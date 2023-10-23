@@ -9,12 +9,12 @@ export const environment: BadgrEnvironment = {
 	production: false,
 	config: {
 		theme: {
-			welcomeMessage: 'Willkommen auf myBadges',
-			serviceName: 'myBadges',
+			welcomeMessage: 'Willkommen auf MINT-O-Badges',
+			serviceName: 'MINT-O-Badges',
 			showPoweredByBadgr: true,
 			providedBy: {
-				name: 're:edu',
-				url: 'https://reedu.de',
+				name: 'openSenseLab gGmbH',
+				url: 'https://opensenselab.org',
 			},
 			logoImg: {
 				small: 'assets/logos/Badges_Entwurf-15-circle.svg',

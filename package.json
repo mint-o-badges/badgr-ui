@@ -71,7 +71,7 @@
 		"@angular/language-service": "^8.2.14",
 		"@types/core-js": "2.5.0",
 		"@types/fabric": "1.5.48",
-		"@types/geojson": "^7946.0.8",
+		"@types/geojson": "7946.0.8",
 		"@types/jasmine": "^3.3.12",
 		"@types/jasminewd2": "~2.0.3",
 		"@types/node": "^10.12.30",
