@@ -14,7 +14,7 @@ env:
 
 jobs:
   build-and-push-image:
-    name:
+    name: 🏗️ Build and publish
     runs-on: ubuntu-latest
     permissions:
       contents: read
