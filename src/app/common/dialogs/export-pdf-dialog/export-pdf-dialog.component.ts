@@ -311,18 +311,18 @@ export class ExportPdfDialog extends BaseDialog {
 				const logoHeight = 15;
 				this.doc.setFontSize(14);
 				this.doc.setFont('Helvetica', 'normal');
-				let logoTextOnContentLength = this.doc.getTextWidth('bereitgestellt von mybadges.org');
+				let logoTextOnContentLength = this.doc.getTextWidth('bereitgestellt von https://ui.mint-o-badges.opensenselab.org');
 				const marginXImageLogo = (pageWidth - logoTextOnContentLength - logoWidth) / 2;
 				var img = new Image();
 				img.src = 'assets/logos/Badges_Entwurf-15.png';
 				this.doc.addImage(img, 'PNG', marginXImageLogo, yPos, logoWidth, logoHeight);
 				// yPos += 13;
 				this.doc.textWithLink(
-					'bereitgestellt von mybadges.org',
+					'bereitgestellt von https://ui.mint-o-badges.opensenselab.org',
 					(pageWidth - logoTextOnContentLength) / 2 + logoWidth,
 					yPos + (logoHeight * 2) / 3,
 					{
-						url: 'https://mybadges.org/public/start',
+						url: 'https://ui.mint-o-badges.opensenselab.org/public/start',
 					}
 				);
 

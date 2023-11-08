@@ -16,8 +16,8 @@ import {EmbedService} from './common/services/embed.service';
 import {InitialLoadingIndicatorService} from './common/services/initial-loading-indicator.service';
 import {Angulartics2GoogleTagManager} from 'angulartics2/gtm';
 
-import {ApiExternalToolLaunchpoint} from 'app/externaltools/models/externaltools-api.model';
-import {ExternalToolsManager} from 'app/externaltools/services/externaltools-manager.service';
+import {ApiExternalToolLaunchpoint} from '../app/externaltools/models/externaltools-api.model';
+import {ExternalToolsManager} from '../app/externaltools/services/externaltools-manager.service';
 
 import {UserProfileManager} from './common/services/user-profile-manager.service';
 import {NewTermsDialog} from './common/dialogs/new-terms-dialog.component';

@@ -13,3 +13,8 @@ code/
 temp/
 
 !src/breakdown/static/js/*.js
+
+# vscode updates
+.vscode
+# package-lock
+package-lock.json
