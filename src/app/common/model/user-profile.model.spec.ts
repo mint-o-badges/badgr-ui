@@ -8,36 +8,25 @@ import {UserProfileManager} from '../services/user-profile-manager.service';
 import {MessageService} from '../services/message.service';
 import {UserProfileApiService} from '../services/user-profile-api.service';
 import {SessionService} from '../services/session.service';
-import {BaseRequestOptions, Http} from '@angular/http';
-import {MockBackend} from '@angular/http/testing';
 import {AppConfigService} from '../app-config.service';
 import {EventsService} from '../services/events.service';
 
 
 xdescribe('UserProfile', () => {
 	beforeEach(() => TestBed.configureTestingModule({
-		declarations: [  ],
+		declarations: [ ],
+        imports: [ ],
 		providers: [
 			AppConfigService,
-			MockBackend,
-			BaseRequestOptions,
 			MessageService,
 			EventsService,
-			{ provide: 'config', useValue: { api: { baseUrl: '' }, features: {} } },
-			{
-				provide: Http,
-				useFactory: (backend, options) => new Http(backend, options),
-				deps: [ MockBackend, BaseRequestOptions ]
-			},
-
 			SessionService,
 			CommonEntityManager,
 			UserProfileApiService,
 			UserProfileManager,
 
 			MessageService
-		],
-		imports: [ ]
+		]
 	}));
 
 	it(
@@ -147,6 +136,7 @@ export const apiProfileEmails = [
 
 export const apiSocialAccountFacebook: ApiUserProfileSocialAccount = {
 	id: "social-account:facebook",
+    url: "",
 	provider: "facebook",
 	dateAdded: new Date().toISOString(),
 	uid: "facebook-uid",
@@ -156,6 +146,7 @@ export const apiSocialAccountFacebook: ApiUserProfileSocialAccount = {
 };
 export const apiSocialAccountKony: ApiUserProfileSocialAccount = {
 	id: "social-account:kony",
+    url: "",
 	provider: "kony",
 	dateAdded: new Date().toISOString(),
 	uid: "kony-uid",
@@ -165,6 +156,7 @@ export const apiSocialAccountKony: ApiUserProfileSocialAccount = {
 };
 export const apiSocialAccountLinkedIn: ApiUserProfileSocialAccount = {
 	id: "social-account:linkedin_oauth2",
+    url: "",
 	provider: "linkedin_oauth2",
 	dateAdded: new Date().toISOString(),
 	uid: "linkedin-uid",
@@ -174,6 +166,7 @@ export const apiSocialAccountLinkedIn: ApiUserProfileSocialAccount = {
 };
 export const apiSocialAccountGoogle: ApiUserProfileSocialAccount = {
 	id: "social-account:google",
+    url: "",
 	provider: "google",
 	dateAdded: new Date().toISOString(),
 	uid: "google-uid",

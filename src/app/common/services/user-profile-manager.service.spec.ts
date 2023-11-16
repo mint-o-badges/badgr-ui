@@ -12,28 +12,31 @@ import {ApiUserProfile, ApiUserProfileEmail, ApiUserProfileSocialAccount} from '
 import {apiProfileEmails, apiSocialAccounts, apiUserProfile, verifyUserProfile} from '../model/user-profile.model.spec';
 import {UserProfile} from '../model/user-profile.model';
 import {EventsService} from './events.service';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {MockBackend} from '@angular/http/testing';
-import {RequestMethod} from '@angular/http';
+import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
+import {HttpClient} from '@angular/common/http';
 import { RouterTestingModule } from "@angular/router/testing";
 import { CommonModule } from "@angular/common";
 import { BadgrCommonModule, COMMON_IMPORTS } from "../badgr-common.module";
 import { COMMON_MOCKS_PROVIDERS_WITH_SUBS } from "../../mocks/mocks.module.spec";
 
 xdescribe('UserProfileManager', () => {
-	beforeEach(() => TestBed.configureTestingModule({
-		declarations: [  ],
-		imports: [
-			RouterTestingModule,
-			CommonModule,
-			BadgrCommonModule,
-			...COMMON_IMPORTS,
-		],
-		providers: [
-			...COMMON_MOCKS_PROVIDERS_WITH_SUBS,
-		],
-	}));
+	beforeEach(() => {
+        TestBed.configureTestingModule({
+            declarations: [  ],
+            imports: [
+                HttpClientTestingModule,
+                RouterTestingModule,
+                CommonModule,
+                BRequestMethodadgrCommonModule,
+                ...COMMON_IMPORTS,
+            ],
+            providers: [
+                ...COMMON_MOCKS_PROVIDERS_WITH_SUBS,
+            ],
+        });
+    });
 
+    let httpMock = TestBed.get(HttpTestingController);
 	setupMockResponseReporting();
 
 	beforeEach(inject([ SessionService ], (loginService: SessionService) => {
@@ -42,10 +45,10 @@ xdescribe('UserProfileManager', () => {
 
 	it('should retrieve user profile',
 		inject(
-			[ UserProfileManager, SessionService, MockBackend ],
-			(userProfileManager: UserProfileManager, loginService: SessionService, mockBackend: MockBackend) => {
+			[ UserProfileManager, SessionService, HttpClientTestingModule ],
+			(userProfileManager: UserProfileManager, loginService: SessionService) => {
 				return Promise.all([
-					expectUserProfileRequest(mockBackend),
+					expectUserProfileRequest(httpMock),
 					verifyEntitySetWhenLoaded(
 						userProfileManager.userProfileSet,
 						[apiUserProfile],
@@ -58,11 +61,11 @@ xdescribe('UserProfileManager', () => {
 
 	it('should retrieve emails',
 		inject(
-			[ UserProfileManager, SessionService, MockBackend ],
-			(userProfileManager: UserProfileManager, loginService: SessionService, mockBackend: MockBackend) => {
+			[ UserProfileManager, SessionService ],
+			(userProfileManager: UserProfileManager, loginService: SessionService) => {
 				return Promise.all([
-					expectUserProfileRequest(mockBackend),
-					expectProfileEmailsRequest(mockBackend),
+					expectUserProfileRequest(httpMock),
+					expectProfileEmailsRequest(httpMock),
 					userProfileManager.userProfilePromise
 						.then(p => p.emails.loadedPromise)
 						.then(p => verifyEntitySetWhenLoaded(
@@ -77,11 +80,11 @@ xdescribe('UserProfileManager', () => {
 
 	it('should retrieve social accounts',
 		inject(
-			[ UserProfileManager, SessionService, MockBackend ],
-			(userProfileManager: UserProfileManager, loginService: SessionService, mockBackend: MockBackend) => {
+			[ UserProfileManager, SessionService ],
+			(userProfileManager: UserProfileManager, loginService: SessionService) => {
 				return Promise.all([
-					expectUserProfileRequest(mockBackend),
-					expectProfileSocialAccountsRequest(mockBackend),
+					expectUserProfileRequest(httpMock),
+					expectProfileSocialAccountsRequest(httpMock),
 					userProfileManager.userProfilePromise
 						.then(p => p.socialAccounts.loadedPromise)
 						.then(p => verifyEntitySetWhenLoaded(
@@ -96,11 +99,11 @@ xdescribe('UserProfileManager', () => {
 });
 
 function expectUserProfileRequest(
-	mockBackend: MockBackend,
+	httpMock: HttpTestingController,
 	apiProfile: ApiUserProfile = apiUserProfile
 ) {
 	return expectRequestAndRespondWith(
-		mockBackend,
+		httpMock,
 		RequestMethod.Get,
 		`/v1/user/profile`,
 		apiProfile
@@ -108,11 +111,11 @@ function expectUserProfileRequest(
 }
 
 function expectProfileEmailsRequest(
-	mockBackend: MockBackend,
+	httpMock: HttpTestingController,
 	emails: ApiUserProfileEmail[] = apiProfileEmails
 ) {
 	return expectRequestAndRespondWith(
-		mockBackend,
+		httpMock,
 		RequestMethod.Get,
 		`/v1/user/emails`,
 		emails
@@ -120,11 +123,11 @@ function expectProfileEmailsRequest(
 }
 
 function expectProfileSocialAccountsRequest(
-	mockBackend: MockBackend,
+	httpMock: HttpTestingController,
 	socialAccounts: ApiUserProfileSocialAccount[] = apiSocialAccounts
 ) {
 	return expectRequestAndRespondWith(
-		mockBackend,
+		httpMock,
 		RequestMethod.Get,
 		`/v1/user/socialaccounts`,
 		socialAccounts
