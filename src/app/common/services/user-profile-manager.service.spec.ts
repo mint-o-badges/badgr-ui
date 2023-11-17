@@ -20,7 +20,7 @@ import { BadgrCommonModule, COMMON_IMPORTS } from "../badgr-common.module";
 import { COMMON_MOCKS_PROVIDERS_WITH_SUBS } from "../../mocks/mocks.module.spec";
 
 xdescribe('UserProfileManager', () => {
-    let httpClient: HttpClient;
+    let httpMock: HttpClient;
     let httpTestingController: HttpTestingController;
 
 	beforeEach(() => {
@@ -30,7 +30,8 @@ xdescribe('UserProfileManager', () => {
                 HttpClientTestingModule,
                 RouterTestingModule,
                 CommonModule,
-                BRequestMethodadgrCommonModule,
+                // This module doesn't exist and I don't know where it comes from
+                //BRequestMethodadgrCommonModule,
                 ...COMMON_IMPORTS,
             ],
             providers: [
@@ -40,7 +41,7 @@ xdescribe('UserProfileManager', () => {
     });
 
     httpMock = TestBed.get(HttpClient);
-    httpTestingController = TestBed.inject(HttpTestingController);
+    httpTestingController = TestBed.get(HttpTestingController);
 	setupMockResponseReporting();
 
 	beforeEach(inject([ SessionService ], (loginService: SessionService) => {
@@ -103,7 +104,7 @@ xdescribe('UserProfileManager', () => {
 });
 
 function expectUserProfileRequest(
-	httpMock: HttpTestingController,
+	httpMock: HttpClient,
 	apiProfile: ApiUserProfile = apiUserProfile
 ) {
 	return expectRequestAndRespondWith(
@@ -115,7 +116,7 @@ function expectUserProfileRequest(
 }
 
 function expectProfileEmailsRequest(
-	httpMock: HttpTestingController,
+	httpMock: HttpClient,
 	emails: ApiUserProfileEmail[] = apiProfileEmails
 ) {
 	return expectRequestAndRespondWith(
@@ -127,7 +128,7 @@ function expectProfileEmailsRequest(
 }
 
 function expectProfileSocialAccountsRequest(
-	httpMock: HttpTestingController,
+	httpMock: HttpClient,
 	socialAccounts: ApiUserProfileSocialAccount[] = apiSocialAccounts
 ) {
 	return expectRequestAndRespondWith(

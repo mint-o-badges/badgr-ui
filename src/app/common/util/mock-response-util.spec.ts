@@ -1,6 +1,10 @@
 import {inject} from '@angular/core/testing';
-import {MockBackend, MockConnection} from '@angular/http/testing';
-import {RequestMethod, Response, ResponseOptions} from '@angular/http';
+import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
+// TODO: Replace with appropriate new testing stuff
+//import {MockBackend, MockConnection} from '@angular/http/testing';
+import {HttpClientModule} from '@angular/common/http';
+// TODO: Replace with appropriate HttpClientModule stuff
+//import {RequestMethod, Response, ResponseOptions} from '@angular/http';
 
 export function setupMockResponseReporting() {
 	beforeEach(inject([ MockBackend ], (mockBackend: MockBackend) => {
