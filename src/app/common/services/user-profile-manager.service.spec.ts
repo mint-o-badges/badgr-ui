@@ -20,6 +20,9 @@ import { BadgrCommonModule, COMMON_IMPORTS } from "../badgr-common.module";
 import { COMMON_MOCKS_PROVIDERS_WITH_SUBS } from "../../mocks/mocks.module.spec";
 
 xdescribe('UserProfileManager', () => {
+    let httpClient: HttpClient;
+    let httpTestingController: HttpTestingController;
+
 	beforeEach(() => {
         TestBed.configureTestingModule({
             declarations: [  ],
@@ -36,7 +39,8 @@ xdescribe('UserProfileManager', () => {
         });
     });
 
-    let httpMock = TestBed.get(HttpTestingController);
+    httpMock = TestBed.get(HttpClient);
+    httpTestingController = TestBed.inject(HttpTestingController);
 	setupMockResponseReporting();
 
 	beforeEach(inject([ SessionService ], (loginService: SessionService) => {
