@@ -1,5 +1,5 @@
-import {BaseRequestOptions, Http, Response, ResponseOptions} from '@angular/http';
-import {MockBackend} from '@angular/http/testing';
+import {HttpClient} from '@angular/common/http';
+import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import {inject, TestBed} from '@angular/core/testing';
 import {AppConfigService} from '../../common/app-config.service';
 import {SignupModel} from '../models/signup-model.type';
@@ -9,42 +9,41 @@ import {SessionService} from '../../common/services/session.service';
 
 
 xdescribe('SignupService', () => {
-	beforeEach(() => TestBed.configureTestingModule({
-		declarations: [  ],
-		providers: [
-			AppConfigService,
-			MockBackend,
-			BaseRequestOptions,
-			MessageService,
-			{ provide: 'config', useValue: { api: { baseUrl: '' }, features: {} } },
-			{
-				provide: Http,
-				useFactory: (backend, options) => new Http(backend, options),
-				deps: [ MockBackend, BaseRequestOptions ]
-			},
+    let httpMock: HttpClient;
+    let httpTestingController: HttpTestingController;
 
-			SignupService,
-			SessionService,
-		],
-		imports: [ ]
-	}));
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            declarations: [  ],
+            providers: [
+                AppConfigService,
+                MessageService,
+                SignupService,
+                SessionService,
+            ],
+            imports: [ ]
+        });
+
+        // TODO: This should actually be `TestBed.inject...`,
+        // but this feature isn't available in the current
+        // Angular version yet.
+        httpMock = TestBed.get(HttpClient);
+        httpTestingController = TestBed.get(HttpTestingController);
+    });
 
 	xit("should send signup payload",
-		inject([ MockBackend, SignupService ], (backend, signupService) => {
-			let connection, error, signupModel;
+		inject([SignupService ], (signupService) => {
+            let connection, error, signupModel;
 
-			backend.connections.subscribe(c => connection = c);
+            signupModel = new SignupModel(
+                'username@email.com', 'Firstname', 'Lastname', 'password', true, true);
+            signupService.submitSignup(signupModel)
+            .then(
+                () => error = false,
+                    () => error = true
+            );
 
-			signupModel = new SignupModel(
-				'username@email.com', 'Firstname', 'Lastname', 'password', true, true);
-			signupService.submitSignup(signupModel)
-				.then(
-					() => error = false,
-					() => error = true
-				);
-
-			connection.mockRespond(new Response(
-				new ResponseOptions({ 'status': 200 })));
+            httpTestingController.expectOne(req => true).flush({}, {status: 200});
 
 			expect(error).toBe(false);
 		})

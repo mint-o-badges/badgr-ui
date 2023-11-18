@@ -1,7 +1,7 @@
 import {inject, TestBed} from '@angular/core/testing';
 import {AppConfigService} from '../../common/app-config.service';
-import {MockBackend} from '@angular/http/testing';
-import {BaseRequestOptions, Http, RequestMethod} from '@angular/http';
+import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
+import {HttpClient} from '@angular/common/http';
 import {CommonEntityManager} from '../../entity-manager/services/common-entity-manager.service';
 import {expectRequestAndRespondWith} from '../../common/util/mock-response-util.spec';
 import {verifyEntitySetWhenLoaded, verifyManagedEntitySet} from '../../common/model/managed-entity-set.spec';
@@ -19,30 +19,33 @@ import {SessionService} from '../../common/services/session.service';
 import {first, skip} from 'rxjs/operators';
 
 xdescribe('RecipientBadgeManger', () => {
-	beforeEach(() => TestBed.configureTestingModule({
-		declarations: [  ],
-		providers: [
-			AppConfigService,
-			MockBackend,
-			BaseRequestOptions,
-			MessageService,
-			{ provide: 'config', useValue: { api: { baseUrl: '' }, features: {} } },
-			{
-				provide: Http,
-				useFactory: (backend, options) => new Http(backend, options),
-				deps: [ MockBackend, BaseRequestOptions ]
-			},
+    let httpMock: HttpClient;
+    let httpTestingController: HttpTestingController;
 
-			SessionService,
-			CommonEntityManager,
-			RecipientBadgeApiService,
-			RecipientBadgeManager,
-		  RecipientBadgeCollectionManager,
-		  RecipientBadgeCollectionApiService,
-			EventsService
-		],
-		imports: [ ]
-	}));
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            declarations: [  ],
+            providers: [
+                AppConfigService,
+                MessageService,
+                { provide: 'config', useValue: { api: { baseUrl: '' }, features: {} } },
+                SessionService,
+                CommonEntityManager,
+                RecipientBadgeApiService,
+                RecipientBadgeManager,
+                RecipientBadgeCollectionManager,
+                RecipientBadgeCollectionApiService,
+                EventsService
+            ],
+            imports: [ ]
+        });
+
+        // TODO: This should actually be `TestBed.inject...`,
+        // but this feature isn't available in the current
+        // Angular version yet.
+        httpMock = TestBed.get(HttpClient);
+        httpTestingController = TestBed.get(HttpTestingController);
+    });
 
 	beforeEach(inject([ SessionService ], (loginService: SessionService) => {
 		loginService.storeToken({ access_token: "MOCKTOKEN" });
@@ -50,12 +53,12 @@ xdescribe('RecipientBadgeManger', () => {
 
 	it('should retrieve all recipient badges',
 		inject(
-			[ RecipientBadgeManager, MockBackend ],
-			(recipientBadgeManager: RecipientBadgeManager, mockBackend: MockBackend) => {
+			[ RecipientBadgeManager ],
+			(recipientBadgeManager: RecipientBadgeManager) => {
 				const testData = buildTestRecipientBadges();
 
 				return Promise.all([
-					expectAllBadgesRequest(mockBackend, testData.apiBadges),
+					expectAllBadgesRequest(httpTestingController, testData.apiBadges),
 					verifyEntitySetWhenLoaded(recipientBadgeManager.recipientBadgeList, testData.apiBadges)
 				]);
 			}
@@ -64,12 +67,12 @@ xdescribe('RecipientBadgeManger', () => {
 
 	it('should retrieve recipientBadges on subscription of allRecipientBadges$',
 		inject(
-			[ RecipientBadgeManager, MockBackend ],
-			(recipientBadgeManager: RecipientBadgeManager, mockBackend: MockBackend) => {
+			[ RecipientBadgeManager ],
+			(recipientBadgeManager: RecipientBadgeManager) => {
 				const testData = buildTestRecipientBadges();
 
 				return Promise.all([
-					expectAllBadgesRequest(mockBackend, testData.apiBadges),
+					expectAllBadgesRequest(httpTestingController, testData.apiBadges),
 					recipientBadgeManager.recipientBadgeList.loadedPromise.then(() => {
 						verifyManagedEntitySet(recipientBadgeManager.recipientBadgeList, testData.apiBadges);
 					})
@@ -80,20 +83,20 @@ xdescribe('RecipientBadgeManger', () => {
 
 	it('should add a new badge',
 		inject(
-			[ RecipientBadgeManager, MockBackend ],
-			(recipientBadgeManager: RecipientBadgeManager, mockBackend: MockBackend) => {
+			[ RecipientBadgeManager ],
+			(recipientBadgeManager: RecipientBadgeManager) => {
 				const testData = buildTestRecipientBadges();
 
 				const existingRecipientBadge = testData.apiBadge1;
 				const newRecipientBadge = testData.apiBadge2;
 
 				return Promise.all([
-					expectAllBadgesRequest(mockBackend, [ existingRecipientBadge ]),
+					expectAllBadgesRequest(httpTestingController, [ existingRecipientBadge ]),
 					expectRequestAndRespondWith(
-						mockBackend,
-						RequestMethod.Post,
+						httpTestingController,
+						'POST',
 						`/v1/earner/badges?json_format=plain`,
-						newRecipientBadge,
+						JSON.stringify(newRecipientBadge),
 						201
 					),
 					verifyEntitySetWhenLoaded(recipientBadgeManager.recipientBadgeList, [ existingRecipientBadge ])
@@ -108,8 +111,8 @@ xdescribe('RecipientBadgeManger', () => {
 
 	it('should list associated collections',
 		inject(
-			[ RecipientBadgeManager, RecipientBadgeCollectionManager, MockBackend ],
-			(recipientBadgeManager: RecipientBadgeManager, collectionManager: RecipientBadgeCollectionManager, mockBackend: MockBackend) => {
+			[ RecipientBadgeManager, RecipientBadgeCollectionManager ],
+			(recipientBadgeManager: RecipientBadgeManager, collectionManager: RecipientBadgeCollectionManager) => {
 				const testBadges = buildTestRecipientBadges();
 				const testCollections = buildTestRecipientBadgeCollections();
 
@@ -124,8 +127,8 @@ xdescribe('RecipientBadgeManger', () => {
 				}];
 
 				return Promise.all([
-					expectAllBadgesRequest(mockBackend, [ apiBadge ]),
-					expectAllCollectionsRequest(mockBackend, [ extraCollection, containingCollection ]),
+					expectAllBadgesRequest(httpTestingController, [ apiBadge ]),
+					expectAllCollectionsRequest(httpTestingController, [ extraCollection, containingCollection ]),
 					verifyEntitySetWhenLoaded(recipientBadgeManager.recipientBadgeList, [ apiBadge ])
 						.then(list => list.entityForApiEntity(apiBadge))
 						.then(badge => {
@@ -141,8 +144,8 @@ xdescribe('RecipientBadgeManger', () => {
 
 	it('should update associated collections when they are modified',
 		inject(
-			[ RecipientBadgeManager, RecipientBadgeCollectionManager, MockBackend ],
-			(recipientBadgeManager: RecipientBadgeManager, collectionManager: RecipientBadgeCollectionManager, mockBackend: MockBackend) => {
+			[ RecipientBadgeManager, RecipientBadgeCollectionManager ],
+			(recipientBadgeManager: RecipientBadgeManager, collectionManager: RecipientBadgeCollectionManager) => {
 				const collectionList = collectionManager.recipientBadgeCollectionList;
 
 				const testBadges = buildTestRecipientBadges();
@@ -156,8 +159,8 @@ xdescribe('RecipientBadgeManger', () => {
 				containingCollection.badges = [];
 
 				return Promise.all([
-					expectAllBadgesRequest(mockBackend, [ apiBadge ]),
-					expectAllCollectionsRequest(mockBackend, [ extraCollection, containingCollection ]),
+					expectAllBadgesRequest(httpTestingController, [ apiBadge ]),
+					expectAllCollectionsRequest(httpTestingController, [ extraCollection, containingCollection ]),
 					verifyEntitySetWhenLoaded(recipientBadgeManager.recipientBadgeList, [ apiBadge ])
 						.then(list => list.entityForApiEntity(apiBadge))
 						.then(badge => {
@@ -190,8 +193,8 @@ xdescribe('RecipientBadgeManger', () => {
 
 	it('should handle adding and removing collections',
 		inject(
-			[ RecipientBadgeManager, RecipientBadgeCollectionManager, MockBackend ],
-			(recipientBadgeManager: RecipientBadgeManager, collectionManager: RecipientBadgeCollectionManager, mockBackend: MockBackend) => {
+			[ RecipientBadgeManager, RecipientBadgeCollectionManager ],
+			(recipientBadgeManager: RecipientBadgeManager, collectionManager: RecipientBadgeCollectionManager) => {
 				const collectionList = collectionManager.recipientBadgeCollectionList;
 
 				const testBadges = buildTestRecipientBadges();
@@ -221,8 +224,8 @@ xdescribe('RecipientBadgeManger', () => {
 
 
 				return Promise.all([
-					expectAllBadgesRequest(mockBackend, [ apiBadge ]),
-					expectAllCollectionsRequest(mockBackend, [ addCollection, removeCollection ]),
+					expectAllBadgesRequest(httpTestingController, [ apiBadge ]),
+					expectAllCollectionsRequest(httpTestingController, [ addCollection, removeCollection ]),
 					verifyEntitySetWhenLoaded(recipientBadgeManager.recipientBadgeList, [ apiBadge ])
 						.then(list => list.entityForApiEntity(apiBadge))
 						.then(badge => {
@@ -232,8 +235,8 @@ xdescribe('RecipientBadgeManger', () => {
 									collections.remove(collectionList.entityForApiEntity(removeCollection));
 
 									return Promise.all([
-										expectCollectionPut(mockBackend, addCollectionResponse),
-										expectCollectionPut(mockBackend, removeCollectionResponse),
+										expectCollectionPut(httpTestingController, addCollectionResponse),
+										expectCollectionPut(httpTestingController, removeCollectionResponse),
 										badge.save()
 									]);
 								}
@@ -246,11 +249,13 @@ xdescribe('RecipientBadgeManger', () => {
 
 });
 
-function expectAllBadgesRequest(mockBackend: MockBackend, badges: ApiRecipientBadgeInstance[]) {
+function expectAllBadgesRequest(
+    httpTestingController: HttpTestingController,
+    badges: ApiRecipientBadgeInstance[]) {
 	return expectRequestAndRespondWith(
-		mockBackend,
-		RequestMethod.Get,
+		httpTestingController,
+		'GET',
 		`/v1/earner/badges?json_format=plain`,
-		badges
+		JSON.stringify(badges)
 	);
 }

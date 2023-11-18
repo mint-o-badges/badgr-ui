@@ -2,8 +2,8 @@ import {inject, TestBed} from '@angular/core/testing';
 import {CommonEntityManager} from '../../entity-manager/services/common-entity-manager.service';
 import {RecipientBadgeCollection} from './recipient-badge-collection.model';
 import {ApiRecipientBadgeCollection} from './recipient-badge-collection-api.model';
-import {BaseRequestOptions, Http} from '@angular/http';
-import {MockBackend} from '@angular/http/testing';
+import {HttpClient} from '@angular/common/http';
+import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import {AppConfigService} from '../../common/app-config.service';
 import {RecipientBadgeApiService} from '../services/recipient-badges-api.service';
 import {RecipientBadgeManager} from '../services/recipient-badge-manager.service';
@@ -12,28 +12,30 @@ import {EventsService} from '../../common/services/events.service';
 import {SessionService} from '../../common/services/session.service';
 
 describe('RecipientBadgeCollection', () => {
-	beforeEach(() => TestBed.configureTestingModule({
-		declarations: [  ],
-		providers: [
-			AppConfigService,
-			MockBackend,
-			BaseRequestOptions,
-			MessageService,
-			{ provide: 'config', useValue: { api: { baseUrl: '' }, features: {} } },
-			{
-				provide: Http,
-				useFactory: (backend, options) => new Http(backend, options),
-				deps: [ MockBackend, BaseRequestOptions ]
-			},
+    let httpMock: HttpClient;
+    let httpTestingController: HttpTestingController;
 
-			SessionService,
-			CommonEntityManager,
-			RecipientBadgeApiService,
-			RecipientBadgeManager,
-		  EventsService
-		],
-		imports: [ ]
-	}));
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            declarations: [  ],
+            providers: [
+                AppConfigService,
+                MessageService,
+                SessionService,
+                CommonEntityManager,
+                RecipientBadgeApiService,
+                RecipientBadgeManager,
+                EventsService
+            ],
+            imports: [ ]
+        });
+
+        // TODO: This should actually be `TestBed.inject...`,
+        // but this feature isn't available in the current
+        // Angular version yet.
+        httpMock = TestBed.get(HttpClient);
+        httpTestingController = TestBed.get(HttpTestingController);
+    });
 
 	it(
 		'should be constructable',
