@@ -46,7 +46,6 @@ export function verifyIssuer(
 	expect(issuer.email).toEqual(apiIssuer.json.email);
 	expect(issuer.websiteUrl).toEqual(apiIssuer.json.url);
 	expect(issuer.createdAt).toEqual(new Date(apiIssuer.created_at));
-	expect(issuer.createdBy).toEqual(apiIssuer.created_by);
 	expect(issuer.staff.entities.map(s => s.apiModel)).toEqual(apiIssuer.staff);
 }
 

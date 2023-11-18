@@ -1,9 +1,9 @@
 import {inject, TestBed} from '@angular/core/testing';
 import {AppConfigService} from '../../common/app-config.service';
-import {MockBackend, MockConnection} from '@angular/http/testing';
-import {BaseRequestOptions, Http, RequestMethod} from '@angular/http';
+import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
+import {HttpClient} from '@angular/common/http';
 import {CommonEntityManager} from '../../entity-manager/services/common-entity-manager.service';
-import {expectRequest, expectRequestAndRespondWith, setupMockResponseReporting} from '../../common/util/mock-response-util.spec';
+import {expectRequest, expectRequestAndRespondWith} from '../../common/util/mock-response-util.spec';
 import {IssuerApiService} from './issuer-api.service';
 import {IssuerManager} from './issuer-manager.service';
 import {ApiIssuer, ApiIssuerStaff, ApiIssuerStaffOperation} from '../models/issuer-api.model';
@@ -16,34 +16,38 @@ import {SessionService} from '../../common/services/session.service';
 import {first} from 'rxjs/operators';
 
 xdescribe('IssuerManager', () => {
-	beforeEach(() => TestBed.configureTestingModule({
-		declarations: [  ],
-		providers: [
-			AppConfigService,
-			MockBackend,
-			BaseRequestOptions,
-			MessageService,
-			{ provide: 'config', useValue: { api: { baseUrl: '' }, features: {} } },
-			{
-				provide: Http,
-				useFactory: (backend, options) => new Http(backend, options),
-				deps: [ MockBackend, BaseRequestOptions ]
-			},
+    // TODO: Potentially some things still need to be adjusted here.
+    // Since the test was disabled anyway, I only adjusted it so much that it compiles; I can't guarantee it also runs correctly.
+    let httpMock: HttpClient;
+    let httpTestingController: HttpTestingController;
 
-			SessionService,
-			CommonEntityManager,
-			IssuerApiService,
-			IssuerManager,
+	beforeEach(() => {
+        TestBed.configureTestingModule({
+            declarations: [  ],
+            providers: [
+                AppConfigService,
+                HttpClientTestingModule,
+                MessageService,
+                { provide: 'config', useValue: { api: { baseUrl: '' }, features: {} } },
+                SessionService,
+                CommonEntityManager,
+                IssuerApiService,
+                IssuerManager,
 
-		  BadgeClassApiService,
-		  BadgeClassManager,
+                BadgeClassApiService,
+                BadgeClassManager,
 
-		  MessageService
-		],
-		imports: [ ]
-	}));
+                MessageService
+            ],
+            imports: [ ]
+        });
 
-	setupMockResponseReporting();
+        // TODO This should actually be `TestBed.inject...`,
+        // but this feature isn't available in the current
+        // Angular version yet.
+        httpMock = TestBed.get(HttpClient);
+        httpTestingController = TestBed.get(HttpTestingController);
+    });
 
 	beforeEach(inject([ SessionService ], (loginService: SessionService) => {
 		loginService.storeToken({ access_token: "MOCKTOKEN" });
@@ -51,10 +55,10 @@ xdescribe('IssuerManager', () => {
 
 	it('should retrieve all issuers',
 		inject(
-			[ IssuerManager, SessionService, MockBackend ],
-			(issuerManager: IssuerManager, loginService: SessionService, mockBackend: MockBackend) => {
+			[ IssuerManager, SessionService ],
+			(issuerManager: IssuerManager, loginService: SessionService) => {
 				return Promise.all([
-					expectAllIssuersRequest(mockBackend),
+					expectAllIssuersRequest(httpTestingController),
 					verifyEntitySetWhenLoaded(issuerManager.issuersList, allApiIssuers)
 				]);
 			}
@@ -63,23 +67,18 @@ xdescribe('IssuerManager', () => {
 
 	it('should not cause dependent entity managers to make API calls when requesting entity counts',
 		inject(
-			[ IssuerManager, SessionService, MockBackend ],
-			(issuerManager: IssuerManager, loginService: SessionService, mockBackend: MockBackend) => {
-				// Ensure the dependent entity APIs aren't called
-				mockBackend.connections.subscribe((connection: MockConnection) => {
-					if (connection.request.url !== '/v1/issuer/issuers') {
-						fail("Only issuer list calls are allowed. No other API calls should occur when counting issuer entities.");
-					}
-				});
+			[ IssuerManager, SessionService ],
+			(issuerManager: IssuerManager, loginService: SessionService) => {
 
 				return Promise.all([
-					expectAllIssuersRequest(mockBackend),
+					expectAllIssuersRequest(httpTestingController),
 					verifyEntitySetWhenLoaded(issuerManager.issuersList, allApiIssuers)
 						.then(list => {
 							/*list.entities.forEach(issuer => {
 								issuer.badgeClassCount;
 							});*/
-						})
+						}),
+                    httpTestingController.verify()
 				]);
 			}
 		)
@@ -87,10 +86,10 @@ xdescribe('IssuerManager', () => {
 
 	it('should retrieve issuers on subscription of allIssuers$',
 		inject(
-			[ IssuerManager, SessionService, MockBackend ],
-			(issuerManager: IssuerManager, loginService: SessionService, mockBackend: MockBackend) => {
+			[ IssuerManager, SessionService ],
+			(issuerManager: IssuerManager, loginService: SessionService) => {
 				return Promise.all([
-					expectAllIssuersRequest(mockBackend),
+					expectAllIssuersRequest(httpTestingController),
 					issuerManager.allIssuers$.pipe(first()).toPromise().then(() => {
 						verifyManagedEntitySet(issuerManager.issuersList, allApiIssuers);
 					})
@@ -101,8 +100,8 @@ xdescribe('IssuerManager', () => {
 
 	it('should add a new issuer',
 		inject(
-			[ IssuerManager, SessionService, MockBackend ],
-			(issuerManager: IssuerManager, loginService: SessionService, mockBackend: MockBackend) => {
+			[ IssuerManager, SessionService ],
+			(issuerManager: IssuerManager, loginService: SessionService) => {
 				const existingIssuer = apiIssuer1;
 				const newIssuer = apiIssuer2;
 				const newIssuerForCreation = {
@@ -114,12 +113,12 @@ xdescribe('IssuerManager', () => {
 				};
 
 				return Promise.all([
-					expectAllIssuersRequest(mockBackend, [ existingIssuer ]),
+					expectAllIssuersRequest(httpTestingController, [ existingIssuer ]),
 					expectRequestAndRespondWith(
-						mockBackend,
-						RequestMethod.Post,
+						httpTestingController,
+						'POST',
 						`/v1/issuer/issuers`,
-						newIssuer,
+						JSON.stringify(newIssuer),
 						201
 					),
 					verifyEntitySetWhenLoaded(issuerManager.issuersList, [ existingIssuer ])
@@ -132,8 +131,8 @@ xdescribe('IssuerManager', () => {
 
 	it('should handle adding staff members',
 		inject(
-			[ IssuerManager, SessionService, MockBackend ],
-			(issuerManager: IssuerManager, loginService: SessionService, mockBackend: MockBackend) => {
+			[ IssuerManager, SessionService ],
+			(issuerManager: IssuerManager, loginService: SessionService) => {
 				const existingIssuer = apiIssuer1;
 				const newStaffMember: ApiIssuerStaff = {
 					role: "staff",
@@ -152,41 +151,38 @@ xdescribe('IssuerManager', () => {
 				};
 
 				return Promise.all([
-					expectAllIssuersRequest(mockBackend, [ existingIssuer ]),
-					expectRequest(
-						mockBackend,
-						RequestMethod.Post,
-						`/v1/issuer/issuers/${existingIssuer.slug}/staff`
-					).then(c => {
-						expect(c.requestJson()).toEqual({
-							action: "add",
-							email: "new@user.com",
-							role: "staff",
-						} as ApiIssuerStaffOperation);
-
-						return c.respondWithJson({ message: "Success" }, 200);
-					}),
-					expectRequestAndRespondWith(
-						mockBackend,
-						RequestMethod.Get,
-						`/v1/issuer/issuers/${existingIssuer.slug}`,
-						existingIssuerWithNewUser,
-						201
-					),
-					verifyEntitySetWhenLoaded(issuerManager.issuersList, [ existingIssuer ])
-						.then(issuersList => issuersList.entities[0].addStaffMember("staff", "new@user.com"))
-						.then(issuer => {
-							expect(issuer.staff.entityForApiEntity(newStaffMember).apiModel).toEqual(newStaffMember);
-						})
-				]);
-			}
-		)
-	);
+					expectAllIssuersRequest(httpTestingController, [ existingIssuer ]),
+					expect(expectRequestAndRespondWith(
+						httpTestingController,
+						'POST',
+						`/v1/issuer/issuers/${existingIssuer.slug}/staff`,
+                        JSON.stringify({ message: "Success" }),
+                        200).request.body).toEqual({
+                            action: "add",
+                            email: "new@user.com",
+                            role: "staff",
+                        }),
+                        expectRequestAndRespondWith(
+                            httpTestingController,
+                            'GET',
+                            `/v1/issuer/issuers/${existingIssuer.slug}`,
+                            JSON.stringify(existingIssuerWithNewUser),
+                            201
+                        ),
+                        verifyEntitySetWhenLoaded(issuerManager.issuersList, [ existingIssuer ])
+                        .then(issuersList => issuersList.entities[0].addStaffMember("staff", "new@user.com"))
+                        .then(issuer => {
+                            expect(issuer.staff.entityForApiEntity(newStaffMember).apiModel).toEqual(newStaffMember);
+                        })
+                ]);
+            }
+        )
+      );
 
 	it('should handle modifying staff members',
 		inject(
-			[ IssuerManager, SessionService, MockBackend ],
-			(issuerManager: IssuerManager, loginService: SessionService, mockBackend: MockBackend) => {
+			[ IssuerManager, SessionService ],
+			(issuerManager: IssuerManager, loginService: SessionService) => {
 				const existingIssuer = apiIssuer1;
 				const modifiedStaffMember: ApiIssuerStaff = {
 					... existingIssuer.staff.find(s => s.role === "staff"),
@@ -201,25 +197,23 @@ xdescribe('IssuerManager', () => {
 				};
 
 				return Promise.all([
-					expectAllIssuersRequest(mockBackend, [ existingIssuer ]),
-					expectRequest(
-						mockBackend,
-						RequestMethod.Post,
-						`/v1/issuer/issuers/${existingIssuer.slug}/staff`
-					).then(c => {
-						expect(c.requestJson()).toEqual({
+					expectAllIssuersRequest(httpTestingController, [ existingIssuer ]),
+					expect(expectRequestAndRespondWith(
+						httpTestingController,
+						'POST',
+						`/v1/issuer/issuers/${existingIssuer.slug}/staff`,
+                        JSON.stringify({ message: "Success" }),
+                        200
+					).request.body).toEqual({
 							action: "modify",
 							email: modifiedStaffMember.user.email,
 							role: "editor",
-						} as ApiIssuerStaffOperation);
-
-						return c.respondWithJson({ message: "Success" }, 200);
-					}),
+						}),
 					expectRequestAndRespondWith(
-						mockBackend,
-						RequestMethod.Get,
+						httpTestingController,
+						'GET',
 						`/v1/issuer/issuers/${existingIssuer.slug}`,
-						existingIssuerWithModifiedStaff,
+						JSON.stringify(existingIssuerWithModifiedStaff),
 						201
 					),
 					verifyEntitySetWhenLoaded(issuerManager.issuersList, [ existingIssuer ])
@@ -238,8 +232,8 @@ xdescribe('IssuerManager', () => {
 
 	it('should handle deleting staff members',
 		inject(
-			[ IssuerManager, SessionService, MockBackend ],
-			(issuerManager: IssuerManager, loginService: SessionService, mockBackend: MockBackend) => {
+			[ IssuerManager, SessionService ],
+			(issuerManager: IssuerManager, loginService: SessionService) => {
 				const existingIssuer = apiIssuer1;
 				const staffMemberToRemove: ApiIssuerStaff = existingIssuer.staff.find(s => s.role === "staff");
 				const existingIssuerWithoutMember = {
@@ -250,24 +244,22 @@ xdescribe('IssuerManager', () => {
 				};
 
 				return Promise.all([
-					expectAllIssuersRequest(mockBackend, [ existingIssuer ]),
-					expectRequest(
-						mockBackend,
-						RequestMethod.Post,
-						`/v1/issuer/issuers/${existingIssuer.slug}/staff`
-					).then(c => {
-						expect(c.requestJson()).toEqual({
+					expectAllIssuersRequest(httpTestingController, [ existingIssuer ]),
+					expect(expectRequestAndRespondWith(
+						httpTestingController,
+						'POST',
+						`/v1/issuer/issuers/${existingIssuer.slug}/staff`,
+                        JSON.stringify({ message: "Success" }),
+                        200
+					).request.body).toEqual({
 							action: "remove",
 							email: staffMemberToRemove.user.email
-						} as ApiIssuerStaffOperation);
-
-						return c.respondWithJson({ message: "Success" }, 200);
-					}),
+						}),
 					expectRequestAndRespondWith(
-						mockBackend,
-						RequestMethod.Get,
+						httpTestingController,
+						'GET',
 						`/v1/issuer/issuers/${existingIssuer.slug}`,
-						existingIssuerWithoutMember,
+						JSON.stringify(existingIssuerWithoutMember),
 						201
 					),
 					verifyEntitySetWhenLoaded(issuerManager.issuersList, [ existingIssuer ])
@@ -283,12 +275,14 @@ xdescribe('IssuerManager', () => {
 
 const allApiIssuers = [ apiIssuer1, apiIssuer2, apiIssuer3 ];
 
-function expectAllIssuersRequest(mockBackend: MockBackend, issuers: ApiIssuer[] = allApiIssuers) {
+function expectAllIssuersRequest(
+    httpTestingController: HttpTestingController,
+    issuers: ApiIssuer[] = allApiIssuers) {
 	return expectRequestAndRespondWith(
-		mockBackend,
-		RequestMethod.Get,
+		httpTestingController,
+		'GET',
 		`/v1/issuer/issuers`,
-		issuers
+		JSON.stringify(issuers)
 	);
 }
 

@@ -1,7 +1,7 @@
 import {inject, TestBed} from '@angular/core/testing';
 import {AppConfigService} from '../app-config.service';
 import {CommonEntityManager} from '../../entity-manager/services/common-entity-manager.service';
-import {expectRequestAndRespondWith, setupMockResponseReporting} from '../util/mock-response-util.spec';
+import {expectRequestAndRespondWith} from '../util/mock-response-util.spec';
 import {verifyEntitySetWhenLoaded} from '../../common/model/managed-entity-set.spec';
 
 import {MessageService} from '../../common/services/message.service';
@@ -20,6 +20,8 @@ import { BadgrCommonModule, COMMON_IMPORTS } from "../badgr-common.module";
 import { COMMON_MOCKS_PROVIDERS_WITH_SUBS } from "../../mocks/mocks.module.spec";
 
 xdescribe('UserProfileManager', () => {
+    // TODO: Potentially some things still need to be adjusted here.
+    // Since the test was disabled anyway, I only adjusted it so much that it compiles; I can't guarantee it also runs correctly.
     let httpMock: HttpClient;
     let httpTestingController: HttpTestingController;
 
@@ -38,11 +40,14 @@ xdescribe('UserProfileManager', () => {
                 ...COMMON_MOCKS_PROVIDERS_WITH_SUBS,
             ],
         });
+
+        // TODO: This should actually be `TestBed.inject...`,
+        // but this feature isn't available in the current
+        // Angular version yet.
+        httpMock = TestBed.get(HttpClient);
+        httpTestingController = TestBed.get(HttpTestingController);
     });
 
-    httpMock = TestBed.get(HttpClient);
-    httpTestingController = TestBed.get(HttpTestingController);
-	setupMockResponseReporting();
 
 	beforeEach(inject([ SessionService ], (loginService: SessionService) => {
 		loginService.storeToken({ access_token: "MOCKTOKEN" });
@@ -53,7 +58,7 @@ xdescribe('UserProfileManager', () => {
 			[ UserProfileManager, SessionService, HttpClientTestingModule ],
 			(userProfileManager: UserProfileManager, loginService: SessionService) => {
 				return Promise.all([
-					expectUserProfileRequest(httpMock),
+					expectUserProfileRequest(httpTestingController),
 					verifyEntitySetWhenLoaded(
 						userProfileManager.userProfileSet,
 						[apiUserProfile],
@@ -69,8 +74,8 @@ xdescribe('UserProfileManager', () => {
 			[ UserProfileManager, SessionService ],
 			(userProfileManager: UserProfileManager, loginService: SessionService) => {
 				return Promise.all([
-					expectUserProfileRequest(httpMock),
-					expectProfileEmailsRequest(httpMock),
+					expectUserProfileRequest(httpTestingController),
+					expectProfileEmailsRequest(httpTestingController),
 					userProfileManager.userProfilePromise
 						.then(p => p.emails.loadedPromise)
 						.then(p => verifyEntitySetWhenLoaded(
@@ -88,8 +93,8 @@ xdescribe('UserProfileManager', () => {
 			[ UserProfileManager, SessionService ],
 			(userProfileManager: UserProfileManager, loginService: SessionService) => {
 				return Promise.all([
-					expectUserProfileRequest(httpMock),
-					expectProfileSocialAccountsRequest(httpMock),
+					expectUserProfileRequest(httpTestingController),
+					expectProfileSocialAccountsRequest(httpTestingController),
 					userProfileManager.userProfilePromise
 						.then(p => p.socialAccounts.loadedPromise)
 						.then(p => verifyEntitySetWhenLoaded(
@@ -104,37 +109,37 @@ xdescribe('UserProfileManager', () => {
 });
 
 function expectUserProfileRequest(
-	httpMock: HttpClient,
+	httpTestingController: HttpTestingController,
 	apiProfile: ApiUserProfile = apiUserProfile
 ) {
 	return expectRequestAndRespondWith(
-		httpMock,
-		RequestMethod.Get,
+		httpTestingController,
+		'GET',
 		`/v1/user/profile`,
-		apiProfile
+		JSON.stringify(apiProfile)
 	);
 }
 
 function expectProfileEmailsRequest(
-	httpMock: HttpClient,
+	httpTestingController: HttpTestingController,
 	emails: ApiUserProfileEmail[] = apiProfileEmails
 ) {
 	return expectRequestAndRespondWith(
-		httpMock,
-		RequestMethod.Get,
+		httpTestingController,
+		'GET',
 		`/v1/user/emails`,
-		emails
+		JSON.stringify(emails)
 	);
 }
 
 function expectProfileSocialAccountsRequest(
-	httpMock: HttpClient,
+	httpTestingController: HttpTestingController,
 	socialAccounts: ApiUserProfileSocialAccount[] = apiSocialAccounts
 ) {
 	return expectRequestAndRespondWith(
-		httpMock,
-		RequestMethod.Get,
+		httpTestingController,
+		'GET',
 		`/v1/user/socialaccounts`,
-		socialAccounts
+		JSON.stringify(socialAccounts)
 	);
 }
