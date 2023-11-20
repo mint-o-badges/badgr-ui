@@ -1,4 +1,4 @@
-import {AfterViewInit, Directive, ElementRef, Renderer} from '@angular/core';
+import { AfterViewInit, Directive, ElementRef, Renderer2 } from '@angular/core';
 
 @Directive({
 	selector: '.l-scrollpin'
@@ -7,7 +7,7 @@ export class ScrollPinDirective implements AfterViewInit {
 	private scrollElem: HTMLElement;
 
 	constructor(
-		private renderer: Renderer,
+		private renderer: Renderer2,
 		private elemRef: ElementRef
 	) {
 	}

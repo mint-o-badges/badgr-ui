@@ -30,7 +30,7 @@ export class ExportPdfDialog extends BaseDialog {
 
 	imageLoader: (file: File | string) => Promise<string> = basicImageLoader;
 
-	@ViewChild('outputPdf', { static: false }) outputElement: ElementRef;
+	@ViewChild('outputPdf') outputElement: ElementRef;
 
 	resolveFunc: () => void;
 	rejectFunc: () => void;

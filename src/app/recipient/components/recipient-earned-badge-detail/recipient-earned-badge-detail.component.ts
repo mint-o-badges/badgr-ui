@@ -35,7 +35,7 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 	readonly badgeLoadingImageUrl = require('../../../../breakdown/static/images/badge-loading.svg') as string;
 	readonly badgeFailedImageUrl = require('../../../../breakdown/static/images/badge-failed.svg') as string;
 
-	@ViewChild('collectionSelectionDialog', { static: false })
+	@ViewChild('collectionSelectionDialog')
 	collectionSelectionDialog: RecipientBadgeCollectionSelectionDialogComponent;
 
 	badgesLoaded: Promise<unknown>;

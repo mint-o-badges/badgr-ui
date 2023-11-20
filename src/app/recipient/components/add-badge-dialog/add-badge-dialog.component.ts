@@ -40,10 +40,10 @@ export class AddBadgeDialogComponent extends BaseDialog {
 
 	badgeUploadPromise: Promise<unknown>;
 
-	@ViewChild("jsonField", {static: false})
+	@ViewChild("jsonField")
 	private jsonField: FormFieldText;
 
-	@ViewChild("urlField", {static: false})
+	@ViewChild("urlField")
 	private urlField: FormFieldText;
 
 	constructor(

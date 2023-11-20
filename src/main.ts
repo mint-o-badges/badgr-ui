@@ -6,7 +6,8 @@ import { environment } from "./environments/environment";
 
 // HACK: Workaround how array-uniq v1 checks for features... seems hardcoded for
 // node usage. It's needed by sanitize-html.
-window["global"] = window;
+// TODO: This doesn't work with Angular 9+, find a new hack
+//window["global"] = window;
 
 // Store the initial window location to allow for future query param retrieval
 // as a workaround for

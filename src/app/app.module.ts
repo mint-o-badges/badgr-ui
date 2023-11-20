@@ -47,34 +47,34 @@ const ROUTE_CONFIG: Routes = [
 	},
 	{
 		path: 'auth',
-		loadChildren: './auth/auth.module#AuthModule',
+		loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule),
 	},
 	{
 		path: 'signup',
-		loadChildren: './signup/signup.module#SignupModule',
+		loadChildren: () => import('./signup/signup.module').then(m => m.SignupModule),
 	},
 	{
 		path: 'recipient',
-		loadChildren: './recipient/recipient.module#RecipientModule',
+		loadChildren: () => import('./recipient/recipient.module').then(m => m.RecipientModule),
 		canActivate: [AuthGuard],
 	},
 	{
 		path: 'issuer',
-		loadChildren: './issuer/issuer.module#IssuerModule',
+		loadChildren: () => import('./issuer/issuer.module').then(m => m.IssuerModule),
 		canActivate: [AuthGuard],
 	},
 	{
 		path: 'profile',
-		loadChildren: './profile/profile.module#ProfileModule',
+		loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule),
 		canActivate: [AuthGuard],
 	},
 	{
 		path: 'public',
-		loadChildren: './public/public.module#PublicModule',
+		loadChildren: () => import('./public/public.module').then(m => m.PublicModule),
 	},
 	{
 		path: 'catalog',
-		loadChildren: './catalog/catalog.module#CatalogModule',
+		loadChildren: () => import('./catalog/catalog.module').then(m => m.CatalogModule),
 	},
 	// Legacy Auth Redirects
 	{

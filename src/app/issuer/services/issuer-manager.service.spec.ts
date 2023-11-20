@@ -42,11 +42,8 @@ xdescribe('IssuerManager', () => {
             imports: [ ]
         });
 
-        // TODO This should actually be `TestBed.inject...`,
-        // but this feature isn't available in the current
-        // Angular version yet.
-        httpMock = TestBed.get(HttpClient);
-        httpTestingController = TestBed.get(HttpTestingController);
+        httpMock = TestBed.inject(HttpClient);
+        httpTestingController = TestBed.inject(HttpTestingController);
     });
 
 	beforeEach(inject([ SessionService ], (loginService: SessionService) => {

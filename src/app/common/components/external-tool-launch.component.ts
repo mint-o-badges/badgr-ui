@@ -23,7 +23,7 @@ import {Subscription} from 'rxjs';
 export class ExternalToolLaunchComponent implements OnDestroy {
 	objectKeys = Object.keys;
 
-	@ViewChild("toolLaunchForm", {static: false}) toolLaunchForm;
+	@ViewChild("toolLaunchForm") toolLaunchForm;
 
 	toolLaunchInfo: ApiExternalToolLaunchInfo;
 	launchSubscription: Subscription;

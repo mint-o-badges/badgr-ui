@@ -31,7 +31,7 @@ export class BadgeStudioComponent implements OnInit, OnChanges {
 	@Input() formData;
 
 	dataUrl: string;
-	@ViewChild("canvas", {static: false})
+	@ViewChild("canvas")
 	private canvasElem: ElementRef;
 
 	@Input() scrolled: boolean;

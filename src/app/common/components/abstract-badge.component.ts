@@ -1,4 +1,4 @@
-import {Input, OnChanges, SimpleChange} from '@angular/core';
+import { Input, OnChanges, SimpleChange, Directive } from '@angular/core';
 import {BadgeClassManager} from '../../issuer/services/badgeclass-manager.service';
 import {BadgeClass} from '../../issuer/models/badgeclass.model';
 import {MessageService} from '../services/message.service';
@@ -14,6 +14,7 @@ export interface BadgeLookupData {
 	badgeId?: BadgeClassUrl | BadgeClassRef;
 }
 
+@Directive()
 export class AbstractBadgeComponent implements OnChanges, BadgeLookupData {
 	@Input()
 	badge: BadgeClass;

@@ -36,7 +36,7 @@ export class NounprojectDialog extends BaseDialog implements AfterViewInit {
 		this.searchIcons(query);
 	}
 
-	@ViewChild('nounprojectSearch', {static:false}) searchbar: ElementRef;
+	@ViewChild('nounprojectSearch') searchbar: ElementRef;
 	
 	constructor(
 		protected messageService: MessageService,

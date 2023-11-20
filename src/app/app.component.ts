@@ -54,31 +54,31 @@ export class AppComponent implements OnInit, AfterViewInit {
 
 	copyrightYear = new Date().getFullYear();
 
-	@ViewChild("confirmDialog", {static: false})
+	@ViewChild("confirmDialog")
 	private confirmDialog: ConfirmDialog;
 
-	@ViewChild("nounprojectDialog", {static: false})
+	@ViewChild("nounprojectDialog")
 	private nounprojectDialog: NounprojectDialog;
 
-	@ViewChild("newTermsDialog", {static: false})
+	@ViewChild("newTermsDialog")
 	private newTermsDialog: NewTermsDialog;
 
-	@ViewChild("shareSocialDialog", {static: false})
+	@ViewChild("shareSocialDialog")
 	private shareSocialDialog: ShareSocialDialog;
 
-	@ViewChild("markdownHintsDialog", {static: false})
+	@ViewChild("markdownHintsDialog")
 	private markdownHintsDialog: MarkdownHintsDialog;
 
-	@ViewChild("exportPdfDialog", {static: false})
+	@ViewChild("exportPdfDialog")
 	private exportPdfDialog: ExportPdfDialog;
   
-	@ViewChild("copyBadgeDialog", {static: false})
+	@ViewChild("copyBadgeDialog")
 	private copyBadgeDialog: CopyBadgeDialog;
 
-	@ViewChild("issuerLink", {static: false})
+	@ViewChild("issuerLink")
 	private issuerLink: unknown;
 
-	@ViewChild("importModalDialog", {static: false})
+	@ViewChild("importModalDialog")
 	importModalDialog: ImportModalComponent;
 
 	get showAppChrome() {

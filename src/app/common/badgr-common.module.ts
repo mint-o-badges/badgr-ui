@@ -178,7 +178,7 @@ export const COMMON_IMPORTS = [CommonModule, FormsModule, ReactiveFormsModule, H
 export class BadgrCommonModule {
 	// Load BadgrCommonModule with forRoot() to preserve singleton status in lazy loaded modules.
 	// see: https://www.youtube.com/watch?v=SBSnsNHQYo4
-	static forRoot(): ModuleWithProviders {
+	static forRoot(): ModuleWithProviders<BadgrCommonModule> {
 		return {
 			ngModule: BadgrCommonModule,
 			providers: [...SERVICES, ...GUARDS],

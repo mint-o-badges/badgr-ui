@@ -47,7 +47,7 @@ export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent imp
 	profileEmailsLoaded: Promise<UserProfileEmail[]>;
 	profileEmails: UserProfileEmail[] = [];
 
-	@ViewChild('issuerStaffCreateDialog', {static: false})
+	@ViewChild('issuerStaffCreateDialog')
 	issuerStaffCreateDialog: IssuerStaffCreateDialogComponent;
 
 	breadcrumbLinkEntries: LinkEntry[] = [];

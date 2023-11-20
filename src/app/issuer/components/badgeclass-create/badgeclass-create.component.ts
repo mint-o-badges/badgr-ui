@@ -30,7 +30,7 @@ export class BadgeClassCreateComponent extends BaseAuthenticatedRoutableComponen
 	badgesLoaded: Promise<unknown>;
 	badges: BadgeClass[] = null;
 
-	@ViewChild('badgeimage', { static: false }) badgeImage;
+	@ViewChild('badgeimage') badgeImage;
 
 	constructor(
 		sessionService: SessionService,

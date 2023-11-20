@@ -43,7 +43,7 @@ export class PublicBadgeAssertionComponent {
 
 	readonly badgeFailedImageUrl = require('../../../../breakdown/static/images/badge-failed.svg') as string;
 
-	@ViewChild('verifyBadgeDialog', {static: false})
+	@ViewChild('verifyBadgeDialog')
 	verifyBadgeDialog: VerifyBadgeDialog;
 
 	assertionIdParam: LoadedRouteParam<PublicApiBadgeAssertionWithBadgeClass>;

@@ -33,8 +33,8 @@ export class TooltipComponent implements AfterViewInit, OnDestroy {
 	};
 	@Input() offset = '-30px -15px';
 	@Input() trigger;
-	@ViewChild('anchor', {static: false}) anchor: ElementRef;
-	@ViewChild('tooltip', {static: false}) tooltip: ElementRef;
+	@ViewChild('anchor') anchor: ElementRef;
+	@ViewChild('tooltip') tooltip: ElementRef;
 
 	active = false;
 	tether: Tether | null = null;

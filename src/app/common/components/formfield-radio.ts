@@ -118,7 +118,7 @@ export class FormFieldRadio implements OnChanges, AfterViewInit {
 
 	@Input() autofocus = false;
 
-	@ViewChild('radioInput', {static: false}) radioInput: ElementRef;
+	@ViewChild('radioInput') radioInput: ElementRef;
 
 	private _unlocked = false;
 

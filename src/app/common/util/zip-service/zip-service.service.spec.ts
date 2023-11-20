@@ -17,7 +17,7 @@ describe('ZipService', () => {
 	}));
 
   it('should be created', () => {
-    const service: ZipService = TestBed.get(ZipService);
+    const service: ZipService = TestBed.inject(ZipService);
     expect(service).toBeTruthy();
   });
 });
