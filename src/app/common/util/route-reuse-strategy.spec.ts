@@ -1,4 +1,4 @@
-import { async } from '@angular/core/testing';
+import { waitForAsync } from '@angular/core/testing';
 import {BadgrRouteReuseStrategy} from './route-reuse-strategy';
 import {Directive} from '@angular/core';
 

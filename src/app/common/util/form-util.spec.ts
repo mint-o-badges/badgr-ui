@@ -1,4 +1,4 @@
-import { async } from '@angular/core/testing';
+import { waitForAsync } from '@angular/core/testing';
 import {markControlsDirty} from './form-util';
 import {Directive} from '@angular/core';
 

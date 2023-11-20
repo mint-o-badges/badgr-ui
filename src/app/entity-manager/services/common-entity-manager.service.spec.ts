@@ -1,4 +1,4 @@
-import { async } from '@angular/core/testing';
+import { waitForAsync } from '@angular/core/testing';
 import {CommonEntityManager} from './common-entity-manager.service';
 
 xdescribe('CommonEntityManager', () => {

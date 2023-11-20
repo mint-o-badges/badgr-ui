@@ -1,4 +1,4 @@
-import { async } from '@angular/core/testing';
+import { waitForAsync } from '@angular/core/testing';
 import {ExternalToolsApiService} from './externaltools-api.service';
 
 xdescribe('ExternalToolsApiService', () => {

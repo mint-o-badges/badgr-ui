@@ -1,5 +1,5 @@
 // tslint:disable
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { Injectable, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { By } from '@angular/platform-browser';

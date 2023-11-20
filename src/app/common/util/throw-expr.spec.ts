@@ -1,4 +1,4 @@
-import { async } from '@angular/core/testing';
+import { waitForAsync } from '@angular/core/testing';
 import {throwExpr} from './throw-expr';
 import {Directive} from '@angular/core';
 

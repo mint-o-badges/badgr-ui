@@ -134,7 +134,7 @@ export const appInitializerFn = (configService: AppConfigService) => {
 	imports: [
 		...COMMON_IMPORTS,
 		BrowserModule,
-		RouterModule.forRoot(ROUTE_CONFIG),
+		RouterModule.forRoot(ROUTE_CONFIG, { relativeLinkResolution: 'legacy' }),
 		Angulartics2Module.forRoot(),
 		BadgrCommonModule.forRoot(),
 		BrowserAnimationsModule,

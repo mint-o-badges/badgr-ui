@@ -1,4 +1,4 @@
-import { async } from '@angular/core/testing';
+import { waitForAsync } from '@angular/core/testing';
 import {StringMatchingUtil} from './string-matching-util';
 import {Directive} from '@angular/core';
 

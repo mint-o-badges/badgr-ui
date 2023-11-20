@@ -1,4 +1,4 @@
-import { async } from '@angular/core/testing';
+import { waitForAsync } from '@angular/core/testing';
 import {RecipientBadgeInstanceUrl} from './recipient-badge-api.model';
 import {Directive} from '@angular/core';
 

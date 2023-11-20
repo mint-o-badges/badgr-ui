@@ -1,4 +1,4 @@
-import { async } from '@angular/core/testing';
+import { waitForAsync } from '@angular/core/testing';
 import {PublicApiService} from './public-api.service';
 
 xdescribe('PublicApiService', () => {

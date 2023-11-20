@@ -1,4 +1,4 @@
-import { async } from '@angular/core/testing';
+import { waitForAsync } from '@angular/core/testing';
 import {RecipientBadgeCollectionApiService} from './recipient-badge-collection-api.service';
 
 xdescribe('RecipientBadgeCollectionApiService', () => {

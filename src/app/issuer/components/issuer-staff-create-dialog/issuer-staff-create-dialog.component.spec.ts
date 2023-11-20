@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import {IssuerStaffCreateDialogComponent} from './issuer-staff-create-dialog.component';
 import {BadgrCommonModule, COMMON_IMPORTS} from '../../../common/badgr-common.module';
@@ -11,7 +11,7 @@ describe('IssuerStaffCreateDialogComponent', () => {
   let component: IssuerStaffCreateDialogComponent;
   let fixture: ComponentFixture<IssuerStaffCreateDialogComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ IssuerStaffCreateDialogComponent ],
 			imports: [

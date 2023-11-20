@@ -1,4 +1,4 @@
-import { async } from '@angular/core/testing';
+import { waitForAsync } from '@angular/core/testing';
 import {ExternalToolsManager} from './externaltools-manager.service';
 
 describe('ExternalToolsManager', () => {

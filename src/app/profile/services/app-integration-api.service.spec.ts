@@ -1,4 +1,4 @@
-import { async } from '@angular/core/testing';
+import { waitForAsync } from '@angular/core/testing';
 import {AppIntegrationApiService} from './app-integration-api.service';
 
 xdescribe('AppIntegrationApiService', () => {

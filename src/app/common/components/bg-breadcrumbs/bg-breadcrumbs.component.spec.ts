@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import {BgBreadcrumbsComponent} from './bg-breadcrumbs.component';
 
@@ -7,7 +7,7 @@ describe('BgBreadcrumbsComponent', () => {
   let component: BgBreadcrumbsComponent;
   let fixture: ComponentFixture<BgBreadcrumbsComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ BgBreadcrumbsComponent ]
     })

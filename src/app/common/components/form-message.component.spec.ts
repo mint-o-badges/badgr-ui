@@ -1,4 +1,4 @@
-import { async, ComponentFixture, inject, TestBed } from '@angular/core/testing';
+import { ComponentFixture, inject, TestBed, waitForAsync } from '@angular/core/testing';
 import { Injectable, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { By } from '@angular/platform-browser';

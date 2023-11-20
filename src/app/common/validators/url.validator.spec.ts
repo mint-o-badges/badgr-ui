@@ -1,4 +1,4 @@
-import { async } from '@angular/core/testing';
+import { waitForAsync } from '@angular/core/testing';
 import {UrlValidator} from './url.validator';
 import {Directive} from '@angular/core';
 

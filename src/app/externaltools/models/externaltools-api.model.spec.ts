@@ -1,4 +1,4 @@
-import { async } from '@angular/core/testing';
+import { waitForAsync } from '@angular/core/testing';
 import {ApiExternalToolSlug} from './externaltools-api.model';
 import {Directive} from '@angular/core';
 
