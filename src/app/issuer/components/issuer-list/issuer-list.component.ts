@@ -72,7 +72,7 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 		// subscribe to issuer and badge class changes
 		this.issuersLoaded = this.loadIssuers();
 
-		this.badgesLoaded = new Promise((resolve, reject) => {
+		this.badgesLoaded = new Promise<void>((resolve, reject) => {
 			this.badgeClassService.badgesByIssuerUrl$.subscribe((badges) => {
 				this.issuerToBadgeInfo = {};
 
@@ -91,7 +91,7 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 	}
 
 	loadIssuers = () => {
-		return new Promise((resolve, reject) => {
+		return new Promise<void>((resolve, reject) => {
 			this.issuerManager.allIssuers$.subscribe(
 				(issuers) => {
 					this.issuers = issuers.slice().sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());

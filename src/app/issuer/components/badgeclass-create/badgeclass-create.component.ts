@@ -56,7 +56,7 @@ export class BadgeClassCreateComponent extends BaseAuthenticatedRoutableComponen
 				{ title: 'Create Badge' },
 			];
 
-			this.badgesLoaded = new Promise((resolve, reject) => {
+			this.badgesLoaded = new Promise<void>((resolve, reject) => {
 				this.badgeClassService.allPublicBadges$.subscribe(
 					(publicBadges) => {
 						this.badges = publicBadges

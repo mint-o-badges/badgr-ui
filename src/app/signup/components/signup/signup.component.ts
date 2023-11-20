@@ -84,7 +84,7 @@ export class SignupComponent extends BaseRoutableComponent implements OnInit {
 			formState.marketingOptIn
 		);
 
-		this.signupFinished = new Promise((resolve, reject) => {
+		this.signupFinished = new Promise<void>((resolve, reject) => {
 			const source = this.route.snapshot.params['source'] || localStorage.getItem('source') || null;
 			this.signupService.submitSignup(signupUser, source)
 				.then(
