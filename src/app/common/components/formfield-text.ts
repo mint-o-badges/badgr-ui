@@ -159,7 +159,7 @@ export class FormFieldText implements OnChanges, AfterViewInit {
 	@Input() sublabel: string;
 	@Input() placeholder: string;
 	@Input() fieldType: FormFieldTextInputType = 'text';
-	@Input() maxchar?: number;
+	@Input() maxchar?: number = null;
 	@Input() max?: number;
 	@Input() optional = false;
 	@Input() inlineButtonText: string;

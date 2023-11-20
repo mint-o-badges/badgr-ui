@@ -1,4 +1,4 @@
-import {OnInit} from '@angular/core';
+import {OnInit, Injectable} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MessageService} from '../../../common/services/message.service';
 import {SessionService} from '../../../common/services/session.service';
@@ -9,6 +9,7 @@ import {AppIntegrationManager} from '../../services/app-integration-manager.serv
 import {AppConfigService} from '../../../common/app-config.service';
 import {ApiAppIntegration} from '../../models/app-integration-api.model';
 
+@Injectable()
 export abstract class AppIntegrationDetailComponent<
 	T extends AppIntegration<ApiAppIntegration>
 > extends BaseAuthenticatedRoutableComponent implements OnInit {

@@ -1,6 +1,7 @@
-import {AfterViewInit, ElementRef, Renderer2} from '@angular/core';
+import {AfterViewInit, ElementRef, Renderer2, Injectable} from '@angular/core';
 import {HTMLDialogElement, registerDialog} from 'dialog-polyfill/dialog-polyfill';
 
+@Injectable()
 export abstract class BaseDialog implements AfterViewInit {
 	constructor(
 		protected componentElem: ElementRef<HTMLElement>,

@@ -6,7 +6,8 @@ import {StandaloneEntitySet} from '../../common/model/managed-entity-set';
 import {CommonEntityManager} from '../../entity-manager/services/common-entity-manager.service';
 import {EventsService} from '../../common/services/events.service';
 
-const test = [CommonEntityManager];
+// TODO: What is this? It causes problems...
+//const test = [CommonEntityManager];
 
 @Injectable()
 export class RecipientBadgeManager {
