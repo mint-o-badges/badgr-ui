@@ -77,7 +77,7 @@
 		"@types/node": "^10.12.30",
 		"@types/source-map": "0.5.7",
 		"@types/uglify-js": "3.0.4",
-		"@types/webpack": "^4.4.31",
+		"@types/webpack": "^5.28.5",
 		"autoprefixer": "9.4.4",
 		"caniuse-lite": "^1.0.30000967",
 		"codelyzer": "~6.0.2",
@@ -113,7 +113,7 @@
 		"typescript": "3.5.3",
 		"uglify-js": "^3.5.11",
 		"url-loader": "^1.1.2",
-		"webpack-cli": "^3.3.2"
+		"webpack-cli": "^5.1.4"
 	},
 	"browserslist": [
 		"> 1%",
