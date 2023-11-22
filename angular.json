@@ -15,8 +15,7 @@
 						"index": "src/index.html",
 						"main": "src/main.ts",
 						"tsConfig": "src/tsconfig.app.json",
-						"polyfills": "src/polyfills.ts",
-						"showCircularDependencies": false,
+            "polyfills": "src/polyfills.ts",
 						"assets": [
 							"src/assets",
 							"src/_redirects",
@@ -121,8 +120,7 @@
 				}
 			}
 		}
-	},
-	"defaultProject": "badgr-ui-cli",
+  },
 	"schematics": {
 		"@schematics/angular:component": {
 			"prefix": "app",

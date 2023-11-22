@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {RouterModule} from '@angular/router';
+import {RouterModule, Routes} from '@angular/router';
 
 import {LogoutComponent} from './components/logout/logout.component';
 import {ResetPasswordSent} from './components/reset-password-sent/reset-password-sent.component';
@@ -12,7 +12,7 @@ import {OAuth2AuthorizeComponent} from './components/oauth2-authorize/oauth2-aut
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { WelcomeComponent } from './components/welcome/welcome.component';
 
-const routes = [
+const routes: Routes = [
 	{
 		path: "",
 		redirectTo: "login",

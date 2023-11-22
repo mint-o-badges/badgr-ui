@@ -18,7 +18,8 @@ import {QueryParametersService} from '../../../common/services/query-parameters.
 import {OAuthApiService} from '../../../common/services/oauth-api.service';
 import {AppConfigService} from '../../../common/app-config.service';
 import {typedFormGroup} from '../../../common/util/typed-forms';
-import { Message } from "@angular/compiler/src/i18n/i18n_ast";
+// TODO: This doesn't compile anymore, since i18n is deprecated. See [this issue](https://github.com/orgs/mint-o-badges/projects/2/views/1?pane=issue&itemId=42737990)
+//import { Message } from "@angular/compiler/src/i18n/i18n_ast";
 import { animationFramePromise } from "../../../common/util/promise-util";
 
 @Component({

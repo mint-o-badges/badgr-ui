@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {RouterModule} from '@angular/router';
+import {RouterModule, Routes} from '@angular/router';
 
 import {BadgrCommonModule, COMMON_IMPORTS} from '../common/badgr-common.module';
 import {ProfileComponent} from './components/profile/profile.component';
@@ -19,7 +19,7 @@ import {ChangePasswordComponent} from './components/change-password/change-passw
 import {OAuthAppDetailComponent} from './components/oauth-app-detail/oauth-app-detail.component';
 import { MozzTransitionModule } from "../mozz-transition/mozz-transition.module";
 
-const routes = [
+const routes: Routes = [
 	/* Profile */
 	{
 		path: "",
