@@ -18,5 +18,5 @@ export class LoadingErrorComponent {
     @Input() errorMessage: string;
     @Input() className: string;
 
-    readonly unavailableImageSrc = require("../../../../node_modules/@concentricsky/badgr-style/dist/images/image-error.svg");
+    readonly unavailableImageSrc = "../../../assets/@concentricsky/badgr-style/dist/images/image-error.svg";
 }

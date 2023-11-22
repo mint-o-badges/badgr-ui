@@ -1,7 +1,7 @@
 import {Directive, Input} from '@angular/core';
 
-const defaultLoadingImage = require("../../../breakdown/static/images/image-placeholder.svg");
-const defaultErrorImage = require("../../../breakdown/static/images/image-failed.svg");
+const defaultLoadingImage = "../../../breakdown/static/images/image-placeholder.svg";
+const defaultErrorImage = "../../../breakdown/static/images/image-failed.svg";
 
 @Directive({
 	// Note that to have webpack process these sources, we must add the attributes to webpack.common.js in the html loader section.

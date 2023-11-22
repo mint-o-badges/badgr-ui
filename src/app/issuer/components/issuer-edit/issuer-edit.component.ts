@@ -25,7 +25,7 @@ import {typedFormGroup} from '../../../common/util/typed-forms';
 	templateUrl: './issuer-edit.component.html',
 })
 export class IssuerEditComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
-	readonly issuerImagePlacholderUrl = preloadImageURL(require('../../../../breakdown/static/images/placeholderavatar-issuer.svg') as string);
+	readonly issuerImagePlacholderUrl = preloadImageURL('../../../../breakdown/static/images/placeholderavatar-issuer.svg');
 
 	issuer: Issuer;
 	issuerSlug: string;

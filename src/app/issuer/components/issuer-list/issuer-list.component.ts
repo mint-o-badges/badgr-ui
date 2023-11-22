@@ -17,10 +17,10 @@ import { AppConfigService } from '../../../common/app-config.service';
 })
 export class IssuerListComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	readonly issuerPlaceholderSrc = preloadImageURL(
-		require('../../../../breakdown/static/images/placeholderavatar-issuer.svg') as string
+		'../../../../breakdown/static/images/placeholderavatar-issuer.svg'
 	);
 	readonly noIssuersPlaceholderSrc =
-		require('../../../../../node_modules/@concentricsky/badgr-style/dist/images/image-empty-issuer.svg') as string;
+		'../../../../assets/@concentricsky/badgr-style/dist/images/image-empty-issuer.svg';
 
 	Array = Array;
 

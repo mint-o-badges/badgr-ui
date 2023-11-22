@@ -147,8 +147,8 @@ export const defaultConfig: BadgrConfig = {
 		privacyPolicyLink: null,
 		providedBy: null,
 		logoImg: {
-			small: require("../../../node_modules/@concentricsky/badgr-style/dist/images/os-logo-small.svg") as string,
-			desktop: require("../../../node_modules/@concentricsky/badgr-style/dist/images/os-logo-large.svg") as string,
+			small: "../../assets/@concentricsky/badgr-style/dist/images/os-logo-small.svg",
+			desktop: "../../assets/@concentricsky/badgr-style/dist/images/os-logo-large.svg",
 		},
 		loadingImg: {
 			// Image is inlined here to avoid any external resource loading, at the expense of a larger initial file size. We only do this for the default theme.

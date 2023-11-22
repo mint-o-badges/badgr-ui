@@ -14,7 +14,7 @@ import {EventsService} from './common/services/events.service';
 import {OAuthManager} from './common/services/oauth-manager.service';
 import {EmbedService} from './common/services/embed.service';
 import {InitialLoadingIndicatorService} from './common/services/initial-loading-indicator.service';
-import {Angulartics2GoogleTagManager} from 'angulartics2/gtm';
+import {Angulartics2GoogleTagManager} from 'angulartics2';
 
 import {ApiExternalToolLaunchpoint} from '../app/externaltools/models/externaltools-api.model';
 import {ExternalToolsManager} from '../app/externaltools/services/externaltools-manager.service';
@@ -26,7 +26,7 @@ import {Title} from '@angular/platform-browser';
 import {MarkdownHintsDialog} from './common/dialogs/markdown-hints-dialog.component';
 import { Issuer } from "./issuer/models/issuer.model";
 import { IssuerManager } from "./issuer/services/issuer-manager.service";
-import { Angulartics2GoogleAnalytics } from "angulartics2/ga";
+import { Angulartics2GoogleAnalytics } from "angulartics2";
 import { ImportModalComponent } from "./mozz-transition/components/import-modal/import-modal.component";
 import { ExportPdfDialog } from './common/dialogs/export-pdf-dialog/export-pdf-dialog.component';
 import { CopyBadgeDialog } from './common/dialogs/copy-badge-dialog/copy-badge-dialog.component';
@@ -103,7 +103,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 		return (this.messageService.message ? this.messageService.message.detail : undefined);
 	}
 
-	readonly unavailableImageSrc = require("../../node_modules/@concentricsky/badgr-style/dist/images/image-error.svg");
+	readonly unavailableImageSrc = "../assets/@concentricsky/badgr-style/dist/images/image-error.svg";
 
 	initFinished: Promise<unknown> = new Promise(() => {});
 
@@ -227,8 +227,8 @@ export class AppComponent implements OnInit, AfterViewInit {
 		);
 	}
 
-	defaultLogoSmall = require("../breakdown/static/images/logo.svg");
-	defaultLogoDesktop = require("../breakdown/static/images/logo-desktop.svg");
+	defaultLogoSmall = "../breakdown/static/images/logo.svg";
+	defaultLogoDesktop = "../breakdown/static/images/logo-desktop.svg";
 	get logoSmall() { return this.theme['logoImg'] ? this.theme['logoImg']['small'] : this.defaultLogoSmall; }
 	get logoDesktop() { return this.theme['logoImg'] ? this.theme['logoImg']['desktop'] : this.defaultLogoDesktop; }
 }

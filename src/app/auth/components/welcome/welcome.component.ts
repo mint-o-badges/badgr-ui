@@ -36,10 +36,10 @@ export class WelcomeComponent /*extends BaseAuthenticatedRoutableComponent*/ imp
 
 	initFinished: Promise<unknown> = new Promise(() => {});
 
-	readonly imageBadge = preloadImageURL(require("../../../../../node_modules/@concentricsky/badgr-style/dist/images/graphic-badge.svg") as string);
-	readonly imageBackpack = preloadImageURL(require("../../../../../node_modules/@concentricsky/badgr-style/dist/images/graphic-backpack.svg") as string);
-	readonly imageCollections = preloadImageURL(require("../../../../../node_modules/@concentricsky/badgr-style/dist/images/graphic-collections.svg") as string);
-	readonly imageIssuer = preloadImageURL(require("../../../../../node_modules/@concentricsky/badgr-style/dist/images/graphic-issuer.svg") as string);
+	readonly imageBadge = preloadImageURL("../../../../assets/@concentricsky/badgr-style/dist/images/graphic-badge.svg");
+	readonly imageBackpack = preloadImageURL("../../../../assets/@concentricsky/badgr-style/dist/images/graphic-backpack.svg");
+	readonly imageCollections = preloadImageURL("../../../../assets/@concentricsky/badgr-style/dist/images/graphic-collections.svg");
+	readonly imageIssuer = preloadImageURL("../../../../assets/@concentricsky/badgr-style/dist/images/graphic-issuer.svg");
 
 	private handleQueryParamCases() {
 		try {

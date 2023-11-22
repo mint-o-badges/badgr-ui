@@ -31,8 +31,8 @@ import { BadgeClassCategory, BadgeClassLevel } from '../../models/badgeclass-api
 	templateUrl: './badgeclass-detail.component.html',
 })
 export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
-	readonly badgeFailedImageUrl = require('../../../../breakdown/static/images/badge-failed.svg');
-	readonly badgeLoadingImageUrl = require('../../../../breakdown/static/images/badge-loading.svg');
+	readonly badgeFailedImageUrl = '../../../../breakdown/static/images/badge-failed.svg';
+	readonly badgeLoadingImageUrl = '../../../../breakdown/static/images/badge-loading.svg';
 	get searchQuery() {
 		return this._searchQuery;
 	}
@@ -73,7 +73,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		return badges && badges.length;
 	}
 	readonly issuerImagePlacholderUrl = preloadImageURL(
-		require('../../../../breakdown/static/images/placeholderavatar-issuer.svg') as string
+		'../../../../breakdown/static/images/placeholderavatar-issuer.svg'
 	);
 	launchpoints: ApiExternalToolLaunchpoint[];
 

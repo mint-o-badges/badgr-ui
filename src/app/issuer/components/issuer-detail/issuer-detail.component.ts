@@ -24,10 +24,10 @@ import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcru
 })
 export class IssuerDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	readonly issuerImagePlaceHolderUrl = preloadImageURL(
-		require('../../../../breakdown/static/images/placeholderavatar-issuer.svg') as string
+		'../../../../breakdown/static/images/placeholderavatar-issuer.svg'
 	);
 	readonly noIssuersPlaceholderSrc =
-		require('../../../../../node_modules/@concentricsky/badgr-style/dist/images/image-empty-issuer.svg') as string;
+		'../../../../assets/@concentricsky/badgr-style/dist/images/image-empty-issuer.svg';
 
 	issuer: Issuer;
 	issuerSlug: string;

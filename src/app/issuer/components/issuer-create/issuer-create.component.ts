@@ -21,7 +21,7 @@ import {typedFormGroup} from '../../../common/util/typed-forms';
 })
 export class IssuerCreateComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	readonly issuerImagePlacholderUrl = preloadImageURL(
-		require('../../../../breakdown/static/images/placeholderavatar-issuer.svg') as string
+		'../../../../breakdown/static/images/placeholderavatar-issuer.svg'
 	);
 
 	issuerForm = typedFormGroup()

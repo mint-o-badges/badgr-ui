@@ -1,4 +1,4 @@
-const checkmarkPngImage = require("../breakdown/static/images/checkmark-circle.png") as string;
+const checkmarkPngImage = "../breakdown/static/images/checkmark-circle.png";
 
 export function generateEmbedHtml(embedOptions) {
 	const options = embedOptions || {

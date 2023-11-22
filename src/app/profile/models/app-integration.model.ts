@@ -72,14 +72,14 @@ export class UnknownLti1Integration extends AppIntegration<ApiAppIntegration> {
 	}
 	description = "Unknown integration";
 	active = true;
-	image = require("../../../breakdown/static/images/placeholderavatar-issuer.svg") as string;
+	image = "../../../breakdown/static/images/placeholderavatar-issuer.svg";
 }
 
 export class BadebookLti1Integration extends AppIntegration<ApiBadgebookCanvasLti1AppIntegration> {
 	name = "Canvas LTI";
 	description = "Badgr connects with Canvas LTI to automatically award badges to students as they complete modules.";
 	active = true;
-	image = require("../../../breakdown/static/images/canvas-icon.svg") as string;
+	image = "../../../breakdown/static/images/canvas-icon.svg";
 
 	get consumerKey() { return this.apiModel.integrationData.credential.client_id; }
 	get sharedSecret() { return this.apiModel.integrationData.credential.client_secret; }

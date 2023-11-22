@@ -3,8 +3,7 @@ import {preloadImageURL} from '../util/file-util';
 
 declare function require(path: string): string;
 
-const iconsSvgPath = preloadImageURL(require(
-    '../../../../node_modules/@concentricsky/badgr-style/dist/images/icons.svg'));
+const iconsSvgPath = preloadImageURL('../../../assets/@concentricsky/badgr-style/dist/images/icons.svg');
 
 @Component({
   selector: 'svg[icon]',

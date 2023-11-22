@@ -2,7 +2,7 @@ import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { Angulartics2, Angulartics2Module } from 'angulartics2';
-import { Angulartics2GoogleTagManager } from 'angulartics2/gtm';
+import { Angulartics2GoogleTagManager } from 'angulartics2';
 
 import { AppComponent } from './app.component';
 import { BadgrCommonModule, COMMON_IMPORTS } from './common/badgr-common.module';

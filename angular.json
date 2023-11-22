@@ -24,7 +24,12 @@
 								"glob": "**/*",
 								"input": "node_modules/ace-builds/src-min",
 								"output": "./assets/ace-builds/"
-							}
+							},
+                            {
+                                "glob": "**/*",
+                                "input": "node_modules/@concentricsky/badgr-style/dist/images/",
+                                "output": "./assets/@concentricsky/badgr-style/dist/images/"
+                            }
 						],
 						"styles": [
 							"node_modules/@concentricsky/badgr-style/dist/css/screen.css",

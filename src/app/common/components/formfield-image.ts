@@ -114,10 +114,10 @@ export class BgFormFieldImageComponent {
 
 	@Output() generateRandomImage: EventEmitter<unknown> = new EventEmitter();
 	readonly imageLoadingSrc = preloadImageURL(
-		require('../../../breakdown/static/images/placeholderavatar-loading.svg') as string
+		'../../../breakdown/static/images/placeholderavatar-loading.svg'
 	);
 	readonly imageFailedSrc = preloadImageURL(
-		require('../../../breakdown/static/images/placeholderavatar-failed.svg') as string
+		'../../../breakdown/static/images/placeholderavatar-failed.svg'
 	);
 
 	@Output() imageUploaded = new EventEmitter();

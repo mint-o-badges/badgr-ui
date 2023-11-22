@@ -20,8 +20,8 @@ type AddBadgeDialogTabName = "upload" | "url" | "json";
 })
 export class AddBadgeDialogComponent extends BaseDialog {
 	static defaultOptions = {} as AddBadgeDialogOptions;
-	readonly uploadBadgeImageUrl = require('../../../../breakdown/static/images/image-uplodBadge.svg') as string;
-	readonly pasteBadgeImageUrl = preloadImageURL(require('../../../../breakdown/static/images/image-uplodBadgeUrl.svg') as string);
+	readonly uploadBadgeImageUrl = '../../../../breakdown/static/images/image-uplodBadge.svg';
+	readonly pasteBadgeImageUrl = preloadImageURL('../../../../breakdown/static/images/image-uplodBadgeUrl.svg');
 
 	addRecipientBadgeForm = typedFormGroup()
 		.addControl("image", null)

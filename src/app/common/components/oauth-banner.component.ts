@@ -18,7 +18,7 @@ import {OAuthManager} from '../services/oauth-manager.service';
 	`
 })
 export class OAuthBannerComponent {
-	readonly authLinkBadgrLogoSrc = require("../../../breakdown/static/images/logo.svg");
+	readonly authLinkBadgrLogoSrc = "../../../breakdown/static/images/logo.svg";
 
 	get authInfo() {
 		return this.oAuthManager.currentAuthorization;

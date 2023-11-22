@@ -63,11 +63,11 @@ export class VerifyBadgeDialog extends BaseDialog {
 
 	badgeAssertion: PublicApiBadgeAssertion = null;
 
-	readonly issuerImagePlaceholderUrl = preloadImageURL(require('../../../../breakdown/static/images/placeholderavatar-issuer.svg') as string);
+	readonly issuerImagePlaceholderUrl = preloadImageURL('../../../../breakdown/static/images/placeholderavatar-issuer.svg');
 
-	readonly badgeLoadingImageUrl = require('../../../../breakdown/static/images/badge-loading.svg') as string;
+	readonly badgeLoadingImageUrl = '../../../../breakdown/static/images/badge-loading.svg';
 
-	readonly badgeFailedImageUrl = require('../../../../breakdown/static/images/badge-failed.svg') as string;
+	readonly badgeFailedImageUrl = '../../../../breakdown/static/images/badge-failed.svg';
 
 	//exposes enums to the template
 	readonly AWARDED_STATES = AwardedState;

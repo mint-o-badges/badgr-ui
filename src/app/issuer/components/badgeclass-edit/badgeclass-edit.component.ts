@@ -36,7 +36,7 @@ export class BadgeClassEditComponent extends BaseAuthenticatedRoutableComponent 
 	get badgeSlug() {
 		return this.route.snapshot.params[ 'badgeSlug' ];
 	}
-	readonly badgeClassPlaceholderImageUrl = require('../../../../breakdown/static/images/placeholderavatar.svg');
+	readonly badgeClassPlaceholderImageUrl = '../../../../breakdown/static/images/placeholderavatar.svg';
 
 	issuer: Issuer;
 	badgeClassEditForm: FormGroup;

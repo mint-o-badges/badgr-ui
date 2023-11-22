@@ -65,7 +65,7 @@ export class BadgeStudioComponent implements OnInit, OnChanges {
 					(this.formData.badge_category === 'membership' || this.formData.badge_category === 'archievement') ?
 					shapeImagesTypes['nolvl'] :
 					shapeImagesTypes[this.formData.badge_level];
-				// var shapeImage2 = require("../../../../breakdown/static/badgestudio/shapes/noun_test.svg") as string;
+				// var shapeImage2 = "../../../../breakdown/static/badgestudio/shapes/noun_test.svg";
 				var shapeImage2 = 'https://static.thenounproject.com/png/1444428-200.png';
 				// Grab a random SVG from our set
 
@@ -197,7 +197,7 @@ export class BadgeStudioComponent implements OnInit, OnChanges {
 					(formdata.badge_category === 'membership' || formdata.badge_category === 'archievement') ?
 					shapeImagesTypes['nolvl'] :
 					shapeImagesTypes[formdata.badge_level];
-				// var shapeImage2 = require("../../../../breakdown/static/badgestudio/shapes/noun_test.svg") as string;
+				// var shapeImage2 = "../../../../breakdown/static/badgestudio/shapes/noun_test.svg";
 				var shapeImage2 = 'https://static.thenounproject.com/png/1444428-200.png';
 				// Grab a random SVG from our set
 
@@ -527,24 +527,24 @@ const shapeColorsTypes = {
 }
 
 const shapeImages = [
-	require("../../../../breakdown/static/badgestudio/shapes/a2.svg") as string,
-	require("../../../../breakdown/static/badgestudio/shapes/diamond.svg") as string,
-	// require("../../../../breakdown/static/badgestudio/shapes/hex.svg") as string,
-	// require("../../../../breakdown/static/badgestudio/shapes/round-bottom.svg") as string,
-	// require("../../../../breakdown/static/badgestudio/shapes/round-top.svg") as string,
-	// require("../../../../breakdown/static/badgestudio/shapes/square.svg") as string,
-	// require("../../../../breakdown/static/badgestudio/shapes/triangle-bottom.svg") as string,
-	// require("../../../../breakdown/static/badgestudio/shapes/triangle-top.svg") as string,
+	"../../../../breakdown/static/badgestudio/shapes/a2.svg",
+	"../../../../breakdown/static/badgestudio/shapes/diamond.svg",
+	// "../../../../breakdown/static/badgestudio/shapes/hex.svg",
+	// "../../../../breakdown/static/badgestudio/shapes/round-bottom.svg",
+	// "../../../../breakdown/static/badgestudio/shapes/round-top.svg",
+	// "../../../../breakdown/static/badgestudio/shapes/square.svg",
+	// "../../../../breakdown/static/badgestudio/shapes/triangle-bottom.svg",
+	// "../../../../breakdown/static/badgestudio/shapes/triangle-top.svg",
 ];
 
 const shapeImagesTypes = {
-	'a1': require("../../../../breakdown/static/badgestudio/shapes/a1.svg") as string,
-	'a2': require("../../../../breakdown/static/badgestudio/shapes/a2.svg") as string,
-	'b1': require("../../../../breakdown/static/badgestudio/shapes/b1.svg") as string,
-	'b2': require("../../../../breakdown/static/badgestudio/shapes/b2.svg") as string,
-	'c1': require("../../../../breakdown/static/badgestudio/shapes/c1.svg") as string,
-	'c2': require("../../../../breakdown/static/badgestudio/shapes/c2.svg") as string,
-	'nolvl': require("../../../../breakdown/static/badgestudio/shapes/nolvl.svg") as string,
+	'a1': "../../../../breakdown/static/badgestudio/shapes/a1.svg",
+	'a2': "../../../../breakdown/static/badgestudio/shapes/a2.svg",
+	'b1': "../../../../breakdown/static/badgestudio/shapes/b1.svg",
+	'b2': "../../../../breakdown/static/badgestudio/shapes/b2.svg",
+	'c1': "../../../../breakdown/static/badgestudio/shapes/c1.svg",
+	'c2': "../../../../breakdown/static/badgestudio/shapes/c2.svg",
+	'nolvl': "../../../../breakdown/static/badgestudio/shapes/nolvl.svg",
 
 }
 

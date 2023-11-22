@@ -16,10 +16,10 @@ import {Title} from '@angular/platform-browser';
 })
 export class PublicBadgeClassComponent {
 	readonly issuerImagePlaceholderUrl = preloadImageURL(
-		require('../../../../breakdown/static/images/placeholderavatar-issuer.svg') as string
+		'../../../../breakdown/static/images/placeholderavatar-issuer.svg'
 	);
-	readonly badgeLoadingImageUrl = require('../../../../breakdown/static/images/badge-loading.svg') as string;
-	readonly badgeFailedImageUrl = require('../../../../breakdown/static/images/badge-failed.svg') as string;
+	readonly badgeLoadingImageUrl = '../../../../breakdown/static/images/badge-loading.svg';
+	readonly badgeFailedImageUrl = '../../../../breakdown/static/images/badge-failed.svg';
 
 	badgeIdParam: LoadedRouteParam<PublicApiBadgeClassWithIssuer>;
 	routerLinkForUrl = routerLinkForUrl;

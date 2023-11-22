@@ -49,7 +49,8 @@ export class ExportPdfDialog extends BaseDialog {
 		this.profileManager.userProfilePromise.then(
 			(profile) => {
 				this.profile = profile;
-				this.emailsLoaded = profile.emails.loadedPromise;
+                if (profile !== undefined)
+                    this.emailsLoaded = profile.emails.loadedPromise;
 			},
 			(error) => this.messageService.reportAndThrowError('Failed to load userProfile', error)
 		);

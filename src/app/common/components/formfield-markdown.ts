@@ -30,12 +30,7 @@ interface UploadResult {
 		'[class.forminput-locked]': 'isLockedState',
 	},
 	template: `<md-editor (ngModelChange)="change()" [(ngModel)]="markdown_content" [upload]="doUpload"></md-editor>`,
-	styleUrls: [
-		'../../../../node_modules/bootstrap/dist/css/bootstrap.css',
-		'../../../../node_modules/ace-builds/css/ace.css',
-		'../../../../node_modules/font-awesome/css/font-awesome.css',
-		'../../../../node_modules/ngx-markdown-editor/assets/highlight.js/agate.min.css',
-	],
+	styleUrls: ['./formfield-markdown.css'],
 	encapsulation: ViewEncapsulation.ShadowDom,
 })
 export class FormFieldMarkdown implements OnChanges, AfterViewInit {

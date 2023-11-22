@@ -17,9 +17,9 @@ import {AppConfigService} from '../../../common/app-config.service';
 	templateUrl: './recipient-badge-collection-list.component.html'
 })
 export class RecipientBadgeCollectionListComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
-	readonly noCollectionsImageUrl = require('../../../../../node_modules/@concentricsky/badgr-style/dist/images/image-empty-collection.svg');
-	readonly badgeLoadingImageUrl = require('../../../../breakdown/static/images/badge-loading.svg');
-	readonly badgeFailedImageUrl = require('../../../../breakdown/static/images/badge-failed.svg');
+	readonly noCollectionsImageUrl = '../../../../assets/@concentricsky/badgr-style/dist/images/image-empty-collection.svg';
+	readonly badgeLoadingImageUrl = '../../../../breakdown/static/images/badge-loading.svg';
+	readonly badgeFailedImageUrl = '../../../../breakdown/static/images/badge-failed.svg';
 
 	get badgeCollections(): RecipientBadgeCollection[] {
 		return this.recipientBadgeCollectionManager.recipientBadgeCollectionList.entities;

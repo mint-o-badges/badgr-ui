@@ -53,11 +53,11 @@ import {preloadImageURL} from '../util/file-util';
 	inputs: [ "badge", "issuerId", "badgeSlug", "badgeId", "forceFailed" ]
 })
 export class BadgeImageComponent extends AbstractBadgeComponent {
-	readonly greenCheckCircleUrl = preloadImageURL(require('../../../breakdown/static/scss/images/awarded-green-check-circle.svg') as string);
-	readonly grayCheckCircleUrl = preloadImageURL(require('../../../breakdown/static/scss/images/awarded-gray-check-circle.svg') as string);
-	readonly loadingBadgeUrl = preloadImageURL(require("../../../breakdown/static/images/badge-loading.svg") as string);
-	readonly failedBadgeUrl = preloadImageURL(require("../../../breakdown/static/images/badge-failed.svg") as string);
-	readonly emptyBadgeUrl = preloadImageURL(require("../../../breakdown/static/images/placeholderavatar.svg") as string);
+	readonly greenCheckCircleUrl = preloadImageURL('../../../breakdown/static/scss/images/awarded-green-check-circle.svg');
+	readonly grayCheckCircleUrl = preloadImageURL('../../../breakdown/static/scss/images/awarded-gray-check-circle.svg');
+	readonly loadingBadgeUrl = preloadImageURL("../../../breakdown/static/images/badge-loading.svg");
+	readonly failedBadgeUrl = preloadImageURL("../../../breakdown/static/images/badge-failed.svg");
+	readonly emptyBadgeUrl = preloadImageURL("../../../breakdown/static/images/placeholderavatar.svg");
 
 	@Input()
 	link = true;

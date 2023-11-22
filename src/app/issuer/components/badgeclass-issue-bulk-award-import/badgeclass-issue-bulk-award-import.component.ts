@@ -18,7 +18,7 @@ import {
 })
 export class BadgeClassIssueBulkAwardImportComponent extends BaseAuthenticatedRoutableComponent {
 	readonly badgrBulkIssueTemplateUrl = require('file-loader!assets/badgrBulkIssueTemplate.csv');
-	readonly csvUploadIconUrl = require('../../../../breakdown/static/images/csvuploadicon.svg');
+	readonly csvUploadIconUrl = '../../../../breakdown/static/images/csvuploadicon.svg';
 
 	@Output() importPreviewDataEmitter = new EventEmitter<BulkIssueImportPreviewData>();
 	@Output() updateStateEmitter  = new EventEmitter<ViewState>();

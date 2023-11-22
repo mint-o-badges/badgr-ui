@@ -20,7 +20,7 @@ import {preloadImageURL} from '../util/file-util';
 
 })
 export class BgIssuerLinkComponent implements OnChanges {
-	readonly issuerPlaceholderImageSrc = preloadImageURL(require("../../../breakdown/static/images/placeholderavatar-issuer.svg") as string);
+	readonly issuerPlaceholderImageSrc = preloadImageURL("../../../breakdown/static/images/placeholderavatar-issuer.svg");
 
 	@Input('bgIssuerLink')
 	bgIssuerLink: Issuer;

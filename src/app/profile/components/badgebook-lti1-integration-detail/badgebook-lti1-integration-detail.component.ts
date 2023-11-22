@@ -14,9 +14,9 @@ import {AppConfigService} from '../../../common/app-config.service';
 	templateUrl: './badgebook-lti1-integration-detail.component.html'
 })
 export class BadgebookLti1DetailComponent extends AppIntegrationDetailComponent<BadebookLti1Integration> {
-	readonly externalAppsBadgrImageUrl = require('../../../../breakdown/static/images/screenshots/badgebook-setup/external-apps-badgr.png');
-	readonly addAppImageUrl = require('../../../../breakdown/static/images/screenshots/badgebook-setup/add-app.png');
-	readonly addAppConfigurationTypeUrl = require('../../../../breakdown/static/images/screenshots/badgebook-setup/add-app-configuration-type.png');
+	readonly externalAppsBadgrImageUrl = '../../../../breakdown/static/images/screenshots/badgebook-setup/external-apps-badgr.png';
+	readonly addAppImageUrl = '../../../../breakdown/static/images/screenshots/badgebook-setup/add-app.png';
+	readonly addAppConfigurationTypeUrl = '../../../../breakdown/static/images/screenshots/badgebook-setup/add-app-configuration-type.png';
 
 	integrationSlug = "canvas-lti1";
 

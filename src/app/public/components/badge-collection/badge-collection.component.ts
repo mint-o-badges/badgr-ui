@@ -15,10 +15,10 @@ import {AppConfigService} from '../../../common/app-config.service';
 })
 export class PublicBadgeCollectionComponent {
 	readonly issuerImagePlacholderUrl = preloadImageURL(
-		require('../../../../breakdown/static/images/placeholderavatar-issuer.svg') as string
+		'../../../../breakdown/static/images/placeholderavatar-issuer.svg'
 	);
-	readonly badgeLoadingImageUrl = require('../../../../breakdown/static/images/badge-loading.svg') as string;
-	readonly badgeFailedImageUrl = require('../../../../breakdown/static/images/badge-failed.svg') as string;
+	readonly badgeLoadingImageUrl = '../../../../breakdown/static/images/badge-loading.svg';
+	readonly badgeFailedImageUrl = '../../../../breakdown/static/images/badge-failed.svg';
 
 	routerLinkForUrl = routerLinkForUrl;
 

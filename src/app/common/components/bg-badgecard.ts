@@ -1,7 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 
-declare function require(path: string): string;
-
 @Component({
 	selector: 'bg-badgecard',
 	host: {'class': 'badgecard'},
@@ -45,8 +43,8 @@ declare function require(path: string): string;
 	`
 })
 export class BgBadgecard {
-	readonly badgeLoadingImageUrl = require('../../../breakdown/static/images/badge-loading.svg');
-	readonly badgeFailedImageUrl = require('../../../breakdown/static/images/badge-failed.svg');
+	readonly badgeLoadingImageUrl = '../../../breakdown/static/images/badge-loading.svg';
+	readonly badgeFailedImageUrl = '../../../breakdown/static/images/badge-failed.svg';
 	@Input() badgeSlug: string;
 	@Input() issuerSlug: string;
 	@Input() publicUrl: string;
