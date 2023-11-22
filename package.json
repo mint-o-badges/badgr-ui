@@ -33,7 +33,7 @@
     "@angular/platform-browser-dynamic": "^14.3.0",
     "@angular/router": "^14.3.0",
     "@angularclass/request-idle-callback": "1.0.7",
-    "@concentricsky/badgr-style": "^54.1.0",
+    "@concentricsky/badgr-style": "^20.1.2",
     "@types/fontfaceobserver": "0.0.6",
     "@types/marked": "^0.6.5",
     "@types/validator": "10.11.0",

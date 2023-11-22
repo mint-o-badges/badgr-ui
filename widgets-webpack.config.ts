@@ -23,6 +23,9 @@ module.exports = {
 	},
 	resolve: {
 		extensions: ['.ts']
+        alias: {
+            '~': path.resolve('./node_modules')
+        }
 	},
 	output: {
 		filename: 'widgets.bundle.js',
