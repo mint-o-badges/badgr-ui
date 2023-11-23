@@ -1,6 +1,7 @@
 import {AfterViewChecked, Directive, ElementRef, Input, Renderer2} from '@angular/core';
 
-import * as marked from 'marked';
+import {marked} from 'marked';
+import sanitizeHtml from 'sanitize-html';
 import {DomSanitizer} from '@angular/platform-browser';
 
 @Directive({
@@ -12,18 +13,14 @@ export class BgMarkdownComponent implements AfterViewChecked {
 	@Input()
 	set bgMarkdown(markdown: string) {
 		markdown = markdown || "";
-		this.renderedHtml = marked(
+		this.renderedHtml = sanitizeHtml(marked.parse(
 			markdown,
 			{
 				gfm: false,
-				tables: true,
 				breaks: false,
 				pedantic: false,
-				sanitize: true,
-				smartLists: true,
-				smartypants: false
 			}
-		);
+		));
 	}
 
 	constructor(
