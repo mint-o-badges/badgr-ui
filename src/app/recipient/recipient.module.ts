@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {RouterModule} from '@angular/router';
+import {RouterModule, Routes} from '@angular/router';
 
 import {BadgrCommonModule, COMMON_IMPORTS} from '../common/badgr-common.module';
 
@@ -19,11 +19,12 @@ import { RecipientBadgeCollectionSelectionDialogComponent } from "./components/r
 import { RecipientBadgeSelectionDialog } from "./components/recipient-badge-selection-dialog/recipient-badge-selection-dialog.component";
 import { MozzTransitionModule } from "../mozz-transition/mozz-transition.module";
 
-const routes = [
+const routes: Routes = [
 	/* Recipient Badges */
 	{
 		path: "",
 		redirectTo: 'badges',
+        pathMatch: 'full'
 	},
 	{
 		path: "badges",
