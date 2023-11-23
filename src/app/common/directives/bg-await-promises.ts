@@ -35,13 +35,15 @@ export class BgAwaitPromises {
 
 	@Input() showLoader = true;
 
-	@Input() set bgAwaitPromises(newValue: Array<Promise<unknown> | {loadedPromise: Promise<unknown>}> | Promise<unknown> | {loadedPromise: Promise<unknown>}) {
+	@Input() set bgAwaitPromises(newValue: Array<Promise<unknown> | Array<{loadedPromise: Promise<unknown>}> | {loadedPromise: Promise<unknown>}> | Promise<unknown> | {loadedPromise: Promise<unknown>}) {
 		let newPromises: Array<Promise<unknown>> = [];
 
 		if (Array.isArray(newValue)) {
 			newPromises = newValue
 				.filter(p => !! p)
-				.map((value: object) => ("loadedPromise" in value) ? value["loadedPromise"] : value);
+				.map((value: object) => "loadedPromise" in value 
+                     ? value["loadedPromise"] as Promise<unknown>
+                     : value as Promise<unknown>);
 
 		} else if (newValue && "loadedPromise" in newValue) {
 			newPromises = [(newValue as object)["loadedPromise"]];

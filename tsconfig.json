@@ -1,19 +1,29 @@
 {
 	"compileOnSave": false,
 	"compilerOptions": {
-		"importHelpers": true,
-		"outDir": "./dist/out-tsc",
-		"sourceMap": true,
-		"declaration": false,
+    "importHelpers": true,
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "declaration": false,
     "moduleResolution": "node",
-		"experimentalDecorators": true,
-		"downlevelIteration": true,
-		"noImplicitAny": false,
-		"target": "es2020",
-		"types": ["node"],
-		"typeRoots": ["node_modules/@types"],
-		"lib": ["es7", "es6", "dom", "esnext"],
-		"module": "es2020",
-		"baseUrl": "./"
-	}
+    "experimentalDecorators": true,
+    "downlevelIteration": true,
+    "noImplicitAny": false,
+    "target": "ES2022",
+    "types": [
+      "node"
+    ],
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es7",
+      "es6",
+      "dom",
+      "esnext"
+    ],
+    "module": "es2020",
+    "baseUrl": "./",
+    "useDefineForClassFields": false
+  }
 }
