@@ -22,9 +22,5 @@ import { ImportLauncherDirective } from './directives/import-launcher/import-lau
 		ImportModalComponent,
 		ImportLauncherDirective
 	],
-	entryComponents: [
-		ImportModalComponent
-	],
-
 })
 export class MozzTransitionModule { }

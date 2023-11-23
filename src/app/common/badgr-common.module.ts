@@ -158,7 +158,6 @@ export const COMMON_IMPORTS = [CommonModule, FormsModule, ReactiveFormsModule, H
 		...COMMON_IMPORTS,
 		FormsModule,
 		LMarkdownEditorModule,
-		// RouterModule.forChild(routes)
 	],
 	providers: [
 		BadgeClassManager,
@@ -166,14 +165,6 @@ export const COMMON_IMPORTS = [CommonModule, FormsModule, ReactiveFormsModule, H
 	],
 	declarations: [...DIRECTIVES, ...COMMON_MODULE_COMPONENTS, ...PIPES, ForwardRouteComponent, BadgeLegendComponent],
 	exports: [...DIRECTIVES, ...COMMON_MODULE_COMPONENTS, ...PIPES, BadgeLegendComponent],
-	entryComponents: [
-		// Allows the dynamic creation of our components using the ComponentFactoryProvider. This is used in structural
-		// directives like BgAwaitPromises. See https://github.com/angular/angular/issues/10735 for details.
-		...COMMON_MODULE_COMPONENTS,
-	],
-	/*providers: [
-		...SERVICES,
-	]*/
 })
 export class BadgrCommonModule {
 	// Load BadgrCommonModule with forRoot() to preserve singleton status in lazy loaded modules.
