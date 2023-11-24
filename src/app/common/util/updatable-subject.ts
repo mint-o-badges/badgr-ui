@@ -39,9 +39,7 @@ export class UpdatableSubject<T> extends Subject<T> {
 		return this._valueSet;
 	}
 
-	_subscribe(
-		subscriber: Subscriber<T>
-	) {
+	override _subscribe(subscriber: Subscriber<T>) {
 		const subscription = super._subscribe(subscriber);
 
 		if (!this.hasFirstSubscriber) {
@@ -56,12 +54,12 @@ export class UpdatableSubject<T> extends Subject<T> {
 		return subscription;
 	}
 
-	next(value: T): void {
+	override next(value: T): void {
 		this._valueSet = true;
 		super.next(this._value = value);
 	}
 
-	error(err: unknown): void {
+	override error(err: unknown): void {
 		this.hasError = true;
 		super.error(this.thrownError = err);
 	}
