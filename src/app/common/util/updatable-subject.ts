@@ -1,4 +1,4 @@
-import {Subject, Subscriber} from 'rxjs';
+import {Subject, Subscriber, Observer} from 'rxjs';
 
 /**
  * A Subject for objects that will be loaded at some point and may be subsequently updated. Acts like a promise with updates:
@@ -39,19 +39,26 @@ export class UpdatableSubject<T> extends Subject<T> {
 		return this._valueSet;
 	}
 
-	override _subscribe(subscriber: Subscriber<T>) {
-		const subscription = super._subscribe(subscriber);
+    /**
+     * Subscribe to this subject with a given observer (typically a `Subscriber`).
+     * If this is the first subscriber, `onFirstSubscription` is getting called.
+     * If a value is already set, `next` is getting called once, and then for
+     * every new updated value.
+     */
+	override subscribe(observerOrNext?: Partial<Observer<T>> | ((value: T) => void) | null) {
+		const subscriber = super.subscribe(observerOrNext) as Subscriber<T>;
 
 		if (!this.hasFirstSubscriber) {
 			this.onFirstSubscription();
 			this.hasFirstSubscriber = true;
 		}
 
-		if (this._valueSet && subscription) {
+		if (this._valueSet && subscriber) {
+            // Inform of initial value (via `next`) on next animation frame
 			requestAnimationFrame(() => subscriber.next(this._value!));
 		}
 
-		return subscription;
+		return subscriber;
 	}
 
 	override next(value: T): void {
@@ -64,6 +71,9 @@ export class UpdatableSubject<T> extends Subject<T> {
 		super.error(this.thrownError = err);
 	}
 
+    /**
+     * Exactly the same as `next`
+     */
 	safeNext(value: T): void {
 		// TODO: Will next() work without a subscription check?
 		this.next(value);
