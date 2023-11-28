@@ -4,7 +4,7 @@
 	<div class="l-containerxaxis topbar-x-wrap">
 		<h2 class="topbar-x-heading">
 			Institutionen
-			<ng-template [bgAwaitPromises]="[issuersLoaded]" [showLoader]="false">
+			<ng-template [showLoader]="false" [bgAwaitPromises]="[issuersLoaded]">
 				<span class="topbar-x-internalheading">
 					{{ issuers.length | i18nPlural: plural['issuer'] }}
 				</span>
@@ -22,7 +22,7 @@
 </header>
 
 <div>
-	<ng-template [bgAwaitPromises]="[issuersLoaded]" [showLoader]="true">
+	<ng-template [showLoader]="true" [bgAwaitPromises]="[issuersLoaded]">
 		<!-- Empty state: no issuers -->
 		<section class="emptysection l-emptysection" *ngIf="Array.isArray(issuers) && issuers?.length === 0">
 			<h2 class="emptysection-x-headline">Du hast noch keine Institution erstellt</h2>

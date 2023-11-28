@@ -4,7 +4,7 @@
 	<div class="l-containerxaxis topbar-x-wrap">
 		<h2 class="topbar-x-heading">
 			Badges
-			<ng-template [bgAwaitPromises]="[badgesLoaded]" [showLoader]="false">
+			<ng-template [showLoader]="false" [bgAwaitPromises]="[badgesLoaded]">
 				<span class="topbar-x-internalheading">
 					{{ badges.length | i18nPlural : plural['badges'] }}
 				</span>
@@ -16,7 +16,7 @@
 <app-badge-legend *ngIf="showLegend" (closed)="closeLegend()"></app-badge-legend>
 
 <div>
-	<ng-template [bgAwaitPromises]="[badgesLoaded]" [showLoader]="true">
+	<ng-template [showLoader]="true" [bgAwaitPromises]="[badgesLoaded]">
 		<section class="l-containerxaxis l-containeryaxis l-responsivelist">
 			<div class="l-actionbar u-margin-bottom3x">
 				<div class="forminput l-actionbar-x-search">

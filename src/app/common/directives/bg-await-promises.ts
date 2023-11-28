@@ -15,7 +15,10 @@ import {LoadingErrorComponent} from '../components/loading-error.component';
  *
  * - or -
  *
- * <ng-template [bgAwaitPromises]="[promise1, promise2]" [showLoader]="false">
+ * <ng-template [showLoader]="false" [bgAwaitPromises]="[promise1, promise2]">
+ *
+ * Make sure to use the `[showLoader]` tag *before* the `[bgAwaitPromises]` tag -
+ * the order matters!
  */
 
 

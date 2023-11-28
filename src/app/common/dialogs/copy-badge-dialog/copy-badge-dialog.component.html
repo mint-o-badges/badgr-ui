@@ -51,7 +51,7 @@
 								</tr>
 							</thead>
 							<tbody class="datatable-x-body">
-								<ng-template [bgAwaitPromises]="[badgesLoaded]" [showLoader]="true">
+								<ng-template [showLoader]="true" [bgAwaitPromises]="[badgesLoaded]">
 									<ng-template ngFor let-issuerGroup [ngForOf]="issuerResults" let-i="index">
 										<tr class="datatable-x-row" *ngIf="groupByIssuer">
 											<th class="datatable-x-inlineheader" scope="row" colspan="4">

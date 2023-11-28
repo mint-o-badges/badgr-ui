@@ -4,7 +4,7 @@
 	<div class="l-containerxaxis topbar-x-wrap">
 		<h2 class="topbar-x-heading">
 			Institutionen
-			<ng-template [bgAwaitPromises]="[issuersLoaded]" [showLoader]="false">
+			<ng-template [showLoader]="false" [bgAwaitPromises]="[issuersLoaded]">
 				<span class="topbar-x-internalheading">
 					{{ issuers.length | i18nPlural: plural['issuer'] }}
 				</span>
@@ -14,7 +14,7 @@
 </header>
 
 <div id="main-page">
-	<ng-template [bgAwaitPromises]="[issuersLoaded]" [showLoader]="true">
+	<ng-template [showLoader]="true" [bgAwaitPromises]="[issuersLoaded]">
 		<section class="l-containerxaxis l-containeryaxis l-responsivelist">
 			<div class="l-actionbar u-margin-bottom3x">
 				<div class="forminput l-actionbar-x-search">
