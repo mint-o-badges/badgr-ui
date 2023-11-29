@@ -23,7 +23,7 @@
             "dom",
             "esnext"
         ],
-        "module": "es2020",
+        "module": "commonjs",
         "baseUrl": "./",
         "useDefineForClassFields": false
     }

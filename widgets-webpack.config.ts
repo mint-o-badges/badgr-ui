@@ -1,7 +1,7 @@
-import * as path from 'path';
-import { WebpackOptions } from 'webpack/declarations/WebpackOptions';
+import path from 'path';
+import webpack from 'webpack';
 
-module.exports = {
+const config: webpack.Configuration = {
 	mode: 'production',
 	target: 'web',
 	entry: path.join(__dirname, 'src/widgets.browser.ts'),
@@ -22,7 +22,7 @@ module.exports = {
 		]
 	},
 	resolve: {
-		extensions: ['.ts']
+		extensions: ['.ts'],
         alias: {
             '~': path.resolve('./node_modules')
         }
@@ -31,4 +31,6 @@ module.exports = {
 		filename: 'widgets.bundle.js',
 		path: path.resolve(__dirname, 'dist')
 	},
-} as WebpackOptions;
+};
+
+export default config;
