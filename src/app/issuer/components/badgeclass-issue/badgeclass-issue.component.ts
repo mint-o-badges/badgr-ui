@@ -22,7 +22,7 @@ import { typedFormGroup } from '../../../common/util/typed-forms';
 import { TelephoneValidator } from '../../../common/validators/telephone.validator';
 import { EventsService } from '../../../common/services/events.service';
 import { FormFieldTextInputType } from '../../../common/components/formfield-text';
-import * as striptags from 'striptags';
+import striptags from 'striptags';
 import { DateValidator } from '../../../common/validators/date.validator';
 import { AppConfigService } from '../../../common/app-config.service';
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';

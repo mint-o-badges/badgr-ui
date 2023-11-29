@@ -1,6 +1,6 @@
 import {Component, ElementRef, Input, OnChanges, OnInit, ViewChild} from '@angular/core';
 // import "font-awesome/css/font-awesome.css";
-import * as FontFaceObserver from 'fontfaceobserver';
+import FontFaceObserver from 'fontfaceobserver';
 import {canvasVisualCenter} from '../../../common/util/visual-center';
 import {HttpClient} from '@angular/common/http';
 
