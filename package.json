@@ -34,6 +34,8 @@
     "@angular/router": "^17.0.4",
     "@angularclass/request-idle-callback": "1.0.7",
     "@concentricsky/badgr-style": "^20.1.2",
+    "@ngx-translate/core": "^15.0.0",
+    "@ngx-translate/http-loader": "^8.0.0",
     "@types/fontfaceobserver": "2.1.3",
     "@types/marked": "^6.0.0",
     "@types/validator": "13.11.7",

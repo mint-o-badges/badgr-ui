@@ -1,13 +1,13 @@
-import {AfterViewInit, Component, OnInit, Renderer2, ViewChild} from '@angular/core';
-import {Router} from '@angular/router';
+import { AfterViewInit, Component, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 
-import {MessageService} from './common/services/message.service';
-import {SessionService} from './common/services/session.service';
-import {CommonDialogsService} from './common/services/common-dialogs.service';
-import {AppConfigService} from './common/app-config.service';
-import {ShareSocialDialog} from './common/dialogs/share-social-dialog/share-social-dialog.component';
-import {ConfirmDialog} from './common/dialogs/confirm-dialog.component';
-import {NounprojectDialog} from './common/dialogs/nounproject-dialog/nounproject-dialog.component';
+import { MessageService } from './common/services/message.service';
+import { SessionService } from './common/services/session.service';
+import { CommonDialogsService } from './common/services/common-dialogs.service';
+import { AppConfigService } from './common/app-config.service';
+import { ShareSocialDialog } from './common/dialogs/share-social-dialog/share-social-dialog.component';
+import { ConfirmDialog } from './common/dialogs/confirm-dialog.component';
+import { NounprojectDialog } from './common/dialogs/nounproject-dialog/nounproject-dialog.component';
 
 import '../thirdparty/scopedQuerySelectorShim';
 import {EventsService} from './common/services/events.service';
@@ -16,8 +16,8 @@ import {EmbedService} from './common/services/embed.service';
 import {InitialLoadingIndicatorService} from './common/services/initial-loading-indicator.service';
 import {Angulartics2GoogleTagManager} from 'angulartics2';
 
-import {ApiExternalToolLaunchpoint} from '../app/externaltools/models/externaltools-api.model';
-import {ExternalToolsManager} from '../app/externaltools/services/externaltools-manager.service';
+import { ApiExternalToolLaunchpoint } from '../app/externaltools/models/externaltools-api.model';
+import { ExternalToolsManager } from '../app/externaltools/services/externaltools-manager.service';
 
 import {UserProfileManager} from './common/services/user-profile-manager.service';
 import {NewTermsDialog} from './common/dialogs/new-terms-dialog.component';
@@ -30,6 +30,7 @@ import { Angulartics2GoogleAnalytics } from "angulartics2";
 import { ImportModalComponent } from "./mozz-transition/components/import-modal/import-modal.component";
 import { ExportPdfDialog } from './common/dialogs/export-pdf-dialog/export-pdf-dialog.component';
 import { CopyBadgeDialog } from './common/dialogs/copy-badge-dialog/copy-badge-dialog.component';
+import { LanguageService } from './common/services/language.service';
 
 // Shim in support for the :scope attribute
 // See https://github.com/lazd/scopedQuerySelectorShim and
@@ -39,12 +40,12 @@ import { CopyBadgeDialog } from './common/dialogs/copy-badge-dialog/copy-badge-d
 	selector: 'app-root',
 	host: {
 		'(document:click)': 'onDocumentClick($event)',
-		'[class.l-stickyfooter-chromeless]': '! showAppChrome'
+		'[class.l-stickyfooter-chromeless]': '! showAppChrome',
 	},
-	templateUrl: './app.component.html'
+	templateUrl: './app.component.html',
 })
 export class AppComponent implements OnInit, AfterViewInit {
-	title = "Badgr Angular";
+	title = 'Badgr Angular';
 	loggedIn = false;
 	mobileNavOpen = false;
 	isUnsupportedBrowser = false;
@@ -82,25 +83,29 @@ export class AppComponent implements OnInit, AfterViewInit {
 	importModalDialog: ImportModalComponent;
 
 	get showAppChrome() {
-		return ! this.embedService.isEmbedded;
+		return !this.embedService.isEmbedded;
 	}
 
-	get theme() { return this.configService.theme; }
+	get theme() {
+		return this.configService.theme;
+	}
 
-	get features() { return this.configService.featuresConfig; }
+	get features() {
+		return this.configService.featuresConfig;
+	}
 
 	get apiBaseUrl() {
 		return this.configService.apiConfig.baseUrl;
 	}
 
-	get hasFatalError() : boolean {
+	get hasFatalError(): boolean {
 		return this.messageService.hasFatalError;
 	}
-	get fatalMessage() : string {
-		return (this.messageService.message ? this.messageService.message.message : undefined);
+	get fatalMessage(): string {
+		return this.messageService.message ? this.messageService.message.message : undefined;
 	}
-	get fatalMessageDetail() : string {
-		return (this.messageService.message ? this.messageService.message.detail : undefined);
+	get fatalMessageDetail(): string {
+		return this.messageService.message ? this.messageService.message.detail : undefined;
 	}
 
 	readonly unavailableImageSrc = "../assets/@concentricsky/badgr-style/dist/images/image-error.svg";
@@ -122,34 +127,37 @@ export class AppComponent implements OnInit, AfterViewInit {
 		private externalToolsManager: ExternalToolsManager,
 		private initialLoadingIndicatorService: InitialLoadingIndicatorService,
 		private angulartics2GoogleAnalytics: Angulartics2GoogleAnalytics,
-		private angulartics2GoogleTagManager: Angulartics2GoogleTagManager,   // required for angulartics to work
+		private angulartics2GoogleTagManager: Angulartics2GoogleTagManager, // required for angulartics to work
 		private titleService: Title,
 		protected issuerManager: IssuerManager,
+		private languageService: LanguageService // Translation
 	) {
+		// Initialize App language
+		this.languageService.setInitialAppLangauge();
 
 		angulartics2GoogleTagManager.startTracking();
 
 		messageService.useRouter(router);
 
-		titleService.setTitle(this.configService.theme['serviceName'] || "Badgr");
+		titleService.setTitle(this.configService.theme['serviceName'] || 'Badgr');
 
 		this.initScrollFix();
 
-		const authCode = this.queryParams.queryStringValue("authCode", true);
+		const authCode = this.queryParams.queryStringValue('authCode', true);
 		if (sessionService.isLoggedIn && !authCode) this.refreshProfile();
 
-		this.externalToolsManager.getToolLaunchpoints("navigation_external_launch").then(launchpoints => {
-			this.launchpoints = launchpoints.filter(lp => Boolean(lp) );
+		this.externalToolsManager.getToolLaunchpoints('navigation_external_launch').then((launchpoints) => {
+			this.launchpoints = launchpoints.filter((lp) => Boolean(lp));
 		});
 
 		if (this.embedService.isEmbedded) {
 			// Enable the embedded indicator class on the body
-			renderer.addClass(document.body, "embeddedcontainer");
+			renderer.addClass(document.body, 'embeddedcontainer');
 		}
 	}
 
 	refreshProfile = () => {
-		this.profileManager.userProfileSet.changed$.subscribe(set => {
+		this.profileManager.userProfileSet.changed$.subscribe((set) => {
 			if (set.entities.length && set.entities[0].agreedTermsVersion !== set.entities[0].latestTermsVersion) {
 				this.commonDialogsService.newTermsDialog.openDialog();
 			}
@@ -161,24 +169,22 @@ export class AppComponent implements OnInit, AfterViewInit {
 		// for issuers tab
 		this.issuerManager.allIssuers$.subscribe(
 			(issuers) => {
-				this.issuers = issuers.slice().sort(
-					(a, b) => b.createdAt.getTime() - a.createdAt.getTime()
-				);
+				this.issuers = issuers.slice().sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
 				this.shouldShowIssuersTab();
 			},
-			error => {
-				this.messageService.reportAndThrowError("Failed to load issuers", error);
+			(error) => {
+				this.messageService.reportAndThrowError('Failed to load issuers', error);
 			}
 		);
-
-	}
+	};
 
 	dismissUnsupportedBrowserMessage() {
 		this.isUnsupportedBrowser = false;
 	}
 
 	showIssuersTab = false;
-	shouldShowIssuersTab = () => this.showIssuersTab = !this.features.disableIssuers || (this.issuers && this.issuers.length > 0);
+	shouldShowIssuersTab = () =>
+		(this.showIssuersTab = !this.features.disableIssuers || (this.issuers && this.issuers.length > 0));
 
 	toggleMobileNav() {
 		this.mobileNavOpen = !this.mobileNavOpen;
@@ -197,9 +203,9 @@ export class AppComponent implements OnInit, AfterViewInit {
 
 	private initScrollFix() {
 		// Scroll the header into view after navigation, mainly for mobile where the menu is at the bottom of the display
-		this.router.events.subscribe(url => {
+		this.router.events.subscribe((url) => {
 			this.mobileNavOpen = false;
-			const header = document.querySelector("header") as HTMLElement;
+			const header = document.querySelector('header') as HTMLElement;
 			if (header) {
 				header.scrollIntoView();
 			}
@@ -209,8 +215,11 @@ export class AppComponent implements OnInit, AfterViewInit {
 	ngOnInit() {
 		this.loggedIn = this.sessionService.isLoggedIn;
 
-		this.sessionService.loggedin$.subscribe(
-			loggedIn => setTimeout(() => {this.loggedIn = loggedIn; this.refreshProfile();})
+		this.sessionService.loggedin$.subscribe((loggedIn) =>
+			setTimeout(() => {
+				this.loggedIn = loggedIn;
+				this.refreshProfile();
+			})
 		);
 		this.shouldShowIssuersTab();
 	}

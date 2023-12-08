@@ -15,6 +15,7 @@ import { AboutComponent } from './components/about/about.component';
 import { StartComponent } from './components/start/start.component';
 import { ImpressumComponent } from './components/impressum/impressum.component';
 import { FaqComponent } from './components/faq/faq.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 export const routes: Routes = [
 	{
@@ -97,7 +98,7 @@ export const routes: Routes = [
 ];
 
 @NgModule({
-	imports: [...COMMON_IMPORTS, BadgrCommonModule, CommonEntityManagerModule, RouterModule.forChild(routes)],
+	imports: [...COMMON_IMPORTS, BadgrCommonModule, CommonEntityManagerModule, RouterModule.forChild(routes), TranslateModule],
 	declarations: [
 		AboutComponent,
 		StartComponent,

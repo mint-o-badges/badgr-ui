@@ -1,0 +1,11 @@
+{
+	"General": {
+		"yes": "Yes",
+		"no": "No",
+		"name": "Name"
+	},
+	"Start": {
+		"desc1": "A learner-centered approach",
+		"desc2": "for documentation & feedback of the learning process"
+	}
+}

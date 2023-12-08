@@ -20,6 +20,10 @@ import { AppConfigService } from './common/app-config.service';
 import { initializeTheme } from '../theming/theme-setup';
 import { timeoutPromise } from './common/util/promise-util';
 import { MozzTransitionModule } from './mozz-transition/mozz-transition.module';
+// Translate
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import { HttpClient } from '@angular/common/http';
 
 // Force AuthModule and ProfileModule to get included in the main module. We don't want them lazy loaded because
 // they basically always need to be present. We have have functions that return them, but use strings in the Routes
@@ -130,6 +134,13 @@ export const appInitializerFn = (configService: AppConfigService) => {
 	};
 };
 
+
+// (Translate) AoT requires an exported function for factories
+export function HttpLoaderFactory(http: HttpClient) {
+    return new TranslateHttpLoader(http);
+}
+
+
 @NgModule({
 	imports: [
 		...COMMON_IMPORTS,
@@ -139,6 +150,14 @@ export const appInitializerFn = (configService: AppConfigService) => {
 		BadgrCommonModule.forRoot(),
 		BrowserAnimationsModule,
 		MozzTransitionModule,
+		TranslateModule.forRoot({
+			loader: {
+				provide: TranslateLoader,
+				// useFactory: (createTranslateLoader),
+				useFactory: HttpLoaderFactory,
+				deps: [HttpClient],
+			},
+		}),
 	],
 	declarations: [AppComponent, InitialRedirectComponent],
 	bootstrap: [AppComponent],
