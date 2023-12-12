@@ -3,7 +3,7 @@
 <header class="topbar">
 	<div class="l-containerxaxis topbar-x-wrap">
 		<h2 class="topbar-x-heading">
-			Institutionen
+			{{ 'General.institutions' | translate }}
 			<ng-template [showLoader]="false" [bgAwaitPromises]="[issuersLoaded]">
 				<span class="topbar-x-internalheading">
 					{{ issuers.length | i18nPlural: plural['issuer'] }}
@@ -23,7 +23,7 @@
 							type="text"
 							name="forminput"changeOrder
 							id="forminput"
-							placeholder="Institutionen durchsuchen"
+							placeholder="{{ 'Issuer.searchInstitutions' | translate }}"
 							[(ngModel)]="searchQuery"
 						/>
 						<svg class="forminput-x-icon" icon="icon_search"></svg>
@@ -56,7 +56,7 @@
 				</div>
 				<div class="viewtoggle-container">
 					<div>
-						<button class="viewtoggle-button" [class.active]="badgesDisplay == 'map'" (click)="openMap()">map</button>				
+						<button class="viewtoggle-button" [class.active]="badgesDisplay == 'map'" (click)="openMap()">{{ 'Issuer.map' | translate }}</button>				
 					</div>
 
 					<div class="viewtoggle l-actionbar-x-viewtoggle"
@@ -90,7 +90,7 @@
 				<div class="l-actionbar-x-groupby" *ngIf="badgesDisplay != 'map'">
 					<label class="checkbox checkbox-small">
 						<input name="groupby" type="checkbox" [(ngModel)]="groupByCategory" />
-						<span class="checkbox-x-text">Nach Kategorien grupppieren</span>
+						<span class="checkbox-x-text">{{ 'Issuer.groupByCategory' | translate }}</span>
 					</label>
 				</div>
 			</div>
@@ -127,7 +127,7 @@
 									[innerHTML]="issuer.badgeClassCount | i18nPlural: plural['badges']"
 								></p>
 							</div>
-							<a class="u-text u-text-small" [routerLink]="['/public/issuers/', issuer.slug]">Öffnen</a>
+							<a class="u-text u-text-small" [routerLink]="['/public/issuers/', issuer.slug]">{{ 'Issuer.open' | translate }}</a>
 						</div>
 					</div>
 				</ng-container>
@@ -172,7 +172,7 @@
 										[innerHTML]="issuer.badgeClassCount | i18nPlural: plural['badges']"
 									></p>
 								</div>
-								<a class="u-text u-text-small" [routerLink]="['/public/issuers/', issuer.slug]">Öffnen</a>
+								<a class="u-text u-text-small" [routerLink]="['/public/issuers/', issuer.slug]">{{ 'Issuer.open' | translate }}</a>
 							</div>
 						</div>
 					</ng-container>
@@ -186,9 +186,9 @@
 					<table class="datatable datatable-roundheaders datatable-onlyfirstcolumn datatable-verticalalignmiddle">
 						<thead class="datatable-x-head">
 							<tr class="datatable-x-header">
-								<th class="datatable-x-cell" scope="col">Bild</th>
+								<th class="datatable-x-cell" scope="col">{{ 'Issuer.image' | translate }}</th>
 								<th class="datatable-x-cell" scope="col">Institution</th>
-								<th class="datatable-x-cell" scope="col">Registriert seit</th>
+								<th class="datatable-x-cell" scope="col">{{ 'Issuer.registeredSince' | translate }}</th>
 								<th class="datatable-x-cell" scope="col"><span class="visuallyhidden">Actions</span></th>
 							</tr>
 						</thead>
@@ -215,7 +215,7 @@
 											<time [date]="issuer.createdAt" format="mediumDate"></time>
 										</td>
 										<td class="datatable-x-cell">
-											<a class="u-text u-text-small" [routerLink]="['/public/issuers/', issuer.slug]">Öffnen</a>
+											<a class="u-text u-text-small" [routerLink]="['/public/issuers/', issuer.slug]">{{ 'Issuer.open' | translate }}</a>
 										</td>
 									</tr>
 							</ng-container>
@@ -227,9 +227,9 @@
 					<table class="datatable datatable-roundheaders datatable-onlyfirstcolumn datatable-verticalalignmiddle">
 						<thead class="datatable-x-head">
 							<tr class="datatable-x-header">
-								<th class="datatable-x-cell" scope="col">Bild</th>
+								<th class="datatable-x-cell" scope="col">{{ 'Issuer.image' | translate }}</th>
 								<th class="datatable-x-cell" scope="col">Institution</th>
-								<th class="datatable-x-cell" scope="col">Registriert seit</th>
+								<th class="datatable-x-cell" scope="col">{{ 'Issuer.registeredSince' | translate }}</th>
 								<th class="datatable-x-cell" scope="col"><span class="visuallyhidden">Actions</span></th>
 							</tr>
 						</thead>
@@ -263,7 +263,7 @@
 												<time [date]="issuer.createdAt" format="mediumDate"></time>
 											</td>
 											<td class="datatable-x-cell">
-												<a class="u-text u-text-small" [routerLink]="['/public/issuers/', issuer.slug]">Öffnen</a>
+												<a class="u-text u-text-small" [routerLink]="['/public/issuers/', issuer.slug]">{{ 'Issuer.open' | translate }}</a>
 											</td>
 										</tr>
 								</ng-container>

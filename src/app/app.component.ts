@@ -10,24 +10,24 @@ import { ConfirmDialog } from './common/dialogs/confirm-dialog.component';
 import { NounprojectDialog } from './common/dialogs/nounproject-dialog/nounproject-dialog.component';
 
 import '../thirdparty/scopedQuerySelectorShim';
-import {EventsService} from './common/services/events.service';
-import {OAuthManager} from './common/services/oauth-manager.service';
-import {EmbedService} from './common/services/embed.service';
-import {InitialLoadingIndicatorService} from './common/services/initial-loading-indicator.service';
-import {Angulartics2GoogleTagManager} from 'angulartics2';
+import { EventsService } from './common/services/events.service';
+import { OAuthManager } from './common/services/oauth-manager.service';
+import { EmbedService } from './common/services/embed.service';
+import { InitialLoadingIndicatorService } from './common/services/initial-loading-indicator.service';
+import { Angulartics2GoogleTagManager } from 'angulartics2';
 
 import { ApiExternalToolLaunchpoint } from '../app/externaltools/models/externaltools-api.model';
 import { ExternalToolsManager } from '../app/externaltools/services/externaltools-manager.service';
 
-import {UserProfileManager} from './common/services/user-profile-manager.service';
-import {NewTermsDialog} from './common/dialogs/new-terms-dialog.component';
-import {QueryParametersService} from './common/services/query-parameters.service';
-import {Title} from '@angular/platform-browser';
-import {MarkdownHintsDialog} from './common/dialogs/markdown-hints-dialog.component';
-import { Issuer } from "./issuer/models/issuer.model";
-import { IssuerManager } from "./issuer/services/issuer-manager.service";
-import { Angulartics2GoogleAnalytics } from "angulartics2";
-import { ImportModalComponent } from "./mozz-transition/components/import-modal/import-modal.component";
+import { UserProfileManager } from './common/services/user-profile-manager.service';
+import { NewTermsDialog } from './common/dialogs/new-terms-dialog.component';
+import { QueryParametersService } from './common/services/query-parameters.service';
+import { Title } from '@angular/platform-browser';
+import { MarkdownHintsDialog } from './common/dialogs/markdown-hints-dialog.component';
+import { Issuer } from './issuer/models/issuer.model';
+import { IssuerManager } from './issuer/services/issuer-manager.service';
+import { Angulartics2GoogleAnalytics } from 'angulartics2';
+import { ImportModalComponent } from './mozz-transition/components/import-modal/import-modal.component';
 import { ExportPdfDialog } from './common/dialogs/export-pdf-dialog/export-pdf-dialog.component';
 import { CopyBadgeDialog } from './common/dialogs/copy-badge-dialog/copy-badge-dialog.component';
 import { LanguageService } from './common/services/language.service';
@@ -55,32 +55,36 @@ export class AppComponent implements OnInit, AfterViewInit {
 
 	copyrightYear = new Date().getFullYear();
 
-	@ViewChild("confirmDialog")
+	@ViewChild('confirmDialog')
 	private confirmDialog: ConfirmDialog;
 
-	@ViewChild("nounprojectDialog")
+	@ViewChild('nounprojectDialog')
 	private nounprojectDialog: NounprojectDialog;
 
-	@ViewChild("newTermsDialog")
+	@ViewChild('newTermsDialog')
 	private newTermsDialog: NewTermsDialog;
 
-	@ViewChild("shareSocialDialog")
+	@ViewChild('shareSocialDialog')
 	private shareSocialDialog: ShareSocialDialog;
 
-	@ViewChild("markdownHintsDialog")
+	@ViewChild('markdownHintsDialog')
 	private markdownHintsDialog: MarkdownHintsDialog;
 
-	@ViewChild("exportPdfDialog")
+	@ViewChild('exportPdfDialog')
 	private exportPdfDialog: ExportPdfDialog;
-  
-	@ViewChild("copyBadgeDialog")
+
+	@ViewChild('copyBadgeDialog')
 	private copyBadgeDialog: CopyBadgeDialog;
 
-	@ViewChild("issuerLink")
+	@ViewChild('issuerLink')
 	private issuerLink: unknown;
 
-	@ViewChild("importModalDialog")
+	@ViewChild('importModalDialog')
 	importModalDialog: ImportModalComponent;
+
+	// For changing language of texts defined in ts file
+	lngObserver = this.languageService.getSelectedLngObs();
+	selectedLng:string = "de";
 
 	get showAppChrome() {
 		return !this.embedService.isEmbedded;
@@ -108,7 +112,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 		return this.messageService.message ? this.messageService.message.detail : undefined;
 	}
 
-	readonly unavailableImageSrc = "../assets/@concentricsky/badgr-style/dist/images/image-error.svg";
+	readonly unavailableImageSrc = '../assets/@concentricsky/badgr-style/dist/images/image-error.svg';
 
 	initFinished: Promise<unknown> = new Promise(() => {});
 
@@ -130,10 +134,16 @@ export class AppComponent implements OnInit, AfterViewInit {
 		private angulartics2GoogleTagManager: Angulartics2GoogleTagManager, // required for angulartics to work
 		private titleService: Title,
 		protected issuerManager: IssuerManager,
-		private languageService: LanguageService // Translation
+		private languageService: LanguageService, // Translation
 	) {
 		// Initialize App language
 		this.languageService.setInitialAppLangauge();
+		this.lngObserver.subscribe((lng) => {
+			if (lng != null) {
+				this.selectedLng = lng;
+				
+			}
+		  });
 
 		angulartics2GoogleTagManager.startTracking();
 
@@ -174,7 +184,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 			},
 			(error) => {
 				this.messageService.reportAndThrowError('Failed to load issuers', error);
-			}
+			},
 		);
 	};
 
@@ -219,7 +229,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 			setTimeout(() => {
 				this.loggedIn = loggedIn;
 				this.refreshProfile();
-			})
+			}),
 		);
 		this.shouldShowIssuersTab();
 	}
@@ -232,12 +242,21 @@ export class AppComponent implements OnInit, AfterViewInit {
 			this.markdownHintsDialog,
 			this.exportPdfDialog,
 			this.nounprojectDialog,
-			this.copyBadgeDialog
+			this.copyBadgeDialog,
 		);
 	}
 
-	defaultLogoSmall = "../breakdown/static/images/logo.svg";
-	defaultLogoDesktop = "../breakdown/static/images/logo-desktop.svg";
-	get logoSmall() { return this.theme['logoImg'] ? this.theme['logoImg']['small'] : this.defaultLogoSmall; }
-	get logoDesktop() { return this.theme['logoImg'] ? this.theme['logoImg']['desktop'] : this.defaultLogoDesktop; }
+	defaultLogoSmall = '../breakdown/static/images/logo.svg';
+	defaultLogoDesktop = '../breakdown/static/images/logo-desktop.svg';
+	get logoSmall() {
+		return this.theme['logoImg'] ? this.theme['logoImg']['small'] : this.defaultLogoSmall;
+	}
+	get logoDesktop() {
+		return this.theme['logoImg'] ? this.theme['logoImg']['desktop'] : this.defaultLogoDesktop;
+	}
+
+	// For changing language based on selection
+	changeLng(lng) {
+		this.languageService.setLanguage(lng);
+	}
 }

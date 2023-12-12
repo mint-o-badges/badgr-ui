@@ -15,6 +15,7 @@ import { BadgeClass } from '../../../issuer/models/badgeclass.model';
 import { BadgeClassManager } from '../../../issuer/services/badgeclass-manager.service';
 import { StringMatchingUtil } from '../../../common/util/string-matching-util';
 import { BadgeClassCategory } from '../../../issuer/models/badgeclass-api.model';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-badge-catalog',
@@ -79,7 +80,7 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		this.updateResults();
 	}
 
-	private _groupBy = 'Kategorie';
+	private _groupBy = this.translate.instant('Badge.category');
 	get groupBy() {
 		return this._groupBy;
 	}
@@ -87,7 +88,7 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		this._groupBy = val;
 		this.updateResults();
 	}
-	groups = ['Kategorie', 'Issuer', '---'];
+	groups = [this.translate.instant('Badge.category'), 'Issuer', '---'];
 	categoryOptions: { [key in BadgeClassCategory | 'noCategory']: string } = {
 		membership: 'Mitgliedschaft',
 		ability: 'Metakompetenz',
@@ -102,7 +103,8 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		protected configService: AppConfigService,
 		protected badgeClassService: BadgeClassManager,
 		router: Router,
-		route: ActivatedRoute
+		route: ActivatedRoute,
+		private translate: TranslateService,
 	) {
 		super(router, route);
 		title.setTitle(`Badges - ${this.configService.theme['serviceName'] || 'Badgr'}`);
@@ -140,6 +142,11 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 
 	ngOnInit() {
 		super.ngOnInit();
+
+		// Trnslate: to update predefined text
+		this.translate.onLangChange.subscribe((event) => {
+			this.groups = [this.translate.instant('Badge.category'), 'Issuer', '---'];
+		  });
 	}
 
 	changeOrder(order) {

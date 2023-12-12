@@ -11,6 +11,7 @@ import {ResetPasswordComponent} from './components/reset-password/reset-password
 import {OAuth2AuthorizeComponent} from './components/oauth2-authorize/oauth2-authorize.component';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { WelcomeComponent } from './components/welcome/welcome.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 const routes: Routes = [
 	{
@@ -78,6 +79,7 @@ const routes: Routes = [
 		BadgrCommonModule,
 		CommonEntityManagerModule,
 		RouterModule.forChild(routes),
+		TranslateModule
 	],
 	declarations: [
 		LoginComponent,

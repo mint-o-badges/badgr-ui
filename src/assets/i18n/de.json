@@ -2,10 +2,61 @@
 	"General": {
 		"yes": "Ja",
 		"no": "Nein",
-		"name": "Name"
+		"name": "Name",
+		"institutions": "Institutionen"
+	},
+	"NavItems": {
+		"register": "Registrieren",
+		"aboutMint-O-Badges": "Über MINT-O-Badges",
+		"backpack": "Rucksack",
+		"collections": "Sammlungen",
+		"profile": "Profil",
+		"myInstitutions": "Meine Institutionen",
+		"appIntegrations": "App Integrationen",
+		"openMenu": "Menü öffnen"
 	},
 	"Start": {
 		"desc1": "Ein lernerzentrierter Ansatz",
-		"desc2": "zur Dokumentation & Feedback des Lernprozesses"
+		"desc2": "zur Dokumentation & Feedback des Lernprozesses",
+		"poweredBy": "Bereitgestellt von",
+		"imprint": "Impressum & Datenschutz",
+		"ourIdeaTitle": "Unsere Idee",
+		"ourApproachTitle": "Unser Ansatz",
+		"ApproachPrinciples": "Dabei baut unser Ansatz auf 6 Prinzipien auf:",
+		"serverDown": "Ups! Der Server antwortet nicht.",
+		"relodePage": "Bitte die Seite neu laden."
+	},
+	"Issuer": {
+		"map": "katre",
+		"groupByCategory": "Nach Kategorien grupppieren",
+		"open": "Öffnen",
+		"image": "Bild",
+		"registeredSince": "Registriert seit",
+		"noInstitutions": "Keine Institutionen",
+		"searchInstitutions": "Institutionen durchsuchen",
+		"noBadges": "Keine Badges",
+		"recipient": "Empfänger",
+		"NoRecipient": "Kein Empfänger"
+	},
+	"Badge":{
+		"groupBy":"Gruppieren nach",
+		"framesMeaning": "Was bedeuten die Rahmen und Farben?",
+		"searchBadges": "Badges durchsuchen",
+		"category": "Kategorie"
+	},
+	"Signup":{
+		"youHaveAccount":"Du hast bereits einen Account?",
+		"application": "Die Anwendung",
+		"loginWithMint-o-b": "würde dich gerne einloggen mit",
+		"fName":"Vorname",
+		"lName":"Nachname",
+		"pass8char":"Passwort (Mindestens 8 Zeichen)"
+	},
+	"login":{
+		"stayLogged":"Angemeldet bleiben",
+		"forgotPassword":"Password vergessen?",
+		"welcome":"Willkommen bei MINT-O-Badges",
+		"confirmPassword":"Passwort bestätigen"
+
 	}
 }

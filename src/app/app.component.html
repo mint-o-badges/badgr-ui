@@ -30,7 +30,7 @@
 						class="navitem"
 						routerLinkActive="navitem-is-active"
 						[routerLink]="['/catalog/issuers']"
-						>Institutionen</a
+						>{{ 'General.institutions' | translate }}</a
 					>
 					<a
 						[class.navitem-light]="!theme.useColorNavbar"
@@ -45,7 +45,7 @@
 						class="navitem"
 						routerLinkActive="navitem-is-active"
 						[routerLink]="['/signup']"
-						>Registrieren</a
+						>{{ 'NavItems.register' | translate }}</a
 					>
 					<a
 						*ngIf="!features.disableRegistration"
@@ -53,7 +53,7 @@
 						class="navitem"
 						routerLinkActive="navitem-is-active"
 						[routerLink]="['/public/about']"
-						>Über MINT-O-Badges</a
+						>{{ 'NavItems.aboutMint-O-Badges' | translate }}</a
 					>
 					<a
 						role="menuitem"
@@ -64,6 +64,15 @@
 						>FAQ</a
 					>
 
+					<div class="navitem" style="position: unset; color: white; display: flex; gap: 4px">
+						<button (click)="changeLng('de')" style="color: white">
+							<span [ngStyle]="{ 'font-weight': selectedLng == 'de' ? 'bold' : 'normal' }">DE</span>
+						</button>
+						<span style="align-self: center">|</span>
+						<button (click)="changeLng('en')" style="color: white">
+							<span [ngStyle]="{ 'font-weight': selectedLng == 'en' ? 'bold' : 'normal' }">EN</span>
+						</button>
+					</div>
 				</div>
 			</nav>
 		</ng-template>
@@ -88,7 +97,7 @@
 						routerLinkActive="navitem-is-active"
 						[routerLink]="['/catalog/issuers']"
 					>
-						Institutionen
+						{{ 'General.institutions' | translate }}
 					</a>
 					<a
 						role="menuitem"
@@ -96,7 +105,7 @@
 						class="navitem"
 						routerLinkActive="navitem-is-active"
 						[routerLink]="['/recipient/badges']"
-						>Rucksack</a
+						>{{ 'NavItems.backpack' | translate }}</a
 					>
 					<a
 						role="menuitem"
@@ -104,7 +113,7 @@
 						class="navitem"
 						routerLinkActive="navitem-is-active"
 						[routerLink]="['/recipient/badge-collections']"
-						>Sammlungen</a
+						>{{ 'NavItems.collections' | translate }}</a
 					>
 					<button
 						role="menuitem"
@@ -160,7 +169,7 @@
 			<span></span>
 			<span></span>
 			<span></span>
-			<i class="visuallyhidden">Open Menu</i>
+			<i class="visuallyhidden">{{ 'NavItems.openMenu' | translate }}</i>
 		</button>
 	</nav>
 
@@ -183,13 +192,13 @@
 			><svg icon="icon_member"></svg>Mein Profil</a
 		>
 		<a class="menuitem" routerLinkActive="menuitem-is-active" [routerLink]="['/issuer']"
-			><svg icon="icon_issuer"></svg>Meine Institutionen</a
+			><svg icon="icon_issuer"></svg>{{ 'NavItems.myInstitutions' | translate }}</a
 		>
 		<a class="menuitem" routerLinkActive="menuitem-is-active" [routerLink]="['/profile/app-integrations']"
-			><svg icon="icon_compare"></svg>App Integrationen</a
+			><svg icon="icon_compare"></svg>{{ 'NavItems.appIntegrations' | translate }}</a
 		>
 		<a class="menuitem" routerLinkActive="menuitem-is-active" [routerLink]="['/public/about']"
-			><svg icon="icon_info"></svg>Über MINT-O-Badges</a
+			><svg icon="icon_info"></svg>{{ 'NavItems.aboutMint-O-Badges' | translate }}</a
 		>
 		<a class="menuitem" routerLinkActive="menuitem-is-active" [routerLink]="['/auth/logout']"
 			><svg icon="icon_exit_to_app"></svg>Logout</a
@@ -204,11 +213,27 @@
 	>
 		<div class="mobilenav-x-navitems">
 			<a routerLinkActive="menuitem-is-active" [routerLink]="['/catalog/badges']">Badges</a>
-			<a routerLinkActive="menuitem-is-active" [routerLink]="['/catalog/issuers']">Institutionen</a>
+			<a routerLinkActive="menuitem-is-active" [routerLink]="['/catalog/issuers']">{{
+				'General.institutions' | translate
+			}}</a>
 			<a routerLinkActive="menuitem-is-active" [routerLink]="['/auth/login']">Login</a>
-			<a routerLinkActive="menuitem-is-active" [routerLink]="['/signup']">Registrieren</a>
-			<a routerLinkActive="menuitem-is-active" [routerLink]="['/public/about']">Über MINT-O-Badges</a>
-
+			<a routerLinkActive="menuitem-is-active" [routerLink]="['/signup']">{{
+				'NavItems.register' | translate
+			}}</a>
+			<a routerLinkActive="menuitem-is-active" [routerLink]="['/public/about']">{{
+				'NavItems.aboutMint-O-Badges' | translate
+			}}</a>
+			<a
+				><div style="color: white; display: flex; gap: 4px">
+					<button (click)="changeLng('de')" style="color: white">
+						<span [ngStyle]="{ 'font-weight': selectedLng == 'de' ? 'bold' : 'normal' }">DE</span>
+					</button>
+					<span style="align-self: center">|</span>
+					<button (click)="changeLng('en')" style="color: white">
+						<span [ngStyle]="{ 'font-weight': selectedLng == 'en' ? 'bold' : 'normal' }">EN</span>
+					</button>
+				</div></a
+			>
 			<hr class="mobilenav-x-rule" />
 			<p class="mobilenav-x-label" *ngIf="launchpoints?.length">Apps</p>
 			<a href="{{ lp.launch_url }}" *ngFor="let lp of launchpoints" target="_blank">
@@ -225,9 +250,9 @@
 	>
 		<div class="mobilenav-x-navitems">
 			<a [routerLink]="['/catalog/badges']">Badges</a>
-			<a [routerLink]="['/catalog/issuers']">Institutionen</a>
-			<a [routerLink]="['/recipient/badges']">Rucksack</a>
-			<a [routerLink]="['/recipient/badge-collections']">Sammlungen</a>
+			<a [routerLink]="['/catalog/issuers']">{{ 'General.institutions' | translate }}</a>
+			<a [routerLink]="['/recipient/badges']">{{ 'NavItems.backpack' | translate }}</a>
+			<a [routerLink]="['/recipient/badge-collections']">{{ 'NavItems.collections' | translate }}</a>
 
 			<hr class="mobilenav-x-rule" *ngIf="launchpoints?.length" />
 			<p class="mobilenav-x-label" *ngIf="launchpoints?.length">Apps</p>
@@ -239,10 +264,10 @@
 
 			<hr class="mobilenav-x-rule" />
 			<p class="mobilenav-x-label">Account</p>
-			<a [routerLink]="['/profile/profile']">Profil</a>
-			<a [routerLink]="['/issuer']" *ngIf="showIssuersTab">Meine Institutionen</a>
-			<a [routerLink]="['/profile/app-integrations']">App Integrationen</a>
-			<a [routerLink]="['/public/about']">Über MINT-O-Badges</a>
+			<a [routerLink]="['/profile/profile']">{{ 'NavItems.profile' | translate }}</a>
+			<a [routerLink]="['/issuer']" *ngIf="showIssuersTab">{{ 'NavItems.myInstitutions' | translate }}</a>
+			<a [routerLink]="['/profile/app-integrations']">{{ 'NavItems.appIntegrations' | translate }}</a>
+			<a [routerLink]="['/public/about']">{{ 'NavItems.aboutMint-O-Badges' | translate }}</a>
 			<a [routerLink]="['/auth/logout']">Logout</a>
 		</div>
 	</nav>
@@ -261,8 +286,8 @@
 			<div>
 				<h1 *ngIf="fatalMessage" class="u-text-h2-bold u-text-center">{{ fatalMessage }}</h1>
 				<h1 *ngIf="fatalMessageDetail" class="u-text-h3 u-text-center">{{ fatalMessageDetail }}</h1>
-				<h1 *ngIf="!fatalMessage" class="u-text-body-bold u-text-center">Ups! Der Server antwortet nicht.</h1>
-				<h1 *ngIf="!fatalMessageDetail" class="u-text-body u-text-center">Bitte die Seite neu laden.</h1>
+				<h1 *ngIf="!fatalMessage" class="u-text-body-bold u-text-center">{{ 'Start.ServerDown' | translate }}</h1>
+				<h1 *ngIf="!fatalMessageDetail" class="u-text-body u-text-center">{{ 'Start.relodePage' | translate }}</h1>
 				<img class="u-width-form" [src]="unavailableImageSrc" />
 			</div>
 		</div>
@@ -287,14 +312,14 @@
 					Powered by <a href="https://badgr.io">Badgr</a>
 				</li>
 				<li *ngIf="theme.providedBy">
-					Bereitgestellt von
+					{{ 'Start.poweredBy' | translate }}
 					<a href="{{ theme.providedBy.url }}" target="_blank">{{ theme.providedBy.name }}</a>
 				</li>
 			</ul>
 
 			<ul class="footer-x-links">
 				<li>
-					<a [href]="theme.termsOfServiceLink" target="_blank">Impressum & Datenschutz</a>
+					<a [href]="theme.termsOfServiceLink" target="_blank">{{ 'Start.imprint' | translate }}</a>
 				</li>
 			</ul>
 		</div>

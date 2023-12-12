@@ -2,10 +2,61 @@
 	"General": {
 		"yes": "Yes",
 		"no": "No",
-		"name": "Name"
+		"name": "Name",
+		"institutions": "Institutions"
+	},
+	"NavItems": {
+		"register": "Register",
+		"aboutMint-O-Badges": "About MINT-O-Badges",
+		"backpack": "Backpack",
+		"collections": "Collections",
+		"profile": "Profile",
+		"myInstitutions": "My institutions",
+		"appIntegrations": "App integrations",
+		"openMenu": "Open Menu"
 	},
 	"Start": {
 		"desc1": "A learner-centered approach",
-		"desc2": "for documentation & feedback of the learning process"
+		"desc2": "for documentation & feedback of the learning process",
+		"poweredBy": "Powered by",
+		"imprint": "Imprint & Data Protection",
+		"ourIdeaTitle": "Our Idea",
+		"ourApproachTitle": "Our Approach",
+		"ApproachPrinciples": "Our approach is based on 6 principles:",
+		"serverDown": "Ups! The server is not responding.",
+		"relodePage": "Please reload the page."
+	},
+	"Issuer": {
+		"map": "map",
+		"groupByCategory": "Group by Category",
+		"open": "Open",
+		"image": "Image",
+		"registeredSince": "Registered since",
+		"noInstitutions": "No institutions",
+		"searchInstitutions": "Search institutions",
+		"noBadges": "No badges",
+		"recipient": "recipient",
+		"NoRecipient": "No recipient"
+	},
+	"Badge":{
+		"groupBy":"Group by",
+		"framesMeaning": "What do the frames and colors mean?",
+		"searchBadges": "Search badges",
+		"category": "Category"
+	},
+	"Signup":{
+		"youHaveAccount":"You already have an account?",
+		"application": "The application",
+		"loginWithMint-o-b": "I'd like you to log in with",
+		"fName":"First name",
+		"lName":"Last name",
+		"pass8char":"Password (at least 8 characters)",
+		"confirmPassword":"Confirm Password"
+	},
+	"login":{
+		"stayLogged":"Stay logged",
+		"forgotPassword":"Forgot password?",
+		"welcome":"Welcome to MINT-O-Badges"
+
 	}
 }

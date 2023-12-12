@@ -1,5 +1,4 @@
-<div
-	class="l-containerxaxis l-containeryaxis l-flex l-flex-justifycenter">
+<div class="l-containerxaxis l-containeryaxis l-flex l-flex-justifycenter">
 	<form-message></form-message>
 
 	<div class="shadowcontainer u-animate-dropfade">
@@ -7,58 +6,36 @@
 		<oauth-banner></oauth-banner>
 
 		<!-- Title Message -->
-		<h3
-			class="u-text-h3-bold"
-			id="heading-form"
-		>
-			Create a {{ theme.serviceName || "Badgr" }} Account
-		</h3>
-		<p
-			class="u-text u-text-body u-responsivemargin-top1x2x"
-			*ngIf="! oAuthManager.currentAuthorization"
-		>
-			Du hast bereits einen Account?
+		<h3 class="u-text-h3-bold" id="heading-form">Create a {{ theme.serviceName || 'Badgr' }} Account</h3>
+		<p class="u-text u-text-body u-responsivemargin-top1x2x" *ngIf="!oAuthManager.currentAuthorization">
+			{{ 'Signup.youHaveAccount' | translate }}
 			<a [routerLink]="['/auth/login']">Sign in</a>.
 		</p>
-		<p
-			class="u-text u-text-body u-responsivemargin-top1x2x"
-			*ngIf="oAuthManager.currentAuthorization"
-		>
-			Die Anwendung
+		<p class="u-text u-text-body u-responsivemargin-top1x2x" *ngIf="oAuthManager.currentAuthorization">
+			{{ 'Signup.application' | translate }}
 			<strong>
 				{{ oAuthManager.currentAuthorization.application.name }}
 			</strong>
-			würde dich gerne 
-			einloggen mit {{ theme.serviceName || "MINT-O-Badges"}}.
-			Du hast bereits einen Account?
+			{{ 'Signup.loginWithMint-o-b' | translate }} {{ theme.serviceName || 'MINT-O-Badges' }}.
+			{{ 'Signup.youHaveAccount' | translate }}
 			<a [routerLink]="['/login']">Sign in</a>!
 		</p>
-		<h3
-			class="ruleheadline l-ruleheadline"
-			*ngIf="sessionService.enabledExternalAuthProviders.length > 0"
-		>
+		<h3 class="ruleheadline l-ruleheadline" *ngIf="sessionService.enabledExternalAuthProviders.length > 0">
 			Sign Up With
 		</h3>
 
-		<div
-			class="l-socialbuttons u-margin-top2x"
-			*ngIf="sessionService.enabledExternalAuthProviders.length > 0"
-		>
+		<div class="l-socialbuttons u-margin-top2x" *ngIf="sessionService.enabledExternalAuthProviders.length > 0">
 			<button
 				*ngFor="let provider of sessionService.enabledExternalAuthProviders"
 				(click)="sessionService.initiateUnauthenticatedExternalAuth(provider)"
 				class="socialbutton"
-				[style.backgroundColor]="provider.color">
-				<div class="visuallyhidden">Access with {{provider.label}}</div>
-				<img [src]="sanitize(provider.imgSrc)" alt="">
+				[style.backgroundColor]="provider.color"
+			>
+				<div class="visuallyhidden">Access with {{ provider.label }}</div>
+				<img [src]="sanitize(provider.imgSrc)" alt="" />
 			</button>
 		</div>
-		<h3
-			class="ruleheadline l-ruleheadline"
-			*ngIf="sessionService.enabledExternalAuthProviders.length > 0"
-		>
-			Oder
-		</h3>
+		<h3 class="ruleheadline l-ruleheadline" *ngIf="sessionService.enabledExternalAuthProviders.length > 0">Oder</h3>
 
 		<!-- Sign Up Form -->
 		<form
@@ -69,17 +46,11 @@
 			(ngSubmit)="onSubmit()"
 			novalidate
 		>
-
 			<!-- Signup Controls -->
-			<fieldset
-				role="group"
-				aria-labelledby="heading-badgrsignup2"
-			>
-				<legend
-					class="visuallyhidden"
-					id="heading-badgrsignup2"
-				>
-					Registrier Dich mit {{ theme.serviceName || "MINT-O-Badges"}}, indem Du die folgenden Informationen bereitstellst
+			<fieldset role="group" aria-labelledby="heading-badgrsignup2">
+				<legend class="visuallyhidden" id="heading-badgrsignup2">
+					Registrier Dich mit {{ theme.serviceName || 'MINT-O-Badges' }}, indem Du die folgenden Informationen
+					bereitstellst
 				</legend>
 
 				<bg-formfield-text
@@ -94,21 +65,21 @@
 				<bg-formfield-text
 					class="u-margin-bottom2x"
 					[control]="signupForm.rawControlMap.firstName"
-					[label]="'Vorname'"
+					label="{{ 'Signup.fName' | translate }}"
 					[errorMessage]="'Bitte gib einen Vornamen an'"
 				></bg-formfield-text>
 
 				<bg-formfield-text
 					class="u-margin-bottom2x"
 					[control]="signupForm.rawControlMap.lastName"
-					[label]="'Nachname'"
+					label="{{ 'Signup.lName' | translate }}"
 					[errorMessage]="'Bitte gib einen Nachnamen an'"
 				></bg-formfield-text>
 
 				<bg-formfield-text
 					class="u-margin-bottom2x"
 					[control]="signupForm.rawControlMap.password"
-					[label]="'Passwort (Mindestens 8 Zeichen)'"
+					label="{{ 'Signup.pass8char' | translate }}"
 					fieldType="password"
 					[errorMessage]="{
 						required: 'Bitte gib ein Passwort ein',
@@ -118,7 +89,7 @@
 
 				<bg-formfield-text
 					[control]="signupForm.rawControlMap.passwordConfirm"
-					[label]="'Passwort bestätigen'"
+					label="{{ 'Signup.confirmPassword' | translate }}"
 					fieldType="password"
 					[errorMessage]="{
 						required: 'Bitte bestätige Dein Passwort',
@@ -130,60 +101,65 @@
 			<div>
 				<label
 					class="checkbox checkbox-small l-flex u-margin-top2p5x"
-					[class.checkbox-is-error]="signupForm.rawControlMap.agreedTermsService.dirty && !signupForm.rawControlMap.agreedTermsService.valid"
+					[class.checkbox-is-error]="
+						signupForm.rawControlMap.agreedTermsService.dirty &&
+						!signupForm.rawControlMap.agreedTermsService.valid
+					"
 				>
 					<input
 						name="terms"
 						id="terms"
 						type="checkbox"
 						[formControl]="signupForm.rawControlMap.agreedTermsService"
-					>
+					/>
 					<span class="checkbox-x-text">
 						<strong>
 							I have read and agree to the
-							<a
-								target="_blank"
-								[href]="theme.termsOfServiceLink || 'https://badgr.org/missing-terms'"
-							>Terms of Service</a>.
-							</strong>
-							<div
-								*ngIf="signupForm.rawControlMap.agreedTermsService.dirty && !signupForm.rawControlMap.agreedTermsService.valid"
-								class="checkbox-x-errortext"
-							>
-								Please read and agree to the Terms of Service if you want to continue.
-							</div>
-						</span>
+							<a target="_blank" [href]="theme.termsOfServiceLink || 'https://badgr.org/missing-terms'"
+								>Terms of Service</a
+							>.
+						</strong>
+						<div
+							*ngIf="
+								signupForm.rawControlMap.agreedTermsService.dirty &&
+								!signupForm.rawControlMap.agreedTermsService.valid
+							"
+							class="checkbox-x-errortext"
+						>
+							Please read and agree to the Terms of Service if you want to continue.
+						</div>
+					</span>
 				</label>
-				<label
-					class="checkbox checkbox-light l-flex u-margin-top2p5x"
-					for="news"
-					*ngIf="showMarketingOptIn"
-				>
+				<label class="checkbox checkbox-light l-flex u-margin-top2p5x" for="news" *ngIf="showMarketingOptIn">
 					<input
 						name="news"
 						id="news"
 						type="checkbox"
 						[formControl]="signupForm.rawControlMap.marketingOptIn"
-					>
+					/>
 					<span class="checkbox-x-text">
-                        <strong>Yes,</strong>
-                        I would like to receive email updates about products &amp;
-						services, upcoming webinars, news and events from {{configService.theme['serviceName'] || "Badgr"}}.
-                    </span>
+						<strong>Yes,</strong>
+						I would like to receive email updates about products &amp; services, upcoming webinars, news and
+						events from {{ configService.theme['serviceName'] || 'Badgr' }}.
+					</span>
 				</label>
 				<div class="l-stack l-stack-2x l-stack-buttons u-margin-top3x">
-					<button class="button button-secondary"
-					        type="button"
-					        *ngIf="oAuthManager.currentAuthorization"
-					        (click)="oAuthManager.cancelCurrentAuthorization()"
-					>Cancel
+					<button
+						class="button button-secondary"
+						type="button"
+						*ngIf="oAuthManager.currentAuthorization"
+						(click)="oAuthManager.cancelCurrentAuthorization()"
+					>
+						Cancel
 					</button>
-					<button class="button"
-					        type="submit"
-					        [disabled]="!! signupFinished"
-					        [loading-promises]="[ signupFinished ]"
-					        loading-message="Signing Up..."
-					>Create Account
+					<button
+						class="button"
+						type="submit"
+						[disabled]="!!signupFinished"
+						[loading-promises]="[signupFinished]"
+						loading-message="Signing Up..."
+					>
+						Create Account
 					</button>
 					<!-- TO DO: Add a destination -->
 					<!--<a class="u-text-link-small" href="#"

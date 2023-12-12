@@ -13,6 +13,7 @@ import { BadgeInstanceApiService } from '../issuer/services/badgeinstance-api.se
 import { BadgeInstanceManager } from '../issuer/services/badgeinstance-manager.service';
 import { IssuerApiService } from '../issuer/services/issuer-api.service';
 import { IssuerManager } from '../issuer/services/issuer-manager.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 export const routes: Routes = [
 	{
@@ -34,7 +35,7 @@ export const routes: Routes = [
 
 @NgModule({
 	declarations: [BadgeCatalogComponent, IssuerCatalogComponent],
-	imports: [...COMMON_IMPORTS, BadgrCommonModule, CommonEntityManagerModule, RouterModule.forChild(routes)],
+	imports: [...COMMON_IMPORTS, BadgrCommonModule, CommonEntityManagerModule, RouterModule.forChild(routes), TranslateModule],
 	providers: [
 		BadgeClassApiService,
 		BadgeClassManager,

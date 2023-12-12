@@ -6,6 +6,7 @@ import {SignupSuccessComponent} from './components/signup-success/signup-success
 import {SignupComponent} from './components/signup/signup.component';
 import {BadgrCommonModule, COMMON_IMPORTS} from '../common/badgr-common.module';
 import {SignupService} from './services/signup.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 const routes = [
 	/* Signup */
@@ -34,7 +35,8 @@ const routes = [
 		FormsModule,
 		ReactiveFormsModule,
 		BadgrCommonModule,
-	  RouterModule.forChild(routes)
+	  RouterModule.forChild(routes),
+	  TranslateModule
 	],
 	declarations: [
 		SignupComponent,

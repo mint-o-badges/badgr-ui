@@ -1,6 +1,7 @@
 <div class="l-containerxaxis l-containeryaxis l-flex l-flex-justifycenter">
 	<div class="shadowcontainer u-animate-dropfade">
-		<markdown-display [value]="theme.welcomeMessage || 'Willkommen bei MINT-O-Badges'"></markdown-display>
+		<!-- <markdown-display [value]="theme.welcomeMessage || 'Willkommen bei MINT-O-Badges'"></markdown-display> -->
+		<markdown-display value="{{ 'login.welcome' | translate }}"></markdown-display>
 		<ng-template [ngIf]="!sessionService.enabledExternalAuthProviders.length"> </ng-template>
 		<ng-template [ngIf]="sessionService.enabledExternalAuthProviders.length">
 			<h3 class="l-ruleheadline ruleheadline">Sign in mit</h3>
@@ -51,7 +52,7 @@
 						href="#"
 						tabindex="-1"
 						[routerLink]="['/auth/request-password-reset', usernameField.value]"
-						>Password vergessen?</a
+						>{{ 'login.forgotPassword' | translate }}</a
 					>
 				</span>
 			</bg-formfield-text>
@@ -76,7 +77,7 @@
 						type="checkbox"
 						[formControl]="loginForm.rawControlMap.rememberMe"
 					/>
-					<span class="checkbox-x-text">Angemeldet bleiben</span>
+					<span class="checkbox-x-text">{{ 'login.stayLogged' | translate }}</span>
 				</label>
 			</div>
 		</form>
