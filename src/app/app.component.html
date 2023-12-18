@@ -286,8 +286,12 @@
 			<div>
 				<h1 *ngIf="fatalMessage" class="u-text-h2-bold u-text-center">{{ fatalMessage }}</h1>
 				<h1 *ngIf="fatalMessageDetail" class="u-text-h3 u-text-center">{{ fatalMessageDetail }}</h1>
-				<h1 *ngIf="!fatalMessage" class="u-text-body-bold u-text-center">{{ 'Start.ServerDown' | translate }}</h1>
-				<h1 *ngIf="!fatalMessageDetail" class="u-text-body u-text-center">{{ 'Start.relodePage' | translate }}</h1>
+				<h1 *ngIf="!fatalMessage" class="u-text-body-bold u-text-center">
+					{{ 'Start.ServerDown' | translate }}
+				</h1>
+				<h1 *ngIf="!fatalMessageDetail" class="u-text-body u-text-center">
+					{{ 'Start.relodePage' | translate }}
+				</h1>
 				<img class="u-width-form" [src]="unavailableImageSrc" />
 			</div>
 		</div>
@@ -308,12 +312,10 @@
 	<div class="l-containerxaxis">
 		<div class="footer l-stickyfooter-x-footer">
 			<ul class="footer-x-leftlinks">
-				<li *ngIf="theme.showPoweredByBadgr === undefined || theme.showPoweredByBadgr">
-					Powered by <a href="https://badgr.io">Badgr</a>
-				</li>
-				<li *ngIf="theme.providedBy">
+				<li *ngIf="theme.showPoweredByOSL && theme.providedBy">
 					{{ 'Start.poweredBy' | translate }}
 					<a href="{{ theme.providedBy.url }}" target="_blank">{{ theme.providedBy.name }}</a>
+					using <a href="https://badgr.io">Badgr</a>
 				</li>
 			</ul>
 

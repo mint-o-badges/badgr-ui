@@ -141,6 +141,7 @@ export const defaultConfig: BadgrConfig = {
 		welcomeMessage: `### Welcome!`,
 		alternateLandingUrl: null,
 		showPoweredByBadgr: false,
+		showPoweredByOSL: false,
 		showApiDocsLink: true,
 		termsOfServiceLink: null,
 		termsHelpLink: null,

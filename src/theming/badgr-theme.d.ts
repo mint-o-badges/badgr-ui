@@ -21,6 +21,11 @@ export interface BadgrTheme {
 	showPoweredByBadgr: boolean;
 
 	/**
+	 * Shows the "Powered by OSL" link
+	 */
+	showPoweredByOSL: boolean
+
+	/**
 	 *
 	 */
 	hideMarketingOptIn?: boolean;
