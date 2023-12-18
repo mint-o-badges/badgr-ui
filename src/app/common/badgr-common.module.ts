@@ -75,6 +75,7 @@ import { LMarkdownEditorModule } from 'ngx-markdown-editor';
 import { ExportPdfDialog } from './dialogs/export-pdf-dialog/export-pdf-dialog.component';
 import { BadgeClassManager } from '../issuer/services/badgeclass-manager.service';
 import { BadgeClassApiService } from '../issuer/services/badgeclass-api.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 const DIRECTIVES = [
 	BgAwaitPromises,
@@ -158,6 +159,7 @@ export const COMMON_IMPORTS = [CommonModule, FormsModule, ReactiveFormsModule, H
 		...COMMON_IMPORTS,
 		FormsModule,
 		LMarkdownEditorModule,
+		TranslateModule
 	],
 	providers: [
 		BadgeClassManager,
