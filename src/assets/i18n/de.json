@@ -56,7 +56,22 @@
 		"groupBy":"Gruppieren nach",
 		"framesMeaning": "Was bedeuten die Rahmen und Farben?",
 		"searchBadges": "Badges durchsuchen",
-		"category": "Kategorie"
+		"category": "Kategorie",
+		"issuer": "Emittent",
+		"membership": "Mitgliedschaft",
+		"ability": "Metakompetenz",
+		"archievement": "Teilnahme / Erfolg",
+		"skill": "Fachliche Kompetenz",
+		"noCategory": "Keine Kategorie",
+		"noIssuers" :"Keine Emittenten",
+		"oneIssuer" :"1 Emittent",
+		"multiIssuers" :"# Emittenten",
+		"noBadges": "Keine Badges",
+		"oneBadge" :"1 Badge",
+		"multiBadges" :"# Badges",
+		"noRecipients" :"Keine Empfänger",
+		"oneRecipient" :"1 Empfänger",
+		"multiRecipients" :"# Empfänger"
 	},
 	"Signup":{
 		"youHaveAccount":"Du hast bereits einen Account?",

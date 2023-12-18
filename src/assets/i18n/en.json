@@ -25,18 +25,18 @@
 		"ourApproachTitle": "Our Approach",
 		"ourApproachDesc": "Our feedback system motivates participants to enjoy learning and helps them to realistically assess their own progress. At the same time, it provides the learning support with orientation about the level of performance and thus forms an important basis for further didactic and pedagogical planning of the learning process.",
 		"ApproachPrinciples": "Our approach is based on 6 principles:",
-		"openTit":"#open",
-		"openDesc":"Other institutions can expand and further develop the system according to their educational offerings.",
-		"transFlexTit":"#transparent & flexible",
-		"transFlexDesc":"The learner has insight into his portfolio and can decide for himself who he makes which information available to.",
-		"standardTit":"#standardized",
-		"standardDesc":"By bringing together various educational actors, a standardization tool is created that offers orientation.",
-		"motivTit":"#motivating",
-		"motivDesc":"“Portfolio & Badges“ are a form of performance presentation; not of evaluation. They promote appreciation for the acquired skills and increase the learner's personal responsibility.",
-		"digitalTit":"#digital & decentralized",
-		"digitalDesc":"We rely on established technical standards with which proof of competence can be created digitally and managed decentrally.",
-		"individTit":"#individual",
-		"individDesc":"“Portfolio & Badges“ can document individual learning paths and thus promote self-determined, lifelong learning.",
+		"openTit": "#open",
+		"openDesc": "Other institutions can expand and further develop the system according to their educational offerings.",
+		"transFlexTit": "#transparent & flexible",
+		"transFlexDesc": "The learner has insight into his portfolio and can decide for himself who he makes which information available to.",
+		"standardTit": "#standardized",
+		"standardDesc": "By bringing together various educational actors, a standardization tool is created that offers orientation.",
+		"motivTit": "#motivating",
+		"motivDesc": "“Portfolio & Badges“ are a form of performance presentation; not of evaluation. They promote appreciation for the acquired skills and increase the learner's personal responsibility.",
+		"digitalTit": "#digital & decentralized",
+		"digitalDesc": "We rely on established technical standards with which proof of competence can be created digitally and managed decentrally.",
+		"individTit": "#individual",
+		"individDesc": "“Portfolio & Badges“ can document individual learning paths and thus promote self-determined, lifelong learning.",
 		"serverDown": "Ups! The server is not responding.",
 		"relodePage": "Please reload the page."
 	},
@@ -52,25 +52,39 @@
 		"recipient": "recipient",
 		"NoRecipient": "No recipient"
 	},
-	"Badge":{
-		"groupBy":"Group by",
+	"Badge": {
+		"groupBy": "Group by",
 		"framesMeaning": "What do the frames and colors mean?",
 		"searchBadges": "Search badges",
-		"category": "Category"
+		"category": "Category",
+		"issuer": "Issuer",
+		"membership": "Membership",
+		"ability": "Ability",
+		"archievement": "Archievement",
+		"skill": "Skill",
+		"noCategory": "No Category",
+		"noIssuers" :"No Issuers",
+		"oneIssuer" :"1 Issuer",
+		"multiIssuers" :"# Issuers",
+		"noBadges": "No badges",
+		"oneBadge" :"1 Badge",
+		"multiBadges" :"# Badges",
+		"noRecipients" :"No Recipients",
+		"oneRecipient" :"1 Recipient",
+		"multiRecipients" :"# Recipients"
 	},
-	"Signup":{
-		"youHaveAccount":"You already have an account?",
+	"Signup": {
+		"youHaveAccount": "You already have an account?",
 		"application": "The application",
 		"loginWithMint-o-b": "I'd like you to log in with",
-		"fName":"First name",
-		"lName":"Last name",
-		"pass8char":"Password (at least 8 characters)",
-		"confirmPassword":"Confirm Password"
+		"fName": "First name",
+		"lName": "Last name",
+		"pass8char": "Password (at least 8 characters)",
+		"confirmPassword": "Confirm Password"
 	},
-	"login":{
-		"stayLogged":"Stay logged",
-		"forgotPassword":"Forgot password?",
-		"welcome":"Welcome to MINT-O-Badges"
-
+	"login": {
+		"stayLogged": "Stay logged",
+		"forgotPassword": "Forgot password?",
+		"welcome": "Welcome to MINT-O-Badges"
 	}
 }

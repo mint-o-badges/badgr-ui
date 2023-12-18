@@ -48,12 +48,12 @@
 				</div>
 				<div class="viewtoggle l-actionbar-x-viewtoggle" [class.viewtoggle-is-listview]="order == 'desc'">
 					<label class="viewtoggle-x-grid" (click)="changeOrder('asc')">
-						<span class="visuallyhidden">name</span>
+						<span class="visuallyhidden">{{ 'General.name' | translate }}</span>
 						<input name="radiobutton2" id="radiobutton3" type="radio" value="asc" [(ngModel)]="order" />
 						<svg style="transform: rotateZ(90deg)" icon="icon_arrow"></svg>
 					</label>
 					<label class="viewtoggle-x-list" (click)="changeOrder('desc')">
-						<span class="visuallyhidden">-name</span>
+						<span class="visuallyhidden">-{{ 'General.name' | translate }}</span>
 						<input type="radio" name="radiobutton2" id="radiobutton4" value="desc" [(ngModel)]="order" />
 						<svg style="transform: rotateZ(-90deg)" icon="icon_arrow"></svg>
 					</label>
