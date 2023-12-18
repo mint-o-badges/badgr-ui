@@ -24,12 +24,9 @@
 	<div class="panel">
 		<div class="center">
 			<h1 class="u-text-h2">{{ 'Start.ourIdeaTitle' | translate }}</h1>
-			<h4 class="u-text-h4">
-				Mit Hilfe der Open Badges von Mozilla, entwickeln wir ein offenes und skalierbares
-				Dokumentations-System, zum Nachweis von erworbenen Kompetenzen und Fähigkeiten im schulischen sowie
-				außerschulischen Umfeld.
-			</h4>
-			<h4>Durch ein E-Portfolio werden die Badges kontextualisiert und die Lernleistungen dokumentiert.</h4>
+			<h4 class="u-text-h4" [innerHTML]="'Start.ourIdeaDesc' | translate"></h4>
+
+
 		</div>
 		<img
 			src="assets/icon/mb_star_outline_blue.png"
@@ -44,10 +41,7 @@
 		<div class="center">
 			<h1 class="u-text-h2">{{ 'Start.ourApproachTitle' | translate }}</h1>
 			<h4 class="u-text-h4">
-				Unser Feedbacksystem motiviert die Teilnehmenden mit Freude zu lernen und verhilft ihnen zu einer
-				realistischen Selbsteinschätzung ihres eigenen Fortschritts. Gleichzeitig bietet es der Lernbegleitung
-				Orientierung über den Leistungsstand und bildet damit eine wichtige Grundlage für die weitere
-				didaktisch-pädagogische Planung des Lernprozesses.
+				{{ 'Start.ourApproachDesc' | translate }}
 			</h4>
 		</div>
 		<img
@@ -67,9 +61,8 @@
 					alt=""
 					style="max-height: 50px"
 				/>
-				<h4 class="u-text-bold" style="margin: 5px">#offen</h4>
-				Andere Einrichtungen können das System entsprechend ihrer Bildungsangebote ausbauen und
-				weiterentwickeln.
+				<h4 class="u-text-bold" style="margin: 5px">{{ 'Start.openTit' | translate }}</h4>
+				{{ 'Start.openDesc' | translate }}
 			</div>
 			<div class="grid-card">
 				<img
@@ -77,15 +70,13 @@
 					alt=""
 					style="max-height: 50px"
 				/>
-				<h4 class="u-text-bold" style="margin: 5px">#transparent &amp; flexibel</h4>
-				Der Lernende hat Einblick über sein Portfolio und kann selbstbestimmt entscheiden, wem er welche
-				Informationen zur Verfügung stellt.
+				<h4 class="u-text-bold" style="margin: 5px">{{ 'Start.transFlexTit' | translate }}</h4>
+				{{ 'Start.transFlexDesc' | translate }}
 			</div>
 			<div class="grid-card">
 				<img src="assets/icon/mb_principle_standard.png" alt="" style="max-height: 50px" />
-				<h4 class="u-text-bold" style="margin: 5px">#standardisiert</h4>
-				Durch den Zusammenschluss verschiedener Bildungsakteure wird ein Standardisierungswerkzeug geschaffen,
-				das Orientierung bietet.
+				<h4 class="u-text-bold" style="margin: 5px">{{ 'Start.standardTit' | translate }}</h4>
+				{{ 'Start.standardDesc' | translate }}
 			</div>
 			<div class="grid-card">
 				<img
@@ -93,9 +84,8 @@
 					alt=""
 					style="max-height: 50px"
 				/>
-				<h4 class="u-text-bold" style="margin: 5px">#motivierend</h4>
-				“Portfolio &amp; Badges” sind eine Form der Leistungsdarstellung; nicht der Bewertung. Sie fördern die
-				Wertschätzung für die erworbenen Kompetenzen und steigern die Selbstverantwortung des Lernenden.
+				<h4 class="u-text-bold" style="margin: 5px">{{ 'Start.motivTit' | translate }}</h4>
+				{{ 'Start.motivDesc' | translate }}
 			</div>
 			<div class="grid-card">
 				<img
@@ -103,9 +93,8 @@
 					alt=""
 					style="max-height: 50px"
 				/>
-				<h4 class="u-text-bold" style="margin: 5px">#digital &amp; dezentral</h4>
-				Wir setzen auf etablierte technische Standards auf, mit denen Kompetenznachweise digital erstellt und
-				dezentral verwaltet werden können.
+				<h4 class="u-text-bold" style="margin: 5px">{{ 'Start.digitalTit' | translate }}</h4>
+				{{ 'Start.digitalDesc' | translate }}
 			</div>
 			<div class="grid-card">
 				<img
@@ -113,9 +102,8 @@
 					alt=""
 					style="max-height: 50px"
 				/>
-				<h4 class="u-text-bold" style="margin: 5px">#individuell</h4>
-				“Portfolio &amp; Badges” können die individuellen Lernwege dokumentieren und fördern somit das
-				selbstbestimmte, lebenslange Lernen.
+				<h4 class="u-text-bold" style="margin: 5px">{{ 'Start.individTit' | translate }}</h4>
+				{{ 'Start.individDesc' | translate }}
 			</div>
 		</div>
 	</div>

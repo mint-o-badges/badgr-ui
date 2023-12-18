@@ -10,6 +10,7 @@ export const environment: BadgrEnvironment = {
 			welcomeMessage: 'Willkommen auf MINT-O-Badges',
 			serviceName: 'MINT-O-Badges',
 			showPoweredByBadgr: true,
+			showPoweredByOSL: true,
 			providedBy: {
 				name: 'openSenseLab gGmbH',
 				url: 'https://opensenselab.org',
