@@ -79,13 +79,24 @@
 		"loginWithMint-o-b": "würde dich gerne einloggen mit",
 		"fName": "Vorname",
 		"lName": "Nachname",
-		"pass8char": "Passwort (Mindestens 8 Zeichen)"
+		"pass8char": "Passwort (Mindestens 8 Zeichen)",
+		"confirmPassword": "Passwort bestätigen",
+		"createAccount": "Konto erstellen",
+		"receiveUpdates":"Ich möchte E-Mail-Updates zu Produkten, Dienstleistungen, bevorstehenden Webinaren, Neuigkeiten und Veranstaltungen von erhalten",
+		"readTerms":"Bitte lesen Sie die Nutzungsbedingungen und stimmen Sie ihnen zu, wenn Sie fortfahren möchten.",
+		"agreeToTerms1":"Ich habe die Nutzungsbedingungen gelesen und stimme ihnen zu. ",
+		"agreeToTerms2":"Die Nutzungsbedingungen",
+		"registerWithUs":"Registrier Dich mit",
+		"provideInfo":", indem Du die folgenden Informationen bereitstellst",
+		"signUpWith":"Anmelden mit",
+		"create": "Erstellen Sie ein",
+		"account":"Konto"
+
 	},
 	"login": {
 		"stayLogged": "Angemeldet bleiben",
 		"forgotPassword": "Password vergessen?",
-		"welcome": "Willkommen bei MINT-O-Badges",
-		"confirmPassword": "Passwort bestätigen"
+		"welcome": "Willkommen bei MINT-O-Badges"
 	},
 	"Legend": {
 		"legendTitle": "Legende",

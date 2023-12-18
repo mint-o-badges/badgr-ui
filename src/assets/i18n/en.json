@@ -80,10 +80,21 @@
 		"fName": "First name",
 		"lName": "Last name",
 		"pass8char": "Password (at least 8 characters)",
-		"confirmPassword": "Confirm Password"
+		"confirmPassword": "Confirm Password",
+		"createAccount": "Create Account",
+		"receiveUpdates":"I would like to receive email updates about products, services, upcoming webinars, news and events from",
+		"readTerms":"Please read and agree to the Terms of Service if you want to continue.",
+		"agreeToTerms1":"I have read and agree to the terms of service. ",
+		"agreeToTerms2":"Terms of Service",
+		"registerWithUs":"Register with us",
+		"provideInfo":", by providing the following information",
+		"signUpWith":"Sign Up With",
+		"create": "Create a",
+		"account":"ccount"
+
 	},
 	"login": {
-		"stayLogged": "Stay logged",
+		"stayLogged": "Stay logged in",
 		"forgotPassword": "Forgot password?",
 		"welcome": "Welcome to MINT-O-Badges"
 	},
