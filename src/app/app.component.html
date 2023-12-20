@@ -105,7 +105,7 @@
 						class="navitem"
 						routerLinkActive="navitem-is-active"
 						[routerLink]="['/recipient/badges']"
-						>{{ 'NavItems.backpack' | translate }}</a
+						>{{ 'General.backpack' | translate }}</a
 					>
 					<a
 						role="menuitem"
@@ -113,7 +113,7 @@
 						class="navitem"
 						routerLinkActive="navitem-is-active"
 						[routerLink]="['/recipient/badge-collections']"
-						>{{ 'NavItems.collections' | translate }}</a
+						>{{ 'General.collections' | translate }}</a
 					>
 					<button
 						role="menuitem"
@@ -154,9 +154,19 @@
 						routerLinkActive="navitem-is-active"
 						[bgPopupMenuTrigger]="accountMenu"
 					>
-						Account
+						{{ 'General.account' | translate }}
 						<svg class="navitem-x-icon" icon="icon_dropdown"></svg>
 					</button>
+
+					<div class="navitem" style="position: unset; color: white; display: flex; gap: 4px">
+						<button (click)="changeLng('de')" style="color: white">
+							<span [ngStyle]="{ 'font-weight': selectedLng == 'de' ? 'bold' : 'normal' }">DE</span>
+						</button>
+						<span style="align-self: center">|</span>
+						<button (click)="changeLng('en')" style="color: white">
+							<span [ngStyle]="{ 'font-weight': selectedLng == 'en' ? 'bold' : 'normal' }">EN</span>
+						</button>
+					</div>
 				</div>
 			</nav>
 		</ng-template>
@@ -223,6 +233,7 @@
 			<a routerLinkActive="menuitem-is-active" [routerLink]="['/public/about']">{{
 				'NavItems.aboutMint-O-Badges' | translate
 			}}</a>
+			<!-- mobile-nav language selection -->
 			<a
 				><div style="color: white; display: flex; gap: 4px">
 					<button (click)="changeLng('de')" style="color: white">
@@ -251,7 +262,7 @@
 		<div class="mobilenav-x-navitems">
 			<a [routerLink]="['/catalog/badges']">Badges</a>
 			<a [routerLink]="['/catalog/issuers']">{{ 'General.institutions' | translate }}</a>
-			<a [routerLink]="['/recipient/badges']">{{ 'NavItems.backpack' | translate }}</a>
+			<a [routerLink]="['/recipient/badges']">{{ 'General.backpack' | translate }}</a>
 			<a [routerLink]="['/recipient/badge-collections']">{{ 'NavItems.collections' | translate }}</a>
 
 			<hr class="mobilenav-x-rule" *ngIf="launchpoints?.length" />
@@ -268,7 +279,7 @@
 			<a [routerLink]="['/issuer']" *ngIf="showIssuersTab">{{ 'NavItems.myInstitutions' | translate }}</a>
 			<a [routerLink]="['/profile/app-integrations']">{{ 'NavItems.appIntegrations' | translate }}</a>
 			<a [routerLink]="['/public/about']">{{ 'NavItems.aboutMint-O-Badges' | translate }}</a>
-			<a [routerLink]="['/auth/logout']">Logout</a>
+			<a [routerLink]="['/auth/logout']">{{ 'NavItems.logout' | translate }}</a>
 		</div>
 	</nav>
 </header>
@@ -315,7 +326,7 @@
 				<li *ngIf="theme.showPoweredByOSL && theme.providedBy">
 					{{ 'Start.poweredBy' | translate }}
 					<a href="{{ theme.providedBy.url }}" target="_blank">{{ theme.providedBy.name }}</a>
-					using <a href="https://badgr.io">Badgr</a>
+					{{ 'Start.using' | translate }} <a href="https://badgr.io">Badgr</a>
 				</li>
 			</ul>
 

@@ -4,9 +4,9 @@
 	<div class="topbar">
 		<div class="l-containerxaxis topbar-x-wrap">
 			<h2 class="topbar-x-heading">
-				Sammlungen
+				{{ 'General.collections' | translate }}
 				<span class="topbar-x-internalheading" *ngIf="!!badgeCollections">
-					{{ badgeCollections.length }} {{ badgeCollections.length == 1 ? 'Sammlung' : 'Sammlungen' }}
+					{{ badgeCollections.length }} {{ badgeCollections.length == 1 ? "{{ 'General.collection' | translate }}" : 'Sammlungen' }}
 				</span>
 			</h2>
 			<button
@@ -14,7 +14,7 @@
 				[routerLink]="['/recipient/badge-collections/create']"
 				[disabled-when-requesting]="true"
 			>
-				Sammlung hinzufügen
+				{{ 'BadgeCollection.addCollection' | translate }}
 			</button>
 		</div>
 	</div>
@@ -22,15 +22,15 @@
 	<ng-template [bgAwaitPromises]="[collectionListLoaded]">
 		<!--  Empty state - collection has not badges -->
 		<div class="emptysection l-emptysection" *ngIf="badgeCollections.length == 0">
-			<h2 class="emptysection-x-headline">Du hast keine Sammlungen</h2>
-			<p class="emptysection-x-copy">Mit Sammlungen kannst du deine erhaltenen Badges organisieren und teilen.</p>
+			<h2 class="emptysection-x-headline">{{ 'BadgeCollection.noCollections' | translate }}</h2>
+			<p class="emptysection-x-copy">{{ 'BadgeCollection.collectionInfo' | translate }}</p>
 			<div class="emptysection-x-buttons">
 				<button
 					class="button button-secondary"
 					[routerLink]="['/recipient/badge-collections/create']"
 					[disabled-when-requesting]="true"
 				>
-					Sammlung erstellen
+					{{ 'BadgeCollection.createCollection' | translate }}
 				</button>
 			</div>
 			<div class="emptysection-x-imagecontainer">

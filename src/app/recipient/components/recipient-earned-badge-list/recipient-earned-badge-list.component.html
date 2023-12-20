@@ -10,14 +10,14 @@
 		</div>-->
 		<div class="l-containerxaxis topbar-x-wrap">
 			<h2 class="topbar-x-heading">
-				Rucksack
+				{{ 'General.backpack' | translate }}
 				<span class="topbar-x-internalheading" *ngIf="!!allBadges"
 					>{{ allBadges.length }} {{ allBadges.length == 1 ? 'Badge' : 'Badges' }}</span
 				>
 			</h2>
 			<div class="l-primarymore">
 				<button class="button topbar-x-button" (click)="addBadge()" [disabled-when-requesting]="true">
-					Badge hinzufügen
+					{{ 'RecBadge.addBadge' | translate }}
 				</button>
 				<!-- <button class="topbar-x-button buttonicon buttonicon-secondary" [bgPopupMenuTrigger]="collectionActionMenu">
 					<svg icon="icon_more"></svg>
@@ -43,16 +43,16 @@
 						<svg icon="icon_info"></svg>
 					</div>
 					<div class="notification-x-text">
-						<h2>Coming from Mozilla?</h2>
+						<h2>{{ 'RecBadge.fromMozilla' | translate }}</h2>
 						<p>
-							Let's finish
-							<button (click)="launchImport($event)" class="u-display-inline u-text-link">adding</button>
-							your badges.
+							{{ 'RecBadge.finisihAddBadge1' | translate }}
+							<button (click)="launchImport($event)" class="u-display-inline u-text-link">{{ 'RecBadge.finisihAddBadge2' | translate }}</button>
+							{{ 'RecBadge.finisihAddBadge3' | translate }}
 						</p>
 					</div>
 					<button (click)="hideMozz($event)" class="notification-x-close buttonicon buttonicon-clear">
 						<svg icon="icon_close"></svg>
-						<span class="visuallyhidden">Close Notification</span>
+						<span class="visuallyhidden">{{ 'RecBadge.closeNotification' | translate }}</span>
 					</button>
 				</div>
 			</div>
@@ -60,8 +60,8 @@
 
 		<!-- No badges, empty state! -->
 		<section class="emptysection l-emptysection" *ngIf="allBadges.length == 0">
-			<h2 class="emptysection-x-headline">Du hast noch keine Badges</h2>
-			<p class="emptysection-x-copy">Sammle und teile digitale Badges aus deinem Rucksack.</p>
+			<h2 class="emptysection-x-headline">{{ 'RecBadge.noBadgesYet' | translate }}</h2>
+			<p class="emptysection-x-copy">{{ 'RecBadge.collectShareBadges' | translate }}</p>
 			<div class="emptysection-x-imagecontainer">
 				<img alt="Illustration of backpack with badges" class="emptysection-x-image" [src]="noBadgesImageUrl" />
 			</div>
@@ -85,7 +85,7 @@
 				<div class="l-actionbar-x-groupby">
 					<label class="checkbox checkbox-small">
 						<input name="groupby" type="checkbox" [(ngModel)]="groupByIssuer" />
-						<span class="checkbox-x-text">Nach Institution gruppieren</span>
+						<span class="checkbox-x-text">{{ 'RecBadge.groupByInstitution' | translate }}</span>
 					</label>
 				</div>
 				<div
@@ -105,7 +105,7 @@
 						<svg icon="icon_grid"></svg>
 					</label>
 					<label class="viewtoggle-x-list">
-						<span class="visuallyhidden">list</span>
+						<span class="visuallyhidden">{{ 'General.list' | translate }}</span>
 						<input
 							type="radio"
 							name="radiobutton"
@@ -172,7 +172,7 @@
 					<thead class="datatable-x-head">
 						<tr class="datatable-x-header">
 							<th class="datatable-x-cell" scope="col">Badge</th>
-							<th class="datatable-x-cell" scope="col">Institution</th>
+							<th class="datatable-x-cell" scope="col">{{ 'RecBadge.institution' | translate }}</th>
 							<th class="datatable-x-cell" scope="col">Vergeben am</th>
 							<th class="datatable-x-cell" scope="col"><span class="visuallyhidden">Actions</span></th>
 						</tr>

@@ -6,7 +6,7 @@
 		<oauth-banner></oauth-banner>
 
 		<!-- Title Message -->
-		<h3 class="u-text-h3-bold" id="heading-form">{{ 'Signup.create' | translate }} {{ theme.serviceName || 'Badgr' }} {{ 'Signup.account' | translate }}</h3>
+		<h3 class="u-text-h3-bold" id="heading-form">{{ 'Signup.create' | translate }} {{ theme.serviceName || 'Badgr' }} {{ 'General.account' | translate }}</h3>
 		<p class="u-text u-text-body u-responsivemargin-top1x2x" *ngIf="!oAuthManager.currentAuthorization">
 			{{ 'Signup.youHaveAccount' | translate }}
 			<a [routerLink]="['/auth/login']">Sign in</a>.

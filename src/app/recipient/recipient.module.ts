@@ -18,6 +18,7 @@ import {CommonEntityManagerModule} from '../entity-manager/entity-manager.module
 import { RecipientBadgeCollectionSelectionDialogComponent } from "./components/recipient-badge-collection-selection-dialog/recipient-badge-collection-selection-dialog.component";
 import { RecipientBadgeSelectionDialog } from "./components/recipient-badge-selection-dialog/recipient-badge-selection-dialog.component";
 import { MozzTransitionModule } from "../mozz-transition/mozz-transition.module";
+import { TranslateModule } from '@ngx-translate/core';
 
 const routes: Routes = [
 	/* Recipient Badges */
@@ -65,7 +66,8 @@ const routes: Routes = [
 		BadgrCommonModule,
 		CommonEntityManagerModule,
 		RouterModule.forChild(routes),
-		MozzTransitionModule
+		MozzTransitionModule,
+		TranslateModule
 	],
 	declarations: [
 		RecipientEarnedBadgeListComponent,

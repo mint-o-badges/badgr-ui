@@ -3,17 +3,23 @@
 		"yes": "Yes",
 		"no": "No",
 		"name": "Name",
-		"institutions": "Institutions"
+		"institutions": "Institutions",
+		"account": "Account",
+		"backpack": "Backpack",
+		"list":"list",
+		"collection": "Collection",
+		"collections": "Collections",
+		"cancel":"Cancel"
+
 	},
 	"NavItems": {
 		"register": "Register",
 		"aboutMint-O-Badges": "About MINT-O-Badges",
-		"backpack": "Backpack",
-		"collections": "Collections",
 		"profile": "Profile",
 		"myInstitutions": "My institutions",
 		"appIntegrations": "App integrations",
-		"openMenu": "Open Menu"
+		"openMenu": "Open Menu",
+		"logout": "Ausloggen"
 	},
 	"Start": {
 		"desc1": "A learner-centered approach",
@@ -38,7 +44,8 @@
 		"individTit": "#individual",
 		"individDesc": "“Portfolio & Badges“ can document individual learning paths and thus promote self-determined, lifelong learning.",
 		"serverDown": "Ups! The server is not responding.",
-		"relodePage": "Please reload the page."
+		"relodePage": "Please reload the page.",
+		"using": "unter Verwendung von"
 	},
 	"Issuer": {
 		"map": "map",
@@ -82,16 +89,14 @@
 		"pass8char": "Password (at least 8 characters)",
 		"confirmPassword": "Confirm Password",
 		"createAccount": "Create Account",
-		"receiveUpdates":"I would like to receive email updates about products, services, upcoming webinars, news and events from",
-		"readTerms":"Please read and agree to the Terms of Service if you want to continue.",
-		"agreeToTerms1":"I have read and agree to the terms of service. ",
-		"agreeToTerms2":"Terms of Service",
-		"registerWithUs":"Register with us",
-		"provideInfo":", by providing the following information",
-		"signUpWith":"Sign Up With",
-		"create": "Create a",
-		"account":"ccount"
-
+		"receiveUpdates": "I would like to receive email updates about products, services, upcoming webinars, news and events from",
+		"readTerms": "Please read and agree to the Terms of Service if you want to continue.",
+		"agreeToTerms1": "I have read and agree to the terms of service. ",
+		"agreeToTerms2": "Terms of Service",
+		"registerWithUs": "Register with us",
+		"provideInfo": ", by providing the following information",
+		"signUpWith": "Sign Up With",
+		"create": "Create a"
 	},
 	"login": {
 		"stayLogged": "Stay logged in",
@@ -140,5 +145,31 @@
 		"A6": "Data protection has the highest priority, which is why we work with maximum data efficiency. The issuer only requires an email address from the learner. The badges are saved to this email address.",
 		"Q7": "7. Where are the badges?",
 		"A7": "The badges are currently in a database at the University of Münster. As the project expands and the MVP is further developed, the plan is to find a suitable location that ensures free access for learners at all times and guarantees the ongoing and secure storage and storage of the badges."
+	},
+	"RecBadge": {
+		"addBadge": "Add badge",
+		"fromMozilla": "Coming from Mozilla?",
+		"finisihAddBadge1": "Let's finish",
+		"finisihAddBadge2": "adding",
+		"finisihAddBadge3": "your badges.",
+		"closeNotification": "Close Notification",
+		"noBadgesYet": "You don't have any badges yet",
+		"collectShareBadges": "Collect and share digital badges from your backpack.",
+		"groupByInstitution": "Nach Institution gruppieren",
+		"institution": "Institution"
+	},
+	"BadgeCollection":{
+		"earnedBy":"earned by",
+		"addCollection":"Add collection",
+		"noCollections":"You have no collections",
+		"collectionInfo":"Collections allow you to organize and share the badges you've earned.",
+		"createCollection":"Create collection",
+		"share":"Share",
+		"orginzeBadges":"Organize your badges into collections.",
+		"collectionName":"Name of the collections",
+		"enterCollectioName":"Please enter a name for the collection",
+		"remainingChar":"remaining characters",
+		"description":"Description",
+		"provideDescription":"Please provide a description"
 	}
 }

@@ -3,17 +3,23 @@
 		"yes": "Ja",
 		"no": "Nein",
 		"name": "Name",
-		"institutions": "Institutionen"
+		"institutions": "Institutionen",
+		"account": "Konto",
+		"backpack": "Rucksack",
+		"list":"list",
+		"collection": "Sammlung",
+		"collections": "Sammlungen",
+		"cancel":"Abbrechen"
+
 	},
 	"NavItems": {
 		"register": "Registrieren",
 		"aboutMint-O-Badges": "Über MINT-O-Badges",
-		"backpack": "Rucksack",
-		"collections": "Sammlungen",
 		"profile": "Profil",
 		"myInstitutions": "Meine Institutionen",
 		"appIntegrations": "App Integrationen",
-		"openMenu": "Menü öffnen"
+		"openMenu": "Menü öffnen",
+		"logout": "Logout"
 	},
 	"Start": {
 		"desc1": "Ein lernerzentrierter Ansatz",
@@ -38,7 +44,8 @@
 		"individTit": "#individuell",
 		"individDesc": "“Portfolio & Badges” können die individuellen Lernwege dokumentieren und fördern somit das selbstbestimmte, lebenslange Lernen.",
 		"serverDown": "Ups! Der Server antwortet nicht.",
-		"relodePage": "Bitte die Seite neu laden."
+		"relodePage": "Bitte die Seite neu laden.",
+		"using": "using"
 	},
 	"Issuer": {
 		"map": "katre",
@@ -82,16 +89,14 @@
 		"pass8char": "Passwort (Mindestens 8 Zeichen)",
 		"confirmPassword": "Passwort bestätigen",
 		"createAccount": "Konto erstellen",
-		"receiveUpdates":"Ich möchte E-Mail-Updates zu Produkten, Dienstleistungen, bevorstehenden Webinaren, Neuigkeiten und Veranstaltungen von erhalten",
-		"readTerms":"Bitte lesen Sie die Nutzungsbedingungen und stimmen Sie ihnen zu, wenn Sie fortfahren möchten.",
-		"agreeToTerms1":"Ich habe die Nutzungsbedingungen gelesen und stimme ihnen zu. ",
-		"agreeToTerms2":"Die Nutzungsbedingungen",
-		"registerWithUs":"Registrier Dich mit",
-		"provideInfo":", indem Du die folgenden Informationen bereitstellst",
-		"signUpWith":"Anmelden mit",
-		"create": "Erstellen Sie ein",
-		"account":"Konto"
-
+		"receiveUpdates": "Ich möchte E-Mail-Updates zu Produkten, Dienstleistungen, bevorstehenden Webinaren, Neuigkeiten und Veranstaltungen von erhalten",
+		"readTerms": "Bitte lesen Sie die Nutzungsbedingungen und stimmen Sie ihnen zu, wenn Sie fortfahren möchten.",
+		"agreeToTerms1": "Ich habe die Nutzungsbedingungen gelesen und stimme ihnen zu. ",
+		"agreeToTerms2": "Die Nutzungsbedingungen",
+		"registerWithUs": "Registrier Dich mit",
+		"provideInfo": ", indem Du die folgenden Informationen bereitstellst",
+		"signUpWith": "Anmelden mit",
+		"create": "Erstellen Sie ein"
 	},
 	"login": {
 		"stayLogged": "Angemeldet bleiben",
@@ -140,5 +145,31 @@
 		"A6": " Datenschutz hat höchste Priorität, daher wird maximal datensparsam gearbeitet. Der Issuer benötigt von dem Lernenden nur eine Email-Adresse. Auf diese Email-Adresse werden die Badges gespeichert.",
 		"Q7": "7. Wo liegen die Badges?",
 		"A7": " Aktuell befinden sich die Badges in einer Datenbank der Universität Münster. Geplant ist mit Ausbau des Projektes und Weiterentwicklung des MVP hierfür einen geeigneten Ort zu finden, der jederzeit einen freien Zugang für Lernende sicherstellt und die andauernde und sichere Aufbewahrung und Speicherung der Badges garantiert."
+	},
+	"RecBadge": {
+		"addBadge": "Badge hinzufügen",
+		"fromMozilla": "Kommt von Mozilla?",
+		"finisihAddBadge1": "Lassen Sie uns",
+		"finisihAddBadge2": "das Hinzufügen",
+		"finisihAddBadge3": "Ihrer Abzeichen beenden.",
+		"closeNotification": "Benachrichtigung schließen",
+		"noBadgesYet": "Du hast noch keine Badges",
+		"collectShareBadges": "Sammle und teile digitale Badges aus deinem Rucksack.",
+		"groupByInstitution": "Group by institution",
+		"institution": "Institution"
+	},
+	"BadgeCollection":{
+		"addCollection":"Sammlung hinzufügen",
+		"earnedBy":"verdient von",
+		"noCollections":"Du hast keine Sammlungen",
+		"collectionInfo":"Mit Sammlungen kannst du deine erhaltenen Badges organisieren und teilen.",
+		"createCollection":"Sammlung erstellen",
+		"share":"Teilen",
+		"orginzeBadges":"Organisiere deine Badges in Sammlungen.",
+		"collectionName":"Name der Sammlungen",
+		"enterCollectioName":"Bitte gebe einen Namen der Sammlung ein",
+		"remainingChar":"verbleibende Zeichen",
+		"description":"Beschreibung",
+		"provideDescription":"Bitte gebe eine Beschreibung an"
 	}
 }
