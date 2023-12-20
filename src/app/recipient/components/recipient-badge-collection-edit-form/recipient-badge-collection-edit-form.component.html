@@ -27,11 +27,13 @@
 					<a class="button button-secondary"
 						 [disabled-when-requesting]="true"
 						 (click)="cancelEditing()"
+						 i18n
 					>Cancel</a>
 					<button class="button" type="submit"
 								[disabled]="!! savePromise"
 								[loading-promises]="[ savePromise ]"
 								loading-message="Saving"
+								i18n
 					>Save</button>
 				</div>
 			</fieldset>

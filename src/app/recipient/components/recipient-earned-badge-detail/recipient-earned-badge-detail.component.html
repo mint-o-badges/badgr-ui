@@ -18,15 +18,16 @@
 					class="button"
 					type="button"
 					(click)="shareBadge()"
+					i18n
 				>
 					Share Badge
 				</button>
 				<button class="buttonicon buttonicon-secondary" id="actionstrigger" [bgPopupMenuTrigger]="moreMenu">
 					<svg icon="icon_more"></svg>
-					<span class="visuallyhidden">More</span>
+					<span class="visuallyhidden" i18n>More</span>
 				</button>
 				<bg-popup-menu #moreMenu>
-					<a class="menuitem" [href]="verifyUrl"><svg icon="icon_checkmark"></svg>Verify</a>
+					<a class="menuitem" [href]="verifyUrl" i18n><svg icon="icon_checkmark"></svg>Verify</a>
 					<!--<a class="menuitem"
 						[href]="v2JsonUrl"
 						>Download JSON</a>
@@ -39,11 +40,12 @@
 						(click)="exportPdf()"
 						loading-message="Loading badge..."
 						[disabled-when-requesting]="true"
+						i18n
 					>
 						<svg icon="icon_file"></svg>Export to PDF
 					</button>
 					<button class="menuitem" (click)="deleteBadge(badge)" [disabled-when-requesting]="true">
-						<svg icon="icon_remove"></svg>Delete
+						<svg icon="icon_remove" i18n></svg>Delete
 					</button>
 					<ng-container *ngIf="launchpoints">
 						<a class="menuitem" *ngFor="let lp of launchpoints" (click)="clickLaunchpoint(lp)">
@@ -81,7 +83,7 @@
 							/>
 						</div>
 						<div>
-							<dt class="u-text-small-bold u-text-dark2">Issued by:</dt>
+							<dt class="u-text-small-bold u-text-dark2" i18n>Issued by:</dt>
 							<dd class="u-text">
 								<a class="u-break-word" [href]="badge.badgeClass.issuer.id">{{
 									badge.badgeClass.issuer.name
@@ -90,13 +92,13 @@
 						</div>
 					</div>
 					<dt
-						class="u-text-small-bold u-padding-top2x u-margin-top2x border border-top border-light3 u-text-dark2"
+						class="u-text-small-bold u-padding-top2x u-margin-top2x border border-top border-light3 u-text-dark2" i18n
 					>
 						Issued on:
 					</dt>
 					<dd class="u-text"><time [date]="badge?.issueDate" format="mediumDate"></time></dd>
 					<dt
-						class="u-text-small-bold u-padding-top2x u-margin-top2x border border-top border-light3 u-text-dark2"
+						class="u-text-small-bold u-padding-top2x u-margin-top2x border border-top border-light3 u-text-dark2" i18n
 					>
 						Awarded to:
 					</dt>
@@ -116,7 +118,7 @@
 			</div>
 		</div>
 		<div class="badgedetail-x-desc">
-			<h2 class="u-text-h3-semibold u-margin-bottom2x u-text-dark2 u-hidden-mintablet">Description</h2>
+			<h2 class="u-text-h3-semibold u-margin-bottom2x u-text-dark2 u-hidden-mintablet" i18n>Description</h2>
 			<p class="u-text-body u-width-paragraph">{{ badge.badgeClass.description }}</p>
 		</div>
 		<div class="badgedetail-x-body">
@@ -124,7 +126,7 @@
 			<section
 				*ngIf="badge.badgeClass.criteria_url || badge.badgeClass.criteria_text || badge.badgeClass.criteria"
 			>
-				<h3 class="u-text-h3-semibold u-margin-bottom2x u-text-dark2 u-margin-top4x">Criteria</h3>
+				<h3 class="u-text-h3-semibold u-margin-bottom2x u-text-dark2 u-margin-top4x" i18n>Criteria</h3>
 				<show-more class="u-margin-bottom8x" *ngIf="badge.badgeClass.criteria_text">
 					<markdown-display
 						id="recipient-earned-badge-detail-markdown-display"
@@ -132,7 +134,7 @@
 					></markdown-display>
 				</show-more>
 				<div class="u-margin-yaxis2x" *ngIf="badge.badgeClass.criteria_url">
-					<a class="u-text-outlink" target="_blank" [href]="badge.badgeClass.criteria_url"
+					<a class="u-text-outlink" target="_blank" [href]="badge.badgeClass.criteria_url" i18n
 						>View external Criteria URL
 						<svg icon="icon_external_link"></svg>
 					</a>
@@ -143,7 +145,7 @@
 			<section>
 				<h3
 					class="u-text-h3-semibold u-margin-bottom2x u-text-dark2 u-margin-top4x"
-					*ngIf="badge.badgeClass.alignment && badge.badgeClass?.alignment.length > 0"
+					*ngIf="badge.badgeClass.alignment && badge.badgeClass?.alignment.length > 0" i18n
 				>
 					Alignment
 				</h3>
@@ -162,7 +164,7 @@
 							*ngIf="alignment.targetUrl"
 							class="u-text-outlink"
 							[href]="alignment.targetUrl"
-							target="_blank"
+							target="_blank" i18n
 							>View alignment URL
 							<svg icon="icon_external_link"></svg>
 						</a>
@@ -172,7 +174,7 @@
 
 			<!-- tags -->
 			<section *ngIf="badge.badgeClass.tags.length > 0">
-				<h3 class="u-text-h3-semibold u-margin-bottom2x u-text-dark2 u-margin-top4x">Tags</h3>
+				<h3 class="u-text-h3-semibold u-margin-bottom2x u-text-dark2 u-margin-top4x" i18n>Tags</h3>
 				<div class="l-tags">
 					<div class="tag" *ngFor="let tag of badge.badgeClass.tags; last as last">{{ tag }}</div>
 				</div>
@@ -184,6 +186,7 @@
 					<h3
 						class="u-text-h3-semibold u-margin-bottom2x u-text-dark2 u-margin-top4x"
 						*ngIf="badge.evidence_items?.length > 0 || badge.narrative"
+						i18n
 					>
 						Narrative
 					</h3>
@@ -193,7 +196,7 @@
 				</div>
 				<div *ngFor="let evidence of badge.evidence_items; let i = index" class="u-break-word">
 					<div *ngIf="badge.evidence_items?.length > 0 || badge.narrative">
-						<h3 class="u-text-h3-semibold u-margin-bottom2x u-text-dark2 u-margin-top4x">Evidence</h3>
+						<h3 class="u-text-h3-semibold u-margin-bottom2x u-text-dark2 u-margin-top4x" i18n>Evidence</h3>
 						<markdown-display [value]="evidence.narrative"></markdown-display>
 					</div>
 					<div class="u-margin-yaxis2x">
@@ -202,6 +205,7 @@
 							class="u-text-outlink"
 							[href]="evidence.evidence_url"
 							target="_blank"
+							i18n
 							>View Evidence URL
 							<svg icon="icon_external_link"></svg>
 						</a>
@@ -212,11 +216,12 @@
 			<!-- collections -->
 			<section>
 				<div class="l-flex l-flex-1x l-flex-justifybetween u-margin-bottom2x u-margin-top4x">
-					<h2 class="u-text-h3-semibold u-text-dark2">Collections</h2>
+					<h2 class="u-text-h3-semibold u-text-dark2" i18n>Collections</h2>
 					<button
 						[class.connectionadd-is-added]="badge.collections.length > 0"
 						(click)="manageCollections()"
 						class="button button-secondary"
+						i18n
 					>
 						Add to Collection
 					</button>
@@ -227,8 +232,8 @@
 				>
 					<thead class="datatable-x-head">
 						<tr class="datatable-x-header">
-							<th class="datatable-x-cell">Collection</th>
-							<th class="datatable-x-cell"><span class="visuallyhidden">Actions</span></th>
+							<th class="datatable-x-cell" i18n>Collection</th>
+							<th class="datatable-x-cell"><span class="visuallyhidden" i18n>Actions</span></th>
 						</tr>
 					</thead>
 					<tbody class="datatable-x-body">
@@ -238,7 +243,7 @@
 							</td>
 							<td class="datatable-x-cell">
 								<div class="l-flex l-flex-justifyend">
-									<button class="u-text-link-small" (click)="removeCollection(collection)">
+									<button class="u-text-link-small" (click)="removeCollection(collection)" i18n>
 										Remove
 									</button>
 								</div>

@@ -11,14 +11,14 @@
 		</div> -->
 
 		<div class="formsection-x-help">
-			<h3 class="u-text-body-bold">Badge Basics</h3>
-			<p class="u-text u-margin-top1x u-margin-bottom2x">
-				Badge Bilder können entweder PNGs oder SVGs oder die über die Iconsuche gewählten Icons sein. Um das
-				gewählte Bild/Icon wird automatisch, je nach Kategorie, ein Rahmen gesetzt.
+			<h3 class="u-text-body-bold" i18n>Badge Basics</h3>
+			<p class="u-text u-margin-top1x u-margin-bottom2x" i18n>
+				Badge images can be either PNGs or SVGs or the icons selected via the icon search. About that
+				A frame is automatically placed on the selected image/icon, depending on the category.
 			</p>
 			<br />
-			<a href="javascript:;" (click)="openLegend()" class="u-text-outlink"
-				>Was bedeuten die Rahmen und Farben?
+			<a href="javascript:;" (click)="openLegend()" class="u-text-outlink" i18n
+				>What do the frames and colors mean?
 			</a>
 		</div>
 		<div class="formsection-x-body">
@@ -50,7 +50,7 @@
 				<bg-formfield-text
 					[control]="badgeClassForm.rawControlMap.badge_name"
 					label="Name"
-					[errorMessage]="{ required: 'Bitte gib dem Badge einen Namen' }"
+					[errorMessage]="{ required: 'Please give the badge a name' }"
 					[autofocus]="true"
 				></bg-formfield-text>
 			</div>
@@ -58,10 +58,10 @@
 			<div class="forminput">
 				<bg-formfield-text
 					[control]="badgeClassForm.rawControlMap.badge_description"
-					label="Kurzbeschreibung"
+					label="Short description"
 					id="badgeclass_description_input"
-					placeholder="Kurze Beschreibung der Leistung"
-					[errorMessage]="{ required: 'Bitte gib eine Beschreibung ein' }"
+					placeholder="Short description of the service"
+					[errorMessage]="{ required: 'Please enter a description' }"
 					[multiline]="true"
 				></bg-formfield-text>
 			</div>
@@ -71,18 +71,18 @@
 	<!-- Criteria Panel -->
 	<div class="formsection">
 		<div class="formsection-x-title">
-			<h2 class="u-text-dark2">
-				Kriterien
-				<span>(Mindestens eines der Felder ist verpflichtend.)</span>
+			<h2 class="u-text-dark2" i18n>
+				Criteria
+				<span>(At least one of the fields is mandatory.)</span>
 			</h2>
 		</div>
 
 		<div class="formsection-x-help">
-			<h3 class="u-text-body-bold">Was sind die Kriterien?</h3>
-			<p class="u-text u-margin-top1x u-margin-bottom2x">
-				Das Kriterienfeld beschreibt genau, was getan werden muss, um das Badge zu erhalten. Einige Issuer
-				wählen eine URL auf ihrer Website als Informationsseite, die erklärt worum es bei dem Badge geht und wie
-				man es erhält.
+			<h3 class="u-text-body-bold" i18n>What are the criteria?</h3>
+			<p class="u-text u-margin-top1x u-margin-bottom2x" i18n>
+				The criteria field describes exactly what needs to be done to receive the badge. Some issuers
+				choose a URL on your website as an information page that explains what the badge is about and how
+				you receive it.
 			</p>
 		</div>
 		<div class="formsection-x-body">
@@ -92,14 +92,15 @@
 						<p
 							[hidden]="!alignmentFieldDirty || !badgeClassForm.hasError('criteriaRequired')"
 							class="u-text u-margin-bottom2x u-text-error"
+							i18n
 						>
-							Entweder Text oder eine URL sind verpflichtend.
+							Either text or a URL is mandatory.
 						</p>
 
 						<bg-formfield-markdown
 							[control]="badgeClassForm.rawControlMap.badge_criteria_text"
 							[newValue]="badgeClassForm.rawControlMap.badge_criteria_text.value"
-							label=" Wie bekommt man dieses Badge?"
+							label=" How do you get this badge?"
 							class="l-formsection-x-inputoffset"
 							[errorMessage]="''"
 						></bg-formfield-markdown>
@@ -113,7 +114,7 @@
 					label="URL"
 					[urlField]="true"
 					fieldType="url"
-					errorMessage="URL zu den Badge Kriterien"
+					errorMessage="URL to the badge criteria"
 				></bg-formfield-text>
 			</div>
 		</div>
@@ -122,23 +123,23 @@
 	<!-- Criteria Panel -->
 	<div class="formsection">
 		<div class="formsection-x-title">
-			<h2 class="u-text-dark2">Dauer</h2>
+			<h2 class="u-text-dark2" i18n>Duration</h2>
 		</div>
 
 		<div class="formsection-x-help">
-			<h3 class="u-text-body-bold">Was ist die Dauer?</h3>
-			<p class="u-text u-margin-top1x u-margin-bottom2x">
-				Im Dauerfeld beschreibst Du den zeitlichen Umfang der Leistung, die nötig ist, um das Badge zu erhalten.
+			<h3 class="u-text-body-bold" i18n>What is the duration?</h3>
+			<p class="u-text u-margin-top1x u-margin-bottom2x" i18n>
+				In the duration field you describe the time scope of the service that is necessary to receive the badge.
 			</p>
 		</div>
 		<div class="formsection-x-body">
 			<div class="forminput u-margin-bottom2x">
 				<bg-formfield-text
 					[control]="badgeClassForm.rawControlMap.badge_study_load"
-					label="Dauer in Stunden"
+					label="Duration in hours"
 					[fieldType]="'number'"
 					[errorMessage]="{
-						required: 'Bitte gib die Dauer der Leistung zum Erhalt des Badges ein.'
+						required: 'Please enter the duration of the service to receive the badge.'
 					}"
 				></bg-formfield-text>
 			</div>
@@ -147,28 +148,28 @@
 
 	<div class="formsection">
 		<div class="formsection-x-title">
-			<h2 class="u-text-dark2">Kategorie</h2>
+			<h2 class="u-text-dark2" i18n>Category</h2>
 		</div>
 
 		<div class="formsection-x-help">
-			<h3 class="u-text-body-bold">Was ist die Kategorie?</h3>
-			<p class="u-text u-margin-top1x u-margin-bottom2x">
-				Als Kategorie wählst Du zwischen der Teilnahme/Erfolg, der Mitgliedschaft, einer fachlichen Kompetenz
-				oder einer Metakompetenz.
+			<h3 class="u-text-body-bold" i18n>What is the category?</h3>
+			<p class="u-text u-margin-top1x u-margin-bottom2x" i18n>
+				As a category you choose between participation/success, membership, professional competence
+				or a meta-competence.
 			</p>
 			<br />
-			<a href="javascript:;" (click)="openLegend()" class="u-text-outlink">Mehr zu den Kategorien </a>
+			<a href="javascript:;" (click)="openLegend()" class="u-text-outlink" i18n>More about the categories </a>
 		</div>
 		<div class="formsection-x-body">
 			<div class="forminput u-margin-bottom2x">
 				<bg-formfield-select
-					ariaLabel="Wähle eine Kategorie"
+					ariaLabel="Choose a category"
 					[control]="badgeClassForm.rawControlMap.badge_category"
-					label="Kategorie"
-					[placeholder]="'Wähle eine Kategorie'"
+					label="Category"
+					[placeholder]="'Choose a category'"
 					[optionMap]="categoryOptions"
 					[errorMessage]="{
-						required: 'Bitte wähle die Kategorie des Badges aus.'
+						required: 'Please select the badge category.'
 					}"
 				></bg-formfield-select>
 			</div>
@@ -177,15 +178,15 @@
 
 	<div class="formsection">
 		<div class="formsection-x-title">
-			<h2 class="u-text-dark2">Stufe</h2>
+			<h2 class="u-text-dark2" i18n>Level</h2>
 		</div>
 
 		<div class="formsection-x-help">
-			<h3 class="u-text-body-bold">Was ist die Stufe?</h3>
-			<p class="u-text u-margin-top1x u-margin-bottom2x">
-				Kompetenzen werden in 6 Stufen abgebildet: A1 Einsteiger*in, A1 Entdecker*in, B1 Insider*in, B2
-				Expert*in, C1 Leader*in und C2 Vorreiter*in. Im Badge Bild erkennt man die Stufe durch die Anzahl der
-				markeirten Kanten im Uhrzeigersinn.
+			<h3 class="u-text-body-bold" i18n>What is the stage?</h3>
+			<p class="u-text u-margin-top1x u-margin-bottom2x" i18n>
+				Competencies are represented in 6 levels: A1 beginner, A1 explorer, B1 insider, B2
+				Expert, C1 leader and C2 pioneer. In the badge image you can recognize the level by the number of them
+				marked edges clockwise.
 			</p>
 		</div>
 		<div class="formsection-x-body">
@@ -211,22 +212,22 @@
 	<!-- alignments -->
 	<div *ngIf="alignmentsEnabled" class="formsection">
 		<div class="formsection-x-title">
-			<h2 class="u-text-dark2">
-				Verknüpfung
+			<h2 class="u-text-dark2" i18n>
+				Shortcut
 				<span>(Optional)</span>
 			</h2>
 			<button type="button" (click)="disableAlignments()" class="buttonicon buttonicon-link">
 				<svg icon="icon_close"></svg>
-				<span class="visuallyhidden">Close</span>
+				<span class="visuallyhidden" i18n>Close</span>
 			</button>
 		</div>
 
 		<div class="formsection-x-help">
-			<h3 class="u-text-body-bold">Was ist die Verknüpfung?</h3>
-			<p class="u-text u-margin-top1x u-margin-bottom2x">
-				Open Badges können optional mit Bildungsstandards verknüpft werden. Diese Verknüpfungsinformation kann
-				für Menschen wichtig sein, die sehen welche Badges man erhalten hat oder für Menschen, die sich
-				überlegen ein bestimmtes Badge zu erhalten.
+			<h3 class="u-text-body-bold" i18n>Was ist die Verknüpfung?</h3>
+			<p class="u-text u-margin-top1x u-margin-bottom2x" i18n>
+				Open badges can optionally be linked to educational standards. This link information can
+				be important for people who see which badges you have received or for people who
+				consider receiving a specific badge.
 			</p>
 		</div>
 		<div class="formsection-x-body">
@@ -240,6 +241,7 @@
 						type="button"
 						(click)="removeAlignment(alignment)"
 						class="u-text-link"
+						i18n
 					>
 						Remove
 					</button>
@@ -263,7 +265,7 @@
 
 						<bg-formfield-text
 							[control]="alignment.rawControlMap.target_description"
-							label="Kurzbeschreibung"
+							label="Short description"
 							[multiline]="true"
 							id="alignment_description_{{ i }}"
 						></bg-formfield-text>
@@ -273,8 +275,9 @@
 							(click)="showAdvanced[i] = true"
 							type="button"
 							class="u-text-link-small u-margin-yaxis2x"
+							i18n
 						>
-							Zeige erweiterte Optionen
+							Show advanced options
 						</button>
 
 						<ng-template [ngIf]="showAdvanced[i]">
@@ -282,14 +285,15 @@
 								(click)="showAdvanced[i] = false"
 								type="button"
 								class="u-text-link-small u-margin-yaxis2x"
+								i18n
 							>
-								Verstecke erweiterte Optionen
+								Hide advanced options
 							</button>
 
-							<label class="forminput-x-label u-margin-top2x" for="forminput2">Rahmen</label>
+							<label class="forminput-x-label u-margin-top2x" for="forminput2" i18n>Frame</label>
 							<input type="text" id="forminput2" name="forminput2" />
 
-							<label class="forminput-x-label u-margin-top2x" for="url">Code</label>
+							<label class="forminput-x-label u-margin-top2x" for="url" i18n>Code</label>
 							<input type="text" id="url" name="url" />
 						</ng-template>
 					</div>
@@ -297,8 +301,8 @@
 			</ng-container>
 
 			<div class="l-stack">
-				<button (click)="addAlignment()" type="button" class="button button-secondary">
-					Verknüpfung hinzufügen
+				<button (click)="addAlignment()" type="button" class="button button-secondary" i18n>
+					Add shortcut
 				</button>
 			</div>
 		</div>
@@ -307,21 +311,21 @@
 	<!-- tags -->
 	<div *ngIf="tagsEnabled" class="formsection">
 		<div class="formsection-x-title">
-			<h2 class="u-text-dark2">
+			<h2 class="u-text-dark2" i18n>
 				Tags
 				<span>(Optional)</span>
 			</h2>
 			<button type="button" (click)="disableTags()" class="buttonicon buttonicon-link">
 				<svg icon="icon_close"></svg>
-				<span class="visuallyhidden">Close</span>
+				<span class="visuallyhidden" i18n>Close</span>
 			</button>
 		</div>
 
 		<div class="formsection-x-help">
-			<h3 class="u-text-body-bold">Was sind Tags?</h3>
-			<p class="u-text u-margin-top1x u-margin-bottom2x">
-				Tags sind eine optionale Art und Weise eine Badge zu beschreiben. Tags helfen bei der Suche von Badges
-				zu bestimmten Themen.
+			<h3 class="u-text-body-bold" i18n>Was sind Tags?</h3>
+			<p class="u-text u-margin-top1x u-margin-bottom2x" i18n>
+				Tags are an optional way to describe a badge. Tags help you find badges
+				on certain topics.
 			</p>
 		</div>
 		<div class="formsection-x-body">
@@ -330,13 +334,13 @@
 					{{ tag }}
 					<button class="buttonicon buttonicon-link">
 						<svg icon="icon_close" (click)="removeTag(tag)"></svg>
-						<span class="visuallyhidden">Löschen</span>
+						<span class="visuallyhidden" i18n>Delete</span>
 					</button>
 				</div>
 			</div>
 
 			<div class="forminput forminput-withbutton forminput-light1 u-width-formsmall u-margin-top3x">
-				<label class="forminput-x-label visuallyhidden" for="addtag">Add Tag</label>
+				<label class="forminput-x-label visuallyhidden" for="addtag" i18n>Add Tag</label>
 				<div class="forminput-x-inputs">
 					<input
 						name="addtag"
@@ -348,8 +352,8 @@
 						placeholder="Neuer Tag..."
 					/>
 					<div class="forminput-x-button">
-						<button type="button" (click)="addTag()" class="button button-secondary button-informinput">
-							Hinzufügen
+						<button type="button" (click)="addTag()" class="button button-secondary button-informinput" i18n>
+							Add
 						</button>
 					</div>
 				</div>
@@ -360,37 +364,37 @@
 	<!-- expiration -->
 	<div *ngIf="expirationEnabled" class="formsection">
 		<div class="formsection-x-title">
-			<h2 class="u-text-dark2">
-				Gültigkeit
+			<h2 class="u-text-dark2" i18n>
+				Validity
 				<span>(Optional)</span>
 			</h2>
 			<button type="button" (click)="disableExpiration()" class="buttonicon buttonicon-link">
 				<svg icon="icon_close"></svg>
-				<span class="visuallyhidden">Schliessen</span>
+				<span class="visuallyhidden" i18n>Close</span>
 			</button>
 		</div>
 
 		<div class="formsection-x-help">
-			<h3 class="u-text-body-bold">Was ist die Gültikgeit?</h3>
-			<p class="u-text u-margin-top1x u-margin-bottom2x">
-				Beschreiben Sie die Dauer, für die dieses Badge allgemein gültig ist. Diese Information kann auch bei
-				der Vergabe geändert werden. Badges werden nach Ablauf der Gültigkeit als abgelaufen markiert.
+			<h3 class="u-text-body-bold" i18n>What is the validity?</h3>
+			<p class="u-text u-margin-top1x u-margin-bottom2x" i18n>
+				Describe the duration for which this badge is generally valid. This information can also be found at
+the award can be changed. Badges are marked as expired once their validity expires.
 			</p>
 		</div>
 		<div class="formsection-x-body">
 			<div class="l-spacestack">
 				<bg-formfield-text
 					[control]="expirationForm.rawControlMap.expires_amount"
-					label="Anzahl"
+					label="Number"
 					[fieldType]="'number'"
 					[max]="1000"
 					[maxchar]="4"
 				></bg-formfield-text>
 				<bg-formfield-select
-					ariaLabel="Wähle Dauer"
+					ariaLabel="Choose duration"
 					[control]="expirationForm.rawControlMap.expires_duration"
 					label="Dauer"
-					[placeholder]="'Wähle Dauer'"
+					[placeholder]="'Choose duration'"
 					[optionMap]="durationOptions"
 				></bg-formfield-select>
 			</div>
@@ -399,24 +403,25 @@
 
 	<!-- add options -->
 	<div class="formsection formsection-nohelp">
-		<h2 class="formsection-x-title">Optionale Details</h2>
+		<h2 class="formsection-x-title" i18n>Optional details</h2>
 		<div class="formsection-x-body">
 			<ul>
 				<li class="l-flex l-flex-justifybetween l-flex-aligncenter u-padding-bottom2x">
 					<div class="l-flex l-flex-2x">
 						<svg class="icon icon-dark4" width="24px" viewBox="0 0 24 24" icon="icon_link"></svg>
-						<p class="u-text-body-semibold u-text-dark2">Verknüpfung zu Bildungsstandards</p>
+						<p class="u-text-body-semibold u-text-dark2" i18n>Link to educational standards</p>
 					</div>
 					<button
 						type="button"
 						(click)="enableAlignments()"
 						*ngIf="!alignmentsEnabled"
 						class="u-text-link-small"
+						i18n
 					>
-						hinzufügen
+						add
 					</button>
-					<button type="button" disabled *ngIf="alignmentsEnabled" class="u-text-link-small u-text-light4">
-						hinzugefügt
+					<button type="button" disabled *ngIf="alignmentsEnabled" class="u-text-link-small u-text-light4" i18n>
+						added
 					</button>
 				</li>
 				<li
@@ -424,13 +429,13 @@
 				>
 					<div class="l-flex l-flex-2x">
 						<svg class="icon icon-dark4" width="24px" viewBox="0 0 24 24" icon="icon_tags"></svg>
-						<p class="u-text-body-semibold u-text-dark2">Tags</p>
+						<p class="u-text-body-semibold u-text-dark2" i18n>Tags</p>
 					</div>
-					<button type="button" (click)="enableTags()" *ngIf="!tagsEnabled" class="u-text-link-small">
-						hinzufügen
+					<button type="button" (click)="enableTags()" *ngIf="!tagsEnabled" class="u-text-link-small" i18n>
+						add
 					</button>
-					<button type="button" *ngIf="tagsEnabled" disabled class="u-text-link-small u-text-light4">
-						hinzugefügt
+					<button type="button" *ngIf="tagsEnabled" disabled class="u-text-link-small u-text-light4" i18n>
+						added
 					</button>
 				</li>
 				<li
@@ -438,18 +443,19 @@
 				>
 					<div class="l-flex l-flex-2x">
 						<svg class="icon icon-dark4" width="24px" viewBox="0 0 24 24" icon="icon_pending"></svg>
-						<p class="u-text-body-semibold u-text-dark2">Gültigkeit</p>
+						<p class="u-text-body-semibold u-text-dark2" i18n>validity</p>
 					</div>
 					<button
 						type="button"
 						(click)="enableExpiration()"
 						*ngIf="!expirationEnabled"
 						class="u-text-link-small"
+						i18n
 					>
-						hinzufügen
+						add
 					</button>
-					<button type="button" disabled *ngIf="expirationEnabled" class="u-text-link-small u-text-light4">
-						hinzugefügt
+					<button type="button" disabled *ngIf="expirationEnabled" class="u-text-link-small u-text-light4" i18n>
+						added
 					</button>
 				</li>
 			</ul>
@@ -458,8 +464,8 @@
 
 	<div class="formsection formsection-nohelp">
 		<div class="formsection-x-body">
-			<a href="https://openbadges.org/" class="u-text-outlink">
-				Finde mehr über Open Badges heraus
+			<a href="https://openbadges.org/" class="u-text-outlink" i18n>
+				Find out more about Open Badges
 				<svg icon="icon_external_link"></svg>
 			</a>
 		</div>
@@ -471,6 +477,7 @@
 			[disabled-when-requesting]="true"
 			(click)="cancelClicked()"
 			class="button button-secondary"
+			i18n
 		>
 			Cancel
 		</button>

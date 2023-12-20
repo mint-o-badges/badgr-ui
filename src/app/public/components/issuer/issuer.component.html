@@ -47,29 +47,28 @@
 							{{ issuer.description }}
 						</p>
 						<div class="u-margin-top1x">
-							<a class="u-text-outlink" target="_blank" [href]="issuer.url"
-								>Website besuchen<svg icon="icon_external_link"></svg
-							></a>
+							<a class="u-text-outlink" target="_blank" [href]="issuer.url" i18n
+								>Visit website<svg icon="icon_external_link"></svg>
+							</a>
 						</div>
 					</div>
 					<div class="topbar-x-buttons">
 						<div class="l-primarymore">
-							<a class="button" href="mailto:{{ issuer.email }}">Institution kontaktieren</a>
+							<a class="button" href="mailto:{{ issuer.email }}" i18n>Contact institution</a>
 							<button
 								class="buttonicon buttonicon-secondary"
 								id="actionstrigger"
 								[bgPopupMenuTrigger]="moreMenu"
 							>
 								<svg icon="icon_more"></svg>
-								<span class="visuallyhidden">Mehr</span>
+								<span class="visuallyhidden" i18n>More</span>
 							</button>
 							<bg-popup-menu #moreMenu>
 								<a class="menuitem" target="_blank" [href]="rawJsonUrl"
-									><svg icon="icon_external_link"></svg>JSON ansehen</a
+									><svg icon="icon_external_link" i18n></svg>JSON view</a
 								>
-								<a class="menuitem" target="_blank" [href]="issuer.sourceUrl" *ngIf="issuer.sourceUrl"
-									><svg icon="icon_external_link"></svg>Original ansehen</a
-								>
+								<a class="menuitem" target="_blank" [href]="issuer.sourceUrl" *ngIf="issuer.sourceUrl" i18n
+									><svg icon="icon_external_link"></svg>Original view</a>
 							</bg-popup-menu>
 						</div>
 					</div>
@@ -91,7 +90,7 @@
 				>
 					<thead class="datatable-x-head">
 						<tr class="datatable-x-header">
-							<th class="datatable-x-cell" scope="col">Badge</th>
+							<th class="datatable-x-cell" scope="col" i18n>Badge</th>
 						</tr>
 					</thead>
 					<tbody class="datatable-x-body">

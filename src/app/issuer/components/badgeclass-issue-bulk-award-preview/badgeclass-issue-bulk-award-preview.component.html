@@ -1,16 +1,16 @@
 <section class="l-containerxaxis l-containeryaxis">
 	<div class="select-csvUpload">
 		<div class="contentlong u-width-form">
-			<h2>CSV Spalten</h2>
-			<p *ngIf="importPreviewData?.rows">
-				Hier ist eine Vorschau der ersten
+			<h2 i18n>CSV Columns</h2>
+			<p *ngIf="importPreviewData?.rows" i18n>
+				Here's a preview of the first one
 				{{
 					importPreviewData.rows.length < MAX_ROWS_TO_DISPLAY
 						? importPreviewData.rows.length
 						: MAX_ROWS_TO_DISPLAY
 				}}
-				von {{ importPreviewData.rows.length }} Zeilen deiner Datei. Wähle die entsprechende Überschrift welche
-				zu der jeweiligen Spalte deiner CSV Datei passt.
+				from {{ importPreviewData.rows.length }} lines of your file. Choose the appropriate heading
+				matches the respective column of your CSV file.
 			</p>
 		</div>
 		<table class="datatable datatable-roundheaders datatable-headers">
@@ -30,9 +30,9 @@
 									[value]="columnHeaderName.destColumn"
 									(change)="mapDestNameToSourceName(columnId, selectDest.value)"
 								>
-									<option value="NA">N/A</option>
-									<option value="email">E-Mail</option>
-									<option value="evidence">Nachweis URL</option>
+									<option value="NA" i18n>N/A</option>
+									<option value="email" i18n>E-Mail</option>
+									<option value="evidence" i18n>Proof URL</option>
 								</select>
 							</div>
 						</label>
@@ -62,22 +62,23 @@
 
 	<!-- BUTTONS -->
 	<div class="l-flex l-flex-2x u-margin-top2x">
-		<button class="button button-secondary" (click)="updateViewState('import')">Abbrechen</button>
+		<button class="button button-secondary" (click)="updateViewState('import')" i18n>Cancel</button>
 
 		<button
 			class="button l-marginLeft-x2"
 			[class.button-is-disabled]="buttonDisabledClass"
 			[attr.disabled]="buttonDisabledAttribute"
 			(click)="generateImportPreview()"
+			i18n
 		>
-			Weiter
+			Further
 		</button>
 	</div>
 </section>
 
 <div *ngIf="rowIsLongerThanHeader">
-	<p class="u-text u-width-form">
-		Die CSV Datei enthält Zeilen länger als ihre Überschrift. Bitte behebe diesen Fehler und versuche es erneut.
+	<p class="u-text u-width-form" i18n>
+		The CSV file contains lines longer than its heading. Please fix this error and try again.
 		<!-- <button type="button" (click)="rowIsLongerThanHeader = false">Dismiss</button> -->
 	</p>
 </div>

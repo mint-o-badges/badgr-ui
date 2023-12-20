@@ -12,7 +12,8 @@
 		"outDir": "../out-tsc/app",
 		"baseUrl": "./",
 		"types": [
-			"node"
-		]
+      "node",
+      "@angular/localize"
+    ]
 	}
 }

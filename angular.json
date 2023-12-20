@@ -7,6 +7,10 @@
 			"root": ".",
 			"sourceRoot": "src",
 			"projectType": "application",
+			"i18n": {
+				"sourceLocale": "en-US",
+				"locales": {}
+			},
 			"architect": {
 				"build": {
 					"builder": "@angular-devkit/build-angular:browser",
@@ -15,7 +19,10 @@
 						"index": "src/index.html",
 						"main": "src/main.ts",
 						"tsConfig": "src/tsconfig.app.json",
-            "polyfills": "src/polyfills.ts",
+            			"polyfills": "src/polyfills.ts",
+						"localize": [
+							"en-US"
+						],
 						"assets": [
 							"src/assets",
                             "src/breakdown",

@@ -19,11 +19,11 @@
 				<img [src]="authLinkLogoSrc" height="72" width="72px" alt="Logo" />
 			</div>
 			<div class="authlist">
-				<div class="authlist-x-title">
+				<div class="authlist-x-title" i18n>
 					{{ authorizingApp?.application?.name }} would like to
 				</div>
 				<ul class="authlist-x-items">
-					<li class="authlist-x-item">
+					<li class="authlist-x-item" i18n>
 						<svg icon="icon_member"></svg>
 						Know who you are on {{ theme.serviceName || "Badgr" }}
 					</li>
@@ -33,7 +33,7 @@
 					</li>
 				</ul>
 			</div>
-			<p class="u-text-small text-dark4 u-margin-yaxis2x">
+			<p class="u-text-small text-dark4 u-margin-yaxis2x" i18n>
 				By clicking Authorize, you are allowing this application and
 				{{ theme.serviceName || "Badgr" }} to use your information in accordance
 				with their respective terms of service and privacy policies. You can
@@ -41,13 +41,14 @@
 				menu.
 			</p>
 			<form class="l-stack l-stack-buttons">
-				<button class="button" type="submit" (click)="authorizeApp()">
+				<button class="button" type="submit" (click)="authorizeApp()"  i18n>
 					Authorize
 				</button>
 				<button
 					class="button button-secondary"
 					type="button"
 					(click)="cancelAuthorization()"
+					i18n
 				>
 					Cancel
 				</button>

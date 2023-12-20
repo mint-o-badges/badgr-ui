@@ -2,7 +2,7 @@
 	<div class="dialog-x-box o-container">
 
 		<div class="dialog-x-header">
-			<h1>Add Member</h1>
+			<h1 i18n>Add Member</h1>
 			<button
 				(click)="closeDialog()"
 				class="buttonicon buttonicon-link">
@@ -14,10 +14,10 @@
 		<div class="u-padding-all3x">
 
 			<div class="l-flex l-flex-justifybetween u-margin-bottom3x">
-				<p class="u-text-body">New Staff Members must create and verify a Badgr account prior to being added to an issuer.</p>
+				<p class="u-text-body" i18n>New Staff Members must create and verify a Badgr account prior to being added to an issuer.</p>
 			</div>
 
-			<h3 class="u-margin-bottom2x u-text-small-bold">Choose Role</h3>
+			<h3 class="u-margin-bottom2x u-text-small-bold" i18n>Choose Role</h3>
 			<form
 				[formGroup]="staffCreateForm.rawControl"
 				(ngSubmit)="submitStaffCreate()">
@@ -49,7 +49,7 @@
 					</div>
 					<div class="notification-x-text">
 
-						<h2>Failed to add member!</h2>
+						<h2 i18n>Failed to add member!</h2>
 						<p>{{error}}</p>
 
 					</div>
@@ -57,11 +57,11 @@
 
 				<div class="l-stack l-stack-buttons u-margin-top4x">
 					<button
-						class="button">Add Member</button>
+						class="button" i18n>Add Member</button>
 					<button
 						class="button button-secondary"
 						type="button"
-						(click)="$event.preventDefault(); closeDialog();">Cancel</button>
+						(click)="$event.preventDefault(); closeDialog();" i18n>Cancel</button>
 				</div>
 
 			</form>

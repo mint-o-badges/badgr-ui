@@ -1,19 +1,19 @@
 <section class="l-containerxaxis l-containeryaxis">
 	<div class="u-width-form">
 		<article class="contentlong">
-			<h2>Anleitung</h2>
-			<p>
-				Du kannst eine Liste von Empfänger*innen importieren welche den Badge erhalten sollen. Die Datei muss
-				folgendermaßen aussehen:
+			<h2 i18n>Instructions</h2>
+			<p i18n>
+				You can import a list of recipients who should receive the badge. The file must
+				look like this:
 			</p>
-			<ol>
-				<li>E-Mail Adresse und Nachweis URL beinhalten</li>
+			<ol i18n>
+				<li>Include email address and proof URL</li>
 				<li>CSV oder TXT Format.</li>
 			</ol>
-			<p>
-				Benutze diese
-				<a [href]="badgrBulkIssueTemplateUrl" download="badgr-bulk-issue-template.csv"> Beispiel Vorlage </a>
-				um eine CSV oder TXT Datei zu erstellen
+			<p i18n>
+				Use these
+				<a [href]="badgrBulkIssueTemplateUrl" download="badgr-bulk-issue-template.csv"> Example template </a>
+				to create a CSV or TXT file
 			</p>
 		</article>
 		<form [formGroup]="csvForm" class>
@@ -31,15 +31,16 @@
 		</form>
 
 		<div class="l-flex l-flex-1x u-margin-top2x">
-			<button class="button button-secondary" (click)="updateViewState('cancel')">Abbrechen</button>
+			<button class="button button-secondary" (click)="updateViewState('cancel')" i18n>Cancel</button>
 
 			<button
 				class="button l-marginLeft-x2"
 				[class.button-is-disabled]="rawCsv === null"
 				[attr.disabled]="rawCsv ? null : true"
 				(click)="importAction()"
+				i18n
 			>
-				Importieren
+				Import
 			</button>
 		</div>
 	</div>

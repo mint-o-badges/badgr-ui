@@ -13,7 +13,7 @@
 				(click)="cancelDialog()"
 				class="buttonicon buttonicon-link">
 				<svg icon="icon_close"></svg>
-				<span class="visuallyhidden">Close</span>
+				<span class="visuallyhidden" i18n>Close</span>
 			</button>
 		</header>
 
@@ -31,7 +31,7 @@
 			<table class="datatable datatable-roundheaders datatable-singlecolumn" *bgAwaitPromises="[collectionListLoaded]">
 				<thead class="datatable-x-head">
 					<tr class="datatable-x-header">
-						<th class="datatable-x-cell">Collection</th>
+						<th class="datatable-x-cell" i18n>Collection</th>
 					</tr>
 				</thead>
 				<tbody class="datatable-x-body">
@@ -52,12 +52,12 @@
 			</table>
 
 			<div class="l-stack l-stack-buttons u-margin-top3x">
-				<button class="button" (click)="saveDialog()">Apply</button>
-				<button class="button button-secondary" (click)="cancelDialog()">Cancel</button>
+				<button class="button" (click)="saveDialog()" i18n>Apply</button>
+				<button class="button button-secondary" (click)="cancelDialog()" i18n>Cancel</button>
 			</div>
 		</div>
 		
-		<div class="bordered bordered-top" *ngIf="badgeCollectionsResults.length == 0">
+		<div class="bordered bordered-top" *ngIf="badgeCollectionsResults.length == 0" i18n>
 			No Available Collections
 		</div>
 		

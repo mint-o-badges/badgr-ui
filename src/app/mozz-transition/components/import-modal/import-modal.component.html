@@ -11,51 +11,51 @@
 					<div class="l-flex l-flex-justifyend u-responsivepadding-xaxis u-responsivepadding-yaxis">
 						<button (click)="closeDialog()" class="buttonicon buttonicon-linklight">
 							<svg icon="icon_close"></svg>
-							<span class="visuallyhidden">Close</span>
+							<span class="visuallyhidden" i18n>Close</span>
 						</button>
 					</div>
 					<div class="u-padding-bottom6x">
 						<div class="progresstracker ">
 							<div class="progresstrackeritem progresstrackeritem-basic progresstrackeritem-is-complete">
 								<span class="progresstrackeritem-x-status">
-									<span>
+									<span i18n>
 										Complete
 										<svg icon="icon_complete"></svg>
 									</span>
 								</span>
 								<div class="progresstrackeritem-x-text">
-									<h3 class="progresstrackeritem-x-texttitle">
+									<h3 class="progresstrackeritem-x-texttitle" i18n>
 										Step 1
 									</h3>
-									<p>Download your ZIP file</p>
+									<p i18n>Download your ZIP file</p>
 								</div>
 							</div>
 							<div class="progresstrackeritem progresstrackeritem-basic progresstrackeritem-is-complete">
 								<span class="progresstrackeritem-x-status">
-									<span>
+									<span i18n>
 										In progress
 										<svg icon="icon_complete"></svg>
 									</span>
 								</span>
 								<div class="progresstrackeritem-x-text">
-									<h3 class="progresstrackeritem-x-texttitle">
+									<h3 class="progresstrackeritem-x-texttitle" i18n>
 										Step 2
 									</h3>
-									<p>Access Badgr</p>
+									<p i18n>Access Badgr</p>
 								</div>
 							</div>
 							<div class="progresstrackeritem progresstrackeritem-basic progresstrackeritem-is-inprogress">
 								<span class="progresstrackeritem-x-status">
-									<span>
+									<span i18n>
 										Not started
 										<svg icon="icon_more"></svg>
 									</span>
 								</span>
 								<div class="progresstrackeritem-x-text">
-									<h3 class="progresstrackeritem-x-texttitle">
+									<h3 class="progresstrackeritem-x-texttitle" i18n>
 										Step 3
 									</h3>
-									<p>Upload your badges</p>
+									<p i18n>Upload your badges</p>
 								</div>
 							</div>
 						</div>
@@ -64,21 +64,21 @@
 
 				<div class="u-responsivepadding-xaxis u-responsivepadding-yaxis">
 
-					<h1 class="u-text-h3 u-margin-bottom2x"><span class="u-text-bold">Step 3:</span> Upload your badges</h1>
-					<p class="u-text u-margin-bottom6x">Your badges are in the zip file from Mozilla.</p>
+					<h1 class="u-text-h3 u-margin-bottom2x" i18n><span class="u-text-bold">Step 3:</span> Upload your badges</h1>
+					<p class="u-text u-margin-bottom6x" i18n>Your badges are in the zip file from Mozilla.</p>
 
 					<ng-template [ngIf]="noManifestError">
 						<div class="l-flex l-flex-1x">
 							<svg class="icon icon-error" icon="icon_error"></svg>
-							<p class="u-text-body-bold u-text-dark1">Oops!</p>
+							<p class="u-text-body-bold u-text-dark1" i18n>Oops!</p>
 						</div>
-						<p class="u-text-small u-text-error u-margin-yaxis1x">That’s not the file from Mozilla. Please try again.</p>
+						<p class="u-text-small u-text-error u-margin-yaxis1x" i18n>That’s not the file from Mozilla. Please try again.</p>
 					</ng-template>
 
 					<ng-template [ngIf]="serverErrors.length" >
 						<div class="l-flex l-flex-1x">
 							<svg class="icon icon-error" icon="icon_error"></svg>
-							<p class="u-text-body-bold u-text-dark1">Oops!</p>
+							<p class="u-text-body-bold u-text-dark1" i18n>Oops!</p>
 						</div>
 						<p *ngFor="let serverError of serverErrors" class="u-text-small u-text-error u-margin-yaxis1x">
 							{{serverError.error}}
@@ -108,7 +108,7 @@
 					<label class="dropzone" *ngIf="inProgress">
 					<div class="l-flex l-flex2x l-flex-column l-flex-aligncenter u-width-xsmall u-padding-xaxis3x">
 						<div class="loaderspin loaderspin-medium u-margin-bottom3x"></div>
-						<p class="u-text-small u-text-center">
+						<p class="u-text-small u-text-center" i18n>
 							We’re uploading your badge(s).
 							<br>This might take a minute.
 						</p>
@@ -119,14 +119,14 @@
 					<ng-template [ngIf]="successes">
 						<div class="l-flex l-flex-1x u-margin-top2x">
 							<svg class="icon icon-success" icon="icon_complete"></svg>
-							<p class="u-text-body-bold u-text-dark1">Congrats! {{successes}} badges of {{attempts}} uploaded will be added to your Backpack</p>
+							<p class="u-text-body-bold u-text-dark1" i18n>Congrats! {{successes}} badges of {{attempts}} uploaded will be added to your Backpack</p>
 						</div>
 					</ng-template>
 
 					<!-- verify emails list -->
 					<ng-template [ngIf]="unverifiedEmails.length">
 						<form (submit)="verifyEmails()">
-						<p class="u-text u-margin-top1x">
+						<p class="u-text u-margin-top1x" i18n>
 							We also found badges awarded to the following email addresses. You'll need to verify these email addresses before you can import the badges.
 						</p>
 						<div class="u-background-light3 border borderradius u-padding-xaxis2x u-padding-top2x u-padding-bottom1x u-margin-top2x">
@@ -145,7 +145,7 @@
 							</div>
 						</div>
 
-						<button type="submit" class="button button-full u-margin-top3x">Send Verification Emails</button>
+						<button type="submit" class="button button-full u-margin-top3x" i18n>Send Verification Emails</button>
 						</form>
 					</ng-template>
 
@@ -153,21 +153,21 @@
 					<ng-template [ngIf]="!successes && !unverifiedEmails.length && serverErrors.length && !inProgress" >
 						<div class="l-flex l-flex-1x">
 							<svg class="icon icon-error" icon="icon_error"></svg>
-							<p class="u-text-body-bold u-text-dark1">No Badges will be added.</p>
+							<p class="u-text-body-bold u-text-dark1" i18n>No Badges will be added.</p>
 						</div>
 
-						<p class="u-text u-margin-top1x">
+						<p class="u-text u-margin-top1x" i18n>
 							Only valid badges can be added to your backpack. The good news is that your badges are saved on your device and available for you at any time.
 						</p>
 						<div class="u-margin-top1x u-margin-bottom2x">
-							<a href="//support.badgr.com/portal/kb/articles/mozilla-backpack-transition-to-badgr-faqs" class="u-text-link">What happened?</a>
+							<a href="//support.badgr.com/portal/kb/articles/mozilla-backpack-transition-to-badgr-faqs" class="u-text-link" i18n>What happened?</a>
 						</div>
 
 						<div class="l-flex l-flex-column l-flex-aligncenter u-background-light3 border borderradius u-padding-all2x">
-							<h3 class="u-text-small-bold u-text-center">But Wait!</h3>
-							<p class="u-text-small u-text-center u-margin-bottom2x">You can earn a badge in less than 5 min. Promise.</p>
+							<h3 class="u-text-small-bold u-text-center" i18n>But Wait!</h3>
+							<p class="u-text-small u-text-center u-margin-bottom2x" i18n>You can earn a badge in less than 5 min. Promise.</p>
 
-							<a href="//explore.badgr.io/" class="button button-small">Earn a Badge</a>
+							<a href="//explore.badgr.io/" class="button button-small" i18n>Earn a Badge</a>
 						</div>
 					</ng-template>
 

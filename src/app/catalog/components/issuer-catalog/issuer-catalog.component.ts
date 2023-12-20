@@ -77,19 +77,19 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 
 	plural = {
 		issuer: {
-			"=0": "Keine Institutionen",
+			"=0": "No institutions",
 			"=1": "1 Institution",
-			other: "# Institutionen",
+			other: "# Institutions",
 		},
 		badges: {
-			"=0": "Keine Badges",
+			"=0": "No Badges",
 			"=1": '<strong class="u-text-bold">1</strong> Badge',
 			other: '<strong class="u-text-bold">#</strong> Badges',
 		},
 		recipient: {
-			"=0": "Kein Empfänger",
-			"=1": "1 Empfänger",
-			other: "# Empfänger",
+			"=0": "No recipient",
+			"=1": "1 Recipient",
+			other: "# Recipient",
 		},
 	};
 

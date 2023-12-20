@@ -1,17 +1,17 @@
 <form-message></form-message>
 <div class="topbar">
 	<div class="l-containerxaxis">
-		<div class="topbar-x-heading">App Integrationen</div>
-		<div class="topbar-x-subheading">
-			Folgende Apps und Seiten haben Zugriff auf deinen
+		<div class="topbar-x-heading" i18n>App integrations</div>
+		<div class="topbar-x-subheading" i18n>
+			The following apps and sites have access to yours
 			{{ configService.theme['serviceName'] || 'Badgr' }} Account
 		</div>
 	</div>
 </div>
 <div class="l-containerxaxis l-containeryaxis" *bgAwaitPromises="[appIntegrationsSet.loadedPromise]">
 	<!-- EMPTY STATE: Integration List -->
-	<p class="u-text" *ngIf="0 == oAuthApps.length && 0 == appIntegrationsSet.length">
-		Keine App Integrationen vorhanden
+	<p class="u-text" *ngIf="0 == oAuthApps.length && 0 == appIntegrationsSet.length" i18n>
+		No app integrations available
 	</p>
 	<div class="l-grid l-grid-cards" *ngIf="oAuthApps.length > 0 || appIntegrationsSet.length > 0">
 		<!-- Integration List -->
@@ -36,7 +36,7 @@
 				<div class="integrationcard-x-desc">{{ integration.description }}</div>
 			</div>
 			<div class="integrationcard-x-footer">
-				<div class="integrationcard-x-status">{{ integration.active ? 'Aktiv' : 'Inaktiv' }}</div>
+				<div class="integrationcard-x-status" i18n>{{ integration.active ? 'Active' : 'Inactive' }}</div>
 			</div>
 		</div>
 		<!-- oAuth App Integration List -->
@@ -52,21 +52,22 @@
 				>
 					{{ app.name }}
 				</a>
-				<div class="integrationcard-x-desc">
-					Diese App hat Zugriff auf deinen {{ configService.theme['serviceName'] || 'Badgr' }} Account.
+				<div class="integrationcard-x-desc" i18n>
+					This app has access to your {{ configService.theme['serviceName'] || 'Badgr' }} Account.
 				</div>
 			</div>
 			<div class="integrationcard-x-footer">
-				<div class="integrationcard-x-status">
-					Authorisiert: <strong><time [date]="app.createdDate" format="mediumDate"></time></strong>
+				<div class="integrationcard-x-status" i18n>
+					Authorized: <strong><time [date]="app.createdDate" format="mediumDate"></time></strong>
 				</div>
 				<button
 					class="integrationcard-x-link"
 					type="button"
 					[attr.aria-labelledby]="'appCardTitle-' + app.entityId"
 					(click)="revokeApp(app)"
+					i18n
 				>
-					Zurücknehmen
+					Take back
 				</button>
 			</div>
 		</div>

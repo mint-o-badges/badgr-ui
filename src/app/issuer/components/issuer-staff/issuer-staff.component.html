@@ -13,14 +13,14 @@
 					[src]="issuerImagePlaceHolderUrl"
 					alt="Default issuer image"
 				/>
-				<h1 class="topbar-x-heading">
-					{{ isCurrentUserIssuerOwner ? 'Mitglieder bearbetien' : 'Mitglieder' }}
+				<h1 class="topbar-x-heading" i18n>
+					{{ isCurrentUserIssuerOwner ? 'Edit members' : 'Members' }}
 				</h1>
-				<div class="topbar-x-subheading">
+				<div class="topbar-x-subheading" i18n>
 					{{
 						isCurrentUserIssuerOwner
-							? 'Bearbeite die Mitglieder der Institution.'
-							: 'Diese Mitglieder haben Zugriff auf die Institution.'
+							? 'Edit the members of the institution.'
+							: 'These members have access to the institution.'
 					}}
 				</div>
 			</div>
@@ -29,17 +29,17 @@
 
 	<div class="l-containerxaxis l-containeryaxis">
 		<div class="l-stack u-margin-bottom2x" *ngIf="isCurrentUserIssuerOwner">
-			<p class="u-text-h3-bold">Mitglieder</p>
+			<p class="u-text-h3-bold" i18n>Members</p>
 			<issuer-staff-create-dialog #issuerStaffCreateDialog></issuer-staff-create-dialog>
-			<button class="button button-secondary" (click)="addStaff()">Mitglied hinzufügen</button>
+			<button class="button button-secondary" (click)="addStaff()" i18n>Add member</button>
 		</div>
 
 		<table class="datatable datatable-roundheaders datatable-onlyfirstcolumntablet datatable-verticalalignmiddle">
 			<thead class="datatable-x-head">
 				<tr class="datatable-x-header">
-					<th class="datatable-x-cell">Name</th>
-					<th class="datatable-x-cell">ID</th>
-					<th class="datatable-x-cell">Rolle</th>
+					<th class="datatable-x-cell" i18n>Name</th>
+					<th class="datatable-x-cell" i18n>ID</th>
+					<th class="datatable-x-cell" i18n>Role</th>
 				</tr>
 			</thead>
 			<tbody class="datatable-x-body">
@@ -51,7 +51,7 @@
 								{{ memberId(member) }}
 							</p>
 							<div class="forminput forminput-full" *ngIf="isCurrentUserIssuerOwner">
-								<div class="forminput-x-label">Role</div>
+								<div class="forminput-x-label" i18n>Role</div>
 								<div class="forminput-x-inputs">
 									<select
 										[value]="member.roleSlug"
@@ -75,6 +75,7 @@
 									[disabled-when-requesting]="true"
 									(click)="removeMember(member)"
 									*ngIf="member != issuer.currentUserStaffMember"
+									i18n
 								>
 									Entfernen
 								</button>
@@ -110,8 +111,9 @@
 									[disabled-when-requesting]="true"
 									(click)="removeMember(member)"
 									*ngIf="member != issuer.currentUserStaffMember"
+									i18n
 								>
-									Entfernen
+									Remove
 								</button>
 							</div>
 						</div>

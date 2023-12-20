@@ -83,7 +83,7 @@
 				</div>
 			</div>
 			<div class="badgedetail-x-desc">
-				<h2 class="u-text-h3-semibold u-margin-bottom2x u-hidden-mintablet">Description</h2>
+				<h2 class="u-text-h3-semibold u-margin-bottom2x u-hidden-mintablet" i18n>Description</h2>
 				<p class="u-text-body u-width-paragraph">{{ badgeClass.description }}</p>
 			</div>
 			<div class="badgedetail-x-body">
@@ -91,7 +91,7 @@
 				<!-- criteria -->
 				<section *ngIf="badgeClass.criteria">
 					<h3 class="u-text-h3-semibold u-text-dark2 u-margin-bottom2x u-margin-top4x"
-						*ngIf="badgeClass.criteria.id || badgeClass.criteria.narrative"
+						*ngIf="badgeClass.criteria.id || badgeClass.criteria.narrative" i18n
 						>Criteria</h3>
 					<show-more>
 						<markdown-display
@@ -102,7 +102,7 @@
 					<div class="u-margin-yaxis2x"
 							*ngIf="badgeClass.criteria.id">
 							<a class="u-text-outlink" target="_blank"
-								[href]="badgeClass.criteria.id"
+								[href]="badgeClass.criteria.id" i18n
 							>View External Criteria URL
 								<svg icon="icon_external_link"></svg>
 							</a>
@@ -131,7 +131,7 @@
 						<div class="u-margin-yaxis2x"
 							 *ngIf="alignmentNode.targetUrl">
 							<a class="u-text-outlink" target="_blank"
-								[href]="alignmentNode.targetUrl"
+								[href]="alignmentNode.targetUrl" i18n
 							>View alignment URL
 								<svg icon="icon_external_link"></svg>
 							</a>
@@ -142,7 +142,7 @@
 				<!-- tags -->
 				<section>
 					<h3 class="u-text-h3-semibold u-margin-bottom2x u-margin-top4x"
-						*ngIf="badgeClass.tags && badgeClass.tags.length">Tags</h3>
+						*ngIf="badgeClass.tags && badgeClass.tags.length" i18n>Tags</h3>
 					<div class="l-tags">
 						<div class="tag"
 							*ngFor="let tag of badgeClass.tags; last as last"

@@ -2,8 +2,8 @@
 
 <header class="topbar">
 	<div class="l-containerxaxis topbar-x-wrap">
-		<h2 class="topbar-x-heading">
-			Institutionen
+		<h2 class="topbar-x-heading" i18n>
+			Institutions
 			<ng-template [showLoader]="false" [bgAwaitPromises]="[issuersLoaded]">
 				<span class="topbar-x-internalheading">
 					{{ issuers.length | i18nPlural: plural['issuer'] }}
@@ -15,8 +15,9 @@
 			*ngIf="!features.disableIssuers"
 			[routerLink]="['/issuer/create']"
 			[disabled-when-requesting]="true"
+			i18n
 		>
-			Institution erstellen
+			Create institution
 		</button>
 	</div>
 </header>
@@ -25,9 +26,9 @@
 	<ng-template [showLoader]="true" [bgAwaitPromises]="[issuersLoaded]">
 		<!-- Empty state: no issuers -->
 		<section class="emptysection l-emptysection" *ngIf="Array.isArray(issuers) && issuers?.length === 0">
-			<h2 class="emptysection-x-headline">Du hast noch keine Institution erstellt</h2>
-			<p class="emptysection-x-copy">
-				Mit Institutionen kannst du Badges erstellen und an Nutzer*innen vergeben.
+			<h2 class="emptysection-x-headline" i18n>You haven't created an institution yet</h2>
+			<p class="emptysection-x-copy" i18n>
+				With institutions you can create badges and give them to users.
 			</p>
 			<div class="emptysection-x-buttons">
 				<button
@@ -35,8 +36,9 @@
 					*ngIf="!features.disableIssuers"
 					[routerLink]="['/issuer/create']"
 					[disabled-when-requesting]="true"
+					i18n
 				>
-					Institution erstellen
+					Create institution
 				</button>
 			</div>
 			<div class="emptysection-x-imagecontainer">
@@ -57,12 +59,12 @@
 				</div>
 				<div class="issuercard-x-title">
 					<a [routerLink]="['/issuer/issuers/', issuer.slug]">{{ issuer.name }}</a>
-					<p><strong>Deine Rolle: </strong>{{ issuer.currentUserStaffMember?.roleInfo.label }}</p>
+					<p><strong i18n>Deine Rolle: </strong>{{ issuer.currentUserStaffMember?.roleInfo.label }}</p>
 				</div>
 				<div class="issuercard-x-desc" [truncatedText]="issuer.description" [maxLength]="250"></div>
 
 				<div class="issuercard-x-topbadges" *ngFor="let issuerBadges of [issuerToBadgeInfo[issuer.issuerUrl]]">
-					<h3 class="u-text-body-bold u-text-dark1 u-margin-bottom2x" *ngIf="issuerBadges">Top Badges:</h3>
+					<h3 class="u-text-body-bold u-text-dark1 u-margin-bottom2x" *ngIf="issuerBadges" i18n>Top Badges:</h3>
 					<div class="l-flex l-flex-2x l-flex-column">
 						<ng-template [bgAwaitPromises]="[badgesLoaded]">
 							<ng-container *ngIf="issuerBadges">
@@ -98,7 +100,7 @@
 							[innerHTML]="issuer.badgeClassCount | i18nPlural: plural['badges']"
 						></p>
 					</div>
-					<a class="u-text u-text-small" [routerLink]="['/issuer/issuers/', issuer.slug]">Öffnen</a>
+					<a class="u-text u-text-small" [routerLink]="['/issuer/issuers/', issuer.slug]" i18n>Open</a>
 				</div>
 			</div>
 		</section>

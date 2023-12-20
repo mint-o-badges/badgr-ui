@@ -1,8 +1,8 @@
 <form-message></form-message>
 <div class="topbar">
 	<div class="l-containerxaxis">
-		<div class="topbar-x-heading">Institution erstellen</div>
-		<div class="topbar-x-subheading">Erstelle eine Institution um Badges zu vergeben.</div>
+		<div class="topbar-x-heading" i18n>Create institution</div>
+		<div class="topbar-x-subheading" i18n>Create an institution to award badges.</div>
 	</div>
 </div>
 
@@ -10,7 +10,7 @@
 	<form (ngSubmit)="onSubmit()" class="u-width-formsmall u-margin-top3x" novalidate>
 		<bg-formfield-image
 			#imageField
-			label="Bild (Optional)"
+			label="Picture (Optional)"
 			imageLoaderName="issuer"
 			[placeholderImage]="issuerImagePlacholderUrl"
 			[control]="issuerForm.rawControlMap.issuer_image"
@@ -20,7 +20,7 @@
 			class="u-margin-yaxis2x"
 			[control]="issuerForm.rawControlMap.issuer_name"
 			[label]="'Name'"
-			[errorMessage]="{ required: 'Bitte gebe einen Namen an' }"
+			[errorMessage]="{ required: 'Please enter a name' }"
 			[autofocus]="true"
 		></bg-formfield-text>
 
@@ -28,7 +28,7 @@
 			class="u-margin-bottom2x"
 			[control]="issuerForm.rawControlMap.issuer_url"
 			[label]="'Website URL'"
-			[errorMessage]="'Bitte gebe eine URL an'"
+			[errorMessage]="'Please provide a URL'"
 			[urlField]="true"
 			[fieldType]="'url'"
 			type="url"
@@ -37,69 +37,69 @@
 		<bg-formfield-select
 			class="u-margin-bottom2x"
 			[control]="issuerForm.rawControlMap.issuer_email"
-			[label]="'Kontakt E-Mail'"
-			[placeholder]="'Bitte gebe eine gültige E-Mail Adresse an'"
+			[label]="'Contact email'"
+			[placeholder]="'Please provide a valid email address'"
 			[options]="emailsOptions"
-			[errorMessage]="{ required: 'Bitte gebe eine gültige E-Mail Adresse an' }"
+			[errorMessage]="{ required: 'Please provide a valid email address' }"
 		></bg-formfield-select>
 
 		<bg-formfield-text
 			class="u-margin-bottom2x"
 			[control]="issuerForm.rawControlMap.issuer_description"
 			[label]="'Beschreibung'"
-			[errorMessage]="{ required: 'Bitte gebe eine Beschreibung an' }"
+			[errorMessage]="{ required: 'Please provide a description' }"
 			[multiline]="true"
 		></bg-formfield-text>
 
 		<bg-formfield-select
 			class="u-margin-bottom2x"
 			[control]="issuerForm.rawControlMap.issuer_category"
-			[label]="'Kategorie'"
-			[placeholder]="'Bitte gib eine Kategorie an'"
+			[label]="'Category'"
+			[placeholder]="'Please enter a category'"
 			[options]="[
 				{
-					label: 'Schule (Grundschulen, weiterführende Schulen, Berufsschulen, Institutionen formaler schulischer Bildung)', 
-					value: 'schule'
+					label: 'School (primary schools, secondary schools, vocational schools, institutions of formal school education)', 
+					value: 'School'
 				}, {
-					label: 'Hochschule (Universitäten. Fachhochschulen, ...)', 
-					value: 'hochschule'
+					label: 'University (universities, technical colleges, ...)', 
+					value: 'University'
 				}, {
-					label: 'Andere (Bibliotheken, Museen, FabLabs, Unternehmen, Vereine, ...)', 
-					value: 'andere'
+					label: 'Others (libraries, museums, FabLabs, companies, associations, ...)', 
+					value: 'Others'
 				}]"
 
 		></bg-formfield-select>
 
-		<h2>Adresse</h2>
+		<h2 i18n>Address</h2>
 
 		<bg-formfield-text
 			class="u-margin-bottom2x"
 			[control]="issuerForm.rawControlMap.issuer_street"
-			[label]="'Strasse'"
-			[errorMessage]="{ required: 'Bitte gib eine Strasse an' }"
+			[label]="'Street'"
+			[errorMessage]="{ required: 'Please enter a street' }"
 		></bg-formfield-text>
 
 		<bg-formfield-text
 			class="u-margin-bottom2x"
 			[control]="issuerForm.rawControlMap.issuer_streetnumber"
-			[label]="'Hausnummer'"
+			[label]="'House number'"
 			[fieldType]="'number'"
-			[errorMessage]="{ required: 'Bitte gib eine Hausnummer an' }"
+			[errorMessage]="{ required: 'Please enter a house number' }"
 		></bg-formfield-text>
 
 		<bg-formfield-text
 			class="u-margin-bottom2x"
 			[control]="issuerForm.rawControlMap.issuer_zip"
-			[label]="'Postleitzahl'"
+			[label]="'Postal code'"
 			[fieldType]="'number'"
-			[errorMessage]="{ required: 'Bitte gib eine Postleitzahl an' }"
+			[errorMessage]="{ required: 'Please enter a zip code' }"
 		></bg-formfield-text>
 
 		<bg-formfield-text
 			class="u-margin-bottom2x"
 			[control]="issuerForm.rawControlMap.issuer_city"
-			[label]="'Stadt'"
-			[errorMessage]="{ required: 'Bitte gib eine Stadt an' }"
+			[label]="'City'"
+			[errorMessage]="{ required: 'Please enter a city' }"
 		></bg-formfield-text>
 
 		<label
@@ -111,30 +111,31 @@
 			for="terms"
 		>
 			<input name="terms" id="terms" type="checkbox" [formControl]="issuerForm.rawControlMap.agreedTerms" />
-			<span class="checkbox-x-text"
-				>Ich habe die <a target="_blank" [href]="dataProcessorUrl">Datenschutzrichtlinien</a> gelesen und stimme
-				ihnen zu.
+			<span class="checkbox-x-text" i18n
+				>I have read and agree to the <a target="_blank" [href]="dataProcessorUrl">Privacy Policy</a>
+				to them.
 				<div
 					*ngIf="issuerForm.rawControlMap.agreedTerms.dirty && !issuerForm.rawControlMap.agreedTerms.valid"
 					class="checkbox-x-errortext"
 				>
-					Bitte lese die Datenschutzrichtlinien und stimme ihnen zu wenn du weitermachen möchtest.
+					Please read the privacy policy and agree to it if you wish to continue.
 				</div>
 			</span>
 		</label>
 
 		<div class="l-flex l-flex-1x u-margin-bottom3x u-margin-top4x">
 			<a [routerLink]="['/issuer']" class="button button-secondary" [disabled-when-requesting]="true"
-				>Abbrechen</a
+				>Cancel</a
 			>
 			<button
 				type="submit"
 				class="button"
 				[disabled]="!!addIssuerFinished"
 				[loading-promises]="[addIssuerFinished]"
-				loading-message="Hinzufügen"
+				loading-message="Add"
+				i18n
 			>
-				Institution erstellen
+				Create institution
 			</button>
 		</div>
 	</form>

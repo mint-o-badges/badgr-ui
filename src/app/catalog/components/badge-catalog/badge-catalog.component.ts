@@ -79,7 +79,7 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		this.updateResults();
 	}
 
-	private _groupBy = 'Kategorie';
+	private _groupBy = 'Category';
 	get groupBy() {
 		return this._groupBy;
 	}
@@ -87,13 +87,13 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		this._groupBy = val;
 		this.updateResults();
 	}
-	groups = ['Kategorie', 'Issuer', '---'];
+	groups = ['Category', 'Issuer', '---'];
 	categoryOptions: { [key in BadgeClassCategory | 'noCategory']: string } = {
-		membership: 'Mitgliedschaft',
-		ability: 'Metakompetenz',
-		archievement: 'Teilnahme / Erfolg',
-		skill: 'Fachliche Kompetenz',
-		noCategory: 'Keine Kategorie',
+		membership: 'Membership',
+		ability: 'Metacompetence',
+		archievement: 'Participation/Success',
+		skill: 'Professional competence',
+		noCategory: 'No category',
 	};
 
 	constructor(

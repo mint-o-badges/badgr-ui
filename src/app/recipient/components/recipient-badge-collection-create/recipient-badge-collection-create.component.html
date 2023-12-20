@@ -1,31 +1,31 @@
 <main>
 	<form-message></form-message>
 	<header class="l-containerxaxis topbar">
-		<h3 class="topbar-x-heading">Sammlung erstellen</h3>
-		<p class="topbar-x-subheading">Organisiere deine Badges in Sammlungen.</p>
+		<h3 class="topbar-x-heading" i18n>Create collection</h3>
+		<p class="topbar-x-subheading" i18n>Organize your badges into collections.</p>
 	</header>
 
 	<div class="l-containerxaxis u-margin-yaxis3x u-width-formsmall">
 		<form [formGroup]="badgeCollectionForm.rawControl" (ngSubmit)="onSubmit(badgeCollectionForm.value)" novalidate>
 			<fieldset aria-labelledby="heading-add-badge-collection" role="group">
-				<legend class="visuallyhidden" id="heading-add-badge-collection">Sammlung erstellen</legend>
+				<legend class="visuallyhidden" id="heading-add-badge-collection" i18n>Create collection</legend>
 				<bg-formfield-text
 					[control]="badgeCollectionForm.rawControlMap.collectionName"
-					[label]="'Name der Sammlungen'"
+					[label]="'Name of collections'"
 					[maxchar]="128"
-					[errorMessage]="{ required: 'Bitte gebe einen Namen der Sammlung ein' }"
+					[errorMessage]="{ required: 'Please enter a name for the collection' }"
 					[autofocus]="true"
-					[sublabel]="' verbleibende Zeichen'"
+					[sublabel]="' remaining characters'"
 				></bg-formfield-text>
 
 				<div class="u-margin-top2x">
 					<bg-formfield-text
 						[control]="badgeCollectionForm.rawControlMap.collectionDescription"
 						[label]="'Description'"
-						[errorMessage]="{ required: 'Bitte gebe eine Beschreibung an' }"
+						[errorMessage]="{ required: 'Please provide a description' }"
 						[maxchar]="255"
 						[multiline]="true"
-						[sublabel]="' verbleibende Zeichen'"
+						[sublabel]="' remaining characters'"
 					></bg-formfield-text>
 				</div>
 
@@ -34,7 +34,8 @@
 						[routerLink]="['/recipient/badge-collections']"
 						class="button button-secondary"
 						[disabled-when-requesting]="true"
-						>Abbrechen</a
+						i18n
+						>Cancel</a
 					>
 
 					<button
@@ -42,9 +43,10 @@
 						class="button"
 						[disabled]="!!createCollectionPromise"
 						[loading-promises]="[createCollectionPromise]"
-						loading-message="Hinzufügen"
+						loading-message="Add"
+						i18n
 					>
-						Sammlung erstellen
+						Create collection
 					</button>
 				</div>
 			</fieldset>

@@ -18,52 +18,53 @@
 				/>
 				<div class="topbar-x-heading">{{ issuer.name }}</div>
 				<div class="topbar-x-subheading">
-					<p class="u-text u-text-small">
+					<p class="u-text u-text-small" i18n>
 						<strong [truncatedText]="issuer.email" [maxLength]="64"></strong>
-						<br class="u-hidden-minmobilelarge" /><span class="u-hidden-maxmobilelarge"> — </span>Deine
-						Rolle:
+						<br class="u-hidden-minmobilelarge" /><span class="u-hidden-maxmobilelarge"> — </span>Your
+						Role:
 						{{ issuer?.currentUserStaffMember?.roleInfo?.label }}
 					</p>
 					<p class="u-margin-top1x u-width-paragraph">
 						{{ issuer.description }}
 					</p>
-					<div class="u-margin-top1x">
+					<div class="u-margin-top1x" i18n>
 						<a href="{{ issuer.websiteUrl }}" class="u-text-outlink">
-							Website besuchen
+							Visit website
 							<svg icon="icon_external_link"></svg>
 						</a>
 					</div>
 					<p></p>
 				</div>
 				<div class="topbar-x-buttons">
-					<p *ngIf="!issuer.apiModel.verified" class="u-margin-top1x u-width-paragraph">
-						Dieser Issuer wurde noch nicht verifiziert
+					<p *ngIf="!issuer.apiModel.verified" class="u-margin-top1x u-width-paragraph" i18n>
+						This issuer has not yet been verified
 					</p>
 					<div class="l-primarymore">
 						<button
 							class="button"
 							[routerLink]="['./badges/create']"
 							[disabled]="!issuer.apiModel.verified"
+							i18n
 						>
-							Badge erstellen
+							Create badge
 						</button>
 						<button class="buttonicon buttonicon-secondary" [bgPopupMenuTrigger]="issuerActionsMenu">
 							<svg icon="icon_more"></svg>
-							<span class="visuallyhidden">Mehr</span>
+							<span class="visuallyhidden">More</span>
 						</button>
 					</div>
 					<bg-popup-menu #issuerActionsMenu>
-						<a class="menuitem" [routerLink]="['./edit']">
+						<a class="menuitem" [routerLink]="['./edit']" i18n>
 							<svg icon="icon_edit"></svg>
-							Bearbeiten
+							Edit
 						</a>
-						<a class="menuitem" (click)="delete($event)" href="#">
+						<a class="menuitem" (click)="delete($event)" href="#" i18n>
 							<svg icon="icon_remove"></svg>
-							Löschen
+							Delete
 						</a>
-						<a class="menuitem" [routerLink]="['./staff']">
+						<a class="menuitem" [routerLink]="['./staff']" i18n>
 							<svg icon="icon_group"></svg>
-							Mitglieder {{ issuer?.currentUserStaffMember?.isOwner ? 'bearbeiten' : '' }}
+							Members {{ issuer?.currentUserStaffMember?.isOwner ? 'edit' : '' }}
 						</a>
 						<a class="menuitem" *ngFor="let lp of launchpoints" href="{{ lp.launch_url }}" target="_blank">
 							<svg icon="icon_external_link"></svg>
@@ -78,7 +79,7 @@
 	<div *bgAwaitPromises="[issuerLoaded, badgesLoaded]">
 		<!-- EMPTY STATE: No badge classes -->
 		<section class="emptysection l-emptysection" *ngIf="!badges?.length">
-			<h2 class="emptysection-x-headline">Der Issuer hat noch keine Badges</h2>
+			<h2 class="emptysection-x-headline" i18n>The issuer does not have any badges yet</h2>
 			<div class="emptysection-x-imagecontainer">
 				<img alt="Illustration" class="emptysection-x-image" [src]="noIssuersPlaceholderSrc" />
 			</div>
@@ -98,11 +99,11 @@
 			>
 				<thead class="datatable-x-head">
 					<tr class="datatable-x-header">
-						<th class="datatable-x-cell">Badge</th>
-						<th class="datatable-x-cell">Erstellt am</th>
-						<th class="datatable-x-cell">Empfänger*innen</th>
+						<th class="datatable-x-cell" i18n>Badge</th>
+						<th class="datatable-x-cell" i18n>Created on</th>
+						<th class="datatable-x-cell" i18n>Recipients</th>
 						<th class="datatable-x-cell">
-							<span class="visuallyhidden">Actions</span>
+							<span class="visuallyhidden" i18n>Actions</span>
 						</th>
 					</tr>
 				</thead>
@@ -124,8 +125,8 @@
 								<div class="u-hidden-minmobilelarge l-flex-x-selfcenter u-margin-leftauto">
 									<a
 										class="u-text-link-small"
-										[routerLink]="['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'issue']"
-										>Vergeben</a
+										[routerLink]="['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'issue']" i18n
+										>Forgive</a
 									>
 								</div>
 							</div>
@@ -144,8 +145,8 @@
 							<div class="l-flex l-flex-aligncenter l-flex-justifyend">
 								<a
 									class="u-text-link-small"
-									[routerLink]="['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'issue']"
-									>Vergeben</a
+									[routerLink]="['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'issue']" i18n
+									>Forgive</a
 								>
 							</div>
 						</td>

@@ -1,19 +1,19 @@
 <section class="l-containerxaxis l-containeryaxis">
 	<div class="u-width-form">
 		<div class="contentlong">
-			<h1 class="title">Import Vorschau</h1>
-			<p>
-				{{ transformedImportData.validRowsTransformed.size }} Zeilen können importiert werden.
-				{{ transformedImportData.duplicateRecords.length }} Zeilen sind Duplikate und werden ignoriert. Klicke
-				auf BADGE VERGEBEN um den Badge zu vergeben.
+			<h1 class="title" i18n>Import preview</h1>
+			<p i18n>
+				{{ transformedImportData.validRowsTransformed.size }} Rows can be imported.
+				{{ transformedImportData.duplicateRecords.length }} Rows are duplicates and will be ignored. Click
+				click GIVE BADGE to award the badge.
 			</p>
 		</div>
 
 		<table class="datatable datatable-roundheaders datatable-headers">
 			<thead class="datatable-x-head">
 				<tr class="datatable-x-header">
-					<th class="datatable-x-cell" scope="col">E-Mail</th>
-					<th class="datatable-x-cell" scope="col">Nachweis</th>
+					<th class="datatable-x-cell" scope="col" i18n>E-Mail</th>
+					<th class="datatable-x-cell" scope="col" i18n>Proof</th>
 					<th class="datatable-x-cell">
 						<!-- header for remove link-->
 					</th>
@@ -28,7 +28,7 @@
 						{{ row.evidence }}
 					</td>
 					<td class="datatable-x-cell">
-						<button class="u-text-link-small" (click)="removeValidRowsTransformed(row)">Entfernen</button>
+						<button class="u-text-link-small" (click)="removeValidRowsTransformed(row)" i18n>Remove</button>
 					</td>
 				</tr>
 			</tbody>
@@ -37,25 +37,26 @@
 		</table>
 	</div>
 	<div class="u-margin-yaxis2x">
-		<h2 class="u-text-h3 u-margin-bottom1x">Benachrichtigung</h2>
+		<h2 class="u-text-h3 u-margin-bottom1x" i18n>Notification</h2>
 
 		<label class="checkbox checkbox-center" for="notify_earner">
 			<input checked name="notify_earner" id="notify_earner" type="checkbox" [(ngModel)]="notifyEarner" />
-			<span class="checkbox-x-label u-margin-left1x"> Benachrichtige die Empfänger*in mit einer E-Mail</span>
+			<span class="checkbox-x-label u-margin-left1x" i18n> Notify the recipient with an email</span>
 		</label>
 	</div>
 
 	<!-- BUTTONS -->
 	<div class="l-flex l-flex-2x u-margin-top2x">
-		<button class="button button-secondary" (click)="updateViewState('import')">Abbrechen</button>
+		<button class="button button-secondary" (click)="updateViewState('import')" i18n>Abbrechen</button>
 
 		<button
 			class="button l-marginLeft-x2"
 			[class.button-is-disabled]="buttonDisabledClass"
 			[attr.disabled]="buttonDisabledAttribute"
 			(click)="dataConfirmed()"
+			i18n
 		>
-			Badge vergeben
+			Badge awarded
 		</button>
 	</div>
 </section>

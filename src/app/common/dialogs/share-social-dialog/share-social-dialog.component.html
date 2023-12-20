@@ -10,19 +10,19 @@
 			<h1>{{ options?.title }}</h1>
 			<button (click)="closeDialog()" class="buttonicon buttonicon-link">
 				<svg icon="icon_close"></svg>
-				<span class="visuallyhidden">Close</span>
+				<span class="visuallyhidden" i18n>Close</span>
 			</button>
 		</div>
 
 		<!-- Tab Navigation Bar -->
 		<nav aria-labelledby="heading-share-options" class="tabbar">
 			<button [class.tab-is-active]="currentTabId === 'link'" (click)="openTab('link')" class="tab">
-				<span class="visuallyhidden"> Open the </span> Link
-				<span class="visuallyhidden"> tab</span>
+				<span class="visuallyhidden" i18n> Open the </span> Link
+				<span class="visuallyhidden" i18n> tab</span>
 			</button>
 			<button [class.tab-is-active]="currentTabId === 'social'" (click)="openTab('social')" class="tab">
-				<span class="visuallyhidden"> Open the </span>Social
-				<span class="visuallyhidden"> tab</span>
+				<span class="visuallyhidden" i18n> Open the </span>Social
+				<span class="visuallyhidden" i18n> tab</span>
 			</button>
 			<button
 				[class.tab-is-active]="currentTabId === 'embed'"
@@ -30,8 +30,8 @@
 				*ngIf="hasEmbedSupport"
 				class="tab"
 			>
-				<span class="visuallyhidden"> Open the </span>HTML
-				<span class="visuallyhidden"> tab</span>
+				<span class="visuallyhidden" i18n> Open the </span>HTML
+				<span class="visuallyhidden" i18n> tab</span>
 			</button>
 		</nav>
 
@@ -43,7 +43,7 @@
 			*ngIf="currentTabId == 'link'"
 		>
 			<ng-template [ngIf]="options?.showRecipientOptions">
-				<p class="u-text-bold u-margin-bottom3x">Badge Optionen:</p>
+				<p class="u-text-bold u-margin-bottom3x" i18n>Badge Options:</p>
 				<label class="checkbox checkbox-light u-margin-bottom5x">
 					<input
 						[(ngModel)]="includeRecipientIdentifier"
@@ -52,14 +52,14 @@
 						checked
 					/>
 					<span class="checkbox-x-text">
-						<strong>Empfänger E-Mail einbeziehen:</strong> <br />
+						<strong i18n>Include recipient email:</strong> <br />
 						{{ options.recipientIdentifier }}
 					</span>
 				</label>
 			</ng-template>
 
 			<div class="forminput forminput-hasiconleft forminput-withbutton u-margin-bottom3x" *ngIf="options">
-				<label class="forminput-x-label" for="link-input">Kopiere diesen Link zum teilen</label>
+				<label class="forminput-x-label" for="link-input" i18n>Copy this link to share</label>
 				<div class="forminput-x-inputs">
 					<svg class="forminput-x-icon" icon="icon_link"></svg>
 
@@ -78,6 +78,7 @@
 							(click)="copyToClipboard(urlInput)"
 							[hidden]="!copySupported"
 							class="button button-secondary button-informinput"
+							i18n
 						>
 							Copy
 						</button>
@@ -85,8 +86,8 @@
 				</div>
 			</div>
 
-			<a *ngIf="options" [href]="currentShareUrl" target="_blank" class="u-text-link-small"
-				>In neuem Fenster öffnen</a
+			<a *ngIf="options" [href]="currentShareUrl" target="_blank" class="u-text-link-small" i18n
+				>Open in new window</a
 			>
 		</div>
 
@@ -98,7 +99,7 @@
 			*ngIf="currentTabId === 'social'"
 		>
 			<ng-template [ngIf]="options.showRecipientOptions">
-				<p class="u-text-bold u-margin-bottom3x">Badge Optionen:</p>
+				<p class="u-text-bold u-margin-bottom3x" i18n>Badge options:</p>
 				<label class="checkbox checkbox-light u-margin-bottom5x">
 					<input
 						id="form-checkbox"
@@ -108,14 +109,14 @@
 						checked
 					/>
 					<span class="checkbox-x-text">
-						<strong>Empfänger E-Mail einbeziehen:</strong> <br />
+						<strong i18n>Include recipient email:</strong> <br />
 						{{ options.recipientIdentifier }}
 					</span>
 				</label>
 			</ng-template>
 
 			<div class="u-margin-bottom3x">
-				<p class="u-text-bold u-margin-bottom3x">Zum Profil hinzufügen:</p>
+				<p class="u-text-bold u-margin-bottom3x" i18n>Add to profile:</p>
 				<div>
 					<a [href]="linkedInCertURL"
 						><img
@@ -125,7 +126,7 @@
 				</div>
 			</div>
 
-			<p class="u-text-bold u-margin-bottom3x">Auf Social Media teilen:</p>
+			<p class="u-text-bold u-margin-bottom3x" i18n>Share on social media:</p>
 			<div class="l-grid l-grid-small">
 				<button
 					*ngIf="displayShareServiceType('Facebook')"
@@ -186,7 +187,7 @@
 			</div>
 
 			<ng-template [ngIf]="options?.showRecipientOptions">
-				<p class="u-text-bold u-margin-bottom2x">Enthaltene Badge Optionen</p>
+				<p class="u-text-bold u-margin-bottom2x" i18n>Badge options included</p>
 
 				<label class="checkbox checkbox-light u-margin-bottom2x">
 					<input
@@ -196,7 +197,7 @@
 						checked
 					/>
 					<span class="checkbox-x-text">
-						<strong>Empfänger E-Mail:</strong> <br />
+						<strong i18n>Recipient E-mail:</strong> <br />
 						{{ options.recipientIdentifier }}
 					</span>
 				</label>
@@ -211,7 +212,7 @@
 						type="checkbox"
 						checked
 					/>
-					<span class="checkbox-x-text"> Badge Name </span>
+					<span class="checkbox-x-text" i18n> Badge Name </span>
 				</label>
 
 				<label
@@ -219,7 +220,7 @@
 					class="checkbox u-margin-bottom2x"
 				>
 					<input [(ngModel)]="includeAwardDate" (change)="updateEmbedHtml()" type="checkbox" checked />
-					<span class="checkbox-x-text"> Datum der Vergabe </span>
+					<span class="checkbox-x-text" i18n> Date of award </span>
 				</label>
 
 				<label
@@ -227,16 +228,16 @@
 					class="checkbox u-margin-bottom2x"
 				>
 					<input [(ngModel)]="includeVerifyButton" (change)="updateEmbedHtml()" type="checkbox" checked />
-					<span class="checkbox-x-text"> Verifizierung </span>
+					<span class="checkbox-x-text" i18n> verification </span>
 				</label>
 			</ng-template>
 
-			<p class="u-text-small-bold u-margin-bottom0p5x u-margin-top2x">Vorschau</p>
+			<p class="u-text-small-bold u-margin-bottom0p5x u-margin-top2x" i18n>Preview</p>
 
 			<iframe src="about:blank" class="previewIframe" style="width: 100%"></iframe>
 
 			<div class="forminput forminput-code u-margin-top3x u-margin-bottom2x">
-				<label class="forminput-x-label" for="emebed-code-box">Eingebetteter Code</label>
+				<label class="forminput-x-label" for="emebed-code-box" i18n>Embedded code</label>
 				<div class="forminput-x-inputs">
 					<textarea
 						id="emebed-code-box"
@@ -245,6 +246,7 @@
 						[value]="currentEmbedHtml"
 						(click)="$event.target.select()"
 						#embedHtmlInput
+						i18n
 					>
 The embed code goes here and changes dynamically as the checks and radios are pressed above.</textarea
 					>
@@ -256,6 +258,7 @@ The embed code goes here and changes dynamically as the checks and radios are pr
 					[hidden]="!copySupported"
 					(click)="copyToClipboard(embedHtmlInput)"
 					class="button button-secondary"
+					i18n
 				>
 					Copy
 				</button>

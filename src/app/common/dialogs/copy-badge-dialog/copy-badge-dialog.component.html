@@ -6,7 +6,7 @@
 >
 		<div class="dialog-x-box o-container">
 			<div class="dialog-x-header u-background-light3">
-				<h1>Badge kopieren</h1>
+				<h1 i18n>Copy badge</h1>
 				<button (click)="closeDialog()" class="buttonicon buttonicon-link">
 					<svg icon="icon_close"></svg>
 					<span class="visuallyhidden">Close</span>
@@ -14,8 +14,8 @@
 			</div>
 
 			<div class="category u-padding-xaxis3x u-margin-top2x warning">
-				<p>
-					Bisherige Änderungen werden beim Kopieren überschrieben!
+				<p i18n>
+					Previous changes will be overwritten when copying!
 				</p>
 			</div>
 			<div
@@ -38,16 +38,16 @@
 				<div class="l-actionbar-x-groupby dialog-x-options">
 					<label class="checkbox checkbox-small">
 						<input name="groupby" type="checkbox" [(ngModel)]="groupByIssuer" />
-						<span class="checkbox-x-text">Nach Institution gruppieren</span>
+						<span class="checkbox-x-text" i18n>Group by institution</span>
 					</label>
 				</div>
 				<div class="dialog-x-height">
 						<table class="datatable datatable-roundheaders datatable-onlyfirstcolumn datatable-verticalalignmiddle">
 							<thead class="datatable-x-head">
 								<tr class="datatable-x-header">
-									<th class="datatable-x-cell" scope="col">Badge</th>
-									<th class="datatable-x-cell" scope="col">Institution</th>
-									<th class="datatable-x-cell" scope="col"><span class="visuallyhidden">Actions</span></th>
+									<th class="datatable-x-cell" scope="col" i18n>Badge</th>
+									<th class="datatable-x-cell" scope="col" i18n>Institution</th>
+									<th class="datatable-x-cell" scope="col"><span class="visuallyhidden" i18n>Actions</span></th>
 								</tr>
 							</thead>
 							<tbody class="datatable-x-body">
@@ -83,6 +83,7 @@
 													<button
 														class="button"
 														(click)="copyBadge(badge)"
+														i18n
 													>
 														Copy
 													</button>

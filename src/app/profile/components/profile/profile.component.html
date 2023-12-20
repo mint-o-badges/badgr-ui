@@ -8,14 +8,15 @@
 				<div class="l-primarymore">
 					<button [routerLink]="['../change-password']"
 					        class="button"
-					>{{(profile.hasPasswordSet)?'Change':'Set'}} Passwort
+							i18n
+					>{{(profile.hasPasswordSet)?'Change':'Set'}} Password
 					</button>
 					<button [bgPopupMenuTrigger]="editMenu"
 					        class="buttonicon buttonicon-secondary"
 					        id="trigger2"
 					>
 						<svg icon="icon_more"></svg>
-						<span class="visuallyhidden">Mehr</span>
+						<span class="visuallyhidden" i18n>More</span>
 					</button>
 				</div>
 			</div>
@@ -26,6 +27,7 @@
 		>
 			<div [routerLink]="['/profile/edit']"
 			     class="menuitem"
+				 i18n
 			>
 				<svg icon="icon_edit"></svg>
 				Edit
@@ -35,7 +37,7 @@
 
 	<div class="l-containerxaxis l-containeryaxis">
 		<div class="l-stack u-margin-yaxis3x">
-			<p class="u-text-h3-bold u-text-dark2">
+			<p class="u-text-h3-bold u-text-dark2" i18n>
 				Emails
 			</p>
 			<form class="table-x-tr table-x-active"
@@ -61,10 +63,11 @@
 			<tr class="datatable-x-header">
 				<th class="datatable-x-cell"
 				    style="width:80%;"
+					i18n
 				>Email Address
 				</th>
-				<th class="datatable-x-cell">Status</th>
-				<th class="datatable-x-cell"><span class="visuallyhidden">Actions</span></th>
+				<th class="datatable-x-cell" i18n>Status</th>
+				<th class="datatable-x-cell"><span class="visuallyhidden" i18n>Actions</span></th>
 			</tr>
 			</thead>
 			<tbody class="datatable-x-body">
@@ -79,6 +82,7 @@
 						</p>
 						<div *ngIf="email.primary"
 						     class="badgestatus badgestatus-new badgestatus-intable"
+							 i18n
 						>primary
 						</div>
 					</div>
@@ -92,7 +96,7 @@
 							     class="icon icon-success"
 							     viewBox="0 0 24 24"
 							></svg>
-							<p class="u-text-body u-hidden-maxtablet">
+							<p class="u-text-body u-hidden-maxtablet" i18n>
 								Verified
 							</p>
 						</div>
@@ -103,7 +107,7 @@
 							     class="icon icon-dark4"
 							     viewBox="0 0 24 24"
 							></svg>
-							<p class="u-text-body u-hidden-maxtablet">
+							<p class="u-text-body u-hidden-maxtablet" i18n>
 								Pending
 							</p>
 						</div>
@@ -116,7 +120,7 @@
 					        class="buttonicon buttonicon-link"
 					>
 						<svg icon="icon_more"></svg>
-						<span class="visuallyhidden">More</span>
+						<span class="visuallyhidden" i18n>More</span>
 					</button>
 
 					<bg-popup-menu #emailMenu
@@ -126,7 +130,7 @@
 
 						<div *ngIf="!email.verified"
 						     class="menuitem"
-						     (click)="clickResendVerification($event, email)"
+						     (click)="clickResendVerification($event, email)" i18n
 						>
 							<svg icon="icon_refresh"></svg>
 							Resend Verification
@@ -134,7 +138,7 @@
 
 						<div *ngIf="email.verified && !email.primary"
 						     class="menuitem"
-						     (click)="clickMakePrimary($event, email)"
+						     (click)="clickMakePrimary($event, email)" i18n
 						>
 							<svg icon="icon_refresh"></svg>
 							Make primary
@@ -143,7 +147,7 @@
 						<div class="menuitem"
 						     [class.button-is-disabled]="email.primary"
 						     (click)="clickConfirmRemove($event, email)"
-						     *ngIf="emails.length > 1 && ! email.primary"
+						     *ngIf="emails.length > 1 && ! email.primary" i18n
 						>
 							<svg icon="icon_remove"></svg>
 							Remove
@@ -158,16 +162,16 @@
 		</table>
 
 		<ng-template [ngIf]="(socialAccounts.length > 0) || (configService.featuresConfig?.socialAccountProviders?.length > 0)">
-			<h2 class="u-text-h3-bold u-margin-yaxis3x u-text-dark2">Linked Accounts</h2>
+			<h2 class="u-text-h3-bold u-margin-yaxis3x u-text-dark2" i18n>Linked Accounts</h2>
 
 			<table class="datatable datatable-roundheaders">
 				<thead class="datatable-x-head"
 							 *ngIf="socialAccounts.length > 0"
 				>
 				<tr class="datatable-x-header">
-					<th class="datatable-x-cell">Service</th>
-					<th class="datatable-x-cell">Account</th>
-					<th class="datatable-x-cell"><span class="visuallyhidden">Actions</span></th>
+					<th class="datatable-x-cell" i18n>Service</th>
+					<th class="datatable-x-cell" i18n>Account</th>
+					<th class="datatable-x-cell"><span class="visuallyhidden" i18n>Actions</span></th>
 				</tr>
 				</thead>
 				<tbody class="datatable-x-body">
@@ -185,6 +189,7 @@
 							<a href="#"
 								 class="u-text u-text-small u-text-bold"
 								 (click)="unlinkAccount($event, account, socialAccounts.length)"
+								 i18n
 							>Unlink</a>
 						</div>
 					</td>
@@ -192,7 +197,7 @@
 				</tbody>
 			</table>
 
-			<p class="u-text-body u-margin-yaxis3x u-width-paragraph">
+			<p class="u-text-body u-margin-yaxis3x u-width-paragraph" i18n>
 				Click one of the provider buttons below to allow you to log in
 				to {{configService.theme['serviceName'] || "Badgr"}}
 				in the future using that service rather than your email and password.
@@ -208,7 +213,7 @@
 					(click)="linkAccount($event, provider)"
 					class="socialbutton"
 					[style.backgroundColor]="provider.color">
-					<div class="visuallyhidden">Access with {{provider.label}}</div>
+					<div class="visuallyhidden" i18n>Access with {{provider.label}}</div>
 					<img [src]="sanitize(provider.imgSrc)" alt="">
 				</button>
 

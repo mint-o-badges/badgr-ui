@@ -2,7 +2,7 @@
 
 <header class="topbar">
 	<div class="l-containerxaxis topbar-x-wrap">
-		<h2 class="topbar-x-heading">
+		<h2 class="topbar-x-heading" i18n>
 			Badges
 			<ng-template [showLoader]="false" [bgAwaitPromises]="[badgesLoaded]">
 				<span class="topbar-x-internalheading">
@@ -26,7 +26,7 @@
 							name="forminput"
 							changeOrder
 							id="forminput"
-							placeholder="Badges durchsuchen"
+							placeholder="Browse badges"
 							[(ngModel)]="searchQuery"
 						/>
 						<svg class="forminput-x-icon" icon="icon_search"></svg>
@@ -34,7 +34,7 @@
 				</div>
 				<div class="l-actionbar-x-groupby" *ngIf="badgesDisplay != 'map'">
 					<label class="l-flex l-flex-2x">
-						<span id="badge-catalog-select-label">Grupppieren nach </span>
+						<span id="badge-catalog-select-label" i18n>Group by </span>
 						<div class="forminput">
 							<div class="forminput-x-inputs">
 								<select [(ngModel)]="groupBy" #selectInput class="border" id="badge-catalog-select">
@@ -48,12 +48,12 @@
 				</div>
 				<div class="viewtoggle l-actionbar-x-viewtoggle" [class.viewtoggle-is-listview]="order == 'desc'">
 					<label class="viewtoggle-x-grid" (click)="changeOrder('asc')">
-						<span class="visuallyhidden">name</span>
+						<span class="visuallyhidden" i18n>name</span>
 						<input name="radiobutton2" id="radiobutton3" type="radio" value="asc" [(ngModel)]="order" />
 						<svg style="transform: rotateZ(90deg)" icon="icon_arrow"></svg>
 					</label>
 					<label class="viewtoggle-x-list" (click)="changeOrder('desc')">
-						<span class="visuallyhidden">-name</span>
+						<span class="visuallyhidden" i18n>-name</span>
 						<input type="radio" name="radiobutton2" id="radiobutton4" value="desc" [(ngModel)]="order" />
 						<svg style="transform: rotateZ(-90deg)" icon="icon_arrow"></svg>
 					</label>
@@ -72,7 +72,7 @@
 					</div>
 				</div>
 				<div class="open-legend-button">
-					<a (click)="openLegend()">Was bedeuten die Rahmen und Farben?</a>
+					<a (click)="openLegend()" i18n>What do the frames and colors mean?</a>
 				</div>
 			</div>
 			<ng-container *ngIf="groupBy == '---'">
@@ -119,7 +119,7 @@
 					</div>
 				</ng-container>
 			</ng-container>
-			<ng-container *ngIf="groupBy == 'Kategorie'">
+			<ng-container *ngIf="groupBy == 'Category'">
 				<ng-container *ngFor="let categoryGroup of badgeResultsByCategory">
 					<h3 class="u-text-h3-semibold u-margin-bottom2x u-margin-top6x u-text-dark1">
 						{{ categoryOptions[categoryGroup.category] }}

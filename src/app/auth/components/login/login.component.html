@@ -1,6 +1,6 @@
 <div class="l-containerxaxis l-containeryaxis l-flex l-flex-justifycenter">
 	<div class="shadowcontainer u-animate-dropfade">
-		<markdown-display [value]="theme.welcomeMessage || 'Willkommen bei MINT-O-Badges'"></markdown-display>
+		<markdown-display [value]="theme.welcomeMessage || 'Welcome to MINT-O-Badges'"></markdown-display>
 		<ng-template [ngIf]="!sessionService.enabledExternalAuthProviders.length"> </ng-template>
 		<ng-template [ngIf]="sessionService.enabledExternalAuthProviders.length">
 			<h3 class="l-ruleheadline ruleheadline">Sign in mit</h3>
@@ -11,7 +11,7 @@
 					class="socialbutton"
 					[style.backgroundColor]="provider.color"
 				>
-					<div class="visuallyhidden">Zugang mit {{ provider.label }}</div>
+					<div i18n class="visuallyhidden">Access with {{ provider.label }}</div>
 					<img [src]="sanitize(provider.imgSrc)" alt="" />
 				</button>
 			</div>
@@ -20,6 +20,7 @@
 		<h3
 			*ngIf="sessionService.enabledExternalAuthProviders.length && !features.disableRegistration"
 			class="l-ruleheadline ruleheadline"
+			i18n
 		>
 			Or
 		</h3>
@@ -30,7 +31,7 @@
 				[control]="loginForm.rawControlMap.username"
 				label="Email"
 				fieldType="email"
-				[errorMessage]="{ required: 'Bitte gib Deine Email-Adresse ein.' }"
+				[errorMessage]="{ required: 'Please enter your email address.' }"
 				[autofocus]="true"
 				[initialValue]="verifiedEmail || ''"
 				#usernameField
@@ -41,7 +42,7 @@
 				[control]="loginForm.rawControlMap.password"
 				label="Password"
 				class="u-margin-top2x"
-				[errorMessage]="'Bitte gib Dein Passwort ein.'"
+				[errorMessage]="'Please enter your password.'"
 				fieldType="password"
 				#passwordField
 			>
@@ -51,7 +52,8 @@
 						href="#"
 						tabindex="-1"
 						[routerLink]="['/auth/request-password-reset', usernameField.value]"
-						>Password vergessen?</a
+						i18n
+						>Password forgotten?</a
 					>
 				</span>
 			</bg-formfield-text>
@@ -64,6 +66,7 @@
 					[disabled]="!!loginFinished"
 					[loading-promises]="[loginFinished]"
 					loading-message="Signing In"
+					i18n
 				>
 					Login
 				</button>
@@ -76,7 +79,7 @@
 						type="checkbox"
 						[formControl]="loginForm.rawControlMap.rememberMe"
 					/>
-					<span class="checkbox-x-text">Angemeldet bleiben</span>
+					<span i18n class="checkbox-x-text">remain signed in</span>
 				</label>
 			</div>
 		</form>

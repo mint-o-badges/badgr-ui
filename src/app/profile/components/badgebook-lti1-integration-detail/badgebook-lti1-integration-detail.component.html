@@ -4,10 +4,10 @@
 	<div class="l-containerxaxis">
 		<div class="topbar-x-wrap">
 			<img class="topbar-x-image" [src]="integration?.image" alt="" width="70px" srcset="">
-			<div class="topbar-x-heading">
+			<div class="topbar-x-heading" i18n>
 				Canvas LTI
 			</div>
-			<div class="topbar-x-subheading">
+			<div class="topbar-x-subheading" i18n>
 				Badgr connects with Canvas to automatically award
 				badges to students as they complete their work.
 			</div>
@@ -19,7 +19,7 @@
 
 	<div class="u-width-form">
 		<div class="forminput forminput-hasiconleft forminput-withbutton">
-			<label class="forminput-x-label" for="forminput1">Your Consumer Key</label>
+			<label class="forminput-x-label" for="forminput1" i18n>Your Consumer Key</label>
 			<div class="forminput-x-inputs u-margin-top1x">
 				<svg class="forminput-x-icon" icon="icon_link"></svg>
 				<input type="text" id="forminput1" type="text" [value]="integration.consumerKey" readonly #consumerKey>
@@ -33,7 +33,7 @@
 
 
 		<div class="forminput forminput-hasiconleft forminput-withbutton u-margin-top2x">
-			<label class="forminput-x-label" for="forminput2">Your Shared Secret</label>
+			<label class="forminput-x-label" for="forminput2" i18n>Your Shared Secret</label>
 			<div class="forminput-x-inputs u-margin-top1x">
 				<svg class="forminput-x-icon" icon="icon_link"></svg>
 				<input type="text" id="forminput2" type="text" [value]="integration.sharedSecret" readonly #sharedSecret>
@@ -46,12 +46,12 @@
 		</div>
 
 		<div class="forminput forminput-hasiconleft forminput-withbutton u-margin-top2x">
-			<label class="forminput-x-label" for="forminput2">Config URL</label>
+			<label class="forminput-x-label" for="forminput2" i18n>Config URL</label>
 			<div class="forminput-x-inputs u-margin-top1x">
 				<svg class="forminput-x-icon" icon="icon_link"></svg>
 				<input type="text" id="forminput2" type="text" [value]="integration.configUrl" readonly #configUrl>
 				<div class="forminput-x-button">
-					<button class="button button-secondary button-informinput" type="button" [click-to-copy]="configUrl">
+					<button class="button button-secondary button-informinput" type="button" [click-to-copy]="configUrl" i18n>
 						Copy
 					</button>
 				</div>
@@ -62,15 +62,15 @@
 	<div class="contentlong u-margin-top3x u-width-paragraph">
 
 
-		<h1>Integrating Badgr into Canvas</h1>
+		<h1 i18n>Integrating Badgr into Canvas</h1>
 		<ol>
-			<li>
+			<li i18n>
 				Make sure your Badgr account has the
 				<a [routerLink]="['/profile']">email address confirmed</a>
 				that you log into Canvas with.
 			</li>
 
-			<li>
+			<li i18n>
 				Log into Canvas with your administrator credentials. Go to the desired Canvas account or sub-account, choose
 				Settings in the left-hand menu, and select the Apps tab
 				<ol>
@@ -78,7 +78,7 @@
 					</li>
 				</ol>
 			</li>
-			<li>
+			<li i18n>
 				Select Badgr from the list (if connected with the EduAppCenter) or add a new custom integration
 				<ol>
 					<li>
@@ -98,8 +98,8 @@
 					</li>
 				</ol>
 			</li>
-			<li>Submit the form and refresh the page</li>
-			<li>
+			<li i18n>Submit the form and refresh the page</li>
+			<li i18n>
 				Observe that a new Badges tab will appear on your left-side course navigation in all courses on the account
 			</li>
 		</ol>

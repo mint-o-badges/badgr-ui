@@ -6,10 +6,10 @@
 >
 		<div class="dialog-x-box o-container">
 			<div class="dialog-x-header u-background-light3">
-				<h1>Icon suchen</h1>
+				<h1 i18n>Search icon</h1>
 				<button (click)="closeDialog()" class="buttonicon buttonicon-link">
 					<svg icon="icon_close"></svg>
-					<span class="visuallyhidden">Close</span>
+					<span class="visuallyhidden" i18n>Close</span>
 				</button>
 			</div>
 			<div
@@ -24,7 +24,7 @@
 							type="text"
 							name="forminput"
 							id="forminput"
-							placeholder="Icon suchen"
+							placeholder="Search icon"
 							(ngModel)="searchQuery"
 						/>
 						<svg class="forminput-x-icon" icon="icon_search"></svg>
@@ -36,9 +36,9 @@
 							<table *ngIf="icons && icons.length > 0; else noResult" class="datatable datatable-roundheaders datatable-onlyfirstcolumn datatable-verticalalignmiddle">
 								<thead class="datatable-x-head">
 									<tr class="datatable-x-header">
-										<th class="datatable-x-cell" scope="col">Icon</th>
-										<th class="datatable-x-cell" scope="col">Tags</th>
-										<th class="datatable-x-cell" scope="col"><span class="visuallyhidden">ID</span></th>
+										<th class="datatable-x-cell" scope="col" i18n>Icon</th>
+										<th class="datatable-x-cell" scope="col" i18n>Tags</th>
+										<th class="datatable-x-cell" scope="col"><span class="visuallyhidden" i18n>ID</span></th>
 									</tr>
 								</thead>
 								<tbody class="datatable-x-body">
@@ -67,26 +67,27 @@
 													<button
 														class="button"
 														(click)="selectIcon(icon)"
+														i18n
 													>
-														Auswählen
+														Choose
 													</button>
 												</td>
 											</tr>
 										</ng-template>
 								</tbody>
 								<div *ngIf="!endOfResults" id="load-more-icons">
-									<div *ngIf="loadingMore; else NotLoadingMore" class="u-text u-text-breakword">Lädt...</div>
+									<div *ngIf="loadingMore; else NotLoadingMore" class="u-text u-text-breakword" i18n>Loading...</div>
 									<ng-template #NotLoadingMore>
 										<a class="u-text u-text-link u-text-breakword"
 										[routerLink]=""
-										(click)="loadMoreIcons()">Mehr laden...</a>
+										(click)="loadMoreIcons()" i18n>Load More...</a>
 									</ng-template>
 								</div>
 							</table>
 							<!-- No results error -->
 							<ng-template #noResult>
-								<div id="no-icon-result">
-									Kein Icon gefunden für "{{ searchTerm }}"
+								<div id="no-icon-result" i18n>
+									No icon found for "{{ searchTerm }}"
 								</div>
 							</ng-template>
 						</div>
@@ -94,8 +95,8 @@
 				</div>
 				<!-- Language warning -->
 				<div class="category u-padding-xaxis3x u-margin-top2x warning">
-					<p>
-						Bitte nutze englische Begriffe zum Suchen der Icons.
+					<p i18n>
+						Please use English terms to search for the icons.
 					</p>
 				</div>
 			</div>

@@ -6,10 +6,10 @@
 >
 	<div class="dialog-x-box o-container">
 		<div class="dialog-x-header u-background-light3">
-			<h1>Badge exportieren</h1>
+			<h1 i18n>Export badge</h1>
 			<button (click)="closeDialog()" class="buttonicon buttonicon-link">
 				<svg icon="icon_close"></svg>
-				<span class="visuallyhidden">Close</span>
+				<span class="visuallyhidden" i18n>Close</span>
 			</button>
 		</div>
 
@@ -17,7 +17,7 @@
 			<embed #outputPdf class="output-pdf-embed" *ngIf="!pdfError; else showError" />
 			<!-- No results error -->
 			<ng-template #showError>
-				<div id="show-error-result">PDF konnte nicht erstellt werden...</div>
+				<div id="show-error-result" i18n>PDF could not be created...</div>
 			</ng-template>
 			<div class="l-stack l-stack-right u-margin-top1x u-padding-bottom2x">
 				<button
@@ -27,8 +27,9 @@
 					loading-message="Downloading..."
 					[disabled-when-requesting]="true"
 					[disabled]="pdfError"
+					i18n
 				>
-					Herunterladen
+					Download
 				</button>
 			</div>
 		</div>

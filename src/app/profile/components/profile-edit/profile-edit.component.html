@@ -11,7 +11,7 @@
 		</div>
 
 		<div class="l-containerxaxis">
-			<div class="topbar-x-heading">
+			<div class="topbar-x-heading" i18n>
 				Edit Profile Name
 			</div>
 		</div>
@@ -42,11 +42,13 @@
 				<a class="button button-secondary"
 				   [routerLink]="['../profile']"
 				   [disabled-when-requesting]="true"
+				   i18n
 				>Cancel</a>
 
 				<button type="submit"
 				        class="button"
 				        [disabled-when-requesting]="true"
+						i18n
 				>
 					Save
 				</button>

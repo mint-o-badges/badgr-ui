@@ -6,16 +6,16 @@
 >
 	<div class="dialog-x-box o-container">
 		<div class="dialog-x-header u-background-light3">
-			<h2 id="addBadgeDialog" class="u-text-body-bold-caps text-dark1">Badge hinzufügen</h2>
+			<h2 id="addBadgeDialog" class="u-text-body-bold-caps text-dark1" i18n>Add badge</h2>
 			<button class="buttonicon buttonicon-link" (click)="closeDialog()">
 				<svg icon="icon_close"></svg>
-				<span class="visuallyhidden">Schließen</span>
+				<span class="visuallyhidden" i18n>Close</span>
 			</button>
 		</div>
 
 		<form [formGroup]="addRecipientBadgeForm.rawControl" (ngSubmit)="submitBadgeRecipientForm()">
-			<p class="u-padding-yaxis2x u-responsivepadding-xaxis border-light3 u-text-body u-background-light3">
-				Füge ein Badge hinzu welches du bereits erhalten hast.
+			<p class="u-padding-yaxis2x u-responsivepadding-xaxis border-light3 u-text-body u-background-light3" i18n>
+				Add a badge that you have already received.
 			</p>
 
 			<div class="tabbar">
@@ -24,8 +24,9 @@
 					[class.tab-is-active]="currentTab === 'upload'"
 					(click)="currentTab = 'upload'"
 					type="button"
+					i18n
 				>
-					Bild
+					Picture
 				</div>
 
 				<div
@@ -33,6 +34,7 @@
 					[class.tab-is-active]="currentTab === 'url'"
 					(click)="currentTab = 'url'"
 					type="button"
+					i18n
 				>
 					URL
 				</div>
@@ -42,6 +44,7 @@
 					[class.tab-is-active]="currentTab === 'json'"
 					(click)="currentTab = 'json'"
 					type="button"
+					i18n
 				>
 					JSON
 				</div>
@@ -99,9 +102,10 @@
 					class="button"
 					type="submit"
 					[loading-promises]="[badgeUploadPromise]"
-					loading-message="Hinzufügen"
+					loading-message="Add"
+					i18n
 				>
-					Badge hinzufügen
+					Add badge
 				</button>
 			</div>
 			<div *ngIf="formError" class="u-padding-all3x">
@@ -110,12 +114,12 @@
 						<svg icon="icon_priority_high"></svg>
 					</div>
 					<div class="notification-x-text">
-						<h2>Uh Oh...</h2>
+						<h2 i18n>Uh Oh...</h2>
 						<p>{{ formError }}</p>
 					</div>
 					<button class="notification-x-close buttonicon buttonicon-clear" (click)="clearFormError()">
 						<svg icon="icon_close"></svg>
-						<span class="visuallyhidden">Benachrichtigung schließen</span>
+						<span class="visuallyhidden" i18n>Close notification</span>
 					</button>
 				</div>
 			</div>

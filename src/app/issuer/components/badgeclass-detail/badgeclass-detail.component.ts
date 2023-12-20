@@ -91,19 +91,19 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 	crumbs: LinkEntry[];
 
 	categoryOptions: { [key in BadgeClassCategory]: string } = {
-		membership: 'Mitgliedschaft',
-		ability: 'Metakompetenz',
-		archievement: 'Teilnahme / Erfolg',
-		skill: 'Fachliche Kompetenz',
+		membership: 'Membership',
+		ability: 'Metacompetence',
+		archievement: 'Participation/Success',
+		skill: 'Professional competence',
 	};
 
 	levelOptions: { [key in BadgeClassLevel]: string } = {
-		a1: 'A1 Einsteiger*in',
-		a2: 'A2 Entdecker*in',
-		b1: 'B1 Insider*in',
-		b2: 'B2 Expert*in',
-		c1: 'C1 Leader*in',
-		c2: 'C2 Vorreiter*in',
+		a1: 'A1 beginner',
+		a2: 'A2 explorer',
+		b1: 'B1 Insider',
+		b2: 'B2 Expert',
+		c1: 'C1 Leader',
+		c2: 'C2 pioneer',
 	};
 
 	private _searchQuery = '';

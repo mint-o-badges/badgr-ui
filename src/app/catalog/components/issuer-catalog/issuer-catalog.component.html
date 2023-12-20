@@ -3,7 +3,7 @@
 <header class="topbar">
 	<div class="l-containerxaxis topbar-x-wrap">
 		<h2 class="topbar-x-heading">
-			Institutionen
+			Institutions
 			<ng-template [showLoader]="false" [bgAwaitPromises]="[issuersLoaded]">
 				<span class="topbar-x-internalheading">
 					{{ issuers.length | i18nPlural: plural['issuer'] }}
@@ -23,7 +23,7 @@
 							type="text"
 							name="forminput"changeOrder
 							id="forminput"
-							placeholder="Institutionen durchsuchen"
+							placeholder="Search institutions"
 							[(ngModel)]="searchQuery"
 						/>
 						<svg class="forminput-x-icon" icon="icon_search"></svg>
@@ -32,7 +32,7 @@
 				<div class="viewtoggle l-actionbar-x-viewtoggle"
 				[class.viewtoggle-is-listview]="order == 'desc'">
 					<label class="viewtoggle-x-grid" (click)='changeOrder("asc")'>
-						<span class="visuallyhidden">name</span>
+						<span class="visuallyhidden" i18n>name</span>
 						<input
 							name="radiobutton2"
 							id="radiobutton3"
@@ -43,7 +43,7 @@
 						<svg style="transform: rotateZ(90deg)" icon="icon_arrow"></svg>
 					</label>
 					<label class="viewtoggle-x-list" (click)='changeOrder("desc")'>
-						<span class="visuallyhidden">-name</span>
+						<span class="visuallyhidden" i18n>-name</span>
 						<input
 							type="radio"
 							name="radiobutton2"
@@ -56,14 +56,14 @@
 				</div>
 				<div class="viewtoggle-container">
 					<div>
-						<button class="viewtoggle-button" [class.active]="badgesDisplay == 'map'" (click)="openMap()">map</button>				
+						<button class="viewtoggle-button" [class.active]="badgesDisplay == 'map'" (click)="openMap()" i18n>map</button>				
 					</div>
 
 					<div class="viewtoggle l-actionbar-x-viewtoggle"
 					[class.mapView]="badgesDisplay == 'map'"
 					[class.viewtoggle-is-listview]="badgesDisplay == 'list'">
 						<label class="viewtoggle-x-grid">
-							<span class="visuallyhidden">grid</span>
+							<span class="visuallyhidden" i18n>grid</span>
 							<input
 								checked="checked"
 								name="radiobutton"
@@ -75,7 +75,7 @@
 							<svg icon="icon_grid"></svg>
 						</label>
 						<label class="viewtoggle-x-list">
-							<span class="visuallyhidden">list</span>
+							<span class="visuallyhidden" i18n>list</span>
 							<input
 								type="radio"
 								name="radiobutton"
@@ -90,7 +90,7 @@
 				<div class="l-actionbar-x-groupby" *ngIf="badgesDisplay != 'map'">
 					<label class="checkbox checkbox-small">
 						<input name="groupby" type="checkbox" [(ngModel)]="groupByCategory" />
-						<span class="checkbox-x-text">Nach Kategorien grupppieren</span>
+						<span class="checkbox-x-text" i18n>Group by categories</span>
 					</label>
 				</div>
 			</div>
@@ -127,7 +127,7 @@
 									[innerHTML]="issuer.badgeClassCount | i18nPlural: plural['badges']"
 								></p>
 							</div>
-							<a class="u-text u-text-small" [routerLink]="['/public/issuers/', issuer.slug]">Öffnen</a>
+							<a class="u-text u-text-small" [routerLink]="['/public/issuers/', issuer.slug]" i18n>Open</a>
 						</div>
 					</div>
 				</ng-container>
@@ -139,7 +139,7 @@
 							{{ issuerKeys[issuerGroup.category] }}
 							<span class="u-text-small-semibold-caps u-text-dark4 u-margin-left2x"
 								>{{ issuerGroup.issuers.length }}
-								{{ issuerGroup.issuers.length == 1 ? 'Institution' : 'Institutionen' }}</span
+								{{ issuerGroup.issuers.length == 1 ? 'Institution' : 'Institutions' }}</span
 							>
 						</h3>
 	
@@ -172,7 +172,7 @@
 										[innerHTML]="issuer.badgeClassCount | i18nPlural: plural['badges']"
 									></p>
 								</div>
-								<a class="u-text u-text-small" [routerLink]="['/public/issuers/', issuer.slug]">Öffnen</a>
+								<a class="u-text u-text-small" [routerLink]="['/public/issuers/', issuer.slug]" i18n>Open</a>
 							</div>
 						</div>
 					</ng-container>
@@ -186,10 +186,10 @@
 					<table class="datatable datatable-roundheaders datatable-onlyfirstcolumn datatable-verticalalignmiddle">
 						<thead class="datatable-x-head">
 							<tr class="datatable-x-header">
-								<th class="datatable-x-cell" scope="col">Bild</th>
-								<th class="datatable-x-cell" scope="col">Institution</th>
-								<th class="datatable-x-cell" scope="col">Registriert seit</th>
-								<th class="datatable-x-cell" scope="col"><span class="visuallyhidden">Actions</span></th>
+								<th class="datatable-x-cell" scope="col" i18n>Picture</th>
+								<th class="datatable-x-cell" scope="col" i18n>Institution</th>
+								<th class="datatable-x-cell" scope="col" i18n>Registered since</th>
+								<th class="datatable-x-cell" scope="col"><span class="visuallyhidden" i18n>Actions</span></th>
 							</tr>
 						</thead>
 						<tbody class="datatable-x-body">
@@ -215,7 +215,7 @@
 											<time [date]="issuer.createdAt" format="mediumDate"></time>
 										</td>
 										<td class="datatable-x-cell">
-											<a class="u-text u-text-small" [routerLink]="['/public/issuers/', issuer.slug]">Öffnen</a>
+											<a class="u-text u-text-small" [routerLink]="['/public/issuers/', issuer.slug]" i18n>Open</a>
 										</td>
 									</tr>
 							</ng-container>
@@ -227,10 +227,10 @@
 					<table class="datatable datatable-roundheaders datatable-onlyfirstcolumn datatable-verticalalignmiddle">
 						<thead class="datatable-x-head">
 							<tr class="datatable-x-header">
-								<th class="datatable-x-cell" scope="col">Bild</th>
-								<th class="datatable-x-cell" scope="col">Institution</th>
-								<th class="datatable-x-cell" scope="col">Registriert seit</th>
-								<th class="datatable-x-cell" scope="col"><span class="visuallyhidden">Actions</span></th>
+								<th class="datatable-x-cell" scope="col" i18n>Picture</th>
+								<th class="datatable-x-cell" scope="col" i18n>Institution</th>
+								<th class="datatable-x-cell" scope="col" i18n>Registered since</th>
+								<th class="datatable-x-cell" scope="col"><span class="visuallyhidden" i18n>Actions</span></th>
 							</tr>
 						</thead>
 						<tbody class="datatable-x-body">
@@ -263,7 +263,7 @@
 												<time [date]="issuer.createdAt" format="mediumDate"></time>
 											</td>
 											<td class="datatable-x-cell">
-												<a class="u-text u-text-small" [routerLink]="['/public/issuers/', issuer.slug]">Öffnen</a>
+												<a class="u-text u-text-small" [routerLink]="['/public/issuers/', issuer.slug]" i18n>Open</a>
 											</td>
 										</tr>
 								</ng-container>
@@ -282,10 +282,10 @@
 		</div>
 		<div id="map-legend">
 			<ul>
-				<li><div class="color cluster"></div>Cluster</li>
-				<li><div class="color schule"></div>Schule</li>
-				<li><div class="color hochschule"></div>Hochschule</li>
-				<li><div class="color andere"></div>Andere</li>
+				<li i18n><div class="color cluster"></div>Cluster</li>
+				<li i18n><div class="color schule"></div>School</li>
+				<li i18n><div class="color hochschule"></div>University</li>
+				<li i18n><div class="color andere"></div>Other</li>
 			</ul>
 		</div>
 	</div>

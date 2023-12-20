@@ -18,22 +18,24 @@
 						class="button"
 						[routerLink]="['/issuer/issuers', issuerSlug, 'badges', badgeClass.slug, 'issue']"
 						[disabled-when-requesting]="true"
-						>Badge vergeben</a
+						i18n
+						>Badge awarded</a
 					>
 					<button class="buttonicon buttonicon-secondary" id="actionstrigger" [bgPopupMenuTrigger]="moreMenu">
 						<svg icon="icon_more"></svg>
-						<span class="visuallyhidden">Mehr</span>
+						<span class="visuallyhidden" i18n>More</span>
 					</button>
 					<bg-popup-menu #moreMenu>
 						<button
 							class="menuitem"
 							type="button"
 							[routerLink]="['/issuer/issuers', issuerSlug, 'badges', badgeClass.slug, 'edit']"
+							i18n
 						>
-							<svg icon="icon_edit"></svg>Bearbeiten
+							<svg icon="icon_edit"></svg>Edit
 						</button>
-						<button class="menuitem" (click)="deleteBadge()" [disabled-when-requesting]="true">
-							<svg icon="icon_remove"></svg>Löschen
+						<button class="menuitem" (click)="deleteBadge()" [disabled-when-requesting]="true" i18n>
+							<svg icon="icon_remove"></svg>Delete
 						</button>
 						<!--
 				        	TODO: Add 'share' action
@@ -63,7 +65,7 @@
 								/>
 							</div>
 							<div>
-								<dt class="u-text-small-bold u-text-dark2">Vergeben von:</dt>
+								<dt class="u-text-small-bold u-text-dark2" i18n>Awarded by:</dt>
 								<dd class="u-text">
 									<a class="u-break-word" [routerLink]="['/issuer/issuers/', issuerSlug]">{{
 										issuer.name
@@ -75,8 +77,8 @@
 							<div>
 								<dt class="u-text-small-bold u-text-dark2"><a 
 									class="u-break-word" 
-									[routerLink]="['/issuer/issuers/', badgeClass.extension['extensions:BasedOnExtension'].BasedOn.issuerSlug, 'badges', badgeClass.extension['extensions:BasedOnExtension'].BasedOn.slug]">
-									Basierend auf &rarr;
+									[routerLink]="['/issuer/issuers/', badgeClass.extension['extensions:BasedOnExtension'].BasedOn.issuerSlug, 'badges', badgeClass.extension['extensions:BasedOnExtension'].BasedOn.slug]" i18n>
+									Based on &rarr;
 								</a></dt>
 							</div>
 						</div>
@@ -87,7 +89,7 @@
 								u-text-dark2
 							"
 						>
-							Erstellt am:
+							Created on:
 						</dt>
 						<dd class="u-text"><time [date]="badgeClass.createdAt" format="dd/MM/y"></time></dd>
 						<dt
@@ -97,8 +99,9 @@
 								u-text-dark2
 							"
 							*ngIf="badgeClass.expiresAmount"
+							i18n
 						>
-							Ablaufdatum:
+							Expiry Date:
 						</dt>
 						<dd class="u-text" *ngIf="badgeClass.expiresAmount > 1">
 							{{ badgeClass.expiresAmount }} {{ badgeClass.expiresDuration }}
@@ -115,11 +118,12 @@
 									border border-top border-light3
 									u-text-dark2
 								"
+								i18n
 							>
-								Minimale Dauer
+								Minimum duration
 							</dt>
 							<dd class="u-text">
-								{{ badgeClass.extension['extensions:StudyLoadExtension'].StudyLoad }} Stunden
+								{{ badgeClass.extension['extensions:StudyLoadExtension'].StudyLoad }} Hours
 							</dd>
 						</div>
 						<!-- Category -->
@@ -130,8 +134,9 @@
 									border border-top border-light3
 									u-text-dark2
 								"
+								i18n
 							>
-								Kategorie:
+								Category:
 							</dt>
 							<dd class="u-text">
 								{{ categoryOptions[badgeClass.extension['extensions:CategoryExtension'].Category] }}
@@ -145,6 +150,7 @@
 									border border-top border-light3
 									u-text-dark2
 								"
+								i18n
 							>
 								Level:
 							</dt>
@@ -156,20 +162,20 @@
 				</div>
 			</div>
 			<div class="badgedetail-x-desc">
-				<h2 class="u-text-h3-semibold u-text-dark2 u-margin-bottom2x u-hidden-mintablet">Beschreibung</h2>
+				<h2 class="u-text-h3-semibold u-text-dark2 u-margin-bottom2x u-hidden-mintablet" i18n>Description</h2>
 				<p class="u-text-body u-width-paragraph">{{ badgeClass.description }}</p>
 			</div>
 			<div class="badgedetail-x-body">
 				<!-- criteria -->
 				<section *ngIf="badgeClass.criteria_url || badgeClass.criteria_text">
-					<h3 class="u-text-h3-semibold u-text-dark2 u-margin-bottom2x u-margin-top4x">Kriterien</h3>
+					<h3 class="u-text-h3-semibold u-text-dark2 u-margin-bottom2x u-margin-top4x" i18n>criteria</h3>
 					<show-more>
 						<markdown-display *ngIf="badgeClass.criteria_text" [value]="badgeClass.criteria_text">
 						</markdown-display>
 					</show-more>
 					<div class="u-margin-yaxis2x" *ngIf="badgeClass.criteria_url">
-						<a class="u-text-outlink" target="_blank" [href]="badgeClass.criteria_url"
-							>Externe Kriteruen URL ansehen
+						<a class="u-text-outlink" target="_blank" [href]="badgeClass.criteria_url" i18n
+							>External criteria View URL
 							<svg icon="icon_external_link"></svg>
 						</a>
 					</div>
@@ -180,8 +186,9 @@
 					<h3
 						class="u-text-h3-semibold u-text-dark2 u-margin-yaxis2x"
 						*ngIf="badgeClass.alignments && badgeClass?.alignments.length > 0"
+						i18n
 					>
-						Anlehnung
+						Leaning
 					</h3>
 
 					<div
@@ -198,8 +205,8 @@
 							{{ alignment.framework_name }}
 						</div>
 						<div class="u-margin-yaxis2x" *ngIf="alignment.target_url">
-							<a class="u-text-outlink" [href]="alignment.target_url" target="_blank"
-								>URL der Anlehnung besuchen
+							<a class="u-text-outlink" [href]="alignment.target_url" target="_blank" i18n
+								>Visit link URL
 								<svg icon="icon_external_link"></svg>
 							</a>
 						</div>
@@ -211,6 +218,7 @@
 					<h3
 						class="u-text-h3-semibold u-text-dark2 u-margin-bottom2x u-margin-top4x"
 						*ngIf="badgeClass.tags && badgeClass.tags.length"
+						i18n
 					>
 						Tags
 					</h3>
@@ -222,19 +230,19 @@
 				<!-- recipients -->
 				<div class="l-stack u-margin-bottom2x u-margin-top4x">
 					<h2 class="u-text-h3-semibold u-text-dark2">
-						{{ recipientCount }} Badge {{ recipientCount == 1 ? 'Empfänger*in' : 'Empfänger*innen' }}
+						{{ recipientCount }} Badge {{ recipientCount == 1 ? 'Recipient' : 'Recipients' }}
 					</h2>
 					<div class="forminput forminput-hasicon">
-						<p class="forminput-x-sublabel">Nach E-Mail Adresse suchen</p>
+						<p class="forminput-x-sublabel" i18n>Search for email address</p>
 						<div class="forminput-x-inputs">
-							<input type="text" placeholder="Nach E-Mail Adresse suchen" [(ngModel)]="searchQuery" />
+							<input type="text" placeholder="Search for email address" [(ngModel)]="searchQuery" />
 							<svg class="forminput-x-icon" icon="icon_search"></svg>
 						</div>
 					</div>
 				</div>
-				<p class="u-text u-margin-bottom3x" *ngIf="showAssertionCount">
-					{{ instanceResults.length }} bisherige Vergaben. Du kannst die Buttons Weiter/Zurück weiter unten verwenden, um weitere Vergaben anzuzeigen, 
-				oder Vergaben anhand der genauen E-Mail-Adresse/Empfängerkennung suchen.
+				<p class="u-text u-margin-bottom3x" *ngIf="showAssertionCount" i18n>
+					{{ instanceResults.length }} previous awards. You can use the Next/Back buttons below to view additional awards,
+					or search for assignments using the exact email address/recipient ID.
 					
 				</p>
 				<ng-template
@@ -244,10 +252,10 @@
 					<table class="datatable datatable-roundheaders datatable-onlyfirstcolumn">
 						<thead class="datatable-x-head">
 							<tr class="datatable-x-header">
-								<th class="datatable-x-cell" scope="col">ID</th>
-								<th class="datatable-x-cell" scope="col">Vergeben am</th>
+								<th class="datatable-x-cell" scope="col" i18n>ID</th>
+								<th class="datatable-x-cell" scope="col" i18n>Awarded on</th>
 								<th class="datatable-x-cell" scope="col">
-									<span class="visuallyhidden">Actions</span>
+									<span class="visuallyhidden" i18n>Actions</span>
 								</th>
 							</tr>
 						</thead>
@@ -258,6 +266,7 @@
 										<span
 											*ngIf="instance.isExpired"
 											class="badgestatus badgestatus-expired u-margin-right1x"
+											i18n
 											>expired</span
 										>
 										<span class="l-flex-x-grow u-overflow-ellipsis">{{
@@ -275,7 +284,7 @@
 												[bgPopupMenuTrigger]="mobileTableMoreMenu"
 											>
 												<svg icon="icon_more"></svg>
-												<span class="visuallyhidden">More</span>
+												<span class="visuallyhidden" i18n>More</span>
 											</button>
 										</span>
 									</div>
@@ -285,14 +294,14 @@
 								</td>
 								<td class="datatable-x-cell">
 									<div class="l-flex l-flex-justifyend l-flex-aligncenter l-flex-1x">
-										<a class="u-text-link-small" target="_blank" [href]="instance.url">Öffnen</a>
+										<a class="u-text-link-small" target="_blank" [href]="instance.url" i18n>Open</a>
 										<button
 											class="buttonicon buttonicon-link"
 											(click)="popInstance = instance"
 											[bgPopupMenuTrigger]="tableMoreMenu"
 										>
 											<svg icon="icon_more"></svg>
-											<span class="visuallyhidden">More</span>
+											<span class="visuallyhidden" i18n>More</span>
 										</button>
 									</div>
 								</td>
@@ -301,11 +310,11 @@
 					</table>
 
 					<bg-popup-menu #mobileTableMoreMenu>
-						<button type="button" class="menuitem" (click)="shareInstance(popInstance)">
-							<svg icon="icon_share"></svg>Teilen
+						<button type="button" class="menuitem" (click)="shareInstance(popInstance)" i18n>
+							<svg icon="icon_share"></svg>Split
 						</button>
-						<button type="button" class="menuitem" (click)="revokeInstance(popInstance)">
-							<svg icon="icon_remove"></svg>Zurücknehmen
+						<button type="button" class="menuitem" (click)="revokeInstance(popInstance)" i18n>
+							<svg icon="icon_remove"></svg>Take back
 						</button>
 						<ng-container *ngIf="launchpoints">
 							<button
@@ -321,11 +330,11 @@
 					</bg-popup-menu>
 
 					<bg-popup-menu #tableMoreMenu>
-						<button type="button" class="menuitem" (click)="shareInstance(popInstance)">
-							<svg icon="icon_share"></svg>Teilen
+						<button type="button" class="menuitem" (click)="shareInstance(popInstance)" i18n>
+							<svg icon="icon_share"></svg>Split
 						</button>
-						<button type="button" class="menuitem" (click)="revokeInstance(popInstance)">
-							<svg icon="icon_remove"></svg>Zurücknehmen
+						<button type="button" class="menuitem" (click)="revokeInstance(popInstance)" i18n>
+							<svg icon="icon_remove"></svg>Take back
 						</button>
 						<ng-container *ngIf="launchpoints">
 							<button
@@ -342,28 +351,29 @@
 
 					<div class="u-margin-yaxis4x" *ngIf="hasNextPage() || hasPrevPage()">
 						<nav class="pagination">
-							<h2 class="visuallyhidden">Pagination</h2>
+							<h2 class="visuallyhidden" i18n>Pagination</h2>
 							<button
 								class="page"
 								[class.is-disabled]="!hasPrevPage()"
 								[attr.disabled]="hasPrevPage() ? null : 'disabled'"
 								(click)="clickPrevPage()"
 							>
-								Zurück
+								Back
 							</button>
 							<button
 								class="page"
 								[class.is-disabled]="!hasNextPage()"
 								[attr.disabled]="hasNextPage() ? null : 'disabled'"
 								(click)="clickNextPage()"
+								i18n
 							>
-								Weiter
+								Further
 							</button>
 						</nav>
 					</div>
-					<p class="u-text-body" *ngIf="!allBadgeInstances?.length">Keine Empfänger*innen.</p>
-					<p class="u-text-body" *ngIf="allBadgeInstances?.length && !instanceResults?.length">
-						Keine Empfänger*innen gefunden.
+					<p class="u-text-body" *ngIf="!allBadgeInstances?.length" i18n>No recipients.</p>
+					<p class="u-text-body" *ngIf="allBadgeInstances?.length && !instanceResults?.length" i18n>
+						No recipients found.
 					</p>
 				</ng-template>
 			</div>

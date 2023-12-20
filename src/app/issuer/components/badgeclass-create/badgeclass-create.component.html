@@ -5,11 +5,11 @@
 		</div>
 	</div>
 	<div class="l-containerxaxis topbar-x-wrap">
-		<div class="topbar-x-heading">
-			Badge erstellen
+		<div class="topbar-x-heading" i18n>
+			Create badge
 		</div>
-		<div class="topbar-x-subheading">
-			Du kannst einen Badge nach der Erstellung an beliebig viele Empfänger vergeben.
+		<div class="topbar-x-subheading" i18n>
+			Once you have created a badge, you can give it to as many recipients as you want.
 		</div>
 		<button
 			type="submit"
@@ -17,8 +17,9 @@
 			(click)="copyBadge()"
 			loading-message="Loading badges..."
 			[disabled-when-requesting]="true"
+			i18n
 		>
-			Badge kopieren
+			Copy badge
 		</button>
 	</div>
 </div>

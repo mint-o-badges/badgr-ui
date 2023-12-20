@@ -6,7 +6,7 @@
 			</h2>
 			<button class="buttonicon buttonicon-link" (click)="cancelDialog()">
 				<svg icon="icon_close"></svg>
-				<span class="visuallyhidden">Close</span>
+				<span class="visuallyhidden" i18n>Close</span>
 			</button>
 		</div>
 		<!-- Search -->
@@ -19,7 +19,7 @@
 			</div>
 			<label class="checkbox checkbox-small" *ngIf="! isRestrictedToSingleIssuer && hasMultipleIssuers">
 				<input name="groupby" type="checkbox" [(ngModel)]="groupByIssuer">
-				<span class="checkbox-x-text">
+				<span class="checkbox-x-text" i18n>
 					Group by Issuer
 				</span>
 			</label>
@@ -28,17 +28,17 @@
 		<table class="datatable datatable-roundheaders datatable-indialog datatable-verticalalignmiddle" *bgAwaitPromises="[badgesLoaded]">
 			<thead class="datatable-x-head">
 				<tr class="datatable-x-header">
-					<th class="datatable-x-cell">Badge</th>
-					<th class="datatable-x-cell">Awarded</th>
+					<th class="datatable-x-cell" i18n>Badge</th>
+					<th class="datatable-x-cell" i18n>Awarded</th>
 				</tr>
 			</thead>
 			<tbody class="datatable-x-body">
 				<ng-template [ngIf]="badgeResults.length < 1">
 					<p class="u-text u-padding-all3x">
-						<ng-template [ngIf]="hasMultipleIssuers">
+						<ng-template [ngIf]="hasMultipleIssuers" i18n>
 							No badges or issuers matching your query
 						</ng-template>
-						<ng-template [ngIf]="!hasMultipleIssuers">
+						<ng-template [ngIf]="!hasMultipleIssuers" i18n>
 							No badges matching your query
 						</ng-template>
 					</p>
@@ -128,8 +128,8 @@
 		</table>
 
 		<div class="u-padding-all2x l-stack l-stack-buttons">
-			<button class="button" (click)="saveDialog()">Save Changes</button>
-			<button class="button button-secondary" (click)="cancelDialog()">Cancel</button>
+			<button class="button" (click)="saveDialog()" i18n>Save Changes</button>
+			<button class="button button-secondary" (click)="cancelDialog()" i18n>Cancel</button>
 		</div>
 
 

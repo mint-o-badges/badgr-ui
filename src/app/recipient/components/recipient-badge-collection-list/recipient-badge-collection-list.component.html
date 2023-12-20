@@ -3,18 +3,19 @@
 
 	<div class="topbar">
 		<div class="l-containerxaxis topbar-x-wrap">
-			<h2 class="topbar-x-heading">
-				Sammlungen
+			<h2 class="topbar-x-heading" i18n>
+				Collections
 				<span class="topbar-x-internalheading" *ngIf="!!badgeCollections">
-					{{ badgeCollections.length }} {{ badgeCollections.length == 1 ? 'Sammlung' : 'Sammlungen' }}
+					{{ badgeCollections.length }} {{ badgeCollections.length == 1 ? 'collection' : 'Collections' }}
 				</span>
 			</h2>
 			<button
 				class="button topbar-x-button"
 				[routerLink]="['/recipient/badge-collections/create']"
 				[disabled-when-requesting]="true"
+				i18n
 			>
-				Sammlung hinzufügen
+				Add collection
 			</button>
 		</div>
 	</div>
@@ -22,15 +23,16 @@
 	<ng-template [bgAwaitPromises]="[collectionListLoaded]">
 		<!--  Empty state - collection has not badges -->
 		<div class="emptysection l-emptysection" *ngIf="badgeCollections.length == 0">
-			<h2 class="emptysection-x-headline">Du hast keine Sammlungen</h2>
-			<p class="emptysection-x-copy">Mit Sammlungen kannst du deine erhaltenen Badges organisieren und teilen.</p>
+			<h2 class="emptysection-x-headline" i18n>You don't have any collections</h2>
+			<p class="emptysection-x-copy" i18n>Collections allow you to organize and share the badges you've earned.</p>
 			<div class="emptysection-x-buttons">
 				<button
 					class="button button-secondary"
 					[routerLink]="['/recipient/badge-collections/create']"
 					[disabled-when-requesting]="true"
+					i18n
 				>
-					Sammlung erstellen
+					Create collection
 				</button>
 			</div>
 			<div class="emptysection-x-imagecontainer">
@@ -86,7 +88,7 @@
 										[checked]="collection.published"
 										(change)="togglePublishCollection(collection)"
 									/>
-									<span class="switch-x-labeltext">Öffentlich</span>
+									<span class="switch-x-labeltext" i18n>Public</span>
 									<div class="switch-x-toggle"></div>
 								</label>
 							</div>
@@ -98,7 +100,7 @@
 						type="button"
 						(click)="shareCollection(collection)"
 					>
-						Teilen
+						Split
 					</button>
 				</div>
 			</div>

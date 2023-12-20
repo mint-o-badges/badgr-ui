@@ -21,6 +21,7 @@
 						class="navitem"
 						routerLinkActive="navitem-is-active"
 						[routerLink]="['/catalog/badges']"
+						i18n
 					>
 						Badges
 					</a>
@@ -30,13 +31,15 @@
 						class="navitem"
 						routerLinkActive="navitem-is-active"
 						[routerLink]="['/catalog/issuers']"
-						>Institutionen</a
+						i18n
+						>Institutions</a
 					>
 					<a
 						[class.navitem-light]="!theme.useColorNavbar"
 						class="navitem"
 						routerLinkActive="navitem-is-active"
 						[routerLink]="['/auth/login']"
+						i18n
 						>Login</a
 					>
 					<a
@@ -45,7 +48,8 @@
 						class="navitem"
 						routerLinkActive="navitem-is-active"
 						[routerLink]="['/signup']"
-						>Registrieren</a
+						i18n
+						>To Register</a
 					>
 					<a
 						*ngIf="!features.disableRegistration"
@@ -53,7 +57,8 @@
 						class="navitem"
 						routerLinkActive="navitem-is-active"
 						[routerLink]="['/public/about']"
-						>Über MINT-O-Badges</a
+						i18n
+						>About MINT-O-Badges</a
 					>
 					<a
 						role="menuitem"
@@ -61,6 +66,7 @@
 						class="navitem"
 						routerLinkActive="navitem-is-active"
 						[routerLink]="['/public/faq']"
+						i18n
 						>FAQ</a
 					>
 
@@ -78,6 +84,7 @@
 						class="navitem"
 						routerLinkActive="navitem-is-active"
 						[routerLink]="['/catalog/badges']"
+						i18n
 					>
 						Badges
 					</a>
@@ -87,8 +94,9 @@
 						class="navitem"
 						routerLinkActive="navitem-is-active"
 						[routerLink]="['/catalog/issuers']"
+						i18n
 					>
-						Institutionen
+						Institutions
 					</a>
 					<a
 						role="menuitem"
@@ -96,7 +104,8 @@
 						class="navitem"
 						routerLinkActive="navitem-is-active"
 						[routerLink]="['/recipient/badges']"
-						>Rucksack</a
+						i18n
+						>Backpack</a
 					>
 					<a
 						role="menuitem"
@@ -104,7 +113,8 @@
 						class="navitem"
 						routerLinkActive="navitem-is-active"
 						[routerLink]="['/recipient/badge-collections']"
-						>Sammlungen</a
+						i18n
+						>Collections</a
 					>
 					<button
 						role="menuitem"
@@ -114,6 +124,7 @@
 						*ngIf="launchpoints?.length"
 						routerLinkActive="navitem-is-active"
 						[bgPopupMenuTrigger]="appsMenu"
+						i18n
 					>
 						Apps
 						<svg class="navitem-x-icon" icon="icon_dropdown"></svg>
@@ -135,6 +146,7 @@
 						class="navitem"
 						routerLinkActive="navitem-is-active"
 						[routerLink]="['/public/faq']"
+						i18n
 						>FAQ</a
 					>
 					<button
@@ -144,6 +156,7 @@
 						class="navitem u-cursor-pointer"
 						routerLinkActive="navitem-is-active"
 						[bgPopupMenuTrigger]="accountMenu"
+						i18n
 					>
 						Account
 						<svg class="navitem-x-icon" icon="icon_dropdown"></svg>
@@ -160,7 +173,7 @@
 			<span></span>
 			<span></span>
 			<span></span>
-			<i class="visuallyhidden">Open Menu</i>
+			<i class="visuallyhidden" i18n>Open Menu</i>
 		</button>
 	</nav>
 
@@ -180,19 +193,19 @@
 
 	<bg-popup-menu #accountMenu>
 		<a class="menuitem" routerLinkActive="menuitem-is-active" [routerLink]="['/profile/profile']"
-			><svg icon="icon_member"></svg>Mein Profil</a
+			><svg icon="icon_member" i18n></svg>My profile</a
 		>
 		<a class="menuitem" routerLinkActive="menuitem-is-active" [routerLink]="['/issuer']"
-			><svg icon="icon_issuer"></svg>Meine Institutionen</a
+			><svg icon="icon_issuer" i18n></svg>My institutions</a
 		>
 		<a class="menuitem" routerLinkActive="menuitem-is-active" [routerLink]="['/profile/app-integrations']"
-			><svg icon="icon_compare"></svg>App Integrationen</a
+			><svg icon="icon_compare" i18n></svg>App integrations</a
 		>
 		<a class="menuitem" routerLinkActive="menuitem-is-active" [routerLink]="['/public/about']"
-			><svg icon="icon_info"></svg>Über MINT-O-Badges</a
+			><svg icon="icon_info" i18n></svg>About MINT-O-Badges</a
 		>
 		<a class="menuitem" routerLinkActive="menuitem-is-active" [routerLink]="['/auth/logout']"
-			><svg icon="icon_exit_to_app"></svg>Logout</a
+			><svg icon="icon_exit_to_app" i18n></svg>Logout</a
 		>
 	</bg-popup-menu>
 
@@ -203,11 +216,11 @@
 		[class.mobilenav-light]="!theme.useColorNavbar"
 	>
 		<div class="mobilenav-x-navitems">
-			<a routerLinkActive="menuitem-is-active" [routerLink]="['/catalog/badges']">Badges</a>
-			<a routerLinkActive="menuitem-is-active" [routerLink]="['/catalog/issuers']">Institutionen</a>
-			<a routerLinkActive="menuitem-is-active" [routerLink]="['/auth/login']">Login</a>
-			<a routerLinkActive="menuitem-is-active" [routerLink]="['/signup']">Registrieren</a>
-			<a routerLinkActive="menuitem-is-active" [routerLink]="['/public/about']">Über MINT-O-Badges</a>
+			<a routerLinkActive="menuitem-is-active" [routerLink]="['/catalog/badges']" i18n>Badges</a>
+			<a routerLinkActive="menuitem-is-active" [routerLink]="['/catalog/issuers']" i18n>Institutions</a>
+			<a routerLinkActive="menuitem-is-active" [routerLink]="['/auth/login']" i18n>Login</a>
+			<a routerLinkActive="menuitem-is-active" [routerLink]="['/signup']" i18n>To Register</a>
+			<a routerLinkActive="menuitem-is-active" [routerLink]="['/public/about']" i18n>About MINT-O-Badges</a>
 
 			<hr class="mobilenav-x-rule" />
 			<p class="mobilenav-x-label" *ngIf="launchpoints?.length">Apps</p>
@@ -224,10 +237,10 @@
 		[class.mobilenav-light]="!theme.useColorNavbar"
 	>
 		<div class="mobilenav-x-navitems">
-			<a [routerLink]="['/catalog/badges']">Badges</a>
-			<a [routerLink]="['/catalog/issuers']">Institutionen</a>
-			<a [routerLink]="['/recipient/badges']">Rucksack</a>
-			<a [routerLink]="['/recipient/badge-collections']">Sammlungen</a>
+			<a [routerLink]="['/catalog/badges']" i18n>Badges</a>
+			<a [routerLink]="['/catalog/issuers']" i18n>Institutions</a>
+			<a [routerLink]="['/recipient/badges']" i18n>Backpack</a>
+			<a [routerLink]="['/recipient/badge-collections']" i18n>Collections</a>
 
 			<hr class="mobilenav-x-rule" *ngIf="launchpoints?.length" />
 			<p class="mobilenav-x-label" *ngIf="launchpoints?.length">Apps</p>
@@ -240,10 +253,10 @@
 			<hr class="mobilenav-x-rule" />
 			<p class="mobilenav-x-label">Account</p>
 			<a [routerLink]="['/profile/profile']">Profil</a>
-			<a [routerLink]="['/issuer']" *ngIf="showIssuersTab">Meine Institutionen</a>
-			<a [routerLink]="['/profile/app-integrations']">App Integrationen</a>
-			<a [routerLink]="['/public/about']">Über MINT-O-Badges</a>
-			<a [routerLink]="['/auth/logout']">Logout</a>
+			<a [routerLink]="['/issuer']" *ngIf="showIssuersTab" i18n>My institutions</a>
+			<a [routerLink]="['/profile/app-integrations']" i18n>App Integrations</a>
+			<a [routerLink]="['/public/about']" i18n>About MINT-O-Badges</a>
+			<a [routerLink]="['/auth/logout']" i18n>Logout</a>
 		</div>
 	</nav>
 </header>
@@ -261,8 +274,8 @@
 			<div>
 				<h1 *ngIf="fatalMessage" class="u-text-h2-bold u-text-center">{{ fatalMessage }}</h1>
 				<h1 *ngIf="fatalMessageDetail" class="u-text-h3 u-text-center">{{ fatalMessageDetail }}</h1>
-				<h1 *ngIf="!fatalMessage" class="u-text-body-bold u-text-center">Ups! Der Server antwortet nicht.</h1>
-				<h1 *ngIf="!fatalMessageDetail" class="u-text-body u-text-center">Bitte die Seite neu laden.</h1>
+				<h1 *ngIf="!fatalMessage" class="u-text-body-bold u-text-center" i18n>Oops! The server is not responding.</h1>
+				<h1 *ngIf="!fatalMessageDetail" class="u-text-body u-text-center" i18n>Please reload the page.</h1>
 				<img class="u-width-form" [src]="unavailableImageSrc" />
 			</div>
 		</div>
@@ -283,18 +296,18 @@
 	<div class="l-containerxaxis">
 		<div class="footer l-stickyfooter-x-footer">
 			<ul class="footer-x-leftlinks">
-				<li *ngIf="theme.showPoweredByBadgr === undefined || theme.showPoweredByBadgr">
+				<li *ngIf="theme.showPoweredByBadgr === undefined || theme.showPoweredByBadgr" i18n>
 					Powered by <a href="https://badgr.io">Badgr</a>
 				</li>
-				<li *ngIf="theme.providedBy">
-					Bereitgestellt von
+				<li *ngIf="theme.providedBy" i18n>
+					Powered by
 					<a href="{{ theme.providedBy.url }}" target="_blank">{{ theme.providedBy.name }}</a>
 				</li>
 			</ul>
 
 			<ul class="footer-x-links">
 				<li>
-					<a [href]="theme.termsOfServiceLink" target="_blank">Impressum & Datenschutz</a>
+					<a [href]="theme.termsOfServiceLink" target="_blank" i18n>Imprint Data Protection</a>
 				</li>
 			</ul>
 		</div>

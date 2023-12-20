@@ -7,7 +7,7 @@
 				<div class="topbar-x-heading">
 					{{ app.name }}
 				</div>
-				<div class="topbar-x-subheading">
+				<div class="topbar-x-subheading" i18n>
 					<p class="topbar-x-authdate u-text">
 						Authorized: <strong><time [date]="app.createdDate" format="mediumDate"></time></strong>
 					</p>
@@ -19,7 +19,7 @@
 					</div>
 				</div>
 				<div class="topbar-x-buttons">
-					<button class="button button-full" (click)="revokeAccess()">Revoke</button>
+					<button class="button button-full" (click)="revokeAccess()" i18n>Revoke</button>
 				</div>
 			</div>
 		</div>
@@ -27,11 +27,11 @@
 
 	<div class="l-containerxaxis l-containeryaxis">
 		<div class="authlist">
-			<div class="authlist-x-title">
+			<div class="authlist-x-title" i18n>
 				{{ app.name }} has permission to:
 			</div>
 			<ul class="authlist-x-items">
-				<li class="authlist-x-item">
+				<li class="authlist-x-item" i18n>
 					<svg icon="icon_member"></svg>
 					Know who you are on Badgr
 				</li>

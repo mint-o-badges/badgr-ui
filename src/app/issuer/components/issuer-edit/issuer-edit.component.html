@@ -5,8 +5,8 @@
 		<div class="topbar-x-breadcrumbs">
 			<bg-breadcrumbs [linkentries]="editIssuerCrumbs"> </bg-breadcrumbs>
 		</div>
-		<div class="topbar-x-heading">Institution bearbeiten</div>
-		<div class="topbar-x-subheading">Bearbeite die Informationen dieser Institution.</div>
+		<div class="topbar-x-heading" i18n>Edit institution</div>
+		<div class="topbar-x-subheading" i18n>Edit this institution's information.</div>
 	</div>
 </div>
 
@@ -15,7 +15,7 @@
 		<fieldset>
 			<bg-formfield-image
 				#imageField
-				label="Bild (Optional)"
+				label="Picture (Optional)"
 				imageLoaderName="issuer"
 				[placeholderImage]="issuerImagePlacholderUrl"
 				[control]="issuerForm.rawControlMap.issuer_image"
@@ -25,7 +25,7 @@
 				class="u-margin-bottom2x"
 				[control]="issuerForm.rawControlMap.issuer_name"
 				[label]="'Name'"
-				[errorMessage]="{ required: 'Bitte gebe einen Namen an' }"
+				[errorMessage]="{ required: 'Please enter a name' }"
 				[autofocus]="true"
 			></bg-formfield-text>
 
@@ -33,42 +33,42 @@
 				class="u-margin-bottom2x"
 				[control]="issuerForm.rawControlMap.issuer_url"
 				[label]="'Website URL'"
-				[errorMessage]="'Bitte gebe eine gültige URL an'"
+				[errorMessage]="'Please provide a valid URL'"
 				[urlField]="true"
 			></bg-formfield-text>
 
 			<bg-formfield-select
 				class="u-margin-bottom2x"
 				[control]="issuerForm.rawControlMap.issuer_email"
-				[label]="'Kontakt E-Mail'"
-				[placeholder]="'Bitte wähle eine verifizierte E-Mail'"
+				[label]="'Contact email'"
+				[placeholder]="'Please choose a verified email'"
 				[options]="emailsOptions"
-				[errorMessage]="{ required: 'Bitte wähle eine verifizierte E-Mail' }"
+				[errorMessage]="{ required: 'Please choose a verified email' }"
 			></bg-formfield-select>
 
 			<bg-formfield-text
 				class="u-margin-bottom2x"
 				[control]="issuerForm.rawControlMap.issuer_description"
-				[label]="'Beschreibung'"
-				[errorMessage]="{ required: 'Bitte gebe eine Beschreibung an' }"
+				[label]="'Description'"
+				[errorMessage]="{ required: 'Please provide a description' }"
 				[multiline]="true"
 			></bg-formfield-text>
 
 			<bg-formfield-select
 			class="u-margin-bottom2x"
 			[control]="issuerForm.rawControlMap.issuer_category"
-			[label]="'Kategorie'"
-			[placeholder]="'Bitte gib eine Kategorie an'"
+			[label]="'Category'"
+			[placeholder]="'Please enter a category'"
 			[options]="[
 				{
-					label: 'Schule (Grundschulen, weiterführende Schulen, Berufsschulen, Institutionen formaler schulischer Bildung)', 
-					value: 'schule'
+					label: 'School (primary schools, secondary schools, vocational schools, institutions of formal school education)', 
+					value: 'School'
 				}, {
-					label: 'Hochschule (Universitäten. Fachhochschulen, ...)', 
-					value: 'hochschule'
+					label: 'University (universities, technical colleges, ...)', 
+					value: 'University'
 				}, {
-					label: 'Andere (Bibliotheken, Museen, FabLabs, Unternehmen, Vereine, ...)', 
-					value: 'andere'
+					label: 'Others (libraries, museums, FabLabs, companies, associations, ...)', 
+					value: 'Others'
 				}]"
 
 			></bg-formfield-select>
@@ -78,31 +78,31 @@
 			<bg-formfield-text
 				class="u-margin-bottom2x"
 				[control]="issuerForm.rawControlMap.issuer_street"
-				[label]="'Strasse'"
-				[errorMessage]="{ required: 'Bitte gib eine Strasse an' }"
+				[label]="'Street'"
+				[errorMessage]="{ required: 'Please enter a street' }"
 			></bg-formfield-text>
 
 			<bg-formfield-text
 				class="u-margin-bottom2x"
 				[control]="issuerForm.rawControlMap.issuer_streetnumber"
-				[label]="'Hausnummer'"
+				[label]="'House number'"
 				[fieldType]="'number'"
-				[errorMessage]="{ required: 'Bitte gib eine Hausnummer an' }"
+				[errorMessage]="{ required: 'Please enter a house number' }"
 			></bg-formfield-text>
 
 			<bg-formfield-text
 				class="u-margin-bottom2x"
 				[control]="issuerForm.rawControlMap.issuer_zip"
-				[label]="'Postleitzahl'"
+				[label]="'Postal code'"
 				[fieldType]="'number'"
-				[errorMessage]="{ required: 'Bitte gib eine Postleitzahl an' }"
+				[errorMessage]="{ required: 'Please enter a zip code' }"
 			></bg-formfield-text>
 
 			<bg-formfield-text
 				class="u-margin-bottom2x"
 				[control]="issuerForm.rawControlMap.issuer_city"
-				[label]="'Stadt'"
-				[errorMessage]="{ required: 'Bitte gib eine Stadt an' }"
+				[label]="'City'"
+				[errorMessage]="{ required: 'Please enter a city' }"
 			></bg-formfield-text>
 
 
@@ -113,14 +113,16 @@
 					[disabled]="!!editIssuerFinished"
 					[loading-promises]="[editIssuerFinished]"
 					loading-message="Adding"
+					i18n
 				>
-					Speichern
+					Save
 				</button>
 				<a
 					[routerLink]="['/issuer/issuers', issuerSlug]"
 					class="button button-secondary"
 					[disabled-when-requesting]="true"
-					>Abbrechen</a
+					i18n
+					>Cancel</a
 				>
 			</div>
 		</fieldset>

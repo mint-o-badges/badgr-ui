@@ -22,7 +22,7 @@
 										type="checkbox"
 										[(ngModel)]="collectionPublished"
 									/>
-									<span class="switch-x-labeltext">Öffentlich</span>
+									<span class="switch-x-labeltext" i18n>Public</span>
 									<div class="switch-x-toggle"></div>
 								</label>
 							</div>
@@ -36,21 +36,23 @@
 							[class.button-is-disabled]="!collection?.published"
 							[disabled]="!collection?.published"
 							(click)="shareCollection()"
+							i18n
 						>
-							Sammlung teilen
+							Share collection
 						</button>
 						<button class="buttonicon buttonicon-secondary" [bgPopupMenuTrigger]="collectionActionMenu">
 							<svg icon="icon_more"></svg>
-							<span class="visuallyhidden">mehr</span>
+							<span class="visuallyhidden" i18n>more</span>
 						</button>
 						<bg-popup-menu #collectionActionMenu>
 							<button
 								class="menuitem"
 								routerLinkActive="menuitem-is-active"
 								(click)="editForm.startEditing()"
+								i18n
 							>
 								<svg icon="icon_edit"></svg>
-								Bearbeiten
+									Edit
 							</button>
 							<!-- <button
 								class="menuitem"
@@ -58,9 +60,9 @@
 								loading-message="Loading badge..."
 								[disabled-when-requesting]="true"
 								><svg icon="icon_file"></svg>Export to PDF</button> -->
-							<button class="menuitem" routerLinkActive="menuitem-is-active" (click)="deleteCollection()">
+							<button class="menuitem" routerLinkActive="menuitem-is-active" (click)="deleteCollection()" i18n>
 								<svg icon="icon_remove"></svg>
-								Löschen
+								Delete
 							</button>
 						</bg-popup-menu>
 					</div>
@@ -79,10 +81,10 @@
 	<!-- Empty State for badges -->
 	<ng-container *ngIf="collection?.badgeEntries.length === 0">
 		<div class="emptysection l-emptysection">
-			<h2 class="emptysection-x-headline">Deine Sammlung ist leer</h2>
-			<p class="emptysection-x-copy">Hier ist es noch ziemlich leer. Füge ein paar Badges hinzu!</p>
+			<h2 class="emptysection-x-headline" i18n>Your collection is empty</h2>
+			<p class="emptysection-x-copy" i18n>It's still pretty empty here. Add some badges!</p>
 			<div class="emptysection-x-buttons">
-				<button class="button button-secondary" type="button" (click)="manageBadges()">Badge hinzufügen</button>
+				<button class="button button-secondary" type="button" (click)="manageBadges()" i18n>Add badge</button>
 			</div>
 			<div class="emptysection-x-imagecontainer">
 				<img alt="Illustration" class="emptysection-x-image" [src]="noCollectionsImageUrl" />
@@ -94,16 +96,16 @@
 	<ng-container *ngIf="collection?.badgeEntries.length > 0">
 		<div class="l-stack u-margin-bottom2x">
 			<h2 class="u-text-h3-semibold u-text-dark2">{{ badgesInCollectionCount }}</h2>
-			<button class="button button-secondary" type="button" (click)="manageBadges()">Badges hinzufügen</button>
+			<button class="button button-secondary" type="button" (click)="manageBadges()" i18n>Add badges</button>
 		</div>
 
 		<table class="datatable datatable-roundheaders datatable-verticalalignmiddle datatable-onlyfirstcolumn">
 			<thead class="datatable-x-head">
 				<tr class="datatable-x-header">
-					<th class="datatable-x-cell" scope="col">Badge</th>
-					<th class="datatable-x-cell" scope="col">Institution</th>
-					<th class="datatable-x-cell" scope="col">Vergeben am</th>
-					<th class="datatable-x-cell" scope="col"><span class="visuallyhidden">Actions</span></th>
+					<th class="datatable-x-cell" scope="col" i18n>Badge</th>
+					<th class="datatable-x-cell" scope="col" i18n>Institution</th>
+					<th class="datatable-x-cell" scope="col" i18n>Awarded on</th>
+					<th class="datatable-x-cell" scope="col" i18n><span class="visuallyhidden">Actions</span></th>
 				</tr>
 			</thead>
 			<tbody class="datatable-x-body">
@@ -130,7 +132,7 @@
 							</span>
 						</a>
 						<div class="u-hidden-minmobilelarge u-margin-top1x">
-							<a class="u-text-link-small" (click)="removeEntry(entry)">Entfernen</a>
+							<a class="u-text-link-small" (click)="removeEntry(entry)" i18n>Remove</a>
 						</div>
 					</th>
 					<td class="datatable-x-cell">{{ entry.badge.badgeClass.issuer.name }}</td>
@@ -141,6 +143,7 @@
 							type="button"
 							(click)="removeEntry(entry)"
 							[disabled-when-requesting]="true"
+							i18n
 						>
 							Remove
 						</button>

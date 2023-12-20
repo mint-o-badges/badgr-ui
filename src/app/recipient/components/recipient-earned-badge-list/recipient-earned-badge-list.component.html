@@ -11,13 +11,13 @@
 		<div class="l-containerxaxis topbar-x-wrap">
 			<h2 class="topbar-x-heading">
 				Rucksack
-				<span class="topbar-x-internalheading" *ngIf="!!allBadges"
+				<span class="topbar-x-internalheading" *ngIf="!!allBadges" i18n
 					>{{ allBadges.length }} {{ allBadges.length == 1 ? 'Badge' : 'Badges' }}</span
 				>
 			</h2>
 			<div class="l-primarymore">
-				<button class="button topbar-x-button" (click)="addBadge()" [disabled-when-requesting]="true">
-					Badge hinzufügen
+				<button class="button topbar-x-button" (click)="addBadge()" [disabled-when-requesting]="true" i18n>
+					Add badge
 				</button>
 				<!-- <button class="topbar-x-button buttonicon buttonicon-secondary" [bgPopupMenuTrigger]="collectionActionMenu">
 					<svg icon="icon_more"></svg>
@@ -43,8 +43,8 @@
 						<svg icon="icon_info"></svg>
 					</div>
 					<div class="notification-x-text">
-						<h2>Coming from Mozilla?</h2>
-						<p>
+						<h2 i18n>Coming from Mozilla?</h2>
+						<p i18n>
 							Let's finish
 							<button (click)="launchImport($event)" class="u-display-inline u-text-link">adding</button>
 							your badges.
@@ -52,7 +52,7 @@
 					</div>
 					<button (click)="hideMozz($event)" class="notification-x-close buttonicon buttonicon-clear">
 						<svg icon="icon_close"></svg>
-						<span class="visuallyhidden">Close Notification</span>
+						<span class="visuallyhidden" i18n>Close Notification</span>
 					</button>
 				</div>
 			</div>
@@ -60,8 +60,8 @@
 
 		<!-- No badges, empty state! -->
 		<section class="emptysection l-emptysection" *ngIf="allBadges.length == 0">
-			<h2 class="emptysection-x-headline">Du hast noch keine Badges</h2>
-			<p class="emptysection-x-copy">Sammle und teile digitale Badges aus deinem Rucksack.</p>
+			<h2 class="emptysection-x-headline" i18n>You don't have any badges yet</h2>
+			<p class="emptysection-x-copy" i18n>Collect and share digital badges from your backpack.</p>
 			<div class="emptysection-x-imagecontainer">
 				<img alt="Illustration of backpack with badges" class="emptysection-x-image" [src]="noBadgesImageUrl" />
 			</div>
@@ -85,7 +85,7 @@
 				<div class="l-actionbar-x-groupby">
 					<label class="checkbox checkbox-small">
 						<input name="groupby" type="checkbox" [(ngModel)]="groupByIssuer" />
-						<span class="checkbox-x-text">Nach Institution gruppieren</span>
+						<span class="checkbox-x-text" i18n>Group by institution</span>
 					</label>
 				</div>
 				<div
@@ -93,7 +93,7 @@
 					[class.viewtoggle-is-listview]="badgesDisplay == 'list'"
 				>
 					<label class="viewtoggle-x-grid">
-						<span class="visuallyhidden">grid</span>
+						<span class="visuallyhidden" i18n>grid</span>
 						<input
 							checked="checked"
 							name="radiobutton"
@@ -105,7 +105,7 @@
 						<svg icon="icon_grid"></svg>
 					</label>
 					<label class="viewtoggle-x-list">
-						<span class="visuallyhidden">list</span>
+						<span class="visuallyhidden" i18n>list</span>
 						<input
 							type="radio"
 							name="radiobutton"
@@ -171,9 +171,9 @@
 				<table class="datatable datatable-roundheaders datatable-onlyfirstcolumn datatable-verticalalignmiddle">
 					<thead class="datatable-x-head">
 						<tr class="datatable-x-header">
-							<th class="datatable-x-cell" scope="col">Badge</th>
-							<th class="datatable-x-cell" scope="col">Institution</th>
-							<th class="datatable-x-cell" scope="col">Vergeben am</th>
+							<th class="datatable-x-cell" scope="col" i18n>Badge</th>
+							<th class="datatable-x-cell" scope="col" i18n>Institution</th>
+							<th class="datatable-x-cell" scope="col" i18n>Awarded on</th>
 							<th class="datatable-x-cell" scope="col"><span class="visuallyhidden">Actions</span></th>
 						</tr>
 					</thead>
@@ -238,7 +238,7 @@
 											class="u-text-link-small u-text-bold u-margin-leftauto"
 											(click)="shareBadge(badge)"
 										>
-											Teilen
+											Split
 										</button>
 									</td>
 								</tr>

@@ -2,17 +2,17 @@
 <ng-template #dialogLoading>
 	<div class="dialog-x-box o-container">
 		<div class="dialog-x-header u-background-light3">
-			<h1>Verify Badge</h1>
+			<h1 i18n>Verify Badge</h1>
 			<button class="buttonicon buttonicon-link"
 			        (click)="closeDialog()">
 				<svg class="navitem-x-icon" icon="icon_close"></svg>
-				<span class="visuallyhidden">Close</span>
+				<span class="visuallyhidden" i18n>Close</span>
 			</button>
 		</div>
 		<div class="u-padding-all3x">
 			<div class="u-text-center">
 				<div class="u-margin-xaxisauto loaderspin loaderspin-large u-margin-bottom2x"></div>
-				<div class="u-text">Verifying Badge...</div>
+				<div class="u-text" i18n>Verifying Badge...</div>
 			</div>
 		</div>
 	</div>
@@ -35,7 +35,7 @@
 			        (click)="closeDialog()"
 			>
 				<svg class="navitem-x-icon" icon="icon_close"></svg>
-				<span class="visuallyhidden">Close</span>
+				<span class="visuallyhidden" i18n>Close</span>
 			</button>
 		</div>
 
@@ -60,7 +60,7 @@
 							<h1 class="u-text-h3 u-text-bold u-text-dark2">
 								{{badgeAssertion?.badge.name}}
 							</h1>
-							<p class="u-text u-text-small u-width-small u-animate-step6">
+							<p class="u-text u-text-small u-width-small u-animate-step6" i18n>
 								{{isBadgeVerified
 									? 'This badge has been verified by Badgr and its information is valid.'
 									: 'This badge has not been verified by Badgr.'
@@ -74,13 +74,13 @@
 									     [icon]="   awardedState === AWARDED_STATES.MATCH ? 'icon_checkmark_circle' : 'icon_error' "
 									></svg>
 									<div>
-										<dt class="u-text-small-bold u-text-dark2">Awarded To</dt>
+										<dt class="u-text-small-bold u-text-dark2" i18n>Awarded To</dt>
 										<dd class="u-margin-bottom2x"
 										    [ngSwitch]="awardedState"
 										>
-											<ng-container *ngSwitchCase="AWARDED_STATES.MATCH"> {{identityEmail}}</ng-container>
-											<ng-container *ngSwitchCase="AWARDED_STATES.NO_MATCH"> This badge was not awarded to {{identityEmail}} </ng-container>
-											<ng-container *ngSwitchCase="AWARDED_STATES.NOT_VERIFIED"> Recipient not verified </ng-container>
+											<ng-container *ngSwitchCase="AWARDED_STATES.MATCH" i18n> {{identityEmail}}</ng-container>
+											<ng-container *ngSwitchCase="AWARDED_STATES.NO_MATCH" i18n> This badge was not awarded to {{identityEmail}} </ng-container>
+											<ng-container *ngSwitchCase="AWARDED_STATES.NOT_VERIFIED" i18n> Recipient not verified </ng-container>
 										</dd>
 									</div>
 								</div>
@@ -90,7 +90,7 @@
 									     icon="icon_checkmark_circle"
 									></svg>
 									<div>
-										<dt class="u-text-small-bold u-text-dark2">Issued On</dt>
+										<dt class="u-text-small-bold u-text-dark2" i18n>Issued On</dt>
 										<dd class="u-margin-bottom2x"><time [date]="badgeAssertion?.issuedOn" format="mediumDate"></time></dd>
 									</div>
 								</div>
@@ -101,12 +101,12 @@
 											 [icon]="expiryState !== EXPIRY_STATES.EXPIRED ? 'icon_checkmark_circle' : 'icon_error' "
 									></svg>
 									<div>
-										<dt class="u-text-small-bold u-text-dark2">Expires On</dt>
+										<dt class="u-text-small-bold u-text-dark2" i18n>Expires On</dt>
 										<dd class="u-margin-bottom2x"
 												[ngSwitch]="expiryState"
 										>
-											<ng-container *ngSwitchCase="EXPIRY_STATES.EXPIRED"> Expired</ng-container>
-											<ng-container *ngSwitchCase="EXPIRY_STATES.NEVER_EXPIRES"> Does not expire</ng-container>
+											<ng-container *ngSwitchCase="EXPIRY_STATES.EXPIRED" i18n> Expired</ng-container>
+											<ng-container *ngSwitchCase="EXPIRY_STATES.NEVER_EXPIRES" i18n> Does not expire</ng-container>
 											<ng-container *ngSwitchCase="EXPIRY_STATES.NOT_EXPIRED">
 												<time [date]="badgeAssertion?.expires"
 															format="mediumDate"
@@ -124,11 +124,12 @@
 			<div class="l-stack l-stack-justifybetween u-margin-top3x">
 				<a class="u-text-outlink"
 				   [href]="verifyUrl"
+				   i18n
 				>
 					Independently Verify Badge
 					<svg icon="icon_external_link"></svg>
 				</a>
-				<button class="button" (click)="closeDialog()">Done</button>
+				<button class="button" (click)="closeDialog()" i18n>Done</button>
 			</div>
 
 		</div>

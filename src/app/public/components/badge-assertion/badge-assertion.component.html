@@ -31,7 +31,7 @@
 				<a [href]="assertion.id" target="_blank" rel="noopener">
 					<img [src]="assertion.image" width="200" alt="Badge image" />
 				</a>
-				<a class="oembedbadge-x-btn button button-tertiary" [href]="assertion.id" target="_blank"
+				<a class="oembedbadge-x-btn button button-tertiary" [href]="assertion.id" target="_blank" i18n
 					>View Credential</a
 				>
 			</div>
@@ -46,40 +46,40 @@
 						width="48"
 					/>
 					<dl>
-						<dt>Vergeben von</dt>
-						<dd>{{ issuer.name }}</dd>
+						<dt i18n i18n>Awarded by</dt>
+						<dd i18n>{{ issuer.name }}</dd>
 					</dl>
 				</div>
 				<dl class="oembedbadge-x-info">
-					<dt>Vergeben am</dt>
+					<dt i18n>Awarded on</dt>
 					<dd>
 						<time [date]="assertion.issuedOn" format="mediumDate"></time>
 					</dd>
 
 					<!-- Study Load -->
 					<!-- <div *ngIf="badgeClass.extension['extensions:StudyLoadExtension']"> -->
-					<dt>Minimale Dauer</dt>
-					<dd class="u-text">
-						{{ badgeClass.extension['extensions:StudyLoadExtension'].StudyLoad }} Stunden
+					<dt i18n>Minimum duration</dt>
+					<dd class="u-text" i18n>
+						{{ badgeClass.extension['extensions:StudyLoadExtension'].StudyLoad }} Hours
 					</dd>
 					<!-- </div> -->
 					<!-- Category -->
 					<div *ngIf="badgeClass.extension['extensions:CategoryExtension']">
-						<dt>Kategorie:</dt>
+						<dt>Category:</dt>
 						<dd class="u-text">
 							{{ categoryOptions[badgeClass.extension['extensions:CategoryExtension'].Category] }}
 						</dd>
 					</div>
 					<!-- LEvel -->
 					<div *ngIf="badgeClass.extension['extensions:LevelExtension']">
-						<dt>Level:</dt>
+						<dt i18n>Level:</dt>
 						<dd class="u-text">
 							{{ levelOptions[badgeClass.extension['extensions:LevelExtension'].Level] }}
 						</dd>
 					</div>
 				</dl>
 				<dl class="oembedbadge-x-info" *ngIf="assertion.expires">
-					<dt>Expires On</dt>
+					<dt i18n>Expires On</dt>
 					<dd>
 						<time [date]="assertion?.expires" format="mediumDate"></time>
 					</dd>
@@ -100,24 +100,24 @@
 				</h1>
 
 				<div class="l-primarymore">
-					<a class="button" *ngIf="!showDownload" (click)="verifyBadge()">Verify Badge</a>
+					<a class="button" *ngIf="!showDownload" (click)="verifyBadge()" i18n>Verify Badge</a>
 
-					<a class="button" (click)="openSaveDialog(assertion)" *ngIf="showDownload">Download</a>
+					<a class="button" (click)="openSaveDialog(assertion)" *ngIf="showDownload" i18n>Download</a>
 
 					<button class="buttonicon buttonicon-secondary" id="actionstrigger" [bgPopupMenuTrigger]="moreMenu">
 						<svg icon="icon_more"></svg>
 						<span class="visuallyhidden">More</span>
 					</button>
 					<bg-popup-menu #moreMenu>
-						<a class="menuitem" [href]="rawJsonUrl"><svg icon="icon_external_link"></svg>Download JSON</a>
+						<a class="menuitem" [href]="rawJsonUrl"><svg icon="icon_external_link" i18n></svg>Download JSON</a>
 						<a class="menuitem" [href]="rawBakedUrl" download="true" target="_blank"
-							><svg icon="icon_external_link"></svg>Download Baked Image</a
+							><svg icon="icon_external_link" i18n></svg>Download Baked Image</a
 						>
 						<a class="menuitem" *ngIf="assertion.sourceUrl" [href]="assertion.sourceUrl"
-							><svg icon="icon_external_link"></svg>View Original</a
+							><svg icon="icon_external_link" i18n></svg>View Original</a
 						>
 						<a class="menuitem" [routerLink]="routerLinkForUrl(badgeClass.hostedUrl || badgeClass.id)">
-							<svg icon="icon_badge"></svg>View Badge</a
+							<svg icon="icon_badge" i18n></svg>View Badge</a
 						>
 					</bg-popup-menu>
 				</div>
@@ -149,7 +149,7 @@
 								/>
 							</div>
 							<div>
-								<dt class="u-text-small-bold u-text-dark2">Issued by:</dt>
+								<dt class="u-text-small-bold u-text-dark2" i18n>Issued by:</dt>
 								<dd class="u-text">
 									<a class="u-break-word" [href]="issuer.id">{{ issuer.name }}</a>
 								</dd>
@@ -161,6 +161,7 @@
 								border border-top border-light3
 								u-text-dark2
 							"
+							i18n
 						>
 							Issued on:
 						</dt>
@@ -172,6 +173,7 @@
 								u-text-dark2
 							"
 							*ngIf="awardedToDisplayName"
+							i18n
 						>
 							Awarded to:
 						</dt>
@@ -193,7 +195,7 @@
 				</div>
 			</div>
 			<div class="badgedetail-x-desc">
-				<h2 class="u-text-h3-semibold u-margin-bottom2x u-hidden-mintablet">Description</h2>
+				<h2 class="u-text-h3-semibold u-margin-bottom2x u-hidden-mintablet" i18n>Description</h2>
 				<p class="u-text-body u-width-paragraph">{{ assertion.badge.description }}</p>
 			</div>
 			<div class="badgedetail-x-body">
@@ -202,6 +204,7 @@
 					<h3
 						*ngIf="badgeClass.criteria.id || badgeClass.criteria.narrative || badgeClass.criteria"
 						class="u-text-h3-semibold u-text-dark2 u-margin-bottom2x u-margin-top4x"
+						i18n
 					>
 						Criteria
 					</h3>
@@ -209,7 +212,7 @@
 						<markdown-display [value]="badgeClass.criteria.narrative"></markdown-display>
 					</show-more>
 					<div class="u-margin-yaxis2x" *ngIf="badgeClass.criteria.id">
-						<a class="u-text-outlink" target="_blank" [href]="badgeClass.criteria.id"
+						<a class="u-text-outlink" target="_blank" [href]="badgeClass.criteria.id" i18n
 							>View External Criteria URL
 							<svg icon="icon_external_link"></svg>
 						</a>
@@ -239,7 +242,7 @@
 							{{ alignment.frameworkName }}
 						</div>
 						<div class="u-margin-yaxis2x" *ngIf="alignment.targetUrl">
-							<a class="u-text-outlink" [href]="alignment.targetUrl" target="_blank"
+							<a class="u-text-outlink" [href]="alignment.targetUrl" target="_blank" i18n
 								>View alignment URL
 								<svg icon="icon_external_link"></svg>
 							</a>
@@ -252,6 +255,7 @@
 					<h3
 						class="u-text-h3-semibold u-margin-bottom2x u-margin-top4x"
 						*ngIf="badgeClass.tags && badgeClass.tags.length"
+						i18n
 					>
 						Tags
 					</h3>
@@ -263,7 +267,7 @@
 				<!-- evidence -->
 				<section *ngIf="assertion?.evidence?.length > 0 || assertion?.narrative || assertion?.evidence">
 					<!-- || assertion.evidence.narrative -->
-					<h3 *ngIf="assertion?.narrative" class="u-text-h3-semibold u-margin-bottom2x u-margin-top4x">
+					<h3 *ngIf="assertion?.narrative" class="u-text-h3-semibold u-margin-bottom2x u-margin-top4x" i18n>
 						Narrative
 					</h3>
 
@@ -276,10 +280,10 @@
 					</show-more>
 
 					<div *ngFor="let evidence of assertion?.evidence; let i = index">
-						<h3 class="u-text-h3-semibold u-margin-bottom2x u-margin-top4x">Evidence</h3>
+						<h3 class="u-text-h3-semibold u-margin-bottom2x u-margin-top4x" i18n>Evidence</h3>
 						<markdown-display [value]="evidence?.narrative"></markdown-display>
 						<div class="u-margin-yaxis2x">
-							<a *ngIf="evidence.id" class="u-text-outlink" [href]="evidence.id" target="_blank"
+							<a *ngIf="evidence.id" class="u-text-outlink" [href]="evidence.id" target="_blank" i18n
 								>View Evidence URL
 								<svg icon="icon_external_link"></svg>
 							</a>
