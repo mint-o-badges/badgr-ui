@@ -6,11 +6,12 @@
 		"institutions": "Institutionen",
 		"account": "Konto",
 		"backpack": "Rucksack",
-		"list":"list",
+		"list": "list",
 		"collection": "Sammlung",
 		"collections": "Sammlungen",
-		"cancel":"Abbrechen"
-
+		"cancel": "Abbrechen",
+		"or": "oder",
+		"search": "suchen"
 	},
 	"NavItems": {
 		"register": "Registrieren",
@@ -156,20 +157,36 @@
 		"noBadgesYet": "Du hast noch keine Badges",
 		"collectShareBadges": "Sammle und teile digitale Badges aus deinem Rucksack.",
 		"groupByInstitution": "Group by institution",
-		"institution": "Institution"
+		"institution": "Institution",
+
+		"addRecievedBadge": "Füge ein Badge hinzu welches du bereits erhalten hast.",
+		"image": "Bild",
+		"close": "Schließen",
+		"enterURL": "URL eingeben",
+		"enterJSON": "JSON eingeben",
+
+		"selectFromFile": "aus Dateien auswählen",
+		"genRandomImage": "Zufälliges Bild erstellen",
+		"searchAnotherIcon": "anderes Icon suchen",
+		"chooseAnotherFile": "andere Datei wählen",
+		"oneBadgeRequired": "Es ist mindestens eine Badge-Eingabe erforderlich.",
+
+		"importedSuccessfully": "Badge erfolgreich importiert.",
+		"uploadFailed": "Badge konnte nicht hochgeladen werden:",
+		"unknownError": "Der Upload des Badges ist aufgrund eines unbekannten Fehlers fehlgeschlagen"
 	},
-	"BadgeCollection":{
-		"addCollection":"Sammlung hinzufügen",
-		"earnedBy":"verdient von",
-		"noCollections":"Du hast keine Sammlungen",
-		"collectionInfo":"Mit Sammlungen kannst du deine erhaltenen Badges organisieren und teilen.",
-		"createCollection":"Sammlung erstellen",
-		"share":"Teilen",
-		"orginzeBadges":"Organisiere deine Badges in Sammlungen.",
-		"collectionName":"Name der Sammlungen",
-		"enterCollectioName":"Bitte gebe einen Namen der Sammlung ein",
-		"remainingChar":"verbleibende Zeichen",
-		"description":"Beschreibung",
-		"provideDescription":"Bitte gebe eine Beschreibung an"
+	"BadgeCollection": {
+		"addCollection": "Sammlung hinzufügen",
+		"earnedBy": "verdient von",
+		"noCollections": "Du hast keine Sammlungen",
+		"collectionInfo": "Mit Sammlungen kannst du deine erhaltenen Badges organisieren und teilen.",
+		"createCollection": "Sammlung erstellen",
+		"share": "Teilen",
+		"orginzeBadges": "Organisiere deine Badges in Sammlungen.",
+		"collectionName": "Name der Sammlungen",
+		"enterCollectioName": "Bitte gebe einen Namen der Sammlung ein",
+		"remainingChar": "verbleibende Zeichen",
+		"description": "Beschreibung",
+		"provideDescription": "Bitte gebe eine Beschreibung an"
 	}
 }

@@ -9,6 +9,7 @@ import {BaseDialog} from '../../../common/dialogs/base-dialog';
 import {preloadImageURL} from '../../../common/util/file-util';
 import {FormFieldText} from '../../../common/components/formfield-text';
 import {TypedFormControl, typedFormGroup} from '../../../common/util/typed-forms';
+import { TranslateService } from '@ngx-translate/core';
 
 
 type AddBadgeDialogTabName = "upload" | "url" | "json";
@@ -51,7 +52,8 @@ export class AddBadgeDialogComponent extends BaseDialog {
 		renderer: Renderer2,
 		protected recipientBadgeManager: RecipientBadgeManager,
 		protected formBuilder: FormBuilder,
-		protected messageService: MessageService
+		protected messageService: MessageService,
+		private translate: TranslateService
 	) {
 		super(componentElem, renderer);
 	}
@@ -103,7 +105,7 @@ export class AddBadgeDialogComponent extends BaseDialog {
 			this.badgeUploadPromise = this.recipientBadgeManager
 				.createRecipientBadge(formState)
 				.then(instance => {
-					this.messageService.reportMajorSuccess("Badge successfully imported.");
+					this.messageService.reportMajorSuccess(this.translate.instant('RecBadge.importedSuccessfully'));
 					this.closeDialog();
 				})
 				.catch(err => {
@@ -125,8 +127,8 @@ export class AddBadgeDialogComponent extends BaseDialog {
 
 					this.messageService.reportAndThrowError(
 						message
-							? `Failed to upload badge: ${message}`
-							: `Badge upload failed due to an unknown error`,
+							? this.translate.instant('RecBadge.uploadFailed') + message
+							: this.translate.instant('RecBadge.unknownError'),
 						err
 					);
 				})
@@ -135,7 +137,7 @@ export class AddBadgeDialogComponent extends BaseDialog {
 					this.rejectFunc(e);
 				});
 		} else {
-			this.formError = "At least one badge input is required";
+			this.formError = this.translate.instant('RecBadge.oneBadgeRequired');
 		}
 	}
 

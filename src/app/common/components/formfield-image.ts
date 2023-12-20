@@ -29,7 +29,7 @@ import { MessageService } from '../services/message.service';
 					(click)="$event.preventDefault(); generateRandomImage.emit()"
 					class="forminput-x-helplink"
 					href="#"
-					>Zufälliges Bild erstellen</a
+					>{{ 'RecBadge.genRandomImage' | translate }}</a
 				>
 			</div>
 			<input
@@ -55,7 +55,7 @@ import { MessageService } from '../services/message.service';
 					<p class="u-text-body">
 						{{ imageName }}
 						<button (click)="imageLabel.click()" type="button" class="u-text-link">
-							andere Datei wählen
+							{{ 'RecBadge.chooseAnotherFile' | translate }}
 						</button>
 						<button
 							*ngIf="loaderName != 'basic'"
@@ -63,7 +63,7 @@ import { MessageService } from '../services/message.service';
 							type="button"
 							class="u-text-link"
 						>
-							anderes Icon suchen
+							{{ 'RecBadge.searchAnotherIcon' | translate }}
 						</button>
 					</p>
 				</div>
@@ -71,12 +71,12 @@ import { MessageService } from '../services/message.service';
 				<ng-container *ngIf="!imageDataUrl">
 					<svg class="dropzone-x-icon" icon="icon_upload"></svg>
 					<p class="dropzone-x-info1">Drag & Drop</p>
-					<p class="dropzone-x-info2">oder <span class="u-text-link">aus Dateien auswählen</span></p>
+					<p class="dropzone-x-info2">{{ 'General.or' | translate }} <span class="u-text-link">{{ 'RecBadge.selectFromFile' | translate }}</span></p>
 					<!-- dont let user select icon when uploading badge -->
 					<p *ngIf="loaderName != 'basic'" class="dropzone-x-info2">
-						oder
+						{{ 'General.or' | translate }}
 						<span class="u-text-link" (click)="$event.preventDefault(); findNounproject($event)"
-							>Icon suchen</span
+							>Icon {{ 'RecBadge.search' | translate }}</span
 						>
 					</p>
 				</ng-container>

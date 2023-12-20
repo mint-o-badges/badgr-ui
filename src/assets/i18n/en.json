@@ -9,7 +9,9 @@
 		"list":"list",
 		"collection": "Collection",
 		"collections": "Collections",
-		"cancel":"Cancel"
+		"cancel":"Cancel",
+		"or":"or",
+		"search":"search"
 
 	},
 	"NavItems": {
@@ -156,7 +158,24 @@
 		"noBadgesYet": "You don't have any badges yet",
 		"collectShareBadges": "Collect and share digital badges from your backpack.",
 		"groupByInstitution": "Nach Institution gruppieren",
-		"institution": "Institution"
+		"institution": "Institution",
+
+		"addRecievedBadge":"Add a badge that you have already received.",
+		"image":"Image",
+		"close":"Close",
+		"enterURL": "Enter URL",
+		"enterJSON": "Enter JSON",
+
+		"selectFromFile":"select from files",
+		"genRandomImage":"Generate random image",
+		"searchAnotherIcon":"search for another icon",
+		"chooseAnotherFile":"choose another file",
+		"oneBadgeRequired":"At least one badge input is required",
+
+		"importedSuccessfully": "Badge successfully imported.",
+		"uploadFailed": "Failed to upload badge:",
+		"unknownError": "Badge upload failed due to an unknown error"
+
 	},
 	"BadgeCollection":{
 		"earnedBy":"earned by",
