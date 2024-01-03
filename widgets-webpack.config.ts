@@ -18,14 +18,25 @@ const config: webpack.Configuration = {
 			{
 				test: /\.(png|jpg|gif|svg)$/i,
 				loader: 'url-loader'
-			}
+			},
+            {
+                test: /\.css$/,
+                use: ExtractTextPlugin.extract({
+                    use: [
+                        {
+                            loader: 'css-loader',
+                            options: {
+                                url: false
+                            }
+                        }
+                    ]
+                })
+            }
 		]
 	},
 	resolve: {
-		extensions: ['.ts'],
-        alias: {
-            '~': path.resolve('./node_modules')
-        }
+		extensions: ['.ts', '.css'],
+        modules: ['node_modules'],
 	},
 	output: {
 		filename: 'widgets.bundle.js',
