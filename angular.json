@@ -19,24 +19,24 @@
 						"index": "src/index.html",
 						"main": "src/main.ts",
 						"tsConfig": "src/tsconfig.app.json",
-            			"polyfills": "src/polyfills.ts",
+						"polyfills": "src/polyfills.ts",
 						"localize": [
 							"en-US"
 						],
 						"assets": [
 							"src/assets",
-                            "src/breakdown",
+							"src/breakdown",
 							"src/_redirects",
 							{
 								"glob": "**/*",
 								"input": "node_modules/ace-builds/src-min",
 								"output": "./assets/ace-builds/"
 							},
-                            {
-                                "glob": "**/*",
-                                "input": "node_modules/@concentricsky/badgr-style/dist/images/",
-                                "output": "./assets/@concentricsky/badgr-style/dist/images/"
-                            }
+							{
+								"glob": "**/*",
+								"input": "node_modules/@concentricsky/badgr-style/dist/images/",
+								"output": "./assets/@concentricsky/badgr-style/dist/images/"
+							}
 						],
 						"styles": [
 							"node_modules/@concentricsky/badgr-style/dist/css/screen.css",
@@ -76,25 +76,36 @@
 									"with": "src/environments/environment.prod.ts"
 								}
 							]
+						},
+						"development": {
+							"fileReplacements": [
+								{
+									"replace": "src/environments/environment.ts",
+									"with": "src/environments/environment.dev.ts"
+								}
+							]
 						}
 					},
 					"defaultConfiguration": ""
 				},
 				"serve": {
 					"builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "buildTarget": "badgr-ui-cli:build"
+					"options": {
+						"buildTarget": "badgr-ui-cli:build"
 					},
 					"configurations": {
-            "production": {
-              "buildTarget": "badgr-ui-cli:build:production"
+						"production": {
+							"buildTarget": "badgr-ui-cli:build:production"
+						},
+						"development": {
+							"buildTarget": "badgr-ui-cli:build:development"
 						}
 					}
 				},
 				"extract-i18n": {
 					"builder": "@angular-devkit/build-angular:extract-i18n",
-          "options": {
-            "buildTarget": "badgr-ui-cli:build"
+					"options": {
+						"buildTarget": "badgr-ui-cli:build"
 					}
 				},
 				"test": {
@@ -109,7 +120,10 @@
 							"node_modules/dialog-polyfill/dialog-polyfill.css"
 						],
 						"scripts": [],
-						"assets": ["src/favicon.ico", "src/assets"]
+						"assets": [
+							"src/favicon.ico",
+							"src/assets"
+						]
 					}
 				}
 			}
@@ -128,7 +142,7 @@
 				}
 			}
 		}
-  },
+	},
 	"schematics": {
 		"@schematics/angular:component": {
 			"prefix": "app",
@@ -137,8 +151,8 @@
 		"@schematics/angular:directive": {
 			"prefix": "app"
 		}
-  },
-  "cli": {
-    "analytics": false
-  }
+	},
+	"cli": {
+		"analytics": false
+	}
 }
