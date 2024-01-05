@@ -257,7 +257,7 @@ export class BgFormFieldImageComponent {
 			.then((icon: NounProjectIcon) => {
 				if (icon) {
 					this.generated = false;
-					this.updateFile(icon.preview_url);
+					this.updateFile(icon.thumbnail_url);
 				}
 			})
 			.catch((error) => {

@@ -9,9 +9,7 @@ export interface NounProjectIcon {
     license_description: string;
 	nounji_free: string;
 	permalink: string;
-	preview_url: string;
-	preview_url_42: string;
-	preview_url_84: string;
+	thumbnail_url: string;
 	sponsor: string;
 	sponsor_campaign_link: string | null;
     sponsor_id: string;
