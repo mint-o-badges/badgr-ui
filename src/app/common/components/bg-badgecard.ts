@@ -26,8 +26,8 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 		</div>
 		<div class="badgecard-x-footer">
 			<div class="badgecard-x-date">
-				<span *ngIf="badgeClass">
-					Verfügbar seit:
+				<span *ngIf="badgeClass" i18n>
+					Available since:
 				</span>
 				<time [date]="badgeIssueDate" format="mediumDate"></time>
 			</div>
