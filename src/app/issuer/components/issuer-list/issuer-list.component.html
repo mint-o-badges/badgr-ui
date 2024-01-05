@@ -59,7 +59,7 @@
 				</div>
 				<div class="issuercard-x-title">
 					<a [routerLink]="['/issuer/issuers/', issuer.slug]">{{ issuer.name }}</a>
-					<p><strong i18n>Deine Rolle: </strong>{{ issuer.currentUserStaffMember?.roleInfo.label }}</p>
+					<p><strong i18n>Your role: </strong>{{ issuer.currentUserStaffMember?.roleInfo.label }}</p>
 				</div>
 				<div class="issuercard-x-desc" [truncatedText]="issuer.description" [maxLength]="250"></div>
 

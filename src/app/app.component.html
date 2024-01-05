@@ -52,15 +52,6 @@
 						>To Register</a
 					>
 					<a
-						*ngIf="!features.disableRegistration"
-						[class.navitem-light]="!theme.useColorNavbar"
-						class="navitem"
-						routerLinkActive="navitem-is-active"
-						[routerLink]="['/public/about']"
-						i18n
-						>About MINT-O-Badges</a
-					>
-					<a
 						role="menuitem"
 						[class.navitem-light]="!theme.useColorNavbar"
 						class="navitem"
@@ -197,12 +188,6 @@
 		>
 		<a class="menuitem" routerLinkActive="menuitem-is-active" [routerLink]="['/issuer']"
 			><svg icon="icon_issuer" i18n></svg>My institutions</a
-		>
-		<a class="menuitem" routerLinkActive="menuitem-is-active" [routerLink]="['/profile/app-integrations']"
-			><svg icon="icon_compare" i18n></svg>App integrations</a
-		>
-		<a class="menuitem" routerLinkActive="menuitem-is-active" [routerLink]="['/public/about']"
-			><svg icon="icon_info" i18n></svg>About MINT-O-Badges</a
 		>
 		<a class="menuitem" routerLinkActive="menuitem-is-active" [routerLink]="['/auth/logout']"
 			><svg icon="icon_exit_to_app" i18n></svg>Logout</a

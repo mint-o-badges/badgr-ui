@@ -54,16 +54,8 @@ import { MessageService } from '../services/message.service';
 					<img [src]="imageDataUrl" alt="" />
 					<p class="u-text-body">
 						{{ imageName }}
-						<button (click)="imageLabel.click()" type="button" class="u-text-link">
-							andere Datei wählen
-						</button>
-						<button
-							*ngIf="loaderName != 'basic'"
-							(click)="$event.preventDefault(); findNounproject($event)"
-							type="button"
-							class="u-text-link"
-						>
-							anderes Icon suchen
+						<button (click)="imageLabel.click()" type="button" class="u-text-link" i18n>
+							Choose another file
 						</button>
 					</p>
 				</div>
@@ -71,14 +63,7 @@ import { MessageService } from '../services/message.service';
 				<ng-container *ngIf="!imageDataUrl">
 					<svg class="dropzone-x-icon" icon="icon_upload"></svg>
 					<p class="dropzone-x-info1">Drag & Drop</p>
-					<p class="dropzone-x-info2">oder <span class="u-text-link">aus Dateien auswählen</span></p>
-					<!-- dont let user select icon when uploading badge -->
-					<p *ngIf="loaderName != 'basic'" class="dropzone-x-info2">
-						oder
-						<span class="u-text-link" (click)="$event.preventDefault(); findNounproject($event)"
-							>Icon suchen</span
-						>
-					</p>
+					<p class="dropzone-x-info2">or <span class="u-text-link" i18n>Select from files</span></p>
 				</ng-container>
 			</label>
 
