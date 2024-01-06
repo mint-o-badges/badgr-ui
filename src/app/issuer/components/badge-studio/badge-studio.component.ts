@@ -65,7 +65,7 @@ export class BadgeStudioComponent implements OnInit, OnChanges {
 					(this.formData.badge_category === 'membership' || this.formData.badge_category === 'archievement') ?
 					shapeImagesTypes['nolvl'] :
 					shapeImagesTypes[this.formData.badge_level];
-				// var shapeImage2 = "../../../../breakdown/static/badgestudio/shapes/noun_test.svg";
+				// var shapeImage2 = "/breakdown/static/badgestudio/shapes/noun_test.svg";
 				var shapeImage2 = 'https://static.thenounproject.com/png/1444428-200.png';
 				// Grab a random SVG from our set
 
@@ -197,7 +197,7 @@ export class BadgeStudioComponent implements OnInit, OnChanges {
 					(formdata.badge_category === 'membership' || formdata.badge_category === 'archievement') ?
 					shapeImagesTypes['nolvl'] :
 					shapeImagesTypes[formdata.badge_level];
-				// var shapeImage2 = "../../../../breakdown/static/badgestudio/shapes/noun_test.svg";
+				// var shapeImage2 = "/breakdown/static/badgestudio/shapes/noun_test.svg";
 				var shapeImage2 = 'https://static.thenounproject.com/png/1444428-200.png';
 				// Grab a random SVG from our set
 
@@ -527,24 +527,24 @@ const shapeColorsTypes = {
 }
 
 const shapeImages = [
-	"../../../../breakdown/static/badgestudio/shapes/a2.svg",
-	"../../../../breakdown/static/badgestudio/shapes/diamond.svg",
-	// "../../../../breakdown/static/badgestudio/shapes/hex.svg",
-	// "../../../../breakdown/static/badgestudio/shapes/round-bottom.svg",
-	// "../../../../breakdown/static/badgestudio/shapes/round-top.svg",
-	// "../../../../breakdown/static/badgestudio/shapes/square.svg",
-	// "../../../../breakdown/static/badgestudio/shapes/triangle-bottom.svg",
-	// "../../../../breakdown/static/badgestudio/shapes/triangle-top.svg",
+	"/breakdown/static/badgestudio/shapes/a2.svg",
+	"/breakdown/static/badgestudio/shapes/diamond.svg",
+	// "/breakdown/static/badgestudio/shapes/hex.svg",
+	// "/breakdown/static/badgestudio/shapes/round-bottom.svg",
+	// "/breakdown/static/badgestudio/shapes/round-top.svg",
+	// "/breakdown/static/badgestudio/shapes/square.svg",
+	// "/breakdown/static/badgestudio/shapes/triangle-bottom.svg",
+	// "/breakdown/static/badgestudio/shapes/triangle-top.svg",
 ];
 
 const shapeImagesTypes = {
-	'a1': "../../../../breakdown/static/badgestudio/shapes/a1.svg",
-	'a2': "../../../../breakdown/static/badgestudio/shapes/a2.svg",
-	'b1': "../../../../breakdown/static/badgestudio/shapes/b1.svg",
-	'b2': "../../../../breakdown/static/badgestudio/shapes/b2.svg",
-	'c1': "../../../../breakdown/static/badgestudio/shapes/c1.svg",
-	'c2': "../../../../breakdown/static/badgestudio/shapes/c2.svg",
-	'nolvl': "../../../../breakdown/static/badgestudio/shapes/nolvl.svg",
+	'a1': "/breakdown/static/badgestudio/shapes/a1.svg",
+	'a2': "/breakdown/static/badgestudio/shapes/a2.svg",
+	'b1': "/breakdown/static/badgestudio/shapes/b1.svg",
+	'b2': "/breakdown/static/badgestudio/shapes/b2.svg",
+	'c1': "/breakdown/static/badgestudio/shapes/c1.svg",
+	'c2': "/breakdown/static/badgestudio/shapes/c2.svg",
+	'nolvl': "/breakdown/static/badgestudio/shapes/nolvl.svg",
 
 }
 
