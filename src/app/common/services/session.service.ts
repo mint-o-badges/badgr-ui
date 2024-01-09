@@ -13,7 +13,10 @@ import {UpdatableSubject} from '../util/updatable-subject';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {NavigationService} from './navigation.service';
 import { DomSanitizer } from "@angular/platform-browser";
+import { ActivatedRoute, Router } from '@angular/router';
 import { OAuthManager } from "./oauth-manager.service";
+import { UserProfileManager } from './user-profile-manager.service';
+import { ExternalToolsManager } from 'app/externaltools/services/externaltools-manager.service';
 
 /**
  * The key used to store the authentication token in session and local storage.
@@ -50,7 +53,11 @@ export class SessionService {
 		private configService: AppConfigService,
 		private messageService: MessageService,
 		private navService: NavigationService,
-		//public oAuthManager: OAuthManager,
+		public oAuthManager: OAuthManager,
+		private profileManager: UserProfileManager,
+		private externalToolsManager: ExternalToolsManager,
+		private router: Router,
+
 	) {
 		this.baseUrl = this.configService.apiConfig.baseUrl;
 		this.enabledExternalAuthProviders = configService.featuresConfig.externalAuthProviders || [];
@@ -161,6 +168,26 @@ export class SessionService {
 			.then(r => r.body);
 	}
 
+	authenticateLMSToken(token: string): Promise<AuthorizationToken> {
+		const scope = "rw:profile rw:issuer rw:backpack";
+		const client_id = "public";
+
+		const payload = `grant_type=password&client_id=${encodeURIComponent(client_id)}&scope=${encodeURIComponent(scope)}`;
+
+		return this.http.post<AuthorizationToken>(
+			this.baseUrl + '/authenticate_lms_token/',
+			payload,
+			{
+				observe: "response",
+				responseType: "json",
+				headers: new HttpHeaders()
+					.append('Content-Type', 'application/x-www-form-urlencoded')
+					.append("Authorization", token)
+			}
+		).toPromise()
+			.then(r => r.body);
+	}
+
 	submitResetPasswordRequest(email: string) {
 		// TODO: Define the type of this response
 		return this.http.post<unknown>(
@@ -205,5 +232,41 @@ export class SessionService {
 			// api errors.
 			window.location.replace(window.location.toString());
 		}
+	}
+
+	loggedInSuccess(){
+		this.profileManager.reloadUserProfileSet().then(() => {
+			this.profileManager.userProfilePromise.then((profile) => {
+				if (profile) {
+					// fetch user profile and emails to check if they are verified
+					profile.emails.updateList().then(() => {
+						if (profile.isVerified) {
+							if (this.oAuthManager.isAuthorizationInProgress) {
+								this.router.navigate(['/auth/oauth2/authorize']);
+							} else {
+								this.externalToolsManager.externaltoolsList.updateIfLoaded();
+								// catch localStorage.redirectUri
+								if (localStorage.redirectUri) {
+									const redirectUri = new URL(localStorage.redirectUri);
+									localStorage.removeItem('redirectUri');
+									window.location.replace(redirectUri.origin);
+									return false;
+								} else {
+									// first time only do welcome
+									this.router.navigate([
+										localStorage.signup ? 'auth/welcome' : 'recipient',
+									]);
+								}
+							}
+						} else {
+							this.router.navigate([
+								'signup/success',
+								{ email: profile.emails.entities[0].email },
+							]);
+						}
+					});
+				}
+			});
+		});
 	}
 }

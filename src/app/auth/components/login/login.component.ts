@@ -24,8 +24,12 @@ import { BadgrApiFailure } from '../../../common/services/api-failure';
 	templateUrl: './login.component.html',
 })
 export class LoginComponent extends BaseRoutableComponent implements OnInit, AfterViewInit {
+	
 	get theme() {
 		return this.configService.theme;
+	}
+	get api(){
+		return this.configService.apiConfig;
 	}
 	get features() {
 		return this.configService.featuresConfig;
@@ -97,39 +101,7 @@ export class LoginComponent extends BaseRoutableComponent implements OnInit, Aft
 			.login(credential)
 			.then(
 				() => {
-					this.profileManager.reloadUserProfileSet().then(() => {
-						this.profileManager.userProfilePromise.then((profile) => {
-							if (profile) {
-								// fetch user profile and emails to check if they are verified
-								profile.emails.updateList().then(() => {
-									if (profile.isVerified) {
-										if (this.oAuthManager.isAuthorizationInProgress) {
-											this.router.navigate(['/auth/oauth2/authorize']);
-										} else {
-											this.externalToolsManager.externaltoolsList.updateIfLoaded();
-											// catch localStorage.redirectUri
-											if (localStorage.redirectUri) {
-												const redirectUri = new URL(localStorage.redirectUri);
-												localStorage.removeItem('redirectUri');
-												window.location.replace(redirectUri.origin);
-												return false;
-											} else {
-												// first time only do welcome
-												this.router.navigate([
-													localStorage.signup ? 'auth/welcome' : 'recipient',
-												]);
-											}
-										}
-									} else {
-										this.router.navigate([
-											'signup/success',
-											{ email: profile.emails.entities[0].email },
-										]);
-									}
-								});
-							}
-						});
-					});
+					this.sessionService.loggedInSuccess();
 				},
 				(response: HttpErrorResponse) =>
 					this.messageService.reportHandledError(

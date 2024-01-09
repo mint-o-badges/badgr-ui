@@ -1,5 +1,5 @@
 <div class="l-containerxaxis l-containeryaxis l-flex l-flex-justifycenter">
-	<div class="shadowcontainer u-animate-dropfade">
+	<div class="shadowcontainer u-animate-dropfade l-flex l-flex-column l-flex-aligncenter">
 		<markdown-display [value]="theme.welcomeMessage || 'Welcome to MINT-O-Badges'"></markdown-display>
 		<ng-template [ngIf]="!sessionService.enabledExternalAuthProviders.length"> </ng-template>
 		<ng-template [ngIf]="sessionService.enabledExternalAuthProviders.length">
@@ -24,65 +24,13 @@
 		>
 			Or
 		</h3>
-
-		<form class="u-margin-top2x" (ngSubmit)="submitAuth()" *ngIf="!features.disableRegistration" novalidate>
-			<!-- Email Field -->
-			<bg-formfield-text
-				[control]="loginForm.rawControlMap.username"
-				label="Email"
-				fieldType="email"
-				[errorMessage]="{ required: 'Please enter your email address.' }"
-				[autofocus]="true"
-				[initialValue]="verifiedEmail || ''"
-				#usernameField
-			></bg-formfield-text>
-
-			<!-- Password Field -->
-			<bg-formfield-text
-				[control]="loginForm.rawControlMap.password"
-				label="Password"
-				class="u-margin-top2x"
-				[errorMessage]="'Please enter your password.'"
-				fieldType="password"
-				#passwordField
-			>
-				<span label-additions>
-					<a
-						class="forminput-x-helplink"
-						href="#"
-						tabindex="-1"
-						[routerLink]="['/auth/request-password-reset', usernameField.value]"
-						i18n
-						>Password forgotten?</a
-					>
-				</span>
-			</bg-formfield-text>
-
-			<div class="l-stack l-stack-buttons l-stack-2x u-margin-top2x">
-				<!-- Submit Button -->
-				<button
-					class="button"
-					type="submit"
-					[disabled]="!!loginFinished"
-					[loading-promises]="[loginFinished]"
-					loading-message="Signing In"
-					i18n
-				>
-					Login
-				</button>
-
-				<!-- Remember Me Checkout -->
-				<label class="checkbox">
-					<input
-						id="remember-me"
-						name="remember-me"
-						type="checkbox"
-						[formControl]="loginForm.rawControlMap.rememberMe"
-					/>
-					<span i18n class="checkbox-x-text">remain signed in</span>
-				</label>
-			</div>
-		</form>
+		<a
+			class="button"
+			href="{{api.baseUrl}}/login"
+			i18n
+		>
+			Login with SDAIA Academy
+		</a>
 	</div>
 </div>
 <form-message></form-message>
