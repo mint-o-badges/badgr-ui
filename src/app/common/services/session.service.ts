@@ -16,7 +16,7 @@ import { DomSanitizer } from "@angular/platform-browser";
 import { ActivatedRoute, Router } from '@angular/router';
 import { OAuthManager } from "./oauth-manager.service";
 import { UserProfileManager } from './user-profile-manager.service';
-import { ExternalToolsManager } from 'app/externaltools/services/externaltools-manager.service';
+import { ExternalToolsManager } from '../../externaltools/services/externaltools-manager.service';
 
 /**
  * The key used to store the authentication token in session and local storage.
