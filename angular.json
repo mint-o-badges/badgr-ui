@@ -94,8 +94,10 @@
 				"test": {
 					"builder": "@angular-devkit/build-angular:karma",
 					"options": {
-                        "main": "src/test.ts",
-						"polyfills": "src/polyfills.ts",
+						"polyfills": [
+                            "zone.js",
+                            "zone.js/testing"
+                        ],
 						"tsConfig": "src/tsconfig.spec.json",
 						"karmaConfig": "src/karma.conf.js",
 						"styles": [
@@ -103,7 +105,13 @@
 							"node_modules/dialog-polyfill/dialog-polyfill.css"
 						],
 						"scripts": [],
-						"assets": ["src/favicon.ico", "src/assets"]
+						"assets": ["src/favicon.ico", "src/assets",
+                            {
+                                "glob": "icons.svg",
+                                "input": "node_modules/@concentricsky/badgr-style/dist/images",
+                                "output": "./assets/@concentricsky/badgr-style/dist/images"
+                            }
+                        ]
 					}
 				}
 			}
