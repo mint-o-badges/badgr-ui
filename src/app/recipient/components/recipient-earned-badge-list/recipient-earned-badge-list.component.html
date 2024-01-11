@@ -10,15 +10,12 @@
 		</div>-->
 		<div class="l-containerxaxis topbar-x-wrap">
 			<h2 class="topbar-x-heading">
-				Rucksack
-				<span class="topbar-x-internalheading" *ngIf="!!allBadges" i18n
+				Backpack
+				<span class="topbar-x-internalheading" *ngIf="!!allBadges"
 					>{{ allBadges.length }} {{ allBadges.length == 1 ? 'Badge' : 'Badges' }}</span
 				>
 			</h2>
-			<div class="l-primarymore">
-				<button class="button topbar-x-button" (click)="addBadge()" [disabled-when-requesting]="true" i18n>
-					Add badge
-				</button>
+			<!-- <div class="l-primarymore"> -->
 				<!-- <button class="topbar-x-button buttonicon buttonicon-secondary" [bgPopupMenuTrigger]="collectionActionMenu">
 					<svg icon="icon_more"></svg>
 					<span class="visuallyhidden">mehr</span>
@@ -31,7 +28,7 @@
 						[disabled-when-requesting]="true"
 						><svg icon="icon_file"></svg>Export to PDF</button>
 				</bg-popup-menu> -->
-			</div>
+			<!-- </div> -->
 		</div>
 	</div>
 
@@ -76,7 +73,7 @@
 							type="text"
 							name="forminput"
 							id="forminput"
-							placeholder="Badges durchsuchen"
+							placeholder="Browse badges"
 							[(ngModel)]="searchQuery"
 						/>
 						<svg class="forminput-x-icon" icon="icon_search"></svg>

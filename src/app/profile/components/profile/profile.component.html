@@ -6,33 +6,15 @@
 			<div class="topbar-x-heading l-spacestack">
 				{{ profile?.firstName }} {{ profile?.lastName}}
 				<div class="l-primarymore">
-					<button [routerLink]="['../change-password']"
-					        class="button"
-							i18n
-					>{{(profile.hasPasswordSet)?'Change':'Set'}} Password
-					</button>
-					<button [bgPopupMenuTrigger]="editMenu"
-					        class="buttonicon buttonicon-secondary"
-					        id="trigger2"
+					<button [routerLink]="['/profile/edit']"
+						class="button"
+						i18n
 					>
-						<svg icon="icon_more"></svg>
-						<span class="visuallyhidden" i18n>More</span>
+						Edit
 					</button>
 				</div>
 			</div>
 		</div>
-		<bg-popup-menu #editMenu
-		               class="menu"
-		               id="menu2"
-		>
-			<div [routerLink]="['/profile/edit']"
-			     class="menuitem"
-				 i18n
-			>
-				<svg icon="icon_edit"></svg>
-				Edit
-			</div>
-		</bg-popup-menu>
 	</div>
 
 	<div class="l-containerxaxis l-containeryaxis">

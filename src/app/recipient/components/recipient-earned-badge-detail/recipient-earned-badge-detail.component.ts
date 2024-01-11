@@ -245,7 +245,7 @@ interface BadgeShareOptions {
 
 export function badgeShareDialogOptions(options: BadgeShareOptions): ShareSocialDialogOptions {
 	return {
-		title: 'Badge Teilen',
+		title: 'SHARE BADGE',
 		shareObjectType: 'BadgeInstance',
 		shareUrl: options.shareUrl,
 		shareTitle: options.badgeClassName,
