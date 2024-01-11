@@ -31,7 +31,7 @@ describe('StandaloneEntitySet', () => {
 	it(
 		'should correctly initially load a list of entities',
 		inject([ CommonEntityManager ], (commonManager: CommonEntityManager) => {
-			let resolveLoadedCalled: () => void;
+			let resolveLoadedCalled: (value: unknown) => void;
 			const loadedCalledPromise = new Promise(r => resolveLoadedCalled = r);
 
 			const { testApiEntities } = buildTestEntities();
@@ -39,7 +39,7 @@ describe('StandaloneEntitySet', () => {
 			const list = new TestEntitySet(
 				commonManager,
 				() => {
-					resolveLoadedCalled();
+					resolveLoadedCalled(null);
 					return Promise.resolve(testApiEntities);
 				}
 			);
@@ -55,7 +55,7 @@ describe('StandaloneEntitySet', () => {
 	it(
 		'should update entities from updateIfLoaded() if already loaded',
 		inject([ CommonEntityManager ], (commonManager: CommonEntityManager) => {
-			const loadRequestedCallbacks: Array<() => void> = [];
+			const loadRequestedCallbacks: Array<(value: unknown) => void> = [];
 			let loadRequestedCount = 0;
 			const loadRequestedPromises = [
 				new Promise(r => loadRequestedCallbacks[0] = r),
@@ -67,7 +67,7 @@ describe('StandaloneEntitySet', () => {
 			const list = new TestEntitySet(
 				commonManager,
 				() => {
-					loadRequestedCallbacks[loadRequestedCount++]();
+					loadRequestedCallbacks[loadRequestedCount++](null);
 					return Promise.resolve(testApiEntities);
 				}
 			);

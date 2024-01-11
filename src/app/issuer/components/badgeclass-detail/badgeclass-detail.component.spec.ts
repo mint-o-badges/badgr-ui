@@ -67,8 +67,9 @@ describe('BadgeClassDetailComponent', () => {
   });
 
   xit('should run #deleteBadge()', async () => {
-		this.recipientCount = 0;
-    const result = component.deleteBadge();
+      // TODO: This doesn't compile, because *something* is possibly 'undefined'
+      //this!.recipientCount = 0;
+      const result = component.deleteBadge();
   });
 
   xit('should run #shareInstance()', async () => {

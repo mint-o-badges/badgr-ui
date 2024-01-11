@@ -1,4 +1,4 @@
-import {groupIntoArray, groupIntoObject} from './array-reducers';
+import {GroupedPair, groupIntoArray, groupIntoObject} from './array-reducers';
 
 describe("groupIntoObject", () => {
 	it("should group an array correctly", () => {
@@ -19,10 +19,9 @@ describe("groupIntoObject", () => {
 	});
 });
 
-
 describe("groupIntoArray", () => {
 	it("should group an array correctly", () => {
-		expect([ 1, 2, 3, 4, 5 ].reduce(groupIntoArray(n => (n % 2).toString()), {}))
+		expect([ 1, 2, 3, 4, 5 ].reduce(groupIntoArray(n => (n % 2).toString()), []))
 			.toEqual([
 				{ key: "1", values: [ 1, 3, 5 ] },
 				{ key: "0", values: [ 2, 4 ] }

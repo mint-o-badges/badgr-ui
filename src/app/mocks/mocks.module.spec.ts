@@ -130,6 +130,7 @@ export class MockAppConfigService {
 			welcomeMessage: "Badger",
 			showPoweredByBadgr: true,
 			showApiDocsLink: true,
+            showPoweredByOSL: false,
 			loadingImg: {
 				imageUrl: 'string',
 			},
