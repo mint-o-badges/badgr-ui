@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { TranslateTestingModule } from "ngx-translate-testing";
 
 import { BadgeLegendComponent } from './badge-legend.component';
 
@@ -8,7 +9,10 @@ describe('BadgeLegendComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ BadgeLegendComponent ]
+      declarations: [ BadgeLegendComponent ],
+      imports: [
+          TranslateTestingModule.withTranslations('de', {})
+      ]
     })
     .compileComponents();
   }));

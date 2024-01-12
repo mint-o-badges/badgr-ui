@@ -11,7 +11,7 @@ import { CommonModule } from "@angular/common";
 import { BadgrCommonModule, COMMON_IMPORTS } from "../../../common/badgr-common.module";
 import { CommonEntityManagerModule } from "../../../entity-manager/entity-manager.module";
 import { RouterTestingModule } from "@angular/router/testing";
-
+import { TranslateTestingModule } from "ngx-translate-testing";
 
 
 describe('LoginComponent', () => {
@@ -25,6 +25,7 @@ describe('LoginComponent', () => {
 				BadgrCommonModule,
 				CommonEntityManagerModule,
 				RouterTestingModule,
+                TranslateTestingModule.withTranslations('de', {}),
 			],
 			declarations: [
         LoginComponent
