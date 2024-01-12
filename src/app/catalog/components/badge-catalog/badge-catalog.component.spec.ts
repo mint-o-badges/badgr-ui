@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { COMMON_MOCKS_PROVIDERS_WITH_SUBS } from "../../../mocks/mocks.module.spec";
-import { COMMON_IMPORTS } from "../../../common/badgr-common.module";
+import { CommonModule } from '@angular/common';
+import { BadgrCommonModule, COMMON_IMPORTS } from "../../../common/badgr-common.module";
 import { RouterTestingModule } from "@angular/router/testing";
 import { TranslateTestingModule } from "ngx-translate-testing";
 
@@ -15,12 +16,15 @@ describe('BadgeCatalogComponent', () => {
       declarations: [ BadgeCatalogComponent ],
       imports: [
           ...COMMON_IMPORTS,
+          CommonModule,
+          BadgrCommonModule,
           RouterTestingModule,
           TranslateTestingModule.withTranslations('de', {}),
       ],
       providers: [
           ...COMMON_MOCKS_PROVIDERS_WITH_SUBS,
-      ]
+      ],
+      teardown: { destroyAfterEach: false },
     })
     .compileComponents();
   }));

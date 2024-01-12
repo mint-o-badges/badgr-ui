@@ -18,7 +18,7 @@ import { DomSanitizer } from "@angular/platform-browser";
 import { InitialLoadingIndicatorService } from "../common/services/initial-loading-indicator.service";
 import { CommonDialogsService } from "../common/services/common-dialogs.service";
 import { BadgeClassManager } from "../issuer/services/badgeclass-manager.service";
-import { Observable } from "rxjs";
+import { of, Observable } from "rxjs";
 import { SettingsService } from "../common/services/settings.service";
 import { IssuerManager } from "../issuer/services/issuer-manager.service";
 import { HttpClient, HttpHandler } from "@angular/common/http";
@@ -238,6 +238,14 @@ export class MockBadgeClassManager {
 	badgeByIssuerSlugAndSlug = () => new Promise(() => ({name: 'badgename'}));
 	removeBadgeClass = () => {};
 	createBadgeClass = () => {};
+    get allPublicBadges$(): Observable<object[]> {
+        return of([{
+            name: 'badgename',
+            apiModel: {
+                source_url: 'source.url'
+            }
+        }]);
+    }
 }
 
 @Injectable()
