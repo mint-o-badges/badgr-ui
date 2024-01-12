@@ -83,7 +83,7 @@ export class FormFieldRadio implements OnChanges, AfterViewInit {
 	}
 
 	get isErrorState() {
-		return (!this.optional && !this.control.valid);
+		return !this.optional && this.control !== undefined && !this.control.valid;
 	}
 
 	get isLockedState() {

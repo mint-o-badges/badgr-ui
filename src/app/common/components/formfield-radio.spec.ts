@@ -33,6 +33,7 @@ describe('FormFieldRadio', () => {
       schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
     }).compileComponents();
     fixture = TestBed.createComponent(FormFieldRadio);
+    fixture.detectChanges();
     component = fixture.debugElement.componentInstance;
   });
 

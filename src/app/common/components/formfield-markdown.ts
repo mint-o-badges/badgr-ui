@@ -113,7 +113,8 @@ export class FormFieldMarkdown implements OnChanges, AfterViewInit {
 	}
 
 	get controlErrorState() {
-		return this.control.dirty && (!this.control.valid || (this.errorGroup && !this.errorGroup.valid));
+		return this.control !== undefined && this.control.dirty &&
+            (!this.control.valid || (this.errorGroup && !this.errorGroup.valid));
 	}
 
 	get isErrorState() {

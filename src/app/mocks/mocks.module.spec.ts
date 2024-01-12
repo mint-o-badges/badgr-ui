@@ -140,7 +140,9 @@ export class MockAppConfigService {
 				desktop: 'string',
 			}
 		};
-	}
+	};
+
+    featuresConfig = {};
 }
 
 @Injectable()
@@ -264,6 +266,7 @@ export class MockBadgeInstanceManager {
 @Injectable()
 export class MockIssuerManager {
 	issuerBySlug = () => new Promise((q) => {console.log(q);});
+    getAllIssuers = () => of();
 }
 
 @Injectable()

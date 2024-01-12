@@ -25,22 +25,23 @@ describe('FormFieldMarkdown', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [
-        FormFieldMarkdown,
-				BgMarkdownComponent,
-				MarkdownHintsDialog
+          FormFieldMarkdown,
+          BgMarkdownComponent,
+          MarkdownHintsDialog
       ],
-			imports: [
-				RouterTestingModule,
-				CommonModule,
-				...COMMON_IMPORTS,
-			],
-			providers: [
-				...COMMON_MOCKS_PROVIDERS_WITH_SUBS,
-				//CommonDialogsService,
-			],
+      imports: [
+          RouterTestingModule,
+          CommonModule,
+          ...COMMON_IMPORTS,
+      ],
+      providers: [
+          ...COMMON_MOCKS_PROVIDERS_WITH_SUBS,
+          //CommonDialogsService,
+      ],
       schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
     }).compileComponents();
     fixture = TestBed.createComponent(FormFieldMarkdown);
+    fixture.detectChanges();
     component = fixture.debugElement.componentInstance;
   });
 
