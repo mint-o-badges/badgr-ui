@@ -10,6 +10,9 @@ import {RecipientBadgeManager} from '../services/recipient-badge-manager.service
 import {MessageService} from '../../common/services/message.service';
 import {EventsService} from '../../common/services/events.service';
 import {SessionService} from '../../common/services/session.service';
+import { COMMON_MOCKS_PROVIDERS_WITH_SUBS } from "../../mocks/mocks.module.spec";
+import { COMMON_IMPORTS } from "../../common/badgr-common.module";
+import { TranslateTestingModule } from "ngx-translate-testing";
 
 describe('RecipientBadgeCollection', () => {
     let httpMock: HttpClient;
@@ -18,6 +21,11 @@ describe('RecipientBadgeCollection', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             declarations: [  ],
+            imports: [
+                HttpClientTestingModule,
+                ...COMMON_IMPORTS,
+                TranslateTestingModule.withTranslations('de', {}),
+            ],
             providers: [
                 AppConfigService,
                 MessageService,
@@ -25,9 +33,9 @@ describe('RecipientBadgeCollection', () => {
                 CommonEntityManager,
                 RecipientBadgeApiService,
                 RecipientBadgeManager,
-                EventsService
+                EventsService,
+                ...COMMON_MOCKS_PROVIDERS_WITH_SUBS,
             ],
-            imports: [ ]
         });
 
         httpMock = TestBed.inject(HttpClient);
