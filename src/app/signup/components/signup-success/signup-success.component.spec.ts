@@ -21,22 +21,23 @@ describe('SignupSuccessComponent', () => {
   let fixture: ComponentFixture<SignupSuccessComponent>;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-			imports: [
-				...COMMON_IMPORTS,
-				BadgrCommonModule,
-				CommonEntityManagerModule,
-				RouterTestingModule,
-			],
-			declarations: [
-        SignupSuccessComponent
-      ],
-      providers: [
-        Title,
-				...COMMON_MOCKS_PROVIDERS_WITH_SUBS,
-      ],
-      schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
-		})
+      TestBed.configureTestingModule({
+          imports: [
+              ...COMMON_IMPORTS,
+              BadgrCommonModule,
+              CommonEntityManagerModule,
+              RouterTestingModule,
+          ],
+          declarations: [
+              SignupSuccessComponent
+          ],
+          providers: [
+              Title,
+              ...COMMON_MOCKS_PROVIDERS_WITH_SUBS,
+          ],
+          schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
+          teardown: { destroyAfterEach: false },
+      })
 		.compileComponents();
 		fixture = TestBed.createComponent(SignupSuccessComponent);
 		component = fixture.componentInstance;

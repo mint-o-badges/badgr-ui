@@ -37,7 +37,8 @@ describe('ResetPasswordSent', () => {
 				Title,
 				...COMMON_MOCKS_PROVIDERS_WITH_SUBS,
 			],
-      schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+      schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
+      teardown: { destroyAfterEach: false },
     }).compileComponents();
     fixture = TestBed.createComponent(ResetPasswordSent);
     component = fixture.debugElement.componentInstance;

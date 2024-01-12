@@ -40,7 +40,8 @@ describe('RecipientBadgeCollectionListComponent', () => {
 			providers: [
 				...COMMON_MOCKS_PROVIDERS_WITH_SUBS,
 			],
-      schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+      schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
+      teardown: { destroyAfterEach: false },
     }).compileComponents();
     fixture = TestBed.createComponent(RecipientBadgeCollectionListComponent);
     component = fixture.debugElement.componentInstance;
