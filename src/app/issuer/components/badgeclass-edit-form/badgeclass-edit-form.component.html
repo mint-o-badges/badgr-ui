@@ -192,17 +192,17 @@
 		<div class="formsection-x-body">
 			<div class="forminput u-margin-bottom2x">
 				<bg-formfield-select
-					ariaLabel="Wähle eine Stufe"
+					ariaLabel="Choose a level"
 					[control]="badgeClassForm.rawControlMap.badge_level"
 					label="Level"
 					[disabled]="
 						badgeClassForm.rawControlMap.badge_category.value === 'membership' ||
 						badgeClassForm.rawControlMap.badge_category.value === 'archievement'
 					"
-					[placeholder]="'Wähle eine Stufe'"
+					[placeholder]="'Choose a level'"
 					[optionMap]="levelOptions"
 					[errorMessage]="{
-						required: 'Wähle eine Stufe für das Badge'
+						required: 'Choose a level for the badge'
 					}"
 				></bg-formfield-select>
 			</div>
@@ -251,14 +251,14 @@
 						<bg-formfield-text
 							[control]="alignment.rawControlMap.target_name"
 							label="Name"
-							[errorMessage]="{ required: 'Gib den Namen der Verknüpfung ein.' }"
+							[errorMessage]="{ required: 'Enter the name of the shortcut.' }"
 							id="alignment_name_{{ i }}"
 						></bg-formfield-text>
 
 						<bg-formfield-text
 							[control]="alignment.rawControlMap.target_url"
 							label="URL"
-							[errorMessage]="{ required: 'Bitte gib eine URL zur Verknüpfung an.' }"
+							[errorMessage]="{ required: 'Please provide a URL to link to.' }"
 							[urlField]="true"
 							id="alignment_url_{{ i }}"
 						></bg-formfield-text>
@@ -393,7 +393,7 @@ the award can be changed. Badges are marked as expired once their validity expir
 				<bg-formfield-select
 					ariaLabel="Choose duration"
 					[control]="expirationForm.rawControlMap.expires_duration"
-					label="Dauer"
+					label="Duration"
 					[placeholder]="'Choose duration'"
 					[optionMap]="durationOptions"
 				></bg-formfield-select>
