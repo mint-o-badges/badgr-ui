@@ -8,14 +8,14 @@
 				<div class="l-primarymore">
 					<button [routerLink]="['../change-password']"
 					        class="button"
-					>{{(profile.hasPasswordSet)?'Change':'Set'}} Passwort
+					>{{(profile.hasPasswordSet)? ("Profile.changePass" | translate) :("Profile.setPass" | translate)}}
 					</button>
 					<button [bgPopupMenuTrigger]="editMenu"
 					        class="buttonicon buttonicon-secondary"
 					        id="trigger2"
 					>
 						<svg icon="icon_more"></svg>
-						<span class="visuallyhidden">Mehr</span>
+						<span class="visuallyhidden">{{ 'Profile.more' | translate }}</span>
 					</button>
 				</div>
 			</div>
@@ -28,7 +28,7 @@
 			     class="menuitem"
 			>
 				<svg icon="icon_edit"></svg>
-				Edit
+				{{ 'Profile.edit' | translate }}
 			</div>
 		</bg-popup-menu>
 	</div>
@@ -47,8 +47,8 @@
 					<bg-formfield-text [control]="emailForm.rawControlMap.email"
 					                   errorMessage="Bitte gib eine gültige Email Adresse ein"
 					                   fieldType="email"
-					                   placeholder="Email Addresse..."
-					                   inlineButtonText="Add"
+					                   placeholder="{{ 'Profile.emailAddress' | translate }}..."
+					                   inlineButtonText="{{ 'Profile.add' | translate }}"
 					>
 					</bg-formfield-text>
 
@@ -61,10 +61,10 @@
 			<tr class="datatable-x-header">
 				<th class="datatable-x-cell"
 				    style="width:80%;"
-				>Email Address
+				>{{ 'Profile.emailAddress' | translate }}
 				</th>
-				<th class="datatable-x-cell">Status</th>
-				<th class="datatable-x-cell"><span class="visuallyhidden">Actions</span></th>
+				<th class="datatable-x-cell">{{ 'Profile.status' | translate }}</th>
+				<th class="datatable-x-cell"><span class="visuallyhidden">{{ 'Profile.actions' | translate }}</span></th>
 			</tr>
 			</thead>
 			<tbody class="datatable-x-body">
@@ -79,7 +79,7 @@
 						</p>
 						<div *ngIf="email.primary"
 						     class="badgestatus badgestatus-new badgestatus-intable"
-						>primary
+						>{{ 'Profile.primary' | translate }}
 						</div>
 					</div>
 				</td>
@@ -93,7 +93,7 @@
 							     viewBox="0 0 24 24"
 							></svg>
 							<p class="u-text-body u-hidden-maxtablet">
-								Verified
+								{{ 'Profile.verified' | translate }}
 							</p>
 						</div>
 						<div *ngIf="!email.verified"
@@ -104,7 +104,7 @@
 							     viewBox="0 0 24 24"
 							></svg>
 							<p class="u-text-body u-hidden-maxtablet">
-								Pending
+								{{ 'Profile.pending' | translate }}
 							</p>
 						</div>
 					</div>
@@ -116,7 +116,7 @@
 					        class="buttonicon buttonicon-link"
 					>
 						<svg icon="icon_more"></svg>
-						<span class="visuallyhidden">More</span>
+						<span class="visuallyhidden">{{ 'Profile.more' | translate }}</span>
 					</button>
 
 					<bg-popup-menu #emailMenu
@@ -129,7 +129,7 @@
 						     (click)="clickResendVerification($event, email)"
 						>
 							<svg icon="icon_refresh"></svg>
-							Resend Verification
+							{{ 'Profile.resendVerification' | translate }}
 						</div>
 
 						<div *ngIf="email.verified && !email.primary"
@@ -137,7 +137,7 @@
 						     (click)="clickMakePrimary($event, email)"
 						>
 							<svg icon="icon_refresh"></svg>
-							Make primary
+							{{ 'Profile.makePrimary' | translate }}
 						</div>
 
 						<div class="menuitem"
@@ -146,7 +146,7 @@
 						     *ngIf="emails.length > 1 && ! email.primary"
 						>
 							<svg icon="icon_remove"></svg>
-							Remove
+							{{ 'Profile.remove' | translate }}
 						</div>
 
 					</bg-popup-menu>
@@ -165,9 +165,9 @@
 							 *ngIf="socialAccounts.length > 0"
 				>
 				<tr class="datatable-x-header">
-					<th class="datatable-x-cell">Service</th>
-					<th class="datatable-x-cell">Account</th>
-					<th class="datatable-x-cell"><span class="visuallyhidden">Actions</span></th>
+					<th class="datatable-x-cell">{{ 'Profile.service' | translate }}</th>
+					<th class="datatable-x-cell">{{ 'General.account' | translate }}</th>
+					<th class="datatable-x-cell"><span class="visuallyhidden">{{ 'Profile.actions' | translate }}</span></th>
 				</tr>
 				</thead>
 				<tbody class="datatable-x-body">
@@ -185,7 +185,7 @@
 							<a href="#"
 								 class="u-text u-text-small u-text-bold"
 								 (click)="unlinkAccount($event, account, socialAccounts.length)"
-							>Unlink</a>
+							>{{ 'Profile.unlink' | translate }}</a>
 						</div>
 					</td>
 				</tr>
@@ -193,9 +193,9 @@
 			</table>
 
 			<p class="u-text-body u-margin-yaxis3x u-width-paragraph">
-				Click one of the provider buttons below to allow you to log in
+				{{ 'Profile.clickProviderBtn' | translate }}
 				to {{configService.theme['serviceName'] || "Badgr"}}
-				in the future using that service rather than your email and password.
+				{{ 'Profile.useServiceInstead' | translate }}
 			</p>
 			<p class="u-text-small u-text-bold u-text-dark2 u-margin-bottom1x">Link Account:</p>
 
@@ -208,7 +208,7 @@
 					(click)="linkAccount($event, provider)"
 					class="socialbutton"
 					[style.backgroundColor]="provider.color">
-					<div class="visuallyhidden">Access with {{provider.label}}</div>
+					<div class="visuallyhidden">{{ 'Profile.accessWith' | translate }} {{provider.label}}</div>
 					<img [src]="sanitize(provider.imgSrc)" alt="">
 				</button>
 

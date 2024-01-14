@@ -67,9 +67,8 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 		return this.configService.featuresConfig;
 	}
 
-	issuerKeys = {}
-	plural = {}
-
+	issuerKeys = {};
+	plural = {};
 
 	mapObject;
 	@ViewChild('map')
@@ -110,7 +109,7 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 					resolve(issuers);
 				},
 				(error) => {
-					this.messageService.reportAndThrowError('Failed to load issuers', error);
+					this.messageService.reportAndThrowError(this.translate.instant('Issuer.failLoadissuers'), error);
 				},
 			);
 		});
@@ -121,14 +120,9 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 
 		this.prepareTexts();
 
-		// Trnslate: to update predefined text
+		// Translate: to update predefined text
 		this.translate.onLangChange.subscribe((event) => {
-			console.log(event.lang);
 			this.prepareTexts();
-		  });
-
-		this.translate.get(['Issuer.noInstitutions']).subscribe((translations) => {
-			
 		});
 	}
 
@@ -426,14 +420,14 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 		}, 10);
 	}
 
-	prepareTexts(){
+	prepareTexts() {
 		this.issuerKeys = {
 			schule: 'Schulen',
 			hochschule: 'Hochschulen und Universitäten',
 			andere: 'Andere (Bibliotheken, Museen, FabLabs, Unternehmen, Vereine, ...)',
 			'n/a': 'Keine Angabe',
 		};
-	
+
 		this.plural = {
 			issuer: {
 				'=0': this.translate.instant('Issuer.noInstitutions'),
@@ -446,7 +440,7 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 				other: '<strong class="u-text-bold">#</strong> Badges',
 			},
 			recipient: {
-				'=0': this.translate.instant('Issuer.NoRecipient'),
+				'=0': this.translate.instant('Issuer.noRecipient'),
 				'=1': '1 ' + this.translate.instant('General.recipient'),
 				other: '# ' + this.translate.instant('General.recipient'),
 			},

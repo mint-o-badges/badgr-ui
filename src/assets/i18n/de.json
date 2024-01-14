@@ -11,7 +11,10 @@
 		"collections": "Sammlungen",
 		"cancel": "Abbrechen",
 		"or": "oder",
-		"search": "suchen"
+		"search": "suchen",
+		"badge":"Badge",
+		"badges":"Badges",
+		"institution": "Institution"
 	},
 	"NavItems": {
 		"register": "Registrieren",
@@ -20,7 +23,8 @@
 		"myInstitutions": "Meine Institutionen",
 		"appIntegrations": "App Integrationen",
 		"openMenu": "Menü öffnen",
-		"logout": "Logout"
+		"logout": "Logout",
+		"myProfile": "Mein Profil"
 	},
 	"Start": {
 		"desc1": "Ein lernerzentrierter Ansatz",
@@ -58,7 +62,17 @@
 		"searchInstitutions": "Institutionen durchsuchen",
 		"noBadges": "Keine Badges",
 		"recipient": "Empfänger",
-		"NoRecipient": "Kein Empfänger"
+		"noRecipient": "Kein Empfänger",
+
+		"createInstitution":"Institution erstellen",
+		"noInstitutionYet":"Du hast noch keine Institution erstellt!",
+		"institutionCreateInfo":"Mit Institutionen kannst du Badges erstellen und an Nutzer*innen vergeben.",
+		"yourRole":"Deine Rolle:",
+		"topBadges":"Top Badges:",
+		"oneInstitution": "1 Institution",
+		"multiInstitutions": "# Institutionen",
+		"failLoadissuers":"Aussteller konnten nicht geladen werden"
+
 	},
 	"Badge": {
 		"groupBy": "Gruppieren nach",
@@ -77,9 +91,9 @@
 		"noBadges": "Keine Badges",
 		"oneBadge": "1 Badge",
 		"multiBadges": "# Badges",
-		"noRecipients": "Keine Empfänger",
+		"noRecipients": "Keine Empfänger*in",
 		"oneRecipient": "1 Empfänger",
-		"multiRecipients": "# Empfänger"
+		"multiRecipients": "# Empfänger*innen"
 	},
 	"Signup": {
 		"youHaveAccount": "Du hast bereits einen Account?",
@@ -188,5 +202,27 @@
 		"remainingChar": "verbleibende Zeichen",
 		"description": "Beschreibung",
 		"provideDescription": "Bitte gebe eine Beschreibung an"
+	},
+	"Profile":{
+		"more": "More",
+		"password":"Passwort",
+		"edit":"Bearbeiten",
+		"emailAddress": "Email Addresse",
+		"status":"Status",
+		"actions":"Aktionen",
+		"primary":"primär",
+		"verified":"Verifiziert",
+		"pending":"Ausstehend",
+		"resendVerification":"Bestätigung erneut senden",
+		"makePrimary":"Primär machen",
+		"remove":"Entfernen",
+		"service":"Service",
+		"unlink":"Verknüpfung aufheben",
+		"clickProviderBtn":"Klicken Sie auf eine der Anbieterschaltflächen unten, um sich anzumelden",
+		"useServiceInstead":"in Zukunft diesen Dienst anstelle Ihrer E-Mail-Adresse und Ihres Passworts verwenden.",
+		"accessWith":"Zugriff mit",
+		"add":"Hinzufügen",
+		"changePass": "Passwort ändern",
+		"setPass": "Passwort einstellen"
 	}
 }

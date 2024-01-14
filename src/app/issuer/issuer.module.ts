@@ -28,6 +28,7 @@ import {CommonEntityManagerModule} from '../entity-manager/entity-manager.module
 import {IssuerStaffComponent} from './components/issuer-staff/issuer-staff.component';
 import {BadgeClassEditFormComponent} from './components/badgeclass-edit-form/badgeclass-edit-form.component';
 import {IssuerStaffCreateDialogComponent} from './components/issuer-staff-create-dialog/issuer-staff-create-dialog.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 const routes = [
 	/* Issuer */
@@ -82,7 +83,8 @@ const routes = [
 		...COMMON_IMPORTS,
 		BadgrCommonModule,
 		CommonEntityManagerModule,
-		RouterModule.forChild(routes)
+		RouterModule.forChild(routes),
+		TranslateModule
 	],
 	declarations: [
 		BadgeClassCreateComponent,

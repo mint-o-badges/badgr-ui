@@ -18,6 +18,7 @@ import {UserProfileApiService} from '../common/services/user-profile-api.service
 import {ChangePasswordComponent} from './components/change-password/change-password.component';
 import {OAuthAppDetailComponent} from './components/oauth-app-detail/oauth-app-detail.component';
 import { MozzTransitionModule } from "../mozz-transition/mozz-transition.module";
+import { TranslateModule } from '@ngx-translate/core';
 
 const routes: Routes = [
 	/* Profile */
@@ -63,6 +64,7 @@ const routes: Routes = [
 		CommonEntityManagerModule,
 		RouterModule.forChild(routes),
 		MozzTransitionModule,
+		TranslateModule
 	],
 	declarations: [
 		BadgebookLti1DetailComponent,

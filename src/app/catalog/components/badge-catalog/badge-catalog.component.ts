@@ -141,39 +141,44 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 	ngOnInit() {
 		super.ngOnInit();
 
+		// initialize predefined text
+		this.prepareTexts();
+
 		// Translate: to update predefined text
 		this.translate.onLangChange.subscribe((event) => {
-
-			// 1. Groups
-			this.groups = [this.translate.instant('Badge.category'), this.translate.instant('Badge.issuer'), '---'];
-			// 2. Category options
-			this.categoryOptions = {
-				membership: this.translate.instant('Badge.membership'),
-				ability: this.translate.instant('Badge.ability'),
-				archievement: this.translate.instant('Badge.archievement'),
-				skill: this.translate.instant('Badge.skill'),
-				noCategory: this.translate.instant('Badge.noCategory'),
-			};
-			// 3. Plural
-			this.plural = {
-				issuer: {
-					'=0': this.translate.instant('Badge.noIssuers'),
-					'=1': this.translate.instant('Badge.oneIssuer'),
-					other: this.translate.instant('Badge.multiIssuers'),
-				},
-				badges: {
-					'=0': this.translate.instant('Badge.noBadges'),
-					'=1': this.translate.instant('Badge.oneBadge'),
-					other: this.translate.instant('Badge.multiBadges'),
-				},
-				recipient: {
-					'=0': this.translate.instant('Badge.noRecipients'),
-					'=1': this.translate.instant('Badge.oneRecipient'),
-					other: this.translate.instant('Badge.multiRecipients'),
-				},
-			};
-
+			this.prepareTexts()
+			
 		});
+	}
+	prepareTexts() {
+		// 1. Groups
+		this.groups = [this.translate.instant('Badge.category'), this.translate.instant('Badge.issuer'), '---'];
+		// 2. Category options
+		this.categoryOptions = {
+			membership: this.translate.instant('Badge.membership'),
+			ability: this.translate.instant('Badge.ability'),
+			archievement: this.translate.instant('Badge.archievement'),
+			skill: this.translate.instant('Badge.skill'),
+			noCategory: this.translate.instant('Badge.noCategory'),
+		};
+		// 3. Plural
+		this.plural = {
+			issuer: {
+				'=0': this.translate.instant('Badge.noIssuers'),
+				'=1': this.translate.instant('Badge.oneIssuer'),
+				other: this.translate.instant('Badge.multiIssuers'),
+			},
+			badges: {
+				'=0': this.translate.instant('Badge.noBadges'),
+				'=1': this.translate.instant('Badge.oneBadge'),
+				other: this.translate.instant('Badge.multiBadges'),
+			},
+			recipient: {
+				'=0': this.translate.instant('Badge.noRecipients'),
+				'=1': this.translate.instant('Badge.oneRecipient'),
+				other: this.translate.instant('Badge.multiRecipients'),
+			},
+		};
 	}
 
 	changeOrder(order) {

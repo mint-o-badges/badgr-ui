@@ -31,6 +31,7 @@ import { ImportModalComponent } from './mozz-transition/components/import-modal/
 import { ExportPdfDialog } from './common/dialogs/export-pdf-dialog/export-pdf-dialog.component';
 import { CopyBadgeDialog } from './common/dialogs/copy-badge-dialog/copy-badge-dialog.component';
 import { LanguageService } from './common/services/language.service';
+import { TranslateService } from '@ngx-translate/core';
 
 // Shim in support for the :scope attribute
 // See https://github.com/lazd/scopedQuerySelectorShim and
@@ -135,13 +136,13 @@ export class AppComponent implements OnInit, AfterViewInit {
 		private titleService: Title,
 		protected issuerManager: IssuerManager,
 		private languageService: LanguageService, // Translation
+		private translate: TranslateService
 	) {
 		// Initialize App language
 		this.languageService.setInitialAppLangauge();
 		this.lngObserver.subscribe((lng) => {
 			if (lng != null) {
 				this.selectedLng = lng;
-				
 			}
 		  });
 
@@ -183,7 +184,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 				this.shouldShowIssuersTab();
 			},
 			(error) => {
-				this.messageService.reportAndThrowError('Failed to load issuers', error);
+				this.messageService.reportAndThrowError(this.translate.instant('Issuer.failLoadissuers'), error);
 			},
 		);
 	};

@@ -6,13 +6,15 @@
 		"institutions": "Institutions",
 		"account": "Account",
 		"backpack": "Backpack",
-		"list":"list",
+		"list": "list",
 		"collection": "Collection",
 		"collections": "Collections",
-		"cancel":"Cancel",
-		"or":"or",
-		"search":"search"
-
+		"cancel": "Cancel",
+		"or": "or",
+		"search": "search",
+		"badge":"Badge",
+		"badges":"Badges",
+		"institution": "Institution"
 	},
 	"NavItems": {
 		"register": "Register",
@@ -21,7 +23,8 @@
 		"myInstitutions": "My institutions",
 		"appIntegrations": "App integrations",
 		"openMenu": "Open Menu",
-		"logout": "Ausloggen"
+		"logout": "Ausloggen",
+		"myProfile": "My profile"
 	},
 	"Start": {
 		"desc1": "A learner-centered approach",
@@ -59,7 +62,17 @@
 		"searchInstitutions": "Search institutions",
 		"noBadges": "No badges",
 		"recipient": "recipient",
-		"NoRecipient": "No recipient"
+		"noRecipient": "No recipient",
+
+		"createInstitution":"Create an institution",
+		"noInstitutionYet":"You haven't created an institution yet!",
+		"institutionCreateInfo":"With institutions you can create badges and give them to users.",
+		"yourRole":"Your role:",
+		"topBadges":"Top Badges:",
+		"oneInstitution": "1 Institution",
+		"multiInstitutions": "# Institutions",
+		"failLoadissuers": "Failed to load issuers"
+
 	},
 	"Badge": {
 		"groupBy": "Group by",
@@ -160,35 +173,56 @@
 		"groupByInstitution": "Nach Institution gruppieren",
 		"institution": "Institution",
 
-		"addRecievedBadge":"Add a badge that you have already received.",
-		"image":"Image",
-		"close":"Close",
+		"addRecievedBadge": "Add a badge that you have already received.",
+		"image": "Image",
+		"close": "Close",
 		"enterURL": "Enter URL",
 		"enterJSON": "Enter JSON",
 
-		"selectFromFile":"select from files",
-		"genRandomImage":"Generate random image",
-		"searchAnotherIcon":"search for another icon",
-		"chooseAnotherFile":"choose another file",
-		"oneBadgeRequired":"At least one badge input is required",
+		"selectFromFile": "select from files",
+		"genRandomImage": "Generate random image",
+		"searchAnotherIcon": "search for another icon",
+		"chooseAnotherFile": "choose another file",
+		"oneBadgeRequired": "At least one badge input is required",
 
 		"importedSuccessfully": "Badge successfully imported.",
 		"uploadFailed": "Failed to upload badge:",
 		"unknownError": "Badge upload failed due to an unknown error"
-
 	},
-	"BadgeCollection":{
-		"earnedBy":"earned by",
-		"addCollection":"Add collection",
-		"noCollections":"You have no collections",
-		"collectionInfo":"Collections allow you to organize and share the badges you've earned.",
-		"createCollection":"Create collection",
-		"share":"Share",
-		"orginzeBadges":"Organize your badges into collections.",
-		"collectionName":"Name of the collections",
-		"enterCollectioName":"Please enter a name for the collection",
-		"remainingChar":"remaining characters",
-		"description":"Description",
-		"provideDescription":"Please provide a description"
+	"BadgeCollection": {
+		"earnedBy": "earned by",
+		"addCollection": "Add collection",
+		"noCollections": "You have no collections",
+		"collectionInfo": "Collections allow you to organize and share the badges you've earned.",
+		"createCollection": "Create collection",
+		"share": "Share",
+		"orginzeBadges": "Organize your badges into collections.",
+		"collectionName": "Name of the collections",
+		"enterCollectioName": "Please enter a name for the collection",
+		"remainingChar": "remaining characters",
+		"description": "Description",
+		"provideDescription": "Please provide a description"
+	},
+	"Profile":{
+		"more": "More",
+		"password":"Password",
+		"edit":"Edit",
+		"emailAddress": "Email Address",
+		"status":"Status",
+		"actions":"Ations",
+		"primary":"Primary",
+		"verified":"Verified",
+		"pending":"Pending",
+		"resendVerification":"Resend Verification",
+		"makePrimary":"Make Primary",
+		"remove":"Remove",
+		"service":"Service",
+		"unlink":"Unlink",
+		"clickProviderBtn":"Click one of the provider buttons below to allow you to log in",
+		"useServiceInstead":"in the future using that service rather than your email and password.",
+		"accessWith":"Access with",
+		"add":"Add",
+		"changePass": "Change Password",
+		"setPass": "Set Password"
 	}
 }

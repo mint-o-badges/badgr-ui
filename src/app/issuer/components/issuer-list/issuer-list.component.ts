@@ -10,15 +10,14 @@ import { BadgeClass } from '../../models/badgeclass.model';
 import { Title } from '@angular/platform-browser';
 import { preloadImageURL } from '../../../common/util/file-util';
 import { AppConfigService } from '../../../common/app-config.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'issuer-list',
 	templateUrl: './issuer-list.component.html',
 })
 export class IssuerListComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
-	readonly issuerPlaceholderSrc = preloadImageURL(
-		'../../../../breakdown/static/images/placeholderavatar-issuer.svg'
-	);
+	readonly issuerPlaceholderSrc = preloadImageURL('../../../../breakdown/static/images/placeholderavatar-issuer.svg');
 	readonly noIssuersPlaceholderSrc =
 		'../../../../assets/@concentricsky/badgr-style/dist/images/image-empty-issuer.svg';
 
@@ -40,19 +39,19 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 
 	plural = {
 		issuer: {
-			'=0': 'Keine Institutionen',
-			'=1': '1 Institution',
-			other: '# Institutionen',
+			'=0': this.translate.instant('Issuer.noInstitutions'),
+			'=1': this.translate.instant('Issuer.oneInstitution'),
+			other: this.translate.instant('Issuer.multiInstitutions'),
 		},
 		badges: {
-			'=0': 'Keine Badges',
-			'=1': '<strong class="u-text-bold">1</strong> Badge',
-			other: '<strong class="u-text-bold">#</strong> Badges',
+			'=0': this.translate.instant('Badge.noBadges'),
+			'=1': '<strong class="u-text-bold">1</strong> ' + this.translate.instant('General.badge'),
+			other: '<strong class="u-text-bold">#</strong> ' + this.translate.instant('General.badges'),
 		},
 		recipient: {
-			'=0': 'Keine Empfänger*in',
-			'=1': '1 Empfänger',
-			other: '# Empfänger*innen',
+			'=0': this.translate.instant('Badge.noRecipients'),
+			'=1': this.translate.instant('Badge.oneRecipient'),
+			other: this.translate.instant('Badge.multiRecipients'),
 		},
 	};
 
@@ -64,7 +63,8 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 		protected badgeClassService: BadgeClassManager,
 		loginService: SessionService,
 		router: Router,
-		route: ActivatedRoute
+		route: ActivatedRoute,
+		private translate: TranslateService,
 	) {
 		super(router, route, loginService);
 		title.setTitle(`Issuers - ${this.configService.theme['serviceName'] || 'Badgr'}`);
@@ -81,7 +81,7 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 
 					this.issuerToBadgeInfo[issuerSlug] = new IssuerBadgesInfo(
 						issuerBadges.reduce((sum, badge) => sum + badge.recipientCount, 0),
-						issuerBadges.sort((a, b) => b.recipientCount - a.recipientCount)
+						issuerBadges.sort((a, b) => b.recipientCount - a.recipientCount),
 					);
 				});
 
@@ -98,18 +98,51 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 					resolve();
 				},
 				(error) => {
-					this.messageService.reportAndThrowError('Failed to load issuers', error);
+					this.messageService.reportAndThrowError(this.translate.instant('Issuer.failLoadissuers'), error);
 					resolve();
-				}
+				},
 			);
 		});
 	};
 
 	ngOnInit() {
 		super.ngOnInit();
+
+		this.prepareTexts();
+
+		// Translate: to update predefined text
+		this.translate.onLangChange.subscribe((event) => {
+			console.log("lng:", event.lang);
+			this.prepareTexts();
+		});
+	}
+
+	// initialize predefined text
+	prepareTexts() {
+		// Plural
+		this.plural = {
+			issuer: {
+				'=0': this.translate.instant('Issuer.noInstitutions'),
+				'=1': this.translate.instant('Issuer.oneInstitution'),
+				other: this.translate.instant('Issuer.multiInstitutions'),
+			},
+			badges: {
+				'=0': this.translate.instant('Badge.noBadges'),
+				'=1': '<strong class="u-text-bold">1</strong> ' + this.translate.instant('General.badge'),
+				other: '<strong class="u-text-bold">#</strong> ' + this.translate.instant('General.badges'),
+			},
+			recipient: {
+				'=0': this.translate.instant('Badge.noRecipients'),
+				'=1': this.translate.instant('Badge.oneRecipient'),
+				other: this.translate.instant('Badge.multiRecipients'),
+			},
+		};
 	}
 }
 
 class IssuerBadgesInfo {
-	constructor(public totalBadgeIssuanceCount = 0, public badges: BadgeClass[] = []) {}
+	constructor(
+		public totalBadgeIssuanceCount = 0,
+		public badges: BadgeClass[] = [],
+	) {}
 }

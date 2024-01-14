@@ -18,10 +18,11 @@ export class LanguageService {
 	setInitialAppLangauge() {
 		// 1. check if device default lang can be fetched and it's one of the supported language
 		// 2. use german as a default lang
-		let langauge = this.translate.getBrowserCultureLang(); // Get browser lang
-		if (lngs.includes(langauge.toLowerCase().slice(0, 2))) {
-			this.translate.setDefaultLang(langauge.toLowerCase().slice(0, 2));
-			this.setSelectedLngValue(langauge.toLowerCase().slice(0, 2));
+		let browserLang = this.translate.getBrowserCultureLang(); // Get browser lang
+		let browserLangVal = browserLang.toLowerCase().slice(0, 2);
+		if (lngs.includes(browserLangVal)) {
+			this.translate.setDefaultLang(browserLangVal);
+			this.setLanguage(browserLangVal);
 		} else {
 			this.setLanguage('de'); // german is the default lang if browser lang is not supported
 		}
