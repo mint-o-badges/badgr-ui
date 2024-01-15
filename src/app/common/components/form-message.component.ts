@@ -68,8 +68,10 @@ export class FormMessageComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnDestroy() {
-		this.subscription.unsubscribe();
-		this.clickSubscription.unsubscribe();
+        if (this.subscription)
+            this.subscription.unsubscribe();
+        if (this.clickSubscription)
+            this.clickSubscription.unsubscribe();
 	}
 
 	ngOnInit() {

@@ -114,6 +114,7 @@ export class MockSessionService {
 @Injectable()
 export class MockMessageService {
 	reportHandledError = () => {};
+    reportAndThrowError = () => {};
 	dismissMessage = () => {};
 	getMessage = () => {};
 	message$ = {
@@ -215,6 +216,7 @@ export class MockRecipientBadgeManager {
 	recipientBadgeList = {
 		changed$: new Observable(),
 		loadedPromise: new Promise(()=>{}),
+        entityForSlug: ()=>{}
 	};
 	recipientBadgeApiService = {
 		saveInstance: new Promise(()=>{}),

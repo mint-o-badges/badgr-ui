@@ -17,6 +17,7 @@ import { COMMON_MOCKS_PROVIDERS_WITH_SUBS } from "../../mocks/mocks.module.spec"
 import { BgMarkdownComponent } from "../directives/bg-markdown.component";
 import { MarkdownHintsDialog } from "../dialogs/markdown-hints-dialog.component";
 import { TruncatedTextComponent } from "./truncated-text.component";
+import { FormControl, Validators } from '@angular/forms';
 
 describe('FormFieldMarkdown', () => {
   let fixture;
@@ -41,6 +42,7 @@ describe('FormFieldMarkdown', () => {
       schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
     }).compileComponents();
     fixture = TestBed.createComponent(FormFieldMarkdown);
+    fixture.componentInstance.control = new FormControl('', Validators.required);
     fixture.detectChanges();
     component = fixture.debugElement.componentInstance;
   });

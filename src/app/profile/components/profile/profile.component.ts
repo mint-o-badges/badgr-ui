@@ -106,7 +106,8 @@ export class ProfileComponent extends BaseAuthenticatedRoutableComponent impleme
 	}
 
 	ngOnDestroy(): void {
-		this.emailsSubscription.unsubscribe();
+        if (this.emailsSubscription)
+            this.emailsSubscription.unsubscribe();
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

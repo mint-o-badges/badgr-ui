@@ -78,7 +78,9 @@ export class TooltipComponent implements AfterViewInit, OnDestroy {
 	}
 
 	ngOnDestroy() {
-		this.tether.destroy();
-		this.tooltip.nativeElement.remove();
+        if (this.tether)
+            this.tether.destroy();
+        if (this.tooltip)
+            this.tooltip.nativeElement.remove();
 	}
 }
