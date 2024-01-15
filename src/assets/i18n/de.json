@@ -14,7 +14,19 @@
 		"search": "suchen",
 		"badge":"Badge",
 		"badges":"Badges",
-		"institution": "Institution"
+		"institution": "Institution",
+		"more": "Mehr",
+		"edit":"Bearbeiten",
+		"editS":"Bearbeiten",
+		"delete":"Löschen",
+		"view":"ansehen",
+		"contact": "Kontakt",
+		"category": "Kategorie",
+		"address":"Adresse",
+		"street":"Strasse",
+		"postalCode":"Postleitzahl",
+		"description": "Beschreibung",
+		"city":"Stadt"
 	},
 	"NavItems": {
 		"register": "Registrieren",
@@ -63,7 +75,6 @@
 		"noBadges": "Keine Badges",
 		"recipient": "Empfänger",
 		"noRecipient": "Kein Empfänger",
-
 		"createInstitution":"Institution erstellen",
 		"noInstitutionYet":"Du hast noch keine Institution erstellt!",
 		"institutionCreateInfo":"Mit Institutionen kannst du Badges erstellen und an Nutzer*innen vergeben.",
@@ -71,8 +82,27 @@
 		"topBadges":"Top Badges:",
 		"oneInstitution": "1 Institution",
 		"multiInstitutions": "# Institutionen",
-		"failLoadissuers":"Aussteller konnten nicht geladen werden"
-
+		"failLoadissuers":"Aussteller konnten nicht geladen werden",
+		"visitWebsite": "Website besuchen",
+		"nichtVerified":"Dieser Issuer wurde noch nicht verifiziert",
+		"createBadge": "Badge erstellen",
+		"contactInstitution": "Institution kontaktieren",
+		"jsonView":"JSON ansehen",
+		"viewOriginal": "Original ansehen",
+		"awardBadeges":"Erstelle eine Institution um Badges zu vergeben.",
+		"imageOptional":"Bild (Optional)",
+		"enterName":"Bitte gebe einen Namen an",
+		"enterURL":"Bitte gebe eine URL an",
+		"enterValidEmail":"Bitte gebe eine gültige E-Mail Adresse an",
+		"enterDescription":"Bitte gebe eine Beschreibung an",
+		"enterCategory":"Bitte gib eine Kategorie an",
+		"enterStreet":"Bitte gib eine Strasse an",
+		"enterHouseNo":"Bitte gib eine Hausnummer an",
+		"enterPostalCode":"Bitte gib eine Postleitzahl an",
+		"enterCity":"Bitte gib eine Stadt an",
+		"houseNo":"Hausnummer",
+		"readPolicy":"Bitte lese die Datenschutzrichtlinien und stimme ihnen zu wenn du weitermachen möchtest.",
+		"instCat1":"School (primary schools, secondary schools, vocational schools, institutions of formal school education)"
 	},
 	"Badge": {
 		"groupBy": "Gruppieren nach",
@@ -113,10 +143,12 @@
 		"signUpWith": "Anmelden mit",
 		"create": "Erstellen Sie ein"
 	},
-	"login": {
+	"Login": {
 		"stayLogged": "Angemeldet bleiben",
 		"forgotPassword": "Password vergessen?",
-		"welcome": "Willkommen bei MINT-O-Badges"
+		"welcome": "Willkommen bei MINT-O-Badges",
+		"failLogin":"Fehler bei der Anmeldung. Bitte überprüfen Sie Ihre E-Mail-Adresse und Ihr Passwort und versuchen Sie es erneut.",
+		"attention": "Beachtung"
 	},
 	"Legend": {
 		"legendTitle": "Legende",
@@ -204,7 +236,7 @@
 		"provideDescription": "Bitte gebe eine Beschreibung an"
 	},
 	"Profile":{
-		"more": "More",
+		"more": "Mehr",
 		"password":"Passwort",
 		"edit":"Bearbeiten",
 		"emailAddress": "Email Addresse",
@@ -223,6 +255,11 @@
 		"accessWith":"Zugriff mit",
 		"add":"Hinzufügen",
 		"changePass": "Passwort ändern",
-		"setPass": "Passwort einstellen"
+		"setPass": "Passwort einstellen",
+		"accountAccess":"Folgende Apps und Seiten haben Zugriff auf deinen",
+		"noAppIntegration": "Keine App Integrationen vorhanden",
+		"appHasAccess": "Diese App hat Zugriff auf deinen",
+		"authorized":"Authorisiert:",
+		"takeBack":"Zurücknehmen"
 	}
 }

@@ -143,8 +143,7 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 
 		// initialize predefined text
 		this.prepareTexts();
-
-		// Translate: to update predefined text
+		// Translate: to update predefined text when language is changed
 		this.translate.onLangChange.subscribe((event) => {
 			this.prepareTexts()
 			

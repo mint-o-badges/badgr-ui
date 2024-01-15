@@ -18,6 +18,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { AppConfigService } from '../../../common/app-config.service';
 import { typedFormGroup } from '../../../common/util/typed-forms';
 import { BadgrApiFailure } from '../../../common/services/api-failure';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'login',
@@ -56,7 +57,8 @@ export class LoginComponent extends BaseRoutableComponent implements OnInit, Aft
 		private profileManager: UserProfileManager,
 		private sanitizer: DomSanitizer,
 		router: Router,
-		route: ActivatedRoute
+		route: ActivatedRoute,
+		private translate: TranslateService
 	) {
 		super(router, route);
 		title.setTitle(`Login - ${this.configService.theme['serviceName'] || 'Badgr'}`);
@@ -134,7 +136,7 @@ export class LoginComponent extends BaseRoutableComponent implements OnInit, Aft
 				(response: HttpErrorResponse) =>
 					this.messageService.reportHandledError(
 						BadgrApiFailure.messageIfThrottableError(response.error) ||
-							'Login failed. Please check your email and password and try again.',
+						this.translate.instant('Login.failLogin'),
 						response
 					)
 			)

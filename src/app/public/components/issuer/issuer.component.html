@@ -48,27 +48,27 @@
 						</p>
 						<div class="u-margin-top1x">
 							<a class="u-text-outlink" target="_blank" [href]="issuer.url"
-								>Website besuchen<svg icon="icon_external_link"></svg
+								>{{ 'Issuer.visitWebsite' | translate }}<svg icon="icon_external_link"></svg
 							></a>
 						</div>
 					</div>
 					<div class="topbar-x-buttons">
 						<div class="l-primarymore">
-							<a class="button" href="mailto:{{ issuer.email }}">Institution kontaktieren</a>
+							<a class="button" href="mailto:{{ issuer.email }}">{{ 'Issuer.contactInstitution' | translate }}</a>
 							<button
 								class="buttonicon buttonicon-secondary"
 								id="actionstrigger"
 								[bgPopupMenuTrigger]="moreMenu"
 							>
 								<svg icon="icon_more"></svg>
-								<span class="visuallyhidden">Mehr</span>
+								<span class="visuallyhidden">{{ 'General.more' | translate }}</span>
 							</button>
 							<bg-popup-menu #moreMenu>
 								<a class="menuitem" target="_blank" [href]="rawJsonUrl"
-									><svg icon="icon_external_link"></svg>JSON ansehen</a
+									><svg icon="icon_external_link"></svg>{{ 'Issuer.jsonView' | translate }}</a
 								>
 								<a class="menuitem" target="_blank" [href]="issuer.sourceUrl" *ngIf="issuer.sourceUrl"
-									><svg icon="icon_external_link"></svg>Original ansehen</a
+									><svg icon="icon_external_link"></svg>{{ 'Issuer.viewOriginal' | translate }}</a
 								>
 							</bg-popup-menu>
 						</div>

@@ -120,7 +120,7 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 
 		this.prepareTexts();
 
-		// Translate: to update predefined text
+		// Translate: to update predefined text when language is changed
 		this.translate.onLangChange.subscribe((event) => {
 			this.prepareTexts();
 		});

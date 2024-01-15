@@ -14,7 +14,19 @@
 		"search": "search",
 		"badge":"Badge",
 		"badges":"Badges",
-		"institution": "Institution"
+		"institution": "Institution",
+		"more": "More",
+		"edit":"Edit",
+		"editS":"edit",
+		"delete":"Delete",
+		"view":"View",
+		"contact": "Contact",
+		"category": "Category",
+		"address":"Address",
+		"street":"Street",
+		"postalCode":"Postal code",
+		"description": "Description",
+		"city":"City"
 	},
 	"NavItems": {
 		"register": "Register",
@@ -63,7 +75,6 @@
 		"noBadges": "No badges",
 		"recipient": "recipient",
 		"noRecipient": "No recipient",
-
 		"createInstitution":"Create an institution",
 		"noInstitutionYet":"You haven't created an institution yet!",
 		"institutionCreateInfo":"With institutions you can create badges and give them to users.",
@@ -71,8 +82,27 @@
 		"topBadges":"Top Badges:",
 		"oneInstitution": "1 Institution",
 		"multiInstitutions": "# Institutions",
-		"failLoadissuers": "Failed to load issuers"
-
+		"failLoadissuers": "Failed to load issuers",
+		"visitWebsite": "Visit website",
+		"nichtVerified":"This issuer has not been verified yet",
+		"createBadge": "Create badge",
+		"contactInstitution": "Contact institution",
+		"jsonView":"View JSON",
+		"viewOriginal": "View original",
+		"awardBadeges":"Create an institution to award badges.",
+		"imageOptional":"Image (Optional)",
+		"enterName":"Please enter a name",
+		"enterURL":"Please enter a URL",
+		"enterValidEmail":"Please enter a valid email address",
+		"enterDescription":"Please enter a description",
+		"enterCategory":"Please enter a category",
+		"enterStreet":"Please enter a street",
+		"enterHouseNo":"Please enter a house number",
+		"enterPostalCode":"Please enter a postal code",
+		"enterCity":"Please enter a city",
+		"houseNo":"House number",
+		"readPolicy":"Please read the privacy policy and agree to it if you wish to continue.",
+		"instCat1":"School (primary schools, secondary schools, vocational schools, institutions of formal school education)"
 	},
 	"Badge": {
 		"groupBy": "Group by",
@@ -113,10 +143,12 @@
 		"signUpWith": "Sign Up With",
 		"create": "Create a"
 	},
-	"login": {
+	"Login": {
 		"stayLogged": "Stay logged in",
 		"forgotPassword": "Forgot password?",
-		"welcome": "Welcome to MINT-O-Badges"
+		"welcome": "Welcome to MINT-O-Badges",
+		"failLogin":"Login failed. Please check your email and password and try again.",
+		"attention": "Attention"
 	},
 	"Legend": {
 		"legendTitle": "Legend",
@@ -223,6 +255,11 @@
 		"accessWith":"Access with",
 		"add":"Add",
 		"changePass": "Change Password",
-		"setPass": "Set Password"
+		"setPass": "Set Password",
+		"accountAccess":"The following apps and sites have access to your",
+		"noAppIntegration": "No app integrations available",
+		"appHasAccess": "This app has access to your",
+		"authorized":"Authorized:",
+		"takeBack":"Take it back"
 	}
 }

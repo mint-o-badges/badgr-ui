@@ -20,8 +20,7 @@
 				<div class="topbar-x-subheading">
 					<p class="u-text u-text-small">
 						<strong [truncatedText]="issuer.email" [maxLength]="64"></strong>
-						<br class="u-hidden-minmobilelarge" /><span class="u-hidden-maxmobilelarge"> — </span>Deine
-						Rolle:
+						<br class="u-hidden-minmobilelarge" /><span class="u-hidden-maxmobilelarge"> — </span>{{ 'Issuer.yourRole' | translate }}
 						{{ issuer?.currentUserStaffMember?.roleInfo?.label }}
 					</p>
 					<p class="u-margin-top1x u-width-paragraph">
@@ -29,7 +28,7 @@
 					</p>
 					<div class="u-margin-top1x">
 						<a href="{{ issuer.websiteUrl }}" class="u-text-outlink">
-							Website besuchen
+							{{ 'Issuer.visitWebsite' | translate }}
 							<svg icon="icon_external_link"></svg>
 						</a>
 					</div>
@@ -37,7 +36,7 @@
 				</div>
 				<div class="topbar-x-buttons">
 					<p *ngIf="!issuer.apiModel.verified" class="u-margin-top1x u-width-paragraph">
-						Dieser Issuer wurde noch nicht verifiziert
+						{{ 'Issuer.nichtVerified' | translate }}
 					</p>
 					<div class="l-primarymore">
 						<button
@@ -45,25 +44,25 @@
 							[routerLink]="['./badges/create']"
 							[disabled]="!issuer.apiModel.verified"
 						>
-							Badge erstellen
+							{{ 'Issuer.createBadge' | translate }}
 						</button>
 						<button class="buttonicon buttonicon-secondary" [bgPopupMenuTrigger]="issuerActionsMenu">
 							<svg icon="icon_more"></svg>
-							<span class="visuallyhidden">Mehr</span>
+							<span class="visuallyhidden">{{ 'General.more' | translate }}</span>
 						</button>
 					</div>
 					<bg-popup-menu #issuerActionsMenu>
 						<a class="menuitem" [routerLink]="['./edit']">
 							<svg icon="icon_edit"></svg>
-							Bearbeiten
+							{{ 'General.edit' | translate }}
 						</a>
 						<a class="menuitem" (click)="delete($event)" href="#">
 							<svg icon="icon_remove"></svg>
-							Löschen
+							{{ 'General.delete' | translate }}
 						</a>
 						<a class="menuitem" [routerLink]="['./staff']">
 							<svg icon="icon_group"></svg>
-							Mitglieder {{ issuer?.currentUserStaffMember?.isOwner ? 'bearbeiten' : '' }}
+							Mitglieder {{ issuer?.currentUserStaffMember?.isOwner ? "{{ 'General.editS' | translate }}" : '' }}
 						</a>
 						<a class="menuitem" *ngFor="let lp of launchpoints" href="{{ lp.launch_url }}" target="_blank">
 							<svg icon="icon_external_link"></svg>

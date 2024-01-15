@@ -1,8 +1,8 @@
 <form-message></form-message>
 <div class="topbar">
 	<div class="l-containerxaxis">
-		<div class="topbar-x-heading">Institution erstellen</div>
-		<div class="topbar-x-subheading">Erstelle eine Institution um Badges zu vergeben.</div>
+		<div class="topbar-x-heading">{{ 'Issuer.createInstitution' | translate }}</div>
+		<div class="topbar-x-subheading">{{ 'Issuer.awardBadeges' | translate }}</div>
 	</div>
 </div>
 
@@ -10,7 +10,7 @@
 	<form (ngSubmit)="onSubmit()" class="u-width-formsmall u-margin-top3x" novalidate>
 		<bg-formfield-image
 			#imageField
-			label="Bild (Optional)"
+			label="{{ 'Issuer.imageOptional' | translate }}"
 			imageLoaderName="issuer"
 			[placeholderImage]="issuerImagePlacholderUrl"
 			[control]="issuerForm.rawControlMap.issuer_image"
@@ -19,8 +19,8 @@
 		<bg-formfield-text
 			class="u-margin-yaxis2x"
 			[control]="issuerForm.rawControlMap.issuer_name"
-			[label]="'Name'"
-			[errorMessage]="{ required: 'Bitte gebe einen Namen an' }"
+			label="{{ 'General.name' | translate }}"
+			errorMessage="{{ 'Issuer.enterName' | translate }}"
 			[autofocus]="true"
 		></bg-formfield-text>
 
@@ -28,7 +28,7 @@
 			class="u-margin-bottom2x"
 			[control]="issuerForm.rawControlMap.issuer_url"
 			[label]="'Website URL'"
-			[errorMessage]="'Bitte gebe eine URL an'"
+			errorMessage="{{ 'Issuer.enterURL' | translate }}"
 			[urlField]="true"
 			[fieldType]="'url'"
 			type="url"
@@ -37,25 +37,25 @@
 		<bg-formfield-select
 			class="u-margin-bottom2x"
 			[control]="issuerForm.rawControlMap.issuer_email"
-			[label]="'Kontakt E-Mail'"
-			[placeholder]="'Bitte gebe eine gültige E-Mail Adresse an'"
+			label="{{ 'General.contact' | translate }} E-Mail"
+			placeholder="{{ 'Issuer.enterValidEmail' | translate }}"
 			[options]="emailsOptions"
-			[errorMessage]="{ required: 'Bitte gebe eine gültige E-Mail Adresse an' }"
+			errorMessage="{{ 'Issuer.enterValidEmail' | translate }}"
 		></bg-formfield-select>
 
 		<bg-formfield-text
 			class="u-margin-bottom2x"
 			[control]="issuerForm.rawControlMap.issuer_description"
-			[label]="'Beschreibung'"
-			[errorMessage]="{ required: 'Bitte gebe eine Beschreibung an' }"
+			label="{{ 'General.description' | translate }}"
+			errorMessage="{{ 'Issuer.enterDescription' | translate }}"
 			[multiline]="true"
 		></bg-formfield-text>
 
 		<bg-formfield-select
 			class="u-margin-bottom2x"
 			[control]="issuerForm.rawControlMap.issuer_category"
-			[label]="'Kategorie'"
-			[placeholder]="'Bitte gib eine Kategorie an'"
+			label="{{ 'General.category' | translate }}"
+			placeholder="{{ 'Issuer.enterCategory' | translate }}"
 			[options]="[
 				{
 					label: 'Schule (Grundschulen, weiterführende Schulen, Berufsschulen, Institutionen formaler schulischer Bildung)', 
@@ -70,36 +70,36 @@
 
 		></bg-formfield-select>
 
-		<h2>Adresse</h2>
+		<h2>{{ 'General.address' | translate }}</h2>
 
 		<bg-formfield-text
 			class="u-margin-bottom2x"
 			[control]="issuerForm.rawControlMap.issuer_street"
-			[label]="'Strasse'"
-			[errorMessage]="{ required: 'Bitte gib eine Strasse an' }"
+			label="{{ 'General.street' | translate }}"
+			errorMessage="{{ 'Issuer.enterStreet' | translate }}"
 		></bg-formfield-text>
 
 		<bg-formfield-text
 			class="u-margin-bottom2x"
 			[control]="issuerForm.rawControlMap.issuer_streetnumber"
-			[label]="'Hausnummer'"
+			label="{{ 'Issuer.houseNo' | translate }}"
 			[fieldType]="'number'"
-			[errorMessage]="{ required: 'Bitte gib eine Hausnummer an' }"
+			errorMessage="{{ 'Issuer.enterHouseNo' | translate }}"
 		></bg-formfield-text>
 
 		<bg-formfield-text
 			class="u-margin-bottom2x"
 			[control]="issuerForm.rawControlMap.issuer_zip"
-			[label]="'Postleitzahl'"
+			label="{{ 'General.postalCode' | translate }}"
 			[fieldType]="'number'"
-			[errorMessage]="{ required: 'Bitte gib eine Postleitzahl an' }"
+			errorMessage="{{ 'Issuer.enterPostalCode' | translate }}"
 		></bg-formfield-text>
 
 		<bg-formfield-text
 			class="u-margin-bottom2x"
 			[control]="issuerForm.rawControlMap.issuer_city"
-			[label]="'Stadt'"
-			[errorMessage]="{ required: 'Bitte gib eine Stadt an' }"
+			label="{{ 'General.city' | translate }}"
+			errorMessage="{{ 'Issuer.enterCity' | translate }}"
 		></bg-formfield-text>
 
 		<label
@@ -118,14 +118,14 @@
 					*ngIf="issuerForm.rawControlMap.agreedTerms.dirty && !issuerForm.rawControlMap.agreedTerms.valid"
 					class="checkbox-x-errortext"
 				>
-					Bitte lese die Datenschutzrichtlinien und stimme ihnen zu wenn du weitermachen möchtest.
+					{{ 'Issuer.readPolicy' | translate }}
 				</div>
 			</span>
 		</label>
 
 		<div class="l-flex l-flex-1x u-margin-bottom3x u-margin-top4x">
 			<a [routerLink]="['/issuer']" class="button button-secondary" [disabled-when-requesting]="true"
-				>Abbrechen</a
+				>{{ 'General.cancel' | translate }}</a
 			>
 			<button
 				type="submit"
@@ -134,7 +134,7 @@
 				[loading-promises]="[addIssuerFinished]"
 				loading-message="Hinzufügen"
 			>
-				Institution erstellen
+				{{ 'Issuer.createInstitution' | translate }}
 			</button>
 		</div>
 	</form>

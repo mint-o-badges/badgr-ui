@@ -1,9 +1,9 @@
 <form-message></form-message>
 <div class="topbar">
 	<div class="l-containerxaxis">
-		<div class="topbar-x-heading">App Integrationen</div>
+		<div class="topbar-x-heading">{{ 'NavItems.appIntegrations' | translate }}</div>
 		<div class="topbar-x-subheading">
-			Folgende Apps und Seiten haben Zugriff auf deinen
+			{{ 'Profile.accountAccess' | translate }}
 			{{ configService.theme['serviceName'] || 'Badgr' }} Account
 		</div>
 	</div>
@@ -11,7 +11,7 @@
 <div class="l-containerxaxis l-containeryaxis" *bgAwaitPromises="[appIntegrationsSet.loadedPromise]">
 	<!-- EMPTY STATE: Integration List -->
 	<p class="u-text" *ngIf="0 == oAuthApps.length && 0 == appIntegrationsSet.length">
-		Keine App Integrationen vorhanden
+		{{ 'Profile.noAppIntegration' | translate }}
 	</p>
 	<div class="l-grid l-grid-cards" *ngIf="oAuthApps.length > 0 || appIntegrationsSet.length > 0">
 		<!-- Integration List -->
@@ -53,12 +53,12 @@
 					{{ app.name }}
 				</a>
 				<div class="integrationcard-x-desc">
-					Diese App hat Zugriff auf deinen {{ configService.theme['serviceName'] || 'Badgr' }} Account.
+					{{ 'Profile.appHasAccess' | translate }} {{ configService.theme['serviceName'] || 'Badgr' }} Account.
 				</div>
 			</div>
 			<div class="integrationcard-x-footer">
 				<div class="integrationcard-x-status">
-					Authorisiert: <strong><time [date]="app.createdDate" format="mediumDate"></time></strong>
+					{{ 'Profile.authorized' | translate }} <strong><time [date]="app.createdDate" format="mediumDate"></time></strong>
 				</div>
 				<button
 					class="integrationcard-x-link"
@@ -66,7 +66,7 @@
 					[attr.aria-labelledby]="'appCardTitle-' + app.entityId"
 					(click)="revokeApp(app)"
 				>
-					Zurücknehmen
+					{{ 'Profile.takeBack' | translate }}
 				</button>
 			</div>
 		</div>
