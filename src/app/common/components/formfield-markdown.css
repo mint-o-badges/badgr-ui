@@ -1,4 +1,4 @@
-@import "~bootstrap/dist/css/bootstrap.css"
-@import "~ace-builds/css/ace.css"
-@import "~font-awesome/css/font-awesome.css"
-@import "~ngx-markdown-editor/assets/highlight.js/agate.min.css"
+@import "~bootstrap/dist/css/bootstrap.css";
+@import "~ace-builds/css/ace.css";
+@import "~font-awesome/css/font-awesome.css";
+/* Note that the agate.min.css style from the ngx-markdown-editor package is imported in angular.json, since it's not exported by the package and thus can't be imported here like this (only with a relative path, and that's not very clean) */

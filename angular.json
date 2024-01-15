@@ -35,7 +35,8 @@
 							"node_modules/@concentricsky/badgr-style/dist/css/screen.css",
 							"node_modules/dialog-polyfill/dialog-polyfill.css",
 							"src/breakdown/static/css/re-style.css",
-							"node_modules/maplibre-gl/dist/maplibre-gl.css"
+							"node_modules/maplibre-gl/dist/maplibre-gl.css",
+                            "node_modules/ngx-markdown-editor/assets/highlight.js/agate.min.css"
 						],
 						"scripts": [
 							"node_modules/ngx-markdown-editor/assets/highlight.js/highlight.min.js",

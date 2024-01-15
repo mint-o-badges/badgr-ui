@@ -22,10 +22,8 @@ const config: webpack.Configuration = {
 		]
 	},
 	resolve: {
-		extensions: ['.ts'],
-        alias: {
-            '~': path.resolve('./node_modules')
-        }
+		extensions: ['.ts', '.css'],
+        modules: ['node_modules'],
 	},
 	output: {
 		filename: 'widgets.bundle.js',

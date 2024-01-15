@@ -427,7 +427,6 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 			andere: 'Andere (Bibliotheken, Museen, FabLabs, Unternehmen, Vereine, ...)',
 			'n/a': 'Keine Angabe',
 		};
-
 		this.plural = {
 			issuer: {
 				'=0': this.translate.instant('Issuer.noInstitutions'),
