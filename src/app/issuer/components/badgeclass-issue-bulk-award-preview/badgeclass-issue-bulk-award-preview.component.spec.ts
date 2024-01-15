@@ -39,6 +39,13 @@ describe('BadgeClassIssueBulkAwardPreviewComponent', () => {
       schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
     }).compileComponents();
     fixture = TestBed.createComponent(BadgeClassIssueBulkAwardPreviewComponent);
+    fixture.componentInstance.importPreviewData = {
+        columnHeaders: [],
+        invalidRows: [],
+        rowLongerThenHeader: false,
+        rows: [],
+        validRows: []
+    };
     fixture.detectChanges();
     component = fixture.debugElement.componentInstance;
   });
