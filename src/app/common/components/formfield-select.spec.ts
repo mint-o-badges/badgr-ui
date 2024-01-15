@@ -13,6 +13,7 @@ import {CommonDialogsService} from '../services/common-dialogs.service';
 import { RouterTestingModule } from "@angular/router/testing";
 import { COMMON_IMPORTS } from "../badgr-common.module";
 import { COMMON_MOCKS_PROVIDERS_WITH_SUBS } from "../../mocks/mocks.module.spec";
+import { FormControl, Validators } from '@angular/forms';
 
 describe('FormFieldSelect', () => {
   let fixture;
@@ -33,6 +34,8 @@ describe('FormFieldSelect', () => {
       schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
     }).compileComponents();
     fixture = TestBed.createComponent(FormFieldSelect);
+    fixture.componentInstance.control = new FormControl('', Validators.required);
+    fixture.detectChanges();
     component = fixture.debugElement.componentInstance;
   });
 
