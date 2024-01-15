@@ -72,7 +72,8 @@ export const apiIssuer1 = {
 			user: {
 				first_name: "Owner",
 				last_name: "Person",
-				email: "owner@person.email"
+				email: "owner@person.email",
+                url: "owner.url"
 			}
 		},
 		{
@@ -80,7 +81,8 @@ export const apiIssuer1 = {
 			user: {
 				first_name: "Editor",
 				last_name: "Person",
-				email: "editor@person.email"
+				email: "editor@person.email",
+                url: "editor.url"
 			}
 		},
 		{
@@ -88,7 +90,8 @@ export const apiIssuer1 = {
 			user: {
 				first_name: "Staff",
 				last_name: "Person",
-				email: "staff@person.email"
+				email: "staff@person.email",
+                url: "staff.url"
 			}
 		}
 	]
@@ -117,7 +120,8 @@ export const apiIssuer2 = {
 			user: {
 				first_name: "Owner",
 				last_name: "Person",
-				email: "owner@person.email"
+				email: "owner@person.email",
+                url: "owner.url"
 			}
 		},
 		{
@@ -125,7 +129,8 @@ export const apiIssuer2 = {
 			user: {
 				first_name: "Editor",
 				last_name: "Person",
-				email: "editor@person.email"
+				email: "editor@person.email",
+                url: "editor.url"
 			}
 		},
 		{
@@ -133,7 +138,8 @@ export const apiIssuer2 = {
 			user: {
 				first_name: "Staff",
 				last_name: "Person",
-				email: "staff@person.email"
+				email: "staff@person.email",
+                url: "staff.url"
 			}
 		}
 	]
@@ -162,7 +168,8 @@ export const apiIssuer3 = {
 			user: {
 				first_name: "Owner",
 				last_name: "Person",
-				email: "owner@person.email"
+				email: "owner@person.email",
+                url: "owner.url"
 			}
 		},
 		{
@@ -170,7 +177,8 @@ export const apiIssuer3 = {
 			user: {
 				first_name: "Editor",
 				last_name: "Person",
-				email: "editor@person.email"
+				email: "editor@person.email",
+                url: "editor.url"
 			}
 		},
 		{
@@ -178,7 +186,8 @@ export const apiIssuer3 = {
 			user: {
 				first_name: "Staff",
 				last_name: "Person",
-				email: "staff@person.email"
+				email: "staff@person.email",
+                url: "staff.url"
 			}
 		}
 	]

@@ -39,6 +39,7 @@ describe('BadgeClassIssueBulkAwardPreviewComponent', () => {
       schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
     }).compileComponents();
     fixture = TestBed.createComponent(BadgeClassIssueBulkAwardPreviewComponent);
+    fixture.detectChanges();
     component = fixture.debugElement.componentInstance;
   });
 
