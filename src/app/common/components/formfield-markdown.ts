@@ -29,7 +29,7 @@ interface UploadResult {
 		'[class.forminput-is-error]': 'isErrorState',
 		'[class.forminput-locked]': 'isLockedState',
 	},
-	template: `<md-editor (ngModelChange)="change()" [(ngModel)]="markdown_content" [upload]="doUpload"></md-editor>`,
+	template: `<md-editor (ngModelChange)="change()" [(ngModel)]="markdown_content" (keyup)="handleKeyPress($event)" [upload]="doUpload"></md-editor>`,
 	styleUrls: [
 		'../../../../node_modules/bootstrap/dist/css/bootstrap.css',
 		'../../../../node_modules/ace-builds/css/ace.css',
@@ -263,9 +263,10 @@ export class FormFieldMarkdown implements OnChanges, AfterViewInit {
 
 	private postProcessInput() {}
 
-	private handleKeyPress(event: KeyboardEvent) {
+	handleKeyPress(event: KeyboardEvent) {
 		// This handles revalidating when hitting enter from within an input element. Ideally, we'd catch _all_ form submission
 		// events, but since the form supresses those if things aren't valid, that doesn't really work. So we do this hack.
+		this.change()
 		if (event.keyCode === 13) {
 			this.control.markAsDirty();
 			this.cacheControlState();
