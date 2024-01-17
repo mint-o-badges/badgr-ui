@@ -4,9 +4,7 @@ import { SessionService } from '../../../common/services/session.service';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
 import { MessageService } from '../../../common/services/message.service';
 import { IssuerManager } from '../../../issuer/services/issuer-manager.service';
-//import {BadgeClassManager} from '../../services/badgeclass-manager.service';
 import { Issuer } from '../../../issuer/models/issuer.model';
-//import {BadgeClass} from '../../models/badgeclass.model';
 import { Title } from '@angular/platform-browser';
 import { preloadImageURL } from '../../../common/util/file-util';
 import { AppConfigService } from '../../../common/app-config.service';
@@ -29,11 +27,8 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 	Array = Array;
 
 	issuers: Issuer[] = null;
-	//badges: BadgeClass[] = null;
-	//issuerToBadgeInfo: {[issuerId: string]: IssuerBadgesInfo} = {};
 
 	issuersLoaded: Promise<unknown>;
-	//badgesLoaded: Promise<unknown>;
 	issuerResults: Issuer[] = [];
 	issuerResultsByCategory: MatchingIssuerCategory[] = [];
 	order = 'asc';
@@ -47,7 +42,6 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 	}
 	set searchQuery(query) {
 		this._searchQuery = query;
-		// this.saveDisplayState();
 		this.updateResults();
 	}
 
@@ -80,8 +74,6 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 		protected messageService: MessageService,
 		protected issuerManager: IssuerManager,
 		protected configService: AppConfigService,
-		//protected badgeClassService: BadgeClassManager,
-		// loginService: SessionService,
 		router: Router,
 		route: ActivatedRoute,
 		private translate: TranslateService,
@@ -185,10 +177,6 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 		this.issuerResultsByCategory = [];
 		const issuerResultsByCategoryLocal = {};
 
-		// var addIssuerToResults = function(item){
-		// 	that.issuerResults.push(item);
-		// }
-
 		var addIssuerToResultsByCategory = function (item) {
 			that.issuerResults.push(item);
 
@@ -206,17 +194,8 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 
 			categoryResults.addIssuer(item);
 
-			// if (!this.issuerResults.find(r => r.category === item)) {
-			// 	// appending the results to the badgeResults array bound to the view template.
-			// 	this.issuerResults.push(new BadgeResult(badge, issuerResults.issuer));
-			// }
-
 			return true;
 		};
-
-		// this.issuers
-		// 	.filter(MatchingAlgorithm.issuerMatcher(this.searchQuery))
-		// 	.forEach(addIssuerToResults);
 
 		this.issuers.filter(MatchingAlgorithm.issuerMatcher(this.searchQuery)).forEach(addIssuerToResultsByCategory);
 
@@ -261,14 +240,6 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 				type: 'circle',
 				source: 'issuers',
 				filter: ['!', ['has', 'point_count']],
-				// 'layout': {
-				// 	'icon-image': 'custom-marker',
-				// 	// get the year from the source's "year" property
-				// 	// 'text-field': ['get', 'name'],
-				// 	'text-font': ['Open Sans Bold'],
-				// 	'text-offset': [0, 1.25],
-				// 	'text-anchor': 'top'
-				// 	}
 				paint: {
 					'circle-radius': {
 						base: 4,
@@ -290,7 +261,6 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 						'#223b53',
 						/* other */ '#ccc',
 					],
-					// "circle-color": "#5b94c6",
 				},
 			});
 
@@ -320,7 +290,6 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 						'#223b53',
 						/* other */ '#ccc',
 					],
-					// "circle-color": "#5b94c6",
 				},
 			});
 
