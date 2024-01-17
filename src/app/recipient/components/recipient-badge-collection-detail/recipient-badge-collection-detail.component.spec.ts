@@ -44,7 +44,6 @@ describe('RecipientBadgeCollectionDetailComponent', () => {
       schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
       teardown: { destroyAfterEach: false },
     }).compileComponents();
-    // jasmine.createSpy('apiModel')
     fixture = TestBed.createComponent(RecipientBadgeCollectionDetailComponent);
     component = fixture.debugElement.componentInstance;
   });
