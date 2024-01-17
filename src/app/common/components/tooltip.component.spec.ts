@@ -33,8 +33,6 @@ describe('TooltipComponent', () => {
       schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
       teardown: { destroyAfterEach: false },
     }).compileComponents();
-    // TODO: ???
-    //tether = Tether;
     fixture = TestBed.createComponent(TooltipComponent);
     fixture.detectChanges();
     component = fixture.debugElement.componentInstance;

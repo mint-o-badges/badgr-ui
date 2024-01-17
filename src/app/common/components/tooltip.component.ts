@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, ElementRef, HostListener, Input, OnDestroy, ViewChild} from '@angular/core';
 
-import * as Tether from 'tether';
+import Tether from 'tether';
 
 @Component({
 	selector: 'tooltip',
