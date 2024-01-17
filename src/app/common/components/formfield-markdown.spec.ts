@@ -19,7 +19,7 @@ import { MarkdownHintsDialog } from "../dialogs/markdown-hints-dialog.component"
 import { TruncatedTextComponent } from "./truncated-text.component";
 import { FormControl, Validators } from '@angular/forms';
 
-xdescribe('FormFieldMarkdown', () => {
+describe('FormFieldMarkdown', () => {
   let fixture;
   let component;
 
