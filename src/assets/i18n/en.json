@@ -30,7 +30,7 @@
 	},
 	"NavItems": {
 		"register": "Register",
-		"aboutMint-O-Badges": "About MINT-O-Badges",
+		"aboutOpenEducationalBadges": "About Open Educational Badges",
 		"profile": "Profile",
 		"myInstitutions": "My institutions",
 		"appIntegrations": "App integrations",
@@ -128,7 +128,7 @@
 	"Signup": {
 		"youHaveAccount": "You already have an account?",
 		"application": "The application",
-		"loginWithMint-o-b": "I'd like you to log in with",
+		"loginWithOpenEducationalBadges": "I'd like you to log in with",
 		"fName": "First name",
 		"lName": "Last name",
 		"pass8char": "Password (at least 8 characters)",
@@ -146,7 +146,7 @@
 	"Login": {
 		"stayLogged": "Stay logged in",
 		"forgotPassword": "Forgot password?",
-		"welcome": "Welcome to MINT-O-Badges",
+		"welcome": "Welcome to Open Educational Badges",
 		"failLogin":"Login failed. Please check your email and password and try again.",
 		"attention": "Attention"
 	},
@@ -169,7 +169,7 @@
 		"Level6": "C2: Pioneer"
 	},
 	"About": {
-		"mainDesc": "MINT-O-Badges is based on preliminary considerations for an open badge system that can be used in school and extracurricular contexts as well as an initial technical feasibility study for an “Open Badges platform” that is being carried out at the Institute for Geoinformatics at the University of Münster within the framework of the BMBF project senseBox Pro was carried out. As part of the hackathon “#WirFürSchule” 2020, the project idea was further developed with an interdisciplinary team and a first prototype was implemented. The version of MINT-O-Badges presented here is based on the open source Open Badges standard “badgr“ from concentricsky and was implemented with the kind support of the Deutsche Telekom Foundation by re:edu GmbH & Co. KG in collaboration with Junge Tüftler*innen gGmbH. A development of integrations to platforms of the senseBox Pro project (Blockly learning environment and openSenseMap) is being developed within the framework of BMBF funding.",
+		"mainDesc": "Open Educational Badges is based on preliminary considerations for an open badge system that can be used in school and extracurricular contexts as well as an initial technical feasibility study for an “Open Badges platform” that is being carried out at the Institute for Geoinformatics at the University of Münster within the framework of the BMBF project senseBox Pro was carried out. As part of the hackathon “#WirFürSchule” 2020, the project idea was further developed with an interdisciplinary team and a first prototype was implemented. The version of Open Educational Badges presented here is based on the open source Open Badges standard “badgr“ from concentricsky and was implemented with the kind support of the Deutsche Telekom Foundation by re:edu GmbH & Co. KG in collaboration with Junge Tüftler*innen gGmbH. A development of integrations to platforms of the senseBox Pro project (Blockly learning environment and openSenseMap) is being developed within the framework of BMBF funding.",
 		"contact": "Contact:",
 		"brojectBy": "Implemented by",
 		"supportedBy": "Supported by",
@@ -179,13 +179,13 @@
 	},
 	"FAQ": {
 		"Q1": "1. Can badges only be distributed and used in the school context?",
-		"A1": "“MINT-O-Badges” can be used across institutions: both in the formal school context and outside of it. It therefore offers the potential to build a bridge between formal, non-formal and informal educational institutions and to connect them more closely in the sense of networking. This is important because learning in the sense of lifelong and networked learning takes place everywhere. Important skills are also acquired in informal areas, which can be of great importance in terms of future skills.",
+		"A1": "“Open Educational Badges” can be used across institutions: both in the formal school context and outside of it. It therefore offers the potential to build a bridge between formal, non-formal and informal educational institutions and to connect them more closely in the sense of networking. This is important because learning in the sense of lifelong and networked learning takes place everywhere. Important skills are also acquired in informal areas, which can be of great importance in terms of future skills.",
 		"Q2": "Which grade (A1 to C2) of the badges describes which level?",
 		"A2": "<p> The awarding of badges is based on the level of independence and the level of complexity of a skill. We are guided by the 6 competency levels of Digcomp Edu. </p> <br /> <ul> <li> <b>A1:</b> Beginner - initial knowledge has been acquired but cannot yet be applied. </li> <li> <b>A2:</b> Explorer - Basic knowledge and skills are available with which further knowledge can be acquired in a self-directed manner. This can be used in standard situations, but is not sufficient to be able to solve unexpected problems independently. </li> <li> <b>B1:</b> Insiders - Acquired knowledge and skills can be applied and transferred to unknown situations. </li> <li> <b>B2:</b> Expert - The knowledge is used to recognize connections and possible alternatives. There is also the ability to independently acquire additional knowledge and share knowledge (digitally). </li> <li> <b>C1:</b> Leader*in - The knowledge and skills developed are used and applied innovatively based on experience. </li> <li> <b>C2:</b> Pioneer - The skills acquired can be used to carry out further developments and redefinitions and to critically examine existing procedures. </li></ul>",
 		"Q3": "3. Why are badges with a six-point scale used here and not traditional school grades?",
-		"A3": "“MINT-O-Badges” are based on the portfolio approach in their pedagogical and didactic concept and thus do much greater justice to the documentation of the learner’s achievements. The combination of the portfolio approach with the concept of Open Badges makes it possible to create a documentation system in which teachers and learners use authentic evidence and work to gain the most comprehensive picture possible of the learner's acquired skills, progress and development, which is motivating and supportive works for the individual. Traditionally existing grading systems in the school context, on the other hand, have a strong classifying effect, are generalizing in many aspects, do not adequately do justice to the learning achievements of the individual and often have a demotivating effect.",
+		"A3": "“Open Educational Badges” are based on the portfolio approach in their pedagogical and didactic concept and thus do much greater justice to the documentation of the learner’s achievements. The combination of the portfolio approach with the concept of Open Badges makes it possible to create a documentation system in which teachers and learners use authentic evidence and work to gain the most comprehensive picture possible of the learner's acquired skills, progress and development, which is motivating and supportive works for the individual. Traditionally existing grading systems in the school context, on the other hand, have a strong classifying effect, are generalizing in many aspects, do not adequately do justice to the learning achievements of the individual and often have a demotivating effect.",
 		"Q4": "4. As an issuer, do I have to install my own infrastructure to issue badges?",
-		"A4": "No. The “MINT-O-Badges” platform offers a service for educational organizations (issuers) that allows them to create and award badges without having to install any software themselves. Login takes place using the access data.",
+		"A4": "No. The “Open Educational Badges” platform offers a service for educational organizations (issuers) that allows them to create and award badges without having to install any software themselves. Login takes place using the access data.",
 		"Q5": "5. How is it ensured that an issuer really belongs to the specified organization?",
 		"A5": "Currently, access as an issuer is only granted by invitation. This ensures the trustworthiness of the issuer.",
 		"Q6": "6. How are the badges transferred from the issuer to the learners? What data must/may I as an organization collect from learners?",

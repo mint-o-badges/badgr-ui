@@ -30,7 +30,7 @@
 	},
 	"NavItems": {
 		"register": "Registrieren",
-		"aboutMint-O-Badges": "Über MINT-O-Badges",
+		"aboutOpenEducationalBadges": "Über Open Educational Badges",
 		"profile": "Profil",
 		"myInstitutions": "Meine Institutionen",
 		"appIntegrations": "App Integrationen",
@@ -128,7 +128,7 @@
 	"Signup": {
 		"youHaveAccount": "Du hast bereits einen Account?",
 		"application": "Die Anwendung",
-		"loginWithMint-o-b": "würde dich gerne einloggen mit",
+		"loginWithOpenEducationalBadges": "würde dich gerne einloggen mit",
 		"fName": "Vorname",
 		"lName": "Nachname",
 		"pass8char": "Passwort (Mindestens 8 Zeichen)",
@@ -146,7 +146,7 @@
 	"Login": {
 		"stayLogged": "Angemeldet bleiben",
 		"forgotPassword": "Password vergessen?",
-		"welcome": "Willkommen bei MINT-O-Badges",
+		"welcome": "Willkommen bei Open Educational Badges",
 		"failLogin":"Fehler bei der Anmeldung. Bitte überprüfen Sie Ihre E-Mail-Adresse und Ihr Passwort und versuchen Sie es erneut.",
 		"attention": "Beachtung"
 	},
@@ -169,7 +169,7 @@
 		"Level6": "C2: Vorreiter*in"
 	},
 	"About": {
-		"mainDesc": "MINT-O-Badges basiert auf Vorüberlegungen zu einem offenen Badge-System, das im schulischen wie außerschulischen Kontext Einsatz finden kann sowie einer ersten technischen Machbarkeitsstudie für eine “Open Badges-Plattform”, die am Institut für Geoinformatik der Uni Münster im Rahmen des BMBF-Projektes senseBox Pro durchgeführt wurde. Im Rahmen des Hackathons “#WirFürSchule“ 2020 wurde mit einem interdisziplinären Team die Projektidee weiterentwickelt und ein erster Prototyp umgesetzt. Die hier vorliegende Version von MINT-O-Badges basiert auf dem quelloffenen Open Badges Standard “badgr“ von concentricsky und wurde mit freundlicher Unterstützung der Deutsche Telekom Stiftung durch re:edu GmbH & Co. KG in Zusammenarbeit mit Junge Tüftler*innen gGmbH umgestzt. Eine Entwicklung von Integrationen zu Plattformen des senseBox Pro Projektes (Blockly Lernumgebung und openSenseMap) wird im Rahmen der BMBF-Förderung entwickelt.",
+		"mainDesc": "Open Educational Badges basiert auf Vorüberlegungen zu einem offenen Badge-System, das im schulischen wie außerschulischen Kontext Einsatz finden kann sowie einer ersten technischen Machbarkeitsstudie für eine “Open Badges-Plattform”, die am Institut für Geoinformatik der Uni Münster im Rahmen des BMBF-Projektes senseBox Pro durchgeführt wurde. Im Rahmen des Hackathons “#WirFürSchule“ 2020 wurde mit einem interdisziplinären Team die Projektidee weiterentwickelt und ein erster Prototyp umgesetzt. Die hier vorliegende Version von Open Educational Badges basiert auf dem quelloffenen Open Badges Standard “badgr“ von concentricsky und wurde mit freundlicher Unterstützung der Deutsche Telekom Stiftung durch re:edu GmbH & Co. KG in Zusammenarbeit mit Junge Tüftler*innen gGmbH umgestzt. Eine Entwicklung von Integrationen zu Plattformen des senseBox Pro Projektes (Blockly Lernumgebung und openSenseMap) wird im Rahmen der BMBF-Förderung entwickelt.",
 		"contact": "Kontakt:",
 		"brojectBy": "Ein Projekt von",
 		"supportedBy": "Unterstützt von der",
@@ -179,13 +179,13 @@
 	},
 	"FAQ": {
 		"Q1": "1. Können Badges nur im Kontext Schule verteilt und verwendet werden?",
-		"A1": "“MINT-O-Badges“ kann institutionsübergreifend eingesetzt werden: Sowohl im formell-schulischen Kontext als auch außerhalb. Damit bietet es das Potenzial, eine Brücke zwischen formalen, non-formalen, und informellen Bildungsinstitutionen zu bauen und diese im Sinne einer Vernetzung stärker miteinander zu verbinden. Dies ist von Bedeutung, da Lernen im Sinne eines lebenslangen und vernetzten Lernens überall stattfindet. Auch in informellen Bereichen werden wichtige Kompetenzen erworben, die im Sinne der Future Skills von hoher Wichtigkeit sein können.",
+		"A1": "“Open Educational Badges“ kann institutionsübergreifend eingesetzt werden: Sowohl im formell-schulischen Kontext als auch außerhalb. Damit bietet es das Potenzial, eine Brücke zwischen formalen, non-formalen, und informellen Bildungsinstitutionen zu bauen und diese im Sinne einer Vernetzung stärker miteinander zu verbinden. Dies ist von Bedeutung, da Lernen im Sinne eines lebenslangen und vernetzten Lernens überall stattfindet. Auch in informellen Bereichen werden wichtige Kompetenzen erworben, die im Sinne der Future Skills von hoher Wichtigkeit sein können.",
 		"Q2": "2. Welche Stufe (A1 bis C2) der Badges beschreibt welches Niveau?",
 		"A2": "<p> Die Vergabe der Badges basiert auf dem Grad der Selbständigkeit und dem Grad der Komplexität einer Fertigkeit. Dabei orientieren wir uns an den 6 Kompetenz-Stufen des Digcomp Edu. </p> <br /> <ul> <li> <b>A1:</b> Einsteiger*in - Erste Kenntnisse wurden erworben, können aber noch nicht angewendet werden. </li> <li> <b>A2:</b> Entdecker*in - Grundlegende Kenntnisse und Fähigkeiten liegen vor, mit denen selbstgesteuert weiteres Wissen erworben werden kann. Dieses kann in Standardsituationen angewendet werden, reicht aber nicht aus, um unerwartete Probleme selbstständig lösen zu können. </li> <li> <b>B1:</b> Insider*n - Erworbene Kenntnisse und Fähigkeiten können angewendet und auf unbekannte Situationen transferiert werden. </li> <li> <b>B2:</b> Expert*in - Das Wissen wird genutzt, um Zusammenhänge und mögliche Alternativen zu erkennen. Zudem besteht die Kompetenz, sich eigenständig weiterführendes Wissen anzueignen und sein Wissen (digital) zu teilen. </li> <li> <b>C1:</b> Leader*in - Die ausgebauten Kenntnisse und Fähigkeiten werden auf Grundlage von Erfahrungen innovativ genutzt und angewendet. </li> <li> <b>C2:</b> Vorreiter*in - Durch die erworbenen Kompetenzen können eigene Weiterentwicklungen und Neudefinitionen vollzogen sowie bestehende Verfahren kritisch beleuchtet werden. </li> </ul>",
 		"Q3": "3. Warum werden hier Badges mit einer sechsstufigen Skala und keine herkömmlichen Schulnoten verwendet?",
-		"A3": "“MINT-O-Badges” lehnen sich in ihrem pädagogisch-didaktischem Konzept an dem Portfolio-Ansatz an und werden damit der Dokumentation der Leistungen des Lernenden in viel höherem Maße gerecht. Die Verbindung des Portfolio-Ansatzes mit dem Konzept der Open Badges ermöglicht es ein Dokumentationssystem zu schaffen, bei dem Lehrende und Lernende mittels authentischer Nachweise und Arbeiten ein möglichst umfassendes Bild von den erworbenen Kompetenzen, Fortschritten und der Entwicklung des Lernenden gewinnen, das motivierend und fördernd für den Einzelnen wirkt. Traditionell existierende Benotungssysteme im Schulkontext wirken dagegen stark klassifizierend, sind in vielen Aspekten pauschalisierend, werden den Lernleistungen der Einzelnen nur unzureichend gerecht und wirken zudem häufig demotivierend.",
+		"A3": "“Open Educational Badges” lehnen sich in ihrem pädagogisch-didaktischem Konzept an dem Portfolio-Ansatz an und werden damit der Dokumentation der Leistungen des Lernenden in viel höherem Maße gerecht. Die Verbindung des Portfolio-Ansatzes mit dem Konzept der Open Badges ermöglicht es ein Dokumentationssystem zu schaffen, bei dem Lehrende und Lernende mittels authentischer Nachweise und Arbeiten ein möglichst umfassendes Bild von den erworbenen Kompetenzen, Fortschritten und der Entwicklung des Lernenden gewinnen, das motivierend und fördernd für den Einzelnen wirkt. Traditionell existierende Benotungssysteme im Schulkontext wirken dagegen stark klassifizierend, sind in vielen Aspekten pauschalisierend, werden den Lernleistungen der Einzelnen nur unzureichend gerecht und wirken zudem häufig demotivierend.",
 		"Q4": "4. Muss ich als Issuer eine eigene Infrastruktur installieren, um Badges auszustellen?",
-		"A4": "Nein. Die Plattform “MINT-O-Badges” bietet hier den Service für Bildungsorganisationen (Issuer), dass sie Badges erstellen und vergeben können, ohne selbst Software installieren zu müssen. Der Login erfolgt über die Zugangsdaten.",
+		"A4": "Nein. Die Plattform “Open Educational Badges” bietet hier den Service für Bildungsorganisationen (Issuer), dass sie Badges erstellen und vergeben können, ohne selbst Software installieren zu müssen. Der Login erfolgt über die Zugangsdaten.",
 		"Q5": "5. Wie wird sichergestellt, dass ein Issuer wirklich auch zu der angegebenen Organisation gehört?",
 		"A5": "Aktuell werden die Zugänge als Issuer nur auf Einladung vergeben. Damit wird die Vertrauenswürdigkeit der Issuer sichergestellt.",
 		"Q6": "6. Wie findet die Übertragung der Badges vom Issuer an die Lernenden statt? Welche Daten muss/ darf ich als Organisation von den Lernenden erheben? ",

@@ -312,6 +312,7 @@ export class ExportPdfDialog extends BaseDialog {
 				const logoHeight = 15;
 				this.doc.setFontSize(14);
 				this.doc.setFont('Helvetica', 'normal');
+                // TODO: Update Domain here to open-educational-badges
 				let logoTextOnContentLength = this.doc.getTextWidth('bereitgestellt von https://ui.mint-o-badges.opensenselab.org');
 				const marginXImageLogo = (pageWidth - logoTextOnContentLength - logoWidth) / 2;
 				var img = new Image();
@@ -319,10 +320,12 @@ export class ExportPdfDialog extends BaseDialog {
 				this.doc.addImage(img, 'PNG', marginXImageLogo, yPos, logoWidth, logoHeight);
 				// yPos += 13;
 				this.doc.textWithLink(
+                    // TODO: Update Domain here to open-educational-badges
 					'bereitgestellt von https://ui.mint-o-badges.opensenselab.org',
 					(pageWidth - logoTextOnContentLength) / 2 + logoWidth,
 					yPos + (logoHeight * 2) / 3,
 					{
+                        // TODO: Update Domain here to open-educational-badges
 						url: 'https://ui.mint-o-badges.opensenselab.org/public/start',
 					}
 				);

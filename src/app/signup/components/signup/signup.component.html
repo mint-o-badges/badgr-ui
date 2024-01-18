@@ -16,7 +16,7 @@
 			<strong>
 				{{ oAuthManager.currentAuthorization.application.name }}
 			</strong>
-			{{ 'Signup.loginWithMint-o-b' | translate }} {{ theme.serviceName || 'MINT-O-Badges' }}.
+			{{ 'Signup.loginWithOpenEducationalBadges' | translate }} {{ theme.serviceName || 'Open Educational Badges' }}.
 			{{ 'Signup.youHaveAccount' | translate }}
 			<a [routerLink]="['/login']">Sign in</a>!
 		</p>
@@ -49,7 +49,7 @@
 			<!-- Signup Controls -->
 			<fieldset role="group" aria-labelledby="heading-badgrsignup2">
 				<legend class="visuallyhidden" id="heading-badgrsignup2">
-					{{ 'Signup.registerWithUs' | translate }} {{ theme.serviceName || 'MINT-O-Badges' }}{{ 'Signup.provideInfo' | translate }}
+					{{ 'Signup.registerWithUs' | translate }} {{ theme.serviceName || 'Open Educational Badges' }}{{ 'Signup.provideInfo' | translate }}
 				</legend>
 
 				<bg-formfield-text

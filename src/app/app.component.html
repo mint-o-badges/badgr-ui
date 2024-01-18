@@ -53,7 +53,7 @@
 						class="navitem"
 						routerLinkActive="navitem-is-active"
 						[routerLink]="['/public/about']"
-						>{{ 'NavItems.aboutMint-O-Badges' | translate }}</a
+						>{{ 'NavItems.aboutOpenEducationalBadges' | translate }}</a
 					>
 					<a
 						role="menuitem"
@@ -208,7 +208,7 @@
 			><svg icon="icon_compare"></svg>{{ 'NavItems.appIntegrations' | translate }}</a
 		>
 		<a class="menuitem" routerLinkActive="menuitem-is-active" [routerLink]="['/public/about']"
-			><svg icon="icon_info"></svg>{{ 'NavItems.aboutMint-O-Badges' | translate }}</a
+			><svg icon="icon_info"></svg>{{ 'NavItems.aboutOpenEducationalBadges' | translate }}</a
 		>
 		<a class="menuitem" routerLinkActive="menuitem-is-active" [routerLink]="['/auth/logout']"
 			><svg icon="icon_exit_to_app"></svg>Logout</a
@@ -231,7 +231,7 @@
 				'NavItems.register' | translate
 			}}</a>
 			<a routerLinkActive="menuitem-is-active" [routerLink]="['/public/about']">{{
-				'NavItems.aboutMint-O-Badges' | translate
+				'NavItems.aboutOpenEducationalBadges' | translate
 			}}</a>
 			<!-- mobile-nav language selection -->
 			<a
@@ -278,7 +278,7 @@
 			<a [routerLink]="['/profile/profile']">{{ 'NavItems.profile' | translate }}</a>
 			<a [routerLink]="['/issuer']" *ngIf="showIssuersTab">{{ 'NavItems.myInstitutions' | translate }}</a>
 			<a [routerLink]="['/profile/app-integrations']">{{ 'NavItems.appIntegrations' | translate }}</a>
-			<a [routerLink]="['/public/about']">{{ 'NavItems.aboutMint-O-Badges' | translate }}</a>
+			<a [routerLink]="['/public/about']">{{ 'NavItems.aboutOpenEducationalBadges' | translate }}</a>
 			<a [routerLink]="['/auth/logout']">{{ 'NavItems.logout' | translate }}</a>
 		</div>
 	</nav>

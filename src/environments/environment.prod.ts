@@ -4,11 +4,12 @@ export const environment: BadgrEnvironment = {
 	production: true,
 	config: {
 		api: {
+            // TODO: Change the url here to open-educational-badges
 			baseUrl: 'https://api.mint-o-badges.opensenselab.org',
 		},
 		theme: {
-			welcomeMessage: 'Willkommen auf MINT-O-Badges',
-			serviceName: 'MINT-O-Badges',
+			welcomeMessage: 'Willkommen auf Open Educational Badges',
+			serviceName: 'Open Educational Badges',
 			showPoweredByBadgr: true,
 			showPoweredByOSL: true,
 			providedBy: {

@@ -9,8 +9,8 @@ export const environment: BadgrEnvironment = {
 	production: false,
 	config: {
 		theme: {
-			welcomeMessage: 'Willkommen auf MINT-O-Badges',
-			serviceName: 'MINT-O-Badges',
+			welcomeMessage: 'Willkommen auf Open Educational Badges',
+			serviceName: 'Open Educational Badges',
 			showPoweredByBadgr: true,
 			showPoweredByOSL: true,
 			providedBy: {
