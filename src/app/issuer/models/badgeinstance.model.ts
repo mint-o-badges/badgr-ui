@@ -111,7 +111,13 @@ export class BadgeInstance extends ManagedEntity<ApiBadgeInstance, BadgeInstance
 		};
 	}
 
-	get instanceUrl(): BadgeInstanceUrl { return this.apiModel.public_url || this.apiModel.json.id; }
+	get instanceUrl(): BadgeInstanceUrl { 
+	
+		if(this.apiModel.public_url && this.recipientIdentifier){
+			return `${this.apiModel.public_url}?identity__email=${this.recipientIdentifier}`
+		}
+		return this.apiModel.json.id; 
+	}
 
 	get issuerUrl(): IssuerUrl { return this.apiModel.issuer; }
 
