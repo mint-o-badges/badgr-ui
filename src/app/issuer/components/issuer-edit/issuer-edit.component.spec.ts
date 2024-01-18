@@ -41,7 +41,6 @@ describe('IssuerEditComponent', () => {
           ...COMMON_MOCKS_PROVIDERS_WITH_SUBS,
       ],
       schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
-      teardown: { destroyAfterEach: false },
     }).compileComponents();
     fixture = TestBed.createComponent(IssuerEditComponent);
     component = fixture.debugElement.componentInstance;

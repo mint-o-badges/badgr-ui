@@ -14,6 +14,7 @@ import { RouterTestingModule } from "@angular/router/testing";
 import { COMMON_IMPORTS } from "../badgr-common.module";
 import { COMMON_MOCKS_PROVIDERS_WITH_SUBS } from "../../mocks/mocks.module.spec";
 import { BadgrButtonComponent } from "./badgr-button.component";
+import { FormControl, Validators } from '@angular/forms';
 
 describe('FormFieldText', () => {
   let fixture;
@@ -36,6 +37,8 @@ describe('FormFieldText', () => {
       schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
     }).compileComponents();
     fixture = TestBed.createComponent(FormFieldText);
+    fixture.componentInstance.control = new FormControl('', Validators.required);
+    fixture.detectChanges();
     component = fixture.debugElement.componentInstance;
   });
 
@@ -76,7 +79,7 @@ describe('FormFieldText', () => {
   });
 
   it('should run #handleKeyPress()', () => {
-    const result = component.handleKeyPress(event);
+    const result = component.handleKeyPress({code: "Enter"});
   });
 
   xit('should run #handleKeyUp()', () => {

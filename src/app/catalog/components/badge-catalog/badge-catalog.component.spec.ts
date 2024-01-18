@@ -24,7 +24,6 @@ describe('BadgeCatalogComponent', () => {
       providers: [
           ...COMMON_MOCKS_PROVIDERS_WITH_SUBS,
       ],
-      teardown: { destroyAfterEach: false },
     })
     .compileComponents();
   }));

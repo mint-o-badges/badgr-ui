@@ -81,7 +81,7 @@ describe('FormFieldMarkdown', () => {
     });
 
     it('should run #handleKeyPress()', async () => {
-        const result = component.handleKeyPress(event);
+        const result = component.handleKeyPress({keyCode: 13});
     });
 
 });
