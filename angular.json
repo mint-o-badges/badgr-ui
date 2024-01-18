@@ -104,8 +104,16 @@
 							"node_modules/@concentricsky/badgr-style/dist/css/screen.css",
 							"node_modules/dialog-polyfill/dialog-polyfill.css"
 						],
-						"scripts": [],
+						"scripts": [
+							"node_modules/ngx-markdown-editor/assets/marked.min.js",
+                            "node_modules/ace-builds/src-min/ace.js"
+                        ],
 						"assets": ["src/favicon.ico", "src/assets",
+							{
+								"glob": "**/*",
+								"input": "node_modules/ace-builds/src-min",
+								"output": "./assets/ace-builds/"
+							},
                             {
                                 "glob": "icons.svg",
                                 "input": "node_modules/@concentricsky/badgr-style/dist/images",
