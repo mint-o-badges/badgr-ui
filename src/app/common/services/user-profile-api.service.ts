@@ -6,6 +6,7 @@ import { MessageService } from './message.service';
 import { EventsService } from './events.service';
 import { ApiUserProfile, ApiUserProfileEmail, ApiUserProfileSocialAccount } from '../model/user-profile-api.model';
 import { HttpClient } from '@angular/common/http';
+import { TOKEN_STORAGE_KEY } from './session.service';
 
 @Injectable()
 export class UserProfileApiService extends BaseHttpApiService {
@@ -14,13 +15,17 @@ export class UserProfileApiService extends BaseHttpApiService {
 		protected http: HttpClient,
 		protected configService: AppConfigService,
 		protected messageService: MessageService,
-		protected eventsService: EventsService
+		protected eventsService: EventsService,
 	) {
 		super(sessionService, http, configService, messageService);
 	}
 
 	getProfile() {
-		if (this.sessionService.isLoggedIn) {
+		if (
+			sessionStorage.getItem(TOKEN_STORAGE_KEY) ||
+			localStorage.getItem(TOKEN_STORAGE_KEY) ||
+			this.sessionService.isLoggedIn
+		) {
 			return this.get<ApiUserProfile>('/v1/user/profile').then((r) => r.body);
 		} else {
 			return Promise.reject('No user logged in');

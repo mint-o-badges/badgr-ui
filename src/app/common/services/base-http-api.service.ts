@@ -6,6 +6,8 @@ import { MessageService } from './message.service';
 import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams, HttpResponse, HttpResponseBase} from '@angular/common/http';
 import { timeoutPromise } from '../util/promise-util';
 import { Observable } from 'rxjs';
+import { TOKEN_STORAGE_KEY } from './session.service'
+
 
 export class BadgrApiError extends Error {
 	constructor(
@@ -224,7 +226,8 @@ export abstract class BaseHttpApiService {
 		headers: HttpHeaders,
 		token: AuthorizationToken
 	) {
-		return headers.append('Authorization', 'Bearer ' + token.access_token);
+		const accessToken = sessionStorage.getItem(TOKEN_STORAGE_KEY) || localStorage.getItem(TOKEN_STORAGE_KEY) || token.access_token;
+		return headers.append('Authorization', 'Bearer ' + accessToken);
 	}
 
 	private async addTestingDelay<T>(value: T): Promise<T> {

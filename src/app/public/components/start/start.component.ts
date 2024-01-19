@@ -31,7 +31,7 @@ export class StartComponent implements OnInit {
 			  token = token + '.' + secret
 
         this.sessionService.authenticateLMSToken(token).then(response => {
-          this.sessionService.storeToken(response as AuthorizationToken, true)
+          this.sessionService.storeToken(response as AuthorizationToken)
           this.sessionService.loggedInSuccess();
           this.router.navigate(['/public/start']);
         })
