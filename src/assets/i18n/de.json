@@ -66,7 +66,7 @@
 	},
 	"Issuer": {
 		"map": "Karte",
-		"groupByCategory": "Nach Kategorien grupppieren",
+		"groupByCategory": "Nach Kategorien gruppieren",
 		"open": "Öffnen",
 		"image": "Bild",
 		"registeredSince": "Registriert seit",
