@@ -168,7 +168,7 @@
 			<div class="badgedetail-x-body">
 				<!-- criteria -->
 				<section *ngIf="badgeClass.criteria_url || badgeClass.criteria_text">
-					<h3 class="u-text-h3-semibold u-text-dark2 u-margin-bottom2x u-margin-top4x" i18n>criteria</h3>
+					<h3 class="u-text-h3-semibold u-text-dark2 u-margin-bottom2x u-margin-top4x" i18n>Criteria</h3>
 					<show-more>
 						<markdown-display *ngIf="badgeClass.criteria_text" [value]="badgeClass.criteria_text">
 						</markdown-display>
@@ -188,7 +188,7 @@
 						*ngIf="badgeClass.alignments && badgeClass?.alignments.length > 0"
 						i18n
 					>
-						Leaning
+						Shortcuts
 					</h3>
 
 					<div
