@@ -12,7 +12,7 @@
     "build": "npm run build:app && npm run build:widgets",
     "test": "ng test --source-map=false",
     "test-intellij": "ng test 2>&1 | perl -e '$|++; while (<>) { s/((ERROR|WARNING) in\\s*)(.*)/$1\\n$3/g; print $_; }'",
-    "test-headless": "ng test --watch=false --browsers=ChromeHeadless",
+    "test-headless": "ng test --source-map=false --watch=false --browsers=ChromeHeadless",
     "lint": "tslint src/**/*.ts",
     "e2e": "ng e2e",
     "postversion": "git push && git push --tags",
