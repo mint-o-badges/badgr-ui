@@ -3,9 +3,7 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { Injectable, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { By } from '@angular/platform-browser';
-// import { Observable } from 'rxjs/Observable';
-// import 'rxjs/add/observable/of';
-// import 'rxjs/add/observable/throw';
+import { TranslateTestingModule } from 'ngx-translate-testing';
 
 import {Component, Directive} from '@angular/core';
 import {AppIntegrationListComponent} from './app-integrations-list.component';
@@ -34,6 +32,7 @@ describe('AppIntegrationListComponent', () => {
 				RouterTestingModule,
 				CommonModule,
 				BadgrCommonModule,
+                TranslateTestingModule.withTranslations('de', {}),
 				...COMMON_IMPORTS,
 			],
 			providers: [
