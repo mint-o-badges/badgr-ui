@@ -62,7 +62,7 @@
 						</a>
 						<a class="menuitem" [routerLink]="['./staff']">
 							<svg icon="icon_group"></svg>
-							Mitglieder {{ issuer?.currentUserStaffMember?.isOwner ? "{{ 'General.editS' | translate }}" : '' }}
+							Mitglieder {{ (issuer?.currentUserStaffMember?.isOwner ? 'General.editS': 'General.emptyString') | translate }}
 						</a>
 						<a class="menuitem" *ngFor="let lp of launchpoints" href="{{ lp.launch_url }}" target="_blank">
 							<svg icon="icon_external_link"></svg>

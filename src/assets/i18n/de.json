@@ -26,7 +26,8 @@
 		"street":"Strasse",
 		"postalCode":"Postleitzahl",
 		"description": "Beschreibung",
-		"city":"Stadt"
+		"city":"Stadt",
+		"emptyString":""
 	},
 	"NavItems": {
 		"register": "Registrieren",

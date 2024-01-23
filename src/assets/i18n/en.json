@@ -26,7 +26,8 @@
 		"street":"Street",
 		"postalCode":"Postal code",
 		"description": "Description",
-		"city":"City"
+		"city":"City",
+		"emptyString":""
 	},
 	"NavItems": {
 		"register": "Register",
