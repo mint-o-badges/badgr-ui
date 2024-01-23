@@ -5,8 +5,8 @@
 		<div class="topbar-x-breadcrumbs">
 			<bg-breadcrumbs [linkentries]="editIssuerCrumbs"> </bg-breadcrumbs>
 		</div>
-		<div class="topbar-x-heading">Institution bearbeiten</div>
-		<div class="topbar-x-subheading">Bearbeite die Informationen dieser Institution.</div>
+		<div class="topbar-x-heading">{{ 'Issuer.editInstitution' | translate }}</div>
+		<div class="topbar-x-subheading">{{ 'Issuer.editInstitutionInfo' | translate }}</div>
 	</div>
 </div>
 
@@ -15,7 +15,7 @@
 		<fieldset>
 			<bg-formfield-image
 				#imageField
-				label="Bild (Optional)"
+				label="{{ 'Issuer.imageOptional' | translate }}"
 				imageLoaderName="issuer"
 				[placeholderImage]="issuerImagePlacholderUrl"
 				[control]="issuerForm.rawControlMap.issuer_image"
@@ -24,8 +24,8 @@
 			<bg-formfield-text
 				class="u-margin-bottom2x"
 				[control]="issuerForm.rawControlMap.issuer_name"
-				[label]="'Name'"
-				[errorMessage]="{ required: 'Bitte gebe einen Namen an' }"
+				label="{{ 'General.name' | translate }}"
+				errorMessage="{{ 'Issuer.enterName' | translate }}"
 				[autofocus]="true"
 			></bg-formfield-text>
 
@@ -33,78 +33,79 @@
 				class="u-margin-bottom2x"
 				[control]="issuerForm.rawControlMap.issuer_url"
 				[label]="'Website URL'"
-				[errorMessage]="'Bitte gebe eine gültige URL an'"
+				errorMessage="{{ 'Issuer.enterURL' | translate }}"
 				[urlField]="true"
 			></bg-formfield-text>
 
 			<bg-formfield-select
 				class="u-margin-bottom2x"
 				[control]="issuerForm.rawControlMap.issuer_email"
-				[label]="'Kontakt E-Mail'"
+				label="{{ 'General.contact' | translate }} E-Mail"
 				[placeholder]="'Bitte wähle eine verifizierte E-Mail'"
 				[options]="emailsOptions"
-				[errorMessage]="{ required: 'Bitte wähle eine verifizierte E-Mail' }"
+				errorMessage="{{ 'Issuer.enterValidEmail' | translate }}"
 			></bg-formfield-select>
 
 			<bg-formfield-text
 				class="u-margin-bottom2x"
 				[control]="issuerForm.rawControlMap.issuer_description"
-				[label]="'Beschreibung'"
-				[errorMessage]="{ required: 'Bitte gebe eine Beschreibung an' }"
+				label="{{ 'General.description' | translate }}"
+				errorMessage="{{ 'Issuer.enterDescription' | translate }}"
 				[multiline]="true"
 			></bg-formfield-text>
 
 			<bg-formfield-select
-			class="u-margin-bottom2x"
-			[control]="issuerForm.rawControlMap.issuer_category"
-			[label]="'Kategorie'"
-			[placeholder]="'Bitte gib eine Kategorie an'"
-			[options]="[
-				{
-					label: 'Schule (Grundschulen, weiterführende Schulen, Berufsschulen, Institutionen formaler schulischer Bildung)', 
-					value: 'schule'
-				}, {
-					label: 'Hochschule (Universitäten. Fachhochschulen, ...)', 
-					value: 'hochschule'
-				}, {
-					label: 'Andere (Bibliotheken, Museen, FabLabs, Unternehmen, Vereine, ...)', 
-					value: 'andere'
-				}]"
-
+				class="u-margin-bottom2x"
+				[control]="issuerForm.rawControlMap.issuer_category"
+				label="{{ 'General.category' | translate }}"
+				placeholder="{{ 'Issuer.enterCategory' | translate }}"
+				[options]="[
+					{
+						label: 'Schule (Grundschulen, weiterführende Schulen, Berufsschulen, Institutionen formaler schulischer Bildung)',
+						value: 'schule'
+					},
+					{
+						label: 'Hochschule (Universitäten. Fachhochschulen, ...)',
+						value: 'hochschule'
+					},
+					{
+						label: 'Andere (Bibliotheken, Museen, FabLabs, Unternehmen, Vereine, ...)',
+						value: 'andere'
+					}
+				]"
 			></bg-formfield-select>
 
-			<h2>Adresse</h2>
+			<h2>{{ 'General.address' | translate }}</h2>
 
 			<bg-formfield-text
 				class="u-margin-bottom2x"
 				[control]="issuerForm.rawControlMap.issuer_street"
-				[label]="'Strasse'"
-				[errorMessage]="{ required: 'Bitte gib eine Strasse an' }"
+				label="{{ 'General.street' | translate }}"
+				errorMessage="{{ 'Issuer.enterStreet' | translate }}"
 			></bg-formfield-text>
 
 			<bg-formfield-text
 				class="u-margin-bottom2x"
 				[control]="issuerForm.rawControlMap.issuer_streetnumber"
-				[label]="'Hausnummer'"
+				label="{{ 'Issuer.houseNo' | translate }}"
 				[fieldType]="'number'"
-				[errorMessage]="{ required: 'Bitte gib eine Hausnummer an' }"
+				errorMessage="{{ 'Issuer.enterHouseNo' | translate }}"
 			></bg-formfield-text>
 
 			<bg-formfield-text
 				class="u-margin-bottom2x"
 				[control]="issuerForm.rawControlMap.issuer_zip"
-				[label]="'Postleitzahl'"
+				label="{{ 'General.postalCode' | translate }}"
 				[fieldType]="'number'"
-				[errorMessage]="{ required: 'Bitte gib eine Postleitzahl an' }"
+				errorMessage="{{ 'Issuer.enterPostalCode' | translate }}"
 			></bg-formfield-text>
 
 			<bg-formfield-text
 				class="u-margin-bottom2x"
 				[control]="issuerForm.rawControlMap.issuer_city"
-				[label]="'Stadt'"
-				[errorMessage]="{ required: 'Bitte gib eine Stadt an' }"
+				label="{{ 'General.city' | translate }}"
+				errorMessage="{{ 'Issuer.enterCity' | translate }}"
 			></bg-formfield-text>
-
 
 			<div class="l-stack l-stack-buttons">
 				<button
@@ -114,13 +115,13 @@
 					[loading-promises]="[editIssuerFinished]"
 					loading-message="Adding"
 				>
-					Speichern
+					{{ 'General.save' | translate }}
 				</button>
 				<a
 					[routerLink]="['/issuer/issuers', issuerSlug]"
 					class="button button-secondary"
 					[disabled-when-requesting]="true"
-					>Abbrechen</a
+					>{{ 'General.cancel' | translate }}</a
 				>
 			</div>
 		</fieldset>

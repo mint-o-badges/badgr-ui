@@ -76,7 +76,7 @@ import { MessageService } from '../services/message.service';
 					<p *ngIf="loaderName != 'basic'" class="dropzone-x-info2">
 						{{ 'General.or' | translate }}
 						<span class="u-text-link" (click)="$event.preventDefault(); findNounproject($event)"
-							>Icon {{ 'RecBadge.search' | translate }}</span
+							>Icon {{ 'General.search' | translate }}</span
 						>
 					</p>
 				</ng-container>

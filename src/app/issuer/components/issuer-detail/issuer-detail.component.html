@@ -20,7 +20,8 @@
 				<div class="topbar-x-subheading">
 					<p class="u-text u-text-small">
 						<strong [truncatedText]="issuer.email" [maxLength]="64"></strong>
-						<br class="u-hidden-minmobilelarge" /><span class="u-hidden-maxmobilelarge"> — </span>{{ 'Issuer.yourRole' | translate }}
+						<br class="u-hidden-minmobilelarge" /><span class="u-hidden-maxmobilelarge"> — </span
+						>{{ 'Issuer.yourRole' | translate }}
 						{{ issuer?.currentUserStaffMember?.roleInfo?.label }}
 					</p>
 					<p class="u-margin-top1x u-width-paragraph">
@@ -62,7 +63,11 @@
 						</a>
 						<a class="menuitem" [routerLink]="['./staff']">
 							<svg icon="icon_group"></svg>
-							Mitglieder {{ (issuer?.currentUserStaffMember?.isOwner ? 'General.editS': 'General.emptyString') | translate }}
+							{{ 'General.members' | translate }}
+							{{
+								(issuer?.currentUserStaffMember?.isOwner ? 'General.editS' : 'General.emptyString')
+									| translate
+							}}
 						</a>
 						<a class="menuitem" *ngFor="let lp of launchpoints" href="{{ lp.launch_url }}" target="_blank">
 							<svg icon="icon_external_link"></svg>
@@ -77,7 +82,7 @@
 	<div *bgAwaitPromises="[issuerLoaded, badgesLoaded]">
 		<!-- EMPTY STATE: No badge classes -->
 		<section class="emptysection l-emptysection" *ngIf="!badges?.length">
-			<h2 class="emptysection-x-headline">Der Issuer hat noch keine Badges</h2>
+			<h2 class="emptysection-x-headline">{{ 'Issuer.issuerHasNoBadgesYet' | translate }}</h2>
 			<div class="emptysection-x-imagecontainer">
 				<img alt="Illustration" class="emptysection-x-image" [src]="noIssuersPlaceholderSrc" />
 			</div>
@@ -89,17 +94,14 @@
 				{{ badges.length }} Badge{{ badges.length == 1 ? '' : 's' }}
 			</h4>
 			<table
-				class="
-					datatable datatable-roundheaders datatable-onlyfirstcolumn datatable-verticalalignmiddle
-					u-margin-top2x
-				"
+				class="datatable datatable-roundheaders datatable-onlyfirstcolumn datatable-verticalalignmiddle u-margin-top2x"
 				*ngIf="badges?.length"
 			>
 				<thead class="datatable-x-head">
 					<tr class="datatable-x-header">
 						<th class="datatable-x-cell">Badge</th>
-						<th class="datatable-x-cell">Erstellt am</th>
-						<th class="datatable-x-cell">Empfänger*innen</th>
+						<th class="datatable-x-cell">{{ 'Issuer.createdOn' | translate }}</th>
+						<th class="datatable-x-cell">{{ 'Badge.multiRecipients' | translate }}</th>
 						<th class="datatable-x-cell">
 							<span class="visuallyhidden">Actions</span>
 						</th>
@@ -124,7 +126,7 @@
 									<a
 										class="u-text-link-small"
 										[routerLink]="['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'issue']"
-										>Vergeben</a
+										>{{ 'Issuer.awarded' | translate }}</a
 									>
 								</div>
 							</div>
@@ -144,7 +146,7 @@
 								<a
 									class="u-text-link-small"
 									[routerLink]="['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'issue']"
-									>Vergeben</a
+									>{{ 'Issuer.awarded' | translate }}</a
 								>
 							</div>
 						</td>
