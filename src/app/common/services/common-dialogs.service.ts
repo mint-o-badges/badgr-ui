@@ -6,6 +6,7 @@ import { MarkdownHintsDialog } from '../dialogs/markdown-hints-dialog.component'
 import { ExportPdfDialog } from '../dialogs/export-pdf-dialog/export-pdf-dialog.component';
 import { NounprojectDialog } from '../dialogs/nounproject-dialog/nounproject-dialog.component';
 import { CopyBadgeDialog } from '../dialogs/copy-badge-dialog/copy-badge-dialog.component';
+import { ForkBadgeDialog } from '../dialogs/fork-badge-dialog/fork-badge-dialog.component';
 
 
 @Injectable()
@@ -17,6 +18,7 @@ export class CommonDialogsService {
 	exportPdfDialog: ExportPdfDialog;
 	nounprojectDialog: NounprojectDialog;
 	copyBadgeDialog: CopyBadgeDialog;
+	forkBadgeDialog: ForkBadgeDialog;
 
 	constructor() {}
 
@@ -27,7 +29,8 @@ export class CommonDialogsService {
 		markdownHintsDialog: MarkdownHintsDialog,
 		exportPdfDialog: ExportPdfDialog,
 		nounprojectDialog: NounprojectDialog,
-		copyBadgeDialog: CopyBadgeDialog
+		copyBadgeDialog: CopyBadgeDialog,
+		forkBadgeDialog: ForkBadgeDialog
 	) {
 		this.confirmDialog = confirmDialog;
 		this.shareSocialDialog = shareSocialDialog;
@@ -36,5 +39,6 @@ export class CommonDialogsService {
 		this.exportPdfDialog = exportPdfDialog;
 		this.nounprojectDialog = nounprojectDialog;
 		this.copyBadgeDialog = copyBadgeDialog;
+		this.forkBadgeDialog = forkBadgeDialog;
 	}
 }

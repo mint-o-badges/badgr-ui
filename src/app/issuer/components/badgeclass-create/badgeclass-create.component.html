@@ -20,6 +20,15 @@
 		>
 			Badge kopieren
 		</button>
+		<button
+			type="submit"
+			class="button topbar-x-button"
+			(click)="forkBadge()"
+			loading-message="Loading badges..."
+			[disabled-when-requesting]="true"
+		>
+			Badge forken
+		</button>
 	</div>
 </div>
 

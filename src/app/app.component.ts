@@ -30,6 +30,7 @@ import { Angulartics2GoogleAnalytics } from 'angulartics2';
 import { ImportModalComponent } from './mozz-transition/components/import-modal/import-modal.component';
 import { ExportPdfDialog } from './common/dialogs/export-pdf-dialog/export-pdf-dialog.component';
 import { CopyBadgeDialog } from './common/dialogs/copy-badge-dialog/copy-badge-dialog.component';
+import { ForkBadgeDialog } from './common/dialogs/fork-badge-dialog/fork-badge-dialog.component';
 import { LanguageService } from './common/services/language.service';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -76,6 +77,9 @@ export class AppComponent implements OnInit, AfterViewInit {
 
 	@ViewChild('copyBadgeDialog')
 	private copyBadgeDialog: CopyBadgeDialog;
+
+	@ViewChild('forkBadgeDialog')
+	private forkBadgeDialog: ForkBadgeDialog;
 
 	@ViewChild('issuerLink')
 	private issuerLink: unknown;
@@ -244,6 +248,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 			this.exportPdfDialog,
 			this.nounprojectDialog,
 			this.copyBadgeDialog,
+			this.forkBadgeDialog,
 		);
 	}
 

@@ -114,4 +114,19 @@ export class BadgeClassCreateComponent extends BaseAuthenticatedRoutableComponen
 				this.messageService.reportAndThrowError('Failed to load badges to copy', error);
 			});
 	}
+
+	forkBadge() {
+		this.dialogService.forkBadgeDialog.openDialog(this.badges)
+			.then((data: any) => {
+				if (data) {
+                    // TODO: Verify that it's possible to just set the copiedBadgeClass
+                    // to the forked value. I guess that also depends on the revised
+                    // behavior of `copyBadge`.
+					this.copiedBadgeClass = data
+				}
+			})
+			.catch((error) => {
+				this.messageService.reportAndThrowError('Failed to load badges to fork', error);
+			});
+	}
 }
