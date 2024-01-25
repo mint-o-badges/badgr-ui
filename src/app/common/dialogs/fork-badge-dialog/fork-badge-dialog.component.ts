@@ -148,7 +148,7 @@ class BadgeResult {
 	constructor(public badge: BadgeClass, public issuerName: string) {}
 }
 
-class MatchingIssuerBadges {
+export class MatchingIssuerBadges {
 	constructor(
 		public issuerSlug: string,
 		public issuerName: string,
@@ -164,7 +164,7 @@ class MatchingIssuerBadges {
 	}
 }
 
-class MatchingAlgorithm {
+export class MatchingAlgorithm {
 	static issuerMatcher(inputPattern: string): (issuer: string) => boolean {
 		const patternStr = StringMatchingUtil.normalizeString(inputPattern);
 		const patternExp = StringMatchingUtil.tryRegExp(patternStr);
@@ -183,3 +183,4 @@ class MatchingAlgorithm {
 		);
 	}
 }
+
