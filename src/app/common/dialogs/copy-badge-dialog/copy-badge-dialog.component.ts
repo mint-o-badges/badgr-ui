@@ -7,6 +7,12 @@ import { BaseDialog } from '../base-dialog';
 import { StringMatchingUtil } from '../../util/string-matching-util';
 import { groupIntoArray, groupIntoObject } from '../../util/array-reducers';
 
+/**
+ * The dialog used in the badge creation component to copy an existing badge.
+ *
+ * @see ForkBadgeDialog, since the ForkBadgeDialog started as an (exact) duplicate
+ * of this.
+ */
 @Component({
 	selector: 'copy-badge-dialog',
 	templateUrl: 'copy-badge-dialog.component.html',
@@ -51,6 +57,13 @@ export class CopyBadgeDialog extends BaseDialog {
 		super(componentElem, renderer);
 	}
 
+    /**
+     * Opens the copy badge dialog, showing it as a modal (@see showModal).
+     *
+     * @param {BadgeClass[]} badges - The badges from which to select one.
+     * @returns a promise, which either resolves to the selected BadgeClass or,
+     * if closed without a selection, undefined.
+     */
 	async openDialog(badges: BadgeClass[]): Promise<BadgeClass | void> {
 		this.badgesLoaded = new Promise((resolve, reject) => {
 			this.badges = badges.slice().sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
@@ -65,16 +78,29 @@ export class CopyBadgeDialog extends BaseDialog {
 		});
 	}
 
+    /**
+     * Closes the dialog, resolving with undefined.
+     */
 	closeDialog() {
 		this.closeModal();
 		this.resolveFunc(undefined);
 	}
 
+    /**
+     * Closes the dialog, resolving with the selected badge.
+     *
+     * @param {BadgeClass} badge - The selected badge.
+     */
 	copyBadge(badge) {
 		this.closeModal();
 		this.resolveFunc(badge);
 	}
 
+    /**
+     * Updates the selectable badges.
+     *
+     * @param {BadgeClass[]} allBadges - the selectable badges.
+     */
 	private updateBadges(allBadges: BadgeClass[]) {
 		this.badgeClassesByIssuerId = allBadges
 			.reduce(groupIntoObject<BadgeClass>(b => b.issuerId), {});
@@ -88,6 +114,11 @@ export class CopyBadgeDialog extends BaseDialog {
 		this.updateResults();
 	}
 
+    /**
+     * Updates the filtered badges, i.e. filters the selectable badges and displays them.
+     *
+     * @see MatchingAlgorithm for how the entries are filtered.
+     */
 	private updateResults() {
 
 		let that = this;
@@ -144,6 +175,9 @@ class BadgeResult {
 	constructor(public badge: BadgeClass, public issuerName: string) {}
 }
 
+/**
+ * A collection of badges that has the same issuer.
+ */
 class MatchingIssuerBadges {
 	constructor(
 		public issuerSlug: string,
@@ -151,6 +185,12 @@ class MatchingIssuerBadges {
 		public badges: BadgeClass[] = []
 	) {}
 
+    /**
+     * Add a badge to the collection. This only adds the badge if it has the same issuer
+     * as the collection and isn't already in this collection.
+     *
+     * @param {BadgeClass} badge - the badge to add to the collection.
+     */
 	addBadge(badge: BadgeClass) {
 		if (badge.issuerSlug === this.issuerSlug) {
 			if (this.badges.indexOf(badge) < 0) {
@@ -160,7 +200,17 @@ class MatchingIssuerBadges {
 	}
 }
 
+/**
+ * A matching algorithm for both issuers and badges.
+ */
 class MatchingAlgorithm {
+    /**
+     * A matcher for issuers.
+     * Matches the issuer string with regular expression passed as a string.
+     *
+     * @param {string} inputPattern - the regular expression to match.
+     * @returns a matcher, returning a boolean for a passed test string.
+     */
 	static issuerMatcher(inputPattern: string): (issuer: string) => boolean {
 		const patternStr = StringMatchingUtil.normalizeString(inputPattern);
 		const patternExp = StringMatchingUtil.tryRegExp(patternStr);
@@ -170,6 +220,13 @@ class MatchingAlgorithm {
 		);
 	}
 
+    /**
+     * A matcher for badges.
+     * Matches the badge name with regular regular expression passed as a string.
+     *
+     * @param {string} inputPattern - the regular expression to match.
+     * @returns a matcher, returning a boolean for a passed badge.
+     */
 	static badgeMatcher(inputPattern: string): (badge: BadgeClass) => boolean {
 		const patternStr = StringMatchingUtil.normalizeString(inputPattern);
 		const patternExp = StringMatchingUtil.tryRegExp(patternStr);
