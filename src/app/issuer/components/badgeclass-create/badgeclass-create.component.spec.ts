@@ -3,10 +3,8 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { Injectable, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { By } from '@angular/platform-browser';
-// import { Observable } from 'rxjs/Observable';
-// import 'rxjs/add/observable/of';
-// import 'rxjs/add/observable/throw';
 
+import { BadgeClass } from '../../models/badgeclass.model';
 import {Component, Directive} from '@angular/core';
 import {BadgeClassCreateComponent} from './badgeclass-create.component';
 import {SessionService} from '../../../common/services/session.service';
@@ -16,7 +14,6 @@ import {Title} from '@angular/platform-browser';
 import {MessageService} from '../../../common/services/message.service';
 import {IssuerManager} from '../../services/issuer-manager.service';
 import {AppConfigService} from '../../../common/app-config.service';
-import {CommonDialogsService} from '../../../common/services/common-dialogs.service';
 import { RouterTestingModule } from "@angular/router/testing";
 import { BadgrCommonModule, COMMON_IMPORTS } from "../../../common/badgr-common.module";
 import { COMMON_MOCKS_PROVIDERS_WITH_SUBS } from "../../../mocks/mocks.module.spec";
@@ -46,6 +43,7 @@ describe('BadgeClassCreateComponent', () => {
     }).compileComponents();
 
     fixture = TestBed.createComponent(BadgeClassCreateComponent);
+    fixture.detectChanges();
     component = fixture.debugElement.componentInstance;
   });
 
@@ -65,4 +63,23 @@ describe('BadgeClassCreateComponent', () => {
     const result = component.creationCanceled();
   });
 
+  it('should use the value from the fork dialog', async () => {
+      let badgeClass = new BadgeClass(null);
+      spyOn(component.dialogService.forkBadgeDialog, 'openDialog').
+          and.returnValue(new Promise((resolve, reject) => {
+          resolve(badgeClass);
+      }));
+      await component.forkBadge();
+      expect(component.copiedBadgeClass).toBe(badgeClass);
+  });
+
+  it('should use the value from the copy dialog', async () => {
+      let badgeClass = new BadgeClass(null);
+      spyOn(component.dialogService.copyBadgeDialog, 'openDialog').
+          and.returnValue(new Promise((resolve, reject) => {
+          resolve(badgeClass);
+      }));
+      await component.copyBadge();
+      expect(component.copiedBadgeClass).toBe(badgeClass);
+  });
 });

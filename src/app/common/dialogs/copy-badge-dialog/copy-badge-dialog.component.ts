@@ -51,7 +51,7 @@ export class CopyBadgeDialog extends BaseDialog {
 		super(componentElem, renderer);
 	}
 
-	async openDialog(badges: BadgeClass[]): Promise<void> {
+	async openDialog(badges: BadgeClass[]): Promise<BadgeClass | void> {
 		this.badgesLoaded = new Promise((resolve, reject) => {
 			this.badges = badges.slice().sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
 			this.updateBadges(badges)
@@ -59,7 +59,7 @@ export class CopyBadgeDialog extends BaseDialog {
 		});
 		this.showModal();
 
-		return new Promise<void>((resolve, reject) => {
+		return new Promise<BadgeClass | void>((resolve, reject) => {
 			this.resolveFunc = resolve;
 			this.rejectFunc = reject;
 		});

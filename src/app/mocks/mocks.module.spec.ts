@@ -196,6 +196,8 @@ export class MockCommonDialogsService {
 	shareSocialDialog = commonDialog;
 	addBadgeDialog = commonDialog;
 	collectionSelectionDialog = commonDialog;
+    copyBadgeDialog = commonDialog;
+    forkBadgeDialog = commonDialog;
 }
 
 // managers

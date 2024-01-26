@@ -105,7 +105,7 @@ export class BadgeClassCreateComponent extends BaseAuthenticatedRoutableComponen
 
 	copyBadge() {
 		this.dialogService.copyBadgeDialog.openDialog(this.badges)
-			.then((data: any) => {
+			.then((data: BadgeClass | void) => {
 				if (data) {
 					this.copiedBadgeClass = data
 				}
@@ -117,7 +117,7 @@ export class BadgeClassCreateComponent extends BaseAuthenticatedRoutableComponen
 
 	forkBadge() {
 		this.dialogService.forkBadgeDialog.openDialog(this.badges)
-			.then((data: any) => {
+			.then((data: BadgeClass | void) => {
 				if (data) {
                     // TODO: Verify that it's possible to just set the copiedBadgeClass
                     // to the forked value. I guess that also depends on the revised
