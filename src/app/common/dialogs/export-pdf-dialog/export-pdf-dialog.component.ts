@@ -313,7 +313,7 @@ export class ExportPdfDialog extends BaseDialog {
 				this.doc.setFontSize(14);
 				this.doc.setFont('Helvetica', 'normal');
                 // TODO: Update Domain here to open-educational-badges
-				let logoTextOnContentLength = this.doc.getTextWidth('bereitgestellt von https://ui.mint-o-badges.opensenselab.org');
+				let logoTextOnContentLength = this.doc.getTextWidth('bereitgestellt von https://openbadges.education');
 				const marginXImageLogo = (pageWidth - logoTextOnContentLength - logoWidth) / 2;
 				var img = new Image();
 				img.src = 'assets/logos/Badges_Entwurf-15.png';
@@ -321,12 +321,12 @@ export class ExportPdfDialog extends BaseDialog {
 				// yPos += 13;
 				this.doc.textWithLink(
                     // TODO: Update Domain here to open-educational-badges
-					'bereitgestellt von https://ui.mint-o-badges.opensenselab.org',
+					'bereitgestellt von https://openbadges.education',
 					(pageWidth - logoTextOnContentLength) / 2 + logoWidth,
 					yPos + (logoHeight * 2) / 3,
 					{
                         // TODO: Update Domain here to open-educational-badges
-						url: 'https://ui.mint-o-badges.opensenselab.org/public/start',
+						url: 'https://openbadges.education/public/start',
 					}
 				);
 
