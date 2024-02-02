@@ -35,12 +35,13 @@
 <div *bgAwaitPromises="[issuerLoaded]" class="l-containerxaxis l-containeryaxis">
 	<div class="l-responsivelist">
 	<badgeclass-edit-form #badgeimage (save)="badgeClassCreated($event)"
-									(cancel)="creationCanceled($event)"
-									[scrolled]="scrolled"
-									[issuerSlug]="issuerSlug"
-									[initBadgeClass]="copiedBadgeClass"
-									submitText="Create Badge"
-									submittingText="Creating Badge..."
+         (cancel)="creationCanceled($event)"
+         [scrolled]="scrolled"
+         [issuerSlug]="issuerSlug"
+         [isForked]="isForked"
+         [initBadgeClass]="copiedBadgeClass"
+         submitText="Create Badge"
+         submittingText="Creating Badge..."
 	></badgeclass-edit-form>
 	</div>
 </div>
