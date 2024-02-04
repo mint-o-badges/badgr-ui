@@ -4,7 +4,6 @@ export const environment: BadgrEnvironment = {
 	production: true,
 	config: {
 		api: {
-            // TODO: Change the url here to open-educational-badges
 			baseUrl: 'https://api.openbadges.education',
 		},
 		theme: {
