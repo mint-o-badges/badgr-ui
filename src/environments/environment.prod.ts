@@ -5,7 +5,7 @@ export const environment: BadgrEnvironment = {
 	config: {
 		api: {
             // TODO: Change the url here to open-educational-badges
-			baseUrl: 'https://api.mint-o-badges.opensenselab.org',
+			baseUrl: 'https://api.openbadges.education',
 		},
 		theme: {
 			welcomeMessage: 'Willkommen auf Open Educational Badges',
