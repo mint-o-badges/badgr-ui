@@ -338,15 +338,28 @@
 			<div class="forminput forminput-withbutton forminput-light1 u-width-formsmall u-margin-top3x">
 				<label class="forminput-x-label visuallyhidden" for="addtag">Add Tag</label>
 				<div class="forminput-x-inputs">
-					<input
-						name="addtag"
-						id="addtag"
-						(keypress)="handleTagInputKeyPress($event)"
-						#newTagInput
-						type="text"
-						maxlength="50"
-						placeholder="Neuer Tag..."
-					/>
+                    <div class="ng-autocomplete">
+                        <ng-autocomplete
+                                name="addtag"
+                                id="addtag"
+                                #newTagInput
+                                maxlength="50"
+                                [data]="existingTags"
+                                [searchKeyword]=tagSearchKeyword
+                                placeholder="Neuer Tag..."
+                                (keypress)="handleTagInputKeyPress($event)"
+                                [itemTemplate]="itemTemplate"
+                                [notFoundTemplate]="notFoundTemplate">
+                        </ng-autocomplete>
+
+                        <ng-template #itemTemplate let-item>
+                            <a [innerHTML]="item.name"></a>
+                        </ng-template>
+
+                        <ng-template #notFoundTemplate let-notFound>
+                            <div [innerHTML]="notFound"></div>
+                        </ng-template>
+                    </div>
 					<div class="forminput-x-button">
 						<button type="button" (click)="addTag()" class="button button-secondary button-informinput">
 							Hinzufügen

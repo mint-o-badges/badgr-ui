@@ -7,6 +7,7 @@ import { Angulartics2GoogleTagManager } from 'angulartics2';
 import { AppComponent } from './app.component';
 import { BadgrCommonModule, COMMON_IMPORTS } from './common/badgr-common.module';
 import { InitialRedirectComponent } from './initial-redirect.component';
+import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouteReuseStrategy, RouterModule, Routes } from '@angular/router';
@@ -145,6 +146,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 	imports: [
 		...COMMON_IMPORTS,
 		BrowserModule,
+        AutocompleteLibModule,
 		RouterModule.forRoot(ROUTE_CONFIG, {}),
 		Angulartics2Module.forRoot(),
 		BadgrCommonModule.forRoot(),

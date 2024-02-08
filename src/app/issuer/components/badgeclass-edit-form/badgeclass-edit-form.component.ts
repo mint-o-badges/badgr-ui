@@ -83,6 +83,19 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
      */
     forbiddenImage: string | null = null;
 
+    tagSearchKeyword: string = "";
+    // TODO: Assign properly
+    existingTags = [
+        {
+            id: 1,
+            name: "Tag 1"
+        },
+        {
+            id: 2,
+            name: "Tag 2"
+        }
+    ];
+
     savePromise: Promise<BadgeClass> | null = null;
     badgeClassForm = typedFormGroup(this.criteriaRequired.bind(this))
     .addControl('badge_name', '', [
