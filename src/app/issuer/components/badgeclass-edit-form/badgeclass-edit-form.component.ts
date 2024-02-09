@@ -55,7 +55,11 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
      * If not set, an error is logged and it is interpreted as `false`.
      */
     @Input()
-    set isForked(isBadgeClassForked: boolean) {
+    set isForked(isBadgeClassForked: boolean | string) {
+        // Parameters from HTML are passed as string, even if the type of the parameter
+        // is set to boolean
+        if (typeof isBadgeClassForked == "string")
+            isBadgeClassForked = isBadgeClassForked == "true";
         this.isBadgeClassForked = isBadgeClassForked;
     }
 
@@ -84,7 +88,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
     forbiddenImage: string | null = null;
 
     // TODO: Assign properly
-    public existingTags = [
+    existingTags = [
         {
             id: 1,
             name: "Albania"
@@ -110,7 +114,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
         Validators.required,
         // Validation that the image (hash) of a fork changed
         (control: AbstractControl): ValidationErrors | null => {
-            if (!control.value || !this.forbiddenImage)
+            if (!control.value || !this.forbiddenImage || !this.currentImage)
                 return null;
             let other = new Md5().appendStr(this.currentImage).end();
             if (this.forbiddenImage != other)
@@ -337,7 +341,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
         if (newTag.length > 0) {
             this.tags.add(newTag);
-            (this.newTagInput.nativeElement as HTMLInputElement).value = '';
+            this.newTagInput["query"] = '';
         }
     }
 
