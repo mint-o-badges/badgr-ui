@@ -100,5 +100,7 @@ export interface BadgrTheme {
 		"--color-interactive2"?: string;
 		"--color-interactive2alpha50"?: string;
 		"--color-theme"?: string;
+		"--color-link"?: string;
+		"--color-linkhover"?: string;
 	};
 }
