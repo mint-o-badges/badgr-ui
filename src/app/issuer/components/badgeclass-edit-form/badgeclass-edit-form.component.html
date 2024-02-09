@@ -345,6 +345,7 @@
                                 #newTagInput
                                 maxlength="50"
                                 [data]="existingTags"
+                                [isLoading]="existingTagsLoading"
                                 searchKeyword=name
                                 placeholder="Neuer Tag..."
                                 (keypress)="handleTagInputKeyPress($event)"

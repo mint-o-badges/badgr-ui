@@ -87,17 +87,17 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
      */
     forbiddenImage: string | null = null;
 
-    // TODO: Assign properly
-    existingTags = [
-        {
-            id: 1,
-            name: "Albania"
-        },
-        {
-            id: 2,
-            name: "Belgium"
-        }
-    ];
+    /**
+     * Indicates wether the existing tags are currently being loaded.
+     * It is set in @see fetchTags
+     */
+    existingTagsLoading: boolean;
+
+    /**
+     * The already existing tags for other badges, for the autocomplete to show.
+     * The tags are loaded in @see fetchTags
+     */
+    existingTags: object[];
 
     savePromise: Promise<BadgeClass> | null = null;
     badgeClassForm = typedFormGroup(this.criteriaRequired.bind(this))
@@ -326,6 +326,39 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
                 },10)
             }
         })
+
+        this.fetchTags();
+    }
+
+    /**
+     * Fetches the tags from the @see badgeClassManager and selects the tags from them.
+     * The tags are then assigned to @see existingTags in an appropriate format.
+     * At the beginning, @see existingTagsLoading is set, once tags are loaded it's unset.
+     */
+    fetchTags() {
+        this.existingTags = [];
+        this.existingTagsLoading = true;
+        // outerThis is needed because inside the observable, `this` is something else
+        let outerThis = this;
+        let observable = this.badgeClassManager.allBadges$;
+
+        observable.subscribe({
+            next(entities: BadgeClass[]) {
+                let tags: string[] = entities.flatMap((entity) => entity.tags);
+                let unique = [...new Set(tags)];
+                unique.sort();
+                outerThis.existingTags = unique.map((tag, index) => ({
+                    id: index,
+                    name: tag
+                }));
+                // The tags are loaded in one badge, so it's save to assume
+                // that after the first `next` call, the loading is done
+                outerThis.existingTagsLoading = false;
+            },
+            error(err) {
+                console.error("Couldn't fetch labels: " + err);
+            },
+        });
     }
 
     enableTags() {
