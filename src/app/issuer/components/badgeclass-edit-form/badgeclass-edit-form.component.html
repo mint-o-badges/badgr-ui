@@ -360,7 +360,9 @@
                             <div [innerHTML]="notFound"></div>
                         </ng-template>
                     </div>
-					<div class="forminput-x-button">
+                    <!--The additional style attribute here is needed to
+                        align the button with the autocomplete input.-->
+					<div class="forminput-x-button" style="margin-top: var(--gridspacing);">
 						<button type="button" (click)="addTag()" class="button button-secondary button-informinput">
 							Hinzufügen
 						</button>

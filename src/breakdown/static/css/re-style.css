@@ -53,3 +53,10 @@
 	max-width: None;
 	max-height: None;
 }
+
+/* The suggestions container of the autocomplete component
+ * should be in the front, in order to draw over the constraints
+ * around it. */
+.autocomplete-container .suggestions-container {
+    z-index: -1
+}
