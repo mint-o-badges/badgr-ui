@@ -345,7 +345,7 @@
                                 #newTagInput
                                 maxlength="50"
                                 [data]="existingTags"
-                                [searchKeyword]=tagSearchKeyword
+                                searchKeyword=name
                                 placeholder="Neuer Tag..."
                                 (keypress)="handleTagInputKeyPress($event)"
                                 [itemTemplate]="itemTemplate"
@@ -357,7 +357,7 @@
                         </ng-template>
 
                         <ng-template #notFoundTemplate let-notFound>
-                            <div [innerHTML]="notFound"></div>
+                            <div>Dieser Tag existiert noch nicht.</div>
                         </ng-template>
                     </div>
                     <!--The additional style attribute here is needed to

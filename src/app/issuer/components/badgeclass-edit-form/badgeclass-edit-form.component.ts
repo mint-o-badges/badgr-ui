@@ -83,16 +83,15 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
      */
     forbiddenImage: string | null = null;
 
-    tagSearchKeyword: string = "";
     // TODO: Assign properly
-    existingTags = [
+    public existingTags = [
         {
             id: 1,
-            name: "Tag 1"
+            name: "Albania"
         },
         {
             id: 2,
-            name: "Tag 2"
+            name: "Belgium"
         }
     ];
 
@@ -334,7 +333,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
     }
 
     addTag() {
-        const newTag = ((this.newTagInput.nativeElement as HTMLInputElement).value || '').trim().toLowerCase();
+        const newTag = (this.newTagInput["query"] || '').trim().toLowerCase();
 
         if (newTag.length > 0) {
             this.tags.add(newTag);
