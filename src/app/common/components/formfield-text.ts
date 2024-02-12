@@ -37,6 +37,7 @@ import {CommonDialogsService} from '../services/common-dialogs.service';
 			       [placeholder]="placeholder || ''"
 						 [attr.maxlength] = "maxchar"
 						 [attr.max] = "max"
+                   [readonly]="readonly"
 			       (change)="postProcessInput()"
 			       (focus)="cacheControlState()"
 			       (keypress)="handleKeyPress($event)"
@@ -63,12 +64,15 @@ import {CommonDialogsService} from '../services/common-dialogs.service';
 			          (keypress)="handleKeyPress($event)"
 			          (keyup)="handleKeyUp($event)"
 			          #textareaInput
+                      [readonly]="readonly"
 			></textarea>
 		</div>
 		<p class="forminput-x-error" *ngIf="isErrorState">{{ errorMessageForDisplay }}</p>
 	`
 })
 export class FormFieldText implements OnChanges, AfterViewInit {
+    @Input() readonly = false;
+
 	@Input()
 	set unlocked(unlocked: boolean) {
 		this._unlocked = unlocked;

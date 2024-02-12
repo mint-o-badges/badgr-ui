@@ -176,9 +176,9 @@ export class FormFieldSelect implements OnChanges, AfterViewInit {
 			return;
 		}
 
-		if (this.isLockedState) {
+		if (this.isLockedState || this.disabled) {
 			this.control.disable();
-		} else {
+		} else if (!this.disabled){
 			this.control.enable();
 		}
 	}

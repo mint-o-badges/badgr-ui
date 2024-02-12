@@ -29,6 +29,7 @@ import { MessageService } from '../services/message.service';
 					(click)="$event.preventDefault(); generateRandomImage.emit()"
 					class="forminput-x-helplink"
 					href="#"
+
 					>{{ 'RecBadge.genRandomImage' | translate }}</a
 				>
 			</div>
@@ -39,6 +40,7 @@ import { MessageService } from '../services/message.service';
 				id="image_field{{ uniqueIdSuffix }}"
 				(change)="fileInputChanged($event)"
 				class="visuallyhidden"
+                [disabled]="readonly ? 'disabled' : null"
 			/>
 
 			<label
@@ -54,15 +56,18 @@ import { MessageService } from '../services/message.service';
 					<img [src]="imageDataUrl" alt="" />
 					<p class="u-text-body">
 						{{ imageName }}
-						<button (click)="imageLabel.click()" type="button" class="u-text-link">
+						<button (click)="imageLabel.click()"
+                                type="button"
+                                class="u-text-link"
+                                [disabled]="readonly ? 'disabled' : null">
 							{{ 'RecBadge.chooseAnotherFile' | translate }}
 						</button>
 						<button
-							*ngIf="loaderName != 'basic'"
+						*ngIf="loaderName != 'basic'"
 							(click)="$event.preventDefault(); findNounproject($event)"
 							type="button"
 							class="u-text-link"
-						>
+                            [disabled]="readonly ? 'disabled' : null">
 							{{ 'RecBadge.searchAnotherIcon' | translate }}
 						</button>
 					</p>
@@ -131,6 +136,8 @@ export class BgFormFieldImageComponent {
 
 	@Input() newDropZone = false;
 
+    @Input() readonly = false;
+
 	uniqueIdSuffix = BgFormFieldImageComponent.uniqueNameCounter++;
 
 	isDragging = false;
@@ -151,10 +158,16 @@ export class BgFormFieldImageComponent {
 	) {}
 
 	clearFileInput() {
+        if (this.readonly)
+            return;
+
 		(this.element.querySelector("input[type='file']") as HTMLInputElement).value = null;
 	}
 
 	fileInputChanged(ev: Event) {
+        if (this.readonly)
+            return;
+
 		const input: HTMLInputElement = ev.target as HTMLInputElement;
 		const self = this;
 

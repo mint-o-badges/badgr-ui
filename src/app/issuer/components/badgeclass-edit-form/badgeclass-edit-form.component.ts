@@ -8,6 +8,7 @@ import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-a
 
 import { SessionService } from '../../../common/services/session.service';
 import { MessageService } from '../../../common/services/message.service';
+import { CopyState } from '../../../common/types/enums';
 
 import {
     ApiBadgeClassForCreation,
@@ -49,14 +50,30 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
     }
 
     /**
-     * Wether or not the badge class that is being worked on is forked.
-     * This field is required to reduce the possibility of misordering @link initBadgeClass and isForked
-     * calls (isForked has to be set first).
-     * If not set, an error is logged and it is interpreted as `false`.
+     * What the copy state of the badge that is being worked on is.
+     * (Fresh (no copy), copy (1:1 copy) or fork (copy & edit))
+     t* This field is required to reduce the possibility of misordering @link initBadgeClass and copyState
+     * calls (copyState has to be set first).
+     * If not set it is interpreted as `fresh`.
      */
     @Input()
-    set isForked(isBadgeClassForked: boolean) {
-        this.isBadgeClassForked = isBadgeClassForked;
+    set copyState(theCopyState: CopyState) {
+        this.theCopyState = theCopyState;
+        // In bg-formfield-markdown it seems to be impossible to disable it normally
+        this.updateDisabledOfMarkdown();
+    }
+
+    updateDisabledOfMarkdown() {
+        let badgeCriteriaTextElement = document.getElementById("badge_criteria_text");
+        if (!badgeCriteriaTextElement)
+            return;
+        let shadowRoot = badgeCriteriaTextElement.shadowRoot;
+        if (!shadowRoot)
+            return;
+        let textAreas = shadowRoot.querySelectorAll("textarea");
+        if (!textAreas || textAreas.length === 0)
+            return;
+        textAreas[0].disabled = this.isReadonly();
     }
 
     get badgeClass() {
@@ -143,9 +160,15 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
     initialisedBadgeClass: BadgeClass | null = null;
 
     /**
-     * Indicates wether or not the @link initialisedBadgeClass is forked
+     * Indicates wether the @link initialisedBadgeClass is forked, copied or fresh
      */
-    isBadgeClassForked: boolean | null = null;
+    theCopyState: CopyState = CopyState.fresh;
+
+    /**
+     * Indicates wether the input fields should be readonly
+     */
+    isReadonly: (() => boolean) =
+        () => this.theCopyState == CopyState.copy;
 
     @Output()
     save = new EventEmitter<Promise<BadgeClass>>();
@@ -234,12 +257,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
         if (!badgeClass)
             return;
 
-        if (this.isBadgeClassForked === null) {
-            console.error("Missing information on wether the init badge is forked!");
-            this.isBadgeClassForked = false;
-        }
-
-        if (this.isBadgeClassForked) {
+        if (this.theCopyState == CopyState.fork) {
             // Store the "old" name and image (hash) to later verify that it changed
             this.forbiddenName = badgeClass.name;
             this.forbiddenImage = 

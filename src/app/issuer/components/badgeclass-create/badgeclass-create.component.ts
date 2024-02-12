@@ -14,6 +14,7 @@ import { CommonDialogsService } from '../../../common/services/common-dialogs.se
 import { BadgeClass } from '../../models/badgeclass.model';
 import { AppConfigService } from '../../../common/app-config.service';
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
+import { CopyState } from '../../../common/types/enums';
 import { BadgeClassManager } from '../../services/badgeclass-manager.service';
 
 @Component({
@@ -26,10 +27,11 @@ export class BadgeClassCreateComponent extends BaseAuthenticatedRoutableComponen
 	breadcrumbLinkEntries: LinkEntry[] = [];
 	scrolled = false;
 	copiedBadgeClass: BadgeClass = null;
+
     /**
-     * Indicates wether the "copiedBadgeClass" is a forked copy, or a 1:1 copy
+     * Indicates wether the "copiedBadgeClass" is a forked copy, or a 1:1 copy (or fresh)
      */
-    isForked = false;
+    copyState = CopyState.fresh;
 
 	badgesLoaded: Promise<unknown>;
 	badges: BadgeClass[] = null;
@@ -112,7 +114,7 @@ export class BadgeClassCreateComponent extends BaseAuthenticatedRoutableComponen
 			.then((data: BadgeClass | void) => {
 				if (data) {
 					this.copiedBadgeClass = data
-                    this.isForked = false;
+                    this.copyState = CopyState.copy;
 				}
 			})
 			.catch((error) => {
@@ -125,7 +127,7 @@ export class BadgeClassCreateComponent extends BaseAuthenticatedRoutableComponen
 			.then((data: BadgeClass | void) => {
 				if (data) {
 					this.copiedBadgeClass = data
-                    this.isForked = true;
+                    this.copyState = CopyState.fork;
 				}
 			})
 			.catch((error) => {

@@ -36,7 +36,8 @@
 					class="l-formimageupload-x-upload"
 					[placeholderImage]="badgeClassPlaceholderImageUrl"
 					[control]="badgeClassForm.rawControlMap.badge_image"
-                    [errorMessage]="'Bitte gib dem Badge ein gültiges (bei einem Fork eindeutiges) Bild'">
+                    [errorMessage]="'Bitte gib dem Badge ein gültiges (bei einem Fork eindeutiges) Bild'"
+                    [readonly]="isReadonly()">
 				</bg-formfield-image>
 				<badge-studio
 					[scrolled]="scrolled"
@@ -52,6 +53,7 @@
 					label="Name"
 					[errorMessage]="{ required: 'Bitte gib dem Badge einen Namen', mustChange: 'Bitte ändere den Namen' }"
 					[autofocus]="true"
+                    [readonly]="isReadonly()"
 				></bg-formfield-text>
 			</div>
 
@@ -102,6 +104,7 @@
 							label=" Wie bekommt man dieses Badge?"
 							class="l-formsection-x-inputoffset"
 							[errorMessage]="''"
+                            id="badge_criteria_text"
 						></bg-formfield-markdown>
 					</div>
 				</div>
@@ -114,6 +117,7 @@
 					[urlField]="true"
 					fieldType="url"
 					errorMessage="URL zu den Badge Kriterien"
+                    [readonly]="isReadonly()"
 				></bg-formfield-text>
 			</div>
 		</div>
@@ -140,6 +144,7 @@
 					[errorMessage]="{
 						required: 'Bitte gib die Dauer der Leistung zum Erhalt des Badges ein.'
 					}"
+                    [readonly]="isReadonly()"
 				></bg-formfield-text>
 			</div>
 		</div>
@@ -170,6 +175,7 @@
 					[errorMessage]="{
 						required: 'Bitte wähle die Kategorie des Badges aus.'
 					}"
+                    [disabled]="isReadonly()"
 				></bg-formfield-select>
 			</div>
 		</div>
@@ -196,7 +202,7 @@
 					label="Level"
 					[disabled]="
 						badgeClassForm.rawControlMap.badge_category.value === 'membership' ||
-						badgeClassForm.rawControlMap.badge_category.value === 'archievement'
+						badgeClassForm.rawControlMap.badge_category.value === 'archievement' || isReadonly()
 					"
 					[placeholder]="'Wähle eine Stufe'"
 					[optionMap]="levelOptions"
@@ -215,7 +221,9 @@
 				Verknüpfung
 				<span>(Optional)</span>
 			</h2>
-			<button type="button" (click)="disableAlignments()" class="buttonicon buttonicon-link">
+			<button type="button"
+                (click)="disableAlignments()"
+                class="buttonicon buttonicon-link">
 				<svg icon="icon_close"></svg>
 				<span class="visuallyhidden">Close</span>
 			</button>
@@ -240,6 +248,7 @@
 						type="button"
 						(click)="removeAlignment(alignment)"
 						class="u-text-link"
+                        [disabled]="isReadonly() ? 'disabled' : null"
 					>
 						Remove
 					</button>
@@ -251,6 +260,7 @@
 							label="Name"
 							[errorMessage]="{ required: 'Gib den Namen der Verknüpfung ein.' }"
 							id="alignment_name_{{ i }}"
+                            [readonly]="isReadonly()"
 						></bg-formfield-text>
 
 						<bg-formfield-text
@@ -259,6 +269,7 @@
 							[errorMessage]="{ required: 'Bitte gib eine URL zur Verknüpfung an.' }"
 							[urlField]="true"
 							id="alignment_url_{{ i }}"
+                            [readonly]="isReadonly()"
 						></bg-formfield-text>
 
 						<bg-formfield-text
@@ -266,6 +277,7 @@
 							label="Kurzbeschreibung"
 							[multiline]="true"
 							id="alignment_description_{{ i }}"
+                            [readonly]="isReadonly()"
 						></bg-formfield-text>
 
 						<button
@@ -287,17 +299,17 @@
 							</button>
 
 							<label class="forminput-x-label u-margin-top2x" for="forminput2">Rahmen</label>
-							<input type="text" id="forminput2" name="forminput2" />
+							<input type="text" id="forminput2" name="forminput2" [readonly]="isReadonly()" />
 
 							<label class="forminput-x-label u-margin-top2x" for="url">Code</label>
-							<input type="text" id="url" name="url" />
+							<input type="text" id="url" name="url" [readonly]="isReadonly()" />
 						</ng-template>
 					</div>
 				</div>
 			</ng-container>
 
 			<div class="l-stack">
-				<button (click)="addAlignment()" type="button" class="button button-secondary">
+				<button (click)="addAlignment()" type="button" class="button button-secondary" [disabled]="isReadonly() ? 'disabled' : null">
 					Verknüpfung hinzufügen
 				</button>
 			</div>
@@ -328,7 +340,7 @@
 			<div class="l-tags">
 				<div *ngFor="let tag of tags" class="tag tag-withclose">
 					{{ tag }}
-					<button class="buttonicon buttonicon-link">
+					<button class="buttonicon buttonicon-link" [disabled]="isReadonly() ? 'disabled' : null">
 						<svg icon="icon_close" (click)="removeTag(tag)"></svg>
 						<span class="visuallyhidden">Löschen</span>
 					</button>
@@ -346,9 +358,10 @@
 						type="text"
 						maxlength="50"
 						placeholder="Neuer Tag..."
+                        [readonly]="isReadonly()"
 					/>
 					<div class="forminput-x-button">
-						<button type="button" (click)="addTag()" class="button button-secondary button-informinput">
+						<button type="button" (click)="addTag()" class="button button-secondary button-informinput" [disabled]="isReadonly() ? 'disabled' : null">
 							Hinzufügen
 						</button>
 					</div>
@@ -385,6 +398,7 @@
 					[fieldType]="'number'"
 					[max]="1000"
 					[maxchar]="4"
+                    [readonly]="isReadonly()"
 				></bg-formfield-text>
 				<bg-formfield-select
 					ariaLabel="Wähle Dauer"
@@ -392,6 +406,7 @@
 					label="Dauer"
 					[placeholder]="'Wähle Dauer'"
 					[optionMap]="durationOptions"
+                    [disabled]="isReadonly()"
 				></bg-formfield-select>
 			</div>
 		</div>
