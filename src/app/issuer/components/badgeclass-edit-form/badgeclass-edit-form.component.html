@@ -36,7 +36,8 @@
 					class="l-formimageupload-x-upload"
 					[placeholderImage]="badgeClassPlaceholderImageUrl"
 					[control]="badgeClassForm.rawControlMap.badge_image"
-                    [errorMessage]="'Bitte gib dem Badge ein gültiges (bei einem Fork eindeutiges) Bild'">
+					[errorMessage]="'Bitte gib dem Badge ein gültiges (bei einem Fork eindeutiges) Bild'"
+				>
 				</bg-formfield-image>
 				<badge-studio
 					[scrolled]="scrolled"
@@ -46,11 +47,22 @@
 				></badge-studio>
 			</div>
 
+			<!-- No Hexagon Frame Checkout -->
+			<div class="u-margin-top3x u-margin-bottom3x">
+				<label class="checkbox">
+					<input id="no-hex-frame" name="no-hex-frame" type="checkbox" (change)="handleCBoxValueChange($event)" />
+					<span class="checkbox-x-text">Ohne Hexagon-Rahmen </span>
+				</label>
+			</div>
+
 			<div class="forminput u-margin-bottom2x">
 				<bg-formfield-text
 					[control]="badgeClassForm.rawControlMap.badge_name"
 					label="Name"
-					[errorMessage]="{ required: 'Bitte gib dem Badge einen Namen', mustChange: 'Bitte ändere den Namen' }"
+					[errorMessage]="{
+						required: 'Bitte gib dem Badge einen Namen',
+						mustChange: 'Bitte ändere den Namen'
+					}"
 					[autofocus]="true"
 				></bg-formfield-text>
 			</div>
@@ -338,32 +350,34 @@
 			<div class="forminput forminput-withbutton forminput-light1 u-width-formsmall u-margin-top3x">
 				<label class="forminput-x-label visuallyhidden" for="addtag">Add Tag</label>
 				<div class="forminput-x-inputs">
-                    <div class="ng-autocomplete">
-                        <ng-autocomplete
-                                name="addtag"
-                                id="addtag"
-                                #newTagInput
-                                maxlength="50"
-                                [data]="existingTags"
-                                [isLoading]="existingTagsLoading"
-                                searchKeyword=name
-                                placeholder="Neuer Tag..."
-                                (keypress)="handleTagInputKeyPress($event)"
-                                [itemTemplate]="itemTemplate"
-                                [notFoundTemplate]="notFoundTemplate">
-                        </ng-autocomplete>
+					<div class="ng-autocomplete">
+						<ng-autocomplete
+							name="addtag"
+							id="addtag"
+							#newTagInput
+							maxlength="50"
+							[data]="existingTags"
+							[isLoading]="existingTagsLoading"
+							searchKeyword="name"
+							placeholder="Neuer Tag..."
+							(keypress)="handleTagInputKeyPress($event)"
+							[itemTemplate]="itemTemplate"
+							[notFoundTemplate]="notFoundTemplate"
+						>
+						</ng-autocomplete>
 
-                        <ng-template #itemTemplate let-item>
-                            <a [innerHTML]="item.name"></a>
-                        </ng-template>
+						<ng-template #itemTemplate let-item>
+							<a [innerHTML]="item.name"></a>
+						</ng-template>
 
-                        <ng-template #notFoundTemplate let-notFound>
-                            <div>Dieser Tag existiert noch nicht.</div>
-                        </ng-template>
-                    </div>
-                    <!--The additional style attribute here is needed to
+						<ng-template #notFoundTemplate let-notFound>
+							<div>Dieser Tag existiert noch nicht.</div>
+						</ng-template>
+					</div>
+					<!--The additional style attribute here is needed to
                         align the button with the autocomplete input.-->
-					<div class="forminput-x-button" style="margin-top: var(--gridspacing);">
+					<div class="forminput-x-button" style="margin-top: var(--gridspacing)">
+
 						<button type="button" (click)="addTag()" class="button button-secondary button-informinput">
 							Hinzufügen
 						</button>
