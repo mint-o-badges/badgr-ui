@@ -102,7 +102,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	/**
 	 * Indicates whether hexagon frame is shown or hidden
 	 */
-	noHexFrame: boolean = false;
+	hideHexFrame: boolean = false;
 
     savePromise: Promise<BadgeClass> | null = null;
     badgeClassForm = typedFormGroup(this.criteriaRequired.bind(this))
@@ -319,7 +319,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		this.badgeClassForm.rawControl.controls['badge_category'].statusChanges.subscribe((res) => {
 			if (this.currentImage) {
 				// Skip update badge icon frame if no-hexagon-frame checkbox is checked
-				if (!this.noHexFrame) {
+				if (!this.hideHexFrame) {
 					//timeout because of workaround for angular bug.
 					setTimeout(function () {
 						that.adjustUploadImage(that.badgeClassForm.value);
@@ -331,7 +331,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		this.badgeClassForm.rawControl.controls['badge_level'].statusChanges.subscribe((res) => {
 			if (this.currentImage) {
 				// Skip update badge icon frame if no-hexagon-frame checkbox is checked
-				if (!this.noHexFrame) {
+				if (!this.hideHexFrame) {
 					//timeout because of workaround for angular bug.
 					setTimeout(function () {
 						that.adjustUploadImage(that.badgeClassForm.value);
@@ -640,7 +640,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			this.initedCurrentImage = true;
 			this.currentImage = image.slice();
 			// Hide hexagon-frame if checkbox is checked
-			if (this.noHexFrame) {
+			if (this.hideHexFrame) {
 				this.imageField.useDataUrl(this.currentImage, 'BADGE');
 			} else {
 				this.badgeStudio
@@ -653,7 +653,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	}
 	adjustUploadImage(formdata) {
 		// Skip update badge icon frame if no-hexagon-frame checkbox is checked
-		if (this.currentImage && this.badgeStudio && !this.noHexFrame) {
+		if (this.currentImage && this.badgeStudio && !this.hideHexFrame) {
 			this.badgeStudio
 				.generateUploadImage(this.currentImage.slice(), formdata)
 				.then((imageUrl) => this.imageField.useDataUrl(imageUrl, 'BADGE'));
@@ -676,10 +676,10 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
     }
 
 	handleCBoxValueChange(e) {
-		this.noHexFrame = !this.noHexFrame;
+		this.hideHexFrame = !this.hideHexFrame;
 
 		if (this.currentImage) {
-			if (this.noHexFrame) {
+			if (this.hideHexFrame) {
 				this.imageField.useDataUrl(this.currentImage, 'BADGE');
 			} else {
 				this.badgeStudio
