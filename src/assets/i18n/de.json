@@ -71,8 +71,8 @@
 		"using": "using"
 	},
 	"Issuer": {
-		"map": "katre",
-		"groupByCategory": "Nach Kategorien grupppieren",
+		"map": "Karte",
+		"groupByCategory": "Nach Kategorien gruppieren",
 		"open": "Öffnen",
 		"image": "Bild",
 		"registeredSince": "Registriert seit",

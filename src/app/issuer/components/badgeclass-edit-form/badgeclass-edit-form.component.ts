@@ -99,10 +99,10 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
      */
     existingTags: object[];
 
-	/**
-	 * Indicates whether hexagon frame is shown or hidden
-	 */
-	hideHexFrame: boolean = false;
+    /**
+     * Indicates whether hexagon frame is shown or hidden
+     */
+    hideHexFrame: boolean = false;
 
     savePromise: Promise<BadgeClass> | null = null;
     badgeClassForm = typedFormGroup(this.criteriaRequired.bind(this))
