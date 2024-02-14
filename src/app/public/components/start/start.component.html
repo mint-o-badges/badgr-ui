@@ -1,28 +1,4 @@
-<div *ngIf="curtain" class="curtain">
-    <div class="l-flex l-flex-justifycenter l-flex-aligncenter flex-wrap u-margin-bottom8x">
-        <div class="l-flex flex-1 l-flex-aligncenter l-flex-justifycenter">
-            <div class="l-containerxaxis l-containeryaxis l-flex l-flex-justifycenter l-flex-column">
-                <h1 class="u-text-h1 u-text-dark2">
-                    Open Educational Badges
-                </h1>
-            </div>
-        </div>
-    </div>
-    <div class="panel">
-        <div class="center">
-            <h1 class="u-text-h2">Coming soon - 1. April 2024</h1>
-            <!--TODO: This is very hacky-->
-			<h1 class="u-text-h1 u-text-dark2">&nbsp;</h1>
-        </div>
-        <div class="video-container">
-            <video width="60%" controls>
-                <source src="assets/videos/badges-curtain.mp4" type="video/mp4">
-            </video>
-        </div>
-    </div>
-</div>
-
-<div *ngIf="!curtain" class="l-containerxaxis l-containeryaxis l-flex l-flex-justifycenter l-flex-column">
+<div class="l-containerxaxis l-containeryaxis l-flex l-flex-justifycenter l-flex-column">
 	<form-message></form-message>
 	<div class="l-flex l-flex-justifycenter l-flex-aligncenter flex-wrap u-margin-bottom8x">
 		<div class="l-flex flex-1 l-flex-aligncenter l-flex-justifycenter">

@@ -45,8 +45,17 @@ import { TranslateService } from '@ngx-translate/core';
 		'[class.l-stickyfooter-chromeless]': '! showAppChrome',
 	},
 	templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit, AfterViewInit {
+    /**
+     * Enables or disables the "curtain" feature, hiding the normal page.
+     */
+    curtainEnabled = true;
+    get curtain() {
+        return this.curtainEnabled && !this.router.url.includes('impressum');
+    }
+
 	title = 'Badgr Angular';
 	loggedIn = false;
 	mobileNavOpen = false;
