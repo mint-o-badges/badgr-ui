@@ -53,6 +53,20 @@ export class AppComponent implements OnInit, AfterViewInit {
      */
     curtainEnabled = true;
     get curtain() {
+        let re = /\?curtainEnabled=(\w*)/i;
+        let match = this.router.url.match(re);
+        if (match && match.length == 2) {
+            let param: string = match[1];
+            if (param == 'false' || param == 'true' ||
+                param == 'yes' || param == 'no')
+                localStorage.setItem("curtainEnabled",
+                                     param == 'true' || param == 'yes'
+                                         ? 'true' : 'false');
+        }
+
+        let local = localStorage.getItem("curtainEnabled");
+        if (local == 'false' || local == 'true')
+            this.curtainEnabled = localStorage.getItem("curtainEnabled") == 'true';
         return this.curtainEnabled && !this.router.url.includes('impressum');
     }
 
