@@ -315,28 +315,22 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	ngOnInit() {
 		super.ngOnInit();
 		let that = this;
-		// update badge frame when a category is selected
+		// update badge frame when a category is selected, unless no-hexagon-frame checkbox is checked
 		this.badgeClassForm.rawControl.controls['badge_category'].statusChanges.subscribe((res) => {
-			if (this.currentImage) {
-				// Skip update badge icon frame if no-hexagon-frame checkbox is checked
-				if (!this.hideHexFrame) {
-					//timeout because of workaround for angular bug.
-					setTimeout(function () {
-						that.adjustUploadImage(that.badgeClassForm.value);
-					}, 10);
-				}
+			if (this.currentImage && !this.hideHexFrame) {
+                //timeout because of workaround for angular bug.
+                setTimeout(function () {
+                    that.adjustUploadImage(that.badgeClassForm.value);
+                }, 10);
 			}
 		});
-		// update badge frame when a level is selected
+		// update badge frame when a level is selected, unless no-hexagon-frame checkbox is checked
 		this.badgeClassForm.rawControl.controls['badge_level'].statusChanges.subscribe((res) => {
-			if (this.currentImage) {
-				// Skip update badge icon frame if no-hexagon-frame checkbox is checked
-				if (!this.hideHexFrame) {
-					//timeout because of workaround for angular bug.
-					setTimeout(function () {
-						that.adjustUploadImage(that.badgeClassForm.value);
-					}, 10);
-				}
+			if (this.currentImage && !this.hideHexFrame) {
+                //timeout because of workaround for angular bug.
+                setTimeout(function () {
+                    that.adjustUploadImage(that.badgeClassForm.value);
+                }, 10);
 			}
 		});
 
@@ -675,8 +669,8 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
         this.showLegend = true;
     }
 
-	handleCBoxValueChange(e) {
-		this.hideHexFrame = !this.hideHexFrame;
+	handleCBoxValueChange(event:Event) {
+		this.hideHexFrame = (<HTMLInputElement>event.target).checked;
 
 		if (this.currentImage) {
 			if (this.hideHexFrame) {
