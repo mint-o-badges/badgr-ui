@@ -12,11 +12,18 @@
 }
 
 .panel {
-	background-color: #00729c;
+	background-color: #474797;
 	padding: 5rem;
 	text-align: center;
 	position: relative;
 	max-width: 100%;
 	color: white;
 	border-radius: 1rem;
+}
+
+.nunito-normal {
+  font-family: "Nunito", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
 }
