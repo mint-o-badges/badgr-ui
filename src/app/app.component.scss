@@ -12,7 +12,6 @@
 }
 
 .panel {
-	background-color: #474797;
 	padding: 5rem;
 	text-align: center;
 	position: relative;
@@ -21,9 +20,13 @@
 	border-radius: 1rem;
 }
 
+.curtain-background {
+	background-image: url("../assets/logos/Wabenstruktur.png");
+}
+
 .nunito-normal {
-  font-family: "Nunito", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 500;
-  font-style: normal;
+	font-family: 'Nunito', sans-serif;
+	font-optical-sizing: auto;
+	font-weight: 500;
+	font-style: normal;
 }
