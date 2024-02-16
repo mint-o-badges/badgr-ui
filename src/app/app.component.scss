@@ -31,6 +31,18 @@
 	font-style: normal;
 }
 
+.header-oeb {
+	font-size: 4em;
+	font-weight: 700;
+	line-height: 1.5;
+}
+
+@media only screen and (max-width: 600px) {
+    .header-oeb {
+		font-size: 2em;
+    }
+  }
+
 .media-container {
     display: flex;
 	gap: 1em;
@@ -40,6 +52,9 @@
     .media-container {
       flex-direction: column; 
     }
+	.media-container video {
+		width: 100%;
+	}
   }
 
 .nunito-normal {
