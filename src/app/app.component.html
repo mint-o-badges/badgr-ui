@@ -1,11 +1,68 @@
 <ng-template sourceListener></ng-template>
-<header class="o-container" style="background-color: #002149;" *ngIf="curtain">
-	<div style="display: flex; justify-content: center; "> 
-	<h1 class="u-text-h1 u-text-light1 nunito-normal header-oeb">
-		Open Educational Badges
-	</h1>
+<div *ngIf="curtain" style="height: 100vh; width: 100vw">
+	<header style="text-align: center; height: 25%; margin-bottom: 2em; margin-top: 2em">
+			<div style="height: 100%; display: flex; justify-content: space-evenly; align-items: center;">
+				<div class="nunito-bold header-oeb">
+					<span style="align-self: flex-start;">Open</span>
+					<span style="align-self: flex-start;">Educational</span>
+					<span style="align-self: flex-start;">Badges</span>
+
+				</div>
+				<img class="badge-logo" width="250" height="150" src="../assets/logos/curtain_logo.png" alt="Logo for this website says: Coming soon: 01. April 2024">
+			</div>
+		
+	</header>
+		<div style="background: linear-gradient(#6100F9 85%, #F5F5F5 15%) ; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+		<div style="height: 10%; text-align: center; margin-top: 2em;">
+			<h2 class="nunito-normal" style="color: white; font-size: 2.5em; line-height: 1.5; ">
+				Was sind <br/> Open Educational Badges?
+			</h2>
+		</div>
+		<video style="max-width: 600px; width: 50%; margin-top: 2em" height="auto" controls>
+				<source src="assets/videos/badges-curtain.mp4" type="video/mp4">
+		</video>
+		<div class="iframe-container">
+				<iframe class="newsletter-form" 
+				src="https://2b1b89e9.sibforms.com/serve/MUIFAKojWi4x97UOmo2HdfRvnlJLK7yupo_
+				1AW0kPuwZAvaJKVrnY9pSznPf8Tjmv0QVrTBPNIJNbXonMqdxYOSWt8pVW1oJ433_rxMKy6MuYinwl
+				-1uOEueeJLYdc3CZWA109Ie3XYxT64NwBAAJD09w6xT_fhZ4Nsh-z-
+				Q4amYm0A3xXy6pWEdrUOuAEd1kAg6YUw7HLIi--v0" 
+				frameborder="0" scrolling="auto" allowfullscreen 
+				style="display: block;margin-right: 2em;max-width: 100%; z-index: 50;"></iframe>
+	<p class="nunito-normal form-paragraph" 
+	>
+	Melde dich hier an und 
+	wir kontaktieren dich sofort,
+	wenn du Badges erstellen kannst.
+	</p>
+
 	</div>
-</header>
+		
+	</div>
+	<footer style="height: 10%; background-color: white">
+		<div class="l-containerxaxis">
+			<div class="footer l-stickyfooter-x-footer">
+				<ul class="footer-x-leftlinks">
+					<li *ngIf="theme.showPoweredByOSL && theme.providedBy">
+						Open Educational Badges ist eine Initiative von 
+						<a href="https://matrix-gruppe.de/matrix-gemeinnuetzig/" target="_blank">matrix gGmbh</a>,
+						<a href="https://mycelia.education/" target="_blank">mycelia gGmbh</a>
+						und der 
+						<a href="{{ theme.providedBy.url }}" target="_blank">openSenselab gGmbh</a>
+						
+					</li>
+				</ul>
+	
+				<ul class="footer-x-links">
+					<li>
+						<a [href]="theme.termsOfServiceLink" target="_blank">{{ 'Start.imprint' | translate }}</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+
+	</footer>
+</div>
 <header class="o-container" *ngIf="!curtain">
 	<nav class="navbar l-containerxaxis l-stickyfooter-x-nav" [class.navbar-light]="!theme.useColorNavbar">
 		<a
@@ -291,41 +348,6 @@
 	</nav>
 </header>
 <div *ngIf="!curtain" class="loader l-stickyfooter-x-loader"></div>
-<div *ngIf="curtain" class="loader l-stickyfooter-x-loader"></div>
-
-
-<!-- Display a "curtain" instead of the normal page, if `curtain` is set to true-->
-<div *ngIf="curtain" class="l-stickyfooter-x-main o-container curtain-background">
-    <div class="l-flex l-flex-justifycenter l-flex-aligncenter flex-wrap u-margin-bottom8x"> 
-        <div class="l-flex flex-1 l-flex-aligncenter l-flex-justifycenter">
-             <div class="l-containerxaxis l-containeryaxis l-flex l-flex-justifycenter l-flex-column"> 
-                <!-- <h1 class="u-text-h1 u-text-dark2 nunito-normal" style="font-weight: 700; font-size: 5em; line-height: 1.5;">
-                    Open Educational Badges
-                </h1> -->
-            </div>
-        </div>
-    </div>
-    <div class="panel" >
-        <div class="center">
-            <h1 class="u-text-h2 u-text-dark2 nunito-normal" style="padding-bottom: 1rem ; font-weight: 700; font-size: 3em;">Coming soon - 1. April 2024</h1>
-            <!--TODO: This is very hacky-->
-            <h1 class="u-text-h1 u-text-dark2">&nbsp;</h1>
-        </div>
-        <div class="media-container">
-                <video width="50%" style="margin-top: auto; margin-bottom: auto;" controls>
-                    <source src="assets/videos/badges-curtain.mp4" type="video/mp4">
-                </video>
-					<iframe 
-							height="800"
-							width="500"
-							src="https://2b1b89e9.sibforms.com/serve/MUIFAKojWi4x97UOmo2HdfRvnlJLK7yupo_1AW0kPuwZAvaJKVrnY9pSznPf8Tjmv0QVrTBPNIJNbXonMqdxYOSWt8pVW1oJ433_rxMKy6MuYinwl-1uOEueeJLYdc3CZWA109Ie3XYxT64NwBAAJD09w6xT_fhZ4Nsh-z-Q4amYm0A3xXy6pWEdrUOuAEd1kAg6YUw7HLIi--v0"
-							frameborder="0"
-							scrolling="auto"
-							allowfullscreen
-							style="display: block;margin-left: auto;margin-right: auto;max-width: 100%;"></iframe>
-        </div>
-    </div>
-</div>
 
 
 
@@ -365,7 +387,7 @@
 <markdown-hints-dialog #markdownHintsDialog></markdown-hints-dialog>
 
 <!-- Footer -->
-<footer class="o-container">
+<footer *ngIf="!curtain" class="o-container">
 	<div class="l-containerxaxis">
 		<div class="footer l-stickyfooter-x-footer">
 			<ul class="footer-x-leftlinks">
