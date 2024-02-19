@@ -57,6 +57,12 @@
     }
   }
 
+@media only screen and (max-width: 400px) {
+    .header-oeb {
+		font-size: 1.5em;
+    }
+  } 
+
 .media-container {
     display: flex;
 	gap: 1em;
@@ -96,6 +102,12 @@
 	  width: 200px;
 	}
   }
+
+  @media only screen and (max-width: 400px) {
+    .badge-logo {
+		width: 150px;
+    }
+  }   
 
 .form-paragraph {
 	max-width: 350px;
