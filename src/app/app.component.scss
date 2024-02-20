@@ -34,20 +34,60 @@
 .header-oeb {
 	display:flex;
 	flex-direction: column;
-	font-size: 4em;
-	line-height: 1.5;
+	font-size: 6em;
+	line-height: 1.2;
 	color: #6100F9;
+	text-transform: uppercase;
+	margin-left: 5em;
 }
+
+.what-are-oeb {
+	color: white;
+	font-size: 2.25em;
+	line-height: 1.5;
+	text-transform: uppercase;
+	margin-top: 3em;
+}
+
+@media only screen and (max-width: 900px) {
+    .what-are-oeb {
+		font-size: 1.5em;
+    }
+  }
+
+  @media only screen and (max-width: 600px) {
+    .what-are-oeb {
+		font-size: 1.2em;
+    }
+  }
+
+
+@media only screen and (max-width: 1600px) {
+    .header-oeb {
+		font-size: 4.5 em;
+		margin-left: 4.5em;
+    }
+  }
+
+@media only screen and (max-width: 1440px) {
+    .header-oeb {
+		font-size: 4.5em;
+		margin-left: 4em;
+    }
+  }
+
 
 @media only screen and (max-width: 1200px) {
     .header-oeb {
 		font-size: 3.5em;
+		margin-left: 3.5em;
     }
   }
 
 @media only screen and (max-width: 900px) {
     .header-oeb {
 		font-size: 3em;
+		margin-left: 2em;
     }
   }
 
@@ -59,7 +99,7 @@
 
 @media only screen and (max-width: 400px) {
     .header-oeb {
-		font-size: 1.5em;
+		font-size: 2em;
     }
   } 
 
@@ -87,27 +127,47 @@
 .nunito-bold {
 	font-family: "Nunito", sans-serif;
     font-optical-sizing: auto;
-    font-weight: 700;
+    font-weight: 900;
     font-style: normal;
 }
 
 .badge-logo {
 	max-width: 100%;
+	min-width: 200px;
 	height: auto;
+	width: 35%
 	// margin-left: auto;
 }
 
-@media only screen and (max-width: 1200px) {
-	.badge-logo {
-	  width: 200px;
-	}
-  }
-
-  @media only screen and (max-width: 400px) {
-    .badge-logo {
-		width: 150px;
+@media only screen and (max-width: 400px) {
+    .badge-logo{
+		min-width: 150px;
     }
-  }   
+  } 
+
+// @media only screen and (max-width: 992px) {
+// 		.badge-logo {
+// 		  width: 25%;
+// 		}
+//   }
+
+    // @media (min-width: 1600px) { 
+    //     .badge-logo {
+    //         width: 12%; /* Adjust width as needed */
+    //     }
+    // }
+
+// @media only screen and (max-width: 1200px) {
+// 	.badge-logo {
+// 	  width: 20%;
+// 	}
+//   }
+
+//   @media only screen and (max-width: 400px) {
+//     .badge-logo {
+// 		width: 150px;
+//     }
+//   }   
 
 .form-paragraph {
 	max-width: 350px;
@@ -150,7 +210,7 @@
 	justify-content: center;
 	width: 100%;
 	height: 100%;
-	margin-top: 2em;
+	margin-top: 6em;
 }
 
 @media only screen and (max-width: 900px) {
