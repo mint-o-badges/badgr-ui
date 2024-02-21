@@ -285,7 +285,43 @@
 </header>
 <div class="loader l-stickyfooter-x-loader"></div>
 
-<main
+<!-- Display a "curtain" instead of the normal page, if `curtain` is set to true-->
+<!-- <div *ngIf="curtain"class="curtain-background">
+<div  class="l-stickyfooter-x-main o-container curtain-background">
+    <div class="l-flex l-flex-justifycenter l-flex-aligncenter flex-wrap u-margin-bottom8x"> 
+        <div class="l-flex flex-1 l-flex-aligncenter l-flex-justifycenter">
+             <div class="l-containerxaxis l-containeryaxis l-flex l-flex-justifycenter l-flex-column"> 
+                <h1 class="u-text-h1 u-text-dark2 nunito-normal" style="font-weight: 700; font-size: 5em; line-height: 1.5;">
+                    Open Educational Badges
+                </h1>
+            </div>
+        </div>
+    </div>
+    <div class="panel" >
+        <div class="center">
+            <h1 class="u-text-h2 u-text-dark2 nunito-normal" style="padding-bottom: 1rem ; font-weight: 700; font-size: 3em;">Coming soon - 1. April 2024</h1> -->
+            <!--TODO: This is very hacky-->
+            <!-- <h1 class="u-text-h1 u-text-dark2">&nbsp;</h1>
+        </div>
+        <div class="media-container">
+                <video width="50%" style="margin-top: auto; margin-bottom: auto;" controls>
+                    <source src="assets/videos/badges-curtain.mp4" type="video/mp4">
+                </video>
+					<iframe 
+							height="800"
+							width="500"
+							src="https://2b1b89e9.sibforms.com/serve/MUIFAKojWi4x97UOmo2HdfRvnlJLK7yupo_1AW0kPuwZAvaJKVrnY9pSznPf8Tjmv0QVrTBPNIJNbXonMqdxYOSWt8pVW1oJ433_rxMKy6MuYinwl-1uOEueeJLYdc3CZWA109Ie3XYxT64NwBAAJD09w6xT_fhZ4Nsh-z-Q4amYm0A3xXy6pWEdrUOuAEd1kAg6YUw7HLIi--v0"
+							frameborder="0"
+							scrolling="auto"
+							allowfullscreen
+							style="display: block;margin-left: auto;margin-right: auto;max-width: 100%;"></iframe>
+        </div>
+    </div>
+</div>
+
+
+<!-- Display a "curtain" instead of the normal page, if `curtain` is set to true-->
+<main 
 	class="l-stickyfooter-x-main o-container"
 	[attr.inert]="mobileNavOpen ? '' : null"
 	[class.l-inertcontainer]="mobileNavOpen"

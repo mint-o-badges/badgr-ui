@@ -13,6 +13,8 @@ import {ShareSocialDialogOptions} from '../../../common/dialogs/share-social-dia
 import {addQueryParamsToUrl} from '../../../common/util/url-util';
 import {AppConfigService} from '../../../common/app-config.service';
 import { LinkEntry } from "../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component";
+import { SuperBadge } from '../../../issuer/models/superbadge.model';
+import { SuperBadgeManager } from '../../../issuer/services/superbadge-manager.service';
 
 
 @Component({
@@ -30,7 +32,11 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 
 	collectionLoadedPromise: Promise<unknown>;
 	collection: RecipientBadgeCollection = new RecipientBadgeCollection(null);
+	superBadgesLoadedPromise: Promise<unknown>;
+	superBadges: SuperBadge[] =null;
 	crumbs: LinkEntry[];
+	superBadgesLoaded: Promise<unknown>;
+
 
 	constructor(
 		router: Router,
@@ -40,12 +46,28 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 		private messageService: MessageService,
 		private recipientBadgeManager: RecipientBadgeManager,
 		private recipientBadgeCollectionManager: RecipientBadgeCollectionManager,
+		private superBadgeManager: SuperBadgeManager,
 		private configService: AppConfigService,
 		private dialogService: CommonDialogsService
 	) {
 		super(router, route, loginService);
 
 		title.setTitle(`Collections - ${this.configService.theme['serviceName'] || "Badgr"}`);
+
+		this.superBadgesLoaded = this.loadSuperBadges();
+
+
+		// this.superBadgesLoadedPromise = Promise.all([this.superBadgeManager.superBadgeList.loadedPromise])
+		//     .then(([list]) => {
+		// 		this.superBadge = list.entityForSlug('test1234');
+		// 		console.log(this.superBadge)
+		// 		return this.superBadge
+		// 	})
+		// 	.then(superBadge => superBadge.badgesPromise)
+			
+
+
+
 
 		this.collectionLoadedPromise = Promise.all([
 				this.recipientBadgeCollectionManager.recipientBadgeCollectionList.loadedPromise,
@@ -68,10 +90,28 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 	}
 
 	get collectionSlug(): string { return this.route.snapshot.params['collectionSlug']; }
+	get superBadgeSlug(): string {return 'test1234'};
+
 
 	ngOnInit() {
 		super.ngOnInit();
 	}
+
+	async loadSuperBadges() {
+		return new Promise(async (resolve, reject) => {
+			this.superBadgeManager.allSuperBadges$.subscribe(
+				(badges) => {
+					this.superBadges = badges;
+					resolve(badges);
+				},
+				(error) => {
+					this.messageService.reportAndThrowError('Failed to load badges', error);
+				},
+			);
+		});
+	}
+
+
 
 	manageBadges() {
 		this.recipientBadgeDialog.openDialog({

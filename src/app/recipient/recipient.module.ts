@@ -19,6 +19,8 @@ import { RecipientBadgeCollectionSelectionDialogComponent } from "./components/r
 import { RecipientBadgeSelectionDialog } from "./components/recipient-badge-selection-dialog/recipient-badge-selection-dialog.component";
 import { MozzTransitionModule } from "../mozz-transition/mozz-transition.module";
 import { TranslateModule } from '@ngx-translate/core';
+import { SuperBadgeManager } from '../issuer/services/superbadge-manager.service';
+import { SuperBadgeApiService } from '../issuer/services/superbadge-api.service';
 
 const routes: Routes = [
 	/* Recipient Badges */
@@ -84,7 +86,9 @@ const routes: Routes = [
 		RecipientBadgeApiService,
 		RecipientBadgeManager,
 		RecipientBadgeCollectionApiService,
-		RecipientBadgeCollectionManager
+		RecipientBadgeCollectionManager,
+		SuperBadgeManager,
+		SuperBadgeApiService
 	],
 	exports: []
 })

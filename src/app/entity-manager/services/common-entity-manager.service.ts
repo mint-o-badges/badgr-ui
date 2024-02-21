@@ -8,6 +8,7 @@ import {AppIntegrationManager} from '../../profile/services/app-integration-mana
 import {IssuerManager} from '../../issuer/services/issuer-manager.service';
 import {UserProfileManager} from '../../common/services/user-profile-manager.service';
 import {OAuthManager} from '../../common/services/oauth-manager.service';
+import { SuperBadgeManager } from '../../issuer/services/superbadge-manager.service';
 
 /**
  * Common entity manager which orchestrates communication between the various types of managed entities so they can
@@ -15,6 +16,10 @@ import {OAuthManager} from '../../common/services/oauth-manager.service';
  */
 @Injectable()
 export class CommonEntityManager {
+	get superBadgeManager(): SuperBadgeManager {
+		return this.injector.get(SuperBadgeManager);
+	}
+
 	get badgeInstanceManager(): BadgeInstanceManager {
 		return this.injector.get(BadgeInstanceManager);
 	}

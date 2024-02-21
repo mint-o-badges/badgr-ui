@@ -24,6 +24,8 @@ import { CommonDialogsService } from '../../../common/services/common-dialogs.se
 import { BadgeClass } from '../../models/badgeclass.model';
 import { AppConfigService } from '../../../common/app-config.service';
 import { typedFormGroup } from '../../../common/util/typed-forms';
+import {SuperBadgeSelectionDialog} from '../superbadge-selection-dialog/superbadgebadge-selection-dialog.component'
+import { SuperBadge } from '../../models/superbadge.model';
 
 @Component({
     selector: 'badgeclass-edit-form',
@@ -31,6 +33,10 @@ import { typedFormGroup } from '../../../common/util/typed-forms';
 })
 export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
     baseUrl: string;
+    isSuperBadgeChecked: boolean = false
+    badgeClassesLoadedPromise: Promise<unknown>
+    badgeClasses: BadgeClass[] | null
+    superBadge: SuperBadge = new SuperBadge(null)
     @Input()
     set badgeClass(badgeClass: BadgeClass) {
         if (this.existingBadgeClass !== badgeClass) {
@@ -125,6 +131,9 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
         .addControl('target_framework', '')
         .addControl('target_code', '')
     );
+
+    @ViewChild("superBadgeDialog")
+	superBadgeDialog: SuperBadgeSelectionDialog;
 
     @ViewChild('badgeStudio')
     badgeStudio: BadgeStudioComponent;
@@ -227,6 +236,30 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
         title.setTitle(`Create Badge - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 
         this.baseUrl = this.configService.apiConfig.baseUrl;
+
+        this.badgeClassesLoadedPromise = Promise.all([
+            // this.recipientBadgeCollectionManager.recipientBadgeCollectionList.loadedPromise,
+            // this.recipientBadgeManager.recipientBadgeList.loadedPromise
+            this.badgeClassManager.allBadgesList.loadedPromise
+        ])
+        .then(([list]) => {
+            this.badgeClasses = list.entities.map(e => e)
+            // this.superBadge = list.entityForSlug(this.collectionSlug);
+            // this.crumbs = [
+            //     {title: 'Collections', routerLink: ['/recipient/badge-collections']},
+            //     {title: this.collection.name, routerLink: ['/collection/' + this.collection.slug]},
+            // ];
+            console.log(this.badgeClasses)
+            return this.badgeClasses;
+        })
+        // .then(badge => collection.badgesPromise)
+        .catch(err => {
+            router.navigate(["/"]);
+            return this.messageService.reportHandledError(`Failed to load collection ${this.badgeClass}`);
+        }
+        );
+
+        
     }
 
     initFormFromExisting(badgeClass: BadgeClass) {
@@ -310,6 +343,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
                 },10)
             }
         })
+        
     }
 
     enableTags() {
@@ -336,6 +370,35 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
             event.preventDefault();
         }
     }
+
+    handleSuperBadgeCheck(){
+        this.isSuperBadgeChecked = !this.isSuperBadgeChecked
+    }
+
+    manageBadges() {
+        console.log(this.superBadgeDialog)
+		this.superBadgeDialog.openDialog({
+			dialogId: "manage-superbadge-badges",
+			dialogTitle: "Add Badges",
+			multiSelectMode: true,
+			// restrictToIssuerId: null,
+			// omittedCollection: this.collection.badges
+            omittedCollection: []
+		})
+        .then(selectedBadges => {
+            console.log(selectedBadges)
+			const  badgeCollection = selectedBadges.concat(this.superBadge.badges);
+            console.log(badgeCollection)
+
+			// badgeCollection.forEach(badge => badge.markAccepted());
+
+			// this.superBadge.updateBadges(badgeCollection);
+			// this.superBadge.save().then(
+			// 	success => this.messageService.reportMinorSuccess(`Superbadge ${this.superBadge.name} badges saved successfully`),
+			// 	failure => this.messageService.reportHandledError(`Failed to save Superbadge`, failure)
+			// );
+		});
+	}
 
     removeTag(tag: string) {
         this.tags.delete(tag);
@@ -435,6 +498,17 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
     }
 
     async onSubmit() {
+        if(this.isSuperBadgeChecked){
+            let superBadgeData = {
+                name: this.badgeClassForm.value.badge_name,
+                description: this.badgeClassForm.value.badge_description ?? '',
+                image: this.badgeClassForm.value.badge_image ?? '',
+                slug: this.badgeClassForm.value.badge_name,
+                badges: []
+            }
+            this.badgeClassManager.createSuperBadgeClass(superBadgeData)
+            return null
+        }
         this.badgeClassForm.markTreeDirty();
         if (this.expirationEnabled) {
             this.expirationForm.markTreeDirty();

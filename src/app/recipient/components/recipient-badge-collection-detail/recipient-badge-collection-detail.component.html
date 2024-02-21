@@ -7,6 +7,9 @@
 		</div>
 	</div>
 	<div class="l-containerxaxis">
+		<div *bgAwaitPromises="[superBadgesLoadedPromise]">
+			<span>{{superBadges.length}}</span>
+		</div>
 		<div class="topbar-x-wrap" *bgAwaitPromises="[collectionLoadedPromise]">
 			<ng-container *ngIf="!editForm.isEditing">
 				<div class="topbar-x-heading">{{ collection?.name }}</div>
