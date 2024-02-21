@@ -11,7 +11,7 @@ import {RecipientBadgeInstance} from '../../../recipient/models/recipient-badge.
 import {BaseDialog} from '../../../common/dialogs/base-dialog';
 import { BadgeClass } from '../../models/badgeclass.model';
 
-export interface SuperBadgeSelectionDialogOptions {
+export interface CollectionBadgeSelectionDialogOptions {
 	dialogId: string;
 	dialogTitle: string;
 	multiSelectMode: boolean;
@@ -27,10 +27,10 @@ export interface SuperBadgeSelectionDialogOptions {
 // }
 
 @Component({
-	selector: 'superbadge-selection-dialog',
-	templateUrl: './superbadge-selection-dialog.component.html'
+	selector: 'collectionbadge-selection-dialog',
+	templateUrl: './collectionbadge-selection-dialog.component.html'
 })
-export class SuperBadgeSelectionDialog extends BaseDialog {
+export class CollectionBadgeSelectionDialog extends BaseDialog {
 	@Input() badgeClasses: BadgeClass[];
 	// get searchQuery() { return this._searchQuery; }
 
@@ -62,7 +62,7 @@ export class SuperBadgeSelectionDialog extends BaseDialog {
 	// 	groupByIssuer: true,
 	// 	badgeSortBy: "newest-first"
 	// };
-	dialogId = "SuperBadgeDialog";
+	dialogId = "CollectionBadgeDialog";
 	dialogTitle = "Select Badges";
 
 	multiSelectMode = false;
@@ -107,7 +107,7 @@ export class SuperBadgeSelectionDialog extends BaseDialog {
 			multiSelectMode = true,
 			// restrictToIssuerId = null,
 			// omittedCollection = []
-		}: SuperBadgeSelectionDialogOptions
+		}: CollectionBadgeSelectionDialogOptions
 	): Promise<BadgeClass[]> {
 		this.showModal();
 		// this._searchQuery = "";

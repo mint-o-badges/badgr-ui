@@ -14,7 +14,7 @@
 		<div class="formsection-x-body">
 			<h2>CollectionBadge</h2>
 			<label class="checkbox">
-				<input type="checkbox" (change)="handleSuperBadgeCheck()"/>
+				<input type="checkbox" (change)="handleCollectionBadgeCheck()"/>
 			</label>
 
 		</div>
@@ -85,10 +85,9 @@
 	</div>
 
 	<div *bgAwaitPromises="[badgeClassesLoadedPromise]">
-		<div *ngIf="isSuperBadgeChecked" class="formsection" >
+		<div *ngIf="isCollectionBadgeChecked" class="formsection" >
 			<div class="formsection-x-title">
 				<h2>Badges</h2>
-				<!-- <span>(Wähle mindestens 2 Badges für deinen Superbadge)</span> -->
 			</div>
 			<div class="formsection-x-body">
 				<div class="emptysection-x-buttons">
@@ -516,4 +515,4 @@
 	</div>
 </form>
 
-<superbadge-selection-dialog #superBadgeDialog [badgeClasses]="badgeClasses"></superbadge-selection-dialog>
+<collectionbadge-selection-dialog #collectionBadgeDialog [badgeClasses]="badgeClasses"></collectionbadge-selection-dialog>

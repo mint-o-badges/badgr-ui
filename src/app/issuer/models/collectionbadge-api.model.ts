@@ -1,12 +1,12 @@
-export interface SuperbadgeRef {
+export interface CollectionbadgeRef {
 	"@id": string;
 	slug: string
 }
 
-export interface ApiSuperBadge {
+export interface ApiCollectionBadge {
 	name: string;
 	description: string;
-	badges: ApiSuperBadgeEntry[];
+	badges: ApiCollectionBadgeEntry[];
 	image: string;
 	// issuerUrl: string;
     // issuerName: string;
@@ -16,12 +16,12 @@ export interface ApiSuperBadge {
 }
 
 
-export interface SuperBadgeEntryRef {
+export interface CollectionBadgeEntryRef {
 	"@id": string;
 	slug: string;
 }
 
-export interface ApiSuperBadgeEntry {
+export interface ApiCollectionBadgeEntry {
 	id: string;
 	description: string;
 }

@@ -13,8 +13,8 @@ import {ShareSocialDialogOptions} from '../../../common/dialogs/share-social-dia
 import {addQueryParamsToUrl} from '../../../common/util/url-util';
 import {AppConfigService} from '../../../common/app-config.service';
 import { LinkEntry } from "../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component";
-import { SuperBadge } from '../../../issuer/models/superbadge.model';
-import { SuperBadgeManager } from '../../../issuer/services/superbadge-manager.service';
+import { CollectionBadge } from '../../../issuer/models/collectionbadge.model';
+import { CollectionBadgeManager } from '../../../issuer/services/collectionbadge-manager.service';
 
 
 @Component({
@@ -32,10 +32,10 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 
 	collectionLoadedPromise: Promise<unknown>;
 	collection: RecipientBadgeCollection = new RecipientBadgeCollection(null);
-	superBadgesLoadedPromise: Promise<unknown>;
-	superBadges: SuperBadge[] =null;
+	collectionBadgesLoadedPromise: Promise<unknown>;
+	collectionBadges: CollectionBadge[] =null;
 	crumbs: LinkEntry[];
-	superBadgesLoaded: Promise<unknown>;
+	collectionBadgesLoaded: Promise<unknown>;
 
 
 	constructor(
@@ -46,7 +46,7 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 		private messageService: MessageService,
 		private recipientBadgeManager: RecipientBadgeManager,
 		private recipientBadgeCollectionManager: RecipientBadgeCollectionManager,
-		private superBadgeManager: SuperBadgeManager,
+		private collectionBadgeManager: CollectionBadgeManager,
 		private configService: AppConfigService,
 		private dialogService: CommonDialogsService
 	) {
@@ -54,7 +54,7 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 
 		title.setTitle(`Collections - ${this.configService.theme['serviceName'] || "Badgr"}`);
 
-		this.superBadgesLoaded = this.loadSuperBadges();
+		this.collectionBadgesLoaded = this.loadCollectionBadges();
 
 
 		// this.superBadgesLoadedPromise = Promise.all([this.superBadgeManager.superBadgeList.loadedPromise])
@@ -90,18 +90,18 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 	}
 
 	get collectionSlug(): string { return this.route.snapshot.params['collectionSlug']; }
-	get superBadgeSlug(): string {return 'test1234'};
+	get collectionBadgeSlug(): string {return 'test1234'};
 
 
 	ngOnInit() {
 		super.ngOnInit();
 	}
 
-	async loadSuperBadges() {
+	async loadCollectionBadges() {
 		return new Promise(async (resolve, reject) => {
-			this.superBadgeManager.allSuperBadges$.subscribe(
+			this.collectionBadgeManager.allCollectionBadges$.subscribe(
 				(badges) => {
-					this.superBadges = badges;
+					this.collectionBadges = badges;
 					resolve(badges);
 				},
 				(error) => {

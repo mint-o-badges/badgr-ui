@@ -24,8 +24,8 @@ import { CommonDialogsService } from '../../../common/services/common-dialogs.se
 import { BadgeClass } from '../../models/badgeclass.model';
 import { AppConfigService } from '../../../common/app-config.service';
 import { typedFormGroup } from '../../../common/util/typed-forms';
-import {SuperBadgeSelectionDialog} from '../superbadge-selection-dialog/superbadgebadge-selection-dialog.component'
-import { SuperBadge } from '../../models/superbadge.model';
+import { CollectionBadgeSelectionDialog } from '../collectionbadge-selection-dialog/collectionbadgebadge-selection-dialog.component';
+import { CollectionBadge } from '../../models/collectionbadge.model';
 
 @Component({
     selector: 'badgeclass-edit-form',
@@ -33,10 +33,10 @@ import { SuperBadge } from '../../models/superbadge.model';
 })
 export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
     baseUrl: string;
-    isSuperBadgeChecked: boolean = false
+    isCollectionBadgeChecked: boolean = false
     badgeClassesLoadedPromise: Promise<unknown>
     badgeClasses: BadgeClass[] | null
-    superBadge: SuperBadge = new SuperBadge(null)
+    collectionBadge: CollectionBadge = new CollectionBadge(null)
     @Input()
     set badgeClass(badgeClass: BadgeClass) {
         if (this.existingBadgeClass !== badgeClass) {
@@ -132,8 +132,8 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
         .addControl('target_code', '')
     );
 
-    @ViewChild("superBadgeDialog")
-	superBadgeDialog: SuperBadgeSelectionDialog;
+    @ViewChild("collectionBadgeDialog")
+	collectionBadgeDialog: CollectionBadgeSelectionDialog;
 
     @ViewChild('badgeStudio')
     badgeStudio: BadgeStudioComponent;
@@ -371,14 +371,14 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
         }
     }
 
-    handleSuperBadgeCheck(){
-        this.isSuperBadgeChecked = !this.isSuperBadgeChecked
+    handleCollectionBadgeCheck(){
+        this.isCollectionBadgeChecked = !this.isCollectionBadgeChecked
     }
 
     manageBadges() {
-        console.log(this.superBadgeDialog)
-		this.superBadgeDialog.openDialog({
-			dialogId: "manage-superbadge-badges",
+        console.log(this.collectionBadgeDialog)
+		this.collectionBadgeDialog.openDialog({
+			dialogId: "manage-collectionbadge-badges",
 			dialogTitle: "Add Badges",
 			multiSelectMode: true,
 			// restrictToIssuerId: null,
@@ -387,7 +387,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		})
         .then(selectedBadges => {
             console.log(selectedBadges)
-			const  badgeCollection = selectedBadges.concat(this.superBadge.badges);
+			const  badgeCollection = selectedBadges.concat(this.collectionBadge.badges);
             console.log(badgeCollection)
 
 			// badgeCollection.forEach(badge => badge.markAccepted());
@@ -498,15 +498,15 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
     }
 
     async onSubmit() {
-        if(this.isSuperBadgeChecked){
-            let superBadgeData = {
+        if(this.isCollectionBadgeChecked){
+            let collectionBadgeData = {
                 name: this.badgeClassForm.value.badge_name,
                 description: this.badgeClassForm.value.badge_description ?? '',
                 image: this.badgeClassForm.value.badge_image ?? '',
                 slug: this.badgeClassForm.value.badge_name,
                 badges: []
             }
-            this.badgeClassManager.createSuperBadgeClass(superBadgeData)
+            this.badgeClassManager.createCollectionBadgeClass(collectionBadgeData)
             return null
         }
         this.badgeClassForm.markTreeDirty();

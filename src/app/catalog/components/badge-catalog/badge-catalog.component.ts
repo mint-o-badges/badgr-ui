@@ -16,8 +16,8 @@ import { BadgeClassManager } from '../../../issuer/services/badgeclass-manager.s
 import { StringMatchingUtil } from '../../../common/util/string-matching-util';
 import { BadgeClassCategory } from '../../../issuer/models/badgeclass-api.model';
 import { TranslateService } from '@ngx-translate/core';
-import { SuperBadge } from '../../../issuer/models/superbadge.model';
-import { SuperBadgeManager } from '../../../issuer/services/superbadge-manager.service';
+import { CollectionBadge } from '../../../issuer/models/collectionbadge.model';
+import { CollectionBadgeManager } from '../../../issuer/services/collectionbadge-manager.service';
 
 @Component({
 	selector: 'app-badge-catalog',
@@ -41,8 +41,8 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 
 	// issuersLoaded: Promise<unknown>;
 	badgesLoaded: Promise<unknown>;
-	superBadgesLoaded: Promise<unknown>;
-	superBadges: SuperBadge[] =null;
+	collectionBadgesLoaded: Promise<unknown>;
+	collectionBadges: CollectionBadge[] =null;
 
 	showLegend = false;
 	tags: string[] = [];
@@ -104,7 +104,7 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		protected messageService: MessageService,
 		protected configService: AppConfigService,
 		protected badgeClassService: BadgeClassManager,
-		private superBadgeManager: SuperBadgeManager,
+		private collectionBadgeManager: CollectionBadgeManager,
 
 		router: Router,
 		route: ActivatedRoute,
@@ -115,7 +115,7 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 
 		// subscribe to issuer and badge class changes
 		this.badgesLoaded = this.loadBadges();
-		this.superBadgesLoaded = this.loadSuperBadges();
+		this.collectionBadgesLoaded = this.loadCollectionBadges();
 
 	}
 
@@ -139,11 +139,11 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		});
 	}
 
-	async loadSuperBadges() {
+	async loadCollectionBadges() {
 		return new Promise(async (resolve, reject) => {
-			this.superBadgeManager.allSuperBadges$.subscribe(
+			this.collectionBadgeManager.allCollectionBadges$.subscribe(
 				(badges) => {
-					this.superBadges = badges;
+					this.collectionBadges = badges;
 					resolve(badges);
 				},
 				(error) => {

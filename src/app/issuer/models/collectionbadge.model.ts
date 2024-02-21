@@ -1,11 +1,11 @@
 import {ManagedEntity} from '../../common/model/managed-entity';
 import {ApiEntityRef} from '../../common/model/entity-ref';
-import {ApiSuperBadge, ApiSuperBadgeEntry, SuperBadgeEntryRef, SuperbadgeRef} from './superbadge-api.model'
+import {ApiCollectionBadge, ApiCollectionBadgeEntry, CollectionBadgeEntryRef, CollectionbadgeRef} from './collectionbadge-api.model'
 import { BadgeClass } from './badgeclass.model';
 import {EmbeddedEntitySet} from '../../common/model/managed-entity-set';
 import {CommonEntityManager} from '../../entity-manager/services/common-entity-manager.service';
 
-export class SuperBadge extends ManagedEntity<ApiSuperBadge, SuperbadgeRef> {
+export class CollectionBadge extends ManagedEntity<ApiCollectionBadge, CollectionbadgeRef> {
 
 	get name(): string { return this.apiModel.name; }
 	set name(name: string) { this.apiModel.name = name; }
@@ -26,29 +26,29 @@ export class SuperBadge extends ManagedEntity<ApiSuperBadge, SuperbadgeRef> {
 	get badgesPromise(): Promise<BadgeClass[]> {
 		return Promise.all([
 			this.badgeEntries.loadedPromise,
-			this.superBadgeManager.superBadgeList.loadedPromise
+			this.collectionBadgeManager.collectionBadgeList.loadedPromise
 		]).then(
 			([list]) => list.entities.map(e => e.badge)
 		);
 	}
 	badgeEntries = new EmbeddedEntitySet<
-		SuperBadge,
-		SuperBadgeEntry,
-        ApiSuperBadgeEntry
+		CollectionBadge,
+		CollectionBadgeEntry,
+        ApiCollectionBadgeEntry
 	>(
 		this,
 		() => this.apiModel.badges,
-		apiEntry => new SuperBadgeEntry(this, apiEntry),
-		apiEntry => SuperBadgeEntry.urlFromApiModel(this, apiEntry)
+		apiEntry => new CollectionBadgeEntry(this, apiEntry),
+		apiEntry => CollectionBadgeEntry.urlFromApiModel(this, apiEntry)
 	);
 
-	static urlForApiModel(apiModel: ApiSuperBadge): string {
+	static urlForApiModel(apiModel: ApiCollectionBadge): string {
 		return "badgr:badge-collection/" + apiModel.slug;
 	}
 
 	protected buildApiRef(): ApiEntityRef {
 		return {
-			"@id": SuperBadge.urlForApiModel(this.apiModel),
+			"@id": CollectionBadge.urlForApiModel(this.apiModel),
 			slug: this.apiModel.slug,
 		};
 	}
@@ -56,7 +56,7 @@ export class SuperBadge extends ManagedEntity<ApiSuperBadge, SuperbadgeRef> {
 
 	constructor(
 		commonManager: CommonEntityManager,
-		initialEntity: ApiSuperBadge = null,
+		initialEntity: ApiCollectionBadge = null,
 		onUpdateSubscribed: () => void = undefined
 	) {
 		super(commonManager, onUpdateSubscribed);
@@ -96,7 +96,7 @@ export class SuperBadge extends ManagedEntity<ApiSuperBadge, SuperbadgeRef> {
 				.map(b => ({
 					id: b.slug,
 					description: null
-				} as ApiSuperBadgeEntry))
+				} as ApiCollectionBadgeEntry))
 		);
 
 		this.apiModel.badges = newApiList;
@@ -104,8 +104,8 @@ export class SuperBadge extends ManagedEntity<ApiSuperBadge, SuperbadgeRef> {
 	}
 
 	save(): Promise<this> {
-		return this.superBadgeManager.superBadgeApiService
-			.saveSuperBadge(this.apiModel)
+		return this.collectionBadgeManager.collectionBadgeApiService
+			.saveCollectionBadge(this.apiModel)
 			.then(newModel => this.applyApiModel(newModel));
 	}
 
@@ -136,9 +136,9 @@ export class SuperBadge extends ManagedEntity<ApiSuperBadge, SuperbadgeRef> {
 	}
 }
 
-export class SuperBadgeEntry extends ManagedEntity<
-	ApiSuperBadgeEntry,
-	SuperBadgeEntryRef
+export class CollectionBadgeEntry extends ManagedEntity<
+	ApiCollectionBadgeEntry,
+	CollectionBadgeEntryRef
 > {
 
 	get badgeSlug(): string {
@@ -146,7 +146,7 @@ export class SuperBadgeEntry extends ManagedEntity<
 	}
 
 	get badge(): any {
-		return this.superBadgeManager.superBadgeList.entityForSlug(this.badgeSlug);
+		return this.collectionBadgeManager.collectionBadgeList.entityForSlug(this.badgeSlug);
 	}
 
 	get description(): string {
@@ -158,16 +158,16 @@ export class SuperBadgeEntry extends ManagedEntity<
 	}
 
 	static urlFromApiModel(
-		superBadge: SuperBadge,
-		apiModel: ApiSuperBadgeEntry
+		collectionBadge: CollectionBadge,
+		apiModel: ApiCollectionBadgeEntry
 	) {
-		return `badgr:superbadge/${superBadge.slug}/entry/${apiModel.id}`;
+		return `badgr:collectionbadge/${collectionBadge.slug}/entry/${apiModel.id}`;
 	}
 	constructor(
-		public superBadge: SuperBadge,
-		initialEntity: ApiSuperBadgeEntry = null,
+		public collectionBadge: CollectionBadge,
+		initialEntity: ApiCollectionBadgeEntry = null,
 	) {
-		super(superBadge.commonManager, null);
+		super(collectionBadge.commonManager, null);
 
 		if (initialEntity) {
 			this.applyApiModel(initialEntity);
@@ -176,8 +176,8 @@ export class SuperBadgeEntry extends ManagedEntity<
 
 	protected buildApiRef(): ApiEntityRef {
 		return {
-			"@id": SuperBadgeEntry.urlFromApiModel(this.superBadge, this.apiModel),
-			slug: `badge-collection-${this.superBadge.slug}-entry-${this.apiModel.id}`,
+			"@id": CollectionBadgeEntry.urlFromApiModel(this.collectionBadge, this.apiModel),
+			slug: `badge-collection-${this.collectionBadge.slug}-entry-${this.apiModel.id}`,
 		};
 	}
 }

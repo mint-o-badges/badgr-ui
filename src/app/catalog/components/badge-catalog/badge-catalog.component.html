@@ -149,20 +149,20 @@
 			</ng-container>
 		</section>
 	</ng-template>
-	<ng-template [showLoader]="true" [bgAwaitPromises]="[superBadgesLoaded]">
+	<ng-template [showLoader]="true" [bgAwaitPromises]="[collectionBadgesLoaded]">
 		<section class="l-containerxaxis l-containeryaxis l-responsivelist">
 			<h3 class="u-text-h3-semibold u-margin-bottom2x u-margin-top6x u-text-dark1">
-			  SuperBadges 
+			  CollectionBadges 
 			  <span class="u-text-small-semibold-caps u-text-dark4 u-margin-left2x"
-							>{{ superBadges.length }}
-							{{ superBadges.length == 1 ? 'Badge' : 'Badges' }}</span
+							>{{ collectionBadges.length }}
+							{{ collectionBadges.length == 1 ? 'Badge' : 'Badges' }}</span
 						>
 			</h3>
 
 			<div class="l-grid l-grid-large">
 				<!-- TODO: Fix the badgecard link for sharing and routing -->
 				<bg-badgecard
-					*ngFor="let badge of superBadges"
+					*ngFor="let badge of collectionBadges"
 					[badgeTitle]="badge.name"
 					[badgeImage]="badge.image"
 					[badgeDescription]="badge.description"
