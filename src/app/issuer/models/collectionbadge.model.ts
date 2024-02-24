@@ -87,17 +87,17 @@ export class CollectionBadge extends ManagedEntity<ApiCollectionBadge, Collectio
 		let newApiList = (this.apiModel.badges || []);
 
 		// Only keep entries that are still referenced in the new list
-		newApiList = newApiList.filter(e => newBadges.find(b => b.slug === e.id) != null);
+		// newApiList = newApiList.filter(e => newBadges.find(b => b.slug === e.id) != null);
 
 		// Add entries for badges that aren't in the API list
-		newApiList.push(
-			... newBadges
-				.filter(b => !newApiList.find(a => a.id === b.slug))
-				.map(b => ({
-					id: b.slug,
-					description: null
-				} as ApiCollectionBadgeEntry))
-		);
+		// newApiList.push(
+		// 	... newBadges
+		// 		.filter(b => !newApiList.find(a => a.id === b.slug))
+		// 		.map(b => ({
+		// 			id: b.slug,
+		// 			// description: null
+		// 		} as ApiCollectionBadgeEntry))
+		// );
 
 		this.apiModel.badges = newApiList;
 		this.applyApiModel(this.apiModel, /* externalChange */false);
@@ -124,7 +124,7 @@ export class CollectionBadge extends ManagedEntity<ApiCollectionBadge, Collectio
 		if (! this.containsBadge(badge)) {
 			this.badgeEntries.addOrUpdate({
 				id: badge.slug,
-				description: ""
+				// description: ""
 			});
 		}
 	}
@@ -149,13 +149,13 @@ export class CollectionBadgeEntry extends ManagedEntity<
 		return this.collectionBadgeManager.collectionBadgeList.entityForSlug(this.badgeSlug);
 	}
 
-	get description(): string {
-		return this.apiModel.description;
-	}
+	// get description(): string {
+	// 	return this.apiModel.description;
+	// }
 
-	set description(description: string) {
-		this.apiModel.description = description;
-	}
+	// set description(description: string) {
+	// 	this.apiModel.description = description;
+	// }
 
 	static urlFromApiModel(
 		collectionBadge: CollectionBadge,

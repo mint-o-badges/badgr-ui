@@ -6,7 +6,7 @@ export interface CollectionbadgeRef {
 export interface ApiCollectionBadge {
 	name: string;
 	description: string;
-	badges: ApiCollectionBadgeEntry[];
+	badges: any []
 	image: string;
 	// issuerUrl: string;
     // issuerName: string;
@@ -23,5 +23,5 @@ export interface CollectionBadgeEntryRef {
 
 export interface ApiCollectionBadgeEntry {
 	id: string;
-	description: string;
+	// description: string;
 }

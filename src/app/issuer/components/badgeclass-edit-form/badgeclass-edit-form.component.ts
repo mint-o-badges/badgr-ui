@@ -26,6 +26,7 @@ import { AppConfigService } from '../../../common/app-config.service';
 import { typedFormGroup } from '../../../common/util/typed-forms';
 import { CollectionBadgeSelectionDialog } from '../collectionbadge-selection-dialog/collectionbadgebadge-selection-dialog.component';
 import { CollectionBadge } from '../../models/collectionbadge.model';
+import { ApiCollectionBadgeEntry } from '../../models/collectionbadge-api.model';
 
 @Component({
     selector: 'badgeclass-edit-form',
@@ -37,6 +38,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
     badgeClassesLoadedPromise: Promise<unknown>
     badgeClasses: BadgeClass[] | null
     collectionBadge: CollectionBadge = new CollectionBadge(null)
+    selectedBadgeClasses: BadgeClass[] = []
     @Input()
     set badgeClass(badgeClass: BadgeClass) {
         if (this.existingBadgeClass !== badgeClass) {
@@ -376,9 +378,8 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
     }
 
     manageBadges() {
-        console.log(this.collectionBadgeDialog)
 		this.collectionBadgeDialog.openDialog({
-			dialogId: "manage-collectionbadge-badges",
+			dialogId: "manage-collectionselectedBadgesbadge-badges",
 			dialogTitle: "Add Badges",
 			multiSelectMode: true,
 			// restrictToIssuerId: null,
@@ -386,17 +387,17 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
             omittedCollection: []
 		})
         .then(selectedBadges => {
-            console.log(selectedBadges)
 			const  badgeCollection = selectedBadges.concat(this.collectionBadge.badges);
-            console.log(badgeCollection)
+            this.selectedBadgeClasses = badgeCollection;
+            console.log(this.selectedBadgeClasses[0].apiModel.name)
 
-			// badgeCollection.forEach(badge => badge.markAccepted());
+            // this.collectionBadge.updateBadges(badgeCollection);
+            // this.collectionBadge.save().then(
+            //     success => this.messageService.reportMinorSuccess(`CollectionBadge ${this.collectionBadge.name} badges saved successfully`),
+            //     failure => this.messageService.reportHandledError(`Failed to save Collectionbadge`, failure)
+            // );
 
-			// this.superBadge.updateBadges(badgeCollection);
-			// this.superBadge.save().then(
-			// 	success => this.messageService.reportMinorSuccess(`Superbadge ${this.superBadge.name} badges saved successfully`),
-			// 	failure => this.messageService.reportHandledError(`Failed to save Superbadge`, failure)
-			// );
+
 		});
 	}
 
@@ -504,7 +505,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
                 description: this.badgeClassForm.value.badge_description ?? '',
                 image: this.badgeClassForm.value.badge_image ?? '',
                 slug: this.badgeClassForm.value.badge_name,
-                badges: []
+                badges: this.selectedBadgeClasses.map(item => item.apiModel.slug)
             }
             this.badgeClassManager.createCollectionBadgeClass(collectionBadgeData)
             return null
