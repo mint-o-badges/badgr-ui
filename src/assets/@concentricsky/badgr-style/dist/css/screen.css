@@ -233,7 +233,7 @@ dialog {
   --box-shadow-inset: inset -3px 0px 5px -3px rgba(0, 0, 0, 0.2);
   --text-shadow-light1: 1px 1px 1px rgba(255, 255, 255, 0.8);
   /* Font */
-  --font-family: "Open Sans", sans-serif;
+  --font-family: "rubik","Open Sans", sans-serif;
   --font-family-condensed: "Open Sans Condensed", sans-serif;
   --font-family-header: "Metronic Slab", serif;
   --font-family-code: courier, monospace;
@@ -302,6 +302,13 @@ dialog {
   font-style: normal;
   font-weight: normal;
   src: url("fonts/OpenSans-CondBold-webfont.woff") format("woff"); }
+
+@font-face {
+    font-family: 'rubik';
+    font-style: normal;
+    font-weight: 500;
+    src: url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap')
+  }
 
 dialog[open] {
   -webkit-animation: show 150ms ease normal;
