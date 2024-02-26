@@ -14,6 +14,7 @@ code/
 temp/
 
 !src/breakdown/static/js/*.js
+!src/assets/@concentricsky/badgr-style/dist
 
 # vscode updates
 .vscode
