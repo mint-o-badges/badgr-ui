@@ -147,9 +147,7 @@ dialog {
   --color-dark2: #191919;
   --color-dark3: #333333;
   --color-dark3alpha20: rgba(20%, 20%, 20%, 20%);
-  --color-dark4: #666666;
-  --color-navitem-light: #323232;
-  --color-navitem-lightalpha50: rgba(23, 23, 23, 0.5);
+  --color-dark4: #666666;     
   --color-light1: #ffffff;
   --color-light1alpha20: rgba(255, 255, 255, 20%);
   --color-light1alpha50: rgba(255, 255, 255, 50%);
@@ -213,7 +211,22 @@ dialog {
   --color-mt4: #b5445b;
   --color-mt4a60: #d38f9d;
   --color-mt5: #e0e2f5;
-  --color-mt6: #dbf2ef; }
+  --color-mt6: #dbf2ef; 
+
+  /* colors from mycelia */
+
+  --color-schwarz:#323232;
+  --color-gelb: #ffcc00;
+  --color-blue: #5446ff;
+  --color-rot: #ff5556;
+  --color-rosa: #ffbab9;
+  --color-hellgrün: #ecfeed;
+  --color-grün: #93f993;
+  --color-weiss: #ffffff;
+  --color-hellgrau: #f5f5f5;
+  --color-grau-inaktiv: #cfcece;
+
+}
 
 :root {
   /* Shadows */
@@ -337,7 +350,7 @@ dialog[open] {
 .accountsbutton {
   position: relative; }
   .accountsbutton span:last-of-type {
-    --typography-size: 20px;
+    --typography-size: 16px;
     font-family: var(--font-family);
     font-size: var(--typography-size);
     line-height: calc(var(--typography-size) + 8px);
@@ -6039,7 +6052,7 @@ dialog[open] {
   line-height: calc(var(--typography-size) + 8px);
   align-items: center;
   background-color: var(--color-light2);
-  color: var(--color-dark4);
+  color: var(--color-schwarz);
   cursor: pointer;
   display: flex;
   padding: calc(var(--gridspacing) * 2);
@@ -6107,7 +6120,7 @@ dialog[open] {
   .menutoggle::-moz-focus-inner {
     border: 0; }
   .menutoggle span {
-    background: var(--color-light1);
+    background: var(--color-schwarz);
     display: block;
     height: 2px;
     left: 10px;
@@ -6131,7 +6144,7 @@ dialog[open] {
   .menutoggle:focus, .menutoggle:hover {
     outline: 0; }
     .menutoggle:focus::before, .menutoggle:hover::before {
-      box-shadow: inset 0 0 0 1px var(--color-light1alpha50); }
+      box-shadow: inset 0 0 0 1px var(--color-schwarz); }
   .menutoggle:active::before {
     box-shadow: inset 0 0 0 1px var(--color-light1); }
   .menutoggle.menutoggle-is-active {
@@ -6145,12 +6158,17 @@ dialog[open] {
         left: 11.5px;
         top: 11px;
         transform: rotate(45deg);
-        transform-origin: bottom left; }
+        transform-origin: bottom left;
+        background: var(--color-weiss); }
       .menutoggle.menutoggle-is-active span:nth-child(3) {
         left: 11.5px;
         bottom: 11px;
         transform: rotate(-45deg);
-        transform-origin: top left; }
+        transform-origin: top left;
+        background: var(--color-weiss); }
+        .menutoggle.menutoggle-is-active:focus::before, .menutoggle.menutoggle-is-active:hover::before{
+          box-shadow: inset 0 0 0 1px var(--color-weiss);  }
+    
 
 @media (min-width: 768px) {
   .o-container:not(.o-container-is-managed) .menutoggle:not(.menutoggle-is-active) {
@@ -6652,7 +6670,7 @@ dialog[open] {
   line-height: calc(var(--typography-size) + 8px);
   font-weight: bold;
   align-items: center;
-  color: var(--color-navitem-light);
+  color: var(--color-schwarz);
   display: flex;
   padding-bottom: calc(2.5 * var(--gridspacing));
   position: relative; }
@@ -6669,15 +6687,15 @@ dialog[open] {
     width: 100%;
     will-change: background-color; }
   .navitem .navitem-x-icon {
-    fill: var(--color-light1);
+    fill: var(--color-schwarz);
     height: 24px;
     width: 24px; }
   .navitem:focus, .navitem:hover {
     outline: 0; }
     .navitem:focus::after, .navitem:hover::after {
-      background-color: var(--color-navitem-lightalpha50); }
+      background-color: var(--color-grau-inaktiv); }
   .navitem:active::after, .navitem.navitem-is-active::after {
-    background-color: var(--color-navitem-light); }
+    background-color: var(--color-schwarz); }
   .navitem:disabled {
     color: var(--color-dark4); }
 
@@ -8759,7 +8777,7 @@ dialog[open] {
     color: var(--color-notice); }
 
 .topbar {
-  background: var(--color-light3);
+  /* background: var(--color-light3); */
   padding-bottom: calc(var(--gridspacing) * 3);
   padding-top: calc(var(--gridspacing) * 3); }
   .topbar .topbar-x-authdate {
@@ -8796,7 +8814,7 @@ dialog[open] {
     font-size: var(--typography-size);
     line-height: calc(var(--typography-size) + 8px);
     font-weight: bold;
-    color: var(--color-dark2); }
+    color: var(--color-interactive1); }
   .topbar .topbar-x-internalheading {
     --typography-size: 12px;
     font-family: var(--font-family);
@@ -8812,7 +8830,7 @@ dialog[open] {
     font-family: var(--font-family);
     font-size: var(--typography-size);
     line-height: calc(var(--typography-size) + 8px);
-    color: var(--color-dark4);
+    color: var(--color-schwarz);
     margin-top: var(--gridspacing); }
   .topbar .topbar-x-wrap {
     display: grid;
