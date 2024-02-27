@@ -33,7 +33,7 @@ export const environment: BadgrEnvironment = {
 			termsOfServiceLink: 'public/impressum',
 			showApiDocsLink: false,
 			cssCustomProps: {
-				'--color-interactive1': '#002149',
+				'--color-interactive1': '#5446ff',
 				'--color-interactive2': '#00729C',
 				'--color-interactive2alpha50': '#00729C80',
 				'--color-theme': '#00729C',

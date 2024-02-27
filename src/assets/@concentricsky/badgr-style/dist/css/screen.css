@@ -148,6 +148,8 @@ dialog {
   --color-dark3: #333333;
   --color-dark3alpha20: rgba(20%, 20%, 20%, 20%);
   --color-dark4: #666666;
+  --color-navitem-light: #323232;
+  --color-navitem-lightalpha50: rgba(23, 23, 23, 0.5);
   --color-light1: #ffffff;
   --color-light1alpha20: rgba(255, 255, 255, 20%);
   --color-light1alpha50: rgba(255, 255, 255, 50%);
@@ -156,12 +158,13 @@ dialog {
   --color-light3: #f2f2f2;
   --color-light3_: #eaeaea;
   --color-light4: #d9d9d9;
-  --color-interactive1: hsl(234, 51%, 55%);
+  --color-interactive1: #5446ff;
   --color-interactive1alpha20: rgba(82, 93, 199, 0.2);
   --color-interactive1alpha50: rgba(82, 93, 199, 0.5);
   --color-interactive2: rgb(36.2%, 40.4%, 87.8%);
   --color-interactive2alpha20: rgba(36.2%, 40.4%, 87.8%, 0.2);
   --color-interactive2alpha50: rgba(36.2%, 40.4%, 87.8%, 0.5);
+  --color-interactive3: #F5F5F5;
   --color-link: #515dc6;
   --color-linkhover: #5c67e0;
   --color-error2: #f9e5e5;
@@ -334,7 +337,7 @@ dialog[open] {
 .accountsbutton {
   position: relative; }
   .accountsbutton span:last-of-type {
-    --typography-size: 16px;
+    --typography-size: 20px;
     font-family: var(--font-family);
     font-size: var(--typography-size);
     line-height: calc(var(--typography-size) + 8px);
@@ -6481,7 +6484,7 @@ dialog[open] {
 
 .navbar {
   align-items: center;
-  background-color: var(--color-interactive1);
+  background-color: var(--color-interactive3);
   display: flex;
   height: 72px;
   justify-content: space-between; }
@@ -6649,7 +6652,7 @@ dialog[open] {
   line-height: calc(var(--typography-size) + 8px);
   font-weight: bold;
   align-items: center;
-  color: var(--color-light1);
+  color: var(--color-navitem-light);
   display: flex;
   padding-bottom: calc(2.5 * var(--gridspacing));
   position: relative; }
@@ -6672,9 +6675,9 @@ dialog[open] {
   .navitem:focus, .navitem:hover {
     outline: 0; }
     .navitem:focus::after, .navitem:hover::after {
-      background-color: var(--color-light1alpha50); }
+      background-color: var(--color-navitem-lightalpha50); }
   .navitem:active::after, .navitem.navitem-is-active::after {
-    background-color: var(--color-light1); }
+    background-color: var(--color-navitem-light); }
   .navitem:disabled {
     color: var(--color-dark4); }
 
