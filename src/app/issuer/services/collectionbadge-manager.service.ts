@@ -6,7 +6,7 @@ import { CollectionBadge } from '../models/collectionbadge.model';
 import { CollectionBadgeApiService } from './collectionbadge-api.service';
 import {EventsService} from '../../common/services/events.service';
 import { Observable } from 'rxjs';
-import {map} from 'rxjs/operators';
+import {first, map} from 'rxjs/operators';
 
 @Injectable()
 export class CollectionBadgeManager {
@@ -40,6 +40,18 @@ export class CollectionBadgeManager {
 			;
 	}
 
+	collectionbadgeByName(name: string): Promise<CollectionBadge> {
+		return this.allCollectionBadges$
+			.pipe(first())
+			.toPromise()
+			.then(
+				(badges) =>
+				
+					badges.find((b) => b.apiModel.name === name) ||
+					this.throwError(`No badge with name '${name}' found`)
+			);
+	}
+
 	deleteCollectionBadge(collectionBadge: CollectionBadge) {
 		return this.collectionBadgeApiService
 			.removeCollectionBadge(collectionBadge.slug)
@@ -49,5 +61,9 @@ export class CollectionBadgeManager {
 
 	updateIfLoaded() {
 		this.collectionBadgeList.updateIfLoaded();
+	}
+
+	private throwError(message: string): never {
+		throw new Error(message);
 	}
 }
