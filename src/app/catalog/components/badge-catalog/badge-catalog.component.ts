@@ -115,8 +115,13 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 
 		// subscribe to issuer and badge class changes
 		this.badgesLoaded = this.loadBadges();
-		this.collectionBadgesLoaded = this.loadCollectionBadges();
+		// this.collectionBadgesLoaded = this.loadCollectionBadges();
 
+		this.collectionBadgesLoaded = this.collectionBadgeManager.collectionBadgeList.loadedPromise	
+		   	.catch(e => this.messageService.reportAndThrowError("Failed to load your collection badges", e));
+
+        this.collectionBadgeManager.collectionBadgeList.changed$.subscribe(
+			collectionBadges => this.updateCollectionBadges(collectionBadges.entities))	
 	}
 
 	async loadBadges() {
@@ -170,6 +175,10 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 			this.prepareTexts()
 			
 		});
+
+		this.collectionBadgeManager.collectionBadgeList.changed$.subscribe(
+			collectionBadges => this.updateCollectionBadges(collectionBadges.entities)
+		  );
 	}
 	prepareTexts() {
 		// 1. Groups
@@ -221,6 +230,11 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 				.sort((a, b) => this.categoryOptions[b.category].localeCompare(this.categoryOptions[a.category]))
 				.forEach((r) => r.badges.sort((a, b) => b.name.localeCompare(a.name)));
 		}
+	}
+
+	private updateCollectionBadges(allCollectionBadges: any[]) {
+		this.collectionBadges = allCollectionBadges;
+		// this.updateChartOptions();
 	}
 
 	private updateResults() {
