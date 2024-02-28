@@ -7,6 +7,7 @@ import { CommonEntityManagerModule } from '../entity-manager/entity-manager.modu
 import { BadgrRouteData } from '../common/services/navigation.service';
 import { BadgeCatalogComponent } from './components/badge-catalog/badge-catalog.component';
 import { IssuerCatalogComponent } from './components/issuer-catalog/issuer-catalog.component';
+import {CollectionBadgeCatalogComponent} from './components/collectionbadge-catalog/collectionbadge-catalog.component'
 import { BadgeClassManager } from '../issuer/services/badgeclass-manager.service';
 import { BadgeClassApiService } from '../issuer/services/badgeclass-api.service';
 import { BadgeInstanceApiService } from '../issuer/services/badgeinstance-api.service';
@@ -27,6 +28,10 @@ export const routes: Routes = [
 		component: IssuerCatalogComponent,
 	},
 	{
+		path: 'collectionbadges/:id',
+		component: CollectionBadgeCatalogComponent,
+	},
+	{
 		path: '**',
 		redirectTo: 'badges',
 		data: {
@@ -36,8 +41,8 @@ export const routes: Routes = [
 ];
 
 @NgModule({
-	declarations: [BadgeCatalogComponent, IssuerCatalogComponent],
-	imports: [...COMMON_IMPORTS, BadgrCommonModule, CommonEntityManagerModule, RouterModule.forChild(routes), TranslateModule],
+	declarations: [BadgeCatalogComponent, IssuerCatalogComponent, CollectionBadgeCatalogComponent],
+	imports: [...COMMON_IMPORTS, BadgrCommonModule, CommonEntityManagerModule,  RouterModule.forChild(routes), TranslateModule],
 	providers: [
 		BadgeClassApiService,
 		BadgeClassManager,
