@@ -1,0 +1,94 @@
+<main class="o-container" *bgAwaitPromises="[collectionBadgeLoaded]">
+	<!-- <external-tool-launch></external-tool-launch>
+	<form-message></form-message> -->
+    
+	<div class="topbar">
+		<!-- <div class="l-containerxaxis">
+			<div class="topbar-x-breadcrumbs">
+				<bg-breadcrumbs [linkentries]="crumbs"> </bg-breadcrumbs>
+			</div>
+		</div> -->
+	</div>
+	<div class="badgedetail">
+		<div class="badgedetail-x-header">
+			<h1>{{collectionBadgeName}}</h1>
+
+			<div class="l-primarymore">
+				<button
+				>
+					Share Badge
+				</button>
+			</div>
+		</div>
+		<div class="badgedetail-x-sidebar">
+			<div class="badgedetail-x-sidebarinternal">
+				<!-- <img
+					[loaded-src]="badge.image"
+					[loading-src]="badgeLoadingImageUrl"
+					[error-src]="badgeFailedImageUrl"
+					[ngStyle]="badge.isExpired && { filter: 'grayscale(1)' }"
+					class="badgeimage badgeimage-center badgeimage-large"
+					width="200"
+				/> -->
+				<!-- <div
+					class="badgestatus badgestatus-{{ badge.mostRelevantStatus }} u-margin-top2x"
+					*ngIf="badge.mostRelevantStatus"
+				>
+					{{ badge.mostRelevantStatus }}
+				</div> -->
+				<dl>
+					<div class="l-flex l-flex-2x u-padding-top2x border border-top border-light3">
+						<!-- <div>
+							<img
+								[loaded-src]="badge.badgeClass?.issuer?.image"
+								[loading-src]="issuerImagePlacholderUrl"
+								[error-src]="issuerImagePlacholderUrl"
+								width="40"
+							/>
+						</div> -->
+						<div>
+							<dt class="u-text-small-bold u-text-dark2">Issued by:</dt>
+							<dd class="u-text">
+								<!-- <a class="u-break-word" [href]="badge.badgeClass.issuer.id">{{
+									badge.badgeClass.issuer.name
+								}}</a> -->
+							</dd>
+						</div>
+					</div>
+					<dt
+						class="u-text-small-bold u-padding-top2x u-margin-top2x border border-top border-light3 u-text-dark2"
+					>
+						Issued on:
+					</dt>
+					<!-- <dd class="u-text"><time [date]="badge?.issueDate" format="mediumDate"></time></dd> -->
+					<dt
+						class="u-text-small-bold u-padding-top2x u-margin-top2x border border-top border-light3 u-text-dark2"
+					>
+						Awarded to:
+					</dt>
+					<!-- <dd class="u-text u-break-all" *ngIf="badge.hasExtension('extensions:recipientProfile')">
+						{{ badge.getExtension('extensions:recipientProfile', null).name }}
+					</dd>
+					<dd class="u-text u-break-all">{{ badge.recipientEmail }}</dd>
+					<div *ngIf="badge && badge.expiresDate">
+						<dt
+							class="u-text-small-bold u-padding-top2x u-margin-top2x border border-top border-light3 u-text-dark2"
+						>
+							{{ compareDate(badge.expiresDate, now) | i18nPlural : tense['expires'] }} on:
+						</dt>
+						<dd class="u-text"><time [date]="badge?.expiresDate" format="mediumDate"></time></dd>
+					</div> -->
+				</dl>
+			</div>
+		</div>
+		<div class="badgedetail-x-desc">
+			<h2 class="u-text-h3-semibold u-margin-bottom2x u-text-dark2 u-hidden-mintablet">Description</h2>
+			<!-- <p class="u-text-body u-width-paragraph">{{ badge.badgeClass.description }}</p> -->
+		</div>
+		<div class="badgedetail-x-body">
+			<div class="chart-container" style="width: 100%; height: 100%;"> 
+
+            </div>
+		</div>
+	</div>
+</main>
