@@ -84,7 +84,7 @@
 		</div>
 	</div>
 
-	<div *bgAwaitPromises="[badgeClassesLoadedPromise]">
+	<!-- <div *bgAwaitPromises="[badgeClassesLoadedPromise]">
 		<div *ngIf="isCollectionBadgeChecked" class="formsection" >
 			<div class="formsection-x-title">
 				<h2>Badges</h2>
@@ -95,10 +95,75 @@
 				</div>
 			</div>
 		</div>
+	</div> -->
+
+	<div *bgAwaitPromises="[badgeClassesLoadedPromise]">
+	<section class="l-containerxaxis l-containeryaxis" *ngIf="isCollectionBadgeChecked">
+		<!-- No badgeclasses selected -->
+	<ng-container *ngIf="selectedBadgeClasses.length === 0">
+		<div class="emptysection l-emptysection">
+			<h2 class="emptysection-x-headline">Dein CollectionBadge enthält noch keine Badges</h2>
+			<p class="emptysection-x-copy"> Füge ein paar Badges hinzu!</p>
+			<div class="emptysection-x-buttons">
+				<button class="button button-secondary" type="button" (click)="manageBadges()">Badge hinzufügen</button>
+			</div>
+		</div>
+	</ng-container>	
+		<!-- List of selected badges in CollectionBadge -->
+		<ng-container *ngIf="selectedBadgeClasses.length > 0">
+			<div class="l-stack u-margin-bottom2x">
+				<h2 class="u-text-h3-semibold u-text-dark2">1 Badge</h2>
+				<button class="button button-secondary" type="button" (click)="manageBadges()">Badges hinzufügen</button>
+			</div>
+	
+			<table class="datatable datatable-roundheaders datatable-verticalalignmiddle datatable-onlyfirstcolumn">
+				<thead class="datatable-x-head">
+					<tr class="datatable-x-header">
+						<th class="datatable-x-cell" scope="col">Badge</th>
+						<th class="datatable-x-cell" scope="col"><span class="visuallyhidden">Actions</span></th>
+					</tr>
+				</thead>
+				<tbody class="datatable-x-body">
+					<tr class="datatable-x-row" *ngFor="let badgeclass of selectedBadgeClasses">
+						<th class="datatable-x-cell">
+							<a
+								[routerLink]="['/recipient/earned-badge', badgeclass.apiModel.slug]"
+								class="l-flex l-flex-1x l-flex-aligncenter"
+							>
+								<img
+									[loaded-src]="badgeclass.apiModel.image"
+									[loading-src]="badgeLoadingImageUrl"
+									[error-src]="badgeFailedImageUrl"
+									width="40"
+									height="40"
+								/>
+								<p class="u-text-link u-text-breakword">{{ badgeclass.apiModel.name }}</p>
+							</a>
+							<div class="u-hidden-minmobilelarge u-margin-top1x">
+								<a class="u-text-link-small" (click)="removeEntry(entry)">Entfernen</a>
+							</div>
+						</th>
+						
+						<td class="datatable-x-cell">
+							<button
+								class="u-text-link-small u-margin-leftauto"
+								type="button"
+								(click)="removeEntry(entry)"
+								[disabled-when-requesting]="true"
+							>
+								Remove
+							</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</ng-container>
+	</section>
 	</div>
 
+
 	<!-- Criteria Panel -->
-	<div class="formsection">
+	<div class="formsection" *ngIf="!isCollectionBadgeChecked">
 		<div class="formsection-x-title">
 			<h2 class="u-text-dark2">
 				Kriterien
@@ -149,7 +214,7 @@
 	</div>
 
 	<!-- Criteria Panel -->
-	<div class="formsection">
+	<div class="formsection" *ngIf="!isCollectionBadgeChecked">
 		<div class="formsection-x-title">
 			<h2 class="u-text-dark2">Dauer</h2>
 		</div>
@@ -174,7 +239,7 @@
 		</div>
 	</div>
 
-	<div class="formsection">
+	<div class="formsection" *ngIf="!isCollectionBadgeChecked">
 		<div class="formsection-x-title">
 			<h2 class="u-text-dark2">Kategorie</h2>
 		</div>
@@ -204,7 +269,7 @@
 		</div>
 	</div>
 
-	<div class="formsection">
+	<div class="formsection" *ngIf="!isCollectionBadgeChecked">
 		<div class="formsection-x-title">
 			<h2 class="u-text-dark2">Stufe</h2>
 		</div>

@@ -25,7 +25,7 @@ import { BadgeClass } from '../../models/badgeclass.model';
 import { AppConfigService } from '../../../common/app-config.service';
 import { typedFormGroup } from '../../../common/util/typed-forms';
 import { CollectionBadgeSelectionDialog } from '../collectionbadge-selection-dialog/collectionbadgebadge-selection-dialog.component';
-import { CollectionBadge } from '../../models/collectionbadge.model';
+import { CollectionBadge, CollectionBadgeEntry } from '../../models/collectionbadge.model';
 import { ApiCollectionBadgeEntry } from '../../models/collectionbadge-api.model';
 
 @Component({
@@ -251,7 +251,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
             //     {title: 'Collections', routerLink: ['/recipient/badge-collections']},
             //     {title: this.collection.name, routerLink: ['/collection/' + this.collection.slug]},
             // ];
-            console.log(this.badgeClasses)
             return this.badgeClasses;
         })
         // .then(badge => collection.badgesPromise)
@@ -389,7 +388,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
         .then(selectedBadges => {
 			const  badgeCollection = selectedBadges.concat(this.collectionBadge.badges);
             this.selectedBadgeClasses = badgeCollection;
-            console.log(this.selectedBadgeClasses[0].apiModel.name)
 
             // this.collectionBadge.updateBadges(badgeCollection);
             // this.collectionBadge.save().then(
@@ -399,6 +397,25 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 
 		});
+	}
+
+    removeEntry(entry: CollectionBadgeEntry) {
+        console.log(entry)
+		this.dialogService.confirmDialog.openResolveRejectDialog({
+			dialogTitle: "Confirm Remove",
+			dialogBody: `Are you sure you want to remove the badgeclass from this collectionbadge ?`,
+			rejectButtonLabel: "Cancel",
+			resolveButtonLabel: "Remove Badge"
+		}).then(
+			() => {
+				this.collectionBadge.badgeEntries.remove(entry);
+				this.collectionBadge.save().then(
+					success => this.messageService.reportMinorSuccess(`Removed badge ${entry} from collection ${this.collectionBadge.name} successfully`),
+					failure => this.messageService.reportHandledError(`Failed to remove badge ${entry} from collection ${this.collectionBadge.name}`, failure)
+				);
+			},
+			() => {}
+		);
 	}
 
     removeTag(tag: string) {
