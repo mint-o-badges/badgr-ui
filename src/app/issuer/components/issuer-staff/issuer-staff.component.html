@@ -50,7 +50,7 @@
 								<div class="forminput-x-label">Role</div>
 								<div class="forminput-x-inputs">
 									<select
-										[value]="member.roleSlug"
+										[ngModel]="member.roleSlug"
 										[disabled]="member == issuer.currentUserStaffMember"
 										(change)="changeMemberRole(member, $event.target.value)"
 										*ngIf="isCurrentUserIssuerOwner"
@@ -88,7 +88,7 @@
 							<div class="forminput" *ngIf="isCurrentUserIssuerOwner">
 								<div class="forminput-x-inputs">
 									<select
-										[value]="member.roleSlug"
+										[ngModel]="member.roleSlug"
 										[disabled]="member == issuer.currentUserStaffMember"
 										(change)="changeMemberRole(member, $event.target.value)"
 										*ngIf="isCurrentUserIssuerOwner"
