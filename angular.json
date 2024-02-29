@@ -27,7 +27,7 @@
 							},
                             {
                                 "glob": "**/*",
-                                "input": "node_modules/@concentricsky/badgr-style/dist/images/",
+                                "input": "./assets/@concentricsky/badgr-style/dist/images/",
                                 "output": "./assets/@concentricsky/badgr-style/dist/images/"
                             }
 						],
@@ -116,7 +116,7 @@
 							},
                             {
                                 "glob": "icons.svg",
-                                "input": "node_modules/@concentricsky/badgr-style/dist/images",
+                                "input": "./assets/@concentricsky/badgr-style/dist/images",
                                 "output": "./assets/@concentricsky/badgr-style/dist/images"
                             }
                         ]
