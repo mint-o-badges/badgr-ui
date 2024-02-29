@@ -124,23 +124,23 @@
 					</tr>
 				</thead>
 				<tbody class="datatable-x-body">
-					<tr class="datatable-x-row" *ngFor="let badgeclass of selectedBadgeClasses">
+					<tr class="datatable-x-row" *ngFor="let selectedbadgeclass of selectedBadgeClasses">
 						<th class="datatable-x-cell">
 							<a
-								[routerLink]="['/recipient/earned-badge', badgeclass.apiModel.slug]"
+								[routerLink]="['/recipient/earned-badge', selectedbadgeclass.apiModel.slug]"
 								class="l-flex l-flex-1x l-flex-aligncenter"
 							>
 								<img
-									[loaded-src]="badgeclass.apiModel.image"
+									[loaded-src]="selectedbadgeclass.apiModel.image"
 									[loading-src]="badgeLoadingImageUrl"
 									[error-src]="badgeFailedImageUrl"
 									width="40"
 									height="40"
 								/>
-								<p class="u-text-link u-text-breakword">{{ badgeclass.apiModel.name }}</p>
+								<p class="u-text-link u-text-breakword">{{ selectedbadgeclass.apiModel.name }}</p>
 							</a>
 							<div class="u-hidden-minmobilelarge u-margin-top1x">
-								<a class="u-text-link-small" (click)="removeEntry(entry)">Entfernen</a>
+								<a class="u-text-link-small" (click)="removeEntry(selectedbadgeclass)">Entfernen</a>
 							</div>
 						</th>
 						
@@ -492,7 +492,7 @@
 	</div>
 
 	<!-- add options -->
-	<div class="formsection formsection-nohelp">
+	<div class="formsection formsection-nohelp" *ngIf="!isCollectionBadgeChecked">
 		<h2 class="formsection-x-title">Optionale Details</h2>
 		<div class="formsection-x-body">
 			<ul>
