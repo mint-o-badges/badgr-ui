@@ -67,6 +67,10 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
         this.isBadgeClassForked = isBadgeClassForked;
     }
 
+    get badgesInCollectionBadgeCount(): string {
+		return `${this.selectedBadgeClasses.length } ${this.selectedBadgeClasses.length === 1 ? 'Badge' : 'Badges'}`;
+	}
+
     get badgeClass() {
         return (this.initialisedBadgeClass) ? this.initialisedBadgeClass : this.existingBadgeClass;
     }
@@ -371,6 +375,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
             event.preventDefault();
         }
     }
+
 
     handleCollectionBadgeCheck(){
         this.isCollectionBadgeChecked = !this.isCollectionBadgeChecked
