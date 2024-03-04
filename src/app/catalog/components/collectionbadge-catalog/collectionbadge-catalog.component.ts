@@ -24,7 +24,7 @@ export class CollectionBadgeCatalogComponent extends BaseRoutableComponent imple
 	collectionBadgeLoaded: Promise<unknown>;
 	collectionBadge: CollectionBadge = null;
 
-    get collectionBadgeName() {
+    get collectionBadgeSlug() {
 		return this.route.snapshot.params['id'];
 	}
 
@@ -45,13 +45,24 @@ export class CollectionBadgeCatalogComponent extends BaseRoutableComponent imple
 	) {
 		super(router, route);
 
-        this.collectionBadgeLoaded = this.collectionBadgeManager.collectionbadgeByName(this.collectionBadgeName).then(
+        // this.collectionBadgeLoaded = this.collectionBadgeManager.collectionbadgeByName(this.collectionBadgeName).then(
+		// 	(badge) => {
+		// 		this.collectionBadge = badge;
+		// 	},
+		// 	(error) =>
+		// 		this.messageService.reportLoadingError(
+		// 			`Cannot find badge ${this.collectionBadgeName}`,
+		// 			error
+		// 		)
+		// );
+
+		this.collectionBadgeLoaded = this.collectionBadgeManager.collectionbadgeById(this.collectionBadgeSlug).then(
 			(badge) => {
 				this.collectionBadge = badge;
 			},
 			(error) =>
 				this.messageService.reportLoadingError(
-					`Cannot find badge ${this.collectionBadgeName}`,
+					`Cannot find badge with ID ${this.collectionBadgeSlug}`,
 					error
 				)
 		);
@@ -65,7 +76,7 @@ export class CollectionBadgeCatalogComponent extends BaseRoutableComponent imple
 	}    
 
 	ngOnInit() {
-			fetch('http://localhost:8000/v2/collectionbadges/KHss2J1RSECTDWE3q30NSw', {
+			fetch('http://localhost:8000/v2/collectionbadges/iQNtwNKsRu-hwLK6huWelA', {
 				headers: {
 					'Authorization': `Bearer ${this.authToken}`,
 					'Content-Type': 'application/json' 

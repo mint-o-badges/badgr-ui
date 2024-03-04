@@ -40,15 +40,15 @@ export class CollectionBadgeManager {
 			;
 	}
 
-	collectionbadgeByName(name: string): Promise<CollectionBadge> {
+	collectionbadgeById(id: string): Promise<CollectionBadge> {
 		return this.allCollectionBadges$
 			.pipe(first())
 			.toPromise()
 			.then(
 				(badges) =>
 				
-					badges.find((b) => b.apiModel.name === name) ||
-					this.throwError(`No badge with name '${name}' found`)
+					badges.find((b) => b.apiModel.slug === id) ||
+					this.throwError(`No badge with slug '${id}' found`)
 			);
 	}
 
