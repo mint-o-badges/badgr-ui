@@ -84,7 +84,7 @@
 						[badgeImage]="badge.image"
 						[badgeDescription]="badge.description"
 						[badgeSlug]="badge.slug"
-						[issuerTitle]="badge.issuerName ? badge.isbadgeResultssuerName : badge.issuer.name"
+						[issuerTitle]="badge.issuerName ? badge.issuerName : badge.issuer.name"
 						[badgeIssueDate]="badge.createdAt"
 						public="true"
 						[publicUrl]="badge.url"
@@ -160,7 +160,6 @@
 			</h3>
 
 			<div class="l-grid l-grid-large">
-				<!-- TODO: Fix the badgecard link for sharing and routing -->
 				<bg-badgecard
 					*ngFor="let badge of collectionBadges"
 					[badgeTitle]="badge.name"
@@ -168,9 +167,6 @@
 					[badgeDescription]="badge.description"
 					[badgeSlug]="badge.slug"
 					[badgeIssueDate]="badge.createdAt"
-					public="true"
-					[publicUrl]="badge.url"
-					[badgeClass]="true"
 					
 				></bg-badgecard>
 			</div>
