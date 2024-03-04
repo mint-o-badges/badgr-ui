@@ -240,21 +240,12 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
         this.baseUrl = this.configService.apiConfig.baseUrl;
 
         this.badgeClassesLoadedPromise = Promise.all([
-            // this.recipientBadgeCollectionManager.recipientBadgeCollectionList.loadedPromise,
-            // this.recipientBadgeManager.recipientBadgeList.loadedPromise
             this.badgeClassManager.allBadgesList.loadedPromise
         ])
         .then(([list]) => {
             this.badgeClasses = list.entities.map(e => e)
-            // this.superBadge = list.entityForSlug(this.collectionSlug);
-            // this.crumbs = [
-            //     {title: 'Collections', routerLink: ['/recipient/badge-collections']},
-            //     {title: this.collection.name, routerLink: ['/collection/' + this.collection.slug]},
-            // ];
-            console.log(this.badgeClasses)
             return this.badgeClasses;
         })
-        // .then(badge => collection.badgesPromise)
         .catch(err => {
             router.navigate(["/"]);
             return this.messageService.reportHandledError(`Failed to load collection ${this.badgeClass}`);
@@ -382,21 +373,10 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			dialogId: "manage-collectionselectedBadgesbadge-badges",
 			dialogTitle: "Add Badges",
 			multiSelectMode: true,
-			// restrictToIssuerId: null,
-			// omittedCollection: this.collection.badges
-            omittedCollection: []
 		})
         .then(selectedBadges => {
 			const  badgeCollection = selectedBadges.concat(this.collectionBadge.badges);
             this.selectedBadgeClasses = badgeCollection;
-            console.log(this.selectedBadgeClasses[0].apiModel.name)
-
-            // this.collectionBadge.updateBadges(badgeCollection);
-            // this.collectionBadge.save().then(
-            //     success => this.messageService.reportMinorSuccess(`CollectionBadge ${this.collectionBadge.name} badges saved successfully`),
-            //     failure => this.messageService.reportHandledError(`Failed to save Collectionbadge`, failure)
-            // );
-
 
 		});
 	}
