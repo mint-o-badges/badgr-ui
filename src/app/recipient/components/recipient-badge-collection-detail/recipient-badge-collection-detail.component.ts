@@ -57,18 +57,6 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 		this.collectionBadgesLoaded = this.loadCollectionBadges();
 
 
-		// this.superBadgesLoadedPromise = Promise.all([this.superBadgeManager.superBadgeList.loadedPromise])
-		//     .then(([list]) => {
-		// 		this.superBadge = list.entityForSlug('test1234');
-		// 		console.log(this.superBadge)
-		// 		return this.superBadge
-		// 	})
-		// 	.then(superBadge => superBadge.badgesPromise)
-			
-
-
-
-
 		this.collectionLoadedPromise = Promise.all([
 				this.recipientBadgeCollectionManager.recipientBadgeCollectionList.loadedPromise,
 				this.recipientBadgeManager.recipientBadgeList.loadedPromise
