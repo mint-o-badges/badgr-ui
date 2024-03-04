@@ -8,8 +8,6 @@ export interface ApiCollectionBadge {
 	description: string;
 	badges: any []
 	image: string;
-	// issuerUrl: string;
-    // issuerName: string;
     slug: string;
     created_at?: string;
 	created_by?: string;
@@ -23,5 +21,4 @@ export interface CollectionBadgeEntryRef {
 
 export interface ApiCollectionBadgeEntry {
 	id: string;
-	// description: string;
 }
