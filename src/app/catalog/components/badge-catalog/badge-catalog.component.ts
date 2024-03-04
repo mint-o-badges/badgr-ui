@@ -115,7 +115,8 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 
 		// subscribe to issuer and badge class changes
 		this.badgesLoaded = this.loadBadges();
-		// this.collectionBadgesLoaded = this.loadCollectionBadges();
+
+		// this.collectionBadgesLoaded = this.loadCollectionBadges()
 
 		this.collectionBadgesLoaded = this.collectionBadgeManager.collectionBadgeList.loadedPromise	
 		   	.catch(e => this.messageService.reportAndThrowError("Failed to load your collection badges", e));

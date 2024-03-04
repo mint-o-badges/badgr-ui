@@ -27,6 +27,7 @@ import { typedFormGroup } from '../../../common/util/typed-forms';
 import { CollectionBadgeSelectionDialog } from '../collectionbadge-selection-dialog/collectionbadgebadge-selection-dialog.component';
 import { CollectionBadge, CollectionBadgeEntry } from '../../models/collectionbadge.model';
 import { ApiCollectionBadgeEntry } from '../../models/collectionbadge-api.model';
+import { BadgrApiFailure } from '../../../../../src/app/common/services/api-failure';
 
 @Component({
     selector: 'badgeclass-edit-form',
@@ -404,7 +405,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		});
 	}
 
-    removeEntry(entry: CollectionBadgeEntry) {
+    removeEntry(entry: any) {
         console.log(entry)
 		this.dialogService.confirmDialog.openResolveRejectDialog({
 			dialogTitle: "Confirm Remove",
@@ -413,11 +414,12 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			resolveButtonLabel: "Remove Badge"
 		}).then(
 			() => {
-				this.collectionBadge.badgeEntries.remove(entry);
-				this.collectionBadge.save().then(
-					success => this.messageService.reportMinorSuccess(`Removed badge ${entry} from collection ${this.collectionBadge.name} successfully`),
-					failure => this.messageService.reportHandledError(`Failed to remove badge ${entry} from collection ${this.collectionBadge.name}`, failure)
-				);
+
+				// this.collectionBadge.badgeEntries.remove(entry);
+				// this.collectionBadge.save().then(
+				// 	success => this.messageService.reportMinorSuccess(`Removed badge ${entry} from collection ${this.collectionBadge.name} successfully`),
+				// 	failure => this.messageService.reportHandledError(`Failed to remove badge ${entry} from collection ${this.collectionBadge.name}`, failure)
+				// );
 			},
 			() => {}
 		);
@@ -529,8 +531,10 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
                 slug: this.badgeClassForm.value.badge_name,
                 badges: this.selectedBadgeClasses.map(item => item.apiModel.slug)
             }
-            this.badgeClassManager.createCollectionBadgeClass(collectionBadgeData)
-            return null
+            try {
+                this.badgeClassManager.createCollectionBadgeClass(collectionBadgeData)
+                this.router.navigate(['catalog/collectionbadges/'])
+            }catch(e){}
         }
         this.badgeClassForm.markTreeDirty();
         if (this.expirationEnabled) {
@@ -687,6 +691,17 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
             .then((imageUrl) => this.imageField.useDataUrl(imageUrl, 'BADGE'));
         }
     }
+
+    // collectionBadgeClassCreated(promise: Promise<any>) {
+	// 	promise.then(
+	// 		(collectionBadgeClass) => this.router.navigate(['catalog/collectionbadges']),
+	// 		(error) =>
+	// 			this.messageService.reportAndThrowError(
+	// 				`Unable to create CollectionBadge Class: ${BadgrApiFailure.from(error).firstMessage}`,
+	// 				error
+	// 			)
+	// 	);
+	// }
 
     positiveInteger(control: AbstractControl) {
         const val = parseInt(control.value, 10);
