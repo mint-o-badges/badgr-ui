@@ -146,7 +146,7 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 					resolve(badges);
 				},
 				(error) => {
-					this.messageService.reportAndThrowError('Failed to load badges', error);
+					this.messageService.reportAndThrowError('Failed to load collection-badges', error);
 				},
 			);
 		});
