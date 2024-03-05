@@ -418,7 +418,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	manageBadges() {
 		this.collectionBadgeDialog
 			.openDialog({
-				dialogId: 'manage-collectionselectedBadgesbadge-badges',
+				dialogId: 'manage-collectionBadge-selected-badges',
 				dialogTitle: 'Add Badges',
 				multiSelectMode: true,
 			})
