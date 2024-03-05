@@ -20,7 +20,7 @@ export class CollectionBadgeSelectionDialog extends BaseDialog {
 	dialogId = 'CollectionBadgeDialog';
 	dialogTitle = 'Select Badges';
 
-	multiSelectMode = false;
+	multiSelectMode = true;
 	restrictToIssuerId: string = null;
 	selectedBadges = new Set<BadgeClass>();
 
@@ -46,7 +46,7 @@ export class CollectionBadgeSelectionDialog extends BaseDialog {
 	openDialog({
 		dialogId,
 		dialogTitle,
-		multiSelectMode = true,
+		multiSelectMode,
 	}: CollectionBadgeSelectionDialogOptions): Promise<BadgeClass[]> {
 		this.showModal();
 		this.dialogId = dialogId;
