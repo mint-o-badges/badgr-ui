@@ -26,7 +26,6 @@ import { AppConfigService } from '../../../common/app-config.service';
 import { typedFormGroup } from '../../../common/util/typed-forms';
 import { CollectionBadgeSelectionDialog } from '../collectionbadge-selection-dialog/collectionbadgebadge-selection-dialog.component';
 import { CollectionBadge } from '../../models/collectionbadge.model';
-import { ApiCollectionBadgeEntry } from '../../models/collectionbadge-api.model';
 
 @Component({
 	selector: 'badgeclass-edit-form',
@@ -34,11 +33,7 @@ import { ApiCollectionBadgeEntry } from '../../models/collectionbadge-api.model'
 })
 export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	baseUrl: string;
-	isCollectionBadgeChecked: boolean = false;
-	badgeClassesLoadedPromise: Promise<unknown>;
-	badgeClasses: BadgeClass[] | null;
-	collectionBadge: CollectionBadge = new CollectionBadge(null);
-	selectedBadgeClasses: BadgeClass[] = [];
+
 	@Input()
 	set badgeClass(badgeClass: BadgeClass) {
 		if (this.existingBadgeClass !== badgeClass) {
@@ -170,6 +165,12 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	existingBadgeClass: BadgeClass | null = null;
 
 	initialisedBadgeClass: BadgeClass | null = null;
+
+	isCollectionBadgeChecked: boolean = false;
+	badgeClassesLoadedPromise: Promise<unknown>;
+	badgeClasses: BadgeClass[] | null;
+	collectionBadge: CollectionBadge = new CollectionBadge(null);
+	selectedBadgeClasses: BadgeClass[] = [];
 
 	/**
 	 * Indicates wether or not the @link initialisedBadgeClass is forked
