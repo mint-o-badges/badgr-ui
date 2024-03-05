@@ -106,7 +106,6 @@ export class RecipientBadgeSelectionDialog extends BaseDialog {
 			omittedCollection = []
 		}: RecipientBadgeSelectionDialogOptions
 	): Promise<RecipientBadgeInstance[]> {
-		console.log(this.allBadges)
 		this.showModal();
 		this._searchQuery = "";
 		this.dialogId = dialogId;

@@ -13,8 +13,6 @@ import {ShareSocialDialogOptions} from '../../../common/dialogs/share-social-dia
 import {addQueryParamsToUrl} from '../../../common/util/url-util';
 import {AppConfigService} from '../../../common/app-config.service';
 import { LinkEntry } from "../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component";
-import { CollectionBadge } from '../../../issuer/models/collectionbadge.model';
-import { CollectionBadgeManager } from '../../../issuer/services/collectionbadge-manager.service';
 
 
 @Component({
@@ -32,10 +30,7 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 
 	collectionLoadedPromise: Promise<unknown>;
 	collection: RecipientBadgeCollection = new RecipientBadgeCollection(null);
-	collectionBadgesLoadedPromise: Promise<unknown>;
-	collectionBadges: CollectionBadge[] =null;
 	crumbs: LinkEntry[];
-	collectionBadgesLoaded: Promise<unknown>;
 
 
 	constructor(
@@ -46,7 +41,6 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 		private messageService: MessageService,
 		private recipientBadgeManager: RecipientBadgeManager,
 		private recipientBadgeCollectionManager: RecipientBadgeCollectionManager,
-		private collectionBadgeManager: CollectionBadgeManager,
 		private configService: AppConfigService,
 		private dialogService: CommonDialogsService
 	) {
@@ -54,7 +48,6 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 
 		title.setTitle(`Collections - ${this.configService.theme['serviceName'] || "Badgr"}`);
 
-		this.collectionBadgesLoaded = this.loadCollectionBadges();
 
 
 		this.collectionLoadedPromise = Promise.all([
@@ -78,25 +71,10 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 	}
 
 	get collectionSlug(): string { return this.route.snapshot.params['collectionSlug']; }
-	get collectionBadgeSlug(): string {return 'test1234'};
 
 
 	ngOnInit() {
 		super.ngOnInit();
-	}
-
-	async loadCollectionBadges() {
-		return new Promise(async (resolve, reject) => {
-			this.collectionBadgeManager.allCollectionBadges$.subscribe(
-				(badges) => {
-					this.collectionBadges = badges;
-					resolve(badges);
-				},
-				(error) => {
-					this.messageService.reportAndThrowError('Failed to load badges', error);
-				},
-			);
-		});
 	}
 
 
