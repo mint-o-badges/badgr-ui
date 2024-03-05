@@ -1,10 +1,6 @@
 import {Component, ElementRef, Input, Renderer2} from '@angular/core';
 import {MessageService} from '../../../common/services/message.service';
-import {StringMatchingUtil} from '../../../common/util/string-matching-util';
-import {SettingsService} from '../../../common/services/settings.service';
-import {ApiRecipientBadgeIssuer} from '../../../recipient/models/recipient-badge-api.model';
 import { BadgeClassManager } from '../../services/badgeclass-manager.service';
-import {RecipientBadgeInstance} from '../../../recipient/models/recipient-badge.model';
 import {BaseDialog} from '../../../common/dialogs/base-dialog';
 import { BadgeClass } from '../../models/badgeclass.model';
 
@@ -12,8 +8,6 @@ export interface CollectionBadgeSelectionDialogOptions {
 	dialogId: string;
 	dialogTitle: string;
 	multiSelectMode: boolean;
-	restrictToIssuerId?: string;
-	omittedCollection?: RecipientBadgeInstance[];
 }
 
 @Component({
@@ -76,7 +70,6 @@ export class CollectionBadgeSelectionDialog extends BaseDialog {
 	}
 
 	saveDialog() {
-		console.log(this.selectedBadges)
 		this.closeModal();
 		this.resolveFunc(Array.from(this.selectedBadges.values()));
 	}
@@ -96,7 +89,6 @@ export class CollectionBadgeSelectionDialog extends BaseDialog {
 					list => this.updateBadges(list.entities),
 					err => this.messageService.reportAndThrowError("Failed to load badge list", err)
 				);
-		console.log(this.badgeClasses)		
 	}
 
 	private updateBadges(allBadges: BadgeClass[]) {
@@ -105,39 +97,3 @@ export class CollectionBadgeSelectionDialog extends BaseDialog {
 	}
 
 	}
-
-class MatchingIssuerBadges {
-	constructor(
-		public issuerId: string,
-		public issuer: ApiRecipientBadgeIssuer,
-		public badges: RecipientBadgeInstance[] = []
-	) {}
-
-	addBadge(badge: RecipientBadgeInstance) {
-		if (badge.issuerId === this.issuerId) {
-			if (this.badges.indexOf(badge) < 0) {
-				this.badges.push(badge);
-			}
-		}
-	}
-}
-
-class MatchingAlgorithm {
-	static issuerMatcher(inputPattern: string): (issuer: ApiRecipientBadgeIssuer) => boolean {
-		const patternStr = StringMatchingUtil.normalizeString(inputPattern);
-		const patternExp = StringMatchingUtil.tryRegExp(patternStr);
-
-		return issuer => (
-			StringMatchingUtil.stringMatches(issuer.name, patternStr, patternExp)
-		);
-	}
-
-	static badgeMatcher(inputPattern: string): (badge: RecipientBadgeInstance) => boolean {
-		const patternStr = StringMatchingUtil.normalizeString(inputPattern);
-		const patternExp = StringMatchingUtil.tryRegExp(patternStr);
-
-		return badge => (
-			StringMatchingUtil.stringMatches(badge.badgeClass.name, patternStr, patternExp)
-		);
-	}
-}
