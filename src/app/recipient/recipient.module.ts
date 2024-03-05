@@ -84,7 +84,7 @@ const routes: Routes = [
 		RecipientBadgeApiService,
 		RecipientBadgeManager,
 		RecipientBadgeCollectionApiService,
-		RecipientBadgeCollectionManager,
+		RecipientBadgeCollectionManager
 	],
 	exports: []
 })
