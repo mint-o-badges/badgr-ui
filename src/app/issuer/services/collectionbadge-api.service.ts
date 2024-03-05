@@ -23,20 +23,6 @@ export class CollectionBadgeApiService extends BaseHttpApiService {
 			.then(r => r.body);
 	}
 
-	removeCollectionBadge(collectionBadgeSlug: string): Promise<void> {
-		return this
-			.delete(`/v1/earner/collections/${collectionBadgeSlug}`)
-			.then(r => void 0);
-	}
-
-	addCollectionBadge(
-		badgeInfo: ApiCollectionBadge
-	) {
-		return this
-			.post<ApiCollectionBadge>('/v1/earner/collections?json_format=plain', badgeInfo)
-			.then(r => r.body);
-	}
-
 	saveCollectionBadge(
 		apiModel: ApiCollectionBadge
 	) {

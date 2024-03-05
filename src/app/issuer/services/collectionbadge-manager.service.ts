@@ -31,22 +31,6 @@ export class CollectionBadgeManager {
 		});
 	}
 
-	createCollectionBadge(
-		collectionBadgeIngo: ApiCollectionBadge
-	): Promise<CollectionBadge> {
-		return this.collectionBadgeApiService
-			.addCollectionBadge(collectionBadgeIngo)
-			.then(newBadge => this.collectionBadgeList.addOrUpdate(newBadge))
-			;
-	}
-
-	deleteCollectionBadge(collectionBadge: CollectionBadge) {
-		return this.collectionBadgeApiService
-			.removeCollectionBadge(collectionBadge.slug)
-			.then(() => this.collectionBadgeList.remove(collectionBadge))
-			;
-	}
-
 	updateIfLoaded() {
 		this.collectionBadgeList.updateIfLoaded();
 	}
