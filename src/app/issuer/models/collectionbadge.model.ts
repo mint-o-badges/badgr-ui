@@ -100,7 +100,7 @@ export class CollectionBadge extends ManagedEntity<ApiCollectionBadge, Collectio
 	addBadge(badge: BadgeClass) {
 		if (!this.containsBadge(badge)) {
 			this.badgeEntries.addOrUpdate({
-				id: badge.slug,
+				slug: badge.slug,
 			});
 		}
 	}
@@ -112,7 +112,7 @@ export class CollectionBadge extends ManagedEntity<ApiCollectionBadge, Collectio
 
 export class CollectionBadgeEntry extends ManagedEntity<ApiCollectionBadgeEntry, CollectionBadgeEntryRef> {
 	get badgeSlug(): string {
-		return String(this.apiModel.id);
+		return String(this.apiModel.slug);
 	}
 
 	get badge(): any {
@@ -120,7 +120,7 @@ export class CollectionBadgeEntry extends ManagedEntity<ApiCollectionBadgeEntry,
 	}
 
 	static urlFromApiModel(collectionBadge: CollectionBadge, apiModel: ApiCollectionBadgeEntry) {
-		return `badgr:collectionbadge/${collectionBadge.slug}/entry/${apiModel.id}`;
+		return `badgr:collectionbadge/${collectionBadge.slug}/entry/${apiModel.slug}`;
 	}
 	constructor(
 		public collectionBadge: CollectionBadge,
@@ -136,7 +136,7 @@ export class CollectionBadgeEntry extends ManagedEntity<ApiCollectionBadgeEntry,
 	protected buildApiRef(): ApiEntityRef {
 		return {
 			'@id': CollectionBadgeEntry.urlFromApiModel(this.collectionBadge, this.apiModel),
-			slug: `badge-collection-${this.collectionBadge.slug}-entry-${this.apiModel.id}`,
+			slug: `badge-collection-${this.collectionBadge.slug}-entry-${this.apiModel.slug}`,
 		};
 	}
 }

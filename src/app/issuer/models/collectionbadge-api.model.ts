@@ -6,7 +6,7 @@ export interface CollectionbadgeRef {
 export interface ApiCollectionBadge {
 	name: string;
 	description: string;
-	badges: any[];
+	badges: ApiCollectionBadgeEntry[];
 	image: string;
 	slug: string;
 	created_at?: string;
@@ -19,5 +19,5 @@ export interface CollectionBadgeEntryRef {
 }
 
 export interface ApiCollectionBadgeEntry {
-	id: string;
+	slug: string;
 }

@@ -532,7 +532,11 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				description: this.badgeClassForm.value.badge_description ?? '',
 				image: this.badgeClassForm.value.badge_image ?? '',
 				slug: this.badgeClassForm.value.badge_name,
-				badges: this.selectedBadgeClasses.map((item) => item.apiModel.slug),
+				badges: this.selectedBadgeClasses.map((item) => {
+					return {
+						slug: item.apiModel.slug,
+					};
+				}),
 			};
 			this.badgeClassManager.createCollectionBadgeClass(collectionBadgeData);
 			return null;
