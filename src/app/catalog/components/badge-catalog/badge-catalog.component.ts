@@ -141,9 +141,9 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 	async loadCollectionBadges() {
 		return new Promise(async (resolve, reject) => {
 			this.collectionBadgeManager.allCollectionBadges$.subscribe(
-				(badges) => {
-					this.collectionBadges = badges;
-					resolve(badges);
+				(collectionbadges) => {
+					this.collectionBadges = collectionbadges;
+					resolve(collectionbadges);
 				},
 				(error) => {
 					this.messageService.reportAndThrowError('Failed to load collection-badges', error);
