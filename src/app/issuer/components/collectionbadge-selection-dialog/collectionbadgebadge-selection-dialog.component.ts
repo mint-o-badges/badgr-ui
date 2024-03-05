@@ -21,7 +21,6 @@ export class CollectionBadgeSelectionDialog extends BaseDialog {
 	dialogTitle = 'Select Badges';
 
 	multiSelectMode = true;
-	restrictToIssuerId: string = null;
 	selectedBadges = new Set<BadgeClass>();
 
 	maxDisplayedResults = 100;
