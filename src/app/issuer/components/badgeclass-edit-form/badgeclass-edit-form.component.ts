@@ -258,14 +258,14 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 		this.baseUrl = this.configService.apiConfig.baseUrl;
 
-		this.badgeClassesLoadedPromise = Promise.all([this.badgeClassManager.allBadgesList.loadedPromise])
-			.then(([list]) => {
-				this.badgeClasses = list.entities.map((e) => e);
+		this.badgeClassesLoadedPromise = this.badgeClassManager.allBadgesList.loadedPromise
+			.then((list) => {
+				this.badgeClasses = list.entities;
 				return this.badgeClasses;
 			})
 			.catch((err) => {
 				router.navigate(['/']);
-				return this.messageService.reportHandledError(`Failed to load collection ${this.badgeClass}`);
+				return this.messageService.reportHandledError(' Failed to load badgeClasses');
 			});
 	}
 
@@ -413,10 +413,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			this.newTagInput.nativeElement.focus();
 			event.preventDefault();
 		}
-	}
-
-	handleCollectionBadgeCheck() {
-		this.isCollectionBadgeChecked = !this.isCollectionBadgeChecked;
 	}
 
 	manageBadges() {
