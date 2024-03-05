@@ -102,7 +102,7 @@ export class BadgeClassEditComponent extends BaseAuthenticatedRoutableComponent 
 					{title: "Issuers", routerLink: ['/issuer']},
 					{title: issuer.name, routerLink: ['/issuer/issuers/', this.issuerSlug]},
 					{title: 'badges', routerLink: ['/issuer/issuers/' + this.issuerSlug + '/badges/']},
-					{title: this.badgeClass.name, routerLink: ['/issuer/issuers/' + this.issuerSlug + '/badges/' + this.badgeSlug]},
+					{title: this.badgeClass ? this.badgeClass.name : '', routerLink: ['/issuer/issuers/' + this.issuerSlug + '/badges/' + this.badgeSlug]},
 					{title: 'Edit Badge Class'},
 				];
 				return issuer;

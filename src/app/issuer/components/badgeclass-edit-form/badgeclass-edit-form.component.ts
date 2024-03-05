@@ -63,7 +63,11 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
      * If not set, an error is logged and it is interpreted as `false`.
      */
     @Input()
-    set isForked(isBadgeClassForked: boolean) {
+    set isForked(isBadgeClassForked: boolean | string) {
+        // Parameters from HTML are passed as string, even if the type of the parameter
+        // is set to boolean
+        if (typeof isBadgeClassForked == "string")
+            isBadgeClassForked = isBadgeClassForked == "true";
         this.isBadgeClassForked = isBadgeClassForked;
     }
 
@@ -91,6 +95,23 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
      */
     forbiddenImage: string | null = null;
 
+    /**
+     * Indicates wether the existing tags are currently being loaded.
+     * It is set in @see fetchTags
+     */
+    existingTagsLoading: boolean;
+
+    /**
+     * The already existing tags for other badges, for the autocomplete to show.
+     * The tags are loaded in @see fetchTags
+     */
+    existingTags: object[];
+
+    /**
+     * Indicates whether hexagon frame is shown or hidden
+     */
+    hideHexFrame: boolean = false;
+
     savePromise: Promise<BadgeClass> | null = null;
     badgeClassForm = typedFormGroup(this.criteriaRequired.bind(this))
     .addControl('badge_name', '', [
@@ -106,7 +127,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
         Validators.required,
         // Validation that the image (hash) of a fork changed
         (control: AbstractControl): ValidationErrors | null => {
-            if (!control.value || !this.forbiddenImage)
+            if (!control.value || !this.forbiddenImage || !this.currentImage)
                 return null;
             let other = new Md5().appendStr(this.currentImage).end();
             if (this.forbiddenImage != other)
@@ -317,26 +338,60 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
         this.adjustUploadImage(this.badgeClassForm.value);
     }
 
-    ngOnInit() {
-        super.ngOnInit();
-        let that = this;
-        this.badgeClassForm.rawControl.controls['badge_category'].statusChanges.subscribe(res => {
-            if(this.currentImage){
+	ngOnInit() {
+		super.ngOnInit();
+		let that = this;
+		// update badge frame when a category is selected, unless no-hexagon-frame checkbox is checked
+		this.badgeClassForm.rawControl.controls['badge_category'].statusChanges.subscribe((res) => {
+			if (this.currentImage && !this.hideHexFrame) {
                 //timeout because of workaround for angular bug.
-                setTimeout(function(){
+                setTimeout(function () {
                     that.adjustUploadImage(that.badgeClassForm.value);
-                },10)
-            }
-        })
-        this.badgeClassForm.rawControl.controls['badge_level'].statusChanges.subscribe(res => {
-            if(this.currentImage){
+                }, 10);
+			}
+		});
+		// update badge frame when a level is selected, unless no-hexagon-frame checkbox is checked
+		this.badgeClassForm.rawControl.controls['badge_level'].statusChanges.subscribe((res) => {
+			if (this.currentImage && !this.hideHexFrame) {
                 //timeout because of workaround for angular bug.
-                setTimeout(function(){
+                setTimeout(function () {
                     that.adjustUploadImage(that.badgeClassForm.value);
-                },10)
-            }
-        })
-        
+                }, 10);
+			}
+		});
+
+        this.fetchTags();
+    }
+
+    /**
+     * Fetches the tags from the @see badgeClassManager and selects the tags from them.
+     * The tags are then assigned to @see existingTags in an appropriate format.
+     * At the beginning, @see existingTagsLoading is set, once tags are loaded it's unset.
+     */
+    fetchTags() {
+        this.existingTags = [];
+        this.existingTagsLoading = true;
+        // outerThis is needed because inside the observable, `this` is something else
+        let outerThis = this;
+        let observable = this.badgeClassManager.allBadges$;
+
+        observable.subscribe({
+            next(entities: BadgeClass[]) {
+                let tags: string[] = entities.flatMap((entity) => entity.tags);
+                let unique = [...new Set(tags)];
+                unique.sort();
+                outerThis.existingTags = unique.map((tag, index) => ({
+                    id: index,
+                    name: tag
+                }));
+                // The tags are loaded in one badge, so it's save to assume
+                // that after the first `next` call, the loading is done
+                outerThis.existingTagsLoading = false;
+            },
+            error(err) {
+                console.error("Couldn't fetch labels: " + err);
+            },
+        });
     }
 
     enableTags() {
@@ -348,11 +403,11 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
     }
 
     addTag() {
-        const newTag = ((this.newTagInput.nativeElement as HTMLInputElement).value || '').trim().toLowerCase();
+        const newTag = (this.newTagInput["query"] || '').trim().toLowerCase();
 
         if (newTag.length > 0) {
             this.tags.add(newTag);
-            (this.newTagInput.nativeElement as HTMLInputElement).value = '';
+            this.newTagInput["query"] = '';
         }
     }
 
@@ -626,25 +681,32 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
         .generateRandom()
         .then((imageUrl) => this.imageField.useDataUrl(imageUrl, 'Auto-generated image'));
     }
-    generateUploadImage(image, formdata) {
-        // the imageUploaded-event of the angular image component is also called after initialising the component because the image is set in initFormFromExisting
-        if(typeof this.currentImage == "undefined" || this.initedCurrentImage) {
-            this.initedCurrentImage = true;
-            this.currentImage = image.slice();
-            this.badgeStudio
-            .generateUploadImage(image.slice(), formdata)
-            .then((imageUrl) => this.imageField.useDataUrl(imageUrl, 'BADGE'));
-        } else {
-            this.initedCurrentImage = true
-        }
-    }
-    adjustUploadImage(formdata) {
-        if(this.currentImage && this.badgeStudio) {
-            this.badgeStudio
-            .generateUploadImage(this.currentImage.slice(), formdata)
-            .then((imageUrl) => this.imageField.useDataUrl(imageUrl, 'BADGE'));
-        }
-    }
+
+	generateUploadImage(image, formdata) {
+		// the imageUploaded-event of the angular image component is also called after initialising the component because the image is set in initFormFromExisting
+		if (typeof this.currentImage == 'undefined' || this.initedCurrentImage) {
+			this.initedCurrentImage = true;
+			this.currentImage = image.slice();
+			// Hide hexagon-frame if checkbox is checked
+			if (this.hideHexFrame) {
+				this.imageField.useDataUrl(this.currentImage, 'BADGE');
+			} else {
+				this.badgeStudio
+					.generateUploadImage(image.slice(), formdata)
+					.then((imageUrl) => this.imageField.useDataUrl(imageUrl, 'BADGE'));
+			}
+		} else {
+			this.initedCurrentImage = true;
+		}
+	}
+	adjustUploadImage(formdata) {
+		// Skip update badge icon frame if no-hexagon-frame checkbox is checked
+		if (this.currentImage && this.badgeStudio && !this.hideHexFrame) {
+			this.badgeStudio
+				.generateUploadImage(this.currentImage.slice(), formdata)
+				.then((imageUrl) => this.imageField.useDataUrl(imageUrl, 'BADGE'));
+		}
+	}
 
     positiveInteger(control: AbstractControl) {
         const val = parseInt(control.value, 10);
@@ -660,4 +722,18 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
     openLegend() {
         this.showLegend = true;
     }
+
+	handleCBoxValueChange(event:Event) {
+		this.hideHexFrame = (<HTMLInputElement>event.target).checked;
+
+		if (this.currentImage) {
+			if (this.hideHexFrame) {
+				this.imageField.useDataUrl(this.currentImage, 'BADGE');
+			} else {
+				this.badgeStudio
+					.generateUploadImage(this.currentImage, this.badgeClassForm.value)
+					.then((imageUrl) => this.imageField.useDataUrl(imageUrl, 'BADGE'));
+			}
+		}
+	}
 }

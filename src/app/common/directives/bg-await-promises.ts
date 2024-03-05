@@ -77,6 +77,7 @@ export class BgAwaitPromises {
 	}
 
 	private showError(error: unknown) {
+        console.error(error);
 		const factory = this.componentResolver.resolveComponentFactory(LoadingErrorComponent);
 
 		this.viewContainer.clear();
