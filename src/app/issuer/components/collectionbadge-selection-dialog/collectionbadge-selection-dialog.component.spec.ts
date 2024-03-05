@@ -59,12 +59,4 @@ describe('CollectionBadgeSelectionDialogComponent', () => {
     // const result = component.updateCollection(checkedCollection, checked);
   });
 
-  it('should run #applySorting()', async () => {
-    const result = component.applySorting();
-  });
-
-  xit('should run #updateResults()', async () => {
-    const result = component.updateResults();
-  });
-
 });
