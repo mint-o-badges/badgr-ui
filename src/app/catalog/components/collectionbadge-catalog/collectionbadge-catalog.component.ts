@@ -9,10 +9,9 @@ import { AppConfigService } from '../../../common/app-config.service';
 import { BaseRoutableComponent } from '../../../common/pages/base-routable.component';
 import { CollectionBadge } from '../../../issuer/models/collectionbadge.model';
 import { CollectionBadgeManager } from '../../../issuer/services/collectionbadge-manager.service';
-import * as d3 from 'd3'
-import {OrgChart} from 'd3-org-chart'
+import * as d3 from 'd3';
+import { OrgChart } from 'd3-org-chart';
 import { TOKEN_STORAGE_KEY } from '../../../../../src/app/common/services/session.service';
-
 
 @Component({
 	selector: 'app-collectionbadge-catalog',
@@ -20,20 +19,16 @@ import { TOKEN_STORAGE_KEY } from '../../../../../src/app/common/services/sessio
 	styleUrls: ['./collectionbadge-catalog.component.css'],
 })
 export class CollectionBadgeCatalogComponent extends BaseRoutableComponent implements OnInit {
-
 	collectionBadgeLoaded: Promise<unknown>;
 	collectionBadge: CollectionBadge = null;
 
-    get collectionBadgeSlug() {
+	get collectionBadgeSlug() {
 		return this.route.snapshot.params['id'];
 	}
 
-	
+	data: any = null;
 
-	data: any = null
-
-	authToken: string = null
-
+	authToken: string = null;
 
 	constructor(
 		protected title: Title,
@@ -45,7 +40,7 @@ export class CollectionBadgeCatalogComponent extends BaseRoutableComponent imple
 	) {
 		super(router, route);
 
-        // this.collectionBadgeLoaded = this.collectionBadgeManager.collectionbadgeByName(this.collectionBadgeName).then(
+		// this.collectionBadgeLoaded = this.collectionBadgeManager.collectionbadgeByName(this.collectionBadgeName).then(
 		// 	(badge) => {
 		// 		this.collectionBadge = badge;
 		// 	},
@@ -61,10 +56,7 @@ export class CollectionBadgeCatalogComponent extends BaseRoutableComponent imple
 				this.collectionBadge = badge;
 			},
 			(error) =>
-				this.messageService.reportLoadingError(
-					`Cannot find badge with ID ${this.collectionBadgeSlug}`,
-					error
-				)
+				this.messageService.reportLoadingError(`Cannot find badge with ID ${this.collectionBadgeSlug}`, error),
 		);
 
 		try {
@@ -72,78 +64,76 @@ export class CollectionBadgeCatalogComponent extends BaseRoutableComponent imple
 				this.authToken = localStorage.getItem(TOKEN_STORAGE_KEY);
 			}
 		} catch (e) {}
-
-	}    
+	}
 
 	ngOnInit() {
-			fetch('http://localhost:8000/v2/collectionbadges/iQNtwNKsRu-hwLK6huWelA', {
-				headers: {
-					'Authorization': `Bearer ${this.authToken}`,
-					'Content-Type': 'application/json' 
-				  },
-			})
-			 
-			  .then((d) => d.json())
-			  .then((data) => {
-
-			const collectionBadgeData = 
-			       { 
+		fetch(`http://localhost:8000/v2/collectionbadges/${this.collectionBadgeSlug}`, {
+			headers: {
+				Authorization: `Bearer ${this.authToken}`,
+				'Content-Type': 'application/json',
+			},
+		})
+			.then((d) => d.json())
+			.then((data) => {
+				const collectionBadgeData = {
 					name: data.result[0].name,
-					description:  data.result[0].description,
-					image:  data.result[0].image,
-					id: 'collectionBadge'
-				   }
- 
-			const badgeData = data.result[0].assertions.map(d => {return {
-				name: d.name,
-				description: d.description,
-				image: d.image,
-				id: d.name,
-				parentId: 'collectionBadge'
+					description: data.result[0].description,
+					image: data.result[0].image,
+					id: 'collectionBadge',
+				};
 
-			}})
+				const badgeData = data.result[0].assertions.map((d) => {
+					return {
+						name: d.name,
+						description: d.description,
+						image: d.image,
+						id: d.name,
+						parentId: 'collectionBadge',
+					};
+				});
 
-			const combinedData = [collectionBadgeData, ...badgeData]
-			const chart = new OrgChart().compact(false)
+				const combinedData = [collectionBadgeData, ...badgeData];
+				const chart = new OrgChart().compact(false);
 
-			function diagonal(s, d) {
-
-				const path = `M ${s.y} ${s.x}
+				function diagonal(s, d) {
+					const path = `M ${s.y} ${s.x}
 						C ${(s.y + d.y) / 2} ${s.x},
 						  ${(s.y + d.y) / 2} ${d.x},
-						  ${d.y} ${d.x}`
-			
-				return path
-			  }
-		
-			  chart
-			    //@ts-ignore
-				.nodeHeight((d) => 200)
-			    //@ts-ignore
-				.nodeWidth((d) => 200)
-				.childrenMargin((d) => 280)
-				.setActiveNodeCentered(false)
-				.container('.chart-container')
-				.nodeUpdate(function (d) {
-				  d3.select(this)
-					.select('.node')
-					.on('click.node', (e, d) => {
-					  chart.onButtonClick(e, d);
-					});
-		
-				  d3.select(this).select('.node-button-foreign-object').remove();
-				})
-				//.buttonContent((d) => '')
-				.linkUpdate(function (d) {
-				  d3.select(this)
-					.attr('stroke-width', '5px')
-					.style('stroke', 'lightgray')
-					.attr('d', function(d){ return diagonal(d, d.parent) })
-				})
-				.nodeContent(
-				  (d) =>{
-				  if (d.depth === 0) { // Check if the node is at the top level
-					return `<svg width="400" height="400" xmlns="http://www.w3.org/2000/svg">
+						  ${d.y} ${d.x}`;
+
+					return path;
+				}
+
+				chart
+					//@ts-ignore
+					.nodeHeight((d) => 200)
+					//@ts-ignore
+					.nodeWidth((d) => 200)
+					.childrenMargin((d) => 280)
+					.setActiveNodeCentered(false)
+					.container('.chart-container')
+					.nodeUpdate(function (d) {
+						d3.select(this)
+							.select('.node')
+							.on('click.node', (e, d) => {
+								chart.onButtonClick(e, d);
+							});
+
+						d3.select(this).select('.node-button-foreign-object').remove();
+					})
+					//.buttonContent((d) => '')
+					.linkUpdate(function (d) {
+						d3.select(this)
+							.attr('stroke-width', '5px')
+							.style('stroke', 'lightgray')
+							.attr('d', function (d) {
+								return diagonal(d, d.parent);
+							});
+					})
+					.nodeContent((d) => {
+						if (d.depth === 0) {
+							// Check if the node is at the top level
+							return `<svg width="400" height="400" xmlns="http://www.w3.org/2000/svg">
 					<polygon points="100,10 
 									150,30 
 									180,70 
@@ -166,17 +156,18 @@ export class CollectionBadgeCatalogComponent extends BaseRoutableComponent imple
 							 </svg>
 				
 				  `;
-				} else{
-					return `<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="139" height="160" viewbox="0 0 138.56406460551017 160" style="filter: drop-shadow(rgba(255, 255, 255, 0.5) 0px 0px 10px);"><path fill="#ffg" d="M69.28203230275508 0L138.56406460551017 40L138.56406460551017 120L69.28203230275508 160L0 120L0 40Z"></path>
+						} else {
+							return `<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="139" height="160" viewbox="0 0 138.56406460551017 160" style="filter: drop-shadow(rgba(255, 255, 255, 0.5) 0px 0px 10px);"><path fill="#ffg" d="M69.28203230275508 0L138.56406460551017 40L138.56406460551017 120L69.28203230275508 160L0 120L0 40Z"></path>
 					<image xlink:href="${this.collectionBadge.apiModel.image}" x="34.28203230275508" y="0" width="70" height="120" />
 					<text x="69.28203230275508" y="110" text-anchor="middle" style="fill: white; font-size: 12px;">Your Text Here</text>
 </svg>
 					</svg>
 				  
 				  `;
-			}})
-				.data(combinedData)
-				.render();
-			})	
+						}
+					})
+					.data(combinedData)
+					.render();
+			});
 	}
 }
