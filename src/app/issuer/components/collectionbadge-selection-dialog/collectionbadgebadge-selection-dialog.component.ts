@@ -1,7 +1,7 @@
-import {Component, ElementRef, Input, Renderer2} from '@angular/core';
-import {MessageService} from '../../../common/services/message.service';
+import { Component, ElementRef, Input, Renderer2 } from '@angular/core';
+import { MessageService } from '../../../common/services/message.service';
 import { BadgeClassManager } from '../../services/badgeclass-manager.service';
-import {BaseDialog} from '../../../common/dialogs/base-dialog';
+import { BaseDialog } from '../../../common/dialogs/base-dialog';
 import { BadgeClass } from '../../models/badgeclass.model';
 
 export interface CollectionBadgeSelectionDialogOptions {
@@ -12,13 +12,13 @@ export interface CollectionBadgeSelectionDialogOptions {
 
 @Component({
 	selector: 'collectionbadge-selection-dialog',
-	templateUrl: './collectionbadge-selection-dialog.component.html'
+	templateUrl: './collectionbadge-selection-dialog.component.html',
 })
 export class CollectionBadgeSelectionDialog extends BaseDialog {
 	@Input() badgeClasses: BadgeClass[];
 
-	dialogId = "CollectionBadgeDialog";
-	dialogTitle = "Select Badges";
+	dialogId = 'CollectionBadgeDialog';
+	dialogTitle = 'Select Badges';
 
 	multiSelectMode = false;
 	restrictToIssuerId: string = null;
@@ -32,7 +32,6 @@ export class CollectionBadgeSelectionDialog extends BaseDialog {
 
 	private resolveFunc: { (badges: BadgeClass[]): void };
 
-
 	private loadedData = false;
 
 	constructor(
@@ -41,17 +40,14 @@ export class CollectionBadgeSelectionDialog extends BaseDialog {
 		private badgeManager: BadgeClassManager,
 		private messageService: MessageService,
 	) {
-
 		super(componentElem, renderer);
 	}
 
-	openDialog(
-		{
-			dialogId,
-			dialogTitle = "Select Badges",
-			multiSelectMode = true,
-		}: CollectionBadgeSelectionDialogOptions
-	): Promise<BadgeClass[]> {
+	openDialog({
+		dialogId,
+		dialogTitle,
+		multiSelectMode = true,
+	}: CollectionBadgeSelectionDialogOptions): Promise<BadgeClass[]> {
 		this.showModal();
 		this.dialogId = dialogId;
 		this.dialogTitle = dialogTitle;
@@ -83,17 +79,14 @@ export class CollectionBadgeSelectionDialog extends BaseDialog {
 	}
 
 	private updateData() {
-		this.badgesLoaded =
-			this.badgeManager.allBadgesList.loadedPromise
-				.then(
-					list => this.updateBadges(list.entities),
-					err => this.messageService.reportAndThrowError("Failed to load badge list", err)
-				);
+		this.badgesLoaded = this.badgeManager.allBadgesList.loadedPromise.then(
+			(list) => this.updateBadges(list.entities),
+			(err) => this.messageService.reportAndThrowError('Failed to load badge list', err),
+		);
 	}
 
 	private updateBadges(allBadges: BadgeClass[]) {
 		this.loadedData = true;
 		this.allBadges = allBadges;
 	}
-
-	}
+}
