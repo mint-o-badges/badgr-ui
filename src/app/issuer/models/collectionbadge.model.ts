@@ -1,57 +1,68 @@
-import {ManagedEntity} from '../../common/model/managed-entity';
-import {ApiEntityRef} from '../../common/model/entity-ref';
-import {ApiCollectionBadge, ApiCollectionBadgeEntry, CollectionBadgeEntryRef, CollectionbadgeRef} from './collectionbadge-api.model'
+import { ManagedEntity } from '../../common/model/managed-entity';
+import { ApiEntityRef } from '../../common/model/entity-ref';
+import {
+	ApiCollectionBadge,
+	ApiCollectionBadgeEntry,
+	CollectionBadgeEntryRef,
+	CollectionbadgeRef,
+} from './collectionbadge-api.model';
 import { BadgeClass } from './badgeclass.model';
-import {EmbeddedEntitySet} from '../../common/model/managed-entity-set';
-import {CommonEntityManager} from '../../entity-manager/services/common-entity-manager.service';
+import { EmbeddedEntitySet } from '../../common/model/managed-entity-set';
+import { CommonEntityManager } from '../../entity-manager/services/common-entity-manager.service';
 
 export class CollectionBadge extends ManagedEntity<ApiCollectionBadge, CollectionbadgeRef> {
+	get name(): string {
+		return this.apiModel.name;
+	}
+	set name(name: string) {
+		this.apiModel.name = name;
+	}
 
-	get name(): string { return this.apiModel.name; }
-	set name(name: string) { this.apiModel.name = name; }
+	get description(): string {
+		return this.apiModel.description;
+	}
+	set description(description: string) {
+		this.apiModel.description = description;
+	}
 
-	get description(): string { return this.apiModel.description; }
-	set description(description: string) { this.apiModel.description = description; }
+	get slug(): string {
+		return this.apiModel.slug;
+	}
+	get image(): string {
+		return this.apiModel.image;
+	}
 
-	get slug(): string { return this.apiModel.slug; }
-	get image(): string { return this.apiModel.image; }
-
-	get badges(): BadgeClass[] { return this.badgeEntries.entities.map(e => e.badge); }
+	get badges(): BadgeClass[] {
+		return this.badgeEntries.entities.map((e) => e.badge);
+	}
 	get badgesPromise(): Promise<BadgeClass[]> {
 		return Promise.all([
 			this.badgeEntries.loadedPromise,
-			this.collectionBadgeManager.collectionBadgeList.loadedPromise
-		]).then(
-			([list]) => list.entities.map(e => e.badge)
-		);
+			this.collectionBadgeManager.collectionBadgeList.loadedPromise,
+		]).then(([list]) => list.entities.map((e) => e.badge));
 	}
-	badgeEntries = new EmbeddedEntitySet<
-		CollectionBadge,
-		CollectionBadgeEntry,
-        ApiCollectionBadgeEntry
-	>(
+	badgeEntries = new EmbeddedEntitySet<CollectionBadge, CollectionBadgeEntry, ApiCollectionBadgeEntry>(
 		this,
 		() => this.apiModel.badges,
-		apiEntry => new CollectionBadgeEntry(this, apiEntry),
-		apiEntry => CollectionBadgeEntry.urlFromApiModel(this, apiEntry)
+		(apiEntry) => new CollectionBadgeEntry(this, apiEntry),
+		(apiEntry) => CollectionBadgeEntry.urlFromApiModel(this, apiEntry),
 	);
 
 	static urlForApiModel(apiModel: ApiCollectionBadge): string {
-		return "badgr:badge-collection/" + apiModel.slug;
+		return 'badgr:badge-collection/' + apiModel.slug;
 	}
 
 	protected buildApiRef(): ApiEntityRef {
 		return {
-			"@id": CollectionBadge.urlForApiModel(this.apiModel),
+			'@id': CollectionBadge.urlForApiModel(this.apiModel),
 			slug: this.apiModel.slug,
 		};
 	}
 
-
 	constructor(
 		commonManager: CommonEntityManager,
 		initialEntity: ApiCollectionBadge = null,
-		onUpdateSubscribed: () => void = undefined
+		onUpdateSubscribed: () => void = undefined,
 	) {
 		super(commonManager, onUpdateSubscribed);
 
@@ -66,49 +77,40 @@ export class CollectionBadge extends ManagedEntity<ApiCollectionBadge, Collectio
 	 *
 	 * @param newBadges The new set of badges that this collectionbadge should hold
 	 */
-	updateBadges(
-		newBadges: BadgeClass[]
-	) {
+	updateBadges(newBadges: BadgeClass[]) {
 		// To preserve descriptions set on existing badge entries, we need to do a two-step update, rather than blowing
 		// away the list with a new value
 
-		let newApiList = (this.apiModel.badges || []);
+		let newApiList = this.apiModel.badges || [];
 
 		this.apiModel.badges = newApiList;
-		this.applyApiModel(this.apiModel, /* externalChange */false);
+		this.applyApiModel(this.apiModel, /* externalChange */ false);
 	}
 
 	save(): Promise<this> {
 		return this.collectionBadgeManager.collectionBadgeApiService
 			.saveCollectionBadge(this.apiModel)
-			.then(newModel => this.applyApiModel(newModel));
+			.then((newModel) => this.applyApiModel(newModel));
 	}
 
 	containsBadge(badge: BadgeClass): boolean {
-		return !! this.badgeEntries.entities.find(e => e.badgeSlug === badge.slug);
+		return !!this.badgeEntries.entities.find((e) => e.badgeSlug === badge.slug);
 	}
 
 	addBadge(badge: BadgeClass) {
-		if (! this.containsBadge(badge)) {
+		if (!this.containsBadge(badge)) {
 			this.badgeEntries.addOrUpdate({
 				id: badge.slug,
-				// description: ""
 			});
 		}
 	}
 
 	removeBadge(badge: BadgeClass): boolean {
-		return this.badgeEntries.remove(
-			this.badgeEntries.entities.find(e => e.badgeSlug === badge.slug)
-		);
+		return this.badgeEntries.remove(this.badgeEntries.entities.find((e) => e.badgeSlug === badge.slug));
 	}
 }
 
-export class CollectionBadgeEntry extends ManagedEntity<
-	ApiCollectionBadgeEntry,
-	CollectionBadgeEntryRef
-> {
-
+export class CollectionBadgeEntry extends ManagedEntity<ApiCollectionBadgeEntry, CollectionBadgeEntryRef> {
 	get badgeSlug(): string {
 		return String(this.apiModel.id);
 	}
@@ -117,10 +119,7 @@ export class CollectionBadgeEntry extends ManagedEntity<
 		return this.collectionBadgeManager.collectionBadgeList.entityForSlug(this.badgeSlug);
 	}
 
-	static urlFromApiModel(
-		collectionBadge: CollectionBadge,
-		apiModel: ApiCollectionBadgeEntry
-	) {
+	static urlFromApiModel(collectionBadge: CollectionBadge, apiModel: ApiCollectionBadgeEntry) {
 		return `badgr:collectionbadge/${collectionBadge.slug}/entry/${apiModel.id}`;
 	}
 	constructor(
@@ -136,7 +135,7 @@ export class CollectionBadgeEntry extends ManagedEntity<
 
 	protected buildApiRef(): ApiEntityRef {
 		return {
-			"@id": CollectionBadgeEntry.urlFromApiModel(this.collectionBadge, this.apiModel),
+			'@id': CollectionBadgeEntry.urlFromApiModel(this.collectionBadge, this.apiModel),
 			slug: `badge-collection-${this.collectionBadge.slug}-entry-${this.apiModel.id}`,
 		};
 	}
