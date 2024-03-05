@@ -1,21 +1,20 @@
 export interface CollectionbadgeRef {
-	"@id": string;
-	slug: string
+	'@id': string;
+	slug: string;
 }
 
 export interface ApiCollectionBadge {
 	name: string;
 	description: string;
-	badges: any []
+	badges: any[];
 	image: string;
-    slug: string;
-    created_at?: string;
+	slug: string;
+	created_at?: string;
 	created_by?: string;
 }
 
-
 export interface CollectionBadgeEntryRef {
-	"@id": string;
+	'@id': string;
 	slug: string;
 }
 
