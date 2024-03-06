@@ -1,5 +1,5 @@
 <ng-template sourceListener></ng-template>
-<header class="o-container">
+<header class="o-container" *ngIf="!curtain">
 	<nav class="navbar l-containerxaxis l-stickyfooter-x-nav" [class.navbar-light]="!theme.useColorNavbar">
 		<a
 			[class.logo-is-loading]="isRequestPending"
@@ -283,10 +283,10 @@
 		</div>
 	</nav>
 </header>
-<div class="loader l-stickyfooter-x-loader"></div>
+<div *ngIf="!curtain" class="loader l-stickyfooter-x-loader"></div>
 
 <!-- Display a "curtain" instead of the normal page, if `curtain` is set to true-->
-<!-- <div *ngIf="curtain"class="curtain-background">
+<div *ngIf="curtain"class="curtain-background">
 <div  class="l-stickyfooter-x-main o-container curtain-background">
     <div class="l-flex l-flex-justifycenter l-flex-aligncenter flex-wrap u-margin-bottom8x"> 
         <div class="l-flex flex-1 l-flex-aligncenter l-flex-justifycenter">
@@ -299,9 +299,9 @@
     </div>
     <div class="panel" >
         <div class="center">
-            <h1 class="u-text-h2 u-text-dark2 nunito-normal" style="padding-bottom: 1rem ; font-weight: 700; font-size: 3em;">Coming soon - 1. April 2024</h1> -->
+            <h1 class="u-text-h2 u-text-dark2 nunito-normal" style="padding-bottom: 1rem ; font-weight: 700; font-size: 3em;">Coming soon - 1. April 2024</h1>
             <!--TODO: This is very hacky-->
-            <!-- <h1 class="u-text-h1 u-text-dark2">&nbsp;</h1>
+            <h1 class="u-text-h1 u-text-dark2">&nbsp;</h1>
         </div>
         <div class="media-container">
                 <video width="50%" style="margin-top: auto; margin-bottom: auto;" controls>
@@ -318,10 +318,11 @@
         </div>
     </div>
 </div>
+</div>
 
 
 <!-- Display a "curtain" instead of the normal page, if `curtain` is set to true-->
-<main 
+<main *ngIf="!curtain"
 	class="l-stickyfooter-x-main o-container"
 	[attr.inert]="mobileNavOpen ? '' : null"
 	[class.l-inertcontainer]="mobileNavOpen"

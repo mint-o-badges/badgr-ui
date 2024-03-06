@@ -1,0 +1,51 @@
+.flex-1 {
+	flex: 1;
+}
+
+.flex-wrap {
+	flex-wrap: wrap;
+}
+.video-container {
+	height: 500px;
+	width: 100%;
+	padding-bottom: 5rem;
+}
+
+.panel {
+	padding: 5rem;
+	text-align: center;
+	position: relative;
+	max-width: 100%;
+	color: white;
+	border-radius: 1rem;
+}
+
+.curtain-background {
+	background-image: url("../assets/logos/Wabenstruktur.png");
+}
+
+.nunito-normal {
+	font-family: 'Nunito', sans-serif;
+	font-optical-sizing: auto;
+	font-weight: 500;
+	font-style: normal;
+}
+
+.media-container {
+    display: flex;
+	gap: 1em;
+  }
+
+@media only screen and (max-width: 600px) {
+    .media-container {
+      flex-direction: column; 
+    }
+  }
+
+.nunito-normal {
+  font-family: "Nunito", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+}
+
