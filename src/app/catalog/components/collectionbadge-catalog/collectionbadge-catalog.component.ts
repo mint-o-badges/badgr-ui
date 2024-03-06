@@ -40,17 +40,6 @@ export class CollectionBadgeCatalogComponent extends BaseRoutableComponent imple
 	) {
 		super(router, route);
 
-		// this.collectionBadgeLoaded = this.collectionBadgeManager.collectionbadgeByName(this.collectionBadgeName).then(
-		// 	(badge) => {
-		// 		this.collectionBadge = badge;
-		// 	},
-		// 	(error) =>
-		// 		this.messageService.reportLoadingError(
-		// 			`Cannot find badge ${this.collectionBadgeName}`,
-		// 			error
-		// 		)
-		// );
-
 		this.collectionBadgeLoaded = this.collectionBadgeManager.collectionbadgeById(this.collectionBadgeSlug).then(
 			(badge) => {
 				this.collectionBadge = badge;
@@ -75,7 +64,7 @@ export class CollectionBadgeCatalogComponent extends BaseRoutableComponent imple
 		})
 			.then((d) => d.json())
 			.then((data) => {
-				const collectionBadgeData = {
+				const topLevelBadgeData = {
 					name: data.result[0].name,
 					description: data.result[0].description,
 					image: data.result[0].image,
@@ -92,17 +81,18 @@ export class CollectionBadgeCatalogComponent extends BaseRoutableComponent imple
 					};
 				});
 
-				const combinedData = [collectionBadgeData, ...badgeData];
+				const collectionBadgeData = [topLevelBadgeData, ...badgeData];
 				const chart = new OrgChart().compact(false);
 
-				function diagonal(s, d) {
-					const path = `M ${s.y} ${s.x}
-						C ${(s.y + d.y) / 2} ${s.x},
-						  ${(s.y + d.y) / 2} ${d.x},
-						  ${d.y} ${d.x}`;
+				// create diagonal links to child nodes
+				// function diagonal(s, d) {
+				// 	const path = `M ${s.y} ${s.x}
+				// 		C ${(s.y + d.y) / 2} ${s.x},
+				// 		  ${(s.y + d.y) / 2} ${d.x},
+				// 		  ${d.y} ${d.x}`;
 
-					return path;
-				}
+				// 	return path;
+				// }
 
 				chart
 					//@ts-ignore
@@ -123,18 +113,17 @@ export class CollectionBadgeCatalogComponent extends BaseRoutableComponent imple
 					})
 					//.buttonContent((d) => '')
 					.linkUpdate(function (d) {
-						d3.select(this)
-							.attr('stroke-width', '5px')
-							.style('stroke', 'lightgray')
-							.attr('d', function (d) {
-								return diagonal(d, d.parent);
-							});
+						d3.select(this).attr('stroke-width', '5px').style('stroke', 'lightgray');
+						// .attr('d', function (d) {
+						// 	return diagonal(d, d.parent);
+						// });
 					})
 					.nodeContent((d) => {
 						if (d.depth === 0) {
 							// Check if the node is at the top level
-							return `<svg width="400" height="400" xmlns="http://www.w3.org/2000/svg">
-					<polygon points="100,10 
+							return /* HTML */ `<svg width="400" height="400" xmlns="http://www.w3.org/2000/svg">
+								<polygon
+									points="100,10 
 									150,30 
 									180,70 
 									180,130 
@@ -143,30 +132,78 @@ export class CollectionBadgeCatalogComponent extends BaseRoutableComponent imple
 									50,170 
 									20,130 
 									20,70 
-									50,30"  
-             style="fill:darkblue;stroke:purple;stroke-width:5;fill-rule:evenodd;" />
-				             <rect x="70" y="30" width="60" height="60" rx="30" ry="30" style="fill:white;stroke:none;" />
-							 <image href="${combinedData[0].image}" x="80" y="40" width="40" height="40" style="border-radius:50%;" />
-    
-							 <rect x="30" y="85" width="140" height="40" rx="20" ry="20" style="fill:white;stroke:none;" />
-							 <text x="100" y="105" text-anchor="middle" alignment-baseline="middle" style="fill:black; font-size:12px; text-transform: uppercase;">
-							 <tspan x="100" dy="0">Kleider-</tspan>
-							 <tspan x="100" dy="1.2em">tauschparty</tspan>
-							 </text>
-							 </svg>
-				
-				  `;
+									50,30"
+									style="fill:darkblue;stroke:purple;stroke-width:5;fill-rule:evenodd;"
+								/>
+								<rect
+									x="70"
+									y="30"
+									width="60"
+									height="60"
+									rx="30"
+									ry="30"
+									style="fill:white;stroke:none;"
+								/>
+								<image
+									href="${collectionBadgeData[0].image}"
+									x="80"
+									y="40"
+									width="40"
+									height="40"
+									style="border-radius:50%;"
+								/>
+
+								<rect
+									x="30"
+									y="85"
+									width="140"
+									height="40"
+									rx="20"
+									ry="20"
+									style="fill:white;stroke:none;"
+								/>
+								<text
+									x="100"
+									y="105"
+									text-anchor="middle"
+									alignment-baseline="middle"
+									style="fill:black; font-size:12px; text-transform: uppercase;"
+								>
+									<tspan x="100" dy="0">${collectionBadgeData[0].name}</tspan>
+								</text>
+							</svg> `;
 						} else {
-							return `<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="139" height="160" viewbox="0 0 138.56406460551017 160" style="filter: drop-shadow(rgba(255, 255, 255, 0.5) 0px 0px 10px);"><path fill="#ffg" d="M69.28203230275508 0L138.56406460551017 40L138.56406460551017 120L69.28203230275508 160L0 120L0 40Z"></path>
-					<image xlink:href="${this.collectionBadge.apiModel.image}" x="34.28203230275508" y="0" width="70" height="120" />
-					<text x="69.28203230275508" y="110" text-anchor="middle" style="fill: white; font-size: 12px;">Your Text Here</text>
-</svg>
-					</svg>
-				  
-				  `;
+							return /* HTML */ `<svg
+								version="1.1"
+								xmlns="http://www.w3.org/2000/svg"
+								width="139"
+								height="160"
+								viewbox="0 0 138.56406460551017 160"
+								style="filter: drop-shadow(rgba(255, 255, 255, 0.5) 0px 0px 10px);"
+							>
+								<path
+									fill="#ffg"
+									d="M69.28203230275508 0L138.56406460551017 40L138.56406460551017 120L69.28203230275508 160L0 120L0 40Z"
+								></path>
+								<image
+									xlink:href="${this.collectionBadge.apiModel.image}"
+									x="34.28203230275508"
+									y="0"
+									width="70"
+									height="120"
+								/>
+								<text
+									x="69.28203230275508"
+									y="110"
+									text-anchor="middle"
+									style="fill: white; font-size: 12px;"
+								>
+									Your Text Here
+								</text>
+							</svg> `;
 						}
 					})
-					.data(combinedData)
+					.data(collectionBadgeData)
 					.render();
 			});
 	}
