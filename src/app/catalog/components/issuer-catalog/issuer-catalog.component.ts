@@ -95,9 +95,10 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 						.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
 					this.issuerResults = this.issuers;
 					this.issuerResults.sort((a, b) => a.name.localeCompare(b.name));
-					this.mapObject.on('load', function () {
-						that.generateGeoJSON(that.issuerResults);
-					});
+                    if (this.mapObject)
+                        this.mapObject.on('load', function () {
+                            that.generateGeoJSON(that.issuerResults);
+                        });
 					resolve(issuers);
 				},
 				(error) => {
