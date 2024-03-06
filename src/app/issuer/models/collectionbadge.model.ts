@@ -33,13 +33,13 @@ export class CollectionBadge extends ManagedEntity<ApiCollectionBadge, Collectio
 	}
 
 	get badges(): BadgeClass[] {
-		return this.badgeEntries.entities.map((e) => e.badge.badges[0]);
+		return this.badgeEntries.entities.map((e) => e.badge);
 	}
 	get badgesPromise(): Promise<BadgeClass[]> {
 		return Promise.all([
 			this.badgeEntries.loadedPromise,
 			this.collectionBadgeManager.collectionBadgeList.loadedPromise,
-		]).then(([list]) => list.entities.map((e) => e.badge.badges[0]));
+		]).then(([list]) => list.entities.map((e) => e.badge));
 	}
 	badgeEntries = new EmbeddedEntitySet<CollectionBadge, CollectionBadgeEntry, ApiCollectionBadgeEntry>(
 		this,
@@ -115,8 +115,8 @@ export class CollectionBadgeEntry extends ManagedEntity<ApiCollectionBadgeEntry,
 		return String(this.apiModel.slug);
 	}
 
-	get badge(): CollectionBadge {
-		return this.collectionBadgeManager.collectionBadgeList.entityForSlug(this.badgeSlug);
+	get badge(): BadgeClass {
+		return this.badgeManager.allBadgesList.entityForSlug(this.badgeSlug);
 	}
 
 	static urlFromApiModel(collectionBadge: CollectionBadge, apiModel: ApiCollectionBadgeEntry) {
