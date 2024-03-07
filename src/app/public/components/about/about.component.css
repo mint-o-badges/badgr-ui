@@ -1,4 +1,4 @@
-.foerderung {
+/* .foerderung {
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -68,11 +68,11 @@ image {
 
 .child a:hover img {
 	transform: scale(1.05);
-}
+} */
 
-h3 {
+/* h3 {
 	text-align: center;
-}
+} */
 
 /* new style */
 p {
@@ -89,6 +89,14 @@ h1 {
 	font-weight: 900;
 	font-size: 46px;
 	line-height: 55.2px;
+	color: var(--color-blue);
+}
+
+.h2-bold {
+	font-weight: 600;
+	font-size: 30px;
+	line-height: 36px;
+	text-align: center;
 	color: var(--color-blue);
 }
 
@@ -123,33 +131,55 @@ h1 {
 .projects-style {
 	display: flex;
 	flex-direction: row;
-	gap: 40px;
-	margin-top: 10em;
-	margin-left: 20em;
+	gap: 30px;
+	margin-top: 6em;
 
 	> div {
 		display: flex;
 		flex-direction: column;
-		gap: 35px;
+		/* gap: 35px; */
 		align-items: center;
-		border: 0.75px solid;
 		color: var(--color-blue);
-		border-radius: 20px;
+		flex: 1 1 0;
 
-		> img {
-			padding: 20px 0 20px 0;
+		/* Logo */
+		.projects-logo-style {
+			width: 100%;
+			height: 250px;
+			border: 0.75px solid;
+			border-radius: 20px 20px 0 0;
+			display: flex;
+			align-items: center;
+			flex-direction: column;
+			justify-content: center;
+			/* padding: 25px 0 25px 0; */
+
+			> img {
+				height: 200px;
+				padding: 25px;
+			}
 		}
 
-		> div {
+		/* Project description title and description */
+		.projects-desc-style {
+			width: 100%;
 			background-color: var(--color-blue);
-			padding: 20px 45px 40px 45px;
-			border-radius: 20px;
+			padding: 20px 0 40px 0;
+			border: 0.75px solid;
+			border-radius: 0 0 20px 20px;
 
 			> h3 {
 				font-weight: 500;
 				font-size: 22px;
 				line-height: 26.4px;
 				color: #ffffff;
+				margin-bottom: 15px;
+				padding: 0 30px 0 30px;
+			}
+
+			> p {
+				text-align: left;
+				padding: 0 30px 0 30px;
 			}
 		}
 	}
@@ -158,6 +188,35 @@ h1 {
 .full-width {
 	margin-left: -16px;
 	margin-right: -16px;
+}
+
+.fund-style {
+	display: flex;
+	justify-content: space-between;
+	margin: 3em 0 3em 0;
+}
+
+.join-us-style {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	
+
+	/* > div {
+		display: flex;
+		flex-direction: row;
+		gap: 30px;
+	} */
+}
+
+.join-us-card {
+	width: 70%;
+	background-color: var(--color-grün);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 60px 40px 60px 40px;
+	border-radius: 20px;
 }
 
 @media (min-width: 768px) {
