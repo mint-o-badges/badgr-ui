@@ -158,7 +158,7 @@ export class ExportPdfDialog extends BaseDialog {
 						callback: function (doc) {
 							return doc;
 						},
-						margin: 8,
+						margin: 8.5,
 						x: 20,
 						y: yPos,
 						width: cutoff - 8, //target width in the PDF document
