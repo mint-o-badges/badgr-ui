@@ -23,6 +23,8 @@ import { TranslateService } from '@ngx-translate/core';
 @Component({
 	selector: 'login',
 	templateUrl: './login.component.html',
+	styleUrls: ['./login.component.scss']
+
 })
 export class LoginComponent extends BaseRoutableComponent implements OnInit, AfterViewInit {
 	get theme() {

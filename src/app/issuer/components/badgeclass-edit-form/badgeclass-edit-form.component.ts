@@ -35,11 +35,7 @@ import { BadgrApiFailure } from '../../../../../src/app/common/services/api-fail
 })
 export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	baseUrl: string;
-	isCollectionBadgeChecked: boolean = false;
-	badgeClassesLoadedPromise: Promise<unknown>;
-	badgeClasses: BadgeClass[] | null;
-	collectionBadge: CollectionBadge = new CollectionBadge(null);
-	selectedBadgeClasses: BadgeClass[] = [];
+
 	@Input()
 	set badgeClass(badgeClass: BadgeClass) {
 		if (this.existingBadgeClass !== badgeClass) {
@@ -176,6 +172,12 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 	initialisedBadgeClass: BadgeClass | null = null;
 
+	isCollectionBadgeChecked: boolean = false;
+	badgeClassesLoadedPromise: Promise<unknown>;
+	badgeClasses: BadgeClass[] | null;
+	collectionBadge: CollectionBadge = new CollectionBadge(null);
+	selectedBadgeClasses: BadgeClass[] = [];
+
 	/**
 	 * Indicates wether or not the @link initialisedBadgeClass is forked
 	 */
@@ -262,24 +264,14 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 		this.baseUrl = this.configService.apiConfig.baseUrl;
 
-		this.badgeClassesLoadedPromise = Promise.all([
-			// this.recipientBadgeCollectionManager.recipientBadgeCollectionList.loadedPromise,
-			// this.recipientBadgeManager.recipientBadgeList.loadedPromise
-			this.badgeClassManager.allBadgesList.loadedPromise,
-		])
-			.then(([list]) => {
-				this.badgeClasses = list.entities.map((e) => e);
-				// this.superBadge = list.entityForSlug(this.collectionSlug);
-				// this.crumbs = [
-				//     {title: 'Collections', routerLink: ['/recipient/badge-collections']},
-				//     {title: this.collection.name, routerLink: ['/collection/' + this.collection.slug]},
-				// ];
+		this.badgeClassesLoadedPromise = this.badgeClassManager.allBadgesList.loadedPromise
+			.then((list) => {
+				this.badgeClasses = list.entities;
 				return this.badgeClasses;
 			})
-			// .then(badge => collection.badgesPromise)
 			.catch((err) => {
 				router.navigate(['/']);
-				return this.messageService.reportHandledError(`Failed to load collection ${this.badgeClass}`);
+				return this.messageService.reportHandledError(' Failed to load badgeClasses');
 			});
 	}
 
@@ -429,51 +421,17 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		}
 	}
 
-	handleCollectionBadgeCheck() {
-		this.isCollectionBadgeChecked = !this.isCollectionBadgeChecked;
-	}
-
 	manageBadges() {
 		this.collectionBadgeDialog
 			.openDialog({
-				dialogId: 'manage-collectionselectedBadgesbadge-badges',
+				dialogId: 'manage-collectionBadge-selected-badges',
 				dialogTitle: 'Add Badges',
 				multiSelectMode: true,
-				// restrictToIssuerId: null,
-				// omittedCollection: this.collection.badges
-				omittedCollection: [],
 			})
 			.then((selectedBadges) => {
 				const badgeCollection = selectedBadges.concat(this.collectionBadge.badges);
 				this.selectedBadgeClasses = badgeCollection;
-
-				// this.collectionBadge.updateBadges(badgeCollection);
-				// this.collectionBadge.save().then(
-				//     success => this.messageService.reportMinorSuccess(`CollectionBadge ${this.collectionBadge.name} badges saved successfully`),
-				//     failure => this.messageService.reportHandledError(`Failed to save Collectionbadge`, failure)
-				// );
 			});
-	}
-
-	removeEntry(entry: any) {
-		console.log(entry);
-		this.dialogService.confirmDialog
-			.openResolveRejectDialog({
-				dialogTitle: 'Confirm Remove',
-				dialogBody: `Are you sure you want to remove the badgeclass from this collectionbadge ?`,
-				rejectButtonLabel: 'Cancel',
-				resolveButtonLabel: 'Remove Badge',
-			})
-			.then(
-				() => {
-					// this.collectionBadge.badgeEntries.remove(entry);
-					// this.collectionBadge.save().then(
-					// 	success => this.messageService.reportMinorSuccess(`Removed badge ${entry} from collection ${this.collectionBadge.name} successfully`),
-					// 	failure => this.messageService.reportHandledError(`Failed to remove badge ${entry} from collection ${this.collectionBadge.name}`, failure)
-					// );
-				},
-				() => {},
-			);
 	}
 
 	removeTag(tag: string) {
@@ -580,12 +538,14 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				description: this.badgeClassForm.value.badge_description ?? '',
 				image: this.badgeClassForm.value.badge_image ?? '',
 				slug: this.badgeClassForm.value.badge_name,
-				badges: this.selectedBadgeClasses.map((item) => item.apiModel.slug),
+				badges: this.selectedBadgeClasses.map((item) => {
+					return {
+						slug: item.apiModel.slug,
+					};
+				}),
 			};
-			try {
-				this.badgeClassManager.createCollectionBadgeClass(collectionBadgeData);
-				this.router.navigate(['catalog/collectionbadges/']);
-			} catch (e) {}
+			this.badgeClassManager.createCollectionBadgeClass(collectionBadgeData);
+			return null;
 		}
 		this.badgeClassForm.markTreeDirty();
 		if (this.expirationEnabled) {

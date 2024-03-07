@@ -5,16 +5,16 @@
 	<!-- General Details Panel -->
 	<div class="formsection">
 		<div class="formsection-x-help">
-			<h3 class="u-text-body-bold">Create CollectionBadge</h3>
+			<h3 class="u-text-body-bold">Create Collection Badge</h3>
 			<p class="u-text u-margin-top1x u-margin-bottom2x">
-				You can create a CollectionBadge by combining multiple badges. A CollectionBadge is a collection of badges that
+				You can create a Collection Badge by combining multiple badges. A Collection Badge is a collection of badges that
 				are awarded together. 
 			</p>	
 		</div>
 		<div class="formsection-x-body">
-			<h2>CollectionBadge</h2>
+			<h2>Collection Badge</h2>
 			<label class="checkbox">
-				<input type="checkbox" (change)="handleCollectionBadgeCheck()"/>
+				<input type="checkbox" [(ngModel)]="isCollectionBadgeChecked" [ngModelOptions]="{standalone: true}"/>
 			</label>
 
 		</div>
@@ -96,7 +96,7 @@
 		</div>
 	</div>
 
-	<!-- <div *bgAwaitPromises="[badgeClassesLoadedPromise]">
+	<div *bgAwaitPromises="[badgeClassesLoadedPromise]">
 		<div *ngIf="isCollectionBadgeChecked" class="formsection" >
 			<div class="formsection-x-title">
 				<h2>Badges</h2>
@@ -107,72 +107,7 @@
 				</div>
 			</div>
 		</div>
-	</div> -->
-
-	<div *bgAwaitPromises="[badgeClassesLoadedPromise]">
-	<section class="l-containerxaxis l-containeryaxis" *ngIf="isCollectionBadgeChecked">
-		<!-- No badgeclasses selected -->
-	<ng-container *ngIf="selectedBadgeClasses.length === 0">
-		<div class="emptysection l-emptysection">
-			<h2 class="emptysection-x-headline">Dein CollectionBadge enthält noch keine Badges</h2>
-			<p class="emptysection-x-copy"> Füge ein paar Badges hinzu!</p>
-			<div class="emptysection-x-buttons">
-				<button class="button button-secondary" type="button" (click)="manageBadges()">Badge hinzufügen</button>
-			</div>
-		</div>
-	</ng-container>	
-		<!-- List of selected badges in CollectionBadge -->
-		<ng-container *ngIf="selectedBadgeClasses.length > 0">
-			<div class="l-stack u-margin-bottom2x">
-				<h2 class="u-text-h3-semibold u-text-dark2">{{badgesInCollectionBadgeCount}}</h2>
-				<button class="button button-secondary" type="button" (click)="manageBadges()">Badges hinzufügen</button>
-			</div>
-	
-			<table class="datatable datatable-roundheaders datatable-verticalalignmiddle datatable-onlyfirstcolumn">
-				<thead class="datatable-x-head">
-					<tr class="datatable-x-header">
-						<th class="datatable-x-cell" scope="col">Badge</th>
-						<th class="datatable-x-cell" scope="col"><span class="visuallyhidden">Actions</span></th>
-					</tr>
-				</thead>
-				<tbody class="datatable-x-body">
-					<tr class="datatable-x-row" *ngFor="let selectedbadgeclass of selectedBadgeClasses">
-						<th class="datatable-x-cell">
-							<a
-								[routerLink]="['/recipient/earned-badge', selectedbadgeclass.apiModel.slug]"
-								class="l-flex l-flex-1x l-flex-aligncenter"
-							>
-								<img
-									[loaded-src]="selectedbadgeclass.apiModel.image"
-									[loading-src]="badgeLoadingImageUrl"
-									[error-src]="badgeFailedImageUrl"
-									width="40"
-									height="40"
-								/>
-								<p class="u-text-link u-text-breakword">{{ selectedbadgeclass.apiModel.name }}</p>
-							</a>
-							<div class="u-hidden-minmobilelarge u-margin-top1x">
-								<a class="u-text-link-small" (click)="removeEntry(selectedbadgeclass)">Entfernen</a>
-							</div>
-						</th>
-						
-						<td class="datatable-x-cell">
-							<button
-								class="u-text-link-small u-margin-leftauto"
-								type="button"
-								(click)="removeEntry(entry)"
-								[disabled-when-requesting]="true"
-							>
-								Remove
-							</button>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</ng-container>
-	</section>
 	</div>
-
 
 	<!-- Criteria Panel -->
 	<div class="formsection" *ngIf="!isCollectionBadgeChecked">
