@@ -1,0 +1,108 @@
+<ng-container *bgAwaitPromises="[issuerLoaded, collectionBadgeClassLoaded]">
+	<form-message></form-message>
+
+	<div class="topbar">
+		<div class="l-containerxaxis">
+			<div class="topbar-x-breadcrumbs">
+				<bg-breadcrumbs [linkentries]="breadcrumbLinkEntries"></bg-breadcrumbs>
+			</div>
+			<div class="topbar-x-heading">Badge vergeben</div>
+			<div class="topbar-x-subheading">
+				Vergebe den Badge an eine Nutzer*in oder
+				<a
+					class="u-text"
+					[routerLink]="['/issuer/issuers', issuerSlug, 'collectionbadges', badgeSlug, 'bulk-import']"
+					>klicke hier um den Badge an mehrere Nutzer*innen gleichzeitig</a
+				>
+				zu vergeben.
+			</div>
+		</div>
+	</div>
+
+	<div class="l-containerxaxis l-containeryaxis">
+		<form class="l-responsivelist" [formGroup]="issueForm.rawControl" (ngSubmit)="onSubmit()" novalidate>
+			<!-- Recipient Information -->
+			<div class="formsection" role="group" aria-labelledby="heading-recipientinformation">
+				<h3 class="formsection-x-title u-text-dark2" id="heading-recipientinformation">
+					Informationen der Empfänger:in
+				</h3>
+				<div class="formsection-x-help">
+					<h3 class="u-text-body-bold">Badgevergabe</h3>
+					<p class="u-text u-margin-top1x u-margin-bottom2x">
+						Du kannst den Bage über eine E-Mail Adresse oder URL vergeben.
+					</p>
+				</div>
+				<div class="formsection-x-body">
+					<div class="forminput">
+						<label class="forminput-x-label">Name der Empfänger*in (optional)</label>
+						<bg-formfield-text
+							[control]="issueForm.rawControlMap.recipientprofile_name"
+							ariaLabel="Recipient Name (optional)"
+						></bg-formfield-text>
+						<p class="u-text u-text-small u-text-dark4 u-margin-top1x u-margin-bottom2x">
+							<strong>Beachte</strong>: Der Name der Empfänger*in wird als Klartext im Badge gespeichert.
+						</p>
+					</div>
+					<div class="forminput forminput-full">
+						<label class="forminput-x-label">Identifier</label>
+						<div class="l-spacestack l-spacestack-auto">
+							<bg-formfield-select
+								ariaLabel="Select Options"
+								[control]="issueForm.rawControlMap.recipient_type"
+								[optionMap]="identifierOptionMap"
+							></bg-formfield-select>
+
+							<bg-formfield-text
+								[control]="issueForm.rawControlMap.recipient_identifier"
+								ariaLabel="Identifier der Empfänger:in"
+								[autofocus]="true"
+								[fieldType]="recipientIdentifierFieldType"
+							></bg-formfield-text>
+							<div class="u-text-error u-text-small" *ngIf="idError === 'invalidEmail'">
+								Bitte gebe eine gültige E-Mail Adresse an.
+							</div>
+							<div class="u-text-error u-text-small" *ngIf="idError === 'invalidUrl'">
+								Bitte gebe eine gültige URL an.
+							</div>
+							<div class="u-text-error u-text-small" *ngIf="idError === 'invalidTelephone'">
+								Please enter a valid phone number.
+							</div>
+						</div>
+					</div>
+					<div class="l-formsection-x-checkbox" *ngIf="issueForm.controls.recipient_type.value == 'email'">
+						<label class="checkbox checkbox-center u-margin-top2x" for="notifybyemail">
+							<input
+								name="notifybyemail"
+								id="notifybyemail"
+								type="checkbox"
+								[formControl]="issueForm.rawControlMap.notify_earner"
+							/>
+							<span class="checkbox-x-text">Empfänger*in mit Email benachrichtigen</span>
+						</label>
+					</div>
+				</div>
+			</div>
+
+			<!-- Buttons -->
+			<div class="l-stack l-stack-right">
+				<a
+					[routerLink]="['/issuer/issuers', issuer.slug, 'collectionbadges', collectionBadgeClass.slug]"
+					type="submit"
+					class="button button-secondary"
+					[disabled-when-requesting]="true"
+				>
+					Abbrechen
+				</a>
+				<button
+					type="submit"
+					class="button"
+					[disabled]="!!issueBadgeFinished"
+					[loading-promises]="[issueBadgeFinished]"
+					loading-message="Vergebe Badge"
+				>
+					Badge vergeben
+				</button>
+			</div>
+		</form>
+	</div>
+</ng-container>
