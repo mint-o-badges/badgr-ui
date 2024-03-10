@@ -79,7 +79,7 @@
 		</div>
 	</header>
 
-	<div *bgAwaitPromises="[issuerLoaded, badgesLoaded]">
+	<div *bgAwaitPromises="[issuerLoaded, collectionBadgesLoaded]">
 		<!-- EMPTY STATE: No badge classes -->
 		<section class="emptysection l-emptysection" *ngIf="!badges?.length">
 			<h2 class="emptysection-x-headline">{{ 'Issuer.issuerHasNoBadgesYet' | translate }}</h2>
@@ -146,6 +146,85 @@
 								<a
 									class="u-text-link-small"
 									[routerLink]="['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'issue']"
+									>{{ 'Issuer.awarded' | translate }}</a
+								>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</section>
+
+		<!-- CollectionBadge Classes -->
+		<section class="l-containerxaxis l-containeryaxis" *ngIf="collectionBadges?.length">
+			<h4 class="u-text-h3-bold u-text-dark2 u-margin-top1x">
+				{{ collectionBadges.length }} Badge{{ collectionBadges.length == 1 ? '' : 's' }}
+			</h4>
+			<table
+				class="datatable datatable-roundheaders datatable-onlyfirstcolumn datatable-verticalalignmiddle u-margin-top2x"
+				*ngIf="collectionBadges?.length"
+			>
+				<thead class="datatable-x-head">
+					<tr class="datatable-x-header">
+						<th class="datatable-x-cell">Badge</th>
+						<th class="datatable-x-cell">{{ 'Issuer.createdOn' | translate }}</th>
+						<th class="datatable-x-cell">{{ 'Badge.multiRecipients' | translate }}</th>
+						<th class="datatable-x-cell">
+							<span class="visuallyhidden">Actions</span>
+						</th>
+					</tr>
+				</thead>
+				<tbody class="datatable-x-body">
+					<tr class="datatable-x-row" *ngFor="let badge of collectionBadges; let i = index">
+						<td class="datatable-x-cell">
+							<div class="l-flex l-flex-aligncenter l-flex-1x">
+								<img
+									class="l-flex-x-shrink0 badgeimage badgeimage-small"
+									src="{{ badge.image }}"
+									alt="{{ badge.description }}"
+									width="40"
+								/>
+								<a
+									class="u-text u-text-breakword"
+									[routerLink]="['/issuer/issuers', issuer.slug, 'collectionbadges', badge.slug]"
+									>{{ badge.name }}</a
+								>
+								<div class="u-hidden-minmobilelarge l-flex-x-selfcenter u-margin-leftauto">
+									<a
+										class="u-text-link-small"
+										[routerLink]="[
+											'/issuer/issuers/',
+											issuer.slug,
+											'collectionbadges',
+											badge.slug,
+											'issue'
+										]"
+										>{{ 'Issuer.awarded' | translate }}</a
+									>
+								</div>
+							</div>
+						</td>
+						<td class="datatable-x-cell">
+							<div class="l-flex l-flex-aligncenter">
+								<p class="u-text"><time [date]="badge.createdAt" format="mediumDate"></time></p>
+							</div>
+						</td>
+						<td class="datatable-x-cell">
+							<div class="l-flex l-flex-aligncenter">
+								<p class="u-text">{{ badge.recipientCount }}</p>
+							</div>
+						</td>
+						<td class="datatable-x-cell">
+							<div class="l-flex l-flex-aligncenter l-flex-justifyend">
+								<a
+									class="u-text-link-small"
+									[routerLink]="[
+										'/issuer/issuers/',
+										issuer.slug,
+										'collectionbadges',
+										badge.slug,
+										'issue'
+									]"
 									>{{ 'Issuer.awarded' | translate }}</a
 								>
 							</div>
