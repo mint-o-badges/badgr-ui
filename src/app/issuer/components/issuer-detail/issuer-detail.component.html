@@ -79,7 +79,7 @@
 		</div>
 	</header>
 
-	<div *bgAwaitPromises="[issuerLoaded, collectionBadgesLoaded]">
+	<div *bgAwaitPromises="[issuerLoaded, badgesLoaded, collectionBadgesLoaded]">
 		<!-- EMPTY STATE: No badge classes -->
 		<section class="emptysection l-emptysection" *ngIf="!badges?.length">
 			<h2 class="emptysection-x-headline">{{ 'Issuer.issuerHasNoBadgesYet' | translate }}</h2>
