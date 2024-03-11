@@ -1,59 +1,67 @@
 <ng-template sourceListener></ng-template>
 <div *ngIf="curtain" style="height: 100vh; width: 100vw">
-	<header style="text-align: center; height: 45%; padding-bottom: 10%; padding-top: 10%; background-color:#F5F5F5;">
-			<div style="height: 100%; display: flex; justify-content: space-between; align-items: center;">
-				<div class="nunito-bold header-oeb">
-					<span style="align-self: flex-start;">Open</span>
-					<span style="align-self: flex-start;">Educational</span>
-					<span style="align-self: flex-start;">Badges</span>
-
-				</div>
-				<img class="badge-logo" src="../assets/logos/curtain_logo.png" alt="Logo for this website says: Coming soon: 01. April 2024">
+	<header style="text-align: center; height: 45%; padding-bottom: 10%; padding-top: 10%; background-color: #f5f5f5">
+		<div style="height: 100%; display: flex; justify-content: space-between; align-items: center">
+			<div class="nunito-bold header-oeb">
+				<span style="align-self: flex-start">Open</span>
+				<span style="align-self: flex-start">Educational</span>
+				<span style="align-self: flex-start">Badges</span>
 			</div>
-		
+			<img
+				class="badge-logo"
+				src="../assets/logos/curtain_logo.png"
+				alt="Logo for this website says: Coming soon: 01. April 2024"
+			/>
+		</div>
 	</header>
-		<div style="background: linear-gradient(#6100F9 85%, #F5F5F5 15%) ; display: flex; flex-direction: column; justify-content: center; align-items: center;">
-		<div style="height: 10%; text-align: center;">
+	<div
+		style="
+			background: linear-gradient(#6100f9 85%, #f5f5f5 15%);
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+		"
+	>
+		<div style="height: 10%; text-align: center">
 			<h2 class="nunito-normal what-are-oeb">
-				Was sind <br/> Open Educational Badges?
+				Was sind <br />
+				Open Educational Badges?
 			</h2>
 		</div>
 		<video style="max-width: 900px; width: 75%; margin-top: 2em" height="auto" controls>
-				<source src="assets/videos/badges-curtain.mp4" type="video/mp4">
+			<source src="assets/videos/badges-curtain.mp4" type="video/mp4" />
 		</video>
 		<div class="iframe-container">
-			
-				<iframe class="newsletter-form" 
+			<iframe
+				class="newsletter-form"
 				src="https://2b1b89e9.sibforms.com/serve/MUIFAKojWi4x97UOmo2HdfRvnlJLK7yupo_
 				1AW0kPuwZAvaJKVrnY9pSznPf8Tjmv0QVrTBPNIJNbXonMqdxYOSWt8pVW1oJ433_rxMKy6MuYinwl
 				-1uOEueeJLYdc3CZWA109Ie3XYxT64NwBAAJD09w6xT_fhZ4Nsh-z-
-				Q4amYm0A3xXy6pWEdrUOuAEd1kAg6YUw7HLIi--v0" 
-				frameborder="0" scrolling="auto" allowfullscreen 
-				style="display: block;margin-right: 2em;max-width: 100%; z-index: 50;"></iframe>
-	<p class="nunito-normal form-paragraph" 
-	>
-	Melde dich hier an und 
-	wir kontaktieren dich sofort,
-	wenn du Badges erstellen kannst.
-	</p>
-
-	</div>
-		
+				Q4amYm0A3xXy6pWEdrUOuAEd1kAg6YUw7HLIi--v0"
+				frameborder="0"
+				scrolling="auto"
+				allowfullscreen
+				style="display: block; margin-right: 2em; max-width: 100%; z-index: 50"
+			></iframe>
+			<p class="nunito-normal form-paragraph">
+				Melde dich hier an und wir kontaktieren dich sofort, wenn du Badges erstellen kannst.
+			</p>
+		</div>
 	</div>
 	<footer style="height: 10%; background-color: white">
 		<div class="l-containerxaxis">
 			<div class="footer l-stickyfooter-x-footer">
 				<ul class="footer-x-leftlinks">
 					<li *ngIf="theme.showPoweredByOSL && theme.providedBy">
-						Open Educational Badges ist eine Initiative von 
+						Open Educational Badges ist eine Initiative von
 						<a href="https://matrix-gruppe.de/matrix-gemeinnuetzig/" target="_blank">matrix gGmbh</a>,
 						<a href="https://mycelia.education/" target="_blank">mycelia gGmbh</a>
-						und der 
+						und der
 						<a href="{{ theme.providedBy.url }}" target="_blank">openSenselab gGmbh</a>
-						
 					</li>
 				</ul>
-	
+
 				<ul class="footer-x-links">
 					<li>
 						<a [href]="theme.termsOfServiceLink" target="_blank">{{ 'Start.imprint' | translate }}</a>
@@ -61,7 +69,6 @@
 				</ul>
 			</div>
 		</div>
-
 	</footer>
 </div>
 <header class="o-container" *ngIf="!curtain">
@@ -203,6 +210,16 @@
 						{{ theme.customMenu.label }}
 						<svg class="navitem-x-icon" icon="icon_dropdown"></svg>
 					</a>
+
+					<a
+						role="menuitem"
+						[class.navitem-light]="!theme.useColorNavbar"
+						class="navitem"
+						routerLinkActive="navitem-is-active"
+						[routerLink]="['/issuer']"
+						>{{ 'NavItems.myInstitutions' | translate }}</a
+					>
+
 					<a
 						role="menuitem"
 						[class.navitem-light]="!theme.useColorNavbar"
@@ -266,9 +283,9 @@
 		<a class="menuitem" routerLinkActive="menuitem-is-active" [routerLink]="['/profile/profile']"
 			><svg icon="icon_member"></svg>{{ 'NavItems.myProfile' | translate }}</a
 		>
-		<a class="menuitem" routerLinkActive="menuitem-is-active" [routerLink]="['/issuer']"
+		<!-- <a class="menuitem" routerLinkActive="menuitem-is-active" [routerLink]="['/issuer']"
 			><svg icon="icon_issuer"></svg>{{ 'NavItems.myInstitutions' | translate }}</a
-		>
+		> -->
 		<a class="menuitem" routerLinkActive="menuitem-is-active" [routerLink]="['/profile/app-integrations']"
 			><svg icon="icon_compare"></svg>{{ 'NavItems.appIntegrations' | translate }}</a
 		>
@@ -328,7 +345,8 @@
 			<a [routerLink]="['/catalog/badges']">Badges</a>
 			<a [routerLink]="['/catalog/issuers']">{{ 'General.institutions' | translate }}</a>
 			<a [routerLink]="['/recipient/badges']">{{ 'General.backpack' | translate }}</a>
-			<a [routerLink]="['/recipient/badge-collections']">{{ 'NavItems.collections' | translate }}</a>
+			<a [routerLink]="['/recipient/badge-collections']">{{ 'General.collections' | translate }}</a>
+			<a [routerLink]="['/issuer']" *ngIf="showIssuersTab">{{ 'NavItems.myInstitutions' | translate }}</a>
 
 			<hr class="mobilenav-x-rule" *ngIf="launchpoints?.length" />
 			<p class="mobilenav-x-label" *ngIf="launchpoints?.length">Apps</p>
@@ -341,7 +359,6 @@
 			<hr class="mobilenav-x-rule" />
 			<p class="mobilenav-x-label">Account</p>
 			<a [routerLink]="['/profile/profile']">{{ 'NavItems.profile' | translate }}</a>
-			<a [routerLink]="['/issuer']" *ngIf="showIssuersTab">{{ 'NavItems.myInstitutions' | translate }}</a>
 			<a [routerLink]="['/profile/app-integrations']">{{ 'NavItems.appIntegrations' | translate }}</a>
 			<a [routerLink]="['/public/about']">{{ 'NavItems.aboutOpenEducationalBadges' | translate }}</a>
 			<a [routerLink]="['/auth/logout']">{{ 'NavItems.logout' | translate }}</a>
@@ -350,10 +367,9 @@
 </header>
 <div *ngIf="!curtain" class="loader l-stickyfooter-x-loader"></div>
 
-
-
 <!-- Display a "curtain" instead of the normal page, if `curtain` is set to true-->
-<main *ngIf="!curtain"
+<main
+	*ngIf="!curtain"
 	class="l-stickyfooter-x-main o-container"
 	[attr.inert]="mobileNavOpen ? '' : null"
 	[class.l-inertcontainer]="mobileNavOpen"
