@@ -77,8 +77,9 @@ export class IssuerStaffCreateDialogComponent extends BaseDialog {
 			},
 			error => {
 				const err = BadgrApiFailure.from(error)
+				console.log(err);
 				this.error =
-					BadgrApiFailure.messageIfThrottableError(JSON.parse(err.overallMessage)) ||
+					BadgrApiFailure.messageIfThrottableError(err.overallMessage) ||
 					`Failed to add member: ${err.firstMessage}`;
 			}
 		);

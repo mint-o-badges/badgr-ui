@@ -163,7 +163,8 @@
 		"forgotPassword": "Forgot password?",
 		"welcome": "Welcome to Open Educational Badges",
 		"failLogin": "Login failed. Please check your email and password and try again.",
-		"attention": "Attention"
+		"attention": "Attention",
+		"loginBildungsraum": "Sign in via Mein Bildungsraum"
 	},
 	"Legend": {
 		"legendTitle": "Legend",

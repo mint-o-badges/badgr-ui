@@ -32,6 +32,7 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 	collection: RecipientBadgeCollection = new RecipientBadgeCollection(null);
 	crumbs: LinkEntry[];
 
+
 	constructor(
 		router: Router,
 		route: ActivatedRoute,
@@ -46,6 +47,8 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 		super(router, route, loginService);
 
 		title.setTitle(`Collections - ${this.configService.theme['serviceName'] || "Badgr"}`);
+
+
 
 		this.collectionLoadedPromise = Promise.all([
 				this.recipientBadgeCollectionManager.recipientBadgeCollectionList.loadedPromise,
@@ -69,9 +72,12 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 
 	get collectionSlug(): string { return this.route.snapshot.params['collectionSlug']; }
 
+
 	ngOnInit() {
 		super.ngOnInit();
 	}
+
+
 
 	manageBadges() {
 		this.recipientBadgeDialog.openDialog({

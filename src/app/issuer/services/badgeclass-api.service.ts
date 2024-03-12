@@ -6,6 +6,8 @@ import { IssuerSlug } from '../models/issuer-api.model';
 import { ApiBadgeClass, ApiBadgeClassForCreation, BadgeClassSlug } from '../models/badgeclass-api.model';
 import { MessageService } from '../../common/services/message.service';
 import { HttpClient } from '@angular/common/http';
+import { ApiCollectionBadge } from '../models/collectionbadge-api.model';
+
 
 @Injectable()
 export class BadgeClassApiService extends BaseHttpApiService {
@@ -44,6 +46,10 @@ export class BadgeClassApiService extends BaseHttpApiService {
 			...badgeClass.extensions,
 		};
 		return this.post<ApiBadgeClass>(`/v1/issuer/issuers/${issuerSlug}/badges`, badgeClassWithExtensions).then((r) => r.body);
+	}
+
+	createCollectionBadgeClass(collectionBadgeClass: ApiCollectionBadge){
+		return this.post<ApiCollectionBadge>('/public/all-collectionbadges', collectionBadgeClass).then((r) => r.body);
 	}
 
 	updateBadgeClass(issuerSlug: IssuerSlug, badgeClass: ApiBadgeClass) {

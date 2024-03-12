@@ -256,7 +256,8 @@ export class AppComponent implements OnInit, AfterViewInit {
 		this.sessionService.loggedin$.subscribe((loggedIn) =>
 			setTimeout(() => {
 				this.loggedIn = loggedIn;
-				this.refreshProfile();
+                if (loggedIn)
+                    this.refreshProfile();
 			}),
 		);
 		this.shouldShowIssuersTab();

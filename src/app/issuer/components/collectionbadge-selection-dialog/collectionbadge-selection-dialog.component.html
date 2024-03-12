@@ -1,0 +1,48 @@
+<dialog class="dialog dialog-is-active l-dialog dialog-clean">
+	<div class="dialog-x-box o-container">
+		<div class="dialog-x-header">
+			<h2 id="addBadgeDialog" class="u-text-body-bold-caps text-dark1">
+				{{ dialogTitle }}
+			</h2>
+			<button class="buttonicon buttonicon-link" (click)="cancelDialog()">
+				<svg icon="icon_close"></svg>
+				<span class="visuallyhidden">Close</span>
+			</button>
+		</div>
+		<!-- Dialog Body -->
+		<table class="datatable datatable-roundheaders datatable-indialog datatable-verticalalignmiddle" *bgAwaitPromises="[badgesLoaded]">
+			<thead class="datatable-x-head">
+				<tr class="datatable-x-header">
+					<th class="datatable-x-cell">Badge</th>
+				</tr>
+			</thead>
+			<tbody class="datatable-x-body">
+				<!-- List of badges — not grouped -->
+					<tr class="datatable-x-row" *ngFor="let badge of badgeClasses">
+						<td class="datatable-x-cell">
+							<div class="l-flex l-flex-1x l-flex-aligncenter">
+								<label class="checkbox" for="badge-check-{{ badge.id }}">
+									<input type="checkbox" id="badge-check-{{ badge.id }}" #badgeCheckbox [checked]="selectedBadges.has(badge)"
+									 (change)="updateBadgeSelection(badge, badgeCheckbox.checked)" *ngIf="multiSelectMode" />
+								</label>
+								<label class="l-flex l-flex-column" for="badge-check-{{ badge.id }}">
+									<p class="u-text-link u-text-bold u-text-breakword">
+										{{ badge.name }}
+									</p>
+								</label>
+
+							</div>
+						</td>
+					</tr>
+			</tbody> 
+		</table> 
+
+		<div class="u-padding-all2x l-stack l-stack-buttons">
+			<button class="button" (click)="saveDialog()">Save Changes</button>
+			<button class="button button-secondary" (click)="cancelDialog()">Cancel</button>
+		</div>
+
+
+	</div>
+
+</dialog>

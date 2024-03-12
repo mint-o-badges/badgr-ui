@@ -39,7 +39,7 @@ export class ExportPdfDialog extends BaseDialog {
 		componentElem: ElementRef<HTMLElement>,
 		renderer: Renderer2,
 		protected profileManager: UserProfileManager,
-		protected messageService: MessageService
+		protected messageService: MessageService,
 	) {
 		super(componentElem, renderer);
 		var r = document.querySelector(':root');
@@ -49,10 +49,9 @@ export class ExportPdfDialog extends BaseDialog {
 		this.profileManager.userProfilePromise.then(
 			(profile) => {
 				this.profile = profile;
-                if (profile !== undefined)
-                    this.emailsLoaded = profile.emails.loadedPromise;
+				if (profile !== undefined) this.emailsLoaded = profile.emails.loadedPromise;
 			},
-			(error) => this.messageService.reportAndThrowError('Failed to load userProfile', error)
+			(error) => this.messageService.reportAndThrowError('Failed to load userProfile', error),
 		);
 	}
 
@@ -117,7 +116,7 @@ export class ExportPdfDialog extends BaseDialog {
 						this.profile = profile;
 						this.emailsLoaded = profile.emails.loadedPromise;
 					},
-					(error) => this.messageService.reportAndThrowError('Failed to load userProfile', error)
+					(error) => this.messageService.reportAndThrowError('Failed to load userProfile', error),
 				);
 			}
 			this.emailsLoaded.then(async () => {
@@ -152,13 +151,14 @@ export class ExportPdfDialog extends BaseDialog {
 				}
 				yPos += titlePadding;
 
-				// subtitle
+				// subtitlecriteria_
 				if (badgeClass.criteria_text) {
 					yPos += 7;
 					await this.doc.html(markdown, {
 						callback: function (doc) {
 							return doc;
 						},
+						margin: 8.5,
 						x: 20,
 						y: yPos,
 						width: cutoff - 8, //target width in the PDF document
@@ -174,7 +174,7 @@ export class ExportPdfDialog extends BaseDialog {
 					this.doc.setFont('Helvetica', 'normal');
 					let subtitle = this.doc.splitTextToSize(
 						badgeClass.description,
-						cutoff - this.doc.getTextWidth('...')
+						cutoff - this.doc.getTextWidth('...'),
 					);
 					let subtitlePadding = 0;
 					let maxSubtitleRows = 5;
@@ -202,14 +202,22 @@ export class ExportPdfDialog extends BaseDialog {
 
 				// edge line
 				let edgeLineOffset = 8;
-				this.doc.roundedRect(
-					edgeLineOffset,
-					edgeLineOffset,
-					pageWidth - edgeLineOffset * 2,
-					pageHeight - edgeLineOffset * 2,
-					5,
-					5
-				);
+				const numPages = this.doc.getNumberOfPages();
+				for (let i = 0; i < numPages; i++) {
+					this.doc.setPage(i);
+					this.doc.setDrawColor(this.themeColor);
+					this.doc.setLineWidth(1.5);
+					this.doc.roundedRect(
+						edgeLineOffset,
+						edgeLineOffset,
+						pageWidth - edgeLineOffset * 2,
+						pageHeight - edgeLineOffset * 2,
+						5,
+						5,
+					);
+				}
+
+				this.doc.setPage(numPages);
 
 				// awarded to
 				yPos += 15;
@@ -248,7 +256,7 @@ export class ExportPdfDialog extends BaseDialog {
 					'Erlangt von: ',
 					pageWidth / 2 - (awardedToContentLength + awardedToLength) / 2,
 					yPos,
-					{}
+					{},
 				);
 				this.doc.setFontSize(20);
 				this.doc.setFont('Helvetica', 'bold');
@@ -256,7 +264,7 @@ export class ExportPdfDialog extends BaseDialog {
 					name,
 					pageWidth / 2 + (awardedToContentLength + awardedToLength) / 2 - awardedToContentLength,
 					yPos,
-					{}
+					{},
 				);
 
 				// issued by
@@ -285,7 +293,7 @@ export class ExportPdfDialog extends BaseDialog {
 					issuedBy,
 					pageWidth / 2 + (issuedByLength + issuedByContentLength) / 2 - issuedByContentLength,
 					yPos,
-					{}
+					{},
 				);
 
 				// issued on
@@ -303,7 +311,7 @@ export class ExportPdfDialog extends BaseDialog {
 					badge.issueDate.toLocaleDateString('uk-UK'),
 					pageWidth / 2 + (issuedOnLength + issuedOnContentLength) / 2 - issuedOnContentLength,
 					yPos,
-					{}
+					{},
 				);
 
 				// logo
@@ -324,7 +332,7 @@ export class ExportPdfDialog extends BaseDialog {
 					yPos + (logoHeight * 2) / 3,
 					{
 						url: 'https://openbadges.education/public/start',
-					}
+					},
 				);
 
 				this.badgePdf = this.doc.output('datauristring');
@@ -433,7 +441,7 @@ export class ExportPdfDialog extends BaseDialog {
 					// }
 					institution = institution.substring(
 						0,
-						institution.length - (this.doc.getTextWidth(institution) - cutoff) / 2
+						institution.length - (this.doc.getTextWidth(institution) - cutoff) / 2,
 					);
 					institution += '...';
 				}
@@ -547,7 +555,7 @@ export class ExportPdfDialog extends BaseDialog {
 					// }
 					institution = institution.substring(
 						0,
-						institution.length - (this.doc.getTextWidth(institution) - cutoff) / 2
+						institution.length - (this.doc.getTextWidth(institution) - cutoff) / 2,
 					);
 					institution += '...';
 				}
@@ -577,7 +585,10 @@ export class ExportPdfDialog extends BaseDialog {
 }
 
 class BadgeResult {
-	constructor(public badge: RecipientBadgeInstance, public issuer: ApiRecipientBadgeIssuer) {}
+	constructor(
+		public badge: RecipientBadgeInstance,
+		public issuer: ApiRecipientBadgeIssuer,
+	) {}
 }
 
 // TODO: put this in a service??

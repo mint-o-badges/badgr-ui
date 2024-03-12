@@ -20,6 +20,8 @@ import { MessageService } from '../../common/services/message.service';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { first, map } from 'rxjs/operators';
+import { ApiCollectionBadge } from '../models/collectionbadge-api.model';
+import { CollectionBadge } from '../models/collectionbadge.model';
 
 @Injectable()
 export class BadgeClassManager extends BaseHttpApiService {
@@ -83,6 +85,10 @@ export class BadgeClassManager extends BaseHttpApiService {
 		return this.badgeClassApi
 			.createBadgeClass(issuerSlug, newBadge)
 			.then((retNewBadge) => { this.allBadgesList.addOrUpdate(retNewBadge); return this.badgesList.addOrUpdate(retNewBadge) });
+	}
+
+	createCollectionBadgeClass(newCollectionBadge: ApiCollectionBadge): any {
+		return this.badgeClassApi.createCollectionBadgeClass(newCollectionBadge)
 	}
 
 	badgeByIssuerUrlAndSlug(issuerId: IssuerUrl, badgeSlug: BadgeClassSlug): Promise<BadgeClass> {

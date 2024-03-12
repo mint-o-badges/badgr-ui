@@ -29,6 +29,7 @@ import {IssuerStaffComponent} from './components/issuer-staff/issuer-staff.compo
 import {BadgeClassEditFormComponent} from './components/badgeclass-edit-form/badgeclass-edit-form.component';
 import {IssuerStaffCreateDialogComponent} from './components/issuer-staff-create-dialog/issuer-staff-create-dialog.component';
 import { TranslateModule } from '@ngx-translate/core';
+import {CollectionBadgeSelectionDialog, CollectionBadgeSelectionDialogOptions} from './components/collectionbadge-selection-dialog/collectionbadgebadge-selection-dialog.component'
 
 const routes = [
 	/* Issuer */
@@ -112,6 +113,8 @@ const routes = [
 		IssuerListComponent,
 
 		IssuerStaffCreateDialogComponent,
+
+		CollectionBadgeSelectionDialog,
 	],
 	exports: [],
 	providers: [
