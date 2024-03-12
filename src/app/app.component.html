@@ -136,12 +136,12 @@
 						>FAQ</a
 					>
 
-					<div class="navitem" style="position: unset; color: white; display: flex; gap: 4px">
-						<button (click)="changeLng('de')" style="color: white">
+					<div class="navitem" style="position: unset; display: flex; gap: 4px">
+						<button (click)="changeLng('de')">
 							<span [ngStyle]="{ 'font-weight': selectedLng == 'de' ? 'bold' : 'normal' }">DE</span>
 						</button>
 						<span style="align-self: center">|</span>
-						<button (click)="changeLng('en')" style="color: white">
+						<button (click)="changeLng('en')">
 							<span [ngStyle]="{ 'font-weight': selectedLng == 'en' ? 'bold' : 'normal' }">EN</span>
 						</button>
 					</div>
@@ -240,12 +240,12 @@
 						<svg class="navitem-x-icon" icon="icon_dropdown"></svg>
 					</button>
 
-					<div class="navitem" style="position: unset; color: white; display: flex; gap: 4px">
-						<button (click)="changeLng('de')" style="color: white">
+					<div class="navitem" style="position: unset; display: flex; gap: 4px">
+						<button (click)="changeLng('de')">
 							<span [ngStyle]="{ 'font-weight': selectedLng == 'de' ? 'bold' : 'normal' }">DE</span>
 						</button>
 						<span style="align-self: center">|</span>
-						<button (click)="changeLng('en')" style="color: white">
+						<button (click)="changeLng('en')">
 							<span [ngStyle]="{ 'font-weight': selectedLng == 'en' ? 'bold' : 'normal' }">EN</span>
 						</button>
 					</div>
@@ -362,7 +362,6 @@
 		</div>
 	</nav>
 </header>
-<div *ngIf="!curtain" class="loader l-stickyfooter-x-loader"></div>
 
 <!-- Display a "curtain" instead of the normal page, if `curtain` is set to true-->
 <main
