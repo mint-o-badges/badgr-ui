@@ -127,15 +127,7 @@
 						[routerLink]="['/public/about']"
 						>{{ 'NavItems.aboutOpenEducationalBadges' | translate }}</a
 					>
-					<a
-						role="menuitem"
-						[class.navitem-light]="!theme.useColorNavbar"
-						class="navitem"
-						routerLinkActive="navitem-is-active"
-						[routerLink]="['/public/faq']"
-						>FAQ</a
-					>
-
+					
 					<div class="navitem" style="position: unset; display: flex; gap: 4px">
 						<button (click)="changeLng('de')">
 							<span [ngStyle]="{ 'font-weight': selectedLng == 'de' ? 'bold' : 'normal' }">DE</span>
@@ -220,14 +212,6 @@
 						>{{ 'NavItems.myInstitutions' | translate }}</a
 					>
 
-					<a
-						role="menuitem"
-						[class.navitem-light]="!theme.useColorNavbar"
-						class="navitem"
-						routerLinkActive="navitem-is-active"
-						[routerLink]="['/public/faq']"
-						>FAQ</a
-					>
 					<button
 						role="menuitem"
 						aria-haspopup="true"
