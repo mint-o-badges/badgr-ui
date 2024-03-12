@@ -3180,23 +3180,22 @@ dialog[open] {
   font-family: var(--font-family);
   font-size: var(--typography-size);
   line-height: calc(var(--typography-size) + 4px);
-  border-top: 1px solid var(--color-light4);
-  padding-top: calc(var(--gridspacing) * 3);
-  padding-bottom: calc(var(--gridspacing) * 4);
+  padding-top: calc(var(--gridspacing) * 12);
+  padding-bottom: calc(var(--gridspacing) * 12);
   flex-shrink: 0;
   color: var(--color-dark4);
   display: flex;
   justify-content: space-between; }
   .footer[href],
   .footer [href] {
-    color: var(--color-dark2);
+    color: var(--color-blue);
     font-family: var(--font-family);
     text-decoration: none;
     transition: color var(--transition-easing) var(--transition-duration);
     will-change: color; }
   .footer[href]:hover,
   .footer [href]:hover {
-    color: var(--color-dark3);
+    color: var(--color-blue);
     text-decoration: underline; }
   .footer[href]:focus,
   .footer [href]:focus {

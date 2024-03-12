@@ -386,20 +386,20 @@
 <markdown-hints-dialog #markdownHintsDialog></markdown-hints-dialog>
 
 <!-- Footer -->
-<footer *ngIf="!curtain" class="o-container">
+<footer *ngIf="!curtain" class="o-container" id="footer" style="background-color: #93F993;">
 	<div class="l-containerxaxis">
 		<div class="footer l-stickyfooter-x-footer">
-			<ul class="footer-x-leftlinks">
-				<li *ngIf="theme.showPoweredByOSL && theme.providedBy">
-					{{ 'Start.poweredBy' | translate }}
-					<a href="{{ theme.providedBy.url }}" target="_blank">{{ theme.providedBy.name }}</a>
-					{{ 'Start.using' | translate }} <a href="https://badgr.io">Badgr</a>
+			<ul class="footer-x-leftlinks" style="width: 40%;">
+				<li class="Text-SemiBold" *ngIf="theme.showPoweredByOSL && theme.providedBy" [innerHtml]="'Start.poweredBy' | translate">
 				</li>
 			</ul>
 
-			<ul class="footer-x-links">
+			<ul class="footer-x-links footer-rightside">
 				<li>
-					<a [href]="theme.termsOfServiceLink" target="_blank">{{ 'Start.imprint' | translate }}</a>
+					<a class="faq" [routerLink]="['/public/faq']">FAQ</a>
+				</li>
+				<li>
+					<a class="impressum" [href]="theme.termsOfServiceLink" target="_blank">{{ 'Start.imprint' | translate }}</a>
 				</li>
 			</ul>
 		</div>
