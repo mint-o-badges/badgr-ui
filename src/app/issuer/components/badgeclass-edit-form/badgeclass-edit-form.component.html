@@ -4,22 +4,6 @@
 <form [formGroup]="badgeClassForm.rawControl" #formElem (ngSubmit)="onSubmit()" novalidate class="l-responsivelist">
 	<!-- General Details Panel -->
 	<div class="formsection">
-		<div class="formsection-x-help">
-			<h3 class="u-text-body-bold">Create Collection Badge</h3>
-			<p class="u-text u-margin-top1x u-margin-bottom2x">
-				You can create a Collection Badge by combining multiple badges. A Collection Badge is a collection of badges that
-				are awarded together. 
-			</p>	
-		</div>
-		<div class="formsection-x-body">
-			<h2>Collection Badge</h2>
-			<label class="checkbox">
-				<input type="checkbox" [(ngModel)]="isCollectionBadgeChecked" [ngModelOptions]="{standalone: true}"/>
-			</label>
-
-		</div>
-	</div>
-	<div class="formsection">
 		<!-- <div class="formsection-x-title">
 			<h2 class="u-text-dark2">
 				Badge Basics
@@ -92,19 +76,6 @@
 					[errorMessage]="{ required: 'Bitte gib eine Beschreibung ein' }"
 					[multiline]="true"
 				></bg-formfield-text>
-			</div>
-		</div>
-	</div>
-
-	<div *bgAwaitPromises="[badgeClassesLoadedPromise]">
-		<div *ngIf="isCollectionBadgeChecked" class="formsection" >
-			<div class="formsection-x-title">
-				<h2>Badges</h2>
-			</div>
-			<div class="formsection-x-body">
-				<div class="emptysection-x-buttons">
-					<button class="button button-secondary" type="button" (click)="manageBadges()">Badge hinzufügen</button>
-				</div>
 			</div>
 		</div>
 	</div>
@@ -544,5 +515,3 @@
 		</button>
 	</div>
 </form>
-
-<collectionbadge-selection-dialog #collectionBadgeDialog [badgeClasses]="badgeClasses"></collectionbadge-selection-dialog>

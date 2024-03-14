@@ -14,8 +14,6 @@ import { BadgeInstanceManager } from '../issuer/services/badgeinstance-manager.s
 import { IssuerApiService } from '../issuer/services/issuer-api.service';
 import { IssuerManager } from '../issuer/services/issuer-manager.service';
 import { TranslateModule } from '@ngx-translate/core';
-import {CollectionBadgeApiService} from '../issuer/services/collectionbadge-api.service'
-import {CollectionBadgeManager} from '../issuer/services/collectionbadge-manager.service'
 
 export const routes: Routes = [
 	{
@@ -45,8 +43,6 @@ export const routes: Routes = [
 		BadgeInstanceManager,
 		IssuerApiService,
 		IssuerManager,
-		CollectionBadgeApiService,
-		CollectionBadgeManager,
 	],
 })
 export class CatalogModule {}
