@@ -83,6 +83,12 @@
 				[errorMessage]="'Bitte gib dem Badge ein gültiges (bei einem Fork eindeutiges) Bild'"
 			>
 			</bg-formfield-image>
+			<badge-studio
+				[scrolled]="scrolled"
+				#badgeStudio
+				[formData]="badgeClassForm.value"
+				[hidden]="true"
+			></badge-studio>
 			<bg-formfield-text
 				[control]="badgeClassForm.rawControlMap.badge_description"
 				label="Kurzbeschreibung"
