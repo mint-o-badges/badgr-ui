@@ -108,7 +108,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	hideHexFrame: boolean = false;
 
 	savePromise: Promise<BadgeClass> | null = null;
-	badgeClassForm = typedFormGroup(this.criteriaRequired.bind(this))
+	badgeClassForm = typedFormGroup()
 		.addControl('badge_name', '', [
 			Validators.required,
 			Validators.maxLength(255),
@@ -131,9 +131,9 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		.addControl('badge_description', '', Validators.required)
 		.addControl('badge_criteria_url', '')
 		.addControl('badge_criteria_text', '')
-		.addControl('badge_study_load', 1, [Validators.required, this.positiveInteger, Validators.max(1000)])
-		.addControl('badge_category', '', Validators.required)
-		.addControl('badge_level', 'a1', Validators.required)
+		.addControl('badge_study_load', 1)
+		.addControl('badge_category', '')
+		.addControl('badge_level', 'a1')
 		.addControl('badge_based_on', {
 			slug: '',
 			issuerSlug: '',
@@ -546,6 +546,8 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		if (this.expirationEnabled) {
 			this.expirationForm.markTreeDirty();
 		}
+
+		console.log(this.badgeClassForm.valid);
 
 		if (!this.badgeClassForm.valid || (this.expirationEnabled && !this.expirationForm.valid)) {
 			const firstInvalidInput = this.formElem.nativeElement.querySelector(
