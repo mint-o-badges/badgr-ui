@@ -30,6 +30,7 @@ import { CollectionBadge } from '../../models/collectionbadge.model';
 @Component({
 	selector: 'badgeclass-edit-form',
 	templateUrl: './badgeclass-edit-form.component.html',
+	styleUrls: ['./badgeclass-edit-form.component.css'],
 })
 export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	baseUrl: string;
@@ -215,10 +216,8 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	};
 
 	categoryOptions: { [key in BadgeClassCategory]: string } = {
-		membership: 'Mitgliedschaft',
-		ability: 'Metakompetenz',
-		archievement: 'Teilnahme / Erfolg',
-		skill: 'Fachliche Kompetenz',
+		competency: 'Kompetenz-Badge',
+		participation: 'Teilnahme-Badge',
 	};
 
 	levelOptions: { [key in BadgeClassLevel]: string } = {
@@ -525,6 +524,8 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		}
 	}
 
+	async newSubmit() {}
+
 	async onSubmit() {
 		if (this.isCollectionBadgeChecked) {
 			let collectionBadgeData = {
@@ -561,6 +562,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		}
 
 		const formState = this.badgeClassForm.value;
+		console.log(formState);
 		const expirationState = this.expirationEnabled ? this.expirationForm.value : undefined;
 
 		const studyLoadExtensionContextUrl = `${this.baseUrl}/static/extensions/StudyLoadExtension/context.json`;

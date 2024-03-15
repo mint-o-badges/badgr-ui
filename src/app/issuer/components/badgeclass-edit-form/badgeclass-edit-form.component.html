@@ -3,7 +3,7 @@
 
 <form [formGroup]="badgeClassForm.rawControl" #formElem (ngSubmit)="onSubmit()" novalidate class="l-responsivelist">
 	<!-- General Details Panel -->
-	<div class="formsection">
+	<!-- <div class="formsection">
 		<div class="formsection-x-help">
 			<h3 class="u-text-body-bold">Create Collection Badge</h3>
 			<p class="u-text u-margin-top1x u-margin-bottom2x">
@@ -18,15 +18,303 @@
 			</label>
 
 		</div>
+	</div> -->
+	<div class="section">
+		<div style="display: flex; flex-direction: column">
+			<h2 class="heading" style="display: flex; justify-content: space-between">
+				1. Badge-Kategorie wählen
+				<bg-formfield-select
+					ariaLabel="Wähle eine Badge-Kategorie"
+					[control]="badgeClassForm.rawControlMap.badge_category"
+					[placeholder]="'Wähle eine Badge-Kategorie'"
+					[optionMap]="categoryOptions"
+					[errorMessage]="{
+						required: 'Bitte wähle die Kategorie des Badges aus.'
+					}"
+				></bg-formfield-select>
+			</h2>
+			<div style="padding-left: 2em; padding-right: 2em; width: 75%; font-style: italic">
+				<span
+					>Kompetenz-Badges können mithilfe unseres KI-Badge-Assistent mit Kompetenzen gefüllt werden.
+				</span>
+				<span>Teilnahme-Badges dienen als Bestätigung der Teilnahme an einem Lehrangebot.</span>
+			</div>
+		</div>
 	</div>
-	<div class="formsection">
-		<!-- <div class="formsection-x-title">
+
+	<div class="section">
+		<div>
+			<h2 class="heading">2. Badge Details eingeben</h2>
+		</div>
+		<div>
+			<bg-formfield-text
+				style="display: flex; align-items: center; gap: 2em; margin-left: 2em; margin-top: 2em"
+				[control]="badgeClassForm.rawControlMap.badge_name"
+				label="TITEL"
+				[errorMessage]="{
+					required: 'Bitte gib dem Badge einen Titel',
+					mustChange: 'Bitte ändere den Titel'
+				}"
+				[autofocus]="true"
+			></bg-formfield-text>
+			<bg-formfield-image
+				style="
+					width: 50%;
+					background-color: #fff6f6;
+					margin-top: 2em;
+					padding: 2em;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					margin-left: auto;
+					margin-right: auto;
+				"
+				#imageField
+				label="Bild"
+				imageLoaderName="badge"
+				[newDropZone]="true"
+				[generateRandom]="false"
+				[type]="'badge'"
+				(generateRandomImage)="generateRandomImage()"
+				(imageUploaded)="generateUploadImage($event, badgeClassForm.value)"
+				class="l-formimageupload-x-upload"
+				[placeholderImage]="badgeClassPlaceholderImageUrl"
+				[control]="badgeClassForm.rawControlMap.badge_image"
+				[errorMessage]="'Bitte gib dem Badge ein gültiges (bei einem Fork eindeutiges) Bild'"
+			>
+			</bg-formfield-image>
+			<bg-formfield-text
+				[control]="badgeClassForm.rawControlMap.badge_description"
+				label="Kurzbeschreibung"
+				id="badgeclass_description_input"
+				placeholder="Kurze Beschreibung der Leistung"
+				[errorMessage]="{ required: 'Bitte gib eine Beschreibung ein' }"
+				[multiline]="true"
+			></bg-formfield-text>
+			<div
+				class="u-margin-top3x u-margin-bottom3x"
+				style="display: flex; justify-content: center; align-items: center"
+			>
+				<label class="checkbox">
+					<input
+						id="no-hex-frame"
+						name="no-hex-frame"
+						type="checkbox"
+						(change)="handleCBoxValueChange($event)"
+					/>
+					<span class="checkbox-x-text">Ohne Hexagon-Rahmen </span>
+				</label>
+			</div>
+			<div style="display: flex; margin-bottom: 1em">
+				<bg-formfield-text
+					style="margin-left: 2em; display: flex; align-items: center; gap: 2em"
+					[control]="badgeClassForm.rawControlMap.badge_name"
+					label="Tags"
+					[autofocus]="true"
+				></bg-formfield-text>
+				<bg-formfield-select
+					style="margin-left: auto"
+					ariaLabel="Füge einen bestehenden Tag hinzu"
+					[control]="badgeClassForm.rawControlMap.badge_category"
+					[placeholder]="'Vorhandenen Tag wählen'"
+				></bg-formfield-select>
+				<button style="margin-left: auto" class="button">Hinzufügen</button>
+			</div>
+			<span style="margin-left: 2em; font-style: italic"
+				>(Optional). Tags verschlagworten Badges und helfen bei der Suche von Badges zu bestimmten Themen.</span
+			>
+		</div>
+	</div>
+
+	<div class="section">
+		<h2 class="heading">3. Badge mit Kompetenzen befüllen</h2>
+		<ul style="list-style-type: disc; padding: 5em">
+			<li>
+				<span style="font-size: 28px; line-height: 55.2px; color: var(--color-blue)"
+					>KI-Badge-Assistent nutzen</span
+				>
+				<p>
+					Nutze unseren
+					<span style="font-weight: 200; color: var(--color-blue)">KI-Badge-Assistent</span>, um deinen Badge
+					mit Kompetenzen zu füllen. Gib einfach die inhaltliche Beschreibung deines Lehrangebots per
+					copy&paste in das Textfeld ein. Der KI-Badge-Assistent schlägt dir passende Kompetenzen vor, die du
+					durch Anklicken zu deinem Badge hinzufügen kannst.
+				</p>
+				<div
+					style="
+						display: flex;
+						flex-direction: column;
+						justify-content: center;
+						align-items: center;
+						margin-top: 3em;
+						width: 100%;
+						background-color: var(--color-blue);
+						border-radius: 25px;
+					"
+				>
+					<div
+						style="
+							width: 50%;
+							background-color: var(--color-grün);
+							margin-top: 2em;
+							border-radius: 25px;
+							justify-content: center;
+							align-items: center;
+							display: flex;
+						"
+					>
+						<span
+							style="
+								color: black;
+								font-weight: 600;
+								padding-left: 1em;
+								padding-right: 1em;
+								padding-top: 0.5em;
+								padding-bottom: 0.5em;
+								font-size: 28px;
+								line-height: 55.2px;
+							"
+							>KI-BADGE-ASSISTENT NUTZEN</span
+						>
+					</div>
+					<div
+						style="
+							display: flex;
+							justify-content: space-between;
+							width: 100%;
+							padding: 4em;
+							margin-left: 2em;
+						"
+					>
+						<div style="display: flex; flex-direction: column">
+							<h2 style="color: #ffffff">Meine inhaltliche Beschreibung</h2>
+							<textarea style="background-color: white; border-radius: 10px"> </textarea>
+							<div style="color: white">
+								<label for="kursdauer"> Dauer des Kurses</label>
+								<div style="display: flex; gap: 2em">
+									<input
+										style="width: 4em; background-color: white"
+										type="number"
+										id="kursdauer"
+										name="kursdauer"
+										value="170"
+									/>
+									<span>Minuten</span>
+								</div>
+								<button
+									class="button"
+									style="
+										background-color: var(--color-grün);
+										color: var(--color-blue);
+										margin-top: 2em;
+									"
+								>
+									<span style="font-weight: 400">Passende</span>
+									<span style="font-weight: 700"> Kompetenzen vorschlagen </span>
+								</button>
+							</div>
+						</div>
+						<div style="width: 50%">
+							<h2 style="color: white">Passende Kompetenzen</h2>
+							<div style="background-color: white; border-radius: 10px; width: 75%; padding: 1em">
+								<p style="width: 100%; font-style: italic">
+									Hier erscheinen passende Kompetenzen, sobald du die Beschreibung deines Lehrinhalts
+									in das Textfeld links eingefügt hast und auf "Pasende Kompetenzen vorschlagen"
+									klickst.
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</li>
+			<hr style="border: 1px dashed var(--color-blue); margin-top: 2em; margin-bottom: 2em" />
+			<li>
+				<span style="font-size: 28px; line-height: 55.2px; color: var(--color-blue)"
+					>Händisch Kompetenzen hinzufügen</span
+				>
+				<p>
+					Alternativ oder ergänzend kannst du händisch Kompetenzen hinzufügen. Gerne kannst du als
+					Unterstützung die Suchfunktion von ESCO nutzen, um die passende Kompetenz zu finden und die
+					Informationen per copy&paste in die unten stehenden Felder übertragen.
+				</p>
+				<button style="margin-top: 2em" class="button">
+					<a
+						style="color: white"
+						href="https://esco.ec.europa.eu/en/classification/skill_main"
+						target="_blank"
+						>Bring mich zu ESCO</a
+					>
+				</button>
+				<div
+					style="
+						border: 2px solid;
+						border-radius: 25px;
+						border-color: var(--color-blue);
+						padding: 2em;
+						margin-top: 2em;
+					"
+				>
+					<div style="display: flex; justify-content: space-around">
+						<bg-formfield-text
+							[control]="badgeClassForm.rawControlMap.badge_study_load"
+							label="Kompetenz-Titel"
+							[fieldType]="'text'"
+							[errorMessage]="{
+								required: 'Bitte gib den Titel der Kompetenz ein.'
+							}"
+						></bg-formfield-text>
+						<bg-formfield-text
+							[control]="badgeClassForm.rawControlMap.badge_study_load"
+							label="Dauer Kompetenz- Erwerb (in Minuten)"
+							[fieldType]="'number'"
+							[errorMessage]="{
+								required: 'Bitte gib die Dauer für den Erwerb der Kompetenz ein.'
+							}"
+						></bg-formfield-text>
+						<bg-formfield-select
+							ariaLabel="Wähle eine Kompetenz-Kategorie"
+							[control]="badgeClassForm.rawControlMap.badge_category"
+							[label]="'Kategorie'"
+							[placeholder]="'Kategorie wählen'"
+							[optionMap]="categoryOptions"
+							[errorMessage]="{
+								required: 'Bitte wähle die Kategorie der Kompetenz aus.'
+							}"
+						></bg-formfield-select>
+					</div>
+					<bg-formfield-text
+						style="margin-left: 2em; margin-top: 2em; margin-right: 2em"
+						[control]="badgeClassForm.rawControlMap.badge_description"
+						label="Kompetenz Beschreibung"
+						id="competency_description_input"
+						placeholder="Kurze Beschreibung der Kompetenz"
+						[errorMessage]="{ required: 'Bitte gib eine Beschreibung ein' }"
+						[multiline]="true"
+					></bg-formfield-text>
+					<button
+						class="button"
+						style="background-color: var(--color-grün); color: var(--color-blue); margin-top: 2em"
+					>
+						Hinzufügen
+					</button>
+				</div>
+				<div class="l-stack l-stack-right u-margin-top2x">
+					<button (click)="addAlignment()" type="button" class="button button-secondary">
+						Kompetenz hinzufügen
+					</button>
+				</div>
+			</li>
+		</ul>
+	</div>
+
+	<!-- <div class="formsection"> -->
+	<!-- <div class="formsection-x-title">
 			<h2 class="u-text-dark2">
 				Badge Basics
 			</h2>
 		</div> -->
 
-		<div class="formsection-x-help">
+	<!-- <div class="formsection-x-help">
 			<h3 class="u-text-body-bold">Badge Basics</h3>
 			<p class="u-text u-margin-top1x u-margin-bottom2x">
 				Badge Bilder können entweder PNGs oder SVGs oder die über die Iconsuche gewählten Icons sein. Um das
@@ -61,12 +349,17 @@
 					[formData]="badgeClassForm.value"
 					[hidden]="true"
 				></badge-studio>
-			</div>
+			</div> -->
 
-			<!-- No Hexagon Frame Checkout -->
-			<div class="u-margin-top3x u-margin-bottom3x">
+	<!-- No Hexagon Frame Checkout -->
+	<!-- <div class="u-margin-top3x u-margin-bottom3x">
 				<label class="checkbox">
-					<input id="no-hex-frame" name="no-hex-frame" type="checkbox" (change)="handleCBoxValueChange($event)" />
+					<input
+						id="no-hex-frame"
+						name="no-hex-frame"
+						type="checkbox"
+						(change)="handleCBoxValueChange($event)"
+					/>
 					<span class="checkbox-x-text">Ohne Hexagon-Rahmen </span>
 				</label>
 			</div>
@@ -94,23 +387,25 @@
 				></bg-formfield-text>
 			</div>
 		</div>
-	</div>
+	</div> -->
 
 	<div *bgAwaitPromises="[badgeClassesLoadedPromise]">
-		<div *ngIf="isCollectionBadgeChecked" class="formsection" >
+		<div *ngIf="isCollectionBadgeChecked" class="formsection">
 			<div class="formsection-x-title">
 				<h2>Badges</h2>
 			</div>
 			<div class="formsection-x-body">
 				<div class="emptysection-x-buttons">
-					<button class="button button-secondary" type="button" (click)="manageBadges()">Badge hinzufügen</button>
+					<button class="button button-secondary" type="button" (click)="manageBadges()">
+						Badge hinzufügen
+					</button>
 				</div>
 			</div>
 		</div>
 	</div>
 
 	<!-- Criteria Panel -->
-	<div class="formsection">
+	<!-- <div class="formsection">
 		<div class="formsection-x-title">
 			<h2 class="u-text-dark2">
 				Kriterien
@@ -158,10 +453,10 @@
 				></bg-formfield-text>
 			</div>
 		</div>
-	</div>
+	</div> -->
 
 	<!-- Criteria Panel -->
-	<div class="formsection">
+	<!-- <div class="formsection">
 		<div class="formsection-x-title">
 			<h2 class="u-text-dark2">Dauer</h2>
 		</div>
@@ -247,7 +542,7 @@
 				></bg-formfield-select>
 			</div>
 		</div>
-	</div>
+	</div> -->
 
 	<!-- alignments -->
 	<div *ngIf="alignmentsEnabled" class="formsection">
@@ -406,7 +701,6 @@
 					<!--The additional style attribute here is needed to
                         align the button with the autocomplete input.-->
 					<div class="forminput-x-button" style="margin-top: var(--gridspacing)">
-
 						<button type="button" (click)="addTag()" class="button button-secondary button-informinput">
 							Hinzufügen
 						</button>
@@ -457,7 +751,7 @@
 	</div>
 
 	<!-- add options -->
-	<div class="formsection formsection-nohelp">
+	<!-- <div class="formsection formsection-nohelp">
 		<h2 class="formsection-x-title">Optionale Details</h2>
 		<div class="formsection-x-body">
 			<ul>
@@ -522,7 +816,7 @@
 				<svg icon="icon_external_link"></svg>
 			</a>
 		</div>
-	</div>
+	</div> -->
 
 	<div class="l-stack l-stack-right u-margin-top3x">
 		<button
@@ -531,7 +825,7 @@
 			(click)="cancelClicked()"
 			class="button button-secondary"
 		>
-			Cancel
+			Abbrechen
 		</button>
 		<button
 			type="submit"
@@ -540,9 +834,12 @@
 			[loading-promises]="[savePromise]"
 			loading-message="{{ submittingText }}"
 		>
-			{{ submitText }}
+			Badge erstellen
 		</button>
 	</div>
 </form>
 
-<collectionbadge-selection-dialog #collectionBadgeDialog [badgeClasses]="badgeClasses"></collectionbadge-selection-dialog>
+<collectionbadge-selection-dialog
+	#collectionBadgeDialog
+	[badgeClasses]="badgeClasses"
+></collectionbadge-selection-dialog>

@@ -92,10 +92,8 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 	}
 	groups = [this.translate.instant('Badge.category'), this.translate.instant('Badge.issuer'), '---'];
 	categoryOptions: { [key in BadgeClassCategory | 'noCategory']: string } = {
-		membership: this.translate.instant('Badge.membership'),
-		ability: this.translate.instant('Badge.ability'),
-		archievement: this.translate.instant('Badge.archievement'),
-		skill: this.translate.instant('Badge.skill'),
+		competency: this.translate.instant('Badge.competency'),
+		participation: this.translate.instant('Badge.participation'),
 		noCategory: this.translate.instant('Badge.noCategory'),
 	};
 
@@ -174,10 +172,8 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		this.groups = [this.translate.instant('Badge.category'), this.translate.instant('Badge.issuer'), '---'];
 		// 2. Category options
 		this.categoryOptions = {
-			membership: this.translate.instant('Badge.membership'),
-			ability: this.translate.instant('Badge.ability'),
-			archievement: this.translate.instant('Badge.archievement'),
-			skill: this.translate.instant('Badge.skill'),
+			competency: this.translate.instant('Badge.competency'),
+			participation: this.translate.instant('Badge.participation'),
 			noCategory: this.translate.instant('Badge.noCategory'),
 		};
 		// 3. Plural

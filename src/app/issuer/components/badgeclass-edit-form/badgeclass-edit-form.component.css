@@ -1,0 +1,19 @@
+.heading {
+    padding-left: 1em; 
+    padding-right: 1em; 
+    padding-top: 1em;
+    font-size: 28px;
+    font-weight: 500;
+    line-height: 55.2px;
+	color: var(--color-blue);
+}
+
+.section{
+    background-color: #f1f0ff;
+    border-radius: 25px;
+    padding: 2em
+}
+
+li::marker {
+    color: var(--color-blue);
+  }
