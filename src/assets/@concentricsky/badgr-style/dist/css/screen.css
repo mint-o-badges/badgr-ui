@@ -10265,7 +10265,7 @@ dialog[open] {
   background-color: var(--color-light1); }
 
 .u-background-light2 {
-  background-color: var(--color-light2); }
+  background-color: white; }
 
 .u-background-light3 {
   background-color: var(--color-light3); }
