@@ -112,19 +112,44 @@
 				</label>
 			</div>
 			<div style="display: flex; margin-bottom: 1em">
-				<bg-formfield-text
+				<div class="ng-autocomplete">
+					<ng-autocomplete
+						name="addtag"
+						id="addtag"
+						#newTagInput
+						maxlength="50"
+						[data]="existingTags"
+						[isLoading]="existingTagsLoading"
+						searchKeyword="name"
+						placeholder="Neuer Tag..."
+						(keypress)="handleTagInputKeyPress($event)"
+						[itemTemplate]="itemTemplate"
+						[notFoundTemplate]="notFoundTemplate"
+					>
+					</ng-autocomplete>
+
+					<ng-template #itemTemplate let-item>
+						<a [innerHTML]="item.name"></a>
+					</ng-template>
+
+					<ng-template #notFoundTemplate let-notFound>
+						<div>Dieser Tag existiert noch nicht.</div>
+					</ng-template>
+				</div>
+				<!-- <bg-formfield-text
 					style="margin-left: 2em; display: flex; align-items: center; gap: 2em"
 					[control]="badgeClassForm.rawControlMap.badge_name"
 					label="Tags"
 					[autofocus]="true"
-				></bg-formfield-text>
+				></bg-formfield-text> -->
 				<bg-formfield-select
 					style="margin-left: auto"
 					ariaLabel="Füge einen bestehenden Tag hinzu"
 					[control]="badgeClassForm.rawControlMap.badge_category"
 					[placeholder]="'Vorhandenen Tag wählen'"
 				></bg-formfield-select>
-				<button style="margin-left: auto" class="button">Hinzufügen</button>
+
+				<button type="button" (click)="addTag()" style="margin-left: auto" class="button">Hinzufügen</button>
 			</div>
 			<span style="margin-left: 2em; font-style: italic"
 				>(Optional). Tags verschlagworten Badges und helfen bei der Suche von Badges zu bestimmten Themen.</span
@@ -411,7 +436,7 @@
 	</div>
 
 	<!-- Criteria Panel -->
-	<!-- <div class="formsection">
+	<div class="formsection">
 		<div class="formsection-x-title">
 			<h2 class="u-text-dark2">
 				Kriterien
@@ -459,7 +484,7 @@
 				></bg-formfield-text>
 			</div>
 		</div>
-	</div> -->
+	</div>
 
 	<!-- Criteria Panel -->
 	<!-- <div class="formsection">
@@ -647,7 +672,7 @@
 	</div>
 
 	<!-- tags -->
-	<div *ngIf="tagsEnabled" class="formsection">
+	<!-- <div *ngIf="tagsEnabled" class="formsection">
 		<div class="formsection-x-title">
 			<h2 class="u-text-dark2">
 				Tags
@@ -703,10 +728,10 @@
 						<ng-template #notFoundTemplate let-notFound>
 							<div>Dieser Tag existiert noch nicht.</div>
 						</ng-template>
-					</div>
-					<!--The additional style attribute here is needed to
+					</div> -->
+	<!--The additional style attribute here is needed to
                         align the button with the autocomplete input.-->
-					<div class="forminput-x-button" style="margin-top: var(--gridspacing)">
+	<!-- <div class="forminput-x-button" style="margin-top: var(--gridspacing)">
 						<button type="button" (click)="addTag()" class="button button-secondary button-informinput">
 							Hinzufügen
 						</button>
@@ -714,7 +739,7 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> -->
 
 	<!-- expiration -->
 	<div *ngIf="expirationEnabled" class="formsection">

@@ -198,7 +198,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// Tags
-	tagsEnabled = false;
+	tagsEnabled = true;
 	tags = new Set<string>();
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -389,9 +389,9 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		});
 	}
 
-	enableTags() {
-		this.tagsEnabled = true;
-	}
+	// enableTags() {
+	// 	this.tagsEnabled = true;
+	// }
 
 	disableTags() {
 		this.tagsEnabled = false;
@@ -399,6 +399,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 	addTag() {
 		const newTag = (this.newTagInput['query'] || '').trim().toLowerCase();
+		console.log(newTag);
 
 		if (newTag.length > 0) {
 			this.tags.add(newTag);
@@ -527,27 +528,10 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	async newSubmit() {}
 
 	async onSubmit() {
-		if (this.isCollectionBadgeChecked) {
-			let collectionBadgeData = {
-				name: this.badgeClassForm.value.badge_name,
-				description: this.badgeClassForm.value.badge_description ?? '',
-				image: this.badgeClassForm.value.badge_image ?? '',
-				slug: this.badgeClassForm.value.badge_name,
-				badges: this.selectedBadgeClasses.map((item) => {
-					return {
-						slug: item.apiModel.slug,
-					};
-				}),
-			};
-			this.badgeClassManager.createCollectionBadgeClass(collectionBadgeData);
-			return null;
-		}
 		this.badgeClassForm.markTreeDirty();
 		if (this.expirationEnabled) {
 			this.expirationForm.markTreeDirty();
 		}
-
-		console.log(this.badgeClassForm.valid);
 
 		if (!this.badgeClassForm.valid || (this.expirationEnabled && !this.expirationForm.valid)) {
 			const firstInvalidInput = this.formElem.nativeElement.querySelector(
@@ -564,13 +548,13 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		}
 
 		const formState = this.badgeClassForm.value;
-		console.log(formState);
 		const expirationState = this.expirationEnabled ? this.expirationForm.value : undefined;
 
 		const studyLoadExtensionContextUrl = `${this.baseUrl}/static/extensions/StudyLoadExtension/context.json`;
 		const categoryExtensionContextUrl = `${this.baseUrl}/static/extensions/CategoryExtension/context.json`;
 		const levelExtensionContextUrl = `${this.baseUrl}/static/extensions/LevelExtension/context.json`;
 		const basedOnExtensionContextUrl = `${this.baseUrl}/static/extensions/BasedOnExtension/context.json`;
+		const competencyExtensionContextUrl = `${this.baseUrl}/static/extensions/CompetencyExtension/context.json`;
 		const orgImageExtensionContextUrl = `${this.baseUrl}/static/extensions/OrgImageExtension/context.json`;
 
 		if (this.existingBadgeClass) {
@@ -598,6 +582,24 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 					type: ['Extension', 'extensions:LevelExtension'],
 					Level: String(formState.badge_level),
 				},
+				// 'extensions:CompetencyExtension': [
+				// 	{
+				// 		'@context': competencyExtensionContextUrl,
+				// 		type: ['Extension', 'extensions:CompetencyExtension'],
+				// 		titel: 'titel1',
+				// 		dauer: 'dauer1',
+				// 		kategorie: 'kategorie1',
+				// 		beschreibung: 'beschreibung1',
+				// 	},
+				// 	{
+				// 		'@context': competencyExtensionContextUrl,
+				// 		type: ['Extension', 'extensions:CompetencyExtension'],
+				// 		titel: 'titel2',
+				// 		dauer: 'dauer2',
+				// 		kategorie: 'kategorie2',
+				// 		beschreibung: 'beschreibung2',
+				// 	},
+				// ],
 			};
 			if (this.currentImage) {
 				this.existingBadgeClass.extension = {
@@ -647,6 +649,22 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 						type: ['Extension', 'extensions:BasedOnExtension'],
 						BasedOn: formState.badge_based_on,
 					},
+					'extensions:CompetencyExtension': {
+						'@context': competencyExtensionContextUrl,
+						type: ['Extension', 'extensions:CompetencyExtension'],
+						Competency: {
+							slug: 'slug1',
+							issuerSlug: 'issuerSlug1',
+						},
+					},
+					// 'extensions:CompetencyExtension': {
+					// 	'@context': competencyExtensionContextUrl,
+					// 	type: ['Extension', 'extensions:CompetencyExtension'],
+					// 	titel: 'titel1',
+					// 	dauer: 'dauer1',
+					// 	kategorie: 'kategorie1',
+					// 	beschreibung: 'beschreibung1',
+					// },
 				},
 			} as ApiBadgeClassForCreation;
 			if (this.currentImage) {
