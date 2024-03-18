@@ -1,6 +1,6 @@
 /* new style */
 p {
-	text-align: justify;
+	text-align: left;
 }
 
 h1 {
@@ -34,7 +34,7 @@ h1 {
 .text-big {
 	font-weight: 400;
 	font-size: 24px;
-	line-height: 28.8px;
+	line-height: 33.6px;
 	color: black;
 }
 
@@ -130,18 +130,13 @@ h1 {
 	display: flex;
 	justify-content: space-between;
 	margin: 3em 0 3em 0;
+	align-items: baseline;
 }
 
 .join-us-style {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-
-	/* > div {
-		display: flex;
-		flex-direction: row;
-		gap: 30px;
-	} */
 }
 
 .join-us-card {
@@ -167,31 +162,34 @@ h1 {
 
 @media (max-width: 1580px) {
 	.badge-logo {
-		width: 301px;
+		width: calc(325px*0.9);
 	}
-
 	.circle-logo {
-		width: 130px;
+		width: calc(145px*0.9);
 	}
 	.network-logo {
-		width: 200px;
+		width: calc(223px*0.9);
+		/* width: 200px; */
 	}
 	.main-paragraph {
 		margin-bottom: 9.5%;
 	}
 }
 
-@media (max-width: 1518px) {
+ @media (max-width: 1518px) {
 	.badge-logo {
-		width: 271px;
+		width: calc(325px*85/100);
+		/* width: 271px; */
 	}
 
 	.circle-logo {
-		width: 117px;
+		width: calc(145px*85/100);
+		/* width: 117px; */
 	}
 	.network-logo {
-		width: 180px;
-		left: -6.2em;
+		width: calc(223px*85/100);
+		/* width: 180px; */
+		/* left: -6.2em; */
 	}
 	.main-paragraph {
 		margin-bottom: 0%;
@@ -233,9 +231,9 @@ h1 {
 		margin-top: 3%;
 	}
 
-	.text-big{
+	/* .text-big{
 		max-width: 75% !important;
-	}
+	} */
 }
 
 
