@@ -105,12 +105,13 @@
 						>{{ 'General.institutions' | translate }}</a
 					>
 					<a
+						*ngIf="!features.disableRegistration"
 						[class.navitem-light]="!theme.useColorNavbar"
 						class="navitem"
 						routerLinkActive="navitem-is-active"
-						[routerLink]="['/auth/login']"
-						>Login</a
-					>
+						[routerLink]="['/public/about']"
+						>{{ 'NavItems.aboutOpenEducationalBadges' | translate }}</a
+					>	
 					<a
 						*ngIf="!features.disableRegistration"
 						[class.navitem-light]="!theme.useColorNavbar"
@@ -119,15 +120,7 @@
 						[routerLink]="['/signup']"
 						>{{ 'NavItems.register' | translate }}</a
 					>
-					<a
-						*ngIf="!features.disableRegistration"
-						[class.navitem-light]="!theme.useColorNavbar"
-						class="navitem"
-						routerLinkActive="navitem-is-active"
-						[routerLink]="['/public/about']"
-						>{{ 'NavItems.aboutOpenEducationalBadges' | translate }}</a
-					>
-					
+		
 					<div class="navitem" style="position: unset; display: flex; gap: 4px">
 						<button (click)="changeLng('de')">
 							<span [ngStyle]="{ 'font-weight': selectedLng == 'de' ? 'bold' : 'normal' }">DE</span>
@@ -138,6 +131,14 @@
 						</button>
 					</div>
 				</div>
+
+				<!-- Login btn -->
+				<button
+					class="main-nav-bold login-btn"
+					[routerLink]="['/auth/login']"
+					>
+					Login
+				</button>
 			</nav>
 		</ng-template>
 
@@ -236,6 +237,7 @@
 				</div>
 			</nav>
 		</ng-template>
+		
 		<button
 			class="menutoggle"
 			(click)="toggleMobileNav()"
@@ -290,11 +292,11 @@
 				'General.institutions' | translate
 			}}</a>
 			<a routerLinkActive="menuitem-is-active" [routerLink]="['/auth/login']">Login</a>
-			<a routerLinkActive="menuitem-is-active" [routerLink]="['/signup']">{{
-				'NavItems.register' | translate
-			}}</a>
 			<a routerLinkActive="menuitem-is-active" [routerLink]="['/public/about']">{{
 				'NavItems.aboutOpenEducationalBadges' | translate
+			}}</a>
+			<a routerLinkActive="menuitem-is-active" [routerLink]="['/signup']">{{
+				'NavItems.register' | translate
 			}}</a>
 			<!-- mobile-nav language selection -->
 			<a

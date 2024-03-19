@@ -57,9 +57,13 @@ h1 {
 
 	> div {
 		display: flex;
-		justify-content: space-between;
+		/* justify-content: space-between; */
 		align-items: center;
 		gap: 45px;
+
+		> p {
+			width: 60%;
+		}
 	}
 }
 
