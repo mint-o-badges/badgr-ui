@@ -27,7 +27,7 @@ A clear and concise description of what you expected to happen.
 If applicable, add screenshots to help explain your problem.
 
 **Desktop (please complete the following information; remove if not applicable):**
- - OS: [e.g. iOS]
+ - OS: [e.g. Windows 10, MacOS 14.03, Ubuntu]
  - Browser [e.g. chrome, safari]
  - Version [e.g. 22]
 
