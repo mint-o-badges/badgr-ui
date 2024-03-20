@@ -145,7 +145,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			typedFormGroup()
 				.addControl('name', '', Validators.required)
 				.addControl('description', '', Validators.required)
-				.addControl('escoID', '', Validators.required)
+				.addControl('escoID', '')
 				.addControl('studyLoad', 60, [Validators.required, this.positiveInteger, Validators.max(1000)])
 				.addControl('category', '', Validators.required),
 		)
@@ -351,7 +351,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		let that = this;
 		// update badge frame when a category is selected, unless no-hexagon-frame checkbox is checked
 		this.badgeClassForm.rawControl.controls['badge_category'].statusChanges.subscribe((res) => {
-			// this.badgeCategory = this.badgeClassForm.rawControl.controls['badge_category'].value;
+			this.badgeCategory = this.badgeClassForm.rawControl.controls['badge_category'].value;
 			if (this.currentImage && !this.hideHexFrame) {
 				//timeout because of workaround for angular bug.
 				setTimeout(function () {
