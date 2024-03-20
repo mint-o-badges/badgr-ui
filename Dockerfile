@@ -6,7 +6,7 @@ COPY . .
 
 RUN npm install
 
-RUN npm run build
+RUN npm run build:app
 
 # Serve Application using Nginx Server
 
