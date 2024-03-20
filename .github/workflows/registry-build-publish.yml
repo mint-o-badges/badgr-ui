@@ -77,4 +77,4 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}-Staging
           labels: ${{ steps.meta.outputs.labels }}-Staging
-          file: {context}/staging.Dockerfile
+          file: staging.Dockerfile
