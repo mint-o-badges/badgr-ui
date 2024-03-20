@@ -70,3 +70,11 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+      - name: 🏗️ Build and push Docker Staging image
+        uses: docker/build-push-action@v5.0.0
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}-Staging
+          labels: ${{ steps.meta.outputs.labels }}-Staging
+          file: {context}/staging.Dockerfile
