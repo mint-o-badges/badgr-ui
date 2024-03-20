@@ -3210,10 +3210,6 @@ dialog[open] {
     cursor: not-allowed; }
   .footer .footer-x-links li {
     display: inline; }
-  .footer .footer-x-links li:not(:last-child) {
-    border-right: 1px solid var(--color-light4);
-    margin-right: calc(var(--gridspacing) * 2);
-    padding-right: calc(var(--gridspacing) * 2); }
   .footer .footer-x-leftlinks li {
     display: inline; }
   .footer .footer-x-leftlinks li:not(:last-child) {
