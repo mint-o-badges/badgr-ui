@@ -24,16 +24,16 @@ import { CommonDialogsService } from '../../../common/services/common-dialogs.se
 import { BadgeClass } from '../../models/badgeclass.model';
 import { AppConfigService } from '../../../common/app-config.service';
 import { typedFormGroup } from '../../../common/util/typed-forms';
-import { CollectionBadgeSelectionDialog } from '../collectionbadge-selection-dialog/collectionbadgebadge-selection-dialog.component';
-import { CollectionBadge } from '../../models/collectionbadge.model';
+import { FormFieldSelectOption } from '../../../common/components/formfield-select';
 
 @Component({
 	selector: 'badgeclass-edit-form',
 	templateUrl: './badgeclass-edit-form.component.html',
-	styleUrls: ['./badgeclass-edit-form.component.css'],
+	styleUrl: './badgeclass-edit-form.component.css',
 })
 export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	baseUrl: string;
+	badgeCategory: string;
 
 	@Input()
 	set badgeClass(badgeClass: BadgeClass) {
@@ -102,13 +102,15 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	 */
 	existingTags: object[];
 
+	tagOptions: FormFieldSelectOption[];
+
 	/**
 	 * Indicates whether hexagon frame is shown or hidden
 	 */
 	hideHexFrame: boolean = false;
 
 	savePromise: Promise<BadgeClass> | null = null;
-	badgeClassForm = typedFormGroup()
+	badgeClassForm = typedFormGroup(this.criteriaRequired.bind(this))
 		.addControl('badge_name', '', [
 			Validators.required,
 			Validators.maxLength(255),
@@ -131,13 +133,22 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		.addControl('badge_description', '', Validators.required)
 		.addControl('badge_criteria_url', '')
 		.addControl('badge_criteria_text', '')
-		.addControl('badge_study_load', 1)
-		.addControl('badge_category', '')
-		.addControl('badge_level', 'a1')
+		.addControl('badge_study_load', 1, [Validators.required, this.positiveInteger, Validators.max(1000)])
+		.addControl('badge_category', '', Validators.required)
+		.addControl('badge_level', 'a1', Validators.required)
 		.addControl('badge_based_on', {
 			slug: '',
 			issuerSlug: '',
 		})
+		.addArray(
+			'competencies',
+			typedFormGroup()
+				.addControl('name', '', Validators.required)
+				.addControl('description', '', Validators.required)
+				.addControl('escoID', '', Validators.required)
+				.addControl('studyLoad', 60, [Validators.required, this.positiveInteger, Validators.max(1000)])
+				.addControl('category', '', Validators.required),
+		)
 		.addArray(
 			'alignments',
 			typedFormGroup()
@@ -147,9 +158,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				.addControl('target_framework', '')
 				.addControl('target_code', ''),
 		);
-
-	@ViewChild('collectionBadgeDialog')
-	collectionBadgeDialog: CollectionBadgeSelectionDialog;
 
 	@ViewChild('badgeStudio')
 	badgeStudio: BadgeStudioComponent;
@@ -167,10 +175,8 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 	initialisedBadgeClass: BadgeClass | null = null;
 
-	isCollectionBadgeChecked: boolean = false;
 	badgeClassesLoadedPromise: Promise<unknown>;
 	badgeClasses: BadgeClass[] | null;
-	collectionBadge: CollectionBadge = new CollectionBadge(null);
 	selectedBadgeClasses: BadgeClass[] = [];
 
 	/**
@@ -216,8 +222,13 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	};
 
 	categoryOptions: { [key in BadgeClassCategory]: string } = {
-		competency: 'Kompetenz-Badge',
-		participation: 'Teilnahme-Badge',
+		competency: 'Kompetenz',
+		participation: 'Teilnahme',
+	};
+
+	competencyCategoryOptions = {
+		skill: 'Fähigkeit',
+		knowledge: 'Wissen',
 	};
 
 	levelOptions: { [key in BadgeClassLevel]: string } = {
@@ -306,6 +317,9 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				slug: badgeClass.slug,
 				issuerSlug: badgeClass.issuerSlug,
 			},
+			competencies: badgeClass.extension['extensions:CompetencyExtension']
+				? badgeClass.extension['extensions:CompetencyExtension']
+				: [],
 			alignments: this.badgeClass.alignments.map((alignment) => ({
 				target_name: alignment.target_name,
 				target_url: alignment.target_url,
@@ -324,7 +338,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		this.tags = new Set();
 		this.badgeClass.tags.forEach((t) => this.tags.add(t));
 
-		this.tagsEnabled = this.tags.size > 0;
 		this.alignmentsEnabled = this.badgeClass.alignments.length > 0;
 		if (badgeClass.expiresAmount && badgeClass.expiresDuration) {
 			this.enableExpiration();
@@ -338,6 +351,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		let that = this;
 		// update badge frame when a category is selected, unless no-hexagon-frame checkbox is checked
 		this.badgeClassForm.rawControl.controls['badge_category'].statusChanges.subscribe((res) => {
+			// this.badgeCategory = this.badgeClassForm.rawControl.controls['badge_category'].value;
 			if (this.currentImage && !this.hideHexFrame) {
 				//timeout because of workaround for angular bug.
 				setTimeout(function () {
@@ -379,6 +393,15 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 					id: index,
 					name: tag,
 				}));
+				outerThis.tagOptions = outerThis.existingTags.map(
+					(tag) =>
+						({
+							//@ts-ignore
+							value: tag.name,
+							//@ts-ignore
+							label: tag.name,
+						}) as FormFieldSelectOption,
+				);
 				// The tags are loaded in one badge, so it's save to assume
 				// that after the first `next` call, the loading is done
 				outerThis.existingTagsLoading = false;
@@ -389,17 +412,8 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		});
 	}
 
-	// enableTags() {
-	// 	this.tagsEnabled = true;
-	// }
-
-	disableTags() {
-		this.tagsEnabled = false;
-	}
-
 	addTag() {
 		const newTag = (this.newTagInput['query'] || '').trim().toLowerCase();
-		console.log(newTag);
 
 		if (newTag.length > 0) {
 			this.tags.add(newTag);
@@ -413,19 +427,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			this.newTagInput.nativeElement.focus();
 			event.preventDefault();
 		}
-	}
-
-	manageBadges() {
-		this.collectionBadgeDialog
-			.openDialog({
-				dialogId: 'manage-collectionBadge-selected-badges',
-				dialogTitle: 'Add Badges',
-				multiSelectMode: true,
-			})
-			.then((selectedBadges) => {
-				const badgeCollection = selectedBadges.concat(this.collectionBadge.badges);
-				this.selectedBadgeClasses = badgeCollection;
-			});
 	}
 
 	removeTag(tag: string) {
@@ -458,6 +459,10 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 	addAlignment() {
 		this.badgeClassForm.controls.alignments.addFromTemplate();
+	}
+
+	addCompetency() {
+		this.badgeClassForm.controls.competencies.addFromTemplate();
 	}
 
 	async disableAlignments() {
@@ -508,6 +513,32 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		);
 	}
 
+	async removeCompetency(competency: this['badgeClassForm']['controls']['competencies']['controls'][0]) {
+		const value = competency.value;
+
+		if (
+			(value.name || '').trim().length > 0 ||
+			(value.description || '').trim().length > 0 ||
+			(value.escoID || '').trim().length > 0 ||
+			(value.category || '').trim().length > 0
+		) {
+			if (
+				!(await this.dialogService.confirmDialog.openTrueFalseDialog({
+					dialogTitle: 'Remove Competency?',
+					dialogBody: 'Are you sure you want to remove this competency? This action cannot be undone.',
+					resolveButtonLabel: 'Remove Competency',
+					rejectButtonLabel: 'Cancel',
+				}))
+			) {
+				return;
+			}
+		}
+
+		this.badgeClassForm.controls.competencies.removeAt(
+			this.badgeClassForm.controls.competencies.controls.indexOf(competency),
+		);
+	}
+
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	criteriaRequired(): { [id: string]: boolean } | null {
@@ -524,8 +555,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			return null;
 		}
 	}
-
-	async newSubmit() {}
 
 	async onSubmit() {
 		this.badgeClassForm.markTreeDirty();
@@ -582,24 +611,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 					type: ['Extension', 'extensions:LevelExtension'],
 					Level: String(formState.badge_level),
 				},
-				// 'extensions:CompetencyExtension': [
-				// 	{
-				// 		'@context': competencyExtensionContextUrl,
-				// 		type: ['Extension', 'extensions:CompetencyExtension'],
-				// 		titel: 'titel1',
-				// 		dauer: 'dauer1',
-				// 		kategorie: 'kategorie1',
-				// 		beschreibung: 'beschreibung1',
-				// 	},
-				// 	{
-				// 		'@context': competencyExtensionContextUrl,
-				// 		type: ['Extension', 'extensions:CompetencyExtension'],
-				// 		titel: 'titel2',
-				// 		dauer: 'dauer2',
-				// 		kategorie: 'kategorie2',
-				// 		beschreibung: 'beschreibung2',
-				// 	},
-				// ],
 			};
 			if (this.currentImage) {
 				this.existingBadgeClass.extension = {
@@ -649,22 +660,15 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 						type: ['Extension', 'extensions:BasedOnExtension'],
 						BasedOn: formState.badge_based_on,
 					},
-					'extensions:CompetencyExtension': {
+					'extensions:CompetencyExtension': formState.competencies.map((competency) => ({
 						'@context': competencyExtensionContextUrl,
 						type: ['Extension', 'extensions:CompetencyExtension'],
-						Competency: {
-							slug: 'slug1',
-							issuerSlug: 'issuerSlug1',
-						},
-					},
-					// 'extensions:CompetencyExtension': {
-					// 	'@context': competencyExtensionContextUrl,
-					// 	type: ['Extension', 'extensions:CompetencyExtension'],
-					// 	titel: 'titel1',
-					// 	dauer: 'dauer1',
-					// 	kategorie: 'kategorie1',
-					// 	beschreibung: 'beschreibung1',
-					// },
+						name: String(competency.name),
+						description: String(competency.description),
+						escoID: String(competency.escoID),
+						studyLoad: Number(competency.studyLoad),
+						category: String(competency.category),
+					})),
 				},
 			} as ApiBadgeClassForCreation;
 			if (this.currentImage) {

@@ -2,23 +2,7 @@
 <app-badge-legend *ngIf="showLegend" (closed)="closeLegend()"></app-badge-legend>
 
 <form [formGroup]="badgeClassForm.rawControl" #formElem (ngSubmit)="onSubmit()" novalidate class="l-responsivelist">
-	<!-- General Details Panel -->
-	<!-- <div class="formsection">
-		<div class="formsection-x-help">
-			<h3 class="u-text-body-bold">Create Collection Badge</h3>
-			<p class="u-text u-margin-top1x u-margin-bottom2x">
-				You can create a Collection Badge by combining multiple badges. A Collection Badge is a collection of badges that
-				are awarded together. 
-			</p>	
-		</div>
-		<div class="formsection-x-body">
-			<h2>Collection Badge</h2>
-			<label class="checkbox">
-				<input type="checkbox" [(ngModel)]="isCollectionBadgeChecked" [ngModelOptions]="{standalone: true}"/>
-			</label>
-
-		</div>
-	</div> -->
+	<!-- Badge Category Panel -->
 	<div class="section">
 		<div style="display: flex; flex-direction: column">
 			<h2 class="heading" style="display: flex; justify-content: space-between">
@@ -47,56 +31,52 @@
 			<h2 class="heading">2. Badge Details eingeben</h2>
 		</div>
 		<div>
-			<bg-formfield-text
-				style="display: flex; align-items: center; gap: 2em; margin-left: 2em; margin-top: 2em"
-				[control]="badgeClassForm.rawControlMap.badge_name"
-				label="TITEL"
-				[errorMessage]="{
-					required: 'Bitte gib dem Badge einen Titel',
-					mustChange: 'Bitte ändere den Titel'
-				}"
-				[autofocus]="true"
-			></bg-formfield-text>
-			<bg-formfield-image
-				style="
-					width: 50%;
-					background-color: #fff6f6;
-					margin-top: 2em;
-					padding: 2em;
-					display: flex;
-					justify-content: center;
-					align-items: center;
-					margin-left: auto;
-					margin-right: auto;
-				"
-				#imageField
-				label="Bild"
-				imageLoaderName="badge"
-				[newDropZone]="true"
-				[generateRandom]="false"
-				[type]="'badge'"
-				(generateRandomImage)="generateRandomImage()"
-				(imageUploaded)="generateUploadImage($event, badgeClassForm.value)"
-				class="l-formimageupload-x-upload"
-				[placeholderImage]="badgeClassPlaceholderImageUrl"
-				[control]="badgeClassForm.rawControlMap.badge_image"
-				[errorMessage]="'Bitte gib dem Badge ein gültiges (bei einem Fork eindeutiges) Bild'"
-			>
-			</bg-formfield-image>
-			<badge-studio
-				[scrolled]="scrolled"
-				#badgeStudio
-				[formData]="badgeClassForm.value"
-				[hidden]="true"
-			></badge-studio>
-			<bg-formfield-text
-				[control]="badgeClassForm.rawControlMap.badge_description"
-				label="Kurzbeschreibung"
-				id="badgeclass_description_input"
-				placeholder="Kurze Beschreibung der Leistung"
-				[errorMessage]="{ required: 'Bitte gib eine Beschreibung ein' }"
-				[multiline]="true"
-			></bg-formfield-text>
+			<div style="display: flex; align-items: center; gap: 2em; margin-left: 2em; margin-top: 2em">
+				<span style="font-weight: 600; font-size: 20px"> Titel</span>
+
+				<bg-formfield-text
+					[control]="badgeClassForm.rawControlMap.badge_name"
+					[errorMessage]="{
+						required: 'Bitte gib dem Badge einen Titel',
+						mustChange: 'Bitte ändere den Titel'
+					}"
+					[autofocus]="true"
+				></bg-formfield-text>
+			</div>
+			<div style="display: flex; gap: 2em; margin-left: 2em; margin-top: 2em">
+				<span style="font-weight: 600; font-size: 20px"> Bild</span>
+				<bg-formfield-image
+					style="
+						width: 50%;
+						background-color: #fff6f6;
+						padding: 2em;
+						display: flex;
+						justify-content: center;
+						align-items: center;
+						margin-left: auto;
+						margin-right: auto;
+						border-radius: 25px;
+					"
+					#imageField
+					imageLoaderName="badge"
+					[newDropZone]="true"
+					[generateRandom]="false"
+					[type]="'badge'"
+					(generateRandomImage)="generateRandomImage()"
+					(imageUploaded)="generateUploadImage($event, badgeClassForm.value)"
+					class="l-formimageupload-x-upload"
+					[placeholderImage]="badgeClassPlaceholderImageUrl"
+					[control]="badgeClassForm.rawControlMap.badge_image"
+					[errorMessage]="'Bitte gib dem Badge ein gültiges (bei einem Fork eindeutiges) Bild'"
+				>
+				</bg-formfield-image>
+				<badge-studio
+					[scrolled]="scrolled"
+					#badgeStudio
+					[formData]="badgeClassForm.value"
+					[hidden]="true"
+				></badge-studio>
+			</div>
 			<div
 				class="u-margin-top3x u-margin-bottom3x"
 				style="display: flex; justify-content: center; align-items: center"
@@ -111,7 +91,30 @@
 					<span class="checkbox-x-text">Ohne Hexagon-Rahmen </span>
 				</label>
 			</div>
-			<div style="display: flex; margin-bottom: 1em">
+			<div style="margin-left: 2em">
+				<span style="font-weight: 600; font-size: 20px"> Kurzbeschreibung</span>
+				<bg-formfield-text
+					class="u-margin-top3x"
+					[control]="badgeClassForm.rawControlMap.badge_description"
+					id="badgeclass_description_input"
+					placeholder="Kurze Beschreibung der Leistung"
+					[errorMessage]="{ required: 'Bitte gib eine Beschreibung ein' }"
+					[multiline]="true"
+				></bg-formfield-text>
+			</div>
+
+			<div
+				style="
+					display: flex;
+					gap: 1em;
+					align-items: center;
+					margin-bottom: 1em;
+					margin-top: 2em;
+					margin-left: 2em;
+				"
+			>
+				<span style="font-weight: 600; font-size: 20px"> Tags</span>
+
 				<div class="ng-autocomplete">
 					<ng-autocomplete
 						name="addtag"
@@ -136,20 +139,22 @@
 						<div>Dieser Tag existiert noch nicht.</div>
 					</ng-template>
 				</div>
-				<!-- <bg-formfield-text
-					style="margin-left: 2em; display: flex; align-items: center; gap: 2em"
-					[control]="badgeClassForm.rawControlMap.badge_name"
-					label="Tags"
-					[autofocus]="true"
-				></bg-formfield-text> -->
 				<bg-formfield-select
 					style="margin-left: auto"
 					ariaLabel="Füge einen bestehenden Tag hinzu"
-					[control]="badgeClassForm.rawControlMap.badge_category"
+					[options]="tagOptions"
+					[control]="tagOptions"
 					[placeholder]="'Vorhandenen Tag wählen'"
 				></bg-formfield-select>
 
-				<button type="button" (click)="addTag()" style="margin-left: auto" class="button">Hinzufügen</button>
+				<button
+					type="button"
+					(click)="addTag()"
+					style="margin-left: auto; background-color: #492e98"
+					class="button"
+				>
+					Hinzufügen
+				</button>
 			</div>
 			<span style="margin-left: 2em; font-style: italic"
 				>(Optional). Tags verschlagworten Badges und helfen bei der Suche von Badges zu bestimmten Themen.</span
@@ -268,7 +273,7 @@
 					Unterstützung die Suchfunktion von ESCO nutzen, um die passende Kompetenz zu finden und die
 					Informationen per copy&paste in die unten stehenden Felder übertragen.
 				</p>
-				<button style="margin-top: 2em" class="button">
+				<button style="margin-top: 2em; background-color: #492e98" class="button">
 					<a
 						style="color: white"
 						href="https://esco.ec.europa.eu/en/classification/skill_main"
@@ -276,163 +281,169 @@
 						>Bring mich zu ESCO</a
 					>
 				</button>
-				<div
-					style="
-						border: 2px solid;
-						border-radius: 25px;
-						border-color: var(--color-blue);
-						padding: 2em;
-						margin-top: 2em;
-					"
-				>
-					<div style="display: flex; justify-content: space-around">
-						<bg-formfield-text
-							[control]="badgeClassForm.rawControlMap.badge_study_load"
-							label="Kompetenz-Titel"
-							[fieldType]="'text'"
-							[errorMessage]="{
-								required: 'Bitte gib den Titel der Kompetenz ein.'
-							}"
-						></bg-formfield-text>
-						<bg-formfield-text
-							[control]="badgeClassForm.rawControlMap.badge_study_load"
-							label="Dauer Kompetenz- Erwerb (in Minuten)"
-							[fieldType]="'number'"
-							[errorMessage]="{
-								required: 'Bitte gib die Dauer für den Erwerb der Kompetenz ein.'
-							}"
-						></bg-formfield-text>
-						<bg-formfield-select
-							ariaLabel="Wähle eine Kompetenz-Kategorie"
-							[control]="badgeClassForm.rawControlMap.badge_category"
-							[label]="'Kategorie'"
-							[placeholder]="'Kategorie wählen'"
-							[optionMap]="categoryOptions"
-							[errorMessage]="{
-								required: 'Bitte wähle die Kategorie der Kompetenz aus.'
-							}"
-						></bg-formfield-select>
-					</div>
-					<bg-formfield-text
-						style="margin-left: 2em; margin-top: 2em; margin-right: 2em"
-						[control]="badgeClassForm.rawControlMap.badge_description"
-						label="Kompetenz Beschreibung"
-						id="competency_description_input"
-						placeholder="Kurze Beschreibung der Kompetenz"
-						[errorMessage]="{ required: 'Bitte gib eine Beschreibung ein' }"
-						[multiline]="true"
-					></bg-formfield-text>
-					<button
-						class="button"
-						style="background-color: var(--color-grün); color: var(--color-blue); margin-top: 2em"
+
+				<!-- <ng-container *ngIf="badgeClassForm.controls.competencies.controls.length === 0; else competencyLoop">
+					<div
+						style="
+							border: 2px solid;
+							border-radius: 25px;
+							border-color: var(--color-blue);
+							padding: 2em;
+							margin-top: 2em;
+						"
 					>
-						Hinzufügen
-					</button>
-				</div>
+						<div style="display: flex; justify-content: space-around">
+							<bg-formfield-text
+								[control]="badgeClassForm.controls.competencies.controls.name"
+								label="Kompetenz-Titel"
+								[fieldType]="'text'"
+								[errorMessage]="{
+									required: 'Bitte gib den Titel der Kompetenz ein.'
+								}"
+							></bg-formfield-text>
+							<bg-formfield-text
+								[control]="badgeClassForm.controls.competencies.controls.rawControlMap.studyLoad"
+								label="Dauer Kompetenz- Erwerb (in Minuten)"
+								[fieldType]="'number'"
+								[errorMessage]="{
+									required: 'Bitte gib die Dauer für den Erwerb der Kompetenz ein.'
+								}"
+							></bg-formfield-text>
+							<bg-formfield-select
+								ariaLabel="Wähle eine Kompetenz-Kategorie"
+								[control]="badgeClassForm.controls.competencies.controls.rawControlMap.category"
+								[label]="'Kategorie'"
+								[placeholder]="'Kategorie wählen'"
+								[optionMap]="competencyCategoryOptions"
+								[errorMessage]="{
+									required: 'Bitte wähle die Kategorie der Kompetenz aus.'
+								}"
+							></bg-formfield-select>
+						</div>
+						<bg-formfield-text
+							style="margin-left: 2em; margin-top: 2em; margin-right: 2em"
+							[control]="badgeClassForm.controls.competencies.controls.rawControlMap.description"
+							label="Kompetenz Beschreibung"
+							id="competency_description_input"
+							placeholder="Kurze Beschreibung der Kompetenz"
+							[errorMessage]="{ required: 'Bitte gib eine Beschreibung ein' }"
+							[multiline]="true"
+						></bg-formfield-text>
+						<bg-formfield-text
+							style="margin-left: 2em; margin-top: 2em; margin-right: 2em"
+							[control]="competencybadgeClassForm.controls.competencies.controls.rawControlMap.escoID"
+							label="Esco Identifier"
+							id="competency_description_input"
+							placeholder="z.B. esco/skill/00090cc1-1f27-439e-a4e0-19a87a501bfc"
+							[errorMessage]="{ required: 'Bitte gib eine Esco ID ein' }"
+						></bg-formfield-text>
+						<div class="l-flex l-flex-1x l-flex-justifybetween u-margin-bottom2x" style="margin-top: 2em">
+							<button
+								class="button"
+								style="background-color: var(--color-grün); color: var(--color-blue)"
+							>
+								Hinzufügen
+							</button>
+							<button
+								*ngIf="badgeClassForm.controls.competencies.controls.length > 0"
+								type="button"
+								(click)="removeCompetency(competency)"
+								class="u-text-link"
+							>
+								Remove
+							</button>
+						</div>
+					</div>
+				</ng-container> -->
+
+				<!-- <ng-template #competencyLoop> -->
+				<ng-container *ngFor="let competency of badgeClassForm.controls.competencies.controls; let i = index">
+					<div
+						style="
+							border: 2px solid;
+							border-radius: 25px;
+							border-color: var(--color-blue);
+							padding: 2em;
+							margin-top: 2em;
+						"
+					>
+						<div style="display: flex; justify-content: space-around">
+							<bg-formfield-text
+								[control]="competency.rawControlMap.name"
+								label="Kompetenz-Titel"
+								[fieldType]="'text'"
+								[errorMessage]="{
+									required: 'Bitte gib den Titel der Kompetenz ein.'
+								}"
+							></bg-formfield-text>
+							<bg-formfield-text
+								[control]="competency.rawControlMap.studyLoad"
+								label="Dauer Kompetenz- Erwerb (in Minuten)"
+								[fieldType]="'number'"
+								[errorMessage]="{
+									required: 'Bitte gib die Dauer für den Erwerb der Kompetenz ein.'
+								}"
+							></bg-formfield-text>
+							<bg-formfield-select
+								ariaLabel="Wähle eine Kompetenz-Kategorie"
+								[control]="competency.rawControlMap.category"
+								[label]="'Kategorie'"
+								[placeholder]="'Kategorie wählen'"
+								[optionMap]="competencyCategoryOptions"
+								[errorMessage]="{
+									required: 'Bitte wähle die Kategorie der Kompetenz aus.'
+								}"
+							></bg-formfield-select>
+						</div>
+						<bg-formfield-text
+							style="margin-left: 2em; margin-top: 2em; margin-right: 2em"
+							[control]="competency.rawControlMap.description"
+							label="Kompetenz Beschreibung"
+							id="competency_description_input"
+							placeholder="Kurze Beschreibung der Kompetenz"
+							[errorMessage]="{ required: 'Bitte gib eine Beschreibung ein' }"
+							[multiline]="true"
+						></bg-formfield-text>
+						<bg-formfield-text
+							style="margin-left: 2em; margin-top: 2em; margin-right: 2em"
+							[control]="competency.rawControlMap.escoID"
+							label="Esco Identifier"
+							id="competency_description_input"
+							placeholder="z.B. esco/skill/00090cc1-1f27-439e-a4e0-19a87a501bfc"
+							[errorMessage]="{ required: 'Bitte gib eine Esco ID ein' }"
+						></bg-formfield-text>
+						<div class="l-flex l-flex-1x l-flex-justifybetween u-margin-bottom2x" style="margin-top: 2em">
+							<button
+								class="button"
+								style="background-color: var(--color-grün); color: var(--color-blue)"
+							>
+								Hinzufügen
+							</button>
+							<button
+								*ngIf="badgeClassForm.controls.competencies.controls.length > 0"
+								type="button"
+								(click)="removeCompetency(competency)"
+								class="u-text-link"
+							>
+								Remove
+							</button>
+						</div>
+						<!-- <button
+							class="button"
+							style="background-color: var(--color-grün); color: var(--color-blue); margin-top: 2em"
+						>
+							Hinzufügen
+						</button> -->
+					</div>
+				</ng-container>
+				<!-- </ng-template> -->
 				<div class="l-stack l-stack-right u-margin-top2x">
-					<button (click)="addAlignment()" type="button" class="button button-secondary">
+					<button (click)="addCompetency()" type="button" class="button button-secondary">
 						Kompetenz hinzufügen
 					</button>
 				</div>
 			</li>
 		</ul>
-	</div>
-
-	<!-- <div class="formsection"> -->
-	<!-- <div class="formsection-x-title">
-			<h2 class="u-text-dark2">
-				Badge Basics
-			</h2>
-		</div> -->
-
-	<!-- <div class="formsection-x-help">
-			<h3 class="u-text-body-bold">Badge Basics</h3>
-			<p class="u-text u-margin-top1x u-margin-bottom2x">
-				Badge Bilder können entweder PNGs oder SVGs oder die über die Iconsuche gewählten Icons sein. Um das
-				gewählte Bild/Icon wird automatisch, je nach Kategorie, ein Rahmen gesetzt.
-			</p>
-			<br />
-			<a href="javascript:;" (click)="openLegend()" class="u-text-outlink"
-				>Was bedeuten die Rahmen und Farben?
-			</a>
-		</div>
-		<div class="formsection-x-body">
-			<div class="forminput u-margin-bottom2x">
-				<bg-formfield-image
-					#imageField
-					label="Bild"
-					imageLoaderName="badge"
-					[class.fixed-imagefield]="scrolled"
-					[newDropZone]="true"
-					[generateRandom]="false"
-					[type]="'badge'"
-					(generateRandomImage)="generateRandomImage()"
-					(imageUploaded)="generateUploadImage($event, badgeClassForm.value)"
-					class="l-formimageupload-x-upload"
-					[placeholderImage]="badgeClassPlaceholderImageUrl"
-					[control]="badgeClassForm.rawControlMap.badge_image"
-					[errorMessage]="'Bitte gib dem Badge ein gültiges (bei einem Fork eindeutiges) Bild'"
-				>
-				</bg-formfield-image>
-				<badge-studio
-					[scrolled]="scrolled"
-					#badgeStudio
-					[formData]="badgeClassForm.value"
-					[hidden]="true"
-				></badge-studio>
-			</div> -->
-
-	<!-- No Hexagon Frame Checkout -->
-	<!-- <div class="u-margin-top3x u-margin-bottom3x">
-				<label class="checkbox">
-					<input
-						id="no-hex-frame"
-						name="no-hex-frame"
-						type="checkbox"
-						(change)="handleCBoxValueChange($event)"
-					/>
-					<span class="checkbox-x-text">Ohne Hexagon-Rahmen </span>
-				</label>
-			</div>
-
-			<div class="forminput u-margin-bottom2x">
-				<bg-formfield-text
-					[control]="badgeClassForm.rawControlMap.badge_name"
-					label="Name"
-					[errorMessage]="{
-						required: 'Bitte gib dem Badge einen Namen',
-						mustChange: 'Bitte ändere den Namen'
-					}"
-					[autofocus]="true"
-				></bg-formfield-text>
-			</div>
-
-			<div class="forminput">
-				<bg-formfield-text
-					[control]="badgeClassForm.rawControlMap.badge_description"
-					label="Kurzbeschreibung"
-					id="badgeclass_description_input"
-					placeholder="Kurze Beschreibung der Leistung"
-					[errorMessage]="{ required: 'Bitte gib eine Beschreibung ein' }"
-					[multiline]="true"
-				></bg-formfield-text>
-			</div>
-		</div>
-	</div> -->
-
-	<div *bgAwaitPromises="[badgeClassesLoadedPromise]">
-		<div *ngIf="isCollectionBadgeChecked" class="formsection">
-			<div class="formsection-x-title">
-				<h2>Badges</h2>
-			</div>
-			<div class="formsection-x-body">
-				<div class="emptysection-x-buttons">
-					<button class="button button-secondary" type="button" (click)="manageBadges()">
-						Badge hinzufügen
-					</button>
-				</div>
-			</div>
-		</div>
 	</div>
 
 	<!-- Criteria Panel -->
@@ -576,7 +587,7 @@
 	</div> -->
 
 	<!-- alignments -->
-	<div *ngIf="alignmentsEnabled" class="formsection">
+	<div class="formsection" *ngIf="alignmentsEnabled">
 		<div class="formsection-x-title">
 			<h2 class="u-text-dark2">
 				Verknüpfung
@@ -782,7 +793,7 @@
 	</div>
 
 	<!-- add options -->
-	<!-- <div class="formsection formsection-nohelp">
+	<div class="formsection formsection-nohelp">
 		<h2 class="formsection-x-title">Optionale Details</h2>
 		<div class="formsection-x-body">
 			<ul>
@@ -800,20 +811,6 @@
 						hinzufügen
 					</button>
 					<button type="button" disabled *ngIf="alignmentsEnabled" class="u-text-link-small u-text-light4">
-						hinzugefügt
-					</button>
-				</li>
-				<li
-					class="l-flex l-flex-justifybetween l-flex-aligncenter border border-top border-light3 u-padding-yaxis2x"
-				>
-					<div class="l-flex l-flex-2x">
-						<svg class="icon icon-dark4" width="24px" viewBox="0 0 24 24" icon="icon_tags"></svg>
-						<p class="u-text-body-semibold u-text-dark2">Tags</p>
-					</div>
-					<button type="button" (click)="enableTags()" *ngIf="!tagsEnabled" class="u-text-link-small">
-						hinzufügen
-					</button>
-					<button type="button" *ngIf="tagsEnabled" disabled class="u-text-link-small u-text-light4">
 						hinzugefügt
 					</button>
 				</li>
@@ -840,7 +837,7 @@
 		</div>
 	</div>
 
-	<div class="formsection formsection-nohelp">
+	<!-- <div class="formsection formsection-nohelp">
 		<div class="formsection-x-body">
 			<a href="https://openbadges.org/" class="u-text-outlink">
 				Finde mehr über Open Badges heraus
@@ -861,6 +858,7 @@
 		<button
 			type="submit"
 			class="button"
+			style="background-color: #492e98"
 			[disabled]="!!savePromise"
 			[loading-promises]="[savePromise]"
 			loading-message="{{ submittingText }}"
@@ -869,8 +867,3 @@
 		</button>
 	</div>
 </form>
-
-<collectionbadge-selection-dialog
-	#collectionBadgeDialog
-	[badgeClasses]="badgeClasses"
-></collectionbadge-selection-dialog>
