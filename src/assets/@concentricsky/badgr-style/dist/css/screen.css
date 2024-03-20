@@ -156,14 +156,14 @@ dialog {
   --color-light3: #f2f2f2;
   --color-light3_: #eaeaea;
   --color-light4: #d9d9d9;
-  --color-interactive1: #5446ff;
+  --color-interactive1: #492E98;
   --color-interactive1alpha20: rgba(82, 93, 199, 0.2);
   --color-interactive1alpha50: rgba(82, 93, 199, 0.5);
   --color-interactive2: rgb(36.2%, 40.4%, 87.8%);
   --color-interactive2alpha20: rgba(36.2%, 40.4%, 87.8%, 0.2);
   --color-interactive2alpha50: rgba(36.2%, 40.4%, 87.8%, 0.5);
   --color-interactive3: #F5F5F5;
-  --color-link: #5446ff;
+  --color-link: #492E98;
   --color-linkhover: #5c67e0;
   --color-error2: #f9e5e5;
   --color-successalpha20: rgba(42%, 78%, 75%, 20%);
@@ -217,7 +217,7 @@ dialog {
 
   --color-schwarz:#323232;
   --color-gelb: #ffcc00;
-  --color-blue: #5446ff;
+  --color-violett: #492E98;
   --color-rot: #ff5556;
   --color-rosa: #ffbab9;
   --color-hellgrün: #ecfeed;
