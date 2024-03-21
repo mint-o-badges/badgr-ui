@@ -1,139 +1,158 @@
 <form-message></form-message>
 
-<header class="topbar">
-	<div class="l-containerxaxis topbar-x-wrap">
-		<h2 class="topbar-x-heading">
-			Institutions
-			<ng-template [showLoader]="false" [bgAwaitPromises]="[issuersLoaded]">
-				<span class="topbar-x-internalheading">
-					{{ issuers.length | i18nPlural: plural['issuer'] }}
-				</span>
-			</ng-template>
-		</h2>
+<header class="newBadgeTopBar instituationTopBar">
+	<h2 class="topbar-x-heading">
+		<img src="../../../../assets/badges/insitituation.svg" alt="insitituations" />
+		<ng-template [showLoader]="false" [bgAwaitPromises]="[issuersLoaded]">
+			<span class="totalBadges">
+				{{ issuers.length | i18nPlural : plural['issuer'] }}
+			</span>
+		</ng-template>
+	</h2>
+	<div class="newBadgeSearchBar largeToggle">
+		<div class="newBadgeSearchBar-wrapper">
+			<div class="forminput l-actionbar-x-search">
+				<div class="forminput-x-inputs">
+					<input
+						type="text"
+						name="forminput"
+						changeOrder
+						id="forminput"
+						placeholder="Search institutions"
+						[(ngModel)]="searchQuery"
+					/>
+					<img class="forminput-x-icon" src="../../../../assets/badges/search-icon.svg" alt="search-icon" />
+				</div>
+			</div>
+			<div class="l-actionbar-x-groupby" *ngIf="badgesDisplay != 'map'">
+				<label class="checkbox checkbox-small searchGroupBy-wrapper">
+					<input name="groupby" type="checkbox" [(ngModel)]="groupByCategory" />
+					<span class="groupBy" i18n>Group by categories</span>
+				</label>
+			</div>
+			<div class="viewtoggle-container">
+				<div class="viewtoggle-map">
+					<button class="viewtoggle-button" [class.active]="badgesDisplay == 'map'" (click)="openMap()" i18n>
+						<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path
+								d="M21 10C21 17 12 23 12 23C12 23 3 17 3 10C3 7.61305 3.94821 5.32387 5.63604 3.63604C7.32387 1.94821 9.61305 1 12 1C14.3869 1 16.6761 1.94821 18.364 3.63604C20.0518 5.32387 21 7.61305 21 10Z"
+								stroke="#1C355E"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+							/>
+							<path
+								d="M12 13C13.6569 13 15 11.6569 15 10C15 8.34315 13.6569 7 12 7C10.3431 7 9 8.34315 9 10C9 11.6569 10.3431 13 12 13Z"
+								stroke="#1C355E"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+							/>
+						</svg>
+					</button>
+				</div>
+
+				<div
+					class="viewtoggle l-actionbar-x-viewtoggle"
+					[class.mapView]="badgesDisplay == 'map'"
+					[class.viewtoggle-is-listview]="badgesDisplay == 'list'"
+				>
+					<label class="viewtoggle-x-grid">
+						<span class="visuallyhidden" i18n>grid</span>
+						<input
+							checked="checked"
+							name="radiobutton"
+							id="radiobutton1"
+							type="radio"
+							value="grid"
+							[(ngModel)]="badgesDisplay"
+						/>
+						<svg icon="icon_grid"></svg>
+					</label>
+					<label class="viewtoggle-x-list">
+						<span class="visuallyhidden" i18n>list</span>
+						<input
+							type="radio"
+							name="radiobutton"
+							id="radiobutton2"
+							value="list"
+							[(ngModel)]="badgesDisplay"
+						/>
+						<svg icon="icon_list"></svg>
+					</label>
+				</div>
+			</div>
+		</div>
+		<div class="viewtoggle l-actionbar-x-viewtoggle lastToggle" [class.viewtoggle-is-listview]="order == 'desc'">
+			<label class="viewtoggle-x-grid" (click)="changeOrder('asc')">
+				<span class="visuallyhidden" i18n>name</span>
+				<input name="radiobutton2" id="radiobutton3" type="radio" value="asc" [(ngModel)]="order" />
+				<svg style="transform: rotateZ(90deg)" icon="icon_arrow"></svg>
+			</label>
+			<label class="viewtoggle-x-list" (click)="changeOrder('desc')">
+				<span class="visuallyhidden" i18n>-name</span>
+				<input type="radio" name="radiobutton2" id="radiobutton4" value="desc" [(ngModel)]="order" />
+				<svg style="transform: rotateZ(-90deg)" icon="icon_arrow"></svg>
+			</label>
+		</div>
 	</div>
 </header>
 
 <div id="main-page">
 	<ng-template [showLoader]="true" [bgAwaitPromises]="[issuersLoaded]">
-		<section class="l-containerxaxis l-containeryaxis l-responsivelist">
-			<div class="l-actionbar u-margin-bottom3x">
-				<div class="forminput l-actionbar-x-search">
-					<div class="forminput-x-inputs">
-						<input
-							type="text"
-							name="forminput"changeOrder
-							id="forminput"
-							placeholder="Search institutions"
-							[(ngModel)]="searchQuery"
-						/>
-						<svg class="forminput-x-icon" icon="icon_search"></svg>
-					</div>
-				</div>
-				<div class="viewtoggle l-actionbar-x-viewtoggle"
-				[class.viewtoggle-is-listview]="order == 'desc'">
-					<label class="viewtoggle-x-grid" (click)='changeOrder("asc")'>
-						<span class="visuallyhidden" i18n>name</span>
-						<input
-							name="radiobutton2"
-							id="radiobutton3"
-							type="radio"
-							value="asc"
-							[(ngModel)]="order"
-						/>
-						<svg style="transform: rotateZ(90deg)" icon="icon_arrow"></svg>
-					</label>
-					<label class="viewtoggle-x-list" (click)='changeOrder("desc")'>
-						<span class="visuallyhidden" i18n>-name</span>
-						<input
-							type="radio"
-							name="radiobutton2"
-							id="radiobutton4"
-							value="desc"
-							[(ngModel)]="order"
-						/>
-						<svg style="transform: rotateZ(-90deg)" icon="icon_arrow"></svg>
-					</label>
-				</div>
-				<div class="viewtoggle-container">
-					<div>
-						<button class="viewtoggle-button" [class.active]="badgesDisplay == 'map'" (click)="openMap()" i18n>map</button>				
-					</div>
-
-					<div class="viewtoggle l-actionbar-x-viewtoggle"
-					[class.mapView]="badgesDisplay == 'map'"
-					[class.viewtoggle-is-listview]="badgesDisplay == 'list'">
-						<label class="viewtoggle-x-grid">
-							<span class="visuallyhidden" i18n>grid</span>
-							<input
-								checked="checked"
-								name="radiobutton"
-								id="radiobutton1"
-								type="radio"
-								value="grid"
-								[(ngModel)]="badgesDisplay"
-							/>
-							<svg icon="icon_grid"></svg>
-						</label>
-						<label class="viewtoggle-x-list">
-							<span class="visuallyhidden" i18n>list</span>
-							<input
-								type="radio"
-								name="radiobutton"
-								id="radiobutton2"
-								value="list"
-								[(ngModel)]="badgesDisplay"
-							/>
-							<svg icon="icon_list"></svg>
-						</label>
-					</div>
-				</div>
-				<div class="l-actionbar-x-groupby" *ngIf="badgesDisplay != 'map'">
-					<label class="checkbox checkbox-small">
-						<input name="groupby" type="checkbox" [(ngModel)]="groupByCategory" />
-						<span class="checkbox-x-text" i18n>Group by categories</span>
-					</label>
-				</div>
-			</div>
-
+		<section class="issuerMainWrapper">
 			<ng-container *ngIf="badgesDisplay == 'grid'">
 				<ng-container *ngIf="!groupByCategory">
+					<div class="newIssuercard" *ngFor="let issuer of issuerResults">
+						<div class="issuercard-main-wrap">
+							<div class="issuercard-x-image">
+								<img
+									[loaded-src]="issuer?.image"
+									[loading-src]="issuerPlaceholderSrc"
+									[error-src]="issuerPlaceholderSrc"
+									alt="{{ issuer.name }} avatar"
+								/>
+							</div>
+							<div class="issuercard-body">
+								<div class="issuercard-x-title">
+									<a [routerLink]="['/public/issuers/', issuer.slug]">{{ issuer.name }}</a>
+									<!-- <p><strong>Your Role: </strong>{{ issuer.currentUserStaffMember?.roleInfo.label }}</p> -->
+								</div>
+								<div
+									class="issuercard-x-desc"
+									[truncatedText]="issuer.description"
+									[maxLength]="250"
+								></div>
+							</div>
+						</div>
 
-					<div class="issuercard" *ngFor="let issuer of issuerResults">
-						<div class="issuercard-x-image">
-							<img
-								[loaded-src]="issuer?.image"
-								[loading-src]="issuerPlaceholderSrc"
-								[error-src]="issuerPlaceholderSrc"
-								alt="{{ issuer.name }} avatar"
-							/>
-						</div>
-						<div class="issuercard-x-title">
-							<a [routerLink]="['/public/issuers/', issuer.slug]">{{ issuer.name }}</a>
-							<!-- <p><strong>Your Role: </strong>{{ issuer.currentUserStaffMember?.roleInfo.label }}</p> -->
-						</div>
-						<div class="issuercard-x-desc" [truncatedText]="issuer.description" [maxLength]="250"></div>
-		
 						<!-- <div class="issuercard-x-topbadges" *ngFor="let issuerBadges of [issuerToBadgeInfo[issuer.issuerUrl]]">
 							<h3 class="u-text-body-bold u-text-dark1 u-margin-bottom2x" *ngIf="issuerBadges">Top Badges:</h3>
 							<div class="l-flex l-flex-2x l-flex-column"></div>
 						</div> -->
-		
+
 						<div class="issuercard-x-footer">
-							<div class="l-flex l-flex-aligncenter l-flex-1x">
-								<svg class="icon icon-light4 u-hidden-maxmobilelarge" width="24px" icon="icon_badge"></svg>
+							<div class="total-issuer-badge">
+								<img src="../../../../assets/badges/badge-icon.svg" alt="badge" />
+
 								<p
 									*ngIf="issuer.badgeClassCount"
-									class="u-text-small u-text-nowrap"
-									[innerHTML]="issuer.badgeClassCount | i18nPlural: plural['badges']"
+									class="total-issuer-text"
+									[innerHTML]="issuer.badgeClassCount | i18nPlural : plural['badges']"
 								></p>
 							</div>
-							<a class="u-text u-text-small" [routerLink]="['/public/issuers/', issuer.slug]" i18n>Open</a>
+							<a
+								class="u-text u-text-small detailIssuer"
+								[routerLink]="['/public/issuers/', issuer.slug]"
+								i18n
+							>
+								<img src="../../../../assets/badges/arrow-open.svg" alt="arrow" />
+							</a>
 						</div>
 					</div>
 				</ng-container>
 
 				<ng-container *ngIf="groupByCategory">
-
 					<ng-container *ngFor="let issuerGroup of issuerResultsByCategory">
 						<h3 class="u-text-h3-semibold u-margin-bottom2x u-margin-top6x u-text-dark1">
 							{{ issuerKeys[issuerGroup.category] }}
@@ -142,7 +161,7 @@
 								{{ issuerGroup.issuers.length == 1 ? 'Institution' : 'Institutions' }}</span
 							>
 						</h3>
-	
+
 						<div class="issuercard" *ngFor="let issuer of issuerGroup.issuers">
 							<div class="issuercard-x-image">
 								<img
@@ -157,80 +176,99 @@
 								<!-- <p><strong>Your Role: </strong>{{ issuer.currentUserStaffMember?.roleInfo.label }}</p> -->
 							</div>
 							<div class="issuercard-x-desc" [truncatedText]="issuer.description" [maxLength]="250"></div>
-			
+
 							<!-- <div class="issuercard-x-topbadges" *ngFor="let issuerBadges of [issuerToBadgeInfo[issuer.issuerUrl]]">
 								<h3 class="u-text-body-bold u-text-dark1 u-margin-bottom2x" *ngIf="issuerBadges">Top Badges:</h3>
 								<div class="l-flex l-flex-2x l-flex-column"></div>
 							</div> -->
-			
+
 							<div class="issuercard-x-footer">
 								<div class="l-flex l-flex-aligncenter l-flex-1x">
-									<svg class="icon icon-light4 u-hidden-maxmobilelarge" width="24px" icon="icon_badge"></svg>
+									<svg
+										class="icon icon-light4 u-hidden-maxmobilelarge"
+										width="24px"
+										icon="icon_badge"
+									></svg>
 									<p
 										*ngIf="issuer.badgeClassCount"
 										class="u-text-small u-text-nowrap"
-										[innerHTML]="issuer.badgeClassCount | i18nPlural: plural['badges']"
+										[innerHTML]="issuer.badgeClassCount | i18nPlural : plural['badges']"
 									></p>
 								</div>
-								<a class="u-text u-text-small" [routerLink]="['/public/issuers/', issuer.slug]" i18n>Open</a>
+								<a class="u-text u-text-small" [routerLink]="['/public/issuers/', issuer.slug]" i18n
+									>Open</a
+								>
 							</div>
 						</div>
 					</ng-container>
 				</ng-container>
-
 			</ng-container>
 
 			<ng-container *ngIf="badgesDisplay === 'list'">
 				<ng-container *ngIf="!groupByCategory">
-				
-					<table class="datatable datatable-roundheaders datatable-onlyfirstcolumn datatable-verticalalignmiddle">
+					<table
+						class="datatable datatable-roundheaders datatable-onlyfirstcolumn datatable-verticalalignmiddle"
+					>
 						<thead class="datatable-x-head">
 							<tr class="datatable-x-header">
 								<th class="datatable-x-cell" scope="col" i18n>Picture</th>
 								<th class="datatable-x-cell" scope="col" i18n>Institution</th>
 								<th class="datatable-x-cell" scope="col" i18n>Registered since</th>
-								<th class="datatable-x-cell" scope="col"><span class="visuallyhidden" i18n>Actions</span></th>
+								<th class="datatable-x-cell" scope="col">
+									<span class="visuallyhidden" i18n>Actions</span>
+								</th>
 							</tr>
 						</thead>
 						<tbody class="datatable-x-body">
 							<!-- Issuer title if grouped by issuer -->
 							<ng-container *ngFor="let issuer of issuerResults">
 								<!-- Badges -->
-									<tr class="datatable-x-row">
-										<td class="datatable-x-cell">
-											<div class="l-flex l-flex-2x l-flex-aligncenter">
-												<img
-													class="badgeimage badgeimage-small u-margin-right2x l-flex-x-shrink0"
-													width="40"
-													[loading-src]="badgeLoadingImageUrl"
-													[error-src]="badgeFailedImageUrl"
-													[loaded-src]="issuer.image"
-												/>
-											</div>
-										</td>
-										<td class="datatable-x-cell u-text-body">
-											<a class="u-text" [routerLink]="['/public/issuers/', issuer.slug]">{{ issuer.name }}</a>
-										</td>
-										<td class="datatable-x-cell u-text-body">
-											<time [date]="issuer.createdAt" format="mediumDate"></time>
-										</td>
-										<td class="datatable-x-cell">
-											<a class="u-text u-text-small" [routerLink]="['/public/issuers/', issuer.slug]" i18n>Open</a>
-										</td>
-									</tr>
+								<tr class="datatable-x-row">
+									<td class="datatable-x-cell">
+										<div class="issuers-list-img">
+											<img
+												class="badgeimage badgeimage-small l-flex-x-shrink0"
+												width="50"
+												[loading-src]="badgeLoadingImageUrl"
+												[error-src]="badgeFailedImageUrl"
+												[loaded-src]="issuer.image"
+											/>
+										</div>
+									</td>
+									<td class="datatable-x-cell u-text-body">
+										<a class="u-text" [routerLink]="['/public/issuers/', issuer.slug]">{{
+											issuer.name
+										}}</a>
+									</td>
+									<td class="datatable-x-cell u-text-body">
+										<time [date]="issuer.createdAt" format="mediumDate"></time>
+									</td>
+									<td class="datatable-x-cell">
+										<a
+											class="u-text u-text-small detailIssuer"
+											[routerLink]="['/public/issuers/', issuer.slug]"
+											i18n
+										>
+											<img src="../../../../assets/badges/arrow-open.svg" alt="arrow"
+										/></a>
+									</td>
+								</tr>
 							</ng-container>
 						</tbody>
 					</table>
 				</ng-container>
 				<ng-container *ngIf="groupByCategory">
-
-					<table class="datatable datatable-roundheaders datatable-onlyfirstcolumn datatable-verticalalignmiddle">
+					<table
+						class="datatable datatable-roundheaders datatable-onlyfirstcolumn datatable-verticalalignmiddle"
+					>
 						<thead class="datatable-x-head">
 							<tr class="datatable-x-header">
 								<th class="datatable-x-cell" scope="col" i18n>Picture</th>
 								<th class="datatable-x-cell" scope="col" i18n>Institution</th>
 								<th class="datatable-x-cell" scope="col" i18n>Registered since</th>
-								<th class="datatable-x-cell" scope="col"><span class="visuallyhidden" i18n>Actions</span></th>
+								<th class="datatable-x-cell" scope="col">
+									<span class="visuallyhidden" i18n>Actions</span>
+								</th>
 							</tr>
 						</thead>
 						<tbody class="datatable-x-body">
@@ -241,52 +279,72 @@
 										{{ issuerKeys[issuerGroup.category] }}
 									</th>
 								</tr>
-	
+
 								<ng-container *ngFor="let issuer of issuerGroup.issuers">
 									<!-- Badges -->
-										<tr class="datatable-x-row">
-											<td class="datatable-x-cell">
-												<div class="l-flex l-flex-2x l-flex-aligncenter">
-													<img
-														class="badgeimage badgeimage-small u-margin-right2x l-flex-x-shrink0"
-														width="40"
-														[loading-src]="badgeLoadingImageUrl"
-														[error-src]="badgeFailedImageUrl"
-														[loaded-src]="issuer.image"
-													/>
-												</div>
-											</td>
-											<td class="datatable-x-cell u-text-body">
-												<a class="u-text" [routerLink]="['/public/issuers/', issuer.slug]">{{ issuer.name }}</a>
-											</td>
-											<td class="datatable-x-cell u-text-body">
-												<time [date]="issuer.createdAt" format="mediumDate"></time>
-											</td>
-											<td class="datatable-x-cell">
-												<a class="u-text u-text-small" [routerLink]="['/public/issuers/', issuer.slug]" i18n>Open</a>
-											</td>
-										</tr>
+									<tr class="datatable-x-row">
+										<td class="datatable-x-cell">
+											<div class="issuers-list-img">
+												<img
+													class="badgeimage badgeimage-small l-flex-x-shrink0"
+													width="50"
+													[loading-src]="badgeLoadingImageUrl"
+													[error-src]="badgeFailedImageUrl"
+													[loaded-src]="issuer.image"
+												/>
+											</div>
+										</td>
+										<td class="datatable-x-cell u-text-body">
+											<a class="u-text" [routerLink]="['/public/issuers/', issuer.slug]">{{
+												issuer.name
+											}}</a>
+										</td>
+										<td class="datatable-x-cell u-text-body">
+											<time [date]="issuer.createdAt" format="mediumDate"></time>
+										</td>
+										<td class="datatable-x-cell">
+											<a
+												class="u-text u-text-small detailIssuer"
+												[routerLink]="['/public/issuers/', issuer.slug]"
+												i18n
+											>
+												<img src="../../../../assets/badges/arrow-open.svg" alt="arrow" />
+											</a>
+										</td>
+									</tr>
 								</ng-container>
 							</ng-template>
 						</tbody>
 					</table>
-
 				</ng-container>
-
-
 			</ng-container>
 		</section>
 	</ng-template>
 	<div id="mapWrapper" [hidden]="badgesDisplay != 'map'">
-		<div id="map" #map>
-		</div>
-		<div id="map-legend">
-			<ul>
-				<li i18n><div class="color cluster"></div>Cluster</li>
-				<li i18n><div class="color schule"></div>School</li>
-				<li i18n><div class="color hochschule"></div>University</li>
-				<li i18n><div class="color andere"></div>Other</li>
-			</ul>
+		<div class="l-containerxaxis l-containeryaxis">
+			<div class="map-main-wrapper">
+				<div id="map" #map></div>
+				<div id="map-legend">
+					<ul>
+						<li i18n>
+							<div class="color cluster"></div>
+							Cluster
+						</li>
+						<li i18n>
+							<div class="color schule"></div>
+							School
+						</li>
+						<li i18n>
+							<div class="color hochschule"></div>
+							University
+						</li>
+						<li i18n>
+							<div class="color andere"></div>
+							Other
+						</li>
+					</ul>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

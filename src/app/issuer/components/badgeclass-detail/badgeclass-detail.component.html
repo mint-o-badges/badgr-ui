@@ -73,31 +73,35 @@
 								</dd>
 							</div>
 						</div>
-						<div *ngIf="badgeClass.extension['extensions:BasedOnExtension']" class="l-flex l-flex-2x u-padding-top2x border border-top border-light3">
+						<div
+							*ngIf="badgeClass.extension['extensions:BasedOnExtension']"
+							class="l-flex l-flex-2x u-padding-top2x border border-top border-light3"
+						>
 							<div>
-								<dt class="u-text-small-bold u-text-dark2"><a 
-									class="u-break-word" 
-									[routerLink]="['/issuer/issuers/', badgeClass.extension['extensions:BasedOnExtension'].BasedOn.issuerSlug, 'badges', badgeClass.extension['extensions:BasedOnExtension'].BasedOn.slug]" i18n>
-									Based on &rarr;
-								</a></dt>
+								<dt class="u-text-small-bold u-text-dark2">
+									<a
+										class="u-break-word"
+										[routerLink]="[
+											'/issuer/issuers/',
+											badgeClass.extension['extensions:BasedOnExtension'].BasedOn.issuerSlug,
+											'badges',
+											badgeClass.extension['extensions:BasedOnExtension'].BasedOn.slug
+										]"
+										i18n
+									>
+										Based on &rarr;
+									</a>
+								</dt>
 							</div>
 						</div>
 						<dt
-							class="
-								u-text-small-bold u-padding-top2x u-margin-top2x
-								border border-top border-light3
-								u-text-dark2
-							"
+							class="u-text-small-bold u-padding-top2x u-margin-top2x border border-top border-light3 u-text-dark2"
 						>
 							Created on:
 						</dt>
 						<dd class="u-text"><time [date]="badgeClass.createdAt" format="dd/MM/y"></time></dd>
 						<dt
-							class="
-								u-text-small-bold u-padding-top2x u-margin-top2x
-								border border-top border-light3
-								u-text-dark2
-							"
+							class="u-text-small-bold u-padding-top2x u-margin-top2x border border-top border-light3 u-text-dark2"
 							*ngIf="badgeClass.expiresAmount"
 							i18n
 						>
@@ -113,11 +117,7 @@
 						<!-- Study Load -->
 						<div *ngIf="badgeClass.extension['extensions:StudyLoadExtension']">
 							<dt
-								class="
-									u-text-small-bold u-padding-top2x u-margin-top2x
-									border border-top border-light3
-									u-text-dark2
-								"
+								class="u-text-small-bold u-padding-top2x u-margin-top2x border border-top border-light3 u-text-dark2"
 								i18n
 							>
 								Minimum duration
@@ -129,11 +129,7 @@
 						<!-- Category -->
 						<div *ngIf="badgeClass.extension['extensions:CategoryExtension']">
 							<dt
-								class="
-									u-text-small-bold u-padding-top2x u-margin-top2x
-									border border-top border-light3
-									u-text-dark2
-								"
+								class="u-text-small-bold u-padding-top2x u-margin-top2x border border-top border-light3 u-text-dark2"
 								i18n
 							>
 								Category:
@@ -145,11 +141,7 @@
 						<!-- LEvel -->
 						<div *ngIf="badgeClass.extension['extensions:LevelExtension']">
 							<dt
-								class="
-									u-text-small-bold u-padding-top2x u-margin-top2x
-									border border-top border-light3
-									u-text-dark2
-								"
+								class="u-text-small-bold u-padding-top2x u-margin-top2x border border-top border-light3 u-text-dark2"
 								i18n
 							>
 								Level:
@@ -241,9 +233,8 @@
 					</div>
 				</div>
 				<p class="u-text u-margin-bottom3x" *ngIf="showAssertionCount" i18n>
-					{{ instanceResults.length }} previous awards. You can use the Next/Back buttons below to view additional awards,
-					or search for assignments using the exact email address/recipient ID.
-					
+					{{ instanceResults.length }} previous awards. You can use the Next/Back buttons below to view
+					additional awards, or search for assignments using the exact email address/recipient ID.
 				</p>
 				<ng-template
 					[bgAwaitPromises]="[badgeInstancesLoaded, assertionsLoaded]"
@@ -273,10 +264,7 @@
 											instance.recipientIdentifier
 										}}</span>
 										<span
-											class="
-												l-flex l-flex-justifyend l-flex-aligncenter l-flex-1x
-												u-hidden-minmobilelarge
-											"
+											class="l-flex l-flex-justifyend l-flex-aligncenter l-flex-1x u-hidden-minmobilelarge"
 										>
 											<button
 												class="buttonicon buttonicon-link"

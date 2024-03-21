@@ -18,63 +18,70 @@ $z-index-med: 2;
 $z-index-high: 3;
 $z-index-highest: 5;
 
-
 // Fonts & Typography
 
 @font-face {
-  font-family: 'Open Sans';
-  font-style: normal;
-  font-weight: bold;
-  src: url('#{$base-path}fonts/opensans-bold-webfont.woff2') format('woff2'), url('#{$base-path}fonts/opensans-bold-webfont.woff') format('woff');
+	font-family: 'Open Sans';
+	font-style: normal;
+	font-weight: bold;
+	src: url('#{$base-path}fonts/opensans-bold-webfont.woff2') format('woff2'),
+		url('#{$base-path}fonts/opensans-bold-webfont.woff') format('woff');
 }
 
 @font-face {
-  font-family: 'Open Sans';
-  font-style: italic;
-  font-weight: bold;
-  src: url('#{$base-path}fonts/opensans-bolditalic-webfont.woff2') format('woff2'), url('#{$base-path}fonts/opensans-bolditalic-webfont.woff') format('woff');
+	font-family: 'Open Sans';
+	font-style: italic;
+	font-weight: bold;
+	src: url('#{$base-path}fonts/opensans-bolditalic-webfont.woff2') format('woff2'),
+		url('#{$base-path}fonts/opensans-bolditalic-webfont.woff') format('woff');
 }
 
 @font-face {
-  font-family: 'Open Sans';
-  font-style: italic;
-  font-weight: normal;
-  src: url('#{$base-path}fonts/opensans-italic-webfont.woff2') format('woff2'), url('#{$base-path}fonts/opensans-italic-webfont.woff') format('woff');
+	font-family: 'Open Sans';
+	font-style: italic;
+	font-weight: normal;
+	src: url('#{$base-path}fonts/opensans-italic-webfont.woff2') format('woff2'),
+		url('#{$base-path}fonts/opensans-italic-webfont.woff') format('woff');
 }
 
 @font-face {
-  font-family: 'Open Sans';
-  font-style: normal;
-  font-weight: 300;
-  src: url('#{$base-path}fonts/opensans-light-webfont.woff2') format('woff2'), url('#{$base-path}fonts/opensans-light-webfont.woff') format('woff');
+	font-family: 'Open Sans';
+	font-style: normal;
+	font-weight: 300;
+	src: url('#{$base-path}fonts/opensans-light-webfont.woff2') format('woff2'),
+		url('#{$base-path}fonts/opensans-light-webfont.woff') format('woff');
 }
 
 @font-face {
-  font-family: 'open_sanslight_italic';
-  font-style: italic;
-  font-weight: 300;
-  src: url('#{$base-path}fonts/opensans-lightitalic-webfont.woff2') format('woff2'), url('#{$base-path}fonts/opensans-lightitalic-webfont.woff') format('woff');
+	font-family: 'open_sanslight_italic';
+	font-style: italic;
+	font-weight: 300;
+	src: url('#{$base-path}fonts/opensans-lightitalic-webfont.woff2') format('woff2'),
+		url('#{$base-path}fonts/opensans-lightitalic-webfont.woff') format('woff');
 }
 
 @font-face {
-  font-family: 'Open Sans';
-  font-style: normal;
-  font-weight: normal;
-  src: url('#{$base-path}fonts/opensans-regular-webfont.woff2') format('woff2'), url('#{$base-path}fonts/opensans-regular-webfont.woff') format('woff');
+	font-family: 'Open Sans';
+	font-style: normal;
+	font-weight: normal;
+	src: url('#{$base-path}fonts/opensans-regular-webfont.woff2') format('woff2'),
+		url('#{$base-path}fonts/opensans-regular-webfont.woff') format('woff');
 }
 
 @font-face {
-  font-family: 'Open Sans';
-  src: url('#{$base-path}fonts/opensans-semibold-webfont.woff2') format('woff2'), url('#{$base-path}fonts/opensans-semibold-webfont.woff') format('woff');
-  font-weight: 600;
-  font-style: normal;
+	font-family: 'Open Sans';
+	src: url('#{$base-path}fonts/opensans-semibold-webfont.woff2') format('woff2'),
+		url('#{$base-path}fonts/opensans-semibold-webfont.woff') format('woff');
+	font-weight: 600;
+	font-style: normal;
 }
 
 @font-face {
-  font-family: 'Open Sans';
-  font-style: italic;
-  font-weight: 600;
-  src: url('#{$base-path}fonts/opensans-semibolditalic-webfont.woff2') format('woff2'), url('#{$base-path}fonts/opensans-semibolditalic-webfont.woff') format('woff');
+	font-family: 'Open Sans';
+	font-style: italic;
+	font-weight: 600;
+	src: url('#{$base-path}fonts/opensans-semibolditalic-webfont.woff2') format('woff2'),
+		url('#{$base-path}fonts/opensans-semibolditalic-webfont.woff') format('woff');
 }
 
 $font-family: 'Open Sans', sans-serif;
@@ -98,64 +105,62 @@ $line-height-large4: 64px;
 $transition-duration: 250ms;
 $transition-easing: ease-out;
 
-
 :root {
+	--color-primary: #b5445b;
+	--color-primary-hover: #d33b5b;
+	--color-primary-light: #f5dfe3;
+	--color-secondary: #05012c;
+	--color-tertiary: #ffb500;
+	--color-quaternary: #93ab23;
+	--color-light1: #fff;
+	--color-light2: #fcfcfc;
+	--color-light3: #f7f7f7;
+	--color-light4: #efefef;
+	--color-dark1: #252247;
+	--color-dark2: #6c6b80;
+	--color-dark3: #a09eaf;
+	--color-dark4: #e1e0e5;
+	--color-dark5: #000;
+	--color-error: #f01f31;
+	--color-pending: #ffb500;
+	--color-success: #93ab23;
 
-  --color-primary: #b5445b;
-  --color-primary-hover: #D33B5B;
-  --color-primary-light: #f5dfe3;
-  --color-secondary: #05012c;
-  --color-tertiary: #ffb500;
-  --color-quaternary: #93ab23;
-  --color-light1: #fff;
-  --color-light2: #fcfcfc;
-  --color-light3: #f7f7f7;
-  --color-light4: #efefef;
-  --color-dark1: #252247;
-  --color-dark2: #6c6b80;
-  --color-dark3: #a09eaf;
-  --color-dark4: #e1e0e5;
-  --color-dark5: #000;
-  --color-error:#f01f31;
-  --color-pending: #ffb500;
-  --color-success: #93ab23;
+	--logo-width: auto;
+	--logo-height: 48px;
+	--color-title: var(--color-secondary);
+	--color-heading-h1: var(--color-dark2);
+	--authlink-display: flex;
+	--button-secondary-border: none;
+	--button-secondary-background: var(--color-light4);
 
-  --logo-width: auto;
-  --logo-height: 48px;
-  --color-title: var(--color-secondary);
-  --color-heading-h1: var(--color-dark2);
-  --authlink-display: flex;
-  --button-secondary-border: none;
-  --button-secondary-background: var(--color-light4);
+	// Update values based on related color
+	--color-secondary-a12: rgba(2%, 0.4%, 17.3%, 0.12);
+	--color-secondary-a38: rgba(2%, 0.4%, 17.3%, 0.38);
+	--color-secondary-a8: rgba(2%, 0.4%, 17.3%, 0.8);
+	--color-secondary-a3: rgba(2%, 0.4%, 17.3%, 0.3);
+	--color-secondary-a54: rgba(2%, 0.4%, 17.3%, 0.54);
+	--color-dark1-a5: rgba(14.5%, 13.3%, 27.8%, 0.5);
+	--color-dark5-a5: rgba(0, 0, 0, 0.5);
+	--color-light1-a12: rgba(255, 255, 255, 0.12);
+	--color-primary-a2: rgba(71%, 26.7%, 35.7%, 0.2);
 
-  // Update values based on related color
-  --color-secondary-a12: rgba(2%, 0.4%, 17.3%, .12);
-  --color-secondary-a38: rgba(2%, 0.4%, 17.3%, .38);
-  --color-secondary-a8: rgba(2%, 0.4%, 17.3%, .8);
-  --color-secondary-a3: rgba(2%, 0.4%, 17.3%, .3);
-  --color-secondary-a54: rgba(2%, 0.4%, 17.3%, .54);
-  --color-dark1-a5: rgba(14.5%, 13.3%, 27.8%, .5);
-  --color-dark5-a5: rgba(0,0,0, .5);
-  --color-light1-a12: rgba(255, 255, 255, .12);
-  --color-primary-a2: rgba(71%, 26.7%, 35.7%, .2);
+	--border: 1px solid var(--color-dark4);
+	--border-radius: 4px;
+	--box-shadow: 0 1px 4 0 var(--color-dark1-a3);
 
-  --border: 1px solid var(--color-dark4);
-  --border-radius: 4px;
-  --box-shadow: 0 1px 4 0 var(--color-dark1-a3);
-  
-  --font-family: #{$font-family};
-  --font-size-small2: #{$font-size-small2};
-  --font-size-small1: #{$font-size-small1};
-  --font-size: #{$font-size};
-  --font-size-large1: #{$font-size-large1};
-  --font-size-large2: #{$font-size-large2};
-  --font-size-large3: #{$font-size-large3};
-  --line-height-small1: #{$line-height-small1};
-  --line-height: #{$line-height};
-  --line-height-large1: #{$line-height-large1};
-  --line-height-large2: #{$line-height-large2};
-  --line-height-large3: #{$line-height-large3};
-  --line-height-large4: #{$line-height-large4};
+	--font-family: #{$font-family};
+	--font-size-small2: #{$font-size-small2};
+	--font-size-small1: #{$font-size-small1};
+	--font-size: #{$font-size};
+	--font-size-large1: #{$font-size-large1};
+	--font-size-large2: #{$font-size-large2};
+	--font-size-large3: #{$font-size-large3};
+	--line-height-small1: #{$line-height-small1};
+	--line-height: #{$line-height};
+	--line-height-large1: #{$line-height-large1};
+	--line-height-large2: #{$line-height-large2};
+	--line-height-large3: #{$line-height-large3};
+	--line-height-large4: #{$line-height-large4};
 }
 
 // Mixins
@@ -163,158 +168,149 @@ $transition-easing: ease-out;
 // Container
 // Shared with .header and .l-containerhorizontal
 @mixin container {
-
-  @media (min-width: $media-desktop + $gridspacing * 8) {
-    padding-left: calc(50vw - #{$media-desktop / 2});
-    padding-right: calc(50vw - #{$media-desktop / 2});
-  }
-
+	@media (min-width: $media-desktop + $gridspacing * 8) {
+		padding-left: calc(50vw - #{$media-desktop / 2});
+		padding-right: calc(50vw - #{$media-desktop / 2});
+	}
 }
 
 // Dropdown
 
 @mixin dropdown {
-  background-color: var(--color-light1);
-  border-radius: var(--border-radius);
-  box-shadow: 0 4px 5px 0 var(--color-secondary-a12), 0 0 4px 0 var(--color-secondary-a12);
-  position: absolute;
-  top: calc(100% + #{$gridspacing * 2});
-  width: 160px;
+	background-color: var(--color-light1);
+	border-radius: var(--border-radius);
+	box-shadow: 0 4px 5px 0 var(--color-secondary-a12), 0 0 4px 0 var(--color-secondary-a12);
+	position: absolute;
+	top: calc(100% + #{$gridspacing * 2});
+	width: 160px;
 
-  &::before {
-    background-color: var(--color-light1);
-    box-shadow: .5px .5px 1px 0 var(--color-dark4); // Best guess
-    content: '';
-    height: $gridspacing * 2;
-    position: absolute;
-    right: $gridspacing * 2;
-    top: -$gridspacing;
-    transform: rotate(-135deg);
-    width: $gridspacing * 2;
-    z-index: $z-index-low;
-  }
+	&::before {
+		background-color: var(--color-light1);
+		box-shadow: 0.5px 0.5px 1px 0 var(--color-dark4); // Best guess
+		content: '';
+		height: $gridspacing * 2;
+		position: absolute;
+		right: $gridspacing * 2;
+		top: -$gridspacing;
+		transform: rotate(-135deg);
+		width: $gridspacing * 2;
+		z-index: $z-index-low;
+	}
 }
 
 // New Label
 @mixin newlabel {
-  background-color: var(--color-pending);
-  border-radius: var(--border-radius);
-  color: var(--color-light1);
-  font-size: var(--font-size-small2);
-  font-weight: bold;
-  line-height: 1;
-  padding: 5px 10px;
-  text-transform: uppercase;
+	background-color: var(--color-pending);
+	border-radius: var(--border-radius);
+	color: var(--color-light1);
+	font-size: var(--font-size-small2);
+	font-weight: bold;
+	line-height: 1;
+	padding: 5px 10px;
+	text-transform: uppercase;
 }
 
 @mixin expiredlabel {
-  background-color: var(--color-dark2);
-  border-radius: var(--border-radius);
-  color: var(--color-light1);
-  font-size: var(--font-size-small2);
-  font-weight: bold;
-  line-height: 1;
-  padding: 5px 10px;
-  text-transform: uppercase;
+	background-color: var(--color-dark2);
+	border-radius: var(--border-radius);
+	color: var(--color-light1);
+	font-size: var(--font-size-small2);
+	font-weight: bold;
+	line-height: 1;
+	padding: 5px 10px;
+	text-transform: uppercase;
 }
 
 // FormField Label
 @mixin label-formfield {
-  align-items: center;
-  color: var(--color-dark2);
-  display: flex;
-  font-size: var(--font-size-small2);
-  font-weight: bold;
-  justify-content: space-between;
-  letter-spacing: .5px;
-  margin-bottom: $gridspacing;
-  text-shadow: 1px 1px 1px var(--color-light1-a5);
-  text-transform: uppercase;
+	align-items: center;
+	color: var(--color-dark2);
+	display: flex;
+	font-size: var(--font-size-small2);
+	font-weight: bold;
+	justify-content: space-between;
+	letter-spacing: 0.5px;
+	margin-bottom: $gridspacing;
+	text-shadow: 1px 1px 1px var(--color-light1-a5);
+	text-transform: uppercase;
 }
-
 
 // Pesudo Base
 // Common for ::before and ::after
 @mixin pseudobase {
-  content: '';
-  display: block;
+	content: '';
+	display: block;
 }
 
 // Spinner
 @mixin spinner {
-  @include pseudobase;
-  animation: rotate .75s linear infinite forwards;
-  border: 1px solid var(--color-quaternary);
-  border-radius: 50%;
-  border-right-color: transparent;
-  box-sizing: border-box;
+	@include pseudobase;
+	animation: rotate 0.75s linear infinite forwards;
+	border: 1px solid var(--color-quaternary);
+	border-radius: 50%;
+	border-right-color: transparent;
+	box-sizing: border-box;
 }
 
 // Wrap
 @mixin wrap {
-  margin: 0 auto;
-  max-width: 1080px;
-  padding: 0 20px;
+	margin: 0 auto;
+	max-width: 1080px;
+	padding: 0 20px;
 }
 
 // Keyframes
 
 // Rotate
 @keyframes rotate {
+	0% {
+		transform: rotate(0);
+	}
 
-  0% {
-    transform: rotate(0);
-  }
-
-  100% {
-    transform: rotate(360deg);
-  }
-
+	100% {
+		transform: rotate(360deg);
+	}
 }
 
 // Fade
 @keyframes fade {
+	0% {
+		opacity: 0.4;
+	}
 
-  0% {
-    opacity: .4;
-  }
+	50% {
+		opacity: 1;
+	}
 
-  50% {
-    opacity: 1;
-  }
-
-  100% {
-    opacity: .4;
-  }
-
+	100% {
+		opacity: 0.4;
+	}
 }
 
 @keyframes fadein {
+	0% {
+		opacity: 0;
+	}
 
-  0% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 1;
-  }
-
+	100% {
+		opacity: 1;
+	}
 }
 
 $spacing: (
-  0p25x: 0.25,
-  0p5x: 0.5,
-  1x: 1.0,
-  1p5x: 1.5,
-  2x: 2.0,
-  2p5x: 2.5,
-  3x: 3.0,
-  3p5x: 3.5,
-  4x: 4.0,
-  4p5x: 4.5,
-  5x: 5.0,
-  5p5x: 5.5,
-  6x: 6.0,
-  7x: 7.0,
-  0x: 0.0
+	0p25x: 0.25,
+	0p5x: 0.5,
+	1x: 1,
+	1p5x: 1.5,
+	2x: 2,
+	2p5x: 2.5,
+	3x: 3,
+	3p5x: 3.5,
+	4x: 4,
+	4p5x: 4.5,
+	5x: 5,
+	5p5x: 5.5,
+	6x: 6,
+	7x: 7,
+	0x: 0,
 );

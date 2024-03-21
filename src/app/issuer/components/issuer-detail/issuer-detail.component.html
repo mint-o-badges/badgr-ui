@@ -20,8 +20,7 @@
 				<div class="topbar-x-subheading">
 					<p class="u-text u-text-small" i18n>
 						<strong [truncatedText]="issuer.email" [maxLength]="64"></strong>
-						<br class="u-hidden-minmobilelarge" /><span class="u-hidden-maxmobilelarge"> — </span>Your
-						Role:
+						<br class="u-hidden-minmobilelarge" /><span class="u-hidden-maxmobilelarge"> — </span>Your Role:
 						{{ issuer?.currentUserStaffMember?.roleInfo?.label }}
 					</p>
 					<p class="u-margin-top1x u-width-paragraph">
@@ -91,10 +90,7 @@
 				{{ badges.length }} Badge{{ badges.length == 1 ? '' : 's' }}
 			</h4>
 			<table
-				class="
-					datatable datatable-roundheaders datatable-onlyfirstcolumn datatable-verticalalignmiddle
-					u-margin-top2x
-				"
+				class="datatable datatable-roundheaders datatable-onlyfirstcolumn datatable-verticalalignmiddle u-margin-top2x"
 				*ngIf="badges?.length"
 			>
 				<thead class="datatable-x-head">
@@ -125,7 +121,8 @@
 								<div class="u-hidden-minmobilelarge l-flex-x-selfcenter u-margin-leftauto">
 									<a
 										class="u-text-link-small"
-										[routerLink]="['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'issue']" i18n
+										[routerLink]="['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'issue']"
+										i18n
 										>Forgive</a
 									>
 								</div>
@@ -145,7 +142,8 @@
 							<div class="l-flex l-flex-aligncenter l-flex-justifyend">
 								<a
 									class="u-text-link-small"
-									[routerLink]="['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'issue']" i18n
+									[routerLink]="['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'issue']"
+									i18n
 									>Forgive</a
 								>
 							</div>

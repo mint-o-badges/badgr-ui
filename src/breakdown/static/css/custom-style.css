@@ -1,0 +1,384 @@
+:root {
+	--border-color: #d9d9d9;
+	--gallery: #ececec;
+	--bg-body: #f9f8f5;
+	--bg-topbar: #f3f2ee;
+	--bg-color-card: #f9f8f5;
+	--primary-color: #1c355e;
+	--secondar-color: #7c7c7c;
+	--IBM-font-family: 'IBM Plex Sans Arabic', sans-serif;
+	--normal-font: 16px;
+	--burnt-sienna: #ea6852;
+	--gray: #8a8a8a;
+	--sliver: #bbbbbb;
+}
+
+.body-bg {
+	background: var(--bg-body);
+}
+.newBadgeContainer {
+	margin-top: 58px;
+}
+
+/* Badge top bar */
+.newBadgeTopBar {
+	border: 1px solid var(--border-color);
+	border-top: none;
+	background-color: var(--bg-topbar);
+	border-radius: 0 0 16px 16px;
+	width: 100%;
+	max-width: 1600px;
+	margin: 0 auto;
+	padding: 30px 40px;
+	display: flex;
+	align-items: center;
+	gap: 200px;
+}
+header.newBadgeTopBar .l-containerxaxis.topbar-x-wrap {
+	padding: 0;
+}
+.newBadgeTopBar .topbar-x-heading {
+	display: flex;
+	align-items: center;
+	gap: 22px;
+	flex-shrink: 0;
+}
+
+.newBadgeTopBar .totalBadges {
+	font-size: 20px;
+	font-weight: 600;
+	font-family: var(--IBM-font-family);
+	color: var(--primary-color);
+}
+.badgeCardContainer {
+	width: 100%;
+	max-width: 1660px;
+	margin: 0 auto;
+	padding: 1rem 10px;
+	padding-top: 0;
+}
+
+.badgeCardContainer .l-grid-large {
+	grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)) !important;
+	grid-gap: calc(var(--gridspacing) * 4.5);
+}
+
+.newBadgeSearchBar .forminput .forminput-x-inputs input {
+	border-radius: 10px;
+	border: 1px solid var(--border-color);
+	padding: 17px 25px;
+	width: 100%;
+	max-width: 300px;
+	min-width: 300px;
+}
+.newBadgeSearchBar .forminput .forminput-x-inputs input::placeholder {
+	color: var(--sliver);
+	font-size: 18px;
+	font-weight: 400;
+	font-family: var(--IBM-font-family);
+}
+.newBadgeSearchBar .forminput .forminput-x-inputs select {
+	background-image: url(../images/dropdown-icon.svg);
+	background-position: right 25px bottom 50%;
+}
+.newBadgeSearchBar .forminput .forminput-x-inputs select:dir(rtl) {
+	background-position: left 25px bottom 50%;
+	text-align: right;
+}
+.newBadgeSearchBar .forminput .forminput-x-inputs .forminput-x-icon {
+	fill: var(--primary-color);
+	right: 25px;
+	top: 50%;
+	transform: translateY(-50%);
+}
+.newBadgeSearchBar .forminput .forminput-x-inputs .forminput-x-icon:dir(rtl) {
+	right: unset;
+	left: 25px;
+}
+.newBadgeSearchBar {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.newBadgeSearchBar-wrapper {
+	display: flex;
+	align-items: center;
+	flex-grow: 1;
+	gap: 60px;
+}
+.newBadgeSearchBar-wrapper .groupBy {
+	font-size: 20px;
+	color: var(--primary-color);
+	font-family: var(--IBM-font-family);
+}
+
+.searchGroupBy-wrapper {
+	display: flex;
+	align-items: center;
+	gap: 25px;
+}
+
+.searchGroupBy-wrapper #badge-catalog-select {
+	padding: 17px 25px;
+	border-radius: 10px;
+	color: var(--primary-color);
+	min-width: 170px;
+	font-weight: 500;
+	font-size: 20px;
+	font-family: var(--IBM-font-family);
+}
+
+.newBadgeSearchBar .viewtoggle {
+	height: 60px;
+	grid-template-columns: 60px 60px;
+	width: 120px;
+	background-color: transparent;
+}
+.newBadgeSearchBar .viewtoggle .viewtoggle-x-grid {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-bottom-left-radius: 10px;
+	border-top-left-radius: 10px;
+	box-shadow: none;
+	background-color: var(--color-light1);
+}
+
+.newBadgeSearchBar .viewtoggle .viewtoggle-x-grid,
+.newBadgeSearchBar .viewtoggle .viewtoggle-x-list {
+	height: 60px;
+	border: 1px solid var(--border-color);
+	width: 60px;
+}
+.newBadgeSearchBar .viewtoggle .viewtoggle-x-grid svg,
+.newBadgeSearchBar .viewtoggle .viewtoggle-x-list svg {
+	width: 30px;
+	height: 30px;
+	padding: 0;
+}
+.newBadgeSearchBar .viewtoggle .viewtoggle-x-grid svg {
+	fill: var(--burnt-sienna);
+}
+.newBadgeSearchBar .viewtoggle .viewtoggle-x-grid:dir(rtl) {
+	border-bottom-left-radius: unset;
+	border-top-left-radius: unset;
+	border-bottom-right-radius: 10px;
+	border-top-right-radius: 10px;
+}
+
+.newBadgeSearchBar .viewtoggle .viewtoggle-x-list:active,
+.newBadgeSearchBar .viewtoggle.viewtoggle-is-listview .viewtoggle-x-grid:active {
+	box-shadow: none;
+}
+
+.newBadgeSearchBar .viewtoggle .viewtoggle-x-list {
+	border-bottom-right-radius: 10px;
+	border-top-right-radius: 10px;
+	display: flex;
+	align-items: center;
+	box-shadow: none;
+	justify-content: center;
+}
+.newBadgeSearchBar .viewtoggle .viewtoggle-x-list:dir(rtl) {
+	border-bottom-right-radius: unset;
+	border-top-right-radius: unset;
+	border-bottom-left-radius: 10px;
+	border-top-left-radius: 10px;
+}
+.newBadgeSearchBar .viewtoggle.viewtoggle-is-listview .viewtoggle-x-list {
+	box-shadow: none;
+	background-color: var(--color-light1);
+}
+.newBadgeSearchBar .viewtoggle.viewtoggle-is-listview .viewtoggle-x-list svg {
+	fill: var(--burnt-sienna);
+}
+/* Bagde heading and tags*/
+.badgeMainHeading {
+	font-weight: 600;
+	font-size: 32px;
+	font-family: var(--IBM-font-family);
+	color: var(--primary-color);
+	display: flex;
+	align-items: center;
+	gap: 40px;
+	line-height: 40px;
+	margin-bottom: 40px !important;
+}
+
+.badgeSubTitle {
+	font-size: 20px;
+	color: var(--secondar-color);
+	line-height: 40px;
+	font-family: var(--IBM-font-family);
+}
+.newBadgeCardTags {
+	margin: 45px 0 !important;
+}
+.newBadgeCardTags .tag-button {
+	color: var(--primary-color);
+	border-radius: 10px;
+	padding: 7px 20px;
+	font-weight: 500;
+	border: 1px solid var(--border-color);
+}
+.tags-wrapper {
+	display: flex;
+	align-items: center;
+	gap: 28px;
+}
+.tagsHeading {
+	color: var(--primary-color);
+	font-family: var(--IBM-font-family);
+	font-size: 20px;
+	font-weight: 500;
+}
+/*badge card design  */
+.badgeNewCard {
+	padding: 30px;
+	border: 1px solid var(--border-color);
+	background-color: var(--color-light1);
+	border-radius: 16px;
+	padding-bottom: 0;
+}
+.badgeNewCard-image-wrap {
+	border: 1px solid var(--border-color);
+	background-color: var(--bg-color-card);
+	border-radius: 16px;
+	padding: 15px;
+}
+.badgeNewCard-image {
+	width: 105px;
+	height: 105px;
+	object-fit: contain;
+}
+.badgeNewCard-title-wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+.badgeNewCard-body {
+	display: flex;
+	align-items: flex-start;
+	gap: 30px;
+	font-family: var(--IBM-font-family);
+	padding-bottom: 20px;
+	border-bottom: 1px solid var(--gallery);
+}
+
+.badgeNewCard-title {
+	color: var(--primary-color);
+	font-size: 24px;
+	font-weight: 600;
+	line-height: 30px;
+}
+.badgeNewCard-title:hover {
+	color: var(--burnt-sienna);
+}
+.badgeNewCard-issuer,
+.badgeNewCard-date {
+	color: var(--secondar-color);
+	font-weight: 500;
+	font-size: var(--normal-font);
+	font-family: var(--IBM-font-family);
+}
+
+.badgeNewCard-desc {
+	color: var(--primary-color);
+	line-height: 25px;
+	font-size: var(--normal-font);
+	font-weight: 500;
+}
+
+.badgeNewCard-footer {
+	padding: 18px 0;
+}
+/* button link */
+.newBadgeDetail-linkWrapper {
+	padding: 14px 20px;
+	border-radius: 12px;
+	border: 1px solid var(--primary-color);
+	margin-top: 34px;
+	width: max-content;
+}
+.newBadgeDetail-link {
+	color: var(--primary-color);
+	font-size: 24px;
+	font-weight: 500;
+	display: flex;
+	gap: 10px;
+	font-family: var(--IBM-font-family);
+}
+@media only screen and (min-width: 768px) {
+	.newBadgeTopBar {
+		gap: 30px;
+		flex-wrap: wrap;
+	}
+	.newBadgeSearchBar,
+	.newBadgeSearchBar-wrapper {
+		flex-wrap: wrap;
+		gap: 10px;
+		justify-content: space-between;
+	}
+
+	.newBadgeDetail-imgWrapper.desktop {
+		display: none;
+	}
+	.newBadgeDetail-imgWrapper.mobileView {
+		display: flex;
+		position: relative;
+		left: 0;
+		top: 0;
+		width: max-content;
+	}
+}
+
+@media only screen and (min-width: 1200px) {
+	.newBadgeTopBar {
+		gap: 50px;
+		flex-wrap: nowrap;
+	}
+	.newBadgeSearchBar,
+	.newBadgeSearchBar-wrapper {
+		flex-wrap: nowrap;
+		gap: 30px;
+	}
+	.newBadgeCardTags,
+	.badgeMainHeading,
+	.badgeCardContainer .l-grid.l-grid-large {
+		padding: 0 50px;
+	}
+
+	.newBadgeDetail-imgWrapper.desktop {
+		display: none;
+	}
+	.newBadgeDetail-imgWrapper.mobileView {
+		display: flex;
+		position: relative;
+		left: 0;
+		top: 0;
+		width: max-content;
+	}
+	.newBadgeSearchBar .forminput .forminput-x-inputs input {
+		min-width: 450px;
+		max-width: 450px;
+	}
+}
+@media only screen and (min-width: 1500px) {
+	.newBadgeTopBar {
+		gap: 200px;
+		flex-wrap: nowrap;
+	}
+	.newBadgeSearchBar,
+	.newBadgeSearchBar-wrapper {
+		flex-wrap: nowrap;
+	}
+
+	.newBadgeDetail-imgWrapper.desktop {
+		display: block;
+	}
+	.newBadgeDetail-imgWrapper.mobileView {
+		display: none;
+	}
+}

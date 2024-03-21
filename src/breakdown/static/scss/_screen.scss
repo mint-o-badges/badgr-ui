@@ -1,293 +1,187 @@
-[tabindex="-1"] {
-  outline: none;
+[tabindex='-1'] {
+	outline: none;
 }
 
-input:not[type="radio"]:not[type="checkbox"],
+input:not[type='radio']:not[type='checkbox'],
 label,
 textarea,
 select {
-  appearance: none;
-  -webkit-appearance: none;
-  color: var(--color-dark1);
-  font-family: var(--font-family);
-  font-size: var(--font-size);
+	appearance: none;
+	-webkit-appearance: none;
+	color: var(--color-dark1);
+	font-family: var(--font-family);
+	font-size: var(--font-size);
 }
 
 html,
 body {
-  height: 100%;
-  width: 100%;
+	height: 100%;
+	width: 100%;
 }
 
 a {
-  color: var(--color-primary);
-  text-decoration: none;
+	color: var(--color-primary);
+	text-decoration: none;
 }
 
 app-root {
-  display: block;
+	display: block;
 
-  > header {
-    position: relative;
-    z-index: $z-index-high + 1;
-  }
+	> header {
+		position: relative;
+		z-index: $z-index-high + 1;
+	}
 
-  &.app-is-hidden-chrome {
-    padding-top: 0;
-  }
+	&.app-is-hidden-chrome {
+		padding-top: 0;
+	}
 
-  @media (min-width: $media-tablet) {
-    padding-top: $headerheight;
+	@media (min-width: $media-tablet) {
+		padding-top: $headerheight;
 
-    > header {
-      left: 0;
-      position: fixed;
-      top: 0;
-    }
+		> header {
+			left: 0;
+			position: fixed;
+			top: 0;
+		}
 
-    > nav {
-      position: fixed;
-      right: 0;
-      top: 0;
-      z-index: $z-index-high + 2;
-    }
-
-  }
-
+		> nav {
+			position: fixed;
+			right: 0;
+			top: 0;
+			z-index: $z-index-high + 2;
+		}
+	}
 }
 
 body {
-  background: var(--color-light2);
-  color: var(--color-dark1);
-  font-family: var(--font-family);
-  font-size: var(--font-size);
-  -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
+	background: var(--color-light2);
+	color: var(--color-dark1);
+	font-family: var(--font-family);
+	font-size: var(--font-size);
+	-webkit-font-smoothing: antialiased;
+	overflow-x: hidden;
 }
 
 button {
-  appearance: none;
-  background: none;
-  border: 0;
-  color: var(--color-dark1);
-  cursor: pointer;
-  font-family: var(--font-family);
-  font-size: var(--font-size);
-  line-height: 1;
-  margin: 0;
-  padding: 0;
+	appearance: none;
+	background: none;
+	border: 0;
+	color: var(--color-dark1);
+	cursor: pointer;
+	font-family: var(--font-family);
+	font-size: var(--font-size);
+	line-height: 1;
+	margin: 0;
+	padding: 0;
 }
 
 strong {
-  font-weight: 600;
+	font-weight: 600;
 }
 
 //Layout Rules
-@import
-
-// Children Layouts
-'layouts/childrenlayouts/l-childrencentered/l-childrencentered',
-'layouts/childrenlayouts/l-childrenhorizontal/l-childrenhorizontal',
-'layouts/childrenlayouts/l-childrenvertical/l-childrenvertical',
-
-// Form Layouts
-'layouts/formlayouts/l-auth/l-auth',
-'layouts/formlayouts/l-dropzoneinput/l-dropzoneinput',
-'layouts/formlayouts/l-form/l-form',
-'layouts/formlayouts/l-formimageupload/l-formimageupload',
-'layouts/formlayouts/l-formmessage/l-formmessage',
-'layouts/formlayouts/l-formsection/l-formsection',
-'layouts/formlayouts/l-formsectionnested/l-formsectionnested',
-'layouts/formlayouts/l-formsectiontoggle/l-formsectiontoggle',
-'layouts/formlayouts/l-formtwoup/l-formtwoup',
-
-// Article
-'layouts/l-article/l-article',
-
-// Auth Buttons
-'layouts/l-authbuttons/l-authbuttons',
-
-// Card Embedded
-'layouts/l-cardembedded/l-cardembedded',
-
-'layouts/l-container/l-container',
-'layouts/l-containerhorizontal/l-containerhorizontal',
-'layouts/l-containervertical/l-containervertical',
-'layouts/l-controls/l-controls',
-'layouts/l-display/l-display',
-'layouts/l-gridthree/l-gridthree',
-'layouts/l-gridtwo/l-gridtwo',
-'layouts/l-headeredsection/l-headeredsection',
-'layouts/l-heading/l-heading',
-'layouts/l-integrations/l-integrations',
-'layouts/l-padding/l-padding',
-'layouts/l-marginBottom/l-marginBottom',
-'layouts/l-marginLeft/l-marginLeft',
-'layouts/l-marginTop/l-marginTop',
-'layouts/l-maxWidth/l-maxWidth',
-'layouts/l-offsetbottom/l-offsetbottom',
-'layouts/l-offsetleft/l-offsetleft',
-'layouts/l-offsetright/l-offsetright',
-'layouts/l-offsettop/l-offsettop',
-'layouts/l-overflowhorizontal/l-overflowhorizontal',
-'layouts/l-overflowhorizontalhidden/l-overflowhorizontalhidden',
-'layouts/l-overflowlist/l-overflowlist',
-'layouts/l-scroll-pin/l-scroll-pin',
-
-// Share Pane
-'layouts/l-sharepane/l-sharepane',
-
-// Square Icon Cards
-'layouts/l-squareiconcards/l-squareiconcards',
-
-// Tabs
-'layouts/l-tabs/l-tabs',
-
-// Tags
-'layouts/l-tags/l-tags',
-
-'layouts/l-uploadBadgeButtons/l-uploadBadgeButtons',
-'layouts/l-fullscreenPage/l-fullscreenPage',
-'layouts/l-wordwrap/l-wordwrap',
-
-// Module Rules
-'layouts/modulerules/l-rule/l-rule';
-
+@import // Children Layouts
+	'layouts/childrenlayouts/l-childrencentered/l-childrencentered',
+	'layouts/childrenlayouts/l-childrenhorizontal/l-childrenhorizontal',
+	'layouts/childrenlayouts/l-childrenvertical/l-childrenvertical',
+	// Form Layouts
+	'layouts/formlayouts/l-auth/l-auth',
+	'layouts/formlayouts/l-dropzoneinput/l-dropzoneinput', 'layouts/formlayouts/l-form/l-form',
+	'layouts/formlayouts/l-formimageupload/l-formimageupload', 'layouts/formlayouts/l-formmessage/l-formmessage',
+	'layouts/formlayouts/l-formsection/l-formsection', 'layouts/formlayouts/l-formsectionnested/l-formsectionnested',
+	'layouts/formlayouts/l-formsectiontoggle/l-formsectiontoggle', 'layouts/formlayouts/l-formtwoup/l-formtwoup',
+	// Article
+	'layouts/l-article/l-article',
+	// Auth Buttons
+	'layouts/l-authbuttons/l-authbuttons',
+	// Card Embedded
+	'layouts/l-cardembedded/l-cardembedded',
+	'layouts/l-container/l-container', 'layouts/l-containerhorizontal/l-containerhorizontal',
+	'layouts/l-containervertical/l-containervertical', 'layouts/l-controls/l-controls', 'layouts/l-display/l-display',
+	'layouts/l-gridthree/l-gridthree', 'layouts/l-gridtwo/l-gridtwo', 'layouts/l-headeredsection/l-headeredsection',
+	'layouts/l-heading/l-heading', 'layouts/l-integrations/l-integrations', 'layouts/l-padding/l-padding',
+	'layouts/l-marginBottom/l-marginBottom', 'layouts/l-marginLeft/l-marginLeft', 'layouts/l-marginTop/l-marginTop',
+	'layouts/l-maxWidth/l-maxWidth', 'layouts/l-offsetbottom/l-offsetbottom', 'layouts/l-offsetleft/l-offsetleft',
+	'layouts/l-offsetright/l-offsetright', 'layouts/l-offsettop/l-offsettop',
+	'layouts/l-overflowhorizontal/l-overflowhorizontal', 'layouts/l-overflowhorizontalhidden/l-overflowhorizontalhidden',
+	'layouts/l-overflowlist/l-overflowlist', 'layouts/l-scroll-pin/l-scroll-pin',
+	// Share Pane
+	'layouts/l-sharepane/l-sharepane',
+	// Square Icon Cards
+	'layouts/l-squareiconcards/l-squareiconcards',
+	// Tabs
+	'layouts/l-tabs/l-tabs',
+	// Tags
+	'layouts/l-tags/l-tags',
+	'layouts/l-uploadBadgeButtons/l-uploadBadgeButtons', 'layouts/l-fullscreenPage/l-fullscreenPage',
+	'layouts/l-wordwrap/l-wordwrap',
+	// Module Rules
+	'layouts/modulerules/l-rule/l-rule';
 
 //Module Rules
-@import
-
-// Auth Link
-'modules/authlink/authlink',
-
-'modules/badge/badge',
-'modules/breadcrumb/breadcrumb',
-
-// Button Modules
-'modules/buttonmodules/badgeButton/badgeButton',
-'modules/buttonmodules/button/button',
-'modules/buttonmodules/buttonauth/buttonauth',
-'modules/buttonmodules/buttonicon/buttonicon',
-'modules/buttonmodules/radiobuttons/radiobuttons',
-'modules/buttonmodules/uploadBadgeButton/uploadBadgeButton',
-
-'modules/bordered/bordered',
-'modules/card/card',
-'modules/checklist/checklist',
-'modules/confirmswitch/confirmswitch',
-
-// Connection Modules
-'modules/connectionmodules/connectedbadge/connectedbadge',
-'modules/connectionmodules/connectedcard/connectedcard',
-'modules/connectionmodules/connecteditem/connecteditem',
-'modules/connectionmodules/connectionadd/connectionadd',
-'modules/connectionmodules/connectionitem/connectionitem',
-
-'modules/detail/detail',
-
-// Embedded Container
-'modules/embeddedcontainer/embeddedcontainer',
-
-'modules/dialog/dialog',
-'modules/emptyillustration/emptyillustration',
-'modules/footer/footer',
-
-// Form Modules
-'modules/formmodules/dropzone/dropzone',
-'modules/formmodules/formaddinput/formaddinput',
-'modules/formmodules/formcheckbox/formcheckbox',
-'modules/formmodules/formdivider/formdivider',
-'modules/formmodules/formfield/formfield',
-'modules/formmodules/formimage/formimage',
-'modules/formmodules/forminline/forminline',
-'modules/formmodules/formmessage/formmessage',
-'modules/formmodules/formradiobutton/formradiobutton',
-'modules/formmodules/formsectionremove/formsectionremove',
-'modules/formmodules/formsectiontoggle/formsectiontoggle',
-
-'modules/header/header',
-'modules/heading/heading',
-'modules/hidden/hidden',
-'modules/importHeading/importHeading',
-'modules/inactive/inactive',
-'modules/intergration/integration',
-'modules/integrationthumb/integrationthumb',
-'modules/issuer/issuer',
-'modules/loading/loading',
-'modules/loadingerror/loadingerror',
-'modules/logo/logo',
-'modules/linklist/linklist',
-'modules/markdowneditor/markdowneditor',
-
-// Menu Modules
-'modules/menumodules/menu/menu',
-'modules/menumodules/menumore/menumore',
-'modules/menumodules/menumoreitem/menumoreitem',
-'modules/menumodules/menuitem/menuitem',
-
-'modules/new/new',
-'modules/pathway/pathway',
-
-// Permission
-'modules/permission/permission',
-
-'modules/pathwaydetail/pathwaydetail',
-'modules/pathwayheading/pathwayheading',
-'modules/progress/progress',
-'modules/rule/rule',
-'modules/search/search',
-'modules/select/select',
-'modules/selecteditem/selecteditem',
-'modules/showmore/showmore',
-'modules/small/small',
-'modules/stack/stack',
-'modules/statusselect/statusselect',
-'modules/social/social',
-
-// Square Icon Card
-'modules/squareiconcard/squareiconcard',
-
-'modules/state/state',
-'modules/statlist/statlist',
-'modules/switch/switch',
-
-// Tab
-'modules/tab/tab',
-
-'modules/table/table',
-
-// Tag
-'modules/tag/tag',
-
-// Text Modules
-'modules/textmodules/article/article',
-'modules/textmodules/standaloneanchor/standaloneanchor',
-'modules/textmodules/label/label',
-'modules/textmodules/text/text',
-'modules/textmodules/title/title',
-'modules/textmodules/titledivider/titledivider',
-
-// Pagination
-'modules/page/page',
-'modules/pagination/pagination',
-
-'modules/tooltip/tooltip',
-'modules/tooltiptrigger/tooltiptrigger',
-'modules/truncate/truncate',
-'modules/videowatch/videowatch',
-'modules/visuallyhidden/visuallyhidden',
-'modules/wrap/wrap',
-'modules/status/status',
-
-// Util
-'modules/u-margin/u-margin',
-'modules/u-padding/u-padding',
-'modules/u-grid/u-grid';
-
+@import // Auth Link
+	'modules/badge/badge',
+	'modules/authlink/authlink', 'modules/badge/badge', 'modules/breadcrumb/breadcrumb',
+	// Button Modules
+	'modules/buttonmodules/badgeButton/badgeButton',
+	'modules/buttonmodules/button/button', 'modules/buttonmodules/buttonauth/buttonauth',
+	'modules/buttonmodules/buttonicon/buttonicon', 'modules/buttonmodules/radiobuttons/radiobuttons',
+	'modules/buttonmodules/uploadBadgeButton/uploadBadgeButton', 'modules/bordered/bordered', 'modules/card/card',
+	'modules/checklist/checklist', 'modules/confirmswitch/confirmswitch',
+	// Connection Modules
+	'modules/connectionmodules/connectedbadge/connectedbadge',
+	'modules/connectionmodules/connectedcard/connectedcard', 'modules/connectionmodules/connecteditem/connecteditem',
+	'modules/connectionmodules/connectionadd/connectionadd', 'modules/connectionmodules/connectionitem/connectionitem',
+	'modules/detail/detail',
+	// Embedded Container
+	'modules/embeddedcontainer/embeddedcontainer',
+	'modules/dialog/dialog', 'modules/emptyillustration/emptyillustration', 'modules/footer/footer',
+	// Form Modules
+	'modules/formmodules/dropzone/dropzone',
+	'modules/formmodules/formaddinput/formaddinput', 'modules/formmodules/formcheckbox/formcheckbox',
+	'modules/formmodules/formdivider/formdivider', 'modules/formmodules/formfield/formfield',
+	'modules/formmodules/formimage/formimage', 'modules/formmodules/forminline/forminline',
+	'modules/formmodules/formmessage/formmessage', 'modules/formmodules/formradiobutton/formradiobutton',
+	'modules/formmodules/formsectionremove/formsectionremove', 'modules/formmodules/formsectiontoggle/formsectiontoggle',
+	'modules/header/header', 'modules/heading/heading', 'modules/hidden/hidden', 'modules/importHeading/importHeading',
+	'modules/inactive/inactive', 'modules/intergration/integration', 'modules/integrationthumb/integrationthumb',
+	'modules/issuer/issuer', 'modules/loading/loading', 'modules/loadingerror/loadingerror', 'modules/logo/logo',
+	'modules/linklist/linklist', 'modules/markdowneditor/markdowneditor',
+	// Menu Modules
+	'modules/menumodules/menu/menu',
+	'modules/menumodules/menumore/menumore', 'modules/menumodules/menumoreitem/menumoreitem',
+	'modules/menumodules/menuitem/menuitem', 'modules/new/new', 'modules/pathway/pathway',
+	// Permission
+	'modules/permission/permission',
+	'modules/pathwaydetail/pathwaydetail', 'modules/pathwayheading/pathwayheading', 'modules/progress/progress',
+	'modules/rule/rule', 'modules/search/search', 'modules/select/select', 'modules/selecteditem/selecteditem',
+	'modules/showmore/showmore', 'modules/small/small', 'modules/stack/stack', 'modules/statusselect/statusselect',
+	'modules/social/social',
+	// Square Icon Card
+	'modules/squareiconcard/squareiconcard',
+	'modules/state/state', 'modules/statlist/statlist', 'modules/switch/switch',
+	// Tab
+	'modules/tab/tab',
+	'modules/table/table',
+	// Tag
+	'modules/tag/tag',
+	// Text Modules
+	'modules/textmodules/article/article',
+	'modules/textmodules/standaloneanchor/standaloneanchor', 'modules/textmodules/label/label',
+	'modules/textmodules/text/text', 'modules/textmodules/title/title', 'modules/textmodules/titledivider/titledivider',
+	// Pagination
+	'modules/page/page',
+	'modules/pagination/pagination', 'modules/tooltip/tooltip', 'modules/tooltiptrigger/tooltiptrigger',
+	'modules/truncate/truncate', 'modules/videowatch/videowatch', 'modules/visuallyhidden/visuallyhidden',
+	'modules/wrap/wrap', 'modules/status/status',
+	// Util
+	'modules/u-margin/u-margin',
+	'modules/u-padding/u-padding', 'modules/u-grid/u-grid';
 
 // Overrides
 
 // When in the canvas/LTI views this overrides the body background to match the design
 .o-canvas {
-  background-color: var(--color-light1);
+	background-color: var(--color-light1);
 }

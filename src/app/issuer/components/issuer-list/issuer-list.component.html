@@ -6,7 +6,7 @@
 			Institutions
 			<ng-template [showLoader]="false" [bgAwaitPromises]="[issuersLoaded]">
 				<span class="topbar-x-internalheading">
-					{{ issuers.length | i18nPlural: plural['issuer'] }}
+					{{ issuers.length | i18nPlural : plural['issuer'] }}
 				</span>
 			</ng-template>
 		</h2>
@@ -27,9 +27,7 @@
 		<!-- Empty state: no issuers -->
 		<section class="emptysection l-emptysection" *ngIf="Array.isArray(issuers) && issuers?.length === 0">
 			<h2 class="emptysection-x-headline" i18n>You haven't created an institution yet</h2>
-			<p class="emptysection-x-copy" i18n>
-				With institutions you can create badges and give them to users.
-			</p>
+			<p class="emptysection-x-copy" i18n>With institutions you can create badges and give them to users.</p>
 			<div class="emptysection-x-buttons">
 				<button
 					class="button button-secondary"
@@ -64,7 +62,9 @@
 				<div class="issuercard-x-desc" [truncatedText]="issuer.description" [maxLength]="250"></div>
 
 				<div class="issuercard-x-topbadges" *ngFor="let issuerBadges of [issuerToBadgeInfo[issuer.issuerUrl]]">
-					<h3 class="u-text-body-bold u-text-dark1 u-margin-bottom2x" *ngIf="issuerBadges" i18n>Top Badges:</h3>
+					<h3 class="u-text-body-bold u-text-dark1 u-margin-bottom2x" *ngIf="issuerBadges" i18n>
+						Top Badges:
+					</h3>
 					<div class="l-flex l-flex-2x l-flex-column">
 						<ng-template [bgAwaitPromises]="[badgesLoaded]">
 							<ng-container *ngIf="issuerBadges">
@@ -83,7 +83,7 @@
 											{{ badge.name }}
 										</a>
 										<p class="u-text-small u-text-dark4">
-											{{ badge.recipientCount | i18nPlural: plural['recipient'] }}
+											{{ badge.recipientCount | i18nPlural : plural['recipient'] }}
 										</p>
 									</div>
 								</div>
@@ -97,7 +97,7 @@
 						<svg class="icon icon-light4 u-hidden-maxmobilelarge" width="24px" icon="icon_badge"></svg>
 						<p
 							class="u-text-small u-text-nowrap"
-							[innerHTML]="issuer.badgeClassCount | i18nPlural: plural['badges']"
+							[innerHTML]="issuer.badgeClassCount | i18nPlural : plural['badges']"
 						></p>
 					</div>
 					<a class="u-text u-text-small" [routerLink]="['/issuer/issuers/', issuer.slug]" i18n>Open</a>

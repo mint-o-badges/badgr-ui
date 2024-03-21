@@ -1,0 +1,93 @@
+/* Header styling */
+
+.header-wrapper {
+	padding: 1rem 10px;
+}
+.new-header {
+	padding: 29px 32px;
+	background-color: var(--color-light1);
+	border: 1px solid var(--border-color);
+	border-radius: 16px;
+	height: max-content;
+	max-width: 1660px;
+	margin: 0 auto;
+	width: 100%;
+}
+.new-header .navbar {
+	background-color: transparent;
+	padding: 0 !important;
+	height: max-content;
+}
+#new-header .navbar .navbar-x-navitems {
+	padding-top: 0;
+	display: flex;
+	align-items: center;
+	gap: 40px;
+	margin-left: 0;
+	margin-right: 0;
+}
+#new-header .navbar .navbar-x-items {
+	margin-right: 0;
+	padding: 10px 0;
+}
+#new-header .navbar .navbar-x-items:dir(rtl) {
+	margin-left: 0;
+}
+#new-header .navbar .navbar-x-navitems .navitem.navitem-is-active {
+	color: var(--burnt-sienna);
+}
+#new-header .navbar-x-navitems.loginBtn a.navitem {
+	background-color: var(--primary-color);
+	color: white !important;
+	padding: 6px 30px !important;
+	border-radius: 10px;
+	font-weight: bold;
+}
+#new-header .navbar-x-navitems.loginBtn .navitem::after {
+	display: none;
+}
+#new-header .navbar-x-navitems.loginBtn .navitem:hover,
+#new-header .navbar-x-navitems.loginBtn a.navitem.navitem-is-active {
+	background-color: var(--burnt-sienna);
+}
+#new-header .navbar-wrapper {
+	display: flex;
+	gap: 60px;
+}
+#new-header .navbar .navbar-x-navitems .navitem {
+	color: var(--primary-color);
+	padding-bottom: 0;
+	font-family: var(--IBM-font-family);
+	font-size: 20px;
+	font-weight: 500;
+	line-height: 40px;
+	margin-right: 0;
+	margin-left: 0;
+}
+
+/* footer stylke */
+
+.newFooter {
+	margin: 25px 10px 30px 10px;
+}
+
+.newFooter .footer-x-links {
+	color: var(--gray);
+	font-family: var(--IBM-font-family);
+	font-size: 20px;
+	font-weight: bold;
+}
+
+.newFooter-conteiner {
+	padding: 28px 40px;
+	background: var(--color-light1);
+	border: 1px solid var(--border-color);
+	border-radius: 16px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 10px;
+	width: 100%;
+	max-width: 1660px;
+	margin: 0 auto;
+}

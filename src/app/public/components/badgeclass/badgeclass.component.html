@@ -4,10 +4,13 @@
 		<div class="card card-largeimage">
 			<a class="card-x-main" [href]="badgeClass.id" target="_blank">
 				<div class="card-x-image">
-					<img [loaded-src]="badgeClass.image"
-					     [loading-src]="badgeLoadingImageUrl"
-					     [error-src]="badgeFailedImageUrl"
-					     width="60" height="60" />
+					<img
+						[loaded-src]="badgeClass.image"
+						[loading-src]="badgeLoadingImageUrl"
+						[error-src]="badgeFailedImageUrl"
+						width="60"
+						height="60"
+					/>
 				</div>
 				<div class="card-x-text">
 					<h1>{{ badgeClass.name }}</h1>
@@ -19,21 +22,75 @@
 	</div>
 
 	<!-- Regular View -->
-	<main class="o-container"
-		*ngIf="! embedService.isEmbedded">
+	<main class="badgeclass-main" *ngIf="!embedService.isEmbedded">
 		<form-message></form-message>
-		<div class="badgedetail">
-			<div class="badgedetail-x-header">
-
+		<div class="newBadgeDetail">
+			<div class="newBadgeDetail-bodyWraper">
 				<!-- Badge Name -->
-				<h1>{{ badgeClass.name }}</h1>
+				<div class="newBadgeDetail-header">
+					<div class="newBadgeDetail-imgWrapper mobileView">
+						<!-- Badge Assertion Image -->
+						<img
+							alt="{{ badgeClass.name }} image"
+							class="newBadgeDetail-image"
+							[loaded-src]="badgeClass.image"
+							[loading-src]="badgeLoadingImageUrl"
+							[error-src]="badgeFailedImageUrl"
+							width="200"
+						/>
+
+						<!-- Issuer Information -->
+					</div>
+					<h1 class="newBadgeDetail--heading">{{ badgeClass.name }}</h1>
+					<section *ngIf="badgeClass.criteria">
+						<!-- <h3
+							class="u-text-h3-semibold u-text-dark2 u-margin-bottom2x u-margin-top4x"
+							*ngIf="badgeClass.criteria.id || badgeClass.criteria.narrative"
+							i18n
+						>
+							Criteria
+						</h3> -->
+						<markdown-display
+							class="newBadgeDetail-subtitle"
+							*ngIf="badgeClass.criteria.narrative"
+							[value]="badgeClass.criteria.narrative"
+						>
+						</markdown-display>
+						<!-- <div class="u-margin-yaxis2x" *ngIf="badgeClass.criteria.id">
+							<a class="u-text-outlink" target="_blank" [href]="badgeClass.criteria.id" i18n
+								>View External Criteria URL
+								<svg icon="icon_external_link"></svg>
+							</a>
+						</div> -->
+					</section>
+				</div>
+				<div class="newBadgeDetail-bodyMain">
+					<div class="newBadgeDetail-headerContent">
+						<div class="newBadgeDetail-issuedBy">
+							<span class="issue-heading">أُصدرت من قِبل:</span>
+							<a class="u-break-word" [routerLink]="routerLinkForUrl(issuer.hostedUrl || issuer.id)">{{
+								issuer.name
+							}}</a>
+						</div>
+						<div class="newBadgeDetail-descriptionWrap">
+							<h2 class="newBadgeDetail--desc-heading" i18n>الوصف</h2>
+							<p class="newBadgeDetail-desc-paragraph">{{ badgeClass.description }}</p>
+						</div>
+						<div class="newBadgeDetail-linkWrapper">
+							<a href="{{ badgeClass.id }}" class="newBadgeDetail-link" target="_blank">
+								<img src="../../../../breakdown/static/images/arrow-external.svg" alt="arrow" />
+								اعرف أكثر
+							</a>
+						</div>
+					</div>
+				</div>
 
 				<!--
 				<div class="l-primarymore">
 				-->
 
-					<!-- URLs -->
-					<!--
+				<!-- URLs -->
+				<!--
 					<section>
 						<a [href]="v1JsonUrl"
 						   class="button button-primaryghost"
@@ -51,105 +108,70 @@
 				</div>
 				-->
 			</div>
-			<div class="badgedetail-x-sidebar">
-				<div class="badgedetail-x-sidebarinternal">
+			<div class="newBadgeDetail-imgWrapper desktop">
+				<!-- Badge Assertion Image -->
+				<img
+					alt="{{ badgeClass.name }} image"
+					class="newBadgeDetail-image"
+					[loaded-src]="badgeClass.image"
+					[loading-src]="badgeLoadingImageUrl"
+					[error-src]="badgeFailedImageUrl"
+					width="200"
+				/>
 
-					<!-- Badge Assertion Image -->
-					<img alt="{{badgeClass.name}} image"
-						 class="badgeimage badgeimage-center badgeimage-large"
-						 [loaded-src]="badgeClass.image"
-					     [loading-src]="badgeLoadingImageUrl"
-					     [error-src]="badgeFailedImageUrl"
-					     width="200" />
-
-					<!-- Issuer Information -->
-					<dl>
-				    	<div class="l-flex l-flex-2x u-padding-top2x border border-top border-light3">
-							<div>
-								<img [loaded-src]="issuer.image"
-									 [loading-src]="issuerImagePlacholderUrl"
-									 [error-src]="issuerImagePlacholderUrl"
-									 width="40" />
-							</div><div>
-								<dt class="u-text-small-bold">Issued by:</dt>
-								<dd class="u-text">
-	                				<a class="u-break-word"
-	                					[routerLink]="routerLinkForUrl(issuer.hostedUrl || issuer.id)"
-	                				>{{ issuer.name }}</a>
-	            				</dd>
-							</div>
-						</div>
-					</dl>
-				</div>
+				<!-- Issuer Information -->
 			</div>
-			<div class="badgedetail-x-desc">
-				<h2 class="u-text-h3-semibold u-margin-bottom2x u-hidden-mintablet" i18n>Description</h2>
-				<p class="u-text-body u-width-paragraph">{{ badgeClass.description }}</p>
-			</div>
-			<div class="badgedetail-x-body">
 
-				<!-- criteria -->
-				<section *ngIf="badgeClass.criteria">
-					<h3 class="u-text-h3-semibold u-text-dark2 u-margin-bottom2x u-margin-top4x"
-						*ngIf="badgeClass.criteria.id || badgeClass.criteria.narrative" i18n
-						>Criteria</h3>
-					<show-more>
-						<markdown-display
-							 *ngIf="badgeClass.criteria.narrative"
-							 [value]="badgeClass.criteria.narrative">
-					 	</markdown-display>
-					</show-more>
-					<div class="u-margin-yaxis2x"
-							*ngIf="badgeClass.criteria.id">
-							<a class="u-text-outlink" target="_blank"
-								[href]="badgeClass.criteria.id" i18n
-							>View External Criteria URL
-								<svg icon="icon_external_link"></svg>
-							</a>
-						</div>
-				</section>
+			<!-- <div class="badgedetail-x-body"> -->
+			<!-- criteria -->
 
-				<!-- alignment -->
-				<section>
-					<h3 class="u-text-h3-semibold u-margin-bottom2x u-margin-top4x"
-						*ngIf="badgeClass.alignment && badgeClass?.alignment.length>0"
-					>Alignment</h3>
-					<div class="bordered l-padding-2x l-marginBottom-2x"
-					     *ngFor="let alignmentNode of badgeClass.alignment; let i=index">
+			<!-- alignment -->
+			<!-- <section>
+					<h3
+						class="u-text-h3-semibold u-margin-bottom2x u-margin-top4x"
+						*ngIf="badgeClass.alignment && badgeClass?.alignment.length > 0"
+					>
+						Alignment
+					</h3>
+					<div
+						class="bordered l-padding-2x l-marginBottom-2x"
+						*ngFor="let alignmentNode of badgeClass.alignment; let i = index"
+					>
 						<div class="l-flex l-flex-justifybetween">
 							<h4 class="u-text-body-bold u-margin-bottom1x">{{ alignmentNode.targetName }}</h4>
 							<small>{{ alignmentNode.targetCode }}</small>
 						</div>
-						<p class="u-break-word u-text-body u-width-paragraph"
-							*ngIf="alignmentNode.targetDescription"
-						>{{ alignmentNode.targetDescription }}</p>
+						<p class="u-break-word u-text-body u-width-paragraph" *ngIf="alignmentNode.targetDescription">
+							{{ alignmentNode.targetDescription }}
+						</p>
 
 						<div *ngIf="alignmentNode.frameworkName">
 							<h4>Framework</h4>
 							{{ alignmentNode.frameworkName }}
 						</div>
-						<div class="u-margin-yaxis2x"
-							 *ngIf="alignmentNode.targetUrl">
-							<a class="u-text-outlink" target="_blank"
-								[href]="alignmentNode.targetUrl" i18n
-							>View alignment URL
+						<div class="u-margin-yaxis2x" *ngIf="alignmentNode.targetUrl">
+							<a class="u-text-outlink" target="_blank" [href]="alignmentNode.targetUrl" i18n
+								>View alignment URL
 								<svg icon="icon_external_link"></svg>
 							</a>
 						</div>
 					</div>
-				</section>
+				</section> -->
 
-				<!-- tags -->
-				<section>
-					<h3 class="u-text-h3-semibold u-margin-bottom2x u-margin-top4x"
-						*ngIf="badgeClass.tags && badgeClass.tags.length" i18n>Tags</h3>
+			<!-- tags -->
+			<!-- <section>
+					<h3
+						class="u-text-h3-semibold u-margin-bottom2x u-margin-top4x"
+						*ngIf="badgeClass.tags && badgeClass.tags.length"
+						i18n
+					>
+						Tags
+					</h3>
 					<div class="l-tags">
-						<div class="tag"
-							*ngFor="let tag of badgeClass.tags; last as last"
-						>{{ tag }}</div>
+						<div class="tag" *ngFor="let tag of badgeClass.tags; last as last">{{ tag }}</div>
 					</div>
-				</section>
-			</div>
+				</section> -->
+			<!-- </div> -->
 		</div>
 	</main>
 </ng-template>

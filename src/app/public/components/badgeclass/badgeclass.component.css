@@ -1,0 +1,114 @@
+.badgeclass-main {
+	max-width: 1660px;
+	margin: 0 auto;
+	width: 100%;
+}
+
+/* Badge detail page */
+.newBadgeDetail {
+	position: relative;
+}
+.newBadgeDetail-header {
+	border: 1px solid var(--border-color);
+	border-top: none;
+	background-color: var(--bg-topbar);
+	border-radius: 0 0 16px 16px;
+	display: flex;
+	flex-direction: column;
+	gap: 32px;
+	padding: 50px 35px 30px;
+	padding-left: 350px;
+	max-width: 1600px;
+	width: 100%;
+	margin: 0 auto;
+}
+.newBadgeDetail-header:dir(rtl) {
+	padding-right: 350px;
+	padding-left: unset;
+}
+
+.newBadgeDetail-headerContent {
+	padding-left: 350px;
+}
+.newBadgeDetail-headerContent:dir(rtl) {
+	padding-right: 350px;
+	padding-left: unset;
+}
+
+.newBadgeDetail-imgWrapper {
+	position: absolute;
+	top: 50px;
+	left: 70px;
+	border-radius: 16px;
+	border: 1px solid var(--border-color);
+	background: var(--color-light1);
+	padding: 30px;
+}
+
+.newBadgeDetail-imgWrapper:dir(rtl) {
+	left: unset;
+	right: 70px;
+}
+
+.newBadgeDetail-image {
+	width: 200px;
+}
+
+.newBadgeDetail--heading {
+	font-size: 28px;
+	line-height: 40px;
+	font-family: var(--IBM-font-family);
+	font-weight: 600;
+	color: var(--primary-color);
+}
+
+.newBadgeDetail-subtitle .markdown p {
+	margin-bottom: 0;
+	font-size: var(--normal-font);
+	font-family: var(--IBM-font-family);
+	color: var(--primary-color);
+}
+
+.newBadgeDetail-issuedBy {
+	display: flex;
+	gap: 5px;
+	align-items: center;
+	margin-top: 40px;
+	margin-bottom: 24px;
+}
+.issue-heading {
+	font-family: var(--IBM-font-family);
+	color: var(--secondar-color);
+	font-size: 18px;
+	font-weight: 500;
+}
+.newBadgeDetail-issuedBy .u-break-word {
+	color: var(--burnt-sienna);
+	font-size: 18px;
+	font-weight: 500;
+	font-family: var(--IBM-font-family);
+}
+.newBadgeDetail-descriptionWrap {
+	display: flex;
+	flex-direction: column;
+	gap: 18px;
+	font-family: var(--IBM-font-family);
+	color: var(--primary-color);
+	font-size: 24px;
+	line-height: 35px;
+	font-weight: 600;
+}
+
+.newBadgeDetail-desc-paragraph {
+	font-size: 20px;
+	line-height: 30px;
+	font-weight: 500;
+}
+
+
+.newBadgeDetail-link:hover {
+	color: var(--burnt-sienna);
+}
+.newBadgeDetail-imgWrapper.mobileView img {
+	width: 100px;
+}

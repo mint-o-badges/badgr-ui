@@ -1,79 +1,99 @@
 <form-message></form-message>
 
-<header class="topbar">
-	<div class="l-containerxaxis topbar-x-wrap">
-		<h2 class="topbar-x-heading" i18n>
-			Badges
-			<ng-template [showLoader]="false" [bgAwaitPromises]="[badgesLoaded]">
-				<span class="topbar-x-internalheading">
-					{{ badges.length | i18nPlural : plural['badges'] }}
-				</span>
-			</ng-template>
-		</h2>
-	</div>
-</header>
-
 <app-badge-legend *ngIf="showLegend" (closed)="closeLegend()"></app-badge-legend>
 
 <div>
 	<ng-template [showLoader]="true" [bgAwaitPromises]="[badgesLoaded]">
-		<section class="l-containerxaxis l-containeryaxis l-responsivelist">
-			<div class="l-actionbar u-margin-bottom3x">
-				<div class="forminput l-actionbar-x-search">
-					<div class="forminput-x-inputs">
-						<input
-							type="text"
-							name="forminput"
-							changeOrder
-							id="forminput"
-							placeholder="Browse badges"
-							[(ngModel)]="searchQuery"
-						/>
-						<svg class="forminput-x-icon" icon="icon_search"></svg>
-					</div>
-				</div>
-				<div class="l-actionbar-x-groupby" *ngIf="badgesDisplay != 'map'">
-					<label class="l-flex l-flex-2x">
-						<span id="badge-catalog-select-label" i18n>Group by </span>
-						<div class="forminput">
+		<section class="badgeCardContainer">
+			<header class="newBadgeTopBar">
+				<h2 class="topbar-x-heading" i18n>
+					<img src="../../../../assets/badges/badge-icon.svg" alt="badge" />
+					<ng-template [showLoader]="false" [bgAwaitPromises]="[badgesLoaded]">
+						<span class="totalBadges">
+							{{ badges.length | i18nPlural : plural['badges'] }}
+						</span>
+					</ng-template>
+				</h2>
+				<div class="newBadgeSearchBar">
+					<div class="newBadgeSearchBar-wrapper">
+						<div class="forminput l-actionbar-x-search">
 							<div class="forminput-x-inputs">
-								<select [(ngModel)]="groupBy" #selectInput class="border" id="badge-catalog-select">
-									<option *ngFor="let option of groups" [value]="option">
-										{{ option }}
-									</option>
-								</select>
+								<input
+									type="text"
+									name="forminput"
+									changeOrder
+									id="forminput"
+									placeholder="Browse badges"
+									[(ngModel)]="searchQuery"
+								/>
+								<img
+									class="forminput-x-icon"
+									src="../../../../assets/badges/search-icon.svg"
+									alt="search"
+								/>
 							</div>
 						</div>
-					</label>
-				</div>
-				<div class="viewtoggle l-actionbar-x-viewtoggle" [class.viewtoggle-is-listview]="order == 'desc'">
-					<label class="viewtoggle-x-grid" (click)="changeOrder('asc')">
-						<span class="visuallyhidden" i18n>name</span>
-						<input name="radiobutton2" id="radiobutton3" type="radio" value="asc" [(ngModel)]="order" />
-						<svg style="transform: rotateZ(90deg)" icon="icon_arrow"></svg>
-					</label>
-					<label class="viewtoggle-x-list" (click)="changeOrder('desc')">
-						<span class="visuallyhidden" i18n>-name</span>
-						<input type="radio" name="radiobutton2" id="radiobutton4" value="desc" [(ngModel)]="order" />
-						<svg style="transform: rotateZ(-90deg)" icon="icon_arrow"></svg>
-					</label>
-				</div>
-			</div>
-			<div class="subtitle-wrapper">
-				<div class="tags-wrapper">
-					<!-- <div class="tag" *ngFor="let tag of badgeClass.tags; last as last">{{ tag }}</div> -->
-					<div
-						(click)="filterByTag(tag)"
-						class="tag tag-wrapper tag-button"
-						[class.tag-button-pressed]="selectedTag == tag"
-						*ngFor="let tag of tags | slice : 0 : 3; last as last"
-					>
-						{{ tag }}
+						<div class="l-actionbar-x-groupby" *ngIf="badgesDisplay != 'map'">
+							<label class="searchGroupBy-wrapper">
+								<span class="groupBy" i18n>Group by </span>
+								<div class="forminput">
+									<div class="forminput-x-inputs">
+										<select
+											[(ngModel)]="groupBy"
+											#selectInput
+											class="border"
+											id="badge-catalog-select"
+										>
+											<option *ngFor="let option of groups" [value]="option">
+												{{ option }}
+											</option>
+										</select>
+									</div>
+								</div>
+							</label>
+						</div>
+					</div>
+					<div class="viewtoggle l-actionbar-x-viewtoggle" [class.viewtoggle-is-listview]="order == 'desc'">
+						<label class="viewtoggle-x-grid" (click)="changeOrder('asc')">
+							<span class="visuallyhidden" i18n>name</span>
+							<input name="radiobutton2" id="radiobutton3" type="radio" value="asc" [(ngModel)]="order" />
+
+							<svg style="transform: rotateZ(90deg); padding: 0" icon="icon_arrow"></svg>
+						</label>
+						<label class="viewtoggle-x-list" (click)="changeOrder('desc')">
+							<span class="visuallyhidden" i18n>-name</span>
+							<input
+								type="radio"
+								name="radiobutton2"
+								id="radiobutton4"
+								value="desc"
+								[(ngModel)]="order"
+							/>
+							<svg style="transform: rotateZ(-90deg); padding: 0" icon="icon_arrow"></svg>
+						</label>
 					</div>
 				</div>
-				<div class="open-legend-button">
-					<a (click)="openLegend()" i18n>What do the frames and colors mean?</a>
+			</header>
+
+			<div class="subtitle-wrapper newBadgeCardTags">
+				<div class="tags-wrapper">
+					<!-- <div class="tag" *ngFor="let tag of badgeClass.tags; last as last">{{ tag }}</div> -->
+					<div class="tagsHeading">العلامات</div>
+					<div>
+						<div
+							(click)="filterByTag(tag)"
+							class="tag tag-wrapper tag-button"
+							[class.tag-button-pressed]="selectedTag == tag"
+							*ngFor="let tag of tags | slice : 0 : 3; last as last"
+						>
+							{{ tag }}
+						</div>
+					</div>
 				</div>
+				<!-- TODO: disscuss with ali salman -->
+				<!-- <div class="open-legend-button">
+					<a (click)="openLegend()" i18n>What do the frames and colors mean?</a>
+				</div> -->
 			</div>
 			<ng-container *ngIf="groupBy == '---'">
 				<div class="l-grid l-grid-large">
@@ -95,9 +115,9 @@
 			</ng-container>
 			<ng-container *ngIf="groupBy == 'Issuer'">
 				<ng-container *ngFor="let issuerGroup of badgeResultsByIssuer">
-					<h3 class="u-text-h3-semibold u-margin-bottom2x u-margin-top6x u-text-dark1">
+					<h3 class="badgeMainHeading">
 						{{ issuerGroup.issuerName }}
-						<span class="u-text-small-semibold-caps u-text-dark4 u-margin-left2x"
+						<span class="badgeSubTitle"
 							>{{ issuerGroup.badges.length }}
 							{{ issuerGroup.badges.length == 1 ? 'Badge' : 'Badges' }}</span
 						>
@@ -121,12 +141,12 @@
 			</ng-container>
 			<ng-container *ngIf="groupBy == 'Category'">
 				<ng-container *ngFor="let categoryGroup of badgeResultsByCategory">
-					<h3 class="u-text-h3-semibold u-margin-bottom2x u-margin-top6x u-text-dark1">
+					<h3 class="badgeMainHeading">
 						{{ categoryOptions[categoryGroup.category] }}
-						<span class="u-text-small-semibold-caps u-text-dark4 u-margin-left2x"
-							>{{ categoryGroup.badges.length }}
-							{{ categoryGroup.badges.length == 1 ? 'Badge' : 'Badges' }}</span
-						>
+						<span class="badgeSubTitle">
+							{{ categoryGroup.badges.length }}
+							{{ categoryGroup.badges.length == 1 ? 'Badge' : 'Badges' }}
+						</span>
 					</h3>
 					<div class="l-grid l-grid-large">
 						<!-- TODO: Fix the badgecard link for sharing and routing -->

@@ -1,3 +1,7 @@
+.badgecard {
+	padding: 30px;
+}
+
 .open-legend-button {
 	color: var(--color-link);
 	justify-self: flex-end;
@@ -25,13 +29,4 @@
 	background-color: var(--color-interactive1);
 	color: var(--color-light1);
 	border-color: var(--color-interactive1);
-}
-#badge-catalog-select {
-	padding-top: 0px;
-	padding-bottom: 1px;
-	padding-left: 5px;
-}
-
-#badge-catalog-select-label {
-	padding-top: 3px;
 }

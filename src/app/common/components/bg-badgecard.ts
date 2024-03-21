@@ -1,46 +1,68 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
 	selector: 'bg-badgecard',
-	host: {'class': 'badgecard'},
+	host: { class: '  badgeNewCard' },
 	template: `
-		<div class="badgecard-x-status badgestatus badgestatus-{{mostRelevantStatus}}" *ngIf="mostRelevantStatus">
-			{{mostRelevantStatus}}
+		<div class="badgecard-x-status badgestatus badgestatus-{{ mostRelevantStatus }}" *ngIf="mostRelevantStatus">
+			{{ mostRelevantStatus }}
 		</div>
 
-		<div class="badgecard-x-body">
-			<div class="badgecard-x-image">
-				<img class="badgeimage badgeimage-{{mostRelevantStatus}}"
+		<div class="badgeNewCard-body">
+			<div class="badgeNewCard-image-wrap">
+				<img
+					class="badgeNewCard-image badgeimage-{{ mostRelevantStatus }}"
 					[loaded-src]="badgeImage"
 					[loading-src]="badgeLoadingImageUrl"
 					[error-src]="badgeFailedImageUrl"
-					width="80" />
+					width="110"
+				/>
 			</div>
-			<a *ngIf="badgeSlug" class="badgecard-x-title u-text-breakword" [routerLink]="['../earned-badge', badgeSlug]">{{ badgeTitle }}</a>
-			<a *ngIf="publicUrl" class="badgecard-x-title" [href]="publicUrl">{{ badgeTitle }}</a>
-			<a *ngIf="issuerSlug; else noIssuerSlug" class="badgecard-x-issuer" [routerLink]="['../../public/issuers', issuerSlug]">{{ issuerTitle }}</a>
-			<ng-template #noIssuerSlug>
-				<div class="badgecard-x-issuer">{{ issuerTitle }}</div>
-			</ng-template>
-			<p class="badgecard-x-desc" [truncatedText]="badgeDescription" [maxLength]="100"></p>
+			<div class="badgeNewCard-title-wrapper">
+				<!--
+				Need to discuss with ali
+				<a *ngIf="badgeSlug" class="badgeNewCard-title " [routerLink]="['../earned-badge', badgeSlug]">
+				{{ badgeTitle }}
+					مقدمة في تحليل البيانات
+				</a> -->
+				<a *ngIf="publicUrl" class="badgeNewCard-title  " [href]="publicUrl"> مقدمة في تحليل البيانات </a>
+
+				<a
+					*ngIf="issuerSlug; else noIssuerSlug"
+					class="badgeNewCard-issuer"
+					[routerLink]="['../../public/issuers', issuerSlug]"
+					>{{ issuerTitle }}</a
+				>
+				<ng-template #noIssuerSlug>
+					<div class="badgeNewCard-issuer">
+						أكاديمية سدايا
+
+						<!--{{ issuerTitle }} -->
+					</div>
+				</ng-template>
+				<p class="badgeNewCard-desc" [truncatedText]="badgeDescription" [maxLength]="100"></p>
+			</div>
 		</div>
-		<div class="badgecard-x-footer">
-			<div class="badgecard-x-date">
+		<div class="badgeNewCard-footer">
+			<div class="badgeNewCard-date">
 				<span *ngIf="badgeClass" i18n>
-					Available since:
+					متاح منذ:
+					<!--  Available since: -->
 				</span>
-				<time [date]="badgeIssueDate" format="mediumDate"></time>
+				<!--	<time [date]="badgeIssueDate" format="mediumDate"></time> -->
+				12 يناير 2024
 			</div>
 			<!-- Show Verify or Share Button unless public -->
-			<button class="badgecard-x-sharelink" *ngIf="!verifyUrl && !public && (mostRelevantStatus !== 'pending')"
-					(click)="shareClicked.emit($event)">
+			<button
+				class="badgeNewCard-sharelink"
+				*ngIf="!verifyUrl && !public && mostRelevantStatus !== 'pending'"
+				(click)="shareClicked.emit($event)"
+			>
 				Share
 			</button>
-			<a class="badgecard-x-sharelink" *ngIf="verifyUrl" [href]="verifyUrl">
-				Verify
-			</a>
+			<a class="badgeNewCard-sharelink" *ngIf="verifyUrl" [href]="verifyUrl"> Verify </a>
 		</div>
-	`
+	`,
 })
 export class BgBadgecard {
 	readonly badgeLoadingImageUrl = '../../../breakdown/static/images/badge-loading.svg';
@@ -54,7 +76,7 @@ export class BgBadgecard {
 	@Input() badgeIssueDate: string;
 	@Input() badgeClass: string;
 	@Input() issuerTitle: string;
-	@Input() mostRelevantStatus: "expired" | "new" | "pending" | undefined;
+	@Input() mostRelevantStatus: 'expired' | 'new' | 'pending' | undefined;
 	@Input() verifyUrl: string;
 	@Input() public = false;
 	@Output() shareClicked = new EventEmitter<MouseEvent>();

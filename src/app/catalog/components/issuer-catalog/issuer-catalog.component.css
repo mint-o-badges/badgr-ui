@@ -1,68 +1,229 @@
-#mapWrapper {
-    position: relative;
-    width: 100%;
-    /* height: 600px; */
-    flex-grow: 1;
-
-}
-#map { position: absolute; top: 0; bottom: 0; width: 100%; }
-
-.viewtoggle-container {
-    display: flex;
-}
-.viewtoggle-button {
-    position: relative;
-    top: 1px;
-    --viewtoggle-border-color: var(--color-light4);
-    background: var(--color-light1);
-    /* display: grid; */
-    width: 40px;
-    height: 42px;
-    grid-template-columns: 40px 40px;
-    display: table-cell;
-    vertical-align: middle;
-}
-
-.viewtoggle-button {
-    height: 42px;
-    border: 1px solid var(--viewtoggle-border-color);
-    background-color: var(--color-light1);
-    cursor: pointer;
-    transition: border var(--transition-duration) var(--transition-easing), color var(--transition-duration) var(--transition-easing);
-}
-
-.viewtoggle-button {
-    background-color: var(--color-light1);
-    
-    border-bottom-left-radius: 3px;
-    border-top-left-radius: 3px;
-}
-
-.viewtoggle-button.active {
-    --viewtoggle-inset-shadow: inset 0 1px 3px 0 var(--color-dark4);
-    box-shadow: var(--viewtoggle-inset-shadow);
-
-    background-color: var(--color-light4);
-}
-
-.mapView .viewtoggle-x-grid {
-    --viewtoggle-inset-shadow: none;
-    background-color: var(--color-light1);
-    pointer-events: all;
- 
+:root {
+	--border-color: #d9d9d9;
+	--gallery: #ececec;
+	--bg-body: #f9f8f5;
+	--bg-topbar: #f3f2ee;
+	--bg-color-card: #f9f8f5;
+	--primary-color: #1c355e;
+	--secondar-color: #7c7c7c;
+	--IBM-font-family: 'IBM Plex Sans Arabic', sans-serif;
+	--normal-font: 16px;
+	--burnt-sienna: #ea6852;
+	--gray: #8a8a8a;
+	--sliver: #bbbbbb;
 }
 
 #main-page {
-    display: flex;
-    flex-direction: column;
-    min-height: calc(100% - 20px);
+	max-width: 1660px;
+	width: 100%;
+	margin: 0 auto;
+	padding: 1rem 10px;
+}
+#map {
+	width: 100%;
+	border-radius: 10px;
+	height: 400px;
+	border: 1px solid var(--border-color);
 }
 
+.viewtoggle-container {
+	display: flex;
+}
+
+.map-main-wrapper {
+	position: relative;
+}
 
 #map-legend {
-    position: absolute;
-    left: 5px;
-    bottom: 5px;
-    padding: 0.8em;
-    background: white;
+	position: absolute;
+	left: 5px;
+	bottom: 5px;
+	padding: 0.8em;
+	background: white;
+}
+
+.newBadgeTopBar.instituationTopBar {
+	gap: 130px;
+}
+
+.viewtoggle-button.active svg path {
+	stroke: var(--burnt-sienna);
+}
+
+.largeToggle .viewtoggle-map .viewtoggle-button {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-bottom-left-radius: 10px;
+	border-top-left-radius: 10px;
+	box-shadow: none;
+	background-color: white;
+	height: 60px;
+	border: 1px solid var(--border-color);
+	width: 60px;
+}
+.largeToggle .viewtoggle-map .viewtoggle-button:dir(rtl) {
+	border-bottom-left-radius: 0;
+	border-top-left-radius: 0;
+	border-bottom-right-radius: 10px;
+	border-top-right-radius: 10px;
+}
+
+.newBadgeSearchBar.largeToggle .viewtoggle.lastToggle .viewtoggle-x-grid {
+	border-left: 1px solid var(--border-color);
+	border-bottom-left-radius: 10px;
+	border-top-left-radius: 10px;
+}
+.newBadgeSearchBar.largeToggle .viewtoggle.lastToggle .viewtoggle-x-grid:dir(rtl) {
+	border-left: 0;
+	border-right: 1px solid var(--border-color);
+	border-bottom-left-radius: 0;
+	border-top-left-radius: 0;
+	border-bottom-right-radius: 10px;
+	border-top-right-radius: 10px;
+}
+.newBadgeSearchBar.largeToggle .viewtoggle .viewtoggle-x-grid {
+	border-left: 0;
+	border-right: 0;
+	border-radius: 0;
+}
+
+/* Issuer list design */
+
+.issuerMainWrapper {
+	padding-top: 60px;
+	display: flex;
+	gap: 40px;
+	flex-direction: column;
+}
+
+.issuerMainWrapper .newIssuercard {
+	border: 1px solid var(--border-color);
+	border-radius: 16px;
+	padding: 30px 30px 0;
+	background-color: var(--color-light1);
+}
+
+.issuerMainWrapper .detailIssuer img {
+	transform: scaleX(-1);
+}
+.issuerMainWrapper .detailIssuer img:dir(rtl) {
+	transform: scaleX(1);
+}
+.total-issuer-badge {
+	display: flex;
+	gap: 22px;
+	align-items: center;
+}
+
+.total-issuer-text {
+	color: var(--primary-color);
+	font-size: 20px;
+	font-family: var(--IBM-font-family);
+	font-weight: 600;
+}
+.issuercard-main-wrap {
+	display: flex;
+	gap: 30px;
+}
+.newIssuercard {
+	display: flex;
+	flex-direction: column;
+}
+.newIssuercard .issuercard-x-footer {
+	border-top: 1px solid var(--border-color);
+	padding: 15px 0;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-top: 24px;
+}
+.newIssuercard .issuercard-x-image {
+	background-color: var(--bg-color-card);
+	border-radius: 16px;
+	border: 1px solid var(--border-color);
+}
+.newIssuercard .issuercard-x-image img {
+	width: 120px;
+	height: 120px;
+	padding: 20px;
+}
+
+.newIssuercard .issuercard-x-title a {
+	color: var(--primary-color);
+	font-size: 24px;
+	font-weight: 600;
+	font-family: var(--IBM-font-family);
+}
+.newIssuercard .issuercard-body {
+	display: flex;
+	gap: 14px;
+	flex-direction: column;
+}
+
+.newIssuercard .issuercard-x-desc {
+	color: var(--primary-color);
+	font-size: 20px;
+	font-weight: 400;
+	line-height: 30px;
+	font-family: var(--IBM-font-family);
+}
+
+/* list view */
+.issuerMainWrapper .datatable-roundheaders .datatable-x-header .datatable-x-cell {
+	box-shadow: none;
+	padding: 18px;
+}
+.issuerMainWrapper .datatable-roundheaders .datatable-x-header .datatable-x-cell:first-child {
+	border-top-left-radius: 10px;
+}
+.issuerMainWrapper .datatable-roundheaders .datatable-x-header .datatable-x-cell:first-child:dir(rtl) {
+	border-top-left-radius: unset;
+	border-top-right-radius: 10px;
+}
+.issuerMainWrapper .datatable-roundheaders .datatable-x-header .datatable-x-cell:last-child {
+	border-top-right-radius: 10px;
+}
+.issuerMainWrapper .datatable-roundheaders .datatable-x-header .datatable-x-cell:last-child:dir(rtl) {
+	border-top-right-radius: unset;
+	border-top-left-radius: 10px;
+}
+.issuerMainWrapper .datatable-roundheaders .datatable-x-row .datatable-x-cell:last-child:dir(rtl) {
+	border-right: none;
+	border-left: solid 1px var(--color-light4);
+}
+.issuerMainWrapper .datatable-roundheaders .datatable-x-row .datatable-x-cell:first-child:dir(rtl) {
+	border-left: none;
+	border-right: solid 1px var(--color-light4);
+}
+.issuerMainWrapper .datatable-x-cell.u-text-body a,
+time {
+	font-family: var(--IBM-font-family);
+}
+.issuerMainWrapper .datatable-roundheaders .datatable-x-head {
+	background-color: var(--burnt-sienna);
+	font-size: 18px;
+	font-weight: 500;
+	font-family: var(--IBM-font-family);
+	color: var(--color-light1);
+}
+
+.issuerMainWrapper .issuers-list-img {
+	padding: 10px;
+	border-radius: 10px;
+	border: 1px solid var(--border-color);
+	background-color: var(--bg-color-card);
+	width: max-content;
+}
+@media only screen and (min-width: 768px) {
+	.newBadgeTopBar.instituationTopBar {
+		gap: 30px;
+		flex-wrap: wrap;
+	}
+}
+@media only screen and (min-width: 1400px) {
+	.newBadgeTopBar.instituationTopBar {
+		gap: 130px;
+		flex-wrap: nowrap;
+	}
 }

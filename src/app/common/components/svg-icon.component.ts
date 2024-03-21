@@ -9,7 +9,7 @@ const iconsSvgPath = preloadImageURL('../../../assets/@concentricsky/badgr-style
   selector: 'svg[icon]',
   template: `
 		<svg:use [attr.xlink:href]="iconHref"></svg:use>
-	`
+`
 })
 export class SvgIconComponent {
   @Input() icon: PatternLibraryIconName;

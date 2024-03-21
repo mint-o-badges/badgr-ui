@@ -1,3 +1,60 @@
-b {
-    font-weight: bold;
+.faqs-main {
+	max-width: 1250px;
+	margin: 0 auto;
+	width: 100%;
+	padding: 1rem 10px;
+}
+.newBadgeTopBar .topbar-x-heading {
+	font-size: 32px;
+	font-weight: 600;
+	font-family: var(--IBM-font-family);
+	color: var(--primary-color);
+	padding: 15px 0;
+}
+
+.newFaqsAccordion {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	padding-top: 60px;
+}
+
+.newFaqsAccordion .accordion-item {
+	border: 1px solid var(--border-color);
+	border-radius: 16px;
+	background-color: white;
+	padding: 20px 32px;
+	display: flex;
+	color: var(--primary-color);
+	font-size: 20px;
+	font-family: var(--IBM-font-family);
+	gap: 15px;
+	flex-direction: column;
+}
+.accordion-button {
+	font-size: 24px;
+	color: var(--primary-color);
+	font-family: var(--IBM-font-family);
+	font-weight: 600;
+	line-height: 30px;
+}
+.newFaqsAccordion .accordion-button:not(.collapsed),
+.accordion-button {
+	padding: 0;
+	background-color: transparent;
+	box-shadow: none;
+}
+.newFaqsAccordion .accordion-body {
+	font-family: var(--IBM-font-family);
+	font-size: 20px;
+	line-height: 30px;
+	padding: 0;
+}
+.newFaqsAccordion .accordion-button::after {
+	background-image: url(../../../../breakdown/static/images/chevron.svg);
+	margin-top: 10px;
+}
+.newFaqsAccordion .accordion-button:dir(rtl)::after {
+	margin-left: unset;
+	margin-right: auto;
 }
