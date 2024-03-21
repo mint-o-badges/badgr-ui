@@ -430,12 +430,6 @@
 								Remove
 							</button>
 						</div>
-						<!-- <button
-							class="button"
-							style="background-color: var(--color-grün); color: var(--color-blue); margin-top: 2em"
-						>
-							Hinzufügen
-						</button> -->
 					</div>
 				</ng-container>
 				<!-- </ng-template> -->
@@ -684,76 +678,6 @@
 		</div>
 	</div>
 
-	<!-- tags -->
-	<!-- <div *ngIf="tagsEnabled" class="formsection">
-		<div class="formsection-x-title">
-			<h2 class="u-text-dark2">
-				Tags
-				<span>(Optional)</span>
-			</h2>
-			<button type="button" (click)="disableTags()" class="buttonicon buttonicon-link">
-				<svg icon="icon_close"></svg>
-				<span class="visuallyhidden">Close</span>
-			</button>
-		</div>
-
-		<div class="formsection-x-help">
-			<h3 class="u-text-body-bold">Was sind Tags?</h3>
-			<p class="u-text u-margin-top1x u-margin-bottom2x">
-				Tags sind eine optionale Art und Weise eine Badge zu beschreiben. Tags helfen bei der Suche von Badges
-				zu bestimmten Themen.
-			</p>
-		</div>
-		<div class="formsection-x-body">
-			<div class="l-tags">
-				<div *ngFor="let tag of tags" class="tag tag-withclose">
-					{{ tag }}
-					<button class="buttonicon buttonicon-link">
-						<svg icon="icon_close" (click)="removeTag(tag)"></svg>
-						<span class="visuallyhidden">Löschen</span>
-					</button>
-				</div>
-			</div>
-
-			<div class="forminput forminput-withbutton forminput-light1 u-width-formsmall u-margin-top3x">
-				<label class="forminput-x-label visuallyhidden" for="addtag">Add Tag</label>
-				<div class="forminput-x-inputs">
-					<div class="ng-autocomplete">
-						<ng-autocomplete
-							name="addtag"
-							id="addtag"
-							#newTagInput
-							maxlength="50"
-							[data]="existingTags"
-							[isLoading]="existingTagsLoading"
-							searchKeyword="name"
-							placeholder="Neuer Tag..."
-							(keypress)="handleTagInputKeyPress($event)"
-							[itemTemplate]="itemTemplate"
-							[notFoundTemplate]="notFoundTemplate"
-						>
-						</ng-autocomplete>
-
-						<ng-template #itemTemplate let-item>
-							<a [innerHTML]="item.name"></a>
-						</ng-template>
-
-						<ng-template #notFoundTemplate let-notFound>
-							<div>Dieser Tag existiert noch nicht.</div>
-						</ng-template>
-					</div> -->
-	<!--The additional style attribute here is needed to
-                        align the button with the autocomplete input.-->
-	<!-- <div class="forminput-x-button" style="margin-top: var(--gridspacing)">
-						<button type="button" (click)="addTag()" class="button button-secondary button-informinput">
-							Hinzufügen
-						</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div> -->
-
 	<!-- expiration -->
 	<div *ngIf="expirationEnabled" class="formsection">
 		<div class="formsection-x-title">
@@ -838,15 +762,6 @@
 			</ul>
 		</div>
 	</div>
-
-	<!-- <div class="formsection formsection-nohelp">
-		<div class="formsection-x-body">
-			<a href="https://openbadges.org/" class="u-text-outlink">
-				Finde mehr über Open Badges heraus
-				<svg icon="icon_external_link"></svg>
-			</a>
-		</div>
-	</div> -->
 
 	<div class="l-stack l-stack-right u-margin-top3x">
 		<button
