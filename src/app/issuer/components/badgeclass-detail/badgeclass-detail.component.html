@@ -71,31 +71,34 @@
 								</dd>
 							</div>
 						</div>
-						<div *ngIf="badgeClass.extension['extensions:BasedOnExtension'].BasedOn.slug" class="l-flex l-flex-2x u-padding-top2x border border-top border-light3">
+						<div
+							*ngIf="badgeClass.extension['extensions:BasedOnExtension'].BasedOn.slug"
+							class="l-flex l-flex-2x u-padding-top2x border border-top border-light3"
+						>
 							<div>
-								<dt class="u-text-small-bold u-text-dark2"><a 
-									class="u-break-word" 
-									[routerLink]="['/issuer/issuers/', badgeClass.extension['extensions:BasedOnExtension'].BasedOn.issuerSlug, 'badges', badgeClass.extension['extensions:BasedOnExtension'].BasedOn.slug]">
-									Basierend auf &rarr;
-								</a></dt>
+								<dt class="u-text-small-bold u-text-dark2">
+									<a
+										class="u-break-word"
+										[routerLink]="[
+											'/issuer/issuers/',
+											badgeClass.extension['extensions:BasedOnExtension'].BasedOn.issuerSlug,
+											'badges',
+											badgeClass.extension['extensions:BasedOnExtension'].BasedOn.slug
+										]"
+									>
+										Basierend auf &rarr;
+									</a>
+								</dt>
 							</div>
 						</div>
 						<dt
-							class="
-								u-text-small-bold u-padding-top2x u-margin-top2x
-								border border-top border-light3
-								u-text-dark2
-							"
+							class="u-text-small-bold u-padding-top2x u-margin-top2x border border-top border-light3 u-text-dark2"
 						>
 							Erstellt am:
 						</dt>
 						<dd class="u-text"><time [date]="badgeClass.createdAt" format="dd/MM/y"></time></dd>
 						<dt
-							class="
-								u-text-small-bold u-padding-top2x u-margin-top2x
-								border border-top border-light3
-								u-text-dark2
-							"
+							class="u-text-small-bold u-padding-top2x u-margin-top2x border border-top border-light3 u-text-dark2"
 							*ngIf="badgeClass.expiresAmount"
 						>
 							Ablaufdatum:
@@ -110,11 +113,7 @@
 						<!-- Study Load -->
 						<div *ngIf="badgeClass.extension['extensions:StudyLoadExtension']">
 							<dt
-								class="
-									u-text-small-bold u-padding-top2x u-margin-top2x
-									border border-top border-light3
-									u-text-dark2
-								"
+								class="u-text-small-bold u-padding-top2x u-margin-top2x border border-top border-light3 u-text-dark2"
 							>
 								Minimale Dauer
 							</dt>
@@ -125,11 +124,7 @@
 						<!-- Category -->
 						<div *ngIf="badgeClass.extension['extensions:CategoryExtension']">
 							<dt
-								class="
-									u-text-small-bold u-padding-top2x u-margin-top2x
-									border border-top border-light3
-									u-text-dark2
-								"
+								class="u-text-small-bold u-padding-top2x u-margin-top2x border border-top border-light3 u-text-dark2"
 							>
 								Kategorie:
 							</dt>
@@ -140,11 +135,7 @@
 						<!-- LEvel -->
 						<div *ngIf="badgeClass.extension['extensions:LevelExtension']">
 							<dt
-								class="
-									u-text-small-bold u-padding-top2x u-margin-top2x
-									border border-top border-light3
-									u-text-dark2
-								"
+								class="u-text-small-bold u-padding-top2x u-margin-top2x border border-top border-light3 u-text-dark2"
 							>
 								Level:
 							</dt>
@@ -219,6 +210,42 @@
 					</div>
 				</section>
 
+				<!-- Kompetenzen -->
+				<section>
+					<h3
+						class="u-text-h3-semibold u-text-dark2 u-margin-bottom2x u-margin-top4x"
+						*ngIf="badgeClass.extension && badgeClass.extension['extensions:CompetencyExtension']"
+					>
+						Kompetenzen
+					</h3>
+					<div>
+						<div *ngFor="let competency of badgeClass.extension['extensions:CompetencyExtension']">
+							<div style="display: flex; flex-direction: column; width: 50%">
+								<div style="display: flex; justify-content: space-between">
+									<span>Name: </span>
+									<span>{{ competency.name }}</span>
+								</div>
+								<div style="display: flex; justify-content: space-between">
+									<span>Beschreibung: </span>
+									<span>{{ competency.description }}</span>
+								</div>
+								<div style="display: flex; justify-content: space-between">
+									<span>Kategorie: </span>
+									<span>{{ competency.category }}</span>
+								</div>
+								<div *ngIf="competency.escoID" style="display: flex; justify-content: space-between">
+									<span>Esco ID: </span>
+									<span>{{ competency.escoID }}</span>
+								</div>
+								<div style="display: flex; justify-content: space-between">
+									<span>Dauer: </span>
+									<span>{{ competency.studyLoad }}</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+
 				<!-- recipients -->
 				<div class="l-stack u-margin-bottom2x u-margin-top4x">
 					<h2 class="u-text-h3-semibold u-text-dark2">
@@ -233,9 +260,9 @@
 					</div>
 				</div>
 				<p class="u-text u-margin-bottom3x" *ngIf="showAssertionCount">
-					{{ instanceResults.length }} bisherige Vergaben. Du kannst die Buttons Weiter/Zurück weiter unten verwenden, um weitere Vergaben anzuzeigen, 
-				oder Vergaben anhand der genauen E-Mail-Adresse/Empfängerkennung suchen.
-					
+					{{ instanceResults.length }} bisherige Vergaben. Du kannst die Buttons Weiter/Zurück weiter unten
+					verwenden, um weitere Vergaben anzuzeigen, oder Vergaben anhand der genauen
+					E-Mail-Adresse/Empfängerkennung suchen.
 				</p>
 				<ng-template
 					[bgAwaitPromises]="[badgeInstancesLoaded, assertionsLoaded]"
@@ -264,10 +291,7 @@
 											instance.recipientIdentifier
 										}}</span>
 										<span
-											class="
-												l-flex l-flex-justifyend l-flex-aligncenter l-flex-1x
-												u-hidden-minmobilelarge
-											"
+											class="l-flex l-flex-justifyend l-flex-aligncenter l-flex-1x u-hidden-minmobilelarge"
 										>
 											<button
 												class="buttonicon buttonicon-link"
