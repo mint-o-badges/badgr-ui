@@ -100,7 +100,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	 * The already existing tags for other badges, for the autocomplete to show.
 	 * The tags are loaded in @see fetchTags
 	 */
-	existingTags: object[];
+	existingTags: { id: number; name: string }[];
 
 	tagOptions: FormFieldSelectOption[];
 
@@ -395,9 +395,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				outerThis.tagOptions = outerThis.existingTags.map(
 					(tag) =>
 						({
-							//@ts-ignore
 							value: tag.name,
-							//@ts-ignore
 							label: tag.name,
 						}) as FormFieldSelectOption,
 				);
