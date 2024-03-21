@@ -204,7 +204,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// Tags
-	tagsEnabled = true;
 	tags = new Set<string>();
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -593,7 +592,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			this.existingBadgeClass.criteria_text = formState.badge_criteria_text;
 			this.existingBadgeClass.criteria_url = formState.badge_criteria_url;
 			this.existingBadgeClass.alignments = this.alignmentsEnabled ? formState.alignments : [];
-			this.existingBadgeClass.tags = this.tagsEnabled ? Array.from(this.tags) : [];
+			this.existingBadgeClass.tags = Array.from(this.tags);
 			this.existingBadgeClass.extension = {
 				...this.existingBadgeClass.extension,
 				'extensions:StudyLoadExtension': {
@@ -637,7 +636,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				image: formState.badge_image,
 				criteria_text: formState.badge_criteria_text,
 				criteria_url: formState.badge_criteria_url,
-				tags: this.tagsEnabled ? Array.from(this.tags) : [],
+				tags: Array.from(this.tags),
 				alignment: this.alignmentsEnabled ? formState.alignments : [],
 				extensions: {
 					'extensions:StudyLoadExtension': {
