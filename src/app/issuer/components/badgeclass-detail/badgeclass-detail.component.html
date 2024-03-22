@@ -210,6 +210,21 @@
 					</div>
 				</section>
 
+				<!-- Kategorie -->
+				<section>
+					<h3
+						class="u-text-h3-semibold u-text-dark2 u-margin-bottom2x u-margin-top4x"
+						*ngIf="badgeClass.extension && badgeClass.extension['extensions:CategoryExtension']"
+					>
+						Kategorie
+					</h3>
+					<span>{{
+						badgeClass.extension['extensions:CategoryExtension'].Category === 'competency'
+							? 'Kompetenz- Badge'
+							: 'Teilnahme- Badge'
+					}}</span>
+				</section>
+
 				<!-- Kompetenzen -->
 				<section>
 					<h3
