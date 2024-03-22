@@ -108,7 +108,7 @@
 						<dt
 							class="u-text-small-bold u-padding-top2x u-margin-top2x border border-top border-light3 u-text-dark2"
 						>
-							{{ compareDate(badge.expiresDate, now) | i18nPlural : tense['expires'] }} on:
+							{{ compareDate(badge.expiresDate, now) | i18nPlural: tense['expires'] }} on:
 						</dt>
 						<dd class="u-text"><time [date]="badge?.expiresDate" format="mediumDate"></time></dd>
 					</div>
@@ -136,6 +136,45 @@
 						>View external Criteria URL
 						<svg icon="icon_external_link"></svg>
 					</a>
+				</div>
+			</section>
+			<!-- Kategorie -->
+			<section>
+				<h3 *ngIf="category" class="u-text-h3-semibold u-margin-bottom2x u-text-dark2 u-margin-top4x">
+					Kategorie
+				</h3>
+				<span>{{ category.Category === 'competency' ? 'Kompetenz- Badge' : 'Teilnahme- Badge' }}</span>
+			</section>
+
+			<!-- Kompetenzen -->
+			<section>
+				<h3 *ngIf="competencies" class="u-text-h3-semibold u-margin-bottom2x u-text-dark2 u-margin-top4x">
+					Kompetenzen
+				</h3>
+				<div *ngFor="let competency of competencies; let i = index">
+					<h1 style="margin-top: 1em; font-weight: bold">{{ i + 1 }}. {{ competency.name }}</h1>
+					<div style="display: flex; flex-direction: column; width: 50%">
+						<div style="display: flex; justify-content: space-between">
+							<span>Name: </span>
+							<span>{{ competency.name }}</span>
+						</div>
+						<div style="display: flex; justify-content: space-between">
+							<span>Beschreibung: </span>
+							<span>{{ competency.description }}</span>
+						</div>
+						<div style="display: flex; justify-content: space-between">
+							<span>Kategorie: </span>
+							<span>{{ competency.category }}</span>
+						</div>
+						<div *ngIf="competency.escoID" style="display: flex; justify-content: space-between">
+							<span>Esco ID: </span>
+							<span>{{ competency.escoID }}</span>
+						</div>
+						<div style="display: flex; justify-content: space-between">
+							<span>Dauer: </span>
+							<span>{{ competency.studyLoad }}</span>
+						</div>
+					</div>
 				</div>
 			</section>
 
