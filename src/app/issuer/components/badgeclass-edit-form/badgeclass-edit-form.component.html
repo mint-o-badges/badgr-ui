@@ -414,20 +414,23 @@
 							placeholder="z.B. esco/skill/00090cc1-1f27-439e-a4e0-19a87a501bfc"
 						></bg-formfield-text>
 						<div class="l-flex l-flex-1x l-flex-justifybetween u-margin-bottom2x" style="margin-top: 2em">
-							<button
+							<!-- TODO: clarify which button will be used to add competencies -->
+
+							<!-- <button
 								class="button"
 								type="button"
 								style="background-color: var(--color-grün); color: var(--color-blue)"
 							>
 								Hinzufügen
-							</button>
+							</button> -->
+
 							<button
 								*ngIf="badgeClassForm.controls.competencies.controls.length > 0"
 								type="button"
 								(click)="removeCompetency(competency)"
 								class="u-text-link"
 							>
-								Remove
+								Entfernen
 							</button>
 						</div>
 					</div>
