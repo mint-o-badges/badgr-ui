@@ -371,15 +371,19 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		this.fetchTags();
 	}
 
-	handleBadgeCategoryChange() {
+	async handleBadgeCategoryChange() {
 		if (
 			this.badgeCategory === 'competency' &&
 			this.badgeClassForm.rawControl.controls['badge_category'].value !== 'competency'
 		) {
-			const response = window.confirm(
-				'Wenn du die Kategorie änderst, werden alle Kompetenzen gelöscht. Möchtest du fortfahren?',
-			);
-			if (response) {
+			if (
+				await this.dialogService.confirmDialog.openTrueFalseDialog({
+					dialogTitle: 'Wenn du die Kategorie änderst, werden alle Kompetenzen gelöscht.',
+					dialogBody: 'Möchtest du fortfahren?',
+					resolveButtonLabel: 'Fortfahren',
+					rejectButtonLabel: 'Abbrechen',
+				})
+			) {
 				this.badgeClassForm.controls.competencies.reset();
 				const controls = this.badgeClassForm.controls.competencies.controls;
 				for (let i = controls.length - 1; i >= 0; i--) {
