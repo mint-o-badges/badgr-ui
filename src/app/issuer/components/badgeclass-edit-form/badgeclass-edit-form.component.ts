@@ -350,7 +350,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		let that = this;
 		// update badge frame when a category is selected, unless no-hexagon-frame checkbox is checked
 		this.badgeClassForm.rawControl.controls['badge_category'].statusChanges.subscribe((res) => {
-			this.badgeCategory = this.badgeClassForm.rawControl.controls['badge_category'].value;
+			this.handleBadgeCategoryChange();
 			if (this.currentImage && !this.hideHexFrame) {
 				//timeout because of workaround for angular bug.
 				setTimeout(function () {
@@ -369,6 +369,29 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		});
 
 		this.fetchTags();
+	}
+
+	handleBadgeCategoryChange() {
+		if (
+			this.badgeCategory === 'competency' &&
+			this.badgeClassForm.rawControl.controls['badge_category'].value !== 'competency'
+		) {
+			const response = window.confirm(
+				'Wenn du die Kategorie änderst, werden alle Kompetenzen gelöscht. Möchtest du fortfahren?',
+			);
+			if (response) {
+				this.badgeClassForm.controls.competencies.reset();
+				const controls = this.badgeClassForm.controls.competencies.controls;
+				for (let i = controls.length - 1; i >= 0; i--) {
+					this.badgeClassForm.controls.competencies.removeAt(controls.indexOf(controls[i]));
+				}
+				this.badgeCategory = this.badgeClassForm.rawControl.controls['badge_category'].value;
+			} else {
+				this.badgeClassForm.controls['badge_category'].setValue(this.badgeCategory);
+			}
+		} else {
+			this.badgeCategory = this.badgeClassForm.rawControl.controls['badge_category'].value;
+		}
 	}
 
 	/**
