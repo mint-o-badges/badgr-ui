@@ -1,41 +1,40 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {Title} from '@angular/platform-browser';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
-import {CommonDialogsService} from '../../../common/services/common-dialogs.service';
-import {StringMatchingUtil} from '../../../common/util/string-matching-util';
-import {BaseAuthenticatedRoutableComponent} from '../../../common/pages/base-authenticated-routable.component';
-import {groupIntoArray, groupIntoObject} from '../../../common/util/array-reducers';
-import {MessageService} from '../../../common/services/message.service';
-import {SessionService} from '../../../common/services/session.service';
+import { CommonDialogsService } from '../../../common/services/common-dialogs.service';
+import { StringMatchingUtil } from '../../../common/util/string-matching-util';
+import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
+import { groupIntoArray, groupIntoObject } from '../../../common/util/array-reducers';
+import { MessageService } from '../../../common/services/message.service';
+import { SessionService } from '../../../common/services/session.service';
 
-import {AddBadgeDialogComponent} from '../add-badge-dialog/add-badge-dialog.component';
-import {RecipientBadgeManager} from '../../services/recipient-badge-manager.service';
-import {ApiRecipientBadgeIssuer} from '../../models/recipient-badge-api.model';
-import {RecipientBadgeInstance} from '../../models/recipient-badge.model';
-import {badgeShareDialogOptionsFor} from '../recipient-earned-badge-detail/recipient-earned-badge-detail.component';
-import {UserProfileManager} from '../../../common/services/user-profile-manager.service';
-import {AppConfigService} from '../../../common/app-config.service';
-import { ImportLauncherDirective } from "../../../mozz-transition/directives/import-launcher/import-launcher.directive";
-import { LinkEntry } from "../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component";
+import { AddBadgeDialogComponent } from '../add-badge-dialog/add-badge-dialog.component';
+import { RecipientBadgeManager } from '../../services/recipient-badge-manager.service';
+import { ApiRecipientBadgeIssuer } from '../../models/recipient-badge-api.model';
+import { RecipientBadgeInstance } from '../../models/recipient-badge.model';
+import { badgeShareDialogOptionsFor } from '../recipient-earned-badge-detail/recipient-earned-badge-detail.component';
+import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
+import { AppConfigService } from '../../../common/app-config.service';
+import { ImportLauncherDirective } from '../../../mozz-transition/directives/import-launcher/import-launcher.directive';
+import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { UserProfile } from '../../../common/model/user-profile.model';
 
-type BadgeDispay = "grid" | "list" ;
+type BadgeDispay = 'grid' | 'list';
 
 @Component({
 	selector: 'recipient-earned-badge-list',
-	templateUrl: './recipient-earned-badge-list.component.html'
+	templateUrl: './recipient-earned-badge-list.component.html',
 })
-
 export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	readonly noBadgesImageUrl = '../../../../assets/@concentricsky/badgr-style/dist/images/image-empty-backpack.svg';
 	readonly badgeLoadingImageUrl = '../../../../breakdown/static/images/badge-loading.svg';
 	readonly badgeFailedImageUrl = '../../../../breakdown/static/images/badge-failed.svg';
 
-	@ViewChild("addBadgeDialog")
+	@ViewChild('addBadgeDialog')
 	addBadgeDialog: AddBadgeDialogComponent;
 
-	@ViewChild(ImportLauncherDirective) importLauncherDirective:ImportLauncherDirective;
+	@ViewChild(ImportLauncherDirective) importLauncherDirective: ImportLauncherDirective;
 
 	allBadges: RecipientBadgeInstance[] = [];
 	badgesLoaded: Promise<unknown>;
@@ -46,15 +45,17 @@ export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutable
 	badgeClassesByIssuerId: { [issuerUrl: string]: RecipientBadgeInstance[] };
 
 	mozillaTransitionOver = true;
-	mozillaFeatureEnabled = this.configService.featuresConfig[
-		"enableComingFromMozilla"
-	];
+	mozillaFeatureEnabled = this.configService.featuresConfig['enableComingFromMozilla'];
 	maxDisplayedResults = 100;
 
-	crumbs: LinkEntry[] = [{title: 'Backpack', routerLink: ['/recipient/badges']},];
+	crumbs: LinkEntry[] = [{ title: 'Backpack', routerLink: ['/recipient/badges'] }];
 
-	private _badgesDisplay: BadgeDispay = "grid";
-	get badgesDisplay() {return this._badgesDisplay;}
+	currentTabId: TabEnum = 'badge';
+
+	private _badgesDisplay: BadgeDispay = 'grid';
+	get badgesDisplay() {
+		return this._badgesDisplay;
+	}
 	set badgesDisplay(val: BadgeDispay) {
 		this._badgesDisplay = val;
 		// this.updateResults();
@@ -62,15 +63,19 @@ export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutable
 	}
 
 	private _groupByIssuer = false;
-	get groupByIssuer() {return this._groupByIssuer;}
+	get groupByIssuer() {
+		return this._groupByIssuer;
+	}
 	set groupByIssuer(val: boolean) {
 		this._groupByIssuer = val;
 		this.saveDisplayState();
 		this.updateResults();
 	}
 
-	private _searchQuery = "";
-	get searchQuery() { return this._searchQuery; }
+	private _searchQuery = '';
+	get searchQuery() {
+		return this._searchQuery;
+	}
 	set searchQuery(query) {
 		this._searchQuery = query;
 		this.saveDisplayState();
@@ -87,22 +92,23 @@ export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutable
 		private messageService: MessageService,
 		private recipientBadgeManager: RecipientBadgeManager,
 		public configService: AppConfigService,
-		private profileManager: UserProfileManager
+		private profileManager: UserProfileManager,
 	) {
 		super(router, route, sessionService);
 
-		title.setTitle(`Backpack - ${this.configService.theme['serviceName'] || "Badgr"}`);
+		title.setTitle(`Backpack - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 
-		this.badgesLoaded = this.recipientBadgeManager.recipientBadgeList.loadedPromise
-			.catch(e => this.messageService.reportAndThrowError("Failed to load your badges", e));
+		this.badgesLoaded = this.recipientBadgeManager.recipientBadgeList.loadedPromise.catch((e) =>
+			this.messageService.reportAndThrowError('Failed to load your badges', e),
+		);
 
-		this.recipientBadgeManager.recipientBadgeList.changed$.subscribe(
-			badges => this.updateBadges(badges.entities)
+		this.recipientBadgeManager.recipientBadgeList.changed$.subscribe((badges) =>
+			this.updateBadges(badges.entities),
 		);
 
 		if (sessionService.isLoggedIn) {
 			// force a refresh of the userProfileSet now that we are authenticated
-			profileManager.userProfileSet.updateList().then(p => {
+			profileManager.userProfileSet.updateList().then((p) => {
 				if (profileManager.userProfile.agreedTermsVersion !== profileManager.userProfile.latestTermsVersion) {
 					dialogService.newTermsDialog.openDialog();
 				}
@@ -127,11 +133,11 @@ export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutable
 
 	restoreDisplayState() {
 		try {
-			const state: object = JSON.parse(window.localStorage["recipient-earned-badge-list-viewstate"]);
+			const state: object = JSON.parse(window.localStorage['recipient-earned-badge-list-viewstate']);
 
-			this.groupByIssuer = state["groupByIssuer"];
-			this.searchQuery = state["searchQuery"];
-			this.badgesDisplay = state["badgesDisplay"];
+			this.groupByIssuer = state['groupByIssuer'];
+			this.searchQuery = state['searchQuery'];
+			this.badgesDisplay = state['badgesDisplay'];
 		} catch (e) {
 			// Bad serialization
 		}
@@ -139,27 +145,30 @@ export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutable
 
 	saveDisplayState() {
 		try {
-			window.localStorage["recipient-earned-badge-list-viewstate"] = JSON.stringify({
+			window.localStorage['recipient-earned-badge-list-viewstate'] = JSON.stringify({
 				groupByIssuer: this.groupByIssuer,
 				searchQuery: this.searchQuery,
-				badgesDisplay: this.badgesDisplay
+				badgesDisplay: this.badgesDisplay,
 			});
 		} catch (e) {
 			// We can't always save to local storage
 		}
 	}
 
+	openTab(tabId: TabEnum) {
+		this.currentTabId = tabId;
+	}
+
 	ngOnInit() {
 		super.ngOnInit();
-		if(this.route.snapshot.routeConfig.path === "badges/import") this.launchImport(new Event('click'));
+		if (this.route.snapshot.routeConfig.path === 'badges/import') this.launchImport(new Event('click'));
 	}
 
 	addBadge() {
-		this.addBadgeDialog.openDialog({})
-			.then(
-				() => {},
-				() => {}
-			);
+		this.addBadgeDialog.openDialog({}).then(
+			() => {},
+			() => {},
+		);
 	}
 
 	shareBadge(badge: RecipientBadgeInstance) {
@@ -169,24 +178,31 @@ export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutable
 	}
 
 	deleteBadge(badge: RecipientBadgeInstance) {
-		this.dialogService.confirmDialog.openResolveRejectDialog({
-			dialogTitle: "Confirm Remove",
-			dialogBody: `Are you sure you want to remove ${badge.badgeClass.name} from your badges?`,
-			rejectButtonLabel: "Cancel",
-			resolveButtonLabel: "Remove Badge"
-		}).then(
-			() => this.recipientBadgeManager.deleteRecipientBadge(badge),
-			() => {}
-		);
+		this.dialogService.confirmDialog
+			.openResolveRejectDialog({
+				dialogTitle: 'Confirm Remove',
+				dialogBody: `Are you sure you want to remove ${badge.badgeClass.name} from your badges?`,
+				rejectButtonLabel: 'Cancel',
+				resolveButtonLabel: 'Remove Badge',
+			})
+			.then(
+				() => this.recipientBadgeManager.deleteRecipientBadge(badge),
+				() => {},
+			);
 	}
 
 	private updateBadges(allBadges: RecipientBadgeInstance[]) {
-		this.badgeClassesByIssuerId = allBadges
-			.reduce(groupIntoObject<RecipientBadgeInstance>(b => b.issuerId), {});
+		this.badgeClassesByIssuerId = allBadges.reduce(
+			groupIntoObject<RecipientBadgeInstance>((b) => b.issuerId),
+			{},
+		);
 
 		this.allIssuers = allBadges
-			.reduce(groupIntoArray<RecipientBadgeInstance, string>(b => b.issuerId), [])
-			.map(g => g.values[0].badgeClass.issuer);
+			.reduce(
+				groupIntoArray<RecipientBadgeInstance, string>((b) => b.issuerId),
+				[],
+			)
+			.map((g) => g.values[0].badgeClass.issuer);
 
 		this.allBadges = allBadges;
 
@@ -194,11 +210,11 @@ export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutable
 	}
 
 	issuerIdToSlug(issuerId) {
-		if(issuerId.startsWith("http")) {
-			let splitted = (issuerId.split(/[/.\s]/))
-			return splitted[splitted.length-1]
+		if (issuerId.startsWith('http')) {
+			let splitted = issuerId.split(/[/.\s]/);
+			return splitted[splitted.length - 1];
 		} else {
-			return issuerId
+			return issuerId;
 		}
 	}
 
@@ -207,7 +223,7 @@ export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutable
 		this.badgeResults.length = 0;
 		this.issuerResults.length = 0;
 
-		const issuerResultsByIssuer: {[issuerUrl: string]: MatchingIssuerBadges} = {};
+		const issuerResultsByIssuer: { [issuerUrl: string]: MatchingIssuerBadges } = {};
 
 		const addBadgeToResults = (badge: RecipientBadgeInstance) => {
 			// Restrict Length
@@ -215,12 +231,12 @@ export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutable
 				return false;
 			}
 
-			let issuerResults = issuerResultsByIssuer[ badge.issuerId ];
+			let issuerResults = issuerResultsByIssuer[badge.issuerId];
 
 			if (!issuerResults) {
-				issuerResults = issuerResultsByIssuer[ badge.issuerId ] = new MatchingIssuerBadges(
+				issuerResults = issuerResultsByIssuer[badge.issuerId] = new MatchingIssuerBadges(
 					badge.issuerId,
-					badge.badgeClass.issuer
+					badge.badgeClass.issuer,
 				);
 
 				// append result to the issuerResults array bound to the view template.
@@ -229,7 +245,7 @@ export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutable
 
 			issuerResults.addBadge(badge);
 
-			if (!this.badgeResults.find(r => r.badge === badge)) {
+			if (!this.badgeResults.find((r) => r.badge === badge)) {
 				// appending the results to the badgeResults array bound to the view template.
 				this.badgeResults.push(new BadgeResult(badge, issuerResults.issuer));
 			}
@@ -238,19 +254,15 @@ export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutable
 		};
 
 		const addIssuerToResults = (issuer: ApiRecipientBadgeIssuer) => {
-			(this.badgeClassesByIssuerId[ issuer.id ] || []).forEach(addBadgeToResults);
+			(this.badgeClassesByIssuerId[issuer.id] || []).forEach(addBadgeToResults);
 		};
 
-		this.allIssuers
-			.filter(MatchingAlgorithm.issuerMatcher(this.searchQuery))
-			.forEach(addIssuerToResults);
+		this.allIssuers.filter(MatchingAlgorithm.issuerMatcher(this.searchQuery)).forEach(addIssuerToResults);
 
-		this.allBadges
-			.filter(MatchingAlgorithm.badgeMatcher(this._searchQuery))
-			.forEach(addBadgeToResults);
+		this.allBadges.filter(MatchingAlgorithm.badgeMatcher(this._searchQuery)).forEach(addBadgeToResults);
 
 		this.badgeResults.sort((a, b) => b.badge.issueDate.getTime() - a.badge.issueDate.getTime());
-		this.issuerResults.forEach(r => r.badges.sort((a, b) => b.issueDate.getTime() - a.issueDate.getTime()));
+		this.issuerResults.forEach((r) => r.badges.sort((a, b) => b.issueDate.getTime() - a.issueDate.getTime()));
 	}
 
 	// exportPdf() {
@@ -267,14 +279,17 @@ export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutable
 }
 
 class BadgeResult {
-	constructor(public badge: RecipientBadgeInstance, public issuer: ApiRecipientBadgeIssuer) {}
+	constructor(
+		public badge: RecipientBadgeInstance,
+		public issuer: ApiRecipientBadgeIssuer,
+	) {}
 }
 
 class MatchingIssuerBadges {
 	constructor(
 		public issuerId: string,
 		public issuer: ApiRecipientBadgeIssuer,
-		public badges: RecipientBadgeInstance[] = []
+		public badges: RecipientBadgeInstance[] = [],
 	) {}
 
 	addBadge(badge: RecipientBadgeInstance) {
@@ -291,17 +306,15 @@ class MatchingAlgorithm {
 		const patternStr = StringMatchingUtil.normalizeString(inputPattern);
 		const patternExp = StringMatchingUtil.tryRegExp(patternStr);
 
-		return issuer => (
-			StringMatchingUtil.stringMatches(issuer.name, patternStr, patternExp)
-		);
+		return (issuer) => StringMatchingUtil.stringMatches(issuer.name, patternStr, patternExp);
 	}
 
 	static badgeMatcher(inputPattern: string): (badge: RecipientBadgeInstance) => boolean {
 		const patternStr = StringMatchingUtil.normalizeString(inputPattern);
 		const patternExp = StringMatchingUtil.tryRegExp(patternStr);
 
-		return badge => (
-			StringMatchingUtil.stringMatches(badge.badgeClass.name, patternStr, patternExp)
-		);
+		return (badge) => StringMatchingUtil.stringMatches(badge.badgeClass.name, patternStr, patternExp);
 	}
 }
+
+type TabEnum = 'badge' | 'competency' | 'collection';

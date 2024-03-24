@@ -9,15 +9,28 @@
 			</div>
 		</div>-->
 		<div class="l-containerxaxis topbar-x-wrap">
-			<h2 class="topbar-x-heading">
-				{{ 'General.backpack' | translate }}
-				<span class="topbar-x-internalheading" *ngIf="!!allBadges"
-					>{{ allBadges.length }} {{ allBadges.length == 1 ? 'Badge' : 'Badges' }}</span
-				>
-			</h2>
+			<div style="display: flex; flex-direction: column">
+				<h2 class="topbar-x-heading">Willkommen in deinem Rucksack</h2>
+				<p class="topbar-x-subheading">
+					Hier siehst du deine gesammelten und bei OEB hochgeladenen Badges. Du kannst eigene
+					<strong> Sammlungen </strong> anlegen, um die Badges darin zu organisieren und mit anderen zu
+					teilen.
+				</p>
+				<p class="topbar-x-subheading" style="color: red">
+					In der <strong> Kompetenz-Ansicht </strong> siehst du, auf welche Profile deine Badges einzahlen.
+				</p>
+			</div>
 			<div class="l-primarymore">
+				<button
+					class="button topbar-x-button button-withiconleft"
+					(click)="addBadge()"
+					[disabled-when-requesting]="true"
+				>
+					<svg class="buttonicon button-x-iconleft" icon="icon_upload"></svg>
+					<span style="margin-left: 1em"> <span style="font-weight: 400">Badge</span> hochladen</span>
+				</button>
 				<button class="button topbar-x-button" (click)="addBadge()" [disabled-when-requesting]="true">
-					{{ 'RecBadge.addBadge' | translate }}
+					<span><span style="font-weight: 400">Sammlung</span> anlegen </span>
 				</button>
 				<!-- <button class="topbar-x-button buttonicon buttonicon-secondary" [bgPopupMenuTrigger]="collectionActionMenu">
 					<svg icon="icon_more"></svg>
@@ -46,7 +59,9 @@
 						<h2>{{ 'RecBadge.fromMozilla' | translate }}</h2>
 						<p>
 							{{ 'RecBadge.finisihAddBadge1' | translate }}
-							<button (click)="launchImport($event)" class="u-display-inline u-text-link">{{ 'RecBadge.finisihAddBadge2' | translate }}</button>
+							<button (click)="launchImport($event)" class="u-display-inline u-text-link">
+								{{ 'RecBadge.finisihAddBadge2' | translate }}
+							</button>
 							{{ 'RecBadge.finisihAddBadge3' | translate }}
 						</p>
 					</div>
@@ -57,15 +72,6 @@
 				</div>
 			</div>
 		</ng-container>
-
-		<!-- No badges, empty state! -->
-		<section class="emptysection l-emptysection" *ngIf="allBadges.length == 0">
-			<h2 class="emptysection-x-headline">{{ 'RecBadge.noBadgesYet' | translate }}</h2>
-			<p class="emptysection-x-copy">{{ 'RecBadge.collectShareBadges' | translate }}</p>
-			<div class="emptysection-x-imagecontainer">
-				<img alt="Illustration of backpack with badges" class="emptysection-x-image" [src]="noBadgesImageUrl" />
-			</div>
-		</section>
 
 		<!-- Badge Search, group and grid/list toggle -->
 		<div class="l-containerxaxis l-containeryaxis" *ngIf="allBadges.length > 0">
@@ -85,7 +91,7 @@
 				<div class="l-actionbar-x-groupby">
 					<label class="checkbox checkbox-small">
 						<input name="groupby" type="checkbox" [(ngModel)]="groupByIssuer" />
-						<span class="checkbox-x-text">{{ 'RecBadge.groupByInstitution' | translate }}</span>
+						<span class="checkbox-x-text">Nach Institution gruppieren</span>
 					</label>
 				</div>
 				<div
@@ -118,8 +124,43 @@
 				</div>
 			</div>
 
+			<!-- Tab Navigation Bar -->
+			<div class="l-containerxaxis" style="margin-top: 2em; margin-bottom: 2em">
+				<nav aria-labelledby="heading-share-options" class="tabbar tabbar-bare" style="width: 50%">
+					<button
+						[class.tab-is-active]="currentTabId === 'badge'"
+						(click)="openTab('badge')"
+						class="tab tab-bare"
+					>
+						<span class="visuallyhidden"> Open the </span> Badge- Ansicht
+						<span class="visuallyhidden"> tab</span>
+					</button>
+					<button
+						[class.tab-is-active]="currentTabId === 'competency'"
+						(click)="openTab('competency')"
+						class="tab tab-bare"
+					>
+						<span class="visuallyhidden"> Open the </span>Kompetenz- Ansicht
+						<span class="visuallyhidden"> tab</span>
+					</button>
+					<button
+						[class.tab-is-active]="currentTabId === 'collection'"
+						(click)="openTab('collection')"
+						class="tab tab-bare"
+					>
+						<span class="visuallyhidden"> Open the </span>Meine Sammlungen
+						<span class="visuallyhidden"> tab</span>
+					</button>
+				</nav>
+			</div>
+
+			<!-- No badges, empty state! -->
+			<section class="emptysection l-emptysection" *ngIf="allBadges.length == 0 && currentTabId === 'badge'">
+				<span style="font-style: italic">Du hast noch keine Badges gesammelt.</span>
+			</section>
+
 			<!-- Grid View -->
-			<ng-template [ngIf]="badgesDisplay == 'grid'">
+			<ng-template [ngIf]="badgesDisplay == 'grid' && currentTabId === 'badge'">
 				<!-- ------------------ UNGROUPED ------------------  -->
 				<ng-template [ngIf]="!groupByIssuer">
 					<div class="l-grid l-grid-large">
