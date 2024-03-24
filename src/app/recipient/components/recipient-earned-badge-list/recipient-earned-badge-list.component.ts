@@ -171,6 +171,10 @@ export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutable
 		);
 	}
 
+	addCollection() {
+		this.router.navigate(['recipient/badge-collections/create']);
+	}
+
 	shareBadge(badge: RecipientBadgeInstance) {
 		badge.markAccepted();
 
