@@ -16,8 +16,6 @@ import { BadgeClassManager } from '../../../issuer/services/badgeclass-manager.s
 import { StringMatchingUtil } from '../../../common/util/string-matching-util';
 import { BadgeClassCategory } from '../../../issuer/models/badgeclass-api.model';
 import { TranslateService } from '@ngx-translate/core';
-import { CollectionBadge } from '../../../issuer/models/collectionbadge.model';
-import { CollectionBadgeManager } from '../../../issuer/services/collectionbadge-manager.service';
 
 @Component({
 	selector: 'app-badge-catalog',
@@ -41,8 +39,6 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 
 	// issuersLoaded: Promise<unknown>;
 	badgesLoaded: Promise<unknown>;
-	collectionBadgesLoaded: Promise<unknown>;
-	collectionBadges: CollectionBadge[] = null;
 
 	showLegend = false;
 	tags: string[] = [];
@@ -102,8 +98,6 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		protected messageService: MessageService,
 		protected configService: AppConfigService,
 		protected badgeClassService: BadgeClassManager,
-		private collectionBadgeManager: CollectionBadgeManager,
-
 		router: Router,
 		route: ActivatedRoute,
 		private translate: TranslateService,
@@ -113,7 +107,6 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 
 		// subscribe to issuer and badge class changes
 		this.badgesLoaded = this.loadBadges();
-		this.collectionBadgesLoaded = this.loadCollectionBadges();
 	}
 
 	async loadBadges() {
@@ -136,20 +129,6 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		});
 	}
 
-	async loadCollectionBadges() {
-		return new Promise(async (resolve, reject) => {
-			this.collectionBadgeManager.allCollectionBadges$.subscribe(
-				(collectionbadges) => {
-					this.collectionBadges = collectionbadges;
-					resolve(collectionbadges);
-				},
-				(error) => {
-					this.messageService.reportAndThrowError('Failed to load collection-badges', error);
-				},
-			);
-		});
-	}
-
 	async getIssuer(badge: BadgeClass): Promise<Issuer> {
 		const im = badge.issuerManager;
 		const issuer = await im.issuerBySlug(badge.issuerSlug);
@@ -164,7 +143,8 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		this.prepareTexts();
 		// Translate: to update predefined text when language is changed
 		this.translate.onLangChange.subscribe((event) => {
-			this.prepareTexts();
+			this.prepareTexts()
+			
 		});
 	}
 	prepareTexts() {

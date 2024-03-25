@@ -156,14 +156,14 @@ dialog {
   --color-light3: #f2f2f2;
   --color-light3_: #eaeaea;
   --color-light4: #d9d9d9;
-  --color-interactive1: #5446ff;
+  --color-interactive1: #492E98;
   --color-interactive1alpha20: rgba(82, 93, 199, 0.2);
   --color-interactive1alpha50: rgba(82, 93, 199, 0.5);
   --color-interactive2: rgb(36.2%, 40.4%, 87.8%);
   --color-interactive2alpha20: rgba(36.2%, 40.4%, 87.8%, 0.2);
   --color-interactive2alpha50: rgba(36.2%, 40.4%, 87.8%, 0.5);
   --color-interactive3: #F5F5F5;
-  --color-link: #5446ff;
+  --color-link: #492E98;
   --color-linkhover: #5c67e0;
   --color-error2: #f9e5e5;
   --color-successalpha20: rgba(42%, 78%, 75%, 20%);
@@ -217,7 +217,7 @@ dialog {
 
   --color-schwarz:#323232;
   --color-gelb: #ffcc00;
-  --color-blue: #5446ff;
+  --color-violett: #492E98;
   --color-rot: #ff5556;
   --color-rosa: #ffbab9;
   --color-hellgrün: #ecfeed;
@@ -3180,23 +3180,22 @@ dialog[open] {
   font-family: var(--font-family);
   font-size: var(--typography-size);
   line-height: calc(var(--typography-size) + 4px);
-  border-top: 1px solid var(--color-light4);
-  padding-top: calc(var(--gridspacing) * 3);
-  padding-bottom: calc(var(--gridspacing) * 4);
+  padding-top: calc(var(--gridspacing) * 12);
+  padding-bottom: calc(var(--gridspacing) * 12);
   flex-shrink: 0;
   color: var(--color-dark4);
   display: flex;
   justify-content: space-between; }
   .footer[href],
   .footer [href] {
-    color: var(--color-dark2);
+    color: var(--color-blue);
     font-family: var(--font-family);
     text-decoration: none;
     transition: color var(--transition-easing) var(--transition-duration);
     will-change: color; }
   .footer[href]:hover,
   .footer [href]:hover {
-    color: var(--color-dark3);
+    color: var(--color-blue);
     text-decoration: underline; }
   .footer[href]:focus,
   .footer [href]:focus {
@@ -3211,10 +3210,6 @@ dialog[open] {
     cursor: not-allowed; }
   .footer .footer-x-links li {
     display: inline; }
-  .footer .footer-x-links li:not(:last-child) {
-    border-right: 1px solid var(--color-light4);
-    margin-right: calc(var(--gridspacing) * 2);
-    padding-right: calc(var(--gridspacing) * 2); }
   .footer .footer-x-leftlinks li {
     display: inline; }
   .footer .footer-x-leftlinks li:not(:last-child) {
@@ -6170,7 +6165,7 @@ dialog[open] {
           box-shadow: inset 0 0 0 1px var(--color-weiss);  }
     
 
-@media (min-width: 768px) {
+@media (min-width: 862px) {
   .o-container:not(.o-container-is-managed) .menutoggle:not(.menutoggle-is-active) {
     display: none; } }
 
@@ -6518,8 +6513,8 @@ dialog[open] {
     display: block;
     line-height: 11px; }
     .navbar .navbar-x-logo img {
-      height: 40px;
-      max-width: 96px; }
+      max-width: 134px;
+    }
   .navbar .navbar-x-accountsbutton {
     margin-left: calc(var(--gridspacing) * 2); }
   .navbar .navbar-x-menutoggle {
@@ -6530,7 +6525,7 @@ dialog[open] {
     display: flex;
     align-items: center; }
 
-@media (min-width: 768px) {
+@media (min-width: 862px) {
   .o-container:not(.o-container-is-managed) .navbar .navbar-x-dropdown {
     align-self: baseline;
     display: block;
@@ -6538,7 +6533,7 @@ dialog[open] {
   .o-container:not(.o-container-is-managed) .navbar .navbar-x-items:not(:last-child) {
     margin-right: calc(var(--gridspacing) * 8); }
   .o-container:not(.o-container-is-managed) .navbar .navbar-x-logo img {
-    max-width: 235px; }
+    max-width: 134px; }
   .o-container:not(.o-container-is-managed) .navbar .navbar-x-menutoggle {
     display: none; }
   .o-container:not(.o-container-is-managed) .navbar .navbar-x-navitems {
@@ -6667,8 +6662,8 @@ dialog[open] {
   --typography-size: 16px;
   font-family: var(--font-family);
   font-size: var(--typography-size);
-  line-height: calc(var(--typography-size) + 8px);
-  font-weight: bold;
+  font-weight: 400;
+  line-height: 30px;
   align-items: center;
   color: var(--color-schwarz);
   display: flex;
@@ -10266,7 +10261,7 @@ dialog[open] {
   background-color: var(--color-light1); }
 
 .u-background-light2 {
-  background-color: var(--color-light2); }
+  background-color: white; }
 
 .u-background-light3 {
   background-color: var(--color-light3); }

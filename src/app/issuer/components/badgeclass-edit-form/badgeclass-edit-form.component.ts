@@ -266,16 +266,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		title.setTitle(`Create Badge - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 
 		this.baseUrl = this.configService.apiConfig.baseUrl;
-
-		this.badgeClassesLoadedPromise = this.badgeClassManager.allBadgesList.loadedPromise
-			.then((list) => {
-				this.badgeClasses = list.entities;
-				return this.badgeClasses;
-			})
-			.catch((err) => {
-				router.navigate(['/']);
-				return this.messageService.reportHandledError(' Failed to load badgeClasses');
-			});
 	}
 
 	initFormFromExisting(badgeClass: BadgeClass) {

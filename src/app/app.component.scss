@@ -212,5 +212,55 @@
 	}
   }
 
+.footer-rightside{
+	display: flex;
+  	flex-direction: column;
+  	gap: 1em;
 
+	  .faq{
+		font-family: "Inter";
+		font-size: 24px;
+		font-weight: 500;
+		line-height: 36px;
+		color: #5446FF;
+	}
+	  
+	  
+	.impressum{
+		font-size: 20px;
+		font-weight: 500;
+		line-height: 26px;
+		color: #5446FF;
+	}
+}
+
+.Text-SemiBold {
+	font-weight: 600;
+	font-size: 20px;
+	line-height: 24px;
+	color: var(--color-violett);
+}
+
+.main-nav-bold{
+	font-weight: 700;
+	font-size: 16px;
+	line-height: 30px;
+	color: #FFFFFF;
+}
+
+
+.login-btn {
+	position: unset;
+	background-color: var(--color-violett);
+	width: 75px;
+	height: 45px;
+	border-radius: 10px;
+	margin-left: 1em;
+}
+
+@media (max-width: 860px) {
+	.login-btn{
+		display: none;
+	}
+}
 

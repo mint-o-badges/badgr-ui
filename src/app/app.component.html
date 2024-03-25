@@ -105,12 +105,13 @@
 						>{{ 'General.institutions' | translate }}</a
 					>
 					<a
+						*ngIf="!features.disableRegistration"
 						[class.navitem-light]="!theme.useColorNavbar"
 						class="navitem"
 						routerLinkActive="navitem-is-active"
-						[routerLink]="['/auth/login']"
-						>Login</a
-					>
+						[routerLink]="['/public/about']"
+						>{{ 'NavItems.aboutOpenEducationalBadges' | translate }}</a
+					>	
 					<a
 						*ngIf="!features.disableRegistration"
 						[class.navitem-light]="!theme.useColorNavbar"
@@ -119,23 +120,7 @@
 						[routerLink]="['/signup']"
 						>{{ 'NavItems.register' | translate }}</a
 					>
-					<a
-						*ngIf="!features.disableRegistration"
-						[class.navitem-light]="!theme.useColorNavbar"
-						class="navitem"
-						routerLinkActive="navitem-is-active"
-						[routerLink]="['/public/about']"
-						>{{ 'NavItems.aboutOpenEducationalBadges' | translate }}</a
-					>
-					<a
-						role="menuitem"
-						[class.navitem-light]="!theme.useColorNavbar"
-						class="navitem"
-						routerLinkActive="navitem-is-active"
-						[routerLink]="['/public/faq']"
-						>FAQ</a
-					>
-
+		
 					<div class="navitem" style="position: unset; display: flex; gap: 4px">
 						<button (click)="changeLng('de')">
 							<span [ngStyle]="{ 'font-weight': selectedLng == 'de' ? 'bold' : 'normal' }">DE</span>
@@ -146,6 +131,14 @@
 						</button>
 					</div>
 				</div>
+
+				<!-- Login btn -->
+				<button
+					class="main-nav-bold login-btn"
+					[routerLink]="['/auth/login']"
+					>
+					Login
+				</button>
 			</nav>
 		</ng-template>
 
@@ -220,14 +213,6 @@
 						>{{ 'NavItems.myInstitutions' | translate }}</a
 					>
 
-					<a
-						role="menuitem"
-						[class.navitem-light]="!theme.useColorNavbar"
-						class="navitem"
-						routerLinkActive="navitem-is-active"
-						[routerLink]="['/public/faq']"
-						>FAQ</a
-					>
 					<button
 						role="menuitem"
 						aria-haspopup="true"
@@ -252,6 +237,7 @@
 				</div>
 			</nav>
 		</ng-template>
+		
 		<button
 			class="menutoggle"
 			(click)="toggleMobileNav()"
@@ -306,11 +292,11 @@
 				'General.institutions' | translate
 			}}</a>
 			<a routerLinkActive="menuitem-is-active" [routerLink]="['/auth/login']">Login</a>
-			<a routerLinkActive="menuitem-is-active" [routerLink]="['/signup']">{{
-				'NavItems.register' | translate
-			}}</a>
 			<a routerLinkActive="menuitem-is-active" [routerLink]="['/public/about']">{{
 				'NavItems.aboutOpenEducationalBadges' | translate
+			}}</a>
+			<a routerLinkActive="menuitem-is-active" [routerLink]="['/signup']">{{
+				'NavItems.register' | translate
 			}}</a>
 			<!-- mobile-nav language selection -->
 			<a
@@ -400,20 +386,20 @@
 <markdown-hints-dialog #markdownHintsDialog></markdown-hints-dialog>
 
 <!-- Footer -->
-<footer *ngIf="!curtain" class="o-container">
+<footer *ngIf="!curtain" class="o-container" id="footer" style="background-color: var(--color-hellgrün); margin-top: 30px;">
 	<div class="l-containerxaxis">
 		<div class="footer l-stickyfooter-x-footer">
-			<ul class="footer-x-leftlinks">
-				<li *ngIf="theme.showPoweredByOSL && theme.providedBy">
-					{{ 'Start.poweredBy' | translate }}
-					<a href="{{ theme.providedBy.url }}" target="_blank">{{ theme.providedBy.name }}</a>
-					{{ 'Start.using' | translate }} <a href="https://badgr.io">Badgr</a>
+			<ul class="footer-x-leftlinks" style="width: 40%;">
+				<li class="Text-SemiBold" *ngIf="theme.showPoweredByOSL && theme.providedBy" [innerHtml]="'Start.poweredBy' | translate">
 				</li>
 			</ul>
 
-			<ul class="footer-x-links">
+			<ul class="footer-x-links footer-rightside">
 				<li>
-					<a [href]="theme.termsOfServiceLink" target="_blank">{{ 'Start.imprint' | translate }}</a>
+					<a class="faq" [routerLink]="['/public/faq']">FAQ</a>
+				</li>
+				<li>
+					<a class="impressum" [href]="theme.termsOfServiceLink" target="_blank">{{ 'Start.imprint' | translate }}</a>
 				</li>
 			</ul>
 		</div>
