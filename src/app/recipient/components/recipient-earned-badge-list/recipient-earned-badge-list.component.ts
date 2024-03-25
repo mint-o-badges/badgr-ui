@@ -19,6 +19,8 @@ import { AppConfigService } from '../../../common/app-config.service';
 import { ImportLauncherDirective } from '../../../mozz-transition/directives/import-launcher/import-launcher.directive';
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { UserProfile } from '../../../common/model/user-profile.model';
+import { RecipientBadgeCollectionManager } from '../../services/recipient-badge-collection-manager.service';
+import { RecipientBadgeCollection } from '../../models/recipient-badge-collection.model';
 
 type BadgeDispay = 'grid' | 'list';
 
@@ -39,6 +41,7 @@ export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutable
 	allBadges: RecipientBadgeInstance[] = [];
 	badgesLoaded: Promise<unknown>;
 	allIssuers: ApiRecipientBadgeIssuer[] = [];
+	collectionListLoaded: Promise<unknown>;
 
 	badgeResults: BadgeResult[] = [];
 	issuerResults: MatchingIssuerBadges[] = [];
@@ -60,6 +63,10 @@ export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutable
 		this._badgesDisplay = val;
 		// this.updateResults();
 		this.saveDisplayState();
+	}
+
+	get badgeCollections(): RecipientBadgeCollection[] {
+		return this.recipientBadgeCollectionManager.recipientBadgeCollectionList.entities;
 	}
 
 	private _groupByIssuer = false;
@@ -91,6 +98,7 @@ export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutable
 		private dialogService: CommonDialogsService,
 		private messageService: MessageService,
 		private recipientBadgeManager: RecipientBadgeManager,
+		private recipientBadgeCollectionManager: RecipientBadgeCollectionManager,
 		public configService: AppConfigService,
 		private profileManager: UserProfileManager,
 	) {
@@ -101,6 +109,11 @@ export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutable
 		this.badgesLoaded = this.recipientBadgeManager.recipientBadgeList.loadedPromise.catch((e) =>
 			this.messageService.reportAndThrowError('Failed to load your badges', e),
 		);
+
+		this.collectionListLoaded =
+			this.recipientBadgeCollectionManager.recipientBadgeCollectionList.loadedPromise.catch((e) =>
+				this.messageService.reportAndThrowError('Failed to load your collections', e),
+			);
 
 		this.recipientBadgeManager.recipientBadgeList.changed$.subscribe((badges) =>
 			this.updateBadges(badges.entities),

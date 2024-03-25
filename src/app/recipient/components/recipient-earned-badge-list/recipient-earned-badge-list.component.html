@@ -208,7 +208,7 @@
 			</ng-template>
 
 			<!-- List View -->
-			<ng-template [ngIf]="badgesDisplay == 'list'">
+			<ng-template [ngIf]="badgesDisplay == 'list' && currentTabId === 'badge'">
 				<table class="datatable datatable-roundheaders datatable-onlyfirstcolumn datatable-verticalalignmiddle">
 					<thead class="datatable-x-head">
 						<tr class="datatable-x-header">
@@ -289,6 +289,75 @@
 				</table>
 			</ng-template>
 		</div>
+
+		<!-- Competency-View -->
+		<ng-template [ngIf]="currentTabId === 'competency'">
+			<div class="emptysection l-emptysection">
+				<span style="font-style: italic">Du hast noch keine Kompetenzen gesammelt.</span>
+			</div>
+		</ng-template>
+
+		<!-- Collection View -->
+		<ng-template [bgAwaitPromises]="[collectionListLoaded]" [ngIf]="currentTabId === 'collection'">
+			<!--  Empty state - collection has not badges -->
+			<div class="emptysection l-emptysection" *ngIf="badgeCollections.length == 0">
+				<h2 class="emptysection-x-headline">Noch keine Sammlungen</h2>
+				<!-- <p class="emptysection-x-copy">{{ 'BadgeCollection.collectionInfo' | translate }}</p> -->
+				<div class="emptysection-x-buttons">
+					<button
+						class="button button-secondary"
+						[routerLink]="['/recipient/badge-collections/create']"
+						[disabled-when-requesting]="true"
+					>
+						Sammlung erstellen
+					</button>
+				</div>
+				<div class="emptysection-x-imagecontainer">
+					<img alt="Illustration" class="emptysection-x-image" [src]="noCollectionsImageUrl" />
+				</div>
+			</div>
+
+			<!--  Collection of Badges -->
+			<div *ngIf="badgeCollections.length > 0" class="l-containerxaxis l-containeryaxis l-grid l-grid-medium">
+				<div class="collectioncard" *ngFor="let collection of badgeCollections">
+					<a
+						class="collectioncard-x-headline"
+						[routerLink]="['/recipient/badge-collections/collection', collection.slug]"
+						>{{ collection.name }}</a
+					>
+					<p class="collectioncard-x-label">
+						{{
+							collection.badgeEntries.length == 1 ? '1 Badge' : collection.badgeEntries.length + ' Badges'
+						}}
+					</p>
+					<div class="l-grid l-grid-badgeimages u-margin-top4x">
+						<img
+							*ngFor="
+								let entry of collection.badgeEntries.entities
+									| slice: 0 : (collection.badgeEntries.length > 3 ? 3 : 4)
+							"
+							class="badgeimage badgeimage-48px"
+							[loaded-src]="entry.badge?.image"
+							[loading-src]="badgeLoadingImageUrl"
+							[error-src]="badgeFailedImageUrl"
+							alt="{{ entry.badge?.badgeClass.name }} Image"
+							[ngStyle]="entry.badge?.isExpired && { filter: 'grayscale(1)' }"
+							width="40"
+						/>
+						<div class="badgecount" *ngIf="collection.badges.length > 3">
+							{{ collection.badges.length - 3 }}+
+						</div>
+					</div>
+					<div class="u-margin-top2x" *ngIf="collection.badges.length != 0">
+						<hr class="rule rule-hairline" />
+					</div>
+					<div
+						class="l-flex l-flex-aligncenter l-flex-justifybetween u-margin-top2x"
+						*ngIf="collection.badges.length != 0"
+					></div>
+				</div>
+			</div>
+		</ng-template>
 	</ng-template>
 	<add-badge-dialog #addBadgeDialog></add-badge-dialog>
 </main>
