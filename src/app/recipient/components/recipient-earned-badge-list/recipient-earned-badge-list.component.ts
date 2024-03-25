@@ -110,10 +110,7 @@ export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutable
 			this.messageService.reportAndThrowError('Failed to load your badges', e),
 		);
 
-		this.collectionListLoaded =
-			this.recipientBadgeCollectionManager.recipientBadgeCollectionList.loadedPromise.catch((e) =>
-				this.messageService.reportAndThrowError('Failed to load your collections', e),
-			);
+		this.collectionListLoaded = this.recipientBadgeCollectionManager.recipientBadgeCollectionList.loadedPromise;
 
 		this.recipientBadgeManager.recipientBadgeList.changed$.subscribe((badges) =>
 			this.updateBadges(badges.entities),
