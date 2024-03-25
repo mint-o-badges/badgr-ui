@@ -149,27 +149,4 @@
 			</ng-container>
 		</section>
 	</ng-template>
-	<ng-template [showLoader]="true" [bgAwaitPromises]="[collectionBadgesLoaded]">
-		<section class="l-containerxaxis l-containeryaxis l-responsivelist">
-			<h3 class="u-text-h3-semibold u-margin-bottom2x u-margin-top6x u-text-dark1">
-			  CollectionBadges 
-			  <span class="u-text-small-semibold-caps u-text-dark4 u-margin-left2x"
-							>{{ collectionBadges.length }}
-							{{ collectionBadges.length == 1 ? 'Badge' : 'Badges' }}</span
-						>
-			</h3>
-
-			<div class="l-grid l-grid-large">
-				<bg-badgecard
-					*ngFor="let badge of collectionBadges"
-					[badgeTitle]="badge.name"
-					[badgeImage]="badge.image"
-					[badgeDescription]="badge.description"
-					[badgeSlug]="badge.slug"
-					[badgeIssueDate]="badge.createdAt"
-					
-				></bg-badgecard>
-			</div>
-		</section>
-	</ng-template>
 </div>

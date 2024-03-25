@@ -1,84 +1,186 @@
-<div class="topbar">
-	<div class="l-containerxaxis topbar-x-wrap">
-		<h2 class="topbar-x-heading">{{ 'NavItems.aboutOpenEducationalBadges' | translate }}</h2>
+<div class="l-containerxaxis l-containeryaxis" style="padding-bottom: 0">
+	<!-- Project Description & group logo-->
+	<div class="main-paragraph">
+		<h1>Gemeinsam setzen wir</h1>
+		<h1 class="h1-black" style="padding-left: 10%">Open Educational Badges um</h1>
+		<p class="text-big">
+			Open Educational Badges ist ein Gemeinschaftsprojekt und wird durch unterschiedliche Partner:innen
+			ermöglicht. Unser Ziel ist es, ein Werkzeug zur standardisierten Dokumentation von Kompetenzen aufzubauen. 
+		</p>
 	</div>
-</div>
-<div class="l-containerxaxis l-containeryaxis">
-	<form-message></form-message>
 
-	<div class="formsection formsection-nohelp u-margin-bottom4x">
-		<div class="formsection-x-body">
-			<p>
-				{{ 'About.mainDesc' | translate }}
-			</p>
-			<p style="padding-top: 1.5rem">
-				{{ 'About.contact' | translate }}
-                <!--TODO: Update mail address here to open-educational-badges-->
-				<a href="mailto:info@opensenselab.org">info&#64;opensenselab.org </a>
-			</p>
+	<div class="logos-group">
+		<div>
+			<img class="badge-logo" src="../assets/logos/Badge-gelb.png" alt="yellow shape" />
+		</div>
+		<div>
+			<img class="circle-logo" src="../assets/logos/Circle-shapes.png" alt="circle shapes" />
+		</div>
+		<div>
+			<img class="network-logo" src="../assets/logos/Netzwerk.png" alt="netzwerk shape" />
 		</div>
 	</div>
 
-	<div class="formsection formsection-nohelp u-margin-bottom4x">
-		<h2 class="formsection-x-title">{{ 'About.brojectBy' | translate }}</h2>
+	<!--  Supported by-->
+	<div class="full-width supportby-section">
+		<div class="l-containerxaxis l-containeryaxis">
+			<h1 class="h1-black" style="margin-top: 5%">Wer steckt hinter der Initiative?</h1>
 
-		<div class="formsection-x-body">
-			<div class="container">
-				<div class="child">
-					<div class="logo">
-						<a href="https://reedu.de/">
-							<img src="assets/logos/reedu.jpg" />
-						</a>
-					</div>
-				</div>
-				<div class="child">
-					<div class="logo">
-						<a href="https://junge-tueftler.de/">
-							<img src="assets/logos/JT-Logo.png" />
-						</a>
-					</div>
-				</div>
-				<div class="child">
-					<div class="logo">
-						<a href="https://ifgi.de/">
-							<img src="assets/logos/Logo_ifgi_long.png" />
-						</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="formsection formsection-nohelp u-margin-bottom4x">
-		<h2 class="formsection-x-title">{{ 'About.supportedBy' | translate }}</h2>
-
-		<div class="formsection-x-body">
-			<div class="container">
-				<div class="child">
-					<div class="logo">
-						<a href="https://www.telekom-stiftung.de/">
-							<img src="assets/logos/T_deutsche_telekom_stiftung_partner_label_rgb_n.png" />
-						</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="formsection formsection-nohelp u-margin-bottom4x">
-		<h2 class="formsection-x-title">{{ 'About.funding' | translate }}</h2>
-
-		<div class="formsection-x-body">
-			<div class="foerderung">
-				<img src="assets/logos/BMBF_CMYK_Gef_L.png" />
+			<div class="supporter-main-style">
 				<div>
-					<p>
-						{{ 'About.fundingDesc' | translate }}
+					<img src="../assets/logos/Logo_Open-Sense-Lab.png" alt="OSL logo" />
+					<p class="text-big">
+						Das OpenSenseLab verantwortet seit Beginn des Projektes die technische Umsetzung der
+						Badges-Plattform auf dem 2.0 und 3.0 Standard und setzt alle neuen Featuers um.
 					</p>
-					<a
-						href="https://www.photonikforschung.de/projekte/open-innovation/foerdermassnahme/open-photonik-pro.html"
-						>{{ 'About.moreAboutFund' | translate }}</a
-					>
+				</div>
+
+				<div>
+					<img src="../assets/logos/Logo-Mycelia.png" alt="Mycelia logo" />
+					<p class="text-big">
+						Mycelia erarbeitet das Konzept sowie die Weiterentwicklung und verantwortet die
+						Begleitforschung. Zudem übersetzt sie das Konzept in User-Flows und konkrete UX/UI-Designs.
+					</p>
+				</div>
+
+				<div>
+					<img src="../assets/logos/Logo-Matrix.png" alt="Matrix logo" />
+					<p class="text-big">
+						Matrix ist Projektkoordinator bei Open Educational Badges. Sie verantwortet die Community sowie die
+						Planung und Umsetzung der Nutzendentests in den Reallaboren. Zudem ist matrix die Schnittstelle sowohl
+						zur MINT-Community als auch zu dem Projekt “Mein Bildungsraum”.
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Projects within OEB -->
+	<div>
+		<div>
+			<h1 class="h1-black" style="margin-top: 8%">Projekte innerhalb von OEB und deren Förderpartner:innen</h1>
+
+			<p class="text-big" style="margin-top: 1em">
+				Die Initiative Open Educational Badges wurde und wird durch verschiedene Forschungs- und Förderprojekte
+				aufgebaut. Ein wissenschaftlicher, experimenteller und innovativer Ansatz ist uns wichtig und
+				ausschlaggebendes Kriterium, um neue Wege in der Zertifizierung zu gehen.
+			</p>
+			<p class="text-big" style="margin-top: 0.5em">
+				Ohne unsere Partner:innen und Förderer:innen wäre dies nicht möglich. Daher bedanken wir uns, dass im
+				Rahmen der folgenden Projekte, Teilaspekte der großen Idee hinter Open Educational Badges verwirklicht werden können.
+			</p>
+		</div>
+
+		<div class="projects-style">
+			<div>
+				<div class="projects-logo-style">
+					<img src="../assets/logos/Logo-MyBadges.png" alt="MyBadges logo" />
+				</div>
+				<div class="projects-desc-style">
+					<h3>mybadges</h3>
+					<p class="text">
+						Das Pilotprojekt myBadges hat ein kompetenzbasiertes Nachweissystem entwickelt, das individuell
+						erworbene Lernerfahrungen abbildet – sowohl im formalen als auch im non-formalen oder
+						informellen Lernkontext. Damit bildet es eine entscheidende Brücke, um erworbene fachliche sowie
+						soziale Kompetenzen unabhängig von der Lernumgebung nachzuweisen. Außerdem ermöglicht es
+						Lernenden mehr Transparenz über ihren eigenen Kompetenzstand und unterstützt ein lernzentriertes
+						Handeln. In der ersten Pilotphase waren sechs Institutionen beteiligt, die über 120 verschiedene
+						Badges entwickelt haben. Das Pilotprojekt myBadges ist eine Zusammenarbeit zwischen mycelia
+						gGmbH und re:edu GmbH & Co KG und wird von der Telekom Stiftung gefördert sowie von der
+						Universität Münster unterstützt.
+					</p>
+				</div>
+			</div>
+
+			<div>
+				<div class="projects-logo-style">
+					<img
+						class="mintobadge-logo"
+						src="../assets/logos/Logo-MintOBadges.png"
+						alt="MintOBadges logo"
+					/>
+				</div>
+				<div class="projects-desc-style">
+					<h3>MINT.OBadges</h3>
+					<p class="text">
+						MINT.OBadges ist ein praxisbezogenes Forschungsprojekt. Es zielt darauf ab, Open Badges in
+						außerschulischen Kursangeboten mit MINT-Schwerpunkt erfolgreich zu etablieren.
+						Bildungsinitiativen sollen befähigt werden, den Kompetenzerwerb durch ihre Angebote
+						niedrigschwellig und anschlussfähig zu dokumentieren. Dafür wird der technische Standard um eine
+						inhaltliche Komponente (ESCO Standard) ergänzt. Die Entwicklung eines KI-Badge-Assistenten
+						erleichtert den Initiativen die Klassifizierung und Vergabe. Durch die Erprobung von zwei
+						digitalen und drei analogen Reallaboren wird die Integration von Open Badges erforscht und
+						entsprechende Communities aktiviert.  Das Forschungsprojekt MINT.OBadges wird von der matrix
+						gGmbH, der mycelia gGmbH und der openSenseLab gGmbH als Verbund gemeinsam umgesetzt und an Mein
+						Bildungsraum angeschlossen. Gefördert wird das Projekt vom Bundesministerium für Bildung und
+						Forschung.
+					</p>
+				</div>
+			</div>
+
+			<div>
+				<div class="projects-logo-style">
+					<img src="../assets/logos/LogoKlimaCampus.png" alt="KlimaCampus logo" />
+				</div>
+				<div class="projects-desc-style">
+					<h3>Klima Campus</h3>
+					<p class="text">
+						Der Klima Campus ist ein transformativer Lernraum, der junge Menschen zum Thema natürlicher
+						Klimaschutz informiert und zum Handeln motiviert. Ziel ist es, die Akzeptanz des Natürlichen
+						Klimaschutzes in der gesamten Gesellschaft zu verbreiten und so mittel- und langfristig den
+						Ausstoß von Treibhausgasen (THG) sowohl durch die Änderung eigener Verhaltensweisen als auch durch strukturelle Veränderungen  zu verringern. Durch den Klima Campus und die daran angeschlossenen
+						Aktivitäten werden Kompetenzen erworben - diese werden durch Open Educational Badges
+						dokumentiert und für die Lernenden transparent. Der Klima Campus ist ein Projekt der mycelia
+						gGmbH und wird vom Bundesministerium für Umwelt, Naturschutz, nukleare Sicherheit und
+						Verbraucherschutz gefördert.
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Funded by -->
+	<div class="fund-style">
+		<div>
+			<img src="../assets/logos/Logo-Telekom-Stiftung-2.jpg" alt="Telekom-Stiftung logo" />
+		</div>
+
+		<div>
+			<img style="width: 279px" src="../assets/logos/Logo-BMBF.png" alt="BMBF logo" />
+		</div>
+
+		<div><img style="width: 442px" src="../assets/logos/Logo-BMUV.png" alt="BMUV logo" /></div>
+	</div>
+
+	<!--  Want to join -->
+	<div style="background-color: var(--color-hellgrün); margin-top: 6em; padding-bottom: 4em" class="full-width">
+		<div class="l-containerxaxis l-containeryaxis join-us-style">
+			<h1 class="h1-black" style="margin-top: 1em">Du willst mitmachen?</h1>
+
+			<div style="width: 90%">
+				<p class="text-big" style="margin-top: 1em; text-align: center;">
+					Klicke auf die Kacheln, um weitere Informationen und Unterstützung zu bekommen.
+				</p>
+
+				<div style="display: flex; flex-direction: row; gap: 20px; margin-top: 3em">
+					<div class="join-us-card" style="width: 60%; background-color: var(--color-grün)">
+						<h2 class="h2-bold">Open Educational Badges jetzt nutzen</h2>
+					</div>
+					<div class="join-us-card" style="width: 40%; background-color: var(--color-rosa)">
+						<h2 class="h2-bold" style="color: #ffffff">Ein Projekt rund um Open Badges durchführen</h2>
+					</div>
+				</div>
+
+				<div style="display: flex; flex-direction: row; gap: 20px; margin-top: 1.5em">
+					<div class="join-us-card" style="width: 30%; background-color: var(--color-violett)">
+						<h2 class="h2-bold" style="color: #ffffff">Open Badges fördern</h2>
+					</div>
+					<div class="join-us-card" style="width: 40%; background-color: var(--color-gelb)">
+						<h2 class="h2-bold" style="color: #ffffff">Die Plattform oder ein Feature fördern</h2>
+					</div>
+					<div class="join-us-card" style="width: 30%; background-color: var(--color-rot)">
+						<h2 class="h2-bold" style="color: #ffffff">Erweiterung des Plugins fördern</h2>
+					</div>
 				</div>
 			</div>
 		</div>

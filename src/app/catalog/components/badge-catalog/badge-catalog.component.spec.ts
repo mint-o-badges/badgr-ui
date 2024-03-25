@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { BadgrCommonModule, COMMON_IMPORTS } from "../../../common/badgr-common.module";
 import { RouterTestingModule } from "@angular/router/testing";
 import { TranslateTestingModule } from "ngx-translate-testing";
-import { CollectionBadgeManager } from '../../../issuer/services/collectionbadge-manager.service'
 
 import { BadgeCatalogComponent } from './badge-catalog.component';
 
@@ -24,7 +23,6 @@ describe('BadgeCatalogComponent', () => {
       ],
       providers: [
           ...COMMON_MOCKS_PROVIDERS_WITH_SUBS,
-          {provide: CollectionBadgeManager, useValue: {}}
       ],
     })
     .compileComponents();
