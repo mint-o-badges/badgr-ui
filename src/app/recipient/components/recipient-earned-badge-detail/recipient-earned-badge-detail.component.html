@@ -55,7 +55,7 @@
 			</div>
 		</div>
 		<div class="badgedetail-x-sidebar">
-			<div class="badgedetail-x-sidebarinternal">
+			<div class="badgedetail-x-sidebarinternal" style="background-color: #ecfeed">
 				<img
 					[loaded-src]="badge.image"
 					[loading-src]="badgeLoadingImageUrl"
@@ -153,7 +153,18 @@
 				</h3>
 				<div *ngFor="let competency of competencies; let i = index">
 					<h1 style="margin-top: 1em; font-weight: bold">{{ i + 1 }}. {{ competency.name }}</h1>
-					<div style="display: flex; flex-direction: column; width: 50%">
+					<div
+						style="
+							display: flex;
+							flex-direction: column;
+							width: 50%;
+							background-color: #492e98;
+							color: white;
+							padding: 1em;
+							border-radius: 25px;
+							margin-top: 1em;
+						"
+					>
 						<div style="display: flex; justify-content: space-between">
 							<span>Name: </span>
 							<span>{{ competency.name }}</span>
