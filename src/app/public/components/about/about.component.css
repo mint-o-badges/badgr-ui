@@ -14,7 +14,7 @@ h1 {
 	font-weight: 900;
 	font-size: 46px;
 	line-height: 55.2px;
-	color: var(--color-blue);
+	color: var(--color-violett);
 }
 
 .h2-bold {
@@ -22,7 +22,7 @@ h1 {
 	font-size: 30px;
 	line-height: 36px;
 	text-align: center;
-	color: var(--color-blue);
+	color: var(--color-violett);
 }
 
 .text {
@@ -81,7 +81,7 @@ h1 {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		color: var(--color-blue);
+		color: var(--color-violett);
 		flex: 1 1 0;
 
 		/* Logo */
@@ -110,7 +110,7 @@ h1 {
 		/* Project description title and description */
 		.projects-desc-style {
 			width: 100%;
-			background-color: var(--color-blue);
+			background-color: var(--color-violett);
 			padding: 20px 0 40px 0;
 			border: 0.75px solid;
 			border-radius: 0 0 20px 20px;
