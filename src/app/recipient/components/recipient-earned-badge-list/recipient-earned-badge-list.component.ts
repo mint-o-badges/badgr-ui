@@ -106,9 +106,7 @@ export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutable
 
 		title.setTitle(`Backpack - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 
-		this.badgesLoaded = this.recipientBadgeManager.recipientBadgeList.loadedPromise.catch((e) =>
-			this.messageService.reportAndThrowError('Failed to load your badges', e),
-		);
+		this.badgesLoaded = this.recipientBadgeManager.recipientBadgeList.loadedPromise;
 
 		this.collectionListLoaded = this.recipientBadgeCollectionManager.recipientBadgeCollectionList.loadedPromise;
 
