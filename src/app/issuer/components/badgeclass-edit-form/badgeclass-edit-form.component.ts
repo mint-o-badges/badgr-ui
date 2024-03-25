@@ -384,10 +384,10 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 					rejectButtonLabel: 'Abbrechen',
 				})
 			) {
-				this.badgeClassForm.controls.competencies.reset();
-				const controls = this.badgeClassForm.controls.competencies.controls;
-				for (let i = controls.length - 1; i >= 0; i--) {
-					this.badgeClassForm.controls.competencies.removeAt(controls.indexOf(controls[i]));
+				const competencies = this.badgeClassForm.controls.competencies;
+				competencies.reset();
+				for (let i = competencies.length - 1; i >= 0; i--) {
+					this.badgeClassForm.controls.competencies.removeAt(competencies[i]);
 				}
 				this.badgeCategory = this.badgeClassForm.rawControl.controls['badge_category'].value;
 			} else {
