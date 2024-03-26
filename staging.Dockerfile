@@ -6,7 +6,7 @@ COPY . .
 
 RUN npm install
 
-RUN npm run build:app
+RUN npm run build:staging
 
 # Serve Application using Nginx Server
 

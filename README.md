@@ -41,6 +41,7 @@ Run the e2e tests with `npm run e2e`
 
 To build for production, a `environment.prod.ts` file must be present in `src/environments/`.
 Copy the example file, `environment.prod.ts.example` to `environment.prod.ts` and modify it as needed.
+Similarly for staging builds a `environment.staging.ts` file needs to be present in `src/environments`, which (for now) is already added in git.
 
 ### Building
 
