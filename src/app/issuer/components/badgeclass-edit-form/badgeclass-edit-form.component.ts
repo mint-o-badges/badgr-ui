@@ -117,6 +117,12 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
      */
     aiCompetenciesDescription: string = "";
 
+    /**
+     * The suggested competencies regarding the description
+     * from the user
+     */
+    aiCompetenciesSuggestion: string = "Hier erscheinen passende Kompetenzen, sobald du die Beschreibung deines Lehrinhalts in das Textfeld links eingefügt hast und auf \"Passende Kompetenzen vorschlagen\" klickst.";
+
 	savePromise: Promise<BadgeClass> | null = null;
 	badgeClassForm = typedFormGroup(this.criteriaRequired.bind(this))
 		.addControl('badge_name', '', [
@@ -489,20 +495,20 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	}
 
     suggestCompetencies() {
-        console.log("Suggesting competencies!");
-        console.log("Description: ", this.aiCompetenciesDescription);
-
-        if (this.aiCompetenciesDescription.length > 0) {
-            this.aiSkillsService.getAiSkills(this.aiCompetenciesDescription)
-                .then(skills => {
-                    console.log("Got skills: ", skills);
-                })
-                .catch(error => {
-                    this.messageService.reportAndThrowError(
-                        "Failed to obtain ai skills.",
-                        error);
-                });
+        if (this.aiCompetenciesDescription.length == 0) {
+            return;
         }
+        this.aiSkillsService.getAiSkills(this.aiCompetenciesDescription)
+        .then(skills => {
+            this.aiCompetenciesSuggestion = skills
+                .map(skill => skill.preferred_label)
+                .join('\n');
+        })
+        .catch(error => {
+            this.messageService.reportAndThrowError(
+                "Failed to obtain ai skills.",
+                error);
+        });
     }
 
 	async disableAlignments() {
