@@ -87,7 +87,23 @@
 		"threeElementsHeadline": "Open Educational Badges besteht aus drei Elementen:",
 		"threeEleText1": "Einer <span class='bold'>technischen Lösung</span>, um Badges zu vergeben und zu sammeln. Diese Funktionalität kann über ein Plug-In in bestehende Lernumgebungen eingebettet werden.",
 		"threeEleText2": "Einem <span class='bold'>standardisierten, offenen und skalierbarem Kompetenz-Raster nach ESCO</span>, das die Wertigkeit der Badges sicherstellt und institutionsübergreifendes Lernen ermöglicht.",
-		"threeEleText3": "Einer <span class='bold'>offenen Community</span>, die Badges erstellt, vergibt, erwirbt und gleichzeitig ihre Qualität durch ein Community-Review-Prinzip sicherstellt."
+		"threeEleText3": "Einer <span class='bold'>offenen Community</span>, die Badges erstellt, vergibt, erwirbt und gleichzeitig ihre Qualität durch ein Community-Review-Prinzip sicherstellt.",
+		
+		"threeEleFooter": "Open Educational Badges sind dadurch teilbar, skalierbar, anschlussfähig und so entsteht eine neue Währung, um Kompetenzen abzubilden.",
+
+		"headline3_1": "So kannst du Open Educational Badges nutzen.",
+		"headline3_2": "Für institutionen und Bildungsakteur:innen",
+		
+		"forEleHeadlinet1": "Konto anlegen und Institution erstellen",
+		"forEleText1": "Lege einen Account auf Open Educational Badges an und registriere deine Institution.",
+		"forEleHeadlinet2": "Badges erstellen",
+		"forEleText2": "Nutze den KI-Badge-Assistenten, um in minutenschnelle Badges für dein Lernangebot zu erstellen.",
+		"forEleHeadlinet3": "Badges vergeben",
+		"forEleText3": "Du kannst Badges per Email oder per QR-Code an deine Lernenden vergeben.",
+		"forEleHeadlinet4": "Lernende erhalten und sammeln Badges",
+		"forEleText4": "Lernende erhalten Badges mit den erworbenen Kompetenzen. Sie erlangen dadurch einen besseren Überblick über ihr Können.",
+
+		"usingOEB": "Diese Institutionen nutzen bereits Open Educational Badges"
 
 	},
 	"Issuer": {
