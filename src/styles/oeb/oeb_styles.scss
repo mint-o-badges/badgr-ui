@@ -31,6 +31,8 @@
 }
 
 .navitem {
+	font-weight: 400;
+	line-height: 30px;
 	color: var(--color-black);
 }
 
@@ -79,4 +81,41 @@
 
 .topbar .topbar-x-subheading {
 	color: var(--color-black);
+}
+
+.footer {
+	border-top: none;
+	padding-top: calc(var(--gridspacing) * 12);
+	padding-bottom: calc(var(--gridspacing) * 12);
+}
+
+.footer [href] {
+	color: var(--color-purple);
+}
+
+.footer[href]:hover,
+.footer [href]:hover {
+	color: var(--color-purple);
+	text-decoration: underline;
+}
+
+.footer .footer-x-links li:not(:last-child) {
+	border-right: none;
+	margin-right: unset;
+	padding-right: unset;
+}
+
+.navbar .navbar-x-logo img {
+	height: unset;
+	max-width: 134px;
+}
+
+.u-background-light2 {
+	background-color: white;
+}
+
+@media (min-width: 768px) {
+	.o-container:not(.o-container-is-managed) .navbar .navbar-x-logo img {
+		max-width: 134px;
+	}
 }
