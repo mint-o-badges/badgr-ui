@@ -26,7 +26,7 @@ export class AiSkillsService extends BaseHttpApiService {
         // (I've tried for hours to add the correct headers etc., it all failed with a 403 without an error message).
         // Since the url lenght limit *probably* isn't too short anyway, for now this solution should suffice.
         return this
-            .get<AiSkillsResult>(`/aiskills/${encodeURIComponent(textToAnalyze)}`)
+            .get<AiSkillsResult>(`/aiskills/${btoa(textToAnalyze)}`)
             .then(r => r.body as AiSkillsResult,
                   error => ({
                 "id": "",
