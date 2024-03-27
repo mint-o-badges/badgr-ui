@@ -19,9 +19,14 @@ export class AiSkillsService extends BaseHttpApiService {
 
     getAiSkillsResult(textToAnalyze: string): Promise<AiSkillsResult> {
         // TODO: Potentially it would be better to transfer the text to analyze in the body,
-        // since it could become quite long
+        // since it could become quite long. For this howerver, POST needs to be used.
+        // This either (probably) failed with some CSRF stuff (though there was no clear error message
+        // indicating this) or the authentication had to be removed (that's how it was done for uploading image).
+        // Removing authentication could lead to attacks though and I didn't manage to fix the CSRF stuff
+        // (I've tried for hours to add the correct headers etc., it all failed with a 403 without an error message).
+        // Since the url lenght limit *probably* isn't too short anyway, for now this solution should suffice.
         return this
-            .get<AiSkillsResult>(`/aiskills/${textToAnalyze}`)
+            .get<AiSkillsResult>(`/aiskills/${encodeURIComponent(textToAnalyze)}`)
             .then(r => r.body as AiSkillsResult,
                   error => ({
                 "id": "",
