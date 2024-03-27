@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="448px" height="448px" viewBox="0 0 448 448" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49 (51002) - http://www.bohemiancoding.com/sketch -->
+    <title>outlink</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="outlink" fill="#4A90E2" fill-rule="nonzero">
+            <path d="M64,0 L64,384 L448,384 L448,0 L64,0 Z M416,352 L96,352 L96,32 L416,32 L416,352 Z M32,416 L32,80 L0,48 L0,448 L400,448 L368,416 L32,416 Z" id="Shape"></path>
+            <polygon id="Shape" points="144 96 224 176 128 272 176 320 272 224 352 304 352 96"></polygon>
+        </g>
+    </g>
+</svg>
