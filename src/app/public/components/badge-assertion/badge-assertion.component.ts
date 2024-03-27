@@ -29,14 +29,14 @@ export class PublicBadgeAssertionComponent {
 		public messageService: MessageService,
 		public configService: AppConfigService,
 		public queryParametersService: QueryParametersService,
-		private title: Title
+		private title: Title,
 	) {
 		title.setTitle(`Assertion - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 		this.assertionIdParam = this.createLoadedRouteParam();
 	}
 
 	readonly issuerImagePlacholderUrl = preloadImageURL(
-		'../../../../breakdown/static/images/placeholderavatar-issuer.svg'
+		'../../../../breakdown/static/images/placeholderavatar-issuer.svg',
 	);
 
 	readonly badgeLoadingImageUrl = '../../../../breakdown/static/images/badge-loading.svg';
@@ -62,10 +62,8 @@ export class PublicBadgeAssertionComponent {
 	};
 
 	categoryOptions: { [key in BadgeClassCategory]: string } = {
-		membership: 'Mitgliedschaft',
-		ability: 'Metakompetenz',
-		archievement: 'Teilnahme / Erfolg',
-		skill: 'Fachliche Kompetenz',
+		competency: 'Kompetenz-Badge',
+		participation: 'Teilnahme-Badge',
 	};
 
 	levelOptions: { [key in BadgeClassLevel]: string } = {
