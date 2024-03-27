@@ -156,14 +156,13 @@ dialog {
   --color-light3: #f2f2f2;
   --color-light3_: #eaeaea;
   --color-light4: #d9d9d9;
-  --color-interactive1: #492E98;
+  --color-interactive1: hsl(234, 51%, 55%);
   --color-interactive1alpha20: rgba(82, 93, 199, 0.2);
   --color-interactive1alpha50: rgba(82, 93, 199, 0.5);
   --color-interactive2: rgb(36.2%, 40.4%, 87.8%);
   --color-interactive2alpha20: rgba(36.2%, 40.4%, 87.8%, 0.2);
   --color-interactive2alpha50: rgba(36.2%, 40.4%, 87.8%, 0.5);
-  --color-interactive3: #F5F5F5;
-  --color-link: #492E98;
+  --color-link: #515dc6;  
   --color-linkhover: #5c67e0;
   --color-error2: #f9e5e5;
   --color-successalpha20: rgba(42%, 78%, 75%, 20%);
@@ -211,22 +210,7 @@ dialog {
   --color-mt4: #b5445b;
   --color-mt4a60: #d38f9d;
   --color-mt5: #e0e2f5;
-  --color-mt6: #dbf2ef; 
-
-  /* colors from mycelia */
-
-  --color-schwarz:#323232;
-  --color-gelb: #ffcc00;
-  --color-violett: #492E98;
-  --color-rot: #ff5556;
-  --color-rosa: #ffbab9;
-  --color-hellgrün: #ecfeed;
-  --color-grün: #93f993;
-  --color-weiss: #ffffff;
-  --color-hellgrau: #f5f5f5;
-  --color-grau-inaktiv: #cfcece;
-
-}
+  --color-mt6: #dbf2ef; }
 
 :root {
   /* Shadows */
@@ -249,7 +233,7 @@ dialog {
   --box-shadow-inset: inset -3px 0px 5px -3px rgba(0, 0, 0, 0.2);
   --text-shadow-light1: 1px 1px 1px rgba(255, 255, 255, 0.8);
   /* Font */
-  --font-family: "rubik","Open Sans", sans-serif;
+  --font-family: "Open Sans", sans-serif;
   --font-family-condensed: "Open Sans Condensed", sans-serif;
   --font-family-header: "Metronic Slab", serif;
   --font-family-code: courier, monospace;
@@ -318,13 +302,6 @@ dialog {
   font-style: normal;
   font-weight: normal;
   src: url("fonts/OpenSans-CondBold-webfont.woff") format("woff"); }
-
-@font-face {
-    font-family: 'rubik';
-    font-style: normal;
-    font-weight: 500;
-    src: url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap')
-  }
 
 dialog[open] {
   -webkit-animation: show 150ms ease normal;
@@ -6047,7 +6024,7 @@ dialog[open] {
   line-height: calc(var(--typography-size) + 8px);
   align-items: center;
   background-color: var(--color-light2);
-  color: var(--color-schwarz);
+  color: var(--color-dark4);
   cursor: pointer;
   display: flex;
   padding: calc(var(--gridspacing) * 2);
@@ -6115,7 +6092,7 @@ dialog[open] {
   .menutoggle::-moz-focus-inner {
     border: 0; }
   .menutoggle span {
-    background: var(--color-schwarz);
+    background: var(--color-light1);
     display: block;
     height: 2px;
     left: 10px;
@@ -6139,7 +6116,7 @@ dialog[open] {
   .menutoggle:focus, .menutoggle:hover {
     outline: 0; }
     .menutoggle:focus::before, .menutoggle:hover::before {
-      box-shadow: inset 0 0 0 1px var(--color-schwarz); }
+      box-shadow: inset 0 0 0 1px var(--color-light1alpha50); }
   .menutoggle:active::before {
     box-shadow: inset 0 0 0 1px var(--color-light1); }
   .menutoggle.menutoggle-is-active {
@@ -6153,17 +6130,13 @@ dialog[open] {
         left: 11.5px;
         top: 11px;
         transform: rotate(45deg);
-        transform-origin: bottom left;
-        background: var(--color-weiss); }
+        transform-origin: bottom left; }
       .menutoggle.menutoggle-is-active span:nth-child(3) {
         left: 11.5px;
         bottom: 11px;
         transform: rotate(-45deg);
-        transform-origin: top left;
-        background: var(--color-weiss); }
-        .menutoggle.menutoggle-is-active:focus::before, .menutoggle.menutoggle-is-active:hover::before{
-          box-shadow: inset 0 0 0 1px var(--color-weiss);  }
-    
+        transform-origin: top left; }
+        
 
 @media (min-width: 862px) {
   .o-container:not(.o-container-is-managed) .menutoggle:not(.menutoggle-is-active) {
@@ -6497,7 +6470,7 @@ dialog[open] {
 
 .navbar {
   align-items: center;
-  background-color: var(--color-interactive3);
+  background-color: var(--color-interactive1);
   display: flex;
   height: 72px;
   justify-content: space-between; }
@@ -6665,7 +6638,7 @@ dialog[open] {
   font-weight: 400;
   line-height: 30px;
   align-items: center;
-  color: var(--color-schwarz);
+  color: var(--color-light1);
   display: flex;
   padding-bottom: calc(2.5 * var(--gridspacing));
   position: relative; }
@@ -6682,15 +6655,15 @@ dialog[open] {
     width: 100%;
     will-change: background-color; }
   .navitem .navitem-x-icon {
-    fill: var(--color-schwarz);
+    fill: var(--color-black);
     height: 24px;
     width: 24px; }
   .navitem:focus, .navitem:hover {
     outline: 0; }
     .navitem:focus::after, .navitem:hover::after {
-      background-color: var(--color-grau-inaktiv); }
+      background-color: var(--color-light1alpha50); }
   .navitem:active::after, .navitem.navitem-is-active::after {
-    background-color: var(--color-schwarz); }
+    background-color: var(--color-navitem-light); }
   .navitem:disabled {
     color: var(--color-dark4); }
 
@@ -8772,7 +8745,7 @@ dialog[open] {
     color: var(--color-notice); }
 
 .topbar {
-  /* background: var(--color-light3); */
+  background: var(--color-light3);
   padding-bottom: calc(var(--gridspacing) * 3);
   padding-top: calc(var(--gridspacing) * 3); }
   .topbar .topbar-x-authdate {
@@ -8809,7 +8782,7 @@ dialog[open] {
     font-size: var(--typography-size);
     line-height: calc(var(--typography-size) + 8px);
     font-weight: bold;
-    color: var(--color-interactive1); }
+    color: var(--color-dark2); }
   .topbar .topbar-x-internalheading {
     --typography-size: 12px;
     font-family: var(--font-family);
@@ -8825,7 +8798,7 @@ dialog[open] {
     font-family: var(--font-family);
     font-size: var(--typography-size);
     line-height: calc(var(--typography-size) + 8px);
-    color: var(--color-schwarz);
+    color: var(--color-dark4);
     margin-top: var(--gridspacing); }
   .topbar .topbar-x-wrap {
     display: grid;

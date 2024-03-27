@@ -6,19 +6,77 @@
 @import url(elements.scss);
 
 .oeb {
-    font-family: rubik;   
+	font-family: rubik;
 }
-  /* colors from mycelia */
-:root{
-  --color-black: #323232;
-  --color-yellow: #ffcc00;
-  --color-purple: #492E98;
-  --color-red: #ff5556;
-  --color-pink: #ffbab9;
-  --color-lightgreen: #ecfeed;
-  --color-green: #93f993;
-  --color-white: #ffffff;
-  --color-lightgray: #f5f5f5;
-  --color-grayinteractive: #cfcece;
-  --color-lightpurple: #F1F0FF;
+/* colors from mycelia */
+:root {
+	--color-black: #323232;
+	--color-yellow: #ffcc00;
+	--color-purple: #492e98;
+	--color-red: #ff5556;
+	--color-pink: #ffbab9;
+	--color-lightgreen: #ecfeed;
+	--color-green: #93f993;
+	--color-white: #ffffff;
+	--color-lightgray: #f5f5f5;
+	--color-grayinteractive: #cfcece;
+	--color-lightpurple: #f1f0ff;
+	--color-interactive1: var(--color-purple);
+	--color-interactive3: var(--color-lightgray);
+	--color-link: #492e98;
+}
+
+.navbar {
+	background-color: var(--color-lightgray);
+}
+
+.navitem {
+	color: var(--color-black);
+}
+
+.navitem .navitem-x-icon {
+	fill: var(--color-black);
+}
+
+.navitem:focus::after,
+.navitem:hover::after {
+	background-color: var(--color-grayinteractive);
+}
+.navitem:active::after,
+.navitem.navitem-is-active::after {
+	background-color: var(--color-black);
+}
+
+.menuitem {
+	color: var(--color-black);
+}
+
+.menutoggle:focus::before,
+.menutoggle:hover::before {
+	box-shadow: inset 0 0 0 1px var(--color-black);
+}
+
+.menutoggle.menutoggle-is-active span:nth-child(1) {
+	background: var(--color-white);
+}
+
+.menutoggle.menutoggle-is-active span:nth-child(3) {
+	background: var(--color-white);
+}
+
+.menutoggle.menutoggle-is-active:focus::before,
+.menutoggle.menutoggle-is-active:hover::before {
+	box-shadow: inset 0 0 0 1px var(--color-white);
+}
+
+.menutoggle span {
+	background: var(--color-black);
+}
+
+.topbar .topbar-x-heading {
+	color: var(--color-interactive1);
+}
+
+.topbar .topbar-x-subheading {
+	color: var(--color-black);
 }
