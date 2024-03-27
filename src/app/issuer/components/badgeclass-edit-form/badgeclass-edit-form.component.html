@@ -227,7 +227,9 @@
 					>
 						<div style="display: flex; flex-direction: column">
 							<h2 style="color: #ffffff">Meine inhaltliche Beschreibung</h2>
-							<textarea style="background-color: white; border-radius: 10px"> </textarea>
+							<textarea style="background-color: white; border-radius: 10px"
+                                [(ngModel)]=aiCompetenciesDescription
+                                [ngModelOptions]="{standalone: true}"> </textarea>
 							<div style="color: white">
 								<label for="kursdauer"> Dauer des Kurses</label>
 								<div style="display: flex; gap: 2em">
@@ -247,6 +249,8 @@
 										color: var(--color-blue);
 										margin-top: 2em;
 									"
+                                    (click)=suggestCompetencies()
+                                    type=button
 								>
 									<span style="font-weight: 400">Passende</span>
 									<span style="font-weight: 700"> Kompetenzen vorschlagen </span>

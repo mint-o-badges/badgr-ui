@@ -18,21 +18,23 @@ export class AiSkillsService extends BaseHttpApiService {
     }
 
     getAiSkillsResult(textToAnalyze: string): Promise<AiSkillsResult> {
+        // TODO: Potentially it would be better to transfer the text to analyze in the body,
+        // since it could become quite long
         return this
-            .get<{result: AiSkillsResult}>(`/aiskills/${textToAnalyze}`)
-            .then(r => r.body.result as AiSkillsResult,
-                  error => {
+            .get<AiSkillsResult>(`/aiskills/${textToAnalyze}`)
+            .then(r => r.body as AiSkillsResult,
+                  error => ({
                 "id": "",
                 "text_to_analyze": textToAnalyze,
                 "skills": [],
                 "status": "failed"
-            });
+            } as AiSkillsResult));
     }
 
     getAiSkills(textToAnalyze: string): Promise<Skill[]> {
         return this
             .getAiSkillsResult(textToAnalyze)
-            .then(result: AiSkillsResult => result.skills,
+            .then((result: AiSkillsResult) => result.skills,
                   error => []);
     }
 }

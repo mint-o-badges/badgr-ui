@@ -26,6 +26,8 @@ import { AppConfigService } from '../../../common/app-config.service';
 import { typedFormGroup } from '../../../common/util/typed-forms';
 import { FormFieldSelectOption } from '../../../common/components/formfield-select';
 
+import { AiSkillsService } from '../../../common/services/ai-skills.service';
+
 @Component({
 	selector: 'badgeclass-edit-form',
 	templateUrl: './badgeclass-edit-form.component.html',
@@ -108,6 +110,12 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	 * Indicates whether hexagon frame is shown or hidden
 	 */
 	hideHexFrame: boolean = false;
+
+    /**
+     * The description of the competencies entered by the user
+     * for the AI tool
+     */
+    aiCompetenciesDescription: string = "";
 
 	savePromise: Promise<BadgeClass> | null = null;
 	badgeClassForm = typedFormGroup(this.criteriaRequired.bind(this))
@@ -261,6 +269,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		protected badgeClassManager: BadgeClassManager,
 		protected dialogService: CommonDialogsService,
 		protected componentElem: ElementRef<HTMLElement>,
+        protected aiSkillsService: AiSkillsService,
 	) {
 		super(router, route, sessionService);
 		title.setTitle(`Create Badge - ${this.configService.theme['serviceName'] || 'Badgr'}`);
@@ -478,6 +487,23 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	addCompetency() {
 		this.badgeClassForm.controls.competencies.addFromTemplate();
 	}
+
+    suggestCompetencies() {
+        console.log("Suggesting competencies!");
+        console.log("Description: ", this.aiCompetenciesDescription);
+
+        if (this.aiCompetenciesDescription.length > 0) {
+            this.aiSkillsService.getAiSkills(this.aiCompetenciesDescription)
+                .then(skills => {
+                    console.log("Got skills: ", skills);
+                })
+                .catch(error => {
+                    this.messageService.reportAndThrowError(
+                        "Failed to obtain ai skills.",
+                        error);
+                });
+        }
+    }
 
 	async disableAlignments() {
 		const isPlural = this.badgeClassForm.value.alignments.length > 1;

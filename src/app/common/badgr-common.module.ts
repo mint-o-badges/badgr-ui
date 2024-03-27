@@ -39,6 +39,7 @@ import { TimeComponent } from './components/time.component';
 import { BadgrButtonComponent } from './components/badgr-button.component';
 import { SharingService } from './services/sharing.service';
 import { NounprojectService } from './services/nounproject.service';
+import { AiSkillsService } from './services/ai-skills.service';
 import { EventsService } from './services/events.service';
 import { ForwardRouteComponent } from './pages/forward-route.component';
 import { MarkdownDisplay } from './components/markdown-display';
@@ -134,6 +135,7 @@ const SERVICES = [
 	SettingsService,
 	SharingService,
 	NounprojectService,
+    AiSkillsService,
 	EventsService,
 	SessionService,
 	QueryParametersService,
