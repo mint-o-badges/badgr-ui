@@ -377,7 +377,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				const competencies = this.badgeClassForm.controls.competencies;
 				competencies.reset();
 				for (let i = competencies.length - 1; i >= 0; i--) {
-					this.badgeClassForm.controls.competencies.removeAt(competencies[i]);
+					competencies.removeAt(i);
 				}
 				this.badgeCategory = this.badgeClassForm.rawControl.controls['badge_category'].value;
 			} else {
