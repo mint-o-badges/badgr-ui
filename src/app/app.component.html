@@ -116,8 +116,9 @@
 						>{{ 'NavItems.register' | translate }}</a
 					>
 
-		
-					<div class="navitem" style="position: unset; display: flex; gap: 4px">
+					<!-- ToDo: comment in when all pages are completely translated -->
+					<!-- Language -->
+					<!-- <div class="navitem" style="position: unset; display: flex; gap: 4px">
 						<button (click)="changeLng('de')">
 							<span [ngStyle]="{ 'font-weight': selectedLng == 'de' ? 'bold' : 'normal' }">DE</span>
 						</button>
@@ -125,7 +126,7 @@
 						<button (click)="changeLng('en')">
 							<span [ngStyle]="{ 'font-weight': selectedLng == 'en' ? 'bold' : 'normal' }">EN</span>
 						</button>
-					</div>
+					</div> -->
 				</div>
 
 				<!-- Login btn -->
@@ -221,7 +222,9 @@
 						<svg class="navitem-x-icon" icon="icon_dropdown"></svg>
 					</button>
 
-					<div class="navitem" style="position: unset; display: flex; gap: 4px">
+					<!-- ToDo: comment in when all pages are completely translated -->
+					<!-- Language -->
+					<!-- <div class="navitem" style="position: unset; display: flex; gap: 4px">
 						<button (click)="changeLng('de')">
 							<span [ngStyle]="{ 'font-weight': selectedLng == 'de' ? 'bold' : 'normal' }">DE</span>
 						</button>
@@ -229,7 +232,7 @@
 						<button (click)="changeLng('en')">
 							<span [ngStyle]="{ 'font-weight': selectedLng == 'en' ? 'bold' : 'normal' }">EN</span>
 						</button>
-					</div>
+					</div> -->
 				</div>
 			</nav>
 		</ng-template>
@@ -300,8 +303,9 @@
 			<a routerLinkActive="menuitem-is-active" [routerLink]="['/signup']">{{
 				'NavItems.register' | translate
 			}}</a>
+			<!-- ToDo: comment in when all pages are completely translated -->
 			<!-- mobile-nav language selection -->
-			<a
+			<!-- <a
 				><div style="color: white; display: flex; gap: 4px">
 					<button (click)="changeLng('de')" style="color: white">
 						<span [ngStyle]="{ 'font-weight': selectedLng == 'de' ? 'bold' : 'normal' }">DE</span>
@@ -311,7 +315,7 @@
 						<span [ngStyle]="{ 'font-weight': selectedLng == 'en' ? 'bold' : 'normal' }">EN</span>
 					</button>
 				</div></a
-			>
+			> -->
 			<hr class="mobilenav-x-rule" />
 			<p class="mobilenav-x-label" *ngIf="launchpoints?.length">Apps</p>
 			<a href="{{ lp.launch_url }}" *ngFor="let lp of launchpoints" target="_blank">
