@@ -138,7 +138,9 @@
 		"multiBadges": "# Badges",
 		"noRecipients": "Keine Empfänger*in",
 		"oneRecipient": "1 Empfänger",
-		"multiRecipients": "# Empfänger*innen"
+		"multiRecipients": "# Empfänger*innen",
+		"participation": "Teilnahme",
+		"competency": "Kompetenz"
 	},
 	"Signup": {
 		"youHaveAccount": "Du hast bereits einen Account?",
