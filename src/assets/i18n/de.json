@@ -5,7 +5,7 @@
 		"name": "Name",
 		"institutions": "Institutionen",
 		"account": "Konto",
-		"backpack": "Rucksack",
+		"backpack": "Mein Rucksack",
 		"list": "list",
 		"collection": "Sammlung",
 		"collections": "Sammlungen",
@@ -32,7 +32,8 @@
 		"members": "Mitglieder",
 		"role": "Rolle",
 		"remove": "Entfernen",
-		"save": "Speichern"
+		"save": "Speichern",
+		"aboutBadges": "Über Badges"
 	},
 	"NavItems": {
 		"register": "Registrieren",
