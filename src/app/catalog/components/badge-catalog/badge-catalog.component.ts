@@ -78,7 +78,7 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		this.updateResults();
 	}
 
-	private _groupBy = this.translate.instant('Badge.category');
+	private _groupBy = '---';
 	get groupBy() {
 		return this._groupBy;
 	}
@@ -143,8 +143,7 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		this.prepareTexts();
 		// Translate: to update predefined text when language is changed
 		this.translate.onLangChange.subscribe((event) => {
-			this.prepareTexts()
-			
+			this.prepareTexts();
 		});
 	}
 	prepareTexts() {
@@ -184,7 +183,7 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 				.sort((a, b) => a.issuerName.localeCompare(b.issuerName))
 				.forEach((r) => r.badges.sort((a, b) => a.name.localeCompare(b.name)));
 			this.badgeResultsByCategory
-				.sort((a, b) => this.categoryOptions[a.category].localeCompare(this.categoryOptions[b.category]))
+				.sort((a, b) => a.category.localeCompare(b.category))
 				.forEach((r) => r.badges.sort((a, b) => a.name.localeCompare(b.name)));
 		} else {
 			this.badgeResults.sort((a, b) => b.name.localeCompare(a.name));
@@ -192,7 +191,7 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 				.sort((a, b) => b.issuerName.localeCompare(a.issuerName))
 				.forEach((r) => r.badges.sort((a, b) => b.name.localeCompare(a.name)));
 			this.badgeResultsByCategory
-				.sort((a, b) => this.categoryOptions[b.category].localeCompare(this.categoryOptions[a.category]))
+				.sort((a, b) => b.category.localeCompare(a.category))
 				.forEach((r) => r.badges.sort((a, b) => b.name.localeCompare(a.name)));
 		}
 	}

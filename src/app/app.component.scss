@@ -216,6 +216,7 @@
 	display: flex;
   	flex-direction: column;
   	gap: 1em;
+	justify-content: space-between;
 
 	  .faq{
 		font-family: "Inter";
@@ -238,7 +239,7 @@
 	font-weight: 600;
 	font-size: 20px;
 	line-height: 24px;
-	color: var(--color-violett);
+	color: var(--color-purple);
 }
 
 .main-nav-bold{
@@ -251,14 +252,14 @@
 
 .login-btn {
 	position: unset;
-	background-color: var(--color-violett);
+	background-color: var(--color-purple);
 	width: 75px;
 	height: 45px;
 	border-radius: 10px;
 	margin-left: 1em;
 }
 
-@media (max-width: 860px) {
+@media (max-width: 767px) {
 	.login-btn{
 		display: none;
 	}

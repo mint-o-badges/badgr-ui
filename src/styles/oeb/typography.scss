@@ -1,0 +1,27 @@
+.oeb {  
+
+    .oeb-red-bg {
+        border-radius: 10px;
+        background: var(--color-red); 
+        color: #FFF;
+    }
+
+    .oeb-yellow-bg {
+        border-radius: 10px;
+        background: var(--color-yellow); 
+        color: var(--color-purple);;
+    }
+    
+    .bold {
+        font-weight:bold;
+    }
+    .oeb-center {
+        text-align: center;
+    }
+}
+
+.oeb-red-bg {
+    border-radius: 10px;
+    background: var(--color-red); 
+    color: #FFF;
+}
