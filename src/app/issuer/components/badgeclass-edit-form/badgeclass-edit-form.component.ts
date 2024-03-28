@@ -625,6 +625,15 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 					type: ['Extension', 'extensions:LevelExtension'],
 					Level: String(formState.badge_level),
 				},
+				'extensions:CompetencyExtension': formState.competencies.map((competency) => ({
+					'@context': competencyExtensionContextUrl,
+					type: ['Extension', 'extensions:CompetencyExtension'],
+					name: String(competency.name),
+					description: String(competency.description),
+					escoID: String(competency.escoID),
+					studyLoad: Number(competency.studyLoad),
+					category: String(competency.category),
+				})),
 			};
 			if (this.currentImage) {
 				this.existingBadgeClass.extension = {
