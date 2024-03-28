@@ -60,7 +60,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 
 	get activeRecipientCount() {
 		const badges = this.allBadgeInstances.entities.filter(
-			(thisEntity) => !thisEntity.isExpired && !thisEntity.isRevoked
+			(thisEntity) => !thisEntity.isExpired && !thisEntity.isRevoked,
 		);
 		return badges && badges.length;
 	}
@@ -73,7 +73,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		return badges && badges.length;
 	}
 	readonly issuerImagePlacholderUrl = preloadImageURL(
-		'../../../../breakdown/static/images/placeholderavatar-issuer.svg'
+		'../../../../breakdown/static/images/placeholderavatar-issuer.svg',
 	);
 	launchpoints: ApiExternalToolLaunchpoint[];
 
@@ -91,10 +91,8 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 	crumbs: LinkEntry[];
 
 	categoryOptions: { [key in BadgeClassCategory]: string } = {
-		membership: 'Mitgliedschaft',
-		ability: 'Metakompetenz',
-		archievement: 'Teilnahme / Erfolg',
-		skill: 'Fachliche Kompetenz',
+		competency: 'Kompetenz-Badge',
+		participation: 'Teilnahme-Badge',
 	};
 
 	levelOptions: { [key in BadgeClassLevel]: string } = {
@@ -120,7 +118,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		protected dialogService: CommonDialogsService,
 		private eventService: EventsService,
 		protected configService: AppConfigService,
-		private externalToolsManager: ExternalToolsManager
+		private externalToolsManager: ExternalToolsManager,
 	) {
 		super(router, route, sessionService);
 
@@ -128,20 +126,20 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 			(badge) => {
 				this.badgeClass = badge;
 				this.title.setTitle(
-					`Badge Class - ${this.badgeClass.name} - ${this.configService.theme['serviceName'] || 'Badgr'}`
+					`Badge Class - ${this.badgeClass.name} - ${this.configService.theme['serviceName'] || 'Badgr'}`,
 				);
 				this.loadInstances();
 			},
 			(error) =>
 				this.messageService.reportLoadingError(
 					`Cannot find badge ${this.issuerSlug} / ${this.badgeSlug}`,
-					error
-				)
+					error,
+				),
 		);
 
 		this.issuerLoaded = issuerManager.issuerBySlug(this.issuerSlug).then(
 			(issuer) => (this.issuer = issuer),
-			(error) => this.messageService.reportLoadingError(`Cannot find issuer ${this.issuerSlug}`, error)
+			(error) => this.messageService.reportLoadingError(`Cannot find issuer ${this.issuerSlug}`, error),
 		);
 
 		this.externalToolsManager.getToolLaunchpoints('issuer_assertion_action').then((launchpoints) => {
@@ -154,7 +152,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 			this.badgeInstanceManager,
 			this.issuerSlug,
 			this.badgeSlug,
-			recipientQuery
+			recipientQuery,
 		);
 		this.badgeInstancesLoaded = instances.loadedPromise.then(
 			(retInstances) => {
@@ -171,10 +169,10 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 			},
 			(error) => {
 				this.messageService.reportLoadingError(
-					`Could not load recipients ${this.issuerSlug} / ${this.badgeSlug}`
+					`Could not load recipients ${this.issuerSlug} / ${this.badgeSlug}`,
 				);
 				return error;
-			}
+			},
 		);
 	}
 
@@ -200,11 +198,11 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 						},
 						(error) =>
 							this.messageService.reportAndThrowError(
-								`Failed to revoke badge to ${instance.recipientIdentifier}`
-							)
+								`Failed to revoke badge to ${instance.recipientIdentifier}`,
+							),
 					);
 				},
-				() => void 0 // Cancel
+				() => void 0, // Cancel
 			);
 	}
 
@@ -226,12 +224,12 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 							},
 							(error) => {
 								this.messageService.reportAndThrowError(
-									`Failed to delete badge class: ${BadgrApiFailure.from(error).firstMessage}`
+									`Failed to delete badge class: ${BadgrApiFailure.from(error).firstMessage}`,
 								);
-							}
+							},
 						);
 					},
-					() => void 0
+					() => void 0,
 				);
 		} else {
 			this.confirmDialog
@@ -243,7 +241,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 				})
 				.then(
 					() => void 0,
-					() => void 0
+					() => void 0,
 				);
 		}
 	}

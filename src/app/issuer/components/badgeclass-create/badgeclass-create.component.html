@@ -4,14 +4,27 @@
 			<bg-breadcrumbs [linkentries]="breadcrumbLinkEntries"></bg-breadcrumbs>
 		</div>
 	</div>
-	<div class="l-containerxaxis topbar-x-wrap">
-		<div class="topbar-x-heading">
-			Badge erstellen
+	<div class="l-containerxaxis">
+		<div class="topbar-x-heading">Badge erstellen</div>
+		<div class="topbar-x-subheading" style="display: flex; flex-direction: column; width: 50%">
+			<span style="padding-bottom: 1em"> Badges sind Container, die mit Kompetenzen gefüllt werden können. </span>
+			<span style="padding-bottom: 1em">
+				Du kannst deinen Badge befüllen, indem du unseren
+				<span style="color: var(--color-interactive1)">KI-Badge-Assistent</span> nutzt und dir anhand deiner
+				Kurs-/Interaktionsbeschreibung Vorschläge generieren lässt.
+			</span>
+			<span style="padding-bottom: 1em">
+				Alternativ kannst du Kompetenzen
+				<span style="color: var(--color-interactive1)">händisch</span> einfügen. Nutze dazu gerne als
+				Unterstützung die
+				<a
+					style="color: var(--color-interactive1); text-decoration: underline; cursor: pointer"
+					href="https://esco.ec.europa.eu/en/classification/skill_main"
+					>Suchfunktion auf der ESCO Seite.</a
+				>
+			</span>
 		</div>
-		<div class="topbar-x-subheading">
-			Du kannst einen Badge nach der Erstellung an beliebig viele Empfänger vergeben.
-		</div>
-		<button
+		<!-- <button
 			type="submit"
 			class="button topbar-x-button"
 			(click)="copyBadge()"
@@ -28,21 +41,22 @@
 			[disabled-when-requesting]="true"
 		>
 			Badge kopieren und bearbeiten
-		</button>
+		</button> -->
 	</div>
 </div>
 
 <div *bgAwaitPromises="[issuerLoaded]" class="l-containerxaxis l-containeryaxis">
 	<div class="l-responsivelist">
-	<badgeclass-edit-form #badgeimage (save)="badgeClassCreated($event)"
-         (cancel)="creationCanceled($event)"
-         [scrolled]="scrolled"
-         [issuerSlug]="issuerSlug"
-         [isForked]="isForked"
-         [initBadgeClass]="copiedBadgeClass"
-         submitText="Create Badge"
-         submittingText="Creating Badge..."
-	></badgeclass-edit-form>
+		<badgeclass-edit-form
+			#badgeimage
+			(save)="badgeClassCreated($event)"
+			(cancel)="creationCanceled($event)"
+			[scrolled]="scrolled"
+			[issuerSlug]="issuerSlug"
+			[isForked]="isForked"
+			[initBadgeClass]="copiedBadgeClass"
+			submitText="Create Badge"
+			submittingText="Creating Badge..."
+		></badgeclass-edit-form>
 	</div>
 </div>
-

@@ -6,7 +6,7 @@
 			Badges
 			<ng-template [showLoader]="false" [bgAwaitPromises]="[badgesLoaded]">
 				<span class="topbar-x-internalheading">
-					{{ badges.length | i18nPlural : plural['badges'] }}
+					{{ badges.length | i18nPlural: plural['badges'] }}
 				</span>
 			</ng-template>
 		</h2>
@@ -66,7 +66,7 @@
 						(click)="filterByTag(tag)"
 						class="tag tag-wrapper tag-button"
 						[class.tag-button-pressed]="selectedTag == tag"
-						*ngFor="let tag of tags | slice : 0 : 3; last as last"
+						*ngFor="let tag of tags | slice: 0 : 3; last as last"
 					>
 						{{ tag }}
 					</div>
@@ -93,7 +93,7 @@
 					></bg-badgecard>
 				</div>
 			</ng-container>
-			<ng-container *ngIf="groupBy == 'Issuer'">
+			<ng-container *ngIf="groupBy == 'Issuer' || groupBy == 'Emittent'">
 				<ng-container *ngFor="let issuerGroup of badgeResultsByIssuer">
 					<h3 class="u-text-h3-semibold u-margin-bottom2x u-margin-top6x u-text-dark1">
 						{{ issuerGroup.issuerName }}

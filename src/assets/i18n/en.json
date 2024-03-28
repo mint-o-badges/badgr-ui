@@ -175,7 +175,9 @@
 		"multiBadges": "# Badges",
 		"noRecipients": "No Recipients",
 		"oneRecipient": "1 Recipient",
-		"multiRecipients": "# Recipients"
+		"multiRecipients": "# Recipients",
+		"participation": "Participation",
+		"competency": "Competency"
 	},
 	"Signup": {
 		"youHaveAccount": "You already have an account?",
