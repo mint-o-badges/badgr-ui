@@ -3,13 +3,14 @@ import { Component, ElementRef, Renderer2, ViewChild, AfterViewInit } from '@ang
 import { BaseDialog } from '../base-dialog';
 import { RecipientBadgeInstance } from '../../../recipient/models/recipient-badge.model';
 
-import { jsPDF } from 'jspdf';
+import jsPDF from 'jspdf';
 import { ApiRecipientBadgeClass, ApiRecipientBadgeIssuer } from '../../../recipient/models/recipient-badge-api.model';
 import { RecipientBadgeCollection } from '../../../recipient/models/recipient-badge-collection.model';
 import { UserProfile } from '../../model/user-profile.model';
 import { loadImageURL, readFileAsDataURL } from '../../util/file-util';
 import { UserProfileManager } from '../../services/user-profile-manager.service';
 import { MessageService } from '../../services/message.service';
+import html2canvas from 'html2canvas';
 
 @Component({
 	selector: 'export-pdf-dialog',
@@ -99,14 +100,27 @@ export class ExportPdfDialog extends BaseDialog {
 	async generateSingleBadgePdf(badge: RecipientBadgeInstance, markdown: HTMLElement) {
 		this.pdfError = undefined;
 		const badgeClass: ApiRecipientBadgeClass = badge.badgeClass;
+		const competencies = badge.getExtension('extensions:CompetencyExtension', [{}]);
 		this.doc = new jsPDF();
 
-		let yPos = 20;
+		let yPos = 0;
 		let xMargin = 10;
 
 		const pageWidth = this.doc.internal.pageSize.getWidth();
 		const pageHeight = this.doc.internal.pageSize.getHeight();
 		let cutoff = pageWidth - 27;
+
+		async function convertImageToDataURL(imageSrc) {
+			let blob = await fetch(imageSrc).then((res) => res.blob());
+			return await new Promise((resolve) => {
+				let reader = new FileReader();
+				reader.onload = () => resolve(reader.result);
+				reader.readAsDataURL(blob);
+			});
+		}
+
+		const oeb_logo = await convertImageToDataURL('assets/logos/Badges_Entwurf-15.png');
+		const badge_image = await convertImageToDataURL(badgeClass.image);
 
 		try {
 			if (!this.profile) {
@@ -120,225 +134,406 @@ export class ExportPdfDialog extends BaseDialog {
 				);
 			}
 			this.emailsLoaded.then(async () => {
-				// image
-				const canvasWidth = 100;
-				const canvasHeight = 100;
-				const marginXImage = (pageWidth - canvasWidth) / 2;
-				let badge_img = new Image();
-				badge_img.src = badgeClass.image;
-				this.doc.addImage(badge_img, 'JPEG', marginXImage, yPos, canvasWidth, canvasHeight);
+				html2canvas(this.outputElement.nativeElement, {
+					backgroundColor: null,
+				})
+					.then((canvas) => {
+						canvas.height = 100;
+						canvas.width = 100;
+						const ctx = canvas.getContext('2d');
 
-				// title
-				yPos += canvasHeight;
-				this.doc.setFontSize(32);
-				this.doc.setFont('Helvetica', 'bold');
-				let title = this.doc.splitTextToSize(badgeClass.name, cutoff - this.doc.getTextWidth('...'));
-				let titlePadding = 0;
-				let maxTitleRows = 2;
-				if (title.length > maxTitleRows) {
-					title[maxTitleRows - 1] = title[maxTitleRows - 1] + '...';
-				} else if (title.length < maxTitleRows) {
-					titlePadding = (15 / 2) * (maxTitleRows - title.length);
-					yPos += titlePadding;
-				}
-				for (let i = 0; i < maxTitleRows; i = i + 1) {
-					if (title[i]) {
-						yPos += 15;
-						this.doc.text(title[i], pageWidth / 2, yPos, {
+						// Sunburst Background
+						const color_2 = '#f5f5f5';
+						const num_rays = 50;
+						const ray_angle = Math.PI / num_rays; // 50 is the number of sunrays
+						const sweep_angle = ray_angle * 2;
+						const mid_x = ctx.canvas.width / 2;
+						const mid_y = canvas.height / 2;
+						const diameter = Math.sqrt(Math.pow(canvas.width, 2) + Math.pow(canvas.height, 2));
+						const radius = diameter / 2;
+						const inner_radius = radius * 0.4; //inner radius for thickness of rays
+						ctx.beginPath();
+						for (let i = 0; i < num_rays; i++) {
+							var start_angle = sweep_angle * i;
+							var end_angle = start_angle + ray_angle;
+
+							ctx.moveTo(
+								mid_x + inner_radius * Math.cos(start_angle),
+								mid_y + inner_radius * Math.sin(start_angle),
+							);
+							ctx.arc(mid_x, mid_y, radius, start_angle, end_angle, false);
+						}
+						ctx.fillStyle = color_2;
+						ctx.fill();
+						const image = canvas.toDataURL('image/png');
+						const pdf = this.doc;
+						const pdfWidth = pageWidth;
+						const pdfHeight = pageHeight;
+						this.doc.addImage(image, 'PNG', 5, 5, pdfWidth, pdfHeight, undefined, 'NONE');
+
+						// Logo
+						yPos += 10;
+						const logoWidth = 20;
+						const logoHeight = 20;
+						// const marginXImageLogo = (pageWidth - logoWidth) / 8;
+						const marginXImageLogo = 15;
+						this.doc.addImage(oeb_logo, 'PNG', marginXImageLogo, yPos, logoWidth, logoHeight);
+						this.doc.setDrawColor('#492E98');
+						this.doc.line(pdfWidth / 2 - 50, 20, pdfWidth / 2 + 100, 20);
+
+						// Name
+						yPos += 60;
+						this.doc.setFontSize(32);
+						this.doc.setFont('Helvetica', 'bold');
+						this.doc.setTextColor('#492E98');
+						let firstName = this.profile.firstName;
+						let lastName = this.profile.lastName;
+						firstName = firstName.charAt(0).toUpperCase() + firstName.slice(1);
+						lastName = lastName.charAt(0).toUpperCase() + lastName.slice(1);
+						this.doc.text(firstName + ' ' + lastName, pageWidth / 2, yPos - 15, { align: 'center' });
+						this.doc.setFontSize(18);
+						this.doc.setFont('Helvetica', '');
+						this.doc.setTextColor('#black');
+
+						this.doc.text('hat am ' + badge.issueDate.toLocaleDateString('de-DE'), pageWidth / 2, yPos, {
 							align: 'center',
 						});
-					}
-				}
-				yPos += titlePadding;
+						this.doc.text('den folgenden Badge erworben: ', pageWidth / 2, yPos + 10, { align: 'center' });
 
-				// subtitlecriteria_
-				if (badgeClass.criteria_text) {
-					yPos += 7;
-					await this.doc.html(markdown, {
-						callback: function (doc) {
-							return doc;
-						},
-						margin: 8.5,
-						x: 20,
-						y: yPos,
-						width: cutoff - 8, //target width in the PDF document
-						windowWidth: 550, //window width in CSS pixels
-					});
-					yPos += 55 + 10;
-					this.doc.setFillColor(255, 255, 255);
-					this.doc.rect(0, yPos, pageWidth, pageHeight - yPos, 'F');
-					yPos += 5;
-				} else {
-					yPos += 7;
-					this.doc.setFontSize(20);
-					this.doc.setFont('Helvetica', 'normal');
-					let subtitle = this.doc.splitTextToSize(
-						badgeClass.description,
-						cutoff - this.doc.getTextWidth('...'),
-					);
-					let subtitlePadding = 0;
-					let maxSubtitleRows = 5;
-					if (subtitle.length > maxSubtitleRows) {
-						subtitle[maxSubtitleRows - 1] = subtitle[maxSubtitleRows - 1] + '...';
-					} else if (subtitle.length < maxSubtitleRows) {
-						subtitlePadding = (10 / 2) * (maxSubtitleRows - subtitle.length);
-						yPos += subtitlePadding;
-					}
-					for (let i = 0; i < maxSubtitleRows; i = i + 1) {
-						if (subtitle[i]) {
-							yPos += 10;
-							this.doc.text(subtitle[i], pageWidth / 2, yPos, {
+						// Badge Image
+						yPos += 20;
+						const imageWidth = 100;
+						const imageHeight = 100;
+						const marginXImg = (pageWidth - imageWidth) / 2;
+						this.doc.addImage(badge_image, 'PNG', marginXImg, yPos, imageWidth, imageHeight);
+
+						// title
+						yPos += canvas.height;
+						this.doc.setFontSize(32);
+						this.doc.setFont('Helvetica', 'bold');
+						this.doc.setTextColor('#492E98');
+
+						let title = this.doc.splitTextToSize(badgeClass.name, cutoff - this.doc.getTextWidth('...'));
+						let titlePadding = 0;
+						let maxTitleRows = 2;
+						if (title.length > maxTitleRows) {
+							title[maxTitleRows - 1] = title[maxTitleRows - 1] + '...';
+						} else if (title.length < maxTitleRows) {
+							titlePadding = (15 / 2) * (maxTitleRows - title.length);
+							yPos += titlePadding;
+						}
+						for (let i = 0; i < maxTitleRows; i = i + 1) {
+							if (title[i]) {
+								yPos += 15;
+								this.doc.text(title[i], pageWidth / 2, yPos, {
+									align: 'center',
+								});
+							}
+						}
+						yPos += titlePadding;
+
+						// description
+						yPos += 15;
+						this.doc.setFontSize(18);
+						this.doc.setFont('Helvetica', 'normal');
+						this.doc.setTextColor('#black');
+
+						this.doc.text(badgeClass.description, xMargin + 10, yPos, {
+							align: 'justify',
+						});
+
+						// issued by
+						yPos += 10;
+						let issuedBy = badgeClass.issuer.name;
+						this.doc.setFontSize(18);
+						this.doc.setFont('Helvetica', 'normal');
+						let issuedByLength = this.doc.getTextWidth('Vergeben von: ..');
+						this.doc.setFontSize(20);
+						this.doc.setFont('Helvetica', 'bold');
+						let issuedByContentLength = this.doc.getTextWidth(issuedBy);
+						let awardedToLength = this.doc.getTextWidth('Erlangt von: ');
+
+						if (issuedByContentLength + issuedByLength > cutoff) {
+							issuedBy =
+								this.doc.splitTextToSize(
+									name,
+									cutoff - awardedToLength - this.doc.getTextWidth('...'),
+								)[0] + '...';
+							this.doc.setFontSize(20);
+							this.doc.setFont('Helvetica', 'bold');
+							issuedByContentLength = this.doc.getTextWidth(issuedBy);
+						}
+						this.doc.setFontSize(18);
+						this.doc.setFont('Helvetica', 'normal');
+						this.doc.setTextColor('#492E98');
+						const combinedIssuedByLength = issuedByContentLength + issuedByLength;
+						this.doc.line(combinedIssuedByLength + 10, yPos - 2, combinedIssuedByLength, yPos - 2);
+						this.doc.line(
+							combinedIssuedByLength * 2 + issuedByLength,
+							yPos - 2,
+							combinedIssuedByLength * 2.5,
+							yPos - 2,
+						);
+						this.doc.text('Vergeben von: ', pageWidth / 2 - combinedIssuedByLength / 2, yPos, {});
+						this.doc.setFontSize(20);
+						this.doc.setFont('Helvetica', 'bold');
+						this.doc.text(
+							issuedBy,
+							pageWidth / 2 + (issuedByLength + issuedByContentLength) / 2 - issuedByContentLength,
+							yPos,
+							{},
+						);
+
+						if (competencies.length > 0) {
+							let pageCount = 1;
+							const competenciesPerPage = 10;
+
+							for (let i = 0; i < competencies.length; i++) {
+								// If it's the first competency or we've reached the max competencies per page
+								if (i === 0 || i % competenciesPerPage === 0) {
+									if (pageCount !== 1) {
+										this.doc.addPage();
+									}
+									pageCount++;
+								}
+								this.doc.text(competencies[i].name, 10, 10 + (i % competenciesPerPage) * 10);
+							}
+						}
+
+						//footer
+						const pageCount = (this.doc as any).internal.getNumberOfPages(); //was doc.internal.getNumberOfPages();
+						for (let i = 1; i <= pageCount; i++) {
+							this.doc.setFontSize(10);
+							// Go to page i
+							this.doc.setPage(i);
+
+							var pageSize = this.doc.internal.pageSize;
+							var pWidth = pageSize.getWidth();
+							var pHeight = pageSize.getHeight();
+
+							this.doc.line(20, pHeight - 8, pWidth / 2 - 10, pHeight - 8);
+							this.doc.line(pWidth / 2 + 10, pHeight - 8, pWidth - 20, pHeight - 8);
+
+							this.doc.text(String(i) + ' / ' + String(pageCount), pWidth / 2, pHeight - 8, {
 								align: 'center',
 							});
 						}
-					}
-					yPos += subtitlePadding + 15;
-				}
 
-				// line
-				this.doc.setDrawColor(this.themeColor);
-				this.doc.setLineWidth(1.5);
-				this.doc.line(25, yPos, pageWidth - 25, yPos);
-
-				// edge line
-				let edgeLineOffset = 8;
-				const numPages = this.doc.getNumberOfPages();
-				for (let i = 0; i < numPages; i++) {
-					this.doc.setPage(i);
-					this.doc.setDrawColor(this.themeColor);
-					this.doc.setLineWidth(1.5);
-					this.doc.roundedRect(
-						edgeLineOffset,
-						edgeLineOffset,
-						pageWidth - edgeLineOffset * 2,
-						pageHeight - edgeLineOffset * 2,
-						5,
-						5,
-					);
-				}
-
-				this.doc.setPage(numPages);
-
-				// awarded to
-				yPos += 15;
-				let name = '';
-				if (
-					this.profile &&
-					((this.profile.firstName && this.profile.firstName.length > 0) ||
-						(this.profile.lastName && this.profile.lastName.length > 0))
-				) {
-					if (this.profile.firstName) {
-						name += this.profile.firstName + ' ';
-					}
-					if (this.profile.lastName) {
-						name += this.profile.lastName;
-					}
-				} else {
-					name = this.profile.emails.entities[0].email;
-				}
-				this.doc.setFontSize(18);
-				this.doc.setFont('Helvetica', 'normal');
-				let awardedToLength = this.doc.getTextWidth('Erlangt von: ');
-				this.doc.setFontSize(20);
-				this.doc.setFont('Helvetica', 'bold');
-				let awardedToContentLength = this.doc.getTextWidth(name);
-				if (awardedToContentLength + awardedToLength > cutoff) {
-					name =
-						this.doc.splitTextToSize(name, cutoff - awardedToLength - this.doc.getTextWidth('...'))[0] +
-						'...';
-					this.doc.setFontSize(20);
-					this.doc.setFont('Helvetica', 'bold');
-					awardedToContentLength = this.doc.getTextWidth(name);
-				}
-				this.doc.setFontSize(18);
-				this.doc.setFont('Helvetica', 'normal');
-				this.doc.text(
-					'Erlangt von: ',
-					pageWidth / 2 - (awardedToContentLength + awardedToLength) / 2,
-					yPos,
-					{},
-				);
-				this.doc.setFontSize(20);
-				this.doc.setFont('Helvetica', 'bold');
-				this.doc.text(
-					name,
-					pageWidth / 2 + (awardedToContentLength + awardedToLength) / 2 - awardedToContentLength,
-					yPos,
-					{},
-				);
-
-				// issued by
-				yPos += 10;
-				let issuedBy = badgeClass.issuer.name;
-				this.doc.setFontSize(18);
-				this.doc.setFont('Helvetica', 'normal');
-				let issuedByLength = this.doc.getTextWidth('Vergeben von: ..');
-				this.doc.setFontSize(20);
-				this.doc.setFont('Helvetica', 'bold');
-				let issuedByContentLength = this.doc.getTextWidth(issuedBy);
-				if (issuedByContentLength + issuedByLength > cutoff) {
-					issuedBy =
-						this.doc.splitTextToSize(name, cutoff - awardedToLength - this.doc.getTextWidth('...'))[0] +
-						'...';
-					this.doc.setFontSize(20);
-					this.doc.setFont('Helvetica', 'bold');
-					issuedByContentLength = this.doc.getTextWidth(issuedBy);
-				}
-				this.doc.setFontSize(18);
-				this.doc.setFont('Helvetica', 'normal');
-				this.doc.text('Vergeben von: ', pageWidth / 2 - (issuedByLength + issuedByContentLength) / 2, yPos, {});
-				this.doc.setFontSize(20);
-				this.doc.setFont('Helvetica', 'bold');
-				this.doc.text(
-					issuedBy,
-					pageWidth / 2 + (issuedByLength + issuedByContentLength) / 2 - issuedByContentLength,
-					yPos,
-					{},
-				);
-
-				// issued on
-				yPos += 10;
-				this.doc.setFontSize(20);
-				this.doc.setFont('Helvetica', 'bold');
-				let issuedOnContentLength = this.doc.getTextWidth(badge.issueDate.toLocaleDateString('uk-UK'));
-				this.doc.setFontSize(18);
-				this.doc.setFont('Helvetica', 'normal');
-				let issuedOnLength = this.doc.getTextWidth('Erhalten am: ');
-				this.doc.text('Erhalten am: ', pageWidth / 2 - (issuedOnLength + issuedOnContentLength) / 2, yPos, {});
-				this.doc.setFontSize(20);
-				this.doc.setFont('Helvetica', 'bold');
-				this.doc.text(
-					badge.issueDate.toLocaleDateString('uk-UK'),
-					pageWidth / 2 + (issuedOnLength + issuedOnContentLength) / 2 - issuedOnContentLength,
-					yPos,
-					{},
-				);
-
-				// logo
-				yPos += 9;
-				const logoWidth = 15;
-				const logoHeight = 15;
-				this.doc.setFontSize(14);
-				this.doc.setFont('Helvetica', 'normal');
-				let logoTextOnContentLength = this.doc.getTextWidth('bereitgestellt von https://openbadges.education');
-				const marginXImageLogo = (pageWidth - logoTextOnContentLength - logoWidth) / 2;
-				var img = new Image();
-				img.src = 'assets/logos/Badges_Entwurf-15.png';
-				this.doc.addImage(img, 'PNG', marginXImageLogo, yPos, logoWidth, logoHeight);
-				// yPos += 13;
-				this.doc.textWithLink(
-					'bereitgestellt von https://openbadges.education',
-					(pageWidth - logoTextOnContentLength) / 2 + logoWidth,
-					yPos + (logoHeight * 2) / 3,
-					{
-						url: 'https://openbadges.education/public/start',
-					},
-				);
-
-				this.badgePdf = this.doc.output('datauristring');
-				this.outputElement.nativeElement.src = this.badgePdf;
-
-				this.outputElement.nativeElement.setAttribute('style', 'overflow: auto');
+						return this.doc;
+					})
+					.then((doc) => {
+						this.badgePdf = doc.output('datauristring');
+						this.outputElement.nativeElement.src = this.badgePdf;
+						this.outputElement.nativeElement.setAttribute('style', 'overflow: auto');
+					});
+				// image
+				// const canvasWidth = 100;
+				// const canvasHeight = 100;this.doc.addImage(image, 'PNG', 5, 5, pdfWidth, pdfHeight, undefined, 'NONE');
+				// const marginXImage = (pageWidth - canvasWidth) / 2;
+				// let badge_img = new Image();
+				// badge_img.src = badgeClass.image;
+				// this.doc.addImage(badge_img, 'JPEG', marginXImage, yPos, canvasWidth, canvasHeight);
+				// // title
+				// yPos += canvasHeight;
+				// this.doc.setFontSize(32);
+				// this.doc.setFont('Helvetica', 'bold');
+				// let title = this.doc.splitTextToSize(badgeClass.name, cutoff - this.doc.getTextWidth('...'));
+				// let titlePadding = 0;
+				// let maxTitleRows = 2;
+				// if (title.length > maxTitleRows) {
+				// 	title[maxTitleRows - 1] = title[maxTitleRows - 1] + '...';
+				// } else if (title.length < maxTitleRows) {
+				// 	titlePadding = (15 / 2) * (maxTitleRows - title.length);
+				// 	yPos += titlePadding;
+				// }
+				// for (let i = 0; i < maxTitleRows; i = i + 1) {
+				// 	if (title[i]) {
+				// 		yPos += 15;
+				// 		this.doc.text(title[i], pageWidth / 2, yPos, {
+				// 			align: 'center',
+				// 		});
+				// 	}
+				// }
+				// yPos += titlePadding;
+				// // subtitlecriteria_
+				// if (badgeClass.criteria_text) {
+				// 	yPos += 7;
+				// 	await this.doc.html(markdown, {
+				// 		callback: function (doc) {
+				// 			return doc;
+				// 		},
+				// 		margin: 8.5,
+				// 		x: 20,
+				// 		y: yPos,
+				// 		width: cutoff - 8, //target width in the PDF document
+				// 		windowWidth: 550, //window width in CSS pixels
+				// 	});
+				// 	yPos += 55 + 10;
+				// 	this.doc.setFillColor(255, 255, 255);
+				// 	this.doc.rect(0, yPos, pageWidth, pageHeight - yPos, 'F');
+				// 	yPos += 5;
+				// } else {
+				// 	yPos += 7;
+				// 	this.doc.setFontSize(20);
+				// 	this.doc.setFont('Helvetica', 'normal');
+				// 	let subtitle = this.doc.splitTextToSize(
+				// 		badgeClass.description,
+				// 		cutoff - this.doc.getTextWidth('...'),
+				// 	);
+				// 	let subtitlePadding = 0;
+				// 	let maxSubtitleRows = 5;
+				// 	if (subtitle.length > maxSubtitleRows) {
+				// 		subtitle[maxSubtitleRows - 1] = subtitle[maxSubtitleRows - 1] + '...';
+				// 	} else if (subtitle.length < maxSubtitleRows) {
+				// 		subtitlePadding = (10 / 2) * (maxSubtitleRows - subtitle.length);
+				// 		yPos += subtitlePadding;
+				// 	}
+				// 	for (let i = 0; i < maxSubtitleRows; i = i + 1) {
+				// 		if (subtitle[i]) {
+				// 			yPos += 10;
+				// 			this.doc.text(subtitle[i], pageWidth / 2, yPos, {
+				// 				align: 'center',
+				// 			});
+				// 		}
+				// 	}
+				// 	yPos += subtitlePadding + 15;
+				// }
+				// // line
+				// this.doc.setDrawColor(this.themeColor);
+				// this.doc.setLineWidth(1.5);
+				// this.doc.line(25, yPos, pageWidth - 25, yPos);
+				// // edge line
+				// let edgeLineOffset = 8;
+				// const numPages = this.doc.getNumberOfPages();
+				// for (let i = 0; i < numPages; i++) {
+				// 	this.doc.setPage(i);
+				// 	this.doc.setDrawColor(this.themeColor);
+				// 	this.doc.setLineWidth(1.5);
+				// 	this.doc.roundedRect(
+				// 		edgeLineOffset,
+				// 		edgeLineOffset,
+				// 		pageWidth - edgeLineOffset * 2,
+				// 		pageHeight - edgeLineOffset * 2,
+				// 		5,
+				// 		5,
+				// 	);
+				// }
+				// this.doc.setPage(numPages);
+				// // awarded to
+				// yPos += 15;
+				// let name = '';
+				// if (
+				// 	this.profile &&
+				// 	((this.profile.firstName && this.profile.firstName.length > 0) ||
+				// 		(this.profile.lastName && this.profile.lastName.length > 0))
+				// ) {
+				// 	if (this.profile.firstName) {
+				// 		name += this.profile.firstName + ' ';
+				// 	}
+				// 	if (this.profile.lastName) {
+				// 		name += this.profile.lastName;
+				// 	}
+				// } else {
+				// 	name = this.profile.emails.entities[0].email;
+				// }
+				// this.doc.setFontSize(18);
+				// this.doc.setFont('Helvetica', 'normal');
+				// let awardedToLength = this.doc.getTextWidth('Erlangt von: ');
+				// this.doc.setFontSize(20);
+				// this.doc.setFont('Helvetica', 'bold');
+				// let awardedToContentLength = this.doc.getTextWidth(name);
+				// if (awardedToContentLength + awardedToLength > cutoff) {
+				// 	name =
+				// 		this.doc.splitTextToSize(name, cutoff - awardedToLength - this.doc.getTextWidth('...'))[0] +
+				// 		'...';
+				// 	this.doc.setFontSize(20);
+				// 	this.doc.setFont('Helvetica', 'bold');
+				// 	awardedToContentLength = this.doc.getTextWidth(name);
+				// }
+				// this.doc.setFontSize(18);
+				// this.doc.setFont('Helvetica', 'normal');
+				// this.doc.text(
+				// 	'Erlangt von: ',
+				// 	pageWidth / 2 - (awardedToContentLength + awardedToLength) / 2,
+				// 	yPos,
+				// 	{},
+				// );
+				// this.doc.setFontSize(20);
+				// this.doc.setFont('Helvetica', 'bold');
+				// this.doc.text(
+				// 	name,
+				// 	pageWidth / 2 + (awardedToContentLength + awardedToLength) / 2 - awardedToContentLength,
+				// 	yPos,
+				// 	{},
+				// );
+				// // issued by
+				// yPos += 10;
+				// let issuedBy = badgeClass.issuer.name;
+				// this.doc.setFontSize(18);
+				// this.doc.setFont('Helvetica', 'normal');
+				// let issuedByLength = this.doc.getTextWidth('Vergeben von: ..');
+				// this.doc.setFontSize(20);
+				// this.doc.setFont('Helvetica', 'bold');
+				// let issuedByContentLength = this.doc.getTextWidth(issuedBy);
+				// if (issuedByContentLength + issuedByLength > cutoff) {
+				// 	issuedBy =
+				// 		this.doc.splitTextToSize(name, cutoff - awardedToLength - this.doc.getTextWidth('...'))[0] +
+				// 		'...';
+				// 	this.doc.setFontSize(20);
+				// 	this.doc.setFont('Helvetica', 'bold');
+				// 	issuedByContentLength = this.doc.getTextWidth(issuedBy);
+				// }
+				// this.doc.setFontSize(18);
+				// this.doc.setFont('Helvetica', 'normal');
+				// this.doc.text('Vergeben von: ', pageWidth / 2 - (issuedByLength + issuedByContentLength) / 2, yPos, {});
+				// this.doc.setFontSize(20);
+				// this.doc.setFont('Helvetica', 'bold');
+				// this.doc.text(
+				// 	issuedBy,
+				// 	pageWidth / 2 + (issuedByLength + issuedByContentLength) / 2 - issuedByContentLength,
+				// 	yPos,
+				// 	{},
+				// );
+				// // issued on
+				// yPos += 10;
+				// this.doc.setFontSize(20);
+				// this.doc.setFont('Helvetica', 'bold');
+				// let issuedOnContentLength = this.doc.getTextWidth(badge.issueDate.toLocaleDateString('uk-UK'));
+				// this.doc.setFontSize(18);
+				// this.doc.setFont('Helvetica', 'normal');
+				// let issuedOnLength = this.doc.getTextWidth('Erhalten am: ');
+				// this.doc.text('Erhalten am: ', pageWidth / 2 - (issuedOnLength + issuedOnContentLength) / 2, yPos, {});
+				// this.doc.setFontSize(20);
+				// this.doc.setFont('Helvetica', 'bold');
+				// this.doc.text(
+				// 	badge.issueDate.toLocaleDateString('uk-UK'),
+				// 	pageWidth / 2 + (issuedOnLength + issuedOnContentLength) / 2 - issuedOnContentLength,
+				// 	yPos,
+				// 	{},
+				// );
+				// // logo
+				// yPos += 9;
+				// const logoWidth = 15;
+				// const logoHeight = 15;
+				// this.doc.setFontSize(14);
+				// this.doc.setFont('Helvetica', 'normal');
+				// let logoTextOnContentLength = this.doc.getTextWidth('bereitgestellt von https://openbadges.education');
+				// const marginXImageLogo = (pageWidth - logoTextOnContentLength - logoWidth) / 2;
+				// var img = new Image();
+				// img.src = 'assets/logos/Badges_Entwurf-15.png';
+				// this.doc.addImage(img, 'PNG', marginXImageLogo, yPos, logoWidth, logoHeight);
+				// // yPos += 13;
+				// this.doc.textWithLink(
+				// 	'bereitgestellt von https://openbadges.education',
+				// 	(pageWidth - logoTextOnContentLength) / 2 + logoWidth,
+				// 	yPos + (logoHeight * 2) / 3,
+				// 	{
+				// 		url: 'https://openbadges.education/public/start',
+				// 	},
+				// );
+				// this.badgePdf = this.doc.output('datauristring');
+				// this.outputElement.nativeElement.src = this.badgePdf;
+				// this.outputElement.nativeElement.setAttribute('style', 'overflow: auto');
 			});
 		} catch (e) {
 			this.pdfError = e;
@@ -350,7 +545,7 @@ export class ExportPdfDialog extends BaseDialog {
 	generateBadgeCollectionPdf(collection: RecipientBadgeCollection) {
 		this.pdfError = undefined;
 		const badges: RecipientBadgeInstance[] = collection.badges;
-		this.doc = new jsPDF();
+		this.doc = new jsPDF('l', 'mm', 'a4', true);
 
 		let yPos = 20;
 		let xMargin = 10;
