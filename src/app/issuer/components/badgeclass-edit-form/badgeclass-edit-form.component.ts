@@ -27,6 +27,7 @@ import { typedFormGroup } from '../../../common/util/typed-forms';
 import { FormFieldSelectOption } from '../../../common/components/formfield-select';
 
 import { AiSkillsService } from '../../../common/services/ai-skills.service';
+import { Skill } from '../../../common/model/ai-skills.model';
 
 @Component({
 	selector: 'badgeclass-edit-form',
@@ -121,7 +122,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
      * The suggested competencies regarding the description
      * from the user
      */
-    aiCompetenciesSuggestion: string = "Hier erscheinen passende Kompetenzen, sobald du die Beschreibung deines Lehrinhalts in das Textfeld links eingefügt hast und auf \"Passende Kompetenzen vorschlagen\" klickst.";
+    aiCompetenciesSuggestions: Skill[] = [];
 
 	savePromise: Promise<BadgeClass> | null = null;
 	badgeClassForm = typedFormGroup(this.criteriaRequired.bind(this))
@@ -154,6 +155,13 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			slug: '',
 			issuerSlug: '',
 		})
+        .addArray(
+            'aiCompetencies',
+            typedFormGroup()
+                .addControl('selected', false)
+                // TODO: This is only required if selected
+                .addControl('studyLoad', 60, [Validators.required, this.positiveInteger, Validators.max(1000)])
+        )
 		.addArray(
 			'competencies',
 			typedFormGroup()
@@ -321,6 +329,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				slug: badgeClass.slug,
 				issuerSlug: badgeClass.issuerSlug,
 			},
+            aiCompetencies: [],
 			competencies: badgeClass.extension['extensions:CompetencyExtension']
 				? badgeClass.extension['extensions:CompetencyExtension']
 				: [],
@@ -500,9 +509,10 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
         }
         this.aiSkillsService.getAiSkills(this.aiCompetenciesDescription)
         .then(skills => {
-            this.aiCompetenciesSuggestion = skills
-                .map(skill => skill.preferred_label)
-                .join('\n');
+            this.aiCompetenciesSuggestions = skills;
+            skills.forEach(skill => {
+                this.badgeClassForm.controls.aiCompetencies.addFromTemplate();
+            });
         })
         .catch(error => {
             this.messageService.reportAndThrowError(
@@ -706,6 +716,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 						type: ['Extension', 'extensions:BasedOnExtension'],
 						BasedOn: formState.badge_based_on,
 					},
+                    // TODO: Also use the ai suggested (and selected) competencies here
 					'extensions:CompetencyExtension': formState.competencies.map((competency) => ({
 						'@context': competencyExtensionContextUrl,
 						type: ['Extension', 'extensions:CompetencyExtension'],
@@ -790,6 +801,11 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	openLegend() {
 		this.showLegend = true;
 	}
+
+    // TODO: Check if I even need this handler
+    handleAiSkillCheckboxValueChange(event: Event, i: Number) {
+        console.log("Ai skill selected!")
+    }
 
 	handleCBoxValueChange(event: Event) {
 		this.hideHexFrame = (<HTMLInputElement>event.target).checked;
