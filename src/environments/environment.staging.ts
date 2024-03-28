@@ -16,8 +16,8 @@ export const environment: BadgrEnvironment = {
 				url: 'https://opensenselab.org',
 			},
 			logoImg: {
-				small: 'assets/logos/Badges_Entwurf-15-circle.svg',
-				desktop: 'assets/logos/Badges_Entwurf-15-circle.svg',
+				small: 'assets/logos/Logo-New.png',
+				desktop: 'assets/logos/Logo-New.png',
 			},
 			loadingImg: {
 				imageUrl:
