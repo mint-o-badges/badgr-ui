@@ -403,8 +403,30 @@
 	style="background-color: var(--color-lightgreen); margin-top: 30px"
 >
 	<div class="l-containerxaxis">
+		
+		<hr>
 		<div class="footer l-stickyfooter-x-footer">
-			<ul class="footer-x-leftlinks" style="width: 40%">
+			
+			<div class="tw-flex tw-justify-between">
+				<div style="width: 40%;">
+					<p
+						class="Text-SemiBold"
+						*ngIf="theme.showPoweredByOSL && theme.providedBy"
+						[innerHtml]="'Start.poweredBy' | translate"
+					></p>
+				</div>
+				<div></div>
+	
+				<div>
+					<a class="faq" [routerLink]="['/public/faq']">FAQ</a>
+					<a class="impressum" [href]="theme.termsOfServiceLink" target="_blank">{{
+						'Start.imprint' | translate
+					}}</a>
+				</div>
+				<div></div>
+			</div>
+
+			<!-- <ul class="footer-x-leftlinks" style="width: 40%">
 				<li
 					class="Text-SemiBold"
 					*ngIf="theme.showPoweredByOSL && theme.providedBy"
@@ -421,7 +443,7 @@
 						'Start.imprint' | translate
 					}}</a>
 				</li>
-			</ul>
+			</ul> -->
 		</div>
 	</div>
 </footer>
