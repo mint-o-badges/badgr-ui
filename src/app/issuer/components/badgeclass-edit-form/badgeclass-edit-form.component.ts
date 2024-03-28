@@ -717,15 +717,27 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 						BasedOn: formState.badge_based_on,
 					},
                     // TODO: Also use the ai suggested (and selected) competencies here
-					'extensions:CompetencyExtension': formState.competencies.map((competency) => ({
-						'@context': competencyExtensionContextUrl,
-						type: ['Extension', 'extensions:CompetencyExtension'],
-						name: String(competency.name),
-						description: String(competency.description),
-						escoID: String(competency.escoID),
-						studyLoad: Number(competency.studyLoad),
-						category: String(competency.category),
-					})),
+					'extensions:CompetencyExtension': formState.competencies
+                        .map((competency) => ({
+                            '@context': competencyExtensionContextUrl,
+                            type: ['Extension', 'extensions:CompetencyExtension'],
+                            name: String(competency.name),
+                            description: String(competency.description),
+                            escoID: String(competency.escoID),
+                            studyLoad: Number(competency.studyLoad),
+                            category: String(competency.category),
+                        }))
+                        .concat(formState.aiCompetencies
+                               .map((aiCompetency, index) => ({
+                                   '@context': competencyExtensionContextUrl,
+                                   type: ['Extension', 'extensions:CompetencyExtension'],
+                                   name: aiCompetenciesSuggestions[index].preferred_label,
+                                   description: aiCompetenciesSuggestions[index].description,
+                                   escoId: aiCompetenciesSuggestions[index].concept_uri,
+                                   studyLoad: aiCompetency.studyLoad,
+                                   category: aiCompetenciesSuggestions[index].concept_uri.includes("skill") ? "skill" : "knowledge"
+                               }))
+                               .filter((_, index) => formState.aiCompetencies[index].selected)),
 				},
 			} as ApiBadgeClassForCreation;
 			if (this.currentImage) {
