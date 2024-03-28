@@ -274,8 +274,7 @@
                                                     id="checkboxAiSkill$i"
                                                     name="checkboxAiSkill$i"
                                                     type="checkbox"
-                                                    (change)="handleAiSkillCheckboxValueChange($event, $i)"
-                                                    [control]="aiCompetency.selected"
+                                                    [formControl]="aiCompetency.rawControlMap.selected"
                                                     />
                                             <span class="checkbox-x-text">Hinzufügen</span>
                                         </label>

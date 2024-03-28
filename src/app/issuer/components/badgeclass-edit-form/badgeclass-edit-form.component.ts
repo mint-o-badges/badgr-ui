@@ -510,8 +510,13 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
         this.aiSkillsService.getAiSkills(this.aiCompetenciesDescription)
         .then(skills => {
             this.aiCompetenciesSuggestions = skills;
+            let aiCompetencies = this.badgeClassForm.controls.aiCompetencies;
+            for (let i = aiCompetencies.length - 1; i >= 0; i--) {
+                aiCompetencies.removeAt(i);
+            }
+
             skills.forEach(skill => {
-                this.badgeClassForm.controls.aiCompetencies.addFromTemplate();
+                aiCompetencies.addFromTemplate();
             });
         })
         .catch(error => {
@@ -642,6 +647,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		const competencyExtensionContextUrl = `${this.baseUrl}/static/extensions/CompetencyExtension/context.json`;
 		const orgImageExtensionContextUrl = `${this.baseUrl}/static/extensions/OrgImageExtension/context.json`;
 
+        const suggestions = this.aiCompetenciesSuggestions;
 		if (this.existingBadgeClass) {
 			this.existingBadgeClass.name = formState.badge_name;
 			this.existingBadgeClass.description = formState.badge_description;
@@ -663,30 +669,51 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 					Category: String(formState.badge_category),
 				},
 				'extensions:LevelExtension': {
-					'@context': levelExtensionContextUrl,
-					type: ['Extension', 'extensions:LevelExtension'],
-					Level: String(formState.badge_level),
-				},
-			};
-			if (this.currentImage) {
-				this.existingBadgeClass.extension = {
-					...this.existingBadgeClass.extension,
-					'extensions:OrgImageExtension': {
-						'@context': orgImageExtensionContextUrl,
-						type: ['Extension', 'extensions:OrgImageExtension'],
-						OrgImage: this.currentImage,
-					},
-				};
-			}
-			if (this.expirationEnabled) {
-				this.existingBadgeClass.expiresDuration = expirationState.expires_duration as BadgeClassExpiresDuration;
-				this.existingBadgeClass.expiresAmount = parseInt(expirationState.expires_amount, 10);
-			} else {
-				this.existingBadgeClass.clearExpires();
-			}
+                    '@context': levelExtensionContextUrl,
+                    type: ['Extension', 'extensions:LevelExtension'],
+                    Level: String(formState.badge_level),
+                },
+                'extensions:CompetencyExtension': formState.competencies
+                    .map((competency) => ({
+                        '@context': competencyExtensionContextUrl,
+                        type: ['Extension', 'extensions:CompetencyExtension'],
+                        name: String(competency.name),
+                        description: String(competency.description),
+                        escoID: String(competency.escoID),
+                        studyLoad: Number(competency.studyLoad),
+                        category: String(competency.category),
+                    }))
+                    .concat(formState.aiCompetencies
+                            .map((aiCompetency, index) => ({
+                                '@context': competencyExtensionContextUrl,
+                                type: ['Extension', 'extensions:CompetencyExtension'],
+                                name: suggestions[index].preferred_label,
+                                description: suggestions[index].description,
+                                escoID: suggestions[index].concept_uri,
+                                studyLoad: Number(aiCompetency.studyLoad),
+                                category: suggestions[index].concept_uri.includes("skill") ? "skill" : "knowledge"
+                            }))
+                            .filter((_, index) => formState.aiCompetencies[index].selected)),
+            };
+            if (this.currentImage) {
+                this.existingBadgeClass.extension = {
+                    ...this.existingBadgeClass.extension,
+                    'extensions:OrgImageExtension': {
+                        '@context': orgImageExtensionContextUrl,
+                        type: ['Extension', 'extensions:OrgImageExtension'],
+                        OrgImage: this.currentImage,
+                    },
+                };
+            }
+            if (this.expirationEnabled) {
+                this.existingBadgeClass.expiresDuration = expirationState.expires_duration as BadgeClassExpiresDuration;
+                this.existingBadgeClass.expiresAmount = parseInt(expirationState.expires_amount, 10);
+            } else {
+                this.existingBadgeClass.clearExpires();
+            }
 
-			this.savePromise = this.existingBadgeClass.save();
-		} else {
+            this.savePromise = this.existingBadgeClass.save();
+        } else {
 			let badgeClassData = {
 				name: formState.badge_name,
 				description: formState.badge_description,
@@ -716,7 +743,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 						type: ['Extension', 'extensions:BasedOnExtension'],
 						BasedOn: formState.badge_based_on,
 					},
-                    // TODO: Also use the ai suggested (and selected) competencies here
 					'extensions:CompetencyExtension': formState.competencies
                         .map((competency) => ({
                             '@context': competencyExtensionContextUrl,
@@ -731,11 +757,11 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
                                .map((aiCompetency, index) => ({
                                    '@context': competencyExtensionContextUrl,
                                    type: ['Extension', 'extensions:CompetencyExtension'],
-                                   name: aiCompetenciesSuggestions[index].preferred_label,
-                                   description: aiCompetenciesSuggestions[index].description,
-                                   escoId: aiCompetenciesSuggestions[index].concept_uri,
-                                   studyLoad: aiCompetency.studyLoad,
-                                   category: aiCompetenciesSuggestions[index].concept_uri.includes("skill") ? "skill" : "knowledge"
+                                   name: suggestions[index].preferred_label,
+                                   description: suggestions[index].description,
+                                   escoID: suggestions[index].concept_uri,
+                                   studyLoad: Number(aiCompetency.studyLoad),
+                                   category: suggestions[index].concept_uri.includes("skill") ? "skill" : "knowledge"
                                }))
                                .filter((_, index) => formState.aiCompetencies[index].selected)),
 				},
