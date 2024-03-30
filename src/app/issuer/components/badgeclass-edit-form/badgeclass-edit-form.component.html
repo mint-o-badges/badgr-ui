@@ -159,6 +159,15 @@
 					Hinzufügen
 				</button>
 			</div>
+			<div *ngIf="tagArray.length > 0" style="display: flex; flex-wrap: wrap">
+				<div class="tag tag-wrapper tag-button" style="flex-basis: 25%; margin: 1em" *ngFor="let tag of tags">
+					<button (click)="removeTag(tag)" class="buttonicon buttonicon-link">
+						<span> {{ tag }}</span>
+						<svg icon="icon_close"></svg>
+						<span class="visuallyhidden">Close</span>
+					</button>
+				</div>
+			</div>
 			<span style="margin-left: 2em; font-style: italic"
 				>(Optional). Tags verschlagworten Badges und helfen bei der Suche von Badges zu bestimmten Themen.</span
 			>
