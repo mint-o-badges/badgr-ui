@@ -217,14 +217,14 @@ export class ExportPdfDialog extends BaseDialog {
 							// this.doc.addImage(image, 'PNG', 0, 0, pageWidth, pageHeight, undefined, 'NONE');
 
 							//  OEB Logo
-							this.doc.addImage(
-								// badgeClass.issuer.image,
-								'PNG',
-								marginXImageLogo,
-								yPos,
-								logoWidth,
-								logoHeight,
-							);
+							// this.doc.addImage(
+							// 	// badgeClass.issuer.image,
+							// 	'PNG',
+							// 	marginXImageLogo,
+							// 	yPos,
+							// 	logoWidth,
+							// 	logoHeight,
+							// );
 							this.doc.setDrawColor('#492E98');
 							this.doc.line(pageWidth / 2 - 50, 25, pageWidth / 2 + 100, 25);
 
@@ -244,14 +244,14 @@ export class ExportPdfDialog extends BaseDialog {
 									this.doc.addPage();
 									// this.doc.addImage(image, 'PNG', 0, 0, pageWidth, pageHeight, undefined, 'NONE');
 									//  OEB Logo
-									this.doc.addImage(
-										// badgeClass.issuer.image,
-										'PNG',
-										marginXImageLogo,
-										yPos,
-										logoWidth,
-										logoHeight,
-									);
+									// this.doc.addImage(
+									// 	// badgeClass.issuer.image,
+									// 	'PNG',
+									// 	marginXImageLogo,
+									// 	yPos,
+									// 	logoWidth,
+									// 	logoHeight,
+									// );
 									this.doc.setDrawColor('#492E98');
 									this.doc.line(pageWidth / 2 - 50, 25, pageWidth / 2 + 100, 25);
 								}
@@ -307,14 +307,14 @@ export class ExportPdfDialog extends BaseDialog {
 						// this.doc.addImage(image, 'PNG', 0, 0, pageWidth, pageHeight, undefined, 'NONE');
 
 						//  OEB Logo
-						this.doc.addImage(
-							// badgeClass.issuer.image,
-							'PNG',
-							marginXImageLogo,
-							yPos,
-							logoWidth,
-							logoHeight,
-						);
+						// this.doc.addImage(
+						// 	// badgeClass.issuer.image,
+						// 	'PNG',
+						// 	marginXImageLogo,
+						// 	yPos,
+						// 	logoWidth,
+						// 	logoHeight,
+						// );
 						this.doc.setDrawColor('#492E98');
 						this.doc.line(pageWidth / 2 - 50, 25, pageWidth / 2 + 100, 25);
 
