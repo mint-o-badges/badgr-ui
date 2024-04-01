@@ -97,10 +97,43 @@ export class ExportPdfDialog extends BaseDialog {
 		this.resolveFunc();
 	}
 
+	generatePdfBackground(canvas: HTMLCanvasElement) {
+		const ctx = canvas.getContext('2d');
+
+		// Sunburst Background
+		// Inspired from https://gist.github.com/rniswonger/185039aa4d2fe49e3b1f578a4d495f6e
+
+		const color = '#f5f5f5';
+		const num_rays = 50;
+		const ray_angle = Math.PI / num_rays;
+		const sweep_angle = ray_angle * 2;
+		const mid_x = ctx.canvas.width / 2;
+		const mid_y = canvas.height / 2;
+		const diameter = Math.sqrt(Math.pow(canvas.width, 2) + Math.pow(canvas.height, 2));
+		const offsetY = 20;
+		const radius = diameter / 2 + offsetY;
+		const mid_y_offset = mid_y - offsetY;
+		ctx.beginPath();
+		for (let i = 0; i < num_rays; i++) {
+			var start_angle = sweep_angle * i;
+			var end_angle = start_angle + ray_angle;
+
+			ctx.moveTo(mid_x, mid_y_offset);
+			ctx.arc(mid_x, mid_y_offset, radius, start_angle, end_angle, false);
+		}
+		ctx.fillStyle = color;
+		ctx.fill();
+		const image = canvas.toDataURL('image/png');
+		return image;
+	}
+
 	async generateSingleBadgePdf(badge: RecipientBadgeInstance, markdown: HTMLElement) {
 		this.pdfError = undefined;
 		const badgeClass: ApiRecipientBadgeClass = badge.badgeClass;
 		const competencies = badge.getExtension('extensions:CompetencyExtension', [{}]);
+		const num_competencies = competencies.length;
+		const scaleFactor = 2;
+
 		this.doc = new jsPDF();
 
 		let yPos = 0;
@@ -119,8 +152,32 @@ export class ExportPdfDialog extends BaseDialog {
 			});
 		}
 
-		const oeb_logo = await convertImageToDataURL('assets/logos/Badges_Entwurf-15.png');
+		let oeb_logo = await convertImageToDataURL('assets/logos/Logo-OEB-3.png');
 		const badge_image = await convertImageToDataURL(badgeClass.image);
+
+		var svgContentClock = `
+		<svg xmlns="http://www.w3.org/2000/svg" height="14" width="12.25" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="#492e98" d="M176 0c-17.7 0-32 14.3-32 32s14.3 32 32 32h16V98.4C92.3 113.8 16 200 16 304c0 114.9 93.1 208 208 208s208-93.1 208-208c0-41.8-12.3-80.7-33.5-113.2l24.1-24.1c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L355.7 143c-28.1-23-62.2-38.8-99.7-44.6V64h16c17.7 0 32-14.3 32-32s-14.3-32-32-32H224 176zm72 192V320c0 13.3-10.7 24-24 24s-24-10.7-24-24V192c0-13.3 10.7-24 24-24s24 10.7 24 24z"/></svg>`;
+
+		const dataUriClock = 'data:image/svg+xml;base64,' + btoa(svgContentClock);
+		const img = new Image();
+		img.src = dataUriClock;
+
+		var canvas = document.createElement('canvas');
+		canvas.width = 25;
+		canvas.height = 25;
+
+		let dataUriClockPng = '';
+
+		img.onload = function () {
+			var ctx = canvas.getContext('2d');
+
+			ctx.drawImage(img, 0, 0);
+
+			dataUriClockPng = canvas.toDataURL('image/png');
+
+			// remove canvas to not interfere with the pdf background
+			canvas.remove();
+		};
 
 		try {
 			if (!this.profile) {
@@ -136,60 +193,137 @@ export class ExportPdfDialog extends BaseDialog {
 			this.emailsLoaded.then(async () => {
 				html2canvas(this.outputElement.nativeElement, {
 					backgroundColor: null,
+					scale: scaleFactor,
 				})
 					.then((canvas) => {
-						canvas.height = 100;
-						canvas.width = 100;
-						const ctx = canvas.getContext('2d');
+						canvas.height = 100 * scaleFactor;
+						canvas.width = 100 * scaleFactor;
+						const image = this.generatePdfBackground(canvas);
 
-						// Sunburst Background
-						const color_2 = '#f5f5f5';
-						const num_rays = 50;
-						const ray_angle = Math.PI / num_rays; // 50 is the number of sunrays
-						const sweep_angle = ray_angle * 2;
-						const mid_x = ctx.canvas.width / 2;
-						const mid_y = canvas.height / 2;
-						const diameter = Math.sqrt(Math.pow(canvas.width, 2) + Math.pow(canvas.height, 2));
-						const radius = diameter / 2;
-						const inner_radius = radius * 0.4; //inner radius for thickness of rays
-						ctx.beginPath();
-						for (let i = 0; i < num_rays; i++) {
-							var start_angle = sweep_angle * i;
-							var end_angle = start_angle + ray_angle;
+						const logoWidth = 50;
+						const logoHeight = 50;
+						const marginXImageLogo = 5;
 
-							ctx.moveTo(
-								mid_x + inner_radius * Math.cos(start_angle),
-								mid_y + inner_radius * Math.sin(start_angle),
+						let firstName = this.profile.firstName;
+						let lastName = this.profile.lastName;
+						firstName = firstName.charAt(0).toUpperCase() + firstName.slice(1);
+						lastName = lastName.charAt(0).toUpperCase() + lastName.slice(1);
+
+						// calculate competencies firs to know how many pages the PDF will have
+						// and to apply the background on each page
+						if (num_competencies > 0) {
+							const esco = competencies.some((c) => c.escoID);
+							const competenciesPerPage = 10;
+							this.doc.addPage();
+							this.doc.addImage(image, 'PNG', 0, 0, pageWidth, pageHeight, undefined, 'NONE');
+
+							//  OEB Logo
+							this.doc.addImage(
+								badgeClass.issuer.image,
+								'PNG',
+								marginXImageLogo,
+								yPos,
+								logoWidth,
+								logoHeight,
 							);
-							ctx.arc(mid_x, mid_y, radius, start_angle, end_angle, false);
-						}
-						ctx.fillStyle = color_2;
-						ctx.fill();
-						const image = canvas.toDataURL('image/png');
-						const pdf = this.doc;
-						const pdfWidth = pageWidth;
-						const pdfHeight = pageHeight;
-						this.doc.addImage(image, 'PNG', 5, 5, pdfWidth, pdfHeight, undefined, 'NONE');
+							this.doc.setDrawColor('#492E98');
+							this.doc.line(pageWidth / 2 - 50, 25, pageWidth / 2 + 100, 25);
 
-						// Logo
-						yPos += 10;
-						const logoWidth = 20;
-						const logoHeight = 20;
-						// const marginXImageLogo = (pageWidth - logoWidth) / 8;
-						const marginXImageLogo = 15;
-						this.doc.addImage(oeb_logo, 'PNG', marginXImageLogo, yPos, logoWidth, logoHeight);
+							if (esco) {
+								this.doc.textWithLink(
+									'* Kompetenz nach ESCO: https://esco.ec.europa.eu/de',
+									10,
+									pageHeight - 20,
+									{
+										url: 'https://esco.ec.europa.eu/de',
+									},
+								);
+							}
+
+							for (let i = 0; i < num_competencies; i++) {
+								if (i != 0 && i % competenciesPerPage === 0) {
+									this.doc.addPage();
+									this.doc.addImage(image, 'PNG', 0, 0, pageWidth, pageHeight, undefined, 'NONE');
+									//  OEB Logo
+									this.doc.addImage(
+										badgeClass.issuer.image,
+										'PNG',
+										marginXImageLogo,
+										yPos,
+										logoWidth,
+										logoHeight,
+									);
+									this.doc.setDrawColor('#492E98');
+									this.doc.line(pageWidth / 2 - 50, 25, pageWidth / 2 + 100, 25);
+								}
+
+								this.doc.setFontSize(28);
+								this.doc.setFont('Helvetica', 'bold');
+								this.doc.setTextColor('#492E98');
+								this.doc.text('Kompetenzen', 10, 60);
+
+								this.doc.setFontSize(18);
+								this.doc.setFont('Helvetica', 'normal');
+								this.doc.text('die ', 10, 75);
+								this.doc.setFont('Helvetica', 'bold');
+								this.doc.text(firstName + ' ' + lastName, this.doc.getTextWidth('die ') + 10, 75);
+								this.doc.setFont('Helvetica', 'normal');
+								const textWidth =
+									this.doc.getTextWidth('die ') +
+									15 +
+									this.doc.getTextWidth(firstName + ' ' + lastName);
+								this.doc.text('mit dem Badge', textWidth, 75);
+
+								this.doc.setFont('Helvetica', 'bold');
+								this.doc.text(badgeClass.name, 10, 85);
+
+								this.doc.setFont('Helvetica', 'normal');
+								this.doc.text('erworben hat:', this.doc.getTextWidth(badgeClass.name) + 15, 85);
+
+								let studyLoadInMin = competencies[i].studyLoad;
+								let studyLoadInHours = studyLoadInMin / 60;
+
+								const y = 110 + (i % competenciesPerPage) * 16;
+
+								this.doc.roundedRect(15, y - 7.5, 42.5, 11, 5, 5);
+								this.doc.setFontSize(14);
+								this.doc.addImage(dataUriClockPng, 20, y - 6, 12.5, 14);
+								if (studyLoadInMin > 60) {
+									this.doc.text(studyLoadInHours + ' Stunden', 30, y) + 2.5;
+								} else {
+									this.doc.text(studyLoadInMin + ' Minuten', 30, y) + 2.5;
+								}
+
+								this.doc.setFontSize(18);
+
+								if (competencies[i].escoID) {
+									this.doc.text(competencies[i].name + ' *', 60, y);
+								} else {
+									this.doc.text(competencies[i].name, 60, y);
+								}
+							}
+						}
+
+						this.doc.setPage(1);
+						this.doc.addImage(image, 'PNG', 0, 0, pageWidth, pageHeight, undefined, 'NONE');
+
+						//  OEB Logo
+						this.doc.addImage(
+							badgeClass.issuer.image,
+							'PNG',
+							marginXImageLogo,
+							yPos,
+							logoWidth,
+							logoHeight,
+						);
 						this.doc.setDrawColor('#492E98');
-						this.doc.line(pdfWidth / 2 - 50, 20, pdfWidth / 2 + 100, 20);
+						this.doc.line(pageWidth / 2 - 50, 25, pageWidth / 2 + 100, 25);
 
 						// Name
 						yPos += 60;
 						this.doc.setFontSize(32);
 						this.doc.setFont('Helvetica', 'bold');
 						this.doc.setTextColor('#492E98');
-						let firstName = this.profile.firstName;
-						let lastName = this.profile.lastName;
-						firstName = firstName.charAt(0).toUpperCase() + firstName.slice(1);
-						lastName = lastName.charAt(0).toUpperCase() + lastName.slice(1);
 						this.doc.text(firstName + ' ' + lastName, pageWidth / 2, yPos - 15, { align: 'center' });
 						this.doc.setFontSize(18);
 						this.doc.setFont('Helvetica', '');
@@ -201,14 +335,14 @@ export class ExportPdfDialog extends BaseDialog {
 						this.doc.text('den folgenden Badge erworben: ', pageWidth / 2, yPos + 10, { align: 'center' });
 
 						// Badge Image
-						yPos += 20;
-						const imageWidth = 100;
-						const imageHeight = 100;
+						const imageWidth = 75;
+						const imageHeight = 75;
+						yPos = (pageHeight - imageHeight) / 2 - 20;
 						const marginXImg = (pageWidth - imageWidth) / 2;
 						this.doc.addImage(badge_image, 'PNG', marginXImg, yPos, imageWidth, imageHeight);
 
 						// title
-						yPos += canvas.height;
+						yPos += 75;
 						this.doc.setFontSize(32);
 						this.doc.setFont('Helvetica', 'bold');
 						this.doc.setTextColor('#492E98');
@@ -233,17 +367,38 @@ export class ExportPdfDialog extends BaseDialog {
 						yPos += titlePadding;
 
 						// description
-						yPos += 15;
-						this.doc.setFontSize(18);
+						this.doc.setFontSize(14);
 						this.doc.setFont('Helvetica', 'normal');
-						this.doc.setTextColor('#black');
+						this.doc.setTextColor('black');
 
-						this.doc.text(badgeClass.description, xMargin + 10, yPos, {
-							align: 'justify',
-						});
+						let subtitle = this.doc.splitTextToSize(
+							badgeClass.description,
+							cutoff - this.doc.getTextWidth('...'),
+						);
+						let subtitlePadding = 0;
+						let maxSubtitleRows = 4;
+						if (subtitle.length > maxSubtitleRows) {
+							subtitle[maxSubtitleRows - 1] = subtitle[maxSubtitleRows - 1] + '...';
+						} else if (subtitle.length < maxSubtitleRows) {
+							subtitlePadding = (10 / 2) * (maxSubtitleRows - subtitle.length);
+							yPos += subtitlePadding;
+						}
+						for (let i = 0; i < maxSubtitleRows; i = i + 1) {
+							if (subtitle[i]) {
+								yPos += 10;
+								this.doc.text(subtitle[i], pageWidth / 2, yPos, {
+									align: 'center',
+								});
+							}
+						}
+						yPos += subtitlePadding;
+
+						// this.doc.text(badgeClass.description, xMargin + 10, yPos, {
+						// 	align: 'justify',
+						// });
 
 						// issued by
-						yPos += 10;
+						yPos += 15;
 						let issuedBy = badgeClass.issuer.name;
 						this.doc.setFontSize(18);
 						this.doc.setFont('Helvetica', 'normal');
@@ -267,11 +422,19 @@ export class ExportPdfDialog extends BaseDialog {
 						this.doc.setFont('Helvetica', 'normal');
 						this.doc.setTextColor('#492E98');
 						const combinedIssuedByLength = issuedByContentLength + issuedByLength;
-						this.doc.line(combinedIssuedByLength + 10, yPos - 2, combinedIssuedByLength, yPos - 2);
+						const lineLength = 2.5;
+
 						this.doc.line(
-							combinedIssuedByLength * 2 + issuedByLength,
+							pageWidth / 2 - combinedIssuedByLength / 2 - lineLength,
 							yPos - 2,
-							combinedIssuedByLength * 2.5,
+							pageWidth / 2 - combinedIssuedByLength / 2 - 5,
+							yPos - 2,
+						);
+
+						this.doc.line(
+							pageWidth / 2 + combinedIssuedByLength / 2 + 5,
+							yPos - 2,
+							pageWidth / 2 + combinedIssuedByLength / 2 + lineLength,
 							yPos - 2,
 						);
 						this.doc.text('Vergeben von: ', pageWidth / 2 - combinedIssuedByLength / 2, yPos, {});
@@ -284,21 +447,11 @@ export class ExportPdfDialog extends BaseDialog {
 							{},
 						);
 
-						if (competencies.length > 0) {
-							let pageCount = 1;
-							const competenciesPerPage = 10;
-
-							for (let i = 0; i < competencies.length; i++) {
-								// If it's the first competency or we've reached the max competencies per page
-								if (i === 0 || i % competenciesPerPage === 0) {
-									if (pageCount !== 1) {
-										this.doc.addPage();
-									}
-									pageCount++;
-								}
-								this.doc.text(competencies[i].name, 10, 10 + (i % competenciesPerPage) * 10);
-							}
-						}
+						// issuer logo
+						yPos += 5;
+						this.doc.setFillColor('#cfcece');
+						this.doc.rect(pageWidth / 4, yPos, pageWidth / 2, 25, 'F');
+						this.doc.addImage(badgeClass.issuer.image, 'PNG', pageWidth / 2 - 25, yPos - 12.5, 50, 50);
 
 						//footer
 						const pageCount = (this.doc as any).internal.getNumberOfPages(); //was doc.internal.getNumberOfPages();
