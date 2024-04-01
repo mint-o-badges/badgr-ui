@@ -218,7 +218,7 @@ export class ExportPdfDialog extends BaseDialog {
 
 							//  OEB Logo
 							this.doc.addImage(
-								badgeClass.issuer.image,
+								// badgeClass.issuer.image,
 								'PNG',
 								marginXImageLogo,
 								yPos,
@@ -245,7 +245,7 @@ export class ExportPdfDialog extends BaseDialog {
 									// this.doc.addImage(image, 'PNG', 0, 0, pageWidth, pageHeight, undefined, 'NONE');
 									//  OEB Logo
 									this.doc.addImage(
-										badgeClass.issuer.image,
+										// badgeClass.issuer.image,
 										'PNG',
 										marginXImageLogo,
 										yPos,
@@ -557,7 +557,7 @@ export class ExportPdfDialog extends BaseDialog {
 			badges.forEach((badge, i) => {
 				let badgeClass = badge.badgeClass;
 				let xPos = xMargin;
-				this.doc.addImage(badgeClass.image, 'png', xPos, yPos - 7, 11, 11);
+				// this.doc.addImage(badgeClass.image, 'png', xPos, yPos - 7, 11, 11);
 				xPos += 13;
 				let name = badgeClass.name;
 				let cutoff = 50;
@@ -671,7 +671,7 @@ export class ExportPdfDialog extends BaseDialog {
 			badgeResults.forEach((badgeResult, _) => {
 				let badgeClass = badgeResult.badge.badgeClass;
 				let xPos = xMargin;
-				this.doc.addImage(badgeClass.image, 'png', xPos, yPos - 7, 11, 11);
+				// this.doc.addImage(badgeClass.image, 'png', xPos, yPos - 7, 11, 11);
 				xPos += 13;
 				let name = badgeClass.name;
 				let cutoff = 60;
