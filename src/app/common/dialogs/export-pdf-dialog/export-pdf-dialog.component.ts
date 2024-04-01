@@ -286,7 +286,7 @@ export class ExportPdfDialog extends BaseDialog {
 
 								this.doc.roundedRect(15, y - 7.5, 42.5, 11, 5, 5);
 								this.doc.setFontSize(14);
-								// this.doc.addImage(dataUriClockPng, 20, y - 6, 12.5, 14);
+								this.doc.addImage(dataUriClockPng, 20, y - 6, 12.5, 14);
 								if (studyLoadInMin > 60) {
 									this.doc.text(studyLoadInHours + ' Stunden', 30, y) + 2.5;
 								} else {
