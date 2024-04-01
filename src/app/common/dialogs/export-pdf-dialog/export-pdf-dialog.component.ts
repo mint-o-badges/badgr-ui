@@ -308,7 +308,7 @@ export class ExportPdfDialog extends BaseDialog {
 
 						//  OEB Logo
 						this.doc.addImage(
-							badgeClass.issuer.image,
+							// badgeClass.issuer.image,
 							'PNG',
 							marginXImageLogo,
 							yPos,
@@ -450,7 +450,7 @@ export class ExportPdfDialog extends BaseDialog {
 						yPos += 5;
 						this.doc.setFillColor('#cfcece');
 						this.doc.rect(pageWidth / 4, yPos, pageWidth / 2, 25, 'F');
-						this.doc.addImage(badgeClass.issuer.image, 'PNG', pageWidth / 2 - 25, yPos - 12.5, 50, 50);
+						// this.doc.addImage(badgeClass.issuer.image, 'PNG', pageWidth / 2 - 25, yPos - 12.5, 50, 50);
 
 						//footer
 						const pageCount = (this.doc as any).internal.getNumberOfPages(); //was doc.internal.getNumberOfPages();
