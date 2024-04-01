@@ -154,6 +154,8 @@ export class ExportPdfDialog extends BaseDialog {
 		let oeb_logo = await this.convertImageToDataURL('assets/logos/Logo-OEB-3.png');
 		const badge_image = await this.convertImageToDataURL(badgeClass.image);
 
+		console.log(badgeClass.issuer.image);
+
 		var svgContentClock = `
 		<svg xmlns="http://www.w3.org/2000/svg" height="14" width="12.25" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="#492e98" d="M176 0c-17.7 0-32 14.3-32 32s14.3 32 32 32h16V98.4C92.3 113.8 16 200 16 304c0 114.9 93.1 208 208 208s208-93.1 208-208c0-41.8-12.3-80.7-33.5-113.2l24.1-24.1c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L355.7 143c-28.1-23-62.2-38.8-99.7-44.6V64h16c17.7 0 32-14.3 32-32s-14.3-32-32-32H224 176zm72 192V320c0 13.3-10.7 24-24 24s-24-10.7-24-24V192c0-13.3 10.7-24 24-24s24 10.7 24 24z"/></svg>`;
 
@@ -217,14 +219,14 @@ export class ExportPdfDialog extends BaseDialog {
 							this.doc.addImage(image, 'PNG', 0, 0, pageWidth, pageHeight, undefined, 'NONE');
 
 							//  OEB Logo
-							this.doc.addImage(
-								badgeClass.issuer.image,
-								'PNG',
-								marginXImageLogo,
-								yPos,
-								logoWidth,
-								logoHeight,
-							);
+							// this.doc.addImage(
+							// 	badgeClass.issuer.image,
+							// 	'PNG',
+							// 	marginXImageLogo,
+							// 	yPos,
+							// 	logoWidth,
+							// 	logoHeight,
+							// );
 							this.doc.setDrawColor('#492E98');
 							this.doc.line(pageWidth / 2 - 50, 25, pageWidth / 2 + 100, 25);
 
@@ -244,14 +246,14 @@ export class ExportPdfDialog extends BaseDialog {
 									this.doc.addPage();
 									this.doc.addImage(image, 'PNG', 0, 0, pageWidth, pageHeight, undefined, 'NONE');
 									//  OEB Logo
-									this.doc.addImage(
-										badgeClass.issuer.image,
-										'PNG',
-										marginXImageLogo,
-										yPos,
-										logoWidth,
-										logoHeight,
-									);
+									// this.doc.addImage(
+									// 	badgeClass.issuer.image,
+									// 	'PNG',
+									// 	marginXImageLogo,
+									// 	yPos,
+									// 	logoWidth,
+									// 	logoHeight,
+									// );
 									this.doc.setDrawColor('#492E98');
 									this.doc.line(pageWidth / 2 - 50, 25, pageWidth / 2 + 100, 25);
 								}
@@ -307,14 +309,14 @@ export class ExportPdfDialog extends BaseDialog {
 						this.doc.addImage(image, 'PNG', 0, 0, pageWidth, pageHeight, undefined, 'NONE');
 
 						//  OEB Logo
-						this.doc.addImage(
-							badgeClass.issuer.image,
-							'PNG',
-							marginXImageLogo,
-							yPos,
-							logoWidth,
-							logoHeight,
-						);
+						// this.doc.addImage(
+						// 	badgeClass.issuer.image,
+						// 	'PNG',
+						// 	marginXImageLogo,
+						// 	yPos,
+						// 	logoWidth,
+						// 	logoHeight,
+						// );
 						this.doc.setDrawColor('#492E98');
 						this.doc.line(pageWidth / 2 - 50, 25, pageWidth / 2 + 100, 25);
 
@@ -450,7 +452,7 @@ export class ExportPdfDialog extends BaseDialog {
 						yPos += 5;
 						this.doc.setFillColor('#cfcece');
 						this.doc.rect(pageWidth / 4, yPos, pageWidth / 2, 25, 'F');
-						this.doc.addImage(badgeClass.issuer.image, 'PNG', pageWidth / 2 - 25, yPos - 12.5, 50, 50);
+						// this.doc.addImage(badgeClass.issuer.image, 'PNG', pageWidth / 2 - 25, yPos - 12.5, 50, 50);
 
 						//footer
 						const pageCount = (this.doc as any).internal.getNumberOfPages(); //was doc.internal.getNumberOfPages();
