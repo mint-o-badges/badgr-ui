@@ -338,7 +338,7 @@ export class ExportPdfDialog extends BaseDialog {
 						const imageHeight = 75;
 						yPos = (pageHeight - imageHeight) / 2 - 20;
 						const marginXImg = (pageWidth - imageWidth) / 2;
-						// this.doc.addImage(badge_image, 'PNG', marginXImg, yPos, imageWidth, imageHeight);
+						this.doc.addImage(badge_image, 'PNG', marginXImg, yPos, imageWidth, imageHeight);
 
 						// title
 						yPos += 75;
