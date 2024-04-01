@@ -214,7 +214,7 @@ export class ExportPdfDialog extends BaseDialog {
 							const esco = competencies.some((c) => c.escoID);
 							const competenciesPerPage = 10;
 							this.doc.addPage();
-							// this.doc.addImage(image, 'PNG', 0, 0, pageWidth, pageHeight, undefined, 'NONE');
+							this.doc.addImage(image, 'PNG', 0, 0, pageWidth, pageHeight, undefined, 'NONE');
 
 							//  OEB Logo
 							// this.doc.addImage(
@@ -242,7 +242,7 @@ export class ExportPdfDialog extends BaseDialog {
 							for (let i = 0; i < num_competencies; i++) {
 								if (i != 0 && i % competenciesPerPage === 0) {
 									this.doc.addPage();
-									// this.doc.addImage(image, 'PNG', 0, 0, pageWidth, pageHeight, undefined, 'NONE');
+									this.doc.addImage(image, 'PNG', 0, 0, pageWidth, pageHeight, undefined, 'NONE');
 									//  OEB Logo
 									// this.doc.addImage(
 									// 	// badgeClass.issuer.image,
@@ -304,7 +304,7 @@ export class ExportPdfDialog extends BaseDialog {
 						}
 
 						this.doc.setPage(1);
-						// this.doc.addImage(image, 'PNG', 0, 0, pageWidth, pageHeight, undefined, 'NONE');
+						this.doc.addImage(image, 'PNG', 0, 0, pageWidth, pageHeight, undefined, 'NONE');
 
 						//  OEB Logo
 						// this.doc.addImage(
