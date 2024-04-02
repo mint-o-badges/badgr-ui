@@ -212,27 +212,19 @@
 	}
   }
 
-.footer-rightside{
-	display: flex;
-  	flex-direction: column;
-  	gap: 1em;
-	justify-content: space-between;
+.faq {
+	font-family: 'Inter';
+	font-size: 24px;
+	font-weight: 500;
+	line-height: 36px;
+	color: var(--color-purple);
+}
 
-	  .faq{
-		font-family: "Inter";
-		font-size: 24px;
-		font-weight: 500;
-		line-height: 36px;
-		color: #5446FF;
-	}
-	  
-	  
-	.impressum{
-		font-size: 20px;
-		font-weight: 500;
-		line-height: 26px;
-		color: #5446FF;
-	}
+.impressum {
+	font-size: 20px;
+	font-weight: 500;
+	line-height: 26px;
+	color: var(--color-purple);
 }
 
 .Text-SemiBold {
@@ -242,13 +234,12 @@
 	color: var(--color-purple);
 }
 
-.main-nav-bold{
+.main-nav-bold {
 	font-weight: 700;
 	font-size: 16px;
 	line-height: 30px;
-	color: #FFFFFF;
+	color: #ffffff;
 }
-
 
 .login-btn {
 	position: unset;
@@ -260,8 +251,22 @@
 }
 
 @media (max-width: 767px) {
-	.login-btn{
+	.login-btn {
 		display: none;
 	}
-}
 
+	.faq {
+		font-size: 16.8px;
+		line-height: 25.2px;
+	}
+
+	.impressum {
+		font-size: 14px;
+		line-height: 18.2px;
+	}
+
+	.Text-SemiBold {
+		font-size: 14px;
+		line-height: 16.8px;
+	}
+}

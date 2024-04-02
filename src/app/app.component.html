@@ -403,47 +403,23 @@
 	style="background-color: var(--color-lightgreen); margin-top: 30px"
 >
 	<div class="l-containerxaxis">
-		
-		<hr>
 		<div class="footer l-stickyfooter-x-footer">
-			
-			<div class="tw-flex tw-justify-between">
-				<div style="width: 40%;">
-					<p
-						class="Text-SemiBold"
-						*ngIf="theme.showPoweredByOSL && theme.providedBy"
-						[innerHtml]="'Start.poweredBy' | translate"
-					></p>
-				</div>
-				<div></div>
-	
+			<div class="tw-text-left tw-flex md:tw-flex-row md:tw-justify-between md:tw-gap-0 tw-flex-col-reverse tw-gap-[2em]">
 				<div>
+						<p
+							class="Text-SemiBold md:tw-w-1/2"
+							*ngIf="theme.showPoweredByOSL && theme.providedBy"
+							[innerHtml]="'Start.poweredBy' | translate"
+						></p>
+				</div>
+
+				<div class="tw-flex tw-flex-col tw-gap-[1em] tw-min-w-fit">
 					<a class="faq" [routerLink]="['/public/faq']">FAQ</a>
 					<a class="impressum" [href]="theme.termsOfServiceLink" target="_blank">{{
 						'Start.imprint' | translate
 					}}</a>
 				</div>
-				<div></div>
 			</div>
-
-			<!-- <ul class="footer-x-leftlinks" style="width: 40%">
-				<li
-					class="Text-SemiBold"
-					*ngIf="theme.showPoweredByOSL && theme.providedBy"
-					[innerHtml]="'Start.poweredBy' | translate"
-				></li>
-			</ul>
-
-			<ul class="footer-x-links footer-rightside">
-				<li>
-					<a class="faq" [routerLink]="['/public/faq']">FAQ</a>
-				</li>
-				<li>
-					<a class="impressum" [href]="theme.termsOfServiceLink" target="_blank">{{
-						'Start.imprint' | translate
-					}}</a>
-				</li>
-			</ul> -->
 		</div>
 	</div>
 </footer>
