@@ -194,11 +194,11 @@ h1 {
 	top: 120px;
 }
 
-.supporter-desktop div{
+.supporter-desktop img{
 	display: none;
 }
 
-.supporter-mobile{
+.supporter-mobile img{
 	display: block;
 }
 
@@ -521,11 +521,11 @@ h1 {
 }
 
 @media (min-width: 848px) {
-	.supporter-desktop div{
+	.supporter-desktop img {
 		display: block;
 	}
 
-	.supporter-mobile{
+	.supporter-mobile img{
 		display: none;
 	}
 }
