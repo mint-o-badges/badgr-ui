@@ -159,12 +159,15 @@
 					Hinzufügen
 				</button>
 			</div>
-			<div *ngIf="tagArray.length > 0" style="display: flex; flex-wrap: wrap">
-				<div class="tag tag-wrapper tag-button" style="flex-basis: 25%; margin: 1em" *ngFor="let tag of tags">
-					<button (click)="removeTag(tag)" class="buttonicon buttonicon-link">
+			<div *ngIf="tagArray.length > 0" class="tw-flex tw-flex-wrap">
+				<div
+					class="tw-flex tw-items-center tw-bg-white tw-rounded-full tw-px-3 tw-py-1 tw-mr-2 tw-mb-2"
+					*ngFor="let tag of tags"
+				>
+					<button (click)="removeTag(tag)">
 						<span> {{ tag }}</span>
-						<svg icon="icon_close"></svg>
-						<span class="visuallyhidden">Close</span>
+						<svg class="tw-ml-1" icon="icon_close" width="12px" height="12px"></svg>
+						<span class="tw-sr-only">Close</span>
 					</button>
 				</div>
 			</div>
@@ -236,10 +239,13 @@
 					>
 						<div style="display: flex; flex-direction: column">
 							<h2 style="color: #ffffff">Meine inhaltliche Beschreibung</h2>
-							<textarea style="background-color: white; border-radius: 10px"
-                                [(ngModel)]=aiCompetenciesDescription
-                                [ngModelOptions]="{standalone: true}"
-                                maxlength=7000> </textarea>
+							<textarea
+								style="background-color: white; border-radius: 10px"
+								[(ngModel)]="aiCompetenciesDescription"
+								[ngModelOptions]="{ standalone: true }"
+								maxlength="7000"
+							>
+							</textarea>
 							<div style="color: white">
 								<label for="kursdauer"> Dauer des Kurses</label>
 								<div style="display: flex; gap: 2em">
@@ -259,8 +265,8 @@
 										color: var(--color-blue);
 										margin-top: 2em;
 									"
-                                    (click)=suggestCompetencies()
-                                    type=button
+									(click)="suggestCompetencies()"
+									type="button"
 								>
 									<span style="font-weight: 400">Passende</span>
 									<span style="font-weight: 700"> Kompetenzen vorschlagen </span>
@@ -269,38 +275,58 @@
 						</div>
 						<div style="width: 50%">
 							<h2 style="color: white">Passende Kompetenzen</h2>
-                            <div style="background-color: white; border-radius: 10px; width: 75%; padding: 1em" *ngIf="aiCompetenciesSuggestions.length == 0">
-								<p style="width: 100%;
-                                          font-style: italic;
-                                          white-space: pre-wrap;">Hier erscheinen passende Kompetenzen, sobald du die Beschreibung deines Lehrinhalts in das Textfeld links eingefügt hast und auf "Passende Kompetenzen vorschlagen" klickst.</p>
+							<div
+								style="background-color: white; border-radius: 10px; width: 75%; padding: 1em"
+								*ngIf="aiCompetenciesSuggestions.length == 0"
+							>
+								<p style="width: 100%; font-style: italic; white-space: pre-wrap">
+									Hier erscheinen passende Kompetenzen, sobald du die Beschreibung deines Lehrinhalts
+									in das Textfeld links eingefügt hast und auf "Passende Kompetenzen vorschlagen"
+									klickst.
+								</p>
 							</div>
-                            <div *ngIf="aiCompetenciesSuggestions.length > 0">
-                                <ng-container *ngFor="let aiCompetency of badgeClassForm.controls.aiCompetencies.controls; let i = index">
-                                    <div style="background-color: white; border-radius: 10px; width: 75%; padding: 1em; margin: 0.5em;">
-                                        <p style="white-space: pre-wrap; font-weight: bold;">{{ aiCompetenciesSuggestions[i].preferred_label }}</p>
-                                        <label class="checkbox">
-                                            <input
-                                                    id="checkboxAiSkill$i"
-                                                    name="checkboxAiSkill$i"
-                                                    type="checkbox"
-                                                    [formControl]="aiCompetency.rawControlMap.selected"
-                                                    />
-                                            <span class="checkbox-x-text">Hinzufügen</span>
-                                        </label>
-                                        <bg-formfield-text
-                                                [control]="aiCompetency.rawControlMap.studyLoad"
-                                                label="Dauer Kompetenz- Erwerb (in Minuten)"
-                                                [fieldType]="'number'"
-                                                [errorMessage]="{
-                                                                required: 'Bitte gib die Dauer für den Erwerb der Kompetenz ein.'
-                                                                }"
-                                                ></bg-formfield-text>
-                                        <!--TODO: Hide this by default-->
-                                        <p style="width: 100%;
-                                                  font-style: italic;
-                                                  white-space: pre-wrap;">{{ aiCompetenciesSuggestions[i].description }} </p>
-                                    </div>
-                                </ng-container>
+							<div *ngIf="aiCompetenciesSuggestions.length > 0">
+								<ng-container
+									*ngFor="
+										let aiCompetency of badgeClassForm.controls.aiCompetencies.controls;
+										let i = index
+									"
+								>
+									<div
+										style="
+											background-color: white;
+											border-radius: 10px;
+											width: 75%;
+											padding: 1em;
+											margin: 0.5em;
+										"
+									>
+										<p style="white-space: pre-wrap; font-weight: bold">
+											{{ aiCompetenciesSuggestions[i].preferred_label }}
+										</p>
+										<label class="checkbox">
+											<input
+												id="checkboxAiSkill$i"
+												name="checkboxAiSkill$i"
+												type="checkbox"
+												[formControl]="aiCompetency.rawControlMap.selected"
+											/>
+											<span class="checkbox-x-text">Hinzufügen</span>
+										</label>
+										<bg-formfield-text
+											[control]="aiCompetency.rawControlMap.studyLoad"
+											label="Dauer Kompetenz- Erwerb (in Minuten)"
+											[fieldType]="'number'"
+											[errorMessage]="{
+												required: 'Bitte gib die Dauer für den Erwerb der Kompetenz ein.'
+											}"
+										></bg-formfield-text>
+										<!--TODO: Hide this by default-->
+										<p style="width: 100%; font-style: italic; white-space: pre-wrap">
+											{{ aiCompetenciesSuggestions[i].description }}
+										</p>
+									</div>
+								</ng-container>
 							</div>
 						</div>
 					</div>
