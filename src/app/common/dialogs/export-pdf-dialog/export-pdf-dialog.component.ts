@@ -217,7 +217,7 @@ export class ExportPdfDialog extends BaseDialog {
 					.then((canvas) => {
 						canvas.height = 100 * scaleFactor;
 						canvas.width = 100 * scaleFactor;
-						const image = this.generatePdfBackground(canvas);
+						const backgroundImage = this.generatePdfBackground(canvas);
 
 						const logoWidth = 50;
 						const logoHeight = logoWidth * oeb_logo_aspectRatio;
@@ -225,8 +225,12 @@ export class ExportPdfDialog extends BaseDialog {
 
 						let firstName = this.profile.firstName;
 						let lastName = this.profile.lastName;
-						firstName = firstName.charAt(0).toUpperCase() + firstName.slice(1);
-						lastName = lastName.charAt(0).toUpperCase() + lastName.slice(1);
+						if (firstName.length > 0) {
+							firstName = firstName.charAt(0).toUpperCase() + firstName.slice(1);
+						}
+						if (lastName.length > 0) {
+							lastName = lastName.charAt(0).toUpperCase() + lastName.slice(1);
+						}
 
 						// calculate competencies firs to know how many pages the PDF will have
 						// and to apply the background on each page
@@ -234,7 +238,7 @@ export class ExportPdfDialog extends BaseDialog {
 							const esco = competencies.some((c) => c.escoID);
 							const competenciesPerPage = 10;
 							this.doc.addPage();
-							this.doc.addImage(image, 'PNG', 0, 0, pageWidth, pageHeight, undefined, 'NONE');
+							this.doc.addImage(backgroundImage, 'PNG', 0, 0, pageWidth, pageHeight, undefined, 'NONE');
 
 							//  OEB Logo
 							this.doc.addImage(oeb_logo, 'PNG', marginXImageLogo, yPos + 10, logoWidth, logoHeight);
@@ -255,7 +259,16 @@ export class ExportPdfDialog extends BaseDialog {
 							for (let i = 0; i < num_competencies; i++) {
 								if (i != 0 && i % competenciesPerPage === 0) {
 									this.doc.addPage();
-									this.doc.addImage(image, 'PNG', 0, 0, pageWidth, pageHeight, undefined, 'NONE');
+									this.doc.addImage(
+										backgroundImage,
+										'PNG',
+										0,
+										0,
+										pageWidth,
+										pageHeight,
+										undefined,
+										'NONE',
+									);
 									//  OEB Logo
 									this.doc.addImage(
 										oeb_logo,
@@ -318,7 +331,7 @@ export class ExportPdfDialog extends BaseDialog {
 						}
 
 						this.doc.setPage(1);
-						this.doc.addImage(image, 'PNG', 0, 0, pageWidth, pageHeight, undefined, 'NONE');
+						this.doc.addImage(backgroundImage, 'PNG', 0, 0, pageWidth, pageHeight, undefined, 'NONE');
 
 						//  OEB Logo
 						this.doc.addImage(oeb_logo, 'PNG', marginXImageLogo, yPos + 10, logoWidth, logoHeight);
@@ -398,10 +411,6 @@ export class ExportPdfDialog extends BaseDialog {
 							}
 						}
 						yPos += subtitlePadding;
-
-						// this.doc.text(badgeClass.description, xMargin + 10, yPos, {
-						// 	align: 'justify',
-						// });
 
 						// issued by
 						yPos += 15;
