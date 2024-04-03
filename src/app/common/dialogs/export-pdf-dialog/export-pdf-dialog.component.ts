@@ -168,13 +168,146 @@ export class ExportPdfDialog extends BaseDialog {
 		const oeb_logo = await this.convertImageToDataURL('assets/logos/Logo-New.png');
 		const oeb_logo_aspectRatio = await this.getAspectRatio(oeb_logo);
 
+		function addCompetencyPage(doc: jsPDF, backgroundImage: string, pageWidth: number, pageHeight: number) {
+			doc.addPage();
+			doc.addImage(backgroundImage, 'PNG', 0, 0, pageWidth, pageHeight, undefined, 'NONE');
+		}
+
+		function addOebLogo(doc: jsPDF, marginXImageLogo: number, logoWidth: number, logoHeight: number) {
+			doc.addImage(oeb_logo, 'PNG', marginXImageLogo, yPos + 10, logoWidth, logoHeight);
+			doc.setDrawColor('#492E98');
+			doc.line(pageWidth / 2 - 50, logoHeight, pageWidth / 2 + 100, logoHeight);
+		}
+
+		function addRecipientName(doc: jsPDF, firstName: string, lastName: string) {
+			yPos += 60;
+			doc.setFontSize(32);
+			doc.setFont('Helvetica', 'bold');
+			doc.setTextColor('#492E98');
+			doc.text(firstName + ' ' + lastName, pageWidth / 2, yPos - 15, { align: 'center' });
+			doc.setFontSize(18);
+			doc.setFont('Helvetica', '');
+			doc.setTextColor('#black');
+
+			doc.text('hat am ' + badge.issueDate.toLocaleDateString('de-DE'), pageWidth / 2, yPos, {
+				align: 'center',
+			});
+			doc.text('den folgenden Badge erworben: ', pageWidth / 2, yPos + 10, { align: 'center' });
+		}
+
+		function addBadgeImage(doc: jsPDF) {
+			const imageWidth = 75;
+			const imageHeight = imageWidth * badge_image_aspectRatio;
+			yPos = (pageHeight - imageHeight) / 2 - 20;
+			const marginXImg = (pageWidth - imageWidth) / 2;
+			doc.addImage(badge_image, 'PNG', marginXImg, yPos, imageWidth, imageHeight);
+		}
+
+		function addTitle(doc: jsPDF) {
+			yPos += 75;
+			doc.setFontSize(32);
+			doc.setFont('Helvetica', 'bold');
+			doc.setTextColor('#492E98');
+
+			let title = doc.splitTextToSize(badgeClass.name, cutoff - doc.getTextWidth('...'));
+			let titlePadding = 0;
+			let maxTitleRows = 2;
+			if (title.length > maxTitleRows) {
+				title[maxTitleRows - 1] = title[maxTitleRows - 1] + '...';
+			} else if (title.length < maxTitleRows) {
+				titlePadding = (15 / 2) * (maxTitleRows - title.length);
+				yPos += titlePadding;
+			}
+			for (let i = 0; i < maxTitleRows; i = i + 1) {
+				if (title[i]) {
+					yPos += 15;
+					doc.text(title[i], pageWidth / 2, yPos, {
+						align: 'center',
+					});
+				}
+			}
+			yPos += titlePadding;
+		}
+
+		function addDescription(doc: jsPDF) {
+			doc.setFontSize(14);
+			doc.setFont('Helvetica', 'normal');
+			doc.setTextColor('black');
+
+			let subtitle = doc.splitTextToSize(badgeClass.description, cutoff - doc.getTextWidth('...'));
+			let subtitlePadding = 0;
+			let maxSubtitleRows = 4;
+			if (subtitle.length > maxSubtitleRows) {
+				subtitle[maxSubtitleRows - 1] = subtitle[maxSubtitleRows - 1] + '...';
+			} else if (subtitle.length < maxSubtitleRows) {
+				subtitlePadding = (10 / 2) * (maxSubtitleRows - subtitle.length);
+				yPos += subtitlePadding;
+			}
+			for (let i = 0; i < maxSubtitleRows; i = i + 1) {
+				if (subtitle[i]) {
+					yPos += 10;
+					doc.text(subtitle[i], pageWidth / 2, yPos, {
+						align: 'center',
+					});
+				}
+			}
+			yPos += subtitlePadding;
+		}
+
+		function addIssuedBy(doc: jsPDF) {
+			yPos += 15;
+			let issuedBy = badgeClass.issuer.name;
+			doc.setFontSize(18);
+			doc.setFont('Helvetica', 'normal');
+			let issuedByLength = doc.getTextWidth('Vergeben von: ..');
+			doc.setFontSize(20);
+			doc.setFont('Helvetica', 'bold');
+			let issuedByContentLength = doc.getTextWidth(issuedBy);
+			let awardedToLength = doc.getTextWidth('Erlangt von: ');
+
+			if (issuedByContentLength + issuedByLength > cutoff) {
+				issuedBy = doc.splitTextToSize(issuedBy, cutoff - awardedToLength - doc.getTextWidth('...'))[0] + '...';
+				doc.setFontSize(20);
+				doc.setFont('Helvetica', 'bold');
+				issuedByContentLength = doc.getTextWidth(issuedBy);
+			}
+			doc.setFontSize(18);
+			doc.setFont('Helvetica', 'normal');
+			doc.setTextColor('#492E98');
+			const combinedIssuedByLength = issuedByContentLength + issuedByLength;
+			const lineLength = 2.5;
+
+			doc.line(
+				pageWidth / 2 - combinedIssuedByLength / 2 - lineLength,
+				yPos - 2,
+				pageWidth / 2 - combinedIssuedByLength / 2 - 5,
+				yPos - 2,
+			);
+
+			doc.line(
+				pageWidth / 2 + combinedIssuedByLength / 2 + 5,
+				yPos - 2,
+				pageWidth / 2 + combinedIssuedByLength / 2 + lineLength,
+				yPos - 2,
+			);
+			doc.text('Vergeben von: ', pageWidth / 2 - combinedIssuedByLength / 2, yPos, {});
+			doc.setFontSize(20);
+			doc.setFont('Helvetica', 'bold');
+			doc.text(
+				issuedBy,
+				pageWidth / 2 + (issuedByLength + issuedByContentLength) / 2 - issuedByContentLength,
+				yPos,
+				{},
+			);
+		}
+
 		const badge_image = await this.convertImageToDataURL(badgeClass.image);
 		const badge_image_aspectRatio = await this.getAspectRatio(badge_image);
 
 		const issuer_image = await this.convertImageToDataURL(badgeClass.issuer.image);
 		const issuer_image_aspectRatio = await this.getAspectRatio(issuer_image);
 
-		var svgContentClock = `
+		const svgContentClock = `
 		<svg xmlns="http://www.w3.org/2000/svg" height="14" width="12.25" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="#492e98" d="M176 0c-17.7 0-32 14.3-32 32s14.3 32 32 32h16V98.4C92.3 113.8 16 200 16 304c0 114.9 93.1 208 208 208s208-93.1 208-208c0-41.8-12.3-80.7-33.5-113.2l24.1-24.1c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L355.7 143c-28.1-23-62.2-38.8-99.7-44.6V64h16c17.7 0 32-14.3 32-32s-14.3-32-32-32H224 176zm72 192V320c0 13.3-10.7 24-24 24s-24-10.7-24-24V192c0-13.3 10.7-24 24-24s24 10.7 24 24z"/></svg>`;
 
 		const dataUriClock = 'data:image/svg+xml;base64,' + btoa(svgContentClock);
@@ -237,13 +370,10 @@ export class ExportPdfDialog extends BaseDialog {
 						if (num_competencies > 0) {
 							const esco = competencies.some((c) => c.escoID);
 							const competenciesPerPage = 10;
-							this.doc.addPage();
-							this.doc.addImage(backgroundImage, 'PNG', 0, 0, pageWidth, pageHeight, undefined, 'NONE');
+							addCompetencyPage(this.doc, backgroundImage, pageWidth, pageHeight);
 
 							//  OEB Logo
-							this.doc.addImage(oeb_logo, 'PNG', marginXImageLogo, yPos + 10, logoWidth, logoHeight);
-							this.doc.setDrawColor('#492E98');
-							this.doc.line(pageWidth / 2 - 50, logoHeight, pageWidth / 2 + 100, logoHeight);
+							addOebLogo(this.doc, marginXImageLogo, logoWidth, logoHeight);
 
 							if (esco) {
 								this.doc.textWithLink(
@@ -258,28 +388,9 @@ export class ExportPdfDialog extends BaseDialog {
 
 							for (let i = 0; i < num_competencies; i++) {
 								if (i != 0 && i % competenciesPerPage === 0) {
-									this.doc.addPage();
-									this.doc.addImage(
-										backgroundImage,
-										'PNG',
-										0,
-										0,
-										pageWidth,
-										pageHeight,
-										undefined,
-										'NONE',
-									);
+									addCompetencyPage(this.doc, backgroundImage, pageWidth, pageHeight);
 									//  OEB Logo
-									this.doc.addImage(
-										oeb_logo,
-										'PNG',
-										marginXImageLogo,
-										yPos + 10,
-										logoWidth,
-										logoHeight,
-									);
-									this.doc.setDrawColor('#492E98');
-									this.doc.line(pageWidth / 2 - 50, logoHeight, pageWidth / 2 + 100, logoHeight);
+									addOebLogo(this.doc, marginXImageLogo, logoWidth, logoHeight);
 								}
 
 								this.doc.setFontSize(28);
@@ -333,139 +444,27 @@ export class ExportPdfDialog extends BaseDialog {
 						this.doc.setPage(1);
 						this.doc.addImage(backgroundImage, 'PNG', 0, 0, pageWidth, pageHeight, undefined, 'NONE');
 
-						//  OEB Logo
-						this.doc.addImage(oeb_logo, 'PNG', marginXImageLogo, yPos + 10, logoWidth, logoHeight);
-						this.doc.setDrawColor('#492E98');
-						this.doc.line(pageWidth / 2 - 50, logoHeight, pageWidth / 2 + 100, logoHeight);
+						addOebLogo(this.doc, marginXImageLogo, logoWidth, logoHeight);
 
 						// Name
-						yPos += 60;
-						this.doc.setFontSize(32);
-						this.doc.setFont('Helvetica', 'bold');
-						this.doc.setTextColor('#492E98');
-						this.doc.text(firstName + ' ' + lastName, pageWidth / 2, yPos - 15, { align: 'center' });
-						this.doc.setFontSize(18);
-						this.doc.setFont('Helvetica', '');
-						this.doc.setTextColor('#black');
-
-						this.doc.text('hat am ' + badge.issueDate.toLocaleDateString('de-DE'), pageWidth / 2, yPos, {
-							align: 'center',
-						});
-						this.doc.text('den folgenden Badge erworben: ', pageWidth / 2, yPos + 10, { align: 'center' });
+						addRecipientName(this.doc, firstName, lastName);
 
 						// Badge Image
-						const imageWidth = 75;
-						const imageHeight = imageWidth * badge_image_aspectRatio;
-						yPos = (pageHeight - imageHeight) / 2 - 20;
-						const marginXImg = (pageWidth - imageWidth) / 2;
-						this.doc.addImage(badge_image, 'PNG', marginXImg, yPos, imageWidth, imageHeight);
+						addBadgeImage(this.doc);
 
 						// title
-						yPos += 75;
-						this.doc.setFontSize(32);
-						this.doc.setFont('Helvetica', 'bold');
-						this.doc.setTextColor('#492E98');
-
-						let title = this.doc.splitTextToSize(badgeClass.name, cutoff - this.doc.getTextWidth('...'));
-						let titlePadding = 0;
-						let maxTitleRows = 2;
-						if (title.length > maxTitleRows) {
-							title[maxTitleRows - 1] = title[maxTitleRows - 1] + '...';
-						} else if (title.length < maxTitleRows) {
-							titlePadding = (15 / 2) * (maxTitleRows - title.length);
-							yPos += titlePadding;
-						}
-						for (let i = 0; i < maxTitleRows; i = i + 1) {
-							if (title[i]) {
-								yPos += 15;
-								this.doc.text(title[i], pageWidth / 2, yPos, {
-									align: 'center',
-								});
-							}
-						}
-						yPos += titlePadding;
+						addTitle(this.doc);
 
 						// description
-						this.doc.setFontSize(14);
-						this.doc.setFont('Helvetica', 'normal');
-						this.doc.setTextColor('black');
-
-						let subtitle = this.doc.splitTextToSize(
-							badgeClass.description,
-							cutoff - this.doc.getTextWidth('...'),
-						);
-						let subtitlePadding = 0;
-						let maxSubtitleRows = 4;
-						if (subtitle.length > maxSubtitleRows) {
-							subtitle[maxSubtitleRows - 1] = subtitle[maxSubtitleRows - 1] + '...';
-						} else if (subtitle.length < maxSubtitleRows) {
-							subtitlePadding = (10 / 2) * (maxSubtitleRows - subtitle.length);
-							yPos += subtitlePadding;
-						}
-						for (let i = 0; i < maxSubtitleRows; i = i + 1) {
-							if (subtitle[i]) {
-								yPos += 10;
-								this.doc.text(subtitle[i], pageWidth / 2, yPos, {
-									align: 'center',
-								});
-							}
-						}
-						yPos += subtitlePadding;
+						addDescription(this.doc);
 
 						// issued by
-						yPos += 15;
-						let issuedBy = badgeClass.issuer.name;
-						this.doc.setFontSize(18);
-						this.doc.setFont('Helvetica', 'normal');
-						let issuedByLength = this.doc.getTextWidth('Vergeben von: ..');
-						this.doc.setFontSize(20);
-						this.doc.setFont('Helvetica', 'bold');
-						let issuedByContentLength = this.doc.getTextWidth(issuedBy);
-						let awardedToLength = this.doc.getTextWidth('Erlangt von: ');
-
-						if (issuedByContentLength + issuedByLength > cutoff) {
-							issuedBy =
-								this.doc.splitTextToSize(
-									issuedBy,
-									cutoff - awardedToLength - this.doc.getTextWidth('...'),
-								)[0] + '...';
-							this.doc.setFontSize(20);
-							this.doc.setFont('Helvetica', 'bold');
-							issuedByContentLength = this.doc.getTextWidth(issuedBy);
-						}
-						this.doc.setFontSize(18);
-						this.doc.setFont('Helvetica', 'normal');
-						this.doc.setTextColor('#492E98');
-						const combinedIssuedByLength = issuedByContentLength + issuedByLength;
-						const lineLength = 2.5;
-
-						this.doc.line(
-							pageWidth / 2 - combinedIssuedByLength / 2 - lineLength,
-							yPos - 2,
-							pageWidth / 2 - combinedIssuedByLength / 2 - 5,
-							yPos - 2,
-						);
-
-						this.doc.line(
-							pageWidth / 2 + combinedIssuedByLength / 2 + 5,
-							yPos - 2,
-							pageWidth / 2 + combinedIssuedByLength / 2 + lineLength,
-							yPos - 2,
-						);
-						this.doc.text('Vergeben von: ', pageWidth / 2 - combinedIssuedByLength / 2, yPos, {});
-						this.doc.setFontSize(20);
-						this.doc.setFont('Helvetica', 'bold');
-						this.doc.text(
-							issuedBy,
-							pageWidth / 2 + (issuedByLength + issuedByContentLength) / 2 - issuedByContentLength,
-							yPos,
-							{},
-						);
+						addIssuedBy(this.doc);
 
 						// issuer logo
 						yPos += 5;
 						const issuer_image_height = 30 * issuer_image_aspectRatio;
-						this.doc.addImage(issuer_image, 'PNG', pageWidth / 2 - 25, yPos - 2, 30, issuer_image_height);
+						// this.doc.addImage(issuer_image, 'PNG', pageWidth / 2 - 15, yPos - 2, 30, issuer_image_height);
 
 						//footer
 						const pageCount = (this.doc as any).internal.getNumberOfPages(); //was doc.internal.getNumberOfPages();
