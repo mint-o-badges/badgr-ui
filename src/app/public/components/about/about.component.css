@@ -199,7 +199,6 @@ h1 {
 }
 
 .supporter-mobile{
-	
 	display: block;
 }
 
@@ -522,12 +521,11 @@ h1 {
 }
 
 @media (min-width: 848px) {
-.supporter-desktop div{
-	display: block;
-}
+	.supporter-desktop div{
+		display: block;
+	}
 
-.supporter-mobile{
-	
-	display: none;
-}
+	.supporter-mobile{
+		display: none;
+	}
 }
