@@ -194,6 +194,15 @@ h1 {
 	top: 120px;
 }
 
+.supporter-desktop div{
+	display: none;
+}
+
+.supporter-mobile{
+	
+	display: block;
+}
+
 @media (max-width: 1340px) {
 	.badge-logo {
 		width: calc(432px * 0.85);
@@ -510,4 +519,15 @@ h1 {
 		margin-left: calc(-100vw / 2 + (50% + 600px) / 2);
 		margin-right: calc(-100vw / 2 + (50% + 600px) / 2);
 	}
+}
+
+@media (min-width: 848px) {
+.supporter-desktop div{
+	display: block;
+}
+
+.supporter-mobile{
+	
+	display: none;
+}
 }
