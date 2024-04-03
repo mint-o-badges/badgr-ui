@@ -4,8 +4,8 @@
 <form [formGroup]="badgeClassForm.rawControl" #formElem (ngSubmit)="onSubmit()" novalidate class="l-responsivelist">
 	<!-- Badge Category Panel -->
 	<div class="section">
-		<div style="display: flex; flex-direction: column">
-			<h2 class="heading" style="display: flex; justify-content: space-between">
+		<div class="tw-flex tw-flex-col">
+			<h2 class="heading tw-flex tw-justify-between">
 				1. Badge-Kategorie wählen
 				<bg-formfield-select
 					ariaLabel="Wähle eine Badge-Kategorie"
@@ -17,7 +17,7 @@
 					}"
 				></bg-formfield-select>
 			</h2>
-			<div style="padding-left: 2em; padding-right: 2em; width: 75%; font-style: italic">
+			<div class="tw-pl-8 tw-pr-8 tw-w-3/4 tw-italic">
 				<span
 					>Kompetenz-Badges können mithilfe unseres KI-Badge-Assistent mit Kompetenzen gefüllt werden.
 				</span>
@@ -31,8 +31,8 @@
 			<h2 class="heading">2. Badge Details eingeben</h2>
 		</div>
 		<div>
-			<div style="display: flex; align-items: center; gap: 2em; margin-left: 2em; margin-top: 2em">
-				<span style="font-weight: 600; font-size: 20px"> Titel</span>
+			<div class="tw-flex tw-items-center tw-gap-8 tw-ml-8 tw-mt-8">
+				<span class="tw-font-bold tw-text-lg tw-text-black tw-uppercase"> Titel</span>
 
 				<bg-formfield-text
 					[control]="badgeClassForm.rawControlMap.badge_name"
@@ -43,20 +43,9 @@
 					[autofocus]="true"
 				></bg-formfield-text>
 			</div>
-			<div style="display: flex; gap: 2em; margin-left: 2em; margin-top: 2em">
-				<span style="font-weight: 600; font-size: 20px"> Bild</span>
+			<div class="tw-flex tw-gap-8 tw-ml-8 tw-mt-8">
+				<span class="tw-font-bold tw-text-lg tw-text-black tw-uppercase"> Bild</span>
 				<bg-formfield-image
-					style="
-						width: 50%;
-						background-color: #fff6f6;
-						padding: 2em;
-						display: flex;
-						justify-content: center;
-						align-items: center;
-						margin-left: auto;
-						margin-right: auto;
-						border-radius: 25px;
-					"
 					#imageField
 					imageLoaderName="badge"
 					[newDropZone]="true"
@@ -64,7 +53,7 @@
 					[type]="'badge'"
 					(generateRandomImage)="generateRandomImage()"
 					(imageUploaded)="generateUploadImage($event, badgeClassForm.value)"
-					class="l-formimageupload-x-upload"
+					class="l-formimageupload-x-upload tw-w-1/2 tw-bg-[var(--color-lightpink)] tw-p-8 tw-flex tw-justify-center tw-items-center tw-mx-auto tw-rounded-2xl"
 					[placeholderImage]="badgeClassPlaceholderImageUrl"
 					[control]="badgeClassForm.rawControlMap.badge_image"
 					[errorMessage]="'Bitte gib dem Badge ein gültiges (bei einem Fork eindeutiges) Bild'"
@@ -77,10 +66,7 @@
 					[hidden]="true"
 				></badge-studio>
 			</div>
-			<div
-				class="u-margin-top3x u-margin-bottom3x"
-				style="display: flex; justify-content: center; align-items: center"
-			>
+			<div class="u-margin-top3x u-margin-bottom3x tw-flex tw-justify-center tw-items-center">
 				<label class="checkbox">
 					<input
 						id="no-hex-frame"
@@ -91,8 +77,8 @@
 					<span class="checkbox-x-text">Ohne Hexagon-Rahmen </span>
 				</label>
 			</div>
-			<div style="margin-left: 2em">
-				<span style="font-weight: 600; font-size: 20px"> Kurzbeschreibung</span>
+			<div class="tw-ml-8">
+				<span class="tw-font-bold tw-text-lg tw-text-black tw-uppercase"> Kurzbeschreibung</span>
 				<bg-formfield-text
 					class="u-margin-top3x"
 					[control]="badgeClassForm.rawControlMap.badge_description"
@@ -103,17 +89,8 @@
 				></bg-formfield-text>
 			</div>
 
-			<div
-				style="
-					display: flex;
-					gap: 1em;
-					align-items: center;
-					margin-bottom: 1em;
-					margin-top: 2em;
-					margin-left: 2em;
-				"
-			>
-				<span style="font-weight: 600; font-size: 20px"> Tags</span>
+			<div class="tw-flex tw-gap-4 tw-items-center tw-mb-4 tw-ml-8 tw-mt-8">
+				<span class="tw-font-bold tw-text-lg tw-text-black tw-uppercase"> Tags</span>
 
 				<div class="ng-autocomplete">
 					<ng-autocomplete
@@ -150,16 +127,11 @@
 					[placeholder]="'Vorhandenen Tag wählen'"
 				></bg-formfield-select> -->
 
-				<button
-					type="button"
-					(click)="addTag()"
-					style="margin-left: auto; background-color: #492e98"
-					class="button"
-				>
+				<button type="button" (click)="addTag()" class="button tw-ml-auto tw-bg-[var(--color-purple)]">
 					Hinzufügen
 				</button>
 			</div>
-			<span style="margin-left: 2em; font-style: italic"
+			<span class="tw-ml-8 tw-italic"
 				>(Optional). Tags verschlagworten Badges und helfen bei der Suche von Badges zu bestimmten Themen.</span
 			>
 		</div>
@@ -167,149 +139,176 @@
 
 	<div class="section" *ngIf="badgeCategory === 'competency'">
 		<h2 class="heading">3. Badge mit Kompetenzen befüllen</h2>
-		<ul style="list-style-type: disc; padding: 5em">
+		<ul class="tw-p-20 tw-list-disc">
 			<li>
-				<span style="font-size: 28px; line-height: 55.2px; color: var(--color-blue)"
+				<span class="tw-text-xl tw-font-semibold tw-leading-10 tw-text-[var(--color-blue)]"
 					>KI-Badge-Assistent nutzen</span
 				>
 				<p>
 					Nutze unseren
-					<span style="font-weight: 200; color: var(--color-blue)">KI-Badge-Assistent</span>, um deinen Badge
+					<span class="tw-font-bold tw-text-[var(--color-blue)]">KI-Badge-Assistent</span>, um deinen Badge
 					mit Kompetenzen zu füllen. Gib einfach die inhaltliche Beschreibung deines Lehrangebots per
 					copy&paste in das Textfeld ein. Der KI-Badge-Assistent schlägt dir passende Kompetenzen vor, die du
 					durch Anklicken zu deinem Badge hinzufügen kannst.
 				</p>
 				<div
-					style="
-						display: flex;
-						flex-direction: column;
-						justify-content: center;
-						align-items: center;
-						margin-top: 3em;
-						width: 100%;
-						background-color: var(--color-blue);
-						border-radius: 25px;
-					"
+					class="tw-flex tw-flex-col tw-justify-center tw-items-center tw-mt-8 tw-w-full tw-bg-[var(--color-blue)] tw-rounded-md"
 				>
 					<div
-						style="
-							width: 50%;
-							background-color: var(--color-grün);
-							margin-top: 2em;
-							border-radius: 25px;
-							justify-content: center;
-							align-items: center;
-							display: flex;
-						"
+						class="tw-w-1/2 tw-bg-[var(--color-green)] tw-mt-8 tw-rounded-md tw-flex tw-justify-center tw-items-center"
 					>
 						<span
-							style="
-								color: black;
-								font-weight: 600;
-								padding-left: 1em;
-								padding-right: 1em;
-								padding-top: 0.5em;
-								padding-bottom: 0.5em;
-								font-size: 28px;
-								line-height: 55.2px;
-							"
+							class="tw-text-black tw-font-semibold tw-text-xl tw-leading-10 tw-text-center tw-py-2 tw-px-4"
 							>KI-BADGE-ASSISTENT NUTZEN</span
 						>
 					</div>
-					<div
-						style="
-							display: flex;
-							justify-content: space-between;
-							width: 100%;
-							padding: 4em;
-							margin-left: 2em;
-						"
-					>
-						<div style="display: flex; flex-direction: column">
-							<h2 style="color: #ffffff">Meine inhaltliche Beschreibung</h2>
-							<textarea style="background-color: white; border-radius: 10px"
-                                [(ngModel)]=aiCompetenciesDescription
-                                [ngModelOptions]="{standalone: true}"
-                                maxlength=7000> </textarea>
-							<div style="color: white">
-								<label for="kursdauer"> Dauer des Kurses</label>
-								<div style="display: flex; gap: 2em">
+					<div class="tw-flex tw-justify-between tw-w-full tw-p-16 tw-ml-8">
+						<div class="tw-flex tw-flex-col">
+							<h2 class="tw-text-white tw-uppercase tw-font-bold">Meine inhaltliche Beschreibung</h2>
+							<textarea
+								class="tw-bg-white tw-border tw-border-gray-300 tw-rounded-md tw-shadow-sm tw-p-2 tw-w-full tw-h-48 tw-resize-none tw-text-sm tw-text-gray-700"
+								[(ngModel)]="aiCompetenciesDescription"
+								[ngModelOptions]="{ standalone: true }"
+								maxlength="7000"
+							>
+							</textarea>
+							<div class="tw-mt-2">
+								<label class="tw-text-white tw-font-bold" for="kursdauer"> Dauer des Kurses</label>
+								<div class="tw-flex tw-gap-4">
 									<input
-										style="width: 4em; background-color: white"
+										class="tw-w-12 tw-bg-white tw-p-1"
 										type="number"
 										id="kursdauer"
 										name="kursdauer"
 										value="170"
 									/>
-									<span>Minuten</span>
+									<span class="tw-text-white tw-font-bold">Minuten</span>
 								</div>
 								<button
-									class="button"
-									style="
-										background-color: var(--color-grün);
-										color: var(--color-blue);
-										margin-top: 2em;
-									"
-                                    (click)=suggestCompetencies()
-                                    type=button
+									class="button tw-bg-[var(--color-green)] tw-text-[var(--color-blue)] tw-mt-8"
+									(click)="suggestCompetencies()"
+									type="button"
 								>
-									<span style="font-weight: 400">Passende</span>
-									<span style="font-weight: 700"> Kompetenzen vorschlagen </span>
+									<span class="tw-font-normal">Passende</span>
+									<span class="tw-font-bold"> Kompetenzen vorschlagen </span>
 								</button>
 							</div>
 						</div>
-						<div style="width: 50%">
-							<h2 style="color: white">Passende Kompetenzen</h2>
-                            <div style="background-color: white; border-radius: 10px; width: 75%; padding: 1em" *ngIf="aiCompetenciesSuggestions.length == 0">
-								<p style="width: 100%;
-                                          font-style: italic;
-                                          white-space: pre-wrap;">Hier erscheinen passende Kompetenzen, sobald du die Beschreibung deines Lehrinhalts in das Textfeld links eingefügt hast und auf "Passende Kompetenzen vorschlagen" klickst.</p>
+						<div class="tw-w-1/2">
+							<h2 class="tw-text-white tw-uppercase tw-font-bold">Passende Kompetenzen</h2>
+							<div
+								class="tw-bg-white tw-border tw-border-gray-300 tw-rounded-md tw-shadow-sm tw-p-2 tw-w-3/4 tw-h-24 tw-resize-none tw-text-sm tw-text-gray-700"
+								*ngIf="aiCompetenciesSuggestions.length == 0"
+							>
+								<p class="tw-w-full tw-italic tw-whitespace-pre-wrap">
+									Hier erscheinen passende Kompetenzen, sobald du die Beschreibung deines Lehrinhalts
+									in das Textfeld links eingefügt hast und auf "Passende Kompetenzen vorschlagen"
+									klickst.
+								</p>
 							</div>
-                            <div *ngIf="aiCompetenciesSuggestions.length > 0">
-                                <ng-container *ngFor="let aiCompetency of badgeClassForm.controls.aiCompetencies.controls; let i = index">
-                                    <div style="background-color: white; border-radius: 10px; width: 75%; padding: 1em; margin: 0.5em;">
-                                        <p style="white-space: pre-wrap; font-weight: bold;">{{ aiCompetenciesSuggestions[i].preferred_label }}</p>
-                                        <label class="checkbox">
-                                            <input
-                                                    id="checkboxAiSkill$i"
-                                                    name="checkboxAiSkill$i"
-                                                    type="checkbox"
-                                                    [formControl]="aiCompetency.rawControlMap.selected"
-                                                    />
-                                            <span class="checkbox-x-text">Hinzufügen</span>
-                                        </label>
-                                        <bg-formfield-text
-                                                [control]="aiCompetency.rawControlMap.studyLoad"
-                                                label="Dauer Kompetenz- Erwerb (in Minuten)"
-                                                [fieldType]="'number'"
-                                                [errorMessage]="{
-                                                                required: 'Bitte gib die Dauer für den Erwerb der Kompetenz ein.'
-                                                                }"
-                                                ></bg-formfield-text>
-                                        <!--TODO: Hide this by default-->
-                                        <p style="width: 100%;
-                                                  font-style: italic;
-                                                  white-space: pre-wrap;">{{ aiCompetenciesSuggestions[i].description }} </p>
-                                    </div>
-                                </ng-container>
+							<div *ngIf="aiCompetenciesSuggestions.length > 0">
+								<ng-container
+									*ngFor="
+										let aiCompetency of badgeClassForm.controls.aiCompetencies.controls;
+										let i = index
+									"
+								>
+									<div
+										[ngClass]="
+											aiCompetency.rawControlMap.selected.value
+												? 'tw-bg-[var(--color-green)]'
+												: 'tw-bg-[var(--color-lightgray)]'
+										"
+										class="tw-rounded-md tw-w-3/4 tw-p-4 tw-mt-2"
+									>
+										<div class="tw-flex tw-justify-between">
+											<h2 class="tw-whitespace-pre-wrap tw-text-black tw-font-bold">
+												{{ aiCompetenciesSuggestions[i].preferred_label }}
+											</h2>
+											<label
+												for="checkboxAiSkill$i"
+												[ngClass]="
+													aiCompetency.rawControlMap.selected
+														? 'checkbox checkbox-center'
+														: ''
+												"
+											>
+												<span
+													[ngClass]="
+														aiCompetency.rawControlMap.selected.value
+															? 'tw-hidden'
+															: 'tw-bg-[var(--color-green)] tw-text-black tw-rounded-md tw-border tw-border-solid tw-border-black tw-cursor-pointer tw-text-sm tw-text-center tw-mr-2 tw-p-1'
+													"
+													>Hinzufügen</span
+												>
+												<input
+													id="checkboxAiSkill$i"
+													name="checkboxAiSkill$i"
+													type="checkbox"
+													[formControl]="aiCompetency.rawControlMap.selected"
+												/>
+											</label>
+										</div>
+										<!-- <bg-formfield-text
+											class="tw-flex tw-gap-2"
+											[control]="aiCompetency.rawControlMap.studyLoad"
+											label="Minuten: "
+											[fieldType]="'number'"
+											[errorMessage]="{
+												required: 'Bitte gib die Dauer für den Erwerb der Kompetenz ein.'
+											}"
+										></bg-formfield-text> -->
+										<div class="tw-flex tw-gap-2 tw-justify-end tw-items-center tw-mt-4">
+											<label class="tw-text-black tw-font-bold" for="studyLoad$i">
+												Minuten:
+											</label>
+											<span
+												class="tw-flex tw-rounded-md tw-bg-white tw-border tw-border-solid tw-border-black tw-h-8 tw-w-8 tw-items-center tw-justify-center"
+												>{{ aiCompetency.rawControlMap.studyLoad.value }}</span
+											>
+											<!-- <input
+												class="tw-w-12 tw-bg-white tw-p-1"
+												type="number"
+												id="studyLoad$i"
+												name="studyLoad$i"
+												value="aiCompetency.rawControlMap.studyLoad"
+											/> -->
+										</div>
+										<div>
+											<button
+												class="oeb-button tw-underline"
+												type="button"
+												(click)="toggleAiDetails(i)"
+											>
+												Details sehen
+											</button>
+										</div>
+										<p
+											[ngClass]="!showAiDetails[i] ? 'tw-hidden' : ''"
+											class="tw-w-full tw-italic tw-whitespace-pre-wrap"
+										>
+											{{ aiCompetenciesSuggestions[i].description }}
+										</p>
+									</div>
+								</ng-container>
 							</div>
 						</div>
 					</div>
 				</div>
 			</li>
-			<hr style="border: 1px dashed var(--color-blue); margin-top: 2em; margin-bottom: 2em" />
+			<hr class="tw-my-8 tw-border tw-border-[var(--color-blue)]-500 tw-border-dashed" />
 			<li>
-				<span style="font-size: 28px; line-height: 55.2px; color: var(--color-blue)"
+				<span class="tw-text-lg tw-font-bold tw-leading-10 tw-text-[var(--color-blue)]"
 					>Händisch Kompetenzen hinzufügen</span
 				>
-				<p>
+				<p class="tw-text-black tw-font-semibold">
 					Alternativ oder ergänzend kannst du händisch Kompetenzen hinzufügen. Gerne kannst du als
 					Unterstützung die Suchfunktion von ESCO nutzen, um die passende Kompetenz zu finden und die
 					Informationen per copy&paste in die unten stehenden Felder übertragen.
 				</p>
-				<button style="margin-top: 2em; background-color: #492e98" class="button">
+				<button class="button tw-mt-8 tw-bg-[var(--color-purple)]">
 					<a
-						style="color: white"
+						class="tw-text-white"
 						href="https://esco.ec.europa.eu/en/classification/skill_main"
 						target="_blank"
 						>Bring mich zu ESCO</a
@@ -395,15 +394,9 @@
 				<!-- <ng-template #competencyLoop> -->
 				<ng-container *ngFor="let competency of badgeClassForm.controls.competencies.controls; let i = index">
 					<div
-						style="
-							border: 2px solid;
-							border-radius: 25px;
-							border-color: var(--color-blue);
-							padding: 2em;
-							margin-top: 2em;
-						"
+						class="tw-border-[var(--color-blue)] tw-border-2 tw-border-solid tw-text-white tw-rounded-md tw-p-4 tw-mt-4"
 					>
-						<div style="display: flex; justify-content: space-around">
+						<div class="tw-flex tw-justify-around">
 							<bg-formfield-text
 								[control]="competency.rawControlMap.name"
 								label="Kompetenz-Titel"
