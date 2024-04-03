@@ -127,12 +127,26 @@ export class ExportPdfDialog extends BaseDialog {
 		return image;
 	}
 
-	async convertImageToDataURL(imageSrc) {
+	async convertImageToDataURL(imageSrc: string) {
 		let blob = await fetch(imageSrc).then((res) => res.blob());
-		return await new Promise((resolve) => {
+		return await new Promise<string>((resolve) => {
 			let reader = new FileReader();
-			reader.onload = () => resolve(reader.result);
+			reader.onload = () => resolve(reader.result as string);
 			reader.readAsDataURL(blob);
+		});
+	}
+
+	getAspectRatio(dataUrl: string) {
+		return new Promise<number>((resolve, reject) => {
+			let img = new Image();
+			img.onload = function () {
+				let aspectRatio = img.height / img.width;
+				resolve(aspectRatio);
+			};
+			img.onerror = function () {
+				reject(new Error('Failed to load image'));
+			};
+			img.src = dataUrl;
 		});
 	}
 
@@ -151,9 +165,14 @@ export class ExportPdfDialog extends BaseDialog {
 		const pageHeight = this.doc.internal.pageSize.getHeight();
 		let cutoff = pageWidth - 27;
 
-		let oeb_logo = await this.convertImageToDataURL('assets/logos/Logo-New.png');
+		const oeb_logo = await this.convertImageToDataURL('assets/logos/Logo-New.png');
+		const oeb_logo_aspectRatio = await this.getAspectRatio(oeb_logo);
+
 		const badge_image = await this.convertImageToDataURL(badgeClass.image);
+		const badge_image_aspectRatio = await this.getAspectRatio(badge_image);
+
 		const issuer_image = await this.convertImageToDataURL(badgeClass.issuer.image);
+		const issuer_image_aspectRatio = await this.getAspectRatio(issuer_image);
 
 		var svgContentClock = `
 		<svg xmlns="http://www.w3.org/2000/svg" height="14" width="12.25" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="#492e98" d="M176 0c-17.7 0-32 14.3-32 32s14.3 32 32 32h16V98.4C92.3 113.8 16 200 16 304c0 114.9 93.1 208 208 208s208-93.1 208-208c0-41.8-12.3-80.7-33.5-113.2l24.1-24.1c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L355.7 143c-28.1-23-62.2-38.8-99.7-44.6V64h16c17.7 0 32-14.3 32-32s-14.3-32-32-32H224 176zm72 192V320c0 13.3-10.7 24-24 24s-24-10.7-24-24V192c0-13.3 10.7-24 24-24s24 10.7 24 24z"/></svg>`;
@@ -201,7 +220,7 @@ export class ExportPdfDialog extends BaseDialog {
 						const image = this.generatePdfBackground(canvas);
 
 						const logoWidth = 50;
-						const logoHeight = 30;
+						const logoHeight = logoWidth * oeb_logo_aspectRatio;
 						const marginXImageLogo = 5;
 
 						let firstName = this.profile.firstName;
@@ -220,7 +239,7 @@ export class ExportPdfDialog extends BaseDialog {
 							//  OEB Logo
 							this.doc.addImage(oeb_logo, 'PNG', marginXImageLogo, yPos + 10, logoWidth, logoHeight);
 							this.doc.setDrawColor('#492E98');
-							this.doc.line(pageWidth / 2 - 50, 25, pageWidth / 2 + 100, 25);
+							this.doc.line(pageWidth / 2 - 50, logoHeight, pageWidth / 2 + 100, logoHeight);
 
 							if (esco) {
 								this.doc.textWithLink(
@@ -247,7 +266,7 @@ export class ExportPdfDialog extends BaseDialog {
 										logoHeight,
 									);
 									this.doc.setDrawColor('#492E98');
-									this.doc.line(pageWidth / 2 - 50, 25, pageWidth / 2 + 100, 25);
+									this.doc.line(pageWidth / 2 - 50, logoHeight, pageWidth / 2 + 100, logoHeight);
 								}
 
 								this.doc.setFontSize(28);
@@ -273,8 +292,8 @@ export class ExportPdfDialog extends BaseDialog {
 								this.doc.setFont('Helvetica', 'normal');
 								this.doc.text('erworben hat:', this.doc.getTextWidth(badgeClass.name) + 15, 85);
 
-								let studyLoadInMin = competencies[i].studyLoad;
-								let studyLoadInHours = studyLoadInMin / 60;
+								const studyLoadInMin = competencies[i].studyLoad;
+								const studyLoadInHours = studyLoadInMin / 60;
 
 								const y = 110 + (i % competenciesPerPage) * 16;
 
@@ -282,9 +301,9 @@ export class ExportPdfDialog extends BaseDialog {
 								this.doc.setFontSize(14);
 								this.doc.addImage(dataUriClockPng, 20, y - 6, 12.5, 14);
 								if (studyLoadInMin > 60) {
-									this.doc.text(studyLoadInHours + ' Stunden', 30, y) + 2.5;
+									this.doc.text(studyLoadInHours + ' Stunden', 30, y + 2.5);
 								} else {
-									this.doc.text(studyLoadInMin + ' Minuten', 30, y) + 2.5;
+									this.doc.text(studyLoadInMin + ' Minuten', 30, y + 2.5);
 								}
 
 								this.doc.setFontSize(18);
@@ -303,7 +322,7 @@ export class ExportPdfDialog extends BaseDialog {
 						//  OEB Logo
 						this.doc.addImage(oeb_logo, 'PNG', marginXImageLogo, yPos + 10, logoWidth, logoHeight);
 						this.doc.setDrawColor('#492E98');
-						this.doc.line(pageWidth / 2 - 50, 25, pageWidth / 2 + 100, 25);
+						this.doc.line(pageWidth / 2 - 50, logoHeight, pageWidth / 2 + 100, logoHeight);
 
 						// Name
 						yPos += 60;
@@ -322,7 +341,7 @@ export class ExportPdfDialog extends BaseDialog {
 
 						// Badge Image
 						const imageWidth = 75;
-						const imageHeight = 75;
+						const imageHeight = imageWidth * badge_image_aspectRatio;
 						yPos = (pageHeight - imageHeight) / 2 - 20;
 						const marginXImg = (pageWidth - imageWidth) / 2;
 						this.doc.addImage(badge_image, 'PNG', marginXImg, yPos, imageWidth, imageHeight);
@@ -397,7 +416,7 @@ export class ExportPdfDialog extends BaseDialog {
 						if (issuedByContentLength + issuedByLength > cutoff) {
 							issuedBy =
 								this.doc.splitTextToSize(
-									name,
+									issuedBy,
 									cutoff - awardedToLength - this.doc.getTextWidth('...'),
 								)[0] + '...';
 							this.doc.setFontSize(20);
@@ -437,7 +456,7 @@ export class ExportPdfDialog extends BaseDialog {
 						yPos += 5;
 						this.doc.setFillColor('#cfcece');
 						this.doc.rect(pageWidth / 4, yPos, pageWidth / 2, 25, 'F');
-						this.doc.addImage(issuer_image, 'PNG', pageWidth / 2 - 25, yPos - 2, 50, 30);
+						// this.doc.addImage(issuer_image, 'PNG', pageWidth / 2 - 25, yPos - 2, 50, 30);
 
 						//footer
 						const pageCount = (this.doc as any).internal.getNumberOfPages(); //was doc.internal.getNumberOfPages();
