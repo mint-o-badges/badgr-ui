@@ -125,7 +125,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	aiCompetenciesSuggestions: Skill[] = [];
 
 	/**
-	 * The suggested competencies which details are shown
+	 * The descriptions of suggested competencies which are shown
 	 * in the view (@see aiCompetenciesSuggestions)
 	 */
 	showAiDetails: boolean[] = [];
@@ -545,7 +545,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	}
 
 	toggleAiDetails(index: number): void {
-		console.log(this.badgeClassForm.controls.aiCompetencies.controls[index].rawControlMap.selected.value);
 		this.showAiDetails[index] = !this.showAiDetails[index];
 	}
 
