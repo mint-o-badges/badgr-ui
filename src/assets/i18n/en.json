@@ -5,7 +5,7 @@
 		"name": "Name",
 		"institutions": "Institutions",
 		"account": "Account",
-		"backpack": "Backpack",
+		"backpack": "My Backpack",
 		"list": "list",
 		"collection": "Collection",
 		"collections": "Collections",
@@ -32,7 +32,8 @@
 		"members": "Members",
 		"role": "Role",
 		"remove": "Remove",
-		"save": "Save"
+		"save": "Save",
+		"aboutBadges": "About Badges"
 	},
 	"NavItems": {
 		"register": "Register",

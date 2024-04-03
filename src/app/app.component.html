@@ -87,23 +87,18 @@
 		<ng-template [ngIf]="!loggedIn">
 			<nav class="navbar-x-items">
 				<div class="navbar-x-navitems">
-					<a
+					<!-- About Badges Menu -->
+					<button
 						role="menuitem"
+						aria-haspopup="true"
 						[class.navitem-light]="!theme.useColorNavbar"
-						class="navitem"
+						class="navitem tw-cursor-pointer"
 						routerLinkActive="navitem-is-active"
-						[routerLink]="['/catalog/badges']"
+						[bgPopupMenuTrigger]="aboutBadgesMenu"
 					>
-						Badges
-					</a>
-					<a
-						role="menuitem"
-						[class.navitem-light]="!theme.useColorNavbar"
-						class="navitem"
-						routerLinkActive="navitem-is-active"
-						[routerLink]="['/catalog/issuers']"
-						>{{ 'General.institutions' | translate }}</a
-					>
+						{{ 'General.aboutBadges' | translate }}
+						<svg class="navitem-x-icon" icon="icon_dropdown"></svg>
+					</button>
 					<a
 						*ngIf="!features.disableRegistration"
 						[class.navitem-light]="!theme.useColorNavbar"
@@ -111,7 +106,7 @@
 						routerLinkActive="navitem-is-active"
 						[routerLink]="['/public/about']"
 						>{{ 'NavItems.aboutOpenEducationalBadges' | translate }}</a
-					>	
+					>
 					<a
 						*ngIf="!features.disableRegistration"
 						[class.navitem-light]="!theme.useColorNavbar"
@@ -120,8 +115,10 @@
 						[routerLink]="['/signup']"
 						>{{ 'NavItems.register' | translate }}</a
 					>
-		
-					<div class="navitem" style="position: unset; display: flex; gap: 4px">
+
+					<!-- ToDo: comment in when all pages are completely translated -->
+					<!-- Language -->
+					<!-- <div class="navitem" style="position: unset; display: flex; gap: 4px">
 						<button (click)="changeLng('de')">
 							<span [ngStyle]="{ 'font-weight': selectedLng == 'de' ? 'bold' : 'normal' }">DE</span>
 						</button>
@@ -129,16 +126,11 @@
 						<button (click)="changeLng('en')">
 							<span [ngStyle]="{ 'font-weight': selectedLng == 'en' ? 'bold' : 'normal' }">EN</span>
 						</button>
-					</div>
+					</div> -->
 				</div>
 
 				<!-- Login btn -->
-				<button
-					class="main-nav-bold login-btn"
-					[routerLink]="['/auth/login']"
-					>
-					Login
-				</button>
+				<button class="main-nav-bold login-btn" [routerLink]="['/auth/login']">Login</button>
 			</nav>
 		</ng-template>
 
@@ -146,23 +138,27 @@
 		<ng-template [ngIf]="loggedIn && !isOAuthAuthorizationInProcess">
 			<nav class="navbar-x-items" role="menubar">
 				<div class="navbar-x-navitems">
+					<!-- About Badges Menu -->
+					<button
+						role="menuitem"
+						aria-haspopup="true"
+						[class.navitem-light]="!theme.useColorNavbar"
+						class="navitem tw-cursor-pointer"
+						routerLinkActive="navitem-is-active"
+						[bgPopupMenuTrigger]="aboutBadgesMenu"
+					>
+						{{ 'General.aboutBadges' | translate }}
+						<svg class="navitem-x-icon" icon="icon_dropdown"></svg>
+					</button>
+
 					<a
 						role="menuitem"
 						[class.navitem-light]="!theme.useColorNavbar"
 						class="navitem"
 						routerLinkActive="navitem-is-active"
-						[routerLink]="['/catalog/badges']"
+						[routerLink]="['public/about']"
 					>
-						Badges
-					</a>
-					<a
-						role="menuitem"
-						[class.navitem-light]="!theme.useColorNavbar"
-						class="navitem"
-						routerLinkActive="navitem-is-active"
-						[routerLink]="['/catalog/issuers']"
-					>
-						{{ 'General.institutions' | translate }}
+						{{ 'NavItems.aboutOpenEducationalBadges' | translate }}
 					</a>
 					<a
 						role="menuitem"
@@ -184,7 +180,7 @@
 						role="menuitem"
 						aria-haspopup="true"
 						[class.navitem-light]="!theme.useColorNavbar"
-						class="navitem u-cursor-pointer"
+						class="navitem tw-cursor-pointer"
 						*ngIf="launchpoints?.length"
 						routerLinkActive="navitem-is-active"
 						[bgPopupMenuTrigger]="appsMenu"
@@ -195,7 +191,7 @@
 					<a
 						role="menuitem"
 						[class.navitem-light]="!theme.useColorNavbar"
-						class="navitem u-cursor-pointer"
+						class="navitem tw-cursor-pointer"
 						*ngIf="theme.customMenu"
 						routerLinkActive="navitem-is-active"
 						[bgPopupMenuTrigger]="customMenu"
@@ -213,11 +209,12 @@
 						>{{ 'NavItems.myInstitutions' | translate }}</a
 					>
 
+					<!-- Account Menu -->
 					<button
 						role="menuitem"
 						aria-haspopup="true"
 						[class.navitem-light]="!theme.useColorNavbar"
-						class="navitem u-cursor-pointer"
+						class="navitem tw-cursor-pointer"
 						routerLinkActive="navitem-is-active"
 						[bgPopupMenuTrigger]="accountMenu"
 					>
@@ -225,7 +222,9 @@
 						<svg class="navitem-x-icon" icon="icon_dropdown"></svg>
 					</button>
 
-					<div class="navitem" style="position: unset; display: flex; gap: 4px">
+					<!-- ToDo: comment in when all pages are completely translated -->
+					<!-- Language -->
+					<!-- <div class="navitem" style="position: unset; display: flex; gap: 4px">
 						<button (click)="changeLng('de')">
 							<span [ngStyle]="{ 'font-weight': selectedLng == 'de' ? 'bold' : 'normal' }">DE</span>
 						</button>
@@ -233,11 +232,11 @@
 						<button (click)="changeLng('en')">
 							<span [ngStyle]="{ 'font-weight': selectedLng == 'en' ? 'bold' : 'normal' }">EN</span>
 						</button>
-					</div>
+					</div> -->
 				</div>
 			</nav>
 		</ng-template>
-		
+
 		<button
 			class="menutoggle"
 			(click)="toggleMobileNav()"
@@ -269,15 +268,21 @@
 		<a class="menuitem" routerLinkActive="menuitem-is-active" [routerLink]="['/profile/profile']"
 			><svg icon="icon_member"></svg>{{ 'NavItems.myProfile' | translate }}</a
 		>
+
 		<a class="menuitem" routerLinkActive="menuitem-is-active" [routerLink]="['/profile/app-integrations']"
 			><svg icon="icon_compare"></svg>{{ 'NavItems.appIntegrations' | translate }}</a
-		>
-		<a class="menuitem" routerLinkActive="menuitem-is-active" [routerLink]="['/public/about']"
-			><svg icon="icon_info"></svg>{{ 'NavItems.aboutOpenEducationalBadges' | translate }}</a
 		>
 		<a class="menuitem" routerLinkActive="menuitem-is-active" [routerLink]="['/auth/logout']"
 			><svg icon="icon_exit_to_app"></svg>Logout</a
 		>
+	</bg-popup-menu>
+
+	<bg-popup-menu #aboutBadgesMenu>
+		<a class="menuitem" routerLinkActive="menuitem-is-active" [routerLink]="['/public/faq']">FAQ</a>
+		<a class="menuitem" routerLinkActive="menuitem-is-active" [routerLink]="['/catalog/badges']">Badges A-Z</a>
+		<a class="menuitem" routerLinkActive="menuitem-is-active" [routerLink]="['/catalog/issuers']">{{
+			'General.institutions' | translate
+		}}</a>
 	</bg-popup-menu>
 
 	<nav
@@ -298,8 +303,9 @@
 			<a routerLinkActive="menuitem-is-active" [routerLink]="['/signup']">{{
 				'NavItems.register' | translate
 			}}</a>
+			<!-- ToDo: comment in when all pages are completely translated -->
 			<!-- mobile-nav language selection -->
-			<a
+			<!-- <a
 				><div style="color: white; display: flex; gap: 4px">
 					<button (click)="changeLng('de')" style="color: white">
 						<span [ngStyle]="{ 'font-weight': selectedLng == 'de' ? 'bold' : 'normal' }">DE</span>
@@ -309,7 +315,7 @@
 						<span [ngStyle]="{ 'font-weight': selectedLng == 'en' ? 'bold' : 'normal' }">EN</span>
 					</button>
 				</div></a
-			>
+			> -->
 			<hr class="mobilenav-x-rule" />
 			<p class="mobilenav-x-label" *ngIf="launchpoints?.length">Apps</p>
 			<a href="{{ lp.launch_url }}" *ngFor="let lp of launchpoints" target="_blank">
@@ -325,8 +331,12 @@
 		[class.mobilenav-light]="!theme.useColorNavbar"
 	>
 		<div class="mobilenav-x-navitems">
-			<a [routerLink]="['/catalog/badges']">Badges</a>
+			<p class="mobilenav-x-label">{{ 'General.aboutBadges' | translate }}</p>
+			<a [routerLink]="['/public/faq']">FAQ</a>
+			<a [routerLink]="['/catalog/badges']">Badges A-Z</a>
 			<a [routerLink]="['/catalog/issuers']">{{ 'General.institutions' | translate }}</a>
+
+			<hr class="mobilenav-x-rule" />
 			<a [routerLink]="['/recipient/badges']">{{ 'General.backpack' | translate }}</a>
 			<a [routerLink]="['/recipient/badge-collections']">{{ 'General.collections' | translate }}</a>
 			<a [routerLink]="['/issuer']" *ngIf="showIssuersTab">{{ 'NavItems.myInstitutions' | translate }}</a>
@@ -340,7 +350,7 @@
 			<a [href]="item.url" *ngFor="let item of theme?.customMenu?.items" target="_blank"> {{ item.label }} </a>
 
 			<hr class="mobilenav-x-rule" />
-			<p class="mobilenav-x-label">Account</p>
+			<p class="mobilenav-x-label">{{ 'General.account' | translate }}</p>
 			<a [routerLink]="['/profile/profile']">{{ 'NavItems.profile' | translate }}</a>
 			<a [routerLink]="['/profile/app-integrations']">{{ 'NavItems.appIntegrations' | translate }}</a>
 			<a [routerLink]="['/public/about']">{{ 'NavItems.aboutOpenEducationalBadges' | translate }}</a>
@@ -386,22 +396,30 @@
 <markdown-hints-dialog #markdownHintsDialog></markdown-hints-dialog>
 
 <!-- Footer -->
-<footer *ngIf="!curtain" class="o-container" id="footer" style="background-color: var(--color-lightgreen); margin-top: 30px;">
+<footer
+	*ngIf="!curtain"
+	class="o-container"
+	id="footer"
+	style="background-color: var(--color-lightgreen); margin-top: 30px"
+>
 	<div class="l-containerxaxis">
 		<div class="footer l-stickyfooter-x-footer">
-			<ul class="footer-x-leftlinks" style="width: 40%;">
-				<li class="Text-SemiBold" *ngIf="theme.showPoweredByOSL && theme.providedBy" [innerHtml]="'Start.poweredBy' | translate">
-				</li>
-			</ul>
+			<div class="tw-text-left tw-flex md:tw-flex-row md:tw-justify-between md:tw-gap-0 tw-flex-col-reverse tw-gap-[2em]">
+				<div>
+						<p
+							class="text-semiBold md:tw-w-1/2"
+							*ngIf="theme.showPoweredByOSL && theme.providedBy"
+							[innerHtml]="'Start.poweredBy' | translate"
+						></p>
+				</div>
 
-			<ul class="footer-x-links footer-rightside">
-				<li>
+				<div class="tw-flex tw-flex-col tw-gap-[1em] tw-min-w-fit">
 					<a class="faq" [routerLink]="['/public/faq']">FAQ</a>
-				</li>
-				<li>
-					<a class="impressum" [href]="theme.termsOfServiceLink" target="_blank">{{ 'Start.imprint' | translate }}</a>
-				</li>
-			</ul>
+					<a class="impressum" [href]="theme.termsOfServiceLink">{{
+						'Start.imprint' | translate
+					}}</a>
+				</div>
+			</div>
 		</div>
 	</div>
 </footer>
