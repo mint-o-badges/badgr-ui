@@ -189,7 +189,9 @@
 									(click)="suggestCompetencies()"
 									type="button"
 								>
-									<span class="tw-font-normal">Passende</span>
+									<span class="tw-font-normal">{{
+										aiCompetenciesSuggestions.length > 0 ? 'Erneut' : 'Passende'
+									}}</span>
 									<span class="tw-font-bold"> Kompetenzen vorschlagen </span>
 								</button>
 							</div>
