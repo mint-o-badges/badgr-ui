@@ -464,7 +464,7 @@ export class ExportPdfDialog extends BaseDialog {
 						// issuer logo
 						yPos += 5;
 						const issuer_image_height = 30 * issuer_image_aspectRatio;
-						// this.doc.addImage(issuer_image, 'PNG', pageWidth / 2 - 15, yPos - 2, 30, issuer_image_height);
+						this.doc.addImage(issuer_image, 'PNG', pageWidth / 2 - 15, yPos - 2, 30, issuer_image_height);
 
 						//footer
 						const pageCount = (this.doc as any).internal.getNumberOfPages(); //was doc.internal.getNumberOfPages();
