@@ -293,25 +293,26 @@ export class ExportPdfDialog extends BaseDialog {
 								this.doc.text('erworben hat:', this.doc.getTextWidth(badgeClass.name) + 15, 85);
 
 								const studyLoadInMin = competencies[i].studyLoad;
-								const studyLoadInHours = studyLoadInMin / 60;
+								const studyLoadInMinText = studyLoadInMin + ' Minuten';
+								const studyLoadInHours = studyLoadInMin / 60 + ' Stunden';
 
 								const y = 110 + (i % competenciesPerPage) * 16;
 
-								this.doc.roundedRect(15, y - 7.5, 42.5, 11, 5, 5);
 								this.doc.setFontSize(14);
 								this.doc.addImage(dataUriClockPng, 20, y - 6, 12.5, 14);
 								if (studyLoadInMin > 60) {
-									this.doc.text(studyLoadInHours + ' Stunden', 30, y + 2.5);
+									this.doc.text(studyLoadInHours, 30, y);
 								} else {
-									this.doc.text(studyLoadInMin + ' Minuten', 30, y + 2.5);
+									this.doc.text(studyLoadInMinText, 30, y);
 								}
+								this.doc.roundedRect(15, y - 7.5, 52.5, 11, 5, 5);
 
 								this.doc.setFontSize(18);
 
 								if (competencies[i].escoID) {
-									this.doc.text(competencies[i].name + ' *', 60, y);
+									this.doc.text(competencies[i].name + ' *', 72.5, y);
 								} else {
-									this.doc.text(competencies[i].name, 60, y);
+									this.doc.text(competencies[i].name, 72.5, y);
 								}
 							}
 						}
