@@ -30,7 +30,7 @@ import { Issuer } from '../../../issuer/models/issuer.model';
 })
 export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	readonly issuerImagePlacholderUrl = preloadImageURL(
-		'../../../../breakdown/static/images/placeholderavatar-issuer.svg'
+		'../../../../breakdown/static/images/placeholderavatar-issuer.svg',
 	);
 	readonly badgeLoadingImageUrl = '../../../../breakdown/static/images/badge-loading.svg';
 	readonly badgeFailedImageUrl = '../../../../breakdown/static/images/badge-failed.svg';
@@ -40,6 +40,8 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 
 	badgesLoaded: Promise<unknown>;
 	badges: RecipientBadgeInstance[] = [];
+	competencies: object[];
+	category: object;
 	badge: RecipientBadgeInstance;
 	issuerBadgeCount: string;
 	launchpoints: ApiExternalToolLaunchpoint[];
@@ -74,13 +76,15 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 		private dialogService: CommonDialogsService,
 		private configService: AppConfigService,
 		private externalToolsManager: ExternalToolsManager,
-		public queryParametersService: QueryParametersService
+		public queryParametersService: QueryParametersService,
 	) {
 		super(router, route, loginService);
 
 		this.badgesLoaded = this.recipientBadgeManager.recipientBadgeList.loadedPromise
 			.then((r) => {
 				this.updateBadge(r);
+				this.competencies = this.badge.getExtension('extensions:CompetencyExtension', [{}]);
+				this.category = this.badge.getExtension('extensions:CategoryExtension', {});
 				this.crumbs = [
 					{ title: 'Backpack', routerLink: ['/recipient/badges'] },
 					{ title: this.badge.badgeClass.name, routerLink: ['/earned-badge/' + this.badge.slug] },
@@ -118,9 +122,9 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 						},
 						(error) => {
 							this.messageService.reportHandledError(`Failed to delete ${badge.badgeClass.name}`, error);
-						}
+						},
 					),
-				() => {}
+				() => {},
 			);
 	}
 
@@ -161,8 +165,8 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 					.save()
 					.then((success) =>
 						this.messageService.reportMinorSuccess(
-							`Collection ${this.badge.badgeClass.name} badges saved successfully`
-						)
+							`Collection ${this.badge.badgeClass.name} badges saved successfully`,
+						),
 					)
 					.catch((failure) => this.messageService.reportHandledError(`Failed to save Collection`, failure));
 			});
@@ -174,11 +178,11 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 			.save()
 			.then((success) =>
 				this.messageService.reportMinorSuccess(
-					`Collection removed successfully from ${this.badge.badgeClass.name}`
-				)
+					`Collection removed successfully from ${this.badge.badgeClass.name}`,
+				),
 			)
 			.catch((failure) =>
-				this.messageService.reportHandledError(`Failed to remove Collection from badge`, failure)
+				this.messageService.reportHandledError(`Failed to remove Collection from badge`, failure),
 			);
 	}
 
@@ -192,7 +196,7 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 
 	private updateData() {
 		this.title.setTitle(
-			`Backpack - ${this.badge.badgeClass.name} - ${this.configService.theme['serviceName'] || 'Badgr'}`
+			`Backpack - ${this.badge.badgeClass.name} - ${this.configService.theme['serviceName'] || 'Badgr'}`,
 		);
 
 		this.badge.markAccepted();

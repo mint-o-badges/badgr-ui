@@ -1,3 +1,10 @@
+.video-container iframe,
+.video-container object,
+.video-container embed {
+	width: 100%;
+	height: 100%;
+}
+
 .logo {
 	width: 350px;
 	height: 350px;
@@ -36,19 +43,6 @@
 	padding: 1rem;
 }
 
-.video-container {
-	height: 500px;
-	width: 100%;
-	padding-bottom: 5rem;
-}
-
-.video-container iframe,
-.video-container object,
-.video-container embed {
-	width: 100%;
-	height: 100%;
-}
-
 .panel {
 	background-color: #00729c;
 	padding: 5rem;
@@ -57,4 +51,13 @@
 	max-width: 100%;
 	color: white;
 	border-radius: 1rem;
+}
+
+.oeb-logo {
+	max-width: 150px;
+	max-height: 150px;
+	margin: 1em;
+	img {
+		width: 100%;
+	}
 }

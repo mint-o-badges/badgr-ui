@@ -2,32 +2,63 @@
 <app-badge-legend *ngIf="showLegend" (closed)="closeLegend()"></app-badge-legend>
 
 <form [formGroup]="badgeClassForm.rawControl" #formElem (ngSubmit)="onSubmit()" novalidate class="l-responsivelist">
-	<!-- General Details Panel -->
-	<div class="formsection">
-		<!-- <div class="formsection-x-title">
-			<h2 class="u-text-dark2">
-				Badge Basics
+	<!-- Badge Category Panel -->
+	<div class="section">
+		<div style="display: flex; flex-direction: column">
+			<h2 class="heading" style="display: flex; justify-content: space-between">
+				1. Badge-Kategorie wählen
+				<bg-formfield-select
+					ariaLabel="Wähle eine Badge-Kategorie"
+					[control]="badgeClassForm.rawControlMap.badge_category"
+					[placeholder]="'Wähle eine Badge-Kategorie'"
+					[optionMap]="categoryOptions"
+					[errorMessage]="{
+						required: 'Bitte wähle die Kategorie des Badges aus.'
+					}"
+				></bg-formfield-select>
 			</h2>
-		</div> -->
-
-		<div class="formsection-x-help">
-			<h3 class="u-text-body-bold">Badge Basics</h3>
-			<p class="u-text u-margin-top1x u-margin-bottom2x">
-				Badge Bilder können entweder PNGs oder SVGs oder die über die Iconsuche gewählten Icons sein. Um das
-				gewählte Bild/Icon wird automatisch, je nach Kategorie, ein Rahmen gesetzt.
-			</p>
-			<br />
-			<a href="javascript:;" (click)="openLegend()" class="u-text-outlink"
-				>Was bedeuten die Rahmen und Farben?
-			</a>
+			<div style="padding-left: 2em; padding-right: 2em; width: 75%; font-style: italic">
+				<span
+					>Kompetenz-Badges können mithilfe unseres KI-Badge-Assistent mit Kompetenzen gefüllt werden.
+				</span>
+				<span>Teilnahme-Badges dienen als Bestätigung der Teilnahme an einem Lehrangebot.</span>
+			</div>
 		</div>
-		<div class="formsection-x-body">
-			<div class="forminput u-margin-bottom2x">
+	</div>
+
+	<div class="section">
+		<div>
+			<h2 class="heading">2. Badge Details eingeben</h2>
+		</div>
+		<div>
+			<div style="display: flex; align-items: center; gap: 2em; margin-left: 2em; margin-top: 2em">
+				<span style="font-weight: 600; font-size: 20px"> Titel</span>
+
+				<bg-formfield-text
+					[control]="badgeClassForm.rawControlMap.badge_name"
+					[errorMessage]="{
+						required: 'Bitte gib dem Badge einen Titel',
+						mustChange: 'Bitte ändere den Titel'
+					}"
+					[autofocus]="true"
+				></bg-formfield-text>
+			</div>
+			<div style="display: flex; gap: 2em; margin-left: 2em; margin-top: 2em">
+				<span style="font-weight: 600; font-size: 20px"> Bild</span>
 				<bg-formfield-image
+					style="
+						width: 50%;
+						background-color: #fff6f6;
+						padding: 2em;
+						display: flex;
+						justify-content: center;
+						align-items: center;
+						margin-left: auto;
+						margin-right: auto;
+						border-radius: 25px;
+					"
 					#imageField
-					label="Bild"
 					imageLoaderName="badge"
-					[class.fixed-imagefield]="scrolled"
 					[newDropZone]="true"
 					[generateRandom]="false"
 					[type]="'badge'"
@@ -46,42 +77,410 @@
 					[hidden]="true"
 				></badge-studio>
 			</div>
-
-			<!-- No Hexagon Frame Checkout -->
-			<div class="u-margin-top3x u-margin-bottom3x">
+			<div
+				class="u-margin-top3x u-margin-bottom3x"
+				style="display: flex; justify-content: center; align-items: center"
+			>
 				<label class="checkbox">
-					<input id="no-hex-frame" name="no-hex-frame" type="checkbox" (change)="handleCBoxValueChange($event)" />
+					<input
+						id="no-hex-frame"
+						name="no-hex-frame"
+						type="checkbox"
+						(change)="handleCBoxValueChange($event)"
+					/>
 					<span class="checkbox-x-text">Ohne Hexagon-Rahmen </span>
 				</label>
 			</div>
-
-			<div class="forminput u-margin-bottom2x">
+			<div style="margin-left: 2em">
+				<span style="font-weight: 600; font-size: 20px"> Kurzbeschreibung</span>
 				<bg-formfield-text
-					[control]="badgeClassForm.rawControlMap.badge_name"
-					label="Name"
-					[errorMessage]="{
-						required: 'Bitte gib dem Badge einen Namen',
-						mustChange: 'Bitte ändere den Namen'
-					}"
-					[autofocus]="true"
-				></bg-formfield-text>
-			</div>
-
-			<div class="forminput">
-				<bg-formfield-text
+					class="u-margin-top3x"
 					[control]="badgeClassForm.rawControlMap.badge_description"
-					label="Kurzbeschreibung"
 					id="badgeclass_description_input"
 					placeholder="Kurze Beschreibung der Leistung"
 					[errorMessage]="{ required: 'Bitte gib eine Beschreibung ein' }"
 					[multiline]="true"
 				></bg-formfield-text>
 			</div>
+
+			<div
+				style="
+					display: flex;
+					gap: 1em;
+					align-items: center;
+					margin-bottom: 1em;
+					margin-top: 2em;
+					margin-left: 2em;
+				"
+			>
+				<span style="font-weight: 600; font-size: 20px"> Tags</span>
+
+				<div class="ng-autocomplete">
+					<ng-autocomplete
+						name="addtag"
+						id="addtag"
+						#newTagInput
+						maxlength="50"
+						[data]="existingTags"
+						[isLoading]="existingTagsLoading"
+						searchKeyword="name"
+						placeholder="Neuer Tag..."
+						(keypress)="handleTagInputKeyPress($event)"
+						[itemTemplate]="itemTemplate"
+						[notFoundTemplate]="notFoundTemplate"
+					>
+					</ng-autocomplete>
+
+					<ng-template #itemTemplate let-item>
+						<a [innerHTML]="item.name"></a>
+					</ng-template>
+
+					<ng-template #notFoundTemplate let-notFound>
+						<div>Dieser Tag existiert noch nicht.</div>
+					</ng-template>
+				</div>
+
+				<!-- Todo: clarify what will be used to add tags -->
+
+				<!-- <bg-formfield-select
+					style="margin-left: auto"
+					ariaLabel="Füge einen bestehenden Tag hinzu"
+					[options]="tagOptions"
+					[control]="tagOptions"
+					[placeholder]="'Vorhandenen Tag wählen'"
+				></bg-formfield-select> -->
+
+				<button
+					type="button"
+					(click)="addTag()"
+					style="margin-left: auto; background-color: #492e98"
+					class="button"
+				>
+					Hinzufügen
+				</button>
+			</div>
+			<span style="margin-left: 2em; font-style: italic"
+				>(Optional). Tags verschlagworten Badges und helfen bei der Suche von Badges zu bestimmten Themen.</span
+			>
 		</div>
 	</div>
 
+	<div class="section" *ngIf="badgeCategory === 'competency'">
+		<h2 class="heading">3. Badge mit Kompetenzen befüllen</h2>
+		<ul style="list-style-type: disc; padding: 5em">
+			<li>
+				<span style="font-size: 28px; line-height: 55.2px; color: var(--color-blue)"
+					>KI-Badge-Assistent nutzen</span
+				>
+				<p>
+					Nutze unseren
+					<span style="font-weight: 200; color: var(--color-blue)">KI-Badge-Assistent</span>, um deinen Badge
+					mit Kompetenzen zu füllen. Gib einfach die inhaltliche Beschreibung deines Lehrangebots per
+					copy&paste in das Textfeld ein. Der KI-Badge-Assistent schlägt dir passende Kompetenzen vor, die du
+					durch Anklicken zu deinem Badge hinzufügen kannst.
+				</p>
+				<div
+					style="
+						display: flex;
+						flex-direction: column;
+						justify-content: center;
+						align-items: center;
+						margin-top: 3em;
+						width: 100%;
+						background-color: var(--color-blue);
+						border-radius: 25px;
+					"
+				>
+					<div
+						style="
+							width: 50%;
+							background-color: var(--color-grün);
+							margin-top: 2em;
+							border-radius: 25px;
+							justify-content: center;
+							align-items: center;
+							display: flex;
+						"
+					>
+						<span
+							style="
+								color: black;
+								font-weight: 600;
+								padding-left: 1em;
+								padding-right: 1em;
+								padding-top: 0.5em;
+								padding-bottom: 0.5em;
+								font-size: 28px;
+								line-height: 55.2px;
+							"
+							>KI-BADGE-ASSISTENT NUTZEN</span
+						>
+					</div>
+					<div
+						style="
+							display: flex;
+							justify-content: space-between;
+							width: 100%;
+							padding: 4em;
+							margin-left: 2em;
+						"
+					>
+						<div style="display: flex; flex-direction: column">
+							<h2 style="color: #ffffff">Meine inhaltliche Beschreibung</h2>
+							<textarea style="background-color: white; border-radius: 10px"
+                                [(ngModel)]=aiCompetenciesDescription
+                                [ngModelOptions]="{standalone: true}"
+                                maxlength=7000> </textarea>
+							<div style="color: white">
+								<label for="kursdauer"> Dauer des Kurses</label>
+								<div style="display: flex; gap: 2em">
+									<input
+										style="width: 4em; background-color: white"
+										type="number"
+										id="kursdauer"
+										name="kursdauer"
+										value="170"
+									/>
+									<span>Minuten</span>
+								</div>
+								<button
+									class="button"
+									style="
+										background-color: var(--color-grün);
+										color: var(--color-blue);
+										margin-top: 2em;
+									"
+                                    (click)=suggestCompetencies()
+                                    type=button
+								>
+									<span style="font-weight: 400">Passende</span>
+									<span style="font-weight: 700"> Kompetenzen vorschlagen </span>
+								</button>
+							</div>
+						</div>
+						<div style="width: 50%">
+							<h2 style="color: white">Passende Kompetenzen</h2>
+                            <div style="background-color: white; border-radius: 10px; width: 75%; padding: 1em" *ngIf="aiCompetenciesSuggestions.length == 0">
+								<p style="width: 100%;
+                                          font-style: italic;
+                                          white-space: pre-wrap;">Hier erscheinen passende Kompetenzen, sobald du die Beschreibung deines Lehrinhalts in das Textfeld links eingefügt hast und auf "Passende Kompetenzen vorschlagen" klickst.</p>
+							</div>
+                            <div *ngIf="aiCompetenciesSuggestions.length > 0">
+                                <ng-container *ngFor="let aiCompetency of badgeClassForm.controls.aiCompetencies.controls; let i = index">
+                                    <div style="background-color: white; border-radius: 10px; width: 75%; padding: 1em; margin: 0.5em;">
+                                        <p style="white-space: pre-wrap; font-weight: bold;">{{ aiCompetenciesSuggestions[i].preferred_label }}</p>
+                                        <label class="checkbox">
+                                            <input
+                                                    id="checkboxAiSkill$i"
+                                                    name="checkboxAiSkill$i"
+                                                    type="checkbox"
+                                                    [formControl]="aiCompetency.rawControlMap.selected"
+                                                    />
+                                            <span class="checkbox-x-text">Hinzufügen</span>
+                                        </label>
+                                        <bg-formfield-text
+                                                [control]="aiCompetency.rawControlMap.studyLoad"
+                                                label="Dauer Kompetenz- Erwerb (in Minuten)"
+                                                [fieldType]="'number'"
+                                                [errorMessage]="{
+                                                                required: 'Bitte gib die Dauer für den Erwerb der Kompetenz ein.'
+                                                                }"
+                                                ></bg-formfield-text>
+                                        <!--TODO: Hide this by default-->
+                                        <p style="width: 100%;
+                                                  font-style: italic;
+                                                  white-space: pre-wrap;">{{ aiCompetenciesSuggestions[i].description }} </p>
+                                    </div>
+                                </ng-container>
+							</div>
+						</div>
+					</div>
+				</div>
+			</li>
+			<hr style="border: 1px dashed var(--color-blue); margin-top: 2em; margin-bottom: 2em" />
+			<li>
+				<span style="font-size: 28px; line-height: 55.2px; color: var(--color-blue)"
+					>Händisch Kompetenzen hinzufügen</span
+				>
+				<p>
+					Alternativ oder ergänzend kannst du händisch Kompetenzen hinzufügen. Gerne kannst du als
+					Unterstützung die Suchfunktion von ESCO nutzen, um die passende Kompetenz zu finden und die
+					Informationen per copy&paste in die unten stehenden Felder übertragen.
+				</p>
+				<button style="margin-top: 2em; background-color: #492e98" class="button">
+					<a
+						style="color: white"
+						href="https://esco.ec.europa.eu/en/classification/skill_main"
+						target="_blank"
+						>Bring mich zu ESCO</a
+					>
+				</button>
+
+				<!-- TODO: display of competency fields when no competencies are present -->
+
+				<!-- <ng-container *ngIf="badgeClassForm.controls.competencies.controls.length === 0; else competencyLoop">
+					<div
+						style="
+							border: 2px solid;
+							border-radius: 25px;
+							border-color: var(--color-blue);
+							padding: 2em;
+							margin-top: 2em;
+						"
+					>
+						<div style="display: flex; justify-content: space-around">
+							<bg-formfield-text
+								[control]="badgeClassForm.controls.competencies.controls.name"
+								label="Kompetenz-Titel"
+								[fieldType]="'text'"
+								[errorMessage]="{
+									required: 'Bitte gib den Titel der Kompetenz ein.'
+								}"
+							></bg-formfield-text>
+							<bg-formfield-text
+								[control]="badgeClassForm.controls.competencies.controls.rawControlMap.studyLoad"
+								label="Dauer Kompetenz- Erwerb (in Minuten)"
+								[fieldType]="'number'"
+								[errorMessage]="{
+									required: 'Bitte gib die Dauer für den Erwerb der Kompetenz ein.'
+								}"
+							></bg-formfield-text>
+							<bg-formfield-select
+								ariaLabel="Wähle eine Kompetenz-Kategorie"
+								[control]="badgeClassForm.controls.competencies.controls.rawControlMap.category"
+								[label]="'Kategorie'"
+								[placeholder]="'Kategorie wählen'"
+								[optionMap]="competencyCategoryOptions"
+								[errorMessage]="{
+									required: 'Bitte wähle die Kategorie der Kompetenz aus.'
+								}"
+							></bg-formfield-select>
+						</div>
+						<bg-formfield-text
+							style="margin-left: 2em; margin-top: 2em; margin-right: 2em"
+							[control]="badgeClassForm.controls.competencies.controls.rawControlMap.description"
+							label="Kompetenz Beschreibung"
+							id="competency_description_input"
+							placeholder="Kurze Beschreibung der Kompetenz"
+							[errorMessage]="{ required: 'Bitte gib eine Beschreibung ein' }"
+							[multiline]="true"
+						></bg-formfield-text>
+						<bg-formfield-text
+							style="margin-left: 2em; margin-top: 2em; margin-right: 2em"
+							[control]="competencybadgeClassForm.controls.competencies.controls.rawControlMap.escoID"
+							label="Esco Identifier"
+							id="competency_description_input"
+							placeholder="z.B. esco/skill/00090cc1-1f27-439e-a4e0-19a87a501bfc"
+							[errorMessage]="{ required: 'Bitte gib eine Esco ID ein' }"
+						></bg-formfield-text>
+						<div class="l-flex l-flex-1x l-flex-justifybetween u-margin-bottom2x" style="margin-top: 2em">
+							<button
+								class="button"
+								style="background-color: var(--color-grün); color: var(--color-blue)"
+							>
+								Hinzufügen
+							</button>
+							<button
+								*ngIf="badgeClassForm.controls.competencies.controls.length > 0"
+								type="button"
+								(click)="removeCompetency(competency)"
+								class="u-text-link"
+							>
+								Remove
+							</button>
+						</div>
+					</div>
+				</ng-container> -->
+
+				<!-- <ng-template #competencyLoop> -->
+				<ng-container *ngFor="let competency of badgeClassForm.controls.competencies.controls; let i = index">
+					<div
+						style="
+							border: 2px solid;
+							border-radius: 25px;
+							border-color: var(--color-blue);
+							padding: 2em;
+							margin-top: 2em;
+						"
+					>
+						<div style="display: flex; justify-content: space-around">
+							<bg-formfield-text
+								[control]="competency.rawControlMap.name"
+								label="Kompetenz-Titel"
+								[fieldType]="'text'"
+								[errorMessage]="{
+									required: 'Bitte gib den Titel der Kompetenz ein.'
+								}"
+							></bg-formfield-text>
+							<bg-formfield-text
+								[control]="competency.rawControlMap.studyLoad"
+								label="Dauer Kompetenz- Erwerb (in Minuten)"
+								[fieldType]="'number'"
+								[errorMessage]="{
+									required: 'Bitte gib die Dauer für den Erwerb der Kompetenz ein.'
+								}"
+							></bg-formfield-text>
+							<bg-formfield-select
+								ariaLabel="Wähle eine Kompetenz-Kategorie"
+								[control]="competency.rawControlMap.category"
+								[label]="'Kategorie'"
+								[placeholder]="'Kategorie wählen'"
+								[optionMap]="competencyCategoryOptions"
+								[errorMessage]="{
+									required: 'Bitte wähle die Kategorie der Kompetenz aus.'
+								}"
+							></bg-formfield-select>
+						</div>
+						<bg-formfield-text
+							style="margin-left: 2em; margin-top: 2em; margin-right: 2em"
+							[control]="competency.rawControlMap.description"
+							label="Kompetenz Beschreibung"
+							id="competency_description_input"
+							placeholder="Kurze Beschreibung der Kompetenz"
+							[errorMessage]="{ required: 'Bitte gib eine Beschreibung ein' }"
+							[multiline]="true"
+						></bg-formfield-text>
+						<bg-formfield-text
+							style="margin-left: 2em; margin-top: 2em; margin-right: 2em"
+							[control]="competency.rawControlMap.escoID"
+							label="Esco Identifier"
+							id="competency_description_input"
+							placeholder="z.B. esco/skill/00090cc1-1f27-439e-a4e0-19a87a501bfc"
+						></bg-formfield-text>
+						<div class="l-flex l-flex-1x l-flex-justifybetween u-margin-bottom2x" style="margin-top: 2em">
+							<!-- TODO: clarify which button will be used to add competencies -->
+
+							<!-- <button
+								class="button"
+								type="button"
+								style="background-color: var(--color-grün); color: var(--color-blue)"
+							>
+								Hinzufügen
+							</button> -->
+
+							<button
+								*ngIf="badgeClassForm.controls.competencies.controls.length > 0"
+								type="button"
+								(click)="removeCompetency(competency)"
+								class="u-text-link"
+							>
+								Entfernen
+							</button>
+						</div>
+					</div>
+				</ng-container>
+				<!-- </ng-template> -->
+				<div class="l-stack l-stack-right u-margin-top2x">
+					<button (click)="addCompetency()" type="button" class="button button-secondary">
+						Kompetenz hinzufügen
+					</button>
+				</div>
+			</li>
+		</ul>
+	</div>
+
 	<!-- Criteria Panel -->
-	<div class="formsection">
+	<div class="formsection" style="border-radius: 25px; background-color: #f1f0ff">
 		<div class="formsection-x-title">
 			<h2 class="u-text-dark2">
 				Kriterien
@@ -132,7 +531,7 @@
 	</div>
 
 	<!-- Criteria Panel -->
-	<div class="formsection">
+	<!-- <div class="formsection">
 		<div class="formsection-x-title">
 			<h2 class="u-text-dark2">Dauer</h2>
 		</div>
@@ -218,10 +617,10 @@
 				></bg-formfield-select>
 			</div>
 		</div>
-	</div>
+	</div> -->
 
 	<!-- alignments -->
-	<div *ngIf="alignmentsEnabled" class="formsection">
+	<div class="formsection" *ngIf="alignmentsEnabled">
 		<div class="formsection-x-title">
 			<h2 class="u-text-dark2">
 				Verknüpfung
@@ -316,77 +715,6 @@
 		</div>
 	</div>
 
-	<!-- tags -->
-	<div *ngIf="tagsEnabled" class="formsection">
-		<div class="formsection-x-title">
-			<h2 class="u-text-dark2">
-				Tags
-				<span>(Optional)</span>
-			</h2>
-			<button type="button" (click)="disableTags()" class="buttonicon buttonicon-link">
-				<svg icon="icon_close"></svg>
-				<span class="visuallyhidden">Close</span>
-			</button>
-		</div>
-
-		<div class="formsection-x-help">
-			<h3 class="u-text-body-bold">Was sind Tags?</h3>
-			<p class="u-text u-margin-top1x u-margin-bottom2x">
-				Tags sind eine optionale Art und Weise eine Badge zu beschreiben. Tags helfen bei der Suche von Badges
-				zu bestimmten Themen.
-			</p>
-		</div>
-		<div class="formsection-x-body">
-			<div class="l-tags">
-				<div *ngFor="let tag of tags" class="tag tag-withclose">
-					{{ tag }}
-					<button class="buttonicon buttonicon-link">
-						<svg icon="icon_close" (click)="removeTag(tag)"></svg>
-						<span class="visuallyhidden">Löschen</span>
-					</button>
-				</div>
-			</div>
-
-			<div class="forminput forminput-withbutton forminput-light1 u-width-formsmall u-margin-top3x">
-				<label class="forminput-x-label visuallyhidden" for="addtag">Add Tag</label>
-				<div class="forminput-x-inputs">
-					<div class="ng-autocomplete">
-						<ng-autocomplete
-							name="addtag"
-							id="addtag"
-							#newTagInput
-							maxlength="50"
-							[data]="existingTags"
-							[isLoading]="existingTagsLoading"
-							searchKeyword="name"
-							placeholder="Neuer Tag..."
-							(keypress)="handleTagInputKeyPress($event)"
-							[itemTemplate]="itemTemplate"
-							[notFoundTemplate]="notFoundTemplate"
-						>
-						</ng-autocomplete>
-
-						<ng-template #itemTemplate let-item>
-							<a [innerHTML]="item.name"></a>
-						</ng-template>
-
-						<ng-template #notFoundTemplate let-notFound>
-							<div>Dieser Tag existiert noch nicht.</div>
-						</ng-template>
-					</div>
-					<!--The additional style attribute here is needed to
-                        align the button with the autocomplete input.-->
-					<div class="forminput-x-button" style="margin-top: var(--gridspacing)">
-
-						<button type="button" (click)="addTag()" class="button button-secondary button-informinput">
-							Hinzufügen
-						</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
 	<!-- expiration -->
 	<div *ngIf="expirationEnabled" class="formsection">
 		<div class="formsection-x-title">
@@ -453,20 +781,6 @@
 					class="l-flex l-flex-justifybetween l-flex-aligncenter border border-top border-light3 u-padding-yaxis2x"
 				>
 					<div class="l-flex l-flex-2x">
-						<svg class="icon icon-dark4" width="24px" viewBox="0 0 24 24" icon="icon_tags"></svg>
-						<p class="u-text-body-semibold u-text-dark2">Tags</p>
-					</div>
-					<button type="button" (click)="enableTags()" *ngIf="!tagsEnabled" class="u-text-link-small">
-						hinzufügen
-					</button>
-					<button type="button" *ngIf="tagsEnabled" disabled class="u-text-link-small u-text-light4">
-						hinzugefügt
-					</button>
-				</li>
-				<li
-					class="l-flex l-flex-justifybetween l-flex-aligncenter border border-top border-light3 u-padding-yaxis2x"
-				>
-					<div class="l-flex l-flex-2x">
 						<svg class="icon icon-dark4" width="24px" viewBox="0 0 24 24" icon="icon_pending"></svg>
 						<p class="u-text-body-semibold u-text-dark2">Gültigkeit</p>
 					</div>
@@ -486,15 +800,6 @@
 		</div>
 	</div>
 
-	<div class="formsection formsection-nohelp">
-		<div class="formsection-x-body">
-			<a href="https://openbadges.org/" class="u-text-outlink">
-				Finde mehr über Open Badges heraus
-				<svg icon="icon_external_link"></svg>
-			</a>
-		</div>
-	</div>
-
 	<div class="l-stack l-stack-right u-margin-top3x">
 		<button
 			type="button"
@@ -502,16 +807,17 @@
 			(click)="cancelClicked()"
 			class="button button-secondary"
 		>
-			Cancel
+			Abbrechen
 		</button>
 		<button
 			type="submit"
 			class="button"
+			style="background-color: #492e98"
 			[disabled]="!!savePromise"
 			[loading-promises]="[savePromise]"
 			loading-message="{{ submittingText }}"
 		>
-			{{ submitText }}
+			Badge erstellen
 		</button>
 	</div>
 </form>
