@@ -32,6 +32,8 @@ export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutable
 	readonly noBadgesImageUrl = '../../../../assets/@concentricsky/badgr-style/dist/images/image-empty-backpack.svg';
 	readonly badgeLoadingImageUrl = '../../../../breakdown/static/images/badge-loading.svg';
 	readonly badgeFailedImageUrl = '../../../../breakdown/static/images/badge-failed.svg';
+	readonly noCollectionsImageUrl =
+		'../../../../assets/@concentricsky/badgr-style/dist/images/image-empty-collection.svg';
 
 	@ViewChild('addBadgeDialog')
 	addBadgeDialog: AddBadgeDialogComponent;
