@@ -9,14 +9,14 @@
 			</div>
 		</div>-->
 		<div class="l-containerxaxis topbar-x-wrap">
-			<div style="display: flex; flex-direction: column">
+			<div class="tw-flex tw-flex-col">
 				<h2 class="topbar-x-heading">Willkommen in deinem Rucksack</h2>
 				<p class="topbar-x-subheading">
 					Hier siehst du deine gesammelten und bei OEB hochgeladenen Badges. Du kannst eigene
 					<strong> Sammlungen </strong> anlegen, um die Badges darin zu organisieren und mit anderen zu
 					teilen.
 				</p>
-				<p class="topbar-x-subheading" style="color: red">
+				<p class="topbar-x-subheading tw-text-[var(--color-red)]">
 					In der <strong> Kompetenz-Ansicht </strong> siehst du, auf welche Profile deine Badges einzahlen.
 				</p>
 			</div>
@@ -156,7 +156,7 @@
 
 			<!-- No badges, empty state! -->
 			<section class="emptysection l-emptysection" *ngIf="allBadges.length == 0 && currentTabId === 'badge'">
-				<span style="font-style: italic">Du hast noch keine Badges gesammelt.</span>
+				<span class="tw-italic">Du hast noch keine Badges gesammelt.</span>
 			</section>
 
 			<!-- Grid View -->
@@ -215,7 +215,7 @@
 							<th class="datatable-x-cell" scope="col">Badge</th>
 							<th class="datatable-x-cell" scope="col">{{ 'RecBadge.institution' | translate }}</th>
 							<th class="datatable-x-cell" scope="col">Vergeben am</th>
-							<th class="datatable-x-cell" scope="col"><span class="visuallyhidden">Actions</span></th>
+							<th class="datatable-x-cell" scope="col"><span class="tw-sr-only">Actions</span></th>
 						</tr>
 					</thead>
 					<tbody class="datatable-x-body">
@@ -293,7 +293,7 @@
 		<!-- Competency-View -->
 		<ng-template [ngIf]="currentTabId === 'competency'">
 			<div class="emptysection l-emptysection">
-				<span style="font-style: italic">Du hast noch keine Kompetenzen gesammelt.</span>
+				<span class="tw-italic">Du hast noch keine Kompetenzen gesammelt.</span>
 			</div>
 		</ng-template>
 
