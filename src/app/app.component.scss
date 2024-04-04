@@ -5,9 +5,11 @@
 .flex-wrap {
 	flex-wrap: wrap;
 }
-.video-container {
-	height: 500px;
+.video-container iframe,
+.video-container object,
+.video-container embed {
 	width: 100%;
+	height: 100%;
 	padding-bottom: 5rem;
 }
 
