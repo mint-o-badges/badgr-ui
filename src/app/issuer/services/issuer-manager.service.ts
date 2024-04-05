@@ -12,19 +12,19 @@ export class IssuerManager {
 	issuersList = new StandaloneEntitySet<Issuer, ApiIssuer>(
 		(apiModel) => new Issuer(this.commonEntityManager),
 		(apiModel) => apiModel.json.id,
-		() => this.issuerApiService.listIssuers()
+		() => this.issuerApiService.listIssuers(),
 	);
 
 	allIssuersList = new StandaloneEntitySet<Issuer, ApiIssuer>(
 		(apiModel) => new Issuer(this.commonEntityManager),
 		(apiModel) => apiModel.json.id,
-		() => this.issuerApiService.listAllIssuers()
+		() => this.issuerApiService.listAllIssuers(),
 	);
 
 	constructor(
 		public issuerApiService: IssuerApiService,
 		@Inject(forwardRef(() => CommonEntityManager))
-		public commonEntityManager: CommonEntityManager
+		public commonEntityManager: CommonEntityManager,
 	) {}
 
 	createIssuer(initialIssuer: ApiIssuerForCreation): Promise<Issuer> {
@@ -48,7 +48,9 @@ export class IssuerManager {
 	}
 
 	deleteIssuer(issuerSlug: IssuerSlug, issuerToDelete: Issuer): Promise<boolean> {
-		return this.issuerApiService.deleteIssuer(issuerSlug).then((response) => this.issuersList.remove(issuerToDelete));
+		return this.issuerApiService
+			.deleteIssuer(issuerSlug)
+			.then((response) => this.issuersList.remove(issuerToDelete));
 	}
 
 	issuerBySlug(issuerSlug: IssuerSlug): Promise<Issuer> {
@@ -57,7 +59,8 @@ export class IssuerManager {
 			.toPromise()
 			.then(
 				(issuers) =>
-					issuers.find((i) => i.slug === issuerSlug) || this.throwError(`Issuer Slug '${issuerSlug}' not found`)
+					issuers.find((i) => i.slug === issuerSlug) ||
+					this.throwError(`Issuer Slug '${issuerSlug}' not found`),
 			);
 	}
 

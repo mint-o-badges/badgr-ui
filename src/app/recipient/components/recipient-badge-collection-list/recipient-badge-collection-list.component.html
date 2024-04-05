@@ -6,7 +6,8 @@
 			<h2 class="topbar-x-heading">
 				{{ 'General.collections' | translate }}
 				<span class="topbar-x-internalheading" *ngIf="!!badgeCollections">
-					{{ badgeCollections.length }} {{ badgeCollections.length == 1 ? "{{ 'General.collection' | translate }}" : 'Sammlungen' }}
+					{{ badgeCollections.length }}
+					{{ badgeCollections.length == 1 ? "{{ 'General.collection' | translate }}" : 'Sammlungen' }}
 				</span>
 			</h2>
 			<button
@@ -53,7 +54,7 @@
 					<img
 						*ngFor="
 							let entry of collection.badgeEntries.entities
-								| slice: 0:(collection.badgeEntries.length > 3 ? 3 : 4)
+								| slice: 0 : (collection.badgeEntries.length > 3 ? 3 : 4)
 						"
 						class="badgeimage badgeimage-48px"
 						[loaded-src]="entry.badge?.image"

@@ -1,19 +1,17 @@
-import {Component, ElementRef, Renderer2, ViewChild} from '@angular/core';
-import {RecipientBadgeManager} from '../../services/recipient-badge-manager.service';
-import {FormBuilder} from '@angular/forms';
-import {UrlValidator} from '../../../common/validators/url.validator';
-import {JsonValidator} from '../../../common/validators/json.validator';
-import {MessageService} from '../../../common/services/message.service';
-import {BadgrApiFailure} from '../../../common/services/api-failure';
-import {BaseDialog} from '../../../common/dialogs/base-dialog';
-import {preloadImageURL} from '../../../common/util/file-util';
-import {FormFieldText} from '../../../common/components/formfield-text';
-import {TypedFormControl, typedFormGroup} from '../../../common/util/typed-forms';
+import { Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
+import { RecipientBadgeManager } from '../../services/recipient-badge-manager.service';
+import { FormBuilder } from '@angular/forms';
+import { UrlValidator } from '../../../common/validators/url.validator';
+import { JsonValidator } from '../../../common/validators/json.validator';
+import { MessageService } from '../../../common/services/message.service';
+import { BadgrApiFailure } from '../../../common/services/api-failure';
+import { BaseDialog } from '../../../common/dialogs/base-dialog';
+import { preloadImageURL } from '../../../common/util/file-util';
+import { FormFieldText } from '../../../common/components/formfield-text';
+import { TypedFormControl, typedFormGroup } from '../../../common/util/typed-forms';
 import { TranslateService } from '@ngx-translate/core';
 
-
-type AddBadgeDialogTabName = "upload" | "url" | "json";
-
+type AddBadgeDialogTabName = 'upload' | 'url' | 'json';
 
 @Component({
 	selector: 'add-badge-dialog',
@@ -25,15 +23,14 @@ export class AddBadgeDialogComponent extends BaseDialog {
 	readonly pasteBadgeImageUrl = preloadImageURL('../../../../breakdown/static/images/image-uplodBadgeUrl.svg');
 
 	addRecipientBadgeForm = typedFormGroup()
-		.addControl("image", null)
-		.addControl("url", "", UrlValidator.validUrl)
-		.addControl("assertion", "", JsonValidator.validJson)
-	;
+		.addControl('image', null)
+		.addControl('url', '', UrlValidator.validUrl)
+		.addControl('assertion', '', JsonValidator.validJson);
 
 	showAdvance = false;
 	formError: string;
 
-	currentTab: AddBadgeDialogTabName = "upload";
+	currentTab: AddBadgeDialogTabName = 'upload';
 
 	options: AddBadgeDialogOptions = AddBadgeDialogComponent.defaultOptions;
 	resolveFunc: () => void = () => {};
@@ -41,10 +38,10 @@ export class AddBadgeDialogComponent extends BaseDialog {
 
 	badgeUploadPromise: Promise<unknown>;
 
-	@ViewChild("jsonField")
+	@ViewChild('jsonField')
 	private jsonField: FormFieldText;
 
-	@ViewChild("urlField")
+	@ViewChild('urlField')
 	private urlField: FormFieldText;
 
 	constructor(
@@ -53,7 +50,7 @@ export class AddBadgeDialogComponent extends BaseDialog {
 		protected recipientBadgeManager: RecipientBadgeManager,
 		protected formBuilder: FormBuilder,
 		protected messageService: MessageService,
-		private translate: TranslateService
+		private translate: TranslateService,
 	) {
 		super(componentElem, renderer);
 	}
@@ -74,9 +71,7 @@ export class AddBadgeDialogComponent extends BaseDialog {
 	 * @param customOptions Options for the dialog
 	 * @returns {Promise<void>}
 	 */
-	openDialog(
-		customOptions: AddBadgeDialogOptions
-	): Promise<void> {
+	openDialog(customOptions: AddBadgeDialogOptions): Promise<void> {
 		this.options = Object.assign({}, AddBadgeDialogComponent.defaultOptions, customOptions);
 		this.addRecipientBadgeForm.reset();
 		this.showModal();
@@ -104,12 +99,11 @@ export class AddBadgeDialogComponent extends BaseDialog {
 		if (this.formHasBadgeValue && this.addRecipientBadgeForm.valid) {
 			this.badgeUploadPromise = this.recipientBadgeManager
 				.createRecipientBadge(formState)
-				.then(instance => {
+				.then((instance) => {
 					this.messageService.reportMajorSuccess(this.translate.instant('RecBadge.importedSuccessfully'));
 					this.closeDialog();
 				})
-				.catch(err => {
-
+				.catch((err) => {
 					let message = BadgrApiFailure.from(err).firstMessage;
 
 					// display human readable description of first error if provided by server
@@ -120,7 +114,7 @@ export class AddBadgeDialogComponent extends BaseDialog {
 							if (body && body.length > 0 && body[0].description) {
 								message = body[0].description;
 							}
-						} else if(jsonErr.length) {
+						} else if (jsonErr.length) {
 							message = jsonErr[0].result || jsonErr[0].description;
 						}
 					}
@@ -129,10 +123,10 @@ export class AddBadgeDialogComponent extends BaseDialog {
 						message
 							? this.translate.instant('RecBadge.uploadFailed') + message
 							: this.translate.instant('RecBadge.unknownError'),
-						err
+						err,
 					);
 				})
-				.catch(e => {
+				.catch((e) => {
 					this.closeModal();
 					this.rejectFunc(e);
 				});
@@ -143,13 +137,11 @@ export class AddBadgeDialogComponent extends BaseDialog {
 
 	controlUpdated(updatedControl: TypedFormControl<unknown>) {
 		// Clear the value from other controls
-		this.addRecipientBadgeForm.controlsArray.forEach(
-			control => {
-				if (control !== updatedControl) {
-					control.reset();
-				}
+		this.addRecipientBadgeForm.controlsArray.forEach((control) => {
+			if (control !== updatedControl) {
+				control.reset();
 			}
-		);
+		});
 	}
 
 	clearFormError() {

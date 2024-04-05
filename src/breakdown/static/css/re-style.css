@@ -1,50 +1,48 @@
-
 .u-width-formsmall {
-    box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 .fixed-imagefield {
-    position: fixed;
-    top: 0;
-    left: 5px;
-    z-index: 100;
+	position: fixed;
+	top: 0;
+	left: 5px;
+	z-index: 100;
 }
 
 .fixed-imagefield .forminput-x-label {
-    display: none;
+	display: none;
 }
 
 .maplibregl-popup-close-button {
-    right: 5px !important;
+	right: 5px !important;
 }
 
-
 .color {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    display: inline-block;
-    margin-right: 0.3em;
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	display: inline-block;
+	margin-right: 0.3em;
 }
 
 .cluster {
-    background: #ccc;
+	background: #ccc;
 }
 
 .schule {
-    background: #fbb03b;
+	background: #fbb03b;
 }
 
 .hochschule {
-    background: #e55e5e;
+	background: #e55e5e;
 }
 
 .andere {
-    background: #3bb2d0;
+	background: #3bb2d0;
 }
 
 .badgecard-x-issuer:hover {
-    text-decoration: underline;
+	text-decoration: underline;
 }
 
 /* the dialog background should fill the whole page */
@@ -58,5 +56,5 @@
  * should be in the front, in order to draw over the constraints
  * around it. */
 .autocomplete-container .suggestions-container {
-    z-index: -1
+	z-index: -1;
 }

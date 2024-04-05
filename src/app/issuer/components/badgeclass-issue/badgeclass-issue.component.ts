@@ -81,7 +81,7 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 		.addControl('notify_earner', true)
 		.addArray(
 			'evidence_items',
-			typedFormGroup().addControl('narrative', '').addControl('evidence_url', '').addControl('expiration', '')
+			typedFormGroup().addControl('narrative', '').addControl('evidence_url', '').addControl('expiration', ''),
 		);
 
 	badgeClass: BadgeClass;
@@ -135,7 +135,7 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 		protected configService: AppConfigService,
 		sessionService: SessionService,
 		router: Router,
-		route: ActivatedRoute
+		route: ActivatedRoute,
 	) {
 		super(router, route, sessionService);
 		title.setTitle(`Award Badge - ${this.configService.theme['serviceName'] || 'Badgr'}`);
@@ -171,7 +171,7 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 					this.issueForm.rawControlMap.expires.setValue(this.defaultExpiration);
 
 					this.title.setTitle(
-						`Award Badge - ${badgeClass.name} - ${this.configService.theme['serviceName'] || 'Badgr'}`
+						`Award Badge - ${badgeClass.name} - ${this.configService.theme['serviceName'] || 'Badgr'}`,
 					);
 				});
 		});
@@ -269,9 +269,9 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 				(error) => {
 					this.messageService.setMessage(
 						'Unable to award badge: ' + BadgrApiFailure.from(error).firstMessage,
-						'error'
+						'error',
 					);
-				}
+				},
 			)
 			.then(() => (this.issueBadgeFinished = null));
 	}

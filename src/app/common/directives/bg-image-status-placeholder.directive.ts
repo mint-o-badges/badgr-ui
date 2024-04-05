@@ -1,15 +1,14 @@
-import {Directive, ElementRef, Input, OnChanges} from '@angular/core';
+import { Directive, ElementRef, Input, OnChanges } from '@angular/core';
 
-const defaultLoadingImage = "../../../breakdown/static/images/image-placeholder.svg";
-const defaultErrorImage = "../../../breakdown/static/images/image-failed.svg";
+const defaultLoadingImage = '../../../breakdown/static/images/image-placeholder.svg';
+const defaultErrorImage = '../../../breakdown/static/images/image-failed.svg';
 
 @Directive({
 	// Note that to have webpack process these sources, we must add the attributes to webpack.common.js in the html loader section.
 	selector: '[loading-src],[loaded-src],[error-src]',
-	exportAs: "image-status-placeholder",
+	exportAs: 'image-status-placeholder',
 })
 export class BgImageStatusPlaceholderDirective implements OnChanges {
-
 	protected get loadingSrc(): string {
 		return this.loadingSrcAttr || defaultLoadingImage;
 	}
@@ -39,18 +38,16 @@ export class BgImageStatusPlaceholderDirective implements OnChanges {
 	failed = false;
 
 	loadingTimeout: number;
-	@Input("loading-src")
+	@Input('loading-src')
 	private loadingSrcAttr: string;
 
-	@Input("loaded-src")
+	@Input('loaded-src')
 	private loadedSrcAttr: string;
 
-	@Input("error-src")
+	@Input('error-src')
 	private errorSrcAttr: string;
 
-	constructor(
-		private elemRef: ElementRef
-	) {
+	constructor(private elemRef: ElementRef) {
 		this.image.onload = () => this.imageLoaded();
 		this.image.onerror = () => this.imageErrored();
 	}
@@ -88,14 +85,12 @@ export class BgImageStatusPlaceholderDirective implements OnChanges {
 				window.clearTimeout(this.loadingTimeout);
 				this.loadingTimeout = null;
 			}
-			this.loadingTimeout = window.setTimeout(
-				() => {
-					if (this.loading) {
-						this.elem.src = this.loadingSrc;
-					}
-					this.loadingTimeout = null;
-				}, 30
-			);
+			this.loadingTimeout = window.setTimeout(() => {
+				if (this.loading) {
+					this.elem.src = this.loadingSrc;
+				}
+				this.loadingTimeout = null;
+			}, 30);
 		} else if (this.failed) {
 			this.elem.src = this.errorSrc;
 		} else {

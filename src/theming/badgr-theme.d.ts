@@ -1,4 +1,3 @@
-
 export interface BadgrTheme {
 	/**
 	 * URL to redirect users who visit the root of the domain to, used as an "info page"
@@ -23,7 +22,7 @@ export interface BadgrTheme {
 	/**
 	 * Shows the "Powered by OSL" link
 	 */
-	showPoweredByOSL: boolean
+	showPoweredByOSL: boolean;
 
 	/**
 	 *
@@ -35,7 +34,7 @@ export interface BadgrTheme {
 	 */
 	providedBy?: {
 		name: string;
-		url: string
+		url: string;
 	};
 
 	/**
@@ -48,7 +47,7 @@ export interface BadgrTheme {
 	 */
 	termsOfServiceLink?: string;
 	privacyPolicyLink?: string;
-	
+
 	/**
 	 * Must agree to this when creating an Issuer
 	 */
@@ -101,9 +100,9 @@ export interface BadgrTheme {
 	 * properties
 	 */
 	cssCustomProps?: {
-		"--color-interactive1"?: string;
-		"--color-interactive2"?: string;
-		"--color-interactive2alpha50"?: string;
-		"--color-theme"?: string;
+		'--color-interactive1'?: string;
+		'--color-interactive2'?: string;
+		'--color-interactive2alpha50'?: string;
+		'--color-theme'?: string;
 	};
 }

@@ -1,5 +1,5 @@
-import {PublicApiBadgeAssertionWithBadgeClass} from "../app/public/models/public-api.model";
-import {generateEmbedHtml} from "./generate-embed-html";
+import { PublicApiBadgeAssertionWithBadgeClass } from '../app/public/models/public-api.model';
+import { generateEmbedHtml } from './generate-embed-html';
 
 const sha256 = require('tiny-sha256') as (message: string) => string;
 
@@ -13,29 +13,27 @@ export function setupEmbeddedBadges() {
 		const day = date.getDate();
 		const monthIndex = date.getMonth();
 		const year = date.getFullYear();
-		const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-		return monthNames[monthIndex] + ' ' + day + ", " + year;
+		const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+		return monthNames[monthIndex] + ' ' + day + ', ' + year;
 	}
 
-	const badges = document.getElementsByClassName("badgr-badge");
+	const badges = document.getElementsByClassName('badgr-badge');
 
 	for (let i = 0; i < badges.length; i++) {
 		const badge = badges[i];
 
-		const includeAwardDate = badge.getElementsByClassName("badgr-badge-date").length > 0;
-		const includeBadgeName = badge.getElementsByClassName("badgr-badge-name").length > 0;
-		const includeRecipientName = badge.getElementsByClassName("badgr-badge-recipient").length > 0;
-		const includeVerifyButton = badge.getElementsByClassName("badgr-badge-verify").length > 0;
+		const includeAwardDate = badge.getElementsByClassName('badgr-badge-date').length > 0;
+		const includeBadgeName = badge.getElementsByClassName('badgr-badge-name').length > 0;
+		const includeRecipientName = badge.getElementsByClassName('badgr-badge-recipient').length > 0;
+		const includeVerifyButton = badge.getElementsByClassName('badgr-badge-verify').length > 0;
 
-		const els = badge.getElementsByTagName("script");
-		const staticPrefix = (els.length > 0)
-			? els[0].getAttribute("src").replace(/[^/]+$/, '')
-			: "https://badgr.io/";
+		const els = badge.getElementsByTagName('script');
+		const staticPrefix = els.length > 0 ? els[0].getAttribute('src').replace(/[^/]+$/, '') : 'https://badgr.io/';
 
-		const as = badge.getElementsByTagName("a");
+		const as = badge.getElementsByTagName('a');
 		if (as.length > 0) {
 			const a = as[0];
-			const badgeUrl = a.getAttribute("href");
+			const badgeUrl = a.getAttribute('href');
 			const expandBadgeUrl = badgeUrl + (badgeUrl.indexOf('?') === -1 ? '?' : '&') + 'expand=badge';
 
 			const xhr = new XMLHttpRequest();
@@ -46,24 +44,25 @@ export function setupEmbeddedBadges() {
 					const data = JSON.parse(xhr.responseText) as PublicApiBadgeAssertionWithBadgeClass;
 
 					if (data.revoked) {
-						badge.innerHTML = "This assertion has been revoked. " + (data.revocationReason || "");
+						badge.innerHTML = 'This assertion has been revoked. ' + (data.revocationReason || '');
 						return;
 					}
 
-					const recipientName = ('extensions:recipientProfile' in data) ? data['extensions:recipientProfile']['name'] : undefined;
+					const recipientName =
+						'extensions:recipientProfile' in data ? data['extensions:recipientProfile']['name'] : undefined;
 
 					let verified = false;
-					if (data.recipient.type === "url") {
+					if (data.recipient.type === 'url') {
 						const currentLocation = window.location.toString();
 						if (data.recipient.hashed) {
-							const parts = data.recipient.identity.split("$", 2);
+							const parts = data.recipient.identity.split('$', 2);
 							const expected = parts[1];
 							const hash = messageToSha256HexString(currentLocation + data.recipient.salt);
 							if (hash === expected) {
 								verified = true;
 							}
 						} else {
-							verified = (data.recipient.identity === currentLocation);
+							verified = data.recipient.identity === currentLocation;
 						}
 					}
 
@@ -82,7 +81,10 @@ export function setupEmbeddedBadges() {
 						staticPrefix,
 					});
 					badge.innerHTML = blockquote.innerHTML;
-					badge.setAttribute("style", 'border: none; font-family: Helvetica, Roboto, \"Segoe UI\", Calibri, sans-serif; border-radius: 4px; max-width: 500px; margin: 0; padding: 0px; position: unset; quotes: unset;');
+					badge.setAttribute(
+						'style',
+						'border: none; font-family: Helvetica, Roboto, "Segoe UI", Calibri, sans-serif; border-radius: 4px; max-width: 500px; margin: 0; padding: 0px; position: unset; quotes: unset;',
+					);
 				}
 			};
 			xhr.send();

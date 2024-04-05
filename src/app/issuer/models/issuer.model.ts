@@ -16,7 +16,7 @@ export class Issuer extends ManagedEntity<ApiIssuer, IssuerRef> {
 		this,
 		() => this.apiModel.staff,
 		(apiEntry) => new IssuerStaffMember(this),
-		IssuerStaffMember.urlFromApiModel
+		IssuerStaffMember.urlFromApiModel,
 	);
 
 	protected buildApiRef(): ApiEntityRef {
@@ -29,7 +29,7 @@ export class Issuer extends ManagedEntity<ApiIssuer, IssuerRef> {
 	constructor(
 		commonManager: CommonEntityManager,
 		initialEntity: ApiIssuer = null,
-		onUpdateSubscribed: () => void = undefined
+		onUpdateSubscribed: () => void = undefined,
 	) {
 		super(commonManager, onUpdateSubscribed);
 
@@ -128,7 +128,7 @@ export class Issuer extends ManagedEntity<ApiIssuer, IssuerRef> {
 
 			return (
 				this.staff.entities.find(
-					(staffMember) => !!emails.find((profileEmail) => profileEmail.email === staffMember.email)
+					(staffMember) => !!emails.find((profileEmail) => profileEmail.email === staffMember.email),
 				) || null
 			);
 		} else {

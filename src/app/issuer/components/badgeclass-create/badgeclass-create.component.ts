@@ -26,10 +26,10 @@ export class BadgeClassCreateComponent extends BaseAuthenticatedRoutableComponen
 	breadcrumbLinkEntries: LinkEntry[] = [];
 	scrolled = false;
 	copiedBadgeClass: BadgeClass = null;
-    /**
-     * Indicates wether the "copiedBadgeClass" is a forked copy, or a 1:1 copy
-     */
-    isForked = false;
+	/**
+	 * Indicates wether the "copiedBadgeClass" is a forked copy, or a 1:1 copy
+	 */
+	isForked = false;
 
 	badgesLoaded: Promise<unknown>;
 	badges: BadgeClass[] = null;
@@ -46,7 +46,7 @@ export class BadgeClassCreateComponent extends BaseAuthenticatedRoutableComponen
 		protected issuerManager: IssuerManager,
 		protected badgeClassService: BadgeClassManager,
 		private configService: AppConfigService,
-		protected dialogService: CommonDialogsService
+		protected dialogService: CommonDialogsService,
 	) {
 		super(router, route, sessionService);
 		title.setTitle(`Create Badge - ${this.configService.theme['serviceName'] || 'Badgr'}`);
@@ -63,16 +63,13 @@ export class BadgeClassCreateComponent extends BaseAuthenticatedRoutableComponen
 			this.badgesLoaded = new Promise<void>((resolve, reject) => {
 				this.badgeClassService.allPublicBadges$.subscribe(
 					(publicBadges) => {
-						this.badges = publicBadges
+						this.badges = publicBadges;
 						resolve();
 					},
 					(error) => {
-						this.messageService.reportAndThrowError(
-							`Failed to load badges`,
-							error
-						);
+						this.messageService.reportAndThrowError(`Failed to load badges`, error);
 						resolve();
-					}
+					},
 				);
 			});
 		});
@@ -88,8 +85,8 @@ export class BadgeClassCreateComponent extends BaseAuthenticatedRoutableComponen
 			(error) =>
 				this.messageService.reportAndThrowError(
 					`Unable to create Badge Class: ${BadgrApiFailure.from(error).firstMessage}`,
-					error
-				)
+					error,
+				),
 		);
 	}
 	creationCanceled() {
@@ -108,11 +105,12 @@ export class BadgeClassCreateComponent extends BaseAuthenticatedRoutableComponen
 	}
 
 	copyBadge() {
-		this.dialogService.copyBadgeDialog.openDialog(this.badges)
+		this.dialogService.copyBadgeDialog
+			.openDialog(this.badges)
 			.then((data: BadgeClass | void) => {
 				if (data) {
-					this.copiedBadgeClass = data
-                    this.isForked = false;
+					this.copiedBadgeClass = data;
+					this.isForked = false;
 				}
 			})
 			.catch((error) => {
@@ -121,11 +119,12 @@ export class BadgeClassCreateComponent extends BaseAuthenticatedRoutableComponen
 	}
 
 	forkBadge() {
-		this.dialogService.forkBadgeDialog.openDialog(this.badges)
+		this.dialogService.forkBadgeDialog
+			.openDialog(this.badges)
 			.then((data: BadgeClass | void) => {
 				if (data) {
-					this.copiedBadgeClass = data
-                    this.isForked = true;
+					this.copiedBadgeClass = data;
+					this.isForked = true;
 				}
 			})
 			.catch((error) => {

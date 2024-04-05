@@ -6,11 +6,8 @@
  * @param params A map of param key-value(s) pairs to add.
  * @returns The modified URL
  */
-export function addQueryParamsToUrl(
-	url: string,
-	params: {[key: string]: ParamValueType | ParamValueType[]}
-) {
-	const hashIndex = url.indexOf("#");
+export function addQueryParamsToUrl(url: string, params: { [key: string]: ParamValueType | ParamValueType[] }) {
+	const hashIndex = url.indexOf('#');
 	const hash = hashIndex < 0 ? null : url.substr(hashIndex);
 
 	if (hash) {
@@ -18,13 +15,15 @@ export function addQueryParamsToUrl(
 	}
 
 	for (const name of Object.getOwnPropertyNames(params)) {
-		const values: ParamValueType[] = Array.isArray(params[name]) ? (params[name] as ParamValueType[]) : [ params[name] as ParamValueType ];
+		const values: ParamValueType[] = Array.isArray(params[name])
+			? (params[name] as ParamValueType[])
+			: [params[name] as ParamValueType];
 
 		for (const value of values) {
-			if (url.indexOf("?") >= 0) url += "&";
-			else url += "?";
+			if (url.indexOf('?') >= 0) url += '&';
+			else url += '?';
 
-			url += encodeURIComponent(name) + "=" + encodeURIComponent(value.toString());
+			url += encodeURIComponent(name) + '=' + encodeURIComponent(value.toString());
 		}
 	}
 
@@ -42,10 +41,7 @@ export function addQueryParamsToUrl(
  * @param params
  * @returns {string}
  */
-export function replaceUrlQueryParams(
-	url: string,
-	params: {[key: string]: ParamValueType | ParamValueType[]}
-) {
+export function replaceUrlQueryParams(url: string, params: { [key: string]: ParamValueType | ParamValueType[] }) {
 	return addQueryParamsToUrl(stripQueryParamsFromUrl(url), params);
 }
 
@@ -55,14 +51,12 @@ export function replaceUrlQueryParams(
  * @param {string} url
  * @returns {string}
  */
-export function stripQueryParamsFromUrl(
-	url: string
-) {
-	const questionIndex = url.indexOf("?");
-	const hashIndex = url.indexOf("#");
+export function stripQueryParamsFromUrl(url: string) {
+	const questionIndex = url.indexOf('?');
+	const hashIndex = url.indexOf('#');
 
 	if (questionIndex >= 0) {
-		return url.substr(0, questionIndex) + (hashIndex >= 0 ? url.substr(hashIndex) : "");
+		return url.substr(0, questionIndex) + (hashIndex >= 0 ? url.substr(hashIndex) : '');
 	} else {
 		return url;
 	}

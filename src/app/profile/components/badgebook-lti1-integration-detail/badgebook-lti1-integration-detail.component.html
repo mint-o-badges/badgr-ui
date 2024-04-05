@@ -3,42 +3,59 @@
 <header class="topbar topbar-withimage">
 	<div class="l-containerxaxis">
 		<div class="topbar-x-wrap">
-			<img class="topbar-x-image" [src]="integration?.image" alt="" width="70px" srcset="">
-			<div class="topbar-x-heading">
-				Canvas LTI
-			</div>
+			<img class="topbar-x-image" [src]="integration?.image" alt="" width="70px" srcset="" />
+			<div class="topbar-x-heading">Canvas LTI</div>
 			<div class="topbar-x-subheading">
-				Badgr connects with Canvas to automatically award
-				badges to students as they complete their work.
+				Badgr connects with Canvas to automatically award badges to students as they complete their work.
 			</div>
 		</div>
 	</div>
 </header>
 
-<div class="l-containerxaxis l-containeryaxis" *bgAwaitPromises="[ integrationPromise ]">
-
+<div class="l-containerxaxis l-containeryaxis" *bgAwaitPromises="[integrationPromise]">
 	<div class="u-width-form">
 		<div class="forminput forminput-hasiconleft forminput-withbutton">
 			<label class="forminput-x-label" for="forminput1">Your Consumer Key</label>
 			<div class="forminput-x-inputs u-margin-top1x">
 				<svg class="forminput-x-icon" icon="icon_link"></svg>
-				<input type="text" id="forminput1" type="text" [value]="integration.consumerKey" readonly #consumerKey>
+				<input
+					type="text"
+					id="forminput1"
+					type="text"
+					[value]="integration.consumerKey"
+					readonly
+					#consumerKey
+				/>
 				<div class="forminput-x-button">
-					<button class="button button-secondary button-informinput" type="button" [click-to-copy]="consumerKey">
+					<button
+						class="button button-secondary button-informinput"
+						type="button"
+						[click-to-copy]="consumerKey"
+					>
 						Copy
 					</button>
 				</div>
 			</div>
 		</div>
 
-
 		<div class="forminput forminput-hasiconleft forminput-withbutton u-margin-top2x">
 			<label class="forminput-x-label" for="forminput2">Your Shared Secret</label>
 			<div class="forminput-x-inputs u-margin-top1x">
 				<svg class="forminput-x-icon" icon="icon_link"></svg>
-				<input type="text" id="forminput2" type="text" [value]="integration.sharedSecret" readonly #sharedSecret>
+				<input
+					type="text"
+					id="forminput2"
+					type="text"
+					[value]="integration.sharedSecret"
+					readonly
+					#sharedSecret
+				/>
 				<div class="forminput-x-button">
-					<button class="button button-secondary button-informinput" type="button" [click-to-copy]="sharedSecret">
+					<button
+						class="button button-secondary button-informinput"
+						type="button"
+						[click-to-copy]="sharedSecret"
+					>
 						Copy
 					</button>
 				</div>
@@ -49,9 +66,13 @@
 			<label class="forminput-x-label" for="forminput2">Config URL</label>
 			<div class="forminput-x-inputs u-margin-top1x">
 				<svg class="forminput-x-icon" icon="icon_link"></svg>
-				<input type="text" id="forminput2" type="text" [value]="integration.configUrl" readonly #configUrl>
+				<input type="text" id="forminput2" type="text" [value]="integration.configUrl" readonly #configUrl />
 				<div class="forminput-x-button">
-					<button class="button button-secondary button-informinput" type="button" [click-to-copy]="configUrl">
+					<button
+						class="button button-secondary button-informinput"
+						type="button"
+						[click-to-copy]="configUrl"
+					>
 						Copy
 					</button>
 				</div>
@@ -60,8 +81,6 @@
 	</div>
 
 	<div class="contentlong u-margin-top3x u-width-paragraph">
-
-
 		<h1>Integrating Badgr into Canvas</h1>
 		<ol>
 			<li>
@@ -71,11 +90,10 @@
 			</li>
 
 			<li>
-				Log into Canvas with your administrator credentials. Go to the desired Canvas account or sub-account, choose
-				Settings in the left-hand menu, and select the Apps tab
+				Log into Canvas with your administrator credentials. Go to the desired Canvas account or sub-account,
+				choose Settings in the left-hand menu, and select the Apps tab
 				<ol>
-					<li [integration-image]="externalAppsBadgrImageUrl" caption="External Apps">
-					</li>
+					<li [integration-image]="externalAppsBadgrImageUrl" caption="External Apps"></li>
 				</ol>
 			</li>
 			<li>
@@ -84,27 +102,23 @@
 					<li>
 						Copy the values for your LTI Shared Secret and Consumer key from Badgr into the dialog
 						<ol>
-							<li [integration-image]="addAppImageUrl" caption="Add App">
-							</li>
+							<li [integration-image]="addAppImageUrl" caption="Add App"></li>
 						</ol>
 					</li>
 					<li>
-						If you are not using the EduAppCenter, choose the By URL method and copy the Consumer key and Shared Secret into
-						the dialog, along with the Config URL
+						If you are not using the EduAppCenter, choose the By URL method and copy the Consumer key and
+						Shared Secret into the dialog, along with the Config URL
 						<ol>
-							<li [integration-image]="addAppConfigurationTypeUrl" caption="Add App by URL">
-							</li>
+							<li [integration-image]="addAppConfigurationTypeUrl" caption="Add App by URL"></li>
 						</ol>
 					</li>
 				</ol>
 			</li>
 			<li>Submit the form and refresh the page</li>
 			<li>
-				Observe that a new Badges tab will appear on your left-side course navigation in all courses on the account
+				Observe that a new Badges tab will appear on your left-side course navigation in all courses on the
+				account
 			</li>
 		</ol>
-
 	</div>
-
-
 </div>

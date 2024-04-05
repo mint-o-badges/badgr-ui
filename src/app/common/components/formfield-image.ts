@@ -71,7 +71,10 @@ import { MessageService } from '../services/message.service';
 				<ng-container *ngIf="!imageDataUrl">
 					<svg class="dropzone-x-icon" icon="icon_upload"></svg>
 					<p class="dropzone-x-info1">Drag & Drop</p>
-					<p class="dropzone-x-info2">{{ 'General.or' | translate }} <span class="u-text-link">{{ 'RecBadge.selectFromFile' | translate }}</span></p>
+					<p class="dropzone-x-info2">
+						{{ 'General.or' | translate }}
+						<span class="u-text-link">{{ 'RecBadge.selectFromFile' | translate }}</span>
+					</p>
 					<!-- dont let user select icon when uploading badge -->
 					<p *ngIf="loaderName != 'basic'" class="dropzone-x-info2">
 						{{ 'General.or' | translate }}
@@ -113,12 +116,8 @@ export class BgFormFieldImageComponent {
 	@Input() generateRandom = false;
 
 	@Output() generateRandomImage: EventEmitter<unknown> = new EventEmitter();
-	readonly imageLoadingSrc = preloadImageURL(
-		'../../../breakdown/static/images/placeholderavatar-loading.svg'
-	);
-	readonly imageFailedSrc = preloadImageURL(
-		'../../../breakdown/static/images/placeholderavatar-failed.svg'
-	);
+	readonly imageLoadingSrc = preloadImageURL('../../../breakdown/static/images/placeholderavatar-loading.svg');
+	readonly imageFailedSrc = preloadImageURL('../../../breakdown/static/images/placeholderavatar-failed.svg');
 
 	@Output() imageUploaded = new EventEmitter();
 
@@ -147,7 +146,7 @@ export class BgFormFieldImageComponent {
 		private elemRef: ElementRef<HTMLElement>,
 		private domSanitizer: DomSanitizer,
 		protected dialogService: CommonDialogsService,
-		protected messageService: MessageService
+		protected messageService: MessageService,
 	) {}
 
 	clearFileInput() {
@@ -246,7 +245,7 @@ export class BgFormFieldImageComponent {
 			(error: Error) => {
 				this.imageErrorMessage = error.message;
 				this.imageLoading = false;
-			}
+			},
 		);
 	}
 
@@ -319,7 +318,7 @@ export function badgeImageLoader(file: File | string): Promise<string> {
 								(canvas.width - scaledWidth) / 2,
 								(canvas.height - scaledHeight) / 2,
 								scaledWidth,
-								scaledHeight
+								scaledHeight,
 							);
 
 							dataURL = canvas.toDataURL('image/png');
@@ -327,7 +326,7 @@ export function badgeImageLoader(file: File | string): Promise<string> {
 							// On the first try, guess a dimension based on the ratio of max pixel count to file size
 							if (maxDimension === startingMaxDimension) {
 								maxDimension = Math.sqrt(
-									maxFileSize * (Math.pow(maxDimension, 2) / base64ByteSize(dataURL))
+									maxFileSize * (Math.pow(maxDimension, 2) / base64ByteSize(dataURL)),
 								);
 							}
 
@@ -371,7 +370,7 @@ export function badgeImageLoader(file: File | string): Promise<string> {
 						(canvas.width - scaledWidth) / 2,
 						(canvas.height - scaledHeight) / 2,
 						scaledWidth,
-						scaledHeight
+						scaledHeight,
 					);
 
 					dataURL = canvas.toDataURL('image/png');
@@ -429,7 +428,7 @@ export function issuerImageLoader(file: File | string): Promise<string> {
 							// On the first try, guess a dimension based on the ratio of max pixel count to file size
 							if (maxDimension === startingMaxDimension) {
 								maxDimension = Math.sqrt(
-									maxFileSize * (Math.pow(maxDimension, 2) / base64ByteSize(dataURL))
+									maxFileSize * (Math.pow(maxDimension, 2) / base64ByteSize(dataURL)),
 								);
 							}
 

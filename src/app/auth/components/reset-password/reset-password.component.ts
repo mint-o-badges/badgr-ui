@@ -1,22 +1,22 @@
-import {Component} from '@angular/core';
+import { Component } from '@angular/core';
 
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {ActivatedRoute, Router} from '@angular/router';
-import {SessionService} from '../../../common/services/session.service';
-import {MessageService} from '../../../common/services/message.service';
-import {Title} from '@angular/platform-browser';
-import {BaseRoutableComponent} from '../../../common/pages/base-routable.component';
-import {AppConfigService} from '../../../common/app-config.service';
-import {typedFormGroup} from '../../../common/util/typed-forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { SessionService } from '../../../common/services/session.service';
+import { MessageService } from '../../../common/services/message.service';
+import { Title } from '@angular/platform-browser';
+import { BaseRoutableComponent } from '../../../common/pages/base-routable.component';
+import { AppConfigService } from '../../../common/app-config.service';
+import { typedFormGroup } from '../../../common/util/typed-forms';
 
 @Component({
 	selector: 'change-password',
-	templateUrl: './reset-password.component.html'
+	templateUrl: './reset-password.component.html',
 })
 export class ResetPasswordComponent extends BaseRoutableComponent {
 	changePasswordForm = typedFormGroup()
-		.addControl("password1", "", Validators.required)
-		.addControl("password2", "", [ Validators.required, this.passwordsMatch.bind(this) ]);
+		.addControl('password1', '', Validators.required)
+		.addControl('password2', '', [Validators.required, this.passwordsMatch.bind(this)]);
 
 	get resetToken(): string {
 		return this.route.snapshot.params['token'];
@@ -29,14 +29,14 @@ export class ResetPasswordComponent extends BaseRoutableComponent {
 		route: ActivatedRoute,
 		router: Router,
 		private configService: AppConfigService,
-		private _messageService: MessageService
+		private _messageService: MessageService,
 	) {
 		super(router, route);
 
-		title.setTitle(`Reset Password - ${this.configService.theme['serviceName'] || "Badgr"}`);
+		title.setTitle(`Reset Password - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 
-		if (! this.resetToken) {
-			this._messageService.reportHandledError("No reset token provided. Please try the reset link again.");
+		if (!this.resetToken) {
+			this._messageService.reportHandledError('No reset token provided. Please try the reset link again.');
 		}
 	}
 
@@ -45,7 +45,7 @@ export class ResetPasswordComponent extends BaseRoutableComponent {
 	}
 
 	submitChange() {
-		if (! this.changePasswordForm.markTreeDirtyAndValidate()) {
+		if (!this.changePasswordForm.markTreeDirtyAndValidate()) {
 			return;
 		}
 
@@ -53,15 +53,18 @@ export class ResetPasswordComponent extends BaseRoutableComponent {
 		const newPassword = this.changePasswordForm.controls.password1.value;
 
 		if (token) {
-			this.sessionService.submitForgotPasswordChange(newPassword, token)
-				.then(
-					() => {
-						// TODO: We should get the user's name and auth so we can send them to the auth page pre-populated
-						this._messageService.reportMajorSuccess('Your password has been changed successfully.', true);
-						return this.router.navigate([ "/auth" ]);
-					},
-					err => this._messageService.reportAndThrowError('Your password must be uncommon and at least 8 characters. Please try again.', err)
-				);
+			this.sessionService.submitForgotPasswordChange(newPassword, token).then(
+				() => {
+					// TODO: We should get the user's name and auth so we can send them to the auth page pre-populated
+					this._messageService.reportMajorSuccess('Your password has been changed successfully.', true);
+					return this.router.navigate(['/auth']);
+				},
+				(err) =>
+					this._messageService.reportAndThrowError(
+						'Your password must be uncommon and at least 8 characters. Please try again.',
+						err,
+					),
+			);
 		}
 	}
 
@@ -71,9 +74,9 @@ export class ResetPasswordComponent extends BaseRoutableComponent {
 
 		for (const name in group.controls) {
 			if (val === undefined) {
-				val = group.controls[ name ].value;
+				val = group.controls[name].value;
 			} else {
-				if (val !== group.controls[ name ].value) {
+				if (val !== group.controls[name].value) {
 					valid = false;
 					break;
 				}
@@ -84,8 +87,6 @@ export class ResetPasswordComponent extends BaseRoutableComponent {
 			return null;
 		}
 
-		return { passwordsMatch: "Passwords do not match" };
+		return { passwordsMatch: 'Passwords do not match' };
 	}
 }
-
-

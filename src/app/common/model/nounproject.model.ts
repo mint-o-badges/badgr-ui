@@ -6,13 +6,13 @@ export interface NounProjectIcon {
 	id: string;
 	is_active: string;
 	is_explicit: string;
-    license_description: string;
+	license_description: string;
 	nounji_free: string;
 	permalink: string;
 	thumbnail_url: string;
 	sponsor: string;
 	sponsor_campaign_link: string | null;
-    sponsor_id: string;
+	sponsor_id: string;
 	tags: NounProjectIconTag[];
 	term: string;
 	term_id: number;
@@ -20,7 +20,7 @@ export interface NounProjectIcon {
 	updated_at: string;
 	uploader: NounProjectIconUploader;
 	uploader_id: string;
-    year: number;
+	year: number;
 	tag_slugs?: string;
 }
 

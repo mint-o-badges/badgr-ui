@@ -13,7 +13,7 @@ export class BadgeClassApiService extends BaseHttpApiService {
 		protected loginService: SessionService,
 		protected http: HttpClient,
 		protected configService: AppConfigService,
-		protected messageService: MessageService
+		protected messageService: MessageService,
 	) {
 		super(loginService, http, configService, messageService);
 	}
@@ -43,7 +43,9 @@ export class BadgeClassApiService extends BaseHttpApiService {
 			...badgeClass,
 			...badgeClass.extensions,
 		};
-		return this.post<ApiBadgeClass>(`/v1/issuer/issuers/${issuerSlug}/badges`, badgeClassWithExtensions).then((r) => r.body);
+		return this.post<ApiBadgeClass>(`/v1/issuer/issuers/${issuerSlug}/badges`, badgeClassWithExtensions).then(
+			(r) => r.body,
+		);
 	}
 
 	updateBadgeClass(issuerSlug: IssuerSlug, badgeClass: ApiBadgeClass) {
@@ -51,6 +53,9 @@ export class BadgeClassApiService extends BaseHttpApiService {
 			...badgeClass,
 			...badgeClass.extensions,
 		};
-		return this.put<ApiBadgeClass>(`/v1/issuer/issuers/${issuerSlug}/badges/${badgeClass.slug}`, badgeClassWithExtensions).then((r) => r.body);
+		return this.put<ApiBadgeClass>(
+			`/v1/issuer/issuers/${issuerSlug}/badges/${badgeClass.slug}`,
+			badgeClassWithExtensions,
+		).then((r) => r.body);
 	}
 }

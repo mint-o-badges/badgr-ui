@@ -25,15 +25,11 @@ interface UploadResult {
 @Component({
 	selector: 'bg-formfield-markdown',
 	host: {
-		'class': 'forminput',
+		class: 'forminput',
 		'[class.forminput-is-error]': 'isErrorState',
 		'[class.forminput-locked]': 'isLockedState',
 	},
-	template: `
-        <md-editor (ngModelChange)="change()"
-                   [(ngModel)]="markdown_content"
-                   [upload]="doUpload">
-        </md-editor>`,
+	template: ` <md-editor (ngModelChange)="change()" [(ngModel)]="markdown_content" [upload]="doUpload"> </md-editor>`,
 	styleUrls: ['./formfield-markdown.css'],
 	encapsulation: ViewEncapsulation.ShadowDom,
 })
@@ -44,7 +40,7 @@ export class FormFieldMarkdown implements OnChanges, AfterViewInit {
 		private dialogService: CommonDialogsService,
 		private domSanitizer: DomSanitizer,
 		private http: HttpClient,
-		private configService: AppConfigService
+		private configService: AppConfigService,
 	) {
 		this.doUpload = this.doUpload.bind(this);
 	}
@@ -67,7 +63,7 @@ export class FormFieldMarkdown implements OnChanges, AfterViewInit {
 				(error) => {
 					console.log(error);
 					reject(error);
-				}
+				},
 			);
 		});
 	}
@@ -108,7 +104,7 @@ export class FormFieldMarkdown implements OnChanges, AfterViewInit {
 
 	get uncachedErrorMessage(): string {
 		return messagesForValidationError(this.label, this.control && this.control.errors, this.errorMessage).concat(
-			messagesForValidationError(this.label, this.errorGroup && this.errorGroup.errors, this.errorGroupMessage)
+			messagesForValidationError(this.label, this.errorGroup && this.errorGroup.errors, this.errorGroupMessage),
 		)[0]; // Only display the first error
 	}
 
@@ -117,8 +113,7 @@ export class FormFieldMarkdown implements OnChanges, AfterViewInit {
 	}
 
 	get controlErrorState() {
-		return this.control.dirty &&
-            (!this.control.valid || (this.errorGroup && !this.errorGroup.valid));
+		return this.control.dirty && (!this.control.valid || (this.errorGroup && !this.errorGroup.valid));
 	}
 
 	get isErrorState() {
@@ -197,7 +192,7 @@ export class FormFieldMarkdown implements OnChanges, AfterViewInit {
 			) {
 				this.control.setValue(initialValue);
 			}
-		} else if ('newValue' in changes){
+		} else if ('newValue' in changes) {
 			const newValue = changes['newValue'].currentValue;
 			this.markdown_content = newValue;
 		}
@@ -239,7 +234,7 @@ export class FormFieldMarkdown implements OnChanges, AfterViewInit {
 			})
 			.then(
 				() => (this.unlocked = true),
-				() => void 0
+				() => void 0,
 			);
 	}
 

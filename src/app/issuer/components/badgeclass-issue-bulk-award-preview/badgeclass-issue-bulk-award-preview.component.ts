@@ -1,28 +1,27 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {FormBuilder} from '@angular/forms';
-import {ActivatedRoute, Router} from '@angular/router';
-import {SessionService} from '../../../common/services/session.service';
-import {MessageService} from '../../../common/services/message.service';
-import {Title} from '@angular/platform-browser';
-import {BaseAuthenticatedRoutableComponent} from '../../../common/pages/base-authenticated-routable.component';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { SessionService } from '../../../common/services/session.service';
+import { MessageService } from '../../../common/services/message.service';
+import { Title } from '@angular/platform-browser';
+import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
 
 import {
 	BulkIssueData,
 	BulkIssueImportPreviewData,
 	DestSelectOptions,
 	TransformedImportData,
-	ViewState
+	ViewState,
 } from '../badgeclass-issue-bulk-award/badgeclass-issue-bulk-award.component';
 
 @Component({
 	selector: 'Badgeclass-issue-bulk-award-preview',
-	templateUrl: './badgeclass-issue-bulk-award-preview.component.html'
+	templateUrl: './badgeclass-issue-bulk-award-preview.component.html',
 })
-
 export class BadgeClassIssueBulkAwardPreviewComponent extends BaseAuthenticatedRoutableComponent {
 	@Input() importPreviewData: BulkIssueImportPreviewData;
 
-	@Output() updateStateEmitter  = new EventEmitter<ViewState>();
+	@Output() updateStateEmitter = new EventEmitter<ViewState>();
 	@Output() transformedImportDataEmitter = new EventEmitter();
 
 	MAX_ROWS_TO_DISPLAY = 5;
@@ -31,23 +30,23 @@ export class BadgeClassIssueBulkAwardPreviewComponent extends BaseAuthenticatedR
 	buttonDisabledClass = true;
 	columnHeadersCount: number;
 	destNameToColumnHeaderMap: {
-		[destColumnName: string]: number
+		[destColumnName: string]: number;
 	};
-	duplicateRecords: BulkIssueData[]=[];
+	duplicateRecords: BulkIssueData[] = [];
 
 	rowIsLongerThanHeader: boolean;
-	validRowsTransformed= new Set<BulkIssueData>();
+	validRowsTransformed = new Set<BulkIssueData>();
 	invalidRowsTransformed = Array<BulkIssueData>();
 
 	viewState: ViewState;
 
-	constructor (
+	constructor(
 		protected formBuilder: FormBuilder,
 		protected loginService: SessionService,
 		protected messageService: MessageService,
 		protected router: Router,
 		protected route: ActivatedRoute,
-		protected title: Title
+		protected title: Title,
 	) {
 		super(router, route, loginService);
 	}
@@ -57,10 +56,8 @@ export class BadgeClassIssueBulkAwardPreviewComponent extends BaseAuthenticatedR
 		this.rowIsLongerThanHeader = this.importPreviewData.rowLongerThenHeader;
 		this.columnHeadersCount = this.importPreviewData.columnHeaders.length;
 
-		if ( ! this.importPreviewData.rowLongerThenHeader ) {
-			this.isEmailColumnHeaderMapped()
-				? this.enableActionButton()
-				: this.disableActionButton();
+		if (!this.importPreviewData.rowLongerThenHeader) {
+			this.isEmailColumnHeaderMapped() ? this.enableActionButton() : this.disableActionButton();
 		}
 	}
 
@@ -81,17 +78,16 @@ export class BadgeClassIssueBulkAwardPreviewComponent extends BaseAuthenticatedR
 
 	emitTransformedData() {
 		const transformedImportData: TransformedImportData = {
-			duplicateRecords : this.duplicateRecords,
+			duplicateRecords: this.duplicateRecords,
 			validRowsTransformed: this.validRowsTransformed,
-			invalidRowsTransformed: this.invalidRowsTransformed
+			invalidRowsTransformed: this.invalidRowsTransformed,
 		};
 
 		this.transformedImportDataEmitter.emit(transformedImportData);
 	}
 
 	isEmailColumnHeaderMapped(): boolean {
-		return this.importPreviewData.columnHeaders
-			.some(columnHeader => columnHeader.destColumn === "email");
+		return this.importPreviewData.columnHeaders.some((columnHeader) => columnHeader.destColumn === 'email');
 	}
 
 	//////// Generating import data ////////
@@ -108,65 +104,48 @@ export class BadgeClassIssueBulkAwardPreviewComponent extends BaseAuthenticatedR
 		const invalidRow = [];
 		let emptyCellsAreOptional: boolean;
 
-		this.importPreviewData.invalidRows
-		.forEach(row => {
+		this.importPreviewData.invalidRows.forEach((row) => {
+			emptyCellsAreOptional = row.every((cell, index) => {
+				if (!cell.length && index !== this.destNameToColumnHeaderMap['evidence']) {
+					return false;
+				}
+				if (cell.length) {
+					return true;
+				} else if (!cell.length && index === this.destNameToColumnHeaderMap['evidence']) {
+					return true;
+				} else {
+					return false;
+				}
+			});
 
-			emptyCellsAreOptional =
-				row.every(
-					(cell, index) => {
-						if (!cell.length && index !== this.destNameToColumnHeaderMap["evidence"]) {
-							return false;
-						}
-						if (cell.length) {
-							return true;
-						} else if (!cell.length && index === this.destNameToColumnHeaderMap["evidence"]) {
-							return true;
-						} else {
-							return false;
-						}
-					}
-				);
-
-			emptyCellsAreOptional
-			? this.importPreviewData.validRows.push(row)
-			: invalidRow.push(row);
+			emptyCellsAreOptional ? this.importPreviewData.validRows.push(row) : invalidRow.push(row);
 		});
 
 		this.importPreviewData.invalidRows = invalidRow;
-
-
 	}
 
 	transformInvalidRows() {
-		this.importPreviewData.invalidRows
-			.forEach((row) => {
-				this.invalidRowsTransformed
-					. push(
-						{
-							evidence: this.getEvidenceFromRow(row),
-							email: this.getEmailFromRow(row)
-						}
-					);
+		this.importPreviewData.invalidRows.forEach((row) => {
+			this.invalidRowsTransformed.push({
+				evidence: this.getEvidenceFromRow(row),
+				email: this.getEmailFromRow(row),
 			});
+		});
 	}
 
 	transformValidRows() {
-		this.importPreviewData.validRows
-			.forEach((row) => {
-				this.validRowsTransformed
-					.add(
-						{
-							evidence: this.getEvidenceFromRow(row),
-							email: this.getEmailFromRow(row)
-						}
-					);
+		this.importPreviewData.validRows.forEach((row) => {
+			this.validRowsTransformed.add({
+				evidence: this.getEvidenceFromRow(row),
+				email: this.getEmailFromRow(row),
 			});
+		});
 	}
 
 	removeDuplicateEmails() {
 		const tempRow = new Set<string>();
-		this.validRowsTransformed.forEach( row => {
-			if ( tempRow.has(row.email)) {
+		this.validRowsTransformed.forEach((row) => {
+			if (tempRow.has(row.email)) {
 				this.duplicateRecords.push(row);
 				this.validRowsTransformed.delete(row);
 			} else {
@@ -176,19 +155,18 @@ export class BadgeClassIssueBulkAwardPreviewComponent extends BaseAuthenticatedR
 	}
 
 	mapDestNameToSourceName(columnHeaderId: number, selected: DestSelectOptions) {
-		Object.keys(this.importPreviewData.columnHeaders)
-			.forEach( columnId => {
-				if (columnId !== columnHeaderId.toString()
-					&&
-					this.importPreviewData.columnHeaders[ columnId ].destColumn === selected
-				) {
-					this.importPreviewData.columnHeaders[ columnId ].destColumn = "NA";
-				}
+		Object.keys(this.importPreviewData.columnHeaders).forEach((columnId) => {
+			if (
+				columnId !== columnHeaderId.toString() &&
+				this.importPreviewData.columnHeaders[columnId].destColumn === selected
+			) {
+				this.importPreviewData.columnHeaders[columnId].destColumn = 'NA';
+			}
 
-				if (columnId === columnHeaderId.toString()) {
-					this.importPreviewData.columnHeaders[ columnId ].destColumn = selected;
-				}
-			});
+			if (columnId === columnHeaderId.toString()) {
+				this.importPreviewData.columnHeaders[columnId].destColumn = selected;
+			}
+		});
 
 		this.isEmailColumnHeaderMapped() ? this.enableActionButton() : this.disableActionButton();
 	}
@@ -207,19 +185,17 @@ export class BadgeClassIssueBulkAwardPreviewComponent extends BaseAuthenticatedR
 
 	generateDestNameToColumnHeaderMap() {
 		this.destNameToColumnHeaderMap = {};
-		Object
-			.keys(this.importPreviewData.columnHeaders)
-			.forEach(key => {
-				if (this.importPreviewData.columnHeaders[ key ].destColumn !== "NA") {
-					this.destNameToColumnHeaderMap[ this.importPreviewData.columnHeaders[ key ].destColumn ] = Number(key);
-				}
-			});
+		Object.keys(this.importPreviewData.columnHeaders).forEach((key) => {
+			if (this.importPreviewData.columnHeaders[key].destColumn !== 'NA') {
+				this.destNameToColumnHeaderMap[this.importPreviewData.columnHeaders[key].destColumn] = Number(key);
+			}
+		});
 	}
 
 	createRange(size: number) {
 		const items: string[] = [];
 		for (let i = 1; i <= size; i++) {
-			items.push("");
+			items.push('');
 		}
 		return items;
 	}

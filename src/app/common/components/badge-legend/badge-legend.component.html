@@ -1,102 +1,99 @@
-<dialog 
-aria-labelledby="updatedTermsDialog" 
-aria-describedby="dialog1Desc" 
-class="dialog dialog-is-active l-dialog" 
-role="dialog"
-[style.display]="'block'">
-  <div class="dialog-x-box o-container">
-    <button
-      (click)="close()"
-      class="buttonicon buttonicon-link">
-      <svg icon="icon_close"></svg>
-      <span class="visuallyhidden">Close</span>
-    </button>
+<dialog
+	aria-labelledby="updatedTermsDialog"
+	aria-describedby="dialog1Desc"
+	class="dialog dialog-is-active l-dialog"
+	role="dialog"
+	[style.display]="'block'"
+>
+	<div class="dialog-x-box o-container">
+		<button (click)="close()" class="buttonicon buttonicon-link">
+			<svg icon="icon_close"></svg>
+			<span class="visuallyhidden">Close</span>
+		</button>
 
-    <div class="l-flex l-flex-justifybetween u-padding-top2x u-padding-xaxis3x">
-      <h1 id="updatedTermsDialog" class="u-text-body-bold-caps text-dark1">
-        {{ 'Legend.legendTitle' | translate }}
-      </h1>
-    </div>
-    <div class="u-padding-all3x u-padding-xaxis3x">
-      <h3 class="u-padding-top2x">{{ 'Legend.legendDesc' | translate }}</h3>
-      <div class="category u-padding-xaxis3x u-margin-top2x skill">
-        <h2 class="u-text-body-bold-caps text-dark1">{{ 'Legend.cat1' | translate }}</h2>
-        <p class="category-text">{{ 'Legend.cat1Desc' | translate }}</p>
-          <div class="legend-images">
-            <div class="legend-item">
-              <img src="assets/badges/a1.svg">
-              <span>{{ 'Legend.Level1' | translate }} </span>
-            </div>
-            <div class="legend-item">
-              <img src="assets/badges/a2.svg">
-              <span>{{ 'Legend.Level2' | translate }} </span>
-            </div>
-            <div class="legend-item">
-              <img src="assets/badges/b1.svg">
-              <span>{{ 'Legend.Level3' | translate }}</span>
-            </div>
-            <div class="legend-item">
-              <img src="assets/badges/b2.svg">
-              <span>{{ 'Legend.Level4' | translate }}</span>
-            </div>
-            <div class="legend-item">
-              <img src="assets/badges/c1.svg">
-              <span>{{ 'Legend.Level5' | translate }}</span>
-            </div>
-            <div class="legend-item">
-              <img src="assets/badges/c2.svg">
-              <span>{{ 'Legend.Level6' | translate }}</span>
-            </div>
-            
-          </div>
-        </div>
-        
-        <div class="category u-padding-xaxis3x u-margin-top2x ability">
-          <h2 class="u-text-body-bold-caps text-dark1">{{ 'Legend.cat2' | translate }}</h2>
-          <p class="category-text">{{ 'Legend.cat2Desc' | translate }}</p>
-            <div class="legend-images">
-              <div class="legend-item">
-                <img src="assets/badges/a1_ability.svg">
-                <span>{{ 'Legend.Level1' | translate }} </span>
-              </div>
-              <div class="legend-item">
-                <img src="assets/badges/a2_ability.svg">
-                <span>{{ 'Legend.Level2' | translate }} </span>
-              </div>
-              <div class="legend-item">
-                <img src="assets/badges/b1_ability.svg">
-                <span>{{ 'Legend.Level3' | translate }}</span>
-              </div>
-              <div class="legend-item">
-                <img src="assets/badges/b2_ability.svg">
-                <span>{{ 'Legend.Level4' | translate }}</span>
-              </div>
-            <div class="legend-item">
-              <img src="assets/badges/c1_ability.svg">
-              <span>{{ 'Legend.Level5' | translate }}</span>
-            </div>
-            <div class="legend-item">
-              <img src="assets/badges/c2_ability.svg">
-              <span>{{ 'Legend.Level6' | translate }}</span>
-            </div>
+		<div class="l-flex l-flex-justifybetween u-padding-top2x u-padding-xaxis3x">
+			<h1 id="updatedTermsDialog" class="u-text-body-bold-caps text-dark1">
+				{{ 'Legend.legendTitle' | translate }}
+			</h1>
+		</div>
+		<div class="u-padding-all3x u-padding-xaxis3x">
+			<h3 class="u-padding-top2x">{{ 'Legend.legendDesc' | translate }}</h3>
+			<div class="category u-padding-xaxis3x u-margin-top2x skill">
+				<h2 class="u-text-body-bold-caps text-dark1">{{ 'Legend.cat1' | translate }}</h2>
+				<p class="category-text">{{ 'Legend.cat1Desc' | translate }}</p>
+				<div class="legend-images">
+					<div class="legend-item">
+						<img src="assets/badges/a1.svg" />
+						<span>{{ 'Legend.Level1' | translate }} </span>
+					</div>
+					<div class="legend-item">
+						<img src="assets/badges/a2.svg" />
+						<span>{{ 'Legend.Level2' | translate }} </span>
+					</div>
+					<div class="legend-item">
+						<img src="assets/badges/b1.svg" />
+						<span>{{ 'Legend.Level3' | translate }}</span>
+					</div>
+					<div class="legend-item">
+						<img src="assets/badges/b2.svg" />
+						<span>{{ 'Legend.Level4' | translate }}</span>
+					</div>
+					<div class="legend-item">
+						<img src="assets/badges/c1.svg" />
+						<span>{{ 'Legend.Level5' | translate }}</span>
+					</div>
+					<div class="legend-item">
+						<img src="assets/badges/c2.svg" />
+						<span>{{ 'Legend.Level6' | translate }}</span>
+					</div>
+				</div>
+			</div>
 
-          </div>
-      </div>
+			<div class="category u-padding-xaxis3x u-margin-top2x ability">
+				<h2 class="u-text-body-bold-caps text-dark1">{{ 'Legend.cat2' | translate }}</h2>
+				<p class="category-text">{{ 'Legend.cat2Desc' | translate }}</p>
+				<div class="legend-images">
+					<div class="legend-item">
+						<img src="assets/badges/a1_ability.svg" />
+						<span>{{ 'Legend.Level1' | translate }} </span>
+					</div>
+					<div class="legend-item">
+						<img src="assets/badges/a2_ability.svg" />
+						<span>{{ 'Legend.Level2' | translate }} </span>
+					</div>
+					<div class="legend-item">
+						<img src="assets/badges/b1_ability.svg" />
+						<span>{{ 'Legend.Level3' | translate }}</span>
+					</div>
+					<div class="legend-item">
+						<img src="assets/badges/b2_ability.svg" />
+						<span>{{ 'Legend.Level4' | translate }}</span>
+					</div>
+					<div class="legend-item">
+						<img src="assets/badges/c1_ability.svg" />
+						<span>{{ 'Legend.Level5' | translate }}</span>
+					</div>
+					<div class="legend-item">
+						<img src="assets/badges/c2_ability.svg" />
+						<span>{{ 'Legend.Level6' | translate }}</span>
+					</div>
+				</div>
+			</div>
 
-      <div class="category u-padding-xaxis3x u-margin-top2x archievement">
-        <h2 class="u-text-body-bold-caps text-dark1">{{ 'Legend.cat3' | translate }}</h2>
-        <p>{{ 'Legend.cat3Desc' | translate }} </p>
-          <div class="legend-images">
-            <div class="legend-item"><img src="assets/badges/nolvl.svg"></div>
-          </div>
-      </div>
-      <div class="category u-padding-xaxis3x u-margin-top2x membership">
-        <h2 class="u-text-body-bold-caps text-dark1">{{ 'Legend.cat4' | translate }}</h2>
-        <p>{{ 'Legend.cat4Desc' | translate }} </p>
-          <div class="legend-images">
-            <div class="legend-item"><img src="assets/badges/nolvl_member.svg"></div>
-          </div>
-      </div>
-    </div>
-  </div>
+			<div class="category u-padding-xaxis3x u-margin-top2x archievement">
+				<h2 class="u-text-body-bold-caps text-dark1">{{ 'Legend.cat3' | translate }}</h2>
+				<p>{{ 'Legend.cat3Desc' | translate }}</p>
+				<div class="legend-images">
+					<div class="legend-item"><img src="assets/badges/nolvl.svg" /></div>
+				</div>
+			</div>
+			<div class="category u-padding-xaxis3x u-margin-top2x membership">
+				<h2 class="u-text-body-bold-caps text-dark1">{{ 'Legend.cat4' | translate }}</h2>
+				<p>{{ 'Legend.cat4Desc' | translate }}</p>
+				<div class="legend-images">
+					<div class="legend-item"><img src="assets/badges/nolvl_member.svg" /></div>
+				</div>
+			</div>
+		</div>
+	</div>
 </dialog>

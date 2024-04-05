@@ -1,24 +1,24 @@
-import {Directive, Input} from '@angular/core';
+import { Directive, Input } from '@angular/core';
 
-const defaultLoadingImage = "../../../breakdown/static/images/image-placeholder.svg";
-const defaultErrorImage = "../../../breakdown/static/images/image-failed.svg";
+const defaultLoadingImage = '../../../breakdown/static/images/image-placeholder.svg';
+const defaultErrorImage = '../../../breakdown/static/images/image-failed.svg';
 
 @Directive({
 	// Note that to have webpack process these sources, we must add the attributes to webpack.common.js in the html loader section.
 	selector: '[click-to-copy]',
 	host: {
-		"(click)": "copyInput()",
-		"[style.display]": "copySupported ? '' : 'none'"
+		'(click)': 'copyInput()',
+		'[style.display]': "copySupported ? '' : 'none'",
 	},
-	exportAs: "copy-input",
+	exportAs: 'copy-input',
 })
 export class BgCopyInputDirective {
-	@Input("click-to-copy")
+	@Input('click-to-copy')
 	input: HTMLInputElement;
 
 	copySupported(): boolean {
 		try {
-			return !! document.queryCommandSupported('copy');
+			return !!document.queryCommandSupported('copy');
 		} catch (e) {
 			return false;
 		}
@@ -37,7 +37,6 @@ export class BgCopyInputDirective {
 				return;
 			}
 		} catch (err) {
-
 		} finally {
 			this.input.disabled = inputWasDisabled;
 		}

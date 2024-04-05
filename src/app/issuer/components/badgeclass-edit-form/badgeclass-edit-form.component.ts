@@ -26,6 +26,9 @@ import { AppConfigService } from '../../../common/app-config.service';
 import { typedFormGroup } from '../../../common/util/typed-forms';
 import { FormFieldSelectOption } from '../../../common/components/formfield-select';
 
+import { AiSkillsService } from '../../../common/services/ai-skills.service';
+import { Skill } from '../../../common/model/ai-skills.model';
+
 @Component({
 	selector: 'badgeclass-edit-form',
 	templateUrl: './badgeclass-edit-form.component.html',
@@ -109,6 +112,18 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	 */
 	hideHexFrame: boolean = false;
 
+	/**
+	 * The description of the competencies entered by the user
+	 * for the AI tool
+	 */
+	aiCompetenciesDescription: string = '';
+
+	/**
+	 * The suggested competencies regarding the description
+	 * from the user (@see aiCompetenciesDescription)
+	 */
+	aiCompetenciesSuggestions: Skill[] = [];
+
 	savePromise: Promise<BadgeClass> | null = null;
 	badgeClassForm = typedFormGroup(this.criteriaRequired.bind(this))
 		.addControl('badge_name', '', [
@@ -140,6 +155,16 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			slug: '',
 			issuerSlug: '',
 		})
+		.addArray(
+			'aiCompetencies',
+			typedFormGroup()
+				.addControl('selected', false)
+				// Technically this is only required if selected,
+				// but since it doesn't make sense to remove the
+				// default of 60 from unselected suggestions,
+				// this doesn't really matter
+				.addControl('studyLoad', 60, [Validators.required, this.positiveInteger, Validators.max(1000)]),
+		)
 		.addArray(
 			'competencies',
 			typedFormGroup()
@@ -261,6 +286,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		protected badgeClassManager: BadgeClassManager,
 		protected dialogService: CommonDialogsService,
 		protected componentElem: ElementRef<HTMLElement>,
+		protected aiSkillsService: AiSkillsService,
 	) {
 		super(router, route, sessionService);
 		title.setTitle(`Create Badge - ${this.configService.theme['serviceName'] || 'Badgr'}`);
@@ -306,6 +332,10 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				slug: badgeClass.slug,
 				issuerSlug: badgeClass.issuerSlug,
 			},
+			// Note that, even though competencies might originally have been selected
+			// based on ai suggestions, they can't be separated anymore and thus will
+			// be displayed as competencies entered by hand
+			aiCompetencies: [],
 			competencies: badgeClass.extension['extensions:CompetencyExtension']
 				? badgeClass.extension['extensions:CompetencyExtension']
 				: [],
@@ -479,6 +509,33 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		this.badgeClassForm.controls.competencies.addFromTemplate();
 	}
 
+	/**
+	 * Fetches competencies from the ai tool (@see aiSkillsService) and saves them
+	 * in @see aiCompetenciesSuggestions. Also adds the necessary form control
+	 * (@see badgeClassForm.controls.aiCompetencies) (and removes the old ones).
+	 */
+	suggestCompetencies() {
+		if (this.aiCompetenciesDescription.length == 0) {
+			return;
+		}
+		this.aiSkillsService
+			.getAiSkills(this.aiCompetenciesDescription)
+			.then((skills) => {
+				this.aiCompetenciesSuggestions = skills;
+				let aiCompetencies = this.badgeClassForm.controls.aiCompetencies;
+				for (let i = aiCompetencies.length - 1; i >= 0; i--) {
+					aiCompetencies.removeAt(i);
+				}
+
+				skills.forEach((skill) => {
+					aiCompetencies.addFromTemplate();
+				});
+			})
+			.catch((error) => {
+				this.messageService.reportAndThrowError('Failed to obtain ai skills.', error);
+			});
+	}
+
 	async disableAlignments() {
 		const isPlural = this.badgeClassForm.value.alignments.length > 1;
 		if (
@@ -600,6 +657,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		const competencyExtensionContextUrl = `${this.baseUrl}/static/extensions/CompetencyExtension/context.json`;
 		const orgImageExtensionContextUrl = `${this.baseUrl}/static/extensions/OrgImageExtension/context.json`;
 
+		const suggestions = this.aiCompetenciesSuggestions;
 		if (this.existingBadgeClass) {
 			this.existingBadgeClass.name = formState.badge_name;
 			this.existingBadgeClass.description = formState.badge_description;
@@ -625,6 +683,11 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 					type: ['Extension', 'extensions:LevelExtension'],
 					Level: String(formState.badge_level),
 				},
+				'extensions:CompetencyExtension': this.getCompetencyExtensions(
+					suggestions,
+					formState,
+					competencyExtensionContextUrl,
+				),
 			};
 			if (this.currentImage) {
 				this.existingBadgeClass.extension = {
@@ -674,15 +737,11 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 						type: ['Extension', 'extensions:BasedOnExtension'],
 						BasedOn: formState.badge_based_on,
 					},
-					'extensions:CompetencyExtension': formState.competencies.map((competency) => ({
-						'@context': competencyExtensionContextUrl,
-						type: ['Extension', 'extensions:CompetencyExtension'],
-						name: String(competency.name),
-						description: String(competency.description),
-						escoID: String(competency.escoID),
-						studyLoad: Number(competency.studyLoad),
-						category: String(competency.category),
-					})),
+					'extensions:CompetencyExtension': this.getCompetencyExtensions(
+						suggestions,
+						formState,
+						competencyExtensionContextUrl,
+					),
 				},
 			} as ApiBadgeClassForCreation;
 			if (this.currentImage) {
@@ -706,6 +765,48 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		}
 
 		this.save.emit(this.savePromise);
+	}
+
+	/**
+	 * Gets the combinded competency extensions, based on the "by hand" competencies (@see formState.competencies)
+	 * and the ones that were suggested by the ai tool and selected (@see formState.aiCompetencies).
+	 */
+	getCompetencyExtensions(
+		suggestions: Skill[],
+		formState,
+		competencyExtensionContextUrl: string,
+	): {
+		'@context': string;
+		type: string[];
+		name: string;
+		description: string;
+		escoId: string;
+		studyLoad: number;
+		category: string;
+	} {
+		return formState.competencies
+			.map((competency) => ({
+				'@context': competencyExtensionContextUrl,
+				type: ['Extension', 'extensions:CompetencyExtension'],
+				name: String(competency.name),
+				description: String(competency.description),
+				escoID: String(competency.escoID),
+				studyLoad: Number(competency.studyLoad),
+				category: String(competency.category),
+			}))
+			.concat(
+				formState.aiCompetencies
+					.map((aiCompetency, index) => ({
+						'@context': competencyExtensionContextUrl,
+						type: ['Extension', 'extensions:CompetencyExtension'],
+						name: suggestions[index].preferred_label,
+						description: suggestions[index].description,
+						escoID: suggestions[index].concept_uri,
+						studyLoad: Number(aiCompetency.studyLoad),
+						category: suggestions[index].concept_uri.includes('skill') ? 'skill' : 'knowledge',
+					}))
+					.filter((_, index) => formState.aiCompetencies[index].selected),
+			);
 	}
 
 	cancelClicked() {
