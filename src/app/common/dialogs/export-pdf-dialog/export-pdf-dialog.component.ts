@@ -323,7 +323,7 @@ export class ExportPdfDialog extends BaseDialog {
 				let logoTextOnContentLength = this.doc.getTextWidth('bereitgestellt von https://openbadges.education');
 				const marginXImageLogo = (pageWidth - logoTextOnContentLength - logoWidth) / 2;
 				var img = new Image();
-				img.src = 'assets/logos/Badges_Entwurf-15.png';
+				img.src = 'assets/logos/Logo-Square.png';
 				this.doc.addImage(img, 'PNG', marginXImageLogo, yPos, logoWidth, logoHeight);
 				// yPos += 13;
 				this.doc.textWithLink(
