@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AboutComponent implements OnInit {
 
+  mailAdrees = "hallo@openbadges.education";
+  mailBody= "Interesse an Open Educational Badges";
   constructor() { }
 
   ngOnInit() {
