@@ -1,3 +1,7 @@
+@import url("../styles/google-webfonts/inter.scss");
+@import url("../styles/google-webfonts/nunito.scss");
+@import url("../styles/google-webfonts/rubik.scss");
+
 .flex-1 {
 	flex: 1;
 }
@@ -5,9 +9,11 @@
 .flex-wrap {
 	flex-wrap: wrap;
 }
-.video-container {
-	height: 500px;
+.video-container iframe,
+.video-container object,
+.video-container embed {
 	width: 100%;
+	height: 100%;
 	padding-bottom: 5rem;
 }
 
@@ -21,15 +27,15 @@
 }
 
 .curtain-background {
-	background-image: url("../assets/logos/Wabenstruktur.png");
+	background-image: url('../assets/logos/Wabenstruktur.png');
 }
 
 .header-oeb {
-	display:flex;
+	display: flex;
 	flex-direction: column;
 	font-size: 6em;
 	line-height: 1.2;
-	color: #6100F9;
+	color: #6100f9;
 	text-transform: uppercase;
 	margin-left: 5em;
 }
@@ -43,100 +49,98 @@
 }
 
 @media only screen and (max-width: 900px) {
-    .what-are-oeb {
+	.what-are-oeb {
 		font-size: 1.5em;
-    }
-  }
+	}
+}
 
-  @media only screen and (max-width: 600px) {
-    .what-are-oeb {
+@media only screen and (max-width: 600px) {
+	.what-are-oeb {
 		font-size: 1.2em;
-    }
-  }
-
+	}
+}
 
 @media only screen and (max-width: 1600px) {
-    .header-oeb {
+	.header-oeb {
 		font-size: 4.5 em;
 		margin-left: 4.5em;
-    }
-  }
+	}
+}
 
 @media only screen and (max-width: 1440px) {
-    .header-oeb {
+	.header-oeb {
 		font-size: 4.5em;
 		margin-left: 4em;
-    }
-  }
-
+	}
+}
 
 @media only screen and (max-width: 1200px) {
-    .header-oeb {
+	.header-oeb {
 		font-size: 3.5em;
 		margin-left: 3.5em;
-    }
-  }
+	}
+}
 
 @media only screen and (max-width: 900px) {
-    .header-oeb {
+	.header-oeb {
 		font-size: 3em;
 		margin-left: 2em;
-    }
-  }
+	}
+}
 
 @media only screen and (max-width: 600px) {
-    .header-oeb {
+	.header-oeb {
 		font-size: 2.5em;
-    }
-  }
+	}
+}
 
 @media only screen and (max-width: 400px) {
-    .header-oeb {
+	.header-oeb {
 		font-size: 2em;
-    }
-  } 
+	}
+}
 
 .media-container {
-    display: flex;
+	display: flex;
 	gap: 1em;
-  }
+}
 
 @media only screen and (max-width: 600px) {
-    .media-container {
-      flex-direction: column; 
-    }
+	.media-container {
+		flex-direction: column;
+	}
 	.media-container video {
 		width: 100%;
 	}
-  }
+}
 
 .nunito-normal {
-  font-family: "Nunito", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 500;
-  font-style: normal;
+	font-family: 'Nunito', sans-serif;
+	font-optical-sizing: auto;
+	font-weight: 500;
+	font-style: normal;
 }
 
 .nunito-bold {
-	font-family: "Nunito", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: 900;
-    font-style: normal;
+	font-family: 'Nunito', sans-serif;
+	font-optical-sizing: auto;
+	font-weight: 900;
+	font-style: normal;
 }
 
 .badge-logo {
 	max-width: 100%;
 	min-width: 200px;
 	height: auto;
-	width: 35%
+	width: 35%;
 	// margin-left: auto;
 }
 
 @media only screen and (max-width: 400px) {
-    .badge-logo{
+	.badge-logo {
 		min-width: 150px;
-    }
-  } 
+	}
+}
 
 // @media only screen and (max-width: 992px) {
 // 		.badge-logo {
@@ -144,11 +148,11 @@
 // 		}
 //   }
 
-    // @media (min-width: 1600px) { 
-    //     .badge-logo {
-    //         width: 12%; /* Adjust width as needed */
-    //     }
-    // }
+// @media (min-width: 1600px) {
+//     .badge-logo {
+//         width: 12%; /* Adjust width as needed */
+//     }
+// }
 
 // @media only screen and (max-width: 1200px) {
 // 	.badge-logo {
@@ -160,7 +164,7 @@
 //     .badge-logo {
 // 		width: 150px;
 //     }
-//   }   
+//   }
 
 .form-paragraph {
 	max-width: 350px;
@@ -174,16 +178,15 @@
 
 @media only screen and (max-width: 900px) {
 	.form-paragraph {
-	  font-size: 1.5em;
+		font-size: 1.5em;
 	}
-  }
+}
 
 //   @media only screen and (max-width: 600px) {
 // 	.form-paragraph {
 // 	  font-size: 1.2em;
 // 	}
 //   }
-
 
 .newsletter-form {
 	width: 540px;
@@ -193,10 +196,10 @@
 
 @media only screen and (max-width: 900px) {
 	.newsletter-form {
-	  width: 400px;
-	  height: 500px; 
+		width: 400px;
+		height: 500px;
 	}
-  }
+}
 
 .iframe-container {
 	display: flex;
@@ -208,9 +211,9 @@
 
 @media only screen and (max-width: 900px) {
 	.iframe-container p {
-	 display: none; 
+		display: none;
 	}
-  }
+}
 
 .faq {
 	font-family: 'Inter';

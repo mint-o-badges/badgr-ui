@@ -26,12 +26,12 @@ export class BadgeClassManager extends BaseHttpApiService {
 	badgesList = new StandaloneEntitySet<BadgeClass, ApiBadgeClass>(
 		(apiModel) => new BadgeClass(this.commonEntityManager),
 		(apiModel) => apiModel.json.id,
-		() => this.badgeClassApi.getAllUserBadgeClasses()
+		() => this.badgeClassApi.getAllUserBadgeClasses(),
 	);
 	allBadgesList = new StandaloneEntitySet<BadgeClass, ApiBadgeClass>(
 		(apiModel) => new BadgeClass(this.commonEntityManager),
 		(apiModel) => apiModel.json.id,
-		() => this.badgeClassApi.getAllBadgeClasses()
+		() => this.badgeClassApi.getAllBadgeClasses(),
 	);
 	badgesByIssuerUrl = new ManagedEntityGrouping<BadgeClass>(this.badgesList, (badgeClass) => badgeClass.issuerUrl);
 
@@ -66,7 +66,7 @@ export class BadgeClassManager extends BaseHttpApiService {
 		@Inject(forwardRef(() => CommonEntityManager))
 		protected commonEntityManager: CommonEntityManager,
 		public badgeClassApi: BadgeClassApiService,
-		protected messageService: MessageService
+		protected messageService: MessageService,
 	) {
 		super(loginService, http, configService, messageService);
 	}
@@ -80,9 +80,10 @@ export class BadgeClassManager extends BaseHttpApiService {
 	}
 
 	createBadgeClass(issuerSlug: string, newBadge: ApiBadgeClassForCreation): Promise<BadgeClass> {
-		return this.badgeClassApi
-			.createBadgeClass(issuerSlug, newBadge)
-			.then((retNewBadge) => { this.allBadgesList.addOrUpdate(retNewBadge); return this.badgesList.addOrUpdate(retNewBadge) });
+		return this.badgeClassApi.createBadgeClass(issuerSlug, newBadge).then((retNewBadge) => {
+			this.allBadgesList.addOrUpdate(retNewBadge);
+			return this.badgesList.addOrUpdate(retNewBadge);
+		});
 	}
 
 	badgeByIssuerUrlAndSlug(issuerId: IssuerUrl, badgeSlug: BadgeClassSlug): Promise<BadgeClass> {
@@ -92,7 +93,7 @@ export class BadgeClassManager extends BaseHttpApiService {
 			.then(
 				(badges) =>
 					badges.find((b) => b.issuerUrl === issuerId && b.slug === badgeSlug) ||
-					this.throwError(`Issuer ID '${issuerId}' has no badge with slug '${badgeSlug}'`)
+					this.throwError(`Issuer ID '${issuerId}' has no badge with slug '${badgeSlug}'`),
 			);
 	}
 
@@ -103,7 +104,7 @@ export class BadgeClassManager extends BaseHttpApiService {
 			.then(
 				(badges) =>
 					badges.find((b) => b.issuerSlug === issuerSlug && b.slug === badgeSlug) ||
-					this.throwError(`Issuer Slug '${issuerSlug}' has no badge with slug '${badgeSlug}'`)
+					this.throwError(`Issuer Slug '${issuerSlug}' has no badge with slug '${badgeSlug}'`),
 			);
 	}
 
@@ -126,7 +127,7 @@ export class BadgeClassManager extends BaseHttpApiService {
 			.toPromise()
 			.then(
 				(badges) =>
-					badges.find((b) => b.badgeUrl === badgeUrl) || this.throwError(`No badge with URL ${badgeUrl}`)
+					badges.find((b) => b.badgeUrl === badgeUrl) || this.throwError(`No badge with URL ${badgeUrl}`),
 			);
 	}
 

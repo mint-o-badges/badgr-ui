@@ -29,9 +29,18 @@
 				Open Educational Badges?
 			</h2>
 		</div>
-		<video style="max-width: 900px; width: 75%; margin-top: 2em" height="auto" controls>
-			<source src="assets/videos/badges-curtain.mp4" type="video/mp4" />
-		</video>
+		<div
+			class="video-container md:tw-w-[52%] tw-h-[370px] tw-border-purple tw-border-solid tw-border-4 tw-m-4 tw-box-border"
+		>
+			<iframe
+				src="https://www.youtube.com/embed/H6lBdH75P7g"
+				class="tw-w-full tw-h-full"
+				title="Open badges kurz erklärt"
+				frameborder="0"
+				allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+				allowfullscreen
+			></iframe>
+		</div>
 		<div class="iframe-container">
 			<iframe
 				class="newsletter-form"
@@ -404,20 +413,20 @@
 >
 	<div class="l-containerxaxis">
 		<div class="footer l-stickyfooter-x-footer">
-			<div class="tw-text-left tw-flex md:tw-flex-row md:tw-justify-between md:tw-gap-0 tw-flex-col-reverse tw-gap-[2em]">
+			<div
+				class="tw-text-left tw-flex md:tw-flex-row md:tw-justify-between md:tw-gap-0 tw-flex-col-reverse tw-gap-[2em]"
+			>
 				<div>
-						<p
-							class="text-semiBold md:tw-w-1/2"
-							*ngIf="theme.showPoweredByOSL && theme.providedBy"
-							[innerHtml]="'Start.poweredBy' | translate"
-						></p>
+					<p
+						class="text-semiBold md:tw-w-1/2"
+						*ngIf="theme.showPoweredByOSL && theme.providedBy"
+						[innerHtml]="'Start.poweredBy' | translate"
+					></p>
 				</div>
 
 				<div class="tw-flex tw-flex-col tw-gap-[1em] tw-min-w-fit">
 					<a class="faq" [routerLink]="['/public/faq']">FAQ</a>
-					<a class="impressum" [href]="theme.termsOfServiceLink">{{
-						'Start.imprint' | translate
-					}}</a>
+					<a class="impressum" [href]="theme.termsOfServiceLink">{{ 'Start.imprint' | translate }}</a>
 				</div>
 			</div>
 		</div>

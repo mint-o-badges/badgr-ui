@@ -1,5 +1,4 @@
-import {UserCredential} from './user-credential.type';
-
+import { UserCredential } from './user-credential.type';
 
 describe('UserCredential', () => {
 	it('has the username given in the constructor', () => {

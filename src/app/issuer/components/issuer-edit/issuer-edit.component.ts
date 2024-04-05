@@ -1,31 +1,33 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {FormBuilder, Validators} from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, Validators } from '@angular/forms';
 
-import {BaseAuthenticatedRoutableComponent} from '../../../common/pages/base-authenticated-routable.component';
+import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
 
-import {SessionService} from '../../../common/services/session.service';
-import {MessageService} from '../../../common/services/message.service';
-import {IssuerManager} from '../../services/issuer-manager.service';
-import {UrlValidator} from '../../../common/validators/url.validator';
-import {Title} from '@angular/platform-browser';
-import {ApiIssuerForEditing} from '../../models/issuer-api.model';
-import {Issuer} from '../../models/issuer.model';
+import { SessionService } from '../../../common/services/session.service';
+import { MessageService } from '../../../common/services/message.service';
+import { IssuerManager } from '../../services/issuer-manager.service';
+import { UrlValidator } from '../../../common/validators/url.validator';
+import { Title } from '@angular/platform-browser';
+import { ApiIssuerForEditing } from '../../models/issuer-api.model';
+import { Issuer } from '../../models/issuer.model';
 
-import {preloadImageURL} from '../../../common/util/file-util';
-import {FormFieldSelectOption} from '../../../common/components/formfield-select';
-import {UserProfileManager} from '../../../common/services/user-profile-manager.service';
-import {UserProfileEmail} from '../../../common/model/user-profile.model';
-import {AppConfigService} from '../../../common/app-config.service';
-import {LinkEntry} from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
-import {typedFormGroup} from '../../../common/util/typed-forms';
+import { preloadImageURL } from '../../../common/util/file-util';
+import { FormFieldSelectOption } from '../../../common/components/formfield-select';
+import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
+import { UserProfileEmail } from '../../../common/model/user-profile.model';
+import { AppConfigService } from '../../../common/app-config.service';
+import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
+import { typedFormGroup } from '../../../common/util/typed-forms';
 
 @Component({
 	selector: 'issuer-edit',
 	templateUrl: './issuer-edit.component.html',
 })
 export class IssuerEditComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
-	readonly issuerImagePlacholderUrl = preloadImageURL('../../../../breakdown/static/images/placeholderavatar-issuer.svg');
+	readonly issuerImagePlacholderUrl = preloadImageURL(
+		'../../../../breakdown/static/images/placeholderavatar-issuer.svg',
+	);
 
 	issuer: Issuer;
 	issuerSlug: string;
@@ -36,15 +38,12 @@ export class IssuerEditComponent extends BaseAuthenticatedRoutableComponent impl
 		.addControl('issuer_email', '', [Validators.required])
 		.addControl('issuer_url', '', [Validators.required, UrlValidator.validUrl])
 		.addControl('issuer_image', '')
-		.addControl('issuer_category', '', [
-			Validators.required
-		])
+		.addControl('issuer_category', '', [Validators.required])
 		.addControl('issuer_image', '')
 		.addControl('issuer_street', '')
 		.addControl('issuer_streetnumber', '')
 		.addControl('issuer_zip', '')
 		.addControl('issuer_city', '');
-
 
 	emails: UserProfileEmail[];
 	emailsOptions: FormFieldSelectOption[];
@@ -64,7 +63,7 @@ export class IssuerEditComponent extends BaseAuthenticatedRoutableComponent impl
 		protected title: Title,
 		protected messageService: MessageService,
 		protected configService: AppConfigService,
-		protected issuerManager: IssuerManager
+		protected issuerManager: IssuerManager,
 	) {
 		super(router, route, loginService);
 		title.setTitle(`Edit Issuer - ${this.configService.theme['serviceName'] || 'Badgr'}`);
@@ -75,9 +74,11 @@ export class IssuerEditComponent extends BaseAuthenticatedRoutableComponent impl
 			(issuer) => {
 				this.issuer = issuer;
 
-				this.editIssuerCrumbs = [{title: 'Issuers', routerLink: ['/issuer']},
-					{title: issuer.name, routerLink: ['/issuer/issuers/', this.issuerSlug]},
-					{title: 'Edit Issuer'}];
+				this.editIssuerCrumbs = [
+					{ title: 'Issuers', routerLink: ['/issuer'] },
+					{ title: issuer.name, routerLink: ['/issuer/issuers/', this.issuerSlug] },
+					{ title: 'Edit Issuer' },
+				];
 
 				this.issuerForm.setValue(
 					{
@@ -91,12 +92,13 @@ export class IssuerEditComponent extends BaseAuthenticatedRoutableComponent impl
 						issuer_streetnumber: this.issuer.streetnumber,
 						issuer_zip: this.issuer.zip,
 						issuer_city: this.issuer.city,
-			
 					},
-					{emitEvent: false}
+					{ emitEvent: false },
 				);
 
-				this.title.setTitle(`Issuer - ${this.issuer.name} - ${this.configService.theme['serviceName'] || 'Badgr'}`);
+				this.title.setTitle(
+					`Issuer - ${this.issuer.name} - ${this.configService.theme['serviceName'] || 'Badgr'}`,
+				);
 
 				/*this.badgesLoaded = new Promise((resolve, reject) => {
 					this.badgeClassService.badgesByIssuerUrl$.subscribe(
@@ -112,15 +114,16 @@ export class IssuerEditComponent extends BaseAuthenticatedRoutableComponent impl
 						}
 					);
 				});*/
-			}, error => {
+			},
+			(error) => {
 				this.messageService.reportLoadingError(`Issuer '${this.issuerSlug}' does not exist.`, error);
-			}
+			},
 		);
 
 		this.emailsLoaded = this.profileManager.userProfilePromise
-			.then(profile => profile.emails.loadedPromise)
-			.then(emails => {
-				this.emails = emails.entities.filter(e => e.verified);
+			.then((profile) => profile.emails.loadedPromise)
+			.then((emails) => {
+				this.emails = emails.entities.filter((e) => e.verified);
 				this.emailsOptions = this.emails.map((e) => {
 					return {
 						label: e.email,
@@ -142,28 +145,33 @@ export class IssuerEditComponent extends BaseAuthenticatedRoutableComponent impl
 		const formState = this.issuerForm.value;
 
 		const issuer: ApiIssuerForEditing = {
-			'name': formState.issuer_name,
-			'description': formState.issuer_description,
-			'email': formState.issuer_email,
-			'url': formState.issuer_url,
-			'category': formState.issuer_category,
-			'street': formState.issuer_street,
-			'streetnumber': formState.issuer_streetnumber,
-			'zip': formState.issuer_zip,
-			'city': formState.issuer_city,
-
+			name: formState.issuer_name,
+			description: formState.issuer_description,
+			email: formState.issuer_email,
+			url: formState.issuer_url,
+			category: formState.issuer_category,
+			street: formState.issuer_street,
+			streetnumber: formState.issuer_streetnumber,
+			zip: formState.issuer_zip,
+			city: formState.issuer_city,
 		};
 
 		if (formState.issuer_image && String(formState.issuer_image).length > 0) {
 			issuer.image = formState.issuer_image;
 		}
 
-		this.editIssuerFinished = this.issuerManager.editIssuer(this.issuerSlug, issuer).then((newIssuer) => {
-			this.router.navigate(['issuer/issuers', newIssuer.slug]);
-			this.messageService.setMessage('Issuer created successfully.', 'success');
-		}, error => {
-			this.messageService.setMessage('Unable to create issuer: ' + error, 'error');
-		}).then(() => this.editIssuerFinished = null);
+		this.editIssuerFinished = this.issuerManager
+			.editIssuer(this.issuerSlug, issuer)
+			.then(
+				(newIssuer) => {
+					this.router.navigate(['issuer/issuers', newIssuer.slug]);
+					this.messageService.setMessage('Issuer created successfully.', 'success');
+				},
+				(error) => {
+					this.messageService.setMessage('Unable to create issuer: ' + error, 'error');
+				},
+			)
+			.then(() => (this.editIssuerFinished = null));
 	}
 
 	urlBlurred(ev) {

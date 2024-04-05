@@ -6,7 +6,9 @@
 		<oauth-banner></oauth-banner>
 
 		<!-- Title Message -->
-		<h3 class="u-text-h3-bold" id="heading-form">{{ 'Signup.create' | translate }} {{ theme.serviceName || 'Badgr' }} {{ 'General.account' | translate }}</h3>
+		<h3 class="u-text-h3-bold" id="heading-form">
+			{{ 'Signup.create' | translate }} {{ theme.serviceName || 'Badgr' }} {{ 'General.account' | translate }}
+		</h3>
 		<p class="u-text u-text-body u-responsivemargin-top1x2x" *ngIf="!oAuthManager.currentAuthorization">
 			{{ 'Signup.youHaveAccount' | translate }}
 			<a [routerLink]="['/auth/login']">Sign in</a>.
@@ -16,7 +18,8 @@
 			<strong>
 				{{ oAuthManager.currentAuthorization.application.name }}
 			</strong>
-			{{ 'Signup.loginWithOpenEducationalBadges' | translate }} {{ theme.serviceName || 'Open Educational Badges' }}.
+			{{ 'Signup.loginWithOpenEducationalBadges' | translate }}
+			{{ theme.serviceName || 'Open Educational Badges' }}.
 			{{ 'Signup.youHaveAccount' | translate }}
 			<a [routerLink]="['/login']">Sign in</a>!
 		</p>
@@ -49,7 +52,8 @@
 			<!-- Signup Controls -->
 			<fieldset role="group" aria-labelledby="heading-badgrsignup2">
 				<legend class="visuallyhidden" id="heading-badgrsignup2">
-					{{ 'Signup.registerWithUs' | translate }} {{ theme.serviceName || 'Open Educational Badges' }}{{ 'Signup.provideInfo' | translate }}
+					{{ 'Signup.registerWithUs' | translate }} {{ theme.serviceName || 'Open Educational Badges'
+					}}{{ 'Signup.provideInfo' | translate }}
 				</legend>
 
 				<bg-formfield-text
@@ -114,8 +118,9 @@
 					<span class="checkbox-x-text">
 						<strong>
 							{{ 'Signup.agreeToTerms1' | translate }}
-							<a target="_blank" [href]="theme.termsOfServiceLink || 'https://badgr.org/missing-terms'"
-								>{{ 'Signup.agreeToTerms2' | translate }}</a
+							<a target="_blank" [href]="theme.termsOfServiceLink || 'https://badgr.org/missing-terms'">{{
+								'Signup.agreeToTerms2' | translate
+							}}</a
 							>.
 						</strong>
 						<div
@@ -125,7 +130,7 @@
 							"
 							class="checkbox-x-errortext"
 						>
-						{{ 'Signup.readTerms' | translate }}
+							{{ 'Signup.readTerms' | translate }}
 						</div>
 					</span>
 				</label>

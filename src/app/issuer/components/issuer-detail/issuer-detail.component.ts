@@ -24,7 +24,7 @@ import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcru
 })
 export class IssuerDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	readonly issuerImagePlaceHolderUrl = preloadImageURL(
-		'../../../../breakdown/static/images/placeholderavatar-issuer.svg'
+		'../../../../breakdown/static/images/placeholderavatar-issuer.svg',
 	);
 	readonly noIssuersPlaceholderSrc =
 		'../../../../assets/@concentricsky/badgr-style/dist/images/image-empty-issuer.svg';
@@ -53,7 +53,7 @@ export class IssuerDetailComponent extends BaseAuthenticatedRoutableComponent im
 		protected profileManager: UserProfileManager,
 		private configService: AppConfigService,
 		private externalToolsManager: ExternalToolsManager,
-		private dialogService: CommonDialogsService
+		private dialogService: CommonDialogsService,
 	) {
 		super(router, route, loginService);
 
@@ -69,7 +69,7 @@ export class IssuerDetailComponent extends BaseAuthenticatedRoutableComponent im
 			(issuer) => {
 				this.issuer = issuer;
 				this.title.setTitle(
-					`Issuer - ${this.issuer.name} - ${this.configService.theme['serviceName'] || 'Badgr'}`
+					`Issuer - ${this.issuer.name} - ${this.configService.theme['serviceName'] || 'Badgr'}`,
 				);
 				this.crumbs = [
 					{ title: 'Issuers', routerLink: ['/issuer/issuers'] },
@@ -81,26 +81,26 @@ export class IssuerDetailComponent extends BaseAuthenticatedRoutableComponent im
 						(badgesByIssuer) => {
 							const cmp = (a, b) => (a === b ? 0 : a < b ? -1 : 1);
 							this.badges = (badgesByIssuer[this.issuer.issuerUrl] || []).sort((a, b) =>
-								cmp(b.createdAt, a.createdAt)
+								cmp(b.createdAt, a.createdAt),
 							);
 							resolve();
 						},
 						(error) => {
 							this.messageService.reportAndThrowError(
 								`Failed to load badges for ${this.issuer ? this.issuer.name : this.issuerSlug}`,
-								error
+								error,
 							);
 							resolve();
-						}
+						},
 					);
 				});
 			},
 			(error) => {
 				this.messageService.reportLoadingError(
 					`Issuer '${this.issuerSlug}' does not exist or you are not allowed to view the issuer`,
-					error
+					error,
 				);
-			}
+			},
 		);
 
 		this.profileEmailsLoaded = this.profileManager.userProfilePromise
@@ -128,10 +128,10 @@ export class IssuerDetailComponent extends BaseAuthenticatedRoutableComponent im
 							this.messageService.reportMinorSuccess(`Deleted issuer '${this.issuer.name}'`);
 							this.router.navigate(['/issuer/issuers']);
 						},
-						(error) => this.messageService.reportHandledError(`Failed to delete issuer`, error)
+						(error) => this.messageService.reportHandledError(`Failed to delete issuer`, error),
 					);
 				},
-				() => {}
+				() => {},
 			);
 	};
 
