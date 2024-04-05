@@ -141,7 +141,7 @@ export class BadgeClass extends ManagedEntity<ApiBadgeClass, BadgeClassRef> {
 	constructor(
 		commonManager: CommonEntityManager,
 		initialEntity: ApiBadgeClass = null,
-		onUpdateSubscribed: () => void = undefined
+		onUpdateSubscribed: () => void = undefined,
 	) {
 		super(commonManager, onUpdateSubscribed);
 

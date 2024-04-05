@@ -1,17 +1,14 @@
-<dialog aria-labelledby="RecipientBadgeCollectionSelectionDialog"
-					aria-describedby="dialog1Desc"
-					class="dialog dialog-is-active l-dialog dialog-clean"
-					role="dialog"
-	>
+<dialog
+	aria-labelledby="RecipientBadgeCollectionSelectionDialog"
+	aria-describedby="dialog1Desc"
+	class="dialog dialog-is-active l-dialog dialog-clean"
+	role="dialog"
+>
 	<div class="dialog-x-box o-container">
-
-
 		<!-- Header and Search Area -->
 		<header class="dialog-x-header">
 			<h1>{{ dialogTitle }}</h1>
-			<button
-				(click)="cancelDialog()"
-				class="buttonicon buttonicon-link">
+			<button (click)="cancelDialog()" class="buttonicon buttonicon-link">
 				<svg icon="icon_close"></svg>
 				<span class="visuallyhidden">Close</span>
 			</button>
@@ -20,15 +17,16 @@
 		<!-- Badge List -->
 		<div class="u-padding-all2x">
 			<div class="forminput u-margin-bottom2x">
-				<div class="forminput-x-label">
-					Filter your collections
-				</div>
+				<div class="forminput-x-label">Filter your collections</div>
 				<div class="forminput-x-inputs">
 					<input type="text" placeholder="Filter your collections" [(ngModel)]="searchQuery" />
 				</div>
 			</div>
 
-			<table class="datatable datatable-roundheaders datatable-singlecolumn" *bgAwaitPromises="[collectionListLoaded]">
+			<table
+				class="datatable datatable-roundheaders datatable-singlecolumn"
+				*bgAwaitPromises="[collectionListLoaded]"
+			>
 				<thead class="datatable-x-head">
 					<tr class="datatable-x-header">
 						<th class="datatable-x-cell">Collection</th>
@@ -39,12 +37,13 @@
 						<td class="datatable-x-cell">
 							<label htmlFor="collection-{{ collection.slug }}" class="checkbox">
 								<input
-										type="checkbox"
-										#collectionsCheckbox
-										[id]="'collection-' + collection.slug"
-									 	[name]="'collection-' + collection.slug"
-								 		(change)="updateCollection(collection, collectionsCheckbox.checked)">
-								<span class="checkbox-x-text">{{collection.name}}</span>
+									type="checkbox"
+									#collectionsCheckbox
+									[id]="'collection-' + collection.slug"
+									[name]="'collection-' + collection.slug"
+									(change)="updateCollection(collection, collectionsCheckbox.checked)"
+								/>
+								<span class="checkbox-x-text">{{ collection.name }}</span>
 							</label>
 						</td>
 					</tr>
@@ -56,11 +55,7 @@
 				<button class="button button-secondary" (click)="cancelDialog()">Cancel</button>
 			</div>
 		</div>
-		
-		<div class="bordered bordered-top" *ngIf="badgeCollectionsResults.length == 0">
-			No Available Collections
-		</div>
-		
 
+		<div class="bordered bordered-top" *ngIf="badgeCollectionsResults.length == 0">No Available Collections</div>
 	</div>
 </dialog>

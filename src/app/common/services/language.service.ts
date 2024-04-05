@@ -20,7 +20,7 @@ export class LanguageService {
 		// 2. use german as a default lang
 		let browserLang = this.translate.getBrowserCultureLang(); // Get browser lang
 		let browserLangVal = browserLang.toLowerCase().slice(0, 2);
-		
+
 		//ToDo: comment in when all pages are completely translated
 		/* if (lngs.includes(browserLangVal)) {
 			this.translate.setDefaultLang(browserLangVal);

@@ -6,9 +6,9 @@ import {
 	FormControl,
 	FormGroup,
 	ValidatorFn,
-	Validators
+	Validators,
 } from '@angular/forms';
-import {markControlsDirty} from './form-util';
+import { markControlsDirty } from './form-util';
 
 /**
  * A function that exercises the typed forms to ensure they compile correctly.
@@ -16,23 +16,16 @@ import {markControlsDirty} from './form-util';
 function typedFormExample() {
 	// Create a typed form whose type is dynamically constructed by the builder calls
 	const group = new TypedFormGroup()
-		.add("firstName", typedControl("", Validators.required))
-		.add("lastName", typedControl("", Validators.required))
+		.add('firstName', typedControl('', Validators.required))
+		.add('lastName', typedControl('', Validators.required))
 		.add(
-			"address",
+			'address',
 			typedFormGroup()
-				.add("street", typedControl("2557 Kincaid"))
-				.add("city", typedControl("Eugene"))
-				.add("zip", typedControl("97405"))
+				.add('street', typedControl('2557 Kincaid'))
+				.add('city', typedControl('Eugene'))
+				.add('zip', typedControl('97405')),
 		)
-		.addArray(
-			"items",
-			typedFormGroup()
-				.addControl("itemName", "")
-				.addControl("itemId", 0)
-		)
-	;
-
+		.addArray('items', typedFormGroup().addControl('itemName', '').addControl('itemId', 0));
 	// All these are type checked:
 	group.value.address.street.trim();
 	const a = group.controls.firstName.value;
@@ -52,7 +45,7 @@ function typedFormExample() {
 export function typedControl<ValueType>(
 	value: ValueType,
 	validator?: ValidatorFn | ValidatorFn[],
-	configurator?: (control: TypedFormControl<ValueType>) => void
+	configurator?: (control: TypedFormControl<ValueType>) => void,
 ): TypedFormControl<ValueType> {
 	const control = new TypedFormControl(value, validator);
 	if (configurator) configurator(control);
@@ -66,7 +59,7 @@ export function typedControl<ValueType>(
  */
 export function typedFormGroup(
 	validatorOrOpts?: ValidatorFn | ValidatorFn[] | AbstractControlOptions | null,
-	asyncValidator?: AsyncValidatorFn | AsyncValidatorFn[] | null
+	asyncValidator?: AsyncValidatorFn | AsyncValidatorFn[] | null,
 ): TypedFormGroup<{}, {}> {
 	return new TypedFormGroup(validatorOrOpts, asyncValidator);
 }
@@ -77,11 +70,8 @@ export function typedFormGroup(
  * @param {ItemType & TypedFormItem<ItemValueType>} templateItem
  * @returns {TypedFormArray<ItemValueType, ItemType extends TypedFormItem<ItemValueType>>}
  */
-export function typedFormArray<
-	ItemValueType,
-	ItemType extends TypedFormItem<ItemValueType>
->(
-	templateItem: ItemType & TypedFormItem<ItemValueType>
+export function typedFormArray<ItemValueType, ItemType extends TypedFormItem<ItemValueType>>(
+	templateItem: ItemType & TypedFormItem<ItemValueType>,
 ): TypedFormArray<ItemValueType, ItemType> {
 	return new TypedFormArray<ItemValueType, ItemType>(templateItem);
 }
@@ -92,18 +82,42 @@ export function typedFormArray<
 export abstract class TypedFormItem<ValueType> {
 	abstract readonly rawControl: AbstractControl;
 
-	get value(): ValueType { return this.rawControl.value; }
-	get status() { return this.rawControl.status; }
-	get valid() { return this.rawControl.valid; }
-	get invalid() { return this.rawControl.invalid; }
-	get pending() { return this.rawControl.pending; }
-	get disabled() { return this.rawControl.disabled; }
-	get enabled() { return this.rawControl.enabled; }
-	get errors() { return this.rawControl.errors; }
-	get pristine() { return this.rawControl.pristine; }
-	get dirty() { return this.rawControl.dirty; }
-	get touched() { return this.rawControl.touched; }
-	get untouched() { return this.rawControl.untouched; }
+	get value(): ValueType {
+		return this.rawControl.value;
+	}
+	get status() {
+		return this.rawControl.status;
+	}
+	get valid() {
+		return this.rawControl.valid;
+	}
+	get invalid() {
+		return this.rawControl.invalid;
+	}
+	get pending() {
+		return this.rawControl.pending;
+	}
+	get disabled() {
+		return this.rawControl.disabled;
+	}
+	get enabled() {
+		return this.rawControl.enabled;
+	}
+	get errors() {
+		return this.rawControl.errors;
+	}
+	get pristine() {
+		return this.rawControl.pristine;
+	}
+	get dirty() {
+		return this.rawControl.dirty;
+	}
+	get touched() {
+		return this.rawControl.touched;
+	}
+	get untouched() {
+		return this.rawControl.untouched;
+	}
 
 	/**
 	 * Marks all controls in this tree dirty and returns true if the form is valid.
@@ -130,7 +144,7 @@ export abstract class TypedFormItem<ValueType> {
 			emitEvent?: boolean;
 			emitModelToViewChange?: boolean;
 			emitViewToModelChange?: boolean;
-		}
+		},
 	);
 
 	/**
@@ -152,21 +166,18 @@ export class TypedFormControl<ValueType> extends TypedFormItem<ValueType> {
 
 	constructor(
 		private initialValue: ValueType,
-		validator?: ValidatorFn | ValidatorFn[]
+		validator?: ValidatorFn | ValidatorFn[],
 	) {
 		super();
 
 		this.rawControl = new FormControl(
 			initialValue,
-			Array.isArray(validator) ? Validators.compose(validator) : validator
+			Array.isArray(validator) ? Validators.compose(validator) : validator,
 		);
 	}
 
 	clone(): this {
-		return new TypedFormControl(
-			this.value,
-			this.rawControl.validator
-		) as this;
+		return new TypedFormControl(this.value, this.rawControl.validator) as this;
 	}
 
 	reset() {
@@ -179,15 +190,15 @@ export class TypedFormControl<ValueType> extends TypedFormItem<ValueType> {
 			onlySelf?: boolean;
 			emitEvent?: boolean;
 			emitModelToViewChange?: boolean;
-			emitViewToModelChange?: boolean
-		}
+			emitViewToModelChange?: boolean;
+		},
 	) {
 		this.rawControl.setValue(value);
 	}
 }
 
 type RawGroupOf<T> = {
-	[F in keyof T]: AbstractControl
+	[F in keyof T]: AbstractControl;
 };
 
 /**
@@ -196,16 +207,13 @@ type RawGroupOf<T> = {
  * Use the `add*` methods to add items to this group and the type of the controls and the resulting value will be
  * maintained.
  */
-export class TypedFormGroup<
-	ValueType = {},
-	ControlsType = {}
-> extends TypedFormItem<ValueType> {
+export class TypedFormGroup<ValueType = {}, ControlsType = {}> extends TypedFormItem<ValueType> {
 	readonly rawControl: FormGroup;
 	controls = {} as ControlsType;
 
 	constructor(
 		validatorOrOpts?: ValidatorFn | ValidatorFn[] | AbstractControlOptions | null,
-		asyncValidator?: AsyncValidatorFn | AsyncValidatorFn[] | null
+		asyncValidator?: AsyncValidatorFn | AsyncValidatorFn[] | null,
 	) {
 		super();
 		this.rawControl = new FormGroup({}, validatorOrOpts, asyncValidator);
@@ -222,14 +230,11 @@ export class TypedFormGroup<
 		return this.rawControl.controls as RawGroupOf<ControlsType>;
 	}
 
-	addControl<
-		NameType extends string,
-		ItemValueType
-	>(
+	addControl<NameType extends string, ItemValueType>(
 		name: NameType,
 		value: ItemValueType,
 		validator?: ValidatorFn | ValidatorFn[],
-		configurator?: (control: TypedFormControl<ItemValueType>) => void
+		configurator?: (control: TypedFormControl<ItemValueType>) => void,
 	): TypedFormGroup<
 		ValueType & Record<NameType, ItemValueType>,
 		ControlsType & Record<NameType, TypedFormControl<ItemValueType>>
@@ -237,13 +242,9 @@ export class TypedFormGroup<
 		return this.add(name, typedControl<ItemValueType>(value, validator, configurator));
 	}
 
-	addArray<
-		NameType extends string,
-		ItemType extends TypedFormItem<ItemValueType>,
-		ItemValueType
-	>(
+	addArray<NameType extends string, ItemType extends TypedFormItem<ItemValueType>, ItemValueType>(
 		name: NameType,
-		templateItem: ItemType & TypedFormItem<ItemValueType>
+		templateItem: ItemType & TypedFormItem<ItemValueType>,
 	): TypedFormGroup<
 		ValueType & Record<NameType, ItemValueType[]>,
 		ControlsType & Record<NameType, TypedFormArray<ItemValueType, ItemType>>
@@ -251,23 +252,16 @@ export class TypedFormGroup<
 		return this.add(name, typedFormArray(templateItem));
 	}
 
-	add<
-		NameType extends string,
-		ItemType extends TypedFormItem<ItemValueType>,
-		ItemValueType
-	>(
+	add<NameType extends string, ItemType extends TypedFormItem<ItemValueType>, ItemValueType>(
 		name: NameType,
-		typedItem: ItemType & TypedFormItem<ItemValueType>
-	): TypedFormGroup<
-		ValueType & Record<NameType, ItemValueType>,
-		ControlsType & Record<NameType, ItemType>
-	> {
-		(this.controls as unknown as {[name: string]: TypedFormItem<unknown>})[name] = typedItem;
+		typedItem: ItemType & TypedFormItem<ItemValueType>,
+	): TypedFormGroup<ValueType & Record<NameType, ItemValueType>, ControlsType & Record<NameType, ItemType>> {
+		(this.controls as unknown as { [name: string]: TypedFormItem<unknown> })[name] = typedItem;
 		this.rawControl.addControl(name, typedItem.rawControl);
 		return this as unknown as TypedFormGroup<
 			ValueType & Record<NameType, ItemValueType>,
 			ControlsType & Record<NameType, ItemType>
-			>;
+		>;
 	}
 
 	clone(): this {
@@ -286,10 +280,10 @@ export class TypedFormGroup<
 			onlySelf?: boolean;
 			emitEvent?: boolean;
 			emitModelToViewChange?: boolean;
-			emitViewToModelChange?: boolean
-		}
+			emitViewToModelChange?: boolean;
+		},
 	) {
-		Object.keys(this.controls).forEach(key => {
+		Object.keys(this.controls).forEach((key) => {
 			this.controls[key].setValue(value[key]);
 		});
 	}
@@ -303,17 +297,14 @@ export class TypedFormGroup<
  * Typed template-based form array. Wraps a [[FormArray]] and holds a template of the type of item that will be added
  * to the array. Can only be used to hold the same type of form item, but automates creating new instances of it.
  */
-export class TypedFormArray<
-	ItemValueType,
-	ItemType extends TypedFormItem<ItemValueType>
-> extends TypedFormItem<ItemValueType[]> {
+export class TypedFormArray<ItemValueType, ItemType extends TypedFormItem<ItemValueType>> extends TypedFormItem<
+	ItemValueType[]
+> {
 	readonly rawControl = new FormArray([]);
 
 	controls: ItemType[] = [];
 
-	constructor(
-		public templateItem: ItemType & TypedFormItem<ItemValueType>
-	) {
+	constructor(public templateItem: ItemType & TypedFormItem<ItemValueType>) {
 		super();
 	}
 
@@ -337,12 +328,12 @@ export class TypedFormArray<
 
 	clone(): this {
 		const array = new TypedFormArray(this.templateItem);
-		this.controls.forEach(item => array.push(item.clone()));
+		this.controls.forEach((item) => array.push(item.clone()));
 		return array as this;
 	}
 
 	reset() {
-		this.controls.forEach(item => item.reset());
+		this.controls.forEach((item) => item.reset());
 	}
 
 	removeAt(i: number): ItemType {
@@ -358,8 +349,8 @@ export class TypedFormArray<
 			onlySelf?: boolean;
 			emitEvent?: boolean;
 			emitModelToViewChange?: boolean;
-			emitViewToModelChange?: boolean
-		}
+			emitViewToModelChange?: boolean;
+		},
 	) {
 		while (this.controls.length < value.length) {
 			this.addFromTemplate();
@@ -369,8 +360,6 @@ export class TypedFormArray<
 			this.removeAt(this.controls.length - 1);
 		}
 
-		this.controls.forEach(
-			(control, i) => control.setValue(value[i])
-		);
+		this.controls.forEach((control, i) => control.setValue(value[i]));
 	}
 }

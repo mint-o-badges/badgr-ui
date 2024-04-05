@@ -1,6 +1,6 @@
-import {Directive, ElementRef, OnDestroy} from '@angular/core';
-import {EventsService} from '../services/events.service';
-import {Subscription} from 'rxjs';
+import { Directive, ElementRef, OnDestroy } from '@angular/core';
+import { EventsService } from '../services/events.service';
+import { Subscription } from 'rxjs';
 
 /**
  * RouterLink which exports itself. Shouldn't be necessary to create this, but the built-in RouterLink does not have
@@ -9,10 +9,10 @@ import {Subscription} from 'rxjs';
 
 @Directive({
 	selector: '.menuItem',
-	exportAs: "menuitem",
+	exportAs: 'menuitem',
 	host: {
-		'[class.menuitem]': 'true'
-	}
+		'[class.menuitem]': 'true',
+	},
 })
 export class MenuItemDirective implements OnDestroy {
 	menuItem: boolean;
@@ -22,9 +22,9 @@ export class MenuItemDirective implements OnDestroy {
 
 	constructor(
 		protected elemRef: ElementRef,
-		protected eventService: EventsService
+		protected eventService: EventsService,
 	) {
-		this.clickSubscription = eventService.documentClicked.subscribe(e => this.onDocumentClick(e));
+		this.clickSubscription = eventService.documentClicked.subscribe((e) => this.onDocumentClick(e));
 	}
 	ngOnDestroy(): void {
 		this.clickSubscription.unsubscribe();
@@ -35,12 +35,12 @@ export class MenuItemDirective implements OnDestroy {
 	}
 
 	onDocumentClick(event: Event) {
-		const buttonElem: Element = this.elem.querySelector(":scope > button");
+		const buttonElem: Element = this.elem.querySelector(':scope > button');
 
 		if (buttonElem && buttonElem.contains(event.target as Node)) {
-			this.elem.classList.toggle("menuitem-is-open");
+			this.elem.classList.toggle('menuitem-is-open');
 		} else {
-			this.elem.classList.remove("menuitem-is-open");
+			this.elem.classList.remove('menuitem-is-open');
 		}
 	}
 }

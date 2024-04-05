@@ -14,7 +14,6 @@ import { EventsService } from './common/services/events.service';
 import { OAuthManager } from './common/services/oauth-manager.service';
 import { EmbedService } from './common/services/embed.service';
 import { InitialLoadingIndicatorService } from './common/services/initial-loading-indicator.service';
-import { Angulartics2GoogleTagManager } from 'angulartics2';
 
 import { ApiExternalToolLaunchpoint } from '../app/externaltools/models/externaltools-api.model';
 import { ExternalToolsManager } from '../app/externaltools/services/externaltools-manager.service';
@@ -26,7 +25,6 @@ import { Title } from '@angular/platform-browser';
 import { MarkdownHintsDialog } from './common/dialogs/markdown-hints-dialog.component';
 import { Issuer } from './issuer/models/issuer.model';
 import { IssuerManager } from './issuer/services/issuer-manager.service';
-import { Angulartics2GoogleAnalytics } from 'angulartics2';
 import { ImportModalComponent } from './mozz-transition/components/import-modal/import-modal.component';
 import { ExportPdfDialog } from './common/dialogs/export-pdf-dialog/export-pdf-dialog.component';
 import { CopyBadgeDialog } from './common/dialogs/copy-badge-dialog/copy-badge-dialog.component';
@@ -45,30 +43,26 @@ import { TranslateService } from '@ngx-translate/core';
 		'[class.l-stickyfooter-chromeless]': '! showAppChrome',
 	},
 	templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss']
+	styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit, AfterViewInit {
-    /**
-     * Enables or disables the "curtain" feature, hiding the normal page.
-     */
-    curtainEnabled = true;
-    get curtain() {
-        let re = /\?curtainEnabled=(\w*)/i;
-        let match = this.router.url.match(re);
-        if (match && match.length == 2) {
-            let param: string = match[1];
-            if (param == 'false' || param == 'true' ||
-                param == 'yes' || param == 'no')
-                localStorage.setItem("curtainEnabled",
-                                     param == 'true' || param == 'yes'
-                                         ? 'true' : 'false');
-        }
+	/**
+	 * Enables or disables the "curtain" feature, hiding the normal page.
+	 */
+	curtainEnabled = true;
+	get curtain() {
+		let re = /\?curtainEnabled=(\w*)/i;
+		let match = this.router.url.match(re);
+		if (match && match.length == 2) {
+			let param: string = match[1];
+			if (param == 'false' || param == 'true' || param == 'yes' || param == 'no')
+				localStorage.setItem('curtainEnabled', param == 'true' || param == 'yes' ? 'true' : 'false');
+		}
 
-        let local = localStorage.getItem("curtainEnabled");
-        if (local == 'false' || local == 'true')
-            this.curtainEnabled = localStorage.getItem("curtainEnabled") == 'true';
-        return this.curtainEnabled && !this.router.url.includes('impressum');
-    }
+		let local = localStorage.getItem('curtainEnabled');
+		if (local == 'false' || local == 'true') this.curtainEnabled = localStorage.getItem('curtainEnabled') == 'true';
+		return this.curtainEnabled && !this.router.url.includes('impressum');
+	}
 
 	title = 'Badgr Angular';
 	loggedIn = false;
@@ -112,7 +106,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
 	// For changing language of texts defined in ts file
 	lngObserver = this.languageService.getSelectedLngObs();
-	selectedLng:string = "de";
+	selectedLng: string = 'de';
 
 	get showAppChrome() {
 		return !this.embedService.isEmbedded;
@@ -158,12 +152,10 @@ export class AppComponent implements OnInit, AfterViewInit {
 		private queryParams: QueryParametersService,
 		private externalToolsManager: ExternalToolsManager,
 		private initialLoadingIndicatorService: InitialLoadingIndicatorService,
-		private angulartics2GoogleAnalytics: Angulartics2GoogleAnalytics,
-		private angulartics2GoogleTagManager: Angulartics2GoogleTagManager, // required for angulartics to work
 		private titleService: Title,
 		protected issuerManager: IssuerManager,
 		private languageService: LanguageService, // Translation
-		private translate: TranslateService
+		private translate: TranslateService,
 	) {
 		// Initialize App language
 		this.languageService.setInitialAppLangauge();
@@ -171,9 +163,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 			if (lng != null) {
 				this.selectedLng = lng;
 			}
-		  });
-
-		angulartics2GoogleTagManager.startTracking();
+		});
 
 		messageService.useRouter(router);
 
@@ -256,8 +246,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 		this.sessionService.loggedin$.subscribe((loggedIn) =>
 			setTimeout(() => {
 				this.loggedIn = loggedIn;
-                if (loggedIn)
-                    this.refreshProfile();
+				if (loggedIn) this.refreshProfile();
 			}),
 		);
 		this.shouldShowIssuersTab();

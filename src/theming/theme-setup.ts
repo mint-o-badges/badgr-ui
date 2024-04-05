@@ -5,13 +5,11 @@ import { BadgrTheme } from './badgr-theme';
 /**
  * Initializes any data from the Badgr Theme definition.
  */
-export function initializeTheme(
-	configService: AppConfigService
-) {
+export function initializeTheme(configService: AppConfigService) {
 	const selectedTheme = configService.theme;
 
-  // Redirect the user to the alternate landing page if they aren't logged in and are requesting the root of the domain
-	if (window.location.pathname === "/") {
+	// Redirect the user to the alternate landing page if they aren't logged in and are requesting the root of the domain
+	if (window.location.pathname === '/') {
 		let hasSession = false;
 
 		try {
@@ -34,13 +32,13 @@ export function initializeTheme(
 
 function writeFavicons(theme: BadgrTheme) {
 	if (theme.favicons && theme.favicons.length && theme.favicons.length > 0) {
-		for (let i=0; i < theme.favicons.length; i++) {
+		for (let i = 0; i < theme.favicons.length; i++) {
 			const favicon = theme.favicons[i];
-			const link = document.createElement("link");
-			link.setAttribute("rel", favicon.rel);
-			link.setAttribute("href", favicon.href);
+			const link = document.createElement('link');
+			link.setAttribute('rel', favicon.rel);
+			link.setAttribute('href', favicon.href);
 			if (favicon.sizes) {
-				link.setAttribute("sizes", favicon.sizes);
+				link.setAttribute('sizes', favicon.sizes);
 			}
 			document.head.appendChild(link);
 		}
@@ -49,16 +47,12 @@ function writeFavicons(theme: BadgrTheme) {
 
 function setCssCustomPropColors(theme: BadgrTheme) {
 	for (const propName of Object.keys(theme.cssCustomProps)) {
-		document.documentElement.style.setProperty(
-			propName,
-			theme.cssCustomProps[propName]
-		);
+		document.documentElement.style.setProperty(propName, theme.cssCustomProps[propName]);
 	}
 }
 
-
 function setupLoadingScreen(theme: BadgrTheme) {
-	const images = document.querySelectorAll("img.initial-loading-image");
+	const images = document.querySelectorAll('img.initial-loading-image');
 	if (images && images.length > 0) {
 		const img = images[0] as HTMLImageElement;
 

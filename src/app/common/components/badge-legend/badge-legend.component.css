@@ -1,49 +1,47 @@
 .category {
-    border: 3px solid var(--color-light4);
-    padding: 1.2em;
-    position: relative;
+	border: 3px solid var(--color-light4);
+	padding: 1.2em;
+	position: relative;
 }
 
-
 .legend-images {
-    display: flex;
-    justify-content: space-evenly;
-    width: 100%;
-    height: 65px;
-    padding: 1.6em 0;
+	display: flex;
+	justify-content: space-evenly;
+	width: 100%;
+	height: 65px;
+	padding: 1.6em 0;
 }
 
 .legend-item {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
 }
 
 .category-text {
-    padding: 0.4em 0;
+	padding: 0.4em 0;
 }
 .legend-item img {
-    height: 100%
+	height: 100%;
 }
 
 .membership {
-    border-color:#cbe0e4
+	border-color: #cbe0e4;
 }
 .ability {
-    border-color:#121940
+	border-color: #121940;
 }
 .archievement {
-    border-color:#b3d44d
+	border-color: #b3d44d;
 }
 .skill {
-    border-color:#09769d !important;
+	border-color: #09769d !important;
 }
 
 .dialog-x-box {
-    max-width: 900px;
+	max-width: 900px;
 }
 
-
 .buttonicon {
-    float: right;
+	float: right;
 }

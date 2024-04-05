@@ -1,41 +1,41 @@
-import {AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild} from '@angular/core';
-import {FormControl, FormGroup} from '@angular/forms';
-import {CommonDialogsService} from '../services/common-dialogs.service';
+import {
+	AfterViewInit,
+	Component,
+	ElementRef,
+	EventEmitter,
+	Input,
+	OnChanges,
+	Output,
+	SimpleChanges,
+	ViewChild,
+} from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+import { CommonDialogsService } from '../services/common-dialogs.service';
 
 @Component({
 	selector: 'bg-formfield-radio',
 
 	host: {
-		'class': 'forminput',
+		class: 'forminput',
 		'[class.forminput-is-error]': 'isErrorState',
 		'[class.forminput-locked]': 'isLockedState',
 		'[class.forminput-monospaced]': 'monospaced',
 		'[class.forminput-withbutton]': 'inlineButtonText',
-		'[class.forminput-withsublabel]': 'sublabel'
+		'[class.forminput-withsublabel]': 'sublabel',
 	},
 	template: `
 		<div class="">
 			<label class="radio">
-				<input
-					type="radio"
-					[id]="inputId"
-					[name]="name"
-					[value]="value"
-					[formControl]="control"
-					#radioInput>
+				<input type="radio" [id]="inputId" [name]="name" [value]="value" [formControl]="control" #radioInput />
 				<span class="radio-x-text">{{ label }}</span>
 			</label>
 
 			<p class="u-margin-left3p5x u-text-small u-margin-bottom2x" *ngIf="sublabel">{{ sublabel }}</p>
-
 		</div>
-		<p
-			class="forminput-x-error"
-			*ngIf="!control.valid && control.dirty && last">{{ errorMessageForDisplay }}</p>
-	`
+		<p class="forminput-x-error" *ngIf="!control.valid && control.dirty && last">{{ errorMessageForDisplay }}</p>
+	`,
 })
 export class FormFieldRadio implements OnChanges, AfterViewInit {
-
 	set unlocked(unlocked: boolean) {
 		this._unlocked = unlocked;
 		this.updateDisabled();
@@ -70,12 +70,10 @@ export class FormFieldRadio implements OnChanges, AfterViewInit {
 		return messagesForValidationError(
 			this.label || this.ariaLabel,
 			this.control && this.control.errors,
-			this.errorMessage
-		).concat(messagesForValidationError(
-			this.label,
-			this.errorGroup && this.errorGroup.errors,
-			this.errorGroupMessage
-		))[0]; // Only display the first error
+			this.errorMessage,
+		).concat(
+			messagesForValidationError(this.label, this.errorGroup && this.errorGroup.errors, this.errorGroupMessage),
+		)[0]; // Only display the first error
 	}
 
 	get controlErrorState() {
@@ -91,7 +89,7 @@ export class FormFieldRadio implements OnChanges, AfterViewInit {
 	}
 
 	get inputId() {
-		return this.id || (this.label || this.randomName).replace(/[^\w]+/g, "_").toLowerCase();
+		return this.id || (this.label || this.randomName).replace(/[^\w]+/g, '_').toLowerCase();
 	}
 	@Input() control: FormControl;
 	@Input() value: string;
@@ -108,13 +106,13 @@ export class FormFieldRadio implements OnChanges, AfterViewInit {
 	@Input() inlineButtonText: string;
 	@Input() last: boolean;
 
-
 	@Output() buttonClicked = new EventEmitter<MouseEvent>();
 
 	@Input() errorGroup: FormGroup;
 	@Input() errorGroupMessage: CustomValidatorMessages;
 
-	@Input() unlockConfirmText = 'Unlocking this field may have unintended consequences. Are you sure you want to continue?';
+	@Input() unlockConfirmText =
+		'Unlocking this field may have unintended consequences. Are you sure you want to continue?';
 
 	@Input() autofocus = false;
 
@@ -130,14 +128,9 @@ export class FormFieldRadio implements OnChanges, AfterViewInit {
 
 	private randomName = 'field' + Math.random();
 
+	constructor(private dialogService: CommonDialogsService) {}
 
-	constructor(
-		private dialogService: CommonDialogsService,
-	) {
-	}
-
-	ngOnInit() {
-	}
+	ngOnInit() {}
 
 	ngAfterViewInit() {
 		if (this.autofocus) {
@@ -153,8 +146,11 @@ export class FormFieldRadio implements OnChanges, AfterViewInit {
 
 		if ('initialValue' in changes) {
 			const initialValue = changes['initialValue'].currentValue;
-			if ((this.value === null || this.value === undefined || this.value === '') &&
-				(initialValue !== null && initialValue !== undefined && initialValue !== '')
+			if (
+				(this.value === null || this.value === undefined || this.value === '') &&
+				initialValue !== null &&
+				initialValue !== undefined &&
+				initialValue !== ''
 			) {
 				this.control.setValue(initialValue);
 			}
@@ -174,15 +170,17 @@ export class FormFieldRadio implements OnChanges, AfterViewInit {
 	}
 
 	unlock() {
-		this.dialogService.confirmDialog.openResolveRejectDialog({
-			dialogTitle: 'Are you sure?',
-			dialogBody: this.unlockConfirmText,
-			resolveButtonLabel: 'Continue',
-			rejectButtonLabel: 'Cancel',
-		}).then(
-			() => this.unlocked = true,
-			() => void 0
-		);
+		this.dialogService.confirmDialog
+			.openResolveRejectDialog({
+				dialogTitle: 'Are you sure?',
+				dialogBody: this.unlockConfirmText,
+				resolveButtonLabel: 'Continue',
+				rejectButtonLabel: 'Cancel',
+			})
+			.then(
+				() => (this.unlocked = true),
+				() => void 0,
+			);
 	}
 
 	cacheControlState() {
@@ -198,9 +196,7 @@ export class FormFieldRadio implements OnChanges, AfterViewInit {
 	select() {
 		this.inputElement.select();
 	}
-
 }
-
 
 export type ValidatorKey = 'required';
 
@@ -210,31 +206,32 @@ export type CustomValidatorMessages = string | { [validatorKey: string]: string 
  * Default validation message generators for input fields.
  */
 export const defaultValidatorMessages: {
-	[validatorKey: string]: (label: string, result?: unknown) => string
+	[validatorKey: string]: (label: string, result?: unknown) => string;
 } = {
-	'required': (label: string) => `${label} is required`,
+	required: (label: string) => `${label} is required`,
 };
 
 export function messagesForValidationError(
 	label: string,
 	validatorResult: { [key: string]: string },
-	customMessages: CustomValidatorMessages
+	customMessages: CustomValidatorMessages,
 ): string[] {
-	if (validatorResult && typeof (validatorResult) === 'object' && Object.keys(validatorResult).length > 0) {
-		if (typeof (customMessages) === 'string') {
+	if (validatorResult && typeof validatorResult === 'object' && Object.keys(validatorResult).length > 0) {
+		if (typeof customMessages === 'string') {
 			return [customMessages];
 		}
 
 		const messages: string[] = [];
 
-		Object.keys(validatorResult).forEach(validatorKey => {
+		Object.keys(validatorResult).forEach((validatorKey) => {
 			const validatorValue = validatorResult[validatorKey];
 
 			messages.push(
-				(customMessages && typeof (customMessages) === 'object' && customMessages[validatorKey]) ||
-				(validatorValue && typeof (validatorValue) === 'string' && validatorValue) ||
-				(defaultValidatorMessages[validatorKey] && defaultValidatorMessages[validatorKey](label, validatorValue)) ||
-				`Field failed ${validatorKey} validation.`
+				(customMessages && typeof customMessages === 'object' && customMessages[validatorKey]) ||
+					(validatorValue && typeof validatorValue === 'string' && validatorValue) ||
+					(defaultValidatorMessages[validatorKey] &&
+						defaultValidatorMessages[validatorKey](label, validatorValue)) ||
+					`Field failed ${validatorKey} validation.`,
 			);
 		});
 

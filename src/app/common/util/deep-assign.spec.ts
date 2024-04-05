@@ -1,4 +1,4 @@
-import {deepAssign, jsonCopy, toJsonInclArrayProps} from './deep-assign';
+import { deepAssign, jsonCopy, toJsonInclArrayProps } from './deep-assign';
 
 const assign = Object.assign;
 
@@ -11,10 +11,7 @@ export function toArray(obj: unknown): Array<unknown> {
 }
 
 describe('deepAssign', () => {
-	function testPair(
-		dest: unknown,
-		source: unknown
-	) {
+	function testPair(dest: unknown, source: unknown) {
 		const origDestStr = toJsonInclArrayProps(dest);
 		const sourceStr = toJsonInclArrayProps(source);
 
@@ -40,31 +37,26 @@ describe('deepAssign', () => {
 		return [source, dest];
 	}
 
-	it("should handle primitives", () => {
-		testPair([], ["string", -1, 0, 1, .1, NaN, Infinity]);
-		testPair({}, { a: "string", b: -1, c: 0, d: 1, e: .1, f: NaN, g: Infinity });
+	it('should handle primitives', () => {
+		testPair([], ['string', -1, 0, 1, 0.1, NaN, Infinity]);
+		testPair({}, { a: 'string', b: -1, c: 0, d: 1, e: 0.1, f: NaN, g: Infinity });
 	});
 
-	it("should handle removing and adding values to arrays", () => {
-		const cases = [
-			[],
-			[1],
-			[1, 2],
-			[1, 2, 3]
-		];
+	it('should handle removing and adding values to arrays', () => {
+		const cases = [[], [1], [1, 2], [1, 2, 3]];
 
-		cases.forEach(left => {
-			cases.forEach(right => {
+		cases.forEach((left) => {
+			cases.forEach((right) => {
 				[
 					[left, right],
-					[ toObject(left), right],
-					[ left, toObject(right)],
-					[ toObject(left), toObject(right)]
+					[toObject(left), right],
+					[left, toObject(right)],
+					[toObject(left), toObject(right)],
 				].forEach(([actual, expected]) => {
 					testPair(jsonCopy(actual), jsonCopy(expected));
-					testPair([ jsonCopy(actual) ], jsonCopy(expected));
-					testPair(jsonCopy(actual), [ jsonCopy(expected) ]);
-					testPair([ jsonCopy(actual) ] , [ jsonCopy(expected) ]);
+					testPair([jsonCopy(actual)], jsonCopy(expected));
+					testPair(jsonCopy(actual), [jsonCopy(expected)]);
+					testPair([jsonCopy(actual)], [jsonCopy(expected)]);
 
 					testPair({ a: jsonCopy(actual) }, jsonCopy(expected));
 					testPair(jsonCopy(actual), { a: jsonCopy(expected) });
@@ -74,8 +66,8 @@ describe('deepAssign', () => {
 		});
 	});
 
-	it("should handle objects where arrays should be", () => {
-		testPair([{}], [ [ 1, 2 ]]);
+	it('should handle objects where arrays should be', () => {
+		testPair([{}], [[1, 2]]);
 	});
 
 	/*it("should handle changed nested properties without changing references", () => {
@@ -93,29 +85,29 @@ describe('deepAssign', () => {
 		expect(dest.a.b).toBe(b);
 	});*/
 
-	it("should handle adding properties", () => {
-		testPair({a : { b : 20 }}, { a: { b: 10, c: 20 }});
+	it('should handle adding properties', () => {
+		testPair({ a: { b: 20 } }, { a: { b: 10, c: 20 } });
 	});
 
-	it("should handle removing properties", () => {
-		testPair({a : { b : 20 }}, { a: { }});
+	it('should handle removing properties', () => {
+		testPair({ a: { b: 20 } }, { a: {} });
 	});
 
-	it("should handle mixed object arrays", () => {
-		testPair({a : [1, 2, 3, 4]}, { a: Object.assign([1, 2, 3], {a: 10})});
+	it('should handle mixed object arrays', () => {
+		testPair({ a: [1, 2, 3, 4] }, { a: Object.assign([1, 2, 3], { a: 10 }) });
 	});
 
-	it("should error on new recursive trees", () => {
-		const source = { a : { b : 10 }};
-		(source.a as unknown as {b: object}).b = source;
+	it('should error on new recursive trees', () => {
+		const source = { a: { b: 10 } };
+		(source.a as unknown as { b: object }).b = source;
 
-		expect(() => testPair({ }, source)).toThrow();
+		expect(() => testPair({}, source)).toThrow();
 	});
 
-	it("should error on existing recursive trees", () => {
-		const source = { a : { b : 10 }};
-		(source.a as unknown as {b: object}).b = source;
+	it('should error on existing recursive trees', () => {
+		const source = { a: { b: 10 } };
+		(source.a as unknown as { b: object }).b = source;
 
-		expect(() => testPair({ a : { b : 10 } }, source)).toThrow();
+		expect(() => testPair({ a: { b: 10 } }, source)).toThrow();
 	});
 });

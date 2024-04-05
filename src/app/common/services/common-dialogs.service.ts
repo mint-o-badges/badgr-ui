@@ -8,7 +8,6 @@ import { NounprojectDialog } from '../dialogs/nounproject-dialog/nounproject-dia
 import { CopyBadgeDialog } from '../dialogs/copy-badge-dialog/copy-badge-dialog.component';
 import { ForkBadgeDialog } from '../dialogs/fork-badge-dialog/fork-badge-dialog.component';
 
-
 @Injectable()
 export class CommonDialogsService {
 	confirmDialog: ConfirmDialog;
@@ -30,7 +29,7 @@ export class CommonDialogsService {
 		exportPdfDialog: ExportPdfDialog,
 		nounprojectDialog: NounprojectDialog,
 		copyBadgeDialog: CopyBadgeDialog,
-		forkBadgeDialog: ForkBadgeDialog
+		forkBadgeDialog: ForkBadgeDialog,
 	) {
 		this.confirmDialog = confirmDialog;
 		this.shareSocialDialog = shareSocialDialog;

@@ -1,4 +1,4 @@
-import {FormControl} from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import isEmail from 'validator/lib/isEmail';
 
 export type ValidationResult = null | {
@@ -7,8 +7,8 @@ export type ValidationResult = null | {
 
 export class EmailValidator {
 	static validEmail(control: FormControl): ValidationResult {
-		return typeof(control.value) !== "string" || control.value.trim().length === 0 || isEmail(control.value)
+		return typeof control.value !== 'string' || control.value.trim().length === 0 || isEmail(control.value)
 			? null
-			: { 'invalidEmail': true };
+			: { invalidEmail: true };
 	}
 }

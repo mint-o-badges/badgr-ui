@@ -1,22 +1,17 @@
 <ng-template [bgAwaitPromises]="collectionHashParam">
-
 	<!-- Embedded View -->
-	<div
-		class="collectioncard"
-		*ngIf="embedService.isEmbedded">
-		<a
-			class="collectioncard-x-headline"
-			[href]="collection.id"
-			target="_blank">{{ collection.name }}</a>
+	<div class="collectioncard" *ngIf="embedService.isEmbedded">
+		<a class="collectioncard-x-headline" [href]="collection.id" target="_blank">{{ collection.name }}</a>
 		<!--<p class="collectioncard-x-label">{{ collection.name }}</p>-->
 		<div class="l-grid l-grid-badgeimages u-margin-top4x">
 			<img
-				*ngFor="let badge of collection.badges | slice:0:(collection.badges.length > 3 ? 3 : 4)"
+				*ngFor="let badge of collection.badges | slice: 0 : (collection.badges.length > 3 ? 3 : 4)"
 				class="badgeimage badgeimage-48px"
 				[loaded-src]="badge.image"
 				[loading-src]="badgeLoadingImageUrl"
 				[error-src]="badgeFailedImageUrl"
-				alt="">
+				alt=""
+			/>
 			<div class="badgecount" *ngIf="collection.badges.length > 3">
 				<span>{{ collection.badges.length - 3 }}<span>+</span></span>
 			</div>
@@ -24,30 +19,30 @@
 	</div>
 
 	<!-- Regular View -->
-	<main *ngIf="! embedService.isEmbedded">
-
+	<main *ngIf="!embedService.isEmbedded">
 		<div class="topbar">
 			<div class="l-containerxaxis">
 				<div class="topbar-x-heading">
 					{{ collection.name }}
 				</div>
 				<div class="topbar-x-subheading">
-					Badges {{ 'NavItems.myInstitutions' | translate }} {{ collection.owner.firstName }} {{ collection.owner.lastName }}
+					Badges {{ 'NavItems.myInstitutions' | translate }} {{ collection.owner.firstName }}
+					{{ collection.owner.lastName }}
 				</div>
 			</div>
 		</div>
 
 		<div class="l-containerxaxis l-containeryaxis l-grid l-grid-4up">
-
-			<bg-badgecard *ngFor="let badge of collection.badges"
-										[badgeTitle]="badge.badge.name"
-										[badgeImage]="badge.image"
-										[badgeDescription]="badge.badge.description"
-										[badgeIssueDate]="badge?.issuedOn"
-										[mostRelevantStatus]="badge.badge.mostRelevantStatus"
-										[issuerTitle]="badge.badge.issuer.name"
-										[public]="true"
-										[publicUrl]="getBadgeUrl(badge)"
+			<bg-badgecard
+				*ngFor="let badge of collection.badges"
+				[badgeTitle]="badge.badge.name"
+				[badgeImage]="badge.image"
+				[badgeDescription]="badge.badge.description"
+				[badgeIssueDate]="badge?.issuedOn"
+				[mostRelevantStatus]="badge.badge.mostRelevantStatus"
+				[issuerTitle]="badge.badge.issuer.name"
+				[public]="true"
+				[publicUrl]="getBadgeUrl(badge)"
 			>
 			</bg-badgecard>
 		</div>

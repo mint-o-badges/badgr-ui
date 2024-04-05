@@ -7,87 +7,77 @@ import { By } from '@angular/platform-browser';
 // import 'rxjs/add/observable/of';
 // import 'rxjs/add/observable/throw';
 
-import {Component, Directive} from '@angular/core';
-import {FormFieldText} from './formfield-text';
-import {CommonDialogsService} from '../services/common-dialogs.service';
-import { RouterTestingModule } from "@angular/router/testing";
-import { COMMON_IMPORTS } from "../badgr-common.module";
-import { COMMON_MOCKS_PROVIDERS_WITH_SUBS } from "../../mocks/mocks.module.spec";
-import { BadgrButtonComponent } from "./badgr-button.component";
+import { Component, Directive } from '@angular/core';
+import { FormFieldText } from './formfield-text';
+import { CommonDialogsService } from '../services/common-dialogs.service';
+import { RouterTestingModule } from '@angular/router/testing';
+import { COMMON_IMPORTS } from '../badgr-common.module';
+import { COMMON_MOCKS_PROVIDERS_WITH_SUBS } from '../../mocks/mocks.module.spec';
+import { BadgrButtonComponent } from './badgr-button.component';
 import { FormControl, Validators } from '@angular/forms';
 
 describe('FormFieldText', () => {
-  let fixture;
-  let component;
+	let fixture;
+	let component;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        FormFieldText,
-				BadgrButtonComponent
-      ],
-			imports: [
-				RouterTestingModule,
-				CommonModule,
-				...COMMON_IMPORTS,
-			],
-			providers: [
-				...COMMON_MOCKS_PROVIDERS_WITH_SUBS,
-			],
-      schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
-    }).compileComponents();
-    fixture = TestBed.createComponent(FormFieldText);
-    fixture.componentInstance.control = new FormControl('', Validators.required);
-    fixture.detectChanges();
-    component = fixture.debugElement.componentInstance;
-  });
+	beforeEach(() => {
+		TestBed.configureTestingModule({
+			declarations: [FormFieldText, BadgrButtonComponent],
+			imports: [RouterTestingModule, CommonModule, ...COMMON_IMPORTS],
+			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
+			schemas: [CUSTOM_ELEMENTS_SCHEMA],
+		}).compileComponents();
+		fixture = TestBed.createComponent(FormFieldText);
+		fixture.componentInstance.control = new FormControl('', Validators.required);
+		fixture.detectChanges();
+		component = fixture.debugElement.componentInstance;
+	});
 
-  it('should create a component', () => {
-    expect(component).toBeTruthy();
-  });
+	it('should create a component', () => {
+		expect(component).toBeTruthy();
+	});
 
-  it('should run #ngOnInit()', () => {
-    const result = component.ngOnInit();
-  });
+	it('should run #ngOnInit()', () => {
+		const result = component.ngOnInit();
+	});
 
-  it('should run #ngAfterViewInit()', () => {
-    const result = component.ngAfterViewInit();
-  });
+	it('should run #ngAfterViewInit()', () => {
+		const result = component.ngAfterViewInit();
+	});
 
-  xit('should run #ngOnChanges()', () => {
-    // const result = component.ngOnChanges(changes);
-  });
+	xit('should run #ngOnChanges()', () => {
+		// const result = component.ngOnChanges(changes);
+	});
 
-  it('should run #updateDisabled()', () => {
-    const result = component.updateDisabled();
-  });
+	it('should run #updateDisabled()', () => {
+		const result = component.updateDisabled();
+	});
 
-  it('should run #unlock()', () => {
-    const result = component.unlock();
-  });
+	it('should run #unlock()', () => {
+		const result = component.unlock();
+	});
 
-  xit('should run #cacheControlState()', () => {
-    const result = component.cacheControlState();
-  });
+	xit('should run #cacheControlState()', () => {
+		const result = component.cacheControlState();
+	});
 
-  xit('should run #focus()', () => {
-    const result = component.focus();
-  });
+	xit('should run #focus()', () => {
+		const result = component.focus();
+	});
 
-  xit('should run #select()', () => {
-    const result = component.select();
-  });
+	xit('should run #select()', () => {
+		const result = component.select();
+	});
 
-  it('should run #handleKeyPress()', () => {
-    const result = component.handleKeyPress({code: "Enter"});
-  });
+	it('should run #handleKeyPress()', () => {
+		const result = component.handleKeyPress({ code: 'Enter' });
+	});
 
-  xit('should run #handleKeyUp()', () => {
-    const result = component.handleKeyUp(event);
-  });
+	xit('should run #handleKeyUp()', () => {
+		const result = component.handleKeyUp(event);
+	});
 
-  it('should run #postProcessInput()', () => {
-    const result = component.postProcessInput();
-  });
-
+	it('should run #postProcessInput()', () => {
+		const result = component.postProcessInput();
+	});
 });

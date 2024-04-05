@@ -1,4 +1,4 @@
-import {ApiEntityRef} from './entity-ref';
+import { ApiEntityRef } from './entity-ref';
 
 export type ApiOAuthResponse = ApiOAuth2AppInfo | ApiOAuth2ClientAuthorized;
 
@@ -14,18 +14,18 @@ export interface ApiOAuth2AppInfo {
 	scopes: string[];
 	state: string;
 	redirect_uri: string;
-	response_type: "code";
+	response_type: 'code';
 	client_id: string;
 	application: ApiOAuthApplication;
 }
 
 export interface ApiOAuth2ClientAuthorized {
-	"success_url": string;
+	success_url: string;
 }
 
 export interface OAuth2AppAuthorizationRef extends ApiEntityRef {}
 export interface ApiOAuth2AppAuthorization {
-	entityType: "AccessToken";
+	entityType: 'AccessToken';
 	entityId: string;
 	application: ApiOAuthApplication;
 	scope: string;

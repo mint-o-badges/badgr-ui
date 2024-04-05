@@ -1,8 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 
 import {
-  scopedPreflightStyles,
-  isolateForComponents, // there are also isolateInsideOfContainer and isolateOutsideOfContainer
+	scopedPreflightStyles,
+	isolateForComponents, // there are also isolateInsideOfContainer and isolateOutsideOfContainer
 } from 'tailwindcss-scoped-preflight';
 
 module.exports = {
@@ -40,4 +40,3 @@ module.exports = {
     }),
   ],
 }
-

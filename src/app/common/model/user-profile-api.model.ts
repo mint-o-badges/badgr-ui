@@ -1,4 +1,4 @@
-import {ApiEntityRef} from './entity-ref';
+import { ApiEntityRef } from './entity-ref';
 
 /**
  * Personal information about the current user from the API
@@ -74,41 +74,48 @@ export interface SocialAccountProviderInfo {
 	name: string;
 }
 
-export type SocialAccountProviderSlug = "facebook" | "kony" | "linkedin_oauth2" | "google" | "azure" | "twitter" | "auth0";
+export type SocialAccountProviderSlug =
+	| 'facebook'
+	| 'kony'
+	| 'linkedin_oauth2'
+	| 'google'
+	| 'azure'
+	| 'twitter'
+	| 'auth0';
 
 export const socialAccountProviderInfos: SocialAccountProviderInfo[] = [
 	{
-		slug: "facebook",
-		name: "Facebook"
+		slug: 'facebook',
+		name: 'Facebook',
 	},
 	{
-		slug: "kony",
-		name: "Kony"
+		slug: 'kony',
+		name: 'Kony',
 	},
 	{
-		slug: "linkedin_oauth2",
-		name: "LinkedIn"
+		slug: 'linkedin_oauth2',
+		name: 'LinkedIn',
 	},
 	{
-		slug: "google",
-		name: "Google"
+		slug: 'google',
+		name: 'Google',
 	},
 	{
-		slug: "azure",
-		name: "Microsoft"
+		slug: 'azure',
+		name: 'Microsoft',
 	},
 	{
-		slug: "twitter",
-		name: "Twitter"
+		slug: 'twitter',
+		name: 'Twitter',
 	},
 	{
-		slug: "auth0",
-		name: "Auth0"
-	}
+		slug: 'auth0',
+		name: 'Auth0',
+	},
 ];
 
 export function socialAccountProviderInfoForSlug(slug: string) {
-	return socialAccountProviderInfos.find(i => i.slug === slug);
+	return socialAccountProviderInfos.find((i) => i.slug === slug);
 }
 
 export interface ExternalAuthProvider {

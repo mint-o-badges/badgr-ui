@@ -1,12 +1,12 @@
-import {Component, ElementRef, Renderer2} from '@angular/core';
-import {RecipientBadgeCollection} from '../../models/recipient-badge-collection.model';
-import {RecipientBadgeInstance} from '../../models/recipient-badge.model';
-import {BaseDialog} from '../../../common/dialogs/base-dialog';
-import {RecipientBadgeManager} from '../../services/recipient-badge-manager.service';
-import {RecipientBadgeCollectionManager} from '../../services/recipient-badge-collection-manager.service';
-import {MessageService} from '../../../common/services/message.service';
-import {SettingsService} from '../../../common/services/settings.service';
-import {StringMatchingUtil} from '../../../common/util/string-matching-util';
+import { Component, ElementRef, Renderer2 } from '@angular/core';
+import { RecipientBadgeCollection } from '../../models/recipient-badge-collection.model';
+import { RecipientBadgeInstance } from '../../models/recipient-badge.model';
+import { BaseDialog } from '../../../common/dialogs/base-dialog';
+import { RecipientBadgeManager } from '../../services/recipient-badge-manager.service';
+import { RecipientBadgeCollectionManager } from '../../services/recipient-badge-collection-manager.service';
+import { MessageService } from '../../../common/services/message.service';
+import { SettingsService } from '../../../common/services/settings.service';
+import { StringMatchingUtil } from '../../../common/util/string-matching-util';
 
 export interface RecipientBadgeCollectionSelectionDialogOptions {
 	dialogId: string;
@@ -19,14 +19,16 @@ export interface RecipientBadgeCollectionSelectionDialogOptions {
 	templateUrl: './recipient-badge-collection-selection-dialog.component.html',
 })
 export class RecipientBadgeCollectionSelectionDialogComponent extends BaseDialog {
-	get searchQuery() { return this._searchQuery; }
+	get searchQuery() {
+		return this._searchQuery;
+	}
 
 	set searchQuery(query) {
 		this._searchQuery = query;
 		this.updateResults();
 	}
-	dialogId = "recipientBadgeCollectionSelection";
-	dialogTitle = "Select Badges";
+	dialogId = 'recipientBadgeCollectionSelection';
+	dialogTitle = 'Select Badges';
 
 	collectionListLoaded: Promise<unknown>;
 	badgeCollections: RecipientBadgeCollection[];
@@ -36,7 +38,7 @@ export class RecipientBadgeCollectionSelectionDialogComponent extends BaseDialog
 	selectedCollections: RecipientBadgeCollection[] = [];
 
 	private resolveFunc: { (collection: RecipientBadgeCollection[]): void };
-	private _searchQuery = "";
+	private _searchQuery = '';
 
 	constructor(
 		componentElem: ElementRef,
@@ -44,22 +46,21 @@ export class RecipientBadgeCollectionSelectionDialogComponent extends BaseDialog
 		private badgeManager: RecipientBadgeManager,
 		private recipientBadgeCollectionManager: RecipientBadgeCollectionManager,
 		private messageService: MessageService,
-		private settingsService: SettingsService
+		private settingsService: SettingsService,
 	) {
 		super(componentElem, renderer);
 	}
 
-	openDialog(
-		{ dialogId,
-		  dialogTitle,
-		  omittedCollection
-		}: RecipientBadgeCollectionSelectionDialogOptions
-	): Promise<RecipientBadgeCollection[]> {
+	openDialog({
+		dialogId,
+		dialogTitle,
+		omittedCollection,
+	}: RecipientBadgeCollectionSelectionDialogOptions): Promise<RecipientBadgeCollection[]> {
 		this.dialogId = dialogId;
 		this.dialogTitle = dialogTitle;
 		this.omittedCollection = omittedCollection;
 		this.selectedCollections = [];
-		this._searchQuery = "";
+		this._searchQuery = '';
 
 		this.showModal();
 		this.updateData();
@@ -80,30 +81,29 @@ export class RecipientBadgeCollectionSelectionDialogComponent extends BaseDialog
 
 	updateData() {
 		this.collectionListLoaded = this.recipientBadgeCollectionManager.recipientBadgeCollectionList.loadedPromise
-			.then( r => {
+			.then((r) => {
 				this.badgeCollections = r.entities;
 				this.updateResults();
 			})
-			.catch(e => this.messageService.reportAndThrowError("Failed to load your badges", e));
+			.catch((e) => this.messageService.reportAndThrowError('Failed to load your badges', e));
 	}
 
 	updateCollection(checkedCollection: RecipientBadgeCollection, checked: boolean) {
 		if (checked) {
 			this.selectedCollections.push(checkedCollection);
 		} else {
-			this.selectedCollections = this.selectedCollections.filter(collection => {
+			this.selectedCollections = this.selectedCollections.filter((collection) => {
 				return collection.name !== checkedCollection.name;
 			});
 		}
 	}
 
 	applySorting() {
-
 		const collectionSorter = (a: RecipientBadgeCollection, b: RecipientBadgeCollection) => {
 			const aName = a.name.toLowerCase();
 			const bName = b.name.toLowerCase();
 
-			return aName === bName ? 0 : (aName < bName ? -1 : 1);
+			return aName === bName ? 0 : aName < bName ? -1 : 1;
 		};
 		(this.badgeCollectionsResults || []).sort(collectionSorter);
 	}
@@ -111,9 +111,9 @@ export class RecipientBadgeCollectionSelectionDialogComponent extends BaseDialog
 	private updateResults() {
 		this.badgeCollectionsResults.length = 0;
 
-		const addCollectionToResults = collection => {
+		const addCollectionToResults = (collection) => {
 			// only display the collections not currently associated with badge.
-			if ( this.omittedCollection.collections.has(collection)) {
+			if (this.omittedCollection.collections.has(collection)) {
 				return;
 			}
 
@@ -133,8 +133,6 @@ class MatchingAlgorithm {
 		const patternStr = StringMatchingUtil.normalizeString(inputPattern);
 		const patternExp = StringMatchingUtil.tryRegExp(patternStr);
 
-		return collection => (
-			StringMatchingUtil.stringMatches(collection.name, patternStr, patternExp)
-		);
+		return (collection) => StringMatchingUtil.stringMatches(collection.name, patternStr, patternExp);
 	}
 }
