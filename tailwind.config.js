@@ -16,7 +16,11 @@ module.exports = {
     extend: {
       colors: {
         purple: 'var(--color-purple)',
-        red: 'var(--color-red)'
+        red: 'var(--color-red)',
+        pink: 'var(--color-pink)',
+        green: 'var(--color-green)',
+        yellow: 'var(--color-yellow)',
+        white: 'var(--color-white)',
       },
     },
   },
