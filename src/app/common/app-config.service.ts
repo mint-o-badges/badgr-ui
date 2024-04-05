@@ -1,5 +1,5 @@
 import {Injectable, InjectionToken, Injector, NgZone} from '@angular/core';
-import {ApiConfig, BadgrConfig, FeaturesConfig, GoogleAnalyticsConfig, HelpConfig} from '../../environments/badgr-config';
+import {ApiConfig, BadgrConfig, FeaturesConfig, HelpConfig} from '../../environments/badgr-config';
 import {environment} from '../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {BadgrTheme} from '../../theming/badgr-theme';
@@ -21,10 +21,6 @@ export class AppConfigService {
 
 	get helpConfig(): HelpConfig {
 		return this.config.help;
-	}
-
-	get googleAnalyticsConfig(): GoogleAnalyticsConfig {
-		return this.config.googleAnalytics;
 	}
 
 	get assertionVerifyUrl(): string {
@@ -131,9 +127,6 @@ export const defaultConfig: BadgrConfig = {
 	},
 	help: {
 		email: "support@badgr.io"
-	},
-	googleAnalytics: {
-		trackingId: null
 	},
 	assertionVerifyUrl: "https://badgecheck.io/",
 	theme: {

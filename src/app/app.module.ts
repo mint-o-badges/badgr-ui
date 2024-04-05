@@ -1,9 +1,6 @@
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { Angulartics2, Angulartics2Module } from 'angulartics2';
-import { Angulartics2GoogleTagManager } from 'angulartics2';
-
 import { AppComponent } from './app.component';
 import { BadgrCommonModule, COMMON_IMPORTS } from './common/badgr-common.module';
 import { InitialRedirectComponent } from './initial-redirect.component';
@@ -120,17 +117,6 @@ export const appInitializerFn = (configService: AppConfigService) => {
 		window['badgrConfig'] = config;
 
 		initializeTheme(configService);
-
-		// Google Tag Manager
-		const aKey = config.googleAnalytics.trackingId; // 'GTM-5DLJTBB';
-		const aScript = document.createElement('script');
-		aScript.text = `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-				new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-			j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-			'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-		})(window,document,'script','dataLayer','${aKey}');`;
-
-		document.getElementsByTagName('head')[0].appendChild(aScript);
 	};
 };
 
@@ -146,7 +132,6 @@ export function HttpLoaderFactory(http: HttpClient) {
 		...COMMON_IMPORTS,
 		BrowserModule,
 		RouterModule.forRoot(ROUTE_CONFIG, {}),
-		Angulartics2Module.forRoot(),
 		BadgrCommonModule.forRoot(),
 		BrowserAnimationsModule,
 		MozzTransitionModule,
@@ -162,8 +147,6 @@ export function HttpLoaderFactory(http: HttpClient) {
 	declarations: [AppComponent, InitialRedirectComponent],
 	bootstrap: [AppComponent],
 	providers: [
-		Angulartics2,
-		Angulartics2GoogleTagManager,
 		RecipientBadgeApiService,
 		{ provide: RouteReuseStrategy, useClass: BadgrRouteReuseStrategy },
 		{

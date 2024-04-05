@@ -1,11 +1,9 @@
 import {Injectable} from '@angular/core';
-import {Angulartics2} from 'angulartics2';
 import {RecipientBadgeApiService} from '../../recipient/services/recipient-badges-api.service';
 
 @Injectable()
 export class SharingService {
 	constructor(
-		private angulartics: Angulartics2,
 		private recipientBadgeApiService: RecipientBadgeApiService
 	) {}
 
@@ -17,7 +15,6 @@ export class SharingService {
 		objectIdUrl: string,
 		shareUrl: string,
 	) {
-		this.reportShare(objectType, objectIdUrl, shareServiceType, shareUrl); // analytics report
 		const providerFeatures = {
 			"Facebook": "width=550,height=274",
 			"LinkedIn": "width=550,height=448",
@@ -37,21 +34,6 @@ export class SharingService {
 				newTab.location.href = url;
 			},
 		);
-	}
-
-	private reportShare(
-		objectType: SharedObjectType,
-		objectIdUrl: string,
-		serviceType: ShareServiceType,
-		sharedUrl: string
-	) {
-		this.angulartics.eventTrack.next({
-			action: `${objectType}-share`,
-			properties: {
-				category: `shares-${serviceType.toLowerCase()}`,
-				label: "Share of " + objectIdUrl + " to " + serviceType
-			}
-		});
 	}
 }
 

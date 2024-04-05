@@ -14,7 +14,6 @@ import { EventsService } from './common/services/events.service';
 import { OAuthManager } from './common/services/oauth-manager.service';
 import { EmbedService } from './common/services/embed.service';
 import { InitialLoadingIndicatorService } from './common/services/initial-loading-indicator.service';
-import { Angulartics2GoogleTagManager } from 'angulartics2';
 
 import { ApiExternalToolLaunchpoint } from '../app/externaltools/models/externaltools-api.model';
 import { ExternalToolsManager } from '../app/externaltools/services/externaltools-manager.service';
@@ -26,7 +25,6 @@ import { Title } from '@angular/platform-browser';
 import { MarkdownHintsDialog } from './common/dialogs/markdown-hints-dialog.component';
 import { Issuer } from './issuer/models/issuer.model';
 import { IssuerManager } from './issuer/services/issuer-manager.service';
-import { Angulartics2GoogleAnalytics } from 'angulartics2';
 import { ImportModalComponent } from './mozz-transition/components/import-modal/import-modal.component';
 import { ExportPdfDialog } from './common/dialogs/export-pdf-dialog/export-pdf-dialog.component';
 import { CopyBadgeDialog } from './common/dialogs/copy-badge-dialog/copy-badge-dialog.component';
@@ -158,8 +156,6 @@ export class AppComponent implements OnInit, AfterViewInit {
 		private queryParams: QueryParametersService,
 		private externalToolsManager: ExternalToolsManager,
 		private initialLoadingIndicatorService: InitialLoadingIndicatorService,
-		private angulartics2GoogleAnalytics: Angulartics2GoogleAnalytics,
-		private angulartics2GoogleTagManager: Angulartics2GoogleTagManager, // required for angulartics to work
 		private titleService: Title,
 		protected issuerManager: IssuerManager,
 		private languageService: LanguageService, // Translation
@@ -172,8 +168,6 @@ export class AppComponent implements OnInit, AfterViewInit {
 				this.selectedLng = lng;
 			}
 		  });
-
-		angulartics2GoogleTagManager.startTracking();
 
 		messageService.useRouter(router);
 

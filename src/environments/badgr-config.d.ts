@@ -9,7 +9,6 @@ export interface BadgrConfig {
 	api: ApiConfig;
 	help: HelpConfig;
 	features: FeaturesConfig;
-	googleAnalytics: GoogleAnalyticsConfig;
 	assertionVerifyUrl: string;
 	theme: BadgrTheme;
 }
@@ -70,14 +69,4 @@ export interface FeaturesConfig {
 	disableRegistration?: boolean;
 	disableIssuers?: boolean;
 	enableComingFromMozilla?: boolean;
-}
-
-/**
- * Google Analytics configuration.
- */
-export interface GoogleAnalyticsConfig {
-	/**
-	 * The GA tracking identifier, e.g. UA-12345678-9
-	 */
-	trackingId: string;
 }
