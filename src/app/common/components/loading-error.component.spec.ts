@@ -7,37 +7,28 @@ import { By } from '@angular/platform-browser';
 // import 'rxjs/add/observable/of';
 // import 'rxjs/add/observable/throw';
 
-import {Component, Directive} from '@angular/core';
-import {LoadingErrorComponent} from './loading-error.component';
-import { RouterTestingModule } from "@angular/router/testing";
-import { COMMON_IMPORTS } from "../badgr-common.module";
-import { COMMON_MOCKS_PROVIDERS_WITH_SUBS } from "../../mocks/mocks.module.spec";
+import { Component, Directive } from '@angular/core';
+import { LoadingErrorComponent } from './loading-error.component';
+import { RouterTestingModule } from '@angular/router/testing';
+import { COMMON_IMPORTS } from '../badgr-common.module';
+import { COMMON_MOCKS_PROVIDERS_WITH_SUBS } from '../../mocks/mocks.module.spec';
 
 describe('LoadingErrorComponent', () => {
-  let fixture;
-  let component;
+	let fixture;
+	let component;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        LoadingErrorComponent
-      ],
-			imports: [
-				RouterTestingModule,
-				CommonModule,
-				...COMMON_IMPORTS,
-			],
-			providers: [
-				...COMMON_MOCKS_PROVIDERS_WITH_SUBS,
-			],
-      schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
-    }).compileComponents();
-    fixture = TestBed.createComponent(LoadingErrorComponent);
-    component = fixture.debugElement.componentInstance;
-  });
+	beforeEach(() => {
+		TestBed.configureTestingModule({
+			declarations: [LoadingErrorComponent],
+			imports: [RouterTestingModule, CommonModule, ...COMMON_IMPORTS],
+			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
+			schemas: [CUSTOM_ELEMENTS_SCHEMA],
+		}).compileComponents();
+		fixture = TestBed.createComponent(LoadingErrorComponent);
+		component = fixture.debugElement.componentInstance;
+	});
 
-  it('should create a component', async () => {
-    expect(component).toBeTruthy();
-  });
-
+	it('should create a component', async () => {
+		expect(component).toBeTruthy();
+	});
 });

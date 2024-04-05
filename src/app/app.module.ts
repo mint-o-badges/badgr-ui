@@ -19,7 +19,7 @@ import { timeoutPromise } from './common/util/promise-util';
 import { MozzTransitionModule } from './mozz-transition/mozz-transition.module';
 // Translate
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient } from '@angular/common/http';
 
 // Force AuthModule and ProfileModule to get included in the main module. We don't want them lazy loaded because
@@ -48,34 +48,34 @@ const ROUTE_CONFIG: Routes = [
 	},
 	{
 		path: 'auth',
-		loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule),
+		loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
 	},
 	{
 		path: 'signup',
-		loadChildren: () => import('./signup/signup.module').then(m => m.SignupModule),
+		loadChildren: () => import('./signup/signup.module').then((m) => m.SignupModule),
 	},
 	{
 		path: 'recipient',
-		loadChildren: () => import('./recipient/recipient.module').then(m => m.RecipientModule),
+		loadChildren: () => import('./recipient/recipient.module').then((m) => m.RecipientModule),
 		canActivate: [AuthGuard],
 	},
 	{
 		path: 'issuer',
-		loadChildren: () => import('./issuer/issuer.module').then(m => m.IssuerModule),
+		loadChildren: () => import('./issuer/issuer.module').then((m) => m.IssuerModule),
 		canActivate: [AuthGuard],
 	},
 	{
 		path: 'profile',
-		loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule),
+		loadChildren: () => import('./profile/profile.module').then((m) => m.ProfileModule),
 		canActivate: [AuthGuard],
 	},
 	{
 		path: 'public',
-		loadChildren: () => import('./public/public.module').then(m => m.PublicModule),
+		loadChildren: () => import('./public/public.module').then((m) => m.PublicModule),
 	},
 	{
 		path: 'catalog',
-		loadChildren: () => import('./catalog/catalog.module').then(m => m.CatalogModule),
+		loadChildren: () => import('./catalog/catalog.module').then((m) => m.CatalogModule),
 	},
 	// Legacy Auth Redirects
 	{
@@ -120,12 +120,10 @@ export const appInitializerFn = (configService: AppConfigService) => {
 	};
 };
 
-
 // (Translate) AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
-    return new TranslateHttpLoader(http);
+	return new TranslateHttpLoader(http);
 }
-
 
 @NgModule({
 	imports: [

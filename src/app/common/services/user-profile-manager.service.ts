@@ -19,7 +19,7 @@ export class UserProfileManager {
 				.getProfile()
 				.then((p) => [p])
 				.catch((e) => []);
-		}
+		},
 	);
 
 	/**
@@ -44,7 +44,7 @@ export class UserProfileManager {
 	constructor(
 		@Inject(forwardRef(() => CommonEntityManager))
 		public commonEntityManager: CommonEntityManager,
-		public profileService: UserProfileApiService
+		public profileService: UserProfileApiService,
 	) {}
 
 	reloadUserProfileSet() {
@@ -60,7 +60,7 @@ export class UserProfileManager {
 						.finally(() => {
 							resolve('userProfileSet updated');
 						});
-				}
+				},
 			);
 		});
 	}

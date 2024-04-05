@@ -1,8 +1,7 @@
-import {Injectable} from '@angular/core';
-import {AppConfigService} from '../../common/app-config.service';
-import {SignupModel} from '../models/signup-model.type';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-
+import { Injectable } from '@angular/core';
+import { AppConfigService } from '../../common/app-config.service';
+import { SignupModel } from '../models/signup-model.type';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable()
 export class SignupService {
@@ -10,7 +9,7 @@ export class SignupService {
 
 	constructor(
 		private http: HttpClient,
-		private configService: AppConfigService
+		private configService: AppConfigService,
 	) {
 		this.baseUrl = this.configService.apiConfig.baseUrl;
 	}
@@ -26,20 +25,16 @@ export class SignupService {
 			marketing_opt_in: signupModel.marketingOptIn,
 		};
 
-		if(source) payload['source'] = source;
+		if (source) payload['source'] = source;
 
-		const headers = new HttpHeaders()
-			.append('Content-Type', 'application/json')
-			.set('Accept', '*/*');
+		const headers = new HttpHeaders().append('Content-Type', 'application/json').set('Accept', '*/*');
 
-		return this.http.post(
-			endpoint,
-			JSON.stringify(payload),
-			{
+		return this.http
+			.post(endpoint, JSON.stringify(payload), {
 				observe: 'body',
 				responseType: 'json',
-				headers
-			}
-		).toPromise();
+				headers,
+			})
+			.toPromise();
 	}
 }

@@ -2,54 +2,42 @@
 	<form-message></form-message>
 
 	<div class="topbar">
-
 		<div class="l-containerxaxis">
 			<div class="topbar-x-breadcrumbs">
-				<bg-breadcrumbs [linkentries]="crumbs">
-				</bg-breadcrumbs>
+				<bg-breadcrumbs [linkentries]="crumbs"> </bg-breadcrumbs>
 			</div>
 		</div>
 
 		<div class="l-containerxaxis">
-			<div class="topbar-x-heading">
-				Edit Profile Name
-			</div>
+			<div class="topbar-x-heading">Edit Profile Name</div>
 		</div>
 	</div>
 
 	<div class="l-containerxaxis l-containeryaxis">
-		<form [formGroup]="profileEditForm.rawControl"
-		      (ngSubmit)="submitEdit()"
-		      class="l-form"
-		      novalidate
-		>
+		<form [formGroup]="profileEditForm.rawControl" (ngSubmit)="submitEdit()" class="l-form" novalidate>
 			<div class="u-width-form">
-				<bg-formfield-text [control]="profileEditForm.rawControlMap.firstName"
-				                   [label]="'First Name'"
-				                   [errorMessage]="'Please enter your first name'"
-				                   class="u-margin-bottom2x forminput-large"
+				<bg-formfield-text
+					[control]="profileEditForm.rawControlMap.firstName"
+					[label]="'First Name'"
+					[errorMessage]="'Please enter your first name'"
+					class="u-margin-bottom2x forminput-large"
 				>
 				</bg-formfield-text>
 
-				<bg-formfield-text [control]="profileEditForm.rawControlMap.lastName"
-				                   [label]="'Last Name'"
-				                   [errorMessage]="'Please enter your last name'"
-				                   class="u-margin-bottom4x forminput-large"
+				<bg-formfield-text
+					[control]="profileEditForm.rawControlMap.lastName"
+					[label]="'Last Name'"
+					[errorMessage]="'Please enter your last name'"
+					class="u-margin-bottom4x forminput-large"
 				></bg-formfield-text>
 			</div>
 
 			<div class="l-flex l-flex-1x">
-				<a class="button button-secondary"
-				   [routerLink]="['../profile']"
-				   [disabled-when-requesting]="true"
-				>Cancel</a>
-
-				<button type="submit"
-				        class="button"
-				        [disabled-when-requesting]="true"
+				<a class="button button-secondary" [routerLink]="['../profile']" [disabled-when-requesting]="true"
+					>Cancel</a
 				>
-					Save
-				</button>
+
+				<button type="submit" class="button" [disabled-when-requesting]="true">Save</button>
 			</div>
 		</form>
 	</div>

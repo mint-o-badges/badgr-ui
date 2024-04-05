@@ -1,16 +1,16 @@
-import {Component} from '@angular/core';
-import {FormBuilder} from '@angular/forms';
-import {ActivatedRoute, Router} from '@angular/router';
-import {SessionService} from '../../../common/services/session.service';
-import {MessageService} from '../../../common/services/message.service';
-import {Title} from '@angular/platform-browser';
-import {BaseAuthenticatedRoutableComponent} from '../../../common/pages/base-authenticated-routable.component';
-import {IssuerManager} from '../../services/issuer-manager.service';
-import {BadgeClass} from '../../models/badgeclass.model';
-import {Issuer} from '../../models/issuer.model';
-import {BadgeClassManager} from '../../services/badgeclass-manager.service';
-import {AppConfigService} from '../../../common/app-config.service';
-import {LinkEntry} from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
+import { Component } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { SessionService } from '../../../common/services/session.service';
+import { MessageService } from '../../../common/services/message.service';
+import { Title } from '@angular/platform-browser';
+import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
+import { IssuerManager } from '../../services/issuer-manager.service';
+import { BadgeClass } from '../../models/badgeclass.model';
+import { Issuer } from '../../models/issuer.model';
+import { BadgeClassManager } from '../../services/badgeclass-manager.service';
+import { AppConfigService } from '../../../common/app-config.service';
+import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 
 export interface TransformedImportData {
 	duplicateRecords: BulkIssueData[];
@@ -42,7 +42,7 @@ export interface ColumnHeaders {
 
 @Component({
 	selector: 'Badgeclass-issue-bulk-award',
-	templateUrl: './badgeclass-issue-bulk-award.component.html'
+	templateUrl: './badgeclass-issue-bulk-award.component.html',
 })
 export class BadgeClassIssueBulkAwardComponent extends BaseAuthenticatedRoutableComponent {
 	importPreviewData: BulkIssueImportPreviewData;
@@ -65,7 +65,7 @@ export class BadgeClassIssueBulkAwardComponent extends BaseAuthenticatedRoutable
 		protected router: Router,
 		protected route: ActivatedRoute,
 		protected configService: AppConfigService,
-		protected title: Title
+		protected title: Title,
 	) {
 		super(router, route, sessionService);
 
@@ -78,13 +78,16 @@ export class BadgeClassIssueBulkAwardComponent extends BaseAuthenticatedRoutable
 				.then((badgeClass) => {
 					this.badgeClass = badgeClass;
 					this.title.setTitle(
-						`Bulk Award Badge - ${badgeClass.name} - ${this.configService.theme['serviceName'] || 'Badgr'}`
+						`Bulk Award Badge - ${badgeClass.name} - ${this.configService.theme['serviceName'] || 'Badgr'}`,
 					);
 					this.breadcrumbLinkEntries = [
-						{ title: 'Issuers', routerLink: [ '/issuer' ] },
-						{ title: issuer.name, routerLink: [ '/issuer/issuers', this.issuerSlug ] },
-						{ title: badgeClass.name, routerLink: [ '/issuer/issuers', this.issuerSlug, 'badges', badgeClass.slug ] },
-						{ title: 'Bulk Award Badge' }
+						{ title: 'Issuers', routerLink: ['/issuer'] },
+						{ title: issuer.name, routerLink: ['/issuer/issuers', this.issuerSlug] },
+						{
+							title: badgeClass.name,
+							routerLink: ['/issuer/issuers', this.issuerSlug, 'badges', badgeClass.slug],
+						},
+						{ title: 'Bulk Award Badge' },
 					];
 				});
 		});
@@ -121,7 +124,7 @@ export class BadgeClassIssueBulkAwardComponent extends BaseAuthenticatedRoutable
 	}
 
 	navigateToIssueBadgeInstance() {
-		this.router.navigate([ '/issuer/issuers', this.issuer.slug, 'badges', this.badgeSlug ]);
+		this.router.navigate(['/issuer/issuers', this.issuer.slug, 'badges', this.badgeSlug]);
 	}
 
 	createRange(size: number) {

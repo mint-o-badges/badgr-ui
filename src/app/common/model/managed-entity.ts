@@ -1,7 +1,7 @@
-import {UpdatableSubject} from '../util/updatable-subject';
-import {ApiEntityRef, EntityRef} from './entity-ref';
-import {CommonEntityManager} from '../../entity-manager/services/common-entity-manager.service';
-import {first} from 'rxjs/operators';
+import { UpdatableSubject } from '../util/updatable-subject';
+import { ApiEntityRef, EntityRef } from './entity-ref';
+import { CommonEntityManager } from '../../entity-manager/services/common-entity-manager.service';
+import { first } from 'rxjs/operators';
 
 export type AnyManagedEntity = ManagedEntity<unknown, ApiEntityRef>;
 
@@ -10,38 +10,70 @@ export type AnyManagedEntity = ManagedEntity<unknown, ApiEntityRef>;
 // TODO: Managed Entities - provide mechanism for delegating to a "detail" entity when it is loaded
 
 export abstract class ManagedEntity<ApiModelType, ApiRefType extends ApiEntityRef> {
-	get loaded$() { return this.loadedSubject.asObservable(); }
-	get changed$() { return this.changedSubject.asObservable(); }
+	get loaded$() {
+		return this.loadedSubject.asObservable();
+	}
+	get changed$() {
+		return this.changedSubject.asObservable();
+	}
 
-	get loadedPromise(): Promise<this> { return this.loadedSubject.pipe(first()).toPromise(); }
+	get loadedPromise(): Promise<this> {
+		return this.loadedSubject.pipe(first()).toPromise();
+	}
 
-	get slug() { return this._ref ? this._ref.slug : null; }
+	get slug() {
+		return this._ref ? this._ref.slug : null;
+	}
 
-	get url() { return this._ref ? this._ref.url : null; }
+	get url() {
+		return this._ref ? this._ref.url : null;
+	}
 
-	get ref(): EntityRef<ApiRefType> { return this._ref; }
+	get ref(): EntityRef<ApiRefType> {
+		return this._ref;
+	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// Manager Accessors
-	get commonManager() { return this._commonManager; }
+	get commonManager() {
+		return this._commonManager;
+	}
 
-	get messageService() { return this._commonManager.messageService; }
+	get messageService() {
+		return this._commonManager.messageService;
+	}
 
-	get issuerManager() { return this._commonManager.issuerManager; }
+	get issuerManager() {
+		return this._commonManager.issuerManager;
+	}
 
-	get badgeManager() { return this._commonManager.badgeManager; }
+	get badgeManager() {
+		return this._commonManager.badgeManager;
+	}
 
-	get badgeInstanceManager() { return this._commonManager.badgeInstanceManager; }
+	get badgeInstanceManager() {
+		return this._commonManager.badgeInstanceManager;
+	}
 
-	get recipientBadgeManager() { return this._commonManager.recipientBadgeManager; }
+	get recipientBadgeManager() {
+		return this._commonManager.recipientBadgeManager;
+	}
 
-	get recipientBadgeCollectionManager() { return this._commonManager.recipientBadgeCollectionManager; }
+	get recipientBadgeCollectionManager() {
+		return this._commonManager.recipientBadgeCollectionManager;
+	}
 
-	get profileManager() { return this._commonManager.profileManager; }
+	get profileManager() {
+		return this._commonManager.profileManager;
+	}
 
-	get oAuthManager() { return this._commonManager.oAuthManager; }
+	get oAuthManager() {
+		return this._commonManager.oAuthManager;
+	}
 
-	get loaded(): boolean { return !! this.apiModel; }
+	get loaded(): boolean {
+		return !!this.apiModel;
+	}
 
 	get hasChanges(): boolean {
 		return this._apiModelJson !== JSON.stringify(this._apiModel);
@@ -62,7 +94,7 @@ export abstract class ManagedEntity<ApiModelType, ApiRefType extends ApiEntityRe
 
 	constructor(
 		private _commonManager: CommonEntityManager,
-		onUpdateSubscribed: () => void = undefined
+		onUpdateSubscribed: () => void = undefined,
 	) {
 		this.loadedSubject = new UpdatableSubject<this>(onUpdateSubscribed);
 		this.changedSubject.subscribe(this.loadedSubject);
@@ -82,8 +114,8 @@ export abstract class ManagedEntity<ApiModelType, ApiRefType extends ApiEntityRe
 			// based on data, which isn't desirable. This method is more likely to cause problems (because the identity of
 			// model children will have changed), but will do so consistently.
 
-			this.apiModel["length"] = 0; // First clear length in case this is an array.
-			Object.keys(this.apiModel).forEach(key => delete this.apiModel[key]); // Delete each property
+			this.apiModel['length'] = 0; // First clear length in case this is an array.
+			Object.keys(this.apiModel).forEach((key) => delete this.apiModel[key]); // Delete each property
 			Object.assign(this.apiModel, JSON.parse(this._apiModelJson)); // Assign everything back from the saved JSON
 
 			this.handleChangedModel();
@@ -120,16 +152,18 @@ export abstract class ManagedEntity<ApiModelType, ApiRefType extends ApiEntityRe
 	}
 }
 
-export abstract class LoadingManagedEntity<ApiModelType, ApiRefType extends ApiEntityRef> extends ManagedEntity<ApiModelType, ApiRefType> {
+export abstract class LoadingManagedEntity<ApiModelType, ApiRefType extends ApiEntityRef> extends ManagedEntity<
+	ApiModelType,
+	ApiRefType
+> {
 	private updateRequested = false;
 
-	get loadRequested() { return this.updateRequested; }
+	get loadRequested() {
+		return this.updateRequested;
+	}
 
 	constructor(commonManager: CommonEntityManager, initialEntity?: ApiModelType) {
-		super(
-			commonManager,
-			() => !this.updateRequested ? this.update() : void 0
-		);
+		super(commonManager, () => (!this.updateRequested ? this.update() : void 0));
 
 		if (initialEntity != null) {
 			this.applyApiModel(initialEntity);
@@ -141,8 +175,8 @@ export abstract class LoadingManagedEntity<ApiModelType, ApiRefType extends ApiE
 	update(): Promise<this> {
 		this.updateRequested = true;
 		return this.doUpdate().then(
-			model => this.applyApiModel(model),
-			error => this.messageService.reportAndThrowError("Failed to load entity", error)
+			(model) => this.applyApiModel(model),
+			(error) => this.messageService.reportAndThrowError('Failed to load entity', error),
 		);
 	}
 }

@@ -1,6 +1,6 @@
 // This impl. bases upon one that can be found in the router's test cases.
-import {ActivatedRouteSnapshot, DetachedRouteHandle, RouteReuseStrategy} from '@angular/router';
-import { Injectable } from "@angular/core";
+import { ActivatedRouteSnapshot, DetachedRouteHandle, RouteReuseStrategy } from '@angular/router';
+import { Injectable } from '@angular/core';
 
 /**
  * Route Reuse Strategy for Badgr. Our routable components were designed before route reuse was the default and as such
@@ -18,9 +18,7 @@ export class BadgrRouteReuseStrategy implements RouteReuseStrategy {
 	/**
 	 * Stores the detached route.
 	 */
-	store(route: ActivatedRouteSnapshot, handle: DetachedRouteHandle): void {
-
-	}
+	store(route: ActivatedRouteSnapshot, handle: DetachedRouteHandle): void {}
 
 	/**
 	 * Determines if this route (and its subtree) should be reattached.

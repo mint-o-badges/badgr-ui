@@ -2,26 +2,28 @@
  * TypeScript type information for a portion of the Open Badges v2.0 Specification, from
  * https://www.imsglobal.org/sites/default/files/Badges/OBv2p0/index.html
  */
-import {BadgeClass} from '../../issuer/models/badgeclass.model';
-import {Issuer} from '../../issuer/models/issuer.model';
+import { BadgeClass } from '../../issuer/models/badgeclass.model';
+import { Issuer } from '../../issuer/models/issuer.model';
 
 export interface PublicApiBadgeAssertion {
-	"@context": "https://w3id.org/openbadges/v2";
-	type: "Assertion";
+	'@context': 'https://w3id.org/openbadges/v2';
+	type: 'Assertion';
 	image: string;
 	badge: string | PublicApiBadgeClass;
 	id: string;
 	verification: {
-		type: "HostedBadge"
+		type: 'HostedBadge';
 	};
 	evidence:
-		Array<{
-			type: "Evidence";
-			id?: string;
-			narrative?: string;
-		}> | {
-			narrative?: string;
-		} | string;
+		| Array<{
+				type: 'Evidence';
+				id?: string;
+				narrative?: string;
+		  }>
+		| {
+				narrative?: string;
+		  }
+		| string;
 	narrative: string;
 	issuedOn: string;
 	expires?: string;
@@ -29,7 +31,7 @@ export interface PublicApiBadgeAssertion {
 	revocationReason?: string;
 	recipient: {
 		salt: string;
-		type: "email" | "url" | "telephone" | "id";
+		type: 'email' | 'url' | 'telephone' | 'id';
 		hashed: boolean;
 		identity: string;
 	};
@@ -42,19 +44,21 @@ export interface PublicApiBadgeAssertionWithBadgeClass extends PublicApiBadgeAss
 }
 
 export interface PublicApiBadgeClass {
-	"@context": "https://w3id.org/openbadges/v2";
+	'@context': 'https://w3id.org/openbadges/v2';
 	description: string;
-	type: "BadgeClass";
+	type: 'BadgeClass';
 	id: string;
 	hostedUrl: string;
 	name: string;
 	issuer: string | PublicApiIssuer;
 	image: string;
-	criteria: {
-		id: string;
-		narrative: string;
-		criteriaUrl: string;
-	} | string;
+	criteria:
+		| {
+				id: string;
+				narrative: string;
+				criteriaUrl: string;
+		  }
+		| string;
 	alignment: Array<{
 		frameworkName?: string;
 		targetName: string;
@@ -67,7 +71,7 @@ export interface PublicApiBadgeClass {
 	// Extension to the spec containing the original URL of this assertion if it is not stored by Badgr
 	sourceUrl?: string;
 }
-export interface PublicApiBadgeClassWithIssuer extends  PublicApiBadgeClass {
+export interface PublicApiBadgeClassWithIssuer extends PublicApiBadgeClass {
 	issuer: PublicApiIssuer;
 	badgeClass: BadgeClass;
 	issueDate: string;
@@ -75,11 +79,11 @@ export interface PublicApiBadgeClassWithIssuer extends  PublicApiBadgeClass {
 }
 
 export interface PublicApiIssuer {
-	"@context": "https://w3id.org/openbadges/v2";
+	'@context': 'https://w3id.org/openbadges/v2';
 	description: string;
 	url: string;
 	email: string;
-	type: "Issuer";
+	type: 'Issuer';
 	id: string;
 	name: string;
 	image?: string;
@@ -90,7 +94,7 @@ export interface PublicApiIssuer {
 
 export interface PublicApiBadgeCollectionWithBadgeClassAndIssuer {
 	entityId: string;
-	entityType: "SharedCollection";
+	entityType: 'SharedCollection';
 	id: string;
 	name: string;
 	description: string;
@@ -103,8 +107,8 @@ export interface PublicApiBadgeCollectionWithBadgeClassAndIssuer {
 }
 
 export interface PublicApiBadgeCollectionEntryWithBadgeClassAndIssuer {
-	"@context": "https://w3id.org/openbadges/v2";
-	type: "Assertion";
+	'@context': 'https://w3id.org/openbadges/v2';
+	type: 'Assertion';
 	id: string;
 	image: string;
 	badge: PublicApiBadgeClassWithIssuer;

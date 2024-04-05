@@ -13,7 +13,7 @@ export class StringMatchingUtil {
 	}
 
 	static normalizeString(value: string) {
-		value = value || "";
+		value = value || '';
 		value = value.toLowerCase();
 		value = value.trim();
 		return value;

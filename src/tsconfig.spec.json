@@ -1,16 +1,10 @@
 {
-  "extends": "../tsconfig.json",
+	"extends": "../tsconfig.json",
 	"module": "es2015",
-  "compilerOptions": {
-    "outDir": "../out-tsc/spec",
-    "baseUrl": "./",
-    "types": [
-      "jasmine",
-      "node"
-    ]
-  },
-  "include": [
-    "./**/*.spec.ts",
-    "./**/*.d.ts"
-  ]
+	"compilerOptions": {
+		"outDir": "../out-tsc/spec",
+		"baseUrl": "./",
+		"types": ["jasmine", "node"]
+	},
+	"include": ["./**/*.spec.ts", "./**/*.d.ts"]
 }

@@ -1,10 +1,10 @@
-import {ApiRecipientBadgeInstanceSlug} from './recipient-badge-api.model';
+import { ApiRecipientBadgeInstanceSlug } from './recipient-badge-api.model';
 
 export type RecipientBadgeCollectionUrl = string;
 export type RecipientBadgeCollectionSlug = string;
 
 export interface RecipientBadgeCollectionRef {
-	"@id": RecipientBadgeCollectionUrl;
+	'@id': RecipientBadgeCollectionUrl;
 	slug: RecipientBadgeCollectionSlug;
 }
 
@@ -22,7 +22,7 @@ export interface ApiRecipientBadgeCollection extends ApiRecipientBadgeCollection
 }
 
 export interface RecipientBadgeCollectionEntryRef {
-	"@id": string;
+	'@id': string;
 	slug: string;
 }
 

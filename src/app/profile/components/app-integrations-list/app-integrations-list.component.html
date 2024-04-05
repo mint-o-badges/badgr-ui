@@ -53,12 +53,14 @@
 					{{ app.name }}
 				</a>
 				<div class="integrationcard-x-desc">
-					{{ 'Profile.appHasAccess' | translate }} {{ configService.theme['serviceName'] || 'Badgr' }} Account.
+					{{ 'Profile.appHasAccess' | translate }}
+					{{ configService.theme['serviceName'] || 'Badgr' }} Account.
 				</div>
 			</div>
 			<div class="integrationcard-x-footer">
 				<div class="integrationcard-x-status">
-					{{ 'Profile.authorized' | translate }} <strong><time [date]="app.createdDate" format="mediumDate"></time></strong>
+					{{ 'Profile.authorized' | translate }}
+					<strong><time [date]="app.createdDate" format="mediumDate"></time></strong>
 				</div>
 				<button
 					class="integrationcard-x-link"

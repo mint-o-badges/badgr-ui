@@ -1,8 +1,8 @@
 {
-  "rules": {
-    "deprecation": {
-      "severity": "warning"
-    }
-  },
-  "extends": "gts/tslint.json"
+	"rules": {
+		"deprecation": {
+			"severity": "warning"
+		}
+	},
+	"extends": "gts/tslint.json"
 }

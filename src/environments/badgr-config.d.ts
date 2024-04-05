@@ -2,8 +2,7 @@
  * The shape of a Badgr Config object. As there may be multiple config sources, each one may not specify all parts.
  */
 import { BadgrTheme } from '../theming/badgr-theme';
-import { ExternalAuthProvider } from "../app/common/model/user-profile-api.model";
-
+import { ExternalAuthProvider } from '../app/common/model/user-profile-api.model';
 
 export interface BadgrConfig {
 	api: ApiConfig;

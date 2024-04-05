@@ -1,9 +1,9 @@
-import {Observable} from 'rxjs';
-import {UpdatableSubject} from '../util/updatable-subject';
-import {AnyManagedEntity, ManagedEntity} from './managed-entity';
-import {AnyRefType, ApiEntityRef, EntityRef} from './entity-ref';
-import {EntitySet, EntitySetUpdate} from './entity-set';
-import {first, map} from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { UpdatableSubject } from '../util/updatable-subject';
+import { AnyManagedEntity, ManagedEntity } from './managed-entity';
+import { AnyRefType, ApiEntityRef, EntityRef } from './entity-ref';
+import { EntitySet, EntitySetUpdate } from './entity-set';
+import { first, map } from 'rxjs/operators';
 
 /**
  * Manages a set of entities based on API data. This set and its children act as the primary holders and creators of
@@ -13,12 +13,9 @@ import {first, map} from 'rxjs/operators';
  * - For managers and other standalone lists, use StandaloneEntitySet
  * - For entities embedded in other entities, use EmbeddedEntitySet
  */
-export class ManagedEntitySet<
-	EntityType extends ManagedEntity<ApiEntityType, any>,
-	ApiEntityType
-> implements EntitySet<EntityType> {
-
-
+export class ManagedEntitySet<EntityType extends ManagedEntity<ApiEntityType, any>, ApiEntityType>
+	implements EntitySet<EntityType>
+{
 	/**
 	 * Observable for updates to this entire entity list. Updates are sent upon subscription (like a promise) if the
 	 * value already exists, and later, upon any change to the list. The entity list will always be complete when
@@ -49,53 +46,55 @@ export class ManagedEntitySet<
 		return this.loadedSubject.isLoaded;
 	}
 
-	get entities() { return this._entities; }
-	get length(): number { return this.entities.length; }
+	get entities() {
+		return this._entities;
+	}
+	get length(): number {
+		return this.entities.length;
+	}
 
-	get entityByUrlMap() { return this.urlEntityMap; }
+	get entityByUrlMap() {
+		return this.urlEntityMap;
+	}
 	protected _entities: EntityType[] = [];
 
 	protected _loadedPromise: Promise<this> = null;
 	private urlEntityMap: { [url: string]: EntityType } = {};
 	private slugEntityMap: { [slug: string]: EntityType } = {};
 
-	private loadedSubject = new UpdatableSubject<EntitySetUpdate<EntityType, this>>(
-		() => this.onFirstListRequest()
-	);
+	private loadedSubject = new UpdatableSubject<EntitySetUpdate<EntityType, this>>(() => this.onFirstListRequest());
 
 	private changedSubject = new UpdatableSubject<EntitySetUpdate<EntityType, this>>();
 
 	constructor(
 		protected entityFactory: (apiModel: ApiEntityType) => EntityType,
-		protected urlForApiModel: (apiModel: ApiEntityType) => string
+		protected urlForApiModel: (apiModel: ApiEntityType) => string,
 	) {
-		this.changedSubject
-			.pipe(map(u => u.entitySet))
-			.subscribe(this.loadedSubject);
+		this.changedSubject.pipe(map((u) => u.entitySet)).subscribe(this.loadedSubject);
 	}
 
 	/**
 	 * Called the first time a request is made for the entity set, can be used to initialize.
 	 */
-	protected onFirstListRequest() { /* For subclasses */ }
-	protected updateSetUsingApiModels(
-		apiEntities: ApiEntityType[]
-	) {
+	protected onFirstListRequest() {
+		/* For subclasses */
+	}
+	protected updateSetUsingApiModels(apiEntities: ApiEntityType[]) {
 		if (apiEntities) {
-			const inputByUrl: {[url: string]: ApiEntityType} = {};
-			apiEntities.forEach(i => inputByUrl[ this.urlForApiModel(i) ] = i);
+			const inputByUrl: { [url: string]: ApiEntityType } = {};
+			apiEntities.forEach((i) => (inputByUrl[this.urlForApiModel(i)] = i));
 
 			const apiEntityUrls = Object.keys(inputByUrl);
 			const existingUrls = Object.keys(this.urlEntityMap);
 
 			const updateInfo = new EntitySetUpdate<EntityType, this>(this);
 
-			apiEntityUrls.forEach(id => {
+			apiEntityUrls.forEach((id) => {
 				if (id in this.urlEntityMap) {
-					this.urlEntityMap[ id ].applyApiModel(inputByUrl[ id ]);
+					this.urlEntityMap[id].applyApiModel(inputByUrl[id]);
 				} else {
-					const newEntity = this.urlEntityMap[ id ] = this.entityFactory(inputByUrl[ id ]);
-					newEntity.applyApiModel(inputByUrl[ id ]);
+					const newEntity = (this.urlEntityMap[id] = this.entityFactory(inputByUrl[id]));
+					newEntity.applyApiModel(inputByUrl[id]);
 					this.entities.push(newEntity);
 					updateInfo.added.push(newEntity);
 
@@ -103,38 +102,44 @@ export class ManagedEntitySet<
 				}
 			});
 
-			existingUrls.forEach(previousUrl => {
+			existingUrls.forEach((previousUrl) => {
 				if (previousUrl in inputByUrl) {
 					/* Old Id still present, no action */
 				} else {
-					updateInfo.removed.push(this.urlEntityMap[ previousUrl ]);
-					delete this.urlEntityMap[ previousUrl ];
+					updateInfo.removed.push(this.urlEntityMap[previousUrl]);
+					delete this.urlEntityMap[previousUrl];
 				}
 			});
 
 			// Rebuild the entity array from the inputs to keep them in order
 			this._entities.length = 0;
-			Object.keys(this.urlEntityMap).forEach(id => this._entities.push(this.urlEntityMap[ id ]));
+			Object.keys(this.urlEntityMap).forEach((id) => this._entities.push(this.urlEntityMap[id]));
 			this.notifySubjects(updateInfo);
 			this.updateSlugMap();
 		}
 	}
 
-	protected onEntityAdded(entity: EntityType) { /* For subclasses */ }
-
-	entityForUrl(url: AnyRefType): EntityType { return this.urlEntityMap[ EntityRef.urlForRef(url) ]; }
-	entitiesForUrls(urls: AnyRefType[]): EntityType[] {
-		return urls.map(url => this.urlEntityMap[ EntityRef.urlForRef(url) ]);
+	protected onEntityAdded(entity: EntityType) {
+		/* For subclasses */
 	}
 
-	entityForSlug(slug: string): EntityType { return this.slugEntityMap[ slug ]; }
+	entityForUrl(url: AnyRefType): EntityType {
+		return this.urlEntityMap[EntityRef.urlForRef(url)];
+	}
+	entitiesForUrls(urls: AnyRefType[]): EntityType[] {
+		return urls.map((url) => this.urlEntityMap[EntityRef.urlForRef(url)]);
+	}
+
+	entityForSlug(slug: string): EntityType {
+		return this.slugEntityMap[slug];
+	}
 
 	entityForApiEntity(apiEntity: ApiEntityType): EntityType {
 		return this.entityForUrl(this.urlForApiModel(apiEntity));
 	}
 
 	entitiesForApiEntities(apiEntities: ApiEntityType[]): EntityType[] {
-		return apiEntities.map(a => this.entityForUrl(this.urlForApiModel(a)));
+		return apiEntities.map((a) => this.entityForUrl(this.urlForApiModel(a)));
 	}
 
 	[Symbol.iterator](): Iterator<EntityType> {
@@ -146,23 +151,21 @@ export class ManagedEntitySet<
 	}
 
 	private updateSlugMap() {
-		Object.keys(this.slugEntityMap).forEach(
-			slug => { delete this.slugEntityMap[ slug ]; }
-		);
-		this.entities.forEach(
-			entity => this.slugEntityMap[ entity.slug ] = entity
-		);
+		Object.keys(this.slugEntityMap).forEach((slug) => {
+			delete this.slugEntityMap[slug];
+		});
+		this.entities.forEach((entity) => (this.slugEntityMap[entity.slug] = entity));
 	}
 }
 
 export class ListBackedEntitySet<
 	EntityType extends ManagedEntity<ApiEntityType, ApiEntityRef>,
-	ApiEntityType
+	ApiEntityType,
 > extends ManagedEntitySet<EntityType, ApiEntityType> {
 	constructor(
 		protected getBackingList: () => ApiEntityType[],
 		entityFactory: (apiModel: ApiEntityType) => EntityType,
-		urlForApiModel: (apiModel: ApiEntityType) => string
+		urlForApiModel: (apiModel: ApiEntityType) => string,
 	) {
 		super(entityFactory, urlForApiModel);
 	}
@@ -170,7 +173,7 @@ export class ListBackedEntitySet<
 	protected onEntityAdded(entity: EntityType) {
 		entity.changed$.subscribe(() => {
 			// Update the model list with the new model from the entity so our backing list is kept up-to-date
-			const modelIndex = this.apiModelList.findIndex(m => this.urlForApiModel(m) === entity.url);
+			const modelIndex = this.apiModelList.findIndex((m) => this.urlForApiModel(m) === entity.url);
 
 			if (modelIndex < 0) {
 				// The entity is no longer part of our list. We can safely ignore changes.
@@ -182,7 +185,7 @@ export class ListBackedEntitySet<
 
 	addOrUpdate(newModel: ApiEntityType): EntityType {
 		const newUrl = this.urlForApiModel(newModel);
-		const modelIndex = this.apiModelList.findIndex(m => this.urlForApiModel(m) === newUrl);
+		const modelIndex = this.apiModelList.findIndex((m) => this.urlForApiModel(m) === newUrl);
 
 		if (modelIndex < 0) {
 			this.apiModelList.push(newModel);
@@ -196,11 +199,11 @@ export class ListBackedEntitySet<
 	}
 
 	remove(entity: EntityType): boolean {
-		if (! entity) {
+		if (!entity) {
 			return false;
 		}
 
-		const index = this.apiModelList.findIndex(a => this.urlForApiModel(a) === entity.url);
+		const index = this.apiModelList.findIndex((a) => this.urlForApiModel(a) === entity.url);
 
 		if (index >= 0) {
 			this.apiModelList.splice(index, 1);
@@ -213,8 +216,8 @@ export class ListBackedEntitySet<
 
 	removeAll(entities: EntityType[]): boolean {
 		let changed = false;
-		entities.forEach(entity => {
-			const index = this.apiModelList.findIndex(a => this.urlForApiModel(a) === entity.url);
+		entities.forEach((entity) => {
+			const index = this.apiModelList.findIndex((a) => this.urlForApiModel(a) === entity.url);
 
 			if (index >= 0) {
 				this.apiModelList.splice(index, 1);
@@ -229,7 +232,9 @@ export class ListBackedEntitySet<
 		return changed;
 	}
 
-	get apiModelList(): ApiEntityType[] { return this.getBackingList(); }
+	get apiModelList(): ApiEntityType[] {
+		return this.getBackingList();
+	}
 
 	protected onBackingListChanged() {
 		this.updateSetUsingApiModels(this.apiModelList);
@@ -244,19 +249,17 @@ export class ListBackedEntitySet<
 export class EmbeddedEntitySet<
 	OwnerType extends AnyManagedEntity,
 	EntityType extends ManagedEntity<ApiEntityType, ApiEntityRef>,
-	ApiEntityType
-	> extends ListBackedEntitySet<EntityType, ApiEntityType> {
+	ApiEntityType,
+> extends ListBackedEntitySet<EntityType, ApiEntityType> {
 	constructor(
 		protected owner: OwnerType,
 		getBackingList: () => ApiEntityType[],
 		entityFactory: (apiModel: ApiEntityType) => EntityType,
-		urlForApiModel: (apiModel: ApiEntityType) => string
+		urlForApiModel: (apiModel: ApiEntityType) => string,
 	) {
 		super(getBackingList, entityFactory, urlForApiModel);
 
-		owner.changed$.subscribe(
-			() => this.onBackingListChanged()
-		);
+		owner.changed$.subscribe(() => this.onBackingListChanged());
 	}
 }
 
@@ -266,26 +269,22 @@ export class EmbeddedEntitySet<
 export class LazyEmbeddedEntitySet<
 	OwnerType extends AnyManagedEntity,
 	EntityType extends ManagedEntity<ApiEntityType, ApiEntityRef>,
-	ApiEntityType
+	ApiEntityType,
 > extends ListBackedEntitySet<EntityType, ApiEntityType> {
 	constructor(
 		protected owner: OwnerType,
 		getCurrentApiList: () => ApiEntityType[],
 		private loadApiList: () => Promise<ApiEntityType[]>,
 		entityFactory: (apiModel: ApiEntityType) => EntityType,
-		urlForApiModel: (apiModel: ApiEntityType) => string
+		urlForApiModel: (apiModel: ApiEntityType) => string,
 	) {
 		super(getCurrentApiList, entityFactory, urlForApiModel);
 
-		owner.changed$.subscribe(
-			() => this.onBackingListChanged()
-		);
+		owner.changed$.subscribe(() => this.onBackingListChanged());
 	}
 
 	protected onFirstListRequest() {
-		this.loadApiList().then(
-			apiEntities => this.updateSetUsingApiModels(apiEntities)
-		);
+		this.loadApiList().then((apiEntities) => this.updateSetUsingApiModels(apiEntities));
 	}
 }
 
@@ -295,7 +294,7 @@ export class LazyEmbeddedEntitySet<
  */
 export class StandaloneEntitySet<
 	EntityType extends ManagedEntity<ApiEntityType, ApiEntityRef>,
-	ApiEntityType
+	ApiEntityType,
 > extends ListBackedEntitySet<EntityType, ApiEntityType> {
 	private _apiEntities: ApiEntityType[] = [];
 
@@ -307,18 +306,12 @@ export class StandaloneEntitySet<
 		entityFactory: (apiModel: ApiEntityType) => EntityType,
 		idForApiModel: (apiModel: ApiEntityType) => string,
 
-		protected loadEntireList: () => Promise<ApiEntityType[]>
+		protected loadEntireList: () => Promise<ApiEntityType[]>,
 	) {
-		super(
-			() => this._apiEntities,
-			entityFactory,
-			idForApiModel
-		);
+		super(() => this._apiEntities, entityFactory, idForApiModel);
 	}
 
-	applyApiData(
-		newApiData: ApiEntityType[]
-	) {
+	applyApiData(newApiData: ApiEntityType[]) {
 		this._apiEntities.length = 0;
 		this._apiEntities.push(...newApiData);
 		this.onBackingListChanged();
@@ -341,22 +334,21 @@ export class StandaloneEntitySet<
 	updateList(): Promise<this> {
 		this.listInvalidatedSinceLastUpdate = false;
 
-		return this.loadEntireList()
-			.then(
-				allEntities => {
-					if (this.listInvalidatedSinceLastUpdate) {
-						return this;
-					} else {
-						this._apiEntities = allEntities;
-						this.onBackingListChanged();
-						return this;
-					}
-				},
-				error => {
-					console.error(`Failed to load list ${error}`);
-					throw error;
+		return this.loadEntireList().then(
+			(allEntities) => {
+				if (this.listInvalidatedSinceLastUpdate) {
+					return this;
+				} else {
+					this._apiEntities = allEntities;
+					this.onBackingListChanged();
+					return this;
 				}
-			);
+			},
+			(error) => {
+				console.error(`Failed to load list ${error}`);
+				throw error;
+			},
+		);
 	}
 
 	/**

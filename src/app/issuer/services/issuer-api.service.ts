@@ -12,7 +12,7 @@ export class IssuerApiService extends BaseHttpApiService {
 		protected loginService: SessionService,
 		protected http: HttpClient,
 		protected configService: AppConfigService,
-		protected messageService: MessageService
+		protected messageService: MessageService,
 	) {
 		super(loginService, http, configService, messageService);
 	}

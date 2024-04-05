@@ -14,7 +14,7 @@ export class UserProfileApiService extends BaseHttpApiService {
 		protected http: HttpClient,
 		protected configService: AppConfigService,
 		protected messageService: MessageService,
-		protected eventsService: EventsService
+		protected eventsService: EventsService,
 	) {
 		super(sessionService, http, configService, messageService);
 	}

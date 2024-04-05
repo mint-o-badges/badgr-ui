@@ -1,28 +1,28 @@
 .warning {
-    border: 3px solid var(--color-notice);
-    border-radius: var(--border-radius);
-    padding: 0.6em 1em;
-    position: relative;
-    margin: 1em 1.8em 0 1.8em;
-    background-color: var(--color-noticealpha20);
+	border: 3px solid var(--color-notice);
+	border-radius: var(--border-radius);
+	padding: 0.6em 1em;
+	position: relative;
+	margin: 1em 1.8em 0 1.8em;
+	background-color: var(--color-noticealpha20);
 }
 
 #no-icon-result {
-    text-align: center;
-    color: var(--color-error);
-    font-weight: bold;
-    font-size: var(--font-size-body);
+	text-align: center;
+	color: var(--color-error);
+	font-weight: bold;
+	font-size: var(--font-size-body);
 }
 
 #load-more-icons {
-    padding: 0.6em 0 0 0;
+	padding: 0.6em 0 0 0;
 }
 
 .dialog-x-height {
-    max-height: 40vh;
-    overflow: auto;
+	max-height: 40vh;
+	overflow: auto;
 }
 
 .dialog-x-options {
-    padding-bottom: calc(var(--gridspacing) * 1.5); 
+	padding-bottom: calc(var(--gridspacing) * 1.5);
 }

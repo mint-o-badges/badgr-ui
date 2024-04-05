@@ -6,32 +6,25 @@ import { BadgrCommonModule, COMMON_IMPORTS } from '../../../common/badgr-common.
 import { AboutComponent } from './about.component';
 
 describe('AboutComponent', () => {
-  let component: AboutComponent;
-  let fixture: ComponentFixture<AboutComponent>;
+	let component: AboutComponent;
+	let fixture: ComponentFixture<AboutComponent>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [ AboutComponent ],
-      imports: [
-          ...COMMON_IMPORTS,
-          BadgrCommonModule,
-          TranslateTestingModule.withTranslations('de', {}),
-      ],
-      providers: [
-          ...COMMON_MOCKS_PROVIDERS_WITH_SUBS,
-      ],
-      teardown: { destroyAfterEach: false },
-    })
-    .compileComponents();
-  }));
+	beforeEach(waitForAsync(() => {
+		TestBed.configureTestingModule({
+			declarations: [AboutComponent],
+			imports: [...COMMON_IMPORTS, BadgrCommonModule, TranslateTestingModule.withTranslations('de', {})],
+			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
+			teardown: { destroyAfterEach: false },
+		}).compileComponents();
+	}));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(AboutComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+	beforeEach(() => {
+		fixture = TestBed.createComponent(AboutComponent);
+		component = fixture.componentInstance;
+		fixture.detectChanges();
+	});
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+	it('should create', () => {
+		expect(component).toBeTruthy();
+	});
 });
