@@ -408,6 +408,7 @@ export class ExportPdfDialog extends BaseDialog {
 									this.doc.getTextWidth('die ') +
 									15 +
 									this.doc.getTextWidth(firstName + ' ' + lastName);
+								//TODO: dont hardcode this text
 								this.doc.text('mit dem Badge', textWidth, 75);
 
 								this.doc.setFont('Helvetica', 'bold');
