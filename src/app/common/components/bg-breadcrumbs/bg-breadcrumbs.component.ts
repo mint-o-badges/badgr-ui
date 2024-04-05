@@ -1,21 +1,18 @@
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'bg-breadcrumbs',
-  templateUrl: './bg-breadcrumbs.component.html'
+	selector: 'bg-breadcrumbs',
+	templateUrl: './bg-breadcrumbs.component.html',
 })
 export class BgBreadcrumbsComponent implements OnInit {
+	@Input() linkentries: LinkEntry[];
 
-  @Input() linkentries: LinkEntry[];
+	constructor() {}
 
-  constructor() { }
-
-  ngOnInit() {
-  }
-
+	ngOnInit() {}
 }
 
 export interface LinkEntry {
-  routerLink?: string[];
-  title: string;
+	routerLink?: string[];
+	title: string;
 }

@@ -5,9 +5,9 @@
 }
 
 #show-error-result {
-    text-align: center;
-    color: var(--color-error);
-    font-weight: bold;
-    font-size: var(--font-size-body);
+	text-align: center;
+	color: var(--color-error);
+	font-weight: bold;
+	font-size: var(--font-size-body);
 	padding: 10px 0;
 }

@@ -1,68 +1,72 @@
 #mapWrapper {
-    position: relative;
-    width: 100%;
-    /* height: 600px; */
-    flex-grow: 1;
-
+	position: relative;
+	width: 100%;
+	/* height: 600px; */
+	flex-grow: 1;
 }
-#map { position: absolute; top: 0; bottom: 0; width: 100%; }
+#map {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	width: 100%;
+}
 
 .viewtoggle-container {
-    display: flex;
+	display: flex;
 }
 .viewtoggle-button {
-    position: relative;
-    top: 1px;
-    --viewtoggle-border-color: var(--color-light4);
-    background: var(--color-light1);
-    /* display: grid; */
-    width: 40px;
-    height: 42px;
-    grid-template-columns: 40px 40px;
-    display: table-cell;
-    vertical-align: middle;
-}
-
-.viewtoggle-button {
-    height: 42px;
-    border: 1px solid var(--viewtoggle-border-color);
-    background-color: var(--color-light1);
-    cursor: pointer;
-    transition: border var(--transition-duration) var(--transition-easing), color var(--transition-duration) var(--transition-easing);
+	position: relative;
+	top: 1px;
+	--viewtoggle-border-color: var(--color-light4);
+	background: var(--color-light1);
+	/* display: grid; */
+	width: 40px;
+	height: 42px;
+	grid-template-columns: 40px 40px;
+	display: table-cell;
+	vertical-align: middle;
 }
 
 .viewtoggle-button {
-    background-color: var(--color-light1);
-    
-    border-bottom-left-radius: 3px;
-    border-top-left-radius: 3px;
+	height: 42px;
+	border: 1px solid var(--viewtoggle-border-color);
+	background-color: var(--color-light1);
+	cursor: pointer;
+	transition:
+		border var(--transition-duration) var(--transition-easing),
+		color var(--transition-duration) var(--transition-easing);
+}
+
+.viewtoggle-button {
+	background-color: var(--color-light1);
+
+	border-bottom-left-radius: 3px;
+	border-top-left-radius: 3px;
 }
 
 .viewtoggle-button.active {
-    --viewtoggle-inset-shadow: inset 0 1px 3px 0 var(--color-dark4);
-    box-shadow: var(--viewtoggle-inset-shadow);
+	--viewtoggle-inset-shadow: inset 0 1px 3px 0 var(--color-dark4);
+	box-shadow: var(--viewtoggle-inset-shadow);
 
-    background-color: var(--color-light4);
+	background-color: var(--color-light4);
 }
 
 .mapView .viewtoggle-x-grid {
-    --viewtoggle-inset-shadow: none;
-    background-color: var(--color-light1);
-    pointer-events: all;
- 
+	--viewtoggle-inset-shadow: none;
+	background-color: var(--color-light1);
+	pointer-events: all;
 }
 
 #main-page {
-    display: flex;
-    flex-direction: column;
-    min-height: calc(100% - 20px);
+	display: flex;
+	flex-direction: column;
+	min-height: calc(100% - 20px);
 }
 
-
 #map-legend {
-    position: absolute;
-    left: 5px;
-    bottom: 5px;
-    padding: 0.8em;
-    background: white;
+	position: absolute;
+	left: 5px;
+	bottom: 5px;
+	padding: 0.8em;
+	background: white;
 }

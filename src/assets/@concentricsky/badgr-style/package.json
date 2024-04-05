@@ -1,67 +1,67 @@
 {
-    "name": "@concentricsky/badgr-style",
-    "version": "20.2.0",
-    "description": "CSS and Visual Assets for Badgr",
-    "files": [
-        "dist/css/*.css",
-        "dist/css/fonts/",
-        "dist/css/images/",
-        "dist/images/*.svg",
-        "dist/images/*.png",
-        "dist/images/*.jpg",
-        "dist/js/"
-    ],
-    "scripts": {
-        "build": "grunt buildFractal",
-        "clean": "grunt clean",
-        "deploy-patch": "grunt publishPrep && npm version patch && npm publish && git push && git push --tags",
-        "deploy-minor": "grunt publishPrep && npm version minor && npm publish && git push && git push --tags",
-        "deploy-major": "grunt publishPrep && npm version major && npm publish && git push && git push --tags",
-        "start": "grunt",
-        "docs": "node auto-docs.js"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+ssh://git@stash.concentricsky.com/bp/badgr-pathways-patternlibrary.git"
-    },
-    "husky": {
-        "hooks": {
-            "pre-commit": "pretty-quick --staged"
-        }
-    },
-    "author": "Nathan Nichols <nnichols@concentricsky.com> (http://concentricsky.com)",
-    "license": "ISC",
-    "devDependencies": {
-        "@frctl/fractal": "^1.1.7",
-        "@frctl/handlebars": "^1.1.5",
-        "@frctl/mandelbrot": "^1.2.0",
-        "autoprefixer": "^9.6.1",
-        "cssnano": "^4.1.4",
-        "extract-scss-variables": "^0.2.1",
-        "grunt": "^1.0.3",
-        "grunt-chokidar": "^1.0.1",
-        "grunt-cli": "^1.3.1",
-        "grunt-concurrent": "^2.3.1",
-        "grunt-contrib-uglify": "^3.1.0",
-        "grunt-sass-globbing": "^1.5.1",
-        "grunt-shell": "^2.1.0",
-        "handlebars-helpers": "^0.9.8",
-        "husky": "^3.0.9",
-        "inert-polyfill": "^0.2.5",
-        "json": "^9.0.6",
-        "mjml": "^4.3.1",
-        "node-sass": "^4.9.0",
-        "popper.js": "^1.13.0",
-        "postcss-cli": "^6.1.3",
-        "puppeteer": "^2.0.0",
-        "puppeteer-cluster": "^0.17.0",
-        "prettier": "^1.18.2",
-        "pretty-quick": "^2.0.0",
-        "semver": "^5.5.0",
-        "shelljs": "^0.8.2"
-    },
-    "dependencies": {
-        "animejs": "^3.1.0",
-        "priority-nav": "^1.0.13"
-    }
+	"name": "@concentricsky/badgr-style",
+	"version": "20.2.0",
+	"description": "CSS and Visual Assets for Badgr",
+	"files": [
+		"dist/css/*.css",
+		"dist/css/fonts/",
+		"dist/css/images/",
+		"dist/images/*.svg",
+		"dist/images/*.png",
+		"dist/images/*.jpg",
+		"dist/js/"
+	],
+	"scripts": {
+		"build": "grunt buildFractal",
+		"clean": "grunt clean",
+		"deploy-patch": "grunt publishPrep && npm version patch && npm publish && git push && git push --tags",
+		"deploy-minor": "grunt publishPrep && npm version minor && npm publish && git push && git push --tags",
+		"deploy-major": "grunt publishPrep && npm version major && npm publish && git push && git push --tags",
+		"start": "grunt",
+		"docs": "node auto-docs.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+ssh://git@stash.concentricsky.com/bp/badgr-pathways-patternlibrary.git"
+	},
+	"husky": {
+		"hooks": {
+			"pre-commit": "pretty-quick --staged"
+		}
+	},
+	"author": "Nathan Nichols <nnichols@concentricsky.com> (http://concentricsky.com)",
+	"license": "ISC",
+	"devDependencies": {
+		"@frctl/fractal": "^1.1.7",
+		"@frctl/handlebars": "^1.1.5",
+		"@frctl/mandelbrot": "^1.2.0",
+		"autoprefixer": "^9.6.1",
+		"cssnano": "^4.1.4",
+		"extract-scss-variables": "^0.2.1",
+		"grunt": "^1.0.3",
+		"grunt-chokidar": "^1.0.1",
+		"grunt-cli": "^1.3.1",
+		"grunt-concurrent": "^2.3.1",
+		"grunt-contrib-uglify": "^3.1.0",
+		"grunt-sass-globbing": "^1.5.1",
+		"grunt-shell": "^2.1.0",
+		"handlebars-helpers": "^0.9.8",
+		"husky": "^3.0.9",
+		"inert-polyfill": "^0.2.5",
+		"json": "^9.0.6",
+		"mjml": "^4.3.1",
+		"node-sass": "^4.9.0",
+		"popper.js": "^1.13.0",
+		"postcss-cli": "^6.1.3",
+		"puppeteer": "^2.0.0",
+		"puppeteer-cluster": "^0.17.0",
+		"prettier": "^1.18.2",
+		"pretty-quick": "^2.0.0",
+		"semver": "^5.5.0",
+		"shelljs": "^0.8.2"
+	},
+	"dependencies": {
+		"animejs": "^3.1.0",
+		"priority-nav": "^1.0.13"
+	}
 }

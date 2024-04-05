@@ -1,4 +1,4 @@
-import {FormControl} from '@angular/forms';
+import { FormControl } from '@angular/forms';
 
 interface ValidationResult {
 	[errorName: string]: boolean;
@@ -6,11 +6,11 @@ interface ValidationResult {
 
 export class JsonValidator {
 	static validJson(control: FormControl): ValidationResult {
-		if (typeof(control.value) === "string" && control.value.length > 0) {
+		if (typeof control.value === 'string' && control.value.length > 0) {
 			try {
 				JSON.parse(control.value);
 			} catch (err) {
-				return { 'invalidJson': true };
+				return { invalidJson: true };
 			}
 		}
 

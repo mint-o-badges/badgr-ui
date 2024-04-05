@@ -10,27 +10,26 @@ import { UserProfileManager } from '../../../common/services/user-profile-manage
 import { UserProfile } from '../../../common/model/user-profile.model';
 import { AppConfigService } from '../../../common/app-config.service';
 import { typedFormGroup } from '../../../common/util/typed-forms';
-import { LinkEntry } from "../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component";
-
+import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 
 @Component({
 	selector: 'change-password',
-	templateUrl: './change-password.component.html'
+	templateUrl: './change-password.component.html',
 })
 export class ChangePasswordComponent extends BaseRoutableComponent {
 	changePasswordForm = typedFormGroup()
-		.addControl("password", "", [ Validators.required, Validators.minLength(8) ])
-		.addControl("password2", "", [ Validators.required, this.passwordsMatch.bind(this) ])
-		.addControl("current_password", "", [ Validators.required ]);
+		.addControl('password', '', [Validators.required, Validators.minLength(8)])
+		.addControl('password2', '', [Validators.required, this.passwordsMatch.bind(this)])
+		.addControl('current_password', '', [Validators.required]);
 
 	profile: UserProfile;
 	errors = {
-		'current_password': '',
-		'password': '',
+		current_password: '',
+		password: '',
 	};
 	crumbs: LinkEntry[] = [
-		{title: 'Profile', routerLink: ['/profile']},
-		{title: 'Change Password', routerLink: ['/profile/change-password']},
+		{ title: 'Profile', routerLink: ['/profile'] },
+		{ title: 'Change Password', routerLink: ['/profile/change-password'] },
 	];
 
 	constructor(
@@ -41,14 +40,13 @@ export class ChangePasswordComponent extends BaseRoutableComponent {
 		route: ActivatedRoute,
 		router: Router,
 		protected configService: AppConfigService,
-		private _messageService: MessageService
+		private _messageService: MessageService,
 	) {
 		super(router, route);
 
-		title.setTitle(`Change Password - ${this.configService.theme['serviceName'] || "Badgr"}`);
+		title.setTitle(`Change Password - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 
-		this.profileManager.userProfilePromise
-			.then(profile => this.profile = profile);
+		this.profileManager.userProfilePromise.then((profile) => (this.profile = profile));
 	}
 
 	isJson = (str) => {
@@ -60,20 +58,17 @@ export class ChangePasswordComponent extends BaseRoutableComponent {
 		return true;
 	};
 
-
 	submitChange() {
-		if (! this.changePasswordForm.markTreeDirtyAndValidate()) {
+		if (!this.changePasswordForm.markTreeDirtyAndValidate()) {
 			return;
 		}
 
-		this.profile.updatePassword(
-			this.changePasswordForm.value.password,
-			this.changePasswordForm.value.current_password
-		)
+		this.profile
+			.updatePassword(this.changePasswordForm.value.password, this.changePasswordForm.value.current_password)
 			.then(
 				() => {
 					this._messageService.reportMajorSuccess('Your password has been changed successfully.', true);
-					this.router.navigate([ "/profile/profile" ]);
+					this.router.navigate(['/profile/profile']);
 				},
 				(err) => {
 					if (err.message && this.isJson(err.message)) {
@@ -81,17 +76,22 @@ export class ChangePasswordComponent extends BaseRoutableComponent {
 						for (const key in errors) {
 							if (errors.hasOwnProperty(key)) {
 								this.errors[key] = errors[key];
-								const c = this.changePasswordForm.controls[key].rawControl.valueChanges.subscribe(val => {
-									if (this.changePasswordForm.value[key] === val) return;
-									this.errors[key] = '';
-									c.unsubscribe();
-								});
+								const c = this.changePasswordForm.controls[key].rawControl.valueChanges.subscribe(
+									(val) => {
+										if (this.changePasswordForm.value[key] === val) return;
+										this.errors[key] = '';
+										c.unsubscribe();
+									},
+								);
 							}
 						}
 					} else {
-						this._messageService.reportAndThrowError('Your password must be uncommon and at least 8 characters. Please try again.', err);
+						this._messageService.reportAndThrowError(
+							'Your password must be uncommon and at least 8 characters. Please try again.',
+							err,
+						);
 					}
-				}
+				},
 			);
 	}
 
@@ -101,21 +101,19 @@ export class ChangePasswordComponent extends BaseRoutableComponent {
 	}
 
 	passwordsMatch(): ValidationErrors | null {
-		if (! this.changePasswordForm) return null;
+		if (!this.changePasswordForm) return null;
 
 		const p1 = this.changePasswordForm.controls.password.value;
 		const p2 = this.changePasswordForm.controls.password2.value;
 
 		if (p1 && p2 && p1 !== p2) {
-			return { passwordsMatch: "Passwords do not match" };
+			return { passwordsMatch: 'Passwords do not match' };
 		}
 
 		return null;
 	}
 
 	cancel() {
-		this.router.navigate(["/profile/profile"]);
+		this.router.navigate(['/profile/profile']);
 	}
 }
-
-

@@ -74,14 +74,14 @@
 		"headline1": "Gemeinsam machen wir",
 		"headline2": "Kompetenzerwerb sichtbar",
 		"text1": "Badges sind digitale Nachweise, die wie Zertifikate einfach und zeiteffizient vergeben und gesammelt werden können, um Lernerfolge sichtbar zu machen – sowohl für digitale Lernangebote als auch für Angebote vor Ort.",
-		"badgesErstellen" : "Jetzt <span class='bold'>Badges erstellen<span>",
+		"badgesErstellen": "Jetzt <span class='bold'>Badges erstellen<span>",
 
 		"headline2_1": "Unsere Ziele für",
 		"headline2_2": "OPEN EDUCATIONAL BADGES",
 
 		"knowWhatIcan": "ICH WEIßs, WAS ICH KANN!",
 		"knowWhatIcan_text": "Wir stärken die Souveränität der Lernenden, indem wir ihnen Transparenz über ihre Kompetenzen geben.",
-		
+
 		"bridges": "Brücken bauen",
 		"bridges_text": "Wir machen den ausser-schulischen Kompetenzerwerb gleichwertig sichtbar und fördern ihn dadurch.",
 
@@ -94,7 +94,7 @@
 
 		"headline3_1": "So kannst du Open Educational Badges nutzen.",
 		"headline3_2": "Für institutionen und Bildungsakteur:innen",
-		
+
 		"forEleHeadlinet1": "Konto anlegen und Institution erstellen",
 		"forEleText1": "Lege einen Account auf Open Educational Badges an und registriere deine Institution.",
 		"forEleHeadlinet2": "Badges erstellen",
@@ -105,8 +105,6 @@
 		"forEleText4": "Lernende erhalten Badges mit den erworbenen Kompetenzen. Sie erlangen dadurch einen besseren Überblick über ihr Können.",
 
 		"usingOEB": "Diese Institutionen nutzen bereits Open Educational Badges"
-
-
 	},
 	"Issuer": {
 		"map": "map",

@@ -1,8 +1,7 @@
-
 export type ApiExternalToolSlug = string;
 
 export interface ExternalToolRef {
-	"@id": string;
+	'@id': string;
 	slug: ApiExternalToolSlug;
 }
 
@@ -26,7 +25,7 @@ export interface ApiExternalToolLaunchInfo {
 }
 
 export type ExternalToolLaunchpointName =
-	"earner_assertion_action"    |
-	"issuer_assertion_action"    |
-	"issuer_external_launch"     |
-	"navigation_external_launch" ;
+	| 'earner_assertion_action'
+	| 'issuer_assertion_action'
+	| 'issuer_external_launch'
+	| 'navigation_external_launch';

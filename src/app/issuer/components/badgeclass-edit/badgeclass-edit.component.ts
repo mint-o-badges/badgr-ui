@@ -1,40 +1,37 @@
-import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {FormBuilder, FormGroup} from '@angular/forms';
-import {Title} from '@angular/platform-browser';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 
-import {BaseAuthenticatedRoutableComponent} from '../../../common/pages/base-authenticated-routable.component';
+import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
 
-import {SessionService} from '../../../common/services/session.service';
-import {MessageService} from '../../../common/services/message.service';
-import {Issuer} from '../../models/issuer.model';
+import { SessionService } from '../../../common/services/session.service';
+import { MessageService } from '../../../common/services/message.service';
+import { Issuer } from '../../models/issuer.model';
 
-import {BadgeClassManager} from '../../services/badgeclass-manager.service';
-import {IssuerManager} from '../../services/issuer-manager.service';
-import {BadgeClass} from '../../models/badgeclass.model';
-import {BadgrApiFailure} from '../../../common/services/api-failure';
-import {BadgeStudioComponent} from '../badge-studio/badge-studio.component';
-import {BgFormFieldImageComponent} from '../../../common/components/formfield-image';
-import {BadgeInstanceManager} from '../../services/badgeinstance-manager.service';
-import {BadgeClassInstances, BadgeInstance} from '../../models/badgeinstance.model';
-import {EventsService} from '../../../common/services/events.service';
-import {AppConfigService} from '../../../common/app-config.service';
-import {LinkEntry} from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
+import { BadgeClassManager } from '../../services/badgeclass-manager.service';
+import { IssuerManager } from '../../services/issuer-manager.service';
+import { BadgeClass } from '../../models/badgeclass.model';
+import { BadgrApiFailure } from '../../../common/services/api-failure';
+import { BadgeStudioComponent } from '../badge-studio/badge-studio.component';
+import { BgFormFieldImageComponent } from '../../../common/components/formfield-image';
+import { BadgeInstanceManager } from '../../services/badgeinstance-manager.service';
+import { BadgeClassInstances, BadgeInstance } from '../../models/badgeinstance.model';
+import { EventsService } from '../../../common/services/events.service';
+import { AppConfigService } from '../../../common/app-config.service';
+import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 
 @Component({
 	selector: 'badgeclass-edit',
 	templateUrl: './badgeclass-edit.component.html',
-
 })
 export class BadgeClassEditComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
-
-
 	get issuerSlug() {
-		return this.route.snapshot.params[ 'issuerSlug' ];
+		return this.route.snapshot.params['issuerSlug'];
 	}
 
 	get badgeSlug() {
-		return this.route.snapshot.params[ 'badgeSlug' ];
+		return this.route.snapshot.params['badgeSlug'];
 	}
 	readonly badgeClassPlaceholderImageUrl = '../../../../breakdown/static/images/placeholderavatar.svg';
 
@@ -57,11 +54,10 @@ export class BadgeClassEditComponent extends BaseAuthenticatedRoutableComponent 
 	// <li><a [routerLink]="['/issuer/issuers/', issuerSlug]">{{issuer.name}}</a></li>
 	// <li class="breadcrumb-x-current">Edit Badge Class</li>
 
-
-	@ViewChild("badgeStudio")
+	@ViewChild('badgeStudio')
 	badgeStudio: BadgeStudioComponent;
 
-	@ViewChild("imageField")
+	@ViewChild('imageField')
 	imageField: BgFormFieldImageComponent;
 
 	private allBadgeInstances: BadgeClassInstances;
@@ -79,57 +75,56 @@ export class BadgeClassEditComponent extends BaseAuthenticatedRoutableComponent 
 		protected issuerManager: IssuerManager,
 		protected badgeInstanceManager: BadgeInstanceManager,
 		protected configService: AppConfigService,
-		protected badgeClassManager: BadgeClassManager
+		protected badgeClassManager: BadgeClassManager,
 	) {
 		super(router, route, sessionService);
-		title.setTitle(`Edit Badge Class - ${this.configService.theme['serviceName'] || "Badgr"}`);
+		title.setTitle(`Edit Badge Class - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 
-		this.badgeClassLoaded = badgeManager.badgeByIssuerSlugAndSlug(
-			this.issuerSlug,
-			this.badgeSlug
-		).then(
-			badge => this.badgeClass = badge,
-			error => this.messageService.reportLoadingError(
-				`Cannot find badge ${this.issuerSlug} / ${this.badgeSlug}`,
-				error
-			)
+		this.badgeClassLoaded = badgeManager.badgeByIssuerSlugAndSlug(this.issuerSlug, this.badgeSlug).then(
+			(badge) => (this.badgeClass = badge),
+			(error) =>
+				this.messageService.reportLoadingError(
+					`Cannot find badge ${this.issuerSlug} / ${this.badgeSlug}`,
+					error,
+				),
 		);
 
 		this.issuerLoaded = issuerManager.issuerBySlug(this.issuerSlug).then(
-			issuer => {
+			(issuer) => {
 				this.issuer = issuer;
 				this.editBadgeCrumbs = [
-					{title: "Issuers", routerLink: ['/issuer']},
-					{title: issuer.name, routerLink: ['/issuer/issuers/', this.issuerSlug]},
-					{title: 'badges', routerLink: ['/issuer/issuers/' + this.issuerSlug + '/badges/']},
-					{title: this.badgeClass ? this.badgeClass.name : '', routerLink: ['/issuer/issuers/' + this.issuerSlug + '/badges/' + this.badgeSlug]},
-					{title: 'Edit Badge Class'},
+					{ title: 'Issuers', routerLink: ['/issuer'] },
+					{ title: issuer.name, routerLink: ['/issuer/issuers/', this.issuerSlug] },
+					{ title: 'badges', routerLink: ['/issuer/issuers/' + this.issuerSlug + '/badges/'] },
+					{
+						title: this.badgeClass ? this.badgeClass.name : '',
+						routerLink: ['/issuer/issuers/' + this.issuerSlug + '/badges/' + this.badgeSlug],
+					},
+					{ title: 'Edit Badge Class' },
 				];
 				return issuer;
 			},
-			error => this.messageService.reportLoadingError(`Cannot find issuer ${this.issuerSlug}`, error)
+			(error) => this.messageService.reportLoadingError(`Cannot find issuer ${this.issuerSlug}`, error),
 		);
 	}
 
 	badgeClassSaved(promise: Promise<BadgeClass>) {
 		promise.then(
-			badgeClass => {
-					this.eventsService.recipientBadgesStale.next([]);
-					this.router.navigate([
-						'issuer/issuers', this.issuerSlug, 'badges', badgeClass.slug
-					]);
+			(badgeClass) => {
+				this.eventsService.recipientBadgesStale.next([]);
+				this.router.navigate(['issuer/issuers', this.issuerSlug, 'badges', badgeClass.slug]);
 			},
-			error => this.messageService.reportAndThrowError(
-				`Unable to create Badge Class: ${BadgrApiFailure.from(error).firstMessage}`,
-				error
-			)
+			(error) =>
+				this.messageService.reportAndThrowError(
+					`Unable to create Badge Class: ${BadgrApiFailure.from(error).firstMessage}`,
+					error,
+				),
 		);
 	}
 
 	editingCanceled() {
-		this.router.navigate(['issuer/issuers', this.issuerSlug, 'badges', this.badgeClass.slug ]);
+		this.router.navigate(['issuer/issuers', this.issuerSlug, 'badges', this.badgeClass.slug]);
 	}
-
 
 	@HostListener('window:scroll')
 	onWindowScroll() {

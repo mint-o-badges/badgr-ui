@@ -1,17 +1,17 @@
-import {AfterViewInit, Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 
-import {FormControl, FormGroup} from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 
-import {CommonDialogsService} from '../services/common-dialogs.service';
-import {CustomValidatorMessages, messagesForValidationError} from './formfield-text';
+import { CommonDialogsService } from '../services/common-dialogs.service';
+import { CustomValidatorMessages, messagesForValidationError } from './formfield-text';
 
 @Component({
 	selector: 'bg-formfield-select',
 
 	host: {
-		'class': "forminput",
-		'[class.forminput-is-error]': "isErrorState",
-		'[class.forminput-locked]': "isLockedState",
+		class: 'forminput',
+		'[class.forminput-is-error]': 'isErrorState',
+		'[class.forminput-locked]': 'isLockedState',
 	},
 	template: `
 		<label class="forminput-x-label" [attr.for]="inputName" *ngIf="label || includeLabelAsWrapper">
@@ -28,7 +28,7 @@ import {CustomValidatorMessages, messagesForValidationError} from './formfield-t
 			<select
 				[name]="inputName"
 				[id]="inputName"
-				[attr.disabled]="disabled  ? '' : null"
+				[attr.disabled]="disabled ? '' : null"
 				[formControl]="control"
 				(focus)="cacheControlState()"
 				(keypress)="handleKeyPress($event)"
@@ -40,7 +40,7 @@ import {CustomValidatorMessages, messagesForValidationError} from './formfield-t
 		</div>
 
 		<p class="forminput-x-error" *ngIf="isErrorState">{{ errorMessageForDisplay }}</p>
-	`
+	`,
 })
 export class FormFieldSelect implements OnChanges, AfterViewInit {
 	@Input() control: FormControl;
@@ -56,22 +56,23 @@ export class FormFieldSelect implements OnChanges, AfterViewInit {
 	@Input() disabled: boolean = false;
 
 	@Input() options: FormFieldSelectOption[];
-	@Input() set optionMap(valueToLabelMap: {[value: string]: string}) {
-		this.options = Object.getOwnPropertyNames(valueToLabelMap).map(value => ({
+	@Input() set optionMap(valueToLabelMap: { [value: string]: string }) {
+		this.options = Object.getOwnPropertyNames(valueToLabelMap).map((value) => ({
 			value,
-			label: valueToLabelMap[value]
+			label: valueToLabelMap[value],
 		}));
 	}
 
 	@Input() errorGroup: FormGroup;
 	@Input() errorGroupMessage: CustomValidatorMessages;
 
-	@Input() unlockConfirmText = "Unlocking this field may have unintended consequences. Are you sure you want to continue?";
+	@Input() unlockConfirmText =
+		'Unlocking this field may have unintended consequences. Are you sure you want to continue?';
 	@Input() urlField = false;
 
 	@Input() autofocus = false;
 
-	@ViewChild("selectInput") selectInput: ElementRef;
+	@ViewChild('selectInput') selectInput: ElementRef;
 
 	private _unlocked = false;
 	@Input()
@@ -80,7 +81,9 @@ export class FormFieldSelect implements OnChanges, AfterViewInit {
 		this.updateDisabled();
 	}
 
-	get unlocked() { return this._unlocked; }
+	get unlocked() {
+		return this._unlocked;
+	}
 
 	private _locked = false;
 	@Input()
@@ -89,7 +92,9 @@ export class FormFieldSelect implements OnChanges, AfterViewInit {
 		this.updateDisabled();
 	}
 
-	get locked() { return this._locked; }
+	get locked() {
+		return this._locked;
+	}
 
 	get inputElement(): HTMLInputElement | HTMLTextAreaElement {
 		if (this.selectInput && this.selectInput.nativeElement) {
@@ -107,15 +112,9 @@ export class FormFieldSelect implements OnChanges, AfterViewInit {
 	}
 
 	get uncachedErrorMessage(): string {
-		return messagesForValidationError(
-			this.label,
-			this.control && this.control.errors,
-			this.errorMessage
-		).concat(messagesForValidationError(
-			this.label,
-			this.errorGroup && this.errorGroup.errors,
-			this.errorGroupMessage
-		))[ 0 ]; // Only display the first error
+		return messagesForValidationError(this.label, this.control && this.control.errors, this.errorMessage).concat(
+			messagesForValidationError(this.label, this.errorGroup && this.errorGroup.errors, this.errorGroupMessage),
+		)[0]; // Only display the first error
 	}
 
 	get value() {
@@ -126,7 +125,9 @@ export class FormFieldSelect implements OnChanges, AfterViewInit {
 	private cachedErrorState = null;
 	private cachedDirtyState = null;
 
-	get controlErrorState() { return this.control.dirty && (!this.control.valid || (this.errorGroup && !this.errorGroup.valid)); }
+	get controlErrorState() {
+		return this.control.dirty && (!this.control.valid || (this.errorGroup && !this.errorGroup.valid));
+	}
 
 	get isErrorState() {
 		if (this.hasFocus && this.cachedErrorState !== null) {
@@ -136,16 +137,20 @@ export class FormFieldSelect implements OnChanges, AfterViewInit {
 		}
 	}
 
-	get isLockedState() { return this.locked && !this.unlocked; }
+	get isLockedState() {
+		return this.locked && !this.unlocked;
+	}
 
-	private randomName = "field" + Math.random();
+	private randomName = 'field' + Math.random();
 
-	get inputName() { return (this.label || this.placeholder || this.randomName).replace(/[^\w]+/g, "_").toLowerCase(); }
+	get inputName() {
+		return (this.label || this.placeholder || this.randomName).replace(/[^\w]+/g, '_').toLowerCase();
+	}
 
 	constructor(
 		private dialogService: CommonDialogsService,
-		private elemRef: ElementRef
-	) { }
+		private elemRef: ElementRef,
+	) {}
 
 	ngAfterViewInit() {
 		if (this.autofocus) {
@@ -159,10 +164,13 @@ export class FormFieldSelect implements OnChanges, AfterViewInit {
 			this.unlocked = true;
 		}
 
-		if ("initialValue" in changes) {
-			const initialValue = changes[ "initialValue" ].currentValue;
-			if ((this.value === null || this.value === undefined || this.value === '') &&
-				(initialValue !== null && initialValue !== undefined && initialValue !== '')
+		if ('initialValue' in changes) {
+			const initialValue = changes['initialValue'].currentValue;
+			if (
+				(this.value === null || this.value === undefined || this.value === '') &&
+				initialValue !== null &&
+				initialValue !== undefined &&
+				initialValue !== ''
 			) {
 				this.control.setValue(initialValue);
 			}
@@ -184,15 +192,17 @@ export class FormFieldSelect implements OnChanges, AfterViewInit {
 	}
 
 	unlock() {
-		this.dialogService.confirmDialog.openResolveRejectDialog({
-			dialogTitle: "Are you sure?",
-			dialogBody: this.unlockConfirmText,
-			resolveButtonLabel: "Continue",
-			rejectButtonLabel: "Cancel",
-		}).then(
-			() => this.unlocked = true,
-			() => void 0
-		);
+		this.dialogService.confirmDialog
+			.openResolveRejectDialog({
+				dialogTitle: 'Are you sure?',
+				dialogBody: this.unlockConfirmText,
+				resolveButtonLabel: 'Continue',
+				rejectButtonLabel: 'Cancel',
+			})
+			.then(
+				() => (this.unlocked = true),
+				() => void 0,
+			);
 	}
 
 	cacheControlState() {

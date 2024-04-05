@@ -1,9 +1,9 @@
 export function timeoutPromise(timeoutMs = 0): Promise<void> {
-	return new Promise<void>(resolve => setTimeout(resolve, timeoutMs));
+	return new Promise<void>((resolve) => setTimeout(resolve, timeoutMs));
 }
 
 export function animationFramePromise(): Promise<number> {
-	return new Promise<number>(resolve => requestAnimationFrame(resolve));
+	return new Promise<number>((resolve) => requestAnimationFrame(resolve));
 }
 
 export function createPromise<T>(): PromiseOwnership<T> {
@@ -15,7 +15,7 @@ export function createPromise<T>(): PromiseOwnership<T> {
 		reject = rej;
 	});
 
-	return { resolve: resolve! , reject: reject!, promise };
+	return { resolve: resolve!, reject: reject!, promise };
 }
 
 export interface PromiseOwnership<T> {

@@ -53,7 +53,7 @@ export class ShareSocialDialog extends BaseDialog {
 		componentElem: ElementRef<HTMLElement>,
 		renderer: Renderer2,
 		private domSanitizer: DomSanitizer,
-		private sharingService: SharingService
+		private sharingService: SharingService,
 	) {
 		super(componentElem, renderer);
 
@@ -115,7 +115,7 @@ export class ShareSocialDialog extends BaseDialog {
 			this.options.shareObjectType,
 			this.includeRecipientIdentifier,
 			this.options.shareIdUrl,
-			this.currentShareUrl
+			this.currentShareUrl,
 		);
 	}
 

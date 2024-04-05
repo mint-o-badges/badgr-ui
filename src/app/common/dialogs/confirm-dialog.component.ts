@@ -1,5 +1,5 @@
-import {Component, ElementRef, Renderer2} from '@angular/core';
-import {BaseDialog} from './base-dialog';
+import { Component, ElementRef, Renderer2 } from '@angular/core';
+import { BaseDialog } from './base-dialog';
 
 export interface ConfirmDialogOptions {
 	dialogTitle?: string;
@@ -14,44 +14,43 @@ export interface ConfirmDialogOptions {
 @Component({
 	selector: 'confirm-dialog',
 	template: `
-    <dialog class="dialog dialog-is-active dialog l-dialog">
-		<div class="dialog-x-box o-container">
-			<div class="u-padding-all3x">
-				<div class="l-flex l-flex-justifybetween u-margin-bottom2x">
-					<h2 class="u-text-body-bold-caps text-dark1">
-						{{ options.dialogTitle }}
-					</h2>
-					<button
-						(click)="rejectDialog()"
-						class="buttonicon buttonicon-link">
-						<svg icon="icon_close"></svg>
-						<span class="visuallyhidden">Close</span>
-					</button>
+		<dialog class="dialog dialog-is-active dialog l-dialog">
+			<div class="dialog-x-box o-container">
+				<div class="u-padding-all3x">
+					<div class="l-flex l-flex-justifybetween u-margin-bottom2x">
+						<h2 class="u-text-body-bold-caps text-dark1">
+							{{ options.dialogTitle }}
+						</h2>
+						<button (click)="rejectDialog()" class="buttonicon buttonicon-link">
+							<svg icon="icon_close"></svg>
+							<span class="visuallyhidden">Close</span>
+						</button>
+					</div>
+					<p class="u-text-body" [innerHTML]="options.dialogBody"></p>
 
-				</div>
-				<p class="u-text-body" [innerHTML]="options.dialogBody"></p>
-
-				<div class="l-stack l-stack-buttons u-margin-top3x">
-					<button 
-						[disabled]="options.disableConfirm"
-						class="button" 
-						(click)="resolveDialog()">{{ options.resolveButtonLabel }}</button>
-					<button *ngIf="options.showRejectButton"
-						class="button button-secondary"
-						(click)="rejectDialog()">{{ options.rejectButtonLabel }}</button>
+					<div class="l-stack l-stack-buttons u-margin-top3x">
+						<button [disabled]="options.disableConfirm" class="button" (click)="resolveDialog()">
+							{{ options.resolveButtonLabel }}
+						</button>
+						<button
+							*ngIf="options.showRejectButton"
+							class="button button-secondary"
+							(click)="rejectDialog()"
+						>
+							{{ options.rejectButtonLabel }}
+						</button>
+					</div>
 				</div>
 			</div>
-		</div>
-    </dialog>
-    `,
-
+		</dialog>
+	`,
 })
 export class ConfirmDialog extends BaseDialog {
 	static defaultOptions = {
-		dialogTitle: "Confirm",
-		dialogBody: "Please confirm",
-		rejectButtonLabel: "Cancel",
-		resolveButtonLabel: "OK",
+		dialogTitle: 'Confirm',
+		dialogBody: 'Please confirm',
+		rejectButtonLabel: 'Cancel',
+		resolveButtonLabel: 'OK',
 		showCloseBox: true,
 		showRejectButton: true,
 		disableConfirm: false,
@@ -61,11 +60,7 @@ export class ConfirmDialog extends BaseDialog {
 	resolveFunc: () => void;
 	rejectFunc: () => void;
 
-
-	constructor(
-		componentElem: ElementRef,
-		renderer: Renderer2,
-	) {
+	constructor(componentElem: ElementRef, renderer: Renderer2) {
 		super(componentElem, renderer);
 	}
 
@@ -76,11 +71,16 @@ export class ConfirmDialog extends BaseDialog {
 	 * @param options Options for the dialog
 	 * @returns {Promise<void>}
 	 */
-	openResolveRejectDialog(
-		options: ConfirmDialogOptions
-	): Promise<void> {
+	openResolveRejectDialog(options: ConfirmDialogOptions): Promise<void> {
 		if (this.isOpen) {
-			return Promise.reject(new Error("Cannot open dialog, because it is already open. Old options" + JSON.stringify(this.options) + "; new options: " + JSON.stringify(options)));
+			return Promise.reject(
+				new Error(
+					'Cannot open dialog, because it is already open. Old options' +
+						JSON.stringify(this.options) +
+						'; new options: ' +
+						JSON.stringify(options),
+				),
+			);
 		}
 
 		this.options = Object.assign({}, ConfirmDialog.defaultOptions, options);
@@ -99,11 +99,11 @@ export class ConfirmDialog extends BaseDialog {
 	 * @param options Options for the dialog
 	 * @returns {Promise<boolean>}
 	 */
-	openTrueFalseDialog(
-		options: ConfirmDialogOptions
-	): Promise<boolean> {
-		return this.openResolveRejectDialog(options)
-			.then(() => true, () => false);
+	openTrueFalseDialog(options: ConfirmDialogOptions): Promise<boolean> {
+		return this.openResolveRejectDialog(options).then(
+			() => true,
+			() => false,
+		);
 	}
 
 	rejectDialog() {

@@ -15,29 +15,32 @@
 						"index": "src/index.html",
 						"main": "src/main.ts",
 						"tsConfig": "src/tsconfig.app.json",
-            "polyfills": "src/polyfills.ts",
+						"polyfills": "src/polyfills.ts",
 						"assets": [
 							"src/assets",
-                            "src/breakdown",
+							"src/breakdown",
 							"src/_redirects",
 							{
 								"glob": "**/*",
 								"input": "node_modules/ace-builds/src-min",
 								"output": "./assets/ace-builds/"
 							},
-                            {
-                                "glob": "**/*",
-                                "input": "./assets/@concentricsky/badgr-style/dist/images/",
-                                "output": "./assets/@concentricsky/badgr-style/dist/images/"
-                            }
+							{
+								"glob": "**/*",
+								"input": "./assets/@concentricsky/badgr-style/dist/images/",
+								"output": "./assets/@concentricsky/badgr-style/dist/images/"
+							}
 						],
 						"styles": [
 							"src/assets/@concentricsky/badgr-style/dist/css/screen.css",
 							"src/styles/oeb/oeb_styles.scss",
+                            "src/styles/google-webfonts/inter.scss",
+                            "src/styles/google-webfonts/nunito.scss",
+                            "src/styles/google-webfonts/rubik.scss",
 							"node_modules/dialog-polyfill/dialog-polyfill.css",
 							"src/breakdown/static/css/re-style.css",
 							"node_modules/maplibre-gl/dist/maplibre-gl.css",
-                            "node_modules/ngx-markdown-editor/assets/highlight.js/agate.min.css"
+							"node_modules/ngx-markdown-editor/assets/highlight.js/agate.min.css"
 						],
 						"scripts": [
 							"node_modules/ngx-markdown-editor/assets/highlight.js/highlight.min.js",
@@ -98,28 +101,25 @@
 				},
 				"serve": {
 					"builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "buildTarget": "badgr-ui-cli:build"
+					"options": {
+						"buildTarget": "badgr-ui-cli:build"
 					},
 					"configurations": {
-            "production": {
-              "buildTarget": "badgr-ui-cli:build:production"
+						"production": {
+							"buildTarget": "badgr-ui-cli:build:production"
 						}
 					}
 				},
 				"extract-i18n": {
 					"builder": "@angular-devkit/build-angular:extract-i18n",
-          "options": {
-            "buildTarget": "badgr-ui-cli:build"
+					"options": {
+						"buildTarget": "badgr-ui-cli:build"
 					}
 				},
 				"test": {
 					"builder": "@angular-devkit/build-angular:karma",
 					"options": {
-						"polyfills": [
-                            "zone.js",
-                            "zone.js/testing"
-                        ],
+						"polyfills": ["zone.js", "zone.js/testing"],
 						"tsConfig": "src/tsconfig.spec.json",
 						"karmaConfig": "src/karma.conf.js",
 						"styles": [
@@ -128,20 +128,22 @@
 						],
 						"scripts": [
 							"node_modules/ngx-markdown-editor/assets/marked.min.js",
-                            "node_modules/ace-builds/src-min/ace.js"
-                        ],
-						"assets": ["src/favicon.ico", "src/assets",
+							"node_modules/ace-builds/src-min/ace.js"
+						],
+						"assets": [
+							"src/favicon.ico",
+							"src/assets",
 							{
 								"glob": "**/*",
 								"input": "node_modules/ace-builds/src-min",
 								"output": "./assets/ace-builds/"
 							},
-                            {
-                                "glob": "icons.svg",
-                                "input": "./assets/@concentricsky/badgr-style/dist/images",
-                                "output": "./assets/@concentricsky/badgr-style/dist/images"
-                            }
-                        ]
+							{
+								"glob": "icons.svg",
+								"input": "./assets/@concentricsky/badgr-style/dist/images",
+								"output": "./assets/@concentricsky/badgr-style/dist/images"
+							}
+						]
 					}
 				}
 			}
@@ -160,7 +162,7 @@
 				}
 			}
 		}
-  },
+	},
 	"schematics": {
 		"@schematics/angular:component": {
 			"prefix": "app",
@@ -169,8 +171,8 @@
 		"@schematics/angular:directive": {
 			"prefix": "app"
 		}
-  },
-  "cli": {
-    "analytics": false
-  }
+	},
+	"cli": {
+		"analytics": false
+	}
 }

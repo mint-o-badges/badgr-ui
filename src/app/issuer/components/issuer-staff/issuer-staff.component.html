@@ -17,7 +17,10 @@
 					{{ (isCurrentUserIssuerOwner ? 'Issuer.editMembers' : 'General.members') | translate }}
 				</h1>
 				<div class="topbar-x-subheading">
-					{{ (isCurrentUserIssuerOwner ? 'Issuer.editMemberInstitute' : 'Issuer.membersHaveAccess') | translate }}
+					{{
+						(isCurrentUserIssuerOwner ? 'Issuer.editMemberInstitute' : 'Issuer.membersHaveAccess')
+							| translate
+					}}
 				</div>
 			</div>
 		</div>
@@ -27,7 +30,7 @@
 		<div class="l-stack u-margin-bottom2x" *ngIf="isCurrentUserIssuerOwner">
 			<p class="u-text-h3-bold">{{ 'General.members' | translate }}</p>
 			<issuer-staff-create-dialog #issuerStaffCreateDialog></issuer-staff-create-dialog>
-			<button class="button button-secondary" (click)="addStaff()">{{'Issuer.addMember' | translate}}</button>
+			<button class="button button-secondary" (click)="addStaff()">{{ 'Issuer.addMember' | translate }}</button>
 		</div>
 
 		<table class="datatable datatable-roundheaders datatable-onlyfirstcolumntablet datatable-verticalalignmiddle">
@@ -35,7 +38,7 @@
 				<tr class="datatable-x-header">
 					<th class="datatable-x-cell">Name</th>
 					<th class="datatable-x-cell">ID</th>
-					<th class="datatable-x-cell">{{'General.role' | translate}}</th>
+					<th class="datatable-x-cell">{{ 'General.role' | translate }}</th>
 				</tr>
 			</thead>
 			<tbody class="datatable-x-body">
@@ -72,7 +75,7 @@
 									(click)="removeMember(member)"
 									*ngIf="member != issuer.currentUserStaffMember"
 								>
-									{{'General.remove' | translate}}
+									{{ 'General.remove' | translate }}
 								</button>
 							</div>
 						</div>
@@ -107,7 +110,7 @@
 									(click)="removeMember(member)"
 									*ngIf="member != issuer.currentUserStaffMember"
 								>
-									{{'General.remove' | translate}}
+									{{ 'General.remove' | translate }}
 								</button>
 							</div>
 						</div>

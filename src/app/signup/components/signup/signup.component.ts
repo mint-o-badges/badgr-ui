@@ -20,17 +20,13 @@ import { BadgrApiFailure } from '../../../common/services/api-failure';
 })
 export class SignupComponent extends BaseRoutableComponent implements OnInit {
 	signupForm = typedFormGroup()
-		.addControl('username', '', [
-			Validators.required,
-			EmailValidator.validEmail
-		])
+		.addControl('username', '', [Validators.required, EmailValidator.validEmail])
 		.addControl('firstName', '', Validators.required)
 		.addControl('lastName', '', Validators.required)
-		.addControl('password', '', [ Validators.required, Validators.minLength(8) ])
-		.addControl('passwordConfirm', '', [ Validators.required, this.passwordsMatch.bind(this) ])
+		.addControl('password', '', [Validators.required, Validators.minLength(8)])
+		.addControl('passwordConfirm', '', [Validators.required, this.passwordsMatch.bind(this)])
 		.addControl('agreedTermsService', false, Validators.requiredTrue)
-		.addControl('marketingOptIn', false)
-	;
+		.addControl('marketingOptIn', false);
 
 	signupFinished: Promise<unknown>;
 
@@ -50,13 +46,13 @@ export class SignupComponent extends BaseRoutableComponent implements OnInit {
 		public oAuthManager: OAuthManager,
 		private sanitizer: DomSanitizer,
 		router: Router,
-		route: ActivatedRoute
+		route: ActivatedRoute,
 	) {
 		super(router, route);
 		title.setTitle(`Signup - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 	}
 
-	sanitize(url:string){
+	sanitize(url: string) {
 		return this.sanitizer.bypassSecurityTrustUrl(url);
 	}
 
@@ -65,11 +61,11 @@ export class SignupComponent extends BaseRoutableComponent implements OnInit {
 			this.router.navigate(['/userProfile']);
 		}
 		const defaultEmail = this.route.snapshot.queryParams['email'];
-		if(defaultEmail) this.signupForm.controls.username.setValue(defaultEmail);
+		if (defaultEmail) this.signupForm.controls.username.setValue(defaultEmail);
 	}
 
 	onSubmit() {
-		if (! this.signupForm.markTreeDirtyAndValidate()) {
+		if (!this.signupForm.markTreeDirtyAndValidate()) {
 			return;
 		}
 
@@ -81,39 +77,38 @@ export class SignupComponent extends BaseRoutableComponent implements OnInit {
 			formState.lastName,
 			formState.password,
 			formState.agreedTermsService,
-			formState.marketingOptIn
+			formState.marketingOptIn,
 		);
 
 		this.signupFinished = new Promise<void>((resolve, reject) => {
 			const source = this.route.snapshot.params['source'] || localStorage.getItem('source') || null;
-			this.signupService.submitSignup(signupUser, source)
-				.then(
-					() => {
-						this.sendSignupConfirmation(formState.username);
-						resolve();
-					},
-					(response: HttpErrorResponse) => {
-						const error = response.error;
-						const throttleMsg = BadgrApiFailure.messageIfThrottableError(error);
+			this.signupService.submitSignup(signupUser, source).then(
+				() => {
+					this.sendSignupConfirmation(formState.username);
+					resolve();
+				},
+				(response: HttpErrorResponse) => {
+					const error = response.error;
+					const throttleMsg = BadgrApiFailure.messageIfThrottableError(error);
 
-						if(throttleMsg){
-							this.messageService.reportHandledError(throttleMsg, error);
+					if (throttleMsg) {
+						this.messageService.reportHandledError(throttleMsg, error);
+					} else if (error) {
+						if (error.password) {
+							this.messageService.setMessage(
+								'Your password must be uncommon and at least 8 characters. Please try again.',
+								'error',
+							);
+						} else {
+							this.messageService.setMessage('' + error, 'error');
 						}
-						else if (error) {
-							if (error.password) {
-								this.messageService.setMessage('Your password must be uncommon and at least 8 characters. Please try again.', 'error');
-							}
-							else {
-								this.messageService.setMessage('' + error, 'error');
-							}
-						}
-						else {
-							this.messageService.setMessage('Unable to signup.', 'error');
-						}
-						resolve();
+					} else {
+						this.messageService.setMessage('Unable to signup.', 'error');
 					}
-				);
-		}).then(() => this.signupFinished = null);
+					resolve();
+				},
+			);
+		}).then(() => (this.signupFinished = null));
 	}
 
 	sendSignupConfirmation(email) {
@@ -125,13 +120,13 @@ export class SignupComponent extends BaseRoutableComponent implements OnInit {
 	}
 
 	passwordsMatch(): ValidationErrors | null {
-		if (! this.signupForm) return null;
+		if (!this.signupForm) return null;
 
 		const p1 = this.signupForm.controls.password.value;
 		const p2 = this.signupForm.controls.passwordConfirm.value;
 
 		if (p1 && p2 && p1 !== p2) {
-			return { passwordsMatch: "Passwords do not match" };
+			return { passwordsMatch: 'Passwords do not match' };
 		}
 
 		return null;
