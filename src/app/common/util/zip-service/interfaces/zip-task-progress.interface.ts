@@ -1,5 +1,5 @@
 export interface ZipTaskProgress {
-  active: boolean;
-  current?: number;
-  total?: number;
+	active: boolean;
+	current?: number;
+	total?: number;
 }

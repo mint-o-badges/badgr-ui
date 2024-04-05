@@ -1,22 +1,21 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {FormBuilder} from '@angular/forms';
-import {ActivatedRoute, Router} from '@angular/router';
-import {SessionService} from '../../../common/services/session.service';
-import {MessageService} from '../../../common/services/message.service';
-import {Title} from '@angular/platform-browser';
-import {BaseAuthenticatedRoutableComponent} from '../../../common/pages/base-authenticated-routable.component';
-import {TransformedImportData, ViewState} from '../badgeclass-issue-bulk-award/badgeclass-issue-bulk-award.component';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { SessionService } from '../../../common/services/session.service';
+import { MessageService } from '../../../common/services/message.service';
+import { Title } from '@angular/platform-browser';
+import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
+import { TransformedImportData, ViewState } from '../badgeclass-issue-bulk-award/badgeclass-issue-bulk-award.component';
 
-import {BadgeInstanceManager} from '../../services/badgeinstance-manager.service';
-import {BadgeInstanceBatchAssertion} from '../../models/badgeinstance-api.model';
-import {BadgrApiFailure} from '../../../common/services/api-failure';
+import { BadgeInstanceManager } from '../../services/badgeinstance-manager.service';
+import { BadgeInstanceBatchAssertion } from '../../models/badgeinstance-api.model';
+import { BadgrApiFailure } from '../../../common/services/api-failure';
 
 @Component({
 	selector: 'badgeclass-issue-bulk-award-confirmation',
 	templateUrl: './badgeclass-issue-bulk-award-confirmation.component.html',
 })
 export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRoutableComponent {
-
 	@Input() transformedImportData: TransformedImportData;
 	@Input() badgeSlug: string;
 	@Input() issuerSlug: string;
@@ -36,7 +35,7 @@ export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRouta
 		protected route: ActivatedRoute,
 		protected messageService: MessageService,
 		protected formBuilder: FormBuilder,
-		protected title: Title
+		protected title: Title,
 	) {
 		super(router, route, sessionService);
 		this.enableActionButton();
@@ -57,37 +56,39 @@ export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRouta
 
 		const assertions: BadgeInstanceBatchAssertion[] = [];
 
-		this.transformedImportData.validRowsTransformed.forEach(row => {
+		this.transformedImportData.validRowsTransformed.forEach((row) => {
 			let assertion: BadgeInstanceBatchAssertion;
 			if (row.evidence) {
 				assertion = {
 					recipient_identifier: row.email,
-					evidence_items: [{evidence_url: row.evidence}]
+					evidence_items: [{ evidence_url: row.evidence }],
 				};
 			} else {
 				assertion = {
-					recipient_identifier: row.email
+					recipient_identifier: row.email,
 				};
 			}
 			assertions.push(assertion);
 		});
 
-		this.badgeInstanceManager.createBadgeInstanceBatched(
-			this.issuerSlug,
-			this.badgeSlug,
-			{
+		this.badgeInstanceManager
+			.createBadgeInstanceBatched(this.issuerSlug, this.badgeSlug, {
 				issuer: this.issuerSlug,
 				badge_class: this.badgeSlug,
 				create_notification: this.notifyEarner,
-				assertions
-			}
-		).then(result => {
-			this.router.navigate(
-				['/issuer/issuers', this.issuerSlug, "badges", this.badgeSlug]
+				assertions,
+			})
+			.then(
+				(result) => {
+					this.router.navigate(['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug]);
+				},
+				(error) => {
+					this.messageService.setMessage(
+						'Unable to award badge: ' + BadgrApiFailure.from(error).firstMessage,
+						'error',
+					);
+				},
 			);
-		}, error => {
-			this.messageService.setMessage("Unable to award badge: " + BadgrApiFailure.from(error).firstMessage, "error");
-		});
 	}
 
 	updateViewState(state: ViewState) {
@@ -100,5 +101,4 @@ export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRouta
 			this.disableActionButton();
 		}
 	}
-
 }

@@ -1,22 +1,22 @@
-import {Component, ElementRef, Renderer2} from '@angular/core';
-import {BaseDialog} from '../../../common/dialogs/base-dialog';
-import {FormBuilder, Validators} from '@angular/forms';
-import {EmailValidator} from '../../../common/validators/email.validator';
-import {IssuerStaffRoleSlug} from '../../models/issuer-api.model';
-import {BadgrApiFailure} from '../../../common/services/api-failure';
-import {MessageService} from '../../../common/services/message.service';
-import {IssuerManager} from '../../services/issuer-manager.service';
-import {Issuer, issuerStaffRoles} from '../../models/issuer.model';
-import {UserProfileManager} from '../../../common/services/user-profile-manager.service';
-import {AppConfigService} from '../../../common/app-config.service';
-import {CommonDialogsService} from '../../../common/services/common-dialogs.service';
-import {typedFormGroup} from '../../../common/util/typed-forms';
-import {MemoizedProperty} from '../../../common/util/memoized-property-decorator';
+import { Component, ElementRef, Renderer2 } from '@angular/core';
+import { BaseDialog } from '../../../common/dialogs/base-dialog';
+import { FormBuilder, Validators } from '@angular/forms';
+import { EmailValidator } from '../../../common/validators/email.validator';
+import { IssuerStaffRoleSlug } from '../../models/issuer-api.model';
+import { BadgrApiFailure } from '../../../common/services/api-failure';
+import { MessageService } from '../../../common/services/message.service';
+import { IssuerManager } from '../../services/issuer-manager.service';
+import { Issuer, issuerStaffRoles } from '../../models/issuer.model';
+import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
+import { AppConfigService } from '../../../common/app-config.service';
+import { CommonDialogsService } from '../../../common/services/common-dialogs.service';
+import { typedFormGroup } from '../../../common/util/typed-forms';
+import { MemoizedProperty } from '../../../common/util/memoized-property-decorator';
 
 @Component({
 	selector: 'issuer-staff-create-dialog',
 	templateUrl: './issuer-staff-create-dialog.component.html',
-	styleUrls: ['./issuer-staff-create-dialog.component.css']
+	styleUrls: ['./issuer-staff-create-dialog.component.css'],
 })
 export class IssuerStaffCreateDialogComponent extends BaseDialog {
 	staffCreateForm = typedFormGroup()
@@ -52,36 +52,33 @@ export class IssuerStaffCreateDialogComponent extends BaseDialog {
 
 	@MemoizedProperty()
 	get issuerStaffRoleOptions() {
-		return issuerStaffRoles.map(r => ({
+		return issuerStaffRoles.map((r) => ({
 			label: r.label,
 			value: r.slug,
-			description: r.description
+			description: r.description,
 		}));
 	}
 
 	submitStaffCreate() {
-		if (! this.staffCreateForm.markTreeDirtyAndValidate()) {
+		if (!this.staffCreateForm.markTreeDirtyAndValidate()) {
 			return;
 		}
 
 		const formData = this.staffCreateForm.value;
 
-		return this.issuer.addStaffMember(
-			formData.staffRole,
-			formData.staffEmail
-		).then(
+		return this.issuer.addStaffMember(formData.staffRole, formData.staffEmail).then(
 			() => {
 				this.error = null;
 				this.messageService.reportMinorSuccess(`Added ${formData.staffEmail} as ${formData.staffRole}`);
 				this.closeModal();
 			},
-			error => {
-				const err = BadgrApiFailure.from(error)
+			(error) => {
+				const err = BadgrApiFailure.from(error);
 				console.log(err);
 				this.error =
 					BadgrApiFailure.messageIfThrottableError(err.overallMessage) ||
 					`Failed to add member: ${err.firstMessage}`;
-			}
+			},
 		);
 	}
 }

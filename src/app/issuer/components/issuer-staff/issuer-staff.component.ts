@@ -38,7 +38,7 @@ export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent imp
 	}
 
 	readonly issuerImagePlaceHolderUrl = preloadImageURL(
-		'../../../../breakdown/static/images/placeholderavatar-issuer.svg'
+		'../../../../breakdown/static/images/placeholderavatar-issuer.svg',
 	);
 
 	issuer: Issuer;
@@ -63,7 +63,7 @@ export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent imp
 		protected issuerManager: IssuerManager,
 		protected profileManager: UserProfileManager,
 		protected configService: AppConfigService,
-		protected dialogService: CommonDialogsService
+		protected dialogService: CommonDialogsService,
 	) {
 		super(router, route, loginService);
 		title.setTitle(`Manage Issuer Staff - ${this.configService.theme['serviceName'] || 'Badgr'}`);
@@ -93,13 +93,13 @@ export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent imp
 		member.save().then(
 			() => {
 				this.messageService.reportMajorSuccess(
-					`${member.nameLabel}'s role has been changed to ${member.roleInfo.label}`
+					`${member.nameLabel}'s role has been changed to ${member.roleInfo.label}`,
 				);
 			},
 			(error) =>
 				this.messageService.reportHandledError(
-					`Failed to edit member: ${BadgrApiFailure.from(error).firstMessage}`
-				)
+					`Failed to edit member: ${BadgrApiFailure.from(error).firstMessage}`,
+				),
 		);
 	}
 
@@ -123,8 +123,8 @@ export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent imp
 			() => this.messageService.reportMinorSuccess(`Removed ${member.nameLabel} from ${this.issuer.name}`),
 			(error) =>
 				this.messageService.reportHandledError(
-					`Failed to add member: ${BadgrApiFailure.from(error).firstMessage}`
-				)
+					`Failed to add member: ${BadgrApiFailure.from(error).firstMessage}`,
+				),
 		);
 	}
 

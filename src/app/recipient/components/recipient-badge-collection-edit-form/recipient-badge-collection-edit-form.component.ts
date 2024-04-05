@@ -1,26 +1,25 @@
 import { Component, Input, OnInit } from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
-import {ActivatedRoute, Router} from '@angular/router';
-import {Title} from '@angular/platform-browser';
-import {BaseAuthenticatedRoutableComponent} from '../../../common/pages/base-authenticated-routable.component';
-import {SessionService} from '../../../common/services/session.service';
-import {MessageService} from '../../../common/services/message.service';
-import {AppConfigService} from '../../../common/app-config.service';
-import {RecipientBadgeCollectionManager} from '../../services/recipient-badge-collection-manager.service';
-import {typedFormGroup} from '../../../common/util/typed-forms';
-import { RecipientBadgeCollection } from "../../models/recipient-badge-collection.model";
+import { FormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
+import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
+import { SessionService } from '../../../common/services/session.service';
+import { MessageService } from '../../../common/services/message.service';
+import { AppConfigService } from '../../../common/app-config.service';
+import { RecipientBadgeCollectionManager } from '../../services/recipient-badge-collection-manager.service';
+import { typedFormGroup } from '../../../common/util/typed-forms';
+import { RecipientBadgeCollection } from '../../models/recipient-badge-collection.model';
 
 @Component({
 	selector: 'recipient-badge-collection-edit-form',
-	templateUrl: './recipient-badge-collection-edit-form.component.html'
+	templateUrl: './recipient-badge-collection-edit-form.component.html',
 })
-export class RecipientBadgeCollectionEditFormComponent extends BaseAuthenticatedRoutableComponent implements OnInit  {
+export class RecipientBadgeCollectionEditFormComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	@Input() badgeCollection: RecipientBadgeCollection;
 
 	badgeCollectionForm = typedFormGroup()
 		.addControl('collectionName', '', [Validators.required, Validators.maxLength(128)])
-		.addControl('collectionDescription', '', [Validators.required, Validators.maxLength(255)])
-	;
+		.addControl('collectionDescription', '', [Validators.required, Validators.maxLength(255)]);
 
 	savePromise: Promise<unknown>;
 
@@ -34,7 +33,7 @@ export class RecipientBadgeCollectionEditFormComponent extends BaseAuthenticated
 		private title: Title,
 		private messageService: MessageService,
 		private configService: AppConfigService,
-		private recipientBadgeCollectionManager: RecipientBadgeCollectionManager
+		private recipientBadgeCollectionManager: RecipientBadgeCollectionManager,
 	) {
 		super(router, route, loginService);
 	}
@@ -43,12 +42,13 @@ export class RecipientBadgeCollectionEditFormComponent extends BaseAuthenticated
 		super.ngOnInit();
 	}
 
-
 	startEditing() {
 		this.isEditing = true;
 
-		this.badgeCollectionForm.controls.collectionName.setValue(this.badgeCollection.name, {emitEvent: false});
-		this.badgeCollectionForm.controls.collectionDescription.setValue(this.badgeCollection.description, {emitEvent: false});
+		this.badgeCollectionForm.controls.collectionName.setValue(this.badgeCollection.name, { emitEvent: false });
+		this.badgeCollectionForm.controls.collectionDescription.setValue(this.badgeCollection.description, {
+			emitEvent: false,
+		});
 	}
 
 	cancelEditing() {
@@ -56,7 +56,7 @@ export class RecipientBadgeCollectionEditFormComponent extends BaseAuthenticated
 	}
 
 	onSubmit() {
-		if (! this.badgeCollectionForm.markTreeDirtyAndValidate()) {
+		if (!this.badgeCollectionForm.markTreeDirtyAndValidate()) {
 			return;
 		}
 
@@ -66,16 +66,21 @@ export class RecipientBadgeCollectionEditFormComponent extends BaseAuthenticated
 			this.badgeCollection.name = formState.collectionName;
 			this.badgeCollection.description = formState.collectionDescription;
 
-			this.savePromise = this.badgeCollection.save()
+			this.savePromise = this.badgeCollection
+				.save()
 				.then(
-					success => {
+					(success) => {
 						this.isEditing = false;
-						this.messageService.reportMinorSuccess(`Saved changes to collection ${this.badgeCollection.name}`);
+						this.messageService.reportMinorSuccess(
+							`Saved changes to collection ${this.badgeCollection.name}`,
+						);
 					},
-					failure => this.messageService.reportHandledError(`Failed to save changes to collection ${this.badgeCollection.name}`)
-				).then(
-					() => this.savePromise = null
-				);
+					(failure) =>
+						this.messageService.reportHandledError(
+							`Failed to save changes to collection ${this.badgeCollection.name}`,
+						),
+				)
+				.then(() => (this.savePromise = null));
 		}
 	}
 }

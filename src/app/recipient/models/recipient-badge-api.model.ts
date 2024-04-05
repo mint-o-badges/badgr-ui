@@ -1,16 +1,15 @@
 // export type RecipientBadgeClassSlug = string;
 export type RecipientBadgeInstanceUrl = string;
 export type RecipientBadgeInstanceSlug = string;
-export type RecipientBadgeAcceptance = "Accepted" | "Rejected" | "Unaccepted";
+export type RecipientBadgeAcceptance = 'Accepted' | 'Rejected' | 'Unaccepted';
 
 /**
  * On the API, instance slugs can be either a string or a number
  */
 export type ApiRecipientBadgeInstanceSlug = string | number;
 
-
 export interface RecipientBadgeInstanceRef {
-	"@id": RecipientBadgeInstanceUrl;
+	'@id': RecipientBadgeInstanceUrl;
 	slug: RecipientBadgeInstanceSlug;
 }
 
@@ -18,7 +17,7 @@ export type RecipientBadgeClassUrl = string;
 export type RecipientBadgeClassSlug = string;
 
 export interface RecipientBadgeClassRef {
-	"@id": RecipientBadgeClassUrl;
+	'@id': RecipientBadgeClassUrl;
 	slug: RecipientBadgeClassSlug;
 }
 
@@ -35,12 +34,12 @@ export interface ApiRecipientBadgeInstance {
 	evidence_items: Array<unknown>;
 	alignment?: Array<unknown>;
 	imagePreview: {
-		type: "image",
-		id: string
+		type: 'image';
+		id: string;
 	};
 	issuerImagePreview?: {
-		type: "image",
-		id: string
+		type: 'image';
+		id: string;
 	};
 	shareUrl?: string;
 	extensions?: object;
@@ -97,7 +96,10 @@ export interface ApiRecipientBadgeIssuer {
 	image?: string;
 }
 
-export type RecipientBadgeInstanceCreationInfo = RecipientBadgeInstanceFromHostedUrl | RecipientBadgeInstanceFromImage | RecipientBadgeInstanceFromJson;
+export type RecipientBadgeInstanceCreationInfo =
+	| RecipientBadgeInstanceFromHostedUrl
+	| RecipientBadgeInstanceFromImage
+	| RecipientBadgeInstanceFromJson;
 
 export interface RecipientBadgeInstanceFromHostedUrl {
 	url: string;

@@ -45,30 +45,26 @@ import { TranslateService } from '@ngx-translate/core';
 		'[class.l-stickyfooter-chromeless]': '! showAppChrome',
 	},
 	templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss']
+	styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit, AfterViewInit {
-    /**
-     * Enables or disables the "curtain" feature, hiding the normal page.
-     */
-    curtainEnabled = true;
-    get curtain() {
-        let re = /\?curtainEnabled=(\w*)/i;
-        let match = this.router.url.match(re);
-        if (match && match.length == 2) {
-            let param: string = match[1];
-            if (param == 'false' || param == 'true' ||
-                param == 'yes' || param == 'no')
-                localStorage.setItem("curtainEnabled",
-                                     param == 'true' || param == 'yes'
-                                         ? 'true' : 'false');
-        }
+	/**
+	 * Enables or disables the "curtain" feature, hiding the normal page.
+	 */
+	curtainEnabled = true;
+	get curtain() {
+		let re = /\?curtainEnabled=(\w*)/i;
+		let match = this.router.url.match(re);
+		if (match && match.length == 2) {
+			let param: string = match[1];
+			if (param == 'false' || param == 'true' || param == 'yes' || param == 'no')
+				localStorage.setItem('curtainEnabled', param == 'true' || param == 'yes' ? 'true' : 'false');
+		}
 
-        let local = localStorage.getItem("curtainEnabled");
-        if (local == 'false' || local == 'true')
-            this.curtainEnabled = localStorage.getItem("curtainEnabled") == 'true';
-        return this.curtainEnabled && !this.router.url.includes('impressum');
-    }
+		let local = localStorage.getItem('curtainEnabled');
+		if (local == 'false' || local == 'true') this.curtainEnabled = localStorage.getItem('curtainEnabled') == 'true';
+		return this.curtainEnabled && !this.router.url.includes('impressum');
+	}
 
 	title = 'Badgr Angular';
 	loggedIn = false;
@@ -112,7 +108,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
 	// For changing language of texts defined in ts file
 	lngObserver = this.languageService.getSelectedLngObs();
-	selectedLng:string = "de";
+	selectedLng: string = 'de';
 
 	get showAppChrome() {
 		return !this.embedService.isEmbedded;
@@ -163,7 +159,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 		private titleService: Title,
 		protected issuerManager: IssuerManager,
 		private languageService: LanguageService, // Translation
-		private translate: TranslateService
+		private translate: TranslateService,
 	) {
 		// Initialize App language
 		this.languageService.setInitialAppLangauge();
@@ -171,7 +167,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 			if (lng != null) {
 				this.selectedLng = lng;
 			}
-		  });
+		});
 
 		angulartics2GoogleTagManager.startTracking();
 
@@ -256,8 +252,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 		this.sessionService.loggedin$.subscribe((loggedIn) =>
 			setTimeout(() => {
 				this.loggedIn = loggedIn;
-                if (loggedIn)
-                    this.refreshProfile();
+				if (loggedIn) this.refreshProfile();
 			}),
 		);
 		this.shouldShowIssuersTab();

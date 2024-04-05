@@ -112,7 +112,7 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 
 		// Translate: to update predefined text when language is changed
 		this.translate.onLangChange.subscribe((event) => {
-			console.log("lng:", event.lang);
+			console.log('lng:', event.lang);
 			this.prepareTexts();
 		});
 	}

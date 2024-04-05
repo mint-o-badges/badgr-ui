@@ -13,7 +13,7 @@
 	"preserveLineBreaks": false,
 	"preventAttributesEscaping": false,
 	"processConditionalComments": true,
-	"processScripts": [ ],
+	"processScripts": [],
 	"removeAttributeQuotes": true,
 	"removeComments": true,
 	"removeEmptyAttributes": true,

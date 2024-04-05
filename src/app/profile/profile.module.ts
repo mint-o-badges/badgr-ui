@@ -1,59 +1,59 @@
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 
-import {BadgrCommonModule, COMMON_IMPORTS} from '../common/badgr-common.module';
-import {ProfileComponent} from './components/profile/profile.component';
-import {AppIntegrationListComponent} from './components/app-integrations-list/app-integrations-list.component';
+import { BadgrCommonModule, COMMON_IMPORTS } from '../common/badgr-common.module';
+import { ProfileComponent } from './components/profile/profile.component';
+import { AppIntegrationListComponent } from './components/app-integrations-list/app-integrations-list.component';
 // import { UserProfileService } from "../common/services/user-profile-api.service";
-import {AppIntegrationApiService} from './services/app-integration-api.service';
-import {AppIntegrationManager} from './services/app-integration-manager.service';
+import { AppIntegrationApiService } from './services/app-integration-api.service';
+import { AppIntegrationManager } from './services/app-integration-manager.service';
 import {
 	BadgebookLti1DetailComponent,
-	IntegrationImageComponent
+	IntegrationImageComponent,
 } from './components/badgebook-lti1-integration-detail/badgebook-lti1-integration-detail.component';
-import {CommonEntityManagerModule} from '../entity-manager/entity-manager.module';
-import {ProfileEditComponent} from './components/profile-edit/profile-edit.component';
-import {UserProfileManager} from '../common/services/user-profile-manager.service';
-import {UserProfileApiService} from '../common/services/user-profile-api.service';
-import {ChangePasswordComponent} from './components/change-password/change-password.component';
-import {OAuthAppDetailComponent} from './components/oauth-app-detail/oauth-app-detail.component';
-import { MozzTransitionModule } from "../mozz-transition/mozz-transition.module";
+import { CommonEntityManagerModule } from '../entity-manager/entity-manager.module';
+import { ProfileEditComponent } from './components/profile-edit/profile-edit.component';
+import { UserProfileManager } from '../common/services/user-profile-manager.service';
+import { UserProfileApiService } from '../common/services/user-profile-api.service';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
+import { OAuthAppDetailComponent } from './components/oauth-app-detail/oauth-app-detail.component';
+import { MozzTransitionModule } from '../mozz-transition/mozz-transition.module';
 import { TranslateModule } from '@ngx-translate/core';
 
 const routes: Routes = [
 	/* Profile */
 	{
-		path: "",
-		redirectTo: "profile",
+		path: '',
+		redirectTo: 'profile',
 		pathMatch: 'full',
 	},
 	{
-		path: "profile",
-		component: ProfileComponent
+		path: 'profile',
+		component: ProfileComponent,
 	},
 	{
-		path: "edit",
-		component: ProfileEditComponent
+		path: 'edit',
+		component: ProfileEditComponent,
 	},
 	{
-		path: "app-integrations",
-		component: AppIntegrationListComponent
+		path: 'app-integrations',
+		component: AppIntegrationListComponent,
 	},
 	{
-		path: "app-integrations/app/canvas-lti1",
-		component: BadgebookLti1DetailComponent
+		path: 'app-integrations/app/canvas-lti1',
+		component: BadgebookLti1DetailComponent,
 	},
 	{
-		path: "app-integrations/oauth-app/:appId",
-		component: OAuthAppDetailComponent
+		path: 'app-integrations/oauth-app/:appId',
+		component: OAuthAppDetailComponent,
 	},
 	{
-		path: "change-password",
-		component: ChangePasswordComponent
+		path: 'change-password',
+		component: ChangePasswordComponent,
 	},
 	{
-		path: "**",
-		component: ProfileComponent
+		path: '**',
+		component: ProfileComponent,
 	},
 ];
 
@@ -64,7 +64,7 @@ const routes: Routes = [
 		CommonEntityManagerModule,
 		RouterModule.forChild(routes),
 		MozzTransitionModule,
-		TranslateModule
+		TranslateModule,
 	],
 	declarations: [
 		BadgebookLti1DetailComponent,
@@ -73,7 +73,7 @@ const routes: Routes = [
 		ProfileEditComponent,
 		IntegrationImageComponent,
 		ChangePasswordComponent,
-		OAuthAppDetailComponent
+		OAuthAppDetailComponent,
 	],
 	providers: [
 		// UserProfileService,
@@ -82,6 +82,6 @@ const routes: Routes = [
 		UserProfileApiService,
 		UserProfileManager,
 	],
-	exports: []
+	exports: [],
 })
 export class ProfileModule {}

@@ -1,23 +1,15 @@
-import {AfterViewInit, Component, ElementRef, HostListener, Input, OnDestroy, ViewChild} from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, Input, OnDestroy, ViewChild } from '@angular/core';
 
 import Tether from 'tether';
 
 @Component({
 	selector: 'tooltip',
 	template: `
-		<span #anchor
-		      (click)="toggleTip()"
-		><ng-content select=".trigger"></ng-content></span>
-		<div #tooltip
-		     class="tooltip"
-		     [ngClass]="{'tooltip-is-active':active}"
-		>
+		<span #anchor (click)="toggleTip()"><ng-content select=".trigger"></ng-content></span>
+		<div #tooltip class="tooltip" [ngClass]="{ 'tooltip-is-active': active }">
 			<span class="tooltip-x-arrow"></span>
 			<div class="tooltip-x-content">
-				<button type="button"
-				        (click)="updateTip(false)"
-				>Close
-				</button>
+				<button type="button" (click)="updateTip(false)">Close</button>
 				<ng-content select="header"></ng-content>
 				<ng-content select="content"></ng-content>
 				<ng-content select="footer"></ng-content>
@@ -25,11 +17,10 @@ import Tether from 'tether';
 		</div>
 	`,
 })
-
 export class TooltipComponent implements AfterViewInit, OnDestroy {
 	@Input() position = {
 		attachment: 'bottom left',
-		targetAttachment: 'middle right'
+		targetAttachment: 'middle right',
 	};
 	@Input() offset = '-30px -15px';
 	@Input() trigger;
@@ -51,8 +42,7 @@ export class TooltipComponent implements AfterViewInit, OnDestroy {
 		}
 	}
 
-	constructor(private el: ElementRef) {
-	}
+	constructor(private el: ElementRef) {}
 
 	updateTip(open: boolean) {
 		this.active = open;
@@ -70,17 +60,14 @@ export class TooltipComponent implements AfterViewInit, OnDestroy {
 			constraints: [
 				{
 					to: 'scrollParent',
-					attachment: 'together'
-				}
+					attachment: 'together',
+				},
 			],
-
 		});
 	}
 
 	ngOnDestroy() {
-        if (this.tether)
-            this.tether.destroy();
-        if (this.tooltip)
-            this.tooltip.nativeElement.remove();
+		if (this.tether) this.tether.destroy();
+		if (this.tooltip) this.tooltip.nativeElement.remove();
 	}
 }

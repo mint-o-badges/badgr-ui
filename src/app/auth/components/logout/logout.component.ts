@@ -1,17 +1,17 @@
-import {Component} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {SessionService} from '../../../common/services/session.service';
-import {BaseRoutableComponent} from '../../../common/pages/base-routable.component';
+import { Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { SessionService } from '../../../common/services/session.service';
+import { BaseRoutableComponent } from '../../../common/pages/base-routable.component';
 
 @Component({
 	selector: 'logout',
-	template: ''
+	template: '',
 })
 export class LogoutComponent extends BaseRoutableComponent {
 	constructor(
 		router: Router,
 		route: ActivatedRoute,
-		protected loginService: SessionService
+		protected loginService: SessionService,
 	) {
 		super(router, route);
 	}
@@ -23,4 +23,3 @@ export class LogoutComponent extends BaseRoutableComponent {
 		window.location.replace('/auth');
 	}
 }
-
