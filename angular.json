@@ -34,6 +34,9 @@
 						"styles": [
 							"src/assets/@concentricsky/badgr-style/dist/css/screen.css",
 							"src/styles/oeb/oeb_styles.scss",
+                            "src/styles/google-webfonts/inter.scss",
+                            "src/styles/google-webfonts/nunito.scss",
+                            "src/styles/google-webfonts/rubik.scss",
 							"node_modules/dialog-polyfill/dialog-polyfill.css",
 							"src/breakdown/static/css/re-style.css",
 							"node_modules/maplibre-gl/dist/maplibre-gl.css",
