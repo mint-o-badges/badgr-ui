@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AbstractControl, FormBuilder, Validators, ValidatorFn, ValidationErrors } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
@@ -31,7 +31,7 @@ import { FormFieldSelectOption } from '../../../common/components/formfield-sele
 	templateUrl: './badgeclass-edit-form.component.html',
 	styleUrl: './badgeclass-edit-form.component.css',
 })
-export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
+export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableComponent implements OnInit, AfterViewInit {
 	baseUrl: string;
 	badgeCategory: string;
 
@@ -338,9 +338,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	ngOnInit() {
 		super.ngOnInit();
 		let that = this;
-		setTimeout(function () {
-			that.adjustUploadImage(that.badgeClassForm.value);
-		}, 10);
 		// update badge frame when a category is selected, unless no-hexagon-frame checkbox is checked
 		this.badgeClassForm.rawControl.controls['badge_category'].statusChanges.subscribe((res) => {
 			this.handleBadgeCategoryChange();
@@ -351,17 +348,13 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				}, 10);
 			}
 		});
-		// update badge frame when a level is selected, unless no-hexagon-frame checkbox is checked
-		this.badgeClassForm.rawControl.controls['badge_level'].statusChanges.subscribe((res) => {
-			if (this.currentImage && !this.hideHexFrame) {
-				//timeout because of workaround for angular bug.
-				setTimeout(function () {
-					that.adjustUploadImage(that.badgeClassForm.value);
-				}, 10);
-			}
-		});
-
 		this.fetchTags();
+	}
+
+	// call adjustUploadImage after formControls are initialized to prevent timing issues
+	// with the imageField (e.g. when editing a badge the image was not shown when the page first loaded)
+	ngAfterViewInit(): void {
+		this.adjustUploadImage(this.badgeClassForm.value);
 	}
 
 	async handleBadgeCategoryChange() {
