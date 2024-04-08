@@ -478,6 +478,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	}
 
 	removeTag(tag: string) {
+		// TODO: also remove tags that were added by the user and not yet saved
 		this.tags.delete(tag);
 	}
 
