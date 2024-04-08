@@ -1,72 +1,88 @@
-import {AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild} from '@angular/core';
+import {
+	AfterViewInit,
+	Component,
+	ElementRef,
+	EventEmitter,
+	Input,
+	OnChanges,
+	Output,
+	SimpleChanges,
+	ViewChild,
+} from '@angular/core';
 
-import {FormControl, FormGroup} from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 
-import {UrlValidator} from '../validators/url.validator';
-import {CommonDialogsService} from '../services/common-dialogs.service';
+import { UrlValidator } from '../validators/url.validator';
+import { CommonDialogsService } from '../services/common-dialogs.service';
 
 @Component({
 	selector: 'bg-formfield-text',
 
 	host: {
-		'class': 'forminput',
+		class: 'forminput',
 		'[class.forminput-is-error]': 'isErrorState',
 		'[class.forminput-locked]': 'isLockedState',
 		'[class.forminput-monospaced]': 'monospaced',
 		'[class.forminput-withbutton]': 'inlineButtonText',
-		'[class.forminput-withsublabel]': 'sublabel'
+		'[class.forminput-withsublabel]': 'sublabel',
 	},
 	template: `
 		<div class="forminput-x-labelrow">
 			<label class="forminput-x-label" [attr.for]="inputName" *ngIf="label || includeLabelAsWrapper">
-				{{ label }}  <span *ngIf="optional">(OPTIONAL)</span>
+				{{ label }} <span *ngIf="optional">(OPTIONAL)</span>
 				<span *ngIf="formFieldAside">{{ formFieldAside }}</span>
 				<button type="button" *ngIf="isLockedState" (click)="unlock()">(unlock)</button>
 			</label>
 			<ng-content class="forminput-x-helplink" select="[label-additions]"></ng-content>
 		</div>
-		<p class="forminput-x-sublabel" *ngIf="sublabel"><span *ngIf="remainingCharactersNum >= 0">{{ remainingCharactersNum }}</span>{{ sublabel }}</p>
+		<p class="forminput-x-sublabel" *ngIf="sublabel">
+			<span *ngIf="remainingCharactersNum >= 0">{{ remainingCharactersNum }}</span
+			>{{ sublabel }}
+		</p>
 
 		<label class="visuallyhidden" [attr.for]="inputName" *ngIf="ariaLabel">{{ ariaLabel }}</label>
 		<div class="forminput-x-inputs">
-			<input [type]="fieldType"
-			       *ngIf="! multiline"
-			       [name]="inputName"
-			       [id]="inputId"
-			       [formControl]="control"
-			       [placeholder]="placeholder || ''"
-						 [attr.maxlength] = "maxchar"
-						 [attr.max] = "max"
-			       (change)="postProcessInput()"
-			       (focus)="cacheControlState()"
-			       (keypress)="handleKeyPress($event)"
-			       (keyup)="handleKeyUp($event)"
-			       #textInput
+			<input
+				[type]="fieldType"
+				*ngIf="!multiline"
+				[name]="inputName"
+				[id]="inputId"
+				[formControl]="control"
+				[placeholder]="placeholder || ''"
+				[attr.maxlength]="maxchar"
+				[attr.max]="max"
+				(change)="postProcessInput()"
+				(focus)="cacheControlState()"
+				(keypress)="handleKeyPress($event)"
+				(keyup)="handleKeyUp($event)"
+				#textInput
 			/>
 			<div class="forminput-x-button" *ngIf="inlineButtonText">
-				<button class="button button-secondary button-informinput"
-						(click)="buttonClicked.emit($event)"
-						[disabled-when-requesting]="true"
-						type="submit"
+				<button
+					class="button button-secondary button-informinput"
+					(click)="buttonClicked.emit($event)"
+					[disabled-when-requesting]="true"
+					type="submit"
 				>
-					{{inlineButtonText}}
+					{{ inlineButtonText }}
 				</button>
 			</div>
-			<textarea *ngIf="multiline"
-			          [name]="inputName"
-			          [id]="inputId"
-			          [formControl]="control"
-			          [attr.maxlength] = "maxchar"
-			          [placeholder]="placeholder || ''"
-			          (change)="postProcessInput()"
-			          (focus)="cacheControlState()"
-			          (keypress)="handleKeyPress($event)"
-			          (keyup)="handleKeyUp($event)"
-			          #textareaInput
+			<textarea
+				*ngIf="multiline"
+				[name]="inputName"
+				[id]="inputId"
+				[formControl]="control"
+				[attr.maxlength]="maxchar"
+				[placeholder]="placeholder || ''"
+				(change)="postProcessInput()"
+				(focus)="cacheControlState()"
+				(keypress)="handleKeyPress($event)"
+				(keyup)="handleKeyUp($event)"
+				#textareaInput
 			></textarea>
 		</div>
 		<p class="forminput-x-error" *ngIf="isErrorState">{{ errorMessageForDisplay }}</p>
-	`
+	`,
 })
 export class FormFieldText implements OnChanges, AfterViewInit {
 	@Input()
@@ -110,12 +126,10 @@ export class FormFieldText implements OnChanges, AfterViewInit {
 		return messagesForValidationError(
 			this.label || this.ariaLabel,
 			this.control && this.control.errors,
-			this.errorMessage
-		).concat(messagesForValidationError(
-			this.label,
-			this.errorGroup && this.errorGroup.errors,
-			this.errorGroupMessage
-		))[0]; // Only display the first error
+			this.errorMessage,
+		).concat(
+			messagesForValidationError(this.label, this.errorGroup && this.errorGroup.errors, this.errorGroupMessage),
+		)[0]; // Only display the first error
 	}
 
 	get value() {
@@ -123,7 +137,10 @@ export class FormFieldText implements OnChanges, AfterViewInit {
 	}
 
 	get controlErrorState() {
-		return this.errorOverride || this.control.dirty && (!this.control.valid || (this.errorGroup && !this.errorGroup.valid));
+		return (
+			this.errorOverride ||
+			(this.control.dirty && (!this.control.valid || (this.errorGroup && !this.errorGroup.valid)))
+		);
 	}
 
 	get isErrorState() {
@@ -143,7 +160,7 @@ export class FormFieldText implements OnChanges, AfterViewInit {
 	}
 
 	get inputId() {
-		return this.id || (this.label || this.placeholder || this.randomName).replace(/[^\w]+/g, "_").toLowerCase();
+		return this.id || (this.label || this.placeholder || this.randomName).replace(/[^\w]+/g, '_').toLowerCase();
 	}
 	@Input() control: FormControl;
 	@Input() initialValue: string;
@@ -164,13 +181,13 @@ export class FormFieldText implements OnChanges, AfterViewInit {
 	@Input() optional = false;
 	@Input() inlineButtonText: string;
 
-
 	@Output() buttonClicked = new EventEmitter<MouseEvent>();
 
 	@Input() errorGroup: FormGroup;
 	@Input() errorGroupMessage: CustomValidatorMessages;
 
-	@Input() unlockConfirmText = 'Unlocking this field may have unintended consequences. Are you sure you want to continue?';
+	@Input() unlockConfirmText =
+		'Unlocking this field may have unintended consequences. Are you sure you want to continue?';
 	@Input() urlField = false;
 
 	@Input() autofocus = false;
@@ -190,11 +207,7 @@ export class FormFieldText implements OnChanges, AfterViewInit {
 
 	private randomName = 'field' + Math.random();
 
-
-	constructor(
-		private dialogService: CommonDialogsService,
-	) {
-	}
+	constructor(private dialogService: CommonDialogsService) {}
 
 	ngOnInit() {
 		if (this.maxchar) {
@@ -216,8 +229,11 @@ export class FormFieldText implements OnChanges, AfterViewInit {
 
 		if ('initialValue' in changes) {
 			const initialValue = changes['initialValue'].currentValue;
-			if ((this.value === null || this.value === undefined || this.value === '') &&
-				(initialValue !== null && initialValue !== undefined && initialValue !== '')
+			if (
+				(this.value === null || this.value === undefined || this.value === '') &&
+				initialValue !== null &&
+				initialValue !== undefined &&
+				initialValue !== ''
 			) {
 				this.control.setValue(initialValue);
 			}
@@ -237,15 +253,17 @@ export class FormFieldText implements OnChanges, AfterViewInit {
 	}
 
 	unlock() {
-		this.dialogService.confirmDialog.openResolveRejectDialog({
-			dialogTitle: 'Are you sure?',
-			dialogBody: this.unlockConfirmText,
-			resolveButtonLabel: 'Continue',
-			rejectButtonLabel: 'Cancel',
-		}).then(
-			() => this.unlocked = true,
-			() => void 0
-		);
+		this.dialogService.confirmDialog
+			.openResolveRejectDialog({
+				dialogTitle: 'Are you sure?',
+				dialogBody: this.unlockConfirmText,
+				resolveButtonLabel: 'Continue',
+				rejectButtonLabel: 'Cancel',
+			})
+			.then(
+				() => (this.unlocked = true),
+				() => void 0,
+			);
 	}
 
 	cacheControlState() {
@@ -272,7 +290,7 @@ export class FormFieldText implements OnChanges, AfterViewInit {
 	}
 
 	handleKeyUp(event: KeyboardEvent) {
-		this.remainingCharactersNum = this.maxchar - (this.control.value? this.control.value.length :0);
+		this.remainingCharactersNum = this.maxchar - (this.control.value ? this.control.value.length : 0);
 	}
 
 	private postProcessInput() {
@@ -295,40 +313,39 @@ export type CustomValidatorMessages = string | { [validatorKey: string]: string 
  * Default validation message generators for input fields.
  */
 export const defaultValidatorMessages: {
-	[validatorKey: string]: (label: string, result?: unknown) => string
+	[validatorKey: string]: (label: string, result?: unknown) => string;
 } = {
-	'required': (label: string) => `${label} is required`,
-	'validUrl': () => `Please enter a valid URL`,
-	'invalidTelephone': () => `Please enter a valid phone number`,
-	'invalidEmail': () => `Please enter a valid email address`,
-	'maxlength': (
-		label: string,
-		{actualLength, requiredLength}: { actualLength: number; requiredLength: number }
-	) => (actualLength && requiredLength)
-		? `${label} exceeds maximum length of ${requiredLength} by ${actualLength - requiredLength} characters`
-		: `${label} exceeds maximum length.`
+	required: (label: string) => `${label} is required`,
+	validUrl: () => `Please enter a valid URL`,
+	invalidTelephone: () => `Please enter a valid phone number`,
+	invalidEmail: () => `Please enter a valid email address`,
+	maxlength: (label: string, { actualLength, requiredLength }: { actualLength: number; requiredLength: number }) =>
+		actualLength && requiredLength
+			? `${label} exceeds maximum length of ${requiredLength} by ${actualLength - requiredLength} characters`
+			: `${label} exceeds maximum length.`,
 };
 
 export function messagesForValidationError(
 	label: string,
 	validatorResult: { [key: string]: string },
-	customMessages: CustomValidatorMessages
+	customMessages: CustomValidatorMessages,
 ): string[] {
-	if (validatorResult && typeof (validatorResult) === 'object' && Object.keys(validatorResult).length > 0) {
-		if (typeof (customMessages) === 'string') {
+	if (validatorResult && typeof validatorResult === 'object' && Object.keys(validatorResult).length > 0) {
+		if (typeof customMessages === 'string') {
 			return [customMessages];
 		}
 
 		const messages: string[] = [];
 
-		Object.keys(validatorResult).forEach(validatorKey => {
+		Object.keys(validatorResult).forEach((validatorKey) => {
 			const validatorValue = validatorResult[validatorKey];
 
 			messages.push(
-				(customMessages && typeof (customMessages) === 'object' && customMessages[validatorKey]) ||
-				(validatorValue && typeof (validatorValue) === 'string' && validatorValue) ||
-				(defaultValidatorMessages[validatorKey] && defaultValidatorMessages[validatorKey](label, validatorValue)) ||
-				`Field failed ${validatorKey} validation.`
+				(customMessages && typeof customMessages === 'object' && customMessages[validatorKey]) ||
+					(validatorValue && typeof validatorValue === 'string' && validatorValue) ||
+					(defaultValidatorMessages[validatorKey] &&
+						defaultValidatorMessages[validatorKey](label, validatorValue)) ||
+					`Field failed ${validatorKey} validation.`,
 			);
 		});
 

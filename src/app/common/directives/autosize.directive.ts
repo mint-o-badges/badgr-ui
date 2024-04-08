@@ -1,5 +1,14 @@
-import {AfterViewChecked, Directive, ElementRef, HostListener, Inject, Input, PLATFORM_ID, Renderer2} from '@angular/core';
-import {isPlatformBrowser} from '@angular/common';
+import {
+	AfterViewChecked,
+	Directive,
+	ElementRef,
+	HostListener,
+	Inject,
+	Input,
+	PLATFORM_ID,
+	Renderer2,
+} from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 /**
  * This file is derived from https://github.com/stevepapa/ng-autosize/blob/master/src/autosize.directive.ts released
@@ -31,10 +40,9 @@ import {isPlatformBrowser} from '@angular/common';
  */
 
 @Directive({
-	selector: 'textarea[autosize]'
+	selector: 'textarea[autosize]',
 })
 export class AutosizeDirective implements AfterViewChecked {
-
 	private el: HTMLElement;
 	private _minHeight: string;
 	private _maxHeight: string;
@@ -74,7 +82,11 @@ export class AutosizeDirective implements AfterViewChecked {
 		this.adjust();
 	}
 
-	constructor(@Inject(PLATFORM_ID) private platformId: {}, private renderer: Renderer2, public element: ElementRef) {
+	constructor(
+		@Inject(PLATFORM_ID) private platformId: {},
+		private renderer: Renderer2,
+		public element: ElementRef,
+	) {
 		this.el = element.nativeElement;
 		this._clientWidth = this.el.clientWidth;
 	}
@@ -84,9 +96,9 @@ export class AutosizeDirective implements AfterViewChecked {
 		if (isPlatformBrowser(this.platformId)) {
 			const style = window.getComputedStyle(this.el, null);
 			if (style.resize === 'both') {
-				this.renderer.setStyle(this.el, 'resize' , 'horizontal');
+				this.renderer.setStyle(this.el, 'resize', 'horizontal');
 			} else if (style.resize === 'vertical') {
-				this.renderer.setStyle(this.el, 'resize' , 'none');
+				this.renderer.setStyle(this.el, 'resize', 'none');
 			}
 			// run first adjust
 			this.adjust();
@@ -95,7 +107,7 @@ export class AutosizeDirective implements AfterViewChecked {
 
 	adjust(): void {
 		// perform height adjustments after input changes, if height is different
-		if (this.el.style.height === this.element.nativeElement.scrollHeight + "px") {
+		if (this.el.style.height === this.element.nativeElement.scrollHeight + 'px') {
 			return;
 		}
 		this.renderer.setStyle(this.el, 'overflow', 'hidden');
@@ -111,5 +123,4 @@ export class AutosizeDirective implements AfterViewChecked {
 		// Set textarea max height if input defined
 		this.renderer.setStyle(this.el, 'maxHeight', this._maxHeight + 'px');
 	}
-
 }

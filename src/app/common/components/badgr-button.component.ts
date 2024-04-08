@@ -1,12 +1,13 @@
-import {Component, Input} from '@angular/core';
-import {MessageService} from '../services/message.service';
+import { Component, Input } from '@angular/core';
+import { MessageService } from '../services/message.service';
 
 @Component({
-	selector: 'button[loading-promises],.button[loading-promises],button[disabled-when-requesting],.button[disabled-when-requesting],button[loading-when-requesting],.button[loading-when-requesting]',
+	selector:
+		'button[loading-promises],.button[loading-promises],button[disabled-when-requesting],.button[disabled-when-requesting],button[loading-when-requesting],.button[loading-when-requesting]',
 	host: {
-		"[class.button-is-loading]": "showLoadindMessage",
-		"[class.button-is-disabled]": "disabledForLoading",
-		"[attr.disabled]": "disabledForLoading ? true : null"
+		'[class.button-is-loading]': 'showLoadindMessage',
+		'[class.button-is-disabled]': 'disabledForLoading',
+		'[attr.disabled]': 'disabledForLoading ? true : null',
 	},
 	template: `
 		<ng-content *ngIf="!showLoadindMessage"></ng-content>
@@ -24,17 +25,11 @@ export class BadgrButtonComponent {
 	loadingWhenRequesting = false;
 
 	@Input('loading-message')
-	loadingMessage = "Loading";
+	loadingMessage = 'Loading';
 
 	@Input('loading-promises')
 	set inputPromises(promises: Promise<unknown> | Array<Promise<unknown>> | null) {
-		this.updatePromises(
-			promises
-				? Array.isArray(promises)
-					? promises.filter(p => !!p)
-				  : [ promises ]
-		    : []
-		);
+		this.updatePromises(promises ? (Array.isArray(promises) ? promises.filter((p) => !!p) : [promises]) : []);
 	}
 
 	get showLoadindMessage() {
@@ -45,16 +40,14 @@ export class BadgrButtonComponent {
 		return this.showLoadindMessage || (this.disabledWhenRequesting && this.messageService.pendingRequestCount > 0);
 	}
 
-	constructor(
-		private messageService: MessageService
-	) {}
+	constructor(private messageService: MessageService) {}
 
 	private updatePromises(promises: Array<Promise<unknown>>) {
 		if (promises.length === 0) {
 			this.loadingPromise = null;
 			this.promiseLoading = false;
 		} else {
-			const ourPromise = this.loadingPromise = Promise.all(promises);
+			const ourPromise = (this.loadingPromise = Promise.all(promises));
 
 			this.promiseLoading = true;
 
@@ -68,7 +61,7 @@ export class BadgrButtonComponent {
 					if (ourPromise === this.loadingPromise) {
 						this.promiseLoading = false;
 					}
-				}
+				},
 			);
 		}
 	}

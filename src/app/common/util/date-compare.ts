@@ -7,8 +7,7 @@
  * @param date1 First date object to compare.
  * @param date2 Second date object to compare.
  */
-export function compareDate(date1: Date, date2: Date): number
-{
+export function compareDate(date1: Date, date2: Date): number {
 	// With Date object we can compare dates using the >, <, <= or >=.
 	// The ==, !=, ===, and !== operators require date.getTime(),
 

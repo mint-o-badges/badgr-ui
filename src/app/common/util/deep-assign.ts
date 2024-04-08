@@ -1,4 +1,3 @@
-
 // tslint:disable
 
 // From https://stackoverflow.com/questions/10834796/validate-that-a-string-is-a-positive-integer
@@ -33,7 +32,7 @@ export function toJsonInclArrayProps(o) {
 		}
 
 		return '[ ' + indexedProps.concat(namedProps).join(', ') + ' ]';
-	} else if (typeof(o) === "object") {
+	} else if (typeof o === 'object') {
 		const namedProps = [];
 
 		for (const key in o) {
@@ -43,10 +42,10 @@ export function toJsonInclArrayProps(o) {
 		}
 
 		return '{ ' + namedProps.join(', ') + ' }';
-	} else if (typeof(o) === "string") {
-		return '"' + o.replace(/([\t\n\r"'])/g, "\\$1") + '"';
+	} else if (typeof o === 'string') {
+		return '"' + o.replace(/([\t\n\r"'])/g, '\\$1') + '"';
 	} else {
-		return "" + o;
+		return '' + o;
 	}
 }
 
@@ -64,13 +63,9 @@ export function jsonCopy<T>(x: T): T {
  * @param seenSources
  * @returns {any}
  */
-export function deepAssign(
-	dest: any,
-	source: any,
-	seenSources: Set<any> = new Set<any>()
-): any {
+export function deepAssign(dest: any, source: any, seenSources: Set<any> = new Set<any>()): any {
 	if (seenSources.has(source)) {
-		throw new Error("Recursive source object graph given to deepAssign");
+		throw new Error('Recursive source object graph given to deepAssign');
 	} else {
 		seenSources.add(source);
 	}
@@ -82,13 +77,13 @@ export function deepAssign(
 
 		for (const key in dest) {
 			if (!isPositiveInteger(key) && dest.hasOwnProperty(key) && !source.hasOwnProperty(key)) {
-				delete dest[ key ];
+				delete dest[key];
 			}
 		}
 	} else {
 		for (const key in dest) {
 			if (dest.hasOwnProperty(key) && !source.hasOwnProperty(key)) {
-				delete dest[ key ];
+				delete dest[key];
 			}
 		}
 	}
@@ -98,15 +93,15 @@ export function deepAssign(
 			const s = source[key];
 			const d = dest[key];
 
-			const sType = Array.isArray(s) ? "array" : typeof(s);
-			const dType = Array.isArray(d) ? "array" : typeof(d);
+			const sType = Array.isArray(s) ? 'array' : typeof s;
+			const dType = Array.isArray(d) ? 'array' : typeof d;
 
-			if (sType === "object" || sType === "array") {
+			if (sType === 'object' || sType === 'array') {
 				// Handle preexisting objects in the dest
-				if (dType === "object" || dType === "array") {
+				if (dType === 'object' || dType === 'array') {
 					if (dType !== sType) {
 						// Handle array -> object and object -> array changes by copying data
-						if (sType === "array") {
+						if (sType === 'array') {
 							dest[key] = [];
 						} else {
 							dest[key] = {};

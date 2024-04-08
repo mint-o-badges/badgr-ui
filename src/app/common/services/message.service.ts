@@ -1,7 +1,7 @@
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
-import {NavigationEnd, Router} from '@angular/router';
-import {UpdatableSubject} from '../util/updatable-subject';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { NavigationEnd, Router } from '@angular/router';
+import { UpdatableSubject } from '../util/updatable-subject';
 
 export interface FlashMessage {
 	message: string;
@@ -10,7 +10,7 @@ export interface FlashMessage {
 	detail?: string;
 }
 
-type MessageStatusType = "success" | "error"  | "info" | "load-error" | "fatal-error";
+type MessageStatusType = 'success' | 'error' | 'info' | 'load-error' | 'fatal-error';
 
 /**
  * A service for displaying application-level messages to the user, such notable API results (failure to load or
@@ -27,7 +27,9 @@ export class MessageService {
 
 	private fatalErrorPresent = false;
 
-	get message$(): Observable<FlashMessage> { return this.subject; }
+	get message$(): Observable<FlashMessage> {
+		return this.subject;
+	}
 
 	constructor() {
 		this.dismissMessage();
@@ -36,7 +38,7 @@ export class MessageService {
 	incrementPendingRequestCount() {
 		// Note: a setTimeout is needed here because not doing so causes the _pendingRequestCount value to change between
 		// angular's dirty checking cycles, and causing errors.
-		setTimeout(() => this._pendingRequestCount ++);
+		setTimeout(() => this._pendingRequestCount++);
 	}
 
 	decrementPendingRequestCount() {
@@ -44,9 +46,9 @@ export class MessageService {
 		// angular's dirty checking cycles, and causing errors.
 		setTimeout(() => {
 			if (this._pendingRequestCount > 0) {
-				this._pendingRequestCount --;
+				this._pendingRequestCount--;
 			} else {
-				console.error("Request counter tried to go below zero!");
+				console.error('Request counter tried to go below zero!');
 			}
 		});
 	}
@@ -63,7 +65,7 @@ export class MessageService {
 	 */
 	useRouter(router: Router) {
 		// BS-1126: Dismiss message on route change
-		router.events.subscribe(e => {
+		router.events.subscribe((e) => {
 			if (e instanceof NavigationEnd) {
 				if (this.retainMessageOnNextRouteChange) {
 					this.retainMessageOnNextRouteChange = false;
@@ -89,14 +91,11 @@ export class MessageService {
 		return null;
 	}
 
-	setMessage(
-		message: string,
-		status: MessageStatusType = "success"
-	) {
+	setMessage(message: string, status: MessageStatusType = 'success') {
 		this.message = {
 			message,
 			timestamp: Date.now(),
-			status
+			status,
 		};
 		this.publish_message();
 		return this.message;
@@ -109,11 +108,8 @@ export class MessageService {
 	 * @param message
 	 * @param exception
 	 */
-	reportLoadingError(
-		message: string,
-		exception?: unknown
-	) {
-		console.error("Loading Error: " + message, exception);
+	reportLoadingError(message: string, exception?: unknown) {
+		console.error('Loading Error: ' + message, exception);
 
 		// Do not report the error to the message bar. Loading errors are to be displayed inline.
 
@@ -126,14 +122,10 @@ export class MessageService {
 		throw new Error(message);
 	}
 
-	reportFatalError(
-		message: string,
-		detail?: string,
-		exception?: unknown
-	) {
+	reportFatalError(message: string, detail?: string, exception?: unknown) {
 		this.fatalErrorPresent = true;
 		if (message) {
-			this.setMessage(message, "fatal-error");
+			this.setMessage(message, 'fatal-error');
 			this.message.detail = detail;
 		}
 	}
@@ -149,15 +141,10 @@ export class MessageService {
 	 * @param exception
 	 * @param retainAfterNextNav
 	 */
-	reportAndThrowError(
-		message: string,
-		exception?: unknown,
-		retainAfterNextNav = false
-	): never {
+	reportAndThrowError(message: string, exception?: unknown, retainAfterNextNav = false): never {
 		this.reportHandledError(message, exception, retainAfterNextNav);
 		throw new Error(message);
 	}
-
 
 	/**
 	 * Report an error that the user should be notified of, but will not be passed on in promises. The error is
@@ -167,16 +154,9 @@ export class MessageService {
 	 * @param exception
 	 * @param retainAfterNextNav
 	 */
-	reportHandledError(
-		message: string,
-		exception?: unknown,
-		retainAfterNextNav = false
-	) {
+	reportHandledError(message: string, exception?: unknown, retainAfterNextNav = false) {
 		console.error(message, exception);
-		this.setMessage(
-			message,
-			"error"
-		);
+		this.setMessage(message, 'error');
 
 		this.retainMessageOnNextRouteChange = retainAfterNextNav;
 	}
@@ -187,9 +167,7 @@ export class MessageService {
 	 *
 	 * @param message
 	 */
-	reportMinorSuccess(
-		message: string
-	) {
+	reportMinorSuccess(message: string) {
 		// We don't care about minor success messages in the UI for now.
 		console.info(message);
 		// this.setMessage(message, "success");
@@ -202,14 +180,8 @@ export class MessageService {
 	 * @param retainAfterNextNav If true, the message will persist past the next router navigation. Useful when a success
 	 *  immediately routes the user to a new page.
 	 */
-	reportMajorSuccess(
-		message: string,
-		retainAfterNextNav = false
-	) {
-		this.setMessage(
-			message,
-			"success"
-		);
+	reportMajorSuccess(message: string, retainAfterNextNav = false) {
+		this.setMessage(message, 'success');
 
 		this.retainMessageOnNextRouteChange = retainAfterNextNav;
 	}
@@ -221,14 +193,8 @@ export class MessageService {
 	 * @param retainAfterNextNav If true, the message will persist past the next router navigation. Useful when a success
 	 *  immediately routes the user to a new page.
 	 */
-	reportInfoMessage(
-		message: string,
-		retainAfterNextNav = false
-	) {
-		this.setMessage(
-			message,
-			"info"
-		);
+	reportInfoMessage(message: string, retainAfterNextNav = false) {
+		this.setMessage(message, 'info');
 
 		this.retainMessageOnNextRouteChange = retainAfterNextNav;
 	}

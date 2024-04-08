@@ -1,12 +1,12 @@
 <div class="breadcrumbs">
-    <ng-container *ngFor="let link of linkentries; let i=index; let last=last">
-        <a *ngIf="!last" class="breadcrumbs-x-link" [routerLink]="link.routerLink">
-          <svg class="breadcrumbs-x-icon icon icon-dark2" icon="icon_arrow"></svg>
-          <span class="breadcrumbs-x-text">
-            {{link.title}}
-          </span>
-        </a>
-        <span *ngIf="!last" class="breadcrumbs-x-divider">/</span>
-        <span *ngIf="last" >{{link.title}}</span>
-    </ng-container>
+	<ng-container *ngFor="let link of linkentries; let i = index; let last = last">
+		<a *ngIf="!last" class="breadcrumbs-x-link" [routerLink]="link.routerLink">
+			<svg class="breadcrumbs-x-icon icon icon-dark2" icon="icon_arrow"></svg>
+			<span class="breadcrumbs-x-text">
+				{{ link.title }}
+			</span>
+		</a>
+		<span *ngIf="!last" class="breadcrumbs-x-divider">/</span>
+		<span *ngIf="last">{{ link.title }}</span>
+	</ng-container>
 </div>

@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable()
 export class SettingsService {
@@ -6,12 +6,8 @@ export class SettingsService {
 
 	loadSettings<T>(settingsId: string, defaults: T) {
 		try {
-			const settingsString = window.localStorage[ "settings-" + settingsId ] || "{}";
-			return Object.assign(
-				{},
-				defaults,
-				JSON.parse(settingsString)
-			);
+			const settingsString = window.localStorage['settings-' + settingsId] || '{}';
+			return Object.assign({}, defaults, JSON.parse(settingsString));
 		} catch (e) {
 			console.error(`Failed to load settings: ${settingsId}`, e);
 			return Object.assign({}, defaults);
@@ -20,7 +16,7 @@ export class SettingsService {
 
 	saveSettings(settingsId: string, settings: unknown) {
 		try {
-			window.localStorage[ "settings-" + settingsId ] = JSON.stringify(settings);
+			window.localStorage['settings-' + settingsId] = JSON.stringify(settings);
 		} catch (e) {
 			console.error(`Failed to save settings for ${settingsId}`, e);
 		}

@@ -6,32 +6,25 @@ import { COMMON_MOCKS_PROVIDERS_WITH_SUBS } from '../../../mocks/mocks.module.sp
 import { BadgrCommonModule, COMMON_IMPORTS } from '../../../common/badgr-common.module';
 
 describe('StartComponent', () => {
-  let component: StartComponent;
-  let fixture: ComponentFixture<StartComponent>;
+	let component: StartComponent;
+	let fixture: ComponentFixture<StartComponent>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [ StartComponent ],
-      imports:[
-          ...COMMON_IMPORTS,
-          BadgrCommonModule,
-          TranslateTestingModule.withTranslations('de', {}),
-      ],
-      providers: [
-          ...COMMON_MOCKS_PROVIDERS_WITH_SUBS,
-      ],
-      teardown: { destroyAfterEach: false },
-    })
-    .compileComponents();
-  }));
+	beforeEach(waitForAsync(() => {
+		TestBed.configureTestingModule({
+			declarations: [StartComponent],
+			imports: [...COMMON_IMPORTS, BadgrCommonModule, TranslateTestingModule.withTranslations('de', {})],
+			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
+			teardown: { destroyAfterEach: false },
+		}).compileComponents();
+	}));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(StartComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+	beforeEach(() => {
+		fixture = TestBed.createComponent(StartComponent);
+		component = fixture.componentInstance;
+		fixture.detectChanges();
+	});
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+	it('should create', () => {
+		expect(component).toBeTruthy();
+	});
 });

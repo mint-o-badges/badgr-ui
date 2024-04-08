@@ -58,16 +58,18 @@
 			placeholder="{{ 'Issuer.enterCategory' | translate }}"
 			[options]="[
 				{
-					label: 'Schule (Grundschulen, weiterführende Schulen, Berufsschulen, Institutionen formaler schulischer Bildung)', 
+					label: 'Schule (Grundschulen, weiterführende Schulen, Berufsschulen, Institutionen formaler schulischer Bildung)',
 					value: 'schule'
-				}, {
-					label: 'Hochschule (Universitäten. Fachhochschulen, ...)', 
+				},
+				{
+					label: 'Hochschule (Universitäten. Fachhochschulen, ...)',
 					value: 'hochschule'
-				}, {
-					label: 'Andere (Bibliotheken, Museen, FabLabs, Unternehmen, Vereine, ...)', 
+				},
+				{
+					label: 'Andere (Bibliotheken, Museen, FabLabs, Unternehmen, Vereine, ...)',
 					value: 'andere'
-				}]"
-
+				}
+			]"
 		></bg-formfield-select>
 
 		<h2>{{ 'General.address' | translate }}</h2>
@@ -124,9 +126,9 @@
 		</label>
 
 		<div class="l-flex l-flex-1x u-margin-bottom3x u-margin-top4x">
-			<a [routerLink]="['/issuer']" class="button button-secondary" [disabled-when-requesting]="true"
-				>{{ 'General.cancel' | translate }}</a
-			>
+			<a [routerLink]="['/issuer']" class="button button-secondary" [disabled-when-requesting]="true">{{
+				'General.cancel' | translate
+			}}</a>
 			<button
 				type="submit"
 				class="button"

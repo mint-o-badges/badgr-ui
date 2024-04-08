@@ -1,8 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 
 import {
-  scopedPreflightStyles,
-  isolateForComponents, // there are also isolateInsideOfContainer and isolateOutsideOfContainer
+	scopedPreflightStyles,
+	isolateForComponents, // there are also isolateInsideOfContainer and isolateOutsideOfContainer
 } from 'tailwindcss-scoped-preflight';
 
 module.exports = {
@@ -16,7 +16,11 @@ module.exports = {
     extend: {
       colors: {
         purple: 'var(--color-purple)',
-        red: 'var(--color-red)'
+        red: 'var(--color-red)',
+        pink: 'var(--color-pink)',
+        green: 'var(--color-green)',
+        yellow: 'var(--color-yellow)',
+        white: 'var(--color-white)',
       },
     },
   },
@@ -36,4 +40,3 @@ module.exports = {
     }),
   ],
 }
-

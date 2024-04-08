@@ -4,100 +4,96 @@
 	class="dialog dialog-is-active l-dialog"
 	role="dialog"
 >
-		<div class="dialog-x-box o-container">
-			<div class="dialog-x-header u-background-light3">
-				<h1>Icon suchen</h1>
-				<button (click)="closeDialog()" class="buttonicon buttonicon-link">
-					<svg icon="icon_close"></svg>
-					<span class="visuallyhidden">Close</span>
-				</button>
+	<div class="dialog-x-box o-container">
+		<div class="dialog-x-header u-background-light3">
+			<h1>Icon suchen</h1>
+			<button (click)="closeDialog()" class="buttonicon buttonicon-link">
+				<svg icon="icon_close"></svg>
+				<span class="visuallyhidden">Close</span>
+			</button>
+		</div>
+		<div class="u-responsivepadding-yaxis u-responsivepadding-xaxis" tabindex="-1" id="sharelink">
+			<div class="forminput l-actionbar-x-search dialog-x-options">
+				<div class="forminput-x-inputs">
+					<input
+						#nounprojectSearch
+						type="text"
+						name="forminput"
+						id="forminput"
+						placeholder="Icon suchen"
+						(ngModel)="(searchQuery)"
+					/>
+					<svg class="forminput-x-icon" icon="icon_search"></svg>
+				</div>
 			</div>
-			<div
-				class="u-responsivepadding-yaxis u-responsivepadding-xaxis"
-				tabindex="-1"
-				id="sharelink"
-			>
-				<div class="forminput l-actionbar-x-search dialog-x-options">
-					<div class="forminput-x-inputs">
-						<input
-							#nounprojectSearch
-							type="text"
-							name="forminput"
-							id="forminput"
-							placeholder="Icon suchen"
-							(ngModel)="searchQuery"
-						/>
-						<svg class="forminput-x-icon" icon="icon_search"></svg>
-					</div>
-				</div>
-				<div class="dialog-x-height">
-					<div *ngIf="iconsLoaded">
-						<div *bgAwaitPromises="[iconsLoaded]" class="l-containerxaxis l-containeryaxis">
-							<table *ngIf="icons && icons.length > 0; else noResult" class="datatable datatable-roundheaders datatable-onlyfirstcolumn datatable-verticalalignmiddle">
-								<thead class="datatable-x-head">
-									<tr class="datatable-x-header">
-										<th class="datatable-x-cell" scope="col">Icon</th>
-										<th class="datatable-x-cell" scope="col">Tags</th>
-										<th class="datatable-x-cell" scope="col"><span class="visuallyhidden">ID</span></th>
+			<div class="dialog-x-height">
+				<div *ngIf="iconsLoaded">
+					<div *bgAwaitPromises="[iconsLoaded]" class="l-containerxaxis l-containeryaxis">
+						<table
+							*ngIf="icons && icons.length > 0; else noResult"
+							class="datatable datatable-roundheaders datatable-onlyfirstcolumn datatable-verticalalignmiddle"
+						>
+							<thead class="datatable-x-head">
+								<tr class="datatable-x-header">
+									<th class="datatable-x-cell" scope="col">Icon</th>
+									<th class="datatable-x-cell" scope="col">Tags</th>
+									<th class="datatable-x-cell" scope="col"><span class="visuallyhidden">ID</span></th>
+								</tr>
+							</thead>
+							<tbody class="datatable-x-body">
+								<!-- Icons -->
+								<ng-template ngFor let-icon [ngForOf]="icons" let-i="index">
+									<tr class="datatable-x-row u-cursor-pointer" (click)="selectIcon(icon)">
+										<td class="datatable-x-cell">
+											<div class="l-flex l-flex-2x l-flex-aligncenter">
+												<img
+													class="badgeimage badgeimage-test badgeimage-small u-margin-right2x l-flex-x-shrink0"
+													width="40"
+													[loading-src]="badgeLoadingImageUrl"
+													[error-src]="badgeFailedImageUrl"
+													[loaded-src]="icon.thumbnail_url"
+												/>
+												<p
+													class="u-text-bold u-text-breakword"
+													[routerLink]=""
+													(click)="selectIcon(icon)"
+												>
+													{{ icon.term }}
+												</p>
+											</div>
+										</td>
+										<td class="datatable-x-cell u-text-body">{{ icon.tags }}</td>
+										<td class="datatable-x-cell">
+											<button class="button" (click)="selectIcon(icon)">Auswählen</button>
+										</td>
 									</tr>
-								</thead>
-								<tbody class="datatable-x-body">
-										<!-- Icons -->
-										<ng-template ngFor let-icon [ngForOf]="icons" let-i="index">
-											<tr class="datatable-x-row u-cursor-pointer" (click)="selectIcon(icon)">
-												<td class="datatable-x-cell">
-													<div class="l-flex l-flex-2x l-flex-aligncenter">
-														<img
-															class="badgeimage badgeimage-test badgeimage-small u-margin-right2x l-flex-x-shrink0"
-															width="40"
-															[loading-src]="badgeLoadingImageUrl"
-															[error-src]="badgeFailedImageUrl"
-															[loaded-src]="icon.thumbnail_url"
-														/> 
-														<p
-															class="u-text-bold u-text-breakword"
-															[routerLink]=""
-															(click)="selectIcon(icon)"
-															>{{ icon.term }}</p
-														>
-													</div>
-												</td>
-												<td class="datatable-x-cell u-text-body">{{ icon.tags }}</td>
-												<td class="datatable-x-cell">
-													<button
-														class="button"
-														(click)="selectIcon(icon)"
-													>
-														Auswählen
-													</button>
-												</td>
-											</tr>
-										</ng-template>
-								</tbody>
-								<div *ngIf="!endOfResults" id="load-more-icons">
-									<div *ngIf="loadingMore; else NotLoadingMore" class="u-text u-text-breakword">Lädt...</div>
-									<ng-template #NotLoadingMore>
-										<a class="u-text u-text-link u-text-breakword"
+								</ng-template>
+							</tbody>
+							<div *ngIf="!endOfResults" id="load-more-icons">
+								<div *ngIf="loadingMore; else NotLoadingMore" class="u-text u-text-breakword">
+									Lädt...
+								</div>
+								<ng-template #NotLoadingMore>
+									<a
+										class="u-text u-text-link u-text-breakword"
 										[routerLink]=""
-										(click)="loadMoreIcons()">Mehr laden...</a>
-									</ng-template>
-								</div>
-							</table>
-							<!-- No results error -->
-							<ng-template #noResult>
-								<div id="no-icon-result">
-									Kein Icon gefunden für "{{ searchTerm }}"
-								</div>
-							</ng-template>
-						</div>
+										(click)="loadMoreIcons()"
+										>Mehr laden...</a
+									>
+								</ng-template>
+							</div>
+						</table>
+						<!-- No results error -->
+						<ng-template #noResult>
+							<div id="no-icon-result">Kein Icon gefunden für "{{ searchTerm }}"</div>
+						</ng-template>
 					</div>
 				</div>
-				<!-- Language warning -->
-				<div class="category u-padding-xaxis3x u-margin-top2x warning">
-					<p>
-						Bitte nutze englische Begriffe zum Suchen der Icons.
-					</p>
-				</div>
+			</div>
+			<!-- Language warning -->
+			<div class="category u-padding-xaxis3x u-margin-top2x warning">
+				<p>Bitte nutze englische Begriffe zum Suchen der Icons.</p>
 			</div>
 		</div>
+	</div>
 </dialog>

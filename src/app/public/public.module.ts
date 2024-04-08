@@ -98,7 +98,13 @@ export const routes: Routes = [
 ];
 
 @NgModule({
-	imports: [...COMMON_IMPORTS, BadgrCommonModule, CommonEntityManagerModule, RouterModule.forChild(routes), TranslateModule],
+	imports: [
+		...COMMON_IMPORTS,
+		BadgrCommonModule,
+		CommonEntityManagerModule,
+		RouterModule.forChild(routes),
+		TranslateModule,
+	],
 	declarations: [
 		AboutComponent,
 		StartComponent,

@@ -23,8 +23,7 @@ import { TranslateService } from '@ngx-translate/core';
 @Component({
 	selector: 'login',
 	templateUrl: './login.component.html',
-	styleUrls: ['./login.component.scss']
-
+	styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent extends BaseRoutableComponent implements OnInit, AfterViewInit {
 	get theme() {
@@ -60,7 +59,7 @@ export class LoginComponent extends BaseRoutableComponent implements OnInit, Aft
 		private sanitizer: DomSanitizer,
 		router: Router,
 		route: ActivatedRoute,
-		private translate: TranslateService
+		private translate: TranslateService,
 	) {
 		super(router, route);
 		title.setTitle(`Login - ${this.configService.theme['serviceName'] || 'Badgr'}`);
@@ -94,7 +93,7 @@ export class LoginComponent extends BaseRoutableComponent implements OnInit, Aft
 
 		const credential: UserCredential = new UserCredential(
 			this.loginForm.value.username,
-			this.loginForm.value.password
+			this.loginForm.value.password,
 		);
 
 		this.loginFinished = this.sessionService
@@ -138,9 +137,9 @@ export class LoginComponent extends BaseRoutableComponent implements OnInit, Aft
 				(response: HttpErrorResponse) =>
 					this.messageService.reportHandledError(
 						BadgrApiFailure.messageIfThrottableError(response.error) ||
-						this.translate.instant('Login.failLogin'),
-						response
-					)
+							this.translate.instant('Login.failLogin'),
+						response,
+					),
 			)
 			.then(() => (this.loginFinished = null));
 	}
@@ -179,7 +178,7 @@ export class LoginComponent extends BaseRoutableComponent implements OnInit, Aft
 				this.messageService.reportHandledError(
 					this.queryParams.queryStringValue('authError', true),
 					null,
-					true
+					true,
 				);
 			} else if (this.sessionService.isLoggedIn) {
 				this.externalToolsManager.externaltoolsList.updateIfLoaded();
@@ -194,9 +193,9 @@ export class LoginComponent extends BaseRoutableComponent implements OnInit, Aft
 				window.setTimeout(
 					() =>
 						this.sessionService.initiateUnauthenticatedExternalAuth(
-							this.sessionService.enabledExternalAuthProviders[0]
+							this.sessionService.enabledExternalAuthProviders[0],
 						),
-					0
+					0,
 				);
 			}
 		} finally {

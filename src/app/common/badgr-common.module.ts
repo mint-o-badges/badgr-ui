@@ -40,6 +40,7 @@ import { BadgrButtonComponent } from './components/badgr-button.component';
 import { SharingService } from './services/sharing.service';
 import { NounprojectService } from './services/nounproject.service';
 import { AiSkillsService } from './services/ai-skills.service';
+import { AiSkillsService } from './services/ai-skills.service';
 import { EventsService } from './services/events.service';
 import { ForwardRouteComponent } from './pages/forward-route.component';
 import { MarkdownDisplay } from './components/markdown-display';
@@ -123,7 +124,7 @@ export const COMMON_MODULE_COMPONENTS = [
 	TooltipComponent,
 	TruncatedTextComponent,
 	ExportPdfDialog,
-	NounprojectDialog
+	NounprojectDialog,
 ];
 
 const SERVICES = [
@@ -135,7 +136,7 @@ const SERVICES = [
 	SettingsService,
 	SharingService,
 	NounprojectService,
-    AiSkillsService,
+	AiSkillsService,
 	EventsService,
 	SessionService,
 	QueryParametersService,
@@ -149,7 +150,7 @@ const SERVICES = [
 	ExternalToolsManager,
 	AppConfigService,
 	NavigationService,
-	ZipService
+	ZipService,
 ];
 
 const GUARDS = [AuthGuard];
@@ -159,16 +160,8 @@ const PIPES = [UcFirstPipe];
 export const COMMON_IMPORTS = [CommonModule, FormsModule, ReactiveFormsModule, HttpClientModule, RouterModule];
 
 @NgModule({
-	imports: [
-		...COMMON_IMPORTS,
-		FormsModule,
-		LMarkdownEditorModule,
-		TranslateModule
-	],
-	providers: [
-		BadgeClassManager,
-		BadgeClassApiService
-	],
+	imports: [...COMMON_IMPORTS, FormsModule, LMarkdownEditorModule, TranslateModule],
+	providers: [BadgeClassManager, BadgeClassApiService],
 	declarations: [...DIRECTIVES, ...COMMON_MODULE_COMPONENTS, ...PIPES, ForwardRouteComponent, BadgeLegendComponent],
 	exports: [...DIRECTIVES, ...COMMON_MODULE_COMPONENTS, ...PIPES, BadgeLegendComponent],
 })

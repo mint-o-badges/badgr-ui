@@ -1,9 +1,9 @@
-<dialog aria-labelledby="shareBadgeDialog"
-				aria-describedby="dialog1Desc"
-				class="dialog dialog-is-active l-dialog"
-				role="dialog"
+<dialog
+	aria-labelledby="shareBadgeDialog"
+	aria-describedby="dialog1Desc"
+	class="dialog dialog-is-active l-dialog"
+	role="dialog"
 >
-
 	<div class="l-dialog o-container">
 		<div class="dialog dialog-small dialog-clean dialog-is-active">
 			<div class="dialog-x-box">
@@ -15,7 +15,7 @@
 						</button>
 					</div>
 					<div class="u-padding-bottom6x">
-						<div class="progresstracker ">
+						<div class="progresstracker">
 							<div class="progresstrackeritem progresstrackeritem-basic progresstrackeritem-is-complete">
 								<span class="progresstrackeritem-x-status">
 									<span>
@@ -24,9 +24,7 @@
 									</span>
 								</span>
 								<div class="progresstrackeritem-x-text">
-									<h3 class="progresstrackeritem-x-texttitle">
-										Step 1
-									</h3>
+									<h3 class="progresstrackeritem-x-texttitle">Step 1</h3>
 									<p>Download your ZIP file</p>
 								</div>
 							</div>
@@ -38,13 +36,13 @@
 									</span>
 								</span>
 								<div class="progresstrackeritem-x-text">
-									<h3 class="progresstrackeritem-x-texttitle">
-										Step 2
-									</h3>
+									<h3 class="progresstrackeritem-x-texttitle">Step 2</h3>
 									<p>Access Badgr</p>
 								</div>
 							</div>
-							<div class="progresstrackeritem progresstrackeritem-basic progresstrackeritem-is-inprogress">
+							<div
+								class="progresstrackeritem progresstrackeritem-basic progresstrackeritem-is-inprogress"
+							>
 								<span class="progresstrackeritem-x-status">
 									<span>
 										Not started
@@ -52,9 +50,7 @@
 									</span>
 								</span>
 								<div class="progresstrackeritem-x-text">
-									<h3 class="progresstrackeritem-x-texttitle">
-										Step 3
-									</h3>
+									<h3 class="progresstrackeritem-x-texttitle">Step 3</h3>
 									<p>Upload your badges</p>
 								</div>
 							</div>
@@ -63,8 +59,9 @@
 				</div>
 
 				<div class="u-responsivepadding-xaxis u-responsivepadding-yaxis">
-
-					<h1 class="u-text-h3 u-margin-bottom2x"><span class="u-text-bold">Step 3:</span> Upload your badges</h1>
+					<h1 class="u-text-h3 u-margin-bottom2x">
+						<span class="u-text-bold">Step 3:</span> Upload your badges
+					</h1>
 					<p class="u-text u-margin-bottom6x">Your badges are in the zip file from Mozilla.</p>
 
 					<ng-template [ngIf]="noManifestError">
@@ -72,23 +69,22 @@
 							<svg class="icon icon-error" icon="icon_error"></svg>
 							<p class="u-text-body-bold u-text-dark1">Oops!</p>
 						</div>
-						<p class="u-text-small u-text-error u-margin-yaxis1x">That’s not the file from Mozilla. Please try again.</p>
+						<p class="u-text-small u-text-error u-margin-yaxis1x">
+							That’s not the file from Mozilla. Please try again.
+						</p>
 					</ng-template>
 
-					<ng-template [ngIf]="serverErrors.length" >
+					<ng-template [ngIf]="serverErrors.length">
 						<div class="l-flex l-flex-1x">
 							<svg class="icon icon-error" icon="icon_error"></svg>
 							<p class="u-text-body-bold u-text-dark1">Oops!</p>
 						</div>
 						<p *ngFor="let serverError of serverErrors" class="u-text-small u-text-error u-margin-yaxis1x">
-							{{serverError.error}}
+							{{ serverError.error }}
 						</p>
 					</ng-template>
 
-					<form
-						[attr.formGroup]="csvForm"
-						*ngIf="!inProgress"
-					>
+					<form [attr.formGroup]="csvForm" *ngIf="!inProgress">
 						<fieldset>
 							<bg-formfield-file
 								#zipFileField
@@ -106,75 +102,95 @@
 
 					<!-- loading -->
 					<label class="dropzone" *ngIf="inProgress">
-					<div class="l-flex l-flex2x l-flex-column l-flex-aligncenter u-width-xsmall u-padding-xaxis3x">
-						<div class="loaderspin loaderspin-medium u-margin-bottom3x"></div>
-						<p class="u-text-small u-text-center">
-							We’re uploading your badge(s).
-							<br>This might take a minute.
-						</p>
-					</div>
+						<div class="l-flex l-flex2x l-flex-column l-flex-aligncenter u-width-xsmall u-padding-xaxis3x">
+							<div class="loaderspin loaderspin-medium u-margin-bottom3x"></div>
+							<p class="u-text-small u-text-center">
+								We’re uploading your badge(s).
+								<br />This might take a minute.
+							</p>
+						</div>
 					</label>
 
 					<!-- success list -->
 					<ng-template [ngIf]="successes">
 						<div class="l-flex l-flex-1x u-margin-top2x">
 							<svg class="icon icon-success" icon="icon_complete"></svg>
-							<p class="u-text-body-bold u-text-dark1">Congrats! {{successes}} badges of {{attempts}} uploaded will be added to your Backpack</p>
+							<p class="u-text-body-bold u-text-dark1">
+								Congrats! {{ successes }} badges of {{ attempts }} uploaded will be added to your
+								Backpack
+							</p>
 						</div>
 					</ng-template>
 
 					<!-- verify emails list -->
 					<ng-template [ngIf]="unverifiedEmails.length">
 						<form (submit)="verifyEmails()">
-						<p class="u-text u-margin-top1x">
-							We also found badges awarded to the following email addresses. You'll need to verify these email addresses before you can import the badges.
-						</p>
-						<div class="u-background-light3 border borderradius u-padding-xaxis2x u-padding-top2x u-padding-bottom1x u-margin-top2x">
-							<div class="l-flex l-flex-justifybetween u-margin-bottom1x" *ngFor="let email of unverifiedEmails; let i = index" >
-								<label class="checkbox">
-									<input
-										[name]="'email-'+i"
-										[value]="email.email"
-										type="checkbox"
-										[(ngModel)]="email.verify">
-									<span class="checkbox-x-text">
-										{{unverifiedEmails[i].email}}
-									</span>
-								</label>
-								<div class="u-text-small u-margin-leftauto">  {{email.count | i18nPlural: plural['badge']}}</div>
+							<p class="u-text u-margin-top1x">
+								We also found badges awarded to the following email addresses. You'll need to verify
+								these email addresses before you can import the badges.
+							</p>
+							<div
+								class="u-background-light3 border borderradius u-padding-xaxis2x u-padding-top2x u-padding-bottom1x u-margin-top2x"
+							>
+								<div
+									class="l-flex l-flex-justifybetween u-margin-bottom1x"
+									*ngFor="let email of unverifiedEmails; let i = index"
+								>
+									<label class="checkbox">
+										<input
+											[name]="'email-' + i"
+											[value]="email.email"
+											type="checkbox"
+											[(ngModel)]="email.verify"
+										/>
+										<span class="checkbox-x-text">
+											{{ unverifiedEmails[i].email }}
+										</span>
+									</label>
+									<div class="u-text-small u-margin-leftauto">
+										{{ email.count | i18nPlural: plural['badge'] }}
+									</div>
+								</div>
 							</div>
-						</div>
 
-						<button type="submit" class="button button-full u-margin-top3x">Send Verification Emails</button>
+							<button type="submit" class="button button-full u-margin-top3x">
+								Send Verification Emails
+							</button>
 						</form>
 					</ng-template>
 
 					<!-- no badges + earn a badge -->
-					<ng-template [ngIf]="!successes && !unverifiedEmails.length && serverErrors.length && !inProgress" >
+					<ng-template [ngIf]="!successes && !unverifiedEmails.length && serverErrors.length && !inProgress">
 						<div class="l-flex l-flex-1x">
 							<svg class="icon icon-error" icon="icon_error"></svg>
 							<p class="u-text-body-bold u-text-dark1">No Badges will be added.</p>
 						</div>
 
 						<p class="u-text u-margin-top1x">
-							Only valid badges can be added to your backpack. The good news is that your badges are saved on your device and available for you at any time.
+							Only valid badges can be added to your backpack. The good news is that your badges are saved
+							on your device and available for you at any time.
 						</p>
 						<div class="u-margin-top1x u-margin-bottom2x">
-							<a href="//support.badgr.com/portal/kb/articles/mozilla-backpack-transition-to-badgr-faqs" class="u-text-link">What happened?</a>
+							<a
+								href="//support.badgr.com/portal/kb/articles/mozilla-backpack-transition-to-badgr-faqs"
+								class="u-text-link"
+								>What happened?</a
+							>
 						</div>
 
-						<div class="l-flex l-flex-column l-flex-aligncenter u-background-light3 border borderradius u-padding-all2x">
+						<div
+							class="l-flex l-flex-column l-flex-aligncenter u-background-light3 border borderradius u-padding-all2x"
+						>
 							<h3 class="u-text-small-bold u-text-center">But Wait!</h3>
-							<p class="u-text-small u-text-center u-margin-bottom2x">You can earn a badge in less than 5 min. Promise.</p>
+							<p class="u-text-small u-text-center u-margin-bottom2x">
+								You can earn a badge in less than 5 min. Promise.
+							</p>
 
 							<a href="//explore.badgr.io/" class="button button-small">Earn a Badge</a>
 						</div>
 					</ng-template>
-
 				</div>
 			</div>
 		</div>
 	</div>
-
-
 </dialog>

@@ -1,5 +1,5 @@
-import {OnInit, Injectable} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import { OnInit, Injectable } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 /**
  * Base class for all routable components (pages).
@@ -11,8 +11,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 export class BaseRoutableComponent implements OnInit {
 	constructor(
 		protected router: Router,
-		protected route: ActivatedRoute
-	) { }
+		protected route: ActivatedRoute,
+	) {}
 
-	ngOnInit() { }
+	ngOnInit() {}
 }

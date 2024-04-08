@@ -1,24 +1,19 @@
-import {ManagedEntity} from './managed-entity';
-import {UpdatableSubject} from '../util/updatable-subject';
-import {ApiEntityRef} from './entity-ref';
-import {first} from 'rxjs/operators';
-import {MemoizedProperty} from '../util/memoized-property-decorator';
+import { ManagedEntity } from './managed-entity';
+import { UpdatableSubject } from '../util/updatable-subject';
+import { ApiEntityRef } from './entity-ref';
+import { first } from 'rxjs/operators';
+import { MemoizedProperty } from '../util/memoized-property-decorator';
 
 /**
  * Represents a many-to-one connection between entities. Wraps an EntityRef from API data and handles loading and
  * maintaining the reference to the linked entity.
  */
-export class EntityLink<
-	EntityType extends ManagedEntity<unknown, RefType>,
-	RefType extends ApiEntityRef
-> {
+export class EntityLink<EntityType extends ManagedEntity<unknown, RefType>, RefType extends ApiEntityRef> {
 	protected _requested = false;
 	protected _entity: EntityType;
 
 	protected changedSubject = new UpdatableSubject<EntityType>();
-	protected loadedSubject = new UpdatableSubject<EntityType>(
-		() => this.updateLink()
-	);
+	protected loadedSubject = new UpdatableSubject<EntityType>(() => this.updateLink());
 
 	protected _loadedPromise: Promise<EntityType> | null = null;
 
@@ -36,30 +31,32 @@ export class EntityLink<
 	}
 
 	get isPresent(): boolean {
-		return !! this.entityRef;
+		return !!this.entityRef;
 	}
 
 	@MemoizedProperty()
 	get loadedPromise() {
-		if (! this._loadedPromise) {
+		if (!this._loadedPromise) {
 			this._loadedPromise = this.loaded$.pipe(first()).toPromise();
-		} 
+		}
 		return this._loadedPromise;
 	}
 
-	get entityRef(): RefType { return this.getRef(); }
+	get entityRef(): RefType {
+		return this.getRef();
+	}
 
 	constructor(
 		protected owningEntity: ManagedEntity<unknown, ApiEntityRef>,
 		protected fetchEntity: (ref: RefType) => Promise<EntityType>,
-		protected getRef: () => RefType
+		protected getRef: () => RefType,
 	) {
 		this.changedSubject.subscribe(this.loadedSubject);
-		this.changedSubject.subscribe(() => this._loadedPromise = null);
+		this.changedSubject.subscribe(() => (this._loadedPromise = null));
 	}
 
 	protected updateLink() {
-		if (! this._requested) {
+		if (!this._requested) {
 			this._requested = true;
 			this.owningEntity.changed$.subscribe(() => this.updateLink());
 		}
@@ -68,14 +65,14 @@ export class EntityLink<
 
 		if (entityRef) {
 			this.fetchEntity(entityRef).then(
-				entity => {
+				(entity) => {
 					this._entity = entity;
 					this.changedSubject.safeNext(entity);
 				},
-				error => {
+				(error) => {
 					console.error(`Failed to fetch entity using ${this.fetchEntity}`, error);
 					this.changedSubject.error(error);
-				}
+				},
 			);
 		} else {
 			this._entity = null;
@@ -89,13 +86,13 @@ export class EntityLink<
  */
 export class MutableEntityLink<
 	EntityType extends ManagedEntity<unknown, RefType>,
-	RefType extends ApiEntityRef
+	RefType extends ApiEntityRef,
 > extends EntityLink<EntityType, RefType> {
 	constructor(
 		owningEntity: ManagedEntity<unknown, ApiEntityRef>,
 		fetchEntity: (ref: RefType) => Promise<EntityType>,
 		getRef: () => RefType,
-		protected setRef: (ref: RefType) => void
+		protected setRef: (ref: RefType) => void,
 	) {
 		super(owningEntity, fetchEntity, getRef);
 	}
@@ -109,7 +106,9 @@ export class MutableEntityLink<
 		this.entityRef = entity.ref.apiRef;
 	}
 
-	get entityRef(): RefType { return this.getRef(); }
+	get entityRef(): RefType {
+		return this.getRef();
+	}
 	set entityRef(newRef: RefType) {
 		this.setRef(newRef);
 		this.updateLink();

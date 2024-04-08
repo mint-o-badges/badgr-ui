@@ -12,22 +12,22 @@ const config: webpack.Configuration = {
 				loader: 'ts-loader',
 				exclude: /node_modules/,
 				options: {
-					onlyCompileBundledFiles: true
-				}
+					onlyCompileBundledFiles: true,
+				},
 			},
 			{
 				test: /\.(png|jpg|gif|svg)$/i,
-				loader: 'url-loader'
-			}
-		]
+				loader: 'url-loader',
+			},
+		],
 	},
 	resolve: {
 		extensions: ['.ts', '.css'],
-        modules: ['node_modules'],
+		modules: ['node_modules'],
 	},
 	output: {
 		filename: 'widgets.bundle.js',
-		path: path.resolve(__dirname, 'dist')
+		path: path.resolve(__dirname, 'dist'),
 	},
 };
 
