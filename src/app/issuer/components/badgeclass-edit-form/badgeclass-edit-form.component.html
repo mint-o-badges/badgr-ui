@@ -159,7 +159,7 @@
 					Hinzufügen
 				</button>
 			</div>
-			<div *ngIf="tagArray.length > 0" class="tw-flex tw-flex-wrap tw-gap-4 tw-w-1/2 tw-ml-8">
+			<div *ngIf="tags.size > 0" class="tw-flex tw-flex-wrap tw-gap-4 tw-w-1/2 tw-ml-8">
 				<div
 					class="tw-flex tw-items-center tw-bg-white tw-rounded-full tw-px-3 tw-py-1 tw-mr-2 tw-mb-2"
 					*ngFor="let tag of tags"
@@ -167,7 +167,7 @@
 					<button (click)="removeTag(tag)">
 						<span> {{ tag }}</span>
 						<svg class="tw-ml-1" icon="icon_close" width="12px" height="12px"></svg>
-						<span class="tw-sr-only">Close</span>
+						<span class="visuallyhidden">Close</span>
 					</button>
 				</div>
 			</div>

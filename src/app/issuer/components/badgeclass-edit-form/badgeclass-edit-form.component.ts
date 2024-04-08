@@ -230,7 +230,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// Tags
 	tags = new Set<string>();
-	tagArray: string[] = [];
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// Expiration
@@ -357,7 +356,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		}
 		this.tags = new Set();
 		this.badgeClass.tags.forEach((t) => this.tags.add(t));
-		this.tagArray = Array.from(this.tags);
 
 		this.alignmentsEnabled = this.badgeClass.alignments.length > 0;
 		if (badgeClass.expiresAmount && badgeClass.expiresDuration) {
@@ -464,9 +462,8 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		if (newTag.length > 0) {
 			this.tags.add(newTag);
 			if (!this.existingTags.some((tag) => tag.name === newTag)) {
-				this.existingTags.push({ id: this.existingTags.length, name: String(newTag) });
+				this.existingTags = [...this.existingTags, { id: this.existingTags.length, name: newTag }];
 			}
-			this.tagArray.push(newTag);
 
 			this.newTagInput['query'] = '';
 		}
