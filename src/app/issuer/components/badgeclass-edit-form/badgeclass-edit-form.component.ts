@@ -29,9 +29,6 @@ import { FormFieldSelectOption } from '../../../common/components/formfield-sele
 import { AiSkillsService } from '../../../common/services/ai-skills.service';
 import { Skill } from '../../../common/model/ai-skills.model';
 
-import { AiSkillsService } from '../../../common/services/ai-skills.service';
-import { Skill } from '../../../common/model/ai-skills.model';
-
 @Component({
 	selector: 'badgeclass-edit-form',
 	templateUrl: './badgeclass-edit-form.component.html',
