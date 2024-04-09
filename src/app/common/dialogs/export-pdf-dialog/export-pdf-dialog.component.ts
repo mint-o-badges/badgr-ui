@@ -165,7 +165,7 @@ export class ExportPdfDialog extends BaseDialog {
 		const pageHeight = this.doc.internal.pageSize.getHeight();
 		let cutoff = pageWidth - 27;
 
-		const oeb_logo = await this.convertImageToDataURL('assets/logos/Logo-New.png');
+		const oeb_logo = await this.convertImageToDataURL('assets/logos/Logo-New-Small.png');
 		const oeb_logo_aspectRatio = await this.getAspectRatio(oeb_logo);
 
 		function addCompetencyPage(doc: jsPDF, backgroundImage: string, pageWidth: number, pageHeight: number) {
