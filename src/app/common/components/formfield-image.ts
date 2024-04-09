@@ -39,6 +39,7 @@ import { MessageService } from '../services/message.service';
 				id="image_field{{ uniqueIdSuffix }}"
 				(change)="fileInputChanged($event)"
 				class="visuallyhidden"
+                (cancel)="cancelFileSelection($event)"
 			/>
 
 			<label
@@ -148,6 +149,11 @@ export class BgFormFieldImageComponent {
 		protected dialogService: CommonDialogsService,
 		protected messageService: MessageService,
 	) {}
+
+    cancelFileSelection(event: Event) {
+        // Stop the propagation so that the form isn't aborted
+        event.stopPropagation();
+    }
 
 	clearFileInput() {
 		(this.element.querySelector("input[type='file']") as HTMLInputElement).value = null;

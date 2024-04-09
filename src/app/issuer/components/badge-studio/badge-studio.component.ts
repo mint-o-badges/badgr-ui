@@ -52,9 +52,9 @@ export class BadgeStudioComponent implements OnInit, OnChanges {
 					const iconColor = '#0000000';
 					this.context2d.clearRect(0, 0, this.canvas.width, this.canvas.height);
 					var shapeImage =
-						this.formData.badge_category === 'membership' || this.formData.badge_category === 'archievement'
-							? shapeImagesTypes['nolvl']
-							: shapeImagesTypes[this.formData.badge_level];
+						this.formData.badge_category === 'competency'
+							? shapeImagesTypes['competency']
+							: shapeImagesTypes['participation'];
 					// var shapeImage2 = "../../../../breakdown/static/badgestudio/shapes/noun_test.svg";
 					var shapeImage2 = 'https://static.thenounproject.com/png/1444428-200.png';
 					// Grab a random SVG from our set
@@ -174,9 +174,9 @@ export class BadgeStudioComponent implements OnInit, OnChanges {
 					const iconColor = '#0000000';
 					this.context2d.clearRect(0, 0, this.canvas.width, this.canvas.height);
 					var shapeImage =
-						formdata.badge_category === 'membership' || formdata.badge_category === 'archievement'
-							? shapeImagesTypes['nolvl']
-							: shapeImagesTypes[formdata.badge_level];
+						formdata.badge_category === 'competency'
+							? shapeImagesTypes['competency']
+							: shapeImagesTypes['participation'];
 					// var shapeImage2 = "../../../../breakdown/static/badgestudio/shapes/noun_test.svg";
 					var shapeImage2 = 'https://static.thenounproject.com/png/1444428-200.png';
 					// Grab a random SVG from our set
@@ -496,6 +496,8 @@ const shapeImagesTypes = {
 	c1: '../../../../breakdown/static/badgestudio/shapes/c1.svg',
 	c2: '../../../../breakdown/static/badgestudio/shapes/c2.svg',
 	nolvl: '../../../../breakdown/static/badgestudio/shapes/nolvl.svg',
+	participation: '../../../../breakdown/static/badgestudio/shapes/participation.svg',
+	competency: '../../../../breakdown/static/badgestudio/shapes/competency.svg',
 };
 
 // Created from http://fontawesome.io/cheatsheet/
