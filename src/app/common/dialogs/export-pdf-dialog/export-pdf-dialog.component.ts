@@ -176,7 +176,7 @@ export class ExportPdfDialog extends BaseDialog {
 		function addOebLogo(doc: jsPDF, marginXImageLogo: number, logoWidth: number, logoHeight: number) {
 			doc.addImage(oeb_logo, 'PNG', marginXImageLogo, yPos + 10, logoWidth, logoHeight);
 			doc.setDrawColor('#492E98');
-			doc.line(pageWidth / 2 - 50, logoHeight, pageWidth / 2 + 100, logoHeight);
+			doc.line(pageWidth / 2 - 50, 22.5, pageWidth / 2 + 100, 22.5);
 		}
 
 		function addRecipientName(doc: jsPDF, firstName: string, lastName: string) {
