@@ -418,18 +418,19 @@
 			>
 				<div>
 					<p
-						class="text-semiBold md:tw-w-2/3 tw-text-[#5446ff] tw-mt-[10px]"
+						class="text-semiBold md:tw-w-2/3 tw-text-purple tw-mt-[10px]"
 						*ngIf="theme.showPoweredByOSL && theme.providedBy"
 					>
-						{{ 'Start.poweredBy' | translate }}
+						Open Educational Badges ist ein Gemeinschaftsprojekt von
+						<a href="https://matrix-gruppe.de/matrix-gemeinnuetzig/">matrix gGmbh</a>,
+						<a href="https://mycelia.education/">mycelia gGmbh</a> und der
+						<a href="https://opensenselab.org/">openSenseLab gGmbh</a>.
 					</p>
 				</div>
 
 				<div class="tw-flex tw-flex-col tw-min-w-fit">
 					<a class="faq" [routerLink]="['/public/faq']">FAQ</a>
-					<a class="impressum" [href]="theme.termsOfServiceLink">{{
-						'Start.imprint' | translate
-					}}</a>
+					<a class="impressum" [href]="theme.termsOfServiceLink">{{ 'Start.imprint' | translate }}</a>
 				</div>
 			</div>
 		</div>

@@ -48,7 +48,8 @@
 	"Start": {
 		"desc1": "A learner-centered approach",
 		"desc2": "for documentation & feedback of the learning process",
-		"poweredBy": "Open Educational Badges is a joint project by matrix gGmbh, mycelia gGmbh and openSenselab gGmbh",
+		"poweredBy": "Open Educational Badges is a joint project by <a href='https://matrix-gruppe.de/matrix-gemeinnuetzig/'>matrix gGmbh</a>, <a href='https://mycelia.education/'>mycelia gGmbh</a> and <a href='https://opensenselab.org/'>openSenseLab gGmbh</a>",
+
 		"imprint": "Imprint & Data Protection",
 		"ourIdeaTitle": "Our Idea",
 		"ourIdeaDesc": "With the help of Mozilla's Open Badges, we are developing an open and scalable documentation system to demonstrate acquired competencies and skills in school and extracurricular environments. <h4> The badges are contextualized and the learning achievements are documented using an e-portfolio.</h4>",
