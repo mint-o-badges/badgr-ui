@@ -79,11 +79,11 @@
 		"headline2_1": "Unsere Ziele für",
 		"headline2_2": "OPEN EDUCATIONAL BADGES",
 
-		"knowWhatIcan": "ICH WEIßs, WAS ICH KANN!",
+		"knowWhatIcan": "ICH WEIß, WAS ICH KANN!",
 		"knowWhatIcan_text": "Wir stärken die Souveränität der Lernenden, indem wir ihnen Transparenz über ihre Kompetenzen geben.",
 
 		"bridges": "Brücken bauen",
-		"bridges_text": "Wir machen den ausser-schulischen Kompetenzerwerb gleichwertig sichtbar und fördern ihn dadurch.",
+		"bridges_text": "Wir machen den außerschulischen Kompetenzerwerb gleichwertig sichtbar und fördern ihn dadurch.",
 
 		"threeElementsHeadline": "Open Educational Badges besteht aus drei Elementen:",
 		"threeEleText1": "Einer <span class='bold'>technischen Lösung</span>, um Badges zu vergeben und zu sammeln. Diese Funktionalität kann über ein Plug-In in bestehende Lernumgebungen eingebettet werden.",
@@ -93,7 +93,7 @@
 		"threeEleFooter": "Open Educational Badges sind dadurch teilbar, skalierbar, anschlussfähig und so entsteht eine neue Währung, um Kompetenzen abzubilden.",
 
 		"headline3_1": "So kannst du Open Educational Badges nutzen.",
-		"headline3_2": "Für institutionen und Bildungsakteur:innen",
+		"headline3_2": "Für Institutionen und Bildungsakteur:innen",
 
 		"forEleHeadlinet1": "Konto anlegen und Institution erstellen",
 		"forEleText1": "Lege einen Account auf Open Educational Badges an und registriere deine Institution.",
@@ -145,7 +145,7 @@
 		"houseNo": "Hausnummer",
 		"readPolicy": "Bitte lese die Datenschutzrichtlinien und stimme ihnen zu wenn du weitermachen möchtest.",
 		"instCat1": "School (primary schools, secondary schools, vocational schools, institutions of formal school education)",
-		"editMembers": "Mitglieder bearbetien",
+		"editMembers": "Mitglieder bearbeiten",
 		"editMemberInstitute": "Bearbeite die Mitglieder der Institution.",
 		"membersHaveAccess": "Diese Mitglieder haben Zugriff auf die Institution.",
 		"addMember": "Mitglied hinzufügen",
