@@ -26,6 +26,7 @@
 						class="oeb-button tw-bg-red tw-text-white"
 						type="submit"
 						loading-message="."
+						[routerLink]="( loggedIn ? '/issuer' : '/auth/login')"
 						[innerHtml]="'Start.badgesErstellen' | translate"
 					></button>
 				</div>
@@ -53,6 +54,7 @@
 					type="submit"
 					loading-message="."
 					[innerHtml]="'Start.badgesErstellen' | translate"
+					[routerLink]="( loggedIn ? '/issuer' : '/auth/login')"
 				></button>
 			</div>
 		</div>
@@ -199,7 +201,11 @@
 				<p [innerHtml]="'Start.threeEleFooter' | translate"></p>
 			</div>
 			<div class="oeb-center">
-				<button class="oeb-button oeb-yellow-bg" [innerHtml]="'Start.badgesErstellen' | translate"></button>
+				<button 
+					class="oeb-button oeb-yellow-bg" 
+					[innerHtml]="'Start.badgesErstellen' | translate" 
+					[routerLink]="( loggedIn ? '/issuer' : '/auth/login')"
+				></button>
 			</div>
 		</div>
 	</div>
@@ -320,6 +326,7 @@
 					type="submit"
 					loading-message="."
 					[innerHtml]="'Start.badgesErstellen' | translate"
+					[routerLink]="( loggedIn ? '/issuer' : '/auth/login')"
 				></button>
 			</div>
 		</div>
