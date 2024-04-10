@@ -414,19 +414,22 @@
 	<div class="l-containerxaxis">
 		<div class="footer l-stickyfooter-x-footer">
 			<div
-				class="tw-text-left tw-flex md:tw-flex-row md:tw-justify-between md:tw-gap-0 tw-flex-col-reverse tw-gap-[2em]"
+				class="tw-font-[rubik] tw-text-left tw-flex md:tw-flex-row md:tw-justify-between md:tw-gap-0 tw-flex-col-reverse tw-gap-[2em]"
 			>
 				<div>
 					<p
-						class="text-semiBold md:tw-w-1/2"
+						class="text-semiBold md:tw-w-2/3 tw-text-[#5446ff] tw-mt-[10px]"
 						*ngIf="theme.showPoweredByOSL && theme.providedBy"
-						[innerHtml]="'Start.poweredBy' | translate"
-					></p>
+					>
+						{{ 'Start.poweredBy' | translate }}
+					</p>
 				</div>
 
-				<div class="tw-flex tw-flex-col tw-gap-[1em] tw-min-w-fit">
+				<div class="tw-flex tw-flex-col tw-min-w-fit">
 					<a class="faq" [routerLink]="['/public/faq']">FAQ</a>
-					<a class="impressum" [href]="theme.termsOfServiceLink">{{ 'Start.imprint' | translate }}</a>
+					<a class="impressum" [href]="theme.termsOfServiceLink">{{
+						'Start.imprint' | translate
+					}}</a>
 				</div>
 			</div>
 		</div>
