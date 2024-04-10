@@ -285,7 +285,7 @@
 		"awardedTo": "Vergeben an",
 		"more": "Mehr",
 		"criteria": "Kriterien",
-		"viewCriteriaUrl": "Beusche externe Kriterien- URL",
+		"viewCriteriaUrl": "Besuche externe Kriterien-URL",
 		"category": "Kategorie",
 		"competencies": "Kompetenzen",
 		"description": "Beschreibung",
@@ -296,10 +296,10 @@
 		"actions": "Aktionen",
 		"remove": "Entfernen",
 		"alignment": "Verknüpfung",
-		"viewAlignmentUrl": "Besuche Verknüpfungs- URL",
-		"narratives": "Narrative",
+		"viewAlignmentUrl": "Besuche Verknüpfungs-URL",
+		"narrative": "Narrativ",
 		"evidence": "Nachweis",
-		"viewEvidenceUrl": "Besuche Nachweis- URL"
+		"viewEvidenceUrl": "Besuche Nachweis-URL"
 	},
 	"BadgeCollection": {
 		"addCollection": "Sammlung hinzufügen",
