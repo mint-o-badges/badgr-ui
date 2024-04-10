@@ -19,14 +19,16 @@
 					type="button"
 					(click)="shareBadge()"
 				>
-					Share Badge
+					{{ 'RecBadgeDetail.shareBadge' | translate }}
 				</button>
 				<button class="buttonicon buttonicon-secondary" id="actionstrigger" [bgPopupMenuTrigger]="moreMenu">
 					<svg icon="icon_more"></svg>
-					<span class="visuallyhidden">More</span>
+					<span class="visuallyhidden">{{ 'RecBadgeDetail.more' | translate }}</span>
 				</button>
 				<bg-popup-menu #moreMenu>
-					<a class="menuitem" [href]="verifyUrl"><svg icon="icon_checkmark"></svg>Verify</a>
+					<a class="menuitem" [href]="verifyUrl"
+						><svg icon="icon_checkmark"></svg>{{ 'RecBadgeDetail.verify' | translate }}</a
+					>
 					<!--<a class="menuitem"
 						[href]="v2JsonUrl"
 						>Download JSON</a>
@@ -40,10 +42,10 @@
 						loading-message="Loading badge..."
 						[disabled-when-requesting]="true"
 					>
-						<svg icon="icon_file"></svg>Export to PDF
+						<svg icon="icon_file"></svg>{{ 'RecBadgeDetail.exportPdf' | translate }}
 					</button>
 					<button class="menuitem" (click)="deleteBadge(badge)" [disabled-when-requesting]="true">
-						<svg icon="icon_remove"></svg>Delete
+						<svg icon="icon_remove"></svg>{{ 'RecBadgeDetail.delete' | translate }}
 					</button>
 					<ng-container *ngIf="launchpoints">
 						<a class="menuitem" *ngFor="let lp of launchpoints" (click)="clickLaunchpoint(lp)">
@@ -81,7 +83,7 @@
 							/>
 						</div>
 						<div>
-							<dt class="u-text-small-bold u-text-dark2">Issued by:</dt>
+							<dt class="u-text-small-bold u-text-dark2">{{ 'RecBadgeDetail.issuedBy' | translate }}</dt>
 							<dd class="u-text">
 								<a class="u-break-word" [href]="badge.badgeClass.issuer.id">{{
 									badge.badgeClass.issuer.name
@@ -92,13 +94,13 @@
 					<dt
 						class="u-text-small-bold u-padding-top2x u-margin-top2x border border-top border-light3 u-text-dark2"
 					>
-						Issued on:
+						{{ 'RecBadgeDetail.issuedOn' | translate }}
 					</dt>
 					<dd class="u-text"><time [date]="badge?.issueDate" format="mediumDate"></time></dd>
 					<dt
 						class="u-text-small-bold u-padding-top2x u-margin-top2x border border-top border-light3 u-text-dark2"
 					>
-						Awarded to:
+						{{ 'RecBadgeDetail.awardedTo' | translate }}
 					</dt>
 					<dd class="u-text u-break-all" *ngIf="badge.hasExtension('extensions:recipientProfile')">
 						{{ badge.getExtension('extensions:recipientProfile', null).name }}
@@ -116,7 +118,9 @@
 			</div>
 		</div>
 		<div class="badgedetail-x-desc">
-			<h2 class="u-text-h3-semibold u-margin-bottom2x u-text-dark2 u-hidden-mintablet">Description</h2>
+			<h2 class="u-text-h3-semibold u-margin-bottom2x u-text-dark2 u-hidden-mintablet">
+				{{ 'RecBadgeDetail.description' | translate }}
+			</h2>
 			<p class="u-text-body u-width-paragraph">{{ badge.badgeClass.description }}</p>
 		</div>
 		<div class="badgedetail-x-body">
@@ -124,7 +128,9 @@
 			<section
 				*ngIf="badge.badgeClass.criteria_url || badge.badgeClass.criteria_text || badge.badgeClass.criteria"
 			>
-				<h3 class="u-text-h3-semibold u-margin-bottom2x u-text-dark2 u-margin-top4x">Criteria</h3>
+				<h3 class="u-text-h3-semibold u-margin-bottom2x u-text-dark2 u-margin-top4x">
+					{{ 'RecBadgeDetail.criteria' | translate }}
+				</h3>
 				<show-more class="u-margin-bottom8x" *ngIf="badge.badgeClass.criteria_text">
 					<markdown-display
 						id="recipient-earned-badge-detail-markdown-display"
@@ -133,7 +139,7 @@
 				</show-more>
 				<div class="u-margin-yaxis2x" *ngIf="badge.badgeClass.criteria_url">
 					<a class="u-text-outlink" target="_blank" [href]="badge.badgeClass.criteria_url"
-						>View external Criteria URL
+						>{{ 'RecBadgeDetail.viewCriteriaUrl' | translate }}
 						<svg icon="icon_external_link"></svg>
 					</a>
 				</div>
@@ -141,7 +147,7 @@
 			<!-- Kategorie -->
 			<section>
 				<h3 *ngIf="category" class="u-text-h3-semibold u-margin-bottom2x u-text-dark2 u-margin-top4x">
-					Kategorie
+					{{ 'RecBadgeDetail.category' | translate }}
 				</h3>
 				<span>{{ category.Category === 'competency' ? 'Kompetenz- Badge' : 'Teilnahme- Badge' }}</span>
 			</section>
@@ -149,7 +155,7 @@
 			<!-- Kompetenzen -->
 			<section>
 				<h3 *ngIf="competencies" class="u-text-h3-semibold u-margin-bottom2x u-text-dark2 u-margin-top4x">
-					Kompetenzen
+					{{ 'RecBadgeDetail.competencies' | translate }}
 				</h3>
 				<div *ngFor="let competency of competencies; let i = index">
 					<h1 style="margin-top: 1em; font-weight: bold">{{ i + 1 }}. {{ competency.name }}</h1>
@@ -170,11 +176,11 @@
 							<span>{{ competency.name }}</span>
 						</div>
 						<div style="display: flex; justify-content: space-between">
-							<span>Beschreibung: </span>
+							<span>{{ 'RecBadgeDetail.description' | translate }} </span>
 							<span>{{ competency.description }}</span>
 						</div>
 						<div style="display: flex; justify-content: space-between">
-							<span>Kategorie: </span>
+							<span>{{ 'RecBadgeDetail.category' | translate }} </span>
 							<span>{{ competency.category }}</span>
 						</div>
 						<div *ngIf="competency.escoID" style="display: flex; justify-content: space-between">
@@ -182,7 +188,7 @@
 							<span>{{ competency.escoID }}</span>
 						</div>
 						<div style="display: flex; justify-content: space-between">
-							<span>Dauer: </span>
+							<span>{{ 'RecBadgeDetail.duration' | translate }} </span>
 							<span>{{ competency.studyLoad }}</span>
 						</div>
 					</div>
@@ -195,7 +201,7 @@
 					class="u-text-h3-semibold u-margin-bottom2x u-text-dark2 u-margin-top4x"
 					*ngIf="badge.badgeClass.alignment && badge.badgeClass?.alignment.length > 0"
 				>
-					Alignment
+					{{ 'RecBadgeDetail.alignment' | translate }}
 				</h3>
 				<div *ngFor="let alignment of badge.badgeClass.alignment; let i = index">
 					<div class="l-flex l-flex-justifybetween">
@@ -213,7 +219,7 @@
 							class="u-text-outlink"
 							[href]="alignment.targetUrl"
 							target="_blank"
-							>View alignment URL
+							>{{ 'RecBadgeDetail.viewAlignmentUrl' | translate }}
 							<svg icon="icon_external_link"></svg>
 						</a>
 					</div>
@@ -235,7 +241,7 @@
 						class="u-text-h3-semibold u-margin-bottom2x u-text-dark2 u-margin-top4x"
 						*ngIf="badge.evidence_items?.length > 0 || badge.narrative"
 					>
-						Narrative
+						{{ 'RecBadgeDetail.narratives' | translate }}
 					</h3>
 					<show-more>
 						<markdown-display [value]="badge.narrative"></markdown-display>
@@ -243,7 +249,9 @@
 				</div>
 				<div *ngFor="let evidence of badge.evidence_items; let i = index" class="u-break-word">
 					<div *ngIf="badge.evidence_items?.length > 0 || badge.narrative">
-						<h3 class="u-text-h3-semibold u-margin-bottom2x u-text-dark2 u-margin-top4x">Evidence</h3>
+						<h3 class="u-text-h3-semibold u-margin-bottom2x u-text-dark2 u-margin-top4x">
+							{{ 'RecBadgeDetail.evidence' | translate }}
+						</h3>
 						<markdown-display [value]="evidence.narrative"></markdown-display>
 					</div>
 					<div class="u-margin-yaxis2x">
@@ -252,7 +260,7 @@
 							class="u-text-outlink"
 							[href]="evidence.evidence_url"
 							target="_blank"
-							>View Evidence URL
+							>{{ 'RecBadgeDetail.viewEvidenceUrl' | translate }}
 							<svg icon="icon_external_link"></svg>
 						</a>
 					</div>
@@ -262,13 +270,13 @@
 			<!-- collections -->
 			<section>
 				<div class="l-flex l-flex-1x l-flex-justifybetween u-margin-bottom2x u-margin-top4x">
-					<h2 class="u-text-h3-semibold u-text-dark2">Collections</h2>
+					<h2 class="u-text-h3-semibold u-text-dark2">{{ 'RecBadgeDetail.collections' | translate }}</h2>
 					<button
 						[class.connectionadd-is-added]="badge.collections.length > 0"
 						(click)="manageCollections()"
 						class="button button-secondary"
 					>
-						Add to Collection
+						{{ 'RecBadgeDetail.addToCollection' | translate }}
 					</button>
 				</div>
 				<table
@@ -277,8 +285,10 @@
 				>
 					<thead class="datatable-x-head">
 						<tr class="datatable-x-header">
-							<th class="datatable-x-cell">Collection</th>
-							<th class="datatable-x-cell"><span class="visuallyhidden">Actions</span></th>
+							<th class="datatable-x-cell">{{ 'RecBadgeDetail.collection' | translate }}</th>
+							<th class="datatable-x-cell">
+								<span class="visuallyhidden">{{ 'RecBadgeDetail.actions' | translate }}</span>
+							</th>
 						</tr>
 					</thead>
 					<tbody class="datatable-x-body">
@@ -289,7 +299,7 @@
 							<td class="datatable-x-cell">
 								<div class="l-flex l-flex-justifyend">
 									<button class="u-text-link-small" (click)="removeCollection(collection)">
-										Remove
+										{{ 'RecBadgeDetail.remove' | translate }}
 									</button>
 								</div>
 							</td>
