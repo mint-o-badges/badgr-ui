@@ -23,7 +23,7 @@
 				</p>
 				<div class="!tw-hidden md:!tw-block">
 					<button
-						class="oeb-button tw-bg-red tw-text-white"
+						class="oeb-button tw-bg-red tw-text-white md:!tw-font-bold"
 						type="submit"
 						loading-message="."
 						[routerLink]="( loggedIn ? '/issuer' : '/auth/login')"
@@ -50,7 +50,7 @@
 
 			<div class="oeb-width-100 md:!tw-hidden">
 				<button
-					class="oeb-button oeb-red-bg oeb-align-right"
+					class="oeb-button oeb-red-bg oeb-align-right md:!tw-font-bold"
 					type="submit"
 					loading-message="."
 					[innerHtml]="'Start.badgesErstellen' | translate"
@@ -202,7 +202,7 @@
 			</div>
 			<div class="oeb-center">
 				<button 
-					class="oeb-button oeb-yellow-bg" 
+					class="oeb-button oeb-yellow-bg md:!tw-font-bold" 
 					[innerHtml]="'Start.badgesErstellen' | translate" 
 					[routerLink]="( loggedIn ? '/issuer' : '/auth/login')"
 				></button>
@@ -322,7 +322,7 @@
 			</div>
 			<div class="oeb-width-100">
 				<button
-					class="oeb-button oeb-red-bg oeb-align-right"
+					class="oeb-button oeb-red-bg oeb-align-right md:!tw-font-bold"
 					type="submit"
 					loading-message="."
 					[innerHtml]="'Start.badgesErstellen' | translate"
