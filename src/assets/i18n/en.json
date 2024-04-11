@@ -206,21 +206,11 @@
 	},
 	"Legend": {
 		"legendTitle": "Legend",
-		"legendDesc": "The badges are divided into four categories: ",
+		"legendDesc": "The badges are divided into two categories: ",
 		"cat1": "Skill",
-		"cat1Desc": "A badge from the 'Skill' category reflects a specific achievement on a technical level. The level achieved can be classified into one of six successive levels:",
-		"cat2": "Ability",
-		"cat2Desc": "Badges from the 'Ability' category represent higher-level skills from the areas of strategic and problem-solving work. Here, the performance is also structured into six successive levels:",
-		"cat3": "Participation",
-		"cat3Desc": "A badge from the 'Participation' category is independent of services provided and can be awarded or obtained by attending listed events.",
-		"cat4": "Membership",
-		"cat4Desc": "Membership in an association, institution or similar distinguishes people from receiving a badge from the 'Member' category. The service provided is not important here.",
-		"Level1": "A1: Beginner",
-		"Level2": "A2: Explorer",
-		"Level3": "B1: Insider",
-		"Level4": "B2: Expert",
-		"Level5": "C1: Leader",
-		"Level6": "C2: Pioneer"
+		"cat1Desc": "Skill badges contain information about the skills taught in a course or workshop. These can be both specialist skills, such as mastery of a specific programming language, and interdisciplinary skills, such as communication. These badges contain information on the amount of time learners have spent developing a competence in a course.",
+		"cat2": "Participation",
+		"cat2Desc": "A badge from the 'Participation' category only indicates the presence of learners at events and does not contain any information about the skills taught or acquired."
 	},
 	"About": {
 		"mainDesc": "Open Educational Badges is based on preliminary considerations for an open badge system that can be used in school and extracurricular contexts as well as an initial technical feasibility study for an “Open Badges platform” that is being carried out at the Institute for Geoinformatics at the University of Münster within the framework of the BMBF project senseBox Pro was carried out. As part of the hackathon “#WirFürSchule” 2020, the project idea was further developed with an interdisciplinary team and a first prototype was implemented. The version of Open Educational Badges presented here is based on the open source Open Badges standard “badgr“ from concentricsky and was implemented with the kind support of the Deutsche Telekom Foundation by re:edu GmbH & Co. KG in collaboration with Junge Tüftler*innen gGmbH. A development of integrations to platforms of the senseBox Pro project (Blockly learning environment and openSenseMap) is being developed within the framework of BMBF funding.",
