@@ -28,6 +28,7 @@ import { FormFieldSelectOption } from '../../../common/components/formfield-sele
 
 import { AiSkillsService } from '../../../common/services/ai-skills.service';
 import { Skill } from '../../../common/model/ai-skills.model';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'badgeclass-edit-form',
@@ -287,6 +288,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		protected dialogService: CommonDialogsService,
 		protected componentElem: ElementRef<HTMLElement>,
 		protected aiSkillsService: AiSkillsService,
+		private translate: TranslateService,
 	) {
 		super(router, route, sessionService);
 		title.setTitle(`Create Badge - ${this.configService.theme['serviceName'] || 'Badgr'}`);
@@ -591,10 +593,10 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		) {
 			if (
 				!(await this.dialogService.confirmDialog.openTrueFalseDialog({
-					dialogTitle: 'Remove Competency?',
-					dialogBody: 'Are you sure you want to remove this competency? This action cannot be undone.',
-					resolveButtonLabel: 'Remove Competency',
-					rejectButtonLabel: 'Cancel',
+					dialogTitle: this.translate.instant('EditBadge.removeCompetency') + '?',
+					dialogBody: this.translate.instant('EditBadge.removeCompetencyInfo'),
+					resolveButtonLabel: this.translate.instant('EditBadge.removeCompetency'),
+					rejectButtonLabel: this.translate.instant('General.cancel'),
 				}))
 			) {
 				return;

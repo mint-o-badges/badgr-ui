@@ -33,6 +33,7 @@
 		"role": "Rolle",
 		"remove": "Entfernen",
 		"save": "Speichern",
+		"saveChanges": "Änderungen sichern",
 		"aboutBadges": "Über Badges"
 	},
 	"NavItems": {
@@ -300,6 +301,12 @@
 		"narrative": "Narrativ",
 		"evidence": "Nachweis",
 		"viewEvidenceUrl": "Besuche Nachweis-URL"
+	},
+	"EditBadge": {
+		"editBadge": "Badge editieren",
+		"editBadgeInfo": "Editiere die Information dieses Badges.",
+		"removeCompetency": "Kompetenz löschen",
+		"removeCompetencyInfo": "Möchtest du diese Kompetenz wirklich löschen ?"
 	},
 	"BadgeCollection": {
 		"addCollection": "Sammlung hinzufügen",
