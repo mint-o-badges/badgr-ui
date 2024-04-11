@@ -50,3 +50,4 @@ Build the packaged files for deployment with `npm run build`
 Run the tests with `npm run test`
 
 All files in `dist` constitute the build artifact.
+
