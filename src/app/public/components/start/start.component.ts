@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SessionService } from '../../../common/services/session.service';
 
 @Component({
 	selector: 'app-start',
@@ -6,7 +7,10 @@ import { Component, OnInit } from '@angular/core';
 	styleUrls: ['./start.component.scss'],
 })
 export class StartComponent implements OnInit {
-	constructor() {}
+	constructor(public sessionService: SessionService) {}
+	public loggedIn = false;
 
-	ngOnInit() {}
+	ngOnInit() {
+		this.loggedIn = this.sessionService.isLoggedIn;
+	}
 }
