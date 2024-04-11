@@ -206,21 +206,11 @@
 	},
 	"Legend": {
 		"legendTitle": "Legende",
-		"legendDesc": "Die Badges gliedern sich in vier Kategorien:",
-		"cat1": "FACHLICHE KOMPETENZ",
-		"cat1Desc": "Ein Badge aus der Kategorie ‚Fachliche Kompetenz‘ spiegelt eine spezifisch erbrachte Leistung auf fachlicher Ebene  wider.  Das  erreichte  Niveau  kann  in  eine  der  sechs  aufeinander  aufbauenden  Stufen  eingeordnet werden:",
-		"cat2": "METAKOMPETENZ",
-		"cat2Desc": "Badges aus der Kategorie ‚Metakompetenz‘ stellen übergeordnete Fähigkeiten aus den Bereichen des strategischen und problemlösenden Arbeitens dar. Hier strukturiert sich die Leistung ebenfalls in sechs aufeinander aufbauenden Stufen:",
-		"cat3": "TEILNAHME",
-		"cat3Desc": "Ein Badge aus der Kategorie ‚Teilnahme‘ ist unabhängig von erbrachten Leistungen und kann durch die Anwesenheit bei gelisteten Veranstaltungen vergeben bzw. erlangt werden.",
-		"cat4": "MITGLIED",
-		"cat4Desc": "Die Mitgliedschaft in einem Verein, einer Institution oder Ähnlichem zeichnet Personen dafür aus,  ein Badge aus der Kategorie ‚Mitglied‘ zu erhalten. Die erbrachte Leistung ist  hier nicht von Bedeutung.",
-		"Level1": "A1: Einsteiger*in",
-		"Level2": "A2: Entdecker*in",
-		"Level3": "B1: Insider*in",
-		"Level4": "B2: Expert*in",
-		"Level5": "C1: Leader*in",
-		"Level6": "C2: Vorreiter*in"
+		"legendDesc": "Die Badges gliedern sich in zwei Kategorien:",
+		"cat1": "KOMPETENZ",
+		"cat1Desc": "Kompetenz-Badges enthalten Informationen über die in einem Kurs oder Workshop-Angebot vermittelten Kompetenzen. Das können sowohl Fachkompetenzen, wie beispielsweise die Beherrschung einer bestimmten Programmiersprache, als auch fachübergreifende Kompetenzen, wie beispielsweise Kommunikation sein. Dabei enthalten diese Badges Informationen zu der Zeitdauer, mit welcher sich Lernende in einem Kurs mit der Entwicklung einer Kompetenz beschäftigt haben.",
+		"cat2": "TEILNAHME",
+		"cat2Desc": "Ein Badge aus der Kategorie 'Teilnahme' weist lediglich die Anwesenheit von Lernenden bei Veranstaltungen aus und enthält keine Informationen über vermittelte oder erlangte Kompetenzen."
 	},
 	"About": {
 		"mainDesc": "Open Educational Badges basiert auf Vorüberlegungen zu einem offenen Badge-System, das im schulischen wie außerschulischen Kontext Einsatz finden kann sowie einer ersten technischen Machbarkeitsstudie für eine “Open Badges-Plattform”, die am Institut für Geoinformatik der Uni Münster im Rahmen des BMBF-Projektes senseBox Pro durchgeführt wurde. Im Rahmen des Hackathons “#WirFürSchule“ 2020 wurde mit einem interdisziplinären Team die Projektidee weiterentwickelt und ein erster Prototyp umgesetzt. Die hier vorliegende Version von Open Educational Badges basiert auf dem quelloffenen Open Badges Standard “badgr“ von concentricsky und wurde mit freundlicher Unterstützung der Deutsche Telekom Stiftung durch re:edu GmbH & Co. KG in Zusammenarbeit mit Junge Tüftler*innen gGmbH umgestzt. Eine Entwicklung von Integrationen zu Plattformen des senseBox Pro Projektes (Blockly Lernumgebung und openSenseMap) wird im Rahmen der BMBF-Förderung entwickelt.",
