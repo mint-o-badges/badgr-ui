@@ -809,7 +809,7 @@
 			(click)="cancelClicked()"
 			class="button button-secondary"
 		>
-			Abbrechen
+			{{ 'General.cancel' | translate }}
 		</button>
 		<button
 			type="submit"
@@ -819,7 +819,12 @@
 			[loading-promises]="[savePromise]"
 			loading-message="{{ submittingText }}"
 		>
-			Badge erstellen
+			<ng-container *ngIf="existingBadgeClass; else createBadgeText">
+				{{ 'General.saveChanges' | translate }}
+			</ng-container>
+			<ng-template #createBadgeText>
+				{{ 'Issuer.createBadge' | translate }}
+			</ng-template>
 		</button>
 	</div>
 </form>

@@ -33,6 +33,7 @@
 		"role": "Role",
 		"remove": "Remove",
 		"save": "Save",
+		"saveChanges": "Save changes",
 		"aboutBadges": "About Badges"
 	},
 	"NavItems": {
@@ -262,6 +263,13 @@
 		"importedSuccessfully": "Badge successfully imported.",
 		"uploadFailed": "Failed to upload badge:",
 		"unknownError": "Badge upload failed due to an unknown error"
+	},
+	"EditBadge": {
+		"editBadge": "Edit badge",
+		"editBadgeInfo": "Edit the information about this achievement.",
+		"removeCompetency": "Remove competency",
+		"removeCompetencyInfo": "Are you sure you want to remove this competency?",
+		"cancel": "Cancel"
 	},
 	"RecBadgeDetail": {
 		"shareBadge": "Share badge",
