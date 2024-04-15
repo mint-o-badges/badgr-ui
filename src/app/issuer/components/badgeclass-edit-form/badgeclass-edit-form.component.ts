@@ -149,7 +149,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		.addControl('badge_description', '', Validators.required)
 		.addControl('badge_criteria_url', '')
 		.addControl('badge_criteria_text', '')
-		.addControl('badge_study_load', 0, [Validators.required, this.positiveIntegerOrNull, Validators.max(10000)])
+		.addControl('badge_study_load', 1, [Validators.required, this.positiveInteger, Validators.max(1000)])
 		.addControl('badge_category', '', Validators.required)
 		.addControl('badge_level', 'a1', Validators.required)
 		.addControl('badge_based_on', {
@@ -847,13 +847,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		const val = parseInt(control.value, 10);
 		if (isNaN(val) || val < 1) {
 			return { expires_amount: 'Must be a positive integer' };
-		}
-	}
-
-	positiveIntegerOrNull(control: AbstractControl) {
-		const val = parseInt(control.value, 10);
-		if (isNaN(val) || val < 0) {
-			return { duration: 'Must be greater or equal to 0' };
 		}
 	}
 

@@ -57,17 +57,12 @@
 					</dd>
 
 					<!-- Study Load -->
-					<div
-						*ngIf="
-							badgeClass.extension['extensions:StudyLoadExtension'] &&
-							badgeClass.extension['extensions:StudyLoadExtension'].StudyLoad != 0
-						"
-					>
-						<dt>Minimale Dauer</dt>
-						<dd class="u-text">
-							{{ badgeClass.extension['extensions:StudyLoadExtension'].StudyLoad }} Minuten
-						</dd>
-					</div>
+					<!-- <div *ngIf="badgeClass.extension['extensions:StudyLoadExtension']"> -->
+					<dt>Minimale Dauer</dt>
+					<dd class="u-text">
+						{{ badgeClass.extension['extensions:StudyLoadExtension'].StudyLoad }} Stunden
+					</dd>
+					<!-- </div> -->
 					<!-- Category -->
 					<div *ngIf="badgeClass.extension['extensions:CategoryExtension']">
 						<dt>Kategorie:</dt>
