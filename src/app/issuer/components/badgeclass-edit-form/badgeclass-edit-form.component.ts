@@ -148,7 +148,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		.addControl('badge_description', '', Validators.required)
 		.addControl('badge_criteria_url', '')
 		.addControl('badge_criteria_text', '')
-		.addControl('badge_study_load', 0, [Validators.required, this.positiveIntegerOrNull, Validators.max(10000)])
+		.addControl('badge_study_load', 0, [this.positiveIntegerOrNull, Validators.max(10000)])
 		.addControl('badge_category', '', Validators.required)
 		.addControl('badge_level', 'a1', Validators.required)
 		.addControl('badge_based_on', {
