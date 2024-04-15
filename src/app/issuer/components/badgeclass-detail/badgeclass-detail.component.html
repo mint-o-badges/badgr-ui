@@ -123,7 +123,12 @@
 								Minimale Dauer
 							</dt>
 							<dd class="u-text">
-								{{ badgeClass.extension['extensions:StudyLoadExtension'].StudyLoad }} Minuten
+								{{ badgeClass.extension['extensions:StudyLoadExtension'].StudyLoad }}
+								{{
+									badgeClass.extension['extensions:StudyLoadExtension'].StudyLoad === 1
+										? 'Minute'
+										: 'Minuten'
+								}}
 							</dd>
 						</div>
 						<!-- Category -->
