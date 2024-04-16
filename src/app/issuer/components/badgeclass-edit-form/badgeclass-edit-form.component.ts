@@ -461,9 +461,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 		if (newTag.length > 0) {
 			this.tags.add(newTag);
-			if (!this.existingTags.some((tag) => tag.name === newTag)) {
-				this.existingTags = [...this.existingTags, { id: this.existingTags.length, name: newTag }];
-			}
 
 			this.newTagInput['query'] = '';
 		}
