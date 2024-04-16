@@ -1,7 +1,7 @@
-<div class="oeb page-padding">
+<div class="oeb page-padding tw-overflow-hidden">
 	<form-message></form-message>
-	<div class="tw-absolute tw-top-[160px] tw-right-[-120px] md:tw-right-0 tw-z-0 tw-opacity-70">
-		<img class="tw-h-[330px]" src="assets/oeb/images/startpage/sun.png" alt="Hands" />
+	<div class="md:tw-hidden tw-absolute tw-top-[240px] tw-right-[-180px] md:tw-right-0 tw-z-0 tw-opacity-70">
+		<img class="md:tw-h-[400px] tw-h-[320px]" src="assets/oeb/images/startpage/sun.png" alt="Hands" />
 	</div>
 	<div class="tw-py-[8rem] tw-relative">
 		<h1
@@ -23,32 +23,38 @@
 				</p>
 				<div class="!tw-hidden md:!tw-block">
 					<button
-						class="oeb-button tw-bg-red tw-text-white"
+						class="oeb-button tw-bg-red tw-text-white md:!tw-font-bold"
 						type="submit"
 						loading-message="."
+						[routerLink]="( loggedIn ? '/issuer' : '/auth/login')"
 						[innerHtml]="'Start.badgesErstellen' | translate"
 					></button>
 				</div>
 			</div>
 			<div
-				class="video-container md:tw-w-[52%] tw-h-[370px] tw-border-purple tw-border-solid tw-border-4 tw-m-4 tw-box-border"
+				class=" video-container md:tw-w-[52%] tw-h-[370px] relative tw-m-4 tw-box-border"
 			>
 				<iframe
 					src="https://www.youtube.com/embed/H6lBdH75P7g"
-					class="tw-w-full tw-h-full"
+					class="tw-w-full tw-h-full tw-z-10 tw-relative tw-border-purple tw-border-solid tw-border-4"
 					title="Open badges kurz erklärt"
 					frameborder="0"
 					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 					allowfullscreen
 				></iframe>
+				
+				<div class="tw-hidden md:tw-block tw-absolute tw-top-[-80px] tw-right-[-110px] tw-opacity-70">
+					<img class="tw-h-[427px]" src="assets/oeb/images/startpage/sun.png" alt="Hands" />
+				</div>
 			</div>
 
 			<div class="oeb-width-100 md:!tw-hidden">
 				<button
-					class="oeb-button oeb-red-bg oeb-align-right"
+					class="oeb-button oeb-red-bg oeb-align-right md:!tw-font-bold"
 					type="submit"
 					loading-message="."
 					[innerHtml]="'Start.badgesErstellen' | translate"
+					[routerLink]="( loggedIn ? '/issuer' : '/auth/login')"
 				></button>
 			</div>
 		</div>
@@ -195,7 +201,11 @@
 				<p [innerHtml]="'Start.threeEleFooter' | translate"></p>
 			</div>
 			<div class="oeb-center">
-				<button class="oeb-button oeb-yellow-bg" [innerHtml]="'Start.badgesErstellen' | translate"></button>
+				<button 
+					class="oeb-button oeb-yellow-bg md:!tw-font-bold" 
+					[innerHtml]="'Start.badgesErstellen' | translate" 
+					[routerLink]="( loggedIn ? '/issuer' : '/auth/login')"
+				></button>
 			</div>
 		</div>
 	</div>
@@ -212,12 +222,18 @@
 				{{ 'Start.headline3_2' | translate }}
 			</h2>
 			<div class="tw-py-16">
-				<div class="tw-flex tw-flex-wrap tw-max-w-[100VW] tw-text-black">
+				<div class="tw-flex tw-flex-wrap tw-max-w-[100VW] tw-text-black tw-relative">
+					<div class="md:tw-block tw-hidden tw-pl-[100px] tw-pr-[20%] tw-box-border tw-absolute tw-bg-top tw-top-[5px] tw-scale-y-[0.8] tw-w-full">
+						<div class="tw-w-full tw-h-[450px] tw-bg-repeat-x tw-bg-[url('assets/oeb/images/startpage/red_lines_cut.png')]"></div>
+					</div>
+					<div class="tw-block md:tw-hidden tw-box-border tw-absolute tw-bg-top tw-top-[0px] tw-w-full tw-h-full">
+						<div class="tw-relative tw-top-[-70px] tw-translate-x-[-50%] tw-left-[96px] tw-rotate-90 tw-w-[700px] tw-h-full tw-bg-right tw-bg-repeat-x tw-bg-[url('assets/oeb/images/startpage/red_lines_cut.png')]"></div>
+					</div>
 					<div class="tw-p-4 md:tw-w-[24%] tw-w-[100%] md:tw-max-w-[300px]">
-						<div>
-							<div class="tw-pb-4 tw-h-[120px]">
+						<div class="tw-relative">
+							<div class="tw-mb-4 tw-h-[120px] tw-z-10 tw-relative md:tw-pl-[0px] tw-pl-[20px]">
 								<img
-									class="tw-h-full"
+									class="tw-h-full tw-z-10 tw-relative"
 									src="assets/oeb/images/startpage/greenHexagon1.png"
 									alt="Green Hexagon"
 								/>
@@ -235,10 +251,10 @@
 						</div>
 					</div>
 					<div class="tw-p-4 md:tw-w-[24%] tw-w-[100%] md:tw-max-w-[300px]">
-						<div>
-							<div class="tw-pb-4 tw-h-[120px]">
+						<div class="tw-relative">
+							<div class="tw-mb-4 tw-h-[120px] tw-z-10 tw-relative tw-overflow-hidden md:tw-pl-[0px] tw-pl-[20px]">
 								<img
-									class="tw-h-full"
+									class="tw-h-full tw-z-10 tw-relative"
 									src="assets/oeb/images/startpage/greenHexagon2.png"
 									alt="Green Hexagon"
 								/>
@@ -256,10 +272,10 @@
 						</div>
 					</div>
 					<div class="tw-p-4 md:tw-w-[24%] tw-w-[100%] md:tw-max-w-[300px]">
-						<div>
-							<div class="tw-pb-4 tw-h-[120px]">
+						<div class="tw-relative">
+							<div class="tw-mb-4 tw-h-[120px] tw-z-10 tw-relative md:tw-pl-[0px] tw-pl-[5px]">
 								<img
-									class="tw-h-full"
+									class="tw-h-full tw-z-10 tw-relative"
 									src="assets/oeb/images/startpage/greenHexagon3.png"
 									alt="Green Hexagon"
 								/>
@@ -277,15 +293,15 @@
 						</div>
 					</div>
 					<div class="tw-p-4 md:tw-w-[24%] tw-w-[100%] md:tw-max-w-[300px]">
-						<div>
-							<div class="tw-pb-4 tw-h-[120px] tw-relative">
+						<div class="tw-relative">
+							<div class="tw-mb-4 tw-h-[120px] tw-z-10 tw-relative md:tw-pl-[0px] tw-pl-[25px]">
 								<img
-									class="tw-h-full"
+									class="tw-h-full tw-z-10 tw-relative"
 									src="assets/oeb/images/startpage/greensix.png"
 									alt="Green Hexagon"
 								/>
 								<img
-									class="tw-absolute tw-top-[-10px] tw-left-[-20px] tw-z-10 tw-h-full"
+									class="tw-absolute tw-top-[-10px] tw-left-[0px] tw-z-10 tw-h-full"
 									src="assets/oeb/images/startpage/noHexagon4.png"
 									alt="Green Hexagon"
 								/>
@@ -306,10 +322,11 @@
 			</div>
 			<div class="oeb-width-100">
 				<button
-					class="oeb-button oeb-red-bg oeb-align-right"
+					class="oeb-button oeb-red-bg oeb-align-right md:!tw-font-bold"
 					type="submit"
 					loading-message="."
 					[innerHtml]="'Start.badgesErstellen' | translate"
+					[routerLink]="( loggedIn ? '/issuer' : '/auth/login')"
 				></button>
 			</div>
 		</div>
@@ -325,14 +342,20 @@
 				</h2>
 			</div>
 			<div class="tw-flex tw-justify-center tw-items-center">
-				<div class="tw-max-w-[150px] tw-max-h-[150px] tw-mx-10">
-					<img src="assets/logos/reedu.jpg" alt="Reedu Logo" />
+				<div class="tw-px-4 md:tw-px-10">
+					<div class="tw-max-w-[150px] tw-max-h-[150px] tw-border-box">
+						<img src="assets/logos/reedu.jpg" alt="Reedu Logo" />
+					</div>
 				</div>
-				<div class="tw-max-w-[150px] tw-max-h-[150px] tw-mx-10">
-					<img src="assets/logos/LogoKlimaCampus.png" alt="KlimaCampus Logo" />
+				<div class="tw-px-4 md:tw-px-10">
+					<div class="tw-max-w-[150px] tw-max-h-[150px] tw-border-box">
+						<img src="assets/logos/LogoKlimaCampus.png" alt="KlimaCampus Logo" />
+					</div>
 				</div>
-				<div class="tw-max-w-[150px] tw-max-h-[150px] tw-mx-10">
-					<img src="assets/logos/Logo-Mycelia.png" alt="MyCelia Logo" />
+				<div class="tw-px-4 md:tw-px-10">
+					<div class="tw-max-w-[150px] tw-max-h-[150px] tw-border-box">
+						<img src="assets/logos/Logo-Mycelia.png" alt="MyCelia Logo" />
+					</div>
 				</div>
 			</div>
 		</div>

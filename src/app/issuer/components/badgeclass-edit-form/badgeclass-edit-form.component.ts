@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AbstractControl, FormBuilder, Validators, ValidatorFn, ValidationErrors } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
@@ -28,13 +28,14 @@ import { FormFieldSelectOption } from '../../../common/components/formfield-sele
 
 import { AiSkillsService } from '../../../common/services/ai-skills.service';
 import { Skill } from '../../../common/model/ai-skills.model';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'badgeclass-edit-form',
 	templateUrl: './badgeclass-edit-form.component.html',
 	styleUrl: './badgeclass-edit-form.component.css',
 })
-export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
+export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableComponent implements OnInit, AfterViewInit {
 	baseUrl: string;
 	badgeCategory: string;
 
@@ -124,6 +125,12 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	 */
 	aiCompetenciesSuggestions: Skill[] = [];
 
+	/**
+	 * The descriptions of suggested competencies which are shown
+	 * in the view (@see aiCompetenciesSuggestions)
+	 */
+	showAiDetails: boolean[] = [];
+
 	savePromise: Promise<BadgeClass> | null = null;
 	badgeClassForm = typedFormGroup(this.criteriaRequired.bind(this))
 		.addControl('badge_name', '', [
@@ -148,7 +155,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		.addControl('badge_description', '', Validators.required)
 		.addControl('badge_criteria_url', '')
 		.addControl('badge_criteria_text', '')
-		.addControl('badge_study_load', 1, [Validators.required, this.positiveInteger, Validators.max(1000)])
+		.addControl('badge_study_load', 0, [this.positiveIntegerOrNull, Validators.max(10000)])
 		.addControl('badge_category', '', Validators.required)
 		.addControl('badge_level', 'a1', Validators.required)
 		.addControl('badge_based_on', {
@@ -287,6 +294,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		protected dialogService: CommonDialogsService,
 		protected componentElem: ElementRef<HTMLElement>,
 		protected aiSkillsService: AiSkillsService,
+		private translate: TranslateService,
 	) {
 		super(router, route, sessionService);
 		title.setTitle(`Create Badge - ${this.configService.theme['serviceName'] || 'Badgr'}`);
@@ -378,17 +386,13 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				}, 10);
 			}
 		});
-		// update badge frame when a level is selected, unless no-hexagon-frame checkbox is checked
-		this.badgeClassForm.rawControl.controls['badge_level'].statusChanges.subscribe((res) => {
-			if (this.currentImage && !this.hideHexFrame) {
-				//timeout because of workaround for angular bug.
-				setTimeout(function () {
-					that.adjustUploadImage(that.badgeClassForm.value);
-				}, 10);
-			}
-		});
-
 		this.fetchTags();
+	}
+
+	// call adjustUploadImage after formControls are initialized to prevent timing issues
+	// with the imageField (e.g. when editing a badge the image was not shown when the page first loaded)
+	ngAfterViewInit(): void {
+		this.adjustUploadImage(this.badgeClassForm.value);
 	}
 
 	async handleBadgeCategoryChange() {
@@ -525,17 +529,23 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			.then((skills) => {
 				this.aiCompetenciesSuggestions = skills;
 				let aiCompetencies = this.badgeClassForm.controls.aiCompetencies;
+				console.log('aiCompetencies', aiCompetencies);
 				for (let i = aiCompetencies.length - 1; i >= 0; i--) {
 					aiCompetencies.removeAt(i);
 				}
 
 				skills.forEach((skill) => {
 					aiCompetencies.addFromTemplate();
+					this.showAiDetails.push(false);
 				});
 			})
 			.catch((error) => {
 				this.messageService.reportAndThrowError('Failed to obtain ai skills.', error);
 			});
+	}
+
+	toggleAiDetails(index: number): void {
+		this.showAiDetails[index] = !this.showAiDetails[index];
 	}
 
 	async disableAlignments() {
@@ -597,10 +607,10 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		) {
 			if (
 				!(await this.dialogService.confirmDialog.openTrueFalseDialog({
-					dialogTitle: 'Remove Competency?',
-					dialogBody: 'Are you sure you want to remove this competency? This action cannot be undone.',
-					resolveButtonLabel: 'Remove Competency',
-					rejectButtonLabel: 'Cancel',
+					dialogTitle: this.translate.instant('EditBadge.removeCompetency') + '?',
+					dialogBody: this.translate.instant('EditBadge.removeCompetencyInfo'),
+					resolveButtonLabel: this.translate.instant('EditBadge.removeCompetency'),
+					rejectButtonLabel: this.translate.instant('General.cancel'),
 				}))
 			) {
 				return;
@@ -851,6 +861,17 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		const val = parseInt(control.value, 10);
 		if (isNaN(val) || val < 1) {
 			return { expires_amount: 'Must be a positive integer' };
+		}
+	}
+
+	positiveIntegerOrNull(control: AbstractControl) {
+		const val = parseFloat(control.value);
+
+		if (isNaN(val)) {
+			return { duration: 'Field cannot be empty, set to 0 if not needed' };
+		}
+		if (!Number.isInteger(val) || val < 0) {
+			return { duration: 'Must be a positive integer or null' };
 		}
 	}
 

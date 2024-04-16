@@ -33,6 +33,7 @@
 		"role": "Role",
 		"remove": "Remove",
 		"save": "Save",
+		"saveChanges": "Save changes",
 		"aboutBadges": "About Badges"
 	},
 	"NavItems": {
@@ -48,7 +49,7 @@
 	"Start": {
 		"desc1": "A learner-centered approach",
 		"desc2": "for documentation & feedback of the learning process",
-		"poweredBy": "Open Educational Badges is an initiative by <a href='https://matrix-gruppe.de/matrix-gemeinnuetzig/'>matrix gGmbh</a>, <a href='https://mycelia.education/'>mycelia gGmbh</a> and <a href='https://opensenselab.org/'>openSenselab gGmbh</a>",
+		"poweredBy": "Open Educational Badges is a joint project by <a href='https://matrix-gruppe.de/matrix-gemeinnuetzig/'>matrix gGmbh</a>, <a href='https://mycelia.education/'>mycelia gGmbh</a> and <a href='https://opensenselab.org/'>openSenseLab gGmbh</a>",
 		"imprint": "Imprint & Data Protection",
 		"ourIdeaTitle": "Our Idea",
 		"ourIdeaDesc": "With the help of Mozilla's Open Badges, we are developing an open and scalable documentation system to demonstrate acquired competencies and skills in school and extracurricular environments. <h4> The badges are contextualized and the learning achievements are documented using an e-portfolio.</h4>",
@@ -93,7 +94,7 @@
 		"threeEleFooter": "Open Educational Badges sind dadurch teilbar, skalierbar, anschlussfähig und so entsteht eine neue Währung, um Kompetenzen abzubilden.",
 
 		"headline3_1": "So kannst du Open Educational Badges nutzen.",
-		"headline3_2": "Für institutionen und Bildungsakteur:innen",
+		"headline3_2": "Für Institutionen und Bildungsakteur:innen",
 
 		"forEleHeadlinet1": "Konto anlegen und Institution erstellen",
 		"forEleText1": "Lege einen Account auf Open Educational Badges an und registriere deine Institution.",
@@ -206,21 +207,11 @@
 	},
 	"Legend": {
 		"legendTitle": "Legend",
-		"legendDesc": "The badges are divided into four categories: ",
+		"legendDesc": "The badges are divided into two categories: ",
 		"cat1": "Skill",
-		"cat1Desc": "A badge from the 'Skill' category reflects a specific achievement on a technical level. The level achieved can be classified into one of six successive levels:",
-		"cat2": "Ability",
-		"cat2Desc": "Badges from the 'Ability' category represent higher-level skills from the areas of strategic and problem-solving work. Here, the performance is also structured into six successive levels:",
-		"cat3": "Participation",
-		"cat3Desc": "A badge from the 'Participation' category is independent of services provided and can be awarded or obtained by attending listed events.",
-		"cat4": "Membership",
-		"cat4Desc": "Membership in an association, institution or similar distinguishes people from receiving a badge from the 'Member' category. The service provided is not important here.",
-		"Level1": "A1: Beginner",
-		"Level2": "A2: Explorer",
-		"Level3": "B1: Insider",
-		"Level4": "B2: Expert",
-		"Level5": "C1: Leader",
-		"Level6": "C2: Pioneer"
+		"cat1Desc": "Skill badges contain information about the skills taught in a course or workshop. These can be both specialist skills, such as mastery of a specific programming language, and interdisciplinary skills, such as communication. These badges contain information on the amount of time learners have spent developing a competence in a course.",
+		"cat2": "Participation",
+		"cat2Desc": "A badge from the 'Participation' category only indicates the presence of learners at events and does not contain any information about the skills taught or acquired."
 	},
 	"About": {
 		"mainDesc": "Open Educational Badges is based on preliminary considerations for an open badge system that can be used in school and extracurricular contexts as well as an initial technical feasibility study for an “Open Badges platform” that is being carried out at the Institute for Geoinformatics at the University of Münster within the framework of the BMBF project senseBox Pro was carried out. As part of the hackathon “#WirFürSchule” 2020, the project idea was further developed with an interdisciplinary team and a first prototype was implemented. The version of Open Educational Badges presented here is based on the open source Open Badges standard “badgr“ from concentricsky and was implemented with the kind support of the Deutsche Telekom Foundation by re:edu GmbH & Co. KG in collaboration with Junge Tüftler*innen gGmbH. A development of integrations to platforms of the senseBox Pro project (Blockly learning environment and openSenseMap) is being developed within the framework of BMBF funding.",
@@ -232,20 +223,18 @@
 		"moreAboutFund": "More about the funding measure"
 	},
 	"FAQ": {
-		"Q1": "1. Can badges only be distributed and used in the school context?",
-		"A1": "“Open Educational Badges” can be used across institutions: both in the formal school context and outside of it. It therefore offers the potential to build a bridge between formal, non-formal and informal educational institutions and to connect them more closely in the sense of networking. This is important because learning in the sense of lifelong and networked learning takes place everywhere. Important skills are also acquired in informal areas, which can be of great importance in terms of future skills.",
-		"Q2": "Which grade (A1 to C2) of the badges describes which level?",
-		"A2": "<p> The awarding of badges is based on the level of independence and the level of complexity of a skill. We are guided by the 6 competency levels of Digcomp Edu. </p> <br /> <ul> <li> <b>A1:</b> Beginner - initial knowledge has been acquired but cannot yet be applied. </li> <li> <b>A2:</b> Explorer - Basic knowledge and skills are available with which further knowledge can be acquired in a self-directed manner. This can be used in standard situations, but is not sufficient to be able to solve unexpected problems independently. </li> <li> <b>B1:</b> Insiders - Acquired knowledge and skills can be applied and transferred to unknown situations. </li> <li> <b>B2:</b> Expert - The knowledge is used to recognize connections and possible alternatives. There is also the ability to independently acquire additional knowledge and share knowledge (digitally). </li> <li> <b>C1:</b> Leader*in - The knowledge and skills developed are used and applied innovatively based on experience. </li> <li> <b>C2:</b> Pioneer - The skills acquired can be used to carry out further developments and redefinitions and to critically examine existing procedures. </li></ul>",
-		"Q3": "3. Why are badges with a six-point scale used here and not traditional school grades?",
-		"A3": "“Open Educational Badges” are based on the portfolio approach in their pedagogical and didactic concept and thus do much greater justice to the documentation of the learner’s achievements. The combination of the portfolio approach with the concept of Open Badges makes it possible to create a documentation system in which teachers and learners use authentic evidence and work to gain the most comprehensive picture possible of the learner's acquired skills, progress and development, which is motivating and supportive works for the individual. Traditionally existing grading systems in the school context, on the other hand, have a strong classifying effect, are generalizing in many aspects, do not adequately do justice to the learning achievements of the individual and often have a demotivating effect.",
-		"Q4": "4. As an issuer, do I have to install my own infrastructure to issue badges?",
-		"A4": "No. The “Open Educational Badges” platform offers a service for educational organizations (issuers) that allows them to create and award badges without having to install any software themselves. Login takes place using the access data.",
-		"Q5": "5. How is it ensured that an issuer really belongs to the specified organization?",
-		"A5": "Currently, access as an issuer is only granted by invitation. This ensures the trustworthiness of the issuer.",
-		"Q6": "6. How are the badges transferred from the issuer to the learners? What data must/may I as an organization collect from learners?",
-		"A6": "Data protection has the highest priority, which is why we work with maximum data efficiency. The issuer only requires an email address from the learner. The badges are saved to this email address.",
-		"Q7": "7. Where are the badges?",
-		"A7": "The badges are currently in a database at the University of Münster. As the project expands and the MVP is further developed, the plan is to find a suitable location that ensures free access for learners at all times and guarantees the ongoing and secure storage and storage of the badges."
+		"Q1": "1. What are Open Educational Badges?",
+		"A1": "",
+		"Q2": "2. What are Open Educational Badges useful for?",
+		"A2": "",
+		"Q3": "3. How do I pass Open Educational Badges?",
+		"A3": "",
+		"Q4": "4. How is it insured that an issuing person belongs to the specified institution?",
+		"A4": "",
+		"Q5": "5. How are badges distributed? Which data do I have to or can I as instituion take from the learners?",
+		"A5": "",
+		"Q6": "6. Where are the badges? What data must/may I as an organization collect from learners?",
+		"A6": "",
 	},
 	"RecBadge": {
 		"addBadge": "Add badge",
@@ -274,6 +263,39 @@
 		"importedSuccessfully": "Badge successfully imported.",
 		"uploadFailed": "Failed to upload badge:",
 		"unknownError": "Badge upload failed due to an unknown error"
+	},
+	"EditBadge": {
+		"editBadge": "Edit badge",
+		"editBadgeInfo": "Edit the information about this achievement.",
+		"removeCompetency": "Remove competency",
+		"removeCompetencyInfo": "Are you sure you want to remove this competency?",
+		"cancel": "Cancel"
+	},
+	"RecBadgeDetail": {
+		"shareBadge": "Share badge",
+		"verify": "Verify",
+		"exportPdf": "Export to PDF",
+		"delete": "Delete",
+		"issuedBy": "Issued by",
+		"issuedOn": "Issued on",
+		"awardedTo": "Awarded to",
+		"more": "More",
+		"criteria": "Criteria",
+		"viewCriteriaUrl": "View external criteria URL",
+		"category": "Category",
+		"competencies": "Competencies",
+		"description": "Description",
+		"duration": "Duration",
+		"collection": "Collection",
+		"collections": "Collections",
+		"addToCollection": "Add to collection",
+		"actions": "Actions",
+		"remove": "Remove",
+		"alignment": "Alignment",
+		"viewAlignmentUrl": "View alignment URL",
+		"narrative": "Narrative",
+		"evidence": "Evidence",
+		"viewEvidenceUrl": "View evidence URL"
 	},
 	"BadgeCollection": {
 		"earnedBy": "earned by",
