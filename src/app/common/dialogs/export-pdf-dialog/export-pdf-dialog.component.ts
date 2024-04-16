@@ -25,6 +25,7 @@ export class ExportPdfDialog extends BaseDialog {
 	doc: jsPDF = null;
 	themeColor: string;
 	pdfError: Error;
+	pdfGenerating: boolean = false;
 
 	profile: UserProfile;
 	emailsLoaded: Promise<unknown>;
@@ -152,6 +153,7 @@ export class ExportPdfDialog extends BaseDialog {
 
 	async generateSingleBadgePdf(badge: RecipientBadgeInstance, markdown: HTMLElement) {
 		this.pdfError = undefined;
+		this.pdfGenerating = true;
 		const badgeClass: ApiRecipientBadgeClass = badge.badgeClass;
 		const competencies = badge.getExtension('extensions:CompetencyExtension', [{}]);
 		const num_competencies = competencies.length;
@@ -463,11 +465,18 @@ export class ExportPdfDialog extends BaseDialog {
 						addIssuedBy(this.doc);
 
 						// issuer logo
-                        if (issuer_image) {
-                            yPos += 5;
-                            const issuer_image_height = 30 * issuer_image_aspectRatio;
-                            this.doc.addImage(issuer_image, 'PNG', pageWidth / 2 - 15, yPos - 2, 30, issuer_image_height);
-                        }
+						if (issuer_image) {
+							yPos += 5;
+							const issuer_image_height = 30 * issuer_image_aspectRatio;
+							this.doc.addImage(
+								issuer_image,
+								'PNG',
+								pageWidth / 2 - 15,
+								yPos - 2,
+								30,
+								issuer_image_height,
+							);
+						}
 
 						//footer
 						const pageCount = (this.doc as any).internal.getNumberOfPages(); //was doc.internal.getNumberOfPages();
@@ -494,6 +503,7 @@ export class ExportPdfDialog extends BaseDialog {
 						this.badgePdf = doc.output('datauristring');
 						this.outputElement.nativeElement.src = this.badgePdf;
 						this.outputElement.nativeElement.setAttribute('style', 'overflow: auto');
+						this.pdfGenerating = false;
 					});
 			});
 		} catch (e) {
