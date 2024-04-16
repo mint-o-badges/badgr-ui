@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { preloadImageURL } from '../../../common/util/file-util';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SessionService } from '../../../common/services/session.service';
@@ -11,7 +10,7 @@ import { MessageService } from '../../../common/services/message.service';
 @Component({
 	selector: 'app-welcome',
 	templateUrl: './welcome.component.html',
-	styleUrls: ['./welcome.component.css'],
+	styleUrls: ['./welcome.component.scss'],
 })
 export class WelcomeComponent /*extends BaseAuthenticatedRoutableComponent*/ implements OnInit {
 	constructor(
@@ -34,19 +33,6 @@ export class WelcomeComponent /*extends BaseAuthenticatedRoutableComponent*/ imp
 	}
 
 	initFinished: Promise<unknown> = new Promise(() => {});
-
-	readonly imageBadge = preloadImageURL(
-		'../../../../assets/@concentricsky/badgr-style/dist/images/graphic-badge.svg',
-	);
-	readonly imageBackpack = preloadImageURL(
-		'../../../../assets/@concentricsky/badgr-style/dist/images/graphic-backpack.svg',
-	);
-	readonly imageCollections = preloadImageURL(
-		'../../../../assets/@concentricsky/badgr-style/dist/images/graphic-collections.svg',
-	);
-	readonly imageIssuer = preloadImageURL(
-		'../../../../assets/@concentricsky/badgr-style/dist/images/graphic-issuer.svg',
-	);
 
 	private handleQueryParamCases() {
 		try {
