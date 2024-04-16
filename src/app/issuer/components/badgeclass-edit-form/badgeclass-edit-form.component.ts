@@ -849,9 +849,13 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	}
 
 	positiveIntegerOrNull(control: AbstractControl) {
-		const val = parseInt(control.value, 10);
-		if (isNaN(val) || val < 0) {
-			return { duration: 'Must be greater or equal to 0' };
+		const val = parseFloat(control.value);
+
+		if (isNaN(val)) {
+			return { duration: 'Field cannot be empty, set to 0 if not needed' };
+		}
+		if (!Number.isInteger(val) || val < 0) {
+			return { duration: 'Must be a positive integer or null' };
 		}
 	}
 
