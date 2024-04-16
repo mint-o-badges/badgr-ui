@@ -538,7 +538,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				});
 			})
 			.catch((error) => {
-				this.messageService.reportAndThrowError('Failed to obtain ai skills.', error);
+				this.messageService.reportAndThrowError(`Failed to obtain ai skills: ${error.message}`, error);
 			});
 	}
 
