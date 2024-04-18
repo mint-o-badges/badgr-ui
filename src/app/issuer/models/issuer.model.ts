@@ -237,7 +237,7 @@ export class IssuerStaffMember extends ManagedEntity<ApiIssuerStaff, IssuerStaff
 export const issuerStaffRoles = [
 	{
 		slug: 'owner',
-		label: 'Owner',
+		label: 'Eigentümer',
 		indefiniteLabel: 'an owner',
 		description:
 			'Möglichkeit, Mitarbeiter hinzuzufügen und zu entfernen. Volle Rechte zum Erstellen, Löschen und Verleihen von Abzeichen. Möglichkeit, Ausstellerdetails zu bearbeiten.',
@@ -251,7 +251,7 @@ export const issuerStaffRoles = [
 	},
 	{
 		slug: 'staff',
-		label: 'Staff Member',
+		label: 'Mitarbeiter',
 		indefiniteLabel: 'a staff member',
 		description: 'Möglichkeit, von Inhabern und Redakteuren erstellte Badges zu vergeben.',
 	},

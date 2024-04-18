@@ -154,7 +154,6 @@
 		"addMember_chooseRole": "Choose Role",
 		"addMember_owner": "Owner",
 		"addMember_ownerText": "Ability to add and remove staff. Full rights to create, delete, and award badges. Ability to edit issuer details.",
-		"addMember_editor": "Editor",
 		"addMember_editorText": "Full rights to create, delete, and award badges. Ability to edit issuer details.",
 		"addMember_staff": "Staff Member",
 		"addMember_staffText": "Ability to issue badges created by Owners and Editors.",

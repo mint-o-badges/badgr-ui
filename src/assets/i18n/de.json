@@ -154,7 +154,6 @@
 		"addMember_chooseRole": "Rolle wählen",
 		"addMember_owner": "Eigentümer",
 		"addMember_ownerText": "Möglichkeit, Mitarbeiter hinzuzufügen und zu entfernen. Volle Rechte zum Erstellen, Löschen und Verleihen von Abzeichen. Möglichkeit, Ausstellerdetails zu bearbeiten.",
-		"addMember_editor": "Herausgeber",
 		"addMember_editorText": "Volle Rechte zum Erstellen, Löschen und Vergeben von Badges. Möglichkeit, Ausstellerdetails zu bearbeiten.",
 		"addMember_staff": "Mitarbeiter",
 		"addMember_staffText": "Möglichkeit, von Inhabern und Redakteuren erstellte Badges zu vergeben.",
