@@ -12,6 +12,7 @@ import { AppConfigService } from '../../../common/app-config.service';
 import { CommonDialogsService } from '../../../common/services/common-dialogs.service';
 import { typedFormGroup } from '../../../common/util/typed-forms';
 import { MemoizedProperty } from '../../../common/util/memoized-property-decorator';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'issuer-staff-create-dialog',
@@ -37,6 +38,7 @@ export class IssuerStaffCreateDialogComponent extends BaseDialog {
 		protected profileManager: UserProfileManager,
 		protected configService: AppConfigService,
 		protected dialogService: CommonDialogsService,
+		private translate: TranslateService
 	) {
 		super(componentElem, renderer);
 	}
@@ -76,8 +78,7 @@ export class IssuerStaffCreateDialogComponent extends BaseDialog {
 				const err = BadgrApiFailure.from(error);
 				console.log(err);
 				this.error =
-					BadgrApiFailure.messageIfThrottableError(err.overallMessage) ||
-					`Mitglied kann nicht hinzugefügt werden: ${err.firstMessage}`;
+					BadgrApiFailure.messageIfThrottableError(err.overallMessage) || ''.concat(this.translate.instant('Issuer.addMember_failed'),": ",(err.firstMessage))
 			},
 		);
 	}

@@ -233,6 +233,7 @@ export class IssuerStaffMember extends ManagedEntity<ApiIssuerStaff, IssuerStaff
 	}
 }
 
+// ToDo: the following texts are already added to de/en.json files, please make sure to use their reference when reactivating English lang 
 export const issuerStaffRoles = [
 	{
 		slug: 'owner',
