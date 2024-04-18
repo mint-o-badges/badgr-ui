@@ -7,34 +7,34 @@
 		<h1
 			class="tw-font-normal md:tw-text-[46px] md:tw-leading-[55.2px] tw-text-purple tw-text-[30px] tw-leading-[36px]"
 		>
-			Schön, dass du da bist!
+			{{ 'Welcome.heading' | translate }}
 		</h1>
 		<div class="tw-pt-7">
 			<p
 				class="tw-font-normal md:tw-text-[24px] md:tw-leading-[28.8px] tw-text-black tw-text-[16px] tw-leading-[22.4px] tw-pb-2"
 			>
-				Du kannst sofort loslegen, erhaltene Badges in deinem
-				<span class="tw-font-[500] tw-text-purple">Rucksack zu sammeln</span><span class="tw-font-[500]">.</span>
+				{{ 'Welcome.text1_a' | translate }}
+				<span class="tw-font-[500] tw-text-purple">{{ 'Welcome.text1_b' | translate }}</span><span class="tw-font-[500]">.</span>
 			</p>
 			<p
 				class="tw-font-normal md:tw-text-[24px] md:tw-leading-[33.6px] tw-text-black tw-text-[16px] tw-leading-[22.4px] tw-pb-4"
 			>
-				Wenn du
+				{{ 'Welcome.text2_a' | translate }}
 				<span class="tw-font-[500] md:tw-leading-[28.8px] tw-text-purple"
-					>Badges vergeben möchtest, lege dafür deine Institution an</span
+					>{{ 'Welcome.text2_b' | translate }}</span
 				><span class="tw-font-[500]">.</span>
 			</p>
 		</div>
 
 		<div class="tw-flex tw-flex-col md:tw-flex-row tw-gap-[2rem] tw-mt-10">
 			<button class="oeb-button oeb-purple-bg !tw-h-[60px] md:!tw-font-bold" [routerLink]="'/recipient/badges'">
-				Badges sammeln
+				{{ 'Welcome.collectBadgesBtn' | translate }}
 			</button>
 			<button
 				class="oeb-button oeb-purple-bg !tw-h-[60px] md:!tw-font-bold"
 				[routerLink]="'/issuer/create'"
 			>
-				Badges vergeben
+				{{ 'Welcome.awardBadgesBtn' | translate }}
 			</button>
 		</div>
 	</div>

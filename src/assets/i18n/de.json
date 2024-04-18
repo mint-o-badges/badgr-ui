@@ -336,5 +336,14 @@
 		"appHasAccess": "Diese App hat Zugriff auf deinen",
 		"authorized": "Authorisiert:",
 		"takeBack": "Zurücknehmen"
+	},
+	"Welcome": {
+		"heading": "Schön, dass du da bist!",
+		"text1_a": "Du kannst sofort loslegen, erhaltene Badges in deinem",
+		"text1_b": "Rucksack zu sammeln",
+		"text2_a": "Wenn du",
+		"text2_b": "Badges vergeben möchtest, lege dafür deine Institution an",
+		"collectBadgesBtn": "Badges sammeln",
+		"awardBadgesBtn": "Badges vergeben"
 	}
 }

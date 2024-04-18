@@ -234,7 +234,7 @@
 		"Q5": "5. How are badges distributed? Which data do I have to or can I as instituion take from the learners?",
 		"A5": "",
 		"Q6": "6. Where are the badges? What data must/may I as an organization collect from learners?",
-		"A6": "",
+		"A6": ""
 	},
 	"RecBadge": {
 		"addBadge": "Add badge",
@@ -337,5 +337,14 @@
 		"appHasAccess": "This app has access to your",
 		"authorized": "Authorized:",
 		"takeBack": "Take it back"
+	},
+	"Welcome": {
+		"heading": "Schön, dass du da bist!",
+		"text1_a": "Du kannst sofort loslegen, erhaltene Badges in deinem",
+		"text1_b": "Rucksack zu sammeln",
+		"text2_a": "Wenn du",
+		"text2_b": "Badges vergeben möchtest, lege dafür deine Institution an",
+		"collectBadgesBtn": "Badges sammeln",
+		"awardBadgesBtn": "Badges vergeben"
 	}
 }
