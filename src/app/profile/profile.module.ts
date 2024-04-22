@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { BadgrCommonModule, COMMON_IMPORTS } from '../common/badgr-common.module';
 import { ProfileComponent } from './components/profile/profile.component';
 import { AppIntegrationListComponent } from './components/app-integrations-list/app-integrations-list.component';
+import { AddCredentialsDialog } from './components/app-integration-add-credentials-dialog/add-credentials-dialog.component';
 // import { UserProfileService } from "../common/services/user-profile-api.service";
 import { AppIntegrationApiService } from './services/app-integration-api.service';
 import { AppIntegrationManager } from './services/app-integration-manager.service';
@@ -74,6 +75,7 @@ const routes: Routes = [
 		IntegrationImageComponent,
 		ChangePasswordComponent,
 		OAuthAppDetailComponent,
+		AddCredentialsDialog
 	],
 	providers: [
 		// UserProfileService,

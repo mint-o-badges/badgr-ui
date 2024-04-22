@@ -78,6 +78,7 @@ import { ExportPdfDialog } from './dialogs/export-pdf-dialog/export-pdf-dialog.c
 import { BadgeClassManager } from '../issuer/services/badgeclass-manager.service';
 import { BadgeClassApiService } from '../issuer/services/badgeclass-api.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { ApplicationCredentialsService } from './services/application-credentials.service.';
 
 const DIRECTIVES = [
 	BgAwaitPromises,
@@ -150,6 +151,7 @@ const SERVICES = [
 	AppConfigService,
 	NavigationService,
 	ZipService,
+	ApplicationCredentialsService
 ];
 
 const GUARDS = [AuthGuard];
