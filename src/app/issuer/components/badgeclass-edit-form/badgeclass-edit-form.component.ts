@@ -166,7 +166,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	 * The descriptions of suggested competencies which are shown
 	 * in the view (@see aiCompetenciesSuggestions)
 	 */
-	showAiDetails: boolean[] = [];
 
 	savePromise: Promise<BadgeClass> | null = null;
 	badgeClassForm = typedFormGroup([this.criteriaRequired.bind(this), this.imageValidation.bind(this)])
@@ -582,23 +581,17 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			.then((skills) => {
 				this.aiCompetenciesSuggestions = skills;
 				let aiCompetencies = this.badgeClassForm.controls.aiCompetencies;
-				console.log('aiCompetencies', aiCompetencies);
 				for (let i = aiCompetencies.length - 1; i >= 0; i--) {
 					aiCompetencies.removeAt(i);
 				}
 
 				skills.forEach((skill) => {
 					aiCompetencies.addFromTemplate();
-					this.showAiDetails.push(false);
 				});
 			})
 			.catch((error) => {
 				this.messageService.reportAndThrowError(`Failed to obtain ai skills: ${error.message}`, error);
 			});
-	}
-
-	toggleAiDetails(index: number): void {
-		this.showAiDetails[index] = !this.showAiDetails[index];
 	}
 
 	async disableAlignments() {
