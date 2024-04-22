@@ -458,7 +458,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			) {
 				this.clearCompetencies();
 				this.badgeCategory = this.badgeClassForm.rawControl.controls['badge_category'].value;
-				this.badgeClassForm.controls.competencies.addFromTemplate();
 			} else {
 				this.badgeClassForm.controls['badge_category'].setValue(this.badgeCategory);
 			}
