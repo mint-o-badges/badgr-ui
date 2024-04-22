@@ -13,6 +13,7 @@ import { groupIntoObject } from '../../../common/util/array-reducers';
 import { AppConfigService } from '../../../common/app-config.service';
 import { AddCredentialsDialog } from '../app-integration-add-credentials-dialog/add-credentials-dialog.component';
 import { ApplicationCredentialsService } from '../../../common/services/application-credentials.service.';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-integration-detail',
@@ -29,7 +30,8 @@ export class AppIntegrationListComponent extends BaseAuthenticatedRoutableCompon
 		private oAuthManager: OAuthManager,
 		public configService: AppConfigService,
 		private dialogService: CommonDialogsService,
-		private applicationCredentialsService: ApplicationCredentialsService
+		private applicationCredentialsService: ApplicationCredentialsService,
+		private translate: TranslateService
 	) {
 		super(router, route, loginService);
 
@@ -71,10 +73,10 @@ export class AppIntegrationListComponent extends BaseAuthenticatedRoutableCompon
 	async revokeAccessTokens(app: OAuth2AppAuthorization) {
 		if (
 			await this.dialogService.confirmDialog.openTrueFalseDialog({
-				dialogTitle: 'App Credentials löschen?',
-				dialogBody: `Möchtest du deinen Access token ${app.name} wirklich löschen?`,
-				resolveButtonLabel: 'Löschen',
-				rejectButtonLabel: 'Abbrechen',
+				dialogTitle: this.translate.instant('Profile.deleteApp'),
+				dialogBody: this.translate.instant('Profile.deleteAppConfirm'),
+				resolveButtonLabel: this.translate.instant('General.delete'),
+				rejectButtonLabel: this.translate.instant('General.cancel'),
 			})
 		) {
 			// revoke all tokens for the app
