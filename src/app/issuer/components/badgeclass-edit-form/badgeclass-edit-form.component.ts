@@ -814,7 +814,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 						description: suggestions[index].description,
 						escoID: suggestions[index].concept_uri,
 						studyLoad: Number(aiCompetency.studyLoad),
-						category: suggestions[index].concept_uri.includes('skill') ? 'skill' : 'knowledge',
+						category: suggestions[index].type.includes('skill') ? 'skill' : 'knowledge',
 					}))
 					.filter((_, index) => formState.aiCompetencies[index].selected),
 			);
