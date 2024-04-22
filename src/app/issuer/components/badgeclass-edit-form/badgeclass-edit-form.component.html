@@ -555,184 +555,168 @@
 			</div>
 			<span class="tw-italic">{{ 'CreateBadge.tagInfo' | translate }}</span>
 			<ul class="tw-mt-4">
-				<li class="l-flex l-flex-justifybetween l-flex-aligncenter u-padding-bottom2x">
-					<div class="l-flex l-flex-2x">
-						<svg class="icon icon-dark4" width="24px" viewBox="0 0 24 24" icon="icon_link"></svg>
-						<p class="u-text-body-semibold u-text-dark2">
+				<li>
+					<button
+						type="button"
+						(click)="alignmentsEnabled ? disableAlignments() : enableAlignments()"
+						class="options-dropdown"
+					>
+						<span class="tw-text-md md:tw-text-lg">
 							{{ 'CreateBadge.alignEducationalFramework' | translate }}
-						</p>
+						</span>
+					</button>
+					<!-- alignments -->
+					<div class="formsection tw-mt-2 tw-bg-inherit tw-border-none" *ngIf="alignmentsEnabled">
+						<div class="formsection-x-title">
+							<h2 class="u-text-dark2">
+								{{ 'RecBadgeDetail.alignment' | translate }}
+								<span>(Optional)</span>
+							</h2>
+							<button type="button" (click)="disableAlignments()" class="buttonicon buttonicon-link">
+								<svg icon="icon_close"></svg>
+								<span class="visuallyhidden">Close</span>
+							</button>
+						</div>
+
+						<div class="formsection-x-help">
+							<h3 class="u-text-body-bold">
+								{{ 'CreateBadge.whatIsThe' | translate }} {{ 'RecBadgeDetail.alignment' | translate }}?
+							</h3>
+							<p class="u-text u-margin-top1x u-margin-bottom2x">
+								{{ 'CreateBadge.alignmentInfo' | translate }}
+							</p>
+						</div>
+						<div class="formsection-x-body">
+							<ng-container
+								*ngFor="let alignment of badgeClassForm.controls.alignments.controls; let i = index"
+							>
+								<div class="tw-mt-2 l-flex l-flex-1x l-flex-justifybetween u-margin-bottom2x">
+									<h3 class="u-text-body-bold u-text-dark1">
+										{{ alignment.controls.target_name.value }}
+									</h3>
+									<button
+										*ngIf="badgeClassForm.controls.alignments.controls.length > 1"
+										type="button"
+										(click)="removeAlignment(alignment)"
+										class="u-text-link"
+									>
+										{{ 'General.remove' | translate }}
+									</button>
+								</div>
+								<div class="forminput u-margin-bottom6x">
+									<div class="forminput-x-inputs">
+										<bg-formfield-text
+											[control]="alignment.rawControlMap.target_name"
+											label="Name"
+											[errorMessage]="{ required: alignmentNameError }"
+											id="alignment_name_{{ i }}"
+										></bg-formfield-text>
+
+										<bg-formfield-text
+											[control]="alignment.rawControlMap.target_url"
+											label="URL"
+											[errorMessage]="{ required: alignmentURLError }"
+											[urlField]="true"
+											id="alignment_url_{{ i }}"
+										></bg-formfield-text>
+
+										<bg-formfield-text
+											[control]="alignment.rawControlMap.target_description"
+											[label]="shortDescription"
+											[multiline]="true"
+											id="alignment_description_{{ i }}"
+										></bg-formfield-text>
+
+										<button
+											*ngIf="!showAdvanced[i]"
+											(click)="showAdvanced[i] = true"
+											type="button"
+											class="u-text-link-small u-margin-yaxis2x"
+										>
+											{{ 'General.show' | translate }}
+											{{ 'CreateBadge.additionalOptions' | translate }}
+										</button>
+
+										<ng-template [ngIf]="showAdvanced[i]">
+											<button
+												(click)="showAdvanced[i] = false"
+												type="button"
+												class="u-text-link-small u-margin-yaxis2x"
+											>
+												{{ 'General.hide' | translate }}
+												{{ 'CreateBadge.additionalOptions' | translate }}
+											</button>
+
+											<label class="forminput-x-label u-margin-top2x" for="forminput2">{{
+												'CreateBadge.frame' | translate
+											}}</label>
+											<input type="text" id="forminput2" name="forminput2" />
+
+											<label class="forminput-x-label u-margin-top2x" for="url">Code</label>
+											<input type="text" id="url" name="url" />
+										</ng-template>
+									</div>
+								</div>
+							</ng-container>
+
+							<div class="l-stack">
+								<button (click)="addAlignment()" type="button" class="button button-secondary">
+									{{ 'CreateBadge.addAlignment' | translate }}
+								</button>
+							</div>
+						</div>
 					</div>
-					<button
-						type="button"
-						(click)="enableAlignments()"
-						*ngIf="!alignmentsEnabled"
-						class="u-text-link-small"
-					>
-						{{ 'General.add' | translate }}
-					</button>
-					<button type="button" disabled *ngIf="alignmentsEnabled" class="u-text-link-small u-text-light4">
-						{{ 'General.added' | translate }}
-					</button>
 				</li>
-				<li
-					class="l-flex l-flex-justifybetween l-flex-aligncenter border border-top border-light3 u-padding-yaxis2x"
-				>
-					<div class="l-flex l-flex-2x">
-						<svg class="icon icon-dark4" width="24px" viewBox="0 0 24 24" icon="icon_pending"></svg>
-						<p class="u-text-body-semibold u-text-dark2">{{ 'CreateBadge.expiration' | translate }}</p>
-					</div>
+				<li class="tw-mt-4">
 					<button
 						type="button"
-						(click)="enableExpiration()"
-						*ngIf="!expirationEnabled"
-						class="u-text-link-small"
+						(click)="expirationEnabled ? disableExpiration() : enableExpiration()"
+						class="options-dropdown"
 					>
-						{{ 'General.add' | translate }}
+						<span class="tw-text-md md:tw-text-lg">{{ 'CreateBadge.expiration' | translate }}</span>
 					</button>
-					<button type="button" disabled *ngIf="expirationEnabled" class="u-text-link-small u-text-light4">
-						{{ 'General.added' | translate }}
-					</button>
+					<!-- expiration -->
+					<div *ngIf="expirationEnabled" class="formsection tw-bg-inherit tw-mt-2 tw-border-none">
+						<div class="formsection-x-title">
+							<h2 class="u-text-dark2">
+								{{ 'CreateBadge.expiration' | translate }}
+								<span>(Optional)</span>
+							</h2>
+							<button type="button" (click)="disableExpiration()" class="buttonicon buttonicon-link">
+								<svg icon="icon_close"></svg>
+								<span class="visuallyhidden">Schliessen</span>
+							</button>
+						</div>
+
+						<div class="formsection-x-help">
+							<h3 class="u-text-body-bold">
+								{{ 'CreateBadge.whatIsThe' | translate }} {{ 'CreateBadge.expiration' | translate }}?
+							</h3>
+							<p class="u-text u-margin-top1x u-margin-bottom2x">
+								{{ 'CreateBadge.expirationInfo' | translate }}
+							</p>
+						</div>
+						<div class="formsection-x-body">
+							<div class="l-spacestack">
+								<bg-formfield-text
+									[control]="expirationForm.rawControlMap.expires_amount"
+									[label]="count"
+									[fieldType]="'number'"
+									[max]="1000"
+									[maxchar]="4"
+								></bg-formfield-text>
+								<bg-formfield-select
+									ariaLabel="chooseDuration"
+									[control]="expirationForm.rawControlMap.expires_duration"
+									[label]="duration"
+									[placeholder]="chooseDuration"
+									[optionMap]="durationOptions"
+								></bg-formfield-select>
+							</div>
+						</div>
+					</div>
 				</li>
 			</ul>
-		</div>
-	</div>
-
-	<!-- alignments -->
-	<div class="formsection section" *ngIf="alignmentsEnabled">
-		<div class="formsection-x-title">
-			<h2 class="u-text-dark2">
-				{{ 'RecBadgeDetail.alignment' | translate }}
-				<span>(Optional)</span>
-			</h2>
-			<button type="button" (click)="disableAlignments()" class="buttonicon buttonicon-link">
-				<svg icon="icon_close"></svg>
-				<span class="visuallyhidden">Close</span>
-			</button>
-		</div>
-
-		<div class="formsection-x-help">
-			<h3 class="u-text-body-bold">
-				{{ 'CreateBadge.whatIsThe' | translate }} {{ 'RecBadgeDetail.alignment' | translate }}?
-			</h3>
-			<p class="u-text u-margin-top1x u-margin-bottom2x">
-				{{ 'CreateBadge.alignmentInfo' | translate }}
-			</p>
-		</div>
-		<div class="formsection-x-body">
-			<ng-container *ngFor="let alignment of badgeClassForm.controls.alignments.controls; let i = index">
-				<div class="tw-mt-2 l-flex l-flex-1x l-flex-justifybetween u-margin-bottom2x">
-					<h3 class="u-text-body-bold u-text-dark1">
-						{{ alignment.controls.target_name.value }}
-					</h3>
-					<button
-						*ngIf="badgeClassForm.controls.alignments.controls.length > 1"
-						type="button"
-						(click)="removeAlignment(alignment)"
-						class="u-text-link"
-					>
-						{{ 'General.remove' | translate }}
-					</button>
-				</div>
-				<div class="forminput u-margin-bottom6x">
-					<div class="forminput-x-inputs">
-						<bg-formfield-text
-							[control]="alignment.rawControlMap.target_name"
-							label="Name"
-							[errorMessage]="{ required: alignmentNameError }"
-							id="alignment_name_{{ i }}"
-						></bg-formfield-text>
-
-						<bg-formfield-text
-							[control]="alignment.rawControlMap.target_url"
-							label="URL"
-							[errorMessage]="{ required: alignmentURLError }"
-							[urlField]="true"
-							id="alignment_url_{{ i }}"
-						></bg-formfield-text>
-
-						<bg-formfield-text
-							[control]="alignment.rawControlMap.target_description"
-							[label]="shortDescription"
-							[multiline]="true"
-							id="alignment_description_{{ i }}"
-						></bg-formfield-text>
-
-						<button
-							*ngIf="!showAdvanced[i]"
-							(click)="showAdvanced[i] = true"
-							type="button"
-							class="u-text-link-small u-margin-yaxis2x"
-						>
-							{{ 'General.show' | translate }} {{ 'CreateBadge.additionalOptions' | translate }}
-						</button>
-
-						<ng-template [ngIf]="showAdvanced[i]">
-							<button
-								(click)="showAdvanced[i] = false"
-								type="button"
-								class="u-text-link-small u-margin-yaxis2x"
-							>
-								{{ 'General.hide' | translate }} {{ 'CreateBadge.additionalOptions' | translate }}
-							</button>
-
-							<label class="forminput-x-label u-margin-top2x" for="forminput2">{{
-								'CreateBadge.frame' | translate
-							}}</label>
-							<input type="text" id="forminput2" name="forminput2" />
-
-							<label class="forminput-x-label u-margin-top2x" for="url">Code</label>
-							<input type="text" id="url" name="url" />
-						</ng-template>
-					</div>
-				</div>
-			</ng-container>
-
-			<div class="l-stack">
-				<button (click)="addAlignment()" type="button" class="button button-secondary">
-					{{ 'CreateBadge.addAlignment' | translate }}
-				</button>
-			</div>
-		</div>
-	</div>
-
-	<!-- expiration -->
-	<div *ngIf="expirationEnabled" class="formsection section">
-		<div class="formsection-x-title">
-			<h2 class="u-text-dark2">
-				{{ 'CreateBadge.expiration' | translate }}
-				<span>(Optional)</span>
-			</h2>
-			<button type="button" (click)="disableExpiration()" class="buttonicon buttonicon-link">
-				<svg icon="icon_close"></svg>
-				<span class="visuallyhidden">Schliessen</span>
-			</button>
-		</div>
-
-		<div class="formsection-x-help">
-			<h3 class="u-text-body-bold">
-				{{ 'CreateBadge.whatIsThe' | translate }} {{ 'CreateBadge.expiration' | translate }}?
-			</h3>
-			<p class="u-text u-margin-top1x u-margin-bottom2x">
-				{{ 'CreateBadge.expirationInfo' | translate }}
-			</p>
-		</div>
-		<div class="formsection-x-body">
-			<div class="l-spacestack">
-				<bg-formfield-text
-					[control]="expirationForm.rawControlMap.expires_amount"
-					[label]="count"
-					[fieldType]="'number'"
-					[max]="1000"
-					[maxchar]="4"
-				></bg-formfield-text>
-				<bg-formfield-select
-					ariaLabel="chooseDuration"
-					[control]="expirationForm.rawControlMap.expires_duration"
-					[label]="duration"
-					[placeholder]="chooseDuration"
-					[optionMap]="durationOptions"
-				></bg-formfield-select>
-			</div>
 		</div>
 	</div>
 
