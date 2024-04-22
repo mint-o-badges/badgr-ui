@@ -338,6 +338,8 @@
 		"idAndSecret": "Client ID und Secret generieren",
 		"idAndSecretSuccess": "<b>ACHTUNG!</b> Bitte kopiere dein Client Secret, es wird dir später nicht mehr angezeigt. Die Client ID kannst du jederzeit einsehen.",
 		"appHasAccess": "Diese App hat Zugriff auf deinen",
+		"deleteApp": "App Credentials löschen?",
+		"deleteAppConfirm": "Möchtest du deinen Access token wirklich löschen?",
 		"authorized": "Authorisiert:",
 		"takeBack": "Zurücknehmen"
 	}
