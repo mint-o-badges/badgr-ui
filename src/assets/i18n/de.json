@@ -425,8 +425,12 @@
 		"add": "Hinzufügen",
 		"changePass": "Passwort ändern",
 		"setPass": "Passwort einstellen",
-		"accountAccess": "Folgende Apps und Seiten haben Zugriff auf deinen",
+		"accountAccess": "Du möchtest einer anderen App Zugriff zu deinem Open Educational Badges Account geben, um z.B. automatisch Badges zu verteilen?<br> Dann registriere hier eine CLIENT ID und ein CLIENT SECRET für deinen Account.",
 		"noAppIntegration": "Keine App Integrationen vorhanden",
+		"newCredentials": "Neue Credentials registrieren",
+		"chooseName": "Wähle einen Namen",
+		"idAndSecret": "Client ID und Secret generieren",
+		"idAndSecretSuccess": "<b>ACHTUNG!</b> Bitte kopiere dein Client Secret, es wird dir später nicht mehr angezeigt. Die Client ID kannst du jederzeit einsehen.",
 		"appHasAccess": "Diese App hat Zugriff auf deinen",
 		"authorized": "Authorisiert:",
 		"takeBack": "Zurücknehmen"

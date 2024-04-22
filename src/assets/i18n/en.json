@@ -424,8 +424,12 @@
 		"add": "Add",
 		"changePass": "Change Password",
 		"setPass": "Set Password",
-		"accountAccess": "The following apps and sites have access to your",
+		"accountAccess": "Grant another App access to your Open Educational Badges Account.",
 		"noAppIntegration": "No app integrations available",
+		"newCredentials": "Generate new Credentials",
+		"chooseName": "Choose a name",
+		"idAndSecret": "Generate Client ID and Secret",
+		"idAndSecretSuccess": "<b>Attention!</b> Please copy your Client Secret, you will not be able to see it again.",
 		"appHasAccess": "This app has access to your",
 		"authorized": "Authorized:",
 		"takeBack": "Take it back"
