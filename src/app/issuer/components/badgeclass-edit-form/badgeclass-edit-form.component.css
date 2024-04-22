@@ -1,11 +1,28 @@
 .heading {
-    padding-left: 1em; 
-    padding-right: 1em; 
-    padding-top: 1em;
+    padding: 0.25rem; 
     font-size: 28px;
+	font-size: 1.25rem/* 20px */;
+    line-height: 1.75rem/* 28px */;
     font-weight: 900;
-    line-height: 55.2px;
-	color: var(--color-blue);
+	color: var(--color-purple);
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	
+}
+
+@media (min-width: 768px) {
+	.heading{
+		flex-direction: row;
+	}
+}
+.purpletext {
+	color: var(--color-purple);
+}
+
+.checkbox input[type='checkbox']:checked {
+	background-color: var(--color-purple);
+	border-color: var(--color-purple);
 }
 
 .property-label {
@@ -14,12 +31,77 @@
 	text-transform: uppercase;
 }
 
+::ng-deep .forminput .forminput-x-inputs input,
+::ng-deep .forminput select,
+::ng-deep .forminput textarea {
+    border: 0.5px solid var(--color-purple) !important;
+	border-radius: 0.25rem !important;
+}
+
+::ng-deep .forminput .forminput-x-sublabel {
+	height: 2.5rem
+}
+
+::ng-deep .dropzone {
+	background-color: white !important;
+	text-align: center;
+	border: 1px solid var(--color-purple) !important;
+	height: 20rem
+}
+
+
+@media (max-width: 480px) {
+	::ng-deep .dropzone .dropzone-x-info1,
+	::ng-deep .dropzone .dropzone-x-info2 {
+		display: block !important;
+	}
+}
+
 .section {
 	background-color: #f1f0ff;
 	border-radius: 25px;
-	padding: 2em;
+	margin-bottom: 2em;
+	padding: 1em;
 }
+
 
 li::marker {
 	color: var(--color-blue);
 }
+
+.ng-autocomplete {
+	width:100%;
+	max-width: 500px;
+  }
+
+.competencyDuration {
+	--typography-size: 12px;
+    font-family: var(--font-family);
+    font-size: var(--typography-size);
+    line-height: calc(var(--typography-size) + 4px);
+    font-weight: bold;
+    color: var(--color-dark3);
+    display: block;
+    margin-bottom: var(--gridspacing);
+    font-family: var(--font-family);
+    font-size: var(--typography-size);
+    line-height: calc(var(--typography-size) + 4px);
+    font-weight: bold;
+    color: var(--color-dark3);
+    display: block;
+    margin-bottom: var(--gridspacing);
+}
+
+  /* although ::ng-deep is marked as deprecated in the angular docs 
+    (https://angular.io/guide/component-styles#deprecated-deep--and-ng-deep) 
+     it is still widely used and should not cause problems imo.
+	 An alternative is proposed here: 
+	 https://medium.com/@simon.sharp_25406/angular-alternatives-after-the-deprecation-of-ng-deep-b51591a296e7	 
+   */
+  .ng-autocomplete ::ng-deep .autocomplete-container {
+	box-shadow: none;
+	} 
+	.ng-autocomplete ::ng-deep .autocomplete-container ::ng-deep .input-container ::ng-deep input {
+		border: 0.5px solid var(--color-purple);
+		border-radius: 0.25rem;
+		}	 
