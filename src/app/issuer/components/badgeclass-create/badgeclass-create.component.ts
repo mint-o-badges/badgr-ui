@@ -15,6 +15,7 @@ import { BadgeClass } from '../../models/badgeclass.model';
 import { AppConfigService } from '../../../common/app-config.service';
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { BadgeClassManager } from '../../services/badgeclass-manager.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	templateUrl: 'badgeclass-create.component.html',
@@ -47,6 +48,7 @@ export class BadgeClassCreateComponent extends BaseAuthenticatedRoutableComponen
 		protected badgeClassService: BadgeClassManager,
 		private configService: AppConfigService,
 		protected dialogService: CommonDialogsService,
+		private translate: TranslateService,
 	) {
 		super(router, route, sessionService);
 		title.setTitle(`Create Badge - ${this.configService.theme['serviceName'] || 'Badgr'}`);
