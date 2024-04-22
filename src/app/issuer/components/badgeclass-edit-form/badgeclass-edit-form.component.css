@@ -1,8 +1,7 @@
 .heading {
     padding: 0.25rem; 
-    font-size: 28px;
-	font-size: 1.25rem/* 20px */;
-    line-height: 1.75rem/* 28px */;
+	font-size: 1.5rem;
+    line-height: 2rem;
     font-weight: 900;
 	color: var(--color-purple);
 	display: flex;
@@ -32,10 +31,15 @@
 }
 
 ::ng-deep .forminput .forminput-x-inputs input,
-::ng-deep .forminput select,
 ::ng-deep .forminput textarea {
     border: 0.5px solid var(--color-purple) !important;
 	border-radius: 0.25rem !important;
+}
+
+::ng-deep .forminput .forminput-x-inputs select{
+	border: 0.5px solid var(--color-purple) !important;
+	border-radius: 0.25rem !important;
+	font-weight: 400;
 }
 
 ::ng-deep .forminput .forminput-x-sublabel {
@@ -64,6 +68,20 @@
 	padding: 1em;
 }
 
+.options-dropdown {
+	text-align: left;
+	width: auto;
+	background-image: url('../../../../assets/@concentricsky/badgr-style/dist/images/dropdown.svg');
+	background-repeat: no-repeat;
+	background-position: right 10px bottom 50%;
+	padding: 0.5rem;
+	padding-right: 30px !important;
+	background-size: 12px 12px;
+	border: 0.5px solid var(--color-purple) ;
+	border-radius: 0.25rem;
+	background-color: white;
+}
+
 
 li::marker {
 	color: var(--color-blue);
@@ -76,13 +94,6 @@ li::marker {
 
 .competencyDuration {
 	--typography-size: 12px;
-    font-family: var(--font-family);
-    font-size: var(--typography-size);
-    line-height: calc(var(--typography-size) + 4px);
-    font-weight: bold;
-    color: var(--color-dark3);
-    display: block;
-    margin-bottom: var(--gridspacing);
     font-family: var(--font-family);
     font-size: var(--typography-size);
     line-height: calc(var(--typography-size) + 4px);
