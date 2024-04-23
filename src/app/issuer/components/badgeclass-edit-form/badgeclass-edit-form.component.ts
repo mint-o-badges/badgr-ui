@@ -443,30 +443,31 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		}
 	}
 
+	async confirmCategoryChange(): Promise<boolean> {
+		return await this.dialogService.confirmDialog.openTrueFalseDialog({
+			dialogTitle: 'Wenn du die Kategorie änderst, werden alle Kompetenzen gelöscht.',
+			dialogBody: 'Möchtest du fortfahren?',
+			resolveButtonLabel: 'Fortfahren',
+			rejectButtonLabel: 'Abbrechen',
+		});
+	}
+
 	async handleBadgeCategoryChange() {
 		const badgeCategoryControl = this.badgeClassForm.rawControl.controls['badge_category'];
 		const currentBadgeCategory = badgeCategoryControl.value;
 
 		if (this.badgeCategory === 'competency' && currentBadgeCategory !== 'competency') {
-			if (
-				await this.dialogService.confirmDialog.openTrueFalseDialog({
-					dialogTitle: 'Wenn du die Kategorie änderst, werden alle Kompetenzen gelöscht.',
-					dialogBody: 'Möchtest du fortfahren?',
-					resolveButtonLabel: 'Fortfahren',
-					rejectButtonLabel: 'Abbrechen',
-				})
-			) {
+			if (await this.confirmCategoryChange()) {
 				this.clearCompetencies();
-				this.badgeCategory = this.badgeClassForm.rawControl.controls['badge_category'].value;
 			} else {
 				this.badgeClassForm.controls['badge_category'].setValue(this.badgeCategory);
+				return;
 			}
-		} else if (this.badgeCategory === '' && currentBadgeCategory === 'competency') {
-			this.badgeCategory = this.badgeClassForm.rawControl.controls['badge_category'].value;
-			this.badgeClassForm.controls.competencies.addFromTemplate();
-		} else {
-			this.badgeCategory = this.badgeClassForm.rawControl.controls['badge_category'].value;
 		}
+		if (currentBadgeCategory === 'competency') {
+			this.badgeClassForm.controls.competencies.addFromTemplate();
+		}
+		this.badgeCategory = currentBadgeCategory;
 	}
 
 	/**
