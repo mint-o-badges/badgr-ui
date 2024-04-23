@@ -26,11 +26,10 @@ export class AiSkillsService extends BaseHttpApiService {
 		const binString = Array.from(bytes, (byte) => String.fromCodePoint(byte)).join('');
 		const base64 = btoa(binString);
 		// To make it url safe, replace + and /
-		return base64.replace('/+/g', '-').replace('///g', '_');
+		return base64.replace(/\+/g, '-').replace(/\//g, '_');
 	}
 
 	getAiSkillsResult(textToAnalyze: string): Promise<AiSkillsResult> {
-		const encodedText = encodeURIComponent(textToAnalyze);
 		// TODO: Potentially it would be better to transfer the text to analyze in the body,
 		// since it could become quite long. For this howerver, POST needs to be used.
 		// This either (probably) failed with some CSRF stuff (though there was no clear error message
@@ -38,7 +37,7 @@ export class AiSkillsService extends BaseHttpApiService {
 		// Removing authentication could lead to attacks though and I didn't manage to fix the CSRF stuff
 		// (I've tried for hours to add the correct headers etc., it all failed with a 403 without an error message).
 		// Since the url lenght limit *probably* isn't too short anyway, for now this solution should suffice.
-		return this.get<AiSkillsResult>(`/aiskills/${this.toBase64Url(encodedText)}`).then(
+		return this.get<AiSkillsResult>(`/aiskills/${this.toBase64Url(textToAnalyze)}`).then(
 			(r) => r.body as AiSkillsResult,
 			(error) => {
 				throw new Error(JSON.parse(error.message).error);
