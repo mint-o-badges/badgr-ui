@@ -32,6 +32,7 @@ import { MessageService } from '../services/message.service';
 					>{{ 'RecBadge.genRandomImage' | translate }}</a
 				>
 			</div>
+			<p class="forminput-x-sublabel" *ngIf="sublabel">{{ sublabel }}</p>
 			<input
 				type="file"
 				accept="image/*"
@@ -39,7 +40,7 @@ import { MessageService } from '../services/message.service';
 				id="image_field{{ uniqueIdSuffix }}"
 				(change)="fileInputChanged($event)"
 				class="visuallyhidden"
-                (cancel)="cancelFileSelection($event)"
+				(cancel)="cancelFileSelection($event)"
 			/>
 
 			<label
@@ -71,16 +72,18 @@ import { MessageService } from '../services/message.service';
 
 				<ng-container *ngIf="!imageDataUrl">
 					<svg class="dropzone-x-icon" icon="icon_upload"></svg>
-					<p class="dropzone-x-info1">Drag & Drop</p>
+					<p *ngIf="dropZoneInfo1" class="dropzone-x-info1">{{ dropZoneInfo1 }}</p>
 					<p class="dropzone-x-info2">
-						{{ 'General.or' | translate }}
-						<span class="u-text-link">{{ 'RecBadge.selectFromFile' | translate }}</span>
+						<span *ngIf="dropZoneInfo1"> {{ 'General.or' | translate }} </span>
+						<span class="u-text-link tw-underline">{{ text_body }}</span>
 					</p>
 					<!-- dont let user select icon when uploading badge -->
-					<p *ngIf="loaderName != 'basic'" class="dropzone-x-info2">
+					<p *ngIf="loaderName != 'basic' && dropZoneInfo2" class="dropzone-x-info2">
 						{{ 'General.or' | translate }}
-						<span class="u-text-link" (click)="$event.preventDefault(); findNounproject($event)"
-							>Icon {{ 'General.search' | translate }}</span
+						<span
+							class="u-text-link tw-underline"
+							(click)="$event.preventDefault(); findNounproject($event)"
+							>{{ dropZoneInfo2 }}</span
 						>
 					</p>
 				</ng-container>
@@ -124,6 +127,10 @@ export class BgFormFieldImageComponent {
 
 	@Input() control: FormControl;
 	@Input() label: string;
+	@Input() sublabel: string;
+	@Input() text_body: string;
+	@Input() dropZoneInfo1: string;
+	@Input() dropZoneInfo2: string;
 	@Input() type: string = null;
 	@Input() errorMessage = 'Please provide a valid image file';
 	@Input() placeholderImage: string;
@@ -150,10 +157,10 @@ export class BgFormFieldImageComponent {
 		protected messageService: MessageService,
 	) {}
 
-    cancelFileSelection(event: Event) {
-        // Stop the propagation so that the form isn't aborted
-        event.stopPropagation();
-    }
+	cancelFileSelection(event: Event) {
+		// Stop the propagation so that the form isn't aborted
+		event.stopPropagation();
+	}
 
 	clearFileInput() {
 		(this.element.querySelector("input[type='file']") as HTMLInputElement).value = null;

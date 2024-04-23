@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AbstractControl, FormBuilder, Validators, ValidatorFn, ValidationErrors } from '@angular/forms';
+import { AbstractControl, FormBuilder, Validators, ValidatorFn, ValidationErrors, FormControl } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { Md5 } from 'ts-md5/dist/md5';
 
@@ -28,6 +28,7 @@ import { FormFieldSelectOption } from '../../../common/components/formfield-sele
 
 import { AiSkillsService } from '../../../common/services/ai-skills.service';
 import { Skill } from '../../../common/model/ai-skills.model';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'badgeclass-edit-form',
@@ -37,6 +38,39 @@ import { Skill } from '../../../common/model/ai-skills.model';
 export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableComponent implements OnInit, AfterViewInit {
 	baseUrl: string;
 	badgeCategory: string;
+
+	selectFromMyFiles = this.translate.instant('RecBadge.selectFromMyFiles');
+	chooseFromExistingIcons = this.translate.instant('RecBadge.chooseFromExistingIcons');
+	uploadOwnVisual = this.translate.instant('RecBadge.uploadOwnVisual');
+
+	chooseABadgeCategory = this.translate.instant('CreateBadge.chooseABadgeCategory');
+	summarizedDescription = this.translate.instant('CreateBadge.summarizedDescription');
+	enterDescription = this.translate.instant('Issuer.enterDescription');
+	max70chars = '(max 70 ' + this.translate.instant('General.characters') + ')';
+
+	useOurEditor = this.translate.instant('CreateBadge.useOurEditor');
+	imageSublabel = this.translate.instant('CreateBadge.imageSublabel');
+	useOwnVisual = this.translate.instant('CreateBadge.useOwnVisual');
+	uploadOwnDesign = this.translate.instant('CreateBadge.uploadOwnDesign');
+	imageErrorFork = this.translate.instant('CreateBadge.imageErrorFork');
+
+	detailedDescription = this.translate.instant('CreateBadge.detailedDescription');
+	competencyTitle = this.translate.instant('Badge.competency') + '-' + this.translate.instant('Badge.title');
+	titleError = this.translate.instant('CreateBadge.titleError');
+	competencyDuration = this.translate.instant('CreateBadge.competencyDuration');
+	competencyCategory = this.translate.instant('Badge.competency') + '-' + this.translate.instant('Badge.category');
+	competencyCategoryError = this.translate.instant('CreateBadge.competencyCategoryError');
+	competencyDescription =
+		this.translate.instant('Badge.competency') + '-' + this.translate.instant('General.description');
+
+	shortDescription = this.translate.instant('CreateBadge.shortDescription');
+	alignmentNameError = this.translate.instant('CreateBadge.alignmentNameError');
+	alignmentURLError = this.translate.instant('CreateBadge.alignmentURLError');
+
+	count = this.translate.instant('General.count');
+	duration = this.translate.instant('RecBadgeDetail.duration');
+	chooseDuration = this.translate.instant('CreateBadge.chooseDuration');
+	newTag = this.translate.instant('CreateBadge.newTag');
 
 	@Input()
 	set badgeClass(badgeClass: BadgeClass) {
@@ -78,6 +112,10 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			this.badgeClassForm.controls.badge_criteria_text.dirty ||
 			this.badgeClassForm.controls.badge_criteria_url.dirty
 		);
+	}
+
+	get imageFieldDirty() {
+		return this.badgeClassForm.controls.badge_image.dirty || this.badgeClassForm.controls.badge_customImage.dirty;
 	}
 
 	readonly badgeClassPlaceholderImageUrl = '../../../../breakdown/static/images/placeholderavatar.svg';
@@ -128,10 +166,9 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	 * The descriptions of suggested competencies which are shown
 	 * in the view (@see aiCompetenciesSuggestions)
 	 */
-	showAiDetails: boolean[] = [];
 
 	savePromise: Promise<BadgeClass> | null = null;
-	badgeClassForm = typedFormGroup(this.criteriaRequired.bind(this))
+	badgeClassForm = typedFormGroup([this.criteriaRequired.bind(this), this.imageValidation.bind(this)])
 		.addControl('badge_name', '', [
 			Validators.required,
 			Validators.maxLength(255),
@@ -141,20 +178,12 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 					? { mustChange: { value: control.value } }
 					: null,
 		])
-		.addControl('badge_image', '', [
-			Validators.required,
-			// Validation that the image (hash) of a fork changed
-			(control: AbstractControl): ValidationErrors | null => {
-				if (!control.value || !this.forbiddenImage || !this.currentImage) return null;
-				let other = new Md5().appendStr(this.currentImage).end();
-				if (this.forbiddenImage != other) return null;
-				return { mustChange: { value: this.currentImage } };
-			},
-		])
+		.addControl('badge_image', '')
+		.addControl('badge_customImage', '')
 		.addControl('badge_description', '', Validators.required)
 		.addControl('badge_criteria_url', '')
 		.addControl('badge_criteria_text', '')
-		.addControl('badge_study_load', 1, [Validators.required, this.positiveInteger, Validators.max(1000)])
+		.addControl('badge_study_load', 0, [this.positiveIntegerOrNull, Validators.max(10000)])
 		.addControl('badge_category', '', Validators.required)
 		.addControl('badge_level', 'a1', Validators.required)
 		.addControl('badge_based_on', {
@@ -174,6 +203,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		.addArray(
 			'competencies',
 			typedFormGroup()
+				.addControl('added', false)
 				.addControl('name', '', Validators.required)
 				.addControl('description', '', Validators.required)
 				.addControl('escoID', '')
@@ -195,6 +225,9 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 	@ViewChild('imageField')
 	imageField: BgFormFieldImageComponent;
+
+	@ViewChild('customImageField')
+	customImageField: BgFormFieldImageComponent;
 
 	@ViewChild('newTagInput')
 	newTagInput: ElementRef<HTMLInputElement>;
@@ -245,20 +278,20 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		.addControl('expires_duration', '', Validators.required);
 
 	durationOptions: { [key in BadgeClassExpiresDuration]: string } = {
-		days: 'Days',
-		weeks: 'Weeks',
-		months: 'Months',
-		years: 'Years',
+		days: this.translate.instant('General.days'),
+		weeks: this.translate.instant('General.weeks'),
+		months: this.translate.instant('General.months'),
+		years: this.translate.instant('General.years'),
 	};
 
 	categoryOptions: { [key in BadgeClassCategory]: string } = {
-		competency: 'Kompetenz',
-		participation: 'Teilnahme',
+		competency: this.translate.instant('Badge.competency'),
+		participation: this.translate.instant('Badge.participation'),
 	};
 
 	competencyCategoryOptions = {
-		skill: 'Fähigkeit',
-		knowledge: 'Wissen',
+		skill: this.translate.instant('Badge.skill'),
+		knowledge: this.translate.instant('Badge.knowledge'),
 	};
 
 	levelOptions: { [key in BadgeClassLevel]: string } = {
@@ -293,6 +326,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		protected dialogService: CommonDialogsService,
 		protected componentElem: ElementRef<HTMLElement>,
 		protected aiSkillsService: AiSkillsService,
+		private translate: TranslateService,
 	) {
 		super(router, route, sessionService);
 		title.setTitle(`Create Badge - ${this.configService.theme['serviceName'] || 'Badgr'}`);
@@ -322,6 +356,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		this.badgeClassForm.setValue({
 			badge_name: badgeClass.name,
 			badge_image: this.existing ? badgeClass.image : null, // Setting the image here is causing me a lot of problems with events being triggered, so I resorted to just set it in this.imageField...
+			badge_customImage: null,
 			badge_description: badgeClass.description,
 			badge_criteria_url: badgeClass.criteria_url,
 			badge_criteria_text: badgeClass.criteria_text,
@@ -387,37 +422,52 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		this.fetchTags();
 	}
 
-	// call adjustUploadImage after formControls are initialized to prevent timing issues
-	// with the imageField (e.g. when editing a badge the image was not shown when the page first loaded)
 	ngAfterViewInit(): void {
+		this.imageField.control.statusChanges.subscribe((e) => {
+			if (this.imageField.control.value != null) this.customImageField.control.reset();
+		});
+
+		this.customImageField.control.statusChanges.subscribe((e) => {
+			if (this.customImageField.control.value != null) this.imageField.control.reset();
+		});
+		// call adjustUploadImage after formControls are initialized to prevent timing issues
+		// with the imageField (e.g. when editing a badge the image was not shown when the page first loaded)
 		this.adjustUploadImage(this.badgeClassForm.value);
 	}
 
+	clearCompetencies() {
+		const competencies = this.badgeClassForm.controls.competencies;
+		competencies.reset();
+		for (let i = competencies.length - 1; i >= 0; i--) {
+			competencies.removeAt(i);
+		}
+	}
+
+	async confirmCategoryChange(): Promise<boolean> {
+		return await this.dialogService.confirmDialog.openTrueFalseDialog({
+			dialogTitle: 'Wenn du die Kategorie änderst, werden alle Kompetenzen gelöscht.',
+			dialogBody: 'Möchtest du fortfahren?',
+			resolveButtonLabel: 'Fortfahren',
+			rejectButtonLabel: 'Abbrechen',
+		});
+	}
+
 	async handleBadgeCategoryChange() {
-		if (
-			this.badgeCategory === 'competency' &&
-			this.badgeClassForm.rawControl.controls['badge_category'].value !== 'competency'
-		) {
-			if (
-				await this.dialogService.confirmDialog.openTrueFalseDialog({
-					dialogTitle: 'Wenn du die Kategorie änderst, werden alle Kompetenzen gelöscht.',
-					dialogBody: 'Möchtest du fortfahren?',
-					resolveButtonLabel: 'Fortfahren',
-					rejectButtonLabel: 'Abbrechen',
-				})
-			) {
-				const competencies = this.badgeClassForm.controls.competencies;
-				competencies.reset();
-				for (let i = competencies.length - 1; i >= 0; i--) {
-					competencies.removeAt(i);
-				}
-				this.badgeCategory = this.badgeClassForm.rawControl.controls['badge_category'].value;
+		const badgeCategoryControl = this.badgeClassForm.rawControl.controls['badge_category'];
+		const currentBadgeCategory = badgeCategoryControl.value;
+
+		if (this.badgeCategory === 'competency' && currentBadgeCategory !== 'competency') {
+			if (await this.confirmCategoryChange()) {
+				this.clearCompetencies();
 			} else {
 				this.badgeClassForm.controls['badge_category'].setValue(this.badgeCategory);
+				return;
 			}
-		} else {
-			this.badgeCategory = this.badgeClassForm.rawControl.controls['badge_category'].value;
 		}
+		if (currentBadgeCategory === 'competency') {
+			this.badgeClassForm.controls.competencies.addFromTemplate();
+		}
+		this.badgeCategory = currentBadgeCategory;
 	}
 
 	/**
@@ -463,6 +513,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 		if (newTag.length > 0) {
 			this.tags.add(newTag);
+
 			this.newTagInput['query'] = '';
 		}
 	}
@@ -507,7 +558,12 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		this.badgeClassForm.controls.alignments.addFromTemplate();
 	}
 
-	addCompetency() {
+	addCompetency(competency: typeof this.badgeClassForm.controls.competencies) {
+		competency.markTreeDirty();
+		if (competency.invalid) {
+			return;
+		}
+		competency.controls['added'].setValue(true);
 		this.badgeClassForm.controls.competencies.addFromTemplate();
 	}
 
@@ -525,35 +581,29 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			.then((skills) => {
 				this.aiCompetenciesSuggestions = skills;
 				let aiCompetencies = this.badgeClassForm.controls.aiCompetencies;
-				console.log('aiCompetencies', aiCompetencies);
 				for (let i = aiCompetencies.length - 1; i >= 0; i--) {
 					aiCompetencies.removeAt(i);
 				}
 
 				skills.forEach((skill) => {
 					aiCompetencies.addFromTemplate();
-					this.showAiDetails.push(false);
 				});
 			})
 			.catch((error) => {
-				this.messageService.reportAndThrowError('Failed to obtain ai skills.', error);
+				this.messageService.reportAndThrowError(`Failed to obtain ai skills: ${error.message}`, error);
 			});
-	}
-
-	toggleAiDetails(index: number): void {
-		this.showAiDetails[index] = !this.showAiDetails[index];
 	}
 
 	async disableAlignments() {
 		const isPlural = this.badgeClassForm.value.alignments.length > 1;
 		if (
 			!(await this.dialogService.confirmDialog.openTrueFalseDialog({
-				dialogTitle: `Remove Alignment${isPlural ? 's' : ''}?`,
-				dialogBody: `Are you sure you want to remove ${
-					isPlural ? 'these alignments?' : 'this alignment?'
-				} This action cannot be undone.`,
-				resolveButtonLabel: 'Remove',
-				rejectButtonLabel: 'Cancel',
+				dialogTitle: this.translate.instant('CreateBadge.removeAlignment') + (isPlural ? 's' : '') + '?',
+				dialogBody:
+					this.translate.instant('CreateBadge.removeAlignmentInfo') +
+					this.translate.instant('CreateBadge.irreversibleAction'),
+				resolveButtonLabel: this.translate.instant('General.remove'),
+				rejectButtonLabel: this.translate.instant('General.cancel'),
 			}))
 		) {
 			return;
@@ -577,10 +627,11 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		) {
 			if (
 				!(await this.dialogService.confirmDialog.openTrueFalseDialog({
-					dialogTitle: 'Remove Alignment?',
-					dialogBody: 'Are you sure you want to remove this alignment? This action cannot be undone.',
-					resolveButtonLabel: 'Remove Alignment',
-					rejectButtonLabel: 'Cancel',
+					dialogTitle: this.translate.instant('CreateBadge.removeAlignment') + '?',
+					dialogBody: this.translate.instant('CreateBadge.removeAlignmentInfo'),
+					resolveButtonLabel:
+						this.translate.instant('General.remove') + ' ' + this.translate.instant('Badge.alignment'),
+					rejectButtonLabel: this.translate.instant('General.cancel'),
 				}))
 			) {
 				return;
@@ -603,10 +654,10 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		) {
 			if (
 				!(await this.dialogService.confirmDialog.openTrueFalseDialog({
-					dialogTitle: 'Remove Competency?',
-					dialogBody: 'Are you sure you want to remove this competency? This action cannot be undone.',
-					resolveButtonLabel: 'Remove Competency',
-					rejectButtonLabel: 'Cancel',
+					dialogTitle: this.translate.instant('EditBadge.removeCompetency') + '?',
+					dialogBody: this.translate.instant('EditBadge.removeCompetencyInfo'),
+					resolveButtonLabel: this.translate.instant('EditBadge.removeCompetency'),
+					rejectButtonLabel: this.translate.instant('General.cancel'),
 				}))
 			) {
 				return;
@@ -635,96 +686,75 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		}
 	}
 
+	imageValidation(): ValidationErrors | null {
+		if (!this.badgeClassForm) return null;
+
+		const value = this.badgeClassForm.value;
+
+		const image = (value.badge_image || '').trim();
+		const customImage = (value.badge_customImage || '').trim();
+
+		if (!image.length && !customImage.length) {
+			return { imageRequired: true };
+		}
+
+		// Validation that the image (hash) of a fork changed
+		const controlValue = customImage || image;
+		if (!controlValue || !this.forbiddenImage || !this.forbiddenImage) {
+			return null;
+		}
+		const other = new Md5().appendStr(this.forbiddenImage).end();
+		if (this.forbiddenImage != other) {
+			return null;
+		}
+		return { mustChange: { value: this.forbiddenImage } };
+	}
+
 	async onSubmit() {
-		this.badgeClassForm.markTreeDirty();
-		if (this.expirationEnabled) {
-			this.expirationForm.markTreeDirty();
-		}
-
-		if (!this.badgeClassForm.valid || (this.expirationEnabled && !this.expirationForm.valid)) {
-			const firstInvalidInput = this.formElem.nativeElement.querySelector(
-				'.ng-invalid,.dropzone-is-error,.u-text-error',
-			);
-			if (firstInvalidInput) {
-				if (typeof firstInvalidInput['focus'] === 'function') {
-					firstInvalidInput['focus']();
-				}
-
-				firstInvalidInput.scrollIntoView({ behavior: 'smooth' });
+		try {
+			if (this.badgeClassForm.controls.badge_customImage.value && this.badgeClassForm.valid) {
+				this.badgeClassForm.controls.badge_image.setValue(this.badgeClassForm.controls.badge_customImage.value);
 			}
-			return;
-		}
+			this.badgeClassForm.markTreeDirty();
+			if (this.expirationEnabled) {
+				this.expirationForm.markTreeDirty();
+			}
 
-		const formState = this.badgeClassForm.value;
-		const expirationState = this.expirationEnabled ? this.expirationForm.value : undefined;
+			if (!this.badgeClassForm.valid || (this.expirationEnabled && !this.expirationForm.valid)) {
+				const firstInvalidInput = this.formElem.nativeElement.querySelector(
+					'.ng-invalid,.dropzone-is-error,.u-text-error',
+				);
+				if (firstInvalidInput) {
+					if (typeof firstInvalidInput['focus'] === 'function') {
+						firstInvalidInput['focus']();
+					}
 
-		const studyLoadExtensionContextUrl = `${this.baseUrl}/static/extensions/StudyLoadExtension/context.json`;
-		const categoryExtensionContextUrl = `${this.baseUrl}/static/extensions/CategoryExtension/context.json`;
-		const levelExtensionContextUrl = `${this.baseUrl}/static/extensions/LevelExtension/context.json`;
-		const basedOnExtensionContextUrl = `${this.baseUrl}/static/extensions/BasedOnExtension/context.json`;
-		const competencyExtensionContextUrl = `${this.baseUrl}/static/extensions/CompetencyExtension/context.json`;
-		const orgImageExtensionContextUrl = `${this.baseUrl}/static/extensions/OrgImageExtension/context.json`;
+					firstInvalidInput.scrollIntoView({ behavior: 'smooth' });
+				}
+				return;
+			}
 
-		const suggestions = this.aiCompetenciesSuggestions;
-		if (this.existingBadgeClass) {
-			this.existingBadgeClass.name = formState.badge_name;
-			this.existingBadgeClass.description = formState.badge_description;
-			this.existingBadgeClass.image = formState.badge_image;
-			this.existingBadgeClass.criteria_text = formState.badge_criteria_text;
-			this.existingBadgeClass.criteria_url = formState.badge_criteria_url;
-			this.existingBadgeClass.alignments = this.alignmentsEnabled ? formState.alignments : [];
-			this.existingBadgeClass.tags = Array.from(this.tags);
-			this.existingBadgeClass.extension = {
-				...this.existingBadgeClass.extension,
-				'extensions:StudyLoadExtension': {
-					'@context': studyLoadExtensionContextUrl,
-					type: ['Extension', 'extensions:StudyLoadExtension'],
-					StudyLoad: Number(formState.badge_study_load),
-				},
-				'extensions:CategoryExtension': {
-					'@context': categoryExtensionContextUrl,
-					type: ['Extension', 'extensions:CategoryExtension'],
-					Category: String(formState.badge_category),
-				},
-				'extensions:LevelExtension': {
-					'@context': levelExtensionContextUrl,
-					type: ['Extension', 'extensions:LevelExtension'],
-					Level: String(formState.badge_level),
-				},
-				'extensions:CompetencyExtension': this.getCompetencyExtensions(
-					suggestions,
-					formState,
-					competencyExtensionContextUrl,
-				),
-			};
-			if (this.currentImage) {
+			const formState = this.badgeClassForm.value;
+			const expirationState = this.expirationEnabled ? this.expirationForm.value : undefined;
+
+			const studyLoadExtensionContextUrl = `${this.baseUrl}/static/extensions/StudyLoadExtension/context.json`;
+			const categoryExtensionContextUrl = `${this.baseUrl}/static/extensions/CategoryExtension/context.json`;
+			const levelExtensionContextUrl = `${this.baseUrl}/static/extensions/LevelExtension/context.json`;
+			const basedOnExtensionContextUrl = `${this.baseUrl}/static/extensions/BasedOnExtension/context.json`;
+			const competencyExtensionContextUrl = `${this.baseUrl}/static/extensions/CompetencyExtension/context.json`;
+			const orgImageExtensionContextUrl = `${this.baseUrl}/static/extensions/OrgImageExtension/context.json`;
+
+			const suggestions = this.aiCompetenciesSuggestions;
+			if (this.existingBadgeClass) {
+				this.existingBadgeClass.name = formState.badge_name;
+				this.existingBadgeClass.description = formState.badge_description;
+				this.existingBadgeClass.image = formState.badge_image;
+				this.existingBadgeClass.criteria_text = formState.badge_criteria_text;
+				this.existingBadgeClass.criteria_url = formState.badge_criteria_url;
+				this.existingBadgeClass.alignments = this.alignmentsEnabled ? formState.alignments : [];
+				this.existingBadgeClass.tags = Array.from(this.tags);
 				this.existingBadgeClass.extension = {
 					...this.existingBadgeClass.extension,
-					'extensions:OrgImageExtension': {
-						'@context': orgImageExtensionContextUrl,
-						type: ['Extension', 'extensions:OrgImageExtension'],
-						OrgImage: this.currentImage,
-					},
-				};
-			}
-			if (this.expirationEnabled) {
-				this.existingBadgeClass.expiresDuration = expirationState.expires_duration as BadgeClassExpiresDuration;
-				this.existingBadgeClass.expiresAmount = parseInt(expirationState.expires_amount, 10);
-			} else {
-				this.existingBadgeClass.clearExpires();
-			}
-
-			this.savePromise = this.existingBadgeClass.save();
-		} else {
-			let badgeClassData = {
-				name: formState.badge_name,
-				description: formState.badge_description,
-				image: formState.badge_image,
-				criteria_text: formState.badge_criteria_text,
-				criteria_url: formState.badge_criteria_url,
-				tags: Array.from(this.tags),
-				alignment: this.alignmentsEnabled ? formState.alignments : [],
-				extensions: {
 					'extensions:StudyLoadExtension': {
 						'@context': studyLoadExtensionContextUrl,
 						type: ['Extension', 'extensions:StudyLoadExtension'],
@@ -740,39 +770,92 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 						type: ['Extension', 'extensions:LevelExtension'],
 						Level: String(formState.badge_level),
 					},
-					'extensions:BasedOnExtension': {
-						'@context': basedOnExtensionContextUrl,
-						type: ['Extension', 'extensions:BasedOnExtension'],
-						BasedOn: formState.badge_based_on,
-					},
 					'extensions:CompetencyExtension': this.getCompetencyExtensions(
 						suggestions,
 						formState,
 						competencyExtensionContextUrl,
 					),
-				},
-			} as ApiBadgeClassForCreation;
-			if (this.currentImage) {
-				badgeClassData.extensions = {
-					...badgeClassData.extensions,
-					'extensions:OrgImageExtension': {
-						'@context': orgImageExtensionContextUrl,
-						type: ['Extension', 'extensions:OrgImageExtension'],
-						OrgImage: this.currentImage,
+				};
+				if (this.currentImage) {
+					this.existingBadgeClass.extension = {
+						...this.existingBadgeClass.extension,
+						'extensions:OrgImageExtension': {
+							'@context': orgImageExtensionContextUrl,
+							type: ['Extension', 'extensions:OrgImageExtension'],
+							OrgImage: this.currentImage,
+						},
+					};
+				}
+				if (this.expirationEnabled) {
+					this.existingBadgeClass.expiresDuration =
+						expirationState.expires_duration as BadgeClassExpiresDuration;
+					this.existingBadgeClass.expiresAmount = parseInt(expirationState.expires_amount, 10);
+				} else {
+					this.existingBadgeClass.clearExpires();
+				}
+
+				this.savePromise = this.existingBadgeClass.save();
+			} else {
+				let badgeClassData = {
+					name: formState.badge_name,
+					description: formState.badge_description,
+					image: formState.badge_image,
+					criteria_text: formState.badge_criteria_text,
+					criteria_url: formState.badge_criteria_url,
+					tags: Array.from(this.tags),
+					alignment: this.alignmentsEnabled ? formState.alignments : [],
+					extensions: {
+						'extensions:StudyLoadExtension': {
+							'@context': studyLoadExtensionContextUrl,
+							type: ['Extension', 'extensions:StudyLoadExtension'],
+							StudyLoad: Number(formState.badge_study_load),
+						},
+						'extensions:CategoryExtension': {
+							'@context': categoryExtensionContextUrl,
+							type: ['Extension', 'extensions:CategoryExtension'],
+							Category: String(formState.badge_category),
+						},
+						'extensions:LevelExtension': {
+							'@context': levelExtensionContextUrl,
+							type: ['Extension', 'extensions:LevelExtension'],
+							Level: String(formState.badge_level),
+						},
+						'extensions:BasedOnExtension': {
+							'@context': basedOnExtensionContextUrl,
+							type: ['Extension', 'extensions:BasedOnExtension'],
+							BasedOn: formState.badge_based_on,
+						},
+						'extensions:CompetencyExtension': this.getCompetencyExtensions(
+							suggestions,
+							formState,
+							competencyExtensionContextUrl,
+						),
 					},
-				};
-			}
-			if (this.expirationEnabled) {
-				badgeClassData.expires = {
-					duration: expirationState.expires_duration as BadgeClassExpiresDuration,
-					amount: parseInt(expirationState.expires_amount, 10),
-				};
+				} as ApiBadgeClassForCreation;
+				if (this.currentImage) {
+					badgeClassData.extensions = {
+						...badgeClassData.extensions,
+						'extensions:OrgImageExtension': {
+							'@context': orgImageExtensionContextUrl,
+							type: ['Extension', 'extensions:OrgImageExtension'],
+							OrgImage: this.currentImage,
+						},
+					};
+				}
+				if (this.expirationEnabled) {
+					badgeClassData.expires = {
+						duration: expirationState.expires_duration as BadgeClassExpiresDuration,
+						amount: parseInt(expirationState.expires_amount, 10),
+					};
+				}
+
+				this.savePromise = this.badgeClassManager.createBadgeClass(this.issuerSlug, badgeClassData);
 			}
 
-			this.savePromise = this.badgeClassManager.createBadgeClass(this.issuerSlug, badgeClassData);
+			this.save.emit(this.savePromise);
+		} catch (e) {
+			console.log(e);
 		}
-
-		this.save.emit(this.savePromise);
 	}
 
 	/**
@@ -844,6 +927,25 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			this.initedCurrentImage = true;
 		}
 	}
+
+	generateCustomUploadImage(image, formdata) {
+		// the imageUploaded-event of the angular image component is also called after initialising the component because the image is set in initFormFromExisting
+		if (typeof this.currentImage == 'undefined' || this.initedCurrentImage) {
+			this.initedCurrentImage = true;
+			this.currentImage = image.slice();
+			// Hide hexagon-frame if checkbox is checked
+			if (this.hideHexFrame) {
+				this.customImageField.useDataUrl(this.currentImage, 'BADGE');
+			} else {
+				this.badgeStudio
+					.generateUploadImage(image.slice(), formdata)
+					.then((imageUrl) => this.customImageField.useDataUrl(imageUrl, 'BADGE'));
+			}
+		} else {
+			this.initedCurrentImage = true;
+		}
+	}
+
 	adjustUploadImage(formdata) {
 		// Skip update badge icon frame if no-hexagon-frame checkbox is checked
 		if (this.currentImage && this.badgeStudio && !this.hideHexFrame) {
@@ -860,25 +962,22 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		}
 	}
 
+	positiveIntegerOrNull(control: AbstractControl) {
+		const val = parseFloat(control.value);
+
+		if (isNaN(val)) {
+			return { duration: 'Field cannot be empty, set to 0 if not needed' };
+		}
+		if (!Number.isInteger(val) || val < 0) {
+			return { duration: 'Must be a positive integer or null' };
+		}
+	}
+
 	closeLegend() {
 		this.showLegend = false;
 	}
 
 	openLegend() {
 		this.showLegend = true;
-	}
-
-	handleCBoxValueChange(event: Event) {
-		this.hideHexFrame = (<HTMLInputElement>event.target).checked;
-
-		if (this.currentImage) {
-			if (this.hideHexFrame) {
-				this.imageField.useDataUrl(this.currentImage, 'BADGE');
-			} else {
-				this.badgeStudio
-					.generateUploadImage(this.currentImage, this.badgeClassForm.value)
-					.then((imageUrl) => this.imageField.useDataUrl(imageUrl, 'BADGE'));
-			}
-		}
 	}
 }

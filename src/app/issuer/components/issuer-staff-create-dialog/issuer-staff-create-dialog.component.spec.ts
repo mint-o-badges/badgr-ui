@@ -6,6 +6,7 @@ import { CommonEntityManagerModule } from '../../../entity-manager/entity-manage
 import { RouterTestingModule } from '@angular/router/testing';
 import { CommonModule } from '@angular/common';
 import { COMMON_MOCKS_PROVIDERS_WITH_SUBS } from '../../../mocks/mocks.module.spec';
+import { TranslateTestingModule } from 'ngx-translate-testing';
 
 describe('IssuerStaffCreateDialogComponent', () => {
 	let component: IssuerStaffCreateDialogComponent;
@@ -14,7 +15,7 @@ describe('IssuerStaffCreateDialogComponent', () => {
 	beforeEach(() => {
 		TestBed.configureTestingModule({
 			declarations: [IssuerStaffCreateDialogComponent],
-			imports: [RouterTestingModule, CommonModule, BadgrCommonModule, ...COMMON_IMPORTS],
+			imports: [RouterTestingModule, CommonModule, BadgrCommonModule, TranslateTestingModule.withTranslations('de', {}), ...COMMON_IMPORTS],
 			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
 		}).compileComponents();
 		fixture = TestBed.createComponent(IssuerStaffCreateDialogComponent);

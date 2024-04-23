@@ -17,6 +17,7 @@ import { AppConfigService } from '../../../common/app-config.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BadgrCommonModule, COMMON_IMPORTS } from '../../../common/badgr-common.module';
 import { COMMON_MOCKS_PROVIDERS_WITH_SUBS } from '../../../mocks/mocks.module.spec';
+import { TranslateTestingModule } from 'ngx-translate-testing';
 
 describe('BadgeClassCreateComponent', () => {
 	let fixture;
@@ -25,7 +26,14 @@ describe('BadgeClassCreateComponent', () => {
 	beforeEach(() => {
 		TestBed.configureTestingModule({
 			declarations: [BadgeClassCreateComponent],
-			imports: [RouterTestingModule, CommonModule, FormsModule, BadgrCommonModule, ...COMMON_IMPORTS],
+			imports: [
+				RouterTestingModule,
+				CommonModule,
+				FormsModule,
+				BadgrCommonModule,
+				TranslateTestingModule.withTranslations('de', {}),
+				...COMMON_IMPORTS,
+			],
 			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		}).compileComponents();

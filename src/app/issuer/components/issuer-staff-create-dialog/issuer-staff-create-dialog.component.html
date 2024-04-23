@@ -1,7 +1,7 @@
 <dialog class="dialog dialog-is-active dialog l-dialog">
 	<div class="dialog-x-box o-container">
 		<div class="dialog-x-header">
-			<h1>Add Member</h1>
+			<h1>{{ 'Issuer.addMember' | translate }}</h1>
 			<button (click)="closeDialog()" class="buttonicon buttonicon-link">
 				<svg icon="icon_close"></svg>
 				<span class="visuallyhidden">Close</span>
@@ -11,11 +11,11 @@
 		<div class="u-padding-all3x">
 			<div class="l-flex l-flex-justifybetween u-margin-bottom3x">
 				<p class="u-text-body">
-					New Staff Members must create and verify a Badgr account prior to being added to an issuer.
+					{{ 'Issuer.addMember_text' | translate }}
 				</p>
 			</div>
 
-			<h3 class="u-margin-bottom2x u-text-small-bold">Choose Role</h3>
+			<h3 class="u-margin-bottom2x u-text-small-bold">{{ 'Issuer.addMember_chooseRole' | translate }}</h3>
 			<form [formGroup]="staffCreateForm.rawControl" (ngSubmit)="submitStaffCreate()">
 				<bg-formfield-radio
 					*ngFor="let role of issuerStaffRoleOptions; last as last"
@@ -25,13 +25,13 @@
 					[value]="role.value"
 					[sublabel]="role.description"
 					[last]="last"
-					[errorMessage]="'Please select a staff role'"
+					errorMessage="{{ 'Issuer.addMember_selectRole' | translate }}"
 				></bg-formfield-radio>
 				<bg-formfield-text
 					[control]="staffCreateForm.rawControlMap.staffEmail"
-					[label]="'New Member Email'"
-					[errorMessage]="'Please enter valid email address'"
-					placeholder="Staff Email"
+					label="{{ 'Issuer.addMember_newEmail' | translate }}"
+					errorMessage="{{ 'Issuer.addMember_enterValidEmail' | translate }}"
+					placeholder="{{ 'Issuer.addMember_newEmailPH' | translate }}"
 					class="forminput-light1 u-width-formsmall u-margin-top3x"
 				></bg-formfield-text>
 				<br />
@@ -43,19 +43,19 @@
 						</svg>
 					</div>
 					<div class="notification-x-text">
-						<h2>Failed to add member!</h2>
+						<h2>{{ 'Issuer.addMember_failed' | translate }}!</h2>
 						<p>{{ error }}</p>
 					</div>
 				</div>
 
 				<div class="l-stack l-stack-buttons u-margin-top4x">
-					<button class="button">Add Member</button>
+					<button class="button">{{ 'Issuer.addMember' | translate }}</button>
 					<button
 						class="button button-secondary"
 						type="button"
 						(click)="$event.preventDefault(); closeDialog()"
 					>
-						Cancel
+					{{ 'General.cancel' | translate }}
 					</button>
 				</div>
 			</form>
