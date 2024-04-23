@@ -37,10 +37,8 @@
 			<h2 class="heading">2. {{ 'CreateBadge.enterDetails' | translate }}</h2>
 		</div>
 		<div class="md:tw-mx-10 md:tw-items-center tw-justify-center">
-			<div class="tw-flex tw-gap-8 tw-flex-col md:tw-flex-row tw-mt-8 tw-items-start">
-				<span
-					class="tw-font-bold md:tw-text-end md:tw-text-lg tw-text-black tw-uppercase md:tw-w-40 tw-break-words"
-				>
+			<div class="field-container tw-items-start">
+				<span class="input-label tw-break-words">
 					{{ 'CreateBadge.short' | translate }}&shy;{{ 'General.description' | translate }}
 					{{ 'CreateBadge.forLearners' | translate }}</span
 				>
@@ -53,10 +51,8 @@
 					[multiline]="true"
 				></bg-formfield-text>
 			</div>
-			<div class="tw-flex tw-flex-col md:tw-items-center tw-justify-start md:tw-flex-row tw-gap-8 tw-mt-8">
-				<span class="tw-font-bold md:tw-text-end md:tw-text-lg tw-text-black tw-uppercase md:tw-w-40">
-					{{ 'RecBadgeDetail.duration' | translate }}</span
-				>
+			<div class="field-container md:tw-items-center tw-justify-start">
+				<span class="input-label"> {{ 'RecBadgeDetail.duration' | translate }}</span>
 				<div class="tw-flex tw-gap-2 tw-items-center">
 					<bg-formfield-text
 						class="tw-w-20"
@@ -66,10 +62,8 @@
 					<span class="tw-text-black">{{ 'General.minutes' | translate }}</span>
 				</div>
 			</div>
-			<div class="tw-flex md:tw-items-center tw-justify-start tw-flex-col md:tw-flex-row tw-gap-8 tw-mt-8">
-				<span class="tw-font-bold md:tw-text-end md:tw-text-lg tw-text-black tw-uppercase md:tw-w-40">
-					{{ 'Badge.title' | translate }}</span
-				>
+			<div class="field-container md:tw-items-center tw-justify-start">
+				<span class="input-label"> {{ 'Badge.title' | translate }}</span>
 
 				<bg-formfield-text
 					[control]="badgeClassForm.rawControlMap.badge_name"
@@ -81,10 +75,8 @@
 					[autofocus]="true"
 				></bg-formfield-text>
 			</div>
-			<div class="tw-flex tw-flex-col md:tw-flex-row tw-gap-8 tw-mt-8">
-				<span class="tw-font-bold md:tw-w-40 md:tw-text-end md:tw-text-lg tw-text-black tw-uppercase">
-					Badge-{{ 'Issuer.image' | translate }}</span
-				>
+			<div class="field-container">
+				<span class="input-label"> Badge-{{ 'Issuer.image' | translate }}</span>
 				<div
 					class="tw-flex tw-flex-col tw-gap-4 md:tw-flex-row tw-bg-[var(--color-lightgreen)] tw-p-8 tw-justify-evenly tw-items-center tw-mr-auto tw-rounded-2xl"
 				>
@@ -149,64 +141,6 @@
 			>
 				{{ 'CreateBadge.imageRequiredError' | translate }}.
 			</p>
-
-			<!-- <div class="tw-flex tw-gap-4 tw-items-center tw-mb-4 tw-ml-8 tw-mt-8">
-				<span class="tw-font-bold tw-text-lg tw-text-black tw-uppercase"> Tags</span>
-
-				<div class="ng-autocomplete">
-					<ng-autocomplete
-						name="addtag"
-						id="addtag"
-						#newTagInput
-						maxlength="50"
-						[data]="existingTags"
-						[isLoading]="existingTagsLoading"
-						searchKeyword="name"
-						placeholder="Neuer Tag..."
-						(keypress)="handleTagInputKeyPress($event)"
-						[itemTemplate]="itemTemplate"
-						[notFoundTemplate]="notFoundTemplate"
-					>
-					</ng-autocomplete>
-
-					<ng-template #itemTemplate let-item>
-						<a [innerHTML]="item.name"></a>
-					</ng-template>
-
-					<ng-template #notFoundTemplate let-notFound>
-						<div>Dieser Tag existiert noch nicht.</div>
-					</ng-template>
-				</div> -->
-
-			<!-- Todo: clarify what will be used to add tags -->
-
-			<!-- <bg-formfield-select
-					style="margin-left: auto"
-					ariaLabel="Füge einen bestehenden Tag hinzu"
-					[options]="tagOptions"
-					[control]="tagOptions"
-					[placeholder]="'Vorhandenen Tag wählen'"
-				></bg-formfield-select> -->
-
-			<!-- <button type="button" (click)="addTag()" class="button tw-ml-auto tw-bg-[var(--color-purple)]">
-					Hinzufügen
-				</button>
-			</div>
-			<div *ngIf="tags.size > 0" class="tw-flex tw-flex-wrap tw-gap-4 tw-w-1/2 tw-ml-8">
-				<div
-					class="tw-flex tw-items-center tw-bg-white tw-rounded-full tw-px-3 tw-py-1 tw-mr-2 tw-mb-2"
-					*ngFor="let tag of tags"
-				>
-					<button (click)="removeTag(tag)">
-						<span> {{ tag }}</span>
-						<svg class="tw-ml-1" icon="icon_close" width="12px" height="12px"></svg>
-						<span class="visuallyhidden">Close</span>
-					</button>
-				</div>
-			</div>
-			<span class="tw-ml-8 tw-italic"
-				>(Optional). Tags verschlagworten Badges und helfen bei der Suche von Badges zu bestimmten Themen.</span
-			> -->
 		</div>
 	</div>
 
