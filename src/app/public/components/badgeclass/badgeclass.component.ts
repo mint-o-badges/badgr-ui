@@ -13,6 +13,7 @@ import { Title } from '@angular/platform-browser';
 
 @Component({
 	templateUrl: './badgeclass.component.html',
+	styleUrls: ['./badgeclass.component.scss'],
 })
 export class PublicBadgeClassComponent {
 	readonly issuerImagePlaceholderUrl = preloadImageURL(
@@ -23,6 +24,8 @@ export class PublicBadgeClassComponent {
 
 	badgeIdParam: LoadedRouteParam<PublicApiBadgeClassWithIssuer>;
 	routerLinkForUrl = routerLinkForUrl;
+
+	showDetails: boolean[] = [];
 
 	constructor(
 		private injector: Injector,
@@ -48,5 +51,9 @@ export class PublicBadgeClassComponent {
 
 	private get rawJsonUrl() {
 		return stripQueryParamsFromUrl(this.badgeClass.id) + '.json';
+	}
+
+	toggleDetails(index: number): void {
+		this.showDetails[index] = !this.showDetails[index];
 	}
 }
