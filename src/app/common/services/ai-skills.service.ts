@@ -38,23 +38,21 @@ export class AiSkillsService extends BaseHttpApiService {
 		// indicating this) or the authentication had to be removed (that's how it was done for uploading image).
 		// Removing authentication could lead to attacks though and I didn't manage to fix the CSRF stuff
 		// (I've tried for hours to add the correct headers etc., it all failed with a 403 without an error message).
-		// Since the url lenght limit *probably* isn't too short anyway, for now this solution should suffice.
-		return this.get<AiSkillsResult>(`/aiskills/${this.toBase64Url(textToAnalyze)}`).then(
-			(r) => r.body as AiSkillsResult,
-			(error) =>
-				({
-					id: '',
-					text_to_analyze: textToAnalyze,
-					skills: [],
-					status: 'failed',
-				}) as AiSkillsResult,
-		);
+        // Since the url lenght limit *probably* isn't too short anyway, for now this solution should suffice.
+        return this.get<AiSkillsResult>(`/aiskills/${this.toBase64Url(textToAnalyze)}`).then(
+            (r) => r.body as AiSkillsResult,
+                (error) => {
+                throw new Error(JSON.parse(error.message).error);
+            },
+        );
 	}
 
 	getAiSkills(textToAnalyze: string): Promise<Skill[]> {
 		return this.getAiSkillsResult(textToAnalyze).then(
 			(result: AiSkillsResult) => result.skills,
-			(error) => [],
+			(error) => {
+                throw error;
+            },
 		);
 	}
 }

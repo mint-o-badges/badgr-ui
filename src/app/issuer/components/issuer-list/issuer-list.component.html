@@ -3,7 +3,7 @@
 <header class="topbar">
 	<div class="l-containerxaxis topbar-x-wrap">
 		<h2 class="topbar-x-heading">
-			{{ 'General.institutions' | translate }}
+			{{ 'NavItems.myInstitutions' | translate }}
 			<ng-template [showLoader]="false" [bgAwaitPromises]="[issuersLoaded]">
 				<span class="topbar-x-internalheading">
 					{{ issuers.length | i18nPlural: plural['issuer'] }}
@@ -103,9 +103,16 @@
 							[innerHTML]="issuer.badgeClassCount | i18nPlural: plural['badges']"
 						></p>
 					</div>
-					<a class="u-text u-text-small" [routerLink]="['/issuer/issuers/', issuer.slug]">{{
-						'Issuer.open' | translate
-					}}</a>
+					<div class="tw-flex tw-gap-4">
+						<a
+							class="u-text u-text-small"
+							[routerLink]="['/issuer/issuers/', issuer.slug, 'badges', 'create']"
+							>{{ 'Issuer.createBadge' | translate }}</a
+						>
+						<a class="u-text u-text-small" [routerLink]="['/issuer/issuers/', issuer.slug]">{{
+							'Issuer.open' | translate
+						}}</a>
+					</div>
 				</div>
 			</div>
 		</section>

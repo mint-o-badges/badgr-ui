@@ -33,6 +33,7 @@
 		"role": "Rolle",
 		"remove": "Entfernen",
 		"save": "Speichern",
+		"saveChanges": "Änderungen sichern",
 		"aboutBadges": "Über Badges"
 	},
 	"NavItems": {
@@ -149,6 +150,18 @@
 		"editMemberInstitute": "Bearbeite die Mitglieder der Institution.",
 		"membersHaveAccess": "Diese Mitglieder haben Zugriff auf die Institution.",
 		"addMember": "Mitglied hinzufügen",
+		"addMember_text": "Neue Mitarbeiter müssen ein OEB-Konto anlegen und verifizieren, bevor sie zu einem Issuer hinzugefügt werden.",
+		"addMember_chooseRole": "Rolle wählen",
+		"addMember_owner": "Eigentümer",
+		"addMember_ownerText": "Möglichkeit, Mitarbeiter hinzuzufügen und zu entfernen. Volle Rechte zum Erstellen, Löschen und Verleihen von Abzeichen. Möglichkeit, Ausstellerdetails zu bearbeiten.",
+		"addMember_editorText": "Volle Rechte zum Erstellen, Löschen und Vergeben von Badges. Möglichkeit, Ausstellerdetails zu bearbeiten.",
+		"addMember_staff": "Mitarbeiter",
+		"addMember_staffText": "Möglichkeit, von Inhabern und Redakteuren erstellte Badges zu vergeben.",
+		"addMember_newEmail": "E-Mail für neue Mitglieder",
+		"addMember_newEmailPH": "Mitarbeiter E-Mail",
+		"addMember_failed": "Mitglied konnte nicht hinzugefügt werden",
+		"addMember_enterValidEmail": "Bitte gültige E-Mail Adresse eingeben",
+		"addMember_selectRole": "Bitte wählen Sie eine Personalrolle",
 		"createdOn": "Erstellt am",
 		"awarded": "Vergeben",
 		"editInstitution": "Institution bearbeiten",
@@ -289,6 +302,12 @@
 		"evidence": "Nachweis",
 		"viewEvidenceUrl": "Besuche Nachweis-URL"
 	},
+	"EditBadge": {
+		"editBadge": "Badge editieren",
+		"editBadgeInfo": "Editiere die Information dieses Badges.",
+		"removeCompetency": "Kompetenz löschen",
+		"removeCompetencyInfo": "Möchtest du diese Kompetenz wirklich löschen?"
+	},
 	"BadgeCollection": {
 		"addCollection": "Sammlung hinzufügen",
 		"earnedBy": "verdient von",
@@ -329,5 +348,14 @@
 		"appHasAccess": "Diese App hat Zugriff auf deinen",
 		"authorized": "Authorisiert:",
 		"takeBack": "Zurücknehmen"
+	},
+	"Welcome": {
+		"heading": "Schön, dass du da bist!",
+		"text1_a": "Du kannst sofort loslegen, erhaltene Badges in deinem",
+		"text1_b": "Rucksack zu sammeln",
+		"text2_a": "Wenn du",
+		"text2_b": "Badges vergeben möchtest, lege dafür deine Institution an",
+		"collectBadgesBtn": "Badges sammeln",
+		"awardBadgesBtn": "Badges vergeben"
 	}
 }

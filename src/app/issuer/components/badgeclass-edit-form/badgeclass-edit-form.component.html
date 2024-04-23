@@ -131,6 +131,18 @@
 					Hinzufügen
 				</button>
 			</div>
+			<div *ngIf="tags.size > 0" class="tw-flex tw-flex-wrap tw-gap-4 tw-w-1/2 tw-ml-8">
+				<div
+					class="tw-flex tw-items-center tw-bg-white tw-rounded-full tw-px-3 tw-py-1 tw-mr-2 tw-mb-2"
+					*ngFor="let tag of tags"
+				>
+					<button (click)="removeTag(tag)">
+						<span> {{ tag }}</span>
+						<svg class="tw-ml-1" icon="icon_close" width="12px" height="12px"></svg>
+						<span class="visuallyhidden">Close</span>
+					</button>
+				</div>
+			</div>
 			<span class="tw-ml-8 tw-italic"
 				>(Optional). Tags verschlagworten Badges und helfen bei der Suche von Badges zu bestimmten Themen.</span
 			>
@@ -461,6 +473,26 @@
 	<!-- Criteria Panel -->
 	<div class="formsection" style="border-radius: 25px; background-color: #f1f0ff">
 		<div class="formsection-x-title">
+			<h2 class="u-text-dark2">Dauer</h2>
+		</div>
+		<div class="formsection-x-help">
+			<h3 class="u-text-body-bold">Was ist die Dauer?</h3>
+			<p class="u-text u-margin-top1x u-margin-bottom2x">
+				Im Dauerfeld beschreibst Du den zeitlichen Umfang der Leistung, die nötig ist, um das Badge zu erhalten.
+			</p>
+		</div>
+		<div class="formsection-x-body">
+			<div class="forminput u-margin-bottom2x">
+				<bg-formfield-text
+					[control]="badgeClassForm.rawControlMap.badge_study_load"
+					label="Dauer in Minuten (optional)"
+					[fieldType]="'number'"
+				></bg-formfield-text>
+			</div>
+		</div>
+	</div>
+	<div class="formsection" style="border-radius: 25px; background-color: #f1f0ff">
+		<div class="formsection-x-title">
 			<h2 class="u-text-dark2">
 				Kriterien
 				<span>(Mindestens eines der Felder ist verpflichtend.)</span>
@@ -786,7 +818,7 @@
 			(click)="cancelClicked()"
 			class="button button-secondary"
 		>
-			Abbrechen
+			{{ 'General.cancel' | translate }}
 		</button>
 		<button
 			type="submit"
@@ -796,7 +828,12 @@
 			[loading-promises]="[savePromise]"
 			loading-message="{{ submittingText }}"
 		>
-			Badge erstellen
+			<ng-container *ngIf="existingBadgeClass; else createBadgeText">
+				{{ 'General.saveChanges' | translate }}
+			</ng-container>
+			<ng-template #createBadgeText>
+				{{ 'Issuer.createBadge' | translate }}
+			</ng-template>
 		</button>
 	</div>
 </form>

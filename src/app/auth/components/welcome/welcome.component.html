@@ -1,43 +1,41 @@
-<h3 class="backgroundgraphic graphicheadline">
-	Willkommen bei <span class="u-text-bold u-text-light1">Open Educational Badges</span>
-</h3>
-<div class="callouts l-callouts">
-	<section class="callouts-x-callout">
-		<img class="callouts-x-image" [src]="imageBadge" />
-		<div class="callouts-x-copy">
-			<h4 class="callouts-x-headline">Erzähle Deine Story mit <span>Badges</span></h4>
-			<p class="callouts-x-graf">
-				Badges sind Deine Leistungen, die zeigen, wann und wie Du sie geleistet hast. Sie sind gemacht, um
-				geteilt zu werden!
+<div class="oeb page-padding tw-overflow-hidden">
+	<div class="md:tw-block tw-absolute tw-top-[120px] tw-opacity-70">
+		<img class="tw-h-[150px] md:tw-h-[228px]" src="assets/oeb/images/welcomepage/sun.png" alt="sun" />
+	</div>
+
+	<div class="tw-py-[5.7rem] tw-pl-[6.5rem] md:tw-py-[7.2rem] md:tw-pl-[10.5rem] tw-relative">
+		<h1
+			class="tw-font-normal md:tw-text-[46px] md:tw-leading-[55.2px] tw-text-purple tw-text-[30px] tw-leading-[36px]"
+		>
+			{{ 'Welcome.heading' | translate }}
+		</h1>
+		<div class="tw-pt-7">
+			<p
+				class="tw-font-normal md:tw-text-[24px] md:tw-leading-[28.8px] tw-text-black tw-text-[16px] tw-leading-[22.4px] tw-pb-2"
+			>
+				{{ 'Welcome.text1_a' | translate }}
+				<span class="tw-font-[500] tw-text-purple">{{ 'Welcome.text1_b' | translate }}</span><span class="tw-font-[500]">.</span>
+			</p>
+			<p
+				class="tw-font-normal md:tw-text-[24px] md:tw-leading-[33.6px] tw-text-black tw-text-[16px] tw-leading-[22.4px] tw-pb-4"
+			>
+				{{ 'Welcome.text2_a' | translate }}
+				<span class="tw-font-[500] md:tw-leading-[28.8px] tw-text-purple"
+					>{{ 'Welcome.text2_b' | translate }}</span
+				><span class="tw-font-[500]">.</span>
 			</p>
 		</div>
-	</section>
-	<section class="callouts-x-callout">
-		<img class="callouts-x-image" [src]="imageBackpack" />
-		<div class="callouts-x-copy">
-			<h4 class="callouts-x-headline">Speichere Deine Badges in Deinem <span>Backpack</span></h4>
-			<p class="callouts-x-graf">Organisiere, zeige und manage Deine Badges.</p>
-		</div>
-	</section>
-	<section class="callouts-x-callout">
-		<img class="callouts-x-image" [src]="imageCollections" />
-		<div class="callouts-x-copy">
-			<h4 class="callouts-x-headline">Sortiere Deine Badges in <span>Collections</span></h4>
-			<p class="callouts-x-graf">Teile Deine Badges mit dem gewünschten Personenkreis.</p>
-		</div>
-	</section>
-	<section class="callouts-x-callout">
-		<img class="callouts-x-image" [src]="imageIssuer" />
-		<div class="callouts-x-copy">
-			<h4 class="callouts-x-headline">Biete als <span>Issuer</span> Badges für Kompetenzen an.</h4>
-			<p class="callouts-x-graf">
-				Individuelle Personen oder Organisationen können Badges vergeben. Registrier Dich als Issuer!
-			</p>
-		</div>
-	</section>
-	<div class="callouts-x-callout">
-		<div class="callouts-x-buttons">
-			<button routerLink="/recipient/badges" class="callouts-x-button button">Los geht's!</button>
+
+		<div class="tw-flex tw-flex-col md:tw-flex-row tw-gap-[2rem] tw-mt-10">
+			<button class="oeb-button oeb-purple-bg !tw-h-[60px] md:!tw-font-bold" [routerLink]="'/recipient/badges'">
+				{{ 'Welcome.collectBadgesBtn' | translate }}
+			</button>
+			<button
+				class="oeb-button oeb-purple-bg !tw-h-[60px] md:!tw-font-bold"
+				[routerLink]="'/issuer/create'"
+			>
+				{{ 'Welcome.awardBadgesBtn' | translate }}
+			</button>
 		</div>
 	</div>
 </div>
