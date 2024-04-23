@@ -47,7 +47,9 @@
 		"days": "Days",
 		"weeks": "Weeks",
 		"months": "Months",
-		"years": "Years"
+		"years": "Years",
+		"showDetails": "Show details",
+		"hideDetails": "Hide details"
 	},
 	"NavItems": {
 		"register": "Register",

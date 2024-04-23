@@ -75,6 +75,49 @@
 							{{ categoryOptions[badgeClass.extension['extensions:CategoryExtension'].Category] }}
 						</dd>
 					</div>
+					<!-- Kompetenzen -->
+					<section>
+						<h3
+							class="u-text-h3-semibold u-text-dark2 u-margin-bottom2x u-margin-top4x"
+							*ngIf="
+								badgeClass.extension &&
+								badgeClass.extension['extensions:CompetencyExtension'].length > 0
+							"
+						>
+							Kompetenzen
+						</h3>
+						<div>
+							<div
+								*ngFor="
+									let competency of badgeClass.extension['extensions:CompetencyExtension'];
+									index as i
+								"
+							>
+								<div
+									class="tw-flex tw-flex-col tw-bg-[var(--color-lightpurple)] tw-border tw-border-solid tw-border-[var(--color-purple)] tw-p-4 tw-rounded-lg tw-mt-4 tw-max-w-[500px]"
+								>
+									<div class="tw-flex tw-justify-between">
+										<span class="tw-font-bold tw-text-lg">{{ competency.name }}</span>
+										<div
+											class="tw-flex tw-bg-white tw-items-center tw-gap-2 tw-px-2 tw-border tw-border-solid tw-rounded-3xl tw-border-[var(--color-purple)]"
+										>
+											<svg
+												class="icon icon-dark4"
+												width="18px"
+												viewBox="0 0 24 24"
+												icon="icon_pending"
+											></svg>
+											<span>{{ competency.studyLoad }} Min.</span>
+										</div>
+									</div>
+									<div>
+										<span>Kategorie: {{ competency.category }}</span>
+										<p class="tw-italic tw-mt-2">{{ competency.description }}</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</section>
 					<!-- LEvel -->
 					<div *ngIf="badgeClass.extension['extensions:LevelExtension']">
 						<dt>Level:</dt>

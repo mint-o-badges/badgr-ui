@@ -117,12 +117,6 @@
 								badgeClass.extension['extensions:StudyLoadExtension'].StudyLoad != 0
 							"
 						>
-						<div
-							*ngIf="
-								badgeClass.extension['extensions:StudyLoadExtension'] &&
-								badgeClass.extension['extensions:StudyLoadExtension'].StudyLoad != 0
-							"
-						>
 							<dt
 								class="u-text-small-bold u-padding-top2x u-margin-top2x border border-top border-light3 u-text-dark2"
 							>
@@ -234,43 +228,50 @@
 				<section>
 					<h3
 						class="u-text-h3-semibold u-text-dark2 u-margin-bottom2x u-margin-top4x"
-						*ngIf="badgeClass.extension && badgeClass.extension['extensions:CompetencyExtension']"
+						*ngIf="
+							badgeClass.extension && badgeClass.extension['extensions:CompetencyExtension'].length > 0
+						"
 					>
 						Kompetenzen
 					</h3>
 					<div>
-						<div *ngFor="let competency of badgeClass.extension['extensions:CompetencyExtension']">
+						<div
+							*ngFor="
+								let competency of badgeClass.extension['extensions:CompetencyExtension'];
+								index as i
+							"
+						>
 							<div
-								style="
-									display: flex;
-									flex-direction: column;
-									width: 50%;
-									background-color: #492e98;
-									color: white;
-									padding: 1em;
-									border-radius: 25px;
-									margin-top: 1em;
-								"
+								class="tw-flex tw-flex-col tw-bg-[var(--color-lightpurple)] tw-border tw-border-solid tw-border-[var(--color-purple)] tw-p-4 tw-rounded-lg tw-mt-4 tw-max-w-[500px]"
 							>
-								<div style="display: flex; justify-content: space-between">
-									<span>Name: </span>
-									<span>{{ competency.name }}</span>
+								<div class="tw-flex tw-justify-between">
+									<span class="tw-font-bold tw-text-lg">{{ competency.name }}</span>
+									<div
+										class="tw-flex tw-bg-white tw-items-center tw-gap-2 tw-px-2 tw-border tw-border-solid tw-rounded-3xl tw-border-[var(--color-purple)]"
+									>
+										<svg
+											class="icon icon-dark4"
+											width="18px"
+											viewBox="0 0 24 24"
+											icon="icon_pending"
+										></svg>
+										<span>{{ competency.studyLoad }} Min.</span>
+									</div>
 								</div>
-								<div style="display: flex; justify-content: space-between">
-									<span>Beschreibung: </span>
-									<span>{{ competency.description }}</span>
-								</div>
-								<div style="display: flex; justify-content: space-between">
-									<span>Kategorie: </span>
-									<span>{{ competency.category }}</span>
-								</div>
-								<div *ngIf="competency.escoID" style="display: flex; justify-content: space-between">
-									<span>Esco ID: </span>
-									<span>{{ competency.escoID }}</span>
-								</div>
-								<div style="display: flex; justify-content: space-between">
-									<span>Dauer: </span>
-									<span>{{ competency.studyLoad }}</span>
+								<button type="button" (click)="toggleDetails(i)" class="options-dropdown">
+									<span>{{
+										!showDetails[i]
+											? ('General.showDetails' | translate)
+											: ('General.hideDetails' | translate)
+									}}</span>
+								</button>
+
+								<div [ngClass]="!showDetails[i] ? 'tw-hidden' : ''">
+									<div class="tw-flex tw-gap-4 tw-mt-2">
+										<span class="tw-font-semibold">Kategorie: </span>
+										<span class="tw-capitalize">{{ competency.category }}</span>
+									</div>
+									<span class="tw-mt-4 tw-italic">{{ competency.description }}</span>
 								</div>
 							</div>
 						</div>

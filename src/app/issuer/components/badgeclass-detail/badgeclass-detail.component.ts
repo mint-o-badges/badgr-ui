@@ -29,6 +29,7 @@ import { BadgeClassCategory, BadgeClassLevel } from '../../models/badgeclass-api
 @Component({
 	selector: 'badgeclass-detail',
 	templateUrl: './badgeclass-detail.component.html',
+	styleUrls: ['./badgeclass-detail.component.scss'],
 })
 export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	readonly badgeFailedImageUrl = '../../../../breakdown/static/images/badge-failed.svg';
@@ -89,6 +90,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 	resultsPerPage = 100;
 	issuer: Issuer;
 	crumbs: LinkEntry[];
+	showDetails: boolean[] = [];
 
 	categoryOptions: { [key in BadgeClassCategory]: string } = {
 		competency: 'Kompetenz-Badge',
@@ -178,6 +180,9 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 
 	ngOnInit() {
 		super.ngOnInit();
+	}
+	toggleDetails(index: number): void {
+		this.showDetails[index] = !this.showDetails[index];
 	}
 
 	revokeInstance(instance: BadgeInstance) {
