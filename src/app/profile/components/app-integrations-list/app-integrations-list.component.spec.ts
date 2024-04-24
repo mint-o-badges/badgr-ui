@@ -18,7 +18,6 @@ import { CommonDialogsService } from '../../../common/services/common-dialogs.se
 import { RouterTestingModule } from '@angular/router/testing';
 import { BadgrCommonModule, COMMON_IMPORTS } from '../../../common/badgr-common.module';
 import { COMMON_MOCKS_PROVIDERS_WITH_SUBS } from '../../../mocks/mocks.module.spec';
-import { ApplicationCredentialsService } from '../../../common/services/application-credentials.service.';
 
 describe('AppIntegrationListComponent', () => {
 	let fixture;
@@ -34,11 +33,7 @@ describe('AppIntegrationListComponent', () => {
 				TranslateTestingModule.withTranslations('de', {}),
 				...COMMON_IMPORTS,
 			],
-			providers: [
-				...COMMON_MOCKS_PROVIDERS_WITH_SUBS, 
-				ApplicationCredentialsService,
-				{ provide: 'config', useValue: { api: { baseUrl: '' }, features: {} } }
-			],
+			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 			teardown: { destroyAfterEach: false },
 		}).compileComponents();

@@ -43,7 +43,6 @@ export class AppIntegrationListComponent extends BaseAuthenticatedRoutableCompon
 		this.applicationCredentialsService.getMyCredentials().then(res => {
 			this.applications = res;
 		})
-
 	}
 
 	openDialog() {
