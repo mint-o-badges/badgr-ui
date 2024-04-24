@@ -9,11 +9,29 @@
 
 <div class="oeb page-padding tw-overflow-hidden">
 	<div class="tw-text-right">
-		<button (click)="openDialog()" class="button tw-inline-block tw-my-6">{{'Profile.newCredentials' | translate}}</button>
+		<button (click)="openDialog()" class="!tw-font-bold oeb-button oeb-purple-bg tw-inline-block tw-my-6 ">{{'Profile.newCredentials' | translate}}</button>
 	</div>
-	<!-- <button (click)="getMyAccessTokens()" class="button">Access Tokens</button> -->
 
-	<add-credentials-dialog #addCredentialsDialog></add-credentials-dialog>
+	<div *ngIf="generatedToken" class="tw-bg-lightgreen tw-px-4 tw-py-6 tw-my-6">
+		<div>
+			<h2 class="tw-font-extrabold md:tw-text-[30px] md:tw-leading-[36px] tw-text-purple tw-text-[20px] tw-leading-[24px] tw-py-4">{{'Profile.idAndSecretSuccessHeadline' | translate}}</h2>
+			<p class="tw-font-normal md:tw-text-[20px] md:tw-leading-[24.4px] tw-text-[14px] tw-leading-[19.6px]" [innerHTML]="'Profile.idAndSecretSuccess' | translate"></p>
+			<div class="forminput tw-py-4">
+				<div class="forminput-x-inputs">
+					<label class="forminput-x-label">Client ID</label>
+					<input class="tw-w-full tw-p-2" type="text" disabled value="{{generatedToken.client_id}}">
+				</div>
+			</div>
+			<div class="forminput">
+				<div class="forminput-x-inputs">
+					<label class="forminput-x-label">Client Secret</label>
+					<input #secret class="tw-w-full tw-p-2" type="text" disabled value="{{generatedToken.client_secret}}">
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<add-credentials-dialog #addCredentialsDialog (newTokenAdded)="addToken($event)"></add-credentials-dialog>
 
 
 	<ng-container>
@@ -23,22 +41,21 @@
 			<thead class="datatable-x-head">
 				<tr class="datatable-x-header">
 					<th class="datatable-x-cell" scope="col">{{'General.name' | translate}}</th>
-					<th class="datatable-x-cell" scope="col">CLIENT ID</th>
+					<th class="datatable-x-cell" scope="col">Client ID</th>
 					<th class="datatable-x-cell" scope="col">
 						<span class="visuallyhidden">Actions</span>
 					</th>
 				</tr>
 			</thead>
 			<tbody class="datatable-x-body">
-				<!-- Issuer title if grouped by issuer -->
 				<ng-container *ngFor="let application of applications">
-					<!-- Badges -->
+					<!-- Tokenlist -->
 					<tr class="datatable-x-row">
 						<td class="datatable-x-cell u-text-body">
-							{{application.name}}
+							{{application.name ?? application.client_name}}
 						</td>
 						<td class="datatable-x-cell u-text-body">
-							{{application.clientId}}
+							{{application.clientId ?? application.client_id}}
 						</td>
 						<td class="datatable-x-cell">
 							<a

@@ -24,10 +24,6 @@ export class AppIntegrationListComponent extends BaseAuthenticatedRoutableCompon
 		loginService: SessionService,
 		router: Router,
 		route: ActivatedRoute,
-		private title: Title,
-		private messageService: MessageService,
-		private appIntegrationManager: AppIntegrationManager,
-		private oAuthManager: OAuthManager,
 		public configService: AppConfigService,
 		private dialogService: CommonDialogsService,
 		private applicationCredentialsService: ApplicationCredentialsService,
@@ -35,28 +31,12 @@ export class AppIntegrationListComponent extends BaseAuthenticatedRoutableCompon
 	) {
 		super(router, route, loginService);
 
-		title.setTitle(`App Integrations - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 	}
-
-	// get appIntegrationsSet() {
-	// 	return this.appIntegrationManager.appIntegrations;
-	// }
-
-	// get oAuthApps() {
-	// 	// omit tokens with clientId='public' and only return first token per application
-	// 	const omittedClientIds = ['public'];
-	// 	const groupedByApplication = this.oAuthManager.authorizedApps.entities
-	// 		.filter((a) => omittedClientIds.indexOf(a.clientId) === -1)
-	// 		.reduce(
-	// 			groupIntoObject((a) => a.clientId),
-	// 			{},
-	// 		);
-	// 	return Object.values(groupedByApplication).map((a) => a[0]);
-	// }
 
 	@ViewChild('addCredentialsDialog')
 	private addCredentialsDialog: AddCredentialsDialog;
 	public applications;
+	public generatedToken = undefined;
 
 	ngOnInit() {
 		super.ngOnInit();
@@ -70,7 +50,7 @@ export class AppIntegrationListComponent extends BaseAuthenticatedRoutableCompon
 		this.addCredentialsDialog.openDialog()
 	}
 
-	async revokeAccessTokens(app: OAuth2AppAuthorization) {
+	async revokeAccessTokens(app) {
 		if (
 			await this.dialogService.confirmDialog.openTrueFalseDialog({
 				dialogTitle: this.translate.instant('Profile.deleteApp'),
@@ -79,41 +59,15 @@ export class AppIntegrationListComponent extends BaseAuthenticatedRoutableCompon
 				rejectButtonLabel: this.translate.instant('General.cancel'),
 			})
 		) {
-			// revoke all tokens for the app
-			Promise.all(
-				this.oAuthManager.authorizedApps.entities
-					.filter((t) => t.clientId === app.clientId)
-					.map((t) => t.revokeAccess()),
-			).then(
-				() => this.messageService.reportMinorSuccess(`Revoked access ${app.name}`),
-				(error) => this.messageService.reportAndThrowError(`Failed to revoke access to ${app.name}`, error),
-			);
-
 			//delete the App Credentials with client_id=name
-			this.applicationCredentialsService.deleteCredentials(app.clientId).then(res => {
+			this.applicationCredentialsService.deleteCredentials(app.clientId ?? app.client_id).then(res => {
 				this.applications = this.applications.filter(item => item.clientId != app.clientId)
 			})
 		}
 	}
 
-	async revokeApp(app: OAuth2AppAuthorization) {
-		if (
-			await this.dialogService.confirmDialog.openTrueFalseDialog({
-				dialogTitle: 'Revoke Access?',
-				dialogBody: `Are you sure you want to revoke access to ${app.name}?`,
-				resolveButtonLabel: 'Revoke Access',
-				rejectButtonLabel: 'Cancel',
-			})
-		) {
-			// revoke all tokens for the app
-			Promise.all(
-				this.oAuthManager.authorizedApps.entities
-					.filter((t) => t.clientId === app.clientId)
-					.map((t) => t.revokeAccess()),
-			).then(
-				() => this.messageService.reportMinorSuccess(`Revoked access ${app.name}`),
-				(error) => this.messageService.reportAndThrowError(`Failed to revoke access to ${app.name}`, error),
-			);
-		}
+	addToken(token){
+		this.generatedToken = token;
+		this.applications.push(token)
 	}
 }

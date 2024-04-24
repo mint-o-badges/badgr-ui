@@ -1,4 +1,4 @@
-import { Component, ElementRef, Renderer2 } from '@angular/core';
+import { Component, ElementRef, Renderer2, Output, EventEmitter } from '@angular/core';
 import { BaseDialog } from '../../../common/dialogs/base-dialog';
 import { ApplicationCredentialsService } from '../../../common/services/application-credentials.service.';
 import { typedFormGroup } from '../../../common/util/typed-forms';
@@ -21,7 +21,7 @@ import { Validators } from '@angular/forms';
 				</button>
 			</div>
 			<div class="u-padding-yaxis2x u-margin-xaxis2x border border-top border-light3">
-				<form *ngIf="!generatedToken" [formGroup]="credentialsForm.rawControl" #formElem (ngSubmit)="generateCredentials()" novalidate class="l-responsivelist">
+				<form [formGroup]="credentialsForm.rawControl" #formElem (ngSubmit)="generateCredentials()" novalidate class="l-responsivelist">
 					<span class="tw-font-bold tw-text-lg tw-text-black tw-uppercase">{{'Profile.chooseName' | translate}}</span>
 					<bg-formfield-text 
 						class="tw-py-4"
@@ -31,25 +31,11 @@ import { Validators } from '@angular/forms';
 						}"
 						[autofocus]="true"
 					></bg-formfield-text>
-					<button [disabled]="!credentialsForm.valid || hasSubmitted" type="submit" class="button oeb-purple">
+					<button [disabled]="!credentialsForm.valid || hasSubmitted" type="submit" class="oeb-button oeb-purple-bg tw-bg-purple !tw-font-bold">
 					{{'Profile.idAndSecret' | translate}}
 					</button>
 				</form>
-				<div *ngIf="generatedToken">
-					<p [innerHTML]="'Profile.idAndSecretSuccess' | translate"></p>
-					<div class="forminput tw-py-4">
-						<div class="forminput-x-inputs">
-							<label class="forminput-x-label">Client ID</label>
-							<input class="tw-w-full tw-p-2" type="text" disabled value="{{generatedToken.client_id}}">
-						</div>
-					</div>
-					<div class="forminput">
-						<div class="forminput-x-inputs">
-							<label class="forminput-x-label">Client Secret</label>
-							<input #secret class="tw-w-full tw-p-2" type="text" disabled value="{{generatedToken.client_secret}}">
-						</div>
-					</div>
-				</div>
+				
 			</div>
 		</div>
 
@@ -57,8 +43,8 @@ import { Validators } from '@angular/forms';
 })
 export class AddCredentialsDialog extends BaseDialog {
 
-	generatedToken = undefined;
-
+	@Output() newTokenAdded = new EventEmitter();
+	
 	hasSubmitted = false;
 
 	credentialsForm = typedFormGroup()
@@ -80,12 +66,12 @@ export class AddCredentialsDialog extends BaseDialog {
 	generateCredentials(){
 		this.hasSubmitted = true;
 		this.applicationCredentialsService.generateCredentials(this.credentialsForm.value).then(res => {
-			this.generatedToken = res;
+			this.newTokenAdded.emit(res);
+			this.closeModal();
 		})
 	}
 
 	closeDialog() {
 		this.closeModal();
 	}
-
 }
