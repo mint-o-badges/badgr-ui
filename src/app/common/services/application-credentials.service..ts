@@ -4,7 +4,6 @@ import { BaseHttpApiService } from './base-http-api.service';
 import { SessionService } from './session.service';
 import { MessageService } from './message.service';
 import { EventsService } from './events.service';
-import { ApiUserProfile, ApiUserProfileEmail, ApiUserProfileSocialAccount } from '../model/user-profile-api.model';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable()
@@ -38,7 +37,7 @@ export class ApplicationCredentialsService extends BaseHttpApiService {
 		if (this.sessionService.isLoggedIn) {
 			return this.delete(`/v2/auth/applications/${clientId}`).then((r) => r.body);
 		} else {
-			return Promise.reject('Can not delete Application.');
+			return Promise.reject('No user logged in');
 		}
 	}
 }

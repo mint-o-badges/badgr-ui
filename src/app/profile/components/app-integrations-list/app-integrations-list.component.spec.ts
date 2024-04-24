@@ -34,7 +34,11 @@ describe('AppIntegrationListComponent', () => {
 				TranslateTestingModule.withTranslations('de', {}),
 				...COMMON_IMPORTS,
 			],
-			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS, ApplicationCredentialsService],
+			providers: [
+				...COMMON_MOCKS_PROVIDERS_WITH_SUBS, 
+				ApplicationCredentialsService,
+				{ provide: 'config', useValue: { api: { baseUrl: '' }, features: {} } }
+			],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 			teardown: { destroyAfterEach: false },
 		}).compileComponents();
