@@ -68,6 +68,7 @@ export class AddCredentialsDialog extends BaseDialog {
 		this.applicationCredentialsService.generateCredentials(this.credentialsForm.value).then(res => {
 			this.newTokenAdded.emit(res);
 			this.closeModal();
+			this.hasSubmitted = false;
 		})
 	}
 
