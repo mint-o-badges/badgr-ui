@@ -247,10 +247,14 @@
 											<label class="tw-text-black tw-font-bold" for="studyLoad$i">
 												{{ 'General.minutes' | translate }}:
 											</label>
-											<span
-												class="tw-flex tw-rounded-md tw-bg-white tw-border tw-border-solid tw-border-black tw-h-6 tw-w-6 tw-items-center tw-justify-center"
-												>{{ aiCompetency.rawControlMap.studyLoad.value }}</span
-											>
+											<bg-formfield-text
+												class="tw-flex tw-rounded-md tw-bg-white tw-w-24 tw-items-center tw-justify-center tw-p-0"
+												[control]="aiCompetency.rawControlMap.studyLoad"
+												[fieldType]="'number'"
+												[errorMessage]="{
+													required: 'Bitte gib die Dauer für den Erwerb der Kompetenz ein.'
+												}"
+											></bg-formfield-text>
 										</div>
 									</div>
 								</ng-container>

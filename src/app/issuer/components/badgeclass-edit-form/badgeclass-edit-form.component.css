@@ -63,6 +63,7 @@
 ::ng-deep .forminput textarea {
     border: 0.5px solid var(--color-purple) !important;
 	border-radius: 0.25rem !important;
+	padding: 2px;
 }
 
 ::ng-deep .forminput .forminput-x-inputs select{
