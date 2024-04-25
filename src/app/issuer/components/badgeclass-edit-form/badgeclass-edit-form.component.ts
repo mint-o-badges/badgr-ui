@@ -883,7 +883,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		studyLoad: number;
 		category: string;
 	} {
-		console.log(formState.competencies.length);
 		return formState.competencies
 			.map((competency) => ({
 				'@context': competencyExtensionContextUrl,
