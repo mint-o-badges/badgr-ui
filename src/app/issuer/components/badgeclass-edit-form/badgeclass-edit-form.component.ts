@@ -712,6 +712,14 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 	async onSubmit() {
 		try {
+			if (this.badgeClassForm.rawControl.controls.badge_category.value === 'competency') {
+				this.badgeClassForm.controls.competencies.rawControls.forEach((control, i) => {
+					if (control.untouched) {
+						this.badgeClassForm.controls.competencies.removeAt(i);
+					}
+				});
+			}
+
 			if (this.badgeClassForm.controls.badge_customImage.value && this.badgeClassForm.valid) {
 				this.badgeClassForm.controls.badge_image.setValue(this.badgeClassForm.controls.badge_customImage.value);
 			}
@@ -875,6 +883,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		studyLoad: number;
 		category: string;
 	} {
+		console.log(formState.competencies.length);
 		return formState.competencies
 			.map((competency) => ({
 				'@context': competencyExtensionContextUrl,
