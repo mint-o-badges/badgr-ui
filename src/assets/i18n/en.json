@@ -433,7 +433,7 @@
 		"idAndSecretSuccess": "<b>Attention!</b> Please copy your Client Secret, you will not be able to see it again.",
 		"appHasAccess": "This app has access to your",
 		"deleteApp": "Delete App Credentials?",
-		"deleteAppConfirm": "Do you really want to delete your Access Tokens?",
+		"deleteAppConfirm": "Do you really want to delete your app credentials?",
 		"authorized": "Authorized:",
 		"takeBack": "Take it back"
 	},
