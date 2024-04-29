@@ -21,6 +21,7 @@ import { BadgeClassCategory, BadgeClassLevel } from './../../../issuer/models/ba
 
 @Component({
 	templateUrl: './badge-assertion.component.html',
+	styleUrls: ['./badge-assertion.component.scss'],
 })
 export class PublicBadgeAssertionComponent {
 	constructor(
@@ -51,6 +52,8 @@ export class PublicBadgeAssertionComponent {
 	assertionId: string;
 
 	awardedToDisplayName: string;
+
+	showDetails: boolean[] = [];
 
 	routerLinkForUrl = routerLinkForUrl;
 
@@ -121,6 +124,10 @@ export class PublicBadgeAssertionComponent {
 
 	onVerifiedBadgeAssertion(ba) {
 		this.assertionIdParam = this.createLoadedRouteParam();
+	}
+
+	toggleDetails(index: number): void {
+		this.showDetails[index] = !this.showDetails[index];
 	}
 
 	verifyBadge() {
