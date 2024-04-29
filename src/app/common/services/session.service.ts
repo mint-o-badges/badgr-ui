@@ -58,6 +58,42 @@ export class SessionService {
 		this.enabledExternalAuthProviders = configService.featuresConfig.externalAuthProviders || [];
 	}
 
+    // TODO: Remove duplicates
+    validateToken(sessionOnlyStorage = false): Promise<AuthorizationToken> {
+		const endpoint = this.baseUrl + '/o/token';
+		const scope = 'rw:profile rw:issuer rw:backpack';
+		const client_id = 'oidc';
+
+		const payload = `grant_type=oidc&client_id=${encodeURIComponent(client_id)}&scope=${encodeURIComponent(
+			scope,
+		)}`;
+
+		const headers = new HttpHeaders().append('Content-Type', 'application/x-www-form-urlencoded');
+
+		// Update global loading state
+		this.messageService.incrementPendingRequestCount();
+
+		return this.http
+			.post<AuthorizationToken>(endpoint, payload, {
+				observe: 'response',
+				responseType: 'json',
+                withCredentials: true,
+				headers,
+			})
+			.toPromise()
+			.then((r) => BaseHttpApiService.addTestingDelay(r, this.configService))
+			.finally(() => this.messageService.decrementPendingRequestCount())
+			.then((r) => {
+				if (r.status < 200 || r.status >= 300) {
+					throw new Error('Login Failed: ' + r.status);
+				}
+
+				this.storeToken(r.body, sessionOnlyStorage);
+
+				return r.body;
+			});
+    }
+
 	login(credential: UserCredential, sessionOnlyStorage = false): Promise<AuthorizationToken> {
 		const endpoint = this.baseUrl + '/o/token';
 		const scope = 'rw:profile rw:issuer rw:backpack';

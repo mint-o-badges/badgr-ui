@@ -122,6 +122,20 @@ export class LoginComponent extends BaseRoutableComponent implements OnInit, Aft
         });
     }
 
+    validateToken() {
+		this.loginFinished = this.sessionService
+			.validateToken()
+			.then(this.afterLogin,
+				(response: HttpErrorResponse) =>
+					this.messageService.reportHandledError(
+						BadgrApiFailure.messageIfThrottableError(response.error) ||
+							this.translate.instant('Login.failLogin'),
+						response,
+					),
+			)
+			.then(() => (this.loginFinished = null));
+    }
+
     bildungsraumLogin() {
         const endpoint = this.sessionService.baseUrl + '/oidc/authenticate';
         window.location.href = endpoint;
