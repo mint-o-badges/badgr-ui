@@ -85,11 +85,15 @@
 		<!-- Mein Bildungsraum -->
 		<div class="bildungsraum-container">
 			<hr />
-			<button class="bildungsraum-button">
+			<button class="bildungsraum-button"
+                (click)=bildungsraumLogin()>
 				<img class="logo" src="assets/logos/mein-bildungsraum.svg" alt="Mein Bildungsraum Logo" />
 				{{ 'Login.loginBildungsraum' | translate }}
 			</button>
 		</div>
+        <button (click)=validateToken()>
+            Validate token
+        </button>
 	</div>
 </div>
 <form-message></form-message>
