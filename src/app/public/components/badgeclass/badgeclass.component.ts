@@ -39,8 +39,6 @@ export class PublicBadgeClassComponent {
 			const service: PublicApiService = injector.get(PublicApiService);
 			return service.getBadgeClass(paramValue);
 		});
-
-		console.log(this.badgeClass);
 	}
 
 	get badgeClass(): PublicApiBadgeClassWithIssuer {
