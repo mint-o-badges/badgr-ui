@@ -13,12 +13,15 @@ import { OAuthManager } from '../../../common/services/oauth-manager.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { typedFormGroup } from '../../../common/util/typed-forms';
 import { BadgrApiFailure } from '../../../common/services/api-failure';
+import 'altcha';
 
 @Component({
 	selector: 'sign-up',
 	templateUrl: './signup.component.html',
 })
 export class SignupComponent extends BaseRoutableComponent implements OnInit {
+	API_KEY = 'ckey_0149960de588d9e2b33ef0ab5432';
+	API_SECRET = 'csec_a7b909af8193294e1bb677b523c6b5054892cf975a329abe';
 	signupForm = typedFormGroup()
 		.addControl('username', '', [Validators.required, EmailValidator.validEmail])
 		.addControl('firstName', '', Validators.required)

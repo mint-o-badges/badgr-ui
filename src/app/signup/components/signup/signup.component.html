@@ -146,6 +146,11 @@
 						{{ 'Signup.receiveUpdates' | translate }} {{ configService.theme['serviceName'] || 'Badgr' }}.
 					</span>
 				</label>
+				<form>
+					<altcha-widget
+						[challengeurl]="'https://eu.altcha.org/api/v1/challenge?apiKey=' + API_KEY"
+					></altcha-widget>
+				</form>
 				<div class="l-stack l-stack-2x l-stack-buttons u-margin-top3x">
 					<button
 						class="button button-secondary"
