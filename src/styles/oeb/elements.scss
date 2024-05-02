@@ -54,24 +54,6 @@
 		padding: 7rem 0rem;
 	}
 
-	.oeb-full-width {
-		margin-left: -16px;
-		margin-right: -16px;
-	}
-
-	@media (min-width: 768px) {
-		.oeb-full-width {
-			margin-left: -24px;
-			margin-right: -24px;
-		}
-	}
-	@media (min-width: 1224px) {
-		.oeb-full-width {
-			margin-left: calc(-100vw / 2 + (50% + 600px) / 2);
-			margin-right: calc(-100vw / 2 + (50% + 600px) / 2);
-		}
-	}
-
 	.oeb-button {
 		display: inline-flex;
 		height: 64px;
