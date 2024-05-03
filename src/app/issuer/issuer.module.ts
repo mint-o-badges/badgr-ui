@@ -91,7 +91,6 @@ const routes = [
 		BadgeClassCreateComponent,
 		BadgeClassEditComponent,
 		BadgeClassEditFormComponent,
-		BadgeClassDetailComponent,
 		BadgeClassIssueComponent,
 
 		BadgeClassIssueBulkAwardComponent,
@@ -100,7 +99,6 @@ const routes = [
 		BadgeclassIssueBulkAwardError,
 		BadgeclassIssueBulkAwardConformation,
 
-		BadgeClassDetailComponent,
 		BadgeClassIssueComponent,
 		BadgeSelectionDialog,
 		BadgeStudioComponent,

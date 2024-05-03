@@ -26,10 +26,28 @@ import { AppConfigService } from '../../../common/app-config.service';
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { BadgeClassCategory, BadgeClassLevel } from '../../models/badgeclass-api.model';
 
+import { CommonModule } from '@angular/common';
+import { BadgrCommonModule } from '../../../common/badgr-common.module';
+import { TranslateModule } from '@ngx-translate/core';
+import { BrnAccordionContentComponent } from '@spartan-ng/ui-accordion-brain';
+import { HlmButtonDirective } from '../../../../../components/ui-button-helm/src';
+import { HlmAccordionModule } from '../../../../../components/ui-accordion-helm/src';
+import { HlmIconModule } from '../../../../../components/ui-icon-helm/src';
+
 @Component({
 	selector: 'badgeclass-detail',
 	templateUrl: './badgeclass-detail.component.html',
 	styleUrls: ['./badgeclass-detail.component.scss'],
+	standalone: true,
+	imports: [
+		HlmAccordionModule,
+		HlmIconModule,
+		CommonModule,
+		BadgrCommonModule,
+		TranslateModule,
+		BrnAccordionContentComponent,
+		HlmButtonDirective,
+	],
 })
 export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	readonly badgeFailedImageUrl = '../../../../breakdown/static/images/badge-failed.svg';

@@ -1,3 +1,5 @@
+@import '@angular/cdk/overlay-prebuilt.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -6,118 +8,140 @@
 @import url(elements.scss);
 
 .oeb {
-	font-family: rubik;
+font-family: rubik;
 }
 /* colors from mycelia */
 :root {
-	--color-black: #323232;
-	--color-blue: #7E73ff;
-	--color-yellow: #ffcc00;
-	--color-purple: #492e98;
-	--color-red: #ff5556;
-	--color-pink: #ffbab9;
-	--color-lightpink: #fff6f6;
-	--color-lightgreen: #ecfeed;
-	--color-green: #93f993;
-	--color-white: #ffffff;
-	--color-lightgray: #f5f5f5;
-	--color-grayinteractive: #cfcece;
-	--color-lightpurple: #f1f0ff;
-	--color-interactive1: var(--color-purple);
-	--color-interactive3: var(--color-lightgray);
-	--color-link: #492e98;
+--color-black: #323232;
+--color-blue: #7E73ff;
+--color-yellow: #ffcc00;
+--color-purple: #492e98;
+--color-red: #ff5556;
+--color-pink: #ffbab9;
+--color-lightpink: #fff6f6;
+--color-lightgreen: #ecfeed;
+--color-green: #93f993;
+--color-white: #ffffff;
+--color-lightgray: #f5f5f5;
+--color-grayinteractive: #cfcece;
+--color-lightpurple: #f1f0ff;
+--color-interactive1: var(--color-purple);
+--color-interactive3: var(--color-lightgray);
+--color-link: #492e98;
+// spartan
+--font-sans: '';
+--background: 0 0% 100%;
+--foreground: 240 10% 3.9%;
+--card: 0 0% 100%;
+--card-foreground: 240 10% 3.9%;
+--popover: 0 0% 100%;
+--popover-foreground: 240 10% 3.9%;
+--primary: 240 5.9% 10%;
+--primary-foreground: 0 0% 98%;
+--secondary: 240 4.8% 95.9%;
+--secondary-foreground: 240 5.9% 10%;
+--muted: 240 4.8% 95.9%;
+--muted-foreground: 240 3.8% 46.1%;
+--accent: 240 4.8% 95.9%;
+--accent-foreground: 240 5.9% 10%;
+--destructive: 0 84.2% 60.2%;
+--destructive-foreground: 0 0% 98%;
+--border: 240 5.9% 90%;
+--input: 240 5.9% 90%;
+--ring: 240 5.9% 10%;
+--radius: 0.5rem;
 }
 
 .navbar {
-	background-color: var(--color-lightgray);
+background-color: var(--color-lightgray);
 }
 
 .navitem {
-	font-weight: 400;
-	line-height: 30px;
-	color: var(--color-black);
+font-weight: 400;
+line-height: 30px;
+color: var(--color-black);
 }
 
 .navitem .navitem-x-icon {
-	fill: var(--color-black);
+fill: var(--color-black);
 }
 
 .navitem:focus::after,
 .navitem:hover::after {
-	background-color: var(--color-grayinteractive);
+background-color: var(--color-grayinteractive);
 }
 .navitem:active::after,
 .navitem.navitem-is-active::after {
-	background-color: var(--color-black);
+background-color: var(--color-black);
 }
 
 .menuitem {
-	color: var(--color-black);
+color: var(--color-black);
 }
 
 .menutoggle:focus::before,
 .menutoggle:hover::before {
-	box-shadow: inset 0 0 0 1px var(--color-black);
+box-shadow: inset 0 0 0 1px var(--color-black);
 }
 
 .menutoggle.menutoggle-is-active span:nth-child(1) {
-	background: var(--color-white);
+background: var(--color-white);
 }
 
 .menutoggle.menutoggle-is-active span:nth-child(3) {
-	background: var(--color-white);
+background: var(--color-white);
 }
 
 .menutoggle.menutoggle-is-active:focus::before,
 .menutoggle.menutoggle-is-active:hover::before {
-	box-shadow: inset 0 0 0 1px var(--color-white);
+box-shadow: inset 0 0 0 1px var(--color-white);
 }
 
 .menutoggle span {
-	background: var(--color-black);
+background: var(--color-black);
 }
 
 .topbar .topbar-x-heading {
-	color: var(--color-interactive1);
+color: var(--color-interactive1);
 }
 
 .topbar .topbar-x-subheading {
-	color: var(--color-black);
+color: var(--color-black);
 }
 
 .footer {
-	border-top: none;
-	padding-top: calc(var(--gridspacing) * 12);
-	padding-bottom: calc(var(--gridspacing) * 12);
+border-top: none;
+padding-top: calc(var(--gridspacing) * 12);
+padding-bottom: calc(var(--gridspacing) * 12);
 }
 
 .footer [href] {
-	color: var(--color-purple);
+color: var(--color-purple);
 }
 
 .footer[href]:hover,
 .footer [href]:hover {
-	color: var(--color-purple);
-	text-decoration: underline;
+color: var(--color-purple);
+text-decoration: underline;
 }
 
 .footer .footer-x-links li:not(:last-child) {
-	border-right: none;
-	margin-right: unset;
-	padding-right: unset;
+border-right: none;
+margin-right: unset;
+padding-right: unset;
 }
 
 .navbar .navbar-x-logo img {
-	height: unset;
-	max-width: 134px;
+height: unset;
+max-width: 134px;
 }
 
 .u-background-light2 {
-	background-color: white;
+background-color: white;
 }
 
 @media (min-width: 768px) {
-	.o-container:not(.o-container-is-managed) .navbar .navbar-x-logo img {
-		max-width: 134px;
-	}
+.o-container:not(.o-container-is-managed) .navbar .navbar-x-logo img {
+max-width: 134px;
+}
 }
