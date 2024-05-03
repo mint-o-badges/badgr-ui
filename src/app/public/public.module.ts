@@ -111,7 +111,6 @@ export const routes: Routes = [
 		ImpressumComponent,
 		PublicComponent,
 		PublicBadgeAssertionComponent,
-		PublicBadgeClassComponent,
 		PublicIssuerComponent,
 		PublicBadgeCollectionComponent,
 		VerifyBadgeDialog,

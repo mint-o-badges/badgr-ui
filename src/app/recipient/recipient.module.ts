@@ -70,7 +70,6 @@ const routes: Routes = [
 	],
 	declarations: [
 		RecipientEarnedBadgeListComponent,
-		RecipientEarnedBadgeDetailComponent,
 		RecipientBadgeCollectionListComponent,
 		RecipientBadgeCollectionCreateComponent,
 		RecipientBadgeCollectionDetailComponent,
