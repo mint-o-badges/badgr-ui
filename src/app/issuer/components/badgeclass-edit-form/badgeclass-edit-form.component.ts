@@ -712,6 +712,14 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 	async onSubmit() {
 		try {
+			if (this.badgeClassForm.rawControl.controls.badge_category.value === 'competency') {
+				this.badgeClassForm.controls.competencies.rawControls.forEach((control, i) => {
+					if (control.untouched) {
+						this.badgeClassForm.controls.competencies.removeAt(i);
+					}
+				});
+			}
+
 			if (this.badgeClassForm.controls.badge_customImage.value && this.badgeClassForm.valid) {
 				this.badgeClassForm.controls.badge_image.setValue(this.badgeClassForm.controls.badge_customImage.value);
 			}
@@ -894,7 +902,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 						description: suggestions[index].description,
 						escoID: suggestions[index].concept_uri,
 						studyLoad: Number(aiCompetency.studyLoad),
-						category: suggestions[index].concept_uri.includes('skill') ? 'skill' : 'knowledge',
+						category: suggestions[index].type.includes('skill') ? 'skill' : 'knowledge',
 					}))
 					.filter((_, index) => formState.aiCompetencies[index].selected),
 			);

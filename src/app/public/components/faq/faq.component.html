@@ -1,102 +1,51 @@
-<div class="topbar">
-	<div class="l-containerxaxis topbar-x-wrap">
-		<h2 class="topbar-x-heading">FAQ</h2>
-	</div>
-</div>
-<div class="l-containerxaxis l-containeryaxis">
-	<div class="formsection formsection-nohelp u-margin-bottom4x">
-		<h2 class="formsection-x-title">{{ 'FAQ.Q1' | translate }}</h2>
-		<div class="formsection-x-body">
-			<p>
-            <span style="display: block; margin-bottom: 0.9em">
-                Open Educational Badges (OEB) sind ein Instrument, um Lernerfahrungen und Kompetenzerwerb standardisiert sichtbar zu machen. Dazu setzen Open Educational Badges auf drei Elemente:
-            </span>
-            <span style="display: block; margin-bottom: 0.9em">
-                <ol style="list-style: decimal; list-style-position: inside; padding-left: 1.2em" type="1">
-                    <li>Eine Plattform, um Badges standardisiert zu erstellen, zu vergeben und zu sammeln.</li>
-                    <li>Das standardisierte Kompetenz-Raster ESCO, das Kompetenznachweise unterschiedlicher Institutionen vergleichbar und anschlussfähig macht.</li>
-                    <li>Eine aktive Community, die Badges nutzt.</li>
-                </ol>
-            </span>
-            <span style="display: block; margin-bottom: 0.9em">
-                Durch die technische und inhaltliche Standardisierung sind Open Educational Badges überall einsetzbar – egal, wo das Lernen stattfindet.
-            </span>
-            <span style="display: block; margin-bottom: 0.9em">
-                Badges selbst sind digitale Zertifikate, die standardisiert und verifizierbar belegen, dass Lernende bestimmte Lernerfahrungen gemacht und entsprechende Kompetenzen erworben haben. Sie basieren auf einem Open Badges Standard, der ursprünglich von der Mozilla Foundation entwickelt worden ist. Rein technisch gesehen sind Open Badges digitale Bilder wie Piktogramme oder Logos, die individuelle Metadaten enthalten – also zusätzliche Informationen, die beispielsweise beschreiben, wer diesen Badge erhält, welche Organisation ihn vergeben hat und welche Kompetenzen erworben wurden.
-            </span>
-            </p>
+<div class="tw-flex tw-flex-col tw-w-full tw-items-center tw-justify-center">
+	<div class="tw-flex tw-justify-evenly">
+		<div class="tw-flex tw-flex-col md:tw-justify-center tw-m-2">
+			<div class="tw-text-2xl md:tw-text-4xl tw-text-[var(--color-purple)] tw-flex tw-flex-col">
+				<span class="tw-whitespace-nowrap">{{ 'FAQ.youHaveQuestions' | translate }} </span>
+				<span class="md:tw-ml-12 tw-font-bold tw-mt-2 md:tw-mt-6 md:tw-whitespace-nowrap">{{
+					'FAQ.weHaveAnswers' | translate
+				}}</span>
+			</div>
+			<div class="tw-mt-4 tw-text-lg">
+				<p>{{ 'FAQ.faqInfo' | translate }}.</p>
+				<p class="tw-mt-2">
+					{{ 'FAQ.cantFindAnswer' | translate }}
+					<a
+						class="tw-underline tw-cursor-pointer tw-text-[var(--color-purple)]"
+						title="contact us"
+						href="mailto:hallo@openbadges.education"
+					>
+						{{ 'FAQ.contactDirectly' | translate }}
+					</a>
+					.
+				</p>
+			</div>
+		</div>
+		<div class="tw-w-full tw-h-auto tw-max-w-96">
+			<img
+				class="tw-w-full tw-max-w-full"
+				src="../../../../assets/oeb/images/faqpage/FAQ-Graphik-Desktop.png"
+				alt="FAQ Graphic"
+			/>
 		</div>
 	</div>
-
-	<div class="formsection formsection-nohelp u-margin-bottom4x">
-		<h2 class="formsection-x-title">{{ 'FAQ.Q2' | translate }}</h2>
-		<div class="formsection-x-body">
-            <p>
-            <span style="display: block; margin-bottom: 0.9em">
-                Open Educational Badges machen Lernerfahrungen und Kompetenzerwerb sichtbar – egal, wo das Lernen stattfindet.
-            </span>
-            <span style="display: block; margin-bottom: 0.9em">
-                Lernende bekommen einen detaillierten Überblick über ihr individuelles Kompetenzprofil. Sie wissen, was sie können, wo ihre Stärken liegen und wie sie sich weiterentwickeln möchten.
-            </span>
-            <span style="display: block; margin-bottom: 0.9em">
-                Vergebende haben mit Open Educational Badges die Möglichkeit, ihre Lernangebote sichtbar zu machen. Außerdem unterstützen Open Educational Badges sie darin, die Wirkung ihrer Arbeit zu dokumentieren.
-            </span>
-            <span style="display: block; margin-bottom: 0.9em">
-                Anerkennende bekommen nicht nur die formalen Noten der Bewerbenden, sondern ein individuelles Kompetenzprofil. Sie haben die Möglichkeit, die Bewerbenden besser einzuschätzen.
-            </span>
-            </p>
+	<div *ngFor="let item of data; let i = index" class="tw-flex tw-flex-col tw-w-full tw-max-w-6xl">
+		<div class="tw-mt-4">
+			<button
+				[ngClass]="item.isActive ? 'tw-text-[var(--color-red)]' : 'tw-text-[var(--color-purple)]'"
+				class="accordion tw-px-4 tw-py-2"
+				(click)="toggleAccordian($event, i)"
+			>
+				{{ item.Q | translate }}
+			</button>
+			<div class="panel" hide="!item.isActive">
+				<input type="text" />
+				<div *ngFor="let answer of item.A">
+					<p class="tw-mt-2 md:tw-text-lg">{{ answer.text | translate }}</p>
+				</div>
+			</div>
 		</div>
-	</div>
-
-	<div class="formsection formsection-nohelp u-margin-bottom4x">
-		<h2 class="formsection-x-title">
-			{{ 'FAQ.Q3' | translate }}
-		</h2>
-		<div class="formsection-x-body">
-            <p>
-            <span style="display: block; margin-bottom: 0.9em">
-                Für die Vergabe eines Badges ist eine Registrierung sowie das Anlegen einer Institution notwendig. Anschließend legt die vergebende Institution einen Badge an und vergibt diesen über die jeweilige E-Mail-Adresse an die Lernenden.
-            </span>
-            </p>
-		</div>
-	</div>
-
-	<div class="formsection formsection-nohelp u-margin-bottom4x">
-		<h2 class="formsection-x-title">
-			{{ 'FAQ.Q4' | translate }}
-		</h2>
-		<div class="formsection-x-body">
-			<p>
-            <span style="display: block; margin-bottom: 0.9em">
-                Aktuell werden die Zugänge als vergebende Person nur auf Einladung vergeben. Damit wird die Vertrauenswürdigkeit der vergebenden Person sichergestellt.
-            </span>
-			</p>
-		</div>
-	</div>
-
-	<div class="formsection formsection-nohelp u-margin-bottom4x">
-		<h2 class="formsection-x-title">
-			{{ 'FAQ.Q5' | translate }}
-		</h2>
-		<div class="formsection-x-body">
-			<p>
-            <span style="display: block; margin-bottom: 0.9em">
-                Datenschutz hat höchste Priorität. Deshalb arbeitet Open Educational Badges maximal datensparsam. Um einen Badge zu vergeben, benötigt die vergebende Institution die Namen der Teilnehmenden sowie die entsprechenden E-Mail-Adressen. Über die E-Mail-Adressen erhalten die Teilnehmenden ihren Badge. Die E-Mail-Adressen fungieren als Identifier, um die Badges den lernenden Personen zuzuordnen.
-            </span>
-			</p>
-		</div>
-	</div>
-
-	<div class="formsection formsection-nohelp u-margin-bottom4x">
-		<h2 class="formsection-x-title">
-			{{ 'FAQ.Q6' | translate }}
-		</h2>
-		<div class="formsection-x-body">
-			<p>
-            <span style="display: block; margin-bottom: 0.9em">
-                Technisch gesehen liegen die Badges aktuell auf dem Hetzner Server von OpenSenseLab. Mit Ausbau des Projekts ist geplant, einen geeigneten Ort zu finden, der jederzeit einen freien Zugang für Lernende sicherstellt sowie die sichere und dauerhafte Aufbewahrung und Speicherung der Badges garantiert.
-            </span>
-			</p>
-		</div>
+		<hr class="tw-w-full tw-mt-2 tw-border-2 tw-border-solid tw-border-[var(--color-lightgray)]" />
 	</div>
 </div>

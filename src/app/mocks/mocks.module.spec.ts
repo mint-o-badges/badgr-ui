@@ -37,6 +37,7 @@ import { PublicApiService } from '../public/services/public-api.service';
 import { BaseHttpApiService } from '../common/services/base-http-api.service';
 import { NavigationService } from '../common/services/navigation.service';
 import { RecipientBadgeCollectionApiService } from '../recipient/services/recipient-badge-collection-api.service';
+import { ApplicationCredentialsService } from '../common/services/application-credentials.service.';
 
 /*@Injectable()
 export class MockRouter { navigate = () => {jasmine.createSpy('navigate'); };}*/
@@ -306,6 +307,13 @@ export class MockDomSanitizer {
 	bypassSecurityTrustHtml = () => 'safeString';
 }
 
+@Injectable()
+export class MockApplicationCredentialsService {
+	generateCredentials = () => new Promise(() => {});
+	getMyCredentials = () => new Promise(() => {});
+	deleteCredentials = () => new Promise(() => {});
+}
+
 export let COMMON_MOCKS_PROVIDERS = [];
 export let COMMON_MOCKS_PROVIDERS_WITH_SUBS = [];
 
@@ -340,6 +348,7 @@ export let COMMON_MOCKS_PROVIDERS_WITH_SUBS = [];
 	ElementRef,
 	RecipientBadgeCollectionManager,
 	RecipientBadgeManager,
+	ApplicationCredentialsService
 ].forEach((m, i, a) => {
 	const thisMock = eval('Mock' + m.name);
 	COMMON_MOCKS_PROVIDERS.push(thisMock);
