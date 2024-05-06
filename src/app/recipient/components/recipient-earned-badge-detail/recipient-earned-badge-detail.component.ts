@@ -36,7 +36,6 @@ import { RouterModule } from '@angular/router';
 @Component({
 	selector: 'recipient-earned-badge-detail',
 	templateUrl: './recipient-earned-badge-detail.component.html',
-	styleUrls: ['./recipient-earned-badge-detail.component.scss'],
 	standalone: true,
 	imports: [
 		CommonModule,

@@ -19,7 +19,6 @@ import { HlmIconModule } from '../../../../../components/ui-icon-helm/src';
 
 @Component({
 	templateUrl: './badgeclass.component.html',
-	styleUrls: ['./badgeclass.component.scss'],
 	standalone: true,
 	imports: [
 		CommonModule,

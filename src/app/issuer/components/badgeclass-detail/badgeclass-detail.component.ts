@@ -38,7 +38,6 @@ import { RouterModule } from '@angular/router';
 @Component({
 	selector: 'badgeclass-detail',
 	templateUrl: './badgeclass-detail.component.html',
-	styleUrls: ['./badgeclass-detail.component.scss'],
 	standalone: true,
 	imports: [
 		HlmAccordionModule,
