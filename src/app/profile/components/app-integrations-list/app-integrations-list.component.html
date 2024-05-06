@@ -2,75 +2,71 @@
 <div class="topbar">
 	<div class="l-containerxaxis">
 		<div class="topbar-x-heading">{{ 'NavItems.appIntegrations' | translate }}</div>
-		<div class="topbar-x-subheading">
-			{{ 'Profile.accountAccess' | translate }}
-			{{ configService.theme['serviceName'] || 'Badgr' }} Account
+		<div class="topbar-x-subheading" [innerHTML]="'Profile.accountAccess' | translate">
 		</div>
 	</div>
 </div>
-<div class="l-containerxaxis l-containeryaxis" *bgAwaitPromises="[appIntegrationsSet.loadedPromise]">
-	<!-- EMPTY STATE: Integration List -->
-	<p class="u-text" *ngIf="0 == oAuthApps.length && 0 == appIntegrationsSet.length">
-		{{ 'Profile.noAppIntegration' | translate }}
-	</p>
-	<div class="l-grid l-grid-cards" *ngIf="oAuthApps.length > 0 || appIntegrationsSet.length > 0">
-		<!-- Integration List -->
-		<div class="integrationcard" *ngFor="let integration of appIntegrationsSet">
-			<div class="integrationcard-x-body">
-				<div class="integrationcard-x-image">
-					<img class="badgeimage" [src]="integration.image" width="80" />
-				</div>
-				<a
-					class="integrationcard-x-title"
-					[routerLink]="
-						integration.integrationUid
-							? [
-									'/profile/app-integrations/app/',
-									integration.integrationType,
-									integration.integrationUid
-							  ]
-							: ['/profile/app-integrations/app/', integration.integrationType]
-					"
-					>{{ integration.name }}</a
-				>
-				<div class="integrationcard-x-desc">{{ integration.description }}</div>
-			</div>
-			<div class="integrationcard-x-footer">
-				<div class="integrationcard-x-status">{{ integration.active ? 'Aktiv' : 'Inaktiv' }}</div>
-			</div>
-		</div>
-		<!-- oAuth App Integration List -->
-		<div class="integrationcard" *ngFor="let app of oAuthApps">
-			<div class="integrationcard-x-body">
-				<div class="integrationcard-x-image">
-					<img class="badgeimage" [src]="app.imageUrl" width="80" />
-				</div>
-				<a
-					class="integrationcard-x-title"
-					[routerLink]="['/profile/app-integrations/oauth-app/', app.entityId]"
-					id="appCardTitle-{{ app.entityId }}"
-				>
-					{{ app.name }}
-				</a>
-				<div class="integrationcard-x-desc">
-					{{ 'Profile.appHasAccess' | translate }}
-					{{ configService.theme['serviceName'] || 'Badgr' }} Account.
+
+<div class="oeb page-padding tw-overflow-hidden">
+	<div class="tw-text-right">
+		<button (click)="openDialog()" class="!tw-font-bold oeb-button oeb-purple-bg tw-inline-block tw-my-6 ">{{'Profile.newCredentials' | translate}}</button>
+	</div>
+
+	<div *ngIf="generatedToken" class="tw-bg-lightgreen tw-px-4 tw-py-6 tw-my-6">
+		<div>
+			<h2 class="tw-font-extrabold md:tw-text-[30px] md:tw-leading-[36px] tw-text-purple tw-text-[20px] tw-leading-[24px] tw-py-4">{{'Profile.idAndSecretSuccessHeadline' | translate}}</h2>
+			<p class="tw-font-normal md:tw-text-[20px] md:tw-leading-[24.4px] tw-text-[14px] tw-leading-[19.6px]" [innerHTML]="'Profile.idAndSecretSuccess' | translate"></p>
+			<div class="forminput tw-py-4">
+				<div class="forminput-x-inputs">
+					<label class="forminput-x-label">Client ID</label>
+					<input class="tw-w-full tw-p-2" type="text" disabled value="{{generatedToken.client_id}}">
 				</div>
 			</div>
-			<div class="integrationcard-x-footer">
-				<div class="integrationcard-x-status">
-					{{ 'Profile.authorized' | translate }}
-					<strong><time [date]="app.createdDate" format="mediumDate"></time></strong>
+			<div class="forminput">
+				<div class="forminput-x-inputs">
+					<label class="forminput-x-label">Client Secret</label>
+					<input #secret class="tw-w-full tw-p-2" type="text" disabled value="{{generatedToken.client_secret}}">
 				</div>
-				<button
-					class="integrationcard-x-link"
-					type="button"
-					[attr.aria-labelledby]="'appCardTitle-' + app.entityId"
-					(click)="revokeApp(app)"
-				>
-					{{ 'Profile.takeBack' | translate }}
-				</button>
 			</div>
 		</div>
 	</div>
+
+	<add-credentials-dialog #addCredentialsDialog (newTokenAdded)="addToken($event)"></add-credentials-dialog>
+
+
+	<ng-container>
+		<table
+			class="datatable datatable-roundheaders datatable-onlyfirstcolumn datatable-verticalalignmiddle"
+		>
+			<thead class="datatable-x-head">
+				<tr class="datatable-x-header">
+					<th class="datatable-x-cell" scope="col">{{'General.name' | translate}}</th>
+					<th class="datatable-x-cell" scope="col">Client ID</th>
+					<th class="datatable-x-cell" scope="col">
+						<span class="visuallyhidden">Actions</span>
+					</th>
+				</tr>
+			</thead>
+			<tbody class="datatable-x-body">
+				<ng-container *ngFor="let application of applications">
+					<!-- Tokenlist -->
+					<tr class="datatable-x-row">
+						<td class="datatable-x-cell u-text-body">
+							{{application.name ?? application.client_name}}
+						</td>
+						<td class="datatable-x-cell u-text-body">
+							{{application.clientId ?? application.client_id}}
+						</td>
+						<td class="datatable-x-cell">
+							<a
+								class="u-text u-text-small tw-text-red tw-cursor-pointer"
+								(click)="revokeAccessTokens(application)"
+								>{{'General.delete' | translate}}</a
+							>
+						</td>
+					</tr>
+				</ng-container>
+			</tbody>
+		</table>
+	</ng-container>
 </div>

@@ -11,4 +11,6 @@ export interface Skill {
 	alt_labels: string[];
 	description: string;
 	concept_uri: string;
+	reuse_level: string;
+	type: string;
 }

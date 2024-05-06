@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
 import { ActivatedRoute, Router } from '@angular/router';
@@ -11,6 +11,9 @@ import { CommonDialogsService } from '../../../common/services/common-dialogs.se
 import { OAuth2AppAuthorization } from '../../../common/model/oauth.model';
 import { groupIntoObject } from '../../../common/util/array-reducers';
 import { AppConfigService } from '../../../common/app-config.service';
+import { AddCredentialsDialog } from '../app-integration-add-credentials-dialog/add-credentials-dialog.component';
+import { ApplicationCredentialsService } from '../../../common/services/application-credentials.service.';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-integration-detail',
@@ -21,56 +24,49 @@ export class AppIntegrationListComponent extends BaseAuthenticatedRoutableCompon
 		loginService: SessionService,
 		router: Router,
 		route: ActivatedRoute,
-		private title: Title,
-		private messageService: MessageService,
-		private appIntegrationManager: AppIntegrationManager,
-		private oAuthManager: OAuthManager,
 		public configService: AppConfigService,
 		private dialogService: CommonDialogsService,
+		private applicationCredentialsService: ApplicationCredentialsService,
+		private translate: TranslateService
 	) {
 		super(router, route, loginService);
 
-		title.setTitle(`App Integrations - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 	}
 
-	get appIntegrationsSet() {
-		return this.appIntegrationManager.appIntegrations;
-	}
-
-	get oAuthApps() {
-		// omit tokens with clientId='public' and only return first token per application
-		const omittedClientIds = ['public'];
-		const groupedByApplication = this.oAuthManager.authorizedApps.entities
-			.filter((a) => omittedClientIds.indexOf(a.clientId) === -1)
-			.reduce(
-				groupIntoObject((a) => a.clientId),
-				{},
-			);
-		return Object.values(groupedByApplication).map((a) => a[0]);
-	}
+	@ViewChild('addCredentialsDialog')
+	private addCredentialsDialog: AddCredentialsDialog;
+	public applications;
+	public generatedToken = undefined;
 
 	ngOnInit() {
 		super.ngOnInit();
+		this.applicationCredentialsService.getMyCredentials().then(res => {
+			this.applications = res;
+		})
 	}
 
-	async revokeApp(app: OAuth2AppAuthorization) {
+	openDialog() {
+		this.addCredentialsDialog.openDialog()
+	}
+
+	async revokeAccessTokens(app) {
 		if (
 			await this.dialogService.confirmDialog.openTrueFalseDialog({
-				dialogTitle: 'Revoke Access?',
-				dialogBody: `Are you sure you want to revoke access to ${app.name}?`,
-				resolveButtonLabel: 'Revoke Access',
-				rejectButtonLabel: 'Cancel',
+				dialogTitle: this.translate.instant('Profile.deleteApp'),
+				dialogBody: this.translate.instant('Profile.deleteAppConfirm'),
+				resolveButtonLabel: this.translate.instant('General.delete'),
+				rejectButtonLabel: this.translate.instant('General.cancel'),
 			})
 		) {
-			// revoke all tokens for the app
-			Promise.all(
-				this.oAuthManager.authorizedApps.entities
-					.filter((t) => t.clientId === app.clientId)
-					.map((t) => t.revokeAccess()),
-			).then(
-				() => this.messageService.reportMinorSuccess(`Revoked access ${app.name}`),
-				(error) => this.messageService.reportAndThrowError(`Failed to revoke access to ${app.name}`, error),
-			);
+			//delete the App Credentials with client_id=name
+			this.applicationCredentialsService.deleteCredentials(app.clientId ?? app.client_id).then(res => {
+				this.applications = this.applications.filter(item => item.clientId != app.clientId)
+			})
 		}
+	}
+
+	addToken(token){
+		this.generatedToken = token;
+		this.applications.push(token)
 	}
 }
