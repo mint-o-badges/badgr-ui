@@ -20,8 +20,7 @@ import 'altcha';
 	templateUrl: './signup.component.html',
 })
 export class SignupComponent extends BaseRoutableComponent implements OnInit {
-	API_KEY = 'ckey_0149960de588d9e2b33ef0ab5432';
-	API_SECRET = 'csec_a7b909af8193294e1bb677b523c6b5054892cf975a329abe';
+	baseUrl: string;
 	signupForm = typedFormGroup()
 		.addControl('username', '', [Validators.required, EmailValidator.validEmail])
 		.addControl('firstName', '', Validators.required)
@@ -29,7 +28,8 @@ export class SignupComponent extends BaseRoutableComponent implements OnInit {
 		.addControl('password', '', [Validators.required, Validators.minLength(8)])
 		.addControl('passwordConfirm', '', [Validators.required, this.passwordsMatch.bind(this)])
 		.addControl('agreedTermsService', false, Validators.requiredTrue)
-		.addControl('marketingOptIn', false);
+		.addControl('marketingOptIn', false)
+		.addControl('captcha', '');
 
 	signupFinished: Promise<unknown>;
 
@@ -53,6 +53,7 @@ export class SignupComponent extends BaseRoutableComponent implements OnInit {
 	) {
 		super(router, route);
 		title.setTitle(`Signup - ${this.configService.theme['serviceName'] || 'Badgr'}`);
+		this.baseUrl = this.configService.apiConfig.baseUrl;
 	}
 
 	sanitize(url: string) {
@@ -72,6 +73,8 @@ export class SignupComponent extends BaseRoutableComponent implements OnInit {
 			return;
 		}
 
+		const altcha = <HTMLInputElement>document.getElementsByName('altcha')[0];
+
 		const formState = this.signupForm.value;
 
 		const signupUser = new SignupModel(
@@ -81,6 +84,7 @@ export class SignupComponent extends BaseRoutableComponent implements OnInit {
 			formState.password,
 			formState.agreedTermsService,
 			formState.marketingOptIn,
+			altcha.value,
 		);
 
 		this.signupFinished = new Promise<void>((resolve, reject) => {
