@@ -215,14 +215,7 @@
 										<span>{{ competency.studyLoad }} Min.</span>
 									</div>
 								</div>
-								<button type="button" (click)="toggleDetails(i)">
-									<span>{{
-										!showDetails[i]
-											? ('General.showDetails' | translate)
-											: ('General.hideDetails' | translate)
-									}}</span>
-								</button>
-								<div [ngClass]="!showDetails[i] ? 'tw-hidden' : ''">
+								<div>
 									<span>Kategorie: {{ competency.category }}</span>
 									<p class="tw-italic tw-mt-2">{{ competency.description }}</p>
 								</div>

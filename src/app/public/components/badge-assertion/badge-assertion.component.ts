@@ -52,8 +52,6 @@ export class PublicBadgeAssertionComponent {
 
 	awardedToDisplayName: string;
 
-	showDetails: boolean[] = [];
-
 	routerLinkForUrl = routerLinkForUrl;
 
 	tense = {
@@ -123,10 +121,6 @@ export class PublicBadgeAssertionComponent {
 
 	onVerifiedBadgeAssertion(ba) {
 		this.assertionIdParam = this.createLoadedRouteParam();
-	}
-
-	toggleDetails(index: number): void {
-		this.showDetails[index] = !this.showDetails[index];
 	}
 
 	verifyBadge() {
