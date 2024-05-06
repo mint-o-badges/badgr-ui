@@ -1,1 +1,1 @@
-export default {extends: ['@commitlint/config-angular']};
+module.exports = {extends: ['@commitlint/config-angular']};
