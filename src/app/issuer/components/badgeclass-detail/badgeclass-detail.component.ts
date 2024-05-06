@@ -30,7 +30,6 @@ import { CommonModule } from '@angular/common';
 import { BadgrCommonModule } from '../../../common/badgr-common.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { BrnAccordionContentComponent } from '@spartan-ng/ui-accordion-brain';
-import { HlmButtonDirective } from '../../../../../components/ui-button-helm/src';
 import { HlmAccordionModule } from '../../../../../components/ui-accordion-helm/src';
 import { HlmIconModule } from '../../../../../components/ui-icon-helm/src';
 import { RouterModule } from '@angular/router';
@@ -46,7 +45,6 @@ import { RouterModule } from '@angular/router';
 		BadgrCommonModule,
 		TranslateModule,
 		BrnAccordionContentComponent,
-		HlmButtonDirective,
 		RouterModule,
 	],
 })
