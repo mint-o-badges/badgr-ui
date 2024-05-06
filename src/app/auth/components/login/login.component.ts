@@ -125,7 +125,7 @@ export class LoginComponent extends BaseRoutableComponent implements OnInit, Aft
     validateToken() {
 		this.loginFinished = this.sessionService
 			.validateToken()
-			.then(this.afterLogin,
+			.then(() => this.afterLogin(),
 				(response: HttpErrorResponse) =>
 					this.messageService.reportHandledError(
 						BadgrApiFailure.messageIfThrottableError(response.error) ||
@@ -153,7 +153,7 @@ export class LoginComponent extends BaseRoutableComponent implements OnInit, Aft
 
 		this.loginFinished = this.sessionService
 			.login(credential)
-			.then(this.afterLogin,
+			.then(() => this.afterLogin(),
 				(response: HttpErrorResponse) =>
 					this.messageService.reportHandledError(
 						BadgrApiFailure.messageIfThrottableError(response.error) ||
@@ -165,6 +165,12 @@ export class LoginComponent extends BaseRoutableComponent implements OnInit, Aft
 	}
 
 	private handleQueryParamCases() {
+
+        this.route.queryParams.subscribe(params => {
+            if (params.hasOwnProperty('validateToken'))
+                this.validateToken();
+        });
+
 		try {
 			// Handle authcode exchange
 			const authCode = this.queryParams.queryStringValue('authCode', true);

@@ -62,13 +62,14 @@ export class SessionService {
     validateToken(sessionOnlyStorage = false): Promise<AuthorizationToken> {
 		const endpoint = this.baseUrl + '/o/token';
 		const scope = 'rw:profile rw:issuer rw:backpack';
-		const client_id = 'oidc';
+		const client_id = 'public';
 
 		const payload = `grant_type=oidc&client_id=${encodeURIComponent(client_id)}&scope=${encodeURIComponent(
 			scope,
 		)}`;
 
-		const headers = new HttpHeaders().append('Content-Type', 'application/x-www-form-urlencoded');
+		const headers = new HttpHeaders()
+            .append('Content-Type', 'application/x-www-form-urlencoded');
 
 		// Update global loading state
 		this.messageService.incrementPendingRequestCount();
