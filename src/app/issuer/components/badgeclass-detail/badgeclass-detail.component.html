@@ -264,11 +264,7 @@
 											class="tw-w-40 tw-px-2 tw-py-2 tw-bg-white tw-rounded-xl tw-border tw-border-solid tw-border-[var(--color-purple)]"
 											hlmAccordionTrigger
 										>
-											{{
-												!showDetails[i]
-													? ('General.showDetails' | translate)
-													: ('General.hideDetails' | translate)
-											}}
+											{{ 'General.showDetails' | translate }}
 											<hlm-icon hlmAccIcon />
 										</button>
 										<brn-accordion-content hlm>
@@ -279,14 +275,6 @@
 											<span class="tw-mt-4 tw-italic">{{ competency.description }}</span>
 										</brn-accordion-content>
 									</div>
-								</div>
-
-								<div [ngClass]="!showDetails[i] ? 'tw-hidden' : ''">
-									<div class="tw-flex tw-gap-4 tw-mt-2">
-										<span class="tw-font-semibold">Kategorie: </span>
-										<span class="tw-capitalize">{{ competency.category }}</span>
-									</div>
-									<span class="tw-mt-4 tw-italic">{{ competency.description }}</span>
 								</div>
 							</div>
 						</div>

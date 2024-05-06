@@ -65,8 +65,6 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 	issuerBadgeCount: string;
 	launchpoints: ApiExternalToolLaunchpoint[];
 
-	showDetails: boolean[] = [];
-
 	now = new Date();
 	compareDate = compareDate;
 	tense = {
@@ -120,10 +118,6 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 
 	ngOnInit() {
 		super.ngOnInit();
-	}
-
-	toggleDetails(index: number): void {
-		this.showDetails[index] = !this.showDetails[index];
 	}
 
 	shareBadge() {

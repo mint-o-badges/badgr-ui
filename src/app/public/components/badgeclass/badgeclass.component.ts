@@ -40,8 +40,6 @@ export class PublicBadgeClassComponent {
 	badgeIdParam: LoadedRouteParam<PublicApiBadgeClassWithIssuer>;
 	routerLinkForUrl = routerLinkForUrl;
 
-	showDetails: boolean[] = [];
-
 	constructor(
 		private injector: Injector,
 		public embedService: EmbedService,
@@ -66,9 +64,5 @@ export class PublicBadgeClassComponent {
 
 	private get rawJsonUrl() {
 		return stripQueryParamsFromUrl(this.badgeClass.id) + '.json';
-	}
-
-	toggleDetails(index: number): void {
-		this.showDetails[index] = !this.showDetails[index];
 	}
 }
