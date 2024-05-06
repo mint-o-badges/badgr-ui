@@ -108,6 +108,7 @@
 		"karma-coverage-istanbul-reporter": "~3.0.2",
 		"karma-jasmine": "~5.1.0",
 		"karma-jasmine-html-reporter": "^2.1.0",
+		"lint-staged": "^15.2.2",
 		"live-server": "^1.2.2",
 		"mapbox-gl": "^2.15.0",
 		"ngx-markdown-editor": "5.3.4",
@@ -148,6 +149,7 @@
 	},
 	"husky": {
 		"hooks": {
+			"pre-commit": "lint-staged",
 			"commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
 			"prepare-commit-msg": "exec < /dev/tty && npx cz --hook || true"
 		}
