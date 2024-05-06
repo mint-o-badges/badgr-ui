@@ -31,6 +31,8 @@ import { BrnAccordionContentComponent } from '@spartan-ng/ui-accordion-brain';
 import { HlmAccordionModule } from '../../../../../components/ui-accordion-helm/src';
 import { HlmIconModule } from '../../../../../components/ui-icon-helm/src';
 
+import { RouterModule } from '@angular/router';
+
 @Component({
 	selector: 'recipient-earned-badge-detail',
 	templateUrl: './recipient-earned-badge-detail.component.html',
@@ -43,6 +45,7 @@ import { HlmIconModule } from '../../../../../components/ui-icon-helm/src';
 		HlmAccordionModule,
 		BrnAccordionContentComponent,
 		HlmIconModule,
+		RouterModule,
 	],
 })
 export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {

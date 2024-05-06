@@ -33,6 +33,7 @@ import { BrnAccordionContentComponent } from '@spartan-ng/ui-accordion-brain';
 import { HlmButtonDirective } from '../../../../../components/ui-button-helm/src';
 import { HlmAccordionModule } from '../../../../../components/ui-accordion-helm/src';
 import { HlmIconModule } from '../../../../../components/ui-icon-helm/src';
+import { RouterModule } from '@angular/router';
 
 @Component({
 	selector: 'badgeclass-detail',
@@ -47,6 +48,7 @@ import { HlmIconModule } from '../../../../../components/ui-icon-helm/src';
 		TranslateModule,
 		BrnAccordionContentComponent,
 		HlmButtonDirective,
+		RouterModule,
 	],
 })
 export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
