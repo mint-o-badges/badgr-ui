@@ -288,6 +288,14 @@
 		"signUpWith": "Anmelden mit",
 		"create": "Erstellen Sie ein"
 	},
+	"Captcha": {
+		"error": "Verifizierung fehlgeschlagen. Bitte erneut versuchen.",
+		"footer": "Protected by <a href=\"https://altcha.org/\" target=\"_blank\">ALTCHA</a>",
+		"label": "Ich bin kein Roboter",
+		"verified": "Verif+iziert",
+		"verifying": "Verifizieren...",
+		"waitAlert": "Verifizierung... bitte warten."
+	},
 	"Login": {
 		"stayLogged": "Angemeldet bleiben",
 		"forgotPassword": "Password vergessen?",

@@ -286,6 +286,14 @@
 		"signUpWith": "Sign Up With",
 		"create": "Create a"
 	},
+	"Captcha": {
+		"error": "Verification failed. Try again later.",
+		"footer": "Protected by <a href=\"https://altcha.org/\" target=\"_blank\">ALTCHA</a>",
+		"label": "I'm not a robot",
+		"verified": "Verified",
+		"verifying": "Verifying...",
+		"waitAlert": "Verifying... please wait."
+	},
 	"Login": {
 		"stayLogged": "Stay logged in",
 		"forgotPassword": "Forgot password?",
