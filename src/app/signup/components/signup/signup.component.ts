@@ -1,5 +1,5 @@
 import { FormBuilder, ValidationErrors, Validators } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SignupModel } from '../../models/signup-model.type';
 import { SignupService } from '../../services/signup.service';
@@ -13,13 +13,15 @@ import { OAuthManager } from '../../../common/services/oauth-manager.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { typedFormGroup } from '../../../common/util/typed-forms';
 import { BadgrApiFailure } from '../../../common/services/api-failure';
+import { CaptchaService } from '../../../common/services/captcha.service';
+import { TranslateService } from '@ngx-translate/core';
 import 'altcha';
 
 @Component({
 	selector: 'sign-up',
 	templateUrl: './signup.component.html',
 })
-export class SignupComponent extends BaseRoutableComponent implements OnInit {
+export class SignupComponent extends BaseRoutableComponent implements OnInit, AfterViewInit {
 	baseUrl: string;
 	signupForm = typedFormGroup()
 		.addControl('username', '', [Validators.required, EmailValidator.validEmail])
@@ -32,6 +34,7 @@ export class SignupComponent extends BaseRoutableComponent implements OnInit {
 		.addControl('captcha', '');
 
 	signupFinished: Promise<unknown>;
+	verified = false;
 
 	agreedTermsService = false;
 
@@ -46,8 +49,10 @@ export class SignupComponent extends BaseRoutableComponent implements OnInit {
 		private configService: AppConfigService,
 		public sessionService: SessionService,
 		public signupService: SignupService,
+		public translate: TranslateService,
 		public oAuthManager: OAuthManager,
 		private sanitizer: DomSanitizer,
+		private captchaService: CaptchaService,
 		router: Router,
 		route: ActivatedRoute,
 	) {
@@ -68,14 +73,41 @@ export class SignupComponent extends BaseRoutableComponent implements OnInit {
 		if (defaultEmail) this.signupForm.controls.username.setValue(defaultEmail);
 	}
 
+	ngAfterViewInit(): void {
+		this.captchaService.getCaptcha().then((captcha) => {
+			document.querySelector('#altcha').addEventListener('statechange', (ev: any) => {
+				if (ev.detail.state === 'verified') {
+					this.verified = true;
+				}
+			});
+			// @ts-ignore
+			document.querySelector('#altcha').configure({
+				challenge: {
+					algorithm: captcha.algorithm,
+					challenge: captcha.challenge,
+					salt: captcha.salt,
+					signature: captcha.signature,
+				},
+				strings: {
+					error: this.translate.instant('Captcha.error'),
+					footer: this.translate.instant('Captcha.footer'),
+					label: this.translate.instant('Captcha.label'),
+					verified: this.translate.instant('Captcha.verified'),
+					verifying: this.translate.instant('Captcha.verifying'),
+					waitAlert: this.translate.instant('Captcha.waitAlert'),
+				},
+			});
+		});
+	}
+
 	onSubmit() {
 		if (!this.signupForm.markTreeDirtyAndValidate()) {
 			return;
 		}
 
-		const altcha = <HTMLInputElement>document.getElementsByName('altcha')[0];
-
 		const formState = this.signupForm.value;
+
+		const altcha = <HTMLInputElement>document.getElementsByName('altcha')[0];
 
 		const signupUser = new SignupModel(
 			formState.username,
@@ -106,6 +138,8 @@ export class SignupComponent extends BaseRoutableComponent implements OnInit {
 								'Your password must be uncommon and at least 8 characters. Please try again.',
 								'error',
 							);
+						} else if (typeof error === 'object') {
+							this.messageService.setMessage('' + error.error, 'error');
 						} else {
 							this.messageService.setMessage('' + error, 'error');
 						}
