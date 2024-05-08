@@ -29,14 +29,8 @@ describe('RecipientEarnedBadgeDetailComponent', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			declarations: [],
-			imports: [
-				RouterTestingModule,
-				CommonModule,
-				BadgrCommonModule,
-				RecipientEarnedBadgeDetailComponent,
-				...COMMON_IMPORTS,
-			],
+			declarations: [RecipientEarnedBadgeDetailComponent],
+			imports: [RouterTestingModule, CommonModule, BadgrCommonModule, ...COMMON_IMPORTS],
 			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		}).compileComponents();
