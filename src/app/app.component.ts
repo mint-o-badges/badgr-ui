@@ -50,10 +50,10 @@ export class AppComponent implements OnInit, AfterViewInit {
 	 * Enables or disables the "curtain" feature, hiding the normal page.
 	 */
 	curtainEnabled = true;
-    /**
-     * Permanently disables the curtain, making it impossible to show it even with the query parameter
-     */
-    curtainPermanentlyDisabled = true;
+	/**
+	 * Permanently disables the curtain, making it impossible to show it even with the query parameter
+	 */
+	curtainPermanentlyDisabled = true;
 	get curtain() {
 		let re = /\?curtainEnabled=(\w*)/i;
 		let match = this.router.url.match(re);
@@ -65,8 +65,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
 		let local = localStorage.getItem('curtainEnabled');
 		if (local == 'false' || local == 'true') this.curtainEnabled = localStorage.getItem('curtainEnabled') == 'true';
-		return this.curtainEnabled && !this.router.url.includes('impressum') &&
-            !this.curtainPermanentlyDisabled;
+		return this.curtainEnabled && !this.router.url.includes('impressum') && !this.curtainPermanentlyDisabled;
 	}
 
 	title = 'Badgr Angular';
@@ -169,6 +168,10 @@ export class AppComponent implements OnInit, AfterViewInit {
 				this.selectedLng = lng;
 			}
 		});
+
+		// @ts-ignore
+		// Start umami tracking
+		umami.track();
 
 		messageService.useRouter(router);
 

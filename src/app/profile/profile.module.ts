@@ -20,6 +20,7 @@ import { ChangePasswordComponent } from './components/change-password/change-pas
 import { OAuthAppDetailComponent } from './components/oauth-app-detail/oauth-app-detail.component';
 import { MozzTransitionModule } from '../mozz-transition/mozz-transition.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { AppIntegrationDetailsDialog } from './components/app-integration-details-dialog/app-integration-details-dialog.component';
 
 const routes: Routes = [
 	/* Profile */
@@ -75,7 +76,8 @@ const routes: Routes = [
 		IntegrationImageComponent,
 		ChangePasswordComponent,
 		OAuthAppDetailComponent,
-		AddCredentialsDialog
+		AddCredentialsDialog,
+		AppIntegrationDetailsDialog
 	],
 	providers: [
 		// UserProfileService,
