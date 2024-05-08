@@ -10,25 +10,9 @@ import { addQueryParamsToUrl, stripQueryParamsFromUrl } from '../../../common/ut
 import { routerLinkForUrl } from '../public/public.component';
 import { AppConfigService } from '../../../common/app-config.service';
 import { Title } from '@angular/platform-browser';
-import { CommonModule } from '@angular/common';
-import { BadgrCommonModule } from '../../../common/badgr-common.module';
-import { TranslateModule } from '@ngx-translate/core';
-import { BrnAccordionContentComponent } from '@spartan-ng/ui-accordion-brain';
-import { HlmAccordionModule } from '../../../../../components/ui-accordion-helm/src';
-import { HlmIconModule } from '../../../../../components/ui-icon-helm/src';
 
 @Component({
 	templateUrl: './badgeclass.component.html',
-	standalone: true,
-	imports: [
-		CommonModule,
-		BadgrCommonModule,
-		TranslateModule,
-		HlmAccordionModule,
-		BrnAccordionContentComponent,
-		HlmIconModule,
-		RouterModule,
-	],
 })
 export class PublicBadgeClassComponent {
 	readonly issuerImagePlaceholderUrl = preloadImageURL(

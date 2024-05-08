@@ -16,6 +16,7 @@ import { StartComponent } from './components/start/start.component';
 import { ImpressumComponent } from './components/impressum/impressum.component';
 import { FaqComponent } from './components/faq/faq.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { CompetencyAccordionComponent } from '../components/accordion.component';
 
 export const routes: Routes = [
 	{
@@ -104,6 +105,7 @@ export const routes: Routes = [
 		CommonEntityManagerModule,
 		RouterModule.forChild(routes),
 		TranslateModule,
+		CompetencyAccordionComponent,
 	],
 	declarations: [
 		AboutComponent,
@@ -115,6 +117,7 @@ export const routes: Routes = [
 		PublicBadgeCollectionComponent,
 		VerifyBadgeDialog,
 		FaqComponent,
+		PublicBadgeClassComponent,
 	],
 	exports: [],
 	providers: [PublicApiService],

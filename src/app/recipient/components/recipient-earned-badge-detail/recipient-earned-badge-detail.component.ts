@@ -24,28 +24,9 @@ import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcru
 import { BadgeInstance } from '../../../issuer/models/badgeinstance.model';
 import { Issuer } from '../../../issuer/models/issuer.model';
 
-import { CommonModule } from '@angular/common';
-import { BadgrCommonModule } from '../../../common/badgr-common.module';
-import { TranslateModule } from '@ngx-translate/core';
-import { BrnAccordionContentComponent } from '@spartan-ng/ui-accordion-brain';
-import { HlmAccordionModule } from '../../../../../components/ui-accordion-helm/src';
-import { HlmIconModule } from '../../../../../components/ui-icon-helm/src';
-
-import { RouterModule } from '@angular/router';
-
 @Component({
 	selector: 'recipient-earned-badge-detail',
 	templateUrl: './recipient-earned-badge-detail.component.html',
-	standalone: true,
-	imports: [
-		CommonModule,
-		BadgrCommonModule,
-		TranslateModule,
-		HlmAccordionModule,
-		BrnAccordionContentComponent,
-		HlmIconModule,
-		RouterModule,
-	],
 })
 export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	readonly issuerImagePlacholderUrl = preloadImageURL(
