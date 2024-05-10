@@ -215,10 +215,10 @@
 										<span>{{ competency.studyLoad }} Min.</span>
 									</div>
 								</div>
-								<div>
-									<span>Kategorie: {{ competency.category }}</span>
-									<p class="tw-italic tw-mt-2">{{ competency.description }}</p>
-								</div>
+								<competency-accordion
+									[category]="competency.category"
+									[description]="competency.description"
+								/>
 							</div>
 						</div>
 					</div>
