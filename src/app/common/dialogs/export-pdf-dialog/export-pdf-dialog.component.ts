@@ -11,6 +11,8 @@ import { loadImageURL, readFileAsDataURL } from '../../util/file-util';
 import { UserProfileManager } from '../../services/user-profile-manager.service';
 import { MessageService } from '../../services/message.service';
 import html2canvas from 'html2canvas';
+import { PdfService } from '../../services/pdf.service';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
 	selector: 'export-pdf-dialog',
@@ -22,6 +24,7 @@ export class ExportPdfDialog extends BaseDialog {
 	collection: RecipientBadgeCollection | null = null;
 	badgeResults: BadgeResult[] | null = null;
 	badgePdf: string | null = null;
+	pdfSrc: SafeResourceUrl;
 	doc: jsPDF = null;
 	themeColor: string;
 	pdfError: Error;
@@ -42,11 +45,14 @@ export class ExportPdfDialog extends BaseDialog {
 		renderer: Renderer2,
 		protected profileManager: UserProfileManager,
 		protected messageService: MessageService,
+		protected pdfService: PdfService,
+		private sanitizer: DomSanitizer
 	) {
 		super(componentElem, renderer);
 		var r = document.querySelector(':root');
 		var rs = getComputedStyle(r);
 		this.themeColor = rs.getPropertyValue('--color-interactive1');
+
 
 		this.profileManager.userProfilePromise.then(
 			(profile) => {
@@ -61,12 +67,17 @@ export class ExportPdfDialog extends BaseDialog {
 		this.badge = badge;
 		this.showModal();
 
-		this.generateSingleBadgePdf(this.badge, markdown);
+		this.pdfService.getPdf().then((pdf) => {
+			console.log(pdf)
+		})
 
-		return new Promise<void>((resolve, reject) => {
-			this.resolveFunc = resolve;
-			this.rejectFunc = reject;
-		});
+		
+		// this.generateSingleBadgePdf(this.badge, markdown);
+
+		// return new Promise<void>((resolve, reject) => {
+		// 	this.resolveFunc = resolve;
+		// 	this.rejectFunc = reject;
+		// });
 	}
 
 	async openDialogForCollections(collection: RecipientBadgeCollection): Promise<void> {
@@ -197,13 +208,13 @@ export class ExportPdfDialog extends BaseDialog {
 			doc.text('den folgenden Badge erworben: ', pageWidth / 2, yPos + 10, { align: 'center' });
 		}
 
-		function addBadgeImage(doc: jsPDF) {
-			const imageWidth = 75;
-			const imageHeight = imageWidth * badge_image_aspectRatio;
-			yPos = (pageHeight - imageHeight) / 2 - 20;
-			const marginXImg = (pageWidth - imageWidth) / 2;
-			doc.addImage(badge_image, 'PNG', marginXImg, yPos, imageWidth, imageHeight);
-		}
+		// function addBadgeImage(doc: jsPDF) {
+		// 	const imageWidth = 75;
+		// 	// const imageHeight = imageWidth * badge_image_aspectRatio;
+		// 	yPos = (pageHeight - imageHeight) / 2 - 20;
+		// 	const marginXImg = (pageWidth - imageWidth) / 2;
+		// 	doc.addImage(badge_image, 'PNG', marginXImg, yPos, imageWidth, imageHeight);
+		// }
 
 		function addTitle(doc: jsPDF) {
 			yPos += 75;
@@ -304,10 +315,10 @@ export class ExportPdfDialog extends BaseDialog {
 		}
 
 		const badge_image = await this.convertImageToDataURL(badgeClass.image);
-		const badge_image_aspectRatio = await this.getAspectRatio(badge_image);
+		// const badge_image_aspectRatio = await this.getAspectRatio(badge_image);
 
 		const issuer_image = badgeClass.issuer.image ? await this.convertImageToDataURL(badgeClass.issuer.image) : null;
-		const issuer_image_aspectRatio = issuer_image ? await this.getAspectRatio(issuer_image) : null;
+		// const issuer_image_aspectRatio = issuer_image ? await this.getAspectRatio(issuer_image) : null;
 
 		const svgContentClock = `
 		<svg xmlns="http://www.w3.org/2000/svg" height="14" width="12.25" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="#492e98" d="M176 0c-17.7 0-32 14.3-32 32s14.3 32 32 32h16V98.4C92.3 113.8 16 200 16 304c0 114.9 93.1 208 208 208s208-93.1 208-208c0-41.8-12.3-80.7-33.5-113.2l24.1-24.1c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L355.7 143c-28.1-23-62.2-38.8-99.7-44.6V64h16c17.7 0 32-14.3 32-32s-14.3-32-32-32H224 176zm72 192V320c0 13.3-10.7 24-24 24s-24-10.7-24-24V192c0-13.3 10.7-24 24-24s24 10.7 24 24z"/></svg>`;
@@ -453,7 +464,7 @@ export class ExportPdfDialog extends BaseDialog {
 						addRecipientName(this.doc, firstName, lastName);
 
 						// Badge Image
-						addBadgeImage(this.doc);
+						// addBadgeImage(this.doc);
 
 						// title
 						addTitle(this.doc);
@@ -465,18 +476,18 @@ export class ExportPdfDialog extends BaseDialog {
 						addIssuedBy(this.doc);
 
 						// issuer logo
-						if (issuer_image) {
-							yPos += 5;
-							const issuer_image_height = 30 * issuer_image_aspectRatio;
-							this.doc.addImage(
-								issuer_image,
-								'PNG',
-								pageWidth / 2 - 15,
-								yPos - 2,
-								30,
-								issuer_image_height,
-							);
-						}
+						// if (issuer_image) {
+						// 	yPos += 5;
+						// 	const issuer_image_height = 30 * issuer_image_aspectRatio;
+						// 	this.doc.addImage(
+						// 		issuer_image,
+						// 		'PNG',
+						// 		pageWidth / 2 - 15,
+						// 		yPos - 2,
+						// 		30,
+						// 		issuer_image_height,
+						// 	);
+						// }
 
 						//footer
 						const pageCount = (this.doc as any).internal.getNumberOfPages(); //was doc.internal.getNumberOfPages();
