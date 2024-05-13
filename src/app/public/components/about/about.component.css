@@ -130,11 +130,6 @@ h1 {
 	}
 }
 
-.full-width {
-	margin-left: -16px;
-	margin-right: -16px;
-}
-
 .fund-style {
 	display: flex;
 	justify-content: space-between;
@@ -517,20 +512,5 @@ h1 {
 		.heading-sec {
 			width: 85%;
 		}
-	}
-}
-
-/* To force full width in some sections */
-@media (min-width: 768px) {
-	.full-width {
-		margin-left: -24px;
-		margin-right: -24px;
-	}
-}
-/* To force full width in some sections */
-@media (min-width: 1224px) {
-	.full-width {
-		margin-left: calc(-100vw / 2 + (50% + 600px) / 2);
-		margin-right: calc(-100vw / 2 + (50% + 600px) / 2);
 	}
 }
