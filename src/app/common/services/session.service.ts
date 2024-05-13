@@ -25,6 +25,7 @@ import { OAuthManager } from './oauth-manager.service';
 export const TOKEN_STORAGE_KEY = 'LoginService.token';
 
 const EXPIRATION_DATE_STORAGE_KEY = 'LoginService.tokenExpirationDate';
+const IS_OIDC_LOGIN_KEY = 'LoginService.isOidcLogin';
 
 const DEFAULT_EXPIRATION_SECONDS = 24 * 60 * 60;
 
@@ -89,7 +90,7 @@ export class SessionService {
 					throw new Error('Login Failed: ' + r.status);
 				}
 
-				this.storeToken(r.body, sessionOnlyStorage);
+				this.storeToken(r.body, sessionOnlyStorage, true);
 
 				return r.body;
 			});
@@ -139,7 +140,7 @@ export class SessionService {
 		if (nextObservable) this.loggedInSubject.next(false);
 	}
 
-	storeToken(token: AuthorizationToken, sessionOnlyStorage = false): void {
+	storeToken(token: AuthorizationToken, sessionOnlyStorage = false, isOidcLogin = false): void {
 		const expirationDateStr = new Date(
 			Date.now() + (token.expires_in || DEFAULT_EXPIRATION_SECONDS) * 1000,
 		).toISOString();
@@ -147,9 +148,11 @@ export class SessionService {
 		if (sessionOnlyStorage) {
 			sessionStorage.setItem(TOKEN_STORAGE_KEY, token.access_token);
 			sessionStorage.setItem(EXPIRATION_DATE_STORAGE_KEY, expirationDateStr);
+            sessionStorage.setItem(IS_OIDC_LOGIN_KEY, isOidcLogin ? "true" : "");
 		} else {
 			localStorage.setItem(TOKEN_STORAGE_KEY, token.access_token);
 			localStorage.setItem(EXPIRATION_DATE_STORAGE_KEY, expirationDateStr);
+            localStorage.setItem(IS_OIDC_LOGIN_KEY, isOidcLogin ? "true" : "");
 		}
 
 		this.loggedInSubject.next(true);
@@ -185,6 +188,16 @@ export class SessionService {
 			return false;
 		}
 	}
+
+    isOidcLogin(): boolean {
+        const expirationString =
+            sessionStorage.getItem(IS_OIDC_LOGIN_KEY) ||
+            localStorage.getItem(IS_OIDC_LOGIN_KEY);
+        if (expirationString === "false")
+            console.error(IS_OIDC_LOGIN_KEY, "is set to false, which is still treated as true");
+        // Note that this treats all values except "" as true
+        return !!expirationString;
+    }
 
 	exchangeCodeForToken(authCode: string): Promise<AuthorizationToken> {
 		return this.http

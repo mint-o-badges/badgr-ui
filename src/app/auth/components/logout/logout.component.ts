@@ -20,6 +20,9 @@ export class LogoutComponent extends BaseRoutableComponent {
 		super.ngOnInit();
 
 		this.loginService.logout();
-		window.location.replace('/auth');
+        if (this.loginService.isOidcLogin())
+            window.location.href = `${this.loginService.baseUrl}/oidcLogoutRedirect/`
+        else
+            window.location.replace('/auth');
 	}
 }
