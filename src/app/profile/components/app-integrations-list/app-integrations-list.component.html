@@ -32,6 +32,7 @@
 	</div>
 
 	<add-credentials-dialog #addCredentialsDialog (newTokenAdded)="addToken($event)"></add-credentials-dialog>
+	<app-integration-details-dialog #appIntegrationDetailsDialog (tokenDeleted)="revokeAccessTokens($event)"></app-integration-details-dialog>
 
 
 	<ng-container>
@@ -51,7 +52,7 @@
 				<ng-container *ngFor="let application of applications">
 					<!-- Tokenlist -->
 					<tr class="datatable-x-row">
-						<td class="datatable-x-cell u-text-body">
+						<td class="datatable-x-cell u-text-body tw-cursor-pointer tw-underline tw-text-purple tw-font-bold" (click)="selectApplication(application)">
 							{{application.name ?? application.client_name}}
 						</td>
 						<td class="datatable-x-cell u-text-body">

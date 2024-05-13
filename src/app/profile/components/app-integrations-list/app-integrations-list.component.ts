@@ -1,17 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Title } from '@angular/platform-browser';
-
 import { ActivatedRoute, Router } from '@angular/router';
-import { MessageService } from '../../../common/services/message.service';
 import { SessionService } from '../../../common/services/session.service';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
-import { AppIntegrationManager } from '../../services/app-integration-manager.service';
-import { OAuthManager } from '../../../common/services/oauth-manager.service';
 import { CommonDialogsService } from '../../../common/services/common-dialogs.service';
-import { OAuth2AppAuthorization } from '../../../common/model/oauth.model';
-import { groupIntoObject } from '../../../common/util/array-reducers';
 import { AppConfigService } from '../../../common/app-config.service';
 import { AddCredentialsDialog } from '../app-integration-add-credentials-dialog/add-credentials-dialog.component';
+import { AppIntegrationDetailsDialog } from '../app-integration-details-dialog/app-integration-details-dialog.component';
 import { ApplicationCredentialsService } from '../../../common/services/application-credentials.service.';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -35,8 +29,11 @@ export class AppIntegrationListComponent extends BaseAuthenticatedRoutableCompon
 
 	@ViewChild('addCredentialsDialog')
 	private addCredentialsDialog: AddCredentialsDialog;
+	@ViewChild('appIntegrationDetailsDialog')
+	private appIntegrationDetailsDialog: AppIntegrationDetailsDialog;
 	public applications;
 	public generatedToken = undefined;
+	public selectedApplication = undefined;
 
 	ngOnInit() {
 		super.ngOnInit();
@@ -68,5 +65,9 @@ export class AppIntegrationListComponent extends BaseAuthenticatedRoutableCompon
 	addToken(token){
 		this.generatedToken = token;
 		this.applications.push(token)
+	}
+
+	selectApplication(application){
+		this.appIntegrationDetailsDialog.openDialog(application)
 	}
 }
