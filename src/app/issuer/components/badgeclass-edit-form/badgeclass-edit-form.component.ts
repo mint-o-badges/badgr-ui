@@ -936,19 +936,13 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		}
 	}
 
-	generateCustomUploadImage(image, formdata) {
+	generateCustomUploadImage(image) {
 		// the imageUploaded-event of the angular image component is also called after initialising the component because the image is set in initFormFromExisting
 		if (typeof this.currentImage == 'undefined' || this.initedCurrentImage) {
 			this.initedCurrentImage = true;
 			this.currentImage = image.slice();
-			// Hide hexagon-frame if checkbox is checked
-			if (this.hideHexFrame) {
-				this.customImageField.useDataUrl(this.currentImage, 'BADGE');
-			} else {
-				this.badgeStudio
-					.generateUploadImage(image.slice(), formdata)
-					.then((imageUrl) => this.customImageField.useDataUrl(imageUrl, 'BADGE'));
-			}
+			// Hide hexagon-frame for custom images
+			this.customImageField.useDataUrl(this.currentImage, 'BADGE');
 		} else {
 			this.initedCurrentImage = true;
 		}
