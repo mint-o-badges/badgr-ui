@@ -59,7 +59,6 @@ export class SessionService {
 		this.enabledExternalAuthProviders = configService.featuresConfig.externalAuthProviders || [];
 	}
 
-    // TODO: Remove duplicates
     validateToken(sessionOnlyStorage = false): Promise<AuthorizationToken> {
 		const endpoint = this.baseUrl + '/o/token';
 		const scope = 'rw:profile rw:issuer rw:backpack';
@@ -69,31 +68,7 @@ export class SessionService {
 			scope,
 		)}`;
 
-		const headers = new HttpHeaders()
-            .append('Content-Type', 'application/x-www-form-urlencoded');
-
-		// Update global loading state
-		this.messageService.incrementPendingRequestCount();
-
-		return this.http
-			.post<AuthorizationToken>(endpoint, payload, {
-				observe: 'response',
-				responseType: 'json',
-                withCredentials: true,
-				headers,
-			})
-			.toPromise()
-			.then((r) => BaseHttpApiService.addTestingDelay(r, this.configService))
-			.finally(() => this.messageService.decrementPendingRequestCount())
-			.then((r) => {
-				if (r.status < 200 || r.status >= 300) {
-					throw new Error('Login Failed: ' + r.status);
-				}
-
-				this.storeToken(r.body, sessionOnlyStorage, true);
-
-				return r.body;
-			});
+        return this.makeAuthorizationRequest(endpoint, payload, true, sessionOnlyStorage, true);
     }
 
 	login(credential: UserCredential, sessionOnlyStorage = false): Promise<AuthorizationToken> {
@@ -105,8 +80,13 @@ export class SessionService {
 			scope,
 		)}&username=${encodeURIComponent(credential.username)}&password=${encodeURIComponent(credential.password)}`;
 
-		const headers = new HttpHeaders().append('Content-Type', 'application/x-www-form-urlencoded');
+        return this.makeAuthorizationRequest(endpoint, payload, false, sessionOnlyStorage, false);
+	}
 
+    makeAuthorizationRequest(endpoint: string, payload: string, withCredentials: boolean,
+                             sessionOnlyStorage: boolean, isOidcLogin: boolean):
+        Promise<AuthorizationToken> {
+		const headers = new HttpHeaders().append('Content-Type', 'application/x-www-form-urlencoded');
 		// Update global loading state
 		this.messageService.incrementPendingRequestCount();
 
@@ -115,6 +95,7 @@ export class SessionService {
 				observe: 'response',
 				responseType: 'json',
 				headers,
+                withCredentials: withCredentials,
 			})
 			.toPromise()
 			.then((r) => BaseHttpApiService.addTestingDelay(r, this.configService))
@@ -124,11 +105,11 @@ export class SessionService {
 					throw new Error('Login Failed: ' + r.status);
 				}
 
-				this.storeToken(r.body, sessionOnlyStorage);
+				this.storeToken(r.body, sessionOnlyStorage, isOidcLogin);
 
 				return r.body;
 			});
-	}
+    }
 
 	initiateUnauthenticatedExternalAuth(provider: ExternalAuthProvider) {
 		window.location.href = `${this.baseUrl}/account/sociallogin?provider=${encodeURIComponent(provider.slug)}`;
