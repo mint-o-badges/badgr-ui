@@ -21,7 +21,7 @@ export class LogoutComponent extends BaseRoutableComponent {
 
 		this.loginService.logout();
         if (this.loginService.isOidcLogin())
-            window.location.href = `${this.loginService.baseUrl}/oidcLogoutRedirect/`
+            window.location.href = `${this.loginService.baseUrl}/oidcview/logoutRedirect/`
         else
             window.location.replace('/auth');
 	}
