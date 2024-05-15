@@ -28,7 +28,11 @@ import { CommonDialogsService } from '../services/common-dialogs.service';
 	},
 	template: `
 		<div class="forminput-x-labelrow">
-			<label class="forminput-x-label" [attr.for]="inputName" *ngIf="label || includeLabelAsWrapper">
+			<label
+				class="tw-font-body tw-font-semibold tw-text-[20px] tw-leading-6 tw-mb-2"
+				[attr.for]="inputName"
+				*ngIf="label || includeLabelAsWrapper"
+			>
 				{{ label }} <span *ngIf="optional">(OPTIONAL)</span>
 				<span *ngIf="formFieldAside">{{ formFieldAside }}</span>
 				<button type="button" *ngIf="isLockedState" (click)="unlock()">(unlock)</button>
@@ -41,8 +45,9 @@ import { CommonDialogsService } from '../services/common-dialogs.service';
 		</p>
 
 		<label class="visuallyhidden" [attr.for]="inputName" *ngIf="ariaLabel">{{ ariaLabel }}</label>
-		<div class="forminput-x-inputs">
+		<div class="tw-border tw-border-solid tw-border-indigo-500 tw-rounded-[10px]">
 			<input
+				class="tw-h-8 tw-w-full tw-p-4 tw-rounded-[10px]"
 				[type]="fieldType"
 				*ngIf="!multiline"
 				[name]="inputName"
