@@ -185,7 +185,7 @@
 			<div class="badgedetail-x-body">
 				<!-- Category -->
 				<section *ngIf="badgeClass['extensions:CategoryExtension']">
-					<h3 class="u-text-h3-semibold u-text-dark2 u-margin-bottom2x u-margin-top4x">Kategorie:</h3>
+					<h3 class="u-text-h3-semibold u-text-dark2 u-margin-bottom2x u-margin-top4x">{{ 'General.category' | translate}}:</h3>
 					<span>{{ categoryOptions[badgeClass['extensions:CategoryExtension'].Category] }}</span>
 				</section>
 				<!-- Kompetenzen -->
@@ -194,7 +194,7 @@
 						class="u-text-h3-semibold u-text-dark2 u-margin-bottom2x u-margin-top4x"
 						*ngIf="badgeClass['extensions:CompetencyExtension'].length > 0"
 					>
-						Kompetenzen
+						{{ 'RecBadgeDetail.competencies' | translate}}
 					</h3>
 					<div>
 						<div *ngFor="let competency of badgeClass['extensions:CompetencyExtension']; index as i">

@@ -30,7 +30,7 @@ import { Component, Input } from '@angular/core';
 			</button>
 			<brn-accordion-content hlm>
 				<div class="tw-flex tw-gap-4 tw-mt-2">
-					<span class="tw-font-semibold">Kategorie: </span>
+					<span class="tw-font-semibold">{{ 'General.category' | translate }}: </span>
 					<span class="tw-capitalize">{{ category }}</span>
 				</div>
 				<span class="tw-mt-4 tw-italic">{{ description }}</span>
