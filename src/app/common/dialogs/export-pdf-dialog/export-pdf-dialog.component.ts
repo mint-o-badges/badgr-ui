@@ -67,8 +67,8 @@ export class ExportPdfDialog extends BaseDialog {
 		this.badge = badge;
 		this.showModal();
 
-		this.pdfService.getPdf().then((pdf) => {
-			console.log(pdf)
+		this.pdfService.getPdf(badge.slug).subscribe((url) => {
+			this.pdfSrc = url;
 		})
 
 		

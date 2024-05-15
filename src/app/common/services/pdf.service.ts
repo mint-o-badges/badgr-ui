@@ -6,28 +6,29 @@ import { MessageService } from './message.service';
 import { SessionService } from './session.service';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { Observable, map } from 'rxjs';
 
 @Injectable()
-export class PdfService extends BaseHttpApiService {
+export class PdfService {
+	baseUrl: string;
+
 	constructor(
 		protected loginService: SessionService,
 		protected http: HttpClient,
 		protected configService: AppConfigService,
 		protected messageService: MessageService,
-        private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer
 	) {
-		super(loginService, http, configService, messageService);
-	}
+    this.baseUrl = this.configService.apiConfig.baseUrl
+  }
 
-	getPdf(): Promise<SafeResourceUrl> {
+	getPdf(slug: string): Observable<SafeResourceUrl> {
         const headers = new HttpHeaders().set('Accept', 'application/pdf');
-        return this.get('/v1/earner/pdf', {responseType: 'blob'})
-          .then((response: HttpResponse<Blob>) => {
-            const url = URL.createObjectURL(response.body);
+        return this.http.get(`${this.baseUrl}/v1/earner/badges/pdf/${slug}`, { responseType: 'blob' }).pipe(
+          map((response: Blob) => {
+            const url = URL.createObjectURL(response);
             return this.sanitizer.bypassSecurityTrustResourceUrl(url);
           })
-          .catch((error) => {
-            throw new Error(error.message);
-          });
+        );
       }
 }
