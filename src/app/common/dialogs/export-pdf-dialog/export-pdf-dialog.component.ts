@@ -1,4 +1,4 @@
-import { Component, ElementRef, Renderer2, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, ElementRef, Renderer2, ViewChild, AfterViewInit, SecurityContext } from '@angular/core';
 
 import { BaseDialog } from '../base-dialog';
 import { RecipientBadgeInstance } from '../../../recipient/models/recipient-badge.model';
@@ -757,7 +757,12 @@ export class ExportPdfDialog extends BaseDialog {
 	}
 
 	downloadPdf() {
-		this.doc.save(this.badge.badgeClass.name + ' - ' + dateToString(this.badge.issueDate, '') + '.pdf');
+		const link = document.createElement('a');
+		// https://stackoverflow.com/questions/55849415/type-saferesourceurl-is-not-assignable-to-type-string
+		const url = this.sanitizer.sanitize(SecurityContext.RESOURCE_URL, this.pdfSrc)
+		link.href = url;
+		link.download = this.badge.badgeClass.name + ' - ' + dateToString(this.badge._issueDate, '') + '.pdf'; 
+		link.click(); 
 	}
 }
 
