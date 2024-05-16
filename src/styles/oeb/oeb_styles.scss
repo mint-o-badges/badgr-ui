@@ -140,6 +140,19 @@
 	background-color: white;
 }
 
+.forminput .forminput-x-label {
+	--typography-size: 20px;
+	font-size: var(--typography-size);
+	font-style: normal;
+	line-height: calc(var(--typography-size) + 4px);
+	font-weight: 600;
+	display: block;
+}
+
+.forminput .forminput-x-formFieldAside {
+	font-weight: 400;
+}
+
 @media (min-width: 768px) {
 	.o-container:not(.o-container-is-managed) .navbar .navbar-x-logo img {
 		max-width: 134px;
