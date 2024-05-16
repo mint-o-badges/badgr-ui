@@ -1,8 +1,5 @@
 <div class="oeb tw-overflow-hidden tw-w-full tw-relative">
 	<div class="u-animate-dropfade">
-		<!-- <div class="tw-absolute tw-top-[253px] tw-left-[614px] tw-z-0 tw-opacity-70">
-			<img class="tw-h-[269px] tw-w-[235px] tw-rotate-[-36.66deg]" src="assets/oeb/images/startpage/hexagonCircles.svg" alt="Hands" />
-		</div> -->
 		<div class="tw-py-[8rem] tw-relative page-padding">
 			<h1
 				class="tw-font-normal md:tw-text-[46px] md:tw-leading-[55.2px] tw-text-purple tw-text-[30px] tw-leading-[36px]"
@@ -19,7 +16,10 @@
 				Du bist neu hier? <a class="tw-text-[#1400FF] tw-underline" href="#" [routerLink]="['/signup']">{{ 'Login.createAccount' | translate }}</a>.
 			</div>
 
-			<div class="tw-mt-[23px] tw-max-w-[546px] tw-min-w-[546px]">
+			<div class="tw-mt-[23px] tw-max-w-full tw-min-w-full md:tw-max-w-[546px] md:tw-min-w-[546px]">
+				<div class="tw-block tw-absolute tw-right-[26%] md:tw-right-[47%] tw-z-0 tw-opacity-70">
+					<img class="tw-h-[269px] tw-w-[235px] tw-rotate-[-36.66deg]" src="assets/oeb/images/startpage/hexagonCircles.svg" alt="Hands" />
+				</div>
 				<form class="u-margin-top2x" (ngSubmit)="submitAuth()" *ngIf="!features.disableRegistration" novalidate>
 					<!-- Email Field -->
 					<bg-formfield-text
@@ -36,7 +36,7 @@
 					<bg-formfield-text
 						[control]="loginForm.rawControlMap.password"
 						label="Passwort"
-						class="u-margin-top2x"
+						class="tw-mt-[35px]"
 						[errorMessage]="'Bitte gib Dein Passwort ein.'"
 						fieldType="password"
 						#passwordField
