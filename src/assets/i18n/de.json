@@ -134,7 +134,7 @@
 		"noBadges": "Keine Badges",
 		"recipient": "Empfänger",
 		"noRecipient": "Kein Empfänger",
-		"createInstitution": "Institution erstellen",
+		"createInstitution": "Neue Institution erstellen",
 		"noInstitutionYet": "Du hast noch keine Institution erstellt!",
 		"institutionCreateInfo": "Mit Institutionen kannst du Badges erstellen und an Nutzer*innen vergeben.",
 		"yourRole": "Deine Rolle:",
@@ -182,7 +182,12 @@
 		"awarded": "Vergeben",
 		"editInstitution": "Institution bearbeiten",
 		"editInstitutionInfo": "Bearbeite die Informationen dieser Institution.",
-		"issuerHasNoBadgesYet": "Der Issuer hat noch keine Badges"
+		"issuerHasNoBadgesYet": "Der Issuer hat noch keine Badges",
+		"myInstitutionsText": "Über deine Institutionen kannst du <span class='tw-text-purple tw-font-medium'> Badges erstellen und anschließend an deine Lernenden vergeben</span>.",
+		"myInstitutionsNoBadge": "hat noch keine Badges, die sie vergeben kann.",
+		"myInstitutionsCreateBadge": "Neuen Badge erstellen",
+		"askForPlugin": "Plugin anfragen",
+		"askForPluginText": "Unser <span class='tw-font-bold tw-text-purple'>Plugin</span> bietet dir die Möglichkeit, Badges aus deiner eigenen digitalen Lehrumgebung heraus zu vergeben."
 	},
 	"Badge": {
 		"groupBy": "Gruppieren nach",
