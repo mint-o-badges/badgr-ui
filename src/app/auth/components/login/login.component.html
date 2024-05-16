@@ -16,8 +16,8 @@
 				Du bist neu hier? <a class="tw-text-[#1400FF] tw-underline" href="#" [routerLink]="['/signup']">{{ 'Login.createAccount' | translate }}</a>.
 			</div>
 
-			<div class="tw-mt-[23px] tw-max-w-full tw-min-w-full md:tw-max-w-[546px] md:tw-min-w-[546px]">
-				<div class="tw-block tw-absolute tw-right-[26%] md:tw-right-[47%] tw-z-0 tw-opacity-70">
+			<div class="tw-relative tw-mt-[23px] tw-max-w-full tw-min-w-full md:tw-max-w-[546px] md:tw-min-w-[546px]">
+				<div class="tw-block tw-absolute md:tw-right-[-15%] md:tw-top-[-10%] tw-z-0 tw-opacity-70">
 					<img class="tw-h-[269px] tw-w-[235px] tw-rotate-[-36.66deg]" src="assets/oeb/images/startpage/hexagonCircles.svg" alt="Hands" />
 				</div>
 				<form class="u-margin-top2x" (ngSubmit)="submitAuth()" *ngIf="!features.disableRegistration" novalidate>
