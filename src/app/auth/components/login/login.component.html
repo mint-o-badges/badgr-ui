@@ -12,12 +12,12 @@
 				{{ 'General.oeb' | translate }}
 			</h1>
 
-			<div class="tw-mt-[14px] tw-font-normal tw-text-purple tw-text-[14px] tw-leading-[19px] md:tw-text-[20px] md:tw-leading-[28px]">
+			<div class="tw-relative tw-z-20 tw-mt-[14px] tw-font-normal tw-text-purple tw-text-[14px] tw-leading-[19px] md:tw-text-[20px] md:tw-leading-[28px]">
 				Du bist neu hier? <a class="tw-text-[#1400FF] tw-underline" href="#" [routerLink]="['/signup']">{{ 'Login.createAccount' | translate }}</a>.
 			</div>
 
 			<div class="tw-relative tw-mt-[23px] tw-max-w-full tw-min-w-full md:tw-max-w-[546px] md:tw-min-w-[546px]">
-				<div class="tw-block tw-absolute md:tw-right-[-15%] md:tw-top-[-10%] tw-z-0">
+				<div class="tw-block tw-absolute tw-right-[15%] tw-top-[-35%] md:tw-right-[-15%] md:tw-top-[-10%] tw-z-0">
 					<img class="tw-h-[269px] tw-w-[235px] tw-rotate-[-17.58deg] md:tw-rotate-[-36.66deg]" src="assets/oeb/images/startpage/hexagonCircles.svg" alt="Hands" />
 				</div>
 				<form class="tw-relative tw-z-20" (ngSubmit)="submitAuth()" *ngIf="!features.disableRegistration" novalidate>
@@ -36,7 +36,7 @@
 					<bg-formfield-text
 						[control]="loginForm.rawControlMap.password"
 						label="Passwort"
-						class="tw-mt-[35px]"
+						class="tw-mt-6 md:tw-mt-[35px]"
 						[errorMessage]="'Bitte gib Dein Passwort ein.'"
 						fieldType="password"
 						#passwordField
@@ -52,22 +52,22 @@
 						</span>
 					</bg-formfield-text>
 
-					<div class="tw-flex tw-gap-2 tw-items-center tw-justify-between tw-mt-[62px]">
+					<div class="tw-flex tw-gap-2 tw-items-center tw-justify-between tw-mt-11 md:tw-mt-[62px]">
 						<!-- Remember Me Checkout -->
 						<label class="tw-flex tw-items-center tw-justify-center tw-gap-2">
 							<input
-								class="tw-relative tw-h-8 tw-w-8 tw-cursor-pointer tw-border tw-border-solid tw-border-purple tw-rounded checked:tw-bg-purple checked:after:tw-content-[''] checked:after:tw-h-[20px] checked:after:tw-w-[10px] checked:after:tw-top-0 checked:after:tw-left-2 checked:after:tw-border-solid checked:after:tw-border-white checked:after:tw-border-t-0 checked:after:tw-border-l-0 checked:after:tw-rotate-45 after:tw-absolute"
+								class="tw-relative tw-h-6 tw-w-6 checked:after:tw-top-[2px] md:tw-h-8 md:tw-w-8 md:checked:after:tw-top-0 tw-cursor-pointer tw-border tw-border-solid tw-border-purple tw-rounded checked:tw-bg-purple checked:after:tw-content-[''] checked:after:tw-h-[12px] checked:after:tw-w-[3px] md:checked:after:tw-h-[20px] md:checked:after:tw-w-[10px] checked:after:tw-left-2 checked:after:tw-border-solid checked:after:tw-border-white checked:after:tw-border-t-0 checked:after:tw-border-l-0 checked:after:tw-rotate-45 after:tw-absolute"
 								id="remember-me"
 								name="remember-me"
 								type="checkbox"
 								[formControl]="loginForm.rawControlMap.rememberMe"
 							/>
-							<span class="oeb tw-font-semibold tw-text-black tw-text-[20px] tw-leading-6">{{ 'Login.stayLogged' | translate }}</span>
+							<span class="oeb tw-font-semibold tw-text-black tw-text-sm tw-leading-4 md:tw-text-[20px] md:tw-leading-6">{{ 'Login.stayLogged' | translate }}</span>
 						</label>
 
 						<!-- Submit Button -->
 						<button
-							class="button tw-w-[289px] tw-h-16 md:tw-text-[20px] md:tw-leading-[30px] tw-rounded-[10px]"
+							class="button tw-w-[172px] tw-h-11 md:tw-w-[289px] md:tw-h-16 tw-text-sm md:tw-text-[20px] md:tw-leading-[30px] tw-rounded-[10px]"
 							type="submit"
 							[disabled]="!!loginFinished"
 							[loading-promises]="[loginFinished]"
@@ -78,9 +78,9 @@
 					</div>
 				</form>
 				<!-- Mein Bildungsraum -->
-				<div class="tw-flex tw-justify-end tw-mt-14">
-					<button class="tw-border tw-border-black tw-border-solid tw-rounded-[10px] tw-h-16">
-						<div class="tw-flex tw-p-4 tw-gap-[8px] tw-items-center tw-justify-center tw-font-normal md:tw-text-[20px] md:tw-leading-[28px]">
+				<div class="tw-flex tw-justify-end tw-mt-6 md:tw-mt-14">
+					<button class="tw-flex tw-border tw-border-black tw-border-solid tw-rounded-[10px] tw-h-11 md:tw-h-16">
+						<div class="tw-flex tw-p-4 tw-gap-[8px] tw-items-center tw-justify-center tw-font-normal tw-text-sm md:tw-text-[20px] md:tw-leading-[28px]">
 							<img class="logo" src="assets/logos/mein-bildungsraum.svg" alt="Mein Bildungsraum Logo" />
 							{{ 'Login.loginBildungsraum' | translate }}
 						</div>

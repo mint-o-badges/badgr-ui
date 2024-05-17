@@ -29,7 +29,7 @@ import { CommonDialogsService } from '../services/common-dialogs.service';
 	template: `
 		<div class="forminput-x-labelrow">
 			<label
-				class="tw-font-body tw-font-semibold tw-text-black tw-text-[20px] tw-leading-6 tw-mb-2"
+				class="tw-font-body tw-font-semibold tw-text-black tw-text-sm tw-leading-4 md:tw-text-[20px] md:tw-leading-6 tw-mb-[2px] md:tw-mb-2"
 				[attr.for]="inputName"
 				*ngIf="label || includeLabelAsWrapper"
 			>
@@ -45,9 +45,9 @@ import { CommonDialogsService } from '../services/common-dialogs.service';
 		</p>
 
 		<label class="visuallyhidden" [attr.for]="inputName" *ngIf="ariaLabel">{{ ariaLabel }}</label>
-		<div class="tw-border tw-border-solid tw-border-indigo-500 tw-rounded-[10px]">
+		<div class="">
 			<input
-				class="tw-h-8 tw-w-full tw-p-4 tw-rounded-[10px]"
+				class="tw-h-6 md:tw-h-8 tw-w-full tw-p-2 md:tw-p-4 tw-border tw-border-solid tw-border-indigo-500 tw-rounded-[7px] md:tw-rounded-[10px] tw-bg-white"
 				[type]="fieldType"
 				*ngIf="!multiline"
 				[name]="inputName"
