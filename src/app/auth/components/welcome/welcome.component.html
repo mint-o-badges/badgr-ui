@@ -1,37 +1,32 @@
-<div class="oeb page-padding tw-overflow-hidden">
-	<div class="md:tw-block tw-absolute tw-top-[120px] tw-opacity-70">
-		<img class="tw-h-[150px] md:tw-h-[228px]" src="assets/oeb/images/welcomepage/sun.png" alt="sun" />
-	</div>
-
-	<div class="tw-py-[5.7rem] tw-pl-[6.5rem] md:tw-py-[7.2rem] md:tw-pl-[10.5rem] tw-relative">
+<div class="oeb page-padding tw-overflow-hidden tw-relative">
+	
+	<div class="tw-py-[5.7rem] md:tw-py-[7.2rem] tw-relative">
+		<div class="md:tw-block tw-absolute  tw-opacity-40  lg:tw-opacity-50 tw-left-[auto] tw-right-[10%] tw-top-[50px] lg:tw-left-[-150px] lg:tw-top-[35px] tw-z-0">
+			<img class="tw-h-[180px] md:tw-h-[228px]" src="assets/oeb/images/welcomepage/sun.png" alt="sun" />
+		</div>
 		<h1
-			class="tw-font-normal md:tw-text-[46px] md:tw-leading-[55.2px] tw-text-purple tw-text-[30px] tw-leading-[36px]"
+			class="tw-font-normal md:tw-text-[46px] md:tw-leading-[55.2px] tw-text-purple tw-text-[32px] tw-leading-[36px] tw-z-10 tw-relative"
 		>
 			{{ 'Welcome.heading' | translate }}
 		</h1>
-		<div class="tw-pt-7">
+		<div class="tw-pt-7 tw-relative tw-z-10">
 			<p
 				class="tw-font-normal md:tw-text-[24px] md:tw-leading-[28.8px] tw-text-black tw-text-[16px] tw-leading-[22.4px] tw-pb-2"
-			>
-				{{ 'Welcome.text1_a' | translate }}
-				<span class="tw-font-[500] tw-text-purple">{{ 'Welcome.text1_b' | translate }}</span><span class="tw-font-[500]">.</span>
+			 	[innerHTML]="'Welcome.text1' | translate">
 			</p>
 			<p
 				class="tw-font-normal md:tw-text-[24px] md:tw-leading-[33.6px] tw-text-black tw-text-[16px] tw-leading-[22.4px] tw-pb-4"
+				[innerHTML]="'Welcome.text2' | translate">
 			>
-				{{ 'Welcome.text2_a' | translate }}
-				<span class="tw-font-[500] md:tw-leading-[28.8px] tw-text-purple"
-					>{{ 'Welcome.text2_b' | translate }}</span
-				><span class="tw-font-[500]">.</span>
 			</p>
 		</div>
 
-		<div class="tw-flex tw-flex-col md:tw-flex-row tw-gap-[2rem] tw-mt-10">
-			<button class="oeb-button oeb-purple-bg !tw-h-[60px] md:!tw-font-bold" [routerLink]="'/recipient/badges'">
+		<div class="tw-flex tw-flex-col lg:tw-flex-row tw-gap-[2rem] tw-mt-10">
+			<button class="oeb-button oeb-purple-bg md:!tw-font-bold" [routerLink]="'/recipient/badges'">
 				{{ 'Welcome.collectBadgesBtn' | translate }}
 			</button>
 			<button
-				class="oeb-button oeb-purple-bg !tw-h-[60px] md:!tw-font-bold"
+				class="oeb-button oeb-purple-bg md:!tw-font-bold"
 				[routerLink]="'/issuer/create'"
 			>
 				{{ 'Welcome.awardBadgesBtn' | translate }}

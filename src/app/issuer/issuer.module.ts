@@ -29,6 +29,7 @@ import { IssuerStaffComponent } from './components/issuer-staff/issuer-staff.com
 import { BadgeClassEditFormComponent } from './components/badgeclass-edit-form/badgeclass-edit-form.component';
 import { IssuerStaffCreateDialogComponent } from './components/issuer-staff-create-dialog/issuer-staff-create-dialog.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { CompetencyAccordionComponent } from '../components/accordion.component';
 
 const routes = [
 	/* Issuer */
@@ -86,13 +87,14 @@ const routes = [
 		CommonEntityManagerModule,
 		RouterModule.forChild(routes),
 		TranslateModule,
+		CompetencyAccordionComponent,
 	],
 	declarations: [
 		BadgeClassCreateComponent,
 		BadgeClassEditComponent,
 		BadgeClassEditFormComponent,
-		BadgeClassDetailComponent,
 		BadgeClassIssueComponent,
+		BadgeClassDetailComponent,
 
 		BadgeClassIssueBulkAwardComponent,
 		BadgeClassIssueBulkAwardImportComponent,
@@ -100,7 +102,6 @@ const routes = [
 		BadgeclassIssueBulkAwardError,
 		BadgeclassIssueBulkAwardConformation,
 
-		BadgeClassDetailComponent,
 		BadgeClassIssueComponent,
 		BadgeSelectionDialog,
 		BadgeStudioComponent,

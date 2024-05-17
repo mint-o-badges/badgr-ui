@@ -68,13 +68,6 @@
 							{{ badgeClass.extension['extensions:StudyLoadExtension'].StudyLoad }} Minuten
 						</dd>
 					</div>
-					<!-- Category -->
-					<div *ngIf="badgeClass.extension['extensions:CategoryExtension']">
-						<dt>Kategorie:</dt>
-						<dd class="u-text">
-							{{ categoryOptions[badgeClass.extension['extensions:CategoryExtension'].Category] }}
-						</dd>
-					</div>
 					<!-- LEvel -->
 					<div *ngIf="badgeClass.extension['extensions:LevelExtension']">
 						<dt>Level:</dt>
@@ -190,6 +183,41 @@
 				<p class="u-text-body u-width-paragraph">{{ assertion.badge.description }}</p>
 			</div>
 			<div class="badgedetail-x-body">
+				<!-- Category -->
+				<section *ngIf="badgeClass['extensions:CategoryExtension']">
+					<h3 class="u-text-h3-semibold u-text-dark2 u-margin-bottom2x u-margin-top4x">{{ 'General.category' | translate}}:</h3>
+					<span>{{ categoryOptions[badgeClass['extensions:CategoryExtension'].Category] }}</span>
+				</section>
+				<!-- Kompetenzen -->
+				<section>
+					<h3
+						class="u-text-h3-semibold u-text-dark2 u-margin-bottom2x u-margin-top4x"
+						*ngIf="badgeClass['extensions:CompetencyExtension'].length > 0"
+					>
+						{{ 'RecBadgeDetail.competencies' | translate}}
+					</h3>
+					<div>
+						<div *ngFor="let competency of badgeClass['extensions:CompetencyExtension']; index as i">
+							<div
+								class="tw-flex tw-flex-col tw-bg-[var(--color-lightpurple)] tw-border tw-border-solid tw-border-[var(--color-purple)] tw-p-4 tw-rounded-lg tw-mt-4 tw-max-w-[500px]"
+							>
+								<div class="tw-grid tw-grid-cols-3">
+									<span class="tw-col-span-2 tw-font-bold tw-text-lg">{{ competency.name }}</span>
+									<div class="tw-flex tw-items-start tw-justify-end ">
+										<div class="tw-flex tw-items-center tw-gap-2 tw-px-2 tw-border tw-border-solid tw-rounded-3xl tw-border-[var(--color-purple)]">
+											<svg class="icon icon-dark4" width="18px" viewBox="0 0 24 24" icon="icon_pending"></svg>
+											<span>{{ competency.studyLoad }} Min.</span>
+										</div>
+									</div>
+								</div>
+								<competency-accordion
+									[category]="competency.category"
+									[description]="competency.description"
+								/>
+							</div>
+						</div>
+					</div>
+				</section>
 				<!-- criteria -->
 				<section>
 					<h3

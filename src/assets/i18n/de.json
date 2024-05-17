@@ -50,6 +50,8 @@
 		"months": "Monate",
 		"years": "Jahre",
 		"oeb": "Open Educational Badges"
+		"showDetails": "Details anzeigen",
+		"hideDetails": "Details verstecken"
 	},
 	"NavItems": {
 		"register": "Registrieren",
@@ -89,7 +91,7 @@
 
 		"headline1": "Gemeinsam machen wir",
 		"headline2": "Kompetenzerwerb sichtbar",
-		"text1": "Badges sind digitale Nachweise, die wie Zertifikate einfach und zeiteffizient vergeben und gesammelt werden können, um Lernerfolge sichtbar zu machen – sowohl für digitale Lernangebote als auch für Angebote vor Ort.",
+		"text1": "Badges sind digitale Nachweise, die wie Zertifikate einfach und zeiteffizient vergeben und gesammelt werden können, um Lernerfolge und Kompetenzerwerb sichtbar zu machen - sowohl für digitale Lernangebote als auch für Angebote vor Ort.",
 		"badgesErstellen": "Jetzt <span class='bold'>Badges erstellen<span>",
 
 		"headline2_1": "Unsere Ziele für",
@@ -455,11 +457,9 @@
 	},
 	"Welcome": {
 		"heading": "Schön, dass du da bist!",
-		"text1_a": "Du kannst sofort loslegen, erhaltene Badges in deinem",
-		"text1_b": "Rucksack zu sammeln",
-		"text2_a": "Wenn du",
-		"text2_b": "Badges vergeben möchtest, lege dafür deine Institution an",
-		"collectBadgesBtn": "Badges sammeln",
-		"awardBadgesBtn": "Badges vergeben"
+		"text1": "Alle deine Badges kannst du ab jetzt in deinem <span class='tw-font-medium tw-text-purple'>Ruckack sammeln</span>.",
+		"text2": "Wenn du<span class='tw-font-medium tw-text-purple'> Badges erstellen und vergeben möchtest</span>, lege dafür deine Institution an.",
+		"collectBadgesBtn": "Badges im Rucksack sammeln",
+		"awardBadgesBtn": "Institutionen erstellen und Badges vergeben"
 	}
 }

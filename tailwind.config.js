@@ -5,13 +5,26 @@ import {
 	isolateForComponents, // there are also isolateInsideOfContainer and isolateOutsideOfContainer
 } from 'tailwindcss-scoped-preflight';
 
+const { fontFamily } = require('tailwindcss/defaultTheme');
+
 module.exports = {
+  presets: [require('@spartan-ng/ui-core/hlm-tailwind-preset')],
+  safelist: ['overflow-hidden'],
   prefix: 'tw-',
   content: [
     "./src/**/*.{html,ts}",
+    './components/**/*.{html,ts}',
   ],
   theme: {
     fontFamily: { body: ["rubik","Open Sans", 'sans-serif']},
+    container: {
+			center: true,
+			padding: '2rem',
+			screens: {
+				'2xl': '1400px',
+			},
+    },
+
 
     extend: {
       colors: {
@@ -40,5 +53,6 @@ module.exports = {
         },
       ),
     }),
+    require('tailwindcss-animate')
   ],
 }

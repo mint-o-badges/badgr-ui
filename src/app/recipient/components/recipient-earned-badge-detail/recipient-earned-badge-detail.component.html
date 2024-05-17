@@ -154,43 +154,29 @@
 
 			<!-- Kompetenzen -->
 			<section>
-				<h3 *ngIf="competencies" class="u-text-h3-semibold u-margin-bottom2x u-text-dark2 u-margin-top4x">
+				<h3
+					*ngIf="competencies.length > 0"
+					class="u-text-h3-semibold u-margin-bottom2x u-text-dark2 u-margin-top4x"
+				>
 					{{ 'RecBadgeDetail.competencies' | translate }}
 				</h3>
 				<div *ngFor="let competency of competencies; let i = index">
-					<h1 style="margin-top: 1em; font-weight: bold">{{ i + 1 }}. {{ competency.name }}</h1>
 					<div
-						style="
-							display: flex;
-							flex-direction: column;
-							width: 50%;
-							background-color: #492e98;
-							color: white;
-							padding: 1em;
-							border-radius: 25px;
-							margin-top: 1em;
-						"
+						class="tw-flex tw-flex-col tw-bg-[var(--color-lightpurple)] tw-border tw-border-solid tw-border-[var(--color-purple)] tw-p-4 tw-rounded-lg tw-mt-4 tw-max-w-[500px]"
 					>
-						<div style="display: flex; justify-content: space-between">
-							<span>Name: </span>
-							<span>{{ competency.name }}</span>
+						<div class="tw-grid tw-grid-cols-3">
+							<span class="tw-col-span-2 tw-font-bold tw-text-lg">{{ competency.name }}</span>
+							<div class="tw-flex tw-items-start tw-justify-end ">
+								<div class="tw-flex tw-items-center tw-gap-2 tw-px-2 tw-border tw-border-solid tw-rounded-3xl tw-border-[var(--color-purple)]">
+									<svg class="icon icon-dark4" width="18px" viewBox="0 0 24 24" icon="icon_pending"></svg>
+									<span>{{ competency.studyLoad }} Min.</span>
+								</div>
+							</div>
 						</div>
-						<div style="display: flex; justify-content: space-between">
-							<span>{{ 'RecBadgeDetail.description' | translate }} </span>
-							<span>{{ competency.description }}</span>
-						</div>
-						<div style="display: flex; justify-content: space-between">
-							<span>{{ 'RecBadgeDetail.category' | translate }} </span>
-							<span>{{ competency.category }}</span>
-						</div>
-						<div *ngIf="competency.escoID" style="display: flex; justify-content: space-between">
-							<span>Esco ID: </span>
-							<span>{{ competency.escoID }}</span>
-						</div>
-						<div style="display: flex; justify-content: space-between">
-							<span>{{ 'RecBadgeDetail.duration' | translate }} </span>
-							<span>{{ competency.studyLoad }}</span>
-						</div>
+						
+						
+
+						<competency-accordion [category]="competency.category" [description]="competency.description" />
 					</div>
 				</div>
 			</section>
