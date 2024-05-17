@@ -425,16 +425,47 @@
 						{{ 'CreateBadge.criteriaError' | translate }}
 					</p>
 
-					<bg-formfield-markdown
+					<!-- <bg-formfield-markdown
 						[control]="badgeClassForm.rawControlMap.badge_criteria_text"
 						[newValue]="badgeClassForm.rawControlMap.badge_criteria_text.value"
 						label=" Wie bekommt man dieses Badge?"
 						class="l-formsection-x-inputoffset"
 						[errorMessage]="''"
-					></bg-formfield-markdown>
+					></bg-formfield-markdown> -->
+					<!-- <textarea id="criteria_textarea" class="tw-my-2" readonly>
+						{{criteriaText}}
+					</textarea> -->
+					<div>
+						<span *ngIf="badgeClassForm.controls.badge_name.value" class="tw-font-semibold tw-text-lg">
+							Du hast erfolgreich an
+							{{badgeClassForm.controls.badge_name.value}} teilgenommen.</span
+						>
+						<div *ngIf="badgeCategory === 'competency'">
+							<span class="tw-font-bold">Dabei hast du folgende Kompetenzen gestärkt: </span>
+							<ul class="tw-list-disc">
+								<ng-container
+									*ngFor="
+										let aiCompetency of badgeClassForm.controls.aiCompetencies.controls;
+										let i = index
+									"
+								>
+									<li *ngIf="aiCompetency.rawControlMap.selected.value">
+										<span >
+											{{ aiCompetenciesSuggestions[i].preferred_label }}
+										</span>
+									</li>
+								</ng-container>
+								<ng-container *ngFor="let competency of badgeClassForm.controls.competencies.controls">
+									<li *ngIf="competency.rawControlMap.name.value" >
+										<span>{{ competency.rawControlMap.name.value }}</span>
+									</li>
+								</ng-container>
+							</ul>
+						</div>
+					</div>
 				</div>
 
-				<div class="forminput u-margin-bottom2x md:tw-items-center tw-flex tw-gap-2 md:tw-flex-row tw-flex-col">
+				<!-- <div class="forminput u-margin-bottom2x md:tw-items-center tw-flex tw-gap-2 md:tw-flex-row tw-flex-col">
 					<span class="tw-font-bold tw-whitespace-nowrap">URL (optional)</span>
 					<bg-formfield-text
 						class="tw-w-full"
@@ -443,7 +474,7 @@
 						fieldType="url"
 						errorMessage="URL zu den Badge Kriterien"
 					></bg-formfield-text>
-				</div>
+				</div> -->
 			</div>
 		</div>
 	</div>

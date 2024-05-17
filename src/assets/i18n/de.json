@@ -218,7 +218,7 @@
 		"participationInfo": "dienen als Bestätigung der Teilnahme an einer Veranstaltung",
 		"noCompetencies": "und enthalten keine Kompetenzen",
 		"enterDetails": "Badge Details eingeben",
-		"criteriaInfo": "Beschreibe hier, was genau getan werden muss, um den Badge zu erhalten und/oder gib eine Webseite als Informationsquelle an. Mindestens eines der Felder ist verpflichtend",
+		"criteriaInfo": "Folgende Kriterien sind auf Basis deiner Eingaben als Metadaten im Badge hinterlegt:",
 		"criteriaError": "Entweder Text oder eine URL sind verpflichtend.",
 		"whatIsThe": "Was ist die",
 		"competencyBadgeInfo": "werden mit Kompetenzen gefüllt",

@@ -218,7 +218,7 @@
 		"participationInfo": "serve as confirmation of attendance at an event",
 		"noCompetencies": "and contain no competencies",
 		"enterDetails": "Enter Badge Details",
-		"criteriaInfo": "Describe here exactly what needs to be done to receive the badge and/or provide a website as a source of information. At least one of the fields is mandatory.",
+		"criteriaInfo": "The following criteria are saved as metadata in the badge as a result of your input: ",
 		"criteriaError": "Either text or url are mandatory.",
 		"whatIsThe": "What is the",
 		"competencyBadgeInfo": "are filled with competencies",
