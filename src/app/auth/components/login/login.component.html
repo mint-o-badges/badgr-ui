@@ -12,7 +12,7 @@
 				{{ 'General.oeb' | translate }}
 			</h1>
 
-			<div class="tw-mt-[14px]">
+			<div class="tw-mt-[14px] tw-font-normal tw-text-purple tw-text-[14px] tw-leading-[19px] md:tw-text-[20px] md:tw-leading-[28px]">
 				Du bist neu hier? <a class="tw-text-[#1400FF] tw-underline" href="#" [routerLink]="['/signup']">{{ 'Login.createAccount' | translate }}</a>.
 			</div>
 
@@ -43,7 +43,7 @@
 					>
 						<span label-additions>
 							<a
-								class="forminput-x-helplink tw-relative tw-z-20 tw-font-semibold tw-text-[14px] md:tw-text-[20px] tw-leading-4 md:tw-leading-6"
+								class="tw-relative tw-z-20 tw-font-semibold tw-text-[14px] md:tw-text-[20px] tw-leading-4 md:tw-leading-6"
 								href="#"
 								tabindex="-1"
 								[routerLink]="['/auth/request-password-reset', usernameField.value]"
@@ -54,19 +54,20 @@
 
 					<div class="tw-flex tw-gap-2 tw-items-center tw-justify-between tw-mt-[62px]">
 						<!-- Remember Me Checkout -->
-						<label class="checkbox">
+						<label class="tw-flex tw-items-center tw-justify-center tw-gap-2">
 							<input
+								class="tw-relative tw-h-8 tw-w-8 tw-cursor-pointer tw-border tw-border-solid tw-border-purple tw-rounded checked:tw-bg-purple checked:after:tw-content-[''] checked:after:tw-h-[20px] checked:after:tw-w-[10px] checked:after:tw-top-0 checked:after:tw-left-2 checked:after:tw-border-solid checked:after:tw-border-white checked:after:tw-border-t-0 checked:after:tw-border-l-0 checked:after:tw-rotate-45 after:tw-absolute"
 								id="remember-me"
 								name="remember-me"
 								type="checkbox"
 								[formControl]="loginForm.rawControlMap.rememberMe"
 							/>
-							<span class="checkbox-x-text">{{ 'Login.stayLogged' | translate }}</span>
+							<span class="oeb tw-font-semibold tw-text-black tw-text-[20px] tw-leading-6">{{ 'Login.stayLogged' | translate }}</span>
 						</label>
 
 						<!-- Submit Button -->
 						<button
-							class="button tw-w-[289px] tw-h-16 tw-rounded-[10px]"
+							class="button tw-w-[289px] tw-h-16 md:tw-text-[20px] md:tw-leading-[30px] tw-rounded-[10px]"
 							type="submit"
 							[disabled]="!!loginFinished"
 							[loading-promises]="[loginFinished]"
@@ -79,7 +80,7 @@
 				<!-- Mein Bildungsraum -->
 				<div class="tw-flex tw-justify-end tw-mt-14">
 					<button class="tw-border tw-border-black tw-border-solid tw-rounded-[10px] tw-h-16">
-						<div class="tw-flex tw-p-4 tw-gap-[8px] tw-items-center tw-justify-center tw-font-normal tw-text-[20px] tw-leading-[28px]">
+						<div class="tw-flex tw-p-4 tw-gap-[8px] tw-items-center tw-justify-center tw-font-normal md:tw-text-[20px] md:tw-leading-[28px]">
 							<img class="logo" src="assets/logos/mein-bildungsraum.svg" alt="Mein Bildungsraum Logo" />
 							{{ 'Login.loginBildungsraum' | translate }}
 						</div>

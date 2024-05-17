@@ -21,7 +21,8 @@ module.exports = {
         green: 'var(--color-green)',
         yellow: 'var(--color-yellow)',
         white: 'var(--color-white)',
-        lightgreen: 'var(--color-lightgreen)'
+        lightgreen: 'var(--color-lightgreen)',
+        black: 'var(--color-black)'
       },
     },
   },

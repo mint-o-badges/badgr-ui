@@ -29,7 +29,7 @@ import { CommonDialogsService } from '../services/common-dialogs.service';
 	template: `
 		<div class="forminput-x-labelrow">
 			<label
-				class="tw-font-body tw-font-semibold tw-text-[20px] tw-leading-6 tw-mb-2"
+				class="tw-font-body tw-font-semibold tw-text-black tw-text-[20px] tw-leading-6 tw-mb-2"
 				[attr.for]="inputName"
 				*ngIf="label || includeLabelAsWrapper"
 			>
