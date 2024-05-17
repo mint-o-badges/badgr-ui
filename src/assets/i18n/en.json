@@ -227,7 +227,8 @@
 		"participationBadgeShortInfo": "confirm participation",
 		"short": "Short",
 		"forLearners": "for learners",
-		"summarizedDescription": "Summarized description of your learning offer",
+		"summarizedDescription": "Summarized description of your learning offer.",
+		"descriptionSavedInBadge": "This description is saved in the badge.",
 		"imageRequiredError": "Please use one of the options to choose an image for the badge",
 		"useOurEditor": "Use our editor",
 		"imageSublabel": "Choose an image/icon to be inserted into our frame.",
@@ -245,7 +246,7 @@
 		"suggestCompetencies": "Suggest Competencies",
 		"fitting": "Fitting",
 		"suggestedCompetencies": "Suggested Competencies appear here.",
-		"addCompetenciesByHand": "Add competencies by hand",
+		"addCompetenciesByHand": "Add competencies by hand (optional)",
 		"tofindFittingCompetencies": "to find fitting competencies.",
 		"toEscoSearch": "to ESCO search",
 		"enterCompetencyTitle": "Please enter a title for the competency",
@@ -268,7 +269,8 @@
 		"tagInfo": "Tags label badges and assist in searching for badges on specific topics.",
 		"removeAlignment": "Remove Alignment",
 		"removeAlignmentInfo": "Are you sure you want to remove the alignment(s)?",
-		"irreversibleAction": "This action cannot be undone."
+		"irreversibleAction": "This action cannot be undone.",
+		"addAnotherCompetency": "Add another competency"
 	},
 	"Signup": {
 		"youHaveAccount": "You already have an account?",
