@@ -33,10 +33,12 @@
 					</div>
 				</div>
 				<div
-					class=" video-container md:tw-w-[52%] tw-h-[370px] tw-relative tw-m-4 tw-box-border"
+				class=" video-container md:tw-w-[52%] tw-h-[370px] tw-relative tw-m-4 tw-box-border"
 				>
+				<img class="tw-cursor-pointer tw-relative tw-z-10" [src]="thumbnailSrc" alt="Thumbnail" *ngIf="!videoStarted" (click)="startVideo()">
 					<iframe
-						src="https://www.youtube.com/embed/H6lBdH75P7g"
+					    *ngIf="videoStarted"
+						src="https://www.youtube.com/embed/H6lBdH75P7g?autoplay=1"
 						class="tw-w-full tw-h-full tw-z-10 tw-relative tw-border-purple tw-border-solid tw-border-4"
 						title="Open badges kurz erklärt"
 						frameborder="0"
