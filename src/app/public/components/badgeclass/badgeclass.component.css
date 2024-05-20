@@ -1,0 +1,7 @@
+::ng-deep .topbar,
+::ng-deep .badgedetail .badgedetail-x-header,
+::ng-deep .badgedetail .badgedetail-x-sidebar,
+::ng-deep .badgedetail .badgedetail-x-body,
+::ng-deep .badgedetail .badgedetail-x-desc{
+    background-color: white;
+}
