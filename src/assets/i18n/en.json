@@ -181,7 +181,8 @@
 		"awarded": "Awarded",
 		"editInstitution": "Edit institution",
 		"editInstitutionInfo": "Edit this institution's information.",
-		"issuerHasNoBadgesYet": "The issuer does not have any badges yet"
+		"issuerHasNoBadgesYet": "The issuer does not have any badges yet",
+		"issuerHasBadges": "has"
 	},
 	"Badge": {
 		"groupBy": "Group by",
@@ -207,7 +208,8 @@
 		"participation": "Participation",
 		"competency": "Competency",
 		"title": "Title",
-		"characters": "characters"
+		"characters": "characters",
+		"createdOn": "Created on"
 	},
 	"CreateBadge": {
 		"chooseBadgeCategory": "Choose Badge-Category",

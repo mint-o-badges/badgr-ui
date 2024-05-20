@@ -182,7 +182,8 @@
 		"awarded": "Vergeben",
 		"editInstitution": "Institution bearbeiten",
 		"editInstitutionInfo": "Bearbeite die Informationen dieser Institution.",
-		"issuerHasNoBadgesYet": "Der Issuer hat noch keine Badges"
+		"issuerHasNoBadgesYet": "hat noch keine Badges.",
+		"issuerHasBadges": "hat"
 	},
 	"Badge": {
 		"groupBy": "Gruppieren nach",
@@ -202,12 +203,13 @@
 		"noBadges": "Keine Badges",
 		"oneBadge": "1 Badge",
 		"multiBadges": "# Badges",
-		"noRecipients": "Keine Empfänger*in",
+		"noRecipients": "Keine Empfänger:in",
 		"oneRecipient": "1 Empfänger",
-		"multiRecipients": "# Empfänger*innen",
+		"multiRecipients": "Empfänger:innen",
 		"participation": "Teilnahme",
 		"competency": "Kompetenz",
-		"title": "Titel"
+		"title": "Titel",
+		"createdOn": "Erstellt am"
 	},
 	"CreateBadge": {
 		"chooseBadgeCategory": "Badge-Kategorie wählen",
