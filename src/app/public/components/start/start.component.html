@@ -37,7 +37,7 @@
 				>
 				<img class="tw-cursor-pointer tw-relative tw-z-10" [src]="thumbnailSrc" alt="Thumbnail" *ngIf="!videoStarted" (click)="startVideo()">
 					<iframe
-					    *ngIf="videoStarted"
+					    [hidden]="!videoStarted"
 						src="https://www.youtube.com/embed/H6lBdH75P7g?autoplay=1"
 						class="tw-w-full tw-h-full tw-z-10 tw-relative tw-border-purple tw-border-solid tw-border-4"
 						title="Open badges kurz erklärt"
