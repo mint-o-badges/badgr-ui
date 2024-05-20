@@ -9,8 +9,14 @@ import { SessionService } from '../../../common/services/session.service';
 export class StartComponent implements OnInit {
 	constructor(public sessionService: SessionService) {}
 	public loggedIn = false;
+	thumbnailSrc: string = "../../../../../assets/videos/thumbnail.svg";
+	videoStarted = false;
 
 	ngOnInit() {
 		this.loggedIn = this.sessionService.isLoggedIn;
+	}
+
+	startVideo() {
+		this.videoStarted = true;
 	}
 }
