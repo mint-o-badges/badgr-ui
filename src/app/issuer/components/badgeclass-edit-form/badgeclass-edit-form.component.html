@@ -464,28 +464,28 @@
 						{{criteriaText}}
 					</textarea> -->
 					<div>
-						<span *ngIf="badgeClassForm.controls.badge_name.value" class="tw-font-semibold tw-text-lg">
+						<span *ngIf="badgeClassForm.controls.badge_name.value" class="tw-text-lg">
 							Du hast erfolgreich an
 							{{ badgeClassForm.controls.badge_name.value }} teilgenommen.</span
 						>
 						<div *ngIf="badgeCategory === 'competency'">
-							<span class="tw-font-bold">Dabei hast du folgende Kompetenzen gestärkt: </span>
-							<ul class="tw-list-disc">
+							<span class="tw-font-bold tw-text-lg">Dabei hast du folgende Kompetenzen gestärkt: </span>
+							<ul class="tw-list-disc tw-mt-4">
 								<ng-container
 									*ngFor="
 										let aiCompetency of badgeClassForm.controls.aiCompetencies.controls;
 										let i = index
 									"
 								>
-									<li *ngIf="aiCompetency.rawControlMap.selected.value">
-										<span>
+									<li *ngIf="aiCompetency.rawControlMap.selected.value" class="tw-mx-6">
+										<span class="tw-text-lg">
 											{{ aiCompetenciesSuggestions[i].preferred_label }}
 										</span>
 									</li>
 								</ng-container>
 								<ng-container *ngFor="let competency of badgeClassForm.controls.competencies.controls">
-									<li *ngIf="competency.rawControlMap.name.value">
-										<span>{{ competency.rawControlMap.name.value }}</span>
+									<li *ngIf="competency.rawControlMap.added.value && competency.rawControlMap.name.value" class="tw-mx-6">
+										<span class="tw-text-lg">{{ competency.rawControlMap.name.value }}</span>
 									</li>
 								</ng-container>
 							</ul>
