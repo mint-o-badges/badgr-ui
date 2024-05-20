@@ -90,7 +90,7 @@
         "@spartan-ng/cli": "^0.0.1-alpha.350",
         "@types/core-js": "2.5.8",
         "@types/fabric": "5.3.6",
-        "@types/geojson": "7946.0.13",
+        "@types/geojson": "7946.0.14",
         "@types/jasmine": "~5.1.4",
         "@types/jasminewd2": "~2.0.3",
         "@types/node": "^20.9.4",
