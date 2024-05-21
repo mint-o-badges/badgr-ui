@@ -1,62 +1,77 @@
-<div class="oeb page-padding tw-overflow-hidden tw-relative tw-py-[6rem]">
-	<div class="tw-flex tw-justify-center tw-top-[240px]">
+<div class="oeb page-padding tw-overflow-hidden tw-relative md:tw-py-[6rem] tw-py-[3rem]">
+	<div class="tw-flex tw-justify-center">
 		<form-message></form-message>
 
-		<div class="md:tw-w-[70%] tw-w-[90%]">
+		<div class="tw-relative md:tw-w-[70%] tw-w-[90%]">
 			<!-- OAuth Banner -->
 			<oauth-banner></oauth-banner>
 
-			<!-- Title Message -->
-			<h1
-				class="tw-font-normal md:tw-text-[46px] md:tw-leading-[55.2px] tw-text-purple tw-text-[30px] tw-leading-[36px]"
-			>
-				Account erstellen für
-			</h1>
-			<h1
-				class="tw-font-black md:tw-text-[46px] md:tw-leading-[55.2px] tw-text-purple tw-text-[30px] tw-leading-[36px]"
-			>
-				Open Educational Badges
-			</h1>
-
-			<p
-				class="tw-font-normal tw-text-[20px] tw-leading-[28px] tw-text-black tw-mt-3"
-				*ngIf="!oAuthManager.currentAuthorization"
-			>
-				{{ 'Signup.youHaveAccount' | translate }}
-				<a class="tw-underline tw-text-[#1400FF]" [routerLink]="['/auth/login']">Login</a>.
-			</p>
-			<p class="tw-font-normal tw-text-[20px] tw-leading-[28px]" *ngIf="oAuthManager.currentAuthorization">
-				{{ 'Signup.application' | translate }}
-				<strong>
-					{{ oAuthManager.currentAuthorization.application.name }}
-				</strong>
-				{{ 'Signup.loginWithOpenEducationalBadges' | translate }}
-				Open Educational Badges.
-				{{ 'Signup.youHaveAccount' | translate }}
-				<a class="tw-underline tw-text-[#1400FF]" [routerLink]="['/login']">Login</a>!
-			</p>
-			<h3 class="ruleheadline l-ruleheadline" *ngIf="sessionService.enabledExternalAuthProviders.length > 0">
-				{{ 'Signup.signUpWith' | translate }}
-			</h3>
-
-			<div class="l-socialbuttons u-margin-top2x" *ngIf="sessionService.enabledExternalAuthProviders.length > 0">
-				<button
-					*ngFor="let provider of sessionService.enabledExternalAuthProviders"
-					(click)="sessionService.initiateUnauthenticatedExternalAuth(provider)"
-					class="socialbutton"
-					[style.backgroundColor]="provider.color"
+			<div class="tw-relative tw-z-20">
+				<!-- Title Message -->
+				<h1
+					class="tw-font-normal md:tw-text-[46px] md:tw-leading-[55.2px] tw-text-purple tw-text-[30px] tw-leading-[36px]"
 				>
-					<div class="visuallyhidden">Access with {{ provider.label }}</div>
-					<img [src]="sanitize(provider.imgSrc)" alt="" />
-				</button>
+					Account erstellen für
+				</h1>
+				<h1
+					class="tw-font-black md:tw-text-[46px] md:tw-leading-[55.2px] tw-text-purple tw-text-[30px] tw-leading-[36px]"
+				>
+					Open Educational Badges
+				</h1>
+
+				<p
+					class="tw-font-normal tw-text-[20px] tw-leading-[28px] tw-text-black tw-mt-4 tw-mb-6"
+					*ngIf="!oAuthManager.currentAuthorization"
+				>
+					{{ 'Signup.youHaveAccount' | translate }}
+					<a class="tw-underline tw-text-[#1400FF]" [routerLink]="['/auth/login']">Login</a>.
+				</p>
+				<p class="tw-font-normal tw-text-[20px] tw-leading-[28px]" *ngIf="oAuthManager.currentAuthorization">
+					{{ 'Signup.application' | translate }}
+					<strong>
+						{{ oAuthManager.currentAuthorization.application.name }}
+					</strong>
+					{{ 'Signup.loginWithOpenEducationalBadges' | translate }}
+					Open Educational Badges.
+					{{ 'Signup.youHaveAccount' | translate }}
+					<a class="tw-underline tw-text-[#1400FF]" [routerLink]="['/login']">Login</a>!
+				</p>
+				<h3 class="ruleheadline l-ruleheadline" *ngIf="sessionService.enabledExternalAuthProviders.length > 0">
+					{{ 'Signup.signUpWith' | translate }}
+				</h3>
+
+				<div
+					class="l-socialbuttons u-margin-top2x"
+					*ngIf="sessionService.enabledExternalAuthProviders.length > 0"
+				>
+					<button
+						*ngFor="let provider of sessionService.enabledExternalAuthProviders"
+						(click)="sessionService.initiateUnauthenticatedExternalAuth(provider)"
+						class="socialbutton"
+						[style.backgroundColor]="provider.color"
+					>
+						<div class="visuallyhidden">Access with {{ provider.label }}</div>
+						<img [src]="sanitize(provider.imgSrc)" alt="" />
+					</button>
+				</div>
+				<h3 class="ruleheadline l-ruleheadline" *ngIf="sessionService.enabledExternalAuthProviders.length > 0">
+					Oder
+				</h3>
 			</div>
-			<h3 class="ruleheadline l-ruleheadline" *ngIf="sessionService.enabledExternalAuthProviders.length > 0">
-				Oder
-			</h3>
+
+			<div
+				class="tw-absolute md:tw-top-[90px] md:tw-right-[80px] tw-top-[30px] tw-right-[-30px] tw-opacity-70 tw-z-0"
+			>
+				<img
+					class="md:tw-h-[384.85px] tw-h-[384.85px]"
+					src="assets/oeb/images/signuppage/circles.png"
+					alt="circles-logo"
+				/>
+			</div>
 
 			<!-- Sign Up Form -->
 			<form
-				class="u-margin-top2x md:tw-w-[546px] tw-w-[357px]"
+				class="u-margin-top2x md:tw-w-[546px] tw-w-[357px] tw-relative tw-z-20"
 				role="form"
 				aria-labelledby="heading-form"
 				[formGroup]="signupForm.rawControl"
