@@ -1,6 +1,5 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component,  OnInit } from '@angular/core';
 import { SessionService } from '../../../common/services/session.service';
-import test from 'node:test';
 
 @Component({
 	selector: 'app-start',
