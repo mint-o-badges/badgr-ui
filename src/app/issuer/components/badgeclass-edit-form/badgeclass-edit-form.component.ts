@@ -44,7 +44,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	uploadOwnVisual = this.translate.instant('RecBadge.uploadOwnVisual');
 
 	chooseABadgeCategory = this.translate.instant('CreateBadge.chooseABadgeCategory');
-	summarizedDescription = this.translate.instant('CreateBadge.summarizedDescription');
+	summarizedDescription = this.translate.instant('CreateBadge.summarizedDescription') + this.translate.instant('CreateBadge.descriptionSavedInBadge');
 	enterDescription = this.translate.instant('Issuer.enterDescription');
 	max70chars = '(max 70 ' + this.translate.instant('General.characters') + ')';
 
@@ -559,6 +559,10 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			return;
 		}
 		competency.controls['added'].setValue(true);
+		// this.badgeClassForm.controls.competencies.addFromTemplate();
+	}
+
+	addAnotherCompetency(){
 		this.badgeClassForm.controls.competencies.addFromTemplate();
 	}
 

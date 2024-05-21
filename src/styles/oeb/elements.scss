@@ -71,4 +71,13 @@
 		font-weight: 400;
 		line-height: 150%; /* 30px */
 	}
+
+	.oeb-label-button {
+		background: white;
+		border: 1px solid;
+		color: var(--color-purple);
+		padding: 4px 16px 4px 16px;
+		gap: 8px;
+		border-radius: 10px;
+	}
 }
