@@ -163,7 +163,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	 */
 
 	savePromise: Promise<BadgeClass> | null = null;
-	badgeClassForm = typedFormGroup([this.criteriaRequired.bind(this), this.imageValidation.bind(this)])
+	badgeClassForm = typedFormGroup([this.imageValidation.bind(this)])
 		.addControl('badge_name', '', [
 			Validators.required,
 			Validators.maxLength(255),

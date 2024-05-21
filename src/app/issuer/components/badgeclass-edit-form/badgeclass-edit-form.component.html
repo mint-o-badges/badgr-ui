@@ -440,14 +440,14 @@
 			<p class="tw-my-2 tw-italic tw-font-semibold">
 				{{ 'CreateBadge.criteriaInfo' | translate }}
 			</p>
-			<div class="mdeditor">
+			<!-- <div class="mdeditor">
 				<div class="mdeditor-x-editor">
 					<p
 						[hidden]="!alignmentFieldDirty || !badgeClassForm.hasError('criteriaRequired')"
 						class="u-text u-margin-bottom2x u-text-error"
 					>
 						{{ 'CreateBadge.criteriaError' | translate }}
-					</p>
+					</p> -->
 
 					<!-- <bg-formfield-markdown
 						[control]="badgeClassForm.rawControlMap.badge_criteria_text"
@@ -462,7 +462,7 @@
 					<div>
 						<span *ngIf="badgeClassForm.controls.badge_name.value" class="tw-text-lg">
 							Du hast erfolgreich an
-							{{ badgeClassForm.controls.badge_name.value }} teilgenommen.</span
+							<span class="tw-italic tw-font-semibold">{{ badgeClassForm.controls.badge_name.value + ' ' }}</span> teilgenommen.</span
 						>
 						<div *ngIf="badgeCategory === 'competency'">
 							<span class="tw-font-bold tw-text-lg">Dabei hast du folgende Kompetenzen gestärkt: </span>
@@ -487,7 +487,7 @@
 							</ul>
 						</div>
 					</div>
-				</div>
+				<!-- </div> -->
 
 				<!-- <div class="forminput u-margin-bottom2x md:tw-items-center tw-flex tw-gap-2 md:tw-flex-row tw-flex-col">
 					<span class="tw-font-bold tw-whitespace-nowrap">URL (optional)</span>
@@ -499,7 +499,7 @@
 						errorMessage="URL zu den Badge Kriterien"
 					></bg-formfield-text>
 				</div> -->
-			</div>
+			<!-- </div> -->
 		</div>
 	</div>
 
