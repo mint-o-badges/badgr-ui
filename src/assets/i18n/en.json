@@ -49,7 +49,8 @@
 		"months": "Months",
 		"years": "Years",
 		"showDetails": "Show details",
-		"hideDetails": "Hide details"
+		"hideDetails": "Hide details",
+		"password": "Password"
 	},
 	"NavItems": {
 		"register": "Register",
@@ -276,12 +277,12 @@
 		"loginWithOpenEducationalBadges": "I'd like you to log in with",
 		"fName": "First name",
 		"lName": "Last name",
-		"pass8char": "Password (at least 8 characters)",
-		"confirmPassword": "Confirm Password",
+		"passMin8Char": "(minimum 8 characters)",
+		"repeatPassword": "Reenter Password",
 		"createAccount": "Create Account",
-		"receiveUpdates": "I would like to receive email updates about products, services, upcoming webinars, news and events from",
+		"receiveUpdatesCB": "Yes, <span class='tw-font-normal'>I would like to receive email updates about Open Educational Badges products and services, future webinars, news and events.<span>",
 		"readTerms": "Please read and agree to the Terms of Service if you want to continue.",
-		"agreeToTerms1": "I have read and agree to the terms of service. ",
+		"agreeToTerms1": "I have read and agree to the <a class='tw-underline tw-text-[#1400FF]' target='_blank' href='public/impressum'>terms of service</a>. ",
 		"agreeToTerms2": "Terms of Service",
 		"registerWithUs": "Register with us",
 		"provideInfo": ", by providing the following information",

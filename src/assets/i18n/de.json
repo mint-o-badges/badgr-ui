@@ -50,7 +50,8 @@
 		"months": "Monate",
 		"years": "Jahre",
 		"showDetails": "Details anzeigen",
-		"hideDetails": "Details verstecken"
+		"hideDetails": "Details verstecken",
+		"password": "Passwort"
 	},
 	"NavItems": {
 		"register": "Registrieren",
@@ -278,13 +279,12 @@
 		"loginWithOpenEducationalBadges": "würde dich gerne einloggen mit",
 		"fName": "Vorname",
 		"lName": "Nachname",
-		"pass8char": "Passwort (Mindestens 8 Zeichen)",
-		"confirmPassword": "Passwort bestätigen",
-		"createAccount": "Konto erstellen",
-		"receiveUpdates": "Ich möchte E-Mail-Updates zu Produkten, Dienstleistungen, bevorstehenden Webinaren, Neuigkeiten und Veranstaltungen von erhalten",
+		"passMin8Char": "(mindestens 8 Zeichen)",
+		"repeatPassword": "Passwort wiederholen",
+		"createAccount": "Account erstellen",
+		"receiveUpdatesCB": "JA, <span class='tw-font-normal'>ich möchte E-Mail-Updates über Produkte und Serviceleistungen, zukünftige Webinare, Neuigkeiten und Events von Open Educational Badges erhalten.<span>",
 		"readTerms": "Bitte lesen Sie die Nutzungsbedingungen und stimmen Sie ihnen zu, wenn Sie fortfahren möchten.",
-		"agreeToTerms1": "Ich habe die Nutzungsbedingungen gelesen und stimme ihnen zu. ",
-		"agreeToTerms2": "Die Nutzungsbedingungen",
+		"agreeToTerms1": "Ich habe die <a class='tw-underline tw-text-[#1400FF]' target='_blank' href='public/impressum'>Nutzungsbedingungen</a> gelesen und stimme ihnen zu. ",
 		"registerWithUs": "Registrier Dich mit",
 		"provideInfo": ", indem Du die folgenden Informationen bereitstellst",
 		"signUpWith": "Anmelden mit",
