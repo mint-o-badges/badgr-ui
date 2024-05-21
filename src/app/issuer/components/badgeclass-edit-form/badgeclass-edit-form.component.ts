@@ -39,6 +39,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	baseUrl: string;
 	badgeCategory: string;
 
+
 	selectFromMyFiles = this.translate.instant('RecBadge.selectFromMyFiles');
 	chooseFromExistingIcons = this.translate.instant('RecBadge.chooseFromExistingIcons');
 	uploadOwnVisual = this.translate.instant('RecBadge.uploadOwnVisual');
@@ -215,6 +216,9 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				.addControl('target_code', ''),
 		);
 
+	criteriaText: string = '';
+	
+		
 	@ViewChild('badgeStudio')
 	badgeStudio: BadgeStudioComponent;
 
@@ -414,6 +418,29 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				}, 10);
 			}
 		});
+
+		this.badgeClassForm.rawControl.statusChanges.subscribe((e) => {
+			let criteriaText = "*Folgende Kriterien sind auf Basis deiner Eingaben als Metadaten im Badge hinterlegt*: \n\n"
+			let participationText = `Du hast erfolgreich an **${this.badgeClassForm.value.badge_name}** teilgenommen.  \n\n `
+			let competenciesTextCaption = "Dabei hast du folgende Kompetenzen gestärkt: \n\n"
+
+			let competenciesText = this.badgeClassForm.value.competencies.map((competency) => {
+				return `- ${competency.name} \n`
+			}).join('');
+
+			let aiCompetenciesText = this.badgeClassForm.controls.aiCompetencies.controls.map((aiCompetency, index) => {
+				if(aiCompetency.controls.selected.value){
+					return `- ${this.aiCompetenciesSuggestions[index].preferred_label} \n`
+				}
+			}).join('');
+
+			if(this.badgeCategory === 'competency'){
+				this.badgeClassForm.controls.badge_criteria_text.setValue(criteriaText + participationText + competenciesTextCaption + competenciesText + aiCompetenciesText );
+			}else{
+				this.badgeClassForm.controls.badge_criteria_text.setValue(criteriaText + participationText );	
+			}
+
+		})
 		this.fetchTags();
 	}
 
