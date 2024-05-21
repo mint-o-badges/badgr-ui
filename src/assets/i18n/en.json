@@ -182,7 +182,13 @@
 		"awarded": "Awarded",
 		"editInstitution": "Edit institution",
 		"editInstitutionInfo": "Edit this institution's information.",
-		"issuerHasNoBadgesYet": "The issuer does not have any badges yet"
+		"issuerHasNoBadgesYet": "The issuer does not have any badges yet",
+		"issuerHasBadges": "has",
+		"myInstitutionsText": "Über deine Institutionen kannst du <span class='tw-text-purple tw-font-medium'> Badges erstellen und anschließend an deine Lernenden vergeben</span>.",
+		"myInstitutionsNoBadge": "hat noch keine Badges, die sie vergeben kann.",
+		"myInstitutionsCreateBadge": "Neuen Badge erstellen",
+		"askForPlugin": "Plugin anfragen",
+		"askForPluginText": "Unser <span class='tw-font-bold tw-text-purple'>Plugin</span> bietet dir die Möglichkeit, Badges aus deiner eigenen digitalen Lehrumgebung heraus zu vergeben."
 	},
 	"Badge": {
 		"groupBy": "Group by",
@@ -208,7 +214,8 @@
 		"participation": "Participation",
 		"competency": "Competency",
 		"title": "Title",
-		"characters": "characters"
+		"characters": "characters",
+		"createdOn": "Created on"
 	},
 	"CreateBadge": {
 		"chooseBadgeCategory": "Choose Badge-Category",
@@ -219,7 +226,7 @@
 		"participationInfo": "serve as confirmation of attendance at an event",
 		"noCompetencies": "and contain no competencies",
 		"enterDetails": "Enter Badge Details",
-		"criteriaInfo": "Describe here exactly what needs to be done to receive the badge and/or provide a website as a source of information. At least one of the fields is mandatory.",
+		"criteriaInfo": "The following criteria are saved as metadata in the badge as a result of your input: ",
 		"criteriaError": "Either text or url are mandatory.",
 		"whatIsThe": "What is the",
 		"competencyBadgeInfo": "are filled with competencies",
@@ -228,7 +235,8 @@
 		"participationBadgeShortInfo": "confirm participation",
 		"short": "Short",
 		"forLearners": "for learners",
-		"summarizedDescription": "Summarized description of your learning offer",
+		"summarizedDescription": "Summarized description of your learning offer.",
+		"descriptionSavedInBadge": "This description is saved in the badge.",
 		"imageRequiredError": "Please use one of the options to choose an image for the badge",
 		"useOurEditor": "Use our editor",
 		"imageSublabel": "Choose an image/icon to be inserted into our frame.",
@@ -246,7 +254,7 @@
 		"suggestCompetencies": "Suggest Competencies",
 		"fitting": "Fitting",
 		"suggestedCompetencies": "Suggested Competencies appear here.",
-		"addCompetenciesByHand": "Add competencies by hand",
+		"addCompetenciesByHand": "Add competencies by hand (optional)",
 		"tofindFittingCompetencies": "to find fitting competencies.",
 		"toEscoSearch": "to ESCO search",
 		"enterCompetencyTitle": "Please enter a title for the competency",
@@ -269,7 +277,8 @@
 		"tagInfo": "Tags label badges and assist in searching for badges on specific topics.",
 		"removeAlignment": "Remove Alignment",
 		"removeAlignmentInfo": "Are you sure you want to remove the alignment(s)?",
-		"irreversibleAction": "This action cannot be undone."
+		"irreversibleAction": "This action cannot be undone.",
+		"addAnotherCompetency": "Add another competency"
 	},
 	"Signup": {
 		"youHaveAccount": "You already have an account?",

@@ -33,15 +33,18 @@
 					</div>
 				</div>
 				<div
-					class=" video-container md:tw-w-[52%] tw-h-[370px] tw-relative tw-m-4 tw-box-border"
+				class=" video-container md:tw-w-[52%] tw-h-[370px] tw-relative tw-m-4 tw-box-border"
 				>
+				<img class="tw-cursor-pointer tw-relative tw-z-10" [src]="thumbnailSrc" alt="Thumbnail" *ngIf="!videoStarted" (click)="startVideo()">
 					<iframe
+					    [hidden]="!videoStarted"
 						src="https://www.youtube.com/embed/H6lBdH75P7g"
 						class="tw-w-full tw-h-full tw-z-10 tw-relative tw-border-purple tw-border-solid tw-border-4"
 						title="Open badges kurz erklärt"
 						frameborder="0"
 						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 						allowfullscreen
+						id="video-iframe"
 					></iframe>
 					
 					<div class="tw-hidden md:tw-block tw-absolute tw-top-[-150px] tw-right-[-140px] tw-opacity-70">
@@ -350,7 +353,7 @@
 					</div>
 					<div class="tw-px-4 md:tw-px-10">
 						<div class="tw-max-w-[150px] tw-max-h-[150px] tw-border-box">
-							<img src="assets/logos/LogoKlimaCampus.png" alt="KlimaCampus Logo" />
+							<img src="assets/logos/Logo-KlimaCampus.png" alt="KlimaCampus Logo" />
 						</div>
 					</div>
 					<div class="tw-px-4 md:tw-px-10">
