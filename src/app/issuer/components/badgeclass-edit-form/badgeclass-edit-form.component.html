@@ -18,7 +18,7 @@
 				></bg-formfield-select>
 			</div>
 			<div class="tw-italic tw-gap-2">
-				<div class="tw-flex">
+				<div class="tw-flex tw-py-2">
 					<span class="purpletext">{{ 'Badge.competency' | translate }}-Badges&nbsp; </span>
 					<span class="md:tw-hidden"> {{ 'CreateBadge.competencyBadgeShortInfo' | translate }}.</span>
 					<span class="tw-hidden md:tw-block">{{ 'CreateBadge.competencyBadgeInfo' | translate }}.</span>
@@ -38,7 +38,7 @@
 		</div>
 		<div class="md:tw-mx-10 md:tw-items-center tw-justify-center">
 			<div class="field-container tw-items-start">
-				<span class="input-label tw-break-words">
+				<span class="input-label tw-break-words   md:tw-flex-[0_0_10em]">
 					{{ 'CreateBadge.short' | translate }}&shy;{{ 'General.description' | translate }}
 					{{ 'CreateBadge.forLearners' | translate }}</span
 				>
@@ -52,7 +52,7 @@
 				></bg-formfield-text>
 			</div>
 			<div class="field-container md:tw-items-center tw-justify-start">
-				<span class="input-label"> {{ 'RecBadgeDetail.duration' | translate }}</span>
+				<span class="input-label   md:tw-flex-[0_0_10em]"> {{ 'RecBadgeDetail.duration' | translate }}</span>
 				<div class="tw-flex tw-gap-2 tw-items-center">
 					<bg-formfield-text
 						class="tw-w-20"
@@ -63,7 +63,7 @@
 				</div>
 			</div>
 			<div class="field-container md:tw-items-center tw-justify-start">
-				<span class="input-label"> {{ 'Badge.title' | translate }}</span>
+				<span class="input-label   md:tw-flex-[0_0_10em]"> {{ 'Badge.title' | translate }}</span>
 
 				<bg-formfield-text
 					[control]="badgeClassForm.rawControlMap.badge_name"
@@ -76,7 +76,7 @@
 				></bg-formfield-text>
 			</div>
 			<div class="field-container">
-				<span class="input-label"> Badge-{{ 'Issuer.image' | translate }}</span>
+				<span class="input-label   md:tw-flex-[0_0_10em]"> Badge-{{ 'Issuer.image' | translate }}</span>
 				<div
 					class="tw-flex tw-flex-col tw-gap-4 md:tw-flex-row tw-bg-[var(--color-lightgreen)] tw-p-8 tw-justify-evenly tw-items-center tw-mr-auto tw-rounded-2xl"
 				>
@@ -154,11 +154,7 @@
 						>{{ 'CreateBadge.useAiAssistant' | translate }}</span
 					>
 					<p class="tw-my-2">{{ 'CreateBadge.enterAiDescription' | translate }}</p>
-					<p class="tw-mb-2">
-						Für diese Funktion wird die eingegeben Kursbeschreibung an einen KI-Assistenten weitergeleitet
-						und verarbeitet. Weitere Information hierzu findest du in unserer Datenschutzerklärung unter
-						Punkt 9.
-					</p>
+				
 					<p class="tw-mb-2">{{ 'CreateBadge.addAiCompetencies' | translate }}</p>
 				</div>
 				<div
