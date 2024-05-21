@@ -142,7 +142,7 @@ export const defaultConfig: BadgrConfig = {
 		alternateLandingRedirect: false,
 	},
 	help: {
-		email: 'support@badgr.io',
+		email: 'support@openbadges.education',
 	},
 	assertionVerifyUrl: "https://badgecheck.io/",
 	theme: {
