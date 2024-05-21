@@ -287,7 +287,13 @@
 		"registerWithUs": "Register with us",
 		"provideInfo": ", by providing the following information",
 		"signUpWith": "Sign Up With",
-		"create": "Create a"
+		"create": "Create a",
+		"createAccountFor": "Account erstellen für",
+		"weCreatedYourAccount": "Wir haben deinen Account erstellt und dir eine Verifizierungs-E-Mail geschickt.",
+		"success_heading": "Wir haben deinen Account erstellt und dir eine Verifizierungs-E-Mail geschickt.",
+		"success_verify_email_heading": "Verifiziere deine E-mail-Addresse",
+		"success_verify_email_desc": "Bitte überprüfe deine E-Mails und <span class='tw-text-purple'>klicke in der Mail auf „Meinen Account bestätigen”</span>, um deinen Account zu aktivieren.",
+		"success_verify_email_help": "Wenn du die Verifizierungs-E-Mail nicht innerhalb weniger Minuten erhältst, schaue in deinen Spam-Ordner. Wenn du die Mail auch dort nicht findest, <a class='tw-text-purple tw-not-italic' href='mailto:support@openbadges.education'>schreib uns</a>."
 	},
 	"Login": {
 		"stayLogged": "Stay logged in",

@@ -1,4 +1,4 @@
-<div class="oeb page-padding tw-overflow-hidden tw-relative md:tw-py-[6rem] tw-py-[3rem]">
+<div class="oeb page-padding tw-overflow-hidden tw-relative md:tw-py-[6rem] tw-py-[2rem]">
 	<div class="tw-flex tw-flex-col tw-items-center tw-justify-center ">
 		<form-message></form-message>
 		<!-- OAuth Banner -->
@@ -11,15 +11,14 @@
 				alt="circles-logo"
 			/>
 
-			<p class="tw-font-normal md:tw-text-[24px] md:tw-leading-[28.8px] tw-text-[16.8px] tw-leading-[px] tw-text-purple">
-				Wir haben deinen Account erstellt und dir eine Verifizierungs-E-Mail geschickt.
+			<p [innerHTML]="'Signup.weCreatedYourAccount' | translate" class="tw-font-normal md:tw-text-[24px] md:tw-leading-[28.8px] tw-text-[16.8px] tw-leading-[px] tw-text-purple">
 			</p>
 		</div>
 
 		<div class="tw-flex tw-flex-col tw-justify-center md:tw-p-[50px] md:tw-mt-[50px] tw-p-[30px] tw-mt-[30px] tw-bg-green md:tw-w-[80%] tw-w-[98%] md:tw-rounded-[20px] tw-rounded-[14px]">
-			<h2 class="tw-font-black md:tw-text-[46px] md:tw-leading-[55.2px] tw-text-center  tw-text-[30px] tw-leading-[33px] tw-text-purple">Verifiziere deine E-mail-Addresse</h2>
-			<h2 class="tw-font-semibold md:tw-text-[30px] md:tw-leading-[36px] md:tw-mt-[30px] tw-text-center  tw-text-[16px] tw-leading-[19.2px] tw-mt-[20px] tw-text-black">Bitte überprüfe deine E-Mails und <span class="tw-text-purple">klicke in der Mail auf „Meinen Account bestätigen”</span>, um deinen Account zu aktivieren.</h2>
-			<p class="tw-font-normal md:tw-text-[20px] md:tw-leading-[24px] md:tw-mt-[30px] tw-text-center  tw-text-[14px] tw-leading-[16.8px] tw-mt-[20px]">Wenn du die Verifizierungs-E-Mail nicht innerhalb weniger Minuten erhältst, schaue in deinen Spam-Ordner. Wenn du die Mail auch dort nicht findest, <a class="tw-text-purple tw-not-italic" [href]="helpEmailUrl">schreib uns</a>.</p>
+			<h2 [innerHTML]="'Signup.success_verify_email_heading' | translate" class="tw-font-black md:tw-text-[46px] md:tw-leading-[55.2px] tw-text-center  tw-text-[30px] tw-leading-[33px] tw-text-purple"></h2>
+			<h2 [innerHTML]="'Signup.success_verify_email_desc' | translate" class="tw-font-semibold md:tw-text-[30px] md:tw-leading-[36px] md:tw-mt-[30px] tw-text-center  tw-text-[16px] tw-leading-[19.2px] tw-mt-[20px] tw-text-black"></h2>
+			<p [innerHTML]="'Signup.success_verify_email_help' | translate" class="tw-font-normal md:tw-text-[20px] md:tw-leading-[24px] md:tw-mt-[30px] tw-text-center  tw-text-[14px] tw-leading-[16.8px] tw-mt-[20px]"></p>
 		</div>
 	</div>
 
