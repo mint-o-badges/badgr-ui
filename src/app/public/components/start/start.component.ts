@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { SessionService } from '../../../common/services/session.service';
+import test from 'node:test';
 
 @Component({
 	selector: 'app-start',
@@ -18,5 +19,6 @@ export class StartComponent implements OnInit {
 
 	startVideo() {
 		this.videoStarted = true;
+		(document.getElementById('video-iframe') as HTMLIFrameElement).src = "https://www.youtube.com/embed/H6lBdH75P7g?autoplay=1";
 	}
 }
