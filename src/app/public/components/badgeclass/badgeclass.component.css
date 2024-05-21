@@ -5,3 +5,7 @@
 ::ng-deep .badgedetail .badgedetail-x-desc{
     background-color: white;
 }
+
+::ng-deep .badgedetail .badgedetail-x-sidebar .badgedetail-x-sidebarinternal{
+    border-radius: 15px;
+}

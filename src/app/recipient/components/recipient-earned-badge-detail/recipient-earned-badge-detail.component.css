@@ -1,7 +1,41 @@
 ::ng-deep .topbar,
-::ng-deep .badgedetail .badgedetail-x-header,
-::ng-deep .badgedetail .badgedetail-x-sidebar,
 ::ng-deep .badgedetail .badgedetail-x-body,
 ::ng-deep .badgedetail .badgedetail-x-desc{
     background-color: white;
+}
+
+::ng-deep .badgedetail .badgedetail-x-header {
+    background-color: white;
+    display: flex
+}
+
+::ng-deep .badgedetail .badgedetail-x-sidebar {
+    background-color: white;
+    position: relative
+}
+
+@media (min-width: 768px) {
+::ng-deep .badgedetail .badgedetail-x-header,
+	.badgedetail .badgedetail-x-desc,
+	.badgedetail .badgedetail-x-body {
+		padding-left: 0px;
+	}
+}
+
+/* @media (min-width: 768px) {
+    ::ng-deep .badgedetail .badgedetail-x-sidebar {
+        left: 0px
+    }
+} */
+
+::ng-deep .badgedetail .badgedetail-x-sidebar .badgedetail-x-sidebarinternal{
+    border-radius: 15px;
+}
+
+.tag{
+    border: 1px solid var(--color-purple);   
+}
+
+.icon{
+    fill: var(--color-purple)
 }

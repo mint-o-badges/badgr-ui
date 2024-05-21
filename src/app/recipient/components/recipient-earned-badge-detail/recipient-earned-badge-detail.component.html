@@ -8,9 +8,9 @@
 			</div>
 		</div>
 	</div>
-	<div class="badgedetail">
-		<div class="badgedetail-x-header">
-			<h1>{{ badge.badgeClass.name }}</h1>
+	<div class="badgedetail page-padding">
+		<div class="badgedetail-x-header ">
+			<h1 class="tw-text-[var(--color-purple)]">{{ badge.badgeClass.name }}</h1>
 
 			<div class="l-primarymore">
 				<button
@@ -56,72 +56,93 @@
 				</bg-popup-menu>
 			</div>
 		</div>
-		<div class="badgedetail-x-sidebar">
-			<div class="badgedetail-x-sidebarinternal" style="background-color: #ecfeed">
-				<img
-					[loaded-src]="badge.image"
-					[loading-src]="badgeLoadingImageUrl"
-					[error-src]="badgeFailedImageUrl"
-					[ngStyle]="badge.isExpired && { filter: 'grayscale(1)' }"
-					class="badgeimage badgeimage-center badgeimage-large"
-					width="200"
-				/>
-				<div
-					class="badgestatus badgestatus-{{ badge.mostRelevantStatus }} u-margin-top2x"
-					*ngIf="badge.mostRelevantStatus"
-				>
-					{{ badge.mostRelevantStatus }}
-				</div>
-				<dl>
-					<div class="l-flex l-flex-2x u-padding-top2x border border-top border-light3">
-						<div>
-							<img
-								[loaded-src]="badge.badgeClass?.issuer?.image"
-								[loading-src]="issuerImagePlacholderUrl"
-								[error-src]="issuerImagePlacholderUrl"
-								width="40"
-							/>
-						</div>
-						<div>
-							<dt class="u-text-small-bold u-text-dark2">{{ 'RecBadgeDetail.issuedBy' | translate }}</dt>
-							<dd class="u-text">
-								<a class="u-break-word" [href]="badge.badgeClass.issuer.id">{{
-									badge.badgeClass.issuer.name
-								}}</a>
-							</dd>
-						</div>
+		<div class="tw-flex page-padding">
+			<div class="badgedetail-x-sidebar">
+				<div class="badgedetail-x-sidebarinternal" style="background-color: #ecfeed">
+					<div class="tw-bg-white tw-px-4 tw-py-2 tw-rounded-[20px] tw-border tw-border-solid tw-border-[var(--color-purple)] ">
+						<img
+							[loaded-src]="badge.image"
+							[loading-src]="badgeLoadingImageUrl"
+							[error-src]="badgeFailedImageUrl"
+							[ngStyle]="badge.isExpired && { filter: 'grayscale(1)' }"
+							class="badgeimage badgeimage-center badgeimage-large"
+							width="200"
+						/>
 					</div>
-					<dt
-						class="u-text-small-bold u-padding-top2x u-margin-top2x border border-top border-light3 u-text-dark2"
+					<div
+						class="badgestatus badgestatus-{{ badge.mostRelevantStatus }} u-margin-top2x"
+						*ngIf="badge.mostRelevantStatus"
 					>
-						{{ 'RecBadgeDetail.issuedOn' | translate }}
-					</dt>
-					<dd class="u-text"><time [date]="badge?.issueDate" format="mediumDate"></time></dd>
-					<dt
-						class="u-text-small-bold u-padding-top2x u-margin-top2x border border-top border-light3 u-text-dark2"
-					>
-						{{ 'RecBadgeDetail.awardedTo' | translate }}
-					</dt>
-					<dd class="u-text u-break-all" *ngIf="badge.hasExtension('extensions:recipientProfile')">
-						{{ badge.getExtension('extensions:recipientProfile', null).name }}
-					</dd>
-					<dd class="u-text u-break-all">{{ badge.recipientEmail }}</dd>
-					<div *ngIf="badge && badge.expiresDate">
+						{{ badge.mostRelevantStatus }}
+					</div>
+					<dl>
+						<div class="l-flex l-flex-2x u-padding-top2x  tw-border tw-border-solid tw-border-[var(--color-purple)] tw-px-4 tw-py-2 tw-bg-white tw-rounded-[20px]">
+							<div>
+								<img
+									[loaded-src]="badge.badgeClass?.issuer?.image"
+									[loading-src]="issuerImagePlacholderUrl"
+									[error-src]="issuerImagePlacholderUrl"
+									width="40"
+								/>
+							</div>
+							<div>
+								<dt class="tw-italic tw-font-semibold">{{ 'RecBadgeDetail.issuedBy' | translate }}</dt>
+								<dd class="u-text">
+									<a class="u-break-word" [href]="badge.badgeClass.issuer.id">{{
+										badge.badgeClass.issuer.name
+									}}</a>
+								</dd>
+							</div>
+							
+						</div>
+						<div class="l-flex l-flex-2x u-padding-top2x border border-top border-light3">
+								<dt class="u-text-small-bold u-text-dark2"> Tags </dt>
+								<dd class="u-text">
+									<div class="l-tags">
+										<div class="tag" *ngFor="let tag of badge.badgeClass.tags; last as last">{{ tag }}</div>
+									</div>
+							
+						</div>
+						<div class="l-flex l-flex-1x u-padding-top2x u-margin-top2x border border-top border-light3">
+							<dt
+								class="u-text-small-bold  u-text-dark2"
+							>
+								{{ 'General.category' | translate }}
+							</dt>
+							<dd class="u-text-small tw-font-semibold">{{ category.Category === 'competency' ? 'Kompetenz- Badge' : 'Teilnahme- Badge' }}</dd>
+						</div>
 						<dt
 							class="u-text-small-bold u-padding-top2x u-margin-top2x border border-top border-light3 u-text-dark2"
 						>
-							{{ compareDate(badge.expiresDate, now) | i18nPlural: tense['expires'] }} on:
+							{{ 'RecBadgeDetail.issuedOn' | translate }}
 						</dt>
-						<dd class="u-text"><time [date]="badge?.expiresDate" format="mediumDate"></time></dd>
-					</div>
-				</dl>
+						<dd class="u-text"><time [date]="badge?.issueDate" format="mediumDate"></time></dd>
+						<dt
+							class="u-text-small-bold u-padding-top2x u-margin-top2x border border-top border-light3 u-text-dark2"
+						>
+							{{ 'RecBadgeDetail.awardedTo' | translate }}
+						</dt>
+						<dd class="u-text u-break-all" *ngIf="badge.hasExtension('extensions:recipientProfile')">
+							{{ badge.getExtension('extensions:recipientProfile', null).name }}
+						</dd>
+						<dd class="u-text u-break-all">{{ badge.recipientEmail }}</dd>
+						<div *ngIf="badge && badge.expiresDate">
+							<dt
+								class="u-text-small-bold u-padding-top2x u-margin-top2x border border-top border-light3 u-text-dark2"
+							>
+								{{ compareDate(badge.expiresDate, now) | i18nPlural: tense['expires'] }} on:
+							</dt>
+							<dd class="u-text"><time [date]="badge?.expiresDate" format="mediumDate"></time></dd>
+						</div>
+					</dl>
+				</div>
 			</div>
-		</div>
-		<div class="badgedetail-x-desc">
-			<h2 class="u-text-h3-semibold u-margin-bottom2x u-text-dark2 u-hidden-mintablet">
-				{{ 'RecBadgeDetail.description' | translate }}
-			</h2>
-			<p class="u-text-body u-width-paragraph">{{ badge.badgeClass.description }}</p>
+			<div class="badgedetail-x-desc">
+				<h2 class="u-text-h3-semibold u-margin-bottom2x u-text-dark2">
+					Kurzbeschreibung
+				</h2>
+				<p class="u-text-body u-width-paragraph">{{ badge.badgeClass.description }}</p>
+			</div>
 		</div>
 		<div class="badgedetail-x-body">
 			<!-- criteria -->
@@ -144,13 +165,6 @@
 					</a>
 				</div>
 			</section>
-			<!-- Kategorie -->
-			<section>
-				<h3 *ngIf="category" class="u-text-h3-semibold u-margin-bottom2x u-text-dark2 u-margin-top4x">
-					{{ 'RecBadgeDetail.category' | translate }}
-				</h3>
-				<span>{{ category.Category === 'competency' ? 'Kompetenz- Badge' : 'Teilnahme- Badge' }}</span>
-			</section>
 
 			<!-- Kompetenzen -->
 			<section>
@@ -162,21 +176,24 @@
 				</h3>
 				<div *ngFor="let competency of competencies; let i = index">
 					<div
-						class="tw-flex tw-flex-col tw-bg-[var(--color-lightpurple)] tw-border tw-border-solid tw-border-[var(--color-purple)] tw-p-4 tw-rounded-lg tw-mt-4 tw-max-w-[500px]"
+						class="tw-flex tw-flex-col tw-bg-[var(--color-lightgreen)] tw-border tw-border-solid tw-border-[var(--color-purple)] tw-p-4 tw-rounded-lg tw-mt-4 tw-max-w-[500px]"
 					>
 						<div class="tw-grid tw-grid-cols-3">
 							<span class="tw-col-span-2 tw-font-bold tw-text-lg">{{ competency.name }}</span>
 							<div class="tw-flex tw-items-start tw-justify-end ">
-								<div class="tw-flex tw-items-center tw-gap-2 tw-px-2 tw-border tw-border-solid tw-rounded-3xl tw-border-[var(--color-purple)]">
-									<svg class="icon icon-dark4" width="18px" viewBox="0 0 24 24" icon="icon_pending"></svg>
+								<div class="tw-flex tw-items-center tw-gap-1 tw-py-1 tw-px-2 tw-border tw-border-solid tw-rounded-3xl tw-border-[var(--color-purple)] tw-bg-white">
+									<svg class="icon icon-dark4" width="18px" fill="purple" viewBox="0 0 24 24" icon="icon_pending"></svg>
 									<span>{{ competency.studyLoad }} Min.</span>
 								</div>
 							</div>
 						</div>
+						<div>
+							<p class="u-break-word u-text-body u-width-paragraph tw-font-semibold u-margin-top2x tw-line-clamp-3">{{ competency.description }}</p>
+						</div>
 						
 						
 
-						<competency-accordion [category]="competency.category" [description]="competency.description" />
+						<!-- <competency-accordion [category]="competency.category" [description]="competency.description" /> -->
 					</div>
 				</div>
 			</section>
@@ -213,12 +230,12 @@
 			</section>
 
 			<!-- tags -->
-			<section *ngIf="badge.badgeClass.tags.length > 0">
+			<!-- <section *ngIf="badge.badgeClass.tags.length > 0">
 				<h3 class="u-text-h3-semibold u-margin-bottom2x u-text-dark2 u-margin-top4x">Tags</h3>
 				<div class="l-tags">
 					<div class="tag" *ngFor="let tag of badge.badgeClass.tags; last as last">{{ tag }}</div>
 				</div>
-			</section>
+			</section> -->
 
 			<!-- evidence -->
 			<section>
@@ -254,7 +271,7 @@
 			</section>
 
 			<!-- collections -->
-			<section>
+			<!-- <section>
 				<div class="l-flex l-flex-1x l-flex-justifybetween u-margin-bottom2x u-margin-top4x">
 					<h2 class="u-text-h3-semibold u-text-dark2">{{ 'RecBadgeDetail.collections' | translate }}</h2>
 					<button
@@ -292,7 +309,7 @@
 						</tr>
 					</tbody>
 				</table>
-			</section>
+			</section> -->
 		</div>
 	</div>
 	<recipient-badge-collection-selection-dialog #collectionSelectionDialog>
