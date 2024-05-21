@@ -435,7 +435,7 @@
 	</div>
 
 	<div class="section">
-		<h2 class="heading">4. Badge- {{ 'RecBadgeDetail.criteria' | translate }}</h2>
+		<h2 class="heading"><ng-container>{{ badgeCategory === 'competency' ? '4.' : '3.'}}</ng-container> Badge-{{ 'RecBadgeDetail.criteria' | translate }}</h2>
 		<div class="md:tw-mx-6">
 			<p class="tw-my-2 tw-italic tw-font-semibold">
 				{{ 'CreateBadge.criteriaInfo' | translate }}
