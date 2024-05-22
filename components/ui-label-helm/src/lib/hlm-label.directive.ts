@@ -5,19 +5,19 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import type { ClassValue } from 'clsx';
 
 export const labelVariants = cva(
-	'text-sm font-medium leading-none [&>[hlmInput]]:my-1 [&:has([hlmInput]:disabled)]:cursor-not-allowed [&:has([hlmInput]:disabled)]:opacity-70',
+	'tw-text-sm tw-font-medium tw-leading-none [&>[hlmInput]]:tw-my-1 [&:has([hlmInput]:disabled)]:tw-cursor-not-allowed [&:has([hlmInput]:disabled)]:tw-opacity-70',
 	{
 		variants: {
 			variant: {
 				default: '',
 			},
 			error: {
-				auto: '[&:has([hlmInput].ng-invalid.ng-touched)]:text-destructive',
-				true: 'text-destructive',
+				auto: '[&:has([hlmInput].ng-invalid.ng-touched)]:tw-text-destructive',
+				true: 'tw-text-destructive',
 			},
 			disabled: {
-				auto: '[&:has([hlmInput]:disabled)]:opacity-70',
-				true: 'opacity-70',
+				auto: '[&:has([hlmInput]:disabled)]:tw-opacity-70',
+				true: 'tw-opacity-70',
 				false: '',
 			},
 		},
@@ -53,7 +53,7 @@ export class HlmLabelDirective {
 				error: this._error(),
 				disabled: this._brn?.dataDisabled() ?? 'auto',
 			}),
-			'[&.ng-invalid.ng-touched]:text-destructive',
+			'[&.ng-invalid.ng-touched]:tw-text-destructive',
 			this.userClass(),
 		),
 	);
