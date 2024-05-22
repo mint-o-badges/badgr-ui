@@ -1,11 +1,78 @@
 ::ng-deep .topbar,
-::ng-deep .badgedetail .badgedetail-x-header,
 ::ng-deep .badgedetail .badgedetail-x-sidebar,
-::ng-deep .badgedetail .badgedetail-x-body,
-::ng-deep .badgedetail .badgedetail-x-desc{
+::ng-deep .badgedetail .badgedetail-x-body{
+    background-color: white;
+}
+
+::ng-deep .badgedetail .badgedetail-x-header{
+    font-size: 34px;
+    line-height: calc(var(--typography-size) + 12px);
+    font-weight: normal;
     background-color: white;
 }
 
 ::ng-deep .badgedetail .badgedetail-x-sidebar .badgedetail-x-sidebarinternal{
     border-radius: 15px;
 }
+
+::ng-deep .badgedetail .badgedetail-x-sidebar {
+    /* position: relative; */
+    width: 346px;
+    height: 785px;
+}
+
+.tag{
+    border: 1px solid var(--color-purple); 
+    height: 32px;  
+}
+
+.icon{
+    fill: var(--color-purple)
+}
+
+@media (min-width: 768px) {
+    ::ng-deep .badgedetail .badgedetail-x-desc{
+        margin-top: calc(var(--gridspacing) * 3);
+        padding-left: calc(346px + 48px + 16px);
+    }
+}
+
+@media (min-width: 1224px) {
+    ::ng-deep .badgedetail .badgedetail-x-desc{
+        /* margin-top: calc(var(--gridspacing) * 3); */
+        padding-left: calc(50% - 600px + 450px);
+    }
+}
+@media (min-width: 768px) {
+    ::ng-deep .badgedetail .badgedetail-x-body{
+        /* margin-top: calc(var(--gridspacing) * 3); */
+        padding-left: calc(346px + 48px + 16px);
+    }
+}
+
+@media (min-width: 1224px) {
+    ::ng-deep .badgedetail .badgedetail-x-body{
+        /* margin-top: calc(var(--gridspacing) * 3); */
+        padding-left: calc(50% - 600px + 450px);
+    }
+}
+
+
+::ng-deep .badgedetail .badgedetail-x-desc{
+  background-color: white;
+}
+
+@media (min-width: 768px) {
+    ::ng-deep .badgedetail .badgedetail-x-header{
+        padding-left: calc(var(--gridspacing) * 2);
+        display: flex
+    }
+}
+
+@media (min-width: 1224px) {
+    ::ng-deep .badgedetail .badgedetail-x-header{
+        padding-left: calc(346px + 48px + 16px);
+        display: flex
+    }
+}
+
