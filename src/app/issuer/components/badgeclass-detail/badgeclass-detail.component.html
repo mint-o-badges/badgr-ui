@@ -127,47 +127,7 @@
 								</dt>
 								<dd class="u-text-small"><time [date]="badgeClass.createdAt" format="dd/MM/y"></time></dd>
 							</div>
-							<!-- <dt
-								class="l-flex l-flex-1x u-text-small-bold u-padding-top2x u-margin-top2x border border-top border-light3 tw-text-oebblack"
-							>
-								Erstellt am:
-							</dt>
-							<dd class="u-text"><time [date]="badgeClass.createdAt" format="dd/MM/y"></time></dd> -->
-							<dt
-								class="u-text-small-bold u-padding-top2x u-margin-top2x border border-top border-light3 u-text-dark2"
-								*ngIf="badgeClass.expiresAmount"
-							>
-								Ablaufdatum:
-							</dt>
-							<dd class="u-text" *ngIf="badgeClass.expiresAmount > 1">
-								{{ badgeClass.expiresAmount }} {{ badgeClass.expiresDuration }}
-							</dd>
-							<dd class="u-text" *ngIf="badgeClass.expiresAmount == 1">
-								{{ badgeClass.expiresAmount }} {{ badgeClass.expiresDuration.slice(0, -1) }}
-							</dd>
 	
-							<!-- Study Load -->
-	
-							<!-- <div
-								*ngIf="
-									badgeClass.extension['extensions:StudyLoadExtension'] &&
-									badgeClass.extension['extensions:StudyLoadExtension'].StudyLoad != 0
-								"
-							>
-								<dt
-									class="u-text-small-bold u-padding-top2x u-margin-top2x border border-top border-light3 u-text-dark2"
-								>
-									Minimale Dauer
-								</dt>
-								<dd class="u-text">
-									{{ badgeClass.extension['extensions:StudyLoadExtension'].StudyLoad }}
-									{{
-										badgeClass.extension['extensions:StudyLoadExtension'].StudyLoad === 1
-											? 'Minute'
-											: 'Minuten'
-									}}
-								</dd>
-							</div> -->
 						</dl>
 
 						<hr class="tw-mx-auto tw-w-[280px] tw-my-4 tw-border tw-border-solid tw-border-[var(--color-purple)]" />
@@ -181,51 +141,6 @@
 				</div>
 			</div>
 			<div class="badgedetail-x-body">
-				<!-- criteria -->
-				<!-- <section *ngIf="badgeClass.criteria_url || badgeClass.criteria_text">
-					<h3 class="u-text-h3-semibold u-text-dark2 u-margin-bottom2x u-margin-top4x">Kriterien</h3>
-					<show-more>
-						<markdown-display *ngIf="badgeClass.criteria_text" [value]="badgeClass.criteria_text">
-						</markdown-display>
-					</show-more>
-					<div class="u-margin-yaxis2x" *ngIf="badgeClass.criteria_url">
-						<a class="u-text-outlink" target="_blank" [href]="badgeClass.criteria_url"
-							>Externe Kriterien URL ansehen
-							<svg icon="icon_external_link"></svg>
-						</a>
-					</div>
-				</section> -->
-
-				<!-- alignment -->
-				<section>
-					<h3
-						class="u-text-h3-semibold u-text-dark2 u-margin-yaxis2x"
-						*ngIf="badgeClass.alignments && badgeClass?.alignments.length > 0"
-					>
-						Anlehnung
-					</h3>
-
-					<div
-						class="bordered l-padding-2x l-marginBottom-2x"
-						*ngFor="let alignment of badgeClass.alignments; let i = index"
-					>
-						<div class="l-flex l-flex-justifybetween">
-							<h4 class="u-text-body-bold u-margin-bottom1x">{{ alignment.target_name }}</h4>
-							<small>{{ alignment.target_code }}</small>
-						</div>
-						<p class="u-break-word u-text-body u-width-paragraph">{{ alignment.target_description }}</p>
-						<div *ngIf="alignment.framework_name">
-							<h1>Framework</h1>
-							{{ alignment.framework_name }}
-						</div>
-						<div class="u-margin-yaxis2x" *ngIf="alignment.target_url">
-							<a class="u-text-outlink" [href]="alignment.target_url" target="_blank"
-								>URL der Anlehnung besuchen
-								<svg icon="icon_external_link"></svg>
-							</a>
-						</div>
-					</div>
-				</section>
 
 				<!-- Kompetenzen -->
 				<section>
@@ -259,92 +174,16 @@
 								<div>
 									<p class="u-break-word u-text-body tw-font-semibold u-width-paragraph u-margin-top2x tw-line-clamp-3 tw-italic">{{ competency.description }}</p>
 								</div>
-								<!-- <competency-accordion
-									[category]="competency.category"
-									[description]="competency.description"
-								/> -->
 							</div>
 						</div>
 					</div>
 				</section>
 
 				<!-- recipients -->
-				<div class="l-stack u-margin-bottom2x u-margin-top4x">
-					<h2 class="u-text-h3-semibold u-text-dark2">
-						{{ recipientCount }} Badge {{ recipientCount == 1 ? 'Empfänger*in' : 'Empfänger*innen' }}
-					</h2>
-					<div class="forminput forminput-hasicon">
-						<p class="forminput-x-sublabel">Nach E-Mail Adresse suchen</p>
-						<div class="forminput-x-inputs">
-							<input type="text" placeholder="Nach E-Mail Adresse suchen" [(ngModel)]="searchQuery" />
-							<svg class="forminput-x-icon" icon="icon_search"></svg>
-						</div>
-					</div>
-				</div>
-				<p class="u-text u-margin-bottom3x" *ngIf="showAssertionCount">
-					{{ instanceResults.length }} bisherige Vergaben. Du kannst die Buttons Weiter/Zurück weiter unten
-					verwenden, um weitere Vergaben anzuzeigen, oder Vergaben anhand der genauen
-					E-Mail-Adresse/Empfängerkennung suchen.
-				</p>
 				<ng-template
 					[bgAwaitPromises]="[badgeInstancesLoaded, assertionsLoaded]"
 					*ngIf="instanceResults?.length"
 				>
-					<!-- <table class="datatable datatable-roundheaders datatable-onlyfirstcolumn">
-						<thead class="datatable-x-head">
-							<tr class="datatable-x-header">
-								<th class="datatable-x-cell" scope="col">ID</th>
-								<th class="datatable-x-cell" scope="col">Vergeben am</th>
-								<th class="datatable-x-cell" scope="col">
-									<span class="visuallyhidden">Actions</span>
-								</th>
-							</tr>
-						</thead>
-						<tbody class="datatable-x-body">
-							<tr class="datatable-x-row" *ngFor="let instance of instanceResults">
-								<th class="datatable-x-cell u-text-body" scope="row">
-									<div class="l-flex l-flex-2x l-flex-aligncenter">
-										<span
-											*ngIf="instance.isExpired"
-											class="badgestatus badgestatus-expired u-margin-right1x"
-											>expired</span
-										>
-										<span class="l-flex-x-grow u-overflow-ellipsis">{{
-											instance.recipientIdentifier
-										}}</span>
-										<span
-											class="l-flex l-flex-justifyend l-flex-aligncenter l-flex-1x u-hidden-minmobilelarge"
-										>
-											<button
-												class="buttonicon buttonicon-link"
-												(click)="popInstance = instance"
-												[bgPopupMenuTrigger]="mobileTableMoreMenu"
-											>
-												<svg icon="icon_more"></svg>
-												<span class="visuallyhidden">More</span>
-											</button>
-										</span>
-									</div>
-								</th>
-								<td class="datatable-x-cell u-text-smalllineheight3x">
-									<time [date]="instance.issuedOn" format="mediumDate"></time>
-								</td>
-								<td class="datatable-x-cell">
-									<div class="l-flex l-flex-justifyend l-flex-aligncenter l-flex-1x">
-										<a class="u-text-link-small" target="_blank" [href]="instance.url">Öffnen</a>
-										<button
-											class="buttonicon buttonicon-link"
-											(click)="popInstance = instance"
-											[bgPopupMenuTrigger]="tableMoreMenu"
-										>
-											<svg icon="icon_more"></svg>
-											<span class="visuallyhidden">More</span>
-										</button>
-									</div>
-								</td>
-							</tr>
-						</tbody>
-					</table> --> 
 
 					<issuer-detail-datatable [recipients]="instanceResults"></issuer-detail-datatable>
 
