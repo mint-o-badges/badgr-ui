@@ -35,6 +35,9 @@
       ],
       "@spartan-ng/ui-table-helm": [
         "./components/ui-table-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-input-helm": [
+        "./components/ui-input-helm/src/index.ts"
       ]
     }
   }
