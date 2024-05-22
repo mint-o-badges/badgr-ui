@@ -23,8 +23,8 @@ export class PdfService {
   }
 
 	getPdf(slug: string): Observable<SafeResourceUrl> {
-        const headers = new HttpHeaders().set('Accept', 'application/pdf');
-        return this.http.get(`${this.baseUrl}/v1/earner/badges/pdf/${slug}`, { responseType: 'blob' }).pipe(
+        const headers = new HttpHeaders().set('Authorization', `Bearer ${this.loginService.currentAuthToken.access_token}`);
+        return this.http.get(`${this.baseUrl}/v1/earner/badges/pdf/${slug}`, { headers: headers, responseType: 'blob' }).pipe(
           map((response: Blob) => {
             const url = URL.createObjectURL(response);
             return this.sanitizer.bypassSecurityTrustResourceUrl(url);
