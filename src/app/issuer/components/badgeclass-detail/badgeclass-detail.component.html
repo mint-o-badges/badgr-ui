@@ -12,15 +12,15 @@
 		</header>
 		<div class="badgedetail">
 			<div class="badgedetail-x-header">
-				<h1>{{ badgeClass?.name }}</h1>
-				<div class="l-primarymore">
+				<h1 class="tw-text-purple">{{ badgeClass?.name }}</h1>
+				<div class="l-primarymore ">
 					<a
-						class="button"
+						class="button md:tw-[358px] tw-h-[64px] tw-flex tw-items-center tw-justify-center tw-text-xl"
 						[routerLink]="['/issuer/issuers', issuerSlug, 'badges', badgeClass.slug, 'issue']"
 						[disabled-when-requesting]="true"
 						>Badge vergeben</a
 					>
-					<button class="buttonicon buttonicon-secondary" id="actionstrigger" [bgPopupMenuTrigger]="moreMenu">
+					<button class="buttonicon buttonicon-secondary tw-w-[64px] tw-h-[64px]" id="actionstrigger" [bgPopupMenuTrigger]="moreMenu">
 						<svg icon="icon_more"></svg>
 						<span class="visuallyhidden">Mehr</span>
 					</button>
@@ -41,122 +41,144 @@
 					</bg-popup-menu>
 				</div>
 			</div>
-			<div class="badgedetail-x-sidebar">
-				<div class="badgedetail-x-sidebarinternal" style="background-color: #ecfeed">
-					<!-- Badge Assertion Image -->
-					<img
-						class="badgeimage badgeimage-center badgeimage-large"
-						[loaded-src]="badgeClass.image"
-						[loading-src]="badgeLoadingImageUrl"
-						[error-src]="badgeFailedImageUrl"
-						width="200"
-					/>
-					<!-- Issuer Information -->
-					<dl>
-						<div class="l-flex l-flex-2x u-padding-top2x border border-top border-light3">
-							<div>
-								<img
-									[loaded-src]="issuer.image"
-									[loading-src]="issuerImagePlacholderUrl"
-									[error-src]="issuerImagePlacholderUrl"
-									width="40"
-								/>
+			<div class="tw-flex md:tw-flex-row tw-flex-col tw-mt-4 tw-relative">
+				<div class="badgedetail-x-sidebar">
+					<div class="badgedetail-x-sidebarinternal" style="background-color: #ecfeed">
+						<div class=" tw-w-[297.86px] tw-h-[257px] tw-flex tw-items-center tw-bg-white tw-mx-auto tw-rounded-[20px] tw-border tw-border-solid tw-border-[var(--color-purple)] ">
+						<!-- Badge Assertion Image -->
+						<img
+							class="badgeimage badgeimage-center badgeimage-large"
+							[loaded-src]="badgeClass.image"
+							[loading-src]="badgeLoadingImageUrl"
+							[error-src]="badgeFailedImageUrl"
+							width="201"
+							height="211.97"
+						/>
+						</div>
+						<!-- Issuer Information -->
+						<dl>
+							<div class="l-flex l-flex-2x u-padding-top2x tw-w-[280px] tw-mx-auto tw-flex tw-items-center tw-border tw-border-solid tw-border-[var(--color-purple)] tw-pl-4 tw-py-4 tw-bg-white tw-rounded-[20px]">
+								<div>
+									<img
+										[loaded-src]="issuer.image"
+										[loading-src]="issuerImagePlacholderUrl"
+										[error-src]="issuerImagePlacholderUrl"
+										width="53"
+										height="53"
+									/>
+								</div>
+								<div class="tw-text-oebblack">
+									<dt class="tw-italic ">Vergeben von:</dt>
+									<dd class="u-text u-break-word">
+											{{issuer.name}}
+									</dd>
+								</div>
 							</div>
-							<div>
-								<dt class="u-text-small-bold u-text-dark2">Vergeben von:</dt>
-								<dd class="u-text">
-									<a class="u-break-word" [routerLink]="['/issuer/issuers/', issuerSlug]">{{
-										issuer.name
-									}}</a>
-								</dd>
-							</div>
-							<div>
-								<dt class="u-text-small-bold u-text-dark2">Tags</dt>
-								<dd class="u-text">
-									<div> tags here
 
+							<div class="l-flex l-flex-2x u-padding-top2x border border-top border-light3">
+								<dt class="u-text-small-bold u-text-dark2 tw-p-2"> Tags </dt>
+								<dd class="u-text">
+									<div class="l-tags">
+										<div class="tag" *ngFor="let tag of badgeClass.tags; last as last">{{ tag }}</div>
 									</div>
-								</dd>
+							
 							</div>
-						</div>
-						<div
-							*ngIf="badgeClass.extension['extensions:BasedOnExtension'].BasedOn.slug"
-							class="l-flex l-flex-2x u-padding-top2x border border-top border-light3"
-						>
-							<div>
-								<dt class="u-text-small-bold u-text-dark2">
-									<a
-										class="u-break-word"
-										[routerLink]="[
-											'/issuer/issuers/',
-											badgeClass.extension['extensions:BasedOnExtension'].BasedOn.issuerSlug,
-											'badges',
-											badgeClass.extension['extensions:BasedOnExtension'].BasedOn.slug
-										]"
-									>
-										Basierend auf &rarr;
-									</a>
+
+							<div class="l-flex l-flex-1x tw-text-oebblack u-padding-top2x u-margin-top2x border border-top border-light3">
+								<dt
+									class="u-text-small-bold "
+								>
+									{{ 'General.category' | translate }}
 								</dt>
+								<dd class="u-text-small ">{{ badgeClass.extension['extensions:CategoryExtension'] === 'competency' ? 'Kompetenz- Badge' : 'Teilnahme- Badge' }}</dd>
 							</div>
-						</div>
-						<dt
-							class="u-text-small-bold u-padding-top2x u-margin-top2x border border-top border-light3 u-text-dark2"
-						>
-							Erstellt am:
-						</dt>
-						<dd class="u-text"><time [date]="badgeClass.createdAt" format="dd/MM/y"></time></dd>
-						<dt
-							class="u-text-small-bold u-padding-top2x u-margin-top2x border border-top border-light3 u-text-dark2"
-							*ngIf="badgeClass.expiresAmount"
-						>
-							Ablaufdatum:
-						</dt>
-						<dd class="u-text" *ngIf="badgeClass.expiresAmount > 1">
-							{{ badgeClass.expiresAmount }} {{ badgeClass.expiresDuration }}
-						</dd>
-						<dd class="u-text" *ngIf="badgeClass.expiresAmount == 1">
-							{{ badgeClass.expiresAmount }} {{ badgeClass.expiresDuration.slice(0, -1) }}
-						</dd>
-
-						<!-- Study Load -->
-
-						<div
-							*ngIf="
-								badgeClass.extension['extensions:StudyLoadExtension'] &&
-								badgeClass.extension['extensions:StudyLoadExtension'].StudyLoad != 0
-							"
-						>
+							
+							<div
+								*ngIf="badgeClass.extension['extensions:BasedOnExtension'].BasedOn.slug"
+								class="l-flex l-flex-2x u-padding-top2x border border-top border-light3"
+							>
+								<div>
+									<dt class="u-text-small-bold u-text-dark2">
+										<a
+											class="u-break-word"
+											[routerLink]="[
+												'/issuer/issuers/',
+												badgeClass.extension['extensions:BasedOnExtension'].BasedOn.issuerSlug,
+												'badges',
+												badgeClass.extension['extensions:BasedOnExtension'].BasedOn.slug
+											]"
+										>
+											Basierend auf &rarr;
+										</a>
+									</dt>
+								</div>
+							</div>
+							<div class="l-flex l-flex-1x tw-text-oebblack u-padding-top2x u-margin-top2x border border-top border-light3">
+								<dt class="u-text-small-bold "
+								>
+									Zuletzt editiert:
+								</dt>
+								<dd class="u-text-small"><time [date]="badgeClass.updatedAt" format="dd/MM/y"></time></dd>
+							</div>
+							<div class="l-flex l-flex-1x tw-text-oebblack u-padding-top2x u-margin-top2x border border-top border-light3">
+								<dt class="u-text-small-bold "
+								>
+									Erstellt am:
+								</dt>
+								<dd class="u-text-small"><time [date]="badgeClass.createdAt" format="dd/MM/y"></time></dd>
+							</div>
+							<!-- <dt
+								class="l-flex l-flex-1x u-text-small-bold u-padding-top2x u-margin-top2x border border-top border-light3 tw-text-oebblack"
+							>
+								Erstellt am:
+							</dt>
+							<dd class="u-text"><time [date]="badgeClass.createdAt" format="dd/MM/y"></time></dd> -->
 							<dt
 								class="u-text-small-bold u-padding-top2x u-margin-top2x border border-top border-light3 u-text-dark2"
+								*ngIf="badgeClass.expiresAmount"
 							>
-								Minimale Dauer
+								Ablaufdatum:
 							</dt>
-							<dd class="u-text">
-								{{ badgeClass.extension['extensions:StudyLoadExtension'].StudyLoad }}
-								{{
-									badgeClass.extension['extensions:StudyLoadExtension'].StudyLoad === 1
-										? 'Minute'
-										: 'Minuten'
-								}}
+							<dd class="u-text" *ngIf="badgeClass.expiresAmount > 1">
+								{{ badgeClass.expiresAmount }} {{ badgeClass.expiresDuration }}
 							</dd>
-						</div>
-						<!-- Category -->
-						<div *ngIf="badgeClass.extension['extensions:CategoryExtension']">
-							<dt
-								class="u-text-small-bold u-padding-top2x u-margin-top2x border border-top border-light3 u-text-dark2"
+							<dd class="u-text" *ngIf="badgeClass.expiresAmount == 1">
+								{{ badgeClass.expiresAmount }} {{ badgeClass.expiresDuration.slice(0, -1) }}
+							</dd>
+	
+							<!-- Study Load -->
+	
+							<!-- <div
+								*ngIf="
+									badgeClass.extension['extensions:StudyLoadExtension'] &&
+									badgeClass.extension['extensions:StudyLoadExtension'].StudyLoad != 0
+								"
 							>
-								Kategorie:
-							</dt>
-							<dd class="u-text">
-								{{ categoryOptions[badgeClass.extension['extensions:CategoryExtension'].Category] }}
-							</dd>
-						</div>
-					</dl>
+								<dt
+									class="u-text-small-bold u-padding-top2x u-margin-top2x border border-top border-light3 u-text-dark2"
+								>
+									Minimale Dauer
+								</dt>
+								<dd class="u-text">
+									{{ badgeClass.extension['extensions:StudyLoadExtension'].StudyLoad }}
+									{{
+										badgeClass.extension['extensions:StudyLoadExtension'].StudyLoad === 1
+											? 'Minute'
+											: 'Minuten'
+									}}
+								</dd>
+							</div> -->
+						</dl>
+
+						<hr class="tw-mx-auto tw-w-[280px] tw-my-4 tw-border tw-border-solid tw-border-[var(--color-purple)]" />
+					</div>
 				</div>
-			</div>
-			<div class="badgedetail-x-desc">
-				<h2 class="u-text-h3-semibold u-text-dark2 u-margin-bottom2x u-hidden-mintablet">Beschreibung</h2>
-				<p class="u-text-body u-width-paragraph">{{ badgeClass.description }}</p>
+				<div class="badgedetail-x-desc">
+					<h2 class="u-text-h3-semibold u-margin-bottom2x u-text-dark2">
+						Kurzbeschreibung
+					</h2>
+					<p class="u-text-body u-width-paragraph tw-font-semibold">{{ badgeClass.description }}</p>
+				</div>
 			</div>
 			<div class="badgedetail-x-body">
 				<!-- criteria -->
@@ -205,34 +227,6 @@
 					</div>
 				</section>
 
-				<!-- tags -->
-				<section>
-					<h3
-						class="u-text-h3-semibold u-text-dark2 u-margin-bottom2x u-margin-top4x"
-						*ngIf="badgeClass.tags && badgeClass.tags.length"
-					>
-						Tags
-					</h3>
-					<div class="l-tags">
-						<div class="tag" *ngFor="let tag of badgeClass.tags; last as last">{{ tag }}</div>
-					</div>
-				</section>
-
-				<!-- Kategorie -->
-				<!-- <section>
-					<h3
-						class="u-text-h3-semibold u-text-dark2 u-margin-bottom2x u-margin-top4x"
-						*ngIf="badgeClass.extension && badgeClass.extension['extensions:CategoryExtension']"
-					>
-						Kategorie
-					</h3>
-					<span>{{
-						badgeClass.extension['extensions:CategoryExtension'].Category === 'competency'
-							? 'Kompetenz- Badge'
-							: 'Teilnahme- Badge'
-					}}</span>
-				</section> -->
-
 				<!-- Kompetenzen -->
 				<section>
 					<h3
@@ -241,7 +235,7 @@
 							badgeClass.extension && badgeClass.extension['extensions:CompetencyExtension'].length > 0
 						"
 					>
-						Kompetenzen
+					{{ 'RecBadgeDetail.competencies' | translate }}
 					</h3>
 					<div>
 						<div
@@ -251,21 +245,24 @@
 							"
 						>
 							<div
-								class="tw-flex tw-flex-col tw-bg-[var(--color-lightpurple)] tw-border tw-border-solid tw-border-[var(--color-purple)] tw-p-4 tw-rounded-lg tw-mt-4 tw-max-w-[500px]"
+								class="tw-flex tw-flex-col tw-bg-[var(--color-lightgreen)] tw-border tw-border-solid tw-border-[var(--color-purple)] tw-p-4 tw-rounded-lg tw-mt-4 tw-max-w-[500px]"
 							>
 								<div class="tw-grid tw-grid-cols-3">
-									<span class="tw-col-span-2 tw-font-bold tw-text-lg">{{ competency.name }}</span>
+									<h3 class="tw-col-span-2 tw-font-[900] tw-text-lg">{{ competency.name }}</h3>
 									<div class="tw-flex tw-items-start tw-justify-end">
-										<div class="tw-flex tw-items-center tw-gap-2 tw-px-2 tw-border tw-border-solid tw-rounded-3xl tw-border-[var(--color-purple)]">
+										<div class="tw-flex tw-items-center tw-gap-2 tw-px-2 tw-border tw-border-solid tw-rounded-3xl tw-border-[var(--color-purple)] tw-bg-white">
 											<svg class="icon icon-dark4" width="18px" viewBox="0 0 24 24" icon="icon_pending"></svg>
 											<span>{{ competency.studyLoad }} Min.</span>
 										</div>
 									</div>
 								</div>
-								<competency-accordion
+								<div>
+									<p class="u-break-word u-text-body tw-font-semibold u-width-paragraph u-margin-top2x tw-line-clamp-3 tw-italic">{{ competency.description }}</p>
+								</div>
+								<!-- <competency-accordion
 									[category]="competency.category"
 									[description]="competency.description"
-								/>
+								/> -->
 							</div>
 						</div>
 					</div>
