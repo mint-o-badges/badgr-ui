@@ -27,7 +27,7 @@ import { BadgeInstance } from '../issuer/models/badgeinstance.model';
         HlmInputDirective,
         ],
 	template: `
-        <hlm-table class="tw-rounded-[20px] tw-overflow-hidden tw-w-full tw-max-w-[100%] tw-bg-lightpurple tw-border-purple tw-border">
+        <hlm-table class="tw-rounded-[20px] tw-overflow-hidden tw-w-full tw-max-w-[100%] tw-bg-lightpurple tw-border-purple tw-border tw-mt-8">
             <hlm-caption>{{caption}}</hlm-caption>
             <hlm-trow class="tw-bg-purple tw-text-white tw-flex-wrap hover:tw-bg-purple">
                 <hlm-th class="!tw-text-white tw-w-40">ID</hlm-th>
