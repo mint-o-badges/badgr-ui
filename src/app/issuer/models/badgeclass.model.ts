@@ -46,6 +46,10 @@ export class BadgeClass extends ManagedEntity<ApiBadgeClass, BadgeClassRef> {
 		return new Date(this.apiModel.created_at);
 	}
 
+	get updatedAt(): Date {
+		return new Date(this.apiModel.updated_at);
+	}
+
 	get createdBy(): string {
 		return this.apiModel.created_by;
 	}
