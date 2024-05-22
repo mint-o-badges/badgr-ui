@@ -180,6 +180,18 @@
 				</section>
 
 				<!-- recipients -->
+				<div class="l-stack u-margin-bottom2x u-margin-top4x">
+					<h2 class="u-text-h3-semibold u-text-dark2">
+						{{ recipientCount }} Badge {{ recipientCount == 1 ? 'Empfänger:in' : 'Empfänger:innen' }}
+					</h2>
+					<!-- <div class="forminput forminput-hasicon">
+						<p class="forminput-x-sublabel">Nach E-Mail Adresse suchen</p>
+						<div class="forminput-x-inputs">
+							<input type="text" placeholder="Nach E-Mail Adresse suchen" [(ngModel)]="searchQuery" />
+							<svg class="forminput-x-icon" icon="icon_search"></svg>
+						</div>
+					</div> -->
+				</div>
 				<ng-template
 					[bgAwaitPromises]="[badgeInstancesLoaded, assertionsLoaded]"
 					*ngIf="instanceResults?.length"
