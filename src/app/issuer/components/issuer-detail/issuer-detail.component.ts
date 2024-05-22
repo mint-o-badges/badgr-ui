@@ -142,4 +142,8 @@ export class IssuerDetailComponent extends BaseAuthenticatedRoutableComponent im
 	routeToBadgeAward(badge, issuer){
 		this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'issue'])
 	}
+
+	routeToBadgeDetail(badge, issuer){
+		this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug])
+	}
 }
