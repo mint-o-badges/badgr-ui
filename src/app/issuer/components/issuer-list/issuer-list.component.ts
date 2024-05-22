@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SessionService } from '../../../common/services/session.service';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
@@ -29,6 +29,7 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 
 	issuersLoaded: Promise<unknown>;
 	badgesLoaded: Promise<unknown>;
+	@ViewChild('pluginBox') public pluginBoxElement: ElementRef;
 
 	get theme() {
 		return this.configService.theme;

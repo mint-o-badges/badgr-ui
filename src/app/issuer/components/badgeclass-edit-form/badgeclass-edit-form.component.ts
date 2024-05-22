@@ -44,7 +44,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	uploadOwnVisual = this.translate.instant('RecBadge.uploadOwnVisual');
 
 	chooseABadgeCategory = this.translate.instant('CreateBadge.chooseABadgeCategory');
-	summarizedDescription = this.translate.instant('CreateBadge.summarizedDescription');
+	summarizedDescription = this.translate.instant('CreateBadge.summarizedDescription') + this.translate.instant('CreateBadge.descriptionSavedInBadge');
 	enterDescription = this.translate.instant('Issuer.enterDescription');
 	max70chars = '(max 70 ' + this.translate.instant('General.characters') + ')';
 
@@ -146,11 +146,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	tagOptions: FormFieldSelectOption[];
 
 	/**
-	 * Indicates whether hexagon frame is shown or hidden
-	 */
-	hideHexFrame: boolean = false;
-
-	/**
 	 * The description of the competencies entered by the user
 	 * for the AI tool
 	 */
@@ -218,8 +213,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				.addControl('target_description', '')
 				.addControl('target_framework', '')
 				.addControl('target_code', ''),
-		);
-
+		);		
 	@ViewChild('badgeStudio')
 	badgeStudio: BadgeStudioComponent;
 
@@ -412,13 +406,14 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		// update badge frame when a category is selected, unless no-hexagon-frame checkbox is checked
 		this.badgeClassForm.rawControl.controls['badge_category'].statusChanges.subscribe((res) => {
 			this.handleBadgeCategoryChange();
-			if (this.currentImage && !this.hideHexFrame) {
+			if (this.currentImage) {
 				//timeout because of workaround for angular bug.
 				setTimeout(function () {
 					that.adjustUploadImage(that.badgeClassForm.value);
 				}, 10);
 			}
 		});
+
 		this.fetchTags();
 	}
 
@@ -564,6 +559,10 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			return;
 		}
 		competency.controls['added'].setValue(true);
+		// this.badgeClassForm.controls.competencies.addFromTemplate();
+	}
+
+	addAnotherCompetency(){
 		this.badgeClassForm.controls.competencies.addFromTemplate();
 	}
 
@@ -718,6 +717,26 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 						this.badgeClassForm.controls.competencies.removeAt(i);
 					}
 				});
+			}
+
+			let criteriaText = "*Folgende Kriterien sind auf Basis deiner Eingaben als Metadaten im Badge hinterlegt*: \n\n"
+			let participationText = `Du hast erfolgreich an **${this.badgeClassForm.value.badge_name}** teilgenommen.  \n\n `
+			let competenciesTextCaption = "Dabei hast du folgende Kompetenzen gestärkt: \n\n"
+
+			let competenciesText = this.badgeClassForm.value.competencies.map((competency) => {
+				return `- ${competency.name} \n`
+			}).join('');
+
+			let aiCompetenciesText = this.badgeClassForm.controls.aiCompetencies.controls.map((aiCompetency, index) => {
+				if(aiCompetency.controls.selected.value){
+					return `- ${this.aiCompetenciesSuggestions[index].preferred_label} \n`
+				}
+			}).join('');
+
+			if(this.badgeCategory === 'competency'){
+				this.badgeClassForm.controls.badge_criteria_text.setValue(criteriaText + participationText + competenciesTextCaption + competenciesText + aiCompetenciesText );
+			}else{
+				this.badgeClassForm.controls.badge_criteria_text.setValue(criteriaText + participationText );	
 			}
 
 			if (this.badgeClassForm.controls.badge_customImage.value && this.badgeClassForm.valid) {
@@ -923,32 +942,21 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		if (typeof this.currentImage == 'undefined' || this.initedCurrentImage) {
 			this.initedCurrentImage = true;
 			this.currentImage = image.slice();
-			// Hide hexagon-frame if checkbox is checked
-			if (this.hideHexFrame) {
-				this.imageField.useDataUrl(this.currentImage, 'BADGE');
-			} else {
 				this.badgeStudio
 					.generateUploadImage(image.slice(), formdata)
 					.then((imageUrl) => this.imageField.useDataUrl(imageUrl, 'BADGE'));
-			}
 		} else {
 			this.initedCurrentImage = true;
 		}
 	}
 
-	generateCustomUploadImage(image, formdata) {
+	generateCustomUploadImage(image) {
 		// the imageUploaded-event of the angular image component is also called after initialising the component because the image is set in initFormFromExisting
 		if (typeof this.currentImage == 'undefined' || this.initedCurrentImage) {
 			this.initedCurrentImage = true;
 			this.currentImage = image.slice();
-			// Hide hexagon-frame if checkbox is checked
-			if (this.hideHexFrame) {
-				this.customImageField.useDataUrl(this.currentImage, 'BADGE');
-			} else {
-				this.badgeStudio
-					.generateUploadImage(image.slice(), formdata)
-					.then((imageUrl) => this.customImageField.useDataUrl(imageUrl, 'BADGE'));
-			}
+			// do not use frame for custom images
+			this.customImageField.useDataUrl(this.currentImage, 'BADGE');
 		} else {
 			this.initedCurrentImage = true;
 		}
@@ -956,7 +964,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 	adjustUploadImage(formdata) {
 		// Skip update badge icon frame if no-hexagon-frame checkbox is checked
-		if (this.currentImage && this.badgeStudio && !this.hideHexFrame) {
+		if (this.currentImage && this.badgeStudio ) {
 			this.badgeStudio
 				.generateUploadImage(this.currentImage.slice(), formdata)
 				.then((imageUrl) => this.imageField.useDataUrl(imageUrl, 'BADGE'));

@@ -1,5 +1,5 @@
 import { Component, Injector } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 
 import { preloadImageURL } from '../../../common/util/file-util';
 import { PublicApiService } from '../../services/public-api.service';

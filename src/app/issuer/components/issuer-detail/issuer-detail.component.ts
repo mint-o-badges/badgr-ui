@@ -138,4 +138,8 @@ export class IssuerDetailComponent extends BaseAuthenticatedRoutableComponent im
 	ngOnInit() {
 		super.ngOnInit();
 	}
+
+	routeToBadgeAward(badge, issuer){
+		this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'issue'])
+	}
 }

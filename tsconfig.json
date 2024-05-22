@@ -1,21 +1,41 @@
 {
-	"compileOnSave": false,
-	"compilerOptions": {
-		"esModuleInterop": true,
-		"importHelpers": true,
-		"outDir": "./dist/out-tsc",
-		"sourceMap": true,
-		"declaration": false,
-		"moduleResolution": "node",
-		"experimentalDecorators": true,
-		"downlevelIteration": true,
-		"noImplicitAny": false,
-		"target": "ES2022",
-		"types": ["node"],
-		"typeRoots": ["node_modules/@types"],
-		"lib": ["es7", "es6", "dom", "esnext"],
-		"module": "commonjs",
-		"baseUrl": "./",
-		"useDefineForClassFields": false
-	}
+  "compileOnSave": false,
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "importHelpers": true,
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "downlevelIteration": true,
+    "noImplicitAny": false,
+    "target": "ES2022",
+    "types": [
+      "node"
+    ],
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es7",
+      "es6",
+      "dom",
+      "esnext"
+    ],
+    "module": "commonjs",
+    "baseUrl": "./",
+    "useDefineForClassFields": false,
+    "paths": {
+      "@spartan-ng/ui-accordion-helm": [
+        "./components/ui-accordion-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-icon-helm": [
+        "./components/ui-icon-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-table-helm": [
+        "./components/ui-table-helm/src/index.ts"
+      ]
+    }
+  }
 }

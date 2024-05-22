@@ -48,7 +48,9 @@
 		"days": "Tage",
 		"weeks": "Wochen",
 		"months": "Monate",
-		"years": "Jahre"
+		"years": "Jahre",
+		"showDetails": "Details anzeigen",
+		"hideDetails": "Details verstecken"
 	},
 	"NavItems": {
 		"register": "Registrieren",
@@ -88,7 +90,7 @@
 
 		"headline1": "Gemeinsam machen wir",
 		"headline2": "Kompetenzerwerb sichtbar",
-		"text1": "Badges sind digitale Nachweise, die wie Zertifikate einfach und zeiteffizient vergeben und gesammelt werden können, um Lernerfolge sichtbar zu machen – sowohl für digitale Lernangebote als auch für Angebote vor Ort.",
+		"text1": "Badges sind digitale Nachweise, die wie Zertifikate einfach und zeiteffizient vergeben und gesammelt werden können, um Lernerfolge und Kompetenzerwerb sichtbar zu machen - sowohl für digitale Lernangebote als auch für Angebote vor Ort.",
 		"badgesErstellen": "Jetzt <span class='bold'>Badges erstellen<span>",
 
 		"headline2_1": "Unsere Ziele für",
@@ -132,7 +134,7 @@
 		"noBadges": "Keine Badges",
 		"recipient": "Empfänger",
 		"noRecipient": "Kein Empfänger",
-		"createInstitution": "Institution erstellen",
+		"createInstitution": "Neue Institution erstellen",
 		"noInstitutionYet": "Du hast noch keine Institution erstellt!",
 		"institutionCreateInfo": "Mit Institutionen kannst du Badges erstellen und an Nutzer*innen vergeben.",
 		"yourRole": "Deine Rolle:",
@@ -180,7 +182,13 @@
 		"awarded": "Vergeben",
 		"editInstitution": "Institution bearbeiten",
 		"editInstitutionInfo": "Bearbeite die Informationen dieser Institution.",
-		"issuerHasNoBadgesYet": "Der Issuer hat noch keine Badges"
+		"issuerHasNoBadgesYet": "hat noch keine Badges.",
+		"issuerHasBadges": "hat",
+		"myInstitutionsText": "Über deine Institutionen kannst du <span class='tw-text-purple tw-font-medium'> Badges erstellen und anschließend an deine Lernenden vergeben</span>.",
+		"myInstitutionsNoBadge": "hat noch keine Badges, die sie vergeben kann.",
+		"myInstitutionsCreateBadge": "Neuen Badge erstellen",
+		"askForPlugin": "Plugin anfragen",
+		"askForPluginText": "Unser <span class='tw-font-bold tw-text-purple'>Plugin</span> bietet dir die Möglichkeit, Badges aus deiner eigenen digitalen Lehrumgebung heraus zu vergeben."
 	},
 	"Badge": {
 		"groupBy": "Gruppieren nach",
@@ -200,12 +208,13 @@
 		"noBadges": "Keine Badges",
 		"oneBadge": "1 Badge",
 		"multiBadges": "# Badges",
-		"noRecipients": "Keine Empfänger*in",
+		"noRecipients": "Keine Empfänger:in",
 		"oneRecipient": "1 Empfänger",
-		"multiRecipients": "# Empfänger*innen",
+		"multiRecipients": "Empfänger:innen",
 		"participation": "Teilnahme",
 		"competency": "Kompetenz",
-		"title": "Titel"
+		"title": "Titel",
+		"createdOn": "Erstellt am"
 	},
 	"CreateBadge": {
 		"chooseBadgeCategory": "Badge-Kategorie wählen",
@@ -215,8 +224,8 @@
 		"withAssistant": "mithilfe unseres KI-Badge-Assistenten",
 		"participationInfo": "dienen als Bestätigung der Teilnahme an einer Veranstaltung",
 		"noCompetencies": "und enthalten keine Kompetenzen",
-		"enterDetails": "Badge Details eingeben",
-		"criteriaInfo": "Beschreibe hier, was genau getan werden muss, um den Badge zu erhalten und/oder gib eine Webseite als Informationsquelle an. Mindestens eines der Felder ist verpflichtend",
+		"enterDetails": "Badge-Details eingeben",
+		"criteriaInfo": "Folgende Kriterien sind auf Basis deiner Eingaben als Metadaten im Badge hinterlegt:",
 		"criteriaError": "Entweder Text oder eine URL sind verpflichtend.",
 		"whatIsThe": "Was ist die",
 		"competencyBadgeInfo": "werden mit Kompetenzen gefüllt",
@@ -225,7 +234,8 @@
 		"participationBadgeShortInfo": "bestätigen Teilnahme",
 		"short": "Kurz",
 		"forLearners": "für Lernende",
-		"summarizedDescription": "Zusammenfassende Beschreibung deines Lehrangebots",
+		"summarizedDescription": "Zusammenfassende Beschreibung deiner Veranstaltung / deines Lehrangebots. ",
+		"descriptionSavedInBadge": "Diese Kurzbeschreibung wird im Badge gespeichert.",
 		"imageRequiredError": "Bitte nutze eine der Optionen um ein Bild für den Badge auszuwählen",
 		"useOurEditor": "Unseren Editor nutzen",
 		"imageSublabel": "Wähle ein Icon/Bild, das in unseren Badge-Rahmen eingesetzt wird.",
@@ -243,7 +253,7 @@
 		"suggestCompetencies": "Kompetenzen vorschlagen",
 		"fitting": "Passende",
 		"suggestedCompetencies": "Hier erscheinen passende Kompetenzen.",
-		"addCompetenciesByHand": "Händisch Kompetenzen hinzufügen",
+		"addCompetenciesByHand": "Händisch Kompetenzen hinzufügen (optional)",
 		"addCompetenciesByHandInfo": "Alternativ/ergänzend kannst du händisch Kompetenzen hinzufügen. Nutze als Unterstützung die Suchfunktion von ESCO",
 		"tofindFittingCompetencies": "um passende Kompetenzen zu finden.",
 		"toEscoSearch": "Zur ESCO-Suche",
@@ -251,13 +261,13 @@
 		"competencyDuration": "Dauer Kompetenz- Erwerb",
 		"chooseCompetencyCategory": "Wähle Kategorie",
 		"competencyCategoryError": "Bitte wähle die Kategorie der Kompetenz aus.",
-		"alignmentInfo": "Open Badges können optional mit Bildungsstandards verknüpft werden. Diese Verknüpfungsinformation kann für Menschen wichtig sein, die sehen welche Badges man erhalten hat oder für Menschen, die sich ein bestimmtes Badge zu erhalten.",
+		"alignmentInfo": "Open Badges können optional mit Bildungs-Standards verknüpft werden. Diese Verknüpfungsinformation kann für Menschen wichtig sein, die sehen welche Badges man erhalten hat oder für Menschen, die sich ein bestimmtes Badge zu erhalten.",
 		"shortDescription": "Kurzbeschreibung",
 		"additionalOptions": "erweiterte Optionen",
 		"addAlignment": "Verknüpfung hinzufügen",
 		"alignmentURLError": "Bitte gib eine URL zur Verknüpfung an.",
 		"alignmentNameError": "Bitte gib einen Namen zur Verknüpfung an.",
-		"alignEducationalFramework": "Verknüpfung zu Bildungsstandards",
+		"alignEducationalFramework": "Verknüpfung zu Bildungs-Standards",
 		"frame": "Rahmen",
 		"expiration": "Gültigkeit",
 		"expirationInfo": "Beschreiben Sie die Dauer, für die dieses Badge allgemein gültig ist. Diese Information kann auch bei der Vergabe geändert werden. Badges werden nach Ablauf der Gültigkeit als abgelaufen markiert.",
@@ -268,7 +278,8 @@
 		"tagInfo": "Tags verschlagworten Badges und helfen bei der Suche von Badges zu bestimmten Themen.",
 		"removeAlignment": "Verknpüfung entfernen",
 		"removeAlignmentInfo": "Bist du sicher, dass du die Verknpüfung(en) entfernen möchtest? ",
-		"irreversibleAction": "Diese Aktion kann nicht rückgängig gemacht werden."
+		"irreversibleAction": "Diese Aktion kann nicht rückgängig gemacht werden.",
+		"addAnotherCompetency": "Weitere Kompetenz hinzufügen"
 	},
 	"Signup": {
 		"youHaveAccount": "Du hast bereits einen Account?",
@@ -453,11 +464,9 @@
 	},
 	"Welcome": {
 		"heading": "Schön, dass du da bist!",
-		"text1_a": "Du kannst sofort loslegen, erhaltene Badges in deinem",
-		"text1_b": "Rucksack zu sammeln",
-		"text2_a": "Wenn du",
-		"text2_b": "Badges vergeben möchtest, lege dafür deine Institution an",
-		"collectBadgesBtn": "Badges sammeln",
-		"awardBadgesBtn": "Badges vergeben"
+		"text1": "Alle deine Badges kannst du ab jetzt in deinem <span class='tw-font-medium tw-text-purple'>Ruckack sammeln</span>.",
+		"text2": "Wenn du<span class='tw-font-medium tw-text-purple'> Badges erstellen und vergeben möchtest</span>, lege dafür deine Institution an.",
+		"collectBadgesBtn": "Badges im Rucksack sammeln",
+		"awardBadgesBtn": "Institutionen erstellen und Badges vergeben"
 	}
 }
