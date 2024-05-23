@@ -449,20 +449,20 @@
 						{{ 'CreateBadge.criteriaError' | translate }}
 					</p>
 
-					<!-- <bg-formfield-markdown
+					<bg-formfield-markdown
 						[control]="badgeClassForm.rawControlMap.badge_criteria_text"
 						[newValue]="badgeClassForm.rawControlMap.badge_criteria_text.value"
 						label=" Wie bekommt man dieses Badge?"
-						class="l-formsection-x-inputoffset"
+						class="tw-hidden"
 						[errorMessage]="''"
-					></bg-formfield-markdown> -->
+					></bg-formfield-markdown>
 					<!-- <textarea id="criteria_textarea" class="tw-my-2" readonly>
 						{{criteriaText}}
 					</textarea> -->
-					<div>
+					 <div >
 						<span *ngIf="badgeClassForm.controls.badge_name.value" class="tw-text-lg">
 							Du hast erfolgreich an
-							{{ badgeClassForm.controls.badge_name.value }} teilgenommen.</span
+							<span class="tw-italic tw-font-semibold">{{ badgeClassForm.controls.badge_name.value + ' ' }}</span> teilgenommen.</span
 						>
 						<div *ngIf="badgeCategory === 'competency'">
 							<span class="tw-font-bold tw-text-lg">Dabei hast du folgende Kompetenzen gestärkt: </span>
@@ -486,7 +486,7 @@
 								</ng-container>
 							</ul>
 						</div>
-					</div>
+					</div> 
 				</div>
 
 				<!-- <div class="forminput u-margin-bottom2x md:tw-items-center tw-flex tw-gap-2 md:tw-flex-row tw-flex-col">
@@ -498,7 +498,7 @@
 						fieldType="url"
 						errorMessage="URL zu den Badge Kriterien"
 					></bg-formfield-text>
-				</div> -->
+				</div>  -->
 			</div>
 		</div>
 	</div>
