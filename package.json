@@ -59,7 +59,6 @@
         "file-saver": "^2.0.1",
         "fontfaceobserver": "^2.0.9",
         "handlebars-helpers": "^0.10.0",
-        "html2canvas": "^1.4.1",
         "inert-polyfill": "^0.2.5",
         "intl": "1.2.5",
         "jspdf": "^2.5.1",
