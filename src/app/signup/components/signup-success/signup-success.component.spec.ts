@@ -10,6 +10,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { BadgrCommonModule, COMMON_IMPORTS } from '../../../common/badgr-common.module';
 import { COMMON_MOCKS_PROVIDERS_WITH_SUBS } from '../../../mocks/mocks.module.spec';
 import { CommonEntityManagerModule } from '../../../entity-manager/entity-manager.module';
+import { TranslateTestingModule } from 'ngx-translate-testing';
 
 describe('SignupSuccessComponent', () => {
 	let component: SignupSuccessComponent;
@@ -17,7 +18,13 @@ describe('SignupSuccessComponent', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			imports: [...COMMON_IMPORTS, BadgrCommonModule, CommonEntityManagerModule, RouterTestingModule],
+			imports: [
+				...COMMON_IMPORTS,
+				BadgrCommonModule,
+				TranslateTestingModule.withTranslations('de', {}),
+				CommonEntityManagerModule,
+				RouterTestingModule,
+			],
 			declarations: [SignupSuccessComponent],
 			providers: [
 				Title,
