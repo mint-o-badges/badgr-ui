@@ -32,7 +32,7 @@ export class SignupSuccessComponent implements OnInit {
 
 	get helpEmailUrl() {
 		return `mailto:${
-			this.configService.helpConfig ? this.configService.helpConfig.email : 'support@openbadges.education'
+			this.configService.helpConfig ? this.configService.helpConfig.email : 'info@openbadges.education'
 		}`;
 	}
 	get service() {
