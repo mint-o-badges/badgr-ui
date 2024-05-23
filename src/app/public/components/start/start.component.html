@@ -1,360 +1,365 @@
-<div class="oeb page-padding tw-overflow-hidden">
-	<form-message></form-message>
-	<div class="md:tw-hidden tw-absolute tw-top-[240px] tw-right-[-180px] md:tw-right-0 tw-z-0 tw-opacity-70">
-		<img class="md:tw-h-[400px] tw-h-[320px]" src="assets/oeb/images/startpage/sun.png" alt="Hands" />
-	</div>
-	<div class="tw-py-[8rem] tw-relative">
-		<h1
-			class="tw-font-normal md:tw-text-[46px] md:tw-leading-[55.2px] tw-text-black tw-text-[30px] tw-leading-[36px]"
-		>
-			{{ 'Start.headline1' | translate }}
-		</h1>
-		<h1
-			class="lg:tw-pl-[10%] tw-font-black md:tw-text-[46px] md:tw-leading-[55.2px] tw-text-purple tw-text-[30px] tw-leading-[36px]"
-		>
-			{{ 'Start.headline2' | translate }}
-		</h1>
-		<div class="tw-flex flex-wrap tw-pt-16 tw-pb-12 tw-flex-col md:tw-flex-row tw-relative">
-			<div class="tw-flex tw-align-middle tw-justify-evenly tw-flex-col tw-w-[100%] md:tw-w-[43%] tw-box-border">
-				<p
-					class="tw-font-normal md:tw-text-[24px] md:tw-leading-[33.6px] tw-text-black tw-text-[16px] tw-leading-[22.4px] tw-pb-4"
+<div class="oeb tw-overflow-hidden tw-w-full tw-relative">
+	<div class="">
+		<form-message></form-message>
+		<div class="md:tw-hidden tw-absolute tw-top-[240px] tw-right-[-180px] md:tw-right-0 tw-z-0 tw-opacity-70">
+			<img class="md:tw-h-[400px] tw-h-[320px]" src="assets/oeb/images/startpage/sun.png" alt="Hands" />
+		</div>
+		<div class="tw-py-[8rem] tw-relative page-padding">
+			<h1
+				class="tw-font-normal md:tw-text-[46px] md:tw-leading-[55.2px] tw-text-black tw-text-[30px] tw-leading-[36px]"
+			>
+				{{ 'Start.headline1' | translate }}
+			</h1>
+			<h1
+				class="lg:tw-pl-[10%] tw-font-black md:tw-text-[46px] md:tw-leading-[55.2px] tw-text-purple tw-text-[30px] tw-leading-[36px]"
+			>
+				{{ 'Start.headline2' | translate }}
+			</h1>
+			<div class="tw-flex flex-wrap tw-pt-16 tw-pb-12 tw-flex-col md:tw-flex-row tw-relative">
+				<div class="tw-flex tw-align-middle tw-justify-evenly tw-flex-col tw-w-[100%] md:tw-w-[43%] tw-box-border">
+					<p
+						class="tw-font-normal md:tw-text-[24px] md:tw-leading-[33.6px] tw-text-black tw-text-[16px] tw-leading-[22.4px] tw-pb-4"
+					>
+						{{ 'Start.text1' | translate }}
+					</p>
+					<div class="!tw-hidden md:!tw-block">
+						<button
+							class="oeb-button tw-bg-red tw-text-white md:!tw-font-bold"
+							type="submit"
+							loading-message="."
+							[routerLink]="( loggedIn ? '/issuer' : '/auth/login')"
+							[innerHtml]="'Start.badgesErstellen' | translate"
+						></button>
+					</div>
+				</div>
+				<div
+				class=" video-container md:tw-w-[52%] tw-h-[370px] tw-relative tw-m-4 tw-box-border"
 				>
-					{{ 'Start.text1' | translate }}
-				</p>
-				<div class="!tw-hidden md:!tw-block">
+				<img class="tw-cursor-pointer tw-relative tw-z-10" [src]="thumbnailSrc" alt="Thumbnail" *ngIf="!videoStarted" (click)="startVideo()">
+					<iframe
+					    [hidden]="!videoStarted"
+						src="https://www.youtube.com/embed/H6lBdH75P7g"
+						class="tw-w-full tw-h-full tw-z-10 tw-relative tw-border-purple tw-border-solid tw-border-4"
+						title="Open badges kurz erklärt"
+						frameborder="0"
+						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+						allowfullscreen
+						id="video-iframe"
+					></iframe>
+					
+					<div class="tw-hidden md:tw-block tw-absolute tw-top-[-150px] tw-right-[-140px] tw-opacity-70">
+						<img class="tw-h-[427px]" src="assets/oeb/images/startpage/sun.png" alt="Hands" />
+					</div>
+				</div>
+
+				<div class="oeb-width-100 md:!tw-hidden">
 					<button
-						class="oeb-button tw-bg-red tw-text-white md:!tw-font-bold"
+						class="oeb-button oeb-red-bg oeb-align-right md:!tw-font-bold"
 						type="submit"
 						loading-message="."
-						[routerLink]="( loggedIn ? '/issuer' : '/auth/login')"
 						[innerHtml]="'Start.badgesErstellen' | translate"
+						[routerLink]="( loggedIn ? '/issuer' : '/auth/login')"
 					></button>
 				</div>
 			</div>
-			<div
-				class=" video-container md:tw-w-[52%] tw-h-[370px] relative tw-m-4 tw-box-border"
-			>
-				<iframe
-					src="https://www.youtube.com/embed/H6lBdH75P7g"
-					class="tw-w-full tw-h-full tw-z-10 tw-relative tw-border-purple tw-border-solid tw-border-4"
-					title="Open badges kurz erklärt"
-					frameborder="0"
-					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-					allowfullscreen
-				></iframe>
-				
-				<div class="tw-hidden md:tw-block tw-absolute tw-top-[-80px] tw-right-[-110px] tw-opacity-70">
-					<img class="tw-h-[427px]" src="assets/oeb/images/startpage/sun.png" alt="Hands" />
+		</div>
+
+		<div class="page-padding oeb-blue-section tw-relative tw-z-20">
+			<div class="tw-absolute md:tw-top-[10px] md:tw-left-[-140px] tw-top-[-110px] tw-left-[-45px] tw-z-0">
+				<img
+					class="tw-h-[248px] md:tw-h-[508px]"
+					src="assets/oeb/images/startpage/greensixhalf.png"
+					alt="Green Sixcant"
+				/>
+			</div>
+			<div class="tw-absolute md:tw-top-[-60px] md:tw-left-[-100px] tw-left-[50px] tw-top-[-50px] tw-z-10">
+				<img class="tw-h-[148px] md:tw-h-[408px]" src="assets/oeb/images/startpage/person.png" alt="Person" />
+			</div>
+
+			<div class="page-padding">
+				<div class="tw-pl-[1em] sm:tw-pl-[34%] tw-pb-16">
+					<h3
+						class="tw-font-normal md:tw-text-[24px] md:tw-leading-[33.6px] tw-text-white tw-text-[16px] tw-leading-[22.4px]"
+					>
+						{{ 'Start.headline2_1' | translate }}
+					</h3>
+					<h2
+						class="tw-font-extrabold md:tw-text-[30px] md:tw-leading-[36px] tw-text-white tw-text-[20px] tw-leading-[24px]"
+					>
+						{{ 'Start.headline2_2' | translate }}
+					</h2>
+				</div>
+				<div class="tw-max-w-[100VW]">
+					<div class="tw-flex tw-justify-center">
+						<div class="md:tw-w-[33%] sm:tw-w-[50%] tw-px-6 md:tw-max-w-[350px] tw-hidden md:tw-block"></div>
+						<div class="md:tw-w-[33%] sm:tw-w-[50%] tw-px-6 md:tw-max-w-[350px]">
+							<div>
+								<div class="tw-pb-4">
+									<img
+										class="tw-h-[110px]"
+										src="assets/oeb/images/startpage/hands_startpage.png"
+										alt="Hands"
+									/>
+								</div>
+								<div class="tw-font-bold tw-uppercase">
+									<h4>{{ 'Start.knowWhatIcan' | translate }}</h4>
+								</div>
+								<div>
+									<p>{{ 'Start.knowWhatIcan_text' | translate }}</p>
+								</div>
+							</div>
+						</div>
+						<div class="md:tw-w-[33%] sm:tw-w-[50%] tw-px-6 md:tw-max-w-[350px]">
+							<div>
+								<div class="tw-pb-4">
+									<img
+										class="tw-h-[110px]"
+										src="assets/oeb/images/startpage/bridges_startpage.png"
+										alt="bridges"
+									/>
+								</div>
+								<div class="tw-font-bold tw-uppercase">
+									<h4>{{ 'Start.bridges' | translate }}</h4>
+								</div>
+								<div>
+									<p>{{ 'Start.bridges_text' | translate }}</p>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
-
-			<div class="oeb-width-100 md:!tw-hidden">
-				<button
-					class="oeb-button oeb-red-bg oeb-align-right md:!tw-font-bold"
-					type="submit"
-					loading-message="."
-					[innerHtml]="'Start.badgesErstellen' | translate"
-					[routerLink]="( loggedIn ? '/issuer' : '/auth/login')"
-				></button>
+			<div
+				class="tw-absolute tw-translate-y-[50%] md:tw-bottom-[0px] md:tw-right-[5%] tw-bottom-[0px] tw-right-[5%] tw-z-0"
+			>
+				<img
+					class="tw-h-[140px] lg:tw-h-[250px] tw-text-yellow"
+					src="assets/oeb/images/startpage/hexagonCircles.svg"
+					alt="Yellow Hexagon"
+				/>
 			</div>
 		</div>
-	</div>
 
-	<div class="oeb-blue-section oeb-full-width tw-relative tw-z-20">
-		<div class="tw-absolute md:tw-top-[10px] md:tw-left-[-140px] tw-top-[-110px] tw-left-[-45px] tw-z-0">
-			<img
-				class="tw-h-[248px] md:tw-h-[508px]"
-				src="assets/oeb/images/startpage/greensixhalf.png"
-				alt="Green Sixcant"
-			/>
-		</div>
-		<div class="tw-absolute md:tw-top-[-60px] md:tw-left-[-100px] tw-left-[50px] tw-top-[-50px] tw-z-10">
-			<img class="tw-h-[148px] md:tw-h-[408px]" src="assets/oeb/images/startpage/person.png" alt="Person" />
-		</div>
-
-		<div class="page-padding">
-			<div class="tw-pl-[1em] sm:tw-pl-[34%] tw-pb-16">
-				<h3
-					class="tw-font-normal md:tw-text-[24px] md:tw-leading-[33.6px] tw-text-white tw-text-[16px] tw-leading-[22.4px]"
+		<div class="oeb-lightpurple-section">
+			<div class="page-padding">
+				<h2
+					class="uppercase tw-text-center tw-pb-4 md:tw-text-[46px] md:tw-leading-[55.2px] tw-font-black tw-text-purple tw-text-[30px] tw-leading-[36px]"
 				>
-					{{ 'Start.headline2_1' | translate }}
+					{{ 'Start.threeElementsHeadline' | translate }}
+				</h2>
+				<!-- <div class="flex-container"> -->
+				<div class="tw-flex-wrap tw-flex tw-flex-row tw-justify-center tw-max-w-full tw-py-16">
+					<div class="tw-px-8 tw-py-6 md:tw-py-0 tw-relative md:tw-max-w-[28%] tw-box-border">
+						<div class="tw-absolute tw-top-[0px] tw-left-[-0px] md:tw-top-[-40px] md:tw-left-[-20px] tw-z-0">
+							<img
+								class="tw-h-[90px] md:tw-h-[200px]"
+								src="assets/oeb/images/startpage/whiteHexagon.png"
+								alt="White hexagon"
+							/>
+						</div>
+						<div class="tw-z-10 tw-relative">
+							<div
+								class="md:tw-text-[24px] md:tw-leading-[33.6px] tw-text-purple tw-text-[16px] tw-leading-[22.4px]"
+							>
+								<p [innerHtml]="'Start.threeEleText1' | translate"></p>
+							</div>
+						</div>
+					</div>
+					<div class="tw-px-8 tw-py-6 md:tw-py-0 tw-relative md:tw-max-w-[28%] tw-box-border">
+						<div class="tw-absolute tw-top-[0px] tw-left-[-0px] md:tw-left-[-20px] md:tw-top-[30px] tw-z-0">
+							<img
+								class="tw-h-[90px] md:tw-h-[200px]"
+								src="assets/oeb/images/startpage/whiteHexagon.png"
+								alt="White hexagon"
+							/>
+						</div>
+						<div class="tw-z-10 tw-relative">
+							<div
+								class="md:tw-text-[24px] md:tw-leading-[33.6px] tw-text-purple tw-text-[16px] tw-leading-[22.4px]"
+							>
+								<p [innerHtml]="'Start.threeEleText2' | translate"></p>
+							</div>
+						</div>
+					</div>
+					<div class="tw-px-8 tw-py-6 md:tw-py-0 tw-relative md:tw-max-w-[28%] tw-box-border">
+						<div class="tw-absolute tw-top-[0px] tw-left-[-0px] md:tw-left-[-20px] tw-z-0">
+							<img
+								class="tw-h-[90px] md:tw-h-[200px]"
+								src="assets/oeb/images/startpage/whiteHexagon.png"
+								alt="White hexagon"
+							/>
+						</div>
+						<div class="tw-z-10 tw-relative">
+							<div
+								class="md:tw-text-[24px] md:tw-leading-[33.6px] tw-text-purple tw-text-[16px] tw-leading-[22.4px]"
+							>
+								<p [innerHtml]="'Start.threeEleText3' | translate"></p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- </div> -->
+				<div
+					class="tw-font-medium tw-py-8 md:tw-py-12 md:tw-px-16 tw-text-center md:tw-text-[22px] md:tw-leading-[26.4px] tw-text-purple tw-text-[16px] tw-leading-[19.2px]"
+				>
+					<p [innerHtml]="'Start.threeEleFooter' | translate"></p>
+				</div>
+				<div class="oeb-center">
+					<button 
+						class="oeb-button oeb-yellow-bg md:!tw-font-bold" 
+						[innerHtml]="'Start.badgesErstellen' | translate" 
+						[routerLink]="( loggedIn ? '/issuer' : '/auth/login')"
+					></button>
+				</div>
+			</div>
+		</div>
+		<div class="oeb-white-section">
+			<div class="page-padding">
+				<h3
+					class="tw-font-normal tw-px-4 md:tw-text-[24px] md:tw-leading-[33.6px] tw-text-black tw-text-[16px] tw-leading-[22.4px]"
+				>
+					{{ 'Start.headline3_1' | translate }}
 				</h3>
 				<h2
-					class="tw-font-extrabold md:tw-text-[30px] md:tw-leading-[36px] tw-text-white tw-text-[20px] tw-leading-[24px]"
+					class="tw-font-extrabold tw-px-4 md:tw-text-[30px] md:tw-leading-[36px] tw-text-purple tw-text-[20px] tw-leading-[24px]"
 				>
-					{{ 'Start.headline2_2' | translate }}
+					{{ 'Start.headline3_2' | translate }}
 				</h2>
-			</div>
-			<div class="tw-max-w-[100VW]">
-				<div class="tw-flex tw-justify-center">
-					<div class="md:tw-w-[33%] sm:tw-w-[50%] tw-px-6 md:tw-max-w-[350px] tw-hidden md:tw-block"></div>
-					<div class="md:tw-w-[33%] sm:tw-w-[50%] tw-px-6 md:tw-max-w-[350px]">
-						<div>
-							<div class="tw-pb-4">
-								<img
-									class="tw-h-[110px]"
-									src="assets/oeb/images/startpage/hands_startpage.png"
-									alt="Hands"
-								/>
-							</div>
-							<div class="tw-font-bold tw-uppercase">
-								<h4>{{ 'Start.knowWhatIcan' | translate }}</h4>
-							</div>
-							<div>
-								<p>{{ 'Start.knowWhatIcan_text' | translate }}</p>
+				<div class="tw-py-16">
+					<div class="tw-flex tw-flex-wrap tw-max-w-[100VW] tw-text-black tw-relative">
+						<div class="md:tw-block tw-hidden tw-pl-[100px] tw-pr-[20%] tw-box-border tw-absolute tw-bg-top tw-top-[5px] tw-scale-y-[0.8] tw-w-full">
+							<div class="tw-w-full tw-h-[450px] tw-bg-repeat-x tw-bg-[url('assets/oeb/images/startpage/red_lines_cut.png')]"></div>
+						</div>
+						<div class="tw-block md:tw-hidden tw-box-border tw-absolute tw-bg-top tw-top-[0px] tw-w-full tw-h-full">
+							<div class="tw-relative tw-top-[-70px] tw-translate-x-[-50%] tw-left-[96px] tw-rotate-90 tw-w-[700px] tw-h-full tw-bg-right tw-bg-repeat-x tw-bg-[url('assets/oeb/images/startpage/red_lines_cut.png')]"></div>
+						</div>
+						<div class="tw-p-4 md:tw-w-[24%] tw-w-[100%] md:tw-max-w-[300px]">
+							<div class="tw-relative">
+								<div class="tw-mb-4 tw-h-[120px] tw-z-10 tw-relative md:tw-pl-[0px] tw-pl-[20px]">
+									<img
+										class="tw-h-full tw-z-10 tw-relative"
+										src="assets/oeb/images/startpage/greenHexagon1.png"
+										alt="Green Hexagon"
+									/>
+								</div>
+								<div
+									class="tw-font-medium tw-pb-2 md:tw-text-[22px] md:tw-leading-[26.4px] tw-text-[16px] tw-leading-[19.2px]"
+								>
+									<h4>{{ 'Start.forEleHeadlinet1' | translate }}</h4>
+								</div>
+								<div
+									class="tw-font-normal md:tw-text-[20px] md:tw-leading-[24.4px] tw-text-[14px] tw-leading-[19.6px]"
+								>
+									<p>{{ 'Start.forEleText1' | translate }}</p>
+								</div>
 							</div>
 						</div>
-					</div>
-					<div class="md:tw-w-[33%] sm:tw-w-[50%] tw-px-6 md:tw-max-w-[350px]">
-						<div>
-							<div class="tw-pb-4">
-								<img
-									class="tw-h-[110px]"
-									src="assets/oeb/images/startpage/bridges_startpage.png"
-									alt="bridges"
-								/>
+						<div class="tw-p-4 md:tw-w-[24%] tw-w-[100%] md:tw-max-w-[300px]">
+							<div class="tw-relative">
+								<div class="tw-mb-4 tw-h-[120px] tw-z-10 tw-relative tw-overflow-hidden md:tw-pl-[0px] tw-pl-[20px]">
+									<img
+										class="tw-h-full tw-z-10 tw-relative"
+										src="assets/oeb/images/startpage/greenHexagon2.png"
+										alt="Green Hexagon"
+									/>
+								</div>
+								<div
+									class="tw-font-medium tw-pb-2 md:tw-text-[22px] md:tw-leading-[26.4px] tw-text-[16px] tw-leading-[19.2px]"
+								>
+									<h4>{{ 'Start.forEleHeadlinet2' | translate }}</h4>
+								</div>
+								<div
+									class="tw-font-normal md:tw-text-[20px] md:tw-leading-[24.4px] tw-text-[14px] tw-leading-[19.6px]"
+								>
+									<p>{{ 'Start.forEleText2' | translate }}</p>
+								</div>
 							</div>
-							<div class="tw-font-bold tw-uppercase">
-								<h4>{{ 'Start.bridges' | translate }}</h4>
+						</div>
+						<div class="tw-p-4 md:tw-w-[24%] tw-w-[100%] md:tw-max-w-[300px]">
+							<div class="tw-relative">
+								<div class="tw-mb-4 tw-h-[120px] tw-z-10 tw-relative md:tw-pl-[0px] tw-pl-[5px]">
+									<img
+										class="tw-h-full tw-z-10 tw-relative"
+										src="assets/oeb/images/startpage/greenHexagon3.png"
+										alt="Green Hexagon"
+									/>
+								</div>
+								<div
+									class="tw-font-medium tw-pb-2 md:tw-text-[22px] md:tw-leading-[26.4px] tw-text-[16px] tw-leading-[19.2px]"
+								>
+									<h4>{{ 'Start.forEleHeadlinet3' | translate }}</h4>
+								</div>
+								<div
+									class="tw-font-normal md:tw-text-[20px] md:tw-leading-[24.4px] tw-text-[14px] tw-leading-[19.6px]"
+								>
+									<p>{{ 'Start.forEleText3' | translate }}</p>
+								</div>
 							</div>
-							<div>
-								<p>{{ 'Start.bridges_text' | translate }}</p>
+						</div>
+						<div class="tw-p-4 md:tw-w-[24%] tw-w-[100%] md:tw-max-w-[300px]">
+							<div class="tw-relative">
+								<div class="tw-mb-4 tw-h-[120px] tw-z-10 tw-relative md:tw-pl-[0px] tw-pl-[25px]">
+									<img
+										class="tw-h-full tw-z-10 tw-relative"
+										src="assets/oeb/images/startpage/greensix.png"
+										alt="Green Hexagon"
+									/>
+									<img
+										class="tw-absolute tw-top-[-10px] tw-left-[0px] tw-z-10 tw-h-full"
+										src="assets/oeb/images/startpage/noHexagon4.png"
+										alt="Green Hexagon"
+									/>
+								</div>
+								<div
+									class="tw-font-medium tw-pb-2 md:tw-text-[22px] md:tw-leading-[26.4px] tw-text-[16px] tw-leading-[19.2px]"
+								>
+									<h4>{{ 'Start.forEleHeadlinet4' | translate }}</h4>
+								</div>
+								<div
+									class="tw-font-normal md:tw-text-[20px] md:tw-leading-[24.4px] tw-text-[14px] tw-leading-[19.6px]"
+								>
+									<p>{{ 'Start.forEleText4' | translate }}</p>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
+				<div class="oeb-width-100">
+					<button
+						class="oeb-button oeb-red-bg oeb-align-right md:!tw-font-bold"
+						type="submit"
+						loading-message="."
+						[innerHtml]="'Start.badgesErstellen' | translate"
+						[routerLink]="( loggedIn ? '/issuer' : '/auth/login')"
+					></button>
+				</div>
 			</div>
 		</div>
-		<div
-			class="tw-absolute tw-translate-y-[50%] md:tw-bottom-[0px] md:tw-right-[5%] tw-bottom-[0px] tw-right-[5%] tw-z-0"
-		>
-			<img
-				class="tw-h-[140px] lg:tw-h-[250px] tw-text-yellow"
-				src="assets/oeb/images/startpage/hexagonCircles.svg"
-				alt="Yellow Hexagon"
-			/>
-		</div>
-	</div>
 
-	<div class="oeb-lightpurple-section oeb-full-width">
-		<div class="page-padding">
-			<h2
-				class="uppercase tw-text-center tw-pb-4 md:tw-text-[46px] md:tw-leading-[55.2px] tw-font-black tw-text-purple tw-text-[30px] tw-leading-[36px]"
-			>
-				{{ 'Start.threeElementsHeadline' | translate }}
-			</h2>
-			<!-- <div class="flex-container"> -->
-			<div class="tw-flex-wrap md:tw-flex-nowrap tw-flex tw-flex-row tw-justify-center tw-max-w-[100VW] tw-py-16">
-				<div class="tw-px-8 tw-py-6 md:tw-py-0 tw-relative">
-					<div class="tw-absolute tw-top-[0px] tw-left-[-0px] md:tw-top-[-40px] md:tw-left-[-20px] tw-z-0">
-						<img
-							class="tw-h-[90px] md:tw-h-[200px]"
-							src="assets/oeb/images/startpage/whiteHexagon.png"
-							alt="White hexagon"
-						/>
-					</div>
-					<div class="tw-z-10 tw-relative">
-						<div
-							class="md:tw-text-[24px] md:tw-leading-[33.6px] tw-text-purple tw-text-[16px] tw-leading-[22.4px]"
-						>
-							<p [innerHtml]="'Start.threeEleText1' | translate"></p>
-						</div>
-					</div>
+		<div class="oeb-gray-section">
+			<div class="page-padding">
+				<div class="tw-pb-16">
+					<h2
+						class="tw-text-center tw-font-extrabold md:tw-text-[46px] md:tw-leading-[55.2px] tw-text-purple tw-text-[30px] tw-leading-[36px]"
+					>
+						{{ 'Start.usingOEB' | translate }}
+					</h2>
 				</div>
-				<div class="tw-px-8 tw-py-6 md:tw-py-0 tw-relative">
-					<div class="tw-absolute tw-top-[0px] tw-left-[-0px] md:tw-left-[-20px] md:tw-top-[30px] tw-z-0">
-						<img
-							class="tw-h-[90px] md:tw-h-[200px]"
-							src="assets/oeb/images/startpage/whiteHexagon.png"
-							alt="White hexagon"
-						/>
-					</div>
-					<div class="tw-z-10 tw-relative">
-						<div
-							class="md:tw-text-[24px] md:tw-leading-[33.6px] tw-text-purple tw-text-[16px] tw-leading-[22.4px]"
-						>
-							<p [innerHtml]="'Start.threeEleText2' | translate"></p>
+				<div class="tw-flex tw-justify-center tw-items-center">
+					<div class="tw-px-4 md:tw-px-10">
+						<div class="tw-max-w-[150px] tw-max-h-[150px] tw-border-box">
+							<img src="assets/logos/reedu.jpg" alt="Reedu Logo" />
 						</div>
 					</div>
-				</div>
-				<div class="tw-px-8 tw-py-6 md:tw-py-0 tw-relative">
-					<div class="tw-absolute tw-top-[0px] tw-left-[-0px] md:tw-left-[-20px] tw-z-0">
-						<img
-							class="tw-h-[90px] md:tw-h-[200px]"
-							src="assets/oeb/images/startpage/whiteHexagon.png"
-							alt="White hexagon"
-						/>
-					</div>
-					<div class="tw-z-10 tw-relative">
-						<div
-							class="md:tw-text-[24px] md:tw-leading-[33.6px] tw-text-purple tw-text-[16px] tw-leading-[22.4px]"
-						>
-							<p [innerHtml]="'Start.threeEleText3' | translate"></p>
+					<div class="tw-px-4 md:tw-px-10">
+						<div class="tw-max-w-[150px] tw-max-h-[150px] tw-border-box">
+							<img src="assets/logos/Logo-KlimaCampus.png" alt="KlimaCampus Logo" />
 						</div>
 					</div>
-				</div>
-			</div>
-			<!-- </div> -->
-			<div
-				class="tw-font-medium tw-py-8 md:tw-py-12 md:tw-px-16 tw-text-center md:tw-text-[22px] md:tw-leading-[26.4px] tw-text-purple tw-text-[16px] tw-leading-[19.2px]"
-			>
-				<p [innerHtml]="'Start.threeEleFooter' | translate"></p>
-			</div>
-			<div class="oeb-center">
-				<button 
-					class="oeb-button oeb-yellow-bg md:!tw-font-bold" 
-					[innerHtml]="'Start.badgesErstellen' | translate" 
-					[routerLink]="( loggedIn ? '/issuer' : '/auth/login')"
-				></button>
-			</div>
-		</div>
-	</div>
-	<div class="oeb-full-width oeb-white-section">
-		<div class="page-padding">
-			<h3
-				class="tw-font-normal tw-px-4 md:tw-text-[24px] md:tw-leading-[33.6px] tw-text-black tw-text-[16px] tw-leading-[22.4px]"
-			>
-				{{ 'Start.headline3_1' | translate }}
-			</h3>
-			<h2
-				class="tw-font-extrabold tw-px-4 md:tw-text-[30px] md:tw-leading-[36px] tw-text-purple tw-text-[20px] tw-leading-[24px]"
-			>
-				{{ 'Start.headline3_2' | translate }}
-			</h2>
-			<div class="tw-py-16">
-				<div class="tw-flex tw-flex-wrap tw-max-w-[100VW] tw-text-black tw-relative">
-					<div class="md:tw-block tw-hidden tw-pl-[100px] tw-pr-[20%] tw-box-border tw-absolute tw-bg-top tw-top-[5px] tw-scale-y-[0.8] tw-w-full">
-						<div class="tw-w-full tw-h-[450px] tw-bg-repeat-x tw-bg-[url('assets/oeb/images/startpage/red_lines_cut.png')]"></div>
-					</div>
-					<div class="tw-block md:tw-hidden tw-box-border tw-absolute tw-bg-top tw-top-[0px] tw-w-full tw-h-full">
-						<div class="tw-relative tw-top-[-70px] tw-translate-x-[-50%] tw-left-[96px] tw-rotate-90 tw-w-[700px] tw-h-full tw-bg-right tw-bg-repeat-x tw-bg-[url('assets/oeb/images/startpage/red_lines_cut.png')]"></div>
-					</div>
-					<div class="tw-p-4 md:tw-w-[24%] tw-w-[100%] md:tw-max-w-[300px]">
-						<div class="tw-relative">
-							<div class="tw-mb-4 tw-h-[120px] tw-z-10 tw-relative md:tw-pl-[0px] tw-pl-[20px]">
-								<img
-									class="tw-h-full tw-z-10 tw-relative"
-									src="assets/oeb/images/startpage/greenHexagon1.png"
-									alt="Green Hexagon"
-								/>
-							</div>
-							<div
-								class="tw-font-medium tw-pb-2 md:tw-text-[22px] md:tw-leading-[26.4px] tw-text-[16px] tw-leading-[19.2px]"
-							>
-								<h4>{{ 'Start.forEleHeadlinet1' | translate }}</h4>
-							</div>
-							<div
-								class="tw-font-normal md:tw-text-[20px] md:tw-leading-[24.4px] tw-text-[14px] tw-leading-[19.6px]"
-							>
-								<p>{{ 'Start.forEleText1' | translate }}</p>
-							</div>
+					<div class="tw-px-4 md:tw-px-10">
+						<div class="tw-max-w-[150px] tw-max-h-[150px] tw-border-box">
+							<img src="assets/logos/Logo-Mycelia.png" alt="MyCelia Logo" />
 						</div>
-					</div>
-					<div class="tw-p-4 md:tw-w-[24%] tw-w-[100%] md:tw-max-w-[300px]">
-						<div class="tw-relative">
-							<div class="tw-mb-4 tw-h-[120px] tw-z-10 tw-relative tw-overflow-hidden md:tw-pl-[0px] tw-pl-[20px]">
-								<img
-									class="tw-h-full tw-z-10 tw-relative"
-									src="assets/oeb/images/startpage/greenHexagon2.png"
-									alt="Green Hexagon"
-								/>
-							</div>
-							<div
-								class="tw-font-medium tw-pb-2 md:tw-text-[22px] md:tw-leading-[26.4px] tw-text-[16px] tw-leading-[19.2px]"
-							>
-								<h4>{{ 'Start.forEleHeadlinet2' | translate }}</h4>
-							</div>
-							<div
-								class="tw-font-normal md:tw-text-[20px] md:tw-leading-[24.4px] tw-text-[14px] tw-leading-[19.6px]"
-							>
-								<p>{{ 'Start.forEleText2' | translate }}</p>
-							</div>
-						</div>
-					</div>
-					<div class="tw-p-4 md:tw-w-[24%] tw-w-[100%] md:tw-max-w-[300px]">
-						<div class="tw-relative">
-							<div class="tw-mb-4 tw-h-[120px] tw-z-10 tw-relative md:tw-pl-[0px] tw-pl-[5px]">
-								<img
-									class="tw-h-full tw-z-10 tw-relative"
-									src="assets/oeb/images/startpage/greenHexagon3.png"
-									alt="Green Hexagon"
-								/>
-							</div>
-							<div
-								class="tw-font-medium tw-pb-2 md:tw-text-[22px] md:tw-leading-[26.4px] tw-text-[16px] tw-leading-[19.2px]"
-							>
-								<h4>{{ 'Start.forEleHeadlinet3' | translate }}</h4>
-							</div>
-							<div
-								class="tw-font-normal md:tw-text-[20px] md:tw-leading-[24.4px] tw-text-[14px] tw-leading-[19.6px]"
-							>
-								<p>{{ 'Start.forEleText3' | translate }}</p>
-							</div>
-						</div>
-					</div>
-					<div class="tw-p-4 md:tw-w-[24%] tw-w-[100%] md:tw-max-w-[300px]">
-						<div class="tw-relative">
-							<div class="tw-mb-4 tw-h-[120px] tw-z-10 tw-relative md:tw-pl-[0px] tw-pl-[25px]">
-								<img
-									class="tw-h-full tw-z-10 tw-relative"
-									src="assets/oeb/images/startpage/greensix.png"
-									alt="Green Hexagon"
-								/>
-								<img
-									class="tw-absolute tw-top-[-10px] tw-left-[0px] tw-z-10 tw-h-full"
-									src="assets/oeb/images/startpage/noHexagon4.png"
-									alt="Green Hexagon"
-								/>
-							</div>
-							<div
-								class="tw-font-medium tw-pb-2 md:tw-text-[22px] md:tw-leading-[26.4px] tw-text-[16px] tw-leading-[19.2px]"
-							>
-								<h4>{{ 'Start.forEleHeadlinet4' | translate }}</h4>
-							</div>
-							<div
-								class="tw-font-normal md:tw-text-[20px] md:tw-leading-[24.4px] tw-text-[14px] tw-leading-[19.6px]"
-							>
-								<p>{{ 'Start.forEleText4' | translate }}</p>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="oeb-width-100">
-				<button
-					class="oeb-button oeb-red-bg oeb-align-right md:!tw-font-bold"
-					type="submit"
-					loading-message="."
-					[innerHtml]="'Start.badgesErstellen' | translate"
-					[routerLink]="( loggedIn ? '/issuer' : '/auth/login')"
-				></button>
-			</div>
-		</div>
-	</div>
-
-	<div class="oeb-gray-section oeb-full-width">
-		<div class="page-padding">
-			<div class="tw-pb-16">
-				<h2
-					class="tw-text-center tw-font-extrabold md:tw-text-[46px] md:tw-leading-[55.2px] tw-text-purple tw-text-[30px] tw-leading-[36px]"
-				>
-					{{ 'Start.usingOEB' | translate }}
-				</h2>
-			</div>
-			<div class="tw-flex tw-justify-center tw-items-center">
-				<div class="tw-px-4 md:tw-px-10">
-					<div class="tw-max-w-[150px] tw-max-h-[150px] tw-border-box">
-						<img src="assets/logos/reedu.jpg" alt="Reedu Logo" />
-					</div>
-				</div>
-				<div class="tw-px-4 md:tw-px-10">
-					<div class="tw-max-w-[150px] tw-max-h-[150px] tw-border-box">
-						<img src="assets/logos/LogoKlimaCampus.png" alt="KlimaCampus Logo" />
-					</div>
-				</div>
-				<div class="tw-px-4 md:tw-px-10">
-					<div class="tw-max-w-[150px] tw-max-h-[150px] tw-border-box">
-						<img src="assets/logos/Logo-Mycelia.png" alt="MyCelia Logo" />
 					</div>
 				</div>
 			</div>

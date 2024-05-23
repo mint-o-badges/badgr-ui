@@ -69,6 +69,10 @@
 							"extractLicenses": true,
 							"vendorChunk": false,
 							"buildOptimizer": true,
+							"index": {
+								"input": "src/index.production.html",
+								"output": "index.html"
+							},
 							"fileReplacements": [
 								{
 									"replace": "src/environments/environment.ts",
@@ -90,6 +94,10 @@
 							"extractLicenses": true,
 							"vendorChunk": false,
 							"buildOptimizer": true,
+							"index": {
+								"input": "src/index.staging.html",
+								"output": "index.html"
+							},
 							"fileReplacements": [
 								{
 									"replace": "src/environments/environment.ts",
