@@ -8,7 +8,8 @@ export const inputVariants = cva(
 	{
 		variants: {
 			size: {
-				default: 'tw-h-10 tw-py-2 tw-px-4',
+				// I put it to tw-py-1, it was tw-py-2 by default
+				default: 'tw-h-10 tw-py-1 tw-px-4',
 				sm: 'tw-h-9 tw-px-3',
 				lg: 'tw-h-11 tw-px-8',
 			},
