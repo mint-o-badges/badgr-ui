@@ -15,12 +15,12 @@
 				<h1 class="tw-text-purple">{{ badgeClass?.name }}</h1>
 				<div class="l-primarymore ">
 					<a
-						class="button md:tw-w-[358px] tw-h-[64px] tw-flex tw-items-center tw-justify-center tw-text-xl"
+						class="button md:tw-w-[358px] md:tw-h-[64px] tw-h-[45px] tw-flex tw-items-center tw-justify-center tw-text-xl"
 						[routerLink]="['/issuer/issuers', issuerSlug, 'badges', badgeClass.slug, 'issue']"
 						[disabled-when-requesting]="true"
 						>Badge vergeben</a
 					>
-					<button class="buttonicon buttonicon-secondary tw-w-[64px] tw-h-[64px]" id="actionstrigger" [bgPopupMenuTrigger]="moreMenu">
+					<button class="buttonicon buttonicon-secondary tw-w-[44.8px] tw-h-[44.8px] md:tw-w-[64px] md:tw-h-[64px]" id="actionstrigger" [bgPopupMenuTrigger]="moreMenu">
 						<svg icon="icon_more"></svg>
 						<span class="visuallyhidden">Mehr</span>
 					</button>
@@ -160,7 +160,7 @@
 							"
 						>
 							<div
-								class="tw-flex tw-flex-col tw-bg-[var(--color-lightgreen)] tw-border tw-border-solid tw-border-[var(--color-purple)] tw-p-4 tw-rounded-lg tw-mt-4 tw-max-w-[500px]"
+								class="tw-flex tw-flex-col tw-bg-[var(--color-lightgreen)] tw-border tw-border-solid tw-border-[var(--color-purple)] tw-p-4 tw-rounded-lg tw-mt-4 md:tw-max-w-[596px] "
 							>
 								<div class="tw-grid tw-grid-cols-3">
 									<h3 class="tw-col-span-2 tw-font-[900] tw-text-lg">{{ competency.name }}</h3>
@@ -180,24 +180,17 @@
 				</section>
 
 				<!-- recipients -->
-				<div class="l-stack u-margin-bottom2x u-margin-top4x">
+				<!-- <div class="l-stack u-margin-bottom2x u-margin-top4x">
 					<h2 class="u-text-h3-semibold u-text-dark2">
 						{{ recipientCount }} Badge {{ recipientCount == 1 ? 'Empfänger:in' : 'Empfänger:innen' }}
 					</h2>
-					<!-- <div class="forminput forminput-hasicon">
-						<p class="forminput-x-sublabel">Nach E-Mail Adresse suchen</p>
-						<div class="forminput-x-inputs">
-							<input type="text" placeholder="Nach E-Mail Adresse suchen" [(ngModel)]="searchQuery" />
-							<svg class="forminput-x-icon" icon="icon_search"></svg>
-						</div>
-					</div> -->
-				</div>
+				</div> -->
 				<ng-template
 					[bgAwaitPromises]="[badgeInstancesLoaded, assertionsLoaded]"
 					*ngIf="instanceResults?.length"
 				>
 
-					<issuer-detail-datatable [recipients]="instanceResults"></issuer-detail-datatable>
+					<issuer-detail-datatable [recipientCount]="recipientCount" [_recipients]="instanceResults"></issuer-detail-datatable>
 
 					<bg-popup-menu #mobileTableMoreMenu>
 						<button type="button" class="menuitem" (click)="shareInstance(popInstance)">
