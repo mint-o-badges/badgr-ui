@@ -125,8 +125,6 @@ export class IssuerCreateComponent extends BaseAuthenticatedRoutableComponent im
 
 		const altcha = <HTMLInputElement>document.getElementsByName('altcha')[0];
 
-		console.log(altcha)
-
 		const issuer: ApiIssuerForCreation = {
 			name: formState.issuer_name,
 			description: formState.issuer_description,
