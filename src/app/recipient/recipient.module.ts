@@ -19,7 +19,6 @@ import { RecipientBadgeCollectionSelectionDialogComponent } from './components/r
 import { RecipientBadgeSelectionDialog } from './components/recipient-badge-selection-dialog/recipient-badge-selection-dialog.component';
 import { MozzTransitionModule } from '../mozz-transition/mozz-transition.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { CompetencyAccordionComponent } from '../components/accordion.component';
 
 const routes: Routes = [
 	/* Recipient Badges */
@@ -67,8 +66,7 @@ const routes: Routes = [
 		CommonEntityManagerModule,
 		RouterModule.forChild(routes),
 		MozzTransitionModule,
-		TranslateModule,
-		CompetencyAccordionComponent,
+		TranslateModule
 	],
 	declarations: [
 		RecipientEarnedBadgeListComponent,

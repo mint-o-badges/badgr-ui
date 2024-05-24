@@ -13,8 +13,6 @@ import { Component, Input } from '@angular/core';
 	imports: [
 		HlmAccordionModule,
 		HlmIconModule,
-		CommonModule,
-		BadgrCommonModule,
 		TranslateModule,
 		BrnAccordionContentComponent,
 		RouterModule,

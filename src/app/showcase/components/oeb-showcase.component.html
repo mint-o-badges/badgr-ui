@@ -90,7 +90,7 @@
 						<span label-additions>
 							<a
 								hlmP
-								class="tw-relative tw-underline tw-text-purple tw-z-20 tw-font-semibold"
+								class="tw-underline tw-text-purple tw-font-semibold"
 								href="#"
 								tabindex="-1"
 								>Hier klicken für Link</a
@@ -103,12 +103,23 @@
                     <h3 hlmH1 class="tw-font-extrabold tw-text-yellow">Reusable Components</h3>
                     <h3 hlmH2 class="tw-font-extrabold tw-text-yellow">Table</h3>
                 </div>
+
                 <badges-datatable 
                     [caption]=""
                     [badges]="badges"
                     ></badges-datatable>
+
+
+                    <div class="tw-pb-10 tw-pt-14">
+                        <h3 hlmH1 class="tw-font-extrabold tw-text-yellow">Reusable Components</h3>
+                        <h3 hlmH2 class="tw-font-extrabold tw-text-yellow">Accordion</h3>
+                    </div>
     
-                    
+                    <competency-accordion
+                        [category]="'Super Kategorie Hier'"
+                        [description]="'Sehr spannend unbedingt durchlesen und aufklappen'"
+                    />
+
             </div>
 
         </div>
