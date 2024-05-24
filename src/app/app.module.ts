@@ -77,7 +77,7 @@ const ROUTE_CONFIG: Routes = [
 		path: 'catalog',
 		loadChildren: () => import('./catalog/catalog.module').then((m) => m.CatalogModule),
 	},
-	... !environment.production ? [{
+	... environment.config.api?.baseUrl != 'https://api.openbadges.education' ? [{
 		path: 'showcase',
 		loadChildren: () => import('./showcase/showcase.module').then((m) => m.ShowcaseModule),
 	}] : [],
