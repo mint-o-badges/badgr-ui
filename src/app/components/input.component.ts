@@ -14,7 +14,7 @@ import { TextSemibold } from './typography/text-semibold';
   <div class="tw-mt-4 md:tw-mt-6">
     <div class="tw-flex tw-justify-between">
         <label class="tw-pb-[2px] tw-pl-[3px]" [attr.for]="inputName" *ngIf="label">
-            <oeb-text-semibold class="tw-text-oebblack" [text]="label"></oeb-text-semibold><span *ngIf="optional">(OPTIONAL)</span>
+            <span hlmP class="tw-text-oebblack" [innerHTML]="label"></span><span *ngIf="optional">(OPTIONAL)</span>
             <span *ngIf="formFieldAside">{{ formFieldAside }}</span>
         </label>
         <ng-content class="tw-relative tw-z-20 tw-font-semibold tw-text-[14px] md:tw-text-[20px] tw-leading-4 md:tw-leading-6" select="[label-additions]"></ng-content>
