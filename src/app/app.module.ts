@@ -21,7 +21,7 @@ import { MozzTransitionModule } from './mozz-transition/mozz-transition.module';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient } from '@angular/common/http';
-
+import { environment } from '../environments/environment';
 // Force AuthModule and ProfileModule to get included in the main module. We don't want them lazy loaded because
 // they basically always need to be present. We have have functions that return them, but use strings in the Routes
 // because of https://github.com/angular/angular-cli/issues/4192
@@ -77,10 +77,10 @@ const ROUTE_CONFIG: Routes = [
 		path: 'catalog',
 		loadChildren: () => import('./catalog/catalog.module').then((m) => m.CatalogModule),
 	},
-	{
+	... !environment.production ? [{
 		path: 'showcase',
 		loadChildren: () => import('./showcase/showcase.module').then((m) => m.ShowcaseModule),
-	},
+	}] : [],
 
 	// Legacy Auth Redirects
 	{

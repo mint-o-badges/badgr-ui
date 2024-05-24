@@ -25,7 +25,8 @@ import { TextSemibold } from './typography/text-semibold';
     </p>
     <label class="visuallyhidden" [attr.for]="inputName" *ngIf="ariaLabel">{{ ariaLabel }}</label>
 
-    <input 				
+    <input 		
+		*ngIf="fieldType != 'textarea'"
         (focus)="cacheControlState()"
         (keypress)="handleKeyPress($event)"
         (keyup)="handleKeyUp($event)"
@@ -39,6 +40,21 @@ import { TextSemibold } from './typography/text-semibold';
         class="tw-w-full tw-border-solid tw-border-purple tw-bg-white"
         hlmInput 
          />
+	 <textarea
+		*ngIf="fieldType === 'textarea'"
+		 (focus)="cacheControlState()"
+		 (keypress)="handleKeyPress($event)"
+		 (keyup)="handleKeyUp($event)"
+		 (change)="postProcessInput()"
+		 [formControl]="control"
+		 [placeholder]="placeholder || ''"
+		 [attr.maxlength]="maxchar"
+		 [attr.max]="max"
+		 [type]="fieldType"
+		 #textInput 
+		 class="tw-w-full tw-border-solid tw-border-purple tw-bg-white tw-min-h-[80px]"
+		 hlmInput 
+		></textarea>
     <oeb-input-error class="tw-text-red" *ngIf="isErrorState" [error]="errorMessageForDisplay"></oeb-input-error>
   </div>`,
 })
