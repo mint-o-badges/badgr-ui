@@ -17,7 +17,6 @@ import { ImpressumComponent } from './components/impressum/impressum.component';
 import { FaqComponent } from './components/faq/faq.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { CompetencyAccordionComponent } from '../components/accordion.component';
-import { DatatableComponent } from '../components/datatable-badges.component';
 
 export const routes: Routes = [
 	{
@@ -106,8 +105,7 @@ export const routes: Routes = [
 		CommonEntityManagerModule,
 		RouterModule.forChild(routes),
 		TranslateModule,
-		CompetencyAccordionComponent,
-		DatatableComponent
+		CompetencyAccordionComponent
 	],
 	declarations: [
 		AboutComponent,

@@ -80,6 +80,16 @@ import { BadgeClassApiService } from '../issuer/services/badgeclass-api.service'
 import { TranslateModule } from '@ngx-translate/core';
 import { ApplicationCredentialsService } from './services/application-credentials.service.';
 
+import { OebInputComponent } from '../components/input.component';
+import { OebInputErrorComponent } from '../components/input.error.component';
+import { TextSemibold } from '../components/typography/text-semibold';
+import { OebButtonComponent } from '../components/oeb-button.component';
+import { HlmH1Directive } from '../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
+import { HlmPDirective } from '../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
+import { HlmADirective } from '../components/spartan/ui-typography-helm/src/lib/hlm-a.directive';
+import { HlmH2Directive } from '../components/spartan/ui-typography-helm/src/lib/hlm-h2.directive';
+import { HlmH3Directive } from '../components/spartan/ui-typography-helm/src/lib/hlm-h3.directive';
+
 const DIRECTIVES = [
 	BgAwaitPromises,
 	BgImageStatusPlaceholderDirective,
@@ -158,7 +168,7 @@ const GUARDS = [AuthGuard];
 
 const PIPES = [UcFirstPipe];
 
-export const COMMON_IMPORTS = [CommonModule, FormsModule, ReactiveFormsModule, HttpClientModule, RouterModule];
+export const COMMON_IMPORTS = [CommonModule, FormsModule, ReactiveFormsModule, HttpClientModule, RouterModule, OebInputComponent, OebInputErrorComponent, OebButtonComponent, HlmH1Directive, HlmH2Directive, HlmH3Directive, HlmPDirective, HlmADirective	];
 
 @NgModule({
 	imports: [...COMMON_IMPORTS, FormsModule, LMarkdownEditorModule, TranslateModule],

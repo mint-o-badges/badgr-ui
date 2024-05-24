@@ -77,6 +77,11 @@ const ROUTE_CONFIG: Routes = [
 		path: 'catalog',
 		loadChildren: () => import('./catalog/catalog.module').then((m) => m.CatalogModule),
 	},
+	{
+		path: 'showcase',
+		loadChildren: () => import('./showcase/showcase.module').then((m) => m.ShowcaseModule),
+	},
+
 	// Legacy Auth Redirects
 	{
 		path: 'login',

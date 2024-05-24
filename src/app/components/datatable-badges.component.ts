@@ -1,13 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { BadgrCommonModule } from '../common/badgr-common.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { BrnAccordionContentComponent } from '@spartan-ng/ui-accordion-brain';
-import { HlmAccordionModule } from '../../../components/ui-accordion-helm/src';
-import { HlmIconModule } from '../../../components/ui-icon-helm/src';
+import { HlmIconModule } from './spartan/ui-icon-helm/src';
 import { RouterModule } from '@angular/router';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { HlmTableModule } from '../../../components/ui-table-helm/src';
+import { HlmTableModule } from './spartan/ui-table-helm/src';
 import { BadgeClass } from '../issuer/models/badgeclass.model';
+import { OebButtonComponent } from './oeb-button.component';
 
 @Component({
 	selector: 'badges-datatable',
@@ -17,8 +16,8 @@ import { BadgeClass } from '../issuer/models/badgeclass.model';
 		HlmIconModule,
 		CommonModule,
 		BadgrCommonModule,
+        OebButtonComponent,
 		TranslateModule,
-		BrnAccordionContentComponent,
 		RouterModule
         ],
 	template: `
@@ -42,7 +41,7 @@ import { BadgeClass } from '../issuer/models/badgeclass.model';
                 <hlm-th class="!tw-flex-1 tw-justify-center !tw-text-oebblack"><p class="u-text"><time [date]="badge.createdAt" format="dd.mm.yyyy"></time></p></hlm-th>
                 <hlm-th class="tw-w-40 tw-justify-center !tw-text-oebblack">{{badge.recipientCount}}</hlm-th>
                 <hlm-th class="tw-justify-center sm:tw-justify-end sm:tw-w-48 tw-w-full !tw-text-oebblack">
-                    <button class="oeb-label-button tw-w-full" (click)="actionElement.emit(badge)">{{actionElementText}}</button>
+                    <oeb-button variant="secondary" size="xs" class="tw-w-full" (click)="actionElement.emit(badge)">{{actionElementText}}</oeb-button>
                 </hlm-th>
             </hlm-trow>
         </hlm-table>`,

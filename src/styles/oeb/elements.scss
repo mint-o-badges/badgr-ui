@@ -80,4 +80,12 @@
 		gap: 8px;
 		border-radius: 10px;
 	}
+
+	.oeb-inset-padding {
+		padding: 1em 2em;
+		@media (min-width: 768px) {
+			padding: 1.5em 3em;
+
+		}
+	}		
 }
