@@ -172,4 +172,14 @@
 		border-radius: 7px;
 		border: 0.7px solid var(--color-purple);
 	}
+
+	.forminput .forminput-x-label {
+		--typography-size: 14px;
+		font-size: var(--typography-size);
+		line-height: 16.8px;
+	}
+
+	.u-margin-bottom2x {
+		margin-bottom: 10px;
+	  }
 }
