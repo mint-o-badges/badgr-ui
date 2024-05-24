@@ -5,16 +5,17 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { NgIf } from '@angular/common';
 import { UrlValidator } from '../common/validators/url.validator';
 import { TextSemibold } from './typography/text-semibold';
+import { HlmPDirective } from './spartan/ui-typography-helm/src/lib/hlm-p.directive';
 
 @Component({
   selector: 'oeb-input',
   standalone: true,
-  imports: [HlmInputDirective, OebInputErrorComponent, NgIf, ReactiveFormsModule, TextSemibold],
+  imports: [HlmInputDirective, HlmPDirective, OebInputErrorComponent, NgIf, ReactiveFormsModule, TextSemibold],
   template: `
   <div class="tw-mt-4 md:tw-mt-6">
     <div class="tw-flex tw-justify-between">
         <label class="tw-pb-[2px] tw-pl-[3px]" [attr.for]="inputName" *ngIf="label">
-            <span hlmP class="tw-text-oebblack" [innerHTML]="label"></span><span *ngIf="optional">(OPTIONAL)</span>
+            <span hlmP class="tw-text-oebblack tw-font-semibold" [innerHTML]="label"></span><span *ngIf="optional">(OPTIONAL)</span>
             <span *ngIf="formFieldAside">{{ formFieldAside }}</span>
         </label>
         <ng-content class="tw-relative tw-z-20 tw-font-semibold tw-text-[14px] md:tw-text-[20px] tw-leading-4 md:tw-leading-6" select="[label-additions]"></ng-content>
