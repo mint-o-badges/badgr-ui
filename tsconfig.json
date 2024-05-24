@@ -43,7 +43,13 @@
         "src/app/components/spartan/ui-button-helm/src/index.ts"
       ],
       "@spartan-ng/ui-typography-helm": [
-        "./src/app/components/spartan/ui-typography-helm/src/index.ts"
+        "src/app/components/spartan/ui-typography-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-checkbox-helm": [
+        "src/app/components/spartan/ui-checkbox-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-label-helm": [
+        "src/app/components/spartan/ui-label-helm/src/index.ts"
       ]
     }
   }

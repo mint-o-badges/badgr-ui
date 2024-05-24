@@ -90,6 +90,7 @@ import { HlmADirective } from '../components/spartan/ui-typography-helm/src/lib/
 import { HlmH2Directive } from '../components/spartan/ui-typography-helm/src/lib/hlm-h2.directive';
 import { HlmH3Directive } from '../components/spartan/ui-typography-helm/src/lib/hlm-h3.directive';
 import { CompetencyAccordionComponent } from '../components/accordion.component';
+import { OebCheckboxComponent } from '../components/oeb-checkbox.component';
 
 const DIRECTIVES = [
 	BgAwaitPromises,
@@ -169,7 +170,7 @@ const GUARDS = [AuthGuard];
 
 const PIPES = [UcFirstPipe];
 
-export const COMMON_IMPORTS = [CommonModule, FormsModule, ReactiveFormsModule, HttpClientModule, RouterModule, OebInputComponent, OebInputErrorComponent, OebButtonComponent, HlmH1Directive, HlmH2Directive, HlmH3Directive, HlmPDirective, HlmADirective, CompetencyAccordionComponent];
+export const COMMON_IMPORTS = [CommonModule, FormsModule, ReactiveFormsModule, HttpClientModule, RouterModule, OebInputComponent, OebInputErrorComponent, OebButtonComponent, HlmH1Directive, HlmH2Directive, HlmH3Directive, HlmPDirective, HlmADirective, CompetencyAccordionComponent, OebCheckboxComponent];
 
 @NgModule({
 	imports: [...COMMON_IMPORTS, FormsModule, LMarkdownEditorModule, TranslateModule],
