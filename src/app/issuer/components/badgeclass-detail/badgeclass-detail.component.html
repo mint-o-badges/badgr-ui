@@ -10,17 +10,17 @@
 				</div>
 			</div>
 		</header>
-		<div class="badgedetail">
-			<div class="badgedetail-x-header">
+		<div class="tw-flex tw-flex-col tw-relative">
+			<div class="badge-header">
 				<h1 class="tw-text-purple">{{ badgeClass?.name }}</h1>
-				<div class="l-primarymore ">
+				<div class="award-btn">
 					<a
-						class="button md:tw-w-[358px] md:tw-h-[64px] tw-h-[45px] tw-flex tw-items-center tw-justify-center tw-text-xl"
+						class="button tw-w-[305px] md:tw-w-[358px] md:tw-h-[64px] tw-h-[45px] tw-flex tw-items-center tw-justify-center tw-text-xl tw-rounded-[7px]"
 						[routerLink]="['/issuer/issuers', issuerSlug, 'badges', badgeClass.slug, 'issue']"
 						[disabled-when-requesting]="true"
 						>Badge vergeben</a
 					>
-					<button class="buttonicon buttonicon-secondary tw-w-[44.8px] tw-h-[44.8px] md:tw-w-[64px] md:tw-h-[64px]" id="actionstrigger" [bgPopupMenuTrigger]="moreMenu">
+					<button class="threedots threedots-secondary tw-rounded-[7px] tw-w-[44.8px] tw-h-[44.8px] md:tw-w-[64px] md:tw-h-[64px]" id="actionstrigger" [bgPopupMenuTrigger]="moreMenu">
 						<svg icon="icon_more"></svg>
 						<span class="visuallyhidden">Mehr</span>
 					</button>
@@ -42,49 +42,46 @@
 				</div>
 			</div>
 			<div class="tw-flex md:tw-flex-row tw-flex-col tw-mt-4 tw-relative">
-				<div class="badgedetail-x-sidebar">
-					<div class="badgedetail-x-sidebarinternal" style="background-color: #ecfeed">
-						<div class=" tw-w-[297.86px] tw-h-[257px] tw-flex tw-items-center tw-bg-white tw-mx-auto tw-rounded-[20px] tw-border tw-border-solid tw-border-[var(--color-purple)] ">
-						<!-- Badge Assertion Image -->
-						<img
-							class="badgeimage badgeimage-center badgeimage-large"
-							[loaded-src]="badgeClass.image"
-							[loading-src]="badgeLoadingImageUrl"
-							[error-src]="badgeFailedImageUrl"
-							width="201"
-							height="211.97"
-						/>
-						</div>
-						<!-- Issuer Information -->
-						<dl>
-							<div class="l-flex l-flex-2x u-padding-top2x tw-w-[280px] tw-mx-auto tw-flex tw-items-center tw-border tw-border-solid tw-border-[var(--color-purple)] tw-pl-4 tw-py-4 tw-bg-white tw-rounded-[20px]">
-								<div>
-									<img
-										[loaded-src]="issuer.image"
-										[loading-src]="issuerImagePlacholderUrl"
-										[error-src]="issuerImagePlacholderUrl"
-										width="53"
-										height="53"
-									/>
-								</div>
-								<div class="tw-text-oebblack">
-									<dt class="tw-italic ">Vergeben von:</dt>
-									<dd class="u-text u-break-word">
-											{{issuer.name}}
-									</dd>
-								</div>
+				<div class="badge-sidebar">
+					<div class="badge-sidebar-internal" style="background-color: #ecfeed">
+						<div>
+							<div class="tw-w-[195px] tw-h-[179px] md:tw-w-[297.86px] md:tw-h-[257px] tw-flex tw-items-center tw-bg-white tw-mx-auto tw-rounded-[20px] tw-border tw-border-solid tw-border-[var(--color-purple)] ">
+							<!-- Badge Assertion Image -->
+							<img
+								class="badge-image badgeimage-center"
+								[loaded-src]="badgeClass.image"
+								[loading-src]="badgeLoadingImageUrl"
+								[error-src]="badgeFailedImageUrl"
+							/>
 							</div>
-
-							<div class="l-flex l-flex-2x u-padding-top2x border border-top border-light3">
-								<dt class="u-text-small-bold u-text-dark2 tw-p-2"> Tags </dt>
+							<!-- Issuer Information -->
+								<div class="l-flex l-flex-2x u-padding-top2x tw-mt-4 md:tw-w-[280px] tw-mx-auto tw-flex tw-items-center tw-border tw-border-solid tw-border-[var(--color-purple)] tw-pl-4 tw-py-4 tw-bg-white tw-rounded-[20px]">
+									<div >
+										<img class="issuer-image"
+											[loaded-src]="issuer.image"
+											[loading-src]="issuerImagePlacholderUrl"
+											[error-src]="issuerImagePlacholderUrl"
+										/>
+									</div>
+									<div class="tw-text-oebblack">
+										<dt class="tw-italic ">Vergeben von:</dt>
+										<dd class="u-text u-break-word">
+												{{issuer.name}}
+										</dd>
+									</div>
+								</div>
+						</div>
+						<dl>
+							<div class="l-flex l-flex-2x tag-container md:tw-flex-row tw-flex-col">
+								<dt class="u-text-small-bold u-text-dark2 md:tw-p-2"> Tags </dt>
 								<dd class="u-text">
 									<div class="l-tags">
-										<div class="tag" *ngFor="let tag of badgeClass.tags; last as last">{{ tag }}</div>
+										<div class="tag tw-max-w-24" *ngFor="let tag of badgeClass.tags; last as last">{{ tag }}</div>
 									</div>
 							
 							</div>
 
-							<div class="l-flex l-flex-1x tw-text-oebblack u-padding-top2x u-margin-top2x border border-top border-light3">
+							<div class="l-flex l-flex-1x tw-text-oebblack u-padding-top2x u-margin-top2x border border-top border-light3 md:tw-flex-row tw-flex-col">
 								<dt
 									class="u-text-small-bold "
 								>
@@ -93,34 +90,14 @@
 								<dd class="u-text-small ">{{ badgeClass.extension['extensions:CategoryExtension'] === 'competency' ? 'Kompetenz- Badge' : 'Teilnahme- Badge' }}</dd>
 							</div>
 							
-							<div
-								*ngIf="badgeClass.extension['extensions:BasedOnExtension'].BasedOn.slug"
-								class="l-flex l-flex-2x u-padding-top2x border border-top border-light3"
-							>
-								<div>
-									<dt class="u-text-small-bold u-text-dark2">
-										<a
-											class="u-break-word"
-											[routerLink]="[
-												'/issuer/issuers/',
-												badgeClass.extension['extensions:BasedOnExtension'].BasedOn.issuerSlug,
-												'badges',
-												badgeClass.extension['extensions:BasedOnExtension'].BasedOn.slug
-											]"
-										>
-											Basierend auf &rarr;
-										</a>
-									</dt>
-								</div>
-							</div>
-							<div class="l-flex l-flex-1x tw-text-oebblack u-padding-top2x u-margin-top2x border border-top border-light3">
+							<div class="l-flex l-flex-1x tw-text-oebblack u-padding-top2x u-margin-top2x border border-top border-light3 md:tw-flex-row tw-flex-col">
 								<dt class="u-text-small-bold "
 								>
 									Zuletzt editiert:
 								</dt>
 								<dd class="u-text-small"><time [date]="badgeClass.updatedAt" format="dd/MM/y"></time></dd>
 							</div>
-							<div class="l-flex l-flex-1x tw-text-oebblack u-padding-top2x u-margin-top2x border border-top border-light3">
+							<div class="l-flex l-flex-1x tw-text-oebblack u-padding-top2x u-margin-top2x border border-top border-light3 md:tw-flex-row tw-flex-col">
 								<dt class="u-text-small-bold "
 								>
 									Erstellt am:
@@ -133,17 +110,17 @@
 						<hr class="tw-mx-auto tw-w-[280px] tw-my-4 tw-border tw-border-solid tw-border-[var(--color-purple)]" />
 					</div>
 				</div>
-				<div class="badgedetail-x-desc">
+			</div>
+			<div class="badge-detail-body">
+				<div class="badge-description">
 					<h2 class="u-text-h3-semibold u-margin-bottom2x u-text-dark2">
 						Kurzbeschreibung
 					</h2>
 					<p class="u-text-body u-width-paragraph tw-font-semibold">{{ badgeClass.description }}</p>
 				</div>
-			</div>
-			<div class="badgedetail-x-body">
 
 				<!-- Kompetenzen -->
-				<section>
+				<section class="badge-competencies">
 					<h3
 						class="u-text-h3-semibold u-text-dark2 u-margin-bottom2x u-margin-top4x"
 						*ngIf="
@@ -160,8 +137,9 @@
 							"
 						>
 							<div
-								class="tw-flex tw-flex-col tw-bg-[var(--color-lightgreen)] tw-border tw-border-solid tw-border-[var(--color-purple)] tw-p-4 tw-rounded-lg tw-mt-4 md:tw-max-w-[596px] "
+								class="tw-flex tw-flex-col tw-bg-[var(--color-lightgreen)] tw-border tw-border-solid tw-border-[var(--color-purple)] tw-rounded-lg tw-mt-4 tw-w-[346px] md:tw-w-[596px] "
 							>
+							<div class="tw-p-4">
 								<div class="tw-grid tw-grid-cols-3">
 									<h3 class="tw-col-span-2 tw-font-[900] tw-text-lg">{{ competency.name }}</h3>
 									<div class="tw-flex tw-items-start tw-justify-end">
@@ -175,16 +153,11 @@
 									<p class="u-break-word u-text-body tw-font-semibold u-width-paragraph u-margin-top2x tw-line-clamp-3 tw-italic">{{ competency.description }}</p>
 								</div>
 							</div>
+							</div>
 						</div>
 					</div>
 				</section>
 
-				<!-- recipients -->
-				<!-- <div class="l-stack u-margin-bottom2x u-margin-top4x">
-					<h2 class="u-text-h3-semibold u-text-dark2">
-						{{ recipientCount }} Badge {{ recipientCount == 1 ? 'Empfänger:in' : 'Empfänger:innen' }}
-					</h2>
-				</div> -->
 				<ng-template
 					[bgAwaitPromises]="[badgeInstancesLoaded, assertionsLoaded]"
 					*ngIf="instanceResults?.length"
