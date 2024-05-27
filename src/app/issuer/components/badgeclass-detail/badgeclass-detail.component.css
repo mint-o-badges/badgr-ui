@@ -195,13 +195,17 @@
     }
     .badge-detail-body{
         padding-right: calc(50% - 600px);
-		padding-left: calc(50% - 600px + 556px);
+		padding-left: calc(50% - 600px + 356px);
     }
     .threedots-secondary > svg {
         width: 58.37px;
         fill: var(--color-interactive1);
     }
 
+}
+
+::ng-deep .topbar{
+    background-color: white;
 }
 
 /* .l-primarymore {
