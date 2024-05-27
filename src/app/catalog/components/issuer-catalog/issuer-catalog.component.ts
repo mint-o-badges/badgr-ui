@@ -13,6 +13,8 @@ import { StringMatchingUtil } from '../../../common/util/string-matching-util';
 
 import { Map, NavigationControl, Popup } from 'maplibre-gl';
 import { TranslateService } from '@ngx-translate/core';
+import { UserProfileEmail } from '../../../common/model/user-profile.model';
+import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
 
 @Component({
 	selector: 'app-issuer-catalog',
@@ -68,6 +70,9 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 	@ViewChild('map')
 	private mapContainer: ElementRef<HTMLElement>;
 
+	public loggedIn = false;
+	profileEmail: UserProfileEmail[];
+
 	constructor(
 		protected title: Title,
 		protected messageService: MessageService,
@@ -76,6 +81,8 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 		router: Router,
 		route: ActivatedRoute,
 		private translate: TranslateService,
+		public sessionService: SessionService,
+		protected profileManager: UserProfileManager,
 	) {
 		super(router, route);
 		title.setTitle(`Issuers - ${this.configService.theme['serviceName'] || 'Badgr'}`);
@@ -110,6 +117,8 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 
 	ngOnInit() {
 		super.ngOnInit();
+
+		this.loggedIn = this.sessionService.isLoggedIn;
 
 		this.prepareTexts();
 
@@ -414,6 +423,22 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 				other: '# ' + this.translate.instant('General.recipient'),
 			},
 		};
+	}
+
+	navigateToIssuer(issuerData) {
+		console.log('🚀 ~ IssuerCatalogComponent ~ navigateToIssuer ~ issuerData:', issuerData.staff.entities);
+		if (!this.loggedIn) {
+			this.router.navigate(['/public/issuers/', issuerData.slug]);
+		} else {
+			// Check whether user is a mebemr of the institution to be redirected to `issuer/issuer` page
+			this.profileManager.userProfilePromise
+				.then((profile) => profile.emails.loadedPromise)
+				.then((emails) => {
+					const userEmail = emails.entities[0].email;
+					let isMemeber = issuerData.staff.entities.some((staffMember) => staffMember.email === userEmail);
+					this.router.navigate([isMemeber ? '/issuer/issuers/' : '/public/issuers/', issuerData.slug]);
+				});
+		}
 	}
 }
 
