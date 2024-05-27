@@ -1,120 +1,73 @@
 <form-message></form-message>
 
-<header class="topbar">
-	<div class="l-containerxaxis topbar-x-wrap">
-		<h2 class="topbar-x-heading">
-			{{ 'NavItems.myInstitutions' | translate }}
-			<ng-template [showLoader]="false" [bgAwaitPromises]="[issuersLoaded]">
-				<span class="topbar-x-internalheading">
-					{{ issuers.length | i18nPlural: plural['issuer'] }}
-				</span>
-			</ng-template>
-		</h2>
-		<button
-			class="button topbar-x-button"
-			*ngIf="!features.disableIssuers"
-			[routerLink]="['/issuer/create']"
-			[disabled-when-requesting]="true"
-		>
-			{{ 'Issuer.createInstitution' | translate }}
-		</button>
+<div class="oeb page-padding">
+	<div class="tw-pt-[4rem] tw-pb-[2.4rem] md:tw-flex tw-justify-between">
+		<div>
+			<p class="tw-text-purple tw-text-[30px] tw-leading-[38px] md:tw-text-[48px] md:tw-leading-[55.2px] tw-pb-4">{{ 'NavItems.myInstitutions' | translate }}</p>
+			<p class="md:tw-text-[24px] md:tw-leading-[33.6px] tw-text-oebblack tw-text-[16px] tw-leading-[22.4px] tw-font-normal tw-pb-4" [innerHTML]="'Issuer.myInstitutionsText' | translate"></p>
+		</div>
+		<div class="tw-border-purple tw-border tw-rounded-[20px]">
+			<button
+				class="oeb-button oeb-white-bg tw-border-solid tw-border-purple tw-border !tw-font-bold md:tw-whitespace-nowrap"
+				[routerLink]="['/issuer/create']"
+				[disabled-when-requesting]="true"
+			>
+				{{ 'Issuer.createInstitution' | translate }}
+			</button>
+		</div>
 	</div>
-</header>
-
-<div>
-	<ng-template [showLoader]="true" [bgAwaitPromises]="[issuersLoaded]">
-		<!-- Empty state: no issuers -->
-		<section class="emptysection l-emptysection" *ngIf="Array.isArray(issuers) && issuers?.length === 0">
-			<h2 class="emptysection-x-headline">{{ 'Issuer.noInstitutionYet' | translate }}</h2>
-			<p class="emptysection-x-copy">
-				{{ 'Issuer.institutionCreateInfo' | translate }}
-			</p>
-			<div class="emptysection-x-buttons">
+	<div class="md:tw-flex">
+		<div class="tw-w-full  tw-flex-grow md:tw-pr-8">
+			<div class="tw-border-purple tw-border tw-border-solid tw-rounded-[20px] tw-p-6 tw-my-6" *ngFor="let issuer of issuers">
+				<div class="tw-flex">
+					<div class="tw-relative">
+						<img
+							[loaded-src]="issuer?.image"
+							[loading-src]="issuerPlaceholderSrc"
+							[error-src]="issuerPlaceholderSrc"
+							alt="{{ issuer.name }} avatar"
+							class="tw-h-[70px] md:tw-h-[100px] tw-w-auto"
+						/>
+					</div>
+					<div class="tw-flex tw-flex-col tw-justify-center tw-pl-4">
+						<a class="md:tw-text-[30px] md:tw-leading-[36px] tw-text-[20px] tw-leading-[24px] tw-text-purple tw-font-semibold" [routerLink]="['/issuer/issuers/', issuer.slug]">{{ issuer.name }}</a>
+						<p class="tw-text-oebblack tw-font-semibold md:tw-text-[20px] md:tw-leading-[24.4px] tw-text-[14px] tw-leading-[19.6px]">
+							{{ 'Issuer.yourRole' | translate }} 
+							{{ issuer.currentUserStaffMember?.roleInfo.label }}:in
+						</p>
+					</div>
+				</div>
+				<div>
+					<p class="tw-text-oebblack tw-py-4">{{issuer.description}}</p>
+				</div>
+				<div *ngFor="let issuerBadges of [issuerToBadgeInfo[issuer.issuerUrl]]">
+					<p class="tw-text-purple tw-font-medium tw-py-4 md:tw-text-[22px] md:tw-leading-[26.4px] tw-text-[16px] tw-leading-[19.2px]" *ngIf="!issuerBadges">
+						{{issuer.name}} {{ 'Issuer.myInstitutionsNoBadge' | translate }}
+					</p>
+					<p
+						*ngIf="issuerBadges"
+						class="tw-text-purple tw-font-medium tw-py-4 md:tw-text-[22px] md:tw-leading-[26.4px] tw-text-[16px] tw-leading-[19.2px]"
+						[innerHTML]="issuer.badgeClassCount | i18nPlural: plural['badges']"
+					></p>
+				</div>
 				<button
-					class="button button-secondary"
-					*ngIf="!features.disableIssuers"
-					[routerLink]="['/issuer/create']"
-					[disabled-when-requesting]="true"
-				>
-					{{ 'Issuer.createInstitution' | translate }}
+					class="oeb-button oeb-purple-bg !tw-font-bold"
+					[routerLink]="['/issuer/issuers/', issuer.slug, 'badges', 'create']"
+					>{{ 'Issuer.myInstitutionsCreateBadge' | translate }}
 				</button>
 			</div>
-			<div class="emptysection-x-imagecontainer">
-				<img alt="Illustration" class="emptysection-x-image" [src]="noIssuersPlaceholderSrc" />
+		</div>
+		<div #pluginBox class="md:tw-flex-[0_0_333px] md:tw-mt-6">
+			<div class="tw-bg-green tw-p-6 tw-rounded-[20px] tw-text-center tw-text-oebblack tw-relative">
+				<img (click)="pluginBoxElement.nativeElement.remove()" class="tw-cursor-pointer tw-inline-block tw-absolute tw-top-2 tw-right-2" alt="Close" src="assets/oeb/images/issuerPage/close.png" />
+				<div class="tw-flex md:tw-block tw-pb-4">
+					<img class="tw-inline-block" alt="Plugin" src="assets/oeb/images/issuerPage/plugin.png" />
+					<p class="tw-pt-4 tw-text-left tw-pl-4 md:tw-pl-0 md:tw-text-center" [innerHTML]="'Issuer.askForPluginText' | translate"></p>
+				</div>
+				<a href="mailto:hallo@openbadges.education?subject=Interesse an Plugin!" class="oeb-button oeb-purple-bg">
+					{{ 'Issuer.askForPlugin' | translate }}
+				</a>
 			</div>
-		</section>
-
-		<!-- List of Issuers -->
-		<section class="l-containerxaxis l-containeryaxis l-responsivelist">
-			<div class="issuercard" *ngFor="let issuer of issuers">
-				<div class="issuercard-x-image">
-					<img
-						[loaded-src]="issuer?.image"
-						[loading-src]="issuerPlaceholderSrc"
-						[error-src]="issuerPlaceholderSrc"
-						alt="{{ issuer.name }} avatar"
-					/>
-				</div>
-				<div class="issuercard-x-title">
-					<a [routerLink]="['/issuer/issuers/', issuer.slug]">{{ issuer.name }}</a>
-					<p>
-						<strong>{{ 'Issuer.yourRole' | translate }} </strong
-						>{{ issuer.currentUserStaffMember?.roleInfo.label }}
-					</p>
-				</div>
-				<div class="issuercard-x-desc" [truncatedText]="issuer.description" [maxLength]="250"></div>
-
-				<div class="issuercard-x-topbadges" *ngFor="let issuerBadges of [issuerToBadgeInfo[issuer.issuerUrl]]">
-					<h3 class="u-text-body-bold u-text-dark1 u-margin-bottom2x" *ngIf="issuerBadges">
-						{{ 'Issuer.topBadges' | translate }}
-					</h3>
-					<div class="l-flex l-flex-2x l-flex-column">
-						<ng-template [bgAwaitPromises]="[badgesLoaded]">
-							<ng-container *ngIf="issuerBadges">
-								<div class="l-flex l-flex-2x" *ngFor="let badge of issuerBadges.badges.slice(0, 3)">
-									<badge-image class="stack-x-image" [badge]="badge" [size]="40"></badge-image>
-									<div class="l-flex l-flex-column">
-										<a
-											[routerLink]="[
-												'/issuer/issuers/',
-												badge?.issuerSlug || '',
-												'badges',
-												badge?.slug || ''
-											]"
-											class="u-text-link u-break-word"
-										>
-											{{ badge.name }}
-										</a>
-										<p class="u-text-small u-text-dark4">
-											{{ badge.recipientCount | i18nPlural: plural['recipient'] }}
-										</p>
-									</div>
-								</div>
-							</ng-container>
-						</ng-template>
-					</div>
-				</div>
-
-				<div class="issuercard-x-footer">
-					<div class="l-flex l-flex-aligncenter l-flex-1x">
-						<svg class="icon icon-light4 u-hidden-maxmobilelarge" width="24px" icon="icon_badge"></svg>
-						<p
-							class="u-text-small u-text-nowrap"
-							[innerHTML]="issuer.badgeClassCount | i18nPlural: plural['badges']"
-						></p>
-					</div>
-					<div class="tw-flex tw-gap-4">
-						<a
-							class="u-text u-text-small"
-							[routerLink]="['/issuer/issuers/', issuer.slug, 'badges', 'create']"
-							>{{ 'Issuer.createBadge' | translate }}</a
-						>
-						<a class="u-text u-text-small" [routerLink]="['/issuer/issuers/', issuer.slug]">{{
-							'Issuer.open' | translate
-						}}</a>
-					</div>
-				</div>
-			</div>
-		</section>
-	</ng-template>
+		</div>
+	</div>
 </div>

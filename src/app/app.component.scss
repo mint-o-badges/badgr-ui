@@ -220,6 +220,7 @@
 	font-size: 24px;
 	font-weight: 500;
 	line-height: 36px;
+	color: var(--color-purple);
 }
 
 .impressum {
@@ -227,6 +228,7 @@
 	font-size: 20px;
 	font-weight: 500;
 	line-height: 26px;
+	color: var(--color-purple);
 }
 
 .text-semiBold {
@@ -277,3 +279,38 @@
 		line-height: 16.8px;
 	}
 }
+
+.logos-container {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.logos-container img {
+	height: auto;
+}
+
+.funding-logos-container{
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+}
+
+
+@media (max-width: 912px) {
+	.logos-container {
+		flex-direction: column;
+	}
+
+	.logos-container img {
+		margin-bottom: 2rem
+	}
+
+	.funding-logos-container{
+		flex-direction: column;
+	}
+}
+
+

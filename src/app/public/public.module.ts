@@ -16,6 +16,8 @@ import { StartComponent } from './components/start/start.component';
 import { ImpressumComponent } from './components/impressum/impressum.component';
 import { FaqComponent } from './components/faq/faq.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { CompetencyAccordionComponent } from '../components/accordion.component';
+import { DatatableComponent } from '../components/datatable-badges.component';
 
 export const routes: Routes = [
 	{
@@ -104,6 +106,8 @@ export const routes: Routes = [
 		CommonEntityManagerModule,
 		RouterModule.forChild(routes),
 		TranslateModule,
+		CompetencyAccordionComponent,
+		DatatableComponent
 	],
 	declarations: [
 		AboutComponent,
@@ -111,11 +115,11 @@ export const routes: Routes = [
 		ImpressumComponent,
 		PublicComponent,
 		PublicBadgeAssertionComponent,
-		PublicBadgeClassComponent,
 		PublicIssuerComponent,
 		PublicBadgeCollectionComponent,
 		VerifyBadgeDialog,
 		FaqComponent,
+		PublicBadgeClassComponent,
 	],
 	exports: [],
 	providers: [PublicApiService],
