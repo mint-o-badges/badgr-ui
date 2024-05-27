@@ -426,7 +426,6 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 	}
 
 	navigateToIssuer(issuerData) {
-		console.log('🚀 ~ IssuerCatalogComponent ~ navigateToIssuer ~ issuerData:', issuerData.staff.entities);
 		if (!this.loggedIn) {
 			this.router.navigate(['/public/issuers/', issuerData.slug]);
 		} else {
