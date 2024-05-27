@@ -51,6 +51,11 @@ Run the tests with `npm run test`
 
 All files in `dist` constitute the build artifact.
 
+## Deployment
+
+To get the image on the prod server, simply update the `release` branch and push it to github.
+The rest should happen automatically (thanks to github actions and watchtower keeping the deployed image up to date).
+
 ## Commit Message Convention
 
 We follow the [angular commit message convention](https://github.com/angular/angular/blob/68a6a07/CONTRIBUTING.md#commit) in this project to maintain a clean and organized commit history. Use `npx cz` instead of `git commit` to commit via the interactive prompt.
