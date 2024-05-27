@@ -47,8 +47,8 @@
 						>
 						<span label-additions>
 							<a
-								hlmP
-								class="tw-relative tw-underline tw-text-purple tw-z-20 tw-font-semibold"
+								hlmA
+								class="tw-relative tw-text-purple tw-z-20 tw-font-semibold"
 								href="#"
 								tabindex="-1"
 								[routerLink]="['/auth/request-password-reset', usernameField.value]"
@@ -59,16 +59,16 @@
 
 					<div class="tw-flex tw-gap-2 tw-items-center tw-justify-between tw-mt-11 md:tw-mt-[62px]">
 						<!-- Remember Me Checkout -->
-						<label class="tw-flex tw-items-center tw-justify-center tw-gap-2">
-							<input
-								class="tw-relative tw-h-6 tw-w-6 checked:after:tw-top-[2px] md:tw-h-8 md:tw-w-8 md:checked:after:tw-top-0 tw-cursor-pointer tw-border tw-border-solid tw-border-purple tw-rounded checked:tw-bg-purple checked:after:tw-content-[''] checked:after:tw-h-[12px] checked:after:tw-w-[3px] md:checked:after:tw-h-[20px] md:checked:after:tw-w-[10px] checked:after:tw-left-2 checked:after:tw-border-solid checked:after:tw-border-white checked:after:tw-border-t-0 checked:after:tw-border-l-0 checked:after:tw-rotate-45 after:tw-absolute"
+							<oeb-checkbox
+								class=""
 								id="remember-me"
 								name="remember-me"
 								type="checkbox"
+								[text]="'Login.stayLogged' | translate "
 								[formControl]="loginForm.rawControlMap.rememberMe"
-							/>
-							<span hlmP class="oeb tw-font-semibold tw-text-black tw-leading-4">{{ 'Login.stayLogged' | translate }}</span>
-						</label>
+								>
+	
+							</oeb-checkbox>
 
 						<!-- Submit Button -->
 						<oeb-button
