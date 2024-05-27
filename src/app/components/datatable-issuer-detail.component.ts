@@ -36,26 +36,26 @@ import { HlmCommandInputWrapperComponent } from '../../../components/ui-command-
     ],
     providers: [provideIcons({ lucideSearch })],    
 	template: `
-    <div class="tw-flex tw-items-center tw-justify-between tw-gap-4 sm:flex-col tw-mt-8">
-    <div class="l-stack u-margin-bottom2x u-margin-top4x">
-					<h2 class="u-text-h3-semibold u-text-dark2">
-						{{ recipientCount }} Badge {{ recipientCount == 1 ? 'Empfänger:in' : 'Empfänger:innen' }}
-					</h2>
-       </div>
-    <label hlmLabel class="tw-font-semibold">Nach Email Adresse suchen
-    <hlm-cmd-input-wrapper class="tw-relative tw-px-0 tw-mt-1">
-            <input
-            hlmInput
-            class="tw-w-full md:tw-w-80 tw-border-solid tw-border-purple tw-py-1 tw-rounded-[20px]"
-            [ngModel]="_emailFilter()"
-            (ngModelChange)="_rawFilterInput.set($event)"
-            />
-            <hlm-icon size="lg" class="tw-absolute tw-right-6 tw-text-purple" name="lucideSearch" />
-    </hlm-cmd-input-wrapper>
-    
-      </label>
-      <div>
+  <div class="tw-p-[calc(var(--gridspacing)*2)] tw-mt-8 tw-max-w-[596px]">
+    <div class="tw-flex tw-items-center tw-justify-between tw-gap-4 sm:flex-col">
+      <div class="l-stack u-margin-bottom2x u-margin-top4x">
+            <h3 class="md:tw-text-xl tw-text-sm tw-font-semibold tw-font-[rubik] tw-text-oebblack">
+              {{ recipientCount }} Badge {{ recipientCount == 1 ? 'Empfänger:in' : 'Empfänger:innen' }}
+            </h3>
       </div>
+      <label hlmLabel class="tw-font-semibold tw-text-[0.5rem] tw-w-full"> 
+        <span class="tw-px-3">Nach Email Adresse suchen</span>
+        <hlm-cmd-input-wrapper class="tw-relative tw-px-0 tw-mt-1">
+                <input
+                hlmInput
+                class="tw-w-full tw-border-solid tw-ml-auto tw-border-purple tw-py-1 tw-rounded-[20px]"
+                [ngModel]="_emailFilter()"
+                (ngModelChange)="_rawFilterInput.set($event)"
+                />
+                <hlm-icon size="lg" class="tw-absolute  tw-right-6 tw-text-purple" name="lucideSearch" />
+        </hlm-cmd-input-wrapper>
+      
+        </label>
       </div>
         <hlm-table class="tw-rounded-[20px] tw-overflow-hidden tw-w-full tw-max-w-[100%] tw-bg-lightpurple tw-border-purple tw-border tw-mt-8">
             <hlm-caption>{{caption}}</hlm-caption>
@@ -71,6 +71,7 @@ import { HlmCommandInputWrapperComponent } from '../../../components/ui-command-
 
             </hlm-trow>
         </hlm-table>
+      </div>  
         `,
 })
 
