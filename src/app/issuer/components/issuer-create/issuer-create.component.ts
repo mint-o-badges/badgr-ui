@@ -43,7 +43,7 @@ export class IssuerCreateComponent extends BaseAuthenticatedRoutableComponent im
 		.addControl('issuer_streetnumber', '')
 		.addControl('issuer_zip', '')
 		.addControl('issuer_city', '')
-		.addControl('captcha', '');
+		.addControl('captcha', '', [Validators.required]);
 
 	emails: UserProfileEmail[];
 	emailsOptions: FormFieldSelectOption[];
@@ -117,6 +117,12 @@ export class IssuerCreateComponent extends BaseAuthenticatedRoutableComponent im
 	}
 
 	onSubmit() {
+
+		if(this.issuerForm.rawControlMap.captcha.errors.required){
+			this.messageService.setMessage(this.translate.instant('Captcha.pleaseVerify'), 'error');
+			return;
+		}
+
 		if (!this.issuerForm.markTreeDirtyAndValidate()) {
 			return;
 		}
