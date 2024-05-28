@@ -98,6 +98,8 @@
     display: grid;
     grid-template-columns: 195px auto;
     grid-gap: calc(var(--gridspacing) * 2);
+    background-color: #ecfeed;
+
 }
 
 .badge-description {
