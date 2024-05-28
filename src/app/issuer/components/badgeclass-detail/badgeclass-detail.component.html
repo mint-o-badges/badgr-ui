@@ -113,16 +113,16 @@
 			</div>
 			<div class="badge-detail-body">
 				<div class="badge-description">
-					<h2 class="u-text-h3-semibold u-margin-bottom2x u-text-dark2">
+					<h3 class="tw-text-[22px] tw-leading-[26.4px] tw-font-[500] tw-font-[rubik] tw-text-oebblack u-margin-bottom2x">
 						Kurzbeschreibung
-					</h2>
-					<p class="u-text-body u-width-paragraph tw-font-semibold">{{ badgeClass.description }}</p>
+					</h3>
+					<p class="tw-text-xl tw-font-[rubik] tw-text-oebblack u-text-body u-width-paragraph">{{ badgeClass.description }}</p>
 				</div>
 
 				<!-- Kompetenzen -->
 				<section class="badge-competencies">
 					<h3
-						class="u-text-h3-semibold u-text-dark2 u-margin-bottom2x u-margin-top4x"
+						class="tw-text-[22px] tw-leading-[26.4px] tw-font-[500] tw-font-[rubik] tw-text-oebblack u-margin-bottom2x u-margin-top4x"
 						*ngIf="
 							badgeClass.extension && badgeClass.extension['extensions:CompetencyExtension'].length > 0
 						"
@@ -141,7 +141,7 @@
 							>
 							<div class="tw-p-4">
 								<div class="tw-grid tw-grid-cols-3">
-									<h3 class="tw-col-span-2 tw-font-[900] tw-text-lg">{{ competency.name }}</h3>
+									<h3 class="tw-col-span-2 tw-text-[22px] tw-leading-[26.4px] tw-font-[500] tw-font-[rubik] tw-text-oebblack">{{ competency.name }}</h3>
 									<div class="tw-flex tw-items-start tw-justify-end">
 										<div class="tw-flex tw-items-center tw-gap-2 tw-px-2 tw-border tw-border-solid tw-rounded-3xl tw-border-[var(--color-purple)] tw-bg-white">
 											<svg class="icon icon-dark4 tw-w-[16px] md:tw-w-[18px]" viewBox="0 0 24 24" icon="icon_pending"></svg>
@@ -150,7 +150,7 @@
 									</div>
 								</div>
 								<div>
-									<p class="u-break-word u-text-body tw-font-semibold u-width-paragraph u-margin-top2x tw-line-clamp-3 tw-italic">{{ competency.description }}</p>
+									<p class="u-break-word u-text-body tw-text-[20px] tw-leading-[24px] tw-font-[rubik] u-width-paragraph u-margin-top2x tw-line-clamp-3 tw-italic">{{ competency.description }}</p>
 								</div>
 							</div>
 							</div>
