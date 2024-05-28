@@ -36,34 +36,39 @@
     		<div class="tw-flex md:tw-flex-row tw-flex-col tw-mt-4 tw-relative md:tw-mx-0 tw-mx-auto">
 			<div class="badge-sidebar">
 				<div class="badge-sidebar-internal">
-					<!-- Badge Assertion Image -->
-					<img
-						[loaded-src]="badgeClass.image"
-						[loading-src]="badgeLoadingImageUrl"
-						[error-src]="badgeFailedImageUrl"
-						class="badge-image badgeimage-center"
-					/>
-
-					<!-- Issuer Information -->
-					<dl>
-						<div class="l-flex l-flex-2x u-padding-top2x border border-top border-light3">
-							<div>
-								<img
-								    class="issuer-image"
-									[loaded-src]="issuer.image"
-									[loading-src]="issuerImagePlacholderUrl"
-									[error-src]="issuerImagePlacholderUrl"
-								/>
-							</div>
-							<div class="tw-text-oebblack">
-								<dt class="tw-italic">{{ 'RecBadgeDetail.issuedBy' | translate }}</dt>
-								<dd class="u-text">
-									<a class="u-break-word" [href]="issuer.id">{{
-										issuer.name
-									}}</a>
-								</dd>
-							</div>
+					<div>
+						<div class="tw-w-[195px] tw-h-[179px] md:tw-w-[297.86px] md:tw-h-[257px] tw-flex tw-items-center tw-bg-white tw-mx-auto tw-rounded-[20px] tw-border tw-border-solid tw-border-[var(--color-purple)] ">
+							<img
+								[loaded-src]="badgeClass.image"
+								[loading-src]="badgeLoadingImageUrl"
+								[error-src]="badgeFailedImageUrl"
+								class="badge-image badgeimage-center"
+							/>
 						</div>
+	
+						<!-- Issuer Information -->
+							<div class="l-flex l-flex-2x u-padding-top2x tw-mt-4 md:tw-w-[280px] tw-mx-auto tw-flex tw-items-center tw-border tw-border-solid tw-border-[var(--color-purple)] tw-pl-4 tw-py-4 tw-bg-white tw-rounded-[20px]">
+								<div>
+									<img
+										class="issuer-image"
+										[loaded-src]="issuer.image"
+										[loading-src]="issuerImagePlacholderUrl"
+										[error-src]="issuerImagePlacholderUrl"
+									/>
+								</div>
+								<div class="tw-text-oebblack">
+									<dt class="tw-italic">{{ 'RecBadgeDetail.issuedBy' | translate }}</dt>
+									<dd class="u-text">
+										<a class="u-break-word" [href]="issuer.id">{{
+											issuer.name
+										}}</a>
+									</dd>
+								</div>
+							</div>
+					</div>
+					<dl>
+
+					
 						<div class="l-flex l-flex-2x tag-container md:tw-flex-row tw-flex-col">
 							<dt class="u-text-small-bold u-text-dark2 md:tw-p-2"> Tags </dt>
 							<dd class="u-text">

@@ -2,6 +2,10 @@
     background-color: white;
 }
 
+::ng-deep .u-text [href] {
+    font-weight: normal;
+}
+
 .three-dots {
 	align-items: center;
 	background: var(--color-light1);
