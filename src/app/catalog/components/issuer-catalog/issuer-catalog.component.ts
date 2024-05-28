@@ -13,7 +13,6 @@ import { StringMatchingUtil } from '../../../common/util/string-matching-util';
 
 import { Map, NavigationControl, Popup } from 'maplibre-gl';
 import { TranslateService } from '@ngx-translate/core';
-import { UserProfileEmail } from '../../../common/model/user-profile.model';
 import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
 
 @Component({
@@ -71,7 +70,6 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 	private mapContainer: ElementRef<HTMLElement>;
 
 	public loggedIn = false;
-	profileEmail: UserProfileEmail[];
 
 	constructor(
 		protected title: Title,
@@ -434,7 +432,7 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 				.then((profile) => profile.emails.loadedPromise)
 				.then((emails) => {
 					const userEmail = emails.entities[0].email;
-					let isMemeber = issuerData.staff.entities.some((staffMember) => staffMember.email === userEmail);
+					const isMemeber = issuerData.staff.entities.some((staffMember) => staffMember.email === userEmail);
 					this.router.navigate([isMemeber ? '/issuer/issuers/' : '/public/issuers/', issuerData.slug]);
 				});
 		}
