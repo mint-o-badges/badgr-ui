@@ -305,7 +305,8 @@
 		"label": "Ich bin kein Roboter",
 		"verified": "Verif+iziert",
 		"verifying": "Verifizieren...",
-		"waitAlert": "Verifizierung... bitte warten."
+		"waitAlert": "Verifizierung... bitte warten.",
+		"pleaseVerify": "Bitte bestätige, dass du kein Roboter bist!"
 	},
 	"Login": {
 		"stayLogged": "Angemeldet bleiben",

@@ -31,7 +31,7 @@ export class SignupComponent extends BaseRoutableComponent implements OnInit, Af
 		.addControl('passwordConfirm', '', [Validators.required, this.passwordsMatch.bind(this)])
 		.addControl('agreedTermsService', false, Validators.requiredTrue)
 		.addControl('marketingOptIn', false)
-		.addControl('captcha', '');
+		.addControl('captcha', '', [Validators.required]);
 
 	signupFinished: Promise<unknown>;
 	verified = false;
@@ -101,6 +101,11 @@ export class SignupComponent extends BaseRoutableComponent implements OnInit, Af
 	}
 
 	onSubmit() {
+		if(this.signupForm.rawControlMap.captcha.errors.required){
+			this.messageService.setMessage(this.translate.instant('Captcha.pleaseVerify'), 'error');
+			return;
+		}
+
 		if (!this.signupForm.markTreeDirtyAndValidate()) {
 			return;
 		}

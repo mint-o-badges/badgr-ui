@@ -303,7 +303,8 @@
 		"label": "I'm not a robot",
 		"verified": "Verified",
 		"verifying": "Verifying...",
-		"waitAlert": "Verifying... please wait."
+		"waitAlert": "Verifying... please wait.",
+		"pleaseVerify": "Please verify that you are not a robot."
 	},
 	"Login": {
 		"stayLogged": "Stay logged in",
