@@ -24,44 +24,24 @@
 	<!-- Regular View -->
 	<main class="o-container" *ngIf="!embedService.isEmbedded">
 		<form-message></form-message>
-		<div class="badgedetail">
-			<div class="badgedetail-x-header">
+
+		<div class="tw-flex tw-flex-col tw-relative">
+			<div class="badge-header ">
 				<!-- Badge Name -->
-				<h1>{{ badgeClass.name }}</h1>
+				<h1 class="tw-text-purple">
+					{{ badgeClass.name }}
+				</h1>
 
-				<!--
-				<div class="l-primarymore">
-				-->
-
-				<!-- URLs -->
-				<!--
-					<section>
-						<a [href]="v1JsonUrl"
-						   class="button button-primaryghost"
-						>v1 JSON</a>
-						<a [href]="v2JsonUrl"
-						   class="button button-primaryghost"
-						>v2.0 JSON</a>
-						<a [href]="badgeClass.sourceUrl"
-						   *ngIf="badgeClass.sourceUrl"
-						   class="button button-primaryghost"
-						>View Original</a>
-					</section>
-					-->
-				<!--
-				</div>
-				-->
 			</div>
-			<div class="badgedetail-x-sidebar">
-				<div class="badgedetail-x-sidebarinternal" style="background-color: #ecfeed">
+    		<div class="tw-flex md:tw-flex-row tw-flex-col tw-mt-4 tw-relative md:tw-mx-0 tw-mx-auto">
+			<div class="badge-sidebar">
+				<div class="badge-sidebar-internal" style="background-color: #ecfeed">
 					<!-- Badge Assertion Image -->
 					<img
-						alt="{{ badgeClass.name }} image"
-						class="badgeimage badgeimage-center badgeimage-large"
 						[loaded-src]="badgeClass.image"
 						[loading-src]="badgeLoadingImageUrl"
 						[error-src]="badgeFailedImageUrl"
-						width="200"
+						class="badge-image badgeimage-center"
 					/>
 
 					<!-- Issuer Information -->
@@ -69,141 +49,79 @@
 						<div class="l-flex l-flex-2x u-padding-top2x border border-top border-light3">
 							<div>
 								<img
+								    class="issuer-image"
 									[loaded-src]="issuer.image"
 									[loading-src]="issuerImagePlacholderUrl"
 									[error-src]="issuerImagePlacholderUrl"
-									width="40"
 								/>
 							</div>
-							<div>
-								<dt class="u-text-small-bold">Issued by:</dt>
+							<div class="tw-text-oebblack">
+								<dt class="tw-italic">{{ 'RecBadgeDetail.issuedBy' | translate }}</dt>
 								<dd class="u-text">
-									<a
-										class="u-break-word"
-										[routerLink]="routerLinkForUrl(issuer.hostedUrl || issuer.id)"
-										>{{ issuer.name }}</a
-									>
+									<a class="u-break-word" [href]="issuer.id">{{
+										issuer.name
+									}}</a>
 								</dd>
 							</div>
 						</div>
+						<div class="l-flex l-flex-2x tag-container md:tw-flex-row tw-flex-col">
+							<dt class="u-text-small-bold u-text-dark2 md:tw-p-2"> Tags </dt>
+							<dd class="u-text">
+								<div class="l-tags">
+									<div class="tag tw-max-w-24" *ngFor="let tag of badgeClass.tags; last as last">{{ tag }}</div>
+								</div>
+						
+					</div>
+						<div class="l-flex l-flex-1x tw-text-oebblack u-padding-top2x u-margin-top2x border border-top border-light3 md:tw-flex-row tw-flex-col">
+							<dt
+								class="u-text-small-bold"
+							>
+								{{ 'General.category' | translate }}
+							</dt>
+							<dd class="u-text-small">{{ badgeClass.category === 'competency' ? 'Kompetenz- Badge' : 'Teilnahme- Badge' }}</dd>
+						</div>
 					</dl>
 				</div>
+			  </div>
 			</div>
-			<div class="badgedetail-x-desc">
-				<h2 class="u-text-h3-semibold u-margin-bottom2x u-hidden-mintablet">Description</h2>
-				<p class="u-text-body u-width-paragraph">{{ badgeClass.description }}</p>
+			<div class="badge-detail-body">
+			<div class="badge-description">
+				<h2 class="tw-text-[22px] tw-leading-[26.4px] tw-font-[500] tw-font-[rubik] tw-text-oebblack u-margin-bottom2x">
+					Kurzbeschreibung
+				</h2>
+				<p class="tw-text-xl tw-font-[rubik] tw-text-oebblack u-text-body u-width-paragraph">{{ badgeClass.description }}</p>
 			</div>
-			<div class="badgedetail-x-body">
-				<!-- Kategorie -->
-				<section>
+				<section class="badge-competencies">
 					<h3
-						class="u-text-h3-semibold u-text-dark2 u-margin-bottom2x u-margin-top4x"
-						*ngIf="badgeClass['extensions:CategoryExtension']"
-					>
-						Kategorie
-					</h3>
-					<span>{{
-						badgeClass['extensions:CategoryExtension'].Category === 'competency'
-							? 'Kompetenz- Badge'
-							: 'Teilnahme- Badge'
-					}}</span>
-				</section>
-
-				<!-- Kompetenzen -->
-				<section>
-					<h3
-						class="u-text-h3-semibold u-text-dark2 u-margin-bottom2x u-margin-top4x"
+					class="tw-text-[22px] tw-leading-[26.4px] tw-font-[500] tw-font-[rubik] tw-text-oebblack u-margin-bottom2x u-margin-top4x"
 						*ngIf="badgeClass['extensions:CompetencyExtension'].length > 0"
 					>
-						Kompetenzen
+						{{ 'RecBadgeDetail.competencies' | translate}}
 					</h3>
 					<div>
 						<div *ngFor="let competency of badgeClass['extensions:CompetencyExtension']; index as i">
 							<div
-								class="tw-flex tw-flex-col tw-bg-[var(--color-lightpurple)] tw-border tw-border-solid tw-border-[var(--color-purple)] tw-p-4 tw-rounded-lg tw-mt-4 tw-max-w-[500px]"
+								class="tw-flex tw-flex-col tw-bg-[var(--color-lightgreen)] tw-border tw-border-solid tw-border-[var(--color-purple)] tw-rounded-lg tw-mt-4 tw-w-[346px] md:tw-w-[596px]"
 							>
+							<div class="tw-p-4">
 								<div class="tw-grid tw-grid-cols-3">
-									<span class="tw-col-span-2 tw-font-bold tw-text-lg">{{ competency.name }}</span>
-									<div class="tw-flex tw-items-start tw-justify-end">
-										<div class="tw-flex tw-items-center tw-gap-2 tw-px-2 tw-border tw-border-solid tw-rounded-3xl tw-border-[var(--color-purple)]">
-											<svg class="icon icon-dark4" width="18px" viewBox="0 0 24 24" icon="icon_pending"></svg>
-											<span>{{ competency.studyLoad }} Min.</span>
+									<span class="tw-col-span-2 tw-text-[22px] tw-leading-[26.4px] tw-font-[500] tw-font-[rubik] tw-text-oebblack">{{ competency.name }}</span>
+									<div class="tw-flex tw-items-start tw-justify-end ">
+										<div class="tw-flex tw-items-center tw-gap-2 tw-px-2 tw-border tw-border-solid tw-rounded-3xl tw-border-[var(--color-purple)] tw-bg-white">
+											<svg class="icon icon-dark4 tw-w-[16px] md:tw-w-[18px]" width="18px" viewBox="0 0 24 24" icon="icon_pending"></svg>
+											<span class="tw-text-xs md:tw-text-lg tw-font-light">{{ competency.studyLoad }} Min.</span>
 										</div>
 									</div>
 								</div>
-								<competency-accordion
-									[category]="competency.category"
-									[description]="competency.description"
-								/>
+								<div>
+									<p class="u-break-word u-text-body tw-text-[20px] tw-leading-[24px] tw-font-[rubik] u-width-paragraph u-margin-top2x tw-line-clamp-3 tw-italic">{{ competency.description }}</p>
+								</div>
+							</div>
 							</div>
 						</div>
 					</div>
 				</section>
-				<!-- criteria -->
-				<section *ngIf="badgeClass.criteria">
-					<h3
-						class="u-text-h3-semibold u-text-dark2 u-margin-bottom2x u-margin-top4x"
-						*ngIf="badgeClass.criteria.id || badgeClass.criteria.narrative"
-					>
-						Kriterien
-					</h3>
-					<show-more>
-						<markdown-display *ngIf="badgeClass.criteria.narrative" [value]="badgeClass.criteria.narrative">
-						</markdown-display>
-					</show-more>
-					<div class="u-margin-yaxis2x" *ngIf="badgeClass.criteria.id">
-						<a class="u-text-outlink" target="_blank" [href]="badgeClass.criteria.id"
-							>View External Criteria URL
-							<svg icon="icon_external_link"></svg>
-						</a>
-					</div>
-				</section>
-
-				<!-- alignment -->
-				<section>
-					<h3
-						class="u-text-h3-semibold u-margin-bottom2x u-margin-top4x"
-						*ngIf="badgeClass.alignment && badgeClass?.alignment.length > 0"
-					>
-						Verknüpfungen
-					</h3>
-					<div
-						class="bordered l-padding-2x l-marginBottom-2x"
-						*ngFor="let alignmentNode of badgeClass.alignment; let i = index"
-					>
-						<div class="l-flex l-flex-justifybetween">
-							<h4 class="u-text-body-bold u-margin-bottom1x">{{ alignmentNode.targetName }}</h4>
-							<small>{{ alignmentNode.targetCode }}</small>
-						</div>
-						<p class="u-break-word u-text-body u-width-paragraph" *ngIf="alignmentNode.targetDescription">
-							{{ alignmentNode.targetDescription }}
-						</p>
-
-						<div *ngIf="alignmentNode.frameworkName">
-							<h4>Framework</h4>
-							{{ alignmentNode.frameworkName }}
-						</div>
-						<div class="u-margin-yaxis2x" *ngIf="alignmentNode.targetUrl">
-							<a class="u-text-outlink" target="_blank" [href]="alignmentNode.targetUrl"
-								>View alignment URL
-								<svg icon="icon_external_link"></svg>
-							</a>
-						</div>
-					</div>
-				</section>
-
-				<!-- tags -->
-				<section>
-					<h3
-						class="u-text-h3-semibold u-margin-bottom2x u-margin-top4x"
-						*ngIf="badgeClass.tags && badgeClass.tags.length"
-					>
-						Tags
-					</h3>
-					<div class="l-tags">
-						<div class="tag" *ngFor="let tag of badgeClass.tags; last as last">{{ tag }}</div>
-					</div>
-				</section>
+				
 			</div>
 		</div>
 	</main>
