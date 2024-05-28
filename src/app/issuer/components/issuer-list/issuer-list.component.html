@@ -51,8 +51,11 @@
 					></p>
 				</div>
 				<button
-					class="oeb-button oeb-purple-bg !tw-font-bold"
+					[class]="issuer.apiModel.verified 
+                        ? 'oeb-button oeb-purple-bg !tw-font-bold'
+                        : 'oeb-button !tw-font-bold'"
 					[routerLink]="['/issuer/issuers/', issuer.slug, 'badges', 'create']"
+                    [disabled]="!issuer.apiModel.verified"
 					>{{ 'Issuer.myInstitutionsCreateBadge' | translate }}
 				</button>
 			</div>
