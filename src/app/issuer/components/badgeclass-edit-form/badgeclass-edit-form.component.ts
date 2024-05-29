@@ -29,6 +29,7 @@ import { FormFieldSelectOption } from '../../../common/components/formfield-sele
 import { AiSkillsService } from '../../../common/services/ai-skills.service';
 import { Skill } from '../../../common/model/ai-skills.model';
 import { TranslateService } from '@ngx-translate/core';
+import { image } from 'html2canvas/dist/types/css/types/image';
 
 @Component({
 	selector: 'badgeclass-edit-form',
@@ -38,6 +39,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableComponent implements OnInit, AfterViewInit {
 	baseUrl: string;
 	badgeCategory: string;
+	editingBadge: boolean;
 
 	selectFromMyFiles = this.translate.instant('RecBadge.selectFromMyFiles');
 	chooseFromExistingIcons = this.translate.instant('RecBadge.chooseFromExistingIcons');
@@ -349,7 +351,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 		this.badgeClassForm.setValue({
 			badge_name: badgeClass.name,
-			badge_image: this.existing ? badgeClass.image : null, // Setting the image here is causing me a lot of problems with events being triggered, so I resorted to just set it in this.imageField...
+			badge_image: null, // Setting the image here is causing me a lot of problems with events being triggered, so I resorted to just set it in this.imageField...
 			badge_customImage: null,
 			badge_description: badgeClass.description,
 			badge_criteria_url: badgeClass.criteria_url,
@@ -383,11 +385,18 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			})),
 		});
 
+		this.editingBadge = true
+
 		this.currentImage = badgeClass.extension['extensions:OrgImageExtension']
 			? badgeClass.extension['extensions:OrgImageExtension'].OrgImage
 			: undefined;
 		if (this.currentImage && this.imageField) {
-			this.imageField.useDataUrl(this.currentImage, 'BADGE');
+			if(!badgeClass.imageFrame && this.customImageField){
+				this.customImageField.useDataUrl(this.currentImage, 'BADGE');
+			}
+			else{
+				this.imageField.useDataUrl(this.currentImage, 'BADGE');
+			}
 		}
 		this.tags = new Set();
 		this.badgeClass.tags.forEach((t) => this.tags.add(t));
@@ -397,7 +406,12 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			this.enableExpiration();
 		}
 
-		this.adjustUploadImage(this.badgeClassForm.value);
+		if(!badgeClass.imageFrame){
+				this.generateCustomUploadImage(this.badgeClassForm.value);
+		}else{
+				this.adjustUploadImage(this.badgeClassForm.value);
+		}
+
 	}
 
 	ngOnInit() {
@@ -711,7 +725,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 	async onSubmit() {
 		try {
-			if (this.badgeClassForm.rawControl.controls.badge_category.value === 'competency') {
+			if (!this.editingBadge && this.badgeClassForm.rawControl.controls.badge_category.value === 'competency') {
 				this.badgeClassForm.controls.competencies.rawControls.forEach((control, i) => {
 					if (control.untouched) {
 						this.badgeClassForm.controls.competencies.removeAt(i);
@@ -739,7 +753,9 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				this.badgeClassForm.controls.badge_criteria_text.setValue(criteriaText + participationText );	
 			}
 
+			let imageFrame = true
 			if (this.badgeClassForm.controls.badge_customImage.value && this.badgeClassForm.valid) {
+				imageFrame = false;
 				this.badgeClassForm.controls.badge_image.setValue(this.badgeClassForm.controls.badge_customImage.value);
 			}
 			this.badgeClassForm.markTreeDirty();
@@ -776,6 +792,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				this.existingBadgeClass.name = formState.badge_name;
 				this.existingBadgeClass.description = formState.badge_description;
 				this.existingBadgeClass.image = formState.badge_image;
+				this.existingBadgeClass.imageFrame = imageFrame;
 				this.existingBadgeClass.criteria_text = formState.badge_criteria_text;
 				this.existingBadgeClass.criteria_url = formState.badge_criteria_url;
 				this.existingBadgeClass.alignments = this.alignmentsEnabled ? formState.alignments : [];
@@ -827,6 +844,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 					name: formState.badge_name,
 					description: formState.badge_description,
 					image: formState.badge_image,
+					imageFrame: imageFrame,
 					criteria_text: formState.badge_criteria_text,
 					criteria_url: formState.badge_criteria_url,
 					tags: Array.from(this.tags),
