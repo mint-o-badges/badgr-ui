@@ -349,8 +349,8 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 		this.badgeClassForm.setValue({
 			badge_name: badgeClass.name,
-			badge_image: this.existing ? badgeClass.image : null, // Setting the image here is causing me a lot of problems with events being triggered, so I resorted to just set it in this.imageField...
-			badge_customImage: null,
+			badge_image: this.existing && badgeClass.imageFrame ? badgeClass.image : null, // Setting the image here is causing me a lot of problems with events being triggered, so I resorted to just set it in this.imageField...
+			badge_customImage: this.existing && !badgeClass.imageFrame ? badgeClass.image : null,
 			badge_description: badgeClass.description,
 			badge_criteria_url: badgeClass.criteria_url,
 			badge_criteria_text: badgeClass.criteria_text,
@@ -977,11 +977,10 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	}
 
 	adjustUploadImage(formdata) {
-		// Skip update badge icon frame if no-hexagon-frame checkbox is checked
 		if (this.currentImage && this.badgeStudio ) {
 			this.badgeStudio
 				.generateUploadImage(this.currentImage.slice(), formdata)
-				.then((imageUrl) => this.imageField.useDataUrl(imageUrl, 'BADGE'));
+				// .then((imageUrl) => this.imageField.useDataUrl(imageUrl, 'BADGE'));
 		}
 	}
 
