@@ -80,3 +80,13 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}-Staging
           labels: ${{ steps.meta.outputs.labels }}-Staging
           file: staging.Dockerfile
+      - name: 🏗️ Build and push Docker develop image
+        # Only build develop images for Staging
+        if: github.ref == 'refs/heads/develop'
+        uses: docker/build-push-action@v5.3.0
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}-Develop
+          labels: ${{ steps.meta.outputs.labels }}-Develop
+          file: Develop.Dockerfile
