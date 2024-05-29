@@ -43,7 +43,7 @@ export class IssuerCreateComponent extends BaseAuthenticatedRoutableComponent im
 		.addControl('issuer_streetnumber', '')
 		.addControl('issuer_zip', '')
 		.addControl('issuer_city', '')
-		.addControl('captcha', '', [Validators.required]);
+		.addControl('captcha', '');
 
 	emails: UserProfileEmail[];
 	emailsOptions: FormFieldSelectOption[];
@@ -90,43 +90,22 @@ export class IssuerCreateComponent extends BaseAuthenticatedRoutableComponent im
 	}
 
 	ngAfterViewInit(): void {
-		this.captchaService.getCaptcha().then((captcha) => {
-			document.querySelector('#altcha').addEventListener('statechange', (ev: any) => {
-				if (ev.detail.state === 'verified') {
-					this.verified = true;
-				}
-			});
-			// @ts-ignore
-			document.querySelector('#altcha').configure({
-				challenge: {
-					algorithm: captcha.algorithm,
-					challenge: captcha.challenge,
-					salt: captcha.salt,
-					signature: captcha.signature,
-				},
-				strings: {
-					error: this.translate.instant('Captcha.error'),
-					footer: this.translate.instant('Captcha.footer'),
-					label: this.translate.instant('Captcha.label'),
-					verified: this.translate.instant('Captcha.verified'),
-					verifying: this.translate.instant('Captcha.verifying'),
-					waitAlert: this.translate.instant('Captcha.waitAlert'),
-				},
-			});
-		});
+		this.captchaService.setupCaptcha('#altcha', (verified) => {
+			this.verified = verified;
+		  });
 	}
 
 	onSubmit() {
-
-		if(this.issuerForm.rawControlMap.captcha.errors.required){
-			this.messageService.setMessage(this.translate.instant('Captcha.pleaseVerify'), 'error');
-			return;
-		}
-
+		
 		if (!this.issuerForm.markTreeDirtyAndValidate()) {
 			return;
 		}
-
+		
+		if(!this.verified){
+			this.messageService.setMessage(this.translate.instant('Captcha.pleaseVerify'), 'error');
+			return;
+		}
+		
 		const formState = this.issuerForm.value;
 
 		const altcha = <HTMLInputElement>document.getElementsByName('altcha')[0];

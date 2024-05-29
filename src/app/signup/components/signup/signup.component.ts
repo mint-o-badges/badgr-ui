@@ -31,7 +31,7 @@ export class SignupComponent extends BaseRoutableComponent implements OnInit, Af
 		.addControl('passwordConfirm', '', [Validators.required, this.passwordsMatch.bind(this)])
 		.addControl('agreedTermsService', false, Validators.requiredTrue)
 		.addControl('marketingOptIn', false)
-		.addControl('captcha', '', [Validators.required]);
+		.addControl('captcha', '');
 
 	signupFinished: Promise<unknown>;
 	verified = false;
@@ -74,42 +74,22 @@ export class SignupComponent extends BaseRoutableComponent implements OnInit, Af
 	}
 
 	ngAfterViewInit(): void {
-		this.captchaService.getCaptcha().then((captcha) => {
-			document.querySelector('#altcha').addEventListener('statechange', (ev: any) => {
-				if (ev.detail.state === 'verified') {
-					this.verified = true;
-				}
-			});
-			// @ts-ignore
-			document.querySelector('#altcha').configure({
-				challenge: {
-					algorithm: captcha.algorithm,
-					challenge: captcha.challenge,
-					salt: captcha.salt,
-					signature: captcha.signature,
-				},
-				strings: {
-					error: this.translate.instant('Captcha.error'),
-					footer: this.translate.instant('Captcha.footer'),
-					label: this.translate.instant('Captcha.label'),
-					verified: this.translate.instant('Captcha.verified'),
-					verifying: this.translate.instant('Captcha.verifying'),
-					waitAlert: this.translate.instant('Captcha.waitAlert'),
-				},
-			});
-		});
+		this.captchaService.setupCaptcha('#altcha', (verified) => {
+			this.verified = verified;
+		  });
 	}
 
 	onSubmit() {
-		if(this.signupForm.rawControlMap.captcha.errors.required){
-			this.messageService.setMessage(this.translate.instant('Captcha.pleaseVerify'), 'error');
-			return;
-		}
-
+		
 		if (!this.signupForm.markTreeDirtyAndValidate()) {
 			return;
 		}
-
+		
+		if(!this.verified){
+			this.messageService.setMessage(this.translate.instant('Captcha.pleaseVerify'), 'error');
+			return;
+		}
+		
 		const formState = this.signupForm.value;
 
 		const altcha = <HTMLInputElement>document.getElementsByName('altcha')[0];
