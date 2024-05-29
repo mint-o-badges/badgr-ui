@@ -38,7 +38,6 @@ import { TranslateService } from '@ngx-translate/core';
 export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableComponent implements OnInit, AfterViewInit {
 	baseUrl: string;
 	badgeCategory: string;
-	editingBadge: boolean;
 
 	selectFromMyFiles = this.translate.instant('RecBadge.selectFromMyFiles');
 	chooseFromExistingIcons = this.translate.instant('RecBadge.chooseFromExistingIcons');
@@ -384,8 +383,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			})),
 		});
 
-		this.editingBadge = true
-
 		this.currentImage = badgeClass.extension['extensions:OrgImageExtension']
 			? badgeClass.extension['extensions:OrgImageExtension'].OrgImage
 			: undefined;
@@ -714,9 +711,9 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 	async onSubmit() {
 		try {
-			if (!this.editingBadge && this.badgeClassForm.rawControl.controls.badge_category.value === 'competency') {
+			if (this.badgeClassForm.rawControl.controls.badge_category.value === 'competency') {
 				this.badgeClassForm.controls.competencies.rawControls.forEach((control, i) => {
-					if (control.untouched) {
+					if (control.untouched && control.status === 'INVALID') {
 						this.badgeClassForm.controls.competencies.removeAt(i);
 					}
 				});
