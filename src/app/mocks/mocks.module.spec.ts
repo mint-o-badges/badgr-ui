@@ -176,6 +176,7 @@ export class MockOAuthApiService {
 @Injectable()
 export class MockCaptchaService {
 	getCaptcha = () => new Promise(() => {});
+	setupCaptcha = () => new Promise(() => {})
 }
 
 export const commonDialog = {
