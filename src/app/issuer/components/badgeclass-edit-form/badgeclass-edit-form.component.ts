@@ -29,7 +29,6 @@ import { FormFieldSelectOption } from '../../../common/components/formfield-sele
 import { AiSkillsService } from '../../../common/services/ai-skills.service';
 import { Skill } from '../../../common/model/ai-skills.model';
 import { TranslateService } from '@ngx-translate/core';
-import { image } from 'html2canvas/dist/types/css/types/image';
 
 @Component({
 	selector: 'badgeclass-edit-form',
@@ -39,7 +38,6 @@ import { image } from 'html2canvas/dist/types/css/types/image';
 export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableComponent implements OnInit, AfterViewInit {
 	baseUrl: string;
 	badgeCategory: string;
-	editingBadge: boolean;
 
 	selectFromMyFiles = this.translate.instant('RecBadge.selectFromMyFiles');
 	chooseFromExistingIcons = this.translate.instant('RecBadge.chooseFromExistingIcons');
@@ -351,7 +349,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 		this.badgeClassForm.setValue({
 			badge_name: badgeClass.name,
-			badge_image: null, // Setting the image here is causing me a lot of problems with events being triggered, so I resorted to just set it in this.imageField...
+			badge_image: this.existing ? badgeClass.image : null, // Setting the image here is causing me a lot of problems with events being triggered, so I resorted to just set it in this.imageField...
 			badge_customImage: null,
 			badge_description: badgeClass.description,
 			badge_criteria_url: badgeClass.criteria_url,
@@ -384,8 +382,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				target_code: alignment.target_code,
 			})),
 		});
-
-		this.editingBadge = true
 
 		this.currentImage = badgeClass.extension['extensions:OrgImageExtension']
 			? badgeClass.extension['extensions:OrgImageExtension'].OrgImage
@@ -725,7 +721,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 	async onSubmit() {
 		try {
-			if (!this.editingBadge && this.badgeClassForm.rawControl.controls.badge_category.value === 'competency') {
+			if (this.badgeClassForm.rawControl.controls.badge_category.value === 'competency') {
 				this.badgeClassForm.controls.competencies.rawControls.forEach((control, i) => {
 					if (control.untouched) {
 						this.badgeClassForm.controls.competencies.removeAt(i);
