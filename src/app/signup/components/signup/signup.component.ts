@@ -34,7 +34,7 @@ export class SignupComponent extends BaseRoutableComponent implements OnInit, Af
 		.addControl('captcha', '');
 
 	signupFinished: Promise<unknown>;
-	verified = false;
+	captchaVerified = false;
 
 	agreedTermsService = false;
 
@@ -75,7 +75,7 @@ export class SignupComponent extends BaseRoutableComponent implements OnInit, Af
 
 	ngAfterViewInit(): void {
 		this.captchaService.setupCaptcha('#altcha', (verified) => {
-			this.verified = verified;
+			this.captchaVerified = verified;
 		  });
 	}
 
@@ -85,7 +85,7 @@ export class SignupComponent extends BaseRoutableComponent implements OnInit, Af
 			return;
 		}
 		
-		if(!this.verified){
+		if(!this.captchaVerified){
 			this.messageService.setMessage(this.translate.instant('Captcha.pleaseVerify'), 'error');
 			return;
 		}
