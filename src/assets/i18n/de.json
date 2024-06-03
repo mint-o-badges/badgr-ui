@@ -303,7 +303,7 @@
 		"error": "Verifizierung fehlgeschlagen. Bitte erneut versuchen.",
 		"footer": "Protected by <a href=\"https://altcha.org/\" target=\"_blank\">ALTCHA</a>",
 		"label": "Ich bin kein Roboter",
-		"verified": "Verif+iziert",
+		"verified": "Verifiziert",
 		"verifying": "Verifizieren...",
 		"waitAlert": "Verifizierung... bitte warten.",
 		"pleaseVerify": "Bitte bestätige, dass du kein Roboter bist!"
