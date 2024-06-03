@@ -1,16 +1,39 @@
-<div class="l-containerxaxis l-containeryaxis l-flex l-flex-justifycenter">
-	<form-message></form-message>
-	<oauth-banner></oauth-banner>
-	<div class="shadowcontainer">
-		<h2 class="u-text-h3-bold">Verifiziere Deine Email-Addresse</h2>
-		<p class="u-text-body u-margin-top1x">Willkommen bei {{ service }}!</p>
-		<p class="u-text-body u-margin-top4x">
-			Wir haben Dir eine Verifizierungs-Email an <strong class="u-text-bold">{{ email }}</strong> geschickt.
-		</p>
-		<p class="u-text-body u-margin-top2x">
-			Klicke die URL, um den Registrierungsprozess abzuschließen. Wenn Du die Email nicht in wenigen Minuten
-			erhältst, schaue in Deinen Spam-Ordner. Wenn Du die Mail immer noch nicht findest, dann
-			<a class="u-text-link" [href]="helpEmailUrl">schreib uns</a>.
-		</p>
+<div class="tw-relative tw-w-full">
+	<div class="oeb page-padding tw-overflow-hidden tw-py-[2rem] md:tw-py-[6rem]">
+		<div class="tw-flex tw-flex-col tw-items-center tw-justify-center">
+			<form-message></form-message>
+			<!-- OAuth Banner -->
+			<oauth-banner></oauth-banner>
+
+			<div class="tw-flex tw-items-center tw-gap-[10px] md:tw-w-[510px] tw-w-[98%]">
+				<img
+					class="md:tw-h-[56px] tw-h-[39.2px]"
+					src="assets/oeb/images/signuppage/checked.png"
+					alt="circles-logo"
+				/>
+
+				<p
+					[innerHTML]="'Signup.weCreatedYourAccount' | translate"
+					class="tw-font-normal md:tw-text-[24px] md:tw-leading-[28.8px] tw-text-[16.8px] tw-leading-[px] tw-text-purple"
+				></p>
+			</div>
+
+			<div
+				class="tw-flex tw-flex-col tw-justify-center md:tw-p-[50px] md:tw-mt-[50px] tw-p-[30px] tw-mt-[30px] tw-bg-green md:tw-w-[80%] tw-w-[98%] md:tw-rounded-[20px] tw-rounded-[14px]"
+			>
+				<h2
+					[innerHTML]="'Signup.success_verify_email_heading' | translate"
+					class="tw-font-black md:tw-text-[46px] md:tw-leading-[55.2px] tw-text-center tw-text-[30px] tw-leading-[33px] tw-text-purple"
+				></h2>
+				<h2
+					[innerHTML]="'Signup.success_verify_email_desc' | translate"
+					class="tw-font-semibold md:tw-text-[30px] md:tw-leading-[36px] md:tw-mt-[30px] tw-text-center tw-text-[16px] tw-leading-[19.2px] tw-mt-[20px] tw-text-oebblack"
+				></h2>
+				<p
+					[innerHTML]="'Signup.success_verify_email_help' | translate"
+					class="tw-font-normal md:tw-text-[20px] md:tw-leading-[24px] md:tw-mt-[30px] tw-text-center tw-text-[14px] tw-leading-[16.8px] tw-mt-[20px]"
+				></p>
+			</div>
+		</div>
 	</div>
 </div>
