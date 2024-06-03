@@ -14,9 +14,9 @@
 		padding-right: calc(var(--gridspacing) * 3);
 		padding-left: calc(var(--gridspacing) * 3);
 	}
-	@media (min-width: 1224px) {
-		padding-right: calc(50% - 600px);
-		padding-left: calc(50% - 600px);
+	@media (min-width: 1440px) {
+		padding-right: calc(50% - 720px);
+		padding-left: calc(50% - 720px);
 	}
 }
 
