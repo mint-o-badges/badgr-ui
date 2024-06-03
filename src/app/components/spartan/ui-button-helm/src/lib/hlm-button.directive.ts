@@ -4,7 +4,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import type { ClassValue } from 'clsx';
 
 export const buttonVariants = cva(
-	'tw-inline-flex tw-items-center tw-justify-center tw-rounded-[10px]  tw-transition-colors focus-visible:tw-outline-none focus-visible:tw-ring-2 focus-visible:tw-ring-ring focus-visible:tw-ring-offset-2 disabled:tw-opacity-50 disabled:tw-pointer-events-none tw-ring-offset-background',
+	'tw-inline-flex tw-items-center tw-justify-center md:tw-rounded-[10px] tw-rounded-[7px] tw-transition-colors focus-visible:tw-outline-none focus-visible:tw-ring-2 focus-visible:tw-ring-ring focus-visible:tw-ring-offset-2 disabled:tw-opacity-50 disabled:tw-pointer-events-none tw-ring-offset-background',
 	{
 		variants: {
 			variant: {
@@ -18,9 +18,9 @@ export const buttonVariants = cva(
 			},
 			size: {
 				default: 'md:tw-py-[15px] md:tw-px-[60px] md:tw-text-[20px] md:tw-leading-[30px] tw-py-[10.5px] tw-px-[42px] tw-text-[14px] tw-leading-[21px] tw-border-2 tw-font-bold',
-				md: 'tw-py-[10px] tw-px-[25px] tw-rounded-[10px] tw-text-[20px] tw-leading-[28px] tw-border tw-font-bold',
-				sm: 'tw-py-[6px] tw-px-[20px] tw-rounded-[10px] tw-text-[16px] tw-leading-[24px] tw-border tw-font-bold',
-				xs: 'tw-py-[4px] tw-px-[16px] tw-rounded-[10px] tw-border',
+				md: 'tw-py-[10px] tw-px-[25px] md:tw-rounded-[10px] tw-rounded-[7px] tw-text-[20px] tw-leading-[28px] tw-border tw-font-bold',
+				sm: 'tw-py-[6px] tw-px-[20px] md:tw-rounded-[10px] tw-rounded-[7px] tw-text-[16px] tw-leading-[24px] tw-border tw-font-bold',
+				xs: 'tw-py-[4px] tw-px-[16px] md:tw-rounded-[10px] tw-rounded-[7px] tw-border',
 				icon: 'tw-h-10 tw-w-10',
 			},
 		},
