@@ -34,6 +34,7 @@ describe('SignupComponent', () => {
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 			teardown: { destroyAfterEach: false },
 		}).compileComponents();
+		//TODO: fix tests and uncomment
 		// fixture = TestBed.createComponent(SignupComponent);
 		// component = fixture.debugElement.componentInstance;
 	});
