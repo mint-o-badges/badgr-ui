@@ -301,7 +301,7 @@
 	},
 	"Captcha": {
 		"error": "Verifizierung fehlgeschlagen. Bitte erneut versuchen.",
-		"footer": "Protected by <a href=\"https://altcha.org/\" target=\"_blank\">ALTCHA</a>",
+		"footer": "Geschützt durch <a href=\"https://altcha.org/\" target=\"_blank\">ALTCHA</a>",
 		"label": "Ich bin kein Roboter",
 		"verified": "Verifiziert",
 		"verifying": "Verifizieren...",
