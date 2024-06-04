@@ -29,7 +29,7 @@ export class SignupSuccessComponent implements OnInit {
 		// observable though, since the user typically shouldn't
 		// be logged in at this point anyway.
 		this.sessionService.logout(false);
-		this.email = decodeURIComponent(atob(this.routeParams.snapshot.params['email']));
+		this.email = atob(decodeURIComponent(this.routeParams.snapshot.params['email']));
 	}
 
 	get helpEmailUrl() {
