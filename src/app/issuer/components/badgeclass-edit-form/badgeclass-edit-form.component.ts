@@ -416,7 +416,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		// update badge frame when a category is selected, unless no-hexagon-frame checkbox is checked
 		this.badgeClassForm.rawControl.controls['badge_category'].statusChanges.subscribe((res) => {
 			this.handleBadgeCategoryChange();
-			if (this.currentImage) {
+			if (this.currentImage && this.badgeClass.imageFrame) {
 				//timeout because of workaround for angular bug.
 				setTimeout(function () {
 					that.adjustUploadImage(that.badgeClassForm.value);
@@ -437,7 +437,9 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		});
 		// call adjustUploadImage after formControls are initialized to prevent timing issues
 		// with the imageField (e.g. when editing a badge the image was not shown when the page first loaded)
-		this.adjustUploadImage(this.badgeClassForm.value);
+		if(this.badgeClass.imageFrame){
+			this.adjustUploadImage(this.badgeClassForm.value);
+		}
 	}
 
 	clearCompetencies() {
@@ -980,7 +982,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		if (this.currentImage && this.badgeStudio ) {
 			this.badgeStudio
 				.generateUploadImage(this.currentImage.slice(), formdata)
-				// .then((imageUrl) => this.imageField.useDataUrl(imageUrl, 'BADGE'));
+				.then((imageUrl) => this.imageField.useDataUrl(imageUrl, 'BADGE'));
 		}
 	}
 
