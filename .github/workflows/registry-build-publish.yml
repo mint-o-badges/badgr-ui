@@ -90,4 +90,4 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}-Develop
           labels: ${{ steps.meta.outputs.labels }}-Develop
-          file: Develop.Dockerfile
+          file: develop.Dockerfile
