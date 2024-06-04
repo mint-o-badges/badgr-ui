@@ -4,6 +4,7 @@ import { SessionService } from '../../../common/services/session.service';
 import { Title } from '@angular/platform-browser';
 import { AppConfigService } from '../../../common/app-config.service';
 import { MessageService } from '../../../common/services/message.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'signup-success',
@@ -17,6 +18,7 @@ export class SignupSuccessComponent implements OnInit {
 		private configService: AppConfigService,
 		private router: Router,
 		private messageService: MessageService,
+		private translate: TranslateService
 	) {
 		title.setTitle(`Verification - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 	}
@@ -44,23 +46,22 @@ export class SignupSuccessComponent implements OnInit {
 	resendVerificatoinEmail(email: string) {
 		this.sessionService.resendVerificationEmail_unloaggedUser(email).then(
 			() => {
-				this.messageService.reportMajorSuccess(`A new verification email was sent to: ${email}`);
+				this.messageService.reportMajorSuccess(this.translate.instant('Signup.newEmailSent') + email);
 			},
 			(err) => {
 				if (err.status === 409) {
 					this.messageService.reportAndThrowError(
-						'Your email address is already verified. You can login.',
+						this.translate.instant('Signup.emailAlreadyConfirmed'),
 						err,
 					);
 				} else if (err.status === 429) {
 					this.messageService.reportAndThrowError(
-						'You have reached a limit for resending verification email. Please check your' +
-							' inbox for an existing message or retry after 5 minutes.',
+						this.translate.instant('Signup.reachedResendEmailLimit'),
 						err,
 					);
 				} else {
 					this.messageService.reportAndThrowError(
-						'Failed to resend verification email. Please contact support.',
+						this.translate.instant('Signup.resendEmailFailed'),
 						err,
 					);
 				}
