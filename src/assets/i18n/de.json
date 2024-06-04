@@ -303,7 +303,8 @@
 		"success_heading": "Wir haben deinen Account erstellt und dir eine Verifizierungs-E-Mail geschickt.",
 		"success_verify_email_heading": "Verifiziere deine E-Mail-Adresse",
 		"success_verify_email_desc": "Bitte überprüfe deine E-Mails und <span class='tw-text-purple'>klicke in der Mail auf „Meinen Account bestätigen”</span>, um deinen Account zu aktivieren.",
-		"success_verify_email_help": "Wenn du die Verifizierungs-E-Mail nicht innerhalb weniger Minuten erhältst, schaue in deinen Spam-Ordner. Wenn du die Mail auch dort nicht findest, <a class='tw-text-purple tw-not-italic' href='mailto:info@openbadges.education'>schreib uns</a>."
+		"success_verify_email_help": "Wenn du die Verifizierungs-E-Mail nicht innerhalb weniger Minuten erhältst, schaue in deinen Spam-Ordner. Wenn du die Mail auch dort nicht findest, <a class='tw-text-purple tw-not-italic' href='mailto:info@openbadges.education'>schreib uns</a>.",
+		"resendEmail":"E-Mail erneut senden"
 	},
 	"Login": {
 		"stayLogged": "Angemeldet bleiben",

@@ -206,4 +206,13 @@ export class SessionService {
 			window.location.replace(window.location.toString());
 		}
 	}
+
+	/**
+	 * To resend verification email for unlogged user.
+	 */
+	resendVerificationEmail_unloaggedUser(emailToVerify: string) {
+		return this.http
+			.put<unknown>(this.baseUrl + `/v1/user/resendemail/${ encodeURIComponent(emailToVerify)}`, { resend: true })
+			.toPromise();
+	}
 }
