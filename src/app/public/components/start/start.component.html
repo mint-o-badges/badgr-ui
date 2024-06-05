@@ -38,12 +38,13 @@
 				<img class="tw-cursor-pointer tw-relative tw-z-10" [src]="thumbnailSrc" alt="Thumbnail" *ngIf="!videoStarted" (click)="startVideo()">
 					<iframe
 					    [hidden]="!videoStarted"
-						src="https://www.youtube.com/embed/H6lBdH75P7g?autoplay=1"
+						src="https://www.youtube.com/embed/H6lBdH75P7g"
 						class="tw-w-full tw-h-full tw-z-10 tw-relative tw-border-purple tw-border-solid tw-border-4"
 						title="Open badges kurz erklärt"
 						frameborder="0"
 						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 						allowfullscreen
+						id="video-iframe"
 					></iframe>
 					
 					<div class="tw-hidden md:tw-block tw-absolute tw-top-[-150px] tw-right-[-140px] tw-opacity-70">

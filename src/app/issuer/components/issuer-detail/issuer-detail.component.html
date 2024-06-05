@@ -20,19 +20,24 @@
 					</p>
 				</div>
 			</div>
-			<div class="l-primarymore tw-w-auto tw-hidden md:tw-grid !tw-content-center">
-				<button
-					class="button"
-					[routerLink]="['./badges/create']"
-					[disabled]="!issuer.apiModel.verified"
-				>
-					{{ 'Issuer.createBadge' | translate }}
-				</button>
-				<button class="buttonicon buttonicon-secondary" [bgPopupMenuTrigger]="issuerActionsMenu">
-					<svg icon="icon_more"></svg>
-					<span class="visuallyhidden">{{ 'General.more' | translate }}</span>
-				</button>
-			</div>
+            <div class="tw-w-auto tw-hidden md:tw-grid !tw-content-center">
+                <p *ngIf="!issuer.apiModel.verified" class="u-margin-top1x u-width-paragraph">
+                {{ 'Issuer.nichtVerified' | translate }}
+                </p>
+                <div class="l-primarymore">
+                    <button
+                            class="button"
+                            [routerLink]="['./badges/create']"
+                            [disabled]="!issuer.apiModel.verified"
+                            >
+                            {{ 'Issuer.createBadge' | translate }}
+                    </button>
+                        <button class="buttonicon buttonicon-secondary" [bgPopupMenuTrigger]="issuerActionsMenu">
+                            <svg icon="icon_more"></svg>
+                            <span class="visuallyhidden">{{ 'General.more' | translate }}</span>
+                        </button>
+                </div>
+            </div>
 		</div>
 		<div>
 			<p class="tw-text-oebblack tw-py-4">{{issuer.description}}</p>
@@ -90,7 +95,8 @@
 			<badges-datatable 
 				[caption]=""
 				[badges]="badges"
-				(actionElement)="routeToBadgeAward($event, issuer)"></badges-datatable>
+				(actionElement)="routeToBadgeAward($event, issuer)"
+				(redirectToBadgeDetail)="routeToBadgeDetail($event, issuer)"></badges-datatable>
 		</section>
 	</ng-template>
 </div>
