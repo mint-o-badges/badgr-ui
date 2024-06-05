@@ -431,8 +431,11 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 			this.profileManager.userProfilePromise
 				.then((profile) => profile.emails.loadedPromise)
 				.then((emails) => {
+					// Search for primary email, since it's not alawys the first in list
+					const primaryEmail = emails.entities.find((email) => email.primary).email;
+					
 					const userEmail = emails.entities[0].email;
-					const isMemeber = issuerData.staff.entities.some((staffMember) => staffMember.email === userEmail);
+					const isMemeber = issuerData.staff.entities.some((staffMember) => staffMember.email === primaryEmail);
 					this.router.navigate([isMemeber ? '/issuer/issuers/' : '/public/issuers/', issuerData.slug]);
 				});
 		}
