@@ -212,7 +212,7 @@ export class SessionService {
 	 */
 	resendVerificationEmail_unloaggedUser(emailToVerify: string) {
 		return this.http
-			.put<unknown>(this.baseUrl + `/v1/user/resendemail/${ encodeURIComponent(emailToVerify)}`, { resend: true })
+			.put<unknown>(this.baseUrl + `/v1/user/resendemail`, { email: emailToVerify })
 			.toPromise();
 	}
 }
