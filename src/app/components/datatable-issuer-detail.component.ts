@@ -67,7 +67,7 @@ import { HlmCommandInputWrapperComponent } from '../../../components/ui-command-
                 <hlm-th class="tw-w-40">
                     <span class="!tw-text-oebblack !tw-font-normal">{{recipient.recipientIdentifier}}</span>
                 </hlm-th>
-                <hlm-th class="!tw-flex-1 tw-justify-center !tw-text-oebblack"><p class="u-text"><time [date]="recipient.issuedOn" format="dd/MM/y"></time></p></hlm-th>
+                <hlm-th class="!tw-flex-1 tw-justify-center !tw-text-oebblack"><p class="u-text"><time [date]="recipient.issuedOn" format="dd.MM.y"></time></p></hlm-th>
 
             </hlm-trow>
         </hlm-table>
