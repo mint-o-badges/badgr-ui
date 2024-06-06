@@ -210,7 +210,7 @@ export class SessionService {
 	/**
 	 * To resend verification email for unlogged user.
 	 */
-	resendVerificationEmail_unloaggedUser(emailToVerify: string) {
+	resendVerificationEmail_unloggedUser(emailToVerify: string) {
 		return this.http
 			.put<unknown>(this.baseUrl + `/v1/user/resendemail`, { email: emailToVerify })
 			.toPromise();

@@ -44,7 +44,7 @@ export class SignupSuccessComponent implements OnInit {
 	}
 
 	resendVerificatoinEmail(email: string) {
-		this.sessionService.resendVerificationEmail_unloaggedUser(email).then(
+		this.sessionService.resendVerificationEmail_unloggedUser(email).then(
 			() => {
 				this.messageService.reportMajorSuccess(this.translate.instant('Signup.newEmailSent') + email);
 			},
