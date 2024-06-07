@@ -43,8 +43,8 @@ export class BadgeClass extends ManagedEntity<ApiBadgeClass, BadgeClassRef> {
 	}
 
 	get imageFrame(): boolean {
-		return this.apiModel.imageFrame;
-	}
+		return this.apiModel.imageFrame !== undefined ? this.apiModel.imageFrame : true;
+	}	
 	set imageFrame(imageFrame: boolean) {
 		this.apiModel.imageFrame = imageFrame;
 	}
