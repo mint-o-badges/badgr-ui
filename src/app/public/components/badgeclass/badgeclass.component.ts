@@ -13,6 +13,7 @@ import { Title } from '@angular/platform-browser';
 
 @Component({
 	templateUrl: './badgeclass.component.html',
+	styleUrls: ['./badgeclass.component.css']
 })
 export class PublicBadgeClassComponent {
 	readonly issuerImagePlaceholderUrl = preloadImageURL(
