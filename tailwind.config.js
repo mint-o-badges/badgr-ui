@@ -29,12 +29,14 @@ module.exports = {
     extend: {
       colors: {
         purple: 'var(--color-purple)',
+        lightpurple: 'var(--color-lightpurple)',
         red: 'var(--color-red)',
         pink: 'var(--color-pink)',
         green: 'var(--color-green)',
         yellow: 'var(--color-yellow)',
         white: 'var(--color-white)',
-        lightgreen: 'var(--color-lightgreen)'
+        lightgreen: 'var(--color-lightgreen)',
+        oebblack: 'var(--color-black)'
       },
     },
   },

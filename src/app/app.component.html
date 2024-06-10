@@ -407,12 +407,11 @@
 <!-- Footer -->
 <footer
 	*ngIf="!curtain"
-	class="o-container"
-	id="footer"
+	class="tw-relative tw-w-full"
 	style="background-color: var(--color-lightgreen); margin-top: 30px"
->
-	<div class="l-containerxaxis">
-		<div class="footer l-stickyfooter-x-footer">
+	>
+	<div class="page-padding">
+		<div class="tw-h-[144px] l-stickyfooter-x-footer tw-flex tw-flex-row tw-items-center">
 			<div
 				class="tw-font-[rubik] tw-text-left tw-flex md:tw-flex-row md:tw-justify-between md:tw-gap-0 tw-flex-col-reverse tw-gap-[2em]"
 			>
@@ -436,3 +435,14 @@
 		</div>
 	</div>
 </footer>
+
+<!-- Funder logos -->
+<div class="tw-relative tw-w-full">
+	<div class="page-padding logos-container">
+		<img class="tw-max-w-[257px]" alt="Telekom-Stiftung Logo" src="assets/oeb/images/aboutpage/telekom_kooperation_logo_new.png" alt="Telekom Stiftung Logo" />
+		<div class="funding-logos-container">
+			<img src="assets/oeb/images/aboutpage/bmbf_logo_new.jpg" class="tw-max-w-[279px]" alt="BMBF logo" />
+			<img src="assets/oeb/images/aboutpage/eu_logo_new.png" class="tw-max-w-[357px]" alt="EU logo" />
+		</div>
+	</div>
+</div>

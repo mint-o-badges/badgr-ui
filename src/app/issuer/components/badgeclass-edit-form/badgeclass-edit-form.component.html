@@ -18,7 +18,7 @@
 				></bg-formfield-select>
 			</div>
 			<div class="tw-italic tw-gap-2">
-				<div class="tw-flex">
+				<div class="tw-flex tw-py-2">
 					<span class="purpletext">{{ 'Badge.competency' | translate }}-Badges&nbsp; </span>
 					<span class="md:tw-hidden"> {{ 'CreateBadge.competencyBadgeShortInfo' | translate }}.</span>
 					<span class="tw-hidden md:tw-block">{{ 'CreateBadge.competencyBadgeInfo' | translate }}.</span>
@@ -38,7 +38,7 @@
 		</div>
 		<div class="md:tw-mx-10 md:tw-items-center tw-justify-center">
 			<div class="field-container tw-items-start">
-				<span class="input-label tw-break-words">
+				<span class="input-label tw-break-words   md:tw-flex-[0_0_10em]">
 					{{ 'CreateBadge.short' | translate }}&shy;{{ 'General.description' | translate }}
 					{{ 'CreateBadge.forLearners' | translate }}</span
 				>
@@ -52,7 +52,7 @@
 				></bg-formfield-text>
 			</div>
 			<div class="field-container md:tw-items-center tw-justify-start">
-				<span class="input-label"> {{ 'RecBadgeDetail.duration' | translate }}</span>
+				<span class="input-label   md:tw-flex-[0_0_10em]"> {{ 'RecBadgeDetail.duration' | translate }}</span>
 				<div class="tw-flex tw-gap-2 tw-items-center">
 					<bg-formfield-text
 						class="tw-w-20"
@@ -63,7 +63,7 @@
 				</div>
 			</div>
 			<div class="field-container md:tw-items-center tw-justify-start">
-				<span class="input-label"> {{ 'Badge.title' | translate }}</span>
+				<span class="input-label   md:tw-flex-[0_0_10em]"> {{ 'Badge.title' | translate }}</span>
 
 				<bg-formfield-text
 					[control]="badgeClassForm.rawControlMap.badge_name"
@@ -76,7 +76,7 @@
 				></bg-formfield-text>
 			</div>
 			<div class="field-container">
-				<span class="input-label"> Badge-{{ 'Issuer.image' | translate }}</span>
+				<span class="input-label   md:tw-flex-[0_0_10em]"> Badge-{{ 'Issuer.image' | translate }}</span>
 				<div
 					class="tw-flex tw-flex-col tw-gap-4 md:tw-flex-row tw-bg-[var(--color-lightgreen)] tw-p-8 tw-justify-evenly tw-items-center tw-mr-auto tw-rounded-2xl"
 				>
@@ -114,8 +114,8 @@
 							[text_body]="uploadOwnVisual"
 							imageLoaderName="badge"
 							[newDropZone]="true"
-							[generateRandom]="false"
 							[type]="'badge'"
+							[generateRandom]="false"
 							(generateRandomImage)="generateRandomImage()"
 							(imageUploaded)="generateCustomUploadImage($event)"
 							[placeholderImage]="badgeClassPlaceholderImageUrl"
@@ -154,11 +154,7 @@
 						>{{ 'CreateBadge.useAiAssistant' | translate }}</span
 					>
 					<p class="tw-my-2">{{ 'CreateBadge.enterAiDescription' | translate }}</p>
-					<p class="tw-mb-2">
-						Für diese Funktion wird die eingegeben Kursbeschreibung an einen KI-Assistenten weitergeleitet
-						und verarbeitet. Weitere Information hierzu findest du in unserer Datenschutzerklärung unter
-						Punkt 9.
-					</p>
+				
 					<p class="tw-mb-2">{{ 'CreateBadge.addAiCompetencies' | translate }}</p>
 				</div>
 				<div
@@ -285,7 +281,7 @@
 					<button class="button tw-bg-[var(--color-purple)]">
 						<a
 							class="tw-text-white"
-							href="https://esco.ec.europa.eu/en/classification/skill_main"
+							href="https://esco.ec.europa.eu/de/classification/skill_main"
 							target="_blank"
 							>{{ 'CreateBadge.toEscoSearch' | translate }}</a
 						>
@@ -406,12 +402,40 @@
 						</div>
 					</ng-template>
 				</ng-container>
+				<div class="tw-w-full">
+					<button
+						type="button"
+						(click)="addAnotherCompetency()"
+						class="button tw-text-white tw-bg-[var(--color-purple)] tw-items-center tw-flex tw-gap-2 tw-mt-2 tw-ml-auto"
+					>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							fill="white"
+							height="16px"
+							width="16px"
+							viewBox="0 0 448 512"
+						>
+							<!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+							<path
+								d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"
+							/>
+						</svg>
+
+						<span>
+							{{
+								badgeClassForm.controls.competencies.controls.length > 0
+									? ('CreateBadge.addAnotherCompetency' | translate)
+									: ('General.add' | translate)
+							}}
+						</span>
+					</button>
+				</div>
 			</li>
 		</ul>
 	</div>
 
 	<div class="section">
-		<h2 class="heading">4. Badge- {{ 'RecBadgeDetail.criteria' | translate }}</h2>
+		<h2 class="heading"><ng-container>{{ badgeCategory === 'competency' ? '4.' : '3.'}}</ng-container> Badge-{{ 'RecBadgeDetail.criteria' | translate }}</h2>
 		<div class="md:tw-mx-6">
 			<p class="tw-my-2 tw-italic tw-font-semibold">
 				{{ 'CreateBadge.criteriaInfo' | translate }}
@@ -429,12 +453,43 @@
 						[control]="badgeClassForm.rawControlMap.badge_criteria_text"
 						[newValue]="badgeClassForm.rawControlMap.badge_criteria_text.value"
 						label=" Wie bekommt man dieses Badge?"
-						class="l-formsection-x-inputoffset"
+						class="tw-hidden"
 						[errorMessage]="''"
 					></bg-formfield-markdown>
+					<!-- <textarea id="criteria_textarea" class="tw-my-2" readonly>
+						{{criteriaText}}
+					</textarea> -->
+					 <div >
+						<span *ngIf="badgeClassForm.controls.badge_name.value" class="tw-text-lg">
+							Du hast erfolgreich an
+							<span class="tw-italic tw-font-semibold">{{ badgeClassForm.controls.badge_name.value + ' ' }}</span> teilgenommen.</span
+						>
+						<div *ngIf="badgeCategory === 'competency'">
+							<span class="tw-font-bold tw-text-lg">Dabei hast du folgende Kompetenzen gestärkt: </span>
+							<ul class="tw-list-disc tw-mt-4">
+								<ng-container
+									*ngFor="
+										let aiCompetency of badgeClassForm.controls.aiCompetencies.controls;
+										let i = index
+									"
+								>
+									<li *ngIf="aiCompetency.rawControlMap.selected.value" class="tw-mx-6">
+										<span class="tw-text-lg">
+											{{ aiCompetenciesSuggestions[i].preferred_label }}
+										</span>
+									</li>
+								</ng-container>
+								<ng-container *ngFor="let competency of badgeClassForm.controls.competencies.controls">
+									<li *ngIf="competency.rawControlMap.added.value && competency.rawControlMap.name.value" class="tw-mx-6">
+										<span class="tw-text-lg">{{ competency.rawControlMap.name.value }}</span>
+									</li>
+								</ng-container>
+							</ul>
+						</div>
+					</div> 
 				</div>
 
-				<div class="forminput u-margin-bottom2x md:tw-items-center tw-flex tw-gap-2 md:tw-flex-row tw-flex-col">
+				<!-- <div class="forminput u-margin-bottom2x md:tw-items-center tw-flex tw-gap-2 md:tw-flex-row tw-flex-col">
 					<span class="tw-font-bold tw-whitespace-nowrap">URL (optional)</span>
 					<bg-formfield-text
 						class="tw-w-full"
@@ -443,7 +498,7 @@
 						fieldType="url"
 						errorMessage="URL zu den Badge Kriterien"
 					></bg-formfield-text>
-				</div>
+				</div>  -->
 			</div>
 		</div>
 	</div>

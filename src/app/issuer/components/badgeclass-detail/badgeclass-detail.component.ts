@@ -29,6 +29,7 @@ import { BadgeClassCategory, BadgeClassLevel } from '../../models/badgeclass-api
 @Component({
 	selector: 'badgeclass-detail',
 	templateUrl: './badgeclass-detail.component.html',
+	styleUrls: ['./badgeclass-detail.component.css'],
 })
 export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	readonly badgeFailedImageUrl = '../../../../breakdown/static/images/badge-failed.svg';

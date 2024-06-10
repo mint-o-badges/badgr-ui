@@ -13,6 +13,7 @@ import { StringMatchingUtil } from '../../../common/util/string-matching-util';
 
 import { Map, NavigationControl, Popup } from 'maplibre-gl';
 import { TranslateService } from '@ngx-translate/core';
+import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
 
 @Component({
 	selector: 'app-issuer-catalog',
@@ -68,6 +69,8 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 	@ViewChild('map')
 	private mapContainer: ElementRef<HTMLElement>;
 
+	public loggedIn = false;
+
 	constructor(
 		protected title: Title,
 		protected messageService: MessageService,
@@ -76,6 +79,8 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 		router: Router,
 		route: ActivatedRoute,
 		private translate: TranslateService,
+		public sessionService: SessionService,
+		protected profileManager: UserProfileManager,
 	) {
 		super(router, route);
 		title.setTitle(`Issuers - ${this.configService.theme['serviceName'] || 'Badgr'}`);
@@ -110,6 +115,8 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 
 	ngOnInit() {
 		super.ngOnInit();
+
+		this.loggedIn = this.sessionService.isLoggedIn;
 
 		this.prepareTexts();
 
@@ -414,6 +421,24 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 				other: '# ' + this.translate.instant('General.recipient'),
 			},
 		};
+	}
+
+	navigateToIssuer(issuerData) {
+		if (!this.loggedIn) {
+			this.router.navigate(['/public/issuers/', issuerData.slug]);
+		} else {
+			// Check whether user is a mebemr of the institution to be redirected to `issuer/issuer` page
+			this.profileManager.userProfilePromise
+				.then((profile) => profile.emails.loadedPromise)
+				.then((emails) => {
+					// Search for primary email, since it's not alawys the first in list
+					const primaryEmail = emails.entities.find((email) => email.primary).email;
+					
+					const userEmail = emails.entities[0].email;
+					const isMember = issuerData.staff.entities.some((staffMember) => staffMember.email === primaryEmail);
+					this.router.navigate([isMember ? '/issuer/issuers/' : '/public/issuers/', issuerData.slug]);
+				});
+		}
 	}
 }
 
