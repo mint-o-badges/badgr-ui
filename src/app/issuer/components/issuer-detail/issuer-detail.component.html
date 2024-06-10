@@ -1,158 +1,102 @@
 <form-message></form-message>
-
-<ng-template [bgAwaitPromises]="[issuerLoaded]">
-	<header class="topbar topbar-withimage">
-		<div class="l-containerxaxis">
-			<div class="topbar-x-breadcrumbs">
-				<bg-breadcrumbs [linkentries]="crumbs"> </bg-breadcrumbs>
-			</div>
-		</div>
-		<div class="l-containerxaxis">
-			<div class="topbar-x-wrap">
-				<img class="topbar-x-image" *ngIf="issuer.image" [src]="issuer.image" alt="{{ issuer.name }} logo " />
-				<img
-					class="topbar-x-image"
-					*ngIf="!issuer.image"
-					[src]="issuerImagePlaceHolderUrl"
-					alt="Default issuer image"
-				/>
-				<div class="topbar-x-heading">{{ issuer.name }}</div>
-				<div class="topbar-x-subheading">
-					<p class="u-text u-text-small">
-						<strong [truncatedText]="issuer.email" [maxLength]="64"></strong>
-						<br class="u-hidden-minmobilelarge" /><span class="u-hidden-maxmobilelarge"> — </span
-						>{{ 'Issuer.yourRole' | translate }}
-						{{ issuer?.currentUserStaffMember?.roleInfo?.label }}
-					</p>
-					<p class="u-margin-top1x u-width-paragraph">
-						{{ issuer.description }}
-					</p>
-					<div class="u-margin-top1x">
-						<a href="{{ issuer.websiteUrl }}" class="u-text-outlink">
-							{{ 'Issuer.visitWebsite' | translate }}
-							<svg icon="icon_external_link"></svg>
-						</a>
-					</div>
-					<p></p>
+<div class="oeb page-padding">
+	<ng-template [bgAwaitPromises]="[issuerLoaded]">
+		<div class="tw-flex tw-justify-between">
+			<div class="tw-flex">
+				<div class="tw-relative">
+					<img
+						[loaded-src]="issuer?.image"
+						[loading-src]="issuerPlaceholderSrc"
+						[error-src]="issuerPlaceholderSrc"
+						alt="{{ issuer.name }} avatar"
+						class="tw-h-[70px] md:tw-h-[100px] tw-w-auto"
+					/>
 				</div>
-				<div class="topbar-x-buttons">
-					<p *ngIf="!issuer.apiModel.verified" class="u-margin-top1x u-width-paragraph">
-						{{ 'Issuer.nichtVerified' | translate }}
+				<div class="tw-flex tw-flex-col tw-justify-center tw-pl-4">
+					<p class="md:tw-text-[30px] md:tw-leading-[36px] tw-text-[20px] tw-leading-[24px] tw-text-purple tw-font-semibold">{{ issuer.name }}</p>
+					<p class="tw-text-oebblack tw-font-semibold md:tw-text-[20px] md:tw-leading-[24.4px] tw-text-[14px] tw-leading-[19.6px]">
+						{{ 'Issuer.yourRole' | translate }} 
+						{{ issuer.currentUserStaffMember?.roleInfo.label }}:in
 					</p>
-					<div class="l-primarymore">
-						<button
-							class="button"
-							[routerLink]="['./badges/create']"
-							[disabled]="!issuer.apiModel.verified"
-						>
-							{{ 'Issuer.createBadge' | translate }}
-						</button>
-						<button class="buttonicon buttonicon-secondary" [bgPopupMenuTrigger]="issuerActionsMenu">
-							<svg icon="icon_more"></svg>
-							<span class="visuallyhidden">{{ 'General.more' | translate }}</span>
-						</button>
-					</div>
-					<bg-popup-menu #issuerActionsMenu>
-						<a class="menuitem" [routerLink]="['./edit']">
-							<svg icon="icon_edit"></svg>
-							{{ 'General.edit' | translate }}
-						</a>
-						<a class="menuitem" (click)="delete($event)" href="#">
-							<svg icon="icon_remove"></svg>
-							{{ 'General.delete' | translate }}
-						</a>
-						<a class="menuitem" [routerLink]="['./staff']">
-							<svg icon="icon_group"></svg>
-							{{ 'General.members' | translate }}
-							{{
-								(issuer?.currentUserStaffMember?.isOwner ? 'General.editS' : 'General.emptyString')
-									| translate
-							}}
-						</a>
-						<a class="menuitem" *ngFor="let lp of launchpoints" href="{{ lp.launch_url }}" target="_blank">
-							<svg icon="icon_external_link"></svg>
-							{{ lp.label }}
-						</a>
-					</bg-popup-menu>
 				</div>
 			</div>
+            <div class="tw-w-auto tw-hidden md:tw-grid !tw-content-center">
+                <p *ngIf="!issuer.apiModel.verified" class="u-margin-top1x u-width-paragraph">
+                {{ 'Issuer.nichtVerified' | translate }}
+                </p>
+                <div class="l-primarymore">
+                    <button
+                            class="button"
+                            [routerLink]="['./badges/create']"
+                            [disabled]="!issuer.apiModel.verified"
+                            >
+                            {{ 'Issuer.createBadge' | translate }}
+                    </button>
+                        <button class="buttonicon buttonicon-secondary" [bgPopupMenuTrigger]="issuerActionsMenu">
+                            <svg icon="icon_more"></svg>
+                            <span class="visuallyhidden">{{ 'General.more' | translate }}</span>
+                        </button>
+                </div>
+            </div>
 		</div>
-	</header>
-
-	<div *bgAwaitPromises="[issuerLoaded, badgesLoaded]">
-		<!-- EMPTY STATE: No badge classes -->
-		<section class="emptysection l-emptysection" *ngIf="!badges?.length">
-			<h2 class="emptysection-x-headline">{{ 'Issuer.issuerHasNoBadgesYet' | translate }}</h2>
-			<div class="emptysection-x-imagecontainer">
-				<img alt="Illustration" class="emptysection-x-image" [src]="noIssuersPlaceholderSrc" />
+		<div>
+			<p class="tw-text-oebblack tw-py-4">{{issuer.description}}</p>
+		</div>
+		<div class="topbar-x-buttons tw-grid md:tw-hidden">
+			<p *ngIf="!issuer.apiModel.verified" class="u-margin-top1x u-width-paragraph">
+				{{ 'Issuer.nichtVerified' | translate }}
+			</p>
+			<div class="l-primarymore">
+				<button
+					class="button"
+					[routerLink]="['./badges/create']"
+					[disabled]="!issuer.apiModel.verified"
+				>
+					{{ 'Issuer.createBadge' | translate }}
+				</button>
+				<button class="buttonicon buttonicon-secondary" [bgPopupMenuTrigger]="issuerActionsMenu">
+					<svg icon="icon_more"></svg>
+					<span class="visuallyhidden">{{ 'General.more' | translate }}</span>
+				</button>
 			</div>
+			<bg-popup-menu #issuerActionsMenu>
+				<a class="menuitem" [routerLink]="['./edit']">
+					<svg icon="icon_edit"></svg>
+					{{ 'General.edit' | translate }}
+				</a>
+				<a class="menuitem" (click)="delete($event)" href="#">
+					<svg icon="icon_remove"></svg>
+					{{ 'General.delete' | translate }}
+				</a>
+				<a class="menuitem" [routerLink]="['./staff']">
+					<svg icon="icon_group"></svg>
+					{{ 'General.members' | translate }}
+					{{
+						(issuer?.currentUserStaffMember?.isOwner ? 'General.editS' : 'General.emptyString')
+							| translate
+					}}
+				</a>
+				<a class="menuitem" *ngFor="let lp of launchpoints" href="{{ lp.launch_url }}" target="_blank">
+					<svg icon="icon_external_link"></svg>
+					{{ lp.label }}
+				</a>
+			</bg-popup-menu>
+		</div>
+		<section class="tw-py-6" *ngIf="!badges?.length">
+			<h2 class="tw-font-medium md:tw-text-[22px] md:tw-leading-[26.4px] tw-text-purple tw-text-[16px] tw-leading-[19.2px]">
+				{{issuer.name}} {{ 'Issuer.issuerHasNoBadgesYet' | translate }}
+			</h2>
 		</section>
-
-		<!-- Has Badge Classes -->
-		<section class="l-containerxaxis l-containeryaxis" *ngIf="badges?.length">
-			<h4 class="u-text-h3-bold u-text-dark2 u-margin-top1x">
-				{{ badges.length }} Badge{{ badges.length == 1 ? '' : 's' }}
-			</h4>
-			<table
-				class="datatable datatable-roundheaders datatable-onlyfirstcolumn datatable-verticalalignmiddle u-margin-top2x"
-				*ngIf="badges?.length"
-			>
-				<thead class="datatable-x-head">
-					<tr class="datatable-x-header">
-						<th class="datatable-x-cell">Badge</th>
-						<th class="datatable-x-cell">{{ 'Issuer.createdOn' | translate }}</th>
-						<th class="datatable-x-cell">{{ 'Badge.multiRecipients' | translate }}</th>
-						<th class="datatable-x-cell">
-							<span class="visuallyhidden">Actions</span>
-						</th>
-					</tr>
-				</thead>
-				<tbody class="datatable-x-body">
-					<tr class="datatable-x-row" *ngFor="let badge of badges; let i = index">
-						<td class="datatable-x-cell">
-							<div class="l-flex l-flex-aligncenter l-flex-1x">
-								<img
-									class="l-flex-x-shrink0 badgeimage badgeimage-small"
-									src="{{ badge.image }}"
-									alt="{{ badge.description }}"
-									width="40"
-								/>
-								<a
-									class="u-text u-text-breakword"
-									[routerLink]="['/issuer/issuers', issuer.slug, 'badges', badge.slug]"
-									>{{ badge.name }}</a
-								>
-								<div class="u-hidden-minmobilelarge l-flex-x-selfcenter u-margin-leftauto">
-									<a
-										class="u-text-link-small"
-										[routerLink]="['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'issue']"
-										>{{ 'Issuer.awarded' | translate }}</a
-									>
-								</div>
-							</div>
-						</td>
-						<td class="datatable-x-cell">
-							<div class="l-flex l-flex-aligncenter">
-								<p class="u-text"><time [date]="badge.createdAt" format="mediumDate"></time></p>
-							</div>
-						</td>
-						<td class="datatable-x-cell">
-							<div class="l-flex l-flex-aligncenter">
-								<p class="u-text">{{ badge.recipientCount }}</p>
-							</div>
-						</td>
-						<td class="datatable-x-cell">
-							<div class="l-flex l-flex-aligncenter l-flex-justifyend">
-								<a
-									class="u-text-link-small"
-									[routerLink]="['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'issue']"
-									>{{ 'Issuer.awarded' | translate }}</a
-								>
-							</div>
-						</td>
-					</tr>
-				</tbody>
-			</table>
+		<section class="tw-py-6 tw-relative" *ngIf="badges?.length">
+			<h2 class="tw-font-medium md:tw-text-[22px] md:tw-leading-[26.4px] tw-text-purple tw-text-[16px] tw-leading-[19.2px] tw-py-2">
+				{{issuer.name}} {{ 'Issuer.issuerHasBadges' | translate }} {{ badges.length }} Badge{{ badges.length == 1 ? '' : 's' }}.
+			</h2>
+			
+			<badges-datatable 
+				[caption]=""
+				[badges]="badges"
+				(actionElement)="routeToBadgeAward($event, issuer)"
+				(redirectToBadgeDetail)="routeToBadgeDetail($event, issuer)"></badges-datatable>
 		</section>
-	</div>
-</ng-template>
+	</ng-template>
+</div>

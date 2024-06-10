@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Open Educational Badges</title>
+
+		<!-- Open Graph properties to improve SEO -->
+		<meta property="og:title" content="Open Educational Badges" />
+		<meta property="og:description" content="Open Educational Badges ist ein Gemeinschaftsprojekt und wird durch unterschiedliche Partner:innen ermöglicht. Unser Ziel ist es, ein Instrument zur standardisierten Dokumentation von Kompetenzen aufzubauen." />
+		<meta property="og:image" content="https://openbadges.education/assets/logos/Logo-Square.png" />
+
+		<base href="/" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="icon" type="image/x-icon" href="favicon.ico" />
+
+		<style type="text/css">
+			@keyframes loading-fade {
+				0% {
+					opacity: 0.4;
+				}
+				50% {
+					opacity: 1;
+				}
+				100% {
+					opacity: 0.4;
+				}
+			}
+		</style>
+		<style>
+			@font-face {
+				font-display: block;
+				font-family: Roboto;
+				src:
+					url(https://assets.brevo.com/font/Roboto/Latin/normal/normal/7529907e9eaf8ebb5220c5f9850e3811.woff2)
+						format('woff2'),
+					url(https://assets.brevo.com/font/Roboto/Latin/normal/normal/25c678feafdc175a70922a116c9be3e7.woff)
+						format('woff');
+			}
+
+			@font-face {
+				font-display: fallback;
+				font-family: Roboto;
+				font-weight: 600;
+				src:
+					url(https://assets.brevo.com/font/Roboto/Latin/medium/normal/6e9caeeafb1f3491be3e32744bc30440.woff2)
+						format('woff2'),
+					url(https://assets.brevo.com/font/Roboto/Latin/medium/normal/71501f0d8d5aa95960f6475d5487d4c2.woff)
+						format('woff');
+			}
+
+			@font-face {
+				font-display: fallback;
+				font-family: Roboto;
+				font-weight: 700;
+				src:
+					url(https://assets.brevo.com/font/Roboto/Latin/bold/normal/3ef7cf158f310cf752d5ad08cd0e7e60.woff2)
+						format('woff2'),
+					url(https://assets.brevo.com/font/Roboto/Latin/bold/normal/ece3a1d82f18b60bcce0211725c476aa.woff)
+						format('woff');
+			}
+
+			#sib-container input:-ms-input-placeholder {
+				text-align: left;
+				font-family: 'Helvetica', sans-serif;
+				color: #c0ccda;
+			}
+
+			#sib-container input::placeholder {
+				text-align: left;
+				font-family: 'Helvetica', sans-serif;
+				color: #c0ccda;
+			}
+
+			#sib-container textarea::placeholder {
+				text-align: left;
+				font-family: 'Helvetica', sans-serif;
+				color: #c0ccda;
+			}
+
+			#sib-container a {
+				text-decoration: underline;
+				color: #2bb2fc;
+			}
+		</style>
+		<link rel="stylesheet" href="https://sibforms.com/forms/end-form/build/sib-styles.css" />
+
+		<script src="/assets/ace-builds/ace.js"></script>
+
+		<!-- Include umami tracking -->
+		<script defer src="https://umami.opensenselab.org/script.js" data-website-id="0ed35f0f-70c4-4e87-a3de-7a962af7ee79"></script>
+	</head>
+	<body>
+		<app-root class="l-stickyfooter u-background-light2"></app-root>
+
+		<!-- Inline style so loading shows up before css and theming is ready -->
+		<div
+			id="initial-loading-indicator"
+			style="
+				align-items: center;
+				display: flex;
+				height: 100%;
+				justify-content: center;
+				left: 0;
+				position: fixed;
+				top: 0;
+				width: 100%;
+				background: white;
+				z-index: 1000;
+			"
+		>
+			<img class="initial-loading-image" style="animation: loading-fade 1.25s ease-out infinite" />
+		</div>
+
+		<!-- TODO: load conditionally -->
+		<script type="text/javascript" src="assets/zipjs/zip.js"></script>
+
+		<!-- Include the unsupported browser check -->
+		<script type="text/javascript" src="assets/unsupported-browser-check.js" async></script>
+	</body>
+</html>
