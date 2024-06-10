@@ -349,8 +349,8 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 		this.badgeClassForm.setValue({
 			badge_name: badgeClass.name,
-			badge_image: this.existing ? badgeClass.image : null, // Setting the image here is causing me a lot of problems with events being triggered, so I resorted to just set it in this.imageField...
-			badge_customImage: null,
+			badge_image: this.existing && badgeClass.imageFrame ? badgeClass.image : null, // Setting the image here is causing me a lot of problems with events being triggered, so I resorted to just set it in this.imageField...
+			badge_customImage: this.existing && !badgeClass.imageFrame ? badgeClass.image : null,
 			badge_description: badgeClass.description,
 			badge_criteria_url: badgeClass.criteria_url,
 			badge_criteria_text: badgeClass.criteria_text,
@@ -387,7 +387,12 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			? badgeClass.extension['extensions:OrgImageExtension'].OrgImage
 			: undefined;
 		if (this.currentImage && this.imageField) {
-			this.imageField.useDataUrl(this.currentImage, 'BADGE');
+			if(!badgeClass.imageFrame && this.customImageField){
+				this.customImageField.useDataUrl(this.currentImage, 'BADGE');
+			}
+			else{
+				this.imageField.useDataUrl(this.currentImage, 'BADGE');
+			}
 		}
 		this.tags = new Set();
 		this.badgeClass.tags.forEach((t) => this.tags.add(t));
@@ -397,7 +402,12 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			this.enableExpiration();
 		}
 
-		this.adjustUploadImage(this.badgeClassForm.value);
+		if(!badgeClass.imageFrame){
+				this.generateCustomUploadImage(this.badgeClassForm.value);
+		}else{
+				this.adjustUploadImage(this.badgeClassForm.value);
+		}
+
 	}
 
 	ngOnInit() {
@@ -406,7 +416,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		// update badge frame when a category is selected, unless no-hexagon-frame checkbox is checked
 		this.badgeClassForm.rawControl.controls['badge_category'].statusChanges.subscribe((res) => {
 			this.handleBadgeCategoryChange();
-			if (this.currentImage) {
+			if (this.currentImage && this.badgeClass.imageFrame) {
 				//timeout because of workaround for angular bug.
 				setTimeout(function () {
 					that.adjustUploadImage(that.badgeClassForm.value);
@@ -427,7 +437,9 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		});
 		// call adjustUploadImage after formControls are initialized to prevent timing issues
 		// with the imageField (e.g. when editing a badge the image was not shown when the page first loaded)
-		this.adjustUploadImage(this.badgeClassForm.value);
+		if(this.badgeClass.imageFrame){
+			this.adjustUploadImage(this.badgeClassForm.value);
+		}
 	}
 
 	clearCompetencies() {
@@ -741,7 +753,9 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				this.badgeClassForm.controls.badge_criteria_text.setValue(criteriaText + participationText );	
 			}
 
+			let imageFrame = true
 			if (this.badgeClassForm.controls.badge_customImage.value && this.badgeClassForm.valid) {
+				imageFrame = false;
 				this.badgeClassForm.controls.badge_image.setValue(this.badgeClassForm.controls.badge_customImage.value);
 			}
 			this.badgeClassForm.markTreeDirty();
@@ -778,6 +792,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				this.existingBadgeClass.name = formState.badge_name;
 				this.existingBadgeClass.description = formState.badge_description;
 				this.existingBadgeClass.image = formState.badge_image;
+				this.existingBadgeClass.imageFrame = imageFrame;
 				this.existingBadgeClass.criteria_text = formState.badge_criteria_text;
 				this.existingBadgeClass.criteria_url = formState.badge_criteria_url;
 				this.existingBadgeClass.alignments = this.alignmentsEnabled ? formState.alignments : [];
@@ -829,6 +844,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 					name: formState.badge_name,
 					description: formState.badge_description,
 					image: formState.badge_image,
+					imageFrame: imageFrame,
 					criteria_text: formState.badge_criteria_text,
 					criteria_url: formState.badge_criteria_url,
 					tags: Array.from(this.tags),
@@ -965,7 +981,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	}
 
 	adjustUploadImage(formdata) {
-		// Skip update badge icon frame if no-hexagon-frame checkbox is checked
 		if (this.currentImage && this.badgeStudio ) {
 			this.badgeStudio
 				.generateUploadImage(this.currentImage.slice(), formdata)
