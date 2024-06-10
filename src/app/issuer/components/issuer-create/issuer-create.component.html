@@ -104,6 +104,12 @@
 			errorMessage="{{ 'Issuer.enterCity' | translate }}"
 		></bg-formfield-text>
 
+		<div class="u-margin-top3x">
+			<form>
+				<altcha-widget auto="onfocus" id="altcha"></altcha-widget>
+			</form>
+		</div>
+
 		<label
 			[class.checkbox-is-error]="
 				issuerForm.rawControlMap.agreedTerms.dirty && !issuerForm.rawControlMap.agreedTerms.valid

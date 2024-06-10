@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { BadgrCommonModule, COMMON_IMPORTS } from '../common/badgr-common.module';
@@ -118,6 +118,7 @@ const routes = [
 
 		IssuerStaffCreateDialogComponent,
 	],
+	schemas: [CUSTOM_ELEMENTS_SCHEMA],
 	exports: [],
 	providers: [
 		BadgeClassApiService,
