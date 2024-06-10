@@ -34,6 +34,13 @@
 					class="tw-font-normal md:tw-text-[20px] md:tw-leading-[24px] md:tw-mt-[30px] tw-text-center tw-text-[14px] tw-leading-[16.8px] tw-mt-[20px]"
 				></p>
 			</div>
+
+			<button
+				class="button tw-w-[232px] md:tw-w-[332px] tw-mt-16 tw-bg-purple tw-rounded-[7px] md:tw-rounded-[10px] tw-inline-flex tw-justify-center tw-shrink-0 tw-text-white tw-gap-[5.6px] md:tw-gap-[8px] md:tw-h-[64px] md:tw-px-[15px] md:tw-text-[20px] tw-items-center tw-h-[44.8px] tw-px-[10.5px] tw-text-[14px] tw-font-bold md:tw-leading-[28px] tw-leading-[19.6px] tw-border-purple"
+				(click)="resendVerificatoinEmail(email)"
+			>
+				{{ 'Signup.resendEmail' | translate }}
+			</button>
 		</div>
 	</div>
 </div>

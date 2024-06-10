@@ -27,6 +27,7 @@ export interface ApiBadgeClassJsonld {
 export interface ApiBadgeClassForCreation {
 	name: string;
 	image: string;
+	imageFrame?: boolean;
 	description: string;
 	criteria_url: string;
 	criteria_text: string;
@@ -62,6 +63,8 @@ export interface ApiBadgeClass extends ApiBadgeClassForCreation {
 
 	created_at: string;
 	created_by: string;
+
+	updated_at?: string
 
 	json: ApiBadgeClassJsonld;
 	source_url: string;

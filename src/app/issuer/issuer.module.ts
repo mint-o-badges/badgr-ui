@@ -31,6 +31,7 @@ import { IssuerStaffCreateDialogComponent } from './components/issuer-staff-crea
 import { TranslateModule } from '@ngx-translate/core';
 import { CompetencyAccordionComponent } from '../components/accordion.component';
 import { DatatableComponent } from '../components/datatable-badges.component';
+import { IssuerDetailDatatableComponent } from '../components/datatable-issuer-detail.component';
 
 const routes = [
 	/* Issuer */
@@ -89,7 +90,8 @@ const routes = [
 		RouterModule.forChild(routes),
 		TranslateModule,
 		CompetencyAccordionComponent,
-		DatatableComponent
+		DatatableComponent,
+		IssuerDetailDatatableComponent
 	],
 	declarations: [
 		BadgeClassCreateComponent,
