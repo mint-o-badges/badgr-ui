@@ -14,6 +14,7 @@ import { UserProfileEmail } from '../../../common/model/user-profile.model';
 import { FormFieldSelectOption } from '../../../common/components/formfield-select';
 import { AppConfigService } from '../../../common/app-config.service';
 import { typedFormGroup } from '../../../common/util/typed-forms';
+import { QueryParametersService } from '../../../common/services/query-parameters.service';
 
 @Component({
 	selector: 'issuer-create',
@@ -51,6 +52,7 @@ export class IssuerCreateComponent extends BaseAuthenticatedRoutableComponent im
 		route: ActivatedRoute,
 		protected configService: AppConfigService,
 		protected profileManager: UserProfileManager,
+		protected queryParams: QueryParametersService,
 		protected formBuilder: FormBuilder,
 		protected title: Title,
 		protected messageService: MessageService,
@@ -62,6 +64,9 @@ export class IssuerCreateComponent extends BaseAuthenticatedRoutableComponent im
 		if (this.configService.theme.dataProcessorTermsLink) {
 			this.issuerForm.addControl('agreedTerms', '', Validators.requiredTrue);
 		}
+
+		const authCode = this.queryParams.queryStringValue('authCode', true);
+		if (loginService.isLoggedIn && !authCode) this.refreshProfile();
 
 		this.emailsLoaded = this.profileManager.userProfilePromise
 			.then((profile) => profile.emails.loadedPromise)
@@ -79,6 +84,12 @@ export class IssuerCreateComponent extends BaseAuthenticatedRoutableComponent im
 	ngOnInit() {
 		super.ngOnInit();
 	}
+
+	refreshProfile = () => {
+		// Load the profile
+		this.profileManager.userProfileSet.ensureLoaded();
+		this.profileManager.reloadUserProfileSet()
+	};
 
 	onSubmit() {
 		if (!this.issuerForm.markTreeDirtyAndValidate()) {

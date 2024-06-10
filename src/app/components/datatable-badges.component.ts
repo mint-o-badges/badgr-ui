@@ -31,7 +31,7 @@ import { BadgeClass } from '../issuer/models/badgeclass.model';
                 <hlm-th class="!tw-text-white tw-justify-end sm:tw-w-48 tw-w-0 !tw-p-0"></hlm-th>
             </hlm-trow>
             <hlm-trow *ngFor="let badge of badges" class="tw-border-purple tw-flex-wrap tw-py-2">
-                <hlm-th class="tw-w-24">
+                <hlm-th class="tw-w-24 tw-cursor-pointer" (click)="redirectToBadgeDetail.emit(badge)">
                     <img
                         class="l-flex-x-shrink0 badgeimage badgeimage-small"
                         src="{{ badge.image }}"
@@ -39,7 +39,7 @@ import { BadgeClass } from '../issuer/models/badgeclass.model';
                         width="40"
                     />
                 </hlm-th>
-                <hlm-th class="!tw-flex-1 tw-justify-center !tw-text-oebblack"><p class="u-text"><time [date]="badge.createdAt" format="dd.mm.yyyy"></time></p></hlm-th>
+                <hlm-th class="!tw-flex-1 tw-justify-center !tw-text-oebblack"><p class="u-text"><time [date]="badge.createdAt" format="dd.MM.y"></time></p></hlm-th>
                 <hlm-th class="tw-w-40 tw-justify-center !tw-text-oebblack">{{badge.recipientCount}}</hlm-th>
                 <hlm-th class="tw-justify-center sm:tw-justify-end sm:tw-w-48 tw-w-full !tw-text-oebblack">
                     <button class="oeb-label-button tw-w-full" (click)="actionElement.emit(badge)">{{actionElementText}}</button>
@@ -52,4 +52,5 @@ export class DatatableComponent {
     @Input() badges: BadgeClass[];
     @Input() actionElementText: string = "Badge vergeben"
     @Output() actionElement = new EventEmitter();
+    @Output() redirectToBadgeDetail = new EventEmitter();
 }
