@@ -308,6 +308,15 @@
 		"resendEmailFailed":"Failed to resend verification email. Please contact support.",
 		"newEmailSent":"A new verification email was sent to:"
 	},
+	"Captcha": {
+		"error": "Verification failed. Try again later.",
+		"footer": "Protected by <a href=\"https://altcha.org/\" target=\"_blank\">ALTCHA</a>",
+		"label": "I'm not a robot",
+		"verified": "Verified",
+		"verifying": "Verifying...",
+		"waitAlert": "Verifying... please wait.",
+		"pleaseVerify": "Please verify that you are not a robot."
+	},
 	"Login": {
 		"stayLogged": "Stay logged in",
 		"forgotPassword": "Forgot password?",
