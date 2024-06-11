@@ -38,8 +38,10 @@ import { BadgeClass } from '../issuer/models/badgeclass.model';
                         alt="{{ badge.description }}"
                         width="40"
                     />
-                    <div class="tw-ml-2 tw-hidden md:tw-block">
-                        <span class="tw-text-oebblack tw-text-nowrap">{{badge.name}}</span>
+                    <div class="tw-ml-2 tw-hidden md:tw-grid md:tw-grid-cols-[150px] md:gap-4">
+                      <div class="tw-line-clamp-2  tw-break-all">
+                        <span class="tw-text-oebblack">{{badge.name}}</span>
+                      </div>  
                     </div>    
                 </hlm-th>
                 <hlm-th class="!tw-flex-1 tw-justify-center !tw-text-oebblack"><p class="u-text"><time [date]="badge.createdAt" format="dd.MM.y"></time></p></hlm-th>
