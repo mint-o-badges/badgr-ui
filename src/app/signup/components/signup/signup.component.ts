@@ -1,5 +1,5 @@
 import { FormBuilder, ValidationErrors, Validators } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SignupModel } from '../../models/signup-model.type';
 import { SignupService } from '../../services/signup.service';
@@ -13,12 +13,16 @@ import { OAuthManager } from '../../../common/services/oauth-manager.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { typedFormGroup } from '../../../common/util/typed-forms';
 import { BadgrApiFailure } from '../../../common/services/api-failure';
+import { CaptchaService } from '../../../common/services/captcha.service';
+import { TranslateService } from '@ngx-translate/core';
+import 'altcha';
 
 @Component({
 	selector: 'sign-up',
 	templateUrl: './signup.component.html',
 })
-export class SignupComponent extends BaseRoutableComponent implements OnInit {
+export class SignupComponent extends BaseRoutableComponent implements OnInit, AfterViewInit {
+	baseUrl: string;
 	signupForm = typedFormGroup()
 		.addControl('username', '', [Validators.required, EmailValidator.validEmail])
 		.addControl('firstName', '', Validators.required)
@@ -26,9 +30,11 @@ export class SignupComponent extends BaseRoutableComponent implements OnInit {
 		.addControl('password', '', [Validators.required, Validators.minLength(8)])
 		.addControl('passwordConfirm', '', [Validators.required, this.passwordsMatch.bind(this)])
 		.addControl('agreedTermsService', false, Validators.requiredTrue)
-		.addControl('marketingOptIn', false);
+		.addControl('marketingOptIn', false)
+		.addControl('captcha', '');
 
 	signupFinished: Promise<unknown>;
+	captchaVerified = false;
 
 	agreedTermsService = false;
 
@@ -43,13 +49,16 @@ export class SignupComponent extends BaseRoutableComponent implements OnInit {
 		private configService: AppConfigService,
 		public sessionService: SessionService,
 		public signupService: SignupService,
+		public translate: TranslateService,
 		public oAuthManager: OAuthManager,
 		private sanitizer: DomSanitizer,
+		private captchaService: CaptchaService,
 		router: Router,
 		route: ActivatedRoute,
 	) {
 		super(router, route);
 		title.setTitle(`Signup - ${this.configService.theme['serviceName'] || 'Badgr'}`);
+		this.baseUrl = this.configService.apiConfig.baseUrl;
 	}
 
 	sanitize(url: string) {
@@ -64,12 +73,26 @@ export class SignupComponent extends BaseRoutableComponent implements OnInit {
 		if (defaultEmail) this.signupForm.controls.username.setValue(defaultEmail);
 	}
 
+	ngAfterViewInit(): void {
+		this.captchaService.setupCaptcha('#altcha', (verified) => {
+			this.captchaVerified = verified;
+		  });
+	}
+
 	onSubmit() {
+		
 		if (!this.signupForm.markTreeDirtyAndValidate()) {
 			return;
 		}
-
+		
+		if(!this.captchaVerified){
+			this.messageService.setMessage(this.translate.instant('Captcha.pleaseVerify'), 'error');
+			return;
+		}
+		
 		const formState = this.signupForm.value;
+
+		const altcha = <HTMLInputElement>document.getElementsByName('altcha')[0];
 
 		const signupUser = new SignupModel(
 			formState.username,
@@ -78,6 +101,7 @@ export class SignupComponent extends BaseRoutableComponent implements OnInit {
 			formState.password,
 			formState.agreedTermsService,
 			formState.marketingOptIn,
+			altcha.value,
 		);
 
 		this.signupFinished = new Promise<void>((resolve, reject) => {
@@ -99,6 +123,8 @@ export class SignupComponent extends BaseRoutableComponent implements OnInit {
 								'Your password must be uncommon and at least 8 characters. Please try again.',
 								'error',
 							);
+						} else if (typeof error === 'object') {
+							this.messageService.setMessage('' + error.error, 'error');
 						} else {
 							this.messageService.setMessage('' + error, 'error');
 						}

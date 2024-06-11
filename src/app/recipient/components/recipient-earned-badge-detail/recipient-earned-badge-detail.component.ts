@@ -27,6 +27,7 @@ import { Issuer } from '../../../issuer/models/issuer.model';
 @Component({
 	selector: 'recipient-earned-badge-detail',
 	templateUrl: './recipient-earned-badge-detail.component.html',
+	styleUrls: ['./recipient-earned-badge-detail.component.css'],
 })
 export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	readonly issuerImagePlacholderUrl = preloadImageURL(

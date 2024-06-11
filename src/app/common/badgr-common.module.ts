@@ -80,6 +80,7 @@ import { BadgeClassManager } from '../issuer/services/badgeclass-manager.service
 import { BadgeClassApiService } from '../issuer/services/badgeclass-api.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { ApplicationCredentialsService } from './services/application-credentials.service.';
+import { CaptchaService } from './services/captcha.service';
 
 const DIRECTIVES = [
 	BgAwaitPromises,
@@ -139,6 +140,7 @@ const SERVICES = [
 	NounprojectService,
 	AiSkillsService,
 	PdfService,
+	CaptchaService,
 	EventsService,
 	SessionService,
 	QueryParametersService,

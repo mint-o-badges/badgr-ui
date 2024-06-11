@@ -38,6 +38,7 @@ import { BaseHttpApiService } from '../common/services/base-http-api.service';
 import { NavigationService } from '../common/services/navigation.service';
 import { RecipientBadgeCollectionApiService } from '../recipient/services/recipient-badge-collection-api.service';
 import { ApplicationCredentialsService } from '../common/services/application-credentials.service.';
+import { CaptchaService } from '../common/services/captcha.service';
 
 /*@Injectable()
 export class MockRouter { navigate = () => {jasmine.createSpy('navigate'); };}*/
@@ -170,6 +171,12 @@ export class MockRecipientBadgeCollectionApiService {}
 @Injectable()
 export class MockOAuthApiService {
 	listAuthorizations = () => new Promise(() => {});
+}
+
+@Injectable()
+export class MockCaptchaService {
+	getCaptcha = () => new Promise(() => {});
+	setupCaptcha = () => new Promise(() => {})
 }
 
 export const commonDialog = {
@@ -348,7 +355,8 @@ export let COMMON_MOCKS_PROVIDERS_WITH_SUBS = [];
 	ElementRef,
 	RecipientBadgeCollectionManager,
 	RecipientBadgeManager,
-	ApplicationCredentialsService
+	ApplicationCredentialsService,
+	CaptchaService
 ].forEach((m, i, a) => {
 	const thisMock = eval('Mock' + m.name);
 	COMMON_MOCKS_PROVIDERS.push(thisMock);

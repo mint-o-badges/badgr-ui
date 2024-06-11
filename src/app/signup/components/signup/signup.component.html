@@ -1,174 +1,238 @@
-<div class="l-containerxaxis l-containeryaxis l-flex l-flex-justifycenter">
-	<form-message></form-message>
+<div class="tw-relative tw-w-full">
+	<div class="oeb page-padding tw-overflow-hidden md:tw-py-[6rem] tw-py-[3rem]">
+		<div class="tw-flex tw-justify-center">
+			<form-message></form-message>
 
-	<div class="shadowcontainer u-animate-dropfade">
-		<!-- OAuth Banner -->
-		<oauth-banner></oauth-banner>
+			<div class="tw-relative md:tw-w-[70%] tw-w-[90%]">
+				<!-- OAuth Banner -->
+				<oauth-banner></oauth-banner>
 
-		<!-- Title Message -->
-		<h3 class="u-text-h3-bold" id="heading-form">
-			{{ 'Signup.create' | translate }} {{ theme.serviceName || 'Badgr' }} {{ 'General.account' | translate }}
-		</h3>
-		<p class="u-text u-text-body u-responsivemargin-top1x2x" *ngIf="!oAuthManager.currentAuthorization">
-			{{ 'Signup.youHaveAccount' | translate }}
-			<a [routerLink]="['/auth/login']">Sign in</a>.
-		</p>
-		<p class="u-text u-text-body u-responsivemargin-top1x2x" *ngIf="oAuthManager.currentAuthorization">
-			{{ 'Signup.application' | translate }}
-			<strong>
-				{{ oAuthManager.currentAuthorization.application.name }}
-			</strong>
-			{{ 'Signup.loginWithOpenEducationalBadges' | translate }}
-			{{ theme.serviceName || 'Open Educational Badges' }}.
-			{{ 'Signup.youHaveAccount' | translate }}
-			<a [routerLink]="['/login']">Sign in</a>!
-		</p>
-		<h3 class="ruleheadline l-ruleheadline" *ngIf="sessionService.enabledExternalAuthProviders.length > 0">
-			{{ 'Signup.signUpWith' | translate }}
-		</h3>
+				<div class="tw-relative tw-z-20">
+					<!-- Title Message -->
+					<h1
+						[innerHTML]="'Signup.createAccountFor' | translate"
+						class="tw-font-normal md:tw-text-[46px] md:tw-leading-[55.2px] tw-text-purple tw-text-[30px] tw-leading-[36px]"
+					></h1>
+					<h1
+						class="tw-font-black tw-text-purple tw-text-[30px] tw-leading-[36px] md:tw-text-[46px] md:tw-leading-[55.2px]"
+					>
+						Open Educational Badges
+					</h1>
 
-		<div class="l-socialbuttons u-margin-top2x" *ngIf="sessionService.enabledExternalAuthProviders.length > 0">
-			<button
-				*ngFor="let provider of sessionService.enabledExternalAuthProviders"
-				(click)="sessionService.initiateUnauthenticatedExternalAuth(provider)"
-				class="socialbutton"
-				[style.backgroundColor]="provider.color"
-			>
-				<div class="visuallyhidden">Access with {{ provider.label }}</div>
-				<img [src]="sanitize(provider.imgSrc)" alt="" />
-			</button>
-		</div>
-		<h3 class="ruleheadline l-ruleheadline" *ngIf="sessionService.enabledExternalAuthProviders.length > 0">Oder</h3>
-
-		<!-- Sign Up Form -->
-		<form
-			class="u-margin-top2x"
-			role="form"
-			aria-labelledby="heading-form"
-			[formGroup]="signupForm.rawControl"
-			(ngSubmit)="onSubmit()"
-			novalidate
-		>
-			<!-- Signup Controls -->
-			<fieldset role="group" aria-labelledby="heading-badgrsignup2">
-				<legend class="visuallyhidden" id="heading-badgrsignup2">
-					{{ 'Signup.registerWithUs' | translate }} {{ theme.serviceName || 'Open Educational Badges'
-					}}{{ 'Signup.provideInfo' | translate }}
-				</legend>
-
-				<bg-formfield-text
-					class="u-margin-bottom2x"
-					[control]="signupForm.rawControlMap.username"
-					[label]="'Email'"
-					fieldType="email"
-					[errorMessage]="'Bitte gib eine gültige Email Adresse ein.'"
-					[autofocus]="true"
-				></bg-formfield-text>
-
-				<bg-formfield-text
-					class="u-margin-bottom2x"
-					[control]="signupForm.rawControlMap.firstName"
-					label="{{ 'Signup.fName' | translate }}"
-					[errorMessage]="'Bitte gib einen Vornamen an'"
-				></bg-formfield-text>
-
-				<bg-formfield-text
-					class="u-margin-bottom2x"
-					[control]="signupForm.rawControlMap.lastName"
-					label="{{ 'Signup.lName' | translate }}"
-					[errorMessage]="'Bitte gib einen Nachnamen an'"
-				></bg-formfield-text>
-
-				<bg-formfield-text
-					class="u-margin-bottom2x"
-					[control]="signupForm.rawControlMap.password"
-					label="{{ 'Signup.pass8char' | translate }}"
-					fieldType="password"
-					[errorMessage]="{
-						required: 'Bitte gib ein Passwort ein',
-						minlength: 'Das Passwort muss mindestens 8 Zeichen lang sein'
-					}"
-				></bg-formfield-text>
-
-				<bg-formfield-text
-					[control]="signupForm.rawControlMap.passwordConfirm"
-					label="{{ 'Signup.confirmPassword' | translate }}"
-					fieldType="password"
-					[errorMessage]="{
-						required: 'Bitte bestätige Dein Passwort',
-						passwordsMatch: 'Die Passwörter sind nicht gleich'
-					}"
-				></bg-formfield-text>
-			</fieldset>
-
-			<div>
-				<label
-					class="checkbox checkbox-small l-flex u-margin-top2p5x"
-					[class.checkbox-is-error]="
-						signupForm.rawControlMap.agreedTermsService.dirty &&
-						!signupForm.rawControlMap.agreedTermsService.valid
-					"
-				>
-					<input
-						name="terms"
-						id="terms"
-						type="checkbox"
-						[formControl]="signupForm.rawControlMap.agreedTermsService"
-					/>
-					<span class="checkbox-x-text">
+					<p
+						class="tw-font-normal tw-text-[14px] tw-leading-[19.6px] md:tw-text-[20px] md:tw-leading-[28px]  tw-text-oebblack tw-mt-3 tw-mb-5 md:tw-mt-4 md:tw-mb-6"
+						*ngIf="!oAuthManager.currentAuthorization"
+					>
+						{{ 'Signup.youHaveAccount' | translate }}
+						<a class="tw-underline tw-text-[#1400FF]" [routerLink]="['/auth/login']">Login</a>.
+					</p>
+					<p
+						class="tw-font-normal tw-text-[20px] tw-leading-[28px]"
+						*ngIf="oAuthManager.currentAuthorization"
+					>
+						{{ 'Signup.application' | translate }}
 						<strong>
-							{{ 'Signup.agreeToTerms1' | translate }}
-							<a target="_blank" [href]="theme.termsOfServiceLink || 'https://badgr.org/missing-terms'">{{
-								'Signup.agreeToTerms2' | translate
-							}}</a
-							>.
+							{{ oAuthManager.currentAuthorization.application.name }}
 						</strong>
-						<div
-							*ngIf="
+						{{ 'Signup.loginWithOpenEducationalBadges' | translate }}
+						Open Educational Badges.
+						{{ 'Signup.youHaveAccount' | translate }}
+						<a class="tw-underline tw-text-[#1400FF]" [routerLink]="['/login']">Login</a>!
+					</p>
+					<h3
+						class="ruleheadline l-ruleheadline"
+						*ngIf="sessionService.enabledExternalAuthProviders.length > 0"
+					>
+						{{ 'Signup.signUpWith' | translate }}
+					</h3>
+
+					<div
+						class="l-socialbuttons u-margin-top2x"
+						*ngIf="sessionService.enabledExternalAuthProviders.length > 0"
+					>
+						<button
+							*ngFor="let provider of sessionService.enabledExternalAuthProviders"
+							(click)="sessionService.initiateUnauthenticatedExternalAuth(provider)"
+							class="socialbutton"
+							[style.backgroundColor]="provider.color"
+						>
+							<div class="visuallyhidden">Access with {{ provider.label }}</div>
+							<img [src]="sanitize(provider.imgSrc)" alt="" />
+						</button>
+					</div>
+					<h3
+						class="ruleheadline l-ruleheadline"
+						*ngIf="sessionService.enabledExternalAuthProviders.length > 0"
+					>
+						Oder
+					</h3>
+				</div>
+
+				<div
+					class="tw-absolute tw-top-[46px] tw-right-[-43px] md:tw-top-[65px] md:tw-right-[30px] tw-opacity-70 tw-z-0"
+				>
+					<img
+						class="tw-h-[286px]  md:tw-h-[472px]"
+						src="assets/oeb/images/signuppage/circles.png"
+						alt="circles-logo"
+					/>
+				</div>
+
+				<!-- Sign Up Form -->
+				<form
+					class="u-margin-top2x tw-w-full sm:tw-w-[357px] md:tw-w-[546px] tw-relative tw-z-20"
+					role="form"
+					aria-labelledby="heading-form"
+					[formGroup]="signupForm.rawControl"
+					(ngSubmit)="onSubmit()"
+					novalidate
+				>
+					<!-- Signup Controls -->
+					<fieldset role="group" aria-labelledby="heading-badgrsignup2">
+						<legend class="visuallyhidden" id="heading-badgrsignup2">
+							{{ 'Signup.registerWithUs' | translate }} {{ theme.serviceName || 'Open Educational Badges'
+							}}{{ 'Signup.provideInfo' | translate }}
+						</legend>
+
+						<bg-formfield-text
+							class="u-margin-bottom2x tw-font-bold"
+							[control]="signupForm.rawControlMap.username"
+							label="E-Mail"
+							fieldType="email"
+							[errorMessage]="'Bitte gib eine gültige Email Adresse ein.'"
+							[autofocus]="true"
+						></bg-formfield-text>
+
+						<bg-formfield-text
+							class="u-margin-bottom2x"
+							[control]="signupForm.rawControlMap.firstName"
+							label="{{ 'Signup.fName' | translate }}"
+							[errorMessage]="'Bitte gib einen Vornamen an'"
+						></bg-formfield-text>
+
+						<bg-formfield-text
+							class="u-margin-bottom2x"
+							[control]="signupForm.rawControlMap.lastName"
+							label="{{ 'Signup.lName' | translate }}"
+							[errorMessage]="'Bitte gib einen Nachnamen an'"
+						></bg-formfield-text>
+
+						<bg-formfield-text
+							class="u-margin-bottom2x"
+							[control]="signupForm.rawControlMap.password"
+							label="{{ 'General.password' | translate }}"
+							formFieldAside="{{ 'Signup.passMin8Char' | translate }}"
+							fieldType="password"
+							[errorMessage]="{
+								required: 'Bitte gib ein Passwort ein',
+								minlength: 'Das Passwort muss mindestens 8 Zeichen lang sein'
+							}"
+						></bg-formfield-text>
+
+						<bg-formfield-text
+							[control]="signupForm.rawControlMap.passwordConfirm"
+							label="{{ 'Signup.repeatPassword' | translate }}"
+							fieldType="password"
+							[errorMessage]="{
+								required: 'Bitte bestätige Dein Passwort',
+								passwordsMatch: 'Die Passwörter sind nicht gleich'
+							}"
+						></bg-formfield-text>
+					</fieldset>
+
+					<div>
+						<label
+							class="checkbox checkbox-small l-flex u-margin-top2p5x tw-pl-[6px]"
+							[class.checkbox-is-error]="
 								signupForm.rawControlMap.agreedTermsService.dirty &&
 								!signupForm.rawControlMap.agreedTermsService.valid
 							"
-							class="checkbox-x-errortext"
 						>
-							{{ 'Signup.readTerms' | translate }}
+							<input
+								class="!tw-mt-[8px] tw-scale-[1.5] !tw-border-purple !tw-border-[0.6px]"
+								name="terms"
+								id="terms"
+								type="checkbox"
+								[formControl]="signupForm.rawControlMap.agreedTermsService"
+							/>
+							<span
+								class="tw-font-semibold md:tw-text-[20px] tw-text-[14px] md:tw-leading-[24px] tw-leading-[16.8px] tw-text-oebblack tw-pl-[14px]"
+							>
+								<span [innerHTML]="'Signup.agreeToTerms1' | translate"> </span>
+								<div
+									*ngIf="
+										signupForm.rawControlMap.agreedTermsService.dirty &&
+										!signupForm.rawControlMap.agreedTermsService.valid
+									"
+									class="checkbox-x-errortext"
+								>
+									{{ 'Signup.readTerms' | translate }}
+								</div>
+							</span>
+						</label>
+						<label
+							class="checkbox checkbox-light l-flex u-margin-top2p5x tw-pl-[6px]"
+							for="news"
+							*ngIf="showMarketingOptIn"
+						>
+							<input
+								class="!tw-mt-[8px] tw-scale-[1.5] !tw-border-purple !tw-border-[0.6px]"
+								name="news"
+								id="news"
+								type="checkbox"
+								[formControl]="signupForm.rawControlMap.marketingOptIn"
+							/>
+							<span
+								[innerHTML]="'Signup.receiveUpdatesCB' | translate"
+								class="tw-font-semibold md:tw-text-[20px] tw-text-[14px] md:tw-leading-[24px] tw-leading-[16.8px] tw-text-oebblack tw-pl-[14px]"
+							>
+							</span>
+						</label>
+						<div class="u-margin-top3x">
+					<form>
+						<altcha-widget auto="onfocus" id="altcha"></altcha-widget>
+					</form>
+				</div>
+				<div class="l-stack l-stack-2x l-stack-buttons u-margin-top3x tw-flex-row tw-justify-end">
+							<button
+								class="button button-secondary"
+								type="button"
+								*ngIf="oAuthManager.currentAuthorization"
+								(click)="oAuthManager.cancelCurrentAuthorization()"
+							>
+								Cancel
+							</button>
+
+							<button
+								class="button tw-inline-flex  tw-h-[44.8px] tw-py-[10.5px] tw-px-[42px] tw-text-[14px] tw-rounded-[7px] tw-font-bold tw-leading-[21px] md:tw-h-[64px] md:tw-py-[15px] md:tw-px-[60px] md:tw-text-[20px] md:tw-leading-[30px] md:tw-rounded-[10px]  "
+								type="submit"
+								[disabled]="!!signupFinished"
+								[loading-promises]="[signupFinished]"
+								loading-message="Signing Up..."
+							>
+								{{ 'Signup.createAccount' | translate }}
+							</button>
+							<!-- TO DO: Add a destination -->
+							<!--<a class="u-text-link-small" href="#"
+						>Change my Badgr location</a>-->
 						</div>
-					</span>
-				</label>
-				<label class="checkbox checkbox-light l-flex u-margin-top2p5x" for="news" *ngIf="showMarketingOptIn">
-					<input
-						name="news"
-						id="news"
-						type="checkbox"
-						[formControl]="signupForm.rawControlMap.marketingOptIn"
-					/>
-					<span class="checkbox-x-text">
-						<strong>{{ 'General.yes' | translate }},</strong>
-						{{ 'Signup.receiveUpdates' | translate }} {{ configService.theme['serviceName'] || 'Badgr' }}.
-					</span>
-				</label>
-				<div class="l-stack l-stack-2x l-stack-buttons u-margin-top3x">
+					</div>
+				</form>
+
+				<div class="tw-w-full sm:tw-w-[357px] md:tw-w-[546px] tw-flex tw-justify-end tw-mt-16">
 					<button
-						class="button button-secondary"
-						type="button"
-						*ngIf="oAuthManager.currentAuthorization"
-						(click)="oAuthManager.cancelCurrentAuthorization()"
+						class="button tw-inline-flex tw-justify-center tw-shrink-0 tw-bg-white tw-text-oebblack tw-gap-[8px] md:tw-h-[64px] md:tw-py-[4px] md:tw-px-[16px] md:tw-text-[20px] md:tw-rounded-[10px] md:tw-border-[1px] tw-items-center tw-h-[44.8px] tw-py-[2.8px] tw-px-[11.2px] tw-text-[14px] tw-border-[0.7] tw-rounded-[7px] tw-font-normal md:tw-leading-[28px] tw-leading-[19.6px]"
 					>
-						Cancel
+						<img
+							style="width: 28px; height: 26.75px"
+							src="assets/logos/mein-bildungsraum.svg"
+							alt="Mein Bildungsraum Logo"
+						/>
+						Registrieren mit Mein Bildungsraum
+						<!-- {{ 'Login.loginBildungsraum' | translate }} -->
 					</button>
-					<button
-						class="button"
-						type="submit"
-						[disabled]="!!signupFinished"
-						[loading-promises]="[signupFinished]"
-						loading-message="Signing Up..."
-					>
-						{{ 'Signup.createAccount' | translate }}
-					</button>
-					<!-- TO DO: Add a destination -->
-					<!--<a class="u-text-link-small" href="#"
-					>Change my Badgr location</a>-->
 				</div>
 			</div>
-		</form>
+		</div>
 	</div>
 </div>
