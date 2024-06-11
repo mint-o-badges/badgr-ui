@@ -38,6 +38,9 @@ import { BadgeClass } from '../issuer/models/badgeclass.model';
                         alt="{{ badge.description }}"
                         width="40"
                     />
+                    <div class="tw-ml-2 tw-hidden md:tw-block">
+                        <span class="tw-text-oebblack tw-text-nowrap">{{badge.name}}</span>
+                    </div>    
                 </hlm-th>
                 <hlm-th class="!tw-flex-1 tw-justify-center !tw-text-oebblack"><p class="u-text"><time [date]="badge.createdAt" format="dd.MM.y"></time></p></hlm-th>
                 <hlm-th class="tw-w-40 tw-justify-center !tw-text-oebblack">{{badge.recipientCount}}</hlm-th>
