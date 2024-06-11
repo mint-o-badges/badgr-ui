@@ -166,7 +166,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	badgeClassForm = typedFormGroup([this.criteriaRequired.bind(this), this.imageValidation.bind(this)])
 		.addControl('badge_name', '', [
 			Validators.required,
-			Validators.maxLength(255),
+			Validators.maxLength(70),
 			// Validation that the name of a fork changed
 			(control: AbstractControl): ValidationErrors | null =>
 				this.forbiddenName && this.forbiddenName == control.value
