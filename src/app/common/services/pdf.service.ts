@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, SecurityContext } from '@angular/core';
 import { AppConfigService } from '../app-config.service';
 import { BaseHttpApiService } from './base-http-api.service';
 import { MessageService } from './message.service';
@@ -27,7 +27,8 @@ export class PdfService {
         return this.http.get(`${this.baseUrl}/v1/earner/badges/pdf/${slug}`, { headers: headers, responseType: 'blob' }).pipe(
           map((response: Blob) => {
             const url = URL.createObjectURL(response);
-            return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+            const safe_url = this.sanitizer.sanitize(SecurityContext.URL, url);
+            return this.sanitizer.bypassSecurityTrustResourceUrl(safe_url);
           })
         );
       }
