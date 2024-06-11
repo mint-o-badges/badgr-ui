@@ -107,32 +107,8 @@ export class SessionService {
 
 				this.storeToken(r.body, sessionOnlyStorage, isOidcLogin);
 
-                if (isOidcLogin) {
-                    const expiresIn = r.body.expires_in;
-                    var renewIn = Math.floor(expiresIn) - 60;
-                    // Multiply seconds by 1000 because setTimeout uses milliseconds
-                    if (renewIn < 0) {
-                        console.error("Access tokens livetime is less than a minute!");
-                        renewIn = 10;
-                    }
-                    // The bind is necessary because otherwise the called method can't figure out
-                    // if the user is logged in
-                    setTimeout(this.initiateSilentOidcTokenRenewal.bind(this), renewIn * 1000);
-                }
-
 				return r.body;
 			});
-    }
-
-    initiateSilentOidcTokenRenewal() {
-        // TODO: Do this silently
-        if (!this.isLoggedIn) {
-            console.log("Skipping silent OIDC token renewal, since user isn't logged in anymore");
-            return;
-        }
-        console.log("Silently renewing the OIDC token...");
-        const endpoint = this.baseUrl + '/oidc/authenticate';
-        window.location.href = endpoint;
     }
 
 	initiateUnauthenticatedExternalAuth(provider: ExternalAuthProvider) {
