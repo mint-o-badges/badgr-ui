@@ -115,8 +115,6 @@ export class SessionService {
                         console.error("Access tokens livetime is less than a minute!");
                         renewIn = 10;
                     }
-                    // TODO: Remove
-                    renewIn = 10;
                     // The bind is necessary because otherwise the called method can't figure out
                     // if the user is logged in
                     setTimeout(this.initiateSilentOidcTokenRenewal.bind(this), renewIn * 1000);
@@ -127,19 +125,14 @@ export class SessionService {
     }
 
     initiateSilentOidcTokenRenewal() {
+        // TODO: Do this silently
         if (!this.isLoggedIn) {
             console.log("Skipping silent OIDC token renewal, since user isn't logged in anymore");
             return;
         }
         console.log("Silently renewing the OIDC token...");
-        const endpoint = this.baseUrl + '/oidc/authenticate?prompt=none';
-        const iframe = <HTMLIFrameElement>document.getElementById("SilentOidcTokenRenewalIframe")
-        if (!iframe) {
-            console.error("Couldn't find iframe to renew OIDC token. Resorting to use the whole document...");
-            window.location.href = endpoint;
-            return;
-        }
-        iframe.src = endpoint;
+        const endpoint = this.baseUrl + '/oidc/authenticate';
+        window.location.href = endpoint;
     }
 
 	initiateUnauthenticatedExternalAuth(provider: ExternalAuthProvider) {
