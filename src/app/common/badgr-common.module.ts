@@ -79,6 +79,7 @@ import { BadgeClassManager } from '../issuer/services/badgeclass-manager.service
 import { BadgeClassApiService } from '../issuer/services/badgeclass-api.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { ApplicationCredentialsService } from './services/application-credentials.service.';
+import { CaptchaService } from './services/captcha.service';
 
 import { OebInputComponent } from '../components/input.component';
 import { OebInputErrorComponent } from '../components/input.error.component';
@@ -149,6 +150,7 @@ const SERVICES = [
 	SharingService,
 	NounprojectService,
 	AiSkillsService,
+	CaptchaService,
 	EventsService,
 	SessionService,
 	QueryParametersService,
@@ -163,7 +165,7 @@ const SERVICES = [
 	AppConfigService,
 	NavigationService,
 	ZipService,
-	ApplicationCredentialsService
+	ApplicationCredentialsService,
 ];
 
 const GUARDS = [AuthGuard];

@@ -30,7 +30,7 @@ import { CommonDialogsService } from '../services/common-dialogs.service';
 		<div class="forminput-x-labelrow">
 			<label class="forminput-x-label" [attr.for]="inputName" *ngIf="label || includeLabelAsWrapper">
 				{{ label }} <span *ngIf="optional">(OPTIONAL)</span>
-				<span *ngIf="formFieldAside">{{ formFieldAside }}</span>
+				<span class="forminput-x-formFieldAside"  *ngIf="formFieldAside">{{ formFieldAside }}</span>
 				<button type="button" *ngIf="isLockedState" (click)="unlock()">(unlock)</button>
 			</label>
 			<ng-content class="forminput-x-helplink" select="[label-additions]"></ng-content>

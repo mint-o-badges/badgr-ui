@@ -49,7 +49,10 @@
         "src/app/components/spartan/ui-checkbox-helm/src/index.ts"
       ],
       "@spartan-ng/ui-label-helm": [
-        "src/app/components/spartan/ui-label-helm/src/index.ts"
+        "src/app/components/spartan/ui-table-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-command-helm": [
+        "src/app/components/spartanui-command-helm/src/index.ts"
       ]
     }
   }
