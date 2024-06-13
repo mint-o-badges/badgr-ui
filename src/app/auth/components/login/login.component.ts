@@ -125,8 +125,7 @@ export class LoginComponent extends BaseRoutableComponent implements OnInit, Aft
 										}
 									} else {
 										this.router.navigate([
-											'signup/success',
-											{ email: profile.emails.entities[0].email },
+											'signup/success', encodeURIComponent(btoa(profile.emails.entities[0].email)),
 										]);
 									}
 								});
