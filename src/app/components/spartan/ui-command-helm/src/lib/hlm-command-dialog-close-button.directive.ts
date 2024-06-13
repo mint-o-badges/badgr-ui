@@ -14,7 +14,7 @@ import type { ClassValue } from 'clsx';
 export class HlmCommandDialogCloseButtonDirective {
 	private _hlmBtn = inject(HlmButtonDirective, { host: true });
 	constructor() {
-		this._hlmBtn.variant = 'ghost';
+		this._hlmBtn.variant = 'blackborder';
 	}
 
 	public readonly userClass = input<ClassValue>('', { alias: 'class' });
