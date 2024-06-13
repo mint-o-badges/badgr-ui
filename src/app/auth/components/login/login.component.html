@@ -48,17 +48,16 @@
 							</oeb-checkbox>
 
 							<!-- Submit Button -->
-							<oeb-button hlmBtn type="submit" [disabled]="!!loginFinished"
+							<oeb-button hlmBtn type="submit" [disabled]="!!loginFinished" text="Login"
 								[loading-promises]="[loginFinished]" loading-message="Signing In">
-								Login
+								
 							</oeb-button>
 						</div>
 					</form>
 					<!-- Mein Bildungsraum -->
 					<div class="tw-flex tw-justify-end tw-mt-6 md:tw-mt-14">
-						<oeb-button variant="blackborder" size="md">
-							<img class="logo" src="assets/logos/mein-bildungsraum.svg" alt="Mein Bildungsraum Logo" />
-							{{ 'Login.loginBildungsraum' | translate }}
+						<oeb-button img="assets/logos/mein-bildungsraum.svg" variant="blackborder" size="md" [text]='"Login.loginBildungsraum" | translate'>
+							
 						</oeb-button>
 					</div>
 				</div>
