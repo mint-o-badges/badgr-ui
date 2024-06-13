@@ -17,6 +17,7 @@ export const pVariants = cva(
 			size: {
 				default: 'tw-text-[14px] tw-leading-[19px] md:tw-text-[20px] md:tw-leading-[28px]',
 				lg: 'tw-text-[20px] tw-leading-[28px] md:tw-text-[24px] md:tw-leading-[33.6px]',
+				sm: 'tw-text-[14px] tw-leading-[15.6px] md:tw-text-[14px] md:tw-leading-[15.6px]',
 			},
 		},
 		defaultVariants: {
