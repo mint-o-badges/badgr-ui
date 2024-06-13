@@ -182,7 +182,7 @@ export class SessionService {
 	 * Handles errors from the API that indicate session expiration, invalid token, and other similar problems.
 	 */
 	handleAuthenticationError() {
-		// currently, only authenticated users (with verified emails) can load list of issuers, this cause users with unverified emails who wants to resend verification-email to be logged out immediatly. Checking whther user is already logged in should resolve the issue for now.
+		// currently, only authenticated users (with verified emails) can load list of issuers, this cause users with unverified emails who wants to resend verification-email to be logged out immediatly. Checking wehther user is already logged in should resolve the issue for now.
 		if (!this.isLoggedIn) {
 			this.logout();
 
