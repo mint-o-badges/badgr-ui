@@ -3,17 +3,11 @@ import { UserCredential } from '../model/user-credential.type';
 import { AppConfigService } from '../app-config.service';
 import { MessageService } from './message.service';
 import { BaseHttpApiService } from './base-http-api.service';
-import {
-	ExternalAuthProvider,
-	SocialAccountProviderInfo,
-	socialAccountProviderInfos,
-} from '../model/user-profile-api.model';
+import { ExternalAuthProvider } from '../model/user-profile-api.model';
 import { throwExpr } from '../util/throw-expr';
 import { UpdatableSubject } from '../util/updatable-subject';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { NavigationService } from './navigation.service';
-import { DomSanitizer } from '@angular/platform-browser';
-import { OAuthManager } from './oauth-manager.service';
 
 /**
  * The key used to store the authentication token in session and local storage.
@@ -53,7 +47,6 @@ export class SessionService {
 		private messageService: MessageService,
 		private navService: NavigationService,
 	) {
-		//public oAuthManager: OAuthManager,
 		this.baseUrl = this.configService.apiConfig.baseUrl;
 		this.enabledExternalAuthProviders = configService.featuresConfig.externalAuthProviders || [];
 	}
