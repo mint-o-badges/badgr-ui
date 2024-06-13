@@ -46,7 +46,7 @@ import { OebButtonComponent } from './oeb-button.component';
                 <hlm-th class="!tw-flex-1 tw-justify-center !tw-text-oebblack"><p class="u-text"><time [date]="badge.createdAt" format="dd.MM.y"></time></p></hlm-th>
                 <hlm-th class="tw-w-40 tw-justify-center !tw-text-oebblack">{{badge.recipientCount}}</hlm-th>
                 <hlm-th class="tw-justify-center sm:tw-justify-end sm:tw-w-48 tw-w-full !tw-text-oebblack">
-                    <oeb-button variant="secondary" size="xs" class="tw-w-full" (click)="actionElement.emit(badge)">{{actionElementText}}</oeb-button>
+                    <oeb-button variant="secondary" size="xs" class="tw-w-full" (click)="actionElement.emit(badge)" [text]="actionElementText"></oeb-button>
                 </hlm-th>
             </hlm-trow>
         </hlm-table>`,
