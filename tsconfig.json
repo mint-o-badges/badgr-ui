@@ -52,7 +52,7 @@
         "src/app/components/spartan/ui-table-helm/src/index.ts"
       ],
       "@spartan-ng/ui-command-helm": [
-        "src/app/components/spartanui-command-helm/src/index.ts"
+        "src/app/components/spartan/ui-command-helm/src/index.ts"
       ]
     }
   }
