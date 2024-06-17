@@ -23,6 +23,7 @@ export class SignupService {
 			password: signupModel.password,
 			agreed_terms_service: signupModel.agreedTermsService,
 			marketing_opt_in: signupModel.marketingOptIn,
+			captcha: signupModel.captcha,
 		};
 
 		if (source) payload['source'] = source;

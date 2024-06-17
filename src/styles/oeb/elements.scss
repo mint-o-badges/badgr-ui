@@ -14,9 +14,9 @@
 		padding-right: calc(var(--gridspacing) * 3);
 		padding-left: calc(var(--gridspacing) * 3);
 	}
-	@media (min-width: 1224px) {
-		padding-right: calc(50% - 600px);
-		padding-left: calc(50% - 600px);
+	@media (min-width: 1440px) {
+		padding-right: calc(50% - 720px);
+		padding-left: calc(50% - 720px);
 	}
 }
 
@@ -79,5 +79,41 @@
 		padding: 4px 16px 4px 16px;
 		gap: 8px;
 		border-radius: 10px;
+	}
+
+	.oeb-inset-padding {
+		padding: 0em 24px;
+		@media (min-width: 768px) {
+			padding: 0em 40px;
+
+		}
+	}
+
+	.oeb-section {
+		padding: 40px 0;
+		@media (min-width: 768px) {
+			padding: 88px 0;
+		}
+	}
+
+	.oeb-headline-container {
+		padding-bottom: 24px;
+		@media (min-width: 768px) {
+			padding-bottom: 88px;
+		}
+	}
+
+	.oeb-headline-container-sm {
+		padding-bottom: 24px;
+		@media (min-width: 768px) {
+			padding-bottom: 32px;
+		}
+	}
+
+	.oeb-standard-padding-bottom {
+		padding-bottom: 24px;
+		@media (min-width: 768px) {
+			padding-bottom: 40px;
+		}
 	}
 }

@@ -83,6 +83,7 @@ import { CommonDialogsService } from '../services/common-dialogs.service';
 		</div>
 		<p class="forminput-x-error" *ngIf="isErrorState">{{ errorMessageForDisplay }}</p>
 	`,
+	// styleUrl: './formfield-text.css',
 })
 export class FormFieldText implements OnChanges, AfterViewInit {
 	@Input()

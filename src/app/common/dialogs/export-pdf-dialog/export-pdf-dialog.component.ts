@@ -23,7 +23,7 @@ export class ExportPdfDialog extends BaseDialog {
 	collection: RecipientBadgeCollection | null = null;
 	badgeResults: BadgeResult[] | null = null;
 	badgePdf: string | null = null;
-	pdfSrc: SafeResourceUrl;
+	pdfSrc: SafeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl('about:blank');
 	doc: jsPDF = null;
 	themeColor: string;
 	pdfError: Error;

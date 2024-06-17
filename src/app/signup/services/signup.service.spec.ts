@@ -6,6 +6,7 @@ import { SignupModel } from '../models/signup-model.type';
 import { SignupService } from './signup.service';
 import { MessageService } from '../../common/services/message.service';
 import { SessionService } from '../../common/services/session.service';
+import { CaptchaService } from '../../common/services/captcha.service';
 
 xdescribe('SignupService', () => {
 	let httpMock: HttpClient;
@@ -14,7 +15,7 @@ xdescribe('SignupService', () => {
 	beforeEach(() => {
 		TestBed.configureTestingModule({
 			declarations: [],
-			providers: [AppConfigService, MessageService, SignupService, SessionService],
+			providers: [AppConfigService, MessageService, SignupService, SessionService, CaptchaService],
 			imports: [],
 		});
 
@@ -28,7 +29,7 @@ xdescribe('SignupService', () => {
 	xit('should send signup payload', inject([SignupService], (signupService) => {
 		let connection, error, signupModel;
 
-		signupModel = new SignupModel('username@email.com', 'Firstname', 'Lastname', 'password', true, true);
+		signupModel = new SignupModel('username@email.com', 'Firstname', 'Lastname', 'password', true, true, '');
 		signupService.submitSignup(signupModel).then(
 			() => (error = false),
 			() => (error = true),

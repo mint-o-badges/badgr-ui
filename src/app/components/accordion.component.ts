@@ -2,8 +2,8 @@ import { CommonModule } from '@angular/common';
 import { BadgrCommonModule } from '../common/badgr-common.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { BrnAccordionContentComponent } from '@spartan-ng/ui-accordion-brain';
-import { HlmAccordionModule } from '../../../components/ui-accordion-helm/src';
-import { HlmIconModule } from '../../../components/ui-icon-helm/src';
+import { HlmAccordionModule } from './spartan/ui-accordion-helm/src';
+import { HlmIconModule } from './spartan/ui-icon-helm/src';
 import { RouterModule } from '@angular/router';
 import { Component, Input } from '@angular/core';
 
@@ -13,8 +13,6 @@ import { Component, Input } from '@angular/core';
 	imports: [
 		HlmAccordionModule,
 		HlmIconModule,
-		CommonModule,
-		BadgrCommonModule,
 		TranslateModule,
 		BrnAccordionContentComponent,
 		RouterModule,

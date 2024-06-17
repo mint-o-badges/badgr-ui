@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -38,6 +38,7 @@ const routes = [
 		RouterModule.forChild(routes),
 		TranslateModule,
 	],
+	schemas: [CUSTOM_ELEMENTS_SCHEMA],
 	declarations: [SignupComponent, SignupSuccessComponent],
 	exports: [],
 	providers: [SignupService],

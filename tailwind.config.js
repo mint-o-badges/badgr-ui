@@ -30,13 +30,19 @@ module.exports = {
       colors: {
         purple: 'var(--color-purple)',
         lightpurple: 'var(--color-lightpurple)',
-        red: 'var(--color-red)',
+        brightpurple: 'var(--color-brightpurple)',
+        buttonhover: 'var(--color-buttonhover)',
+        red: {
+          DEFAULT: 'var(--color-red)',
+          300: 'var(--color-lightred)',
+        },
         pink: 'var(--color-pink)',
         green: 'var(--color-green)',
         yellow: 'var(--color-yellow)',
         white: 'var(--color-white)',
         lightgreen: 'var(--color-lightgreen)',
-        oebblack: 'var(--color-black)'
+        oebblack: 'var(--color-black)',
+        link: 'var(--color-link)'
       },
     },
   },

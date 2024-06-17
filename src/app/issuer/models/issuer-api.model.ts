@@ -83,6 +83,7 @@ export interface ApiIssuerForCreation {
 
 	lat?: number;
 	lon?: number;
+	captcha?: string
 }
 
 export interface ApiIssuerForEditing {

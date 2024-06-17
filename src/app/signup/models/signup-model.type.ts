@@ -6,5 +6,6 @@ export class SignupModel {
 		public password: string,
 		public agreedTermsService: boolean,
 		public marketingOptIn: boolean,
+		public captcha: string,
 	) {}
 }
