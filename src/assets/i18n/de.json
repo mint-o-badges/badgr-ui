@@ -49,6 +49,7 @@
 		"weeks": "Wochen",
 		"months": "Monate",
 		"years": "Jahre",
+		"oeb": "Open Educational Badges",
 		"showDetails": "Details anzeigen",
 		"hideDetails": "Details verstecken",
 		"password": "Passwort"
@@ -320,11 +321,12 @@
 	},
 	"Login": {
 		"stayLogged": "Angemeldet bleiben",
-		"forgotPassword": "Password vergessen?",
-		"welcome": "Willkommen bei Open Educational Badges",
+		"forgotPassword": "Passwort vergessen?",
+		"welcome": "Willkommen bei",
 		"failLogin": "Fehler bei der Anmeldung. Bitte überprüfen Sie Ihre E-Mail-Adresse und Ihr Passwort und versuchen Sie es erneut.",
 		"attention": "Beachtung",
-		"loginBildungsraum": "Anmelden mit Mein Bildungsraum"
+		"loginBildungsraum": "Anmelden mit Mein Bildungsraum",
+		"createAccount": "Account erstellen"
 	},
 	"Legend": {
 		"legendTitle": "Legende",
