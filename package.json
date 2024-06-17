@@ -39,7 +39,7 @@
     "@angularclass/request-idle-callback": "1.0.7",
     "@concentricsky/badgr-style": "^20.1.2",
     "@ng-icons/core": "^25.1.0",
-    "@ng-icons/lucide": "^26.3.0",
+    "@ng-icons/lucide": "^28.0.0",
     "@ngx-translate/core": "^15.0.0",
     "@ngx-translate/http-loader": "^8.0.0",
     "@spartan-ng/ui-checkbox-brain": "0.0.1-alpha.351",
