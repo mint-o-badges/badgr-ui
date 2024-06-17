@@ -27,6 +27,7 @@ export class PdfService {
         return this.http.get(`${this.baseUrl}/v1/earner/badges/pdf/${slug}`, { headers: headers, responseType: 'blob' }).pipe(
           map((response: Blob) => {
             const url = URL.createObjectURL(response);
+            // sanitize the url before avoiding security check
             const safe_url = this.sanitizer.sanitize(SecurityContext.URL, url);
             return this.sanitizer.bypassSecurityTrustResourceUrl(safe_url);
           })
