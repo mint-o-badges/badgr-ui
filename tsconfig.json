@@ -28,13 +28,31 @@
     "useDefineForClassFields": false,
     "paths": {
       "@spartan-ng/ui-accordion-helm": [
-        "./components/ui-accordion-helm/src/index.ts"
+        "src/app/components/spartan/ui-accordion-helm/src/index.ts"
       ],
       "@spartan-ng/ui-icon-helm": [
-        "./components/ui-icon-helm/src/index.ts"
+        "src/app/components/spartan/ui-icon-helm/src/index.ts"
       ],
       "@spartan-ng/ui-table-helm": [
-        "./components/ui-table-helm/src/index.ts"
+        "src/app/components/spartan/ui-table-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-input-helm": [
+        "src/app/components/spartan/ui-input-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-button-helm": [
+        "src/app/components/spartan/ui-button-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-typography-helm": [
+        "src/app/components/spartan/ui-typography-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-checkbox-helm": [
+        "src/app/components/spartan/ui-checkbox-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-label-helm": [
+        "src/app/components/spartan/ui-table-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-command-helm": [
+        "src/app/components/spartan/ui-command-helm/src/index.ts"
       ]
     }
   }

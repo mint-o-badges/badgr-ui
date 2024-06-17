@@ -34,9 +34,9 @@
 						"styles": [
 							"src/assets/@concentricsky/badgr-style/dist/css/screen.css",
 							"src/styles/oeb/oeb_styles.scss",
-                            "src/styles/google-webfonts/inter.scss",
-                            "src/styles/google-webfonts/nunito.scss",
-                            "src/styles/google-webfonts/rubik.scss",
+							"src/styles/google-webfonts/inter.scss",
+							"src/styles/google-webfonts/nunito.scss",
+							"src/styles/google-webfonts/rubik.scss",
 							"node_modules/dialog-polyfill/dialog-polyfill.css",
 							"src/breakdown/static/css/re-style.css",
 							"node_modules/maplibre-gl/dist/maplibre-gl.css",
@@ -44,7 +44,8 @@
 						],
 						"scripts": [
 							"node_modules/ngx-markdown-editor/assets/highlight.js/highlight.min.js",
-							"node_modules/ngx-markdown-editor/assets/marked.min.js"
+							"node_modules/ngx-markdown-editor/assets/marked.min.js",
+							"node_modules/altcha/dist/altcha.js"
 						],
 						"vendorChunk": true,
 						"extractLicenses": false,
@@ -101,6 +102,31 @@
 								{
 									"replace": "src/environments/environment.ts",
 									"with": "src/environments/environment.staging.ts"
+								}
+							]
+						}
+						"develop": {
+							"budgets": [
+								{
+									"type": "anyComponentStyle",
+									"maximumWarning": "6kb"
+								}
+							],
+							"optimization": true,
+							"outputHashing": "all",
+							"sourceMap": false,
+							"namedChunks": false,
+							"extractLicenses": true,
+							"vendorChunk": false,
+							"buildOptimizer": true,
+							"index": {
+								"input": "src/index.develop.html",
+								"output": "index.html"
+							},
+							"fileReplacements": [
+								{
+									"replace": "src/environments/environment.ts",
+									"with": "src/environments/environment.develop.ts"
 								}
 							]
 						}

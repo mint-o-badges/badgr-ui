@@ -48,6 +48,7 @@
 		"weeks": "Weeks",
 		"months": "Months",
 		"years": "Years",
+		"oeb": "Open Educational Badges",
 		"showDetails": "Show details",
 		"hideDetails": "Hide details",
 		"password": "Password"
@@ -298,19 +299,33 @@
 		"signUpWith": "Sign Up With",
 		"create": "Create a",
 		"createAccountFor": "Account erstellen für",
-		"weCreatedYourAccount": "Wir haben deinen Account erstellt und dir eine Verifizierungs-E-Mail geschickt.",
-		"success_heading": "Wir haben deinen Account erstellt und dir eine Verifizierungs-E-Mail geschickt.",
+		"weCreatedYourAccount": "We have created your account and sent you a verification email.",
 		"success_verify_email_heading": "Verifiziere deine E-mail-Addresse",
-		"success_verify_email_desc": "Bitte überprüfe deine E-Mails und <span class='tw-text-purple'>klicke in der Mail auf „Meinen Account bestätigen”</span>, um deinen Account zu aktivieren.",
-		"success_verify_email_help": "Wenn du die Verifizierungs-E-Mail nicht innerhalb weniger Minuten erhältst, schaue in deinen Spam-Ordner. Wenn du die Mail auch dort nicht findest, <a class='tw-text-purple tw-not-italic' href='mailto:info@openbadges.education'>schreib uns</a>."
+		"success_verify_email_desc": "Please check your emails and <span class='tw-text-purple'>click on “Confirm my account” in the email</span>, to activate your account.",
+		"success_verify_email_help": "If you do not receive the verification email within a few minutes, check your spam folder. If you cannot find the email there, <a class='tw-text-purple tw-not-italic' href='mailto:info@openbadges.education'>contact us</a>.",
+		"resendEmail":"Resend email",
+		"emailAlreadyConfirmed":"Your email address is already verified. You can login now.",
+		"reachedResendEmailLimit":"You have reached a limit for resending verification email. Please check your inbox for an existing message or retry after 5 minutes.",
+		"resendEmailFailed":"Failed to resend verification email. Please contact support.",
+		"newEmailSent":"A new verification email was sent to:"
+	},
+	"Captcha": {
+		"error": "Verification failed. Try again later.",
+		"footer": "Protected by <a href=\"https://altcha.org/\" target=\"_blank\">ALTCHA</a>",
+		"label": "I'm not a robot",
+		"verified": "Verified",
+		"verifying": "Verifying...",
+		"waitAlert": "Verifying... please wait.",
+		"pleaseVerify": "Please verify that you are not a robot."
 	},
 	"Login": {
 		"stayLogged": "Stay logged in",
 		"forgotPassword": "Forgot password?",
-		"welcome": "Welcome to Open Educational Badges",
+		"welcome": "Welcome to",
 		"failLogin": "Login failed. Please check your email and password and try again.",
 		"attention": "Attention",
-		"loginBildungsraum": "Sign in via Mein Bildungsraum"
+		"loginBildungsraum": "Sign in via Mein Bildungsraum",
+		"createAccount": "Create account"
 	},
 	"Legend": {
 		"legendTitle": "Legend",
@@ -401,7 +416,7 @@
 		"criteria": "Criteria",
 		"viewCriteriaUrl": "View external criteria URL",
 		"category": "Category",
-		"competencies": "Competencies",
+		"competencies": "Included Competencies",
 		"description": "Description",
 		"duration": "Duration",
 		"collection": "Collection",

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { BadgrCommonModule, COMMON_IMPORTS } from '../common/badgr-common.module';
@@ -29,8 +29,9 @@ import { IssuerStaffComponent } from './components/issuer-staff/issuer-staff.com
 import { BadgeClassEditFormComponent } from './components/badgeclass-edit-form/badgeclass-edit-form.component';
 import { IssuerStaffCreateDialogComponent } from './components/issuer-staff-create-dialog/issuer-staff-create-dialog.component';
 import { TranslateModule } from '@ngx-translate/core';
-import { CompetencyAccordionComponent } from '../components/accordion.component';
 import { DatatableComponent } from '../components/datatable-badges.component';
+import { IssuerDetailDatatableComponent } from '../components/datatable-issuer-detail.component';
+import { CompetencyAccordionComponent } from '../components/accordion.component';
 
 const routes = [
 	/* Issuer */
@@ -89,7 +90,8 @@ const routes = [
 		RouterModule.forChild(routes),
 		TranslateModule,
 		CompetencyAccordionComponent,
-		DatatableComponent
+		DatatableComponent,
+		IssuerDetailDatatableComponent
 	],
 	declarations: [
 		BadgeClassCreateComponent,
@@ -116,6 +118,7 @@ const routes = [
 
 		IssuerStaffCreateDialogComponent,
 	],
+	schemas: [CUSTOM_ELEMENTS_SCHEMA],
 	exports: [],
 	providers: [
 		BadgeClassApiService,

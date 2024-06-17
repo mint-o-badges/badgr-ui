@@ -20,14 +20,14 @@ const DEFINED_SIZES = ['xs', 'sm', 'base', 'lg', 'xl', 'none'] as const;
 
 type DefinedSizes = (typeof DEFINED_SIZES)[number];
 
-export const iconVariants = cva('inline-flex', {
+export const iconVariants = cva('tw-inline-flex', {
 	variants: {
 		variant: {
-			xs: 'h-3 w-3',
-			sm: 'h-4 w-4',
-			base: 'h-6 w-6',
-			lg: 'h-8 w-8',
-			xl: 'h-12 w-12',
+			xs: 'tw-h-3 tw-w-3',
+			sm: 'tw-h-4 tw-w-4',
+			base: 'tw-h-6 tw-w-6',
+			lg: 'tw-h-8 tw-w-8',
+			xl: 'tw-h-12 tw-w-12',
 			none: '',
 		} satisfies Record<DefinedSizes, string>,
 	},
