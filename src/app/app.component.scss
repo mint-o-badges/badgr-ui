@@ -9,6 +9,7 @@
 .flex-wrap {
 	flex-wrap: wrap;
 }
+
 .video-container iframe,
 .video-container object,
 .video-container embed {
@@ -109,6 +110,7 @@
 	.media-container {
 		flex-direction: column;
 	}
+
 	.media-container video {
 		width: 100%;
 	}
@@ -292,7 +294,7 @@
 	height: auto;
 }
 
-.funding-logos-container{
+.funding-logos-container {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
@@ -308,9 +310,88 @@
 		margin-bottom: 2rem
 	}
 
-	.funding-logos-container{
+	.funding-logos-container {
 		flex-direction: column;
 	}
 }
 
 
+.oeb-navbar {
+	align-items: center;
+	background-color: var(--color-lightgray);
+	display: flex;
+	height: 72px;
+	justify-content: space-between;
+	position: relative;
+	padding-right: calc(var(--gridspacing) * 2);
+	padding-left: calc(var(--gridspacing) * 2);
+
+	@media (min-width: 768px) {
+		padding-right: calc(var(--gridspacing) * 3);
+		padding-left: calc(var(--gridspacing) * 3);
+	}
+
+	@media (min-width: 1440px) {
+		padding-right: calc(50% - 720px);
+		padding-left: calc(50% - 720px);
+	}
+
+}
+
+@media (min-width: 768px) {
+	.oeb-navbaritems:not(:last-child) {
+		margin-right: calc(var(--gridspacing) * 4);
+	}
+}
+
+@media (min-width: 768px) {
+	.oeb-navbaritems {
+		align-items: stretch;
+		display: flex;
+		margin-left: calc(var(--gridspacing) * 4);
+		padding-top: calc(var(--gridspacing) * 2.5);
+	}
+}
+
+
+@media (min-width: 768px) {
+	.oeb-navbaritems> :not(:last-child) {
+		margin-right: calc(var(--gridspacing) * 4);
+	}
+}
+
+.oeb-navitem {
+	--typography-size: 16px;
+	font-family: var(--font-family);
+	font-size: var(--typography-size);
+	line-height: calc(var(--typography-size) + 8px);
+	font-weight: bold;
+	align-items: center;
+	color: var(--color-oebblack);
+	display: flex;
+	padding-bottom: calc(2.5 * var(--gridspacing));
+	position: relative;
+	font-weight: 400;
+	line-height: 30px;
+
+	.navitem-x-icon {
+		height: 24px;
+		width: 24px;
+	}
+}
+
+.oeb-navbar-logo {
+	display: block;
+	line-height: 11px;
+
+	img {
+		max-width: 134px;
+		height: unset;
+	}
+}
+
+.oeb-menuitem {
+	font-weight: 400;
+	line-height: 30px;
+	color: var(--color-oebblack);
+}
