@@ -63,6 +63,7 @@ export class BadgeclassIssueBulkAwardError extends BaseAuthenticatedRoutableComp
 				this.transformedImportData.validRowsTransformed.add({
 					evidence: row['evidence'] ? row['evidence'].trim() : null,
 					email: row['email'] ? row['email'].trim() : null,
+					name: row['name'] ? row['name'].trim() : null,
 				});
 			});
 			this.removeDuplicateEmails();

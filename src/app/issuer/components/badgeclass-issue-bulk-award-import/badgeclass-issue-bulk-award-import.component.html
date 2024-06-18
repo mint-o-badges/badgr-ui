@@ -1,34 +1,40 @@
-<section class="l-containerxaxis l-containeryaxis">
-	<div class="u-width-form">
-		<article class="contentlong">
-			<h2>Anleitung</h2>
-			<p>
-				Du kannst eine Liste von Empfänger*innen importieren welche den Badge erhalten sollen. Die Datei muss
-				folgendermaßen aussehen:
-			</p>
-			<ol>
-				<li>E-Mail Adresse und Nachweis URL beinhalten</li>
-				<li>CSV oder TXT Format.</li>
+	<div class="oeb-section">
+		<div class="oeb-headline-container-sm">
+			<h1 hlmH1 class="tw-text-purple">Badge an mehrere Lernende gleichzeitig vergeben</h1>
+		</div>
+		<div class="oeb-standard-padding-bottom">
+			<p hlmP>
+				Du kannst eine Liste von Empfänger:innen importieren, die den Badge gleichzeitig erhalten sollen. Die Datei muss folgendermaßen aussehen:</p>
+			<ol class="tw-list-disc tw-pl-8 tw-py-4">
+				<li hlmP>Name, E-Mail-Adresse und Evidence (optional) beinhalten</li>
+				<li hlmP>CSV- oder TXT-Format.</li>
 			</ol>
-			<p>
+			<p hlmP class="oeb-stan">
 				Benutze diese
-				<a [href]="badgrBulkIssueTemplateUrl" download="badgr-bulk-issue-template.csv"> Beispiel Vorlage </a>
+				<a hlmA href="./assets/badgrBulkIssueTemplate.csv" download="badgrBulkIssueTemplate.csv"> Beispiel Vorlage </a>
 				um eine CSV oder TXT Datei zu erstellen
 			</p>
-		</article>
-		<form [formGroup]="csvForm" class>
-			<fieldset>
-				<bg-formfield-file
-					#fileField
-					label="File"
-					validFileTypes="text/plain,.csv"
-					[control]="csvForm.controls['zipFile']"
-					[placeholderImage]="csvUploadIconUrl"
-					(fileData)="onFileDataReceived($event)"
-				>
-				</bg-formfield-file>
-			</fieldset>
-		</form>
+		</div>
+		
+		<div class="tw-py-6 tw-px-10 tw-bg-lightpurple tw-rounded-[20px]">
+			<div class="oeb-headline-container-sm">
+				<h3 hlmH3 class="tw-font-bold tw-text-purple">Liste importieren</h3>		
+			</div>
+			<form [formGroup]="csvForm" class>
+				<fieldset>
+					<bg-formfield-file
+						class="tw-bg-white"
+						#fileField
+						label="File"
+						validFileTypes="text/plain,.csv"
+						[control]="csvForm.controls['zipFile']"
+						[placeholderImage]="csvUploadIconUrl"
+						(fileData)="onFileDataReceived($event)"
+					>
+					</bg-formfield-file>
+				</fieldset>
+			</form>
+		</div>
 
 		<div class="l-flex l-flex-1x u-margin-top2x">
 			<button class="button button-secondary" (click)="updateViewState('cancel')">Abbrechen</button>
@@ -43,4 +49,3 @@
 			</button>
 		</div>
 	</div>
-</section>
