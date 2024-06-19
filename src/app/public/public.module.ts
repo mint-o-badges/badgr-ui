@@ -20,6 +20,7 @@ import { CompetencyAccordionComponent } from '../components/accordion.component'
 import { DatatableComponent } from '../components/datatable-badges.component';
 import { PrivacyComponent } from './components/privacy/privacy.component';
 
+
 export const routes: Routes = [
 	{
 		path: '',
@@ -113,9 +114,7 @@ export const routes: Routes = [
 		BadgrCommonModule,
 		CommonEntityManagerModule,
 		RouterModule.forChild(routes),
-		TranslateModule,
-		CompetencyAccordionComponent,
-		DatatableComponent
+		TranslateModule
 	],
 	declarations: [
 		AboutComponent,
