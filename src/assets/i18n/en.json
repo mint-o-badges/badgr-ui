@@ -249,6 +249,7 @@
 		"aiAssistant": "AI-Badge-Assistant",
 		"useAiAssistant": "Use AI-Badge-Assistant",
 		"enterAiDescription": "Insert the content description of your teaching offer into the text field.",
+		"NoPersonalInformation":"Please do not enter any biographical / personal information here.",
 		"addAiCompetencies": "Add appropriate suggested competencies to your badge by clicking.",
 		"myContentDescription": "My content description",
 		"min70max1000Chars": "(At least 70 / maximum 1000 characters)",

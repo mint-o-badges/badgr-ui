@@ -249,6 +249,7 @@
 		"aiAssistant": "KI-Badge-Assistent",
 		"useAiAssistant": "KI-Badge-Assistenten nutzen",
 		"enterAiDescription": "Füge die inhaltliche Beschreibung deines Lehrangebots in das Textfeld ein.",
+		"NoPersonalInformation":"Bitte trage hier keine biographischen / persönlichen Informationen ein.",
 		"addAiCompetencies": "Füge passende vorgeschlagene Kompetenzen durch Anklicken zu deinem Badge hinzu.",
 		"myContentDescription": "Meine inhaltliche Beschreibung",
 		"min70max1000Chars": "(Mindestens 70 / maximal 1000 Zeichen)",
