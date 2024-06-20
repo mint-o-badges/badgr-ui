@@ -1,51 +1,44 @@
-	<div class="oeb-section">
-		<div class="oeb-headline-container-sm">
-			<h1 hlmH1 class="tw-text-purple">Badge an mehrere Lernende gleichzeitig vergeben</h1>
-		</div>
-		<div class="oeb-standard-padding-bottom">
-			<p hlmP>
-				Du kannst eine Liste von Empfänger:innen importieren, die den Badge gleichzeitig erhalten sollen. Die Datei muss folgendermaßen aussehen:</p>
-			<ol class="tw-list-disc tw-pl-8 tw-py-4">
-				<li hlmP>Name, E-Mail-Adresse und Evidence (optional) beinhalten</li>
-				<li hlmP>CSV- oder TXT-Format.</li>
-			</ol>
-			<p hlmP class="oeb-stan">
-				Benutze diese
-				<a hlmA href="./assets/badgrBulkIssueTemplate.csv" download="badgrBulkIssueTemplate.csv"> Beispiel Vorlage </a>
-				um eine CSV oder TXT Datei zu erstellen
-			</p>
-		</div>
-		
+<div class="oeb-section">
+	<div class="oeb-headline-container-sm">
+		<h1 hlmH1 class="tw-text-purple">Badge an mehrere Lernende gleichzeitig vergeben</h1>
+	</div>
+	<div class="oeb-standard-padding-bottom">
+		<p hlmP>
+			Du kannst eine Liste von Empfänger:innen importieren, die den Badge gleichzeitig erhalten sollen. Die Datei
+			muss folgendermaßen aussehen:</p>
+		<ol class="tw-list-disc tw-pl-8 tw-py-4">
+			<li hlmP>E-Mail-Adresse, Name (optional) und Evidence (optional) beinhalten</li>
+			<li hlmP>CSV- oder TXT-Format.</li>
+		</ol>
+		<p hlmP>
+			Benutze diese
+			<a hlmA href="./assets/badgrBulkIssueTemplate.csv" download="badgrBulkIssueTemplate.csv"> Beispiel Vorlage
+			</a>
+			um eine CSV oder TXT Datei zu erstellen
+		</p>
+	</div>
+	<div class="oeb-standard-padding-bottom">
 		<div class="tw-py-6 tw-px-10 tw-bg-lightpurple tw-rounded-[20px]">
 			<div class="oeb-headline-container-sm">
-				<h3 hlmH3 class="tw-font-bold tw-text-purple">Liste importieren</h3>		
+				<h3 hlmH3 class="tw-font-bold tw-text-purple">Liste importieren</h3>
 			</div>
 			<form [formGroup]="csvForm" class>
 				<fieldset>
-					<bg-formfield-file
-						class="tw-bg-white"
-						#fileField
-						label="File"
-						validFileTypes="text/plain,.csv"
-						[control]="csvForm.controls['zipFile']"
-						[placeholderImage]="csvUploadIconUrl"
-						(fileData)="onFileDataReceived($event)"
-					>
+					<bg-formfield-file class="tw-bg-white" #fileField label="File" validFileTypes="text/plain,.csv"
+						[control]="csvForm.controls['zipFile']" [placeholderImage]="csvUploadIconUrl"
+						(fileData)="onFileDataReceived($event)">
 					</bg-formfield-file>
 				</fieldset>
 			</form>
 		</div>
-
-		<div class="l-flex l-flex-1x u-margin-top2x">
-			<button class="button button-secondary" (click)="updateViewState('cancel')">Abbrechen</button>
-
-			<button
-				class="button l-marginLeft-x2"
-				[class.button-is-disabled]="rawCsv === null"
-				[attr.disabled]="rawCsv ? null : true"
-				(click)="importAction()"
-			>
-				Importieren
-			</button>
-		</div>
 	</div>
+
+	<div class="l-flex l-flex-1x u-margin-top2x">
+		<oeb-button class="tw-mr-4" variant="secondary" (click)="updateViewState('cancel')"
+			text="Abbrechen"></oeb-button>
+
+		<oeb-button [class.button-is-disabled]="rawCsv === null" [disabled]="rawCsv ? null : true"
+			(click)="importAction()" text="Importieren">
+		</oeb-button>
+	</div>
+</div>

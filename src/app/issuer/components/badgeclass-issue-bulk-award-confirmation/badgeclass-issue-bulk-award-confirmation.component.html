@@ -1,18 +1,20 @@
-<section class="l-containerxaxis l-containeryaxis">
-	<div class="u-width-form">
-		<div class="contentlong">
-			<h1 class="title">Import Vorschau</h1>
-			<p>
-				{{ transformedImportData.validRowsTransformed.size }} Zeilen können importiert werden.
-				{{ transformedImportData.duplicateRecords.length }} Zeilen sind Duplikate und werden ignoriert. Klicke
-				auf BADGE VERGEBEN um den Badge zu vergeben.
-			</p>
-		</div>
+<section class="oeb-section">
+	<div class="oeb-headline-container-sm">
+		<h1 hlmH1 class="tw-text-purple">Import Vorschau</h1>
+	</div>
+	<p hlmP class="oeb-standard-padding-bottom">
+		{{ transformedImportData.validRowsTransformed.size }} Zeilen können importiert werden.
+		{{ transformedImportData.duplicateRecords.length }} Zeilen sind Duplikate und werden ignoriert. Klicke
+		auf BADGE VERGEBEN um den Badge zu vergeben.
+	</p>
+
+	<div class="oeb-standard-padding-bottom">
 
 		<table class="datatable datatable-roundheaders datatable-headers">
 			<thead class="datatable-x-head">
 				<tr class="datatable-x-header">
 					<th class="datatable-x-cell" scope="col">E-Mail</th>
+					<th class="datatable-x-cell" scope="col">Name</th>
 					<th class="datatable-x-cell" scope="col">Nachweis</th>
 					<th class="datatable-x-cell">
 						<!-- header for remove link-->
@@ -25,37 +27,39 @@
 						{{ row.email }}
 					</td>
 					<td class="datatable-x-cell">
+						{{ row.name }}
+					</td>
+					<td class="datatable-x-cell">
 						{{ row.evidence }}
 					</td>
 					<td class="datatable-x-cell">
-						<button class="u-text-link-small" (click)="removeValidRowsTransformed(row)">Entfernen</button>
+						<oeb-button variant="secondary" size="xs" text="Entfernen" (click)="removeValidRowsTransformed(row)"></oeb-button>
 					</td>
 				</tr>
 			</tbody>
-
+	
 			<tbody></tbody>
 		</table>
 	</div>
-	<div class="u-margin-yaxis2x">
-		<h2 class="u-text-h3 u-margin-bottom1x">Benachrichtigung</h2>
-
-		<label class="checkbox checkbox-center" for="notify_earner">
-			<input checked name="notify_earner" id="notify_earner" type="checkbox" [(ngModel)]="notifyEarner" />
+	<div class="oeb-standard-padding-bottom">
+		<h3 hlmH3 class="tw-text-purple">Benachrichtigung</h3>
+		<oeb-checkbox name="notify_earner" id="notify_earner" type="checkbox" (checkedChange)="notifyChange($event)" [checked]="notifyEarner" [text]="'Benachrichtige die Empfänger*in mit einer E-Mail'"></oeb-checkbox>
+		<!-- <label class="checkbox checkbox-center" for="notify_earner">
+			<input checked name="notify_earner" id="notify_earner" type="checkbox" [(ngModel)]="notifyEarner"/>
 			<span class="checkbox-x-label u-margin-left1x"> Benachrichtige die Empfänger*in mit einer E-Mail</span>
-		</label>
+		</label> -->
 	</div>
 
 	<!-- BUTTONS -->
-	<div class="l-flex l-flex-2x u-margin-top2x">
-		<button class="button button-secondary" (click)="updateViewState('import')">Abbrechen</button>
+	<div class="tw-flex">
+		<oeb-button hlmBtn class="tw-mr-4" variant="secondary" (click)="updateViewState('import')" text="Abbrechen"></oeb-button>
 
-		<button
-			class="button l-marginLeft-x2"
+		<oeb-button
 			[class.button-is-disabled]="buttonDisabledClass"
-			[attr.disabled]="buttonDisabledAttribute"
+			[disabled]="buttonDisabledAttribute"
 			(click)="dataConfirmed()"
+			text="Badge vergeben"
 		>
-			Badge vergeben
-		</button>
+		</oeb-button>
 	</div>
 </section>

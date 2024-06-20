@@ -216,14 +216,14 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 		// 	},
 		// };
 
-		// const recipientProfileContextUrl = "https://openbadgespec.org/extensions/recipientProfile/context.json";
-		// const extensions = formState.recipientprofile_name ? {
-		// 	"extensions:recipientProfile": {
-		// 		"@context": recipientProfileContextUrl,
-		// 		"type": ["Extension", "extensions:RecipientProfile"],
-		// 		"name": cleanedName
-		// 	}
-		// } : undefined;
+		const recipientProfileContextUrl = "https://openbadgespec.org/extensions/recipientProfile/context.json";
+		const extensions = formState.recipientprofile_name ? {
+			"extensions:recipientProfile": {
+				"@context": recipientProfileContextUrl,
+				"type": ["Extension", "extensions:RecipientProfile"],
+				"name": cleanedName
+			}
+		} : undefined;
 
 		// const extensions = studyLoadExtension;
 
@@ -256,7 +256,7 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 				narrative: this.narrativeEnabled ? formState.narrative : '',
 				create_notification: formState.notify_earner,
 				evidence_items: this.evidenceEnabled ? cleanedEvidence : [],
-				// extensions,
+				extensions,
 				expires,
 			})
 			.then(() => this.badgeClass.update())
