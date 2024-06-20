@@ -16,6 +16,10 @@ import { StartComponent } from './components/start/start.component';
 import { ImpressumComponent } from './components/impressum/impressum.component';
 import { FaqComponent } from './components/faq/faq.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { CompetencyAccordionComponent } from '../components/accordion.component';
+import { DatatableComponent } from '../components/datatable-badges.component';
+import { PrivacyComponent } from './components/privacy/privacy.component';
+
 
 export const routes: Routes = [
 	{
@@ -44,6 +48,13 @@ export const routes: Routes = [
 	{
 		path: 'impressum',
 		component: ImpressumComponent,
+		data: {
+			publiclyAccessible: true,
+		} as BadgrRouteData,
+	},
+	{
+		path: 'privacy',
+		component: PrivacyComponent,
 		data: {
 			publiclyAccessible: true,
 		} as BadgrRouteData,
@@ -109,6 +120,7 @@ export const routes: Routes = [
 		AboutComponent,
 		StartComponent,
 		ImpressumComponent,
+		PrivacyComponent,
 		PublicComponent,
 		PublicBadgeAssertionComponent,
 		PublicIssuerComponent,

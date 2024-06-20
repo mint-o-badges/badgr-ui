@@ -33,6 +33,7 @@ export const environment: BadgrEnvironment = {
 			],
 			useColorNavbar: true,
 			termsOfServiceLink: 'public/impressum',
+			privacyPolicyLink:'public/privacy',
 			showApiDocsLink: false,
 			cssCustomProps: {
 				'--color-interactive1': '#492E98',
