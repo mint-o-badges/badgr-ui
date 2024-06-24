@@ -189,7 +189,14 @@
 		"myInstitutionsNoBadge": "hat noch keine Badges, die sie vergeben kann.",
 		"myInstitutionsCreateBadge": "Neuen Badge erstellen",
 		"askForPlugin": "Plugin anfragen",
-		"askForPluginText": "Unser <span class='tw-font-bold tw-text-purple'>Plugin</span> bietet dir die Möglichkeit, Badges aus deiner eigenen digitalen Lehrumgebung heraus zu vergeben."
+		"askForPluginText": "Unser <span class='tw-font-bold tw-text-purple'>Plugin</span> bietet dir die Möglichkeit, Badges aus deiner eigenen digitalen Lehrumgebung heraus zu vergeben.",
+		"award": "vergeben",
+		"badgePreview": "Badge-Vorschau",
+		"certPreview": "Zertifikats-Vorschau",
+		"batchAwardText1" : "Vergebe den Badge an eine lernende Person oder",
+		"batchAwardTextLink": "klicke hier, um den Badge an mehrere Lernende gleichzeitig",
+		"batchAwardText2": "zu vergeben",
+		"nameWarning": "Beachte: Der Name wird als Klartext im Badge gespeichert."
 	},
 	"Badge": {
 		"groupBy": "Group by",

@@ -7,11 +7,11 @@ export const hlmP = '';
 
 
 export const pVariants = cva(
-	'tw-text-[14px] tw-leading-[19px] md:tw-text-[20px] md:tw-leading-[28px] tw-text-oebblack',
+	'tw-text-oebblack',
 	{
 		variants: {
 			variant: {
-				default: 'tw-text-[14px] tw-leading-[19px] md:tw-text-[20px] md:tw-leading-[28px]',
+				default: '',
 				// destructive: 'tw-bg-destructive tw-text-destructive-foreground hover:btw-g-destructive/90',
 			},
 			size: {
