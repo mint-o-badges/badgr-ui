@@ -60,7 +60,8 @@
                             variant="blackborder"
                             size="md"
                             [text]='"Login.loginBildungsraum" | translate'
-                            (click)=bildungsraumLogin()>
+                            (click)=bildungsraumLogin()
+                            [disabled]='isOidcDisabled()'>
 							
 						</oeb-button>
 					</div>

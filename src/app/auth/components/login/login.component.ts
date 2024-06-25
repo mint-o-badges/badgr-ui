@@ -157,6 +157,8 @@ export class LoginComponent extends BaseRoutableComponent implements OnInit, Aft
     }
 
     bildungsraumLogin() {
+        if (this.isOidcDisabled())
+            return;
         const endpoint = this.sessionService.baseUrl + '/oidc/authenticate';
         window.location.href = endpoint;
     }
@@ -253,4 +255,9 @@ export class LoginComponent extends BaseRoutableComponent implements OnInit, Aft
 		this.verifiedName = this.queryParams.queryStringValue('name');
 		this.verifiedEmail = this.queryParams.queryStringValue('email');
 	}
+
+    isOidcDisabled(): boolean {
+        const prodUrl = "https://openbadges.education";
+        return location.origin === prodUrl;
+    }
 }
