@@ -386,14 +386,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		this.currentImage = badgeClass.extension['extensions:OrgImageExtension']
 			? badgeClass.extension['extensions:OrgImageExtension'].OrgImage
 			: undefined;
-		// if (this.currentImage && this.imageField) {
-		// 	if(!badgeClass.imageFrame && this.customImageField){
-		// 		this.customImageField.useDataUrl(this.currentImage, 'BADGE');
-		// 	}
-		// 	else{
-		// 		this.imageField.useDataUrl(this.currentImage, 'BADGE');
-		// 	}
-		// }
 		this.tags = new Set();
 		this.badgeClass.tags.forEach((t) => this.tags.add(t));
 
@@ -401,13 +393,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		if (badgeClass.expiresAmount && badgeClass.expiresDuration) {
 			this.enableExpiration();
 		}
-
-		// if(!badgeClass.imageFrame){
-		// 		this.generateCustomUploadImage(this.badgeClassForm.value);
-		// }else{
-		// 		this.generateUploadImage(this.currentImage, this.badgeClassForm.value);
-		// }
-
 	}
 
 	ngOnInit() {
@@ -416,19 +401,27 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		// update badge frame when a category is selected, unless no-hexagon-frame checkbox is checked
 		this.badgeClassForm.rawControl.controls['badge_category'].statusChanges.subscribe((res) => {
 			this.handleBadgeCategoryChange();
-			
-			// call adjustUploadImage after formControls are initialized to prevent timing issues
-		    // with the imageField (e.g. when editing a badge the image was not shown when the page first loaded)
 			if(that.imageField.control.value){
 				setTimeout(() => {
 					that.adjustUploadImage(this.badgeClassForm.value);
 				}, 10)
 			}
 			else if(that.customImageField.control.value){
-				setTimeout(() => {
-				that.customImageField.useDataUrl(this.customImageField.control.value, 'BADGE');
-				}, 10)
+				if(!that.existing){
+					setTimeout(() => {
+					that.customImageField.useDataUrl(this.customImageField.control.value, 'BADGE');
+					}, 10)
+				}
 			}
+			// I am not sure why, but without calling adjustUploadImage here again, 
+			// the image disappears while editing the badge
+			// TODO: investigate why this is happening
+			if (this.currentImage && this.existing) {
+				if(that.imageField.control.value){
+					setTimeout(function () {
+						that.adjustUploadImage(that.badgeClassForm.value);
+					}, 10);
+				}}
 		});
 
 		this.fetchTags();
