@@ -9,67 +9,58 @@
 
 				<div class="oeb-section">
 					<div class="oeb-headline-container-sm">
-						<h1 hlmH1 class="tw-text-purple">Badge "{{badgeClass.name}}" {{'Issuer.award' | translate}} </h1>
+						<h1 hlmH1 class="tw-text-purple">Badge "{{badgeClass.name}}" {{'Issuer.award' | translate}}
+						</h1>
 					</div>
 					<div class="tw-flex tw-flex-wrap oeb-standard-padding-bottom">
-						<div class="md:tw-max-w-[250px] tw-max-w-[150px] tw-text-center tw-mr-6 md:tw-h-[300px] tw-h-[200px]">
-							<div class="tw-px-6 tw-py-4 tw-border-purple tw-border-solid tw-border tw-rounded-[15px] tw-h-full tw-mb-1 tw-flex">
-								<img
-								class="badge-image badgeimage-center tw-self-center"
-								[loaded-src]="badgeClass.image"
-								[loading-src]="badgeLoadingImageUrl"
-								[error-src]="badgeFailedImageUrl"
-							/>
+						<div
+							class="md:tw-max-w-[250px] tw-max-w-[150px] tw-text-center tw-mr-6 md:tw-h-[300px] tw-h-[200px]">
+							<div
+								class="tw-px-6 tw-py-4 tw-border-purple tw-border-solid tw-border tw-rounded-[15px] tw-h-full tw-mb-1 tw-flex">
+								<img class="badge-image badgeimage-center tw-self-center"
+									[loaded-src]="badgeClass.image" [loading-src]="badgeLoadingImageUrl"
+									[error-src]="badgeFailedImageUrl" />
 							</div>
 							<p size="sm" hlmP>{{'Issuer.badgePreview' | translate}}</p>
 						</div>
 						<div class="md:tw-max-w-[250px] tw-max-w-[150px] tw-text-center md:tw-h-[300px] tw-h-[200px]">
-							<div class="tw-px-6 tw-py-4 tw-border-purple tw-border-solid tw-border tw-rounded-[15px] tw-relative tw-h-full tw-mb-1 tw-overflow-hidden tw-flex">
-								<img class="tw-inline-block tw-absolute tw-right-0 tw-left-0 tw-m-auto tw-top-0 tw-z-0 tw-h-full" alt="Certificate" src="assets/oeb/images/issuerPage/cert_preview.png" />
+							<div
+								class="tw-px-6 tw-py-4 tw-border-purple tw-border-solid tw-border tw-rounded-[15px] tw-relative tw-h-full tw-mb-1 tw-overflow-hidden tw-flex">
+								<img class="tw-inline-block tw-absolute tw-right-0 tw-left-0 tw-m-auto tw-top-0 tw-z-0 tw-h-full"
+									alt="Certificate" src="assets/oeb/images/issuerPage/cert_preview.png" />
 
-								<img
-								class="badge-image badgeimage-center tw-z-10 tw-relative tw-w-[70%] tw-self-center"
-								[loaded-src]="badgeClass.image"
-								[loading-src]="badgeLoadingImageUrl"
-								[error-src]="badgeFailedImageUrl"
-							/>
+								<img class="badge-image badgeimage-center tw-z-10 tw-relative tw-w-[70%] tw-self-center"
+									[loaded-src]="badgeClass.image" [loading-src]="badgeLoadingImageUrl"
+									[error-src]="badgeFailedImageUrl" />
 							</div>
 							<p size="sm" hlmP [innerHTML]="'Issuer.certPreview' | translate"></p>
-		
+
 						</div>
 					</div>
 				</div>
 				<div class="tw-border-purple tw-border-solid tw-border tw-px-4 tw-py-6 tw-rounded-[15px] tw-mb-6">
 					<span hlmP [innerHTML]="'Issuer.batchAwardText1' | translate"></span>&nbsp;
-					<a hlmP hlmA [routerLink]="['/issuer/issuers', issuerSlug, 'badges', badgeSlug, 'bulk-import']">{{'Issuer.batchAwardTextLink' | translate}}</a>&nbsp;
+					<a hlmP hlmA
+						[routerLink]="['/issuer/issuers', issuerSlug, 'badges', badgeSlug, 'bulk-import']">{{'Issuer.batchAwardTextLink'
+						| translate}}</a>&nbsp;
 					<span hlmP [innerHTML]="'Issuer.batchAwardText2' | translate"></span>
-						<oeb-input label="Name Empfänger:in (Optional)" placeholder="Name der Empfänger:in" fieldType="email"
-						[autofocus]="true"
-						[control]="issueForm.rawControlMap.recipientprofile_name" #nameField></oeb-input>
-						<p hlmP class="tw-mt-1 tw-text-right" size="sm">{{'Issuer.nameWarning' | translate}}</p>
-						<div class="tw-flex tw-justify-end oeb-standard-padding-bottom">
-							<bg-formfield-select
-							class="tw-self-end tw-mr-2"
-							ariaLabel="Select Options"
+					<oeb-input label="Name Empfänger:in (Optional)" [placeholder]="'Issuer.awardedPerson' | translate"
+						fieldType="email" [autofocus]="true" [control]="issueForm.rawControlMap.recipientprofile_name"
+						#nameField></oeb-input>
+					<p hlmP class="tw-mt-1 tw-text-right" size="sm">{{'Issuer.nameWarning' | translate}}</p>
+					<div class="tw-flex tw-justify-end oeb-standard-padding-bottom">
+						<bg-formfield-select class="tw-self-end tw-mr-2" ariaLabel="Select Options"
 							[control]="issueForm.rawControlMap.recipient_type"
-							[optionMap]="identifierOptionMap"
-							></bg-formfield-select>
-							<oeb-input
-							class="tw-flex-grow"
-							label="Identifier"
+							[optionMap]="identifierOptionMap"></bg-formfield-select>
+						<oeb-input class="tw-flex-grow" label="Identifier"
 							[control]="issueForm.rawControlMap.recipient_identifier"
-							ariaLabel="Identifier der Empfänger:in"
-							[autofocus]="true"
-							[fieldType]="recipientIdentifierFieldType"
-							></oeb-input>
-						</div>
-						<oeb-checkbox 
-						name="notifybyemail"
-						id="notifybyemail"
+							ariaLabel="Identifier der Empfänger:in" [autofocus]="true"
+							[fieldType]="recipientIdentifierFieldType"></oeb-input>
+					</div>
+					<oeb-checkbox name="notifybyemail" id="notifybyemail"
 						[formControl]="issueForm.rawControlMap.notify_earner"
-						text="Empfänger:in mit E-Mail benachrichtigen"
-						></oeb-checkbox>
-						
+						[text]="'Issuer.sendEmail' | translate"></oeb-checkbox>
+
 				</div>
 				<div class="tw-border-purple tw-border-solid tw-border tw-px-4 tw-py-6 tw-rounded-[15px] tw-mb-8">
 					<div class="" role="group" aria-labelledby="heading-narrative" *ngIf="narrativeEnabled">
@@ -83,26 +74,24 @@
 								<span class="visuallyhidden">Schließen</span>
 							</button>
 						</div>
-		
+
 						<div class="formsection-x-help">
 							<h3 class="u-text-body-bold">Was ist das Narrativ?</h3>
 							<p class="u-text u-margin-top1x u-margin-bottom2x">
 								Das Narrativ ist eine generelle Beschreibung des Erfolges bezogen auf das Badge.
 							</p>
-							<a href="https://support.badgr.io/pages/viewpage.action?pageId=2981918" class="u-text-outlink"
-								>Mehr Informationen
+							<a href="https://support.badgr.io/pages/viewpage.action?pageId=2981918"
+								class="u-text-outlink">Mehr Informationen
 								<svg icon="icon_external_link"></svg>
 							</a>
 						</div>
 						<div class="formsection-x-body">
-							<bg-formfield-markdown
-								class="l-formsection-x-inputoffset"
+							<bg-formfield-markdown class="l-formsection-x-inputoffset"
 								[control]="issueForm.rawControlMap.narrative"
-								label="How did the recipient earn this badge?"
-							></bg-formfield-markdown>
+								label="How did the recipient earn this badge?"></bg-formfield-markdown>
 						</div>
 					</div>
-		
+
 					<!-- Evidence -->
 					<div class="formsection" role="group" aria-labelledby="heading-evidence" *ngIf="evidenceEnabled">
 						<div class="formsection-x-title">
@@ -118,43 +107,36 @@
 						<div class="formsection-x-help">
 							<h3 class="u-text-body-bold">Was ist der Nachweis?</h3>
 							<p class="u-text u-margin-top1x u-margin-bottom2x">
-								Nachweise sind belege dafür, dass die Empfänger*in die entsprechenden Kriterien erfüllt um das
-								Badge zu erhalten. Dies kann in form eines Narrativs welcher den Erfolg beschreibt und / oder
+								Nachweise sind belege dafür, dass die Empfänger*in die entsprechenden Kriterien erfüllt
+								um das
+								Badge zu erhalten. Dies kann in form eines Narrativs welcher den Erfolg beschreibt und /
+								oder
 								als URL einer Website geschehen.
 							</p>
-							<a href="https://support.badgr.io/pages/viewpage.action?pageId=2981918" class="u-text-outlink"
-								>Mehr Informationen
+							<a href="https://support.badgr.io/pages/viewpage.action?pageId=2981918"
+								class="u-text-outlink">Mehr Informationen
 								<svg icon="icon_external_link"></svg>
 							</a>
 						</div>
 						<div class="formsection-x-body">
-							<ng-container *ngFor="let evidence of issueForm.controls.evidence_items.controls; let i = index">
+							<ng-container
+								*ngFor="let evidence of issueForm.controls.evidence_items.controls; let i = index">
 								<div class="l-flex l-flex-1x l-flex-justifybetween u-margin-bottom2x">
 									<h3 class="u-text-body-bold u-text-dark1">Nachweis {{ i + 1 }}</h3>
-									<button
-										class="u-text-link"
-										aria-labelledby="heading-nestedevidence"
-										*ngIf="issueForm.controls.evidence_items.length > 1"
-										(click)="removeEvidence(i)"
-										type="button"
-									>
+									<button class="u-text-link" aria-labelledby="heading-nestedevidence"
+										*ngIf="issueForm.controls.evidence_items.length > 1" (click)="removeEvidence(i)"
+										type="button">
 										Entfernen
 									</button>
 								</div>
-								<bg-formfield-markdown
-									[control]="evidence.rawControlMap.narrative"
-									label="Wie wurde der Badge erhalten?"
-								></bg-formfield-markdown>
-								<bg-formfield-text
-									class="u-margin-top2x u-margin-bottom6x"
-									[control]="evidence.rawControlMap.evidence_url"
-									label="URL zum Nachweis"
-									fieldType="url"
-									[urlField]="true"
-									errorMessage="Bitte gebe eine gültige URL an"
-								></bg-formfield-text>
+								<bg-formfield-markdown [control]="evidence.rawControlMap.narrative"
+									label="Wie wurde der Badge erhalten?"></bg-formfield-markdown>
+								<bg-formfield-text class="u-margin-top2x u-margin-bottom6x"
+									[control]="evidence.rawControlMap.evidence_url" label="URL zum Nachweis"
+									fieldType="url" [urlField]="true"
+									errorMessage="Bitte gebe eine gültige URL an"></bg-formfield-text>
 							</ng-container>
-		
+
 							<div class="l-stack">
 								<button class="button button-secondary" type="button" (click)="addEvidence()">
 									Weiteren Nachweis hinzufügen
@@ -162,42 +144,40 @@
 							</div>
 						</div>
 					</div>
-		
+
 					<!-- Expiration -->
-					<div class="formsection !tw-shadow-none" role="group" aria-labelledby="heading-expiration" *ngIf="expirationEnabled">
+					<div class="formsection !tw-shadow-none" role="group" aria-labelledby="heading-expiration"
+						*ngIf="expirationEnabled">
 						<div class="formsection-x-title">
 							<h2>
 								Ablaufdatum
 								<span>(Optional)</span>
 							</h2>
-							<button class="buttonicon buttonicon-link" (click)="expirationEnabled = false" type="button">
+							<button class="buttonicon buttonicon-link" (click)="expirationEnabled = false"
+								type="button">
 								<svg icon="icon_close"></svg>
 								<span class="visuallyhidden">Schließen</span>
 							</button>
 						</div>
-		
+
 						<div class="formsection-x-help">
 							<h3 class="u-text-body-bold">Was ist das Ablaufdatum?</h3>
 							<p class="u-text u-margin-top1x u-margin-bottom2x">
-								Der Badge kann ein Ablaufdatum bekommen. Hier kannst du es einstellen, bearbeiten oder löschen
+								Der Badge kann ein Ablaufdatum bekommen. Hier kannst du es einstellen, bearbeiten oder
+								löschen
 								wenn der Badge nicht ablaufen soll.
 							</p>
-							<a href="https://support.badgr.io/pages/viewpage.action?pageId=2981918" class="u-text-outlink"
-								>Weitere Informationen
+							<a href="https://support.badgr.io/pages/viewpage.action?pageId=2981918"
+								class="u-text-outlink">Weitere Informationen
 								<svg icon="icon_external_link"></svg>
 							</a>
 						</div>
-		
+
 						<div class="formsection-x-body">
 							<div *ngIf="!defaultExpiration || expirationDateEditable" class="formfield">
-								<bg-formfield-text
-									label="Ablaufdatum"
-									id="date"
-									fieldType="date"
-									[control]="issueForm.rawControlMap.expires"
-									ariaLabel="Ablaufdatum"
-									[errorMessage]="'Bitte gebe ein Datum in der Form YYYY/mm/dd an'"
-								></bg-formfield-text>
+								<bg-formfield-text label="Ablaufdatum" id="date" fieldType="date"
+									[control]="issueForm.rawControlMap.expires" ariaLabel="Ablaufdatum"
+									[errorMessage]="'Bitte gebe ein Datum in der Form YYYY/mm/dd an'"></bg-formfield-text>
 								<div class="u-text-error u-text-small" *ngIf="dateError">
 									Bitte gebe ein Datum in der Form YYYY-mm-dd an.
 								</div>
@@ -206,89 +186,64 @@
 								<label class="forminput-x-label" for="date"> Ablaufdatum </label>
 								<h1 class="u-text-h3-bold">
 									<strong>{{ defaultExpiration | date }}</strong>
-									<button
-										class="u-text-link-small u-display-inline u-margin-left1x"
-										type="button"
-										tabindex="0"
-										(click)="expirationDateEditable = true"
-									>
+									<button class="u-text-link-small u-display-inline u-margin-left1x" type="button"
+										tabindex="0" (click)="expirationDateEditable = true">
 										Bearbeiten
 									</button>
 								</h1>
 							</div>
 						</div>
 					</div>
-		
+
 					<!-- Add Optional Details -->
-					<div class="formsection formsection-nohelp !tw-shadow-none" role="group" aria-labelledby="heading-addoptionaldetails">
+					<div class="formsection formsection-nohelp !tw-shadow-none" role="group"
+						aria-labelledby="heading-addoptionaldetails">
 						<h3 class="formsection-x-title u-text-dark2" id="heading-addoptionaldetails">
 							Optionale Details hinzufügen
 						</h3>
-		
+
 						<div class="formsection-x-body">
 							<ul>
 								<li class="l-flex l-flex-justifybetween l-flex-aligncenter u-padding-bottom2x">
 									<div class="l-flex l-flex-2x">
 										<svg class="icon icon-dark4" icon="icon_narrative"></svg>
-										<p
-											class="u-text-body-semibold"
-											[ngClass]="{ 'u-text-dark2': !narrativeEnabled, 'u-text-dark4': narrativeEnabled }"
-										>
+										<p class="u-text-body-semibold"
+											[ngClass]="{ 'u-text-dark2': !narrativeEnabled, 'u-text-dark4': narrativeEnabled }">
 											Narrativ
 										</p>
 									</div>
-									<button
-										class="u-text-link-small"
-										[class.u-text-light4]="narrativeEnabled"
-										[disabled]="narrativeEnabled"
-										(click)="narrativeEnabled = true"
-										type="button"
-									>
+									<button class="u-text-link-small" [class.u-text-light4]="narrativeEnabled"
+										[disabled]="narrativeEnabled" (click)="narrativeEnabled = true" type="button">
 										{{ narrativeEnabled ? 'Hinzugefügt' : 'Hinzufügen' }}
 									</button>
 								</li>
-		
+
 								<li class="l-flex l-flex-justifybetween l-flex-aligncenter u-padding-bottom2x">
 									<div class="l-flex l-flex-2x">
 										<svg class="icon icon-dark4" icon="icon_search"></svg>
-										<p
-											class="u-text-body-semibold"
-											[ngClass]="{ 'u-text-dark2': !evidenceEnabled, 'u-text-dark4': evidenceEnabled }"
-										>
+										<p class="u-text-body-semibold"
+											[ngClass]="{ 'u-text-dark2': !evidenceEnabled, 'u-text-dark4': evidenceEnabled }">
 											Nachweis
 										</p>
 									</div>
-									<button
-										class="u-text-link-small"
-										[class.u-text-light4]="evidenceEnabled"
-										[disabled]="evidenceEnabled"
-										(click)="enableEvidence()"
-										type="button"
-									>
+									<button class="u-text-link-small" [class.u-text-light4]="evidenceEnabled"
+										[disabled]="evidenceEnabled" (click)="enableEvidence()" type="button">
 										{{ evidenceEnabled ? 'Hinzugefügt' : 'Hinzufügen' }}
 									</button>
 								</li>
-		
+
 								<li class="l-flex l-flex-justifybetween l-flex-aligncenter u-padding-bottom2x">
 									<div class="l-flex l-flex-2x">
 										<svg class="icon icon-dark4" icon="icon_pending"></svg>
-										<p
-											class="u-text-body-semibold"
-											[ngClass]="{
+										<p class="u-text-body-semibold" [ngClass]="{
 												'u-text-dark2': !expirationEnabled,
 												'u-text-dark4': expirationEnabled
-											}"
-										>
+											}">
 											Ablaufdatum
 										</p>
 									</div>
-									<button
-										class="u-text-link-small"
-										[class.u-text-light4]="expirationEnabled"
-										[disabled]="expirationEnabled"
-										(click)="toggleExpiration()"
-										type="button"
-									>
+									<button class="u-text-link-small" [class.u-text-light4]="expirationEnabled"
+										[disabled]="expirationEnabled" (click)="toggleExpiration()" type="button">
 										{{ expirationEnabled ? 'Hinzugefügt' : 'Hinzufügen' }}
 									</button>
 								</li>
@@ -297,28 +252,18 @@
 					</div>
 				</div>
 				<div class="tw-flex tw-justify-end">
-					<oeb-button
-						class="tw-mr-4"
-						variant="secondary"
-						[routerLink]="['/issuer/issuers', issuer.slug, 'badges', badgeClass.slug]"
-						type="submit"
-						[disabled-when-requesting]="true"
-						text="Abbrechen"
-					>
-						
+					<oeb-button class="tw-mr-4" variant="secondary"
+						[routerLink]="['/issuer/issuers', issuer.slug, 'badges', badgeClass.slug]" type="submit"
+						[disabled-when-requesting]="true" [text]="'General.cancel' | translate">
+
 					</oeb-button>
-					<oeb-button
-						type="submit"
-						[disabled]="!!issueBadgeFinished"
-						[loading-promises]="[issueBadgeFinished]"
-						loading-message="Vergebe Badge"
-						text="Badge vergeben"
-					>
-						
+					<oeb-button type="submit" [disabled]="!!issueBadgeFinished"
+						[loading-promises]="[issueBadgeFinished]" loading-message="Vergebe Badge" [text]="'Issuer.giveBadge' | translate">
+
 					</oeb-button>
 				</div>
 			</form>
 		</div>
 	</div>
-	
+
 </ng-container>

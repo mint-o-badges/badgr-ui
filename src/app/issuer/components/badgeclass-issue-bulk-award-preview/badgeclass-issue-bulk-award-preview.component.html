@@ -1,6 +1,6 @@
 <section class="oeb-section">
 	<div class="oeb-headline-container-sm">
-		<h1 hlmH1 class="tw-text-purple">CSV Spalten</h1>
+		<h1 hlmH1 class="tw-text-purple">{{'Issuer.csvColumns' | translate}}</h1>
 	</div>
 	<div class="select-csvUpload oeb-standard-padding-bottom">
 		<div class="oeb-standard-padding-bottom">
@@ -53,17 +53,16 @@
 	<!-- BUTTONS -->
 	<div class="tw-flex">
 		<oeb-button class="tw-mr-4" variant="secondary" (click)="updateViewState('import')"
-			text="Abbrechen"></oeb-button>
+			[text]="'General.cancel' | translate"></oeb-button>
 
 		<oeb-button [class.button-is-disabled]="buttonDisabledClass" [disabled]="buttonDisabledAttribute"
-			(click)="generateImportPreview()" text="Weiter">
+			(click)="generateImportPreview()" [text]="'General.forward' | translate">
 		</oeb-button>
 	</div>
 </section>
 
 <div *ngIf="rowIsLongerThanHeader">
 	<p hlmP>
-		Die CSV Datei enthält Zeilen länger als ihre Überschrift. Bitte behebe diesen Fehler und versuche es erneut.
-		<!-- <button type="button" (click)="rowIsLongerThanHeader = false">Dismiss</button> -->
+		{{'Issuer.csvError' | translate}}
 	</p>
 </div>

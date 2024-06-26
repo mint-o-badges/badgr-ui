@@ -33,10 +33,10 @@
 
 	<div class="l-flex l-flex-1x u-margin-top2x">
 		<oeb-button class="tw-mr-4" variant="secondary" (click)="updateViewState('cancel')"
-			text="Abbrechen"></oeb-button>
+			[text]="'General.cancel' | translate"></oeb-button>
 
 		<oeb-button [class.button-is-disabled]="rawCsv === null" [disabled]="rawCsv ? null : true"
-			(click)="importAction()" text="'Issuer.import' | translate">
+			(click)="importAction()" [text]="'Issuer.import' | translate">
 		</oeb-button>
 	</div>
 </div>

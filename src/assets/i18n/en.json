@@ -10,6 +10,7 @@
 		"collection": "Collection",
 		"collections": "Collections",
 		"cancel": "Cancel",
+		"forward": "Ok",
 		"or": "or",
 		"and": "and",
 		"can": "can",
@@ -196,6 +197,9 @@
 		"batchAwardText1" : "Vergebe den Badge an eine lernende Person oder",
 		"batchAwardTextLink": "klicke hier, um den Badge an mehrere Lernende gleichzeitig",
 		"batchAwardText2": "zu vergeben",
+		"awardedPerson": "Name der Empfänger:in",
+		"sendEmail": "Empfänger:in mit E-Mail benachrichtigen",
+		"giveBadge": "Badge vergeben",
 		"nameWarning": "Beachte: Der Name wird als Klartext im Badge gespeichert.",
 		"multipleBadgeAwardHeadline": "Badge an mehrere Lernende gleichzeitig vergeben",
 		"uploadListText": "Du kannst eine Liste von Empfänger:innen importieren, die den Badge gleichzeitig erhalten sollen. Die Datei muss folgendermaßen aussehen:",
@@ -205,7 +209,9 @@
 		"exampleLink" : "Beispiel Vorlage",
 		"createCSVorTXT" : "um eine CSV oder TXT Datei zu erstellen",
 		"importList": "Liste importieren",
-		"import": "import"
+		"import": "Import",
+		"csvColumns": "CSV Spalten",
+		"csvError": "Die CSV Datei enthält Zeilen länger als ihre Überschrift. Bitte behebe diesen Fehler und versuche es erneut."
 	},
 	"Badge": {
 		"groupBy": "Group by",
