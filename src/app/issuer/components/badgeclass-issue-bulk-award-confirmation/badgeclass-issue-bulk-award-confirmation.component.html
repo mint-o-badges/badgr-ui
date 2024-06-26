@@ -33,17 +33,19 @@
 						{{ row.evidence }}
 					</td>
 					<td class="datatable-x-cell">
-						<oeb-button variant="secondary" size="xs" text="Entfernen" (click)="removeValidRowsTransformed(row)"></oeb-button>
+						<oeb-button variant="secondary" size="xs" text="Entfernen"
+							(click)="removeValidRowsTransformed(row)"></oeb-button>
 					</td>
 				</tr>
 			</tbody>
-	
+
 			<tbody></tbody>
 		</table>
 	</div>
 	<div class="oeb-standard-padding-bottom">
 		<h3 hlmH3 class="tw-text-purple">Benachrichtigung</h3>
-		<oeb-checkbox name="notify_earner" id="notify_earner" type="checkbox" (checkedChange)="notifyChange($event)" [checked]="notifyEarner" [text]="'Benachrichtige die Empfänger*in mit einer E-Mail'"></oeb-checkbox>
+		<oeb-checkbox name="notify_earner" id="notify_earner" type="checkbox" (checkedChange)="notifyChange($event)"
+			[checked]="notifyEarner" [text]="'Benachrichtige die Empfänger*in mit einer E-Mail'"></oeb-checkbox>
 		<!-- <label class="checkbox checkbox-center" for="notify_earner">
 			<input checked name="notify_earner" id="notify_earner" type="checkbox" [(ngModel)]="notifyEarner"/>
 			<span class="checkbox-x-label u-margin-left1x"> Benachrichtige die Empfänger*in mit einer E-Mail</span>
@@ -52,14 +54,11 @@
 
 	<!-- BUTTONS -->
 	<div class="tw-flex">
-		<oeb-button hlmBtn class="tw-mr-4" variant="secondary" (click)="updateViewState('import')" text="Abbrechen"></oeb-button>
+		<oeb-button hlmBtn class="tw-mr-4" variant="secondary" (click)="updateViewState('import')"
+			text="Abbrechen"></oeb-button>
 
-		<oeb-button
-			[class.button-is-disabled]="buttonDisabledClass"
-			[disabled]="buttonDisabledAttribute"
-			(click)="dataConfirmed()"
-			text="Badge vergeben"
-		>
+		<oeb-button [class.button-is-disabled]="buttonDisabledClass" [disabled]="buttonDisabledAttribute"
+			(click)="dataConfirmed()" text="Badge vergeben">
 		</oeb-button>
 	</div>
 </section>
