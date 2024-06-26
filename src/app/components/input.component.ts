@@ -162,14 +162,14 @@ export type CustomValidatorMessages = string | { [validatorKey: string]: string 
 export const defaultValidatorMessages: {
 	[validatorKey: string]: (label: string, result?: unknown) => string;
 } = {
-	required: (label: string) => `${label} is required`,
+	required: (label: string) => `Bitte ${label} eingeben`,
 	validUrl: () => `Bitte gültige URL eingeben.`,
-	invalidTelephone: () => `Please enter a valid phone number`,
+	invalidTelephone: () => `Bitte gültige Telefonnummer eingeben`,
 	invalidEmail: () => `Bitte gültige E-Mail Adresse eingeben`,
 	maxlength: (label: string, { actualLength, requiredLength }: { actualLength: number; requiredLength: number }) =>
 		actualLength && requiredLength
-			? `${label} exceeds maximum length of ${requiredLength} by ${actualLength - requiredLength} characters`
-			: `${label} exceeds maximum length.`,
+			? `${label} überschreitet maximale Länge von ${requiredLength} um ${actualLength - requiredLength} Zeichen`
+			: `${label} überschreitet maximale Länge.`,
 };
 
 
