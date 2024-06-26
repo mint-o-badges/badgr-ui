@@ -1,26 +1,24 @@
 <div class="oeb-section">
 	<div class="oeb-headline-container-sm">
-		<h1 hlmH1 class="tw-text-purple">Badge an mehrere Lernende gleichzeitig vergeben</h1>
+		<h1 hlmH1 class="tw-text-purple">{{'Issuer.multipleBadgeAwardHeadline' | translate}}</h1>
 	</div>
 	<div class="oeb-standard-padding-bottom">
-		<p hlmP>
-			Du kannst eine Liste von Empfänger:innen importieren, die den Badge gleichzeitig erhalten sollen. Die Datei
-			muss folgendermaßen aussehen:</p>
+		<p hlmP>{{'Issuer.uploadListText' | translate}}</p>
 		<ol class="tw-list-disc tw-pl-8 tw-py-4">
-			<li hlmP>E-Mail-Adresse, Name (optional) und Evidence (optional) beinhalten</li>
-			<li hlmP>CSV- oder TXT-Format.</li>
+			<li hlmP>{{'Issuer.uploadFields' | translate}}</li>
+			<li hlmP>{{'Issuer.uploadFormat' | translate}}</li>
 		</ol>
 		<p hlmP>
-			Benutze diese
-			<a hlmA href="./assets/badgrBulkIssueTemplate.csv" download="badgrBulkIssueTemplate.csv"> Beispiel Vorlage
+			{{'Issuer.useThis' | translate}}
+			<a hlmA href="./assets/badgrBulkIssueTemplate.csv" download="badgrBulkIssueTemplate.csv">{{'Issuer.exampleLink' | translate}}
 			</a>
-			um eine CSV oder TXT Datei zu erstellen
+			{{'Issuer.createCSVorTXT' | translate }}
 		</p>
 	</div>
 	<div class="oeb-standard-padding-bottom">
 		<div class="tw-py-6 tw-px-10 tw-bg-lightpurple tw-rounded-[20px]">
 			<div class="oeb-headline-container-sm">
-				<h3 hlmH3 class="tw-font-bold tw-text-purple">Liste importieren</h3>
+				<h3 hlmH3 class="tw-font-bold tw-text-purple">{{'Issuer.importList' | translate }}</h3>
 			</div>
 			<form [formGroup]="csvForm" class>
 				<fieldset>
@@ -38,7 +36,7 @@
 			text="Abbrechen"></oeb-button>
 
 		<oeb-button [class.button-is-disabled]="rawCsv === null" [disabled]="rawCsv ? null : true"
-			(click)="importAction()" text="Importieren">
+			(click)="importAction()" text="'Issuer.import' | translate">
 		</oeb-button>
 	</div>
 </div>

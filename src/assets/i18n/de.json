@@ -197,7 +197,16 @@
 		"batchAwardText1" : "Vergebe den Badge an eine lernende Person oder",
 		"batchAwardTextLink": "klicke hier, um den Badge an mehrere Lernende gleichzeitig",
 		"batchAwardText2": "zu vergeben",
-		"nameWarning": "Beachte: Der Name wird als Klartext im Badge gespeichert."
+		"nameWarning": "Beachte: Der Name wird als Klartext im Badge gespeichert.",
+		"multipleBadgeAwardHeadline": "Badge an mehrere Lernende gleichzeitig vergeben",
+		"uploadListText": "Du kannst eine Liste von Empfänger:innen importieren, die den Badge gleichzeitig erhalten sollen. Die Datei muss folgendermaßen aussehen:",
+		"uploadFields": "E-Mail-Adresse, Name (optional) und Evidence (optional) beinhalten",
+		"uploadFormat": "CSV- oder TXT-Format",
+		"useThis" : "Benutze diese",
+		"exampleLink" : "Beispiel Vorlage",
+		"createCSVorTXT" : "um eine CSV oder TXT Datei zu erstellen",
+		"importList": "Liste importieren",
+		"import": "import"
 	},
 	"Badge": {
 		"groupBy": "Gruppieren nach",
