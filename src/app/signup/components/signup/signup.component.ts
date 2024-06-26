@@ -123,7 +123,7 @@ export class SignupComponent extends BaseRoutableComponent implements OnInit, Af
 								'Your password must be uncommon and at least 8 characters. Please try again.',
 								'error',
 							);
-						} else if (typeof error === 'object') {
+						} else if (typeof error === 'object' && error.error) {
 							this.messageService.setMessage('' + error.error, 'error');
 						} else {
 							this.messageService.setMessage('' + error, 'error');
