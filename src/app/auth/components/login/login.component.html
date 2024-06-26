@@ -56,7 +56,12 @@
 					</form>
 					<!-- Mein Bildungsraum -->
 					<div class="tw-flex tw-justify-end tw-mt-6 md:tw-mt-14">
-						<oeb-button img="assets/logos/mein-bildungsraum.svg" variant="blackborder" size="md" [text]='"Login.loginBildungsraum" | translate'>
+						<oeb-button img="assets/logos/mein-bildungsraum.svg"
+                            variant="blackborder"
+                            size="md"
+                            [text]='"Login.loginBildungsraum" | translate'
+                            (click)=bildungsraumLogin()
+                            [disabled]='isOidcDisabled()'>
 							
 						</oeb-button>
 					</div>
