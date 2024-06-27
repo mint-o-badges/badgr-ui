@@ -298,6 +298,11 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 			this.eventService.externalToolLaunch.next(launchInfo);
 		});
 	}
+
+	getFormattedStudyLoad(studyLoad: number): string {
+		return studyLoad > 120 ? Math.floor(studyLoad / 60) + ' Std.' : studyLoad.toString() + ' Min.';
+	}
+  
 }
 
 class MatchingAlgorithm {

@@ -220,6 +220,10 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 
 		this.dialogService.exportPdfDialog.openDialog(this.badge, markdown).catch((error) => console.log(error));
 	}
+
+	getFormattedStudyLoad(studyLoad: number): string {
+		return studyLoad > 120 ? Math.floor(studyLoad / 60) + ' Std.' : studyLoad.toString() + ' Min.';
+	}
 }
 
 export function badgeShareDialogOptionsFor(badge: RecipientBadgeInstance): ShareSocialDialogOptions {
