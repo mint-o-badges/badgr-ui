@@ -32,8 +32,8 @@ import { DomSanitizer } from '@angular/platform-browser';
 		/>
 		<label [attr.for]="name" (click)="clearFileInput()" class="l-flex l-flex-column l-flex-aligncenter">
 			<svg class="dropzone-x-icon" icon="icon_upload"></svg>
-			<div class="dropzone-x-text" *ngIf="!fileErrorMessage">
-				<div *ngIf="!fileProvided && !fileLoading" class="u-text-link">Drop file or browse.</div>
+			<div class="dropzone-x-text tw-text-center" *ngIf="!fileErrorMessage">
+				<div *ngIf="!fileProvided && !fileLoading" hlmP><span class="tw-font-bold">Drag and Drop</span> oder <br><a hlmA class="tw-font-bold">aus meinen Dateien auswählen</a></div>
 				<div *ngIf="fileLoading" class="dropzone-x-info1">Loading File...</div>
 				<div *ngIf="fileName" class="dropzone-x-info1">{{ fileName }}</div>
 				<div *ngIf="fileName" class="u-text-link">Change</div>

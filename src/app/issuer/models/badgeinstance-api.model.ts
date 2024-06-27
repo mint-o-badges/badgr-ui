@@ -23,6 +23,7 @@ export interface ApiBadgeInstanceForBatchCreation {
 	create_notification?: boolean;
 	assertions: BadgeInstanceBatchAssertion[];
 	evidence_items?: ApiBadgeInstanceEvidenceItem[];
+	extensions?: object;
 }
 
 export interface ApiBadgeInstanceForCreation {
@@ -35,6 +36,7 @@ export interface ApiBadgeInstanceForCreation {
 	evidence_items?: ApiBadgeInstanceEvidenceItem[];
 	extensions?: object;
 	expires?: string;
+	name?: string;
 }
 
 export type RecipientIdentifierType = 'email' | 'openBadgeId' | 'telephone' | 'url';
@@ -70,4 +72,5 @@ export interface ApiBadgeInstance {
 export interface BadgeInstanceBatchAssertion {
 	recipient_identifier: string;
 	evidence_items?: ApiBadgeInstanceEvidenceItem[];
+	extensions?: object;
 }

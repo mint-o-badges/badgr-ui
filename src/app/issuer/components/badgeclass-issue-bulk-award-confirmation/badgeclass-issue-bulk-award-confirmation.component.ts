@@ -10,6 +10,7 @@ import { TransformedImportData, ViewState } from '../badgeclass-issue-bulk-award
 import { BadgeInstanceManager } from '../../services/badgeinstance-manager.service';
 import { BadgeInstanceBatchAssertion } from '../../models/badgeinstance-api.model';
 import { BadgrApiFailure } from '../../../common/services/api-failure';
+import striptags from 'striptags';
 
 @Component({
 	selector: 'badgeclass-issue-bulk-award-confirmation',
@@ -55,17 +56,30 @@ export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRouta
 		this.disableActionButton();
 
 		const assertions: BadgeInstanceBatchAssertion[] = [];
-
+		const recipientProfileContextUrl = 'https://openbadgespec.org/extensions/recipientProfile/context.json';
 		this.transformedImportData.validRowsTransformed.forEach((row) => {
 			let assertion: BadgeInstanceBatchAssertion;
+
+			const extensions = row.name
+				? {
+						'extensions:recipientProfile': {
+							'@context': recipientProfileContextUrl,
+							type: ['Extension', 'extensions:RecipientProfile'],
+							name: striptags(row.name),
+						},
+					}
+				: undefined;
+
 			if (row.evidence) {
 				assertion = {
 					recipient_identifier: row.email,
 					evidence_items: [{ evidence_url: row.evidence }],
+					extensions: extensions,
 				};
 			} else {
 				assertion = {
 					recipient_identifier: row.email,
+					extensions: extensions,
 				};
 			}
 			assertions.push(assertion);
@@ -100,5 +114,9 @@ export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRouta
 		if (!this.transformedImportData.validRowsTransformed.size) {
 			this.disableActionButton();
 		}
+	}
+
+	notifyChange(value) {
+		this.notifyEarner = value;
 	}
 }

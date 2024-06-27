@@ -129,6 +129,7 @@ export class BadgeClassIssueBulkAwardPreviewComponent extends BaseAuthenticatedR
 			this.invalidRowsTransformed.push({
 				evidence: this.getEvidenceFromRow(row),
 				email: this.getEmailFromRow(row),
+				name: this.getNameFromRow(row)
 			});
 		});
 	}
@@ -138,6 +139,8 @@ export class BadgeClassIssueBulkAwardPreviewComponent extends BaseAuthenticatedR
 			this.validRowsTransformed.add({
 				evidence: this.getEvidenceFromRow(row),
 				email: this.getEmailFromRow(row),
+				name: this.getNameFromRow(row)
+
 			});
 		});
 	}
@@ -177,6 +180,10 @@ export class BadgeClassIssueBulkAwardPreviewComponent extends BaseAuthenticatedR
 
 	getEmailFromRow(row) {
 		return this.getCellFromRowByDestName('email', row);
+	}
+
+	getNameFromRow(row) {
+		return this.getCellFromRowByDestName('name', row);
 	}
 
 	getCellFromRowByDestName(destName: string, row: Object) {

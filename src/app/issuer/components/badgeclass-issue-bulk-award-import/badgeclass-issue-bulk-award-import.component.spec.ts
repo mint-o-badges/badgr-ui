@@ -17,6 +17,7 @@ import { Title } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { COMMON_IMPORTS } from '../../../common/badgr-common.module';
 import { COMMON_MOCKS_PROVIDERS_WITH_SUBS } from '../../../mocks/mocks.module.spec';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('BadgeClassIssueBulkAwardImportComponent', () => {
 	let fixture;
@@ -25,7 +26,7 @@ describe('BadgeClassIssueBulkAwardImportComponent', () => {
 	beforeEach(() => {
 		TestBed.configureTestingModule({
 			declarations: [BadgeClassIssueBulkAwardImportComponent],
-			imports: [RouterTestingModule, CommonModule, ...COMMON_IMPORTS],
+			imports: [RouterTestingModule, CommonModule, ...COMMON_IMPORTS, TranslateModule.forRoot()],
 			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		}).compileComponents();

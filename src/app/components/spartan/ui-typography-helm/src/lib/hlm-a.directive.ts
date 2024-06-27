@@ -2,7 +2,7 @@ import { Directive, computed, input } from '@angular/core';
 import { hlm } from '@spartan-ng/ui-core';
 import type { ClassValue } from 'clsx';
 
-export const hlmA = 'tw-underline tw-text-link hover:tw-text-buttonhover tw-cursor-pointer';
+export const hlmA = 'tw-underline !tw-text-link hover:!tw-text-buttonhover tw-cursor-pointer';
 
 @Directive({
 	selector: '[hlmA]',
