@@ -20,7 +20,7 @@
 					</h1>
 
 					<p
-						class="tw-font-normal tw-text-[14px] tw-leading-[19.6px] md:tw-text-[20px] md:tw-leading-[28px]  tw-text-oebblack tw-mt-3 tw-mb-5 md:tw-mt-4 md:tw-mb-6"
+						class="tw-font-normal tw-text-[14px] tw-leading-[19.6px] md:tw-text-[20px] md:tw-leading-[28px] tw-text-oebblack tw-mt-3 tw-mb-5 md:tw-mt-4 md:tw-mb-6"
 						*ngIf="!oAuthManager.currentAuthorization"
 					>
 						{{ 'Signup.youHaveAccount' | translate }}
@@ -72,7 +72,7 @@
 					class="tw-absolute tw-top-[46px] tw-right-[-43px] md:tw-top-[65px] md:tw-right-[30px] tw-opacity-70 tw-z-0"
 				>
 					<img
-						class="tw-h-[286px]  md:tw-h-[472px]"
+						class="tw-h-[286px] md:tw-h-[472px]"
 						src="assets/oeb/images/signuppage/circles.png"
 						alt="circles-logo"
 					/>
@@ -140,36 +140,12 @@
 						></bg-formfield-text>
 					</fieldset>
 
+					<p hlmP class="tw-font-normal tw-mt-3">
+						Informationen zur Verarbeitung Deiner personenbezogenen Daten findest in unserer
+						<a class="tw-underline tw-text-[#1400FF]" href="public/privacy"> Dateschutzerklärung </a>
+					</p>
+
 					<div>
-						<label
-							class="checkbox checkbox-small l-flex u-margin-top2p5x tw-pl-[6px]"
-							[class.checkbox-is-error]="
-								signupForm.rawControlMap.agreedTermsService.dirty &&
-								!signupForm.rawControlMap.agreedTermsService.valid
-							"
-						>
-							<input
-								class="!tw-mt-[8px] tw-scale-[1.5] !tw-border-purple !tw-border-[0.6px]"
-								name="terms"
-								id="terms"
-								type="checkbox"
-								[formControl]="signupForm.rawControlMap.agreedTermsService"
-							/>
-							<span
-								class="tw-font-semibold md:tw-text-[20px] tw-text-[14px] md:tw-leading-[24px] tw-leading-[16.8px] tw-text-oebblack tw-pl-[14px]"
-							>
-								<span [innerHTML]="'Signup.agreeToTerms1' | translate"> </span>
-								<div
-									*ngIf="
-										signupForm.rawControlMap.agreedTermsService.dirty &&
-										!signupForm.rawControlMap.agreedTermsService.valid
-									"
-									class="checkbox-x-errortext"
-								>
-									{{ 'Signup.readTerms' | translate }}
-								</div>
-							</span>
-						</label>
 						<label
 							class="checkbox checkbox-light l-flex u-margin-top2p5x tw-pl-[6px]"
 							for="news"
@@ -189,11 +165,11 @@
 							</span>
 						</label>
 						<div class="u-margin-top3x">
-					<form>
-						<altcha-widget auto="onfocus" id="altcha"></altcha-widget>
-					</form>
-				</div>
-				<div class="l-stack l-stack-2x l-stack-buttons u-margin-top3x tw-flex-row tw-justify-end">
+							<form>
+								<altcha-widget auto="onfocus" id="altcha"></altcha-widget>
+							</form>
+						</div>
+						<div class="l-stack l-stack-2x l-stack-buttons u-margin-top3x tw-flex-row tw-justify-end">
 							<button
 								class="button button-secondary"
 								type="button"
@@ -204,7 +180,7 @@
 							</button>
 
 							<button
-								class="button tw-inline-flex  tw-h-[44.8px] tw-py-[10.5px] tw-px-[42px] tw-text-[14px] tw-rounded-[7px] tw-font-bold tw-leading-[21px] md:tw-h-[64px] md:tw-py-[15px] md:tw-px-[60px] md:tw-text-[20px] md:tw-leading-[30px] md:tw-rounded-[10px]  "
+								class="button tw-inline-flex tw-h-[44.8px] tw-py-[10.5px] tw-px-[42px] tw-text-[14px] tw-rounded-[7px] tw-font-bold tw-leading-[21px] md:tw-h-[64px] md:tw-py-[15px] md:tw-px-[60px] md:tw-text-[20px] md:tw-leading-[30px] md:tw-rounded-[10px]"
 								type="submit"
 								[disabled]="!!signupFinished"
 								[loading-promises]="[signupFinished]"
