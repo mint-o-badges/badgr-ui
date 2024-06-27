@@ -193,7 +193,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				// but since it doesn't make sense to remove the
 				// default of 60 from unselected suggestions,
 				// this doesn't really matter
-				.addControl('studyLoad', 60, [Validators.required, this.positiveInteger, Validators.max(1000)]),
+				.addControl('studyLoad', 60, [Validators.required, this.positiveInteger]),
 		)
 		.addArray(
 			'competencies',
@@ -202,7 +202,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				.addControl('name', '', Validators.required)
 				.addControl('description', '', Validators.required)
 				.addControl('escoID', '')
-				.addControl('studyLoad', 60, [Validators.required, this.positiveInteger, Validators.max(1000)])
+				.addControl('studyLoad', 60, [Validators.required, this.positiveInteger])
 				.addControl('category', '', Validators.required),
 		)
 		.addArray(
