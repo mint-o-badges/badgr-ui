@@ -140,10 +140,11 @@
 						></bg-formfield-text>
 					</fieldset>
 
-					<p hlmP class="tw-font-normal tw-mt-3">
-						Informationen zur Verarbeitung Deiner personenbezogenen Daten findest in unserer
-						<a class="tw-underline tw-text-[#1400FF]" href="public/privacy"> Dateschutzerklärung </a>
-					</p>
+					<p
+						hlmP
+						class="tw-font-normal tw-mt-3"
+						[innerHTML]="'Signup.infoPersonalDataProcessing' | translate"
+					></p>
 
 					<div>
 						<label
