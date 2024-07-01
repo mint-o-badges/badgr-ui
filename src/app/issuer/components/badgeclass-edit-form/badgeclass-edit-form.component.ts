@@ -202,6 +202,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				.addControl('name', '', Validators.required)
 				.addControl('description', '', Validators.required)
 				.addControl('escoID', '')
+				// limit of 1000000 is set so that users cant break the UI by entering a very long number
 				.addControl('studyLoad', 60, [Validators.required, this.positiveInteger, Validators.max(1000000)])
 				.addControl('category', '', Validators.required),
 		)
