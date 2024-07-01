@@ -132,10 +132,6 @@ export class PublicBadgeAssertionComponent {
 		return `${assertion.badge.name} - ${assertion.recipient.identity}${fileExtension}`;
 	}
 
-	getFormattedStudyLoad(studyLoad: number): string {
-		return studyLoad > 120 ? Math.floor(studyLoad / 60) + ' Std.' : studyLoad.toString() + ' Min.';
-	}
-
 	openSaveDialog(assertion): void {
 		const xhr = new XMLHttpRequest();
 		xhr.open('GET', assertion.image, true);

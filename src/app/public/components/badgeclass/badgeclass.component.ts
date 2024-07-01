@@ -50,8 +50,4 @@ export class PublicBadgeClassComponent {
 	private get rawJsonUrl() {
 		return stripQueryParamsFromUrl(this.badgeClass.id) + '.json';
 	}
-
-	getFormattedStudyLoad(studyLoad: number): string {
-		return studyLoad > 120 ? Math.floor(studyLoad / 60) + ' Std.' : studyLoad.toString() + ' Min.';
-	}
 }
