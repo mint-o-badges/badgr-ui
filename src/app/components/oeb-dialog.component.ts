@@ -32,6 +32,7 @@ import { NgIf } from '@angular/common';
 	NgIf
   ],
   template: `
+  	<div class="tw-px-4 tw-py-6">
 	<hlm-dialog-header *ngIf="title">
 		<h3 hlmH3> {{title}} </h3>
 		<p hlmP hlmDialogDescription>{{ subtitle }}</p>
@@ -40,6 +41,7 @@ import { NgIf } from '@angular/common';
 	<hlm-dialog-footer *ngIf="footer">
 		<button hlmBtn type="submit">Save changes</button>
 	</hlm-dialog-footer>
+	</div>
   `,
 })
 export class OebDialogComponent {
