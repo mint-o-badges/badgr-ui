@@ -11,7 +11,6 @@ import {
 } from './spartan/ui-dialog-helm/src';
 import { HlmInputDirective } from './spartan/ui-input-helm/src';
 import { NgIf } from '@angular/common';
-// import { HlmLabelDirective } from '@spartan-ng/ui-label-helm';
 
 @Component({
   selector: 'oeb-dialog',
@@ -33,14 +32,14 @@ import { NgIf } from '@angular/common';
   ],
   template: `
   	<div class="tw-px-4 tw-py-6">
-	<hlm-dialog-header *ngIf="title">
-		<h3 hlmH3> {{title}} </h3>
-		<p hlmP hlmDialogDescription>{{ subtitle }}</p>
-	</hlm-dialog-header>
-	<ng-content></ng-content>
-	<hlm-dialog-footer *ngIf="footer">
-		<button hlmBtn type="submit">Save changes</button>
-	</hlm-dialog-footer>
+		<hlm-dialog-header *ngIf="title">
+			<h3 hlmH3> {{title}} </h3>
+			<p hlmP hlmDialogDescription>{{ subtitle }}</p>
+		</hlm-dialog-header>
+		<ng-content></ng-content>
+		<hlm-dialog-footer *ngIf="footer">
+			<button hlmBtn type="submit">Save changes</button>
+		</hlm-dialog-footer>
 	</div>
   `,
 })

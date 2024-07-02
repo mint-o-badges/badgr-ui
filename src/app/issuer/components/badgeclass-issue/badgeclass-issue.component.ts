@@ -181,7 +181,6 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 
 	ngOnInit() {
 		super.ngOnInit();
-		this.openSuccessDialog("test")
 	}
 
 	enableEvidence() {
