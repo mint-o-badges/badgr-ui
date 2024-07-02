@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SessionService } from '../../../common/services/session.service';
@@ -11,6 +11,8 @@ import { BadgeInstanceManager } from '../../services/badgeinstance-manager.servi
 import { BadgeInstanceBatchAssertion } from '../../models/badgeinstance-api.model';
 import { BadgrApiFailure } from '../../../common/services/api-failure';
 import striptags from 'striptags';
+import { SuccessDialogComponent } from '../../../common/dialogs/oeb-dialogs/success-dialog.component';
+import { HlmDialogService } from './../../../components/spartan/ui-dialog-helm/src';
 
 @Component({
 	selector: 'badgeclass-issue-bulk-award-confirmation',
@@ -94,6 +96,7 @@ export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRouta
 			})
 			.then(
 				(result) => {
+					this.openSuccessDialog(assertions.length + " User")
 					this.router.navigate(['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug]);
 				},
 				(error) => {
@@ -118,5 +121,15 @@ export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRouta
 
 	notifyChange(value) {
 		this.notifyEarner = value;
+	}
+
+	private readonly _hlmDialogService = inject(HlmDialogService);
+	public openSuccessDialog(recipient) {
+		const dialogRef = this._hlmDialogService.open(SuccessDialogComponent, {
+			context: {
+				recipient: recipient,
+				variant: "success"
+			},
+		});
 	}
 }

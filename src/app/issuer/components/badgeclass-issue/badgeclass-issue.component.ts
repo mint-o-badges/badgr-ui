@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
@@ -26,6 +26,8 @@ import striptags from 'striptags';
 import { DateValidator } from '../../../common/validators/date.validator';
 import { AppConfigService } from '../../../common/app-config.service';
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
+import { HlmDialogService } from './../../../components/spartan/ui-dialog-helm/src';
+import { SuccessDialogComponent } from '../../../common/dialogs/oeb-dialogs/success-dialog.component';
 
 @Component({
 	selector: 'badgeclass-issue',
@@ -216,14 +218,16 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 		// 	},
 		// };
 
-		const recipientProfileContextUrl = "https://openbadgespec.org/extensions/recipientProfile/context.json";
-		const extensions = formState.recipientprofile_name ? {
-			"extensions:recipientProfile": {
-				"@context": recipientProfileContextUrl,
-				"type": ["Extension", "extensions:RecipientProfile"],
-				"name": cleanedName
-			}
-		} : undefined;
+		const recipientProfileContextUrl = 'https://openbadgespec.org/extensions/recipientProfile/context.json';
+		const extensions = formState.recipientprofile_name
+			? {
+					'extensions:recipientProfile': {
+						'@context': recipientProfileContextUrl,
+						type: ['Extension', 'extensions:RecipientProfile'],
+						name: cleanedName,
+					},
+				}
+			: undefined;
 
 		// const extensions = studyLoadExtension;
 
@@ -263,6 +267,7 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 			.then(
 				() => {
 					this.eventsService.recipientBadgesStale.next([]);
+					this.openSuccessDialog(formState.recipient_identifier);
 					this.router.navigate(['issuer/issuers', this.issuerSlug, 'badges', this.badgeClass.slug]);
 					this.messageService.setMessage('Badge awarded to ' + formState.recipient_identifier, 'success');
 				},
@@ -290,5 +295,15 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 		) {
 			this.issueForm.controls.evidence_items.removeAt(i);
 		}
+	}
+
+	private readonly _hlmDialogService = inject(HlmDialogService);
+	public openSuccessDialog(recipient) {
+		const dialogRef = this._hlmDialogService.open(SuccessDialogComponent, {
+			context: {
+				recipient: recipient,
+				variant: "success"
+			},
+		});
 	}
 }
