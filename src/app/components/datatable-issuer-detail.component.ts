@@ -15,6 +15,7 @@ import { FormsModule } from '@angular/forms';
 import { HlmIconComponent, provideIcons } from './spartan/ui-icon-helm/src';
 import { lucideSearch } from '@ng-icons/lucide';
 import { HlmCommandInputWrapperComponent } from './spartan/ui-command-helm/src';
+import { OebButtonComponent } from './oeb-button.component';
 
 
 @Component({
@@ -32,7 +33,8 @@ import { HlmCommandInputWrapperComponent } from './spartan/ui-command-helm/src';
     HlmInputDirective,
     HlmLabelDirective,
     HlmIconComponent,
-    HlmCommandInputWrapperComponent
+    HlmCommandInputWrapperComponent,
+    OebButtonComponent
     ],
     providers: [provideIcons({ lucideSearch })],    
 	template: `
@@ -61,14 +63,17 @@ import { HlmCommandInputWrapperComponent } from './spartan/ui-command-helm/src';
             <hlm-caption>{{caption}}</hlm-caption>
             <hlm-trow class="tw-bg-purple tw-text-white tw-flex-wrap hover:tw-bg-purple">
                 <hlm-th class="!tw-text-white tw-w-40">ID</hlm-th>
-                <hlm-th class="!tw-text-white tw-justify-center !tw-flex-1">Vergeben am </hlm-th>
+                <hlm-th class="!tw-text-white tw-justify-center sm:tw-pr-12 !tw-flex-1">Vergeben am </hlm-th>
+                <hlm-th class="!tw-text-white tw-justify-end sm:tw-w-48 tw-w-0 !tw-p-0"></hlm-th>
             </hlm-trow>
             <hlm-trow *ngFor="let recipient of _filteredEmails()" class="tw-border-purple tw-flex-wrap tw-py-2">
                 <hlm-th class="tw-w-40">
                     <span class="!tw-text-oebblack !tw-font-normal">{{recipient.recipientIdentifier}}</span>
                 </hlm-th>
                 <hlm-th class="!tw-flex-1 tw-justify-center !tw-text-oebblack"><p class="u-text"><time [date]="recipient.issuedOn" format="dd.MM.y"></time></p></hlm-th>
-
+                <hlm-th class="tw-justify-center sm:tw-justify-end sm:tw-w-48 tw-w-full !tw-text-oebblack">
+                    <oeb-button variant="secondary" size="xs" class="tw-w-full" (click)="actionElement.emit(recipient)" [text]="actionElementText"></oeb-button>
+                </hlm-th>
             </hlm-trow>
         </hlm-table>
       </div>  
@@ -81,6 +86,7 @@ export class IssuerDetailDatatableComponent {
 
     @Input() caption: string = "";
     @Input() recipientCount: number = 0;
+    @Input() actionElementText: string = "Vergabe widerrufen"
     @Output() actionElement = new EventEmitter();
 
     _recipients = input.required<BadgeInstance[]>();
