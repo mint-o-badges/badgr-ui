@@ -29,6 +29,7 @@ import { FormFieldSelectOption } from '../../../common/components/formfield-sele
 import { AiSkillsService } from '../../../common/services/ai-skills.service';
 import { Skill } from '../../../common/model/ai-skills.model';
 import { TranslateService } from '@ngx-translate/core';
+import { Platform } from '@angular/cdk/platform';	// To detect the current platform by comparing the userAgent strings
 
 @Component({
 	selector: 'badgeclass-edit-form',
@@ -321,6 +322,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		protected componentElem: ElementRef<HTMLElement>,
 		protected aiSkillsService: AiSkillsService,
 		private translate: TranslateService,
+		private platformService: Platform,
 	) {
 		super(router, route, sessionService);
 		title.setTitle(`Create Badge - ${this.configService.theme['serviceName'] || 'Badgr'}`);
@@ -470,6 +472,11 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			this.badgeClassForm.controls.competencies.addFromTemplate();
 		}
 		this.badgeCategory = currentBadgeCategory;
+
+		// fix the issue of missing badge-frame when changing type for first time (only with safari browser)
+		if (this.platformService.SAFARI && this.currentImage) {
+			this.generateUploadImage(this.currentImage, this.badgeClassForm.value);
+		}
 	}
 
 	/**
@@ -955,14 +962,11 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		if (typeof this.currentImage == 'undefined' || this.initedCurrentImage) {
 			this.initedCurrentImage = true;
 			this.currentImage = image.slice();
-				this.badgeStudio
-					.generateUploadImage(image.slice(), formdata)
-					.then((imageUrl) => {
-						this.imageField.useDataUrl(imageUrl, 'BADGE');
-						// Added as a workaround to resolve the issue of not showing badge frame from first time, occureed only with safari
-						this.adjustUploadImage(formdata);
-					}
-				);
+			this.badgeStudio.generateUploadImage(image.slice(), formdata).then((imageUrl) => {
+				this.imageField.useDataUrl(imageUrl, 'BADGE');
+				// Added as a workaround to resolve the issue of not showing badge frame from first time (only with safari browser)
+				this.adjustUploadImage(formdata);
+			});
 		} else {
 			this.initedCurrentImage = true;
 		}
@@ -981,7 +985,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	}
 
 	adjustUploadImage(formdata) {
-		if (this.currentImage && this.badgeStudio ) {
+		if (this.currentImage && this.badgeStudio) {
 			this.badgeStudio
 				.generateUploadImage(this.currentImage.slice(), formdata)
 				.then((imageUrl) => this.imageField.useDataUrl(imageUrl, 'BADGE'));
