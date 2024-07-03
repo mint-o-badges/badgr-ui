@@ -401,12 +401,12 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		// update badge frame when a category is selected, unless no-hexagon-frame checkbox is checked
 		this.badgeClassForm.rawControl.controls['badge_category'].statusChanges.subscribe((res) => {
 			this.handleBadgeCategoryChange();
-			if(that.imageField.control.value){
+			if(that.imageField && that.imageField.control.value){
 				setTimeout(() => {
 					that.adjustUploadImage(this.badgeClassForm.value);
 				}, 10)
 			}
-			else if(that.customImageField.control.value){
+			else if(that.imageField && that.customImageField.control.value){
 				if(!that.existing){
 					setTimeout(() => {
 					that.customImageField.useDataUrl(this.customImageField.control.value, 'BADGE');
