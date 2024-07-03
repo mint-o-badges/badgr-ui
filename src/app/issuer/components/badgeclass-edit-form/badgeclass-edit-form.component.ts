@@ -419,7 +419,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			// the image disappears while editing the badge
 			// TODO: investigate why this is happening
 			if (this.currentImage && this.existing) {
-				if(that.imageField.control.value){
+				if(that.imageField && that.imageField.control.value){
 					setTimeout(function () {
 						that.adjustUploadImage(that.badgeClassForm.value);
 					}, 10);
