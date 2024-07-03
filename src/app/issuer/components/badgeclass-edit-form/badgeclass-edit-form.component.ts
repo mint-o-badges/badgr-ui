@@ -722,7 +722,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				this.badgeClassForm.controls.competencies.rawControls.forEach((control, i) => {
 					// Remove competencies that are invalid and untouched 
 					// (not just untouched because they might be valid and untouched when editing a badge.)
-					if (control.untouched && control.status === 'INVALID') {
+					if (control.untouched && control.status === "INVALID") {
 						this.badgeClassForm.controls.competencies.removeAt(i);
 					}
 				});
