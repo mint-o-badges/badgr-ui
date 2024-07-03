@@ -957,7 +957,12 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			this.currentImage = image.slice();
 				this.badgeStudio
 					.generateUploadImage(image.slice(), formdata)
-					.then((imageUrl) => this.imageField.useDataUrl(imageUrl, 'BADGE'));
+					.then((imageUrl) => {
+						this.imageField.useDataUrl(imageUrl, 'BADGE');
+						// Added as a workaround to resolve the issue of not showing badge frame from first time, occureed only with safari
+						this.adjustUploadImage(formdata);
+					}
+				);
 		} else {
 			this.initedCurrentImage = true;
 		}
