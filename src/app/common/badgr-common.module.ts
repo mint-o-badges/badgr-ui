@@ -94,6 +94,7 @@ import { CompetencyAccordionComponent } from '../components/accordion.component'
 import { OebCheckboxComponent } from '../components/oeb-checkbox.component';
 import { OebDialogComponent } from '../components/oeb-dialog.component';
 import { SuccessDialogComponent } from './dialogs/oeb-dialogs/success-dialog.component';
+import { OebBackgroundComponent } from '../components/oeb-background.component';
 
 const DIRECTIVES = [
 	BgAwaitPromises,
@@ -175,7 +176,7 @@ const GUARDS = [AuthGuard];
 
 const PIPES = [UcFirstPipe];
 
-export const COMMON_IMPORTS = [CommonModule, FormsModule, ReactiveFormsModule, HttpClientModule, RouterModule, OebInputComponent, OebInputErrorComponent, OebButtonComponent, HlmH1Directive, HlmH2Directive, HlmH3Directive, HlmPDirective, HlmADirective, CompetencyAccordionComponent, OebCheckboxComponent, OebDialogComponent, SuccessDialogComponent];
+export const COMMON_IMPORTS = [CommonModule, FormsModule, ReactiveFormsModule, HttpClientModule, RouterModule, OebInputComponent, OebInputErrorComponent, OebButtonComponent, HlmH1Directive, HlmH2Directive, HlmH3Directive, HlmPDirective, HlmADirective, CompetencyAccordionComponent, OebCheckboxComponent, OebDialogComponent, SuccessDialogComponent, OebBackgroundComponent];
 
 @NgModule({
 	imports: [...COMMON_IMPORTS, FormsModule, LMarkdownEditorModule, TranslateModule],
