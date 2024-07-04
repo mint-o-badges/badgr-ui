@@ -164,16 +164,18 @@
 	border-radius: 10px;
 }
 
-/* Hide arrows from input number - Firefox */
-.forminput .forminput-x-inputs input[type='number'] {
-	-moz-appearance: textfield;
-}
+.forminput-hide-arrows {
+	/* Hide arrows from input number - Firefox */
+	.forminput-x-inputs input[type='number'] {
+		-moz-appearance: textfield;
+	}
 
-/* Hide arrows from input number - Chrome, Safari, Edge, Opera */
-.forminput .forminput-x-inputs input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-	-webkit-appearance: none;
-	margin: 0;
+	/* Hide arrows from input number - Chrome, Safari, Edge, Opera */
+	.forminput .forminput-x-inputs input::-webkit-outer-spin-button,
+	input::-webkit-inner-spin-button {
+		-webkit-appearance: none;
+		margin: 0;
+	}
 }
 
 @media (min-width: 768px) {
