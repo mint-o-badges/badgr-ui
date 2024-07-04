@@ -474,6 +474,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		this.badgeCategory = currentBadgeCategory;
 
 		// fix the issue of missing badge-frame when changing type for first time (only with safari browser)
+		// by regenerating the upload image as adjusting upload image didn't work with this issue
 		if (this.platformService.SAFARI && this.currentImage) {
 			this.generateUploadImage(this.currentImage, this.badgeClassForm.value);
 		}
