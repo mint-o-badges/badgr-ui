@@ -98,14 +98,7 @@ export class BadgeClassCreateComponent extends BaseAuthenticatedRoutableComponen
 	@HostListener('window:scroll')
 	onWindowScroll() {
 		var top = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
-
-		if (this.badgeImage) {
-			if (top > this.badgeImage.componentElem.nativeElement.offsetTop) {
-				this.scrolled = true;
-			} else {
-				this.scrolled = false;
-			}
-		}
+		this.scrolled = this.badgeImage && top > this.badgeImage.componentElem.nativeElement.offsetTop;
 	}
 
 	copyBadge() {
