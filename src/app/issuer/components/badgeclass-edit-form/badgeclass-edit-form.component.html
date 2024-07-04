@@ -75,7 +75,7 @@
 					[autofocus]="true"
 				></bg-formfield-text>
 			</div>
-			<div class="field-container">
+			<div class="field-container" id="imageSection" #imageSection>
 				<span class="input-label   md:tw-flex-[0_0_10em]"> Badge-{{ 'Issuer.image' | translate }}</span>
 				<div
 					class="tw-flex tw-flex-col tw-gap-4 md:tw-flex-row tw-bg-[var(--color-lightgreen)] tw-p-8 tw-justify-evenly tw-items-center tw-mr-auto tw-rounded-2xl"
@@ -136,6 +136,7 @@
 				</div>
 			</div>
 			<p
+				id="imageTextError"
 				[hidden]="!imageFieldDirty || !badgeClassForm.hasError('imageRequired')"
 				class="u-text u-margin-bottom2x u-text-error tw-w-full tw-text-center tw-mt-2"
 			>
