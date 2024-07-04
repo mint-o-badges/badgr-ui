@@ -184,22 +184,21 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 	revokeInstance(instance: BadgeInstance) {
 		this.confirmDialog
 			.openResolveRejectDialog({
-				dialogTitle: 'Warning',
-				dialogBody: `Are you sure you want to revoke <strong>${this.badgeClass.name}</strong> from <strong>${instance.recipientIdentifier}</strong>?`,
-				resolveButtonLabel: 'Revoke Badge',
-				rejectButtonLabel: 'Cancel',
+				dialogTitle: 'Warnung',
+				dialogBody: `Bist du sicher, dass du <strong>${this.badgeClass.name}</strong> von <strong>${instance.recipientIdentifier}</strong> widerrufen möchtest?`,
+				resolveButtonLabel: 'Widerrufen',
+				rejectButtonLabel: 'Abbrechen',
 			})
 			.then(
 				() => {
 					instance.revokeBadgeInstance('Manually revoked by Issuer').then(
 						(result) => {
-							this.messageService.reportMinorSuccess(`Revoked badge to ${instance.recipientIdentifier}`);
-							this.badgeClass.update();
+							this.messageService.reportMinorSuccess(`Badge von ${instance.recipientIdentifier} widerrufen`);
 							this.updateResults();
 						},
 						(error) =>
 							this.messageService.reportAndThrowError(
-								`Failed to revoke badge to ${instance.recipientIdentifier}`,
+								`Widerrufen des Badges von ${instance.recipientIdentifier} fehlgeschlagen`,
 							),
 					);
 				},
