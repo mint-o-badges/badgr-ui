@@ -193,7 +193,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				// but since it doesn't make sense to remove the
 				// default of 60 from unselected suggestions,
 				// this doesn't really matter
-				.addControl('studyLoad', 60, [Validators.required, this.positiveInteger, Validators.max(1000)]),
+				.addControl('studyLoad', 60, [Validators.required, this.positiveInteger]),
 		)
 		.addArray(
 			'competencies',
@@ -202,7 +202,8 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				.addControl('name', '', Validators.required)
 				.addControl('description', '', Validators.required)
 				.addControl('escoID', '')
-				.addControl('studyLoad', 60, [Validators.required, this.positiveInteger, Validators.max(1000)])
+				// limit of 1000000 is set so that users cant break the UI by entering a very long number
+				.addControl('studyLoad', 60, [Validators.required, this.positiveInteger, Validators.max(1000000)])
 				.addControl('category', '', Validators.required),
 		)
 		.addArray(
@@ -720,9 +721,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		try {
 			if (this.badgeClassForm.rawControl.controls.badge_category.value === 'competency') {
 				this.badgeClassForm.controls.competencies.rawControls.forEach((control, i) => {
-					// Remove competencies that are invalid and untouched 
-					// (not just untouched because they might be valid and untouched when editing a badge.)
-					if (control.untouched && control.status === 'INVALID') {
+					if (control.untouched && control.status === "INVALID") {
 						this.badgeClassForm.controls.competencies.removeAt(i);
 					}
 				});

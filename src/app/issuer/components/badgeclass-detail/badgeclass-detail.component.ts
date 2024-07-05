@@ -290,6 +290,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 			this.eventService.externalToolLaunch.next(launchInfo);
 		});
 	}
+  
 }
 
 class MatchingAlgorithm {
