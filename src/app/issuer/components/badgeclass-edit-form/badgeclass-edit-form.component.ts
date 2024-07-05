@@ -769,7 +769,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 						firstInvalidInput['focus']();
 					}
 					if (firstInvalidInput.id == "imageTextError") {
-						this.imageSection.nativeElement.scrollIntoView({ behavior: 'smooth' });
+						this.imageSection.nativeElement.scrollIntoView(true);
 					} else {
 						
 						firstInvalidInput.scrollIntoView({ behavior: 'smooth' });
