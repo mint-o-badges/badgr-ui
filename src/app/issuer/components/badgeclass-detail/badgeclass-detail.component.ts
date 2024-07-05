@@ -185,7 +185,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		this.confirmDialog
 			.openResolveRejectDialog({
 				dialogTitle: 'Warnung',
-				dialogBody: `Bist du sicher, dass du <strong>${this.badgeClass.name}</strong> von <strong>${instance.recipientIdentifier}</strong> widerrufen möchtest?`,
+				dialogBody: `Bist du sicher, dass du <strong>${this.badgeClass.name}</strong> von <strong>${instance.recipientIdentifier}</strong> zurücknehmen möchtest?`,
 				resolveButtonLabel: 'Widerrufen',
 				rejectButtonLabel: 'Abbrechen',
 			})
@@ -193,7 +193,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 				() => {
 					instance.revokeBadgeInstance('Manually revoked by Issuer').then(
 						(result) => {
-							this.messageService.reportMinorSuccess(`Badge von ${instance.recipientIdentifier} widerrufen`);
+							this.messageService.reportMinorSuccess(`Badge von ${instance.recipientIdentifier} zurücknehmen`);
 							this.badgeClass.update();
 							// this.updateResults();
 							// reload instances to refresh datatable

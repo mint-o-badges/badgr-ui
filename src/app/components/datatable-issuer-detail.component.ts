@@ -86,7 +86,7 @@ export class IssuerDetailDatatableComponent {
 
     @Input() caption: string = "";
     @Input() recipientCount: number = 0;
-    @Input() actionElementText: string = "Vergabe widerrufen"
+    @Input() actionElementText: string = "Zurücknehmen"
     @Output() actionElement = new EventEmitter();
 
     _recipients = input.required<BadgeInstance[]>();
