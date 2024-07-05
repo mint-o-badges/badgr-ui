@@ -34,14 +34,6 @@ import { BadgeClassCategory, BadgeClassLevel } from '../../models/badgeclass-api
 export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	readonly badgeFailedImageUrl = '../../../../breakdown/static/images/badge-failed.svg';
 	readonly badgeLoadingImageUrl = '../../../../breakdown/static/images/badge-loading.svg';
-	get searchQuery() {
-		return this._searchQuery;
-	}
-
-	set searchQuery(query) {
-		this._searchQuery = query;
-		this.loadInstances(encodeURIComponent(query));
-	}
 
 	get issuerSlug() {
 		return this.route.snapshot.params['issuerSlug'];
@@ -104,8 +96,6 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		c1: 'C1 Leader*in',
 		c2: 'C2 Vorreiter*in',
 	};
-
-	private _searchQuery = '';
 
 	constructor(
 		protected title: Title,
