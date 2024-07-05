@@ -95,6 +95,12 @@
 			padding: 88px 0;
 		}
 	}
+	.oeb-section-sm {
+		padding: 20px 0;
+		@media (min-width: 768px) {
+			padding: 40px 0;
+		}
+	}
 
 	.oeb-headline-container {
 		padding-bottom: 24px;
@@ -116,4 +122,9 @@
 			padding-bottom: 40px;
 		}
 	}
+}
+
+
+.oeb-badge-card {
+	box-shadow: 0px 4px 8px 0px #0000000D, 0px 2px 2px 0px #0000001A, 0px 0px 0px 1px #0000001A;
 }

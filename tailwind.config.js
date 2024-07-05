@@ -42,7 +42,8 @@ module.exports = {
         white: 'var(--color-white)',
         lightgreen: 'var(--color-lightgreen)',
         oebblack: 'var(--color-black)',
-        link: 'var(--color-link)'
+        link: 'var(--color-link)',
+        oebgrey: 'var(--color-lightgray)'
       },
     },
   },

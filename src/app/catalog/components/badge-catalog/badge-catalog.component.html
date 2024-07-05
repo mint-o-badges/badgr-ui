@@ -76,7 +76,7 @@
 				</div>
 			</div>
 			<ng-container *ngIf="groupBy == '---'">
-				<div class="l-grid l-grid-large">
+				<div class="l-grid l-grid-large tw-gap-10">
 					<!-- TODO: Fix the badgecard link for sharing and routing -->
 					<bg-badgecard
 						*ngFor="let badge of badgeResults"
@@ -102,7 +102,7 @@
 							{{ issuerGroup.badges.length == 1 ? 'Badge' : 'Badges' }}</span
 						>
 					</h3>
-					<div class="l-grid l-grid-large">
+					<div class="l-grid l-grid-large tw-gap-10">
 						<!-- TODO: Fix the badgecard link for sharing and routing -->
 						<bg-badgecard
 							*ngFor="let badge of issuerGroup.badges"
