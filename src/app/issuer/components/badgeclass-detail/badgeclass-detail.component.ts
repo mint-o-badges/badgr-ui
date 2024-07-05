@@ -194,7 +194,10 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 					instance.revokeBadgeInstance('Manually revoked by Issuer').then(
 						(result) => {
 							this.messageService.reportMinorSuccess(`Badge von ${instance.recipientIdentifier} widerrufen`);
-							this.updateResults();
+							this.badgeClass.update();
+							// this.updateResults();
+							// reload instances to refresh datatable
+							this.loadInstances();
 						},
 						(error) =>
 							this.messageService.reportAndThrowError(
