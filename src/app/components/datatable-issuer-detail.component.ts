@@ -59,14 +59,14 @@ import { OebButtonComponent } from './oeb-button.component';
       
         </label>
       </div>
-        <hlm-table class="tw-rounded-[20px] tw-overflow-hidden tw-w-full tw-max-w-[100%] tw-bg-lightpurple tw-border-purple tw-border tw-mt-8">
+        <hlm-table class="tw-rounded-[20px] tw-overflow-hidden tw-w-full tw-max-w-[100%] tw-bg-lightpurple tw-border-purple tw-border-[1px] tw-border-solid tw-mt-8">
             <hlm-caption>{{caption}}</hlm-caption>
             <hlm-trow class="tw-bg-purple tw-text-white tw-flex-wrap hover:tw-bg-purple">
                 <hlm-th class="!tw-text-white tw-w-48">ID</hlm-th>
                 <hlm-th class="!tw-text-white tw-justify-center xl:tw-pr-12 !tw-flex-1">Vergeben am </hlm-th>
                 <hlm-th class="!tw-text-white tw-justify-end xl:tw-w-48 tw-w-0 !tw-p-0"></hlm-th>
             </hlm-trow>
-            <hlm-trow *ngFor="let recipient of _filteredEmails()" class="tw-border-purple tw-flex-wrap tw-py-2">
+            <hlm-trow *ngFor="let recipient of _filteredEmails()" class="tw-border-purple tw-border-0 tw-border-solid tw-flex-wrap tw-py-2">
                 <hlm-th class="tw-w-48">
                     <span class="!tw-text-oebblack !tw-font-normal">{{recipient.recipientIdentifier}}</span>
                 </hlm-th>
