@@ -176,7 +176,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 			.openResolveRejectDialog({
 				dialogTitle: 'Warnung',
 				dialogBody: `Bist du sicher, dass du <strong>${this.badgeClass.name}</strong> von <strong>${instance.recipientIdentifier}</strong> zurücknehmen möchtest?`,
-				resolveButtonLabel: 'Widerrufen',
+				resolveButtonLabel: 'Zurücknehmen',
 				rejectButtonLabel: 'Abbrechen',
 			})
 			.then(
