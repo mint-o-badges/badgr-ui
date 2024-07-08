@@ -15,7 +15,7 @@ export const bg = 'tw-block tw-absolute tw-z-0 tw-opacity-80';
 	standalone: true,
 	imports: [HlmTabsModule, HlmTabsTriggerDirective, NgFor, JsonPipe, NgTemplateOutlet],
 	template: `<hlm-tabs class='tw-block tw-w-full' tab="Badges" (tabActivated)="onTabChange($event)">
-        <hlm-tabs-list class='tw-w-full tw-grid tw-grid-cols-3' aria-label='tabs example'>
+        <hlm-tabs-list class='tw-w-full tw-max-w-[580px] tw-grid tw-grid-cols-3' aria-label='tabs example'>
             <ng-container *ngFor="let tab of tabs">
                 <button [hlmTabsTrigger]="tab.title" >{{tab.title}}</button>
             </ng-container>
@@ -23,7 +23,8 @@ export const bg = 'tw-block tw-absolute tw-z-0 tw-opacity-80';
         <div  *ngFor="let tab of tabs" [hlmTabsContent]='tab.title'>
             <ng-template *ngTemplateOutlet="tab.component"></ng-template>
         </div>
-    </hlm-tabs> `,
+    </hlm-tabs> 
+    `,
 
 })
 export class OebTabsComponent {
@@ -36,7 +37,4 @@ export class OebTabsComponent {
     onTabChange(tab){
         this.onTabChanged.emit(tab)
     }
-
-	public readonly userClass = input<ClassValue>('', { alias: 'class' });
-	protected _computedClass = computed(() => hlm(bg, this.userClass()));
 }

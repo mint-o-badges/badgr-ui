@@ -20,7 +20,7 @@ import { ImportLauncherDirective } from '../../../mozz-transition/directives/imp
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { UserProfile } from '../../../common/model/user-profile.model';
 import { provideIcons } from '../../../components/spartan/ui-icon-helm/src';
-import { lucideHand, lucideHexagon, lucideMedal, lucideBookOpen, lucideClock } from '@ng-icons/lucide';
+import { lucideHand, lucideHexagon, lucideMedal, lucideBookOpen, lucideClock, lucideHeart } from '@ng-icons/lucide';
 import { CountUpDirective } from 'ngx-countup';
 type BadgeDispay = 'grid' | 'list';
 
@@ -33,6 +33,7 @@ type BadgeDispay = 'grid' | 'list';
 		provideIcons({ lucideClock }),
 		provideIcons({ lucideHand }),
 		provideIcons({ lucideBookOpen }),
+		provideIcons({ lucideHeart }),
 	],
 })
 export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
@@ -76,6 +77,8 @@ export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutable
 	@ViewChild('badgesCompetency', { static: true }) badgesCompetency: ElementRef;
 
 	groupedUserCompetencies = {};
+	newGroupedUserCompetencies = {};
+	
 	totalStudyTime = 0;
 	public objectKeys = Object.keys;
 	public objectValues = Object.values;
@@ -83,8 +86,10 @@ export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutable
 	@ViewChild('countup') countup: CountUpDirective;
 	@ViewChild('countup2') countup2: CountUpDirective;
 	@ViewChild('testCounter') testCounter: CountUpDirective;
+	
 	activeTab = 'Badges';
 	private _badgesDisplay: BadgeDispay = 'grid';
+
 	get badgesDisplay() {
 		return this._badgesDisplay;
 	}
@@ -322,11 +327,12 @@ export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutable
 
 	private groupCompetencies(badges) {
 		let groupedCompetencies = {};
+		let newGroupedCompetencies = {};
 		this.groupedUserCompetencies = {};
+		this.newGroupedUserCompetencies = {};
 
 		badges.forEach((badge) => {
 			let competencies = badge.getExtension('extensions:CompetencyExtension', [{}]);
-
 			competencies.forEach((competency) => {
 				if (groupedCompetencies[competency.escoID]) {
 					groupedCompetencies[competency.escoID].studyLoad += competency.studyLoad;
@@ -337,7 +343,20 @@ export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutable
 			});
 		});
 
+		badges.filter(badge => badge.mostRelevantStatus).forEach((badge) => {
+			let competencies = badge.getExtension('extensions:CompetencyExtension', [{}]);
+			competencies.forEach((competency) => {
+				if (newGroupedCompetencies[competency.escoID]) {
+					newGroupedCompetencies[competency.escoID].studyLoad += competency.studyLoad;
+				} else {
+					newGroupedCompetencies[competency.escoID] = Object.create(competency);
+				}
+			});
+		});
+
+
 		this.groupedUserCompetencies = groupedCompetencies;
+		this.newGroupedUserCompetencies = newGroupedCompetencies;
 	}
 
 	onTabChange(tab) {

@@ -12,7 +12,7 @@ import { lucideUpload } from '@ng-icons/lucide';
 	providers: [MessageService, provideIcons({ lucideUpload })],
 	template: `
 		<button class="tw-relative" hlmBtn [disabled]="disabled" [size]="size" [variant]="variant">
-			<hlm-icon class="tw-mr-2" size="base" [name]="icon" />
+			<hlm-icon *ngIf="icon" class="tw-mr-4" size="base" [name]="icon" />
 			<img *ngIf="img" class="md:tw-h-[30px] tw-h-[20px] tw-pr-4" [src]="img" /><span
 				[innerHTML]="showLoadindMessage && loadingMessage ? loadingMessage : text"
 			></span>
