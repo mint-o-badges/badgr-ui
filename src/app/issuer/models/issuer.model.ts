@@ -129,7 +129,7 @@ export class Issuer extends ManagedEntity<ApiIssuer, IssuerRef> {
      * - there is a logged in user
      * - the logged in user has either the owner or editor role for this issuer
      *
-     * @returns {string}
+     * @returns {boolean}
      */
     get canCreateBadge(): boolean {
         return this.apiModel.verified &&
