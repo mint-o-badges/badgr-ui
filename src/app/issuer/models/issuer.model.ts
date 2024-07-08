@@ -122,6 +122,15 @@ export class Issuer extends ManagedEntity<ApiIssuer, IssuerRef> {
 		return this.update();
 	}
 
+    /**
+     * Evaluates if the current user can create badges.
+     * This is the case if all of the following conditions are fulfilled:
+     * - the issuer is verified
+     * - there is a logged in user
+     * - the logged in user has either the owner or editor role for this issuer
+     *
+     * @returns {string}
+     */
     get canCreateBadge(): boolean {
         return this.apiModel.verified &&
             (this.currentUserStaffMember?.canEdit ?? false);
@@ -171,15 +180,22 @@ export class IssuerStaffMember extends ManagedEntity<ApiIssuerStaff, IssuerStaff
 		this.apiModel.role = role;
 	}
 
-	get isOwner() {
+	get isOwner(): boolean {
 		return this.roleSlug === 'owner';
 	}
 
-	get isEditor() {
+	get isEditor(): boolean {
 		return this.roleSlug === 'editor';
 	}
 
-    get canEdit() {
+    /**
+     * Evaluates if the user has the permission to make edits,
+     * specifically to create badges. This is the case if the user
+     * is either an owner, or an editor.
+     *
+     * @returns {boolean}
+     */
+    get canEdit(): boolean {
         return this.isOwner || this.isEditor;
     }
 
