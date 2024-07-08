@@ -35,7 +35,7 @@
 							<span label-additions>
 								<a hlmA class="tw-relative tw-text-purple tw-z-20 tw-font-semibold" href="#"
 									tabindex="-1"
-									[routerLink]="['/auth/request-password-reset', usernameField.value]">{{
+									[routerLink]="['/auth/request-password-reset', loginForm.rawControlMap.username.value]">{{
 									'Login.forgotPassword' | translate }}</a>
 							</span>
 						</oeb-input>
