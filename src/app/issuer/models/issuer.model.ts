@@ -122,6 +122,11 @@ export class Issuer extends ManagedEntity<ApiIssuer, IssuerRef> {
 		return this.update();
 	}
 
+    get canCreateBadge(): boolean {
+        return this.apiModel.verified &&
+            (this.currentUserStaffMember?.canEdit ?? false);
+    }
+
 	get currentUserStaffMember(): IssuerStaffMember {
 		if (this.profileManager.userProfile && this.profileManager.userProfile.emails.entities) {
 			const emails = this.profileManager.userProfile.emails.entities;
@@ -169,6 +174,14 @@ export class IssuerStaffMember extends ManagedEntity<ApiIssuerStaff, IssuerStaff
 	get isOwner() {
 		return this.roleSlug === 'owner';
 	}
+
+	get isEditor() {
+		return this.roleSlug === 'editor';
+	}
+
+    get canEdit() {
+        return this.isOwner || this.isEditor;
+    }
 
 	/**
 	 * Returns a label to use for this member based on the name if it's available (e.g. "Luke Skywalker"), or the email
