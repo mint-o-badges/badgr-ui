@@ -1,6 +1,5 @@
 import { Component, EventEmitter, forwardRef, computed, input, Input, Output } from '@angular/core';
 import { HlmCheckboxComponent } from './spartan/ui-checkbox-helm/src';
-import { HlmLabelDirective, HlmLabelModule } from './spartan/ui-label-helm/src';
 import { HlmPDirective } from './spartan/ui-typography-helm/src/lib/hlm-p.directive';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import type { ClassValue } from 'clsx';

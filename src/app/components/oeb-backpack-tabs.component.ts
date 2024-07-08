@@ -1,6 +1,4 @@
-import { Component, EventEmitter, Input, Output, computed, input } from '@angular/core';
-import { hlm } from '@spartan-ng/ui-core';
-import type { ClassValue } from 'clsx';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import {
     HlmTabsModule,
     HlmTabsTriggerDirective,
@@ -31,7 +29,6 @@ export class OebTabsComponent {
 	@Input() image: string;
 	@Input() imgClass: string;
     @Input() tabs: any;
-    // @Input() onTabChange: any;
     @Output() onTabChanged = new EventEmitter();
 
     onTabChange(tab){

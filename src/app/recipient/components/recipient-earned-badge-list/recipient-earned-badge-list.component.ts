@@ -1,4 +1,4 @@
-import { Component, ContentChild, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ContentChild, ElementRef, OnInit, ViewChild, AfterContentInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
@@ -36,7 +36,7 @@ type BadgeDispay = 'grid' | 'list';
 		provideIcons({ lucideHeart }),
 	],
 })
-export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
+export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutableComponent implements OnInit, AfterContentInit {
 	readonly noBadgesImageUrl = '../../../../assets/@concentricsky/badgr-style/dist/images/image-empty-backpack.svg';
 	readonly badgeLoadingImageUrl = '../../../../breakdown/static/images/badge-loading.svg';
 	readonly badgeFailedImageUrl = '../../../../breakdown/static/images/badge-failed.svg';
@@ -62,16 +62,7 @@ export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutable
 	crumbs: LinkEntry[] = [{ title: 'Backpack', routerLink: ['/recipient/badges'] }];
 	profile: UserProfile;
 	running = false;
-	tabs: any = [
-		{
-			title: 'overview',
-			component: 'this.overViewTemplate',
-		},
-		{
-			title: 'badges',
-			component: 'this.badgesTemplate',
-		},
-	];
+	tabs: any = undefined;
 	@ViewChild('overViewTemplate', { static: true }) overViewTemplate: ElementRef;
 	@ViewChild('badgesTemplate', { static: true }) badgesTemplate: ElementRef;
 	@ViewChild('badgesCompetency', { static: true }) badgesCompetency: ElementRef;
@@ -197,7 +188,8 @@ export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutable
 		super.ngOnInit();
 		if (this.route.snapshot.routeConfig.path === 'badges/import') this.launchImport(new Event('click'));
 	}
-	ngAfterViewInit() {
+	
+	ngAfterContentInit() {
 		this.tabs = [
 			{
 				title: 'Overview',

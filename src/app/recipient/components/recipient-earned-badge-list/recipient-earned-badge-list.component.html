@@ -6,8 +6,9 @@
 
 			<ng-template [bgAwaitPromises]="[profileLoaded]">
 
-				<div class="tw-flex tw-justify-between tw-items-center oeb-section-sm">
-					<h2 hlmH2 class="tw-text-oebblack tw-font-bold">Hallo {{profile.firstName}} </h2>
+				<div class="md:tw-flex tw-justify-between tw-items-center oeb-section-sm">
+					<h2 hlmH2 class="tw-text-oebblack tw-font-bold tw-pb-4 md:tw-pb-0">Hallo {{profile.firstName}} </h2>
+					
 					<oeb-button icon="lucideUpload" (click)="addBadge()" [disabled-when-requesting]="true"
 						[text]="'RecBadge.addBadge' | translate">
 					</oeb-button>
@@ -233,8 +234,8 @@
 							</div>
 						</div>
 						<div class="oeb-section-sm">
-							<div class="lg:tw-flex tw-flex-wrap oeb-standard-padding-bottom">
-								<div class="tw-w-full lg:tw-w-[300px] lg:tw-flex-shrink-0 lg:tw-pb-0 tw-pb-4">
+							<div *ngIf="objectValues(newGroupedUserCompetencies).length > 0" class="lg:tw-flex tw-flex-wrap oeb-standard-padding-bottom">
+								<div class="tw-w-full lg:tw-w-[270px] lg:tw-flex-shrink-0 lg:tw-pb-0 tw-pb-4">
 									<div class="tw-flex tw-items-center">
 										<hlm-icon class="tw-mr-2" name="lucideHeart" />
 										<h3 hlmH3 class="tw-font-medium tw-text-oebblack tw-ml-2">Neue Kompetenzen</h3>
@@ -249,7 +250,7 @@
 								</div>
 							</div>
 							<div class="lg:tw-flex tw-flex-wrap oeb-standard-padding-bottom">
-								<div class="tw-w-full lg:tw-w-[300px] lg:tw-flex-shrink-0 lg:tw-pb-0 tw-pb-4">
+								<div class="tw-w-full lg:tw-w-[270px] lg:tw-flex-shrink-0 lg:tw-pb-0 tw-pb-4">
 									<div class="tw-flex tw-items-center">
 										<hlm-icon class="tw-mr-2" name="lucideHand" />
 										<h3 hlmH3 class="tw-font-medium tw-text-oebblack tw-ml-2">Fähigkeiten</h3>
@@ -263,8 +264,8 @@
 									</div>
 								</div>
 							</div>
-							<div class="tw-flex tw-flex-wrap">
-								<div class="tw-w-full lg:tw-w-[300px] lg:tw-flex-shrink-0 lg:tw-pb-0 tw-pb-4">
+							<div class="lg:tw-flex tw-flex-wrap oeb-standard-padding-bottom">
+								<div class="tw-w-full lg:tw-w-[270px] lg:tw-flex-shrink-0 lg:tw-pb-0 tw-pb-4">
 									<div class="tw-flex tw-items-center">
 										<hlm-icon class="tw-mr-2" name="lucideBookOpen" />
 										<h3 hlmH3 class="tw-font-medium tw-text-oebblack tw-ml-2">Wissen</h3>
