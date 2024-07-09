@@ -17,7 +17,6 @@ import {
 	templateUrl: './badgeclass-issue-bulk-award-import.component.html',
 })
 export class BadgeClassIssueBulkAwardImportComponent extends BaseAuthenticatedRoutableComponent {
-	readonly badgrBulkIssueTemplateUrl = require('file-loader!assets/badgrBulkIssueTemplate.csv');
 	readonly csvUploadIconUrl = '../../../../breakdown/static/images/csvuploadicon.svg';
 
 	@Output() importPreviewDataEmitter = new EventEmitter<BulkIssueImportPreviewData>();
@@ -83,6 +82,10 @@ export class BadgeClassIssueBulkAwardImportComponent extends BaseAuthenticatedRo
 				if (tempColumnHeaderName === 'email') {
 					inferredColumnHeaders.add('email');
 					destinationColumn = 'email';
+				}
+				if (tempColumnHeaderName === 'name') {
+					inferredColumnHeaders.add('name');
+					destinationColumn = 'name';
 				}
 
 				if (tempColumnHeaderName.includes('evidence')) {

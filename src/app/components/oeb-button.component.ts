@@ -18,6 +18,7 @@ import { lucideUpload } from '@ng-icons/lucide';
 			></span>
 		</button>
 	`,
+
 })
 export class OebButtonComponent {
 	loadingPromise: Promise<unknown>;

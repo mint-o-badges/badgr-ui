@@ -32,6 +32,7 @@ import { SettingsService } from './services/settings.service';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UcFirstPipe } from './pipes/ucfirst.pipe';
+import { StudyLoadPipe } from './pipes/format-studyload.pipe';
 // import { TooltipDirective } from "./directives/tooltip.directive";
 import { BgCopyInputDirective } from './directives/bg-copy-input.directive';
 import { ShareSocialDialog } from './dialogs/share-social-dialog/share-social-dialog.component';
@@ -98,6 +99,9 @@ import { HlmIconModule } from '../components/spartan/ui-icon-helm/src';
 import { CountUpModule } from 'ngx-countup';
 import { DynamicFilterPipe } from './pipes/dynamicFilterPipe';
 import { OebCompetency } from './components/oeb-competency';
+import { OebDialogComponent } from '../components/oeb-dialog.component';
+import { SuccessDialogComponent } from './dialogs/oeb-dialogs/success-dialog.component';
+import { OebBackgroundComponent } from '../components/oeb-background.component';
 
 const DIRECTIVES = [
 	BgAwaitPromises,
@@ -179,9 +183,9 @@ const SERVICES = [
 
 const GUARDS = [AuthGuard];
 
-const PIPES = [UcFirstPipe];
+const PIPES = [UcFirstPipe, StudyLoadPipe];
 
-export const COMMON_IMPORTS = [CommonModule, FormsModule, ReactiveFormsModule, HttpClientModule, RouterModule, OebInputComponent, OebInputErrorComponent, OebButtonComponent, HlmH1Directive, HlmH2Directive, HlmH3Directive, HlmPDirective, HlmADirective, CompetencyAccordionComponent, OebCheckboxComponent, OebTabsComponent, HlmIconModule, CountUpModule, HlmInputDirective];
+export const COMMON_IMPORTS = [CommonModule, FormsModule, ReactiveFormsModule, HttpClientModule, RouterModule, OebInputComponent, OebInputErrorComponent, OebButtonComponent, HlmH1Directive, HlmH2Directive, HlmH3Directive, HlmPDirective, HlmADirective, CompetencyAccordionComponent, OebCheckboxComponent, OebDialogComponent, SuccessDialogComponent, OebBackgroundComponent, OebTabsComponent, HlmIconModule, CountUpModule, HlmInputDirective];
 
 @NgModule({
 	imports: [...COMMON_IMPORTS, FormsModule, LMarkdownEditorModule, TranslateModule],

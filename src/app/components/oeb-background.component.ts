@@ -8,7 +8,7 @@ export const bg = 'tw-block tw-absolute tw-z-0 tw-opacity-80';
 	selector: 'oeb-background',
 	standalone: true,
 	imports: [],
-	template: ` <img [class]="imgClass" [src]="image" alt="Circles" /> `,
+	template: ` <img [class]="imgClass" [src]="image" alt="placeholder" /> `,
 	host: {
 		'[class]': '_computedClass()',
 	},

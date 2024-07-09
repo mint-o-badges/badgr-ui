@@ -29,6 +29,7 @@ import { FormFieldSelectOption } from '../../../common/components/formfield-sele
 import { AiSkillsService } from '../../../common/services/ai-skills.service';
 import { Skill } from '../../../common/model/ai-skills.model';
 import { TranslateService } from '@ngx-translate/core';
+import { Platform } from '@angular/cdk/platform';	// To detect the current platform by comparing the userAgent strings
 
 @Component({
 	selector: 'badgeclass-edit-form',
@@ -193,7 +194,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				// but since it doesn't make sense to remove the
 				// default of 60 from unselected suggestions,
 				// this doesn't really matter
-				.addControl('studyLoad', 60, [Validators.required, this.positiveInteger, Validators.max(1000)]),
+				.addControl('studyLoad', 60, [Validators.required, this.positiveInteger]),
 		)
 		.addArray(
 			'competencies',
@@ -202,7 +203,8 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				.addControl('name', '', Validators.required)
 				.addControl('description', '', Validators.required)
 				.addControl('escoID', '')
-				.addControl('studyLoad', 60, [Validators.required, this.positiveInteger, Validators.max(1000)])
+				// limit of 1000000 is set so that users cant break the UI by entering a very long number
+				.addControl('studyLoad', 60, [Validators.required, this.positiveInteger, Validators.max(1000000)])
 				.addControl('category', '', Validators.required),
 		)
 		.addArray(
@@ -228,6 +230,8 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 	@ViewChild('formElem')
 	formElem: ElementRef<HTMLFormElement>;
+
+	@ViewChild('imageSection') imageSection!: ElementRef<HTMLElement>;
 
 	existingBadgeClass: BadgeClass | null = null;
 
@@ -321,6 +325,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		protected componentElem: ElementRef<HTMLElement>,
 		protected aiSkillsService: AiSkillsService,
 		private translate: TranslateService,
+		private platformService: Platform,
 	) {
 		super(router, route, sessionService);
 		title.setTitle(`Create Badge - ${this.configService.theme['serviceName'] || 'Badgr'}`);
@@ -401,12 +406,12 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		// update badge frame when a category is selected, unless no-hexagon-frame checkbox is checked
 		this.badgeClassForm.rawControl.controls['badge_category'].statusChanges.subscribe((res) => {
 			this.handleBadgeCategoryChange();
-			if(that.imageField.control.value){
+			if(that.imageField?.control.value){
 				setTimeout(() => {
 					that.adjustUploadImage(this.badgeClassForm.value);
 				}, 10)
 			}
-			else if(that.customImageField.control.value){
+			else if(that.customImageField?.control.value){
 				if(!that.existing){
 					setTimeout(() => {
 					that.customImageField.useDataUrl(this.customImageField.control.value, 'BADGE');
@@ -417,7 +422,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			// the image disappears while editing the badge
 			// TODO: investigate why this is happening
 			if (this.currentImage && this.existing) {
-				if(that.imageField.control.value){
+				if(that.imageField?.control.value){
 					setTimeout(function () {
 						that.adjustUploadImage(that.badgeClassForm.value);
 					}, 10);
@@ -470,6 +475,12 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			this.badgeClassForm.controls.competencies.addFromTemplate();
 		}
 		this.badgeCategory = currentBadgeCategory;
+
+		// fix the issue of missing badge-frame when changing type for first time (only with safari browser)
+		// by regenerating the upload image as adjusting upload image didn't work with this issue
+		if (this.platformService.SAFARI && this.currentImage) {
+			this.generateUploadImage(this.currentImage, this.badgeClassForm.value);
+		}
 	}
 
 	/**
@@ -720,8 +731,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		try {
 			if (this.badgeClassForm.rawControl.controls.badge_category.value === 'competency') {
 				this.badgeClassForm.controls.competencies.rawControls.forEach((control, i) => {
-					// Remove competencies that are invalid and untouched 
-					// (not just untouched because they might be valid and untouched when editing a badge.)
 					if (control.untouched && control.status === "INVALID") {
 						this.badgeClassForm.controls.competencies.removeAt(i);
 					}
@@ -766,8 +775,12 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 					if (typeof firstInvalidInput['focus'] === 'function') {
 						firstInvalidInput['focus']();
 					}
-
-					firstInvalidInput.scrollIntoView({ behavior: 'smooth' });
+					if (firstInvalidInput.id == "imageTextError") {
+						this.imageSection.nativeElement.scrollIntoView(true);
+					} else {
+						
+						firstInvalidInput.scrollIntoView({ behavior: 'smooth' });
+					}
 				}
 				return;
 			}
@@ -955,9 +968,11 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		if (typeof this.currentImage == 'undefined' || this.initedCurrentImage) {
 			this.initedCurrentImage = true;
 			this.currentImage = image.slice();
-				this.badgeStudio
-					.generateUploadImage(image.slice(), formdata)
-					.then((imageUrl) => this.imageField.useDataUrl(imageUrl, 'BADGE'));
+			this.badgeStudio.generateUploadImage(image.slice(), formdata).then((imageUrl) => {
+				this.imageField.useDataUrl(imageUrl, 'BADGE');
+				// Added as a workaround to resolve the issue of not showing badge frame from first time (only with safari browser)
+				this.adjustUploadImage(formdata);
+			});
 		} else {
 			this.initedCurrentImage = true;
 		}
@@ -976,7 +991,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	}
 
 	adjustUploadImage(formdata) {
-		if (this.currentImage && this.badgeStudio ) {
+		if (this.currentImage && this.badgeStudio) {
 			this.badgeStudio
 				.generateUploadImage(this.currentImage.slice(), formdata)
 				.then((imageUrl) => this.imageField.useDataUrl(imageUrl, 'BADGE'));

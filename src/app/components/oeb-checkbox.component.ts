@@ -27,8 +27,8 @@ import { hlm } from '@spartan-ng/ui-core';
 })
 export class OebCheckboxComponent implements ControlValueAccessor  {
     @Input() text: string;
-	@Input() control: FormControl;
-	@Input() name: string;
+	  @Input() control: FormControl;
+	  @Input() name: string;
 
     @Input() ngModel: boolean;
     @Input() value: string;
@@ -50,5 +50,6 @@ export class OebCheckboxComponent implements ControlValueAccessor  {
     setDisabledState?(isDisabled: boolean): void {  }
 
     public readonly userClass = input<ClassValue>('', { alias: 'class' });
-	protected _computedClass = computed(() => hlm(this.userClass()));
+   	protected _computedClass = computed(() => hlm(this.userClass()));
 }
+
