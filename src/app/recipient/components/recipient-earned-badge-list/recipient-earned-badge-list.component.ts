@@ -191,10 +191,7 @@ export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutable
 	
 	ngAfterContentInit() {
 		this.tabs = [
-			{
-				title: 'Overview',
-				component: this.overViewTemplate,
-			},
+			
 			{
 				title: 'Badges',
 				component: this.badgesTemplate,

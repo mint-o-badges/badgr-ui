@@ -7,7 +7,7 @@
 			<ng-template [bgAwaitPromises]="[profileLoaded]">
 
 				<div class="md:tw-flex tw-justify-between tw-items-center oeb-section-sm">
-					<h2 hlmH2 class="tw-text-oebblack tw-font-bold tw-pb-4 md:tw-pb-0">Hallo {{profile.firstName}} </h2>
+					<h2 hlmH2 class="tw-text-oebblack tw-font-bold tw-pb-4 md:tw-pb-0">{{'RecBadge.greating' | translate}} {{profile.firstName}} </h2>
 					
 					<oeb-button icon="lucideUpload" (click)="addBadge()" [disabled-when-requesting]="true"
 						[text]="'RecBadge.addBadge' | translate">
@@ -18,11 +18,11 @@
 
 			<div class="oeb-section-sm">
 				<oeb-backpack-tabs (onTabChanged)="onTabChange($event)" [tabs]="tabs"></oeb-backpack-tabs>
-				<ng-template #overViewTemplate>
+				<!-- <ng-template #overViewTemplate>
 					<div class="oeb-section">
 						<h1 hlmH1 class="tw-text-purple">Coming soon...</h1>
 					</div>
-				</ng-template>
+				</ng-template> -->
 				<ng-template #badgesTemplate>
 					<ng-template [bgAwaitPromises]="[badgesLoaded]">
 						<ng-container *ngIf="mozillaFeatureEnabled">
@@ -44,8 +44,7 @@
 									<button (click)="hideMozz($event)"
 										class="notification-x-close buttonicon buttonicon-clear">
 										<svg icon="icon_close"></svg>
-										<span class="visuallyhidden">{{ 'RecBadge.closeNotification' | translate
-											}}</span>
+										<span class="visuallyhidden">{{ 'RecBadge.closeNotification' | translate}}</span>
 									</button>
 								</div>
 							</div>
@@ -61,13 +60,13 @@
 									<p hlmP *ngIf="!!allBadges" #testCounter [countUp]="allBadges.length"
 										class="tw-text-purple tw-font-bold"></p>
 								</div>
-								<div
+								<!-- <div
 									class="tw-bg-white tw-rounded-[10px] tw-border-purple tw-border-solid tw-border tw-h-[90px] tw-p-4">
 									<div class="tw-whitespace-nowrap tw-flex tw-items-center tw-mb-2"><hlm-icon
 											class="tw-mr-2" size='sm' name="lucideMedal" /><span hlmP
 											size="sm">Micro-Degrees</span></div>
 
-								</div>
+								</div> -->
 							</div>
 						</div>
 
@@ -131,75 +130,7 @@
 								</ng-template>
 							</ng-template>
 
-							<!-- List View -->
-							<ng-template [ngIf]="badgesDisplay == 'list'">
-								<table
-									class="datatable datatable-roundheaders datatable-onlyfirstcolumn datatable-verticalalignmiddle">
-									<thead class="datatable-x-head">
-										<tr class="datatable-x-header">
-											<th class="datatable-x-cell" scope="col">Badge</th>
-											<th class="datatable-x-cell" scope="col">{{ 'RecBadge.institution' |
-												translate
-												}}</th>
-											<th class="datatable-x-cell" scope="col">Vergeben am</th>
-											<th class="datatable-x-cell" scope="col"><span
-													class="visuallyhidden">Actions</span></th>
-										</tr>
-									</thead>
-									<tbody class="datatable-x-body">
-										<!-- Issuer title if grouped by issuer -->
-										<ng-template ngFor let-issuerGroup [ngForOf]="issuerResults" let-i="index">
-											<tr class="datatable-x-row" *ngIf="groupByIssuer">
-												<th class="datatable-x-inlineheader" scope="row" colspan="4">
-													<a class="u-text u-text-link u-text-breakword"
-														[routerLink]="['../../public/issuers', issuerIdToSlug(issuerGroup.issuerId)]">
-														{{ issuerGroup.issuer.name }}
-													</a>
-												</th>
-											</tr>
-											<!-- Badges -->
-											<ng-template ngFor let-badge [ngForOf]="issuerGroup.badges" let-i="index">
-												<tr class="datatable-x-row">
-													<td class="datatable-x-cell">
-														<div class="l-flex l-flex-2x l-flex-aligncenter">
-															<img class="badgeimage badgeimage-{{
-																	badge.mostRelevantStatus
-																}} badgeimage-small u-margin-right2x l-flex-x-shrink0" width="40" [loading-src]="badgeLoadingImageUrl"
-																[error-src]="badgeFailedImageUrl"
-																[loaded-src]="badge.image" />
-															<a class="u-text u-text-link u-text-breakword"
-																[routerLink]="['../earned-badge', badge.slug]">{{
-																badge.badgeClass.name }}</a>
-															<div class="datatable-x-status badgestatus badgestatus-intable badgestatus-{{
-																	badge.mostRelevantStatus
-																}}" *ngIf="badge.mostRelevantStatus">
-																{{ badge.mostRelevantStatus }}
-															</div>
-														</div>
-													</td>
-													<td class="datatable-x-cell u-text-body">
-														<a class="u-text u-text-link u-text-breakword" [routerLink]="[
-																'../../public/issuers',
-																issuerIdToSlug(issuerGroup.issuerId)
-															]">
-															{{ issuerGroup.issuer.name }}
-														</a>
-													</td>
-													<td class="datatable-x-cell u-text-body">
-														<time [date]="badge?.issueDate" format="mediumDate"></time>
-													</td>
-													<td class="datatable-x-cell">
-														<button class="u-text-link-small u-text-bold u-margin-leftauto"
-															(click)="shareBadge(badge)">
-															Teilen
-														</button>
-													</td>
-												</tr>
-											</ng-template>
-										</ng-template>
-									</tbody>
-								</table>
-							</ng-template>
+							
 						</div>
 					</ng-template>
 				</ng-template>
@@ -212,7 +143,7 @@
 									class="tw-bg-white tw-rounded-[10px] tw-border-purple tw-border-solid tw-border tw-h-[90px] tw-p-4">
 									<div class="tw-whitespace-nowrap tw-flex tw-items-center tw-mb-2"><hlm-icon
 											class="tw-mr-2" size='sm' name="lucideHexagon" /><span hlmP
-											size="sm">Kompetenzen</span></div>
+											size="sm">{{ 'RecBadge.competencies' | translate }}</span></div>
 									<p hlmP #countup hlmP class="tw-text-purple tw-font-bold" *ngIf="!!allBadges"
 										[countUp]="objectKeys(groupedUserCompetencies).length"></p>
 								</div>
@@ -220,17 +151,17 @@
 									class="tw-bg-white tw-rounded-[10px] tw-border-purple tw-border-solid tw-border tw-h-[90px] tw-p-4">
 									<div class="tw-whitespace-nowrap tw-flex tw-items-center tw-mb-2"><hlm-icon
 											class="tw-mr-2" size='sm' name="lucideClock" /><span hlmP
-											size="sm">Lernzeit</span></div>
+											size="sm">{{ 'RecBadge.studyingTime' | translate }}</span></div>
 									<p hlmP class="tw-text-purple tw-font-bold" *ngIf="!!allBadges"><span #countup2
-											[countUp]="totalStudyTime / 60">0</span> Stunden</p>
+											[countUp]="totalStudyTime / 60">0</span> {{ 'RecBadge.hours' | translate }}</p>
 								</div>
-								<div
+								<!-- <div
 									class="tw-bg-white tw-rounded-[10px] tw-border-purple tw-border-solid tw-border tw-h-[90px] tw-p-4">
 									<div class="tw-whitespace-nowrap tw-flex tw-items-center tw-mb-2"><hlm-icon
 											class="tw-mr-2" size='sm' name="lucideMedal" /><span hlmP
 											size="sm">Kompetenzen</span></div>
 
-								</div>
+								</div> -->
 							</div>
 						</div>
 						<div class="oeb-section-sm">
@@ -238,7 +169,7 @@
 								<div class="tw-w-full lg:tw-w-[270px] lg:tw-flex-shrink-0 lg:tw-pb-0 tw-pb-4">
 									<div class="tw-flex tw-items-center">
 										<hlm-icon class="tw-mr-2" name="lucideHeart" />
-										<h3 hlmH3 class="tw-font-medium tw-text-oebblack tw-ml-2">Neue Kompetenzen</h3>
+										<h3 hlmH3 class="tw-font-medium tw-text-oebblack tw-ml-2">{{ 'RecBadge.newCompetencies' | translate }}</h3>
 									</div>
 								</div>
 								<div class="tw-flex-grow">
@@ -253,7 +184,7 @@
 								<div class="tw-w-full lg:tw-w-[270px] lg:tw-flex-shrink-0 lg:tw-pb-0 tw-pb-4">
 									<div class="tw-flex tw-items-center">
 										<hlm-icon class="tw-mr-2" name="lucideHand" />
-										<h3 hlmH3 class="tw-font-medium tw-text-oebblack tw-ml-2">Fähigkeiten</h3>
+										<h3 hlmH3 class="tw-font-medium tw-text-oebblack tw-ml-2">{{ 'RecBadge.skills' | translate }}</h3>
 									</div>
 								</div>
 								<div class="tw-flex-grow">
@@ -268,7 +199,7 @@
 								<div class="tw-w-full lg:tw-w-[270px] lg:tw-flex-shrink-0 lg:tw-pb-0 tw-pb-4">
 									<div class="tw-flex tw-items-center">
 										<hlm-icon class="tw-mr-2" name="lucideBookOpen" />
-										<h3 hlmH3 class="tw-font-medium tw-text-oebblack tw-ml-2">Wissen</h3>
+										<h3 hlmH3 class="tw-font-medium tw-text-oebblack tw-ml-2">{{ 'RecBadge.knowledge' | translate }}</h3>
 									</div>
 								</div>
 								<div class="tw-flex-grow">

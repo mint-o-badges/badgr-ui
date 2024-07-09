@@ -97,7 +97,7 @@ import { OebTabsComponent } from '../components/oeb-backpack-tabs.component';
 import { HlmIconModule } from '../components/spartan/ui-icon-helm/src';
 import { CountUpModule } from 'ngx-countup';
 import { DynamicFilterPipe } from './pipes/dynamicFilterPipe';
-import { OebCompetency } from './components/oeb-competencies';
+import { OebCompetency } from './components/oeb-competency';
 
 const DIRECTIVES = [
 	BgAwaitPromises,

@@ -380,6 +380,15 @@
 		"groupByInstitution": "Nach Institution gruppieren",
 		"institution": "Institution",
 
+		"greating": "Hello",
+		"competencies": "Competencies",
+		"studyingTime": "Studytime",
+		"hours": "Hours",
+		"newCompetencies": "New Competencies",
+		"skills": "Skills",
+		"knowledge": "Knowledge",
+
+
 		"addRecievedBadge": "Add a badge that you have already received.",
 		"image": "Image",
 		"close": "Close",

@@ -61,7 +61,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 							*ngIf="!verifyUrl && !public && mostRelevantStatus !== 'pending'"
 							(click)="shareClicked.emit($event)"
 						>
-							Teilen
+							{{ 'BadgeCollection.share' | translate }}
 						</a>
 						<a
 							hlmA
@@ -71,7 +71,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 							*ngIf="verifyUrl"
 							[href]="verifyUrl"
 						>
-							Verify
+							{{ 'RecBadgeDetail.verify' | translate }}
 						</a>
 					</div>
 				</div>

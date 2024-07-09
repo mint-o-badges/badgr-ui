@@ -383,8 +383,16 @@
 		"closeNotification": "Benachrichtigung schließen",
 		"noBadgesYet": "Du hast noch keine Badges",
 		"collectShareBadges": "Sammle und teile digitale Badges aus deinem Rucksack.",
-		"groupByInstitution": "Group by institution",
+		"groupByInstitution": "Nach Institutionen gruppieren",
 		"institution": "Institution",
+
+		"greating": "Hallo",
+		"competencies": "Kompetenzen",
+		"studyingTime": "Lernzeiten",
+		"hours": "Stunden",
+		"newCompetencies": "Neue Kompetenzen",
+		"skills": "Fähigkeiten",
+		"knowledge": "Wissen",
 
 		"addRecievedBadge": "Füge ein Badge hinzu welches du bereits erhalten hast.",
 		"image": "Bild",
