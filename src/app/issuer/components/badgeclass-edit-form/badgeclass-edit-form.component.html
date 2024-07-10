@@ -75,7 +75,7 @@
 					[autofocus]="true"
 				></bg-formfield-text>
 			</div>
-			<div class="field-container">
+			<div class="field-container" id="imageSection" #imageSection>
 				<span class="input-label   md:tw-flex-[0_0_10em]"> Badge-{{ 'Issuer.image' | translate }}</span>
 				<div
 					class="tw-flex tw-flex-col tw-gap-4 md:tw-flex-row tw-bg-[var(--color-lightgreen)] tw-p-8 tw-justify-evenly tw-items-center tw-mr-auto tw-rounded-2xl"
@@ -136,6 +136,7 @@
 				</div>
 			</div>
 			<p
+				id="imageTextError"
 				[hidden]="!imageFieldDirty || !badgeClassForm.hasError('imageRequired')"
 				class="u-text u-margin-bottom2x u-text-error tw-w-full tw-text-center tw-mt-2"
 			>
@@ -312,12 +313,12 @@
 							>
 								{{ competency.rawControlMap.description.value }}
 							</p>
-							<div class="tw-flex tw-gap-2 tw-items-center tw-mt-4">
+							<div class="tw-flex tw-gap-2 tw-items-center tw-mt-4 ">
 								<label class="tw-text-black tw-font-bold" for="studyLoad$i">
 									{{ 'General.minutes' | translate }}:
 								</label>
 								<span
-									class="tw-flex tw-rounded-md tw-bg-white tw-border tw-border-solid tw-border-black tw-h-8 tw-w-8 tw-items-center tw-justify-center"
+									class="tw-flex tw-rounded-md tw-bg-white tw-border tw-border-solid tw-border-black tw-h-8 tw-w-8 tw-min-w-fit tw-items-center tw-justify-center"
 									>{{ competency.rawControlMap.studyLoad.value }}</span
 								>
 							</div>

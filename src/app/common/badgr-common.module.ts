@@ -32,6 +32,7 @@ import { SettingsService } from './services/settings.service';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UcFirstPipe } from './pipes/ucfirst.pipe';
+import { StudyLoadPipe } from './pipes/format-studyload.pipe';
 // import { TooltipDirective } from "./directives/tooltip.directive";
 import { BgCopyInputDirective } from './directives/bg-copy-input.directive';
 import { ShareSocialDialog } from './dialogs/share-social-dialog/share-social-dialog.component';
@@ -93,6 +94,9 @@ import { HlmH2Directive } from '../components/spartan/ui-typography-helm/src/lib
 import { HlmH3Directive } from '../components/spartan/ui-typography-helm/src/lib/hlm-h3.directive';
 import { CompetencyAccordionComponent } from '../components/accordion.component';
 import { OebCheckboxComponent } from '../components/oeb-checkbox.component';
+import { OebDialogComponent } from '../components/oeb-dialog.component';
+import { SuccessDialogComponent } from './dialogs/oeb-dialogs/success-dialog.component';
+import { OebBackgroundComponent } from '../components/oeb-background.component';
 
 const DIRECTIVES = [
 	BgAwaitPromises,
@@ -139,6 +143,7 @@ export const COMMON_MODULE_COMPONENTS = [
 	TruncatedTextComponent,
 	ExportPdfDialog,
 	NounprojectDialog,
+	
 ];
 
 const SERVICES = [
@@ -172,9 +177,9 @@ const SERVICES = [
 
 const GUARDS = [AuthGuard];
 
-const PIPES = [UcFirstPipe];
+const PIPES = [UcFirstPipe, StudyLoadPipe];
 
-export const COMMON_IMPORTS = [CommonModule, FormsModule, ReactiveFormsModule, HttpClientModule, RouterModule, OebInputComponent, OebInputErrorComponent, OebButtonComponent, HlmH1Directive, HlmH2Directive, HlmH3Directive, HlmPDirective, HlmADirective, CompetencyAccordionComponent, OebCheckboxComponent];
+export const COMMON_IMPORTS = [CommonModule, FormsModule, ReactiveFormsModule, HttpClientModule, RouterModule, OebInputComponent, OebInputErrorComponent, OebButtonComponent, HlmH1Directive, HlmH2Directive, HlmH3Directive, HlmPDirective, HlmADirective, CompetencyAccordionComponent, OebCheckboxComponent, OebDialogComponent, SuccessDialogComponent, OebBackgroundComponent];
 
 @NgModule({
 	imports: [...COMMON_IMPORTS, FormsModule, LMarkdownEditorModule, TranslateModule],

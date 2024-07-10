@@ -51,11 +51,11 @@
 					></p>
 				</div>
 				<button
-					[class]="'oeb-button oeb-purple-bg !tw-font-bold'.concat(issuer.apiModel.verified 
+					[class]="'oeb-button oeb-purple-bg !tw-font-bold'.concat(issuer.canCreateBadge
                         ? ''
                         : ' disabled')"
 					[routerLink]="['/issuer/issuers/', issuer.slug, 'badges', 'create']"
-                    [disabled]="!issuer.apiModel.verified"
+                    [disabled]="!issuer.canCreateBadge"
 					>{{ 'Issuer.myInstitutionsCreateBadge' | translate }}
 				</button>
 			</div>

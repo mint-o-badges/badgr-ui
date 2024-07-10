@@ -1,43 +1,28 @@
 <ng-container *bgAwaitPromises="[issuerLoaded, badgeClassLoaded]">
-	<form-message></form-message>
-
-	<div class="topbar topbar-withimage">
-		<div class="l-containerxaxis">
-			<div class="topbar-x-breadcrumbs">
-				<bg-breadcrumbs [linkentries]="breadcrumbLinkEntries"> </bg-breadcrumbs>
-			</div>
-			<h1 class="topbar-x-heading">Bulk Award</h1>
+	<oeb-background imgClass="md:tw-h-[400px] tw-h-[269px]  tw-rotate-[-17.58deg] md:tw-rotate-[-36.66deg]" class="tw-right-[5%] tw-top-[15%] md:tw-right-[10%] md:tw-top-[15%]" image="assets/oeb/images/signuppage/circles.png"></oeb-background>
+	<div class="oeb page-padding tw-relative">
+		<div class="topbar-x-breadcrumbs">
+			<bg-breadcrumbs [linkentries]="breadcrumbLinkEntries"> </bg-breadcrumbs>
 		</div>
+		<form-message></form-message>
+
+		<Badgeclass-issue-bulk-award-import *ngIf="viewState == 'import'"
+			(importPreviewDataEmitter)="onBulkIssueImportPreviewData($event)"
+			(updateStateEmitter)="updateViewState($event)">
+		</Badgeclass-issue-bulk-award-import>
+
+		<Badgeclass-issue-bulk-award-preview *ngIf="viewState == 'importPreview'"
+			[importPreviewData]="importPreviewData" (transformedImportDataEmitter)="onTransformedImportData($event)"
+			(updateStateEmitter)="updateViewState($event)">
+		</Badgeclass-issue-bulk-award-preview>
+
+		<badgeclass-issue-bulk-award-confirmation *ngIf="viewState == 'importConformation'"
+			[transformedImportData]="transformedImportData" (updateStateEmitter)="updateViewState($event)"
+			[badgeSlug]="badgeSlug" [issuerSlug]="issuerSlug">
+		</badgeclass-issue-bulk-award-confirmation>
+
+		<badgeclass-issue-bulk-award-error *ngIf="viewState == 'importError'"
+			[transformedImportData]="transformedImportData" (updateStateEmitter)="updateViewState($event)">
+		</badgeclass-issue-bulk-award-error>
 	</div>
-
-	<Badgeclass-issue-bulk-award-import
-		*ngIf="viewState == 'import'"
-		(importPreviewDataEmitter)="onBulkIssueImportPreviewData($event)"
-		(updateStateEmitter)="updateViewState($event)"
-	>
-	</Badgeclass-issue-bulk-award-import>
-
-	<Badgeclass-issue-bulk-award-preview
-		*ngIf="viewState == 'importPreview'"
-		[importPreviewData]="importPreviewData"
-		(transformedImportDataEmitter)="onTransformedImportData($event)"
-		(updateStateEmitter)="updateViewState($event)"
-	>
-	</Badgeclass-issue-bulk-award-preview>
-
-	<badgeclass-issue-bulk-award-confirmation
-		*ngIf="viewState == 'importConformation'"
-		[transformedImportData]="transformedImportData"
-		(updateStateEmitter)="updateViewState($event)"
-		[badgeSlug]="badgeSlug"
-		[issuerSlug]="issuerSlug"
-	>
-	</badgeclass-issue-bulk-award-confirmation>
-
-	<badgeclass-issue-bulk-award-error
-		*ngIf="viewState == 'importError'"
-		[transformedImportData]="transformedImportData"
-		(updateStateEmitter)="updateViewState($event)"
-	>
-	</badgeclass-issue-bulk-award-error>
 </ng-container>
