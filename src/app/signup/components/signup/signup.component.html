@@ -19,13 +19,15 @@
 						Open Educational Badges
 					</h1>
 
-					<p
-						class="tw-font-normal tw-text-[14px] tw-leading-[19.6px] md:tw-text-[20px] md:tw-leading-[28px] tw-text-oebblack tw-mt-3 tw-mb-5 md:tw-mt-4 md:tw-mb-6"
+
+					<p hlmP
+						class="tw-font-normal tw-mt-3 tw-mb-5 md:tw-mt-4 md:tw-mb-6"
 						*ngIf="!oAuthManager.currentAuthorization"
 					>
 						{{ 'Signup.youHaveAccount' | translate }}
 						<a class="tw-underline tw-text-[#1400FF]" [routerLink]="['/auth/login']">Login</a>.
 					</p>
+
 					<p
 						class="tw-font-normal tw-text-[20px] tw-leading-[28px]"
 						*ngIf="oAuthManager.currentAuthorization"
@@ -142,7 +144,7 @@
 
 					<p
 						hlmP
-						class="tw-font-normal tw-mt-3"
+						class="tw-font-normal tw-my-5"
 						[innerHTML]="'Signup.infoPersonalDataProcessing' | translate"
 					></p>
 
