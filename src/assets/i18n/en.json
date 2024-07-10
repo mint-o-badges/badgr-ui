@@ -314,7 +314,6 @@
 		"passMin8Char": "(minimum 8 characters)",
 		"repeatPassword": "Reenter Password",
 		"createAccount": "Create Account",
-		"receiveUpdatesCB": "Yes, <span class='tw-font-normal'> I would like to receive email updates about products and services, future webinars, news and events from Open Educational Badges. My consent is voluntary. I can revoke it at any time without giving reasons (e.g. by email to datenschutz@opensenselab.org).<span>",
 		"readTerms": "Please read and agree to the Terms of Service if you want to continue.",
 		"agreeToTerms1": "I have read and agree to the <a class='tw-underline tw-text-[#1400FF]' target='_blank' href='public/impressum'>terms of service</a>. ",
 		"agreeToTerms2": "Terms of Service",

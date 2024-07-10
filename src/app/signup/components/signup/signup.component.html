@@ -147,24 +147,6 @@
 					></p>
 
 					<div>
-						<label
-							class="checkbox checkbox-light l-flex u-margin-top2p5x tw-pl-[6px]"
-							for="news"
-							*ngIf="showMarketingOptIn"
-						>
-							<input
-								class="!tw-mt-[8px] tw-scale-[1.5] !tw-border-purple !tw-border-[0.6px]"
-								name="news"
-								id="news"
-								type="checkbox"
-								[formControl]="signupForm.rawControlMap.marketingOptIn"
-							/>
-							<span
-								[innerHTML]="'Signup.receiveUpdatesCB' | translate"
-								class="tw-font-semibold md:tw-text-[20px] tw-text-[14px] md:tw-leading-[24px] tw-leading-[16.8px] tw-text-oebblack tw-pl-[14px]"
-							>
-							</span>
-						</label>
 						<div class="u-margin-top3x">
 							<form>
 								<altcha-widget auto="onfocus" id="altcha"></altcha-widget>
