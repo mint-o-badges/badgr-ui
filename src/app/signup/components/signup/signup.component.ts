@@ -29,7 +29,7 @@ export class SignupComponent extends BaseRoutableComponent implements OnInit, Af
 		.addControl('lastName', '', Validators.required)
 		.addControl('password', '', [Validators.required, Validators.minLength(8)])
 		.addControl('passwordConfirm', '', [Validators.required, this.passwordsMatch.bind(this)])
-		.addControl('agreedTermsService', false, Validators.requiredTrue)
+		.addControl('agreedTermsService', false)
 		.addControl('marketingOptIn', false)
 		.addControl('captcha', '');
 
