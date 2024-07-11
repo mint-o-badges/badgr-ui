@@ -87,7 +87,7 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 				this.competencies = this.badge.getExtension('extensions:CompetencyExtension', [{}]);
 				this.category = this.badge.getExtension('extensions:CategoryExtension', {});
 				this.crumbs = [
-					{ title: 'Backpack', routerLink: ['/recipient/badges'] },
+					{ title: 'Mein Rucksack', routerLink: ['/recipient/badges'] },
 					{ title: this.badge.badgeClass.name, routerLink: ['/earned-badge/' + this.badge.slug] },
 				];
 			})

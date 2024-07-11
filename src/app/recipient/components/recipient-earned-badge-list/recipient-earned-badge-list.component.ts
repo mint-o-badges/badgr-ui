@@ -59,7 +59,7 @@ export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutable
 	mozillaFeatureEnabled = this.configService.featuresConfig['enableComingFromMozilla'];
 	maxDisplayedResults = 100;
 
-	crumbs: LinkEntry[] = [{ title: 'Backpack', routerLink: ['/recipient/badges'] }];
+	crumbs: LinkEntry[] = [{ title: 'Mein Rucksack', routerLink: ['/recipient/badges'] }];
 	profile: UserProfile;
 	running = false;
 	tabs: any = undefined;
