@@ -41,7 +41,7 @@ export class OebCheckboxComponent implements ControlValueAccessor  {
         this.ngModelChange.emit(event)
     }
 
-    //Angeular needs these for custom implementations of ngModel
+    //Angular needs these for custom implementations of ngModel
     writeValue(value: string): void {
         this.value = value ? value : ''
     }

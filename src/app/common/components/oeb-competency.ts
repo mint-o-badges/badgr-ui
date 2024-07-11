@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { lucideClock } from '@ng-icons/lucide';
 import { provideIcons } from '../../components/spartan/ui-icon-helm/src';
+import { Competency } from '../model/competency.model';
 
 @Component({
 	selector: 'oeb-competency',
@@ -24,6 +25,6 @@ import { provideIcons } from '../../components/spartan/ui-icon-helm/src';
 	`,
 })
 export class OebCompetency {
-	@Input() competency: any;
+	@Input() competency: Competency;
 	@Input() new: boolean = false;
 }

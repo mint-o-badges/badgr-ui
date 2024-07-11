@@ -76,7 +76,7 @@ export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutable
 
 	@ViewChild('countup') countup: CountUpDirective;
 	@ViewChild('countup2') countup2: CountUpDirective;
-	@ViewChild('testCounter') testCounter: CountUpDirective;
+	@ViewChild('badgesCounter') badgesCounter: CountUpDirective;
 	
 	activeTab = 'Badges';
 	private _badgesDisplay: BadgeDispay = 'grid';
