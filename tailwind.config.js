@@ -24,8 +24,6 @@ module.exports = {
 				'2xl': '1400px',
 			},
     },
-
-
     extend: {
       colors: {
         purple: 'var(--color-purple)',
@@ -45,6 +43,9 @@ module.exports = {
         link: 'var(--color-link)',
         oebgrey: 'var(--color-lightgray)'
       },
+      gridTemplateColumns: {
+        'badges': 'repeat(auto-fill, minmax(320px, 1fr))',
+      }
     },
   },
   plugins: [
