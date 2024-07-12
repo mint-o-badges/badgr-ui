@@ -144,7 +144,7 @@
 					*ngIf="instanceResults?.length"
 				>
 
-					<issuer-detail-datatable [recipientCount]="recipientCount" [_recipients]="instanceResults"></issuer-detail-datatable>
+					<issuer-detail-datatable [recipientCount]="recipientCount" [_recipients]="instanceResults" (actionElement)="revokeInstance($event)"></issuer-detail-datatable>
 
 					<bg-popup-menu #mobileTableMoreMenu>
 						<button type="button" class="menuitem" (click)="shareInstance(popInstance)">
