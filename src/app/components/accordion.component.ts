@@ -20,20 +20,19 @@ import { lucideClock } from '@ng-icons/lucide';
 		NgIf,
 	],
 	template: `
-	<div class="tw-bg-[var(--color-lightgray)] tw-border tw-border-solid tw-border-[var(--color-purple)] tw-rounded-lg tw-mt-4 tw-w-[346px] md:tw-w-[596px]"><div hlmAccordion>
+	<div class="tw-bg-[var(--color-lightgray)] tw-border tw-border-solid tw-border-purple tw-rounded-lg tw-mt-4"><div hlmAccordion>
 		<div hlmAccordionItem class="tw-px-2 tw-py-2">
 			<button
 				class="tw-w-full hover:tw-no-underline"
 				hlmAccordionTrigger
 			>
 				<div class="tw-w-full tw-flex tw-justify-between">
-					<div class="tw-flex tw-gap-2">
-						<span class="tw-font-bold">{{ name }}</span>
-						<a href="http://data.europa.eu/{{escoID}}" class="tw-text-[var(--color-link)] tw-underline" *ngIf="escoID">[E]</a>
+					<div class="tw-flex tw-gap-2 tw-flex-shrink-1">
+						<span class="tw-font-bold tw-text-left">{{ name }} <a href="http://data.europa.eu/{{escoID}}" class="tw-text-link tw-font-normal tw-underline" *ngIf="escoID">[E]</a></span>
 					</div>
-					<div class="tw-flex tw-items-center tw-justify-center tw-text-purple tw-gap-2 tw-mr-2">
+					<div class="tw-text-purple tw-whitespace-nowrap tw-flex tw-items-center tw-gap-2 tw-mr-2">
 						<hlm-icon name="lucideClock" class="!tw-w-4 !tw-h-4" />
-					  <span>{{ studyload.toString() }} </span>
+					 	<span>{{ studyload.toString() }} </span>
 					</div>
 				</div>
 				<hlm-icon hlmAccIcon class="tw-w-8 tw-h-8" />
