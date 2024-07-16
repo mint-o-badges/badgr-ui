@@ -10,10 +10,12 @@ import { addQueryParamsToUrl, stripQueryParamsFromUrl } from '../../../common/ut
 import { routerLinkForUrl } from '../public/public.component';
 import { AppConfigService } from '../../../common/app-config.service';
 import { Title } from '@angular/platform-browser';
+import { PageConfig } from '../../../common/components/badge-detail';
 
 @Component({
-	templateUrl: './badgeclass.component.html',
-	styleUrls: ['./badgeclass.component.css']
+	template: `<span>hello</span>`,
+	// template: '<bg-badgedetail [config]="config"></bg-badgedetail>',
+	// styleUrls: ['./badgeclass.component.css']
 })
 export class PublicBadgeClassComponent {
 	readonly issuerImagePlaceholderUrl = preloadImageURL(
@@ -24,6 +26,8 @@ export class PublicBadgeClassComponent {
 
 	badgeIdParam: LoadedRouteParam<PublicApiBadgeClassWithIssuer>;
 	routerLinkForUrl = routerLinkForUrl;
+
+	config: PageConfig
 
 	constructor(
 		private injector: Injector,
@@ -37,6 +41,27 @@ export class PublicBadgeClassComponent {
 			const service: PublicApiService = injector.get(PublicApiService);
 			return service.getBadgeClass(paramValue);
 		});
+
+		console.log(this.badgeClass)
+
+		// this.config = {
+		// 	badgeTitle: this.badgeClass.name,
+		// 	menuitems: [],
+		// 	badgeDescription: this.badgeClass.description,
+		// 	issuerSlug: this.issuer.id,
+		// 	slug: this.badgeClass.id,
+		// 	createdAt: new Date(),
+		// 	updatedAt: new Date(),
+		// 	category: '',
+		// 	tags: this.badgeClass.tags,
+		// 	issuerName: this.issuer.name,
+		// 	issuerImagePlacholderUrl: '',
+		// 	issuerImage: '',
+		// 	badgeLoadingImageUrl: this.badgeLoadingImageUrl,
+		// 	badgeFailedImageUrl: this.badgeFailedImageUrl,
+		// 	badgeImage: this.badgeClass.image,
+		// 	competencies: [] as any,
+		// }
 	}
 
 	get badgeClass(): PublicApiBadgeClassWithIssuer {

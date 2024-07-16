@@ -25,10 +25,12 @@ import { ShareSocialDialogOptions } from '../../../common/dialogs/share-social-d
 import { AppConfigService } from '../../../common/app-config.service';
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { BadgeClassCategory, BadgeClassLevel } from '../../models/badgeclass-api.model';
+import { PageConfig } from '../../../common/components/badge-detail';
 
 @Component({
 	selector: 'badgeclass-detail',
-	templateUrl: './badgeclass-detail.component.html',
+	template: `<bg-badgedetail [config]="config"></bg-badgedetail>`,
+	// templateUrl: './badgeclass-detail.component.html',
 	styleUrls: ['./badgeclass-detail.component.css'],
 })
 export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
@@ -82,6 +84,9 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 	resultsPerPage = 100;
 	issuer: Issuer;
 	crumbs: LinkEntry[];
+
+	config: PageConfig 
+
 
 	categoryOptions: { [key in BadgeClassCategory]: string } = {
 		competency: 'Kompetenz-Badge',
@@ -157,6 +162,51 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 				];
 				this.allBadgeInstances = retInstances;
 				this.updateResults();
+				this.config = {
+					crumbs: this.crumbs,
+					badgeTitle: this.badgeClass.name,
+					headerButton: {
+						title: 'Badge vergeben',
+						routerLink: ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'issue'],
+
+					},
+					menuitems: [
+						{
+							title: 'Bearbeiten',
+							routerLink: ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'edit'],
+							icon: 'icon_edit',
+
+						},
+						{
+							title: 'Löschen',
+							routerLink: [],
+							icon: 'icon_remove',
+							action: () => this.deleteBadge(),
+						}
+					
+					],
+					badgeDescription: this.badgeClass.description,
+					issuerSlug: this.issuerSlug,
+					slug: this.badgeSlug,
+					createdAt: this.badgeClass.createdAt,
+					updatedAt: this.badgeClass.updatedAt,
+					category: this.categoryOptions[this.badgeClass.extension['extensions:CategoryExtension']],
+					tags: this.badgeClass.tags,
+					issuerName: this.badgeClass.issuerName,
+					issuerImagePlacholderUrl: this.issuerImagePlacholderUrl,
+					issuerImage: '',
+					badgeLoadingImageUrl: this.badgeLoadingImageUrl,
+					badgeFailedImageUrl: this.badgeFailedImageUrl,
+					badgeImage: this.badgeClass.image,
+					competencies: this.badgeClass.extension['extensions:CompetencyExtension'],
+					datatable: {
+						caption: '',
+						recipientCount: this.recipientCount,
+						recipients: this.instanceResults,
+						actionElement: this.revokeInstance.bind(this),
+					}
+
+				}
 			},
 			(error) => {
 				this.messageService.reportLoadingError(

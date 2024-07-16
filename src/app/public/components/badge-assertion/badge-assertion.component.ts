@@ -1,4 +1,4 @@
-import { Component, Injector, ViewChild } from '@angular/core';
+import { Component, Injector, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { preloadImageURL } from '../../../common/util/file-util';
@@ -18,9 +18,11 @@ import { saveAs } from 'file-saver';
 import { Title } from '@angular/platform-browser';
 import { VerifyBadgeDialog } from '../verify-badge-dialog/verify-badge-dialog.component';
 import { BadgeClassCategory, BadgeClassLevel } from './../../../issuer/models/badgeclass-api.model';
+import { PageConfig } from '../../../common/components/badge-detail';
 
 @Component({
-	templateUrl: './badge-assertion.component.html',
+	// templateUrl: './badge-assertion.component.html',
+	template: '<bg-badgedetail [config]="config"></bg-badgedetail>',
 	styleUrls: ['./badge-assertion.component.css'],
 })
 export class PublicBadgeAssertionComponent {
@@ -52,6 +54,9 @@ export class PublicBadgeAssertionComponent {
 	assertionId: string;
 
 	awardedToDisplayName: string;
+
+	config: PageConfig 
+
 
 	routerLinkForUrl = routerLinkForUrl;
 

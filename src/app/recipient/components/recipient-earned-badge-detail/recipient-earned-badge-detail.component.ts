@@ -23,10 +23,12 @@ import { QueryParametersService } from '../../../common/services/query-parameter
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { BadgeInstance } from '../../../issuer/models/badgeinstance.model';
 import { Issuer } from '../../../issuer/models/issuer.model';
+import { PageConfig } from '../../../common/components/badge-detail';
 
 @Component({
 	selector: 'recipient-earned-badge-detail',
-	templateUrl: './recipient-earned-badge-detail.component.html',
+	template: `<bg-badgedetail [config]="config"></bg-badgedetail>`,
+	// templateUrl: './recipient-earned-badge-detail.component.html',
 	styleUrls: ['./recipient-earned-badge-detail.component.css'],
 })
 export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
@@ -46,6 +48,9 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 	badge: RecipientBadgeInstance;
 	issuerBadgeCount: string;
 	launchpoints: ApiExternalToolLaunchpoint[];
+
+	config: PageConfig 
+
 
 	now = new Date();
 	compareDate = compareDate;
@@ -90,6 +95,48 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 					{ title: 'Backpack', routerLink: ['/recipient/badges'] },
 					{ title: this.badge.badgeClass.name, routerLink: ['/earned-badge/' + this.badge.slug] },
 				];
+				this.config = {
+					crumbs: this.crumbs,
+					badgeTitle: this.badge.badgeClass.name,
+					headerButton: {
+						title: 'Badge teilen',
+						routerLink: [],
+					},
+					menuitems: [
+						{
+							title: 'Verifizieren',
+							routerLink: [],
+							icon: 'icon_edit',
+
+						},
+						{
+							title: 'PDF exportieren',
+							routerLink: [],
+							icon: 'icon_remove',
+						},
+						{
+							title: 'Löschen',
+							routerLink: [],
+							icon: 'icon_remove',
+						}
+					
+					],
+					badgeDescription: this.badge.badgeClass.description,
+					issuerSlug: this.badge.badgeClass.issuer.id,
+					slug: this.badgeSlug,
+					createdAt: new Date(),
+					updatedAt: new Date(),
+					category: '',
+					tags: this.badge.badgeClass.tags,
+					issuerName: this.badge.badgeClass.issuer.name,
+					issuerImagePlacholderUrl: this.issuerImagePlacholderUrl,
+					issuerImage: '',
+					badgeLoadingImageUrl: this.badgeLoadingImageUrl,
+					badgeFailedImageUrl: this.badgeFailedImageUrl,
+					badgeImage: this.badge.badgeClass.image,
+					competencies: this.competencies as [{ name: string; description: string; studyLoad: number; }],
+
+				}
 			})
 			.catch((e) => this.messageService.reportAndThrowError('Failed to load your badges', e));
 
