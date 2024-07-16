@@ -65,7 +65,7 @@
 	</footer>
 </div>
 <header class="" *ngIf="!curtain">
-	<nav class="oeb-navbar" [class.navbar-light]="!theme.useColorNavbar">
+	<nav class="oeb-navbar">
 		<a [class.logo-is-loading]="isRequestPending"
 			[href]="isOAuthAuthorizationInProcess ? '#' : theme.alternateLandingUrl || '/'">
 			<picture class="oeb-navbar-logo">
@@ -77,19 +77,19 @@
 		<!-- Unauthenticated -->
 		<ng-template [ngIf]="!loggedIn">
 			<nav class="tw-items-stretch tw-align-middle tw-hidden md:tw-flex">
-				<div class="oeb-navbaritems">
+				<div class="tw-flex tw-gap-10 tw-items-center">
 					<!-- About Badges Menu -->
-					<button role="menuitem" aria-haspopup="true" [class.navitem-light]="!theme.useColorNavbar"
-						class="oeb-navitem tw-cursor-pointer" routerLinkActive="navitem-is-active"
+					<button role="menuitem" aria-haspopup="true"
+						class="oeb-navitem tw-cursor-pointer" routerLinkActive="oeb-navitem-is-active"
 						[bgPopupMenuTrigger]="aboutBadgesMenu">
 						{{ 'General.aboutBadges' | translate }}
 						<svg class="navitem-x-icon" icon="icon_dropdown"></svg>
 					</button>
-					<a *ngIf="!features.disableRegistration" [class.navitem-light]="!theme.useColorNavbar"
-						class="oeb-navitem" routerLinkActive="navitem-is-active" [routerLink]="['/public/about']">{{
+					<a *ngIf="!features.disableRegistration"
+						class="oeb-navitem" routerLinkActive="oeb-navitem-is-active" [routerLink]="['/public/about']">{{
 						'NavItems.aboutOpenEducationalBadges' | translate }}</a>
-					<a *ngIf="!features.disableRegistration" [class.navitem-light]="!theme.useColorNavbar"
-						class="oeb-navitem" routerLinkActive="navitem-is-active" [routerLink]="['/signup']">{{
+					<a *ngIf="!features.disableRegistration"
+						class="oeb-navitem" routerLinkActive="oeb-navitem-is-active" [routerLink]="['/signup']">{{
 						'NavItems.register' | translate }}</a>
 
 					<!-- ToDo: comment in when all pages are completely translated -->
@@ -103,54 +103,46 @@
 							<span [ngStyle]="{ 'font-weight': selectedLng == 'en' ? 'bold' : 'normal' }">EN</span>
 						</button>
 					</div> -->
+					<oeb-button size="sm" class="tw-self-center" [routerLink]="['/auth/login']" text="Login"></oeb-button>
 				</div>
-
-				<!-- Login btn -->
-				<oeb-button size="sm" class="tw-self-center" [routerLink]="['/auth/login']" text="Login"></oeb-button>
 			</nav>
 		</ng-template>
 
 		<!-- Authenticated -->
 		<ng-template [ngIf]="loggedIn && !isOAuthAuthorizationInProcess">
-			<nav class="navbar-x-items" role="menubar">
-				<div class="navbar-x-navitems">
+			<nav class="tw-hidden lg:tw-block">
+				<div class="tw-flex tw-gap-10 tw-items-center">
 					<!-- About Badges Menu -->
-					<button role="menuitem" aria-haspopup="true" [class.navitem-light]="!theme.useColorNavbar"
-						class="navitem tw-cursor-pointer" routerLinkActive="navitem-is-active"
+					<button role="menuitem" aria-haspopup="true"
+						class="oeb-navitem tw-cursor-pointer" routerLinkActive="oeb-navitem-is-active"
 						[bgPopupMenuTrigger]="aboutBadgesMenu">
 						{{ 'General.aboutBadges' | translate }}
 						<svg class="navitem-x-icon" icon="icon_dropdown"></svg>
 					</button>
 
-					<a role="menuitem" [class.navitem-light]="!theme.useColorNavbar" class="navitem"
-						routerLinkActive="navitem-is-active" [routerLink]="['public/about']">
+					<a class="oeb-navitem"
+						routerLinkActive="oeb-navitem-is-active" [routerLink]="['public/about']">
 						{{ 'NavItems.aboutOpenEducationalBadges' | translate }}
 					</a>
-					<a role="menuitem" [class.navitem-light]="!theme.useColorNavbar" class="navitem"
-						routerLinkActive="navitem-is-active" [routerLink]="['/recipient/badges']">{{ 'General.backpack'
+					<a class="oeb-navitem"
+						routerLinkActive="oeb-navitem-is-active" [routerLink]="['/recipient/badges']">{{ 'General.backpack'
 						| translate }}</a>
-					<a role="menuitem" [class.navitem-light]="!theme.useColorNavbar" class="navitem"
-						routerLinkActive="navitem-is-active" [routerLink]="['/recipient/badge-collections']">{{
-						'General.collections' | translate }}</a>
-					<button role="menuitem" aria-haspopup="true" [class.navitem-light]="!theme.useColorNavbar"
-						class="navitem tw-cursor-pointer" *ngIf="launchpoints?.length"
-						routerLinkActive="navitem-is-active" [bgPopupMenuTrigger]="appsMenu">
-						Apps
-						<svg class="navitem-x-icon" icon="icon_dropdown"></svg>
-					</button>
-					<a role="menuitem" [class.navitem-light]="!theme.useColorNavbar" class="navitem tw-cursor-pointer"
-						*ngIf="theme.customMenu" routerLinkActive="navitem-is-active" [bgPopupMenuTrigger]="customMenu">
+					<!-- <a class="oeb-navitem"
+						routerLinkActive="oeb-navitem-is-active" [routerLink]="['/recipient/badge-collections']">{{
+						'General.collections' | translate }}</a> -->
+					<a class="oeb-navitem tw-cursor-pointer"
+						*ngIf="theme.customMenu" routerLinkActive="oeb-navitem-is-active" [bgPopupMenuTrigger]="customMenu">
 						{{ theme.customMenu.label }}
 						<svg class="navitem-x-icon" icon="icon_dropdown"></svg>
 					</a>
 
-					<a role="menuitem" [class.navitem-light]="!theme.useColorNavbar" class="navitem"
-						routerLinkActive="navitem-is-active" [routerLink]="['/issuer']">{{ 'NavItems.myInstitutions' |
+					<a class="oeb-navitem"
+						routerLinkActive="oeb-navitem-is-active" [routerLink]="['/issuer']">{{ 'NavItems.myInstitutions' |
 						translate }}</a>
 
 					<!-- Account Menu -->
-					<button role="menuitem" aria-haspopup="true" [class.navitem-light]="!theme.useColorNavbar"
-						class="navitem tw-cursor-pointer" routerLinkActive="navitem-is-active"
+					<button aria-haspopup="true"
+						class="oeb-navitem tw-cursor-pointer" routerLinkActive="oeb-navitem-is-active"
 						[bgPopupMenuTrigger]="accountMenu">
 						{{ 'General.account' | translate }}
 						<svg class="navitem-x-icon" icon="icon_dropdown"></svg>
@@ -171,7 +163,7 @@
 			</nav>
 		</ng-template>
 
-		<button class="menutoggle md:tw-hidden" (click)="toggleMobileNav()" [class.menutoggle-is-active]="mobileNavOpen"
+		<button class="menutoggle lg:tw-hidden" (click)="toggleMobileNav()" [class.menutoggle-is-active]="mobileNavOpen"
 			[class.menutoggle-light]="!theme.useColorNavbar">
 			<span></span>
 			<span></span>

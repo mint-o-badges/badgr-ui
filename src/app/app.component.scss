@@ -2,6 +2,19 @@
 @import url("../styles/google-webfonts/nunito.scss");
 @import url("../styles/google-webfonts/rubik.scss");
 
+
+.oeb-stickyfooter {
+	display: grid;
+	min-height: 100vh;
+	grid-template-columns: 1fr;
+	grid-template-areas:
+	'nav   ' 
+	'loader' 
+	'main  ' 
+	'footer';
+	grid-template-rows: 100px 6px 1fr auto;
+}
+
 .flex-1 {
 	flex: 1;
 }
@@ -315,12 +328,12 @@
 	}
 }
 
-
+// NAVBAR
 .oeb-navbar {
 	align-items: center;
 	background-color: var(--color-lightgray);
 	display: flex;
-	height: 72px;
+	height: 100px;
 	justify-content: space-between;
 	position: relative;
 	padding-right: calc(var(--gridspacing) * 2);
@@ -362,22 +375,58 @@
 
 .oeb-navitem {
 	--typography-size: 16px;
-	font-family: var(--font-family);
-	font-size: var(--typography-size);
-	line-height: calc(var(--typography-size) + 8px);
-	font-weight: bold;
+	font-family: rubik;
+	font-size: 20px;
 	align-items: center;
 	color: var(--color-oebblack);
 	display: flex;
-	padding-bottom: calc(2.5 * var(--gridspacing));
+	padding: 0 0.2em;
 	position: relative;
 	font-weight: 400;
 	line-height: 30px;
+	// white-space: no-wrap;
+	transition: color var(--transition-easing) var(--transition-duration);
 
 	.navitem-x-icon {
 		height: 24px;
 		width: 24px;
 	}
+
+
+	&:after {
+		background-color: transparent;
+		bottom: -10px;
+		content: '';
+		display: block;
+		height: 4px;
+		left: 0;
+		position: absolute;
+		transition: background-color var(--transition-easing) var(--transition-duration);
+		top: auto;
+		width: 100%;
+		will-change: background-color;
+		opacity: 0.7;
+	}
+	&:hover {
+		color: var(--color-buttonhover);
+	}
+	&:hover:after {
+		background-color: var(--color-buttonhover);
+	}
+	&:active:after
+	 {
+		background-color: var(--color-purple);
+	}
+}
+.oeb-navitem.oeb-navitem-is-active {
+	&:after
+	{
+		background-color: var(--color-purple);
+		opacity: 0.85;
+	}
+}
+.oeb-navitem-is-active {
+	color: var(--color-purple) !important;
 }
 
 .oeb-navbar-logo {
