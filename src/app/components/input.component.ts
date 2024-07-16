@@ -73,6 +73,7 @@ export class OebInputComponent {
 	@Input() maxchar?: number = null;
 	@Input() max?: number;
     @Input() sublabel?: string;
+	@Input() autofocus = false;
 
 
 	@ViewChild('textInput') textInput: ElementRef;
@@ -128,10 +129,20 @@ export class OebInputComponent {
 		)[0]; // Only display the first error
 	}
 
+	ngAfterViewInit() {
+		if (this.autofocus) {
+			this.focus();
+		}
+	}
+
     cacheControlState() {
 		this.cachedErrorMessage = this.uncachedErrorMessage;
 		this.cachedDirtyState = this.control.dirty;
 		this.cachedErrorState = this.controlErrorState;
+	}
+
+	focus() {
+		this.inputElement.focus();
 	}
 
     handleKeyPress(event: KeyboardEvent) {
