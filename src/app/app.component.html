@@ -64,7 +64,7 @@
 		</div>
 	</footer>
 </div>
-<header class="" *ngIf="!curtain">
+<header *ngIf="!curtain">
 	<nav class="oeb-navbar">
 		<a [class.logo-is-loading]="isRequestPending"
 			[href]="isOAuthAuthorizationInProcess ? '#' : theme.alternateLandingUrl || '/'">
@@ -76,8 +76,8 @@
 
 		<!-- Unauthenticated -->
 		<ng-template [ngIf]="!loggedIn">
-			<nav class="tw-items-stretch tw-align-middle tw-hidden md:tw-flex">
-				<div class="tw-flex tw-gap-10 tw-items-center">
+			<nav class="tw-items-stretch tw-align-middle tw-hidden lg:tw-flex">
+				<div class="tw-flex tw-gap-8 tw-items-center">
 					<!-- About Badges Menu -->
 					<button role="menuitem" aria-haspopup="true"
 						class="oeb-navitem tw-cursor-pointer" routerLinkActive="oeb-navitem-is-active"
@@ -111,7 +111,7 @@
 		<!-- Authenticated -->
 		<ng-template [ngIf]="loggedIn && !isOAuthAuthorizationInProcess">
 			<nav class="tw-hidden lg:tw-block">
-				<div class="tw-flex tw-gap-10 tw-items-center">
+				<div class="tw-flex tw-gap-8 tw-items-center">
 					<!-- About Badges Menu -->
 					<button role="menuitem" aria-haspopup="true"
 						class="oeb-navitem tw-cursor-pointer" routerLinkActive="oeb-navitem-is-active"
