@@ -22,7 +22,12 @@ import { UserProfile } from '../../../common/model/user-profile.model';
 import { provideIcons } from '../../../components/spartan/ui-icon-helm/src';
 import { lucideHand, lucideHexagon, lucideMedal, lucideBookOpen, lucideClock, lucideHeart } from '@ng-icons/lucide';
 import { CountUpDirective } from 'ngx-countup';
+import { Competency } from '../../../common/model/competency.model';
+
 type BadgeDispay = 'grid' | 'list';
+type EscoCompetencies = {
+	[key: string]: Competency;		
+}
 
 @Component({
 	selector: 'recipient-earned-badge-list',
@@ -315,8 +320,9 @@ export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutable
 	// }
 
 	private groupCompetencies(badges) {
-		let groupedCompetencies = {};
-		let newGroupedCompetencies = {};
+
+		let groupedCompetencies : EscoCompetencies = {};
+		let newGroupedCompetencies : EscoCompetencies = {};
 		this.groupedUserCompetencies = {};
 		this.newGroupedUserCompetencies = {};
 
@@ -325,8 +331,12 @@ export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutable
 			competencies.forEach((competency) => {
 				if (groupedCompetencies[competency.escoID]) {
 					groupedCompetencies[competency.escoID].studyLoad += competency.studyLoad;
+					if (groupedCompetencies[competency.escoID].lastReceived < badge.issueDate){
+						groupedCompetencies[competency.escoID].lastReceived = badge.issueDate;
+					}
 				} else {
 					groupedCompetencies[competency.escoID] = Object.create(competency);
+					groupedCompetencies[competency.escoID].lastReceived = badge.issueDate;
 				}
 				this.totalStudyTime += competency.studyLoad;
 			});
@@ -337,15 +347,18 @@ export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutable
 			competencies.forEach((competency) => {
 				if (newGroupedCompetencies[competency.escoID]) {
 					newGroupedCompetencies[competency.escoID].studyLoad += competency.studyLoad;
+					if (newGroupedCompetencies[competency.escoID].lastReceived < badge.issueDate){
+						newGroupedCompetencies[competency.escoID].lastReceived = badge.issueDate;
+					}
 				} else {
 					newGroupedCompetencies[competency.escoID] = Object.create(competency);
+					newGroupedCompetencies[competency.escoID].lastReceived = badge.issueDate;
 				}
 			});
 		});
 
-
-		this.groupedUserCompetencies = groupedCompetencies;
-		this.newGroupedUserCompetencies = newGroupedCompetencies;
+		this.groupedUserCompetencies = Object.values(groupedCompetencies).sort((a,b) => { return a.lastReceived.getTime() - b.lastReceived.getTime() });
+		this.newGroupedUserCompetencies = Object.values(newGroupedCompetencies).sort((a,b) => { return a.lastReceived.getTime() - b.lastReceived.getTime() });;
 	}
 
 	onTabChange(tab) {

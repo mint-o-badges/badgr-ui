@@ -5,9 +5,9 @@
 		<div class="oeb-section-sm">
 			<div class="oeb-headline-container tw-relative">
 				<div class="tw-z-10 tw-relative">
-					<h1 hlmH1 class="tw-text-purple">Alle Badges in der Übersicht</h1>
+					<h1 hlmH1 class="tw-text-purple">{{ 'Badge.catalogHeadline' | translate }}</h1>
 					<h1 hlmH1 class="lg:tw-pl-[10%] tw-font-extrabold tw-text-purple">
-						{{ badges.length | i18nPlural: plural['badges'] }} in {{ badgeResultsByIssuer.length | i18nPlural: plural['issuer'] }}
+						{{ badges.length | i18nPlural: plural['badges'] }} in {{ issuers.length | i18nPlural: plural['issuer'] }}
 					</h1>
 				</div>
 				<oeb-background imgClass="md:tw-h-[400px] tw-h-[269px] tw-rotate-[-17.58deg] md:tw-rotate-[-36.66deg]" class="tw-right-[5%] tw-top-[-10%] md:tw-right-[10%] md:tw-top-[-15%]" image="assets/oeb/images/signuppage/circles.png"></oeb-background>

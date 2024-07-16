@@ -29,19 +29,19 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 
 	Array = Array;
 
-	// issuers: Issuer[] = null;
 	badges: BadgeClass[] = null;
 	badgeResults: BadgeClass[] = null;
 	badgeResultsByIssuer: MatchingBadgeIssuer[] = [];
 	badgeResultsByCategory: MatchingBadgeCategory[] = [];
 	order = 'asc';
 	//issuerToBadgeInfo: {[issuerId: string]: IssuerBadgesInfo} = {};
-
+	
 	// issuersLoaded: Promise<unknown>;
 	badgesLoaded: Promise<unknown>;
-
+	
 	showLegend = false;
 	tags: string[] = [];
+	issuers: string[] = [];
 	selectedTag: string = null;
 
 	get theme() {
@@ -117,8 +117,10 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 					this.badgeResults = this.badges;
 					badges.forEach((badge) => {
 						this.tags = this.tags.concat(badge.tags);
+						this.issuers = this.tags.concat(badge.issuer);
 					});
 					this.tags = sortUnique(this.tags);
+					this.issuers = sortUnique(this.issuers);
 					this.updateResults();
 					resolve(badges);
 				},

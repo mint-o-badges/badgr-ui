@@ -240,7 +240,8 @@
 		"participation": "Teilnahme",
 		"competency": "Kompetenz",
 		"title": "Titel",
-		"createdOn": "Erstellt am"
+		"createdOn": "Erstellt am",
+		"catalogHeadline": "Alle Badges in der Übersicht"
 	},
 	"CreateBadge": {
 		"chooseBadgeCategory": "Badge-Kategorie wählen",
