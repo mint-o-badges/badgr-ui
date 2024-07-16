@@ -27,7 +27,7 @@ import { PageConfig } from '../../../common/components/badge-detail';
 
 @Component({
 	selector: 'recipient-earned-badge-detail',
-	template: `<bg-badgedetail [config]="config"></bg-badgedetail>`,
+	template: `<bg-badgedetail [config]="config" [awaitPromises]="[badgesLoaded]"></bg-badgedetail>`,
 	// templateUrl: './recipient-earned-badge-detail.component.html',
 	styleUrls: ['./recipient-earned-badge-detail.component.css'],
 })
@@ -100,37 +100,39 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 					badgeTitle: this.badge.badgeClass.name,
 					headerButton: {
 						title: 'Badge teilen',
-						routerLink: [],
+						action: () => this.shareBadge(),
 					},
 					menuitems: [
 						{
 							title: 'Verifizieren',
-							routerLink: [],
-							icon: 'icon_edit',
-
+							// routerLink: this.verifyUrl,
+							icon: 'icon_checkmark',
+							action: () => window.open(this.verifyUrl, '_blank'),
 						},
 						{
 							title: 'PDF exportieren',
 							routerLink: [],
 							icon: 'icon_remove',
+							action: () => this.exportPdf(),
 						},
 						{
 							title: 'Löschen',
 							routerLink: [],
 							icon: 'icon_remove',
+							action: () => this.deleteBadge(this.badge),
 						}
 					
 					],
 					badgeDescription: this.badge.badgeClass.description,
 					issuerSlug: this.badge.badgeClass.issuer.id,
 					slug: this.badgeSlug,
-					createdAt: new Date(),
-					updatedAt: new Date(),
-					category: '',
+					issuedOn: this.badge.issueDate,
+					issuedTo: this.badge.recipientEmail,
+					category: this.category['Category'] === 'competency' ? 'Kompetenz- Badge' : 'Teilnahme- Badge',
 					tags: this.badge.badgeClass.tags,
 					issuerName: this.badge.badgeClass.issuer.name,
 					issuerImagePlacholderUrl: this.issuerImagePlacholderUrl,
-					issuerImage: '',
+					issuerImage: this.badge.badgeClass?.issuer?.image,
 					badgeLoadingImageUrl: this.badgeLoadingImageUrl,
 					badgeFailedImageUrl: this.badgeFailedImageUrl,
 					badgeImage: this.badge.badgeClass.image,

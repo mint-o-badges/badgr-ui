@@ -13,8 +13,7 @@ import { Title } from '@angular/platform-browser';
 import { PageConfig } from '../../../common/components/badge-detail';
 
 @Component({
-	template: `<span>hello</span>`,
-	// template: '<bg-badgedetail [config]="config"></bg-badgedetail>',
+	template: '<bg-badgedetail [config]="config" [awaitPromises]="[badgeClass]"></bg-badgedetail>',
 	// styleUrls: ['./badgeclass.component.css']
 })
 export class PublicBadgeClassComponent {
@@ -39,29 +38,33 @@ export class PublicBadgeClassComponent {
 
 		this.badgeIdParam = new LoadedRouteParam(injector.get(ActivatedRoute), 'badgeId', (paramValue) => {
 			const service: PublicApiService = injector.get(PublicApiService);
-			return service.getBadgeClass(paramValue);
+			const badgeClass = service.getBadgeClass(paramValue);
+			badgeClass.then((badge) => {
+				this.config = {
+					badgeTitle: badge.name,
+					menuitems: [],
+					badgeDescription: badge.description,
+					issuerSlug: badge.issuer['slug'],
+					slug: badge.id,
+					category: badge['extensions:CategoryExtension'].Category === 'competency' ? 'Kompetenz- Badge' : 'Teilnahme- Badge',
+					tags: badge.tags,
+					issuerName: badge.issuer.name,
+					issuerImagePlacholderUrl: '',
+					issuerImage: badge.issuer.image,
+					badgeLoadingImageUrl: this.badgeLoadingImageUrl,
+					badgeFailedImageUrl: this.badgeFailedImageUrl,
+					badgeImage: badge.image,
+					competencies: badge['extensions:CompetencyExtension'],
+				}
+			})
+			return badgeClass
+			// return service.getBadgeClass(paramValue);
 		});
 
-		console.log(this.badgeClass)
+		// console.log(this.badgeIdParam)
 
-		// this.config = {
-		// 	badgeTitle: this.badgeClass.name,
-		// 	menuitems: [],
-		// 	badgeDescription: this.badgeClass.description,
-		// 	issuerSlug: this.issuer.id,
-		// 	slug: this.badgeClass.id,
-		// 	createdAt: new Date(),
-		// 	updatedAt: new Date(),
-		// 	category: '',
-		// 	tags: this.badgeClass.tags,
-		// 	issuerName: this.issuer.name,
-		// 	issuerImagePlacholderUrl: '',
-		// 	issuerImage: '',
-		// 	badgeLoadingImageUrl: this.badgeLoadingImageUrl,
-		// 	badgeFailedImageUrl: this.badgeFailedImageUrl,
-		// 	badgeImage: this.badgeClass.image,
-		// 	competencies: [] as any,
-		// }
+
+		
 	}
 
 	get badgeClass(): PublicApiBadgeClassWithIssuer {

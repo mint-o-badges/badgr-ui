@@ -1,27 +1,33 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { LinkEntry } from './bg-breadcrumbs/bg-breadcrumbs.component';
+import { VerifyBadgeDialog } from '../../public/components/verify-badge-dialog/verify-badge-dialog.component';
 
 type MenuItem = {
     title: string;
-    routerLink: string[];
+    routerLink?: string[] | string;
     icon: string;
     disabled?: boolean;
     action?: () => void;
 };
 
+type HeaderButton = {
+    title: string;
+    routerLink?: string[];
+    disabled?: boolean;
+    action?: () => void;
+};
+
 export interface PageConfig {
-     crumbs?: LinkEntry[];
+     crumbs?: LinkEntry[] | null;
      badgeTitle: string;
-     headerButton?: {
-        title: string;
-        routerLink: string[];
-        disabled?: boolean;
-     },
+     headerButton?: HeaderButton | null,
      issuerSlug: string;
      slug: string;
      menuitems?: MenuItem[];
-     createdAt: Date;
-     updatedAt: Date;
+     createdAt?: Date;
+     updatedAt?: Date;
+     issuedOn?: Date;
+     issuedTo?: string;
      category: string;
      tags: string[];
      issuerName: string;
@@ -49,24 +55,26 @@ export interface PageConfig {
 @Component({
 	selector: 'bg-badgedetail',
 	template: `
-        <main class="o-container">
+    <ng-template [bgAwaitPromises]="awaitPromises">
+        <main class="o-container" *ngIf="config">
         <form-message></form-message>
         <div class="l-containerxaxis">
-            <header *ngIf="config.crumbs" class="topbar">
-                    <div class="topbar-x-breadcrumbs">
-                        <bg-breadcrumbs [linkentries]="config.crumbs"> </bg-breadcrumbs>
-                    </div>
-            </header>
+            
             <div class="tw-flex tw-flex-col tw-relative">
                 <div class="badge-header">
                     <h1 class="tw-text-purple tw-max-w-[480px]">{{ config.badgeTitle }}</h1>
-                    <div *ngIf="config.headerButton.title" class="badge-header-btn">
-					<a
+                    <div *ngIf="config.headerButton" class="badge-header-btn">
+					<a *ngIf="config.headerButton.routerLink"
 						class="button tw-w-[305px] md:tw-w-[358px] md:tw-h-[64px] tw-h-[45px] tw-flex tw-items-center tw-justify-center tw-text-xl tw-rounded-[7px]"
 						[routerLink]="config.headerButton.routerLink"
 						[disabled-when-requesting]="true"
 						>{{ config.headerButton.title }}</a
 					>
+                    <button *ngIf="config.headerButton.action"
+                        class="button tw-w-[305px] md:tw-w-[358px] md:tw-h-[64px] tw-h-[45px] tw-flex tw-items-center tw-justify-center tw-text-xl tw-rounded-[7px]"
+                        (click)="config.headerButton.action()"
+                        [disabled-when-requesting]="true">{{ config.headerButton.title }}</button>
+
 					<button class="threedots threedots-secondary tw-rounded-[7px] tw-w-[44.8px] tw-h-[44.8px] md:tw-w-[64px] md:tw-h-[64px]" id="actionstrigger" [bgPopupMenuTrigger]="moreMenu">
 						<svg icon="icon_more"></svg>
 						<span class="visuallyhidden">Mehr</span>
@@ -137,20 +145,34 @@ export interface PageConfig {
 								<dd class="u-text-small ">{{ config.category }}</dd>
 							</div>
 							
-							<div class="l-flex l-flex-1x tw-text-oebblack u-padding-top2x u-margin-top2x border border-top border-light3 md:tw-flex-row tw-flex-col">
+							<div *ngIf="config.updatedAt" class="l-flex l-flex-1x tw-text-oebblack u-padding-top2x u-margin-top2x border border-top border-light3 md:tw-flex-row tw-flex-col">
 								<dt class="u-text-small-bold "
 								>
 									Zuletzt editiert:
 								</dt>
 								<dd class="u-text-small"><time [date]="config.updatedAt" format="dd.MM.y"></time></dd>
 							</div>
-							<div class="l-flex l-flex-1x tw-text-oebblack u-padding-top2x u-margin-top2x border border-top border-light3 md:tw-flex-row tw-flex-col">
+							<div *ngIf="config.createdAt" class="l-flex l-flex-1x tw-text-oebblack u-padding-top2x u-margin-top2x border border-top border-light3 md:tw-flex-row tw-flex-col">
 								<dt class="u-text-small-bold "
 								>
 									Erstellt am:
 								</dt>
 								<dd class="u-text-small"><time [date]="config.createdAt" format="dd.MM.y"></time></dd>
 							</div>
+                            <div *ngIf="config.issuedOn" class="l-flex l-flex-1x tw-text-oebblack u-padding-top2x u-margin-top2x border border-top border-light3 md:tw-flex-row tw-flex-col">
+								<dt class="u-text-small-bold "
+								>
+									Issued on:
+								</dt>
+								<dd class="u-text-small"><time [date]="config.issuedOn" format="dd.MM.y"></time></dd>
+							</div>
+                            <div *ngIf="config.issuedTo" class="l-flex l-flex-1x tw-text-oebblack u-padding-top2x u-margin-top2x border border-top border-light3 md:tw-flex-row tw-flex-col">
+                                <dt class="u-text-small-bold "
+                                >
+                                    Vergeben an:
+                                </dt>
+                                <dd class="u-text-small u-break-all">{{ config.issuedTo }}</dd>
+                            </div>
 	
 						</dl>
 
@@ -186,6 +208,7 @@ export interface PageConfig {
                             </div>
                         </div>
                     </section>
+                    <ng-content></ng-content>
             </div>
 
         </div>
@@ -194,9 +217,11 @@ export interface PageConfig {
 
 
         </main>
+        </ng-template>
 
 	`,
 })
 export class BgBadgeDetail {
     @Input() config: PageConfig;
+    @Input() awaitPromises?: Promise<any>[];
 }

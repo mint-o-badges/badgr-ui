@@ -22,7 +22,11 @@ import { PageConfig } from '../../../common/components/badge-detail';
 
 @Component({
 	// templateUrl: './badge-assertion.component.html',
-	template: '<bg-badgedetail [config]="config"></bg-badgedetail>',
+	template: `<verify-badge-dialog
+					#verifyBadgeDialog
+					(verifiedBadgeAssertion)="onVerifiedBadgeAssertion($event)"
+				></verify-badge-dialog>
+	<bg-badgedetail [config]="config" [awaitPromises]="[assertionIdParam]"></bg-badgedetail>`,
 	styleUrls: ['./badge-assertion.component.css'],
 })
 export class PublicBadgeAssertionComponent {
@@ -162,6 +166,44 @@ export class PublicBadgeAssertionComponent {
 			this.assertionId = paramValue;
 			const service: PublicApiService = this.injector.get(PublicApiService);
 			return service.getBadgeAssertion(paramValue).then((assertion) => {
+				this.config = {
+					badgeTitle: assertion.badge.name,
+					headerButton: {
+						title: 'Verify Badge',
+						action: () => this.verifyBadge(),
+
+					},
+					menuitems: [
+						{
+							title: 'Download JSON',
+							icon: 'icon_external_link',
+							action: () => window.open(this.rawJsonUrl),
+
+						},
+						{
+							title: 'Download baked Image',
+							icon: 'icon_external_link',
+							action: () => window.open(this.rawBakedUrl),
+						},
+						{
+							title: 'View Badge',
+							icon: 'icon_badge',
+							routerLink: routerLinkForUrl(assertion.badge.hostedUrl || assertion.badge.id)
+						}
+					],
+					badgeDescription: assertion.badge.description,
+					issuerSlug: assertion.badge.issuer['slug'],
+					slug: assertion.badge.id,
+					category: assertion.badge['extensions:CategoryExtension'].Category === 'competency' ? 'Kompetenz- Badge' : 'Teilnahme- Badge',
+					tags: assertion.badge.tags,
+					issuerName: assertion.badge.issuer.name,
+					issuerImagePlacholderUrl: '',
+					issuerImage: assertion.badge.issuer.image,
+					badgeLoadingImageUrl: this.badgeLoadingImageUrl,
+					badgeFailedImageUrl: this.badgeFailedImageUrl,
+					badgeImage: assertion.badge.image,
+					competencies: assertion.badge['extensions:CompetencyExtension'],
+				}
 				if (assertion.revoked) {
 					if (assertion.revocationReason) {
 						this.messageService.reportFatalError('Assertion has been revoked:', assertion.revocationReason);

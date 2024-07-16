@@ -29,7 +29,11 @@ import { PageConfig } from '../../../common/components/badge-detail';
 
 @Component({
 	selector: 'badgeclass-detail',
-	template: `<bg-badgedetail [config]="config"></bg-badgedetail>`,
+	template: `
+	<bg-badgedetail [config]="config" [awaitPromises]="[issuerLoaded, badgeClassLoaded]">
+	<issuer-detail-datatable [recipientCount]="recipientCount" [_recipients]="instanceResults" (actionElement)="revokeInstance($event)"></issuer-detail-datatable>
+	</bg-badgedetail>
+`,
 	// templateUrl: './badgeclass-detail.component.html',
 	styleUrls: ['./badgeclass-detail.component.css'],
 })
@@ -190,11 +194,11 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 					slug: this.badgeSlug,
 					createdAt: this.badgeClass.createdAt,
 					updatedAt: this.badgeClass.updatedAt,
-					category: this.categoryOptions[this.badgeClass.extension['extensions:CategoryExtension']],
+					category: this.badgeClass.extension['extensions:CategoryExtension'].Category === 'competency' ? 'Kompetenz- Badge' : 'Teilnahme- Badge',
 					tags: this.badgeClass.tags,
 					issuerName: this.badgeClass.issuerName,
 					issuerImagePlacholderUrl: this.issuerImagePlacholderUrl,
-					issuerImage: '',
+					issuerImage: this.issuer.image,
 					badgeLoadingImageUrl: this.badgeLoadingImageUrl,
 					badgeFailedImageUrl: this.badgeFailedImageUrl,
 					badgeImage: this.badgeClass.image,

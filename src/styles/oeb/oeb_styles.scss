@@ -219,6 +219,16 @@
 	position: relative;
 	cursor: pointer;
 }
+.issuer-image {
+    width: 37.1px;
+    height: 37.1px;
+}
+
+.badge-image{
+    width: 120.88px;
+    height: 120.88px
+}
+
 .three-dots > svg {
 	display: inline;
 	fill: var(--color-dark4);
@@ -334,8 +344,20 @@
     }
 	.badge-detail-body{
 		padding-left: calc(346px + 48px + 16px);
-		padding-bottom: calc(var(--gridspacing) * 6);
-        
+		padding-bottom: calc(var(--gridspacing) * 6);   
+    }
+
+	.issuer-image {
+        width: 53px;
+        height: 53px;
+    }
+
+	.badge-image{
+        width: 172.69px;
+        height: 172.69px
+    }
+    .tag-container{
+      padding-top: calc(var(--gridspacing) * 2);
     }
 }
 
