@@ -109,7 +109,9 @@ export interface PageConfig {
 								[error-src]="config.badgeFailedImageUrl"
 							/>
 							</div>
+
 							<!-- Issuer Information -->
+
 								<div class="l-flex l-flex-2x u-padding-top2x tw-mt-4 md:tw-w-[280px] tw-mx-auto tw-flex tw-items-center tw-border tw-border-solid tw-border-[var(--color-purple)] tw-pl-4 tw-py-4 tw-bg-white tw-rounded-[20px]">
 									<div >
 										<img class="issuer-image"
@@ -119,7 +121,7 @@ export interface PageConfig {
 										/>
 									</div>
 									<div class="tw-text-oebblack">
-										<dt class="tw-italic ">Vergeben von:</dt>
+										<dt class="tw-italic ">{{ 'RecBadgeDetail.issuedBy' | translate }}:</dt>
 										<dd class="u-text u-break-word">
 												{{config.issuerName}}
 										</dd>
@@ -162,7 +164,7 @@ export interface PageConfig {
                             <div *ngIf="config.issuedOn" class="l-flex l-flex-1x tw-text-oebblack u-padding-top2x u-margin-top2x border border-top border-light3 md:tw-flex-row tw-flex-col">
 								<dt class="u-text-small-bold "
 								>
-									Issued on:
+                                    {{ 'RecBadgeDetail.issuedOn' | translate }}
 								</dt>
 								<dd class="u-text-small"><time [date]="config.issuedOn" format="dd.MM.y"></time></dd>
 							</div>
