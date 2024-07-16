@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SessionService } from '../../../common/services/session.service';
-import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
 import { MessageService } from '../../../common/services/message.service';
-import { IssuerManager } from '../../../issuer/services/issuer-manager.service';
 //import {BadgeClassManager} from '../../services/badgeclass-manager.service';
 import { Issuer } from '../../../issuer/models/issuer.model';
 //import {BadgeClass} from '../../models/badgeclass.model';
@@ -34,11 +31,9 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 	badgeResultsByIssuer: MatchingBadgeIssuer[] = [];
 	badgeResultsByCategory: MatchingBadgeCategory[] = [];
 	order = 'asc';
-	//issuerToBadgeInfo: {[issuerId: string]: IssuerBadgesInfo} = {};
-	
-	// issuersLoaded: Promise<unknown>;
+
 	badgesLoaded: Promise<unknown>;
-	
+
 	showLegend = false;
 	tags: string[] = [];
 	issuers: string[] = [];

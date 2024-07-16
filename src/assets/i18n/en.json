@@ -239,7 +239,8 @@
 		"competency": "Competency",
 		"title": "Title",
 		"characters": "characters",
-		"createdOn": "Created on"
+		"createdOn": "Created on",
+		"catalogHeadline": "Alle Badges in der Übersicht"
 	},
 	"CreateBadge": {
 		"chooseBadgeCategory": "Choose Badge-Category",
