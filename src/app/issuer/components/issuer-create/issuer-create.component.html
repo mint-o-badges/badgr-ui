@@ -6,7 +6,7 @@
 	</div>
 </div>
 
-<div class="l-containerxaxis">
+<div class="oeb page-padding">
 	<form (ngSubmit)="onSubmit()" class="u-width-formsmall u-margin-top3x" novalidate>
 		<bg-formfield-image
 			#imageField
@@ -16,23 +16,23 @@
 			[control]="issuerForm.rawControlMap.issuer_image"
 		></bg-formfield-image>
 
-		<bg-formfield-text
-			class="u-margin-yaxis2x"
-			[control]="issuerForm.rawControlMap.issuer_name"
+		<oeb-input
 			label="{{ 'General.name' | translate }}"
-			errorMessage="{{ 'Issuer.enterName' | translate }}"
+			[control]="issuerForm.rawControlMap.issuer_name"
+			[fieldType]="'text'"
 			[autofocus]="true"
-		></bg-formfield-text>
+			errorMessage="{{ 'Issuer.enterName' | translate }}"
+			#issuer_name_field
+		></oeb-input>
 
-		<bg-formfield-text
-			class="u-margin-bottom2x"
-			[control]="issuerForm.rawControlMap.issuer_url"
+		<oeb-input
 			[label]="'Website URL'"
-			errorMessage="{{ 'Issuer.enterURL' | translate }}"
+			[control]="issuerForm.rawControlMap.issuer_url"
 			[urlField]="true"
 			[fieldType]="'url'"
-			type="url"
-		></bg-formfield-text>
+			errorMessage="{{ 'Issuer.enterURL' | translate }}"
+			#issuer_url_field
+		></oeb-input>
 
 		<bg-formfield-select
 			class="u-margin-bottom2x"
@@ -43,13 +43,13 @@
 			errorMessage="{{ 'Issuer.enterValidEmail' | translate }}"
 		></bg-formfield-select>
 
-		<bg-formfield-text
-			class="u-margin-bottom2x"
-			[control]="issuerForm.rawControlMap.issuer_description"
+		<oeb-input
 			label="{{ 'General.description' | translate }}"
+			[control]="issuerForm.rawControlMap.issuer_description"
+			[fieldType]="'textarea'"
 			errorMessage="{{ 'Issuer.enterDescription' | translate }}"
-			[multiline]="true"
-		></bg-formfield-text>
+			#issuer_description_field
+		></oeb-input>
 
 		<bg-formfield-select
 			class="u-margin-bottom2x"
@@ -74,35 +74,38 @@
 
 		<h2>{{ 'General.address' | translate }}</h2>
 
-		<bg-formfield-text
-			class="u-margin-bottom2x"
-			[control]="issuerForm.rawControlMap.issuer_street"
+		<oeb-input
 			label="{{ 'General.street' | translate }}"
+			[control]="issuerForm.rawControlMap.issuer_street"
+			[fieldType]="'text'"
 			errorMessage="{{ 'Issuer.enterStreet' | translate }}"
-		></bg-formfield-text>
+			#issuer_street_field
+		></oeb-input>
 
-		<bg-formfield-text
-			class="u-margin-bottom2x"
-			[control]="issuerForm.rawControlMap.issuer_streetnumber"
+		<oeb-input
 			label="{{ 'Issuer.houseNo' | translate }}"
+			[control]="issuerForm.rawControlMap.issuer_streetnumber"
 			[fieldType]="'number'"
 			errorMessage="{{ 'Issuer.enterHouseNo' | translate }}"
-		></bg-formfield-text>
+			#issuer_streetnumber_field
+		></oeb-input>
 
-		<bg-formfield-text
-			class="u-margin-bottom2x forminput-hide-arrows"
-			[control]="issuerForm.rawControlMap.issuer_zip"
+		<oeb-input
+			class="oeb-input-hide-arrows"
 			label="{{ 'General.postalCode' | translate }}"
+			[control]="issuerForm.rawControlMap.issuer_zip"
 			[fieldType]="'number'"
 			errorMessage="{{ 'Issuer.enterPostalCode' | translate }}"
-		></bg-formfield-text>
+			#issuer_zip_field
+		></oeb-input>
 
-		<bg-formfield-text
-			class="u-margin-bottom2x"
-			[control]="issuerForm.rawControlMap.issuer_city"
+		<oeb-input
 			label="{{ 'General.city' | translate }}"
+			[control]="issuerForm.rawControlMap.issuer_city"
+			[fieldType]="'text'"
 			errorMessage="{{ 'Issuer.enterCity' | translate }}"
-		></bg-formfield-text>
+			#issuer_city_field
+		></oeb-input>
 
 		<div class="u-margin-top3x">
 			<form>
