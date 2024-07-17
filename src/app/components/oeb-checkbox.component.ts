@@ -55,6 +55,5 @@ export class OebCheckboxComponent implements ControlValueAccessor {
 	}
 
 	setDisabledState?(isDisabled: boolean): void {
-		// Handle disabled state if necessary
 	}
 }
