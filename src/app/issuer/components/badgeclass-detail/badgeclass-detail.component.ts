@@ -183,7 +183,6 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 						},
 						{
 							title: 'Löschen',
-							routerLink: [],
 							icon: 'icon_remove',
 							action: () => this.deleteBadge(),
 						}
@@ -202,13 +201,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 					badgeLoadingImageUrl: this.badgeLoadingImageUrl,
 					badgeFailedImageUrl: this.badgeFailedImageUrl,
 					badgeImage: this.badgeClass.image,
-					competencies: this.badgeClass.extension['extensions:CompetencyExtension'],
-					datatable: {
-						caption: '',
-						recipientCount: this.recipientCount,
-						recipients: this.instanceResults,
-						actionElement: this.revokeInstance.bind(this),
-					}
+					competencies: this.badgeClass.extension['extensions:CompetencyExtension']
 
 				}
 			},

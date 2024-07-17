@@ -42,14 +42,13 @@ export class PublicBadgeClassComponent {
 			badgeClass.then((badge) => {
 				this.config = {
 					badgeTitle: badge.name,
-					menuitems: [],
 					badgeDescription: badge.description,
 					issuerSlug: badge.issuer['slug'],
 					slug: badge.id,
 					category: badge['extensions:CategoryExtension'].Category === 'competency' ? 'Kompetenz- Badge' : 'Teilnahme- Badge',
 					tags: badge.tags,
 					issuerName: badge.issuer.name,
-					issuerImagePlacholderUrl: '',
+					issuerImagePlacholderUrl: this.issuerImagePlaceholderUrl,
 					issuerImage: badge.issuer.image,
 					badgeLoadingImageUrl: this.badgeLoadingImageUrl,
 					badgeFailedImageUrl: this.badgeFailedImageUrl,

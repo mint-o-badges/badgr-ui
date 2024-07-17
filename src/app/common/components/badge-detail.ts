@@ -17,6 +17,12 @@ type HeaderButton = {
     action?: () => void;
 };
 
+export type CompetencyType = {
+    name: string;
+    description: string;
+    studyLoad: number;
+};
+
 export interface PageConfig {
      crumbs?: LinkEntry[] | null;
      badgeTitle: string;
@@ -37,19 +43,7 @@ export interface PageConfig {
      badgeFailedImageUrl: string;
      badgeImage: string;
      badgeDescription: string;
-     competencies?: [
-        {
-            name: string;
-            description: string;
-            studyLoad: number;
-        }
-     ];
-     datatable?: {
-        caption: string;
-        recipientCount: number;
-        recipients: any[];
-        actionElement: any;
-     };
+     competencies?: CompetencyType[];
 }
 
 @Component({
@@ -103,7 +97,7 @@ export interface PageConfig {
 						<div>
 							<div class="tw-w-[195px] tw-h-[179px] md:tw-w-[297.86px] md:tw-h-[257px] tw-flex tw-items-center tw-bg-white tw-mx-auto tw-rounded-[20px] tw-border tw-border-solid tw-border-[var(--color-purple)] ">
 							<img
-								class="badge-image badgeimage-center"
+								class="tw-w-[120.88px] tw-h-[120.88px] md:tw-w-[172.69px] md:tw-h-[172.69px] tw-mx-auto tw-block"
 								[loaded-src]="config.badgeImage"
 								[loading-src]="config.badgeLoadingImageUrl"
 								[error-src]="config.badgeFailedImageUrl"
@@ -114,7 +108,7 @@ export interface PageConfig {
 
 								<div class="l-flex l-flex-2x u-padding-top2x tw-mt-4 md:tw-w-[280px] tw-mx-auto tw-flex tw-items-center tw-border tw-border-solid tw-border-[var(--color-purple)] tw-pl-4 tw-py-4 tw-bg-white tw-rounded-[20px]">
 									<div >
-										<img class="issuer-image"
+										<img class="tw-w-[37.1px] tw-h-[37.1px] md:tw-w-[53px] md:tw-h-[53px] issuer-image"
 											[loaded-src]="config.issuerImage"
 											[loading-src]="config.issuerImagePlacholderUrl"
 											[error-src]="config.issuerImagePlacholderUrl"

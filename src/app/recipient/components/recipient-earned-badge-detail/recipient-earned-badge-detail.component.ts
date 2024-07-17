@@ -23,7 +23,7 @@ import { QueryParametersService } from '../../../common/services/query-parameter
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { BadgeInstance } from '../../../issuer/models/badgeinstance.model';
 import { Issuer } from '../../../issuer/models/issuer.model';
-import { PageConfig } from '../../../common/components/badge-detail';
+import { CompetencyType, PageConfig } from '../../../common/components/badge-detail';
 
 @Component({
 	selector: 'recipient-earned-badge-detail',
@@ -136,7 +136,7 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 					badgeLoadingImageUrl: this.badgeLoadingImageUrl,
 					badgeFailedImageUrl: this.badgeFailedImageUrl,
 					badgeImage: this.badge.badgeClass.image,
-					competencies: this.competencies as [{ name: string; description: string; studyLoad: number; }],
+					competencies: this.competencies as CompetencyType[],
 
 				}
 			})

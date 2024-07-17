@@ -219,15 +219,6 @@
 	position: relative;
 	cursor: pointer;
 }
-.issuer-image {
-    width: 37.1px;
-    height: 37.1px;
-}
-
-.badge-image{
-    width: 120.88px;
-    height: 120.88px
-}
 
 .three-dots > svg {
 	display: inline;
@@ -299,15 +290,6 @@
 	padding-bottom: calc(var(--gridspacing) * 4);
 }
 
-.issuer-image {
-    width: 37.1px;
-    height: 37.1px;
-}
-
-.badge-image{
-    width: 120.88px;
-    height: 120.88px
-}
 
 @media (min-width: 768px) {
 	.o-container:not(.o-container-is-managed) .navbar .navbar-x-logo img {
@@ -345,16 +327,6 @@
 	.badge-detail-body{
 		padding-left: calc(346px + 48px + 16px);
 		padding-bottom: calc(var(--gridspacing) * 6);   
-    }
-
-	.issuer-image {
-        width: 53px;
-        height: 53px;
-    }
-
-	.badge-image{
-        width: 172.69px;
-        height: 172.69px
     }
     .tag-container{
       padding-top: calc(var(--gridspacing) * 2);
