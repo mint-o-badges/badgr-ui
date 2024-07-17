@@ -1,12 +1,11 @@
-<form-message></form-message>
-<div class="topbar">
-	<div class="l-containerxaxis">
-		<div class="topbar-x-heading">{{ 'Issuer.createInstitution' | translate }}</div>
-		<div class="topbar-x-subheading">{{ 'Issuer.awardBadeges' | translate }}</div>
-	</div>
-</div>
-
 <div class="oeb page-padding">
+	<form-message></form-message>
+
+	<div class="oeb-headline-container-sm">
+		<h1 hlmH1 class="tw-text-purple">{{ 'Issuer.createInstitution' | translate }}</h1>
+		<p hlmP class="tw-font-normal">{{ 'Issuer.awardBadeges' | translate }}</p>
+	</div>
+
 	<form (ngSubmit)="onSubmit()" class="u-width-formsmall u-margin-top3x" novalidate>
 		<bg-formfield-image
 			#imageField
@@ -153,3 +152,4 @@
 		</div>
 	</form>
 </div>
+<!-- </div> -->
