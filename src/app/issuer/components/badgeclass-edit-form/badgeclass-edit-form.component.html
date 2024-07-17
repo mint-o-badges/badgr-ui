@@ -218,35 +218,25 @@
 										[ngClass]="
 											aiCompetency.rawControlMap.selected.value
 												? 'tw-bg-[var(--color-lightgreen)]'
-												: 'tw-bg-[var(--color-lightpurple)]'
+												: 'tw-bg-[var(--color-lightgray)]'
 										"
 										class="tw-rounded-md md:tw-w-2/3 tw-mx-auto md:tw-ml-0 tw-p-4 tw-mt-2"
 									>
 										<div class="tw-flex tw-justify-between">
-											<h2 class="tw-whitespace-pre-wrap tw-text-black tw-font-bold">
-												{{ aiCompetenciesSuggestions[i].preferred_label }}
+											<h2 class="tw-whitespace-pre-wrap tw-text-sm tw-text-oebblack tw-font-bold">
+												{{ aiCompetenciesSuggestions[i].preferred_label }} <a href="http://data.europa.eu/{{aiCompetenciesSuggestions[i].concept_uri}}" target="_blank" class="tw-ml-2 !tw-text-[var(--color-link)]]">(E)</a>
 											</h2>
-											<label
-												for="checkboxAiSkill$i"
-												[ngClass]="
-													aiCompetency.rawControlMap.selected
-														? 'checkbox checkbox-center'
-														: ''
-												"
-											>
-												<input
-													id="checkboxAiSkill$i"
-													name="checkboxAiSkill$i"
-													type="checkbox"
-													[formControl]="aiCompetency.rawControlMap.selected"
-												/>
-											</label>
+											<oeb-checkbox class="tw-border-[var(--color-purple)]" name="checkboxAiSkill$i" id="checkboxAiSkill$i"
+												[formControl]="aiCompetency.rawControlMap.selected"
+												></oeb-checkbox>
 										</div>
-										<p class="tw-w-full tw-mt-2 tw-italic tw-whitespace-pre-wrap">
+										<hr class="tw-text-[var(--color-grayinteractive)] tw-my-1 tw-border-solid tw-border" />
+										<p class="tw-w-full tw-my-2 tw-text-sm tw-text-oebblack tw-whitespace-pre-wrap">
 											{{ aiCompetenciesSuggestions[i].description }}
 										</p>
+										<span class="tw-text-sm tw-text-[#6B6B6B] tw-font-light">{{ 'Badge.category' | translate}}: {{ aiCompetenciesSuggestions[i].type.includes('skill') ? ('Badge.skill' | translate) : ('Badge.knowledge' | translate) }} </span>
 										<div class="tw-flex tw-gap-2 tw-items-center tw-mt-4">
-											<label class="tw-text-black tw-font-bold" for="studyLoad$i">
+											<label class="tw-text-oebblack tw-font-bold" for="studyLoad$i">
 												{{ 'General.minutes' | translate }}:
 											</label>
 											<bg-formfield-text
@@ -292,29 +282,23 @@
 				<ng-container *ngFor="let competency of badgeClassForm.controls.competencies.controls; let i = index">
 					<ng-container *ngIf="competency.controls['added'].value; else competencyForm">
 						<div
-							class="tw-bg-[var(--color-lightgreen)] tw-rounded-2xl tw-border tw-border-solid tw-border-black tw-p-4 tw-mt-2"
+							class="tw-bg-[var(--color-lightgray)] tw-rounded-2xl tw-border tw-border-solid tw-border-[var(--color-purple)] tw-p-4 tw-mt-2"
 						>
 							<div class="tw-flex tw-justify-between">
-								<h2 class="tw-whitespace-pre-wrap tw-text-black tw-font-bold">
+								<h2 class="tw-whitespace-pre-wrap tw-text-oebblack tw-font-bold">
 									{{ competency.rawControlMap.name.value }}
 								</h2>
-								<label for="competency$i" class="tw-bg-[var(--color-purple)] checkbox checkbox-center">
-									<input
-										class="tw-bg-[var(--color-purple)]"
-										id="competency$i"
-										name="competency$i"
-										type="checkbox"
-										[formControl]="competency.rawControlMap.added"
-									/>
-								</label>
+								<oeb-checkbox class="tw-border-[var(--color-purple)]" name="competency$i" id="competency$i"
+												[formControl]="competency.rawControlMap.added"
+								></oeb-checkbox>
 							</div>
 							<p
-								class="tw-w-full tw-font-semibold tw-mt-2 tw-italic tw-whitespace-pre-wrap tw-line-clamp-3"
+								class="tw-w-full tw-text-oebblack tw-mt-2 tw-italic tw-whitespace-pre-wrap tw-line-clamp-3"
 							>
 								{{ competency.rawControlMap.description.value }}
 							</p>
 							<div class="tw-flex tw-gap-2 tw-items-center tw-mt-4 ">
-								<label class="tw-text-black tw-font-bold" for="studyLoad$i">
+								<label class="tw-text-oebblack tw-font-bold" for="studyLoad$i">
 									{{ 'General.minutes' | translate }}:
 								</label>
 								<span
@@ -350,7 +334,7 @@
 												required: 'Bitte gib die Dauer für den Erwerb der Kompetenz ein.'
 											}"
 										></bg-formfield-text>
-										<span class="tw-font-bold">{{ 'General.minutes' | translate }}</span>
+										<span class="tw-text-oebblack">{{ 'General.minutes' | translate }}</span>
 									</div>
 								</div>
 								<bg-formfield-select
