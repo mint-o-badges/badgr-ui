@@ -130,11 +130,7 @@ export class BadgeClassEditComponent extends BaseAuthenticatedRoutableComponent 
 	onWindowScroll() {
 		var top = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
 
-		if (top > this.badgeImage.componentElem.nativeElement.offsetTop) {
-			this.scrolled = true;
-		} else {
-			this.scrolled = false;
-		}
+		this.scrolled = this.badgeImage && top > this.badgeImage.componentElem.nativeElement.offsetTop;
 	}
 }
 
