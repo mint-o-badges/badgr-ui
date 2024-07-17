@@ -10,12 +10,22 @@ type MenuItem = {
     action?: () => void;
 };
 
-type HeaderButton = {
+type HeaderButtonBase = {
     title: string;
-    routerLink?: string[];
     disabled?: boolean;
-    action?: () => void;
 };
+
+type HeaderButtonWithLink = HeaderButtonBase & {
+    routerLink: string[];
+    action?: never;
+};
+
+type HeaderButtonWithAction = HeaderButtonBase & {
+    routerLink?: never;
+    action: () => void;
+};
+
+type HeaderButton = HeaderButtonWithLink | HeaderButtonWithAction;
 
 export type CompetencyType = {
     name: string;
@@ -57,17 +67,19 @@ export interface PageConfig {
             <div class="tw-flex tw-flex-col tw-relative">
                 <div class="badge-header">
                     <h1 class="tw-text-purple tw-max-w-[480px]">{{ config.badgeTitle }}</h1>
-                    <div *ngIf="config.headerButton" class="badge-header-btn">
-					<a *ngIf="config.headerButton.routerLink"
-						class="button tw-w-[305px] md:tw-w-[358px] md:tw-h-[64px] tw-h-[45px] tw-flex tw-items-center tw-justify-center tw-text-xl tw-rounded-[7px]"
-						[routerLink]="config.headerButton.routerLink"
-						[disabled-when-requesting]="true"
-						>{{ config.headerButton.title }}</a
-					>
-                    <button *ngIf="config.headerButton.action"
-                        class="button tw-w-[305px] md:tw-w-[358px] md:tw-h-[64px] tw-h-[45px] tw-flex tw-items-center tw-justify-center tw-text-xl tw-rounded-[7px]"
-                        (click)="config.headerButton.action()"
-                        [disabled-when-requesting]="true">{{ config.headerButton.title }}</button>
+                    <div class="badge-header-btn">
+                    <div *ngIf="config.headerButton">
+                        <a *ngIf="config.headerButton.routerLink"
+                            class="button tw-w-[305px] md:tw-w-[358px] md:tw-h-[64px] tw-h-[45px] tw-flex tw-items-center tw-justify-center tw-text-xl tw-rounded-[7px]"
+                            [routerLink]="config.headerButton.routerLink"
+                            [disabled-when-requesting]="true"
+                            >{{ config.headerButton.title }}</a
+                        >
+                        <button *ngIf="config.headerButton.action"
+                            class="button tw-w-[305px] md:tw-w-[358px] md:tw-h-[64px] tw-h-[45px] tw-flex tw-items-center tw-justify-center tw-text-xl tw-rounded-[7px]"
+                            (click)="config.headerButton.action()"
+                            [disabled-when-requesting]="true">{{ config.headerButton.title }}</button>
+                        </div>
 
 					<button class="threedots threedots-secondary tw-rounded-[7px] tw-w-[44.8px] tw-h-[44.8px] md:tw-w-[64px] md:tw-h-[64px]" id="actionstrigger" [bgPopupMenuTrigger]="moreMenu">
 						<svg icon="icon_more"></svg>

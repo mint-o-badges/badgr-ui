@@ -96,10 +96,11 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 				this.config = {
 					crumbs: this.crumbs,
 					badgeTitle: this.badge.badgeClass.name,
-					headerButton: {
-						title: 'Badge teilen',
-						action: () => this.shareBadge(),
-					},
+					// uncomment after the sharing of a badge is discussed from a data privacy perspective
+					// headerButton: {
+					// 	title: 'Badge teilen',
+					// 	action: () => this.shareBadge(),
+					// },
 					menuitems: [
 						{
 							title: 'Verifizieren',
