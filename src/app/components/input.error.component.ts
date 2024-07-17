@@ -7,7 +7,7 @@ import { HlmInputErrorDirective } from './spartan/ui-input-helm/src';
 	standalone: true,
 	imports: [HlmInputErrorDirective],
 	host: {
-		class: 'tw-block tw-mt-1 tw-min-h-[20px] tw-mb-4',
+		class: 'tw-block tw-absolute tw-mt-1 tw-min-h-[20px] tw-mb-4',
 		// eslint-disable-next-line @angular-eslint/no-host-metadata-property
 		// '[class.invisible]': "touchedState() === 'UNTOUCHED'",
 	},

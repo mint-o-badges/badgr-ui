@@ -127,10 +127,16 @@ li::marker {
     font-family: var(--font-family);
     font-size: var(--typography-size);
     line-height: calc(var(--typography-size) + 4px);
-    font-weight: bold;
+    font-weight: 600;
     color: var(--color-dark3);
     display: block;
     margin-bottom: var(--gridspacing);
+}
+
+@media (min-width: 768px) {
+	.competencyDuration {
+		--typography-size: 20px;
+	}
 }
 
   /* although ::ng-deep is marked as deprecated in the angular docs 

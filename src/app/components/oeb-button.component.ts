@@ -6,20 +6,17 @@ import { HlmIconModule, provideIcons } from './spartan/ui-icon-helm/src';
 import { lucideUpload } from '@ng-icons/lucide';
 
 @Component({
-	selector: 'oeb-button',
-	standalone: true,
-	imports: [HlmButtonDirective, NgIf, HlmIconModule],
+  selector: 'oeb-button',
+  standalone: true,
+  imports: [HlmButtonDirective, NgIf, HlmIconModule],
 	providers: [MessageService, provideIcons({ lucideUpload })],
-	template: `
-		<button class="tw-relative" hlmBtn [disabled]="disabled" [size]="size" [variant]="variant">
-			<hlm-icon *ngIf="icon" class="tw-mr-4" size="base" [name]="icon" />
-			<img *ngIf="img" class="md:tw-h-[30px] tw-h-[20px] tw-pr-4" [src]="img" /><span
-				[innerHTML]="showLoadindMessage && loadingMessage ? loadingMessage : text"
-			></span>
-		</button>
-	`,
-
+  template: `<button [type]="type" class="tw-relative" hlmBtn [disabled]="disabled" [size]="size" [variant]="variant">
+  			        <hlm-icon *ngIf="icon" class="tw-mr-4" size="base" [name]="icon" />
+                <img *ngIf="img" class="md:tw-h-[30px] tw-h-[20px] tw-pr-4" [src]="img"/>
+                <span [innerHTML]="showLoadindMessage && loadingMessage ? loadingMessage : text"></span>
+              </button> `,
 })
+
 export class OebButtonComponent {
 	loadingPromise: Promise<unknown>;
 	promiseLoading = false;
@@ -30,6 +27,7 @@ export class OebButtonComponent {
 	@Input() text: string = undefined;
 	@Input() img: string = undefined;
 	@Input() icon: string = undefined;
+  @Input() type: string = 'submit';
 
 	@Input('disabled-when-requesting')
 	disabledWhenRequesting = false;
@@ -76,6 +74,6 @@ export class OebButtonComponent {
 			);
 		}
 	}
-
 	constructor(private messageService: MessageService) {}
 }
+
