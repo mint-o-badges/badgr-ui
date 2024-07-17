@@ -135,18 +135,21 @@
 		</label>
 
 		<div class="l-flex l-flex-1x u-margin-bottom3x u-margin-top4x">
-			<a [routerLink]="['/issuer']" class="button button-secondary" [disabled-when-requesting]="true">{{
-				'General.cancel' | translate
-			}}</a>
-			<button
+			<oeb-button
+				variant="secondary"
+				[routerLink]="['/issuer']"
+				[disabled-when-requesting]="true"
+				text="{{ 'General.cancel' | translate }}"
+			></oeb-button>
+
+			<oeb-button
 				type="submit"
-				class="button"
 				[disabled]="!!addIssuerFinished"
+				text="{{ 'Issuer.createInstitution' | translate }}"
 				[loading-promises]="[addIssuerFinished]"
 				loading-message="Hinzufügen"
 			>
-				{{ 'Issuer.createInstitution' | translate }}
-			</button>
+			</oeb-button>
 		</div>
 	</form>
 </div>
