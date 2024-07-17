@@ -1,3 +1,3 @@
-email,evidence
-jsmith@google.com, https://example.org/john-smith-project.html
-jillBrown@aol.com
+email,name,evidence
+jsmith@google.com,John,https://example.org/john-smith-project.html
+jillBrown@aol.com,Peter,

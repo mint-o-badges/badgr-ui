@@ -29,7 +29,7 @@ export class SignupComponent extends BaseRoutableComponent implements OnInit, Af
 		.addControl('lastName', '', Validators.required)
 		.addControl('password', '', [Validators.required, Validators.minLength(8)])
 		.addControl('passwordConfirm', '', [Validators.required, this.passwordsMatch.bind(this)])
-		.addControl('agreedTermsService', false, Validators.requiredTrue)
+		.addControl('agreedTermsService', false)
 		.addControl('marketingOptIn', false)
 		.addControl('captcha', '');
 
@@ -123,7 +123,7 @@ export class SignupComponent extends BaseRoutableComponent implements OnInit, Af
 								'Your password must be uncommon and at least 8 characters. Please try again.',
 								'error',
 							);
-						} else if (typeof error === 'object') {
+						} else if (typeof error === 'object' && error.error) {
 							this.messageService.setMessage('' + error.error, 'error');
 						} else {
 							this.messageService.setMessage('' + error, 'error');

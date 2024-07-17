@@ -6,7 +6,7 @@ import { NgIf } from '@angular/common';
   selector: 'oeb-button',
   standalone: true,
   imports: [HlmButtonDirective, NgIf],
-  template: `<button class="tw-relative" hlmBtn [disabled]="disabled" [size]="size" [variant]="variant"><img *ngIf="img" class="md:tw-h-[30px] tw-h-[20px] tw-pr-4" [src]="img"/><span [innerHTML]="text"></span></button> `,
+  template: `<button [type]="type" class="tw-relative" hlmBtn [disabled]="disabled" [size]="size" [variant]="variant"><img *ngIf="img" class="md:tw-h-[30px] tw-h-[20px] tw-pr-4" [src]="img"/><span [innerHTML]="text"></span></button> `,
 })
 export class OebButtonComponent {
 
@@ -15,4 +15,5 @@ export class OebButtonComponent {
     @Input() disabled: boolean = false;
     @Input() text: string = undefined;
     @Input() img: string = undefined;
+    @Input() type: string = 'submit';
 }

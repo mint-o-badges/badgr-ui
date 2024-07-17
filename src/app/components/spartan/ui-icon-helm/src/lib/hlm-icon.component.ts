@@ -16,7 +16,7 @@ import { hlm } from '@spartan-ng/ui-core';
 import { cva } from 'class-variance-authority';
 import type { ClassValue } from 'clsx';
 
-const DEFINED_SIZES = ['xs', 'sm', 'base', 'lg', 'xl', 'none'] as const;
+const DEFINED_SIZES = ['xs', 'sm', 'base', 'lg', 'xl', 'xxl', 'none'] as const;
 
 type DefinedSizes = (typeof DEFINED_SIZES)[number];
 
@@ -28,6 +28,7 @@ export const iconVariants = cva('tw-inline-flex', {
 			base: 'tw-h-6 tw-w-6',
 			lg: 'tw-h-8 tw-w-8',
 			xl: 'tw-h-12 tw-w-12',
+			xxl: 'tw-h-16 tw-w-16',
 			none: '',
 		} satisfies Record<DefinedSizes, string>,
 	},

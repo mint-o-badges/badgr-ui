@@ -1,6 +1,9 @@
 <form-message></form-message>
 <div class="oeb page-padding">
 	<ng-template [bgAwaitPromises]="[issuerLoaded]">
+		<div class="tw-mb-8 l-containerxaxis tw-pb-6 tw-border-b tw-border-solid tw-border-[var(--color-light4)]">
+			<bg-breadcrumbs [linkentries]="crumbs"> </bg-breadcrumbs>
+		</div>
 		<div class="tw-flex tw-justify-between">
 			<div class="tw-flex">
 				<div class="tw-relative">
@@ -28,7 +31,7 @@
                     <button
                             class="button"
                             [routerLink]="['./badges/create']"
-                            [disabled]="!issuer.apiModel.verified"
+                            [disabled]="!issuer.canCreateBadge"
                             >
                             {{ 'Issuer.createBadge' | translate }}
                     </button>
@@ -50,7 +53,7 @@
 				<button
 					class="button"
 					[routerLink]="['./badges/create']"
-					[disabled]="!issuer.apiModel.verified"
+					[disabled]="!issuer.canCreateBadge"
 				>
 					{{ 'Issuer.createBadge' | translate }}
 				</button>
