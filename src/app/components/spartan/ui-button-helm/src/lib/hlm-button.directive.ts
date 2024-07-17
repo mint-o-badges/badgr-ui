@@ -40,7 +40,6 @@ export const buttonVariants = cva(
 	},
 );
 
-// tw-w-max
 export type ButtonVariants = VariantProps<typeof buttonVariants>;
 
 @Directive({
