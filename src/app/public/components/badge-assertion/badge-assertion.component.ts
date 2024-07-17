@@ -195,7 +195,7 @@ export class PublicBadgeAssertionComponent {
 					category: assertion.badge['extensions:CategoryExtension'].Category === 'competency' ? 'Kompetenz- Badge' : 'Teilnahme- Badge',
 					tags: assertion.badge.tags,
 					issuerName: assertion.badge.issuer.name,
-					issuerImagePlacholderUrl: '',
+					issuerImagePlacholderUrl: this.issuerImagePlacholderUrl,
 					issuerImage: assertion.badge.issuer.image,
 					badgeLoadingImageUrl: this.badgeLoadingImageUrl,
 					badgeFailedImageUrl: this.badgeFailedImageUrl,

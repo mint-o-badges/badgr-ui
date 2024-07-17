@@ -56,13 +56,7 @@ export class PublicBadgeClassComponent {
 				}
 			})
 			return badgeClass
-			// return service.getBadgeClass(paramValue);
 		});
-
-		// console.log(this.badgeIdParam)
-
-
-		
 	}
 
 	get badgeClass(): PublicApiBadgeClassWithIssuer {
