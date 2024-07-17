@@ -31,11 +31,9 @@ import { PageConfig } from '../../../common/components/badge-detail';
 	selector: 'badgeclass-detail',
 	template: `
 	<bg-badgedetail [config]="config" [awaitPromises]="[issuerLoaded, badgeClassLoaded]">
-	<issuer-detail-datatable [recipientCount]="recipientCount" [_recipients]="instanceResults" (actionElement)="revokeInstance($event)"></issuer-detail-datatable>
+	<issuer-detail-datatable *ngIf="recipientCount > 0" [recipientCount]="recipientCount" [_recipients]="instanceResults" (actionElement)="revokeInstance($event)"></issuer-detail-datatable>
 	</bg-badgedetail>
 `,
-	// templateUrl: './badgeclass-detail.component.html',
-	styleUrls: ['./badgeclass-detail.component.css'],
 })
 export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	readonly badgeFailedImageUrl = '../../../../breakdown/static/images/badge-failed.svg';

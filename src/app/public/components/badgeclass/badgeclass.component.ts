@@ -14,7 +14,6 @@ import { PageConfig } from '../../../common/components/badge-detail';
 
 @Component({
 	template: '<bg-badgedetail [config]="config" [awaitPromises]="[badgeClass]"></bg-badgedetail>',
-	// styleUrls: ['./badgeclass.component.css']
 })
 export class PublicBadgeClassComponent {
 	readonly issuerImagePlaceholderUrl = preloadImageURL(

@@ -28,8 +28,6 @@ import { CompetencyType, PageConfig } from '../../../common/components/badge-det
 @Component({
 	selector: 'recipient-earned-badge-detail',
 	template: `<bg-badgedetail [config]="config" [awaitPromises]="[badgesLoaded]"></bg-badgedetail>`,
-	// templateUrl: './recipient-earned-badge-detail.component.html',
-	styleUrls: ['./recipient-earned-badge-detail.component.css'],
 })
 export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	readonly issuerImagePlacholderUrl = preloadImageURL(
