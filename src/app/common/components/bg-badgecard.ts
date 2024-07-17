@@ -42,13 +42,13 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 				<time [date]="badgeIssueDate" format="mediumDate"></time>
 			</div>
 			<!-- Show Verify or Share Button unless public -->
-			<button
+			<!-- <button
 				class="badgecard-x-sharelink"
 				*ngIf="!verifyUrl && !public && mostRelevantStatus !== 'pending'"
 				(click)="shareClicked.emit($event)"
 			>
 				Share
-			</button>
+			</button> -->
 			<a class="badgecard-x-sharelink" *ngIf="verifyUrl" [href]="verifyUrl"> Verify </a>
 		</div>
 	`,
