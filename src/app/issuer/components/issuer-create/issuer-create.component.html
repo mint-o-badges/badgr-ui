@@ -4,10 +4,10 @@
 
 		<div class="oeb-headline-container-sm">
 			<h1 hlmH1 class="tw-text-purple">{{ 'Issuer.createInstitution' | translate }}</h1>
-			<h1 hlmH1 class="tw-text-oebblack md:tw-text-xl tw-text-sm">{{ 'Issuer.awardBadeges' | translate }}</h1>
+			<p hlmP class="tw-font-normal">{{ 'Issuer.awardBadeges' | translate }}</p>
 		</div>
 
-		<form (ngSubmit)="onSubmit()" class="u-width-formsmall u-margin-top3x" novalidate>
+		<form (ngSubmit)="onSubmit()" class="tw-w-full tw-max-w-[400px] tw-mt-6" novalidate>
 			<bg-formfield-image
 				#imageField
 				label="{{ 'Issuer.imageOptional' | translate }}"
@@ -34,8 +34,9 @@
 				#issuer_url_field
 			></oeb-input>
 
+			<!-- margin added temporary till select component is ready -->
 			<bg-formfield-select
-				class="u-margin-bottom2x"
+				class="u-margin-bottom2x tw-mt-6"
 				[control]="issuerForm.rawControlMap.issuer_email"
 				label="{{ 'General.contact' | translate }} E-Mail"
 				placeholder="{{ 'Issuer.enterValidEmail' | translate }}"
@@ -51,8 +52,9 @@
 				#issuer_description_field
 			></oeb-input>
 
+			<!-- margin added temporary till select component is ready -->
 			<bg-formfield-select
-				class="u-margin-bottom2x"
+				class="u-margin-bottom2x tw-mt-6"
 				[control]="issuerForm.rawControlMap.issuer_category"
 				label="{{ 'General.category' | translate }}"
 				placeholder="{{ 'Issuer.enterCategory' | translate }}"
@@ -72,7 +74,7 @@
 				]"
 			></bg-formfield-select>
 
-			<h2>{{ 'General.address' | translate }}</h2>
+			<h3 hlmH3 class="tw-font-bold tw-text-oebblack tw-mt-12">{{ 'General.address' | translate }}</h3>
 
 			<oeb-input
 				label="{{ 'General.street' | translate }}"
