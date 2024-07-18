@@ -23,7 +23,7 @@ import { QueryParametersService } from '../../../common/services/query-parameter
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { BadgeInstance } from '../../../issuer/models/badgeinstance.model';
 import { Issuer } from '../../../issuer/models/issuer.model';
-import { CompetencyType, PageConfig } from '../../../common/components/badge-detail';
+import { CompetencyType, PageConfig } from '../../../common/components/badge-detail/badge-detail.component';
 
 @Component({
 	selector: 'recipient-earned-badge-detail',

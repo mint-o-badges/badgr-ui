@@ -25,7 +25,7 @@ import { ShareSocialDialogOptions } from '../../../common/dialogs/share-social-d
 import { AppConfigService } from '../../../common/app-config.service';
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { BadgeClassCategory, BadgeClassLevel } from '../../models/badgeclass-api.model';
-import { PageConfig } from '../../../common/components/badge-detail';
+import { PageConfig } from '../../../common/components/badge-detail/badge-detail.component';
 
 @Component({
 	selector: 'badgeclass-detail',
