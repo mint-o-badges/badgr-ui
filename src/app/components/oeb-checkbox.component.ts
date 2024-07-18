@@ -1,32 +1,47 @@
-import { Component, EventEmitter, Input, Output, forwardRef } from '@angular/core';
+import { Component, EventEmitter, forwardRef, computed, input, Input, Output } from '@angular/core';
 import { HlmCheckboxComponent } from './spartan/ui-checkbox-helm/src';
 import { HlmPDirective } from './spartan/ui-typography-helm/src/lib/hlm-p.directive';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
+import type { ClassValue } from 'clsx';
+import { hlm } from '@spartan-ng/ui-core';
+
 
 @Component({
 	selector: 'oeb-checkbox',
 	standalone: true,
 	imports: [HlmPDirective, HlmCheckboxComponent],
-	providers: [{
-		provide: NG_VALUE_ACCESSOR,
-		useExisting: forwardRef(() => OebCheckboxComponent),
-		multi: true
-	}],
-	template: `
-		<label class="tw-flex tw-items-center" hlmP>
-			<hlm-checkbox [checked]="checked" (changed)="onChange($event)" class="tw-mr-2" />
-			{{ text }}
-		</label>
-	`,
+	providers: [
+		{
+			provide: NG_VALUE_ACCESSOR,
+			useExisting: forwardRef(() => OebCheckboxComponent),
+			multi: true,
+		},
+	],
+	template: ` <label class="tw-flex tw-items-center" hlmP>
+		<hlm-checkbox [name]="name" (changed)="onChange($event)" class="tw-mr-2" />
+		{{ text }}
+	</label>`,
+	host: {
+		'[class]': '_computedClass()',
+	},
 })
 export class OebCheckboxComponent implements ControlValueAccessor {
 	@Input() text: string;
+	@Input() control: FormControl;
+	@Input() name: string;
 	@Output() checkedChange = new EventEmitter<boolean>();
+	@Input() ngModel: boolean;
+	@Input() value: string;
 
-	onChange(value) {
-		this.checkedChange.emit(value);
+	@Output() ngModelChange = new EventEmitter<string>();
+
+	onChange(event) {
+		this.ngModelChange.emit(event);
 	}
 
+
+	public readonly userClass = input<ClassValue>('', { alias: 'class' });
+	protected _computedClass = computed(() => hlm(this.userClass()));
 	private _checked = false;
 
 	get checked() {

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ContentChild, ElementRef, OnInit, ViewChild, AfterContentInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
@@ -19,14 +19,29 @@ import { AppConfigService } from '../../../common/app-config.service';
 import { ImportLauncherDirective } from '../../../mozz-transition/directives/import-launcher/import-launcher.directive';
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { UserProfile } from '../../../common/model/user-profile.model';
+import { provideIcons } from '../../../components/spartan/ui-icon-helm/src';
+import { lucideHand, lucideHexagon, lucideMedal, lucideBookOpen, lucideClock, lucideHeart } from '@ng-icons/lucide';
+import { CountUpDirective } from 'ngx-countup';
+import { Competency } from '../../../common/model/competency.model';
 
 type BadgeDispay = 'grid' | 'list';
+type EscoCompetencies = {
+	[key: string]: Competency;		
+}
 
 @Component({
 	selector: 'recipient-earned-badge-list',
 	templateUrl: './recipient-earned-badge-list.component.html',
+	providers: [
+		provideIcons({ lucideHexagon }),
+		provideIcons({ lucideMedal }),
+		provideIcons({ lucideClock }),
+		provideIcons({ lucideHand }),
+		provideIcons({ lucideBookOpen }),
+		provideIcons({ lucideHeart }),
+	],
 })
-export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
+export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutableComponent implements OnInit, AfterContentInit {
 	readonly noBadgesImageUrl = '../../../../assets/@concentricsky/badgr-style/dist/images/image-empty-backpack.svg';
 	readonly badgeLoadingImageUrl = '../../../../breakdown/static/images/badge-loading.svg';
 	readonly badgeFailedImageUrl = '../../../../breakdown/static/images/badge-failed.svg';
@@ -38,6 +53,7 @@ export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutable
 
 	allBadges: RecipientBadgeInstance[] = [];
 	badgesLoaded: Promise<unknown>;
+	profileLoaded: Promise<unknown>;
 	allIssuers: ApiRecipientBadgeIssuer[] = [];
 
 	badgeResults: BadgeResult[] = [];
@@ -48,9 +64,28 @@ export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutable
 	mozillaFeatureEnabled = this.configService.featuresConfig['enableComingFromMozilla'];
 	maxDisplayedResults = 100;
 
-	crumbs: LinkEntry[] = [{ title: 'Backpack', routerLink: ['/recipient/badges'] }];
+	crumbs: LinkEntry[] = [{ title: 'Mein Rucksack', routerLink: ['/recipient/badges'] }];
+	profile: UserProfile;
+	running = false;
+	tabs: any = undefined;
+	@ViewChild('overViewTemplate', { static: true }) overViewTemplate: ElementRef;
+	@ViewChild('badgesTemplate', { static: true }) badgesTemplate: ElementRef;
+	@ViewChild('badgesCompetency', { static: true }) badgesCompetency: ElementRef;
 
+	groupedUserCompetencies = {};
+	newGroupedUserCompetencies = {};
+	
+	totalStudyTime = 0;
+	public objectKeys = Object.keys;
+	public objectValues = Object.values;
+
+	@ViewChild('countup') countup: CountUpDirective;
+	@ViewChild('countup2') countup2: CountUpDirective;
+	@ViewChild('badgesCounter') badgesCounter: CountUpDirective;
+	
+	activeTab = 'Badges';
 	private _badgesDisplay: BadgeDispay = 'grid';
+
 	get badgesDisplay() {
 		return this._badgesDisplay;
 	}
@@ -106,7 +141,8 @@ export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutable
 
 		if (sessionService.isLoggedIn) {
 			// force a refresh of the userProfileSet now that we are authenticated
-			profileManager.userProfileSet.updateList().then((p) => {
+			this.profileLoaded = profileManager.userProfileSet.updateList().then((p) => {
+				this.profile = profileManager.userProfile;
 				if (profileManager.userProfile.agreedTermsVersion !== profileManager.userProfile.latestTermsVersion) {
 					dialogService.newTermsDialog.openDialog();
 				}
@@ -157,6 +193,20 @@ export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutable
 		super.ngOnInit();
 		if (this.route.snapshot.routeConfig.path === 'badges/import') this.launchImport(new Event('click'));
 	}
+	
+	ngAfterContentInit() {
+		this.tabs = [
+			
+			{
+				title: 'Badges',
+				component: this.badgesTemplate,
+			},
+			{
+				title: 'Kompetenzen',
+				component: this.badgesCompetency,
+			},
+		];
+	}
 
 	addBadge() {
 		this.addBadgeDialog.openDialog({}).then(
@@ -199,7 +249,7 @@ export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutable
 			.map((g) => g.values[0].badgeClass.issuer);
 
 		this.allBadges = allBadges;
-
+		this.groupCompetencies(allBadges);
 		this.updateResults();
 	}
 
@@ -243,7 +293,6 @@ export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutable
 				// appending the results to the badgeResults array bound to the view template.
 				this.badgeResults.push(new BadgeResult(badge, issuerResults.issuer));
 			}
-
 			return true;
 		};
 
@@ -254,7 +303,6 @@ export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutable
 		this.allIssuers.filter(MatchingAlgorithm.issuerMatcher(this.searchQuery)).forEach(addIssuerToResults);
 
 		this.allBadges.filter(MatchingAlgorithm.badgeMatcher(this._searchQuery)).forEach(addBadgeToResults);
-
 		this.badgeResults.sort((a, b) => b.badge.issueDate.getTime() - a.badge.issueDate.getTime());
 		this.issuerResults.forEach((r) => r.badges.sort((a, b) => b.issueDate.getTime() - a.issueDate.getTime()));
 	}
@@ -270,6 +318,52 @@ export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutable
 	// 		)
 	// 	);
 	// }
+
+	private groupCompetencies(badges) {
+
+		let groupedCompetencies : EscoCompetencies = {};
+		let newGroupedCompetencies : EscoCompetencies = {};
+		this.groupedUserCompetencies = {};
+		this.newGroupedUserCompetencies = {};
+
+		badges.forEach((badge) => {
+			let competencies = badge.getExtension('extensions:CompetencyExtension', [{}]);
+			competencies.forEach((competency) => {
+				if (groupedCompetencies[competency.escoID]) {
+					groupedCompetencies[competency.escoID].studyLoad += competency.studyLoad;
+					if (groupedCompetencies[competency.escoID].lastReceived < badge.issueDate){
+						groupedCompetencies[competency.escoID].lastReceived = badge.issueDate;
+					}
+				} else {
+					groupedCompetencies[competency.escoID] = Object.create(competency);
+					groupedCompetencies[competency.escoID].lastReceived = badge.issueDate;
+				}
+				this.totalStudyTime += competency.studyLoad;
+			});
+		});
+
+		badges.filter(badge => badge.mostRelevantStatus).forEach((badge) => {
+			let competencies = badge.getExtension('extensions:CompetencyExtension', [{}]);
+			competencies.forEach((competency) => {
+				if (newGroupedCompetencies[competency.escoID]) {
+					newGroupedCompetencies[competency.escoID].studyLoad += competency.studyLoad;
+					if (newGroupedCompetencies[competency.escoID].lastReceived < badge.issueDate){
+						newGroupedCompetencies[competency.escoID].lastReceived = badge.issueDate;
+					}
+				} else {
+					newGroupedCompetencies[competency.escoID] = Object.create(competency);
+					newGroupedCompetencies[competency.escoID].lastReceived = badge.issueDate;
+				}
+			});
+		});
+
+		this.groupedUserCompetencies = Object.values(groupedCompetencies).sort((a,b) => { return a.lastReceived.getTime() - b.lastReceived.getTime() });
+		this.newGroupedUserCompetencies = Object.values(newGroupedCompetencies).sort((a,b) => { return a.lastReceived.getTime() - b.lastReceived.getTime() });;
+	}
+
+	onTabChange(tab) {
+		this.activeTab = tab;
+	}
 }
 
 class BadgeResult {
