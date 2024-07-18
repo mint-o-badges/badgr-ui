@@ -76,6 +76,15 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 					</div>
 				</div>
 			</div>
+			<!-- Show Verify or Share Button unless public -->
+			<!-- <button
+				class="badgecard-x-sharelink"
+				*ngIf="!verifyUrl && !public && mostRelevantStatus !== 'pending'"
+				(click)="shareClicked.emit($event)"
+			>
+				Share
+			</button> -->
+			<a class="badgecard-x-sharelink" *ngIf="verifyUrl" [href]="verifyUrl"> Verify </a>
 		</div>
 	`,
 })
