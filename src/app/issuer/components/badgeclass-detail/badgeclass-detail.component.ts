@@ -34,14 +34,6 @@ import { BadgeClassCategory, BadgeClassLevel } from '../../models/badgeclass-api
 export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	readonly badgeFailedImageUrl = '../../../../breakdown/static/images/badge-failed.svg';
 	readonly badgeLoadingImageUrl = '../../../../breakdown/static/images/badge-loading.svg';
-	get searchQuery() {
-		return this._searchQuery;
-	}
-
-	set searchQuery(query) {
-		this._searchQuery = query;
-		this.loadInstances(encodeURIComponent(query));
-	}
 
 	get issuerSlug() {
 		return this.route.snapshot.params['issuerSlug'];
@@ -104,8 +96,6 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		c1: 'C1 Leader*in',
 		c2: 'C2 Vorreiter*in',
 	};
-
-	private _searchQuery = '';
 
 	constructor(
 		protected title: Title,
@@ -184,22 +174,24 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 	revokeInstance(instance: BadgeInstance) {
 		this.confirmDialog
 			.openResolveRejectDialog({
-				dialogTitle: 'Warning',
-				dialogBody: `Are you sure you want to revoke <strong>${this.badgeClass.name}</strong> from <strong>${instance.recipientIdentifier}</strong>?`,
-				resolveButtonLabel: 'Revoke Badge',
-				rejectButtonLabel: 'Cancel',
+				dialogTitle: 'Warnung',
+				dialogBody: `Bist du sicher, dass du <strong>${this.badgeClass.name}</strong> von <strong>${instance.recipientIdentifier}</strong> zurücknehmen möchtest?`,
+				resolveButtonLabel: 'Zurücknehmen',
+				rejectButtonLabel: 'Abbrechen',
 			})
 			.then(
 				() => {
 					instance.revokeBadgeInstance('Manually revoked by Issuer').then(
 						(result) => {
-							this.messageService.reportMinorSuccess(`Revoked badge to ${instance.recipientIdentifier}`);
+							this.messageService.reportMinorSuccess(`Badge von ${instance.recipientIdentifier} zurücknehmen`);
 							this.badgeClass.update();
-							this.updateResults();
+							// this.updateResults();
+							// reload instances to refresh datatable
+							this.loadInstances();
 						},
 						(error) =>
 							this.messageService.reportAndThrowError(
-								`Failed to revoke badge to ${instance.recipientIdentifier}`,
+								`Widerrufen des Badges von ${instance.recipientIdentifier} fehlgeschlagen`,
 							),
 					);
 				},

@@ -228,9 +228,9 @@
 		"skill": "Fähigkeit",
 		"knowledge": "Wissen",
 		"noCategory": "Keine Kategorie",
-		"noIssuers": "Keine Issuer",
-		"oneIssuer": "1 Issuer",
-		"multiIssuers": "# Issuer",
+		"noIssuers": "keiner Institution",
+		"oneIssuer": "einer Institution",
+		"multiIssuers": "# Institutionen",
 		"noBadges": "Keine Badges",
 		"oneBadge": "1 Badge",
 		"multiBadges": "# Badges",
@@ -240,7 +240,8 @@
 		"participation": "Teilnahme",
 		"competency": "Kompetenz",
 		"title": "Titel",
-		"createdOn": "Erstellt am"
+		"createdOn": "Erstellt am",
+		"catalogHeadline": "Alle Badges in der Übersicht"
 	},
 	"CreateBadge": {
 		"chooseBadgeCategory": "Badge-Kategorie wählen",
@@ -400,14 +401,19 @@
 	"RecBadge": {
 		"addBadge": "Badge hinzufügen",
 		"fromMozilla": "Kommt von Mozilla?",
-		"finisihAddBadge1": "Lassen Sie uns",
-		"finisihAddBadge2": "das Hinzufügen",
-		"finisihAddBadge3": "Ihrer Abzeichen beenden.",
 		"closeNotification": "Benachrichtigung schließen",
 		"noBadgesYet": "Du hast noch keine Badges",
 		"collectShareBadges": "Sammle und teile digitale Badges aus deinem Rucksack.",
-		"groupByInstitution": "Group by institution",
+		"groupByInstitution": "Nach Institutionen gruppieren",
 		"institution": "Institution",
+
+		"greating": "Hallo",
+		"competencies": "Kompetenzen",
+		"studyingTime": "Lernzeiten",
+		"hours": "Stunden",
+		"newCompetencies": "Neue Kompetenzen",
+		"skills": "Fähigkeiten",
+		"knowledge": "Wissen",
 
 		"addRecievedBadge": "Füge ein Badge hinzu welches du bereits erhalten hast.",
 		"image": "Bild",
