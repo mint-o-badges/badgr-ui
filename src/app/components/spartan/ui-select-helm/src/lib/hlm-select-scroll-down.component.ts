@@ -8,10 +8,10 @@ import { HlmIconComponent, provideIcons } from '@spartan-ng/ui-icon-helm';
 	imports: [HlmIconComponent],
 	providers: [provideIcons({ lucideChevronDown })],
 	host: {
-		class: 'flex cursor-default items-center justify-center py-1',
+		class: 'tw-flex tw-cursor-default tw-items-center tw-justify-center tw-py-1',
 	},
 	template: `
-		<hlm-icon class="w-4 h-4 ml-2" name="lucideChevronDown" />
+		<hlm-icon class="tw-w-4 tw-h-4 tw-ml-2" name="lucideChevronDown" />
 	`,
 })
 export class HlmSelectScrollDownComponent {}

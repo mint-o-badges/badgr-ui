@@ -85,6 +85,7 @@ import { CaptchaService } from './services/captcha.service';
 
 import { OebInputComponent } from '../components/input.component';
 import { OebInputErrorComponent } from '../components/input.error.component';
+import { OebSelectComponent } from '../components/select.component';
 import { TextSemibold } from '../components/typography/text-semibold';
 import { OebButtonComponent } from '../components/oeb-button.component';
 import { HlmH1Directive } from '../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
@@ -179,7 +180,7 @@ const GUARDS = [AuthGuard];
 
 const PIPES = [UcFirstPipe, StudyLoadPipe];
 
-export const COMMON_IMPORTS = [CommonModule, FormsModule, ReactiveFormsModule, HttpClientModule, RouterModule, OebInputComponent, OebInputErrorComponent, OebButtonComponent, HlmH1Directive, HlmH2Directive, HlmH3Directive, HlmPDirective, HlmADirective, CompetencyAccordionComponent, OebCheckboxComponent, OebDialogComponent, SuccessDialogComponent, OebBackgroundComponent];
+export const COMMON_IMPORTS = [CommonModule, FormsModule, ReactiveFormsModule, HttpClientModule, RouterModule, OebInputComponent, OebInputErrorComponent, OebSelectComponent, OebButtonComponent, HlmH1Directive, HlmH2Directive, HlmH3Directive, HlmPDirective, HlmADirective, CompetencyAccordionComponent, OebCheckboxComponent, OebDialogComponent, SuccessDialogComponent, OebBackgroundComponent];
 
 @NgModule({
 	imports: [...COMMON_IMPORTS, FormsModule, LMarkdownEditorModule, TranslateModule],

@@ -18,8 +18,8 @@ export class HlmSelectLabelDirective implements OnInit {
 	public readonly userClass = input<ClassValue>('', { alias: 'class' });
 	protected _computedClass = computed(() =>
 		hlm(
-			'pl-8 pr-2 text-sm font-semibold rtl:pl-2 rtl:pr-8',
-			this._stickyLabels() ? 'sticky top-0 bg-popover block z-[2]' : '',
+			'tw-pl-8 tw-pr-2 tw-text-sm tw-font-semibold rtl:tw-pl-2 rtl:tw-pr-8',
+			this._stickyLabels() ? 'tw-sticky tw-top-0 tw-bg-popover tw-block tw-z-[2]' : '',
 			this.userClass(),
 		),
 	);
