@@ -59,6 +59,9 @@
       ],
       "@spartan-ng/ui-dialog-helm": [
         "./src/app/components/spartan/ui-dialog-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-menu-helm": [
+        "./src/app/components/spartan/ui-menu-helm/src/index.ts"
       ]
     }
   }
