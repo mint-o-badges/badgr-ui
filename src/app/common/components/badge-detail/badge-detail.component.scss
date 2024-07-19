@@ -1,9 +1,7 @@
 .badge-sidebar-internal {
-    padding: calc(var(--gridspacing) * 2);
+    padding: calc(var(--gridspacing) * 4);
 	padding-top: calc(var(--gridspacing) * 4);
 	border-radius: 14px;
-    display: grid;
-    grid-template-columns: 195px auto;
     grid-gap: calc(var(--gridspacing) * 2);
     background-color: #ecfeed;
 }
