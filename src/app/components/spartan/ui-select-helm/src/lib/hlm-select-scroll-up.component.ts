@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { lucideChevronUp } from '@ng-icons/lucide';
-import { HlmIconComponent, provideIcons } from '@spartan-ng/ui-icon-helm';
+import { HlmIconComponent, provideIcons } from "../../../ui-icon-helm/src";
 
 @Component({
 	selector: 'hlm-select-scroll-up',
