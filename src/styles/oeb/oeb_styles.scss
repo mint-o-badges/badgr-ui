@@ -181,14 +181,14 @@
 	border-radius: 10px;
 }
 
-.forminput-hide-arrows {
+.oeb-input-hide-arrows {
 	/* Hide arrows from input number - Firefox */
-	.forminput-x-inputs input[type='number'] {
+	input[type='number'] {
 		-moz-appearance: textfield;
 	}
 
 	/* Hide arrows from input number - Chrome, Safari, Edge, Opera */
-	.forminput .forminput-x-inputs input::-webkit-outer-spin-button,
+	input::-webkit-outer-spin-button,
 	input::-webkit-inner-spin-button {
 		-webkit-appearance: none;
 		margin: 0;

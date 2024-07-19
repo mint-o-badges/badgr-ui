@@ -239,7 +239,8 @@
 		"competency": "Competency",
 		"title": "Title",
 		"characters": "characters",
-		"createdOn": "Created on"
+		"createdOn": "Created on",
+		"catalogHeadline": "Alle Badges in der Übersicht"
 	},
 	"CreateBadge": {
 		"chooseBadgeCategory": "Choose Badge-Category",
@@ -393,14 +394,20 @@
 	"RecBadge": {
 		"addBadge": "Add badge",
 		"fromMozilla": "Coming from Mozilla?",
-		"finisihAddBadge1": "Let's finish",
-		"finisihAddBadge2": "adding",
-		"finisihAddBadge3": "your badges.",
 		"closeNotification": "Close Notification",
 		"noBadgesYet": "You don't have any badges yet",
 		"collectShareBadges": "Collect and share digital badges from your backpack.",
 		"groupByInstitution": "Nach Institution gruppieren",
 		"institution": "Institution",
+
+		"greating": "Hello",
+		"competencies": "Competencies",
+		"studyingTime": "Studytime",
+		"hours": "Hours",
+		"newCompetencies": "New Competencies",
+		"skills": "Skills",
+		"knowledge": "Knowledge",
+
 
 		"addRecievedBadge": "Add a badge that you have already received.",
 		"image": "Image",
