@@ -117,6 +117,10 @@
 	background: var(--color-black);
 }
 
+.topbar {
+	background-color: white;
+}
+
 .topbar .topbar-x-heading {
 	color: var(--color-interactive1);
 }
@@ -177,19 +181,20 @@
 	border-radius: 10px;
 }
 
-.forminput-hide-arrows {
+.oeb-input-hide-arrows {
 	/* Hide arrows from input number - Firefox */
-	.forminput-x-inputs input[type='number'] {
+	input[type='number'] {
 		-moz-appearance: textfield;
 	}
 
 	/* Hide arrows from input number - Chrome, Safari, Edge, Opera */
-	.forminput .forminput-x-inputs input::-webkit-outer-spin-button,
+	input::-webkit-outer-spin-button,
 	input::-webkit-inner-spin-button {
 		-webkit-appearance: none;
 		margin: 0;
 	}
 }
+
 
 @media (min-width: 768px) {
 	.o-container:not(.o-container-is-managed) .navbar .navbar-x-logo img {
@@ -213,7 +218,9 @@
 	.u-margin-bottom2x {
 		margin-bottom: 10px;
 	}
+
 }
+
 
 #altcha_checkbox {
 	appearance: auto;

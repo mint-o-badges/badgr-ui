@@ -51,7 +51,6 @@ import { HlmPDirective } from './spartan/ui-typography-helm/src/lib/hlm-p.direct
 		 [placeholder]="placeholder || ''"
 		 [attr.maxlength]="maxchar"
 		 [attr.max]="max"
-		 [type]="fieldType"
 		 #textInput 
 		 class="tw-w-full tw-border-solid tw-border-purple tw-bg-white tw-min-h-[80px]"
 		 hlmInput 
@@ -73,6 +72,7 @@ export class OebInputComponent {
 	@Input() maxchar?: number = null;
 	@Input() max?: number;
     @Input() sublabel?: string;
+	@Input() autofocus = false;
 
 
 	@ViewChild('textInput') textInput: ElementRef;
@@ -128,10 +128,20 @@ export class OebInputComponent {
 		)[0]; // Only display the first error
 	}
 
+	ngAfterViewInit() {
+		if (this.autofocus) {
+			this.focus();
+		}
+	}
+
     cacheControlState() {
 		this.cachedErrorMessage = this.uncachedErrorMessage;
 		this.cachedDirtyState = this.control.dirty;
 		this.cachedErrorState = this.controlErrorState;
+	}
+
+	focus() {
+		this.inputElement.focus();
 	}
 
     handleKeyPress(event: KeyboardEvent) {

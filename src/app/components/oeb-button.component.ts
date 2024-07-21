@@ -10,7 +10,7 @@ import { lucideUpload } from '@ng-icons/lucide';
   standalone: true,
   imports: [HlmButtonDirective, NgIf, HlmIconModule],
 	providers: [MessageService, provideIcons({ lucideUpload })],
-  template: `<button [type]="type" class="tw-relative" hlmBtn [disabled]="disabled" [size]="size" [variant]="variant">
+  template: `<button [type]="type" class="tw-relative" hlmBtn [disabled]="disabled" [width]="width" [size]="size" [variant]="variant">
   			        <hlm-icon *ngIf="icon" class="tw-mr-4" size="base" [name]="icon" />
                 <img *ngIf="img" class="md:tw-h-[30px] tw-h-[20px] tw-pr-4" [src]="img"/>
                 <span [innerHTML]="showLoadindMessage && loadingMessage ? loadingMessage : text"></span>
@@ -23,6 +23,7 @@ export class OebButtonComponent {
 
 	@Input() variant: string = 'default';
 	@Input() size: string = 'default';
+	@Input() width: string = 'default';
 	@Input() disabled: boolean = false;
 	@Input() text: string = undefined;
 	@Input() img: string = undefined;
@@ -76,4 +77,3 @@ export class OebButtonComponent {
 	}
 	constructor(private messageService: MessageService) {}
 }
-

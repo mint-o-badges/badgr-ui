@@ -8,28 +8,38 @@ export const buttonVariants = cva(
 	{
 		variants: {
 			variant: {
-				default: 'tw-bg-purple tw-text-white hover:tw-bg-buttonhover tw-border-solid tw-border-purple hover:tw-border-buttonhover',
+				default:
+					'tw-bg-purple tw-text-white hover:tw-bg-buttonhover tw-border-solid tw-border-purple hover:tw-border-buttonhover',
 				destructive: 'tw-bg-destructive tw-text-destructive-foreground hover:btw-g-destructive/90',
 				red: 'tw-bg-red tw-text-white hover:tw-bg-red-300 tw-border-solid tw-border-red hover:tw-border-red-300',
-				secondary: 'tw-bg-white tw-text-purple hover:tw-bg-buttonhover hover:tw-text-white tw-border-solid tw-border-purple',
-				blackborder: 'tw-bg-white tw-text-oebblack tw-font-medium hover:tw-bg-lightpurple tw-border-solid tw-border-black',
+				secondary:
+					'tw-bg-white tw-text-purple hover:tw-bg-buttonhover hover:tw-text-white tw-border-solid tw-border-purple',
+				blackborder:
+					'tw-bg-white tw-text-oebblack tw-font-medium hover:tw-bg-lightpurple tw-border-solid tw-border-black',
 				yellow: 'tw-bg-yellow tw-text-purple hover:tw-bg-yellow hover:tw-text-purple tw-border-solid tw-border-yellow',
 				link: 'tw-underline-offset-4 hover:tw-underline tw-text-primary',
 			},
 			size: {
-				default: 'md:tw-py-[15px] md:tw-px-[60px] md:tw-text-[20px] md:tw-leading-[30px] tw-py-[10.5px] tw-px-[42px] tw-text-[14px] tw-leading-[21px] tw-border-2 tw-font-bold',
+				default:
+					'md:tw-py-[15px] md:tw-px-[60px] md:tw-text-[20px] md:tw-leading-[30px] tw-py-[10.5px] tw-px-[42px] tw-text-[14px] tw-leading-[21px] tw-border-2 tw-font-bold',
 				md: 'tw-py-[10px] tw-px-[25px] md:tw-rounded-[10px] tw-rounded-[7px] tw-text-[20px] tw-leading-[28px] tw-border tw-font-bold',
 				sm: 'tw-py-[6px] tw-px-[20px] md:tw-rounded-[10px] tw-rounded-[7px] tw-text-[16px] tw-leading-[24px] tw-border tw-font-bold',
 				xs: 'tw-py-[4px] tw-px-[16px] md:tw-rounded-[10px] tw-rounded-[7px] tw-border',
 				icon: 'tw-h-10 tw-w-10',
 			},
+			width: {
+				default: '',
+				max_content: 'tw-w-max',
+			},
 		},
 		defaultVariants: {
 			variant: 'default',
 			size: 'default',
+			width: 'default',
 		},
 	},
 );
+
 export type ButtonVariants = VariantProps<typeof buttonVariants>;
 
 @Directive({
@@ -44,7 +54,15 @@ export class HlmButtonDirective {
 	private readonly _settableClass = signal<ClassValue>('');
 
 	protected _computedClass = computed(() =>
-		hlm(buttonVariants({ variant: this._variant(), size: this._size() }), this._settableClass(), this.userClass()),
+		hlm(
+			buttonVariants({
+				variant: this._variant(),
+				size: this._size(),
+				width: this._width(),
+			}),
+			this._settableClass(),
+			this.userClass(),
+		),
 	);
 
 	setClass(value: ClassValue) {
@@ -61,5 +79,11 @@ export class HlmButtonDirective {
 	@Input()
 	set size(size: ButtonVariants['size']) {
 		this._size.set(size);
+	}
+
+	private readonly _width = signal<ButtonVariants['width']>('default');
+	@Input()
+	set width(width: ButtonVariants['width']) {
+		this._width.set(width);
 	}
 }

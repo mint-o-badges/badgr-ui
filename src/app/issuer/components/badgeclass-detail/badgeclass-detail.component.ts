@@ -25,11 +25,15 @@ import { ShareSocialDialogOptions } from '../../../common/dialogs/share-social-d
 import { AppConfigService } from '../../../common/app-config.service';
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { BadgeClassCategory, BadgeClassLevel } from '../../models/badgeclass-api.model';
+import { PageConfig } from '../../../common/components/badge-detail/badge-detail.component';
 
 @Component({
 	selector: 'badgeclass-detail',
-	templateUrl: './badgeclass-detail.component.html',
-	styleUrls: ['./badgeclass-detail.component.css'],
+	template: `
+	<bg-badgedetail [config]="config" [awaitPromises]="[issuerLoaded, badgeClassLoaded]">
+	<issuer-detail-datatable *ngIf="recipientCount > 0" [recipientCount]="recipientCount" [_recipients]="instanceResults" (actionElement)="revokeInstance($event)"></issuer-detail-datatable>
+	</bg-badgedetail>
+`,
 })
 export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	readonly badgeFailedImageUrl = '../../../../breakdown/static/images/badge-failed.svg';
@@ -82,6 +86,9 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 	resultsPerPage = 100;
 	issuer: Issuer;
 	crumbs: LinkEntry[];
+
+	config: PageConfig 
+
 
 	categoryOptions: { [key in BadgeClassCategory]: string } = {
 		competency: 'Kompetenz-Badge',
@@ -157,6 +164,44 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 				];
 				this.allBadgeInstances = retInstances;
 				this.updateResults();
+				this.config = {
+					crumbs: this.crumbs,
+					badgeTitle: this.badgeClass.name,
+					headerButton: {
+						title: 'Badge vergeben',
+						routerLink: ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'issue'],
+
+					},
+					menuitems: [
+						{
+							title: 'Bearbeiten',
+							routerLink: ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'edit'],
+							icon: 'icon_edit',
+
+						},
+						{
+							title: 'Löschen',
+							icon: 'icon_remove',
+							action: () => this.deleteBadge(),
+						}
+					
+					],
+					badgeDescription: this.badgeClass.description,
+					issuerSlug: this.issuerSlug,
+					slug: this.badgeSlug,
+					createdAt: this.badgeClass.createdAt,
+					updatedAt: this.badgeClass.updatedAt,
+					category: this.badgeClass.extension['extensions:CategoryExtension'].Category === 'competency' ? 'Kompetenz- Badge' : 'Teilnahme- Badge',
+					tags: this.badgeClass.tags,
+					issuerName: this.badgeClass.issuerName,
+					issuerImagePlacholderUrl: this.issuerImagePlacholderUrl,
+					issuerImage: this.issuer.image,
+					badgeLoadingImageUrl: this.badgeLoadingImageUrl,
+					badgeFailedImageUrl: this.badgeFailedImageUrl,
+					badgeImage: this.badgeClass.image,
+					competencies: this.badgeClass.extension['extensions:CompetencyExtension']
+
+				}
 			},
 			(error) => {
 				this.messageService.reportLoadingError(
