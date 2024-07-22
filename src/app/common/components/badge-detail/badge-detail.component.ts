@@ -1,8 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { LinkEntry } from '../bg-breadcrumbs/bg-breadcrumbs.component';
-import { VerifyBadgeDialog } from '../../../public/components/verify-badge-dialog/verify-badge-dialog.component';
 
-type MenuItem = {
+export type MenuItem = {
     title: string;
     routerLink?: string[] | string;
     icon: string;
