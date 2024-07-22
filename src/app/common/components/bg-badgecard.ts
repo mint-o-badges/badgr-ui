@@ -53,7 +53,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 				<div class="tw-absolute tw-left-0 tw-bottom-2 tw-w-full">
 					<!-- Show Verify or Share Button unless public -->
 					<div class="tw-float-right tw-pr-4">
-						<a
+					<!-- <a
 							hlmA
 							hlmP
 							size="sm"
@@ -62,7 +62,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 							(click)="shareClicked.emit($event)"
 						>
 							{{ 'BadgeCollection.share' | translate }}
-						</a>
+						</a> -->
 						<a
 							hlmA
 							hlmP
