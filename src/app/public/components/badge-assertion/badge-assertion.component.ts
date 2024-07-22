@@ -18,7 +18,7 @@ import { saveAs } from 'file-saver';
 import { Title } from '@angular/platform-browser';
 import { VerifyBadgeDialog } from '../verify-badge-dialog/verify-badge-dialog.component';
 import { BadgeClassCategory, BadgeClassLevel } from './../../../issuer/models/badgeclass-api.model';
-import { PageConfig } from '../../../common/components/badge-detail/badge-detail.component';
+import { PageConfig } from '../../../common/components/badge-detail/badge-detail.component.types';
 
 @Component({
 	template: `<verify-badge-dialog
