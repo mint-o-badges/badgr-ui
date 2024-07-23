@@ -1,4 +1,4 @@
-import { Component, Injector, ViewChild } from '@angular/core';
+import { Component, Injector, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { preloadImageURL } from '../../../common/util/file-util';
@@ -18,10 +18,14 @@ import { saveAs } from 'file-saver';
 import { Title } from '@angular/platform-browser';
 import { VerifyBadgeDialog } from '../verify-badge-dialog/verify-badge-dialog.component';
 import { BadgeClassCategory, BadgeClassLevel } from './../../../issuer/models/badgeclass-api.model';
+import { PageConfig } from '../../../common/components/badge-detail/badge-detail.component';
 
 @Component({
-	templateUrl: './badge-assertion.component.html',
-	styleUrls: ['./badge-assertion.component.css'],
+	template: `<verify-badge-dialog
+					#verifyBadgeDialog
+					(verifiedBadgeAssertion)="onVerifiedBadgeAssertion($event)"
+				></verify-badge-dialog>
+	<bg-badgedetail [config]="config" [awaitPromises]="[assertionIdParam]"></bg-badgedetail>`,
 })
 export class PublicBadgeAssertionComponent {
 	constructor(
@@ -52,6 +56,9 @@ export class PublicBadgeAssertionComponent {
 	assertionId: string;
 
 	awardedToDisplayName: string;
+
+	config: PageConfig 
+
 
 	routerLinkForUrl = routerLinkForUrl;
 
@@ -157,6 +164,44 @@ export class PublicBadgeAssertionComponent {
 			this.assertionId = paramValue;
 			const service: PublicApiService = this.injector.get(PublicApiService);
 			return service.getBadgeAssertion(paramValue).then((assertion) => {
+				this.config = {
+					badgeTitle: assertion.badge.name,
+					headerButton: {
+						title: 'Verify Badge',
+						action: () => this.verifyBadge(),
+
+					},
+					menuitems: [
+						{
+							title: 'Download JSON',
+							icon: 'icon_external_link',
+							action: () => window.open(this.rawJsonUrl),
+
+						},
+						{
+							title: 'Download baked Image',
+							icon: 'icon_external_link',
+							action: () => window.open(this.rawBakedUrl),
+						},
+						{
+							title: 'View Badge',
+							icon: 'icon_badge',
+							routerLink: routerLinkForUrl(assertion.badge.hostedUrl || assertion.badge.id)
+						}
+					],
+					badgeDescription: assertion.badge.description,
+					issuerSlug: assertion.badge.issuer['slug'],
+					slug: assertion.badge.id,
+					category: assertion.badge['extensions:CategoryExtension'].Category === 'competency' ? 'Kompetenz- Badge' : 'Teilnahme- Badge',
+					tags: assertion.badge.tags,
+					issuerName: assertion.badge.issuer.name,
+					issuerImagePlacholderUrl: this.issuerImagePlacholderUrl,
+					issuerImage: assertion.badge.issuer.image,
+					badgeLoadingImageUrl: this.badgeLoadingImageUrl,
+					badgeFailedImageUrl: this.badgeFailedImageUrl,
+					badgeImage: assertion.badge.image,
+					competencies: assertion.badge['extensions:CompetencyExtension'],
+				}
 				if (assertion.revoked) {
 					if (assertion.revocationReason) {
 						this.messageService.reportFatalError('Assertion has been revoked:', assertion.revocationReason);

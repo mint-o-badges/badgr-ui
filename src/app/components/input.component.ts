@@ -51,7 +51,6 @@ import { HlmPDirective } from './spartan/ui-typography-helm/src/lib/hlm-p.direct
 		 [placeholder]="placeholder || ''"
 		 [attr.maxlength]="maxchar"
 		 [attr.max]="max"
-		 [type]="fieldType"
 		 #textInput 
 		 class="tw-w-full tw-border-solid tw-border-purple tw-bg-white tw-min-h-[80px]"
 		 hlmInput 

@@ -2,6 +2,7 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { BgBadgecard } from './components/bg-badgecard';
+import { BgBadgeDetail } from './components/badge-detail/badge-detail.component';
 
 import { BgAwaitPromises } from './directives/bg-await-promises';
 import { BgImageStatusPlaceholderDirective } from './directives/bg-image-status-placeholder.directive';
@@ -85,15 +86,20 @@ import { CaptchaService } from './services/captcha.service';
 
 import { OebInputComponent } from '../components/input.component';
 import { OebInputErrorComponent } from '../components/input.error.component';
-import { TextSemibold } from '../components/typography/text-semibold';
 import { OebButtonComponent } from '../components/oeb-button.component';
 import { HlmH1Directive } from '../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
 import { HlmPDirective } from '../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
 import { HlmADirective } from '../components/spartan/ui-typography-helm/src/lib/hlm-a.directive';
 import { HlmH2Directive } from '../components/spartan/ui-typography-helm/src/lib/hlm-h2.directive';
 import { HlmH3Directive } from '../components/spartan/ui-typography-helm/src/lib/hlm-h3.directive';
+import { HlmInputDirective } from '../components/spartan/ui-input-helm/src/lib/hlm-input.directive';
 import { CompetencyAccordionComponent } from '../components/accordion.component';
 import { OebCheckboxComponent } from '../components/oeb-checkbox.component';
+import { OebTabsComponent } from '../components/oeb-backpack-tabs.component';
+import { HlmIconModule } from '../components/spartan/ui-icon-helm/src';
+import { CountUpModule } from 'ngx-countup';
+import { DynamicFilterPipe } from './pipes/dynamicFilterPipe';
+import { OebCompetency } from './components/oeb-competency';
 import { OebDialogComponent } from '../components/oeb-dialog.component';
 import { SuccessDialogComponent } from './dialogs/oeb-dialogs/success-dialog.component';
 import { OebBackgroundComponent } from '../components/oeb-background.component';
@@ -109,12 +115,14 @@ const DIRECTIVES = [
 	BgMarkdownComponent,
 	// TooltipDirective,
 	BgPopupMenuTriggerDirective,
+	DynamicFilterPipe
 ];
 
 export const COMMON_MODULE_COMPONENTS = [
 	BadgeImageComponent,
 	BadgrButtonComponent,
 	BgBadgecard,
+	BgBadgeDetail,
 	BgBreadcrumbsComponent,
 	BgFormFieldFileComponent,
 	BgFormFieldImageComponent,
@@ -144,7 +152,7 @@ export const COMMON_MODULE_COMPONENTS = [
 	TruncatedTextComponent,
 	ExportPdfDialog,
 	NounprojectDialog,
-	
+	OebCompetency
 ];
 
 const SERVICES = [
@@ -180,7 +188,7 @@ const GUARDS = [AuthGuard];
 
 const PIPES = [UcFirstPipe, StudyLoadPipe];
 
-export const COMMON_IMPORTS = [CommonModule, FormsModule, ReactiveFormsModule, HttpClientModule, RouterModule, OebInputComponent, OebSelectComponent, OebInputErrorComponent, OebButtonComponent, HlmH1Directive, HlmH2Directive, HlmH3Directive, HlmPDirective, HlmADirective, CompetencyAccordionComponent, OebCheckboxComponent, OebDialogComponent, SuccessDialogComponent, OebBackgroundComponent];
+export const COMMON_IMPORTS = [CommonModule, FormsModule, ReactiveFormsModule, HttpClientModule, RouterModule, OebInputComponent, OebInputErrorComponent, OebSelectComponent, OebButtonComponent, HlmH1Directive, HlmH2Directive, HlmH3Directive, HlmPDirective, HlmADirective, CompetencyAccordionComponent, OebCheckboxComponent, OebDialogComponent, SuccessDialogComponent, OebBackgroundComponent, OebTabsComponent, HlmIconModule, CountUpModule, HlmInputDirective];
 
 @NgModule({
 	imports: [...COMMON_IMPORTS, FormsModule, LMarkdownEditorModule, TranslateModule],
