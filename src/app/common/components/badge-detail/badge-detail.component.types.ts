@@ -3,7 +3,7 @@ import { LinkEntry } from '../bg-breadcrumbs/bg-breadcrumbs.component';
 type MenuItemBase = {
     title: string;
     routerLink?: string[] | string;
-    icon: any;
+    icon?: any;
     disabled?: boolean;
     action?: () => void;
 };
