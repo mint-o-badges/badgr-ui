@@ -31,6 +31,7 @@ import { CopyBadgeDialog } from './common/dialogs/copy-badge-dialog/copy-badge-d
 import { ForkBadgeDialog } from './common/dialogs/fork-badge-dialog/fork-badge-dialog.component';
 import { LanguageService } from './common/services/language.service';
 import { TranslateService } from '@ngx-translate/core';
+import { MenuItem } from './common/components/badge-detail/badge-detail.component.types';
 
 // Shim in support for the :scope attribute
 // See https://github.com/lazd/scopedQuerySelectorShim and
@@ -50,6 +51,21 @@ export class AppComponent implements OnInit, AfterViewInit {
 	 * Enables or disables the "curtain" feature, hiding the normal page.
 	 */
 	curtainEnabled = true;
+
+	aboutBadgesMenuItems: MenuItem[] = [
+		{
+			title: 'FAQ',
+			routerLink: ['/public/faq'],
+		},
+		{
+			title: 'Badges A-Z',
+			routerLink: ['/catalog/badges'],
+		},
+		{
+			title: 'Institutions',
+			routerLink: ['/catalog/institutions'],
+		},
+	]
 	/**
 	 * Permanently disables the curtain, making it impossible to show it even with the query parameter
 	 */

@@ -78,6 +78,8 @@
 		<ng-template [ngIf]="!loggedIn">
 			<nav class="tw-items-stretch tw-align-middle tw-hidden lg:tw-flex">
 				<div class="tw-flex tw-gap-8 tw-items-center">
+					<oeb-dropdown [menuItems]="aboutBadgesMenuItems" trigger="Über OEB"></oeb-dropdown>
+
 					<!-- About Badges Menu -->
 					<button role="menuitem" aria-haspopup="true"
 						class="oeb-navitem tw-cursor-pointer" routerLinkActive="oeb-navitem-is-active"
@@ -112,6 +114,7 @@
 		<ng-template [ngIf]="loggedIn && !isOAuthAuthorizationInProcess">
 			<nav class="tw-hidden lg:tw-block">
 				<div class="tw-flex tw-gap-8 tw-items-center">
+					<oeb-dropdown class="oeb-navitem tw-cursor-pointer" [menuitems]="" trigger="Über OEB"></oeb-dropdown>
 					<!-- About Badges Menu -->
 					<button role="menuitem" aria-haspopup="true"
 						class="oeb-navitem tw-cursor-pointer" routerLinkActive="oeb-navitem-is-active"
