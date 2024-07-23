@@ -1,23 +1,15 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-
 import { ActivatedRoute, Router } from '@angular/router';
 import { SessionService } from '../../../common/services/session.service';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
 import { MessageService } from '../../../common/services/message.service';
 import { Title } from '@angular/platform-browser';
-import { preloadImageURL } from '../../../common/util/file-util';
 import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
-import { UserProfileEmail } from '../../../common/model/user-profile.model';
 import { AppConfigService } from '../../../common/app-config.service';
-import { CommonDialogsService } from '../../../common/services/common-dialogs.service';
-import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { Issuer } from '../../../issuer/models/issuer.model';
 import { BadgeClass } from '../../../issuer/models/badgeclass.model';
-import { ApiExternalToolLaunchpoint } from '../../../externaltools/models/externaltools-api.model';
 import { IssuerManager } from '../../../issuer/services/issuer-manager.service';
 import { BadgeClassManager } from '../../..//issuer/services/badgeclass-manager.service';
-import { ExternalToolsManager } from '../../..//externaltools/services/externaltools-manager.service';
-import { stripQueryParamsFromUrl } from '../../util/url-util';
 import { MatchingAlgorithm } from '../../dialogs/fork-badge-dialog/fork-badge-dialog.component';
 
 @Component({
@@ -43,7 +35,6 @@ export class OebIssuerDetailComponent extends BaseAuthenticatedRoutableComponent
 		protected issuerManager: IssuerManager,
 		protected profileManager: UserProfileManager,
 		private configService: AppConfigService,
-		private badgeClassManager: BadgeClassManager,
 	) {
         super(router, route, loginService);
 	};

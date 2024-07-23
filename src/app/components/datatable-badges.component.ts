@@ -1,13 +1,11 @@
-import { CommonModule, JsonPipe } from '@angular/common';
-import { BadgrCommonModule } from '../common/badgr-common.module';
+import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { HlmIconModule } from './spartan/ui-icon-helm/src';
 import { RouterModule } from '@angular/router';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { HlmTableModule } from './spartan/ui-table-helm/src';
 import { BadgeClass } from '../issuer/models/badgeclass.model';
 import { OebButtonComponent } from './oeb-button.component';
-import { TimeComponent } from '../common/components/time.component';
 
 @Component({
 	selector: 'badges-datatable',
