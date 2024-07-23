@@ -1,12 +1,13 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, JsonPipe } from '@angular/common';
 import { BadgrCommonModule } from '../common/badgr-common.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { HlmIconModule } from './spartan/ui-icon-helm/src';
 import { RouterModule } from '@angular/router';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { HlmTableModule } from './spartan/ui-table-helm/src';
 import { BadgeClass } from '../issuer/models/badgeclass.model';
 import { OebButtonComponent } from './oeb-button.component';
+import { TimeComponent } from '../common/components/time.component';
 
 @Component({
 	selector: 'badges-datatable',
@@ -32,28 +33,35 @@ import { OebButtonComponent } from './oeb-button.component';
                 <hlm-th class="tw-w-24 tw-cursor-pointer" (click)="redirectToBadgeDetail.emit(badge)">
                     <img
                         class="l-flex-x-shrink0 badgeimage badgeimage-small"
-                        src="{{ badge.image }}"
-                        alt="{{ badge.description }}"
+                        src="{{ badge.badge.image }}"
+                        alt="{{ badge.badge.description }}"
                         width="40"
                     />
                     <div class="tw-ml-2 tw-hidden md:tw-grid md:tw-grid-cols-[150px] md:gap-4">
                       <div class="tw-line-clamp-2  tw-break-all">
-                        <span class="tw-text-oebblack">{{badge.name}}</span>
+                        <span class="tw-text-oebblack">{{badge.badge.name}}</span>
                       </div>  
                     </div>    
                 </hlm-th>
-                <hlm-th class="!tw-flex-1 tw-justify-center !tw-text-oebblack"><p class="u-text"><time [date]="badge.createdAt" format="dd.MM.y"></time></p></hlm-th>
-                <hlm-th class="tw-w-40 tw-justify-center !tw-text-oebblack">{{badge.recipientCount}}</hlm-th>
+                <hlm-th class="!tw-flex-1 tw-justify-center !tw-text-oebblack"><p class="u-text">{{badge.badge.createdAt | date:"dd.MM.yyyy"}}</p></hlm-th>
+                <hlm-th class="tw-w-40 tw-justify-center !tw-text-oebblack">{{badge.badge.recipientCount}}</hlm-th>
                 <hlm-th class="tw-justify-center sm:tw-justify-end sm:tw-w-48 tw-w-full !tw-text-oebblack">
-                    <oeb-button variant="secondary" size="xs" class="tw-w-full" (click)="actionElement.emit(badge)" [text]="actionElementText"></oeb-button>
+                    <oeb-button variant="secondary" size="xs" class="tw-w-full" (click)="actionElement.emit(badge.badge)" [text]="actionElementText"></oeb-button>
                 </hlm-th>
             </hlm-trow>
         </hlm-table>`,
 })
 export class DatatableComponent {
 	@Input() caption: string = "";
-    @Input() badges: BadgeClass[];
+    @Input() badges: BadgeResult[];
     @Input() actionElementText: string = "Badge vergeben"
     @Output() actionElement = new EventEmitter();
     @Output() redirectToBadgeDetail = new EventEmitter();
+}
+
+class BadgeResult {
+	constructor(
+		public badge: BadgeClass,
+		public issuerName: string,
+	) {}
 }

@@ -41,15 +41,14 @@ export class OebIssuerDetailComponent extends BaseAuthenticatedRoutableComponent
 		protected messageService: MessageService,
 		protected title: Title,
 		protected issuerManager: IssuerManager,
-		protected badgeClassService: BadgeClassManager,
 		protected profileManager: UserProfileManager,
 		private configService: AppConfigService,
+		private badgeClassManager: BadgeClassManager,
 	) {
         super(router, route, loginService);
-
 	};
 
-	badgeResults: any[] = [];
+	badgeResults: BadgeResult[] = [];
 	maxDisplayedResults = 100;
 
 	private _searchQuery = '';
@@ -65,7 +64,7 @@ export class OebIssuerDetailComponent extends BaseAuthenticatedRoutableComponent
 		// Clear Results
 		this.badgeResults.length = 0;
 
-		const addBadgeToResults = (badge: any) => {
+		const addBadgeToResults = (badge: BadgeClass) => {
 			// Restrict Length
 			if (this.badgeResults.length > this.maxDisplayedResults) {
 				return false;
@@ -74,16 +73,17 @@ export class OebIssuerDetailComponent extends BaseAuthenticatedRoutableComponent
 
 			if (!this.badgeResults.find((r) => r.badge === badge)) {
 				// appending the results to the badgeResults array bound to the view template.
-				this.badgeResults.push(badge);
+				this.badgeResults.push(new BadgeResult(badge, this.issuer.name));
 			}
 			return true;
 		};
 
 		this.badges.filter(MatchingAlgorithm.badgeMatcher(this._searchQuery)).forEach(addBadgeToResults);
-		this.badgeResults.sort((a, b) => b.badge.issueDate.getTime() - a.badge.issueDate.getTime());
+		this.badgeResults.sort((a, b) => b.badge.createdAt.getTime() - a.badge.createdAt.getTime());
 	}
 
 	ngOnInit() {
+		super.ngOnInit();
 		this.updateResults();
 	}
 
@@ -106,4 +106,11 @@ export class OebIssuerDetailComponent extends BaseAuthenticatedRoutableComponent
 	routeToUrl(url){
 		window.location.href = url;
 	}
+}
+
+class BadgeResult {
+	constructor(
+		public badge: BadgeClass,
+		public issuerName: string,
+	) {}
 }

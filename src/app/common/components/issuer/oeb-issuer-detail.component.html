@@ -1,4 +1,4 @@
-<div class="tw-flex tw-justify-between">
+<div class="tw-flex tw-justify-between tw-gap-6">
 	<div class="tw-flex oeb-section-sm">
 		<div class="tw-relative">
 			<img [loaded-src]="issuer?.image" [loading-src]="issuerPlaceholderSrc" [error-src]="issuerPlaceholderSrc"
@@ -51,13 +51,14 @@
 	<div class="tw-flex tw-flex-wrap tw-gap-4">
 		<oeb-button 
 			*ngIf="!public"
+			width="full_width"
 			class="tw-flex-grow tw-relative"
 			[routerLink]="['./badges/create']"
 			[disabled]="!issuer.canCreateBadge"
 			[text]="'Issuer.createBadge' | translate"
 		>
 		</oeb-button>
-		<oeb-button *ngIf="public" (click)="routeToUrl(issuer.url)" [text]="'Issuer.visitWebsite' | translate">
+		<oeb-button *ngIf="public" (click)="routeToUrl(issuer.url)" class="tw-flex-grow" width="full_width" [text]="'Issuer.visitWebsite' | translate">
 		</oeb-button>
 
 		<button class="buttonicon buttonicon-secondary" [bgPopupMenuTrigger]="issuerActionsMenu">
@@ -114,11 +115,10 @@
 	<h2 class="tw-font-medium md:tw-text-[22px] md:tw-leading-[26.4px] tw-text-purple tw-text-[16px] tw-leading-[19.2px] tw-py-2">
 		{{issuer.name}} {{ 'Issuer.issuerHasBadges' | translate }} {{ badges.length }} Badge{{ badges.length == 1 ? '' : 's' }}.
 	</h2>
-	
 	<badges-datatable 
 		*ngIf="!public"
 		[caption]=""
-		[badges]="badges"
+		[badges]="badgeResults"
 		(actionElement)="routeToBadgeAward($event, issuer)"
 		(redirectToBadgeDetail)="routeToBadgeDetail($event, issuer)"></badges-datatable>
 
@@ -135,14 +135,14 @@
 		<div class="tw-grid tw-grid-cols-badges tw-gap-16">
 	
 			<bg-badgecard *ngFor="let badge of badgeResults" 
-				[badgeTitle]="badge.name"
-				[badgeImage]="badge.image" 
-				[badgeDescription]="badge.description"
-				[badgeSlug]="badge.slug"
+				[badgeTitle]="badge.badge.name"
+				[badgeImage]="badge.badge.image" 
+				[badgeDescription]="badge.badge.description"
+				[badgeSlug]="badge.badge.slug"
 				[issuerTitle]="badge.issuerName ? badge.issuerName : badge.issuer.name"
-				[badgeIssueDate]="badge.createdAt"
-				public="true" 
-				[publicUrl]="badge.id"
+				[badgeIssueDate]="badge.badge.createdAt"
+				public="true"
+				[publicUrl]="badge.badge.id"
 				[badgeClass]="true"></bg-badgecard>
 		</div>
 	</ng-container>

@@ -10,7 +10,7 @@ import { lucideUpload } from '@ng-icons/lucide';
   standalone: true,
   imports: [HlmButtonDirective, NgIf, HlmIconModule],
 	providers: [MessageService, provideIcons({ lucideUpload })],
-  template: `<button [type]="type" class="tw-relative tw-w-full" hlmBtn [disabled]="disabled" [width]="width" [size]="size" [variant]="variant">
+  template: `<button [type]="type" class="tw-relative" hlmBtn [disabled]="disabled" [width]="width" [size]="size" [variant]="variant">
   			        <hlm-icon *ngIf="icon" class="tw-mr-4" size="base" [name]="icon" />
                 <img *ngIf="img" class="md:tw-h-[30px] tw-h-[20px] tw-pr-4" [src]="img"/>
                 <span [innerHTML]="showLoadindMessage && loadingMessage ? loadingMessage : text"></span>
