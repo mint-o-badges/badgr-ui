@@ -15,7 +15,6 @@ import { OebButtonComponent } from './oeb-button.component';
 		HlmTableModule,
 		HlmIconModule,
 		CommonModule,
-		BadgrCommonModule,
         OebButtonComponent,
 		TranslateModule,
 		RouterModule

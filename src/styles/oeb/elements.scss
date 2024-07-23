@@ -142,3 +142,30 @@
 	box-shadow: 0px 4px 8px 0px #0000000D, 0px 2px 2px 0px #0000001A, 0px 0px 0px 1px #0000001A;
 }
 
+.oeb-stickyfooter {
+	display: grid;
+	min-height: 100vh;
+	grid-template-columns: 1fr;
+	grid-template-areas:
+	'nav   ' 
+	'loader' 
+	'main  ' 
+	'footer';
+	grid-template-rows: 100px 6px 1fr auto;
+}
+
+.oeb-nav {
+	grid-area: nav;
+}
+
+.oeb-loader {
+	grid-area: loader;
+}
+
+.oeb-main {
+	grid-area: main;
+}
+
+.oeb-footer {
+	grid-area: footer;
+}
