@@ -61,14 +61,13 @@ export class ExportPdfDialog extends BaseDialog {
 		);
 	}
 
-	async openDialog(badge: RecipientBadgeInstance, markdown: HTMLElement): Promise<void> {
+	async openDialog(badge: RecipientBadgeInstance): Promise<void> {
 		this.badge = badge;
 		this.showModal();
 
 		this.pdfService.getPdf(badge.slug).subscribe((url) => {
 			this.pdfSrc = url;
 		})
-
 	}
 
 	async openDialogForCollections(collection: RecipientBadgeCollection): Promise<void> {
@@ -335,6 +334,8 @@ export class ExportPdfDialog extends BaseDialog {
 	}
 
 	downloadPdf() {
+		console.log(this.badge)
+		console.log(this.badge._issueDate)
 		const link = document.createElement('a');
 		// https://stackoverflow.com/questions/55849415/type-saferesourceurl-is-not-assignable-to-type-string
 		const url = this.sanitizer.sanitize(SecurityContext.RESOURCE_URL, this.pdfSrc)
