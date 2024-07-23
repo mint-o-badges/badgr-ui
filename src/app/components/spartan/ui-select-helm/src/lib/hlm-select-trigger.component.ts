@@ -8,17 +8,17 @@ import { type VariantProps, cva } from 'class-variance-authority';
 import type { ClassValue } from 'clsx';
 
 export const selectTriggerVariants = cva(
-	'flex items-center justify-between rounded-md border border-input bg-background text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50',
+	'tw-flex tw-items-center tw-justify-between tw-rounded-md tw-border tw-border-input tw-bg-background tw-text-sm tw-ring-offset-background placeholder:tw-text-muted-foreground focus-visible:tw-outline-none focus-visible:tw-ring-2 focus-visible:tw-ring-ring focus-visible:tw-ring-offset-2 disabled:tw-cursor-not-allowed disabled:tw-opacity-50',
 	{
 		variants: {
 			size: {
-				default: 'h-10 py-2 px-4',
-				sm: 'h-9 px-3',
-				lg: 'h-11 px-8',
+				default: 'tw-h-10 tw-py-2 tw-px-4',
+				sm: 'tw-h-9 tw-px-3',
+				lg: 'tw-h-11 tw-px-8',
 			},
 			error: {
-				auto: '[&.ng-invalid.ng-touched]:text-destructive [&.ng-invalid.ng-touched]:border-destructive [&.ng-invalid.ng-touched]:focus-visible:ring-destructive',
-				true: 'text-destructive border-destructive focus-visible:ring-destructive',
+				auto: '[&.ng-invalid.ng-touched]:tw-text-destructive [&.ng-invalid.ng-touched]:tw-border-destructive [&.ng-invalid.ng-touched]:focus-visible:tw-ring-destructive',
+				true: 'tw-text-destructive tw-border-destructive focus-visible:tw-text-destructivering-destructive',
 			},
 		},
 		defaultVariants: {
@@ -40,7 +40,7 @@ type SelectTriggerVariants = VariantProps<typeof selectTriggerVariants>;
 			@if (icon) {
 				<ng-content select="hlm-icon" />
 			} @else {
-				<hlm-icon class="flex-none w-4 h-4 ml-2" name="lucideChevronDown" />
+				<hlm-icon class="tw-flex-none tw-w-4 tw-h-4 tw-ml-2" name="lucideChevronDown" />
 			}
 		</button>
 	`,
