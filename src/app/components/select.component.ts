@@ -21,7 +21,8 @@ import { CustomValidatorMessages, messagesForValidationError } from './input.com
 		ReactiveFormsModule,
 		TextSemibold,
 	],
-	template: ` <label class="tw-pb-[2px] tw-pl-[3px]" [attr.for]="inputName" *ngIf="label">
+	template: ` <div class="tw-mt-4 md:tw-mt-6">
+		<label class="tw-pb-[2px] tw-pl-[3px]" [attr.for]="inputName" *ngIf="label">
 			<span hlmP class="tw-text-oebblack tw-font-semibold" [innerHTML]="label"></span>
 			<span *ngIf="formFieldAside">{{ formFieldAside }}</span>
 			<ng-content select="[label-additions]"></ng-content>
@@ -48,7 +49,8 @@ import { CustomValidatorMessages, messagesForValidationError } from './input.com
 			</hlm-select-content>
 		</brn-select>
 
-		<oeb-input-error class="tw-text-red" *ngIf="isErrorState" [error]="errorMessageForDisplay"></oeb-input-error>`,
+		<oeb-input-error class="tw-text-red" *ngIf="isErrorState" [error]="errorMessageForDisplay"></oeb-input-error>
+	</div>`,
 })
 export class OebSelectComponent {
 	@Input() control: FormControl;

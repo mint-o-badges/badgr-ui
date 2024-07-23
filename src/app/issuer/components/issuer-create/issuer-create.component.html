@@ -34,14 +34,14 @@
 			#issuer_url_field
 		></oeb-input>
 
-		<bg-formfield-select
-			class="u-margin-bottom2x"
+		<oeb-select
 			[control]="issuerForm.rawControlMap.issuer_email"
 			label="{{ 'General.contact' | translate }} E-Mail"
 			placeholder="{{ 'Issuer.enterValidEmail' | translate }}"
 			[options]="emailsOptions"
 			errorMessage="{{ 'Issuer.enterValidEmail' | translate }}"
-		></bg-formfield-select>
+			#issuer_contact_Email
+		></oeb-select>
 
 		<oeb-input
 			label="{{ 'General.description' | translate }}"
@@ -51,8 +51,7 @@
 			#issuer_description_field
 		></oeb-input>
 
-		<bg-formfield-select
-			class="u-margin-bottom2x"
+		<oeb-select
 			[control]="issuerForm.rawControlMap.issuer_category"
 			label="{{ 'General.category' | translate }}"
 			placeholder="{{ 'Issuer.enterCategory' | translate }}"
@@ -70,7 +69,8 @@
 					value: 'andere'
 				}
 			]"
-		></bg-formfield-select>
+			#issuer_category
+		></oeb-select>
 
 		<h2>{{ 'General.address' | translate }}</h2>
 
