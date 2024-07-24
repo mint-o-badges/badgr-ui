@@ -41,7 +41,9 @@ module.exports = {
         lightgreen: 'var(--color-lightgreen)',
         oebblack: 'var(--color-black)',
         link: 'var(--color-link)',
-        oebgrey: 'var(--color-lightgray)'
+        oebgrey: 'var(--color-lightgray)',
+        oebgrey85: 'var(--color-gray85)'
+
       },
       gridTemplateColumns: {
         'badges': 'repeat(auto-fill, minmax(320px, 1fr))',
