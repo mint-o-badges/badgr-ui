@@ -10,7 +10,9 @@ import {
   lucideAward,
   lucideWarehouse,
   lucideChevronRight,
-  lucideUsers
+  lucideUsers,
+  lucideDownload,
+  lucideBadge
 
 } from '@ng-icons/lucide';
 
@@ -26,7 +28,9 @@ import {
       lucideAward,
       lucideWarehouse,
       lucideChevronRight,
-      lucideUsers
+      lucideUsers,
+      lucideDownload,
+      lucideBadge
     }),
   ],
 })

@@ -174,18 +174,18 @@ export class PublicBadgeAssertionComponent {
 					menuitems: [
 						{
 							title: 'Download JSON',
-							icon: 'icon_external_link',
+							icon: 'lucideDownload',
 							action: () => window.open(this.rawJsonUrl),
 
 						},
 						{
 							title: 'Download baked Image',
-							icon: 'icon_external_link',
+							icon: 'lucideDownload',
 							action: () => window.open(this.rawBakedUrl),
 						},
 						{
 							title: 'View Badge',
-							icon: 'icon_badge',
+							icon: 'lucideBadge',
 							routerLink: routerLinkForUrl(assertion.badge.hostedUrl || assertion.badge.id)
 						}
 					],
