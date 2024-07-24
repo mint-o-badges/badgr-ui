@@ -12,7 +12,7 @@ import {
     HlmSubMenuComponent, } from './spartan/ui-menu-helm/src/index';
 import { NgIf, NgFor, NgTemplateOutlet } from '@angular/common';
 import type { MenuItem } from '../common/components/badge-detail/badge-detail.component.types';
-import { RouterModule } from '@angular/router';
+import { RouterModule} from '@angular/router';
 import { HlmIconModule } from './spartan/ui-icon-helm/src';
 import { SharedIconsModule } from '../public/icons.module';
 
@@ -41,26 +41,25 @@ import { SharedIconsModule } from '../public/icons.module';
     <button [brnMenuTriggerFor]="menu">
         <ngTemplateOutlet *ngIf="isTemplate; else stringTrigger" [ngTemplateOutlet]="trigger"></ngTemplateOutlet>
         <ng-template #stringTrigger>
-            <button hlmMenuItem>
+            <button class={{triggerStyle}} hlmMenuItem>
                 {{ trigger }}
-                <hlm-icon name="lucideChevronDown" hlmMenuIcon />
+                <hlm-icon class="tw-ml-2" name="lucideChevronDown" hlmMenuIcon />
             </button>
         </ng-template>
     </button>
 
-    <ng-template #menu>
-    <hlm-menu class="tw-border tw-border-solid tw-border-[var(--color-purple)]">
+    <ng-template  #menu>
+    <hlm-menu class="tw-border-[var(--color-purple)] tw-border-2">
     <hlm-menu-label *ngIf="label">{{ label }}</hlm-menu-label>
     <ng-container *ngFor="let menuItem of menuItems">
-            <button *ngIf="menuItem.action" (click)="menuItem.action()" hlmMenuItem>
+            <button *ngIf="menuItem.action" (click)="menuItem.action($event)" hlmMenuItem>
+            <hlm-icon *ngIf="menuItem.icon" name={{menuItem.icon}} hlmMenuIcon />
             {{menuItem.title}}
-             <hlm-icon *ngIf="menuItem.icon" class="tw-ml-2" name={{menuItem.icon}} hlmMenuIcon />
             </button>
-            <button *ngIf="menuItem.routerLink" [routerLink]="menuItem.routerLink" hlmMenuItem>
+            <button routerLinkActive="tw-bg-lightpurple" *ngIf="menuItem.routerLink" [routerLink]="menuItem.routerLink" hlmMenuItem>
+            <hlm-icon *ngIf="menuItem.icon" name={{menuItem.icon}} hlmMenuIcon />
             {{menuItem.title}}
-             <hlm-icon *ngIf="menuItem.icon" class="tw-ml-2" name={{menuItem.icon}} hlmMenuIcon />
             </button>
-
     </ng-container>
     </hlm-menu>
     </ng-template>
@@ -69,9 +68,10 @@ import { SharedIconsModule } from '../public/icons.module';
 
 export class OebDropdownComponent {
     @Input() trigger: any;
+    @Input() triggerStyle: string = 'tw-border tw-border-solid tw-border-purple tw-px-1 tw-py-2 tw-rounded-xl';
     @Input() label?: string = '';
     @Input() class?: string = '';
-    @Input() menuItems: MenuItem[] = [];
+    @Input() menuItems: MenuItem[];
     
     get isTemplate(): boolean {
             return this.trigger instanceof TemplateRef;
