@@ -56,7 +56,6 @@ export class OebCollapsibleComponent {
     isOpen = false;
 
     toggleOpen() {
-        console.log(this.isOpen);
         this.isOpen = !this.isOpen;
     }
 
