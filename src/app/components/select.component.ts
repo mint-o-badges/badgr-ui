@@ -37,7 +37,7 @@ import { CustomValidatorMessages, messagesForValidationError } from './input.com
 			(focus)="cacheControlState()"
 			(keypress)="handleKeyPress($event)"
 			#selectInput
-			class="tw-text-oebblack tw-font-semibold"
+			class="tw-text-oebblack"
 			hlm
 		>
 			<hlm-select-trigger class="tw-w-full tw-border-solid tw-border-purple tw-bg-white">
