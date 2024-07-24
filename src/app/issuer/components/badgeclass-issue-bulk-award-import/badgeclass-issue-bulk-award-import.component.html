@@ -3,17 +3,15 @@
 		<h1 hlmH1 class="tw-text-purple">{{'Issuer.multipleBadgeAwardHeadline' | translate}}</h1>
 	</div>
 	<div class="oeb-standard-padding-bottom">
-		<p hlmP>{{'Issuer.uploadListText' | translate}}</p>
-		<ol class="tw-list-disc tw-pl-8 tw-py-4">
-			<li hlmP>{{'Issuer.uploadFields' | translate}}</li>
-			<li hlmP>{{'Issuer.uploadFormat' | translate}}</li>
+		<p hlmP [innerHtml]="'Issuer.uploadListText' | translate"></p>
+		<ol class="tw-list-decimal tw-pl-8 tw-py-4">
+			<li class="tw-flex tw-gap-2" hlmP>{{'Issuer.downloadExampleCSV' | translate}} <p  hlmP [innerHtml]="'Issuer.exampleCSVLink' | translate"></p> </li>
+			<li hlmP>{{'Issuer.openInExcel' | translate}}</li>
+			<li hlmP [innerHtml]="'Issuer.fillInList' | translate"></li>
+			<li hlmP>{{'Issuer.exportAsCSV' | translate}}</li>
+			<li hlmP>{{'Issuer.uploadCSV' | translate}}</li>
 		</ol>
-		<p hlmP>
-			{{'Issuer.useThis' | translate}}
-			<a hlmA href="./assets/badgrBulkIssueTemplate.csv" download="badgrBulkIssueTemplate.csv">{{'Issuer.exampleLink' | translate}}
-			</a>
-			{{'Issuer.createCSVorTXT' | translate }}
-		</p>
+		
 	</div>
 	<div class="oeb-standard-padding-bottom">
 		<div class="tw-py-6 tw-px-10 tw-bg-lightpurple tw-rounded-[20px]">
@@ -37,6 +35,12 @@
 				</oeb-button>
 			</div>
 		</div>
+	</div>
+	
+	<div>
+		<p hlmP size="sm">
+			{{'Issuer.nameInPdfInfo' | translate}}
+		</p>
 	</div>
 
 	
