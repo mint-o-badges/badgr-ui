@@ -33,7 +33,7 @@ export class HlmSelectOptionComponent {
 	public readonly userClass = input<ClassValue>('', { alias: 'class' });
 	protected readonly _computedClass = computed(() =>
 		hlm(
-			'tw-relative tw-flex tw-w-full tw-cursor-default tw-select-none tw-items-center tw-rounded-sm tw-py-1.5 tw-pl-8 tw-pr-2  rtl:tw-flex-reverse rtl:tw-pr-8 rtl:tw-pl-2 tw-text-sm tw-outline-none focus:tw-bg-accent focus:tw-text-accent-foreground data-[disabled]:tw-pointer-events-none data-[disabled]:tw-opacity-50',
+			'tw-relative tw-flex tw-w-full tw-cursor-default tw-select-none tw-items-center tw-rounded-sm tw-py-1.5 tw-pl-8 tw-pr-2  rtl:tw-flex-reverse rtl:tw-pr-8 rtl:tw-pl-2 tw-text-sm tw-outline-none focus:tw-bg-lightpurple focus:tw-text-accent-foreground data-[disabled]:tw-pointer-events-none data-[disabled]:tw-opacity-50',
 			this.userClass(),
 		),
 	);
