@@ -84,9 +84,19 @@ export class BadgeClassIssueBulkAwardImportComponent extends BaseAuthenticatedRo
 					destinationColumn = 'email';
 				}
 
+				if (tempColumnHeaderName.includes('E-Mail-Adresse')) {
+					inferredColumnHeaders.add('E-Mail-Adresse');
+					destinationColumn = 'E-Mail-Adresse';
+				}
+
 				if (tempColumnHeaderName === 'name') {
 					inferredColumnHeaders.add('name');
 					destinationColumn = 'name';
+				}
+
+				if (tempColumnHeaderName === 'Vor-/Nachname') {
+					inferredColumnHeaders.add('Vor-/Nachname');
+					destinationColumn = 'Vor-/Nachname';
 				}
 
 				if (tempColumnHeaderName.includes('evidence')) {
