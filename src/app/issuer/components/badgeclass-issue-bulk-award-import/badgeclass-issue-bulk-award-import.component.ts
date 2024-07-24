@@ -65,7 +65,7 @@ export class BadgeClassIssueBulkAwardImportComponent extends BaseAuthenticatedRo
 	//////// Parsing ////////
 	parseCsv(rawCSV: string) {
 		const parseRow = (rawRow: string) => {
-			rows.push(rawRow.split(',').map((r) => r.trim()));
+			rows.push(rawRow.split(/[,;]/).map((r) => r.trim()));
 		};
 
 		const padRowWithMissingCells = (row: string[]) =>
@@ -83,6 +83,7 @@ export class BadgeClassIssueBulkAwardImportComponent extends BaseAuthenticatedRo
 					inferredColumnHeaders.add('email');
 					destinationColumn = 'email';
 				}
+
 				if (tempColumnHeaderName === 'name') {
 					inferredColumnHeaders.add('name');
 					destinationColumn = 'name';
