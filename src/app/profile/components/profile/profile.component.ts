@@ -254,4 +254,9 @@ export class ProfileComponent extends BaseAuthenticatedRoutableComponent impleme
 			},
 		);
 	}
+
+    delete() {
+        console.log("Deleting user!");
+        console.log(this.profile);
+    }
 }
