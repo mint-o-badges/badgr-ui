@@ -65,7 +65,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 		},
 		{
 			title: 'Institutions',
-			routerLink: ['/catalog/institutions'],
+			routerLink: ['/catalog/issuers'],
 			icon: 'lucideWarehouse',
 		},
 	]
