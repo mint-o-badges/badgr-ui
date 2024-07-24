@@ -1,4 +1,4 @@
-import { Component, Input, TemplateRef, input } from '@angular/core';
+import { Component, Input, TemplateRef } from '@angular/core';
 import { BrnMenuTriggerDirective} from '@spartan-ng/ui-menu-brain'
 import { 
     HlmMenuComponent,
@@ -41,7 +41,7 @@ import { SharedIconsModule } from '../public/icons.module';
     <button [brnMenuTriggerFor]="menu">
         <ngTemplateOutlet *ngIf="isTemplate; else stringTrigger" [ngTemplateOutlet]="trigger"></ngTemplateOutlet>
         <ng-template #stringTrigger>
-            <button class={{triggerStyle}} hlmMenuItem>
+            <button [class]="triggerStyle">
                 {{ trigger }}
                 <hlm-icon class="tw-ml-2" name="lucideChevronDown" hlmMenuIcon />
             </button>
@@ -63,7 +63,8 @@ import { SharedIconsModule } from '../public/icons.module';
     </ng-container>
     </hlm-menu>
     </ng-template>
-`
+`,
+    styleUrls: ['../app.component.scss']
 })
 
 export class OebDropdownComponent {
