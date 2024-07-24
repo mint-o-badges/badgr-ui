@@ -3,7 +3,15 @@ import { provideIcons } from '@ng-icons/core';
 import {
   lucideChevronDown,
   lucidePencil,
-  lucideTrash2
+  lucideTrash2,
+  lucideBadgeCheck,
+  lucideFileText,
+  lucideFileQuestion,
+  lucideAward,
+  lucideWarehouse,
+  lucideChevronRight,
+  lucideUsers
+
 } from '@ng-icons/lucide';
 
 @NgModule({
@@ -11,7 +19,14 @@ import {
     provideIcons({
       lucideChevronDown,
       lucidePencil,
-      lucideTrash2
+      lucideTrash2,
+      lucideBadgeCheck,
+      lucideFileText,
+      lucideFileQuestion,
+      lucideAward,
+      lucideWarehouse,
+      lucideChevronRight,
+      lucideUsers
     }),
   ],
 })
