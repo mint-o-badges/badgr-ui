@@ -32,6 +32,7 @@
 		</div>
 	</div>
 
+
 	<div class="section">
 		<div>
 			<h2 class="heading">2. {{ 'CreateBadge.enterDetails' | translate }}</h2>
@@ -257,9 +258,13 @@
 			</li>
 			<hr class="tw-my-8 tw-border tw-border-[var(--color-purple)] tw-border-dashed" />
 			<li>
-				<span class="tw-text-lg tw-font-bold tw-leading-10 tw-text-[var(--color-purple)]">{{
-					'CreateBadge.addCompetenciesByHand' | translate
-				}}</span>
+				<oeb-collapsible [trigger]="collapseCompetenciesTrigger">
+					<ng-template #collapseCompetenciesTrigger>
+						<span class="tw-text-lg tw-font-bold tw-leading-10 tw-text-[var(--color-purple)] tw-mr-auto">{{
+							'CreateBadge.addCompetenciesByHand' | translate
+						}}</span>
+					</ng-template>
+				
 				<div
 					class="tw-flex tw-flex-col md:tw-flex-row md:tw-gap-4 tw-gap-2 md:tw-justify-between md:tw-items-center"
 				>
@@ -415,6 +420,7 @@
 						</span>
 					</button>
 				</div>
+			</oeb-collapsible>
 			</li>
 		</ul>
 	</div>
@@ -489,7 +495,11 @@
 
 	<!-- add options -->
 	<div class="section formsection formsection-nohelp">
-		<h2 class="tw-pt-1 tw-px-1 tw-text-xl tw-text-[var(--color-purple)]">Optionale Badge-Details</h2>
+		<oeb-collapsible [trigger]="collapseDetailsTrigger">
+			<ng-template #collapseDetailsTrigger>
+				<h2 class="tw-pt-1 tw-px-1 tw-text-xl tw-text-[var(--color-purple)] tw-mr-auto">Optionale Badge-Details</h2>
+			</ng-template>
+		
 		<div class="formsection-x-body">
 			<div class="tw-flex tw-gap-4 tw-items-center tw-mb-2 tw-mt-8">
 				<span class="tw-font-semibold tw-text-lg tw-text-black tw-uppercase"> Tag</span>
@@ -700,6 +710,7 @@
 				</li>
 			</ul>
 		</div>
+	</oeb-collapsible>
 	</div>
 
 	<div class="l-stack l-stack-right u-margin-top3x">
