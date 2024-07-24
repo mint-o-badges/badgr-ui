@@ -5,7 +5,7 @@ type MenuItemBase = {
     routerLink?: string[] | string;
     icon?: any;
     disabled?: boolean;
-    action?: () => void;
+    action?: (args?: any) => void;
 };
 
 type MenuItemWithLink = MenuItemBase & {
@@ -15,7 +15,7 @@ type MenuItemWithLink = MenuItemBase & {
 
 type MenuItemWithAction = MenuItemBase & {
     routerLink?: never;
-    action: () => void;
+    action: (args?: any) => void;
 };
 
 export type MenuItem = MenuItemWithLink | MenuItemWithAction;
