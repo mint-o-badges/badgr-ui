@@ -78,7 +78,7 @@
 		<ng-template [ngIf]="!loggedIn">
 			<nav class="tw-items-stretch tw-align-middle tw-hidden lg:tw-flex">
 				<div class="tw-flex tw-gap-8 tw-items-center">
-					<oeb-dropdown [menuItems]="aboutBadgesMenuItems" trigger="Über OEB"></oeb-dropdown>
+					<oeb-dropdown [menuItems]="aboutBadgesMenuItems" trigger="Über Badges" triggerStyle="oeb-navitem tw-cursor-pointer tw-leading-none"></oeb-dropdown>
 
 					<!-- About Badges Menu -->
 					<button role="menuitem" aria-haspopup="true"
@@ -114,14 +114,14 @@
 		<ng-template [ngIf]="loggedIn && !isOAuthAuthorizationInProcess">
 			<nav class="tw-hidden lg:tw-block">
 				<div class="tw-flex tw-gap-8 tw-items-center">
-					<oeb-dropdown class="oeb-navitem tw-cursor-pointer" [menuitems]="" trigger="Über OEB"></oeb-dropdown>
+					<oeb-dropdown [menuItems]="aboutBadgesMenuItems" trigger="Über OEB" triggerStyle="oeb-navitem tw-cursor-pointer !tw-leading-none"></oeb-dropdown>
 					<!-- About Badges Menu -->
-					<button role="menuitem" aria-haspopup="true"
+					<!-- <button role="menuitem" aria-haspopup="true"
 						class="oeb-navitem tw-cursor-pointer" routerLinkActive="oeb-navitem-is-active"
 						[bgPopupMenuTrigger]="aboutBadgesMenu">
 						{{ 'General.aboutBadges' | translate }}
 						<svg class="navitem-x-icon" icon="icon_dropdown"></svg>
-					</button>
+					</button> -->
 
 					<a class="oeb-navitem"
 						routerLinkActive="oeb-navitem-is-active" [routerLink]="['public/about']">
@@ -177,7 +177,7 @@
 
 	<!-- Nav dropdown menus -->
 
-	<bg-popup-menu #appsMenu>
+	 <bg-popup-menu #appsMenu>
 		<a class="menuitem" href="{{ lp.launch_url }}" *ngFor="let lp of launchpoints" target="_blank">
 			{{ lp.label }}
 		</a>
@@ -197,15 +197,15 @@
 				icon="icon_compare"></svg>{{ 'NavItems.appIntegrations' | translate }}</a>
 		<a class="menuitem" routerLinkActive="menuitem-is-active" [routerLink]="['/auth/logout']"><svg
 				icon="icon_exit_to_app"></svg>Logout</a>
-	</bg-popup-menu>
+	</bg-popup-menu> 
 
-	<bg-popup-menu #aboutBadgesMenu>
+	<!-- <bg-popup-menu #aboutBadgesMenu>
 		<a class="menuitem" routerLinkActive="menuitem-is-active" [routerLink]="['/public/faq']">FAQ</a>
 		<a class="menuitem" routerLinkActive="menuitem-is-active" [routerLink]="['/catalog/badges']">Badges A-Z</a>
 		<a class="menuitem" routerLinkActive="menuitem-is-active" [routerLink]="['/catalog/issuers']">{{
 			'General.institutions' | translate
 			}}</a>
-	</bg-popup-menu>
+	</bg-popup-menu> -->
 
 	<nav class="l-dialog mobilenav" [class.mobilenav-is-active]="mobileNavOpen" *ngIf="!loggedIn"
 		[class.mobilenav-light]="!theme.useColorNavbar">

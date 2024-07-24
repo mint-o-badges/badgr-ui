@@ -56,14 +56,17 @@ export class AppComponent implements OnInit, AfterViewInit {
 		{
 			title: 'FAQ',
 			routerLink: ['/public/faq'],
+			icon: 'lucideFileQuestion',
 		},
 		{
 			title: 'Badges A-Z',
 			routerLink: ['/catalog/badges'],
+			icon: 'lucideAward',
 		},
 		{
 			title: 'Institutions',
 			routerLink: ['/catalog/institutions'],
+			icon: 'lucideWarehouse',
 		},
 	]
 	/**
