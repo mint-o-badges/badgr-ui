@@ -104,17 +104,17 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 					menuitems: [
 						{
 							title: 'Verifizieren',
-							icon: 'icon_checkmark',
+							icon: 'lucideBadgeCheck',
 							action: () => window.open(this.verifyUrl, '_blank'),
 						},
 						{
 							title: 'PDF exportieren',
-							icon: 'icon_remove',
+							icon: 'lucideFileText',
 							action: () => this.exportPdf(),
 						},
 						{
 							title: 'Löschen',
-							icon: 'icon_remove',
+							icon: 'lucideTrash2',
 							action: () => this.deleteBadge(this.badge),
 						}
 					
