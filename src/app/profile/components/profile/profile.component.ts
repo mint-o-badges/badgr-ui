@@ -255,8 +255,21 @@ export class ProfileComponent extends BaseAuthenticatedRoutableComponent impleme
 		);
 	}
 
-    delete() {
-        console.log("Deleting user!");
-        console.log(this.profile);
+    async delete() {
+		if (
+			await this.dialogService.confirmDialog.openTrueFalseDialog({
+                // TODO: Language
+				dialogTitle: 'Delete account?',
+				dialogBody: 'Are you sure you want to delete your account? This cannot be undone.',
+				resolveButtonLabel: 'Delete account',
+				rejectButtonLabel: 'Cancel',
+			})
+		) {
+            this.profile.delete().then(
+                () => this.messageService.reportMinorSuccess('Deleted account'),
+                    // TODO: Redirect to home
+                (error) => this.messageService.reportHandledError(`Failed to delete account: ${error.response._body}`)
+            );
+		}
     }
 }

@@ -38,6 +38,11 @@ export class UserProfileApiService extends BaseHttpApiService {
 		return this.put<ApiUserProfile>('/v1/user/profile', profile).then((r) => r.body);
 	}
 
+	deleteOwnProfile() {
+		return this.delete('/v1/user/profile');
+	}
+
+
 	fetchEmails() {
 		return this.get<ApiUserProfileEmail[]>('/v1/user/emails').then((r) => r.body);
 	}
