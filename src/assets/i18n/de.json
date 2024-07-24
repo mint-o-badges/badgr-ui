@@ -214,7 +214,6 @@
 		"import": "Importieren",
 		"csvColumns": "CSV Spalten",
 		"csvError": "Die CSV Datei enthält Zeilen länger als ihre Überschrift. Bitte behebe diesen Fehler und versuche es erneut."
-
 	},
 	"Badge": {
 		"groupBy": "Gruppieren nach",
@@ -512,7 +511,17 @@
 		"deleteApp": "App Credentials löschen?",
 		"deleteAppConfirm": "Möchtest du deine App credentials wirklich löschen?",
 		"authorized": "Authorisiert:",
-		"takeBack": "Zurücknehmen"
+		"takeBack": "Zurücknehmen",
+		"ResetPassword": "Passwort zurücksetzen",
+		"EnterNewPassword": "Gib ein neues Passwort ein.",
+		"currentPassword": "Aktuelles Passwort",
+		"enterCurrentPassword": "Bitte aktuelles Passwort eingeben",
+		"newPassword": "Neues Passwort",
+		"enterYourNewPassword": "Bitte gib dein neues Passwort ein",
+		"mustBe8Char": "Muss mindestens 8 Zeichen lang sein",
+		"confirmNewPassword": "Neues Passwort bestätigen",
+		"enterNewPasswordConfirmation": "Bitte bestätige dein neues Passwort",
+		"PasswordsNotMatch": "Passwörter stimmen nicht überein"
 	},
 	"Welcome": {
 		"heading": "Schön, dass du da bist!",
