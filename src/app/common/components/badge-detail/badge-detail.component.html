@@ -5,9 +5,9 @@
             <div class="oeb-section-sm">
 
                 <div class="tw-flex tw-flex-col tw-relative">
-                    <div class="tw-grid md:tw-flex md:tw-justify-between md:tw-items-center">
+                    <div class="tw-grid md:tw-flex md:tw-justify-between md:tw-items-center md:tw-gap-10">
                         <h1 hlmH1
-                            class="tw-text-purple tw-font-medium tw-hyphens-auto tw-break-words tw-max-w-[358px] md:tw-max-w-[346px] tw-mb-2 md:tw-mb-0">
+                            class="tw-text-purple tw-font-medium tw-hyphens-auto tw-break-words tw-mb-2 md:tw-mb-0">
                             {{ config.badgeTitle }}</h1>
                         <div class="tw-flex tw-gap-2">
                             <div *ngIf="config.headerButton">
@@ -53,7 +53,7 @@
             <div class="tw-flex md:tw-flex-row tw-flex-col tw-gap-16 tw-mt-4 tw-relative md:tw-mx-0 tw-mx-auto">
                 <div class="md:tw-w-[346px] md:tw-p-0 tw-pb-8 md:tw-flex-grow-1">
                     <div class="badge-sidebar-internal tw-flex tw-flex-wrap">
-                        <div class="tw-min-w-[280px] tw-max-w-[340px] tw-flex-grow">
+                        <div class="md:tw-min-w-[260px] tw-min-w-[200px]">
                             <div
                                 class="tw-flex tw-items-center tw-bg-white tw-mx-auto tw-py-8 tw-rounded-[20px] oeb-slight-shadow">
                                 <img class="tw-w-[120.88px] tw-h-[120.88px] md:tw-w-[172.69px] md:tw-h-[172.69px] tw-mx-auto tw-block"
@@ -81,9 +81,9 @@
                         </div>
                         <dl clss="tw-min-w-[150px]">
                             <div class="tw-flex tw-items-start md:tw-flex-row tw-flex-col">
-                                <dt class="tw-text-oebblack tw-font-bold md:tw-py-2">Tags</dt>
+                                <dt class="tw-text-oebblack tw-font-bold md:tw-py-2 md:tw-mr-2 tw-mb-1">Tags</dt>
                                 <dd class="tw-text-oebblack">
-                                    <div class="tag tw-border-[var(--color-purple)] tw-m-1 tw-ml-0 tw-max-w-24"
+                                    <div class="tag tw-border-[var(--color-purple)] tw-mx-2 tw-ml-0 tw-max-w-24"
                                         *ngFor="let tag of config.tags; last as last">{{ tag }}</div>
 
                             </div>
@@ -133,12 +133,12 @@
                             class="tw-hidden md:tw-block tw-w-full tw-col-span-full tw-my-4 tw-border tw-border-dashed tw-border-[var(--color-purple)]" />
                     </div>
                 </div>
-                <div class="md:tw-pb-8 md:tw-min-h-[800px]">
+                <div class="md:tw-pb-8 md:tw-min-h-[800px] tw-w-full">
                     <div class="tw-text-oebblack tw-pt-0 tw-pb-4">
                         <h3 hlmH3 class="tw-font-semibold tw-text-oebblack tw-mb-4">
                             Kurzbeschreibung
                         </h3>
-                        <p hlmP class="tw-text-oebblack tw-w-full tw-max-w-[720px]">{{ config.badgeDescription }}</p>
+                        <p hlmP class="tw-text-oebblack tw-w-full">{{ config.badgeDescription }}</p>
                     </div>
                     <!-- Kompetenzen -->
                     <section class="tw-text-oebblack tw-pb-8">

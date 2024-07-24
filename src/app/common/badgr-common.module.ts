@@ -104,6 +104,7 @@ import { OebCompetency } from './components/oeb-competency';
 import { OebDialogComponent } from '../components/oeb-dialog.component';
 import { SuccessDialogComponent } from './dialogs/oeb-dialogs/success-dialog.component';
 import { OebBackgroundComponent } from '../components/oeb-background.component';
+import { OebSelectComponent } from '../components/select.component';
 
 const DIRECTIVES = [
 	BgAwaitPromises,
@@ -188,7 +189,7 @@ const GUARDS = [AuthGuard];
 
 const PIPES = [UcFirstPipe, StudyLoadPipe];
 
-export const COMMON_IMPORTS = [CommonModule, FormsModule, ReactiveFormsModule, HttpClientModule, RouterModule, OebInputComponent, OebInputErrorComponent, OebButtonComponent, OebDropdownComponent, HlmH1Directive, HlmH2Directive, HlmH3Directive, HlmPDirective, HlmADirective, CompetencyAccordionComponent, OebCheckboxComponent, OebDialogComponent, SuccessDialogComponent, OebBackgroundComponent, OebTabsComponent, HlmIconModule, CountUpModule, HlmInputDirective];
+export const COMMON_IMPORTS = [CommonModule, FormsModule, ReactiveFormsModule, HttpClientModule, RouterModule, OebInputComponent, OebInputErrorComponent, OebSelectComponent, OebButtonComponent, OebDropdownComponent, HlmH1Directive, HlmH2Directive, HlmH3Directive, HlmPDirective, HlmADirective, CompetencyAccordionComponent, OebCheckboxComponent, OebDialogComponent, SuccessDialogComponent, OebBackgroundComponent, OebTabsComponent, HlmIconModule, CountUpModule, HlmInputDirective];
 
 @NgModule({
 	imports: [...COMMON_IMPORTS, FormsModule, LMarkdownEditorModule, TranslateModule],
