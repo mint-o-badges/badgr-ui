@@ -43,9 +43,9 @@ export class ProfileComponent extends BaseAuthenticatedRoutableComponent impleme
 	private emailsSubscription: Subscription;
 
 	constructor(
-		router: Router,
+		protected router: Router,
 		route: ActivatedRoute,
-		sessionService: SessionService,
+		protected sessionService: SessionService,
 		protected formBuilder: FormBuilder,
 		protected title: Title,
 		protected messageService: MessageService,
@@ -259,6 +259,7 @@ export class ProfileComponent extends BaseAuthenticatedRoutableComponent impleme
 		if (
 			await this.dialogService.confirmDialog.openTrueFalseDialog({
                 // TODO: Language
+                // this.translate.instant
 				dialogTitle: 'Delete account?',
 				dialogBody: 'Are you sure you want to delete your account? This cannot be undone.',
 				resolveButtonLabel: 'Delete account',
@@ -266,8 +267,13 @@ export class ProfileComponent extends BaseAuthenticatedRoutableComponent impleme
 			})
 		) {
             this.profile.delete().then(
-                () => this.messageService.reportMinorSuccess('Deleted account'),
-                    // TODO: Redirect to home
+                () => {
+                    this.sessionService.logout();
+                    // Not sure why I need the timeout, but
+                    // otherwise the message isn't shown
+                    setTimeout(() => this.messageService.reportMajorSuccess('Successfully deleted account', true));
+                    this.router.navigate(['/public/start']);
+                },
                 (error) => this.messageService.reportHandledError(`Failed to delete account: ${error.response._body}`)
             );
 		}
