@@ -79,24 +79,14 @@ export class BadgeClassIssueBulkAwardImportComponent extends BaseAuthenticatedRo
 				const tempColumnHeaderName: string = columnHeaderName.toLowerCase();
 				let destinationColumn: DestSelectOptions;
 
-				if (tempColumnHeaderName === 'email') {
+				if (tempColumnHeaderName === 'email' || tempColumnHeaderName === 'e-mail-adresse') {
 					inferredColumnHeaders.add('email');
 					destinationColumn = 'email';
 				}
 
-				if (tempColumnHeaderName.includes('E-Mail-Adresse')) {
-					inferredColumnHeaders.add('E-Mail-Adresse');
-					destinationColumn = 'E-Mail-Adresse';
-				}
-
-				if (tempColumnHeaderName === 'name') {
+				if (tempColumnHeaderName === 'name' || tempColumnHeaderName === 'vor/-nachname') {
 					inferredColumnHeaders.add('name');
 					destinationColumn = 'name';
-				}
-
-				if (tempColumnHeaderName === 'Vor-/Nachname') {
-					inferredColumnHeaders.add('Vor-/Nachname');
-					destinationColumn = 'Vor-/Nachname';
 				}
 
 				if (tempColumnHeaderName.includes('evidence')) {
