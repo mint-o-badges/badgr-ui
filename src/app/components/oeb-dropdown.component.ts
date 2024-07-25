@@ -49,14 +49,14 @@ import { SharedIconsModule } from '../public/icons.module';
     </button>
 
     <ng-template  #menu>
-    <hlm-menu class="tw-border-[var(--color-purple)] tw-border-2">
+    <hlm-menu class="tw-border-[var(--color-purple)] tw-border-2" >
     <hlm-menu-label *ngIf="label">{{ label }}</hlm-menu-label>
-    <ng-container *ngFor="let menuItem of menuItems">
-            <button *ngIf="menuItem.action" (click)="menuItem.action($event)" hlmMenuItem>
+    <ng-container *ngFor="let menuItem of menuItems" >
+            <button *ngIf="menuItem.action" (click)="menuItem.action($event)" [size]="size"  hlmMenuItem>
             <hlm-icon *ngIf="menuItem.icon" name={{menuItem.icon}} hlmMenuIcon />
             {{menuItem.title}}
             </button>
-            <button routerLinkActive="tw-bg-lightpurple" *ngIf="menuItem.routerLink" [routerLink]="menuItem.routerLink" hlmMenuItem>
+            <button routerLinkActive="tw-bg-lightpurple" *ngIf="menuItem.routerLink" [routerLink]="menuItem.routerLink" [size]="size" hlmMenuItem>
             <hlm-icon *ngIf="menuItem.icon" name={{menuItem.icon}} hlmMenuIcon />
             {{menuItem.title}}
             </button>
@@ -69,6 +69,7 @@ import { SharedIconsModule } from '../public/icons.module';
 
 export class OebDropdownComponent {
     @Input() trigger: any;
+    @Input() size: string = 'default';
     @Input() triggerStyle: string = 'tw-border tw-border-solid tw-border-purple tw-px-1 tw-py-2 tw-rounded-xl';
     @Input() label?: string = '';
     @Input() class?: string = '';
