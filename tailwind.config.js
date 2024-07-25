@@ -40,6 +40,7 @@ module.exports = {
 				link: 'var(--color-link)',
 				oebgrey: 'var(--color-lightgray)',
 				grey: {
+					DEFAULT: '#808080',
 					40: '#666666',
 					85: '#d9d9d9',
 				},
