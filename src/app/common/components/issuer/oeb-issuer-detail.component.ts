@@ -1,7 +1,5 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { SessionService } from '../../../common/services/session.service';
-import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
+import { Router } from '@angular/router';
 import { MessageService } from '../../../common/services/message.service';
 import { Title } from '@angular/platform-browser';
 import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
@@ -9,7 +7,6 @@ import { AppConfigService } from '../../../common/app-config.service';
 import { Issuer } from '../../../issuer/models/issuer.model';
 import { BadgeClass } from '../../../issuer/models/badgeclass.model';
 import { IssuerManager } from '../../../issuer/services/issuer-manager.service';
-import { BadgeClassManager } from '../../..//issuer/services/badgeclass-manager.service';
 import { MatchingAlgorithm } from '../../dialogs/fork-badge-dialog/fork-badge-dialog.component';
 
 @Component({
@@ -17,7 +14,7 @@ import { MatchingAlgorithm } from '../../dialogs/fork-badge-dialog/fork-badge-di
 	templateUrl: './oeb-issuer-detail.component.html',
 	styleUrl: './oeb-issuer-detail.component.scss',
 })
-export class OebIssuerDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
+export class OebIssuerDetailComponent implements OnInit {
 
     @Input() issuer: Issuer;
     @Input() issuerPlaceholderSrc: string;
@@ -27,16 +24,14 @@ export class OebIssuerDetailComponent extends BaseAuthenticatedRoutableComponent
     @Output() issuerDeleted = new EventEmitter();
 
 	constructor(
-		loginService: SessionService,
-		router: Router,
-		route: ActivatedRoute,
+		private router: Router,
 		protected messageService: MessageService,
 		protected title: Title,
 		protected issuerManager: IssuerManager,
 		protected profileManager: UserProfileManager,
 		private configService: AppConfigService,
 	) {
-        super(router, route, loginService);
+        
 	};
 
 	badgeResults: BadgeResult[] = [];
@@ -74,7 +69,7 @@ export class OebIssuerDetailComponent extends BaseAuthenticatedRoutableComponent
 	}
 
 	ngOnInit() {
-		super.ngOnInit();
+		// super.ngOnInit();
 		this.updateResults();
 	}
 
