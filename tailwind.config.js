@@ -42,7 +42,8 @@ module.exports = {
         oebblack: 'var(--color-black)',
         link: 'var(--color-link)',
         oebgrey: 'var(--color-lightgray)',
-        oebgrey85: 'var(--color-gray85)'
+        grey85: 'var(--color-grey85)',
+        grey40: 'var(--color-grey40)'
 
       },
       gridTemplateColumns: {

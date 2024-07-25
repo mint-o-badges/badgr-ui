@@ -517,7 +517,10 @@
 		"mustBe8Char": "Must be at least 8 characters",
 		"confirmNewPassword": "Confirm New Password",
 		"enterNewPasswordConfirmation": "Please confirm your new password",
-		"PasswordsNotMatch": "Passwords do not match"
+		"PasswordsNotMatch": "Passwords do not match",
+		"dontHavePassword": "Don’t have your current password? ",
+		"clickHere": "Click here",
+		"resetByEmail": "to reset by email."
 	},
 	"Welcome": {
 		"heading": "Schön, dass du da bist!",

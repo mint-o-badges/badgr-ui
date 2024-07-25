@@ -521,7 +521,10 @@
 		"mustBe8Char": "Muss mindestens 8 Zeichen lang sein",
 		"confirmNewPassword": "Neues Passwort bestätigen",
 		"enterNewPasswordConfirmation": "Bitte bestätige dein neues Passwort",
-		"PasswordsNotMatch": "Passwörter stimmen nicht überein"
+		"PasswordsNotMatch": "Passwörter stimmen nicht überein",
+		"dontHavePassword": "Du hast dein aktuelles Passwort nicht?",
+		"clickHere": "Hier Klicken",
+		"resetByEmail": "zum Zurücksetzen per E-Mail."
 	},
 	"Welcome": {
 		"heading": "Schön, dass du da bist!",
