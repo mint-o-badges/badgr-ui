@@ -184,10 +184,19 @@
 	}
 }
 
+.oeb-max-form-width{
+	width: 100%;
+	max-width: 456.5px;
+}
+
 
 @media (min-width: 768px) {
 	.o-container:not(.o-container-is-managed) .navbar .navbar-x-logo img {
 		max-width: 134px;
+	}
+
+	.oeb-max-form-width{
+		max-width: 637.5px;
 	}
 }
 

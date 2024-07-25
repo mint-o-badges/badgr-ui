@@ -7,7 +7,7 @@
 			<p hlmP class="tw-font-normal">{{ 'Issuer.awardBadeges' | translate }}</p>
 		</div>
 
-		<form (ngSubmit)="onSubmit()" class="tw-w-full tw-max-w-[400px] tw-mt-6" novalidate>
+		<form (ngSubmit)="onSubmit()" class="oeb-max-form-width tw-mt-6" novalidate>
 			<bg-formfield-image
 				#imageField
 				label="{{ 'Issuer.imageOptional' | translate }}"
@@ -34,15 +34,14 @@
 				#issuer_url_field
 			></oeb-input>
 
-			<!-- margin added temporary till select component is ready -->
-			<bg-formfield-select
-				class="u-margin-bottom2x tw-mt-6"
+			<oeb-select
 				[control]="issuerForm.rawControlMap.issuer_email"
 				label="{{ 'General.contact' | translate }} E-Mail"
 				placeholder="{{ 'Issuer.enterValidEmail' | translate }}"
 				[options]="emailsOptions"
 				errorMessage="{{ 'Issuer.enterValidEmail' | translate }}"
-			></bg-formfield-select>
+				#issuer_contact_Email
+			></oeb-select>
 
 			<oeb-input
 				label="{{ 'General.description' | translate }}"
@@ -52,9 +51,7 @@
 				#issuer_description_field
 			></oeb-input>
 
-			<!-- margin added temporary till select component is ready -->
-			<bg-formfield-select
-				class="u-margin-bottom2x tw-mt-6"
+			<oeb-select
 				[control]="issuerForm.rawControlMap.issuer_category"
 				label="{{ 'General.category' | translate }}"
 				placeholder="{{ 'Issuer.enterCategory' | translate }}"
@@ -72,7 +69,8 @@
 						value: 'andere'
 					}
 				]"
-			></bg-formfield-select>
+				#issuer_category
+			></oeb-select>
 
 			<h3 hlmH3 class="tw-font-bold tw-text-oebblack tw-mt-12">{{ 'General.address' | translate }}</h3>
 
@@ -138,7 +136,7 @@
 				</span>
 			</label>
 
-			<div class="tw-flex tw-justify-start tw-flex-wrap sm:tw-flex-nowrap tw-gap-2 tw-mt-4">
+			<div class="tw-flex tw-justify-between tw-flex-wrap sm:tw-flex-nowrap tw-gap-2 tw-mt-4">
 				<oeb-button
 					class="tw-mr-4"
 					variant="secondary"

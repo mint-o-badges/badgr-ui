@@ -196,7 +196,7 @@
 		"award": "vergeben",
 		"badgePreview": "Badge-Vorschau",
 		"certPreview": "Zertifikats-Vorschau",
-		"batchAwardText1" : "Vergebe den Badge an eine lernende Person oder",
+		"batchAwardText1": "Vergebe den Badge an eine lernende Person oder",
 		"batchAwardTextLink": "klicke hier, um den Badge an mehrere Lernende gleichzeitig",
 		"batchAwardText2": "zu vergeben",
 		"awardedPerson": "Name der Empfänger:in",
@@ -207,14 +207,13 @@
 		"uploadListText": "Du kannst eine Liste von Empfänger:innen importieren, die den Badge gleichzeitig erhalten sollen. Die Datei muss folgendermaßen aussehen:",
 		"uploadFields": "E-Mail-Adresse, Name (optional) und Evidence (optional) beinhalten",
 		"uploadFormat": "CSV- oder TXT-Format",
-		"useThis" : "Benutze diese",
-		"exampleLink" : "Beispiel Vorlage",
-		"createCSVorTXT" : "um eine CSV oder TXT Datei zu erstellen",
+		"useThis": "Benutze diese",
+		"exampleLink": "Beispiel Vorlage",
+		"createCSVorTXT": "um eine CSV oder TXT Datei zu erstellen",
 		"importList": "Liste importieren",
 		"import": "Importieren",
 		"csvColumns": "CSV Spalten",
 		"csvError": "Die CSV Datei enthält Zeilen länger als ihre Überschrift. Bitte behebe diesen Fehler und versuche es erneut."
-
 	},
 	"Badge": {
 		"groupBy": "Gruppieren nach",
@@ -347,12 +346,16 @@
 	},
 	"Login": {
 		"stayLogged": "Angemeldet bleiben",
-		"forgotPassword": "Passwort vergessen?",
+		"forgotPassword?": "Passwort vergessen?",
+		"forgotPassword": "Passwort vergessen",
 		"welcome": "Willkommen bei",
 		"failLogin": "Fehler bei der Anmeldung. Bitte überprüfen Sie Ihre E-Mail-Adresse und Ihr Passwort und versuchen Sie es erneut.",
 		"attention": "Beachtung",
 		"loginBildungsraum": "Anmelden mit Mein Bildungsraum",
-		"createAccount": "Account erstellen"
+		"createAccount": "Account erstellen",
+		"enterYourEmail": "Gib deine E-Mail Adresse ein und wir helfen dir dein Passwort zurückzusetzen.",
+		"ResetPassword": "Passwort zurücksetzen",
+		"enterYourEmailAddress": "Bitte gib deine E-Mail Adresse ein"
 	},
 	"Legend": {
 		"legendTitle": "Legende",
