@@ -12,7 +12,7 @@ import { HlmPDirective } from './spartan/ui-typography-helm/src/lib/hlm-p.direct
   standalone: true,
   imports: [HlmInputDirective, HlmPDirective, OebInputErrorComponent, NgIf, ReactiveFormsModule, TextSemibold],
   template: `
-  <div class="tw-mt-4 md:tw-mt-6">
+  <div class="tw-mt-5 md:tw-mt-7">
     <div class="tw-flex tw-justify-between">
         <label class="tw-pb-[2px] tw-pl-[3px]" [attr.for]="inputName" *ngIf="label">
             <span hlmP class="tw-text-oebblack tw-font-semibold" [innerHTML]="label"></span><span *ngIf="optional">(OPTIONAL)</span>

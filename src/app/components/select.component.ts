@@ -21,7 +21,7 @@ import { CustomValidatorMessages, messagesForValidationError } from './input.com
 		ReactiveFormsModule,
 		TextSemibold,
 	],
-	template: ` <div class="tw-mt-4 md:tw-mt-6">
+	template: ` <div class="tw-mt-5 md:tw-mt-7">
 		<label class="tw-pb-[2px] tw-pl-[3px]" [attr.for]="inputName" *ngIf="label">
 			<span hlmP class="tw-text-oebblack tw-font-semibold" [innerHTML]="label"></span>
 			<span *ngIf="formFieldAside">{{ formFieldAside }}</span>
