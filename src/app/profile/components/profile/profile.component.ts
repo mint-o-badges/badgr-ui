@@ -18,8 +18,7 @@ import { QueryParametersService } from '../../../common/services/query-parameter
 import { OAuthApiService } from '../../../common/services/oauth-api.service';
 import { AppConfigService } from '../../../common/app-config.service';
 import { typedFormGroup } from '../../../common/util/typed-forms';
-// TODO: This doesn't compile anymore, since i18n is deprecated. See [this issue](https://github.com/orgs/mint-o-badges/projects/2/views/1?pane=issue&itemId=42737990)
-//import { Message } from "@angular/compiler/src/i18n/i18n_ast";
+import { TranslateService } from '@ngx-translate/core';
 import { animationFramePromise } from '../../../common/util/promise-util';
 
 @Component({
@@ -55,6 +54,7 @@ export class ProfileComponent extends BaseAuthenticatedRoutableComponent impleme
 		protected configService: AppConfigService,
 		private oauthService: OAuthApiService,
 		private sanitizer: DomSanitizer,
+        private translate: TranslateService,
 	) {
 		super(router, route, sessionService);
 		title.setTitle(`Profile - ${this.configService.theme['serviceName'] || 'Badgr'}`);
@@ -260,10 +260,10 @@ export class ProfileComponent extends BaseAuthenticatedRoutableComponent impleme
 			await this.dialogService.confirmDialog.openTrueFalseDialog({
                 // TODO: Language
                 // this.translate.instant
-				dialogTitle: 'Delete account?',
-				dialogBody: 'Are you sure you want to delete your account? This cannot be undone.',
-				resolveButtonLabel: 'Delete account',
-				rejectButtonLabel: 'Cancel',
+				dialogTitle: this.translate.instant('Profile.deleteAccount'),
+				dialogBody: this.translate.instant('Profile.deleteAccountConfirm'),
+				resolveButtonLabel: this.translate.instant('Profile.deleteAccountYes'),
+				rejectButtonLabel: this.translate.instant('General.cancel'),
 			})
 		) {
             this.profile.delete().then(
@@ -271,10 +271,10 @@ export class ProfileComponent extends BaseAuthenticatedRoutableComponent impleme
                     this.sessionService.logout();
                     // Not sure why I need the timeout, but
                     // otherwise the message isn't shown
-                    setTimeout(() => this.messageService.reportMajorSuccess('Successfully deleted account', true));
+                    setTimeout(() => this.messageService.reportMajorSuccess(this.translate.instant('Profile.deleteAccountSuccess'), true));
                     this.router.navigate(['/public/start']);
                 },
-                (error) => this.messageService.reportHandledError(`Failed to delete account: ${error.response._body}`)
+                (error) => this.messageService.reportHandledError(this.translate.instant('Profile.deleteAccountFailure') + ` ${error.response._body}`)
             );
 		}
     }

@@ -508,7 +508,12 @@
 		"deleteApp": "Delete App Credentials?",
 		"deleteAppConfirm": "Do you really want to delete your app credentials?",
 		"authorized": "Authorized:",
-		"takeBack": "Take it back"
+		"takeBack": "Take it back",
+        "deleteAccount": "Delete account?",
+        "deleteAccountConfirm": "Are you sure you want to delete your account? This can not be undone.",
+        "deleteAccountYes": "Delete account",
+        "deleteAccountSuccess": "Successfully deleted account",
+        "deleteAccountFailure": "Failed to delete account"
 	},
 	"Welcome": {
 		"heading": "Schön, dass du da bist!",

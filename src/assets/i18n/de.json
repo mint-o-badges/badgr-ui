@@ -513,7 +513,12 @@
 		"deleteApp": "App Credentials löschen?",
 		"deleteAppConfirm": "Möchtest du deine App credentials wirklich löschen?",
 		"authorized": "Authorisiert:",
-		"takeBack": "Zurücknehmen"
+		"takeBack": "Zurücknehmen",
+        "deleteAccount": "Account löschen?",
+        "deleteAccountConfirm": "Bist du dir sicher, dass du deinen Account löschen möchtest? Dies kann nicht rückgängig gemacht werden.",
+        "deleteAccountYes": "Account löschen",
+        "deleteAccountSuccess": "Account erfolgreich gelöscht",
+        "deleteAccountFailure": "Account konnte nicht gelöscht werden"
 	},
 	"Welcome": {
 		"heading": "Schön, dass du da bist!",
