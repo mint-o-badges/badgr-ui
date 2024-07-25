@@ -19,6 +19,7 @@ import { MessageService } from '../../../common/services/message.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BadgrCommonModule, COMMON_IMPORTS } from '../../../common/badgr-common.module';
 import { COMMON_MOCKS_PROVIDERS_WITH_SUBS } from '../../../mocks/mocks.module.spec';
+import { TranslateTestingModule } from 'ngx-translate-testing';
 
 describe('ChangePasswordComponent', () => {
 	let fixture;
@@ -27,7 +28,7 @@ describe('ChangePasswordComponent', () => {
 	beforeEach(() => {
 		TestBed.configureTestingModule({
 			declarations: [ChangePasswordComponent],
-			imports: [RouterTestingModule, CommonModule, BadgrCommonModule, ...COMMON_IMPORTS],
+			imports: [RouterTestingModule, CommonModule, BadgrCommonModule, ...COMMON_IMPORTS, TranslateTestingModule.withTranslations('de', {})],
 			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 			teardown: { destroyAfterEach: false },
