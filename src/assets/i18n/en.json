@@ -195,7 +195,7 @@
 		"award": "vergeben",
 		"badgePreview": "Badge-Vorschau",
 		"certPreview": "Zertifikats-Vorschau",
-		"batchAwardText1" : "Vergebe den Badge an eine lernende Person oder",
+		"batchAwardText1": "Vergebe den Badge an eine lernende Person oder",
 		"batchAwardTextLink": "klicke hier, um den Badge an mehrere Lernende gleichzeitig",
 		"batchAwardText2": "zu vergeben",
 		"awardedPerson": "Name der Empfänger:in",
@@ -213,9 +213,9 @@
 		"nameInPdfInfo": "* Zusammen mit dem Badge wird ein entsprechendes PDF-Zertifikat an die Empfänger:innen gesendet. In diesem werden Vor- und Nachname verwendet.",
 		"uploadFields": "E-Mail-Adresse, Name (optional) und Evidence (optional) beinhalten",
 		"uploadFormat": "CSV- oder TXT-Format",
-		"useThis" : "Benutze diese",
-		"exampleLink" : "Beispiel Vorlage",
-		"createCSVorTXT" : "um eine CSV oder TXT Datei zu erstellen",
+		"useThis": "Benutze diese",
+		"exampleLink": "Beispiel Vorlage",
+		"createCSVorTXT": "um eine CSV oder TXT Datei zu erstellen",
 		"importList": "Liste importieren",
 		"import": "Import",
 		"csvColumns": "CSV Spalten",
@@ -352,12 +352,16 @@
 	},
 	"Login": {
 		"stayLogged": "Stay logged in",
-		"forgotPassword": "Forgot password?",
+		"forgotPassword?": "Forgot password?",
+		"forgotPassword": "Forgot password",
 		"welcome": "Welcome to",
 		"failLogin": "Login failed. Please check your email and password and try again.",
 		"attention": "Attention",
 		"loginBildungsraum": "Sign in via Mein Bildungsraum",
-		"createAccount": "Create account"
+		"createAccount": "Create account",
+		"enterYourEmail": "Enter your email address and we will help you reset your password.",
+		"ResetPassword": "Reset password",
+		"enterYourEmailAddress": "Please enter your email address"
 	},
 	"Legend": {
 		"legendTitle": "Legend",
@@ -414,7 +418,6 @@
 		"newCompetencies": "New Competencies",
 		"skills": "Skills",
 		"knowledge": "Knowledge",
-
 
 		"addRecievedBadge": "Add a badge that you have already received.",
 		"image": "Image",

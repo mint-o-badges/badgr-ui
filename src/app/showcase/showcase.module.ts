@@ -22,7 +22,7 @@ export const routes: Routes = [
 		...COMMON_IMPORTS,
 		BadgrCommonModule,
 		RouterModule.forChild(routes),
-		DatatableComponent
+		// DatatableComponent
 	],
 	declarations: [
 		ShowcaseComponent,

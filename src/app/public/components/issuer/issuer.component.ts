@@ -51,7 +51,6 @@ export class PublicIssuerComponent {
 	get badgeClasses(): PublicApiBadgeClass[] {
 		return this.issuerIdParam.value.badges;
 	}
-
 	private get rawJsonUrl() {
 		return stripQueryParamsFromUrl(this.issuer.id) + '.json';
 	}

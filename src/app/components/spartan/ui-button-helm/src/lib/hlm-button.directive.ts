@@ -30,6 +30,7 @@ export const buttonVariants = cva(
 			width: {
 				default: '',
 				max_content: 'tw-w-max',
+				full_width: 'tw-w-full',
 			},
 		},
 		defaultVariants: {
