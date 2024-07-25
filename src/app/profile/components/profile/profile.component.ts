@@ -258,8 +258,6 @@ export class ProfileComponent extends BaseAuthenticatedRoutableComponent impleme
     async delete() {
 		if (
 			await this.dialogService.confirmDialog.openTrueFalseDialog({
-                // TODO: Language
-                // this.translate.instant
 				dialogTitle: this.translate.instant('Profile.deleteAccount'),
 				dialogBody: this.translate.instant('Profile.deleteAccountConfirm'),
 				resolveButtonLabel: this.translate.instant('Profile.deleteAccountYes'),
