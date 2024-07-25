@@ -346,12 +346,16 @@
 	},
 	"Login": {
 		"stayLogged": "Stay logged in",
-		"forgotPassword": "Forgot password?",
+		"forgotPassword?": "Forgot password?",
+		"forgotPassword": "Forgot password",
 		"welcome": "Welcome to",
 		"failLogin": "Login failed. Please check your email and password and try again.",
 		"attention": "Attention",
 		"loginBildungsraum": "Sign in via Mein Bildungsraum",
-		"createAccount": "Create account"
+		"createAccount": "Create account",
+		"enterYourEmail": "Enter your email address and we will help you reset your password.",
+		"ResetPassword": "Reset password",
+		"enterYourEmailAddress": "Please enter your email address"
 	},
 	"Legend": {
 		"legendTitle": "Legend",

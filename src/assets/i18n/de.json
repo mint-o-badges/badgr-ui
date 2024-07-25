@@ -346,12 +346,16 @@
 	},
 	"Login": {
 		"stayLogged": "Angemeldet bleiben",
-		"forgotPassword": "Passwort vergessen?",
+		"forgotPassword?": "Passwort vergessen?",
+		"forgotPassword": "Passwort vergessen",
 		"welcome": "Willkommen bei",
 		"failLogin": "Fehler bei der Anmeldung. Bitte überprüfen Sie Ihre E-Mail-Adresse und Ihr Passwort und versuchen Sie es erneut.",
 		"attention": "Beachtung",
 		"loginBildungsraum": "Anmelden mit Mein Bildungsraum",
-		"createAccount": "Account erstellen"
+		"createAccount": "Account erstellen",
+		"enterYourEmail": "Gib deine E-Mail Adresse ein und wir helfen dir dein Passwort zurückzusetzen.",
+		"ResetPassword": "Passwort zurücksetzen",
+		"enterYourEmailAddress": "Bitte gib deine E-Mail Adresse ein"
 	},
 	"Legend": {
 		"legendTitle": "Legende",
