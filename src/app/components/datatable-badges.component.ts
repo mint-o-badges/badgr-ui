@@ -36,7 +36,7 @@ import { OebButtonComponent } from './oeb-button.component';
                         width="40"
                     />
                     <div class="tw-ml-2 tw-hidden md:tw-grid md:tw-grid-cols-[150px] md:gap-4">
-                      <div class="tw-line-clamp-2 tw-breakall">
+                      <div class="tw-line-clamp-2 tw-break-all">
                         <span class="tw-text-oebblack tw-cursor-pointer" (click)="redirectToBadgeDetail.emit(badge.badge)">{{badge.badge.name}}</span>
                       </div>  
                     </div>    
