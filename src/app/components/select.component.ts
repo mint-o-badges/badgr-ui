@@ -49,7 +49,7 @@ import { CustomValidatorMessages, messagesForValidationError } from './input.com
 			</hlm-select-content>
 		</brn-select>
 
-		<oeb-input-error class="tw-text-red" *ngIf="isErrorState" [error]="errorMessageForDisplay"></oeb-input-error>
+		<oeb-input-error class="tw-text-red tw-pl-[3px]" *ngIf="isErrorState" [error]="errorMessageForDisplay"></oeb-input-error>
 	</div>`,
 })
 export class OebSelectComponent {

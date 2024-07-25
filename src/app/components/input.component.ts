@@ -18,9 +18,9 @@ import { HlmPDirective } from './spartan/ui-typography-helm/src/lib/hlm-p.direct
             <span hlmP class="tw-text-oebblack tw-font-semibold" [innerHTML]="label"></span><span *ngIf="optional">(OPTIONAL)</span>
             <span *ngIf="formFieldAside">{{ formFieldAside }}</span>
         </label>
-        <ng-content class="tw-relative tw-z-20 tw-font-semibold tw-text-[14px] md:tw-text-[20px] tw-leading-4 md:tw-leading-6" select="[label-additions]"></ng-content>
+        <ng-content class="tw-relative tw-z-20 tw-font-semibold tw-text-[14px] md:tw-text-[20px] tw-leading-4 md:tw-leading-6 " select="[label-additions]"></ng-content>
     </div>
-    <p class="" *ngIf="sublabel">
+    <p class="tw-pl-[3px]" *ngIf="sublabel">
         <span *ngIf="remainingCharactersNum >= 0">{{ remainingCharactersNum }}</span
         >{{ sublabel }}
     </p>
@@ -55,7 +55,7 @@ import { HlmPDirective } from './spartan/ui-typography-helm/src/lib/hlm-p.direct
 		 class="tw-w-full tw-border-solid tw-border-purple tw-bg-white tw-min-h-[80px]"
 		 hlmInput 
 		></textarea>
-    <oeb-input-error class="tw-text-red" *ngIf="isErrorState" [error]="errorMessageForDisplay"></oeb-input-error>
+    <oeb-input-error class="tw-text-red tw-pl-[3px]" *ngIf="isErrorState" [error]="errorMessageForDisplay"></oeb-input-error>
   </div>`,
 })
 export class OebInputComponent {
