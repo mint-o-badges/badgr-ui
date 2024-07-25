@@ -52,8 +52,4 @@ describe('ChangePasswordComponent', () => {
 	it('should run #passwordsMatch()', async () => {
 		const result = component.passwordsMatch();
 	});
-
-	it('should run #cancel()', async () => {
-		const result = component.cancel();
-	});
 });
