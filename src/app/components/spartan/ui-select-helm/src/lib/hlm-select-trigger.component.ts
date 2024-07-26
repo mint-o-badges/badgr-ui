@@ -8,7 +8,7 @@ import { type VariantProps, cva } from 'class-variance-authority';
 import type { ClassValue } from 'clsx';
 
 export const selectTriggerVariants = cva(
-	'tw-flex tw-items-center tw-justify-between tw-rounded-md tw-border tw-border-input tw-bg-background tw-text-sm tw-ring-offset-background placeholder:tw-text-muted-foreground focus-visible:tw-outline-none focus-visible:tw-ring-2 focus-visible:tw-ring-ring focus-visible:tw-ring-offset-2 disabled:tw-cursor-not-allowed disabled:tw-opacity-50',
+	'tw-flex tw-items-center tw-justify-between tw-rounded-[10px] tw-border tw-border-input tw-bg-background tw-text-sm tw-ring-offset-background placeholder:tw-text-muted-foreground focus-visible:tw-outline-none focus-visible:tw-ring-2 focus-visible:tw-ring-ring focus-visible:tw-ring-offset-2 disabled:tw-cursor-not-allowed disabled:tw-opacity-50',
 	{
 		variants: {
 			size: {
@@ -40,7 +40,7 @@ type SelectTriggerVariants = VariantProps<typeof selectTriggerVariants>;
 			@if (icon) {
 				<ng-content select="hlm-icon" />
 			} @else {
-				<hlm-icon class="tw-flex-none tw-w-4 tw-h-4 tw-ml-2" name="lucideChevronDown" />
+				<hlm-icon class="tw-flex-none tw-w-4 tw-h-4 tw-ml-2 tw-text-purple" name="lucideChevronDown" />
 			}
 		</button>
 	`,

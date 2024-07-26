@@ -90,8 +90,8 @@ const routes = [
 		RouterModule.forChild(routes),
 		TranslateModule,
 		CompetencyAccordionComponent,
-		DatatableComponent,
-		IssuerDetailDatatableComponent
+		IssuerDetailDatatableComponent,
+		// DatatableComponent
 	],
 	declarations: [
 		BadgeClassCreateComponent,

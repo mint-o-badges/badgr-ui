@@ -7,12 +7,12 @@
 					'FAQ.weHaveAnswers' | translate
 				}}</span>
 			</div>
-			<div class="tw-mt-4 tw-text-lg">
+			<div class="tw-mt-4 tw-text-lg tw-text-oebblack">
 				<p>{{ 'FAQ.faqInfo' | translate }}.</p>
 				<p class="tw-mt-2">
 					{{ 'FAQ.cantFindAnswer' | translate }}
 					<a
-						class="tw-underline tw-cursor-pointer tw-text-[var(--color-purple)]"
+						class="tw-underline tw-cursor-pointer tw-text-link"
 						title="contact us"
 						href="mailto:hallo@openbadges.education"
 					>
@@ -42,7 +42,7 @@
 			<div class="panel" hide="!item.isActive">
 				<input type="text" />
 				<div *ngFor="let answer of item.A">
-					<p class="tw-mt-2 md:tw-text-lg">{{ answer.text | translate }}</p>
+					<p class="tw-mt-2 md:tw-text-lg tw-text-oebblack">{{ answer.text | translate }}</p>
 				</div>
 			</div>
 		</div>
