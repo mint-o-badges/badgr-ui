@@ -6,6 +6,7 @@ import {
     HlmMenuItemDirective,
     HlmMenuItemIconDirective,
     HlmMenuItemSubIndicatorComponent,
+    HlmMenuItemVariants,
     HlmMenuLabelComponent,
     HlmMenuSeparatorComponent,
     HlmMenuShortcutComponent,
@@ -49,15 +50,15 @@ import { SharedIconsModule } from '../public/icons.module';
     </button>
 
     <ng-template  #menu>
-    <hlm-menu class="tw-border-[var(--color-purple)] tw-border-2" >
-    <hlm-menu-label *ngIf="label">{{ label }}</hlm-menu-label>
-    <ng-container *ngFor="let menuItem of menuItems" >
+    <hlm-menu [size]="size" class="tw-border-[var(--color-purple)] tw-border-2" >
+    <hlm-menu-label [size]="size" *ngIf="label">{{ label }}</hlm-menu-label>
+    <ng-container  *ngFor="let menuItem of menuItems" >
             <button *ngIf="menuItem.action" (click)="menuItem.action($event)" [size]="size"  hlmMenuItem>
-            <hlm-icon *ngIf="menuItem.icon" name={{menuItem.icon}} hlmMenuIcon />
+            <hlm-icon [class]="iconClass" *ngIf="menuItem.icon" name={{menuItem.icon}} hlmMenuIcon />
             {{menuItem.title}}
             </button>
             <button routerLinkActive="tw-bg-lightpurple" *ngIf="menuItem.routerLink" [routerLink]="menuItem.routerLink" [size]="size" hlmMenuItem>
-            <hlm-icon *ngIf="menuItem.icon" name={{menuItem.icon}} hlmMenuIcon />
+            <hlm-icon [class]="iconClass"  *ngIf="menuItem.icon" name={{menuItem.icon}} hlmMenuIcon />
             {{menuItem.title}}
             </button>
     </ng-container>
@@ -69,13 +70,24 @@ import { SharedIconsModule } from '../public/icons.module';
 
 export class OebDropdownComponent {
     @Input() trigger: any;
-    @Input() size: string = 'default';
+    @Input() size: HlmMenuItemVariants['size'] = 'default';
     @Input() triggerStyle: string = 'tw-border tw-border-solid tw-border-purple tw-px-1 tw-py-2 tw-rounded-xl';
     @Input() label?: string = '';
     @Input() class?: string = '';
     @Input() menuItems: MenuItem[];
     
     get isTemplate(): boolean {
-            return this.trigger instanceof TemplateRef;
+        return this.trigger instanceof TemplateRef;
+    }
+    
+    get iconClass(): string {
+        switch(this.size) {
+            case 'sm':
+                return 'tw-h-4 tw-w-4';
+            case 'lg':
+                return 'tw-h-6 tw-w-6';
+            default:
+                return 'tw-h-5 tw-w-5';
+        }
     }
 }

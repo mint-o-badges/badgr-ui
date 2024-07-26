@@ -10,9 +10,9 @@ export const hlmMenuItemVariants = cva(
 		variants: { 
 			inset: { true: 'pl-8', false: '' },
 			size: {
-				default: 'tw-text-base',
-				sm: 'tw-text-sm',
-				lg: 'tw-text-lg',
+				default: 'tw-text-[14px] tw-leading-[19px] md:tw-text-[20px] md:tw-leading-[28px]',
+				sm: 'tw-text-[14px] tw-leading-[15.6px] md:tw-text-[14px] md:tw-leading-[15.6px]',
+				lg: 'tw-text-[20px] tw-leading-[28px] md:tw-text-[24px] md:tw-leading-[33.6px]',
 			}
 		},
 		defaultVariants: { inset: false, size: 'default'},
@@ -37,8 +37,6 @@ export type HlmMenuItemVariants = VariantProps<typeof hlmMenuItemVariants>;
 export class HlmMenuItemDirective {
 	private readonly _inset = signal<boolean>(false);
 	private readonly _size = signal<HlmMenuItemVariants['size']>('default');
-
-
 
 	public readonly userClass = input<ClassValue>('', { alias: 'class' });
 	protected _computedClass = computed(() => hlm(hlmMenuItemVariants({ inset: this._inset(), size: this._size() }), this.userClass()));
