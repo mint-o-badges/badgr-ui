@@ -76,25 +76,16 @@ export class ResetPasswordComponent extends BaseRoutableComponent {
 		}
 	}
 
-	passwordsMatch(group: FormGroup) {
-		let valid = true;
-		let val: string;
+	passwordsMatch(): ValidationErrors | null {
+		if (!this.changePasswordForm) return null;
 
-		for (const name in group.controls) {
-			if (val === undefined) {
-				val = group.controls[name].value;
-			} else {
-				if (val !== group.controls[name].value) {
-					valid = false;
-					break;
-				}
-			}
+		const p1 = this.changePasswordForm.controls.password1.value;
+		const p2 = this.changePasswordForm.controls.password2.value;
+
+		if (p1 && p2 && p1 !== p2) {
+			return { passwordsMatch: 'Passwords do not match' };
 		}
 
-		if (valid) {
-			return null;
-		}
-
-		return { passwordsMatch: 'Passwords do not match' };
+		return null;
 	}
 }
