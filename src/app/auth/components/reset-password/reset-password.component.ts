@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SessionService } from '../../../common/services/session.service';
 import { MessageService } from '../../../common/services/message.service';
@@ -8,6 +8,7 @@ import { Title } from '@angular/platform-browser';
 import { BaseRoutableComponent } from '../../../common/pages/base-routable.component';
 import { AppConfigService } from '../../../common/app-config.service';
 import { typedFormGroup } from '../../../common/util/typed-forms';
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'change-password',
@@ -15,12 +16,18 @@ import { typedFormGroup } from '../../../common/util/typed-forms';
 })
 export class ResetPasswordComponent extends BaseRoutableComponent {
 	changePasswordForm = typedFormGroup()
-		.addControl('password1', '', Validators.required)
+		.addControl('password1', '', [Validators.required, Validators.minLength(8)])
 		.addControl('password2', '', [Validators.required, this.passwordsMatch.bind(this)]);
 
 	get resetToken(): string {
 		return this.route.snapshot.params['token'];
 	}
+
+	// Translations
+	enterNewPassword;
+	mustBe8Char;
+	enterNewPasswordConfirmation;
+	passwordsDoNotMatch;
 
 	constructor(
 		private fb: FormBuilder,
@@ -30,6 +37,7 @@ export class ResetPasswordComponent extends BaseRoutableComponent {
 		router: Router,
 		private configService: AppConfigService,
 		private _messageService: MessageService,
+		public translate: TranslateService,
 	) {
 		super(router, route);
 
