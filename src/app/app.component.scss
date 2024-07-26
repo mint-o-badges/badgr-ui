@@ -3,18 +3,6 @@
 @import url("../styles/google-webfonts/rubik.scss");
 
 
-.oeb-stickyfooter {
-	display: grid;
-	min-height: 100vh;
-	grid-template-columns: 1fr;
-	grid-template-areas:
-	'nav   ' 
-	'loader' 
-	'main  ' 
-	'footer';
-	grid-template-rows: 100px 6px 1fr auto;
-}
-
 .flex-1 {
 	flex: 1;
 }

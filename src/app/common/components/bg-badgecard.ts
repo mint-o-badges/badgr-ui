@@ -29,7 +29,6 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 					hlmP
 					size="sm"
 					>{{ badgeTitle }}</a>
-					 
 				<a *ngIf="publicUrl"
 					class="tw-font-bold"
 					hlmP

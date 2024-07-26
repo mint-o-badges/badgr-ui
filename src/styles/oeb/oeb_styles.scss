@@ -18,7 +18,7 @@
 	--color-purple: #492e98;
 	--color-brightpurple: #9747ff;
 	--color-buttonhover: #6e30f2;
-	--color-red: #ff5556;
+	--color-red: #FF4849;
 	--color-lightred: #ff8383;
 	--color-pink: #ffbab9;
 	--color-lightpink: #fff6f6;
@@ -56,18 +56,6 @@
 	--radius: 0.5rem;
 }
 
-
-.oeb-main {
-	display: grid;
-	min-height: 100vh;
-	grid-template-columns: 1fr;
-	grid-template-areas:
-		'nav' 
-		'loader' 
-		'main' 
-		'footer';
-	grid-template-rows: 100px 6px 1fr auto;
-}
 .navbar {
 	background-color: var(--color-lightgray);
 }
@@ -195,10 +183,24 @@
 	}
 }
 
+.oeb-breadcrumbs {
+	margin-bottom: 24px;
+	padding-bottom: 16px;
+	border-bottom: 1px solid theme('colors.grey.85');
+}
+
+.oeb-max-form-width {
+	width: 100%;
+	max-width: 456.5px;
+}
 
 @media (min-width: 768px) {
 	.o-container:not(.o-container-is-managed) .navbar .navbar-x-logo img {
 		max-width: 134px;
+	}
+
+	.oeb-max-form-width {
+		max-width: 637.5px;
 	}
 }
 
@@ -218,9 +220,7 @@
 	.u-margin-bottom2x {
 		margin-bottom: 10px;
 	}
-
 }
-
 
 #altcha_checkbox {
 	appearance: auto;

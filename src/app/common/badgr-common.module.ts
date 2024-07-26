@@ -103,6 +103,9 @@ import { OebCompetency } from './components/oeb-competency';
 import { OebDialogComponent } from '../components/oeb-dialog.component';
 import { SuccessDialogComponent } from './dialogs/oeb-dialogs/success-dialog.component';
 import { OebBackgroundComponent } from '../components/oeb-background.component';
+import { OebIssuerDetailComponent } from './components/issuer/oeb-issuer-detail.component';
+import { DatatableComponent } from '../components/datatable-badges.component';
+
 import { OebSelectComponent } from '../components/select.component';
 import { OebCollapsibleComponent } from '../components/oeb-collapsible.component';
 
@@ -153,7 +156,8 @@ export const COMMON_MODULE_COMPONENTS = [
 	TruncatedTextComponent,
 	ExportPdfDialog,
 	NounprojectDialog,
-	OebCompetency
+	OebCompetency,
+	OebIssuerDetailComponent
 ];
 
 const SERVICES = [
@@ -189,7 +193,8 @@ const GUARDS = [AuthGuard];
 
 const PIPES = [UcFirstPipe, StudyLoadPipe];
 
-export const COMMON_IMPORTS = [CommonModule, FormsModule, ReactiveFormsModule, HttpClientModule, RouterModule, OebInputComponent, OebInputErrorComponent, OebSelectComponent, OebCollapsibleComponent, OebButtonComponent, HlmH1Directive, HlmH2Directive, HlmH3Directive, HlmPDirective, HlmADirective, CompetencyAccordionComponent, OebCheckboxComponent, OebDialogComponent, SuccessDialogComponent, OebBackgroundComponent, OebTabsComponent, HlmIconModule, CountUpModule, HlmInputDirective];
+export const COMMON_IMPORTS = [CommonModule, FormsModule, ReactiveFormsModule, HttpClientModule, RouterModule, OebInputComponent, OebInputErrorComponent, OebSelectComponent, OebCollapsibleComponent, OebButtonComponent, HlmH1Directive, HlmH2Directive, HlmH3Directive, HlmPDirective, HlmADirective, CompetencyAccordionComponent, OebCheckboxComponent, OebDialogComponent, SuccessDialogComponent, OebBackgroundComponent, OebTabsComponent, HlmIconModule, CountUpModule, HlmInputDirective, DatatableComponent];
+
 
 @NgModule({
 	imports: [...COMMON_IMPORTS, FormsModule, LMarkdownEditorModule, TranslateModule],
