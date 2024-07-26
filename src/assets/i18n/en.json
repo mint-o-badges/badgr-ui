@@ -354,8 +354,15 @@
 		"loginBildungsraum": "Sign in via Mein Bildungsraum",
 		"createAccount": "Create account",
 		"enterYourEmail": "Enter your email address and we will help you reset your password.",
-		"ResetPassword": "Reset password",
-		"enterYourEmailAddress": "Please enter your email address"
+		"resetPassword": "Reset password",
+		"enterYourEmailAddress": "Please enter your email address",
+		"enterYourNewPassword": "Please enter a new password",
+		"mustBe8Char": "Must be at least 8 characters",
+		"confirmNewPassword": "Confirm New Password",
+		"enterNewPasswordConfirmation": "Please confirm your new password",
+		"passwordsNotMatch": "Passwords do not match",
+		"changePassword": "Change Password",
+		"newPassword": "New Password"
 	},
 	"Legend": {
 		"legendTitle": "Legend",
