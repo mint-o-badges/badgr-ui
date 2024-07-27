@@ -204,7 +204,7 @@
 		"giveBadge": "Badge vergeben",
 		"nameWarning": "Beachte: Der Name wird als Klartext im Badge gespeichert.",
 		"multipleBadgeAwardHeadline": "Badge an mehrere Lernende gleichzeitig vergeben",
-		"uploadListText": "Du kannst eine <span class='tw-font-bold'>Liste von Empfänger:innen importieren</span>, die den Badge gleichzeitig erhalten sollen. So geht`s:",
+		"uploadListText": "Du kannst eine <span class='tw-font-bold'>Liste von Empfänger:innen importieren</span>, die den Badge gleichzeitig erhalten sollen. So geht's:",
 		"downloadExampleCSV": "Lade unsere Datei-Vorlage herunter:",
 		"exampleCSVLink": "<a class='tw-underline tw-text-[#1400FF]' hlmA href='./assets/badgrBulkIssueTemplate.csv' download='CSV-Beispiel-Vorlage.csv''>Download CSV-Beispiel-Vorlage</a>",
 		"openInExcel": "Öffne sie in Excel",
