@@ -39,7 +39,7 @@ import { lucideClock } from '@ng-icons/lucide';
 			</button>
 			<brn-accordion-content hlm>
 			<hr class="tw-w-full tw-my-2 tw-border tw-text-[#cfcece] tw-bg-[#cfcece] tw-border-solid" />
-			<span class="tw-mt-4 tw-text-oebblack tw-font-semibold">{{ description }}</span>
+			<span class="tw-mt-4 tw-text-oebblack">{{ description }}</span>
 			<div class="tw-flex tw-gap-4 tw-mt-2">
 				<span>{{ 'General.category' | translate }}: </span>
 				<span class="tw-capitalize">{{ category }}</span>
