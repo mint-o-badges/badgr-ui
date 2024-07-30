@@ -42,7 +42,7 @@ import { lucideClock } from '@ng-icons/lucide';
 			<span class="tw-mt-4 tw-text-oebblack tw-font-semibold">{{ description }}</span>
 			<div class="tw-flex tw-gap-4 tw-mt-2">
 				<span>{{ 'General.category' | translate }}: </span>
-				<span class="tw-capitalize">{{ category.toLowerCase() === 'skill' ? 'Fähigkeit' : 'Wissen' }}</span>
+				<span class="tw-capitalize">{{ category.toLowerCase() === 'skill' ? ('Badge.skill' | translate) : ('Badge.knowledge' | translate)  }}</span>
 			</div>
 			</brn-accordion-content>
 		</div>
