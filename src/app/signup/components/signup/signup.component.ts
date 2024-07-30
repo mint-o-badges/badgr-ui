@@ -22,6 +22,13 @@ import 'altcha';
 	templateUrl: './signup.component.html',
 })
 export class SignupComponent extends BaseRoutableComponent implements OnInit, AfterViewInit {
+	// Translations
+	enterPassword = this.translate.instant('Signup.enterPassword');
+	passwordMustBe8Char = this.translate.instant('Signup.passwordMustBe8Char');
+	confirmPassword = this.translate.instant('Signup.confirmPassword');
+	passwordsNotEqual = this.translate.instant('Signup.passwordsNotEqual');
+	
+
 	baseUrl: string;
 	signupForm = typedFormGroup()
 		.addControl('username', '', [Validators.required, EmailValidator.validEmail])
