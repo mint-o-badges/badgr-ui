@@ -333,7 +333,11 @@
 		"reachedResendEmailLimit": "You have reached a limit for resending verification email. Please check your inbox for an existing message or retry after 5 minutes.",
 		"resendEmailFailed": "Failed to resend verification email. Please contact support.",
 		"newEmailSent": "A new verification email was sent to:",
-		"infoPersonalDataProcessing": "Information on the processing of your personal data can be found in our <a class='tw-underline tw-text-[#1400FF]' href='public/privacy'> Privacy Policy </a>"
+		"infoPersonalDataProcessing": "Information on the processing of your personal data can be found in our <a class='tw-underline tw-text-[#1400FF]' href='public/privacy'> Privacy Policy </a>",
+		"enterValidEmail":"Please enter a valid email address.",
+		"enterFirstName":"Please enter a first name",
+		"enterLastName":"Please enter a last name",
+		"registerWithBildungsraum": "Register with Mein Bildungsraum"
 	},
 	"Captcha": {
 		"error": "Verification failed. Try again later.",
