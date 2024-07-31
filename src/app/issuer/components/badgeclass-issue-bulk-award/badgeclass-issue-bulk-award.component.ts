@@ -32,7 +32,7 @@ export interface BulkIssueData {
 	name: string;
 }
 
-export type DestSelectOptions = 'email' | 'evidence' | 'name' | 'NA' ;
+export type DestSelectOptions = 'email'| 'evidence' | 'name' | 'NA' ;
 
 export type ViewState = 'import' | 'importPreview' | 'importError' | 'importConformation' | 'cancel' | 'exit';
 
