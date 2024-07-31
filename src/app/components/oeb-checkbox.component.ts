@@ -32,6 +32,7 @@ export class OebCheckboxComponent implements ControlValueAccessor {
 	@Output() checkedChange = new EventEmitter<boolean>();
 	@Input() ngModel: boolean;
 	@Input() value: string;
+	@Input() checked = false;
 
 	@Output() ngModelChange = new EventEmitter<string>();
 
@@ -42,18 +43,6 @@ export class OebCheckboxComponent implements ControlValueAccessor {
 
 	public readonly userClass = input<ClassValue>('', { alias: 'class' });
 	protected _computedClass = computed(() => hlm(this.userClass()));
-	private _checked = false;
-
-	get checked() {
-		return this._checked;
-	}
-
-	set checked(value: boolean) {
-		this._checked = value;
-		this.checkedChange.emit(this._checked);
-		this.onChange(this._checked);
-		this.onTouched();
-	}
 
 	onTouched = () => {};
 

@@ -255,7 +255,7 @@
 					</div>
 				</div>
 			<hr class="tw-my-8 tw-border tw-border-[var(--color-purple)] tw-border-dashed" />
-				<oeb-collapsible [trigger]="collapseCompetenciesTrigger">
+				<oeb-collapsible [trigger]="collapseCompetenciesTrigger" [defaultOpen]="collapsedCompetenciesOpen">
 					<ng-template #collapseCompetenciesTrigger>
 						<span class="tw-list-item tw-text-lg tw-font-bold tw-leading-10 tw-text-[var(--color-purple)] tw-mr-auto">{{
 							'CreateBadge.addCompetenciesByHand' | translate

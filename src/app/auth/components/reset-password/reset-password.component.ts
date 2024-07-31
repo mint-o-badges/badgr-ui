@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SessionService } from '../../../common/services/session.service';
 import { MessageService } from '../../../common/services/message.service';
@@ -8,6 +8,7 @@ import { Title } from '@angular/platform-browser';
 import { BaseRoutableComponent } from '../../../common/pages/base-routable.component';
 import { AppConfigService } from '../../../common/app-config.service';
 import { typedFormGroup } from '../../../common/util/typed-forms';
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'change-password',
@@ -15,12 +16,18 @@ import { typedFormGroup } from '../../../common/util/typed-forms';
 })
 export class ResetPasswordComponent extends BaseRoutableComponent {
 	changePasswordForm = typedFormGroup()
-		.addControl('password1', '', Validators.required)
+		.addControl('password1', '', [Validators.required, Validators.minLength(8)])
 		.addControl('password2', '', [Validators.required, this.passwordsMatch.bind(this)]);
 
 	get resetToken(): string {
 		return this.route.snapshot.params['token'];
 	}
+
+	// Translation
+	enterNewPassword;
+	mustBe8Char;
+	enterNewPasswordConfirmation;
+	passwordsDoNotMatch;
 
 	constructor(
 		private fb: FormBuilder,
@@ -30,6 +37,7 @@ export class ResetPasswordComponent extends BaseRoutableComponent {
 		router: Router,
 		private configService: AppConfigService,
 		private _messageService: MessageService,
+		public translate: TranslateService,
 	) {
 		super(router, route);
 
@@ -42,6 +50,14 @@ export class ResetPasswordComponent extends BaseRoutableComponent {
 
 	ngOnInit() {
 		super.ngOnInit();
+
+		// To resolve the issue of translation bug when opening a page direclty via link. In this case sent via email.
+		this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+			this.enterNewPassword = this.translate.instant('Login.enterNewPassword');
+			this.mustBe8Char = this.translate.instant('Login.mustBe8Char');
+			this.enterNewPasswordConfirmation = this.translate.instant('Login.enterNewPasswordConfirmation');
+			this.passwordsDoNotMatch = this.translate.instant('Login.passwordsNotMatch');
+		});
 	}
 
 	submitChange() {
@@ -68,25 +84,16 @@ export class ResetPasswordComponent extends BaseRoutableComponent {
 		}
 	}
 
-	passwordsMatch(group: FormGroup) {
-		let valid = true;
-		let val: string;
+	passwordsMatch(): ValidationErrors | null {
+		if (!this.changePasswordForm) return null;
 
-		for (const name in group.controls) {
-			if (val === undefined) {
-				val = group.controls[name].value;
-			} else {
-				if (val !== group.controls[name].value) {
-					valid = false;
-					break;
-				}
-			}
+		const p1 = this.changePasswordForm.controls.password1.value;
+		const p2 = this.changePasswordForm.controls.password2.value;
+
+		if (p1 && p2 && p1 !== p2) {
+			return { passwordsMatch: 'Passwords do not match' };
 		}
 
-		if (valid) {
-			return null;
-		}
-
-		return { passwordsMatch: 'Passwords do not match' };
+		return null;
 	}
 }
