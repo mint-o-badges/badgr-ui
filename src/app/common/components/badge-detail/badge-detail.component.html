@@ -2,7 +2,9 @@
     <main class="oeb" *ngIf="config">
         <form-message></form-message>
         <div class="page-padding">
-            <bg-breadcrumbs [linkentries]="config.crumbs"> </bg-breadcrumbs>
+            <div class="oeb-breadcrumbs">
+                <bg-breadcrumbs [linkentries]="config.crumbs"> </bg-breadcrumbs>
+            </div>
             <div class="oeb-section-sm">
 
                 <div class="tw-flex tw-flex-col tw-relative">
