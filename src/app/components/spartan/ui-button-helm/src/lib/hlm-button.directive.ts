@@ -18,6 +18,7 @@ export const buttonVariants = cva(
 					'tw-bg-white tw-text-oebblack tw-font-medium hover:tw-bg-lightpurple tw-border-solid tw-border-black',
 				yellow: 'tw-bg-yellow tw-text-purple hover:tw-bg-yellow hover:tw-text-purple tw-border-solid tw-border-yellow',
 				link: 'tw-underline-offset-4 hover:tw-underline tw-text-primary',
+				green: 'tw-bg-green tw-text-purple hover:tw-bg-green-300 tw-border-solid tw-border-green hover:tw-border-green-300',
 			},
 			size: {
 				default:
