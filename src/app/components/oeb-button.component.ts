@@ -13,7 +13,7 @@ import { lucideUpload } from '@ng-icons/lucide';
   template: `<button [type]="type" class="tw-relative" hlmBtn [disabled]="disabled" [width]="width" [size]="size" [variant]="variant">
   			        <hlm-icon *ngIf="icon" class="tw-mr-4" size="base" [name]="icon" />
                 <img *ngIf="img" class="md:tw-h-[30px] tw-h-[20px] tw-pr-4" [src]="img"/>
-                <span [innerHTML]="showLoadindMessage && loadingMessage ? loadingMessage : text"></span>
+                <span [innerHTML]="showLoadingMessage && loadingMessage ? loadingMessage : text"></span>
               </button> `,
 })
 
@@ -44,12 +44,12 @@ export class OebButtonComponent {
 		this.updatePromises(promises ? (Array.isArray(promises) ? promises.filter((p) => !!p) : [promises]) : []);
 	}
 
-	get showLoadindMessage() {
+	get showLoadingMessage() {
 		return this.promiseLoading || (this.loadingWhenRequesting && this.messageService.pendingRequestCount > 0);
 	}
 
 	get disabledForLoading() {
-		return this.showLoadindMessage || (this.disabledWhenRequesting && this.messageService.pendingRequestCount > 0);
+		return this.showLoadingMessage || (this.disabledWhenRequesting && this.messageService.pendingRequestCount > 0);
 	}
 
 	private updatePromises(promises: Array<Promise<unknown>>) {
