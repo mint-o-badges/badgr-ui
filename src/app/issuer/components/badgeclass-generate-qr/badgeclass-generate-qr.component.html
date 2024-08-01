@@ -1,0 +1,4 @@
+<div>
+    <qrcode (qrCodeURL)="onChangeURL($event)" [qrdata]="qrData"></qrcode>
+    <a [href]="qrCodeDownloadLink" download="qrcode">Download</a>
+</div>
