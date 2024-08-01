@@ -37,6 +37,8 @@ export interface PageConfig {
      crumbs?: LinkEntry[] | null;
      badgeTitle: string;
      headerButton?: HeaderButton | null,
+     qrCodeButton?: boolean,
+     issueQrRouterLink?: string[],
      issuerSlug: string;
      slug: string;
      menuitems?: MenuItem[];
