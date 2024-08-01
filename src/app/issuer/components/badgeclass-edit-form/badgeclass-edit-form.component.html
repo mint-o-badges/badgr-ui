@@ -184,15 +184,18 @@
 							>
 							</textarea>
 							<div class="tw-mt-4">
-								<button
-									class="button tw-bg-[var(--color-green)] tw-text-[var(--color-purple)]"
+								<oeb-button
+								    class="tw-whitespace-nowrap"
 									(click)="suggestCompetencies()"
 									type="button"
+									[text]="suggestCompetenciesText"
+									variant="green"
+									size="sm"
 								>
 									<span class="tw-font-bold">
 										{{ 'CreateBadge.suggestCompetencies' | translate }}
 									</span>
-								</button>
+								</oeb-button>
 							</div>
 						</div>
 						<div class="tw-mt-6 md:tw-mt-0 tw-w-full">

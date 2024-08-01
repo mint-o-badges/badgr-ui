@@ -73,6 +73,8 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	chooseDuration = this.translate.instant('CreateBadge.chooseDuration');
 	newTag = this.translate.instant('CreateBadge.newTag');
 
+	suggestCompetenciesText = this.translate.instant('CreateBadge.suggestCompetencies');
+
 	@Input()
 	set badgeClass(badgeClass: BadgeClass) {
 		if (this.existingBadgeClass !== badgeClass) {
