@@ -1,0 +1,26 @@
+import { Component } from "@angular/core";
+import { BrnAccordionContentComponent, BrnAccordionDirective } from '@spartan-ng/ui-accordion-brain';
+import { HlmAccordionModule } from '../../../../app/components/spartan/ui-accordion-helm/src';
+import { HlmIconModule, provideIcons } from '../../../../app/components/spartan/ui-icon-helm/src';
+import { TranslateModule } from "@ngx-translate/core";
+import { RouterModule } from "@angular/router";
+import { NgIf } from "@angular/common";
+
+@Component({
+	selector: 'qrcode-awards',
+	templateUrl: './qrcode-awards.component.html',
+    standalone: true,
+    providers: [BrnAccordionDirective],
+    imports: [
+		HlmAccordionModule,
+		HlmIconModule,
+		TranslateModule,
+		BrnAccordionContentComponent,
+		RouterModule,
+		NgIf,
+	],
+})
+
+export class QrCodeAwardsComponent {
+
+}

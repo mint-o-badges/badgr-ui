@@ -31,6 +31,7 @@ import { PageConfig } from '../../../common/components/badge-detail/badge-detail
 	selector: 'badgeclass-detail',
 	template: `
 	<bg-badgedetail [config]="config" [awaitPromises]="[issuerLoaded, badgeClassLoaded]">
+	<qrcode-awards></qrcode-awards>
 	<issuer-detail-datatable *ngIf="recipientCount > 0" [recipientCount]="recipientCount" [_recipients]="instanceResults" (actionElement)="revokeInstance($event)"></issuer-detail-datatable>
 	</bg-badgedetail>
 `,
