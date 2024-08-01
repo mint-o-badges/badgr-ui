@@ -32,6 +32,9 @@ import { TranslateModule } from '@ngx-translate/core';
 import { DatatableComponent } from '../components/datatable-badges.component';
 import { IssuerDetailDatatableComponent } from '../components/datatable-issuer-detail.component';
 import { CompetencyAccordionComponent } from '../components/accordion.component';
+import { BadgeClassIssueQrComponent } from './components/badgeclass-issue-qr/badgeclass-issue-qr.component';
+import { BadgeClassGenerateQrComponent } from './components/badgeclass-generate-qr/badgeclass-generate-qr.component';
+import { QRCodeModule } from 'angularx-qrcode';
 
 const routes = [
 	/* Issuer */
@@ -64,6 +67,14 @@ const routes = [
 		component: BadgeClassDetailComponent,
 	},
 	{
+		path: 'issuers/:issuerSlug/badges/:badgeSlug/qr',
+		component: BadgeClassIssueQrComponent,
+	},
+	{
+		path: 'issuers/:issuerSlug/badges/:badgeSlug/qr/generate',
+		component: BadgeClassGenerateQrComponent,
+	},
+	{
 		path: 'issuers/:issuerSlug/badges/:badgeSlug/edit',
 		component: BadgeClassEditComponent,
 	},
@@ -91,6 +102,7 @@ const routes = [
 		TranslateModule,
 		CompetencyAccordionComponent,
 		IssuerDetailDatatableComponent,
+		QRCodeModule
 		// DatatableComponent
 	],
 	declarations: [
@@ -98,6 +110,8 @@ const routes = [
 		BadgeClassEditComponent,
 		BadgeClassEditFormComponent,
 		BadgeClassIssueComponent,
+		BadgeClassIssueQrComponent,
+		BadgeClassGenerateQrComponent,
 		BadgeClassDetailComponent,
 
 		BadgeClassIssueBulkAwardComponent,
