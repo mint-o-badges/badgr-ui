@@ -89,6 +89,8 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 
 	config: PageConfig 
 
+	qrCodeButtonText = "Badge über QR-Code vergeben"
+
 
 	categoryOptions: { [key in BadgeClassCategory]: string } = {
 		competency: 'Kompetenz-Badge',
@@ -172,6 +174,8 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 						routerLink: ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'issue'],
 
 					},
+					issueQrRouterLink: ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'qr'],
+					qrCodeButton: true,
 					menuitems: [
 						{
 							title: 'Bearbeiten',
