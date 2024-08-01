@@ -7,7 +7,7 @@
 		<div class="tw-flex tw-flex-col tw-gap-2">
 			<div class="heading">
 				<h2>1. {{ 'CreateBadge.chooseBadgeCategory' | translate }}</h2>
-				<bg-formfield-select
+				<oeb-select
 					ariaLabel="chooseABadgeCategory"
 					[control]="badgeClassForm.rawControlMap.badge_category"
 					[placeholder]="chooseABadgeCategory"
@@ -15,7 +15,7 @@
 					[errorMessage]="{
 						required: chooseABadgeCategory
 					}"
-				></bg-formfield-select>
+				></oeb-select>
 			</div>
 			<div class="tw-italic tw-gap-2">
 				<div class="tw-flex tw-py-2">
@@ -38,28 +38,37 @@
 			<h2 class="heading">2. {{ 'CreateBadge.enterDetails' | translate }}</h2>
 		</div>
 		<div class="md:tw-mx-10 md:tw-items-center tw-justify-center">
-			<div class="field-container tw-items-start">
+			<div class="tw-flex md:tw-flex-row md:tw-gap-8 tw-flex-col tw-items-center">
 				<span class="input-label tw-break-words   md:tw-flex-[0_0_10em]">
 					{{ 'CreateBadge.short' | translate }}&shy;{{ 'General.description' | translate }}
 					{{ 'CreateBadge.forLearners' | translate }}</span
 				>
-				<bg-formfield-text
+				<oeb-input class="tw-w-full tw-max-w-[750px]" [fieldType]="'textarea'" [control]="badgeClassForm.rawControlMap.badge_description"
+				id="badgeclass_description_input"
+				[placeholder]="summarizedDescription"
+				[errorMessage]="{ required: enterDescription }">
+
+				</oeb-input>
+				<!-- <bg-formfield-text
 					class="tw-mt-1 md:tw-mt-0 tw-w-full tw-max-w-[750px]"
 					[control]="badgeClassForm.rawControlMap.badge_description"
 					id="badgeclass_description_input"
 					[placeholder]="summarizedDescription"
 					[errorMessage]="{ required: enterDescription }"
 					[multiline]="true"
-				></bg-formfield-text>
+				></bg-formfield-text> -->
 			</div>
-			<div class="field-container md:tw-items-center tw-justify-start">
-				<span class="input-label   md:tw-flex-[0_0_10em]"> {{ 'RecBadgeDetail.duration' | translate }}</span>
-				<div class="tw-flex tw-gap-2 tw-items-center">
-					<bg-formfield-text
+			<div class="tw-flex md:tw-flex-row md:tw-gap-8 tw-flex-col md:tw-items-end tw-justify-start">
+				<span class="input-label  md:tw-flex-[0_0_10em]"> {{ 'RecBadgeDetail.duration' | translate }}</span>
+				<div class="tw-flex tw-gap-2 tw-items-end">
+					<!-- <bg-formfield-text
 						class="tw-w-20"
 						[control]="badgeClassForm.rawControlMap.badge_study_load"
 						[fieldType]="'number'"
-					></bg-formfield-text>
+					></bg-formfield-text> -->
+					<oeb-input class="tw-w-20" [fieldType]="'number'" [control]="badgeClassForm.rawControlMap.badge_study_load">
+
+					</oeb-input>
 					<span class="tw-text-oebblack">{{ 'General.minutes' | translate }}</span>
 				</div>
 			</div>
