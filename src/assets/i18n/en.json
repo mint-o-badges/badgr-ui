@@ -344,7 +344,9 @@
 		"enterValidEmail":"Please enter a valid email address.",
 		"enterFirstName":"Please enter a first name",
 		"enterLastName":"Please enter a last name",
-		"registerWithBildungsraum": "Register with Mein Bildungsraum"
+		"registerWithBildungsraum": "Register with Mein Bildungsraum",
+		"ageConfirm": "I confirm that I am at least 16 years old when registering or that I have the consent of my legal guardian to register on the platform."
+
 	},
 	"Captcha": {
 		"error": "Verification failed. Try again later.",
