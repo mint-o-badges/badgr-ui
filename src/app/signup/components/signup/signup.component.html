@@ -134,7 +134,7 @@
 							label="{{ 'Signup.repeatPassword' | translate }}"
 							[errorMessage]="{
 								required: confirmPassword,
-								minlength: passwordsNotEqual
+								passwordsMatch: passwordsNotEqual
 							}"
 							[fieldType]="'password'"
 						></oeb-input>
