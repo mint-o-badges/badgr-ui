@@ -35,6 +35,7 @@ import { CompetencyAccordionComponent } from '../components/accordion.component'
 import { BadgeClassIssueQrComponent } from './components/badgeclass-issue-qr/badgeclass-issue-qr.component';
 import { BadgeClassGenerateQrComponent } from './components/badgeclass-generate-qr/badgeclass-generate-qr.component';
 import { QRCodeModule } from 'angularx-qrcode';
+import {QrCodeAwardsComponent} from './components/qrcode-awards/qrcode-awards.component';
 
 const routes = [
 	/* Issuer */
@@ -102,7 +103,8 @@ const routes = [
 		TranslateModule,
 		CompetencyAccordionComponent,
 		IssuerDetailDatatableComponent,
-		QRCodeModule
+		QRCodeModule,
+		QrCodeAwardsComponent
 		// DatatableComponent
 	],
 	declarations: [
