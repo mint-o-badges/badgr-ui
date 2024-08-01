@@ -1,0 +1,27 @@
+<div class="page-padding">
+    <div class="oeb-breadcrumbs">
+        <bg-breadcrumbs [linkentries]="crumbs"></bg-breadcrumbs>
+
+    </div>
+    <span>Badge über QR-Code vergeben</span>
+    <p>
+        Wenn du hier eine QR-Code-Vergabe anlegst, können deine Lernenden den so generierten QR-Code abscannen und sich den Badge darüber selbst abholen.
+    </p>
+    <div class="tw-bg-lightpurple tw-rounded-3xl oeb-section">
+        <form [formGroup]="qrForm.rawControl" (ngSubmit)="onSubmit()" novalidate>
+            <div class="tw-flex tw-flex-col">
+                <oeb-input label="Titel" [placeholder]=""
+						fieldType="text" [autofocus]="true" [control]="qrForm.rawControlMap.title"
+						#nameField></oeb-input>
+                <oeb-input label="Name Ersteller:in" [placeholder]=""
+						fieldType="text" [autofocus]="true" [control]="qrForm.rawControlMap.name"
+						#nameField></oeb-input>
+                <oeb-button type="submit" text="Vergeben">
+
+                 </oeb-button>
+            </div>
+
+        </form>
+
+    </div>
+</div>
