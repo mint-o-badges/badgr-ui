@@ -3,7 +3,7 @@
 
 <form [formGroup]="badgeClassForm.rawControl" #formElem (ngSubmit)="onSubmit()" novalidate>
 	<!-- Badge Category Panel -->
-	<div class="section">
+	<div class="section tw-text-oebblack">
 		<div class="tw-flex tw-flex-col tw-gap-2">
 			<div class="heading">
 				<h2>1. {{ 'CreateBadge.chooseBadgeCategory' | translate }}</h2>
@@ -33,7 +33,7 @@
 	</div>
 
 
-	<div class="section">
+	<div class="section tw-text-oebblack">
 		<div>
 			<h2 class="heading">2. {{ 'CreateBadge.enterDetails' | translate }}</h2>
 		</div>
@@ -60,7 +60,7 @@
 						[control]="badgeClassForm.rawControlMap.badge_study_load"
 						[fieldType]="'number'"
 					></bg-formfield-text>
-					<span class="tw-text-black">{{ 'General.minutes' | translate }}</span>
+					<span class="tw-text-oebblack">{{ 'General.minutes' | translate }}</span>
 				</div>
 			</div>
 			<div class="field-container md:tw-items-center tw-justify-start">
@@ -146,7 +146,7 @@
 		</div>
 	</div>
 
-	<div class="section tw-px-1" *ngIf="badgeCategory === 'competency'">
+	<div class="section tw-text-oebblack tw-px-1" *ngIf="badgeCategory === 'competency'">
 		<h2 class="heading">3. {{ 'CreateBadge.fillWithCompetencies' | translate }}</h2>
 		<ul class="tw-list-disc md:tw-mx-10 tw-mx-4">
 				<div>
@@ -265,7 +265,7 @@
 				<div
 					class="tw-flex tw-flex-col md:tw-flex-row md:tw-gap-4 tw-gap-2 md:tw-justify-between md:tw-items-center"
 				>
-					<p class="tw-text-black tw-font-semibold">
+					<p class="tw-text-oebblack tw-font-semibold">
 						{{ 'CreateBadge.addCompetenciesByHandInfo' | translate }}
 						<span class="tw-hidden md:tw-inline"
 							>, {{ 'CreateBadge.tofindFittingCompetencies' | translate }}</span
@@ -421,7 +421,7 @@
 		</ul>
 	</div>
 
-	<div class="section">
+	<div class="section tw-text-oebblack">
 		<h2 class="heading"><ng-container>{{ badgeCategory === 'competency' ? '4.' : '3.'}}</ng-container> Badge-{{ 'RecBadgeDetail.criteria' | translate }}</h2>
 		<div class="md:tw-mx-6">
 			<p class="tw-my-2 tw-italic tw-font-semibold">
@@ -490,7 +490,7 @@
 	</div>
 
 	<!-- add options -->
-	<div class="section formsection formsection-nohelp">
+	<div class="section formsection formsection-nohelp tw-text-oebblack">
 		<oeb-collapsible [trigger]="collapseDetailsTrigger">
 			<ng-template #collapseDetailsTrigger>
 				<h2 class="tw-pt-1 tw-px-1 tw-text-xl tw-text-[var(--color-purple)] tw-mr-auto">{{'CreateBadge.optionalBadgeDetails' | translate }}</h2>
@@ -498,7 +498,7 @@
 		
 		<div class="formsection-x-body">
 			<div class="tw-flex tw-gap-4 tw-items-center tw-mb-2">
-				<span class="tw-font-semibold tw-text-lg tw-text-black tw-uppercase"> Tag</span>
+				<span class="tw-font-semibold tw-text-lg tw-text-oebblack tw-uppercase"> Tag</span>
 
 				<div class="ng-autocomplete">
 					<ng-autocomplete
