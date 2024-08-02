@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, Input } from "@angular/core";
 import { BrnAccordionContentComponent, BrnAccordionDirective } from '@spartan-ng/ui-accordion-brain';
 import { HlmAccordionModule } from '../../../../app/components/spartan/ui-accordion-helm/src';
 import { HlmIconModule, provideIcons } from '../../../../app/components/spartan/ui-icon-helm/src';
@@ -22,5 +22,6 @@ import { NgIf } from "@angular/common";
 })
 
 export class QrCodeAwardsComponent {
+    @Input() awards: any[]
 
 }
