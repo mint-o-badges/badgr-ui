@@ -211,7 +211,7 @@
 		"exportAsCSV": "Export the template as a CSV file.",
 		"uploadCSV": "Upload your CSV file:",
 		"nameInPdfInfo": "* Along with the badge, a corresponding PDF certificate will be sent to the recipients. It will use their first and last names.",
-		"uploadFields": "E-Mail-Adresse, Name (optional) und Evidence (optional) beinhalten",
+		"uploadFields": "E-Mail-Adresse, Name und Evidence (optional) beinhalten",
 		"uploadFormat": "CSV- oder TXT-Format",
 		"useThis": "Benutze diese",
 		"exampleLink": "Beispiel Vorlage",

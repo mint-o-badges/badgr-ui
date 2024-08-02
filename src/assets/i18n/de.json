@@ -211,7 +211,7 @@
 		"fillInList": "Lösche den Beispiel-Eintrag und fülle die beiden Tabellenspalten entsprechend mit <span class='tw-font-bold'>Vor- und Nachnamen*</span> sowie <span class='tw-font-bold'>E-Mail-Adressen</span> deiner Lernenden aus.",
 		"exportAsCSV": "Exportiere die Vorlage als CSV-Datei.",
 		"uploadCSV": "Lade deine CSV-Datei hoch:",
-		"uploadFields": "E-Mail-Adresse, Name (optional) und Evidence (optional) beinhalten",
+		"uploadFields": "E-Mail-Adresse, Name und Evidence (optional) beinhalten",
 		"uploadFormat": "CSV- oder TXT-Format",
 		"nameInPdfInfo": "* Zusammen mit dem Badge wird ein entsprechendes PDF-Zertifikat an die Empfänger:innen gesendet. In diesem werden Vor- und Nachname verwendet.",
 		"useThis" : "Benutze diese",
