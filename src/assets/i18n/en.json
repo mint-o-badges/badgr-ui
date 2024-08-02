@@ -546,5 +546,14 @@
 		"text2": "Wenn du<span class='tw-font-medium tw-text-purple'> Badges erstellen und vergeben möchtest</span>, lege dafür deine Institution an.",
 		"collectBadgesBtn": "Badges im Rucksack sammeln",
 		"awardBadgesBtn": "Institutionen erstellen und Badges vergeben"
+	},
+	"RequestBadge": {
+		"requestBadge": "Request Badge",
+		"fillForm": "Fill in the form fields to request your badge.",
+		"requestBadgeInfo1": "Your request will then be approved by a person from ",
+		"requestBadgeInfo2": "Once that has happened, the badge will be sent to you via email.",
+		"personalDataInfo": "You can find information about the processing of your personal data in our <a class='tw-underline tw-text-[#1400FF]' href='public/privacy'> privacy policy </a>",
+		"ageConfirmation": "I confirm that I am 16 years old or older. If I am younger than 16: My parents or guardians are aware that I am providing my personal data to use the Open Educational Badges platform. I confirm that they agree with this."
+
 	}
 }
