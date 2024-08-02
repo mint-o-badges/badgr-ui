@@ -72,6 +72,8 @@ import { OebButtonComponent } from './oeb-button.component';
                 <hlm-th class="!tw-flex-1 tw-justify-center !tw-text-oebblack"><p class="u-text"><time [date]="recipient.issuedOn" format="dd.MM.y"></time></p></hlm-th>
                 <hlm-th class="tw-justify-center xl:tw-justify-end xl:tw-w-40 tw-w-full !tw-text-oebblack">
                     <oeb-button variant="secondary" size="xs" class="tw-w-full" (click)="actionElement.emit(recipient)" [text]="actionElementText"></oeb-button>
+                    <oeb-button variant="secondary" size="xs" class="tw-w-full" (click)="actionElement2.emit(recipient)" [text]="actionElementText2"></oeb-button>
+
                 </hlm-th>
             </hlm-trow>
         </hlm-table>
@@ -82,7 +84,10 @@ export class IssuerDetailDatatableComponent {
     @Input() caption: string = "";
     @Input() recipientCount: number = 0;
     @Input() actionElementText: string = "Zurücknehmen"
+    @Input() actionElementText2: string = "PDF"
     @Output() actionElement = new EventEmitter();
+    @Output() actionElement2 = new EventEmitter();
+
 
     _recipients = input.required<BadgeInstance[]>();
 

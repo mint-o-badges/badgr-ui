@@ -26,12 +26,17 @@ import { AppConfigService } from '../../../common/app-config.service';
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { BadgeClassCategory, BadgeClassLevel } from '../../models/badgeclass-api.model';
 import { PageConfig } from '../../../common/components/badge-detail/badge-detail.component';
+import { CommonEntityManager } from '../../../entity-manager/services/common-entity-manager.service';
+import { RecipientBadgeInstance } from '../../../recipient/models/recipient-badge.model';
+import { RecipientBadgeApiService } from '../../../recipient/services/recipient-badges-api.service';
+import { StandaloneEntitySet } from '../../../common/model/managed-entity-set';
+import { ApiRecipientBadgeInstance } from '../../../recipient/models/recipient-badge-api.model';
 
 @Component({
 	selector: 'badgeclass-detail',
 	template: `
 	<bg-badgedetail [config]="config" [awaitPromises]="[issuerLoaded, badgeClassLoaded]">
-	<issuer-detail-datatable *ngIf="recipientCount > 0" [recipientCount]="recipientCount" [_recipients]="instanceResults" (actionElement)="revokeInstance($event)"></issuer-detail-datatable>
+	<issuer-detail-datatable *ngIf="recipientCount > 0" [recipientCount]="recipientCount" [_recipients]="instanceResults" (actionElement)="revokeInstance($event)" (actionElement2)="exportPdf($event)"></issuer-detail-datatable>
 	</bg-badgedetail>
 `,
 })
@@ -89,6 +94,9 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 
 	config: PageConfig 
 
+	recipientBadgeManager: any
+
+	prefetchedBadges: StandaloneEntitySet<RecipientBadgeInstance, ApiRecipientBadgeInstance>;
 
 	categoryOptions: { [key in BadgeClassCategory]: string } = {
 		competency: 'Kompetenz-Badge',
@@ -107,9 +115,11 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 	constructor(
 		protected title: Title,
 		protected messageService: MessageService,
+		protected badgeRecipientsApiService: RecipientBadgeApiService,
 		protected badgeManager: BadgeClassManager,
 		protected issuerManager: IssuerManager,
 		protected badgeInstanceManager: BadgeInstanceManager,
+		protected commonEntityManager: CommonEntityManager,
 		sessionService: SessionService,
 		router: Router,
 		route: ActivatedRoute,
@@ -214,6 +224,8 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 
 	ngOnInit() {
 		super.ngOnInit();
+
+		this.recipientBadgeManager = this.commonEntityManager.recipientBadgeManager
 	}
 
 	revokeInstance(instance: BadgeInstance) {
@@ -242,6 +254,18 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 				},
 				() => void 0, // Cancel
 			);
+	}
+
+	exportPdf(instance: BadgeInstance) {
+		const startTime = performance.now();
+		this.recipientBadgeManager.recipientBadgeList.loadedPromise.then((r) => {
+			const promiseResolvedTime = performance.now();
+			console.log(`Time to resolve loadedPromise: ${promiseResolvedTime - startTime} ms`);
+			const badge = r.entityForUrl(instance.slug);
+						
+			badge._issueDate = new Date(badge.apiModel.json.issuedOn)
+			this.dialogService.exportPdfDialog.openDialog(badge).catch((error) => console.log(error));
+		})
 	}
 
 	deleteBadge() {

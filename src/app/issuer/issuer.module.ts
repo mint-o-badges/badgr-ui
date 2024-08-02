@@ -32,6 +32,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { DatatableComponent } from '../components/datatable-badges.component';
 import { IssuerDetailDatatableComponent } from '../components/datatable-issuer-detail.component';
 import { CompetencyAccordionComponent } from '../components/accordion.component';
+import { RecipientBadgeManager } from '../recipient/services/recipient-badge-manager.service';
 
 const routes = [
 	/* Issuer */
@@ -125,6 +126,7 @@ const routes = [
 		BadgeClassManager,
 		BadgeInstanceApiService,
 		BadgeInstanceManager,
+		RecipientBadgeManager,
 		IssuerApiService,
 		IssuerManager,
 	],
