@@ -42,6 +42,7 @@ import { PdfService } from '../../../common/services/pdf.service';
 			></issuer-detail-datatable>
 		</bg-badgedetail>
 	`,
+	providers: [PdfService]
 })
 export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	readonly badgeFailedImageUrl = '../../../../breakdown/static/images/badge-failed.svg';
