@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, SecurityContext } from '@angular/core';
 
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from '../../../common/services/message.service';
 import { BadgeClassManager } from '../../services/badgeclass-manager.service';
 import { BadgeClass } from '../../models/badgeclass.model';
 import { Issuer } from '../../models/issuer.model';
-import { Title } from '@angular/platform-browser';
+import { DomSanitizer, SafeResourceUrl, Title } from '@angular/platform-browser';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
 import { SessionService } from '../../../common/services/session.service';
 import { StringMatchingUtil } from '../../../common/util/string-matching-util';
@@ -26,14 +26,22 @@ import { AppConfigService } from '../../../common/app-config.service';
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { BadgeClassCategory, BadgeClassLevel } from '../../models/badgeclass-api.model';
 import { PageConfig } from '../../../common/components/badge-detail/badge-detail.component';
+import { PdfService } from '../../../common/services/pdf.service';
 
 @Component({
 	selector: 'badgeclass-detail',
 	template: `
-	<bg-badgedetail [config]="config" [awaitPromises]="[issuerLoaded, badgeClassLoaded]">
-	<issuer-detail-datatable *ngIf="recipientCount > 0" [recipientCount]="recipientCount" [_recipients]="instanceResults" (actionElement)="revokeInstance($event)"></issuer-detail-datatable>
-	</bg-badgedetail>
-`,
+		<bg-badgedetail [config]="config" [awaitPromises]="[issuerLoaded, badgeClassLoaded]">
+			<issuer-detail-datatable
+				*ngIf="recipientCount > 0"
+				[recipientCount]="recipientCount"
+				[_recipients]="instanceResults"
+				(actionElement)="revokeInstance($event)"
+				(downloadCertificate)="download($event)"
+				[isDownloadingPdf]="isDownloadingPdf"
+			></issuer-detail-datatable>
+		</bg-badgedetail>
+	`,
 })
 export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	readonly badgeFailedImageUrl = '../../../../breakdown/static/images/badge-failed.svg';
@@ -87,8 +95,10 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 	issuer: Issuer;
 	crumbs: LinkEntry[];
 
-	config: PageConfig 
+	config: PageConfig;
 
+	pdfSrc: SafeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl('about:blank');
+	isDownloadingPdf: boolean = false;
 
 	categoryOptions: { [key in BadgeClassCategory]: string } = {
 		competency: 'Kompetenz-Badge',
@@ -117,6 +127,8 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		private eventService: EventsService,
 		protected configService: AppConfigService,
 		private externalToolsManager: ExternalToolsManager,
+		protected pdfService: PdfService,
+		private sanitizer: DomSanitizer,
 	) {
 		super(router, route, sessionService);
 
@@ -170,28 +182,28 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 					headerButton: {
 						title: 'Badge vergeben',
 						routerLink: ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'issue'],
-
 					},
 					menuitems: [
 						{
 							title: 'Bearbeiten',
 							routerLink: ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'edit'],
 							icon: 'icon_edit',
-
 						},
 						{
 							title: 'Löschen',
 							icon: 'icon_remove',
 							action: () => this.deleteBadge(),
-						}
-					
+						},
 					],
 					badgeDescription: this.badgeClass.description,
 					issuerSlug: this.issuerSlug,
 					slug: this.badgeSlug,
 					createdAt: this.badgeClass.createdAt,
 					updatedAt: this.badgeClass.updatedAt,
-					category: this.badgeClass.extension['extensions:CategoryExtension'].Category === 'competency' ? 'Kompetenz- Badge' : 'Teilnahme- Badge',
+					category:
+						this.badgeClass.extension['extensions:CategoryExtension'].Category === 'competency'
+							? 'Kompetenz- Badge'
+							: 'Teilnahme- Badge',
 					tags: this.badgeClass.tags,
 					issuerName: this.badgeClass.issuerName,
 					issuerImagePlacholderUrl: this.issuerImagePlacholderUrl,
@@ -199,9 +211,8 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 					badgeLoadingImageUrl: this.badgeLoadingImageUrl,
 					badgeFailedImageUrl: this.badgeFailedImageUrl,
 					badgeImage: this.badgeClass.image,
-					competencies: this.badgeClass.extension['extensions:CompetencyExtension']
-
-				}
+					competencies: this.badgeClass.extension['extensions:CompetencyExtension'],
+				};
 			},
 			(error) => {
 				this.messageService.reportLoadingError(
@@ -228,7 +239,9 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 				() => {
 					instance.revokeBadgeInstance('Manually revoked by Issuer').then(
 						(result) => {
-							this.messageService.reportMinorSuccess(`Badge von ${instance.recipientIdentifier} zurücknehmen`);
+							this.messageService.reportMinorSuccess(
+								`Badge von ${instance.recipientIdentifier} zurücknehmen`,
+							);
 							this.badgeClass.update();
 							// this.updateResults();
 							// reload instances to refresh datatable
@@ -242,6 +255,32 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 				},
 				() => void 0, // Cancel
 			);
+	}
+
+	//ToDo: upadte fun name
+	download(instance: BadgeInstance) {
+		this.isDownloadingPdf = true;
+		this.pdfService.getPdf(instance.slug).subscribe(
+			(url) => {
+				this.pdfSrc = url;
+				this.downloadPdf();
+				this.isDownloadingPdf = false;
+			},
+			(error) => {
+				this.isDownloadingPdf = false;
+				console.log(error);
+			},
+		);
+	}
+
+	downloadPdf() {
+		const link = document.createElement('a');
+		// https://stackoverflow.com/questions/55849415/type-saferesourceurl-is-not-assignable-to-type-string
+		const url = this.sanitizer.sanitize(SecurityContext.RESOURCE_URL, this.pdfSrc);
+		link.href = url;
+		// link.download = this.badge.badgeClass.name + ' - ' + dateToString(this.badge._issueDate, '') + '.pdf';
+		link.download = 'test' + '.pdf';
+		link.click();
 	}
 
 	deleteBadge() {
@@ -335,7 +374,6 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 			this.eventService.externalToolLaunch.next(launchInfo);
 		});
 	}
-  
 }
 
 class MatchingAlgorithm {
