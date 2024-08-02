@@ -65,7 +65,7 @@ export class BadgeClassIssueBulkAwardImportComponent extends BaseAuthenticatedRo
 	//////// Parsing ////////
 	parseCsv(rawCSV: string) {
 		const parseRow = (rawRow: string) => {
-			rows.push(rawRow.split(',').map((r) => r.trim()));
+			rows.push(rawRow.split(/[,;]/).map((r) => r.trim()));
 		};
 
 		const padRowWithMissingCells = (row: string[]) =>
@@ -79,11 +79,12 @@ export class BadgeClassIssueBulkAwardImportComponent extends BaseAuthenticatedRo
 				const tempColumnHeaderName: string = columnHeaderName.toLowerCase();
 				let destinationColumn: DestSelectOptions;
 
-				if (tempColumnHeaderName === 'email') {
+				if (tempColumnHeaderName === 'email' || tempColumnHeaderName === 'e-mail-adresse') {
 					inferredColumnHeaders.add('email');
 					destinationColumn = 'email';
 				}
-				if (tempColumnHeaderName === 'name') {
+
+				if (tempColumnHeaderName === 'name' || tempColumnHeaderName === 'vor- / nachname') {
 					inferredColumnHeaders.add('name');
 					destinationColumn = 'name';
 				}

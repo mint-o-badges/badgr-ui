@@ -268,6 +268,8 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	// Tags
 	tags = new Set<string>();
 
+	collapsedCompetenciesOpen = false
+
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// Expiration
 	expirationEnabled = false;
@@ -387,6 +389,9 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				target_code: alignment.target_code,
 			})),
 		});
+		if(this.badgeClassForm.controls.competencies.controls.length > 0){
+			this.collapsedCompetenciesOpen = true;
+		};
 
 		this.currentImage = badgeClass.extension['extensions:OrgImageExtension']
 			? badgeClass.extension['extensions:OrgImageExtension'].OrgImage
@@ -403,6 +408,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	ngOnInit() {
 		super.ngOnInit();
 		let that = this;
+
 		// update badge frame when a category is selected, unless no-hexagon-frame checkbox is checked
 		this.badgeClassForm.rawControl.controls['badge_category'].statusChanges.subscribe((res) => {
 			this.handleBadgeCategoryChange();
