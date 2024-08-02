@@ -36,6 +36,7 @@ import { BadgeClassIssueQrComponent } from './components/badgeclass-issue-qr/bad
 import { BadgeClassGenerateQrComponent } from './components/badgeclass-generate-qr/badgeclass-generate-qr.component';
 import { QRCodeModule } from 'angularx-qrcode';
 import {QrCodeAwardsComponent} from './components/qrcode-awards/qrcode-awards.component';
+import { RequestBadgeComponent } from './components/request-badge/request-badge.component';
 
 const routes = [
 	/* Issuer */
@@ -76,6 +77,10 @@ const routes = [
 		component: BadgeClassGenerateQrComponent,
 	},
 	{
+		path: 'badges/:badgeSlug/request/:requestId',
+		component: RequestBadgeComponent,
+	},
+	{
 		path: 'issuers/:issuerSlug/badges/:badgeSlug/edit',
 		component: BadgeClassEditComponent,
 	},
@@ -114,6 +119,7 @@ const routes = [
 		BadgeClassIssueComponent,
 		BadgeClassIssueQrComponent,
 		BadgeClassGenerateQrComponent,
+		RequestBadgeComponent,
 		BadgeClassDetailComponent,
 
 		BadgeClassIssueBulkAwardComponent,

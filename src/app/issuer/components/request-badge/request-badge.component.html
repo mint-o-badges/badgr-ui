@@ -1,0 +1,44 @@
+<div class="page-padding">
+    <span>
+        {{ 'RequestBadge.requestBadge' | translate}}
+    </span>
+    <div>
+        <p>
+            {{ 'RequestBadge.fillForm' | translate}}
+        </p>
+        <p>
+            {{ 'RequestBadge.requestBadgeInfo1' | translate}}
+            {{ 'RequestBadge.requestBadgeInfo2' | translate}}
+
+        </p>
+    </div>
+
+    <div class="oeb-section">
+        <form [formGroup]="requestForm.rawControl" (ngSubmit)="onSubmit()" novalidate>
+            <div class="tw-flex tw-flex-col">
+                <oeb-input label="Vorname" [placeholder]=""
+						fieldType="text" [control]="requestForm.rawControlMap.firstname"
+						#firstname></oeb-input>
+                <oeb-input label="Nachname" [placeholder]=""
+						fieldType="text" [control]="requestForm.rawControlMap.lastname"
+						#lastname></oeb-input>
+                <oeb-input label="Email" [placeholder]=""
+                fieldType="email" [control]="requestForm.rawControlMap.email"
+                #email></oeb-input>        
+            </div>
+
+        </form>
+        <p>
+            {{ 'RequestBadge.personalDataInfo' | translate}}
+        </p>
+        
+        <p>
+            {{ 'RequestBadge.ageConfirmation' | translate}}
+        </p>
+
+        <oeb-button type="submit" [text]="requestBadge">
+
+        </oeb-button>
+
+    </div>
+</div>
