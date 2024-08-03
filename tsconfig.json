@@ -62,6 +62,9 @@
       ],
       "@spartan-ng/ui-select-helm": [
         "./src/app/components/spartan/ui-select-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-separator-helm": [
+        "./src/app/components/spartan/ui-separator-helm/src/index.ts"
       ]
     }
   }
