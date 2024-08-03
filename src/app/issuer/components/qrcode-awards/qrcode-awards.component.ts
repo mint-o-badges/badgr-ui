@@ -5,6 +5,7 @@ import { HlmIconModule, provideIcons } from '../../../../app/components/spartan/
 import { TranslateModule } from "@ngx-translate/core";
 import { RouterModule } from "@angular/router";
 import { NgIf } from "@angular/common";
+import { OebSeparatorComponent } from "../../../components/oeb-separator.component";
 
 @Component({
 	selector: 'qrcode-awards',
@@ -18,10 +19,13 @@ import { NgIf } from "@angular/common";
 		BrnAccordionContentComponent,
 		RouterModule,
 		NgIf,
+		OebSeparatorComponent
 	],
 })
 
 export class QrCodeAwardsComponent {
+	separatorStyle = "tw-block tw-my-2 tw-border-[var(--color-lightgray)] tw-border"
+
     @Input() awards: any[]
 
 }
