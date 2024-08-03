@@ -264,16 +264,18 @@ export class ProfileComponent extends BaseAuthenticatedRoutableComponent impleme
 				rejectButtonLabel: this.translate.instant('General.cancel'),
 			})
 		) {
-            this.profile.delete().then(
-                () => {
+            this.profile.delete().then(() => {
                     this.sessionService.logout();
                     // Not sure why I need the timeout, but
                     // otherwise the message isn't shown
                     setTimeout(() => this.messageService.reportMajorSuccess(this.translate.instant('Profile.deleteAccountSuccess'), true));
                     this.router.navigate(['/public/start']);
                 },
-                (error) => this.messageService.reportHandledError(this.translate.instant('Profile.deleteAccountFailure') + ` ${error.response._body}`)
-            );
+                (error) =>
+                    this.messageService.reportHandledError(
+                        this.translate.instant('Profile.deleteAccountFailure')
+                        + ` (${error.response?._body ?? error})`, true)
+                );
 		}
     }
 }
