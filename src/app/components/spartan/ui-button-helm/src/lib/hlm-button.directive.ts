@@ -13,7 +13,7 @@ export const buttonVariants = cva(
 				destructive: 'tw-bg-destructive tw-text-destructive-foreground hover:btw-g-destructive/90',
 				red: 'tw-bg-red tw-text-white hover:tw-bg-red-300 tw-border-solid tw-border-red hover:tw-border-red-300',
 				secondary:
-					'tw-bg-white tw-text-purple hover:tw-bg-buttonhover hover:tw-text-white tw-border-solid tw-border-purple',
+					'tw-bg-white tw-text-purple hover:tw-bg-buttonhover tw-border-solid tw-border-purple',
 				blackborder:
 					'tw-bg-white tw-text-oebblack tw-font-medium hover:tw-bg-lightpurple tw-border-solid tw-border-black',
 				yellow: 'tw-bg-yellow tw-text-purple hover:tw-bg-yellow hover:tw-text-purple tw-border-solid tw-border-yellow',
