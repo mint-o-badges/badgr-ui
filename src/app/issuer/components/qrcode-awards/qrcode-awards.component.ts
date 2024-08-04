@@ -6,6 +6,7 @@ import { TranslateModule } from "@ngx-translate/core";
 import { RouterModule } from "@angular/router";
 import { NgIf } from "@angular/common";
 import { OebSeparatorComponent } from "../../../components/oeb-separator.component";
+import { OebButtonComponent } from "../../../components/oeb-button.component";
 
 @Component({
 	selector: 'qrcode-awards',
@@ -19,7 +20,8 @@ import { OebSeparatorComponent } from "../../../components/oeb-separator.compone
 		BrnAccordionContentComponent,
 		RouterModule,
 		NgIf,
-		OebSeparatorComponent
+		OebSeparatorComponent,
+		OebButtonComponent
 	],
 })
 
@@ -27,5 +29,6 @@ export class QrCodeAwardsComponent {
 	separatorStyle = "tw-block tw-my-2 tw-border-[var(--color-lightgray)] tw-border"
 
     @Input() awards: any[]
+	@Input() routerLink: string[]
 
 }
