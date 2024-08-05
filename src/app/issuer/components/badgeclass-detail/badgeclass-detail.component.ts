@@ -37,7 +37,7 @@ import { PdfService } from '../../../common/services/pdf.service';
 				[recipientCount]="recipientCount"
 				[_recipients]="instanceResults"
 				(actionElement)="revokeInstance($event)"
-				(downloadCertificate)="download($event)"
+				(downloadCertificate)="downloadCertificate($event)"
 				[isDownloadingPdf]="isDownloadingPdf"
 			></issuer-detail-datatable>
 		</bg-badgedetail>
@@ -257,13 +257,13 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 			);
 	}
 
-	//ToDo: upadte fun name
-	download(instance: BadgeInstance) {
+	// To get and download badge certificate in pdf format
+	downloadCertificate(instance: BadgeInstance) {
 		this.isDownloadingPdf = true;
 		this.pdfService.getPdf(instance.slug).subscribe(
 			(url) => {
 				this.pdfSrc = url;
-				this.downloadPdf();
+				this.pdfService.downloadPdf(this.pdfSrc, this.badgeClass.name, instance.createdAt);
 				this.isDownloadingPdf = false;
 			},
 			(error) => {
@@ -271,16 +271,6 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 				console.log(error);
 			},
 		);
-	}
-
-	downloadPdf() {
-		const link = document.createElement('a');
-		// https://stackoverflow.com/questions/55849415/type-saferesourceurl-is-not-assignable-to-type-string
-		const url = this.sanitizer.sanitize(SecurityContext.RESOURCE_URL, this.pdfSrc);
-		link.href = url;
-		// link.download = this.badge.badgeClass.name + ' - ' + dateToString(this.badge._issueDate, '') + '.pdf';
-		link.download = 'test' + '.pdf';
-		link.click();
 	}
 
 	deleteBadge() {
