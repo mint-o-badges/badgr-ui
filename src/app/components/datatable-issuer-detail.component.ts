@@ -73,7 +73,7 @@ import { OebButtonComponent } from './oeb-button.component';
 					<!-- loading spinner -->
 					<loading-dots
 						[showLoading]="false"
-						*ngIf="downloadStates[i]"
+						*ngIf="isDownloadingPdf"
 						class="tw-absolute tw-right-0 tw-left-0 tw-z-50"
 					></loading-dots>
 
@@ -101,7 +101,7 @@ import { OebButtonComponent } from './oeb-button.component';
 							class="tw-w-full tw-font-semibold"
 							(click)="downloadCertificate.emit({ instance: recipient, badgeIndex: i })"
 							text="{{ 'Issuer.pdfCertificate' | translate }}"
-							[disabled]="downloadStates[i]"
+							[disabled]="isDownloadingPdf"
 						></oeb-button>
 					</hlm-th>
 				</hlm-trow>
@@ -113,7 +113,7 @@ export class IssuerDetailDatatableComponent {
 	@Input() caption: string = '';
 	@Input() recipientCount: number = 0;
 	@Input() actionElementText: string = 'zurücknehmen';
-	@Input() downloadStates;
+	@Input() isDownloadingPdf: boolean = false;
 	@Output() actionElement = new EventEmitter();
 	@Output() downloadCertificate = new EventEmitter<object>();
 
