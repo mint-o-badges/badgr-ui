@@ -98,7 +98,6 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 	config: PageConfig;
 
 	pdfSrc: SafeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl('about:blank');
-	isDownloadingPdf: boolean = false;
 	downloadStates: boolean[] = [false];
 
 	categoryOptions: { [key in BadgeClassCategory]: string } = {
