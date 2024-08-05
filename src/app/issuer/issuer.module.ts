@@ -37,6 +37,8 @@ import { BadgeClassGenerateQrComponent } from './components/badgeclass-generate-
 import { QRCodeModule } from 'angularx-qrcode';
 import {QrCodeAwardsComponent} from './components/qrcode-awards/qrcode-awards.component';
 import { RequestBadgeComponent } from './components/request-badge/request-badge.component';
+import { QrCodeApiService } from './services/qrcode-api.service';
+import { BadgeRequestApiService } from './services/badgerequest-api.service';
 
 const routes = [
 	/* Issuer */
@@ -149,6 +151,8 @@ const routes = [
 		BadgeInstanceManager,
 		IssuerApiService,
 		IssuerManager,
+		QrCodeApiService,
+		BadgeRequestApiService
 	],
 })
 export class IssuerModule {}

@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 import { BaseHttpApiService } from '../../common/services/base-http-api.service';
 import { SessionService } from '../../common/services/session.service';
 import { AppConfigService } from '../../common/app-config.service';
-import { ApiQRCode } from '../models/qrcode-api.model';
+import { BadgeClassSlug } from '../models/badgeclass-api.model';
 import { MessageService } from '../../common/services/message.service';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable()
-export class QrCodeApiService extends BaseHttpApiService {
-    constructor(
+export class BadgeRequestApiService extends BaseHttpApiService {
+	constructor(
 		protected loginService: SessionService,
 		protected http: HttpClient,
 		protected configService: AppConfigService,
@@ -16,14 +16,12 @@ export class QrCodeApiService extends BaseHttpApiService {
 	) {
 		super(loginService, http, configService, messageService);
 	}
+    
+    requestBadge(badgeClassSlug: BadgeClassSlug, userData: any) {
+        return this.post(`/request-badge/${badgeClassSlug}`, userData);
+    }
 
-    createQrCode(issuerSlug: string, qrCode: ApiQRCode) {
-		return this.post<ApiQRCode>(`/v1/issuer/issuers/${issuerSlug}/qrcodes`, qrCode).then(
-			(r) => r.body,
-		);
-	}
-
-	getQrCodesForIssuer(issuerSlug: string) {
-		return this.get<ApiQRCode[]>(`/v1/issuer/issuers/${issuerSlug}/qrcodes`).then((r) => r.body);
-	}
+    getBadgeRequests(badgeClassSlug: string) {
+        return this.get(`/request-badge/${badgeClassSlug}`);
+    }
 }

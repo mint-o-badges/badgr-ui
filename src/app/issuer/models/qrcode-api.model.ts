@@ -1,6 +1,7 @@
 export interface ApiQRCode{
     title: string;
-    name: string; 
-    expiration?: any;
-    badgeclass?: string;
+    createdBy: string; 
+    expires_at?: any;
+    badgeclass_id: string;
+    issuer_id: string;
 }
