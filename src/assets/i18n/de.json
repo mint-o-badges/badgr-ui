@@ -53,7 +53,8 @@
 		"oeb": "Open Educational Badges",
 		"showDetails": "Details anzeigen",
 		"hideDetails": "Details verstecken",
-		"password": "Passwort"
+		"password": "Passwort",
+		"loading": "Laden..."
 	},
 	"NavItems": {
 		"register": "Registrieren",
