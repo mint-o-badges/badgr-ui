@@ -7,6 +7,8 @@ import { SessionService } from "../../../common/services/session.service";
 import { BadgeClass } from "../../models/badgeclass.model";
 import { typedFormGroup } from "../../../common/util/typed-forms";
 import { Validators } from "@angular/forms";
+import { DateValidator } from "../../../common/validators/date.validator";
+import { QrCodeApiService } from "../../services/qrcode-api.service";
 
 @Component({
 	selector: 'badgeclass-issue-qr',
@@ -30,8 +32,10 @@ export class BadgeClassIssueQrComponent extends BaseAuthenticatedRoutableCompone
 
     qrForm = typedFormGroup()
         .addControl('title', '', Validators.required)
-        .addControl('name', '', Validators.required)
-		.addControl('expires', '', this['expirationValidator'])
+        .addControl('createdBy', '', Validators.required)
+		.addControl('expires', '', DateValidator.validDate)
+		.addControl('badgeclass_id', '', Validators.required)
+		.addControl('issuer_id', '', Validators.required);
         
 		
 
@@ -40,6 +44,7 @@ export class BadgeClassIssueQrComponent extends BaseAuthenticatedRoutableCompone
         route: ActivatedRoute,
         router: Router,
         sessionService: SessionService,
+		protected qrCodeApiService: QrCodeApiService,
 		protected badgeClassManager: BadgeClassManager,
 
         ){
@@ -68,16 +73,30 @@ export class BadgeClassIssueQrComponent extends BaseAuthenticatedRoutableCompone
 						{ title: 'Award Badge' },
 					];
 				});
+
+			this.qrForm.setValue({
+				...this.qrForm.value,
+				badgeclass_id: this.badgeSlug,
+				issuer_id: this.issuerSlug,
+			});	
         
 
     }
 
     onSubmit() {
-		if (!this.qrForm.markTreeDirtyAndValidate()) {
-			return;
-		}
+		// if (!this.qrForm.markTreeDirtyAndValidate()) {
+		// 	return;
+		// }
 
 		const formState = this.qrForm.value;
+		console.log(formState.badgeclass_id)
+		this.qrCodeApiService.createQrCode(this.issuerSlug, {
+			title: formState.title,
+			createdBy: formState.createdBy,
+			badgeclass_id: formState.badgeclass_id,
+			issuer_id: formState.issuer_id,
+			// expires_at: formState.expires,
+		})
         this.router.navigate(['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'qr', 'generate'], {queryParams: formState});
 
     }
