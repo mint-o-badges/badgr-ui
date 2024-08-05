@@ -315,7 +315,7 @@ export class ExportPdfDialog extends BaseDialog {
 					align: 'justify',
 				});
 				xPos += 70 * (12 / 14);
-				let datum = dateToString(this.badge.issueDate, '.');
+				let datum = this.pdfService.dateToString(this.badge.issueDate, '.');
 				this.doc.text(datum, xPos, yPos, {
 					align: 'justify',
 				});
@@ -359,14 +359,4 @@ export function basicImageLoader(file: File | string): Promise<string> {
 				throw new Error(`${file.name} is not a valid image file`);
 			});
 	}
-}
-
-function dateToString(date: Date, seperator: string) {
-	return (
-		('0' + date.getDate()).slice(-2) +
-		seperator +
-		('0' + (date.getMonth() + 1)).slice(-2) +
-		seperator +
-		date.getFullYear()
-	);
 }
