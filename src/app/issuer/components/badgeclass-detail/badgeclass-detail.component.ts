@@ -37,8 +37,8 @@ import { PdfService } from '../../../common/services/pdf.service';
 				[recipientCount]="recipientCount"
 				[_recipients]="instanceResults"
 				(actionElement)="revokeInstance($event)"
-				(downloadCertificate)="downloadCertificate($event)"
-				[isDownloadingPdf]="isDownloadingPdf"
+				(downloadCertificate)="downloadCertificate($event.instance, $event.badgeIndex)"
+				[downloadStates]="downloadStates"
 			></issuer-detail-datatable>
 		</bg-badgedetail>
 	`,
@@ -99,6 +99,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 
 	pdfSrc: SafeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl('about:blank');
 	isDownloadingPdf: boolean = false;
+	downloadStates: boolean[] = [false];
 
 	categoryOptions: { [key in BadgeClassCategory]: string } = {
 		competency: 'Kompetenz-Badge',
@@ -258,16 +259,16 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 	}
 
 	// To get and download badge certificate in pdf format
-	downloadCertificate(instance: BadgeInstance) {
-		this.isDownloadingPdf = true;
+	downloadCertificate(instance: BadgeInstance, badgeIndex: number) {
+		this.downloadStates[badgeIndex] = true;
 		this.pdfService.getPdf(instance.slug).subscribe(
 			(url) => {
 				this.pdfSrc = url;
 				this.pdfService.downloadPdf(this.pdfSrc, this.badgeClass.name, instance.createdAt);
-				this.isDownloadingPdf = false;
+				this.downloadStates[badgeIndex] = false;
 			},
 			(error) => {
-				this.isDownloadingPdf = false;
+				this.downloadStates[badgeIndex] = false;
 				console.log(error);
 			},
 		);

@@ -58,9 +58,8 @@ import { OebButtonComponent } from './oeb-button.component';
 				</label>
 			</div>
 			<hlm-table
-				class="tw-rounded-[20px] tw-overflow-hidden tw-w-full tw-max-w-[100%] tw-bg-lightpurple tw-border-purple tw-border-[1px] tw-border-solid tw-mt-8 tw-relative"
+				class="tw-rounded-[20px] tw-overflow-hidden tw-w-full tw-max-w-[100%] tw-bg-lightpurple tw-border-purple tw-border-[1px] tw-border-solid tw-mt-8"
 			>
-				<loading-dots *ngIf="isDownloadingPdf" class="tw-absolute tw-right-0 tw-left-0 tw-mt-[10%] tw-z-50"></loading-dots>
 				<hlm-caption>{{ caption }}</hlm-caption>
 				<hlm-trow class="tw-bg-purple tw-text-white tw-flex-wrap hover:tw-bg-purple">
 					<hlm-th class="!tw-text-white tw-w-40">ID</hlm-th>
@@ -68,9 +67,16 @@ import { OebButtonComponent } from './oeb-button.component';
 					<hlm-th class="!tw-text-white tw-justify-end xl:tw-w-40 tw-w-0 !tw-p-0"></hlm-th>
 				</hlm-trow>
 				<hlm-trow
-					*ngFor="let recipient of _filteredEmails()"
-					class="tw-border-purple tw-border-0 tw-border-solid tw-flex-wrap tw-items-center tw-py-2"
+					*ngFor="let recipient of _filteredEmails(); let i = index"
+					class="tw-border-purple tw-border-0 tw-border-solid tw-flex-wrap tw-items-center tw-py-2 tw-relative"
 				>
+					<!-- loading spinner -->
+					<loading-dots
+						[showLoading]="false"
+						*ngIf="downloadStates[i]"
+						class="tw-absolute tw-right-0 tw-left-0 tw-z-50"
+					></loading-dots>
+
 					<hlm-th class="tw-w-40">
 						<span class="!tw-text-oebblack !tw-font-normal">{{ recipient.recipientIdentifier }}</span>
 					</hlm-th>
@@ -93,8 +99,9 @@ import { OebButtonComponent } from './oeb-button.component';
 							size="xs"
 							width="full_width"
 							class="tw-w-full tw-font-semibold"
-							(click)="downloadCertificate.emit(recipient)"
-							text="{{'Issuer.pdfCertificate'| translate}}"
+							(click)="downloadCertificate.emit({ instance: recipient, badgeIndex: i })"
+							text="{{ 'Issuer.pdfCertificate' | translate }}"
+							[disabled]="downloadStates[i]"
 						></oeb-button>
 					</hlm-th>
 				</hlm-trow>
@@ -106,16 +113,15 @@ export class IssuerDetailDatatableComponent {
 	@Input() caption: string = '';
 	@Input() recipientCount: number = 0;
 	@Input() actionElementText: string = 'zurücknehmen';
-	@Input() isDownloadingPdf;
+	@Input() downloadStates;
 	@Output() actionElement = new EventEmitter();
-	@Output() downloadCertificate = new EventEmitter();
+	@Output() downloadCertificate = new EventEmitter<object>();
 
 	_recipients = input.required<BadgeInstance[]>();
 
 	protected readonly _rawFilterInput = signal('');
 	protected readonly _emailFilter = signal('');
 	private readonly _debouncedFilter = toSignal(toObservable(this._rawFilterInput).pipe(debounceTime(300)));
-
 	constructor() {
 		// needed to sync the debounced filter to the name filter, but being able to override the
 		// filter when loading new users without debounce
