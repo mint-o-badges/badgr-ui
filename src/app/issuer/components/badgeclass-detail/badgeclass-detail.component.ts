@@ -38,7 +38,7 @@ import { PdfService } from '../../../common/services/pdf.service';
 				[_recipients]="instanceResults"
 				(actionElement)="revokeInstance($event)"
 				(downloadCertificate)="downloadCertificate($event.instance, $event.badgeIndex)"
-				[isDownloadingPdf]="isDownloadingPdf"
+				[downloadStates]="downloadStates"
 			></issuer-detail-datatable>
 		</bg-badgedetail>
 	`,
@@ -260,15 +260,15 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 
 	// To get and download badge certificate in pdf format
 	downloadCertificate(instance: BadgeInstance, badgeIndex: number) {
-		this.isDownloadingPdf = true;
+		this.downloadStates[badgeIndex] = true;
 		this.pdfService.getPdf(instance.slug).subscribe(
 			(url) => {
 				this.pdfSrc = url;
 				this.pdfService.downloadPdf(this.pdfSrc, this.badgeClass.name, instance.createdAt);
-				this.isDownloadingPdf = false;
+				this.downloadStates[badgeIndex] = false;
 			},
 			(error) => {
-				this.isDownloadingPdf = false;
+				this.downloadStates[badgeIndex] = false;
 				console.log(error);
 			},
 		);
