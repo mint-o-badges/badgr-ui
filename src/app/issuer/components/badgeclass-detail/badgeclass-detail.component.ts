@@ -26,12 +26,13 @@ import { AppConfigService } from '../../../common/app-config.service';
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { BadgeClassCategory, BadgeClassLevel } from '../../models/badgeclass-api.model';
 import { PageConfig } from '../../../common/components/badge-detail/badge-detail.component';
+import { QrCodeApiService } from '../../services/qrcode-api.service';
 
 @Component({
 	selector: 'badgeclass-detail',
 	template: `
 	<bg-badgedetail [config]="config" [awaitPromises]="[issuerLoaded, badgeClassLoaded]">
-	<qrcode-awards [awards]="qrCodeAwards" [routerLink]="config.issueQrRouterLink"></qrcode-awards>
+	<qrcode-awards [awards]="qrCodeAwards" [badgeClassSlug]="badgeSlug" [routerLink]="config.issueQrRouterLink"></qrcode-awards>
 	<issuer-detail-datatable *ngIf="recipientCount > 0" [recipientCount]="recipientCount" [_recipients]="instanceResults" (actionElement)="revokeInstance($event)"></issuer-detail-datatable>
 	</bg-badgedetail>
 `,
@@ -114,6 +115,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		protected badgeManager: BadgeClassManager,
 		protected issuerManager: IssuerManager,
 		protected badgeInstanceManager: BadgeInstanceManager,
+		protected qrCodeApiService: QrCodeApiService,
 		sessionService: SessionService,
 		router: Router,
 		route: ActivatedRoute,
@@ -143,6 +145,11 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 			(issuer) => (this.issuer = issuer),
 			(error) => this.messageService.reportLoadingError(`Cannot find issuer ${this.issuerSlug}`, error),
 		);
+
+		this.qrCodeApiService.getQrCodesForIssuer(this.issuerSlug).then((qrCodes) => {
+			this.qrCodeAwards = qrCodes
+			console.log(qrCodes)
+		})
 
 		this.externalToolsManager.getToolLaunchpoints('issuer_assertion_action').then((launchpoints) => {
 			this.launchpoints = launchpoints;

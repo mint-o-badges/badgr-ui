@@ -6,6 +6,7 @@ import { BaseAuthenticatedRoutableComponent } from "../../../common/pages/base-a
 import { SessionService } from "../../../common/services/session.service";
 import { BadgeClass } from "../../models/badgeclass.model";
 import { SafeUrl } from "@angular/platform-browser";
+import { BadgeRequestApiService } from "../../services/badgerequest-api.service";
 
 @Component({
 	selector: 'badgeclass-generate-qr',
@@ -35,6 +36,7 @@ export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComp
         router: Router,
         sessionService: SessionService,
 		protected badgeClassManager: BadgeClassManager,
+		protected badgeRequestApiService: BadgeRequestApiService,
 
         ){
             super(router, route, sessionService);
@@ -69,7 +71,12 @@ export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComp
     ngOnInit() {
         this.route.queryParams.subscribe(params => {
           this.qrData = JSON.stringify(params);
+		  console.log(this.qrData)
         });
+
+		this.badgeRequestApiService.requestBadge(this.badgeSlug, {'firstName': 'test', 'lastName': 'test123', 'email': 'abc@test.de'}).then((badgeRequest) => {
+			console.log(badgeRequest);
+		})
     }
 
     onChangeURL(url: SafeUrl) {
