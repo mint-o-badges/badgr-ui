@@ -23,7 +23,7 @@ import { QueryParametersService } from '../../../common/services/query-parameter
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { BadgeInstance } from '../../../issuer/models/badgeinstance.model';
 import { Issuer } from '../../../issuer/models/issuer.model';
-import { CompetencyType, PageConfig } from '../../../common/components/badge-detail/badge-detail.component';
+import { CompetencyType, PageConfig } from '../../../common/components/badge-detail/badge-detail.component.types';
 
 @Component({
 	selector: 'recipient-earned-badge-detail',
@@ -104,20 +104,17 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 					menuitems: [
 						{
 							title: 'Verifizieren',
-							// routerLink: this.verifyUrl,
-							icon: 'icon_checkmark',
+							icon: 'lucideBadgeCheck',
 							action: () => window.open(this.verifyUrl, '_blank'),
 						},
 						{
 							title: 'PDF exportieren',
-							routerLink: [],
-							icon: 'icon_remove',
+							icon: 'lucideFileText',
 							action: () => this.exportPdf(),
 						},
 						{
 							title: 'Löschen',
-							routerLink: [],
-							icon: 'icon_remove',
+							icon: 'lucideTrash2',
 							action: () => this.deleteBadge(this.badge),
 						}
 					

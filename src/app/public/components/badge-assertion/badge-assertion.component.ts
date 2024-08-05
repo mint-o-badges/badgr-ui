@@ -18,7 +18,7 @@ import { saveAs } from 'file-saver';
 import { Title } from '@angular/platform-browser';
 import { VerifyBadgeDialog } from '../verify-badge-dialog/verify-badge-dialog.component';
 import { BadgeClassCategory, BadgeClassLevel } from './../../../issuer/models/badgeclass-api.model';
-import { PageConfig } from '../../../common/components/badge-detail/badge-detail.component';
+import { PageConfig } from '../../../common/components/badge-detail/badge-detail.component.types';
 
 @Component({
 	template: `<verify-badge-dialog
@@ -174,18 +174,18 @@ export class PublicBadgeAssertionComponent {
 					menuitems: [
 						{
 							title: 'Download JSON',
-							icon: 'icon_external_link',
+							icon: 'lucideDownload',
 							action: () => window.open(this.rawJsonUrl),
 
 						},
 						{
 							title: 'Download baked Image',
-							icon: 'icon_external_link',
+							icon: 'lucideDownload',
 							action: () => window.open(this.rawBakedUrl),
 						},
 						{
 							title: 'View Badge',
-							icon: 'icon_badge',
+							icon: 'lucideBadge',
 							routerLink: routerLinkForUrl(assertion.badge.hostedUrl || assertion.badge.id)
 						}
 					],

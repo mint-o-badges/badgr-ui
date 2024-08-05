@@ -17,6 +17,7 @@ import { ExternalToolsManager } from 'app/externaltools/services/externaltools-m
 import { AppConfigService } from '../../../common/app-config.service';
 import { CommonDialogsService } from '../../../common/services/common-dialogs.service';
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
+import { MenuItem } from '../../../common/components/badge-detail/badge-detail.component.types';
 
 @Component({
 	selector: 'issuer-detail',
@@ -42,6 +43,8 @@ export class IssuerDetailComponent extends BaseAuthenticatedRoutableComponent im
 	profileEmailsLoaded: Promise<unknown>;
 	crumbs: LinkEntry[];
 
+	menuitems: MenuItem[]	= [];
+
 	constructor(
 		loginService: SessionService,
 		router: Router,
@@ -64,6 +67,24 @@ export class IssuerDetailComponent extends BaseAuthenticatedRoutableComponent im
 		this.externalToolsManager.getToolLaunchpoints('issuer_external_launch').then((launchpoints) => {
 			this.launchpoints = launchpoints.filter((lp) => Boolean(lp));
 		});
+
+		this.menuitems = [{
+			title: 'Bearbeiten',
+			routerLink: ['./edit'],
+			icon: 'lucidePencil',
+		},
+		{
+			title: 'Löschen',
+			action: ($event) => this.delete($event),
+			icon: 'lucideTrash2',
+		},
+		{
+			title: 'Mitglieder bearbeiten',
+			routerLink: ['./staff'],
+			icon: 'lucideUsers',
+		}
+		
+	]
 
 		this.issuerLoaded = this.issuerManager.issuerBySlug(this.issuerSlug).then(
 			(issuer) => {
