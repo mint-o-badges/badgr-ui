@@ -32,6 +32,7 @@
 		</div>
 	</div>
 
+
 	<div class="section">
 		<div>
 			<h2 class="heading">2. {{ 'CreateBadge.enterDetails' | translate }}</h2>
@@ -148,10 +149,9 @@
 	<div class="section tw-px-1" *ngIf="badgeCategory === 'competency'">
 		<h2 class="heading">3. {{ 'CreateBadge.fillWithCompetencies' | translate }}</h2>
 		<ul class="tw-list-disc md:tw-mx-10 tw-mx-4">
-			<li>
 				<div>
 					<span
-						class="md:tw-text-xl tw-text-lg tw-font-semibold md:tw-leading-10 tw-text-[var(--color-purple)]"
+						class="tw-list-item tw-list-inside md:tw-text-xl tw-text-lg tw-font-semibold md:tw-leading-10 tw-text-[var(--color-purple)]"
 						>{{ 'CreateBadge.useAiAssistant' | translate }}</span
 					>
 					<p class="tw-my-2">{{ 'CreateBadge.enterAiDescription' | translate }}</p>
@@ -254,12 +254,14 @@
 						</div>
 					</div>
 				</div>
-			</li>
 			<hr class="tw-my-8 tw-border tw-border-[var(--color-purple)] tw-border-dashed" />
-			<li>
-				<span class="tw-text-lg tw-font-bold tw-leading-10 tw-text-[var(--color-purple)]">{{
-					'CreateBadge.addCompetenciesByHand' | translate
-				}}</span>
+				<oeb-collapsible [trigger]="collapseCompetenciesTrigger" [defaultOpen]="collapsedCompetenciesOpen">
+					<ng-template #collapseCompetenciesTrigger>
+						<span class="tw-list-item tw-text-lg tw-font-bold tw-leading-10 tw-text-[var(--color-purple)] tw-mr-auto">{{
+							'CreateBadge.addCompetenciesByHand' | translate
+						}}</span>
+					</ng-template>
+				
 				<div
 					class="tw-flex tw-flex-col md:tw-flex-row md:tw-gap-4 tw-gap-2 md:tw-justify-between md:tw-items-center"
 				>
@@ -415,7 +417,7 @@
 						</span>
 					</button>
 				</div>
-			</li>
+			</oeb-collapsible>
 		</ul>
 	</div>
 
@@ -489,9 +491,13 @@
 
 	<!-- add options -->
 	<div class="section formsection formsection-nohelp">
-		<h2 class="tw-pt-1 tw-px-1 tw-text-xl tw-text-[var(--color-purple)]">Optionale Badge-Details</h2>
+		<oeb-collapsible [trigger]="collapseDetailsTrigger">
+			<ng-template #collapseDetailsTrigger>
+				<h2 class="tw-pt-1 tw-px-1 tw-text-xl tw-text-[var(--color-purple)] tw-mr-auto">{{'CreateBadge.optionalBadgeDetails' | translate }}</h2>
+			</ng-template>
+		
 		<div class="formsection-x-body">
-			<div class="tw-flex tw-gap-4 tw-items-center tw-mb-2 tw-mt-8">
+			<div class="tw-flex tw-gap-4 tw-items-center tw-mb-2">
 				<span class="tw-font-semibold tw-text-lg tw-text-black tw-uppercase"> Tag</span>
 
 				<div class="ng-autocomplete">
@@ -700,6 +706,7 @@
 				</li>
 			</ul>
 		</div>
+	</oeb-collapsible>
 	</div>
 
 	<div class="l-stack l-stack-right u-margin-top3x">

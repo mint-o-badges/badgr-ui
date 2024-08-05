@@ -72,13 +72,13 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 	issuer: Issuer;
 	issueForm = typedFormGroup()
 		.addControl('expires', '', this['expirationValidator'])
+		.addControl('recipientprofile_name', '', Validators.required)
 		.addControl('recipient_type', 'email' as RecipientIdentifierType, [Validators.required], (control) => {
 			control.rawControl.valueChanges.subscribe(() => {
 				this.issueForm.controls.recipient_identifier.rawControl.updateValueAndValidity();
 			});
 		})
 		.addControl('recipient_identifier', '', [Validators.required, this['idValidator']])
-		.addControl('recipientprofile_name', '')
 		.addControl('narrative', '', MdImgValidator.imageTest)
 		.addControl('notify_earner', true)
 		.addArray(

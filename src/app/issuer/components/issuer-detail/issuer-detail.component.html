@@ -1,107 +1,11 @@
 <form-message></form-message>
-<div class="oeb page-padding">
-	<ng-template [bgAwaitPromises]="[issuerLoaded]">
-		<div class="tw-mb-8 l-containerxaxis tw-pb-6 tw-border-b tw-border-solid tw-border-[var(--color-light4)]">
-			<bg-breadcrumbs [linkentries]="crumbs"> </bg-breadcrumbs>
-		</div>
-		<div class="tw-flex tw-justify-between">
-			<div class="tw-flex">
-				<div class="tw-relative">
-					<img
-						[loaded-src]="issuer?.image"
-						[loading-src]="issuerPlaceholderSrc"
-						[error-src]="issuerPlaceholderSrc"
-						alt="{{ issuer.name }} avatar"
-						class="tw-h-[70px] md:tw-h-[100px] tw-w-auto"
-					/>
-				</div>
-				<div class="tw-flex tw-flex-col tw-justify-center tw-pl-4">
-					<p class="md:tw-text-[30px] md:tw-leading-[36px] tw-text-[20px] tw-leading-[24px] tw-text-purple tw-font-semibold">{{ issuer.name }}</p>
-					<p class="tw-text-oebblack tw-font-semibold md:tw-text-[20px] md:tw-leading-[24.4px] tw-text-[14px] tw-leading-[19.6px]">
-						{{ 'Issuer.yourRole' | translate }} 
-						{{ issuer.currentUserStaffMember?.roleInfo.label }}:in
-					</p>
-				</div>
+<div class="oeb tw-relative tw-w-full">
+	<div class="page-padding">
+		<ng-template [bgAwaitPromises]="[issuerLoaded, badgesLoaded]">
+			<div class="tw-mb-8 tw-pb-6 tw-border-b tw-border-solid tw-border-[var(--color-light4)]">
+				<bg-breadcrumbs [linkentries]="crumbs"> </bg-breadcrumbs>
 			</div>
-            <div class="tw-w-auto tw-hidden md:tw-grid !tw-content-center">
-                <p *ngIf="!issuer.apiModel.verified" class="u-margin-top1x u-width-paragraph">
-                {{ 'Issuer.nichtVerified' | translate }}
-                </p>
-                <div class="l-primarymore">
-                    <button
-                            class="button"
-                            [routerLink]="['./badges/create']"
-                            [disabled]="!issuer.canCreateBadge"
-                            >
-                            {{ 'Issuer.createBadge' | translate }}
-                    </button>
-					<oeb-dropdown [trigger]="svgTrigger" class="tw-items-center tw-justify-center tw-flex tw-cursor-pointer tw-border tw-border-solid tw-border-[var(--color-purple)] tw-rounded-[7px]" [menuItems]="menuitems"></oeb-dropdown>
-
-                        <ng-template #svgTrigger>
-                                <svg class="tw-w-[44.8px] tw-h-[44.8px]" fill="var(--color-purple)" icon="icon_more"></svg>
-                                <span class="visuallyhidden">Mehr</span>
-                        </ng-template>
-                </div>
-            </div>
-		</div>
-		<div>
-			<p class="tw-text-oebblack tw-py-4">{{issuer.description}}</p>
-		</div>
-		<div class="topbar-x-buttons tw-grid md:tw-hidden">
-			<p *ngIf="!issuer.apiModel.verified" class="u-margin-top1x u-width-paragraph">
-				{{ 'Issuer.nichtVerified' | translate }}
-			</p>
-			<div class="l-primarymore">
-				<button
-					class="button"
-					[routerLink]="['./badges/create']"
-					[disabled]="!issuer.canCreateBadge"
-				>
-					{{ 'Issuer.createBadge' | translate }}
-				</button>
-				<button class="buttonicon buttonicon-secondary" [bgPopupMenuTrigger]="issuerActionsMenu">
-					<svg icon="icon_more"></svg>
-					<span class="visuallyhidden">{{ 'General.more' | translate }}</span>
-				</button>
-			</div>
-			<bg-popup-menu #issuerActionsMenu>
-				<a class="menuitem" [routerLink]="['./edit']">
-					<svg icon="icon_edit"></svg>
-					{{ 'General.edit' | translate }}
-				</a>
-				<a class="menuitem" (click)="delete($event)" href="#">
-					<svg icon="icon_remove"></svg>
-					{{ 'General.delete' | translate }}
-				</a>
-				<a class="menuitem" [routerLink]="['./staff']">
-					<svg icon="icon_group"></svg>
-					{{ 'General.members' | translate }}
-					{{
-						(issuer?.currentUserStaffMember?.isOwner ? 'General.editS' : 'General.emptyString')
-							| translate
-					}}
-				</a>
-				<a class="menuitem" *ngFor="let lp of launchpoints" href="{{ lp.launch_url }}" target="_blank">
-					<svg icon="icon_external_link"></svg>
-					{{ lp.label }}
-				</a>
-			</bg-popup-menu>
-		</div>
-		<section class="tw-py-6" *ngIf="!badges?.length">
-			<h2 class="tw-font-medium md:tw-text-[22px] md:tw-leading-[26.4px] tw-text-purple tw-text-[16px] tw-leading-[19.2px]">
-				{{issuer.name}} {{ 'Issuer.issuerHasNoBadgesYet' | translate }}
-			</h2>
-		</section>
-		<section class="tw-py-6 tw-relative" *ngIf="badges?.length">
-			<h2 class="tw-font-medium md:tw-text-[22px] md:tw-leading-[26.4px] tw-text-purple tw-text-[16px] tw-leading-[19.2px] tw-py-2">
-				{{issuer.name}} {{ 'Issuer.issuerHasBadges' | translate }} {{ badges.length }} Badge{{ badges.length == 1 ? '' : 's' }}.
-			</h2>
-			
-			<badges-datatable 
-				[caption]=""
-				[badges]="badges"
-				(actionElement)="routeToBadgeAward($event, issuer)"
-				(redirectToBadgeDetail)="routeToBadgeDetail($event, issuer)"></badges-datatable>
-		</section>
-	</ng-template>
+			<oeb-issuer-detail (issuerDeleted)="delete($event)" [badges]="badges" [issuerActionsMenu]="issuerActionsMenu" [issuer]="issuer" [issuerPlaceholderSrc]="issuerPlaceholderSrc"></oeb-issuer-detail>
+		</ng-template>
+	</div>
 </div>

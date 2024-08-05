@@ -44,8 +44,8 @@
 						[routerLink]="['/issuer/issuers', issuerSlug, 'badges', badgeSlug, 'bulk-import']">{{'Issuer.batchAwardTextLink'
 						| translate}}</a>&nbsp;
 					<span hlmP [innerHTML]="'Issuer.batchAwardText2' | translate"></span>
-					<oeb-input label="Name Empfänger:in (Optional)" [placeholder]="'Issuer.awardedPerson' | translate"
-						fieldType="email" [autofocus]="true" [control]="issueForm.rawControlMap.recipientprofile_name"
+					<oeb-input [label]="'Issuer.awardedPerson' | translate"
+						fieldType="text" [autofocus]="true" [control]="issueForm.rawControlMap.recipientprofile_name"
 						#nameField></oeb-input>
 					<p hlmP class="tw-mt-1 tw-text-right" size="sm">{{'Issuer.nameWarning' | translate}}</p>
 					<div class="tw-flex tw-justify-end oeb-standard-padding-bottom">
@@ -54,7 +54,7 @@
 							[optionMap]="identifierOptionMap"></bg-formfield-select>
 						<oeb-input class="tw-flex-grow" label="Identifier"
 							[control]="issueForm.rawControlMap.recipient_identifier"
-							ariaLabel="Identifier der Empfänger:in" [autofocus]="true"
+							ariaLabel="Identifier der Empfänger:in"
 							[fieldType]="recipientIdentifierFieldType"></oeb-input>
 					</div>
 					<oeb-checkbox name="notifybyemail" id="notifybyemail"
@@ -80,10 +80,10 @@
 							<p class="u-text u-margin-top1x u-margin-bottom2x">
 								Das Narrativ ist eine generelle Beschreibung des Erfolges bezogen auf das Badge.
 							</p>
-							<a href="https://support.badgr.io/pages/viewpage.action?pageId=2981918"
+							<!-- <a href="https://support.badgr.io/pages/viewpage.action?pageId=2981918"
 								class="u-text-outlink">Mehr Informationen
 								<svg icon="icon_external_link"></svg>
-							</a>
+							</a> -->
 						</div>
 						<div class="formsection-x-body">
 							<bg-formfield-markdown class="l-formsection-x-inputoffset"
@@ -107,16 +107,16 @@
 						<div class="formsection-x-help">
 							<h3 class="u-text-body-bold">Was ist der Nachweis?</h3>
 							<p class="u-text u-margin-top1x u-margin-bottom2x">
-								Nachweise sind belege dafür, dass die Empfänger*in die entsprechenden Kriterien erfüllt
+								Nachweise sind Belege dafür, dass die Empfänger*in die entsprechenden Kriterien erfüllt
 								um das
-								Badge zu erhalten. Dies kann in form eines Narrativs welcher den Erfolg beschreibt und /
+								Badge zu erhalten. Dies kann in Form eines Narrativs welcher den Erfolg beschreibt und /
 								oder
 								als URL einer Website geschehen.
 							</p>
-							<a href="https://support.badgr.io/pages/viewpage.action?pageId=2981918"
+							<!-- <a href="https://support.badgr.io/pages/viewpage.action?pageId=2981918"
 								class="u-text-outlink">Mehr Informationen
 								<svg icon="icon_external_link"></svg>
-							</a>
+							</a> -->
 						</div>
 						<div class="formsection-x-body">
 							<ng-container
@@ -167,10 +167,10 @@
 								löschen
 								wenn der Badge nicht ablaufen soll.
 							</p>
-							<a href="https://support.badgr.io/pages/viewpage.action?pageId=2981918"
+							<!-- <a href="https://support.badgr.io/pages/viewpage.action?pageId=2981918"
 								class="u-text-outlink">Weitere Informationen
 								<svg icon="icon_external_link"></svg>
-							</a>
+							</a> -->
 						</div>
 
 						<div class="formsection-x-body">

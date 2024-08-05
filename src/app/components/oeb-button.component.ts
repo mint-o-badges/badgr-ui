@@ -28,7 +28,7 @@ export class OebButtonComponent {
 	@Input() text: string = undefined;
 	@Input() img: string = undefined;
 	@Input() icon: string = undefined;
-  @Input() type: string = 'submit';
+  	@Input() type: string = 'submit';
 
 	@Input('disabled-when-requesting')
 	disabledWhenRequesting = false;

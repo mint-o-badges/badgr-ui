@@ -11,6 +11,7 @@ import { UserProfile } from '../../../common/model/user-profile.model';
 import { AppConfigService } from '../../../common/app-config.service';
 import { typedFormGroup } from '../../../common/util/typed-forms';
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'change-password',
@@ -32,6 +33,13 @@ export class ChangePasswordComponent extends BaseRoutableComponent {
 		{ title: 'Change Password', routerLink: ['/profile/change-password'] },
 	];
 
+	// Translations
+	enterYourNewPassword = this.translate.instant('Profile.enterYourNewPassword');
+	mustBe8Char = this.translate.instant('Profile.mustBe8Char');
+	confirmNewPassword = this.translate.instant('Profile.confirmNewPassword');
+	enterNewPasswordConfirmation = this.translate.instant('Profile.enterNewPasswordConfirmation');
+	PasswordsDoNotMatch = this.translate.instant('Profile.PasswordsNotMatch');
+
 	constructor(
 		private fb: FormBuilder,
 		private title: Title,
@@ -41,6 +49,7 @@ export class ChangePasswordComponent extends BaseRoutableComponent {
 		router: Router,
 		protected configService: AppConfigService,
 		private _messageService: MessageService,
+		private translate: TranslateService
 	) {
 		super(router, route);
 
@@ -111,9 +120,5 @@ export class ChangePasswordComponent extends BaseRoutableComponent {
 		}
 
 		return null;
-	}
-
-	cancel() {
-		this.router.navigate(['/profile/profile']);
 	}
 }

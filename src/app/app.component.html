@@ -65,7 +65,7 @@
 	</footer>
 </div>
 <header *ngIf="!curtain">
-	<nav class="oeb-navbar">
+	<nav class="oeb-navbar oeb-nav">
 		<a [class.logo-is-loading]="isRequestPending"
 			[href]="isOAuthAuthorizationInProcess ? '#' : theme.alternateLandingUrl || '/'">
 			<picture class="oeb-navbar-logo">
@@ -268,8 +268,8 @@
 </header>
 
 <!-- Display a "curtain" instead of the normal page, if `curtain` is set to true-->
-<main *ngIf="!curtain" class="l-stickyfooter-x-main o-container" [attr.inert]="mobileNavOpen ? '' : null"
-	[class.l-inertcontainer]="mobileNavOpen">
+<main *ngIf="!curtain" class="oeb-main o-container" [attr.inert]="mobileNavOpen ? '' : null"
+	[class.tw-hidden]="mobileNavOpen">
 	<router-outlet *ngIf="!hasFatalError"></router-outlet>
 	<!-- children go here -->
 	<article *ngIf="hasFatalError" class="l-containerxaxis l-containeryaxis">
@@ -307,7 +307,7 @@
 	style="background-color: var(--color-lightgreen); margin-top: 30px"
 >
 	<div class="page-padding">
-		<div class="tw-h-[144px] l-stickyfooter-x-footer tw-flex tw-flex-row tw-items-center">
+		<div class="tw-h-[144px] oeb-footer tw-flex tw-flex-row tw-items-center">
 			<div
 				class="tw-font-[rubik] tw-text-left tw-flex md:tw-flex-row md:tw-justify-between md:tw-gap-0 tw-flex-col-reverse tw-gap-[2em]">
 				<div>
@@ -334,7 +334,7 @@
 </footer>
 
 <!-- Funder logos -->
-<div class="tw-relative tw-w-full">
+<div class="tw-relative tw-w-full" 	[class.tw-hidden]="mobileNavOpen">
 	<div class="page-padding logos-container">
 		<img
 			class="tw-max-w-[257px]"
