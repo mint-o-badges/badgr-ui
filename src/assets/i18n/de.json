@@ -220,7 +220,8 @@
 		"importList": "Liste importieren",
 		"import": "Importieren",
 		"csvColumns": "CSV Spalten",
-		"csvError": "Die CSV Datei enthält Zeilen länger als ihre Überschrift. Bitte behebe diesen Fehler und versuche es erneut."
+		"csvError": "Die CSV Datei enthält Zeilen länger als ihre Überschrift. Bitte behebe diesen Fehler und versuche es erneut.",
+		"pdfCertificate": "PDF-Zertifikat"
 	},
 	"Badge": {
 		"groupBy": "Gruppieren nach",

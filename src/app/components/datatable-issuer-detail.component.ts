@@ -94,7 +94,7 @@ import { OebButtonComponent } from './oeb-button.component';
 							width="full_width"
 							class="tw-w-full tw-font-semibold"
 							(click)="downloadCertificate.emit(recipient)"
-							text="PDF-Zertifikat"
+							text="{{'Issuer.pdfCertificate'| translate}}"
 						></oeb-button>
 					</hlm-th>
 				</hlm-trow>
