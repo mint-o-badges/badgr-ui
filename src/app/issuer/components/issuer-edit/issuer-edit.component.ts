@@ -99,21 +99,6 @@ export class IssuerEditComponent extends BaseAuthenticatedRoutableComponent impl
 				this.title.setTitle(
 					`Issuer - ${this.issuer.name} - ${this.configService.theme['serviceName'] || 'Badgr'}`,
 				);
-
-				/*this.badgesLoaded = new Promise((resolve, reject) => {
-					this.badgeClassService.badgesByIssuerUrl$.subscribe(
-						badgesByIssuer => {
-							this.badges = badgesByIssuer[this.issuer.issuerUrl];
-							resolve();
-						},
-						error => {
-							this.messageService.reportAndThrowError(
-								`Failed to load badges for ${this.issuer ? this.issuer.name : this.issuerSlug}`, error
-							);
-							resolve();
-						}
-					);
-				});*/
 			},
 			(error) => {
 				this.messageService.reportLoadingError(`Issuer '${this.issuerSlug}' does not exist.`, error);

@@ -6,6 +6,7 @@ import { ProfileComponent } from './profile.component';
 import { COMMON_MOCKS_PROVIDERS_WITH_SUBS } from '../../../mocks/mocks.module.spec';
 import { BadgrCommonModule, COMMON_IMPORTS } from '../../../common/badgr-common.module';
 import { RouterTestingModule } from '@angular/router/testing';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('ProfileComponent', () => {
 	let fixture;
@@ -14,7 +15,7 @@ describe('ProfileComponent', () => {
 	beforeEach(() => {
 		TestBed.configureTestingModule({
 			declarations: [ProfileComponent],
-			imports: [RouterTestingModule, CommonModule, BadgrCommonModule, ...COMMON_IMPORTS],
+			imports: [RouterTestingModule, CommonModule, BadgrCommonModule, ...COMMON_IMPORTS, TranslateModule.forRoot()],
 			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 			teardown: { destroyAfterEach: false },
