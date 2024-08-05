@@ -78,15 +78,9 @@
 		<ng-template [ngIf]="!loggedIn">
 			<nav class="tw-items-stretch tw-align-middle tw-hidden lg:tw-flex">
 				<div class="tw-flex tw-gap-8 tw-items-center">
+					<!-- About Badges Menu -->
 					<oeb-dropdown [menuItems]="aboutBadgesMenuItems" trigger="Über Badges" triggerStyle="oeb-navitem tw-cursor-pointer !tw-leading-none"></oeb-dropdown>
 
-					<!-- About Badges Menu -->
-					<button role="menuitem" aria-haspopup="true"
-						class="oeb-navitem tw-cursor-pointer" routerLinkActive="oeb-navitem-is-active"
-						[bgPopupMenuTrigger]="aboutBadgesMenu">
-						{{ 'General.aboutBadges' | translate }}
-						<svg class="navitem-x-icon" icon="icon_dropdown"></svg>
-					</button>
 					<a *ngIf="!features.disableRegistration"
 						class="oeb-navitem" routerLinkActive="oeb-navitem-is-active" [routerLink]="['/public/about']">{{
 						'NavItems.aboutOpenEducationalBadges' | translate }}</a>
