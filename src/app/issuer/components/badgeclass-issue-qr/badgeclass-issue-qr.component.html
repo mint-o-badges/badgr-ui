@@ -1,43 +1,25 @@
-<div class="page-padding">
-    <div class="oeb-breadcrumbs">
-        <bg-breadcrumbs [linkentries]="crumbs"></bg-breadcrumbs>
+<ng-container *bgAwaitPromises="[badgeClassLoaded]">
+    <div class="page-padding">
+        <div class="oeb-breadcrumbs">
+            <bg-breadcrumbs [linkentries]="crumbs"></bg-breadcrumbs>
 
+        </div>
+        <span class="tw-text-purple tw-text-[46px] tw-leading-[52.9px] tw-font-extrabold">Badge über QR-Code vergeben</span>
+        <p class="tw-text-2xl tw-text-oebblack tw-my-4">
+            Wenn du hier eine QR-Code-Vergabe anlegst, können deine Lernenden den so generierten QR-Code abscannen und sich den Badge darüber selbst abholen.
+        </p>
+        <div class="tw-text-oebblack">
+            <span class="tw-font-bold">So funktioniert's</span>
+            <ol class="tw-list-decimal tw-list-inside tw-my-2">
+                <li> {{ 'IssueQr.list1' | translate }}</li>
+                <li> {{ 'IssueQr.list2' | translate }} </li>
+                <li> {{ 'IssueQr.list3' | translate }}</li>
+                <li> {{ 'IssueQr.list4' | translate }}</li>
+            </ol>
+
+        </div>
+        <div class="tw-bg-lightpurple tw-rounded-3xl tw-mt-2 tw-p-10">
+            <edit-qr-form></edit-qr-form>
+        </div>
     </div>
-    <span class="tw-text-purple tw-text-[46px] tw-leading-[52.9px] tw-font-extrabold">Badge über QR-Code vergeben</span>
-    <p class="tw-text-2xl tw-text-oebblack tw-my-2">
-        Wenn du hier eine QR-Code-Vergabe anlegst, können deine Lernenden den so generierten QR-Code abscannen und sich den Badge darüber selbst abholen.
-    </p>
-    <div class="tw-text-oebblack">
-        <span class="tw-font-bold">So funktioniert's</span>
-        <ol class="tw-list-decimal">
-            <li> {{ 'IssueQr.list1' | translate }}</li>
-            <li> {{ 'IssueQr.list2' | translate }} </li>
-            <li> {{ 'IssueQr.list3' | translate }}</li>
-            <li> {{ 'IssueQr.list4' | translate }}</li>
-        </ol>
-
-    </div>
-    <div class="tw-bg-lightpurple tw-rounded-3xl oeb-section">
-        <form [formGroup]="qrForm.rawControl" (ngSubmit)="onSubmit()" novalidate>
-            <div class="tw-flex tw-flex-col">
-                <oeb-input label="Titel" [placeholder]=""
-						fieldType="text" [autofocus]="true" [control]="qrForm.rawControlMap.title"
-						></oeb-input>
-                <oeb-input label="Name Ersteller:in" [placeholder]=""
-						fieldType="text" [autofocus]="true" [control]="qrForm.rawControlMap.createdBy"
-						></oeb-input>
-                <input [formControl]="qrForm.rawControlMap.badgeclass_id" type="hidden" />
-                <input [formControl]="qrForm.rawControlMap.issuer_id" type="hidden" />
-
-                <span>Gültikeit des QR-Codes (optional)</span>
-                <!-- <oeb-input label="Start-Datum" fieldtype="date"></oeb-input>
-                <oeb-input label="End-Datum" fieldtype="date"></oeb-input> -->
-                <oeb-button type="submit" text="Vergeben">
-
-                 </oeb-button>
-            </div>
-
-        </form>
-
-    </div>
-</div>
+</ng-container>    

@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { LinkEntry } from "../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component";
 import { ActivatedRoute, Route, Router } from "@angular/router";
 import { BadgeClassManager } from "../../services/badgeclass-manager.service";
@@ -9,6 +9,9 @@ import { typedFormGroup } from "../../../common/util/typed-forms";
 import { Validators } from "@angular/forms";
 import { DateValidator } from "../../../common/validators/date.validator";
 import { QrCodeApiService } from "../../services/qrcode-api.service";
+import { HlmDialogService } from "../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service";
+import { SuccessDialogComponent } from "../../../common/dialogs/oeb-dialogs/success-dialog.component";
+import { TranslateService } from "@ngx-translate/core";
 
 @Component({
 	selector: 'badgeclass-issue-qr',
@@ -26,6 +29,9 @@ export class BadgeClassIssueQrComponent extends BaseAuthenticatedRoutableCompone
 
 	badgeClass: BadgeClass;
 
+	readonly badgeFailedImageUrl = '../../../../breakdown/static/images/badge-failed.svg';
+	readonly badgeLoadingImageUrl = '../../../../breakdown/static/images/badge-loading.svg';
+
 
 	badgeClassLoaded: Promise<unknown>;
     crumbs: LinkEntry[]
@@ -33,7 +39,8 @@ export class BadgeClassIssueQrComponent extends BaseAuthenticatedRoutableCompone
     qrForm = typedFormGroup()
         .addControl('title', '', Validators.required)
         .addControl('createdBy', '', Validators.required)
-		.addControl('expires', '', DateValidator.validDate)
+		.addControl('valid_from', '', DateValidator.validDate)
+		.addControl('expires_at', '', DateValidator.validDate)
 		.addControl('badgeclass_id', '', Validators.required)
 		.addControl('issuer_id', '', Validators.required);
         
@@ -44,11 +51,13 @@ export class BadgeClassIssueQrComponent extends BaseAuthenticatedRoutableCompone
         route: ActivatedRoute,
         router: Router,
         sessionService: SessionService,
+		protected translate: TranslateService,
 		protected qrCodeApiService: QrCodeApiService,
 		protected badgeClassManager: BadgeClassManager,
 
         ){
             super(router, route, sessionService);
+
 
             this.badgeClassLoaded = this.badgeClassManager
 				.badgeByIssuerSlugAndSlug(this.issuerSlug, this.badgeSlug)
@@ -83,6 +92,16 @@ export class BadgeClassIssueQrComponent extends BaseAuthenticatedRoutableCompone
 
     }
 
+	private readonly _hlmDialogService = inject(HlmDialogService);
+	public openSuccessDialog() {
+		const dialogRef = this._hlmDialogService.open(SuccessDialogComponent, {
+			context: {
+                text: this.translate.instant('QrCode.savedSuccessfully'),
+				variant: "success"
+			},
+		});
+	}
+
     onSubmit() {
 		// if (!this.qrForm.markTreeDirtyAndValidate()) {
 		// 	return;
@@ -97,6 +116,7 @@ export class BadgeClassIssueQrComponent extends BaseAuthenticatedRoutableCompone
 			issuer_id: formState.issuer_id,
 			// expires_at: formState.expires,
 		})
+		this.openSuccessDialog()
         this.router.navigate(['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'qr', 'generate'], {queryParams: formState});
 
     }
