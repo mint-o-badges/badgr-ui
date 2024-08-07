@@ -44,8 +44,8 @@
 						[routerLink]="['/issuer/issuers', issuerSlug, 'badges', badgeSlug, 'bulk-import']">{{'Issuer.batchAwardTextLink'
 						| translate}}</a>&nbsp;
 					<span hlmP [innerHTML]="'Issuer.batchAwardText2' | translate"></span>
-					<oeb-input label="Name Empfänger:in (Optional)" [placeholder]="'Issuer.awardedPerson' | translate"
-						fieldType="email" [autofocus]="true" [control]="issueForm.rawControlMap.recipientprofile_name"
+					<oeb-input [label]="'Issuer.awardedPerson' | translate"
+						fieldType="text" [autofocus]="true" [control]="issueForm.rawControlMap.recipientprofile_name"
 						#nameField></oeb-input>
 					<p hlmP class="tw-mt-1 tw-text-right" size="sm">{{'Issuer.nameWarning' | translate}}</p>
 					<div class="tw-flex tw-justify-end oeb-standard-padding-bottom">
@@ -54,7 +54,7 @@
 							[optionMap]="identifierOptionMap"></bg-formfield-select>
 						<oeb-input class="tw-flex-grow" label="Identifier"
 							[control]="issueForm.rawControlMap.recipient_identifier"
-							ariaLabel="Identifier der Empfänger:in" [autofocus]="true"
+							ariaLabel="Identifier der Empfänger:in"
 							[fieldType]="recipientIdentifierFieldType"></oeb-input>
 					</div>
 					<oeb-checkbox name="notifybyemail" id="notifybyemail"

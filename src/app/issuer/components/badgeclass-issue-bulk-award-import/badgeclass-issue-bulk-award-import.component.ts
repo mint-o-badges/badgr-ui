@@ -112,16 +112,17 @@ export class BadgeClassIssueBulkAwardImportComponent extends BaseAuthenticatedRo
 		const columnHeaders: ColumnHeaders[] = generateColumnHeaders();
 		this.columnHeadersCount = columnHeaders.length;
 
-		rows.forEach((row) => {
+        for (let row of rows) {
+            // Only "evidence" is allowed to be empty
 			// Valid if all the cells in a row are not empty.
-			const rowIsValid: boolean = row.every((cell) => cell.length > 0);
+			const rowIsValid: boolean = row.every((cell, i) => cell.length > 0 || columnHeaders[i].destColumn == 'evidence');
 
 			if (row.length < this.columnHeadersCount) {
 				invalidRows.push(padRowWithMissingCells(row));
 			} else {
 				rowIsValid ? validRows.push(row) : invalidRows.push(row);
 			}
-		});
+		}
 
 		this.importPreviewData = {
 			columnHeaders,
