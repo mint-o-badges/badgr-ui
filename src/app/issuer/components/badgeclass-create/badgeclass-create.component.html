@@ -1,15 +1,18 @@
-<div class="tw-py-8">
-	<div class="tw-mb-8 l-containerxaxis tw-pb-6 tw-border-b tw-border-solid tw-border-[var(--color-light4)]">
+<div class="oeb">
+<div class="page-padding">
+	<div class="oeb-breadcrumbs">
 		<bg-breadcrumbs [linkentries]="breadcrumbLinkEntries"></bg-breadcrumbs>
 	</div>
-	<div class="l-containerxaxis">
-		<div class="tw-text-4xl tw-font-semibold tw-leading-14 tw-text-[var(--color-purple)]">
-			{{ 'Issuer.createBadge' | translate }}
+	<div class="oeb-section-sm">
+		<div class="oeb-headline-container-sm">
+			<h1 hlmH1 class="tw-text-purple">
+				{{ 'Issuer.createBadge' | translate }}
+			</h1>
 		</div>
 		<div class="tw-flex tw-flex-col tw-text-oebblack">
-			<span class="tw-my-4"> {{ 'CreateBadge.chooseCategory' | translate }} </span>
+			<p hlmP class="tw-font-normal md:!tw-leading-[31.2px]">{{ 'CreateBadge.chooseCategory' | translate }}</p>
 			<div class="tw-w-full">
-				<p class="tw-break-words tw-text-left tw-mb-2">
+				<p hlmP class="tw-font-normal md:!tw-leading-[28.8px]">
 					<span class="tw-font-semibold tw-text-[var(--color-purple)] tw-whitespace-nowrap">
 						{{ 'Badge.competency' | translate }}&hyphen;Badges
 					</span>
@@ -17,7 +20,7 @@
 					<span class="tw-hidden md:tw-inline">({{ 'CreateBadge.withAssistant' | translate }})</span>
 					{{ 'CreateBadge.competencyInfo' | translate }}.
 				</p>
-				<p class="tw-break-words tw-text-left tw-mb-2">
+				<p hlmP class="tw-font-normal md:!tw-leading-[28.8px]">
 					<span class="tw-font-semibold tw-text-[var(--color-purple)] tw-whitespace-nowrap">
 						{{ 'Badge.participation' | translate }}&hyphen;Badges
 					</span>
@@ -48,8 +51,8 @@
 		</button> -->
 	</div>
 
-	<div *bgAwaitPromises="[issuerLoaded]" class="l-containerxaxis l-containeryaxis">
-		<div class="l-responsivelist">
+	<div *bgAwaitPromises="[issuerLoaded]">
+		<div>
 			<badgeclass-edit-form
 				#badgeimage
 				(save)="badgeClassCreated($event)"
@@ -63,4 +66,5 @@
 			></badgeclass-edit-form>
 		</div>
 	</div>
+</div>
 </div>
