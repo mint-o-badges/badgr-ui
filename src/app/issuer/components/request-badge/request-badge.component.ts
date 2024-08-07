@@ -1,17 +1,47 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, inject} from '@angular/core';
 import { typedFormGroup } from '../../../common/util/typed-forms';
 import { Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
+import { BadgeRequestApiService } from '../../services/badgerequest-api.service';
+import { BaseRoutableComponent } from '../../../common/pages/base-routable.component';
+import { Router, ActivatedRoute } from '@angular/router';
+import { SuccessDialogComponent } from '../../../common/dialogs/oeb-dialogs/success-dialog.component';
+import { HlmDialogService } from './../../../components/spartan/ui-dialog-helm/src';
+
 
 @Component({
     selector: 'request-badge',
     templateUrl: './request-badge.component.html',
 })
 
-export class RequestBadgeComponent{
-    constructor(private translate: TranslateService) {
+export class RequestBadgeComponent extends BaseRoutableComponent{
+    constructor(
+        private translate: TranslateService,
+        private badgeRequestApiService: BadgeRequestApiService,
+        router: Router,
+		route: ActivatedRoute,
+    ) {
+        super(router, route);
 
     }
+
+    private readonly _hlmDialogService = inject(HlmDialogService);
+	public openSuccessDialog() {
+		const dialogRef = this._hlmDialogService.open(SuccessDialogComponent, {
+			context: {
+                text: this.translate.instant('RequestBadge.successMessage') + this.translate.instant('RequestBadge.successMessage2'),
+				variant: "success"
+			},
+		});
+	}
+
+    get badgeSlug() {
+		return this.route.snapshot.params['badgeSlug'];
+	}
+
+    // get issuerSlug() {
+    //     return this.route.snapshot.params['issuerSlug'];
+    // }
 
     requestBadge = this.translate.instant('RequestBadge.requestBadge');
 
@@ -19,6 +49,7 @@ export class RequestBadgeComponent{
     .addControl('firstname', '', Validators.required)
     .addControl('lastname', '', Validators.required)
     .addControl('email', '', Validators.required)
+    .addControl('ageConfirmation', false, Validators.requiredTrue)
 
     onSubmit() {
 		if (!this.requestForm.markTreeDirtyAndValidate()) {
@@ -26,7 +57,15 @@ export class RequestBadgeComponent{
 		}
 
 		const formState = this.requestForm.value;
-        // this.router.navigate(['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'qr', 'generate'], {queryParams: formState});
+
+        this.badgeRequestApiService.requestBadge(this.badgeSlug, JSON.stringify(formState)).then((response) => {
+            if(response.ok){
+                this.openSuccessDialog();
+                // this.router.navigate(['/issuer/issuers', 'badges', this.badgeSlug], {queryParams: formState});
+
+            }
+        })
+
 
     }
 
