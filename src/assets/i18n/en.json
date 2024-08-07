@@ -247,7 +247,8 @@
 		"title": "Title",
 		"characters": "characters",
 		"createdOn": "Created on",
-		"catalogHeadline": "Alle Badges in der Übersicht"
+		"catalogHeadline": "Alle Badges in der Übersicht",
+		"requestedOn": "Requested on"	
 	},
 	"CreateBadge": {
 		"chooseBadgeCategory": "Choose Badge-Category",
@@ -561,6 +562,11 @@
 		"list2": "You show your learners the QR code – either digitally or printed.",
 		"list3": "Your learners scan the QR code with their smartphones and are directed to an input form where they enter their first name, last name, and email address. They then submit the form as a badge request.",
 		"list4": "You can see your learners' badge requests on the <a class='tw-underline tw-text-[#1400FF]' hlmA href='' Badge Detail Page </a> on OEB and can directly issue the badges. They will be sent to the learners via email."
+
+	},
+	"QrCode": {
+		"savedSuccessfully": "<span class='tw-font-bold'> The QR code assignment was successfully saved on the badge detail page.</span>",
+		"downloadedSuccessfully": "<span class='tw-font-bold'>You have successfully downloaded the QR-Code.</span><br> Check your download folder."
 
 	}
 }
