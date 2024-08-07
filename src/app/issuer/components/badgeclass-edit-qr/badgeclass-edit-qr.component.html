@@ -1,0 +1,13 @@
+<ng-container *bgAwaitPromises="[badgeClassLoaded]">
+    <div class="page-padding">
+        <div class="oeb-breadcrumbs">
+            <bg-breadcrumbs [linkentries]="crumbs"></bg-breadcrumbs>
+
+        </div>
+        <span class="tw-text-purple tw-text-[46px] tw-leading-[52.9px] tw-font-extrabold">QR-Code Vergabe bearbeiten</span>
+       
+        <div class="tw-bg-lightpurple tw-rounded-3xl tw-mt-2 tw-p-10">
+            <edit-qr-form [editing]="true"></edit-qr-form>
+        </div>
+    </div>
+</ng-container>    
