@@ -33,6 +33,7 @@ export class OebCheckboxComponent implements ControlValueAccessor {
 	@Input() ngModel: boolean;
 	@Input() value: string;
 	@Input() checked = false;
+	@Input() error: string;
 
 	@Output() ngModelChange = new EventEmitter<string>();
 
