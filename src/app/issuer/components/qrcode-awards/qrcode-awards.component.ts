@@ -8,6 +8,7 @@ import { NgFor, NgIf } from "@angular/common";
 import { OebSeparatorComponent } from "../../../components/oeb-separator.component";
 import { OebButtonComponent } from "../../../components/oeb-button.component";
 import { BadgeRequestApiService } from "../../services/badgerequest-api.service";
+import { QrCodeDatatableComponent } from "../../../components/datatable-qrcodes.component";
 
 @Component({
 	selector: 'qrcode-awards',
@@ -23,7 +24,8 @@ import { BadgeRequestApiService } from "../../services/badgerequest-api.service"
 		NgIf,
 		NgFor,
 		OebSeparatorComponent,
-		OebButtonComponent
+		OebButtonComponent,
+		QrCodeDatatableComponent
 	],
 })
 
