@@ -1,0 +1,47 @@
+<form [formGroup]="qrForm.rawControl" (ngSubmit)="onSubmit()" novalidate>
+    <div class="tw-flex tw-flex-col md:tw-flex-row tw-gap-6">
+        <div class="tw-w-[195px] tw-h-[179px] md:tw-w-[297.86px] md:tw-h-[257px] tw-flex tw-items-center tw-bg-white tw-rounded-[20px] tw-border tw-border-solid tw-border-[var(--color-purple)] ">
+            <div class="tw-flex tw-items-center tw-bg-white tw-mx-auto tw-py-8 tw-rounded-[20px] oeb-slight-shadow">
+                <img class="tw-w-[120.88px] tw-h-[120.88px] md:tw-w-[172.69px] md:tw-h-[172.69px] tw-mx-auto tw-block"
+                    [loaded-src]="badgeClass.image" [loading-src]="badgeLoadingImageUrl"
+                    [error-src]="badgeFailedImageUrl" />
+            </div>
+        </div>
+        <div class="tw-flex tw-flex-col tw-w-full ">
+            <h2 class="tw-text-purple tw-text-3xl">QR-Code Vergabe erstellen für <br> <span class="tw-font-extrabold">{{badgeClass.name}}</span></h2>
+            <oeb-input label="Titel" [placeholder]=""
+                    fieldType="text" [autofocus]="true" [control]="qrForm.rawControlMap.title"
+                    ></oeb-input>
+            <oeb-input label="Name Ersteller:in" [placeholder]=""
+                    fieldType="text" [autofocus]="true" [control]="qrForm.rawControlMap.createdBy"
+                    ></oeb-input>
+            <input [formControl]="qrForm.rawControlMap.badgeclass_id" type="hidden" />
+            <input [formControl]="qrForm.rawControlMap.issuer_id" type="hidden" />
+
+            <span class="tw-mt-6 md:tw-mt-7 tw-text-oebblack tw-font-semibold md:tw-leading-[28px] md:tw-text-[20px] tw-leading-[19px] tw-text-[14px]">Gültikeit des QR-Codes <span class="tw-font-normal">(optional)</span></span>
+            
+            <div *ngIf="!editing; else editButtons" class="tw-flex tw-flex-col xl:tw-flex-row tw-gap-2 tw-justify-between xl:tw-items-end">
+                <div class="tw-flex md:tw-justify-between tw-gap-12">
+                    <oeb-input label="Start-Datum" [errorMessage]="'Bitte gebe ein Datum in der Form YYYY/mm/dd an'" [control]="qrForm.rawControlMap.valid_from" fieldType="date"></oeb-input>
+                    <oeb-input label="End-Datum" [errorMessage]="'Bitte gebe ein Datum in der Form YYYY/mm/dd an'" [control]="qrForm.rawControlMap.expires_at" fieldType="date"></oeb-input>
+                </div>
+                <oeb-button  class="tw-whitespace-nowrap" width="full_width" type="submit" text="Qr-Code generieren">
+                </oeb-button>
+
+            </div>
+            <ng-template #editButtons>
+                <div class="tw-flex tw-gap-12">
+                    <oeb-input label="Start-Datum" [errorMessage]="'Bitte gebe ein Datum in der Form YYYY/mm/dd an'" [control]="qrForm.rawControlMap.valid_from" fieldType="date"></oeb-input>
+                    <oeb-input label="End-Datum" [errorMessage]="'Bitte gebe ein Datum in der Form YYYY/mm/dd an'" [control]="qrForm.rawControlMap.expires_at" fieldType="date"></oeb-input>
+                </div>
+                <div class="tw-flex tw-flex-col md:tw-flex-row tw-gap-4 tw-mt-2 tw-w-full">
+                    <oeb-button variant="secondary" width="full_width" type="button" [text]="'General.cancel' | translate">
+                    </oeb-button>
+                    <oeb-button class="tw-whitespace-nowrap" width="full_width" type="submit" [text]="'General.saveChanges' | translate">
+                    </oeb-button>
+                </div>
+            </ng-template>
+        </div>
+</div>
+
+</form>
