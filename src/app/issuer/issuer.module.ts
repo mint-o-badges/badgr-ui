@@ -30,8 +30,10 @@ import { BadgeClassEditFormComponent } from './components/badgeclass-edit-form/b
 import { IssuerStaffCreateDialogComponent } from './components/issuer-staff-create-dialog/issuer-staff-create-dialog.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { DatatableComponent } from '../components/datatable-badges.component';
+import { QrCodeDatatableComponent } from '../components/datatable-qrcodes.component';
 import { IssuerDetailDatatableComponent } from '../components/datatable-issuer-detail.component';
 import { CompetencyAccordionComponent } from '../components/accordion.component';
+import {BadgeClassEditQrComponent} from './components/badgeclass-edit-qr/badgeclass-edit-qr.component';
 import { BadgeClassIssueQrComponent } from './components/badgeclass-issue-qr/badgeclass-issue-qr.component';
 import { BadgeClassGenerateQrComponent } from './components/badgeclass-generate-qr/badgeclass-generate-qr.component';
 import { QRCodeModule } from 'angularx-qrcode';
@@ -39,6 +41,8 @@ import {QrCodeAwardsComponent} from './components/qrcode-awards/qrcode-awards.co
 import { RequestBadgeComponent } from './components/request-badge/request-badge.component';
 import { QrCodeApiService } from './services/qrcode-api.service';
 import { BadgeRequestApiService } from './services/badgerequest-api.service';
+import { EditQrFormComponent } from './components/edit-qr-form/edit-qr-form.component';
+
 
 const routes = [
 	/* Issuer */
@@ -75,6 +79,10 @@ const routes = [
 		component: BadgeClassIssueQrComponent,
 	},
 	{
+		path: 'issuers/:issuerSlug/badges/:badgeSlug/qr/edit',
+		component: BadgeClassEditQrComponent,
+	},
+	{
 		path: 'issuers/:issuerSlug/badges/:badgeSlug/qr/generate',
 		component: BadgeClassGenerateQrComponent,
 	},
@@ -109,6 +117,7 @@ const routes = [
 		RouterModule.forChild(routes),
 		TranslateModule,
 		CompetencyAccordionComponent,
+		QrCodeDatatableComponent,
 		IssuerDetailDatatableComponent,
 		QRCodeModule,
 		QrCodeAwardsComponent
@@ -120,9 +129,11 @@ const routes = [
 		BadgeClassEditFormComponent,
 		BadgeClassIssueComponent,
 		BadgeClassIssueQrComponent,
+		BadgeClassEditQrComponent,
 		BadgeClassGenerateQrComponent,
 		RequestBadgeComponent,
 		BadgeClassDetailComponent,
+		EditQrFormComponent,
 
 		BadgeClassIssueBulkAwardComponent,
 		BadgeClassIssueBulkAwardImportComponent,
