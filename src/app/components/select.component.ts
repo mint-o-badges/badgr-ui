@@ -1,7 +1,7 @@
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { OebInputErrorComponent } from './input.error.component';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { NgFor, NgIf } from '@angular/common';
+import { NgClass, NgFor, NgIf } from '@angular/common';
 import { TextSemibold } from './typography/text-semibold';
 import { HlmPDirective } from './spartan/ui-typography-helm/src/lib/hlm-p.directive';
 import { BrnSelectImports } from '@spartan-ng/ui-select-brain';
@@ -20,8 +20,9 @@ import { CustomValidatorMessages, messagesForValidationError } from './input.com
 		NgIf,
 		ReactiveFormsModule,
 		TextSemibold,
+		NgClass
 	],
-	template: ` <div class="tw-mt-6 md:tw-mt-7">
+	template: ` <div [ngClass]="{ 'tw-mt-6 md:tw-mt-7': !noTopMargin }">
 		<label class="tw-pb-[2px] tw-pl-[3px]" [attr.for]="inputName" *ngIf="label">
 			<span hlmP class="tw-text-oebblack tw-font-semibold" [innerHTML]="label"></span>
 			<span *ngIf="formFieldAside">{{ formFieldAside }}</span>
@@ -81,6 +82,7 @@ export class OebSelectComponent {
 	@Input() urlField = false;
 
 	@Input() autofocus = false;
+	@Input() noTopMargin = false;
 
 	@ViewChild('selectInput') selectInput: ElementRef;
 
