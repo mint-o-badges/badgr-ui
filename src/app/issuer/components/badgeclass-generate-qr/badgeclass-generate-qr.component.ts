@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, inject } from "@angular/core";
 import { LinkEntry } from "../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component";
 import { ActivatedRoute, Route, Router } from "@angular/router";
 import { BadgeClassManager } from "../../services/badgeclass-manager.service";
@@ -7,10 +7,14 @@ import { SessionService } from "../../../common/services/session.service";
 import { BadgeClass } from "../../models/badgeclass.model";
 import { SafeUrl } from "@angular/platform-browser";
 import { BadgeRequestApiService } from "../../services/badgerequest-api.service";
+import { HlmDialogService } from "../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service";
+import { SuccessDialogComponent } from "../../../common/dialogs/oeb-dialogs/success-dialog.component";
+import { TranslateService } from "@ngx-translate/core";
 
 @Component({
 	selector: 'badgeclass-generate-qr',
 	templateUrl: './badgeclass-generate-qr.component.html',
+	styleUrls: ['../../../public/components/about/about.component.css']
 })
 export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComponent implements OnInit{
 
@@ -22,6 +26,9 @@ export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComp
 		return this.route.snapshot.params['badgeSlug'];
 	}
 
+	badgeLoadingImageUrl = '../../../../breakdown/static/images/badge-loading.svg';
+	badgeFailedImageUrl = '../../../../breakdown/static/images/badge-failed.svg';
+
 	badgeClass: BadgeClass;
 
 
@@ -29,6 +36,13 @@ export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComp
     crumbs: LinkEntry[]
 
     qrData: string;
+	qrTitle: string ;
+	qrCodeCSS: string = "tw-border-solid tw-border-purple tw-border-[3px] tw-p-2 tw-rounded-2xl tw-max-w-[265px] md:tw-max-w-[350px]";
+	issuer: string;
+	creator: string;
+	validity: string = '';
+	editQrCodeLink: string = `/issuer/issuers/${this.issuerSlug}/badges/${this.badgeSlug}/qr/edit`;
+	qrCodeWidth = 244; 
     public qrCodeDownloadLink: SafeUrl = "";
 
     constructor(
@@ -37,6 +51,7 @@ export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComp
         sessionService: SessionService,
 		protected badgeClassManager: BadgeClassManager,
 		protected badgeRequestApiService: BadgeRequestApiService,
+		protected translate: TranslateService
 
         ){
             super(router, route, sessionService);
@@ -45,6 +60,14 @@ export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComp
 				.badgeByIssuerSlugAndSlug(this.issuerSlug, this.badgeSlug)
 				.then((badgeClass) => {
 					this.badgeClass = badgeClass;
+
+					let im = this.badgeClass.issuerManager
+					im.issuerBySlug(this.issuerSlug).then((issuer) => {
+						this.issuer = issuer.name;
+					})
+
+					
+
 
 					this.crumbs = [
 						{ title: 'Issuers', routerLink: ['/issuer'] },
@@ -61,23 +84,41 @@ export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComp
 							title: badgeClass.name,
 							routerLink: ['/issuer/issuers', this.issuerSlug, 'badges', badgeClass.slug],
 						},
-						{ title: 'Award Badge' },
+						{ 
+							title: 'Award Badge',
+							routerLink: ['/issuer/issuers', this.issuerSlug, 'badges', badgeClass.slug, 'qr']
+						},
+						{
+							title: 'Generate QR',
+						}
 					];
 				});
+
+				
         
 
     }
 
     ngOnInit() {
         this.route.queryParams.subscribe(params => {
-          this.qrData = JSON.stringify(params);
-		  console.log(this.qrData)
+		  this.qrTitle = params['title'];
+		  this.creator = params['createdBy'];
+		  this.validity = params['valid_from'] + ' - ' + params['expires_at'];
         });
 
-		this.badgeRequestApiService.requestBadge(this.badgeSlug, {'firstName': 'test', 'lastName': 'test123', 'email': 'abc@test.de'}).then((badgeRequest) => {
-			console.log(badgeRequest);
-		})
+		this.qrData = `https://openbadges.education/issuer/badges/${this.badgeSlug}/request`;
     }
+
+	private readonly _hlmDialogService = inject(HlmDialogService);
+	public openSuccessDialog() {
+		const dialogRef = this._hlmDialogService.open(SuccessDialogComponent, {
+			context: {
+                text: this.translate.instant('QrCode.downloadedSuccessfully'),
+				variant: "success"
+			},
+		});
+	}
+
 
     onChangeURL(url: SafeUrl) {
         this.qrCodeDownloadLink = url;
