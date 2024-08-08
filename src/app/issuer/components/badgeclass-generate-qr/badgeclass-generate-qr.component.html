@@ -18,8 +18,8 @@
             <a class="menuitem" [href]="editQrCodeLink"
                 ><svg icon="icon_external_link"></svg>{{ 'General.edit' | translate }}</a
             >
-            <a class="menuitem" [href]=""
-                ><svg icon="icon_external_link"></svg>{{ 'General.delete' | translate }}</a
+            <button class="menuitem" (click)="openDangerDialog()"
+                ><svg icon="icon_external_link"></svg>{{ 'General.delete' | translate }}</button
             >
         </bg-popup-menu>
     </div>

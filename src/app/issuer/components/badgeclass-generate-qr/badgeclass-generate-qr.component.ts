@@ -9,6 +9,7 @@ import { SafeUrl } from "@angular/platform-browser";
 import { BadgeRequestApiService } from "../../services/badgerequest-api.service";
 import { HlmDialogService } from "../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service";
 import { SuccessDialogComponent } from "../../../common/dialogs/oeb-dialogs/success-dialog.component";
+import { DangerDialogComponent } from "../../../common/dialogs/oeb-dialogs/danger-dialog.component";
 import { TranslateService } from "@ngx-translate/core";
 
 @Component({
@@ -115,6 +116,15 @@ export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComp
 			context: {
                 text: this.translate.instant('QrCode.downloadedSuccessfully'),
 				variant: "success"
+			},
+		});
+	}
+
+	public openDangerDialog() {
+		const dialogRef = this._hlmDialogService.open(DangerDialogComponent, {
+			context: {
+				// text: kthis.translate.instant('QrCode.downloadFailed'),
+				variant: "danger"
 			},
 		});
 	}
