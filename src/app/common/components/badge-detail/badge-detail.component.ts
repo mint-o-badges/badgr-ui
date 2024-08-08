@@ -38,7 +38,7 @@ export interface PageConfig {
      badgeTitle: string;
      headerButton?: HeaderButton | null,
      qrCodeButton?: boolean,
-     issueQrRouterLink?: string[],
+     issueQrRouterLink?: string[] | null,
      issuerSlug: string;
      slug: string;
      menuitems?: MenuItem[];
