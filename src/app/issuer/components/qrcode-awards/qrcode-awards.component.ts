@@ -37,11 +37,12 @@ export class QrCodeAwardsComponent implements OnInit {
     @Input() awards: any[]
 	@Input() routerLink: string[]
 	@Input() badgeClassSlug: string
+	@Input() qrCodeId: string
 
 	requestedBadges: any[] = []
 
 	ngOnInit(): void {
-		this.badgeRequestApiService.getBadgeRequests(this.badgeClassSlug).then((requestedBadges) => {
+		this.badgeRequestApiService.getBadgeRequestsByQrCode(this.qrCodeId).then((requestedBadges) => {
 			console.log(requestedBadges)
 		})
 	}
