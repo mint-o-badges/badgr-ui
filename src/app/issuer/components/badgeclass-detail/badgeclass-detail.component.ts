@@ -32,8 +32,8 @@ import { QrCodeApiService } from '../../services/qrcode-api.service';
 	selector: 'badgeclass-detail',
 	template: `
 	<bg-badgedetail [config]="config" [awaitPromises]="[issuerLoaded, badgeClassLoaded]">
-	<qrcode-awards [awards]="qrCodeAwards" [badgeClassSlug]="badgeSlug" [routerLink]="config.issueQrRouterLink"></qrcode-awards>
-	<issuer-detail-datatable *ngIf="recipientCount > 0" [recipientCount]="recipientCount" [_recipients]="instanceResults" (actionElement)="revokeInstance($event)"></issuer-detail-datatable>
+		<qrcode-awards [awards]="qrCodeAwards" [badgeClassSlug]="badgeSlug" [routerLink]="config?.issueQrRouterLink"></qrcode-awards>
+		<issuer-detail-datatable *ngIf="recipientCount > 0" [recipientCount]="recipientCount" [_recipients]="instanceResults" (actionElement)="revokeInstance($event)"></issuer-detail-datatable>
 	</bg-badgedetail>
 `,
 })
@@ -48,6 +48,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 	get badgeSlug() {
 		return this.route.snapshot.params['badgeSlug'];
 	}
+
 
 	get confirmDialog() {
 		return this.dialogService.confirmDialog;
