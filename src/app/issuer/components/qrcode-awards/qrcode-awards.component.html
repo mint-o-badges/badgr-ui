@@ -1,12 +1,12 @@
 <div>
 
     <oeb-separator [class]="separatorStyle"></oeb-separator>
-        <div class="tw-flex tw-items-center tw-justify-between"  *ngIf="awards.length === 0; else showAwards">
+        <div class="tw-flex tw-flex-col lg:tw-flex-row tw-items-center tw-justify-between tw-gap-2"  *ngIf="awards.length === 0; else showAwards">
             <div class="tw-flex tw-flex-col">
                 <span class="tw-text-[22px] tw-leading-[26.4px] tw-text-purple tw-font-bold">QR-CODE-VERGABEN</span>
                 <span class="tw-italic tw-text-[18px] tw-leading-[21.6px] tw-text-oebblack tw-mt-2">Du hast bisher keine QR-Code Vergabe erstellt</span>
             </div>
-            <oeb-button class="oeb-button" variant="secondary" [routerLink]="routerLink" text="Badge über QR Code vergeben"></oeb-button>
+            <oeb-button class="oeb-button tw-whitespace-nowrap !tw-p-0" variant="secondary" [routerLink]="routerLink" text="Badge über QR Code vergeben"></oeb-button>
             
         </div>
         
@@ -25,7 +25,7 @@
                     </div>
                 </button> 
                 <brn-accordion-content hlm class="tw-text-white">
-                    <qrcodes-datatable></qrcodes-datatable>
+                    <qrcodes-datatable [qrCodeId]="award.slug" [routerLink]="routerLink"></qrcodes-datatable>
                 </brn-accordion-content>   
             </div>
         </div>
