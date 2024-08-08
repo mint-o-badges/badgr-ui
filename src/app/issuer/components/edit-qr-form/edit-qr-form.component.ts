@@ -110,6 +110,22 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent{
 		// 	return;
 		// }
 
+		if(this.editing){
+			console.log('editing')
+			const formState = this.qrForm.value;
+			this.qrCodeApiService.updateQrCode(this.issuerSlug, this.badgeSlug, {
+				title: formState.title,
+				createdBy: formState.createdBy,
+				// expires_at: formState.expires,
+			}).then((qrcode) => {
+					console.log(qrcode.slug)
+					this.openSuccessDialog()
+					// this.router.navigate(['/issuer/issuers', 'badges', this.badgeSlug], {queryParams: formState});
+					this.router.navigate(['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'qr', qrcode.slug, 'generate'], {queryParams: formState});
+				}
+			)
+		}
+
 		const formState = this.qrForm.value;
 		this.qrCodeApiService.createQrCode(this.issuerSlug, this.badgeSlug, {
 			title: formState.title,
@@ -124,8 +140,6 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent{
                 this.router.navigate(['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'qr', qrcode.slug, 'generate'], {queryParams: formState});
             }
         )
-		// this.openSuccessDialog()
-
     }
 
    
