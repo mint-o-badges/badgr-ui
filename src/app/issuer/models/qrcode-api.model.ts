@@ -3,6 +3,6 @@ export interface ApiQRCode{
     createdBy: string;
     slug?: string; 
     expires_at?: any;
-    badgeclass_id: string;
-    issuer_id: string;
+    badgeclass_id?: string;
+    issuer_id?: string;
 }
