@@ -5,9 +5,10 @@
 	<!-- Badge Category Panel -->
 	<div class="section tw-text-oebblack">
 		<div class="tw-flex tw-flex-col tw-gap-2">
-			<div class="heading">
-				<h2>1. {{ 'CreateBadge.chooseBadgeCategory' | translate }}</h2>
+			<div class="tw-flex tw-flex-col md:tw-flex-row tw-gap-4 md:tw-gap-8">
+				<h2 hlmH2 class="tw-font-bold">1. {{ 'CreateBadge.chooseBadgeCategory' | translate }}</h2>
 				<oeb-select
+					class="tw-w-[280px]"
 					ariaLabel="chooseABadgeCategory"
 					[control]="badgeClassForm.rawControlMap.badge_category"
 					[placeholder]="chooseABadgeCategory"
@@ -15,18 +16,19 @@
 					[errorMessage]="{
 						required: chooseABadgeCategory
 					}"
+					noTopMargin="true"
 				></oeb-select>
 			</div>
-			<div class="tw-italic tw-gap-2">
+			<div class="tw-italic tw-gap-2 md:tw-pl-8">
 				<div class="tw-flex tw-py-2">
-					<span class="tw-text-purple">{{ 'Badge.competency' | translate }}-Badges&nbsp; </span>
-					<span class="md:tw-hidden"> {{ 'CreateBadge.competencyBadgeShortInfo' | translate }}.</span>
-					<span class="tw-hidden md:tw-block">{{ 'CreateBadge.competencyBadgeInfo' | translate }}.</span>
+					<p hlmP size="sm" class="tw-text-purple">{{ 'Badge.competency' | translate }}-Badges&nbsp; </p>
+					<p hlmP size="sm" class="md:tw-hidden"> {{ 'CreateBadge.competencyBadgeShortInfo' | translate }}.</p>
+					<p hlmP size="sm" class="tw-hidden md:tw-block">{{ 'CreateBadge.competencyBadgeInfo' | translate }}.</p>
 				</div>
 				<div class="tw-flex">
-					<span class="tw-text-purple">{{ 'Badge.participation' | translate }}-Badges&nbsp; </span>
-					<span class="md:tw-hidden"> {{ 'CreateBadge.participationBadgeShortInfo' | translate }}.</span>
-					<span class="tw-hidden md:tw-block">{{ 'CreateBadge.participationBadgeInfo' | translate }}.</span>
+					<p hlmP size="sm" class="tw-text-purple">{{ 'Badge.participation' | translate }}-Badges&nbsp; </p>
+					<p hlmP size="sm" class="md:tw-hidden"> {{ 'CreateBadge.participationBadgeShortInfo' | translate }}.</p>
+					<p hlmP size="sm" class="tw-hidden md:tw-block">{{ 'CreateBadge.participationBadgeInfo' | translate }}.</p>
 				</div>
 			</div>
 		</div>
@@ -35,10 +37,10 @@
 
 	<div class="section tw-text-oebblack">
 		<div>
-			<h2 class="heading">2. {{ 'CreateBadge.enterDetails' | translate }}</h2>
+			<h2 hlmH2 class="tw-font-bold">2. {{ 'CreateBadge.enterDetails' | translate }}</h2>
 		</div>
-		<div class="md:tw-mx-10 md:tw-items-center tw-justify-center">
-			<div class="tw-flex md:tw-flex-row md:tw-gap-8 tw-flex-col tw-items-center">
+		<div class="tw-flex tw-flex-col md:tw-mx-10 tw-justify-center tw-gap-5">
+			<div class="tw-flex tw-flex-col md:tw-flex-row tw-gap-2 md:tw-gap-8 md:tw-items-center tw-mt-5">
 				<span class="input-label tw-break-words   md:tw-flex-[0_0_10em]">
 					{{ 'CreateBadge.short' | translate }}&shy;{{ 'General.description' | translate }}
 					{{ 'CreateBadge.forLearners' | translate }}</span
@@ -46,7 +48,8 @@
 				<oeb-input class="tw-w-full tw-max-w-[750px]" [fieldType]="'textarea'" [control]="badgeClassForm.rawControlMap.badge_description"
 				id="badgeclass_description_input"
 				[placeholder]="summarizedDescription"
-				[errorMessage]="{ required: enterDescription }">
+				[errorMessage]="{ required: enterDescription }"
+				noTopMargin="true">
 
 				</oeb-input>
 				<!-- <bg-formfield-text
@@ -58,22 +61,16 @@
 					[multiline]="true"
 				></bg-formfield-text> -->
 			</div>
-			<div class="tw-flex md:tw-flex-row md:tw-gap-8 tw-flex-col md:tw-items-end tw-justify-start">
-				<span class="input-label  md:tw-flex-[0_0_10em]"> {{ 'RecBadgeDetail.duration' | translate }}</span>
-				<div class="tw-flex tw-gap-2 tw-items-end">
-					<!-- <bg-formfield-text
-						class="tw-w-20"
-						[control]="badgeClassForm.rawControlMap.badge_study_load"
-						[fieldType]="'number'"
-					></bg-formfield-text> -->
-					<oeb-input class="tw-w-20" [fieldType]="'number'" [control]="badgeClassForm.rawControlMap.badge_study_load">
-
+			<div class="tw-flex md:tw-flex-row tw-gap-2  md:tw-gap-8 tw-flex-col md:tw-items-center tw-justify-start">
+				<span class="input-label md:tw-flex-[0_0_10em]"> {{ 'RecBadgeDetail.duration' | translate }}</span>
+				<div class="tw-flex tw-gap-2 tw-items-center">
+					<oeb-input class="tw-w-20" [fieldType]="'number'" [control]="badgeClassForm.rawControlMap.badge_study_load" noTopMargin="true">
 					</oeb-input>
 					<span class="tw-text-oebblack">{{ 'General.minutes' | translate }}</span>
 				</div>
 			</div>
 			<div class="field-container md:tw-items-center tw-justify-start">
-				<span class="input-label   md:tw-flex-[0_0_10em]"> {{ 'Badge.title' | translate }}</span>
+				<span class="input-label md:tw-flex-[0_0_10em]"> {{ 'Badge.title' | translate }}</span>
 
 				<bg-formfield-text
 					[control]="badgeClassForm.rawControlMap.badge_name"
@@ -156,7 +153,7 @@
 	</div>
 
 	<div class="section tw-text-oebblack tw-px-1" *ngIf="badgeCategory === 'competency'">
-		<h2 class="heading">3. {{ 'CreateBadge.fillWithCompetencies' | translate }}</h2>
+		<h2 hlmH2 class="tw-font-bold">3. {{ 'CreateBadge.fillWithCompetencies' | translate }}</h2>
 		<ul class="tw-list-disc md:tw-mx-10 tw-mx-4">
 				<div>
 					<span
@@ -434,7 +431,7 @@
 	</div>
 
 	<div class="section tw-text-oebblack">
-		<h2 class="heading"><ng-container>{{ badgeCategory === 'competency' ? '4.' : '3.'}}</ng-container> Badge-{{ 'RecBadgeDetail.criteria' | translate }}</h2>
+		<h2 hlmH2 class="tw-font-bold"><ng-container>{{ badgeCategory === 'competency' ? '4.' : '3.'}}</ng-container> Badge-{{ 'RecBadgeDetail.criteria' | translate }}</h2>
 		<div class="md:tw-mx-6">
 			<p class="tw-my-2 tw-italic tw-font-semibold">
 				{{ 'CreateBadge.criteriaInfo' | translate }}
