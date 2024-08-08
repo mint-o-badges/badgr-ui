@@ -17,13 +17,13 @@ export class QrCodeApiService extends BaseHttpApiService {
 		super(loginService, http, configService, messageService);
 	}
 
-    createQrCode(issuerSlug: string, qrCode: ApiQRCode) {
-		return this.post<ApiQRCode>(`/v1/issuer/issuers/${issuerSlug}/qrcodes`, qrCode).then(
+    createQrCode(issuerSlug: string, badgeClassSlug: string, qrCode: ApiQRCode) {
+		return this.post<ApiQRCode>(`/v1/issuer/issuers/${issuerSlug}/badges/${badgeClassSlug}/qrcodes`, qrCode).then(
 			(r) => r.body,
 		);
 	}
 
-	getQrCodesForIssuer(issuerSlug: string) {
-		return this.get<ApiQRCode[]>(`/v1/issuer/issuers/${issuerSlug}/qrcodes`).then((r) => r.body);
+	getQrCodesForIssuerByBadgeClass(issuerSlug: string, badgeClassSlug: string) {
+		return this.get<ApiQRCode[]>(`/v1/issuer/issuers/${issuerSlug}/badges/${badgeClassSlug}/qrcodes`).then((r) => r.body);
 	}
 }

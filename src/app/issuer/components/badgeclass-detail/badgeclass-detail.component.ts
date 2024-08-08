@@ -146,7 +146,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 			(error) => this.messageService.reportLoadingError(`Cannot find issuer ${this.issuerSlug}`, error),
 		);
 
-		this.qrCodeApiService.getQrCodesForIssuer(this.issuerSlug).then((qrCodes) => {
+		this.qrCodeApiService.getQrCodesForIssuerByBadgeClass(this.issuerSlug, this.badgeSlug).then((qrCodes) => {
 			this.qrCodeAwards = qrCodes
 			console.log(qrCodes)
 		})
