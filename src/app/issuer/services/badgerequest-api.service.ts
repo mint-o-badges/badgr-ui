@@ -17,11 +17,11 @@ export class BadgeRequestApiService extends BaseHttpApiService {
 		super(loginService, http, configService, messageService);
 	}
     
-    requestBadge(badgeClassSlug: BadgeClassSlug, userData: any) {
-        return this.post(`/request-badge/${badgeClassSlug}`, userData);
+    requestBadge(qrCodeId: string, userData: any) {
+        return this.post(`/request-badge/${qrCodeId}`, userData);
     }
 
-    getBadgeRequests(badgeClassSlug: string) {
-        return this.get(`/request-badge/${badgeClassSlug}`);
+	getBadgeRequestsByQrCode(qrCodeId: string) {
+        return this.get(`/request-badge/${qrCodeId}`);
     }
 }
