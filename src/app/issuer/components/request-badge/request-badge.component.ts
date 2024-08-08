@@ -39,9 +39,20 @@ export class RequestBadgeComponent extends BaseRoutableComponent{
 		return this.route.snapshot.params['badgeSlug'];
 	}
 
+    get qrSlug() {
+		return this.route.snapshot.params['qrCodeId'];
+	}
+
     // get issuerSlug() {
     //     return this.route.snapshot.params['issuerSlug'];
     // }
+
+    ngOnInit(): void {
+        this.requestForm.setValue({
+            ...this.requestForm.value,
+            qrCodeId: this.qrSlug
+        })
+    }
 
     requestBadge = this.translate.instant('RequestBadge.requestBadge');
 
@@ -49,6 +60,7 @@ export class RequestBadgeComponent extends BaseRoutableComponent{
     .addControl('firstname', '', Validators.required)
     .addControl('lastname', '', Validators.required)
     .addControl('email', '', Validators.required)
+    .addControl('qrCodeId', '', Validators.required)
     .addControl('ageConfirmation', false, Validators.requiredTrue)
 
     onSubmit() {
