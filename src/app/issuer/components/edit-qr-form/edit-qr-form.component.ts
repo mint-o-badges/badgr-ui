@@ -111,16 +111,20 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent{
 		// }
 
 		const formState = this.qrForm.value;
-		console.log(formState.badgeclass_id)
-		this.qrCodeApiService.createQrCode(this.issuerSlug, {
+		this.qrCodeApiService.createQrCode(this.issuerSlug, this.badgeSlug, {
 			title: formState.title,
 			createdBy: formState.createdBy,
 			badgeclass_id: formState.badgeclass_id,
 			issuer_id: formState.issuer_id,
 			// expires_at: formState.expires,
-		})
-		this.openSuccessDialog()
-        this.router.navigate(['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'qr', 'generate'], {queryParams: formState});
+		}).then((qrcode) => {
+                console.log(qrcode.slug)
+                this.openSuccessDialog()
+                // this.router.navigate(['/issuer/issuers', 'badges', this.badgeSlug], {queryParams: formState});
+                this.router.navigate(['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'qr', qrcode.slug, 'generate'], {queryParams: formState});
+            }
+        )
+		// this.openSuccessDialog()
 
     }
 
