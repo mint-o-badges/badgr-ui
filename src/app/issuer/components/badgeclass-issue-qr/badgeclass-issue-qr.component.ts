@@ -109,7 +109,7 @@ export class BadgeClassIssueQrComponent extends BaseAuthenticatedRoutableCompone
 
 		const formState = this.qrForm.value;
 		console.log(formState.badgeclass_id)
-		this.qrCodeApiService.createQrCode(this.issuerSlug, {
+		this.qrCodeApiService.createQrCode(this.issuerSlug, this.badgeSlug, {
 			title: formState.title,
 			createdBy: formState.createdBy,
 			badgeclass_id: formState.badgeclass_id,
