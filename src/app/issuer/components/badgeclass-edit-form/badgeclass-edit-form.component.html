@@ -16,6 +16,7 @@
 					[errorMessage]="{
 						required: chooseABadgeCategory
 					}"
+					[autofocus]="true"
 					noTopMargin="true"
 				></oeb-select>
 			</div>
@@ -39,51 +40,53 @@
 		<div>
 			<h2 hlmH2 class="tw-font-bold">2. {{ 'CreateBadge.enterDetails' | translate }}</h2>
 		</div>
-		<div class="tw-flex tw-flex-col md:tw-mx-10 tw-justify-center tw-gap-5">
-			<div class="tw-flex tw-flex-col md:tw-flex-row tw-gap-2 md:tw-gap-8 md:tw-items-center tw-mt-5">
-				<span class="input-label tw-break-words   md:tw-flex-[0_0_10em]">
+		<div class="tw-flex tw-flex-col md:tw-mx-10 tw-justify-center tw-gap-6">
+			<div class="tw-flex tw-flex-col md:tw-flex-row tw-gap-3 md:tw-gap-8 md:tw-items-center tw-mt-6">
+				<span class="input-label tw-break-words md:tw-flex-[0_0_10em]">
 					{{ 'CreateBadge.short' | translate }}&shy;{{ 'General.description' | translate }}
 					{{ 'CreateBadge.forLearners' | translate }}</span
 				>
-				<oeb-input class="tw-w-full tw-max-w-[750px]" [fieldType]="'textarea'" [control]="badgeClassForm.rawControlMap.badge_description"
-				id="badgeclass_description_input"
-				[placeholder]="summarizedDescription"
-				[errorMessage]="{ required: enterDescription }"
-				noTopMargin="true">
-
-				</oeb-input>
-				<!-- <bg-formfield-text
-					class="tw-mt-1 md:tw-mt-0 tw-w-full tw-max-w-[750px]"
+				<oeb-input 
+					class="tw-w-full tw-max-w-[750px]" 
+					[fieldType]="'textarea'" 
 					[control]="badgeClassForm.rawControlMap.badge_description"
 					id="badgeclass_description_input"
 					[placeholder]="summarizedDescription"
 					[errorMessage]="{ required: enterDescription }"
-					[multiline]="true"
-				></bg-formfield-text> -->
+					noTopMargin="true"
+				>
+				</oeb-input>
 			</div>
-			<div class="tw-flex md:tw-flex-row tw-gap-2  md:tw-gap-8 tw-flex-col md:tw-items-center tw-justify-start">
+
+			<div class="tw-flex md:tw-flex-row tw-gap-3  md:tw-gap-8 tw-flex-col md:tw-items-center tw-justify-start">
 				<span class="input-label md:tw-flex-[0_0_10em]"> {{ 'RecBadgeDetail.duration' | translate }}</span>
 				<div class="tw-flex tw-gap-2 tw-items-center">
-					<oeb-input class="tw-w-20" [fieldType]="'number'" [control]="badgeClassForm.rawControlMap.badge_study_load" noTopMargin="true">
+					<oeb-input 
+						class="tw-w-20" 
+						[fieldType]="'number'" 
+						[control]="badgeClassForm.rawControlMap.badge_study_load" 
+						noTopMargin="true"
+					>
 					</oeb-input>
 					<span class="tw-text-oebblack">{{ 'General.minutes' | translate }}</span>
 				</div>
 			</div>
-			<div class="field-container md:tw-items-center tw-justify-start">
-				<span class="input-label md:tw-flex-[0_0_10em]"> {{ 'Badge.title' | translate }}</span>
 
-				<bg-formfield-text
-					[control]="badgeClassForm.rawControlMap.badge_name"
-					[placeholder]="max70chars"
-					[errorMessage]="{
-						required: 'Bitte gib dem Badge einen Titel',
-						mustChange: 'Bitte ändere den Titel'
-					}"
-					[autofocus]="true"
-				></bg-formfield-text>
+			<div class="tw-flex md:tw-flex-row tw-gap-3 md:tw-gap-8 tw-flex-col md:tw-items-center tw-justify-start">
+				<span class="input-label md:tw-flex-[0_0_10em]"> {{ 'Badge.title' | translate }}</span>
+				<oeb-input 
+						[control]="badgeClassForm.rawControlMap.badge_name"
+						[placeholder]="max70chars"
+						noTopMargin="true"
+						[errorMessage]="{
+							required: giveBadgeTitle,
+							mustChange: changeBadgeTitle
+						}"
+					>
+				</oeb-input>
 			</div>
-			<div class="field-container" id="imageSection" #imageSection>
-				<span class="input-label   md:tw-flex-[0_0_10em]"> Badge-{{ 'Issuer.image' | translate }}</span>
+			<div class="tw-flex md:tw-flex-row tw-gap-3 md:tw-gap-8 tw-flex-col" id="imageSection" #imageSection>
+				<span class="input-label md:tw-flex-[0_0_10em]"> Badge-{{ 'Issuer.image' | translate }}</span>
 				<div
 					class="tw-flex tw-flex-col tw-gap-4 md:tw-flex-row tw-bg-[var(--color-lightgreen)] tw-p-8 tw-justify-evenly tw-items-center tw-mr-auto tw-rounded-2xl"
 				>
@@ -142,10 +145,13 @@
 					></badge-studio>
 				</div>
 			</div>
+			
 			<p
+				hlmP 
+				size="sm"
 				id="imageTextError"
 				[hidden]="!imageFieldDirty || !badgeClassForm.hasError('imageRequired')"
-				class="u-text u-margin-bottom2x u-text-error tw-w-full tw-text-center tw-mt-2"
+				class="tw-font-normal tw-text-red tw-text-start md:tw-pl-[13.5rem] tw-w-full tw-mt-2"
 			>
 				{{ 'CreateBadge.imageRequiredError' | translate }}.
 			</p>

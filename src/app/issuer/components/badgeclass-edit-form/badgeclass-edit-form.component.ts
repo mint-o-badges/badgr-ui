@@ -40,6 +40,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	baseUrl: string;
 	badgeCategory: string;
 
+	// Translation
 	selectFromMyFiles = this.translate.instant('RecBadge.selectFromMyFiles');
 	chooseFromExistingIcons = this.translate.instant('RecBadge.chooseFromExistingIcons');
 	uploadOwnVisual = this.translate.instant('RecBadge.uploadOwnVisual');
@@ -74,6 +75,9 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	newTag = this.translate.instant('CreateBadge.newTag');
 
 	suggestCompetenciesText = this.translate.instant('CreateBadge.suggestCompetencies');
+
+	giveBadgeTitle = this.translate.instant('CreateBadge.giveBadgeTitle');
+	changeBadgeTitle = this.translate.instant('CreateBadge.changeBadgeTitle');
 
 	@Input()
 	set badgeClass(badgeClass: BadgeClass) {

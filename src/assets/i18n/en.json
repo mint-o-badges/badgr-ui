@@ -315,7 +315,9 @@
 		"removeAlignment": "Remove Alignment",
 		"removeAlignmentInfo": "Are you sure you want to remove the alignment(s)?",
 		"irreversibleAction": "This action cannot be undone.",
-		"addAnotherCompetency": "Add another competency"
+		"addAnotherCompetency": "Add another competency",
+		"giveBadgeTitle":"Please give the badge a title",
+		"changeBadgeTitle":"Please change the title"
 	},
 	"Signup": {
 		"youHaveAccount": "You already have an account?",
