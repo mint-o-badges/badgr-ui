@@ -33,16 +33,17 @@ import { TranslateService } from "@ngx-translate/core";
                 </span>
             </p> 
             <div class="tw-flex tw-justify-around tw-mt-6">
-            <oeb-button variant="secondary" [text]="cancelText" ></oeb-button>
-            <oeb-button class="tw-mr-4" [text]="deleteText" (click)="selectUser()"></oeb-button>
+            <oeb-button variant="secondary" [text]="cancelText" (click)="closeDialog()" ></oeb-button>
+            <oeb-button class="tw-mr-4" [text]="deleteText" (click)="deleteItem()" ></oeb-button>
             </div>
         </oeb-dialog>
     `,
 })
 export class DangerDialogComponent {
     // @HostBinding('class') private readonly _class: string = 'tw-bg-red tw-bg-red';
-    private readonly _dialogContext = injectBrnDialogContext<{ text: string, recipient: any, variant: string }>();
+    private readonly _dialogContext = injectBrnDialogContext<{ text: string, delete: any, variant: string }>();
     protected readonly text = this._dialogContext.text;
+    protected readonly delete = this._dialogContext.delete;
     protected readonly variant = this._dialogContext.variant;
     private readonly _dialogRef = inject<BrnDialogRef>(BrnDialogRef);
 
@@ -52,7 +53,12 @@ export class DangerDialogComponent {
     deleteText = this.translate.instant('General.delete');
 
 
-    public selectUser() {
+    public closeDialog() {
+        this._dialogRef.close();
+    }
+
+    public deleteItem() {
+        this.delete();
         this._dialogRef.close();
     }
 }

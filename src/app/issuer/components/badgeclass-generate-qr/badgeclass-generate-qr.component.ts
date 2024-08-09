@@ -11,6 +11,7 @@ import { HlmDialogService } from "../../../components/spartan/ui-dialog-helm/src
 import { SuccessDialogComponent } from "../../../common/dialogs/oeb-dialogs/success-dialog.component";
 import { DangerDialogComponent } from "../../../common/dialogs/oeb-dialogs/danger-dialog.component";
 import { TranslateService } from "@ngx-translate/core";
+import { QrCodeApiService } from "../../services/qrcode-api.service";
 
 @Component({
 	selector: 'badgeclass-generate-qr',
@@ -25,6 +26,10 @@ export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComp
 
 	get badgeSlug() {
 		return this.route.snapshot.params['badgeSlug'];
+	}
+
+	get qrSlug(){
+		return this.route.snapshot.params['qrCodeId'];
 	}
 
 	badgeLoadingImageUrl = '../../../../breakdown/static/images/badge-loading.svg';
@@ -52,7 +57,8 @@ export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComp
         sessionService: SessionService,
 		protected badgeClassManager: BadgeClassManager,
 		protected badgeRequestApiService: BadgeRequestApiService,
-		protected translate: TranslateService
+		protected translate: TranslateService,
+		protected qrCodeApiService: QrCodeApiService
 
         ){
             super(router, route, sessionService);
@@ -123,11 +129,19 @@ export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComp
 	public openDangerDialog() {
 		const dialogRef = this._hlmDialogService.open(DangerDialogComponent, {
 			context: {
+				delete: this.deleteQrCode.bind(this),
 				// text: kthis.translate.instant('QrCode.downloadFailed'),
 				variant: "danger"
 			},
 		});
 	}
+
+	deleteQrCode() {
+		this.qrCodeApiService.deleteQrCode(this.issuerSlug, this.badgeSlug, this.qrSlug).then(() => {
+			console.log('QrCode deleted');
+			
+		}
+	)};
 
 
     onChangeURL(url: SafeUrl) {

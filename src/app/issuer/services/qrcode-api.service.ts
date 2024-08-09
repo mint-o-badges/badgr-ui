@@ -23,6 +23,21 @@ export class QrCodeApiService extends BaseHttpApiService {
 		);
 	}
 
+	updateQrCode(issuerSlug: string, badgeClassSlug: string, qrCode: ApiQRCode) {
+		const updatedQrCode: ApiQRCode = {
+			...qrCode,
+		};
+		console.log(updatedQrCode);
+		return this.put<ApiQRCode>(
+			`/v1/issuer/issuers/${issuerSlug}/badges/${badgeClassSlug}/qrcodes/${qrCode.slug}`,
+			updatedQrCode,
+		).then((r) => r.body);
+	}
+
+	deleteQrCode(issuerSlug: string, badgeClassSlug: string, qrCodeSlug: string) {
+		return this.delete(`/v1/issuer/issuers/${issuerSlug}/badges/${badgeClassSlug}/qrcodes/${qrCodeSlug}`);
+	}
+
 	getQrCodesForIssuerByBadgeClass(issuerSlug: string, badgeClassSlug: string) {
 		return this.get<ApiQRCode[]>(`/v1/issuer/issuers/${issuerSlug}/badges/${badgeClassSlug}/qrcodes`).then((r) => r.body);
 	}
