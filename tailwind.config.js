@@ -32,7 +32,10 @@ module.exports = {
 					300: 'var(--color-lightred)',
 				},
 				pink: 'var(--color-pink)',
-				green: 'var(--color-green)',
+				green:{
+					DEFAULT: 'var(--color-green)',
+					400: '#66BB6A',
+				},
 				yellow: 'var(--color-yellow)',
 				white: 'var(--color-white)',
 				lightgreen: 'var(--color-lightgreen)',
