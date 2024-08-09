@@ -120,9 +120,15 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent{
 			this.qrCodeApiService.updateQrCode(this.issuerSlug, this.badgeSlug, this.qrSlug, {
 				title: formState.title,
 				createdBy: formState.createdBy,
+				expires_at: new Date(formState.expires_at).toISOString() ,
+				valid_from: new Date(formState.valid_from).toISOString(),
 				badgeclass_id: this.badgeSlug,
 				issuer_id: this.issuerSlug
-			})
+			}).then((qrcode) => {
+                this.openSuccessDialog()
+                this.router.navigate(['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'qr', qrcode.slug, 'generate'], {queryParams: formState});
+            }
+        )
 		}
 		else{
 
@@ -132,9 +138,9 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent{
 			createdBy: formState.createdBy,
 			badgeclass_id: formState.badgeclass_id,
 			issuer_id: formState.issuer_id,
-			// expires_at: formState.expires,
+			expires_at: new Date(formState.expires_at).toISOString() ,
+			valid_from: new Date(formState.valid_from).toISOString()
 		}).then((qrcode) => {
-                console.log(qrcode.slug)
                 this.openSuccessDialog()
                 // this.router.navigate(['/issuer/issuers', 'badges', this.badgeSlug], {queryParams: formState});
                 this.router.navigate(['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'qr', qrcode.slug, 'generate'], {queryParams: formState});

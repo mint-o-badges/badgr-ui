@@ -46,7 +46,10 @@ export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComp
 	qrCodeCSS: string = "tw-border-solid tw-border-purple tw-border-[3px] tw-p-2 tw-rounded-2xl tw-max-w-[265px] md:tw-max-w-[350px]";
 	issuer: string;
 	creator: string;
-	validity: string = '';
+	valid: boolean = true;
+	validity: string;
+	valid_from: Date;
+	expires_at: Date;
 	editQrCodeLink: string = `/issuer/issuers/${this.issuerSlug}/badges/${this.badgeSlug}/qr/${this.qrSlug}/edit`;
 	qrCodeWidth = 244; 
     public qrCodeDownloadLink: SafeUrl = "";
@@ -110,10 +113,26 @@ export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComp
         this.route.queryParams.subscribe(params => {
 		  this.qrTitle = params['title'];
 		  this.creator = params['createdBy'];
-		  this.validity = params['valid_from'] + ' - ' + params['expires_at'];
+		  this.valid_from = params['valid_from'];
+		  this.expires_at = params['expires_at'];
+		  this.validity = this.valid_from + ' - ' + this.expires_at;
         });
 
-		this.qrData = `https://openbadges.education/issuer/badges/${this.badgeSlug}/request`;
+		if(this.valid_from !=  null || this.expires_at != null){
+			if(new Date(this.valid_from) < new Date() && new Date(this.expires_at) >= new Date()){
+				console.log('Valid');
+				this.valid = true;
+			}else{
+				console.log('Invalid');
+				this.valid = false;
+			}
+		}
+		if(this.valid){
+			this.qrData = `https://openbadges.education/issuer/badges/${this.badgeSlug}/request/${this.qrSlug}`;
+		}else{
+			this.qrData = "Die Gültigkeit dieses Qr Codes ist abgelaufen.";
+		}
+
     }
 
 	private readonly _hlmDialogService = inject(HlmDialogService);
