@@ -47,7 +47,7 @@ export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComp
 	issuer: string;
 	creator: string;
 	validity: string = '';
-	editQrCodeLink: string = `/issuer/issuers/${this.issuerSlug}/badges/${this.badgeSlug}/qr/edit`;
+	editQrCodeLink: string = `/issuer/issuers/${this.issuerSlug}/badges/${this.badgeSlug}/qr/${this.qrSlug}/edit`;
 	qrCodeWidth = 244; 
     public qrCodeDownloadLink: SafeUrl = "";
 

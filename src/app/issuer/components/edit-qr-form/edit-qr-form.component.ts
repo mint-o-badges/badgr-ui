@@ -30,6 +30,10 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent{
 		return this.route.snapshot.params['badgeSlug'];
 	}
 
+	get qrSlug(){
+		return this.route.snapshot.params['qrCodeId'];
+	}
+
 	badgeClass: BadgeClass;
 
 	readonly badgeFailedImageUrl = '../../../../breakdown/static/images/badge-failed.svg';
@@ -113,18 +117,14 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent{
 		if(this.editing){
 			console.log('editing')
 			const formState = this.qrForm.value;
-			this.qrCodeApiService.updateQrCode(this.issuerSlug, this.badgeSlug, {
+			this.qrCodeApiService.updateQrCode(this.issuerSlug, this.badgeSlug, this.qrSlug, {
 				title: formState.title,
 				createdBy: formState.createdBy,
-				// expires_at: formState.expires,
-			}).then((qrcode) => {
-					console.log(qrcode.slug)
-					this.openSuccessDialog()
-					// this.router.navigate(['/issuer/issuers', 'badges', this.badgeSlug], {queryParams: formState});
-					this.router.navigate(['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'qr', qrcode.slug, 'generate'], {queryParams: formState});
-				}
-			)
+				badgeclass_id: this.badgeSlug,
+				issuer_id: this.issuerSlug
+			})
 		}
+		else{
 
 		const formState = this.qrForm.value;
 		this.qrCodeApiService.createQrCode(this.issuerSlug, this.badgeSlug, {
@@ -140,7 +140,5 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent{
                 this.router.navigate(['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'qr', qrcode.slug, 'generate'], {queryParams: formState});
             }
         )
-    }
-
-   
+    }}   
 }

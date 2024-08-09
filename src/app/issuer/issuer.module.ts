@@ -79,7 +79,7 @@ const routes = [
 		component: BadgeClassIssueQrComponent,
 	},
 	{
-		path: 'issuers/:issuerSlug/badges/:badgeSlug/qr/edit',
+		path: 'issuers/:issuerSlug/badges/:badgeSlug/qr/:qrCodeId/edit',
 		component: BadgeClassEditQrComponent,
 	},
 	{

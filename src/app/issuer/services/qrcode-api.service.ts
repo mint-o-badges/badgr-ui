@@ -23,15 +23,10 @@ export class QrCodeApiService extends BaseHttpApiService {
 		);
 	}
 
-	updateQrCode(issuerSlug: string, badgeClassSlug: string, qrCode: ApiQRCode) {
-		const updatedQrCode: ApiQRCode = {
-			...qrCode,
-		};
-		console.log(updatedQrCode);
-		return this.put<ApiQRCode>(
-			`/v1/issuer/issuers/${issuerSlug}/badges/${badgeClassSlug}/qrcodes/${qrCode.slug}`,
-			updatedQrCode,
-		).then((r) => r.body);
+	updateQrCode(issuerSlug: string, badgeClassSlug: string, qrCodeSlug: string, updatedQrCode: ApiQRCode) {
+		return this.put<ApiQRCode>(`/v1/issuer/issuers/${issuerSlug}/badges/${badgeClassSlug}/qrcodes/${qrCodeSlug}`, updatedQrCode).then(
+			(r) => r.body
+		);
 	}
 
 	deleteQrCode(issuerSlug: string, badgeClassSlug: string, qrCodeSlug: string) {
