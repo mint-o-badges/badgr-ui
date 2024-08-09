@@ -26,6 +26,7 @@ import { AppConfigService } from '../../../common/app-config.service';
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { BadgeClassCategory, BadgeClassLevel } from '../../models/badgeclass-api.model';
 import { PageConfig } from '../../../common/components/badge-detail/badge-detail.component';
+import { TranslateService } from '@ngx-translate/core';
 import { PdfService } from '../../../common/services/pdf.service';
 
 @Component({
@@ -129,6 +130,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		private externalToolsManager: ExternalToolsManager,
 		protected pdfService: PdfService,
 		private sanitizer: DomSanitizer,
+        private translate: TranslateService,
 	) {
 		super(router, route, sessionService);
 
@@ -277,10 +279,10 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		if (this.activeRecipientCount === 0) {
 			this.confirmDialog
 				.openResolveRejectDialog({
-					dialogTitle: 'Warning',
-					dialogBody: `Are you sure you want to delete the badge <strong>${this.badgeClass.name}</strong>?`,
-					resolveButtonLabel: 'Delete Badge',
-					rejectButtonLabel: 'Cancel',
+					dialogTitle: this.translate.instant('General.warning'),
+					dialogBody: this.translate.instant('Badge.deletePart1') + `<strong>${this.badgeClass.name}</strong>` + this.translate.instant('Badge.deletePart2'),
+					resolveButtonLabel: this.translate.instant('Badge.deleteConfirm'),
+					rejectButtonLabel: this.translate.instant('General.cancel'),
 				})
 				.then(
 					() => {

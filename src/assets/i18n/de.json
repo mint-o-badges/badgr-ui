@@ -54,7 +54,8 @@
 		"showDetails": "Details anzeigen",
 		"hideDetails": "Details verstecken",
 		"password": "Passwort",
-		"loading": "Laden..."
+		"loading": "Laden...",
+        "warning": "Warnung"
 	},
 	"NavItems": {
 		"register": "Registrieren",
@@ -249,7 +250,10 @@
 		"competency": "Kompetenz",
 		"title": "Titel",
 		"createdOn": "Erstellt am",
-		"catalogHeadline": "Alle Badges in der Übersicht"
+		"catalogHeadline": "Alle Badges in der Übersicht",
+        "deletePart1": "Bist du sicher, dass du das Badge '",
+        "deletePart2": "' löschen möchtest?",
+        "deleteConfirm": "Badge löschen"
 	},
 	"CreateBadge": {
 		"chooseBadgeCategory": "Badge-Kategorie wählen",

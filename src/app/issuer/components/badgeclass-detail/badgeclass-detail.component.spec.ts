@@ -25,6 +25,7 @@ import { BadgrCommonModule, COMMON_IMPORTS } from '../../../common/badgr-common.
 import { COMMON_MOCKS_PROVIDERS_WITH_SUBS } from '../../../mocks/mocks.module.spec';
 import { BadgrButtonComponent } from '../../../common/components/badgr-button.component';
 import { CommonEntityManager } from '../../../entity-manager/services/common-entity-manager.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('BadgeClassDetailComponent', () => {
 	let fixture;
@@ -33,7 +34,7 @@ describe('BadgeClassDetailComponent', () => {
 	beforeEach(() => {
 		TestBed.configureTestingModule({
 			declarations: [BadgeClassDetailComponent],
-			imports: [RouterTestingModule, CommonModule, BadgrCommonModule, ...COMMON_IMPORTS],
+			imports: [RouterTestingModule, CommonModule, BadgrCommonModule, ...COMMON_IMPORTS, TranslateModule.forRoot()],
 			providers: [CommonEntityManager, ...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		}).compileComponents();
