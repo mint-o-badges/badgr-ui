@@ -11,29 +11,31 @@
         </div>
         
         <ng-template #showAwards >
-            <div *ngFor="let award of awards; " [ngClass]="award.request_count > 0 ? 'tw-bg-[var(--color-green)]' : 'tw-bg-[var(--color-darkgray)]'" class="tw-border tw-border-solid tw-border-purple tw-rounded-lg tw-mt-4 tw-pb-2">
-            <div hlmAccordionItem class="tw-px-2 tw-py-2" (click)="$event.stopPropagation()">
-                <button
-                        type="button"
-                        class="tw-w-full hover:tw-no-underline"
-                        hlmAccordionTrigger
-                    >
-                    <div [ngClass]="award.request_count > 0 ? 'tw-text-oebblack' : 'tw-text-white'" class="tw-w-full tw-flex tw-justify-between tw-items-center">
-                        <div>
-                           <span class="tw-font-bold">
-                                {{award.title}}
-                           </span> 
-                           <span class="tw-ml-2">
-                                ( {{award.request_count}} offene Badge Anfragen)
-                           </span>
-                        </div> 
-                        <hlm-icon hlmAccIcon class="tw-w-8 tw-h-8" />
-        
-                    </div>
-                </button> 
-                <brn-accordion-content hlm class="tw-text-white">
-                    <qrcodes-datatable [qrCodeId]="award.slug" [routerLink]="routerLink"></qrcodes-datatable>
-                </brn-accordion-content>   
+            <div hlmAccordion>
+                <div *ngFor="let award of awards; " [ngClass]="award.request_count > 0 ? 'tw-bg-[var(--color-green)]' : 'tw-bg-[var(--color-darkgray)]'" class="tw-border tw-border-solid tw-border-purple tw-rounded-lg tw-mt-4 tw-pb-2">
+                <div hlmAccordionItem class="tw-px-2 tw-py-2" (click)="$event.stopPropagation()">
+                    <button
+                            type="button"
+                            class="tw-w-full hover:tw-no-underline"
+                            hlmAccordionTrigger
+                        >
+                        <div [ngClass]="award.request_count > 0 ? 'tw-text-oebblack' : 'tw-text-white'" class="tw-w-full tw-flex tw-justify-between tw-items-center">
+                            <div>
+                            <span class="tw-font-bold">
+                                    {{award.title}}
+                            </span> 
+                            <span class="tw-ml-2">
+                                    ( {{award.request_count}} offene Badge Anfragen)
+                            </span>
+                            </div> 
+                            <hlm-icon hlmAccIcon class="tw-w-8 tw-h-8" />
+            
+                        </div>
+                    </button> 
+                    <brn-accordion-content hlm class="tw-text-white">
+                        <qrcodes-datatable [qrCodeId]="award.slug" [routerLink]="routerLink"></qrcodes-datatable>
+                    </brn-accordion-content>   
+                </div>
             </div>
         </div>
         </ng-template>

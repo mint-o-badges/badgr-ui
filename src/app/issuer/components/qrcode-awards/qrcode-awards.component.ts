@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from "@angular/core";
-import { BrnAccordionContentComponent, BrnAccordionDirective } from '@spartan-ng/ui-accordion-brain';
-import { HlmAccordionModule } from '../../../../app/components/spartan/ui-accordion-helm/src';
-import { HlmIconModule, provideIcons } from '../../../../app/components/spartan/ui-icon-helm/src';
+import { BrnAccordionContentComponent } from '@spartan-ng/ui-accordion-brain';
+import { HlmAccordionModule } from '../../../components/spartan/ui-accordion-helm/src';
+import { HlmIconModule } from '../../../components/spartan/ui-icon-helm/src';
 import { TranslateModule } from "@ngx-translate/core";
 import { RouterModule } from "@angular/router";
 import { NgFor, NgIf, NgClass } from "@angular/common";
@@ -14,7 +14,7 @@ import { QrCodeDatatableComponent } from "../../../components/datatable-qrcodes.
 	selector: 'qrcode-awards',
 	templateUrl: './qrcode-awards.component.html',
     standalone: true,
-    providers: [BrnAccordionDirective, BadgeRequestApiService],
+    providers: [BadgeRequestApiService],
     imports: [
 		HlmAccordionModule,
 		HlmIconModule,
