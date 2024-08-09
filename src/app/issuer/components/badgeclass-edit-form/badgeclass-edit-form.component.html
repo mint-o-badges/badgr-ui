@@ -40,7 +40,7 @@
 		<div>
 			<h2 hlmH2 class="tw-font-bold">2. {{ 'CreateBadge.enterDetails' | translate }}</h2>
 		</div>
-		<div class="tw-flex tw-flex-col md:tw-mx-10 tw-justify-center tw-gap-6">
+		<div class="tw-flex tw-flex-col md:tw-mx-10 tw-justify-center tw-gap-7">
 			<div class="tw-flex tw-flex-col md:tw-flex-row tw-gap-3 md:tw-gap-8 md:tw-items-center tw-mt-6">
 				<span class="input-label tw-break-words md:tw-flex-[0_0_10em]">
 					{{ 'CreateBadge.short' | translate }}&shy;{{ 'General.description' | translate }}
@@ -166,12 +166,12 @@
 						class="tw-list-item tw-list-inside md:tw-text-xl tw-text-lg tw-font-semibold md:tw-leading-10 tw-text-[var(--color-purple)]"
 						>{{ 'CreateBadge.useAiAssistant' | translate }}</span
 					>
-					<p class="tw-my-2">{{ 'CreateBadge.enterAiDescription' | translate }}</p>
-					<p class="tw-my-2">{{ 'CreateBadge.NoPersonalInformation' | translate }}</p>
-					<p class="tw-mb-2">{{ 'CreateBadge.addAiCompetencies' | translate }}</p>
+					<p hlmP size="sm" class="tw-my-2">{{ 'CreateBadge.enterAiDescription' | translate }}</p>
+					<p hlmP size="sm" class="tw-my-2">{{ 'CreateBadge.NoPersonalInformation' | translate }}</p>
+					<p hlmP size="sm" class="tw-mb-2">{{ 'CreateBadge.addAiCompetencies' | translate }}</p>
 				</div>
 				<div
-					class="tw-flex tw-flex-col tw-justify-center tw-items-center tw-mt-8 tw-p-4 tw-bg-[var(--color-purple)] tw-rounded-md tw-mx-auto"
+					class="tw-flex tw-flex-col tw-justify-center tw-items-center tw-mt-7 tw-p-4 tw-bg-[var(--color-purple)] tw-rounded-md tw-mx-auto"
 				>
 					<span
 						class="tw-text-[var(--color-green)] tw-font-extrabold tw-text-xl tw-leading-10 tw-text-center tw-py-2 tw-px-4"
@@ -327,35 +327,39 @@
 					</ng-container>
 					<ng-template #competencyForm>
 						<div
-							class="tw-border-[var(--color-purple)] tw-border tw-border-solid tw-rounded-md tw-p-4 tw-mt-4"
+							class="tw-border-[var(--color-purple)] tw-border tw-border-solid tw-rounded-md tw-p-6 tw-mt-4"
 						>
-							<div class="tw-flex tw-flex-col md:tw-flex-row md:tw-justify-between md:tw-mx-8">
-								<bg-formfield-text
-									class="tw-mt-4"
-									[control]="competency.rawControlMap.name"
+							<div class="tw-flex tw-flex-col md:tw-flex-row md:tw-justify-between tw-gap-5 md:tw-gap-0">
+								
+								<oeb-input 
+									[fieldType]="'text'" 
 									[label]="competencyTitle"
-									[fieldType]="'text'"
-									[errorMessage]="{
-										required: titleError
-									}"
-								></bg-formfield-text>
-								<div class="tw-flex tw-flex-col tw-mt-4">
-									<span class="competencyDuration">{{ competencyDuration }}</span>
+									[control]="competency.rawControlMap.name"
+									[errorMessage]="{ required: titleError }"
+									noTopMargin="true"
+								>
+								</oeb-input>
+
+								<div class="tw-flex tw-flex-col">
+									<span class="tw-font-semibold tw-text-[14px] md:tw-text-[20px] tw-leading-4 md:tw-leading-6 tw-font-[rubik] tw-pb-[5px] tw-pl-[3px]">{{ competencyDuration }}</span>
 
 									<div class="tw-flex tw-gap-2 tw-items-center">
-										<bg-formfield-text
+										<oeb-input 
+											[fieldType]="'number'"
 											class="tw-max-w-24"
 											[control]="competency.rawControlMap.studyLoad"
-											[fieldType]="'number'"
 											[errorMessage]="{
 												required: 'Bitte gib die Dauer für den Erwerb der Kompetenz ein.'
 											}"
-										></bg-formfield-text>
+											noTopMargin="true"
+										>
+										</oeb-input>
+
 										<span class="tw-text-oebblack">{{ 'General.minutes' | translate }}</span>
 									</div>
 								</div>
-								<bg-formfield-select
-									class="tw-mt-4"
+								
+								<oeb-select
 									ariaLabel="Wähle eine Kompetenz-Kategorie"
 									[control]="competency.rawControlMap.category"
 									[label]="competencyCategory"
@@ -364,23 +368,27 @@
 									[errorMessage]="{
 										required: competencyCategoryError
 									}"
-								></bg-formfield-select>
+									noTopMargin="true"
+								></oeb-select>
+
 							</div>
-							<bg-formfield-text
-								class="md:tw-mx-8 tw-mt-4"
-								[control]="competency.rawControlMap.description"
+
+							<oeb-input 
+								[fieldType]="'textarea'" 
 								[label]="competencyDescription"
+								[control]="competency.rawControlMap.description"
 								id="competency_description_input"
 								[errorMessage]="{ required: enterDescription }"
-								[multiline]="true"
-							></bg-formfield-text>
-							<bg-formfield-text
-								class="md:tw-mx-8 tw-mt-4"
-								[control]="competency.rawControlMap.escoID"
+							>
+							</oeb-input>
+
+							<oeb-input 
 								label="Esco-Identifier (optional)"
-								id="competency_description_input"
+								[control]="competency.rawControlMap.escoID"
 								placeholder="z.B. esco/skill/00090cc1-1f27-439e-a4e0-19a87a501bfc"
-							></bg-formfield-text>
+							>
+							</oeb-input>
+
 							<div
 								class="l-flex l-flex-1x l-flex-justifybetween u-margin-bottom2x"
 								style="margin-top: 2em"

@@ -19,7 +19,7 @@ import { HlmPDirective } from './spartan/ui-typography-helm/src/lib/hlm-p.direct
 				<span *ngIf="formFieldAside">{{ formFieldAside }}</span>
 			</label>
 			<ng-content
-				class="tw-relative tw-z-20 tw-font-semibold tw-text-[14px] md:tw-text-[20px] tw-leading-4 md:tw-leading-6 "
+				class="tw-relative tw-z-20 tw-font-semibold tw-text-[14px] md:tw-text-[20px] tw-leading-4 md:tw-leading-6"
 				select="[label-additions]"
 			></ng-content>
 		</div>

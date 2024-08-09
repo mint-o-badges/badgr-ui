@@ -20,7 +20,7 @@ import { CustomValidatorMessages, messagesForValidationError } from './input.com
 		NgIf,
 		ReactiveFormsModule,
 		TextSemibold,
-		NgClass
+		NgClass,
 	],
 	template: ` <div [ngClass]="{ 'tw-mt-6 md:tw-mt-7': !noTopMargin }">
 		<label class="tw-pb-[2px] tw-pl-[3px]" [attr.for]="inputName" *ngIf="label">
@@ -50,7 +50,11 @@ import { CustomValidatorMessages, messagesForValidationError } from './input.com
 			</hlm-select-content>
 		</brn-select>
 
-		<oeb-input-error class="tw-text-red tw-pl-[3px]" *ngIf="isErrorState" [error]="errorMessageForDisplay"></oeb-input-error>
+		<oeb-input-error
+			class="tw-text-red tw-pl-[3px]"
+			*ngIf="isErrorState"
+			[error]="errorMessageForDisplay"
+		></oeb-input-error>
 	</div>`,
 })
 export class OebSelectComponent {
@@ -184,7 +188,9 @@ export class OebSelectComponent {
 	}
 
 	focus() {
-		this.inputElement.focus();
+		if (this.inputElement) {
+			this.inputElement.focus();
+		}
 	}
 
 	select() {
