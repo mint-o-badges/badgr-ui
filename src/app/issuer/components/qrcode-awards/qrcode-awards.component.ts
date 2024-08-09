@@ -4,7 +4,7 @@ import { HlmAccordionModule } from '../../../../app/components/spartan/ui-accord
 import { HlmIconModule, provideIcons } from '../../../../app/components/spartan/ui-icon-helm/src';
 import { TranslateModule } from "@ngx-translate/core";
 import { RouterModule } from "@angular/router";
-import { NgFor, NgIf } from "@angular/common";
+import { NgFor, NgIf, NgClass } from "@angular/common";
 import { OebSeparatorComponent } from "../../../components/oeb-separator.component";
 import { OebButtonComponent } from "../../../components/oeb-button.component";
 import { BadgeRequestApiService } from "../../services/badgerequest-api.service";
@@ -23,6 +23,7 @@ import { QrCodeDatatableComponent } from "../../../components/datatable-qrcodes.
 		RouterModule,
 		NgIf,
 		NgFor,
+		NgClass,
 		OebSeparatorComponent,
 		OebButtonComponent,
 		QrCodeDatatableComponent
