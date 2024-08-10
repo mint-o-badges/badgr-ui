@@ -4,7 +4,6 @@ import { HlmIconModule } from './spartan/ui-icon-helm/src';
 import { RouterModule } from '@angular/router';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { HlmTableModule } from './spartan/ui-table-helm/src';
-import { BadgeClass } from '../issuer/models/badgeclass.model';
 import { OebButtonComponent } from './oeb-button.component';
 import { BadgeRequestApiService } from '../issuer/services/badgerequest-api.service';
 
@@ -29,10 +28,10 @@ import { BadgeRequestApiService } from '../issuer/services/badgerequest-api.serv
                 <hlm-th class="!tw-text-white tw-justify-end sm:tw-w-48 tw-w-0 !tw-p-0"></hlm-th>
             </hlm-trow>
             <hlm-trow *ngFor="let badge of requestedBadges" class="tw-bg-[var(--color-lightgray)] tw-border-[var(--color-darkgray)] tw-flex-wrap tw-py-2">
-                <hlm-th class="!tw-flex-1 !tw-text-oebblack"><p class="u-text">{{badge.email}}</p></hlm-th>
-                <hlm-th class="tw-w-28 md:tw-w-48 tw-justify-center !tw-text-oebblack"> {{badge.requestedOn}}</hlm-th>
-                <hlm-th class="tw-justify-center sm:tw-justify-end sm:tw-w-48 tw-w-full !tw-text-oebblack">
-                    <oeb-button class="tw-w-full" variant="secondary" size="xs" width="full_width" [routerLink]="" (click)="actionElement.emit(badge.badge)" [text]="actionElementText"></oeb-button>
+                <hlm-th class="tw-w-28 md:tw-w-48 tw-justify-center !tw-text-oebblack"> {{badge.email}}</hlm-th>
+                <hlm-th class="!tw-flex-1 tw-justify-center"><p class="u-text tw-text-purple"> {{badge.requestedOn | date:"dd.MM.yyyy"}}  </p></hlm-th>
+                <hlm-th class="tw-justify-center sm:tw-justify-end sm:tw-w-48 tw-w-0 !tw-text-oebblack">
+                    <oeb-button class="tw-w-full" size="xs" width="full_width" [routerLink]="" (click)="actionElement.emit(badge.badge)" [text]="actionElementText"></oeb-button>
                 </hlm-th>
             </hlm-trow>
         </hlm-table>`,
