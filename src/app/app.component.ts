@@ -69,6 +69,23 @@ export class AppComponent implements OnInit, AfterViewInit {
 			icon: 'lucideWarehouse',
 		},
 	]
+	accountMenuItems: MenuItem[] = [
+		{
+			title: "Mein Profil",
+			routerLink: ['/profile/profile'],
+			icon: 'lucideUsers',
+		},
+		{
+			title: 'App Integrationen',
+			routerLink: ['/profile/app-integrations'],
+			icon: 'lucideRepeat2',
+		},
+		{
+			title: "Logout",
+			routerLink: ['/auth/logout'],
+			icon: 'lucideLogOut',
+		},
+	]
 	/**
 	 * Permanently disables the curtain, making it impossible to show it even with the query parameter
 	 */

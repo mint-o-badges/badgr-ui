@@ -12,7 +12,9 @@ import {
   lucideChevronRight,
   lucideUsers,
   lucideDownload,
-  lucideBadge
+  lucideBadge,
+  lucideRepeat2,
+  lucideLogOut
 
 } from '@ng-icons/lucide';
 
@@ -30,7 +32,9 @@ import {
       lucideChevronRight,
       lucideUsers,
       lucideDownload,
-      lucideBadge
+      lucideBadge,
+      lucideRepeat2,
+      lucideLogOut
     }),
   ],
 })

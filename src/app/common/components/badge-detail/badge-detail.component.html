@@ -12,40 +12,25 @@
                         <h1 hlmH1
                             class="tw-text-purple tw-font-medium tw-hyphens-auto tw-break-words tw-mb-2 md:tw-mb-0">
                             {{ config.badgeTitle }}</h1>
-                        <div class="tw-flex tw-gap-2">
-                            <div *ngIf="config.headerButton">
-                                <a *ngIf="config.headerButton.routerLink"
-                                    class="button tw-w-[305px] md:tw-w-[358px] md:tw-h-[64px] tw-h-[45px] tw-flex tw-items-center tw-justify-center tw-text-xl tw-rounded-[7px]"
-                                    [routerLink]="config.headerButton.routerLink" [disabled-when-requesting]="true">{{
-                                    config.headerButton.title }}</a>
-                                <!-- TODO:  use full width button variant -->
-                                <oeb-button *ngIf="config.headerButton.action"
-                                    class="oeb-button tw-w-[305px] md:tw-w-[358px] md:tw-h-[64px] tw-h-[45px] tw-flex tw-items-center tw-justify-center tw-text-xl tw-rounded-[7px]"
-                                    (click)="config.headerButton.action()" [disabled-when-requesting]="true"
-                                    [text]="config.headerButton.title"></oeb-button>
-                            </div>
+                        <div class="tw-flex tw-gap-2" *ngIf="config.headerButton">
+                            <oeb-button *ngIf="config.headerButton.routerLink" class="tw-whitespace-nowrap tw-grow"
+                                [text]="config.headerButton.title" width="full_width"
+                                [routerLink]="config.headerButton.routerLink"
+                                [disabled-when-requesting]="true"></oeb-button>
+                            <!-- TODO:  use full width button variant -->
+                            <oeb-button *ngIf="config.headerButton.action" class="tw-whitespace-nowrap tw-grow"
+                                width="full_width" (click)="config.headerButton.action()"
+                                [disabled-when-requesting]="true" [text]="config.headerButton.title"></oeb-button>
 
-                            <oeb-dropdown [trigger]="svgTrigger" class="tw-items-center tw-justify-center tw-flex tw-cursor-pointer tw-border tw-border-solid tw-border-[var(--color-purple)] tw-rounded-[7px]" *ngIf="config.menuitems" label="Mehr" [menuItems]="config.menuitems"></oeb-dropdown>
+                            <oeb-dropdown [trigger]="svgTrigger"
+                                class="tw-items-center tw-justify-center tw-flex tw-cursor-pointer tw-border tw-border-solid tw-border-[var(--color-purple)] tw-rounded-[7px]"
+                                *ngIf="config.menuitems" [menuItems]="config.menuitems"></oeb-dropdown>
 
                             <ng-template #svgTrigger>
-                                <svg class="tw-w-[44.8px] tw-h-[44.8px] md:tw-w-[64px] md:tw-h-[64px]" fill="var(--color-purple)" icon="icon_more"></svg>
+                                <svg class="tw-w-[44.8px] tw-h-[44.8px] md:tw-w-[64px] md:tw-h-[64px]"
+                                    fill="var(--color-purple)" icon="icon_more"></svg>
                                 <span class="visuallyhidden">Mehr</span>
                             </ng-template>
-
-                            <!-- <button *ngIf="config.menuitems"
-                                class="tw-items-center tw-justify-center tw-flex tw-cursor-pointer tw-border tw-border-solid tw-border-[var(--color-purple)] tw-rounded-[7px] tw-w-[44.8px] tw-h-[44.8px] md:tw-w-[64px] md:tw-h-[64px]"
-                                id="actionstrigger" [bgPopupMenuTrigger]="moreMenu">
-                                <svg fill="var(--color-purple)" icon="icon_more"></svg>
-                                <span class="visuallyhidden">Mehr</span>
-                            </button>
-                            <bg-popup-menu #moreMenu>
-                                <div *ngFor="let menuitem of config.menuitems">
-                                    <button class="menuitem" type="button" [routerLink]="menuitem.routerLink"
-                                        (click)="menuitem.action()">
-                                        <svg icon={{menuitem.icon}}></svg>{{ menuitem.title}}
-                                    </button>
-                                </div>
-                            </bg-popup-menu> -->
                         </div>
                     </div>
                 </div>

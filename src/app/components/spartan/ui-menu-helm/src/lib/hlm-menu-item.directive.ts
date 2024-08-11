@@ -5,13 +5,13 @@ import { type VariantProps, cva } from 'class-variance-authority';
 import type { ClassValue } from 'clsx';
 
 export const hlmMenuItemVariants = cva(
-	'tw-group tw-w-full tw-relative tw-flex tw-cursor-pointer tw-select-none tw-items-center tw-rounded-sm tw-px-4 tw-py-[7px] tw-outline-none tw-transition-colors hover:tw-bg-lightpurple hover:tw-text-accent-foreground focus-visible:tw-bg-accent focus-visible:tw-text-accent-foreground disabled:tw-pointer-events-none disabled:tw-opacity-50',
+	'tw-group tw-w-full !tw-font-body !tw-text-oebblack tw-relative tw-flex tw-cursor-pointer tw-select-none tw-items-center tw-rounded-sm tw-outline-none tw-transition-colors hover:tw-bg-lightpurple hover:tw-text-accent-foreground focus-visible:tw-bg-accent focus-visible:tw-text-accent-foreground disabled:tw-pointer-events-none disabled:tw-opacity-50',
 	{
 		variants: { 
 			inset: { true: 'pl-8', false: '' },
 			size: {
-				default: 'tw-text-[14px] tw-leading-[19px] md:tw-text-[20px] md:tw-leading-[28px]',
-				sm: 'tw-text-[14px] tw-leading-[15.6px] md:tw-text-[14px] md:tw-leading-[15.6px]',
+				default: 'tw-text-[14px] tw-leading-[19px] md:tw-text-[20px] md:tw-leading-[28px] tw-px-6 tw-py-3',
+				sm: 'tw-text-[14px] tw-leading-[15.6px] md:tw-text-[14px] md:tw-leading-[15.6px] tw-px-4 tw-py-[7px] ',
 				lg: 'tw-text-[20px] tw-leading-[28px] md:tw-text-[24px] md:tw-leading-[33.6px]',
 			}
 		},
@@ -48,7 +48,6 @@ export class HlmMenuItemDirective {
 
 	@Input()
 	set size(value: HlmMenuItemVariants['size']) {
-		console.log(value)
 		this._size.set(value);
 	}
 }
