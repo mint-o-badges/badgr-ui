@@ -415,6 +415,9 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		super.ngOnInit();
 		let that = this;
 
+		// Set badge category when editing a badge. As new select component doesn't show badge competencies
+		this.badgeCategory = this.badgeClassForm.rawControl.controls['badge_category'].value; 		
+
 		// update badge frame when a category is selected, unless no-hexagon-frame checkbox is checked
 		this.badgeClassForm.rawControl.controls['badge_category'].statusChanges.subscribe((res) => {
 			this.handleBadgeCategoryChange();
