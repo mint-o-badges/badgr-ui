@@ -17,6 +17,8 @@ import { HlmDialogService } from "../../../../app/components/spartan/ui-dialog-h
 import { DangerDialogComponent } from "../../../../app/common/dialogs/oeb-dialogs/danger-dialog.component";
 import { QrCodeApiService } from "../../services/qrcode-api.service";
 import { ApiQRCode } from "../../models/qrcode-api.model";
+import { HlmH3Directive } from "../../../../app/components/spartan/ui-typography-helm/src/lib/hlm-h3.directive";
+import { HlmPDirective } from "../../../../app/components/spartan/ui-typography-helm/src/lib/hlm-p.directive";
 
 @Component({
 	selector: 'qrcode-awards',
@@ -38,7 +40,9 @@ import { ApiQRCode } from "../../models/qrcode-api.model";
 		QrCodeDatatableComponent,
 		SharedIconsModule,
 		BadgrCommonModule,
-		DangerDialogComponent
+		DangerDialogComponent,
+		HlmH3Directive,
+		HlmPDirective
 	],
 })
 
