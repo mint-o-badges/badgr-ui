@@ -1,4 +1,4 @@
-<div>
+<div class="oeb">
 
     <oeb-separator [class]="separatorStyle"></oeb-separator>
         <div class="tw-flex tw-flex-col lg:tw-flex-row tw-items-center tw-justify-between tw-gap-2"  *ngIf="awards.length === 0; else showAwards">
@@ -11,9 +11,11 @@
         </div>
         
         <ng-template #showAwards >
+            <span class="tw-text-[22px] tw-leading-[26.4px] tw-text-purple tw-font-bold">QR-CODE-VERGABEN</span>
             <div hlmAccordion>
-                <div *ngFor="let award of awards; " [ngClass]="award.request_count > 0 ? 'tw-bg-[var(--color-green)]' : 'tw-bg-[var(--color-darkgray)]'" class="tw-border tw-border-solid tw-border-purple tw-rounded-lg tw-mt-4 tw-pb-2">
-                <div hlmAccordionItem class="tw-px-2 tw-py-2" (click)="$event.stopPropagation()">
+                <div *ngFor="let award of awards; index as i " class="tw-flex tw-gap-2" >
+                <div [ngClass]="award.request_count > 0 ? 'tw-bg-[var(--color-green)]' : 'tw-bg-[var(--color-darkgray)]'" class="tw-border tw-border-solid tw-border-purple tw-rounded-lg tw-mt-4 tw-pb-2 tw-w-full">
+                    <div hlmAccordionItem class="tw-px-2 tw-py-2" (click)="$event.stopPropagation()">
                     <button
                             type="button"
                             class="tw-w-full hover:tw-no-underline"
@@ -36,6 +38,18 @@
                         <qrcodes-datatable [qrCodeId]="award.slug" [routerLink]="routerLink"></qrcodes-datatable>
                     </brn-accordion-content>   
                 </div>
+            </div>
+            <div class="tw-flex tw-items-end" (click)="$event.stopPropagation()">
+                <oeb-dropdown [trigger]="svgTrigger" [ngClass]="award.request_count > 0 ? 'tw-bg-[var(--color-green)]' : 'tw-bg-[var(--color-darkgray)]'"
+                              class="tw-items-center tw-justify-center tw-flex tw-cursor-pointer tw-rounded-[7px]"
+                              [menuItems]="qrCodeMenus[i]"></oeb-dropdown>
+    
+                <ng-template #svgTrigger>
+                    <svg class="tw-w-[44.8px] tw-h-[44.8px] md:tw-w-[74.15px] md:tw-h-[74.15px]"
+                        [attr.fill]="getSvgFillColor(award.request_count)" icon="icon_more"></svg>
+                    <span class="visuallyhidden">Mehr</span>
+                </ng-template>
+            </div>
             </div>
         </div>
         </ng-template>
