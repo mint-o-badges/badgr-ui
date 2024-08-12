@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, SecurityContext } from '@angular/core';
 
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from '../../../common/services/message.service';
 import { BadgeClassManager } from '../../services/badgeclass-manager.service';
 import { BadgeClass } from '../../models/badgeclass.model';
 import { Issuer } from '../../models/issuer.model';
-import { Title } from '@angular/platform-browser';
+import { DomSanitizer, SafeResourceUrl, Title } from '@angular/platform-browser';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
 import { SessionService } from '../../../common/services/session.service';
 import { StringMatchingUtil } from '../../../common/util/string-matching-util';
@@ -25,17 +25,25 @@ import { ShareSocialDialogOptions } from '../../../common/dialogs/share-social-d
 import { AppConfigService } from '../../../common/app-config.service';
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { BadgeClassCategory, BadgeClassLevel } from '../../models/badgeclass-api.model';
-import { PageConfig } from '../../../common/components/badge-detail/badge-detail.component';
+import { PageConfig } from '../../../common/components/badge-detail/badge-detail.component.types';
+import { PdfService } from '../../../common/services/pdf.service';
 import { QrCodeApiService } from '../../services/qrcode-api.service';
 
 @Component({
 	selector: 'badgeclass-detail',
 	template: `
-	<bg-badgedetail [config]="config" [awaitPromises]="[issuerLoaded, badgeClassLoaded]">
-		<qrcode-awards [awards]="qrCodeAwards" [badgeClassSlug]="badgeSlug" [routerLink]="config?.issueQrRouterLink"></qrcode-awards>
-		<issuer-detail-datatable *ngIf="recipientCount > 0" [recipientCount]="recipientCount" [_recipients]="instanceResults" (actionElement)="revokeInstance($event)"></issuer-detail-datatable>
-	</bg-badgedetail>
-`,
+		<bg-badgedetail [config]="config" [awaitPromises]="[issuerLoaded, badgeClassLoaded]">
+				<qrcode-awards [awards]="qrCodeAwards" [badgeClassSlug]="badgeSlug" [routerLink]="config?.issueQrRouterLink"></qrcode-awards>
+		<issuer-detail-datatable
+				*ngIf="recipientCount > 0"
+				[recipientCount]="recipientCount"
+				[_recipients]="instanceResults"
+				(actionElement)="revokeInstance($event)"
+				(downloadCertificate)="downloadCertificate($event.instance, $event.badgeIndex)"
+				[downloadStates]="downloadStates"
+			></issuer-detail-datatable>
+		</bg-badgedetail>
+	`,
 })
 export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	readonly badgeFailedImageUrl = '../../../../breakdown/static/images/badge-failed.svg';
@@ -90,11 +98,13 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 	issuer: Issuer;
 	crumbs: LinkEntry[];
 
-	config: PageConfig 
+	config: PageConfig;
 
 	qrCodeButtonText = "Badge über QR-Code vergeben"
 	qrCodeAwards = []
 
+	pdfSrc: SafeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl('about:blank');
+	downloadStates: boolean[] = [false];
 
 	categoryOptions: { [key in BadgeClassCategory]: string } = {
 		competency: 'Kompetenz-Badge',
@@ -124,6 +134,8 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		private eventService: EventsService,
 		protected configService: AppConfigService,
 		private externalToolsManager: ExternalToolsManager,
+		protected pdfService: PdfService,
+		private sanitizer: DomSanitizer,
 	) {
 		super(router, route, sessionService);
 
@@ -182,7 +194,6 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 					headerButton: {
 						title: 'Badge vergeben',
 						routerLink: ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'issue'],
-
 					},
 					issueQrRouterLink: ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'qr'],
 					qrCodeButton: true,
@@ -190,22 +201,24 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 						{
 							title: 'Bearbeiten',
 							routerLink: ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'edit'],
-							icon: 'icon_edit',
+							icon:  "lucidePencil",
 
 						},
 						{
 							title: 'Löschen',
-							icon: 'icon_remove',
+							icon: 'lucideTrash2',
 							action: () => this.deleteBadge(),
-						}
-					
+						},
 					],
 					badgeDescription: this.badgeClass.description,
 					issuerSlug: this.issuerSlug,
 					slug: this.badgeSlug,
 					createdAt: this.badgeClass.createdAt,
 					updatedAt: this.badgeClass.updatedAt,
-					category: this.badgeClass.extension['extensions:CategoryExtension'].Category === 'competency' ? 'Kompetenz- Badge' : 'Teilnahme- Badge',
+					category:
+						this.badgeClass.extension['extensions:CategoryExtension'].Category === 'competency'
+							? 'Kompetenz- Badge'
+							: 'Teilnahme- Badge',
 					tags: this.badgeClass.tags,
 					issuerName: this.badgeClass.issuerName,
 					issuerImagePlacholderUrl: this.issuerImagePlacholderUrl,
@@ -213,9 +226,8 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 					badgeLoadingImageUrl: this.badgeLoadingImageUrl,
 					badgeFailedImageUrl: this.badgeFailedImageUrl,
 					badgeImage: this.badgeClass.image,
-					competencies: this.badgeClass.extension['extensions:CompetencyExtension']
-
-				}
+					competencies: this.badgeClass.extension['extensions:CompetencyExtension'],
+				};
 			},
 			(error) => {
 				this.messageService.reportLoadingError(
@@ -242,7 +254,9 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 				() => {
 					instance.revokeBadgeInstance('Manually revoked by Issuer').then(
 						(result) => {
-							this.messageService.reportMinorSuccess(`Badge von ${instance.recipientIdentifier} zurücknehmen`);
+							this.messageService.reportMinorSuccess(
+								`Badge von ${instance.recipientIdentifier} zurücknehmen`,
+							);
 							this.badgeClass.update();
 							// this.updateResults();
 							// reload instances to refresh datatable
@@ -256,6 +270,22 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 				},
 				() => void 0, // Cancel
 			);
+	}
+
+	// To get and download badge certificate in pdf format
+	downloadCertificate(instance: BadgeInstance, badgeIndex: number) {
+		this.downloadStates[badgeIndex] = true;
+		this.pdfService.getPdf(instance.slug).subscribe(
+			(url) => {
+				this.pdfSrc = url;
+				this.pdfService.downloadPdf(this.pdfSrc, this.badgeClass.name, instance.createdAt);
+				this.downloadStates[badgeIndex] = false;
+			},
+			(error) => {
+				this.downloadStates[badgeIndex] = false;
+				console.log(error);
+			},
+		);
 	}
 
 	deleteBadge() {
@@ -349,7 +379,6 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 			this.eventService.externalToolLaunch.next(launchInfo);
 		});
 	}
-  
 }
 
 class MatchingAlgorithm {

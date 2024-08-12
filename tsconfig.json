@@ -65,6 +65,9 @@
       ],
       "@spartan-ng/ui-separator-helm": [
         "./src/app/components/spartan/ui-separator-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-menu-helm": [
+        "./src/app/components/spartan/ui-menu-helm/src/index.ts"
       ]
     }
   }

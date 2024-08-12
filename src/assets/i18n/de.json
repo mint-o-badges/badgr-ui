@@ -53,7 +53,8 @@
 		"oeb": "Open Educational Badges",
 		"showDetails": "Details anzeigen",
 		"hideDetails": "Details verstecken",
-		"password": "Passwort"
+		"password": "Passwort",
+		"loading": "Laden..."
 	},
 	"NavItems": {
 		"register": "Registrieren",
@@ -211,7 +212,7 @@
 		"fillInList": "Lösche den Beispiel-Eintrag und fülle die beiden Tabellenspalten entsprechend mit <span class='tw-font-bold'>Vor- und Nachnamen*</span> sowie <span class='tw-font-bold'>E-Mail-Adressen</span> deiner Lernenden aus.",
 		"exportAsCSV": "Exportiere die Vorlage als CSV-Datei.",
 		"uploadCSV": "Lade deine CSV-Datei hoch:",
-		"uploadFields": "E-Mail-Adresse, Name (optional) und Evidence (optional) beinhalten",
+		"uploadFields": "E-Mail-Adresse, Name und Evidence (optional) beinhalten",
 		"uploadFormat": "CSV- oder TXT-Format",
 		"nameInPdfInfo": "* Zusammen mit dem Badge wird ein entsprechendes PDF-Zertifikat an die Empfänger:innen gesendet. In diesem werden Vor- und Nachname verwendet.",
 		"useThis" : "Benutze diese",
@@ -220,7 +221,8 @@
 		"importList": "Liste importieren",
 		"import": "Importieren",
 		"csvColumns": "CSV Spalten",
-		"csvError": "Die CSV Datei enthält Zeilen länger als ihre Überschrift. Bitte behebe diesen Fehler und versuche es erneut."
+		"csvError": "Die CSV Datei enthält Zeilen länger als ihre Überschrift. Bitte behebe diesen Fehler und versuche es erneut.",
+		"pdfCertificate": "PDF-Zertifikat"
 	},
 	"Badge": {
 		"groupBy": "Gruppieren nach",
@@ -341,7 +343,17 @@
 		"reachedResendEmailLimit": "Du hast das Limit für das erneute Senden von Bestätigungs-E-Mails erreicht. Überprüfe deinen Posteingang auf eine vorhandene Nachricht oder versuche es nach 5 Minuten erneut.",
 		"resendEmailFailed": "Das erneute Senden der Bestätigungs-E-Mail ist fehlgeschlagen. Bitte wende dich an den Support.",
 		"newEmailSent": "Eine neue Bestätigungs-E-Mail wurde gesendet an: ",
-		"infoPersonalDataProcessing": "Informationen zur Verarbeitung Deiner personenbezogenen Daten findest in unserer <a class='tw-underline tw-text-[#1400FF]' href='public/privacy'> Dateschutzerklärung </a>"
+		"infoPersonalDataProcessing": "Informationen zur Verarbeitung Deiner personenbezogenen Daten findest in unserer <a class='tw-underline tw-text-[#1400FF]' href='public/privacy'> Dateschutzerklärung </a>",
+		"enterValidEmail":"Bitte gib eine gültige Email Adresse ein.",
+		"enterFirstName":"Bitte gib einen Vornamen an",
+		"enterLastName":"Bitte gib einen Nachnamen an",
+		"enterPassword":"Bitte gib ein Passwort ein",
+		"passwordMustBe8Char":"Das Passwort muss mindestens 8 Zeichen lang sein",
+		"confirmPassword":"Bitte bestätige Dein Passwort",
+		"passwordsNotEqual":"Die Passwörter sind nicht gleich",
+		"registerWithBildungsraum": "Registrieren mit Mein Bildungsraum",
+		"ageConfirm": "Ich bestätige, dass ich bei Registrierung mindestens 16 Jahre alt bin oder mir für die Registrierung auf Plattform eine Zustimmung meiner Personensorgeberechtigten vorliegt."
+
 	},
 	"Captcha": {
 		"error": "Verifizierung fehlgeschlagen. Bitte erneut versuchen.",
@@ -502,6 +514,7 @@
 		"more": "Mehr",
 		"password": "Passwort",
 		"edit": "Bearbeiten",
+        "delete": "Löschen",
 		"emailAddress": "Email Adresse",
 		"status": "Status",
 		"actions": "Aktionen",
@@ -531,6 +544,11 @@
 		"deleteAppConfirm": "Möchtest du deine App credentials wirklich löschen?",
 		"authorized": "Authorisiert:",
 		"takeBack": "Zurücknehmen",
+        "deleteAccount": "Account löschen?",
+        "deleteAccountConfirm": "Bist du dir sicher, dass du deinen Account löschen möchtest? Dies kann nicht rückgängig gemacht werden.",
+        "deleteAccountYes": "Account löschen",
+        "deleteAccountSuccess": "Account erfolgreich gelöscht",
+        "deleteAccountFailure": "Account konnte nicht gelöscht werden",
 		"ResetPassword": "Passwort zurücksetzen",
 		"EnterNewPassword": "Gib ein neues Passwort ein.",
 		"currentPassword": "Aktuelles Passwort",

@@ -52,7 +52,8 @@
 		"oeb": "Open Educational Badges",
 		"showDetails": "Show details",
 		"hideDetails": "Hide details",
-		"password": "Password"
+		"password": "Password",
+		"loading": "Loading..."
 	},
 	"NavItems": {
 		"register": "Register",
@@ -211,7 +212,7 @@
 		"exportAsCSV": "Export the template as a CSV file.",
 		"uploadCSV": "Upload your CSV file:",
 		"nameInPdfInfo": "* Along with the badge, a corresponding PDF certificate will be sent to the recipients. It will use their first and last names.",
-		"uploadFields": "E-Mail-Adresse, Name (optional) und Evidence (optional) beinhalten",
+		"uploadFields": "E-Mail-Adresse, Name und Evidence (optional) beinhalten",
 		"uploadFormat": "CSV- oder TXT-Format",
 		"useThis": "Benutze diese",
 		"exampleLink": "Beispiel Vorlage",
@@ -219,7 +220,8 @@
 		"importList": "Liste importieren",
 		"import": "Import",
 		"csvColumns": "CSV Spalten",
-		"csvError": "Die CSV Datei enthält Zeilen länger als ihre Überschrift. Bitte behebe diesen Fehler und versuche es erneut."
+		"csvError": "Die CSV Datei enthält Zeilen länger als ihre Überschrift. Bitte behebe diesen Fehler und versuche es erneut.",
+		"pdfCertificate": "PDF-Certificate"
 	},
 	"Badge": {
 		"groupBy": "Group by",
@@ -341,7 +343,13 @@
 		"reachedResendEmailLimit": "You have reached a limit for resending verification email. Please check your inbox for an existing message or retry after 5 minutes.",
 		"resendEmailFailed": "Failed to resend verification email. Please contact support.",
 		"newEmailSent": "A new verification email was sent to:",
-		"infoPersonalDataProcessing": "Information on the processing of your personal data can be found in our <a class='tw-underline tw-text-[#1400FF]' href='public/privacy'> Privacy Policy </a>"
+		"infoPersonalDataProcessing": "Information on the processing of your personal data can be found in our <a class='tw-underline tw-text-[#1400FF]' href='public/privacy'> Privacy Policy </a>",
+		"enterValidEmail":"Please enter a valid email address.",
+		"enterFirstName":"Please enter a first name",
+		"enterLastName":"Please enter a last name",
+		"registerWithBildungsraum": "Register with Mein Bildungsraum",
+		"ageConfirm": "I confirm that I am at least 16 years old when registering or that I have the consent of my legal guardian to register on the platform."
+
 	},
 	"Captcha": {
 		"error": "Verification failed. Try again later.",
@@ -498,6 +506,7 @@
 		"more": "More",
 		"password": "Password",
 		"edit": "Edit",
+		"delete": "Delete",
 		"emailAddress": "Email Address",
 		"status": "Status",
 		"actions": "Ations",
@@ -527,6 +536,11 @@
 		"deleteAppConfirm": "Do you really want to delete your app credentials?",
 		"authorized": "Authorized:",
 		"takeBack": "Take it back",
+        "deleteAccount": "Delete account?",
+        "deleteAccountConfirm": "Are you sure you want to delete your account? This can not be undone.",
+        "deleteAccountYes": "Delete account",
+        "deleteAccountSuccess": "Successfully deleted account",
+        "deleteAccountFailure": "Failed to delete account",
 		"ResetPassword": "Reset password",
 		"EnterNewPassword": "Enter a new password.",
 		"currentPassword": "Current password",
