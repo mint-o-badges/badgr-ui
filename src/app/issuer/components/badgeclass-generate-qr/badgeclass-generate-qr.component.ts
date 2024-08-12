@@ -12,6 +12,8 @@ import { SuccessDialogComponent } from "../../../common/dialogs/oeb-dialogs/succ
 import { DangerDialogComponent } from "../../../common/dialogs/oeb-dialogs/danger-dialog.component";
 import { TranslateService } from "@ngx-translate/core";
 import { QrCodeApiService } from "../../services/qrcode-api.service";
+import { DatePipe } from "@angular/common";
+
 
 @Component({
 	selector: 'badgeclass-generate-qr',
@@ -19,6 +21,7 @@ import { QrCodeApiService } from "../../services/qrcode-api.service";
 	styleUrls: ['../../../public/components/about/about.component.css']
 })
 export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComponent implements OnInit{
+	static datePipe = new DatePipe('de');
 
     get issuerSlug() {
 		return this.route.snapshot.params['issuerSlug'];
@@ -115,15 +118,13 @@ export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComp
 		  this.creator = params['createdBy'];
 		  this.valid_from = params['valid_from'];
 		  this.expires_at = params['expires_at'];
-		  this.validity = this.valid_from + ' - ' + this.expires_at;
+		  this.validity = BadgeClassGenerateQrComponent.datePipe.transform(new Date(this.valid_from), 'dd.MM.yyyy')   + ' - ' + BadgeClassGenerateQrComponent.datePipe.transform(new Date(this.expires_at), 'dd.MM.yyyy');
         });
 
 		if(this.valid_from !=  null || this.expires_at != null){
 			if(new Date(this.valid_from) < new Date() && new Date(this.expires_at) >= new Date()){
-				console.log('Valid');
 				this.valid = true;
 			}else{
-				console.log('Invalid');
 				this.valid = false;
 			}
 		}
