@@ -129,7 +129,7 @@ export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComp
 			}
 		}
 		if(this.valid){
-			this.qrData = `https://openbadges.education/issuer/issuers/${this.issuerSlug}/badges/${this.badgeSlug}/request/${this.qrSlug}`;
+			this.qrData = `https://develop.openbadges.education/issuer/issuers/${this.issuerSlug}/badges/${this.badgeSlug}/request/${this.qrSlug}`;
 		}else{
 			this.qrData = "Die Gültigkeit dieses Qr Codes ist abgelaufen.";
 		}

@@ -1,9 +1,11 @@
 <ng-template [bgAwaitPromises]="badgeClassLoaded">
     <div class="page-padding oeb">
-        <h1 class="tw-text-oebblack tw-text-3xl">
-            {{ 'RequestBadge.requestBadge' | translate}}<br>
-            <span class="tw-text-purple tw-font-extrabold">{{badgeClass.name}}</span>
-        </h1>
+        <div class="oeb-headline-container-sm">
+            <h1 hlmH1 class="tw-text tw-text-oebblack">
+                {{ 'RequestBadge.requestBadge' | translate}}:
+            </h1>
+            <h1 hlmH1 class="tw-text-purple tw-font-extrabold">{{badgeClass.name}}</h1>
+        </div>
         <div class="tw-flex tw-gap-4 tw-mt-4 tw-items-center">
 
             <div
@@ -39,15 +41,17 @@
                     <oeb-input fieldType="hidden" [control]="requestForm.rawControlMap.qrCodeId"></oeb-input>    
                 </div>
 
-                <p hlmP class="tw-mt-6 md:tw-mt-7 tw-text-oebblack tw-leading-[18.2px] tw-mb-2">
-                    {{ 'RequestBadge.personalDataInfo' | translate}}
-                </p>
-                
-                <oeb-checkbox id="age-confirmation" name="age-confirmation" type="checkbox"
-                                    [text]="'RequestBadge.ageConfirmation' | translate "
-                                    [formControl]="requestForm.rawControlMap.ageConfirmation">
-                </oeb-checkbox>
-                <oeb-button variant="secondary" type="submit" [text]="'RequestBadge.requestBadge' | translate">
+                <div class="oeb-standard-padding-bottom">
+                    <p hlmP class="tw-mt-6 md:tw-mt-7 tw-text-oebblack tw-leading-[18.2px] tw-mb-2">
+                        <span [innerHTML]="'RequestBadge.personalDataInfo' | translate" ></span>
+                    </p>
+                    
+                    <oeb-checkbox id="age-confirmation" name="age-confirmation" type="checkbox"
+                                        [text]="'RequestBadge.ageConfirmation' | translate "
+                                        [formControl]="requestForm.rawControlMap.ageConfirmation">
+                    </oeb-checkbox>
+                </div>
+                <oeb-button type="submit" [text]="'RequestBadge.requestBadge' | translate">
 
                 </oeb-button>
 
