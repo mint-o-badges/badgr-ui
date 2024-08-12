@@ -31,7 +31,7 @@ import { BadgeRequestApiService } from '../issuer/services/badgerequest-api.serv
                 <hlm-th class="tw-w-28 md:tw-w-48 tw-justify-center !tw-text-oebblack"> {{badge.email}}</hlm-th>
                 <hlm-th class="!tw-flex-1 tw-justify-center"><p class="u-text tw-text-purple"> {{badge.requestedOn | date:"dd.MM.yyyy"}}  </p></hlm-th>
                 <hlm-th class="tw-justify-center sm:tw-justify-end sm:tw-w-48 tw-w-0 !tw-text-oebblack">
-                    <oeb-button class="tw-w-full" size="xs" width="full_width" [routerLink]="routerLink" (click)="actionElement.emit(badge.badge)" [text]="actionElementText"></oeb-button>
+                    <oeb-button class="tw-w-full" size="xs" width="full_width" [routerLink]="badgeIssueLink" (click)="actionElement.emit(badge.badge)" [text]="actionElementText"></oeb-button>
                 </hlm-th>
             </hlm-trow>
         </hlm-table>`,
@@ -39,7 +39,7 @@ import { BadgeRequestApiService } from '../issuer/services/badgerequest-api.serv
 export class QrCodeDatatableComponent implements OnInit {
 	@Input() caption: string = "";
     @Input() qrCodeId: string = "";
-    @Input() routerLink: string[] = [];
+    @Input() badgeIssueLink: string[] = [];
     @Input() requestedBadges: any;
     @Input() actionElementText: string = "Badge vergeben"
     @Output() actionElement = new EventEmitter();
