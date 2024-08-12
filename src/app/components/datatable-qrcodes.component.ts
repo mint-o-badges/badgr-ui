@@ -41,7 +41,8 @@ import { SuccessDialogComponent } from '../common/dialogs/oeb-dialogs/success-di
                 <hlm-th class="!tw-px-2 tw-w-36 md:tw-w-48 tw-justify-center !tw-text-oebblack"> {{badge.email}}</hlm-th>
                 <hlm-th class="!tw-flex-1 tw-justify-center"><p class="u-text tw-text-purple"> {{badge.requestedOn | date:"dd.MM.yyyy"}}  </p></hlm-th>
                 <hlm-th class="tw-justify-center sm:tw-justify-end tw-w-full lg:tw-w-48 !tw-text-oebblack">
-                    <oeb-button class="tw-w-full" size="xs" width="full_width" (click)="issueBadge(badge)" [text]="actionElementText"></oeb-button>
+                    <oeb-button class="tw-w-full" size="xs" width="full_width" (click)="issueBadge(badge)" [disabled]="!!loading" text="Login"
+                        [loading-promises]="[loading]" loading-message="Loading" [text]="actionElementText"></oeb-button>
                 </hlm-th>
             </hlm-trow>
         </hlm-table>`,
@@ -56,6 +57,8 @@ export class QrCodeDatatableComponent implements OnInit {
     @Input() actionElementText: string = "Badge vergeben"
     @Output() actionElement = new EventEmitter();
     @Output() redirectToBadgeDetail = new EventEmitter();
+    @Output() deletedQRAward = new EventEmitter();
+    loading: Promise<unknown>;
 
     constructor(
         private badgeRequestApiService: BadgeRequestApiService,
@@ -83,9 +86,8 @@ export class QrCodeDatatableComponent implements OnInit {
     }    
 
     issueBadge(badge:any) {
-
         this.badgeClassManager.badgeByIssuerSlugAndSlug(this.issuerSlug, this.badgeSlug).then((badgeClass: BadgeClass) => {
-            this.badgeInstanceManager.createBadgeInstance(this.issuerSlug, this.badgeSlug, {
+            this.loading =  this.badgeInstanceManager.createBadgeInstance(this.issuerSlug, this.badgeSlug, {
                 issuer: this.issuerSlug,
 				badge_class: this.badgeSlug,
 				recipient_type: 'email',
@@ -99,9 +101,10 @@ export class QrCodeDatatableComponent implements OnInit {
 
             }).then(
 				() => {
+                    this.router.navigate(['issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug]);
 					this.openSuccessDialog(badge.email);
-					this.router.navigate(['issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug]);
-					this.messageService.setMessage('Badge awarded to ' + badge.email, 'success');
+                    this.requestedBadges = this.requestedBadges.filter(awardBadge => awardBadge.id != badge.id )
+                    this.deletedQRAward.emit({id: badge.id, badgeclass: badge.badgeclass})
                     this.badgeRequestApiService.deleteRequest(badge.id)
 				},
 				(error) => {
@@ -110,7 +113,7 @@ export class QrCodeDatatableComponent implements OnInit {
 						'error',
 					);
 				},
-			)
+			).then(() => (this.loading = null));
         })
     }           
 
