@@ -13,6 +13,7 @@ import { HlmDialogService } from "../../../components/spartan/ui-dialog-helm/src
 import { SuccessDialogComponent } from "../../../common/dialogs/oeb-dialogs/success-dialog.component";
 import { TranslateService } from "@ngx-translate/core";
 import { DatePipe } from "@angular/common";
+import { Location } from "@angular/common";
 
 @Component({
 	selector: 'edit-qr-form',
@@ -23,7 +24,6 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent  {
 	static datePipe = new DatePipe('de');
 
     @Input() editing: boolean = false;
-
 
     get issuerSlug() {
 		return this.route.snapshot.params['issuerSlug'];
@@ -64,6 +64,7 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent  {
 		protected translate: TranslateService,
 		protected qrCodeApiService: QrCodeApiService,
 		protected badgeClassManager: BadgeClassManager,
+		protected _location: Location
 
         ){
             super(router, route, sessionService);
@@ -121,6 +122,10 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent  {
 				variant: "success"
 			},
 		});
+	}
+
+	previousPage(){
+		this._location.back();
 	}
 
     onSubmit() {
