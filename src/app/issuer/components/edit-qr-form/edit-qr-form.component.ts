@@ -120,8 +120,8 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent{
 			this.qrCodeApiService.updateQrCode(this.issuerSlug, this.badgeSlug, this.qrSlug, {
 				title: formState.title,
 				createdBy: formState.createdBy,
-				expires_at: new Date(formState.expires_at).toISOString() ,
-				valid_from: new Date(formState.valid_from).toISOString(),
+				expires_at: formState.expires_at ? new Date(formState.expires_at).toISOString() : undefined,
+				valid_from: formState.valid_from ? new Date(formState.valid_from).toISOString() : undefined,
 				badgeclass_id: this.badgeSlug,
 				issuer_id: this.issuerSlug
 			}).then((qrcode) => {
@@ -138,8 +138,8 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent{
 			createdBy: formState.createdBy,
 			badgeclass_id: formState.badgeclass_id,
 			issuer_id: formState.issuer_id,
-			expires_at: new Date(formState.expires_at).toISOString() ,
-			valid_from: new Date(formState.valid_from).toISOString()
+			expires_at: formState.expires_at ? new Date(formState.expires_at).toISOString() : undefined ,
+			valid_from: formState.valid_from ? new Date(formState.valid_from).toISOString() : undefined
 		}).then((qrcode) => {
                 this.openSuccessDialog()
                 // this.router.navigate(['/issuer/issuers', 'badges', this.badgeSlug], {queryParams: formState});

@@ -26,7 +26,7 @@ import { NgIf } from "@angular/common";
             <p *ngIf="recipient; else showText" hlmP class="tw-text-purple">Der Badge wurde erfolgreich an 
             <span class="tw-font-bold">{{recipient}}</span> vergeben.</p>
             <ng-template #showText>
-                <p hlmP class="tw-text-purple">{{ text }}</p>
+                <p hlmP class="tw-text-purple" [innerHTML]="text"></p>
             </ng-template>
         </oeb-dialog>
     `,
