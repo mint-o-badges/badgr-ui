@@ -87,7 +87,7 @@ const routes = [
 		component: BadgeClassGenerateQrComponent,
 	},
 	{
-		path: 'badges/:badgeSlug/request/:qrCodeId',
+		path: 'issuers/:issuerSlug/badges/:badgeSlug/request/:qrCodeId',
 		component: RequestBadgeComponent,
 	},
 	{
