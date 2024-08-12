@@ -86,7 +86,8 @@ export class RequestBadgeComponent extends BaseRoutableComponent{
         this.badgeRequestApiService.requestBadge(this.qrSlug, JSON.stringify(formState)).then((response) => {
             if(response.ok){
                 this.openSuccessDialog();
-                // this.router.navigate(['/issuer/issuers', 'badges', this.badgeSlug], {queryParams: formState});
+                // TODO: check if this is correct 
+                this.router.navigate(['/catalog/badges']);
 
             }
         })
