@@ -42,8 +42,6 @@ import { SuccessDialogComponent } from '../common/dialogs/oeb-dialogs/success-di
                 <hlm-th class="!tw-flex-1 tw-justify-center"><p class="u-text tw-text-purple"> {{badge.requestedOn | date:"dd.MM.yyyy"}}  </p></hlm-th>
                 <hlm-th class="tw-justify-center sm:tw-justify-end tw-w-full lg:tw-w-48 !tw-text-oebblack">
                     <oeb-button class="tw-w-full" size="xs" width="full_width" (click)="issueBadge(badge)" [text]="actionElementText"></oeb-button>
-                <hlm-th class="tw-justify-center sm:tw-justify-end sm:tw-w-48 tw-w-0 !tw-text-oebblack">
-                    <oeb-button class="tw-w-full" size="xs" width="full_width" (click)="issueBadge(badge)" [text]="actionElementText"></oeb-button>
                 </hlm-th>
             </hlm-trow>
         </hlm-table>`,
