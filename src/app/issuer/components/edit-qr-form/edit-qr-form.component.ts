@@ -6,7 +6,7 @@ import { BaseAuthenticatedRoutableComponent } from "../../../common/pages/base-a
 import { SessionService } from "../../../common/services/session.service";
 import { BadgeClass } from "../../models/badgeclass.model";
 import { typedFormGroup } from "../../../common/util/typed-forms";
-import { Validators } from "@angular/forms";
+import { FormControl, ValidationErrors, Validators } from "@angular/forms";
 import { DateValidator } from "../../../common/validators/date.validator";
 import { QrCodeApiService } from "../../services/qrcode-api.service";
 import { HlmDialogService } from "../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service";
@@ -50,12 +50,11 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent  {
         .addControl('title', '', Validators.required)
         .addControl('createdBy', '', Validators.required)
 		.addControl('valid_from', '', DateValidator.validDate)
-		.addControl('expires_at', '', DateValidator.validDate)
+		.addControl('expires_at', '', [DateValidator.validDate, this.validDateRange.bind(this)])
 		.addControl('badgeclass_id', '', Validators.required)
-		.addControl('issuer_id', '', Validators.required);
-        
-		
-
+		.addControl('issuer_id', '', Validators.required)
+	
+	
 
     constructor(
         route: ActivatedRoute,
@@ -128,10 +127,23 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent  {
 		this._location.back();
 	}
 
+	validDateRange(): ValidationErrors | null {
+		if (!this.qrForm) return null;
+
+		const valid_from = this.qrForm.controls.valid_from.value;
+		const expires = this.qrForm.controls.expires_at.value;
+
+		if (valid_from && expires && new Date(expires) <= new Date(valid_from)) {
+			return { expiresBeforeValidFrom: true };
+		}
+
+		return null;
+	}
+
     onSubmit() {
-		// if (!this.qrForm.markTreeDirtyAndValidate()) {
-		// 	return;
-		// }
+		if (!this.qrForm.markTreeDirtyAndValidate()) {
+			return;
+		}
 
 		if(this.editing){
 			console.log('editing')
