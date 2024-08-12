@@ -161,7 +161,6 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 
 		this.qrCodeApiService.getQrCodesForIssuerByBadgeClass(this.issuerSlug, this.badgeSlug).then((qrCodes) => {
 			this.qrCodeAwards = qrCodes
-			console.log(qrCodes)
 		})
 
 		this.externalToolsManager.getToolLaunchpoints('issuer_assertion_action').then((launchpoints) => {
