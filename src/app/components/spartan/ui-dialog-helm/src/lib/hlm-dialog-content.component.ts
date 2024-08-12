@@ -17,7 +17,7 @@ export const dialogVariants = cva(
 			variant: {
 				default: 'tw-bg-white',
 				success: 'tw-bg-green',
-				danger: 'tw-border-solid !tw-rounded-[20px] tw-border-[6px] tw-border-[var(--color-red)]',
+				danger: 'tw-border-solid !tw-rounded-[20px] tw-border-[6px] !tw-border-[var(--color-red)]',
 			}
 		},
 		defaultVariants: {
