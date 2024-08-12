@@ -1,11 +1,20 @@
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { HlmIconModule } from './spartan/ui-icon-helm/src';
-import { RouterModule } from '@angular/router';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
+import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
 import { HlmTableModule } from './spartan/ui-table-helm/src';
 import { OebButtonComponent } from './oeb-button.component';
 import { BadgeRequestApiService } from '../issuer/services/badgerequest-api.service';
+import { BadgeInstanceManager } from '../issuer/services/badgeinstance-manager.service';
+import { BadgeClassManager } from '../issuer/services/badgeclass-manager.service';
+import { BadgeClass } from '../issuer/models/badgeclass.model';
+import { ApiBadgeInstanceForCreation } from '../issuer/models/badgeinstance-api.model';
+import { BadgeInstance } from '../issuer/models/badgeinstance.model';
+import { MessageService } from '../common/services/message.service';
+import { BadgrApiFailure } from '../common/services/api-failure';
+import { HlmDialogService } from './spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
+import { SuccessDialogComponent } from '../common/dialogs/oeb-dialogs/success-dialog.component';
 
 @Component({
 	selector: 'qrcodes-datatable',
@@ -16,9 +25,10 @@ import { BadgeRequestApiService } from '../issuer/services/badgerequest-api.serv
 		CommonModule,
         OebButtonComponent,
 		TranslateModule,
-		RouterModule
+		RouterModule,
+        SuccessDialogComponent
         ],
-    providers: [BadgeRequestApiService],    
+    providers: [BadgeRequestApiService, BadgeInstanceManager, BadgeClassManager, HlmDialogService],    
 	template: `
         <hlm-table class="tw-rounded-[20px] tw-overflow-hidden tw-w-full tw-max-w-[100%] tw-bg-[var(--color-darkgray)] tw-border-darkgray tw-border">
             <hlm-caption>{{caption}}</hlm-caption>
@@ -31,7 +41,7 @@ import { BadgeRequestApiService } from '../issuer/services/badgerequest-api.serv
                 <hlm-th class="tw-w-28 md:tw-w-48 tw-justify-center !tw-text-oebblack"> {{badge.email}}</hlm-th>
                 <hlm-th class="!tw-flex-1 tw-justify-center"><p class="u-text tw-text-purple"> {{badge.requestedOn | date:"dd.MM.yyyy"}}  </p></hlm-th>
                 <hlm-th class="tw-justify-center sm:tw-justify-end sm:tw-w-48 tw-w-0 !tw-text-oebblack">
-                    <oeb-button class="tw-w-full" size="xs" width="full_width" [routerLink]="badgeIssueLink" (click)="actionElement.emit(badge.badge)" [text]="actionElementText"></oeb-button>
+                    <oeb-button class="tw-w-full" size="xs" width="full_width" (click)="issueBadge(badge)" [text]="actionElementText"></oeb-button>
                 </hlm-th>
             </hlm-trow>
         </hlm-table>`,
@@ -39,13 +49,21 @@ import { BadgeRequestApiService } from '../issuer/services/badgerequest-api.serv
 export class QrCodeDatatableComponent implements OnInit {
 	@Input() caption: string = "";
     @Input() qrCodeId: string = "";
+    @Input() badgeSlug: string = "";
+    @Input() issuerSlug: string = "";
     @Input() badgeIssueLink: string[] = [];
     @Input() requestedBadges: any;
     @Input() actionElementText: string = "Badge vergeben"
     @Output() actionElement = new EventEmitter();
     @Output() redirectToBadgeDetail = new EventEmitter();
 
-    constructor(private badgeRequestApiService: BadgeRequestApiService) {
+    constructor(
+        private badgeRequestApiService: BadgeRequestApiService,
+        private badgeInstanceManager: BadgeInstanceManager,
+        private badgeClassManager: BadgeClassManager,
+        private messageService: MessageService,
+		public router: Router,
+        ) {
     }
 
     ngOnInit(): void {
@@ -53,4 +71,47 @@ export class QrCodeDatatableComponent implements OnInit {
             this.requestedBadges = requestedBadges.body.requested_badges
          })
         }
+
+    private readonly _hlmDialogService = inject(HlmDialogService);
+    public openSuccessDialog(recipient) {
+        const dialogRef = this._hlmDialogService.open(SuccessDialogComponent, {
+            context: {
+                recipient: recipient,
+                variant: "success"
+            },
+        });
+    }    
+
+    issueBadge(badge:any) {
+
+        this.badgeClassManager.badgeByIssuerSlugAndSlug(this.issuerSlug, this.badgeSlug).then((badgeClass: BadgeClass) => {
+            this.badgeInstanceManager.createBadgeInstance(this.issuerSlug, this.badgeSlug, {
+                issuer: this.issuerSlug,
+				badge_class: this.badgeSlug,
+				recipient_type: 'email',
+				recipient_identifier: badge.email,
+				narrative: '',
+				create_notification: true,
+				evidence_items: [],
+				extensions: badgeClass.extension,
+                name: badge.firstName + ' ' + badge.lastName,
+				// expires,
+
+            }).then(
+				() => {
+					this.openSuccessDialog(badge.email);
+					this.router.navigate(['issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug]);
+					this.messageService.setMessage('Badge awarded to ' + badge.email, 'success');
+                    this.badgeRequestApiService.deleteRequest(badge.id)
+				},
+				(error) => {
+					this.messageService.setMessage(
+						'Unable to award badge: ' + BadgrApiFailure.from(error).firstMessage,
+						'error',
+					);
+				},
+			)
+        })
+    }           
+
     }
