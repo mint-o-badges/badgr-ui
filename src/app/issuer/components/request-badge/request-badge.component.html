@@ -1,48 +1,59 @@
-<div class="page-padding oeb">
-    <h1 class="tw-text-oebblack tw-text-3xl">
-        {{ 'RequestBadge.requestBadge' | translate}}<br>
-        <span class="tw-text-purple tw-font-extrabold">Müllkippe Meer</span>
-    </h1>
-    <div>
-        <p>
-            {{ 'RequestBadge.fillForm' | translate}}
-        </p>
-        <p>
-            {{ 'RequestBadge.requestBadgeInfo1' | translate}}
-            {{ 'RequestBadge.requestBadgeInfo2' | translate}}
+<ng-template [bgAwaitPromises]="badgeClassLoaded">
+    <div class="page-padding oeb">
+        <h1 class="tw-text-oebblack tw-text-3xl">
+            {{ 'RequestBadge.requestBadge' | translate}}<br>
+            <span class="tw-text-purple tw-font-extrabold">{{badgeClass.name}}</span>
+        </h1>
+        <div class="tw-flex tw-gap-4 tw-mt-4 tw-items-center">
 
-        </p>
-    </div>
-
-    <div class="oeb-section">
-        <form [formGroup]="requestForm.rawControl" (ngSubmit)="onSubmit()" novalidate>
-            <div class="tw-flex tw-flex-col">
-                <oeb-input label="Vorname" [placeholder]=""
-						fieldType="text" [control]="requestForm.rawControlMap.firstname"
-						></oeb-input>
-                <oeb-input label="Nachname" [placeholder]=""
-						fieldType="text" [control]="requestForm.rawControlMap.lastname"
-						></oeb-input>
-                <oeb-input label="Email" [placeholder]=""
-                fieldType="email" [control]="requestForm.rawControlMap.email"
-                ></oeb-input>    
-                <oeb-input fieldType="hidden" [control]="requestForm.rawControlMap.qrCodeId"></oeb-input>    
+            <div
+                                    class="tw-flex tw-items-center tw-bg-white tw-mx-auto tw-rounded-[20px]">
+                                    <img class="tw-w-[120.88px] tw-min-w-[120.88px] md:tw-w-[172.69px] tw-mx-auto tw-block"
+                                        [loaded-src]="badgeClass.image" [loading-src]="badgeLoadingImageUrl"
+                                        [error-src]="badgeFailedImageUrl" />
+                                </div>
+            <div>
+                <p hlmP>
+                    {{ 'RequestBadge.fillForm' | translate}}
+                </p>
+                <p hlmP>
+                    {{ 'RequestBadge.requestBadgeInfo1' | translate}} {{badgeClass.name}}
+                    {{ 'RequestBadge.requestBadgeInfo2' | translate}}
+    
+                </p>
             </div>
+        </div>
 
-            <p class="tw-mt-6 md:tw-mt-7 tw-text-oebblack tw-leading-[18.2px]">
-                {{ 'RequestBadge.personalDataInfo' | translate}}
-            </p>
-            
-            <oeb-checkbox id="age-confirmation" name="age-confirmation" type="checkbox"
-								[text]="'RequestBadge.ageConfirmation' | translate "
-								[formControl]="requestForm.rawControlMap.ageConfirmation">
-            </oeb-checkbox>
-            <oeb-button variant="secondary" type="submit" [text]="requestBadge">
+        <div class="oeb-section-sm">
+            <form [formGroup]="requestForm.rawControl" (ngSubmit)="onSubmit()" novalidate>
+                <div class="tw-flex tw-flex-col">
+                    <oeb-input label="Vorname" [placeholder]=""
+                            fieldType="text" [control]="requestForm.rawControlMap.firstname"
+                            ></oeb-input>
+                    <oeb-input label="Nachname" [placeholder]=""
+                            fieldType="text" [control]="requestForm.rawControlMap.lastname"
+                            ></oeb-input>
+                    <oeb-input label="Email" [placeholder]=""
+                    fieldType="email" [control]="requestForm.rawControlMap.email"
+                    ></oeb-input>    
+                    <oeb-input fieldType="hidden" [control]="requestForm.rawControlMap.qrCodeId"></oeb-input>    
+                </div>
 
-            </oeb-button>
+                <p hlmP class="tw-mt-6 md:tw-mt-7 tw-text-oebblack tw-leading-[18.2px] tw-mb-2">
+                    {{ 'RequestBadge.personalDataInfo' | translate}}
+                </p>
+                
+                <oeb-checkbox id="age-confirmation" name="age-confirmation" type="checkbox"
+                                    [text]="'RequestBadge.ageConfirmation' | translate "
+                                    [formControl]="requestForm.rawControlMap.ageConfirmation">
+                </oeb-checkbox>
+                <oeb-button variant="secondary" type="submit" [text]="'RequestBadge.requestBadge' | translate">
 
-        </form>
+                </oeb-button>
+
+            </form>
 
 
+        </div>
     </div>
-</div>
+</ng-template>

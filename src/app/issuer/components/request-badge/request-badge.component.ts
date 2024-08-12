@@ -7,6 +7,8 @@ import { BaseRoutableComponent } from '../../../common/pages/base-routable.compo
 import { Router, ActivatedRoute } from '@angular/router';
 import { SuccessDialogComponent } from '../../../common/dialogs/oeb-dialogs/success-dialog.component';
 import { HlmDialogService } from './../../../components/spartan/ui-dialog-helm/src';
+import { BadgeClassManager } from '../../services/badgeclass-manager.service';
+import { BadgeClass } from '../../models/badgeclass.model';
 
 
 @Component({
@@ -18,12 +20,18 @@ export class RequestBadgeComponent extends BaseRoutableComponent{
     constructor(
         private translate: TranslateService,
         private badgeRequestApiService: BadgeRequestApiService,
+		protected badgeManager: BadgeClassManager,
         router: Router,
 		route: ActivatedRoute,
     ) {
         super(router, route);
-
+        this.badgeClassLoaded = this.badgeManager.badgeByIssuerSlugAndSlug(this.issuerSlug, this.badgeSlug).then((badge) => {
+            this.badgeClass = badge;
+    })
     }
+
+    readonly badgeLoadingImageUrl = '../../../breakdown/static/images/badge-loading.svg';
+	readonly badgeFailedImageUrl = '../../../breakdown/static/images/badge-failed.svg';
 
     private readonly _hlmDialogService = inject(HlmDialogService);
 	public openSuccessDialog() {
@@ -43,9 +51,14 @@ export class RequestBadgeComponent extends BaseRoutableComponent{
 		return this.route.snapshot.params['qrCodeId'];
 	}
 
-    // get issuerSlug() {
-    //     return this.route.snapshot.params['issuerSlug'];
-    // }
+	badgeClassLoaded: Promise<unknown>;
+	badgeClass: BadgeClass;
+
+
+
+    get issuerSlug() {
+        return this.route.snapshot.params['issuerSlug'];
+    }
 
     ngOnInit(): void {
         this.requestForm.setValue({
