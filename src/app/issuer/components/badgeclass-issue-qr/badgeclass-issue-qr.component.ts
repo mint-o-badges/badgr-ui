@@ -117,7 +117,7 @@ export class BadgeClassIssueQrComponent extends BaseAuthenticatedRoutableCompone
 			// expires_at: formState.expires,
 		}).then(() => {
 			this.openSuccessDialog()
-			this.router.navigate(['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'qr', 'generate'], {queryParams: {formState}});
+			this.router.navigate(['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'qr', 'generate']);
 		});	
 
     }

@@ -140,7 +140,7 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent  {
 				issuer_id: this.issuerSlug
 			}).then((qrcode) => {
                 this.openSuccessDialog()
-                this.router.navigate(['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'qr', qrcode.slug, 'generate'], {queryParams: formState});
+                this.router.navigate(['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'qr', qrcode.slug, 'generate']);
             }
         )
 		}
@@ -156,8 +156,7 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent  {
 			valid_from: formState.valid_from ? new Date(formState.valid_from).toISOString() : undefined
 		}).then((qrcode) => {
                 this.openSuccessDialog()
-                // this.router.navigate(['/issuer/issuers', 'badges', this.badgeSlug], {queryParams: formState});
-                this.router.navigate(['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'qr', qrcode.slug, 'generate'], {queryParams: formState});
+                this.router.navigate(['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'qr', qrcode.slug, 'generate']);
             }
         )
     }}   

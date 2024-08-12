@@ -120,16 +120,15 @@ export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComp
 	}
 
 	ngOnInit() {
-		this.route.queryParams.subscribe((params) => {
-			this.qrTitle = params['title'];
-			this.creator = params['createdBy'];
-			this.valid_from = params['valid_from'];
-			this.expires_at = params['expires_at'];
-			this.validity =
-				BadgeClassGenerateQrComponent.datePipe.transform(new Date(this.valid_from), 'dd.MM.yyyy') +
-				' - ' +
-				BadgeClassGenerateQrComponent.datePipe.transform(new Date(this.expires_at), 'dd.MM.yyyy');
-		});
+		this.qrCodeApiService.getQrCode(this.qrSlug).then((qrCode) => {
+			this.qrTitle = qrCode.title;
+			this.creator = qrCode.createdBy;
+			this.valid_from = qrCode.valid_from;
+			this.expires_at = qrCode.expires_at;
+			this.validity = BadgeClassGenerateQrComponent.datePipe.transform(new Date(this.valid_from), 'dd.MM.yyyy') +
+			' - ' +
+			BadgeClassGenerateQrComponent.datePipe.transform(new Date(this.expires_at), 'dd.MM.yyyy');
+		})
 
 		// apparently this is the best way to check if something is a date in js
 		//@ts-ignore

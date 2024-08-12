@@ -24,4 +24,8 @@ export class BadgeRequestApiService extends BaseHttpApiService {
 	getBadgeRequestsByQrCode(qrCodeId: string) {
         return this.get(`/request-badge/${qrCodeId}`);
     }
+
+	deleteRequest(requestId: string) {
+		return this.delete(`/deleteBadgeRequest/${requestId}`);
+	}
 }
