@@ -13,6 +13,7 @@ import { DangerDialogComponent } from "../../../common/dialogs/oeb-dialogs/dange
 import { TranslateService } from "@ngx-translate/core";
 import { QrCodeApiService } from "../../services/qrcode-api.service";
 import { DatePipe } from "@angular/common";
+import { MenuItem } from "../../../common/components/badge-detail/badge-detail.component.types";
 
 
 @Component({
@@ -56,6 +57,21 @@ export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComp
 	editQrCodeLink: string = `/issuer/issuers/${this.issuerSlug}/badges/${this.badgeSlug}/qr/${this.qrSlug}/edit`;
 	qrCodeWidth = 244; 
     public qrCodeDownloadLink: SafeUrl = "";
+
+	qrCodeMenu : MenuItem[] = [
+		{
+			title: 'Bearbeiten',
+			icon: 'lucidePencil',
+			routerLink: [this.editQrCodeLink]
+		},
+		{
+			title: 'Delete',
+			icon: 'lucideTrash2',
+			action: () => {
+				this.openDangerDialog();
+			}
+		}
+	]
 
     constructor(
         route: ActivatedRoute,
