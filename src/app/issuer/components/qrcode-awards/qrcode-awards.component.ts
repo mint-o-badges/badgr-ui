@@ -88,12 +88,6 @@ export class QrCodeAwardsComponent {
 				])
 			})
 		}
-		this.qrCodeMenus.forEach((menu, index) => {
-			console.log(menu, index)
-
-		}
-		)
-
 	}
 
 	private readonly _hlmDialogService = inject(HlmDialogService);

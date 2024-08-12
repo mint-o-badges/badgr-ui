@@ -12,12 +12,15 @@ import { QrCodeApiService } from "../../services/qrcode-api.service";
 import { HlmDialogService } from "../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service";
 import { SuccessDialogComponent } from "../../../common/dialogs/oeb-dialogs/success-dialog.component";
 import { TranslateService } from "@ngx-translate/core";
+import { DatePipe } from "@angular/common";
 
 @Component({
 	selector: 'edit-qr-form',
 	templateUrl: './edit-qr-form.component.html',
 })
-export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent{
+export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent  {
+
+	static datePipe = new DatePipe('de');
 
     @Input() editing: boolean = false;
 
@@ -89,16 +92,27 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent{
 						{ title: 'Award Badge' },
 					];
 				});
+			
+				this.qrCodeApiService.getQrCode(this.qrSlug).then((qrCode) => {
+					this.qrForm.setValue({
+						title: qrCode.title,
+						createdBy: qrCode.createdBy,
+						valid_from: EditQrFormComponent.datePipe.transform(new Date(qrCode.valid_from), 'yyyy-MM-dd'),
+						expires_at: EditQrFormComponent.datePipe.transform(new Date(qrCode.expires_at),  'yyyy-MM-dd'),
+						badgeclass_id: qrCode.badgeclass_id,
+						issuer_id: qrCode.issuer_id
+					});
+				});
+			
+				this.qrForm.setValue({
+					...this.qrForm.value,
+					badgeclass_id: this.badgeSlug,
+					issuer_id: this.issuerSlug,
+				});	
 
-			this.qrForm.setValue({
-				...this.qrForm.value,
-				badgeclass_id: this.badgeSlug,
-				issuer_id: this.issuerSlug,
-			});	
         
 
     }
-
 	private readonly _hlmDialogService = inject(HlmDialogService);
 	public openSuccessDialog() {
 		const dialogRef = this._hlmDialogService.open(SuccessDialogComponent, {

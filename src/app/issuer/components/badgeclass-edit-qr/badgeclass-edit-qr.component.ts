@@ -34,16 +34,7 @@ export class BadgeClassEditQrComponent extends BaseAuthenticatedRoutableComponen
 
 
 	badgeClassLoaded: Promise<unknown>;
-    crumbs: LinkEntry[]
-
-    qrForm = typedFormGroup()
-        .addControl('title', '', Validators.required)
-        .addControl('createdBy', '', Validators.required)
-		.addControl('valid_from', '', DateValidator.validDate)
-		.addControl('expires_at', '', DateValidator.validDate)
-		.addControl('badgeclass_id', '', Validators.required)
-		.addControl('issuer_id', '', Validators.required);
-        
+    crumbs: LinkEntry[]    
 		
 
 
@@ -81,14 +72,7 @@ export class BadgeClassEditQrComponent extends BaseAuthenticatedRoutableComponen
 						},
 						{ title: 'Award Badge' },
 					];
-				});
-
-			this.qrForm.setValue({
-				...this.qrForm.value,
-				badgeclass_id: this.badgeSlug,
-				issuer_id: this.issuerSlug,
-			});	
-        
+				});     
 
     }
 
@@ -101,25 +85,5 @@ export class BadgeClassEditQrComponent extends BaseAuthenticatedRoutableComponen
 			},
 		});
 	}
-
-    onSubmit() {
-		// if (!this.qrForm.markTreeDirtyAndValidate()) {
-		// 	return;
-		// }
-
-		const formState = this.qrForm.value;
-		console.log(formState.badgeclass_id)
-		this.qrCodeApiService.createQrCode(this.issuerSlug, this.badgeSlug, {
-			title: formState.title,
-			createdBy: formState.createdBy,
-			badgeclass_id: formState.badgeclass_id,
-			issuer_id: formState.issuer_id,
-			// expires_at: formState.expires,
-		})
-		this.openSuccessDialog()
-        this.router.navigate(['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'qr', 'generate'], {queryParams: formState});
-
-    }
-
    
 }
