@@ -1,25 +1,27 @@
 <ng-container *bgAwaitPromises="[badgeClassLoaded]">
-    <div class="page-padding">
+    <div class="oeb page-padding">
         <div class="oeb-breadcrumbs">
             <bg-breadcrumbs [linkentries]="crumbs"></bg-breadcrumbs>
-
         </div>
-        <span class="tw-text-purple tw-text-[46px] tw-leading-[52.9px] tw-font-extrabold">Badge über QR-Code vergeben</span>
-        <p class="tw-text-2xl tw-text-oebblack tw-my-4">
-            Wenn du hier eine QR-Code-Vergabe anlegst, können deine Lernenden den so generierten QR-Code abscannen und sich den Badge darüber selbst abholen.
-        </p>
+        <div class="oeb-headline-container-sm">
+            <h1 hlmH1 class="tw-text-purple tw-font-extrabold">Badge über QR-Code vergeben</h1>
+            <p hlmP size="lg" class="tw-text-oebblack tw-my-4">
+                Wenn du hier eine QR-Code-Vergabe anlegst, können deine Lernenden den so generierten QR-Code abscannen und sich den Badge darüber selbst abholen.
+            </p>
+        </div>
         <div class="tw-text-oebblack">
-            <span class="tw-font-bold">So funktioniert's</span>
+            <span hlmP class="tw-font-bold">So funktioniert's</span>
             <ol class="tw-list-decimal tw-list-inside tw-my-2">
-                <li> {{ 'IssueQr.list1' | translate }}</li>
-                <li> {{ 'IssueQr.list2' | translate }} </li>
-                <li> {{ 'IssueQr.list3' | translate }}</li>
-                <li> {{ 'IssueQr.list4' | translate }}</li>
+                <li class="tw-pt-1" hlmP [innerHTML]="'IssueQr.list1' | translate"></li>
+                <li class="tw-pt-1" hlmP [innerHTML]="'IssueQr.list2' | translate"></li>
+                <li class="tw-pt-1" hlmP [innerHTML]="'IssueQr.list3' | translate"></li>
+                <li class="tw-pt-1" hlmP [innerHTML]="'IssueQr.list4' | translate"></li>
             </ol>
-
         </div>
-        <div class="tw-bg-lightpurple tw-rounded-3xl tw-mt-2 tw-p-10">
-            <edit-qr-form></edit-qr-form>
+        <div class="oeb-section-sm">
+            <div class="tw-bg-lightpurple tw-rounded-3xl tw-mt-2 tw-p-10">
+                <edit-qr-form></edit-qr-form>
+            </div>
         </div>
     </div>
 </ng-container>    

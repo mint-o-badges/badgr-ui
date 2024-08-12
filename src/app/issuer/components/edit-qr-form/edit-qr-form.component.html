@@ -1,26 +1,25 @@
 <form [formGroup]="qrForm.rawControl" (ngSubmit)="onSubmit()" novalidate>
     <div class="tw-flex tw-flex-col md:tw-flex-row tw-gap-6">
         <div class="tw-flex tw-flex-row tw-justify-center">
-
-        <div class="tw-w-[195px] tw-h-[179px] md:tw-w-[297.86px] md:tw-h-[257px] tw-flex tw-items-center tw-bg-white tw-rounded-[20px] tw-border tw-border-solid tw-border-[var(--color-purple)] ">
-            <div class="tw-flex tw-items-center tw-bg-white tw-mx-auto md:tw-py-8 tw-py-4 tw-rounded-[20px] oeb-slight-shadow">
-                <img class="tw-w-[120.88px] tw-h-[120.88px] md:tw-w-[172.69px] md:tw-h-[172.69px] tw-mx-auto tw-block"
-                    [loaded-src]="badgeClass.image" [loading-src]="badgeLoadingImageUrl"
-                    [error-src]="badgeFailedImageUrl" />
+            <div>
+                <div class="tw-flex tw-items-center tw-px-4 tw-bg-white tw-mx-auto md:tw-py-8 tw-py-4 tw-rounded-[20px] oeb-slight-shadow tw-grow-0 tw-shrink-0">
+                    <img class="md:tw-max-w-[200px] tw-max-w-[150px] tw-mx-auto tw-block"
+                        [loaded-src]="badgeClass.image" [loading-src]="badgeLoadingImageUrl"
+                        [error-src]="badgeFailedImageUrl" />
+                </div>
             </div>
-        </div>
-        <div class="tw-ml-4 md:tw-hidden tw-justify-center tw-items-center tw-flex">
-            <h2 class=" tw-text-purple tw-text-3xl">QR-Code Vergabe erstellen für <br> <span class="tw-font-extrabold">{{badgeClass.name}}</span></h2>
-        </div>
+            <div class="tw-ml-4 md:tw-hidden tw-justify-center tw-items-center tw-flex">
+                <h2 class=" tw-text-purple tw-text-3xl">QR-Code Vergabe erstellen für <br> <span class="tw-font-extrabold">{{badgeClass.name}}</span></h2>
+            </div>
         </div>
 
 
         <div class="tw-flex tw-flex-col tw-w-full ">
             <h2 class="tw-hidden md:tw-block tw-text-purple tw-text-3xl">QR-Code Vergabe erstellen für <br> <span class="tw-font-extrabold">{{badgeClass.name}}</span></h2>
-            <oeb-input label="Titel" [placeholder]=""
+            <oeb-input label="Titel" [placeholder]="'Badge Vergabe Juni 2024'"
                     fieldType="text" [autofocus]="true" [control]="qrForm.rawControlMap.title"
                     ></oeb-input>
-            <oeb-input label="Name Ersteller:in" [placeholder]=""
+            <oeb-input label="Name Ersteller:in" [placeholder]="'Mein Name und Vorname'"
                     fieldType="text" [autofocus]="true" [control]="qrForm.rawControlMap.createdBy"
                     ></oeb-input>
             <input [formControl]="qrForm.rawControlMap.badgeclass_id" type="hidden" />
