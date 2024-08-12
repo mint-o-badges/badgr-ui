@@ -79,7 +79,7 @@
 			<nav class="tw-items-stretch tw-align-middle tw-hidden lg:tw-flex">
 				<div class="tw-flex tw-gap-8 tw-items-center">
 					<!-- About Badges Menu -->
-					<oeb-dropdown [menuItems]="aboutBadgesMenuItems" trigger="Über Badges" triggerStyle="oeb-navitem tw-cursor-pointer !tw-leading-none"></oeb-dropdown>
+					<oeb-dropdown [menuItems]="aboutBadgesMenuItems" trigger="Über Badges" triggerStyle="oeb-navitem tw-cursor-pointer !tw-leading-none !tw-py-1"></oeb-dropdown>
 
 					<a *ngIf="!features.disableRegistration"
 						class="oeb-navitem" routerLinkActive="oeb-navitem-is-active" [routerLink]="['/public/about']">{{
@@ -108,7 +108,7 @@
 		<ng-template [ngIf]="loggedIn && !isOAuthAuthorizationInProcess">
 			<nav class="tw-hidden lg:tw-block">
 				<div class="tw-flex tw-gap-8 tw-items-center">
-					<oeb-dropdown [menuItems]="aboutBadgesMenuItems" trigger="Über Badges" triggerStyle="oeb-navitem tw-cursor-pointer !tw-leading-none"></oeb-dropdown>
+					<oeb-dropdown [menuItems]="aboutBadgesMenuItems" trigger="Über Badges" triggerStyle="oeb-navitem tw-cursor-pointer !tw-leading-none !tw-py-1"></oeb-dropdown>
 
 					<a class="oeb-navitem"
 						routerLinkActive="oeb-navitem-is-active" [routerLink]="['public/about']">
@@ -131,7 +131,7 @@
 						translate }}</a>
 
 					<!-- Account Menu -->
-					<oeb-dropdown [menuItems]="accountMenuItems" trigger="{{ 'General.account' | translate }}" triggerStyle="oeb-navitem tw-cursor-pointer !tw-leading-none"></oeb-dropdown>
+					<oeb-dropdown [menuItems]="accountMenuItems" trigger="{{ 'General.account' | translate }}" triggerStyle="oeb-navitem tw-cursor-pointer !tw-leading-none !tw-py-1"></oeb-dropdown>
 
 					<!-- ToDo: comment in when all pages are completely translated -->
 					<!-- Language -->

@@ -84,11 +84,11 @@ export class OebDropdownComponent {
     get iconClass(): string {
         switch(this.size) {
             case 'sm':
-                return 'tw-h-4 tw-w-4';
+                return 'tw-h-4 tw-w-4 !tw-mr-3';
             case 'lg':
-                return 'tw-h-6 tw-w-6';
+                return 'tw-h-6 tw-w-6 !tw-mr-3';
             default:
-                return 'tw-h-5 tw-w-5';
+                return 'tw-h-5 tw-w-5 !tw-mr-3';
         }
     }
 }
