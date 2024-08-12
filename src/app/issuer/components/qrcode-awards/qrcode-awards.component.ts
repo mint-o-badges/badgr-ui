@@ -100,10 +100,9 @@ export class QrCodeAwardsComponent {
 
 
 	public openDangerDialog(qrSlug: string) {
-		console.log(qrSlug)
 		const dialogRef = this._hlmDialogService.open(DangerDialogComponent, {
 			context: {
-				delete: this.deleteQrCode(qrSlug),
+				delete: () => this.deleteQrCode(qrSlug),
 				variant: "danger"
 			},
 		});
@@ -111,8 +110,7 @@ export class QrCodeAwardsComponent {
 
 	deleteQrCode(qrSlug: string) {
 		this.qrCodeApiService.deleteQrCode(this.issuerSlug, this.badgeClassSlug, qrSlug).then(() => {
-			console.log('QrCode deleted');
-			
+			this.awards = this.awards.filter(value => value.slug != qrSlug)
 		}
 	)};
 
