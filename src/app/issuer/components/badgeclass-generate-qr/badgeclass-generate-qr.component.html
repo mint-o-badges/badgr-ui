@@ -9,20 +9,16 @@
                 <h1>QR-Code Vergabe</h1>
                 <h1 class="h1-black heading-sec tw-w-full">{{qrTitle}}</h1>
             </div>
-            <button 
-                class="tw-items-center tw-justify-center tw-flex tw-cursor-pointer tw-border tw-border-solid tw-border-[var(--color-purple)] tw-rounded-[7px] tw-w-[44.8px] tw-h-[44.8px] md:tw-w-[64px] md:tw-h-[64px]"
-                id="actionstrigger" [bgPopupMenuTrigger]="moreMenu">
-                <svg fill="var(--color-purple)" icon="icon_more"></svg>
-                <span class="visuallyhidden">Mehr</span>
-            </button>
-            <bg-popup-menu #moreMenu>
-                <a class="menuitem" [href]="editQrCodeLink"
-                    ><svg icon="icon_external_link"></svg>{{ 'General.edit' | translate }}</a
-                >
-                <button class="menuitem" (click)="openDangerDialog()"
-                    ><svg icon="icon_external_link"></svg>{{ 'General.delete' | translate }}</button
-                >
-            </bg-popup-menu>
+            <div>
+                <oeb-dropdown [trigger]="svgTrigger" 
+                    class="tw-items-center tw-justify-center tw-flex tw-cursor-pointer tw-border tw-border-solid tw-border-[var(--color-purple)] tw-rounded-[7px]"
+                    [menuItems]="qrCodeMenu"></oeb-dropdown>
+                <ng-template #svgTrigger>
+                    <svg class="tw-w-[44.8px] tw-h-[44.8px] md:tw-w-[64px] md:tw-h-[64px]"
+                        fill="var(--color-purple)" icon="icon_more"></svg>
+                    <span class="visuallyhidden">Mehr</span>
+                </ng-template>    
+            </div>
         </div>
         <div class="tw-pl-[10%] tw-flex tw-flex-col tw-gap-10">
             <div class="tw-flex tw-flex-col md:tw-flex-row tw-max-w-[322px] md:tw-max-w-[668px] tw-gap-8">
