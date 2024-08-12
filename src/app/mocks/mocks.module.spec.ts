@@ -39,6 +39,7 @@ import { NavigationService } from '../common/services/navigation.service';
 import { RecipientBadgeCollectionApiService } from '../recipient/services/recipient-badge-collection-api.service';
 import { ApplicationCredentialsService } from '../common/services/application-credentials.service.';
 import { CaptchaService } from '../common/services/captcha.service';
+import { PdfService } from '../common/services/pdf.service';
 
 /*@Injectable()
 export class MockRouter { navigate = () => {jasmine.createSpy('navigate'); };}*/
@@ -179,6 +180,13 @@ export class MockCaptchaService {
 	setupCaptcha = () => new Promise(() => {})
 }
 
+@Injectable()
+export class MockPdfService {
+	getPdf = () => new Promise(() => {});
+	downloadPdf = () => new Promise(() => {});
+	dateToString = () => new Promise(() => {});
+}
+
 export const commonDialog = {
 	open: false,
 	openDialog: () => new Promise(() => {}),
@@ -312,6 +320,7 @@ export class MockDomSanitizer {
 	sanitize = () => 'safeString';
 	bypassSecurityTrustUrl = () => 'safeString';
 	bypassSecurityTrustHtml = () => 'safeString';
+	bypassSecurityTrustResourceUrl = () => 'safeString';
 }
 
 @Injectable()
@@ -356,7 +365,8 @@ export let COMMON_MOCKS_PROVIDERS_WITH_SUBS = [];
 	RecipientBadgeCollectionManager,
 	RecipientBadgeManager,
 	ApplicationCredentialsService,
-	CaptchaService
+	CaptchaService,
+	PdfService
 ].forEach((m, i, a) => {
 	const thisMock = eval('Mock' + m.name);
 	COMMON_MOCKS_PROVIDERS.push(thisMock);

@@ -44,13 +44,12 @@ export class ExportPdfDialog extends BaseDialog {
 		protected profileManager: UserProfileManager,
 		protected messageService: MessageService,
 		protected pdfService: PdfService,
-		private sanitizer: DomSanitizer
+		private sanitizer: DomSanitizer,
 	) {
 		super(componentElem, renderer);
 		var r = document.querySelector(':root');
 		var rs = getComputedStyle(r);
 		this.themeColor = rs.getPropertyValue('--color-interactive1');
-
 
 		this.profileManager.userProfilePromise.then(
 			(profile) => {
@@ -67,8 +66,7 @@ export class ExportPdfDialog extends BaseDialog {
 
 		this.pdfService.getPdf(badge.slug).subscribe((url) => {
 			this.pdfSrc = url;
-		})
-
+		});
 	}
 
 	async openDialogForCollections(collection: RecipientBadgeCollection): Promise<void> {
@@ -99,7 +97,6 @@ export class ExportPdfDialog extends BaseDialog {
 		this.closeModal();
 		this.resolveFunc();
 	}
-
 
 	// disclaimer: unfinished
 	generateBadgeCollectionPdf(collection: RecipientBadgeCollection) {
@@ -318,7 +315,7 @@ export class ExportPdfDialog extends BaseDialog {
 					align: 'justify',
 				});
 				xPos += 70 * (12 / 14);
-				let datum = dateToString(this.badge.issueDate, '.');
+				let datum = this.pdfService.dateToString(this.badge.issueDate, '.');
 				this.doc.text(datum, xPos, yPos, {
 					align: 'justify',
 				});
@@ -335,12 +332,7 @@ export class ExportPdfDialog extends BaseDialog {
 	}
 
 	downloadPdf() {
-		const link = document.createElement('a');
-		// https://stackoverflow.com/questions/55849415/type-saferesourceurl-is-not-assignable-to-type-string
-		const url = this.sanitizer.sanitize(SecurityContext.RESOURCE_URL, this.pdfSrc)
-		link.href = url;
-		link.download = this.badge.badgeClass.name + ' - ' + dateToString(this.badge._issueDate, '') + '.pdf'; 
-		link.click(); 
+		this.pdfService.downloadPdf(this.pdfSrc, this.badge.badgeClass.name, this.badge._issueDate);
 	}
 }
 
@@ -367,14 +359,4 @@ export function basicImageLoader(file: File | string): Promise<string> {
 				throw new Error(`${file.name} is not a valid image file`);
 			});
 	}
-}
-
-function dateToString(date: Date, seperator: string) {
-	return (
-		('0' + date.getDate()).slice(-2) +
-		seperator +
-		('0' + (date.getMonth() + 1)).slice(-2) +
-		seperator +
-		date.getFullYear()
-	);
 }

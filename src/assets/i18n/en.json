@@ -52,7 +52,8 @@
 		"oeb": "Open Educational Badges",
 		"showDetails": "Show details",
 		"hideDetails": "Hide details",
-		"password": "Password"
+		"password": "Password",
+		"loading": "Loading..."
 	},
 	"NavItems": {
 		"register": "Register",
@@ -219,7 +220,8 @@
 		"importList": "Liste importieren",
 		"import": "Import",
 		"csvColumns": "CSV Spalten",
-		"csvError": "Die CSV Datei enthält Zeilen länger als ihre Überschrift. Bitte behebe diesen Fehler und versuche es erneut."
+		"csvError": "Die CSV Datei enthält Zeilen länger als ihre Überschrift. Bitte behebe diesen Fehler und versuche es erneut.",
+		"pdfCertificate": "PDF-Certificate"
 	},
 	"Badge": {
 		"groupBy": "Group by",
