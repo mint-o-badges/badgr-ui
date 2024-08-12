@@ -174,7 +174,7 @@ export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComp
 
 	deleteQrCode() {
 		this.qrCodeApiService.deleteQrCode(this.issuerSlug, this.badgeSlug, this.qrSlug).then(() => {
-			console.log('QrCode deleted');
+			this.router.navigate(['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug]);
 		});
 	}
 
