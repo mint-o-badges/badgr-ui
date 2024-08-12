@@ -9,6 +9,7 @@ import { SuccessDialogComponent } from '../../../common/dialogs/oeb-dialogs/succ
 import { HlmDialogService } from './../../../components/spartan/ui-dialog-helm/src';
 import { BadgeClassManager } from '../../services/badgeclass-manager.service';
 import { BadgeClass } from '../../models/badgeclass.model';
+import { BadgeRequest } from '../../models/badgerequest-api.model';
 
 
 @Component({
@@ -83,7 +84,15 @@ export class RequestBadgeComponent extends BaseRoutableComponent{
 
 		const formState = this.requestForm.value;
 
-        this.badgeRequestApiService.requestBadge(this.qrSlug, JSON.stringify(formState)).then((response) => {
+        const userData: BadgeRequest = {
+            firstname: formState.firstname,
+            lastname: formState.lastname,
+            email: formState.email,
+            ageConfirmation: formState.ageConfirmation,
+            qrCodeId: formState.qrCodeId            
+        }
+
+        this.badgeRequestApiService.requestBadge(this.qrSlug, userData).then((response) => {
             if(response.ok){
                 this.openSuccessDialog();
                 // TODO: check if this is correct 
