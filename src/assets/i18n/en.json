@@ -266,6 +266,7 @@
 		"enterDetails": "Enter Badge Details",
 		"criteriaInfo": "The following criteria are saved as metadata in the badge as a result of your input: ",
 		"criteriaError": "Either text or url are mandatory.",
+		"duplicateCompetencyError": "Badges may not contain duplicate competencies. Duplicate competency: ",
 		"whatIsThe": "What is the",
 		"competencyBadgeInfo": "are filled with competencies",
 		"competencyBadgeShortInfo": "contain competencies",

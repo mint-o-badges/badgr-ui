@@ -164,7 +164,10 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	 */
 
 	savePromise: Promise<BadgeClass> | null = null;
-	badgeClassForm = typedFormGroup([this.criteriaRequired.bind(this), this.imageValidation.bind(this)])
+	badgeClassForm = typedFormGroup([
+        this.criteriaRequired.bind(this),
+        this.imageValidation.bind(this),
+        this.noDuplicateCompetencies.bind(this)])
 		.addControl('badge_name', '', [
 			Validators.required,
 			Validators.maxLength(70),
@@ -195,7 +198,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				// default of 60 from unselected suggestions,
 				// this doesn't really matter
 				.addControl('studyLoad', 60, [Validators.required, this.positiveInteger]),
-            this.noDuplicateCompetenciesAi
 		)
 		.addArray(
 			'competencies',
@@ -207,7 +209,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				// limit of 1000000 is set so that users cant break the UI by entering a very long number
 				.addControl('studyLoad', 60, [Validators.required, this.positiveInteger, Validators.max(1000000)])
 				.addControl('category', '', Validators.required),
-            this.noDuplicateCompetenciesHand
 		)
 		.addArray(
 			'alignments',
@@ -610,7 +611,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 					aiCompetencies.removeAt(i);
 				}
 
-				skills.forEach((skill) => {
+				skills.forEach((skill,i) => {
 					aiCompetencies.addFromTemplate();
 				});
 			})
@@ -1024,27 +1025,31 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		}
 	}
 
-    noDuplicateCompetenciesHand(control: AbstractControl): {error: String} {
-        if (!control?.root?.value)
-            return null;
-        const selectedHandCompetencies = control.value.filter(c => c.added).map(c => c.name);
-        const aiCompetencies = control.root.value.aiCompetencies ?? [];
-        // TODO: Extract title from AI competencies
-        const selectedAiCompetencies = aiCompetencies.filter(c => c.selected)
-
-        return null;
+    noDuplicateCompetencies(): {duplicateCompetency: Boolean} | null {
+        if (this.duplicateCompetency)
+            return { duplicateCompetency: true };
     }
 
-    noDuplicateCompetenciesAi(control: AbstractControl): {error: String} {
-        if (!control?.root?.value)
-            return null;
-        const handCompetencies = control.root.value.competencies ?? [];
-        const selectedHandCompetencies = handCompetencies.filter(c => c.added).map(c => c.name);
-        const selectedAiCompetencies = control.value.filter(c => c.selected)
+    get duplicateCompetency(): String | null {
+        if (!this.badgeClassForm) return null;
 
+        const hand = this.badgeClassForm.controls.competencies.value.
+            filter(c => c.added).
+            map(c => c.name);
+        const ai = this.badgeClassForm.controls.aiCompetencies.value.
+            filter(c => c.selected).
+            map((c,i) => this.aiCompetenciesSuggestions[i].preferred_label);
+
+        const all = hand.concat(ai);
+        const check = new Set();
+
+        for (const name of all)
+            if (check.has(name))
+                return name;
+            else
+                check.add(name);
         return null;
     }
-
 
 	closeLegend() {
 		this.showLegend = false;

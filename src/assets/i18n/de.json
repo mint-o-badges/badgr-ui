@@ -266,6 +266,7 @@
 		"enterDetails": "Badge-Details eingeben",
 		"criteriaInfo": "Folgende Kriterien sind auf Basis deiner Eingaben als Metadaten im Badge hinterlegt:",
 		"criteriaError": "Entweder Text oder eine URL sind verpflichtend.",
+		"duplicateCompetencyError": "Badges dürfen keine Kompetenz doppelt beinhalten. Doppelte Kompetenz: ",
 		"whatIsThe": "Was ist die",
 		"competencyBadgeInfo": "werden mit Kompetenzen gefüllt",
 		"competencyBadgeShortInfo": "enthalten Kompetenzen",
