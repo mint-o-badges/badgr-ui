@@ -29,7 +29,7 @@
 			{{ 'Issuer.nichtVerified' | translate }}
 		</p>
 		<div class="tw-flex tw-gap-2">
-			<oeb-button *ngIf="!public" [routerLink]="['./badges/create']" [disabled]="!issuer.canCreateBadge" [text]="'Issuer.createBadge' | translate">
+			<oeb-button *ngIf="!public" [routerLink]="['./badges/create']" [disabled]="!issuer.canCreateBadge" [text]="'Issuer.createBadge' | translate" [class]="issuer.canCreateBadge ? '' : 'disabled'">
 			</oeb-button>
 			<oeb-button *ngIf="public" (click)="routeToUrl(issuer.url)" [text]="'Issuer.visitWebsite' | translate">
 			</oeb-button>
@@ -52,7 +52,9 @@
 		<oeb-button 
 			*ngIf="!public"
 			width="full_width"
-			class="tw-flex-grow tw-relative"
+			[class]="'tw-flex-grow tw-relative'.concat(issuer.canCreateBadge
+                               ? ''
+                               : ' disabled')"
 			[routerLink]="['./badges/create']"
 			[disabled]="!issuer.canCreateBadge"
 			[text]="'Issuer.createBadge' | translate"

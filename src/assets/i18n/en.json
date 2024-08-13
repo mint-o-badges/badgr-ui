@@ -53,7 +53,8 @@
 		"showDetails": "Show details",
 		"hideDetails": "Hide details",
 		"password": "Password",
-		"loading": "Loading..."
+		"loading": "Loading...",
+        "warning": "Warning"
 	},
 	"NavItems": {
 		"register": "Register",
@@ -251,6 +252,9 @@
 		"createdOn": "Created on",
 		"catalogHeadline": "Alle Badges in der Übersicht",
 		"requestedOn": "Requested on"	
+        "deletePart1": "Are you sure you want to delete the badge '",
+        "deletePart2": "'?",
+        "deleteConfirm": "Delete Badge"
 	},
 	"CreateBadge": {
 		"chooseBadgeCategory": "Choose Badge-Category",

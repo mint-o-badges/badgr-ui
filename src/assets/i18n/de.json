@@ -54,7 +54,8 @@
 		"showDetails": "Details anzeigen",
 		"hideDetails": "Details verstecken",
 		"password": "Passwort",
-		"loading": "Laden..."
+		"loading": "Laden...",
+        "warning": "Warnung"
 	},
 	"NavItems": {
 		"register": "Registrieren",
@@ -250,7 +251,10 @@
 		"title": "Titel",
 		"createdOn": "Erstellt am",
 		"catalogHeadline": "Alle Badges in der Übersicht",
-		"requestedOn": "Angefragt am"
+		"requestedOn": "Angefragt am",
+        "deletePart1": "Bist du sicher, dass du das Badge '",
+        "deletePart2": "' löschen möchtest?",
+        "deleteConfirm": "Badge löschen"
 	},
 	"CreateBadge": {
 		"chooseBadgeCategory": "Badge-Kategorie wählen",
@@ -352,7 +356,7 @@
 		"confirmPassword":"Bitte bestätige Dein Passwort",
 		"passwordsNotEqual":"Die Passwörter sind nicht gleich",
 		"registerWithBildungsraum": "Registrieren mit Mein Bildungsraum",
-		"ageConfirm": "Ich bestätige, dass ich bei Registrierung mindestens 16 Jahre alt bin oder mir für die Registrierung auf Plattform eine Zustimmung meiner Personensorgeberechtigten vorliegt."
+		"ageConfirm": "Ich bestätige, dass ich bei Registrierung mindestens 16 Jahre alt bin oder mir für die Registrierung auf dieser Plattform eine Zustimmung meiner Personensorgeberechtigten vorliegt."
 
 	},
 	"Captcha": {
