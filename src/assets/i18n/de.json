@@ -355,7 +355,7 @@
 		"confirmPassword":"Bitte bestätige Dein Passwort",
 		"passwordsNotEqual":"Die Passwörter sind nicht gleich",
 		"registerWithBildungsraum": "Registrieren mit Mein Bildungsraum",
-		"ageConfirm": "Ich bestätige, dass ich bei Registrierung mindestens 16 Jahre alt bin oder mir für die Registrierung auf Plattform eine Zustimmung meiner Personensorgeberechtigten vorliegt."
+		"ageConfirm": "Ich bestätige, dass ich bei Registrierung mindestens 16 Jahre alt bin oder mir für die Registrierung auf dieser Plattform eine Zustimmung meiner Personensorgeberechtigten vorliegt."
 
 	},
 	"Captcha": {

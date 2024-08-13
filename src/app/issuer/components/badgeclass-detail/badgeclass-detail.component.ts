@@ -25,8 +25,8 @@ import { ShareSocialDialogOptions } from '../../../common/dialogs/share-social-d
 import { AppConfigService } from '../../../common/app-config.service';
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { BadgeClassCategory, BadgeClassLevel } from '../../models/badgeclass-api.model';
-import { PageConfig } from '../../../common/components/badge-detail/badge-detail.component';
 import { TranslateService } from '@ngx-translate/core';
+import { PageConfig } from '../../../common/components/badge-detail/badge-detail.component.types';
 import { PdfService } from '../../../common/services/pdf.service';
 
 @Component({
@@ -189,11 +189,12 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 						{
 							title: 'Bearbeiten',
 							routerLink: ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'edit'],
-							icon: 'icon_edit',
+							icon:  "lucidePencil",
+
 						},
 						{
 							title: 'Löschen',
-							icon: 'icon_remove',
+							icon: 'lucideTrash2',
 							action: () => this.deleteBadge(),
 						},
 					],

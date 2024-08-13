@@ -8,6 +8,8 @@ import { Issuer } from '../../../issuer/models/issuer.model';
 import { BadgeClass } from '../../../issuer/models/badgeclass.model';
 import { IssuerManager } from '../../../issuer/services/issuer-manager.service';
 import { MatchingAlgorithm } from '../../dialogs/fork-badge-dialog/fork-badge-dialog.component';
+import { MenuItem } from '../badge-detail/badge-detail.component.types';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'oeb-issuer-detail',
@@ -25,6 +27,7 @@ export class OebIssuerDetailComponent implements OnInit {
 
 	constructor(
 		private router: Router,
+		public translate: TranslateService,
 		protected messageService: MessageService,
 		protected title: Title,
 		protected issuerManager: IssuerManager,
@@ -33,6 +36,33 @@ export class OebIssuerDetailComponent implements OnInit {
 	) {
         
 	};
+
+	menuItemsPublic: MenuItem[] = [
+		{
+			title: this.translate.instant('Issuer.jsonView'),
+			action: (a:any) => this.routeToJson(),
+			// action: (a:any) => this.delete(a),
+			icon: 'lucideFileQuestion',
+		}	
+	]
+	menuItems: MenuItem[] = [
+		{
+			title: this.translate.instant('General.edit'),
+			routerLink: ['./edit'],
+			icon: 'lucideUsers',
+		},
+		{
+			title: this.translate.instant('General.delete'),
+			// routerLink: ['/catalog/badges'],
+			action: (a:any) => this.delete(a),
+			icon: 'lucideTrash2',
+		},
+		{
+			title: this.translate.instant('General.members'),
+			routerLink: ['./staff'],
+			icon: 'lucideWarehouse',
+		},
+	]
 
 	badgeResults: BadgeResult[] = [];
 	maxDisplayedResults = 100;
@@ -86,7 +116,12 @@ export class OebIssuerDetailComponent implements OnInit {
 	}
 
 	get rawJsonUrl() {
-		return `${this.configService.apiConfig.baseUrl}/public/issuers/${this.issuer.slug}.json`;
+		if(this.issuer)
+			return `${this.configService.apiConfig.baseUrl}/public/issuers/${this.issuer.slug}.json`;
+	}
+
+	routeToJson() {
+		window.open(`${this.configService.apiConfig.baseUrl}/public/issuers/${this.issuer.slug}.json`, '_blank')
 	}
 
 	routeToUrl(url){
