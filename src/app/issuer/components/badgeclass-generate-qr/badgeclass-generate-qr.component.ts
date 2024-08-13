@@ -65,7 +65,7 @@ export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComp
 			routerLink: [this.editQrCodeLink],
 		},
 		{
-			title: 'Delete',
+			title: 'Löschen',
 			icon: 'lucideTrash2',
 			action: () => {
 				this.openDangerDialog();
