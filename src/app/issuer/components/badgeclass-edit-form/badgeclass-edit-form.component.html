@@ -415,33 +415,20 @@
 						</div>
 					</ng-template>
 				</ng-container>
-				<div class="tw-w-full">
-					<button
-						type="button"
-						(click)="addAnotherCompetency()"
-						class="button tw-text-white tw-bg-[var(--color-purple)] tw-items-center tw-flex tw-gap-2 tw-mt-2 tw-ml-auto"
-					>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							fill="white"
-							height="16px"
-							width="16px"
-							viewBox="0 0 448 512"
-						>
-							<!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
-							<path
-								d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"
-							/>
-						</svg>
 
-						<span>
-							{{
-								badgeClassForm.controls.competencies.controls.length > 0
-									? ('CreateBadge.addAnotherCompetency' | translate)
-									: ('General.add' | translate)
-							}}
-						</span>
-					</button>
+				<div class="tw-w-full tw-flex tw-justify-end">
+					<oeb-button
+						size="sm"
+						type="button"
+						class="tw-mt-2"
+						(click)="addAnotherCompetency()"
+						text="{{
+							(badgeClassForm.controls.competencies.controls.length > 0		
+							? 'CreateBadge.addAnotherCompetency'		
+							: 'General.add') | translate}}"
+							icon="lucidePlus"
+					>
+					</oeb-button>
 				</div>
 			</oeb-collapsible>
 		</ul>
@@ -550,21 +537,27 @@
 						<div>{{ 'CreateBadge.tagDoesNotExist' | translate }}</div>
 					</ng-template>
 				</div>
-
-				<button type="button" (click)="addTag()" class="button tw-ml-auto tw-bg-[var(--color-purple)]">
-					{{ 'General.add' | translate }}
-				</button>
+					
+				<oeb-button 
+					size="sm"
+					type="button" 
+					(click)="addTag()" 
+					text="{{ 'General.add' | translate }}">
+				</oeb-button>
 			</div>
-			<div *ngIf="tags.size > 0" class="tw-flex tw-flex-wrap tw-gap-4 tw-w-1/2 tw-ml-8">
+			<div *ngIf="tags.size > 0" class="tw-flex tw-flex-wrap tw-gap-4 tw-w-[70%] tw-ml-[3.2rem]">
 				<div
-					class="tw-flex tw-items-center tw-bg-white tw-rounded-full tw-px-3 tw-py-1 tw-mr-2 tw-mb-2"
+					class="tw-flex tw-items-center  tw-rounded-full tw-py-1 tw-mb-2"
 					*ngFor="let tag of tags"
 				>
-					<button (click)="removeTag(tag)">
-						<span> {{ tag }}</span>
-						<svg class="tw-ml-1" icon="icon_close" width="12px" height="12px"></svg>
-						<span class="visuallyhidden">Close</span>
-					</button>
+					<oeb-button 
+					variant="secondary"
+					size="xxs"
+					(click)="removeTag(tag)" 
+					icon="lucideXCircle"
+					text="{{ tag }}">
+
+					</oeb-button>
 				</div>
 			</div>
 			<span class="tw-italic">{{ 'CreateBadge.tagInfo' | translate }}</span>
