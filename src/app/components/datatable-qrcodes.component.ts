@@ -15,6 +15,7 @@ import { MessageService } from '../common/services/message.service';
 import { BadgrApiFailure } from '../common/services/api-failure';
 import { HlmDialogService } from './spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
 import { SuccessDialogComponent } from '../common/dialogs/oeb-dialogs/success-dialog.component';
+import striptags from 'striptags';
 
 @Component({
 	selector: 'qrcodes-datatable',
@@ -75,6 +76,9 @@ export class QrCodeDatatableComponent implements OnInit {
          })
         }
 
+    recipientProfileContextUrl = 'https://openbadgespec.org/extensions/recipientProfile/context.json';
+    
+
     private readonly _hlmDialogService = inject(HlmDialogService);
     public openSuccessDialog(recipient) {
         const dialogRef = this._hlmDialogService.open(SuccessDialogComponent, {
@@ -87,6 +91,8 @@ export class QrCodeDatatableComponent implements OnInit {
 
     issueBadge(badge:any) {
         this.badgeClassManager.badgeByIssuerSlugAndSlug(this.issuerSlug, this.badgeSlug).then((badgeClass: BadgeClass) => {
+		const cleanedName = striptags(badge.firstName + ' ' + badge.lastName);
+
             this.loading =  this.badgeInstanceManager.createBadgeInstance(this.issuerSlug, this.badgeSlug, {
                 issuer: this.issuerSlug,
 				badge_class: this.badgeSlug,
@@ -95,9 +101,13 @@ export class QrCodeDatatableComponent implements OnInit {
 				narrative: '',
 				create_notification: true,
 				evidence_items: [],
-				extensions: badgeClass.extension,
-                name: badge.firstName + ' ' + badge.lastName,
-				// expires,
+				extensions:  {...badgeClass.extension, 
+                    'extensions:recipientProfile': {
+						'@context': this.recipientProfileContextUrl,
+						type: ['Extension', 'extensions:RecipientProfile'],
+						name: cleanedName,
+					}, 
+                },
 
             }).then(
 				() => {
