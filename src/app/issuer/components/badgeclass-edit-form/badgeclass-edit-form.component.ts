@@ -611,7 +611,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 					aiCompetencies.removeAt(i);
 				}
 
-				skills.forEach((skill,i) => {
+				skills.forEach((skill) => {
 					aiCompetencies.addFromTemplate();
 				});
 			})
