@@ -12,15 +12,17 @@
                         <h1 hlmH1
                             class="tw-text-purple tw-font-medium tw-hyphens-auto tw-break-words tw-mb-2 md:tw-mb-0">
                             {{ config.badgeTitle }}</h1>
-                        <div class="tw-flex tw-gap-2" *ngIf="config.headerButton">
-                            <oeb-button *ngIf="config.headerButton.routerLink" class="tw-whitespace-nowrap tw-grow"
-                                [text]="config.headerButton.title" width="full_width"
-                                [routerLink]="config.headerButton.routerLink"
-                                [disabled-when-requesting]="true"></oeb-button>
-                            <!-- TODO:  use full width button variant -->
-                            <oeb-button *ngIf="config.headerButton.action" class="tw-whitespace-nowrap tw-grow"
-                                width="full_width" (click)="config.headerButton.action()"
-                                [disabled-when-requesting]="true" [text]="config.headerButton.title"></oeb-button>
+                        <div class="tw-flex tw-gap-2">
+                            <ng-container  *ngIf="config.headerButton">
+                                <oeb-button *ngIf="config.headerButton.routerLink" class="tw-whitespace-nowrap tw-grow"
+                                    [text]="config.headerButton.title" width="full_width"
+                                    [routerLink]="config.headerButton.routerLink"
+                                    [disabled-when-requesting]="true"></oeb-button>
+                                <!-- TODO:  use full width button variant -->
+                                <oeb-button *ngIf="config.headerButton.action" class="tw-whitespace-nowrap tw-grow"
+                                    width="full_width" (click)="config.headerButton.action()"
+                                    [disabled-when-requesting]="true" [text]="config.headerButton.title"></oeb-button>
+                            </ng-container>
 
                             <oeb-dropdown [trigger]="svgTrigger"
                                 class="tw-items-center tw-justify-center tw-flex tw-cursor-pointer tw-border tw-border-solid tw-border-[var(--color-purple)] tw-rounded-[7px]"
