@@ -255,14 +255,15 @@
 											<label class="tw-text-oebblack tw-font-bold" for="studyLoad$i">
 												{{ 'General.minutes' | translate }}:
 											</label>
-											<bg-formfield-text
+											<oeb-input
 												class="tw-max-w-24"
 												[control]="aiCompetency.rawControlMap.studyLoad"
 												[fieldType]="'number'"
 												[errorMessage]="{
 													required: 'Bitte gib die Dauer für den Erwerb der Kompetenz ein.'
 												}"
-											></bg-formfield-text>
+												noTopMargin="true"
+											></oeb-input>
 										</div>
 									</div>
 								</ng-container>
@@ -287,14 +288,15 @@
 							>, {{ 'CreateBadge.tofindFittingCompetencies' | translate }}</span
 						>
 					</p>
-					<button class="button tw-bg-[var(--color-purple)]">
+
+					<div class="button tw-bg-[var(--color-purple)]">
 						<a
 							class="tw-text-white"
 							href="https://esco.ec.europa.eu/de/classification/skill_main"
 							target="_blank"
 							>{{ 'CreateBadge.toEscoSearch' | translate }}</a
 						>
-					</button>
+					</div>
 				</div>
 
 				<ng-container *ngFor="let competency of badgeClassForm.controls.competencies.controls; let i = index">
@@ -390,25 +392,25 @@
 							>
 							</oeb-input>
 
-							<div
-								class="l-flex l-flex-1x l-flex-justifybetween u-margin-bottom2x"
-								style="margin-top: 2em"
-							>
-								<button
+							<div class="tw-flex tw-justify-between tw-flex-wrap sm:tw-flex-nowrap tw-gap-2 tw-mt-8">
+								<oeb-button
 									*ngIf="badgeClassForm.controls.competencies.controls.length > 0"
+									class="tw-mr-4"
+									variant="secondary"
+									size="sm"
 									type="button"
 									(click)="removeCompetency(competency)"
-									class="u-text-link"
-								>
-									{{ 'General.remove' | translate }}
-								</button>
-								<button
+									text="{{ 'General.remove' | translate }}"
+								></oeb-button>
+						
+								<oeb-button
+									size="sm"
 									type="button"
+									width="max_content"
 									(click)="addCompetency(competency)"
-									class="button tw-text-white tw-bg-[var(--color-purple)]"
+									text="{{ 'General.add' | translate }}"
 								>
-									{{ 'General.add' | translate }}
-								</button>
+								</oeb-button>
 							</div>
 						</div>
 					</ng-template>
@@ -617,27 +619,27 @@
 								</div>
 								<div class="forminput u-margin-bottom6x">
 									<div class="forminput-x-inputs">
-										<bg-formfield-text
+										<oeb-input
 											[control]="alignment.rawControlMap.target_name"
 											label="Name"
 											[errorMessage]="{ required: alignmentNameError }"
 											id="alignment_name_{{ i }}"
-										></bg-formfield-text>
+										></oeb-input>
 
-										<bg-formfield-text
+										<oeb-input
 											[control]="alignment.rawControlMap.target_url"
 											label="URL"
 											[errorMessage]="{ required: alignmentURLError }"
 											[urlField]="true"
 											id="alignment_url_{{ i }}"
-										></bg-formfield-text>
+										></oeb-input>
 
-										<bg-formfield-text
+										<oeb-input
 											[control]="alignment.rawControlMap.target_description"
 											[label]="shortDescription"
 											[multiline]="true"
 											id="alignment_description_{{ i }}"
-										></bg-formfield-text>
+										></oeb-input>
 
 										<button
 											*ngIf="!showAdvanced[i]"
@@ -710,20 +712,23 @@
 						</div>
 						<div class="formsection-x-body">
 							<div class="l-spacestack">
-								<bg-formfield-text
+								<oeb-input
 									[control]="expirationForm.rawControlMap.expires_amount"
 									[label]="count"
 									[fieldType]="'number'"
 									[max]="1000"
 									[maxchar]="4"
-								></bg-formfield-text>
-								<bg-formfield-select
+									[errorMessage]="{
+										max: maxValue1000
+									}"
+								></oeb-input>
+								<oeb-select
 									ariaLabel="chooseDuration"
 									[control]="expirationForm.rawControlMap.expires_duration"
 									[label]="duration"
 									[placeholder]="chooseDuration"
 									[optionMap]="durationOptions"
-								></bg-formfield-select>
+								></oeb-select>
 							</div>
 						</div>
 					</div>
@@ -733,30 +738,24 @@
 	</oeb-collapsible>
 	</div>
 
-	<div class="l-stack l-stack-right u-margin-top3x">
-		<button
-			type="button"
-			[disabled-when-requesting]="true"
+	<div class="tw-flex tw-justify-between md:tw-justify-end tw-flex-wrap sm:tw-flex-nowrap tw-gap-2 tw-mt-8">
+		<oeb-button
+			class="tw-mr-4"
+			variant="secondary"
 			(click)="cancelClicked()"
-			class="button button-secondary"
-		>
-			{{ 'General.cancel' | translate }}
-		</button>
-		<button
+			[disabled-when-requesting]="true"
+			text="{{ 'General.cancel' | translate }}"
+		></oeb-button>
+
+		<oeb-button
 			type="submit"
-			class="button"
-			style="background-color: #492e98"
+			width="max_content"
 			[disabled]="!!savePromise"
 			[loading-promises]="[savePromise]"
 			loading-message="{{ submittingText }}"
+			text="{{ (existingBadgeClass ? 'General.saveChanges' : 'Issuer.createBadge') | translate }}"
 		>
-			<ng-container *ngIf="existingBadgeClass; else createBadgeText">
-				{{ 'General.saveChanges' | translate }}
-			</ng-container>
-			<ng-template #createBadgeText>
-				{{ 'Issuer.createBadge' | translate }}
-			</ng-template>
-		</button>
+		</oeb-button>
 	</div>
 </form>
 </div>

@@ -79,6 +79,8 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	giveBadgeTitle = this.translate.instant('CreateBadge.giveBadgeTitle');
 	changeBadgeTitle = this.translate.instant('CreateBadge.changeBadgeTitle');
 
+	maxValue1000 = this.translate.instant('CreateBadge.maxValue1000');
+
 	@Input()
 	set badgeClass(badgeClass: BadgeClass) {
 		if (this.existingBadgeClass !== badgeClass) {

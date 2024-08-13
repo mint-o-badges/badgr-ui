@@ -317,7 +317,8 @@
 		"irreversibleAction": "Diese Aktion kann nicht rückgängig gemacht werden.",
 		"addAnotherCompetency": "Weitere Kompetenz hinzufügen",
 		"giveBadgeTitle":"Bitte gib dem Badge einen Titel",
-		"changeBadgeTitle":"Bitte ändere den Titel"
+		"changeBadgeTitle":"Bitte ändere den Titel",
+		"maxValue1000":"Maximalwert ist 1000"
 	},
 	"Signup": {
 		"youHaveAccount": "Du hast bereits einen Account?",
