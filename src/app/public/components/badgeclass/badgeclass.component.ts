@@ -10,7 +10,7 @@ import { addQueryParamsToUrl, stripQueryParamsFromUrl } from '../../../common/ut
 import { routerLinkForUrl } from '../public/public.component';
 import { AppConfigService } from '../../../common/app-config.service';
 import { Title } from '@angular/platform-browser';
-import { PageConfig } from '../../../common/components/badge-detail/badge-detail.component';
+import { PageConfig } from '../../../common/components/badge-detail/badge-detail.component.types';
 
 @Component({
 	template: '<bg-badgedetail [config]="config" [awaitPromises]="[badgeClass]"></bg-badgedetail>',
