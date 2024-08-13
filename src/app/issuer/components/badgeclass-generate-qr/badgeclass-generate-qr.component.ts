@@ -53,6 +53,7 @@ export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComp
 	validity: string;
 	valid_from: Date;
 	expires_at: Date;
+	baseUrl: string
 	editQrCodeLink: string = `/issuer/issuers/${this.issuerSlug}/badges/${this.badgeSlug}/qr/${this.qrSlug}/edit`;
 	qrCodeWidth = 244;
 	public qrCodeDownloadLink: SafeUrl = '';
@@ -120,6 +121,7 @@ export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComp
 	}
 
 	ngOnInit() {
+		this.baseUrl = window.location.origin;
 		this.qrCodeApiService.getQrCode(this.qrSlug).then((qrCode) => {
 			this.qrTitle = qrCode.title;
 			this.creator = qrCode.createdBy;
@@ -146,7 +148,7 @@ export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComp
 			}
 
 			if (this.valid) {
-				this.qrData = `https://openbadges.education/issuer/issuers/${this.issuerSlug}/badges/${this.badgeSlug}/request/${this.qrSlug}`;
+				this.qrData = `${this.baseUrl}/issuer/issuers/${this.issuerSlug}/badges/${this.badgeSlug}/request/${this.qrSlug}`;
 			} else {
 				this.qrData = 'Die Gültigkeit dieses Qr Codes ist abgelaufen.';
 			}
