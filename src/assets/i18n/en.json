@@ -251,7 +251,7 @@
 		"characters": "characters",
 		"createdOn": "Created on",
 		"catalogHeadline": "Alle Badges in der Übersicht",
-		"requestedOn": "Requested on"	
+		"requestedOn": "Requested on",	
         "deletePart1": "Are you sure you want to delete the badge '",
         "deletePart2": "'?",
         "deleteConfirm": "Delete Badge"
