@@ -42,7 +42,7 @@ import { SuccessDialogComponent } from '../common/dialogs/oeb-dialogs/success-di
                 <hlm-th class="!tw-flex-1 tw-justify-center"><p class="u-text tw-text-purple"> {{badge.requestedOn | date:"dd.MM.yyyy"}}  </p></hlm-th>
                 <hlm-th class="tw-justify-center sm:tw-justify-end tw-w-full lg:tw-w-48 !tw-text-oebblack">
                     <oeb-button class="tw-w-full" size="xs" width="full_width" (click)="issueBadge(badge)" [disabled]="!!loading" text="Login"
-                        [loading-promises]="[loading]" loading-message="Loading" [text]="actionElementText"></oeb-button>
+                        [loading-promises]="[loading]" loading-message="Loading..." [text]="actionElementText"></oeb-button>
                 </hlm-th>
             </hlm-trow>
         </hlm-table>`,
@@ -104,7 +104,7 @@ export class QrCodeDatatableComponent implements OnInit {
                     this.router.navigate(['issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug]);
 					this.openSuccessDialog(badge.email);
                     this.requestedBadges = this.requestedBadges.filter(awardBadge => awardBadge.id != badge.id )
-                    this.deletedQRAward.emit({id: badge.id, badgeclass: badge.badgeclass})
+                    this.deletedQRAward.emit({id: badge.id, slug: this.qrCodeId, badgeclass: badge.badgeclass})
                     this.badgeRequestApiService.deleteRequest(badge.id)
 				},
 				(error) => {

@@ -125,26 +125,32 @@ export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComp
 			this.creator = qrCode.createdBy;
 			this.valid_from = qrCode.valid_from;
 			this.expires_at = qrCode.expires_at;
-			this.validity = BadgeClassGenerateQrComponent.datePipe.transform(new Date(this.valid_from), 'dd.MM.yyyy') +
-			' - ' +
-			BadgeClassGenerateQrComponent.datePipe.transform(new Date(this.expires_at), 'dd.MM.yyyy');
-		})
+			if (
+				//@ts-ignore
+				(qrCode.expires_at && !isNaN(new Date(qrCode.expires_at))) ||
+				//@ts-ignore
+				(qrCode.valid_from && !isNaN(new Date(qrCode.valid_from)))
+			) {
+				if (new Date(this.valid_from) < new Date() && new Date(this.expires_at) >= new Date()) {
+					this.valid = true;
+				} else {
+					this.valid = false;
+				}
 
-		// apparently this is the best way to check if something is a date in js
-		//@ts-ignore
-		if (!isNaN(new Date(this.valid_from)) || !isNaN(new Date(this.valid_from))) {
-			if (new Date(this.valid_from) < new Date() && new Date(this.expires_at) >= new Date()) {
-				this.valid = true;
+				this.validity =
+					BadgeClassGenerateQrComponent.datePipe.transform(new Date(this.valid_from), 'dd.MM.yyyy') +
+					' - ' +
+					BadgeClassGenerateQrComponent.datePipe.transform(new Date(this.expires_at), 'dd.MM.yyyy');
 			} else {
-				this.valid = false;
+				this.validity = undefined;
 			}
-		}
-		if (this.valid) {
-			this.qrData = `https://develop.openbadges.education/issuer/issuers/${this.issuerSlug}/badges/${this.badgeSlug}/request/${this.qrSlug}`;
-			console.log(this.qrData)
-		} else {
-			this.qrData = 'Die Gültigkeit dieses Qr Codes ist abgelaufen.';
-		}
+
+			if (this.valid) {
+				this.qrData = `https://openbadges.education/issuer/issuers/${this.issuerSlug}/badges/${this.badgeSlug}/request/${this.qrSlug}`;
+			} else {
+				this.qrData = 'Die Gültigkeit dieses Qr Codes ist abgelaufen.';
+			}
+		});
 	}
 
 	private readonly _hlmDialogService = inject(HlmDialogService);

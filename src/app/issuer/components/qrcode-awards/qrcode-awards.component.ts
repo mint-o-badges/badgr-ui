@@ -107,8 +107,8 @@ export class QrCodeAwardsComponent {
 	}
 
 	deleteQRAward(data){
-		let item = this.awards.find(award => award.badgeclass_id == data.badgeclass)
-		item.request_count -= 1;
+		let index = this.awards.findIndex(award => award.slug == data.slug)
+		this.awards[index].request_count -= 1;
 	}
 
 	deleteQrCode(qrSlug: string) {
