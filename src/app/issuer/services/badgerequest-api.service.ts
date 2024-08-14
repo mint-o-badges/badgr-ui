@@ -5,7 +5,7 @@ import { AppConfigService } from '../../common/app-config.service';
 import { BadgeClassSlug } from '../models/badgeclass-api.model';
 import { BadgeRequest } from '../models/badgerequest-api.model';
 import { MessageService } from '../../common/services/message.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable()
 export class BadgeRequestApiService extends BaseHttpApiService {
@@ -19,7 +19,7 @@ export class BadgeRequestApiService extends BaseHttpApiService {
 	}
     
     requestBadge(qrCodeId: string, userData: BadgeRequest) {
-        return this.post(`/request-badge/${qrCodeId}`, JSON.stringify(userData));
+        return this.post(`/request-badge/${qrCodeId}`, JSON.stringify(userData), null, new HttpHeaders(), false, false);
     }
 
 	getBadgeRequestsByQrCode(qrCodeId: string) {
