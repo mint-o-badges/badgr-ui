@@ -94,6 +94,9 @@ export const routes: Routes = [
 	{
 		path: 'issuer/issuers/:issuerSlug/badges/:badgeSlug/request/:qrCodeId',
 		component: RequestBadgeComponent,
+		data: {
+			publiclyAccessible: true,
+		} as BadgrRouteData,
 	},
 
 	{
