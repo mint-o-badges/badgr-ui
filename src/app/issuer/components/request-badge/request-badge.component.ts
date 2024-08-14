@@ -10,7 +10,7 @@ import { HlmDialogService } from './../../../components/spartan/ui-dialog-helm/s
 import { PublicApiService } from '../../../public/services/public-api.service';
 import { BadgeRequest } from '../../models/badgerequest-api.model';
 import { PublicApiBadgeClassWithIssuer } from '../../../public/models/public-api.model';
-
+import { EmailValidator } from '../../../common/validators/email.validator';
 
 @Component({
     selector: 'request-badge',
@@ -73,7 +73,7 @@ export class RequestBadgeComponent extends BaseRoutableComponent{
     requestForm = typedFormGroup()
     .addControl('firstname', '', Validators.required)
     .addControl('lastname', '', Validators.required)
-    .addControl('email', '', Validators.required)
+    .addControl('email', '', [Validators.required, EmailValidator.validEmail])
     .addControl('qrCodeId', '', Validators.required)
     .addControl('ageConfirmation', false, Validators.requiredTrue)
 
