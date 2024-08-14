@@ -7,9 +7,9 @@ import { BaseRoutableComponent } from '../../../common/pages/base-routable.compo
 import { Router, ActivatedRoute } from '@angular/router';
 import { SuccessDialogComponent } from '../../../common/dialogs/oeb-dialogs/success-dialog.component';
 import { HlmDialogService } from './../../../components/spartan/ui-dialog-helm/src';
-import { BadgeClassManager } from '../../services/badgeclass-manager.service';
-import { BadgeClass } from '../../models/badgeclass.model';
+import { PublicApiService } from '../../../public/services/public-api.service';
 import { BadgeRequest } from '../../models/badgerequest-api.model';
+import { PublicApiBadgeClassWithIssuer } from '../../../public/models/public-api.model';
 
 
 @Component({
@@ -21,14 +21,14 @@ export class RequestBadgeComponent extends BaseRoutableComponent{
     constructor(
         private translate: TranslateService,
         private badgeRequestApiService: BadgeRequestApiService,
-		protected badgeManager: BadgeClassManager,
+        protected publicApiService: PublicApiService,
         router: Router,
 		route: ActivatedRoute,
     ) {
         super(router, route);
-        this.badgeClassLoaded = this.badgeManager.badgeByIssuerSlugAndSlug(this.issuerSlug, this.badgeSlug).then((badge) => {
+        this.badgeClassLoaded = this.publicApiService.getBadgeClass(this.badgeSlug).then((badge: PublicApiBadgeClassWithIssuer) => {
             this.badgeClass = badge;
-    })
+        })
     }
 
     readonly badgeLoadingImageUrl = '../../../breakdown/static/images/badge-loading.svg';
@@ -53,7 +53,7 @@ export class RequestBadgeComponent extends BaseRoutableComponent{
 	}
 
 	badgeClassLoaded: Promise<unknown>;
-	badgeClass: BadgeClass;
+	badgeClass: PublicApiBadgeClassWithIssuer;
 
 
 
