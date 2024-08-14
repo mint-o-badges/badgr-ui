@@ -193,7 +193,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 					crumbs: this.crumbs,
 					badgeTitle: this.badgeClass.name,
 					headerButton: {
-						title: 'Badge vergeben',
+						title: 'Badge direkt vergeben',
 						routerLink: ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'issue'],
 					},
 					issueQrRouterLink: ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'qr'],
