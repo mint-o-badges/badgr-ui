@@ -39,6 +39,7 @@ import { HlmPDirective } from './spartan/ui-typography-helm/src/lib/hlm-p.direct
 			[attr.maxlength]="maxchar"
 			[attr.max]="max"
 			[type]="fieldType"
+			[readonly]="readonly || false"
 			#textInput
 			class="tw-w-full tw-border-solid tw-border-purple tw-bg-white"
 			hlmInput
@@ -76,6 +77,7 @@ export class OebInputComponent {
 	@Input() placeholder = '';
 	@Input() maxchar?: number = null;
 	@Input() max?: number;
+	@Input() readonly?: boolean = false;
 	@Input() sublabel?: string;
 	@Input() autofocus = false;
 	@Input() noTopMargin = false;

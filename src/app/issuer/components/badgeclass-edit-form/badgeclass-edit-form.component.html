@@ -388,6 +388,7 @@
 							<oeb-input 
 								label="Esco-Identifier (optional)"
 								[control]="competency.rawControlMap.escoID"
+								[readonly]="true"
 								placeholder="z.B. esco/skill/00090cc1-1f27-439e-a4e0-19a87a501bfc"
 							>
 							</oeb-input>
@@ -426,7 +427,6 @@
 							(badgeClassForm.controls.competencies.controls.length > 0		
 							? 'CreateBadge.addAnotherCompetency'		
 							: 'General.add') | translate}}"
-							icon="lucidePlus"
 					>
 					</oeb-button>
 				</div>
