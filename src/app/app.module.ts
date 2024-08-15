@@ -22,6 +22,9 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../environments/environment';
+import { registerLocaleData } from '@angular/common';
+import localeDe from '@angular/common/locales/de';
+registerLocaleData(localeDe);
 // Force AuthModule and ProfileModule to get included in the main module. We don't want them lazy loaded because
 // they basically always need to be present. We have have functions that return them, but use strings in the Routes
 // because of https://github.com/angular/angular-cli/issues/4192

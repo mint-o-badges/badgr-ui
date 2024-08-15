@@ -19,7 +19,7 @@ import { hlm } from '@spartan-ng/ui-core';
 	],
 	template: ` <label class="tw-flex tw-items-center" hlmP>
 		<hlm-checkbox [name]="name" [checked]="checked" (changed)="onChange($event)" class="tw-mr-2" />
-		{{ text }}
+		<span [innerHTML]="text"></span>
 	</label>`,
 	host: {
 		'[class]': '_computedClass()',
@@ -33,6 +33,7 @@ export class OebCheckboxComponent implements ControlValueAccessor {
 	@Input() ngModel: boolean;
 	@Input() value: string;
 	@Input() checked = false;
+	@Input() error: string;
 
 	@Output() ngModelChange = new EventEmitter<string>();
 

@@ -79,12 +79,8 @@
 			<nav class="tw-items-stretch tw-align-middle tw-hidden lg:tw-flex">
 				<div class="tw-flex tw-gap-8 tw-items-center">
 					<!-- About Badges Menu -->
-					<button role="menuitem" aria-haspopup="true"
-						class="oeb-navitem tw-cursor-pointer" routerLinkActive="oeb-navitem-is-active"
-						[bgPopupMenuTrigger]="aboutBadgesMenu">
-						{{ 'General.aboutBadges' | translate }}
-						<svg class="navitem-x-icon" icon="icon_dropdown"></svg>
-					</button>
+					<oeb-dropdown [menuItems]="aboutBadgesMenuItems" trigger="Über Badges" triggerStyle="oeb-navitem tw-cursor-pointer !tw-leading-none !tw-py-1"></oeb-dropdown>
+
 					<a *ngIf="!features.disableRegistration"
 						class="oeb-navitem" routerLinkActive="oeb-navitem-is-active" [routerLink]="['/public/about']">{{
 						'NavItems.aboutOpenEducationalBadges' | translate }}</a>
@@ -112,13 +108,7 @@
 		<ng-template [ngIf]="loggedIn && !isOAuthAuthorizationInProcess">
 			<nav class="tw-hidden lg:tw-block">
 				<div class="tw-flex tw-gap-8 tw-items-center">
-					<!-- About Badges Menu -->
-					<button role="menuitem" aria-haspopup="true"
-						class="oeb-navitem tw-cursor-pointer" routerLinkActive="oeb-navitem-is-active"
-						[bgPopupMenuTrigger]="aboutBadgesMenu">
-						{{ 'General.aboutBadges' | translate }}
-						<svg class="navitem-x-icon" icon="icon_dropdown"></svg>
-					</button>
+					<oeb-dropdown [menuItems]="aboutBadgesMenuItems" trigger="Über Badges" triggerStyle="oeb-navitem tw-cursor-pointer !tw-leading-none !tw-py-1"></oeb-dropdown>
 
 					<a class="oeb-navitem"
 						routerLinkActive="oeb-navitem-is-active" [routerLink]="['public/about']">
@@ -141,12 +131,7 @@
 						translate }}</a>
 
 					<!-- Account Menu -->
-					<button aria-haspopup="true"
-						class="oeb-navitem tw-cursor-pointer" routerLinkActive="oeb-navitem-is-active"
-						[bgPopupMenuTrigger]="accountMenu">
-						{{ 'General.account' | translate }}
-						<svg class="navitem-x-icon" icon="icon_dropdown"></svg>
-					</button>
+					<oeb-dropdown [menuItems]="accountMenuItems" trigger="{{ 'General.account' | translate }}" triggerStyle="oeb-navitem tw-cursor-pointer !tw-leading-none !tw-py-1"></oeb-dropdown>
 
 					<!-- ToDo: comment in when all pages are completely translated -->
 					<!-- Language -->
@@ -174,7 +159,7 @@
 
 	<!-- Nav dropdown menus -->
 
-	<bg-popup-menu #appsMenu>
+	 <bg-popup-menu #appsMenu>
 		<a class="menuitem" href="{{ lp.launch_url }}" *ngFor="let lp of launchpoints" target="_blank">
 			{{ lp.label }}
 		</a>
@@ -184,24 +169,6 @@
 		<a class="menuitem" [href]="item.url" *ngFor="let item of theme?.customMenu?.items" target="_blank">
 			{{ item.label }}
 		</a>
-	</bg-popup-menu>
-
-	<bg-popup-menu #accountMenu>
-		<a class="menuitem" routerLinkActive="menuitem-is-active" [routerLink]="['/profile/profile']"><svg
-				icon="icon_member"></svg>{{ 'NavItems.myProfile' | translate }}</a>
-
-		<a class="menuitem" routerLinkActive="menuitem-is-active" [routerLink]="['/profile/app-integrations']"><svg
-				icon="icon_compare"></svg>{{ 'NavItems.appIntegrations' | translate }}</a>
-		<a class="menuitem" routerLinkActive="menuitem-is-active" [routerLink]="['/auth/logout']"><svg
-				icon="icon_exit_to_app"></svg>Logout</a>
-	</bg-popup-menu>
-
-	<bg-popup-menu #aboutBadgesMenu>
-		<a class="menuitem" routerLinkActive="menuitem-is-active" [routerLink]="['/public/faq']">FAQ</a>
-		<a class="menuitem" routerLinkActive="menuitem-is-active" [routerLink]="['/catalog/badges']">Badges A-Z</a>
-		<a class="menuitem" routerLinkActive="menuitem-is-active" [routerLink]="['/catalog/issuers']">{{
-			'General.institutions' | translate
-			}}</a>
 	</bg-popup-menu>
 
 	<nav class="l-dialog mobilenav" [class.mobilenav-is-active]="mobileNavOpen" *ngIf="!loggedIn"
