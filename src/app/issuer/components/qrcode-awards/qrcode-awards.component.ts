@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, SimpleChanges, inject } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges, inject } from "@angular/core";
 import { BrnAccordionContentComponent } from '@spartan-ng/ui-accordion-brain';
 import { HlmAccordionModule } from '../../../components/spartan/ui-accordion-helm/src';
 import { HlmIconModule } from '../../../components/spartan/ui-icon-helm/src';
@@ -65,6 +65,8 @@ export class QrCodeAwardsComponent {
 	@Input() routerLink: string[]
 	@Input() issuerSlug: string
 	@Input() badgeClassSlug: string
+	@Output() qrBadgeAward = new EventEmitter<void>();
+
 
 	requestedBadges: any[] = []
 
@@ -116,5 +118,9 @@ export class QrCodeAwardsComponent {
 			this.awards = this.awards.filter(value => value.slug != qrSlug)
 		}
 	)};
+
+	onQrBadgeAward() {
+		this.qrBadgeAward.emit();  
+	}
 
 }
