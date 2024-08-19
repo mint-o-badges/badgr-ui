@@ -347,7 +347,7 @@
 		"reachedResendEmailLimit": "Du hast das Limit für das erneute Senden von Bestätigungs-E-Mails erreicht. Überprüfe deinen Posteingang auf eine vorhandene Nachricht oder versuche es nach 5 Minuten erneut.",
 		"resendEmailFailed": "Das erneute Senden der Bestätigungs-E-Mail ist fehlgeschlagen. Bitte wende dich an den Support.",
 		"newEmailSent": "Eine neue Bestätigungs-E-Mail wurde gesendet an: ",
-		"infoPersonalDataProcessing": "Informationen zur Verarbeitung Deiner personenbezogenen Daten findest in unserer <a class='tw-underline tw-text-[#1400FF]' href='public/privacy'> Datenschutzerklärung </a>",
+		"infoPersonalDataProcessing": "Informationen zur Verarbeitung Deiner personenbezogenen Daten findest du in unserer <a class='tw-underline tw-text-[#1400FF]' href='public/privacy'> Datenschutzerklärung</a>",
 		"enterValidEmail":"Bitte gib eine gültige Email Adresse ein.",
 		"enterFirstName":"Bitte gib einen Vornamen an",
 		"enterLastName":"Bitte gib einen Nachnamen an",
@@ -579,7 +579,7 @@
 		"fillForm": "Fülle die Formular-Felder aus, um deinen Badge anzufordern.",
 		"requestBadgeInfo1": "Deine Anfrage wird dann von einer Person von",
 		"requestBadgeInfo2": "freigegeben. Sobald das passiert ist, wird dir der Badge per E-Mail zugesendet.",
-		"personalDataInfo": "Informationen zur Verarbeitung deiner personenbezogenen Daten findest in unserer <a class='tw-underline tw-text-[#1400FF]' href='public/privacy'> Datenschutzerklärung </a>.",
+		"personalDataInfo": "Informationen zur Verarbeitung deiner personenbezogenen Daten findest du in unserer <a class='tw-underline tw-text-[#1400FF]' href='public/privacy'> Datenschutzerklärung</a>.",
 		"ageConfirmation": "Ich bestätige, dass ich <b>16 Jahre oder älter bin. Wenn ich jünger als 16 Jahre bin:</b> Meine Eltern oder meine Erziehungsberechtigten wissen, dass ich meine persönlichen Daten für die Nutzung der Plattform Open Educational Badges angebe. Ich bestätige, dass sie damit einverstanden sind.",
 		"successMessage": "<span class='tw-font-bold'>Du hast den Badge erfolgreich angefordert.</span><br>",
 		"successMessage2": "Sobald deine Anfrage bestätigt wurde, bekommst du den Badge per E-Mail zugesendet."
