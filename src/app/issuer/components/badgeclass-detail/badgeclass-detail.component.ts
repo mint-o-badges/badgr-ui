@@ -34,7 +34,7 @@ import { QrCodeApiService } from '../../services/qrcode-api.service';
 	selector: 'badgeclass-detail',
 	template: `
 		<bg-badgedetail [config]="config" [awaitPromises]="[issuerLoaded, badgeClassLoaded]">
-				<qrcode-awards [awards]="qrCodeAwards" [badgeClassSlug]="badgeSlug" [issuerSlug]="issuerSlug" [routerLink]="config?.issueQrRouterLink"></qrcode-awards>
+				<qrcode-awards (qrBadgeAward)="onQrBadgeAward()" [awards]="qrCodeAwards" [badgeClassSlug]="badgeSlug" [issuerSlug]="issuerSlug" [routerLink]="config?.issueQrRouterLink"></qrcode-awards>
 		<issuer-detail-datatable
 				[recipientCount]="recipientCount"
 				[_recipients]="instanceResults"
@@ -64,6 +64,10 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 
 	get recipientCount() {
 		return this.badgeClass ? this.badgeClass.recipientCount : null;
+	}
+
+	set recipientCount(value: number){
+		this.badgeClass.recipientCount = value;
 	}
 
 	get activeRecipientCount() {
@@ -236,6 +240,11 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 				return error;
 			},
 		);
+	}
+
+	onQrBadgeAward() {
+		this.loadInstances();
+		this.recipientCount += 1
 	}
 
 	ngOnInit() {

@@ -1,4 +1,4 @@
-<div class="oeb">
+<div class="oeb" >
 
     <oeb-separator [class]="separatorStyle"></oeb-separator>
         <div class="tw-flex tw-flex-col lg:tw-flex-row tw-items-center tw-justify-between tw-gap-2"  *ngIf="awards.length === 0; else showAwards">
@@ -37,7 +37,7 @@
                             </div>
                         </button> 
                         <brn-accordion-content *ngIf="award.request_count > 0" hlm class="tw-text-white">
-                            <qrcodes-datatable [qrCodeId]="award.slug" [issuerSlug]="issuerSlug" [badgeSlug]="badgeClassSlug" (deletedQRAward)="deleteQRAward($event)"></qrcodes-datatable>
+                            <qrcodes-datatable [qrCodeId]="award.slug" [issuerSlug]="issuerSlug" [badgeSlug]="badgeClassSlug" (deletedQRAward)="deleteQRAward($event)" (qrBadgeAward)="onQrBadgeAward()"></qrcodes-datatable>
                         </brn-accordion-content>   
                     </div>
                 
