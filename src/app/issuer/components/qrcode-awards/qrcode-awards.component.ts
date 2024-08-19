@@ -62,7 +62,7 @@ export class QrCodeAwardsComponent {
 	}
 
     @Input() awards: any[]
-	@Input() routerLink: string[]
+	@Input() routerLinkText: string[]
 	@Input() issuerSlug: string
 	@Input() badgeClassSlug: string
 	@Output() qrBadgeAward = new EventEmitter<void>();
