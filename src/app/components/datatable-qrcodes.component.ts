@@ -38,7 +38,7 @@ import striptags from 'striptags';
                 <hlm-th class="!tw-text-white tw-justify-end lg:tw-w-48 tw-w-0 !tw-p-0"></hlm-th>
             </hlm-trow>
             <hlm-trow *ngFor="let badge of requestedBadges" class="tw-bg-[var(--color-lightgray)] hover:!tw-bg-[var(--color-lightgray)] tw-border-[var(--color-darkgray)] tw-flex tw-flex-wrap tw-py-2">
-                <hlm-th class="!tw-px-2 tw-w-36 md:tw-w-48 tw-justify-center !tw-text-oebblack"> {{badge.email}}</hlm-th>
+                <hlm-th class="!tw-px-2 tw-w-36 md:tw-w-48 tw-justify-center !tw-text-oebblack"><span class="tw-inline-block tw-truncate tw-text-ellipsis">{{badge.email}}</span></hlm-th>
                 <hlm-th class="!tw-flex-1 tw-justify-center"><p class="u-text tw-text-purple"> {{badge.requestedOn | date:"dd.MM.yyyy"}}  </p></hlm-th>
                 <hlm-th class="tw-justify-center sm:tw-justify-end tw-w-full lg:tw-w-48 !tw-text-oebblack">
                     <oeb-button class="tw-w-full" size="xs" width="full_width" (click)="issueBadge(badge)" [disabled]="!!loading" text="Login"
