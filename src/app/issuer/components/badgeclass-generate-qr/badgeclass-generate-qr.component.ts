@@ -53,7 +53,8 @@ export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComp
 	validity: string;
 	valid_from: Date;
 	expires_at: Date;
-	baseUrl: string
+	baseUrl: string;
+	badgeRequested: boolean = false;
 	editQrCodeLink: string = `/issuer/issuers/${this.issuerSlug}/badges/${this.badgeSlug}/qr/${this.qrSlug}/edit`;
 	qrCodeWidth = 244;
 	public qrCodeDownloadLink: SafeUrl = '';
@@ -118,6 +119,9 @@ export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComp
 					},
 				];
 			});
+			this.badgeRequestApiService.getBadgeRequestsByQrCode(this.qrSlug).then((r) => {	
+				this.badgeRequested = r.body['requested_badges'].length > 0 ? true : false;
+			});
 	}
 
 	ngOnInit() {
@@ -161,6 +165,7 @@ export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComp
 		const dialogRef = this._hlmDialogService.open(SuccessDialogComponent, {
 			context: {
 				text: this.translate.instant('QrCode.downloadedSuccessfully'),
+				qrCodeRequested: this.badgeRequested,
 				variant: 'success',
 			},
 		});

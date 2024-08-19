@@ -101,6 +101,7 @@ export class QrCodeAwardsComponent {
 		const dialogRef = this._hlmDialogService.open(DangerDialogComponent, {
 			context: {
 				delete: () => this.deleteQrCode(qrSlug),
+				qrCodeRequested: this.awards.find(award => award.slug == qrSlug).request_count > 0,
 				variant: "danger"
 			},
 		});
