@@ -153,7 +153,6 @@ export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComp
 
 			if (this.valid) {
 				this.qrData = `${this.baseUrl}/public/issuer/issuers/${this.issuerSlug}/badges/${this.badgeSlug}/request/${this.qrSlug}`;
-				console.log(this.qrData)
 			} else {
 				this.qrData = 'Die Gültigkeit dieses Qr Codes ist abgelaufen.';
 			}
