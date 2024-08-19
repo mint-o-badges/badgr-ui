@@ -29,7 +29,7 @@
                                         {{award.title}}
                                 </span> 
                                 <span class="tw-ml-2">
-                                        ( {{award.request_count}} offene Badge Anfragen)
+                                        ( {{award.request_count}} offene Badge {{award.request_count === 1 ? "Anfrage" : "Anfragen"}})
                                 </span>
                                 </div> 
                                 <hlm-icon *ngIf="award.request_count > 0" hlmAccIcon class="tw-w-8 tw-h-8" />
@@ -37,7 +37,7 @@
                             </div>
                         </button> 
                         <brn-accordion-content *ngIf="award.request_count > 0" hlm class="tw-text-white">
-                            <qrcodes-datatable [qrCodeId]="award.slug" [issuerSlug]="issuerSlug" [badgeSlug]="badgeClassSlug" (deletedQRAward)="deleteQRAward($event)"></qrcodes-datatable>
+                            <qrcodes-datatable caption="" [qrCodeId]="award.slug" [issuerSlug]="issuerSlug" [badgeSlug]="badgeClassSlug" (deletedQRAward)="deleteQRAward($event)"></qrcodes-datatable>
                         </brn-accordion-content>   
                     </div>
                 

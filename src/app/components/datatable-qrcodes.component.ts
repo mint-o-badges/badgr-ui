@@ -31,8 +31,7 @@ import striptags from 'striptags';
         ],
     providers: [BadgeRequestApiService, BadgeInstanceManager, BadgeClassManager, HlmDialogService],    
 	template: `
-        <hlm-table class="tw-rounded-[20px] tw-overflow-hidden tw-w-full tw-max-w-[100%] tw-bg-[var(--color-darkgray)] tw-border-darkgray tw-border">
-            <hlm-caption>{{caption}}</hlm-caption>
+        <hlm-table class="tw-rounded-t-[20px] tw-overflow-hidden tw-w-full tw-max-w-[100%] tw-bg-[var(--color-darkgray)] tw-border-darkgrey tw-border-[1px] tw-border-solid">
             <hlm-trow class="tw-bg-[var(--color-darkgray)] hover:!tw-bg-[var(--color-darkgray)] tw-text-white tw-flex-wrap">
                 <hlm-th class="!tw-text-white tw-w-36 md:tw-w-48 !tw-px-2 tw-flex tw-justify-center tw-items-center">ID</hlm-th>
                 <hlm-th class="!tw-text-white tw-justify-center !tw-flex-1">{{'Badge.requestedOn' | translate}}</hlm-th>
