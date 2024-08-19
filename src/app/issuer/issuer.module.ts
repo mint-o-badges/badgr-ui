@@ -41,6 +41,7 @@ import {QrCodeAwardsComponent} from './components/qrcode-awards/qrcode-awards.co
 import { QrCodeApiService } from './services/qrcode-api.service';
 import { BadgeRequestApiService } from './services/badgerequest-api.service';
 import { EditQrFormComponent } from './components/edit-qr-form/edit-qr-form.component';
+import { IssuerLearningPathComponent } from './components/issuer-learning-path/issuer-learning-path.component';
 
 
 const routes = [
@@ -72,6 +73,10 @@ const routes = [
 	{
 		path: 'issuers/:issuerSlug/badges/:badgeSlug',
 		component: BadgeClassDetailComponent,
+	},
+	{
+		path: 'issuers/:issuerSlug/learningpaths/:learningPath',
+		component: IssuerLearningPathComponent,
 	},
 	{
 		path: 'issuers/:issuerSlug/badges/:badgeSlug/qr',
@@ -146,6 +151,7 @@ const routes = [
 		IssuerListComponent,
 
 		IssuerStaffCreateDialogComponent,
+		IssuerLearningPathComponent
 	],
 	schemas: [CUSTOM_ELEMENTS_SCHEMA],
 	exports: [],

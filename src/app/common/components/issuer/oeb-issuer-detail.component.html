@@ -29,7 +29,9 @@
 			{{ 'Issuer.nichtVerified' | translate }}
 		</p>
 		<div class="tw-flex tw-gap-2">
-			<oeb-button *ngIf="!public" [routerLink]="['./badges/create']" [disabled]="!issuer.canCreateBadge" [text]="'Issuer.createBadge' | translate" [class]="issuer.canCreateBadge ? '' : 'disabled'">
+			<oeb-button *ngIf="!public && activeTab == 'Badges'" [routerLink]="['./badges/create']" [disabled]="!issuer.canCreateBadge" [text]="'Issuer.createBadge' | translate" [class]="issuer.canCreateBadge ? '' : 'disabled'">
+			</oeb-button>
+			<oeb-button *ngIf="!public && activeTab == 'Lernpfade'" [routerLink]="['./badges/create']" [disabled]="!issuer.canCreateBadge" [text]="'Issuer.createLearningPath' | translate" [class]="issuer.canCreateBadge ? '' : 'disabled'">
 			</oeb-button>
 			<oeb-button *ngIf="public" (click)="routeToUrl(issuer.url)" [text]="'Issuer.visitWebsite' | translate">
 			</oeb-button>
@@ -73,44 +75,63 @@
 	</div>
 </div>
 
-<section class="tw-py-6" *ngIf="!badges?.length">
-	<h2 class="tw-font-medium md:tw-text-[22px] md:tw-leading-[26.4px] tw-text-purple tw-text-[16px] tw-leading-[19.2px]">
-		{{issuer.name}} {{ 'Issuer.issuerHasNoBadgesYet' | translate }}
-	</h2>
-</section>
-<section class="tw-py-6 tw-relative" *ngIf="badges?.length">
-	<h2 class="tw-font-medium md:tw-text-[22px] md:tw-leading-[26.4px] tw-text-purple tw-text-[16px] tw-leading-[19.2px] tw-py-2">
-		{{issuer.name}} {{ 'Issuer.issuerHasBadges' | translate }} {{ badges.length }} Badge{{ badges.length == 1 ? '' : 's' }}.
-	</h2>
-	<badges-datatable 
-		*ngIf="!public"
-		[caption]=""
-		[badges]="badgeResults"
-		(actionElement)="routeToBadgeAward($event, issuer)"
-		(redirectToBadgeDetail)="routeToBadgeDetail($event, issuer)"></badges-datatable>
+<div class="oeb-section-sm">
+	<oeb-backpack-tabs (onTabChanged)="onTabChange($event)" [tabs]="tabs"></oeb-backpack-tabs>
 
-	<ng-container *ngIf="public">
-
-		<div *ngIf="badges.length > 0">
-			<div class="tw-flex tw-flex-wrap tw-items-center oeb-standard-padding-bottom">
-				<input type="text" name="forminput" id="forminput" placeholder="Badges durchsuchen"
-					[(ngModel)]="searchQuery"
-					class="tw-w-[300px] tw-border-solid tw-border-purple tw-bg-white tw-mr-6"
-					hlmInput />
+	<ng-template #badgesTemplate>
+		<section class="tw-py-6" *ngIf="!badges?.length">
+			<h2 class="tw-font-medium md:tw-text-[22px] md:tw-leading-[26.4px] tw-text-purple tw-text-[16px] tw-leading-[19.2px]">
+				{{issuer.name}} {{ 'Issuer.issuerHasNoBadgesYet' | translate }}
+			</h2>
+		</section>
+	
+		<section class="tw-py-6 tw-relative" *ngIf="badges?.length">
+			<h2 class="tw-font-medium md:tw-text-[22px] md:tw-leading-[26.4px] tw-text-purple tw-text-[16px] tw-leading-[19.2px] tw-py-2">
+				{{issuer.name}} {{ 'Issuer.issuerHasBadges' | translate }} {{ badges.length }} Badge{{ badges.length == 1 ? '' : 's' }}.
+			</h2>
+			<badges-datatable 
+				*ngIf="!public"
+				[caption]=""
+				[badges]="badgeResults"
+				(actionElement)="routeToBadgeAward($event, issuer)"
+				(redirectToBadgeDetail)="routeToBadgeDetail($event, issuer)"></badges-datatable>
+	
+			<ng-container *ngIf="public">
+				<div *ngIf="badges.length > 0">
+					<div class="tw-flex tw-flex-wrap tw-items-center oeb-standard-padding-bottom">
+						<input type="text" name="forminput" id="forminput" placeholder="Badges durchsuchen"
+							[(ngModel)]="searchQuery"
+							class="tw-w-[300px] tw-border-solid tw-border-purple tw-bg-white tw-mr-6"
+							hlmInput />
+					</div>
+				</div>
+				<div class="tw-grid tw-grid-cols-badges tw-gap-16">
+			
+					<bg-badgecard *ngFor="let badge of badgeResults" 
+						[badgeTitle]="badge.badge.name"
+						[badgeImage]="badge.badge.image" 
+						[badgeDescription]="badge.badge.description"
+						[badgeSlug]="badge.badge.slug"
+						[issuerTitle]="badge.issuerName ? badge.issuerName : badge.issuer.name"
+						[badgeIssueDate]="badge.badge.createdAt"
+						public="true"
+						[publicUrl]="badge.badge.id"
+						[badgeClass]="true"></bg-badgecard>
+				</div>
+			</ng-container>
+		</section>
+	</ng-template>
+	<ng-template #learningPathTemplate>
+		<div class="oeb-section-sm">
+			<p hlmP>{{issuer.name}} {{ 'Issuer.issuerHasNoLearningPathYet' | translate }} </p>
+		</div>
+		<div class="oeb-section-sm">
+			<div class="tw-bg-green tw-p-6 tw-rounded-[20px] tw-text-oebblack tw-relative tw-max-w-[600px]">
+				<div class="tw-flex tw-pb-4 tw-flex-wrap sm:tw-flex-nowrap tw-items-center tw-justify-center tw-gap-2">
+					<img class="tw-inline-block" alt="Plugin" src="assets/oeb/images/issuerPage/email_icon.png" />
+					<p hlmP class="tw-pl-4 xs:tw-pl-0 tw-text-center sm:tw-text-left tw-font-bold" [innerHTML]="'Issuer.askForLearningPath' | translate"></p>
+				</div>
 			</div>
 		</div>
-		<div class="tw-grid tw-grid-cols-badges tw-gap-16">
-	
-			<bg-badgecard *ngFor="let badge of badgeResults" 
-				[badgeTitle]="badge.badge.name"
-				[badgeImage]="badge.badge.image" 
-				[badgeDescription]="badge.badge.description"
-				[badgeSlug]="badge.badge.slug"
-				[issuerTitle]="badge.issuerName ? badge.issuerName : badge.issuer.name"
-				[badgeIssueDate]="badge.badge.createdAt"
-				public="true"
-				[publicUrl]="badge.badge.id"
-				[badgeClass]="true"></bg-badgecard>
-		</div>
-	</ng-container>
-</section>
+	</ng-template>
+</div>
