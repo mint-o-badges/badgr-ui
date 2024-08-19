@@ -19,7 +19,7 @@
                     {{ 'RequestBadge.fillForm' | translate}}
                 </p>
                 <p hlmP>
-                    {{ 'RequestBadge.requestBadgeInfo1' | translate}} {{badgeClass.name}}
+                    {{ 'RequestBadge.requestBadgeInfo1' | translate}} <span class="tw-italic">{{badgeClass.name}}</span>
                     {{ 'RequestBadge.requestBadgeInfo2' | translate}}
     
                 </p>
@@ -35,7 +35,7 @@
                     <oeb-input label="Nachname" [placeholder]=""
                             fieldType="text" [control]="requestForm.rawControlMap.lastname"
                             ></oeb-input>
-                    <oeb-input label="Email" [placeholder]=""
+                    <oeb-input label="E-Mail" [placeholder]=""
                     fieldType="email" [control]="requestForm.rawControlMap.email"
                     ></oeb-input>    
                     <oeb-input fieldType="hidden" [control]="requestForm.rawControlMap.qrCodeId"></oeb-input>    
