@@ -223,7 +223,14 @@
 		"import": "Importieren",
 		"csvColumns": "CSV Spalten",
 		"csvError": "Die CSV Datei enthält Zeilen länger als ihre Überschrift. Bitte behebe diesen Fehler und versuche es erneut.",
-		"pdfCertificate": "PDF-Zertifikat"
+		"pdfCertificate": "PDF-Zertifikat",
+		"learningPathHeadline": "Lernpfad hochladen",
+		"uploadLearningPathText": "Wenn du versiert im Umgang mit JSON-Dateien bist, kannst du den Lernpfad auch selbst anlegen. So geht’s:",
+		"learningPathList1": "Lade unsere Datei-Vorlage herunter: Download JSON-Vorlage",
+		"learningPathList2": "Öffne sie mit einem Texteditor.",
+		"learningPathList3": "Ersetze den Beispiel-Text durch die richtigen Badge-Angaben.",
+		"learningPathList4": "Exportiere die Vorlage als JSON-Datei.",
+		"learningPathList5": "Lade deine JSON-Datei hoch:"
 	},
 	"Badge": {
 		"groupBy": "Gruppieren nach",
