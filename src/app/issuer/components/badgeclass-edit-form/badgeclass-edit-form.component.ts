@@ -312,7 +312,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	showAdvanced: boolean[] = [false];
 
 	currentImage;
-	initedCurrentImage = false;
 	existing = false;
 	showLegend = false;
 
@@ -359,8 +358,8 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 		this.badgeClassForm.setValue({
 			badge_name: badgeClass.name,
-			badge_image: null,
-			badge_customImage: null,
+            badge_image: this.existing && badgeClass.imageFrame ? badgeClass.image : null,
+            badge_customImage: this.existing && !badgeClass.imageFrame ? badgeClass.image : null,
 			badge_description: badgeClass.description,
 			badge_criteria_url: badgeClass.criteria_url,
 			badge_criteria_text: badgeClass.criteria_text,
@@ -392,12 +391,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				target_code: alignment.target_code,
 			})),
 		});
-
-        if (this.existing && badgeClass.imageFrame)
-            // TODO: The data URL is wrong, also this still probably doesn't call `generateUploadImage`. Maybe it'd be better to directly call this method, if I figure out what `image` and `formdata` should be.
-            this.imageField.useDataUrl(badgeClass.image, 'BADGE');
-        else if (this.existing && !badgeClass.imageFrame)
-            this.imageField.useDataUrl(badgeClass.image, 'BADGE');
 
 		if(this.badgeClassForm.controls.competencies.controls.length > 0){
 			this.collapsedCompetenciesOpen = true;
@@ -953,31 +946,16 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	}
 
 	generateUploadImage(image, formdata) {
-		// the imageUploaded-event of the angular image component is also called after initialising the component because the image is set in initFormFromExisting
-        // This is a lie
-		if (typeof this.currentImage == 'undefined' || this.initedCurrentImage) {
-			this.initedCurrentImage = true;
-			this.currentImage = image.slice();
-			this.badgeStudio.generateUploadImage(image.slice(), formdata).then((imageUrl) => {
-				this.imageField.useDataUrl(imageUrl, 'BADGE');
-				// Added as a workaround to resolve the issue of not showing badge frame from first time (only with safari browser)
-				//this.adjustUploadImage(formdata);
-			});
-		} else {
-			this.initedCurrentImage = true;
-		}
+        this.currentImage = image.slice();
+        this.badgeStudio.generateUploadImage(image.slice(), formdata).then((imageUrl) => {
+            this.imageField.useDataUrl(imageUrl, 'BADGE');
+        });
 	}
 
 	generateCustomUploadImage(image) {
-		// the imageUploaded-event of the angular image component is also called after initialising the component because the image is set in initFormFromExisting
-		if (typeof this.currentImage == 'undefined' || this.initedCurrentImage) {
-			this.initedCurrentImage = true;
-			this.currentImage = image.slice();
-			// do not use frame for custom images
-			this.customImageField.useDataUrl(this.currentImage, 'BADGE');
-		} else {
-			this.initedCurrentImage = true;
-		}
+        this.currentImage = image.slice();
+        // do not use frame for custom images
+        this.customImageField.useDataUrl(this.currentImage, 'BADGE');
 	}
 
 	positiveInteger(control: AbstractControl) {
