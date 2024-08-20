@@ -11,11 +11,16 @@ import { HlmPDirective } from './spartan/ui-typography-helm/src/lib/hlm-p.direct
 	selector: 'oeb-input',
 	standalone: true,
 	imports: [HlmInputDirective, HlmPDirective, OebInputErrorComponent, NgIf, ReactiveFormsModule, TextSemibold],
+	styleUrls: ['./input.component.scss'],
 	template: ` <div class="tw-mt-6 md:tw-mt-7">
 		<div class="tw-flex tw-justify-between">
 			<label class="tw-pb-[2px] tw-pl-[3px]" [attr.for]="inputName" *ngIf="label">
+				<span *ngIf="labelStyle; else baseLabel" [class]="labelStyle" [innerHTML]="label"></span>
+				<ng-template #baseLabel>
 				<span hlmP class="tw-text-oebblack tw-font-semibold" [innerHTML]="label"></span
-				><span *ngIf="optional">(OPTIONAL)</span>
+				>
+				</ng-template>
+				<span *ngIf="optional">(OPTIONAL)</span>
 				<span *ngIf="formFieldAside">{{ formFieldAside }}</span>
 			</label>
 			<ng-content
@@ -68,6 +73,7 @@ export class OebInputComponent {
 	@Input() error: string;
 	@Input() errorOverride?: false;
 	@Input() label: string;
+	@Input() labelStyle?: string = '';
 	@Input() ariaLabel: string;
 	@Input() errorMessage: string;
 	@Input() errorGroupMessage: CustomValidatorMessages;
