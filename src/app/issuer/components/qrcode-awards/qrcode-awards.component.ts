@@ -62,7 +62,7 @@ export class QrCodeAwardsComponent {
 	}
 
     @Input() awards: any[]
-	@Input() routerLink: string[]
+	@Input() routerLinkText: string[]
 	@Input() issuerSlug: string
 	@Input() badgeClassSlug: string
 	@Output() qrBadgeAward = new EventEmitter<void>();
@@ -103,6 +103,7 @@ export class QrCodeAwardsComponent {
 		const dialogRef = this._hlmDialogService.open(DangerDialogComponent, {
 			context: {
 				delete: () => this.deleteQrCode(qrSlug),
+				qrCodeRequested: this.awards.find(award => award.slug == qrSlug).request_count > 0,
 				variant: "danger"
 			},
 		});

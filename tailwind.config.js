@@ -39,6 +39,7 @@ module.exports = {
 				oebblack: 'var(--color-black)',
 				link: 'var(--color-link)',
 				oebgrey: 'var(--color-lightgray)',
+				darkgrey: 'var(--color-darkgray)',
 				grey: {
 					DEFAULT: '#808080',
 					40: '#666666',

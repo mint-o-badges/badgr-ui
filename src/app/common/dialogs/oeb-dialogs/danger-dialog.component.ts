@@ -29,7 +29,7 @@ import { TranslateService } from "@ngx-translate/core";
             <p hlmP class="tw-flex tw-flex-col tw-gap-2">
                 <span class="tw-font-extrabold tw-uppercase">Qr-Code Vergabe löschen</span>
                 <span> Möchtest du die QR-Code Vergabe wirklich löschen? 
-                    Damit gehen alle noch offenen Badge-Anfragen verloren.
+                    <span *ngIf="qrCodeRequested">Damit gehen alle noch offenen Badge-Anfragen verloren.</span>
                 </span>
             </p> 
             <div class="tw-flex tw-justify-around tw-mt-6">
@@ -41,10 +41,11 @@ import { TranslateService } from "@ngx-translate/core";
 })
 export class DangerDialogComponent {
     // @HostBinding('class') private readonly _class: string = 'tw-bg-red tw-bg-red';
-    private readonly _dialogContext = injectBrnDialogContext<{ text: string, delete: any, variant: string }>();
+    private readonly _dialogContext = injectBrnDialogContext<{ text: string, delete: any, qrCodeRequested: boolean, variant: string }>();
     protected readonly text = this._dialogContext.text;
     protected readonly delete = this._dialogContext.delete;
     protected readonly variant = this._dialogContext.variant;
+    protected readonly qrCodeRequested = this._dialogContext.qrCodeRequested;
     private readonly _dialogRef = inject<BrnDialogRef>(BrnDialogRef);
 
     constructor(private translate: TranslateService) {}
