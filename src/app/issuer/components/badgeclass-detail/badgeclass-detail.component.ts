@@ -25,15 +25,17 @@ import { ShareSocialDialogOptions } from '../../../common/dialogs/share-social-d
 import { AppConfigService } from '../../../common/app-config.service';
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { BadgeClassCategory, BadgeClassLevel } from '../../models/badgeclass-api.model';
-import { PageConfig } from '../../../common/components/badge-detail/badge-detail.component';
+import { TranslateService } from '@ngx-translate/core';
+import { PageConfig } from '../../../common/components/badge-detail/badge-detail.component.types';
 import { PdfService } from '../../../common/services/pdf.service';
+import { QrCodeApiService } from '../../services/qrcode-api.service';
 
 @Component({
 	selector: 'badgeclass-detail',
 	template: `
 		<bg-badgedetail [config]="config" [awaitPromises]="[issuerLoaded, badgeClassLoaded]">
-			<issuer-detail-datatable
-				*ngIf="recipientCount > 0"
+				<qrcode-awards (qrBadgeAward)="onQrBadgeAward()" [awards]="qrCodeAwards" [badgeClassSlug]="badgeSlug" [issuerSlug]="issuerSlug" [routerLinkText]="config?.issueQrRouterLink"></qrcode-awards>
+		<issuer-detail-datatable
 				[recipientCount]="recipientCount"
 				[_recipients]="instanceResults"
 				(actionElement)="revokeInstance($event)"
@@ -55,12 +57,17 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		return this.route.snapshot.params['badgeSlug'];
 	}
 
+
 	get confirmDialog() {
 		return this.dialogService.confirmDialog;
 	}
 
 	get recipientCount() {
 		return this.badgeClass ? this.badgeClass.recipientCount : null;
+	}
+
+	set recipientCount(value: number){
+		this.badgeClass.recipientCount = value;
 	}
 
 	get activeRecipientCount() {
@@ -97,6 +104,9 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 
 	config: PageConfig;
 
+	qrCodeButtonText = "Badge über QR-Code vergeben"
+	qrCodeAwards = []
+
 	pdfSrc: SafeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl('about:blank');
 	downloadStates: boolean[] = [false];
 
@@ -120,6 +130,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		protected badgeManager: BadgeClassManager,
 		protected issuerManager: IssuerManager,
 		protected badgeInstanceManager: BadgeInstanceManager,
+		protected qrCodeApiService: QrCodeApiService,
 		sessionService: SessionService,
 		router: Router,
 		route: ActivatedRoute,
@@ -129,6 +140,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		private externalToolsManager: ExternalToolsManager,
 		protected pdfService: PdfService,
 		private sanitizer: DomSanitizer,
+        private translate: TranslateService,
 	) {
 		super(router, route, sessionService);
 
@@ -151,6 +163,10 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 			(issuer) => (this.issuer = issuer),
 			(error) => this.messageService.reportLoadingError(`Cannot find issuer ${this.issuerSlug}`, error),
 		);
+
+		this.qrCodeApiService.getQrCodesForIssuerByBadgeClass(this.issuerSlug, this.badgeSlug).then((qrCodes) => {
+			this.qrCodeAwards = qrCodes
+		})
 
 		this.externalToolsManager.getToolLaunchpoints('issuer_assertion_action').then((launchpoints) => {
 			this.launchpoints = launchpoints;
@@ -180,18 +196,21 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 					crumbs: this.crumbs,
 					badgeTitle: this.badgeClass.name,
 					headerButton: {
-						title: 'Badge vergeben',
+						title: 'Badge direkt vergeben',
 						routerLink: ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'issue'],
 					},
+					issueQrRouterLink: ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'qr'],
+					qrCodeButton: true,
 					menuitems: [
 						{
 							title: 'Bearbeiten',
 							routerLink: ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'edit'],
-							icon: 'icon_edit',
+							icon:  "lucidePencil",
+
 						},
 						{
 							title: 'Löschen',
-							icon: 'icon_remove',
+							icon: 'lucideTrash2',
 							action: () => this.deleteBadge(),
 						},
 					],
@@ -221,6 +240,11 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 				return error;
 			},
 		);
+	}
+
+	onQrBadgeAward() {
+		this.loadInstances();
+		this.recipientCount += 1
 	}
 
 	ngOnInit() {
@@ -277,10 +301,10 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		if (this.activeRecipientCount === 0) {
 			this.confirmDialog
 				.openResolveRejectDialog({
-					dialogTitle: 'Warning',
-					dialogBody: `Are you sure you want to delete the badge <strong>${this.badgeClass.name}</strong>?`,
-					resolveButtonLabel: 'Delete Badge',
-					rejectButtonLabel: 'Cancel',
+					dialogTitle: this.translate.instant('General.warning'),
+					dialogBody: this.translate.instant('Badge.deletePart1') + `<strong>${this.badgeClass.name}</strong>` + this.translate.instant('Badge.deletePart2'),
+					resolveButtonLabel: this.translate.instant('Badge.deleteConfirm'),
+					rejectButtonLabel: this.translate.instant('General.cancel'),
 				})
 				.then(
 					() => {

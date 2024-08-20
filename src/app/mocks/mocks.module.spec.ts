@@ -39,6 +39,7 @@ import { NavigationService } from '../common/services/navigation.service';
 import { RecipientBadgeCollectionApiService } from '../recipient/services/recipient-badge-collection-api.service';
 import { ApplicationCredentialsService } from '../common/services/application-credentials.service.';
 import { CaptchaService } from '../common/services/captcha.service';
+import { QrCodeApiService } from '../issuer/services/qrcode-api.service';
 import { PdfService } from '../common/services/pdf.service';
 
 /*@Injectable()
@@ -168,6 +169,14 @@ export class MockInitialLoadingIndicatorService {}
 
 @Injectable()
 export class MockRecipientBadgeCollectionApiService {}
+
+@Injectable()
+export class MockQrCodeApiService {
+	getQrCodesForIssuerByBadgeClass = () => new Promise(() => {});
+	createQrCode = () => new Promise(() => {});
+	updateQrCode = () => new Promise(() => {});
+	deleteQrCode = () => new Promise(() => {});
+}
 
 @Injectable()
 export class MockOAuthApiService {
@@ -366,6 +375,7 @@ export let COMMON_MOCKS_PROVIDERS_WITH_SUBS = [];
 	RecipientBadgeManager,
 	ApplicationCredentialsService,
 	CaptchaService,
+	QrCodeApiService,
 	PdfService
 ].forEach((m, i, a) => {
 	const thisMock = eval('Mock' + m.name);
