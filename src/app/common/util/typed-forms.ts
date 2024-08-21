@@ -72,8 +72,9 @@ export function typedFormGroup(
  */
 export function typedFormArray<ItemValueType, ItemType extends TypedFormItem<ItemValueType>>(
 	templateItem: ItemType & TypedFormItem<ItemValueType>,
+	validator?: ValidatorFn | ValidatorFn[]
 ): TypedFormArray<ItemValueType, ItemType> {
-	return new TypedFormArray<ItemValueType, ItemType>(templateItem);
+	return new TypedFormArray<ItemValueType, ItemType>(templateItem, validator);
 }
 
 /**
@@ -245,11 +246,12 @@ export class TypedFormGroup<ValueType = {}, ControlsType = {}> extends TypedForm
 	addArray<NameType extends string, ItemType extends TypedFormItem<ItemValueType>, ItemValueType>(
 		name: NameType,
 		templateItem: ItemType & TypedFormItem<ItemValueType>,
+        validator?: ValidatorFn | ValidatorFn[]
 	): TypedFormGroup<
 		ValueType & Record<NameType, ItemValueType[]>,
 		ControlsType & Record<NameType, TypedFormArray<ItemValueType, ItemType>>
 	> {
-		return this.add(name, typedFormArray(templateItem));
+		return this.add(name, typedFormArray(templateItem, validator));
 	}
 
 	add<NameType extends string, ItemType extends TypedFormItem<ItemValueType>, ItemValueType>(
@@ -300,12 +302,13 @@ export class TypedFormGroup<ValueType = {}, ControlsType = {}> extends TypedForm
 export class TypedFormArray<ItemValueType, ItemType extends TypedFormItem<ItemValueType>> extends TypedFormItem<
 	ItemValueType[]
 > {
-	readonly rawControl = new FormArray([]);
+	readonly rawControl;
 
 	controls: ItemType[] = [];
 
-	constructor(public templateItem: ItemType & TypedFormItem<ItemValueType>) {
+	constructor(public templateItem: ItemType & TypedFormItem<ItemValueType>, validator?: ValidatorFn | ValidatorFn[]) {
 		super();
+        this.rawControl = new FormArray([], validator);
 	}
 
 	get rawControls(): AbstractControl[] {
