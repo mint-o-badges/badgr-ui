@@ -8,8 +8,8 @@ import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-a
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { Issuer } from '../../models/issuer.model';
 import { IssuerManager } from '../../services/issuer-manager.service';
-import { ApiLearningPath } from '../../models/learningpath-api.model';
-import { LearningPathApiService } from '../../services/learningpath-api.service';
+import { ApiLearningPath } from '../../../common/model/learningpath-api.model';
+import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
 
 @Component({
 	selector: 'learningpath-upload',
@@ -44,7 +44,7 @@ export class LearningPathUploadComponent extends BaseAuthenticatedRoutableCompon
 			this.breadcrumbLinkEntries = [
 				{ title: 'Issuers', routerLink: ['/issuer'] },
 				{ title: issuer.name, routerLink: ['/issuer/issuers', this.issuerSlug] },
-                {title: 'Lernpfade'},
+                { title: 'Lernpfade' },
 				{ title: 'Lernpfad hochladen', routerLink: ['/issuer/issuers', this.issuerSlug, '/learningpaths/upload'] },
 			];
         }); 
@@ -60,7 +60,6 @@ export class LearningPathUploadComponent extends BaseAuthenticatedRoutableCompon
     importAction() {
 		if (this.rawJson) {
 			const learningPath: ApiLearningPath = JSON.parse(this.rawJson);
-			console.log(learningPath)
 			this.learningPathApiService.createLearningPath(this.issuerSlug, learningPath).then((lp) => {	
 				console.log(lp)
 				// this.router.navigate(['/issuer/issuers', this.issuerSlug, '/learningpaths', lp.slug]);

@@ -235,7 +235,8 @@
 		"learningPathList2": "Öffne sie mit einem Texteditor.",
 		"learningPathList3": "Ersetze den Beispiel-Text durch die richtigen Badge-Angaben.",
 		"learningPathList4": "Exportiere die Vorlage als JSON-Datei.",
-		"learningPathList5": "Lade deine JSON-Datei hoch:"
+		"learningPathList5": "Lade deine JSON-Datei hoch:",
+		"learningPathRecipient": "Absolvent:innen"
 	},
 	"Badge": {
 		"groupBy": "Gruppieren nach",

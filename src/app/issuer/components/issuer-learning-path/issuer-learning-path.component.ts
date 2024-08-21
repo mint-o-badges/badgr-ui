@@ -11,12 +11,12 @@ import { Title } from '@angular/platform-browser';
 import { preloadImageURL } from '../../../common/util/file-util';
 import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
 import { UserProfileEmail } from '../../../common/model/user-profile.model';
-import { ApiExternalToolLaunchpoint } from 'app/externaltools/models/externaltools-api.model';
-import { ExternalToolsManager } from 'app/externaltools/services/externaltools-manager.service';
 import { AppConfigService } from '../../../common/app-config.service';
 import { CommonDialogsService } from '../../../common/services/common-dialogs.service';
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { MenuItem } from '../../../common/components/badge-detail/badge-detail.component.types';
+import { ApiLearningPath } from '../../..//common/model/learningpath-api.model';
+import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
 
 @Component({
 	selector: 'issuer-learning-path',
@@ -30,26 +30,19 @@ export class IssuerLearningPathComponent extends BaseAuthenticatedRoutableCompon
 		'../../../../assets/@concentricsky/badgr-style/dist/images/image-empty-issuer.svg';
 
 	issuer: Issuer;
+	learningPath: ApiLearningPath;
 	issuerSlug: string;
+	learningPathSlug: string;
 	badges: BadgeClass[];
-	launchpoints: ApiExternalToolLaunchpoint[];
 
 	profileEmails: UserProfileEmail[] = [];
 
 	issuerLoaded: Promise<unknown>;
-	badgesLoaded: Promise<unknown>;
+	learningPathLoaded: Promise<unknown>;
 
 	profileEmailsLoaded: Promise<unknown>;
 	crumbs: LinkEntry[];
-
 	menuitems: MenuItem[]	= [];
-
-	fakeLearningPath = {
-		title: "MINT-Koordinatorin",
-		tags: ["hallo", "peter", "pan"],
-		description: "Dieser Kurs wurde entwickelt, um MINT-Akteur:innen in der außerschulischen MINT-Bildung dabei zu unterstützen, ihre Netzwerke wirkungsvoller zu gestalten. Wir möchten, dass Ihr von diesem Kurs nicht nur theoretisches Wissen mitnehmt, sondern auch konkrete Strategien entwickelt, die Ihr in Eurer Netzwerkarbeit anwenden könnt.",
-		badges: ["fakebadges"]
-	}
 
 	constructor(
 		loginService: SessionService,
@@ -61,18 +54,15 @@ export class IssuerLearningPathComponent extends BaseAuthenticatedRoutableCompon
 		protected badgeClassService: BadgeClassManager,
 		protected profileManager: UserProfileManager,
 		private configService: AppConfigService,
-		private externalToolsManager: ExternalToolsManager,
 		private dialogService: CommonDialogsService,
+		private learningPathApiService: LearningPathApiService
 	) {
 		super(router, route, loginService);
 
 		title.setTitle(`Issuer Detail - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 
 		this.issuerSlug = this.route.snapshot.params['issuerSlug'];
-
-		this.externalToolsManager.getToolLaunchpoints('issuer_external_launch').then((launchpoints) => {
-			this.launchpoints = launchpoints.filter((lp) => Boolean(lp));
-		});
+		this.learningPathSlug = this.route.snapshot.params['learningPathSlug'];
 
 		this.menuitems = [{
 			title: 'Bearbeiten',
@@ -101,20 +91,19 @@ export class IssuerLearningPathComponent extends BaseAuthenticatedRoutableCompon
 				this.crumbs = [
 					{ title: 'Meine Institutionen', routerLink: ['/issuer/issuers'] },
 					{ title: this.issuer.name, routerLink: ['/issuer/issuers/' + this.issuer.slug] },
+					{ title: "Lernpfad" },
 				];
 
-				this.badgesLoaded = new Promise<void>((resolve, reject) => {
-					this.badgeClassService.badgesByIssuerUrl$.subscribe(
-						(badgesByIssuer) => {
-							const cmp = (a, b) => (a === b ? 0 : a < b ? -1 : 1);
-							this.badges = (badgesByIssuer[this.issuer.issuerUrl] || []).sort((a, b) =>
-								cmp(b.createdAt, a.createdAt),
-							);
+				this.learningPathLoaded = new Promise<void>((resolve, reject) => {
+					this.learningPathApiService.getLearningPath(this.learningPathSlug).then(
+						(result) => {
+							console.log(result)
+							this.learningPath = result;
 							resolve();
 						},
 						(error) => {
 							this.messageService.reportAndThrowError(
-								`Failed to load badges for ${this.issuer ? this.issuer.name : this.issuerSlug}`,
+								`Failed to load learningpath for ${this.issuer ? this.issuer.name : this.issuerSlug}`,
 								error,
 							);
 							resolve();

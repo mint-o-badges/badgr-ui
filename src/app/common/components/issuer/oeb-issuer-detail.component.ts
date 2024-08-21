@@ -10,6 +10,8 @@ import { IssuerManager } from '../../../issuer/services/issuer-manager.service';
 import { MatchingAlgorithm } from '../../dialogs/fork-badge-dialog/fork-badge-dialog.component';
 import { MenuItem } from '../badge-detail/badge-detail.component.types';
 import { TranslateService } from '@ngx-translate/core';
+import { ApiLearningPath } from '../../../common/model/learningpath-api.model';
+import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
 
 @Component({
 	selector: 'oeb-issuer-detail',
@@ -22,6 +24,7 @@ export class OebIssuerDetailComponent implements OnInit {
     @Input() issuerPlaceholderSrc: string;
     @Input() issuerActionsMenu: any;
     @Input() badges: BadgeClass[];
+    @Input() learningPaths: ApiLearningPath[];
     @Input() public: boolean = false;
     @Output() issuerDeleted = new EventEmitter();
 
@@ -33,6 +36,7 @@ export class OebIssuerDetailComponent implements OnInit {
 		protected issuerManager: IssuerManager,
 		protected profileManager: UserProfileManager,
 		private configService: AppConfigService,
+		private learningPathApiService: LearningPathApiService
 	) {
         
 	};
@@ -45,6 +49,7 @@ export class OebIssuerDetailComponent implements OnInit {
 			icon: 'lucideFileQuestion',
 		}	
 	]
+
 	menuItems: MenuItem[] = [
 		{
 			title: this.translate.instant('General.edit'),
@@ -130,9 +135,18 @@ export class OebIssuerDetailComponent implements OnInit {
     routeToBadgeAward(badge, issuer){
 		this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'issue'])
 	}
-
+	
 	routeToBadgeDetail(badge, issuer){
 		this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug])
+	}
+	redirectToLearningPathDetail(learningPathSlug, issuer){
+		this.router.navigate(['/issuer/issuers/', issuer.slug, 'learningpaths', learningPathSlug])
+	}
+
+	deleteLearningPath(learningPathSlug, issuer){
+		this.learningPathApiService.deleteLearningPath(issuer.slug, learningPathSlug).then(
+			() => this.learningPaths = this.learningPaths.filter(value => value.slug != learningPathSlug)
+		);
 	}
 
 	get rawJsonUrl() {

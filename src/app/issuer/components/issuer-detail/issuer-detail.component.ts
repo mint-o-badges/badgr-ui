@@ -18,6 +18,8 @@ import { AppConfigService } from '../../../common/app-config.service';
 import { CommonDialogsService } from '../../../common/services/common-dialogs.service';
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { MenuItem } from '../../../common/components/badge-detail/badge-detail.component.types';
+import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
+import { ApiLearningPath } from '../../../common/model/learningpath-api.model';
 
 @Component({
 	selector: 'issuer-detail',
@@ -33,12 +35,14 @@ export class IssuerDetailComponent extends BaseAuthenticatedRoutableComponent im
 	issuer: Issuer;
 	issuerSlug: string;
 	badges: BadgeClass[];
+	learningPaths: ApiLearningPath[];
 	launchpoints: ApiExternalToolLaunchpoint[];
 
 	profileEmails: UserProfileEmail[] = [];
 
 	issuerLoaded: Promise<unknown>;
 	badgesLoaded: Promise<unknown>;
+	learningPathsLoaded: Promise<unknown>;
 
 	profileEmailsLoaded: Promise<unknown>;
 	crumbs: LinkEntry[];
@@ -53,6 +57,7 @@ export class IssuerDetailComponent extends BaseAuthenticatedRoutableComponent im
 		protected title: Title,
 		protected issuerManager: IssuerManager,
 		protected badgeClassService: BadgeClassManager,
+		protected learningPathsService: LearningPathApiService,
 		protected profileManager: UserProfileManager,
 		private configService: AppConfigService,
 		private externalToolsManager: ExternalToolsManager,
@@ -115,6 +120,22 @@ export class IssuerDetailComponent extends BaseAuthenticatedRoutableComponent im
 						},
 					);
 				});
+				this.learningPathsLoaded = new Promise<void>((resolve, reject) => {
+					this.learningPathsService.getLearningPathsForIssuer(this.issuerSlug).then(
+						(result) => {
+							this.learningPaths = result; 
+							resolve();
+						},
+						(error) => {
+							this.messageService.reportAndThrowError(
+								`Failed to load learningpaths for ${this.issuer ? this.issuer.name : this.issuerSlug}`,
+								error,
+							);
+							resolve();
+						},
+					);
+				});
+
 			},
 			(error) => {
 				this.messageService.reportLoadingError(

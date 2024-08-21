@@ -29,7 +29,6 @@ import { IssuerStaffComponent } from './components/issuer-staff/issuer-staff.com
 import { BadgeClassEditFormComponent } from './components/badgeclass-edit-form/badgeclass-edit-form.component';
 import { IssuerStaffCreateDialogComponent } from './components/issuer-staff-create-dialog/issuer-staff-create-dialog.component';
 import { TranslateModule } from '@ngx-translate/core';
-import { DatatableComponent } from '../components/datatable-badges.component';
 import { QrCodeDatatableComponent } from '../components/datatable-qrcodes.component';
 import { IssuerDetailDatatableComponent } from '../components/datatable-issuer-detail.component';
 import { CompetencyAccordionComponent } from '../components/accordion.component';
@@ -42,7 +41,6 @@ import { QrCodeApiService } from './services/qrcode-api.service';
 import { BadgeRequestApiService } from './services/badgerequest-api.service';
 import { EditQrFormComponent } from './components/edit-qr-form/edit-qr-form.component';
 import { LearningPathUploadComponent } from './components/learningpath-upload/learningpath-upload.component';
-import { LearningPathApiService } from './services/learningpath-api.service';
 import { IssuerLearningPathComponent } from './components/issuer-learning-path/issuer-learning-path.component';
 
 
@@ -81,7 +79,7 @@ const routes = [
 		component: LearningPathUploadComponent,
 	},
 	{
-		path: 'issuers/:issuerSlug/learningpaths/:learningPath',
+		path: 'issuers/:issuerSlug/learningpaths/:learningPathSlug',
 		component: IssuerLearningPathComponent,
 	},
 	{
@@ -127,7 +125,6 @@ const routes = [
 		IssuerDetailDatatableComponent,
 		QRCodeModule,
 		QrCodeAwardsComponent
-		// DatatableComponent
 	],
 	declarations: [
 		BadgeClassCreateComponent,
@@ -170,8 +167,7 @@ const routes = [
 		IssuerApiService,
 		IssuerManager,
 		QrCodeApiService,
-		BadgeRequestApiService,
-		LearningPathApiService
+		BadgeRequestApiService
 	],
 })
 export class IssuerModule {}

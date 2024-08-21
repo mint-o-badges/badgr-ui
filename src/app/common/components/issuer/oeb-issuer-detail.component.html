@@ -31,7 +31,7 @@
 		<div class="tw-flex tw-gap-2">
 			<oeb-button *ngIf="!public && activeTab == 'Badges'" [routerLink]="['./badges/create']" [disabled]="!issuer.canCreateBadge" [text]="'Issuer.createBadge' | translate" [class]="issuer.canCreateBadge ? '' : 'disabled'">
 			</oeb-button>
-			<oeb-button *ngIf="!public && activeTab == 'Lernpfade'" [routerLink]="['./badges/create']" [disabled]="!issuer.canCreateBadge" [text]="'Issuer.createLearningPath' | translate" [class]="issuer.canCreateBadge ? '' : 'disabled'">
+			<oeb-button *ngIf="!public && activeTab == 'Lernpfade'" [routerLink]="['./learningpaths/upload']" [disabled]="!issuer.canCreateBadge" [text]="'Issuer.createLearningPath' | translate" [class]="issuer.canCreateBadge ? '' : 'disabled'">
 			</oeb-button>
 			<oeb-button *ngIf="public" (click)="routeToUrl(issuer.url)" [text]="'Issuer.visitWebsite' | translate">
 			</oeb-button>
@@ -122,15 +122,28 @@
 		</section>
 	</ng-template>
 	<ng-template #learningPathTemplate>
-		<div class="oeb-section-sm">
-			<p hlmP>{{issuer.name}} {{ 'Issuer.issuerHasNoLearningPathYet' | translate }} </p>
-		</div>
-		<div class="oeb-section-sm">
-			<div class="tw-bg-green tw-p-6 tw-rounded-[20px] tw-text-oebblack tw-relative tw-max-w-[600px]">
-				<div class="tw-flex tw-pb-4 tw-flex-wrap sm:tw-flex-nowrap tw-items-center tw-justify-center tw-gap-2">
-					<img class="tw-inline-block" alt="Plugin" src="assets/oeb/images/issuerPage/email_icon.png" />
-					<p hlmP class="tw-pl-4 xs:tw-pl-0 tw-text-center sm:tw-text-left tw-font-bold" [innerHTML]="'Issuer.askForLearningPath' | translate"></p>
+		<div *ngIf="!learningPaths">
+			<div class="oeb-section-sm">
+				<p hlmP>{{issuer.name}} {{ 'Issuer.issuerHasNoLearningPathYet' | translate }} </p>
+			</div>
+			<div class="oeb-section-sm">
+				<div class="tw-bg-green tw-p-6 tw-rounded-[20px] tw-text-oebblack tw-relative tw-max-w-[600px]">
+					<div class="tw-flex tw-pb-4 tw-flex-wrap sm:tw-flex-nowrap tw-items-center tw-justify-center tw-gap-2">
+						<img class="tw-inline-block" alt="Plugin" src="assets/oeb/images/issuerPage/email_icon.png" />
+						<p hlmP class="tw-pl-4 xs:tw-pl-0 tw-text-center sm:tw-text-left tw-font-bold" [innerHTML]="'Issuer.askForLearningPath' | translate"></p>
+					</div>
 				</div>
+			</div>
+		</div>
+		<div *ngIf="learningPaths">
+			<div class="oeb-section-sm">
+				<h2 class="tw-font-medium md:tw-text-[22px] md:tw-leading-[26.4px] tw-text-purple tw-text-[16px] tw-leading-[19.2px] tw-py-2">
+					{{issuer.name}} {{ 'Issuer.issuerHasBadges' | translate }} {{ learningPaths.length }} Lernpfad{{ learningPaths.length == 1 ? '' : 'e' }}.
+				</h2>
+				<learningpaths-datatable 
+					[learningPaths]="learningPaths"
+					(actionElement)="deleteLearningPath($event, issuer)"
+					(redirectToLearningPathDetail)="redirectToLearningPathDetail($event, issuer)"></learningpaths-datatable>
 			</div>
 		</div>
 	</ng-template>

@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { BaseHttpApiService } from '../../common/services/base-http-api.service';
 import { SessionService } from '../../common/services/session.service';
 import { AppConfigService } from '../../common/app-config.service';
-import { ApiQRCode } from '../models/qrcode-api.model';
-import { ApiLearningPath } from '../models/learningpath-api.model';
+import { ApiLearningPath } from '../../common/model/learningpath-api.model';
 import { MessageService } from '../../common/services/message.service';
 import { HttpClient } from '@angular/common/http';
 
@@ -20,6 +19,10 @@ export class LearningPathApiService extends BaseHttpApiService {
 
 	getLearningPath(lpSlug: string) {
 		return this.get<ApiLearningPath>(`/v1/issuer/learningpath/${lpSlug}`).then((r) => r.body);
+	}
+
+	getLearningPathsForIssuer(issuerSlug: string) {
+		return this.get<ApiLearningPath[]>(`/v1/issuer/issuers/${issuerSlug}/learningpath`).then((r) => r.body);
 	}
 
     createLearningPath(issuerSlug: string, learningPath: ApiLearningPath) {

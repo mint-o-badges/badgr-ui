@@ -114,6 +114,8 @@ import { OebSeparatorComponent } from '../components/oeb-separator.component';
 import { OebLearningPathDetailComponent } from './components/learningpath-detail/oeb-learning-path.component';
 
 import { SharedIconsModule } from '../public/icons.module';
+import { LearningPathDatatableComponent } from '../components/datatable-learningpaths.component';
+import { LearningPathApiService } from './services/learningpath-api.service';
 
 const DIRECTIVES = [
 	BgAwaitPromises,
@@ -194,13 +196,14 @@ const SERVICES = [
 	NavigationService,
 	ZipService,
 	ApplicationCredentialsService,
+	LearningPathApiService
 ];
 
 const GUARDS = [AuthGuard];
 
 const PIPES = [UcFirstPipe, StudyLoadPipe];
 
-export const COMMON_IMPORTS = [CommonModule, SharedIconsModule, FormsModule, ReactiveFormsModule, HttpClientModule, RouterModule, OebInputComponent, OebInputErrorComponent, OebSelectComponent, OebSeparatorComponent, OebCollapsibleComponent, OebButtonComponent, OebDropdownComponent, HlmH1Directive, HlmH2Directive, HlmH3Directive, HlmPDirective, HlmADirective, CompetencyAccordionComponent, OebCheckboxComponent, OebDialogComponent, SuccessDialogComponent, DangerDialogComponent, OebBackgroundComponent, OebTabsComponent, HlmIconModule, CountUpModule, HlmInputDirective, DatatableComponent];
+export const COMMON_IMPORTS = [CommonModule, SharedIconsModule, FormsModule, ReactiveFormsModule, HttpClientModule, RouterModule, OebInputComponent, OebInputErrorComponent, OebSelectComponent, OebSeparatorComponent, OebCollapsibleComponent, OebButtonComponent, OebDropdownComponent, HlmH1Directive, HlmH2Directive, HlmH3Directive, HlmPDirective, HlmADirective, CompetencyAccordionComponent, OebCheckboxComponent, OebDialogComponent, SuccessDialogComponent, DangerDialogComponent, OebBackgroundComponent, OebTabsComponent, HlmIconModule, CountUpModule, HlmInputDirective, DatatableComponent, LearningPathDatatableComponent];
 
 
 @NgModule({
