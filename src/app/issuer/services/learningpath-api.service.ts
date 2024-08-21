@@ -35,6 +35,6 @@ export class LearningPathApiService extends BaseHttpApiService {
 	}
 
 	deleteLearningPath(issuerSlug: string, lpSlug: string) {
-		return this.delete(`/v1/issuer/issuers/${issuerSlug}/learningpath/${lpSlug}/`);
+		return this.delete(`/v1/issuer/issuers/${issuerSlug}/learningpath/${lpSlug}`);
 	}
 }
