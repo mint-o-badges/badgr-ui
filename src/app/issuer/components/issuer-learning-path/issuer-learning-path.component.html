@@ -1,0 +1,11 @@
+<form-message></form-message>
+<div class="oeb tw-relative tw-w-full">
+	<div class="page-padding">
+		<ng-template [bgAwaitPromises]="[issuerLoaded, badgesLoaded]">
+			<div class="tw-mb-8 tw-pb-6 tw-border-b tw-border-solid tw-border-[var(--color-light4)]">
+				<bg-breadcrumbs [linkentries]="crumbs"> </bg-breadcrumbs>
+			</div>
+			<oeb-learning-path [learningPath]="fakeLearningPath" [issuer]="issuer" [badges]="badges"></oeb-learning-path>
+		</ng-template>
+	</div>
+</div>

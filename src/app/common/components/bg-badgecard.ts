@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 @Component({
 	selector: 'bg-badgecard',
 	host: {
-		class: 'tw-rounded-[10px] tw-bg-white tw-border-purple tw-border-solid tw-border tw-relative tw-p-[calc(var(--gridspacing)*3)] tw-block tw-overflow-hidden oeb-badge-card',
+		class: 'tw-rounded-[10px] tw-bg-white tw-border-purple tw-border-solid tw-border tw-relative tw-p-3 tw-block tw-overflow-hidden oeb-badge-card',
 	},
 	template: `
 		<div
@@ -13,7 +13,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 			{{ mostRelevantStatus }}
 		</div>
 
-		<div class="tw-flex tw-items-center">
+		<div class="tw-flex tw-items-center tw-h-full">
 			<img
 				class="badgeimage badgeimage-{{ mostRelevantStatus }}"
 				[loaded-src]="badgeImage"
@@ -21,7 +21,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 				[error-src]="badgeFailedImageUrl"
 				width="80"
 			/>
-			<div class="tw-flex tw-flex-col tw-flex-wrap tw-pl-4">
+			<div class="tw-flex tw-flex-col tw-flex-wrap tw-pl-4 tw-py-2">
 				<a
 					*ngIf="badgeSlug && !publicUrl"
 					class="tw-font-bold"

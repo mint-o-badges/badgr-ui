@@ -111,6 +111,7 @@ import { DatatableComponent } from '../components/datatable-badges.component';
 import { OebSelectComponent } from '../components/select.component';
 import { OebCollapsibleComponent } from '../components/oeb-collapsible.component';
 import { OebSeparatorComponent } from '../components/oeb-separator.component';
+import { OebLearningPathDetailComponent } from './components/learningpath-detail/oeb-learning-path.component';
 
 import { SharedIconsModule } from '../public/icons.module';
 
@@ -163,6 +164,7 @@ export const COMMON_MODULE_COMPONENTS = [
 	NounprojectDialog,
 	OebCompetency,
 	OebIssuerDetailComponent,
+	OebLearningPathDetailComponent
 ];
 
 const SERVICES = [

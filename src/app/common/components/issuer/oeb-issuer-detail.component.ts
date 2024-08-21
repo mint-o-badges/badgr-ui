@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { MessageService } from '../../../common/services/message.service';
 import { Title } from '@angular/platform-browser';
@@ -63,6 +63,26 @@ export class OebIssuerDetailComponent implements OnInit {
 			icon: 'lucideWarehouse',
 		},
 	]
+	
+	tabs: any = undefined;
+	activeTab = 'Badges';
+
+	@ViewChild('badgesTemplate', { static: true }) badgesTemplate: ElementRef;
+	@ViewChild('learningPathTemplate', { static: true }) learningPathTemplate: ElementRef;
+
+	ngAfterContentInit() {
+		this.tabs = [
+			
+			{
+				title: 'Badges',
+				component: this.badgesTemplate,
+			},
+			{
+				title: 'Lernpfade',
+				component: this.learningPathTemplate,
+			},
+		];
+	}
 
 	badgeResults: BadgeResult[] = [];
 	maxDisplayedResults = 100;
@@ -126,6 +146,10 @@ export class OebIssuerDetailComponent implements OnInit {
 
 	routeToUrl(url){
 		window.location.href = url;
+	}
+
+	onTabChange(tab) {
+		this.activeTab = tab;
 	}
 }
 
