@@ -79,6 +79,8 @@ const routes = [
 	{
 		path: 'issuers/:issuerSlug/learningpaths/upload',
 		component: LearningPathUploadComponent,
+	},
+	{
 		path: 'issuers/:issuerSlug/learningpaths/:learningPath',
 		component: IssuerLearningPathComponent,
 	},
