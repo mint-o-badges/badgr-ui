@@ -4,7 +4,7 @@ import { OebDialogComponent } from "../../../components/oeb-dialog.component";
 import { OebButtonComponent } from "../../../components/oeb-button.component";
 import { HlmPDirective } from "../../../components/spartan/ui-typography-helm/src";
 import { HlmIconComponent, HlmIconModule, provideIcons } from "../../../components/spartan/ui-icon-helm/src";
-import { lucideAlertTriangle } from '@ng-icons/lucide';
+import { lucideTriangleAlert } from '@ng-icons/lucide';
 import { NgIf } from "@angular/common";
 import { TranslateService } from "@ngx-translate/core";
 
@@ -18,12 +18,12 @@ import { TranslateService } from "@ngx-translate/core";
         HlmIconComponent,
         NgIf
     ],
-    providers: [TranslateService, provideIcons({ lucideAlertTriangle })],
+    providers: [TranslateService, provideIcons({ lucideTriangleAlert })],
     template: `
         <oeb-dialog [variant]="variant" class="tw-text-center tw-text-oebblack">
             <div class="tw-flex tw-justify-center">
                 <div class="oeb-icon-circle tw-my-6">
-                    <hlm-icon class="tw-text-red" size='xxl' name="lucideAlertTriangle" />
+                    <hlm-icon class="tw-text-red" size='xxl' name="lucideTriangleAlert" />
                 </div>
             </div>
             <p hlmP class="tw-flex tw-flex-col tw-gap-2">
