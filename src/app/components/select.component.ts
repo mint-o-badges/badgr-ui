@@ -40,7 +40,7 @@ import { CustomValidatorMessages, messagesForValidationError } from './input.com
 			class="tw-text-oebblack"
 			hlm
 		>
-			<hlm-select-trigger class="tw-w-full tw-border-solid tw-border-purple tw-bg-white">
+			<hlm-select-trigger class="tw-w-full tw-border-solid tw-border-purple tw-bg-white tw-bottom-0">
 				<hlm-select-value class="tw-text-base" />
 			</hlm-select-trigger>
 			<hlm-select-content>

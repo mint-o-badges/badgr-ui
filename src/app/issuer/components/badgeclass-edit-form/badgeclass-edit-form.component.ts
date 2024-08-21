@@ -164,7 +164,10 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	 */
 
 	savePromise: Promise<BadgeClass> | null = null;
-	badgeClassForm = typedFormGroup([this.criteriaRequired.bind(this), this.imageValidation.bind(this)])
+	badgeClassForm = typedFormGroup([
+        this.criteriaRequired.bind(this),
+        this.imageValidation.bind(this),
+        this.noDuplicateCompetencies.bind(this)])
 		.addControl('badge_name', '', [
 			Validators.required,
 			Validators.maxLength(70),
@@ -267,6 +270,8 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// Tags
 	tags = new Set<string>();
+
+	collapsedCompetenciesOpen = false
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// Expiration
@@ -387,6 +392,9 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				target_code: alignment.target_code,
 			})),
 		});
+		if(this.badgeClassForm.controls.competencies.controls.length > 0){
+			this.collapsedCompetenciesOpen = true;
+		};
 
 		this.currentImage = badgeClass.extension['extensions:OrgImageExtension']
 			? badgeClass.extension['extensions:OrgImageExtension'].OrgImage
@@ -403,6 +411,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	ngOnInit() {
 		super.ngOnInit();
 		let that = this;
+
 		// update badge frame when a category is selected, unless no-hexagon-frame checkbox is checked
 		this.badgeClassForm.rawControl.controls['badge_category'].statusChanges.subscribe((res) => {
 			this.handleBadgeCategoryChange();
@@ -1015,6 +1024,33 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			return { duration: 'Must be a positive integer or null' };
 		}
 	}
+
+    noDuplicateCompetencies(): {duplicateCompetency: Boolean} | null {
+        if (this.duplicateCompetency)
+            return { duplicateCompetency: true };
+    }
+
+    get duplicateCompetency(): String | null {
+        if (!this.badgeClassForm) return null;
+
+        const hand = this.badgeClassForm.controls.competencies.value.
+            // Hand competencies get added automatically at submitting
+            //filter(c => c.added).
+            map(c => c.name);
+        const ai = this.badgeClassForm.controls.aiCompetencies.value.
+            filter(c => c.selected).
+            map((c,i) => this.aiCompetenciesSuggestions[i].preferred_label);
+
+        const all = hand.concat(ai);
+        const check = new Set();
+
+        for (const name of all)
+            if (check.has(name))
+                return name;
+            else
+                check.add(name);
+        return null;
+    }
 
 	closeLegend() {
 		this.showLegend = false;

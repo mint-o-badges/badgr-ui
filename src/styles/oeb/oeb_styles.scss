@@ -7,6 +7,10 @@
 @import url(typography.scss);
 @import url(elements.scss);
 
+html {
+	font-family: rubik;
+}
+
 .oeb {
 	font-family: rubik;
 }
@@ -26,6 +30,7 @@
 	--color-green: #93f993;
 	--color-white: #ffffff;
 	--color-lightgray: #f5f5f5;
+	--color-darkgray: #6B6B6B;
 	--color-grayinteractive: #cfcece;
 	--color-lightpurple: #f1f0ff;
 	--color-interactive1: var(--color-purple);

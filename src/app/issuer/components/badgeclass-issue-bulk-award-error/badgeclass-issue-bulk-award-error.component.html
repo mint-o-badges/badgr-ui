@@ -40,6 +40,13 @@
 						<td class="datatable-x-cell">
 							<bg-formfield-text
 								class="u-margin-left2x"
+								[control]="importErrorForm.controls['users']['controls'][i].controls.name"
+								[errorMessage]="'Please enter a valid name'"
+							></bg-formfield-text>
+						</td>
+						<td class="datatable-x-cell">
+							<bg-formfield-text
+								class="u-margin-left2x"
 								[control]="importErrorForm.controls['users']['controls'][i].controls.evidence"
 								[errorMessage]="{ required: 'Please enter a valid URL' }"
 							></bg-formfield-text>
