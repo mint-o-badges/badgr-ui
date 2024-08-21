@@ -54,7 +54,8 @@
 		"showDetails": "Details anzeigen",
 		"hideDetails": "Details verstecken",
 		"password": "Passwort",
-		"loading": "Laden..."
+		"loading": "Laden...",
+        "warning": "Warnung"
 	},
 	"NavItems": {
 		"register": "Registrieren",
@@ -192,6 +193,7 @@
 		"myInstitutionsText": "Über deine Institutionen kannst du <span class='tw-text-purple tw-font-medium'> Badges erstellen und anschließend an deine Lernenden vergeben</span>.",
 		"myInstitutionsNoBadge": "hat noch keine Badges, die sie vergeben kann.",
 		"myInstitutionsCreateBadge": "Neuen Badge erstellen",
+		"giveMyBadges": "Meine Badges vergeben",
 		"askForPlugin": "Plugin anfragen",
 		"askForPluginText": "Unser <span class='tw-font-bold tw-text-purple'>Plugin</span> bietet dir die Möglichkeit, Badges aus deiner eigenen digitalen Lehrumgebung heraus zu vergeben.",
 		"award": "vergeben",
@@ -249,7 +251,11 @@
 		"competency": "Kompetenz",
 		"title": "Titel",
 		"createdOn": "Erstellt am",
-		"catalogHeadline": "Alle Badges in der Übersicht"
+		"catalogHeadline": "Alle Badges in der Übersicht",
+		"requestedOn": "Angefragt am",
+        "deletePart1": "Bist du sicher, dass du das Badge '",
+        "deletePart2": "' löschen möchtest?",
+        "deleteConfirm": "Badge löschen"
 	},
 	"CreateBadge": {
 		"chooseBadgeCategory": "Badge-Kategorie wählen",
@@ -262,6 +268,7 @@
 		"enterDetails": "Badge-Details eingeben",
 		"criteriaInfo": "Folgende Kriterien sind auf Basis deiner Eingaben als Metadaten im Badge hinterlegt:",
 		"criteriaError": "Entweder Text oder eine URL sind verpflichtend.",
+		"duplicateCompetencyError": "Badges dürfen keine Kompetenz doppelt beinhalten. Doppelte Kompetenz: ",
 		"whatIsThe": "Was ist die",
 		"competencyBadgeInfo": "werden mit Kompetenzen gefüllt",
 		"competencyBadgeShortInfo": "enthalten Kompetenzen",
@@ -342,7 +349,7 @@
 		"reachedResendEmailLimit": "Du hast das Limit für das erneute Senden von Bestätigungs-E-Mails erreicht. Überprüfe deinen Posteingang auf eine vorhandene Nachricht oder versuche es nach 5 Minuten erneut.",
 		"resendEmailFailed": "Das erneute Senden der Bestätigungs-E-Mail ist fehlgeschlagen. Bitte wende dich an den Support.",
 		"newEmailSent": "Eine neue Bestätigungs-E-Mail wurde gesendet an: ",
-		"infoPersonalDataProcessing": "Informationen zur Verarbeitung Deiner personenbezogenen Daten findest in unserer <a class='tw-underline tw-text-[#1400FF]' href='public/privacy'> Dateschutzerklärung </a>",
+		"infoPersonalDataProcessing": "Informationen zur Verarbeitung Deiner personenbezogenen Daten findest du in unserer <a class='tw-underline tw-text-[#1400FF]' href='public/privacy'> Datenschutzerklärung</a>",
 		"enterValidEmail":"Bitte gib eine gültige Email Adresse ein.",
 		"enterFirstName":"Bitte gib einen Vornamen an",
 		"enterLastName":"Bitte gib einen Nachnamen an",
@@ -351,7 +358,7 @@
 		"confirmPassword":"Bitte bestätige Dein Passwort",
 		"passwordsNotEqual":"Die Passwörter sind nicht gleich",
 		"registerWithBildungsraum": "Registrieren mit Mein Bildungsraum",
-		"ageConfirm": "Ich bestätige, dass ich bei Registrierung mindestens 16 Jahre alt bin oder mir für die Registrierung auf Plattform eine Zustimmung meiner Personensorgeberechtigten vorliegt."
+		"ageConfirm": "Ich bestätige, dass ich bei Registrierung mindestens 16 Jahre alt bin oder mir für die Registrierung auf dieser Plattform eine Zustimmung meiner Personensorgeberechtigten vorliegt."
 
 	},
 	"Captcha": {
@@ -568,5 +575,26 @@
 		"text2": "Wenn du<span class='tw-font-medium tw-text-purple'> Badges erstellen und vergeben möchtest</span>, lege dafür deine Institution an.",
 		"collectBadgesBtn": "Badges im Rucksack sammeln",
 		"awardBadgesBtn": "Institutionen erstellen und Badges vergeben"
+	},
+	"RequestBadge": {
+		"requestBadge": "Badge anfordern",
+		"fillForm": "Fülle die Formular-Felder aus, um deinen Badge anzufordern.",
+		"requestBadgeInfo1": "Deine Anfrage wird dann von einer Person von",
+		"requestBadgeInfo2": "freigegeben. Sobald das passiert ist, wird dir der Badge per E-Mail zugesendet.",
+		"personalDataInfo": "Informationen zur Verarbeitung deiner personenbezogenen Daten findest du in unserer <a class='tw-underline tw-text-[#1400FF]' href='public/privacy'> Datenschutzerklärung</a>.",
+		"ageConfirmation": "Ich bestätige, dass ich <b>16 Jahre oder älter bin. Wenn ich jünger als 16 Jahre bin:</b> Meine Eltern oder meine Erziehungsberechtigten wissen, dass ich meine persönlichen Daten für die Nutzung der Plattform Open Educational Badges angebe. Ich bestätige, dass sie damit einverstanden sind.",
+		"successMessage": "<span class='tw-font-bold'>Du hast den Badge erfolgreich angefordert.</span><br>",
+		"successMessage2": "Sobald deine Anfrage bestätigt wurde, bekommst du den Badge per E-Mail zugesendet."
+	},
+	"IssueQr": {
+		"list1": "Du füllst die Details für die QR-Code-Vergabe auf dieser Seite aus und klickst auf QR-Code generieren. Du wirst zum so generierten QR-Code weitergeleitet und kannst ihn herunterladen oder einen Screenshot machen.",
+		"list2": "Du zeigst deinen Lernenden den QR-Code – digital oder ausgedruckt.",
+		"list3": "Deine Lernenden scannen den QR-Code mit ihrem Smartphone und gelangen zu einer Eingabe-Maske, in der sie Vor- und Nachnamen sowie E-Mail-Adresse eingeben. Anschließend senden sie das Formular als Badge-Anfrage ab.",
+		"list4": "Du siehst die Badge-Anfragen deiner Lernenden auf der <a class='tw-underline tw-text-[#1400FF]' hlmA href='issuer/issuers/' Badge-Detail-Seite </a> bei OEB und kannst die Badges direkt vergeben. Sie werden den Lernenden per E-Mail zugestellt."
+
+	},
+	"QrCode": {
+		"savedSuccessfully": "<span class='tw-font-bold'> Die QR-Code-Vergabe wurde erfolgreich auf der Badge-Detail-Seite gespeichert.</span>",
+		"downloadedSuccessfully": "<span class='tw-font-bold'>Du hast den QR-Code erfolgreich heruntergeladen.</span><br> Schaue in deinem Download-Ordner nach."
 	}
 }

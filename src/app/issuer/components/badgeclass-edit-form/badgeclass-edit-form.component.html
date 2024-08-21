@@ -419,6 +419,13 @@
 				</div>
 			</oeb-collapsible>
 		</ul>
+        <p
+            id="competencyDuplicateError"
+            [hidden]="!badgeClassForm.hasError('duplicateCompetency')"
+            class="u-text u-margin-bottom2x u-text-error tw-w-full tw-text-center tw-mt-2"
+            >
+            {{ 'CreateBadge.duplicateCompetencyError' | translate }} '{{ this.duplicateCompetency }}'
+        </p>
 	</div>
 
 	<div class="section">

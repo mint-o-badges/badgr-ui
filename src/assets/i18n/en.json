@@ -53,7 +53,8 @@
 		"showDetails": "Show details",
 		"hideDetails": "Hide details",
 		"password": "Password",
-		"loading": "Loading..."
+		"loading": "Loading...",
+        "warning": "Warning"
 	},
 	"NavItems": {
 		"register": "Register",
@@ -191,6 +192,7 @@
 		"myInstitutionsText": "Über deine Institutionen kannst du <span class='tw-text-purple tw-font-medium'> Badges erstellen und anschließend an deine Lernenden vergeben</span>.",
 		"myInstitutionsNoBadge": "hat noch keine Badges, die sie vergeben kann.",
 		"myInstitutionsCreateBadge": "Neuen Badge erstellen",
+		"giveMyBadges": "Award Badges",
 		"askForPlugin": "Plugin anfragen",
 		"askForPluginText": "Unser <span class='tw-font-bold tw-text-purple'>Plugin</span> bietet dir die Möglichkeit, Badges aus deiner eigenen digitalen Lehrumgebung heraus zu vergeben.",
 		"award": "vergeben",
@@ -249,7 +251,11 @@
 		"title": "Title",
 		"characters": "characters",
 		"createdOn": "Created on",
-		"catalogHeadline": "Alle Badges in der Übersicht"
+		"catalogHeadline": "Alle Badges in der Übersicht",
+		"requestedOn": "Requested on",	
+        "deletePart1": "Are you sure you want to delete the badge '",
+        "deletePart2": "'?",
+        "deleteConfirm": "Delete Badge"
 	},
 	"CreateBadge": {
 		"chooseBadgeCategory": "Choose Badge-Category",
@@ -262,6 +268,7 @@
 		"enterDetails": "Enter Badge Details",
 		"criteriaInfo": "The following criteria are saved as metadata in the badge as a result of your input: ",
 		"criteriaError": "Either text or url are mandatory.",
+		"duplicateCompetencyError": "Badges may not contain duplicate competencies. Duplicate competency: ",
 		"whatIsThe": "What is the",
 		"competencyBadgeInfo": "are filled with competencies",
 		"competencyBadgeShortInfo": "contain competencies",
@@ -560,5 +567,26 @@
 		"text2": "Wenn du<span class='tw-font-medium tw-text-purple'> Badges erstellen und vergeben möchtest</span>, lege dafür deine Institution an.",
 		"collectBadgesBtn": "Badges im Rucksack sammeln",
 		"awardBadgesBtn": "Institutionen erstellen und Badges vergeben"
+	},
+	"RequestBadge": {
+		"requestBadge": "Request Badge",
+		"fillForm": "Fill in the form fields to request your badge.",
+		"requestBadgeInfo1": "Your request will then be approved by a person from ",
+		"requestBadgeInfo2": "Once that has happened, the badge will be sent to you via email.",
+		"personalDataInfo": "You can find information about the processing of your personal data in our <a class='tw-underline tw-text-[#1400FF]' href='public/privacy'> privacy policy </a>",
+		"ageConfirmation": "I confirm that I am 16 years old or older. If I am younger than 16: My parents or guardians are aware that I am providing my personal data to use the Open Educational Badges platform. I confirm that they agree with this."
+
+	},
+	"IssueQr": {
+		"list1": "You fill in the details for the QR code issuance on this page and click on Generate QR Code. You will be redirected to the generated QR code and can download it or take a screenshot.",
+		"list2": "You show your learners the QR code – either digitally or printed.",
+		"list3": "Your learners scan the QR code with their smartphones and are directed to an input form where they enter their first name, last name, and email address. They then submit the form as a badge request.",
+		"list4": "You can see your learners' badge requests on the <a class='tw-underline tw-text-[#1400FF]' hlmA href='' Badge Detail Page </a> on OEB and can directly issue the badges. They will be sent to the learners via email."
+
+	},
+	"QrCode": {
+		"savedSuccessfully": "<span class='tw-font-bold'> The QR code assignment was successfully saved on the badge detail page.</span>",
+		"downloadedSuccessfully": "<span class='tw-font-bold'>You have successfully downloaded the QR-Code.</span><br> Check your download folder."
+
 	}
 }

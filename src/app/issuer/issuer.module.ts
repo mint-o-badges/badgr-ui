@@ -30,8 +30,18 @@ import { BadgeClassEditFormComponent } from './components/badgeclass-edit-form/b
 import { IssuerStaffCreateDialogComponent } from './components/issuer-staff-create-dialog/issuer-staff-create-dialog.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { DatatableComponent } from '../components/datatable-badges.component';
+import { QrCodeDatatableComponent } from '../components/datatable-qrcodes.component';
 import { IssuerDetailDatatableComponent } from '../components/datatable-issuer-detail.component';
 import { CompetencyAccordionComponent } from '../components/accordion.component';
+import {BadgeClassEditQrComponent} from './components/badgeclass-edit-qr/badgeclass-edit-qr.component';
+import { BadgeClassIssueQrComponent } from './components/badgeclass-issue-qr/badgeclass-issue-qr.component';
+import { BadgeClassGenerateQrComponent } from './components/badgeclass-generate-qr/badgeclass-generate-qr.component';
+import { QRCodeModule } from 'angularx-qrcode';
+import {QrCodeAwardsComponent} from './components/qrcode-awards/qrcode-awards.component';
+import { QrCodeApiService } from './services/qrcode-api.service';
+import { BadgeRequestApiService } from './services/badgerequest-api.service';
+import { EditQrFormComponent } from './components/edit-qr-form/edit-qr-form.component';
+
 
 const routes = [
 	/* Issuer */
@@ -64,6 +74,18 @@ const routes = [
 		component: BadgeClassDetailComponent,
 	},
 	{
+		path: 'issuers/:issuerSlug/badges/:badgeSlug/qr',
+		component: BadgeClassIssueQrComponent,
+	},
+	{
+		path: 'issuers/:issuerSlug/badges/:badgeSlug/qr/:qrCodeId/edit',
+		component: BadgeClassEditQrComponent,
+	},
+	{
+		path: 'issuers/:issuerSlug/badges/:badgeSlug/qr/:qrCodeId/generate',
+		component: BadgeClassGenerateQrComponent,
+	},
+	{
 		path: 'issuers/:issuerSlug/badges/:badgeSlug/edit',
 		component: BadgeClassEditComponent,
 	},
@@ -90,7 +112,10 @@ const routes = [
 		RouterModule.forChild(routes),
 		TranslateModule,
 		CompetencyAccordionComponent,
+		QrCodeDatatableComponent,
 		IssuerDetailDatatableComponent,
+		QRCodeModule,
+		QrCodeAwardsComponent
 		// DatatableComponent
 	],
 	declarations: [
@@ -98,7 +123,11 @@ const routes = [
 		BadgeClassEditComponent,
 		BadgeClassEditFormComponent,
 		BadgeClassIssueComponent,
+		BadgeClassIssueQrComponent,
+		BadgeClassEditQrComponent,
+		BadgeClassGenerateQrComponent,
 		BadgeClassDetailComponent,
+		EditQrFormComponent,
 
 		BadgeClassIssueBulkAwardComponent,
 		BadgeClassIssueBulkAwardImportComponent,
@@ -127,6 +156,8 @@ const routes = [
 		BadgeInstanceManager,
 		IssuerApiService,
 		IssuerManager,
+		QrCodeApiService,
+		BadgeRequestApiService
 	],
 })
 export class IssuerModule {}
