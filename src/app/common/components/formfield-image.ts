@@ -35,7 +35,7 @@ import { MessageService } from '../services/message.service';
 			<p class="forminput-x-sublabel" *ngIf="sublabel">{{ sublabel }}</p>
 			<input
 				type="file"
-				accept="image/*"
+				accept="image/png"
 				name="image_field{{ uniqueIdSuffix }}"
 				id="image_field{{ uniqueIdSuffix }}"
 				(change)="fileInputChanged($event)"
