@@ -1,13 +1,13 @@
 <div class="">
 	<div class="tw-flex oeb-section-sm tw-w-full">
         <div class="tw-flex tw-justify-between tw-w-full">
-            <div class="tw-flex tw-items-center tw-gap-4">
+            <div class="tw-flex tw-items-center tw-gap-4 tw-w-full">
                 <div class="tw-relative md:tw-flex tw-flex-shrink-0 tw-z-10 tw-hidden">
                     <img src="assets/oeb/images/learningPath/badge.png"
                         alt="{{ issuer.name }} Badge" class="tw-w-[150px] md:tw-w-[200px]" />
                 </div>
-                <div>
-                    <div class="tw-flex tw-flex-row tw-justify-between">
+                <div class="tw-w-full">
+                    <div class="tw-flex tw-flex-row tw-justify-between tw-w-full tw-flex-wrap md:tw-flex-nowrap">
                         <div class="tw-flex tw-flex-col tw-justify-center">
                             <h2 hlmH2
                                 class="!tw-text-oebblack tw-font-extrabold tw-uppercase">
@@ -22,13 +22,24 @@
                             </div>
                         </div>
                         <oeb-button 
-                            class="tw-whitespace-nowrap"
+                            class="tw-whitespace-nowrap tw-hidden md:tw-block"
                             [text]="'Lernpfad löschen'"
                             variant="secondary" 
                             width="full_width"
                             [disabled-when-requesting]="true"></oeb-button>
                     </div>
+                    
                     <p hlmP>{{learningPath.description}}</p>
+
+                    <div class="tw-mt-4 md:tw-hidden">
+                        <oeb-button 
+                            class="tw-whitespace-nowrap "
+                            [text]="'Lernpfad löschen'"
+                            variant="secondary" 
+                            width="full_width"
+                            [disabled-when-requesting]="true"></oeb-button>
+                    </div>
+
                 </div>
             </div>
         </div>

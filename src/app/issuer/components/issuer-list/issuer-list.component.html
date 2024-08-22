@@ -52,6 +52,19 @@
 							class="tw-text-purple tw-font-medium tw-py-4 md:tw-text-[22px] md:tw-leading-[26.4px] tw-text-[16px] tw-leading-[19.2px]"
 							[innerHTML]="issuer.badgeClassCount | i18nPlural: plural['badges']"
 						></p>
+						<div *ngIf="issuerBadges" class="tw-flex tw-flex-wrap tw-gap-1 tw-pb-6">
+							<div *ngFor="let badge of issuerBadges.badges">
+								<img
+									[src]="badge.image"
+									[title]="badge?.name"
+									[width]="80"
+									[height]="80"
+								/>
+							</div>
+						</div>
+					</div>
+					<div>
+						
 					</div>
 					<div class="tw-flex tw-gap-2 tw-flex-wrap">
 						<oeb-button
