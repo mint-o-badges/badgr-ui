@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SessionService } from '../../../common/services/session.service';
@@ -22,7 +22,6 @@ export class LearningPathUploadComponent extends BaseAuthenticatedRoutableCompon
 	issuerLoaded: Promise<unknown>;
 
 	breadcrumbLinkEntries: LinkEntry[] = [];
-
 
     constructor(
 		protected formBuilder: FormBuilder,
@@ -65,5 +64,4 @@ export class LearningPathUploadComponent extends BaseAuthenticatedRoutableCompon
 			});
 		}
 	}
-
 }

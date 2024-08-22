@@ -97,7 +97,6 @@ export class IssuerLearningPathComponent extends BaseAuthenticatedRoutableCompon
 				this.learningPathLoaded = new Promise<void>((resolve, reject) => {
 					this.learningPathApiService.getLearningPath(this.learningPathSlug).then(
 						(result) => {
-							console.log(result)
 							this.learningPath = result;
 							resolve();
 						},

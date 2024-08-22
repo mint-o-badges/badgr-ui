@@ -8,7 +8,7 @@ import { animate, animateChild, query, stagger, state, style, transition, trigge
 	animations: [
         trigger('inOutAnimation', [
             transition(':enter', [style({ transform: 'translateX(-120px)', opacity: '0' }), animate('.5s ease-out', style({ transform: 'translateX(0px)', opacity: '1' }))]),
-            transition(':leave', [style({ opacity: '1' }), animate('.5s ease-out', style({ opacity: '0' }))]),
+            // transition(':leave', [style({ opacity: '1' }), animate('.5s ease-out', style({ opacity: '0' }))]),
         ]),
 		trigger('stagger', [
 			transition(':enter', [
