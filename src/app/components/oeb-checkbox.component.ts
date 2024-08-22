@@ -4,12 +4,13 @@ import { HlmPDirective } from './spartan/ui-typography-helm/src/lib/hlm-p.direct
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import type { ClassValue } from 'clsx';
 import { hlm } from '@spartan-ng/ui-core';
+import { OebInputErrorComponent } from './input.error.component';
 
 
 @Component({
 	selector: 'oeb-checkbox',
 	standalone: true,
-	imports: [HlmPDirective, HlmCheckboxComponent],
+	imports: [HlmPDirective, HlmCheckboxComponent, OebInputErrorComponent],
 	providers: [
 		{
 			provide: NG_VALUE_ACCESSOR,
@@ -17,10 +18,19 @@ import { hlm } from '@spartan-ng/ui-core';
 			multi: true,
 		},
 	],
-	template: ` <label class="tw-flex tw-items-center" hlmP>
-		<hlm-checkbox [name]="name" [checked]="checked" (changed)="onChange($event)" class="tw-mr-2" />
-		<span [innerHTML]="text"></span>
-	</label>`,
+	template: ` 
+	<div> 
+		<label class="tw-flex tw-items-center" hlmP>
+			<hlm-checkbox [name]="name" [checked]="checked" (changed)="onChange($event)" class="tw-mr-2" />
+			<span [innerHTML]="text"></span>
+			</label>
+			<oeb-input-error
+				class="tw-text-red tw-pl-[3px]"
+				*ngIf="isErrorState"
+				[error]="error"
+			></oeb-input-error>
+	</div>		
+	`,
 	host: {
 		'[class]': '_computedClass()',
 	},
@@ -60,5 +70,9 @@ export class OebCheckboxComponent implements ControlValueAccessor {
 	}
 
 	setDisabledState?(isDisabled: boolean): void {
+	}
+
+	get isErrorState() {
+		return this.control.dirty && !this.control.valid;
 	}
 }
