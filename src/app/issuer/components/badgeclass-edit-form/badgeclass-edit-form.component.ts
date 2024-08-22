@@ -1018,6 +1018,9 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		}
 	}
 
+	allowedFileFormats = ['image/png', 'image/svg+xml'];
+	allowedFileFormatsCustom = ['image/png'];
+
 	positiveInteger(control: AbstractControl) {
 		const val = parseInt(control.value, 10);
 		if (isNaN(val) || val < 1) {

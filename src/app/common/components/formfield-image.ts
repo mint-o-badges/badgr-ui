@@ -35,7 +35,7 @@ import { MessageService } from '../services/message.service';
 			<p class="forminput-x-sublabel" *ngIf="sublabel">{{ sublabel }}</p>
 			<input
 				type="file"
-				accept="image/png"
+				[accept]="allowedFileFormats"
 				name="image_field{{ uniqueIdSuffix }}"
 				id="image_field{{ uniqueIdSuffix }}"
 				(change)="fileInputChanged($event)"
@@ -98,6 +98,7 @@ export class BgFormFieldImageComponent {
 		this.loaderName = name;
 		this.imageLoader = namedImageLoaders[name] || throwExpr(new Error(`Invalid image loader name ${name}`));
 	}
+	@Input() allowedFileFormats: string[] = ['image/*'];
 	get imageDataUrl() {
 		return this.control.value;
 	}
