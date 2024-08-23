@@ -1,4 +1,4 @@
-import { Component, Injector } from '@angular/core';
+import { Component, Injector, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { PublicApiService } from '../../services/public-api.service';
@@ -8,6 +8,8 @@ import { EmbedService } from '../../../common/services/embed.service';
 import { Title } from '@angular/platform-browser';
 import { AppConfigService } from '../../../common/app-config.service';
 import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
+import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
+import { SuccessDialogComponent } from '../../../common/dialogs/oeb-dialogs/success-dialog.component';
 
 @Component({
 	templateUrl: './learningpath.component.html',
@@ -34,10 +36,21 @@ export class PublicLearningPathComponent {
 		});
 	}
 
+	private readonly _hlmDialogService = inject(HlmDialogService);
+	public openSuccessDialog() {
+		const dialogRef = this._hlmDialogService.open(SuccessDialogComponent, {
+			context: {
+				text: `Du nimmst am Lernpfad ${this.learningPathIdParam.value.name} teil!`,
+				variant: 'success',
+			},
+		});
+	}
+
 	participate(){
 		this.learningPathApiService.participateInLearningPath(this.learningPathSlug).then(
 			(response) => {
 				console.log(response);
+				this.openSuccessDialog();
 			},
 			(err) => {
 				console.log(err);

@@ -614,6 +614,7 @@
 		"downloadedSuccessfully": "<span class='tw-font-bold'>Du hast den QR-Code erfolgreich heruntergeladen.</span><br> Schaue in deinem Download-Ordner nach."
 	},
 	"LearningPath": {
+		"learningpaths": "Lernpfade",
 		"catalogHeadline":"Alle Lernpfade in der Übersicht"
 	}
 }

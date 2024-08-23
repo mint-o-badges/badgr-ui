@@ -17,7 +17,7 @@
 				<ng-container *ngIf="groupBy == '---'">
 					<div class="tw-grid tw-grid-cols-badges tw-gap-16">
 						<div *ngFor="let lp of learningPaths">
-                            <a [routerLink]="[catalog/learningPaths, lp.slug]">{{lp.name}}</a>
+                            <a [href]="'http://localhost:4200/public/learningpaths/' + lp.slug">{{lp.name}}</a>
                         </div>
 					</div>
 				</ng-container>

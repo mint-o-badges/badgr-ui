@@ -66,7 +66,6 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
         return new Promise(async (resolve, reject) => {
             this.learningPathService.allPublicLearningPaths$.subscribe(
 				(lps) => {
-                    console.log(lps)
 					this.learningPaths = lps
 					resolve(lps);
 				},
