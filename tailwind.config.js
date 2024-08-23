@@ -32,13 +32,17 @@ module.exports = {
 					300: 'var(--color-lightred)',
 				},
 				pink: 'var(--color-pink)',
-				green: 'var(--color-green)',
+				green:{
+					DEFAULT: 'var(--color-green)',
+					400: '#66BB6A',
+				},
 				yellow: 'var(--color-yellow)',
 				white: 'var(--color-white)',
 				lightgreen: 'var(--color-lightgreen)',
 				oebblack: 'var(--color-black)',
 				link: 'var(--color-link)',
 				oebgrey: 'var(--color-lightgray)',
+				darkgrey: 'var(--color-darkgray)',
 				grey: {
 					DEFAULT: '#808080',
 					40: '#666666',

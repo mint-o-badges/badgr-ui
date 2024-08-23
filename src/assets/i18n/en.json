@@ -63,7 +63,7 @@
 		"myInstitutions": "My institutions",
 		"appIntegrations": "App integrations",
 		"openMenu": "Open Menu",
-		"logout": "Ausloggen",
+		"logout": "Logout",
 		"myProfile": "My profile"
 	},
 	"Start": {
@@ -192,6 +192,7 @@
 		"myInstitutionsText": "Über deine Institutionen kannst du <span class='tw-text-purple tw-font-medium'> Badges erstellen und anschließend an deine Lernenden vergeben</span>.",
 		"myInstitutionsNoBadge": "hat noch keine Badges, die sie vergeben kann.",
 		"myInstitutionsCreateBadge": "Neuen Badge erstellen",
+		"giveMyBadges": "Award Badges",
 		"askForPlugin": "Plugin anfragen",
 		"askForPluginText": "Unser <span class='tw-font-bold tw-text-purple'>Plugin</span> bietet dir die Möglichkeit, Badges aus deiner eigenen digitalen Lehrumgebung heraus zu vergeben.",
 		"award": "vergeben",
@@ -267,6 +268,7 @@
 		"enterDetails": "Enter Badge Details",
 		"criteriaInfo": "The following criteria are saved as metadata in the badge as a result of your input: ",
 		"criteriaError": "Either text or url are mandatory.",
+		"duplicateCompetencyError": "Badges may not contain duplicate competencies. Duplicate competency: ",
 		"whatIsThe": "What is the",
 		"competencyBadgeInfo": "are filled with competencies",
 		"competencyBadgeShortInfo": "contain competencies",
@@ -320,7 +322,10 @@
 		"removeAlignment": "Remove Alignment",
 		"removeAlignmentInfo": "Are you sure you want to remove the alignment(s)?",
 		"irreversibleAction": "This action cannot be undone.",
-		"addAnotherCompetency": "Add another competency"
+		"addAnotherCompetency": "Add another competency",
+		"giveBadgeTitle":"Please give the badge a title",
+		"changeBadgeTitle":"Please change the title",
+		"maxValue1000":"Maximum value is 1000"
 	},
 	"Signup": {
 		"youHaveAccount": "You already have an account?",
