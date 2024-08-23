@@ -52,7 +52,7 @@
 							class="tw-text-purple tw-font-medium tw-py-4 md:tw-text-[22px] md:tw-leading-[26.4px] tw-text-[16px] tw-leading-[19.2px]"
 							[innerHTML]="issuer.badgeClassCount | i18nPlural: plural['badges']"
 						></p>
-						<div *ngIf="issuerBadges" class="tw-flex tw-flex-wrap tw-gap-1 tw-pb-6">
+						<div *ngIf="issuerBadges" class="tw-flex tw-flex-wrap tw-gap-1 tw-pb-6 tw-items-center">
 							<div *ngFor="let badge of issuerBadges.badges">
 								<img
 									[src]="badge.image"
@@ -61,19 +61,35 @@
 									[height]="80"
 								/>
 							</div>
+							<!-- <div title="Neuen Badge erstellen" class="tw-ml-2 tw-text-[40px] tw-h-[80px] tw-w-[80px] tw-rounded-[50%] tw-bg-purple tw-text-white tw-justify-center tw-flex tw-items-center tw-font-bold">
+								+
+							</div> -->
+							<oeb-button
+								class="md:tw-whitespace-nowrap tw-rounded-[50%] tw-overflow-hidden tw-font-bold tw-border-2 tw-border-solid tw-border-purple"
+								size="bigIcon"
+								variant="secondary"
+								[routerLink]="['/issuer/create']"
+								[disabled-when-requesting]="true"
+								[text]="'+'"
+		
+							></oeb-button>
+							<div title="Neuen Badge erstellen" class="tw-ml-2 tw-text-[40px] tw-h-[80px] tw-w-[80px] tw-rounded-[50%] tw-bg-white tw-text-purple tw-justify-center tw-flex tw-items-center tw-font-bold tw-border-2 tw-border-solid tw-border-purple">
+								+
+							</div>
 						</div>
 					</div>
 					<div>
 						
 					</div>
-					<div class="tw-flex tw-gap-2 tw-flex-wrap">
+					<div class="tw-flex tw-gap-2 tw-flex-wrap tw-justify-between">
 						<oeb-button
 							[class]="'tw-whitespace-nowrap'.concat(issuer.canCreateBadge
 								? ''
 								: ' disabled')"
 							[routerLink]="['/issuer/issuers/', issuer.slug, 'badges', 'create']"
 							[disabled]="!issuer.canCreateBadge"
-							[text]="'Issuer.myInstitutionsCreateBadge' | translate"
+							[text]="'Issuer.giveBadge' | translate"
+							variant="secondary"
 							>
 						</oeb-button>
 						<oeb-button

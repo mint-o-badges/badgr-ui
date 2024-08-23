@@ -78,9 +78,7 @@ export class IssuerLearningPathComponent extends BaseAuthenticatedRoutableCompon
 			title: 'Mitglieder bearbeiten',
 			routerLink: ['./staff'],
 			icon: 'lucideUsers',
-		}
-		
-	]
+		}]
 
 		this.issuerLoaded = this.issuerManager.issuerBySlug(this.issuerSlug).then(
 			(issuer) => {
@@ -88,16 +86,16 @@ export class IssuerLearningPathComponent extends BaseAuthenticatedRoutableCompon
 				this.title.setTitle(
 					`Issuer - ${this.issuer.name} - ${this.configService.theme['serviceName'] || 'Badgr'}`,
 				);
-				this.crumbs = [
-					{ title: 'Meine Institutionen', routerLink: ['/issuer/issuers'] },
-					{ title: this.issuer.name, routerLink: ['/issuer/issuers/' + this.issuer.slug] },
-					{ title: "Lernpfad" },
-				];
-
+				
 				this.learningPathLoaded = new Promise<void>((resolve, reject) => {
 					this.learningPathApiService.getLearningPath(this.learningPathSlug).then(
 						(result) => {
 							this.learningPath = result;
+							this.crumbs = [
+								{ title: 'Meine Institutionen', routerLink: ['/issuer/issuers'] },
+								{ title: this.issuer.name, routerLink: ['/issuer/issuers/' + this.issuer.slug] },
+								{ title: this.learningPath.name },
+							];
 							resolve();
 						},
 						(error) => {
