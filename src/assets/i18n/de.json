@@ -607,5 +607,8 @@
 	"QrCode": {
 		"savedSuccessfully": "<span class='tw-font-bold'> Die QR-Code-Vergabe wurde erfolgreich auf der Badge-Detail-Seite gespeichert.</span>",
 		"downloadedSuccessfully": "<span class='tw-font-bold'>Du hast den QR-Code erfolgreich heruntergeladen.</span><br> Schaue in deinem Download-Ordner nach."
+	},
+	"LearningPath": {
+		"catalogHeadline":"Alle Lernpfade in der Übersicht"
 	}
 }

@@ -132,3 +132,12 @@ export interface PublicApiBadgeCollectionEntryWithBadgeClassAndIssuer {
 	hostedUrl?: string;
 	expires?: string;
 }
+
+export interface PublicApiLearningPath {
+	name: string;
+	description: string;
+	image?: string;
+	badges: PublicApiBadgeClass[];
+	slug: string;
+	tags: string[];
+}

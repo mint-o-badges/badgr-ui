@@ -1,3 +1,5 @@
+import { ApiEntityRef } from "./entity-ref";
+
 export interface ApiLearningPath {
     id?: number;
     slug?: string;
@@ -6,4 +8,6 @@ export interface ApiLearningPath {
     description: string;
     tags: string[];
     badges: Array<{ id: string; order: number }>;
-  }
+}
+
+export interface LearningPathRef extends ApiEntityRef {}

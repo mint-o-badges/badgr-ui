@@ -1,0 +1,27 @@
+<form-message></form-message>
+
+<div class="oeb page-padding">
+	<ng-template [showLoader]="true" [bgAwaitPromises]="[learningPathsLoaded]">
+		<div class="oeb-section-sm">
+			<div class="oeb-headline-container tw-relative">
+				<div class="tw-z-10 tw-relative">
+					<h1 hlmH1 class="tw-text-purple tw-font-extrabold">{{ 'LearningPath.catalogHeadline' | translate }}</h1>
+				</div>
+			</div>
+		</div>
+
+		<div class="tw-relative">
+			<section class="">
+				<div class="tw-flex tw-items-center oeb-standard-padding-bottom tw-flex-wrap">
+				</div>
+				<ng-container *ngIf="groupBy == '---'">
+					<div class="tw-grid tw-grid-cols-badges tw-gap-16">
+						<div *ngFor="let lp of learningPaths">
+                            <a [routerLink]="[catalog/learningPaths, lp.slug]">{{lp.name}}</a>
+                        </div>
+					</div>
+				</ng-container>
+			</section>
+		</div>
+	</ng-template>
+</div>

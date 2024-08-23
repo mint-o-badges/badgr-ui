@@ -10,6 +10,7 @@ import {
 	PublicApiBadgeClassWithIssuer,
 	PublicApiBadgeCollectionWithBadgeClassAndIssuer,
 	PublicApiIssuer,
+	PublicApiLearningPath
 } from '../models/public-api.model';
 import { stripQueryParamsFromUrl } from '../../common/util/url-util';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -92,5 +93,11 @@ export class PublicApiService extends BaseHttpApiService {
 			false,
 			false,
 		).then((r) => r.body);
+	}
+
+	getLearningPath(lpId: string) {
+		const url = lpId.startsWith('http') ? lpId : `/public/learningpaths/${lpId}`;
+
+		return this.get<PublicApiLearningPath>(url, null, false, false).then((r) => r.body);
 	}
 }

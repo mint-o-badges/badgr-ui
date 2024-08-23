@@ -14,6 +14,9 @@ import { BadgeInstanceManager } from '../issuer/services/badgeinstance-manager.s
 import { IssuerApiService } from '../issuer/services/issuer-api.service';
 import { IssuerManager } from '../issuer/services/issuer-manager.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { LearningPathsCatalogComponent } from './components/learningpath-catalog/learningpath-catalog.component';
+import { LearningPathManager } from '../issuer/services/learningpath-manager.service';
+import { LearningPathApiService } from '../common/services/learningpath-api.service';
 
 export const routes: Routes = [
 	{
@@ -25,6 +28,10 @@ export const routes: Routes = [
 		component: IssuerCatalogComponent,
 	},
 	{
+		path: 'learningpaths',
+		component: LearningPathsCatalogComponent,
+	},
+	{
 		path: '**',
 		redirectTo: 'badges',
 		data: {
@@ -34,7 +41,7 @@ export const routes: Routes = [
 ];
 
 @NgModule({
-	declarations: [BadgeCatalogComponent, IssuerCatalogComponent],
+	declarations: [BadgeCatalogComponent, IssuerCatalogComponent, LearningPathsCatalogComponent],
 	imports: [
 		...COMMON_IMPORTS,
 		BadgrCommonModule,
@@ -49,6 +56,8 @@ export const routes: Routes = [
 		BadgeInstanceManager,
 		IssuerApiService,
 		IssuerManager,
+		LearningPathManager,
+		LearningPathApiService
 	],
 })
 export class CatalogModule {}
