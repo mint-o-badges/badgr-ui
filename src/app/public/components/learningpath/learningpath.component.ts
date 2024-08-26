@@ -1,4 +1,4 @@
-import { Component, Injector, inject } from '@angular/core';
+import { Component, Injector, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { PublicApiService } from '../../services/public-api.service';
@@ -10,23 +10,29 @@ import { AppConfigService } from '../../../common/app-config.service';
 import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
 import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
 import { SuccessDialogComponent } from '../../../common/dialogs/oeb-dialogs/success-dialog.component';
+import { UserProfileApiService } from '../../../common/services/user-profile-api.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	templateUrl: './learningpath.component.html',
 })
-export class PublicLearningPathComponent {
+export class PublicLearningPathComponent implements OnInit {
 
 	learningPathSlug: string;
 
-	learningPathIdParam: LoadedRouteParam<PublicApiLearningPath >;
+	isParticipating: boolean = false;
 
+	learningPathIdParam: LoadedRouteParam<PublicApiLearningPath >;
+	participationButtonText: string = "Teilnehmen"; 
 	constructor(
 		private injector: Injector,
 		public embedService: EmbedService,
 		public configService: AppConfigService,
 		private learningPathApiService: LearningPathApiService,
+		protected userProfileApiService: UserProfileApiService,
+		protected translate: TranslateService,
 		private title: Title,
-	) {
+		) {
 		title.setTitle(`LearningPath - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 
 		this.learningPathIdParam = new LoadedRouteParam(injector.get(ActivatedRoute), 'learningPathId', (paramValue) => {
@@ -36,6 +42,27 @@ export class PublicLearningPathComponent {
 		});
 	}
 
+	ngOnInit(): void {
+		this.userProfileApiService.getProfile().then(
+			(response) => {
+				let userSlug = response['slug'];
+				if(userSlug){
+					this.learningPathApiService.getLearningPathParticipants(this.learningPathSlug).then(
+						(response) => {
+							if(response.body){
+								const participants = response.body
+								participants.forEach((participant) => {
+									if(participant.user['slug'] == userSlug){
+										this.participationButtonText = this.translate.instant('LearningPath.notParticipateAnymore');
+									}
+								});
+							}
+						}, 
+					);
+				}
+			}
+		)
+	}
 	private readonly _hlmDialogService = inject(HlmDialogService);
 	public openSuccessDialog() {
 		const dialogRef = this._hlmDialogService.open(SuccessDialogComponent, {
@@ -45,6 +72,7 @@ export class PublicLearningPathComponent {
 			},
 		});
 	}
+
 
 	participate(){
 		this.learningPathApiService.participateInLearningPath(this.learningPathSlug).then(

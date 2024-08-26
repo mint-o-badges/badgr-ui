@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BaseHttpApiService } from '../../common/services/base-http-api.service';
 import { SessionService } from '../../common/services/session.service';
 import { AppConfigService } from '../../common/app-config.service';
-import { ApiLearningPath } from '../../common/model/learningpath-api.model';
+import { ApiLearningPath, ApiLearningPathParticipant } from '../../common/model/learningpath-api.model';
 import { MessageService } from '../../common/services/message.service';
 import { HttpClient } from '@angular/common/http';
 
@@ -51,5 +51,13 @@ export class LearningPathApiService extends BaseHttpApiService {
 
 	participateInLearningPath(lpSlug: string, body: any = null) {
 		return this.post(`/learningpath/${lpSlug}/participate`, body);
+	}
+
+	getLearningPathParticipant(participantId: string){
+		return this.get(`/learningpath/participant/${participantId}`);
+	}
+
+	getLearningPathParticipants(lpSlug: string){
+		return this.get<ApiLearningPathParticipant[]>(`/v1/issuer/learningpath/${lpSlug}/participants`);
 	}
 }

@@ -615,6 +615,8 @@
 	},
 	"LearningPath": {
 		"learningpaths": "Lernpfade",
-		"catalogHeadline":"Alle Lernpfade in der Übersicht"
+		"catalogHeadline":"Alle Lernpfade in der Übersicht",
+		"partipate": "Teilnehmen",
+		"notParticipateAnymore": "Nicht mehr teilnehmen"
 	}
 }

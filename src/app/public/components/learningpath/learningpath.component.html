@@ -3,7 +3,7 @@
 		<ng-template [bgAwaitPromises]="learningPathIdParam">
 		<!-- Embedded View -->
 		<form (ngSubmit)="participate()" novalidate>
-        	<oeb-button hlmBtn type="submit" text="Teilnehmen"></oeb-button>
+        	<oeb-button hlmBtn type="submit" [text]="participationButtonText"></oeb-button>
 		</form>
 		</ng-template>
 	</div>

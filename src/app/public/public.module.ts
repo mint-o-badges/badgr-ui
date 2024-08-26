@@ -22,7 +22,7 @@ import { PrivacyComponent } from './components/privacy/privacy.component';
 import { RequestBadgeComponent } from '../issuer/components/request-badge/request-badge.component';
 import { BadgeRequestApiService } from '../issuer/services/badgerequest-api.service';
 import { PublicLearningPathComponent } from './components/learningpath/learningpath.component';
-
+import { UserProfileApiService } from '../common/services/user-profile-api.service';
 
 export const routes: Routes = [
 	{
@@ -149,6 +149,6 @@ export const routes: Routes = [
 		PublicLearningPathComponent
 	],
 	exports: [],
-	providers: [PublicApiService, BadgeRequestApiService],
+	providers: [PublicApiService, BadgeRequestApiService, UserProfileApiService],
 })
 export class PublicModule {}
