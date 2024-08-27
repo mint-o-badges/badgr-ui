@@ -13,7 +13,6 @@ export class BgBadgeDetail {
 
     ngAfterViewChecked(){
         if(this.config && !this.config?.crumbs){
-            console.log("🚀 ~ BgBadgeDetail ~ ngAfterViewChecked ~ this.config:", this.config)
             this.config.crumbs = [
                 { title: 'Badges', routerLink: ['/catalog/badges'] },
                 { title: this.config.badgeTitle},
