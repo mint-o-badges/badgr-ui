@@ -181,6 +181,8 @@ export const defaultValidatorMessages: {
 		actualLength && requiredLength
 			? `${label} überschreitet maximale Länge von ${requiredLength} um ${actualLength - requiredLength} Zeichen`
 			: `${label} überschreitet maximale Länge.`,
+	requiredTrue: () => `This field is required.`,
+
 };
 
 export function messagesForValidationError(
