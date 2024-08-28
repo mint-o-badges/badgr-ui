@@ -8,6 +8,7 @@ import { CustomValidatorMessages, messagesForValidationError } from './input.com
 import { NgIf } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { OebInputErrorComponent } from './input.error.component';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'oeb-checkbox',
@@ -52,6 +53,12 @@ export class OebCheckboxComponent implements ControlValueAccessor {
 
 	@Output() ngModelChange = new EventEmitter<string>();
 
+	// Translation
+	fieldIsRequired = this.translate.instant('OEBComponents.fieldIsRequired');
+
+	constructor(private translate: TranslateService){
+	}
+
 	onChange(event) {
 		this.ngModelChange.emit(event);
 	}
@@ -80,7 +87,9 @@ export class OebCheckboxComponent implements ControlValueAccessor {
 	}
 
 	get uncachedErrorMessage(): string {
-		return messagesForValidationError(this.label, { requiredTrue: true } && this.control.errors, this.errorMessage).concat(
+		const checkboxDefaultErrorText = { required: this.fieldIsRequired };
+		
+		return messagesForValidationError(this.label, checkboxDefaultErrorText, this.errorMessage).concat(
 			messagesForValidationError(this.label, this.errorGroup && this.errorGroup.errors, this.errorGroupMessage),
 		)[0]; // Only display the first error
 	}
