@@ -53,11 +53,6 @@ export class OebCheckboxComponent implements ControlValueAccessor {
 
 	@Output() ngModelChange = new EventEmitter<string>();
 
-	// Translation
-	fieldIsRequired = this.translate.instant('OEBComponents.fieldIsRequired');
-
-	constructor(private translate: TranslateService){
-	}
 
 	onChange(event) {
 		this.ngModelChange.emit(event);
@@ -87,7 +82,7 @@ export class OebCheckboxComponent implements ControlValueAccessor {
 	}
 
 	get uncachedErrorMessage(): string {
-		const checkboxDefaultErrorText = { required: this.fieldIsRequired };
+		const checkboxDefaultErrorText = { required: "Dieses Feld ist erforderlich" };
 		
 		return messagesForValidationError(this.label, checkboxDefaultErrorText, this.errorMessage).concat(
 			messagesForValidationError(this.label, this.errorGroup && this.errorGroup.errors, this.errorGroupMessage),
