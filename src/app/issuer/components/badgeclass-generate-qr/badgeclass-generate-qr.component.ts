@@ -5,7 +5,7 @@ import { BadgeClassManager } from '../../services/badgeclass-manager.service';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
 import { SessionService } from '../../../common/services/session.service';
 import { BadgeClass } from '../../models/badgeclass.model';
-import { SafeUrl } from '@angular/platform-browser';
+import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
 import { BadgeRequestApiService } from '../../services/badgerequest-api.service';
 import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
 import { SuccessDialogComponent } from '../../../common/dialogs/oeb-dialogs/success-dialog.component';
@@ -59,6 +59,9 @@ export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComp
 	qrCodeWidth = 244;
 	public qrCodeDownloadLink: SafeUrl = '';
 
+	pdfSrc: SafeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl('about:blank');
+
+
 	qrCodeMenu: MenuItem[] = [
 		{
 			title: 'Bearbeiten',
@@ -82,6 +85,7 @@ export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComp
 		protected badgeRequestApiService: BadgeRequestApiService,
 		protected translate: TranslateService,
 		protected qrCodeApiService: QrCodeApiService,
+		protected sanitizer: DomSanitizer
 	) {
 		super(router, route, sessionService);
 
@@ -170,6 +174,44 @@ export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComp
 		});
 	}
 
+	async saveAsImage(parent: any) {
+		let parentElement = null
+	
+		  parentElement = parent.qrcElement.nativeElement
+			.querySelector("canvas")
+			.toDataURL("image/png")
+
+	
+		if (parentElement) {
+		  // converts base 64 encoded image to blobData
+		  let blobData = this.convertBase64ToBlob(parentElement)
+		  // saves as image
+		  const blob = new Blob([blobData], { type: "image/png" })
+		  let data = await this.getQrCodePdf(parentElement);
+		  setTimeout(() => {
+			  console.log(this.pdfSrc);
+			  this.qrCodeApiService.downloadQrCode(this.pdfSrc, this.qrTitle, this.badgeClass.name);
+		  }, 2000);
+		  const url = window.URL.createObjectURL(blob)
+		  const link = document.createElement("a")
+		  link.href = url
+		  // name of the file
+		  link.download = "angularx-qrcode"
+		//   link.click()
+		}
+	  }
+	
+	private convertBase64ToBlob(Base64Image: string) {
+		const parts = Base64Image.split(";base64,")
+		const imageType = parts[0].split(":")[1]
+		const decodedData = window.atob(parts[1])
+		const uInt8Array = new Uint8Array(decodedData.length)
+		for (let i = 0; i < decodedData.length; ++i) {
+			uInt8Array[i] = decodedData.charCodeAt(i)
+		}
+		return new Blob([uInt8Array], { type: imageType })
+		}	
+
 	public openDangerDialog() {
 		const dialogRef = this._hlmDialogService.open(DangerDialogComponent, {
 			context: {
@@ -183,6 +225,12 @@ export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComp
 	deleteQrCode() {
 		this.qrCodeApiService.deleteQrCode(this.issuerSlug, this.badgeSlug, this.qrSlug).then(() => {
 			this.router.navigate(['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug]);
+		});
+	}
+
+	async getQrCodePdf(base64QrImage: string) {
+		this.qrCodeApiService.getQrCodePdf(this.qrSlug, this.badgeClass.slug, base64QrImage).then((url) => {
+			this.pdfSrc = url;
 		});
 	}
 

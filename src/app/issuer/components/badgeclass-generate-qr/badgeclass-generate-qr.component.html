@@ -22,7 +22,7 @@
         </div>
         <div class="tw-pl-[10%] tw-flex tw-flex-col tw-gap-10">
             <div class="tw-flex tw-flex-col md:tw-flex-row tw-max-w-[322px] md:tw-max-w-[668px] tw-gap-8">
-                <qrcode (qrCodeURL)="onChangeURL($event)" [qrdata]="qrData" [width]="qrCodeWidth" [className]="qrCodeCSS"></qrcode>
+                <qrcode #parent (qrCodeURL)="onChangeURL($event)" [qrdata]="qrData" [width]="qrCodeWidth" [className]="qrCodeCSS"></qrcode>
                 <div class="tw-flex tw-flex-col tw-gap-2">
                     <div class="tw-flex tw-gap-2">
                         <img class="tw-w-[63.58px] tw-h-[63.58px] md:tw-w-[75.61px] md:tw-h-[75.61px] tw-block"
@@ -44,9 +44,9 @@
                 </div>
 
             </div>
-            <a [href]="qrCodeDownloadLink" download="qrcode" class="tw-max-w-[668px]">
-                <oeb-button  width="full_width" text="Download QR-Code" (click)=openSuccessDialog()></oeb-button>
-            </a>
+            <div class="tw-max-w-[668px]">
+                <oeb-button  width="full_width" text="Download QR-Code" (click)=saveAsImage(parent)></oeb-button>
+            </div>
             <oeb-button [routerLink]="['/issuer/issuers', this.issuerSlug, 'badges', badgeClass.slug]" class="tw-max-w-[668px]" width="full_width" variant="secondary" text="Zur Badge Detail Seite"></oeb-button>
         </div>
     </div>
