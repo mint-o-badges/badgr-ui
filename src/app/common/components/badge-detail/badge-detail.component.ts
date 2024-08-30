@@ -10,13 +10,4 @@ import type { PageConfig } from './badge-detail.component.types';
 export class BgBadgeDetail {
     @Input() config: PageConfig;
     @Input() awaitPromises?: Promise<any>[];
-
-    ngAfterViewChecked(){
-        if(this.config && !this.config?.crumbs){
-            this.config.crumbs = [
-                { title: 'Badges', routerLink: ['/catalog/badges'] },
-                { title: this.config.badgeTitle},
-            ];
-        }
-    }
 }
