@@ -45,6 +45,27 @@ import { OebButtonComponent } from './oeb-button.component';
                 <hlm-th class="tw-w-36 md:tw-w-40 tw-justify-center !tw-text-oebblack">{{badge.badge.recipientCount}}</hlm-th>
                 <hlm-th class="tw-justify-center sm:tw-justify-end sm:tw-w-48 tw-w-full !tw-text-oebblack">
                     <oeb-button class="tw-w-full" variant="secondary" size="xs" width="full_width" (click)="actionElement.emit(badge.badge)" [text]="actionElementText"></oeb-button>
+                <hlm-th
+				class="tw-justify-center sm:tw-justify-end !tw-text-oebblack tw-flex-col tw-h-fit sm:tw-w-max tw-w-full tw-gap-2 tw-my-2 sm:tw-my-0"
+                >
+                    <oeb-button
+                        variant="secondary"
+                        size="xs"
+                        width="full_width"
+                        class="tw-w-full"
+                        (click)="directBadgeAward.emit(badge.badge)"
+                        [text]="directBadgeAwardText"
+                    >
+                    </oeb-button>
+                    <oeb-button
+                        variant="secondary"
+                        size="xs"
+                        width="full_width"
+                        class="tw-w-full"
+                        (click)="qrCodeAward.emit(badge.badge)"
+                        [text]="qrCodeAwardText"
+                    >
+                    </oeb-button>
                 </hlm-th>
             </hlm-trow>
         </hlm-table>`,
@@ -52,8 +73,10 @@ import { OebButtonComponent } from './oeb-button.component';
 export class DatatableComponent {
 	@Input() caption: string = "";
     @Input() badges: BadgeResult[];
-    @Input() actionElementText: string = "Badge vergeben"
-    @Output() actionElement = new EventEmitter();
+    @Input() directBadgeAwardText: string = "Badge direkt vergeben"
+    @Input() qrCodeAwardText: string = "QR-Code-Vergabe"
+    @Output() directBadgeAward = new EventEmitter();
+    @Output() qrCodeAward = new EventEmitter();
     @Output() redirectToBadgeDetail = new EventEmitter();
 }
 
