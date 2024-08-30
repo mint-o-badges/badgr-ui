@@ -180,7 +180,7 @@ export const defaultValidatorMessages: {
 	maxlength: (label: string, { actualLength, requiredLength }: { actualLength: number; requiredLength: number }) =>
 		actualLength && requiredLength
 			? `${label} überschreitet maximale Länge von ${requiredLength} um ${actualLength - requiredLength} Zeichen`
-			: `${label} überschreitet maximale Länge.`,
+			: `${label} überschreitet maximale Länge.`
 };
 
 export function messagesForValidationError(
