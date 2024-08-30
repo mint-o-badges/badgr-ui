@@ -30,7 +30,7 @@ export class IssuerCreateComponent extends BaseAuthenticatedRoutableComponent im
 	);
 
 	issuerForm = typedFormGroup()
-		.addControl('issuer_name', '', [Validators.required, Validators.maxLength(1024)])
+		.addControl('issuer_name', '', [Validators.required, Validators.maxLength(90)])
 		.addControl('issuer_description', '', [Validators.required, Validators.maxLength(700)])
 		.addControl('issuer_email', '', [
 			Validators.required,
@@ -53,6 +53,8 @@ export class IssuerCreateComponent extends BaseAuthenticatedRoutableComponent im
 	verified = false;
 
 	enterDescription: string; 
+	issuerRequiredError = this.translate.instant('Issuer.enterName');
+
 
 	constructor(
 		loginService: SessionService,

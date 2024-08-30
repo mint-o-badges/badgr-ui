@@ -64,7 +64,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 			icon: 'lucideAward',
 		},
 		{
-			title: 'Institutions',
+			title: '',
 			routerLink: ['/catalog/issuers'],
 			icon: 'lucideWarehouse',
 		},
@@ -294,6 +294,18 @@ export class AppComponent implements OnInit, AfterViewInit {
 			}),
 		);
 		this.shouldShowIssuersTab();
+
+		this.translate.get('General.institutions').subscribe((translatedText: string) => {
+            this.aboutBadgesMenuItems[2].title = translatedText;
+        });
+
+		this.translate.get('NavItems.myProfile').subscribe((translatedText: string) => {
+			this.accountMenuItems[0].title = translatedText;
+		});
+
+		this.translate.get('NavItems.appIntegrations').subscribe((translatedText: string) => {
+			this.accountMenuItems[1].title = translatedText;
+		});
 	}
 
 	ngAfterViewInit() {

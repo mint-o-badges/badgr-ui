@@ -103,6 +103,7 @@
 							[newDropZone]="true"
 							[generateRandom]="false"
 							[type]="'badge'"
+							[allowedFileFormats]="allowedFileFormats"
 							(generateRandomImage)="generateRandomImage()"
 							(imageUploaded)="generateUploadImage($event, badgeClassForm.value)"
 							[placeholderImage]="badgeClassPlaceholderImageUrl"
@@ -126,6 +127,7 @@
 							imageLoaderName="basic"
 							[newDropZone]="true"
 							[type]="'badge'"
+							[allowedFileFormats]="allowedFileFormatsCustom"
 							[generateRandom]="false"
 							(generateRandomImage)="generateRandomImage()"
 							(imageUploaded)="generateCustomUploadImage($event)"
@@ -135,7 +137,7 @@
 						>
 						</bg-formfield-image>
 						<span class="tw-italic tw-text-sm md:tw-flex md:tw-justify-center md:tw-items-center"
-							>{{ 'General.fileformats' | translate }}: SVG {{ 'General.and' | translate }} PNG</span
+							>{{ 'General.fileformats' | translate }}: PNG</span
 						>
 					</div>
 					<badge-studio
@@ -243,7 +245,7 @@
 												{{ aiCompetenciesSuggestions[i].preferred_label }} <a href="http://data.europa.eu/{{aiCompetenciesSuggestions[i].concept_uri}}" target="_blank" class="tw-ml-2 !tw-text-[var(--color-link)]]">(E)</a>
 											</h2>
 											<oeb-checkbox class="tw-border-[var(--color-purple)]" name="checkboxAiSkill$i" id="checkboxAiSkill$i"
-												[formControl]="aiCompetency.rawControlMap.selected"
+												[control]="aiCompetency.rawControlMap.selected"
 												></oeb-checkbox>
 										</div>
 										<hr class="tw-text-[var(--color-grayinteractive)] tw-my-1 tw-border-solid tw-border" />
@@ -309,7 +311,7 @@
 									{{ competency.rawControlMap.name.value }}
 								</h2>
 								<oeb-checkbox class="tw-border-[var(--color-purple)]" name="competency$i" id="competency$i"
-												[formControl]="competency.rawControlMap.added"
+												[control]="competency.rawControlMap.added"
 								></oeb-checkbox>
 							</div>
 							<p

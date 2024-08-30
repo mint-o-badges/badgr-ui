@@ -21,7 +21,7 @@
 				[control]="issuerForm.rawControlMap.issuer_name"
 				[fieldType]="'text'"
 				[autofocus]="true"
-				errorMessage="{{ 'Issuer.enterName' | translate }}"
+				[errorMessage]="{ required: issuerRequiredError }"
 				#issuer_name_field
 			></oeb-input>
 
