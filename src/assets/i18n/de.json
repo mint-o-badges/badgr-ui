@@ -156,10 +156,10 @@
 		"viewOriginal": "Original ansehen",
 		"awardBadeges": "Erstelle eine Institution um Badges zu vergeben.",
 		"imageOptional": "Bild (Optional)",
-		"enterName": "Bitte gebe einen Namen an",
-		"enterURL": "Bitte gebe eine gültige URL an",
-		"enterValidEmail": "Bitte gebe eine gültige E-Mail Adresse an",
-		"enterDescription": "Bitte gebe eine Beschreibung an",
+		"enterName": "Bitte gib einen Namen an",
+		"enterURL": "Bitte gib eine gültige URL an",
+		"enterValidEmail": "Bitte gib eine gültige E-Mail Adresse an",
+		"enterDescription": "Bitte gib eine Beschreibung an",
 		"enterCategory": "Bitte gib eine Kategorie an",
 		"enterStreet": "Bitte gib eine Strasse an",
 		"enterHouseNo": "Bitte gib eine Hausnummer an",
@@ -514,10 +514,10 @@
 		"share": "Teilen",
 		"orginzeBadges": "Organisiere deine Badges in Sammlungen.",
 		"collectionName": "Name der Sammlungen",
-		"enterCollectioName": "Bitte gebe einen Namen der Sammlung ein",
+		"enterCollectioName": "Bitte gib einen Namen der Sammlung ein",
 		"remainingChar": "verbleibende Zeichen",
 		"description": "Beschreibung",
-		"provideDescription": "Bitte gebe eine Beschreibung an"
+		"provideDescription": "Bitte gib eine Beschreibung an"
 	},
 	"Profile": {
 		"more": "Mehr",
