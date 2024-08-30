@@ -1,4 +1,4 @@
-import { Component, Injector, OnInit, inject } from '@angular/core';
+import { AfterContentInit, Component, ElementRef, Injector, OnInit, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { PublicApiService } from '../../services/public-api.service';
@@ -16,7 +16,7 @@ import { TranslateService } from '@ngx-translate/core';
 @Component({
 	templateUrl: './learningpath.component.html',
 })
-export class PublicLearningPathComponent implements OnInit {
+export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 
 	learningPathSlug: string;
 
@@ -24,6 +24,14 @@ export class PublicLearningPathComponent implements OnInit {
 
 	learningPathIdParam: LoadedRouteParam<PublicApiLearningPath >;
 	participationButtonText: string = "Teilnehmen"; 
+
+	tabs:any = undefined;
+	activeTab = 'Alle'
+
+	@ViewChild('allTemplate', { static: true }) allTemplate: ElementRef;
+	@ViewChild('openTemplate', { static: true }) openTemplate: ElementRef;
+	@ViewChild('finishedTemplate', { static: true }) finishedTemplate: ElementRef;
+
 	constructor(
 		private injector: Injector,
 		public embedService: EmbedService,
@@ -63,6 +71,24 @@ export class PublicLearningPathComponent implements OnInit {
 			}
 		)
 	}
+
+	ngAfterContentInit() {
+		this.tabs = [
+			{
+				title: 'Alle',
+				component: this.allTemplate,
+			},
+			{
+				title: 'Offen',
+				component: this.openTemplate,
+			},
+			{
+				title: 'Abgeschlossen',
+				component: this.finishedTemplate,
+			},
+		];
+	}
+
 	private readonly _hlmDialogService = inject(HlmDialogService);
 	public openSuccessDialog() {
 		const dialogRef = this._hlmDialogService.open(SuccessDialogComponent, {
@@ -86,4 +112,9 @@ export class PublicLearningPathComponent implements OnInit {
 		)
 
 	}
+
+	onTabChange(tab) {
+		this.activeTab = tab;
+	}
+
 }

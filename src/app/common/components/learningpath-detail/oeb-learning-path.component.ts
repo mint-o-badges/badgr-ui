@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, input, Input, OnInit } from '@angular/core';
 import { animate, animateChild, query, stagger, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
@@ -22,7 +22,14 @@ export class OebLearningPathDetailComponent implements OnInit {
 	@Input() learningPath;
 	@Input() issuer;
 	@Input() badges;
+	@Input() participants;
 
+	filterFunction(t): boolean {
+		return t.completed_at;
+	}
+	filterFunctionOngoing(t): boolean {
+		return !t.completed_at;
+	}
 
 	ngOnInit(): void {
 		

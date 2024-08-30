@@ -116,6 +116,8 @@ import { OebLearningPathDetailComponent } from './components/learningpath-detail
 import { SharedIconsModule } from '../public/icons.module';
 import { LearningPathDatatableComponent } from '../components/datatable-learningpaths.component';
 import { LearningPathApiService } from './services/learningpath-api.service';
+import { LearningPathParticipantsDatatableComponent } from '../components/datatable-learningpath-participants.component';
+import { LearningPathGraduatesDatatableComponent } from '../components/datatable-learningpath-graduates.component';
 
 const DIRECTIVES = [
 	BgAwaitPromises,
@@ -203,7 +205,7 @@ const GUARDS = [AuthGuard];
 
 const PIPES = [UcFirstPipe, StudyLoadPipe];
 
-export const COMMON_IMPORTS = [CommonModule, SharedIconsModule, FormsModule, ReactiveFormsModule, HttpClientModule, RouterModule, OebInputComponent, OebInputErrorComponent, OebSelectComponent, OebSeparatorComponent, OebCollapsibleComponent, OebButtonComponent, OebDropdownComponent, HlmH1Directive, HlmH2Directive, HlmH3Directive, HlmPDirective, HlmADirective, CompetencyAccordionComponent, OebCheckboxComponent, OebDialogComponent, SuccessDialogComponent, DangerDialogComponent, OebBackgroundComponent, OebTabsComponent, HlmIconModule, CountUpModule, HlmInputDirective, DatatableComponent, LearningPathDatatableComponent];
+export const COMMON_IMPORTS = [CommonModule, SharedIconsModule, FormsModule, ReactiveFormsModule, HttpClientModule, RouterModule, OebInputComponent, OebInputErrorComponent, OebSelectComponent, OebSeparatorComponent, OebCollapsibleComponent, OebButtonComponent, OebDropdownComponent, HlmH1Directive, HlmH2Directive, HlmH3Directive, HlmPDirective, HlmADirective, CompetencyAccordionComponent, OebCheckboxComponent, OebDialogComponent, SuccessDialogComponent, DangerDialogComponent, OebBackgroundComponent, OebTabsComponent, HlmIconModule, CountUpModule, HlmInputDirective, DatatableComponent, LearningPathDatatableComponent, LearningPathParticipantsDatatableComponent, LearningPathGraduatesDatatableComponent];
 
 
 @NgModule({

@@ -1,10 +1,43 @@
 <div class="oeb tw-relative tw-w-full">
-	<div class="page-padding">
-		<ng-template [bgAwaitPromises]="learningPathIdParam">
-		<!-- Embedded View -->
-		<form (ngSubmit)="participate()" novalidate>
-        	<oeb-button hlmBtn type="submit" [text]="participationButtonText"></oeb-button>
-		</form>
-		</ng-template>
-	</div>
+	<ng-template [bgAwaitPromises]="learningPathIdParam">
+		<div class="oeb-section tw-bg-lightpurple">
+			<div class="page-padding">
+				<div class="oeb-headline-container">
+					<h1 class="tw-text-oebblack tw-font-extrabold" hlmH1>{{learningPathIdParam.value.name}}</h1>
+					<p size="sm" hlmP
+						class="tw-text-oebblack">
+						Lernpfad von <a hlmA [routerLink]="['/issuer/issuers/' ]">ISSUERLINKFEHLT</a>
+					</p>
+				</div>
+				<form (ngSubmit)="participate()" novalidate>
+					<oeb-button hlmBtn type="submit" [text]="participationButtonText"></oeb-button>
+				</form>
+			</div>
+		</div>
+		<div class="page-padding">
+			<div class="tw-grid tw-grid-cols-2">
+				<div>
+					<div class="oeb-section-sm">
+						<h3 hlmH3 class="tw-text-oebblack tw-font-bold">Beschreibung</h3>
+						<p hlmP>{{learningPathIdParam.value.description}}</p>
+					</div>
+					<div class="oeb-section-sm">
+						<h3 hlmH3 class="tw-text-oebblack tw-font-bold">Enthaltene Badges</h3>
+					</div>
+				</div>
+				<div>
+					ISSUERCARD
+				</div>
+			</div>
+			<div>
+				<div class="oeb-section-sm">
+					<h3 hlmH3 class="tw-text-oebblack tw-font-bold">Lern weiter</h3>
+					<oeb-backpack-tabs (onTabChanged)="onTabChange($event)" [tabs]="tabs"></oeb-backpack-tabs>
+				</div>
+			</div>
+		</div>
+	</ng-template>
+	<ng-template #allTemplate><div>all</div></ng-template>
+	<ng-template #openTemplate><div>all</div></ng-template>
+	<ng-template #finishedTemplate><div>all</div></ng-template>
 </div>
