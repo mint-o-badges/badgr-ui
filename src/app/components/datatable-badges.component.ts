@@ -24,7 +24,7 @@ import { OebButtonComponent } from './oeb-button.component';
             <hlm-trow class="tw-bg-purple tw-text-white tw-flex-wrap hover:tw-bg-purple">
                 <hlm-th class="!tw-text-white tw-w-28 md:tw-w-48">Badge</hlm-th>
                 <hlm-th class="!tw-text-white tw-justify-center !tw-flex-1">{{'Badge.createdOn' | translate}}</hlm-th>
-                <hlm-th class="!tw-text-white tw-w-36 md:tw-w-40">{{'Badge.multiRecipients' | translate}}</hlm-th>
+                <hlm-th class="!tw-text-white tw-w-36 md:tw-w-40 tw-hidden sm:tw-grid">{{'Badge.multiRecipients' | translate}}</hlm-th>
                 <hlm-th class="!tw-text-white tw-justify-end sm:tw-w-48 tw-w-0 !tw-p-0"></hlm-th>
             </hlm-trow>
             <hlm-trow *ngFor="let badge of badges" class="tw-border-purple tw-flex-wrap tw-py-2">
@@ -42,9 +42,7 @@ import { OebButtonComponent } from './oeb-button.component';
                     </div>    
                 </hlm-th>
                 <hlm-th class="!tw-flex-1 tw-justify-center !tw-text-oebblack"><p class="u-text">{{badge.badge.createdAt | date:"dd.MM.yyyy"}}</p></hlm-th>
-                <hlm-th class="tw-w-36 md:tw-w-40 tw-justify-center !tw-text-oebblack">{{badge.badge.recipientCount}}</hlm-th>
-                <hlm-th class="tw-justify-center sm:tw-justify-end sm:tw-w-48 tw-w-full !tw-text-oebblack">
-                    <oeb-button class="tw-w-full" variant="secondary" size="xs" width="full_width" (click)="actionElement.emit(badge.badge)" [text]="actionElementText"></oeb-button>
+                <hlm-th class="tw-w-36 md:tw-w-40 tw-justify-center !tw-text-oebblack tw-hidden sm:tw-grid">{{badge.badge.recipientCount}}</hlm-th>
                 <hlm-th
 				class="tw-justify-center sm:tw-justify-end !tw-text-oebblack tw-flex-col tw-h-fit sm:tw-w-max tw-w-full tw-gap-2 tw-my-2 sm:tw-my-0"
                 >
