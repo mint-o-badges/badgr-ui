@@ -218,22 +218,6 @@
 	}
 }
 
-.faq {
-	font-family: 'Inter';
-	font-size: 24px;
-	font-weight: 500;
-	line-height: 36px;
-	color: var(--color-purple);
-}
-
-.impressum {
-	font-family: 'rubik';
-	font-size: 20px;
-	font-weight: 500;
-	line-height: 26px;
-	color: var(--color-purple);
-}
-
 .text-semiBold {
 	font-weight: 600;
 	font-size: 20px;
@@ -265,16 +249,6 @@
 @media (max-width: 767px) {
 	.login-btn {
 		display: none;
-	}
-
-	.faq {
-		font-size: 16.8px;
-		line-height: 25.2px;
-	}
-
-	.impressum {
-		font-size: 14px;
-		line-height: 18.2px;
 	}
 
 	.text-semiBold {

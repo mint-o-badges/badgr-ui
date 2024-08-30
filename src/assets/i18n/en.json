@@ -64,7 +64,7 @@
 		"myInstitutions": "My institutions",
 		"appIntegrations": "App integrations",
 		"openMenu": "Open Menu",
-		"logout": "Ausloggen",
+		"logout": "Logout",
 		"myProfile": "My profile"
 	},
 	"Start": {
@@ -323,7 +323,10 @@
 		"removeAlignment": "Remove Alignment",
 		"removeAlignmentInfo": "Are you sure you want to remove the alignment(s)?",
 		"irreversibleAction": "This action cannot be undone.",
-		"addAnotherCompetency": "Add another competency"
+		"addAnotherCompetency": "Add another competency",
+		"giveBadgeTitle":"Please give the badge a title",
+		"changeBadgeTitle":"Please change the title",
+		"maxValue1000":"Maximum value is 1000"
 	},
 	"Signup": {
 		"youHaveAccount": "You already have an account?",
@@ -589,6 +592,8 @@
 	"QrCode": {
 		"savedSuccessfully": "<span class='tw-font-bold'> The QR code assignment was successfully saved on the badge detail page.</span>",
 		"downloadedSuccessfully": "<span class='tw-font-bold'>You have successfully downloaded the QR-Code.</span><br> Check your download folder."
-
+	},
+	"OEBComponents":{
+		"fieldIsRequired": "This field is required"
 	}
 }
