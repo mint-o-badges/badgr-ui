@@ -21,7 +21,7 @@ import { OebButtonComponent } from './oeb-button.component';
 	template: `
         <hlm-table class="tw-rounded-t-[20px] tw-overflow-hidden tw-w-full tw-max-w-[100%] tw-bg-white tw-border-purple tw-border">
             <hlm-caption>{{caption}}</hlm-caption>
-            <hlm-trow class="tw-bg-darkgrey tw-text-white tw-flex-wrap hover:tw-bg-darkgrey">
+            <hlm-trow class="tw-bg-darkgrey tw-text-white tw-flex-wrap hover:!tw-bg-darkgrey">
                 <hlm-th class="!tw-text-white tw-w-28 md:tw-w-48">ID</hlm-th>
                 <hlm-th class="!tw-text-white tw-justify-center !tw-flex-1">Begonnen am</hlm-th>
                 <hlm-th class="!tw-text-white tw-justify-end tw-w-48">Status</hlm-th>

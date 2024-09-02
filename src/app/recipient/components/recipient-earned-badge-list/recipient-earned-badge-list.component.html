@@ -187,6 +187,55 @@
 						</div>
 					</div>
 				</ng-template>
+				<ng-template #learningPathTemplate>
+					<ng-template [bgAwaitPromises]="[learningpathLoaded]">
+						
+						<!-- No badges, empty state! -->
+						<section class="emptysection l-emptysection" *ngIf="allLearningPaths.length == 0">
+							<h2 class="emptysection-x-headline">{{ 'RecBadge.noLearningPathYet' | translate }}</h2>
+							<p class="emptysection-x-copy">{{ 'RecBadge.collectShareLearningPath' | translate }}</p>
+							<div class="emptysection-x-imagecontainer">
+								<img alt="Illustration of backpack with badges" class="emptysection-x-image"
+									[src]="noBadgesImageUrl" />
+							</div>
+						</section>
+
+						<!-- Badge Search, group and grid/list toggle -->
+						<div class="oeb-section-sm" *ngIf="allLearningPaths.length > 0">
+							<div class="tw-flex tw-flex-wrap tw-items-center oeb-standard-padding-bottom">
+								<input type="text" name="forminput" id="forminput" placeholder="Lernpfade durchsuchen"
+									[(ngModel)]="searchQuery"
+									class="tw-w-[300px] tw-border-solid tw-border-purple tw-bg-white tw-mr-6"
+									hlmInput />
+								<oeb-checkbox class="tw-mt-2 md:tw-mt-0" name="groupby" [(ngModel)]="groupByIssuer"
+									[text]="'RecBadge.groupByInstitution' | translate"></oeb-checkbox>
+							</div>							
+
+							
+						</div>
+						
+						<div class="tw-grid tw-grid-cols-badges tw-gap-16" *ngIf="!groupByIssuer">
+							<div *ngFor="let lp of learningPathResults">
+								<a [href]="'http://localhost:4200/public/learningpaths/' + lp.slug">{{lp.name}}</a>
+							</div>
+						</div>
+						<div class="tw-grid tw-grid-cols-badges tw-gap-16" *ngIf="groupByIssuer">
+							<div *ngFor="let learningPathResult of issuerLearningPathResults | keyvalue">
+								<h3 class="u-text-h3-semibold u-margin-bottom2x u-margin-top6x u-text-dark1">
+									{{ learningPathResult.value.issuerId}}
+									<span class="u-text-small-semibold-caps u-text-dark4 u-margin-left2x">{{
+										learningPathResult.value.learningPaths.length }}
+										{{ learningPathResult.value.learningPaths.length == 1 ? 'Lernpfad' : 'Lernpfade' }}</span>
+								</h3>
+
+								<div *ngFor="let lp of learningPathResult.value.learningPaths">
+									<a [href]="'http://localhost:4200/public/learningpaths/' + lp.slug">{{lp.name}}</a>
+								</div>
+							</div>
+						</div>
+						
+					</ng-template>
+				</ng-template>
 			</div>
 		</div>
 		<add-badge-dialog #addBadgeDialog></add-badge-dialog>

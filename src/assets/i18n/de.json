@@ -455,7 +455,9 @@
 		"fromMozilla": "Kommt von Mozilla?",
 		"closeNotification": "Benachrichtigung schließen",
 		"noBadgesYet": "Du hast noch keine Badges",
+		"noLearningPathYet": "Du hast noch keine Lernpfade",
 		"collectShareBadges": "Sammle und teile digitale Badges aus deinem Rucksack.",
+		"collectShareLearningPath": "Sammle und teile digitale Lernpfade aus deinem Rucksack.",
 		"groupByInstitution": "Nach Institutionen gruppieren",
 		"institution": "Institution",
 
