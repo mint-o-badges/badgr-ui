@@ -54,7 +54,8 @@
 		"hideDetails": "Hide details",
 		"password": "Password",
 		"loading": "Loading...",
-        "warning": "Warning"
+        "warning": "Warning",
+		"page": "Page"
 	},
 	"NavItems": {
 		"register": "Register",
@@ -581,16 +582,19 @@
 
 	},
 	"IssueQr": {
-		"list1": "You fill in the details for the QR code issuance on this page and click on Generate QR Code. You will be redirected to the generated QR code and can download it or take a screenshot.",
+		"list1": "You fill in the details for the QR code issuance on this page and click on <span class='tw-italic'>Generate QR Code</span>. You will be redirected to the generated QR code and can download it or take a screenshot.",
 		"list2": "You show your learners the QR code – either digitally or printed.",
 		"list3": "Your learners scan the QR code with their smartphones and are directed to an input form where they enter their first name, last name, and email address. They then submit the form as a badge request.",
-		"list4": "You can see your learners' badge requests on the <a class='tw-underline tw-text-[#1400FF]' hlmA href='' Badge Detail Page </a> on OEB and can directly issue the badges. They will be sent to the learners via email."
+		"list4": "You can see your learners' badge requests on the ",
+		"list4.2": "on OEB and can directly issue the badges. They will be sent to the learners via email."
 
 	},
 	"QrCode": {
 		"savedSuccessfully": "<span class='tw-font-bold'> The QR code assignment was successfully saved on the badge detail page.</span>",
 		"downloadedSuccessfully": "<span class='tw-font-bold'>You have successfully downloaded the QR-Code.</span><br> Check your download folder."
-
+	},
+	"OEBComponents":{
+		"fieldIsRequired": "This field is required"
 	},
 	"LearningPath": {
 		"learningpaths": "Learning Paths",

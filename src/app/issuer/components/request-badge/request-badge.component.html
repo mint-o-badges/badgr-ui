@@ -35,8 +35,11 @@
                     <oeb-input label="Nachname" [placeholder]=""
                             fieldType="text" [control]="requestForm.rawControlMap.lastname"
                             ></oeb-input>
-                    <oeb-input label="E-Mail" [placeholder]=""
-                    fieldType="email" [control]="requestForm.rawControlMap.email"
+                    <oeb-input 
+						label="E-Mail" 
+						[placeholder]=""
+                    	fieldType="email" 
+						[control]="requestForm.rawControlMap.email">
                     ></oeb-input>    
                     <oeb-input fieldType="hidden" [control]="requestForm.rawControlMap.qrCodeId"></oeb-input>    
                 </div>
@@ -46,9 +49,12 @@
                         <span [innerHTML]="'RequestBadge.personalDataInfo' | translate" ></span>
                     </p>
                     
-                    <oeb-checkbox id="age-confirmation" name="age-confirmation" type="checkbox"
-                                        [text]="'RequestBadge.ageConfirmation' | translate "
-                                        [formControl]="requestForm.rawControlMap.ageConfirmation">
+                    <oeb-checkbox 
+						id="age-confirmation" 
+						name="age-confirmation" 
+						type="checkbox"
+                        [text]="'RequestBadge.ageConfirmation' | translate "
+                        [control]="requestForm.rawControlMap.ageConfirmation">
                     </oeb-checkbox>
                 </div>
                 <oeb-button type="submit" [text]="'RequestBadge.requestBadge' | translate">
