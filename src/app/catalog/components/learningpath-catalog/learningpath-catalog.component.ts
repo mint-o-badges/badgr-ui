@@ -70,7 +70,7 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 					resolve(lps);
 				},
 				(error) => {
-					this.messageService.reportAndThrowError('Failed to load badges', error);
+					this.messageService.reportAndThrowError('Failed to load learningPaths', error);
 				},
         )})
     }

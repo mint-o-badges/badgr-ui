@@ -121,7 +121,7 @@ export class IssuerDetailComponent extends BaseAuthenticatedRoutableComponent im
 					);
 				});
 				this.learningPathsLoaded = new Promise<void>((resolve, reject) => {
-					this.learningPathsService.getLearningPathsForIssuer(this.issuerSlug).then(
+					this.learningPathsService.getLearningPathsForUser().then(
 						(result) => {
 							this.learningPaths = result; 
 							resolve();

@@ -3,8 +3,8 @@
         <div class="tw-flex tw-justify-between tw-w-full">
             <div class="tw-flex tw-items-center tw-gap-4 tw-w-full">
                 <div class="tw-relative md:tw-flex tw-flex-shrink-0 tw-z-10 tw-hidden">
-                    <img src="assets/oeb/images/learningPath/badge.png"
-                        alt="{{ issuer.name }} Badge" class="tw-w-[150px] md:tw-w-[200px]" />
+                    <img [src]="learningPath.participationBadge_image"
+                         alt="{{ issuer.name }} Badge" class="tw-w-[150px] md:tw-w-[200px]" />
                 </div>
                 <div class="tw-w-full">
                     <div class="tw-flex tw-flex-row tw-justify-between tw-w-full tw-flex-wrap md:tw-flex-nowrap tw-gap-4">
@@ -26,6 +26,7 @@
                             [text]="'Lernpfad löschen'"
                             variant="secondary" 
                             width="full_width"
+                            (click)="deleteLearningPath(learningPath.slug, issuer)"
                             [disabled-when-requesting]="true"></oeb-button>
                     </div>
                     
@@ -47,7 +48,7 @@
     <div class="tw-block lg:tw-flex tw-gap-10">
         <div class="oeb-section-sm tw-relative tw-inline-block tw-border-b-4 tw-border-purple tw-border-solid">
             <div class="tw-relative tw-pb-8 md:tw-hidden tw-z-10">
-                <img src="assets/oeb/images/learningPath/badge.png"
+                <img [src]="learningPath.participationBadge_image"
                     alt="{{ issuer.name }} Badge" class="tw-w-[150px] md:tw-w-[200px]" />
             </div>
             <div class="tw-absolute tw-border-l-8 tw-border-lightpurple tw-border-solid tw-left-[70px] md:tw-left-[96px] tw-top-[50px] md:tw-top-[-100px] tw-bottom-[20px]"></div>

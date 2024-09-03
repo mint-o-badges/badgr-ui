@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { PublicApiService } from '../../services/public-api.service';
 import { LoadedRouteParam } from '../../../common/util/loaded-route-param';
-import { PublicApiLearningPath } from '../../models/public-api.model';
+import { PublicApiIssuer, PublicApiLearningPath } from '../../models/public-api.model';
 import { EmbedService } from '../../../common/services/embed.service';
 import { Title } from '@angular/platform-browser';
 import { AppConfigService } from '../../../common/app-config.service';
@@ -12,6 +12,9 @@ import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src
 import { SuccessDialogComponent } from '../../../common/dialogs/oeb-dialogs/success-dialog.component';
 import { UserProfileApiService } from '../../../common/services/user-profile-api.service';
 import { TranslateService } from '@ngx-translate/core';
+import { Issuer } from '../../../issuer/models/issuer.model';
+import { IssuerApiService } from '../../../issuer/services/issuer-api.service';
+import { IssuerManager } from '../../../issuer/services/issuer-manager.service';
 
 @Component({
 	templateUrl: './learningpath.component.html',
@@ -22,9 +25,14 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 
 	isParticipating: boolean = false;
 
+	learningPath;
 	learningPathIdParam: LoadedRouteParam<PublicApiLearningPath >;
 	participationButtonText: string = "Teilnehmen"; 
-
+	issuerLoaded: Promise<unknown>;
+	badgeLoaded: Promise<unknown>;
+	loaded;
+	issuer: PublicApiIssuer;
+	badge: any;
 	tabs:any = undefined;
 	activeTab = 'Alle'
 
@@ -36,40 +44,60 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 		private injector: Injector,
 		public embedService: EmbedService,
 		public configService: AppConfigService,
+		public publicService: PublicApiService,
 		private learningPathApiService: LearningPathApiService,
 		protected userProfileApiService: UserProfileApiService,
 		protected translate: TranslateService,
+		public issuerManager: IssuerManager,
 		private title: Title,
 		) {
 		title.setTitle(`LearningPath - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 
-		this.learningPathIdParam = new LoadedRouteParam(injector.get(ActivatedRoute), 'learningPathId', (paramValue) => {
+		
+		this.loaded = new LoadedRouteParam(injector.get(ActivatedRoute), 'learningPathId', (paramValue) => {
 			this.learningPathSlug = paramValue;
 			const service: PublicApiService = injector.get(PublicApiService);
-			return service.getLearningPath(paramValue);
+			
+
+			this.userProfileApiService.getProfile().then(
+				(response) => {
+					let userSlug = response['slug'];
+					if(userSlug){
+						this.learningPathApiService.getLearningPathParticipants(this.learningPathSlug).then(
+							(response) => {
+								if(response.body){
+									const participants = response.body
+									participants.forEach((participant) => {
+										if(participant.user['slug'] == userSlug){
+											this.participationButtonText = this.translate.instant('LearningPath.notParticipateAnymore');
+										}
+									});
+								}
+							}, 
+						);
+					}
+				}
+			)
+			return service.getLearningPath(paramValue).then((res)=> {
+				this.learningPath = res;
+				this.issuerLoaded = this.publicService.getIssuer(res.issuer_id).then(
+					(issuer) => {
+						console.log(issuer)
+						this.issuer = issuer;
+					});
+				this.badgeLoaded = this.publicService.getBadgeClass(res.participationBadge_id).then(
+					(badge) => {
+						console.log(badge)
+						this.badge = badge;
+						return badge;
+					}
+				);
+			});
 		});
 	}
 
 	ngOnInit(): void {
-		this.userProfileApiService.getProfile().then(
-			(response) => {
-				let userSlug = response['slug'];
-				if(userSlug){
-					this.learningPathApiService.getLearningPathParticipants(this.learningPathSlug).then(
-						(response) => {
-							if(response.body){
-								const participants = response.body
-								participants.forEach((participant) => {
-									if(participant.user['slug'] == userSlug){
-										this.participationButtonText = this.translate.instant('LearningPath.notParticipateAnymore');
-									}
-								});
-							}
-						}, 
-					);
-				}
-			}
-		)
+	
 	}
 
 	ngAfterContentInit() {
@@ -93,7 +121,7 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 	public openSuccessDialog() {
 		const dialogRef = this._hlmDialogService.open(SuccessDialogComponent, {
 			context: {
-				text: `Du nimmst am Lernpfad ${this.learningPathIdParam.value.name} teil!`,
+				text: `Du nimmst am Lernpfad ${this.learningPath.name} teil!`,
 				variant: 'success',
 			},
 		});
@@ -103,7 +131,6 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 	participate(){
 		this.learningPathApiService.participateInLearningPath(this.learningPathSlug).then(
 			(response) => {
-				console.log(response);
 				this.openSuccessDialog();
 			},
 			(err) => {

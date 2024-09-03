@@ -141,7 +141,7 @@ export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutable
 		this.badgesLoaded = this.recipientBadgeManager.recipientBadgeList.loadedPromise.catch((e) =>
 			this.messageService.reportAndThrowError('Failed to load your badges', e),
 		);
-		this.learningpathLoaded = this.learningPathApi.getAllLearningPaths().then((res) => {
+		this.learningpathLoaded = this.learningPathApi.getLearningPathsForUser().then((res) => {
 			this.allLearningPaths = res;
 		}).catch((e) =>
 			this.messageService.reportAndThrowError('Failed to load your badges', e),

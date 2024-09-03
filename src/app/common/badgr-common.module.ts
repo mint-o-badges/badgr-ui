@@ -118,6 +118,7 @@ import { LearningPathDatatableComponent } from '../components/datatable-learning
 import { LearningPathApiService } from './services/learningpath-api.service';
 import { LearningPathParticipantsDatatableComponent } from '../components/datatable-learningpath-participants.component';
 import { LearningPathGraduatesDatatableComponent } from '../components/datatable-learningpath-graduates.component';
+import { OebIssuerCard } from './components/oeb-issuercard';
 
 const DIRECTIVES = [
 	BgAwaitPromises,
@@ -168,7 +169,8 @@ export const COMMON_MODULE_COMPONENTS = [
 	NounprojectDialog,
 	OebCompetency,
 	OebIssuerDetailComponent,
-	OebLearningPathDetailComponent
+	OebLearningPathDetailComponent,
+	OebIssuerCard
 ];
 
 const SERVICES = [

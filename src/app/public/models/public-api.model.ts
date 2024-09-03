@@ -140,4 +140,6 @@ export interface PublicApiLearningPath {
 	badges: PublicApiBadgeClass[];
 	slug: string;
 	tags: string[];
+	issuer_id: string;
+	participationBadge_id: string;
 }

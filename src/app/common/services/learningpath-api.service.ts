@@ -26,7 +26,7 @@ export class LearningPathApiService extends BaseHttpApiService {
 	}
 
 	getLearningPathsForUser() {
-		return this.get<ApiLearningPath[]>(`/v1/issuer/all-learningpaths`).then((r) => r.body);
+		return this.get<ApiLearningPath[]>(`/v1/user/learningpaths`).then((r) => r.body);
 	}
 
 	getAllLearningPaths(){
