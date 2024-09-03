@@ -28,14 +28,14 @@ import { OebButtonComponent } from './oeb-button.component';
                 <hlm-th class="!tw-text-white tw-justify-end sm:tw-w-48 tw-w-0 !tw-p-0"></hlm-th>
             </hlm-trow>
             <hlm-trow *ngFor="let badge of badges" class="tw-border-purple tw-flex-wrap tw-py-2">
-                <hlm-th class="tw-w-28 md:tw-w-48 tw-cursor-pointer" (click)="redirectToBadgeDetail.emit(badge.badge)">
+                <hlm-th class="tw-w-28 md:tw-w-48 tw-cursor-pointer tw-flex-col tw-items-baseline tw-gap-1 md:tw-gap-2 md:tw-items-center md:tw-flex-row" (click)="redirectToBadgeDetail.emit(badge.badge)">
                     <img
                         class="l-flex-x-shrink0 badgeimage badgeimage-small"
                         src="{{ badge.badge.image }}"
                         alt="{{ badge.badge.description }}"
                         width="40"
                     />
-                    <div class="tw-ml-2 tw-hidden md:tw-grid md:tw-grid-cols-[150px] md:gap-4">
+                    <div class="md:tw-grid md:tw-grid-cols-[150px] ">
                       <div class="tw-line-clamp-2 tw-break-all">
                         <span class="tw-text-oebblack tw-cursor-pointer" (click)="redirectToBadgeDetail.emit(badge.badge)">{{badge.badge.name}}</span>
                       </div>  
@@ -44,7 +44,7 @@ import { OebButtonComponent } from './oeb-button.component';
                 <hlm-th class="!tw-flex-1 tw-justify-center !tw-text-oebblack tw-w-28 md:tw-w-48"><p class="u-text">{{badge.badge.createdAt | date:"dd.MM.yyyy"}}</p></hlm-th>
                 <hlm-th class="tw-w-36 md:tw-w-40 tw-justify-center !tw-text-oebblack tw-hidden sm:tw-grid">{{badge.badge.recipientCount}}</hlm-th>
                 <hlm-th
-				class="tw-justify-center sm:tw-justify-end !tw-text-oebblack tw-flex-col tw-h-fit sm:tw-w-max tw-w-full tw-gap-2 tw-my-2"
+				class="tw-justify-center sm:tw-justify-end !tw-text-oebblack tw-flex-col tw-h-fit sm:tw-w-max tw-w-full tw-gap-2 tw-my-2 tw-mt-6 sm:tw-mt-0"
                 >
                     <oeb-button
                         variant="secondary"
