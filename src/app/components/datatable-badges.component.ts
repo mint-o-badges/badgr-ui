@@ -6,6 +6,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { HlmTableModule } from './spartan/ui-table-helm/src';
 import { BadgeClass } from '../issuer/models/badgeclass.model';
 import { OebButtonComponent } from './oeb-button.component';
+import { HlmPDirective } from '../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
 
 @Component({
 	selector: 'badges-datatable',
@@ -16,15 +17,16 @@ import { OebButtonComponent } from './oeb-button.component';
 		CommonModule,
         OebButtonComponent,
 		TranslateModule,
-		RouterModule
+		RouterModule,
+        HlmPDirective
         ],
 	template: `
         <hlm-table class="tw-rounded-t-[20px] tw-overflow-hidden tw-w-full tw-max-w-[100%] tw-bg-lightpurple tw-border-purple tw-border">
             <hlm-caption>{{caption}}</hlm-caption>
             <hlm-trow class="tw-bg-purple tw-text-white tw-flex-wrap hover:tw-bg-purple">
                 <hlm-th class="!tw-text-white tw-w-28 sm:tw-w-20 md:tw-w-40">Badge</hlm-th>
-                <hlm-th class="!tw-text-white tw-justify-center !tw-flex-1 tw-w-28 md:tw-w-48">{{'Badge.createdOn' | translate}}</hlm-th>
-                <hlm-th class="!tw-text-white tw-w-36 md:tw-w-40 tw-hidden sm:tw-grid">{{'Badge.multiRecipients' | translate}}</hlm-th>
+                <hlm-th class="!tw-text-white tw-justify-center !tw-flex-1 tw-w-24 sm:tw-w-28  md:tw-w-48 !tw-px-3 sm:!tw-px-4">{{'Badge.createdOn' | translate}}</hlm-th>
+                <hlm-th class="!tw-text-white tw-w-36 md:tw-w-40 sm:tw-grid">{{'Badge.multiRecipients' | translate}}</hlm-th>
                 <hlm-th class="!tw-text-white tw-justify-end sm:tw-w-48 tw-w-0 !tw-p-0"></hlm-th>
             </hlm-trow>
             <hlm-trow *ngFor="let badge of badges" class="tw-border-purple tw-flex-wrap tw-py-2">
@@ -41,8 +43,8 @@ import { OebButtonComponent } from './oeb-button.component';
                       </div>  
                     </div>    
                 </hlm-th>
-                <hlm-th class="!tw-flex-1 tw-justify-center !tw-text-oebblack tw-w-28 md:tw-w-48"><p class="u-text">{{badge.badge.createdAt | date:"dd.MM.yyyy"}}</p></hlm-th>
-                <hlm-th class="tw-w-36 md:tw-w-40 tw-justify-center !tw-text-oebblack tw-hidden sm:tw-grid">{{badge.badge.recipientCount}}</hlm-th>
+                <hlm-th class="!tw-flex-1 tw-justify-center !tw-text-oebblack tw-w-24 sm:tw-w-28 md:tw-w-48 sm:tw-px-3 tw-px-4"><p hlmP class="tw-font-normal sm:!tw-text-[16px]">{{badge.badge.createdAt | date:"dd.MM.yyyy"}}</p></hlm-th>
+                <hlm-th class="tw-w-36 md:tw-w-40 tw-justify-center !tw-text-oebblack sm:tw-grid"><p hlmP class="tw-font-normal sm:!tw-text-[16px]">{{badge.badge.recipientCount}}</p></hlm-th>
                 <hlm-th
 				class="tw-justify-center sm:tw-justify-end !tw-text-oebblack tw-flex-col tw-h-fit sm:tw-w-max tw-w-full tw-gap-2 tw-my-2 tw-mt-6 sm:tw-mt-0"
                 >
