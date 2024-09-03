@@ -40,6 +40,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	baseUrl: string;
 	badgeCategory: string;
 
+	// Translation
 	selectFromMyFiles = this.translate.instant('RecBadge.selectFromMyFiles');
 	chooseFromExistingIcons = this.translate.instant('RecBadge.chooseFromExistingIcons');
 	uploadOwnVisual = this.translate.instant('RecBadge.uploadOwnVisual');
@@ -72,6 +73,13 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	duration = this.translate.instant('RecBadgeDetail.duration');
 	chooseDuration = this.translate.instant('CreateBadge.chooseDuration');
 	newTag = this.translate.instant('CreateBadge.newTag');
+
+	suggestCompetenciesText = this.translate.instant('CreateBadge.suggestCompetencies');
+
+	giveBadgeTitle = this.translate.instant('CreateBadge.giveBadgeTitle');
+	changeBadgeTitle = this.translate.instant('CreateBadge.changeBadgeTitle');
+
+	maxValue1000 = this.translate.instant('CreateBadge.maxValue1000');
 
 	@Input()
 	set badgeClass(badgeClass: BadgeClass) {
@@ -411,6 +419,9 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	ngOnInit() {
 		super.ngOnInit();
 		let that = this;
+
+		// Set badge category when editing a badge. As new select component doesn't show badge competencies
+		this.badgeCategory = this.badgeClassForm.rawControl.controls['badge_category'].value; 		
 
 		// update badge frame when a category is selected, unless no-hexagon-frame checkbox is checked
 		this.badgeClassForm.rawControl.controls['badge_category'].statusChanges.subscribe((res) => {
@@ -957,6 +968,9 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
         // do not use frame for custom images
         this.customImageField.useDataUrl(this.currentImage, 'BADGE');
 	}
+
+	allowedFileFormats = ['image/png', 'image/svg+xml'];
+	allowedFileFormatsCustom = ['image/png'];
 
 	positiveInteger(control: AbstractControl) {
 		const val = parseInt(control.value, 10);
