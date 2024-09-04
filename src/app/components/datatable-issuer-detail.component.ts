@@ -45,7 +45,7 @@ import { OebButtonComponent } from './oeb-button.component';
 					</h3>
 				</div>
 				<label hlmLabel class="tw-font-semibold tw-text-[0.5rem] tw-w-full">
-					<span class="tw-px-3">Nach Email Adresse suchen</span>
+					<span class="tw-px-3">Nach E-Mail-Adresse suchen</span>
 					<hlm-cmd-input-wrapper class="tw-relative tw-px-0 tw-mt-1 tw-border-b-0">
 						<input
 							hlmInput
