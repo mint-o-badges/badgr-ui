@@ -49,9 +49,14 @@
 						#nameField></oeb-input>
 					<p hlmP class="tw-mt-1 tw-text-right" size="sm">{{'Issuer.nameWarning' | translate}}</p>
 					<div class="tw-flex tw-justify-end oeb-standard-padding-bottom">
-						<bg-formfield-select class="tw-self-end tw-mr-2" ariaLabel="Select Options"
+						<oeb-select
 							[control]="issueForm.rawControlMap.recipient_type"
-							[optionMap]="identifierOptionMap"></bg-formfield-select>
+							ariaLabel="Select Options"
+							[optionMap]="identifierOptionMap" 
+							[locked]="disableSelect"
+							errorMessage="'error'"
+							class="tw-self-end tw-mr-2"
+						></oeb-select>
 						<oeb-input class="tw-flex-grow" label="Identifier"
 							[control]="issueForm.rawControlMap.recipient_identifier"
 							ariaLabel="Identifier der Empfänger:in"

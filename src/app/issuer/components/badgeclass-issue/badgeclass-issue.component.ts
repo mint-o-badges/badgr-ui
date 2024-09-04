@@ -36,6 +36,8 @@ import { SuccessDialogComponent } from '../../../common/dialogs/oeb-dialogs/succ
 export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	breadcrumbLinkEntries: LinkEntry[] = [];
 
+	disableSelect = true;
+
 	get defaultExpiration(): string {
 		if (this.badgeClass && this.badgeClass.expiresDuration && this.badgeClass.expiresAmount) {
 			return this.badgeClass.expirationDateRelative().toISOString().replace(/T.*/, '');
@@ -73,11 +75,7 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 	issueForm = typedFormGroup()
 		.addControl('expires', '', this['expirationValidator'])
 		.addControl('recipientprofile_name', '', Validators.required)
-		.addControl('recipient_type', 'email' as RecipientIdentifierType, [Validators.required], (control) => {
-			control.rawControl.valueChanges.subscribe(() => {
-				this.issueForm.controls.recipient_identifier.rawControl.updateValueAndValidity();
-			});
-		})
+		.addControl('recipient_type', 'email' as RecipientIdentifierType, )
 		.addControl('recipient_identifier', '', [Validators.required, this['idValidator']])
 		.addControl('narrative', '', MdImgValidator.imageTest)
 		.addControl('notify_earner', true)
@@ -203,6 +201,8 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 		if (!this.issueForm.markTreeDirtyAndValidate()) {
 			return;
 		}
+
+		console.log(this.issueForm.rawControlMap.recipient_type.value);
 
 		const formState = this.issueForm.value;
 		const cleanedEvidence = formState.evidence_items.filter((e) => e.narrative !== '' || e.evidence_url !== '');
