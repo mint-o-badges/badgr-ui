@@ -13,12 +13,26 @@
 		<div class="tw-relative">
 			<section class="">
 				<div class="tw-flex tw-items-center oeb-standard-padding-bottom tw-flex-wrap">
+					<div class="tw-flex tw-gap-4 tw-items-center">
+						<div class="tw-pb-2 md:tw-pb-0 ">
+							<input type="text" name="forminput" changeOrder
+								class="tw-w-[300px] tw-border-solid tw-border-purple tw-bg-white tw-mr-6"
+								placeholder="{{ 'LearningPath.searchLearningPaths' | translate }}" [(ngModel)]="searchQuery"
+								hlmInput />
+
+						</div>
+						<!-- <oeb-checkbox
+								[text]="'Nach Institutionen gruppieren' "
+								name="'groupByInstitution'"
+								[(ngModel)]="groupByInstitution"
+								>
+						</oeb-checkbox> -->
+					</div>
 				</div>
-				<ng-container *ngIf="groupBy == '---'">
-					<div class="tw-grid tw-grid-cols-badges tw-gap-16">
-						<div *ngFor="let lp of learningPaths">
-                            <a [href]="'http://localhost:4200/public/learningpaths/' + lp.slug">{{lp.name}}</a>
-                        </div>
+				<ng-container>
+					<div class="tw-grid tw-grid-cols-learningpaths tw-gap-16">
+						<bg-learningpathcard *ngFor="let lp of learningPaths"
+						[badgeImage]="baseUrl + lp._apiModel.participationBadge_image" [name]="lp.name" [description]="lp.description" ></bg-learningpathcard>
 					</div>
 				</ng-container>
 			</section>

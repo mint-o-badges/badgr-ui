@@ -619,7 +619,8 @@
 		"learningpaths": "Lernpfade",
 		"catalogHeadline":"Alle Lernpfade in der Übersicht",
 		"partipate": "Teilnehmen",
-		"notParticipateAnymore": "Nicht mehr teilnehmen"
+		"notParticipateAnymore": "Nicht mehr teilnehmen",
+		"searchLearningPaths": "Lernpfade durchsuchen"
 	},
 	"OEBComponents":{
 		"fieldIsRequired": "Dieses Feld ist erforderlich"

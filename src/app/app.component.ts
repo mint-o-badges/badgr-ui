@@ -71,7 +71,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 		{
 			title: '',
 			routerLink: ['/catalog/learningpaths'],
-			icon: 'lucideWaypoints',
+			icon: 'lucideRoute',
 		},
 	]
 	accountMenuItems: MenuItem[] = [

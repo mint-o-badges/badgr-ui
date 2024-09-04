@@ -51,6 +51,7 @@ module.exports = {
 			},
 			gridTemplateColumns: {
 				badges: 'repeat(auto-fill, minmax(320px, 1fr))',
+				learningpaths: 'repeat(auto-fill, minmax(211px, 1fr))',
 			},
 		},
 	},

@@ -21,6 +21,10 @@ export class LearningPathApiService extends BaseHttpApiService {
 		return this.get<ApiLearningPath>(`/v1/issuer/learningpath/${lpSlug}`).then((r) => r.body);
 	}
 
+	getPublicLearningPath(lpSlug: string) {
+		return this.get<ApiLearningPath>(`/public/learningpaths/${lpSlug}`, {}, false).then((r) => r.body);
+	}
+
 	getLearningPathsForIssuer(issuerSlug: string) {
 		return this.get<ApiLearningPath[]>(`/v1/issuer/issuers/${issuerSlug}/learningpath`).then((r) => r.body);
 	}
@@ -59,5 +63,9 @@ export class LearningPathApiService extends BaseHttpApiService {
 
 	getLearningPathParticipants(lpSlug: string){
 		return this.get<ApiLearningPathParticipant[]>(`/v1/issuer/learningpath/${lpSlug}/participants`);
+	}
+
+	requestLearningPath(lpId: string){
+		return this.post(`/request-learningpath/${lpId}/`, null);
 	}
 }

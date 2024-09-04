@@ -17,7 +17,7 @@ import {
   lucideLogOut,
   lucideQrCode,
   lucideCloudUpload,
-  lucideWaypoints
+  lucideRoute
 
 } from '@ng-icons/lucide';
 
@@ -40,7 +40,8 @@ import {
       lucideLogOut,
       lucideQrCode,
       lucideCloudUpload,
-      lucideWaypoints
+      lucideRoute,
+      
     }),
   ],
 })

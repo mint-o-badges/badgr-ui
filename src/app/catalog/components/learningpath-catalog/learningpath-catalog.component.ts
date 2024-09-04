@@ -20,6 +20,8 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 
     learningPaths: LearningPath[] = [];
 
+	baseUrl: string;
+
 	tags: string[] = [];
 	issuers: string[] = [];
 	selectedTag: string = null;
@@ -40,12 +42,12 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 		// this.updateResults();
 	}
 
-	private _groupBy = '---';
-	get groupBy() {
-		return this._groupBy;
+	private _groupByInstitution = false;
+	get groupByInstitution() {
+		return this._groupByInstitution;
 	}
-	set groupBy(val: string) {
-		this._groupBy = val;
+	set groupByInstitution(val: boolean) {
+		this._groupByInstitution = val;
 		// this.updateResults();
 	}
 
@@ -60,6 +62,7 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 	) {
 		super(router, route);
         this.learningPathsLoaded = this.loadLearningPaths();
+		this.baseUrl = this.configService.apiConfig.baseUrl;
     }
 
     async loadLearningPaths() { 
@@ -68,6 +71,9 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 				(lps) => {
 					this.learningPaths = lps
 					resolve(lps);
+					console.log(lps)
+					//@ts-ignore
+					console.log(this.baseUrl + lps[0].participationBadge_image)
 				},
 				(error) => {
 					this.messageService.reportAndThrowError('Failed to load badges', error);

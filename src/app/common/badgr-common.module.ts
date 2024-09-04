@@ -2,6 +2,7 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { BgBadgecard } from './components/bg-badgecard';
+import { BgLearningPathCard } from './components/bg-learningpathcard';
 import { BgBadgeDetail } from './components/badge-detail/badge-detail.component';
 
 import { BgAwaitPromises } from './directives/bg-await-promises';
@@ -134,6 +135,7 @@ export const COMMON_MODULE_COMPONENTS = [
 	BadgeImageComponent,
 	BadgrButtonComponent,
 	BgBadgecard,
+	BgLearningPathCard,
 	BgBadgeDetail,
 	BgBreadcrumbsComponent,
 	BgFormFieldFileComponent,
