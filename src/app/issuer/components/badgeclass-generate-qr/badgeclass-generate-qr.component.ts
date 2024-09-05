@@ -206,7 +206,6 @@ export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComp
 	async getQrCodePdf(base64QrImage: string) {
 		this.qrCodeApiService.getQrCodePdf(this.qrSlug, this.badgeClass.slug, base64QrImage).subscribe({
 			next: (blob: Blob) => {
-			  console.log(blob);
 			  this.qrCodeApiService.downloadQrCode(blob, this.qrTitle, this.badgeClass.name);
 			},
 			error: (error) => {
