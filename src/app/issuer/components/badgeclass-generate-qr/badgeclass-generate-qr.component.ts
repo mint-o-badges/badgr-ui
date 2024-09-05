@@ -183,21 +183,7 @@ export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComp
 
 	
 		if (parentElement) {
-		  // converts base 64 encoded image to blobData
-		  let blobData = this.convertBase64ToBlob(parentElement)
-		  // saves as image
-		  const blob = new Blob([blobData], { type: "image/png" })
-		  let data = await this.getQrCodePdf(parentElement);
-		  setTimeout(() => {
-			  console.log(this.pdfSrc);
-			  this.qrCodeApiService.downloadQrCode(this.pdfSrc, this.qrTitle, this.badgeClass.name);
-		  }, 2000);
-		  const url = window.URL.createObjectURL(blob)
-		  const link = document.createElement("a")
-		  link.href = url
-		  // name of the file
-		  link.download = "angularx-qrcode"
-		//   link.click()
+		  let data = await this.getQrCodePdf(parentElement)
 		}
 	  }
 	
@@ -229,9 +215,15 @@ export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComp
 	}
 
 	async getQrCodePdf(base64QrImage: string) {
-		this.qrCodeApiService.getQrCodePdf(this.qrSlug, this.badgeClass.slug, base64QrImage).then((url) => {
-			this.pdfSrc = url;
-		});
+		this.qrCodeApiService.getQrCodePdf(this.qrSlug, this.badgeClass.slug, base64QrImage).subscribe({
+			next: (blob: Blob) => {
+			  console.log(blob);
+			  this.qrCodeApiService.downloadQrCode(blob, this.qrTitle, this.badgeClass.name);
+			},
+			error: (error) => {
+			  console.error('Error downloading the QrCode', error);
+			}
+		  });
 	}
 
 	onChangeURL(url: SafeUrl) {

@@ -44,22 +44,20 @@ export class QrCodeApiService extends BaseHttpApiService {
 		return this.get<ApiQRCode[]>(`/v1/issuer/issuers/${issuerSlug}/badges/${badgeClassSlug}/qrcodes`).then((r) => r.body);
 	}
 
-	// getQrCodePdf(slug: string, badgeName: string, base64QrImage: string) {
-    //     return this.http.post<any>(`${this.baseUrl}/download-qrcode/${slug}/${badgeName}`, base64QrImage).then((response) => {
-			
-	// 	});
-  	// }
-
-	getQrCodePdf(slug: string, badgeSlug: string, base64QrImage: string) {
-		return this.post<any>(`/download-qrcode/${slug}/${badgeSlug}`, base64QrImage)
+	getQrCodePdf(slug: string, badgeSlug: string, base64QrImage: string): Observable<Blob> {
+        const headers = new HttpHeaders().set('Authorization', `Bearer ${this.loginService.currentAuthToken.access_token}`);
+		const imageData = {
+			"image": base64QrImage
+		}
+		return this.http.post(`${this.baseUrl}/download-qrcode/${slug}/${badgeSlug}`, imageData, { headers: headers, responseType: 'blob' });
 	}
 
-	downloadQrCode(pdfSrc: SafeResourceUrl, qrCodeName: string, badgeName: string) {
+	downloadQrCode(blob: Blob, qrCodeName: string, badgeName: string): void {
+		const url = window.URL.createObjectURL(blob); 
 		const link = document.createElement('a');
-		// https://stackoverflow.com/questions/55849415/type-saferesourceurl-is-not-assignable-to-type-string
-		const url = this.sanitizer.sanitize(SecurityContext.RESOURCE_URL, pdfSrc);
 		link.href = url;
-		link.download = qrCodeName + '.pdf';
+		link.download = `${qrCodeName}.pdf`;
 		link.click();
-	 }
+		window.URL.revokeObjectURL(url); 
+	  }
 }
