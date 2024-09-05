@@ -33,6 +33,10 @@ export class LearningPath extends ManagedEntity<ApiLearningPath, LearningPathRef
 		return this.apiModel.issuer_id;
 	}
 
+	get issuer_name(){
+		return this.apiModel.issuer_name;
+	}
+
 	constructor(
 		commonManager: CommonEntityManager,
 		initialEntity: ApiLearningPath = null,

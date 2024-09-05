@@ -5,6 +5,7 @@ export interface ApiLearningPath {
     id?: number;
     slug?: string;
     issuer_id: string;
+    issuer_name: string;
     participationBadge_id: string;
     name: string;
     description: string;

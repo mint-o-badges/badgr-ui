@@ -20,14 +20,16 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 						width="38"
 					/>
 				</div>
-				<div class="tw-flex tw-flex-col tw-flex-wrap tw-pl-4 tw-py-2">
+				<div class="tw-flex tw-flex-col tw-flex-wrap tw-py-2">
 					<a
 						class="tw-font-bold"
 						[routerLink]="[]"
 						hlmP
 						size="sm"
 						>{{ name }}</a>
-				</div>
+						<a class="tw-text-[10px] tw-leading-3">{{issuerTitle}}</a>
+						</div>
+					
 			</div>
 		</div>
 	`,
@@ -44,9 +46,7 @@ export class BgLearningPathCard {
 	@Input() badgeIssueDate: string;
 	@Input() badgeClass: string;
 	@Input() issuerTitle: string;
-	@Input() mostRelevantStatus: 'expired' | 'new' | 'pending' | undefined;
-	@Input() verifyUrl: string;
+	@Input() tags: string[];
 	@Input() public = false;
 	@Output() shareClicked = new EventEmitter<MouseEvent>();
-
 }
