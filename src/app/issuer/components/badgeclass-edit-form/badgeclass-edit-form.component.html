@@ -158,6 +158,14 @@
 			>
 				{{ 'CreateBadge.imageRequiredError' | translate }}.
 			</p>
+			<p
+				hlmP 
+				size="sm"
+				[hidden]="!imageFieldDirty || !badgeClassForm.hasError('imageTooLarge')"
+				class="tw-font-normal tw-text-red tw-text-start md:tw-pl-[13.5rem] tw-w-full tw-mt-2"
+			>
+				{{ 'CreateBadge.imageTooLarge' | translate }}.
+			</p>
 		</div>
 	</div>
 

@@ -31,6 +31,8 @@ import { Skill } from '../../../common/model/ai-skills.model';
 import { TranslateService } from '@ngx-translate/core';
 import { Platform } from '@angular/cdk/platform';	// To detect the current platform by comparing the userAgent strings
 
+import { base64ByteSize } from '../../../common/util/file-util';
+
 @Component({
 	selector: 'badgeclass-edit-form',
 	templateUrl: './badgeclass-edit-form.component.html',
@@ -80,6 +82,8 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	changeBadgeTitle = this.translate.instant('CreateBadge.changeBadgeTitle');
 
 	maxValue1000 = this.translate.instant('CreateBadge.maxValue1000');
+
+	imageTooLarge = this.translate.instant('CreateBadge.imageTooLarge');
 
 	@Input()
 	set badgeClass(badgeClass: BadgeClass) {
@@ -733,6 +737,10 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 		if (!image.length && !customImage.length) {
 			return { imageRequired: true };
+		}
+
+		if(base64ByteSize(customImage) > 1024 * 256){
+			return { imageTooLarge: true };
 		}
 
 		// Validation that the image (hash) of a fork changed
