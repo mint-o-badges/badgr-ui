@@ -36,6 +36,9 @@ export class BadgeClassIssueQrComponent extends BaseAuthenticatedRoutableCompone
 	badgeClassLoaded: Promise<unknown>;
     crumbs: LinkEntry[]
 
+	list4Text: string  
+
+
     qrForm = typedFormGroup()
         .addControl('title', '', Validators.required)
         .addControl('createdBy', '', Validators.required)
@@ -63,6 +66,7 @@ export class BadgeClassIssueQrComponent extends BaseAuthenticatedRoutableCompone
 				.badgeByIssuerSlugAndSlug(this.issuerSlug, this.badgeSlug)
 				.then((badgeClass) => {
 					this.badgeClass = badgeClass;
+					this.list4Text = this.translate.instant('IssueQr.list4') + `<a class="tw-tw-underline tw-text-[#1400FF]" href="issuer/issuers/${this.issuerSlug}/badges/${this.badgeSlug}">Badge Detail Seite </a>` + this.translate.instant('IssueQr.list4.2')
 
 					this.crumbs = [
 						{ title: 'Issuers', routerLink: ['/issuer'] },
@@ -101,6 +105,8 @@ export class BadgeClassIssueQrComponent extends BaseAuthenticatedRoutableCompone
 			},
 		});
 	}
+
+
 
     onSubmit() {
 		// if (!this.qrForm.markTreeDirtyAndValidate()) {

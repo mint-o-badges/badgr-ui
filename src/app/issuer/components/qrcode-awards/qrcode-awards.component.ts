@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, SimpleChanges, inject } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges, inject } from "@angular/core";
 import { BrnAccordionContentComponent } from '@spartan-ng/ui-accordion-brain';
 import { HlmAccordionModule } from '../../../components/spartan/ui-accordion-helm/src';
 import { HlmIconModule } from '../../../components/spartan/ui-icon-helm/src';
@@ -62,9 +62,11 @@ export class QrCodeAwardsComponent {
 	}
 
     @Input() awards: any[]
-	@Input() routerLink: string[]
+	@Input() routerLinkText: string[]
 	@Input() issuerSlug: string
 	@Input() badgeClassSlug: string
+	@Output() qrBadgeAward = new EventEmitter<void>();
+
 
 	requestedBadges: any[] = []
 
@@ -101,6 +103,7 @@ export class QrCodeAwardsComponent {
 		const dialogRef = this._hlmDialogService.open(DangerDialogComponent, {
 			context: {
 				delete: () => this.deleteQrCode(qrSlug),
+				qrCodeRequested: this.awards.find(award => award.slug == qrSlug).request_count > 0,
 				variant: "danger"
 			},
 		});
@@ -116,5 +119,9 @@ export class QrCodeAwardsComponent {
 			this.awards = this.awards.filter(value => value.slug != qrSlug)
 		}
 	)};
+
+	onQrBadgeAward() {
+		this.qrBadgeAward.emit();  
+	}
 
 }
