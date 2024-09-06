@@ -1,4 +1,4 @@
-// @import '@angular/cdk/overlay-prebuilt.css';
+@import '@angular/cdk/overlay-prebuilt.css';
 
 @tailwind base;
 @tailwind components;
@@ -6,6 +6,10 @@
 
 @import url(typography.scss);
 @import url(elements.scss);
+
+html {
+	font-family: rubik;
+}
 
 .oeb {
 	font-family: rubik;
@@ -16,9 +20,9 @@
 	--color-blue: #7e73ff;
 	--color-yellow: #ffcc00;
 	--color-purple: #492e98;
-	--color-brightpurple: #9747FF;
-	--color-buttonhover: #6E30F2;
-	--color-red: #ff5556;
+	--color-brightpurple: #9747ff;
+	--color-buttonhover: #6e30f2;
+	--color-red: #FF4849;
 	--color-lightred: #ff8383;
 	--color-pink: #ffbab9;
 	--color-lightpink: #fff6f6;
@@ -26,12 +30,13 @@
 	--color-green: #93f993;
 	--color-white: #ffffff;
 	--color-lightgray: #f5f5f5;
+	--color-darkgray: #6B6B6B;
 	--color-grayinteractive: #cfcece;
 	--color-lightpurple: #f1f0ff;
 	--color-interactive1: var(--color-purple);
 	--color-interactive3: var(--color-lightgray);
-	--color-link: #1400FF;
-	
+	--color-link: #1400ff;
+
 	// spartan
 	--font-sans: '';
 	--background: 0 0% 100%;
@@ -105,6 +110,10 @@
 	background: var(--color-black);
 }
 
+.topbar {
+	background-color: white;
+}
+
 .topbar .topbar-x-heading {
 	color: var(--color-interactive1);
 }
@@ -117,6 +126,7 @@
 	border-top: none;
 	padding-top: calc(var(--gridspacing) * 12);
 	padding-bottom: calc(var(--gridspacing) * 12);
+	grid-area: 'footer';
 }
 
 .footer [href] {
@@ -164,9 +174,38 @@
 	border-radius: 10px;
 }
 
+.oeb-input-hide-arrows {
+	/* Hide arrows from input number - Firefox */
+	input[type='number'] {
+		-moz-appearance: textfield;
+	}
+
+	/* Hide arrows from input number - Chrome, Safari, Edge, Opera */
+	input::-webkit-outer-spin-button,
+	input::-webkit-inner-spin-button {
+		-webkit-appearance: none;
+		margin: 0;
+	}
+}
+
+.oeb-breadcrumbs {
+	margin-bottom: 24px;
+	padding-bottom: 16px;
+	border-bottom: 1px solid theme('colors.grey.85');
+}
+
+.oeb-max-form-width {
+	width: 100%;
+	max-width: 456.5px;
+}
+
 @media (min-width: 768px) {
 	.o-container:not(.o-container-is-managed) .navbar .navbar-x-logo img {
 		max-width: 134px;
+	}
+
+	.oeb-max-form-width {
+		max-width: 637.5px;
 	}
 }
 
@@ -185,5 +224,9 @@
 
 	.u-margin-bottom2x {
 		margin-bottom: 10px;
-	  }
+	}
+}
+
+#altcha_checkbox {
+	appearance: auto;
 }

@@ -23,11 +23,11 @@ import { QueryParametersService } from '../../../common/services/query-parameter
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { BadgeInstance } from '../../../issuer/models/badgeinstance.model';
 import { Issuer } from '../../../issuer/models/issuer.model';
+import { CompetencyType, PageConfig } from '../../../common/components/badge-detail/badge-detail.component.types';
 
 @Component({
 	selector: 'recipient-earned-badge-detail',
-	templateUrl: './recipient-earned-badge-detail.component.html',
-	styleUrls: ['./recipient-earned-badge-detail.component.css'],
+	template: `<bg-badgedetail [config]="config" [awaitPromises]="[badgesLoaded]"></bg-badgedetail>`,
 })
 export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	readonly issuerImagePlacholderUrl = preloadImageURL(
@@ -46,6 +46,9 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 	badge: RecipientBadgeInstance;
 	issuerBadgeCount: string;
 	launchpoints: ApiExternalToolLaunchpoint[];
+
+	config: PageConfig 
+
 
 	now = new Date();
 	compareDate = compareDate;
@@ -87,9 +90,51 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 				this.competencies = this.badge.getExtension('extensions:CompetencyExtension', [{}]);
 				this.category = this.badge.getExtension('extensions:CategoryExtension', {});
 				this.crumbs = [
-					{ title: 'Backpack', routerLink: ['/recipient/badges'] },
+					{ title: 'Mein Rucksack', routerLink: ['/recipient/badges'] },
 					{ title: this.badge.badgeClass.name, routerLink: ['/earned-badge/' + this.badge.slug] },
 				];
+				this.config = {
+					crumbs: this.crumbs,
+					badgeTitle: this.badge.badgeClass.name,
+					// uncomment after the sharing of a badge is discussed from a data privacy perspective
+					// headerButton: {
+					// 	title: 'Badge teilen',
+					// 	action: () => this.shareBadge(),
+					// },
+					menuitems: [
+						{
+							title: 'Verifizieren',
+							icon: 'lucideBadgeCheck',
+							action: () => window.open(this.verifyUrl, '_blank'),
+						},
+						{
+							title: 'PDF exportieren',
+							icon: 'lucideFileText',
+							action: () => this.exportPdf(),
+						},
+						{
+							title: 'Löschen',
+							icon: 'lucideTrash2',
+							action: () => this.deleteBadge(this.badge),
+						}
+					
+					],
+					badgeDescription: this.badge.badgeClass.description,
+					issuerSlug: this.badge.badgeClass.issuer.id,
+					slug: this.badgeSlug,
+					issuedOn: this.badge.issueDate,
+					issuedTo: this.badge.recipientEmail,
+					category: this.category['Category'] === 'competency' ? 'Kompetenz- Badge' : 'Teilnahme- Badge',
+					tags: this.badge.badgeClass.tags,
+					issuerName: this.badge.badgeClass.issuer.name,
+					issuerImagePlacholderUrl: this.issuerImagePlacholderUrl,
+					issuerImage: this.badge.badgeClass?.issuer?.image,
+					badgeLoadingImageUrl: this.badgeLoadingImageUrl,
+					badgeFailedImageUrl: this.badgeFailedImageUrl,
+					badgeImage: this.badge.badgeClass.image,
+					competencies: this.competencies as CompetencyType[],
+
+				}
 			})
 			.catch((e) => this.messageService.reportAndThrowError('Failed to load your badges', e));
 

@@ -18,6 +18,7 @@
 				<thead class="datatable-x-head">
 					<tr class="datatable-x-header">
 						<th class="datatable-x-cell" scope="col">E-Mail</th>
+						<th class="datatable-x-cell" scope="col">Name</th>
 						<th class="datatable-x-cell" scope="col">Nachweis URL</th>
 						<th class="datatable-x-cell">
 							<!-- header for remove link-->
@@ -34,6 +35,13 @@
 								class="u-margin-left2x"
 								[control]="importErrorForm.controls['users']['controls'][i].controls.email"
 								[errorMessage]="'Please enter a valid email'"
+							></bg-formfield-text>
+						</td>
+						<td class="datatable-x-cell">
+							<bg-formfield-text
+								class="u-margin-left2x"
+								[control]="importErrorForm.controls['users']['controls'][i].controls.name"
+								[errorMessage]="'Please enter a valid name'"
 							></bg-formfield-text>
 						</td>
 						<td class="datatable-x-cell">
@@ -57,7 +65,7 @@
 	</div>
 
 	<!-- BUTTONS -->
-	<div class="l-flex l-flex-1x u-margin-top2x">
+	<div class="tw-flex tw-justify-end tw-gap-2 tw-mt-4">
 		<button class="button button-secondary" (click)="updateViewState('import')">Abbrechen</button>
 
 		<button class="button l-marginLeft-x2" (click)="continueButtonAction()">Weiter</button>

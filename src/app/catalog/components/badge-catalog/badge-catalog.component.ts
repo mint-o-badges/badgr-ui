@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SessionService } from '../../../common/services/session.service';
-import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
 import { MessageService } from '../../../common/services/message.service';
-import { IssuerManager } from '../../../issuer/services/issuer-manager.service';
 //import {BadgeClassManager} from '../../services/badgeclass-manager.service';
 import { Issuer } from '../../../issuer/models/issuer.model';
 //import {BadgeClass} from '../../models/badgeclass.model';
@@ -29,19 +26,17 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 
 	Array = Array;
 
-	// issuers: Issuer[] = null;
 	badges: BadgeClass[] = null;
 	badgeResults: BadgeClass[] = null;
 	badgeResultsByIssuer: MatchingBadgeIssuer[] = [];
 	badgeResultsByCategory: MatchingBadgeCategory[] = [];
 	order = 'asc';
-	//issuerToBadgeInfo: {[issuerId: string]: IssuerBadgesInfo} = {};
 
-	// issuersLoaded: Promise<unknown>;
 	badgesLoaded: Promise<unknown>;
 
 	showLegend = false;
 	tags: string[] = [];
+	issuers: string[] = [];
 	selectedTag: string = null;
 
 	get theme() {
@@ -117,8 +112,10 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 					this.badgeResults = this.badges;
 					badges.forEach((badge) => {
 						this.tags = this.tags.concat(badge.tags);
+						this.issuers = this.issuers.concat(badge.issuer);
 					});
 					this.tags = sortUnique(this.tags);
+					this.issuers = sortUnique(this.issuers);
 					this.updateResults();
 					resolve(badges);
 				},

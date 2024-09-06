@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
@@ -26,6 +26,8 @@ import striptags from 'striptags';
 import { DateValidator } from '../../../common/validators/date.validator';
 import { AppConfigService } from '../../../common/app-config.service';
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
+import { HlmDialogService } from './../../../components/spartan/ui-dialog-helm/src';
+import { SuccessDialogComponent } from '../../../common/dialogs/oeb-dialogs/success-dialog.component';
 
 @Component({
 	selector: 'badgeclass-issue',
@@ -70,13 +72,13 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 	issuer: Issuer;
 	issueForm = typedFormGroup()
 		.addControl('expires', '', this['expirationValidator'])
+		.addControl('recipientprofile_name', '', Validators.required)
 		.addControl('recipient_type', 'email' as RecipientIdentifierType, [Validators.required], (control) => {
 			control.rawControl.valueChanges.subscribe(() => {
 				this.issueForm.controls.recipient_identifier.rawControl.updateValueAndValidity();
 			});
 		})
 		.addControl('recipient_identifier', '', [Validators.required, this['idValidator']])
-		.addControl('recipientprofile_name', '')
 		.addControl('narrative', '', MdImgValidator.imageTest)
 		.addControl('notify_earner', true)
 		.addArray(
@@ -216,14 +218,16 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 		// 	},
 		// };
 
-		// const recipientProfileContextUrl = "https://openbadgespec.org/extensions/recipientProfile/context.json";
-		// const extensions = formState.recipientprofile_name ? {
-		// 	"extensions:recipientProfile": {
-		// 		"@context": recipientProfileContextUrl,
-		// 		"type": ["Extension", "extensions:RecipientProfile"],
-		// 		"name": cleanedName
-		// 	}
-		// } : undefined;
+		const recipientProfileContextUrl = 'https://openbadgespec.org/extensions/recipientProfile/context.json';
+		const extensions = formState.recipientprofile_name
+			? {
+					'extensions:recipientProfile': {
+						'@context': recipientProfileContextUrl,
+						type: ['Extension', 'extensions:RecipientProfile'],
+						name: cleanedName,
+					},
+				}
+			: undefined;
 
 		// const extensions = studyLoadExtension;
 
@@ -256,13 +260,14 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 				narrative: this.narrativeEnabled ? formState.narrative : '',
 				create_notification: formState.notify_earner,
 				evidence_items: this.evidenceEnabled ? cleanedEvidence : [],
-				// extensions,
+				extensions,
 				expires,
 			})
 			.then(() => this.badgeClass.update())
 			.then(
 				() => {
 					this.eventsService.recipientBadgesStale.next([]);
+					this.openSuccessDialog(formState.recipient_identifier);
 					this.router.navigate(['issuer/issuers', this.issuerSlug, 'badges', this.badgeClass.slug]);
 					this.messageService.setMessage('Badge awarded to ' + formState.recipient_identifier, 'success');
 				},
@@ -290,5 +295,15 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 		) {
 			this.issueForm.controls.evidence_items.removeAt(i);
 		}
+	}
+
+	private readonly _hlmDialogService = inject(HlmDialogService);
+	public openSuccessDialog(recipient) {
+		const dialogRef = this._hlmDialogService.open(SuccessDialogComponent, {
+			context: {
+				recipient: recipient,
+				variant: "success"
+			},
+		});
 	}
 }

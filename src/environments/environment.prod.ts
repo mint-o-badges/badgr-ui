@@ -16,8 +16,8 @@ export const environment: BadgrEnvironment = {
 				url: 'https://opensenselab.org',
 			},
 			logoImg: {
-				small: 'assets/logos/Logo-New.png',
-				desktop: 'assets/logos/Logo-New.png',
+				small: 'assets/logos/Logo-Oeb.png',
+				desktop: 'assets/logos/Logo-Oeb.png',
 			},
 			loadingImg: {
 				imageUrl:
@@ -31,6 +31,7 @@ export const environment: BadgrEnvironment = {
 			],
 			useColorNavbar: true,
 			termsOfServiceLink: 'public/impressum',
+			privacyPolicyLink:'public/privacy',
 			showApiDocsLink: false,
 			cssCustomProps: {
 				'--color-interactive1': '#492E98',

@@ -39,6 +39,8 @@ import { NavigationService } from '../common/services/navigation.service';
 import { RecipientBadgeCollectionApiService } from '../recipient/services/recipient-badge-collection-api.service';
 import { ApplicationCredentialsService } from '../common/services/application-credentials.service.';
 import { CaptchaService } from '../common/services/captcha.service';
+import { QrCodeApiService } from '../issuer/services/qrcode-api.service';
+import { PdfService } from '../common/services/pdf.service';
 
 /*@Injectable()
 export class MockRouter { navigate = () => {jasmine.createSpy('navigate'); };}*/
@@ -169,6 +171,14 @@ export class MockInitialLoadingIndicatorService {}
 export class MockRecipientBadgeCollectionApiService {}
 
 @Injectable()
+export class MockQrCodeApiService {
+	getQrCodesForIssuerByBadgeClass = () => new Promise(() => {});
+	createQrCode = () => new Promise(() => {});
+	updateQrCode = () => new Promise(() => {});
+	deleteQrCode = () => new Promise(() => {});
+}
+
+@Injectable()
 export class MockOAuthApiService {
 	listAuthorizations = () => new Promise(() => {});
 }
@@ -177,6 +187,13 @@ export class MockOAuthApiService {
 export class MockCaptchaService {
 	getCaptcha = () => new Promise(() => {});
 	setupCaptcha = () => new Promise(() => {})
+}
+
+@Injectable()
+export class MockPdfService {
+	getPdf = () => new Promise(() => {});
+	downloadPdf = () => new Promise(() => {});
+	dateToString = () => new Promise(() => {});
 }
 
 export const commonDialog = {
@@ -312,6 +329,7 @@ export class MockDomSanitizer {
 	sanitize = () => 'safeString';
 	bypassSecurityTrustUrl = () => 'safeString';
 	bypassSecurityTrustHtml = () => 'safeString';
+	bypassSecurityTrustResourceUrl = () => 'safeString';
 }
 
 @Injectable()
@@ -356,7 +374,9 @@ export let COMMON_MOCKS_PROVIDERS_WITH_SUBS = [];
 	RecipientBadgeCollectionManager,
 	RecipientBadgeManager,
 	ApplicationCredentialsService,
-	CaptchaService
+	CaptchaService,
+	QrCodeApiService,
+	PdfService
 ].forEach((m, i, a) => {
 	const thisMock = eval('Mock' + m.name);
 	COMMON_MOCKS_PROVIDERS.push(thisMock);

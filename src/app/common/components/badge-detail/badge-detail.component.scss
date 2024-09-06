@@ -1,0 +1,16 @@
+.badge-sidebar-internal {
+    padding: calc(var(--gridspacing) * 4);
+	padding-top: calc(var(--gridspacing) * 4);
+	border-radius: 14px;
+    grid-gap: calc(var(--gridspacing) * 2);
+    background-color: #ecfeed;
+}
+
+@media (min-width: 768px) {
+    
+    .badge-sidebar-internal{
+        padding-top: calc(var(--gridspacing) * 6);
+        display: flex;
+        flex-direction: column;
+    }
+}

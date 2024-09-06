@@ -10,6 +10,7 @@
 		"collection": "Collection",
 		"collections": "Collections",
 		"cancel": "Cancel",
+		"forward": "Ok",
 		"or": "or",
 		"and": "and",
 		"can": "can",
@@ -51,7 +52,10 @@
 		"oeb": "Open Educational Badges",
 		"showDetails": "Show details",
 		"hideDetails": "Hide details",
-		"password": "Password"
+		"password": "Password",
+		"loading": "Loading...",
+        "warning": "Warning",
+		"page": "Page"
 	},
 	"NavItems": {
 		"register": "Register",
@@ -60,14 +64,15 @@
 		"myInstitutions": "My institutions",
 		"appIntegrations": "App integrations",
 		"openMenu": "Open Menu",
-		"logout": "Ausloggen",
+		"logout": "Logout",
 		"myProfile": "My profile"
 	},
 	"Start": {
 		"desc1": "A learner-centered approach",
 		"desc2": "for documentation & feedback of the learning process",
 		"poweredBy": "Open Educational Badges is a joint project by <a href='https://matrix-gruppe.de/matrix-gemeinnuetzig/'>matrix gGmbh</a>, <a href='https://mycelia.education/'>mycelia gGmbh</a> and <a href='https://opensenselab.org/'>openSenseLab gGmbh</a>",
-		"imprint": "Imprint & Data Protection",
+		"imprint": "Imprint",
+		"privacyPolicy": "Privacy Policy",
 		"ourIdeaTitle": "Our Idea",
 		"ourIdeaDesc": "With the help of Mozilla's Open Badges, we are developing an open and scalable documentation system to demonstrate acquired competencies and skills in school and extracurricular environments. <h4> The badges are contextualized and the learning achievements are documented using an e-portfolio.</h4>",
 		"ourApproachTitle": "Our Approach",
@@ -188,8 +193,38 @@
 		"myInstitutionsText": "Über deine Institutionen kannst du <span class='tw-text-purple tw-font-medium'> Badges erstellen und anschließend an deine Lernenden vergeben</span>.",
 		"myInstitutionsNoBadge": "hat noch keine Badges, die sie vergeben kann.",
 		"myInstitutionsCreateBadge": "Neuen Badge erstellen",
+		"giveMyBadges": "Award Badges",
 		"askForPlugin": "Plugin anfragen",
-		"askForPluginText": "Unser <span class='tw-font-bold tw-text-purple'>Plugin</span> bietet dir die Möglichkeit, Badges aus deiner eigenen digitalen Lehrumgebung heraus zu vergeben."
+		"askForPluginText": "Unser <span class='tw-font-bold tw-text-purple'>Plugin</span> bietet dir die Möglichkeit, Badges aus deiner eigenen digitalen Lehrumgebung heraus zu vergeben.",
+		"award": "vergeben",
+		"badgePreview": "Badge-Vorschau",
+		"certPreview": "Zertifikats-Vorschau",
+		"batchAwardText1": "Vergebe den Badge an eine lernende Person oder",
+		"batchAwardTextLink": "klicke hier, um den Badge an mehrere Lernende gleichzeitig",
+		"batchAwardText2": "zu vergeben",
+		"awardedPerson": "Name der Empfänger:in",
+		"sendEmail": "Empfänger:in mit E-Mail benachrichtigen",
+		"giveBadge": "Badge vergeben",
+		"nameWarning": "Beachte: Der Name wird als Klartext im Badge gespeichert.",
+		"multipleBadgeAwardHeadline": "Badge an mehrere Lernende gleichzeitig vergeben",
+		"uploadListText": "You can import a <span class='tw-font-bold'>list of recipients</span> who should receive the badge simultaneously. Here's how:",
+		"downloadExampleCSV": "Download our file template:",
+		"exampleCSVLink": "<a class='tw-underline tw-text-[#1400FF]' target='_blank' href='public/impressum'>Download CSV example template</a>",
+		"openInExcel": "Open it in excel",
+		"fillInList": "Delete the sample entry and fill in the two table columns with the <span class='tw-font-bold'> first and last names*</span> as well as the <span class='tw-font-bold'>email addresses</span> of your learners.",
+		"exportAsCSV": "Export the template as a CSV file.",
+		"uploadCSV": "Upload your CSV file:",
+		"nameInPdfInfo": "* Along with the badge, a corresponding PDF certificate will be sent to the recipients. It will use their first and last names.",
+		"uploadFields": "E-Mail-Adresse, Name und Evidence (optional) beinhalten",
+		"uploadFormat": "CSV- oder TXT-Format",
+		"useThis": "Benutze diese",
+		"exampleLink": "Beispiel Vorlage",
+		"createCSVorTXT": "um eine CSV oder TXT Datei zu erstellen",
+		"importList": "Liste importieren",
+		"import": "Import",
+		"csvColumns": "CSV Spalten",
+		"csvError": "Die CSV Datei enthält Zeilen länger als ihre Überschrift. Bitte behebe diesen Fehler und versuche es erneut.",
+		"pdfCertificate": "PDF-Certificate"
 	},
 	"Badge": {
 		"groupBy": "Group by",
@@ -216,7 +251,12 @@
 		"competency": "Competency",
 		"title": "Title",
 		"characters": "characters",
-		"createdOn": "Created on"
+		"createdOn": "Created on",
+		"catalogHeadline": "Alle Badges in der Übersicht",
+		"requestedOn": "Requested on",	
+        "deletePart1": "Are you sure you want to delete the badge '",
+        "deletePart2": "'?",
+        "deleteConfirm": "Delete Badge"
 	},
 	"CreateBadge": {
 		"chooseBadgeCategory": "Choose Badge-Category",
@@ -229,6 +269,7 @@
 		"enterDetails": "Enter Badge Details",
 		"criteriaInfo": "The following criteria are saved as metadata in the badge as a result of your input: ",
 		"criteriaError": "Either text or url are mandatory.",
+		"duplicateCompetencyError": "Badges may not contain duplicate competencies. Duplicate competency: ",
 		"whatIsThe": "What is the",
 		"competencyBadgeInfo": "are filled with competencies",
 		"competencyBadgeShortInfo": "contain competencies",
@@ -248,6 +289,7 @@
 		"aiAssistant": "AI-Badge-Assistant",
 		"useAiAssistant": "Use AI-Badge-Assistant",
 		"enterAiDescription": "Insert the content description of your teaching offer into the text field.",
+		"NoPersonalInformation": "Please do not enter any biographical / personal information here.",
 		"addAiCompetencies": "Add appropriate suggested competencies to your badge by clicking.",
 		"myContentDescription": "My content description",
 		"min70max1000Chars": "(At least 70 / maximum 1000 characters)",
@@ -259,6 +301,7 @@
 		"tofindFittingCompetencies": "to find fitting competencies.",
 		"toEscoSearch": "to ESCO search",
 		"enterCompetencyTitle": "Please enter a title for the competency",
+		"titleError": "Please enter a title for the skill",
 		"competencyDuration": "Duration of competency acquisition",
 		"chooseCompetencyCategory": "Choose category",
 		"competencyCategoryError": "Please choose a category for this competency.",
@@ -268,6 +311,7 @@
 		"addAlignment": "Add alignment",
 		"alignmentNameError": "Please enter a name for the alignment.",
 		"alignmentURLError": "Please enter a valid URL for the alignment",
+		"alignEducationalFramework": "link to educational standards",
 		"frame": "Frame",
 		"expiration": "Expiration",
 		"expirationInfo": "Describe the duration for which this badge is generally valid. This information can also be changed during the award process. Badges will be marked as expired after the validity period expires.",
@@ -279,7 +323,10 @@
 		"removeAlignment": "Remove Alignment",
 		"removeAlignmentInfo": "Are you sure you want to remove the alignment(s)?",
 		"irreversibleAction": "This action cannot be undone.",
-		"addAnotherCompetency": "Add another competency"
+		"addAnotherCompetency": "Add another competency",
+		"giveBadgeTitle":"Please give the badge a title",
+		"changeBadgeTitle":"Please change the title",
+		"maxValue1000":"Maximum value is 1000"
 	},
 	"Signup": {
 		"youHaveAccount": "You already have an account?",
@@ -290,10 +337,8 @@
 		"passMin8Char": "(minimum 8 characters)",
 		"repeatPassword": "Reenter Password",
 		"createAccount": "Create Account",
-		"receiveUpdatesCB": "Yes, <span class='tw-font-normal'>I would like to receive email updates about Open Educational Badges products and services, future webinars, news and events.<span>",
 		"readTerms": "Please read and agree to the Terms of Service if you want to continue.",
 		"agreeToTerms1": "I have read and agree to the <a class='tw-underline tw-text-[#1400FF]' target='_blank' href='public/impressum'>terms of service</a>. ",
-		"agreeToTerms2": "Terms of Service",
 		"registerWithUs": "Register with us",
 		"provideInfo": ", by providing the following information",
 		"signUpWith": "Sign Up With",
@@ -303,11 +348,18 @@
 		"success_verify_email_heading": "Verifiziere deine E-mail-Addresse",
 		"success_verify_email_desc": "Please check your emails and <span class='tw-text-purple'>click on “Confirm my account” in the email</span>, to activate your account.",
 		"success_verify_email_help": "If you do not receive the verification email within a few minutes, check your spam folder. If you cannot find the email there, <a class='tw-text-purple tw-not-italic' href='mailto:info@openbadges.education'>contact us</a>.",
-		"resendEmail":"Resend email",
-		"emailAlreadyConfirmed":"Your email address is already verified. You can login now.",
-		"reachedResendEmailLimit":"You have reached a limit for resending verification email. Please check your inbox for an existing message or retry after 5 minutes.",
-		"resendEmailFailed":"Failed to resend verification email. Please contact support.",
-		"newEmailSent":"A new verification email was sent to:"
+		"resendEmail": "Resend email",
+		"emailAlreadyConfirmed": "Your email address is already verified. You can login now.",
+		"reachedResendEmailLimit": "You have reached a limit for resending verification email. Please check your inbox for an existing message or retry after 5 minutes.",
+		"resendEmailFailed": "Failed to resend verification email. Please contact support.",
+		"newEmailSent": "A new verification email was sent to:",
+		"infoPersonalDataProcessing": "Information on the processing of your personal data can be found in our <a class='tw-underline tw-text-[#1400FF]' href='public/privacy'> Privacy Policy </a>",
+		"enterValidEmail":"Please enter a valid email address.",
+		"enterFirstName":"Please enter a first name",
+		"enterLastName":"Please enter a last name",
+		"registerWithBildungsraum": "Register with Mein Bildungsraum",
+		"ageConfirm": "I confirm that I am at least 16 years old when registering or that I have the consent of my legal guardian to register on the platform."
+
 	},
 	"Captcha": {
 		"error": "Verification failed. Try again later.",
@@ -320,12 +372,23 @@
 	},
 	"Login": {
 		"stayLogged": "Stay logged in",
-		"forgotPassword": "Forgot password?",
+		"forgotPassword?": "Forgot password?",
+		"forgotPassword": "Forgot password",
 		"welcome": "Welcome to",
 		"failLogin": "Login failed. Please check your email and password and try again.",
 		"attention": "Attention",
 		"loginBildungsraum": "Sign in via Mein Bildungsraum",
-		"createAccount": "Create account"
+		"createAccount": "Create account",
+		"enterYourEmail": "Enter your email address and we will help you reset your password.",
+		"resetPassword": "Reset password",
+		"enterYourEmailAddress": "Please enter your email address",
+		"enterYourNewPassword": "Please enter a new password",
+		"mustBe8Char": "Must be at least 8 characters",
+		"confirmNewPassword": "Confirm new password",
+		"enterNewPasswordConfirmation": "Please confirm your new password",
+		"passwordsNotMatch": "Passwords do not match",
+		"changePassword": "Change password",
+		"newPassword": "New password"
 	},
 	"Legend": {
 		"legendTitle": "Legend",
@@ -369,14 +432,19 @@
 	"RecBadge": {
 		"addBadge": "Add badge",
 		"fromMozilla": "Coming from Mozilla?",
-		"finisihAddBadge1": "Let's finish",
-		"finisihAddBadge2": "adding",
-		"finisihAddBadge3": "your badges.",
 		"closeNotification": "Close Notification",
 		"noBadgesYet": "You don't have any badges yet",
 		"collectShareBadges": "Collect and share digital badges from your backpack.",
 		"groupByInstitution": "Nach Institution gruppieren",
 		"institution": "Institution",
+
+		"greating": "Hello",
+		"competencies": "Competencies",
+		"studyingTime": "Studytime",
+		"hours": "Hours",
+		"newCompetencies": "New Competencies",
+		"skills": "Skills",
+		"knowledge": "Knowledge",
 
 		"addRecievedBadge": "Add a badge that you have already received.",
 		"image": "Image",
@@ -448,6 +516,7 @@
 		"more": "More",
 		"password": "Password",
 		"edit": "Edit",
+		"delete": "Delete",
 		"emailAddress": "Email Address",
 		"status": "Status",
 		"actions": "Ations",
@@ -476,7 +545,25 @@
 		"deleteApp": "Delete App Credentials?",
 		"deleteAppConfirm": "Do you really want to delete your app credentials?",
 		"authorized": "Authorized:",
-		"takeBack": "Take it back"
+		"takeBack": "Take it back",
+        "deleteAccount": "Delete account?",
+        "deleteAccountConfirm": "Are you sure you want to delete your account? This can not be undone.",
+        "deleteAccountYes": "Delete account",
+        "deleteAccountSuccess": "Successfully deleted account",
+        "deleteAccountFailure": "Failed to delete account",
+		"ResetPassword": "Reset password",
+		"EnterNewPassword": "Enter a new password.",
+		"currentPassword": "Current password",
+		"enterCurrentPassword": "Please enter current password",
+		"newPassword": "New password",
+		"enterYourNewPassword": "Please enter your new password",
+		"mustBe8Char": "Must be at least 8 characters",
+		"confirmNewPassword": "Confirm new password",
+		"enterNewPasswordConfirmation": "Please confirm your new password",
+		"PasswordsNotMatch": "Passwords do not match",
+		"dontHavePassword": "Don’t have your current password? ",
+		"clickHere": "Click here",
+		"resetByEmail": "to reset by email."
 	},
 	"Welcome": {
 		"heading": "Schön, dass du da bist!",
@@ -484,5 +571,29 @@
 		"text2": "Wenn du<span class='tw-font-medium tw-text-purple'> Badges erstellen und vergeben möchtest</span>, lege dafür deine Institution an.",
 		"collectBadgesBtn": "Badges im Rucksack sammeln",
 		"awardBadgesBtn": "Institutionen erstellen und Badges vergeben"
+	},
+	"RequestBadge": {
+		"requestBadge": "Request Badge",
+		"fillForm": "Fill in the form fields to request your badge.",
+		"requestBadgeInfo1": "Your request will then be approved by a person from ",
+		"requestBadgeInfo2": "Once that has happened, the badge will be sent to you via email.",
+		"personalDataInfo": "You can find information about the processing of your personal data in our <a class='tw-underline tw-text-[#1400FF]' href='public/privacy'> privacy policy </a>",
+		"ageConfirmation": "I confirm that I am 16 years old or older. If I am younger than 16: My parents or guardians are aware that I am providing my personal data to use the Open Educational Badges platform. I confirm that they agree with this."
+
+	},
+	"IssueQr": {
+		"list1": "You fill in the details for the QR code issuance on this page and click on <span class='tw-italic'>Generate QR Code</span>. You will be redirected to the generated QR code and can download it or take a screenshot.",
+		"list2": "You show your learners the QR code – either digitally or printed.",
+		"list3": "Your learners scan the QR code with their smartphones and are directed to an input form where they enter their first name, last name, and email address. They then submit the form as a badge request.",
+		"list4": "You can see your learners' badge requests on the ",
+		"list4.2": "on OEB and can directly issue the badges. They will be sent to the learners via email."
+
+	},
+	"QrCode": {
+		"savedSuccessfully": "<span class='tw-font-bold'> The QR code assignment was successfully saved on the badge detail page.</span>",
+		"downloadedSuccessfully": "<span class='tw-font-bold'>You have successfully downloaded the QR-Code.</span><br> Check your download folder."
+	},
+	"OEBComponents":{
+		"fieldIsRequired": "This field is required"
 	}
 }

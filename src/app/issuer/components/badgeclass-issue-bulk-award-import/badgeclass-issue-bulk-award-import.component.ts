@@ -17,7 +17,6 @@ import {
 	templateUrl: './badgeclass-issue-bulk-award-import.component.html',
 })
 export class BadgeClassIssueBulkAwardImportComponent extends BaseAuthenticatedRoutableComponent {
-	readonly badgrBulkIssueTemplateUrl = require('file-loader!assets/badgrBulkIssueTemplate.csv');
 	readonly csvUploadIconUrl = '../../../../breakdown/static/images/csvuploadicon.svg';
 
 	@Output() importPreviewDataEmitter = new EventEmitter<BulkIssueImportPreviewData>();
@@ -66,7 +65,7 @@ export class BadgeClassIssueBulkAwardImportComponent extends BaseAuthenticatedRo
 	//////// Parsing ////////
 	parseCsv(rawCSV: string) {
 		const parseRow = (rawRow: string) => {
-			rows.push(rawRow.split(',').map((r) => r.trim()));
+			rows.push(rawRow.split(/[,;]/).map((r) => r.trim()));
 		};
 
 		const padRowWithMissingCells = (row: string[]) =>
@@ -80,9 +79,14 @@ export class BadgeClassIssueBulkAwardImportComponent extends BaseAuthenticatedRo
 				const tempColumnHeaderName: string = columnHeaderName.toLowerCase();
 				let destinationColumn: DestSelectOptions;
 
-				if (tempColumnHeaderName === 'email') {
+				if (tempColumnHeaderName === 'email' || tempColumnHeaderName === 'e-mail-adresse') {
 					inferredColumnHeaders.add('email');
 					destinationColumn = 'email';
+				}
+
+				if (tempColumnHeaderName === 'name' || tempColumnHeaderName === 'vor- / nachname') {
+					inferredColumnHeaders.add('name');
+					destinationColumn = 'name';
 				}
 
 				if (tempColumnHeaderName.includes('evidence')) {
@@ -108,16 +112,17 @@ export class BadgeClassIssueBulkAwardImportComponent extends BaseAuthenticatedRo
 		const columnHeaders: ColumnHeaders[] = generateColumnHeaders();
 		this.columnHeadersCount = columnHeaders.length;
 
-		rows.forEach((row) => {
+        for (let row of rows) {
+            // Only "evidence" is allowed to be empty
 			// Valid if all the cells in a row are not empty.
-			const rowIsValid: boolean = row.every((cell) => cell.length > 0);
+			const rowIsValid: boolean = row.every((cell, i) => cell.length > 0 || columnHeaders[i].destColumn == 'evidence');
 
 			if (row.length < this.columnHeadersCount) {
 				invalidRows.push(padRowWithMissingCells(row));
 			} else {
 				rowIsValid ? validRows.push(row) : invalidRows.push(row);
 			}
-		});
+		}
 
 		this.importPreviewData = {
 			columnHeaders,

@@ -43,6 +43,7 @@ export class BadgeclassIssueBulkAwardError extends BaseAuthenticatedRoutableComp
 				formArray.push(
 					this.formBuilder.group({
 						evidence: [row.evidence, Validators.compose([UrlValidator.validUrl])],
+                        name: [row.name, Validators.required],
 						email: [row.email, Validators.compose([Validators.required, EmailValidator.validEmail])],
 					}),
 				);
@@ -62,6 +63,7 @@ export class BadgeclassIssueBulkAwardError extends BaseAuthenticatedRoutableComp
 			this.importErrorForm.value['users'].forEach((row) => {
 				this.transformedImportData.validRowsTransformed.add({
 					evidence: row['evidence'] ? row['evidence'].trim() : null,
+					name: row['name'] ? row['name'].trim() : null,
 					email: row['email'] ? row['email'].trim() : null,
 				});
 			});
