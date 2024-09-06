@@ -14,9 +14,7 @@ import { UserProfileEmail } from '../../../common/model/user-profile.model';
 import { FormFieldSelectOption } from '../../../common/components/formfield-select';
 import { AppConfigService } from '../../../common/app-config.service';
 import { typedFormGroup } from '../../../common/util/typed-forms';
-import { CaptchaService } from '../../../common/services/captcha.service';
 import { TranslateService } from '@ngx-translate/core';
-import 'altcha';
 
 import { QueryParametersService } from '../../../common/services/query-parameters.service';
 
@@ -44,13 +42,11 @@ export class IssuerCreateComponent extends BaseAuthenticatedRoutableComponent im
 		.addControl('issuer_streetnumber', '')
 		.addControl('issuer_zip', '')
 		.addControl('issuer_city', '')
-		.addControl('captcha', '');
 
 	emails: UserProfileEmail[];
 	emailsOptions: FormFieldSelectOption[];
 	addIssuerFinished: Promise<unknown>;
 	emailsLoaded: Promise<unknown>;
-	verified = false;
 
 	issuerRequiredError = this.translate.instant('Issuer.enterName');
 
@@ -65,7 +61,6 @@ export class IssuerCreateComponent extends BaseAuthenticatedRoutableComponent im
 		protected formBuilder: FormBuilder,
 		protected title: Title,
 		protected messageService: MessageService,
-		protected captchaService: CaptchaService,
 		protected translate: TranslateService,
 		protected issuerManager: IssuerManager,
 	) {
@@ -97,12 +92,6 @@ export class IssuerCreateComponent extends BaseAuthenticatedRoutableComponent im
 	}
 
 	
-	ngAfterViewInit(): void {
-		this.captchaService.setupCaptcha('#altcha', (verified) => {
-			this.verified = verified;
-		});
-	}
-	
 	refreshProfile = () => {
 		// Load the profile
 		this.profileManager.userProfileSet.ensureLoaded();
@@ -115,14 +104,8 @@ export class IssuerCreateComponent extends BaseAuthenticatedRoutableComponent im
 			return;
 		}
 		
-		if(!this.verified){
-			this.messageService.setMessage(this.translate.instant('Captcha.pleaseVerify'), 'error');
-			return;
-		}
-		
 		const formState = this.issuerForm.value;
 
-		const altcha = <HTMLInputElement>document.getElementsByName('altcha')[0];
 
 		const issuer: ApiIssuerForCreation = {
 			name: formState.issuer_name,
@@ -134,7 +117,6 @@ export class IssuerCreateComponent extends BaseAuthenticatedRoutableComponent im
 			streetnumber: formState.issuer_streetnumber,
 			zip: formState.issuer_zip,
 			city: formState.issuer_city,
-			captcha: altcha.value,
 		};
 
 		if (formState.issuer_image && String(formState.issuer_image).length > 0) {
