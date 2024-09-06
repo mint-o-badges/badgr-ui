@@ -111,6 +111,10 @@ export class OebIssuerDetailComponent implements OnInit {
 		this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'issue'])
 	}
 
+	routeToQRCodeAward(badge, issuer){
+		this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'qr'])
+	}
+
 	routeToBadgeDetail(badge, issuer){
 		this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug])
 	}
