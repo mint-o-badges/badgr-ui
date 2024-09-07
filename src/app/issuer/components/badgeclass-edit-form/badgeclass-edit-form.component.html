@@ -388,9 +388,11 @@
 							</oeb-input>
 
 							<oeb-input 
-								label="Esco-Identifier (optional)"
+								*ngIf="competency.rawControlMap.escoID.value"
+								label="Framework-Identifier"
 								[control]="competency.rawControlMap.escoID"
-								placeholder="z.B. esco/skill/00090cc1-1f27-439e-a4e0-19a87a501bfc"
+								[readonly]="true"
+								placeholder="z.B. http://data.europa.eu/esco/skill/7de3b70e-2568-420a-8528-69523d323e7a"
 							>
 							</oeb-input>
 
