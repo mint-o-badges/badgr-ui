@@ -139,7 +139,7 @@
     "postcss": "^8.4.31",
     "protractor": "~7.0.0",
     "remap-istanbul": "0.13.0",
-    "rimraf": "^5.0.5",
+    "rimraf": "^6.0.1",
     "sass": "^1.49.9",
     "sc5-styleguide": "2.2.0",
     "shelljs": "^0.8.5",

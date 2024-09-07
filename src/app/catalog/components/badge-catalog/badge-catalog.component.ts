@@ -112,7 +112,7 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 					this.badgeResults = this.badges;
 					badges.forEach((badge) => {
 						this.tags = this.tags.concat(badge.tags);
-						this.issuers = this.tags.concat(badge.issuer);
+						this.issuers = this.issuers.concat(badge.issuer);
 					});
 					this.tags = sortUnique(this.tags);
 					this.issuers = sortUnique(this.issuers);

@@ -55,7 +55,8 @@
 		"hideDetails": "Details verstecken",
 		"password": "Passwort",
 		"loading": "Laden...",
-        "warning": "Warnung"
+        "warning": "Warnung",
+		"page": "Seite"
 	},
 	"NavItems": {
 		"register": "Registrieren",
@@ -64,7 +65,7 @@
 		"myInstitutions": "Meine Institutionen",
 		"appIntegrations": "App Integrationen",
 		"openMenu": "Menü öffnen",
-		"logout": "Logout",
+		"logout": "Ausloggen",
 		"myProfile": "Mein Profil"
 	},
 	"Start": {
@@ -322,7 +323,10 @@
 		"removeAlignment": "Verknpüfung entfernen",
 		"removeAlignmentInfo": "Bist du sicher, dass du die Verknpüfung(en) entfernen möchtest? ",
 		"irreversibleAction": "Diese Aktion kann nicht rückgängig gemacht werden.",
-		"addAnotherCompetency": "Weitere Kompetenz hinzufügen"
+		"addAnotherCompetency": "Weitere Kompetenz hinzufügen",
+		"giveBadgeTitle":"Bitte gib dem Badge einen Titel",
+		"changeBadgeTitle":"Bitte ändere den Titel",
+		"maxValue1000":"Maximalwert ist 1000"
 	},
 	"Signup": {
 		"youHaveAccount": "Du hast bereits einen Account?",
@@ -587,14 +591,18 @@
 		"successMessage2": "Sobald deine Anfrage bestätigt wurde, bekommst du den Badge per E-Mail zugesendet."
 	},
 	"IssueQr": {
-		"list1": "Du füllst die Details für die QR-Code-Vergabe auf dieser Seite aus und klickst auf QR-Code generieren. Du wirst zum so generierten QR-Code weitergeleitet und kannst ihn herunterladen oder einen Screenshot machen.",
+		"list1": "Du füllst die Details für die QR-Code-Vergabe auf dieser Seite aus und klickst auf <span class='tw-italic'>QR-Code generieren</span>. Du wirst zum so generierten QR-Code weitergeleitet und kannst ihn herunterladen oder einen Screenshot machen.",
 		"list2": "Du zeigst deinen Lernenden den QR-Code – digital oder ausgedruckt.",
 		"list3": "Deine Lernenden scannen den QR-Code mit ihrem Smartphone und gelangen zu einer Eingabe-Maske, in der sie Vor- und Nachnamen sowie E-Mail-Adresse eingeben. Anschließend senden sie das Formular als Badge-Anfrage ab.",
-		"list4": "Du siehst die Badge-Anfragen deiner Lernenden auf der <a class='tw-underline tw-text-[#1400FF]' hlmA href='issuer/issuers/' Badge-Detail-Seite </a> bei OEB und kannst die Badges direkt vergeben. Sie werden den Lernenden per E-Mail zugestellt."
+		"list4": "Du siehst die Badge-Anfragen deiner Lernenden auf der ",
+		"list4.2": "bei OEB und kannst die Badges direkt vergeben. Sie werden den Lernenden per E-Mail zugestellt."		
 
 	},
 	"QrCode": {
 		"savedSuccessfully": "<span class='tw-font-bold'> Die QR-Code-Vergabe wurde erfolgreich auf der Badge-Detail-Seite gespeichert.</span>",
 		"downloadedSuccessfully": "<span class='tw-font-bold'>Du hast den QR-Code erfolgreich heruntergeladen.</span><br> Schaue in deinem Download-Ordner nach."
+	},
+	"OEBComponents":{
+		"fieldIsRequired": "Dieses Feld ist erforderlich"
 	}
 }
