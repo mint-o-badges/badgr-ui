@@ -3,11 +3,11 @@
         <div class="tw-flex tw-justify-between tw-w-full">
             <div class="tw-flex tw-items-center tw-gap-4 tw-w-full">
                 <div class="tw-relative md:tw-flex tw-flex-shrink-0 tw-z-10 tw-hidden">
-                    <img src="assets/oeb/images/learningPath/badge.png"
-                        alt="{{ issuer.name }} Badge" class="tw-w-[150px] md:tw-w-[200px]" />
+                    <img [src]="learningPath.participationBadge_image"
+                         alt="{{ issuer.name }} Badge" class="tw-w-[150px] md:tw-w-[200px]" />
                 </div>
                 <div class="tw-w-full">
-                    <div class="tw-flex tw-flex-row tw-justify-between tw-w-full tw-flex-wrap md:tw-flex-nowrap">
+                    <div class="tw-flex tw-flex-row tw-justify-between tw-w-full tw-flex-wrap md:tw-flex-nowrap tw-gap-4">
                         <div class="tw-flex tw-flex-col tw-justify-center">
                             <h2 hlmH2
                                 class="!tw-text-oebblack tw-font-extrabold tw-uppercase">
@@ -26,6 +26,7 @@
                             [text]="'Lernpfad löschen'"
                             variant="secondary" 
                             width="full_width"
+                            (click)="deleteLearningPath(learningPath.slug, issuer)"
                             [disabled-when-requesting]="true"></oeb-button>
                     </div>
                     
@@ -44,31 +45,49 @@
             </div>
         </div>
     </div>
-    <div class="oeb-section-sm tw-relative tw-inline-block tw-border-b-4 tw-border-purple tw-border-solid">
-        <div class="tw-relative tw-pb-8 md:tw-hidden tw-z-10">
-            <img src="assets/oeb/images/learningPath/badge.png"
-                alt="{{ issuer.name }} Badge" class="tw-w-[150px] md:tw-w-[200px]" />
-        </div>
-        <div class="tw-absolute tw-border-l-8 tw-border-lightpurple tw-border-solid tw-left-[70px] md:tw-left-[96px] tw-top-[50px] md:tw-top-[-100px] tw-bottom-[20px]"></div>
-        <div class="tw-pl-[120px] md:tw-pl-[145px]">
-            <h3 hlmH3 class="tw-uppercase tw-font-bold tw-text-purple tw-pb-4">Badges des Lernpfades</h3>
-            <div class="tw-flex tw-flex-col tw-gap-4" [@stagger]>
-                <div class="tw-relative" *ngFor="let badge of learningPath.badges.reverse(); let i = index" [@inOutAnimation]="state">
-                    <div class="tw-absolute tw-left-[-71px] md:tw-left-[-72px] tw-top-[50%] tw-translate-y-[-50%]">
-                        <div class="tw-flex tw-items-center">
-                            <!-- <img *ngIf="badge.extension['extensions:CategoryExtension'].Category === 'competency'" src="assets/oeb/images/learningPath/competency_icon.png"> -->
-                            <!-- <img class="tw-relative tw-left-[2px]" *ngIf="badge.extension['extensions:CategoryExtension'].Category === 'participation'" src="assets/oeb/images/learningPath/participation_icon.png"> -->
-                            <img src="assets/oeb/images/learningPath/participation_icon.png"> 
-                            <div class="tw-absolute tw-text-[22px] tw-font-bold tw-text-white tw-top-[50%] tw-translate-y-[-50%] tw-left-[50%] tw-translate-x-[-50%]">{{learningPath.badges.length - i}}</div>
+    <div class="tw-block lg:tw-flex tw-gap-10">
+        <div class="oeb-section-sm tw-relative tw-inline-block tw-border-b-4 tw-border-purple tw-border-solid">
+            <div class="tw-relative tw-pb-8 md:tw-hidden tw-z-10">
+                <img [src]="learningPath.participationBadge_image"
+                    alt="{{ issuer.name }} Badge" class="tw-w-[150px] md:tw-w-[200px]" />
+            </div>
+            <div class="tw-absolute tw-border-l-8 tw-border-lightpurple tw-border-solid tw-left-[70px] md:tw-left-[96px] tw-top-[50px] md:tw-top-[-100px] tw-bottom-[20px]"></div>
+            <div class="tw-pl-[120px] md:tw-pl-[145px]">
+                <h3 hlmH3 class="tw-uppercase tw-font-bold tw-text-purple tw-pb-4">Badges des Lernpfads</h3>
+                <div class="tw-flex tw-flex-col tw-gap-4" [@stagger]>
+                    <div class="tw-relative" *ngFor="let badge of learningPath.badges.reverse(); let i = index" [@inOutAnimation]="state">
+                        <div class="tw-absolute tw-left-[-71px] md:tw-left-[-72px] tw-top-[50%] tw-translate-y-[-50%]">
+                            <div class="tw-flex tw-items-center">
+                                <!-- <img *ngIf="badge.extension['extensions:CategoryExtension'].Category === 'competency'" src="assets/oeb/images/learningPath/competency_icon.png"> -->
+                                <!-- <img class="tw-relative tw-left-[2px]" *ngIf="badge.extension['extensions:CategoryExtension'].Category === 'participation'" src="assets/oeb/images/learningPath/participation_icon.png"> -->
+                                <img src="assets/oeb/images/learningPath/participation_icon.png"> 
+                                <div class="tw-absolute tw-text-[22px] tw-font-bold tw-text-white tw-top-[50%] tw-translate-y-[-50%] tw-left-[50%] tw-translate-x-[-50%]">{{learningPath.badges.length - i}}</div>
+                            </div>
                         </div>
+                        <bg-badgecard [badgeTitle]="badge.badge.name"
+                            class="tw-max-w-[300px]"
+                            [badgeImage]="badge.badge.image" 
+                            [badgeDescription]="badge.badge.description"
+                            [badgeSlug]="badge.badge.slug"
+                            [issuerTitle]="badge?.badge.issuerName ? badge.badge.issuerName : issuer.name"
+                            [badgeIssueDate]="badge.badge.createdAt"
+                            public="true"
+                            [publicUrl]="badge.badge.url"
+                            [badgeClass]="true"></bg-badgecard>
                     </div>
-                    <bg-badgecard [badgeTitle]="badge.name"
-                        class="tw-max-w-[280px]"
-                        [badgeImage]="badge.image" [badgeDescription]="badge.description"
-                        [badgeSlug]="badge.slug"
-                        [issuerTitle]="learningPath.badge?.issuerName ? learningPath.badge.issuerName : issuer.name"
-                        [badgeIssueDate]="badge.createdAt" public="true" [publicUrl]="badge.url"
-                        [badgeClass]="true"></bg-badgecard>
+                </div>
+            </div>
+        </div>
+        <div class="tw-flex-grow lg:tw-pt-0 tw-pt-6">
+            <div class="tw-bg-oebgrey tw-rounded-[10px] tw-py-6 tw-px-4">
+                <h3 hlmH3 class="tw-font-bold tw-uppercase tw-text-oebblack tw-text-center">Lernpfad-Nutzende</h3>
+                <div class="oeb-section-sm">
+                    <h3 hlmH3 class="tw-font-medium tw-text-oebblack"> {{(participants | dynamicFilter: filterFunction).length}} Lernpfad-Empfänger:innen</h3>
+                    <learningpath-graduates-datatable [participants]="participants | dynamicFilter: filterFunction"></learningpath-graduates-datatable>
+                </div>
+                <div class="oeb-section-sm">
+                    <h3 hlmH3 class="tw-font-medium tw-text-oebblack">   {{(participants | dynamicFilter: filterFunctionOngoing).length}} Aktuell Lernende</h3>
+                    <learningpath-participants-datatable [participants]="participants | dynamicFilter: filterFunctionOngoing" [number_badges]="learningPath.badges.length"></learningpath-participants-datatable>
                 </div>
             </div>
         </div>

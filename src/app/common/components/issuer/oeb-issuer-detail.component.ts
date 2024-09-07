@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output, EventEmitter, ElementRef, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, ElementRef, ViewChild, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { MessageService } from '../../../common/services/message.service';
 import { Title } from '@angular/platform-browser';
@@ -12,6 +12,8 @@ import { MenuItem } from '../badge-detail/badge-detail.component.types';
 import { TranslateService } from '@ngx-translate/core';
 import { ApiLearningPath } from '../../../common/model/learningpath-api.model';
 import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
+import { DangerDialogComponentTemplate } from '../../dialogs/oeb-dialogs/danger-dialog-template.component';
+import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
 
 @Component({
 	selector: 'oeb-issuer-detail',
@@ -40,6 +42,7 @@ export class OebIssuerDetailComponent implements OnInit {
 	) {
         
 	};
+    private readonly _hlmDialogService = inject(HlmDialogService);
 
 	menuItemsPublic: MenuItem[] = [
 		{
@@ -143,7 +146,19 @@ export class OebIssuerDetailComponent implements OnInit {
 		this.router.navigate(['/issuer/issuers/', issuer.slug, 'learningpaths', learningPathSlug])
 	}
 
-	deleteLearningPath(learningPathSlug, issuer){
+	public deleteLearningPath(learningPathSlug, issuer) {
+		const dialogRef = this._hlmDialogService.open(DangerDialogComponentTemplate, {
+			context: {
+				delete: () => this.deleteLearningPathApi(learningPathSlug, issuer),
+				// qrCodeRequested: () => {},
+				variant: "danger",
+				text: "Möchtest du diesen Lernpfad wirklich löschen?",
+				title: "Lernpfad löschen"
+			},
+		});
+	}
+
+	deleteLearningPathApi(learningPathSlug, issuer){
 		this.learningPathApiService.deleteLearningPath(issuer.slug, learningPathSlug).then(
 			() => this.learningPaths = this.learningPaths.filter(value => value.slug != learningPathSlug)
 		);

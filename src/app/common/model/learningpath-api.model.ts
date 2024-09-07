@@ -10,7 +10,7 @@ export interface ApiLearningPath {
     name: string;
     description: string;
     tags: string[];
-    badges: Array<{ id: string; order: number }>;
+    badges: Array<{ badge: any; order: number }>;
 }
 
 export interface ApiLearningPathParticipant {

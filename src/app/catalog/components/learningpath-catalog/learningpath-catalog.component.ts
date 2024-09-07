@@ -176,7 +176,7 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 					console.log(this.baseUrl + lps[0].participationBadge_image)
 				},
 				(error) => {
-					this.messageService.reportAndThrowError('Failed to load badges', error);
+					this.messageService.reportAndThrowError('Failed to load learningPaths', error);
 				},
         )})
     }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterContentInit, AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SessionService } from '../../../common/services/session.service';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
@@ -39,6 +39,8 @@ export class IssuerLearningPathComponent extends BaseAuthenticatedRoutableCompon
 
 	issuerLoaded: Promise<unknown>;
 	learningPathLoaded: Promise<unknown>;
+	participantsLoaded: Promise<unknown>;
+	participants: any[];
 
 	profileEmailsLoaded: Promise<unknown>;
 	crumbs: LinkEntry[];
@@ -78,9 +80,7 @@ export class IssuerLearningPathComponent extends BaseAuthenticatedRoutableCompon
 			title: 'Mitglieder bearbeiten',
 			routerLink: ['./staff'],
 			icon: 'lucideUsers',
-		}
-		
-	]
+		}]
 
 		this.issuerLoaded = this.issuerManager.issuerBySlug(this.issuerSlug).then(
 			(issuer) => {
@@ -88,16 +88,16 @@ export class IssuerLearningPathComponent extends BaseAuthenticatedRoutableCompon
 				this.title.setTitle(
 					`Issuer - ${this.issuer.name} - ${this.configService.theme['serviceName'] || 'Badgr'}`,
 				);
-				this.crumbs = [
-					{ title: 'Meine Institutionen', routerLink: ['/issuer/issuers'] },
-					{ title: this.issuer.name, routerLink: ['/issuer/issuers/' + this.issuer.slug] },
-					{ title: "Lernpfad" },
-				];
-
+				
 				this.learningPathLoaded = new Promise<void>((resolve, reject) => {
 					this.learningPathApiService.getLearningPath(this.learningPathSlug).then(
 						(result) => {
 							this.learningPath = result;
+							this.crumbs = [
+								{ title: 'Meine Institutionen', routerLink: ['/issuer/issuers'] },
+								{ title: this.issuer.name, routerLink: ['/issuer/issuers/' + this.issuer.slug] },
+								{ title: this.learningPath.name },
+							];
 							resolve();
 						},
 						(error) => {
@@ -109,6 +109,14 @@ export class IssuerLearningPathComponent extends BaseAuthenticatedRoutableCompon
 						},
 					);
 				});
+				this.participantsLoaded = new Promise<void>((resolve, reject) => {
+					this.learningPathApiService.getLearningPathParticipants(this.learningPathSlug).then(
+						(result) => {
+							this.participants = result.body;
+							resolve()
+						}
+					)
+				})
 			},
 			(error) => {
 				this.messageService.reportLoadingError(
