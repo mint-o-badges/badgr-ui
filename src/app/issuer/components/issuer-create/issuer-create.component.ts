@@ -31,7 +31,7 @@ export class IssuerCreateComponent extends BaseAuthenticatedRoutableComponent im
 
 	issuerForm = typedFormGroup()
 		.addControl('issuer_name', '', [Validators.required, Validators.maxLength(90)])
-		.addControl('issuer_description', '', [Validators.required, Validators.maxLength(1024)])
+		.addControl('issuer_description', '', [Validators.required, Validators.minLength(200), Validators.maxLength(300)])
 		.addControl('issuer_email', '', [
 			Validators.required,
 			/*Validators.maxLength(75),

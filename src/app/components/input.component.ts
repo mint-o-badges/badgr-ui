@@ -183,10 +183,14 @@ export const defaultValidatorMessages: {
 	validUrl: () => `Bitte gültige URL eingeben.`,
 	invalidTelephone: () => `Bitte gültige Telefonnummer eingeben`,
 	invalidEmail: () => `Bitte gültige E-Mail Adresse eingeben`,
-	maxlength: (label: string, { actualLength, requiredLength }: { actualLength: number; requiredLength: number }) =>
+	maxlength: (label: string , { actualLength, requiredLength }: { actualLength: number; requiredLength: number }) =>
 		actualLength && requiredLength
 			? `${label} überschreitet maximale Länge von ${requiredLength} um ${actualLength - requiredLength} Zeichen`
-			: `${label} überschreitet maximale Länge.`
+			: `${label} überschreitet maximale Länge.`,
+	minlength: (label: string , { actualLength, requiredLength }: { actualLength: number; requiredLength: number }) =>
+	actualLength && requiredLength
+		? `${label} unterschreitet erforderliche Länge von ${requiredLength} um ${requiredLength - actualLength} Zeichen`
+		: `${label} unterschreitet erforderliche Länge.`
 };
 
 export function messagesForValidationError(

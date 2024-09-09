@@ -4,7 +4,9 @@
 
 		<div class="oeb-headline-container-sm">
 			<h1 hlmH1 class="tw-text-purple">{{ 'Issuer.createInstitution' | translate }}</h1>
-			<p hlmP class="tw-font-normal">{{ 'Issuer.awardBadeges' | translate }}</p>
+			<p hlmP class="tw-font-normal">{{ 'Issuer.awardBadges' | translate }}</p>
+			<p hlmP class="tw-font-normal">{{ 'Issuer.institutionWillAward' | translate }}</p>
+
 		</div>
 
 		<form (ngSubmit)="onSubmit()" class="oeb-max-form-width tw-mt-6" novalidate>
@@ -17,11 +19,12 @@
 			></bg-formfield-image>
 
 			<oeb-input
-				label="{{ 'General.name' | translate }}"
+				label="{{ 'General.name' | translate }} der Institution"
 				[control]="issuerForm.rawControlMap.issuer_name"
 				[fieldType]="'text'"
 				[autofocus]="true"
 				[errorMessage]="{ required: issuerRequiredError }"
+				placeholder="(max 90 Zeichen)"
 				#issuer_name_field
 			></oeb-input>
 
@@ -36,7 +39,7 @@
 
 			<oeb-select
 				[control]="issuerForm.rawControlMap.issuer_email"
-				label="{{ 'General.contact' | translate }} E-Mail"
+				label="{{ 'General.contact' | translate }}-E-Mail"
 				placeholder="{{ 'Issuer.enterValidEmail' | translate }}"
 				[options]="emailsOptions"
 				errorMessage="{{ 'Issuer.enterValidEmail' | translate }}"
@@ -47,7 +50,8 @@
 				label="{{ 'General.description' | translate }}"
 				[control]="issuerForm.rawControlMap.issuer_description"
 				[fieldType]="'textarea'"
-				errorMessage="{{ 'Issuer.enterDescription' | translate }}"
+				[errorMessage]="{ required: 'Issuer.enterDescription' | translate }"
+				placeholder="(mind. 200 / max. 300 Zeichen)"
 				#issuer_description_field
 			></oeb-input>
 
