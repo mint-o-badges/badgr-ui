@@ -12,6 +12,7 @@ import { LearningPath } from '../../../issuer/models/learningpath.model';
 import { Issuer } from '../../../issuer/models/issuer.model';
 import { StringMatchingUtil } from '../../../common/util/string-matching-util';
 import { IssuerManager } from '../../../issuer/services/issuer-manager.service';
+import { sortUnique } from '../badge-catalog/badge-catalog.component';
 
 @Component({
 	selector: 'app-learningpaths-catalog',
@@ -115,9 +116,8 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 		const learningPathResultsByIssuerLocal = {};
 
 		var addLearningPathToResultsByIssuer = function (item) {
-			// console.log(item)
+			console.log(item);
 			let issuerResults = learningPathResultsByIssuerLocal[item.issuer_name];
-			console.log(issuerResults)
 
 			if (!issuerResults) {
 				issuerResults = learningPathResultsByIssuerLocal[item.issuer_name] = new MatchingLearningPathIssuer(
@@ -127,13 +127,14 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 
 				// append result to the issuerResults array bound to the view template.
 				that.learningPathResultsByIssuer.push(issuerResults);
-				console.log(issuerResults)
 			}
 
 			issuerResults.addLp(item);
 
 			return true;
 		};
+		this.learningPaths.filter(MatchingAlgorithm.learningPathMatcher(that.searchQuery)).forEach(addLearningPathToResultsByIssuer);
+
 		this.learningPaths
 			.filter(this.learningPathMatcher(this.searchQuery))
 			.filter(this.learningPathTagMatcher(this.selectedTag))
@@ -165,21 +166,38 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 		});
 	}
 
+	filterByTag(tag) {
+		this.selectedTag = this.selectedTag == tag ? null : tag;
+		this.updateResults();
+	}
+
     async loadLearningPaths() { 
         return new Promise(async (resolve, reject) => {
             this.learningPathService.allPublicLearningPaths$.subscribe(
 				(lps) => {
 					this.learningPaths = lps
+					lps.forEach((lp) => {
+						lp.tags.forEach((tag) => {
+							this.tags.push(tag);
+						})
+					});
+					this.tags = sortUnique(this.tags);
 					resolve(lps);
-					console.log(lps)
-					//@ts-ignore
-					console.log(this.baseUrl + lps[0].participationBadge_image)
 				},
 				(error) => {
 					this.messageService.reportAndThrowError('Failed to load learningPaths', error);
 				},
         )})
     }
+}
+
+class MatchingAlgorithm {
+	static learningPathMatcher(inputPattern: string): (lp) => boolean {
+		const patternStr = StringMatchingUtil.normalizeString(inputPattern);
+		const patternExp = StringMatchingUtil.tryRegExp(patternStr);
+
+		return (lp) => StringMatchingUtil.stringMatches(lp.name, patternStr, patternExp);
+	}
 }
 
 class MatchingLearningPathIssuer {
@@ -191,7 +209,7 @@ class MatchingLearningPathIssuer {
 	}
 
 	async addLp(learningpath) {
-		if (learningpath.issuerName === this.issuerName) {
+		if (learningpath.issuer_name === this.issuerName) {
 			if (this.learningpaths.indexOf(learningpath) < 0) {
 				this.learningpaths.push(learningpath);
 			}

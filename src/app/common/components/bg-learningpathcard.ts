@@ -6,6 +6,9 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 		class: 'tw-rounded-[10px] tw-max-w-[218px] tw-bg-white tw-border-purple tw-border-solid tw-border tw-relative tw-p-3 tw-block tw-overflow-hidden oeb-badge-card',
 	},
 	template: `
+		<a
+					class="tw-font-bold"
+					[href]="publicUrl">
 		<div class="tw-flex tw-items-center tw-h-full">
         	<div class="tw-p-2">
 				<div class="tw-bg-[var(--color-lightgray)] tw-relative tw-h-[109px] tw-items-center tw-flex tw-justify-center tw-p-2 tw-rounded-[3px]">
@@ -32,6 +35,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 					
 			</div>
 		</div>
+		</a>
 	`,
 })
 export class BgLearningPathCard {
