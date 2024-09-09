@@ -140,10 +140,7 @@ export class OebInputComponent {
 
 	ngAfterViewInit() {
 		if (this.autofocus) {
-			// delay focus to prevent unwanted scrolling
-			setTimeout(() => {
-				this.focus();
-			}, 100);
+			this.focus();
 		}
 	}
 
