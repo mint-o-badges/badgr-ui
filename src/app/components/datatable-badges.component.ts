@@ -34,17 +34,15 @@ import { HlmPDirective } from '../components/spartan/ui-typography-helm/src/lib/
                 <hlm-th class="!tw-text-white tw-justify-end sm:tw-w-48 tw-w-0 !tw-p-0"></hlm-th>
             </hlm-trow>
             <hlm-trow *ngFor="let badge of badges" class="tw-border-purple tw-flex-wrap tw-py-2">
-                <hlm-th class="tw-w-28 md:tw-w-48 tw-cursor-pointer tw-flex-col tw-items-baseline tw-gap-1 md:tw-gap-2 md:tw-items-center md:tw-flex-row" (click)="redirectToBadgeDetail.emit(badge.badge)">
+                <hlm-th class="tw-w-28 md:tw-w-48 tw-cursor-pointer tw-flex-col tw-items-baseline tw-gap-1" (click)="redirectToBadgeDetail.emit(badge.badge)">
                     <img
                         class="l-flex-x-shrink0 badgeimage badgeimage-small"
                         src="{{ badge.badge.image }}"
                         alt="{{ badge.badge.description }}"
                         width="40"
                     />
-                    <div class="md:tw-grid md:tw-grid-cols-[150px] tw-my-1 md:tw-my-0">
-                      <div class="tw-line-clamp-1 md:tw-line-clamp-2 tw-break-all  tw-max-w-36 md:tw-max-w-none tw-absolute md:tw-relative">
-                        <span class="tw-text-oebblack tw-cursor-pointer" (click)="redirectToBadgeDetail.emit(badge.badge)">{{badge.badge.name}}</span>
-                      </div>  
+                    <div class="tw-my-1 tw-text-nowrap">
+                        <span class="tw-text-oebblack tw-cursor-pointer tw-overflow-hidden" (click)="redirectToBadgeDetail.emit(badge.badge)">{{badge.badge.name}}</span>
                     </div>    
                 </hlm-th>
                 <hlm-th class="!tw-flex-1 tw-justify-center !tw-text-oebblack tw-w-24 sm:tw-w-28 md:tw-w-48 sm:tw-px-3 tw-px-4"><p hlmP class="tw-font-normal sm:!tw-text-[16px]">{{badge.badge.createdAt | date:"dd.MM.yyyy"}}</p></hlm-th>
