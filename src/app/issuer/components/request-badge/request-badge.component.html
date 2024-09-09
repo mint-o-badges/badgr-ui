@@ -35,6 +35,15 @@
                     <oeb-input label="Nachname" [placeholder]=""
                             fieldType="text" [control]="requestForm.rawControlMap.lastname"
                             ></oeb-input>
+                    <p
+                        hlmP 
+                        size="sm"
+                        id="nameValidationError"
+                        [hidden]="!requestForm.hasError('maxLengthExceeded')"
+                        class="tw-font-normal tw-text-red tw-text-start tw-w-full tw-mt-2"
+                    >
+                        {{ 'RequestBadge.nameValidationError' | translate }}
+                    </p>        
                     <oeb-input 
 						label="E-Mail" 
 						[placeholder]=""

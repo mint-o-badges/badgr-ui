@@ -588,7 +588,8 @@
 		"personalDataInfo": "Informationen zur Verarbeitung deiner personenbezogenen Daten findest du in unserer <a class='tw-underline tw-text-[#1400FF]' href='public/privacy'> Datenschutzerklärung</a>.",
 		"ageConfirmation": "Ich bestätige, dass ich <b>16 Jahre oder älter bin. Wenn ich jünger als 16 Jahre bin:</b> Meine Eltern oder meine Erziehungsberechtigten wissen, dass ich meine persönlichen Daten für die Nutzung der Plattform Open Educational Badges angebe. Ich bestätige, dass sie damit einverstanden sind.",
 		"successMessage": "<span class='tw-font-bold'>Du hast den Badge erfolgreich angefordert.</span><br>",
-		"successMessage2": "Sobald deine Anfrage bestätigt wurde, bekommst du den Badge per E-Mail zugesendet."
+		"successMessage2": "Sobald deine Anfrage bestätigt wurde, bekommst du den Badge per E-Mail zugesendet.",
+		"nameValidationError": "Vor- und Nachname dürfen zusammen nicht mehr als 35 Zeichen ergeben."
 	},
 	"IssueQr": {
 		"list1": "Du füllst die Details für die QR-Code-Vergabe auf dieser Seite aus und klickst auf <span class='tw-italic'>QR-Code generieren</span>. Du wirst zum so generierten QR-Code weitergeleitet und kannst ihn herunterladen oder einen Screenshot machen.",

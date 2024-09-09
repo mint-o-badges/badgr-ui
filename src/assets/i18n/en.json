@@ -578,8 +578,8 @@
 		"requestBadgeInfo1": "Your request will then be approved by a person from ",
 		"requestBadgeInfo2": "Once that has happened, the badge will be sent to you via email.",
 		"personalDataInfo": "You can find information about the processing of your personal data in our <a class='tw-underline tw-text-[#1400FF]' href='public/privacy'> privacy policy </a>",
-		"ageConfirmation": "I confirm that I am 16 years old or older. If I am younger than 16: My parents or guardians are aware that I am providing my personal data to use the Open Educational Badges platform. I confirm that they agree with this."
-
+		"ageConfirmation": "I confirm that I am 16 years old or older. If I am younger than 16: My parents or guardians are aware that I am providing my personal data to use the Open Educational Badges platform. I confirm that they agree with this.",
+		"nameValidationError": "First name and last name together must not exceed 35 characters."
 	},
 	"IssueQr": {
 		"list1": "You fill in the details for the QR code issuance on this page and click on <span class='tw-italic'>Generate QR Code</span>. You will be redirected to the generated QR code and can download it or take a screenshot.",
