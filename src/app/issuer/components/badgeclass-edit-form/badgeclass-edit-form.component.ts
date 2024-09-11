@@ -426,6 +426,8 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		// update badge frame when a category is selected, unless no-hexagon-frame checkbox is checked
 		this.badgeClassForm.rawControl.controls['badge_category'].statusChanges.subscribe((res) => {
 			this.handleBadgeCategoryChange();
+			// To change badge-frame
+			this.changeBadgeFrame();
 		});
 
 		this.fetchTags();
@@ -462,6 +464,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		const badgeCategoryControl = this.badgeClassForm.rawControl.controls['badge_category'];
 		const currentBadgeCategory = badgeCategoryControl.value;
 
+		// First part of below if-condition is to handle selecting category for first time
 		if (this.badgeCategory === 'competency' && currentBadgeCategory !== 'competency') {
 			if (await this.confirmCategoryChange()) {
 				this.clearCompetencies();
@@ -474,6 +477,20 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			this.badgeClassForm.controls.competencies.addFromTemplate();
 		}
 		this.badgeCategory = currentBadgeCategory;
+	}
+
+	changeBadgeFrame() {
+		if (this.imageField?.control.value) {
+			setTimeout(() => {
+				this.adjustUploadImage(this.badgeClassForm.value);
+			}, 10);
+		} else if (this.customImageField?.control.value) {
+			if (!this.existing) {
+				setTimeout(() => {
+					this.customImageField.useDataUrl(this.customImageField.control.value, 'BADGE');
+				}, 10);
+			}
+		}
 	}
 
 	/**
@@ -967,6 +984,14 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
         this.currentImage = image.slice();
         // do not use frame for custom images
         this.customImageField.useDataUrl(this.currentImage, 'BADGE');
+	}
+
+	adjustUploadImage(formdata) {
+		if (this.currentImage && this.badgeStudio) {
+			this.badgeStudio
+				.generateUploadImage(this.currentImage.slice(), formdata)
+				.then((imageUrl) => this.imageField.useDataUrl(imageUrl, 'BADGE'));
+		}
 	}
 
 	allowedFileFormats = ['image/png', 'image/svg+xml'];
