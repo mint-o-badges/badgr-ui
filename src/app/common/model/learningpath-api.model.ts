@@ -1,6 +1,10 @@
 import { ApiEntityRef } from "./entity-ref";
 import { ApiUserProfile } from "./user-profile-api.model";
 
+export type LearningPathUrl = string;
+
+export interface LearningPathRef extends ApiEntityRef {}
+
 export interface ApiLearningPath {
     id?: number;
     slug?: string;

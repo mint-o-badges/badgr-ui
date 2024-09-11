@@ -17,7 +17,8 @@ import {
   lucideLogOut,
   lucideQrCode,
   lucideCloudUpload,
-  lucideRoute
+  lucideRoute,
+  lucideClock,
 
 } from '@ng-icons/lucide';
 
@@ -41,7 +42,7 @@ import {
       lucideQrCode,
       lucideCloudUpload,
       lucideRoute,
-      
+      lucideClock
     }),
   ],
 })

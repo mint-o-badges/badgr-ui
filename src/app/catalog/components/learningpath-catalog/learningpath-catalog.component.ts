@@ -116,7 +116,6 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 		const learningPathResultsByIssuerLocal = {};
 
 		var addLearningPathToResultsByIssuer = function (item) {
-			console.log(item);
 			let issuerResults = learningPathResultsByIssuerLocal[item.issuer_name];
 
 			if (!issuerResults) {
@@ -142,7 +141,7 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 				that.learningPathResults.push(item);
 				addLearningPathToResultsByIssuer(item);
 			});
-
+		console.log(that.learningPathResults)	
 		this.changeOrder(this.order);
 	}
 
