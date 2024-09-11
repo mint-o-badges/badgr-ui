@@ -233,10 +233,12 @@ export class BadgeStudioComponent implements OnInit, OnChanges {
 							'data:image/svg+xml;charset=utf-8,' +
 							encodeURIComponent(new XMLSerializer().serializeToString(svgRoot));
 						// const svgDataUrl2 = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(new XMLSerializer().serializeToString(svgRoot2));
-						const svgImage = new Image();
-						const svgImage2 = new Image();
+						let svgImage = new Image();
+						let svgImage2 = new Image();
 						svgImage.onload = () => {
 							this.context2d.drawImage(svgImage, 0, 0, this.canvas.width, this.canvas.height);
+						}
+						svgImage2.onload = () => {
 							this.context2d.drawImage(
 								svgImage2,
 								this.canvas.width / 4,
