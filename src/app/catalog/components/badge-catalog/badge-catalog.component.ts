@@ -252,6 +252,8 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 			});
 
 		this.changeOrder(this.order);
+		console.log(this.badgeResultsByIssuer)
+		console.log(this.badgeResults)
 	}
 
 	openLegend() {
