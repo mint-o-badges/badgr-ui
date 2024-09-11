@@ -86,7 +86,9 @@
 		*ngIf="!public"
 		[caption]=""
 		[badges]="badgeResults"
-		(actionElement)="routeToBadgeAward($event, issuer)"
+		(directBadgeAward)="routeToBadgeAward($event, issuer)"
+		(qrCodeAward)="routeToQRCodeAward($event, issuer)"
+
 		(redirectToBadgeDetail)="routeToBadgeDetail($event, issuer)"></badges-datatable>
 
 	<ng-container *ngIf="public">
