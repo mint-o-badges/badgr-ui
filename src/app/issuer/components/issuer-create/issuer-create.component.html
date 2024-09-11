@@ -47,8 +47,7 @@
 				label="{{ 'General.description' | translate }}"
 				[control]="issuerForm.rawControlMap.issuer_description"
 				[fieldType]="'textarea'"
-				errorMessage="{{ 'Issuer.enterDescription' | translate }}"
-				#issuer_description_field
+				[errorMessage]="{ required: enterDescription }"
 			></oeb-input>
 
 			<oeb-select
