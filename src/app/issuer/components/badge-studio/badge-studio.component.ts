@@ -280,8 +280,17 @@ export class BadgeStudioComponent implements OnInit, OnChanges {
 							this.dataUrl = this.canvas.toDataURL();
 							resolve(this.dataUrl);
 						};
+
 						svgImage.src = svgDataUrl;
-						svgImage2.src = this.imageToShow;
+
+						// To resolve the issue of missing frame, we need to make sure that frame-image is aleady loaded before drawing badge-image
+						if(svgImage.complete){
+							svgImage2.src = this.imageToShow;
+						} else {
+							setTimeout(() => {
+								svgImage2.src = this.imageToShow;
+							}, 800); // To Do: reduce time when frame-images (competency.svg and participation.svg) size is reduced (less than ≈ 30 KB) 
+						}
 					});
 				}),
 		);
