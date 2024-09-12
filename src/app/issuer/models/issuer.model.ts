@@ -188,6 +188,10 @@ export class IssuerStaffMember extends ManagedEntity<ApiIssuerStaff, IssuerStaff
 		return this.roleSlug === 'editor';
 	}
 
+	get isStaff(): boolean {
+		return this.roleSlug === 'staff';
+	}
+
     /**
      * Evaluates if the user has the permission to make edits,
      * specifically to create badges. This is the case if the user
@@ -196,7 +200,7 @@ export class IssuerStaffMember extends ManagedEntity<ApiIssuerStaff, IssuerStaff
      * @returns {boolean}
      */
     get canEdit(): boolean {
-        return this.isOwner || this.isEditor;
+        return this.isOwner || this.isEditor || this.isStaff;
     }
 
 	/**
