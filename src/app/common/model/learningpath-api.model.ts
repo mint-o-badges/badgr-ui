@@ -11,6 +11,7 @@ export interface ApiLearningPath {
     issuer_id: string;
     issuer_name: string;
     participationBadge_id: string;
+    participationBadge_image?: string; 
     name: string;
     description: string;
     tags: string[];

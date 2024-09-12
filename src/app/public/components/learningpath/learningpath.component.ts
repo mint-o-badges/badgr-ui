@@ -15,6 +15,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Issuer } from '../../../issuer/models/issuer.model';
 import { IssuerApiService } from '../../../issuer/services/issuer-api.service';
 import { IssuerManager } from '../../../issuer/services/issuer-manager.service';
+import type { Tab } from '../../../components/oeb-backpack-tabs.component';
 
 @Component({
 	templateUrl: './learningpath.component.html',
@@ -30,11 +31,15 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 	participationButtonText: string = "Teilnehmen"; 
 	issuerLoaded: Promise<unknown>;
 	badgeLoaded: Promise<unknown>;
-	loaded;
+	loaded: LoadedRouteParam<void>;
 	issuer: PublicApiIssuer;
 	badge: any;
-	tabs:any = undefined;
+	tabs:Tab[] = undefined;
 	activeTab = 'Alle'
+
+	totalBadgeCount : number;
+	openBadgeCount: number; 
+	finishedBadgeCount: number;
 
 	@ViewChild('allTemplate', { static: true }) allTemplate: ElementRef;
 	@ViewChild('openTemplate', { static: true }) openTemplate: ElementRef;
@@ -82,12 +87,10 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 				this.learningPath = res;
 				this.issuerLoaded = this.publicService.getIssuer(res.issuer_id).then(
 					(issuer) => {
-						console.log(issuer)
 						this.issuer = issuer;
 					});
 				this.badgeLoaded = this.publicService.getBadgeClass(res.participationBadge_id).then(
 					(badge) => {
-						console.log(badge)
 						this.badge = badge;
 						return badge;
 					}
@@ -104,14 +107,17 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 		this.tabs = [
 			{
 				title: 'Alle',
+				count: this.totalBadgeCount,
 				component: this.allTemplate,
 			},
 			{
 				title: 'Offen',
+				count: this.openBadgeCount,
 				component: this.openTemplate,
 			},
 			{
 				title: 'Abgeschlossen',
+				count: this.finishedBadgeCount,
 				component: this.finishedTemplate,
 			},
 		];

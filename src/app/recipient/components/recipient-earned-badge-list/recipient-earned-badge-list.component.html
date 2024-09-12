@@ -79,7 +79,8 @@
 											[issuerTitle]="badgeResult.badge.badgeClass.issuer.name"
 											[issuerSlug]="badgeResult.badge.badgeClass.issuer.slug"
 											[badgeSlug]="badgeResult.badge.slug"
-											(shareClicked)="shareBadge(badgeResult.badge)"></bg-badgecard>
+											(shareClicked)="shareBadge(badgeResult.badge)"
+											[competencies]="badgeResult.badge.getExtension('extensions:CompetencyExtension', [{}])"></bg-badgecard>
 									</div>
 								</ng-template>
 								<!-- ------------------ GROUP BY ISSUER ------------------  -->
@@ -214,12 +215,11 @@
 							
 						</div>
 						
-						<div class="tw-grid tw-grid-cols-badges tw-gap-16" *ngIf="!groupByIssuer">
-							<div *ngFor="let lp of learningPathResults">
-								<a [href]="'http://localhost:4200/public/learningpaths/' + lp.slug">{{lp.name}}</a>
-							</div>
+						<div class="tw-grid tw-grid-cols-learningpaths tw-gap-16" *ngIf="!groupByIssuer">
+							<bg-learningpathcard *ngFor="let lp of learningPathResults"
+									[badgeImage]="lp.participationBadge_image" [name]="lp.name" [issuerTitle]="lp.issuer_name" [description]="lp.description" [tags]="lp.tags" [slug]="lp.slug"></bg-learningpathcard>
 						</div>
-						<div class="tw-grid tw-grid-cols-badges tw-gap-16" *ngIf="groupByIssuer">
+						<div class="tw-grid tw-grid-cols-learningpaths tw-gap-16" *ngIf="groupByIssuer">
 							<div *ngFor="let learningPathResult of issuerLearningPathResults | keyvalue">
 								<h3 class="u-text-h3-semibold u-margin-bottom2x u-margin-top6x u-text-dark1">
 									{{ learningPathResult.value.issuerId}}
@@ -228,9 +228,8 @@
 										{{ learningPathResult.value.learningPaths.length == 1 ? 'Lernpfad' : 'Lernpfade' }}</span>
 								</h3>
 
-								<div *ngFor="let lp of learningPathResult.value.learningPaths">
-									<a [href]="'http://localhost:4200/public/learningpaths/' + lp.slug">{{lp.name}}</a>
-								</div>
+									<bg-learningpathcard *ngFor="let lp of learningPathResults"
+									[badgeImage]="baseUrl + lp.participationBadge_image" [name]="lp.name" [issuerTitle]="lp.issuer_name" [description]="lp.description" [tags]="lp.tags" [slug]="lp.slug"></bg-learningpathcard>
 							</div>
 						</div>
 						

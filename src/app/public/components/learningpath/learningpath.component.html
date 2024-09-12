@@ -34,6 +34,10 @@
 					
 				</div>
 				<div *bgAwaitPromises="[issuerLoaded]">
+					<div class="tw-w-full">
+						<oeb-progress [value]="20" class="tw-block tw-bg-black"></oeb-progress>
+					</div>
+
 					<oeb-issuerCard [issuer]="issuer"></oeb-issuerCard>
 				</div>
 			</div>
@@ -43,13 +47,12 @@
 					<oeb-backpack-tabs (onTabChanged)="onTabChange($event)" [tabs]="tabs"></oeb-backpack-tabs>
 					<ng-template #allTemplate [bgAwaitPromises]="learningPath">
 						<div class="tw-relative" *ngFor="let badge of learningPath.badges.reverse(); let i = index">
-							{{badge.badge_name}}
-							<bg-badgecard [badgeTitle]="badge.badge_name"
-								class="tw-max-w-[300px]"
-								
-								[issuerTitle]="badge.badge_id"
-								public="true"
-								[badgeClass]="true"></bg-badgecard>
+							<bg-badgecard [badgeTitle]="badge.badge.name"
+							[badgeImage]="badge.badge.image" [badgeDescription]="badge.badge.description"
+							[badgeSlug]="badge.badge.slug"
+							[issuerTitle]="badge.badge.issuerName ? badge.badge.issuerName : badge.badge.issuer.name"
+							[badgeIssueDate]="badge.badge.createdAt" public="true" [publicUrl]="badge.badge.url"
+							[badgeClass]="true" [competencies]="badge.badge['extensions:CompetencyExtension']"></bg-badgecard>
 						</div>
 					</ng-template>
 					<ng-template #openTemplate><div>all</div></ng-template>

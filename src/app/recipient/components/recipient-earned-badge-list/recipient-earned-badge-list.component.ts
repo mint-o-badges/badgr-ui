@@ -341,6 +341,7 @@ export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutable
 				// appending the results to the badgeResults array bound to the view template.
 				this.learningPathResults.push(learningPath);
 			}
+			console.log(this.learningPathResults);
 			return true;
 		};
 

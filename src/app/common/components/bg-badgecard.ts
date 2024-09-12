@@ -79,7 +79,7 @@ import { Component, EventEmitter, HostBinding, Input, Output } from '@angular/co
 				<div class="tw-float-right tw-relative tw-ml-auto tw-mr-6 tw-min-h-20">
 					<oeb-checkbox *ngIf="checkboxControl" class="tw-absolute tw-top-0" [(ngModel)]="checked" [control]="checkboxControl">
 					</oeb-checkbox>
-					<div *ngIf="competencies.length > 0" class="tw-absolute tw-bottom-0 tw-cursor-pointer" (click)="toggleCompetencies()">
+					<div *ngIf="competencies && competencies.length > 0" class="tw-absolute tw-bottom-0 tw-cursor-pointer" (click)="toggleCompetencies()">
 						<hlm-icon [name]=" showCompetencies ? 'lucideChevronUp' : 'lucideChevronDown'" />
 					</div>
 				</div>	

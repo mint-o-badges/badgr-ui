@@ -1,17 +1,28 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { HlmTabsModule, HlmTabsTriggerDirective } from './spartan/ui-tabs-helm/src';
-import { JsonPipe, NgFor, NgTemplateOutlet } from '@angular/common';
+import { JsonPipe, NgIf, NgFor, NgTemplateOutlet } from '@angular/common';
 
 export const bg = 'tw-block tw-absolute tw-z-0 tw-opacity-80';
+
+export type Tab = {
+		title: string;
+		count?: number; 
+		component: any;
+}
 
 @Component({
 	selector: 'oeb-backpack-tabs',
 	standalone: true,
-	imports: [HlmTabsModule, HlmTabsTriggerDirective, NgFor, JsonPipe, NgTemplateOutlet],
+	imports: [HlmTabsModule, HlmTabsTriggerDirective, NgIf, NgFor, JsonPipe, NgTemplateOutlet],
 	template: `<hlm-tabs class="tw-block tw-w-full" tab="Badges" (tabActivated)="onTabChange($event)">
 		<hlm-tabs-list class="tw-w-full tw-max-w-[580px] tw-grid tw-grid-cols-3" aria-label="tabs example">
 			<ng-container *ngFor="let tab of tabs">
-				<button [hlmTabsTrigger]="tab.title">{{ tab.title }}</button>
+				<button [hlmTabsTrigger]="tab.title">{{ tab.title }} 
+				<div *ngIf="tab.count"
+				 class="tw-w-7 tw-h-7 tw-flex tw-items-center tw-justify-center tw-ml-2 tw-p-1 tw-rounded-full tw-bg-purple tw-text-white tw-text-sm">
+				 	{{tab.count}}
+					</div>
+				</button>
 			</ng-container>
 		</hlm-tabs-list>
 		<div *ngFor="let tab of tabs" [hlmTabsContent]="tab.title">
@@ -22,7 +33,8 @@ export const bg = 'tw-block tw-absolute tw-z-0 tw-opacity-80';
 export class OebTabsComponent {
 	@Input() image: string;
 	@Input() imgClass: string;
-	@Input() tabs: any;
+	@Input() tabs: Tab[];
+	@Input() activeTab?: string;
 	@Output() onTabChanged = new EventEmitter();
     
 	onTabChange(tab) {

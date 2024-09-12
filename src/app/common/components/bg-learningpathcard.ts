@@ -53,7 +53,4 @@ export class BgLearningPathCard {
 	@Output() shareClicked = new EventEmitter<MouseEvent>();
 	constructor() {
 	}
-	ngOnInit() {
-		console.log(this.slug)
-	}
 }
