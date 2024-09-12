@@ -55,7 +55,8 @@
 		"hideDetails": "Details verstecken",
 		"password": "Passwort",
 		"loading": "Laden...",
-        "warning": "Warnung"
+        "warning": "Warnung",
+		"page": "Seite"
 	},
 	"NavItems": {
 		"register": "Registrieren",
@@ -156,10 +157,10 @@
 		"viewOriginal": "Original ansehen",
 		"awardBadeges": "Erstelle eine Institution um Badges zu vergeben.",
 		"imageOptional": "Bild (Optional)",
-		"enterName": "Bitte gebe einen Namen an",
-		"enterURL": "Bitte gebe eine gültige URL an",
-		"enterValidEmail": "Bitte gebe eine gültige E-Mail Adresse an",
-		"enterDescription": "Bitte gebe eine Beschreibung an",
+		"enterName": "Bitte gib einen Namen an",
+		"enterURL": "Bitte gib eine gültige URL an",
+		"enterValidEmail": "Bitte gib eine gültige E-Mail Adresse an",
+		"enterDescription": "Bitte gib eine Beschreibung an",
 		"enterCategory": "Bitte gib eine Kategorie an",
 		"enterStreet": "Bitte gib eine Strasse an",
 		"enterHouseNo": "Bitte gib eine Hausnummer an",
@@ -276,7 +277,7 @@
 		"participationBadgeShortInfo": "bestätigen Teilnahme",
 		"short": "Kurz",
 		"forLearners": "für Lernende",
-		"summarizedDescription": "Zusammenfassende Beschreibung deiner Veranstaltung / deines Lernangebots. ",
+		"summarizedDescription": "Zusammenfassende Beschreibung deiner Veranstaltung / deines Lernangebots ",
 		"descriptionSavedInBadge": "Diese Kurzbeschreibung wird im Badge gespeichert.",
 		"imageRequiredError": "Bitte nutze eine der Optionen um ein Bild für den Badge auszuwählen",
 		"useOurEditor": "Unseren Editor nutzen",
@@ -514,10 +515,10 @@
 		"share": "Teilen",
 		"orginzeBadges": "Organisiere deine Badges in Sammlungen.",
 		"collectionName": "Name der Sammlungen",
-		"enterCollectioName": "Bitte gebe einen Namen der Sammlung ein",
+		"enterCollectioName": "Bitte gib einen Namen der Sammlung ein",
 		"remainingChar": "verbleibende Zeichen",
 		"description": "Beschreibung",
-		"provideDescription": "Bitte gebe eine Beschreibung an"
+		"provideDescription": "Bitte gib eine Beschreibung an"
 	},
 	"Profile": {
 		"more": "Mehr",
@@ -587,13 +588,15 @@
 		"personalDataInfo": "Informationen zur Verarbeitung deiner personenbezogenen Daten findest du in unserer <a class='tw-underline tw-text-[#1400FF]' href='public/privacy'> Datenschutzerklärung</a>.",
 		"ageConfirmation": "Ich bestätige, dass ich <b>16 Jahre oder älter bin. Wenn ich jünger als 16 Jahre bin:</b> Meine Eltern oder meine Erziehungsberechtigten wissen, dass ich meine persönlichen Daten für die Nutzung der Plattform Open Educational Badges angebe. Ich bestätige, dass sie damit einverstanden sind.",
 		"successMessage": "<span class='tw-font-bold'>Du hast den Badge erfolgreich angefordert.</span><br>",
-		"successMessage2": "Sobald deine Anfrage bestätigt wurde, bekommst du den Badge per E-Mail zugesendet."
+		"successMessage2": "Sobald deine Anfrage bestätigt wurde, bekommst du den Badge per E-Mail zugesendet.",
+		"nameValidationError": "Vor- und Nachname dürfen zusammen nicht mehr als 35 Zeichen ergeben."
 	},
 	"IssueQr": {
-		"list1": "Du füllst die Details für die QR-Code-Vergabe auf dieser Seite aus und klickst auf QR-Code generieren. Du wirst zum so generierten QR-Code weitergeleitet und kannst ihn herunterladen oder einen Screenshot machen.",
+		"list1": "Du füllst die Details für die QR-Code-Vergabe auf dieser Seite aus und klickst auf <span class='tw-italic'>QR-Code generieren</span>. Du wirst zum so generierten QR-Code weitergeleitet und kannst ihn herunterladen oder einen Screenshot machen.",
 		"list2": "Du zeigst deinen Lernenden den QR-Code – digital oder ausgedruckt.",
 		"list3": "Deine Lernenden scannen den QR-Code mit ihrem Smartphone und gelangen zu einer Eingabe-Maske, in der sie Vor- und Nachnamen sowie E-Mail-Adresse eingeben. Anschließend senden sie das Formular als Badge-Anfrage ab.",
-		"list4": "Du siehst die Badge-Anfragen deiner Lernenden auf der <a class='tw-underline tw-text-[#1400FF]' hlmA href='issuer/issuers/' Badge-Detail-Seite </a> bei OEB und kannst die Badges direkt vergeben. Sie werden den Lernenden per E-Mail zugestellt."
+		"list4": "Du siehst die Badge-Anfragen deiner Lernenden auf der ",
+		"list4.2": "bei OEB und kannst die Badges direkt vergeben. Sie werden den Lernenden per E-Mail zugestellt."		
 
 	},
 	"QrCode": {

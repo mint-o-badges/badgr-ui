@@ -33,10 +33,14 @@
                             <span>{{badgeClass.name}}</span>
                         </div>                
                     </div>
-                    <span class="tw-font-bold">Organisation</span>
-                    <span>{{issuer}}</span>
-                    <span class="tw-font-bold">Kampagnen-Ersteller:in</span>
-                    <span>{{creator}}</span>
+                    <div class="tw-flex tw-flex-col">
+                        <span class="tw-font-bold">Organisation</span>
+                        <span>{{issuer}}</span>
+                    </div>
+                    <div class="tw-flex tw-flex-col">
+                        <span class="tw-font-bold">Kampagnen-Ersteller:in</span>
+                        <span>{{creator}}</span>
+                    </div>
                     <div class="tw-flex tw-flex-col" *ngIf="validity">
                         <span class="tw-font-bold">Gültigkeit des QR-Codes</span>
                         <span>{{validity}}</span>

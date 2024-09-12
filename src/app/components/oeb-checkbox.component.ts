@@ -105,4 +105,5 @@ export class OebCheckboxComponent implements ControlValueAccessor {
 			return this.controlErrorState;
 		}
 	}
+
 }
