@@ -61,12 +61,15 @@ export class ExportPdfDialog extends BaseDialog {
 	}
 
 	async openDialog(badge: RecipientBadgeInstance, markdown: HTMLElement): Promise<void> {
-		this.badge = badge;
-		this.showModal();
-
-		this.pdfService.getPdf(badge.slug).subscribe((url) => {
+		this.pdfService.getPdf(badge.slug).then((url) => {
 			this.pdfSrc = url;
-		});
+			// set-time-out to fix the issue with viewing pdf from first time with safari
+			setTimeout( ()=> {
+				// Put below code within getpdf promise to avoid showing previous pdf with chrome and firefox 
+				this.badge = badge;
+				this.showModal();
+			}, 10);
+		})
 	}
 
 	async openDialogForCollections(collection: RecipientBadgeCollection): Promise<void> {
