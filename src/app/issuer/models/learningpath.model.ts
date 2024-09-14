@@ -29,12 +29,24 @@ export class LearningPath extends ManagedEntity<ApiLearningPath, LearningPathRef
 		this.apiModel.tags = tags;
 	}
 
+	get badges(): Array<{ badge: any; order: number }> {
+		return this.apiModel.badges;
+	}
+
 	get issuer_id() {
 		return this.apiModel.issuer_id;
 	}
 
 	get issuer_name(){
 		return this.apiModel.issuer_name;
+	}
+
+	get progress(): number | null {
+		return this.apiModel.progress;
+	}
+
+	get completed_at(): Date | null {
+		return this.apiModel.completed_at;
 	}
 
 	constructor(

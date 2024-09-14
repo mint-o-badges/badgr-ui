@@ -19,7 +19,8 @@ import {
   lucideCloudUpload,
   lucideRoute,
   lucideClock,
-  lucideChevronUp
+  lucideChevronUp,
+  lucideCheck
 
 } from '@ng-icons/lucide';
 
@@ -44,7 +45,8 @@ import {
       lucideCloudUpload,
       lucideRoute,
       lucideClock,
-      lucideChevronUp
+      lucideChevronUp,
+      lucideCheck
     }),
   ],
 })

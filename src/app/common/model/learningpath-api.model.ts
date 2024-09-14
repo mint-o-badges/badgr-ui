@@ -16,7 +16,10 @@ export interface ApiLearningPath {
     description: string;
     tags: string[];
     badges: Array<{ badge: any; order: number }>;
+    progress?: number | null;
+    completed_at?: Date | null;
 }
+
 
 export interface ApiLearningPathParticipant {
     id?: number; 

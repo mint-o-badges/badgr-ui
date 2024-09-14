@@ -34,8 +34,15 @@
 					
 				</div>
 				<div *bgAwaitPromises="[issuerLoaded]">
-					<div class="tw-w-full">
-						<oeb-progress [value]="20" class="tw-block tw-bg-black"></oeb-progress>
+					<ng-template #progessTemplate>
+						<div class="tw-absolute tw-flex tw-flex-col tw-w-full tw-text-right tw-right-4">
+							<span class="tw-font-extrabold tw-text-purple tw-text-[64px] tw-leading-[64px]">67%</span>
+							<span class="tw-mt-2 tw-text-base tw-text-oebblack">161/200 h</span>
+						  </div>
+					</ng-template>
+
+					<div class="tw-w-full tw-flex tw-justify-center tw-items-center">
+						<oeb-progress class="tw-w-full tw-h-32 tw-relative tw-inline-flex tw-overflow-hidden tw-rounded-3xl tw-bg-[var(--color-grayinteractive)] tw-items-center" [value]="67" [template]="progessTemplate"></oeb-progress>
 					</div>
 
 					<oeb-issuerCard [issuer]="issuer"></oeb-issuerCard>
@@ -47,12 +54,16 @@
 					<oeb-backpack-tabs (onTabChanged)="onTabChange($event)" [tabs]="tabs"></oeb-backpack-tabs>
 					<ng-template #allTemplate [bgAwaitPromises]="learningPath">
 						<div class="tw-relative" *ngFor="let badge of learningPath.badges.reverse(); let i = index">
-							<bg-badgecard [badgeTitle]="badge.badge.name"
-							[badgeImage]="badge.badge.image" [badgeDescription]="badge.badge.description"
-							[badgeSlug]="badge.badge.slug"
-							[issuerTitle]="badge.badge.issuerName ? badge.badge.issuerName : badge.badge.issuer.name"
-							[badgeIssueDate]="badge.badge.createdAt" public="true" [publicUrl]="badge.badge.url"
-							[badgeClass]="true" [competencies]="badge.badge['extensions:CompetencyExtension']"></bg-badgecard>
+							<bg-badgecard class="tw-max-w-[300px]"
+								[badgeImage]="badge.image"
+								[badgeDescription]="badge.description"
+								[badgeSlug]="badge.slug"
+								[badgeIssueDate]="badge.createdAt" public="true" [publicUrl]="badge.url"
+								[badgeClass]="true" 
+								
+								[issuerTitle]="badge.badge_id"
+								public="true"
+								[badgeClass]="true"></bg-badgecard>
 						</div>
 					</ng-template>
 					<ng-template #openTemplate><div>all</div></ng-template>

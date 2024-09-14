@@ -7,12 +7,16 @@ import { AppConfigService } from '../../../common/app-config.service';
 import { BaseRoutableComponent } from '../../../common/pages/base-routable.component';
 import { BadgeClassCategory } from '../../../issuer/models/badgeclass-api.model';
 import { TranslateService } from '@ngx-translate/core';
+import { SessionService } from '../../../common/services/session.service';
 import { LearningPathManager } from '../../../issuer/services/learningpath-manager.service';
 import { LearningPath } from '../../../issuer/models/learningpath.model';
 import { Issuer } from '../../../issuer/models/issuer.model';
 import { StringMatchingUtil } from '../../../common/util/string-matching-util';
 import { IssuerManager } from '../../../issuer/services/issuer-manager.service';
 import { sortUnique } from '../badge-catalog/badge-catalog.component';
+import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
+import { RecipientBadgeApiService } from '../../../recipient/services/recipient-badges-api.service';
+import { ApiRecipientBadgeInstance } from '../../../recipient/models/recipient-badge-api.model';
 
 @Component({
 	selector: 'app-learningpaths-catalog',
@@ -22,6 +26,7 @@ import { sortUnique } from '../badge-catalog/badge-catalog.component';
 export class LearningPathsCatalogComponent extends BaseRoutableComponent implements OnInit {
 	learningPathsLoaded: Promise<unknown>;
 	issuersLoaded: Promise<unknown>;
+	userBadgesLoaded: Promise<unknown>;
 
 	order = 'asc';
 
@@ -40,6 +45,9 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 	issuers: Issuer[] = null;
 
 	selectedTag: string = null;
+	loggedIn = false;
+
+	userBadges: string[] = [];
 
 	get theme() {
 		return this.configService.theme;
@@ -72,6 +80,9 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 		protected configService: AppConfigService,
 		protected learningPathService: LearningPathManager,
 		protected issuerManager: IssuerManager,
+		protected sessionService: SessionService,
+		protected profileManager: UserProfileManager,
+		protected recipientBadgeApiService: RecipientBadgeApiService,
 		router: Router,
 		route: ActivatedRoute,
 		private translate: TranslateService,
@@ -81,6 +92,17 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 		this.issuersLoaded = this.loadIssuers();
 		this.baseUrl = this.configService.apiConfig.baseUrl;
     }
+
+	ngOnInit(): void {
+		this.loggedIn = this.sessionService.isLoggedIn;
+
+		if(this.loggedIn){
+			this.userBadgesLoaded = this.recipientBadgeApiService.listRecipientBadges().then((badges) => {
+				const badgeClassIds = badges.map((b) => b.json.badge.id);
+				this.userBadges = badgeClassIds;
+			})				
+		}
+	}
 
 	private learningPathMatcher(inputPattern: string): (lp) => boolean {
 		const patternStr = StringMatchingUtil.normalizeString(inputPattern);
@@ -106,6 +128,30 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 				.sort((a, b) => b.issuerName.localeCompare(a.issuerName))
 				.forEach((r) => r.learningpaths.sort((a, b) => b.name.localeCompare(a.name)));
 		}
+	}
+
+	calculateMatch(lp: LearningPath): number {
+		const lpBadges = lp.badges;
+		const badgeClassIds = lpBadges.map((b) => b.badge.json.id);
+		const totalBadges = lpBadges.length;
+		const userBadgeCount = badgeClassIds.filter((b) => this.userBadges.includes(b)).length;
+		const match = userBadgeCount / totalBadges;
+		return match * 100;
+	}
+
+	calculateLearningPathStatus(lp: LearningPath): { 'match' : number} | { 'progress' : number} {
+		if(lp.progress){
+			const percentCompleted = (lp.progress / lp.badges.length) * 100;
+			return {'progress' : percentCompleted }
+		}
+		else{
+			return {'match' : this.calculateMatch(lp)}
+		}
+	}
+
+	calculateStudyLoad(lp: LearningPath): number {
+		const totalStudyLoad = lp.badges.reduce((acc, b) => acc + b.badge.extensions['extensions:StudyLoadExtension'].StudyLoad, 0);
+		return totalStudyLoad;
 	}
 
 	private updateResults() {
@@ -181,6 +227,7 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 						})
 					});
 					this.tags = sortUnique(this.tags);
+					this.updateResults();
 					resolve(lps);
 				},
 				(error) => {
