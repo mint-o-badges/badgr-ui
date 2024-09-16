@@ -66,6 +66,6 @@ export class LearningPathApiService extends BaseHttpApiService {
 	}
 
 	requestLearningPath(lpId: string){
-		return this.post(`/request-learningpath/${lpId}/`, null);
+		return this.post(`/request-learningpath/${lpId}`, null);
 	}
 }

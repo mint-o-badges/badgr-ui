@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, HostBinding, Output } from '@angular/core';
+import { LearningPathApiService } from '../services/learningpath-api.service';
 
 type MatchOrProgressType = { match: number } | { progress: number };
 
@@ -60,7 +61,7 @@ type MatchOrProgressType = { match: number } | { progress: number };
 								<span class="tw-ml-2 md:tw-text-sm tw-text-[8px] tw-text-purple">Lernpfad <span *ngIf="!completed">{{progress.toFixed(0)}}%</span> abgeschlossen</span>
 							</div>
 						</ng-template>	
-						<oeb-button *ngIf="isProgress && progress === 100 && !this.completed" [text]="'Lernpfad abholen'" width="full_width">
+						<oeb-button *ngIf="isProgress && progress === 100 && !this.completed" (click)="requestLearningPath()" [text]="'Lernpfad abholen'" width="full_width">
 							
 						</oeb-button>
 					</div>
@@ -78,6 +79,8 @@ export class BgLearningPathCard {
 	readonly badgeLoadingImageUrl = '../../../breakdown/static/images/badge-loading.svg';
 	readonly badgeFailedImageUrl = '../../../breakdown/static/images/badge-failed.svg';
 	private _matchOrProgress: MatchOrProgressType;
+
+	constructor(private learningPathApiService: LearningPathApiService) {}
 
 	@Input() slug: string;
 	@Input() issuerSlug: string;
@@ -129,4 +132,7 @@ export class BgLearningPathCard {
 		return this.isProgress ? (this._matchOrProgress as { progress: number }).progress : undefined;
 	  }
 	
+	  requestLearningPath() {
+		this.learningPathApiService.requestLearningPath(this.slug)
+	  }
 }
