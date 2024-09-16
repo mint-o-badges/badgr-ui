@@ -26,6 +26,7 @@ export class OebLearningPathDetailComponent implements OnInit {
 	@Input() issuer;
 	@Input() badges;
 	@Input() participants;
+	@Input() requests;
 
 	constructor(
 		private learningPathApiService: LearningPathApiService

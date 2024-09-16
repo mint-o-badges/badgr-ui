@@ -40,6 +40,8 @@ export class IssuerLearningPathComponent extends BaseAuthenticatedRoutableCompon
 	issuerLoaded: Promise<unknown>;
 	learningPathLoaded: Promise<unknown>;
 	participantsLoaded: Promise<unknown>;
+	requestsLoaded: Promise<unknown>;
+	requests: any[];
 	participants: any[];
 
 	profileEmailsLoaded: Promise<unknown>;
@@ -109,6 +111,14 @@ export class IssuerLearningPathComponent extends BaseAuthenticatedRoutableCompon
 						},
 					);
 				});
+				this.requestsLoaded = new Promise<void>((resolve, reject) => {
+					this.learningPathApiService.getLearningPathRequests(this.learningPathSlug).then(
+						(result) => {
+							this.requests = result.body['requested_learningpaths'];
+							resolve()
+						}
+					)
+				})
 				this.participantsLoaded = new Promise<void>((resolve, reject) => {
 					this.learningPathApiService.getLearningPathParticipants(this.learningPathSlug).then(
 						(result) => {
