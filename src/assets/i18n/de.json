@@ -238,7 +238,9 @@
 		"learningPathList3": "Ersetze den Beispiel-Text durch die richtigen Badge-Angaben.",
 		"learningPathList4": "Exportiere die Vorlage als JSON-Datei.",
 		"learningPathList5": "Lade deine JSON-Datei hoch:",
-		"learningPathRecipient": "Absolvent:innen"
+		"learningPathRecipient": "Absolvent:innen",
+		"learningPathCreateHeadline": "Erstelle deinen Lernpfad"
+
 	},
 	"Badge": {
 		"groupBy": "Gruppieren nach",
@@ -620,7 +622,7 @@
 	"LearningPath": {
 		"learningpaths": "Lernpfade",
 		"catalogHeadline":"Alle Lernpfade in der Übersicht",
-		"partipate": "Teilnehmen",
+		"participate": "Teilnehmen",
 		"notParticipateAnymore": "Nicht mehr teilnehmen",
 		"searchLearningPaths": "Lernpfade durchsuchen"
 	},

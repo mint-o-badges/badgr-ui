@@ -41,6 +41,7 @@ import { QrCodeApiService } from './services/qrcode-api.service';
 import { BadgeRequestApiService } from './services/badgerequest-api.service';
 import { EditQrFormComponent } from './components/edit-qr-form/edit-qr-form.component';
 import { LearningPathUploadComponent } from './components/learningpath-upload/learningpath-upload.component';
+// import { LearningPathCreateComponent } from './components/learningpath-create/learningpath-create.component';
 import { IssuerLearningPathComponent } from './components/issuer-learning-path/issuer-learning-path.component';
 
 
@@ -78,6 +79,10 @@ const routes = [
 		path: 'issuers/:issuerSlug/learningpaths/upload',
 		component: LearningPathUploadComponent,
 	},
+	// {
+	// 	path: 'issuers/:issuerSlug/learningpaths/create',
+	// 	component: LearningPathCreateComponent,
+	// },
 	{
 		path: 'issuers/:issuerSlug/learningpaths/:learningPathSlug',
 		component: IssuerLearningPathComponent,
@@ -140,6 +145,7 @@ const routes = [
 		BadgeClassIssueBulkAwardComponent,
 		BadgeClassIssueBulkAwardImportComponent,
 		LearningPathUploadComponent,
+		// LearningPathCreateComponent,
 		BadgeClassIssueBulkAwardPreviewComponent,
 		BadgeclassIssueBulkAwardError,
 		BadgeclassIssueBulkAwardConformation,

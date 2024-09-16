@@ -6,12 +6,16 @@
 					<div class="oeb-headline-container">
 						<h1 class="tw-text-oebblack tw-font-extrabold" hlmH1>{{learningPath.name}}</h1>
 						<p size="sm" hlmP
-							class="tw-text-oebblack">
+							class="tw-text-oebblack tw-mt-2">
 							Lernpfad von <a hlmA [routerLink]="['/public/issuers/', issuer.slug ]">{{issuer.name}}</a>
 						</p>
+						<div class="tw-flex tw-flex-row tw-gap-2 tw-text-[#6B7280] tw-mt-1 tw-items-end">
+							<hlm-icon name="lucideClock" />
+							<span>{{hoursTotal}} Stunden</span>
+						</div>
 					</div>
-					<form (ngSubmit)="participate()" novalidate>
-						<oeb-button hlmBtn type="submit" [text]="participationButtonText"></oeb-button>
+					<form *ngIf="sessionService.isLoggedIn" (ngSubmit)="participate()" novalidate >
+						<oeb-button [variant]="participantButtonVariant" hlmBtn type="submit" [text]="participationButtonText"></oeb-button>
 					</form>
 				</div>
 				<div class="tw-relative tw-grow tw-px-16 tw-py-8 tw-bg-oebgrey tw-rounded-[12px] tw-flex tw-justify-center tw-items-center tw-max-w-[500px] tw-min-w-[250px]">
@@ -36,13 +40,21 @@
 				<div *bgAwaitPromises="[issuerLoaded]">
 					<ng-template #progessTemplate>
 						<div class="tw-absolute tw-flex tw-flex-col tw-w-full tw-text-right tw-right-4">
-							<span class="tw-font-extrabold tw-text-purple tw-text-[64px] tw-leading-[64px]">67%</span>
-							<span class="tw-mt-2 tw-text-base tw-text-oebblack">161/200 h</span>
+							<span class="tw-font-extrabold tw-text-purple tw-text-[64px] tw-leading-[64px]">{{progressPercentage.toFixed(0) }} %</span>
+							<span class="tw-mt-2 tw-text-base tw-text-oebblack">161/{{hoursTotal}} h</span>
 						  </div>
 					</ng-template>
 
-					<div class="tw-w-full tw-flex tw-justify-center tw-items-center">
-						<oeb-progress class="tw-w-full tw-h-32 tw-relative tw-inline-flex tw-overflow-hidden tw-rounded-3xl tw-bg-[var(--color-grayinteractive)] tw-items-center" [value]="67" [template]="progessTemplate"></oeb-progress>
+					<div *ngIf="progressPercentage" class="tw-rounded-[10px] tw-bg-white tw-border-[#CFCECE] tw-border-solid tw-border tw-relative tw-p-3 tw-block tw-overflow-hidden">
+						<div class="tw-flex tw-flex-col tw-h-full">
+							<div class="tw-flex tw-flex-row tw-gap-2 tw-text-[#6B7280] tw-mt-1 tw-items-end">
+								<hlm-icon name="lucideClock" />
+								<span>Mein Fortschritt</span>
+							</div>
+							<div  class="tw-w-full tw-flex tw-justify-center tw-items-center">
+								<oeb-progress class="tw-w-full tw-h-32 tw-relative tw-inline-flex tw-overflow-hidden tw-rounded-3xl tw-bg-[var(--color-grayinteractive)] tw-items-center" [value]="progressPercentage" [template]="progessTemplate"></oeb-progress>
+							</div>
+						</div>
 					</div>
 
 					<oeb-issuerCard [issuer]="issuer"></oeb-issuerCard>
@@ -52,18 +64,15 @@
 				<div class="oeb-section-sm">
 					<h3 hlmH3 class="tw-text-oebblack tw-font-bold">Enthaltene Badges</h3>
 					<oeb-backpack-tabs (onTabChanged)="onTabChange($event)" [tabs]="tabs"></oeb-backpack-tabs>
-					<ng-template #allTemplate [bgAwaitPromises]="learningPath">
+					<ng-template #allTemplate [bgAwaitPromises]="[learningPath]">
 						<div class="tw-relative" *ngFor="let badge of learningPath.badges.reverse(); let i = index">
 							<bg-badgecard class="tw-max-w-[300px]"
-								[badgeImage]="badge.image"
-								[badgeDescription]="badge.description"
-								[badgeSlug]="badge.slug"
-								[badgeIssueDate]="badge.createdAt" public="true" [publicUrl]="badge.url"
+								[badgeImage]="badge.badge.image"
+								[badgeDescription]="badge.badge.description"
+								[badgeSlug]="badge.badge.slug"
+								[badgeIssueDate]="badge.badge.createdAt" public="true" [publicUrl]="badge.badge.url"
 								[badgeClass]="true" 
-								
-								[issuerTitle]="badge.badge_id"
-								public="true"
-								[badgeClass]="true"></bg-badgecard>
+								></bg-badgecard>
 						</div>
 					</ng-template>
 					<ng-template #openTemplate><div>all</div></ng-template>

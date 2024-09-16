@@ -16,6 +16,7 @@ import { Issuer } from '../../../issuer/models/issuer.model';
 import { IssuerApiService } from '../../../issuer/services/issuer-api.service';
 import { IssuerManager } from '../../../issuer/services/issuer-manager.service';
 import type { Tab } from '../../../components/oeb-backpack-tabs.component';
+import { SessionService } from '../../../common/services/session.service';
 
 @Component({
 	templateUrl: './learningpath.component.html',
@@ -34,12 +35,17 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 	loaded: LoadedRouteParam<void>;
 	issuer: PublicApiIssuer;
 	badge: any;
+	progressPercentage: number | undefined = undefined;
+	hoursCompleted: number;
+	hoursTotal: number;
 	tabs:Tab[] = undefined;
 	activeTab = 'Alle'
 
 	totalBadgeCount : number;
 	openBadgeCount: number; 
 	finishedBadgeCount: number;
+
+	participantButtonVariant: string
 
 	@ViewChild('allTemplate', { static: true }) allTemplate: ElementRef;
 	@ViewChild('openTemplate', { static: true }) openTemplate: ElementRef;
@@ -53,6 +59,7 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 		private learningPathApiService: LearningPathApiService,
 		protected userProfileApiService: UserProfileApiService,
 		protected translate: TranslateService,
+		protected sessionService: SessionService,
 		public issuerManager: IssuerManager,
 		private title: Title,
 		) {
@@ -68,23 +75,48 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 				(response) => {
 					let userSlug = response['slug'];
 					if(userSlug){
-						this.learningPathApiService.getLearningPathParticipants(this.learningPathSlug).then(
+						// this.learningPathApiService.getLearningPathParticipants(this.learningPathSlug).then(
+						// 	(response) => {
+						// 		if(response.body){
+						// 			const participants = response.body
+						// 			participants.forEach((participant) => {
+						// 				if(participant.user['slug'] == userSlug){
+						// 					this.participationButtonText = this.translate.instant('LearningPath.notParticipateAnymore');
+						// 				}
+						// 			});
+						// 		}
+						// 	}, 
+						// );
+						return this.learningPathApiService.getLearningPath(this.learningPathSlug).then(
 							(response) => {
-								if(response.body){
-									const participants = response.body
-									participants.forEach((participant) => {
-										if(participant.user['slug'] == userSlug){
-											this.participationButtonText = this.translate.instant('LearningPath.notParticipateAnymore');
-										}
-									});
+								this.learningPath = response;
+								if(response.progress){
+									this.isParticipating = true;
+									this.participationButtonText = this.translate.instant('LearningPath.notParticipateAnymore');
 								}
-							}, 
-						);
-					}
+								else{
+									this.isParticipating = false;
+									this.participationButtonText = this.translate.instant('LearningPath.participate');
+								}
+								this.progressPercentage = (response.progress / response.badges.length) * 100;
+								this.hoursTotal = response.badges.reduce((acc, b) => acc + b.badge.extensions['extensions:StudyLoadExtension'].StudyLoad, 0);
+								this.issuerLoaded = this.publicService.getIssuer(response.issuer_id).then(
+									(issuer) => {
+										this.issuer = issuer;
+									});
+								this.badgeLoaded = this.publicService.getBadgeClass(response.participationBadge_id).then(
+									(badge) => {
+										this.badge = badge;
+										return badge;
+									}
+								);
+					})
 				}
-			)
+			})
 			return service.getLearningPath(paramValue).then((res)=> {
 				this.learningPath = res;
+				// this.hoursTotal = res.badges.reduce((acc, b) => acc + b.badge.extensions['extensions:StudyLoadExtension'].StudyLoad, 0);
+
 				this.issuerLoaded = this.publicService.getIssuer(res.issuer_id).then(
 					(issuer) => {
 						this.issuer = issuer;

@@ -187,7 +187,6 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 				that.learningPathResults.push(item);
 				addLearningPathToResultsByIssuer(item);
 			});
-		console.log(that.learningPathResults)	
 		this.changeOrder(this.order);
 	}
 

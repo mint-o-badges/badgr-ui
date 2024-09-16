@@ -216,20 +216,57 @@
 						</div>
 						
 						<div class="oeb-section" *ngIf="!groupByIssuer">
+							<div *ngIf="learningPathsReadyToRequest.length > 0">
 
-							<span class="tw-text-[22px] tw-leading-[26px] tw-text-purple tw-font-bold" >
-								Weiterlernen
-							</span>
-							<div class="tw-grid tw-grid-cols-learningpaths tw-gap-16 ">
-								<bg-learningpathcard *ngFor="let lp of learningPathsInProgress"
-										[badgeImage]="lp.participationBadge_image"
-										[name]="lp.name"
-										[issuerTitle]="lp.issuer_name"
-										[description]="lp.description"
-										[tags]="lp.tags" 
-										[slug]="lp.slug"
-										[matchOrProgress]="{'progress': 16}"></bg-learningpathcard>
+								<span class="tw-text-[22px] tw-leading-[26px] tw-text-purple tw-font-bold" >
+									Hol dir deinen Lernpfad-Badge ab
+								</span>
+								<div class="tw-grid tw-grid-cols-learningpaths tw-gap-16 ">
+									<bg-learningpathcard *ngFor="let lp of learningPathsReadyToRequest"
+											[badgeImage]="lp.participationBadge_image"
+											[name]="lp.name"
+											[issuerTitle]="lp.issuer_name"
+											[description]="lp.description"
+											[tags]="lp.tags" 
+											[slug]="lp.slug"
+											[matchOrProgress]="{'progress': 16}"></bg-learningpathcard>
+								</div>
 							</div>
+
+							<div *ngIf="learningPathsInProgress.length > 0">
+
+								<span class="tw-text-[22px] tw-leading-[26px] tw-text-purple tw-font-bold" >
+									Weiterlernen
+								</span>
+								<div class="tw-grid tw-grid-cols-learningpaths tw-gap-16 ">
+									<bg-learningpathcard *ngFor="let lp of learningPathsInProgress"
+											[badgeImage]="lp.participationBadge_image"
+											[name]="lp.name"
+											[issuerTitle]="lp.issuer_name"
+											[description]="lp.description"
+											[tags]="lp.tags" 
+											[slug]="lp.slug"
+											[matchOrProgress]="{'progress': 16}"></bg-learningpathcard>
+								</div>
+							</div>
+
+							<div *ngIf="learningPathsCompleted.length > 0">
+
+								<span class="tw-text-[22px] tw-leading-[26px] tw-text-purple tw-font-bold" >
+									Abgeschlossen
+								</span>
+								<div class="tw-grid tw-grid-cols-learningpaths tw-gap-16 ">
+									<bg-learningpathcard *ngFor="let lp of learningPathsCompleted"
+											[badgeImage]="lp.participationBadge_image"
+											[name]="lp.name"
+											[issuerTitle]="lp.issuer_name"
+											[description]="lp.description"
+											[tags]="lp.tags" 
+											[slug]="lp.slug"
+											[matchOrProgress]="{'progress': 16}"></bg-learningpathcard>
+								</div>
+							</div>
+
 						</div>
 						<div class="tw-grid tw-grid-cols-learningpaths tw-gap-16" *ngIf="groupByIssuer">
 							<div *ngFor="let learningPathResult of issuerLearningPathResults ">

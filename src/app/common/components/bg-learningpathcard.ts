@@ -5,13 +5,13 @@ type MatchOrProgressType = { match: number } | { progress: number };
 @Component({
 	selector: 'bg-learningpathcard',
 	host: {
-		class: 'tw-rounded-[10px] tw-w-[392px] tw-border-solid tw-relative tw-p-6 tw-block tw-overflow-hidden oeb-badge-card',
+		class: 'tw-rounded-[10px] tw-w-[208px] md:tw-w-[392px] tw-border-solid tw-relative tw-p-6 tw-block tw-overflow-hidden oeb-badge-card',
 	},
 	template: `
 		<a
 					[routerLink]="['/public/learningpaths/', slug]">
 		<div class="tw-flex tw-flex-col">
-				<div class="tw-bg-[var(--color-lightgray)] tw-w-full tw-relative tw-h-[175px] tw-items-center tw-flex tw-justify-center tw-p-2 tw-rounded-[3px]">
+				<div class="tw-bg-[var(--color-lightgray)] tw-w-full tw-relative md:tw-h-[175px] tw-h-[100px] tw-items-center tw-flex tw-justify-center tw-p-2 tw-rounded-[3px]">
 				<div *ngIf="!completed" class="tw-bg-[var(--color-purple)] tw-inline-flex tw-rounded-full tw-justify-center tw-items-center tw-p-2 tw-absolute tw-top-0 tw-right-0 tw-mt-1 tw-mr-1">
 					<hlm-icon class="tw-text-white" name="lucideRoute" />
                 </div>
@@ -25,7 +25,7 @@ type MatchOrProgressType = { match: number } | { progress: number };
 				</div>
 				
 					<img
-						class="tw-w-[80px] tw-h-[80px]"
+						class="md:tw-w-[80px] md:tw-h-[80px] tw-w-[45px] tw-h-[45px]"
 						[loaded-src]="badgeImage"
 						[loading-src]="badgeLoadingImageUrl"
 						[error-src]="badgeFailedImageUrl"
@@ -34,10 +34,10 @@ type MatchOrProgressType = { match: number } | { progress: number };
 				</div>
 				<div class="tw-flex tw-flex-col tw-flex-wrap tw-py-2 tw-text-oebblack tw-mt-2 tw-gap-1">
 					<span
-						class="tlew-font-bold tw-text-[22px] tw-leading-[26px]"
+						class="tlew-font-bold tw-text-xs md:tw-text-[22px] md:tw-leading-[26px]"
 						
 						>{{ name }}</span>
-						<a class="tw-text-[18px] tw-leading-[23.4px]">{{issuerTitle}}</a>
+						<a class="md:tw-text-[18px] md:tw-leading-[23.4px] tw-text-[10px] tw-leading-[13px]">{{issuerTitle}}</a>
 					<div class="tw-grid tw-items-center">
 						<div *ngIf="!isProgress" class="oeb-standard-padding-bottom">
 							<div  class="tw-bg-white tw-text-purple tw-px-[11.55px] tw-py-[3.85px] tw-rounded-[95px] tw-inline-block tw-border-solid tw-border-[1.59px] tw-border-purple tw-mr-1"
@@ -57,14 +57,14 @@ type MatchOrProgressType = { match: number } | { progress: number };
 						</ng-template>
 						<ng-template #progressTemplate>
 							<div class="tw-absolute tw-w-full tw-text-left">
-								<span class="tw-ml-2 tw-text-sm tw-text-purple">Lernpfad <span *ngIf="!completed">{{progress.toFixed(0)}}%</span> abgeschlossen</span>
+								<span class="tw-ml-2 md:tw-text-sm tw-text-[8px] tw-text-purple">Lernpfad <span *ngIf="!completed">{{progress.toFixed(0)}}%</span> abgeschlossen</span>
 							</div>
 						</ng-template>	
 						<oeb-button *ngIf="isProgress && progress === 100 && !this.completed" [text]="'Lernpfad abholen'" width="full_width">
 							
 						</oeb-button>
 					</div>
-					<div class="tw-flex tw-flex-row tw-gap-4 tw-text-[#6B7280] tw-mt-6 tw-items-end">
+					<div class="tw-flex tw-flex-row tw-gap-4 tw-text-[#6B7280] md:tw-text-sm tw-text-[8px] tw-mt-6 tw-items-end">
 						<hlm-icon name="lucideClock" />
 						<span>{{studyLoad}} Stunden</span>
 					</div>

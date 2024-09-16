@@ -39,7 +39,7 @@
 					</div>
 				</div>
 				<ng-container *ngIf="!groupByInstitution">
-					<div class="tw-grid tw-grid-cols-learningpaths tw-gap-16">
+					<div class="tw-grid md:tw-grid-cols-learningpaths tw-grid-cols-learningpathsSmall tw-gap-16">
 						<bg-learningpathcard *ngFor="let lp of learningPathResults"
 						[badgeImage]="baseUrl + lp._apiModel.participationBadge_image" 
 						[name]="lp.name"
