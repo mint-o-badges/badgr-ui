@@ -90,6 +90,25 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 						return this.learningPathApiService.getLearningPath(this.learningPathSlug).then(
 							(response) => {
 								this.learningPath = response;
+								
+								this.totalBadgeCount = response.badges.length
+								this.tabs = [
+									{
+										title: 'Alle',
+										count: this.totalBadgeCount,
+										component: this.allTemplate,
+									},
+									{
+										title: 'Offen',
+										count: this.openBadgeCount,
+										component: this.openTemplate,
+									},
+									{
+										title: 'Abgeschlossen',
+										count: this.finishedBadgeCount,
+										component: this.finishedTemplate,
+									},
+								];
 								if(response.progress){
 									this.isParticipating = true;
 									this.participationButtonText = this.translate.instant('LearningPath.notParticipateAnymore');
