@@ -75,8 +75,10 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 				(response) => {
 					let userSlug = response['slug'];
 					if(userSlug){
-						// this.learningPathApiService.getLearningPathParticipants(this.learningPathSlug).then(
-						// 	(response) => {
+						this.learningPathApiService.getLearningPathParticipants(this.learningPathSlug).then(
+							(response) => {
+								console.log(response)
+							})
 						// 		if(response.body){
 						// 			const participants = response.body
 						// 			participants.forEach((participant) => {
