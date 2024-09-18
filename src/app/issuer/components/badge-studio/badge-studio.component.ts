@@ -289,7 +289,7 @@ export class BadgeStudioComponent implements OnInit, OnChanges {
 						} else {
 							setTimeout(() => {
 								svgImage2.src = this.imageToShow;
-							}, 800); // To Do: reduce time when frame-images (competency.svg and participation.svg) size is reduced (less than ≈ 30 KB) 
+							}, 100);
 						}
 					});
 				}),
