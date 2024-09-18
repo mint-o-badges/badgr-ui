@@ -13,15 +13,17 @@ type MatchOrProgressType = { match: number } | { progress: number };
 					[routerLink]="['/public/learningpaths/', slug]">
 		<div class="tw-flex tw-flex-col">
 				<div class="tw-bg-[var(--color-lightgray)] tw-w-full tw-relative md:tw-h-[175px] tw-h-[100px] tw-items-center tw-flex tw-justify-center tw-p-2 tw-rounded-[3px]">
-				<div *ngIf="!completed" class="tw-bg-[var(--color-purple)] tw-inline-flex tw-rounded-full tw-justify-center tw-items-center tw-p-2 tw-absolute tw-top-0 tw-right-0 tw-mt-1 tw-mr-1">
-					<hlm-icon class="tw-text-white" name="lucideRoute" />
-                </div>
-				<div *ngIf="completed">
-					<div class="tw-bg-white tw-inline-flex tw-rounded-full tw-justify-center tw-items-center tw-p-[6px] tw-absolute tw-top-0 tw-right-0 tw-mt-1 tw-mr-1 tw-border-solid tw-border-green tw-border-[3px] ">
-						<hlm-icon class="tw-text-purple" name="lucideCheck" />
+				<div *ngIf="!completed" class="tw-absolute tw-top-[10px] tw-right-[10px]">
+					<img src="/assets/oeb/images/learningPath/learningPathIcon.png" class="tw-w-[30px]"
+						alt="LearningPath" />
+				</div>
+				<div *ngIf="completed" class="tw-absolute tw-top-[10px] tw-right-[10px] tw-flex tw-justify-center tw-items-center tw-gap-2">
+					<div class="tw-bg-white tw-inline-flex tw-rounded-full tw-justify-center tw-items-center tw-border-solid tw-border-green tw-border-[3px] ">
+						<hlm-icon class="tw-text-purple tw-box-border tw-w-[30px] tw-h-[30px]" name="lucideCheck" />
 					</div>
-					<div class="tw-bg-[var(--color-purple)] tw-inline-flex tw-rounded-full tw-justify-center tw-items-center tw-p-2 tw-absolute tw-top-0 tw-right-12 tw-mt-1 tw-mr-1">
-						<hlm-icon class="tw-text-white" name="lucideRoute" />
+					<div class="tw-inline-block">
+						<img src="/assets/oeb/images/learningPath/learningPathIcon.png" class="tw-w-[30px]"
+							alt="LearningPath" />
 					</div>
 				</div>
 				
