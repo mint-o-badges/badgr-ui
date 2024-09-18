@@ -55,6 +55,6 @@ import { OebButtonComponent } from './oeb-button.component';
 export class LearningPathRequestsDatatableComponent {
 	@Input() caption: string = "";
     @Input() requests: any[];
-    @Input() actionElementText: string = "Badge vergeben "
+    @Input() actionElementText: string = "Badge vergeben"
     @Output() actionElement = new EventEmitter();
 }

@@ -19,7 +19,7 @@ import { NgIf } from "@angular/common";
     template: `
         <oeb-dialog [variant]="variant" class="tw-text-center tw-text-purple">
             <div class="tw-flex tw-justify-center">
-                <div class="oeb-icon-circle tw-my-6">
+                <div class="oeb-icon-circle tw-bg-white tw-my-6">
                     <hlm-icon size='xxl' name="lucideCheck" />
                 </div>
             </div>

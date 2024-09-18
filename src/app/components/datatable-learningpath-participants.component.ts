@@ -32,7 +32,7 @@ import { OebButtonComponent } from './oeb-button.component';
                 </hlm-th>
                 <hlm-th class="!tw-flex-1 tw-justify-center !tw-text-oebblack"><p class="u-text">{{participant.started_at | date:"dd.MM.yyyy"}}</p></hlm-th>
                 <hlm-th class="tw-justify-center sm:tw-justify-end tw-w-48 !tw-text-oebblack">
-                   {{participant.completed_badges}} / {{number_badges}} Badges
+                   {{participant.completed_badges.length}} / {{number_badges}} Badges
                 </hlm-th>
             </hlm-trow>
         </hlm-table>`,
