@@ -141,7 +141,7 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 
 	calculateLearningPathStatus(lp: LearningPath): { 'match' : number} | { 'progress' : number} {
 		if(lp.progress){
-			const percentCompleted = (lp.progress / lp.badges.length) * 100;
+			const percentCompleted = lp.progress 
 			return {'progress' : percentCompleted }
 		}
 		else{

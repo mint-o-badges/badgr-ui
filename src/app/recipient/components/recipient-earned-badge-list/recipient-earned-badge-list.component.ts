@@ -421,6 +421,12 @@ export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutable
 	onTabChange(tab) {
 		this.activeTab = tab;
 	}
+
+	calculateStudyLoad(lp: LearningPath): number {
+		const totalStudyLoad = lp.badges.reduce((acc, b) => acc + b.badge.extensions['extensions:StudyLoadExtension'].StudyLoad, 0);
+		return totalStudyLoad;
+	}
+
 }
 
 class BadgeResult {
