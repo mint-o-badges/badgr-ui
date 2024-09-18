@@ -71,50 +71,50 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 			const service: PublicApiService = injector.get(PublicApiService);
 			
 
-			this.userProfileApiService.getProfile().then(
-				(response) => {
-					let userSlug = response['slug'];
-					if(userSlug){
-						this.learningPathApiService.getLearningPathParticipants(this.learningPathSlug).then(
-							(response) => {
-								console.log(response)
-							})
-						// 		if(response.body){
-						// 			const participants = response.body
-						// 			participants.forEach((participant) => {
-						// 				if(participant.user['slug'] == userSlug){
-						// 					this.participationButtonText = this.translate.instant('LearningPath.notParticipateAnymore');
-						// 				}
-						// 			});
-						// 		}
-						// 	}, 
-						// );
-						return this.learningPathApiService.getLearningPath(this.learningPathSlug).then(
-							(response) => {
-								this.learningPath = response;
-								if(response.progress){
-									this.isParticipating = true;
-									this.participationButtonText = this.translate.instant('LearningPath.notParticipateAnymore');
-								}
-								else{
-									this.isParticipating = false;
-									this.participationButtonText = this.translate.instant('LearningPath.participate');
-								}
-								this.progressPercentage = (response.progress / response.badges.length) * 100;
-								this.hoursTotal = response.badges.reduce((acc, b) => acc + b.badge.extensions['extensions:StudyLoadExtension'].StudyLoad, 0);
-								this.issuerLoaded = this.publicService.getIssuer(response.issuer_id).then(
-									(issuer) => {
-										this.issuer = issuer;
-									});
-								this.badgeLoaded = this.publicService.getBadgeClass(response.participationBadge_id).then(
-									(badge) => {
-										this.badge = badge;
-										return badge;
-									}
-								);
-					})
-				}
-			})
+			// this.userProfileApiService.getProfile().then(
+			// 	(response) => {
+			// 		let userSlug = response['slug'];
+			// 		if(userSlug){
+			// 			this.learningPathApiService.getLearningPathParticipants(this.learningPathSlug).then(
+			// 				(response) => {
+			// 					console.log(response)
+			// 				})
+			// 			// 		if(response.body){
+			// 			// 			const participants = response.body
+			// 			// 			participants.forEach((participant) => {
+			// 			// 				if(participant.user['slug'] == userSlug){
+			// 			// 					this.participationButtonText = this.translate.instant('LearningPath.notParticipateAnymore');
+			// 			// 				}
+			// 			// 			});
+			// 			// 		}
+			// 			// 	}, 
+			// 			// );
+			// 			return this.learningPathApiService.getLearningPath(this.learningPathSlug).then(
+			// 				(response) => {
+			// 					this.learningPath = response;
+			// 					if(response.progress){
+			// 						this.isParticipating = true;
+			// 						this.participationButtonText = this.translate.instant('LearningPath.notParticipateAnymore');
+			// 					}
+			// 					else{
+			// 						this.isParticipating = false;
+			// 						this.participationButtonText = this.translate.instant('LearningPath.participate');
+			// 					}
+			// 					this.progressPercentage = (response.progress / response.badges.length) * 100;
+			// 					this.hoursTotal = response.badges.reduce((acc, b) => acc + b.badge.extensions['extensions:StudyLoadExtension'].StudyLoad, 0);
+			// 					this.issuerLoaded = this.publicService.getIssuer(response.issuer_id).then(
+			// 						(issuer) => {
+			// 							this.issuer = issuer;
+			// 						});
+			// 					this.badgeLoaded = this.publicService.getBadgeClass(response.participationBadge_id).then(
+			// 						(badge) => {
+			// 							this.badge = badge;
+			// 							return badge;
+			// 						}
+			// 					);
+			// 		})
+			// 	}
+			// })
 			return service.getLearningPath(paramValue).then((res)=> {
 				this.learningPath = res;
 				// this.hoursTotal = res.badges.reduce((acc, b) => acc + b.badge.extensions['extensions:StudyLoadExtension'].StudyLoad, 0);
