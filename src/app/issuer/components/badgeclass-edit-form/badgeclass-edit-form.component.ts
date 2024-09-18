@@ -429,8 +429,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		// update badge frame when a category is selected, unless no-hexagon-frame checkbox is checked
 		this.badgeClassForm.rawControl.controls['badge_category'].statusChanges.subscribe((res) => {
 			this.handleBadgeCategoryChange();
-			// To change badge-frame
-			this.changeBadgeFrame();
 		});
 
 		this.fetchTags();
@@ -480,6 +478,9 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			this.badgeClassForm.controls.competencies.addFromTemplate();
 		}
 		this.badgeCategory = currentBadgeCategory;
+
+		// To update badge-frame when badge-category is changed
+		this.changeBadgeFrame();
 	}
 
 	changeBadgeFrame() {
@@ -977,10 +978,13 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	}
 
 	generateUploadImage(image, formdata) {
-        this.currentImage = image.slice();
-        this.badgeStudio.generateUploadImage(image.slice(), formdata).then((imageUrl) => {
-            this.imageField.useDataUrl(imageUrl, 'BADGE');
-        });
+		// if-condition is important to avoid drawing multible frames when badge-category is changed
+		if (typeof this.currentImage == 'undefined') {
+			this.currentImage = image.slice();
+			this.badgeStudio.generateUploadImage(image.slice(), formdata).then((imageUrl) => {
+				this.imageField.useDataUrl(imageUrl, 'BADGE');
+			});
+		}
 	}
 
 	generateCustomUploadImage(image) {
@@ -995,6 +999,11 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				.generateUploadImage(this.currentImage.slice(), formdata)
 				.then((imageUrl) => this.imageField.useDataUrl(imageUrl, 'BADGE'));
 		}
+
+		// Note: calling generate-upload-game was essential to fix the issue of disapearing badge-image when page is refreshed. No Idea why!!
+		this.badgeStudio
+		.generateUploadImage(this.currentImage.slice(), formdata)
+		.then((imageUrl) => this.imageField.useDataUrl(imageUrl, 'BADGE'));		
 	}
 
 	allowedFileFormats = ['image/png', 'image/svg+xml'];
