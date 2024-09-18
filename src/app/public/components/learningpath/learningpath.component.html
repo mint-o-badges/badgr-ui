@@ -105,13 +105,15 @@
 	</ng-template>
 	<ng-template #finishedTemplate>
 		<ng-template [bgAwaitPromises]="[issuerLoaded, badgeLoaded, loaded]">
-			<div class="tw-relative tw-flex tw-gap-4 tw-pt-4"
-				*ngFor="let badge of learningPath.completed_badges.reverse(); let i = index">
-				<bg-badgecard class="tw-w-[350px]" [badgeImage]="badge.image" [badgeTitle]="badge.name"
-					[issuerTitle]="badge.issuerName" [badgeDescription]="badge.description" [badgeSlug]="badge.slug"
-					[badgeIssueDate]="badge.createdAt" public="true" [publicUrl]="'/public/badges/'+ badge.slug"
-					[badgeClass]="true"></bg-badgecard>
-			</div>
+			<ng-template *ngIf="learningPath.completed_badges">
+				<div class="tw-relative tw-flex tw-gap-4 tw-pt-4"
+					*ngFor="let badge of learningPath.completed_badges.reverse(); let i = index">
+					<bg-badgecard class="tw-w-[350px]" [badgeImage]="badge.image" [badgeTitle]="badge.name"
+						[issuerTitle]="badge.issuerName" [badgeDescription]="badge.description" [badgeSlug]="badge.slug"
+						[badgeIssueDate]="badge.createdAt" public="true" [publicUrl]="'/public/badges/'+ badge.slug"
+						[badgeClass]="true"></bg-badgecard>
+				</div>
+			</ng-template>
 		</ng-template>
 	</ng-template>
 </div>

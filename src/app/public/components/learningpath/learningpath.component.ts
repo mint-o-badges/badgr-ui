@@ -75,7 +75,7 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 
 						this.totalBadgeCount = response.badges.length;
 
-						let completedBadgeIds = response.completed_badges.map((badge) => badge.slug);
+						let completedBadgeIds = response.completed_badges ? response.completed_badges.map((badge) => badge.slug) : [];
 						this.openBadges = response.badges.filter(
 							(badge) => !completedBadgeIds.includes(badge.badge.slug),
 						);
@@ -88,12 +88,12 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 							},
 							{
 								title: 'Offen',
-								count: this.totalBadgeCount - response.completed_badges.length,
+								count: this.totalBadgeCount - (response.completed_badges ? response.completed_badges.length : 0),
 								component: this.openTemplate,
 							},
 							{
 								title: 'Abgeschlossen',
-								count: response.completed_badges.length,
+								count: (response.completed_badges ? response.completed_badges.length : 0),
 								component: this.finishedTemplate,
 							},
 						];
