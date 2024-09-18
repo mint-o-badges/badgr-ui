@@ -35,7 +35,7 @@ type MatchOrProgressType = { match: number } | { progress: number };
 				</div>
 				<div class="tw-flex tw-flex-col tw-flex-wrap tw-py-2 tw-text-oebblack tw-mt-2 tw-gap-1">
 					<span
-						class="tlew-font-bold tw-text-xs md:tw-text-[22px] md:tw-leading-[26px]"
+						class="tw-font-semibold tw-text-xs md:tw-text-[22px] md:tw-leading-[26px]"
 						
 						>{{ name }}</span>
 						<a class="md:tw-text-[18px] md:tw-leading-[23.4px] tw-text-[10px] tw-leading-[13px]">{{issuerTitle}}</a>
@@ -52,8 +52,8 @@ type MatchOrProgressType = { match: number } | { progress: number };
 							</div>
 						</div>	
 						<ng-template #progressBar>
-							<div *ngIf="progress === 0 || progress" class="tw-w-full tw-mt-6 tw-flex tw-justify-center tw-items-center">
-								<oeb-progress class="tw-w-full tw-h-6 tw-relative tw-inline-flex tw-overflow-hidden tw-rounded-3xl tw-bg-white tw-items-center" [value]="progress" [template]="progressTemplate"></oeb-progress>
+							<div *ngIf="progress === 0 || progress" class="tw-mb-4 tw-w-full tw-mt-6 tw-flex tw-justify-center tw-items-center">
+								<oeb-progress class="tw-w-full tw-h-7 tw-relative tw-inline-flex tw-overflow-hidden tw-rounded-3xl tw-bg-white tw-items-center" [value]="progress" [template]="progressTemplate"></oeb-progress>
 							</div>
 						</ng-template>
 						<ng-template #progressTemplate>
