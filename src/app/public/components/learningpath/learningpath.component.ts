@@ -22,14 +22,13 @@ import { SessionService } from '../../../common/services/session.service';
 	templateUrl: './learningpath.component.html',
 })
 export class PublicLearningPathComponent implements OnInit, AfterContentInit {
-
 	learningPathSlug: string;
 
 	isParticipating: boolean = false;
 
 	learningPath;
-	learningPathIdParam: LoadedRouteParam<PublicApiLearningPath >;
-	participationButtonText: string = "Teilnehmen"; 
+	learningPathIdParam: LoadedRouteParam<PublicApiLearningPath>;
+	participationButtonText: string = 'Teilnehmen';
 	issuerLoaded: Promise<unknown>;
 	badgeLoaded: Promise<unknown>;
 	loaded: LoadedRouteParam<void>;
@@ -38,14 +37,16 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 	progressPercentage: number | undefined = undefined;
 	hoursCompleted: number;
 	hoursTotal: number;
-	tabs:Tab[] = undefined;
-	activeTab = 'Alle'
+	tabs: Tab[] = undefined;
+	activeTab = 'Alle';
 
-	totalBadgeCount : number;
-	openBadgeCount: number; 
+	totalBadgeCount: number;
+	openBadgeCount: number;
 	finishedBadgeCount: number;
 
-	participantButtonVariant: string
+	openBadges;
+
+	participantButtonVariant: string;
 
 	@ViewChild('allTemplate', { static: true }) allTemplate: ElementRef;
 	@ViewChild('openTemplate', { static: true }) openTemplate: ElementRef;
@@ -62,97 +63,83 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 		protected sessionService: SessionService,
 		public issuerManager: IssuerManager,
 		private title: Title,
-		) {
+	) {
 		title.setTitle(`LearningPath - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 
-		
 		this.loaded = new LoadedRouteParam(injector.get(ActivatedRoute), 'learningPathId', (paramValue) => {
 			this.learningPathSlug = paramValue;
 			const service: PublicApiService = injector.get(PublicApiService);
-			
 
-			this.userProfileApiService.getProfile().then(
-				(response) => {
-					let userSlug = response['slug'];
-					if(userSlug){
-						// this.learningPathApiService.getLearningPathParticipants(this.learningPathSlug).then(
-						// 	(response) => {
-						// 		if(response.body){
-						// 			const participants = response.body
-						// 			participants.forEach((participant) => {
-						// 				if(participant.user['slug'] == userSlug){
-						// 					this.participationButtonText = this.translate.instant('LearningPath.notParticipateAnymore');
-						// 				}
-						// 			});
-						// 		}
-						// 	}, 
-						// );
-						return this.learningPathApiService.getLearningPath(this.learningPathSlug).then(
-							(response) => {
-								this.learningPath = response;
-								
-								this.totalBadgeCount = response.badges.length
-								this.tabs = [
-									{
-										title: 'Alle',
-										count: this.totalBadgeCount,
-										component: this.allTemplate,
-									},
-									{
-										title: 'Offen',
-										count: this.openBadgeCount,
-										component: this.openTemplate,
-									},
-									{
-										title: 'Abgeschlossen',
-										count: this.finishedBadgeCount,
-										component: this.finishedTemplate,
-									},
-								];
-								if(response.progress){
-									this.isParticipating = true;
-									this.participationButtonText = this.translate.instant('LearningPath.notParticipateAnymore');
-								}
-								else{
-									this.isParticipating = false;
-									this.participationButtonText = this.translate.instant('LearningPath.participate');
-								}
-								this.progressPercentage = (response.progress / response.badges.length) * 100;
-								this.hoursTotal = response.badges.reduce((acc, b) => acc + b.badge.extensions['extensions:StudyLoadExtension'].StudyLoad, 0);
-								this.issuerLoaded = this.publicService.getIssuer(response.issuer_id).then(
-									(issuer) => {
-										this.issuer = issuer;
-									});
-								this.badgeLoaded = this.publicService.getBadgeClass(response.participationBadge_id).then(
-									(badge) => {
-										this.badge = badge;
-										return badge;
-									}
-								);
-					})
-				}
-			})
-			return service.getLearningPath(paramValue).then((res)=> {
-				this.learningPath = res;
-				// this.hoursTotal = res.badges.reduce((acc, b) => acc + b.badge.extensions['extensions:StudyLoadExtension'].StudyLoad, 0);
+			return this.userProfileApiService.getProfile().then((response) => {
+				let userSlug = response['slug'];
+				if (userSlug) {
+					// this.learningPathApiService.getLearningPathParticipants(this.learningPathSlug).then(
+					// 	(response) => {
+					// 		if(response.body){
+					// 			const participants = response.body
+					// 			participants.forEach((participant) => {
+					// 				if(participant.user['slug'] == userSlug){
+					// 					this.participationButtonText = this.translate.instant('LearningPath.notParticipateAnymore');
+					// 				}
+					// 			});
+					// 		}
+					// 	},
+					// );
+					return this.learningPathApiService.getLearningPath(this.learningPathSlug).then((response) => {
+						this.learningPath = response;
 
-				this.issuerLoaded = this.publicService.getIssuer(res.issuer_id).then(
-					(issuer) => {
-						this.issuer = issuer;
+						this.totalBadgeCount = response.badges.length;
+
+						let completedBadgeIds = response.completed_badges.map((badge) => badge.slug);
+						this.openBadges = response.badges.filter(
+							(badge) => !completedBadgeIds.includes(badge.badge.slug),
+						);
+
+						this.tabs = [
+							{
+								title: 'Alle',
+								count: this.totalBadgeCount,
+								component: this.allTemplate,
+							},
+							{
+								title: 'Offen',
+								count: this.totalBadgeCount - response.completed_badges.length,
+								component: this.openTemplate,
+							},
+							{
+								title: 'Abgeschlossen',
+								count: response.completed_badges.length,
+								component: this.finishedTemplate,
+							},
+						];
+						if (!isNaN(response.progress)) {
+							this.isParticipating = true;
+							this.participationButtonText = this.translate.instant('LearningPath.notParticipateAnymore');
+						} else {
+							this.isParticipating = false;
+							this.participationButtonText = this.translate.instant('LearningPath.participate');
+						}
+						this.progressPercentage = response.progress;
+						this.hoursTotal = response.badges.reduce(
+							(acc, b) => acc + b.badge.extensions['extensions:StudyLoadExtension'].StudyLoad,
+							0,
+						);
+						this.issuerLoaded = this.publicService.getIssuer(response.issuer_id).then((issuer) => {
+							this.issuer = issuer;
+						});
+						this.badgeLoaded = this.publicService
+							.getBadgeClass(response.participationBadge_id)
+							.then((badge) => {
+								this.badge = badge;
+								return badge;
+							});
 					});
-				this.badgeLoaded = this.publicService.getBadgeClass(res.participationBadge_id).then(
-					(badge) => {
-						this.badge = badge;
-						return badge;
-					}
-				);
+				}
 			});
 		});
 	}
 
-	ngOnInit(): void {
-	
-	}
+	ngOnInit(): void {}
 
 	ngAfterContentInit() {
 		this.tabs = [
@@ -184,21 +171,18 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 		});
 	}
 
-
-	participate(){
+	participate() {
 		this.learningPathApiService.participateInLearningPath(this.learningPathSlug).then(
 			(response) => {
 				this.openSuccessDialog();
 			},
 			(err) => {
 				console.log(err);
-			}
-		)
-
+			},
+		);
 	}
 
 	onTabChange(tab) {
 		this.activeTab = tab;
 	}
-
 }

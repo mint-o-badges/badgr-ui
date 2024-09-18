@@ -15,7 +15,7 @@ export type Tab = {
 	standalone: true,
 	imports: [HlmTabsModule, HlmTabsTriggerDirective, NgIf, NgFor, JsonPipe, NgTemplateOutlet],
 	template: `<hlm-tabs class="tw-block tw-w-full" tab="Badges" (tabActivated)="onTabChange($event)">
-		<hlm-tabs-list class="tw-w-full tw-max-w-[580px] tw-grid tw-grid-cols-3" aria-label="tabs">
+		<hlm-tabs-list class="tw-w-full tw-max-w-[660px] tw-grid tw-grid-cols-3" aria-label="tabs">
 			<ng-container *ngFor="let tab of tabs">
 				<button [hlmTabsTrigger]="tab.title">{{ tab.title }} 
 				<div *ngIf="tab.count"

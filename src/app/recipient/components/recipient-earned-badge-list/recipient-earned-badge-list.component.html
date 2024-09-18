@@ -7,8 +7,9 @@
 			<ng-template [bgAwaitPromises]="[profileLoaded]">
 
 				<div class="md:tw-flex tw-justify-between tw-items-center oeb-section-sm">
-					<h2 hlmH2 class="tw-text-oebblack tw-font-bold tw-pb-4 md:tw-pb-0">{{'RecBadge.greating' | translate}} {{profile.firstName}} </h2>
-					
+					<h2 hlmH2 class="tw-text-oebblack tw-font-bold tw-pb-4 md:tw-pb-0">{{'RecBadge.greating' |
+						translate}} {{profile.firstName}} </h2>
+
 					<oeb-button icon="lucideUpload" (click)="addBadge()" [disabled-when-requesting]="true"
 						[text]="'RecBadge.addBadge' | translate">
 					</oeb-button>
@@ -105,7 +106,7 @@
 								</ng-template>
 							</ng-template>
 
-							
+
 						</div>
 					</ng-template>
 				</ng-template>
@@ -117,18 +118,19 @@
 								<div
 									class="tw-bg-white tw-rounded-[10px] tw-border-purple tw-border-solid tw-border tw-h-[90px] tw-p-4">
 									<div class="tw-whitespace-nowrap tw-flex tw-items-center tw-mb-2"><hlm-icon
-											class="tw-mr-2" size='sm' name="lucideHexagon" /><span hlmP
-											size="sm">{{ 'RecBadge.competencies' | translate }}</span></div>
+											class="tw-mr-2" size='sm' name="lucideHexagon" /><span hlmP size="sm">{{
+											'RecBadge.competencies' | translate }}</span></div>
 									<p hlmP #countup hlmP class="tw-text-purple tw-font-bold" *ngIf="!!allBadges"
 										[countUp]="objectKeys(groupedUserCompetencies).length"></p>
 								</div>
 								<div
 									class="tw-bg-white tw-rounded-[10px] tw-border-purple tw-border-solid tw-border tw-h-[90px] tw-p-4">
 									<div class="tw-whitespace-nowrap tw-flex tw-items-center tw-mb-2"><hlm-icon
-											class="tw-mr-2" size='sm' name="lucideClock" /><span hlmP
-											size="sm">{{ 'RecBadge.studyingTime' | translate }}</span></div>
+											class="tw-mr-2" size='sm' name="lucideClock" /><span hlmP size="sm">{{
+											'RecBadge.studyingTime' | translate }}</span></div>
 									<p hlmP class="tw-text-purple tw-font-bold" *ngIf="!!allBadges"><span #countup2
-											[countUp]="totalStudyTime / 60">0</span> {{ 'RecBadge.hours' | translate }}</p>
+											[countUp]="totalStudyTime / 60">0</span> {{ 'RecBadge.hours' | translate }}
+									</p>
 								</div>
 								<!-- <div
 									class="tw-bg-white tw-rounded-[10px] tw-border-purple tw-border-solid tw-border tw-h-[90px] tw-p-4">
@@ -140,11 +142,13 @@
 							</div>
 						</div>
 						<div class="oeb-section-sm">
-							<div *ngIf="objectValues(newGroupedUserCompetencies).length > 0" class="lg:tw-flex tw-flex-wrap oeb-standard-padding-bottom">
+							<div *ngIf="objectValues(newGroupedUserCompetencies).length > 0"
+								class="lg:tw-flex tw-flex-wrap oeb-standard-padding-bottom">
 								<div class="tw-w-full lg:tw-w-[270px] lg:tw-flex-shrink-0 lg:tw-pb-0 tw-pb-4">
 									<div class="tw-flex tw-items-center">
 										<hlm-icon class="tw-mr-2" name="lucideHeart" />
-										<h3 hlmH3 class="tw-font-medium tw-text-oebblack tw-ml-2">{{ 'RecBadge.newCompetencies' | translate }}</h3>
+										<h3 hlmH3 class="tw-font-medium tw-text-oebblack tw-ml-2">{{
+											'RecBadge.newCompetencies' | translate }}</h3>
 									</div>
 								</div>
 								<div class="tw-flex-grow">
@@ -159,7 +163,8 @@
 								<div class="tw-w-full lg:tw-w-[270px] lg:tw-flex-shrink-0 lg:tw-pb-0 tw-pb-4">
 									<div class="tw-flex tw-items-center">
 										<hlm-icon class="tw-mr-2" name="lucideHand" />
-										<h3 hlmH3 class="tw-font-medium tw-text-oebblack tw-ml-2">{{ 'RecBadge.skills' | translate }}</h3>
+										<h3 hlmH3 class="tw-font-medium tw-text-oebblack tw-ml-2">{{ 'RecBadge.skills' |
+											translate }}</h3>
 									</div>
 								</div>
 								<div class="tw-flex-grow">
@@ -174,7 +179,8 @@
 								<div class="tw-w-full lg:tw-w-[270px] lg:tw-flex-shrink-0 lg:tw-pb-0 tw-pb-4">
 									<div class="tw-flex tw-items-center">
 										<hlm-icon class="tw-mr-2" name="lucideBookOpen" />
-										<h3 hlmH3 class="tw-font-medium tw-text-oebblack tw-ml-2">{{ 'RecBadge.knowledge' | translate }}</h3>
+										<h3 hlmH3 class="tw-font-medium tw-text-oebblack tw-ml-2">{{
+											'RecBadge.knowledge' | translate }}</h3>
 									</div>
 								</div>
 								<div class="tw-flex-grow">
@@ -190,7 +196,6 @@
 				</ng-template>
 				<ng-template #learningPathTemplate>
 					<ng-template [bgAwaitPromises]="[learningpathLoaded]">
-						
 						<!-- No badges, empty state! -->
 						<section class="emptysection l-emptysection" *ngIf="allLearningPaths.length == 0">
 							<h2 class="emptysection-x-headline">{{ 'RecBadge.noLearningPathYet' | translate }}</h2>
@@ -203,72 +208,63 @@
 
 						<!-- Badge Search, group and grid/list toggle -->
 						<div class="oeb-section-sm" *ngIf="allLearningPaths.length > 0">
-							<div class="tw-flex tw-flex-wrap tw-items-center oeb-standard-padding-bottom">
+							<div class="tw-flex tw-flex-wrap tw-items-center">
 								<input type="text" name="forminput" id="forminput" placeholder="Lernpfade durchsuchen"
 									[(ngModel)]="searchQuery"
 									class="tw-w-[300px] tw-border-solid tw-border-purple tw-bg-white tw-mr-6"
 									hlmInput />
-								<oeb-checkbox class="tw-mt-2 md:tw-mt-0" name="groupby" [(ngModel)]="groupByIssuer"
-									[text]="'RecBadge.groupByInstitution' | translate"></oeb-checkbox>
-							</div>							
+								<!-- <oeb-checkbox class="tw-mt-2 md:tw-mt-0" name="groupby" [(ngModel)]="groupByIssuer"
+									[text]="'RecBadge.groupByInstitution' | translate"></oeb-checkbox> -->
+							</div>
 
-							
+
 						</div>
-						
-						<div class="oeb-section" *ngIf="!groupByIssuer">
-							<div *ngIf="learningPathsReadyToRequest.length > 0">
 
-								<span class="tw-text-[22px] tw-leading-[26px] tw-text-purple tw-font-bold" >
+						<div>
+							<div class="oeb-section-sm" *ngIf="learningPathsReadyToRequest.length > 0">
+
+								<h3 hlmH3 class="tw-uppercase tw-text-purple tw-font-bold tw-pb-4">
 									Hol dir deinen Lernpfad-Badge ab
-								</span>
+								</h3>
 								<div class="tw-grid tw-grid-cols-learningpaths tw-gap-16 ">
 									<bg-learningpathcard *ngFor="let lp of learningPathsReadyToRequest"
-											[badgeImage]="lp.participationBadge_image"
-											[name]="lp.name"
-											[issuerTitle]="lp.issuer_name"
-											[description]="lp.description"
-											[tags]="lp.tags" 
-											[slug]="lp.slug"
-											[matchOrProgress]="{'progress': 16}"></bg-learningpathcard>
+										[badgeImage]="lp.participationBadge_image" [name]="lp.name"
+										[issuerTitle]="lp.issuer_name" [description]="lp.description" [tags]="lp.tags"
+										[slug]="lp.slug"
+										[matchOrProgress]="{'progress': lp.progress	/ lp.badges.length}"></bg-learningpathcard>
 								</div>
 							</div>
 
-							<div *ngIf="learningPathsInProgress.length > 0">
+							<div class="oeb-section-sm" *ngIf="learningPathsInProgress.length > 0">
 
-								<span class="tw-text-[22px] tw-leading-[26px] tw-text-purple tw-font-bold" >
+								<h3 hlmH3 class="tw-uppercase tw-text-purple tw-font-bold tw-pb-4">
 									Weiterlernen
-								</span>
+								</h3>
 								<div class="tw-grid tw-grid-cols-learningpaths tw-gap-16 ">
 									<bg-learningpathcard *ngFor="let lp of learningPathsInProgress"
-											[badgeImage]="lp.participationBadge_image"
-											[name]="lp.name"
-											[issuerTitle]="lp.issuer_name"
-											[description]="lp.description"
-											[tags]="lp.tags" 
-											[slug]="lp.slug"
-											[matchOrProgress]="{'progress': 16}"></bg-learningpathcard>
+										[badgeImage]="lp.participationBadge_image" [name]="lp.name"
+										[issuerTitle]="lp.issuer_name" [description]="lp.description" [tags]="lp.tags"
+										[slug]="lp.slug"
+										[matchOrProgress]="{'progress': lp.progress	/ lp.badges.length}"></bg-learningpathcard>
 								</div>
 							</div>
 
-							<div *ngIf="learningPathsCompleted.length > 0">
+							<div class="oeb-section-sm" *ngIf="learningPathsCompleted.length > 0">
 
-								<span class="tw-text-[22px] tw-leading-[26px] tw-text-purple tw-font-bold" >
+								<h3 hlmH3 class="tw-uppercase tw-text-purple tw-font-bold tw-pb-4">
 									Abgeschlossen
-								</span>
+								</h3>
 								<div class="tw-grid tw-grid-cols-learningpaths tw-gap-16 ">
 									<bg-learningpathcard *ngFor="let lp of learningPathsCompleted"
-											[badgeImage]="lp.participationBadge_image"
-											[name]="lp.name"
-											[issuerTitle]="lp.issuer_name"
-											[description]="lp.description"
-											[tags]="lp.tags" 
-											[slug]="lp.slug"
-											[matchOrProgress]="{'progress': 16}"></bg-learningpathcard>
+										[badgeImage]="lp.participationBadge_image" [name]="lp.name"
+										[issuerTitle]="lp.issuer_name" [description]="lp.description" [tags]="lp.tags"
+										[slug]="lp.slug"
+										[matchOrProgress]="{'progress': lp.progress	/ lp.badges.length}"></bg-learningpathcard>
 								</div>
 							</div>
 
 						</div>
-						<div class="tw-grid tw-grid-cols-learningpaths tw-gap-16" *ngIf="groupByIssuer">
+						<!-- <div class="tw-grid tw-grid-cols-learningpaths tw-gap-16" *ngIf="groupByIssuer">
 							<div *ngFor="let learningPathResult of issuerLearningPathResults ">
 								<h3 class="u-text-h3-semibold u-margin-bottom2x u-margin-top6x u-text-dark1">
 									{{ learningPathResult.issuerName}}
@@ -279,18 +275,18 @@
 								<div class="tw-grid tw-grid-cols-learningpaths tw-gap-16">
 
 									<bg-learningpathcard *ngFor="let lp of learningPathResults"
-									[badgeImage]="baseUrl + lp.participationBadge_image"
-									[name]="lp.name"
-									[issuerTitle]="lp.issuer_name"
-									[description]="lp.description"
-									[tags]="lp.tags"
-									[slug]="lp.slug"
-									[matchOrProgress]="{'progress': 16}">
-								</bg-learningpathcard>
+										[badgeImage]="baseUrl + lp.participationBadge_image"
+										[name]="lp.name"
+										[issuerTitle]="lp.issuer_name"
+										[description]="lp.description"
+										[tags]="lp.tags"
+										[slug]="lp.slug"
+										[matchOrProgress]="{'progress': lp.progress	/ lp.badges.length * 100}">
+									</bg-learningpathcard>
 								</div>
 							</div>
-						</div>
-						
+						</div> -->
+
 					</ng-template>
 				</ng-template>
 			</div>

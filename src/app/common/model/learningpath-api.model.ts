@@ -16,6 +16,7 @@ export interface ApiLearningPath {
     description: string;
     tags: string[];
     badges: Array<{ badge: any; order: number }>;
+    completed_badges: Array<any>
     progress?: number | null;
     completed_at?: Date | null;
 }

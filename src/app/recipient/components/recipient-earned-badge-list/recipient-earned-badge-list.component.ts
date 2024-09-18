@@ -147,6 +147,7 @@ export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutable
 		);
 		this.learningpathLoaded = this.learningPathApi.getLearningPathsForUser().then((res) => {
 			this.allLearningPaths = res;
+			this.updateResults();
 		}).catch((e) =>
 			this.messageService.reportAndThrowError('Failed to load your badges', e),
 		);
@@ -294,9 +295,6 @@ export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutable
 		this.issuerLearningPathResults.length = 0;
 
 		const issuerResultsByIssuer: { [issuerUrl: string]: MatchingIssuerBadges } = {};
-		const learningPathResultsByIssuerLocal = {};
-
-		const issuerLearningPathResultsByIssuer: { [issuerUrl: string]: any } = {};
 
 		const addBadgeToResults = (badge: RecipientBadgeInstance) => {
 			// Restrict Length
@@ -330,66 +328,28 @@ export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutable
 			if (this.learningPathResults.length > this.maxDisplayedResults) {
 				return false;
 			}
-			let issuerLearningPathResults = issuerLearningPathResultsByIssuer[learningPath.issuer_id];
 
-			if (!issuerLearningPathResults) {
-				issuerLearningPathResults = issuerLearningPathResultsByIssuer[learningPath.issuer_id] =new MatchingLearningPathIssuer(
-					learningPath.issuer_name,
-					'',
-				);
-			
-			// 	// append result to the issuerResults array bound to the view template.
-				// this.issuerLearningPathResults.push(issuerLearningPathResults);
-			}
-
-			issuerLearningPathResults.addLp(learningPath)
-
-			// issuerResults.addBadge(badge);
 			if (!this.learningPathResults.find((r) => r.learningPath === learningPath)) {
 				// appending the results to the badgeResults array bound to the view template.
-				console.log(learningPath);
 				if(learningPath.completed_at){
 					if (!this.learningPathsCompleted.find((r) => r === learningPath)){
 						this.learningPathsCompleted.push(learningPath);
 					}
 				}
-				else if(learningPath.progress === 100){
+				else if(learningPath.progress / learningPath.badges.length == 1){
 					if (!this.learningPathsReadyToRequest.find((r) => r === learningPath)){
 						this.learningPathsReadyToRequest.push(learningPath);
 					}
 				}
-				else if (learningPath.progress){
+				else {
 					if (!this.learningPathsInProgress.find((r) => r === learningPath)){
 						this.learningPathsInProgress.push(learningPath);
 					}
 				}
 				this.learningPathResults.push(learningPath);
 			}
-			console.log(this.learningPathsInProgress);
 			return true;
 		};
-
-
-		var addLearningPathToResultsByIssuer = function (item) {
-			let issuerResults = learningPathResultsByIssuerLocal[item.issuer_name];
-
-			if (!issuerResults) {
-				issuerResults = learningPathResultsByIssuerLocal[item.issuer_name] = new MatchingLearningPathIssuer(
-					item.issuer_name,
-					'',
-				);
-
-				// append result to the issuerResults array bound to the view template.
-				that.issuerLearningPathResults.push(issuerResults);
-			}
-
-			issuerResults.addLp(item);
-
-			return true;
-		};
-		this.allLearningPaths.filter(MatchingAlgorithm.learningPathMatcher(that.searchQuery)).forEach(addLearningPathToResultsByIssuer);
-
-
 
 		const addIssuerToResults = (issuer: ApiRecipientBadgeIssuer) => {
 			(this.badgeClassesByIssuerId[issuer.id] || []).forEach(addBadgeToResults);
@@ -489,7 +449,6 @@ class MatchingIssuerBadges {
 class MatchingLearningPathIssuer {
 	constructor(
 		public issuerName: string,
-		public learningpath,
 		public learningpaths: LearningPath[] = [],
 	) {
 	}

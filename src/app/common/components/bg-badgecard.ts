@@ -13,7 +13,7 @@ import { Component, EventEmitter, HostBinding, Input, Output } from '@angular/co
 			{{ mostRelevantStatus }}
 		</div>
 
-		<div>
+		<div class="tw-h-[100px]">
 			<div class="tw-flex tw-items-center tw-h-full">
 				<img
 					class="badgeimage badgeimage-{{ mostRelevantStatus }}"

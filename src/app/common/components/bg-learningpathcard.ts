@@ -52,7 +52,7 @@ type MatchOrProgressType = { match: number } | { progress: number };
 							</div>
 						</div>	
 						<ng-template #progressBar>
-							<div *ngIf="progress" class="tw-w-full tw-mt-6 tw-flex tw-justify-center tw-items-center">
+							<div *ngIf="progress === 0 || progress" class="tw-w-full tw-mt-6 tw-flex tw-justify-center tw-items-center">
 								<oeb-progress class="tw-w-full tw-h-6 tw-relative tw-inline-flex tw-overflow-hidden tw-rounded-3xl tw-bg-white tw-items-center" [value]="progress" [template]="progressTemplate"></oeb-progress>
 							</div>
 						</ng-template>
