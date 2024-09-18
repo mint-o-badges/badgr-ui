@@ -45,6 +45,7 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 	finishedBadgeCount: number;
 
 	openBadges;
+	completedBadgeIds;
 
 	participantButtonVariant: string;
 
@@ -111,9 +112,9 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 			this.learningPath = response;
 			this.totalBadgeCount = response.badges.length;
 
-			let completedBadgeIds = response.completed_badges ? response.completed_badges.map((badge) => badge.slug) : [];
+			this.completedBadgeIds = response.completed_badges ? response.completed_badges.map((badge) => badge.slug) : [];
 			this.openBadges = response.badges.filter(
-				(badge) => !completedBadgeIds.includes(badge.badge.slug),
+				(badge) => !this.completedBadgeIds.includes(badge.badge.slug),
 			);
 
 			this.tabs = [
@@ -161,7 +162,10 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 	participate() {
 		this.learningPathApiService.participateInLearningPath(this.learningPathSlug).then(
 			(response) => {
-				this.openSuccessDialog();
+				//@ts-ignore
+				if(response.body.message === "Successfully joined the learning path"){
+					this.openSuccessDialog();
+				}
 				this.requestPath();
 			},
 			(err) => {
