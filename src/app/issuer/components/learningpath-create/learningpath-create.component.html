@@ -5,45 +5,69 @@
             <bg-breadcrumbs [linkentries]="breadcrumbLinkEntries"> </bg-breadcrumbs>
         </div>
         <form-message></form-message>
-    <div class="oeb-section">
+    <form [formGroup]="learningPathForm.rawControl" #formElem (ngSubmit)="onSubmit()" novalidate>
+    <div class="oeb-section tw-bg-[var(--color-lightpink)]">
         <div class="oeb-headline-container-sm">
             <h1 hlmH1 class="tw-text-purple tw-font-extrabold">{{'Issuer.learningPathHeadline' | translate}}</h1>
         </div>
 
-        <div>
-            <h1>Enthaltene Badges</h1>
-            <ng-container *ngIf="groupBy == '---'">
-                <div class="tw-grid tw-grid-cols-badges tw-gap-16">
-                    <!-- TODO: Fix the badgecard link for sharing and routing -->
-                    <!-- <bg-badgecard *ngFor="let badge of badgeResults" 
-                        [badgeTitle]="badge.name"
-                        [badgeImage]="badge.image"
-                        [badgeDescription]="badge.description"
-                        [badgeSlug]="badge.slug"
-                        [issuerTitle]="badge.issuerName ? badge.issuerName : badge.issuer.name"
-                        [badgeIssueDate]="badge.createdAt"
-                        public="true"
-                        [publicUrl]="badge.url"
-                        [badgeClass]="true"
-                        [issuerSlug]="badge.issuerSlug"
-                        [competencies]="badge.extension['extensions:CompetencyExtension']"
-                        [checkboxControl]="true"></bg-badgecard> -->
-                </div>
-            </ng-container>
-            <!-- <div 
-                [dndList]
-                [dndPlaceholder]="placeholder"
-                [dndModel]="simpleList[0]">
-                <div *ngFor="let item of simpleList[0]"
-                    [dndType]="'item'"
-                    (dndMoved)="removeItem(item, simpleList[0])"
-                    [dndDraggable]
-                    [dndObject]="item">{{item.name}}</div>
-             </div>
+            <oeb-input 
+					class="tw-w-full tw-max-w-[750px]" 
+					[control]="learningPathForm.rawControlMap.lp_name"
+				></oeb-input>
+                
+            <div>
+                <h1>Enthaltene Badges</h1>
+                <ng-container *ngIf="groupBy == '---'">
+                    <div class="tw-grid tw-grid-cols-badges tw-gap-16">
+                        <!-- TODO: Fix the badgecard link for sharing and routing -->
+                        <!-- <bg-badgecard *ngFor="let badge of badgeResults" 
+                            [badgeTitle]="badge.name"
+                            [badgeImage]="badge.image"
+                            [badgeDescription]="badge.description"
+                            [badgeSlug]="badge.slug"
+                            [issuerTitle]="badge.issuerName ? badge.issuerName : badge.issuer.name"
+                            [badgeIssueDate]="badge.createdAt"
+                            public="true"
+                            [publicUrl]="badge.url"
+                            [badgeClass]="true"
+                            [issuerSlug]="badge.issuerSlug"
+                            [competencies]="badge.extension['extensions:CompetencyExtension']"
+                            [checkboxControl]="true"></bg-badgecard> -->
+                    </div>
+                </ng-container>
 
-        </div> -->
+            </div> 
 
     </div>
+    <div class="oeb-section tw-bg-[var(--color-lightpink)]">
+        <h1>Reihenfolge der Badges im Lernpfad</h1>
+        <ng-template [showLoader]="true" [bgAwaitPromises]="[badgesLoaded]">
+            <ul dndDropzone (dndDrop)="onDrop($event, draggableList)">
+                <li *ngFor="let item of draggableList" class="tw-list-decimal">
+                    <div  [dndDraggable] dndEffectAllowed="move" (dndMoved)="onDragged(item, draggableList, 'move')">
+                        <!-- <bg-badgecard
+                            [badgeTitle]="item.content.name"
+                            [badgeImage]="item.content.image"
+                            [badgeDescription]="item.content.description"
+                            [badgeSlug]="item.content.slug"
+                            [issuerTitle]="item.content.issuerName ? item.content.issuerName : item.content.issuer.name"
+                            [badgeIssueDate]="item.content.createdAt"
+                            public="true"
+                            [publicUrl]="item.content.url"
+                            [badgeClass]="true"
+                            [issuerSlug]="item.content.issuerSlug"
+                            [competencies]="item.content.extension['extensions:CompetencyExtension']"
+                            [checkboxControl]="true">
+                        </bg-badgecard> -->
+                        <span>{{item.title}}</span>
+                    </div>
+                </li>
+            </ul>
+        </ng-template>
+
+    </div>
+    </form>
     </div>
     </ng-template>
 </div>

@@ -22,7 +22,7 @@ export class LearningPathApiService extends BaseHttpApiService {
 	}
 
 	getPublicLearningPath(lpSlug: string) {
-		return this.get<ApiLearningPath>(`/public/learningpaths/${lpSlug}`, {}, false).then((r) => r.body);
+		return this.get<ApiLearningPath>(`/public/learningpaths/${lpSlug}`, null, false, true).then((r) => r.body);
 	}
 
 	getLearningPathsForIssuer(issuerSlug: string) {
@@ -67,5 +67,9 @@ export class LearningPathApiService extends BaseHttpApiService {
 
 	requestLearningPath(lpId: string){
 		return this.post(`/request-learningpath/${lpId}`, null);
+	}
+
+	getLearningPathRequests(lpId: string){
+		return this.get(`/request-learningpath/${lpId}`);
 	}
 }

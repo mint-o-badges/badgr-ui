@@ -98,6 +98,6 @@ export class PublicApiService extends BaseHttpApiService {
 	getLearningPath(lpId: string) {
 		const url = lpId.startsWith('http') ? lpId : `/public/learningpaths/${lpId}`;
 
-		return this.get<PublicApiLearningPath>(url, null, false, false).then((r) => r.body);
+		return this.get<PublicApiLearningPath>(url, null, false, true).then((r) => r.body);
 	}
 }
