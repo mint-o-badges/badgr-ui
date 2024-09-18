@@ -97,6 +97,8 @@ export class BgLearningPathCard {
 	@Input() public = false;
 	@Input() studyLoad: number;
 	@Input() completed = false;
+	@Input() progress: number | null = null;
+	@Input() match: number | null = null;
 	@Output() shareClicked = new EventEmitter<MouseEvent>();
 
 	@HostBinding('class') get hostClasses(): string {
@@ -119,20 +121,22 @@ export class BgLearningPathCard {
 	  }
 	
 	  get isMatch(): boolean {
-		return 'match' in this._matchOrProgress;
+		return this.match !== null;
+		// return 'match' in this._matchOrProgress;
 	  }
 	
 	  get isProgress(): boolean {
-		return 'progress' in this._matchOrProgress;
+		return this.progress !== null;
+		// return 'progress' in this._matchOrProgress;
 	  }
 	
-	  get match(): number | undefined {
-		return this.isMatch ? (this._matchOrProgress as { match: number }).match : undefined;
-	  }
+	//   get match(): number | undefined {
+	// 	return this.isMatch ? (this._matchOrProgress as { match: number }).match : undefined;
+	//   }
 	
-	  get progress(): number | undefined {
-		return this.isProgress ? (this._matchOrProgress as { progress: number }).progress : undefined;
-	  }
+	//   get progress(): number | undefined {
+	// 	return this.isProgress ? (this._matchOrProgress as { progress: number }).progress : undefined;
+	//   }
 	
 	  requestLearningPath() {
 		this.learningPathApiService.requestLearningPath(this.slug)

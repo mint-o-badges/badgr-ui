@@ -4,7 +4,7 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
 import { preloadImageURL } from '../../../common/util/file-util';
 import { PublicApiService } from '../../services/public-api.service';
 import { LoadedRouteParam } from '../../../common/util/loaded-route-param';
-import { PublicApiBadgeClassWithIssuer, PublicApiIssuer } from '../../models/public-api.model';
+import { PublicApiBadgeClassWithIssuer, PublicApiIssuer, PublicApiLearningPath } from '../../models/public-api.model';
 import { EmbedService } from '../../../common/services/embed.service';
 import { addQueryParamsToUrl, stripQueryParamsFromUrl } from '../../../common/util/url-util';
 import { routerLinkForUrl } from '../public/public.component';
@@ -13,7 +13,20 @@ import { Title } from '@angular/platform-browser';
 import { PageConfig } from '../../../common/components/badge-detail/badge-detail.component.types';
 
 @Component({
-	template: '<bg-badgedetail [config]="config" [awaitPromises]="[badgeClass]"></bg-badgedetail>',
+	template: `<bg-badgedetail [config]="config" [awaitPromises]="[badgeClass]">
+				<ng-template [bgAwaitPromises]="[learningPaths]">
+					<div class="tw-grid md:tw-grid-cols-learningpaths tw-grid-cols-learningpathsSmall tw-gap-16">
+						<bg-learningpathcard *ngFor="let lp of learningPaths"
+							[name]="lp.name"
+							[issuerTitle]="lp.issuer_name"
+							[description]="lp.description"
+							[tags]="lp.tags"
+							[slug]="lp.slug"
+							[progress]="lp.progress"
+						></bg-learningpathcard>
+					</div>
+				</ng-template>
+				</bg-badgedetail>`,
 })
 export class PublicBadgeClassComponent {
 	readonly issuerImagePlaceholderUrl = preloadImageURL(
@@ -26,6 +39,8 @@ export class PublicBadgeClassComponent {
 	routerLinkForUrl = routerLinkForUrl;
 
 	config: PageConfig
+
+	learningPaths: PublicApiLearningPath[];
 
 	constructor(
 		private injector: Injector,
@@ -55,6 +70,11 @@ export class PublicBadgeClassComponent {
 					competencies: badge['extensions:CompetencyExtension'],
 					crumbs: [{ title: 'Badges', routerLink: ['/catalog/badges'] }, { title: badge.name }],
 				}
+			})
+
+			const learningPaths = service.getLearningPathsForBadgeClass(paramValue).then(lp => {
+				console.log(lp)
+				this.learningPaths = lp;
 			})
 			return badgeClass
 		});
