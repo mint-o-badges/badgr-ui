@@ -69,7 +69,56 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 		this.loaded = new LoadedRouteParam(injector.get(ActivatedRoute), 'learningPathId', (paramValue) => {
 			this.learningPathSlug = paramValue;
 			const service: PublicApiService = injector.get(PublicApiService);
-			
+
+			return service.getLearningPath(this.learningPathSlug).then((response) => {
+						this.learningPath = response;
+
+						this.totalBadgeCount = response.badges.length;
+
+						let completedBadgeIds = response.completed_badges.map((badge) => badge.slug);
+						this.openBadges = response.badges.filter(
+							(badge) => !completedBadgeIds.includes(badge.badge.slug),
+						);
+
+						this.tabs = [
+							{
+								title: 'Alle',
+								count: this.totalBadgeCount,
+								component: this.allTemplate,
+							},
+							{
+								title: 'Offen',
+								count: this.totalBadgeCount - response.completed_badges.length,
+								component: this.openTemplate,
+							},
+							{
+								title: 'Abgeschlossen',
+								count: response.completed_badges.length,
+								component: this.finishedTemplate,
+							},
+						];
+						if (!isNaN(response.progress)) {
+							this.isParticipating = true;
+							this.participationButtonText = this.translate.instant('LearningPath.notParticipateAnymore');
+						} else {
+							this.isParticipating = false;
+							this.participationButtonText = this.translate.instant('LearningPath.participate');
+						}
+						this.progressPercentage = response.progress;
+						this.hoursTotal = response.badges.reduce(
+							(acc, b) => acc + b.badge.extensions['extensions:StudyLoadExtension'].StudyLoad,
+							0,
+						);
+						this.issuerLoaded = this.publicService.getIssuer(response.issuer_id).then((issuer) => {
+							this.issuer = issuer;
+						});
+						this.badgeLoaded = this.publicService
+							.getBadgeClass(response.participationBadge_id)
+							.then((badge) => {
+								this.badge = badge;
+								return badge;
+							});
+					})
 
 			// this.userProfileApiService.getProfile().then(
 			// 	(response) => {
