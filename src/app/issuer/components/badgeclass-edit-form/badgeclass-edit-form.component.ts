@@ -452,6 +452,13 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				}}
 		});
 
+		
+		// To check duplicate competencies only when one is selected
+		this.badgeClassForm.controls.aiCompetencies.controls['selected'].statusChanges.subscribe((res) => {
+			console.log("🚀 ~ T1 - statusChanges", )
+			this.checkDuplicateCompetency();
+		});
+
 		this.fetchTags();
 	}
 
@@ -1043,11 +1050,11 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	}
 
     noDuplicateCompetencies(): {duplicateCompetency: Boolean} | null {
-        if (this.duplicateCompetency)
+        if (this.checkDuplicateCompetency())
             return { duplicateCompetency: true };
     }
 
-    get duplicateCompetency(): String | null {
+    checkDuplicateCompetency(): String | null {
         if (!this.badgeClassForm) return null;
 
         const storedCompetencies = this.badgeClassForm.controls.competencies.value.
