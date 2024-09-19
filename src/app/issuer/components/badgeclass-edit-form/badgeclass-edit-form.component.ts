@@ -1054,9 +1054,10 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
             // Hand competencies get added automatically at submitting
             //filter(c => c.added).
             map(c => c.name);
-        const ai = this.badgeClassForm.controls.aiCompetencies.value.
-            filter(c => c.selected).
-            map((c,i) => this.aiCompetenciesSuggestions[i].preferred_label);
+		
+		const ai = this.badgeClassForm.controls.aiCompetencies.value
+			.map((c, i) => (c.selected ? this.aiCompetenciesSuggestions[i].preferred_label : ''))
+			.filter(String);
 
         const all = hand.concat(ai);
         const check = new Set();
