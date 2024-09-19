@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, HostBinding, Output } from '@angular/core';
 import { LearningPathApiService } from '../services/learningpath-api.service';
 
-type MatchOrProgressType = { match: number } | { progress: number };
+type MatchOrProgressType = { match?: number, progress?: number };
 
 @Component({
 	selector: 'bg-learningpathcard',
@@ -50,7 +50,7 @@ type MatchOrProgressType = { match: number } | { progress: number };
 						</div>
 						<div *ngIf="isMatch; else progressBar">
 							<div class="tw-px-[11.55px] tw-py-[3.85px] tw-bg-lightpurple tw-rounded-[95px] tw-max-w-[30%]">
-								<span class="tw-text-sm tw-text-purple">{{match.toFixed(0)}}% Match</span> 
+								<span class="tw-text-sm tw-text-purple">{{this._matchOrProgress?.match.toFixed(0)}}% Match</span> 
 							</div>
 						</div>	
 						<ng-template #progressBar>
@@ -121,7 +121,8 @@ export class BgLearningPathCard {
 	  }
 	
 	  get isMatch(): boolean {
-		return this.match !== null;
+		console.log(this._matchOrProgress)
+		return !isNaN(this._matchOrProgress.match);
 		// return 'match' in this._matchOrProgress;
 	  }
 	
@@ -131,7 +132,7 @@ export class BgLearningPathCard {
 	  }
 	
 	//   get match(): number | undefined {
-	// 	return this.isMatch ? (this._matchOrProgress as { match: number }).match : undefined;
+	// 	return (this._matchOrProgress as { match: number }).match;
 	//   }
 	
 	//   get progress(): number | undefined {

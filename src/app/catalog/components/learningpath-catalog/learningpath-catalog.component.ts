@@ -140,11 +140,12 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 	}
 
 	calculateLearningPathStatus(lp: LearningPath): { 'match' : number} | { 'progress' : number} {
-		if(lp.progress){
+		if(lp.progress !=  null){
 			const percentCompleted = lp.progress
 			return {'progress' : percentCompleted }
 		}
 		else{
+			// console.log( {'match' : this.calculateMatch(lp)})
 			return {'match' : this.calculateMatch(lp)}
 		}
 	}
