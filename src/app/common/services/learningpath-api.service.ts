@@ -29,6 +29,10 @@ export class LearningPathApiService extends BaseHttpApiService {
 		return this.get<ApiLearningPath[]>(`/v1/issuer/issuers/${issuerSlug}/learningpath`).then((r) => r.body);
 	}
 
+	getLearningPathsForBadgeClass(badgeClassSlug: string) {
+		return this.get<ApiLearningPath[]>(`/public/badges/${badgeClassSlug}/learningpaths`).then((r) => r.body);
+	}
+
 	getLearningPathsForUser() {
 		return this.get<ApiLearningPath[]>(`/v1/user/learningpaths`).then((r) => r.body);
 	}

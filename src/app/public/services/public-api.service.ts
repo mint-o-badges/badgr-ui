@@ -100,4 +100,10 @@ export class PublicApiService extends BaseHttpApiService {
 
 		return this.get<PublicApiLearningPath>(url, null, false, true).then((r) => r.body);
 	}
+
+	getLearningPathsForBadgeClass(badgeClassSlug: string) {
+		const url = badgeClassSlug.startsWith('http') ? badgeClassSlug : `/public/badges/${badgeClassSlug}/learningpaths`;
+
+		return this.get<PublicApiLearningPath[]>(url, null, false, true).then((r) => r.body);
+	}
 }
