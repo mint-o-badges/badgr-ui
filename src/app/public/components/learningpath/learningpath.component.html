@@ -10,7 +10,7 @@
 						</p>
 						<div class="tw-flex tw-flex-row tw-gap-2 tw-text-[#6B7280] tw-mt-1 tw-items-end">
 							<hlm-icon name="lucideClock" />
-							<span>{{hoursTotal}} Stunden</span>
+							<span>{{hoursTotal | hourPipe}} Stunden</span>
 						</div>
 					</div>
 					<form *ngIf="sessionService.isLoggedIn" (ngSubmit)="participate()" novalidate>

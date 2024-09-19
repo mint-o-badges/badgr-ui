@@ -69,10 +69,9 @@ type MatchOrProgressType = { match: number } | { progress: number };
 					</div>
 					<div class="tw-flex tw-flex-row tw-gap-4 tw-text-[#6B7280] md:tw-text-sm tw-text-[8px] tw-mt-6 tw-items-end">
 						<hlm-icon name="lucideClock" />
-						<span>{{studyLoad}} Stunden</span>
+						<span>{{studyLoad | hourPipe}} Stunden</span>
 					</div>
-				</div>
-					
+				</div>	
 		</div>
 		</a>
 	`,

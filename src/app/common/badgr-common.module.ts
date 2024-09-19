@@ -122,6 +122,7 @@ import { LearningPathParticipantsDatatableComponent } from '../components/datata
 import { LearningPathGraduatesDatatableComponent } from '../components/datatable-learningpath-graduates.component';
 import { LearningPathRequestsDatatableComponent } from '../components/datatable-learningpath-requests.component';
 import { OebIssuerCard } from './components/oeb-issuercard';
+import { HourPipe } from './pipes/hourPipe';
 
 const DIRECTIVES = [
 	BgAwaitPromises,
@@ -133,7 +134,8 @@ const DIRECTIVES = [
 	BgMarkdownComponent,
 	// TooltipDirective,
 	BgPopupMenuTriggerDirective,
-	DynamicFilterPipe
+	DynamicFilterPipe,
+	HourPipe
 ];
 
 export const COMMON_MODULE_COMPONENTS = [
