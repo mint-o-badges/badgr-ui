@@ -35,8 +35,8 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 	issuer: PublicApiIssuer;
 	badge: any;
 	progressPercentage: number | undefined = undefined;
-	hoursCompleted: number;
-	hoursTotal: number;
+	minutesCompleted: number;
+	minutesTotal: number;
 	tabs: Tab[] = undefined;
 	activeTab = 'Alle';
 
@@ -142,8 +142,12 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 				this.participationButtonText = this.translate.instant('LearningPath.notParticipateAnymore');
 			}
 			this.progressPercentage = response.progress;
-			this.hoursTotal = response.badges.reduce(
+			this.minutesTotal = response.badges.reduce(
 				(acc, b) => acc + b.badge.extensions['extensions:StudyLoadExtension'].StudyLoad,
+				0,
+			);
+			this.minutesCompleted = response.completed_badges.reduce(
+				(acc, b) => acc + b.extensions['extensions:StudyLoadExtension'].StudyLoad,
 				0,
 			);
 			this.issuerLoaded = this.publicService.getIssuer(response.issuer_id).then((issuer) => {

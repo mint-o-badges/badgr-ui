@@ -76,7 +76,7 @@
 </div>
 
 <div class="oeb-section-sm">
-	<oeb-backpack-tabs (onTabChanged)="onTabChange($event)" [tabs]="tabs"></oeb-backpack-tabs>
+	<oeb-backpack-tabs [variant]="'lightpurple'" (onTabChanged)="onTabChange($event)" [tabs]="tabs"></oeb-backpack-tabs>
 
 	<ng-template #badgesTemplate>
 		<section class="tw-py-6" *ngIf="!badges?.length">
