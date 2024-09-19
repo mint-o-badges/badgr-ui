@@ -455,7 +455,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		
 		// To check duplicate competencies only when one is selected
 		this.badgeClassForm.controls.aiCompetencies.controls['selected'].statusChanges.subscribe((res) => {
-			console.log("🚀 ~ T1 - statusChanges", )
 			this.checkDuplicateCompetency();
 		});
 
