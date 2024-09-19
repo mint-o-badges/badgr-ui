@@ -55,15 +55,15 @@ type MatchOrProgressType = { match: number } | { progress: number };
 						</div>	
 						<ng-template #progressBar>
 							<div *ngIf="progress === 0 || progress" class="tw-mb-4 tw-w-full tw-mt-6 tw-flex tw-justify-center tw-items-center">
-								<oeb-progress class="tw-w-full tw-h-7 tw-relative tw-inline-flex tw-overflow-hidden tw-rounded-3xl tw-bg-white tw-items-center" [value]="progress" [template]="progressTemplate"></oeb-progress>
+								<oeb-progress class="tw-w-full tw-h-7 tw-relative tw-inline-flex tw-overflow-hidden tw-rounded-3xl tw-bg-white tw-items-center" [value]="(progress/studyLoad*100).toFixed(0)" [template]="progressTemplate"></oeb-progress>
 							</div>
 						</ng-template>
 						<ng-template #progressTemplate>
 							<div class="tw-absolute tw-w-full tw-text-left">
-								<span class="tw-ml-2 md:tw-text-sm tw-text-[8px] tw-text-purple">Lernpfad <span *ngIf="!completed">{{progress.toFixed(0)}}%</span> abgeschlossen</span>
+								<span class="tw-ml-2 md:tw-text-sm tw-text-[8px] tw-text-purple">Lernpfad <span *ngIf="!completed">{{(progress/studyLoad*100).toFixed(0)}}%</span> abgeschlossen</span>
 							</div>
 						</ng-template>	
-						<oeb-button *ngIf="isProgress && progress === 100 && !this.completed" (click)="requestLearningPath()" [text]="'Lernpfad abholen'" width="full_width">
+						<oeb-button *ngIf="isProgress && progress/studyLoad === 1 && !this.completed && !this.requested" (click)="requestLearningPath()" [text]="'Lernpfad abholen'" width="full_width">
 							
 						</oeb-button>
 					</div>
@@ -96,15 +96,16 @@ export class BgLearningPathCard {
 	@Input() public = false;
 	@Input() studyLoad: number;
 	@Input() completed = false;
+	@Input() requested = false;
 	@Input() progress: number | null = null;
 	@Input() match: number | null = null;
 	@Output() shareClicked = new EventEmitter<MouseEvent>();
 
 	@HostBinding('class') get hostClasses(): string {
-		if(this.isProgress && this.progress < 100){
+		if(this.isProgress && this.progress/this.studyLoad < 1){
 			return 'tw-bg-[var(--color-lightgreen)] tw-border-purple tw-border'
 		}
-		else if(this.isProgress && this.progress === 100 && !this.completed){
+		else if(this.isProgress && this.progress/this.studyLoad === 1 && !this.completed){
 			return 'tw-bg-[var(--color-lightgreen)] tw-border-green tw-border-4'
 		}
 		else{

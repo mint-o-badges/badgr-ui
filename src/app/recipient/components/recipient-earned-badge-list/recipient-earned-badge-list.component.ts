@@ -336,7 +336,7 @@ export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutable
 						this.learningPathsCompleted.push(learningPath);
 					}
 				}
-				else if(learningPath.progress / learningPath.badges.length == 1){
+				else if(learningPath.progress / this.calculateStudyLoad(learningPath) == 1){
 					if (!this.learningPathsReadyToRequest.find((r) => r === learningPath)){
 						this.learningPathsReadyToRequest.push(learningPath);
 					}

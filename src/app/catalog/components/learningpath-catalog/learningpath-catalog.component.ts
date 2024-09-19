@@ -141,7 +141,7 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 
 	calculateLearningPathStatus(lp: LearningPath): { 'match' : number} | { 'progress' : number} {
 		if(lp.progress){
-			const percentCompleted = lp.progress 
+			const percentCompleted = lp.progress
 			return {'progress' : percentCompleted }
 		}
 		else{
@@ -191,7 +191,6 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 	}
 
 	async loadIssuers() {
-		let that = this;
 		return new Promise(async (resolve, reject) => {
 			this.issuerManager.getAllIssuers().subscribe(
 				(issuers) => {

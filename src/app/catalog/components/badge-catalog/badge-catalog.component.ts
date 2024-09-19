@@ -114,7 +114,6 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 						this.tags = this.tags.concat(badge.tags);
 						this.issuers = this.issuers.concat(badge.issuer);
 					});
-					console.log(this.badgeResults[0].url);
 					this.tags = sortUnique(this.tags);
 					this.issuers = sortUnique(this.issuers);
 					this.updateResults();
@@ -252,8 +251,6 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 			});
 
 		this.changeOrder(this.order);
-		console.log(this.badgeResultsByIssuer)
-		console.log(this.badgeResults)
 	}
 
 	openLegend() {
