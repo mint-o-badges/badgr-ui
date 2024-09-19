@@ -145,7 +145,6 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 			return {'progress' : percentCompleted }
 		}
 		else{
-			// console.log( {'match' : this.calculateMatch(lp)})
 			return {'match' : this.calculateMatch(lp)}
 		}
 	}
