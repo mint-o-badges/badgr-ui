@@ -57,6 +57,10 @@ export class LearningPathApiService extends BaseHttpApiService {
 		return this.delete(`/v1/issuer/issuers/${issuerSlug}/learningpath/${lpSlug}`);
 	}
 
+	deleteLearningPathRequest(lpId: string){
+		return this.delete(`request-learningpath/${lpId}`)
+	}
+
 	participateInLearningPath(lpSlug: string, body: any = null) {
 		return this.post(`/learningpath/${lpSlug}/participate`, body);
 	}
