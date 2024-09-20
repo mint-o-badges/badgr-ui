@@ -6,7 +6,7 @@ type MatchOrProgressType = { match?: number, progress?: number };
 @Component({
 	selector: 'bg-learningpathcard',
 	host: {
-		class: 'tw-rounded-[10px] tw-w-[208px] md:tw-w-[392px] tw-border-solid tw-relative tw-p-6 tw-block tw-overflow-hidden oeb-badge-card',
+		class: 'tw-rounded-[10px] tw-w-[255px] md:tw-w-[392px] tw-border-solid tw-relative tw-p-4 md:tw-p-6 tw-block tw-overflow-hidden oeb-badge-card',
 	},
 	template: `
 		<a [routerLink]="['/public/learningpaths/', slug]">
@@ -54,7 +54,7 @@ type MatchOrProgressType = { match?: number, progress?: number };
 						</div>	
 						<ng-template #progressBar>
 							<div *ngIf="progress === 0 || progress" class="tw-mb-4 tw-w-full tw-mt-6 tw-flex tw-justify-center tw-items-center">
-								<oeb-progress class="tw-w-full tw-h-7 tw-relative tw-inline-flex tw-overflow-hidden tw-rounded-3xl tw-bg-white tw-items-center" [value]="(progress/studyLoad*100).toFixed(0)" [template]="progressTemplate"></oeb-progress>
+								<oeb-progress class="tw-w-full tw-h-5 md:tw-h-7 tw-relative tw-inline-flex tw-overflow-hidden tw-rounded-3xl tw-bg-white tw-items-center" [value]="(progress/studyLoad*100).toFixed(0)" [template]="progressTemplate"></oeb-progress>
 							</div>
 						</ng-template>
 						<ng-template #progressTemplate>

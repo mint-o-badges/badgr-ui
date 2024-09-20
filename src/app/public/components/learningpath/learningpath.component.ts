@@ -146,7 +146,8 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 				(acc, b) => acc + b.badge.extensions['extensions:StudyLoadExtension'].StudyLoad,
 				0,
 			);
-			this.minutesCompleted = response.completed_badges.reduce(
+			
+			this.minutesCompleted = response.completed_badges?.reduce(
 				(acc, b) => acc + b.extensions['extensions:StudyLoadExtension'].StudyLoad,
 				0,
 			);

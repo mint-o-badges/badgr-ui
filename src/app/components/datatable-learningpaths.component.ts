@@ -22,7 +22,7 @@ import { OebButtonComponent } from './oeb-button.component';
             <hlm-trow class="tw-bg-purple tw-text-white tw-flex-wrap hover:tw-bg-purple">
                 <hlm-th class="!tw-text-white tw-w-28 md:tw-w-48">Lernpfad</hlm-th>
                 <hlm-th class="!tw-text-white tw-justify-center !tw-flex-1">{{'Badge.createdOn' | translate}}</hlm-th>
-                <hlm-th class="!tw-text-white tw-w-36 md:tw-w-40">{{'Issuer.learningPathRecipient' | translate}}</hlm-th>
+                <hlm-th class="!tw-text-white tw-w-36 md:tw-w-40">{{'Issuer.learningPathParticipants' | translate}}</hlm-th>
                 <hlm-th class="!tw-text-white tw-justify-end sm:tw-w-48 tw-w-0 !tw-p-0"></hlm-th>
             </hlm-trow>
             <hlm-trow *ngFor="let learningPath of learningPaths" class="tw-border-purple tw-flex-wrap tw-py-2">
@@ -38,8 +38,8 @@ import { OebButtonComponent } from './oeb-button.component';
                       </div>  
                     </div>    
                 </hlm-th>
-                <hlm-th class="!tw-flex-1 tw-justify-center !tw-text-oebblack"><p class="u-text">test</p></hlm-th>
-                <hlm-th class="tw-w-36 md:tw-w-40 tw-justify-center !tw-text-oebblack">{{ 0 }}</hlm-th>
+                <hlm-th class="!tw-flex-1 tw-justify-center !tw-text-oebblack"><p class="u-text">{{learningPath.created_at | date:"dd.MM.yyyy" }}</p></hlm-th>
+                <hlm-th class="tw-w-36 md:tw-w-40 tw-justify-center !tw-text-oebblack">{{ learningPath.participant_count }}</hlm-th>
                 <hlm-th class="tw-justify-center sm:tw-justify-end sm:tw-w-48 tw-w-full !tw-text-oebblack">
                     <oeb-button class="tw-w-full" variant="secondary" size="xs" width="full_width" (click)="actionElement.emit(learningPath.slug)" [text]="actionElementText"></oeb-button>
                 </hlm-th>
