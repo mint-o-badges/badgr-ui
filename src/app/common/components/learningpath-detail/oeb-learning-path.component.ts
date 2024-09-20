@@ -100,7 +100,7 @@ export class OebLearningPathDetailComponent implements OnInit {
 						'extensions:recipientProfile': {
 							'@context': recipientProfileContextUrl,
 							type: ['Extension', 'extensions:RecipientProfile'],
-							name: req.email,
+							name: req.user.name,
 						},
 					},
 				})
