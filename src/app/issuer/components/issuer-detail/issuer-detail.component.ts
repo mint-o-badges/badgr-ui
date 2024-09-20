@@ -98,7 +98,7 @@ export class IssuerDetailComponent extends BaseAuthenticatedRoutableComponent im
 					`Issuer - ${this.issuer.name} - ${this.configService.theme['serviceName'] || 'Badgr'}`,
 				);
 				this.crumbs = [
-					{ title: 'Issuers', routerLink: ['/issuer/issuers'] },
+					{ title: 'Meine Institutionen', routerLink: ['/issuer/issuers'] },
 					{ title: this.issuer.name, routerLink: ['/issuer/issuers/' + this.issuer.slug] },
 				];
 

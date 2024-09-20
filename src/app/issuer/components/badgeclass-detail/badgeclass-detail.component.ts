@@ -183,7 +183,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		this.badgeInstancesLoaded = instances.loadedPromise.then(
 			(retInstances) => {
 				this.crumbs = [
-					{ title: 'Issuers', routerLink: ['/issuer/issuers'] },
+					{ title: 'Meine Institutionen', routerLink: ['/issuer/issuers'] },
 					{ title: this.issuer.name, routerLink: ['/issuer/issuers/' + this.issuerSlug] },
 					{
 						title: this.badgeClass.name,

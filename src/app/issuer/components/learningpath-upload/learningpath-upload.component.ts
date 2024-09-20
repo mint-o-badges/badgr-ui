@@ -41,7 +41,7 @@ export class LearningPathUploadComponent extends BaseAuthenticatedRoutableCompon
         this.issuerLoaded = this.issuerManager.issuerBySlug(this.issuerSlug).then((issuer) => {
 			this.issuer = issuer;
 			this.breadcrumbLinkEntries = [
-				{ title: 'Issuers', routerLink: ['/issuer'] },
+				{ title: 'Meine Institutionen', routerLink: ['/issuer'] },
 				{ title: issuer.name, routerLink: ['/issuer/issuers', this.issuerSlug] },
                 { title: 'Lernpfade' },
 				{ title: 'Lernpfad hochladen', routerLink: ['/issuer/issuers', this.issuerSlug, '/learningpaths/upload'] },
