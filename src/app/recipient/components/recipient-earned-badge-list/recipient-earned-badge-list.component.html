@@ -16,9 +16,8 @@
 
 				</div>
 			</ng-template>
-
 			<div class="oeb-section-sm">
-				<oeb-backpack-tabs (onTabChanged)="onTabChange($event)" [tabs]="tabs"></oeb-backpack-tabs>
+				<oeb-backpack-tabs (onTabChanged)="onTabChange($event)" [activeTab]="'Badges'" [tabs]="tabs"></oeb-backpack-tabs>
 				<!-- <ng-template #overViewTemplate>
 					<div class="oeb-section">
 						<h1 hlmH1 class="tw-text-purple">Coming soon...</h1>
