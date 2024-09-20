@@ -112,7 +112,7 @@ export class OebLearningPathDetailComponent implements OnInit {
 						this.requests = this.requests.filter(
 								(request) => request.entitiy_id != req.entitiy_id,
 							);
-						this.learningPathApiService.deleteLearningPathRequest(this.learningPath.slug);
+						this.learningPathApiService.deleteLearningPathRequest(req.entity_id);
 					},
 					(error) => {
 						this.messageService.setMessage(
