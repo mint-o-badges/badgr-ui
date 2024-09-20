@@ -9,20 +9,19 @@ type MatchOrProgressType = { match?: number, progress?: number };
 		class: 'tw-rounded-[10px] tw-w-[208px] md:tw-w-[392px] tw-border-solid tw-relative tw-p-6 tw-block tw-overflow-hidden oeb-badge-card',
 	},
 	template: `
-		<a
-					[routerLink]="['/public/learningpaths/', slug]">
-		<div class="tw-flex tw-flex-col tw-justify-between tw-h-full">
+		<a [routerLink]="['/public/learningpaths/', slug]">
+			<div class="tw-flex tw-flex-col tw-justify-between tw-h-full">
 				<div class="tw-bg-[var(--color-lightgray)] tw-w-full tw-relative md:tw-h-[175px] tw-h-[100px] tw-items-center tw-flex tw-justify-center tw-p-2 tw-rounded-[3px]">
 				<div *ngIf="!completed" class="tw-absolute tw-top-[10px] tw-right-[10px]">
-					<img src="/assets/oeb/images/learningPath/learningPathIcon.png" class="tw-w-[30px]"
+					<img src="/assets/oeb/images/learningPath/learningPathIcon.png" class="md:tw-w-[30px] tw-w-[20px]"
 						alt="LearningPath" />
 				</div>
 				<div *ngIf="completed" class="tw-absolute tw-top-[10px] tw-right-[10px] tw-flex tw-justify-center tw-items-center tw-gap-2">
 					<div class="tw-bg-white tw-inline-flex tw-rounded-full tw-justify-center tw-items-center tw-border-solid tw-border-green tw-border-[3px] ">
-						<hlm-icon class="tw-text-purple tw-box-border tw-w-[30px] tw-h-[30px]" name="lucideCheck" />
+						<hlm-icon class="tw-text-purple tw-box-border md:tw-w-[30px] tw-w-[20px] md:tw-h-[30px] tw-h-[20px]" name="lucideCheck" />
 					</div>
 					<div class="tw-inline-block">
-						<img src="/assets/oeb/images/learningPath/learningPathIcon.png" class="tw-w-[30px]"
+						<img src="/assets/oeb/images/learningPath/learningPathIcon.png" class="md:tw-w-[30px] tw-w-[20px]"
 							alt="LearningPath" />
 					</div>
 				</div>
@@ -42,14 +41,14 @@ type MatchOrProgressType = { match?: number, progress?: number };
 						>{{ name }}</span>
 						<a class="md:tw-text-[18px] md:tw-leading-[23.4px] tw-text-[10px] tw-leading-[13px]">{{issuerTitle}}</a>
 					<div class="tw-grid tw-items-center">
-						<div *ngIf="!isProgress" class="oeb-standard-padding-bottom">
-							<div  class="tw-bg-white tw-text-purple tw-px-[11.55px] tw-py-[3.85px] tw-rounded-[95px] tw-inline-block tw-border-solid tw-border-[1.59px] tw-border-purple tw-mr-1"
+						<div *ngIf="!isProgress" class="oeb-standard-padding-bottom tw-gap-1 tw-flex tw-flex-wrap">
+							<div hlmP size="sm" class="tw-bg-white tw-text-purple md:tw-px-[11.55px] tw-px-[5px] tw-py-[2px] md:tw-py-[3.85px] tw-rounded-[95px] tw-border-solid tw-border-[1.59px] tw-border-purple tw-mr-1"
 								*ngFor="let tag of tags | slice: 0 : 3; last as last">
 								{{ tag }}
 							</div>									
 						</div>
 						<div *ngIf="isMatch; else progressBar">
-							<div class="tw-px-[11.55px] tw-py-[3.85px] tw-bg-lightpurple tw-rounded-[95px] tw-max-w-[30%]">
+							<div class="tw-px-[11.55px] tw-py-[3.85px] tw-bg-lightpurple tw-rounded-[95px] tw-inline-block">
 								<span class="tw-text-sm tw-text-purple">{{this._matchOrProgress?.match.toFixed(0)}}% Match</span> 
 							</div>
 						</div>	
