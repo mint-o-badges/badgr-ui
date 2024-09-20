@@ -11,7 +11,7 @@ type MatchOrProgressType = { match?: number, progress?: number };
 	template: `
 		<a
 					[routerLink]="['/public/learningpaths/', slug]">
-		<div class="tw-flex tw-flex-col">
+		<div class="tw-flex tw-flex-col tw-justify-between tw-h-full">
 				<div class="tw-bg-[var(--color-lightgray)] tw-w-full tw-relative md:tw-h-[175px] tw-h-[100px] tw-items-center tw-flex tw-justify-center tw-p-2 tw-rounded-[3px]">
 				<div *ngIf="!completed" class="tw-absolute tw-top-[10px] tw-right-[10px]">
 					<img src="/assets/oeb/images/learningPath/learningPathIcon.png" class="tw-w-[30px]"
@@ -63,9 +63,10 @@ type MatchOrProgressType = { match?: number, progress?: number };
 								<span class="tw-ml-2 md:tw-text-sm tw-text-[8px] tw-text-purple">Lernpfad <span *ngIf="!completed">{{(progress/studyLoad*100).toFixed(0)}}%</span> abgeschlossen</span>
 							</div>
 						</ng-template>	
-						<oeb-button *ngIf="isProgress && progress/studyLoad === 1 && !this.completed && !this.requested" (click)="requestLearningPath()" [text]="'Lernpfad abholen'" width="full_width">
+						<oeb-button *ngIf="isProgress && progress/studyLoad === 1 && !completed && !requested" (click)="requestLearningPath()" [text]="'Lernpfad abholen'" width="full_width">
 							
 						</oeb-button>
+						<p hlmP *ngIf="requested">Badge erfolgreich angefragt!</p>
 					</div>
 					<div class="tw-flex tw-flex-row tw-gap-4 tw-text-[#6B7280] md:tw-text-sm tw-text-[8px] tw-mt-6 tw-items-end">
 						<hlm-icon name="lucideClock" />
@@ -93,10 +94,10 @@ export class BgLearningPathCard {
 	@Input() badgeClass: string;
 	@Input() issuerTitle: string;
 	@Input() tags: string[];
-	@Input() public = false;
+	@Input() public: boolean = false;
 	@Input() studyLoad: number;
-	@Input() completed = false;
-	@Input() requested = false;
+	@Input() completed: boolean = false;
+	@Input() requested: boolean = false;
 	@Input() progress: number | null = null;
 	@Input() match: number | null = null;
 	@Output() shareClicked = new EventEmitter<MouseEvent>();
@@ -121,7 +122,6 @@ export class BgLearningPathCard {
 	  }
 	
 	  get isMatch(): boolean {
-		console.log(this._matchOrProgress)
 		return !isNaN(this._matchOrProgress.match);
 		// return 'match' in this._matchOrProgress;
 	  }
@@ -140,6 +140,9 @@ export class BgLearningPathCard {
 	//   }
 	
 	  requestLearningPath() {
-		this.learningPathApiService.requestLearningPath(this.slug)
+		this.learningPathApiService.requestLearningPath(this.slug).then(res => {
+			console.log(res);
+			this.requested = true;
+		})
 	  }
 }

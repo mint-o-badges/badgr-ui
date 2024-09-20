@@ -46,6 +46,8 @@ import { OebButtonComponent } from './oeb-button.component';
                     class="tw-w-full"
                     (click)="actionElement.emit(request)"
                     [text]="actionElementText"
+                    [disabled]="!!loading"
+                    [loading-promises]="[loading]" loading-message="Badge vergeben..."
                 ></oeb-button>
                     </hlm-th>
                 </hlm-trow>
@@ -55,6 +57,7 @@ import { OebButtonComponent } from './oeb-button.component';
 export class LearningPathRequestsDatatableComponent {
 	@Input() caption: string = "";
     @Input() requests: any[];
+    @Input() loading;
     @Input() actionElementText: string = "Badge vergeben"
     @Output() actionElement = new EventEmitter();
 }

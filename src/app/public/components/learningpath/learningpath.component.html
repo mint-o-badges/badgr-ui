@@ -14,8 +14,9 @@
 						</div>
 					</div>
 					<form *ngIf="sessionService.isLoggedIn" (ngSubmit)="participate()" novalidate>
-						<oeb-button [variant]="participantButtonVariant" hlmBtn type="submit"
+						<oeb-button *ngIf="!learningPath.requested" [variant]="participantButtonVariant" hlmBtn type="submit"
 							[text]="participationButtonText"></oeb-button>
+						<h3 *ngIf="learningPath.requested && !learningPath.completed" class="tw-text-purple" hlmH3>Du hast deinen Lernpfad-Badge erfolgreich angefragt!</h3>
 					</form>
 				</div>
 				<div

@@ -3,6 +3,13 @@ import { animate, animateChild, query, stagger, state, style, transition, trigge
 import { LearningPathApiService } from '../../services/learningpath-api.service';
 import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
 import { DangerDialogComponentTemplate } from '../../dialogs/oeb-dialogs/danger-dialog-template.component';
+import { BadgeClassManager } from '../../../issuer/services/badgeclass-manager.service';
+import { BadgeClass } from '../../../issuer/models/badgeclass.model';
+import { BadgeInstanceManager } from '../../../issuer/services/badgeinstance-manager.service';
+import { Router } from '@angular/router';
+import { MessageService } from '../../services/message.service';
+import { BadgrApiFailure } from '../../services/api-failure';
+import { SuccessDialogComponent } from '../../dialogs/oeb-dialogs/success-dialog.component';
 
 @Component({
 	selector: 'oeb-learning-path',
@@ -27,9 +34,15 @@ export class OebLearningPathDetailComponent implements OnInit {
 	@Input() badges;
 	@Input() participants;
 	@Input() requests;
+	loading: any;
 
 	constructor(
-		private learningPathApiService: LearningPathApiService
+		private learningPathApiService: LearningPathApiService,
+		private badgeClassManager: BadgeClassManager,
+		private badgeInstanceManager: BadgeInstanceManager,
+		private messageService: MessageService,
+		public router: Router,
+
 	) {
         
 	};
@@ -63,6 +76,62 @@ export class OebLearningPathDetailComponent implements OnInit {
 		this.learningPathApiService.deleteLearningPath(issuer.slug, learningPathSlug).then(
 			() => console.log("del")
 		);
+	}
+
+	public giveBadge(req){
+		this.loading = true;
+		let recipientProfileContextUrl = 'https://openbadgespec.org/extensions/recipientProfile/context.json';
+
+		this.badgeClassManager
+			.badgeByIssuerSlugAndSlug(this.issuer.slug, this.learningPath.participationBadge_id)
+			.then((badgeClass: BadgeClass) => {
+
+			this.loading = this.badgeInstanceManager
+				.createBadgeInstance(this.issuer.slug, this.learningPath.participationBadge_id, {
+					issuer: this.issuer.slug,
+					badge_class: this.learningPath.participationBadge_id,
+					recipient_type: 'email',
+					recipient_identifier: req.email,
+					narrative: '',
+					create_notification: true,
+					evidence_items: [],
+					extensions: {
+						...badgeClass.extension,
+						'extensions:recipientProfile': {
+							'@context': recipientProfileContextUrl,
+							type: ['Extension', 'extensions:RecipientProfile'],
+							name: req.email,
+						},
+					},
+				})
+				.then(
+					() => {
+						this.router.navigate(['issuer/issuers', this.issuer.slug, 'badges', this.learningPath.participationBadge_id]);
+						this.openSuccessDialog(req.email);
+				
+						this.requests = this.requests.filter(
+								(request) => request.entitiy_id != req.entitiy_id,
+							);
+						this.learningPathApiService.deleteLearningPathRequest(this.learningPath.slug);
+					},
+					(error) => {
+						this.messageService.setMessage(
+							'Unable to award badge: ' + BadgrApiFailure.from(error).firstMessage,
+							'error',
+						);
+					},
+				)
+				.then(() => (this.loading = null));
+		});
+	}
+
+	public openSuccessDialog(recipient) {
+		const dialogRef = this._hlmDialogService.open(SuccessDialogComponent, {
+			context: {
+				recipient: recipient,
+				variant: 'success',
+			},
+		});
 	}
 
 }
