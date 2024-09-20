@@ -21,15 +21,15 @@ import { TranslateService } from '@ngx-translate/core';
 			multi: true,
 		},
 	],
-	template: ` <label class="tw-flex" hlmP>
-			<hlm-checkbox [name]="name" [checked]="checked" (changed)="onChange($event)" [formControl]="control" class="tw-mr-2 tw-mt-[0.25rem]" />
+	template: ` <label class="tw-flex tw-items-center tw-mt-[0.25rem]" hlmP>
+			<hlm-checkbox [name]="name" [checked]="checked" (changed)="onChange($event)" [formControl]="control" class="tw-mr-2" />
 			<div class="tw-flex tw-flex-col">
 				<span class="tw-pl-[3px]" [innerHTML]="text"></span>
 				<oeb-input-error
-				class="tw-text-red tw-pl-[3px]"
-				*ngIf="isErrorState"
-				[error]="errorMessageForDisplay"
-			></oeb-input-error>
+					class="tw-text-red tw-pl-[3px]"
+					*ngIf="isErrorState"
+					[error]="errorMessageForDisplay"
+				></oeb-input-error>
 
 			</div>
 		</label>`,
