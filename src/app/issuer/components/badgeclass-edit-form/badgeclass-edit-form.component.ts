@@ -751,6 +751,13 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	}
 
 	async onSubmit() {
+		const studyLoadExtensionContextUrl = `${this.baseUrl}/static/extensions/StudyLoadExtension/context.json`;
+		const categoryExtensionContextUrl = `${this.baseUrl}/static/extensions/CategoryExtension/context.json`;
+		const levelExtensionContextUrl = `${this.baseUrl}/static/extensions/LevelExtension/context.json`;
+		const basedOnExtensionContextUrl = `${this.baseUrl}/static/extensions/BasedOnExtension/context.json`;
+		const competencyExtensionContextUrl = `${this.baseUrl}/static/extensions/CompetencyExtension/context.json`;
+		const orgImageExtensionContextUrl = `${this.baseUrl}/static/extensions/OrgImageExtension/context.json`;
+
 		try {
 			if (this.badgeClassForm.rawControl.controls.badge_category.value === 'competency') {
 				this.badgeClassForm.controls.competencies.rawControls.forEach((control, i) => {
@@ -774,10 +781,15 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				}
 			}).join('');
 
+			let studyLoad
+
+
 			if(this.badgeCategory === 'competency'){
 				this.badgeClassForm.controls.badge_criteria_text.setValue(criteriaText + participationText + competenciesTextCaption + competenciesText + aiCompetenciesText );
+				studyLoad = this.getCompetencyExtensions(this.aiCompetenciesSuggestions, this.badgeClassForm.value, competencyExtensionContextUrl).reduce((acc, competency) => acc + competency.studyLoad, 0)
 			}else{
-				this.badgeClassForm.controls.badge_criteria_text.setValue(criteriaText + participationText );	
+				this.badgeClassForm.controls.badge_criteria_text.setValue(criteriaText + participationText );
+				studyLoad = Number(this.badgeClassForm.value.badge_study_load)
 			}
 
 			let imageFrame = true
@@ -811,13 +823,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			const formState = this.badgeClassForm.value;
 			const expirationState = this.expirationEnabled ? this.expirationForm.value : undefined;
 
-			const studyLoadExtensionContextUrl = `${this.baseUrl}/static/extensions/StudyLoadExtension/context.json`;
-			const categoryExtensionContextUrl = `${this.baseUrl}/static/extensions/CategoryExtension/context.json`;
-			const levelExtensionContextUrl = `${this.baseUrl}/static/extensions/LevelExtension/context.json`;
-			const basedOnExtensionContextUrl = `${this.baseUrl}/static/extensions/BasedOnExtension/context.json`;
-			const competencyExtensionContextUrl = `${this.baseUrl}/static/extensions/CompetencyExtension/context.json`;
-			const orgImageExtensionContextUrl = `${this.baseUrl}/static/extensions/OrgImageExtension/context.json`;
-
 			const suggestions = this.aiCompetenciesSuggestions;
 			if (this.existingBadgeClass) {
 				this.existingBadgeClass.name = formState.badge_name;
@@ -833,7 +838,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 					'extensions:StudyLoadExtension': {
 						'@context': studyLoadExtensionContextUrl,
 						type: ['Extension', 'extensions:StudyLoadExtension'],
-						StudyLoad: Number(formState.badge_study_load),
+						StudyLoad: studyLoad,
 					},
 					'extensions:CategoryExtension': {
 						'@context': categoryExtensionContextUrl,
@@ -884,7 +889,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 						'extensions:StudyLoadExtension': {
 							'@context': studyLoadExtensionContextUrl,
 							type: ['Extension', 'extensions:StudyLoadExtension'],
-							StudyLoad: Number(formState.badge_study_load),
+							StudyLoad: studyLoad,
 						},
 						'extensions:CategoryExtension': {
 							'@context': categoryExtensionContextUrl,
@@ -950,7 +955,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		escoId: string;
 		studyLoad: number;
 		category: string;
-	} {
+	}[] {
 		return formState.competencies
 			.map((competency) => ({
 				'@context': competencyExtensionContextUrl,
