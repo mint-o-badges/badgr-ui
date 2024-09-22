@@ -92,7 +92,7 @@ export class IssuerLearningPathComponent extends BaseAuthenticatedRoutableCompon
 				);
 				
 				this.learningPathLoaded = new Promise<void>((resolve, reject) => {
-					this.learningPathApiService.getLearningPath(this.learningPathSlug).then(
+					this.learningPathApiService.getLearningPath(this.issuerSlug, this.learningPathSlug).then(
 						(result) => {
 							this.learningPath = result;
 							this.crumbs = [

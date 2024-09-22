@@ -25,6 +25,7 @@ export interface ApiLearningPath {
 export interface ApiLearningPathParticipant {
     id?: number; 
     slug?: string;
+    entity_id?: string;
     user: ApiUserProfile;
     completed_badges: number;
     started_at: Date;

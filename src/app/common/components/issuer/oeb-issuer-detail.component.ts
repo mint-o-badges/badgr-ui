@@ -129,6 +129,7 @@ export class OebIssuerDetailComponent implements OnInit {
 	ngOnInit() {
 		// super.ngOnInit();
 		this.updateResults();
+		this.getLearningPathsForIssuerApi(this.issuer.slug);
 	}
 
     delete(event){
@@ -161,6 +162,12 @@ export class OebIssuerDetailComponent implements OnInit {
 	deleteLearningPathApi(learningPathSlug, issuer){
 		this.learningPathApiService.deleteLearningPath(issuer.slug, learningPathSlug).then(
 			() => this.learningPaths = this.learningPaths.filter(value => value.slug != learningPathSlug)
+		);
+	}
+
+	getLearningPathsForIssuerApi(issuerSlug){
+		this.learningPathApiService.getLearningPathsForIssuer(issuerSlug).then(
+			(learningPaths) => this.learningPaths = learningPaths
 		);
 	}
 

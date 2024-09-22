@@ -17,8 +17,8 @@ export class LearningPathApiService extends BaseHttpApiService {
 		super(loginService, http, configService, messageService);
 	}
 
-	getLearningPath(lpSlug: string) {
-		return this.get<ApiLearningPath>(`/v1/issuer/learningpath/${lpSlug}`).then((r) => r.body);
+	getLearningPath(issuerSlug: string, lpSlug: string) {
+		return this.get<ApiLearningPath>(`/v1/issuer/issuers/${issuerSlug}/learningpath/${lpSlug}`).then((r) => r.body);
 	}
 
 	getPublicLearningPath(lpSlug: string) {
@@ -71,6 +71,10 @@ export class LearningPathApiService extends BaseHttpApiService {
 
 	getLearningPathParticipants(lpSlug: string){
 		return this.get<ApiLearningPathParticipant[]>(`/v1/issuer/learningpath/${lpSlug}/participants`);
+	}
+
+	updateLearningPathParticipant(participantId: string, body: ApiLearningPathParticipant){
+		return this.put<ApiLearningPathParticipant>(`/learningpath/participant/${participantId}`, body);
 	}
 
 	requestLearningPath(lpId: string){

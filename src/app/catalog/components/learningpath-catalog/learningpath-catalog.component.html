@@ -33,7 +33,7 @@
 					<div class="oeb-standard-padding-bottom">
 						<div (click)="filterByTag(tag)" class="tag tag-wrapper tag-button tw-cursor-pointer tw-mr-2"
 							[class.tag-button-pressed]="selectedTag == tag"
-							*ngFor="let tag of tags | slice: 0 : 3; last as last">
+							*ngFor="let tag of tags ; last as last">
 							{{ tag }}
 						</div>
 					</div>
@@ -48,7 +48,7 @@
 							[tags]="lp.tags"
 							[slug]="lp.slug"
 							[studyLoad]="calculateStudyLoad(lp)"
-							[completed]="lp.completed"
+							[completed]="checkCompleted(lp)"
 							[requested]="lp.requested"
 							[progress]="lp.progress"
 							[matchOrProgress]="calculateLearningPathStatus(lp)"
@@ -77,7 +77,7 @@
 						[progress]="lp.progress"
 						[requested]="lp.requested"
 						[matchOrProgress]="calculateLearningPathStatus(lp)"
-						[completed]="lp.completed"
+						[completed]="checkCompleted(lp)"
 						></bg-learningpathcard>
 					<!-- TODO: Fix the badgecard link for sharing and routing -->
 					<!-- <bg-badgecard *ngFor="let badge of issuerGroup.badges" [badgeTitle]="badge.name"

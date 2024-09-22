@@ -149,6 +149,10 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 		}
 	}
 
+	checkCompleted(lp: LearningPath): boolean {
+		return lp.completed_at != null;
+	}
+
 	calculateStudyLoad(lp: LearningPath): number {
 		const totalStudyLoad = lp.badges.reduce((acc, b) => acc + b.badge.extensions['extensions:StudyLoadExtension'].StudyLoad, 0);
 		return totalStudyLoad;

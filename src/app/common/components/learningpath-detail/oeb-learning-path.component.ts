@@ -78,6 +78,8 @@ export class OebLearningPathDetailComponent implements OnInit {
 		);
 	}
 
+
+
 	public giveBadge(req){
 		this.loading = true;
 		let recipientProfileContextUrl = 'https://openbadgespec.org/extensions/recipientProfile/context.json';
@@ -91,7 +93,7 @@ export class OebLearningPathDetailComponent implements OnInit {
 					issuer: this.issuer.slug,
 					badge_class: this.learningPath.participationBadge_id,
 					recipient_type: 'email',
-					recipient_identifier: req.email,
+					recipient_identifier: req.user.email,
 					narrative: '',
 					create_notification: true,
 					evidence_items: [],
@@ -121,8 +123,20 @@ export class OebLearningPathDetailComponent implements OnInit {
 						);
 					},
 				)
-				.then(() => (this.loading = null));
-		});
+				.then(() => {
+					this.loading = null
+					this.learningPathApiService.getLearningPathParticipants(this.learningPath.slug).then(
+						(participants) => {
+							// @ts-ignore
+							const participant = participants.body.filter((p) => p.user.slug === req.user.slug);
+							this.learningPathApiService.updateLearningPathParticipant(participant[0].entity_id, {
+								...participant[0],
+								completed_at: new Date(),
+							})
+						},
+					)}
+					)
+				});
 	}
 
 	public openSuccessDialog(recipient) {
