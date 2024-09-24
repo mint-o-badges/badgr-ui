@@ -20,6 +20,7 @@ import { HlmPDirective } from './spartan/ui-typography-helm/src/lib/hlm-p.direct
 				<span hlmP class="tw-text-oebblack tw-font-semibold" [innerHTML]="label"></span
 				>
 				</ng-template>
+				<span class="tw-pl-[3px] tw-text-oebblack" *ngIf="sublabelRight"> {{sublabelRight}}</span>
 				<span *ngIf="optional">(OPTIONAL)</span>
 				<span *ngIf="formFieldAside">{{ formFieldAside }}</span>
 			</label>
@@ -83,6 +84,7 @@ export class OebInputComponent {
 	@Input() maxchar?: number = null;
 	@Input() max?: number;
 	@Input() sublabel?: string;
+	@Input() sublabelRight?: string;
 	@Input() autofocus = false;
 	@Input() noTopMargin = false;
 

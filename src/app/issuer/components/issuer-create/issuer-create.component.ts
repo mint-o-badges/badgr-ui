@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, ValidationErrors, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from '../../../common/services/message.service';
 import { IssuerManager } from '../../services/issuer-manager.service';
@@ -15,12 +15,13 @@ import { FormFieldSelectOption } from '../../../common/components/formfield-sele
 import { AppConfigService } from '../../../common/app-config.service';
 import { typedFormGroup } from '../../../common/util/typed-forms';
 import { TranslateService } from '@ngx-translate/core';
-
 import { QueryParametersService } from '../../../common/services/query-parameters.service';
+import { imageRatioAsyncValidator } from '../../../common/validators/image-ratio.validator';
 
 @Component({
 	selector: 'issuer-create',
 	templateUrl: './issuer-create.component.html',
+	styleUrls: ['./issuer-create.component.scss'],
 })
 export class IssuerCreateComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	readonly issuerImagePlacholderUrl = preloadImageURL(
@@ -37,7 +38,7 @@ export class IssuerCreateComponent extends BaseAuthenticatedRoutableComponent im
 		])
 		.addControl('issuer_url', '', [Validators.required, UrlValidator.validUrl])
 		.addControl('issuer_category', '', [Validators.required])
-		.addControl('issuer_image', '')
+		.addControl('issuer_image', '', [Validators.required, imageRatioAsyncValidator(['1:1'])])
 		.addControl('issuer_street', '')
 		.addControl('issuer_streetnumber', '')
 		.addControl('issuer_zip', '')
@@ -49,8 +50,9 @@ export class IssuerCreateComponent extends BaseAuthenticatedRoutableComponent im
 	emailsLoaded: Promise<unknown>;
 
 	enterDescription: string; 
-	issuerRequiredError = this.translate.instant('Issuer.enterName');
-
+	issuerRequiredError: string;
+	selectFromMyFiles: string;
+	useImageFormat: string;
 
 	constructor(
 		loginService: SessionService,
@@ -90,8 +92,23 @@ export class IssuerCreateComponent extends BaseAuthenticatedRoutableComponent im
 
 	ngOnInit() {
 		super.ngOnInit();
+		this.issuerForm.rawControl.controls.issuer_image.statusChanges.subscribe((status) => {
+			if (status === 'INVALID') {
+				console.log(this.issuerForm.rawControl.controls.issuer_image.hasError('imageRatio'))
+			//   alert(JSON.stringify(this.fileControl.errors));
+			}
+		  });
 		this.translate.get('Issuer.enterDescription').subscribe((translatedText: string) => {
             this.enterDescription = translatedText;
+		});
+		this.translate.get('Issuer.enterName').subscribe((translatedText: string) => {
+            this.issuerRequiredError = translatedText;
+		});
+		this.translate.get('RecBadge.selectFromMyFiles').subscribe((translatedText: string) => {
+            this.selectFromMyFiles = translatedText;
+		});
+		this.translate.get('Issuer.useImageFormat').subscribe((translatedText: string) => {
+            this.useImageFormat = translatedText;
 		});
 	}
 
@@ -109,6 +126,8 @@ export class IssuerCreateComponent extends BaseAuthenticatedRoutableComponent im
 		}
 		
 		const formState = this.issuerForm.value;
+		console.log(this.issuerForm.errors)
+
 
 
 		const issuer: ApiIssuerForCreation = {
@@ -126,6 +145,8 @@ export class IssuerCreateComponent extends BaseAuthenticatedRoutableComponent im
 		if (formState.issuer_image && String(formState.issuer_image).length > 0) {
 			issuer.image = formState.issuer_image;
 		}
+		console.log(formState.issuer_image)
+
 
 		this.addIssuerFinished = this.issuerManager
 			.createIssuer(issuer)

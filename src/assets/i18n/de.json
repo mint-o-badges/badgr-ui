@@ -157,7 +157,7 @@
 		"viewOriginal": "Original ansehen",
 		"awardBadges": "Erstelle eine Institution, um Badges zu vergeben.",
 		"institutionWillAward": "Diese Institution wird Absender der über sie erstellten Badges sein.",
-		"imageOptional": "Bild (Optional)",
+		"imageLogo": "Logo-Bild",
 		"enterName": "Bitte gib einen Namen an",
 		"enterURL": "Bitte gib eine gültige URL an",
 		"enterValidEmail": "Bitte gib eine gültige E-Mail Adresse an",
@@ -226,7 +226,8 @@
 		"import": "Importieren",
 		"csvColumns": "CSV Spalten",
 		"csvError": "Die CSV Datei enthält Zeilen länger als ihre Überschrift. Bitte behebe diesen Fehler und versuche es erneut.",
-		"pdfCertificate": "PDF-Zertifikat"
+		"pdfCertificate": "PDF-Zertifikat",
+		"useImageFormat": "Bitte nutze ein Bild im quadratischen Format 1:1, damit es auf unserer Plattform optimal dargestellt werden kann."
 	},
 	"Badge": {
 		"groupBy": "Gruppieren nach",

@@ -12,11 +12,22 @@
 		<form (ngSubmit)="onSubmit()" class="oeb-max-form-width tw-mt-6" novalidate>
 			<bg-formfield-image
 				#imageField
-				label="{{ 'Issuer.imageOptional' | translate }}"
+				label="{{ 'Issuer.imageLogo' | translate }}"
+				sublabelRight="(Format 1:1 / quadratisch)"
 				imageLoaderName="issuer"
+				[text_body]="selectFromMyFiles"
+				dropZoneInfo1="Drag & Drop"
+				[dropZoneInfo3]="useImageFormat"
 				[placeholderImage]="issuerImagePlacholderUrl"
 				[control]="issuerForm.rawControlMap.issuer_image"
+				[allowedFileFormats]="['image/png', 'image/svg+xml']"
+				[errorMessage]="{
+					required: 'Bitte gib die Dauer für den Erwerb der Kompetenz ein.',
+					imageRatio: 'Das Bild muss quadratisch sein.',
+				}"
+
 			></bg-formfield-image>
+			<span class="tw-text-oebblack tw-italic tw-text-lg">Dateiformat: PNG</span>
 
 			<oeb-input
 				label="{{ 'General.name' | translate }} der Institution"
@@ -24,7 +35,7 @@
 				[fieldType]="'text'"
 				[autofocus]="true"
 				[errorMessage]="{ required: issuerRequiredError }"
-				placeholder="(max 90 Zeichen)"
+				sublabelRight="(max 90 Zeichen)"
 				#issuer_name_field
 			></oeb-input>
 
@@ -51,6 +62,7 @@
 				[control]="issuerForm.rawControlMap.issuer_description"
 				[fieldType]="'textarea'"
 				[errorMessage]="{ required: enterDescription }"
+				sublabelRight="(mind. 200 / max. 300 Zeichen)"
 			></oeb-input>
 
 			<oeb-select
