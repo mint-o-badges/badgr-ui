@@ -1,4 +1,5 @@
 import { Component, EventEmitter, HostBinding, Input, Output } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 @Component({
 	selector: 'bg-badgecard',
@@ -110,7 +111,7 @@ export class BgBadgecard {
 	@Input() verifyUrl: string;
 	@Input() public = false;
 	@Input() competencies?: any[];
-	@Input() checkboxControl?: any;
+	@Input() checkboxControl?: FormControl;
 	@Output() shareClicked = new EventEmitter<MouseEvent>();
 	
 	checked = false;

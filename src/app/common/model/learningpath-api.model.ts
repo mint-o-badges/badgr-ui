@@ -5,6 +5,14 @@ export type LearningPathUrl = string;
 
 export interface LearningPathRef extends ApiEntityRef {}
 
+export interface ApiLearningPathForCreation {
+    issuer_id: string;
+    name: string;
+    description: string;
+    tags: string[];
+    badges: Array<object>;
+    participationBadge_id: string;
+}
 export interface ApiLearningPath {
     id?: number;
     slug?: string;
@@ -16,7 +24,7 @@ export interface ApiLearningPath {
     description: string;
     tags: string[];
     badges: Array<{ badge: any; order: number }>;
-    completed_badges: Array<any>
+    completed_badges?: Array<any>
     progress?: number | null;
     completed_at?: Date | null;
 }

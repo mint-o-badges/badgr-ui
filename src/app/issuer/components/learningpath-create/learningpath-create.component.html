@@ -1,0 +1,226 @@
+<div class="oeb tw-relative tw-w-full">
+    <ng-template [showLoader]="true" [bgAwaitPromises]="[badgesLoaded]">
+    <div class="page-padding">
+        <div class="oeb-breadcrumbs">
+            <bg-breadcrumbs [linkentries]="breadcrumbLinkEntries"> </bg-breadcrumbs>
+        </div>
+        <form-message></form-message>
+    <form [formGroup]="learningPathForm.rawControl" #formElem (ngSubmit)="onSubmit()" novalidate>
+    <div class="oeb-section tw-bg-[var(--color-lightpurple)] !tw-p-20">
+        <div class="oeb-headline-container-sm">
+            <h1 hlmH1 class="tw-text-purple tw-font-extrabold">{{'Issuer.learningPathHeadline' | translate}}</h1>
+        </div>
+
+          <oeb-input 
+            label="Lernpfad-Titel"
+            [control]="learningPathForm.rawControlMap.name"
+            [autofocus]="true"
+            [errorMessage]="{
+              required: 'Required'
+            }"
+				></oeb-input>
+          <oeb-input 
+            label="Kurz-Beschreibung für Lernende"
+            [control]="learningPathForm.rawControlMap.description"
+            [fieldType]="'textarea'"
+          ></oeb-input>
+
+          <div class="tw-flex md:tw-flex-row tw-gap-3 md:tw-gap-8 tw-flex-col" id="imageSection" #imageSection>
+            <span class="input-label md:tw-flex-[0_0_10em]"> Badge-{{ 'Issuer.image' | translate }}</span>
+            <div
+              class="tw-flex tw-flex-col tw-gap-4 md:tw-flex-row tw-bg-[var(--color-lightgreen)] tw-p-8 tw-justify-evenly tw-items-center tw-mr-auto tw-rounded-2xl"
+            >
+              <div class="tw-w-full">
+                <bg-formfield-image
+                  #imageField
+                  [label]="useOurEditor"
+                  [sublabel]="imageSublabel"
+                  [text_body]="selectFromMyFiles"
+                  dropZoneInfo1="Drag & Drop"
+                  [dropZoneInfo2]="chooseFromExistingIcons"
+                  imageLoaderName="badge"
+                  [newDropZone]="true"
+                  [generateRandom]="false"
+                  [type]="'badge'"
+                  [allowedFileFormats]="allowedFileFormats"
+                  (generateRandomImage)="generateRandomImage()"
+                  (imageUploaded)="generateUploadImage($event, learningPathForm.value)"
+                  [placeholderImage]="badgeClassPlaceholderImageUrl"
+                  [control]="learningPathForm.rawControlMap.badge_image"
+                  [errorMessage]="imageErrorFork"
+                >
+                </bg-formfield-image>
+                <span class="tw-italic tw-text-sm md:tw-flex md:tw-justify-center md:tw-items-center"
+                  >{{ 'General.fileformats' | translate }}: SVG {{ 'General.and' | translate }} PNG</span
+                >
+              </div>
+              <hr
+                class="md:tw-hidden tw-my-8 tw-w-full tw-border tw-border-[var(--color-purple)] tw-border-dashed"
+              />
+              <div class="tw-w-full">
+                <bg-formfield-image
+                  #customImageField
+                  [label]="useOwnVisual"
+							    [sublabel]="uploadOwnDesign"
+							    [text_body]="uploadOwnVisual"
+                  imageLoaderName="basic"
+                  [newDropZone]="true"
+                  [type]="'badge'"
+                  [allowedFileFormats]="allowedFileFormatsCustom"
+                  [generateRandom]="false"
+                  (generateRandomImage)="generateRandomImage()"
+                  (imageUploaded)="generateCustomUploadImage($event)"
+                  [placeholderImage]="badgeClassPlaceholderImageUrl"
+                  [control]="learningPathForm.rawControlMap.badge_customImage"
+                  [errorMessage]="imageErrorFork"
+                > 
+                </bg-formfield-image>
+                <span class="tw-italic tw-text-sm md:tw-flex md:tw-justify-center md:tw-items-center"
+                  >{{ 'General.fileformats' | translate }}: PNG</span
+                >
+              </div>
+              <badge-studio
+                [scrolled]="scrolled"
+                #badgeStudio
+                [formData]="learningPathForm.value"
+                [hidden]="true"
+              ></badge-studio>
+            </div>
+          </div>
+                
+            <h1>Enthaltene Badges</h1>
+            <div class="oeb-section tw-bg-[var(--color-lightpink)]">
+              <!-- Search  -->
+              <ng-container>
+                <div class="tw-pb-2 md:tw-pb-0 ">
+                  <input type="text" name="forminput" changeOrder
+                    class="tw-w-[300px] tw-border-solid tw-border-purple tw-bg-white tw-mr-6"
+                    placeholder="{{ 'Badge.searchBadges' | translate }}" [(ngModel)]="searchQuery" [ngModelOptions]="{standalone: true}"
+                    hlmInput />
+                </div>
+
+                <div class="l-actionbar-x-groupby">
+                  <label class="l-flex l-flex-2x">
+                    <span id="badge-catalog-select-label">{{ 'Badge.groupBy' | translate }} </span>
+                    <div class="forminput">
+                      <div class="forminput-x-inputs">
+                        <select [(ngModel)]="groupBy" #selectInput class="border" [ngModelOptions]="{standalone: true}" id="badge-catalog-select">
+                          <option *ngFor="let option of groups" [value]="option" >
+                            {{ option }}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                  </label>
+                </div>
+                <ng-container *ngIf="groupBy == '---'">
+                  <div class="tw-grid tw-grid-cols-badges tw-gap-16">
+                    <bg-badgecard *ngFor="let badge of learningPathForm.controls.badges.controls" [badgeTitle]="badge.controls.badge.rawControl.value.name"
+                    [badgeImage]="badge.controls.badge.rawControl.value.image" [badgeDescription]="badge.controls.badge.rawControl.value.description" [badgeSlug]="badge.controls.badge.rawControl.value.slug"
+                    [issuerTitle]="badge.controls.badge.rawControl.value.issuerName ? badge.controls.badge.rawControl.value.issuerName : badge.controls.badge.rawControl.value.issuer.name"
+                    [badgeIssueDate]="badge.controls.badge.rawControl.value.createdAt" public="true" [publicUrl]="badge.controls.badge.rawControl.value.url" [badgeClass]="true"
+                    [issuerSlug]="badge.controls.badge.rawControl.value.issuerSlug" [competencies]="badge.controls.badge.rawControl.value.extension['extensions:CompetencyExtension']"
+                    [checkboxControl]="badge.rawControlMap.selected" ></bg-badgecard>
+                  </div>
+                </ng-container>
+              </ng-container>
+              <ng-container *ngIf="groupBy == 'Kategorie' || groupBy == 'Category'">
+                <ng-container *ngFor="let categoryGroup of badgeResultsByCategory">
+                  <h3 class="u-text-h3-semibold u-margin-bottom2x u-margin-top6x u-text-dark1">
+                    {{ categoryOptions[categoryGroup.category] }}
+                    <span class="u-text-small-semibold-caps u-text-dark4 u-margin-left2x">{{
+                      categoryGroup.badges.length }}
+                      {{ categoryGroup.badges.length == 1 ? 'Badge' : 'Badges' }}</span>
+                  </h3>
+                  <div class="tw-grid tw-grid-cols-badges tw-gap-16">
+                    <!-- TODO: Fix the badgecard link for sharing and routing -->
+                    <bg-badgecard *ngFor="let badge of categoryGroup.badges" [badgeTitle]="badge.name"
+                      [badgeImage]="badge.image" [badgeDescription]="badge.description"
+                      [badgeSlug]="badge.slug"
+                      [issuerTitle]="badge.issuerName ? badge.issuerName : badge.issuer.name"
+                      [badgeIssueDate]="badge.createdAt" public="true" [publicUrl]="badge.url"
+                      [badgeClass]="true" [competencies]="badge.extension['extensions:CompetencyExtension']"></bg-badgecard>
+                  </div>
+                </ng-container>
+              </ng-container>
+            </div>
+            <h1>Reihenfolge der Badges im Lernpfad</h1>
+            <div class="oeb-section tw-bg-[var(--color-lightpink)]">
+                <!-- <ul class="tw-grid tw-grid-cols-1">
+                  <li
+                    class="tw-list-decimal tw-list-inside"
+                    *ngFor="let item of draggableList; let i = index"
+                    dndDraggable
+                    [dndDraggable]="item"
+                    (dndDrop)="onDrop($event, i, draggableList)"
+                    [dndDropzone]="{ allowedTypes: ['item-type'] }"
+                  >
+                  <div class="md:tw-w-[392px]">
+                    <bg-badgecard
+                      [badgeTitle]="item.name"
+                      [badgeImage]="item.image"
+                      [badgeDescription]="item.description"
+                      [badgeSlug]="item.slug"
+                      [issuerTitle]="item.issuerName"
+                      >
+                    </bg-badgecard>
+                  </div>
+                  </li>
+                </ul> -->
+                  <!-- <ul>
+                      <li *ngFor="let item of draggableList; let i = index"  
+                        dndDraggable
+                        [dndDraggable]="item"
+                        (dndDrop)="onDrop($event, i, items)"
+                        [dndDropzone]="{ allowedTypes: ['item-type'] }"
+                        class="tw-list-decimal">
+                        <div>
+                          {{item.content.name}}
+                        </div> -->
+                          <!-- <div  [dndDraggable] dndEffectAllowed="move" (dndMoved)="onDragged(item, draggableList, 'move')"> -->
+                              <!-- <bg-badgecard
+                                  [badgeTitle]="item.content.name"
+                                  [badgeImage]="item.content.image"
+                                  [badgeDescription]="item.content.description"
+                                  [badgeSlug]="item.content.slug"
+                                  [issuerTitle]="item.content.issuerName ? item.content.issuerName : item.content.issuer.name"
+                                  [badgeIssueDate]="item.content.createdAt"
+                                  public="true"
+                                  [publicUrl]="item.content.url"
+                                  [badgeClass]="true"
+                                  [issuerSlug]="item.content.issuerSlug"
+                                  [competencies]="item.content.extension['extensions:CompetencyExtension']"
+                                  [checkboxControl]="true">
+                              </bg-badgecard> -->
+                          <!-- </div> -->
+                      <!-- </li>
+                  </ul> -->
+          </div>
+
+          <div class="tw-flex tw-justify-between md:tw-justify-end tw-flex-wrap sm:tw-flex-nowrap tw-gap-2 tw-mt-8">
+            <oeb-button
+              class="tw-mr-4"
+              variant="secondary"
+              (click)="cancelClicked()"
+              [disabled-when-requesting]="true"
+              text="{{ 'General.cancel' | translate }}"
+            ></oeb-button>
+        
+            <oeb-button
+              type="submit"
+              width="max_content"
+              [disabled]="!!savePromise"
+              [loading-promises]="[savePromise]"
+              loading-message="{{ submittingText }}"
+              text="{{ (existingBadgeClass ? 'General.saveChanges' : 'Issuer.myInstitutionsCreateLearningPath') | translate }}"
+            >
+            </oeb-button>
+          </div>
+    </div>
+    
+    </form>
+    </div>
+    </ng-template>
+
+      
+</div>
