@@ -66,7 +66,7 @@
 					<bg-formfield-text
 						urlField="true"
 						[control]="addRecipientBadgeForm.rawControlMap.url"
-						errorMessage="Bitte gebe eine gültige URL ein"
+						errorMessage="Bitte gib eine gültige URL ein"
 						(change)="controlUpdated(addRecipientBadgeForm.controls.url)"
 						includeLabelAsWrapper="true"
 						placeholder="{{ 'RecBadge.enterURL' | translate }}"
@@ -82,7 +82,7 @@
 				<div class="forminput">
 					<bg-formfield-text
 						[control]="addRecipientBadgeForm.rawControlMap.assertion"
-						errorMessage="Bitte gebe ein gültiges JSON ein"
+						errorMessage="Bitte gib ein gültiges JSON ein"
 						placeholder="{{ 'RecBadge.enterJSON' | translate }}"
 						(change)="controlUpdated(addRecipientBadgeForm.controls.assertion)"
 						[multiline]="true"
