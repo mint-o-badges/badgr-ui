@@ -22,14 +22,14 @@
                         class="tw-font-extrabold">{{badgeClass.name}}</span></h2>
                 <oeb-input label="Titel" [placeholder]="'Badge Vergabe Juni 2024'" fieldType="text" [autofocus]="true"
                     [control]="qrForm.rawControlMap.title" ></oeb-input>
-                <oeb-input label="Name Ersteller:in" [placeholder]="'Mein Name und Vorname'" fieldType="text"
+                <oeb-input label="Name Ersteller:in" [placeholder]="'Mein Vorname und Nachname'" fieldType="text"
                     [control]="qrForm.rawControlMap.createdBy"></oeb-input>
                 <input [formControl]="qrForm.rawControlMap.badgeclass_id" type="hidden" />
                 <input [formControl]="qrForm.rawControlMap.issuer_id" type="hidden" />
 
 
                 <span
-                    class="tw-mt-6 md:tw-mt-7 tw-text-oebblack tw-font-semibold md:tw-leading-[28px] md:tw-text-[20px] tw-leading-[19px] tw-text-[14px]">Gültikeit
+                    class="tw-mt-6 md:tw-mt-7 tw-text-oebblack tw-font-semibold md:tw-leading-[28px] md:tw-text-[20px] tw-leading-[19px] tw-text-[14px]">Gültigkeit
                     des QR-Codes <span class="tw-font-normal">(optional)</span></span>
 
                 <div *ngIf="!editing; else editButtons"
@@ -40,15 +40,15 @@
                         <oeb-input labelStyle="tw-text-oebblack" label="End-Datum" [errorMessage]="{ expiresBeforeValidFrom: 'Das Ablaufdatum muss nach dem Start-Datum liegen', invalidDate: 'Bitte gib ein Datum in der Form YYYY/mm/dd an' }"
                             [control]="qrForm.rawControlMap.expires_at" fieldType="date"></oeb-input>
                     </div>
-                    <oeb-button class="tw-whitespace-nowrap" width="full_width" type="submit" text="Qr-Code generieren">
+                    <oeb-button class="tw-whitespace-nowrap" width="full_width" type="submit" text="QR-Code generieren">
                     </oeb-button>
 
                 </div>
                 <ng-template #editButtons>
                     <div class="tw-flex tw-gap-12 oeb-standard-padding-bottom">
-                        <oeb-input label="Start-Datum" [errorMessage]="'Bitte gebe ein Datum in der Form YYYY/mm/dd an'"
+                        <oeb-input label="Start-Datum" [errorMessage]="'Bitte gib ein Datum in der Form YYYY/mm/dd an'"
                             [control]="qrForm.rawControlMap.valid_from" fieldType="date"></oeb-input>
-                        <oeb-input label="End-Datum" [errorMessage]="'Bitte gebe ein Datum in der Form YYYY/mm/dd an'"
+                        <oeb-input label="End-Datum" [errorMessage]="'Bitte gib ein Datum in der Form YYYY/mm/dd an'"
                             [control]="qrForm.rawControlMap.expires_at" fieldType="date"></oeb-input>
                     </div>
                     <div class="tw-flex tw-flex-col md:tw-flex-row tw-gap-4 tw-mt-2 tw-w-full">

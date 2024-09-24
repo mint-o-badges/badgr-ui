@@ -47,8 +47,7 @@
 				label="{{ 'General.description' | translate }}"
 				[control]="issuerForm.rawControlMap.issuer_description"
 				[fieldType]="'textarea'"
-				errorMessage="{{ 'Issuer.enterDescription' | translate }}"
-				#issuer_description_field
+				[errorMessage]="{ required: enterDescription }"
 			></oeb-input>
 
 			<oeb-select
@@ -106,12 +105,6 @@
 				errorMessage="{{ 'Issuer.enterCity' | translate }}"
 				#issuer_city_field
 			></oeb-input>
-
-			<div class="tw-mt-6">
-				<form>
-					<altcha-widget auto="onfocus" id="altcha"></altcha-widget>
-				</form>
-			</div>
 
 			<label
 				[class.checkbox-is-error]="
