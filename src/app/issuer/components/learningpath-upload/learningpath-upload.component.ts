@@ -8,7 +8,7 @@ import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-a
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { Issuer } from '../../models/issuer.model';
 import { IssuerManager } from '../../services/issuer-manager.service';
-import { ApiLearningPath } from '../../../common/model/learningpath-api.model';
+import { ApiLearningPath, ApiLearningPathForCreation } from '../../../common/model/learningpath-api.model';
 import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
 
 @Component({
@@ -58,7 +58,7 @@ export class LearningPathUploadComponent extends BaseAuthenticatedRoutableCompon
 
     importAction() {
 		if (this.rawJson) {
-			const learningPath: ApiLearningPath = JSON.parse(this.rawJson);
+			const learningPath: ApiLearningPathForCreation = JSON.parse(this.rawJson);
 			this.learningPathApiService.createLearningPath(this.issuerSlug, learningPath).then((lp) => {	
 				this.router.navigate(['/issuer/issuers', this.issuerSlug, 'learningpaths', lp.slug]);
 			});

@@ -5,6 +5,16 @@ export type LearningPathUrl = string;
 
 export interface LearningPathRef extends ApiEntityRef {}
 
+export interface ApiLearningPathForCreation {
+    slug?: string;
+    issuer_id: string;
+    name: string;
+    description: string;
+    tags: string[];
+    participationBadge_id: string;
+    badges: Array<{ slug: string; order: number }>;
+}
+
 export interface ApiLearningPath {
     id?: number;
     slug?: string;
