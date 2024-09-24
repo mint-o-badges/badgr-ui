@@ -39,6 +39,7 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 	minutesTotal: number;
 	tabs: Tab[] = undefined;
 	activeTab = 'Alle';
+	loggedIn = false;
 
 	totalBadgeCount: number;
 	openBadgeCount: number;
@@ -73,7 +74,9 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 		});
 	}
 
-	ngOnInit(): void {}
+	ngOnInit(): void {
+		this.loggedIn = this.sessionService.isLoggedIn
+	}
 
 	ngAfterContentInit() {
 		this.tabs = [

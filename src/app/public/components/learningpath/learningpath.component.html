@@ -39,7 +39,7 @@
 					</div>
 					<div class="oeb-section-sm">
 						<h3 hlmH3 class="tw-text-oebblack tw-font-bold tw-pb-4">Enthaltene Badges</h3>
-						<oeb-backpack-tabs (onTabChanged)="onTabChange($event)" [tabs]="tabs" [activeTab]="'Alle'" [variant]="'lightpurple'"></oeb-backpack-tabs>
+						<oeb-backpack-tabs *ngIf="loggedIn; else allTemplate" (onTabChanged)="onTabChange($event)" [tabs]="tabs" [activeTab]="'Alle'" [variant]="'lightpurple'"></oeb-backpack-tabs>
 
 					</div>
 
