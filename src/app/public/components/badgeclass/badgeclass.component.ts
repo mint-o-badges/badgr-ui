@@ -11,20 +11,33 @@ import { routerLinkForUrl } from '../public/public.component';
 import { AppConfigService } from '../../../common/app-config.service';
 import { Title } from '@angular/platform-browser';
 import { PageConfig } from '../../../common/components/badge-detail/badge-detail.component.types';
+import { LearningPath } from '../../../issuer/models/learningpath.model';
+import { SessionService } from '../../../common/services/session.service';
+import { RecipientBadgeApiService } from '../../../recipient/services/recipient-badges-api.service';
 
 @Component({
 	template: `<bg-badgedetail [config]="config" [awaitPromises]="[badgeClass]">
 				<ng-template [bgAwaitPromises]="[learningPaths]">
-					<div class="tw-grid md:tw-grid-cols-learningpaths tw-grid-cols-learningpathsSmall tw-gap-16">
-						<bg-learningpathcard *ngFor="let lp of learningPaths"
-							[name]="lp.name"
-							[issuerTitle]="lp.issuer_name"
-							[description]="lp.description"
-							[tags]="lp.tags"
-							[slug]="lp.slug"
-							[progress]="lp.progress"
-						></bg-learningpathcard>
-					</div>
+				<div class="oeb" *ngIf="learningPaths.length > 0">
+					<oeb-separator class="tw-block tw-mb-6 tw-border-[var(--color-lightgray)] tw-border-2"></oeb-separator>
+					<span class="tw-my-2 tw-text-oebblack tw-text-[22px] tw-leading-[26px] tw-font-semibold"> Dieser Badge ist Teil folgender Lernpfade: </span>
+						<div class=" tw-mt-2 tw-grid md:tw-grid-cols-learningpaths tw-grid-cols-learningpathsSmall tw-gap-16">
+							<bg-learningpathcard *ngFor="let lp of learningPaths"
+								[name]="lp.name"
+								[badgeImage]="lp.participationBadge_image"
+								[issuerTitle]="lp.issuer_name"
+								[description]="lp.description"
+								[tags]="lp.tags"
+								[slug]="lp.slug"
+								[studyLoad]="calculateStudyLoad(lp)"
+								[progress]="lp.progress"
+								[matchOrProgress]="calculateLearningPathStatus(lp)"
+								[requested]="lp.requested"
+								[completed]="checkCompleted(lp)"
+
+							></bg-learningpathcard>
+						</div>
+				</div>	
 				</ng-template>
 				</bg-badgedetail>`,
 })
@@ -42,11 +55,18 @@ export class PublicBadgeClassComponent {
 
 	learningPaths: PublicApiLearningPath[];
 
+	userBadges: string[] = [];
+	loggedIn = false;
+	userBadgesLoaded: Promise<unknown>;
+
+
 	constructor(
 		private injector: Injector,
 		public embedService: EmbedService,
 		public configService: AppConfigService,
 		private title: Title,
+		private sessionService: SessionService,
+		private recipientBadgeApiService: RecipientBadgeApiService,
 	) {
 		title.setTitle(`Badge Class - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 
@@ -80,6 +100,17 @@ export class PublicBadgeClassComponent {
 		});
 	}
 
+	ngOnInit(): void {
+		this.loggedIn = this.sessionService.isLoggedIn;
+
+		if(this.loggedIn){
+			this.userBadgesLoaded = this.recipientBadgeApiService.listRecipientBadges().then((badges) => {
+				const badgeClassIds = badges.map((b) => b.json.badge.id);
+				this.userBadges = badgeClassIds;
+			})				
+		}
+	}
+
 	get badgeClass(): PublicApiBadgeClassWithIssuer {
 		return this.badgeIdParam.value;
 	}
@@ -90,5 +121,33 @@ export class PublicBadgeClassComponent {
 
 	private get rawJsonUrl() {
 		return stripQueryParamsFromUrl(this.badgeClass.id) + '.json';
+	}
+
+	calculateLearningPathStatus(lp: LearningPath): { 'match' : number} | { 'progress' : number} {
+		if(lp.progress !=  null){
+			const percentCompleted = lp.progress
+			return {'progress' : percentCompleted }
+		}
+		else{
+			return {'match' : this.calculateMatch(lp)}
+		}
+	}
+
+	calculateMatch(lp: LearningPath): number {
+		const lpBadges = lp.badges;
+		const badgeClassIds = lpBadges.map((b) => b.badge.json.id);
+		const totalBadges = lpBadges.length;
+		const userBadgeCount = badgeClassIds.filter((b) => this.userBadges.includes(b)).length;
+		const match = userBadgeCount / totalBadges;
+		return match * 100;
+	}
+
+	calculateStudyLoad(lp: LearningPath): number {
+		const totalStudyLoad = lp.badges.reduce((acc, b) => acc + b.badge.extensions['extensions:StudyLoadExtension'].StudyLoad, 0);
+		return totalStudyLoad;
+	}
+
+	checkCompleted(lp: LearningPath): boolean {
+		return lp.completed_at != null;
 	}
 }
