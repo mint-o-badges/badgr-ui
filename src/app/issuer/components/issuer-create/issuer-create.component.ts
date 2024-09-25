@@ -16,7 +16,6 @@ import { AppConfigService } from '../../../common/app-config.service';
 import { typedFormGroup } from '../../../common/util/typed-forms';
 import { TranslateService } from '@ngx-translate/core';
 import { QueryParametersService } from '../../../common/services/query-parameters.service';
-import { imageRatioAsyncValidator } from '../../../common/validators/image-ratio.validator';
 
 @Component({
 	selector: 'issuer-create',
@@ -38,7 +37,7 @@ export class IssuerCreateComponent extends BaseAuthenticatedRoutableComponent im
 		])
 		.addControl('issuer_url', '', [Validators.required, UrlValidator.validUrl])
 		.addControl('issuer_category', '', [Validators.required])
-		.addControl('issuer_image', '', [Validators.required, imageRatioAsyncValidator(['1:1'])])
+		.addControl('issuer_image', '', Validators.required)
 		.addControl('issuer_street', '')
 		.addControl('issuer_streetnumber', '')
 		.addControl('issuer_zip', '')
@@ -53,6 +52,7 @@ export class IssuerCreateComponent extends BaseAuthenticatedRoutableComponent im
 	issuerRequiredError: string;
 	selectFromMyFiles: string;
 	useImageFormat: string;
+	imageError: string;
 
 	constructor(
 		loginService: SessionService,
@@ -110,6 +110,16 @@ export class IssuerCreateComponent extends BaseAuthenticatedRoutableComponent im
 		this.translate.get('Issuer.useImageFormat').subscribe((translatedText: string) => {
             this.useImageFormat = translatedText;
 		});
+
+	}
+
+	onImageRatioError(error: string) {
+		this.imageError = error;
+		const imageControl = this.issuerForm.rawControlMap.issuer_image;
+		if (imageControl) {
+			imageControl.setErrors({ imageRatioError: error });
+		}
+		this.issuerForm.markTreeDirtyAndValidate()
 	}
 
 	
@@ -120,6 +130,10 @@ export class IssuerCreateComponent extends BaseAuthenticatedRoutableComponent im
 	};
 	
 	onSubmit() {
+
+		if(this.issuerForm.controls.issuer_image.rawControl.hasError('required')){
+			this.imageError = "Bitte wählen Sie ein Bild aus.";
+		}	
 		
 		if (!this.issuerForm.markTreeDirtyAndValidate()) {
 			return;

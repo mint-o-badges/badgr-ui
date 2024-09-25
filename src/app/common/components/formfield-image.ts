@@ -132,6 +132,7 @@ export class BgFormFieldImageComponent {
 	readonly imageFailedSrc = preloadImageURL('../../../breakdown/static/images/placeholderavatar-failed.svg');
 
 	@Output() imageUploaded = new EventEmitter();
+	@Output() imageRatioError = new EventEmitter<string>(); 
 
 	@Input() control: FormControl;
 	@Input() label: string;
@@ -472,6 +473,11 @@ export function issuerImageLoader(file: File | string): Promise<string> {
 		return readFileAsDataURL(file)
 			.then(loadImageURL)
 			.then((image) => {
+
+				if(image.width / image.height !== 1) {
+					return Promise.reject(new Error('Image must be square'));
+				}
+
 				const canvas = document.createElement('canvas');
 				let dataURL: string;
 
@@ -504,6 +510,9 @@ export function issuerImageLoader(file: File | string): Promise<string> {
 				return dataURL;
 			})
 			.catch((e) => {
+				if(e.message === 'Image must be square') {
+					this.imageRatioError.emit('Bitte lade ein Bild im quadratischen 1:1-Format hoch, damit es auf unserer Plattform optimal dargestellt werden kann');
+				}
 				throw new Error(`${file.name} is not a valid image file`);
 			});
 	}

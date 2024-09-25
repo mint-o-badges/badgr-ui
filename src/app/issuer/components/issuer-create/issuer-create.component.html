@@ -21,10 +21,8 @@
 				[placeholderImage]="issuerImagePlacholderUrl"
 				[control]="issuerForm.rawControlMap.issuer_image"
 				[allowedFileFormats]="['image/png', 'image/svg+xml']"
-				[errorMessage]="{
-					required: 'Bitte gib die Dauer für den Erwerb der Kompetenz ein.',
-					imageRatio: 'Das Bild muss quadratisch sein.',
-				}"
+				[errorMessage]="imageError"
+				(imageRatioError)="onImageRatioError($event)"
 
 			></bg-formfield-image>
 			<span class="tw-text-oebblack tw-italic tw-text-lg">Dateiformat: PNG</span>

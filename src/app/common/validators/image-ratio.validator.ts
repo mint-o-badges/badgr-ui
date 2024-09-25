@@ -1,3 +1,5 @@
+// Code from https://dev.to/olegmingaleev/image-validation-for-angular-8n9
+
 import { imageAsyncValidator } from './image.validator';
 
 export type Ratio =
