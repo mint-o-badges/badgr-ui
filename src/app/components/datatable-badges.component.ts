@@ -70,6 +70,16 @@ import { HlmPDirective } from '../components/spartan/ui-typography-helm/src/lib/
                         [text]="qrCodeAwardText"
                     >
                     </oeb-button>
+                    <oeb-button
+                        *ngIf="badge.requestCount > 0"
+                        variant="green"
+                        size="xs"
+                        width="full_width"
+                        class="tw-w-full"
+                        (click)="redirectToBadgeDetail.emit(badge.badge)"
+                        [text]="badge.requestCount + ' offene Anfragen'"
+                    >
+                    </oeb-button>
                 </hlm-th>
             </hlm-trow>
         </hlm-table>`,

@@ -26,6 +26,10 @@ export class BadgeRequestApiService extends BaseHttpApiService {
         return this.get(`/request-badge/${qrCodeId}`);
     }
 
+	getBadgeRequestsCountByBadgeClass(badgeClassSlug: BadgeClassSlug) {
+		return this.get(`/badgeRequests/${badgeClassSlug}`);
+	}
+
 	deleteRequest(requestId: string) {
 		return this.delete(`/deleteBadgeRequest/${requestId}`);
 	}
