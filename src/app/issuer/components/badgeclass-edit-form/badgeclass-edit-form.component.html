@@ -136,9 +136,13 @@
 							[errorMessage]="imageErrorFork"
 						>
 						</bg-formfield-image>
-						<span class="tw-italic tw-text-sm md:tw-flex md:tw-justify-center md:tw-items-center"
-							>{{ 'General.fileformats' | translate }}: PNG</span
-						>
+						<div class="tw-flex tw-justify-center tw-flex-wrap">
+							<span class="tw-italic tw-text-sm md:tw-flex md:tw-justify-center md:tw-items-center"
+							>{{ 'General.fileformats' | translate }}: PNG,&nbsp; </span>
+							<span class="tw-italic tw-text-sm md:tw-flex md:tw-justify-center md:tw-items-center"
+							>Max: ({{maxCustomImageSize / 1024}} KB)</span>
+
+						</div>
 					</div>
 					<badge-studio
 						[scrolled]="scrolled"
