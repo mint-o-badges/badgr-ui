@@ -69,22 +69,25 @@
 						noTopMargin="true"
 					>
 					</oeb-input>
-					<span class="tw-text-oebblack">{{ 'General.minutes' | translate }}</span>
+					<span class="tw-text-oebblack md:tw-text-lg">{{ 'General.minutes' | translate }}</span>
 				</div>
 			</div>
 
 			<div class="tw-flex md:tw-flex-row tw-gap-3 md:tw-gap-8 tw-flex-col md:tw-items-center tw-justify-start">
 				<span class="input-label md:tw-flex-[0_0_10em]"> {{ 'Badge.title' | translate }}</span>
-				<oeb-input 
-						[control]="badgeClassForm.rawControlMap.badge_name"
-						[placeholder]="max60chars"
-						noTopMargin="true"
-						[errorMessage]="{
-							required: giveBadgeTitle,
-							mustChange: changeBadgeTitle
-						}"
-					>
-				</oeb-input>
+				<div class="tw-flex tw-gap-2 tw-items-center">
+					<oeb-input 
+							[control]="badgeClassForm.rawControlMap.badge_name"
+							[placeholder]="max60chars"
+							noTopMargin="true"
+							[errorMessage]="{
+								required: giveBadgeTitle,
+								mustChange: changeBadgeTitle
+							}"
+						>
+					</oeb-input>
+					<span class="tw-text-oebblack tw-italic">  {{max60chars}}</span>
+				</div>	
 			</div>
 			<div class="tw-flex md:tw-flex-row tw-gap-3 md:tw-gap-8 tw-flex-col" id="imageSection" #imageSection>
 				<span class="input-label md:tw-flex-[0_0_10em]"> Badge-{{ 'Issuer.image' | translate }}</span>
