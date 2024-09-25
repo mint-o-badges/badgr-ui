@@ -327,7 +327,7 @@
 		"giveBadgeTitle":"Please give the badge a title",
 		"changeBadgeTitle":"Please change the title",
 		"maxValue1000":"Maximum value is 1000",
-		"imageTooLarge": "The image is too large. Please select an image with a size of up to 150 KB."
+		"imageTooLarge": "The image is too large. Please select an image with a size of up to 250 KB."
 	},
 	"Signup": {
 		"youHaveAccount": "You already have an account?",

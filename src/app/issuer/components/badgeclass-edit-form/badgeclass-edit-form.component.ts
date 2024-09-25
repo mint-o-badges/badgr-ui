@@ -737,7 +737,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 		const image = (value.badge_image || '').trim();
 		const customImage = (value.badge_customImage || '').trim();
-		// To hide custom-image size error msg 
+		// To hide custom-image large size error msg 
 		this.isCustomImageLarge = false;
 
 		if (!image.length && !customImage.length) {
