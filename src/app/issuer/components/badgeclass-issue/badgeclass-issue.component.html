@@ -58,7 +58,7 @@
 							[fieldType]="recipientIdentifierFieldType"></oeb-input>
 					</div>
 					<oeb-checkbox name="notifybyemail" id="notifybyemail"
-						[formControl]="issueForm.rawControlMap.notify_earner"
+						[control]="issueForm.rawControlMap.notify_earner"
 						[text]="'Issuer.sendEmail' | translate"></oeb-checkbox>
 
 				</div>
@@ -134,7 +134,7 @@
 								<bg-formfield-text class="u-margin-top2x u-margin-bottom6x"
 									[control]="evidence.rawControlMap.evidence_url" label="URL zum Nachweis"
 									fieldType="url" [urlField]="true"
-									errorMessage="Bitte gebe eine gültige URL an"></bg-formfield-text>
+									errorMessage="Bitte gib eine gültige URL an"></bg-formfield-text>
 							</ng-container>
 
 							<div class="l-stack">
@@ -177,9 +177,9 @@
 							<div *ngIf="!defaultExpiration || expirationDateEditable" class="formfield">
 								<bg-formfield-text label="Ablaufdatum" id="date" fieldType="date"
 									[control]="issueForm.rawControlMap.expires" ariaLabel="Ablaufdatum"
-									[errorMessage]="'Bitte gebe ein Datum in der Form YYYY/mm/dd an'"></bg-formfield-text>
+									[errorMessage]="'Bitte gib ein Datum in der Form YYYY/mm/dd an'"></bg-formfield-text>
 								<div class="u-text-error u-text-small" *ngIf="dateError">
-									Bitte gebe ein Datum in der Form YYYY-mm-dd an.
+									Bitte gib ein Datum in der Form YYYY-mm-dd an.
 								</div>
 							</div>
 							<div *ngIf="defaultExpiration && !expirationDateEditable" class="forminput">

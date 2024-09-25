@@ -34,9 +34,8 @@ import { QrCodeApiService } from '../../services/qrcode-api.service';
 	selector: 'badgeclass-detail',
 	template: `
 		<bg-badgedetail [config]="config" [awaitPromises]="[issuerLoaded, badgeClassLoaded]">
-				<qrcode-awards [awards]="qrCodeAwards" [badgeClassSlug]="badgeSlug" [issuerSlug]="issuerSlug" [routerLink]="config?.issueQrRouterLink"></qrcode-awards>
+				<qrcode-awards (qrBadgeAward)="onQrBadgeAward()" [awards]="qrCodeAwards" [badgeClassSlug]="badgeSlug" [issuerSlug]="issuerSlug" [routerLinkText]="config?.issueQrRouterLink"></qrcode-awards>
 		<issuer-detail-datatable
-				*ngIf="recipientCount > 0"
 				[recipientCount]="recipientCount"
 				[_recipients]="instanceResults"
 				(actionElement)="revokeInstance($event)"
@@ -65,6 +64,10 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 
 	get recipientCount() {
 		return this.badgeClass ? this.badgeClass.recipientCount : null;
+	}
+
+	set recipientCount(value: number){
+		this.badgeClass.recipientCount = value;
 	}
 
 	get activeRecipientCount() {
@@ -239,6 +242,11 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		);
 	}
 
+	onQrBadgeAward() {
+		this.loadInstances();
+		this.recipientCount += 1
+	}
+
 	ngOnInit() {
 		super.ngOnInit();
 	}
@@ -276,17 +284,15 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 	// To get and download badge certificate in pdf format
 	downloadCertificate(instance: BadgeInstance, badgeIndex: number) {
 		this.downloadStates[badgeIndex] = true;
-		this.pdfService.getPdf(instance.slug).subscribe(
+		this.pdfService.getPdf(instance.slug).then(
 			(url) => {
 				this.pdfSrc = url;
 				this.pdfService.downloadPdf(this.pdfSrc, this.badgeClass.name, instance.createdAt);
 				this.downloadStates[badgeIndex] = false;
-			},
-			(error) => {
+			}).catch((error) => {
 				this.downloadStates[badgeIndex] = false;
 				console.log(error);
-			},
-		);
+			});
 	}
 
 	deleteBadge() {

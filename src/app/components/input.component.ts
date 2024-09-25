@@ -3,6 +3,7 @@ import { HlmInputDirective } from './spartan/ui-input-helm/src';
 import { OebInputErrorComponent } from './input.error.component';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { NgClass, NgIf } from '@angular/common';
+import { NgClass, NgIf } from '@angular/common';
 import { UrlValidator } from '../common/validators/url.validator';
 import { TextSemibold } from './typography/text-semibold';
 import { HlmPDirective } from './spartan/ui-typography-helm/src/lib/hlm-p.directive';
@@ -11,11 +12,16 @@ import { HlmPDirective } from './spartan/ui-typography-helm/src/lib/hlm-p.direct
 	selector: 'oeb-input',
 	standalone: true,
 	imports: [HlmInputDirective, HlmPDirective, OebInputErrorComponent, NgIf, NgClass, ReactiveFormsModule, TextSemibold],
+	styleUrls: ['./input.component.scss'],
 	template: ` <div [ngClass]="{ 'tw-mt-6 md:tw-mt-7': !noTopMargin }">
 		<div class="tw-flex tw-justify-between">
 			<label class="tw-pb-[2px] tw-pl-[3px]" [attr.for]="inputName" *ngIf="label">
+				<span *ngIf="labelStyle; else baseLabel" [class]="labelStyle" [innerHTML]="label"></span>
+				<ng-template #baseLabel>
 				<span hlmP class="tw-text-oebblack tw-font-semibold" [innerHTML]="label"></span
-				><span *ngIf="optional">(OPTIONAL)</span>
+				>
+				</ng-template>
+				<span *ngIf="optional">(OPTIONAL)</span>
 				<span *ngIf="formFieldAside">{{ formFieldAside }}</span>
 			</label>
 			<ng-content
@@ -69,6 +75,7 @@ export class OebInputComponent {
 	@Input() error: string;
 	@Input() errorOverride?: false;
 	@Input() label: string;
+	@Input() labelStyle?: string = '';
 	@Input() ariaLabel: string;
 	@Input() errorMessage: string;
 	@Input() errorGroupMessage: CustomValidatorMessages;
@@ -179,10 +186,10 @@ export const defaultValidatorMessages: {
 	validUrl: () => `Bitte gültige URL eingeben.`,
 	invalidTelephone: () => `Bitte gültige Telefonnummer eingeben`,
 	invalidEmail: () => `Bitte gültige E-Mail Adresse eingeben`,
-	maxlength: (label: string, { actualLength, requiredLength }: { actualLength: number; requiredLength: number }) =>
+	maxlength: (label: string | undefined, { actualLength, requiredLength }: { actualLength: number; requiredLength: number }) =>
 		actualLength && requiredLength
-			? `${label} überschreitet maximale Länge von ${requiredLength} um ${actualLength - requiredLength} Zeichen`
-			: `${label} überschreitet maximale Länge.`,
+			? `${label ?? 'Text'} überschreitet maximale Länge von ${requiredLength} um ${actualLength - requiredLength} Zeichen`
+			: `${label ?? 'Text'} überschreitet maximale Länge.`,
 };
 
 export function messagesForValidationError(

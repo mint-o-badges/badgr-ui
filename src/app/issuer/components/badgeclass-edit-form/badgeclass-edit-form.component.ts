@@ -41,14 +41,15 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	badgeCategory: string;
 
 	// Translation
+	// Translation
 	selectFromMyFiles = this.translate.instant('RecBadge.selectFromMyFiles');
 	chooseFromExistingIcons = this.translate.instant('RecBadge.chooseFromExistingIcons');
 	uploadOwnVisual = this.translate.instant('RecBadge.uploadOwnVisual');
 
 	chooseABadgeCategory = this.translate.instant('CreateBadge.chooseABadgeCategory');
-	summarizedDescription = this.translate.instant('CreateBadge.summarizedDescription') + this.translate.instant('CreateBadge.descriptionSavedInBadge');
+	summarizedDescription = this.translate.instant('CreateBadge.summarizedDescription') + '(max 700 ' + this.translate.instant('General.characters') + '). ' + this.translate.instant('CreateBadge.descriptionSavedInBadge');
 	enterDescription = this.translate.instant('Issuer.enterDescription');
-	max70chars = '(max 70 ' + this.translate.instant('General.characters') + ')';
+	max60chars = '(max 60 ' + this.translate.instant('General.characters') + ')';
 
 	useOurEditor = this.translate.instant('CreateBadge.useOurEditor');
 	imageSublabel = this.translate.instant('CreateBadge.imageSublabel');
@@ -172,10 +173,13 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	 */
 
 	savePromise: Promise<BadgeClass> | null = null;
-	badgeClassForm = typedFormGroup([this.criteriaRequired.bind(this), this.imageValidation.bind(this)])
+	badgeClassForm = typedFormGroup([
+        this.criteriaRequired.bind(this),
+        this.imageValidation.bind(this),
+        this.noDuplicateCompetencies.bind(this)])
 		.addControl('badge_name', '', [
 			Validators.required,
-			Validators.maxLength(70),
+			Validators.maxLength(60),
 			// Validation that the name of a fork changed
 			(control: AbstractControl): ValidationErrors | null =>
 				this.forbiddenName && this.forbiddenName == control.value
@@ -184,7 +188,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		])
 		.addControl('badge_image', '')
 		.addControl('badge_customImage', '')
-		.addControl('badge_description', '', Validators.required)
+		.addControl('badge_description', '', [Validators.required, Validators.maxLength(700)])
 		.addControl('badge_criteria_url', '')
 		.addControl('badge_criteria_text', '')
 		.addControl('badge_study_load', 0, [this.positiveIntegerOrNull, Validators.max(10000)])
@@ -418,7 +422,10 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		let that = this;
 
 		// Set badge category when editing a badge. As new select component doesn't show badge competencies
-		this.badgeCategory = this.badgeClassForm.rawControl.controls['badge_category'].value; 		
+		this.badgeCategory = this.badgeClassForm.rawControl.controls['badge_category'].value; 
+		if(this.badgeCategory === 'competency'){
+			this.badgeClassForm.controls.competencies.addFromTemplate();
+		}
 
 		// update badge frame when a category is selected, unless no-hexagon-frame checkbox is checked
 		this.badgeClassForm.rawControl.controls['badge_category'].statusChanges.subscribe((res) => {
@@ -1015,6 +1022,9 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		}
 	}
 
+	allowedFileFormats = ['image/png', 'image/svg+xml'];
+	allowedFileFormatsCustom = ['image/png'];
+
 	positiveInteger(control: AbstractControl) {
 		const val = parseInt(control.value, 10);
 		if (isNaN(val) || val < 1) {
@@ -1032,6 +1042,33 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			return { duration: 'Must be a positive integer or null' };
 		}
 	}
+
+    noDuplicateCompetencies(): {duplicateCompetency: Boolean} | null {
+        if (this.duplicateCompetency)
+            return { duplicateCompetency: true };
+    }
+
+    get duplicateCompetency(): String | null {
+        if (!this.badgeClassForm) return null;
+
+        const hand = this.badgeClassForm.controls.competencies.value.
+            // Hand competencies get added automatically at submitting
+            //filter(c => c.added).
+            map(c => c.name);
+        const ai = this.badgeClassForm.controls.aiCompetencies.value.
+            filter(c => c.selected).
+            map((c,i) => this.aiCompetenciesSuggestions[i].preferred_label);
+
+        const all = hand.concat(ai);
+        const check = new Set();
+
+        for (const name of all)
+            if (check.has(name))
+                return name;
+            else
+                check.add(name);
+        return null;
+    }
 
 	closeLegend() {
 		this.showLegend = false;

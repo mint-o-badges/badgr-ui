@@ -19,7 +19,7 @@
                     {{ 'RequestBadge.fillForm' | translate}}
                 </p>
                 <p hlmP>
-                    {{ 'RequestBadge.requestBadgeInfo1' | translate}} {{badgeClass.name}}
+                    {{ 'RequestBadge.requestBadgeInfo1' | translate}} <span class="tw-italic">{{badgeClass.name}}</span>
                     {{ 'RequestBadge.requestBadgeInfo2' | translate}}
     
                 </p>
@@ -35,8 +35,20 @@
                     <oeb-input label="Nachname" [placeholder]=""
                             fieldType="text" [control]="requestForm.rawControlMap.lastname"
                             ></oeb-input>
-                    <oeb-input label="Email" [placeholder]=""
-                    fieldType="email" [control]="requestForm.rawControlMap.email"
+                    <p
+                        hlmP 
+                        size="sm"
+                        id="nameValidationError"
+                        [hidden]="!requestForm.hasError('maxLengthExceeded')"
+                        class="tw-font-normal tw-text-red tw-text-start tw-w-full tw-mt-2"
+                    >
+                        {{ 'RequestBadge.nameValidationError' | translate }}
+                    </p>        
+                    <oeb-input 
+						label="E-Mail" 
+						[placeholder]=""
+                    	fieldType="email" 
+						[control]="requestForm.rawControlMap.email">
                     ></oeb-input>    
                     <oeb-input fieldType="hidden" [control]="requestForm.rawControlMap.qrCodeId"></oeb-input>    
                 </div>
@@ -46,9 +58,12 @@
                         <span [innerHTML]="'RequestBadge.personalDataInfo' | translate" ></span>
                     </p>
                     
-                    <oeb-checkbox id="age-confirmation" name="age-confirmation" type="checkbox"
-                                        [text]="'RequestBadge.ageConfirmation' | translate "
-                                        [formControl]="requestForm.rawControlMap.ageConfirmation">
+                    <oeb-checkbox 
+						id="age-confirmation" 
+						name="age-confirmation" 
+						type="checkbox"
+                        [text]="'RequestBadge.ageConfirmation' | translate "
+                        [control]="requestForm.rawControlMap.ageConfirmation">
                     </oeb-checkbox>
                 </div>
                 <oeb-button type="submit" [text]="'RequestBadge.requestBadge' | translate">

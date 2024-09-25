@@ -4,7 +4,7 @@ import { OebDialogComponent } from "../../../components/oeb-dialog.component";
 import { OebButtonComponent } from "../../../components/oeb-button.component";
 import { HlmPDirective } from "../../../components/spartan/ui-typography-helm/src";
 import { HlmIconComponent, HlmIconModule, provideIcons } from "../../../components/spartan/ui-icon-helm/src";
-import { lucideAlertTriangle } from '@ng-icons/lucide';
+import { lucideTriangleAlert } from '@ng-icons/lucide';
 import { NgIf } from "@angular/common";
 import { TranslateService } from "@ngx-translate/core";
 
@@ -18,18 +18,18 @@ import { TranslateService } from "@ngx-translate/core";
         HlmIconComponent,
         NgIf
     ],
-    providers: [TranslateService, provideIcons({ lucideAlertTriangle })],
+    providers: [TranslateService, provideIcons({ lucideTriangleAlert })],
     template: `
         <oeb-dialog [variant]="variant" class="tw-text-center tw-text-oebblack">
             <div class="tw-flex tw-justify-center">
                 <div class="oeb-icon-circle tw-my-6">
-                    <hlm-icon class="tw-text-red" size='xxl' name="lucideAlertTriangle" />
+                    <hlm-icon class="tw-text-red" size='xxl' name="lucideTriangleAlert" />
                 </div>
             </div>
             <p hlmP class="tw-flex tw-flex-col tw-gap-2">
                 <span class="tw-font-extrabold tw-uppercase">Qr-Code Vergabe löschen</span>
                 <span> Möchtest du die QR-Code Vergabe wirklich löschen? 
-                    Damit gehen alle noch offenen Badge-Anfragen verloren.
+                    <span *ngIf="qrCodeRequested">Damit gehen alle noch offenen Badge-Anfragen verloren.</span>
                 </span>
             </p> 
             <div class="tw-flex tw-justify-around tw-mt-6">
@@ -41,10 +41,11 @@ import { TranslateService } from "@ngx-translate/core";
 })
 export class DangerDialogComponent {
     // @HostBinding('class') private readonly _class: string = 'tw-bg-red tw-bg-red';
-    private readonly _dialogContext = injectBrnDialogContext<{ text: string, delete: any, variant: string }>();
+    private readonly _dialogContext = injectBrnDialogContext<{ text: string, delete: any, qrCodeRequested: boolean, variant: string }>();
     protected readonly text = this._dialogContext.text;
     protected readonly delete = this._dialogContext.delete;
     protected readonly variant = this._dialogContext.variant;
+    protected readonly qrCodeRequested = this._dialogContext.qrCodeRequested;
     private readonly _dialogRef = inject<BrnDialogRef>(BrnDialogRef);
 
     constructor(private translate: TranslateService) {}

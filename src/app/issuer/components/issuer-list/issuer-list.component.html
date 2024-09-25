@@ -51,14 +51,27 @@
 							[innerHTML]="issuer.badgeClassCount | i18nPlural: plural['badges']"
 						></p>
 					</div>
-					<button
-						[class]="'oeb-button oeb-purple-bg !tw-font-bold'.concat(issuer.canCreateBadge
-							? ''
-							: ' disabled')"
-						[routerLink]="['/issuer/issuers/', issuer.slug, 'badges', 'create']"
-						[disabled]="!issuer.canCreateBadge"
-						>{{ 'Issuer.myInstitutionsCreateBadge' | translate }}
-					</button>
+					<div class="tw-flex tw-gap-2 tw-flex-wrap">
+						<oeb-button
+							[class]="'tw-whitespace-nowrap'.concat(issuer.currentUserStaffMember
+								? ''
+								: ' disabled')"
+							[routerLink]="['/issuer/issuers/', issuer.slug]"
+							[disabled]="!issuer.currentUserStaffMember"
+							[text]="'Issuer.giveMyBadges' | translate"
+							>
+						</oeb-button>
+						<oeb-button
+							[class]="'tw-whitespace-nowrap'.concat(issuer.canCreateBadge
+								? ''
+								: ' disabled')"
+							[routerLink]="['/issuer/issuers/', issuer.slug, 'badges', 'create']"
+							[disabled]="!issuer.canCreateBadge"
+							variant="secondary"
+							[text]="'Issuer.myInstitutionsCreateBadge' | translate"
+							>
+						</oeb-button>
+					</div>
 				</div>
 			</div>
 			<div #pluginBox class="md:tw-flex-[0_0_333px] md:tw-mt-6">

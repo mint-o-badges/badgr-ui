@@ -77,7 +77,7 @@
 				<span class="input-label md:tw-flex-[0_0_10em]"> {{ 'Badge.title' | translate }}</span>
 				<oeb-input 
 						[control]="badgeClassForm.rawControlMap.badge_name"
-						[placeholder]="max70chars"
+						[placeholder]="max60chars"
 						noTopMargin="true"
 						[errorMessage]="{
 							required: giveBadgeTitle,
@@ -103,6 +103,7 @@
 							[newDropZone]="true"
 							[generateRandom]="false"
 							[type]="'badge'"
+							[allowedFileFormats]="allowedFileFormats"
 							(generateRandomImage)="generateRandomImage()"
 							(imageUploaded)="generateUploadImage($event, badgeClassForm.value)"
 							[placeholderImage]="badgeClassPlaceholderImageUrl"
@@ -126,6 +127,7 @@
 							imageLoaderName="basic"
 							[newDropZone]="true"
 							[type]="'badge'"
+							[allowedFileFormats]="allowedFileFormatsCustom"
 							[generateRandom]="false"
 							(generateRandomImage)="generateRandomImage()"
 							(imageUploaded)="generateCustomUploadImage($event)"
@@ -135,7 +137,7 @@
 						>
 						</bg-formfield-image>
 						<span class="tw-italic tw-text-sm md:tw-flex md:tw-justify-center md:tw-items-center"
-							>{{ 'General.fileformats' | translate }}: SVG {{ 'General.and' | translate }} PNG</span
+							>{{ 'General.fileformats' | translate }}: PNG</span
 						>
 					</div>
 					<badge-studio
@@ -161,15 +163,17 @@
 
 	<div class="section tw-text-oebblack tw-px-1" *ngIf="badgeCategory === 'competency'">
 		<h2 hlmH2 class="tw-font-bold">3. {{ 'CreateBadge.fillWithCompetencies' | translate }}</h2>
+	<div class="section tw-text-oebblack tw-px-1" *ngIf="badgeCategory === 'competency'">
+		<h2 hlmH2 class="tw-font-bold">3. {{ 'CreateBadge.fillWithCompetencies' | translate }}</h2>
 		<ul class="tw-list-disc md:tw-mx-10 tw-mx-4">
 				<div>
 					<span
-						class="tw-list-item tw-list-inside md:tw-text-xl tw-text-lg tw-font-semibold md:tw-leading-10 tw-text-[var(--color-purple)]"
+						class="tw-list-item tw-list-inside tw-text-3xl tw-font-normal tw-text-[var(--color-purple)] tw-mt-2"
 						>{{ 'CreateBadge.useAiAssistant' | translate }}</span
 					>
-					<p hlmP size="sm" class="tw-my-2">{{ 'CreateBadge.enterAiDescription' | translate }}</p>
-					<p hlmP size="sm" class="tw-my-2">{{ 'CreateBadge.NoPersonalInformation' | translate }}</p>
-					<p hlmP size="sm" class="tw-mb-2">{{ 'CreateBadge.addAiCompetencies' | translate }}</p>
+					<p hlmP class="tw-my-2">{{ 'CreateBadge.enterAiDescription' | translate }}</p>
+					<p hlmP class="tw-my-2">{{ 'CreateBadge.NoPersonalInformation' | translate }}</p>
+					<p hlmP class="tw-mb-2">{{ 'CreateBadge.addAiCompetencies' | translate }}</p>
 				</div>
 				<div
 					class="tw-flex tw-flex-col tw-justify-center tw-items-center tw-mt-7 tw-p-4 tw-bg-[var(--color-purple)] tw-rounded-md tw-mx-auto"
@@ -240,10 +244,10 @@
 									>
 										<div class="tw-flex tw-justify-between">
 											<h2 class="tw-whitespace-pre-wrap tw-text-sm tw-text-oebblack tw-font-bold">
-												{{ aiCompetenciesSuggestions[i].preferred_label }} <a href="http://data.europa.eu/{{aiCompetenciesSuggestions[i].concept_uri}}" target="_blank" class="tw-ml-2 !tw-text-[var(--color-link)]]">(E)</a>
+												{{ aiCompetenciesSuggestions[i].preferred_label }} <a href="http://data.europa.eu/{{aiCompetenciesSuggestions[i].concept_uri}}" target="_blank" class="tw-ml-2 !tw-text-[var(--color-link)]]"> <span class="tw-text-[var(--color-link)] tw-underline tw-font-normal">(E)</span></a>
 											</h2>
 											<oeb-checkbox class="tw-border-[var(--color-purple)]" name="checkboxAiSkill$i" id="checkboxAiSkill$i"
-												[formControl]="aiCompetency.rawControlMap.selected"
+												[control]="aiCompetency.rawControlMap.selected"
 												></oeb-checkbox>
 										</div>
 										<hr class="tw-text-[var(--color-grayinteractive)] tw-my-1 tw-border-solid tw-border" />
@@ -274,7 +278,7 @@
 			<hr class="tw-my-8 tw-border tw-border-[var(--color-purple)] tw-border-dashed" />
 				<oeb-collapsible [trigger]="collapseCompetenciesTrigger" [defaultOpen]="collapsedCompetenciesOpen">
 					<ng-template #collapseCompetenciesTrigger>
-						<span class="tw-list-item tw-text-lg tw-font-bold tw-leading-10 tw-text-[var(--color-purple)] tw-mr-auto">{{
+						<span class="tw-list-item tw-text-3xl tw-font-normal tw-text-[var(--color-purple)] tw-mr-auto">{{
 							'CreateBadge.addCompetenciesByHand' | translate
 						}}</span>
 					</ng-template>
@@ -282,7 +286,7 @@
 				<div
 					class="tw-flex tw-flex-col md:tw-flex-row md:tw-gap-4 tw-gap-2 md:tw-justify-between md:tw-items-center"
 				>
-					<p class="tw-text-oebblack tw-font-semibold">
+					<p class="tw-text-oebblack tw-text-lg tw-leading-6">
 						{{ 'CreateBadge.addCompetenciesByHandInfo' | translate }}
 						<span class="tw-hidden md:tw-inline"
 							>, {{ 'CreateBadge.tofindFittingCompetencies' | translate }}</span
@@ -309,7 +313,7 @@
 									{{ competency.rawControlMap.name.value }}
 								</h2>
 								<oeb-checkbox class="tw-border-[var(--color-purple)]" name="competency$i" id="competency$i"
-												[formControl]="competency.rawControlMap.added"
+												[control]="competency.rawControlMap.added"
 								></oeb-checkbox>
 							</div>
 							<p
@@ -387,6 +391,11 @@
 
 							<oeb-input 
 								label="Esco-Identifier (optional)"
+							>
+							</oeb-input>
+
+							<oeb-input 
+								label="Esco-Identifier (optional)"
 								[control]="competency.rawControlMap.escoID"
 								[readonly]="true"
 								placeholder="z.B. esco/skill/00090cc1-1f27-439e-a4e0-19a87a501bfc"
@@ -427,11 +436,19 @@
 							(badgeClassForm.controls.competencies.controls.length > 0		
 							? 'CreateBadge.addAnotherCompetency'		
 							: 'General.add') | translate}}"
+							icon="lucidePlus"
 					>
 					</oeb-button>
 				</div>
 			</oeb-collapsible>
 		</ul>
+        <p
+            id="competencyDuplicateError"
+            [hidden]="!badgeClassForm.hasError('duplicateCompetency')"
+            class="u-text u-margin-bottom2x u-text-error tw-w-full tw-text-center tw-mt-2"
+            >
+            {{ 'CreateBadge.duplicateCompetencyError' | translate }} '{{ this.duplicateCompetency }}'
+        </p>
 	</div>
 
 	<div class="section tw-text-oebblack">
@@ -554,7 +571,7 @@
 					variant="secondary"
 					size="xxs"
 					(click)="removeTag(tag)" 
-					icon="lucideXCircle"
+					icon="lucideCircleX"
 					text="{{ tag }}">
 
 					</oeb-button>
