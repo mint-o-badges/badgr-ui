@@ -46,7 +46,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	selectFromMyFiles = this.translate.instant('RecBadge.selectFromMyFiles');
 	chooseFromExistingIcons = this.translate.instant('RecBadge.chooseFromExistingIcons');
 	uploadOwnVisual = this.translate.instant('RecBadge.uploadOwnVisual');
-
 	chooseABadgeCategory = this.translate.instant('CreateBadge.chooseABadgeCategory');
 	summarizedDescription = this.translate.instant('CreateBadge.summarizedDescription') + this.translate.instant('CreateBadge.descriptionSavedInBadge');
 	enterDescription = this.translate.instant('Issuer.enterDescription');
@@ -84,6 +83,10 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	maxValue1000 = this.translate.instant('CreateBadge.maxValue1000');
 
 	imageTooLarge = this.translate.instant('CreateBadge.imageTooLarge');
+
+	// To check ustom-image size
+	maxCustomImageSize = 1024 * 256;
+	isCustomImageLarge:boolean = false;
 
 	@Input()
 	set badgeClass(badgeClass: BadgeClass) {
@@ -734,13 +737,11 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 		const image = (value.badge_image || '').trim();
 		const customImage = (value.badge_customImage || '').trim();
+		// To hide custom-image size error msg 
+		this.isCustomImageLarge = false;
 
 		if (!image.length && !customImage.length) {
 			return { imageRequired: true };
-		}
-
-		if(base64ByteSize(customImage) > 1024 * 256){
-			return { imageTooLarge: true };
 		}
 
 		// Validation that the image (hash) of a fork changed
@@ -1007,6 +1008,12 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	}
 
 	generateCustomUploadImage(image) {
+		// Check custom-image size before loading it
+		if(base64ByteSize(image) > this.maxCustomImageSize){
+			this.isCustomImageLarge = true;
+			return;
+		}
+
 		// the imageUploaded-event of the angular image component is also called after initialising the component because the image is set in initFormFromExisting
 		if (typeof this.currentImage == 'undefined' || this.initedCurrentImage) {
 			this.initedCurrentImage = true;
