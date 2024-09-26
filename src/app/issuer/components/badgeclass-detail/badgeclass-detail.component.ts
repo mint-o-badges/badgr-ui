@@ -284,15 +284,17 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 	// To get and download badge certificate in pdf format
 	downloadCertificate(instance: BadgeInstance, badgeIndex: number) {
 		this.downloadStates[badgeIndex] = true;
-		this.pdfService.getPdf(instance.slug).then(
+		this.pdfService.getPdf(instance.slug).subscribe(
 			(url) => {
 				this.pdfSrc = url;
 				this.pdfService.downloadPdf(this.pdfSrc, this.badgeClass.name, instance.createdAt);
 				this.downloadStates[badgeIndex] = false;
-			}).catch((error) => {
+			},
+			(error) => {
 				this.downloadStates[badgeIndex] = false;
 				console.log(error);
-			});
+			},
+		);
 	}
 
 	deleteBadge() {
