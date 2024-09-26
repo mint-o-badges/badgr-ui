@@ -329,7 +329,8 @@
 		"giveBadgeTitle":"Bitte gib dem Badge einen Titel",
 		"changeBadgeTitle":"Bitte ändere den Titel",
 		"maxValue1000":"Maximalwert ist 1000",
-		"imageTooLarge": "Das Bild ist zu groß. Bitte wähle ein Bild mit einer Größe von maximal 250 KB."
+		"imageTooLarge": "Das Bild ist zu groß. Bitte wähle ein Bild mit einer Größe von maximal 250 KB.",
+		"licenseInfo": "Badges werden unter der <a class='tw-underline tw-text-[#1400FF]' target='_blank' href='https://creativecommons.org/publicdomain/zero/1.0/legalcode.de'> Lizenz CC0 1.0 </a> erstellt."
 	},
 	"Signup": {
 		"youHaveAccount": "Du hast bereits einen Account?",
