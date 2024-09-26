@@ -30,6 +30,7 @@ import { AiSkillsService } from '../../../common/services/ai-skills.service';
 import { Skill } from '../../../common/model/ai-skills.model';
 import { TranslateService } from '@ngx-translate/core';
 import { Platform } from '@angular/cdk/platform';	// To detect the current platform by comparing the userAgent strings
+import { NavigationService } from '../../../common/services/navigation.service';
 
 @Component({
 	selector: 'badgeclass-edit-form',
@@ -337,7 +338,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		protected componentElem: ElementRef<HTMLElement>,
 		protected aiSkillsService: AiSkillsService,
 		private translate: TranslateService,
-		private platformService: Platform,
+		private navService: NavigationService
 	) {
 		super(router, route, sessionService);
 		title.setTitle(`Create Badge - ${this.configService.theme['serviceName'] || 'Badgr'}`);
@@ -978,8 +979,8 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	}
 
 	generateUploadImage(image, formdata) {
-		// if-condition is important to avoid drawing multible frames when badge-category is changed
-		if (typeof this.currentImage == 'undefined') {
+		//  Check browser refresh to avoid drawing multible frames when page is reloaded
+		if(!this.navService.browserRefresh){
 			this.currentImage = image.slice();
 			this.badgeStudio.generateUploadImage(image.slice(), formdata).then((imageUrl) => {
 				this.imageField.useDataUrl(imageUrl, 'BADGE');
