@@ -31,6 +31,8 @@ import { Skill } from '../../../common/model/ai-skills.model';
 import { TranslateService } from '@ngx-translate/core';
 import { Platform } from '@angular/cdk/platform';	// To detect the current platform by comparing the userAgent strings
 
+import { base64ByteSize } from '../../../common/util/file-util';
+
 @Component({
 	selector: 'badgeclass-edit-form',
 	templateUrl: './badgeclass-edit-form.component.html',
@@ -44,11 +46,10 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	selectFromMyFiles = this.translate.instant('RecBadge.selectFromMyFiles');
 	chooseFromExistingIcons = this.translate.instant('RecBadge.chooseFromExistingIcons');
 	uploadOwnVisual = this.translate.instant('RecBadge.uploadOwnVisual');
-
 	chooseABadgeCategory = this.translate.instant('CreateBadge.chooseABadgeCategory');
 	summarizedDescription = this.translate.instant('CreateBadge.summarizedDescription') + '(max 700 ' + this.translate.instant('General.characters') + '). ' + this.translate.instant('CreateBadge.descriptionSavedInBadge');
 	enterDescription = this.translate.instant('Issuer.enterDescription');
-	max60chars = '(max 60 ' + this.translate.instant('General.characters') + ')';
+	max60chars = '(max. 60 ' + this.translate.instant('General.characters') + ')';
 
 	useOurEditor = this.translate.instant('CreateBadge.useOurEditor');
 	imageSublabel = this.translate.instant('CreateBadge.imageSublabel');
@@ -80,6 +81,12 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	changeBadgeTitle = this.translate.instant('CreateBadge.changeBadgeTitle');
 
 	maxValue1000 = this.translate.instant('CreateBadge.maxValue1000');
+
+	imageTooLarge = this.translate.instant('CreateBadge.imageTooLarge');
+
+	// To check ustom-image size
+	maxCustomImageSize = 1024 * 250;
+	isCustomImageLarge:boolean = false;
 
 	@Input()
 	set badgeClass(badgeClass: BadgeClass) {
@@ -739,6 +746,8 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 		const image = (value.badge_image || '').trim();
 		const customImage = (value.badge_customImage || '').trim();
+		// To hide custom-image large size error msg 
+		this.isCustomImageLarge = false;
 
 		if (!image.length && !customImage.length) {
 			return { imageRequired: true };
@@ -1008,6 +1017,12 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	}
 
 	generateCustomUploadImage(image) {
+		// Check custom-image size before loading it
+		if(base64ByteSize(image) > this.maxCustomImageSize){
+			this.isCustomImageLarge = true;
+			return;
+		}
+
 		// the imageUploaded-event of the angular image component is also called after initialising the component because the image is set in initFormFromExisting
 		if (typeof this.currentImage == 'undefined' || this.initedCurrentImage) {
 			this.initedCurrentImage = true;
