@@ -1056,16 +1056,16 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
     checkDuplicateCompetency(): String | null {
         if (!this.badgeClassForm) return null;
 
-        const storedCompetencies = this.badgeClassForm.controls.competencies.value.
+        const inHandCompetencies = this.badgeClassForm.controls.competencies.value.
             // Hand competencies get added automatically at submitting
             //filter(c => c.added).
             map(c => c.name);
 		
-		const newSelectedCompetencies = this.badgeClassForm.controls.aiCompetencies.value
+		const newSelectedAICompetencies = this.badgeClassForm.controls.aiCompetencies.value
 			.map((c, i) => (c.selected ? this.aiCompetenciesSuggestions[i].preferred_label : ''))
 			.filter(String);
 
-        const all = storedCompetencies.concat(newSelectedCompetencies);
+        const all = inHandCompetencies.concat(newSelectedAICompetencies);
         const check = new Set();
 
         for (const name of all)
