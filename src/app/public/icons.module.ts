@@ -15,7 +15,8 @@ import {
   lucideBadge,
   lucideRepeat2,
   lucideLogOut,
-  lucideQrCode
+  lucideQrCode,
+  lucideCloudUpload
 
 } from '@ng-icons/lucide';
 
@@ -36,7 +37,8 @@ import {
       lucideBadge,
       lucideRepeat2,
       lucideLogOut,
-      lucideQrCode
+      lucideQrCode,
+      lucideCloudUpload
     }),
   ],
 })

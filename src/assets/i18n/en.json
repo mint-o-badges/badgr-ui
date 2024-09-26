@@ -283,7 +283,7 @@
 		"useOurEditor": "Use our editor",
 		"imageSublabel": "Choose an image/icon to be inserted into our frame.",
 		"useOwnVisual": "Use your own visual",
-		"uploadOwnDesign": "Upload your own badge design.",
+		"uploadOwnDesign": "Upload your own badge design (max. 250 KB)",
 		"imageErrorFork": "Please use a valid (and unique after fork) image for the badge",
 		"fillWithCompetencies": "fill badge with competencies",
 		"aiAssistant": "AI-Badge-Assistant",
@@ -326,7 +326,8 @@
 		"addAnotherCompetency": "Add another competency",
 		"giveBadgeTitle":"Please give the badge a title",
 		"changeBadgeTitle":"Please change the title",
-		"maxValue1000":"Maximum value is 1000"
+		"maxValue1000":"Maximum value is 1000",
+		"imageTooLarge": "The image is too large. Please select an image with a size of up to 250 KB."
 	},
 	"Signup": {
 		"youHaveAccount": "You already have an account?",
