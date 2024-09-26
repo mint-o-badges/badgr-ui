@@ -78,7 +78,6 @@
 				<div class="tw-flex tw-gap-2 tw-items-center">
 					<oeb-input 
 							[control]="badgeClassForm.rawControlMap.badge_name"
-							[placeholder]="max60chars"
 							noTopMargin="true"
 							[errorMessage]="{
 								required: giveBadgeTitle,
@@ -139,13 +138,9 @@
 							[errorMessage]="imageErrorFork"
 						>
 						</bg-formfield-image>
-						<div class="tw-flex tw-justify-center tw-flex-wrap">
 							<span class="tw-italic tw-text-sm md:tw-flex md:tw-justify-center md:tw-items-center"
 							>{{ 'General.fileformats' | translate }}: PNG,&nbsp; </span>
-							<span class="tw-italic tw-text-sm md:tw-flex md:tw-justify-center md:tw-items-center"
-							>Max: ({{maxCustomImageSize / 1024}} KB)</span>
 
-						</div>
 					</div>
 					<badge-studio
 						[scrolled]="scrolled"
