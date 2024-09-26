@@ -6,7 +6,7 @@ import { MessageService } from './message.service';
 import { SessionService } from './session.service';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { map } from 'rxjs';
+import { Observable, map } from 'rxjs';
 
 @Injectable()
 export class PdfService {
@@ -22,7 +22,7 @@ export class PdfService {
     this.baseUrl = this.configService.apiConfig.baseUrl
   }
 
-	getPdf(slug: string): Promise<SafeResourceUrl> {
+	getPdf(slug: string): Observable<SafeResourceUrl> {
         const headers = new HttpHeaders().set('Authorization', `Bearer ${this.loginService.currentAuthToken.access_token}`);
         return this.http.get(`${this.baseUrl}/v1/earner/badges/pdf/${slug}`, { headers: headers, responseType: 'blob' }).pipe(
           map((response: Blob) => {
@@ -31,7 +31,7 @@ export class PdfService {
             const safe_url = this.sanitizer.sanitize(SecurityContext.URL, url);
             return this.sanitizer.bypassSecurityTrustResourceUrl(safe_url);
           })
-        ).toPromise();
+        );
   }
   
   downloadPdf(pdfSrc: SafeResourceUrl, badgeName: string, issueDate: Date) {
