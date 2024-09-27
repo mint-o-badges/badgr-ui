@@ -326,7 +326,7 @@
 			<div
 				class="tw-font-[rubik] tw-text-left tw-flex md:tw-flex-row md:tw-justify-between md:tw-gap-0 tw-flex-col-reverse tw-gap-[2em]">
 				<div>
-					<p class="text-semiBold md:tw-w-2/3 tw-text-purple tw-mt-[10px]"
+					<p class="text-semiBold md:tw-w-2/3 tw-text-oebblack tw-mt-[10px]"
 						*ngIf="theme.showPoweredByOSL && theme.providedBy">
 						Open Educational Badges ist ein Gemeinschaftsprojekt von
 						<a href="https://matrix-gruppe.de/matrix-gemeinnuetzig/" target="_blank">matrix gGmbh</a>,
@@ -335,13 +335,11 @@
 					</p>
 				</div>
 
-				<div class="tw-flex tw-flex-col tw-min-w-fit">
-					<a class="tw-text-[14px] tw-leading-[16.8px] tw-font-semibold  md:tw-text-[20px] md:tw-font-medium md:tw-leading-[26px] tw-text-purple" [routerLink]="['/public/faq']">FAQ</a>
-					<div>
-						<a class="tw-text-[14px] tw-leading-[16.8px] tw-font-semibold  md:tw-text-[20px] md:tw-font-medium md:tw-leading-[26px] tw-text-purple" [href]="theme.termsOfServiceLink">{{ 'Start.imprint' | translate }}</a>
-						<span> | </span>
-						<a class="tw-text-[14px] tw-leading-[16.8px] tw-font-semibold  md:tw-text-[20px] md:tw-font-medium md:tw-leading-[26px] tw-text-purple" [href]="theme.privacyPolicyLink">{{ 'Start.privacyPolicy' | translate }}</a>
-					</div>
+				<div class="tw-flex tw-flex-col tw-min-w-fit tw-text-right tw-justify-evenly">
+					<a class="tw-text-[14px] tw-leading-[16.8px] tw-font-semibold  md:tw-text-[20px] md:tw-font-medium md:tw-leading-[26px] tw-text-oebblack" [routerLink]="['/public/faq']">FAQ</a>
+					<a class="tw-text-[14px] tw-leading-[16.8px] tw-font-semibold  md:tw-text-[20px] md:tw-font-medium md:tw-leading-[26px] tw-text-oebblack" [href]="theme.termsOfServiceLink">{{ 'Start.imprint' | translate }}</a>
+					<!-- <span> | </span> -->
+					<a class="tw-text-[14px] tw-leading-[16.8px] tw-font-semibold  md:tw-text-[20px] md:tw-font-medium md:tw-leading-[26px] tw-text-oebblack" [href]="theme.privacyPolicyLink">{{ 'Start.privacyPolicy' | translate }}</a>
 				</div>
 			</div>
 		</div>
