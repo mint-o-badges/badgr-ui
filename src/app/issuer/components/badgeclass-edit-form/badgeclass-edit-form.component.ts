@@ -485,16 +485,21 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	}
 
 	changeBadgeFrame() {
-		if (this.imageField?.control.value) {
-			setTimeout(() => {
-				this.adjustUploadImage(this.badgeClassForm.value);
-			}, 10);
-		} else if (this.customImageField?.control.value) {
-			if (!this.existing) {
+		// check browser refresh to resolve disappearing badge-image when page reload
+		if(!this.navService.browserRefresh){			
+			if (this.imageField?.control.value) {
 				setTimeout(() => {
-					this.customImageField.useDataUrl(this.customImageField.control.value, 'BADGE');
+					this.adjustUploadImage(this.badgeClassForm.value);
 				}, 10);
+			} else if (this.customImageField?.control.value) {
+				if (!this.existing) {
+					setTimeout(() => {
+						this.customImageField.useDataUrl(this.customImageField.control.value, 'BADGE');
+					}, 10);
+				}
 			}
+		} else {
+			this.navService.browserRefresh = false;
 		}
 	}
 
