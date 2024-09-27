@@ -984,12 +984,15 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	}
 
 	generateUploadImage(image, formdata) {
-		//  Check browser refresh to avoid drawing multible frames when page is reloaded
-		if(!this.navService.browserRefresh){
+		// It generates a new image when image filed is empty. 1st case: creating new badge, 2nd: changing from custom to framed image
+		// otherwise it goes to else where it updates the frame instead of drawing multible frames. 
+		if(typeof this.currentImage == 'undefined' || this.customImageField?.control.value){
 			this.currentImage = image.slice();
 			this.badgeStudio.generateUploadImage(image.slice(), formdata).then((imageUrl) => {
 				this.imageField.useDataUrl(imageUrl, 'BADGE');
 			});
+		} else {
+			this.adjustUploadImage(this.badgeClassForm.value);
 		}
 	}
 
