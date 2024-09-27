@@ -1008,11 +1008,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				.generateUploadImage(this.currentImage.slice(), formdata)
 				.then((imageUrl) => this.imageField.useDataUrl(imageUrl, 'BADGE'));
 		}
-
-		// Note: calling generate-upload-game was essential to fix the issue of disapearing badge-image when page is refreshed. No Idea why!!
-		this.badgeStudio
-		.generateUploadImage(this.currentImage.slice(), formdata)
-		.then((imageUrl) => this.imageField.useDataUrl(imageUrl, 'BADGE'));		
 	}
 
 	allowedFileFormats = ['image/png', 'image/svg+xml'];
