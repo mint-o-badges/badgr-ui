@@ -41,8 +41,8 @@ import { HlmPDirective } from '../components/spartan/ui-typography-helm/src/lib/
                         alt="{{ badge.badge.description }}"
                         width="40"
                     />
-                    <div class="md:tw-grid md:tw-grid-cols-[150px] tw-my-1 md:tw-my-0">
-                      <div class="tw-line-clamp-1 md:tw-line-clamp-2 tw-break-all  tw-max-w-36 md:tw-max-w-none tw-absolute md:tw-relative">
+                    <div class="md:tw-grid md:tw-grid-cols-[150px] lg:tw-grid-cols-[250px] xl:tw-grid-cols-[350px] tw-my-1 md:tw-my-0">
+                      <div class="tw-text-nowrap md:tw-text-wrap md:tw-line-clamp-3 tw-break-word  tw-max-w-36 md:tw-max-w-none tw-absolute md:tw-relative">
                         <span class="tw-text-oebblack tw-cursor-pointer" (click)="redirectToBadgeDetail.emit(badge.badge)">{{badge.badge.name}}</span>
                       </div>  
                     </div>    
@@ -68,6 +68,16 @@ import { HlmPDirective } from '../components/spartan/ui-typography-helm/src/lib/
                         class="tw-w-full"
                         (click)="qrCodeAward.emit(badge.badge)"
                         [text]="qrCodeAwardText"
+                    >
+                    </oeb-button>
+                    <oeb-button
+                        *ngIf="badge.requestCount > 0"
+                        variant="green"
+                        size="xs"
+                        width="full_width"
+                        class="tw-w-full"
+                        (click)="redirectToBadgeDetail.emit(badge.badge)"
+                        [text]="badge.requestCount + ' offene Anfragen'"
                     >
                     </oeb-button>
                 </hlm-th>
