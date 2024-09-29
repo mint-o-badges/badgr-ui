@@ -156,17 +156,9 @@
 				size="sm"
 				id="imageTextError"
 				[hidden]="!imageFieldDirty || !badgeClassForm.hasError('imageRequired')"
-				class="tw-font-normal tw-text-red tw-text-start md:tw-pl-[13.5rem] tw-w-full tw-mt-2"
+				class="tw-font-normal md:tw-pl-[13.5rem] u-text-error"
 			>
-				{{ 'CreateBadge.imageRequiredError' | translate }}.
-			</p>
-			<p
-				hlmP 
-				size="sm"
-				[hidden]="!isCustomImageLarge"
-				class="tw-font-normal tw-text-red tw-text-start md:tw-pl-[13.5rem] tw-w-full tw-mt-2"
-			>
-				{{ 'CreateBadge.imageTooLarge' | translate }}.
+				{{ (isCustomImageLarge?'CreateBadge.imageTooLarge':'CreateBadge.imageRequiredError') | translate }}.
 			</p>
 		</div>
 	</div>
