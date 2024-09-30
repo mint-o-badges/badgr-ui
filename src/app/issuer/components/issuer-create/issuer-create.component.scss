@@ -5,6 +5,23 @@
 	height: 20rem
 }
 
+::ng-deep .forminput .forminput-x-label {
+	font-family: 'rubik';
+	font-size: 20px;
+	line-height: 28px;
+	font-weight: 600px;
+	color: var(--color-black);
+	display: block;
+	margin-bottom: var(--gridspacing);
+}
+
+@media (max-width: 768px) {
+	::ng-deep .forminput .forminput-x-label{
+		font-size: 14px;
+		line-height: 19px;
+	}
+}
+
 
 @media (max-width: 480px) {
 	::ng-deep .dropzone .dropzone-x-info1,

@@ -32,14 +32,15 @@ export class IssuerEditComponent extends BaseAuthenticatedRoutableComponent impl
 	issuer: Issuer;
 	issuerSlug: string;
 
+	imageError: string;
+
 	issuerForm = typedFormGroup()
 		.addControl('issuer_name', '', [Validators.required, Validators.maxLength(1024)])
 		.addControl('issuer_description', '', [Validators.required, Validators.maxLength(1024)])
 		.addControl('issuer_email', '', [Validators.required])
 		.addControl('issuer_url', '', [Validators.required, UrlValidator.validUrl])
-		.addControl('issuer_image', '')
+		.addControl('issuer_image', '', [Validators.required])
 		.addControl('issuer_category', '', [Validators.required])
-		.addControl('issuer_image', '')
 		.addControl('issuer_street', '')
 		.addControl('issuer_streetnumber', '')
 		.addControl('issuer_zip', '')
@@ -122,7 +123,21 @@ export class IssuerEditComponent extends BaseAuthenticatedRoutableComponent impl
 		super.ngOnInit();
 	}
 
+	onImageRatioError(error: string) {
+		this.imageError = error;
+		const imageControl = this.issuerForm.rawControlMap.issuer_image;
+		if (imageControl) {
+			imageControl.setErrors({ imageRatioError: error });
+		}
+		this.issuerForm.markTreeDirtyAndValidate()
+	}
+
 	onSubmit() {
+
+		if(this.issuerForm.controls.issuer_image.rawControl.hasError('required')){
+			this.imageError = "Bitte wählen Sie ein Bild aus.";
+		}
+
 		if (!this.issuerForm.markTreeDirtyAndValidate()) {
 			return;
 		}
