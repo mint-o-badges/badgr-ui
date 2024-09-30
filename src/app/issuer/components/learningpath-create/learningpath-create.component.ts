@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, ViewChild } from "@angular/core";
+import { Component, EventEmitter, OnInit, Output, ViewChild } from "@angular/core";
 import { BaseAuthenticatedRoutableComponent } from "../../../common/pages/base-authenticated-routable.component";
 import { FormBuilder, FormControl, Validators } from "@angular/forms";
 import { SessionService } from "../../../common/services/session.service";
@@ -40,7 +40,7 @@ interface DraggableItem {
 	selector: 'learningpath-create',
 	templateUrl: './learningpath-create.component.html',
 })
-export class LearningPathCreateComponent extends BaseAuthenticatedRoutableComponent {
+export class LearningPathCreateComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 
 	@ViewChild('badgeStudio')
 	badgeStudio: BadgeStudioComponent;
@@ -108,6 +108,14 @@ export class LearningPathCreateComponent extends BaseAuthenticatedRoutableCompon
 		super(router, route, loginService);
 		this.badgesLoaded = this.loadBadges();
     }
+
+	ngOnInit(){
+		this.learningPathForm.rawControl.controls.badges.statusChanges.subscribe((value) => {
+			this.learningPathForm.value.badges.filter((badge) => badge.selected).forEach((badge) => {
+				this.draggableList.push({id: badge.badge.slug, name: badge.badge.name, image: badge.badge.image, description: badge.badge.description, slug: badge.badge.slug, issuerName: badge.badge.issuerName})
+		})
+		})
+	}
 
 	useOurEditor = this.translate.instant('CreateBadge.useOurEditor');
 	imageSublabel = this.translate.instant('CreateBadge.imageSublabel');
@@ -270,7 +278,6 @@ export class LearningPathCreateComponent extends BaseAuthenticatedRoutableCompon
 		// this.badgeResults.forEach((item, index) => {
 		// 	this.draggableList.push({id: index.toString(), name: item.name, image: item.image, description: item.description, slug: item.slug, issuerName: item.issuerName})
 		// })
-		console.log(this.learningPathForm.value.badges.filter((badge) => badge.selected))
 
 	}
         
