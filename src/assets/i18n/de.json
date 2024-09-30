@@ -155,12 +155,13 @@
 		"contactInstitution": "Institution kontaktieren",
 		"jsonView": "JSON ansehen",
 		"viewOriginal": "Original ansehen",
-		"awardBadeges": "Erstelle eine Institution um Badges zu vergeben.",
-		"imageOptional": "Bild (Optional)",
-		"enterName": "Bitte gebe einen Namen an",
-		"enterURL": "Bitte gebe eine gültige URL an",
-		"enterValidEmail": "Bitte gebe eine gültige E-Mail Adresse an",
-		"enterDescription": "Bitte gebe eine Beschreibung an",
+		"awardBadges": "Erstelle eine Institution, um Badges zu vergeben.",
+		"institutionWillAward": "Diese Institution wird Absender der über sie erstellten Badges sein.",
+		"imageLogo": "Logo-Bild",
+		"enterName": "Bitte gib einen Namen an",
+		"enterURL": "Bitte gib eine gültige URL an",
+		"enterValidEmail": "Bitte gib eine gültige E-Mail Adresse an",
+		"enterDescription": "Bitte gib eine Beschreibung an",
 		"enterCategory": "Bitte gib eine Kategorie an",
 		"enterStreet": "Bitte gib eine Strasse an",
 		"enterHouseNo": "Bitte gib eine Hausnummer an",
@@ -225,7 +226,8 @@
 		"import": "Importieren",
 		"csvColumns": "CSV Spalten",
 		"csvError": "Die CSV Datei enthält Zeilen länger als ihre Überschrift. Bitte behebe diesen Fehler und versuche es erneut.",
-		"pdfCertificate": "PDF-Zertifikat"
+		"pdfCertificate": "PDF-Zertifikat",
+		"useImageFormat": "Bitte nutze ein Bild im quadratischen Format 1:1, damit es auf unserer Plattform optimal dargestellt werden kann."
 	},
 	"Badge": {
 		"groupBy": "Gruppieren nach",
@@ -277,13 +279,13 @@
 		"participationBadgeShortInfo": "bestätigen Teilnahme",
 		"short": "Kurz",
 		"forLearners": "für Lernende",
-		"summarizedDescription": "Zusammenfassende Beschreibung deiner Veranstaltung / deines Lernangebots. ",
+		"summarizedDescription": "Zusammenfassende Beschreibung deiner Veranstaltung / deines Lernangebots ",
 		"descriptionSavedInBadge": "Diese Kurzbeschreibung wird im Badge gespeichert.",
 		"imageRequiredError": "Bitte nutze eine der Optionen um ein Bild für den Badge auszuwählen",
 		"useOurEditor": "Unseren Editor nutzen",
 		"imageSublabel": "Wähle ein Icon/Bild, das in unseren Badge-Rahmen eingesetzt wird.",
 		"useOwnVisual": "Eigenes Visual nutzen",
-		"uploadOwnDesign": "Lade ein eigenes Badge-Design hoch.",
+		"uploadOwnDesign": "Lade ein eigenes Badge-Design hoch (max. 250 KB)",
 		"imageErrorFork": "Bitte gib dem Badge ein gültiges (bei einem Fork eindeutiges) Bild",
 		"fillWithCompetencies": "Badge mit Kompetenzen befüllen",
 		"aiAssistant": "KI-Badge-Assistent",
@@ -326,7 +328,9 @@
 		"addAnotherCompetency": "Weitere Kompetenz hinzufügen",
 		"giveBadgeTitle":"Bitte gib dem Badge einen Titel",
 		"changeBadgeTitle":"Bitte ändere den Titel",
-		"maxValue1000":"Maximalwert ist 1000"
+		"maxValue1000":"Maximalwert ist 1000",
+		"imageTooLarge": "Das Bild ist zu groß. Bitte wähle ein Bild mit einer Größe von maximal 250 KB.",
+		"licenseInfo": "Badges werden unter der <a class='tw-underline tw-text-[#1400FF]' target='_blank' href='https://creativecommons.org/publicdomain/zero/1.0/legalcode.de'> Lizenz CC0 1.0 </a> erstellt."
 	},
 	"Signup": {
 		"youHaveAccount": "Du hast bereits einen Account?",
@@ -515,10 +519,10 @@
 		"share": "Teilen",
 		"orginzeBadges": "Organisiere deine Badges in Sammlungen.",
 		"collectionName": "Name der Sammlungen",
-		"enterCollectioName": "Bitte gebe einen Namen der Sammlung ein",
+		"enterCollectioName": "Bitte gib einen Namen der Sammlung ein",
 		"remainingChar": "verbleibende Zeichen",
 		"description": "Beschreibung",
-		"provideDescription": "Bitte gebe eine Beschreibung an"
+		"provideDescription": "Bitte gib eine Beschreibung an"
 	},
 	"Profile": {
 		"more": "Mehr",
@@ -588,7 +592,8 @@
 		"personalDataInfo": "Informationen zur Verarbeitung deiner personenbezogenen Daten findest du in unserer <a class='tw-underline tw-text-[#1400FF]' href='public/privacy'> Datenschutzerklärung</a>.",
 		"ageConfirmation": "Ich bestätige, dass ich <b>16 Jahre oder älter bin. Wenn ich jünger als 16 Jahre bin:</b> Meine Eltern oder meine Erziehungsberechtigten wissen, dass ich meine persönlichen Daten für die Nutzung der Plattform Open Educational Badges angebe. Ich bestätige, dass sie damit einverstanden sind.",
 		"successMessage": "<span class='tw-font-bold'>Du hast den Badge erfolgreich angefordert.</span><br>",
-		"successMessage2": "Sobald deine Anfrage bestätigt wurde, bekommst du den Badge per E-Mail zugesendet."
+		"successMessage2": "Sobald deine Anfrage bestätigt wurde, bekommst du den Badge per E-Mail zugesendet.",
+		"nameValidationError": "Vor- und Nachname dürfen zusammen nicht mehr als 35 Zeichen ergeben."
 	},
 	"IssueQr": {
 		"list1": "Du füllst die Details für die QR-Code-Vergabe auf dieser Seite aus und klickst auf <span class='tw-italic'>QR-Code generieren</span>. Du wirst zum so generierten QR-Code weitergeleitet und kannst ihn herunterladen oder einen Screenshot machen.",

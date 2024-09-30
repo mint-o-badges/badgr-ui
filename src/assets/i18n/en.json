@@ -277,13 +277,13 @@
 		"participationBadgeShortInfo": "confirm participation",
 		"short": "Short",
 		"forLearners": "for learners",
-		"summarizedDescription": "Summarized description of your learning offer.",
+		"summarizedDescription": "Summarized description of your learning offer ",
 		"descriptionSavedInBadge": "This description is saved in the badge.",
 		"imageRequiredError": "Please use one of the options to choose an image for the badge",
 		"useOurEditor": "Use our editor",
 		"imageSublabel": "Choose an image/icon to be inserted into our frame.",
 		"useOwnVisual": "Use your own visual",
-		"uploadOwnDesign": "Upload your own badge design.",
+		"uploadOwnDesign": "Upload your own badge design (max. 250 KB)",
 		"imageErrorFork": "Please use a valid (and unique after fork) image for the badge",
 		"fillWithCompetencies": "fill badge with competencies",
 		"aiAssistant": "AI-Badge-Assistant",
@@ -326,7 +326,9 @@
 		"addAnotherCompetency": "Add another competency",
 		"giveBadgeTitle":"Please give the badge a title",
 		"changeBadgeTitle":"Please change the title",
-		"maxValue1000":"Maximum value is 1000"
+		"maxValue1000":"Maximum value is 1000",
+		"imageTooLarge": "The image is too large. Please select an image with a size of up to 250 KB.",
+		"licenseInfo": "Badges are created under the license <a class='tw-underline tw-text-[#1400FF]' target='_blank' href='https://creativecommons.org/publicdomain/zero/1.0/legalcode.de'>CC BY 4.0'</a>."
 	},
 	"Signup": {
 		"youHaveAccount": "You already have an account?",
@@ -578,8 +580,8 @@
 		"requestBadgeInfo1": "Your request will then be approved by a person from ",
 		"requestBadgeInfo2": "Once that has happened, the badge will be sent to you via email.",
 		"personalDataInfo": "You can find information about the processing of your personal data in our <a class='tw-underline tw-text-[#1400FF]' href='public/privacy'> privacy policy </a>",
-		"ageConfirmation": "I confirm that I am 16 years old or older. If I am younger than 16: My parents or guardians are aware that I am providing my personal data to use the Open Educational Badges platform. I confirm that they agree with this."
-
+		"ageConfirmation": "I confirm that I am 16 years old or older. If I am younger than 16: My parents or guardians are aware that I am providing my personal data to use the Open Educational Badges platform. I confirm that they agree with this.",
+		"nameValidationError": "First name and last name together must not exceed 35 characters."
 	},
 	"IssueQr": {
 		"list1": "You fill in the details for the QR code issuance on this page and click on <span class='tw-italic'>Generate QR Code</span>. You will be redirected to the generated QR code and can download it or take a screenshot.",
