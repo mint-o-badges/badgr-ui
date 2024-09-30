@@ -110,10 +110,14 @@ export class LearningPathCreateComponent extends BaseAuthenticatedRoutableCompon
     }
 
 	ngOnInit(){
-		this.learningPathForm.rawControl.controls.badges.statusChanges.subscribe((value) => {
+		this.learningPathForm.rawControl.controls.badges.valueChanges.subscribe((value) => {
+			setTimeout(() => {
 			this.learningPathForm.value.badges.filter((badge) => badge.selected).forEach((badge) => {
+				if (!this.draggableList.some(item => item.slug === badge.badge.slug)) {
 				this.draggableList.push({id: badge.badge.slug, name: badge.badge.name, image: badge.badge.image, description: badge.badge.description, slug: badge.badge.slug, issuerName: badge.badge.issuerName})
+				}
 		})
+	}, 10)
 		})
 	}
 
