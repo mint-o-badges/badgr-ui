@@ -352,6 +352,7 @@
 									[control]="competency.rawControlMap.name"
 									[errorMessage]="{ required: titleError }"
 									noTopMargin="true"
+									[readonly]="competency.controls.escoID.value ? true : false"
 								>
 								</oeb-input>
 
@@ -367,6 +368,7 @@
 												required: 'Bitte gib die Dauer für den Erwerb der Kompetenz ein.'
 											}"
 											noTopMargin="true"
+											[readonly]="competency.controls.escoID.value ? true : false"
 										>
 										</oeb-input>
 
@@ -384,16 +386,17 @@
 										required: competencyCategoryError
 									}"
 									noTopMargin="true"
+									[disabled]="competency.controls.escoID.value ? true : false"
 								></oeb-select>
 
 							</div>
-
 							<oeb-input 
 								[fieldType]="'textarea'" 
 								[label]="competencyDescription"
 								[control]="competency.rawControlMap.description"
 								id="competency_description_input"
 								[errorMessage]="{ required: enterDescription }"
+								[readonly]="competency.controls.escoID.value ? true : false"
 							>
 							</oeb-input>
 
