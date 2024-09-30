@@ -55,7 +55,8 @@
 		"password": "Password",
 		"loading": "Loading...",
         "warning": "Warning",
-		"page": "Page"
+		"page": "Page",
+		"betaInfo": "Our platform is still in the beta phase."
 	},
 	"NavItems": {
 		"register": "Register",

@@ -56,7 +56,8 @@
 		"password": "Passwort",
 		"loading": "Laden...",
         "warning": "Warnung",
-		"page": "Seite"
+		"page": "Seite",
+		"betaInfo": "Unsere Plattform befindet sich noch in der <a class='tw-underline tw-text-[#1400FF]' hlmA href=''>Betaphase </a>."
 	},
 	"NavItems": {
 		"register": "Registrieren",
