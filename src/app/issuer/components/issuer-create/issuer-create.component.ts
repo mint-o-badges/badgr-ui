@@ -181,18 +181,4 @@ export class IssuerCreateComponent extends BaseAuthenticatedRoutableComponent im
 	get dataProcessorUrl() {
 		return this.configService.theme.dataProcessorTermsLink;
 	}
-
-	restrictAtAndNonAscii(control: AbstractControl) {
-		const nonAsciiRegex = /[^\x00-\x7Fäöüß]/ 
-		
-		const atIndex = control.value.indexOf('@');
-		const nonAsciiMatch = control.value.match(nonAsciiRegex);
-	  
-		if (atIndex !== -1) {
-		  return { invalidCharacter: 'Bitte entfernen Sie das @ Zeichen.' };
-		} else if (nonAsciiMatch) {
-		  return { invalidCharacter: `Bitte entfernen Sie das Zeichen: ${nonAsciiMatch[0]}.` };
-		}
-		return null; 
-	  }
 }
