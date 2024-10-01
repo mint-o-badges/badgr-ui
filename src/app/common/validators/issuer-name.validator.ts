@@ -1,17 +1,17 @@
 import { AbstractControl } from '@angular/forms';
 
 export class IssuerNameValidator {
-    static validIssuerName(control: AbstractControl): {[errorName: string]: string} {
-        const nonAsciiRegex = /[^\x00-\x7Fäöüß]/ 
-		
+	static validIssuerName(control: AbstractControl): { [errorName: string]: string } {
+		const nonAsciiRegex = /[^\x00-\x7Fäöüß]/;
+
 		const atIndex = control.value.indexOf('@');
 		const nonAsciiMatch = control.value.match(nonAsciiRegex);
-	  
+
 		if (atIndex !== -1) {
-		  return { invalidCharacter: 'Bitte entfernen Sie das @ Zeichen.' };
+			return { invalidCharacter: 'Bitte entfernen Sie das @ Zeichen.' };
 		} else if (nonAsciiMatch) {
-		  return { invalidCharacter: `Bitte entfernen Sie das Zeichen: ${nonAsciiMatch[0]}.` };
+			return { invalidCharacter: `Bitte entfernen Sie das Zeichen: ${nonAsciiMatch[0]}.` };
 		}
-		return null; 
-	  }
+		return null;
+	}
 }
