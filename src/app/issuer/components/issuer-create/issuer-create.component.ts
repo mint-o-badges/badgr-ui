@@ -94,12 +94,6 @@ export class IssuerCreateComponent extends BaseAuthenticatedRoutableComponent im
 
 	ngOnInit() {
 		super.ngOnInit();
-		this.issuerForm.rawControl.controls.issuer_image.statusChanges.subscribe((status) => {
-			if (status === 'INVALID') {
-				console.log(this.issuerForm.rawControl.controls.issuer_image.hasError('imageRatio'))
-			//   alert(JSON.stringify(this.fileControl.errors));
-			}
-		  });
 		this.translate.get('Issuer.enterDescription').subscribe((translatedText: string) => {
             this.enterDescription = translatedText;
 		});
@@ -133,8 +127,6 @@ export class IssuerCreateComponent extends BaseAuthenticatedRoutableComponent im
 		}
 		
 		const formState = this.issuerForm.value;
-		console.log(this.issuerForm.errors)
-
 
 
 		const issuer: ApiIssuerForCreation = {
@@ -152,8 +144,6 @@ export class IssuerCreateComponent extends BaseAuthenticatedRoutableComponent im
 		if (formState.issuer_image && String(formState.issuer_image).length > 0) {
 			issuer.image = formState.issuer_image;
 		}
-		console.log(formState.issuer_image)
-
 
 		this.addIssuerFinished = this.issuerManager
 			.createIssuer(issuer)

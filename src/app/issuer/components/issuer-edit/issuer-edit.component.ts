@@ -46,7 +46,6 @@ export class IssuerEditComponent extends BaseAuthenticatedRoutableComponent impl
 		.addControl('issuer_url', '', [Validators.required, UrlValidator.validUrl])
 		.addControl('issuer_image', '')
 		.addControl('issuer_category', '', [Validators.required])
-		.addControl('issuer_image', '')
 		.addControl('issuer_street', '')
 		.addControl('issuer_streetnumber', '')
 		.addControl('issuer_zip', '')
@@ -141,9 +140,11 @@ export class IssuerEditComponent extends BaseAuthenticatedRoutableComponent impl
 	}
 
 	onSubmit() {
+
 		if(this.issuerForm.controls.issuer_image.rawControl.hasError('required')){
 			this.imageError = "Bitte wählen Sie ein Bild aus.";
 		}
+    
 		if (!this.issuerForm.markTreeDirtyAndValidate()) {
 			return;
 		}
