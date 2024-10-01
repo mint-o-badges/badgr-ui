@@ -32,8 +32,6 @@ export class IssuerEditComponent extends BaseAuthenticatedRoutableComponent impl
 	issuer: Issuer;
 	issuerSlug: string;
 
-	imageError: string;
-
 	issuerForm = typedFormGroup()
 		.addControl('issuer_name', '', [Validators.required, Validators.maxLength(1024)])
 		.addControl('issuer_description', '', [Validators.required, Validators.maxLength(1024)])
@@ -124,10 +122,6 @@ export class IssuerEditComponent extends BaseAuthenticatedRoutableComponent impl
 	}
 
 	onSubmit() {
-
-		if(this.issuerForm.controls.issuer_image.rawControl.hasError('required')){
-			this.imageError = "Bitte wählen Sie ein Bild aus.";
-		}
 
 		if (!this.issuerForm.markTreeDirtyAndValidate()) {
 			return;
