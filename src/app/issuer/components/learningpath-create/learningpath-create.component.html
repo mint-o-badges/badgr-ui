@@ -12,25 +12,29 @@
         </div>
 
           <oeb-input 
-            label="Lernpfad-Titel"
+            label="1. Lernpfad-Titel"
             [control]="learningPathForm.rawControlMap.name"
             [autofocus]="true"
             [errorMessage]="{
               required: 'Required'
             }"
+            sublabelRight="(max 60 Zeichen)"
 				></oeb-input>
           <oeb-input 
-            label="Kurz-Beschreibung für Lernende"
+            label="2. Kurz-Beschreibung für Lernende"
             [control]="learningPathForm.rawControlMap.description"
             [fieldType]="'textarea'"
+            sublabelRight="(max 700 Zeichen)"
+            placeholder="{{ 'LearningPathEditor.shortDescription' | translate }}"
           ></oeb-input>
 
-          <div class="tw-flex md:tw-flex-row tw-gap-3 md:tw-gap-8 tw-flex-col" id="imageSection" #imageSection>
-            <span class="input-label md:tw-flex-[0_0_10em]"> Badge-{{ 'Issuer.image' | translate }}</span>
+          <div class="tw-mt-6 md:tw-mt-7" id="imageSection" #imageSection>
+            <!-- <span class="input-label md:tw-flex-[0_0_10em]"> Badge-{{ 'Issuer.image' | translate }}</span> -->
+            <span hlmP class="tw-text-oebblack tw-font-semibold" [innerHTML]="'3. Lernpfad-Bild'"></span>
             <div
-              class="tw-flex tw-flex-col tw-gap-4 md:tw-flex-row tw-bg-[var(--color-lightgreen)] tw-p-8 tw-justify-evenly tw-items-center tw-mr-auto tw-rounded-2xl"
+              class="tw-flex tw-flex-col tw-gap-4 md:tw-flex-row tw-bg-[var(--color-lightpink)] tw-p-8 tw-justify-evenly tw-items-center tw-mr-auto tw-rounded-2xl"
             >
-              <div class="tw-w-full">
+              <div class="tw-w-full tw-h-72">
                 <bg-formfield-image
                   #imageField
                   [label]="useOurEditor"
@@ -57,12 +61,12 @@
               <hr
                 class="md:tw-hidden tw-my-8 tw-w-full tw-border tw-border-[var(--color-purple)] tw-border-dashed"
               />
-              <div class="tw-w-full">
+              <div class="tw-w-full tw-h-72">
                 <bg-formfield-image
                   #customImageField
                   [label]="useOwnVisual"
 							    [sublabel]="uploadOwnDesign"
-							    [text_body]="uploadOwnVisual"
+							    text_body="{{'RecBadge.uploadOwnVisual' | translate}}"
                   imageLoaderName="basic"
                   [newDropZone]="true"
                   [type]="'badge'"
@@ -87,11 +91,12 @@
               ></badge-studio>
             </div>
           </div>
-                
+          
+          <div class="tw-mt-6 md:tw-mt-7">
             <h1>Enthaltene Badges</h1>
             <div class="oeb-section tw-bg-[var(--color-lightpink)]">
+              <div class="tw-flex">
               <!-- Search  -->
-              <ng-container>
                 <div class="tw-pb-2 md:tw-pb-0 ">
                   <input type="text" name="forminput" changeOrder
                     class="tw-w-[300px] tw-border-solid tw-border-purple tw-bg-white tw-mr-6"
@@ -113,6 +118,7 @@
                     </div>
                   </label>
                 </div>
+                </div>
                 <ng-container *ngIf="groupBy == '---'">
                   <div class="tw-grid tw-grid-cols-badges tw-gap-16">
                     <bg-badgecard *ngFor="let badge of learningPathForm.controls.badges.controls" [badgeTitle]="badge.controls.badge.rawControl.value.name"
@@ -123,7 +129,6 @@
                     [checkboxControl]="badge.rawControlMap.selected" ></bg-badgecard>
                   </div>
                 </ng-container>
-              </ng-container>
               <ng-container *ngIf="groupBy == 'Kategorie' || groupBy == 'Category'">
                 <ng-container *ngFor="let categoryGroup of badgeResultsByCategory">
                   <h3 class="u-text-h3-semibold u-margin-bottom2x u-margin-top6x u-text-dark1">
@@ -144,6 +149,7 @@
                 </ng-container>
               </ng-container>
             </div>
+          </div>
             <h1>Reihenfolge der Badges im Lernpfad</h1>
             <div class="oeb-section tw-bg-[var(--color-lightpink)]">
                 <ul class="tw-grid tw-grid-cols-1">

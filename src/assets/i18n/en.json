@@ -605,5 +605,8 @@
 		"catalogHeadline":"Overview of all learning paths",
 		"partipate": "Participate",
 		"notParticipateAnymore": "Not participate anymore"
+	},
+	"LearningPathEditor": {
+		"shortDescription": "short description"
 	}
 }

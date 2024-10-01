@@ -39,7 +39,7 @@ export class OebIssuerDetailComponent implements OnInit {
 		protected issuerManager: IssuerManager,
 		protected profileManager: UserProfileManager,
 		private configService: AppConfigService,
-		private learningPathApiService: LearningPathApiService
+		private learningPathApiService: LearningPathApiService,
 		private badgeRequestApiService: BadgeRequestApiService
 	) {
         

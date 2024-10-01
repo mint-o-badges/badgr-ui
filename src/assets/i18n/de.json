@@ -633,6 +633,10 @@
 		"notParticipateAnymore": "Nicht mehr teilnehmen",
 		"searchLearningPaths": "Lernpfade durchsuchen"
 	},
+	"LearningPathEditor": {
+		"shortDescription": "Zusammenfassende Beschreibung deines Lernpfades. Diese Kurzbeschreibung wird im Lernpfad-Badge gespeichert."
+
+	},
 	"OEBComponents":{
 		"fieldIsRequired": "Dieses Feld ist erforderlich"
 	}

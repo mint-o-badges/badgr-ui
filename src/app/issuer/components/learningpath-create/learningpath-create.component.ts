@@ -39,6 +39,7 @@ interface DraggableItem {
 @Component({
 	selector: 'learningpath-create',
 	templateUrl: './learningpath-create.component.html',
+	styleUrls: ['./learningpath-create.component.scss'],
 })
 export class LearningPathCreateComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 
