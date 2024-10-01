@@ -22,6 +22,7 @@
 				[control]="issuerForm.rawControlMap.issuer_image"
 				[allowedFileFormats]="['image/png', 'image/svg+xml']"
 				[errorMessage]="imageError"
+				(imageRatioError)="onImageRatioError($event)"
 
 			></bg-formfield-image>
 			<span class="tw-text-oebblack tw-italic tw-text-lg">Dateiformat: PNG</span>
