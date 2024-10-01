@@ -141,6 +141,9 @@ export class IssuerEditComponent extends BaseAuthenticatedRoutableComponent impl
 	}
 
 	onSubmit() {
+		if(this.issuerForm.controls.issuer_image.rawControl.hasError('required')){
+			this.imageError = "Bitte wählen Sie ein Bild aus.";
+		}
 		if (!this.issuerForm.markTreeDirtyAndValidate()) {
 			return;
 		}
