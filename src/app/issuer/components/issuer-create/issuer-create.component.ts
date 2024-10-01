@@ -115,15 +115,6 @@ export class IssuerCreateComponent extends BaseAuthenticatedRoutableComponent im
 
 	}
 
-	onImageRatioError(error: string) {
-		this.imageError = error;
-		const imageControl = this.issuerForm.rawControlMap.issuer_image;
-		if (imageControl) {
-			imageControl.setErrors({ imageRatioError: error });
-		}
-		this.issuerForm.markTreeDirtyAndValidate()
-	}
-
 	
 	refreshProfile = () => {
 		// Load the profile
