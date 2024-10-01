@@ -39,7 +39,7 @@ export class IssuerEditComponent extends BaseAuthenticatedRoutableComponent impl
 		.addControl('issuer_description', '', [Validators.required, Validators.maxLength(1024)])
 		.addControl('issuer_email', '', [Validators.required])
 		.addControl('issuer_url', '', [Validators.required, UrlValidator.validUrl])
-		.addControl('issuer_image', '', [Validators.required])
+		.addControl('issuer_image', '')
 		.addControl('issuer_category', '', [Validators.required])
 		.addControl('issuer_street', '')
 		.addControl('issuer_streetnumber', '')
@@ -121,15 +121,6 @@ export class IssuerEditComponent extends BaseAuthenticatedRoutableComponent impl
 
 	ngOnInit() {
 		super.ngOnInit();
-	}
-
-	onImageRatioError(error: string) {
-		this.imageError = error;
-		const imageControl = this.issuerForm.rawControlMap.issuer_image;
-		if (imageControl) {
-			imageControl.setErrors({ imageRatioError: error });
-		}
-		this.issuerForm.markTreeDirtyAndValidate()
 	}
 
 	onSubmit() {
