@@ -19,6 +19,9 @@ import { UserProfileEmail } from '../../../common/model/user-profile.model';
 import { AppConfigService } from '../../../common/app-config.service';
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { typedFormGroup } from '../../../common/util/typed-forms';
+import { IssuerNameValidator } from '../../../common/validators/issuer-name.validator';
+import { TranslateService } from '@ngx-translate/core';
+
 
 @Component({
 	selector: 'issuer-edit',
@@ -32,9 +35,13 @@ export class IssuerEditComponent extends BaseAuthenticatedRoutableComponent impl
 	issuer: Issuer;
 	issuerSlug: string;
 
+	imageError: string;
+	issuerRequiredError: string;
+
+
 	issuerForm = typedFormGroup()
-		.addControl('issuer_name', '', [Validators.required, Validators.maxLength(1024)])
-		.addControl('issuer_description', '', [Validators.required, Validators.maxLength(1024)])
+		.addControl('issuer_name', '', [Validators.required, Validators.maxLength(90), IssuerNameValidator.validIssuerName])
+		.addControl('issuer_description', '', [Validators.required, Validators.minLength(200), Validators.maxLength(300)])
 		.addControl('issuer_email', '', [Validators.required])
 		.addControl('issuer_url', '', [Validators.required, UrlValidator.validUrl])
 		.addControl('issuer_image', '')
@@ -64,6 +71,8 @@ export class IssuerEditComponent extends BaseAuthenticatedRoutableComponent impl
 		protected messageService: MessageService,
 		protected configService: AppConfigService,
 		protected issuerManager: IssuerManager,
+		protected translate: TranslateService,
+
 	) {
 		super(router, route, loginService);
 		title.setTitle(`Edit Issuer - ${this.configService.theme['serviceName'] || 'Badgr'}`);
@@ -120,6 +129,15 @@ export class IssuerEditComponent extends BaseAuthenticatedRoutableComponent impl
 
 	ngOnInit() {
 		super.ngOnInit();
+	}
+
+	onImageRatioError(error: string) {
+		this.imageError = error;
+		const imageControl = this.issuerForm.rawControlMap.issuer_image;
+		if (imageControl) {
+			imageControl.setErrors({ imageRatioError: error });
+		}
+		this.issuerForm.markTreeDirtyAndValidate()
 	}
 
 	onSubmit() {

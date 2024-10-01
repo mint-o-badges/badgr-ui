@@ -16,6 +16,7 @@ import { AppConfigService } from '../../../common/app-config.service';
 import { typedFormGroup } from '../../../common/util/typed-forms';
 import { TranslateService } from '@ngx-translate/core';
 import { QueryParametersService } from '../../../common/services/query-parameters.service';
+import { IssuerNameValidator } from '../../../common/validators/issuer-name.validator';
 
 @Component({
 	selector: 'issuer-create',
@@ -28,7 +29,7 @@ export class IssuerCreateComponent extends BaseAuthenticatedRoutableComponent im
 	);
 
 	issuerForm = typedFormGroup()
-		.addControl('issuer_name', '', [Validators.required, Validators.maxLength(90)])
+		.addControl('issuer_name', '', [Validators.required, Validators.maxLength(90), IssuerNameValidator.validIssuerName])
 		.addControl('issuer_description', '', [Validators.required, Validators.minLength(200), Validators.maxLength(300)])
 		.addControl('issuer_email', '', [
 			Validators.required,
