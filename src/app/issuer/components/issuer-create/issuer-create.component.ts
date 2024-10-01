@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, ValidationErrors, Validators } from '@angular/forms';
+import { FormBuilder, ValidationErrors, Validators, AbstractControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from '../../../common/services/message.service';
 import { IssuerManager } from '../../services/issuer-manager.service';
@@ -51,6 +51,7 @@ export class IssuerCreateComponent extends BaseAuthenticatedRoutableComponent im
 
 	enterDescription: string; 
 	issuerRequiredError: string;
+	invalidCharacterError: string = '';
 	selectFromMyFiles: string;
 	useImageFormat: string;
 	imageError: string;
@@ -180,4 +181,18 @@ export class IssuerCreateComponent extends BaseAuthenticatedRoutableComponent im
 	get dataProcessorUrl() {
 		return this.configService.theme.dataProcessorTermsLink;
 	}
+
+	restrictAtAndNonAscii(control: AbstractControl) {
+		const nonAsciiRegex = /[^\x00-\x7Fäöüß]/ 
+		
+		const atIndex = control.value.indexOf('@');
+		const nonAsciiMatch = control.value.match(nonAsciiRegex);
+	  
+		if (atIndex !== -1) {
+		  return { invalidCharacter: 'Bitte entfernen Sie das @ Zeichen.' };
+		} else if (nonAsciiMatch) {
+		  return { invalidCharacter: `Bitte entfernen Sie das Zeichen: ${nonAsciiMatch[0]}.` };
+		}
+		return null; 
+	  }
 }
