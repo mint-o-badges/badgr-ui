@@ -90,10 +90,16 @@ export class OebIssuerDetailComponent implements OnInit {
 
 
 			if (!this.badgeResults.find((r) => r.badge === badge)) {
-				// appending the results to the badgeResults array bound to the view template.
-				this.badgeRequestApiService.getBadgeRequestsCountByBadgeClass(badge.slug).then((r) => {
-					this.badgeResults.push(new BadgeResult(badge, this.issuer.name, r.body['request_count']));
-				})
+				if(!badge.slug){
+					this.badgeResults.push(new BadgeResult(badge, this.issuer.name, 0));
+					
+				}
+				else{
+					this.badgeRequestApiService.getBadgeRequestsCountByBadgeClass(badge.slug).then((r) => {
+						// appending the results to the badgeResults array bound to the view template.
+						this.badgeResults.push(new BadgeResult(badge, this.issuer.name, r.body['request_count']));
+					})
+				}
 			}
 			return true;
 		};
