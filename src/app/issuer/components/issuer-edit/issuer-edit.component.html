@@ -26,7 +26,7 @@
 				class="u-margin-bottom2x"
 				[control]="issuerForm.rawControlMap.issuer_name"
 				label="{{ 'General.name' | translate }}"
-				errorMessage="{{ 'Issuer.enterName' | translate }}"
+				[errorMessage]="{required: issuerRequiredError}"
 				[autofocus]="true"
 			></bg-formfield-text>
 
