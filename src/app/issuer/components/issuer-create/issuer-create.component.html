@@ -4,24 +4,36 @@
 
 		<div class="oeb-headline-container-sm">
 			<h1 hlmH1 class="tw-text-purple">{{ 'Issuer.createInstitution' | translate }}</h1>
-			<p hlmP class="tw-font-normal">{{ 'Issuer.awardBadeges' | translate }}</p>
+			<p hlmP class="tw-font-normal">{{ 'Issuer.awardBadges' | translate }}</p>
+			<p hlmP class="tw-font-normal">{{ 'Issuer.institutionWillAward' | translate }}</p>
+
 		</div>
 
 		<form (ngSubmit)="onSubmit()" class="oeb-max-form-width tw-mt-6" novalidate>
 			<bg-formfield-image
 				#imageField
-				label="{{ 'Issuer.imageOptional' | translate }}"
+				label="{{ 'Issuer.imageLogo' | translate }}"
+				sublabelRight="(Format 1:1 / quadratisch)"
 				imageLoaderName="issuer"
+				[text_body]="selectFromMyFiles"
+				dropZoneInfo1="Drag & Drop"
+				[dropZoneInfo3]="useImageFormat"
 				[placeholderImage]="issuerImagePlacholderUrl"
 				[control]="issuerForm.rawControlMap.issuer_image"
+				[allowedFileFormats]="['image/png', 'image/svg+xml']"
+				[errorMessage]="imageError"
+				(imageRatioError)="onImageRatioError($event)"
+
 			></bg-formfield-image>
+			<span class="tw-text-oebblack tw-italic tw-text-lg">Dateiformat: PNG</span>
 
 			<oeb-input
-				label="{{ 'General.name' | translate }}"
+				label="{{ 'General.name' | translate }} der Institution"
 				[control]="issuerForm.rawControlMap.issuer_name"
 				[fieldType]="'text'"
 				[autofocus]="true"
 				[errorMessage]="{ required: issuerRequiredError }"
+				sublabelRight="(max 90 Zeichen)"
 				#issuer_name_field
 			></oeb-input>
 
@@ -36,7 +48,7 @@
 
 			<oeb-select
 				[control]="issuerForm.rawControlMap.issuer_email"
-				label="{{ 'General.contact' | translate }} E-Mail"
+				label="{{ 'General.contact' | translate }}-E-Mail"
 				placeholder="{{ 'Issuer.enterValidEmail' | translate }}"
 				[options]="emailsOptions"
 				errorMessage="{{ 'Issuer.enterValidEmail' | translate }}"
@@ -44,11 +56,11 @@
 			></oeb-select>
 
 			<oeb-input
-				label="{{ 'General.description' | translate }}"
+				label="{{ 'CreateBadge.shortDescription' | translate }}"
 				[control]="issuerForm.rawControlMap.issuer_description"
 				[fieldType]="'textarea'"
-				errorMessage="{{ 'Issuer.enterDescription' | translate }}"
-				#issuer_description_field
+				[errorMessage]="{ required: enterDescription }"
+				sublabelRight="(mind. 200 / max. 300 Zeichen)"
 			></oeb-input>
 
 			<oeb-select
@@ -106,12 +118,6 @@
 				errorMessage="{{ 'Issuer.enterCity' | translate }}"
 				#issuer_city_field
 			></oeb-input>
-
-			<div class="tw-mt-6">
-				<form>
-					<altcha-widget auto="onfocus" id="altcha"></altcha-widget>
-				</form>
-			</div>
 
 			<label
 				[class.checkbox-is-error]="
