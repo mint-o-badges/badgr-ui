@@ -155,16 +155,16 @@
 				hlmP 
 				size="sm"
 				id="imageTextError"
-				[hidden]="!imageFieldDirty || !badgeClassForm.hasError('imageRequired')"
-				class="tw-font-normal tw-text-red tw-text-start md:tw-pl-[13.5rem] tw-w-full tw-mt-2"
+				[hidden]="!imageFieldDirty || !badgeClassForm.hasError('imageRequired') "
+				class="tw-font-normal md:tw-pl-[13.5rem] u-text-error"
 			>
-				{{ 'CreateBadge.imageRequiredError' | translate }}.
+				{{'CreateBadge.imageRequiredError' | translate }}.
 			</p>
 			<p
 				hlmP 
 				size="sm"
 				[hidden]="!isCustomImageLarge"
-				class="tw-font-normal tw-text-red tw-text-start md:tw-pl-[13.5rem] tw-w-full tw-mt-2"
+				class="tw-font-normal md:tw-pl-[13.5rem] u-text-error"
 			>
 				{{ 'CreateBadge.imageTooLarge' | translate }}.
 			</p>
@@ -750,7 +750,7 @@
 	</oeb-collapsible>
 	</div>
 	
-	<div>
+	<div class="tw-hidden">
 		<p class="tw-text-end tw-text-oebblack tw-italic tw-text-lg" [innerHTML]="'CreateBadge.licenseInfo' | translate"> </p>
 	</div>
 
