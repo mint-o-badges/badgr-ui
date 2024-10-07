@@ -975,10 +975,11 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				type: ['Extension', 'extensions:CompetencyExtension'],
 				name: String(competency.name),
 				description: String(competency.description),
-				// escoID: String(competency.escoID),
 				studyLoad: Number(competency.studyLoad),
 				category: String(competency.category),
-				source: 'manual',
+				source: competency.source === 'ai' ? 'ai' : 'manual',
+				framework: competency.framework,
+				'framework-identifier': String(competency['framework-identifier']),
 			}))
 			.concat(
 				formState.aiCompetencies
