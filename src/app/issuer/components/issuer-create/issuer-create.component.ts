@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, ValidationErrors, Validators } from '@angular/forms';
+import { FormBuilder, ValidationErrors, Validators, AbstractControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from '../../../common/services/message.service';
 import { IssuerManager } from '../../services/issuer-manager.service';
@@ -16,6 +16,7 @@ import { AppConfigService } from '../../../common/app-config.service';
 import { typedFormGroup } from '../../../common/util/typed-forms';
 import { TranslateService } from '@ngx-translate/core';
 import { QueryParametersService } from '../../../common/services/query-parameters.service';
+import { IssuerNameValidator } from '../../../common/validators/issuer-name.validator';
 
 @Component({
 	selector: 'issuer-create',
@@ -28,7 +29,7 @@ export class IssuerCreateComponent extends BaseAuthenticatedRoutableComponent im
 	);
 
 	issuerForm = typedFormGroup()
-		.addControl('issuer_name', '', [Validators.required, Validators.maxLength(90)])
+		.addControl('issuer_name', '', [Validators.required, Validators.maxLength(90), IssuerNameValidator.validIssuerName])
 		.addControl('issuer_description', '', [Validators.required, Validators.minLength(200), Validators.maxLength(300)])
 		.addControl('issuer_email', '', [
 			Validators.required,
@@ -38,10 +39,10 @@ export class IssuerCreateComponent extends BaseAuthenticatedRoutableComponent im
 		.addControl('issuer_url', '', [Validators.required, UrlValidator.validUrl])
 		.addControl('issuer_category', '', [Validators.required])
 		.addControl('issuer_image', '', Validators.required)
-		.addControl('issuer_street', '')
-		.addControl('issuer_streetnumber', '')
-		.addControl('issuer_zip', '')
-		.addControl('issuer_city', '')
+		.addControl('issuer_street', '', Validators.required)
+		.addControl('issuer_streetnumber', '', Validators.required)
+		.addControl('issuer_zip', '', Validators.required)
+		.addControl('issuer_city', '', Validators.required)
 
 	emails: UserProfileEmail[];
 	emailsOptions: FormFieldSelectOption[];
@@ -50,6 +51,7 @@ export class IssuerCreateComponent extends BaseAuthenticatedRoutableComponent im
 
 	enterDescription: string; 
 	issuerRequiredError: string;
+	invalidCharacterError: string = '';
 	selectFromMyFiles: string;
 	useImageFormat: string;
 	imageError: string;
@@ -92,12 +94,6 @@ export class IssuerCreateComponent extends BaseAuthenticatedRoutableComponent im
 
 	ngOnInit() {
 		super.ngOnInit();
-		this.issuerForm.rawControl.controls.issuer_image.statusChanges.subscribe((status) => {
-			if (status === 'INVALID') {
-				console.log(this.issuerForm.rawControl.controls.issuer_image.hasError('imageRatio'))
-			//   alert(JSON.stringify(this.fileControl.errors));
-			}
-		  });
 		this.translate.get('Issuer.enterDescription').subscribe((translatedText: string) => {
             this.enterDescription = translatedText;
 		});
@@ -122,7 +118,6 @@ export class IssuerCreateComponent extends BaseAuthenticatedRoutableComponent im
 		this.issuerForm.markTreeDirtyAndValidate()
 	}
 
-	
 	refreshProfile = () => {
 		// Load the profile
 		this.profileManager.userProfileSet.ensureLoaded();
@@ -140,8 +135,6 @@ export class IssuerCreateComponent extends BaseAuthenticatedRoutableComponent im
 		}
 		
 		const formState = this.issuerForm.value;
-		console.log(this.issuerForm.errors)
-
 
 
 		const issuer: ApiIssuerForCreation = {
@@ -159,8 +152,6 @@ export class IssuerCreateComponent extends BaseAuthenticatedRoutableComponent im
 		if (formState.issuer_image && String(formState.issuer_image).length > 0) {
 			issuer.image = formState.issuer_image;
 		}
-		console.log(formState.issuer_image)
-
 
 		this.addIssuerFinished = this.issuerManager
 			.createIssuer(issuer)

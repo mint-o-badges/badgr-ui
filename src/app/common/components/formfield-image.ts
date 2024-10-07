@@ -473,8 +473,9 @@ export function issuerImageLoader(file: File | string): Promise<string> {
 		return readFileAsDataURL(file)
 			.then(loadImageURL)
 			.then((image) => {
-
-				if(image.width / image.height !== 1) {
+				
+				const tolerance = 0.05;
+				if(Math.abs(image.width / image.height - 1) > tolerance) {
 					return Promise.reject(new Error('Image must be square'));
 				}
 

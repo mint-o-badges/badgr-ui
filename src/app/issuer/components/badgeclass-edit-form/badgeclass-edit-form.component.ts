@@ -84,7 +84,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 	imageTooLarge = this.translate.instant('CreateBadge.imageTooLarge');
 
-	// To check ustom-image size
+	// To check custom-image size
 	maxCustomImageSize = 1024 * 250;
 	isCustomImageLarge:boolean = false;
 
@@ -460,6 +460,12 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 						that.adjustUploadImage(that.badgeClassForm.value);
 					}, 10);
 				}}
+		});
+
+		
+		// To check duplicate competencies only when one is selected
+		this.badgeClassForm.controls.aiCompetencies.controls['selected'].statusChanges.subscribe((res) => {
+			this.checkDuplicateCompetency();
 		});
 
 		this.fetchTags();
@@ -1064,22 +1070,23 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	}
 
     noDuplicateCompetencies(): {duplicateCompetency: Boolean} | null {
-        if (this.duplicateCompetency)
+        if (this.checkDuplicateCompetency())
             return { duplicateCompetency: true };
     }
 
-    get duplicateCompetency(): String | null {
+    checkDuplicateCompetency(): String | null {
         if (!this.badgeClassForm) return null;
 
-        const hand = this.badgeClassForm.controls.competencies.value.
+        const inHandCompetencies = this.badgeClassForm.controls.competencies.value.
             // Hand competencies get added automatically at submitting
             //filter(c => c.added).
             map(c => c.name);
-        const ai = this.badgeClassForm.controls.aiCompetencies.value.
-            filter(c => c.selected).
-            map((c,i) => this.aiCompetenciesSuggestions[i].preferred_label);
+		
+		const newSelectedAICompetencies = this.badgeClassForm.controls.aiCompetencies.value
+			.map((c, i) => (c.selected ? this.aiCompetenciesSuggestions[i].preferred_label : ''))
+			.filter(String);
 
-        const all = hand.concat(ai);
+        const all = inHandCompetencies.concat(newSelectedAICompetencies);
         const check = new Set();
 
         for (const name of all)
