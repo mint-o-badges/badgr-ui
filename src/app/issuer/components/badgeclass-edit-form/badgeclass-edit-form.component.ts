@@ -221,11 +221,12 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				.addControl('added', false)
 				.addControl('name', '', Validators.required)
 				.addControl('description', '', Validators.required)
-				.addControl('escoID', '')
+				.addControl('framework-identifier', '')
 				// limit of 1000000 is set so that users cant break the UI by entering a very long number
 				.addControl('studyLoad', 60, [Validators.required, this.positiveInteger, Validators.max(1000000)])
 				.addControl('category', '', Validators.required)
-				.addControl('framework', ''),
+				.addControl('framework', '')
+				.addControl('source', ''),
 		)
 		.addArray(
 			'alignments',
@@ -698,7 +699,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		if (
 			(value.name || '').trim().length > 0 ||
 			(value.description || '').trim().length > 0 ||
-			(value.escoID || '').trim().length > 0 ||
+			(value['framework-identifier'] || '').trim().length > 0 ||
 			(value.category || '').trim().length > 0
 		) {
 			if (
@@ -980,7 +981,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 						type: ['Extension', 'extensions:CompetencyExtension'],
 						name: suggestions[index].preferred_label,
 						description: suggestions[index].description,
-						escoID: 'http://data.europa.eu' + suggestions[index].concept_uri,
+						'framework-identifier': 'http://data.europa.eu' + suggestions[index].concept_uri,
 						studyLoad: Number(aiCompetency.studyLoad),
 						category: suggestions[index].type.includes('skill') ? 'skill' : 'knowledge',
 						source: 'ai',
