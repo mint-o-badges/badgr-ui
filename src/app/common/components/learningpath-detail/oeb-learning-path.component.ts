@@ -74,7 +74,9 @@ export class OebLearningPathDetailComponent implements OnInit {
 
 	deleteLearningPathApi(learningPathSlug, issuer){
 		this.learningPathApiService.deleteLearningPath(issuer.slug, learningPathSlug).then(
-			() => console.log("del")
+			() => {
+				this.router.navigate(['issuer/issuers']);
+			}
 		);
 	}
 
