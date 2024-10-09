@@ -31,8 +31,9 @@ import { OebButtonComponent } from './oeb-button.component';
                         class="l-flex-x-shrink0 badgeimage badgeimage-small"
                         width="40"
                         height="40"
+                        src="{{ learningPath.participationBadge_image }}"
                     />
-                    <div class="tw-ml-2 md:tw-grid md:tw-grid-cols-[150px] md:gap-4">
+                    <div class="tw-ml-2 tw-hidden md:tw-grid md:tw-grid-cols-[150px] md:gap-4">
                       <div class="tw-line-clamp-2 tw-whitespace-nowrap">
                         <span class="tw-text-oebblack tw-cursor-pointer" (click)="redirectToLearningPathDetail.emit(learningPath.slug)">{{learningPath.name}}</span>
                       </div>  
