@@ -29,9 +29,9 @@
 						</oeb-checkbox>
 					</div>
 				</div>
-				<div class="tw-grid-cols-2 tw-grid tw-items-center">
-					<div class="oeb-standard-padding-bottom">
-						<div (click)="filterByTag(tag)" class="tag tag-wrapper tag-button tw-cursor-pointer tw-mr-2"
+				<div class="tw-grid-cols-2 tw-grid tw-items-center subtitle-wrapper">
+					<div class="tags-wrapper oeb-standard-padding-bottom">
+						<div (click)="filterByTag(tag)" class="tag tag-wrapper tag-button"
 							[class.tag-button-pressed]="selectedTag == tag"
 							*ngFor="let tag of tags ; last as last">
 							{{ tag }}
