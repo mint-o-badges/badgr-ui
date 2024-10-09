@@ -499,12 +499,12 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 	changeBadgeFrame() {
 		// check browser refresh to resolve disappearing badge-image when page reload
-		if(!this.navService.browserRefresh){			
+		if (!this.navService.browserRefresh) {
 			if (this.imageField?.control.value) {
-				this.adjustUploadImage(this.badgeClassForm.value, true);
+				this.UpdateImageFrame(this.badgeClassForm.value, true);
 			} else if (this.customImageField?.control.value) {
 				if (!this.existing) {
-				this.customImageField.useDataUrl(this.customImageField.control.value, 'BADGE');
+					this.customImageField.useDataUrl(this.customImageField.control.value, 'BADGE');
 				}
 			}
 		} else {
@@ -1028,9 +1028,9 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	 * Updates image-frame when category is changed.
 	 * 
 	 * @param formdata
-	 * @param isCategoryChanged - To prevent unnecessry calling of (@function generateUploadImage) which causes an issue of drawing multiple frames around badge-image
+	 * @param isCategoryChanged - To prevent unnecessary call of (@function generateUploadImage) which causes an issue of drawing multiple frames around badge-image.
 	 */
-	adjustUploadImage(formdata, isCategoryChanged=false) {
+	UpdateImageFrame(formdata, isCategoryChanged=false) {
 		if (this.currentImage && this.badgeStudio) {
 			this.badgeStudio
 				.generateUploadImage(this.currentImage.slice(), formdata)
