@@ -232,7 +232,7 @@
 										[completed]="lp.completed"
 										[requested]="lp.requested"				
 
-										[matchOrProgress]="{'progress': lp.progress	/ lp.badges.length}"></bg-learningpathcard>
+										[matchOrProgress]="{'progress': lp.progress	/ calculateStudyLoad(lp)}"></bg-learningpathcard>
 								</div>
 							</div>
 
@@ -250,7 +250,7 @@
 										[completed]="lp.completed"
 										[requested]="lp.requested"				
 										[studyLoad]="calculateStudyLoad(lp)"
-										[matchOrProgress]="{'progress': lp.progress	/ lp.badges.length}"></bg-learningpathcard>
+										[matchOrProgress]="{'progress': lp.progress	/ calculateStudyLoad(lp)}"></bg-learningpathcard>
 								</div>
 							</div>
 
@@ -264,9 +264,10 @@
 										[badgeImage]="lp.participationBadge_image" [name]="lp.name"
 										[issuerTitle]="lp.issuer_name" [description]="lp.description" [tags]="lp.tags"
 										[slug]="lp.slug"
-										[requested]="lp.requested"				
+										[progress]="lp.progress"
+										[completed]="true"				
 										[studyLoad]="calculateStudyLoad(lp)"
-										[matchOrProgress]="{'progress': lp.progress	/ lp.badges.length}"></bg-learningpathcard>
+										[matchOrProgress]="{'progress': lp.progress	/ calculateStudyLoad(lp)}"></bg-learningpathcard>
 								</div>
 							</div>
 						</div>

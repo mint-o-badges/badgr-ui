@@ -72,7 +72,7 @@ type MatchOrProgressType = { match?: number, progress?: number };
 						<span>{{studyLoad | hourPipe}} Stunden</span>
 					</div>
 				</div>	
-		</div>
+			</div>
 		</a>
 	`,
 })
