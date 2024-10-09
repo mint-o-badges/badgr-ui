@@ -114,7 +114,6 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 		return service.getLearningPath(this.learningPathSlug).then((response) => {
 			this.learningPath = response;
 			this.totalBadgeCount = response.badges.length;
-
 			this.completedBadgeIds = response.completed_badges ? response.completed_badges.map((badge) => badge.slug) : [];
 			this.openBadges = response.badges.filter(
 				(badge) => !this.completedBadgeIds.includes(badge.badge.slug),
