@@ -59,7 +59,7 @@
 				</oeb-input>
 			</div>
 
-			<div class="tw-flex md:tw-flex-row tw-gap-3  md:tw-gap-8 tw-flex-col md:tw-items-center tw-justify-start">
+			<div *ngIf="badgeCategory !== 'competency'" class="tw-flex md:tw-flex-row tw-gap-3  md:tw-gap-8 tw-flex-col md:tw-items-center tw-justify-start">
 				<span class="input-label md:tw-flex-[0_0_10em]"> {{ 'RecBadgeDetail.duration' | translate }}</span>
 				<div class="tw-flex tw-gap-2 tw-items-center">
 					<oeb-input 
