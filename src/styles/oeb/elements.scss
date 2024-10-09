@@ -123,6 +123,27 @@
 		}
 	}
 
+	.oeb-tag {
+		color: var(--color-purple);
+		background-color: white;
+		padding-left: 5px;
+    	padding-right: 5px;
+		padding-top: 2px;
+    	padding-bottom: 2px;
+		border-radius: 95px;
+		border-style: solid;
+		border-width: 1.59px;
+		border-color: var(--color-purple);
+		margin-right: 0.25rem;
+
+		@media (min-width: 768px) {
+			padding-left: 11.55px;
+			padding-right: 11.55px;
+			padding-top: 3.85px;
+			padding-bottom: 3.85px;
+		}
+	}
+
 }
 
 .oeb-icon-circle {

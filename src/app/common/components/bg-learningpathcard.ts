@@ -42,7 +42,7 @@ type MatchOrProgressType = { match?: number, progress?: number };
 						<a class="md:tw-text-[18px] md:tw-leading-[23.4px] tw-text-[10px] tw-leading-[13px]">{{issuerTitle}}</a>
 					<div class="tw-grid tw-items-center">
 						<div *ngIf="!isProgress" class="oeb-standard-padding-bottom tw-gap-1 tw-flex tw-flex-wrap">
-							<div hlmP size="sm" class="tw-bg-white tw-text-purple md:tw-px-[11.55px] tw-px-[5px] tw-py-[2px] md:tw-py-[3.85px] tw-rounded-[95px] tw-border-solid tw-border-[1.59px] tw-border-purple tw-mr-1"
+							<div hlmP size="sm" class="oeb-tag"
 								*ngFor="let tag of tags | slice: 0 : 3; last as last">
 								{{ tag }}
 							</div>									
