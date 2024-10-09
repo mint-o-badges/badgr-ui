@@ -56,9 +56,11 @@ export class LearningPathUploadComponent extends BaseAuthenticatedRoutableCompon
 		this.rawJson = data;
 	}
 
+
     importAction() {
 		if (this.rawJson) {
 			const learningPath: ApiLearningPathForCreation = JSON.parse(this.rawJson);
+			learningPath["issuer_id"]=this.issuerSlug;
 			this.learningPathApiService.createLearningPath(this.issuerSlug, learningPath).then((lp) => {	
 				this.router.navigate(['/issuer/issuers', this.issuerSlug, 'learningpaths', lp.slug]);
 			});
