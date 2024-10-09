@@ -140,7 +140,6 @@ export class BgLearningPathCard {
 	
 	  requestLearningPath() {
 		this.learningPathApiService.requestLearningPath(this.slug).then(res => {
-			console.log(res);
 			this.requested = true;
 		})
 	  }

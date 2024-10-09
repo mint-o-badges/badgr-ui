@@ -184,4 +184,11 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 	onTabChange(tab) {
 		this.activeTab = tab;
 	}
+
+	requestLearningPath() {
+		this.learningPathApiService.requestLearningPath(this.learningPath.slug).then(res => {
+			this.learningPath.requested = true;
+		})
+	  }
+
 }
