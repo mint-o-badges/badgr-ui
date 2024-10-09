@@ -627,7 +627,16 @@
 		"catalogHeadline":"Alle Lernpfade in der Übersicht",
 		"participate": "Teilnehmen",
 		"notParticipateAnymore": "Nicht mehr teilnehmen",
-		"searchLearningPaths": "Lernpfade durchsuchen"
+		"searchLearningPaths": "Lernpfade durchsuchen",
+		"lpFrom": "Lernpfad von",
+		"hours": "Stunden",
+		"successRequestPath": "Du hast deinen Lernpfad-Badge erfolgreich angefragt!",
+		"desc": "Beschreibung",
+		"myProgress": "Mein Fortschritt",
+		"lpBadges": "Badges des Lernpfads",
+		"lpBadgeRequests": "Lernpfad-Badge-Anfragen",
+		"lpRecipients": "Lernpfad-Empfänger:innen",
+		"lpActives": "Aktuell Lernende"
 	},
 	"OEBComponents":{
 		"fieldIsRequired": "Dieses Feld ist erforderlich"

@@ -602,6 +602,16 @@
 		"learningpaths": "Learning Paths",
 		"catalogHeadline":"Overview of all learning paths",
 		"partipate": "Participate",
-		"notParticipateAnymore": "Not participate anymore"
+		"notParticipateAnymore": "Not participate anymore",
+		"searchLearningPaths": "Lernpfade durchsuchen",
+		"lpFrom": "Lernpfad von",
+		"hours": "Stunden",
+		"successRequestPath": "Du hast deinen Lernpfad-Badge erfolgreich angefragt!",
+		"desc": "Beschreibung",
+		"myProgress": "Mein Fortschritt",
+		"lpBadges": "Badges des Lernpfads",
+		"lpBadgeRequests": "Lernpfad-Badge-Anfragen",
+		"lpRecipients": "Lernpfad-Empfänger:innen",
+		"lpActives": "Aktuell Lernende"
 	}
 }

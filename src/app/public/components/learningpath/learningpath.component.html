@@ -6,17 +6,17 @@
 					<div class="oeb-headline-container">
 						<h1 class="tw-text-oebblack tw-font-extrabold" hlmH1>{{learningPath.name}}</h1>
 						<p size="sm" hlmP class="tw-text-oebblack tw-mt-2">
-							Lernpfad von <a hlmA [routerLink]="['/public/issuers/', issuer.slug ]">{{issuer.name}}</a>
+							{{'LearningPath.lpFrom' | translate}} <a hlmA [routerLink]="['/public/issuers/', issuer.slug ]">{{issuer.name}}</a>
 						</p>
 						<div class="tw-flex tw-flex-row tw-gap-2 tw-text-[#6B7280] tw-mt-1 tw-items-end">
 							<hlm-icon name="lucideClock" />
-							<span>{{minutesTotal | hourPipe}} Stunden</span>
+							<span>{{minutesTotal | hourPipe}} {{'LearningPath.hours' | translate}}</span>
 						</div>
 					</div>
 					<form *ngIf="sessionService.isLoggedIn" (ngSubmit)="participate()" novalidate>
 						<oeb-button *ngIf="!learningPath.requested" [variant]="participantButtonVariant" hlmBtn type="submit"
 							[text]="participationButtonText"></oeb-button>
-						<h3 *ngIf="learningPath.requested && !learningPath.completed" class="tw-text-purple" hlmH3>Du hast deinen Lernpfad-Badge erfolgreich angefragt!</h3>
+						<h3 *ngIf="learningPath.requested && !learningPath.completed" class="tw-text-purple" hlmH3>{{'LearningPath.successRequestPath' | translate}}</h3>
 					</form>
 				</div>
 				<div
@@ -34,7 +34,7 @@
 			<div class="md:tw-grid md:tw-gap-8 md:tw-grid-cols-5 ">
 				<div class="tw-col-span-3">
 					<div class="oeb-section-sm">
-						<h3 hlmH3 class="tw-text-oebblack tw-font-bold">Beschreibung</h3>
+						<h3 hlmH3 class="tw-text-oebblack tw-font-bold">{{'LearningPath.desc' | translate}}</h3>
 						<p hlmP>{{learningPath.description}}</p>
 					</div>
 					<div class="oeb-section-sm">
@@ -59,7 +59,7 @@
 						<div class="tw-flex tw-flex-col tw-h-full">
 							<div class="tw-flex tw-flex-row tw-gap-2 tw-text-oebblack tw-mt-2 tw-pb-4 tw-items-end">
 								<hlm-icon class="tw-text-[#6B7280]" name="lucideClock" />
-								<span hlmP class="tw-font-medium">Mein Fortschritt</span>
+								<span hlmP class="tw-font-medium">{{'LearningPath.myProgress' | translate}}</span>
 							</div>
 							<div class="tw-w-full tw-flex tw-justify-center tw-items-center">
 								<oeb-progress
