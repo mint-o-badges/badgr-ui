@@ -994,10 +994,20 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			.then((imageUrl) => this.imageField.useDataUrl(imageUrl, 'Auto-generated image'));
 	}
 
+	/**
+	 * Generates a new bagde-image only when:
+	 * 	 1. image field is empty / creating a new badge.
+	 * 	 2. changing existing bagde-image
+	 * 	 3. changing from custom to framed image.
+	 * 	    for the AI tool.
+	 * otherwise it updates image-frame instead of drawing a new image which leads to multible frames
+	 */
 	generateUploadImage(image, formdata) {
-		// It generates a new image when image filed is empty. 1st case: creating new badge, 2nd: changing from custom to framed image
-		// otherwise it goes to else where it updates the frame instead of drawing multible frames. 
-		if(typeof this.currentImage == 'undefined' || this.customImageField?.control.value){
+		if (
+			typeof this.currentImage == 'undefined' ||
+			image.slice() != this.currentImage ||
+			this.customImageField?.control.value
+		) {
 			this.currentImage = image.slice();
 			this.badgeStudio.generateUploadImage(image.slice(), formdata).then((imageUrl) => {
 				this.imageField.useDataUrl(imageUrl, 'BADGE');
