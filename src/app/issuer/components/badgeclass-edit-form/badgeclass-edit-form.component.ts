@@ -501,7 +501,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		// check browser refresh to resolve disappearing badge-image when page reload
 		if(!this.navService.browserRefresh){			
 			if (this.imageField?.control.value) {
-				this.adjustUploadImage(this.badgeClassForm.value);
+				this.adjustUploadImage(this.badgeClassForm.value, true);
 			} else if (this.customImageField?.control.value) {
 				if (!this.existing) {
 				this.customImageField.useDataUrl(this.customImageField.control.value, 'BADGE');
@@ -995,26 +995,21 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	}
 
 	/**
-	 * Generates a new bagde-image only when:
+	 * Generates a new bagde-image when:
 	 * 	 1. image field is empty / creating a new badge.
 	 * 	 2. changing existing bagde-image
 	 * 	 3. changing from custom to framed image.
 	 * 	    for the AI tool.
-	 * otherwise it updates image-frame instead of drawing a new image which leads to multible frames
+	 * 
+	 * @param image 
+	 * @param formdata 
 	 */
 	generateUploadImage(image, formdata) {
-		if (
-			typeof this.currentImage == 'undefined' ||
-			image.slice() != this.currentImage ||
-			this.customImageField?.control.value
-		) {
-			this.currentImage = image.slice();
-			this.badgeStudio.generateUploadImage(image.slice(), formdata).then((imageUrl) => {
-				this.imageField.useDataUrl(imageUrl, 'BADGE');
-			});
-		} else {
-			this.adjustUploadImage(this.badgeClassForm.value);
-		}
+		this.currentImage = image.slice();
+		this.badgeStudio.generateUploadImage(image.slice(), formdata).then((imageUrl) => {
+			this.imageField.useDataUrl(imageUrl, 'BADGE');
+		});
+
 	}
 
 	generateCustomUploadImage(image) {
@@ -1029,11 +1024,18 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
     this.customImageField.useDataUrl(this.currentImage, 'BADGE');
 	}
 
-	adjustUploadImage(formdata) {
+	/**
+	 * Updates image-frame when category is changed.
+	 * 
+	 * @param formdata
+	 * @param isCategoryChanged - To prevent unnecessry calling of (@function generateUploadImage) which causes an issue of drawing multiple frames around badge-image
+	 */
+	adjustUploadImage(formdata, isCategoryChanged=false) {
 		if (this.currentImage && this.badgeStudio) {
 			this.badgeStudio
 				.generateUploadImage(this.currentImage.slice(), formdata)
-				.then((imageUrl) => this.imageField.useDataUrl(imageUrl, 'BADGE'));
+				.then((imageUrl) => this.imageField.useDataUrl(imageUrl, 'BADGE', isCategoryChanged)				
+				);
 		}
 	}
 
