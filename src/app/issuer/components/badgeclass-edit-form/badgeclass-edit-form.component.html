@@ -155,16 +155,16 @@
 				hlmP 
 				size="sm"
 				id="imageTextError"
-				[hidden]="!imageFieldDirty || !badgeClassForm.hasError('imageRequired')"
-				class="tw-font-normal tw-text-red tw-text-start md:tw-pl-[13.5rem] tw-w-full tw-mt-2"
+				[hidden]="!imageFieldDirty || !badgeClassForm.hasError('imageRequired') "
+				class="tw-font-normal md:tw-pl-[13.5rem] u-text-error"
 			>
-				{{ 'CreateBadge.imageRequiredError' | translate }}.
+				{{'CreateBadge.imageRequiredError' | translate }}.
 			</p>
 			<p
 				hlmP 
 				size="sm"
 				[hidden]="!isCustomImageLarge"
-				class="tw-font-normal tw-text-red tw-text-start md:tw-pl-[13.5rem] tw-w-full tw-mt-2"
+				class="tw-font-normal md:tw-pl-[13.5rem] u-text-error"
 			>
 				{{ 'CreateBadge.imageTooLarge' | translate }}.
 			</p>
@@ -446,10 +446,11 @@
 		</ul>
         <p
             id="competencyDuplicateError"
+			*ngIf="badgeClassForm.hasError('duplicateCompetency')"
             [hidden]="!badgeClassForm.hasError('duplicateCompetency')"
             class="u-text u-margin-bottom2x u-text-error tw-w-full tw-text-center tw-mt-2"
             >
-            {{ 'CreateBadge.duplicateCompetencyError' | translate }} '{{ this.duplicateCompetency }}'
+            {{ 'CreateBadge.duplicateCompetencyError' | translate }} '{{ checkDuplicateCompetency() }}'
         </p>
 	</div>
 

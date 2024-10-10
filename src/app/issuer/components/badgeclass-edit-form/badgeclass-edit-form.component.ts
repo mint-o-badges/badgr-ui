@@ -30,6 +30,7 @@ import { AiSkillsService } from '../../../common/services/ai-skills.service';
 import { Skill } from '../../../common/model/ai-skills.model';
 import { TranslateService } from '@ngx-translate/core';
 import { Platform } from '@angular/cdk/platform';	// To detect the current platform by comparing the userAgent strings
+import { NavigationService } from '../../../common/services/navigation.service';
 
 import { base64ByteSize } from '../../../common/util/file-util';
 
@@ -84,7 +85,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 	imageTooLarge = this.translate.instant('CreateBadge.imageTooLarge');
 
-	// To check ustom-image size
+	// To check custom-image size
 	maxCustomImageSize = 1024 * 250;
 	isCustomImageLarge:boolean = false;
 
@@ -327,7 +328,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	showAdvanced: boolean[] = [false];
 
 	currentImage;
-	initedCurrentImage = false;
 	existing = false;
 	showLegend = false;
 
@@ -345,7 +345,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		protected componentElem: ElementRef<HTMLElement>,
 		protected aiSkillsService: AiSkillsService,
 		private translate: TranslateService,
-		private platformService: Platform,
+		private navService: NavigationService
 	) {
 		super(router, route, sessionService);
 		title.setTitle(`Create Badge - ${this.configService.theme['serviceName'] || 'Badgr'}`);
@@ -374,8 +374,8 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 		this.badgeClassForm.setValue({
 			badge_name: badgeClass.name,
-			badge_image: this.existing && badgeClass.imageFrame ? badgeClass.image : null, // Setting the image here is causing me a lot of problems with events being triggered, so I resorted to just set it in this.imageField...
-			badge_customImage: this.existing && !badgeClass.imageFrame ? badgeClass.image : null,
+            badge_image: this.existing && badgeClass.imageFrame ? badgeClass.image : null,
+            badge_customImage: this.existing && !badgeClass.imageFrame ? badgeClass.image : null,
 			badge_description: badgeClass.description,
 			badge_criteria_url: badgeClass.criteria_url,
 			badge_criteria_text: badgeClass.criteria_text,
@@ -407,6 +407,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				target_code: alignment.target_code,
 			})),
 		});
+
 		if(this.badgeClassForm.controls.competencies.controls.length > 0){
 			this.collapsedCompetenciesOpen = true;
 		};
@@ -436,27 +437,12 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		// update badge frame when a category is selected, unless no-hexagon-frame checkbox is checked
 		this.badgeClassForm.rawControl.controls['badge_category'].statusChanges.subscribe((res) => {
 			this.handleBadgeCategoryChange();
-			if(that.imageField?.control.value){
-				setTimeout(() => {
-					that.adjustUploadImage(this.badgeClassForm.value);
-				}, 10)
-			}
-			else if(that.customImageField?.control.value){
-				if(!that.existing){
-					setTimeout(() => {
-					that.customImageField.useDataUrl(this.customImageField.control.value, 'BADGE');
-					}, 10)
-				}
-			}
-			// I am not sure why, but without calling adjustUploadImage here again, 
-			// the image disappears while editing the badge
-			// TODO: investigate why this is happening
-			if (this.currentImage && this.existing) {
-				if(that.imageField?.control.value){
-					setTimeout(function () {
-						that.adjustUploadImage(that.badgeClassForm.value);
-					}, 10);
-				}}
+		});
+
+		
+		// To check duplicate competencies only when one is selected
+		this.badgeClassForm.controls.aiCompetencies.controls['selected'].statusChanges.subscribe((res) => {
+			this.checkDuplicateCompetency();
 		});
 
 		this.fetchTags();
@@ -493,6 +479,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		const badgeCategoryControl = this.badgeClassForm.rawControl.controls['badge_category'];
 		const currentBadgeCategory = badgeCategoryControl.value;
 
+		// First part of below if-condition is to handle selecting category for first time
 		if (this.badgeCategory === 'competency' && currentBadgeCategory !== 'competency') {
 			if (await this.confirmCategoryChange()) {
 				this.clearCompetencies();
@@ -506,10 +493,22 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		}
 		this.badgeCategory = currentBadgeCategory;
 
-		// fix the issue of missing badge-frame when changing type for first time (only with safari browser)
-		// by regenerating the upload image as adjusting upload image didn't work with this issue
-		if (this.platformService.SAFARI && this.currentImage) {
-			this.generateUploadImage(this.currentImage, this.badgeClassForm.value);
+		// To update badge-frame when badge-category is changed
+		this.changeBadgeFrame();
+	}
+
+	changeBadgeFrame() {
+		// check browser refresh to resolve disappearing badge-image when page reload
+		if (!this.navService.browserRefresh) {
+			if (this.imageField?.control.value) {
+				this.updateImageFrame(this.badgeClassForm.value, true);
+			} else if (this.customImageField?.control.value) {
+				if (!this.existing) {
+					this.customImageField.useDataUrl(this.customImageField.control.value, 'BADGE');
+				}
+			}
+		} else {
+			this.navService.browserRefresh = false;
 		}
 	}
 
@@ -995,19 +994,22 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			.then((imageUrl) => this.imageField.useDataUrl(imageUrl, 'Auto-generated image'));
 	}
 
+	/**
+	 * Generates a new bagde-image when:
+	 * 	 1. image field is empty / creating a new badge.
+	 * 	 2. changing existing bagde-image
+	 * 	 3. changing from custom to framed image.
+	 * 	    for the AI tool.
+	 * 
+	 * @param image 
+	 * @param formdata 
+	 */
 	generateUploadImage(image, formdata) {
-		// the imageUploaded-event of the angular image component is also called after initialising the component because the image is set in initFormFromExisting
-		if (typeof this.currentImage == 'undefined' || this.initedCurrentImage) {
-			this.initedCurrentImage = true;
-			this.currentImage = image.slice();
-			this.badgeStudio.generateUploadImage(image.slice(), formdata).then((imageUrl) => {
-				this.imageField.useDataUrl(imageUrl, 'BADGE');
-				// Added as a workaround to resolve the issue of not showing badge frame from first time (only with safari browser)
-				this.adjustUploadImage(formdata);
-			});
-		} else {
-			this.initedCurrentImage = true;
-		}
+		this.currentImage = image.slice();
+		this.badgeStudio.generateUploadImage(image.slice(), formdata).then((imageUrl) => {
+			this.imageField.useDataUrl(imageUrl, 'BADGE');
+		});
+
 	}
 
 	generateCustomUploadImage(image) {
@@ -1016,23 +1018,24 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			this.isCustomImageLarge = true;
 			return;
 		}
-
-		// the imageUploaded-event of the angular image component is also called after initialising the component because the image is set in initFormFromExisting
-		if (typeof this.currentImage == 'undefined' || this.initedCurrentImage) {
-			this.initedCurrentImage = true;
-			this.currentImage = image.slice();
-			// do not use frame for custom images
-			this.customImageField.useDataUrl(this.currentImage, 'BADGE');
-		} else {
-			this.initedCurrentImage = true;
-		}
+    
+    this.currentImage = image.slice();
+    // do not use frame for custom images
+    this.customImageField.useDataUrl(this.currentImage, 'BADGE');
 	}
 
-	adjustUploadImage(formdata) {
+	/**
+	 * Updates image-frame when category is changed.
+	 * 
+	 * @param formdata
+	 * @param isCategoryChanged - To prevent unnecessary call of (@function generateUploadImage) which causes an issue of drawing multiple frames around badge-image.
+	 */
+	updateImageFrame(formdata, isCategoryChanged=false) {
 		if (this.currentImage && this.badgeStudio) {
 			this.badgeStudio
 				.generateUploadImage(this.currentImage.slice(), formdata)
-				.then((imageUrl) => this.imageField.useDataUrl(imageUrl, 'BADGE'));
+				.then((imageUrl) => this.imageField.useDataUrl(imageUrl, 'BADGE', isCategoryChanged)				
+				);
 		}
 	}
 
@@ -1058,22 +1061,23 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	}
 
     noDuplicateCompetencies(): {duplicateCompetency: Boolean} | null {
-        if (this.duplicateCompetency)
+        if (this.checkDuplicateCompetency())
             return { duplicateCompetency: true };
     }
 
-    get duplicateCompetency(): String | null {
+    checkDuplicateCompetency(): String | null {
         if (!this.badgeClassForm) return null;
 
-        const hand = this.badgeClassForm.controls.competencies.value.
+        const inHandCompetencies = this.badgeClassForm.controls.competencies.value.
             // Hand competencies get added automatically at submitting
             //filter(c => c.added).
             map(c => c.name);
-        const ai = this.badgeClassForm.controls.aiCompetencies.value.
-            filter(c => c.selected).
-            map((c,i) => this.aiCompetenciesSuggestions[i].preferred_label);
+		
+		const newSelectedAICompetencies = this.badgeClassForm.controls.aiCompetencies.value
+			.map((c, i) => (c.selected ? this.aiCompetenciesSuggestions[i].preferred_label : ''))
+			.filter(String);
 
-        const all = hand.concat(ai);
+        const all = inHandCompetencies.concat(newSelectedAICompetencies);
         const check = new Set();
 
         for (const name of all)

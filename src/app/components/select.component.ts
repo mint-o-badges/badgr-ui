@@ -39,6 +39,8 @@ import { CustomValidatorMessages, messagesForValidationError } from './input.com
 			(keypress)="handleKeyPress($event)"
 			#selectInput
 			class="tw-text-oebblack"
+			[ngClass]="{ 'tw-pointer-events-none tw-opacity-50': disabled}"
+			brn-select
 			hlm
 		>
 			<hlm-select-trigger class="tw-w-full tw-border-solid tw-border-purple tw-bg-white">
