@@ -85,14 +85,14 @@
 
                             <div class="tw-flex tw-text-oebblack tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
                                 <dt class="tw-text-sm tw-text-oebblack tw-font-bold">
-                                    {{ 'General.category' | translate }}:
+                                    {{ 'General.category' | translate }}
                                 </dt>
                                 <dd class="tw-text-sm tw-text-oebblack md:tw-ml-2">{{ config.category }}</dd>
                             </div>
                             <div *ngIf="config.updatedAt"
                                 class="tw-flex tw-text-oebblack tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
                                 <dt class="tw-text-sm tw-text-oebblack tw-font-bold">
-                                    Zuletzt editiert:
+                                    Zuletzt editiert
                                 </dt>
                                 <dd class="tw-text-sm tw-text-oebblack md:tw-ml-2"><time [date]="config.updatedAt"
                                         format="dd.MM.y"></time></dd>
@@ -100,7 +100,7 @@
                             <div *ngIf="config.createdAt"
                                 class="tw-flex tw-text-oebblack tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
                                 <dt class="tw-text-sm tw-text-oebblack tw-font-bold">
-                                    Erstellt am:
+                                    Erstellt am
                                 </dt>
                                 <dd class="tw-text-sm tw-text-oebblack md:tw-ml-2"><time [date]="config.createdAt"
                                         format="dd.MM.y"></time></dd>
@@ -116,9 +116,24 @@
                             <div *ngIf="config.issuedTo"
                                 class="tw-flex tw-text-oebblack tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
                                 <dt class="tw-text-sm tw-text-oebblack tw-font-bold ">
-                                    Vergeben an:
+                                    Vergeben an
                                 </dt>
                                 <dd class="tw-text-sm tw-break-all">&nbsp;{{ config.issuedTo }}</dd>
+                            </div>
+                            <div
+                                class="tw-hidden tw-text-oebblack tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
+                                <dt class="tw-text-sm tw-text-oebblack tw-font-bold">
+                                    Lizenz
+                                </dt>
+                                <dd class="tw-text-sm tw-text-oebblack md:tw-ml-2 tw-flex">
+                                    <div class="tw-ml-1 tw-w-5 tw-h-5 tw-flex tw-items-center tw-justify-center tw-border-solid tw-border-[1px] tw-border-oebblack tw-rounded-full">
+                                        <span class="tw-text-[11px]">CC</span>
+                                    </div>
+                                    <div class="tw-ml-1 tw-w-5 tw-h-5 tw-flex tw-items-center tw-justify-center tw-border-solid tw-border-[1px] tw-border-oebblack tw-rounded-full">
+                                        <span class="tw-text-[11px]">0</span>
+                                    </div>
+                                    <a class='tw-ml-2 tw-underline tw-text-[#1400FF]' target='_blank' href='https://creativecommons.org/publicdomain/zero/1.0/legalcode.de'> CC0 1.0</a>
+                                </dd>
                             </div>
 
                         </dl>

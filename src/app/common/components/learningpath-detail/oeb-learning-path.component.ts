@@ -6,10 +6,14 @@ import { DangerDialogComponentTemplate } from '../../dialogs/oeb-dialogs/danger-
 import { BadgeClassManager } from '../../../issuer/services/badgeclass-manager.service';
 import { BadgeClass } from '../../../issuer/models/badgeclass.model';
 import { BadgeInstanceManager } from '../../../issuer/services/badgeinstance-manager.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { MessageService } from '../../services/message.service';
 import { BadgrApiFailure } from '../../services/api-failure';
 import { SuccessDialogComponent } from '../../dialogs/oeb-dialogs/success-dialog.component';
+import { BadgeInstance } from '../../../issuer/models/badgeinstance.model';
+import { CommonDialogsService } from '../../services/common-dialogs.service';
+import { BaseRoutableComponent } from '../../pages/base-routable.component';
+import { BadgeInstanceApiService } from '../../../issuer/services/badgeinstance-api.service';
 
 @Component({
 	selector: 'oeb-learning-path',
@@ -27,7 +31,7 @@ import { SuccessDialogComponent } from '../../dialogs/oeb-dialogs/success-dialog
 		])
 	],
 })
-export class OebLearningPathDetailComponent implements OnInit {
+export class OebLearningPathDetailComponent extends BaseRoutableComponent implements OnInit {
 
 	@Input() learningPath;
 	@Input() issuer;
@@ -41,9 +45,13 @@ export class OebLearningPathDetailComponent implements OnInit {
 		private badgeClassManager: BadgeClassManager,
 		private badgeInstanceManager: BadgeInstanceManager,
 		private messageService: MessageService,
+		private dialogService: CommonDialogsService,
+		private badgeInstanceApiservice: BadgeInstanceApiService,
 		public router: Router,
+		route: ActivatedRoute
 
 	) {
+		super(router, route);
         
 	};
 	private readonly _hlmDialogService = inject(HlmDialogService);
@@ -150,4 +158,34 @@ export class OebLearningPathDetailComponent implements OnInit {
 		});
 	}
 
+	get lpSlug() {
+		return this.route.snapshot.params['learningPathSlug'];
+	}
+
+	get confirmDialog() {
+		return this.dialogService.confirmDialog;
+	}
+
+	revokeLpParticipationBadge(participant: any) {
+		const participationBadgeInstance: BadgeInstance = participant.participationBadgeAssertion;
+		this.confirmDialog
+			.openResolveRejectDialog({
+				dialogTitle: 'Warnung',
+				dialogBody: `Bist du sicher, dass du <strong>${this.learningPath.name}</strong> von <strong>${participationBadgeInstance.recipientIdentifier}</strong> zurücknehmen möchtest?`,
+				resolveButtonLabel: 'Zurücknehmen',
+				rejectButtonLabel: 'Abbrechen',
+			})
+			.then(
+				() => {
+					this.badgeInstanceApiservice.revokeBadgeInstance(this.issuer.slug, this.learningPath.participationBadge_id, participationBadgeInstance.slug, 'revoked').then(
+						(result) => {
+							this.learningPathApiService.deleteLearningPathParticipant(participant.entity_id);
+						}),
+					(error) => {
+						console.log(error)
+					};
+				},
+				() => void 0, // Cancel
+			);
+	}
 }

@@ -86,7 +86,7 @@
                 <h3 hlmH3 class="tw-font-bold tw-uppercase tw-text-oebblack tw-text-center">Lernpfad-Nutzende</h3>
                 <div class="oeb-section-sm">
                     <h3 hlmH3 class="tw-font-medium tw-text-oebblack"> {{(participants | dynamicFilter: filterFunction).length}} {{'LearningPath.lpRecipients' | translate}}</h3>
-                    <learningpath-graduates-datatable [participants]="participants | dynamicFilter: filterFunction"></learningpath-graduates-datatable>
+                    <learningpath-graduates-datatable [participants]="participants | dynamicFilter: filterFunction" (revokeLearningPath)="revokeLpParticipationBadge($event)"></learningpath-graduates-datatable>
                 </div>
                 <div class="oeb-section-sm">
                     <h3 hlmH3 class="tw-font-medium tw-text-oebblack">   {{(participants | dynamicFilter: filterFunctionOngoing).length}} {{'LearningPath.lpActives' | translate}}</h3>
