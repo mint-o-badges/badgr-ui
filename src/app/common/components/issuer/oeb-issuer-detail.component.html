@@ -1,12 +1,12 @@
 <div class="tw-flex tw-justify-between tw-gap-6">
-	<div class="tw-flex oeb-section-sm">
+	<div class="tw-flex oeb-section-sm md:tw-max-w-[70%]">
 		<div class="tw-relative">
 			<img [loaded-src]="issuer?.image" [loading-src]="issuerPlaceholderSrc" [error-src]="issuerPlaceholderSrc"
 				alt="{{ issuer.name }} avatar" class="tw-h-[70px] md:tw-h-[100px] tw-w-auto" />
 		</div>
-		<div class="tw-flex tw-flex-col tw-justify-center tw-pl-8">
+		<div class="tw-flex tw-flex-col tw-justify-center tw-pl-8 tw-max-w-[80%]">
 			<h1 hlmH1
-				class="tw-text-purple tw-font-semibold">
+				class="tw-text-purple tw-font-semibold md:tw-text-[35px] xl:tw-text-[46px]">
 				{{ issuer.name }}</h1>
 			<ng-container *ngIf="public" >
 				<p hlmP
@@ -93,7 +93,9 @@
 				*ngIf="!public"
 				[caption]=""
 				[badges]="badgeResults"
-				(actionElement)="routeToBadgeAward($event, issuer)"
+				(directBadgeAward)="routeToBadgeAward($event, issuer)"
+		(qrCodeAward)="routeToQRCodeAward($event, issuer)"
+
 				(redirectToBadgeDetail)="routeToBadgeDetail($event, issuer)"></badges-datatable>
 	
 			<ng-container *ngIf="public">

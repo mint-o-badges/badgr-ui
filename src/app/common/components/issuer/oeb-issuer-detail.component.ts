@@ -14,6 +14,7 @@ import { ApiLearningPath } from '../../../common/model/learningpath-api.model';
 import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
 import { DangerDialogComponentTemplate } from '../../dialogs/oeb-dialogs/danger-dialog-template.component';
 import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
+import { BadgeRequestApiService } from '../../../issuer/services/badgerequest-api.service';
 
 @Component({
 	selector: 'oeb-issuer-detail',
@@ -38,7 +39,8 @@ export class OebIssuerDetailComponent implements OnInit {
 		protected issuerManager: IssuerManager,
 		protected profileManager: UserProfileManager,
 		private configService: AppConfigService,
-		private learningPathApiService: LearningPathApiService
+		private learningPathApiService: LearningPathApiService,
+		private badgeRequestApiService: BadgeRequestApiService
 	) {
         
 	};
@@ -117,7 +119,9 @@ export class OebIssuerDetailComponent implements OnInit {
 
 			if (!this.badgeResults.find((r) => r.badge === badge)) {
 				// appending the results to the badgeResults array bound to the view template.
-				this.badgeResults.push(new BadgeResult(badge, this.issuer.name));
+				this.badgeRequestApiService.getBadgeRequestsCountByBadgeClass(badge.slug).then((r) => {
+					this.badgeResults.push(new BadgeResult(badge, this.issuer.name, r.body['request_count']));
+				})
 			}
 			return true;
 		};
@@ -139,7 +143,11 @@ export class OebIssuerDetailComponent implements OnInit {
     routeToBadgeAward(badge, issuer){
 		this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'issue'])
 	}
-	
+
+	routeToQRCodeAward(badge, issuer){
+		this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'qr'])
+	}
+
 	routeToBadgeDetail(badge, issuer){
 		this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug])
 	}
@@ -193,5 +201,6 @@ class BadgeResult {
 	constructor(
 		public badge: BadgeClass,
 		public issuerName: string,
+		public requestCount: number
 	) {}
 }

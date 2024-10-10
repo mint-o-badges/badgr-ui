@@ -70,7 +70,7 @@ export class RequestBadgeComponent extends BaseRoutableComponent{
 
     requestBadge = this.translate.instant('RequestBadge.requestBadge');
 
-    requestForm = typedFormGroup()
+    requestForm = typedFormGroup(this.nameValidation.bind(this))
     .addControl('firstname', '', Validators.required)
     .addControl('lastname', '', Validators.required)
     .addControl('email', '', [Validators.required, EmailValidator.validEmail])
@@ -101,6 +101,21 @@ export class RequestBadgeComponent extends BaseRoutableComponent{
             }
         })
 
+
+    }
+
+    nameValidation(){
+		if (!this.requestForm) return null;
+
+        const value = this.requestForm.value;
+        const firstname = value.firstname;
+        const lastname = value.lastname;
+        if(firstname.length  + lastname.length > 35){
+            return {
+                maxLengthExceeded: true
+            }
+        }
+        return null;
 
     }
 

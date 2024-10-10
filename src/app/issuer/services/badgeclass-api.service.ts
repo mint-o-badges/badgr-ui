@@ -23,7 +23,7 @@ export class BadgeClassApiService extends BaseHttpApiService {
 	}
 
 	getAllBadgeClasses() {
-		return this.get<ApiBadgeClass[]>(`/public/all-badges`, {}, false).then((r) => r.body);
+		return this.get<ApiBadgeClass[]>(`/public/all-badges?exclude_orgImg=true`, {}, false).then((r) => r.body);
 	}
 
 	getBadgesForIssuer(issuerSlug?: IssuerSlug) {
