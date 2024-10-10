@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, ValidationErrors, Validators, AbstractControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from '../../../common/services/message.service';
 import { IssuerManager } from '../../services/issuer-manager.service';
@@ -15,12 +15,13 @@ import { FormFieldSelectOption } from '../../../common/components/formfield-sele
 import { AppConfigService } from '../../../common/app-config.service';
 import { typedFormGroup } from '../../../common/util/typed-forms';
 import { TranslateService } from '@ngx-translate/core';
-
 import { QueryParametersService } from '../../../common/services/query-parameters.service';
+import { IssuerNameValidator } from '../../../common/validators/issuer-name.validator';
 
 @Component({
 	selector: 'issuer-create',
 	templateUrl: './issuer-create.component.html',
+	styleUrls: ['./issuer-create.component.scss'],
 })
 export class IssuerCreateComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	readonly issuerImagePlacholderUrl = preloadImageURL(
@@ -28,8 +29,8 @@ export class IssuerCreateComponent extends BaseAuthenticatedRoutableComponent im
 	);
 
 	issuerForm = typedFormGroup()
-		.addControl('issuer_name', '', [Validators.required, Validators.maxLength(90)])
-		.addControl('issuer_description', '', [Validators.required, Validators.maxLength(700)])
+		.addControl('issuer_name', '', [Validators.required, Validators.maxLength(90), IssuerNameValidator.validIssuerName])
+		.addControl('issuer_description', '', [Validators.required, Validators.minLength(200), Validators.maxLength(300)])
 		.addControl('issuer_email', '', [
 			Validators.required,
 			/*Validators.maxLength(75),
@@ -37,11 +38,11 @@ export class IssuerCreateComponent extends BaseAuthenticatedRoutableComponent im
 		])
 		.addControl('issuer_url', '', [Validators.required, UrlValidator.validUrl])
 		.addControl('issuer_category', '', [Validators.required])
-		.addControl('issuer_image', '')
-		.addControl('issuer_street', '')
-		.addControl('issuer_streetnumber', '')
-		.addControl('issuer_zip', '')
-		.addControl('issuer_city', '')
+		.addControl('issuer_image', '', Validators.required)
+		.addControl('issuer_street', '', Validators.required)
+		.addControl('issuer_streetnumber', '', Validators.required)
+		.addControl('issuer_zip', '', Validators.required)
+		.addControl('issuer_city', '', Validators.required)
 
 	emails: UserProfileEmail[];
 	emailsOptions: FormFieldSelectOption[];
@@ -49,8 +50,11 @@ export class IssuerCreateComponent extends BaseAuthenticatedRoutableComponent im
 	emailsLoaded: Promise<unknown>;
 
 	enterDescription: string; 
-	issuerRequiredError = this.translate.instant('Issuer.enterName');
-
+	issuerRequiredError: string;
+	invalidCharacterError: string = '';
+	selectFromMyFiles: string;
+	useImageFormat: string;
+	imageError: string;
 
 	constructor(
 		loginService: SessionService,
@@ -93,9 +97,27 @@ export class IssuerCreateComponent extends BaseAuthenticatedRoutableComponent im
 		this.translate.get('Issuer.enterDescription').subscribe((translatedText: string) => {
             this.enterDescription = translatedText;
 		});
+		this.translate.get('Issuer.enterName').subscribe((translatedText: string) => {
+            this.issuerRequiredError = translatedText;
+		});
+		this.translate.get('RecBadge.selectFromMyFiles').subscribe((translatedText: string) => {
+            this.selectFromMyFiles = translatedText;
+		});
+		this.translate.get('Issuer.useImageFormat').subscribe((translatedText: string) => {
+            this.useImageFormat = translatedText;
+		});
+
 	}
 
-	
+	onImageRatioError(error: string) {
+		this.imageError = error;
+		const imageControl = this.issuerForm.rawControlMap.issuer_image;
+		if (imageControl) {
+			imageControl.setErrors({ imageRatioError: error });
+		}
+		this.issuerForm.markTreeDirtyAndValidate()
+	}
+
 	refreshProfile = () => {
 		// Load the profile
 		this.profileManager.userProfileSet.ensureLoaded();
@@ -103,6 +125,10 @@ export class IssuerCreateComponent extends BaseAuthenticatedRoutableComponent im
 	};
 	
 	onSubmit() {
+
+		if(this.issuerForm.controls.issuer_image.rawControl.hasError('required')){
+			this.imageError = "Bitte wählen Sie ein Bild aus.";
+		}	
 		
 		if (!this.issuerForm.markTreeDirtyAndValidate()) {
 			return;

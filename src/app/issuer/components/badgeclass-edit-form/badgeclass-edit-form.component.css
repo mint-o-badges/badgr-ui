@@ -132,3 +132,11 @@ li::marker {
 		border: 0.5px solid var(--color-purple);
 		border-radius: 0.25rem;
 		}	 
+
+
+.u-text-error{
+	color: var(--color-red);
+	text-align: start;
+	margin-top: 0.5rem;
+	width: 100%;
+}
