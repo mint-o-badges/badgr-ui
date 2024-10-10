@@ -14,6 +14,8 @@ import { BadgeInstance } from '../../../issuer/models/badgeinstance.model';
 import { CommonDialogsService } from '../../services/common-dialogs.service';
 import { BaseRoutableComponent } from '../../pages/base-routable.component';
 import { BadgeInstanceApiService } from '../../../issuer/services/badgeinstance-api.service';
+import { PdfService } from '../../services/pdf.service';
+import { SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
 	selector: 'oeb-learning-path',
@@ -39,6 +41,7 @@ export class OebLearningPathDetailComponent extends BaseRoutableComponent implem
 	@Input() participants;
 	@Input() requests;
 	loading: any;
+	pdfSrc: SafeResourceUrl;
 
 	constructor(
 		private learningPathApiService: LearningPathApiService,
@@ -47,6 +50,7 @@ export class OebLearningPathDetailComponent extends BaseRoutableComponent implem
 		private messageService: MessageService,
 		private dialogService: CommonDialogsService,
 		private badgeInstanceApiservice: BadgeInstanceApiService,
+		private pdfService: PdfService,
 		public router: Router,
 		route: ActivatedRoute
 
@@ -187,5 +191,16 @@ export class OebLearningPathDetailComponent extends BaseRoutableComponent implem
 				},
 				() => void 0, // Cancel
 			);
+	}
+
+	downloadCertificate(participant: any ) {
+		const instance = participant.participationBadgeAssertion;
+		this.pdfService.getPdf(instance.slug).then(
+			(url) => {
+				this.pdfSrc = url;
+				this.pdfService.downloadPdf(this.pdfSrc, this.learningPath.name, new Date(instance.json.issuedOn));
+			}).catch((error) => {
+				console.log(error);
+			});
 	}
 }
