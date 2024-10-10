@@ -46,10 +46,10 @@ export class IssuerEditComponent extends BaseAuthenticatedRoutableComponent impl
 		.addControl('issuer_url', '', [Validators.required, UrlValidator.validUrl])
 		.addControl('issuer_image', '')
 		.addControl('issuer_category', '', [Validators.required])
-		.addControl('issuer_street', '')
-		.addControl('issuer_streetnumber', '')
-		.addControl('issuer_zip', '')
-		.addControl('issuer_city', '');
+		.addControl('issuer_street', '', Validators.required)
+		.addControl('issuer_streetnumber', '', Validators.required)
+		.addControl('issuer_zip', '', Validators.required)
+		.addControl('issuer_city', '', Validators.required);
 
 	emails: UserProfileEmail[];
 	emailsOptions: FormFieldSelectOption[];
