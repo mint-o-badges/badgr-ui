@@ -501,7 +501,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		// check browser refresh to resolve disappearing badge-image when page reload
 		if (!this.navService.browserRefresh) {
 			if (this.imageField?.control.value) {
-				this.UpdateImageFrame(this.badgeClassForm.value, true);
+				this.updateImageFrame(this.badgeClassForm.value, true);
 			} else if (this.customImageField?.control.value) {
 				if (!this.existing) {
 					this.customImageField.useDataUrl(this.customImageField.control.value, 'BADGE');
@@ -1030,7 +1030,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	 * @param formdata
 	 * @param isCategoryChanged - To prevent unnecessary call of (@function generateUploadImage) which causes an issue of drawing multiple frames around badge-image.
 	 */
-	UpdateImageFrame(formdata, isCategoryChanged=false) {
+	updateImageFrame(formdata, isCategoryChanged=false) {
 		if (this.currentImage && this.badgeStudio) {
 			this.badgeStudio
 				.generateUploadImage(this.currentImage.slice(), formdata)
