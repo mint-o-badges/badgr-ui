@@ -56,6 +56,7 @@ export interface PageConfig {
      updatedAt?: Date;
      issuedOn?: Date;
      issuedTo?: string;
+     duration?: string;
      category: string;
      tags: string[];
      issuerName: string;
