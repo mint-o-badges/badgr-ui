@@ -27,7 +27,7 @@ type MatchOrProgressType = { match?: number, progress?: number };
 				</div>
 				
 					<img
-						class="md:tw-w-[80px] md:tw-h-[80px] tw-w-[45px] tw-h-[45px]"
+						class="md:tw-w-[145px] md:tw-h-[145px] tw-w-[65px] tw-h-[65px]"
 						[loaded-src]="badgeImage"
 						[loading-src]="badgeLoadingImageUrl"
 						[error-src]="badgeFailedImageUrl"
