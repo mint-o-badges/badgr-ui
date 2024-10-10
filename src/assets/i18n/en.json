@@ -612,6 +612,9 @@
 		"lpBadges": "Badges des Lernpfads",
 		"lpBadgeRequests": "Lernpfad-Badge-Anfragen",
 		"lpRecipients": "Lernpfad-Empfänger:innen",
-		"lpActives": "Aktuell Lernende"
+		"lpActives": "Aktuell Lernende",
+		"getYourPath": "Hol dir deinen Lernpfad-Badge ab",
+		"continue": "Weiterlernen",
+		"finished": "Abgeschlossen"
 	}
 }
