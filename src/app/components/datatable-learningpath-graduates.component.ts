@@ -30,8 +30,10 @@ import { OebButtonComponent } from './oeb-button.component';
                     <span class="tw-text-oebblack tw-cursor-pointer">{{participant.user.email}}</span>
                 </hlm-th>
                 <hlm-th class="!tw-flex-1 tw-justify-center !tw-text-oebblack"><p class="u-text">{{participant.completed_at | date:"dd.MM.yyyy"}}</p></hlm-th>
-                <hlm-th class="tw-justify-center sm:tw-justify-end sm:tw-w-48 tw-w-full !tw-text-oebblack tw-flex tw-flex-col">
-                    <oeb-button class="tw-w-full" variant="secondary" size="xs" width="full_width" (click)="actionElement.emit(participant)" [text]="actionElementText"></oeb-button>
+                <hlm-th class="tw-justify-center sm:tw-justify-end !tw-text-oebblack tw-flex-col tw-h-fit sm:tw-w-max tw-w-full tw-gap-2 tw-my-2 tw-mt-7 sm:tw-mt-2" >
+                    <oeb-button class="tw-w-full" variant="secondary" size="xs" width="full_width" (click)="revokeLearningPath.emit(participant)" [text]="revokeLpText"></oeb-button>
+                    <oeb-button class="tw-w-full" size="xs" width="full_width" (click)="actionElement.emit(participant)" [text]="actionElementText"></oeb-button>
+
                 </hlm-th>
             </hlm-trow>
         </hlm-table>`,
@@ -40,6 +42,8 @@ export class LearningPathGraduatesDatatableComponent {
 	@Input() caption: string = "";
     @Input() participants: any[];
     @Input() actionElementText: string = "PDF-Zertifikat"
-    @Output() actionElement = new EventEmitter();
+    @Input() revokeLpText: string = "zurücknehmen"
+    @Output() revokeLearningPath = new EventEmitter();
+    @Output() downloadCertificate = new EventEmitter();
     @Output() redirectToBadgeDetail = new EventEmitter();
 }
