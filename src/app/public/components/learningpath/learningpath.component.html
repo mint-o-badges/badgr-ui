@@ -94,7 +94,7 @@
 				<bg-badgecard class="tw-w-[350px]" [badgeImage]="badge.badge.image" [badgeTitle]="badge.badge.name"
 					[issuerTitle]="badge.badge.issuerName" [badgeDescription]="badge.badge.description"
 					[badgeSlug]="badge.badge.slug" [badgeIssueDate]="badge.badge.createdAt" public="true"
-					[publicUrl]="'/public/badges/'+ badge.badge.slug" [badgeClass]="true"></bg-badgecard>
+					[publicUrl]="'/public/badges/'+ badge.badge.slug" [completed]="completedBadgeIds.includes(badge.badge.slug)" [badgeClass]="true"></bg-badgecard>
 			</div>
 		</ng-template>
 	</ng-template>
@@ -115,7 +115,7 @@
 					<bg-badgecard class="tw-w-[350px]" [badgeImage]="badge.image" [badgeTitle]="badge.name"
 						[issuerTitle]="badge.issuerName" [badgeDescription]="badge.description" [badgeSlug]="badge.slug"
 						[badgeIssueDate]="badge.createdAt" public="true" [publicUrl]="'/public/badges/'+ badge.slug"
-						[badgeClass]="true"></bg-badgecard>
+						[badgeClass]="true" [completed]="completedBadgeIds.includes(badge.slug)"></bg-badgecard>
 				</div>
 		</ng-template>
 	</ng-template>

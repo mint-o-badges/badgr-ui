@@ -15,6 +15,11 @@ import { Component, EventEmitter, HostBinding, Input, Output } from '@angular/co
 
 		<div class="tw-h-[100px]">
 			<div class="tw-flex tw-items-center tw-h-full">
+				<div *ngIf="completed" class="tw-absolute tw-top-[10px] tw-right-[10px] tw-flex tw-justify-center tw-items-center">
+					<div class="tw-bg-white tw-inline-flex tw-rounded-full tw-justify-center tw-items-center tw-border-solid tw-border-purple tw-border-[2px] ">
+						<hlm-icon class="tw-text-purple tw-box-border md:tw-w-[22px] tw-w-[16px] md:tw-h-[22px] tw-h-[16px]" name="lucideCheck" />
+					</div>
+				</div>
 				<img
 					class="badgeimage badgeimage-{{ mostRelevantStatus }}"
 					[loaded-src]="badgeImage"
@@ -112,11 +117,17 @@ export class BgBadgecard {
 	@Input() competencies?: any[];
 	@Input() checkboxControl?: any;
 	@Output() shareClicked = new EventEmitter<MouseEvent>();
-	
+	@Input() completed: Boolean = false;
 	checked = false;
+
 	@HostBinding('class') get hostClasses(): string {
 		return this.checked 
 		  ? 'tw-bg-[var(--color-lightgreen)]'   
+		  : 'tw-bg-white';  
+	  }
+	@HostBinding('class') get completedClass(): string {
+		return this.completed 
+		  ? 'tw-bg-[var(--color-green)]'   
 		  : 'tw-bg-white';  
 	  }
 
