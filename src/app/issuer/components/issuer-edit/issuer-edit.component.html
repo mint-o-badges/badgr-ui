@@ -15,17 +15,18 @@
 		<fieldset>
 			<bg-formfield-image
 				#imageField
-				label="{{ 'Issuer.imageOptional' | translate }}"
+				label="{{ 'Issuer.imageLogo' | translate }}"
 				imageLoaderName="issuer"
 				[placeholderImage]="issuerImagePlacholderUrl"
 				[control]="issuerForm.rawControlMap.issuer_image"
+
 			></bg-formfield-image>
 
 			<bg-formfield-text
 				class="u-margin-bottom2x"
 				[control]="issuerForm.rawControlMap.issuer_name"
 				label="{{ 'General.name' | translate }}"
-				errorMessage="{{ 'Issuer.enterName' | translate }}"
+				[errorMessage]="{required: issuerRequiredError}"
 				[autofocus]="true"
 			></bg-formfield-text>
 
