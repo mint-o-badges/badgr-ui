@@ -1,7 +1,23 @@
 import { Component, EventEmitter, HostBinding, Input, Output } from '@angular/core';
+import {
+	AUTO_STYLE,
+	animate,
+	state,
+	style,
+	transition,
+	trigger,
+  } from '@angular/animations';
 
 @Component({
 	selector: 'bg-badgecard',
+	animations: [
+		trigger('showCompetencies', [
+		  state('true', style({ height: AUTO_STYLE, visibility: AUTO_STYLE })),
+		  state('false', style({ height: '0', visibility: 'hidden' })),
+		  transition('false => true', animate(220 + 'ms ease-out')),
+		  transition('true => false', animate(220 + 'ms ease-in')),
+		]),
+	  ],
 	host: {
 		class: 'tw-rounded-[10px] tw-h-max tw-border-purple tw-border-solid tw-border tw-relative tw-p-3 tw-block tw-overflow-hidden oeb-badge-card',
 	},
@@ -90,12 +106,14 @@ import { Component, EventEmitter, HostBinding, Input, Output } from '@angular/co
 				</div>	
 				</div>
 		</div>
-		<div class="tw-mt-8" *ngIf="showCompetencies">
-					<div *ngFor="let competency of competencies">
+		<div [@showCompetencies]="showCompetencies">
+			<div class="tw-pt-8">
+				<div *ngFor="let competency of competencies">
 					<competency-accordion [name]="competency.name" [category]="competency.category"
-					[description]="competency.description" [escoID]="competency.escoID"
-					[studyload]="competency.studyLoad | studyload"></competency-accordion>
-					</div>
+						[description]="competency.description" [escoID]="competency.escoID"
+						[studyload]="competency.studyLoad | studyload"></competency-accordion>
+				</div>
+			</div>
 		</div>
 	`,
 })
