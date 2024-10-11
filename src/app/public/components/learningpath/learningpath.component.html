@@ -18,9 +18,9 @@
 						<oeb-button *ngIf="!learningPath.requested && learningPath.progress/minutesTotal != 1" [variant]="participantButtonVariant" hlmBtn type="submit"
 						[text]="participationButtonText"></oeb-button>
 					</form>
-					<oeb-button *ngIf="learningPath.progress && learningPath.progress/minutesTotal === 1 && !learningPath.completed && !learningPath.requested" (click)="requestLearningPath()" [text]="'Lernpfad abholen'">
+					<oeb-button *ngIf="learningPath.progress && learningPath.progress/minutesTotal === 1 && !learningPath.completed_at && !learningPath.requested" (click)="requestLearningPath()" [text]="'Lernpfad abholen'">
 					</oeb-button>
-					<h3 *ngIf="learningPath.requested && !learningPath.completed" class="tw-text-purple" hlmH3>{{'LearningPath.successRequestPath' | translate}}</h3>
+					<h3 *ngIf="learningPath.requested && !learningPath.completed_at" class="tw-text-purple" hlmH3>{{'LearningPath.successRequestPath' | translate}}</h3>
 				</div>
 				<div
 					class="tw-relative tw-grow tw-px-16 tw-py-8 tw-bg-oebgrey tw-rounded-[12px] tw-flex tw-justify-center tw-items-center tw-max-w-[500px] md:tw-min-w-[250px]">
