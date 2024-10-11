@@ -10,10 +10,10 @@ import { addQueryParamsToUrl, stripQueryParamsFromUrl } from '../../../common/ut
 import { routerLinkForUrl } from '../public/public.component';
 import { AppConfigService } from '../../../common/app-config.service';
 import { Title } from '@angular/platform-browser';
+import { PageConfig } from '../../../common/components/badge-detail/badge-detail.component.types';
 
 @Component({
-	templateUrl: './badgeclass.component.html',
-	styleUrls: ['./badgeclass.component.css']
+	template: '<bg-badgedetail [config]="config" [awaitPromises]="[badgeClass]"></bg-badgedetail>',
 })
 export class PublicBadgeClassComponent {
 	readonly issuerImagePlaceholderUrl = preloadImageURL(
@@ -25,6 +25,8 @@ export class PublicBadgeClassComponent {
 	badgeIdParam: LoadedRouteParam<PublicApiBadgeClassWithIssuer>;
 	routerLinkForUrl = routerLinkForUrl;
 
+	config: PageConfig
+
 	constructor(
 		private injector: Injector,
 		public embedService: EmbedService,
@@ -35,7 +37,27 @@ export class PublicBadgeClassComponent {
 
 		this.badgeIdParam = new LoadedRouteParam(injector.get(ActivatedRoute), 'badgeId', (paramValue) => {
 			const service: PublicApiService = injector.get(PublicApiService);
-			return service.getBadgeClass(paramValue);
+			const badgeClass = service.getBadgeClass(paramValue);
+			badgeClass.then((badge) => {
+				this.config = {
+					badgeTitle: badge.name,
+					badgeDescription: badge.description,
+					issuerSlug: badge.issuer['slug'],
+					slug: badge.id,
+					category: badge['extensions:CategoryExtension'].Category === 'competency' ? 'Kompetenz- Badge' : 'Teilnahme- Badge',
+					duration: badge['extensions:StudyLoadExtension'].StudyLoad,
+					tags: badge.tags,
+					issuerName: badge.issuer.name,
+					issuerImagePlacholderUrl: this.issuerImagePlaceholderUrl,
+					issuerImage: badge.issuer.image,
+					badgeLoadingImageUrl: this.badgeLoadingImageUrl,
+					badgeFailedImageUrl: this.badgeFailedImageUrl,
+					badgeImage: badge.image,
+					competencies: badge['extensions:CompetencyExtension'],
+					crumbs: [{ title: 'Badges', routerLink: ['/catalog/badges'] }, { title: badge.name }],
+				}
+			})
+			return badgeClass
 		});
 	}
 

@@ -28,8 +28,8 @@ interface UploadResult {
 		class: 'forminput',
 		'[class.forminput-is-error]': 'isErrorState',
 		'[class.forminput-locked]': 'isLockedState',
-	},
-	template: ` <md-editor (input)="change()" [(ngModel)]="markdown_content" [upload]="doUpload"> </md-editor>`,
+	}, 
+	template: ` <md-editor (input)="change()" [(ngModel)]="markdown_content" [upload]="doUpload" (paste)="change()"> </md-editor>`,
 	styleUrls: ['./formfield-markdown.css'],
 	encapsulation: ViewEncapsulation.ShadowDom,
 })
@@ -140,7 +140,6 @@ export class FormFieldMarkdown implements OnChanges, AfterViewInit {
 	@Input() description: string;
 	@Input() placeholder: string;
 	@Input() optional = false;
-	@Input() newValue: any;
 
 	@Input() errorGroup: FormGroup;
 	@Input() errorGroupMessage: CustomValidatorMessages;
@@ -192,9 +191,6 @@ export class FormFieldMarkdown implements OnChanges, AfterViewInit {
 			) {
 				this.control.setValue(initialValue);
 			}
-		} else if ('newValue' in changes) {
-			const newValue = changes['newValue'].currentValue;
-			this.markdown_content = newValue;
 		}
 
 		this.updateDisabled();

@@ -24,6 +24,7 @@ import { MessageService } from '../services/message.service';
 				<label class="forminput-x-label u-margin-bottom1x" for="image_field{{ uniqueIdSuffix }}">{{
 					label
 				}}</label>
+				<span *ngIf="sublabelRight" class="tw-mr-auto tw-ml-2 tw-font-[rubik] tw-text-oebblack tw-text-sm tw-font-normal">{{sublabelRight}}</span>
 				<a
 					*ngIf="generateRandom"
 					(click)="$event.preventDefault(); generateRandomImage.emit()"
@@ -35,7 +36,7 @@ import { MessageService } from '../services/message.service';
 			<p class="forminput-x-sublabel" *ngIf="sublabel">{{ sublabel }}</p>
 			<input
 				type="file"
-				accept="image/*"
+				[accept]="allowedFileFormats"
 				name="image_field{{ uniqueIdSuffix }}"
 				id="image_field{{ uniqueIdSuffix }}"
 				(change)="fileInputChanged($event)"
@@ -71,7 +72,7 @@ import { MessageService } from '../services/message.service';
 				</div>
 
 				<ng-container *ngIf="!imageDataUrl">
-					<svg class="dropzone-x-icon" icon="icon_upload"></svg>
+					<hlm-icon size="xl" name="lucideCloudUpload"></hlm-icon>
 					<p *ngIf="dropZoneInfo1" class="dropzone-x-info1">{{ dropZoneInfo1 }}</p>
 					<p class="dropzone-x-info2">
 						<span *ngIf="dropZoneInfo1"> {{ 'General.or' | translate }} </span>
@@ -86,6 +87,12 @@ import { MessageService } from '../services/message.service';
 							>{{ dropZoneInfo2 }}</span
 						>
 					</p>
+					<p *ngIf="loaderName != 'basic' && dropZoneInfo3" class="tw-mx-auto tw-mt-4">
+						<span
+							class="tw-text-oebblack tw-italic tw-text-sm tw-mt-4"
+							>{{ dropZoneInfo3 }}</span
+						>
+					</p>
 				</ng-container>
 			</label>
 
@@ -98,6 +105,7 @@ export class BgFormFieldImageComponent {
 		this.loaderName = name;
 		this.imageLoader = namedImageLoaders[name] || throwExpr(new Error(`Invalid image loader name ${name}`));
 	}
+	@Input() allowedFileFormats: string[] = ['image/*'];
 	get imageDataUrl() {
 		return this.control.value;
 	}
@@ -124,13 +132,16 @@ export class BgFormFieldImageComponent {
 	readonly imageFailedSrc = preloadImageURL('../../../breakdown/static/images/placeholderavatar-failed.svg');
 
 	@Output() imageUploaded = new EventEmitter();
+	@Output() imageRatioError = new EventEmitter<string>(); 
 
 	@Input() control: FormControl;
 	@Input() label: string;
 	@Input() sublabel: string;
+	@Input() sublabelRight: string;
 	@Input() text_body: string;
 	@Input() dropZoneInfo1: string;
 	@Input() dropZoneInfo2: string;
+	@Input() dropZoneInfo3: string;
 	@Input() type: string = null;
 	@Input() errorMessage = 'Please provide a valid image file';
 	@Input() placeholderImage: string;
@@ -199,7 +210,7 @@ export class BgFormFieldImageComponent {
 		}
 	}
 
-	useDataUrl(dataUrl: string, name = 'Unknown') {
+	useDataUrl(dataUrl: string, name = 'Unknown', isCategoryChanged = false) {
 		// From https://stackoverflow.com/questions/4998908/convert-data-uri-to-file-then-append-to-formdata
 		function dataURItoBlob(dataURI): Blob {
 			// convert base64/URLEncoded data component to raw binary data held in a string
@@ -227,14 +238,14 @@ export class BgFormFieldImageComponent {
 			lastModifiedDate: new Date(),
 		}) as unknown as File;
 
-		this.updateFile(file);
+		this.updateFile(file, isCategoryChanged);
 	}
 
 	private updateFiles(files: FileList) {
-		this.updateFile(files[0]);
+		this.updateFile(files[0], false);
 	}
 
-	private updateFile(file: File | string) {
+	private updateFile(file: File | string, isCategoryChanged) {
 		this.imageName = typeof file == 'string' ? 'icon' : file.name;
 		this.imageDataUrl = null;
 		this.imageProvided = false;
@@ -243,7 +254,7 @@ export class BgFormFieldImageComponent {
 
 		this.imageLoader(file).then(
 			(dataUrl) => {
-				if (this.type === 'badge' && !this.generated) {
+				if (this.type === 'badge' && !this.generated && !isCategoryChanged) {
 					this.imageUploaded.emit(dataUrl);
 					this.generated = true;
 					// this.generateRandom = true;
@@ -269,7 +280,7 @@ export class BgFormFieldImageComponent {
 			.then((icon: NounProjectIcon) => {
 				if (icon) {
 					this.generated = false;
-					this.updateFile(icon.thumbnail_url);
+					this.updateFile(icon.thumbnail_url, false);
 				}
 			})
 			.catch((error) => {
@@ -462,6 +473,12 @@ export function issuerImageLoader(file: File | string): Promise<string> {
 		return readFileAsDataURL(file)
 			.then(loadImageURL)
 			.then((image) => {
+				
+				const tolerance = 0.05;
+				if(Math.abs(image.width / image.height - 1) > tolerance) {
+					return Promise.reject(new Error('Image must be square'));
+				}
+
 				const canvas = document.createElement('canvas');
 				let dataURL: string;
 
@@ -494,6 +511,9 @@ export function issuerImageLoader(file: File | string): Promise<string> {
 				return dataURL;
 			})
 			.catch((e) => {
+				if(e.message === 'Image must be square') {
+					this.imageRatioError.emit('Bitte lade ein Bild im quadratischen 1:1-Format hoch, damit es auf unserer Plattform optimal dargestellt werden kann');
+				}
 				throw new Error(`${file.name} is not a valid image file`);
 			});
 	}

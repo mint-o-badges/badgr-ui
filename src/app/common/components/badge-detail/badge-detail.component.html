@@ -1,0 +1,185 @@
+<ng-template [bgAwaitPromises]="awaitPromises">
+    <main class="oeb" *ngIf="config">
+        <form-message></form-message>
+        <div class="page-padding">
+            <div class="oeb-breadcrumbs">
+                <bg-breadcrumbs [linkentries]="config.crumbs"> </bg-breadcrumbs>
+            </div>
+            <div class="oeb-section-sm">
+
+                <div class="tw-flex tw-flex-col tw-relative">
+                    <div class="tw-grid md:tw-flex md:tw-justify-between md:tw-items-center md:tw-gap-10">
+                        <h1 hlmH1
+                            class="tw-text-purple tw-font-medium tw-hyphens-auto tw-break-words tw-mb-2 md:tw-mb-0">
+                            {{ config.badgeTitle }}</h1>
+                        <div class="tw-flex tw-gap-2">
+                            <ng-container  *ngIf="config.headerButton">
+                                <oeb-button *ngIf="config.headerButton.routerLink" class="tw-whitespace-nowrap tw-grow"
+                                    [text]="config.headerButton.title" width="full_width"
+                                    [routerLink]="config.headerButton.routerLink"
+                                    [disabled-when-requesting]="true"></oeb-button>
+                                <!-- TODO:  use full width button variant -->
+                                <oeb-button *ngIf="config.headerButton.action" class="tw-whitespace-nowrap tw-grow"
+                                    width="full_width" (click)="config.headerButton.action()"
+                                    [disabled-when-requesting]="true" [text]="config.headerButton.title"></oeb-button>
+                            </ng-container>
+
+                            <oeb-dropdown [trigger]="svgTrigger"
+                                class="tw-items-center tw-justify-center tw-flex tw-cursor-pointer tw-border tw-border-solid tw-border-[var(--color-purple)] tw-rounded-[7px]"
+                                *ngIf="config.menuitems" [menuItems]="config.menuitems"></oeb-dropdown>
+
+                            <ng-template #svgTrigger>
+                                <svg class="tw-w-[44.8px] tw-h-[44.8px] md:tw-w-[64px] md:tw-h-[64px]"
+                                    fill="var(--color-purple)" icon="icon_more"></svg>
+                                <span class="visuallyhidden">Mehr</span>
+                            </ng-template>
+                        </div>
+                    </div>
+                    <div class="tw-grid md:tw-flex tw-justify-start">
+                        <oeb-button *ngIf="config.qrCodeButton && config.issueQrRouterLink"
+                                        class="oeb-button !tw-p-0 tw-mt-2 tw-w-full md:tw-w-fit md:tw-ml-auto md:tw-h-[64px] tw-h-[45px] tw-flex tw-items-center tw-justify-center tw-text-xl tw-rounded-[7px]"
+                                        text="Badge über QR-Code vergeben" variant="secondary" [routerLink]="config.issueQrRouterLink"></oeb-button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+
+            <div class="tw-flex md:tw-flex-row tw-flex-col tw-gap-16 tw-mt-4 tw-relative md:tw-mx-0 tw-mx-auto">
+                <div class="md:tw-w-[346px] md:tw-p-0 tw-pb-8 md:tw-flex-grow-1">
+                    <div class="badge-sidebar-internal tw-flex tw-flex-wrap">
+                        <div class="md:tw-min-w-[260px] tw-min-w-[200px]">
+                            <div
+                                class="tw-flex tw-items-center tw-bg-white tw-mx-auto tw-py-8 tw-rounded-[20px] oeb-slight-shadow">
+                                <img class="tw-w-[120.88px] tw-h-[120.88px] md:tw-w-[172.69px] md:tw-h-[172.69px] tw-mx-auto tw-block"
+                                    [loaded-src]="config.badgeImage" [loading-src]="config.badgeLoadingImageUrl"
+                                    [error-src]="config.badgeFailedImageUrl" />
+                            </div>
+
+                            <!-- Issuer Information -->
+
+                            <div
+                                class="tw-mt-4 tw-mx-auto tw-flex tw-items-center oeb-slight-shadow tw-pl-4 tw-py-4 tw-bg-white tw-rounded-[20px]">
+                                <div>
+                                    <img class="tw-w-[37.1px] tw-h-[37.1px] md:tw-w-[53px] md:tw-h-[53px] issuer-image"
+                                        [loaded-src]="config.issuerImage"
+                                        [loading-src]="config.issuerImagePlacholderUrl"
+                                        [error-src]="config.issuerImagePlacholderUrl" />
+                                </div>
+                                <div class="tw-text-oebblack tw-ml-2">
+                                    <dt class="tw-italic ">{{ 'RecBadgeDetail.issuedBy' | translate }}:</dt>
+                                    <dd class="tw-break-words">
+                                        {{config.issuerName}}
+                                    </dd>
+                                </div>
+                            </div>
+                        </div>
+                        <dl clss="tw-min-w-[150px]">
+                            <div class="tw-flex tw-items-start md:tw-flex-row tw-flex-col">
+                                <dt class="tw-text-oebblack tw-font-bold md:tw-py-2 md:tw-mr-2 tw-mb-1">Tags</dt>
+                                <dd class="tw-text-oebblack">
+                                    <div class="tag tw-border-[var(--color-purple)] tw-mx-2 tw-ml-0 tw-max-w-24"
+                                        *ngFor="let tag of config.tags; last as last">{{ tag }}</div>
+
+                            </div>
+
+                            <div class="tw-flex tw-text-oebblack tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
+                                <dt class="tw-text-sm tw-text-oebblack tw-font-bold">
+                                    {{ 'General.category' | translate }}
+                                </dt>
+                                <dd class="tw-text-sm tw-text-oebblack md:tw-ml-2">{{ config.category }}</dd>
+                            </div>
+
+                            <div *ngIf="config.duration" class="tw-flex tw-text-oebblack tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
+                                <dt class="tw-text-sm tw-text-oebblack tw-font-bold">
+                                    {{ 'RecBadgeDetail.duration' | translate }}
+                                </dt>
+                                <dd class="tw-text-sm tw-text-oebblack md:tw-ml-2">{{ config.duration }} {{ 'General.minutes' | translate}}</dd>
+                            </div>
+
+                            <div *ngIf="config.updatedAt"
+                                class="tw-flex tw-text-oebblack tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
+                                <dt class="tw-text-sm tw-text-oebblack tw-font-bold">
+                                    Zuletzt editiert
+                                </dt>
+                                <dd class="tw-text-sm tw-text-oebblack md:tw-ml-2"><time [date]="config.updatedAt"
+                                        format="dd.MM.y"></time></dd>
+                            </div>
+                            <div *ngIf="config.createdAt"
+                                class="tw-flex tw-text-oebblack tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
+                                <dt class="tw-text-sm tw-text-oebblack tw-font-bold">
+                                    Erstellt am
+                                </dt>
+                                <dd class="tw-text-sm tw-text-oebblack md:tw-ml-2"><time [date]="config.createdAt"
+                                        format="dd.MM.y"></time></dd>
+                            </div>
+                            <div *ngIf="config.issuedOn"
+                                class="tw-flex tw-text-oebblack tw-mt-2 tw-pt-2  md:tw-flex-row tw-flex-col">
+                                <dt class="tw-text-sm tw-text-oebblack tw-font-bold ">
+                                    {{ 'RecBadgeDetail.issuedOn' | translate }}
+                                </dt>
+                                <dd class="tw-text-sm tw-text-oebblack md:tw-ml-2 "><time [date]="config.issuedOn"
+                                        format="dd.MM.y"></time></dd>
+                            </div>
+                            <div *ngIf="config.issuedTo"
+                                class="tw-flex tw-text-oebblack tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
+                                <dt class="tw-text-sm tw-text-oebblack tw-font-bold ">
+                                    Vergeben an
+                                </dt>
+                                <dd class="tw-text-sm tw-break-all">&nbsp;{{ config.issuedTo }}</dd>
+                            </div>
+                            <div
+                                class="tw-hidden tw-text-oebblack tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
+                                <dt class="tw-text-sm tw-text-oebblack tw-font-bold">
+                                    Lizenz
+                                </dt>
+                                <dd class="tw-text-sm tw-text-oebblack md:tw-ml-2 tw-flex">
+                                    <div class="tw-ml-1 tw-w-5 tw-h-5 tw-flex tw-items-center tw-justify-center tw-border-solid tw-border-[1px] tw-border-oebblack tw-rounded-full">
+                                        <span class="tw-text-[11px]">CC</span>
+                                    </div>
+                                    <div class="tw-ml-1 tw-w-5 tw-h-5 tw-flex tw-items-center tw-justify-center tw-border-solid tw-border-[1px] tw-border-oebblack tw-rounded-full">
+                                        <span class="tw-text-[11px]">0</span>
+                                    </div>
+                                    <a class='tw-ml-2 tw-underline tw-text-[#1400FF]' target='_blank' href='https://creativecommons.org/publicdomain/zero/1.0/legalcode.de'> CC0 1.0</a>
+                                </dd>
+                            </div>
+
+                        </dl>
+
+                        <hr
+                            class="tw-hidden md:tw-block tw-w-full tw-col-span-full tw-my-4 tw-border tw-border-dashed tw-border-[var(--color-purple)]" />
+                    </div>
+                </div>
+                <div class="md:tw-pb-8 md:tw-min-h-[800px] tw-w-full">
+                    <div class="tw-text-oebblack tw-pt-0 tw-pb-4">
+                        <h3 hlmH3 class="tw-font-semibold tw-text-oebblack tw-mb-4">
+                            Kurzbeschreibung
+                        </h3>
+                        <p hlmP class="tw-text-oebblack tw-w-full">{{ config.badgeDescription }}</p>
+                    </div>
+                    <!-- Kompetenzen -->
+                    <section class="tw-text-oebblack tw-pb-8">
+                        <h3 class="tw-text-[22px] tw-leading-[26.4px] tw-font-[500] tw-font-[rubik] tw-text-oebblack u-margin-bottom2x u-margin-top4x"
+                            *ngIf="
+                                config.competencies && config.competencies.length > 0
+                            ">
+                            {{ 'RecBadgeDetail.competencies' | translate }}
+                        </h3>
+                        <div>
+                            <div *ngFor="
+                                    let competency of config.competencies;
+                                    index as i;
+                                ">
+                                <competency-accordion [name]="competency.name" [category]="competency.category"
+                                    [description]="competency.description" [escoID]="competency.escoID"
+                                    [studyload]="competency.studyLoad | studyload"></competency-accordion>
+                            </div>
+                        </div>
+                    </section>
+                    <ng-content></ng-content>
+                </div>
+            </div>
+
+        </div>
+    </main>
+</ng-template>

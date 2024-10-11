@@ -16,18 +16,20 @@ import { hlm } from '@spartan-ng/ui-core';
 import { cva } from 'class-variance-authority';
 import type { ClassValue } from 'clsx';
 
-const DEFINED_SIZES = ['xs', 'sm', 'base', 'lg', 'xl', 'none'] as const;
+const DEFINED_SIZES = ['xxs', 'xs', 'sm', 'base', 'lg', 'xl', 'xxl', 'none'] as const;
 
 type DefinedSizes = (typeof DEFINED_SIZES)[number];
 
 export const iconVariants = cva('tw-inline-flex', {
 	variants: {
 		variant: {
-			xs: 'tw-h-3 tw-w-3',
-			sm: 'tw-h-4 tw-w-4',
+			xxs: 'tw-h-3 tw-w-3 !tw-mr-1',
+			xs: 'tw-h-3 tw-w-3 !tw-mr-2',
+			sm: 'tw-h-4 tw-w-4 !tw-mr-2',
 			base: 'tw-h-6 tw-w-6',
 			lg: 'tw-h-8 tw-w-8',
 			xl: 'tw-h-12 tw-w-12',
+			xxl: 'tw-h-16 tw-w-16',
 			none: '',
 		} satisfies Record<DefinedSizes, string>,
 	},
@@ -115,7 +117,13 @@ export class HlmIconComponent implements OnDestroy {
 
 	@Input()
 	set size(value: IconSize) {
-		this._size.set(value);
+		// in case sent size value doesn't exist in defined sizes use base
+		// this resolve the issue of having same icon size when button zise is updated
+		if (DEFINED_SIZES.includes(value as any)) {
+			this._size.set(value);
+		} else {
+			this._size.set('base');
+		}
 	}
 
 	@Input()

@@ -1,0 +1,57 @@
+<ng-template [bgAwaitPromises]="badgeClassLoaded">
+    <div class="page-padding oeb tw-text-oebblack">
+        <div class="oeb-breadcrumbs">
+            <bg-breadcrumbs [linkentries]="crumbs"></bg-breadcrumbs>
+        </div>
+
+        <div class="tw-pt-[6rem] tw-pb-[4.4rem] main-paragraph tw-flex tw-justify-between">
+            <div class="tw-w-full">
+                <h1>QR-Code Vergabe</h1>
+                <h1 class="h1-black heading-sec tw-w-full">{{qrTitle}}</h1>
+            </div>
+            <div>
+                <oeb-dropdown [trigger]="svgTrigger" 
+                    class="tw-items-center tw-justify-center tw-flex tw-cursor-pointer tw-border tw-border-solid tw-border-[var(--color-purple)] tw-rounded-[7px]"
+                    [menuItems]="qrCodeMenu"></oeb-dropdown>
+                <ng-template #svgTrigger>
+                    <svg class="tw-w-[44.8px] tw-h-[44.8px] md:tw-w-[64px] md:tw-h-[64px]"
+                        fill="var(--color-purple)" icon="icon_more"></svg>
+                    <span class="visuallyhidden">Mehr</span>
+                </ng-template>    
+            </div>
+        </div>
+        <div class="tw-pl-[10%] tw-flex tw-flex-col tw-gap-10">
+            <div class="tw-flex tw-flex-col md:tw-flex-row tw-max-w-[322px] md:tw-max-w-[668px] tw-gap-8">
+                <qrcode #parent (qrCodeURL)="onChangeURL($event)" [qrdata]="qrData" [width]="qrCodeWidth" [className]="qrCodeCSS"></qrcode>
+                <div class="tw-flex tw-flex-col tw-gap-2">
+                    <div class="tw-flex tw-gap-2">
+                        <img class="tw-w-[63.58px] tw-h-[63.58px] md:tw-w-[75.61px] md:tw-h-[75.61px] tw-block"
+                                        [loaded-src]="badgeClass.image" [loading-src]="badgeLoadingImageUrl"
+                                        [error-src]="badgeFailedImageUrl" />
+                        <div class="tw-flex tw-flex-col tw-justify-center">
+                            <span class="tw-font-bold">Badge</span>
+                            <span>{{badgeClass.name}}</span>
+                        </div>                
+                    </div>
+                    <div class="tw-flex tw-flex-col">
+                        <span class="tw-font-bold">Organisation</span>
+                        <span>{{issuer}}</span>
+                    </div>
+                    <div class="tw-flex tw-flex-col">
+                        <span class="tw-font-bold">Kampagnen-Ersteller:in</span>
+                        <span>{{creator}}</span>
+                    </div>
+                    <div class="tw-flex tw-flex-col" *ngIf="validity">
+                        <span class="tw-font-bold">Gültigkeit des QR-Codes</span>
+                        <span>{{validity}}</span>
+                    </div>
+                </div>
+
+            </div>
+            <div class="tw-max-w-[668px]">
+                <oeb-button  width="full_width" text="Download QR-Code" (click)=saveAsImage(parent)></oeb-button>
+            </div>
+            <oeb-button [routerLink]="['/issuer/issuers', this.issuerSlug, 'badges', badgeClass.slug]" class="tw-max-w-[668px]" width="full_width" variant="secondary" text="Zur Badge Detail Seite"></oeb-button>
+        </div>
+    </div>
+</ng-template>

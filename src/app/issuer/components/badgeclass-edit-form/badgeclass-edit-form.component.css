@@ -15,9 +15,6 @@
 		flex-direction: row;
 	}
 }
-.purpletext {
-	color: var(--color-purple);
-}
 
 .checkbox input[type='checkbox']:checked {
 	background-color: var(--color-purple);
@@ -95,7 +92,7 @@
 	background-color: #f1f0ff;
 	border-radius: 25px;
 	margin-bottom: 2em;
-	padding: 1em;
+	padding: 1.8em;
 }
 
 .options-dropdown {
@@ -122,17 +119,6 @@ li::marker {
 	max-width: 500px;
   }
 
-.competencyDuration {
-	--typography-size: 12px;
-    font-family: var(--font-family);
-    font-size: var(--typography-size);
-    line-height: calc(var(--typography-size) + 4px);
-    font-weight: bold;
-    color: var(--color-dark3);
-    display: block;
-    margin-bottom: var(--gridspacing);
-}
-
   /* although ::ng-deep is marked as deprecated in the angular docs 
     (https://angular.io/guide/component-styles#deprecated-deep--and-ng-deep) 
      it is still widely used and should not cause problems imo.
@@ -146,3 +132,11 @@ li::marker {
 		border: 0.5px solid var(--color-purple);
 		border-radius: 0.25rem;
 		}	 
+
+
+.u-text-error{
+	color: var(--color-red);
+	text-align: start;
+	margin-top: 0.5rem;
+	width: 100%;
+}
