@@ -110,7 +110,6 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 
 	requestPath(){
 		const service: PublicApiService = this.injector.get(PublicApiService);
-		console.log("TST")
 		return service.getLearningPath(this.learningPathSlug).then((response) => {
 			this.learningPath = response;
 			this.totalBadgeCount = response.badges.length;
