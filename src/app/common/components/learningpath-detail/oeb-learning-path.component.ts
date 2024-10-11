@@ -203,4 +203,8 @@ export class OebLearningPathDetailComponent extends BaseRoutableComponent implem
 				console.log(error);
 			});
 	}
+
+	get learningPathReverseBadges() {
+		return [...this.learningPath.badges].reverse()
+	}
 }

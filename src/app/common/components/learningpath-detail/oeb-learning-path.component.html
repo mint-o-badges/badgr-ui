@@ -55,7 +55,7 @@
             <div class="tw-pl-[120px] md:tw-pl-[145px]">
                 <h3 hlmH3 class="tw-uppercase tw-font-bold tw-text-purple tw-pb-4"> {{'LearningPath.lpBadges' | translate}}</h3>
                 <div class="tw-flex tw-flex-col tw-gap-4" [@stagger]>
-                    <div class="tw-relative" *ngFor="let badge of learningPath.badges.reverse(); let i = index" [@inOutAnimation]="state">
+                    <div class="tw-relative" *ngFor="let badge of learningPathReverseBadges; let i = index" [@inOutAnimation]="state">
                         <div class="tw-absolute tw-left-[-71px] md:tw-left-[-72px] tw-top-[50%] tw-translate-y-[-50%]">
                             <div class="tw-flex tw-items-center">
                                 <img *ngIf="badge?.badge.extensions['extensions:CategoryExtension'].Category === 'competency'" src="assets/oeb/images/learningPath/competency_icon.png">

@@ -66,7 +66,7 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 		public issuerManager: IssuerManager,
 		private title: Title,
 	) {
-		title.setTitle(`LearningPath - ${this.configService.theme['serviceName'] || 'Badgr'}`);
+		this.title.setTitle(`LearningPath - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 
 		this.loaded = new LoadedRouteParam(injector.get(ActivatedRoute), 'learningPathId', (paramValue) => {
 			this.learningPathSlug = paramValue;
@@ -110,7 +110,7 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 
 	requestPath(){
 		const service: PublicApiService = this.injector.get(PublicApiService);
-
+		console.log("TST")
 		return service.getLearningPath(this.learningPathSlug).then((response) => {
 			this.learningPath = response;
 			this.totalBadgeCount = response.badges.length;
@@ -163,7 +163,6 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 					return badge;
 				});
 		})
-
 	}
 
 	participate() {
@@ -191,4 +190,11 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 		})
 	  }
 
+	get learningPathReverseBadges() {
+		return [...this.learningPath.badges].reverse()
+	}
+	
+	get openBadgesReversed() {
+		return [...this.openBadges].reverse()
+	}
 }

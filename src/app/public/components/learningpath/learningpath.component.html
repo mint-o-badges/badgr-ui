@@ -43,7 +43,6 @@
 					<div class="oeb-section-sm">
 						<h3 hlmH3 class="tw-text-oebblack tw-font-bold tw-pb-4">Enthaltene Badges</h3>
 						<oeb-backpack-tabs *ngIf="loggedIn; else allTemplate" (onTabChanged)="onTabChange($event)" [tabs]="tabs" [activeTab]="'Alle'" [variant]="'lightpurple'"></oeb-backpack-tabs>
-
 					</div>
 
 				</div>
@@ -90,7 +89,7 @@
 	<ng-template #allTemplate>
 		<ng-template [bgAwaitPromises]="[issuerLoaded, badgeLoaded, loaded]">
 			<div class="tw-relative tw-flex tw-gap-4 tw-pt-4"
-				*ngFor="let badge of learningPath.badges.reverse(); let i = index">
+				*ngFor="let badge of learningPathReverseBadges; let i = index">
 				<bg-badgecard class="tw-w-[350px]" [badgeImage]="badge.badge.image" [badgeTitle]="badge.badge.name"
 					[issuerTitle]="badge.badge.issuerName" [badgeDescription]="badge.badge.description"
 					[badgeSlug]="badge.badge.slug" [badgeIssueDate]="badge.badge.createdAt" public="true"
@@ -100,7 +99,7 @@
 	</ng-template>
 	<ng-template #openTemplate>
 		<ng-template [bgAwaitPromises]="[issuerLoaded, badgeLoaded, loaded]">
-			<div class="tw-relative tw-flex tw-gap-4 tw-pt-4" *ngFor="let badge of openBadges.reverse(); let i = index">
+			<div class="tw-relative tw-flex tw-gap-4 tw-pt-4" *ngFor="let badge of openBadgesReversed; let i = index">
 				<bg-badgecard class="tw-w-[350px]" [badgeImage]="badge.badge.image" [badgeTitle]="badge.badge.name"
 					[issuerTitle]="badge.badge.issuerName" [badgeDescription]="badge.badge.description"
 					[badgeSlug]="badge.badge.slug" [badgeIssueDate]="badge.badge.createdAt" public="true"
