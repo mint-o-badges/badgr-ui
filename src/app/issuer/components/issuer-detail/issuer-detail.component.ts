@@ -120,21 +120,6 @@ export class IssuerDetailComponent extends BaseAuthenticatedRoutableComponent im
 						},
 					);
 				});
-				this.learningPathsLoaded = new Promise<void>((resolve, reject) => {
-					this.learningPathsService.getLearningPathsForUser().then(
-						(result) => {
-							this.learningPaths = result; 
-							resolve();
-						},
-						(error) => {
-							this.messageService.reportAndThrowError(
-								`Failed to load learningpaths for ${this.issuer ? this.issuer.name : this.issuerSlug}`,
-								error,
-							);
-							resolve();
-						},
-					);
-				});
 
 			},
 			(error) => {
