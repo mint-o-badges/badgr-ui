@@ -45,6 +45,7 @@ export class PublicBadgeClassComponent {
 					issuerSlug: badge.issuer['slug'],
 					slug: badge.id,
 					category: badge['extensions:CategoryExtension'].Category === 'competency' ? 'Kompetenz- Badge' : 'Teilnahme- Badge',
+					duration: badge['extensions:StudyLoadExtension'].StudyLoad,
 					tags: badge.tags,
 					issuerName: badge.issuer.name,
 					issuerImagePlacholderUrl: this.issuerImagePlaceholderUrl,
