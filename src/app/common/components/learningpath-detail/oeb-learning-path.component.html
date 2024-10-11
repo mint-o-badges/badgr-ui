@@ -71,7 +71,7 @@
                             [issuerTitle]="badge?.badge.issuerName ? badge.badge.issuerName : issuer.name"
                             [badgeIssueDate]="badge.badge.createdAt"
                             public="true"
-                            [publicUrl]="badge.badge.url"
+                            [publicUrl]="'/public/badges/' + badge.badge.slug"
                             [competencies]="badge.badge.extensions['extensions:CompetencyExtension']"
                             [badgeClass]="true"></bg-badgecard>
                     </div>
