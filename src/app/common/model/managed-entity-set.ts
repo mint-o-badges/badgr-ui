@@ -24,6 +24,7 @@ export class ManagedEntitySet<EntityType extends ManagedEntity<ApiEntityType, an
 	 * @returns {Observable<ManagedEntitySet>}
 	 */
 	get loaded$(): Observable<this> {
+		//@ts-ignore
 		return this.loadedSubject.asObservable();
 	}
 
@@ -70,6 +71,7 @@ export class ManagedEntitySet<EntityType extends ManagedEntity<ApiEntityType, an
 		protected entityFactory: (apiModel: ApiEntityType) => EntityType,
 		protected urlForApiModel: (apiModel: ApiEntityType) => string,
 	) {
+		//@ts-ignore
 		this.changedSubject.pipe(map((u) => u.entitySet)).subscribe(this.loadedSubject);
 	}
 
