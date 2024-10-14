@@ -118,7 +118,7 @@
 				<bg-badgecard class="tw-w-[350px]" [badgeImage]="badge.badge.image" [badgeTitle]="badge.badge.name"
 					[issuerTitle]="badge.badge.issuerName" [badgeDescription]="badge.badge.description"
 					[badgeSlug]="badge.badge.slug" [badgeIssueDate]="badge.badge.createdAt" public="true"
-					[competencies]="badge.badge.s['extensions:CompetencyExtension']"
+					[competencies]="badge.badge['extensions:CompetencyExtension']"
 					[publicUrl]="'/public/badges/'+ badge.badge.slug" [badgeClass]="true"></bg-badgecard>
 			</div>
 		</ng-template>
