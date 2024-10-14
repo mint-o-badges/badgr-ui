@@ -138,7 +138,7 @@ export class IssuerEditFormComponent extends BaseAuthenticatedRoutableComponent 
 			issuer_street: issuer.street,
 			issuer_streetnumber: issuer.streetnumber,
 			issuer_zip: issuer.zip,
-			issuer_url: issuer.url,
+			issuer_url: issuer.websiteUrl,
 		});
 	}
 
@@ -169,7 +169,7 @@ export class IssuerEditFormComponent extends BaseAuthenticatedRoutableComponent 
 
 		const formState = this.issuerForm.value;
 
-		if(this.existingIssuer) {
+		if(this.existingIssuer) {			
 			const issuer: ApiIssuerForEditing= {
 				name: formState.issuer_name,
 				description: formState.issuer_description,
