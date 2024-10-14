@@ -54,6 +54,11 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 	@ViewChild('openTemplate', { static: true }) openTemplate: ElementRef;
 	@ViewChild('finishedTemplate', { static: true }) finishedTemplate: ElementRef;
 
+
+	crumbs = [
+		{ title: 'Lernpfade', routerLink: ['/catalog/learningpaths'] }
+	];
+
 	constructor(
 		private injector: Injector,
 		public embedService: EmbedService,
@@ -134,6 +139,11 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 					count: (response.completed_badges ? response.completed_badges.length : 0),
 					component: this.finishedTemplate,
 				},
+			];
+			this.crumbs = [
+				{ title: 'Lernpfade', routerLink: ['/catalog/learningpaths'] },
+				{ title: this.learningPath.name, routerLink: ['/public/learningpaths/'+this.learningPath.slug] },
+				
 			];
 			if (response.progress === null) {
 				this.isParticipating = false;

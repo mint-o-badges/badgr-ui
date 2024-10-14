@@ -6,6 +6,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class BgBreadcrumbsComponent implements OnInit {
 	@Input() linkentries: LinkEntry[];
+	@Input() divider: Boolean = true;
 
 	constructor() {}
 
