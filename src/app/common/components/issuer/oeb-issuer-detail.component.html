@@ -124,7 +124,7 @@
 		</section>
 	</ng-template>
 	<ng-template #learningPathTemplate>
-		<div *ngIf="!learningPaths">
+		<div *ngIf="!learningPaths.length">
 			<div class="oeb-section-sm">
 				<p hlmP>{{issuer.name}} {{ 'Issuer.issuerHasNoLearningPathYet' | translate }} </p>
 			</div>
@@ -137,7 +137,7 @@
 				</div>
 			</div>
 		</div>
-		<div *ngIf="learningPaths">
+		<div *ngIf="learningPaths.length">
 			<div class="oeb-section-sm">
 				<h2 class="tw-font-medium md:tw-text-[22px] md:tw-leading-[26.4px] tw-text-purple tw-text-[16px] tw-leading-[19.2px] tw-py-2">
 					{{issuer.name}} {{ 'Issuer.issuerHasBadges' | translate }} {{ learningPaths.length }} Lernpfad{{ learningPaths.length == 1 ? '' : 'e' }}.
