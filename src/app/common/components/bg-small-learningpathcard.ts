@@ -65,7 +65,6 @@ type MatchOrProgressType = { match?: number, progress?: number };
 						<oeb-button *ngIf="isProgress && progress/studyLoad === 1 && !completed && !requested" (click)="requestLearningPath()" [text]="'Lernpfad abholen'" width="full_width">
 							
 						</oeb-button>
-						<p hlmP *ngIf="requested">Badge erfolgreich angefragt!</p>
 					</div>
 					<div class="tw-flex tw-flex-row tw-gap-4 tw-text-[#6B7280] tw-text-[8px] tw-mt-2 tw-items-end">
 						<hlm-icon name="lucideClock" />
