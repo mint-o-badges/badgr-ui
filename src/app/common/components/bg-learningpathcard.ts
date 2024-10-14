@@ -54,7 +54,7 @@ type MatchOrProgressType = { match?: number, progress?: number };
 						</div>	
 						<ng-template #progressBar>
 							<div *ngIf="progress === 0 || progress" class="tw-mb-4 tw-w-full tw-mt-2 md:tw-mt-6 tw-flex tw-justify-center tw-items-center">
-								<oeb-progress class="tw-w-full tw-h-5 md:tw-h-7 tw-relative tw-inline-flex tw-overflow-hidden tw-rounded-3xl tw-bg-white tw-items-center" [value]="(progress/studyLoad*100).toFixed(0)" [template]="progressTemplate"></oeb-progress>
+								<oeb-progress class="tw-w-full tw-h-5 md:tw-h-7 tw-relative tw-inline-flex tw-overflow-hidden tw-rounded-3xl tw-bg-white tw-items-center" [value]="(progress/studyLoad*100).toFixed(0)" [template]="requested ? requestedTemplate : progressTemplate"></oeb-progress>
 							</div>
 						</ng-template>
 						<ng-template #progressTemplate>
@@ -62,10 +62,16 @@ type MatchOrProgressType = { match?: number, progress?: number };
 								<span class="tw-ml-2 md:tw-text-sm tw-text-[8px] tw-text-purple">Lernpfad <span *ngIf="!completed">{{(progress/studyLoad*100).toFixed(0)}}%</span> abgeschlossen</span>
 							</div>
 						</ng-template>	
-						<oeb-button *ngIf="isProgress && progress/studyLoad === 1 && !completed && !requested" (click)="requestLearningPath()" [text]="'Lernpfad abholen'" width="full_width">
-							
+						<ng-template #requestedTemplate>
+							<div class="tw-absolute tw-w-full tw-text-left tw-flex tw-items-center">
+								<span class="tw-bg-purple tw-rounded-[50%] tw-h-[20px] tw-w-[20px] tw-ml-2">
+									<hlm-icon variant="sm" class="tw-text-white tw-box-border" name="lucideCheck" />
+								</span>
+								<span class="tw-ml-2 md:tw-text-sm tw-text-[8px] tw-text-purple">{{'LearningPath.successRequestPath' | translate}}</span>
+							</div>
+						</ng-template>	
+						<oeb-button *ngIf="isProgress && progress/studyLoad === 1 && !completed && !requested" (click)="requestLearningPath()" [text]="'Lernpfad abholen'" width="full_width">							
 						</oeb-button>
-						<p hlmP *ngIf="requested">Badge erfolgreich angefragt!</p>
 					</div>
 					<div class="tw-flex tw-flex-row tw-gap-4 tw-text-[#6B7280] md:tw-text-sm tw-text-[8px] tw-mt-2 md:tw-mt-6 tw-items-end">
 						<hlm-icon name="lucideClock" />

@@ -1,7 +1,23 @@
 import { Component, EventEmitter, HostBinding, Input, Output } from '@angular/core';
+import {
+	AUTO_STYLE,
+	animate,
+	state,
+	style,
+	transition,
+	trigger,
+  } from '@angular/animations';
 
 @Component({
 	selector: 'bg-badgecard',
+	animations: [
+		trigger('showCompetencies', [
+		  state('true', style({ height: AUTO_STYLE, visibility: AUTO_STYLE })),
+		  state('false', style({ height: '0', visibility: 'hidden' })),
+		  transition('false => true', animate(220 + 'ms ease-out')),
+		  transition('true => false', animate(220 + 'ms ease-in')),
+		]),
+	  ],
 	host: {
 		class: 'tw-rounded-[10px] tw-h-max tw-border-purple tw-border-solid tw-border tw-relative tw-p-3 tw-block tw-overflow-hidden oeb-badge-card',
 	},
@@ -15,6 +31,11 @@ import { Component, EventEmitter, HostBinding, Input, Output } from '@angular/co
 
 		<div class="tw-h-[100px]">
 			<div class="tw-flex tw-items-center tw-h-full">
+				<div *ngIf="completed" class="tw-absolute tw-top-[10px] tw-right-[10px] tw-flex tw-justify-center tw-items-center">
+					<div class="tw-bg-white tw-inline-flex tw-rounded-full tw-justify-center tw-items-center tw-border-solid tw-border-purple tw-border-[2px] ">
+						<hlm-icon class="tw-text-purple tw-box-border md:tw-w-[22px] tw-w-[16px] md:tw-h-[22px] tw-h-[16px]" name="lucideCheck" />
+					</div>
+				</div>
 				<img
 					class="badgeimage badgeimage-{{ mostRelevantStatus }}"
 					[loaded-src]="badgeImage"
@@ -85,12 +106,14 @@ import { Component, EventEmitter, HostBinding, Input, Output } from '@angular/co
 				</div>	
 				</div>
 		</div>
-		<div class="tw-mt-8" *ngIf="showCompetencies">
-					<div *ngFor="let competency of competencies">
+		<div [@showCompetencies]="showCompetencies">
+			<div class="tw-pt-8">
+				<div *ngFor="let competency of competencies">
 					<competency-accordion [name]="competency.name" [category]="competency.category"
-					[description]="competency.description" [escoID]="competency.escoID"
-					[studyload]="competency.studyLoad | studyload"></competency-accordion>
-					</div>
+						[description]="competency.description" [escoID]="competency.escoID"
+						[studyload]="competency.studyLoad | studyload"></competency-accordion>
+				</div>
+			</div>
 		</div>
 	`,
 })
@@ -112,11 +135,17 @@ export class BgBadgecard {
 	@Input() competencies?: any[];
 	@Input() checkboxControl?: any;
 	@Output() shareClicked = new EventEmitter<MouseEvent>();
-	
+	@Input() completed: Boolean = false;
 	checked = false;
+
 	@HostBinding('class') get hostClasses(): string {
 		return this.checked 
 		  ? 'tw-bg-[var(--color-lightgreen)]'   
+		  : 'tw-bg-white';  
+	  }
+	@HostBinding('class') get completedClass(): string {
+		return this.completed 
+		  ? 'tw-bg-[var(--color-green)]'   
 		  : 'tw-bg-white';  
 	  }
 

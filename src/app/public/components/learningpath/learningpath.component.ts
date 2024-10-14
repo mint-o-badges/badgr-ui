@@ -54,6 +54,11 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 	@ViewChild('openTemplate', { static: true }) openTemplate: ElementRef;
 	@ViewChild('finishedTemplate', { static: true }) finishedTemplate: ElementRef;
 
+
+	crumbs = [
+		{ title: 'Lernpfade', routerLink: ['/catalog/learningpaths'] }
+	];
+
 	constructor(
 		private injector: Injector,
 		public embedService: EmbedService,
@@ -66,7 +71,7 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 		public issuerManager: IssuerManager,
 		private title: Title,
 	) {
-		title.setTitle(`LearningPath - ${this.configService.theme['serviceName'] || 'Badgr'}`);
+		this.title.setTitle(`LearningPath - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 
 		this.loaded = new LoadedRouteParam(injector.get(ActivatedRoute), 'learningPathId', (paramValue) => {
 			this.learningPathSlug = paramValue;
@@ -110,7 +115,6 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 
 	requestPath(){
 		const service: PublicApiService = this.injector.get(PublicApiService);
-
 		return service.getLearningPath(this.learningPathSlug).then((response) => {
 			this.learningPath = response;
 			this.totalBadgeCount = response.badges.length;
@@ -135,6 +139,11 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 					count: (response.completed_badges ? response.completed_badges.length : 0),
 					component: this.finishedTemplate,
 				},
+			];
+			this.crumbs = [
+				{ title: 'Lernpfade', routerLink: ['/catalog/learningpaths'] },
+				{ title: this.learningPath.name, routerLink: ['/public/learningpaths/'+this.learningPath.slug] },
+				
 			];
 			if (response.progress === null) {
 				this.isParticipating = false;
@@ -163,7 +172,6 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 					return badge;
 				});
 		})
-
 	}
 
 	participate() {
@@ -191,4 +199,11 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 		})
 	  }
 
+	get learningPathReverseBadges() {
+		return [...this.learningPath.badges].reverse()
+	}
+	
+	get openBadgesReversed() {
+		return [...this.openBadges].reverse()
+	}
 }

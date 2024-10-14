@@ -123,7 +123,7 @@ export class OebLearningPathDetailComponent extends BaseRoutableComponent implem
 				.then(
 					() => {
 						this.router.navigate(['issuer/issuers', this.issuer.slug, 'badges', this.learningPath.participationBadge_id]);
-						this.openSuccessDialog(req.email);
+						this.openSuccessDialog(req.user.email);
 				
 						this.requests = this.requests.filter(
 								(request) => request.entitiy_id != req.entitiy_id,
@@ -202,5 +202,9 @@ export class OebLearningPathDetailComponent extends BaseRoutableComponent implem
 			}).catch((error) => {
 				console.log(error);
 			});
+	}
+
+	get learningPathReverseBadges() {
+		return [...this.learningPath.badges].reverse()
 	}
 }
