@@ -21,7 +21,6 @@ import { IssuerNameValidator } from '../../../common/validators/issuer-name.vali
 @Component({
 	selector: 'issuer-create',
 	templateUrl: './issuer-create.component.html',
-	styleUrls: ['./issuer-create.component.scss'],
 })
 export class IssuerCreateComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 }

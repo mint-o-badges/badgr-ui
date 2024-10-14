@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Input } from "@angular/core";
 import { BaseAuthenticatedRoutableComponent } from "../../../common/pages/base-authenticated-routable.component";
 import { typedFormGroup } from "../../../common/util/typed-forms";
 import { FormBuilder, Validators } from "@angular/forms";
@@ -6,7 +6,7 @@ import { IssuerNameValidator } from "../../../common/validators/issuer-name.vali
 import { UrlValidator } from "../../../common/validators/url.validator";
 import { UserProfileEmail } from "../../../common/model/user-profile.model";
 import { FormFieldSelectOption } from "../../../common/components/formfield-select";
-import { ApiIssuerForCreation } from "../../models/issuer-api.model";
+import { ApiIssuerForCreation, ApiIssuerForEditing } from "../../models/issuer-api.model";
 import { SessionService } from "../../../common/services/session.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AppConfigService } from "../../../common/app-config.service";
@@ -17,10 +17,12 @@ import { MessageService } from "../../../common/services/message.service";
 import { TranslateService } from "@ngx-translate/core";
 import { IssuerManager } from "../../services/issuer-manager.service";
 import { preloadImageURL } from "../../../common/util/file-util";
+import { Issuer } from "../../models/issuer.model";
 
 @Component({
 	selector: 'issuer-edit-form',
 	templateUrl: 'issuer-edit-form.component.html',
+	styleUrls: ['issuer-edit-form.component.scss']
 })
 export class IssuerEditFormComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	readonly issuerImagePlacholderUrl = preloadImageURL(
@@ -45,6 +47,11 @@ export class IssuerEditFormComponent extends BaseAuthenticatedRoutableComponent 
 	emails: UserProfileEmail[];
 	emailsOptions: FormFieldSelectOption[];
 	addIssuerFinished: Promise<unknown>;
+	editIssuerFinished: Promise<unknown>;
+
+	issuerSlug: string;
+
+
 	emailsLoaded: Promise<unknown>;
 
 	enterDescription: string; 
@@ -54,6 +61,15 @@ export class IssuerEditFormComponent extends BaseAuthenticatedRoutableComponent 
 	useImageFormat: string;
 	imageError: string;
 
+	existingIssuer: Issuer | null = null;
+
+
+	@Input() set issuer(issuer: Issuer) {
+		if(this.existingIssuer !== issuer) {
+			this.existingIssuer = issuer; 
+			this.initFormFromExisting(issuer);
+		}
+	}
 	constructor(
 		loginService: SessionService,
 		router: Router,
@@ -73,6 +89,9 @@ export class IssuerEditFormComponent extends BaseAuthenticatedRoutableComponent 
 		if (this.configService.theme.dataProcessorTermsLink) {
 			this.issuerForm.addControl('agreedTerms', '', Validators.requiredTrue);
 		}
+
+		this.issuerSlug = this.route.snapshot.params['issuerSlug'];
+
 
 		const authCode = this.queryParams.queryStringValue('authCode', true);
 		if (loginService.isLoggedIn && !authCode) this.refreshProfile();
@@ -107,6 +126,22 @@ export class IssuerEditFormComponent extends BaseAuthenticatedRoutableComponent 
 
 	}
 
+	initFormFromExisting(issuer: Issuer) {
+		if (!issuer) return;
+		this.issuerForm.setValue({
+			issuer_name: issuer.name,
+            issuer_description: issuer.description,
+			issuer_image: issuer.image,
+		    issuer_category: issuer.category,
+			issuer_email: issuer.email,
+			issuer_city: issuer.city,
+			issuer_street: issuer.street,
+			issuer_streetnumber: issuer.streetnumber,
+			issuer_zip: issuer.zip,
+			issuer_url: issuer.url,
+		});
+	}
+
 	onImageRatioError(error: string) {
 		this.imageError = error;
 		const imageControl = this.issuerForm.rawControlMap.issuer_image;
@@ -131,28 +166,23 @@ export class IssuerEditFormComponent extends BaseAuthenticatedRoutableComponent 
 		if (!this.issuerForm.markTreeDirtyAndValidate()) {
 			return;
 		}
-		
+
 		const formState = this.issuerForm.value;
 
-
-		const issuer: ApiIssuerForCreation = {
-			name: formState.issuer_name,
-			description: formState.issuer_description,
-			email: formState.issuer_email,
-			url: formState.issuer_url,
-			category: formState.issuer_category,
-			street: formState.issuer_street,
-			streetnumber: formState.issuer_streetnumber,
-			zip: formState.issuer_zip,
-			city: formState.issuer_city,
-		};
-
-		if (formState.issuer_image && String(formState.issuer_image).length > 0) {
-			issuer.image = formState.issuer_image;
-		}
-
-		this.addIssuerFinished = this.issuerManager
-			.createIssuer(issuer)
+		if(this.existingIssuer) {
+			const issuer: ApiIssuerForEditing= {
+				name: formState.issuer_name,
+				description: formState.issuer_description,
+				email: formState.issuer_email,
+				url: formState.issuer_url,
+				category: formState.issuer_category,
+				street: formState.issuer_street,
+				streetnumber: formState.issuer_streetnumber,
+				zip: formState.issuer_zip,
+				city: formState.issuer_city,
+			}
+			this.editIssuerFinished = this.issuerManager
+			.editIssuer(this.issuerSlug, issuer)
 			.then(
 				(newIssuer) => {
 					this.router.navigate(['issuer/issuers', newIssuer.slug]);
@@ -162,7 +192,44 @@ export class IssuerEditFormComponent extends BaseAuthenticatedRoutableComponent 
 					this.messageService.setMessage('Unable to create issuer: ' + error, 'error');
 				},
 			)
-			.then(() => (this.addIssuerFinished = null));
+			.then(() => (this.editIssuerFinished = null));
+		}
+		else{
+
+			const issuer: ApiIssuerForCreation = {
+				name: formState.issuer_name,
+				description: formState.issuer_description,
+				email: formState.issuer_email,
+				url: formState.issuer_url,
+				category: formState.issuer_category,
+				street: formState.issuer_street,
+				streetnumber: formState.issuer_streetnumber,
+				zip: formState.issuer_zip,
+				city: formState.issuer_city,
+			};
+
+
+			if (formState.issuer_image && String(formState.issuer_image).length > 0) {
+				issuer.image = formState.issuer_image;
+			}
+	
+			this.addIssuerFinished = this.issuerManager
+				.createIssuer(issuer)
+				.then(
+					(newIssuer) => {
+						this.router.navigate(['issuer/issuers', newIssuer.slug]);
+						this.messageService.setMessage('Issuer created successfully.', 'success');
+					},
+					(error) => {
+						this.messageService.setMessage('Unable to create issuer: ' + error, 'error');
+					},
+				)
+				.then(() => (this.addIssuerFinished = null));
+		}
+		
+
+
+
 	}
 
 	get dataProcessorUrl() {
