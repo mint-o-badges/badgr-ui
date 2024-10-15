@@ -1,9 +1,8 @@
 import { AfterContentInit, Component, ElementRef, Injector, OnInit, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-
 import { PublicApiService } from '../../services/public-api.service';
 import { LoadedRouteParam } from '../../../common/util/loaded-route-param';
-import { PublicApiIssuer, PublicApiLearningPath } from '../../models/public-api.model';
+import { PublicApiBadgeClass, PublicApiBadgeClassWithIssuer, PublicApiIssuer, PublicApiLearningPath } from '../../models/public-api.model';
 import { EmbedService } from '../../../common/services/embed.service';
 import { Title } from '@angular/platform-browser';
 import { AppConfigService } from '../../../common/app-config.service';
@@ -12,8 +11,6 @@ import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src
 import { SuccessDialogComponent } from '../../../common/dialogs/oeb-dialogs/success-dialog.component';
 import { UserProfileApiService } from '../../../common/services/user-profile-api.service';
 import { TranslateService } from '@ngx-translate/core';
-import { Issuer } from '../../../issuer/models/issuer.model';
-import { IssuerApiService } from '../../../issuer/services/issuer-api.service';
 import { IssuerManager } from '../../../issuer/services/issuer-manager.service';
 import type { Tab } from '../../../components/oeb-backpack-tabs.component';
 import { SessionService } from '../../../common/services/session.service';
@@ -22,18 +19,17 @@ import { SessionService } from '../../../common/services/session.service';
 	templateUrl: './learningpath.component.html',
 })
 export class PublicLearningPathComponent implements OnInit, AfterContentInit {
+	
 	learningPathSlug: string;
-
 	isParticipating: boolean = false;
-
-	learningPath;
+	learningPath: PublicApiLearningPath;
 	learningPathIdParam: LoadedRouteParam<PublicApiLearningPath>;
 	participationButtonText: string = 'Teilnehmen';
 	issuerLoaded: Promise<unknown>;
 	badgeLoaded: Promise<unknown>;
 	loaded: LoadedRouteParam<void>;
 	issuer: PublicApiIssuer;
-	badge: any;
+	badge: PublicApiBadgeClassWithIssuer;
 	progressPercentage: number | undefined = undefined;
 	minutesCompleted: number;
 	minutesTotal: number;
@@ -45,8 +41,8 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 	openBadgeCount: number;
 	finishedBadgeCount: number;
 
-	openBadges;
-	completedBadgeIds;
+	openBadges: PublicApiBadgeClass[];
+	completedBadgeIds: PublicApiBadgeClass[];
 
 	participantButtonVariant: string;
 
