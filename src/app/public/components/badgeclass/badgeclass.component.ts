@@ -19,23 +19,23 @@ import { RecipientBadgeApiService } from '../../../recipient/services/recipient-
 	template: `<bg-badgedetail [config]="config" [awaitPromises]="[badgeClass]">
 					<ng-template [bgAwaitPromises]="[learningPathsPromise]">
 						<div class="oeb" *ngIf="learningPaths.length > 0">
-							<oeb-separator class="tw-block tw-mb-6 tw-border-[var(--color-lightgray)] tw-border-2"></oeb-separator>
+							<oeb-separator class="tw-block tw-mb-8 tw-mt-8"></oeb-separator>
 							<span class="tw-my-2 tw-text-oebblack tw-text-[22px] tw-leading-[26px] tw-font-semibold"> Dieser Badge ist Teil folgender Lernpfade: </span>
-								<div class="tw-mt-2 tw-flex tw-flex-wrap tw-gap-16">
-									<bg-learningpathcard *ngFor="let lp of learningPaths"
-										[name]="lp.name"
-										[badgeImage]="lp.participationBadge_image"
-										[issuerTitle]="lp.issuer_name"
-										[description]="lp.description"
-										[tags]="lp.tags"
-										[slug]="lp.slug"
-										[studyLoad]="calculateStudyLoad(lp)"
-										[progress]="lp.progress"
-										[matchOrProgress]="calculateLearningPathStatus(lp)"
-										[requested]="lp.requested"
-										[completed]="checkCompleted(lp)"
-									></bg-learningpathcard>
-								</div>
+							<div class="tw-mt-4 tw-flex tw-flex-wrap tw-gap-16">
+								<bg-learningpathcard *ngFor="let lp of learningPaths"
+									[name]="lp.name"
+									[badgeImage]="lp.participationBadge_image"
+									[issuerTitle]="lp.issuer_name"
+									[description]="lp.description"
+									[slug]="lp.slug"
+									[tags]="lp.tags"
+									[studyLoad]="calculateStudyLoad(lp)"
+									[progress]="lp.progress"
+									[matchOrProgress]="calculateLearningPathStatus(lp)"
+									[requested]="lp.requested"
+									[completed]="checkCompleted(lp)"
+								></bg-learningpathcard>
+							</div>
 						</div>	
 					</ng-template>
 				</bg-badgedetail>`,
