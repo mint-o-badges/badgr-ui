@@ -8,7 +8,7 @@ import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-a
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { Issuer } from '../../models/issuer.model';
 import { IssuerManager } from '../../services/issuer-manager.service';
-import { ApiLearningPath, ApiLearningPathForCreation } from '../../../common/model/learningpath-api.model';
+import { ApiLearningPathForCreation } from '../../../common/model/learningpath-api.model';
 import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
 
 @Component({

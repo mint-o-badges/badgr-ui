@@ -17,28 +17,27 @@ import { RecipientBadgeApiService } from '../../../recipient/services/recipient-
 
 @Component({
 	template: `<bg-badgedetail [config]="config" [awaitPromises]="[badgeClass]">
-				<ng-template [bgAwaitPromises]="[learningPaths]">
-				<div class="oeb" *ngIf="learningPaths.length > 0">
-					<oeb-separator class="tw-block tw-mb-6 tw-border-[var(--color-lightgray)] tw-border-2"></oeb-separator>
-					<span class="tw-my-2 tw-text-oebblack tw-text-[22px] tw-leading-[26px] tw-font-semibold"> Dieser Badge ist Teil folgender Lernpfade: </span>
-						<div class=" tw-mt-2 tw-grid md:tw-grid-cols-learningpaths tw-grid-cols-learningpathsSmall tw-gap-16">
-							<bg-learningpathcard *ngFor="let lp of learningPaths"
-								[name]="lp.name"
-								[badgeImage]="lp.participationBadge_image"
-								[issuerTitle]="lp.issuer_name"
-								[description]="lp.description"
-								[tags]="lp.tags"
-								[slug]="lp.slug"
-								[studyLoad]="calculateStudyLoad(lp)"
-								[progress]="lp.progress"
-								[matchOrProgress]="calculateLearningPathStatus(lp)"
-								[requested]="lp.requested"
-								[completed]="checkCompleted(lp)"
-
-							></bg-learningpathcard>
-						</div>
-				</div>	
-				</ng-template>
+					<ng-template [bgAwaitPromises]="[learningPathsPromise]">
+						<div class="oeb" *ngIf="learningPaths.length > 0">
+							<oeb-separator class="tw-block tw-mb-6 tw-border-[var(--color-lightgray)] tw-border-2"></oeb-separator>
+							<span class="tw-my-2 tw-text-oebblack tw-text-[22px] tw-leading-[26px] tw-font-semibold"> Dieser Badge ist Teil folgender Lernpfade: </span>
+								<div class="tw-mt-2 tw-flex tw-flex-wrap tw-gap-16">
+									<bg-learningpathcard *ngFor="let lp of learningPaths"
+										[name]="lp.name"
+										[badgeImage]="lp.participationBadge_image"
+										[issuerTitle]="lp.issuer_name"
+										[description]="lp.description"
+										[tags]="lp.tags"
+										[slug]="lp.slug"
+										[studyLoad]="calculateStudyLoad(lp)"
+										[progress]="lp.progress"
+										[matchOrProgress]="calculateLearningPathStatus(lp)"
+										[requested]="lp.requested"
+										[completed]="checkCompleted(lp)"
+									></bg-learningpathcard>
+								</div>
+						</div>	
+					</ng-template>
 				</bg-badgedetail>`,
 })
 export class PublicBadgeClassComponent {
@@ -54,6 +53,7 @@ export class PublicBadgeClassComponent {
 	config: PageConfig
 
 	learningPaths: PublicApiLearningPath[];
+	learningPathsPromise: Promise<PublicApiLearningPath[] | void>;
 
 	userBadges: string[] = [];
 	loggedIn = false;
@@ -92,8 +92,7 @@ export class PublicBadgeClassComponent {
 				}
 			})
 
-			const learningPaths = service.getLearningPathsForBadgeClass(paramValue).then(lp => {
-				console.log(lp)
+			this.learningPathsPromise = service.getLearningPathsForBadgeClass(paramValue).then(lp => {
 				this.learningPaths = lp;
 			})
 			return badgeClass

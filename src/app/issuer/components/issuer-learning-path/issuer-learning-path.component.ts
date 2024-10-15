@@ -107,7 +107,6 @@ export class IssuerLearningPathComponent extends BaseAuthenticatedRoutableCompon
 								`Failed to load learningpath for ${this.issuer ? this.issuer.name : this.issuerSlug}`,
 								error,
 							);
-							resolve();
 						},
 					);
 				});

@@ -25,7 +25,7 @@
 							<li hlmP>{{'Issuer.learningPathList4' | translate}}</li>
 							<li hlmP>{{'Issuer.learningPathList5' | translate}}</li>
 						</ol>
-		
+
 					</div>
 					<div class="oeb-standard-padding-bottom">
 						<div class="tw-py-6 tw-px-10 tw-bg-lightpurple tw-rounded-[20px]">
@@ -34,17 +34,19 @@
 							</div>
 							<form [formGroup]="jsonForm" class>
 								<fieldset>
-									<bg-formfield-file class="tw-bg-white" #fileField label="File" validFileTypes=".json"
-										[control]="jsonForm.controls['jsonFile']" (fileData)="onFileDataReceived($event)">
+									<bg-formfield-file class="tw-bg-white" #fileField label="File"
+										validFileTypes=".json" [control]="jsonForm.controls['jsonFile']"
+										(fileData)="onFileDataReceived($event)">
 									</bg-formfield-file>
 								</fieldset>
 							</form>
 							<div class="tw-flex tw-justify-end tw-gap-2 tw-mt-4">
 								<oeb-button class="tw-mr-4" variant="secondary"
 									[text]="'General.cancel' | translate"></oeb-button>
-		
-								<oeb-button [class.button-is-disabled]="rawJson === null" [disabled]="rawJson ? null : true"
-									(click)="importAction()" [text]="'Issuer.import' | translate">
+
+								<oeb-button [class.button-is-disabled]="rawJson === null"
+									[disabled]="rawJson ? null : true" (click)="importAction()"
+									[text]="'Issuer.import' | translate">
 								</oeb-button>
 							</div>
 						</div>
@@ -52,16 +54,17 @@
 				</div>
 				<div class="tw-max-w-[350px]">
 					<div>
-						<div class="tw-p-4 tw-text-oebblack tw-relative tw-flex tw-flex-row tw-items-center tw-border-yellow tw-border-2 tw-border-solid">
-							<img class="tw-inline-block tw-h-[90px]" alt="Plugin" src="assets/oeb/images/issuerPage/oeb-beta-logo.svg" />
+						<div
+							class="tw-p-4 tw-text-oebblack tw-relative tw-flex tw-flex-row tw-items-center tw-border-yellow tw-border-2 tw-border-solid">
+							<img class="tw-inline-block tw-h-[90px]" alt="Plugin"
+								src="assets/oeb/images/issuerPage/oeb-beta-logo.svg" />
 							<div class="tw-flex md:tw-block tw-pb-4">
-								<p class="tw-pt-4 tw-text-left tw-pl-4 md:tw-pl-0" [innerHTML]="'Issuer.betaPhase' | translate"></p>
+								<p class="tw-pt-4 tw-text-left tw-pl-4 md:tw-pl-0"
+									[innerHTML]="'Issuer.betaPhase' | translate"></p>
 							</div>
 						</div>
 					</div>
-	
 				</div>
-
 			</div>
 		</div>
 	</div>

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input  } from '@angular/core';
 import type { PageConfig } from './badge-detail.component.types';
 
 @Component({
@@ -9,6 +9,4 @@ import type { PageConfig } from './badge-detail.component.types';
 export class BgBadgeDetail {
     @Input() config: PageConfig;
     @Input() awaitPromises?: Promise<any>[];
-
-
 }

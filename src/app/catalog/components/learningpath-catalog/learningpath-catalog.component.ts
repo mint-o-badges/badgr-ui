@@ -27,26 +27,16 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 	learningPathsLoaded: Promise<unknown>;
 	issuersLoaded: Promise<unknown>;
 	userBadgesLoaded: Promise<unknown>;
-
 	order = 'asc';
-
 	learningPathResults: LearningPath[] = null;
 	learningPathResultsByIssuer: MatchingLearningPathIssuer[] = [];
-
-
     learningPaths: LearningPath[] = [];
-
 	issuerResults: Issuer[] = [];
-
-
 	baseUrl: string;
-
 	tags: string[] = [];
 	issuers: Issuer[] = null;
-
 	selectedTag: string = null;
 	loggedIn = false;
-
 	userBadges: string[] = [];
 
 	get theme() {

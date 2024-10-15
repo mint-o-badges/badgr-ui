@@ -53,7 +53,6 @@ export class OebLearningPathDetailComponent extends BaseRoutableComponent implem
 		private pdfService: PdfService,
 		public router: Router,
 		route: ActivatedRoute
-
 	) {
 		super(router, route);
         
@@ -91,8 +90,6 @@ export class OebLearningPathDetailComponent extends BaseRoutableComponent implem
 			}
 		);
 	}
-
-
 
 	public giveBadge(req){
 		this.loading = true;
