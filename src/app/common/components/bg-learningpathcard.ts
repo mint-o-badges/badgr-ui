@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, HostBinding, Output } from '@angular/core';
 import { LearningPathApiService } from '../services/learningpath-api.service';
 
-type MatchOrProgressType = { match?: number, progress?: number };
+type MatchOrProgressType = { match?: string, progress?: number };
 
 @Component({
 	selector: 'bg-learningpathcard',
@@ -49,7 +49,7 @@ type MatchOrProgressType = { match?: number, progress?: number };
 						</div>
 						<div *ngIf="isMatch; else progressBar">
 							<div class="tw-px-[11.55px] tw-py-[3.85px] tw-bg-lightpurple tw-rounded-[95px] tw-inline-block">
-								<span class="tw-text-sm tw-text-purple">{{this._matchOrProgress?.match.toFixed(0)}}% Match</span> 
+								<span class="tw-text-sm tw-text-purple">{{this._matchOrProgress?.match}} Badges</span> 
 							</div>
 						</div>	
 						<ng-template #progressBar>
@@ -104,7 +104,7 @@ export class BgLearningPathCard {
 	@Input() completed: boolean = false;
 	@Input() requested: boolean = false;
 	@Input() progress: number | null = null;
-	@Input() match: number | null = null;
+	@Input() match: string | null = null;
 	@Output() shareClicked = new EventEmitter<MouseEvent>();
 
 	@HostBinding('class') get hostClasses(): string {
@@ -126,23 +126,13 @@ export class BgLearningPathCard {
 		this._matchOrProgress = value;
 	  }
 	
-	  get isMatch(): boolean {
-		return !isNaN(this._matchOrProgress.match);
-		// return 'match' in this._matchOrProgress;
+	  get isMatch(): (string | undefined) {
+		return this._matchOrProgress.match;
 	  }
 	
 	  get isProgress(): boolean {
 		return this.progress !== null;
-		// return 'progress' in this._matchOrProgress;
 	  }
-	
-	//   get match(): number | undefined {
-	// 	return (this._matchOrProgress as { match: number }).match;
-	//   }
-	
-	//   get progress(): number | undefined {
-	// 	return this.isProgress ? (this._matchOrProgress as { progress: number }).progress : undefined;
-	//   }
 	
 	  requestLearningPath() {
 		this.learningPathApiService.requestLearningPath(this.slug).then(res => {

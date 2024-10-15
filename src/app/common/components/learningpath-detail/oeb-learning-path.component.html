@@ -51,13 +51,13 @@
                 <img [src]="learningPath.participationBadge_image"
                     alt="{{ issuer.name }} Badge" class="tw-w-[150px] md:tw-w-[200px]" />
             </div>
-            <div class="tw-absolute tw-border-l-8 tw-border-lightpurple tw-border-solid tw-left-[70px] md:tw-left-[96px] tw-top-[50px] md:tw-top-[-100px] tw-bottom-[20px]"></div>
+            <div class="tw-absolute tw-border-l-8 tw-border-lightpurple tw-border-solid tw-left-[74px] md:tw-left-[100px] tw-top-[50px] md:tw-top-[-100px] tw-bottom-[20px]"></div>
             <div class="tw-pl-[120px] md:tw-pl-[145px]">
                 <h3 hlmH3 class="tw-uppercase tw-font-bold tw-text-purple tw-pb-4"> {{'LearningPath.lpBadges' | translate}}</h3>
                 <div class="tw-flex tw-flex-col tw-gap-4" [@stagger]>
                     <div class="tw-relative" *ngFor="let badge of learningPathReverseBadges; let i = index" [@inOutAnimation]="state">
-                        <div class="tw-absolute tw-left-[-74px] md:tw-left-[-74px] tw-top-[50%] tw-translate-y-[-50%]">
-                            <div class="tw-flex tw-items-center">
+                        <div class="tw-absolute tw-left-[-69px] md:tw-left-[-69px] tw-top-[50%] tw-translate-y-[-50%]">
+                            <div class="tw-flex tw-items-center tw-justify-center tw-w-[56px] tw-h-[56px] tw-relative">
                                 <img *ngIf="badge?.badge.extensions['extensions:CategoryExtension'].Category === 'competency'" src="assets/oeb/images/learningPath/competency_icon.png">
                                 <img  *ngIf="badge?.badge.extensions['extensions:CategoryExtension'].Category === 'participation'" src="assets/oeb/images/learningPath/participation_icon.png"> 
                                 <div class="tw-absolute tw-text-[22px] tw-font-bold tw-text-white tw-top-[50%] tw-translate-y-[-50%] tw-left-[50%] tw-translate-x-[-50%]">{{learningPath.badges.length - i}}</div>
