@@ -235,4 +235,9 @@ export class IssuerEditFormComponent extends BaseAuthenticatedRoutableComponent 
 	get dataProcessorUrl() {
 		return this.configService.theme.dataProcessorTermsLink;
 	}
+
+	urlBlurred(ev) {
+		const control = this.issuerForm.rawControlMap['issuer_url'];
+		UrlValidator.addMissingHttpToControl(control);
+	}
 }
