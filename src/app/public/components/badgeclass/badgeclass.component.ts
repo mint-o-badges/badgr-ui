@@ -123,7 +123,15 @@ export class PublicBadgeClassComponent {
 		return stripQueryParamsFromUrl(this.badgeClass.id) + '.json';
 	}
 
-	calculateLearningPathStatus(lp: LearningPath): { 'match' : number} | { 'progress' : number} {
+	calculateMatch(lp: LearningPath): string {
+		const lpBadges = lp.badges;
+		const badgeClassIds = lpBadges.map((b) => b.badge.json.id);
+		const totalBadges = lpBadges.length;
+		const userBadgeCount = badgeClassIds.filter((b) => this.userBadges.includes(b)).length;
+		return `${userBadgeCount}/${totalBadges}`;
+	}
+
+	calculateLearningPathStatus(lp: LearningPath): { 'match' : string} | { 'progress' : number} {
 		if(lp.progress !=  null){
 			const percentCompleted = lp.progress
 			return {'progress' : percentCompleted }
@@ -131,15 +139,6 @@ export class PublicBadgeClassComponent {
 		else{
 			return {'match' : this.calculateMatch(lp)}
 		}
-	}
-
-	calculateMatch(lp: LearningPath): number {
-		const lpBadges = lp.badges;
-		const badgeClassIds = lpBadges.map((b) => b.badge.json.id);
-		const totalBadges = lpBadges.length;
-		const userBadgeCount = badgeClassIds.filter((b) => this.userBadges.includes(b)).length;
-		const match = userBadgeCount / totalBadges;
-		return match * 100;
 	}
 
 	calculateStudyLoad(lp: LearningPath): number {

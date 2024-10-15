@@ -130,16 +130,15 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 		}
 	}
 
-	calculateMatch(lp: LearningPath): number {
+	calculateMatch(lp: LearningPath): string {
 		const lpBadges = lp.badges;
 		const badgeClassIds = lpBadges.map((b) => b.badge.json.id);
 		const totalBadges = lpBadges.length;
 		const userBadgeCount = badgeClassIds.filter((b) => this.userBadges.includes(b)).length;
-		const match = userBadgeCount / totalBadges;
-		return match * 100;
+		return `${userBadgeCount}/${totalBadges}`;
 	}
 
-	calculateLearningPathStatus(lp: LearningPath): { 'match' : number} | { 'progress' : number} {
+	calculateLearningPathStatus(lp: LearningPath): { 'match' : string} | { 'progress' : number} {
 		if(lp.progress !=  null){
 			const percentCompleted = lp.progress
 			return {'progress' : percentCompleted }
