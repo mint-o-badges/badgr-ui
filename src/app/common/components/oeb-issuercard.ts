@@ -17,7 +17,7 @@ import { Issuer } from '../../issuer/models/issuer.model';
 				<div class="tw-flex tw-flex-col tw-flex-wrap tw-pl-4 tw-py-2">
 					<a
 						
-						[routerLink]="['/issuer', issuer.slug]"
+						[routerLink]="['/public/issuers', issuer.slug]"
 						hlmP
 						
 						>{{ issuer.name }}</a>
