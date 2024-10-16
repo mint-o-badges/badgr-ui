@@ -346,7 +346,7 @@
 		"createAccountFor": "Account erstellen für",
 		"weCreatedYourAccount": "Wir haben deinen Account erstellt und dir eine Verifizierungs-E-Mail geschickt.",
 		"success_verify_email_heading": "Verifiziere deine E-Mail-Adresse",
-		"success_verify_email_desc": "Bitte überprüfe deine E-Mails und <span class='tw-text-purple'>klicke in der Mail auf „Meinen Account bestätigen”</span>, um deinen Account zu aktivieren.",
+		"success_verify_email_desc": "Bitte überprüfe deinen Posteingang und <span class='tw-text-oebblack tw-font-bold'>klicke in der Verifizierungs-E-Mail auf „Meinen Account bestätigen”</span>, um deinen oEB-Account zu aktivieren.",
 		"success_verify_email_help": "Wenn du die Verifizierungs-E-Mail nicht innerhalb weniger Minuten erhältst, schaue in deinen Spam-Ordner. Wenn du die Mail auch dort nicht findest, <a class='tw-text-purple tw-not-italic' href='mailto:info@openbadges.education'>schreib uns</a>.",
 		"resendEmail": "E-Mail erneut senden",
 		"emailAlreadyConfirmed": "Deine E-Mail-Adresse wurde bereits bestätigt. Du kannst dich jetzt anmelden.",
@@ -362,8 +362,10 @@
 		"confirmPassword":"Bitte bestätige Dein Passwort",
 		"passwordsNotEqual":"Die Passwörter sind nicht gleich",
 		"registerWithBildungsraum": "Registrieren mit Mein Bildungsraum",
-		"ageConfirm": "Ich bestätige, dass ich bei Registrierung mindestens 16 Jahre alt bin oder mir für die Registrierung auf dieser Plattform eine Zustimmung meiner Personensorgeberechtigten vorliegt."
-
+		"ageConfirm": "Ich bestätige, dass ich bei Registrierung mindestens 16 Jahre alt bin oder mir für die Registrierung auf dieser Plattform eine Zustimmung meiner Personensorgeberechtigten vorliegt.",
+		"newsletterEmail": "Wir haben dir ebenfalls eine E-Mail zur Bestätigung deiner Newsletter-Anmeldung geschickt.",
+		"confirmNewsletter": "Klicke in der Newsletter-E-Mail auf „Newsletter-Anmeldung bestätigen”, um die Newsletter-Anmeldung abzuschließen.",
+		"newsletterEmailNotReceived": "Du hast keine Newsletter-E-Mail bekommen? Bitte übermittle deine Daten über unser Newsletter-Anmelde-Formular oder schreib uns."
 	},
 	"Captcha": {
 		"error": "Verifizierung fehlgeschlagen. Bitte erneut versuchen.",

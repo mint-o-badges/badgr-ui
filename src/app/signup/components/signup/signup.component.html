@@ -138,6 +138,13 @@
 							}"
 							[fieldType]="'password'"
 						></oeb-input>
+
+						<div class="tw-mt-6 md:tw-mt-7">
+							<oeb-checkbox  id="terms" name="terms" type="checkbox"
+									[text]="'Signup.agreeToTerms1' | translate "
+									[control]="signupForm.rawControlMap.agreedTermsService">
+							</oeb-checkbox>
+						</div>
 					</fieldset>
 
 					<!-- Newsletter Signup Brevo Form -->
