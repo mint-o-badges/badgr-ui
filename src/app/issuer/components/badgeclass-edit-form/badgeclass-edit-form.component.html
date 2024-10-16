@@ -352,6 +352,7 @@
 									[control]="competency.rawControlMap.name"
 									[errorMessage]="{ required: titleError }"
 									noTopMargin="true"
+									[readonly]="competency.controls['framework_identifier'].value ? true : false"
 								>
 								</oeb-input>
 
@@ -367,6 +368,7 @@
 												required: 'Bitte gib die Dauer für den Erwerb der Kompetenz ein.'
 											}"
 											noTopMargin="true"
+											[readonly]="competency.controls['framework_identifier'].value ? true : false"
 										>
 										</oeb-input>
 
@@ -384,23 +386,26 @@
 										required: competencyCategoryError
 									}"
 									noTopMargin="true"
+									[disabled]="competency.controls['framework_identifier'].value ? true : false"
 								></oeb-select>
 
 							</div>
-
 							<oeb-input 
 								[fieldType]="'textarea'" 
 								[label]="competencyDescription"
 								[control]="competency.rawControlMap.description"
 								id="competency_description_input"
 								[errorMessage]="{ required: enterDescription }"
+								[readonly]="competency.controls['framework_identifier'].value ? true : false"
 							>
 							</oeb-input>
 
 							<oeb-input 
-								label="Esco-Identifier (optional)"
-								[control]="competency.rawControlMap.escoID"
-								placeholder="z.B. esco/skill/00090cc1-1f27-439e-a4e0-19a87a501bfc"
+								*ngIf="competency.rawControlMap['framework_identifier'].value"
+								label="Framework-Identifier"
+								[control]="competency.rawControlMap['framework_identifier']"
+								[readonly]="true"
+								placeholder="z.B. http://data.europa.eu/esco/skill/7de3b70e-2568-420a-8528-69523d323e7a"
 							>
 							</oeb-input>
 

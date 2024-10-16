@@ -13,7 +13,7 @@ import { Competency } from '../model/competency.model';
 		<div class="tw-flex tw-justify-between tw-items-center">
             <div>
                 <span hlmP size="sm" class="tw-text-oebblack tw-font-medium">{{competency.name}} </span>
-                <a hlmP hlmA size="sm" target="_blank" [href]="'http://data.europa.eu' + competency.escoID" text="inline link">(E)</a>
+                <a hlmP hlmA size="sm" target="_blank" [href]="competency['framework_identifier']" text="inline link">(E)</a>
             </div>
             
             <div class="tw-text-purple tw-flex tw-items-center tw-whitespace-nowrap">
