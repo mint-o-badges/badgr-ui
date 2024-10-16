@@ -41,7 +41,8 @@ import {QrCodeAwardsComponent} from './components/qrcode-awards/qrcode-awards.co
 import { QrCodeApiService } from './services/qrcode-api.service';
 import { BadgeRequestApiService } from './services/badgerequest-api.service';
 import { EditQrFormComponent } from './components/edit-qr-form/edit-qr-form.component';
-
+import { IssuerEditFormComponent } from './components/issuer-edit-form/issuer-edit-form.component';
+import { Issuer } from './models/issuer.model';
 
 const routes = [
 	/* Issuer */
@@ -142,6 +143,7 @@ const routes = [
 		IssuerCreateComponent,
 		IssuerDetailComponent,
 		IssuerEditComponent,
+		IssuerEditFormComponent,
 		IssuerStaffComponent,
 		IssuerListComponent,
 
