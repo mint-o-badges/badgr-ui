@@ -44,6 +44,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	badgeCategory: string;
 
 	// Translation
+	// Translation
 	selectFromMyFiles = this.translate.instant('RecBadge.selectFromMyFiles');
 	chooseFromExistingIcons = this.translate.instant('RecBadge.chooseFromExistingIcons');
 	uploadOwnVisual = this.translate.instant('RecBadge.uploadOwnVisual');
