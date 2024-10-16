@@ -27,8 +27,8 @@ import { TranslateService } from "@ngx-translate/core";
                 </div>
             </div>
             <p hlmP class="tw-flex tw-flex-col tw-gap-2">
-                <span class="tw-font-extrabold tw-uppercase">Qr-Code Vergabe löschen</span>
-                <span> Möchtest du die QR-Code Vergabe wirklich löschen? 
+                <span class="tw-font-extrabold tw-uppercase">Qr-Code-Vergabe löschen</span>
+                <span> Möchtest du die QR-Code-Vergabe wirklich löschen? 
                     <span *ngIf="qrCodeRequested">Damit gehen alle noch offenen Badge-Anfragen verloren.</span>
                 </span>
             </p> 
