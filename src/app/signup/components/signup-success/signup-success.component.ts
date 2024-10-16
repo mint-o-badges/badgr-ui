@@ -6,6 +6,7 @@ import { AppConfigService } from '../../../common/app-config.service';
 import { MessageService } from '../../../common/services/message.service';
 import { TranslateService } from '@ngx-translate/core';
 
+
 @Component({
 	selector: 'signup-success',
 	templateUrl: './signup-success.component.html',
