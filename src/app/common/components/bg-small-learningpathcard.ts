@@ -13,12 +13,12 @@ type MatchOrProgressType = { match?: string, progress?: number };
 			<div class="tw-flex tw-flex-col tw-justify-between tw-h-full">
 				<div class="tw-bg-[var(--color-lightgray)] tw-w-full tw-relative tw-h-[100px] tw-items-center tw-flex tw-justify-center tw-p-2 tw-rounded-[3px]">
 				<div *ngIf="!completed" class="tw-absolute tw-top-[10px] tw-right-[10px]">
-					<img src="/assets/oeb/images/learningPath/learningPathIcon.png" class=" tw-w-[20px]"
+					<img src="/assets/oeb/images/learningPath/learningPathIcon.svg" class=" tw-w-[20px]"
 						alt="LearningPath" />
 				</div>
 				<div *ngIf="completed" class="tw-absolute tw-top-[10px] tw-right-[10px] tw-flex tw-justify-center tw-items-center tw-gap-2">
 					<div class="tw-inline-block">
-						<img src="/assets/oeb/images/learningPath/learningPathIcon.png" class="tw-w-[20px]"
+						<img src="/assets/oeb/images/learningPath/learningPathIcon.svg" class="tw-w-[20px]"
 							alt="LearningPath" />
 					</div>
 					<div class="tw-bg-white tw-inline-flex tw-rounded-full tw-justify-center tw-items-center tw-border-solid tw-border-green tw-border-[3px] ">
