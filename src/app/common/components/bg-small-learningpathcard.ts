@@ -104,7 +104,7 @@ export class BgSmallLearningPathCard {
 		if(this.isProgress && this.progress/this.studyLoad < 1){
 			return 'tw-bg-[var(--color-lightgreen)] tw-border-purple tw-border'
 		}
-		else if(this.isProgress && this.progress/this.studyLoad === 1 && !this.completed){
+		else if(this.isProgress && this.progress/this.studyLoad === 1 && !this.completed  && !this.requested){
 			return 'tw-bg-[var(--color-lightgreen)] tw-border-green tw-border-4'
 		}
 		else{
