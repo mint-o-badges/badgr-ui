@@ -65,7 +65,6 @@ export class LearningPathUploadComponent extends BaseAuthenticatedRoutableCompon
 			this.learningPathApiService.createLearningPath(this.issuerSlug, learningPath).then(
 				(lp) => {	
 					this.router.navigate(['/issuer/issuers', this.issuerSlug, 'learningpaths', lp.slug]);
-
 				},
 				(error) => {
 					this.messageService.setMessage(

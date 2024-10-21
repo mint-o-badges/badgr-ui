@@ -31,6 +31,8 @@ export class OebIssuerDetailComponent implements OnInit {
     @Input() public: boolean = false;
     @Output() issuerDeleted = new EventEmitter();
 
+	learningPathsPromise: Promise<unknown>;
+
 	constructor(
 		private router: Router,
 		public translate: TranslateService,
@@ -116,18 +118,12 @@ export class OebIssuerDetailComponent implements OnInit {
 				return false;
 			}
 
-
-			// if (!this.badgeResults.find((r) => r.badge === badge)) {
-			// 	// appending the results to the badgeResults array bound to the view template.
-			// 	this.badgeRequestApiService.getBadgeRequestsCountByBadgeClass(badge.slug).then((r) => {
-			// 		this.badgeResults.push(new BadgeResult(badge, this.issuer.name, r.body['request_count']));
-			// 	})
-			// }
 			this.badgeResults.push(new BadgeResult(badge, this.issuer.name, 0));
 
 			return true;
 		};
 
+		console.log("THISRESULTS", this.badgeResults)
 		this.badges.filter(MatchingAlgorithm.badgeMatcher(this._searchQuery)).forEach(addBadgeToResults);
 		this.badgeResults.sort((a, b) => b.badge.createdAt.getTime() - a.badge.createdAt.getTime());
 	}
@@ -176,7 +172,7 @@ export class OebIssuerDetailComponent implements OnInit {
 	}
 
 	getLearningPathsForIssuerApi(issuerSlug){
-		this.learningPathApiService.getLearningPathsForIssuer(issuerSlug).then(
+		this.learningPathsPromise =this.learningPathApiService.getLearningPathsForIssuer(issuerSlug).then(
 			(learningPaths) => this.learningPaths = learningPaths
 		);
 	}
