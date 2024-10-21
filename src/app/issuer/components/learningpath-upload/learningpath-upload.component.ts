@@ -10,6 +10,7 @@ import { Issuer } from '../../models/issuer.model';
 import { IssuerManager } from '../../services/issuer-manager.service';
 import { ApiLearningPathForCreation } from '../../../common/model/learningpath-api.model';
 import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
+import { BadgrApiFailure } from '../../../common/services/api-failure';
 
 @Component({
 	selector: 'learningpath-upload',
@@ -61,9 +62,17 @@ export class LearningPathUploadComponent extends BaseAuthenticatedRoutableCompon
 		if (this.rawJson) {
 			const learningPath: ApiLearningPathForCreation = JSON.parse(this.rawJson);
 			learningPath["issuer_id"]=this.issuerSlug;
-			this.learningPathApiService.createLearningPath(this.issuerSlug, learningPath).then((lp) => {	
-				this.router.navigate(['/issuer/issuers', this.issuerSlug, 'learningpaths', lp.slug]);
-			});
+			this.learningPathApiService.createLearningPath(this.issuerSlug, learningPath).then(
+				(lp) => {	
+					this.router.navigate(['/issuer/issuers', this.issuerSlug, 'learningpaths', lp.slug]);
+
+				},
+				(error) => {
+					this.messageService.setMessage(
+						'Lernpfad konnte nicht erstellt werden: ' + BadgrApiFailure.from(error).firstMessage,
+						'error',
+					);
+				},);
 		}
 	}
 }
