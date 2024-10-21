@@ -11,8 +11,8 @@
 					src="assets/oeb/images/signuppage/checked.png"
 					alt="circles-logo"
 				/> -->
-				<div class="oeb-icon-circle tw-my-6">
-                    <hlm-icon size='xxl' name="lucideCheck" />
+				<div class="oeb-icon-circle tw-my-6 tw-bg-green tw-w-[60px] tw-h-[60px]">
+                    <hlm-icon class="tw-text-purple tw-font-bold" size='xxl' name="lucideCheck" />
                 </div>
 
 				<p
@@ -36,15 +36,28 @@
 					[innerHTML]="'Signup.success_verify_email_help' | translate"
 					class="tw-font-normal md:tw-text-[20px] md:tw-leading-[24px] md:tw-mt-[30px] tw-text-center tw-text-[14px] tw-leading-[16.8px] tw-mt-[20px]"
 				></p>
+
+				<oeb-button class="tw-mx-auto tw-mt-16"  
+				(click)="resendVerificatoinEmail(email)"
+				 variant="white"
+				 hlmBtn [text]="'Signup.resendEmail' | translate">
+								
+				</oeb-button>
+
 			</div>
 
 			<div
 				class="tw-flex tw-flex-col tw-justify-center md:tw-p-[50px] md:tw-mt-[50px] tw-p-[30px] tw-mt-[30px] tw-bg-yellow md:tw-w-[80%] tw-w-[98%] md:tw-rounded-[20px] tw-rounded-[14px]"
 			>
-			<p
-					[innerHTML]="'Signup.newsletterEmail' | translate"
-					class="tw-font-normal md:tw-text-[20px] md:tw-leading-[24px] md:tw-mt-[30px] tw-text-center tw-text-[14px] tw-leading-[16.8px] tw-mt-[20px]"
-			></p>
+			<div class="tw-flex tw-gap-2">
+				<div class="oeb-icon-circle tw-my-6 tw-bg-white tw-w-[40px] tw-h-[40px]">
+                    <hlm-icon class="tw-text-purple tw-font-bold" name="lucideCheck" />
+                </div>
+				<p
+						[innerHTML]="'Signup.newsletterEmail' | translate"
+						class="tw-font-normal md:tw-text-[20px] md:tw-leading-[24px] md:tw-mt-[30px] tw-text-center tw-text-[14px] tw-leading-[16.8px] tw-mt-[20px]"
+				></p>
+			</div>
 
 			<p
 					[innerHTML]="'Signup.confirmNewsletter' | translate"
@@ -57,13 +70,6 @@
 			></p>
 
 			</div>
-
-			<button
-				class="button tw-w-[232px] md:tw-w-[332px] tw-mt-16 tw-bg-purple tw-rounded-[7px] md:tw-rounded-[10px] tw-inline-flex tw-justify-center tw-shrink-0 tw-text-white tw-gap-[5.6px] md:tw-gap-[8px] md:tw-h-[64px] md:tw-px-[15px] md:tw-text-[20px] tw-items-center tw-h-[44.8px] tw-px-[10.5px] tw-text-[14px] tw-font-bold md:tw-leading-[28px] tw-leading-[19.6px] tw-border-purple"
-				(click)="resendVerificatoinEmail(email)"
-			>
-				{{ 'Signup.resendEmail' | translate }}
-			</button>
 		</div>
 	</div>
 </div>

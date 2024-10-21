@@ -5,11 +5,14 @@ import { Title } from '@angular/platform-browser';
 import { AppConfigService } from '../../../common/app-config.service';
 import { MessageService } from '../../../common/services/message.service';
 import { TranslateService } from '@ngx-translate/core';
+import { provideIcons } from '@ng-icons/core';
+import { lucideCheck } from '@ng-icons/lucide';
 
 
 @Component({
 	selector: 'signup-success',
 	templateUrl: './signup-success.component.html',
+	providers: [provideIcons({ lucideCheck })],
 })
 export class SignupSuccessComponent implements OnInit {
 	constructor(

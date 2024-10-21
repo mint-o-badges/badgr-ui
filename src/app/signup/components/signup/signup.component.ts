@@ -78,9 +78,9 @@ export class SignupComponent extends BaseRoutableComponent implements OnInit, Af
 		}
 		const defaultEmail = this.route.snapshot.queryParams['email'];
 		if (defaultEmail) this.signupForm.controls.username.setValue(defaultEmail);
-		const script = this.renderer.createElement('script');
-		script.src = 'https://sibforms.com/forms/end-form/build/main.js';
-    	this.renderer.appendChild(document.body, script);
+		// const script = this.renderer.createElement('script');
+		// script.src = 'https://sibforms.com/forms/end-form/build/main.js';
+    	// this.renderer.appendChild(document.body, script);
 	}
 
 	ngAfterViewInit(): void {
