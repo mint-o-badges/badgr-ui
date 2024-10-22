@@ -140,6 +140,7 @@
 			<div *ngIf="learningPaths && learningPaths.length > 0">
 				<div class="oeb-section-sm">
 					<h2 class="tw-font-medium md:tw-text-[22px] md:tw-leading-[26.4px] tw-text-purple tw-text-[16px] tw-leading-[19.2px] tw-py-4">
+
 						{{issuer.name}} {{ 'Issuer.issuerHasBadges' | translate }} {{ learningPaths.length }} Lernpfad{{ learningPaths.length == 1 ? '' : 'e' }}.
 					</h2>
 					<learningpaths-datatable 
@@ -150,6 +151,7 @@
 				
 					<ng-container *ngIf="public">
 						<div class="tw-grid tw-grid-cols-learningpaths tw-gap-12">
+
 							<bg-learningpathcard *ngFor="let lp of learningPaths"
 								[badgeImage]="lp.image" 
 								[name]="lp.name"
