@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN 'echo $PATH'
+RUN 'git --version'
 RUN '/usr/local/bin/git --version'
 
 RUN npm install
