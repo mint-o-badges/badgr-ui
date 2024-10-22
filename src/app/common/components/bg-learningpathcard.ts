@@ -127,7 +127,7 @@ export class BgLearningPathCard {
 	  }
 	
 	  get isMatch(): (string | undefined) {
-		return this._matchOrProgress.match;
+		return this._matchOrProgress?.match;
 	  }
 	
 	  get isProgress(): boolean {

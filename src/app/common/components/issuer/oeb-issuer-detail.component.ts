@@ -123,15 +123,14 @@ export class OebIssuerDetailComponent implements OnInit {
 			return true;
 		};
 
-		console.log("THISRESULTS", this.badgeResults)
 		this.badges.filter(MatchingAlgorithm.badgeMatcher(this._searchQuery)).forEach(addBadgeToResults);
 		this.badgeResults.sort((a, b) => b.badge.createdAt.getTime() - a.badge.createdAt.getTime());
 	}
 
 	ngOnInit() {
-		// super.ngOnInit();
 		this.updateResults();
-		this.getLearningPathsForIssuerApi(this.issuer.slug);
+		if(!this.public)
+			this.getLearningPathsForIssuerApi(this.issuer.slug);
 	}
 
     delete(event){
@@ -172,7 +171,7 @@ export class OebIssuerDetailComponent implements OnInit {
 	}
 
 	getLearningPathsForIssuerApi(issuerSlug){
-		this.learningPathsPromise =this.learningPathApiService.getLearningPathsForIssuer(issuerSlug).then(
+		this.learningPathsPromise = this.learningPathApiService.getLearningPathsForIssuer(issuerSlug).then(
 			(learningPaths) => this.learningPaths = learningPaths
 		);
 	}
@@ -192,6 +191,11 @@ export class OebIssuerDetailComponent implements OnInit {
 
 	onTabChange(tab) {
 		this.activeTab = tab;
+	}
+
+	calculateStudyLoad(lp: any): number {
+		const totalStudyLoad = lp.badges.reduce((acc, b) => acc + b.badge['extensions:StudyLoadExtension'].StudyLoad, 0);
+		return totalStudyLoad;
 	}
 }
 

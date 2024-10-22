@@ -94,8 +94,7 @@
 				[caption]=""
 				[badges]="badgeResults"
 				(directBadgeAward)="routeToBadgeAward($event, issuer)"
-		(qrCodeAward)="routeToQRCodeAward($event, issuer)"
-
+				(qrCodeAward)="routeToQRCodeAward($event, issuer)"
 				(redirectToBadgeDetail)="routeToBadgeDetail($event, issuer)"></badges-datatable>
 	
 			<ng-container *ngIf="public">
@@ -138,15 +137,34 @@
 					</div>
 				</div>
 			</div>
-			<div *ngIf="learningPaths && learningPaths.length">
+			<div *ngIf="learningPaths && learningPaths.length > 0">
 				<div class="oeb-section-sm">
 					<h2 class="tw-font-medium md:tw-text-[22px] md:tw-leading-[26.4px] tw-text-purple tw-text-[16px] tw-leading-[19.2px] tw-py-2">
 						{{issuer.name}} {{ 'Issuer.issuerHasBadges' | translate }} {{ learningPaths.length }} Lernpfad{{ learningPaths.length == 1 ? '' : 'e' }}.
 					</h2>
 					<learningpaths-datatable 
+						*ngIf="!public"
 						[learningPaths]="learningPaths"
 						(actionElement)="deleteLearningPath($event, issuer)"
 						(redirectToLearningPathDetail)="redirectToLearningPathDetail($event, issuer)"></learningpaths-datatable>
+				
+					<ng-container *ngIf="public">
+						<div class="tw-grid tw-grid-cols-badges tw-gap-16">
+							<bg-learningpathcard *ngFor="let lp of learningPaths"
+								[badgeImage]="lp.image" 
+								[name]="lp.name"
+								[issuerTitle]="issuer.name"
+								[description]="lp.description"
+								[tags]="lp.tags"
+								[slug]="lp.slug"
+								[studyLoad]="calculateStudyLoad(lp)"
+								[completed]="false"
+								[requested]="lp.requested"
+								[progress]="lp.progress"
+								[matchOrProgress]="undefined"
+							></bg-learningpathcard>
+						</div>
+					</ng-container>
 				</div>
 			</div>
 		</ng-template>
