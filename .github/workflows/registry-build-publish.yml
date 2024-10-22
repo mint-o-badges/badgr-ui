@@ -66,7 +66,9 @@ jobs:
         run: |
           sudo apt-get install -y git
           git --version
+          echo "Path is ... $PATH"
           PATH=$PATH:$(which git)
+          echo "Path is ... $PATH"
 
       - name: 🏗️ Build and push Docker image
         if: github.ref != 'refs/heads/develop'
