@@ -4,6 +4,9 @@ WORKDIR /app
 
 COPY . .
 
+RUN 'echo $PATH'
+RUN '/usr/local/bin/git --version'
+
 RUN npm install
 
 RUN npm run build:app
