@@ -62,14 +62,6 @@ jobs:
             latest=auto
             prefix=
             suffix=
-      - name: Install git
-        run: |
-          sudo apt-get install -y git
-          git --version
-          PATH=$PATH:$(which git)
-          sudo ln -s $(which git) /usr/local/bin/git
-          echo $PATH
-          /usr/local/bin/git --version
 
       - name: 🏗️ Build and push Docker image
         if: github.ref != 'refs/heads/develop'
@@ -99,8 +91,4 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}-Develop
           labels: ${{ steps.meta.outputs.labels }}-Develop
           file: develop.Dockerfile
-      - name: Log everything
-        run: |
-          echo "Printing all npm logs..."
-          cat /root/.npm/_logs/*
 

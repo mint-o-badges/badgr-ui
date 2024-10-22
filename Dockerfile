@@ -4,8 +4,9 @@ WORKDIR /app
 
 COPY . .
 
-RUN 'git --version'
-RUN '/usr/local/bin/git --version'
+RUN apt-get clean all && apt-get update && apt-get upgrade -y
+RUN apt-get install -y git
+RUN git --version
 
 RUN npm install
 
