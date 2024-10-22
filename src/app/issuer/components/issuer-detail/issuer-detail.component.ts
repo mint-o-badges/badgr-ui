@@ -12,8 +12,8 @@ import { Title } from '@angular/platform-browser';
 import { preloadImageURL } from '../../../common/util/file-util';
 import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
 import { UserProfileEmail } from '../../../common/model/user-profile.model';
-import { ApiExternalToolLaunchpoint } from 'app/externaltools/models/externaltools-api.model';
-import { ExternalToolsManager } from 'app/externaltools/services/externaltools-manager.service';
+import { ApiExternalToolLaunchpoint } from '../../../externaltools/models/externaltools-api.model';
+import { ExternalToolsManager } from '../../../externaltools/services/externaltools-manager.service';
 import { AppConfigService } from '../../../common/app-config.service';
 import { CommonDialogsService } from '../../../common/services/common-dialogs.service';
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
@@ -74,22 +74,21 @@ export class IssuerDetailComponent extends BaseAuthenticatedRoutableComponent im
 		});
 
 		this.menuitems = [{
-			title: 'Bearbeiten',
-			routerLink: ['./edit'],
-			icon: 'lucidePencil',
-		},
-		{
-			title: 'Löschen',
-			action: ($event) => this.delete($event),
-			icon: 'lucideTrash2',
-		},
-		{
-			title: 'Mitglieder bearbeiten',
-			routerLink: ['./staff'],
-			icon: 'lucideUsers',
-		}
-		
-	]
+				title: 'Bearbeiten',
+				routerLink: ['./edit'],
+				icon: 'lucidePencil',
+			},
+			{
+				title: 'Löschen',
+				action: ($event) => this.delete($event),
+				icon: 'lucideTrash2',
+			},
+			{
+				title: 'Mitglieder bearbeiten',
+				routerLink: ['./staff'],
+				icon: 'lucideUsers',
+			}
+		]
 
 		this.issuerLoaded = this.issuerManager.issuerBySlug(this.issuerSlug).then(
 			(issuer) => {
@@ -120,7 +119,6 @@ export class IssuerDetailComponent extends BaseAuthenticatedRoutableComponent im
 						},
 					);
 				});
-
 			},
 			(error) => {
 				this.messageService.reportLoadingError(

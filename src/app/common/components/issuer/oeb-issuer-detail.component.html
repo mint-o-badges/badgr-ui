@@ -94,8 +94,7 @@
 				[caption]=""
 				[badges]="badgeResults"
 				(directBadgeAward)="routeToBadgeAward($event, issuer)"
-		(qrCodeAward)="routeToQRCodeAward($event, issuer)"
-
+				(qrCodeAward)="routeToQRCodeAward($event, issuer)"
 				(redirectToBadgeDetail)="routeToBadgeDetail($event, issuer)"></badges-datatable>
 	
 			<ng-container *ngIf="public">
@@ -124,29 +123,50 @@
 		</section>
 	</ng-template>
 	<ng-template #learningPathTemplate>
-		<div *ngIf="!learningPaths.length">
-			<div class="oeb-section-sm">
-				<p hlmP>{{issuer.name}} {{ 'Issuer.issuerHasNoLearningPathYet' | translate }} </p>
-			</div>
-			<div class="oeb-section-sm">
-				<div class="tw-bg-green tw-p-6 tw-rounded-[20px] tw-text-oebblack tw-relative tw-max-w-[600px]">
-					<div class="tw-flex tw-pb-4 tw-flex-wrap sm:tw-flex-nowrap tw-items-center tw-justify-center tw-gap-2">
-						<img class="tw-inline-block" alt="Plugin" src="assets/oeb/images/issuerPage/email_icon.png" />
-						<p hlmP class="tw-pl-4 xs:tw-pl-0 tw-text-center sm:tw-text-left tw-font-bold" [innerHTML]="'Issuer.askForLearningPath' | translate"></p>
+		<ng-template [bgAwaitPromises]="learningPathsPromise">
+			<div *ngIf="!learningPaths?.length">
+				<div class="oeb-section-sm">
+					<p hlmP>{{issuer.name}} {{ 'Issuer.issuerHasNoLearningPathYet' | translate }} </p>
+				</div>
+				<div class="oeb-section-sm">
+					<div class="tw-bg-green tw-p-6 tw-rounded-[20px] tw-text-oebblack tw-relative tw-max-w-[600px]">
+						<div class="tw-flex tw-pb-4 tw-flex-wrap sm:tw-flex-nowrap tw-items-center tw-justify-center tw-gap-2">
+							<img class="tw-inline-block" alt="Plugin" src="assets/oeb/images/issuerPage/email_icon.png" />
+							<p hlmP class="tw-pl-4 xs:tw-pl-0 tw-text-center sm:tw-text-left tw-font-bold" [innerHTML]="'Issuer.askForLearningPath' | translate"></p>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-		<div *ngIf="learningPaths.length">
-			<div class="oeb-section-sm">
-				<h2 class="tw-font-medium md:tw-text-[22px] md:tw-leading-[26.4px] tw-text-purple tw-text-[16px] tw-leading-[19.2px] tw-py-2">
-					{{issuer.name}} {{ 'Issuer.issuerHasBadges' | translate }} {{ learningPaths.length }} Lernpfad{{ learningPaths.length == 1 ? '' : 'e' }}.
-				</h2>
-				<learningpaths-datatable 
-					[learningPaths]="learningPaths"
-					(actionElement)="deleteLearningPath($event, issuer)"
-					(redirectToLearningPathDetail)="redirectToLearningPathDetail($event, issuer)"></learningpaths-datatable>
+			<div *ngIf="learningPaths && learningPaths.length > 0">
+				<div class="oeb-section-sm">
+					<h2 class="tw-font-medium md:tw-text-[22px] md:tw-leading-[26.4px] tw-text-purple tw-text-[16px] tw-leading-[19.2px] tw-py-2">
+						{{issuer.name}} {{ 'Issuer.issuerHasBadges' | translate }} {{ learningPaths.length }} Lernpfad{{ learningPaths.length == 1 ? '' : 'e' }}.
+					</h2>
+					<learningpaths-datatable 
+						*ngIf="!public"
+						[learningPaths]="learningPaths"
+						(actionElement)="deleteLearningPath($event, issuer)"
+						(redirectToLearningPathDetail)="redirectToLearningPathDetail($event, issuer)"></learningpaths-datatable>
+				
+					<ng-container *ngIf="public">
+						<div class="tw-grid tw-grid-cols-badges tw-gap-16">
+							<bg-learningpathcard *ngFor="let lp of learningPaths"
+								[badgeImage]="lp.image" 
+								[name]="lp.name"
+								[issuerTitle]="issuer.name"
+								[description]="lp.description"
+								[tags]="lp.tags"
+								[slug]="lp.slug"
+								[studyLoad]="calculateStudyLoad(lp)"
+								[completed]="false"
+								[requested]="lp.requested"
+								[progress]="lp.progress"
+								[matchOrProgress]="undefined"
+							></bg-learningpathcard>
+						</div>
+					</ng-container>
+				</div>
 			</div>
-		</div>
+		</ng-template>
 	</ng-template>
 </div>
