@@ -62,6 +62,10 @@ jobs:
             latest=auto
             prefix=
             suffix=
+      - name: Install git
+        run: |
+          apt-get install -y git
+          git --version
 
       - name: 🏗️ Build and push Docker image
         if: github.ref != 'refs/heads/develop'
