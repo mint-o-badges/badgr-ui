@@ -98,3 +98,8 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}-Develop
           labels: ${{ steps.meta.outputs.labels }}-Develop
           file: develop.Dockerfile
+      - name: Log everything
+        run: |
+          echo "Printing all npm logs..."
+          cat /root/.npm/_logs/*
+
