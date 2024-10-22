@@ -33,7 +33,7 @@ import { OebButtonComponent } from './oeb-button.component';
         >
 
             <hlm-th class="tw-w-40">
-                <span class="!tw-text-oebblack !tw-font-normal">{{ request.email }}</span>
+                <span class="!tw-text-oebblack !tw-font-normal">{{ request.user.email }}</span>
             </hlm-th>
             <hlm-th class="!tw-flex-1 tw-justify-center !tw-text-purple"><p class="u-text">{{request.requestedOn | date:"dd.MM.yyyy"}}</p></hlm-th>
 
