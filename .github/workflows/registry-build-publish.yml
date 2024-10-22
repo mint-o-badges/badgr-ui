@@ -68,6 +68,8 @@ jobs:
           git --version
           PATH=$PATH:$(which git)
           sudo ln -s $(which git) /usr/local/bin/git
+          echo $PATH
+          /usr/local/bin/git --version
 
       - name: 🏗️ Build and push Docker image
         if: github.ref != 'refs/heads/develop'
