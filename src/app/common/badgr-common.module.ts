@@ -42,6 +42,7 @@ import { BadgrButtonComponent } from './components/badgr-button.component';
 import { SharingService } from './services/sharing.service';
 import { NounprojectService } from './services/nounproject.service';
 import { AiSkillsService } from './services/ai-skills.service';
+import { ServerVersionService } from './services/server-version.service';
 import { PdfService } from './services/pdf.service';
 import { EventsService } from './services/events.service';
 import { ForwardRouteComponent } from './pages/forward-route.component';
@@ -173,6 +174,7 @@ const SERVICES = [
 	SharingService,
 	NounprojectService,
 	AiSkillsService,
+    ServerVersionService,
 	PdfService,
 	CaptchaService,
 	EventsService,
