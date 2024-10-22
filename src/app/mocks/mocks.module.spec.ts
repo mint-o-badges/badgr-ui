@@ -41,6 +41,7 @@ import { ApplicationCredentialsService } from '../common/services/application-cr
 import { CaptchaService } from '../common/services/captcha.service';
 import { QrCodeApiService } from '../issuer/services/qrcode-api.service';
 import { PdfService } from '../common/services/pdf.service';
+import { ServerVersionService } from '../common/services/server-version.service';
 
 /*@Injectable()
 export class MockRouter { navigate = () => {jasmine.createSpy('navigate'); };}*/
@@ -194,6 +195,11 @@ export class MockPdfService {
 	getPdf = () => new Promise(() => {});
 	downloadPdf = () => new Promise(() => {});
 	dateToString = () => new Promise(() => {});
+}
+
+@Injectable()
+export class MockServerVersionService {
+    getServerVersion = () => new Promise(() => "");
 }
 
 export const commonDialog = {
@@ -376,7 +382,8 @@ export let COMMON_MOCKS_PROVIDERS_WITH_SUBS = [];
 	ApplicationCredentialsService,
 	CaptchaService,
 	QrCodeApiService,
-	PdfService
+	PdfService,
+    ServerVersionService
 ].forEach((m, i, a) => {
 	const thisMock = eval('Mock' + m.name);
 	COMMON_MOCKS_PROVIDERS.push(thisMock);
