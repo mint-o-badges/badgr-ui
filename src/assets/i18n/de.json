@@ -237,7 +237,7 @@
 		"learningPathHeadline": "Lernpfad hochladen",
 		"uploadLearningPathText": "Wenn du versiert im Umgang mit JSON-Dateien bist, kannst du den Lernpfad auch selbst anlegen. So geht’s:",
 		"learningPathHelp": "Momentan werden Lernpfade noch als JSON-Datei importiert. <b>Gerne erstellen wir diese Datei für dich</b>, schreibe einfach an <a class='tw-text-link tw-underline' href='mailto:lernpfad@openbadges.education'>lernpfad@openbadges.education</a>.",
-		"learningPathList1": "Lade unsere Datei-Vorlage herunter: <a target='_blank' class='tw-underline tw-text-[#1400FF]' href='./assets/testpfad.json'>Download JSON-Vorlage</a>",
+		"learningPathList1": "Lade unsere Datei-Vorlage herunter: <a download='BeispielPfad.json' class='tw-underline tw-text-[#1400FF]' href='./assets/testpfad.json'>Download JSON-Vorlage</a>",
 		"learningPathList2": "Öffne sie mit einem Texteditor.",
 		"learningPathList3": "Ersetze den Beispiel-Text durch die richtigen Badge-Angaben.",
 		"learningPathList4": "Exportiere die Vorlage als JSON-Datei.",
