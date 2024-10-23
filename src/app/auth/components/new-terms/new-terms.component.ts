@@ -47,9 +47,9 @@ export class NewTermsComponent extends BaseRoutableComponent {
 	public openErrorDialog() {
 		const dialogRef = this._hlmDialogService.open(DangerDialogComponent, {
 			context: {
-				text: this.translate.instant('TermsOfService.cantUseWithoutSubscription'),
+        caption: this.translate.instant('TermsOfService.cantUseWithoutConfirmation'),
 				variant: 'danger',
-        singleButtonText: this.translate.instant('TermsOfService.cantUseWithoutSubscription')
+        singleButtonText: this.translate.instant('TermsOfService.backToTerms')
 			},
 		});
 	}

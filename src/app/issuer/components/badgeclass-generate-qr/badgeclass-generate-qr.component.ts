@@ -173,6 +173,8 @@ export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComp
 	public openDangerDialog() {
 		const dialogRef = this._hlmDialogService.open(DangerDialogComponent, {
 			context: {
+				caption: this.translate.instant('QrCode.deleteQrAward'),
+				text: this.translate.instant('QrCode.deleteQrAwardConfirm'),
 				delete: this.deleteQrCode.bind(this),
 				qrCodeRequested: this.badgeRequested,
 				variant: 'danger',
