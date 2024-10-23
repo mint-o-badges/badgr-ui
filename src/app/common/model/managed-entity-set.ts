@@ -62,7 +62,7 @@ export class ManagedEntitySet<EntityType extends ManagedEntity<ApiEntityType, an
 	private urlEntityMap: { [url: string]: EntityType } = {};
 	private slugEntityMap: { [slug: string]: EntityType } = {};
 
-	private loadedSubject = new UpdatableSubject<this>(() => this.onFirstListRequest());
+	private loadedSubject = new UpdatableSubject<EntitySetUpdate<EntityType, this>>(() => this.onFirstListRequest());
 
 	private changedSubject = new UpdatableSubject<EntitySetUpdate<EntityType, this>>();
 
