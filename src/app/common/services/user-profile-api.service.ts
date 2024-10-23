@@ -5,7 +5,7 @@ import { SessionService } from './session.service';
 import { MessageService } from './message.service';
 import { EventsService } from './events.service';
 import { ApiUserProfile, ApiUserProfileEmail, ApiUserProfileSocialAccount } from '../model/user-profile-api.model';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable()
 export class UserProfileApiService extends BaseHttpApiService {
@@ -69,5 +69,9 @@ export class UserProfileApiService extends BaseHttpApiService {
 
 	resendVerificationEmail(emailIdToVerify: number) {
 		return this.put('/v1/user/emails/' + emailIdToVerify, { resend: true });
+	}
+
+	sendNewsletterConfirmationEmail(email: string) {
+		return this.post('/v1/user/confirm-newsletter', 'email=' + encodeURIComponent(email))
 	}
 }

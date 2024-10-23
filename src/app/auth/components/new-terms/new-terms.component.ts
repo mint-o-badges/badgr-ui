@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
 import { HlmDialogService } from "../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service";
 import { DangerDialogComponent } from "../../../common/dialogs/oeb-dialogs/danger-dialog.component";
+import { UserProfileApiService } from "../../../common/services/user-profile-api.service";
 
 @Component({
     selector: "app-new-terms",
@@ -16,7 +17,9 @@ export class NewTermsComponent extends BaseRoutableComponent {
   constructor(
     router: Router,
     route: ActivatedRoute,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private userProfileApiService: UserProfileApiService
+
   ) {
     super(router, route);
   }
@@ -32,6 +35,10 @@ export class NewTermsComponent extends BaseRoutableComponent {
     }
     else{
       this.router.navigate(['public/about/newsletter']);
+      this.userProfileApiService.getProfile().then(profile => {
+        this.userProfileApiService.
+        updateProfile({...profile,  agreed_terms_version: 1 });
+      });
     }
   }
 
@@ -42,6 +49,7 @@ export class NewTermsComponent extends BaseRoutableComponent {
 			context: {
 				text: this.translate.instant('TermsOfService.cantUseWithoutSubscription'),
 				variant: 'danger',
+        singleButtonText: this.translate.instant('TermsOfService.cantUseWithoutSubscription')
 			},
 		});
 	}

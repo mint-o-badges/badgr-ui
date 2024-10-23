@@ -274,4 +274,15 @@ export class SessionService {
 	resendVerificationEmail_unloggedUser(emailToVerify: string) {
 		return this.http.put<unknown>(this.baseUrl + `/v1/user/resendemail`, { email: emailToVerify }).toPromise();
 	}
+
+	submitNewsletterSubscription(email: string) {
+		// TODO: Define the type of this response
+		return this.http
+			.post<unknown>(this.baseUrl + '/v1/user/confirm-newsletter', 'email=' + encodeURIComponent(email), {
+				observe: 'response',
+				responseType: 'json',
+				headers: new HttpHeaders().append('Content-Type', 'application/x-www-form-urlencoded'),
+			})
+			.toPromise();
+	}
 }

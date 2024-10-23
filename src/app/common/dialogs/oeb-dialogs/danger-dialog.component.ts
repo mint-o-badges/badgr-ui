@@ -1,4 +1,4 @@
-import { Component, HostBinding, inject } from "@angular/core";
+import { Component, HostBinding, Input, inject } from "@angular/core";
 import { BrnDialogRef, injectBrnDialogContext } from "@spartan-ng/ui-dialog-brain";
 import { OebDialogComponent } from "../../../components/oeb-dialog.component";
 import { OebButtonComponent } from "../../../components/oeb-button.component";
@@ -32,20 +32,26 @@ import { TranslateService } from "@ngx-translate/core";
                     <span *ngIf="qrCodeRequested">Damit gehen alle noch offenen Badge-Anfragen verloren.</span>
                 </span>
             </p> 
-            <div class="tw-flex tw-justify-around tw-mt-6">
-            <oeb-button variant="secondary" [text]="cancelText" (click)="closeDialog()" ></oeb-button>
-            <oeb-button class="tw-mr-4" [text]="deleteText" (click)="deleteItem()" ></oeb-button>
-            </div>
+            <oeb-button *ngIf="singleButtonText; else TwoButtons" [text]="singleButtonText">
+            
+            </oeb-button>
+            <ng-template #TwoButtons>
+                <div class="tw-flex tw-justify-around tw-mt-6">
+                    <oeb-button variant="secondary" [text]="cancelText" (click)="closeDialog()" ></oeb-button>
+                    <oeb-button class="tw-mr-4" [text]="deleteText" (click)="deleteItem()" ></oeb-button>
+                </div>
+            </ng-template>
         </oeb-dialog>
     `,
 })
 export class DangerDialogComponent {
     // @HostBinding('class') private readonly _class: string = 'tw-bg-red tw-bg-red';
-    private readonly _dialogContext = injectBrnDialogContext<{ text: string, delete: any, qrCodeRequested: boolean, variant: string }>();
+    private readonly _dialogContext = injectBrnDialogContext<{ text: string, delete: any, qrCodeRequested: boolean, variant: string, singleButtonText?: string }>();
     protected readonly text = this._dialogContext.text;
     protected readonly delete = this._dialogContext.delete;
     protected readonly variant = this._dialogContext.variant;
     protected readonly qrCodeRequested = this._dialogContext.qrCodeRequested;
+    protected readonly singleButtonText = this._dialogContext.singleButtonText;
     private readonly _dialogRef = inject<BrnDialogRef>(BrnDialogRef);
 
     constructor(private translate: TranslateService) {}

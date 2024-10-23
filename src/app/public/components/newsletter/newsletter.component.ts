@@ -7,6 +7,7 @@ import { BaseRoutableComponent } from '../../../common/pages/base-routable.compo
 import { typedFormGroup } from '../../../common/util/typed-forms';
 import { Validators } from '@angular/forms';
 import { UserProfileApiService } from '../../../common/services/user-profile-api.service';
+import { SessionService } from '../../../common/services/session.service';
 
 @Component({
 	selector: 'about-newsletter',
@@ -23,6 +24,7 @@ export class NewsletterComponent extends BaseRoutableComponent implements OnInit
     constructor(
         private translate: TranslateService, 
         private userProfileApiService: UserProfileApiService,
+        private sessionService: SessionService,
 		router: Router,
         route: ActivatedRoute
         ) {
@@ -43,6 +45,8 @@ export class NewsletterComponent extends BaseRoutableComponent implements OnInit
 
 
     subscribe(){
+        this.sessionService.submitNewsletterSubscription(this.newsletterForm.value.email);
+        // this.userProfileApiService.sendNewsletterConfirmationEmail(this.newsletterForm.value.email);
         this.router.navigate(['issuer']);
         this.openSuccessDialog();
     }
