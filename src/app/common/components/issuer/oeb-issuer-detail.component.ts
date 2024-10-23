@@ -172,7 +172,7 @@ export class OebIssuerDetailComponent implements OnInit {
 
 	getLearningPathsForIssuerApi(issuerSlug){
 		this.learningPathsPromise = this.learningPathApiService.getLearningPathsForIssuer(issuerSlug).then(
-			(learningPaths) => this.learningPaths = learningPaths
+			(learningPaths) => this.learningPaths = learningPaths.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
 		);
 	}
 

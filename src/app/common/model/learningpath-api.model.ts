@@ -29,6 +29,7 @@ export interface ApiLearningPath {
     completed_badges: Array<any>
     progress?: number | null;
     completed_at?: Date | null;
+    created_at?: Date | null;
     requested?: Boolean;
 }
 
