@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from "@angular/core";
-import { BaseAuthenticatedRoutableComponent } from "../../../common/pages/base-authenticated-routable.component";
 import { typedFormGroup } from "../../../common/util/typed-forms";
 import { FormBuilder, Validators } from "@angular/forms";
 import { IssuerNameValidator } from "../../../common/validators/issuer-name.validator";
@@ -24,7 +23,7 @@ import { Issuer } from "../../models/issuer.model";
 	templateUrl: 'issuer-edit-form.component.html',
 	styleUrls: ['issuer-edit-form.component.scss']
 })
-export class IssuerEditFormComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
+export class IssuerEditFormComponent implements OnInit {
 	readonly issuerImagePlacholderUrl = preloadImageURL(
 		'../../../../breakdown/static/images/placeholderavatar-issuer.svg',
 	);
@@ -49,9 +48,6 @@ export class IssuerEditFormComponent extends BaseAuthenticatedRoutableComponent 
 	addIssuerFinished: Promise<unknown>;
 	editIssuerFinished: Promise<unknown>;
 
-	issuerSlug: string;
-
-
 	emailsLoaded: Promise<unknown>;
 
 	enterDescription: string; 
@@ -63,6 +59,8 @@ export class IssuerEditFormComponent extends BaseAuthenticatedRoutableComponent 
 
 	existingIssuer: Issuer | null = null;
 
+	@Input() issuerSlug: string;
+
 
 	@Input() set issuer(issuer: Issuer) {
 		if(this.existingIssuer !== issuer) {
@@ -72,8 +70,8 @@ export class IssuerEditFormComponent extends BaseAuthenticatedRoutableComponent 
 	}
 	constructor(
 		loginService: SessionService,
-		router: Router,
-		route: ActivatedRoute,
+		protected router: Router,
+		protected route: ActivatedRoute,
 		protected configService: AppConfigService,
 		protected profileManager: UserProfileManager,
 		protected queryParams: QueryParametersService,
@@ -83,15 +81,11 @@ export class IssuerEditFormComponent extends BaseAuthenticatedRoutableComponent 
 		protected translate: TranslateService,
 		protected issuerManager: IssuerManager,
 	) {
-		super(router, route, loginService);
 		title.setTitle(`Create Issuer - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 
 		if (this.configService.theme.dataProcessorTermsLink) {
 			this.issuerForm.addControl('agreedTerms', '', Validators.requiredTrue);
 		}
-
-		this.issuerSlug = this.route.snapshot.params['issuerSlug'];
-
 
 		const authCode = this.queryParams.queryStringValue('authCode', true);
 		if (loginService.isLoggedIn && !authCode) this.refreshProfile();
@@ -110,7 +104,6 @@ export class IssuerEditFormComponent extends BaseAuthenticatedRoutableComponent 
 	}
 
 	ngOnInit() {
-		super.ngOnInit();
 		this.translate.get('Issuer.enterDescription').subscribe((translatedText: string) => {
             this.enterDescription = translatedText;
 		});
