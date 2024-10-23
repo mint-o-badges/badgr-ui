@@ -20,3 +20,5 @@ temp/
 .vscode
 # package-lock
 package-lock.json
+
+src/environments/version.ts
