@@ -11,19 +11,19 @@
                     </div>
                 </div>
                 <div class="tw-ml-4 md:tw-hidden tw-justify-center tw-items-center tw-flex">
-                    <h2 class=" tw-text-purple tw-text-3xl">QR-Code Vergabe erstellen für <br> <span
+                    <h2 class=" tw-text-purple tw-text-3xl">QR-Code-Vergabe erstellen für <br> <span
                             class="tw-font-extrabold">{{badgeClass.name}}</span></h2>
                 </div>
             </div>
 
 
             <div class="tw-flex tw-flex-col tw-w-full ">
-                <h2 class="tw-hidden md:tw-block tw-text-purple tw-text-3xl">QR-Code Vergabe erstellen für <br> <span
+                <h2 class="tw-hidden md:tw-block tw-text-purple tw-text-3xl">QR-Code-Vergabe erstellen für <br> <span
                         class="tw-font-extrabold">{{badgeClass.name}}</span></h2>
                 <oeb-input label="Titel" [placeholder]="'Badge Vergabe Juni 2024'" fieldType="text" [autofocus]="true"
                     [control]="qrForm.rawControlMap.title" ></oeb-input>
                 <oeb-input label="Name Ersteller:in" [placeholder]="'Mein Vorname und Nachname'" fieldType="text"
-                    [autofocus]="true" [control]="qrForm.rawControlMap.createdBy"></oeb-input>
+                    [control]="qrForm.rawControlMap.createdBy"></oeb-input>
                 <input [formControl]="qrForm.rawControlMap.badgeclass_id" type="hidden" />
                 <input [formControl]="qrForm.rawControlMap.issuer_id" type="hidden" />
 

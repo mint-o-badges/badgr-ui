@@ -20,6 +20,7 @@ import { HlmPDirective } from './spartan/ui-typography-helm/src/lib/hlm-p.direct
 				<span hlmP class="tw-text-oebblack tw-font-semibold" [innerHTML]="label"></span
 				>
 				</ng-template>
+				<span class="tw-pl-[3px] tw-text-oebblack" *ngIf="sublabelRight"> {{sublabelRight}}</span>
 				<span *ngIf="optional">(OPTIONAL)</span>
 				<span *ngIf="formFieldAside">{{ formFieldAside }}</span>
 			</label>
@@ -85,6 +86,7 @@ export class OebInputComponent {
 	@Input() max?: number;
 	@Input() readonly?: boolean = false;
 	@Input() sublabel?: string;
+	@Input() sublabelRight?: string;
 	@Input() autofocus = false;
 	@Input() noTopMargin = false;
 
@@ -142,7 +144,10 @@ export class OebInputComponent {
 
 	ngAfterViewInit() {
 		if (this.autofocus) {
-			this.focus();
+			// delay focus to prevent unwanted scrolling
+			setTimeout(() => {
+				this.focus();
+			}, 100);
 		}
 	}
 
@@ -185,10 +190,14 @@ export const defaultValidatorMessages: {
 	validUrl: () => `Bitte gültige URL eingeben.`,
 	invalidTelephone: () => `Bitte gültige Telefonnummer eingeben`,
 	invalidEmail: () => `Bitte gültige E-Mail Adresse eingeben`,
-	maxlength: (label: string | undefined, { actualLength, requiredLength }: { actualLength: number; requiredLength: number }) =>
+	maxlength: (label: string  | undefined, { actualLength, requiredLength }: { actualLength: number; requiredLength: number }) =>
 		actualLength && requiredLength
 			? `${label ?? 'Text'} überschreitet maximale Länge von ${requiredLength} um ${actualLength - requiredLength} Zeichen`
 			: `${label ?? 'Text'} überschreitet maximale Länge.`,
+	minlength: (label: string , { actualLength, requiredLength }: { actualLength: number; requiredLength: number }) =>
+	actualLength && requiredLength
+		? `${label} unterschreitet erforderliche Länge von ${requiredLength} um ${requiredLength - actualLength} Zeichen`
+		: `${label} unterschreitet erforderliche Länge.`
 };
 
 export function messagesForValidationError(
