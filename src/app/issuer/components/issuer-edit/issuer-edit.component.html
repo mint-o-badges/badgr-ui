@@ -1,130 +1,15 @@
 <form-message></form-message>
 
-<div class="topbar">
-	<div class="l-containerxaxis">
-		<div class="topbar-x-breadcrumbs">
-			<bg-breadcrumbs [linkentries]="editIssuerCrumbs"> </bg-breadcrumbs>
-		</div>
-		<div class="topbar-x-heading">{{ 'Issuer.editInstitution' | translate }}</div>
-		<div class="topbar-x-subheading">{{ 'Issuer.editInstitutionInfo' | translate }}</div>
-	</div>
-</div>
-
-<div class="l-containerxaxis l-containeryaxis">
-	<form (ngSubmit)="onSubmit()" class="u-width-formsmall u-margin-top3x" novalidate>
-		<fieldset>
-			<bg-formfield-image
-				#imageField
-				label="{{ 'Issuer.imageLogo' | translate }}"
-				imageLoaderName="issuer"
-				[placeholderImage]="issuerImagePlacholderUrl"
-				[control]="issuerForm.rawControlMap.issuer_image"
-
-			></bg-formfield-image>
-
-			<bg-formfield-text
-				class="u-margin-bottom2x"
-				[control]="issuerForm.rawControlMap.issuer_name"
-				label="{{ 'General.name' | translate }}"
-				[errorMessage]="{required: issuerRequiredError}"
-				[autofocus]="true"
-			></bg-formfield-text>
-
-			<bg-formfield-text
-				class="u-margin-bottom2x"
-				[control]="issuerForm.rawControlMap.issuer_url"
-				[label]="'Website URL'"
-				errorMessage="{{ 'Issuer.enterURL' | translate }}"
-				[urlField]="true"
-			></bg-formfield-text>
-
-			<bg-formfield-select
-				class="u-margin-bottom2x"
-				[control]="issuerForm.rawControlMap.issuer_email"
-				label="{{ 'General.contact' | translate }} E-Mail"
-				[placeholder]="'Bitte wähle eine verifizierte E-Mail'"
-				[options]="emailsOptions"
-				errorMessage="{{ 'Issuer.enterValidEmail' | translate }}"
-			></bg-formfield-select>
-
-			<bg-formfield-text
-				class="u-margin-bottom2x"
-				[control]="issuerForm.rawControlMap.issuer_description"
-				label="{{ 'General.description' | translate }}"
-				errorMessage="{{ 'Issuer.enterDescription' | translate }}"
-				[multiline]="true"
-			></bg-formfield-text>
-
-			<bg-formfield-select
-				class="u-margin-bottom2x"
-				[control]="issuerForm.rawControlMap.issuer_category"
-				label="{{ 'General.category' | translate }}"
-				placeholder="{{ 'Issuer.enterCategory' | translate }}"
-				[options]="[
-					{
-						label: 'Schule (Grundschulen, weiterführende Schulen, Berufsschulen, Institutionen formaler schulischer Bildung)',
-						value: 'schule'
-					},
-					{
-						label: 'Hochschule (Universitäten. Fachhochschulen, ...)',
-						value: 'hochschule'
-					},
-					{
-						label: 'Andere (Bibliotheken, Museen, FabLabs, Unternehmen, Vereine, ...)',
-						value: 'andere'
-					}
-				]"
-			></bg-formfield-select>
-
-			<h2>{{ 'General.address' | translate }}</h2>
-
-			<bg-formfield-text
-				class="u-margin-bottom2x"
-				[control]="issuerForm.rawControlMap.issuer_street"
-				label="{{ 'General.street' | translate }}"
-				errorMessage="{{ 'Issuer.enterStreet' | translate }}"
-			></bg-formfield-text>
-
-			<bg-formfield-text
-				class="u-margin-bottom2x"
-				[control]="issuerForm.rawControlMap.issuer_streetnumber"
-				label="{{ 'Issuer.houseNo' | translate }}"
-				[fieldType]="'number'"
-				errorMessage="{{ 'Issuer.enterHouseNo' | translate }}"
-			></bg-formfield-text>
-
-			<bg-formfield-text
-				class="u-margin-bottom2x"
-				[control]="issuerForm.rawControlMap.issuer_zip"
-				label="{{ 'General.postalCode' | translate }}"
-				[fieldType]="'number'"
-				errorMessage="{{ 'Issuer.enterPostalCode' | translate }}"
-			></bg-formfield-text>
-
-			<bg-formfield-text
-				class="u-margin-bottom2x"
-				[control]="issuerForm.rawControlMap.issuer_city"
-				label="{{ 'General.city' | translate }}"
-				errorMessage="{{ 'Issuer.enterCity' | translate }}"
-			></bg-formfield-text>
-
-			<div class="l-stack l-stack-buttons">
-				<button
-					type="submit"
-					class="button"
-					[disabled]="!!editIssuerFinished"
-					[loading-promises]="[editIssuerFinished]"
-					loading-message="Adding"
-				>
-					{{ 'General.save' | translate }}
-				</button>
-				<a
-					[routerLink]="['/issuer/issuers', issuerSlug]"
-					class="button button-secondary"
-					[disabled-when-requesting]="true"
-					>{{ 'General.cancel' | translate }}</a
-				>
+<div class="tw-relative tw-w-full oeb page-padding">
+	<div class="topbar">
+			<div class="topbar-x-breadcrumbs">
+				<bg-breadcrumbs [linkentries]="editIssuerCrumbs"> </bg-breadcrumbs>
 			</div>
-		</fieldset>
-	</form>
+			<div class="oeb-headline-container-sm">
+				<h1 hlmH1 class="tw-text-purple">{{ 'Issuer.editInstitution' | translate }}</h1>
+				<p hlmP class="tw-font-normal">{{ 'Issuer.editInstitutionInfo' | translate }}</p>
+			</div>
+	</div>
+
+	<issuer-edit-form [issuer]="issuer" [issuerSlug]="issuerSlug"></issuer-edit-form>
 </div>
