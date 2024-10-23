@@ -171,7 +171,6 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 
 			return true;
 		};
-		this.learningPaths.filter(MatchingAlgorithm.learningPathMatcher(that.searchQuery)).forEach(addLearningPathToResultsByIssuer);
 
 		this.learningPaths
 			.filter(this.learningPathMatcher(this.searchQuery))
