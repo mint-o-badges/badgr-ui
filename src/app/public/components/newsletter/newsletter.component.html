@@ -20,7 +20,7 @@
 
         <!-- Newsletter Signup Brevo Form -->
 
-            <div class="sib-form" style="text-align: center; background-color: #EFF2F7;                                 ">
+            <div class="sib-form" style="text-align: center;">
                 <div id="sib-form-container" class="sib-form-container">
                     <div id="error-message" class="sib-form-message-panel" style="font-size:16px; text-align:left; font-family:&quot;Helvetica&quot;, sans-serif; color:#661d1d; background-color:#ffeded; border-radius:3px; border-color:#ff4949;max-width:540px;">
                     <div class="sib-form-message-panel__text sib-form-message-panel__text--center">
@@ -156,7 +156,7 @@
                             </div>
                         </div>
                         </div>
-                        <div style="padding: 8px 0;">
+                        <!-- <div style="padding: 8px 0;">
                         <div class="sib-form-block" style="text-align: left">
                             <button class="sib-form-block__button sib-form-block__button-with-loader" style="font-size:16px; text-align:left; font-weight:700; font-family:&quot;Helvetica&quot;, sans-serif; color:#FFFFFF; background-color:#3E4857; border-radius:3px; border-width:0px;" form="sib-form" type="submit">
                             <svg class="icon clickable__icon progress-indicator__icon sib-hide-loader-icon" viewBox="0 0 512 512">
@@ -165,7 +165,9 @@
                             ANMELDEN
                             </button>
                         </div>
-                        </div>
+                        </div> -->
+                        <oeb-button (click)="subscribe()" class="tw-justify-end tw-flex" [text]="'Newsletter.subscribe' | translate"></oeb-button>
+
 
                         <input type="text" name="email_address_check" value="" class="input--hidden">
                         <input type="hidden" name="locale" value="de">
