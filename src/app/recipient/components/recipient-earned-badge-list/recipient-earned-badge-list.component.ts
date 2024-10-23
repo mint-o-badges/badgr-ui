@@ -293,7 +293,10 @@ export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutable
 		this.learningPathResults.length = 0;
 		this.issuerResults.length = 0;
 		this.issuerLearningPathResults.length = 0;
-
+		this.learningPathsCompleted.length = 0;
+		this.learningPathsReadyToRequest.length = 0;
+		this.learningPathsInProgress.length = 0;
+		
 		const issuerResultsByIssuer: { [issuerUrl: string]: MatchingIssuerBadges } = {};
 
 		const addBadgeToResults = (badge: RecipientBadgeInstance) => {
