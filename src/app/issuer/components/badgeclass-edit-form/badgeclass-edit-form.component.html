@@ -173,6 +173,8 @@
 
 	<div class="section tw-text-oebblack tw-px-1" *ngIf="badgeCategory === 'competency'">
 		<h2 hlmH2 class="tw-font-bold">3. {{ 'CreateBadge.fillWithCompetencies' | translate }}</h2>
+	<div class="section tw-text-oebblack tw-px-1" *ngIf="badgeCategory === 'competency'">
+		<h2 hlmH2 class="tw-font-bold">3. {{ 'CreateBadge.fillWithCompetencies' | translate }}</h2>
 		<ul class="tw-list-disc md:tw-mx-10 tw-mx-4">
 				<div>
 					<span
@@ -399,7 +401,13 @@
 
 							<oeb-input 
 								label="Esco-Identifier (optional)"
+							>
+							</oeb-input>
+
+							<oeb-input 
+								label="Esco-Identifier (optional)"
 								[control]="competency.rawControlMap.escoID"
+								[readonly]="true"
 								placeholder="z.B. esco/skill/00090cc1-1f27-439e-a4e0-19a87a501bfc"
 							>
 							</oeb-input>
@@ -773,6 +781,7 @@
 			text="{{ (existingBadgeClass ? 'General.saveChanges' : 'Issuer.createBadge') | translate }}"
 		>
 		</oeb-button>
+	</div>
 	</div>
 </form>
 </div>
