@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 @Injectable()
 export class NavigationService {
 	currentRouteData: BadgrRouteData = {};
+	browserRefresh = false;
 
 	constructor(public router: Router) {
 		router.events.subscribe(async (e) => {
@@ -12,6 +13,11 @@ export class NavigationService {
 				// Clear the navigation items when finished routing
 				this.currentRouteData = {};
 				this.findAndApplyRouteNavConfig(router.routerState.snapshot.root);
+			}
+
+			// Detect browser refresh
+			if (e instanceof NavigationStart) {
+				this.browserRefresh = !router.navigated;
 			}
 		});
 	}
