@@ -48,17 +48,17 @@ export class NewsletterComponent extends BaseRoutableComponent implements OnInit
         this.sessionService.submitNewsletterSubscription(this.newsletterForm.value.email);
         // this.userProfileApiService.sendNewsletterConfirmationEmail(this.newsletterForm.value.email);
         this.router.navigate(['issuer']);
-        this.openSuccessDialog();
+        // this.openSuccessDialog();
     }
 
-    private readonly _hlmDialogService = inject(HlmDialogService);
-	public openSuccessDialog() {
-		const dialogRef = this._hlmDialogService.open(SuccessDialogComponent, {
-			context: {
-                text: this.translate.instant('Newsletter.confirmedSubscription'),
-				variant: "success"
-			},
-		});
-	}
+    // private readonly _hlmDialogService = inject(HlmDialogService);
+	// public openSuccessDialog() {
+	// 	const dialogRef = this._hlmDialogService.open(SuccessDialogComponent, {
+	// 		context: {
+    //             text: this.translate.instant('Newsletter.confirmedSubscription'),
+	// 			variant: "success"
+	// 		},
+	// 	});
+	// }
 
 }
