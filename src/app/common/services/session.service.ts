@@ -278,7 +278,7 @@ export class SessionService {
 	submitNewsletterSubscription(email: string) {
 		// TODO: Define the type of this response
 		return this.http
-			.post<unknown>(this.baseUrl + '/v1/user/confirm-newsletter', 'email=' + encodeURIComponent(email), {
+			.post<unknown>(this.baseUrl + '/v1/user/subscribe-newsletter', 'email=' + encodeURIComponent(email), {
 				observe: 'response',
 				responseType: 'json',
 				headers: new HttpHeaders().append('Content-Type', 'application/x-www-form-urlencoded'),
