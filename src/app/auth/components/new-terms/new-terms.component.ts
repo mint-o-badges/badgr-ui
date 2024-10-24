@@ -37,7 +37,11 @@ export class NewTermsComponent extends BaseRoutableComponent {
       this.router.navigate(['public/about/newsletter']);
       this.userProfileApiService.getProfile().then(profile => {
         this.userProfileApiService.
-        updateProfile({...profile,  agreed_terms_version: 1 });
+        updateProfile({...profile,  agreed_terms_version: 2 }).then(
+          (profile) => {
+            console.log('Profile updated', profile);
+          }
+        );
       });
     }
   }
