@@ -27,6 +27,8 @@ jobs:
         uses: actions/setup-node@master
         with:
           node-version: ${{ matrix.node-version }}
+      - name: Clean npm cache
+        run: npm cache clean  
       - name: 📲 Install dependencies
         run: |
           npm install
