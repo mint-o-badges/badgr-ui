@@ -104,6 +104,10 @@ export class BadgeClass extends ManagedEntity<ApiBadgeClass, BadgeClassRef> {
 		return this.apiModel.source_url;
 	}
 
+	get issuerVerified() {
+		return this.apiModel.issuerVerified;
+	}
+
 	hasExtension(extensionName: string) {
 		return this.apiModel.extensions && extensionName in this.apiModel.extensions;
 	}

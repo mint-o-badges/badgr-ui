@@ -108,12 +108,13 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		return new Promise(async (resolve, reject) => {
 			this.badgeClassService.allPublicBadges$.subscribe(
 				(badges) => {
-					this.badges = badges.slice().sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+					this.badges = badges.filter(badge => badge.issuerVerified).slice().sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
 					this.badgeResults = this.badges;
 					badges.forEach((badge) => {
 						this.tags = this.tags.concat(badge.tags);
-						this.issuers = this.issuers.concat(badge.issuer);
+						this.issuers = badge.issuerVerified ? this.issuers.concat(badge.issuer) : this.issuers;
 					});
+					
 					this.tags = sortUnique(this.tags);
 					this.issuers = sortUnique(this.issuers);
 					this.updateResults();
