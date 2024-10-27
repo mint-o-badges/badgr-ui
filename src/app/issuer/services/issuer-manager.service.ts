@@ -57,6 +57,11 @@ export class IssuerManager {
 		return this.allIssuers$
 			.pipe(first())
 			.toPromise()
+			.then(issuers => {
+				if(issuerSlug === '3JYSluHXQ-2R_QppwHuFTQ')
+				console.log('issuers', issuers);
+				return issuers
+			})
 			.then(
 				(issuers) =>
 					issuers.find((i) => i.slug === issuerSlug) ||

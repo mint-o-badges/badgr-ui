@@ -99,6 +99,18 @@ export class Issuer extends ManagedEntity<ApiIssuer, IssuerRef> {
 			: this.apiModel.badgeClassCount;
 	}
 
+	get ownerAcceptedTos(): boolean {
+		const owners = this.staff.entities.filter((staff) => staff.isOwner);
+		let accepted = false;
+		owners.forEach((owner) => {
+			if(owner.apiModel.user.agreed_terms_version == owner.apiModel.user.latest_terms_version){
+				accepted = true;
+			}
+		});
+		return accepted;
+		
+	}
+
 	async update(): Promise<this> {
 		this.applyApiModel(await this.issuerApiService.getIssuer(this.slug), true);
 		return this;
