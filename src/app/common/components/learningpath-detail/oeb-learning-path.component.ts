@@ -16,6 +16,7 @@ import { BaseRoutableComponent } from '../../pages/base-routable.component';
 import { BadgeInstanceApiService } from '../../../issuer/services/badgeinstance-api.service';
 import { PdfService } from '../../services/pdf.service';
 import { SafeResourceUrl } from '@angular/platform-browser';
+import { ApiLearningPathParticipant, ApiLearningPathRequest } from '../../model/learningpath-api.model';
 
 @Component({
 	selector: 'oeb-learning-path',
@@ -39,7 +40,7 @@ export class OebLearningPathDetailComponent extends BaseRoutableComponent implem
 	@Input() issuer;
 	@Input() badges;
 	@Input() participants;
-	@Input() requests;
+	@Input() requests: ApiLearningPathRequest[];
 	loading: any;
 	pdfSrc: SafeResourceUrl;
 
@@ -123,7 +124,7 @@ export class OebLearningPathDetailComponent extends BaseRoutableComponent implem
 						this.openSuccessDialog(req.user.email);
 				
 						this.requests = this.requests.filter(
-								(request) => request.entitiy_id != req.entitiy_id,
+								(request) => request.entity_id != req.entity_id,
 							);
 						this.learningPathApiService.deleteLearningPathRequest(req.entity_id);
 					},

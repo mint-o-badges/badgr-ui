@@ -44,6 +44,10 @@ export interface ApiLearningPathParticipant {
     completed_at: Date | null;
 }
 
-
+export interface ApiLearningPathRequest {
+    entity_id: string;
+    user: ApiUserProfile;
+    requestedOn: Date | null;
+}
 
 export interface LearningPathRef extends ApiEntityRef {}

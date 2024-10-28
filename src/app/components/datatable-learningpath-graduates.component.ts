@@ -19,7 +19,6 @@ import { OebButtonComponent } from './oeb-button.component';
         ],
 	template: `
         <hlm-table class="tw-rounded-t-[20px] tw-overflow-hidden tw-w-full tw-max-w-[100%] tw-bg-lightpurple tw-border-purple tw-border">
-            <hlm-caption>{{caption}}</hlm-caption>
             <hlm-trow class="tw-bg-purple tw-text-white tw-flex-wrap hover:tw-bg-purple">
                 <hlm-th class="!tw-text-white tw-w-28 md:tw-w-48">ID</hlm-th>
                 <hlm-th class="!tw-text-white tw-justify-center !tw-flex-1">Abgeschlossen am</hlm-th>
