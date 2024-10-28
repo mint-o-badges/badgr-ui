@@ -155,8 +155,9 @@
 		"contactInstitution": "Institution kontaktieren",
 		"jsonView": "JSON ansehen",
 		"viewOriginal": "Original ansehen",
-		"awardBadeges": "Erstelle eine Institution um Badges zu vergeben.",
-		"imageOptional": "Bild (Optional)",
+		"awardBadges": "Erstelle eine Institution, um Badges zu vergeben.",
+		"institutionWillAward": "Diese Institution wird Absender der über sie erstellten Badges sein.",
+		"imageLogo": "Logo-Bild",
 		"enterName": "Bitte gib einen Namen an",
 		"enterURL": "Bitte gib eine gültige URL an",
 		"enterValidEmail": "Bitte gib eine gültige E-Mail Adresse an",
@@ -225,7 +226,8 @@
 		"import": "Importieren",
 		"csvColumns": "CSV Spalten",
 		"csvError": "Die CSV Datei enthält Zeilen länger als ihre Überschrift. Bitte behebe diesen Fehler und versuche es erneut.",
-		"pdfCertificate": "PDF-Zertifikat"
+		"pdfCertificate": "PDF-Zertifikat",
+		"useImageFormat": "Bitte nutze ein Bild im quadratischen Format 1:1, damit es auf unserer Plattform optimal dargestellt werden kann."
 	},
 	"Badge": {
 		"groupBy": "Gruppieren nach",
@@ -283,7 +285,7 @@
 		"useOurEditor": "Unseren Editor nutzen",
 		"imageSublabel": "Wähle ein Icon/Bild, das in unseren Badge-Rahmen eingesetzt wird.",
 		"useOwnVisual": "Eigenes Visual nutzen",
-		"uploadOwnDesign": "Lade ein eigenes Badge-Design hoch.",
+		"uploadOwnDesign": "Lade ein eigenes Badge-Design hoch (max. 250 KB)",
 		"imageErrorFork": "Bitte gib dem Badge ein gültiges (bei einem Fork eindeutiges) Bild",
 		"fillWithCompetencies": "Badge mit Kompetenzen befüllen",
 		"aiAssistant": "KI-Badge-Assistent",
@@ -326,7 +328,9 @@
 		"addAnotherCompetency": "Weitere Kompetenz hinzufügen",
 		"giveBadgeTitle":"Bitte gib dem Badge einen Titel",
 		"changeBadgeTitle":"Bitte ändere den Titel",
-		"maxValue1000":"Maximalwert ist 1000"
+		"maxValue1000":"Maximalwert ist 1000",
+		"imageTooLarge": "Das Bild ist zu groß. Bitte wähle ein Bild mit einer Größe von maximal 250 KB.",
+		"licenseInfo": "Badges werden unter der <a class='tw-underline tw-text-[#1400FF]' target='_blank' href='https://creativecommons.org/publicdomain/zero/1.0/legalcode.de'> Lizenz CC0 1.0 </a> erstellt."
 	},
 	"Signup": {
 		"youHaveAccount": "Du hast bereits einen Account?",

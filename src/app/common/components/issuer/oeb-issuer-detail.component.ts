@@ -10,6 +10,7 @@ import { IssuerManager } from '../../../issuer/services/issuer-manager.service';
 import { MatchingAlgorithm } from '../../dialogs/fork-badge-dialog/fork-badge-dialog.component';
 import { MenuItem } from '../badge-detail/badge-detail.component.types';
 import { TranslateService } from '@ngx-translate/core';
+import { BadgeRequestApiService } from '../../../issuer/services/badgerequest-api.service';
 
 @Component({
 	selector: 'oeb-issuer-detail',
@@ -33,6 +34,7 @@ export class OebIssuerDetailComponent implements OnInit {
 		protected issuerManager: IssuerManager,
 		protected profileManager: UserProfileManager,
 		private configService: AppConfigService,
+		private badgeRequestApiService: BadgeRequestApiService
 	) {
         
 	};
@@ -49,7 +51,7 @@ export class OebIssuerDetailComponent implements OnInit {
 		{
 			title: this.translate.instant('General.edit'),
 			routerLink: ['./edit'],
-			icon: 'lucideUsers',
+			icon: 'lucidePencil',
 		},
 		{
 			title: this.translate.instant('General.delete'),
@@ -60,7 +62,7 @@ export class OebIssuerDetailComponent implements OnInit {
 		{
 			title: this.translate.instant('General.members'),
 			routerLink: ['./staff'],
-			icon: 'lucideWarehouse',
+			icon: 'lucideUsers',
 		},
 	]
 
@@ -88,8 +90,15 @@ export class OebIssuerDetailComponent implements OnInit {
 
 
 			if (!this.badgeResults.find((r) => r.badge === badge)) {
-				// appending the results to the badgeResults array bound to the view template.
-				this.badgeResults.push(new BadgeResult(badge, this.issuer.name));
+				if(!badge.slug){
+					this.badgeResults.push(new BadgeResult(badge, this.issuer.name, 0));
+				}
+				else{
+					this.badgeRequestApiService.getBadgeRequestsCountByBadgeClass(badge.slug).then((r) => {
+						// appending the results to the badgeResults array bound to the view template.
+						this.badgeResults.push(new BadgeResult(badge, this.issuer.name, r.body['request_count']));
+					})
+				}
 			}
 			return true;
 		};
@@ -137,5 +146,6 @@ class BadgeResult {
 	constructor(
 		public badge: BadgeClass,
 		public issuerName: string,
+		public requestCount: number
 	) {}
 }
