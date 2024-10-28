@@ -111,6 +111,7 @@ import { DatatableComponent } from '../components/datatable-badges.component';
 import { OebSelectComponent } from '../components/select.component';
 import { OebCollapsibleComponent } from '../components/oeb-collapsible.component';
 import { OebSeparatorComponent } from '../components/oeb-separator.component';
+import { HourPipe } from './pipes/hourPipe';
 
 const DIRECTIVES = [
 	BgAwaitPromises,
@@ -194,7 +195,7 @@ const SERVICES = [
 
 const GUARDS = [AuthGuard];
 
-const PIPES = [UcFirstPipe, StudyLoadPipe];
+const PIPES = [UcFirstPipe, StudyLoadPipe, HourPipe];
 
 export const COMMON_IMPORTS = [CommonModule, FormsModule, ReactiveFormsModule, HttpClientModule, RouterModule, OebInputComponent, OebInputErrorComponent, OebSelectComponent, OebSeparatorComponent, OebCollapsibleComponent, OebButtonComponent, OebDropdownComponent, HlmH1Directive, HlmH2Directive, HlmH3Directive, HlmPDirective, HlmADirective, CompetencyAccordionComponent, OebCheckboxComponent, OebDialogComponent, SuccessDialogComponent, DangerDialogComponent, OebBackgroundComponent, OebTabsComponent, HlmIconModule, CountUpModule, HlmInputDirective, DatatableComponent];
 

@@ -199,6 +199,8 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		.addControl('badge_criteria_url', '')
 		.addControl('badge_criteria_text', '')
 		.addControl('badge_study_load', 0, [this.positiveIntegerOrNull, Validators.max(10000)])
+		.addControl('badge_hours', 0, [this.positiveIntegerOrNull, Validators.max(10000)])
+		.addControl('badge_minutes', 0, [this.positiveIntegerOrNull, Validators.max(59)])
 		.addControl('badge_category', '', Validators.required)
 		.addControl('badge_level', 'a1', Validators.required)
 		.addControl('badge_based_on', {
@@ -224,6 +226,8 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				.addControl('escoID', '')
 				// limit of 1000000 is set so that users cant break the UI by entering a very long number
 				.addControl('studyLoad', 60, [Validators.required, this.positiveInteger, Validators.max(1000000)])
+				.addControl('hours', 1, [this.positiveIntegerOrNull, Validators.max(1000000)])
+				.addControl('minutes', 0, [this.positiveIntegerOrNull, Validators.max(59)])
 				.addControl('category', '', Validators.required),
 		)
 		.addArray(
@@ -372,6 +376,11 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			this.forbiddenImage = null;
 		}
 
+		//transform minutes into hours and minutes
+		let competencies = badgeClass.extension['extensions:CompetencyExtension'].map(comp => {
+			return {...comp, hours: Math.floor(comp.studyLoad / 60), minutes: comp.studyLoad % 60 }
+		})
+
 		this.badgeClassForm.setValue({
 			badge_name: badgeClass.name,
             badge_image: this.existing && badgeClass.imageFrame ? badgeClass.image : null,
@@ -379,6 +388,12 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			badge_description: badgeClass.description,
 			badge_criteria_url: badgeClass.criteria_url,
 			badge_criteria_text: badgeClass.criteria_text,
+			badge_hours: badgeClass.extension['extensions:StudyLoadExtension']
+				? Math.floor(badgeClass.extension['extensions:StudyLoadExtension'].StudyLoad / 60)
+				: null,
+			badge_minutes: badgeClass.extension['extensions:StudyLoadExtension']
+				? Math.floor(badgeClass.extension['extensions:StudyLoadExtension'].StudyLoad % 60)
+				: null,
 			badge_study_load: badgeClass.extension['extensions:StudyLoadExtension']
 				? badgeClass.extension['extensions:StudyLoadExtension'].StudyLoad
 				: null,
@@ -397,7 +412,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			// be displayed as competencies entered by hand
 			aiCompetencies: [],
 			competencies: badgeClass.extension['extensions:CompetencyExtension']
-				? badgeClass.extension['extensions:CompetencyExtension']
+				? competencies
 				: [],
 			alignments: this.badgeClass.alignments.map((alignment) => ({
 				target_name: alignment.target_name,
@@ -841,7 +856,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 					'extensions:StudyLoadExtension': {
 						'@context': studyLoadExtensionContextUrl,
 						type: ['Extension', 'extensions:StudyLoadExtension'],
-						StudyLoad: Number(formState.badge_study_load),
+						StudyLoad: Number(formState.badge_hours * 60 + formState.badge_minutes),
 					},
 					'extensions:CategoryExtension': {
 						'@context': categoryExtensionContextUrl,
@@ -892,7 +907,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 						'extensions:StudyLoadExtension': {
 							'@context': studyLoadExtensionContextUrl,
 							type: ['Extension', 'extensions:StudyLoadExtension'],
-							StudyLoad: Number(formState.badge_study_load),
+							StudyLoad: Number(formState.badge_hours * 60 + formState.badge_minutes),
 						},
 						'extensions:CategoryExtension': {
 							'@context': categoryExtensionContextUrl,
@@ -966,7 +981,9 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				name: String(competency.name),
 				description: String(competency.description),
 				escoID: String(competency.escoID),
-				studyLoad: Number(competency.studyLoad),
+				studyLoad: Number(competency.hours * 60 + competency.minutes),
+				hours: Number(competency.hours),
+				minutes: Number(competency.minutes),
 				category: String(competency.category),
 			}))
 			.concat(
@@ -978,6 +995,8 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 						description: suggestions[index].description,
 						escoID: suggestions[index].concept_uri,
 						studyLoad: Number(aiCompetency.studyLoad),
+						hours: Number(Math.floor(aiCompetency.studyLoad / 60)),
+						minutes: Number(aiCompetency.studyLoad % 60),
 						category: suggestions[index].type.includes('skill') ? 'skill' : 'knowledge',
 					}))
 					.filter((_, index) => formState.aiCompetencies[index].selected),

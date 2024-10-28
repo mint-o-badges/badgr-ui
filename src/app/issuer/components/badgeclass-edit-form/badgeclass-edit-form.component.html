@@ -65,11 +65,19 @@
 					<oeb-input 
 						class="tw-w-20" 
 						[fieldType]="'number'" 
-						[control]="badgeClassForm.rawControlMap.badge_study_load" 
+						[control]="badgeClassForm.rawControlMap.badge_hours" 
 						noTopMargin="true"
 					>
 					</oeb-input>
-					<span class="tw-text-oebblack md:tw-text-lg">{{ 'General.minutes' | translate }}</span>
+					<span class="tw-font-bold tw-text-purple" hlmP>:</span>
+					<oeb-input 
+						class="tw-w-20" 
+						[fieldType]="'number'" 
+						[control]="badgeClassForm.rawControlMap.badge_minutes" 
+						noTopMargin="true"
+					>
+					</oeb-input>
+					<span class="tw-text-oebblack md:tw-text-lg">{{ 'RecBadge.hours' | translate }} : {{ 'General.minutes' | translate }}</span>
 				</div>
 			</div>
 
@@ -331,11 +339,11 @@
 							</p>
 							<div class="tw-flex tw-gap-2 tw-items-center tw-mt-4 ">
 								<label class="tw-text-oebblack tw-font-bold" for="studyLoad$i">
-									{{ 'General.minutes' | translate }}:
+									{{ 'RecBadgeDetail.duration' | translate }}:
 								</label>
 								<span
-									class="tw-flex tw-rounded-md tw-bg-white tw-border tw-border-solid tw-border-black tw-h-8 tw-w-8 tw-min-w-fit tw-items-center tw-justify-center"
-									>{{ competency.rawControlMap.studyLoad.value }}</span
+									class="tw-flex tw-rounded-md tw-bg-white tw-border tw-border-solid tw-border-black tw-h-8 tw-w-20 tw-min-w-fit tw-items-center tw-justify-center"
+									>{{ competency.rawControlMap.studyLoad.value | hourPipe }}</span
 								>
 							</div>
 						</div>
@@ -362,7 +370,18 @@
 										<oeb-input 
 											[fieldType]="'number'"
 											class="tw-max-w-24"
-											[control]="competency.rawControlMap.studyLoad"
+											[control]="competency.rawControlMap.hours"
+											[errorMessage]="{
+												required: 'Bitte gib die Dauer für den Erwerb der Kompetenz ein.'
+											}"
+											noTopMargin="true"
+										>
+										</oeb-input>
+										:
+										<oeb-input 
+											[fieldType]="'number'"
+											class="tw-max-w-24"
+											[control]="competency.rawControlMap.minutes"
 											[errorMessage]="{
 												required: 'Bitte gib die Dauer für den Erwerb der Kompetenz ein.'
 											}"
@@ -370,7 +389,7 @@
 										>
 										</oeb-input>
 
-										<span class="tw-text-oebblack">{{ 'General.minutes' | translate }}</span>
+										<span class="tw-text-oebblack">h</span>
 									</div>
 								</div>
 								
