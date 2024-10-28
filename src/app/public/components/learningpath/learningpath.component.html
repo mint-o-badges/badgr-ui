@@ -106,7 +106,7 @@
 				*ngFor="let badge of learningPathReverseBadges; let i = index">
 				<bg-badgecard class="tw-w-[350px]" [badgeImage]="badge.badge.image" [badgeTitle]="badge.badge.name"
 					[issuerTitle]="badge.badge.issuerName" [badgeDescription]="badge.badge.description"
-					[badgeSlug]="badge.badge.slug" [badgeIssueDate]="badge.badge.createdAt" public="true"
+					[badgeSlug]="badge.badge.slug" [badgeIssueDate]="badge.badge.created_at" public="true"
 					[competencies]="badge.badge.extensions['extensions:CompetencyExtension']"
 					[publicUrl]="'/public/badges/'+ badge.badge.slug" [completed]="completedBadgeIds.includes(badge.badge.slug)" [badgeClass]="true"></bg-badgecard>
 			</div>
@@ -117,7 +117,7 @@
 			<div class="tw-relative tw-flex tw-gap-4 tw-pt-4" *ngFor="let badge of openBadgesReversed; let i = index">
 				<bg-badgecard class="tw-w-[350px]" [badgeImage]="badge.badge.image" [badgeTitle]="badge.badge.name"
 					[issuerTitle]="badge.badge.issuerName" [badgeDescription]="badge.badge.description"
-					[badgeSlug]="badge.badge.slug" [badgeIssueDate]="badge.badge.createdAt" public="true"
+					[badgeSlug]="badge.badge.slug" [badgeIssueDate]="badge.badge.created_at" public="true"
 					[competencies]="badge.badge.extensions['extensions:CompetencyExtension']"
 					[publicUrl]="'/public/badges/'+ badge.badge.slug" [badgeClass]="true"></bg-badgecard>
 			</div>
@@ -129,7 +129,7 @@
 					*ngFor="let badge of learningPath.completed_badges; let i = index">
 					<bg-badgecard class="tw-w-[350px]" [badgeImage]="badge.image" [badgeTitle]="badge.name"
 						[issuerTitle]="badge.issuerName" [badgeDescription]="badge.description" [badgeSlug]="badge.slug"
-						[badgeIssueDate]="badge.createdAt" public="true" [publicUrl]="'/public/badges/'+ badge.slug"
+						[badgeIssueDate]="badge.created_at" public="true" [publicUrl]="'/public/badges/'+ badge.slug"
 						[competencies]="badge.extensions['extensions:CompetencyExtension']"
 						[badgeClass]="true" [completed]="completedBadgeIds.includes(badge.slug)"></bg-badgecard>
 				</div>
