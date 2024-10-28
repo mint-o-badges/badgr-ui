@@ -108,6 +108,14 @@
         #issuer_city_field
     ></oeb-input>
 
+    <oeb-checkbox id="verify-intent" name="verify-intent"
+            [text]="'Hiermit bestätige ich, dass ich: <br>
+            1.) ...berechtigt bin, für die genannte Institution einen Account anzulegen sowie Badges zu erstellen und zu vergeben.<br>
+            2.) ...die Verantwortung für die Qualität der Kursangebote, der erstellten und vergebenen Badges sowie für die zugeordneten Kompetenzen trage. <br>
+            3.) ...die Plattform nur für die vorgesehenen Zwecke nutze und jeglichen Missbrauch ablehne.' "
+            [control]="issuerForm.rawControlMap.verify_intended_use">
+	</oeb-checkbox>
+
     <label
         [class.checkbox-is-error]="
             issuerForm.rawControlMap.agreedTerms.dirty && !issuerForm.rawControlMap.agreedTerms.valid

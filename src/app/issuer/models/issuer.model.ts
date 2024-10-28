@@ -81,6 +81,11 @@ export class Issuer extends ManagedEntity<ApiIssuer, IssuerRef> {
 	get city(): string {
 		return this.apiModel.city;
 	}
+
+	get intendedUseVerified(): boolean {
+		return this.apiModel.intendedUseVerified;
+	}
+
 	get lat(): number {
 		return this.apiModel.lat;
 	}
@@ -101,14 +106,9 @@ export class Issuer extends ManagedEntity<ApiIssuer, IssuerRef> {
 
 	get ownerAcceptedTos(): boolean {
 		const owners = this.staff.entities.filter((staff) => staff.isOwner);
-		let accepted = false;
-		owners.forEach((owner) => {
-			if(owner.apiModel.user.agreed_terms_version == owner.apiModel.user.latest_terms_version){
-				accepted = true;
-			}
-		});
-		return accepted;
-		
+		return owners.some(owner => 
+			owner.apiModel.user.agreed_terms_version === owner.apiModel.user.latest_terms_version
+		);		
 	}
 
 	async update(): Promise<this> {
