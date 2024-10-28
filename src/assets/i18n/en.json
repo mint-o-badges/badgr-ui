@@ -409,6 +409,11 @@
 		"fundingDesc": "With the 'Open Photonics Pro' funding measure, the Federal Ministry of Education and Research (BMBF) aims to enable new forms of collaboration between science and business with the maker and start-up scene. The aim is to open up additional innovation paths and potential. At the same time, innovation cycles should be significantly shortened and the networking of these groups should be sustainably improved.",
 		"moreAboutFund": "More about the funding measure"
 	},
+	"Newsletter": {
+		"subscribe": "Subscribe to our newsletter",
+		"confirmedSubscription": "<span class='tw-font-bold tw-text-oebblack'>You have confirmed your newsletter subscription successfully.</span>",
+		"signup": "Newsletter Signup"
+	},
 	"FAQ": {
 		"Q1": "1. What are Open Educational Badges?",
 		"A1.1": "Open Educational Badges (OEB) are a tool to standardize the visibility of learning experiences and competence acquisition. Open Educational Badges rely on three elements:",
