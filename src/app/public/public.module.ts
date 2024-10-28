@@ -12,7 +12,7 @@ import { PublicBadgeCollectionComponent } from './components/badge-collection/ba
 import { BadgrRouteData } from '../common/services/navigation.service';
 import { VerifyBadgeDialog } from './components/verify-badge-dialog/verify-badge-dialog.component';
 import { AboutComponent } from './components/about/about.component';
-import { NewsletterComponent } from './components/newsletter/newsletter.component';
+import { NewsletterComponent } from './components/about/newsletter/newsletter.component';
 import { StartComponent } from './components/start/start.component';
 import { ImpressumComponent } from './components/impressum/impressum.component';
 import { TermsComponent } from './components/terms-of-service/terms-of-service.component';

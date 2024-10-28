@@ -1,18 +1,18 @@
 import { Component, OnInit, inject} from '@angular/core';
-import { SuccessDialogComponent } from '../../../common/dialogs/oeb-dialogs/success-dialog.component';
-import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
+import { SuccessDialogComponent } from '../../../../common/dialogs/oeb-dialogs/success-dialog.component';
+import { HlmDialogService } from '../../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BaseRoutableComponent } from '../../../common/pages/base-routable.component';
-import { typedFormGroup } from '../../../common/util/typed-forms';
+import { BaseRoutableComponent } from '../../../../common/pages/base-routable.component';
+import { typedFormGroup } from '../../../../common/util/typed-forms';
 import { Validators } from '@angular/forms';
-import { UserProfileApiService } from '../../../common/services/user-profile-api.service';
-import { SessionService } from '../../../common/services/session.service';
+import { UserProfileApiService } from '../../../../common/services/user-profile-api.service';
+import { SessionService } from '../../../../common/services/session.service';
 
 @Component({
 	selector: 'about-newsletter',
 	templateUrl: './newsletter.component.html',
-	styleUrls: ['../about/about.component.css'],
+	styleUrls: ['../about.component.css'],
 })
 export class NewsletterComponent extends BaseRoutableComponent implements OnInit {
 
