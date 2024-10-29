@@ -34,8 +34,7 @@ export class AuthGuard {
 		else {
 			this.userProfileApiService.getProfile().then(profile => {
 				console.log(profile.agreed_terms_version)
-				// terms version is 0 or 1
-				if (profile.agreed_terms_version !== 2) {
+				if (profile.agreed_terms_version !== profile.latest_terms_version) {
 					this.router.navigate(['/auth/new-terms']);
 					return false;
 				}

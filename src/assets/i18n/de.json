@@ -373,7 +373,7 @@
 		"ageConfirm": "Ich bestätige, dass ich bei Registrierung mindestens 16 Jahre alt bin oder mir für die Registrierung auf dieser Plattform eine Zustimmung meiner Personensorgeberechtigten vorliegt.",
 		"newsletterEmail": "Wir haben dir ebenfalls eine E-Mail zur Bestätigung deiner Newsletter-Anmeldung geschickt.",
 		"confirmNewsletter": "Klicke in der Newsletter-E-Mail auf <span class ='tw-font-bold'> „Newsletter-Anmeldung bestätigen” </span>, <br> um die Newsletter-Anmeldung abzuschließen.",
-		"newsletterEmailNotReceived": "Du hast keine Newsletter-E-Mail bekommen? Bitte übermittle deine Daten über <br> unser <a class='tw-underline tw-text-purple' target='_blank' href='public/terms'> Newsletter-Anmelde-Formular </a> oder <a class='tw-underline tw-text-purple' target='_blank' href='public/terms'>schreib uns.</a>",
+		"newsletterEmailNotReceived": "Du hast keine Newsletter-E-Mail bekommen? Bitte übermittle deine Daten über <br> unser <a class='tw-underline tw-text-purple' href='public/about/newsletter'> Newsletter-Anmelde-Formular </a> oder <a class='tw-underline tw-text-purple' target='_blank' href='mailto:info@openbadges.education'>schreib uns.</a>",
 		"updatesOptInText": "<span class='tw-text-oebblack tw-font-bold'>Ja</span>, ich möchte E-Mail-Updates über Produkte und Serviceleistungen, zukünftige Webinare, Neuigkeiten und Events von Open Educational Badges erhalten."
 	},
 	"Captcha": {
