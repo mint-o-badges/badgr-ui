@@ -1,5 +1,5 @@
 import { FormBuilder, ValidationErrors, Validators } from '@angular/forms';
-import { AfterViewInit, Component, OnInit, Renderer2 } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SignupModel } from '../../models/signup-model.type';
 import { SignupService } from '../../services/signup.service';
@@ -59,7 +59,6 @@ export class SignupComponent extends BaseRoutableComponent implements OnInit, Af
 		public oAuthManager: OAuthManager,
 		private sanitizer: DomSanitizer,
 		private captchaService: CaptchaService,
-		private renderer: Renderer2,
 		router: Router,
 		route: ActivatedRoute,
 	) {
@@ -78,9 +77,6 @@ export class SignupComponent extends BaseRoutableComponent implements OnInit, Af
 		}
 		const defaultEmail = this.route.snapshot.queryParams['email'];
 		if (defaultEmail) this.signupForm.controls.username.setValue(defaultEmail);
-		// const script = this.renderer.createElement('script');
-		// script.src = 'https://sibforms.com/forms/end-form/build/main.js';
-    	// this.renderer.appendChild(document.body, script);
 	}
 
 	ngAfterViewInit(): void {

@@ -30,18 +30,6 @@ export class SignupService {
 
 		const headers = new HttpHeaders().append('Content-Type', 'application/json').set('Accept', '*/*');
 
-		// if(signupModel.marketingOptIn){
-		// 	const formData = new FormData();
-		// 	formData.append('EMAIL', signupModel.username);
-		// 	formData.append('VORNAME', signupModel.firstName);
-		// 	formData.append('NACHNAME', signupModel.lastName);
-		// 	formData.append('OPT_IN', '1');
-		// 	formData.append('email_address_check', '');
-
-		// 	return this.http.post('https://2b1b89e9.sibforms.com/serve/MUIFALKzbfP1ewV7BIhHDOki43AU-M9xs7TR_w_yGhcocjTC-UU37s1NOUtpT1NNtMGMdPdPyRhHIOo6QML2xLqzecNQXTyu6DZrkUYSN0ZX_fUmS9djk28bIbK23BDJWf-0fLlY7UAW0QQR7a9ShjcL5POuKBVyTOiT9BYQ9aNuKoSw4o0vPfsqKFfsTAjbiUdYnIHHrn8KKRPc',
-		// 	formData
-		// 	).toPromise()
-		// }
 		return this.http
 			.post(endpoint, JSON.stringify(payload), {
 				observe: 'body',

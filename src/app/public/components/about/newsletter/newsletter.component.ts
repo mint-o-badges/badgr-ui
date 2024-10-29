@@ -45,7 +45,6 @@ export class NewsletterComponent extends BaseRoutableComponent implements OnInit
 
 
     subscribe(){
-        // this.sessionService.submitNewsletterSubscription(this.newsletterForm.value.email);
         // this.userProfileApiService.sendNewsletterConfirmationEmail(this.newsletterForm.value.email);
         this.router.navigate(['issuer']);
         this.openSuccessDialog();
