@@ -108,23 +108,16 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		return new Promise(async (resolve, reject) => {
 			this.badgeClassService.allPublicBadges$.subscribe(
 				async (badges) => {
-					// const filteredBadges = await Promise.all(
-					// 	badges.map(async (badge) => {
-					// 	  return badge.issuerVerified && await badge.issuerOwnerAcceptedTos;
-					// 	})
-					//   );
-					  
-					// this.badges = badges.filter((_, index) => filteredBadges[index]).slice().sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
-					  
-					this.badges = badges.filter(badge => badge.issuerVerified).slice().sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+					this.badges = badges
+						.filter((badge) => badge.issuerVerified && badge.issuerOwnerAcceptedTos)
+						.slice()
+						.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
 					this.badgeResults = this.badges;
-					badges.forEach(async (badge) => {
-						const x = await badge.issuerOwnerAcceptedTos
-						console.log(x)
+					badges.forEach((badge) => {
 						this.tags = this.tags.concat(badge.tags);
 						this.issuers = badge.issuerVerified ? this.issuers.concat(badge.issuer) : this.issuers;
 					});
-					
+
 					this.tags = sortUnique(this.tags);
 					this.issuers = sortUnique(this.issuers);
 					this.updateResults();

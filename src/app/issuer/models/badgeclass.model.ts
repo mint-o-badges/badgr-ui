@@ -135,10 +135,8 @@ export class BadgeClass extends ManagedEntity<ApiBadgeClass, BadgeClassRef> {
 		return BadgeClass.issuerSlugFromUrl(this.issuerUrl);
 	}
 
-	get issuerOwnerAcceptedTos(): Promise<boolean> {
-		return this.issuerManager.issuerBySlug(this.issuerSlug).then((issuer) => {
-			return issuer.ownerAcceptedTos;
-		});
+	get issuerOwnerAcceptedTos(): boolean {
+		return this.apiModel.issuerOwnerAcceptedTos;
 	}
 
 	get alignments() {
