@@ -232,7 +232,6 @@
 		"import": "Importieren",
 		"csvColumns": "CSV Spalten",
 		"csvError": "Die CSV Datei enthält Zeilen länger als ihre Überschrift. Bitte behebe diesen Fehler und versuche es erneut.",
-		"pdfCertificate": "PDF-Zertifikat",
 		"useImageFormat": "Bitte nutze ein Bild im quadratischen Format 1:1, damit es auf unserer Plattform optimal dargestellt werden kann.",
 		"pdfCertificate": "PDF-Zertifikat",
 		"learningPathHeadline": "Lernpfad hochladen",
@@ -243,7 +242,9 @@
 		"learningPathList4": "Exportiere die Vorlage als JSON-Datei.",
 		"learningPathList5": "Lade deine JSON-Datei hoch:",
 		"learningPathRecipient": "Absolvent:innen",
-		"learningPathCreateHeadline": "Erstelle deinen Lernpfad"
+		"learningPathCreateHeadline": "Lernpfad erstellen",
+		"lpSubHeading": "Ein Lernpfad verbindet mehrere Badges zu einer größeren Lerneinheit."
+
 
 	},
 	"Badge": {
