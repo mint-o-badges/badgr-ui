@@ -339,7 +339,7 @@
 		"optionalBadgeDetails": "Optionale Badge-Details",
 		"newTag": "Neuer Tag...",
 		"tagDoesNotExist": "Dieser Tag existiert noch nicht",
-		"tagInfo": "Tags verschlagworten Badges und helfen bei der Suche von Badges zu bestimmten Themen.",
+		"tagInfo": "Tags verschlagworten Lernpfade und helfen Lernenden auf OEB bei der Suche von Lernpfaden zu bestimmten Themen.",
 		"removeAlignment": "Verknpüfung entfernen",
 		"removeAlignmentInfo": "Bist du sicher, dass du die Verknpüfung(en) entfernen möchtest? ",
 		"irreversibleAction": "Diese Aktion kann nicht rückgängig gemacht werden.",
@@ -632,7 +632,22 @@
 		"catalogHeadline":"Alle Lernpfade in der Übersicht",
 		"participate": "Teilnehmen",
 		"notParticipateAnymore": "Nicht mehr teilnehmen",
-		"searchLearningPaths": "Lernpfade durchsuchen"
+		"searchLearningPaths": "Lernpfade durchsuchen",
+		"enterDetails": "Lernpfad-Details eingeben",
+		"chooseBadges": "Lernpfad-Badges wählen",
+		"badgeSequence": "Reihenfolge der Badges im Lernpfad",
+		"combineBadgeCategories": "Du kannst Kompetenz-Badges und Teilnahme-Badges kombinieren.",
+		"min3Badges": "Der Lernpfad muss mindestens 3 Badges enthalten.",
+		"chooseBadgesInfo": "Verwende am besten nur Badges deiner eigenen Institution, da der Lernpfad inaktiv wird, falls einer der enthaltenen Badges gelöscht werden sollte. Du musst dann einen Ersatz finden, um den Lernpfad wieder zu aktivieren.",
+		"youHave": "Du hast",
+		"choosenForLp": "für den Lernpfad ausgewählt.",
+		"dragDropInfo": "Durch <span class='tw-font-bold'>Drag & Drop</span> kannst du deine ausgewählten Badges hier in die Reihenfolge bringen, in der sie innerhalb des Lernpfads erworben werden sollen.",
+		"lpParticipationBadge": "Lernpfad-Teilnahme-Badge",
+		"lpParticipationBadgeInfo": "Lernende können den Lernpfad-Badge bei dir anfordern, sobald sie alle im Lernpfad enthaltenen Badges erworben haben. <span class='tw-font-bold'>Du erhältst die Anfragen per E-Mail </span>.",
+		"lpDerivedData": "Folgende Daten haben wir für den Lernpfad-Teilnahme-Badge übernommen:",
+		"addTag": "Tag hinzufügen",
+		"createdSuccessfully": "Dein Lernpfad wurde erfolgreich erstellt."
+
 	},
 	"LearningPathEditor": {
 		"shortDescription": "Zusammenfassende Beschreibung deines Lernpfades. Diese Kurzbeschreibung wird im Lernpfad-Badge gespeichert."

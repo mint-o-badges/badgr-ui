@@ -1,0 +1,21 @@
+::ng-deep .dropzone {
+	background-color: white !important;
+	text-align: center;
+	border: 1px solid var(--color-purple) !important;
+	height: 190px;
+	width: 260px;
+}
+
+.section {
+	background-color: #f1f0ff;
+	border-radius: 25px;
+	margin-bottom: 2em;
+	padding: 1.8em;
+}
+
+li::marker {
+	color: var(--color-purple);
+	font-weight: 900;
+	font-size: 18px;
+	line-height: 21.6px;
+}

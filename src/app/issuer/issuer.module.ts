@@ -43,7 +43,9 @@ import { EditQrFormComponent } from './components/edit-qr-form/edit-qr-form.comp
 import { LearningPathUploadComponent } from './components/learningpath-upload/learningpath-upload.component';
 import { IssuerLearningPathComponent } from './components/issuer-learning-path/issuer-learning-path.component';
 import { LearningPathCreateComponent } from './components/learningpath-create/learningpath-create.component';
+import { LearningPathEditFormComponent } from './components/learningpath-edit-form/learningpath-edit-form.component';
 import { DndModule } from 'ngx-drag-drop';
+import { LearningPathManager } from './services/learningpath-manager.service';
 
 const routes = [
 	/* Issuer */
@@ -147,6 +149,7 @@ const routes = [
 		BadgeClassIssueBulkAwardImportComponent,
 		LearningPathUploadComponent,
 		LearningPathCreateComponent,
+		LearningPathEditFormComponent,
 		BadgeClassIssueBulkAwardPreviewComponent,
 		BadgeclassIssueBulkAwardError,
 		BadgeclassIssueBulkAwardConformation,
@@ -169,6 +172,7 @@ const routes = [
 	providers: [
 		BadgeClassApiService,
 		BadgeClassManager,
+		LearningPathManager,
 		BadgeInstanceApiService,
 		BadgeInstanceManager,
 		IssuerApiService,

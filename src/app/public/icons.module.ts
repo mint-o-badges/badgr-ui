@@ -21,7 +21,8 @@ import {
   lucideClock,
   lucideChevronUp,
   lucideCheck,
-  lucideRocket
+  lucideRocket,
+  lucideCircleAlert
 
 } from '@ng-icons/lucide';
 
@@ -48,7 +49,8 @@ import {
       lucideClock,
       lucideChevronUp,
       lucideCheck,
-      lucideRocket
+      lucideRocket,
+      lucideCircleAlert
     }),
   ],
 })
