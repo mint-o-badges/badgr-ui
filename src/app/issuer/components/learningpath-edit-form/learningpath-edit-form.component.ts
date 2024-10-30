@@ -165,7 +165,6 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 					);
 			}, 10);
 		});
-		console.log(this.useOurEditor)
 		this.fetchTags();
 	}
 
