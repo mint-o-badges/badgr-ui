@@ -31,6 +31,8 @@ export class OebIssuerDetailComponent implements OnInit {
     @Input() public: boolean = false;
     @Output() issuerDeleted = new EventEmitter();
 
+	learningPathsPromise: Promise<unknown>;
+
 	constructor(
 		private router: Router,
 		public translate: TranslateService,
@@ -116,13 +118,8 @@ export class OebIssuerDetailComponent implements OnInit {
 				return false;
 			}
 
+			this.badgeResults.push(new BadgeResult(badge, this.issuer.name, 0));
 
-			if (!this.badgeResults.find((r) => r.badge === badge)) {
-				// appending the results to the badgeResults array bound to the view template.
-				this.badgeRequestApiService.getBadgeRequestsCountByBadgeClass(badge.slug).then((r) => {
-					this.badgeResults.push(new BadgeResult(badge, this.issuer.name, r.body['request_count']));
-				})
-			}
 			return true;
 		};
 
@@ -131,8 +128,9 @@ export class OebIssuerDetailComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		// super.ngOnInit();
 		this.updateResults();
+		if(!this.public)
+			this.getLearningPathsForIssuerApi(this.issuer.slug);
 	}
 
     delete(event){
@@ -146,7 +144,7 @@ export class OebIssuerDetailComponent implements OnInit {
 	routeToQRCodeAward(badge, issuer){
 		this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'qr'])
 	}
-	
+
 	routeToBadgeDetail(badge, issuer){
 		this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug])
 	}
@@ -172,6 +170,12 @@ export class OebIssuerDetailComponent implements OnInit {
 		);
 	}
 
+	getLearningPathsForIssuerApi(issuerSlug){
+		this.learningPathsPromise = this.learningPathApiService.getLearningPathsForIssuer(issuerSlug).then(
+			(learningPaths) => this.learningPaths = learningPaths.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+		);
+	}
+
 	get rawJsonUrl() {
 		if(this.issuer)
 			return `${this.configService.apiConfig.baseUrl}/public/issuers/${this.issuer.slug}.json`;
@@ -187,6 +191,11 @@ export class OebIssuerDetailComponent implements OnInit {
 
 	onTabChange(tab) {
 		this.activeTab = tab;
+	}
+
+	calculateStudyLoad(lp: any): number {
+		const totalStudyLoad = lp.badges.reduce((acc, b) => acc + b.badge['extensions:StudyLoadExtension'].StudyLoad, 0);
+		return totalStudyLoad;
 	}
 }
 

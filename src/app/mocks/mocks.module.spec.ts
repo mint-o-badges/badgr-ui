@@ -41,6 +41,7 @@ import { ApplicationCredentialsService } from '../common/services/application-cr
 import { CaptchaService } from '../common/services/captcha.service';
 import { QrCodeApiService } from '../issuer/services/qrcode-api.service';
 import { PdfService } from '../common/services/pdf.service';
+import { LearningPathApiService } from '../common/services/learningpath-api.service';
 
 /*@Injectable()
 export class MockRouter { navigate = () => {jasmine.createSpy('navigate'); };}*/
@@ -139,7 +140,6 @@ export class MockAppConfigService {
 			},
 		};
 	};
-
 	featuresConfig = {};
 }
 
@@ -157,6 +157,8 @@ export class MockPublicApiService {
 	getBadgeCollection = () => new Promise(() => {});
 	getBadgeClass = () => new Promise(() => {});
 	getIssuerWithBadges = () => new Promise(() => {});
+	getIssuerWithBadgesAndLps = () => new Promise(() => {});
+	getLearningPathsForBadgeClass = () => new Promise(() => {});
 }
 
 @Injectable()
@@ -230,6 +232,7 @@ export class MockOAuthManager {
 
 @Injectable()
 export class MockRecipientBadgeManager {
+	baseUrl = '';
 	recipientBadgeList = {
 		changed$: new Observable(),
 		loadedPromise: new Promise(() => {}),
@@ -237,6 +240,11 @@ export class MockRecipientBadgeManager {
 	};
 	recipientBadgeApiService = {
 		saveInstance: new Promise(() => {}),
+		listRecipientBadges: new Promise(() => {}),
+		removeRecipientBadge: new Promise(() => {}),
+		addRecipientBadge: new Promise(() => {}),
+		getBadgeShareUrlForProvider: new Promise(() => {}),
+		getCollectionShareUrlForProvider: new Promise(() => {})
 	};
 }
 
@@ -338,6 +346,13 @@ export class MockApplicationCredentialsService {
 	getMyCredentials = () => new Promise(() => {});
 	deleteCredentials = () => new Promise(() => {});
 }
+@Injectable()
+export class MockLearningPathApiService {
+	getLearningPath = () => new Promise(() => {});
+	getPublicLearningPath = () => new Promise(() => {});
+	getLearningPathsForIssuer = () => new Promise(() => {});
+	getLearningPathsForUser  = () => new Promise(() => {});
+}
 
 export let COMMON_MOCKS_PROVIDERS = [];
 export let COMMON_MOCKS_PROVIDERS_WITH_SUBS = [];
@@ -376,7 +391,8 @@ export let COMMON_MOCKS_PROVIDERS_WITH_SUBS = [];
 	ApplicationCredentialsService,
 	CaptchaService,
 	QrCodeApiService,
-	PdfService
+	PdfService,
+	LearningPathApiService
 ].forEach((m, i, a) => {
 	const thisMock = eval('Mock' + m.name);
 	COMMON_MOCKS_PROVIDERS.push(thisMock);

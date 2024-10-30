@@ -14,12 +14,12 @@ export type Tab = {
 	selector: 'oeb-backpack-tabs',
 	standalone: true,
 	imports: [HlmTabsModule, HlmTabsTriggerDirective, NgIf, NgFor, JsonPipe, NgTemplateOutlet],
-	template: `<hlm-tabs class="tw-block tw-w-full" tab="Badges" (tabActivated)="onTabChange($event)">
-		<hlm-tabs-list class="tw-w-full tw-max-w-[660px] tw-grid tw-grid-cols-3" aria-label="tabs">
+	template: `<hlm-tabs class="tw-block tw-w-full" [tab]="activeTab" (tabActivated)="onTabChange($event)">
+		<hlm-tabs-list class="tw-w-full tw-max-w-[660px] tw-flex tw-justify-between" aria-label="tabs">
 			<ng-container *ngFor="let tab of tabs">
-				<button [hlmTabsTrigger]="tab.title" [variant]="variant">{{ tab.title }} 
+				<button class="tw-grow" [hlmTabsTrigger]="tab.title" [variant]="variant">{{ tab.title }} 
 					<div *ngIf="tab.count"
-					class="tw-w-7 tw-h-7 tw-flex tw-items-center tw-justify-center tw-ml-2 tw-p-1 tw-rounded-full tw-bg-purple tw-text-white tw-text-sm">
+					class="md:tw-w-7 md:tw-h-7 tw-h-5 tw-w-5 tw-flex tw-items-center tw-justify-center tw-ml-2 tw-p-1 tw-rounded-full tw-bg-purple tw-text-white tw-text-sm">
 						{{tab.count}}
 					</div>
 				</button>
@@ -34,7 +34,7 @@ export class OebTabsComponent {
 	@Input() image: string;
 	@Input() imgClass: string;
 	@Input() tabs: Tab[];
-	@Input() activeTab?: string;
+	@Input() activeTab: string;
 	@Input() variant: string = 'default';
 	@Output() onTabChanged = new EventEmitter();
     

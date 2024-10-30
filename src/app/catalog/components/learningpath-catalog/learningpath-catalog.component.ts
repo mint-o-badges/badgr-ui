@@ -21,32 +21,22 @@ import { ApiRecipientBadgeInstance } from '../../../recipient/models/recipient-b
 @Component({
 	selector: 'app-learningpaths-catalog',
 	templateUrl: './learningpath-catalog.component.html',
-	// styleUrls: ['./learningpaths-catalog.component.css'],
+	styleUrls: ['../badge-catalog/badge-catalog.component.css'],
 })
 export class LearningPathsCatalogComponent extends BaseRoutableComponent implements OnInit {
 	learningPathsLoaded: Promise<unknown>;
 	issuersLoaded: Promise<unknown>;
 	userBadgesLoaded: Promise<unknown>;
-
 	order = 'asc';
-
 	learningPathResults: LearningPath[] = null;
 	learningPathResultsByIssuer: MatchingLearningPathIssuer[] = [];
-
-
     learningPaths: LearningPath[] = [];
-
 	issuerResults: Issuer[] = [];
-
-
 	baseUrl: string;
-
 	tags: string[] = [];
 	issuers: Issuer[] = null;
-
 	selectedTag: string = null;
 	loggedIn = false;
-
 	userBadges: string[] = [];
 
 	get theme() {
@@ -130,23 +120,26 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 		}
 	}
 
-	calculateMatch(lp: LearningPath): number {
+	calculateMatch(lp: LearningPath): string {
 		const lpBadges = lp.badges;
 		const badgeClassIds = lpBadges.map((b) => b.badge.json.id);
 		const totalBadges = lpBadges.length;
 		const userBadgeCount = badgeClassIds.filter((b) => this.userBadges.includes(b)).length;
-		const match = userBadgeCount / totalBadges;
-		return match * 100;
+		return `${userBadgeCount}/${totalBadges}`;
 	}
 
-	calculateLearningPathStatus(lp: LearningPath): { 'match' : number} | { 'progress' : number} {
-		if(lp.progress){
+	calculateLearningPathStatus(lp: LearningPath): { 'match' : string} | { 'progress' : number} {
+		if(lp.progress !=  null){
 			const percentCompleted = lp.progress
 			return {'progress' : percentCompleted }
 		}
 		else{
 			return {'match' : this.calculateMatch(lp)}
 		}
+	}
+
+	checkCompleted(lp: LearningPath): boolean {
+		return lp.completed_at != null;
 	}
 
 	calculateStudyLoad(lp: LearningPath): number {
@@ -178,7 +171,6 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 
 			return true;
 		};
-		this.learningPaths.filter(MatchingAlgorithm.learningPathMatcher(that.searchQuery)).forEach(addLearningPathToResultsByIssuer);
 
 		this.learningPaths
 			.filter(this.learningPathMatcher(this.searchQuery))

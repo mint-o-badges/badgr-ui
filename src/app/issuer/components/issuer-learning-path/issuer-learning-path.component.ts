@@ -15,7 +15,7 @@ import { AppConfigService } from '../../../common/app-config.service';
 import { CommonDialogsService } from '../../../common/services/common-dialogs.service';
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { MenuItem } from '../../../common/components/badge-detail/badge-detail.component.types';
-import { ApiLearningPath } from '../../..//common/model/learningpath-api.model';
+import { ApiLearningPath, ApiLearningPathParticipant, ApiLearningPathRequest } from '../../..//common/model/learningpath-api.model';
 import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
 
 @Component({
@@ -41,12 +41,12 @@ export class IssuerLearningPathComponent extends BaseAuthenticatedRoutableCompon
 	learningPathLoaded: Promise<unknown>;
 	participantsLoaded: Promise<unknown>;
 	requestsLoaded: Promise<unknown>;
-	requests: any[];
-	participants: any[];
+	requests: ApiLearningPathRequest[];
+	participants: ApiLearningPathParticipant[];
 
 	profileEmailsLoaded: Promise<unknown>;
 	crumbs: LinkEntry[];
-	menuitems: MenuItem[]	= [];
+	menuitems: MenuItem[] = [];
 
 	constructor(
 		loginService: SessionService,
@@ -92,7 +92,7 @@ export class IssuerLearningPathComponent extends BaseAuthenticatedRoutableCompon
 				);
 				
 				this.learningPathLoaded = new Promise<void>((resolve, reject) => {
-					this.learningPathApiService.getLearningPath(this.learningPathSlug).then(
+					this.learningPathApiService.getLearningPath(this.issuerSlug, this.learningPathSlug).then(
 						(result) => {
 							this.learningPath = result;
 							this.crumbs = [
@@ -107,7 +107,6 @@ export class IssuerLearningPathComponent extends BaseAuthenticatedRoutableCompon
 								`Failed to load learningpath for ${this.issuer ? this.issuer.name : this.issuerSlug}`,
 								error,
 							);
-							resolve();
 						},
 					);
 				});

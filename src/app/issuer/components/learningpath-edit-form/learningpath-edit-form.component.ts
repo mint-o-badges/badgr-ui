@@ -27,7 +27,7 @@ import { BadgeStudioComponent } from '../badge-studio/badge-studio.component';
 import { BgFormFieldImageComponent } from '../../../common/components/formfield-image';
 import { TranslateService } from '@ngx-translate/core';
 import { BadgeInstanceManager } from '../../services/badgeinstance-manager.service';
-import { ApiLearningPathForCreation } from '../../../common/model/learningpath-api.model';
+import { ApiLearningPath, ApiLearningPathForCreation } from '../../../common/model/learningpath-api.model';
 import { BadgeClassCategory } from '../../models/badgeclass-api.model';
 import { FormFieldSelectOption } from '../../../common/components/formfield-select';
 import { LearningPathManager } from '../../services/learningpath-manager.service';
@@ -56,7 +56,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 	newTagInput: ElementRef<HTMLInputElement>;
 
 	@Output()
-	save = new EventEmitter<Promise<ApiLearningPathForCreation>>();
+	save = new EventEmitter<Promise<ApiLearningPath>>();
 
 	@Input()
 	submittingText: string;
@@ -81,7 +81,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 
 	breadcrumbLinkEntries: LinkEntry[] = [];
 	badgesLoaded: Promise<unknown>;
-	savePromise: Promise<ApiLearningPathForCreation> | null = null;
+	savePromise: Promise<ApiLearningPath> | null = null;
 	badges: BadgeClass[] = null;
 	badgeResults: BadgeClass[] = null;
 	badgesFormArray: any;

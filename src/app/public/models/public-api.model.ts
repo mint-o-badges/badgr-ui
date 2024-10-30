@@ -146,4 +146,5 @@ export interface PublicApiLearningPath {
 	participationBadge_id: string;
 	completed_badges?: any[];
 	progress: number;
+	requested?: boolean;
 }

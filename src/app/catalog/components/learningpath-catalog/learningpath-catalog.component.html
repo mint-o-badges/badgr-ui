@@ -13,7 +13,7 @@
 		<div class="tw-relative">
 			<section class="">
 				<div class="tw-flex tw-items-center oeb-standard-padding-bottom tw-flex-wrap">
-					<div class="tw-flex tw-gap-4 tw-items-center">
+					<div class="tw-flex tw-gap-4 tw-items-center tw-flex-wrap">
 						<div class="tw-pb-2 md:tw-pb-0 ">
 							<input type="text" name="forminput" changeOrder
 								class="tw-w-[300px] tw-border-solid tw-border-purple tw-bg-white tw-mr-6"
@@ -22,33 +22,33 @@
 
 						</div>
 						<oeb-checkbox
-								[text]="'Nach Institutionen gruppieren' "
-								name="'groupByInstitution'"
-								[(ngModel)]="groupByInstitution"
-								>
+							[text]="'Nach Institutionen gruppieren' "
+							name="'groupByInstitution'"
+							[(ngModel)]="groupByInstitution"
+							>
 						</oeb-checkbox>
 					</div>
 				</div>
-				<div class="tw-grid-cols-2 tw-grid tw-items-center">
-					<div class="oeb-standard-padding-bottom">
-						<div (click)="filterByTag(tag)" class="tag tag-wrapper tag-button tw-cursor-pointer tw-mr-2"
+				<div class="tw-grid-cols-2 tw-grid tw-items-center subtitle-wrapper">
+					<div class="tags-wrapper oeb-standard-padding-bottom">
+						<div (click)="filterByTag(tag)" class="tag tag-wrapper tag-button"
 							[class.tag-button-pressed]="selectedTag == tag"
-							*ngFor="let tag of tags | slice: 0 : 3; last as last">
+							*ngFor="let tag of tags ; last as last">
 							{{ tag }}
 						</div>
 					</div>
 				</div>
 				<ng-container *ngIf="!groupByInstitution">
-					<div class="tw-grid md:tw-grid-cols-learningpaths tw-grid-cols-learningpathsSmall tw-gap-16">
+					<div class="tw-grid md:tw-grid-cols-learningpaths tw-grid-cols-learningpathsSmall tw-gap-16 tw-items-center">
 						<bg-learningpathcard *ngFor="let lp of learningPathResults"
-							[badgeImage]="baseUrl + lp._apiModel.participationBadge_image" 
+							[badgeImage]="lp._apiModel.participationBadge_image" 
 							[name]="lp.name"
 							[issuerTitle]="lp.issuer_name"
 							[description]="lp.description"
 							[tags]="lp.tags"
 							[slug]="lp.slug"
 							[studyLoad]="calculateStudyLoad(lp)"
-							[completed]="lp.completed"
+							[completed]="checkCompleted(lp)"
 							[requested]="lp.requested"
 							[progress]="lp.progress"
 							[matchOrProgress]="calculateLearningPathStatus(lp)"
@@ -65,9 +65,9 @@
 						issuerGroup.learningpaths.length }}
 						{{ issuerGroup.learningpaths.length == 1 ? 'LearningPath' : 'LearningPaths' }}</span>
 				</h3>
-				<div class="tw-grid tw-grid-cols-learningpaths tw-gap-16">
-					<bg-learningpathcard *ngFor="let lp of learningPathResults"
-						[badgeImage]="baseUrl + lp._apiModel.participationBadge_image"
+				<div class="tw-grid tw-grid-cols-learningpaths tw-gap-16 tw-items-center">
+					<bg-learningpathcard *ngFor="let lp of issuerGroup.learningpaths"
+						[badgeImage]="lp._apiModel.participationBadge_image"
 						[name]="lp.name"
 						[issuerTitle]="lp.issuer_name"
 						[description]="lp.description"
@@ -77,15 +77,8 @@
 						[progress]="lp.progress"
 						[requested]="lp.requested"
 						[matchOrProgress]="calculateLearningPathStatus(lp)"
-						[completed]="lp.completed"
-						></bg-learningpathcard>
-					<!-- TODO: Fix the badgecard link for sharing and routing -->
-					<!-- <bg-badgecard *ngFor="let badge of issuerGroup.badges" [badgeTitle]="badge.name"
-						[badgeImage]="badge.image" [badgeDescription]="badge.description"
-						[badgeSlug]="badge.slug"
-						[issuerTitle]="badge.issuerName ? badge.issuerName : badge.issuer.name"
-						[badgeIssueDate]="badge.createdAt" public="true" [publicUrl]="badge.url"
-						[badgeClass]="true"></bg-badgecard> -->
+						[completed]="checkCompleted(lp)"
+					></bg-learningpathcard>
 				</div>
 			</ng-container>
 		</ng-container>

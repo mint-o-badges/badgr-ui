@@ -89,7 +89,6 @@
                                 </dt>
                                 <dd class="tw-text-sm tw-text-oebblack md:tw-ml-2">{{ config.category }}</dd>
                             </div>
-
                             <div *ngIf="config.updatedAt"
                                 class="tw-flex tw-text-oebblack tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
                                 <dt class="tw-text-sm tw-text-oebblack tw-font-bold">
@@ -151,11 +150,9 @@
                         <p hlmP class="tw-text-oebblack tw-w-full">{{ config.badgeDescription }}</p>
                     </div>
                     <!-- Kompetenzen -->
-                    <section class="tw-text-oebblack tw-pb-8">
+                    <section *ngIf="config.competencies && config.competencies.length > 0" class="tw-text-oebblack tw-pb-8">
                         <h3 class="tw-text-[22px] tw-leading-[26.4px] tw-font-[500] tw-font-[rubik] tw-text-oebblack u-margin-bottom2x u-margin-top4x"
-                            *ngIf="
-                                config.competencies && config.competencies.length > 0
-                            ">
+                            >
                             {{ 'RecBadgeDetail.competencies' | translate }}
                         </h3>
                         <div>
