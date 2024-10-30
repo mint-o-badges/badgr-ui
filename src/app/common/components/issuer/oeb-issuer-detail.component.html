@@ -33,7 +33,7 @@
 			</oeb-button>
 			<oeb-button *ngIf="public" (click)="routeToUrl(issuer.url)" [text]="'Issuer.visitWebsite' | translate">
 			</oeb-button>
-			<oeb-dropdown [trigger]="svgTrigger" class="tw-items-center tw-justify-center tw-flex tw-cursor-pointer tw-border tw-border-solid tw-border-[var(--color-purple)] tw-rounded-[7px]" *ngIf="menuItemsPublic && issuer.canEditIssuer"  [menuItems]="public ? menuItemsPublic : menuItems"></oeb-dropdown>
+			<oeb-dropdown [trigger]="svgTrigger" class="tw-items-center tw-justify-center tw-flex tw-cursor-pointer tw-border tw-border-solid tw-border-[var(--color-purple)] tw-rounded-[7px]" *ngIf="menuItemsPublic && issuer.canUpdateDeleteIssuer"  [menuItems]="public ? menuItemsPublic : menuItems"></oeb-dropdown>
 			<ng-template #svgTrigger>
 				<svg class="tw-w-[44.8px] tw-h-[44.8px] md:tw-w-[64px] md:tw-h-[64px]" fill="var(--color-purple)" icon="icon_more"></svg>
 				<span class="visuallyhidden">Mehr</span>

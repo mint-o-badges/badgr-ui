@@ -128,7 +128,7 @@ export class Issuer extends ManagedEntity<ApiIssuer, IssuerRef> {
 	 *
 	 * @returns {boolean}
 	 */
-	get canEditIssuer(): boolean {
+	get canUpdateDeleteIssuer(): boolean {
 		return this.currentUserStaffMember?.canEditIssuer ?? false;
 	}
 
