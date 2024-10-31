@@ -29,13 +29,19 @@ import { TranslateService } from '@ngx-translate/core';
 import { PageConfig } from '../../../common/components/badge-detail/badge-detail.component.types';
 import { PdfService } from '../../../common/services/pdf.service';
 import { QrCodeApiService } from '../../services/qrcode-api.service';
-
+import { toDataURL } from 'qrcode';
 @Component({
 	selector: 'badgeclass-detail',
 	template: `
 		<bg-badgedetail [config]="config" [awaitPromises]="[issuerLoaded, badgeClassLoaded]">
-				<qrcode-awards (qrBadgeAward)="onQrBadgeAward()" [awards]="qrCodeAwards" [badgeClassSlug]="badgeSlug" [issuerSlug]="issuerSlug" [routerLinkText]="config?.issueQrRouterLink"></qrcode-awards>
-		<issuer-detail-datatable
+			<qrcode-awards
+				(qrBadgeAward)="onQrBadgeAward()"
+				[awards]="qrCodeAwards"
+				[badgeClassSlug]="badgeSlug"
+				[issuerSlug]="issuerSlug"
+				[routerLinkText]="config?.issueQrRouterLink"
+			></qrcode-awards>
+			<issuer-detail-datatable
 				[recipientCount]="recipientCount"
 				[_recipients]="instanceResults"
 				(actionElement)="revokeInstance($event)"
@@ -57,7 +63,6 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		return this.route.snapshot.params['badgeSlug'];
 	}
 
-
 	get confirmDialog() {
 		return this.dialogService.confirmDialog;
 	}
@@ -66,7 +71,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		return this.badgeClass ? this.badgeClass.recipientCount : null;
 	}
 
-	set recipientCount(value: number){
+	set recipientCount(value: number) {
 		this.badgeClass.recipientCount = value;
 	}
 
@@ -104,8 +109,8 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 
 	config: PageConfig;
 
-	qrCodeButtonText = "Badge über QR-Code vergeben"
-	qrCodeAwards = []
+	qrCodeButtonText = 'Badge über QR-Code vergeben';
+	qrCodeAwards = [];
 
 	pdfSrc: SafeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl('about:blank');
 	downloadStates: boolean[] = [false];
@@ -140,7 +145,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		private externalToolsManager: ExternalToolsManager,
 		protected pdfService: PdfService,
 		private sanitizer: DomSanitizer,
-        private translate: TranslateService,
+		private translate: TranslateService,
 	) {
 		super(router, route, sessionService);
 
@@ -165,8 +170,8 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		);
 
 		this.qrCodeApiService.getQrCodesForIssuerByBadgeClass(this.issuerSlug, this.badgeSlug).then((qrCodes) => {
-			this.qrCodeAwards = qrCodes
-		})
+			this.qrCodeAwards = qrCodes;
+		});
 
 		this.externalToolsManager.getToolLaunchpoints('issuer_assertion_action').then((launchpoints) => {
 			this.launchpoints = launchpoints;
@@ -205,8 +210,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 						{
 							title: 'Bearbeiten',
 							routerLink: ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'edit'],
-							icon:  "lucidePencil",
-
+							icon: 'lucidePencil',
 						},
 						{
 							title: 'Löschen',
@@ -245,7 +249,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 
 	onQrBadgeAward() {
 		this.loadInstances();
-		this.recipientCount += 1
+		this.recipientCount += 1;
 	}
 
 	ngOnInit() {
@@ -282,17 +286,30 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 			);
 	}
 
-	// To get and download badge certificate in pdf format
 	downloadCertificate(instance: BadgeInstance, badgeIndex: number) {
 		this.downloadStates[badgeIndex] = true;
-		this.pdfService.getPdf(instance.slug).then(
-			(url) => {
-				this.pdfSrc = url;
-				this.pdfService.downloadPdf(this.pdfSrc, this.badgeClass.name, instance.createdAt);
+		const baseUrl = window.location.origin;
+		const qrCodeUrl = `${baseUrl}/public/assertions/${instance.slug}`;
+
+		// generate qr code as base64
+		toDataURL(qrCodeUrl, { errorCorrectionLevel: 'H' })
+			.then((qrCodeBase64: string) => {
+				// provide base64 string to backend
+				this.pdfService
+					.getCertificatePdf(instance.slug, qrCodeBase64)
+					.then((url) => {
+						this.pdfSrc = url;
+						this.pdfService.downloadPdf(this.pdfSrc, this.badgeClass.name, instance.createdAt);
+						this.downloadStates[badgeIndex] = false;
+					})
+					.catch((error) => {
+						this.downloadStates[badgeIndex] = false;
+						console.log(error);
+					});
+			})
+			.catch((error) => {
+				console.error('Fehler beim Generieren des QR-Codes:', error);
 				this.downloadStates[badgeIndex] = false;
-			}).catch((error) => {
-				this.downloadStates[badgeIndex] = false;
-				console.log(error);
 			});
 	}
 
@@ -301,7 +318,10 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 			this.confirmDialog
 				.openResolveRejectDialog({
 					dialogTitle: this.translate.instant('General.warning'),
-					dialogBody: this.translate.instant('Badge.deletePart1') + `<strong>${this.badgeClass.name}</strong>` + this.translate.instant('Badge.deletePart2'),
+					dialogBody:
+						this.translate.instant('Badge.deletePart1') +
+						`<strong>${this.badgeClass.name}</strong>` +
+						this.translate.instant('Badge.deletePart2'),
 					resolveButtonLabel: this.translate.instant('Badge.deleteConfirm'),
 					rejectButtonLabel: this.translate.instant('General.cancel'),
 				})
