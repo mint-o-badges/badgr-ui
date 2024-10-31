@@ -14,6 +14,8 @@ import { BadgeInstanceManager } from "../../services/badgeinstance-manager.servi
 import { BadgrApiFailure } from "../../../common/services/api-failure";
 import { HlmDialogService } from "../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service";
 import { SuccessDialogComponent } from "../../../common/dialogs/oeb-dialogs/success-dialog.component";
+import { Issuer } from "../../models/issuer.model";
+import { IssuerManager } from "../../services/issuer-manager.service";
 
 @Component({
 	selector: 'learningpath-create',
@@ -23,12 +25,16 @@ export class LearningPathCreateComponent extends BaseAuthenticatedRoutableCompon
 
 	breadcrumbLinkEntries: LinkEntry[] = [];
 	issuerSlug: string;
+	issuer: Issuer;
+
+	issuerLoaded: Promise<unknown>;
 
     constructor(
 		protected formBuilder: FormBuilder,
 		protected loginService: SessionService,
 		protected messageService: MessageService,
 		protected learningPathApiService: LearningPathApiService,
+		protected issuerManager: IssuerManager,
 		protected issuerApiService: IssuerApiService,
 		protected router: Router,
 		protected route: ActivatedRoute,
@@ -39,7 +45,17 @@ export class LearningPathCreateComponent extends BaseAuthenticatedRoutableCompon
 	) {
 		super(router, route, loginService);
 		this.issuerSlug = this.route.snapshot.params['issuerSlug'];
-		
+
+		this.issuerLoaded = this.issuerManager.issuerBySlug(this.issuerSlug).then((issuer) => {
+			this.issuer = issuer;
+			this.breadcrumbLinkEntries = [
+				{ title: 'Issuers', routerLink: ['/issuer'] },
+					{
+						title: this.issuer.name,
+						routerLink: ['/issuer/issuers', this.issuerSlug],
+					},
+			]
+		})
     }
 
 	ngOnInit(){
