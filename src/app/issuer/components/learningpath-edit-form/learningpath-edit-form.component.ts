@@ -267,7 +267,6 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 							label: tag.name,
 						}) as FormFieldSelectOption,
 				);
-				console.log(outerThis.tagOptions);
 				// The tags are loaded in one badge, so it's save to assume
 				// that after the first `next` call, the loading is done
 				outerThis.existingTagsLoading = false;
