@@ -61,6 +61,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	detailedDescription = this.translate.instant('CreateBadge.detailedDescription');
 	competencyTitle = this.translate.instant('Badge.competency') + '-' + this.translate.instant('Badge.title');
 	titleError = this.translate.instant('CreateBadge.titleError');
+	requiredError = this.translate.instant('CreateBadge.requiredError');
 	competencyDuration = this.translate.instant('CreateBadge.competencyDuration');
 	competencyCategory = this.translate.instant('Badge.competency') + '-' + this.translate.instant('Badge.category');
 	competencyCategoryError = this.translate.instant('CreateBadge.competencyCategoryError');
@@ -226,7 +227,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				.addControl('escoID', '')
 				// limit of 1000000 is set so that users cant break the UI by entering a very long number
 				.addControl('studyLoad', 60, [Validators.required, this.positiveInteger, Validators.max(1000000)])
-				.addControl('hours', 1, [this.positiveIntegerOrNull, Validators.max(1000000)])
+				.addControl('hours', 1, [this.positiveIntegerOrNull, Validators.max(999)])
 				.addControl('minutes', 0, [this.positiveIntegerOrNull, Validators.max(59)])
 				.addControl('category', '', Validators.required),
 		)
@@ -392,7 +393,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				? Math.floor(badgeClass.extension['extensions:StudyLoadExtension'].StudyLoad / 60)
 				: null,
 			badge_minutes: badgeClass.extension['extensions:StudyLoadExtension']
-				? Math.floor(badgeClass.extension['extensions:StudyLoadExtension'].StudyLoad % 60)
+				? badgeClass.extension['extensions:StudyLoadExtension'].StudyLoad % 60
 				: null,
 			badge_study_load: badgeClass.extension['extensions:StudyLoadExtension']
 				? badgeClass.extension['extensions:StudyLoadExtension'].StudyLoad

@@ -66,6 +66,7 @@
 						class="tw-w-20" 
 						[fieldType]="'number'" 
 						[control]="badgeClassForm.rawControlMap.badge_hours" 
+						[errorMessage]="{ duration: requiredError }"
 						noTopMargin="true"
 					>
 					</oeb-input>
@@ -74,6 +75,7 @@
 						class="tw-w-20" 
 						[fieldType]="'number'" 
 						[control]="badgeClassForm.rawControlMap.badge_minutes" 
+						[errorMessage]="{ duration: requiredError }"
 						noTopMargin="true"
 					>
 					</oeb-input>
@@ -372,7 +374,7 @@
 											class="tw-max-w-24"
 											[control]="competency.rawControlMap.hours"
 											[errorMessage]="{
-												required: 'Bitte gib die Dauer für den Erwerb der Kompetenz ein.'
+												duration: requiredError
 											}"
 											noTopMargin="true"
 										>
@@ -383,7 +385,7 @@
 											class="tw-max-w-24"
 											[control]="competency.rawControlMap.minutes"
 											[errorMessage]="{
-												required: 'Bitte gib die Dauer für den Erwerb der Kompetenz ein.'
+												duration: requiredError
 											}"
 											noTopMargin="true"
 										>
