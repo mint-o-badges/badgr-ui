@@ -205,34 +205,6 @@ export class OebLearningPathDetailComponent extends BaseRoutableComponent implem
 
 	  }
 
-	// revokeLpParticipationBadge(participant: any) {
-	// 	const participationBadgeInstance: BadgeInstance = participant.participationBadgeAssertion;
-	// 	this.confirmDialog
-	// 		.openResolveRejectDialog({
-	// 			dialogTitle: 'Warnung',
-	// 			dialogBody: `Bist du sicher, dass du <strong>${this.learningPath.name}</strong> von <strong>${participationBadgeInstance.recipientIdentifier}</strong> zurücknehmen möchtest?`,
-	// 			resolveButtonLabel: 'Zurücknehmen',
-	// 			rejectButtonLabel: 'Abbrechen',
-	// 		})
-	// 		.then(
-	// 			() => {
-	// 				this.badgeInstanceApiservice.revokeBadgeInstance(this.issuer.slug, this.learningPath.participationBadge_id, participationBadgeInstance.slug, 'revoked').then(
-	// 					(result) => {
-	// 						this.learningPathApiService.deleteLearningPathParticipant(participant.entity_id).then(() => {
-	// 							this.learningPathApiService.getLearningPathParticipants(this.learningPath.slug).then(
-	// 								(participants) => {
-	// 									this.participants = participants.body;
-	// 								})
-	// 							})
-	// 					}),
-	// 				(error) => {
-	// 					console.log(error)
-	// 				};
-	// 			},
-	// 			() => void 0, // Cancel
-	// 		)
-	// }
-
 	downloadCertificate(participant: any ) {
 		const instance = participant.participationBadgeAssertion;
 		this.pdfService.getPdf(instance.slug).then(
