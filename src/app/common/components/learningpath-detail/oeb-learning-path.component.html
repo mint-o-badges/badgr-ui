@@ -81,7 +81,7 @@
         <div class="oeb-section-sm tw-flex-grow lg:tw-pt-0 tw-pt-6">
             <div class="tw-bg-oebgrey tw-rounded-[10px] tw-py-6 tw-px-4">
                 <div class="oeb-section-sm" *ngIf="requests.length > 0">
-                    <h3 hlmH3 class="tw-pb-2 tw-font-medium tw-text-oebblack">   {{(requests | dynamicFilter: filterFunctionOngoing).length}} {{'LearningPath.lpBadgeRequests' | translate}}</h3>
+                    <h3 hlmH3 class="tw-pb-2 tw-font-medium tw-text-oebblack"> {{(requests | dynamicFilter: filterFunctionOngoing).length}} {{'LearningPath.lpBadgeRequests' | translate}}</h3>
                     <learningpath-requests-datatable (actionElement)="giveBadge($event)" [requests]="requests | dynamicFilter: filterFunctionOngoing" [loading]="loading"></learningpath-requests-datatable>
                 </div>
                 <h3 hlmH3 class="tw-font-bold tw-uppercase tw-text-oebblack tw-text-center">Lernpfad-Nutzende</h3>
@@ -90,7 +90,7 @@
                     <learningpath-graduates-datatable [participants]="participants | dynamicFilter: filterFunction" (revokeLearningPath)="revokeLpParticipationBadge($event)" (downloadCertificate)="downloadCertificate($event)"></learningpath-graduates-datatable>
                 </div>
                 <div class="oeb-section-sm">
-                    <h3 hlmH3 class="tw-pb-2 tw-font-medium tw-text-oebblack">   {{(participants | dynamicFilter: filterFunctionOngoing).length}} {{'LearningPath.lpActives' | translate}}</h3>
+                    <h3 hlmH3 class="tw-pb-2 tw-font-medium tw-text-oebblack"> {{(participants | dynamicFilter: filterFunctionOngoing).length}} {{'LearningPath.lpActives' | translate}}</h3>
                     <learningpath-participants-datatable [participants]="participants | dynamicFilter: filterFunctionOngoing" [number_badges]="learningPath.badges.length"></learningpath-participants-datatable>
                 </div>
             </div>

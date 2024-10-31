@@ -78,25 +78,25 @@
 					<div>
 						
 					</div>
-					<div class="tw-flex tw-gap-2 tw-flex-wrap tw-justify-between">
+					<div class="tw-flex tw-gap-4 tw-flex-wrap tw-justify-between tw-pt-2">
 						<oeb-button
-							[class]="'tw-whitespace-nowrap'.concat(issuer.currentUserStaffMember
-								? ''
-								: ' disabled')"
+							[class.disabled]="!issuer.canCreateBadge"
+							class="tw-whitespace-nowrap tw-flex-grow"
 							[routerLink]="['/issuer/issuers/', issuer.slug]"
 							[disabled]="!issuer.currentUserStaffMember"
 							[text]="'Issuer.giveBadge' | translate"
 							variant="secondary"
+							width="full_width"
 							>
 						</oeb-button>
 						<oeb-button
-							[class]="'tw-whitespace-nowrap'.concat(issuer.canCreateBadge
-								? ''
-								: ' disabled')"
+							[class.disabled]="!issuer.canCreateBadge"
+							class="tw-whitespace-nowrap tw-flex-grow"
 							[routerLink]="['/issuer/issuers/', issuer.slug, 'learningpaths', 'upload']"
 							[disabled]="!issuer.canCreateBadge"
 							[text]="'Issuer.myInstitutionsCreateLearningPath' | translate"
 							variant="secondary"
+							width="full_width"
 							>
 						</oeb-button>
 					</div>
