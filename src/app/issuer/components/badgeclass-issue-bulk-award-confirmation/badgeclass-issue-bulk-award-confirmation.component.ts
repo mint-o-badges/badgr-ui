@@ -72,18 +72,10 @@ export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRouta
 					}
 				: undefined;
 
-			if (row.evidence) {
-				assertion = {
-					recipient_identifier: row.email,
-					evidence_items: [{ evidence_url: row.evidence }],
-					extensions: extensions,
-				};
-			} else {
 				assertion = {
 					recipient_identifier: row.email,
 					extensions: extensions,
 				};
-			}
 			assertions.push(assertion);
 		});
 
