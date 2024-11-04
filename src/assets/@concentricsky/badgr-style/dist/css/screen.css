@@ -215,7 +215,6 @@ dialog {
 	padding: 0px;
 }
 
-
 /* Private z-index values */
 :root {
 	/* Public z-index */
@@ -7221,15 +7220,22 @@ dialog[open] {
 }
 
 .issuercard {
-	border-radius: 3px;
+	border-radius: 10px;
 	background-color: var(--color-light1);
-	border: 1px solid var(--color-light4);
+	border: 1px solid var(--color-interactive1);
 	position: relative;
-	padding: calc(var(--gridspacing) * 2);
-	display: grid;
-	grid-template-columns: 40px 1fr;
-	grid-gap: calc(var(--gridspacing) * 2);
+	padding: calc(var(--gridspacing) * 4);
+	display: flex;
+	flex-direction: column;
+	max-width: 45%;
+	box-sizing: border-box;
 }
+.issuercard-x-body {
+	display: flex;
+	flex-direction: row;
+	gap: 12px;
+}
+
 .issuercard .issuercard-x-image {
 	grid-column-start: 1;
 	grid-row: 1 / 2;
@@ -7240,16 +7246,14 @@ dialog[open] {
 .issuercard .issuercard-x-title {
 	grid-column-start: 2;
 }
+
 .issuercard .issuercard-x-title a {
 	--typography-size: 16px;
 	font-family: var(--font-family);
 	font-size: var(--typography-size);
 	line-height: calc(var(--typography-size) + 8px);
-	font-weight: bold;
-	color: var(--color-link);
 	text-decoration: none;
 	cursor: pointer;
-	font-weight: bold;
 	transition: color var(--transition-easing) var(--transition-duration);
 	will-change: color;
 	word-break: break-word;
@@ -7258,6 +7262,9 @@ dialog[open] {
 	hyphens: auto;
 	overflow-wrap: break-word;
 	word-wrap: break-word;
+	color: var(--color-interactive1) !important;
+	font-weight: 700 !important;
+	font-family: 'rubik' !important;
 }
 .issuercard .issuercard-x-title a:hover {
 	color: var(--color-linkhover);
@@ -7286,24 +7293,32 @@ dialog[open] {
 	font-weight: bold;
 }
 .issuercard .issuercard-x-desc {
-	--typography-size: 12px;
+	--typography-size: 18px;
 	font-family: var(--font-family);
 	font-size: var(--typography-size);
 	line-height: calc(var(--typography-size) + 4px);
-	color: var(--color-dark4);
+	color: var(--color-black);
 	grid-column: 1 / 3;
 	max-width: 456px;
+	font-weight: 400;
 }
 .issuercard .issuercard-x-topbadges {
 	display: none;
 }
 .issuercard .issuercard-x-footer {
 	grid-column: 1 / 3;
-	border-top: 1px solid var(--color-light3);
 	padding-top: calc(var(--gridspacing) * 2);
-	display: flex;
 	align-items: center;
 	justify-content: space-between;
+}
+
+.badgesLink {
+	font-size: 18px;
+	display: flex;
+	flex-direction: row;
+	color: var(--color-interactive1);
+	font-weight: 600;
+	gap: 4px;
 }
 
 @media (min-width: 480px) {

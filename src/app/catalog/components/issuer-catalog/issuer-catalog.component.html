@@ -89,42 +89,60 @@
 
 			<ng-container *ngIf="badgesDisplay == 'grid'">
 				<ng-container *ngIf="!groupByCategory">
-					<div class="issuercard" *ngFor="let issuer of issuerResults">
-						<div class="issuercard-x-image">
-							<img
-								[loaded-src]="issuer?.image"
-								[loading-src]="issuerPlaceholderSrc"
-								[error-src]="issuerPlaceholderSrc"
-								alt="{{ issuer.name }} avatar"
-							/>
-						</div>
-						<div class="issuercard-x-title">
-							<a (click)="navigateToIssuer(issuer)">{{ issuer.name }}</a>
-							<!-- <p><strong>Your Role: </strong>{{ issuer.currentUserStaffMember?.roleInfo.label }}</p> -->
-						</div>
-						<div class="issuercard-x-desc" [truncatedText]="issuer.description" [maxLength]="250"></div>
-
-						<!-- <div class="issuercard-x-topbadges" *ngFor="let issuerBadges of [issuerToBadgeInfo[issuer.issuerUrl]]">
-							<h3 class="u-text-body-bold u-text-dark1 u-margin-bottom2x" *ngIf="issuerBadges">Top Badges:</h3>
-							<div class="l-flex l-flex-2x l-flex-column"></div>
-						</div> -->
-
-						<div class="issuercard-x-footer">
-							<div class="l-flex l-flex-aligncenter l-flex-1x">
-								<svg
-									class="icon icon-light4 u-hidden-maxmobilelarge"
-									width="24px"
-									icon="icon_badge"
-								></svg>
-								<p
-									*ngIf="issuer.badgeClassCount"
-									class="u-text-small u-text-nowrap"
-									[innerHTML]="issuer.badgeClassCount | i18nPlural: plural['badges']"
-								></p>
+					<div class="tw-flex tw-flex-wrap tw-gap-12 tw-w-full">
+						<div class="issuercard" *ngFor="let issuer of issuerResults">
+							<div class="issuercard-x-body">
+								<div class="issuercard-x-image">
+									<img
+										[loaded-src]="issuer?.image"
+										[loading-src]="issuerPlaceholderSrc"
+										[error-src]="issuerPlaceholderSrc"
+										alt="{{ issuer.name }} avatar"
+									/>
+								</div>
+								<div class="issuercard-x-title tw-content-center">
+									<a class="tw-text-[#492E98]" (click)="navigateToIssuer(issuer)">{{
+										issuer.name
+									}}</a>
+									<!-- <p><strong>Your Role: </strong>{{ issuer.currentUserStaffMember?.roleInfo.label }}</p> -->
+								</div>
 							</div>
-							<a class="u-text u-text-small" [routerLink]="['/public/issuers/', issuer.slug]">{{
-								'Issuer.open' | translate
-							}}</a>
+
+							<div class="issuercard-x-desc" [truncatedText]="issuer.description" [maxLength]="250"></div>
+
+							<!-- <div class="issuercard-x-topbadges" *ngFor="let issuerBadges of [issuerToBadgeInfo[issuer.issuerUrl]]">
+								<h3 class="u-text-body-bold u-text-dark1 u-margin-bottom2x" *ngIf="issuerBadges">Top Badges:</h3>
+								<div class="l-flex l-flex-2x l-flex-column"></div>
+							</div> -->
+
+							<div class="issuercard-x-footer">
+								<div class="tw-flex tw-flex-row tw-gap-4 l-flex l-flex-aligncenter l-flex-1x">
+									<a class="badgesLink" [routerLink]="['/public/issuers/', issuer.slug]">
+										<svg
+											class="icon u-hidden-maxmobilelarge"
+											width="36px"
+											icon="icon_badge_custom"
+										></svg>
+										<p
+											*ngIf="issuer.badgeClassCount"
+											class=""
+											[innerHTML]="issuer.badgeClassCount | i18nPlural: plural['badges']"
+										></p>
+									</a>
+									<a class="badgesLink" [routerLink]="['/public/issuers/', issuer.slug]">
+										<svg
+											class="icon u-hidden-maxmobilelarge"
+											width="36px"
+											icon="icon_pathway"
+										></svg>
+										<p
+											*ngIf="issuer.badgeClassCount"
+											class=""
+											[innerHTML]="issuer.badgeClassCount | i18nPlural: plural['badges']"
+										></p>
+									</a>
+								</div>
+							</div>
 						</div>
 					</div>
 				</ng-container>
