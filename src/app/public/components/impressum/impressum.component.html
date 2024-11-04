@@ -82,7 +82,7 @@
 			<br />
 			<p style="font-size: 1.1rem; color: black; line-height: 1.55">
 				<span style="display: block; font-weight: bold; margin-bottom: 15px"> Version </span>
-                UI: {{ version.tag }}-{{ version.hash }} <br/>
+                UI: {{ version.tag }}-{{ version.hash.replace('g', '') }} <br/>
                 Server: {{ serverVersion }}
 				<br />
 			</p>
