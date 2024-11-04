@@ -1,0 +1,21 @@
+<section class="container">
+    <header>
+      <h2>Step {{selectedIndex + 1}}/{{steps.length}}</h2>
+      <div>
+        <button class="pure-button" cdkStepperPrevious>&larr;</button>
+        <button
+            class="pure-button"
+            *ngFor="let step of steps; let i = index;"
+            [ngClass]="{'pure-button-primary': selectedIndex === i}"
+            (click)="onClick(i)"
+        >
+          Step {{i + 1}}
+        </button>
+        <button class="pure-button" cdkStepperNext>&rarr;</button>
+      </div>
+    </header>
+  
+    <!-- Content from the CdkStep is projected here -->
+    <div class="tw-flex tw-gap-2" [ngTemplateOutlet]="selected.content"></div>
+  
+  </section>

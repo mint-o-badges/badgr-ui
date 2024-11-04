@@ -46,6 +46,10 @@ import { LearningPathCreateComponent } from './components/learningpath-create/le
 import { LearningPathEditFormComponent } from './components/learningpath-edit-form/learningpath-edit-form.component';
 import { DndModule } from 'ngx-drag-drop';
 import { LearningPathManager } from './services/learningpath-manager.service';
+import { CdkStepperModule } from '@angular/cdk/stepper';
+import { CdkStepper } from '@angular/cdk/stepper';
+import { MyStepperComponent } from '../components/stepper/stepper.component';
+import { StepperExampleComponent } from './components/stepper-example/stepper-example.component';
 
 const routes = [
 	/* Issuer */
@@ -132,7 +136,8 @@ const routes = [
 		IssuerDetailDatatableComponent,
 		QRCodeModule,
 		QrCodeAwardsComponent,
-		DndModule
+		DndModule,
+		CdkStepperModule
 	],
 	declarations: [
 		BadgeClassCreateComponent,
@@ -165,7 +170,9 @@ const routes = [
 		IssuerListComponent,
 
 		IssuerStaffCreateDialogComponent,
-		IssuerLearningPathComponent
+		IssuerLearningPathComponent,
+		MyStepperComponent,
+		StepperExampleComponent,
 	],
 	schemas: [CUSTOM_ELEMENTS_SCHEMA],
 	exports: [],
@@ -178,7 +185,8 @@ const routes = [
 		IssuerApiService,
 		IssuerManager,
 		QrCodeApiService,
-		BadgeRequestApiService
+		BadgeRequestApiService,
+		CdkStepper
 	],
 })
 export class IssuerModule {}

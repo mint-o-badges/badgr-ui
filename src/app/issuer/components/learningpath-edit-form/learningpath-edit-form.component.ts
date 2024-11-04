@@ -31,6 +31,7 @@ import { ApiLearningPath, ApiLearningPathForCreation } from '../../../common/mod
 import { BadgeClassCategory } from '../../models/badgeclass-api.model';
 import { FormFieldSelectOption } from '../../../common/components/formfield-select';
 import { LearningPathManager } from '../../services/learningpath-manager.service';
+import { CdkStepper } from '@angular/cdk/stepper';
 
 interface DraggableItem {
 	content: string;
@@ -119,12 +120,20 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 		this._selectedBadges = val;
 	}
 
+	activeTab = 'Schritt 1';
+	tabs: any = undefined;
+
+
+
 	useOurEditor = this.translate.instant('CreateBadge.useOurEditor');
 	imageSublabel = this.translate.instant('CreateBadge.imageSublabel');
 	useOwnVisual = this.translate.instant('CreateBadge.useOwnVisual');
 	uploadOwnVisual = this.translate.instant('CreateBadge.uploadOwnVisual');
 	uploadOwnDesign = this.translate.instant('CreateBadge.uploadOwnDesign');
 	
+	@ViewChild('step1Template', { static: true }) step1Template: ElementRef;
+	@ViewChild('step2Template', { static: true }) step2Template: ElementRef;
+
 	constructor(
 		protected formBuilder: FormBuilder,
 		protected loginService: SessionService,
@@ -166,6 +175,20 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 			}, 10);
 		});
 		this.fetchTags();
+	}
+
+	ngAfterContentInit() {
+		this.tabs = [
+			
+			{
+				title: 'Schritt 1',
+				component: this.step1Template,
+			},
+			{
+				title: 'Schritt 2',
+				component: this.step2Template,
+			},
+		];
 	}
 
 	groups = [this.translate.instant('Badge.category'), this.translate.instant('Badge.issuer'), '---'];
@@ -420,6 +443,10 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 
 	generateCustomUploadImage(image) {
 		this.customImageField.useDataUrl(image, 'BADGE');
+	}
+
+	onTabChange(tab) {
+		this.activeTab = tab;
 	}
 
 	async onSubmit() {

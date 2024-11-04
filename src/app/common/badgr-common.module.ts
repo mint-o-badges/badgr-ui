@@ -124,6 +124,8 @@ import { LearningPathRequestsDatatableComponent } from '../components/datatable-
 import { OebIssuerCard } from './components/oeb-issuercard';
 import { HourPipe } from './pipes/hourPipe';
 import { BgSmallLearningPathCard } from './components/bg-small-learningpathcard';
+// import { OebStepperComponent } from '../components/stepper/stepper.component';
+import { CdkStepperModule } from '@angular/cdk/stepper';
 
 const DIRECTIVES = [
 	BgAwaitPromises,
@@ -219,7 +221,7 @@ export const COMMON_IMPORTS = [CommonModule, SharedIconsModule, FormsModule, Rea
 
 
 @NgModule({
-	imports: [...COMMON_IMPORTS, FormsModule, LMarkdownEditorModule, TranslateModule],
+	imports: [...COMMON_IMPORTS, FormsModule, LMarkdownEditorModule, TranslateModule, CdkStepperModule],
 	providers: [BadgeClassManager, BadgeClassApiService],
 	declarations: [...DIRECTIVES, ...COMMON_MODULE_COMPONENTS, ...PIPES, ForwardRouteComponent, BadgeLegendComponent],
 	exports: [...DIRECTIVES, ...COMMON_MODULE_COMPONENTS, ...PIPES, BadgeLegendComponent],

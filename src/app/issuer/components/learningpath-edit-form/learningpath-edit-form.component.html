@@ -1,6 +1,27 @@
 <form-message></form-message>
 <ng-template [showLoader]="true" [bgAwaitPromises]="[badgesLoaded]">
 
+    <oeb-backpack-tabs
+		[variant]="'lightpurple'"
+		(onTabChanged)="onTabChange($event)"
+		[activeTab]="'Schritt 1'"
+		[tabs]="tabs"
+	></oeb-backpack-tabs>
+
+    <app-stepper-example></app-stepper-example>
+
+    <app-my-stepper>
+        <cdk-step>
+          <img src="https://www.catster.com/wp-content/uploads/2018/07/Savannah-cat-long-body-shot.jpg" alt="cat 1">
+        </cdk-step>
+        <cdk-step>
+          <img src="https://r.hswstatic.com/w_907/gif/tesla-cat.jpg" alt="cat 2">
+        </cdk-step>
+            <cdk-step>
+          <img src="https://www.pizzeria-kebap-erdal.ch/bilder/startseite/pizzahome.jpg" alt="pizza1">
+        </cdk-step>
+      </app-my-stepper>
+
 <form [formGroup]="learningPathForm.rawControl" #formElem (ngSubmit)="onSubmit()" novalidate>
 	<div class="oeb-section">
     <div class="section">
@@ -28,9 +49,9 @@
 			<!-- <span class="input-label md:tw-flex-[0_0_10em]"> Badge-{{ 'Issuer.image' | translate }}</span> -->
 			<span hlmP class="tw-text-oebblack tw-font-semibold" [innerHTML]="'3. Lernpfad-Bild'"></span>
 			<div
-				class="tw-flex tw-flex-col tw-gap-4 md:tw-flex-row tw-bg-white tw-p-8 tw-justify-evenly tw-items-center tw-mr-auto tw-rounded-2xl tw-h-96"
+				class="tw-flex tw-flex-col tw-gap-4 md:tw-flex-row tw-bg-white tw-p-8 tw-justify-evenly tw-items-center tw-mr-auto tw-rounded-2xl tw-h-96 tw-border tw-border-solid tw-border-purple"
 			>
-				<div class="tw-bg-[var(--color-lightpink)] tw-p-4">
+				<div class="tw-bg-[var(--color-lightpink)] tw-p-4 tw-rounded-[10px]">
 					<bg-formfield-image
                         #imageField
                         [label]="useOurEditor"
@@ -56,7 +77,7 @@
 				</div>
                 <span>{{ 'General.or' | translate }}</span>
 				<hr class="md:tw-hidden tw-my-8 tw-w-full tw-border tw-border-[var(--color-purple)] tw-border-dashed" />
-				<div class="tw-bg-[var(--color-lightpink)] tw-p-4">
+				<div class="tw-bg-[var(--color-lightpink)] tw-p-4 tw-rounded-[10px]">
                     <bg-formfield-image
                         #customImageField
                         [label]="useOwnVisual"
