@@ -12,6 +12,7 @@ import { UserProfileManager } from '../../services/user-profile-manager.service'
 import { MessageService } from '../../services/message.service';
 import { PdfService } from '../../services/pdf.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { toDataURL } from 'qrcode';
 
 @Component({
 	selector: 'export-pdf-dialog',
@@ -62,17 +63,32 @@ export class ExportPdfDialog extends BaseDialog {
 	}
 
 	async openDialog(badge: RecipientBadgeInstance, markdown: HTMLElement): Promise<void> {
-		this.pdfIsLoading = true; 
-		this.pdfService.getPdf(badge.slug).then((url) => {
-			this.pdfSrc = url;
-			// set-time-out to fix the issue with viewing pdf from first time with safari
-			setTimeout( ()=> {
-				// Put below code within getpdf promise to avoid showing (previous pdf view / blank view) while loading pdf with chrome and firefox 
-				this.badge = badge;
-				this.showModal();
-				this.pdfIsLoading = false; 
-			}, 10);
-		})
+		this.pdfIsLoading = true;
+		const baseUrl = window.location.origin;
+		const qrCodeUrl = `${baseUrl}/public/assertions/${badge.slug}`;
+
+		// generate qr code as base64
+		toDataURL(qrCodeUrl, { errorCorrectionLevel: 'H' })
+			.then((qrCodeBase64: string) => {
+				// provide base64 string to backend
+				this.pdfService
+					.getCertificatePdf(badge.slug, qrCodeBase64)
+					.then((url) => {
+						this.pdfSrc = url;
+						setTimeout(() => {
+							// Put below code within getpdf promise to avoid showing (previous pdf view / blank view) while loading pdf with chrome and firefox
+							this.badge = badge;
+							this.showModal();
+							this.pdfIsLoading = false;
+						}, 10);
+					})
+					.catch((error) => {
+						console.log(error);
+					});
+			})
+			.catch((error) => {
+				console.error('Fehler beim Generieren des QR-Codes:', error);
+			});
 	}
 
 	async openDialogForCollections(collection: RecipientBadgeCollection): Promise<void> {

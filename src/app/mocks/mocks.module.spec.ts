@@ -186,12 +186,12 @@ export class MockOAuthApiService {
 @Injectable()
 export class MockCaptchaService {
 	getCaptcha = () => new Promise(() => {});
-	setupCaptcha = () => new Promise(() => {})
+	setupCaptcha = () => new Promise(() => {});
 }
 
 @Injectable()
 export class MockPdfService {
-	getPdf = () => new Promise(() => {});
+	getCertificatePdf = () => new Promise(() => {});
 	downloadPdf = () => new Promise(() => {});
 	dateToString = () => new Promise(() => {});
 }
@@ -376,7 +376,7 @@ export let COMMON_MOCKS_PROVIDERS_WITH_SUBS = [];
 	ApplicationCredentialsService,
 	CaptchaService,
 	QrCodeApiService,
-	PdfService
+	PdfService,
 ].forEach((m, i, a) => {
 	const thisMock = eval('Mock' + m.name);
 	COMMON_MOCKS_PROVIDERS.push(thisMock);
