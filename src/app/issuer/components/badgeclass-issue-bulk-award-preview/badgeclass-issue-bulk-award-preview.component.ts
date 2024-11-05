@@ -106,14 +106,10 @@ export class BadgeClassIssueBulkAwardPreviewComponent extends BaseAuthenticatedR
 
 		this.importPreviewData.invalidRows.forEach((row) => {
 			emptyCellsAreOptional = row.every((cell, index) => {
-				if (!cell.length && index !== this.destNameToColumnHeaderMap['evidence']) {
-					return false;
-				}
 				if (cell.length) {
 					return true;
-				} else if (!cell.length && index === this.destNameToColumnHeaderMap['evidence']) {
-					return true;
-				} else {
+				} 
+				else {
 					return false;
 				}
 			});
@@ -127,7 +123,6 @@ export class BadgeClassIssueBulkAwardPreviewComponent extends BaseAuthenticatedR
 	transformInvalidRows() {
 		this.importPreviewData.invalidRows.forEach((row) => {
 			this.invalidRowsTransformed.push({
-				evidence: this.getEvidenceFromRow(row),
 				email: this.getEmailFromRow(row),
 				name: this.getNameFromRow(row)
 			});
@@ -137,7 +132,6 @@ export class BadgeClassIssueBulkAwardPreviewComponent extends BaseAuthenticatedR
 	transformValidRows() {
 		this.importPreviewData.validRows.forEach((row) => {
 			this.validRowsTransformed.add({
-				evidence: this.getEvidenceFromRow(row),
 				email: this.getEmailFromRow(row),
 				name: this.getNameFromRow(row)
 
@@ -172,10 +166,6 @@ export class BadgeClassIssueBulkAwardPreviewComponent extends BaseAuthenticatedR
 		});
 
 		this.isEmailColumnHeaderMapped() ? this.enableActionButton() : this.disableActionButton();
-	}
-
-	getEvidenceFromRow(row) {
-		return this.getCellFromRowByDestName('evidence', row);
 	}
 
 	getEmailFromRow(row) {

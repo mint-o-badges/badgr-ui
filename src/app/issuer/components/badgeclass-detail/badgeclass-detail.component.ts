@@ -219,6 +219,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 					slug: this.badgeSlug,
 					createdAt: this.badgeClass.createdAt,
 					updatedAt: this.badgeClass.updatedAt,
+					duration: this.badgeClass.extension['extensions:StudyLoadExtension'].StudyLoad,
 					category:
 						this.badgeClass.extension['extensions:CategoryExtension'].Category === 'competency'
 							? 'Kompetenz- Badge'

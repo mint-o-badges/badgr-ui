@@ -61,7 +61,7 @@ export class OebIssuerDetailComponent implements OnInit {
 		{
 			title: this.translate.instant('General.edit'),
 			routerLink: ['./edit'],
-			icon: 'lucideUsers',
+			icon: 'lucidePencil',
 		},
 		{
 			title: this.translate.instant('General.delete'),
@@ -72,7 +72,7 @@ export class OebIssuerDetailComponent implements OnInit {
 		{
 			title: this.translate.instant('General.members'),
 			routerLink: ['./staff'],
-			icon: 'lucideWarehouse',
+			icon: 'lucideUsers',
 		},
 	]
 	

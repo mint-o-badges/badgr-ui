@@ -125,6 +125,7 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 					issuedOn: this.badge.issueDate,
 					issuedTo: this.badge.recipientEmail,
 					category: this.category['Category'] === 'competency' ? 'Kompetenz- Badge' : 'Teilnahme- Badge',
+					duration: this.badge.getExtension('extensions:StudyLoadExtension', {}).StudyLoad,
 					tags: this.badge.badgeClass.tags,
 					issuerName: this.badge.badgeClass.issuer.name,
 					issuerImagePlacholderUrl: this.issuerImagePlacholderUrl,
