@@ -9,25 +9,14 @@ import { UpdatableSubject } from '../util/updatable-subject';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { NavigationService } from './navigation.service';
 
-/**
- * The key used to store the authentication token in session and local storage.
- *
- * NOTE: This name is also referenced in the landing redirect code in index.html.
- *
- * @type {string}
- */
-export const TOKEN_STORAGE_KEY = 'LoginService.token';
-export const REFRESH_TOKEN_STORAGE_KEY = 'LoginService.refreshToken';
 
-const EXPIRATION_DATE_STORAGE_KEY = 'LoginService.tokenExpirationDate';
+export const EXPIRATION_DATE_STORAGE_KEY = 'LoginService.tokenExpirationDate';
 const IS_OIDC_LOGIN_KEY = 'LoginService.isOidcLogin';
 
 const DEFAULT_EXPIRATION_SECONDS = 24 * 60 * 60;
 
-export interface AuthorizationToken {
-	access_token: string;
+export interface AuthorizationTokenInformation {
 	expires_in?: number;
-	refresh_token?: string;
 	scope?: string;
 	token_typ?: string;
 }
@@ -53,7 +42,7 @@ export class SessionService {
 		this.enabledExternalAuthProviders = configService.featuresConfig.externalAuthProviders || [];
 	}
 
-    validateToken(sessionOnlyStorage = false): Promise<AuthorizationToken> {
+    validateToken(sessionOnlyStorage = false): Promise<AuthorizationTokenInformation> {
 		const endpoint = this.baseUrl + '/o/token';
 		const scope = 'rw:profile rw:issuer rw:backpack';
 		const client_id = 'public';
@@ -62,23 +51,22 @@ export class SessionService {
 			scope,
 		)}`;
 
-        return this.makeAuthorizationRequest(endpoint, payload, true, sessionOnlyStorage, true);
+        return this.makeAuthorizationRequest(endpoint, payload, sessionOnlyStorage, true);
     }
 
-    refreshToken(sessionOnlyStorage = false): Promise<AuthorizationToken> {
+    refreshToken(sessionOnlyStorage = false): Promise<AuthorizationTokenInformation> {
 		const endpoint = this.baseUrl + '/o/token';
 		const scope = 'rw:profile rw:issuer rw:backpack';
 		const client_id = 'public';
-        const refreshToken = sessionStorage.getItem(REFRESH_TOKEN_STORAGE_KEY) || localStorage.getItem(REFRESH_TOKEN_STORAGE_KEY) || null;
 
 		const payload = `grant_type=refresh_token&client_id=${encodeURIComponent(client_id)}&scope=${encodeURIComponent(
 			scope,
-		)}&refresh_token=${encodeURIComponent(refreshToken)}`;
+		)}`;
 
-        return this.makeAuthorizationRequest(endpoint, payload, true, sessionOnlyStorage, true);
+        return this.makeAuthorizationRequest(endpoint, payload, sessionOnlyStorage, true);
     }
 
-	login(credential: UserCredential, sessionOnlyStorage = false): Promise<AuthorizationToken> {
+	login(credential: UserCredential, sessionOnlyStorage = false): Promise<AuthorizationTokenInformation> {
 		const endpoint = this.baseUrl + '/o/token';
 		const scope = 'rw:profile rw:issuer rw:backpack';
 		const client_id = 'public';
@@ -87,22 +75,22 @@ export class SessionService {
 			scope,
 		)}&username=${encodeURIComponent(credential.username)}&password=${encodeURIComponent(credential.password)}`;
 
-        return this.makeAuthorizationRequest(endpoint, payload, false, sessionOnlyStorage, false);
+        return this.makeAuthorizationRequest(endpoint, payload, sessionOnlyStorage, false);
 	}
 
-    makeAuthorizationRequest(endpoint: string, payload: string, withCredentials: boolean,
+    makeAuthorizationRequest(endpoint: string, payload: string,
                              sessionOnlyStorage: boolean, isOidcLogin: boolean):
-        Promise<AuthorizationToken> {
+        Promise<AuthorizationTokenInformation> {
 		const headers = new HttpHeaders().append('Content-Type', 'application/x-www-form-urlencoded');
 		// Update global loading state
 		this.messageService.incrementPendingRequestCount();
 
 		return this.http
-			.post<AuthorizationToken>(endpoint, payload, {
+			.post<AuthorizationTokenInformation>(endpoint, payload, {
 				observe: 'response',
 				responseType: 'json',
 				headers,
-                withCredentials: withCredentials,
+                withCredentials: true,
 			})
 			.toPromise()
 			.then((r) => BaseHttpApiService.addTestingDelay(r, this.configService))
@@ -137,26 +125,24 @@ export class SessionService {
 
 	logout(nextObservable = true): void {
         this.stopRefreshTokenTimer();
-		localStorage.removeItem(TOKEN_STORAGE_KEY);
-		sessionStorage.removeItem(TOKEN_STORAGE_KEY);
+        localStorage.removeItem(EXPIRATION_DATE_STORAGE_KEY);
+        sessionStorage.removeItem(EXPIRATION_DATE_STORAGE_KEY);
 		if (nextObservable) this.loggedInSubject.next(false);
+        // TODO: Delete token cookie
 	}
 
-	storeToken(token: AuthorizationToken, sessionOnlyStorage = false, isOidcLogin = false): void {
+    /**
+     * Note that this doesn't actually store the token anymore, but merely the metadata on the token
+     */
+	storeToken(token: AuthorizationTokenInformation, sessionOnlyStorage = false, isOidcLogin = false): void {
 		const expirationDateStr = new Date(
 			Date.now() + (token.expires_in || DEFAULT_EXPIRATION_SECONDS) * 1000,
 		).toISOString();
 
-        // TODO: Potentially we might want to reconsider if we want to store all tokens in the session /
-        // local storage. Cookies might be a better option, django session might be an *even* better option.
 		if (sessionOnlyStorage) {
-			sessionStorage.setItem(TOKEN_STORAGE_KEY, token.access_token);
-			sessionStorage.setItem(REFRESH_TOKEN_STORAGE_KEY, token.refresh_token);
 			sessionStorage.setItem(EXPIRATION_DATE_STORAGE_KEY, expirationDateStr);
             sessionStorage.setItem(IS_OIDC_LOGIN_KEY, isOidcLogin ? "true" : "");
 		} else {
-			localStorage.setItem(TOKEN_STORAGE_KEY, token.access_token);
-			localStorage.setItem(REFRESH_TOKEN_STORAGE_KEY, token.refresh_token);
 			localStorage.setItem(EXPIRATION_DATE_STORAGE_KEY, expirationDateStr);
             localStorage.setItem(IS_OIDC_LOGIN_KEY, isOidcLogin ? "true" : "");
 		}
@@ -164,21 +150,8 @@ export class SessionService {
 		this.loggedInSubject.next(true);
 	}
 
-	get currentAuthToken(): AuthorizationToken | null {
-		const tokenString =
-			sessionStorage.getItem(TOKEN_STORAGE_KEY) || localStorage.getItem(TOKEN_STORAGE_KEY) || null;
-
-		return tokenString ? { access_token: tokenString } : null;
-	}
-
-	get requiredAuthToken(): AuthorizationToken {
-		return (
-			this.currentAuthToken || throwExpr('An authentication token is required, but the user is not logged in.')
-		);
-	}
-
 	get isLoggedIn(): boolean {
-		if (sessionStorage.getItem(TOKEN_STORAGE_KEY) || localStorage.getItem(TOKEN_STORAGE_KEY)) {
+		if (sessionStorage.getItem(EXPIRATION_DATE_STORAGE_KEY) || localStorage.getItem(EXPIRATION_DATE_STORAGE_KEY)) {
 			const expirationString =
 				sessionStorage.getItem(EXPIRATION_DATE_STORAGE_KEY) ||
 				localStorage.getItem(EXPIRATION_DATE_STORAGE_KEY);
@@ -205,9 +178,9 @@ export class SessionService {
         return !!expirationString;
     }
 
-	exchangeCodeForToken(authCode: string): Promise<AuthorizationToken> {
+	exchangeCodeForToken(authCode: string): Promise<AuthorizationTokenInformation> {
 		return this.http
-			.post<AuthorizationToken>(this.baseUrl + '/o/code', 'code=' + encodeURIComponent(authCode), {
+			.post<AuthorizationTokenInformation>(this.baseUrl + '/o/code', 'code=' + encodeURIComponent(authCode), {
 				observe: 'response',
 				responseType: 'json',
 				headers: new HttpHeaders().append('Content-Type', 'application/x-www-form-urlencoded'),

@@ -23,16 +23,18 @@ export class PdfService {
   }
 
 	getPdf(slug: string): Promise<SafeResourceUrl> {
-        const headers = new HttpHeaders().set('Authorization', `Bearer ${this.loginService.currentAuthToken.access_token}`);
-        return this.http.get(`${this.baseUrl}/v1/earner/badges/pdf/${slug}`, { headers: headers, responseType: 'blob' }).pipe(
-          map((response: Blob) => {
+        return this.http.get(`${this.baseUrl}/v1/earner/badges/pdf/${slug}`, {
+            responseType: 'blob',
+            withCredentials: true
+        }).pipe(
+        map((response: Blob) => {
             const url = URL.createObjectURL(response);
             // sanitize the url before avoiding security check
             const safe_url = this.sanitizer.sanitize(SecurityContext.URL, url);
             return this.sanitizer.bypassSecurityTrustResourceUrl(safe_url);
-          })
+        })
         ).toPromise();
-  }
+    }
   
   downloadPdf(pdfSrc: SafeResourceUrl, badgeName: string, issueDate: Date) {
     const link = document.createElement('a');
