@@ -377,7 +377,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			this.forbiddenImage = null;
 		}
 
-		//transform minutes into hours and minutes
+		// transform minutes into hours and minutes
 		let competencies = badgeClass.extension['extensions:CompetencyExtension'].map(comp => {
 			return {...comp, hours: Math.floor(comp.studyLoad / 60), minutes: comp.studyLoad % 60 }
 		})
