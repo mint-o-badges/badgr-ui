@@ -32,7 +32,7 @@ describe('PublicBadgeClassComponent', () => {
 		component = fixture.debugElement.componentInstance;
 	});
 
-	xit('should create a component', async () => {
+	it('should create a component', async () => {
 		expect(component).toBeTruthy();
 	});
 });
