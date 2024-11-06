@@ -393,6 +393,11 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 		}, 10);
 	}
 
+	openGrid() {
+		this.badgesDisplay = 'grid';
+		this.updateResults();
+	}
+
 	prepareTexts() {
 		this.issuerKeys = {
 			schule: 'Schulen',

@@ -19,6 +19,7 @@ import {
 	lucideCloudUpload,
 	lucideMapPin,
 	lucideSearch,
+	lucideGrid2x2,
 } from '@ng-icons/lucide';
 
 @NgModule({
@@ -42,6 +43,7 @@ import {
 			lucideCloudUpload,
 			lucideMapPin,
 			lucideSearch,
+			lucideGrid2x2,
 		}),
 	],
 })

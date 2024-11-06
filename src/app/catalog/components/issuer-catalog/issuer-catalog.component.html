@@ -33,7 +33,7 @@
 						</div>
 
 						<oeb-select
-							class="tw-w-[150px] tw-font-[rubik] tw-text-[#323232]"
+							class="tw-w-[180px] tw-font-[rubik] tw-text-[#323232]"
 							[options]="[
 								{
 									label: 'Schule',
@@ -44,19 +44,22 @@
 									value: 'hochschule'
 								},
 								{
-									label: 'Andere ',
+									label: 'Andere',
 									value: 'andere'
 								}
 							]"
 							[control]="categoryControl"
-							placeholder="{{ 'Badge.category' | translate }}"
+							placeholder="{{ 'Issuer.allCategories' | translate }}"
 							[autofocus]="true"
 							noTopMargin="true"
 							ariaLabel="chooseABadgeCategory"
 						></oeb-select>
 					</div>
-					<button hlmBtn size="icon" (click)="openMap()">
+					<button hlmBtn size="icon" *ngIf="badgesDisplay !== 'map'" (click)="openMap()">
 						<hlm-icon name="lucideMapPin" size="lg"></hlm-icon>
+					</button>
+					<button hlmBtn size="icon" *ngIf="badgesDisplay === 'map'" (click)="openGrid()">
+						<hlm-icon name="lucideGrid2x2" size="lg"></hlm-icon>
 					</button>
 				</div>
 			</div>
