@@ -399,8 +399,8 @@ export let COMMON_MOCKS_PROVIDERS_WITH_SUBS = [];
 	CaptchaService,
 	QrCodeApiService,
 	PdfService,
-	LearningPathApiService
-  ServerVersionService
+	LearningPathApiService,
+  	ServerVersionService
 
 ].forEach((m, i, a) => {
 	const thisMock = eval('Mock' + m.name);
