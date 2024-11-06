@@ -45,6 +45,8 @@ jobs:
     steps:
       - name: ⬇️  Checkout repository
         uses: actions/checkout@v4.2.2
+        with:
+          fetch-tags: 'true'
 
       - name: 🔑 Log in to the Container registry
         uses: docker/login-action@v3.3.0
