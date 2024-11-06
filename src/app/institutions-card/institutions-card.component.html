@@ -33,19 +33,22 @@
 				class="tw-flex tw-flex-row tw-text-lg tw-text-[#492E98] tw-font-semibold tw-items-center"
 				[routerLink]="['/public/issuers/', issuer?.slug]"
 			>
-				<svg class="icon u-hidden-maxmobilelarge" width="36px" icon="icon_badge_custom"></svg>
+				<img src="assets/badges/badgeIcon.svg" alt="bade icon" class="tw-w-9" />
 				<p
 					*ngIf="issuer?.badgeClassCount"
 					[innerHTML]="issuer?.badgeClassCount | i18nPlural: plural['badges']"
 				></p>
 			</a>
 			<a
-				*ngIf="issuer?.pathwayCount > 0"
 				class="tw-flex tw-flex-row tw-text-lg tw-text-[#492E98] tw-font-semibold tw-items-center"
 				[routerLink]="['/public/issuers/', issuer?.slug]"
 			>
-				<svg class="icon u-hidden-maxmobilelarge" width="36px" icon="icon_pathway"></svg>
-				<p [innerHTML]="issuer?.pathwayCount | i18nPlural: plural['badges']"></p>
+				<img
+					src="assets/oeb/images/learningPath/learningPathIcon.svg"
+					alt="learning path icon"
+					class="tw-w-7"
+				/>
+				<p class="tw-ml-2" [innerHTML]="issuer?.pathwayCount | i18nPlural: plural['learningPath']"></p>
 			</a>
 		</div>
 	</div>

@@ -416,6 +416,11 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 				'=1': '<strong class="u-text-bold">1</strong> Badge',
 				other: '<strong class="u-text-bold">#</strong> Badges',
 			},
+			learningPath: {
+				'=0': this.translate.instant('General.noLearningPaths'),
+				'=1': '1 ' + this.translate.instant('General.learningPath'),
+				other: '# ' + this.translate.instant('General.learningPaths'),
+			},
 			recipient: {
 				'=0': this.translate.instant('Issuer.noRecipient'),
 				'=1': '1 ' + this.translate.instant('General.recipient'),

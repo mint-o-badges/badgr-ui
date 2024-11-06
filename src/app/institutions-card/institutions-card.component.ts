@@ -13,7 +13,7 @@ export interface Issuer {
 }
 
 @Component({
-	selector: 'app-institutions-card',
+	selector: 'oeb-institutions-card',
 	templateUrl: './institutions-card.component.html',
 	styleUrls: ['./institutions-card.component.css'],
 	host: { style: 'display: contents;' },

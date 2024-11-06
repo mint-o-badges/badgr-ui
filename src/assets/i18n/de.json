@@ -56,7 +56,10 @@
 		"password": "Passwort",
 		"loading": "Laden...",
 		"warning": "Warnung",
-		"page": "Seite"
+		"page": "Seite",
+		"learningPath": "Lernpfad",
+		"learningPaths": "Lernpfade",
+		"noLearningPaths": "Keine Lernpfade"
 	},
 	"NavItems": {
 		"register": "Registrieren",

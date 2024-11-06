@@ -64,12 +64,12 @@
 			<ng-container *ngIf="badgesDisplay == 'grid'">
 				<ng-container *ngIf="!groupByCategory">
 					<div class="tw-flex tw-justify-between tw-flex-wrap tw-gap-4 tw-w-full">
-						<app-institutions-card
+						<oeb-institutions-card
 							*ngFor="let issuer of issuerResults"
 							[issuer]="issuer"
 							[plural]="plural"
 							(navigate)="navigateToIssuer(issuer)"
-						></app-institutions-card>
+						></oeb-institutions-card>
 					</div>
 				</ng-container>
 			</ng-container>
