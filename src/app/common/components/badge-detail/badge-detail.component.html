@@ -94,7 +94,7 @@
                                 <dt class="tw-text-sm tw-text-oebblack tw-font-bold">
                                     {{ 'RecBadgeDetail.duration' | translate }}
                                 </dt>
-                                <dd class="tw-text-sm tw-text-oebblack md:tw-ml-2">{{ config.duration }} {{ 'General.minutes' | translate}}</dd>
+                                <dd class="tw-text-sm tw-text-oebblack md:tw-ml-2">{{ config.duration | hourPipe}}</dd>
                             </div>
 
                             <div *ngIf="config.updatedAt"
@@ -158,11 +158,9 @@
                         <p hlmP class="tw-text-oebblack tw-w-full">{{ config.badgeDescription }}</p>
                     </div>
                     <!-- Kompetenzen -->
-                    <section class="tw-text-oebblack tw-pb-8">
+                    <section *ngIf="config.competencies && config.competencies.length > 0" class="tw-text-oebblack tw-pb-8">
                         <h3 class="tw-text-[22px] tw-leading-[26.4px] tw-font-[500] tw-font-[rubik] tw-text-oebblack u-margin-bottom2x u-margin-top4x"
-                            *ngIf="
-                                config.competencies && config.competencies.length > 0
-                            ">
+                            >
                             {{ 'RecBadgeDetail.competencies' | translate }}
                         </h3>
                         <div>
@@ -172,7 +170,7 @@
                                 ">
                                 <competency-accordion [name]="competency.name" [category]="competency.category"
                                     [description]="competency.description" [escoID]="competency.escoID"
-                                    [studyload]="competency.studyLoad | studyload"></competency-accordion>
+                                    [studyload]="competency.studyLoad | hourPipe"></competency-accordion>
                             </div>
                         </div>
                     </section>

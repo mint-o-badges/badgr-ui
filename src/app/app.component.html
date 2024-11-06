@@ -174,14 +174,21 @@
 	<nav class="l-dialog mobilenav" [class.mobilenav-is-active]="mobileNavOpen" *ngIf="!loggedIn"
 		[class.mobilenav-light]="!theme.useColorNavbar">
 		<div class="mobilenav-x-navitems">
+			<p class="mobilenav-x-label">{{ 'General.aboutBadges' | translate }}</p>
+
 			<a routerLinkActive="menuitem-is-active" [routerLink]="['/catalog/badges']">Badges</a>
 			<a routerLinkActive="menuitem-is-active" [routerLink]="['/catalog/issuers']">{{
 				'General.institutions' | translate
 				}}</a>
-			<a routerLinkActive="menuitem-is-active" [routerLink]="['/auth/login']">Login</a>
+			<a routerLinkActive="menuitem-is-active" [routerLink]="['/catalog/learningpaths']">{{ 'LearningPath.learningpaths' | translate }}</a>
+			<hr class="mobilenav-x-rule" />
+
 			<a routerLinkActive="menuitem-is-active" [routerLink]="['/public/about']">{{
 				'NavItems.aboutOpenEducationalBadges' | translate
 				}}</a>
+			<hr class="mobilenav-x-rule" />
+
+			<a routerLinkActive="menuitem-is-active" [routerLink]="['/auth/login']">Login</a>
 			<a routerLinkActive="menuitem-is-active" [routerLink]="['/signup']">{{
 				'NavItems.register' | translate
 				}}</a>
@@ -213,6 +220,7 @@
 			<a [routerLink]="['/public/faq']">FAQ</a>
 			<a [routerLink]="['/catalog/badges']">Badges A-Z</a>
 			<a [routerLink]="['/catalog/issuers']">{{ 'General.institutions' | translate }}</a>
+			<a [routerLink]="['/catalog/learningpaths']">{{ 'LearningPath.learningpaths' | translate }}</a>
 
 			<hr class="mobilenav-x-rule" />
 			<a [routerLink]="['/recipient/badges']">{{ 'General.backpack' | translate }}</a>

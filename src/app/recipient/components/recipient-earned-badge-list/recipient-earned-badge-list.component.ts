@@ -23,6 +23,8 @@ import { provideIcons } from '../../../components/spartan/ui-icon-helm/src';
 import { lucideHand, lucideHexagon, lucideMedal, lucideBookOpen, lucideClock, lucideHeart } from '@ng-icons/lucide';
 import { CountUpDirective } from 'ngx-countup';
 import { Competency } from '../../../common/model/competency.model';
+import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
+import { LearningPath } from '../../../issuer/models/learningpath.model';
 
 type BadgeDispay = 'grid' | 'list';
 type EscoCompetencies = {
@@ -54,10 +56,17 @@ export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutable
 	allBadges: RecipientBadgeInstance[] = [];
 	badgesLoaded: Promise<unknown>;
 	profileLoaded: Promise<unknown>;
+	learningpathLoaded: Promise<unknown>;
 	allIssuers: ApiRecipientBadgeIssuer[] = [];
+	allLearningPaths: any[] = [];
 
 	badgeResults: BadgeResult[] = [];
+	learningPathResults: any[] = [];
+	learningPathsInProgress: LearningPath[] = [];
+	learningPathsCompleted: LearningPath[] = [];
+	learningPathsReadyToRequest: LearningPath[] = [];
 	issuerResults: MatchingIssuerBadges[] = [];
+	issuerLearningPathResults: MatchingLearningPathIssuer[] = [];
 	badgeClassesByIssuerId: { [issuerUrl: string]: RecipientBadgeInstance[] };
 
 	mozillaTransitionOver = true;
@@ -71,6 +80,7 @@ export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutable
 	@ViewChild('overViewTemplate', { static: true }) overViewTemplate: ElementRef;
 	@ViewChild('badgesTemplate', { static: true }) badgesTemplate: ElementRef;
 	@ViewChild('badgesCompetency', { static: true }) badgesCompetency: ElementRef;
+	@ViewChild('learningPathTemplate', { static: true }) learningPathTemplate: ElementRef;
 
 	groupedUserCompetencies = {};
 	newGroupedUserCompetencies = {};
@@ -124,6 +134,7 @@ export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutable
 		private dialogService: CommonDialogsService,
 		private messageService: MessageService,
 		private recipientBadgeManager: RecipientBadgeManager,
+		private learningPathApi: LearningPathApiService,
 		public configService: AppConfigService,
 		private profileManager: UserProfileManager,
 	) {
@@ -134,7 +145,16 @@ export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutable
 		this.badgesLoaded = this.recipientBadgeManager.recipientBadgeList.loadedPromise.catch((e) =>
 			this.messageService.reportAndThrowError('Failed to load your badges', e),
 		);
+		this.learningpathLoaded = this.learningPathApi.getLearningPathsForUser().then((res) => {
+			this.allLearningPaths = res;
+			this.updateResults();
+		}).catch((e) =>
+			this.messageService.reportAndThrowError('Failed to load your badges', e),
+		);
 
+		this.recipientBadgeManager.recipientBadgeList.changed$.subscribe((badges) =>
+			this.updateBadges(badges.entities),
+		);
 		this.recipientBadgeManager.recipientBadgeList.changed$.subscribe((badges) =>
 			this.updateBadges(badges.entities),
 		);
@@ -205,6 +225,10 @@ export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutable
 				title: 'Kompetenzen',
 				component: this.badgesCompetency,
 			},
+			{
+				title: 'Lernpfade',
+				component: this.learningPathTemplate,
+			},
 		];
 	}
 
@@ -265,7 +289,12 @@ export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutable
 	private updateResults() {
 		// Clear Results
 		this.badgeResults.length = 0;
+		this.learningPathResults.length = 0;
 		this.issuerResults.length = 0;
+		this.issuerLearningPathResults.length = 0;
+		this.learningPathsCompleted.length = 0;
+		this.learningPathsReadyToRequest.length = 0;
+		this.learningPathsInProgress.length = 0;
 
 		const issuerResultsByIssuer: { [issuerUrl: string]: MatchingIssuerBadges } = {};
 
@@ -296,6 +325,34 @@ export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutable
 			return true;
 		};
 
+		const addToLearningPathResults = (learningPath: any) => {
+			// Restrict Length
+			if (this.learningPathResults.length > this.maxDisplayedResults) {
+				return false;
+			}
+
+			if (!this.learningPathResults.find((r) => r.learningPath === learningPath)) {
+				// appending the results to the badgeResults array bound to the view template.
+				if(learningPath.completed_at){
+					if (!this.learningPathsCompleted.find((r) => r === learningPath)){
+						this.learningPathsCompleted.push(learningPath);
+					}
+				}
+				else if(learningPath.progress / this.calculateStudyLoad(learningPath) == 1){
+					if (!this.learningPathsReadyToRequest.find((r) => r === learningPath)){
+						this.learningPathsReadyToRequest.push(learningPath);
+					}
+				}
+				else {
+					if (!this.learningPathsInProgress.find((r) => r === learningPath)){
+						this.learningPathsInProgress.push(learningPath);
+					}
+				}
+				this.learningPathResults.push(learningPath);
+			}
+			return true;
+		};
+
 		const addIssuerToResults = (issuer: ApiRecipientBadgeIssuer) => {
 			(this.badgeClassesByIssuerId[issuer.id] || []).forEach(addBadgeToResults);
 		};
@@ -303,8 +360,10 @@ export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutable
 		this.allIssuers.filter(MatchingAlgorithm.issuerMatcher(this.searchQuery)).forEach(addIssuerToResults);
 
 		this.allBadges.filter(MatchingAlgorithm.badgeMatcher(this._searchQuery)).forEach(addBadgeToResults);
+		this.allLearningPaths.filter(MatchingAlgorithm.learningPathMatcher(this._searchQuery)).forEach(addToLearningPathResults);
 		this.badgeResults.sort((a, b) => b.badge.issueDate.getTime() - a.badge.issueDate.getTime());
 		this.issuerResults.forEach((r) => r.badges.sort((a, b) => b.issueDate.getTime() - a.issueDate.getTime()));
+		// this.learningPathResults.forEach((r) => r.sort((a, b) => b.issueDate.getTime() - a.issueDate.getTime()));
 	}
 
 	// exportPdf() {
@@ -364,6 +423,12 @@ export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutable
 	onTabChange(tab) {
 		this.activeTab = tab;
 	}
+
+	calculateStudyLoad(lp: LearningPath): number {
+		const totalStudyLoad = lp.badges.reduce((acc, b) => acc + b.badge.extensions['extensions:StudyLoadExtension'].StudyLoad, 0);
+		return totalStudyLoad;
+	}
+
 }
 
 class BadgeResult {
@@ -389,6 +454,22 @@ class MatchingIssuerBadges {
 	}
 }
 
+class MatchingLearningPathIssuer {
+	constructor(
+		public issuerName: string,
+		public learningpaths: LearningPath[] = [],
+	) {
+	}
+
+	async addLp(learningpath) {
+		if (learningpath.issuer_name === this.issuerName) {
+			if (this.learningpaths.indexOf(learningpath) < 0) {
+				this.learningpaths.push(learningpath);
+			}
+		}
+	}
+}
+
 class MatchingAlgorithm {
 	static issuerMatcher(inputPattern: string): (issuer: ApiRecipientBadgeIssuer) => boolean {
 		const patternStr = StringMatchingUtil.normalizeString(inputPattern);
@@ -402,5 +483,11 @@ class MatchingAlgorithm {
 		const patternExp = StringMatchingUtil.tryRegExp(patternStr);
 
 		return (badge) => StringMatchingUtil.stringMatches(badge.badgeClass.name, patternStr, patternExp);
+	}
+	static learningPathMatcher(inputPattern: string): (learningPath: any) => boolean {
+		const patternStr = StringMatchingUtil.normalizeString(inputPattern);
+		const patternExp = StringMatchingUtil.tryRegExp(patternStr);
+
+		return (learningPath) => StringMatchingUtil.stringMatches(learningPath.name, patternStr, patternExp);
 	}
 }

@@ -89,10 +89,6 @@ export class BadgeClassIssueBulkAwardImportComponent extends BaseAuthenticatedRo
 					destinationColumn = 'name';
 				}
 
-				if (tempColumnHeaderName.includes('evidence')) {
-					inferredColumnHeaders.add('evidence');
-					destinationColumn = 'evidence';
-				}
 
 				theseColumnHeaders.push({
 					destColumn: destinationColumn ? destinationColumn : 'NA',
@@ -113,9 +109,8 @@ export class BadgeClassIssueBulkAwardImportComponent extends BaseAuthenticatedRo
 		this.columnHeadersCount = columnHeaders.length;
 
         for (let row of rows) {
-            // Only "evidence" is allowed to be empty
 			// Valid if all the cells in a row are not empty.
-			const rowIsValid: boolean = row.every((cell, i) => cell.length > 0 || columnHeaders[i].destColumn == 'evidence');
+			const rowIsValid: boolean = row.every((cell, i) => cell.length > 0);
 
 			if (row.length < this.columnHeadersCount) {
 				invalidRows.push(padRowWithMissingCells(row));
