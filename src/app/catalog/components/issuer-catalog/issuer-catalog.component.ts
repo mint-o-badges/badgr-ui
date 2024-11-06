@@ -65,15 +65,6 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 		this.updateResults();
 	}
 
-	private _groupByCategory = false;
-	get groupByCategory() {
-		return this._groupByCategory;
-	}
-	set groupByCategory(val: boolean) {
-		this._groupByCategory = val;
-		this.updateResults();
-	}
-
 	get theme() {
 		return this.configService.theme;
 	}
@@ -201,27 +192,7 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 		// Clear Results
 		this.issuerResults = [];
 		this.issuerResultsByCategory = [];
-		const issuerResultsByCategoryLocal = {};
-		var addIssuerToResultsByCategory = function (item) {
-			that.issuerResults.push(item);
 
-			let categoryResults = issuerResultsByCategoryLocal[item.category];
-
-			if (!categoryResults) {
-				categoryResults = issuerResultsByCategoryLocal[item.category] = new MatchingIssuerCategory(
-					item.category,
-					'',
-				);
-
-				// append result to the issuerResults array bound to the view template.
-				that.issuerResultsByCategory.push(categoryResults);
-			}
-
-			categoryResults.addIssuer(item);
-
-			return true;
-		};
-		this.issuers.filter(MatchingAlgorithm.issuerMatcher(this.searchQuery)).forEach(addIssuerToResultsByCategory);
 		this.issuerResults.sort((a, b) => a.name.localeCompare(b.name));
 		this.issuerResults = this.issuers
 			.filter(MatchingAlgorithm.issuerMatcher(this.searchQuery))
