@@ -2,6 +2,7 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { BgBadgecard } from './components/bg-badgecard';
+import { BgLearningPathCard } from './components/bg-learningpathcard';
 import { BgBadgeDetail } from './components/badge-detail/badge-detail.component';
 
 import { BgAwaitPromises } from './directives/bg-await-promises';
@@ -42,6 +43,7 @@ import { BadgrButtonComponent } from './components/badgr-button.component';
 import { SharingService } from './services/sharing.service';
 import { NounprojectService } from './services/nounproject.service';
 import { AiSkillsService } from './services/ai-skills.service';
+import { ServerVersionService } from './services/server-version.service';
 import { PdfService } from './services/pdf.service';
 import { EventsService } from './services/events.service';
 import { ForwardRouteComponent } from './pages/forward-route.component';
@@ -108,12 +110,25 @@ import { OebBackgroundComponent } from '../components/oeb-background.component';
 import { OebIssuerDetailComponent } from './components/issuer/oeb-issuer-detail.component';
 import { DatatableComponent } from '../components/datatable-badges.component';
 
+import { OebProgressComponent } from '../components/oeb-progress.component';
 import { OebSelectComponent } from '../components/select.component';
 import { OebCollapsibleComponent } from '../components/oeb-collapsible.component';
 import { OebSeparatorComponent } from '../components/oeb-separator.component';
+import { OebLearningPathDetailComponent } from './components/learningpath-detail/oeb-learning-path.component';
+
+import { SharedIconsModule } from '../public/icons.module';
+import { LearningPathDatatableComponent } from '../components/datatable-learningpaths.component';
+import { LearningPathApiService } from './services/learningpath-api.service';
+import { LearningPathParticipantsDatatableComponent } from '../components/datatable-learningpath-participants.component';
+import { LearningPathGraduatesDatatableComponent } from '../components/datatable-learningpath-graduates.component';
+import { LearningPathRequestsDatatableComponent } from '../components/datatable-learningpath-requests.component';
+import { OebIssuerCard } from './components/oeb-issuercard';
+import { HourPipe } from './pipes/hourPipe';
+import { BgSmallLearningPathCard } from './components/bg-small-learningpathcard';
 import { HlmBadgeDirective } from '../components/spartan/ui-badge-helm/src/lib/hlm-badge.directive';
 import { HlmButtonDirective } from '../components/spartan/ui-button-helm/src/lib/hlm-button.directive';
 import { InstitutionsCardComponent } from '../institutions-card/institutions-card.component';
+
 const DIRECTIVES = [
 	BgAwaitPromises,
 	BgImageStatusPlaceholderDirective,
@@ -125,12 +140,15 @@ const DIRECTIVES = [
 	// TooltipDirective,
 	BgPopupMenuTriggerDirective,
 	DynamicFilterPipe,
+	HourPipe
 ];
 
 export const COMMON_MODULE_COMPONENTS = [
 	BadgeImageComponent,
 	BadgrButtonComponent,
 	BgBadgecard,
+	BgLearningPathCard,
+	BgSmallLearningPathCard,
 	BgBadgeDetail,
 	BgBreadcrumbsComponent,
 	BgFormFieldFileComponent,
@@ -164,6 +182,8 @@ export const COMMON_MODULE_COMPONENTS = [
 	OebCompetency,
 	OebIssuerDetailComponent,
 	InstitutionsCardComponent,
+	OebLearningPathDetailComponent,
+	OebIssuerCard
 ];
 
 const SERVICES = [
@@ -176,6 +196,7 @@ const SERVICES = [
 	SharingService,
 	NounprojectService,
 	AiSkillsService,
+    ServerVersionService,
 	PdfService,
 	CaptchaService,
 	EventsService,
@@ -193,44 +214,16 @@ const SERVICES = [
 	NavigationService,
 	ZipService,
 	ApplicationCredentialsService,
+	LearningPathApiService
 ];
 
 const GUARDS = [AuthGuard];
 
-const PIPES = [UcFirstPipe, StudyLoadPipe];
+const PIPES = [UcFirstPipe, StudyLoadPipe, HourPipe];
 
-export const COMMON_IMPORTS = [
-	CommonModule,
-	FormsModule,
-	ReactiveFormsModule,
-	HttpClientModule,
-	RouterModule,
-	OebInputComponent,
-	OebInputErrorComponent,
-	OebSelectComponent,
-	OebSeparatorComponent,
-	OebCollapsibleComponent,
-	OebButtonComponent,
-	OebDropdownComponent,
-	HlmH1Directive,
-	HlmH2Directive,
-	HlmH3Directive,
-	HlmPDirective,
-	HlmADirective,
-	CompetencyAccordionComponent,
-	OebCheckboxComponent,
-	OebDialogComponent,
-	SuccessDialogComponent,
-	DangerDialogComponent,
-	OebBackgroundComponent,
-	OebTabsComponent,
-	HlmIconModule,
-	CountUpModule,
-	HlmInputDirective,
-	DatatableComponent,
-	HlmBadgeDirective,
-	HlmButtonDirective,
-];
+
+export const COMMON_IMPORTS = [CommonModule, SharedIconsModule, FormsModule, ReactiveFormsModule, HttpClientModule, RouterModule, OebInputComponent, OebInputErrorComponent, OebSelectComponent, OebSeparatorComponent, OebCollapsibleComponent, OebButtonComponent, OebProgressComponent, OebDropdownComponent, HlmH1Directive, HlmH2Directive, HlmH3Directive, HlmPDirective, HlmADirective, CompetencyAccordionComponent, OebCheckboxComponent, OebDialogComponent, SuccessDialogComponent, DangerDialogComponent, OebBackgroundComponent, OebTabsComponent, HlmIconModule, CountUpModule, HlmInputDirective, DatatableComponent, LearningPathDatatableComponent, LearningPathParticipantsDatatableComponent, LearningPathGraduatesDatatableComponent, LearningPathRequestsDatatableComponent,	HlmBadgeDirective, HlmButtonDirective];
+
 
 @NgModule({
 	imports: [...COMMON_IMPORTS, FormsModule, LMarkdownEditorModule, TranslateModule],

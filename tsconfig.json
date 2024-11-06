@@ -71,6 +71,9 @@
       ],
       "@spartan-ng/ui-badge-helm": [
         "./src/app/components/spartan/ui-badge-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-progress-helm": [
+        "./src/app/components/spartan/ui-progress-helm/src/index.ts"
       ]
     }
   }

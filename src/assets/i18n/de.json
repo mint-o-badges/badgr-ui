@@ -155,6 +155,7 @@
 		"visitWebsite": "Website besuchen",
 		"nichtVerified": "Dieser Issuer wurde noch nicht verifiziert",
 		"createBadge": "Badge erstellen",
+		"createLearningPath": "Lernpfad hochladen",
 		"contactInstitution": "Institution kontaktieren",
 		"jsonView": "JSON ansehen",
 		"viewOriginal": "Original ansehen",
@@ -194,13 +195,18 @@
 		"editInstitution": "Institution bearbeiten",
 		"editInstitutionInfo": "Bearbeite die Informationen dieser Institution.",
 		"issuerHasNoBadgesYet": "hat noch keine Badges.",
+		"issuerHasNoLearningPathYet": "hat noch keine Lernpfade.",
 		"issuerHasBadges": "hat",
-		"myInstitutionsText": "Über deine Institutionen kannst du <span class='tw-text-purple tw-font-medium'> Badges erstellen und anschließend an deine Lernenden vergeben</span>.",
+		"myInstitutionsText": "Über deine Institutionen kannst du <span class='tw-font-medium'> Badges erstellen und anschließend an deine Lernenden vergeben</span>.",
+		"myLearningPathText": "Ebenso kannst du <span class='tw-font-medium'>Lernpfade</span> anlegen. Da sich diese Funktion noch in der Ausarbeitung befindet, helfen wir dir sehr gerne dabei. Schreib uns einfach an <a class='tw-underline tw-text-[#1400FF]' hlmA href='mailto:lernpfad@openbadges.education'>lernpfad@openbadges.education</a>.",
 		"myInstitutionsNoBadge": "hat noch keine Badges, die sie vergeben kann.",
 		"myInstitutionsCreateBadge": "Neuen Badge erstellen",
+		"myInstitutionsCreateLearningPath": "Lernpfad erstellen",
 		"giveMyBadges": "Meine Badges vergeben",
 		"askForPlugin": "Plugin anfragen",
 		"askForPluginText": "Unser <span class='tw-font-bold tw-text-purple'>Plugin</span> bietet dir die Möglichkeit, Badges aus deiner eigenen digitalen Lehrumgebung heraus zu vergeben.",
+		"betaPhase": "Wir befinden uns noch in der Betaphase. <b>Du hast Fehler entdeckt? Schreib uns an <a class='tw-text-link' href='mailto:hallo@openbadges.education'>hallo@openbadges.education</a></b>.",
+		"askForLearningPath": "Wir helfen dir, einen Lernpfad anzulegen. Schreibe an <a href='mailto:lernpfad@openbadges.education' class='tw-underline tw-text-[#1400FF]'>lernpfad@openbadges.education</a>.",
 		"award": "vergeben",
 		"badgePreview": "Badge-Vorschau",
 		"certPreview": "Zertifikats-Vorschau",
@@ -234,6 +240,17 @@
 		"institutionIssued": "Institution vergibt Badges über OEB",
 		"institutionsIssued": "Institutionen vergeben Badges über OEB",
 		"allCategories": "Alle Kategorien"
+		"learningPathHeadline": "Lernpfad hochladen",
+		"uploadLearningPathText": "Wenn du versiert im Umgang mit JSON-Dateien bist, kannst du den Lernpfad auch selbst anlegen. So geht’s:",
+		"learningPathHelp": "Momentan werden Lernpfade noch als JSON-Datei importiert. <b>Gerne erstellen wir diese Datei für dich</b>, schreibe einfach an <a class='tw-text-link tw-underline' href='mailto:lernpfad@openbadges.education'>lernpfad@openbadges.education</a>.",
+		"learningPathList1": "Lade unsere Datei-Vorlage herunter: <a download='BeispielPfad.json' class='tw-underline tw-text-[#1400FF]' href='./assets/testpfad.json'>Download JSON-Vorlage</a>",
+		"learningPathList2": "Öffne sie mit einem Texteditor.",
+		"learningPathList3": "Ersetze den Beispiel-Text durch die richtigen Badge-Angaben.",
+		"learningPathList4": "Exportiere die Vorlage als JSON-Datei.",
+		"learningPathList5": "Lade deine JSON-Datei hoch:",
+		"learningPathRecipient": "Absolvent:innen",
+		"learningPathParticipants": "Teilnehmer:innen",
+		"learningPathCreateHeadline": "Erstelle deinen Lernpfad"
 	},
 	"Badge": {
 		"groupBy": "Gruppieren nach",
@@ -336,7 +353,8 @@
 		"changeBadgeTitle": "Bitte ändere den Titel",
 		"maxValue1000": "Maximalwert ist 1000",
 		"imageTooLarge": "Das Bild ist zu groß. Bitte wähle ein Bild mit einer Größe von maximal 250 KB.",
-		"licenseInfo": "Badges werden unter der <a class='tw-underline tw-text-[#1400FF]' target='_blank' href='https://creativecommons.org/publicdomain/zero/1.0/legalcode.de'> Lizenz CC0 1.0 </a> erstellt."
+		"licenseInfo": "Badges werden unter der <a class='tw-underline tw-text-[#1400FF]' target='_blank' href='https://creativecommons.org/publicdomain/zero/1.0/legalcode.de'> Lizenz CC0 1.0 </a> erstellt.",
+		"requiredError": "Erforderlich"
 	},
 	"Signup": {
 		"youHaveAccount": "Du hast bereits einen Account?",
@@ -452,13 +470,15 @@
 		"fromMozilla": "Kommt von Mozilla?",
 		"closeNotification": "Benachrichtigung schließen",
 		"noBadgesYet": "Du hast noch keine Badges",
+		"noLearningPathYet": "Du hast noch keine Lernpfade",
 		"collectShareBadges": "Sammle und teile digitale Badges aus deinem Rucksack.",
+		"collectShareLearningPath": "Sammle und teile digitale Lernpfade aus deinem Rucksack.",
 		"groupByInstitution": "Nach Institutionen gruppieren",
 		"institution": "Institution",
 
 		"greating": "Hallo",
 		"competencies": "Kompetenzen",
-		"studyingTime": "Lernzeiten",
+		"studyingTime": "Lernzeit",
 		"hours": "Stunden",
 		"newCompetencies": "Neue Kompetenzen",
 		"skills": "Fähigkeiten",
@@ -611,7 +631,26 @@
 		"savedSuccessfully": "<span class='tw-font-bold'> Die QR-Code-Vergabe wurde erfolgreich auf der Badge-Detail-Seite gespeichert.</span>",
 		"downloadedSuccessfully": "<span class='tw-font-bold'>Du hast den QR-Code erfolgreich heruntergeladen.</span><br> Schaue in deinem Download-Ordner nach."
 	},
-	"OEBComponents": {
+	"LearningPath": {
+		"learningpaths": "Lernpfade",
+		"catalogHeadline":"Alle Lernpfade in der Übersicht",
+		"participate": "Teilnehmen",
+		"notParticipateAnymore": "Nicht mehr teilnehmen",
+		"searchLearningPaths": "Lernpfade durchsuchen",
+		"lpFrom": "Lernpfad von",
+		"hours": "Stunden",
+		"successRequestPath": "Lernpfad-Badge erfolgreich angefragt!",
+		"desc": "Beschreibung",
+		"myProgress": "Mein Fortschritt",
+		"lpBadges": "Badges des Lernpfads",
+		"lpBadgeRequests": "Lernpfad-Badge-Anfragen",
+		"lpRecipients": "Lernpfad-Empfänger:innen",
+		"lpActives": "Aktuell Lernende",
+		"getYourPath": "Hol dir deinen Lernpfad-Badge ab",
+		"continue": "Weiterlernen",
+		"finished": "Abgeschlossen"
+	},
+	"OEBComponents":{
 		"fieldIsRequired": "Dieses Feld ist erforderlich"
 	}
 }

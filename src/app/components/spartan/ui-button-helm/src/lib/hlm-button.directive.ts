@@ -30,6 +30,7 @@ export const buttonVariants = cva(
 				xs: 'tw-py-[4px] tw-px-[16px] md:tw-rounded-[10px] tw-rounded-[7px] tw-border',
 				xxs: 'tw-py-[3px] tw-px-[9px] md:tw-rounded-[10px] tw-rounded-[7px] tw-border',
 				icon: 'tw-h-12 tw-w-12 ',
+				bigIcon: 'tw-h-[76px] tw-w-[76px] tw-text-[40px]',
 			},
 			width: {
 				default: '',
