@@ -330,7 +330,8 @@
 		"changeBadgeTitle":"Bitte ändere den Titel",
 		"maxValue1000":"Maximalwert ist 1000",
 		"imageTooLarge": "Das Bild ist zu groß. Bitte wähle ein Bild mit einer Größe von maximal 250 KB.",
-		"licenseInfo": "Badges werden unter der <a class='tw-underline tw-text-[#1400FF]' target='_blank' href='https://creativecommons.org/publicdomain/zero/1.0/legalcode.de'> Lizenz CC0 1.0 </a> erstellt."
+		"licenseInfo": "Badges werden unter der <a class='tw-underline tw-text-[#1400FF]' target='_blank' href='https://creativecommons.org/publicdomain/zero/1.0/legalcode.de'> Lizenz CC0 1.0 </a> erstellt.",
+		"requiredError": "Erforderlich"
 	},
 	"Signup": {
 		"youHaveAccount": "Du hast bereits einen Account?",
@@ -453,7 +454,7 @@
 
 		"greating": "Hallo",
 		"competencies": "Kompetenzen",
-		"studyingTime": "Lernzeiten",
+		"studyingTime": "Lernzeit",
 		"hours": "Stunden",
 		"newCompetencies": "Neue Kompetenzen",
 		"skills": "Fähigkeiten",
