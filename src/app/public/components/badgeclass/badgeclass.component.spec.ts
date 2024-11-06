@@ -25,7 +25,7 @@ describe('PublicBadgeClassComponent', () => {
 		TestBed.configureTestingModule({
 			declarations: [PublicBadgeClassComponent],
 			imports: [RouterTestingModule, CommonModule, BadgrCommonModule, ...COMMON_IMPORTS],
-			providers: [RecipientBadgeApiService, ...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
+			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS, RecipientBadgeApiService, AppConfigService, { provide: 'config', useValue: { api: { baseUrl: '' }, features: {} } },],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		}).compileComponents();
 		fixture = TestBed.createComponent(PublicBadgeClassComponent);
