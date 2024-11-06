@@ -4,7 +4,7 @@
 		<h2 class="tw-flex tw-flex-col tw-text-[#492E98] tw-font-black tw-text-5xl tw-font-[rubik]">
 			{{ 'General.institutions' | translate }}
 			<ng-template [showLoader]="false" [bgAwaitPromises]="[issuersLoaded]">
-				<span class="tw-font-normal tw-text-2xl tw-font-[rubik] tw-text-[#000000]">
+				<span class="tw-font-normal tw-text-2xl tw-break-words tw-font-[rubik] tw-text-[#000000]">
 					{{ issuers.length | i18nPlural: plural['issuerText'] }}
 				</span>
 			</ng-template>
@@ -15,18 +15,20 @@
 		<ng-template [showLoader]="true" [bgAwaitPromises]="[issuersLoaded]">
 			<section>
 				<div class="tw-flex tw-items-center tw-rounded-lg tw-p-4 tw-bg-[#ECFEED]">
-					<div class="tw-flex tw-flex-row tw-gap-4 tw-w-full tw-items-center tw-justify-between">
-						<div class="tw-flex tw-flex-row tw-items-center tw-gap-6">
+					<div
+						class="tw-flex tw-flex-col tw-gap-4 tw-w-full md:tw-items-center md:tw-justify-between md:tw-flex-row"
+					>
+						<div class="tw-flex tw-flex-col md:tw-flex-row md:tw-items-center tw-gap-6">
 							<div class="tw-flex tw-relative tw-items-center">
 								<input
 									hlmInput
-									class="tw-bg-white tw-border-1 tw-border-[#492E98] tw-min-w-96 tw-border-solid tw-min-h-12 tw-rounded-lg tw-p-2 tw-font-[rubik]"
+									class="tw-bg-white tw-border-1 tw-border-[#492E98] md:tw-min-w-96 tw-border-solid tw-min-h-12 tw-rounded-lg tw-p-2 tw-font-[rubik]"
 									placeholder="{{ 'Issuer.searchInstitutions' | translate }}"
 									[(ngModel)]="searchQuery"
 								/>
 								<hlm-icon
 									name="lucideSearch"
-									class="tw-w-8 tw-h-8 tw-absolute tw-top-1/2 tw-right-2 -tw-translate-y-1/2 tw-pointer-events-none tw-text-[#492E98]"
+									class="tw-w-8 tw-h-8 tw-absolute tw-top-1/2 tw-right-36 md:tw-right-2 -tw-translate-y-1/2 tw-pointer-events-none tw-text-[#492E98]"
 								></hlm-icon>
 							</div>
 
