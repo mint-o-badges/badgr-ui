@@ -1,7 +1,6 @@
 <form-message></form-message>
-
-<header class="topbar">
-	<div class="l-containerxaxis topbar-x-wrap">
+<div class="oeb page-padding">
+	<header class="oeb-headline-container tw-relative oeb-section-sm">
 		<h2 class="tw-flex tw-flex-col tw-text-[#492E98] tw-font-black tw-text-5xl tw-font-[rubik]">
 			{{ 'General.institutions' | translate }}
 			<ng-template [showLoader]="false" [bgAwaitPromises]="[issuersLoaded]">
@@ -10,95 +9,95 @@
 				</span>
 			</ng-template>
 		</h2>
-	</div>
-</header>
+	</header>
 
-<div id="main-page">
-	<ng-template [showLoader]="true" [bgAwaitPromises]="[issuersLoaded]">
-		<section class="l-containerxaxis l-containeryaxis l-responsivelist">
-			<div class="tw-flex tw-items-center tw-rounded-lg tw-p-4 tw-bg-[#ECFEED]">
-				<div class="tw-flex tw-flex-row tw-gap-4 tw-w-full tw-items-center tw-justify-between">
-					<div class="tw-flex tw-flex-row tw-items-center tw-gap-6">
-						<div class="tw-flex tw-relative tw-items-center">
-							<input
-								hlmInput
-								class="tw-bg-white tw-border-1 tw-border-[#492E98] tw-min-w-96 tw-border-solid tw-min-h-12 tw-rounded-lg tw-p-2 tw-font-[rubik]"
-								placeholder="{{ 'Issuer.searchInstitutions' | translate }}"
-								[(ngModel)]="searchQuery"
-							/>
-							<hlm-icon
-								name="lucideSearch"
-								class="tw-w-8 tw-h-8 tw-absolute tw-top-1/2 tw-right-2 -tw-translate-y-1/2 tw-pointer-events-none tw-text-[#492E98]"
-							></hlm-icon>
+	<div>
+		<ng-template [showLoader]="true" [bgAwaitPromises]="[issuersLoaded]">
+			<section>
+				<div class="tw-flex tw-items-center tw-rounded-lg tw-p-4 tw-bg-[#ECFEED]">
+					<div class="tw-flex tw-flex-row tw-gap-4 tw-w-full tw-items-center tw-justify-between">
+						<div class="tw-flex tw-flex-row tw-items-center tw-gap-6">
+							<div class="tw-flex tw-relative tw-items-center">
+								<input
+									hlmInput
+									class="tw-bg-white tw-border-1 tw-border-[#492E98] tw-min-w-96 tw-border-solid tw-min-h-12 tw-rounded-lg tw-p-2 tw-font-[rubik]"
+									placeholder="{{ 'Issuer.searchInstitutions' | translate }}"
+									[(ngModel)]="searchQuery"
+								/>
+								<hlm-icon
+									name="lucideSearch"
+									class="tw-w-8 tw-h-8 tw-absolute tw-top-1/2 tw-right-2 -tw-translate-y-1/2 tw-pointer-events-none tw-text-[#492E98]"
+								></hlm-icon>
+							</div>
+
+							<oeb-select
+								class="tw-w-[180px] oeb tw-font-[rubik] tw-text-[#323232]"
+								[options]="[
+									{
+										label: 'Schule',
+										value: 'schule'
+									},
+									{
+										label: 'Hochschule ',
+										value: 'hochschule'
+									},
+									{
+										label: 'Andere',
+										value: 'andere'
+									}
+								]"
+								[control]="categoryControl"
+								placeholder="{{ 'Issuer.allCategories' | translate }}"
+								[autofocus]="true"
+								noTopMargin="true"
+								ariaLabel="chooseABadgeCategory"
+							></oeb-select>
 						</div>
-
-						<oeb-select
-							class="tw-w-[180px] oeb tw-font-[rubik] tw-text-[#323232]"
-							[options]="[
-								{
-									label: 'Schule',
-									value: 'schule'
-								},
-								{
-									label: 'Hochschule ',
-									value: 'hochschule'
-								},
-								{
-									label: 'Andere',
-									value: 'andere'
-								}
-							]"
-							[control]="categoryControl"
-							placeholder="{{ 'Issuer.allCategories' | translate }}"
-							[autofocus]="true"
-							noTopMargin="true"
-							ariaLabel="chooseABadgeCategory"
-						></oeb-select>
+						<button hlmBtn size="icon" *ngIf="badgesDisplay !== 'map'" (click)="openMap()">
+							<hlm-icon name="lucideMapPin" size="lg"></hlm-icon>
+						</button>
+						<button hlmBtn size="icon" *ngIf="badgesDisplay === 'map'" (click)="openGrid()">
+							<hlm-icon name="lucideGrid2x2" size="lg"></hlm-icon>
+						</button>
 					</div>
-					<button hlmBtn size="icon" *ngIf="badgesDisplay !== 'map'" (click)="openMap()">
-						<hlm-icon name="lucideMapPin" size="lg"></hlm-icon>
-					</button>
-					<button hlmBtn size="icon" *ngIf="badgesDisplay === 'map'" (click)="openGrid()">
-						<hlm-icon name="lucideGrid2x2" size="lg"></hlm-icon>
-					</button>
 				</div>
-			</div>
 
-			<ng-container *ngIf="badgesDisplay == 'grid'">
-				<ng-container *ngIf="!groupByCategory">
-					<div class="tw-flex tw-justify-between tw-flex-wrap tw-gap-4 tw-w-full">
-						<oeb-institutions-card
-							*ngFor="let issuer of issuerResults"
-							[issuer]="issuer"
-							[plural]="plural"
-							(navigate)="navigateToIssuer(issuer)"
-						></oeb-institutions-card>
-					</div>
+				<ng-container *ngIf="badgesDisplay == 'grid'">
+					<ng-container *ngIf="!groupByCategory">
+						<div class="tw-flex tw-justify-between tw-flex-wrap tw-gap-4 tw-w-full tw-mt-4">
+							<oeb-institutions-card
+								*ngFor="let issuer of issuerResults"
+								[issuer]="issuer"
+								[plural]="plural"
+								(navigate)="navigateToIssuer(issuer)"
+							></oeb-institutions-card>
+						</div>
+					</ng-container>
 				</ng-container>
-			</ng-container>
-		</section>
-	</ng-template>
-	<div id="mapWrapper" [hidden]="badgesDisplay != 'map'">
-		<div id="map" #map></div>
-		<div id="map-legend">
-			<ul>
-				<li>
-					<div class="color cluster"></div>
-					Cluster
-				</li>
-				<li>
-					<div class="color schule"></div>
-					Schule
-				</li>
-				<li>
-					<div class="color hochschule"></div>
-					Hochschule
-				</li>
-				<li>
-					<div class="color andere"></div>
-					Andere
-				</li>
-			</ul>
+			</section>
+		</ng-template>
+		<div id="mapWrapper" [hidden]="badgesDisplay != 'map'">
+			<div id="map" #map></div>
+			<div id="map-legend">
+				<ul>
+					<li>
+						<div class="color cluster"></div>
+						Cluster
+					</li>
+					<li>
+						<div class="color schule"></div>
+						Schule
+					</li>
+					<li>
+						<div class="color hochschule"></div>
+						Hochschule
+					</li>
+					<li>
+						<div class="color andere"></div>
+						Andere
+					</li>
+				</ul>
+			</div>
 		</div>
 	</div>
 </div>
