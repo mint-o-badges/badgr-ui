@@ -65,6 +65,7 @@
 								+
 							</div> -->
 							<oeb-button
+								*ngIf="issuer.canCreateBadge"
 								class="tw-ml-4 md:tw-whitespace-nowrap tw-rounded-[50%] tw-overflow-hidden tw-font-bold tw-border-2 tw-border-solid tw-border-purple"
 								size="bigIcon"
 								[routerLink]="['/issuer/issuers/', issuer.slug, 'badges', 'create']"
