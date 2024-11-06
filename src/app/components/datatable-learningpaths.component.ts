@@ -61,8 +61,8 @@ import { Issuer } from '../issuer/models/issuer.model';
 					width="full_width"
 					(click)="actionElement.emit(learningPath.slug)"
 					[text]="actionElementText"
-					[disabled]="!issuer.canEditBadge"
-					[class]="issuer.canEditBadge ? '' : 'disabled'"
+					[disabled]="!issuer.canCreateBadge"
+					[class]="issuer.canCreateBadge ? '' : 'disabled'"
 				></oeb-button>
 			</hlm-th>
 		</hlm-trow>
@@ -74,4 +74,5 @@ export class LearningPathDatatableComponent {
 	@Input() issuer: Issuer;
 	@Output() actionElement = new EventEmitter();
 	@Output() redirectToLearningPathDetail = new EventEmitter();
+
 }
