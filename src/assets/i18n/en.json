@@ -196,6 +196,8 @@
 		"giveMyBadges": "Award Badges",
 		"askForPlugin": "Plugin anfragen",
 		"askForPluginText": "Unser <span class='tw-font-bold tw-text-purple'>Plugin</span> bietet dir die Möglichkeit, Badges aus deiner eigenen digitalen Lehrumgebung heraus zu vergeben.",
+		"betaPhase": "Wir befinden uns noch in der Betaphase. <b>Du hast Fehler entdeckt? Schreib uns an <a class='tw-text-link' href='mailto:hallo@openbadges.education'>hallo@openbadges.education</a></b>.",
+		"askForLearningPath": "Wir helfen dir, einen Lernpfad anzulegen. Schreibe an <a href='mailto:lernpfad@openbadges.education' class='tw-underline tw-text-[#1400FF]'>lernpfad@openbadges.education</a>.",
 		"award": "vergeben",
 		"badgePreview": "Badge-Vorschau",
 		"certPreview": "Zertifikats-Vorschau",
@@ -328,7 +330,8 @@
 		"changeBadgeTitle":"Please change the title",
 		"maxValue1000":"Maximum value is 1000",
 		"imageTooLarge": "The image is too large. Please select an image with a size of up to 250 KB.",
-		"licenseInfo": "Badges are created under the license <a class='tw-underline tw-text-[#1400FF]' target='_blank' href='https://creativecommons.org/publicdomain/zero/1.0/legalcode.de'>CC BY 4.0'</a>."
+		"licenseInfo": "Badges are created under the license <a class='tw-underline tw-text-[#1400FF]' target='_blank' href='https://creativecommons.org/publicdomain/zero/1.0/legalcode.de'>CC BY 4.0'</a>.",
+		"requiredError": "Required"
 	},
 	"Signup": {
 		"youHaveAccount": "You already have an account?",
@@ -597,5 +600,24 @@
 	},
 	"OEBComponents":{
 		"fieldIsRequired": "This field is required"
+	},
+	"LearningPath": {
+		"learningpaths": "Learning Paths",
+		"catalogHeadline":"Overview of all learning paths",
+		"partipate": "Participate",
+		"notParticipateAnymore": "Not participate anymore",
+		"searchLearningPaths": "Lernpfade durchsuchen",
+		"lpFrom": "Lernpfad von",
+		"hours": "Stunden",
+		"successRequestPath": "Du hast deinen Lernpfad-Badge erfolgreich angefragt!",
+		"desc": "Beschreibung",
+		"myProgress": "Mein Fortschritt",
+		"lpBadges": "Badges des Lernpfads",
+		"lpBadgeRequests": "Lernpfad-Badge-Anfragen",
+		"lpRecipients": "Lernpfad-Empfänger:innen",
+		"lpActives": "Aktuell Lernende",
+		"getYourPath": "Hol dir deinen Lernpfad-Badge ab",
+		"continue": "Weiterlernen",
+		"finished": "Abgeschlossen"
 	}
 }

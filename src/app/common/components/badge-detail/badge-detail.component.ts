@@ -1,6 +1,5 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input  } from '@angular/core';
 import type { PageConfig } from './badge-detail.component.types';
-
 
 @Component({
 	selector: 'bg-badgedetail',
