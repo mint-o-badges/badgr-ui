@@ -386,6 +386,7 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 
 	openMap() {
 		this.badgesDisplay = 'map';
+		this.updateResults();
 		let that = this;
 		setTimeout(function () {
 			that.mapObject.resize();
