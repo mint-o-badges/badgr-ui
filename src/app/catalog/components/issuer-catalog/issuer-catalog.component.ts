@@ -434,6 +434,11 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 				'=1': '1 Institution',
 				other: '# ' + this.translate.instant('General.institutions'),
 			},
+			issuerText: {
+				'=0': this.translate.instant('Issuer.institutionsIssued'),
+				'=1': '1 ' + this.translate.instant('Issuer.institutionIssued'),
+				other: '# ' + this.translate.instant('Issuer.institutionsIssued'),
+			},
 			badges: {
 				'=0': this.translate.instant('Issuer.noBadges'),
 				'=1': '<strong class="u-text-bold">1</strong> Badge',

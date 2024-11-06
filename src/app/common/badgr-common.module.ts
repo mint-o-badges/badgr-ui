@@ -113,6 +113,7 @@ import { OebCollapsibleComponent } from '../components/oeb-collapsible.component
 import { OebSeparatorComponent } from '../components/oeb-separator.component';
 import { HlmBadgeDirective } from '../components/spartan/ui-badge-helm/src/lib/hlm-badge.directive';
 import { HlmButtonDirective } from '../components/spartan/ui-button-helm/src/lib/hlm-button.directive';
+import { InstitutionsCardComponent } from '../institutions-card/institutions-card.component';
 const DIRECTIVES = [
 	BgAwaitPromises,
 	BgImageStatusPlaceholderDirective,
@@ -162,6 +163,7 @@ export const COMMON_MODULE_COMPONENTS = [
 	NounprojectDialog,
 	OebCompetency,
 	OebIssuerDetailComponent,
+	InstitutionsCardComponent,
 ];
 
 const SERVICES = [

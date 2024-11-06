@@ -1,0 +1,52 @@
+<div
+	class="tw-flex tw-flex-col tw-max-w-[49%] tw-box-border tw-gap-6 tw-border-solid tw-border tw-border-[#492E98] tw-rounded-lg tw-p-8"
+>
+	<div class="tw-flex tw-flex-row tw-gap-4">
+		<img
+			class="tw-w-24"
+			[loaded-src]="issuer?.image"
+			[loading-src]="issuer?.imagePlaceholder"
+			[error-src]="issuer?.imagePlaceholder"
+			alt="{{ issuer?.name }} avatar"
+		/>
+		<div class="tw-content-center">
+			<a
+				class="tw-text-[#492E98] tw-font-bold tw-font-[rubik] tw-text-3xl tw-break-words tw-cursor-pointer"
+				(click)="onNavigate()"
+				[maxLength]="40"
+				[truncatedText]="issuer?.name"
+			></a>
+		</div>
+	</div>
+
+	<div
+		class="tw-font-normal tw-text-base tw-text-[#323232] tw-font-[rubik] tw-min-h-32"
+		[truncatedText]="issuer?.description"
+		[maxLength]="250"
+	></div>
+	<div>
+		<div variant="categoryTag" hlmBadge>{{ issuer?.category | titlecase }}</div>
+	</div>
+	<div>
+		<div class="tw-flex tw-flex-row tw-gap-4">
+			<a
+				class="tw-flex tw-flex-row tw-text-lg tw-text-[#492E98] tw-font-semibold tw-items-center"
+				[routerLink]="['/public/issuers/', issuer?.slug]"
+			>
+				<svg class="icon u-hidden-maxmobilelarge" width="36px" icon="icon_badge_custom"></svg>
+				<p
+					*ngIf="issuer?.badgeClassCount"
+					[innerHTML]="issuer?.badgeClassCount | i18nPlural: plural['badges']"
+				></p>
+			</a>
+			<a
+				*ngIf="issuer?.pathwayCount > 0"
+				class="tw-flex tw-flex-row tw-text-lg tw-text-[#492E98] tw-font-semibold tw-items-center"
+				[routerLink]="['/public/issuers/', issuer?.slug]"
+			>
+				<svg class="icon u-hidden-maxmobilelarge" width="36px" icon="icon_pathway"></svg>
+				<p [innerHTML]="issuer?.pathwayCount | i18nPlural: plural['badges']"></p>
+			</a>
+		</div>
+	</div>
+</div>

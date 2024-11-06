@@ -55,7 +55,7 @@
 		"hideDetails": "Details verstecken",
 		"password": "Passwort",
 		"loading": "Laden...",
-        "warning": "Warnung",
+		"warning": "Warnung",
 		"page": "Seite"
 	},
 	"NavItems": {
@@ -219,15 +219,17 @@
 		"uploadFields": "E-Mail-Adresse, Name und Evidence (optional) beinhalten",
 		"uploadFormat": "CSV- oder TXT-Format",
 		"nameInPdfInfo": "* Zusammen mit dem Badge wird ein entsprechendes PDF-Zertifikat an die Empfänger:innen gesendet. In diesem werden Vor- und Nachname verwendet.",
-		"useThis" : "Benutze diese",
-		"exampleLink" : "Beispiel Vorlage",
-		"createCSVorTXT" : "um eine CSV oder TXT Datei zu erstellen",
+		"useThis": "Benutze diese",
+		"exampleLink": "Beispiel Vorlage",
+		"createCSVorTXT": "um eine CSV oder TXT Datei zu erstellen",
 		"importList": "Liste importieren",
 		"import": "Importieren",
 		"csvColumns": "CSV Spalten",
 		"csvError": "Die CSV Datei enthält Zeilen länger als ihre Überschrift. Bitte behebe diesen Fehler und versuche es erneut.",
 		"pdfCertificate": "PDF-Zertifikat",
-		"useImageFormat": "Bitte nutze ein Bild im quadratischen Format 1:1, damit es auf unserer Plattform optimal dargestellt werden kann."
+		"useImageFormat": "Bitte nutze ein Bild im quadratischen Format 1:1, damit es auf unserer Plattform optimal dargestellt werden kann.",
+		"institutionIssued": "Institution vergibt Badges über OEB",
+		"institutionsIssued": "Institutionen vergeben Badges über OEB"
 	},
 	"Badge": {
 		"groupBy": "Gruppieren nach",
@@ -256,9 +258,9 @@
 		"createdOn": "Erstellt am",
 		"catalogHeadline": "Alle Badges in der Übersicht",
 		"requestedOn": "Angefragt am",
-        "deletePart1": "Bist du sicher, dass du das Badge '",
-        "deletePart2": "' löschen möchtest?",
-        "deleteConfirm": "Badge löschen"
+		"deletePart1": "Bist du sicher, dass du das Badge '",
+		"deletePart2": "' löschen möchtest?",
+		"deleteConfirm": "Badge löschen"
 	},
 	"CreateBadge": {
 		"chooseBadgeCategory": "Badge-Kategorie wählen",
@@ -326,9 +328,9 @@
 		"removeAlignmentInfo": "Bist du sicher, dass du die Verknpüfung(en) entfernen möchtest? ",
 		"irreversibleAction": "Diese Aktion kann nicht rückgängig gemacht werden.",
 		"addAnotherCompetency": "Weitere Kompetenz hinzufügen",
-		"giveBadgeTitle":"Bitte gib dem Badge einen Titel",
-		"changeBadgeTitle":"Bitte ändere den Titel",
-		"maxValue1000":"Maximalwert ist 1000",
+		"giveBadgeTitle": "Bitte gib dem Badge einen Titel",
+		"changeBadgeTitle": "Bitte ändere den Titel",
+		"maxValue1000": "Maximalwert ist 1000",
 		"imageTooLarge": "Das Bild ist zu groß. Bitte wähle ein Bild mit einer Größe von maximal 250 KB.",
 		"licenseInfo": "Badges werden unter der <a class='tw-underline tw-text-[#1400FF]' target='_blank' href='https://creativecommons.org/publicdomain/zero/1.0/legalcode.de'> Lizenz CC0 1.0 </a> erstellt."
 	},
@@ -358,16 +360,15 @@
 		"resendEmailFailed": "Das erneute Senden der Bestätigungs-E-Mail ist fehlgeschlagen. Bitte wende dich an den Support.",
 		"newEmailSent": "Eine neue Bestätigungs-E-Mail wurde gesendet an: ",
 		"infoPersonalDataProcessing": "Informationen zur Verarbeitung Deiner personenbezogenen Daten findest du in unserer <a class='tw-underline tw-text-[#1400FF]' href='public/privacy'> Datenschutzerklärung</a>",
-		"enterValidEmail":"Bitte gib eine gültige Email Adresse ein.",
-		"enterFirstName":"Bitte gib einen Vornamen an",
-		"enterLastName":"Bitte gib einen Nachnamen an",
-		"enterPassword":"Bitte gib ein Passwort ein",
-		"passwordMustBe8Char":"Das Passwort muss mindestens 8 Zeichen lang sein",
-		"confirmPassword":"Bitte bestätige Dein Passwort",
-		"passwordsNotEqual":"Die Passwörter sind nicht gleich",
+		"enterValidEmail": "Bitte gib eine gültige Email Adresse ein.",
+		"enterFirstName": "Bitte gib einen Vornamen an",
+		"enterLastName": "Bitte gib einen Nachnamen an",
+		"enterPassword": "Bitte gib ein Passwort ein",
+		"passwordMustBe8Char": "Das Passwort muss mindestens 8 Zeichen lang sein",
+		"confirmPassword": "Bitte bestätige Dein Passwort",
+		"passwordsNotEqual": "Die Passwörter sind nicht gleich",
 		"registerWithBildungsraum": "Registrieren mit Mein Bildungsraum",
 		"ageConfirm": "Ich bestätige, dass ich bei Registrierung mindestens 16 Jahre alt bin oder mir für die Registrierung auf dieser Plattform eine Zustimmung meiner Personensorgeberechtigten vorliegt."
-
 	},
 	"Captcha": {
 		"error": "Verifizierung fehlgeschlagen. Bitte erneut versuchen.",
@@ -528,7 +529,7 @@
 		"more": "Mehr",
 		"password": "Passwort",
 		"edit": "Bearbeiten",
-        "delete": "Löschen",
+		"delete": "Löschen",
 		"emailAddress": "Email Adresse",
 		"status": "Status",
 		"actions": "Aktionen",
@@ -558,11 +559,11 @@
 		"deleteAppConfirm": "Möchtest du deine App credentials wirklich löschen?",
 		"authorized": "Authorisiert:",
 		"takeBack": "Zurücknehmen",
-        "deleteAccount": "Account löschen?",
-        "deleteAccountConfirm": "Bist du dir sicher, dass du deinen Account löschen möchtest? Dies kann nicht rückgängig gemacht werden.",
-        "deleteAccountYes": "Account löschen",
-        "deleteAccountSuccess": "Account erfolgreich gelöscht",
-        "deleteAccountFailure": "Account konnte nicht gelöscht werden",
+		"deleteAccount": "Account löschen?",
+		"deleteAccountConfirm": "Bist du dir sicher, dass du deinen Account löschen möchtest? Dies kann nicht rückgängig gemacht werden.",
+		"deleteAccountYes": "Account löschen",
+		"deleteAccountSuccess": "Account erfolgreich gelöscht",
+		"deleteAccountFailure": "Account konnte nicht gelöscht werden",
 		"ResetPassword": "Passwort zurücksetzen",
 		"EnterNewPassword": "Gib ein neues Passwort ein.",
 		"currentPassword": "Aktuelles Passwort",
@@ -600,14 +601,13 @@
 		"list2": "Du zeigst deinen Lernenden den QR-Code – digital oder ausgedruckt.",
 		"list3": "Deine Lernenden scannen den QR-Code mit ihrem Smartphone und gelangen zu einer Eingabe-Maske, in der sie Vor- und Nachnamen sowie E-Mail-Adresse eingeben. Anschließend senden sie das Formular als Badge-Anfrage ab.",
 		"list4": "Du siehst die Badge-Anfragen deiner Lernenden auf der ",
-		"list4.2": "bei OEB und kannst die Badges direkt vergeben. Sie werden den Lernenden per E-Mail zugestellt."		
-
+		"list4.2": "bei OEB und kannst die Badges direkt vergeben. Sie werden den Lernenden per E-Mail zugestellt."
 	},
 	"QrCode": {
 		"savedSuccessfully": "<span class='tw-font-bold'> Die QR-Code-Vergabe wurde erfolgreich auf der Badge-Detail-Seite gespeichert.</span>",
 		"downloadedSuccessfully": "<span class='tw-font-bold'>Du hast den QR-Code erfolgreich heruntergeladen.</span><br> Schaue in deinem Download-Ordner nach."
 	},
-	"OEBComponents":{
+	"OEBComponents": {
 		"fieldIsRequired": "Dieses Feld ist erforderlich"
 	}
 }
