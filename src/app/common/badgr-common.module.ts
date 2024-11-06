@@ -111,7 +111,8 @@ import { DatatableComponent } from '../components/datatable-badges.component';
 import { OebSelectComponent } from '../components/select.component';
 import { OebCollapsibleComponent } from '../components/oeb-collapsible.component';
 import { OebSeparatorComponent } from '../components/oeb-separator.component';
-
+import { HlmBadgeDirective } from '../components/spartan/ui-badge-helm/src/lib/hlm-badge.directive';
+import { HlmButtonDirective } from '../components/spartan/ui-button-helm/src/lib/hlm-button.directive';
 const DIRECTIVES = [
 	BgAwaitPromises,
 	BgImageStatusPlaceholderDirective,
@@ -122,7 +123,7 @@ const DIRECTIVES = [
 	BgMarkdownComponent,
 	// TooltipDirective,
 	BgPopupMenuTriggerDirective,
-	DynamicFilterPipe
+	DynamicFilterPipe,
 ];
 
 export const COMMON_MODULE_COMPONENTS = [
@@ -160,7 +161,7 @@ export const COMMON_MODULE_COMPONENTS = [
 	ExportPdfDialog,
 	NounprojectDialog,
 	OebCompetency,
-	OebIssuerDetailComponent
+	OebIssuerDetailComponent,
 ];
 
 const SERVICES = [
@@ -196,8 +197,38 @@ const GUARDS = [AuthGuard];
 
 const PIPES = [UcFirstPipe, StudyLoadPipe];
 
-export const COMMON_IMPORTS = [CommonModule, FormsModule, ReactiveFormsModule, HttpClientModule, RouterModule, OebInputComponent, OebInputErrorComponent, OebSelectComponent, OebSeparatorComponent, OebCollapsibleComponent, OebButtonComponent, OebDropdownComponent, HlmH1Directive, HlmH2Directive, HlmH3Directive, HlmPDirective, HlmADirective, CompetencyAccordionComponent, OebCheckboxComponent, OebDialogComponent, SuccessDialogComponent, DangerDialogComponent, OebBackgroundComponent, OebTabsComponent, HlmIconModule, CountUpModule, HlmInputDirective, DatatableComponent];
-
+export const COMMON_IMPORTS = [
+	CommonModule,
+	FormsModule,
+	ReactiveFormsModule,
+	HttpClientModule,
+	RouterModule,
+	OebInputComponent,
+	OebInputErrorComponent,
+	OebSelectComponent,
+	OebSeparatorComponent,
+	OebCollapsibleComponent,
+	OebButtonComponent,
+	OebDropdownComponent,
+	HlmH1Directive,
+	HlmH2Directive,
+	HlmH3Directive,
+	HlmPDirective,
+	HlmADirective,
+	CompetencyAccordionComponent,
+	OebCheckboxComponent,
+	OebDialogComponent,
+	SuccessDialogComponent,
+	DangerDialogComponent,
+	OebBackgroundComponent,
+	OebTabsComponent,
+	HlmIconModule,
+	CountUpModule,
+	HlmInputDirective,
+	DatatableComponent,
+	HlmBadgeDirective,
+	HlmButtonDirective,
+];
 
 @NgModule({
 	imports: [...COMMON_IMPORTS, FormsModule, LMarkdownEditorModule, TranslateModule],

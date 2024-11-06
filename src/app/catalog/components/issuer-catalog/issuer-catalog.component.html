@@ -2,10 +2,10 @@
 
 <header class="topbar">
 	<div class="l-containerxaxis topbar-x-wrap">
-		<h2 class="topbar-x-heading">
+		<h2 class="tw-flex tw-flex-col tw-text-[#492E98] tw-font-black tw-text-5xl tw-font-[rubik]">
 			{{ 'General.institutions' | translate }}
 			<ng-template [showLoader]="false" [bgAwaitPromises]="[issuersLoaded]">
-				<span class="topbar-x-internalheading">
+				<span class="tw-font-normal tw-text-2xl tw-font-[rubik] tw-text-[#000000]">
 					{{ issuers.length | i18nPlural: plural['issuer'] }}
 				</span>
 			</ng-template>
@@ -16,108 +16,90 @@
 <div id="main-page">
 	<ng-template [showLoader]="true" [bgAwaitPromises]="[issuersLoaded]">
 		<section class="l-containerxaxis l-containeryaxis l-responsivelist">
-			<div class="l-actionbar u-margin-bottom3x">
-				<div class="forminput l-actionbar-x-search">
-					<div class="forminput-x-inputs">
-						<input
-							type="text"
-							name="forminput"
-							changeOrder
-							id="forminput"
-							placeholder="{{ 'Issuer.searchInstitutions' | translate }}"
-							[(ngModel)]="searchQuery"
-						/>
-						<svg class="forminput-x-icon" icon="icon_search"></svg>
-					</div>
-				</div>
-				<div class="viewtoggle l-actionbar-x-viewtoggle" [class.viewtoggle-is-listview]="order == 'desc'">
-					<label class="viewtoggle-x-grid" (click)="changeOrder('asc')">
-						<span class="visuallyhidden">name</span>
-						<input name="radiobutton2" id="radiobutton3" type="radio" value="asc" [(ngModel)]="order" />
-						<svg style="transform: rotateZ(90deg)" icon="icon_arrow"></svg>
-					</label>
-					<label class="viewtoggle-x-list" (click)="changeOrder('desc')">
-						<span class="visuallyhidden">-name</span>
-						<input type="radio" name="radiobutton2" id="radiobutton4" value="desc" [(ngModel)]="order" />
-						<svg style="transform: rotateZ(-90deg)" icon="icon_arrow"></svg>
-					</label>
-				</div>
-				<div class="viewtoggle-container">
-					<div>
-						<button class="viewtoggle-button" [class.active]="badgesDisplay == 'map'" (click)="openMap()">
-							{{ 'Issuer.map' | translate }}
-						</button>
-					</div>
+			<div class="tw-flex tw-items-center tw-rounded-lg tw-p-4 tw-bg-[#ECFEED]">
+				<div class="tw-flex tw-flex-row tw-gap-4 tw-w-full tw-items-center tw-justify-between">
+					<div class="tw-flex tw-flex-row tw-items-center tw-gap-6">
+						<div class="tw-flex tw-relative tw-items-center">
+							<input
+								hlmInput
+								class="tw-bg-white tw-border-1 tw-border-[#492E98] tw-min-w-96 tw-border-solid tw-min-h-12 tw-rounded-lg tw-p-2 tw-font-[rubik]"
+								placeholder="{{ 'Issuer.searchInstitutions' | translate }}"
+								[(ngModel)]="searchQuery"
+							/>
+							<hlm-icon
+								name="lucideSearch"
+								class="tw-w-8 tw-h-8 tw-absolute tw-top-1/2 tw-right-2 -tw-translate-y-1/2 tw-pointer-events-none tw-text-[#492E98]"
+							></hlm-icon>
+						</div>
 
-					<div
-						class="viewtoggle l-actionbar-x-viewtoggle"
-						[class.mapView]="badgesDisplay == 'map'"
-						[class.viewtoggle-is-listview]="badgesDisplay == 'list'"
-					>
-						<label class="viewtoggle-x-grid">
-							<span class="visuallyhidden">grid</span>
-							<input
-								checked="checked"
-								name="radiobutton"
-								id="radiobutton1"
-								type="radio"
-								value="grid"
-								[(ngModel)]="badgesDisplay"
-							/>
-							<svg icon="icon_grid"></svg>
-						</label>
-						<label class="viewtoggle-x-list">
-							<span class="visuallyhidden">list</span>
-							<input
-								type="radio"
-								name="radiobutton"
-								id="radiobutton2"
-								value="list"
-								[(ngModel)]="badgesDisplay"
-							/>
-							<svg icon="icon_list"></svg>
-						</label>
+						<oeb-select
+							class="tw-w-[150px] tw-font-[rubik] tw-text-[#323232]"
+							[options]="[
+								{
+									label: 'Schule',
+									value: 'schule'
+								},
+								{
+									label: 'Hochschule ',
+									value: 'hochschule'
+								},
+								{
+									label: 'Andere ',
+									value: 'andere'
+								}
+							]"
+							[control]="categoryControl"
+							placeholder="{{ 'Badge.category' | translate }}"
+							[autofocus]="true"
+							noTopMargin="true"
+							ariaLabel="chooseABadgeCategory"
+						></oeb-select>
 					</div>
-				</div>
-				<div class="l-actionbar-x-groupby" *ngIf="badgesDisplay != 'map'">
-					<label class="checkbox checkbox-small">
-						<input name="groupby" type="checkbox" [(ngModel)]="groupByCategory" />
-						<span class="checkbox-x-text">{{ 'Issuer.groupByCategory' | translate }}</span>
-					</label>
+					<button hlmBtn size="icon">
+						<hlm-icon name="lucideMapPin" size="lg"></hlm-icon>
+					</button>
 				</div>
 			</div>
 
 			<ng-container *ngIf="badgesDisplay == 'grid'">
 				<ng-container *ngIf="!groupByCategory">
-					<div class="tw-flex tw-flex-wrap tw-gap-12 tw-w-full">
-						<div class="issuercard" *ngFor="let issuer of issuerResults">
-							<div class="issuercard-x-body">
-								<div class="issuercard-x-image">
-									<img
-										[loaded-src]="issuer?.image"
-										[loading-src]="issuerPlaceholderSrc"
-										[error-src]="issuerPlaceholderSrc"
-										alt="{{ issuer.name }} avatar"
-									/>
-								</div>
-								<div class="issuercard-x-title tw-content-center">
-									<a class="tw-text-[#492E98]" (click)="navigateToIssuer(issuer)">{{
-										issuer.name
-									}}</a>
-									<!-- <p><strong>Your Role: </strong>{{ issuer.currentUserStaffMember?.roleInfo.label }}</p> -->
+					<div class="tw-flex tw-justify-between tw-flex-wrap tw-gap-4 tw-w-full">
+						<div
+							class="tw-flex tw-flex-col tw-max-w-[49%] tw-box-border tw-gap-6 tw-border-solid tw-border tw-border-[#492E98] tw-rounded-lg tw-p-4 ]"
+							*ngFor="let issuer of issuerResults"
+						>
+							<div class="tw-flex tw-flex-row tw-gap-4">
+								<img
+									class="tw-w-24"
+									[loaded-src]="issuer?.image"
+									[loading-src]="issuerPlaceholderSrc"
+									[error-src]="issuerPlaceholderSrc"
+									alt="{{ issuer.name }} avatar"
+								/>
+								<div class="tw-content-center">
+									<a
+										class="tw-text-[#492E98] tw-font-bold tw-font-[rubik] tw-text-3xl tw-break-words tw-cursor-pointer"
+										(click)="navigateToIssuer(issuer)"
+										[maxLength]="40"
+										[truncatedText]="issuer.name"
+									></a>
 								</div>
 							</div>
 
-							<div class="issuercard-x-desc" [truncatedText]="issuer.description" [maxLength]="250"></div>
-
-							<!-- <div class="issuercard-x-topbadges" *ngFor="let issuerBadges of [issuerToBadgeInfo[issuer.issuerUrl]]">
-								<h3 class="u-text-body-bold u-text-dark1 u-margin-bottom2x" *ngIf="issuerBadges">Top Badges:</h3>
-								<div class="l-flex l-flex-2x l-flex-column"></div>
-							</div> -->
-
-							<div class="issuercard-x-footer">
-								<div class="tw-flex tw-flex-row tw-gap-4 l-flex l-flex-aligncenter l-flex-1x">
-									<a class="badgesLink" [routerLink]="['/public/issuers/', issuer.slug]">
+							<div
+								class="tw-font-normal tw-text-base tw-text-[#323232] tw-font-[rubik] tw-min-h-32"
+								[truncatedText]="issuer.description"
+								[maxLength]="250"
+							></div>
+							<div>
+								<div variant="categoryTag" hlmBadge>{{ issuer.category | titlecase }}</div>
+							</div>
+							<div class="">
+								<div class="tw-flex tw-flex-row tw-gap-4">
+									<a
+										class="tw-flex tw-flex-row tw-text-lg tw-text-[#492E98] tw-font-semibold tw-items-center"
+										[routerLink]="['/public/issuers/', issuer.slug]"
+									>
 										<svg
 											class="icon u-hidden-maxmobilelarge"
 											width="36px"
@@ -125,21 +107,20 @@
 										></svg>
 										<p
 											*ngIf="issuer.badgeClassCount"
-											class=""
 											[innerHTML]="issuer.badgeClassCount | i18nPlural: plural['badges']"
 										></p>
 									</a>
-									<a class="badgesLink" [routerLink]="['/public/issuers/', issuer.slug]">
+									<a
+										*ngIf="issuer.pathwayCount > 0"
+										class="tw-flex tw-flex-row tw-text-lg tw-text-[#492E98] tw-font-semibold tw-items-center"
+										[routerLink]="['/public/issuers/', issuer.slug]"
+									>
 										<svg
 											class="icon u-hidden-maxmobilelarge"
 											width="36px"
 											icon="icon_pathway"
 										></svg>
-										<p
-											*ngIf="issuer.badgeClassCount"
-											class=""
-											[innerHTML]="issuer.badgeClassCount | i18nPlural: plural['badges']"
-										></p>
+										<p [innerHTML]="issuer.pathwayCount | i18nPlural: plural['badges']"></p>
 									</a>
 								</div>
 							</div>

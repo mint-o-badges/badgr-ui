@@ -7312,15 +7312,6 @@ dialog[open] {
 	justify-content: space-between;
 }
 
-.badgesLink {
-	font-size: 18px;
-	display: flex;
-	flex-direction: row;
-	color: var(--color-interactive1);
-	font-weight: 600;
-	gap: 4px;
-}
-
 @media (min-width: 480px) {
 	.o-container:not(.o-container-is-managed) .issuercard {
 		grid-template-columns: 56px 1fr;

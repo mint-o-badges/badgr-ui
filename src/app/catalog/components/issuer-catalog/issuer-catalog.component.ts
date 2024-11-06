@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, NgModule, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SessionService } from '../../../common/services/session.service';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
@@ -15,6 +15,12 @@ import { Map, NavigationControl, Popup } from 'maplibre-gl';
 import { TranslateService } from '@ngx-translate/core';
 import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
 
+import { HlmInputDirective } from '../../../components/spartan/ui-input-helm/src/lib/hlm-input.directive';
+import { HlmIconComponent } from '../../../components/spartan/ui-icon-helm/src/lib/hlm-icon.component';
+import { HlmBadgeDirective } from '../../../components/spartan/ui-badge-helm/src/lib/hlm-badge.directive';
+import { BadgeClassCategory } from '../../../issuer/models/badgeclass-api.model';
+import { FormControl } from '@angular/forms';
+
 @Component({
 	selector: 'app-issuer-catalog',
 	templateUrl: './issuer-catalog.component.html',
@@ -28,6 +34,7 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 	Array = Array;
 
 	issuers: Issuer[] = null;
+	chooseABadgeCategory = this.translate.instant('CreateBadge.chooseABadgeCategory');
 
 	issuersLoaded: Promise<unknown>;
 	issuerResults: Issuer[] = [];
@@ -36,6 +43,8 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 	public badgesDisplay = 'grid';
 
 	issuerGeoJson;
+	categoryControl = new FormControl('');
+	categoryOptions = ['Schule', 'Hochschule', 'Andere', 'N/A'];
 
 	private _searchQuery = '';
 	get searchQuery() {
@@ -43,6 +52,16 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 	}
 	set searchQuery(query) {
 		this._searchQuery = query;
+		this.updateResults();
+	}
+
+	private _categoryFilter = '';
+	get categoryFilter() {
+		return this._categoryFilter;
+	}
+
+	set categoryFilter(val: string) {
+		this._categoryFilter = val;
 		this.updateResults();
 	}
 
@@ -87,6 +106,11 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 
 		// subscribe to issuer and badge class changes
 		this.issuersLoaded = this.loadIssuers();
+		// Subscribe to changes on the control
+		this.categoryControl.valueChanges.subscribe((value) => {
+			this.categoryFilter = value;
+			console.log(value);
+		});
 	}
 
 	async loadIssuers() {
@@ -178,7 +202,6 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 		this.issuerResults = [];
 		this.issuerResultsByCategory = [];
 		const issuerResultsByCategoryLocal = {};
-
 		var addIssuerToResultsByCategory = function (item) {
 			that.issuerResults.push(item);
 
@@ -198,10 +221,11 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 
 			return true;
 		};
-
 		this.issuers.filter(MatchingAlgorithm.issuerMatcher(this.searchQuery)).forEach(addIssuerToResultsByCategory);
-
 		this.issuerResults.sort((a, b) => a.name.localeCompare(b.name));
+		this.issuerResults = this.issuers
+			.filter(MatchingAlgorithm.issuerMatcher(this.searchQuery))
+			.filter((issuer) => !this.categoryFilter || issuer.category === this.categoryFilter);
 		this.issuerResultsByCategory.forEach((r) => r.issuers.sort((a, b) => a.name.localeCompare(b.name)));
 		this.generateGeoJSON(this.issuerResults);
 	}
