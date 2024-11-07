@@ -14,7 +14,7 @@
 	<div>
 		<ng-template [showLoader]="true" [bgAwaitPromises]="[issuersLoaded]">
 			<section>
-				<div class="tw-flex tw-items-center tw-rounded-lg tw-p-4 tw-bg-[#ECFEED]">
+				<div class="tw-flex tw-items-center tw-rounded-lg tw-p-4 tw-bg-[#ECFEED] tw-mb-4">
 					<div
 						class="tw-flex tw-flex-col tw-gap-4 tw-w-full md:tw-items-center md:tw-justify-between md:tw-flex-row"
 					>
@@ -22,18 +22,18 @@
 							<div class="tw-flex tw-relative tw-items-center">
 								<input
 									hlmInput
-									class="tw-bg-white tw-border-1 tw-border-[#492E98] md:tw-min-w-96 tw-border-solid tw-min-h-12 tw-rounded-lg tw-p-2 tw-font-[rubik]"
+									class="tw-bg-white tw-w-full tw-border-1 tw-border-[#492E98] md:tw-w-96 tw-border-solid tw-min-h-12 tw-rounded-lg tw-p-2 tw-font-[rubik]"
 									placeholder="{{ 'Issuer.searchInstitutions' | translate }}"
 									[(ngModel)]="searchQuery"
 								/>
 								<hlm-icon
 									name="lucideSearch"
-									class="tw-w-8 tw-h-8 tw-absolute tw-top-1/2 tw-right-36 md:tw-right-2 -tw-translate-y-1/2 tw-pointer-events-none tw-text-[#492E98]"
+									class="tw-w-8 tw-h-8 tw-absolute tw-top-1/2 tw-right-2 -tw-translate-y-1/2 tw-pointer-events-none tw-text-[#492E98]"
 								></hlm-icon>
 							</div>
 
 							<oeb-select
-								class="tw-w-[180px] oeb tw-font-[rubik] tw-text-[#323232]"
+								class="md:tw-w-[180px] oeb tw-font-[rubik] tw-text-[#323232]"
 								[options]="[
 									{
 										label: 'Schule',
@@ -66,7 +66,7 @@
 
 				<ng-container *ngIf="badgesDisplay == 'grid'">
 					<ng-container *ngIf="!groupByCategory">
-						<div class="tw-flex tw-justify-between tw-flex-wrap tw-gap-4 tw-w-full tw-mt-4">
+						<div class="tw-flex tw-justify-between tw-flex-wrap tw-gap-4 tw-w-full">
 							<oeb-institutions-card
 								*ngFor="let issuer of issuerResults"
 								[issuer]="issuer"
@@ -78,7 +78,7 @@
 				</ng-container>
 			</section>
 		</ng-template>
-		<div id="mapWrapper" [hidden]="badgesDisplay != 'map'">
+		<div id="mapWrapper" class="tw-h-96" [hidden]="badgesDisplay != 'map'">
 			<div id="map" #map></div>
 			<div id="map-legend">
 				<ul>
