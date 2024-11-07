@@ -8,7 +8,7 @@ export interface Issuer {
 	category: string;
 	slug: string;
 	badgeClassCount: number;
-	pathwayCount: number;
+	learningPathCount: number;
 	// Add other properties as needed
 }
 

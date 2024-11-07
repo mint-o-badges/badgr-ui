@@ -45,7 +45,7 @@
 					alt="learning path icon"
 					class="tw-w-7"
 				/>
-				<p class="tw-ml-2" [innerHTML]="1 | i18nPlural: plural['learningPath']"></p>
+				<p class="tw-ml-2" [innerHTML]="issuer?.learningPathCount | i18nPlural: plural['learningPath']"></p>
 			</a>
 		</div>
 	</div>
