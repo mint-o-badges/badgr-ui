@@ -18,6 +18,7 @@ import { lucidePlus, lucideUpload, lucideCircleX } from '@ng-icons/lucide';
 		[width]="width"
 		[size]="size"
 		[variant]="variant"
+		[attr.id]="id"
 	>
 		<hlm-icon *ngIf="icon" class="tw-mr-4" [size]="size" [name]="icon" />
 		<img *ngIf="img" class="md:tw-h-[30px] tw-h-[20px] tw-pr-4" [src]="img" />
@@ -36,6 +37,7 @@ export class OebButtonComponent {
 	@Input() img: string = undefined;
 	@Input() icon: string = undefined;
 	@Input() type: string = 'submit';
+	@Input() id: string = null;
 
 	@Input('disabled-when-requesting')
 	disabledWhenRequesting = false;
