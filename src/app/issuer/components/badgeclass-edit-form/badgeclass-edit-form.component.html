@@ -583,7 +583,8 @@
 					size="sm"
 					type="button" 
 					(click)="addTag()" 
-					text="{{ 'General.add' | translate }}">
+					text="{{ 'General.add' | translate }}"
+					[id]="'add-tag-btn'">
 				</oeb-button>
 			</div>
 			<div *ngIf="tags.size > 0" class="tw-flex tw-flex-wrap tw-gap-4 tw-w-[70%] tw-ml-[3.2rem]">
