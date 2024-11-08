@@ -1,5 +1,5 @@
 <div
-	class="tw-flex tw-flex-col tw-w-[100%] lg:tw-w-[49%] tw-box-border tw-gap-6 tw-border-solid tw-border tw-border-[#492E98] tw-rounded-lg tw-p-8"
+	class="tw-flex tw-flex-col tw-box-border tw-gap-6 tw-border-solid tw-border tw-border-[#492E98] tw-rounded-[10px] tw-p-8"
 >
 	<div class="tw-flex tw-flex-row tw-gap-4">
 		<img
@@ -16,6 +16,10 @@
 				[maxLength]="40"
 				[truncatedText]="issuer?.name"
 			></a>
+			<p *ngIf="!public" hlmP class="tw-text-oebblack tw-font-semibold">
+				{{ 'Issuer.yourRole' | translate }}
+				{{ issuer.currentUserStaffMember?.roleInfo.label }}:in
+			</p>
 		</div>
 	</div>
 
@@ -47,6 +51,59 @@
 				/>
 				<p class="tw-ml-2" [innerHTML]="issuer?.learningPathCount | i18nPlural: plural['learningPath']"></p>
 			</a>
+		</div>
+	</div>
+	<div *ngIf="!public">
+		<div *ngFor="let issuerBadges of [issuerToBadgeInfo[issuer.issuerUrl]]">
+			<p
+				class="tw-text-purple tw-font-medium tw-py-4 md:tw-text-[22px] md:tw-leading-[26.4px] tw-text-[16px] tw-leading-[19.2px]"
+				*ngIf="!issuerBadges"
+			>
+				{{ issuer.name }} {{ 'Issuer.myInstitutionsNoBadge' | translate }}
+			</p>
+
+			<div *ngIf="issuerBadges" class="tw-flex tw-flex-wrap tw-gap-1 tw-pb-6 tw-items-center">
+				<oeb-button
+					class="md:tw-whitespace-nowrap tw-rounded-[50%] tw-overflow-hidden tw-font-bold tw-border-2 tw-border-solid tw-border-purple"
+					size="bigIcon"
+					[routerLink]="['/issuer/issuers/', issuer.slug, 'badges', 'create']"
+					[disabled-when-requesting]="true"
+					[text]="'+'"
+					variant="lightpurple"
+				></oeb-button>
+				<a
+					*ngFor="let badge of issuerBadges.badges"
+					[routerLink]="['/issuer/issuers/', issuer.slug, 'badges', badge.slug]"
+					class="hover:tw-scale-105 tw-ease-in-out tw-transition tw-duration-200"
+					[title]="badge.name"
+				>
+					<div>
+						<img [src]="badge.image" [title]="badge?.name" [width]="80" [height]="80" />
+					</div>
+				</a>
+			</div>
+		</div>
+
+		<div class="tw-flex tw-gap-4 tw-flex-wrap tw-justify-between tw-pt-2">
+			<oeb-button
+				[class.disabled]="!issuer.canCreateBadge"
+				class="tw-whitespace-nowrap tw-flex-grow"
+				[routerLink]="['/issuer/issuers/', issuer.slug]"
+				[disabled]="!issuer.currentUserStaffMember"
+				[text]="'Issuer.giveBadge' | translate"
+				width="full_width"
+			>
+			</oeb-button>
+			<oeb-button
+				[class.disabled]="!issuer.canCreateBadge"
+				class="tw-whitespace-nowrap tw-flex-grow"
+				[routerLink]="['/issuer/issuers/', issuer.slug, 'learningpaths', 'upload']"
+				[disabled]="!issuer.canCreateBadge"
+				[text]="'Issuer.myInstitutionsCreateLearningPath' | translate"
+				variant="secondary"
+				width="full_width"
+			>
+			</oeb-button>
 		</div>
 	</div>
 </div>
