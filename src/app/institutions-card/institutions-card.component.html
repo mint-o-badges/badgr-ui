@@ -34,14 +34,14 @@
 	<div>
 		<div class="tw-flex tw-flex-row tw-gap-4">
 			<a
-				class="tw-flex tw-flex-row tw-text-lg tw-text-[#492E98] tw-font-semibold tw-items-center"
+				class="tw-flex tw-flex-row tw-text-lg tw-text-[#492E98] tw-font-semibold tw-items-center hover:tw-underline"
 				[routerLink]="['/public/issuers/', issuer?.slug]"
 			>
 				<img src="assets/badges/badgeIcon.svg" alt="bade icon" class="tw-w-9" />
 				<p [innerHTML]="issuer?.badgeClassCount | i18nPlural: plural['badges']"></p>
 			</a>
 			<a
-				class="tw-flex tw-flex-row tw-text-lg tw-text-[#492E98] tw-font-semibold tw-items-center"
+				class="tw-flex tw-flex-row tw-text-lg tw-text-[#492E98] tw-font-semibold tw-items-center hover:tw-underline"
 				[routerLink]="['/public/issuers/', issuer?.slug]"
 			>
 				<img
@@ -64,7 +64,7 @@
 
 			<div *ngIf="issuerBadges" class="tw-flex tw-flex-wrap tw-gap-1 tw-pb-6 tw-items-center">
 				<oeb-button
-					class="md:tw-whitespace-nowrap tw-rounded-[50%] tw-overflow-hidden tw-font-bold tw-border-2 tw-border-solid tw-border-purple"
+					class="md:tw-whitespace-nowrap tw-mr-4 tw-rounded-[50%] tw-overflow-hidden tw-font-bold tw-border-2 tw-border-solid tw-border-purple"
 					size="bigIcon"
 					[routerLink]="['/issuer/issuers/', issuer.slug, 'badges', 'create']"
 					[disabled-when-requesting]="true"
