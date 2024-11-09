@@ -22,7 +22,9 @@ import {
   lucideChevronUp,
   lucideCheck,
   lucideRocket,
-  lucideCircleAlert
+  lucideCircleAlert,
+  lucideStepBack,
+  lucideStepForward
 
 } from '@ng-icons/lucide';
 
@@ -50,7 +52,9 @@ import {
       lucideChevronUp,
       lucideCheck,
       lucideRocket,
-      lucideCircleAlert
+      lucideCircleAlert,
+      lucideStepBack,
+      lucideStepForward
     }),
   ],
 })
