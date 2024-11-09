@@ -1,21 +1,41 @@
-<section class="container">
+<div class="stepper">
     <header>
-      <h2>Step {{selectedIndex + 1}}/{{steps.length}}</h2>
-      <div>
-        <button class="pure-button" cdkStepperPrevious>&larr;</button>
-        <button
-            class="pure-button"
-            *ngFor="let step of steps; let i = index;"
-            [ngClass]="{'pure-button-primary': selectedIndex === i}"
-            (click)="onClick(i)"
-        >
-          Step {{i + 1}}
-        </button>
-        <button class="pure-button" cdkStepperNext>&rarr;</button>
-      </div>
+        <div class="tw-justify-evenly tw-items-center tw-w-full tw-z-20 tw-relative tw-inline-flex tw-bg-[var(--color-lightgreen)] tw-p-2 tw-my-10 tw-rounded-2xl">
+          <button class="tw-w-8 tw-cursor-pointer" cdkStepperPrevious>
+            <hlm-icon class="tw-text-purple tw-box-border md:tw-w-[22px] tw-w-[16px] md:tw-h-[22px] tw-h-[16px]" name="lucideStepBack"></hlm-icon>
+          </button>
+
+          <div class="steps-wrapper">
+
+            <button
+                class="step"
+                *ngFor="let step of steps ; let i = index;"
+                [ngClass]="{
+                  active: selectedIndex === i,
+                  error: step.hasError,
+                  completed: step.completed && i < selectedIndex
+                }"
+                (click)="onClick(i)"
+            >
+              <div class="step-bullet">
+    
+                {{i + 1}}
+              </div>
+              <span class="step-title">
+                {{ step.label}}
+              </span>
+  
+            </button>
+          </div>
+          
+          <button class="tw-w-8 tw-cursor-pointer"  cdkStepperNext>
+            <hlm-icon class="tw-text-purple tw-box-border md:tw-w-[22px] tw-w-[16px] md:tw-h-[22px] tw-h-[16px]" name="lucideStepForward"></hlm-icon>
+          </button>
+        </div>
+
     </header>
   
     <!-- Content from the CdkStep is projected here -->
     <div class="tw-flex tw-gap-2" [ngTemplateOutlet]="selected.content"></div>
   
-  </section>
+  </div>

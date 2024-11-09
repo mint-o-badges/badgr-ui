@@ -1,23 +1,26 @@
 import { Component, OnInit } from '@angular/core';
-import { CdkStepper } from '@angular/cdk/stepper';
+import { CdkStepper, STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 
 
 @Component({
   selector: 'app-my-stepper',
   templateUrl: './stepper.component.html',
   styleUrls: ['./stepper.component.scss'],
-  /* ANGULAR: This custom stepper provides itself as CdkStepper so that it can be recognized
+  /* This custom stepper provides itself as CdkStepper so that it can be recognized
   / by other components. */
-  /* ME: WTF why do you have to make this so complicated */
-  providers: [{ provide: CdkStepper, useExisting: MyStepperComponent }]
+  providers: [{ 
+    provide: CdkStepper, useExisting: StepperComponent }, {
+      provide: STEPPER_GLOBAL_OPTIONS, useValue: { showError: true }
+    }]
 })
-export class MyStepperComponent extends CdkStepper implements OnInit {
+export class StepperComponent extends CdkStepper implements OnInit {
 
   onClick(index: number): void {
     this.selectedIndex = index;
   }
 
-  ngOnInit() {
+  ngOnInit() { 
+    console.log(this.steps.first.hasError)      
   }
 
 }
