@@ -1,6 +1,6 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, ValidationErrors, Validators } from '@angular/forms';
 import { SessionService } from '../../../common/services/session.service';
 import { MessageService } from '../../../common/services/message.service';
 import { IssuerApiService } from '../../services/issuer-api.service';
@@ -31,7 +31,8 @@ import { ApiLearningPath, ApiLearningPathForCreation } from '../../../common/mod
 import { BadgeClassCategory } from '../../models/badgeclass-api.model';
 import { FormFieldSelectOption } from '../../../common/components/formfield-select';
 import { LearningPathManager } from '../../services/learningpath-manager.service';
-import { CdkStepper } from '@angular/cdk/stepper';
+import { StepperComponent } from '../../../components/stepper/stepper.component';
+import { base64ByteSize } from '../../../common/util/file-util';
 
 interface DraggableItem {
 	content: string;
@@ -39,12 +40,23 @@ interface DraggableItem {
 	disable: boolean;
 	handle: boolean;
 }
+
+type BadgeResult = BadgeClass & { selected?: boolean };
+
 @Component({
 	selector: 'learningpath-edit-form',
 	templateUrl: './learningpath-edit-form.component.html',
 	styleUrls: ['./learningpath-edit-form.component.scss'],
 })
 export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
+
+	useOurEditor = this.translate.instant('CreateBadge.useOurEditor');
+	imageSublabel = this.translate.instant('CreateBadge.imageSublabel');
+	useOwnVisual = this.translate.instant('CreateBadge.useOwnVisual');
+	uploadOwnVisual = this.translate.instant('CreateBadge.uploadOwnVisual');
+	uploadOwnDesign = this.translate.instant('CreateBadge.uploadOwnDesign');
+	chooseFromExistingIcons = this.translate.instant('RecBadge.chooseFromExistingIcons');
+
 	@ViewChild('badgeStudio')
 	badgeStudio: BadgeStudioComponent;
 	@ViewChild('imageField')
@@ -55,6 +67,22 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 
 	@ViewChild('newTagInput')
 	newTagInput: ElementRef<HTMLInputElement>;
+
+	@ViewChild(StepperComponent) stepper: StepperComponent;
+
+	nextStep(): void {
+		this.stepper.next();
+	}
+
+	previousStep(): void {
+		this.stepper.previous();
+	}
+
+	badgeCardChecked = false;
+
+	onCheckedChange(event) {
+		console.log(event)
+	}
 
 	@Output()
 	save = new EventEmitter<Promise<ApiLearningPath>>();
@@ -82,9 +110,12 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 
 	breadcrumbLinkEntries: LinkEntry[] = [];
 	badgesLoaded: Promise<unknown>;
+	selectedBadgesLoaded: Promise<unknown>;
+	selectedBadges: BadgeClass[] = [];
 	savePromise: Promise<ApiLearningPath> | null = null;
 	badges: BadgeClass[] = null;
-	badgeResults: BadgeClass[] = null;
+	badgeResults: BadgeResult[] = null;
+	selectedBadgeUrls: string[] = ['http://localhost:8000/public/badges/FoxDoIV0SiCk5fJKTjkwpQ', 'http://localhost:8000/public/badges/MpenDQytTMqqQMOCcbgvYA'];
 	badgesFormArray: any;
 	draggableList: { id: string; name: string; image: any; description: string; slug: string; issuerName: string }[] =
 		[];
@@ -112,25 +143,34 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 		this.updateResults();
 	}
 
-	private _selectedBadges = [];
-	get selectedBadges() {
-		return this._selectedBadges;
+	checkboxChange(event, badgeUrl: string) {
+		if(event){
+			this.selectedBadgeUrls.push(badgeUrl);
+		}
+		else {
+			this.selectedBadgeUrls.splice(this.selectedBadgeUrls.indexOf(badgeUrl), 1);
+		}
+		console.log(this.selectedBadgeUrls)
 	}
-	set selectedBadges(val: any) {
-		this._selectedBadges = val;
+
+	// private _selectedBadges = [];
+	// get selectedBadges() {
+	// 	return this._selectedBadges;
+	// }
+	// set selectedBadges(val: any) {
+	// 	this._selectedBadges = val;
+	// }
+
+	get imageFieldDirty() {
+		return this.lpDetailsForm.controls.badge_image.dirty || this.lpDetailsForm.controls.badge_customImage.dirty;
 	}
 
-	activeTab = 'Schritt 1';
-	tabs: any = undefined;
+	selectedStep = 0;
+
+	maxCustomImageSize = 1024 * 250;
+	isCustomImageLarge = false;
 
 
-
-	useOurEditor = this.translate.instant('CreateBadge.useOurEditor');
-	imageSublabel = this.translate.instant('CreateBadge.imageSublabel');
-	useOwnVisual = this.translate.instant('CreateBadge.useOwnVisual');
-	uploadOwnVisual = this.translate.instant('CreateBadge.uploadOwnVisual');
-	uploadOwnDesign = this.translate.instant('CreateBadge.uploadOwnDesign');
-	
 	@ViewChild('step1Template', { static: true }) step1Template: ElementRef;
 	@ViewChild('step2Template', { static: true }) step2Template: ElementRef;
 
@@ -150,74 +190,147 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 	) {
 		super(router, route, loginService);
 		this.badgesLoaded = this.loadBadges();
+		this.selectedBadgesLoaded = this.loadSelectedBadges();
 	}
 
 	ngOnInit() {
-		this.learningPathForm.rawControl.controls.badges.valueChanges.subscribe((value) => {
-			setTimeout(() => {
-				this.learningPathForm.value.badges
-					.filter((badge) => badge.selected)
-					.forEach((badge) => {
-						if (!this.draggableList.some((item) => item.slug === badge.badge.slug)) {
-							this.draggableList.push({
-								id: badge.badge.slug,
-								name: badge.badge.name,
-								image: badge.badge.image,
-								description: badge.badge.description,
-								slug: badge.badge.slug,
-								issuerName: badge.badge.issuerName,
-							});
-						}
-					});
-					this.draggableList = this.draggableList.filter((item) =>
-						this.learningPathForm.value.badges.some((badge) => badge.badge.slug === item.slug && badge.selected)
-					);
-			}, 10);
-		});
+		this.translate.get('CreateBadge.useOurEditor').subscribe((translatedText: string) => {
+			this.useOurEditor = translatedText;
+		})
+		this.translate.get('CreateBadge.imageSublabel').subscribe((translatedText: string) => {
+			this.imageSublabel = translatedText;
+		})
+
+		this.translate.get('CreateBadge.useOwnVisual').subscribe((translatedText: string) => {
+			this.useOwnVisual = translatedText;
+		})
+
+		this.translate.get('CreateBadge.uploadOwnDesign').subscribe((translatedText: string) => {
+			this.uploadOwnDesign = translatedText;
+		})
+
+		this.translate.get('RecBadge.chooseFromExistingIcons').subscribe((translatedText: string) => {
+			this.chooseFromExistingIcons = translatedText;
+		})
+
+		this.groups[0] = "---"
+
+		this.translate.get('Badge.category').subscribe((translatedText: string) => {
+			this.groups[1] = translatedText
+		})
+
+		this.translate.get('Badge.issuer').subscribe((translatedText: string) => {
+			this.groups[2] = translatedText
+		})
+
+		this.translate.get('Badge.competency').subscribe((translatedText: string) => {
+			this.categoryOptions.competency = translatedText
+		})
+
+		this.translate.get('Badge.participation').subscribe((translatedText: string) => {
+			this.categoryOptions.participation = translatedText
+		})
+
+		this.translate.get('Badge.noCategory').subscribe((translatedText: string) => {
+			this.categoryOptions.noCategory = translatedText
+		})
+
+		// this.learningPathForm.rawControl.controls.badges.valueChanges.subscribe((value) => {
+		// 	setTimeout(() => {
+		// 		this.learningPathForm.value.badges.badges
+		// 			.filter((badge) => badge.selected)
+		// 			.forEach((badge) => {
+		// 				if (!this.draggableList.some((item) => item.slug === badge.badge.slug)) {
+		// 					this.draggableList.push({
+		// 						id: badge.badge.slug,
+		// 						name: badge.badge.name,
+		// 						image: badge.badge.image,
+		// 						description: badge.badge.description,
+		// 						slug: badge.badge.slug,
+		// 						issuerName: badge.badge.issuerName,
+		// 					});
+		// 				}
+		// 			});
+		// 		this.draggableList = this.draggableList.filter((item) =>
+		// 			this.learningPathForm.value.badges.badges.some(
+		// 				(badge) => badge.badge.slug === item.slug && badge.selected,
+		// 			),
+		// 		);
+		// 	}, 10);
+		// });
 		this.fetchTags();
 	}
 
-	ngAfterContentInit() {
-		this.tabs = [
-			
-			{
-				title: 'Schritt 1',
-				component: this.step1Template,
-			},
-			{
-				title: 'Schritt 2',
-				component: this.step2Template,
-			},
-		];
+	ngAfterViewInit(): void {
+		this.lpDetailsForm.controls.badge_image.rawControl.valueChanges.subscribe((value) => {
+			if (this.imageField.control.value != null) this.customImageField.control.reset();
+		});
+
+		this.lpDetailsForm.controls.badge_customImage.rawControl.valueChanges.subscribe((value) => {
+			if (this.customImageField.control.value != null) this.imageField.control.reset();
+		});
 	}
 
-	groups = [this.translate.instant('Badge.category'), this.translate.instant('Badge.issuer'), '---'];
+	// ngAfterViewChecked(): void {
+	// 	this.selectedStep = this.stepper.selectedIndex;
+	// }
+
+	groups: string [] = []
+	// groups = [this.translate.instant('Badge.category'), this.translate.instant('Badge.issuer'), '---'];
 	categoryOptions: { [key in BadgeClassCategory | 'noCategory']: string } = {
-		competency: this.translate.instant('Badge.competency'),
-		participation: this.translate.instant('Badge.participation'),
-		noCategory: this.translate.instant('Badge.noCategory'),
+		competency: '',
+		participation: '',
+		noCategory: ''
 	};
 
 	get issuerSlug() {
 		return this.route.snapshot.params['issuerSlug'];
 	}
 
-	learningPathForm = typedFormGroup()
+	lpDetailsForm = typedFormGroup(this.imageValidation.bind(this))
 		.addControl('name', '', [Validators.required, Validators.maxLength(60)])
 		.addControl('description', '', [Validators.required, Validators.maxLength(700)])
 		.addControl('badge_image', '')
-		.addControl('badge_customImage', '')
-		.addArray(
-			'badges',
-			typedFormGroup()
-				.addControl('selected', false)
-				.addControl('badge', null, Validators.required)
-				.addControl('order', 0, Validators.required),
-			// Technically this is only required if selected,
-			// but since it doesn't make sense to remove the
-			// default of 60 from unselected suggestions,
-			// this doesn't really matter
-		);
+		.addControl('badge_customImage', '');
+
+	lpBadgesForm = typedFormGroup(this.minSelectedBadges.bind(this)).addArray(
+		'badges',
+		typedFormGroup()
+			.addControl('selected', false)
+			.addControl('badge', null, Validators.required)
+			.addControl('order', 0, Validators.required),
+	);
+
+	// minSelectedBadges(minRequired: number) {
+	// 	return (formArray: FormArray): ValidationErrors | null => {
+	// 	  const selectedCount = formArray.controls.reduce((count, control) => {
+	// 		return control.get('selected')?.value === true ? count + 1 : count;
+	// 	  }, 0);
+
+	// 	  return selectedCount >= minRequired
+	// 		? null
+	// 		: { minSelectedBadges: { required: minRequired, actual: selectedCount } };
+	// 	};
+	//   }
+
+	learningPathForm = typedFormGroup().add('details', this.lpDetailsForm).add('badges', this.lpBadgesForm);
+
+	// learningPathForm = typedFormGroup()
+	// 	.addControl('name', '', [Validators.required, Validators.maxLength(60)])
+	// 	.addControl('description', '', [Validators.required, Validators.maxLength(700)])
+	// 	.addControl('badge_image', '')
+	// 	.addControl('badge_customImage', '')
+	// 	.addArray(
+	// 		'badges',
+	// 		typedFormGroup()
+	// 			.addControl('selected', false)
+	// 			.addControl('badge', null, Validators.required)
+	// 			.addControl('order', 0, Validators.required),
+	// Technically this is only required if selected,
+	// but since it doesn't make sense to remove the
+	// default of 60 from unselected suggestions,
+	// this doesn't really matter
+	// );
 	// .addArray(
 	// 	'badges',
 	// 	typedFormGroup()
@@ -231,15 +344,15 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 					this.badges = badges.slice().sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
 					this.badgeResults = this.badges;
 
-					this.badgesFormArray = this.learningPathForm.controls.badges.value;
+					this.badgesFormArray = this.learningPathForm.controls.badges.value.badges;
 
 					badges.forEach((badge) => {
 						this.badgesFormArray.push({ badge: badge, order: 0, selected: false });
 						this.tags = this.tags.concat(badge.tags);
 						this.issuers = this.issuers.concat(badge.issuer);
 					});
-					this.learningPathForm.setValue({
-						...this.learningPathForm.value,
+					this.lpBadgesForm.setValue({
+						...this.lpBadgesForm.value,
 						badges: this.badgesFormArray,
 					});
 					this.tags = sortUnique(this.tags);
@@ -260,6 +373,22 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 	}
 	private badgeTagMatcher(tag: string) {
 		return (badge) => (tag ? badge.tags.includes(tag) : true);
+	}
+
+	async loadSelectedBadges(){
+		 const selectedBadges =	await this.badgeClassService.badgesByUrls(this.selectedBadgeUrls)
+		 this.selectedBadges = selectedBadges;
+		 this.draggableList = this.selectedBadges.map((badge) => {
+			return {
+				id: badge.slug,
+				name: badge.name,
+				image: badge.image,
+				description: badge.description,
+				slug: badge.slug,
+				issuerName: badge.issuerName,
+			};
+		})
+		console.log(this.draggableList)	
 	}
 
 	/**
@@ -344,6 +473,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 	}
 
 	private updateResults() {
+		console.log(this.groupBy)
 		let that = this;
 		// Clear Results
 		this.badgeResults = [];
@@ -390,20 +520,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 				addBadgeToResultsByIssuer(item);
 				addBadgeToResultsByCategory(item);
 			});
-		// this.changeOrder(this.order);
-		// console.log(this.badgeResultsByIssuer)
-		// this.draggableList = this.badgeResults.map((item, index) => {
-		//     return {
-		// 	  id: index,
-		//       content: item,
-		//       effectAllowed: 'move',
-		//       disable: false,
-		//       handle: false
-		//     };
-		//   });
-		// this.badgeResults.forEach((item, index) => {
-		// 	this.draggableList.push({id: index.toString(), name: item.name, image: item.image, description: item.description, slug: item.slug, issuerName: item.issuerName})
-		// })
+		console.log(this.badgeResultsByCategory)
 	}
 
 	onDragged(item: any, list: any[], effect: DropEffect) {
@@ -442,27 +559,33 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 	}
 
 	generateCustomUploadImage(image) {
+		if (base64ByteSize(image) > this.maxCustomImageSize) {
+			this.isCustomImageLarge = true;
+			return;
+		}
 		this.customImageField.useDataUrl(image, 'BADGE');
-	}
-
-	onTabChange(tab) {
-		this.activeTab = tab;
 	}
 
 	async onSubmit() {
 		try {
 			const formState = this.learningPathForm.value;
-			console.log(formState);
+			console.log(formState)
+
+			let imageFrame = true;
+			if (this.lpDetailsForm.controls.badge_customImage.value && this.lpDetailsForm.valid) {
+				imageFrame = false;
+				this.lpDetailsForm.controls.badge_image.setValue(this.lpDetailsForm.controls.badge_customImage.value);
+			}
 
 			const criteriaText =
 				'*Folgende Kriterien sind auf Basis deiner Eingaben als Metadaten im Badge hinterlegt*: \n\n';
-			const participationText = `Du hast erfolgreich an **${this.learningPathForm.value.name}** teilgenommen.  \n\n `;
+			const participationText = `Du hast erfolgreich an **${this.learningPathForm.value.details.name}** teilgenommen.  \n\n `;
 
 			const participationBadge = await this.badgeClassService.createBadgeClass(this.issuerSlug, {
-				image: formState.badge_customImage,
-				name: formState.name,
-				description: formState.description,
-				tags: [],
+				image: formState.details.badge_image,
+				name: formState.details.name,
+				description: formState.details.description,
+				tags: Array.from(this.lpTags),
 				criteria_text: criteriaText,
 				criteria_url: '',
 			});
@@ -471,9 +594,9 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 
 			this.savePromise = this.learningPathApiService.createLearningPath(this.issuerSlug, {
 				issuer_id: issuer.slug,
-				name: formState.name,
-				description: formState.description,
-				tags: [],
+				name: formState.details.name,
+				description: formState.details.description,
+				tags: Array.from(this.lpTags),
 				badges: this.draggableList.map((item, index) => {
 					return {
 						slug: item.slug,
@@ -489,6 +612,27 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 			this.save.emit(this.savePromise);
 		} catch (e) {
 			console.log(e);
+		}
+	}
+
+	minSelectedBadges(): ValidationErrors | null {
+		return this.selectedBadgeUrls.length >= 3
+			? null
+			: { minSelectedBadges: { required: 3, actual: this.selectedBadgeUrls.length } }
+	}
+
+	imageValidation(): ValidationErrors | null {
+		if (!this.lpDetailsForm) return null;
+
+		const value = this.lpDetailsForm.value;
+
+		const image = (value.badge_image || '').trim();
+		const customImage = (value.badge_customImage || '').trim();
+		// To hide custom-image large size error msg
+		this.isCustomImageLarge = false;
+
+		if (!image.length && !customImage.length) {
+			return { imageRequired: true };
 		}
 	}
 }
