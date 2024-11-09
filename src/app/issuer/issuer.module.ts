@@ -48,8 +48,7 @@ import { DndModule } from 'ngx-drag-drop';
 import { LearningPathManager } from './services/learningpath-manager.service';
 import { CdkStepperModule } from '@angular/cdk/stepper';
 import { CdkStepper } from '@angular/cdk/stepper';
-import { MyStepperComponent } from '../components/stepper/stepper.component';
-import { StepperExampleComponent } from './components/stepper-example/stepper-example.component';
+import { StepperComponent } from '../components/stepper/stepper.component';
 
 const routes = [
 	/* Issuer */
@@ -171,8 +170,7 @@ const routes = [
 
 		IssuerStaffCreateDialogComponent,
 		IssuerLearningPathComponent,
-		MyStepperComponent,
-		StepperExampleComponent,
+		StepperComponent,
 	],
 	schemas: [CUSTOM_ELEMENTS_SCHEMA],
 	exports: [],
