@@ -1,6 +1,6 @@
 <form-message></form-message>
     <ng-container [formGroup]="learningPathForm">
-    <oeb-stepper >
+    <oeb-stepper [linear]="true">
         <cdk-step label="Lernpfad Details" [stepControl]="stepOne.lpDetailsForm" [optional]="false" errorMessage="Bitte vollständig ausfüllen">
             <learningpath-details #stepOne></learningpath-details>
         </cdk-step>
