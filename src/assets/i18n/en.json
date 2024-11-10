@@ -55,7 +55,9 @@
 		"password": "Password",
 		"loading": "Loading...",
         "warning": "Warning",
-		"page": "Page"
+		"page": "Page",
+		"next": "Next",
+		"previous": "Previous"
 	},
 	"NavItems": {
 		"register": "Register",
