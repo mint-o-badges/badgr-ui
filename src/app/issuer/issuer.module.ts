@@ -49,6 +49,10 @@ import { LearningPathManager } from './services/learningpath-manager.service';
 import { CdkStepperModule } from '@angular/cdk/stepper';
 import { CdkStepper } from '@angular/cdk/stepper';
 import { StepperComponent } from '../components/stepper/stepper.component';
+import { LearningPathDetailsComponent } from './components/learningpath-create-steps/learningpath-details/learningpath-details.component';
+import { LearningPathBadgesComponent } from './components/learningpath-create-steps/learningpath-badges/learningpath-badges.component';
+import { LearningPathBadgeOrderComponent } from './components/learningpath-create-steps/learningpath-badge-order/learningpath-badge-order.component';
+import { LearningPathTagsComponent } from './components/learningpath-create-steps/learningpath-tags/learningpath-tags.component';
 
 const routes = [
 	/* Issuer */
@@ -154,6 +158,10 @@ const routes = [
 		LearningPathUploadComponent,
 		LearningPathCreateComponent,
 		LearningPathEditFormComponent,
+		LearningPathDetailsComponent,
+		LearningPathBadgesComponent,
+		LearningPathBadgeOrderComponent,
+		LearningPathTagsComponent,
 		BadgeClassIssueBulkAwardPreviewComponent,
 		BadgeclassIssueBulkAwardError,
 		BadgeclassIssueBulkAwardConformation,
