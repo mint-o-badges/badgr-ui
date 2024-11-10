@@ -24,7 +24,9 @@ import {
   lucideRocket,
   lucideCircleAlert,
   lucideStepBack,
-  lucideStepForward
+  lucideStepForward,
+  lucideArrowLeft,
+  lucideArrowRight,
 
 } from '@ng-icons/lucide';
 
@@ -54,7 +56,9 @@ import {
       lucideRocket,
       lucideCircleAlert,
       lucideStepBack,
-      lucideStepForward
+      lucideStepForward,
+      lucideArrowLeft,
+      lucideArrowRight,
     }),
   ],
 })
