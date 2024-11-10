@@ -8,6 +8,13 @@
 				alt="{{ issuer.name }} avatar"
 				class="tw-h-[70px] md:tw-h-[100px] tw-w-auto"
 			/>
+			<img
+				[loaded-src]="issuer?.image"
+				[loading-src]="issuerPlaceholderSrc"
+				[error-src]="issuerPlaceholderSrc"
+				alt="{{ issuer.name }} avatar"
+				class="tw-h-[70px] md:tw-h-[100px] tw-w-auto"
+			/>
 		</div>
 		<div class="tw-flex tw-flex-col tw-justify-center tw-pl-8 tw-max-w-[80%]">
 			<h1 hlmH1 class="tw-text-purple tw-font-semibold md:tw-text-[35px] xl:tw-text-[46px]">
@@ -64,7 +71,7 @@
 			<oeb-dropdown
 				[trigger]="svgTrigger"
 				class="tw-items-center tw-justify-center tw-flex tw-cursor-pointer tw-border tw-border-solid tw-border-[var(--color-purple)] tw-rounded-[7px]"
-				*ngIf="menuItemsPublic"
+				*ngIf="menuItemsPublic && issuer.canUpdateDeleteIssuer"
 				[menuItems]="public ? menuItemsPublic : menuItems"
 			></oeb-dropdown>
 			<ng-template #svgTrigger>
@@ -220,6 +227,7 @@
 					<learningpaths-datatable
 						*ngIf="!public"
 						[learningPaths]="learningPaths"
+						[issuer]="issuer"
 						(actionElement)="deleteLearningPath($event, issuer)"
 						(redirectToLearningPathDetail)="redirectToLearningPathDetail($event, issuer)"
 					></learningpaths-datatable>

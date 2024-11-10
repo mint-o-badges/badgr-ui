@@ -40,8 +40,6 @@ import {QrCodeAwardsComponent} from './components/qrcode-awards/qrcode-awards.co
 import { QrCodeApiService } from './services/qrcode-api.service';
 import { BadgeRequestApiService } from './services/badgerequest-api.service';
 import { EditQrFormComponent } from './components/edit-qr-form/edit-qr-form.component';
-import { LearningPathUploadComponent } from './components/learningpath-upload/learningpath-upload.component';
-import { IssuerLearningPathComponent } from './components/issuer-learning-path/issuer-learning-path.component';
 import { LearningPathCreateComponent } from './components/learningpath-create/learningpath-create.component';
 import { LearningPathEditFormComponent } from './components/learningpath-edit-form/learningpath-edit-form.component';
 import { DndModule } from 'ngx-drag-drop';
@@ -53,6 +51,9 @@ import { LearningPathDetailsComponent } from './components/learningpath-create-s
 import { LearningPathBadgesComponent } from './components/learningpath-create-steps/learningpath-badges/learningpath-badges.component';
 import { LearningPathBadgeOrderComponent } from './components/learningpath-create-steps/learningpath-badge-order/learningpath-badge-order.component';
 import { LearningPathTagsComponent } from './components/learningpath-create-steps/learningpath-tags/learningpath-tags.component';
+import { LearningPathUploadComponent } from './components/learningpath-upload/learningpath-upload.component';
+import { IssuerLearningPathComponent } from './components/issuer-learning-path/issuer-learning-path.component';import { IssuerEditFormComponent } from './components/issuer-edit-form/issuer-edit-form.component';
+import { Issuer } from './models/issuer.model';
 
 const routes = [
 	/* Issuer */
@@ -173,6 +174,7 @@ const routes = [
 		IssuerCreateComponent,
 		IssuerDetailComponent,
 		IssuerEditComponent,
+		IssuerEditFormComponent,
 		IssuerStaffComponent,
 		IssuerListComponent,
 

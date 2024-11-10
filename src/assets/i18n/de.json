@@ -204,7 +204,7 @@
 		"giveMyBadges": "Meine Badges vergeben",
 		"askForPlugin": "Plugin anfragen",
 		"askForPluginText": "Unser <span class='tw-font-bold tw-text-purple'>Plugin</span> bietet dir die Möglichkeit, Badges aus deiner eigenen digitalen Lehrumgebung heraus zu vergeben.",
-		"betaPhase": "Wir befinden uns noch in der Betaphase. <b>Du hast Fehler entdeckt? Schreib uns an <a class='tw-text-link' href='mailto:hallo@openbadges.education'>hallo@openbadges.education</a></b>.",
+		"betaPhase": "Unsere Plattform befindet sich noch in der Betaphase. <b>Du hast Fehler entdeckt? Schreib uns an <a class='tw-text-link' href='mailto:hallo@openbadges.education'>hallo@openbadges.education</a></b>.",
 		"askForLearningPath": "Wir helfen dir, einen Lernpfad anzulegen. Schreibe an <a href='mailto:lernpfad@openbadges.education' class='tw-underline tw-text-[#1400FF]'>lernpfad@openbadges.education</a>.",
 		"award": "vergeben",
 		"badgePreview": "Badge-Vorschau",
@@ -353,7 +353,8 @@
 		"changeBadgeTitle":"Bitte ändere den Titel",
 		"maxValue1000":"Maximalwert ist 1000",
 		"imageTooLarge": "Das Bild ist zu groß. Bitte wähle ein Bild mit einer Größe von maximal 250 KB.",
-		"licenseInfo": "Badges werden unter der <a class='tw-underline tw-text-[#1400FF]' target='_blank' href='https://creativecommons.org/publicdomain/zero/1.0/legalcode.de'> Lizenz CC0 1.0 </a> erstellt."
+		"licenseInfo": "Badges werden unter der <a class='tw-underline tw-text-[#1400FF]' target='_blank' href='https://creativecommons.org/publicdomain/zero/1.0/legalcode.de'> Lizenz CC0 1.0 </a> erstellt.",
+		"requiredError": "Erforderlich"
 	},
 	"Signup": {
 		"youHaveAccount": "Du hast bereits einen Account?",
@@ -478,7 +479,7 @@
 
 		"greating": "Hallo",
 		"competencies": "Kompetenzen",
-		"studyingTime": "Lernzeiten",
+		"studyingTime": "Lernzeit",
 		"hours": "Stunden",
 		"newCompetencies": "Neue Kompetenzen",
 		"skills": "Fähigkeiten",

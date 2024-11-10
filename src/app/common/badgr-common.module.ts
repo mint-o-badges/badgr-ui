@@ -43,6 +43,7 @@ import { BadgrButtonComponent } from './components/badgr-button.component';
 import { SharingService } from './services/sharing.service';
 import { NounprojectService } from './services/nounproject.service';
 import { AiSkillsService } from './services/ai-skills.service';
+import { ServerVersionService } from './services/server-version.service';
 import { PdfService } from './services/pdf.service';
 import { EventsService } from './services/events.service';
 import { ForwardRouteComponent } from './pages/forward-route.component';
@@ -193,6 +194,7 @@ const SERVICES = [
 	SharingService,
 	NounprojectService,
 	AiSkillsService,
+    ServerVersionService,
 	PdfService,
 	CaptchaService,
 	EventsService,
@@ -215,7 +217,7 @@ const SERVICES = [
 
 const GUARDS = [AuthGuard];
 
-const PIPES = [UcFirstPipe, StudyLoadPipe];
+const PIPES = [UcFirstPipe, StudyLoadPipe, HourPipe];
 
 export const COMMON_IMPORTS = [CommonModule, SharedIconsModule, FormsModule, ReactiveFormsModule, HttpClientModule, RouterModule, OebInputComponent, OebInputErrorComponent, OebSelectComponent, OebSeparatorComponent, OebCollapsibleComponent, OebButtonComponent, OebProgressComponent, OebDropdownComponent, HlmH1Directive, HlmH2Directive, HlmH3Directive, HlmPDirective, HlmADirective, CompetencyAccordionComponent, OebCheckboxComponent, OebDialogComponent, SuccessDialogComponent, DangerDialogComponent, OebBackgroundComponent, OebTabsComponent, HlmIconModule, CountUpModule, HlmInputDirective, DatatableComponent, LearningPathDatatableComponent, LearningPathParticipantsDatatableComponent, LearningPathGraduatesDatatableComponent, LearningPathRequestsDatatableComponent];
 

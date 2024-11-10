@@ -89,6 +89,14 @@
                                 </dt>
                                 <dd class="tw-text-sm tw-text-oebblack md:tw-ml-2">{{ config.category }}</dd>
                             </div>
+
+                            <div *ngIf="config.duration" class="tw-flex tw-text-oebblack tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
+                                <dt class="tw-text-sm tw-text-oebblack tw-font-bold">
+                                    {{ 'RecBadgeDetail.duration' | translate }}
+                                </dt>
+                                <dd class="tw-text-sm tw-text-oebblack md:tw-ml-2">{{ config.duration | hourPipe}}</dd>
+                            </div>
+
                             <div *ngIf="config.updatedAt"
                                 class="tw-flex tw-text-oebblack tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
                                 <dt class="tw-text-sm tw-text-oebblack tw-font-bold">
@@ -162,7 +170,7 @@
                                 ">
                                 <competency-accordion [name]="competency.name" [category]="competency.category"
                                     [description]="competency.description" [escoID]="competency.escoID"
-                                    [studyload]="competency.studyLoad | studyload"></competency-accordion>
+                                    [studyload]="competency.studyLoad | hourPipe"></competency-accordion>
                             </div>
                         </div>
                     </section>

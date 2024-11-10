@@ -113,7 +113,7 @@ import { FormControl } from '@angular/forms';
 				<div *ngFor="let competency of competencies">
 					<competency-accordion [name]="competency.name" [category]="competency.category"
 						[description]="competency.description" [escoID]="competency.escoID"
-						[studyload]="competency.studyLoad | studyload"></competency-accordion>
+						[studyload]="competency.studyLoad | hourPipe"></competency-accordion>
 				</div>
 			</div>
 		</div>

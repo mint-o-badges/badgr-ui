@@ -7,6 +7,11 @@
 				<h1 hlmH1 class="tw-text-purple oeb-standard-padding-bottom">{{ 'NavItems.myInstitutions' | translate }}</h1>
 				<p hlmP size="lg" class="tw-pb-3" [innerHTML]="'Issuer.myInstitutionsText' | translate"></p>
 				<p hlmP size="lg" class="tw-pb-3" [innerHTML]="'Issuer.myLearningPathText' | translate"></p>
+		<div class="tw-pt-[4rem] tw-pb-[2.4rem] md:tw-flex tw-justify-between md:tw-gap-4">
+			<div class="oeb-standard-padding-bottom">
+				<h1 hlmH1 class="tw-text-purple oeb-standard-padding-bottom">{{ 'NavItems.myInstitutions' | translate }}</h1>
+				<p hlmP size="lg" class="tw-pb-3" [innerHTML]="'Issuer.myInstitutionsText' | translate"></p>
+				<p hlmP size="lg" class="tw-pb-3" [innerHTML]="'Issuer.myLearningPathText' | translate"></p>
 			</div>
 			<div class="tw-border-purple tw-border tw-rounded-[20px]">
 				<oeb-button
@@ -20,7 +25,7 @@
 			</div>
 		</div>
 		<div class="md:tw-flex">
-			<div class="tw-w-full  tw-flex-grow md:tw-pr-8">
+			<div class="tw-w-full tw-flex-grow md:tw-pr-8">
 				<div class="tw-border-purple tw-border tw-border-solid tw-rounded-[20px] tw-p-6 tw-my-6" *ngFor="let issuer of issuers">
 					<div class="tw-flex">
 						<div class="tw-relative">
@@ -65,6 +70,7 @@
 								+
 							</div> -->
 							<oeb-button
+								*ngIf="issuer.canCreateBadge"
 								class="tw-ml-4 md:tw-whitespace-nowrap tw-rounded-[50%] tw-overflow-hidden tw-font-bold tw-border-2 tw-border-solid tw-border-purple"
 								size="bigIcon"
 								[routerLink]="['/issuer/issuers/', issuer.slug, 'badges', 'create']"
@@ -78,31 +84,31 @@
 					<div>
 						
 					</div>
-					<div class="tw-flex tw-gap-2 tw-flex-wrap tw-justify-between">
+					<div class="tw-flex tw-gap-4 tw-flex-wrap tw-justify-between tw-pt-2">
 						<oeb-button
-							[class]="'tw-whitespace-nowrap'.concat(issuer.currentUserStaffMember
-								? ''
-								: ' disabled')"
+							[class.disabled]="!issuer.canCreateBadge"
+							class="tw-whitespace-nowrap tw-flex-grow"
 							[routerLink]="['/issuer/issuers/', issuer.slug]"
 							[disabled]="!issuer.currentUserStaffMember"
 							[text]="'Issuer.giveBadge' | translate"
 							variant="secondary"
+							width="full_width"
 							>
 						</oeb-button>
 						<oeb-button
-							[class]="'tw-whitespace-nowrap'.concat(issuer.canCreateBadge
-								? ''
-								: ' disabled')"
+							[class.disabled]="!issuer.canCreateBadge"
+							class="tw-whitespace-nowrap tw-flex-grow"
 							[routerLink]="['/issuer/issuers/', issuer.slug, 'learningpaths', 'upload']"
 							[disabled]="!issuer.canCreateBadge"
 							[text]="'Issuer.myInstitutionsCreateLearningPath' | translate"
 							variant="secondary"
+							width="full_width"
 							>
 						</oeb-button>
 					</div>
 				</div>
 			</div>
-			<div class="md:tw-flex-[0_0_333px] md:tw-mt-6">
+			<div class="md:tw-flex-[0_0_363px] md:tw-mt-6">
 				<div #pluginBox>
 					<div class="tw-bg-green tw-p-6 tw-rounded-[20px] tw-text-center tw-text-oebblack tw-relative">
 						<img (click)="pluginBoxElement.nativeElement.remove()" class="tw-cursor-pointer tw-inline-block tw-absolute tw-top-2 tw-right-2" alt="Close" src="assets/oeb/images/issuerPage/close.png" />

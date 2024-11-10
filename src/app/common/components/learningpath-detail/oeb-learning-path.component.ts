@@ -168,8 +168,9 @@ export class OebLearningPathDetailComponent extends BaseRoutableComponent implem
 		return this.dialogService.confirmDialog;
 	}
 
-	revokeLpParticipationBadge(participant: any) {
+	async revokeLpParticipationBadge(participant: any) {
 		const participationBadgeInstance: BadgeInstance = participant.participationBadgeAssertion;
+
 		this.confirmDialog
 			.openResolveRejectDialog({
 				dialogTitle: 'Warnung',
@@ -177,19 +178,32 @@ export class OebLearningPathDetailComponent extends BaseRoutableComponent implem
 				resolveButtonLabel: 'Zurücknehmen',
 				rejectButtonLabel: 'Abbrechen',
 			})
-			.then(
-				() => {
-					this.badgeInstanceApiservice.revokeBadgeInstance(this.issuer.slug, this.learningPath.participationBadge_id, participationBadgeInstance.slug, 'revoked').then(
-						(result) => {
-							this.learningPathApiService.deleteLearningPathParticipant(participant.entity_id);
-						}),
-					(error) => {
-						console.log(error)
-					};
-				},
-				() => void 0, // Cancel
-			);
-	}
+			.then(async () => {
+
+				try {
+				  const [revokeResult, deleteResult] = await Promise.all([
+					this.badgeInstanceApiservice.revokeBadgeInstance(
+					  this.issuer.slug,
+					  this.learningPath.participationBadge_id,
+					  participationBadgeInstance.slug,
+					  'revoked'
+					),
+					this.learningPathApiService.deleteLearningPathParticipant(
+					  participant.entity_id
+					)
+				  ]);
+			  
+				  const response = await this.learningPathApiService.getLearningPathParticipants(
+					this.learningPath.slug
+				  );
+				  this.participants = response.body;
+				} catch (error) {
+				  console.error(error);
+				  throw error;
+				}
+			})
+
+	  }
 
 	downloadCertificate(participant: any ) {
 		const instance = participant.participationBadgeAssertion;
