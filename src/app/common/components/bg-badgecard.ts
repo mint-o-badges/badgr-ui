@@ -146,18 +146,17 @@ export class BgBadgecard {
 	}
 
 	@HostBinding('class') get hostClasses(): string {
-		return this.checked 
-		  ? 'tw-bg-[var(--color-lightgreen)]'   
-		  : 'tw-bg-white';  
-	  }
-	@HostBinding('class') get completedClass(): string {
-		return this.completed 
+		return (this.checked || this.completed) 
 		  ? 'tw-bg-[var(--color-green)]'   
 		  : 'tw-bg-white';  
 	  }
+	// @HostBinding('class') get completedClass(): string {
+	// 	return this.completed 
+	// 	  ? 'tw-bg-[var(--color-green)]'   
+	// 	  : 'tw-bg-white';  
+	//   }
 
 	ngOnInit(){
-		// console.log(this.checkboxControl.value)
 	}
 
 
