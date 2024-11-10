@@ -3,7 +3,7 @@ import { CdkStepper, STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 
 
 @Component({
-  selector: 'app-my-stepper',
+  selector: 'oeb-stepper',
   templateUrl: './stepper.component.html',
   styleUrls: ['./stepper.component.scss'],
   /* This custom stepper provides itself as CdkStepper so that it can be recognized
@@ -20,7 +20,6 @@ export class StepperComponent extends CdkStepper implements OnInit {
   }
 
   ngOnInit() { 
-    console.log(this.steps.first.hasError)      
   }
 
 }

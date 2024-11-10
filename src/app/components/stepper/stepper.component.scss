@@ -15,6 +15,9 @@
       .step-bullet {
         background-color: var(--color-red);
       }
+      .step-title {
+        color: var(--color-red);
+      }
     }
     &.done {
       .step-bullet {
@@ -42,7 +45,7 @@
   .step-title {
     position: absolute;
     right: 0;
-    bottom: -15px;
+    bottom: -25px;
     left: 0;
     margin: auto 0;
     height: 0;
