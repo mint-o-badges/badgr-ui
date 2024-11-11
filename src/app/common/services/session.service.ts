@@ -123,13 +123,42 @@ export class SessionService {
 		window.location.href = `${this.baseUrl}/account/sociallogin?provider=${encodeURIComponent(provider.slug)}`;
 	}
 
-	logout(nextObservable = true): void {
+	logout(nextObservable = true): Promise<void> {
         this.stopRefreshTokenTimer();
-        localStorage.removeItem(EXPIRATION_DATE_STORAGE_KEY);
-        sessionStorage.removeItem(EXPIRATION_DATE_STORAGE_KEY);
-		if (nextObservable) this.loggedInSubject.next(false);
-        // TODO: Delete token cookie
-	}
+
+		const endpoint = this.baseUrl + '/o/revoke_token/';
+		const client_id = 'public';
+		const payload = `client_id=${encodeURIComponent(client_id)}`;
+		const headers = new HttpHeaders().append('Content-Type', 'application/x-www-form-urlencoded');
+		// Update global loading state
+		this.messageService.incrementPendingRequestCount();
+        const that = this;
+
+        return new Promise((resolve, reject) => {
+            this.http
+            .post<Response>(endpoint, payload, {
+                observe: 'response',
+                responseType: 'json',
+                headers,
+                withCredentials: true,
+            })
+            .subscribe({next: (r) => {
+                if (r.status < 200 || r.status >= 300) {
+                    that.messageService.reportFatalError('Logout Failed: ' + r.status);
+                    reject('Logout failed: ' + r.status);
+                }
+
+                localStorage.removeItem(EXPIRATION_DATE_STORAGE_KEY);
+                sessionStorage.removeItem(EXPIRATION_DATE_STORAGE_KEY);
+                if (nextObservable) that.loggedInSubject.next(false);
+                resolve();
+            },
+            error: (err) => {
+                that.messageService.reportFatalError('Logout Failed: ' + err);
+                reject('Logout failed: ' + err);
+            }});
+        });
+    }
 
     /**
      * Note that this doesn't actually store the token anymore, but merely the metadata on the token
