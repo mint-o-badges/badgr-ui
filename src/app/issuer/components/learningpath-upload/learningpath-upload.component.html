@@ -1,0 +1,69 @@
+<div class="oeb tw-relative tw-w-full">
+	<div class="page-padding">
+		<div class="oeb-breadcrumbs">
+			<bg-breadcrumbs [linkentries]="breadcrumbLinkEntries"> </bg-breadcrumbs>
+		</div>
+		<form-message></form-message>
+		<div class="oeb-section">
+			<div class="oeb-headline-container-sm">
+				<h1 hlmH1 class="tw-text-purple tw-font-extrabold">{{'Issuer.learningPathHeadline' | translate}}</h1>
+			</div>
+			<div class="lg:tw-flex lg:tw-gap-8">
+				<div>
+					<div class="tw-bg-lightgreen tw-p-4 tw-mb-4">
+						<p hlmP [innerHTML]="'Issuer.learningPathHelp' | translate">
+						</p>
+					</div>
+					<div class="oeb-standard-padding-bottom">
+						<p hlmP [innerHtml]="'Issuer.uploadLearningPathText' | translate"></p>
+						<ol class="tw-list-decimal tw-pl-8 tw-py-4">
+							<li hlmP> <div class="tw-flex tw-gap-2" [innerHTML]="'Issuer.learningPathList1' | translate">  </div> </li>
+							<li hlmP>{{'Issuer.learningPathList2' | translate}}</li>
+							<li hlmP [innerHtml]="'Issuer.learningPathList3' | translate"></li>
+							<li hlmP>{{'Issuer.learningPathList4' | translate}}</li>
+							<li hlmP>{{'Issuer.learningPathList5' | translate}}</li>
+						</ol>
+
+					</div>
+					<div class="oeb-standard-padding-bottom">
+						<div class="tw-py-6 tw-px-10 tw-bg-lightpurple tw-rounded-[20px]">
+							<div class="oeb-headline-container-sm">
+								<h3 hlmH3 class="tw-font-bold tw-text-purple">{{'Issuer.importList' | translate }}</h3>
+							</div>
+							<form [formGroup]="jsonForm" class>
+								<fieldset>
+									<bg-formfield-file class="tw-bg-white" #fileField label="File"
+										validFileTypes=".json" [control]="jsonForm.controls['jsonFile']"
+										(fileData)="onFileDataReceived($event)">
+									</bg-formfield-file>
+								</fieldset>
+							</form>
+							<div class="tw-flex tw-justify-end tw-gap-2 tw-mt-4">
+								<oeb-button class="tw-mr-4" variant="secondary"
+									[text]="'General.cancel' | translate"></oeb-button>
+
+								<oeb-button [class.button-is-disabled]="rawJson === null"
+									[disabled]="rawJson ? null : true" (click)="importAction()"
+									[text]="'Issuer.import' | translate">
+								</oeb-button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="tw-max-w-[350px] tw-min-w-[300px]">
+					<div>
+						<div
+							class="tw-p-4 tw-text-oebblack tw-relative tw-flex tw-flex-row tw-items-center">
+							<img class="tw-inline-block tw-h-[90px]" alt="Plugin"
+								src="assets/oeb/images/issuerPage/oeb-beta-logo.svg" />
+							<div class="tw-flex md:tw-block tw-pb-4">
+								<p class="tw-pt-4 tw-text-left tw-pl-4 md:tw-pl-0"
+									[innerHTML]="'Issuer.betaPhase' | translate"></p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

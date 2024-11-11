@@ -1,23 +1,30 @@
 <div class="tw-flex tw-justify-between tw-gap-6">
 	<div class="tw-flex oeb-section-sm md:tw-max-w-[70%]">
 		<div class="tw-relative">
-			<img [loaded-src]="issuer?.image" [loading-src]="issuerPlaceholderSrc" [error-src]="issuerPlaceholderSrc"
-				alt="{{ issuer.name }} avatar" class="tw-h-[70px] md:tw-h-[100px] tw-w-auto" />
+			<img
+				[loaded-src]="issuer?.image"
+				[loading-src]="issuerPlaceholderSrc"
+				[error-src]="issuerPlaceholderSrc"
+				alt="{{ issuer.name }} avatar"
+				class="tw-h-[70px] md:tw-h-[100px] tw-w-auto"
+			/>
 		</div>
 		<div class="tw-flex tw-flex-col tw-justify-center tw-pl-8 tw-max-w-[80%]">
-			<h1 hlmH1
-				class="tw-text-purple tw-font-semibold md:tw-text-[35px] xl:tw-text-[46px]">
-				{{ issuer.name }}</h1>
-			<ng-container *ngIf="public" >
-				<p hlmP
-					class="tw-text-oebblack tw-font-semibold">
-					{{issuer.email}}
+			<h1 hlmH1 class="tw-text-purple tw-font-semibold md:tw-text-[35px] xl:tw-text-[46px]">
+				{{ issuer.name }}
+			</h1>
+			<ng-container *ngIf="public">
+				<p hlmP class="tw-text-oebblack tw-font-semibold">
+					{{ issuer.email }}
 				</p>
-				<p hlmP size="sm" *ngIf="issuer.url"><a hlmA target="_blank" [href]="issuer.url">{{ issuer.url }}</a></p>
+				<p hlmP size="sm" *ngIf="issuer.url">
+					<a hlmA target="_blank" [href]="issuer.url">{{ issuer.url }}</a>
+				</p>
 			</ng-container>
 			<ng-container *ngIf="!public">
-				<p 
-					class="tw-text-oebblack tw-font-semibold md:tw-text-[20px] md:tw-leading-[24.4px] tw-text-[14px] tw-leading-[19.6px]">
+				<p
+					class="tw-text-oebblack tw-font-semibold md:tw-text-[20px] md:tw-leading-[24.4px] tw-text-[14px] tw-leading-[19.6px]"
+				>
 					{{ 'Issuer.yourRole' | translate }}
 					{{ issuer.currentUserStaffMember?.roleInfo.label }}:in
 				</p>
@@ -29,90 +36,215 @@
 			{{ 'Issuer.nichtVerified' | translate }}
 		</p>
 		<div class="tw-flex tw-gap-2">
-			<oeb-button *ngIf="!public" [routerLink]="['./badges/create']" [disabled]="!issuer.canCreateBadge" [text]="'Issuer.createBadge' | translate" [class]="issuer.canCreateBadge ? '' : 'disabled'">
+			<oeb-button
+				class="tw-whitespace-nowrap"
+				*ngIf="!public && activeTab == 'Badges'"
+				[routerLink]="['./badges/create']"
+				[disabled]="!issuer.canCreateBadge"
+				[text]="'Issuer.createBadge' | translate"
+				[class]="issuer.canCreateBadge ? '' : 'disabled'"
+			>
 			</oeb-button>
-			<oeb-button *ngIf="public" (click)="routeToUrl(issuer.url)" [text]="'Issuer.visitWebsite' | translate">
+			<oeb-button
+				class="tw-whitespace-nowrap"
+				*ngIf="!public && activeTab == 'Lernpfade'"
+				[routerLink]="['./learningpaths/upload']"
+				[disabled]="!issuer.canCreateBadge"
+				[text]="'Issuer.createLearningPath' | translate"
+				[class]="issuer.canCreateBadge ? '' : 'disabled'"
+			>
 			</oeb-button>
-			<oeb-dropdown [trigger]="svgTrigger" class="tw-items-center tw-justify-center tw-flex tw-cursor-pointer tw-border tw-border-solid tw-border-[var(--color-purple)] tw-rounded-[7px]" *ngIf="menuItemsPublic && issuer.canUpdateDeleteIssuer"  [menuItems]="public ? menuItemsPublic : menuItems"></oeb-dropdown>
+			<oeb-button
+				class="tw-whitespace-nowrap"
+				*ngIf="public"
+				(click)="routeToUrl(issuer.url)"
+				[text]="'Issuer.visitWebsite' | translate"
+			>
+			</oeb-button>
+			<oeb-dropdown
+				[trigger]="svgTrigger"
+				class="tw-items-center tw-justify-center tw-flex tw-cursor-pointer tw-border tw-border-solid tw-border-[var(--color-purple)] tw-rounded-[7px]"
+				*ngIf="menuItemsPublic && issuer.canUpdateDeleteIssuer"
+				[menuItems]="public ? menuItemsPublic : menuItems"
+			></oeb-dropdown>
 			<ng-template #svgTrigger>
-				<svg class="tw-w-[44.8px] tw-h-[44.8px] md:tw-w-[64px] md:tw-h-[64px]" fill="var(--color-purple)" icon="icon_more"></svg>
+				<svg
+					class="tw-w-[44.8px] tw-h-[44.8px] md:tw-w-[64px] md:tw-h-[64px]"
+					fill="var(--color-purple)"
+					icon="icon_more"
+				></svg>
 				<span class="visuallyhidden">Mehr</span>
 			</ng-template>
 		</div>
 	</div>
 </div>
 <div>
-	<p class="tw-text-oebblack tw-py-4">{{issuer.description}}</p>
+	<p class="tw-text-oebblack tw-py-4">{{ issuer.description }}</p>
 </div>
 <div class="topbar-x-buttons tw-grid md:tw-hidden">
 	<p *ngIf="issuer.apiModel && !issuer.apiModel.verified" class="u-margin-top1x u-width-paragraph">
 		{{ 'Issuer.nichtVerified' | translate }}
 	</p>
 	<div class="tw-flex tw-flex-wrap tw-gap-4">
-		<oeb-button 
+		<oeb-button
 			*ngIf="!public"
 			width="full_width"
-			[class]="'tw-flex-grow tw-relative'.concat(issuer.canCreateBadge
-                               ? ''
-                               : ' disabled')"
+			[class]="'tw-flex-grow tw-relative'.concat(issuer.canCreateBadge ? '' : ' disabled')"
 			[routerLink]="['./badges/create']"
 			[disabled]="!issuer.canCreateBadge"
 			[text]="'Issuer.createBadge' | translate"
 		>
 		</oeb-button>
-		<oeb-button *ngIf="public" (click)="routeToUrl(issuer.url)" class="tw-flex-grow" width="full_width" [text]="'Issuer.visitWebsite' | translate">
+		<oeb-button
+			*ngIf="public"
+			(click)="routeToUrl(issuer.url)"
+			class="tw-flex-grow"
+			width="full_width"
+			[text]="'Issuer.visitWebsite' | translate"
+		>
 		</oeb-button>
 
-		<oeb-dropdown [trigger]="svgTrigger"
+		<oeb-dropdown
+			[trigger]="svgTrigger"
 			class="tw-items-center tw-justify-center tw-flex tw-cursor-pointer tw-border tw-border-solid tw-border-[var(--color-purple)] tw-rounded-[7px]"
-			*ngIf="menuItems" [menuItems]="public ? menuItemsPublic : menuItems"></oeb-dropdown>
+			*ngIf="menuItems"
+			[menuItems]="public ? menuItemsPublic : menuItems"
+		></oeb-dropdown>
 		<ng-template #svgTrigger>
-			<svg class="tw-w-[44.8px] tw-h-[44.8px] md:tw-w-[64px] md:tw-h-[64px]" fill="var(--color-purple)" icon="icon_more"></svg>
+			<svg
+				class="tw-w-[44.8px] tw-h-[44.8px] md:tw-w-[64px] md:tw-h-[64px]"
+				fill="var(--color-purple)"
+				icon="icon_more"
+			></svg>
 			<span class="visuallyhidden">Mehr</span>
 		</ng-template>
 	</div>
 </div>
 
-<section class="tw-py-6" *ngIf="!badges?.length">
-	<h2 class="tw-font-medium md:tw-text-[22px] md:tw-leading-[26.4px] tw-text-purple tw-text-[16px] tw-leading-[19.2px]">
-		{{issuer.name}} {{ 'Issuer.issuerHasNoBadgesYet' | translate }}
-	</h2>
-</section>
-<section class="tw-py-6 tw-relative" *ngIf="badges?.length">
-	<h2 class="tw-font-medium md:tw-text-[22px] md:tw-leading-[26.4px] tw-text-purple tw-text-[16px] tw-leading-[19.2px] tw-py-2">
-		{{issuer.name}} {{ 'Issuer.issuerHasBadges' | translate }} {{ badges.length }} Badge{{ badges.length == 1 ? '' : 's' }}.
-	</h2>
-	<badges-datatable 
-		*ngIf="!public"
-		[caption]=""
-		[badges]="badgeResults"
-		(directBadgeAward)="routeToBadgeAward($event, issuer)"
-		(qrCodeAward)="routeToQRCodeAward($event, issuer)"
+<div class="oeb-section-sm">
+	<oeb-backpack-tabs
+		[variant]="'lightpurple'"
+		(onTabChanged)="onTabChange($event)"
+		[activeTab]="'Badges'"
+		[tabs]="tabs"
+	></oeb-backpack-tabs>
 
-		(redirectToBadgeDetail)="routeToBadgeDetail($event, issuer)"></badges-datatable>
+	<ng-template #badgesTemplate>
+		<section class="oeb-section-sm" *ngIf="!badges?.length">
+			<h2
+				class="tw-font-medium md:tw-text-[22px] md:tw-leading-[26.4px] tw-text-purple tw-text-[16px] tw-leading-[19.2px]"
+			>
+				{{ issuer.name }} {{ 'Issuer.issuerHasNoBadgesYet' | translate }}
+			</h2>
+		</section>
 
-	<ng-container *ngIf="public">
+		<section class="oeb-section-sm tw-relative" *ngIf="badges?.length">
+			<h2
+				class="tw-font-medium md:tw-text-[22px] md:tw-leading-[26.4px] tw-text-purple tw-text-[16px] tw-leading-[19.2px] tw-py-4"
+			>
+				{{ issuer.name }} {{ 'Issuer.issuerHasBadges' | translate }} {{ badges.length }} Badge{{
+					badges.length == 1 ? '' : 's'
+				}}.
+			</h2>
+			<badges-datatable
+				*ngIf="!public"
+				[caption]=""
+				[badges]="badgeResults"
+				(directBadgeAward)="routeToBadgeAward($event, issuer)"
+				(qrCodeAward)="routeToQRCodeAward($event, issuer)"
+				(redirectToBadgeDetail)="routeToBadgeDetail($event, issuer)"
+			></badges-datatable>
 
-		<div *ngIf="badges.length > 0">
-			<div class="tw-flex tw-flex-wrap tw-items-center oeb-standard-padding-bottom">
-				<input type="text" name="forminput" id="forminput" placeholder="Badges durchsuchen"
-					[(ngModel)]="searchQuery"
-					class="tw-w-[300px] tw-border-solid tw-border-purple tw-bg-white tw-mr-6"
-					hlmInput />
-			</div>
+			<ng-container *ngIf="public">
+				<div *ngIf="badges.length > 0">
+					<div class="tw-flex tw-flex-wrap tw-items-center oeb-standard-padding-bottom">
+						<input
+							type="text"
+							name="forminput"
+							id="forminput"
+							placeholder="Badges durchsuchen"
+							[(ngModel)]="searchQuery"
+							class="tw-w-[300px] tw-border-solid tw-border-purple tw-bg-white tw-mr-6"
+							hlmInput
+						/>
+					</div>
+				</div>
+				<div class="tw-grid tw-grid-cols-badges tw-gap-16">
+					<bg-badgecard
+						*ngFor="let badge of badgeResults"
+						[badgeTitle]="badge.badge.name"
+						[badgeImage]="badge.badge.image"
+						[badgeDescription]="badge.badge.description"
+						[badgeSlug]="badge.badge.slug"
+						[issuerTitle]="badge.issuerName ? badge.issuerName : badge.issuer.name"
+						[badgeIssueDate]="badge.badge.createdAt"
+						public="true"
+						[publicUrl]="badge.badge.id"
+						[badgeClass]="true"
+					></bg-badgecard>
+				</div>
+			</ng-container>
+		</section>
+	</ng-template>
+	<ng-template #learningPathTemplate>
+		<div class="oeb-section-sm">
+			<ng-template [bgAwaitPromises]="learningPathsPromise">
+				<div *ngIf="!learningPaths?.length">
+					<p hlmP>{{ issuer.name }} {{ 'Issuer.issuerHasNoLearningPathYet' | translate }}</p>
+					<div class="oeb-section-sm">
+						<div class="tw-bg-green tw-p-6 tw-rounded-[20px] tw-text-oebblack tw-relative tw-max-w-[600px]">
+							<div
+								class="tw-flex tw-pb-4 tw-flex-wrap sm:tw-flex-nowrap tw-items-center tw-justify-center tw-gap-2"
+							>
+								<img
+									class="tw-inline-block"
+									alt="Plugin"
+									src="assets/oeb/images/issuerPage/email_icon.png"
+								/>
+								<p
+									hlmP
+									class="tw-pl-4 xs:tw-pl-0 tw-text-center sm:tw-text-left tw-font-bold"
+									[innerHTML]="'Issuer.askForLearningPath' | translate"
+								></p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div *ngIf="learningPaths && learningPaths.length > 0">
+					<h2
+						class="tw-font-medium md:tw-text-[22px] md:tw-leading-[26.4px] tw-text-purple tw-text-[16px] tw-leading-[19.2px] tw-py-4"
+					>
+						{{ issuer.name }} {{ 'Issuer.issuerHasBadges' | translate }}
+						{{ learningPaths.length }} Lernpfad{{ learningPaths.length == 1 ? '' : 'e' }}.
+					</h2>
+					<learningpaths-datatable
+						*ngIf="!public"
+						[learningPaths]="learningPaths"
+						[issuer]="issuer"
+						(actionElement)="deleteLearningPath($event, issuer)"
+						(redirectToLearningPathDetail)="redirectToLearningPathDetail($event, issuer)"
+					></learningpaths-datatable>
+
+					<ng-container *ngIf="public">
+						<div class="tw-grid tw-grid-cols-learningpaths tw-gap-12">
+							<bg-learningpathcard
+								*ngFor="let lp of learningPaths"
+								[badgeImage]="lp.image"
+								[name]="lp.name"
+								[issuerTitle]="issuer.name"
+								[description]="lp.description"
+								[tags]="lp.tags"
+								[slug]="lp.slug"
+								[studyLoad]="calculateStudyLoad(lp)"
+								[completed]="false"
+								[requested]="lp.requested"
+								[progress]="lp.progress"
+								[matchOrProgress]="undefined"
+							></bg-learningpathcard>
+						</div>
+					</ng-container>
+				</div>
+			</ng-template>
 		</div>
-		<div class="tw-grid tw-grid-cols-badges tw-gap-16">
-	
-			<bg-badgecard *ngFor="let badge of badgeResults" 
-				[badgeTitle]="badge.badge.name"
-				[badgeImage]="badge.badge.image" 
-				[badgeDescription]="badge.badge.description"
-				[badgeSlug]="badge.badge.slug"
-				[issuerTitle]="badge.issuerName ? badge.issuerName : badge.issuer.name"
-				[badgeIssueDate]="badge.badge.createdAt"
-				public="true"
-				[publicUrl]="badge.badge.id"
-				[badgeClass]="true"></bg-badgecard>
-		</div>
-	</ng-container>
-</section>
+	</ng-template>
+</div>
