@@ -17,25 +17,24 @@ import { BadgeInstanceApiService } from '../../../issuer/services/badgeinstance-
 import { PdfService } from '../../services/pdf.service';
 import { SafeResourceUrl } from '@angular/platform-browser';
 import { ApiLearningPathParticipant, ApiLearningPathRequest } from '../../model/learningpath-api.model';
+import { toDataURL } from 'qrcode';
 
 @Component({
 	selector: 'oeb-learning-path',
 	templateUrl: './oeb-learning-path.component.html',
 	styleUrl: './oeb-learning-path.component.scss',
 	animations: [
-        trigger('inOutAnimation', [
-            transition(':enter', [style({ transform: 'translateX(-120px)', opacity: '0' }), animate('.5s ease-out', style({ transform: 'translateX(0px)', opacity: '1' }))]),
-            // transition(':leave', [style({ opacity: '1' }), animate('.5s ease-out', style({ opacity: '0' }))]),
-        ]),
-		trigger('stagger', [
+		trigger('inOutAnimation', [
 			transition(':enter', [
-			  	query(':enter', stagger('.3s', [animateChild()]))
-			])
-		])
+				style({ transform: 'translateX(-120px)', opacity: '0' }),
+				animate('.5s ease-out', style({ transform: 'translateX(0px)', opacity: '1' })),
+			]),
+			// transition(':leave', [style({ opacity: '1' }), animate('.5s ease-out', style({ opacity: '0' }))]),
+		]),
+		trigger('stagger', [transition(':enter', [query(':enter', stagger('.3s', [animateChild()]))])]),
 	],
 })
 export class OebLearningPathDetailComponent extends BaseRoutableComponent implements OnInit {
-
 	@Input() learningPath;
 	@Input() issuer;
 	@Input() badges;
@@ -53,13 +52,11 @@ export class OebLearningPathDetailComponent extends BaseRoutableComponent implem
 		private badgeInstanceApiservice: BadgeInstanceApiService,
 		private pdfService: PdfService,
 		public router: Router,
-		route: ActivatedRoute
+		route: ActivatedRoute,
 	) {
 		super(router, route);
-        
-	};
+	}
 	private readonly _hlmDialogService = inject(HlmDialogService);
-
 
 	filterFunction(t): boolean {
 		return t.completed_at;
@@ -68,87 +65,85 @@ export class OebLearningPathDetailComponent extends BaseRoutableComponent implem
 		return !t.completed_at;
 	}
 
-	ngOnInit(): void {
-		
-	}
+	ngOnInit(): void {}
 
 	public deleteLearningPath(learningPathSlug, issuer) {
 		const dialogRef = this._hlmDialogService.open(DangerDialogComponentTemplate, {
 			context: {
 				delete: () => this.deleteLearningPathApi(learningPathSlug, issuer),
 				// qrCodeRequested: () => {},
-				variant: "danger",
-				text: "Möchtest du diesen Lernpfad wirklich löschen?",
-				title: "Lernpfad löschen"
+				variant: 'danger',
+				text: 'Möchtest du diesen Lernpfad wirklich löschen?',
+				title: 'Lernpfad löschen',
 			},
 		});
 	}
 
-	deleteLearningPathApi(learningPathSlug, issuer){
-		this.learningPathApiService.deleteLearningPath(issuer.slug, learningPathSlug).then(
-			() => {
-				this.router.navigate(['issuer/issuers']);
-			}
-		);
+	deleteLearningPathApi(learningPathSlug, issuer) {
+		this.learningPathApiService.deleteLearningPath(issuer.slug, learningPathSlug).then(() => {
+			this.router.navigate(['issuer/issuers']);
+		});
 	}
 
-	public giveBadge(req){
+	public giveBadge(req) {
 		this.loading = true;
 		let recipientProfileContextUrl = 'https://openbadgespec.org/extensions/recipientProfile/context.json';
 
 		this.badgeClassManager
 			.badgeByIssuerSlugAndSlug(this.issuer.slug, this.learningPath.participationBadge_id)
 			.then((badgeClass: BadgeClass) => {
+				this.loading = this.badgeInstanceManager
+					.createBadgeInstance(this.issuer.slug, this.learningPath.participationBadge_id, {
+						issuer: this.issuer.slug,
+						badge_class: this.learningPath.participationBadge_id,
+						recipient_type: 'email',
+						recipient_identifier: req.user.email,
+						narrative: '',
+						create_notification: true,
+						evidence_items: [],
+						extensions: {
+							...badgeClass.extension,
+							'extensions:recipientProfile': {
+								'@context': recipientProfileContextUrl,
+								type: ['Extension', 'extensions:RecipientProfile'],
+								name: req.user.name,
+							},
+						},
+					})
+					.then(
+						() => {
+							this.router.navigate([
+								'issuer/issuers',
+								this.issuer.slug,
+								'badges',
+								this.learningPath.participationBadge_id,
+							]);
+							this.openSuccessDialog(req.user.email);
 
-			this.loading = this.badgeInstanceManager
-				.createBadgeInstance(this.issuer.slug, this.learningPath.participationBadge_id, {
-					issuer: this.issuer.slug,
-					badge_class: this.learningPath.participationBadge_id,
-					recipient_type: 'email',
-					recipient_identifier: req.user.email,
-					narrative: '',
-					create_notification: true,
-					evidence_items: [],
-					extensions: {
-						...badgeClass.extension,
-						'extensions:recipientProfile': {
-							'@context': recipientProfileContextUrl,
-							type: ['Extension', 'extensions:RecipientProfile'],
-							name: req.user.name,
+							this.requests = this.requests.filter((request) => request.entity_id != req.entity_id);
+							this.learningPathApiService.deleteLearningPathRequest(req.entity_id);
 						},
-					},
-				})
-				.then(
-					() => {
-						this.router.navigate(['issuer/issuers', this.issuer.slug, 'badges', this.learningPath.participationBadge_id]);
-						this.openSuccessDialog(req.user.email);
-				
-						this.requests = this.requests.filter(
-								(request) => request.entity_id != req.entity_id,
+						(error) => {
+							this.messageService.setMessage(
+								'Unable to award badge: ' + BadgrApiFailure.from(error).firstMessage,
+								'error',
 							);
-						this.learningPathApiService.deleteLearningPathRequest(req.entity_id);
-					},
-					(error) => {
-						this.messageService.setMessage(
-							'Unable to award badge: ' + BadgrApiFailure.from(error).firstMessage,
-							'error',
-						);
-					},
-				)
-				.then(() => {
-					this.loading = null
-					this.learningPathApiService.getLearningPathParticipants(this.learningPath.slug).then(
-						(participants) => {
-							// @ts-ignore
-							const participant = participants.body.filter((p) => p.user.slug === req.user.slug);
-							this.learningPathApiService.updateLearningPathParticipant(participant[0].entity_id, {
-								...participant[0],
-								completed_at: new Date(),
-							})
 						},
-					)}
 					)
-				});
+					.then(() => {
+						this.loading = null;
+						this.learningPathApiService
+							.getLearningPathParticipants(this.learningPath.slug)
+							.then((participants) => {
+								// @ts-ignore
+								const participant = participants.body.filter((p) => p.user.slug === req.user.slug);
+								this.learningPathApiService.updateLearningPathParticipant(participant[0].entity_id, {
+									...participant[0],
+									completed_at: new Date(),
+								});
+							});
+					});
+			});
 	}
 
 	public openSuccessDialog(recipient) {
@@ -179,44 +174,57 @@ export class OebLearningPathDetailComponent extends BaseRoutableComponent implem
 				rejectButtonLabel: 'Abbrechen',
 			})
 			.then(async () => {
-
 				try {
-				  const [revokeResult, deleteResult] = await Promise.all([
-					this.badgeInstanceApiservice.revokeBadgeInstance(
-					  this.issuer.slug,
-					  this.learningPath.participationBadge_id,
-					  participationBadgeInstance.slug,
-					  'revoked'
-					),
-					this.learningPathApiService.deleteLearningPathParticipant(
-					  participant.entity_id
-					)
-				  ]);
-			  
-				  const response = await this.learningPathApiService.getLearningPathParticipants(
-					this.learningPath.slug
-				  );
-				  this.participants = response.body;
+					const [revokeResult, deleteResult] = await Promise.all([
+						this.badgeInstanceApiservice.revokeBadgeInstance(
+							this.issuer.slug,
+							this.learningPath.participationBadge_id,
+							participationBadgeInstance.slug,
+							'revoked',
+						),
+						this.learningPathApiService.deleteLearningPathParticipant(participant.entity_id),
+					]);
+
+					const response = await this.learningPathApiService.getLearningPathParticipants(
+						this.learningPath.slug,
+					);
+					this.participants = response.body;
 				} catch (error) {
-				  console.error(error);
-				  throw error;
+					console.error(error);
+					throw error;
 				}
-			})
+			});
+	}
 
-	  }
-
-	downloadCertificate(participant: any ) {
+	downloadCertificate(participant: any) {
 		const instance = participant.participationBadgeAssertion;
-		this.pdfService.getPdf(instance.slug).then(
-			(url) => {
-				this.pdfSrc = url;
-				this.pdfService.downloadPdf(this.pdfSrc, this.learningPath.name, new Date(instance.json.issuedOn));
-			}).catch((error) => {
-				console.log(error);
+		const baseUrl = window.location.origin;
+		const qrCodeUrl = `${baseUrl}/public/assertions/${instance.slug}`;
+
+		// generate qr code as base64
+		toDataURL(qrCodeUrl, { errorCorrectionLevel: 'H' })
+			.then((qrCodeBase64: string) => {
+				// provide base64 string to backend
+				this.pdfService
+					.getCertificatePdf(instance.slug, qrCodeBase64)
+					.then((url) => {
+						this.pdfSrc = url;
+						this.pdfService.downloadPdf(
+							this.pdfSrc,
+							this.learningPath.name,
+							new Date(instance.json.issuedOn),
+						);
+					})
+					.catch((error) => {
+						console.log(error);
+					});
+			})
+			.catch((error) => {
+				console.error('Fehler beim Generieren des QR-Codes:', error);
 			});
 	}
 
 	get learningPathReverseBadges() {
-		return [...this.learningPath.badges].reverse()
+		return [...this.learningPath.badges].reverse();
 	}
 }
