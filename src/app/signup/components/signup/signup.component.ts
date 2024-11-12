@@ -99,7 +99,7 @@ export class SignupComponent extends BaseRoutableComponent implements OnInit, Af
 		const formState = this.signupForm.value;
 
 		const altcha = <HTMLInputElement>document.getElementsByName('altcha')[0];
-
+		
 		const signupUser = new SignupModel(
 			formState.username,
 			formState.firstName,
