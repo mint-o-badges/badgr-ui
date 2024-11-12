@@ -44,7 +44,20 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 
 	issuerGeoJson;
 	categoryControl = new FormControl('');
-	categoryOptions = ['Schule', 'Hochschule', 'Andere', 'N/A'];
+	categoryOptions = [
+		{
+			label: 'Schule',
+			value: 'schule',
+		},
+		{
+			label: 'Hochschule ',
+			value: 'hochschule',
+		},
+		{
+			label: 'Andere',
+			value: 'andere',
+		},
+	];
 
 	private _searchQuery = '';
 	get searchQuery() {

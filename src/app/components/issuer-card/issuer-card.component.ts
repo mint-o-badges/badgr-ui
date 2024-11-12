@@ -13,12 +13,12 @@ export interface Issuer {
 }
 
 @Component({
-	selector: 'oeb-institutions-card',
-	templateUrl: './institutions-card.component.html',
-	styleUrls: ['./institutions-card.component.css'],
+	selector: 'oeb-issuer-card',
+	templateUrl: './issuer-card.component.html',
+	styleUrls: ['./issuer-card.component.css'],
 	host: { style: 'display: contents;' },
 })
-export class InstitutionsCardComponent {
+export class IssuerCardComponent {
 	@Input() issuer: Issuer; // Single input for the entire object
 	@Input() plural: any; // If needed for pluralization logic
 

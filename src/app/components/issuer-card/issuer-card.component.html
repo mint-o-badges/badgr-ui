@@ -1,5 +1,5 @@
 <div
-	class="tw-flex tw-flex-col tw-w-[100%] lg:tw-w-[49%] tw-box-border tw-gap-6 tw-border-solid tw-border tw-border-[#492E98] tw-rounded-lg tw-p-8"
+	class="tw-flex tw-flex-col tw-w-[100%] lg:tw-w-[49%] tw-box-border tw-gap-6 tw-border-solid tw-border tw-border-purple tw-rounded-lg tw-p-8"
 >
 	<div class="tw-flex tw-flex-row tw-gap-4">
 		<img
@@ -11,7 +11,8 @@
 		/>
 		<div class="tw-content-center">
 			<a
-				class="tw-text-[#492E98] tw-font-bold tw-font-[rubik] tw-text-3xl tw-break-words tw-cursor-pointer"
+				hlmH2
+				class="tw-text-purple tw-font-bold tw-break-words tw-cursor-pointer"
 				(click)="onNavigate()"
 				[maxLength]="40"
 				[truncatedText]="issuer?.name"
@@ -20,7 +21,8 @@
 	</div>
 
 	<div
-		class="tw-font-normal tw-text-base tw-text-[#323232] tw-font-[rubik] tw-min-h-32"
+		hlmP
+		class="tw-font-normal tw-text-black tw-min-h-32"
 		[truncatedText]="issuer?.description"
 		[maxLength]="250"
 	></div>
@@ -30,14 +32,16 @@
 	<div>
 		<div class="tw-flex tw-flex-row tw-gap-4">
 			<a
-				class="tw-flex tw-flex-row tw-text-lg tw-text-[#492E98] tw-font-semibold tw-items-center"
+				hlmP
+				class="tw-flex tw-flex-row tw-text-purple tw-font-semibold tw-items-center"
 				[routerLink]="['/public/issuers/', issuer?.slug]"
 			>
 				<img src="assets/badges/badgeIcon.svg" alt="bade icon" class="tw-w-9" />
 				<p [innerHTML]="issuer?.badgeClassCount | i18nPlural: plural['badges']"></p>
 			</a>
 			<a
-				class="tw-flex tw-flex-row tw-text-lg tw-text-[#492E98] tw-font-semibold tw-items-center"
+				hlmP
+				class="tw-flex tw-flex-row tw-text-purple tw-font-semibold tw-items-center"
 				[routerLink]="['/public/issuers/', issuer?.slug]"
 			>
 				<img

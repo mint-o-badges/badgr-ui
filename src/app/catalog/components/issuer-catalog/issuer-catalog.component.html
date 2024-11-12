@@ -1,14 +1,14 @@
 <form-message></form-message>
 <div class="oeb page-padding">
-	<header class="oeb-headline-container tw-relative oeb-section-sm">
-		<h2 class="tw-flex tw-flex-col tw-text-[#492E98] tw-font-black tw-text-5xl tw-font-[rubik]">
+	<header class="oeb-headline-container tw-relative oeb-section-sm tw-flex tw-flex-col">
+		<h2 hlmH1 class="tw-text-purple tw-font-black">
 			{{ 'General.institutions' | translate }}
-			<ng-template [showLoader]="false" [bgAwaitPromises]="[issuersLoaded]">
-				<span class="tw-font-normal tw-text-2xl tw-break-words tw-font-[rubik] tw-text-[#000000]">
-					{{ issuers.length | i18nPlural: plural['issuerText'] }}
-				</span>
-			</ng-template>
 		</h2>
+		<ng-template [showLoader]="false" [bgAwaitPromises]="[issuersLoaded]">
+			<span hlmH2 class="!tw-text-oebblack w-font-normal tw-break-words">
+				{{ issuers.length | i18nPlural: plural['issuerText'] }}
+			</span>
+		</ng-template>
 	</header>
 
 	<div>
@@ -22,32 +22,19 @@
 							<div class="tw-flex tw-relative tw-items-center">
 								<input
 									hlmInput
-									class="tw-bg-white tw-w-full tw-border-1 tw-border-[#492E98] md:tw-w-96 tw-border-solid tw-min-h-12 tw-rounded-lg tw-p-2 tw-font-[rubik]"
+									class="!tw-bg-white tw-w-full tw-border-1 tw-border-purple md:tw-w-96 tw-border-solid tw-h-12 tw-rounded-lg tw-p-2"
 									placeholder="{{ 'Issuer.searchInstitutions' | translate }}"
 									[(ngModel)]="searchQuery"
 								/>
 								<hlm-icon
 									name="lucideSearch"
-									class="tw-w-8 tw-h-8 tw-absolute tw-top-1/2 tw-right-2 -tw-translate-y-1/2 tw-pointer-events-none tw-text-[#492E98]"
+									class="tw-w-8 tw-h-8 tw-absolute tw-top-1/2 tw-right-2 -tw-translate-y-1/2 tw-pointer-events-none tw-text-purple"
 								></hlm-icon>
 							</div>
-
 							<oeb-select
-								class="md:tw-w-[180px] oeb tw-font-[rubik] tw-text-[#323232]"
-								[options]="[
-									{
-										label: 'Schule',
-										value: 'schule'
-									},
-									{
-										label: 'Hochschule ',
-										value: 'hochschule'
-									},
-									{
-										label: 'Andere',
-										value: 'andere'
-									}
-								]"
+								actionBar="true"
+								class="md:tw-w-[180px] oeb"
+								[options]="categoryOptions"
 								[control]="categoryControl"
 								placeholder="{{ 'Issuer.allCategories' | translate }}"
 								[autofocus]="true"
@@ -67,12 +54,12 @@
 				<ng-container *ngIf="badgesDisplay == 'grid'">
 					<ng-container *ngIf="!groupByCategory">
 						<div class="tw-flex tw-justify-between tw-flex-wrap tw-gap-4 tw-w-full">
-							<oeb-institutions-card
+							<oeb-issuer-card
 								*ngFor="let issuer of issuerResults"
 								[issuer]="issuer"
 								[plural]="plural"
 								(navigate)="navigateToIssuer(issuer)"
-							></oeb-institutions-card>
+							></oeb-issuer-card>
 						</div>
 					</ng-container>
 				</ng-container>
