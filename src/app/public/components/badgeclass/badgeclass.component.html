@@ -105,12 +105,24 @@
 					</h3>
 					<div>
 						<div *ngFor="let competency of badgeClass['extensions:CompetencyExtension']; index as i">
-							<competency-accordion [name]="competency.name" [category]="competency.category" [description]="competency.description" [escoID]="competency.escoID" [studyload]="competency.studyLoad | studyload"></competency-accordion>
+							<competency-accordion [name]="competency.name" [category]="competency.category" [description]="competency.description" [escoID]="competency.escoID" [studyload]="competency.studyLoad | hourPipe"></competency-accordion>
 						</div>
 					</div>
 				</section>
 				
 			</div>
+			<ng-container>
+				<div class="tw-grid md:tw-grid-cols-learningpaths tw-grid-cols-learningpathsSmall tw-gap-16">
+					<bg-learningpathcard *ngFor="let lp of learningPaths"
+					[badgeImage]="baseUrl + lp._apiModel.participationBadge_image" 
+					[name]="lp.name"
+					[issuerTitle]="lp.issuer_name"
+					[description]="lp.description"
+					[tags]="lp.tags"
+					[slug]="lp.slug"
+					></bg-learningpathcard>
+				</div>
+			</ng-container>
 		</div>
 	</main>
 </ng-template>

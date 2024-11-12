@@ -50,6 +50,7 @@ export interface PublicApiBadgeClass {
 	id: string;
 	hostedUrl: string;
 	name: string;
+	slug: string;
 	issuer: string | PublicApiIssuer;
 	image: string;
 	criteria:
@@ -70,6 +71,7 @@ export interface PublicApiBadgeClass {
 	tags: string[];
 	// Extension to the spec containing the original URL of this assertion if it is not stored by Badgr
 	sourceUrl?: string;
+	badge?: any;
 }
 export interface PublicApiBadgeClassWithIssuer extends PublicApiBadgeClass {
 	issuer: PublicApiIssuer;
@@ -131,4 +133,18 @@ export interface PublicApiBadgeCollectionEntryWithBadgeClassAndIssuer {
 	sourceUrl?: string;
 	hostedUrl?: string;
 	expires?: string;
+}
+
+export interface PublicApiLearningPath {
+	name: string;
+	description: string;
+	image?: string;
+	badges: PublicApiBadgeClass[];
+	slug: string;
+	tags: string[];
+	issuer_id: string;
+	participationBadge_id: string;
+	completed_badges?: any[];
+	progress: number;
+	requested?: boolean;
 }

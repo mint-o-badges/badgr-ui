@@ -18,11 +18,11 @@ import { ImpressumComponent } from './components/impressum/impressum.component';
 import { TermsComponent } from './components/terms-of-service/terms-of-service.component';
 import { FaqComponent } from './components/faq/faq.component';
 import { TranslateModule } from '@ngx-translate/core';
-import { CompetencyAccordionComponent } from '../components/accordion.component';
-import { DatatableComponent } from '../components/datatable-badges.component';
 import { PrivacyComponent } from './components/privacy/privacy.component';
 import { RequestBadgeComponent } from '../issuer/components/request-badge/request-badge.component';
 import { BadgeRequestApiService } from '../issuer/services/badgerequest-api.service';
+import { PublicLearningPathComponent } from './components/learningpath/learningpath.component';
+import { UserProfileApiService } from '../common/services/user-profile-api.service';
 
 export const routes: Routes = [
 	{
@@ -107,6 +107,13 @@ export const routes: Routes = [
 		} as BadgrRouteData,
 	},
 	{
+		path: 'learningpaths/:learningPathId',
+		component: PublicLearningPathComponent,
+		data: {
+			publiclyAccessible: true,
+		} as BadgrRouteData,
+	},
+	{
 		path: 'issuer/issuers/:issuerSlug/badges/:badgeSlug/request/:qrCodeId',
 		component: RequestBadgeComponent,
 		data: {
@@ -153,8 +160,9 @@ export const routes: Routes = [
 		VerifyBadgeDialog,
 		FaqComponent,
 		PublicBadgeClassComponent,
+		PublicLearningPathComponent
 	],
 	exports: [],
-	providers: [PublicApiService, BadgeRequestApiService],
+	providers: [PublicApiService, BadgeRequestApiService, UserProfileApiService],
 })
 export class PublicModule {}

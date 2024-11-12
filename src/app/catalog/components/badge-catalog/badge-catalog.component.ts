@@ -298,7 +298,7 @@ class MatchingBadgeIssuer {
 	}
 }
 
-function sortUnique(array: string[]): string[] {
+export function sortUnique(array: string[]): string[] {
 	let frequency = {};
 
 	array.forEach(function (value) {
