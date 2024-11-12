@@ -26,7 +26,7 @@ import { lucideClock } from '@ng-icons/lucide';
 				class="tw-w-full hover:tw-no-underline"
 				hlmAccordionTrigger
 			>
-				<div class="tw-w-full tw-flex tw-justify-between">
+				<div class="tw-w-full tw-flex tw-justify-between tw-gap-1">
 					<div class="tw-flex tw-gap-2 tw-flex-shrink-1">
 						<span class="tw-font-bold tw-text-left">{{ name }} <a (click)="$event.stopPropagation()" href="http://data.europa.eu/{{escoID}}" class="tw-text-link tw-font-normal tw-underline" target="_blank" *ngIf="escoID">[E]</a></span>
 					</div>
