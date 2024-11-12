@@ -290,26 +290,16 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		this.downloadStates[badgeIndex] = true;
 		const baseUrl = window.location.origin;
 		const qrCodeUrl = `${baseUrl}/public/assertions/${instance.slug}`;
-
-		// generate qr code as base64
-		toDataURL(qrCodeUrl, { errorCorrectionLevel: 'H' })
-			.then((qrCodeBase64: string) => {
-				// provide base64 string to backend
-				this.pdfService
-					.getCertificatePdf(instance.slug, qrCodeBase64)
-					.then((url) => {
-						this.pdfSrc = url;
-						this.pdfService.downloadPdf(this.pdfSrc, this.badgeClass.name, instance.createdAt);
-						this.downloadStates[badgeIndex] = false;
-					})
-					.catch((error) => {
-						this.downloadStates[badgeIndex] = false;
-						console.log(error);
-					});
+		this.pdfService
+			.getCertificatePdf(instance.slug)
+			.then((url) => {
+				this.pdfSrc = url;
+				this.pdfService.downloadPdf(this.pdfSrc, this.badgeClass.name, instance.createdAt);
+				this.downloadStates[badgeIndex] = false;
 			})
 			.catch((error) => {
-				console.error('Fehler beim Generieren des QR-Codes:', error);
 				this.downloadStates[badgeIndex] = false;
+				console.log(error);
 			});
 	}
 

@@ -64,30 +64,19 @@ export class ExportPdfDialog extends BaseDialog {
 
 	async openDialog(badge: RecipientBadgeInstance, markdown: HTMLElement): Promise<void> {
 		this.pdfIsLoading = true;
-		const baseUrl = window.location.origin;
-		const qrCodeUrl = `${baseUrl}/public/assertions/${badge.slug}`;
-
-		// generate qr code as base64
-		toDataURL(qrCodeUrl, { errorCorrectionLevel: 'H' })
-			.then((qrCodeBase64: string) => {
-				// provide base64 string to backend
-				this.pdfService
-					.getCertificatePdf(badge.slug, qrCodeBase64)
-					.then((url) => {
-						this.pdfSrc = url;
-						setTimeout(() => {
-							// Put below code within getpdf promise to avoid showing (previous pdf view / blank view) while loading pdf with chrome and firefox
-							this.badge = badge;
-							this.showModal();
-							this.pdfIsLoading = false;
-						}, 10);
-					})
-					.catch((error) => {
-						console.log(error);
-					});
+		this.pdfService
+			.getCertificatePdf(badge.slug)
+			.then((url) => {
+				this.pdfSrc = url;
+				setTimeout(() => {
+					// Put below code within getpdf promise to avoid showing (previous pdf view / blank view) while loading pdf with chrome and firefox
+					this.badge = badge;
+					this.showModal();
+					this.pdfIsLoading = false;
+				}, 10);
 			})
 			.catch((error) => {
-				console.error('Fehler beim Generieren des QR-Codes:', error);
+				console.log(error);
 			});
 	}
 

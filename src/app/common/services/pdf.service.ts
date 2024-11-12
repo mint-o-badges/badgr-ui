@@ -22,26 +22,17 @@ export class PdfService {
 		this.baseUrl = this.configService.apiConfig.baseUrl;
 	}
 
-	// function getCertificatepdf which takes the slug and a base64 image string as input
-	// does a post request and receives a pdf blob as response
-	getCertificatePdf(slug: string, base64Image: string): Promise<SafeResourceUrl> {
-		const headers = new HttpHeaders({
-			Authorization: `Bearer ${this.loginService.currentAuthToken.access_token}`,
-			'Content-Type': 'application/json',
-		});
-
-		const imageData = {
-			image: base64Image,
-		};
-
+	getCertificatePdf(slug: string): Promise<SafeResourceUrl> {
+		const headers = new HttpHeaders().set(
+			'Authorization',
+			`Bearer ${this.loginService.currentAuthToken.access_token}`,
+		);
 		return this.http
-			.post(`${this.baseUrl}/v1/earner/badges/pdf/${slug}`, imageData, {
-				headers: headers,
-				responseType: 'blob',
-			})
+			.get(`${this.baseUrl}/v1/earner/badges/pdf/${slug}`, { headers: headers, responseType: 'blob' })
 			.pipe(
 				map((response: Blob) => {
 					const url = URL.createObjectURL(response);
+					// sanitize the url before avoiding security check
 					const safe_url = this.sanitizer.sanitize(SecurityContext.URL, url);
 					return this.sanitizer.bypassSecurityTrustResourceUrl(safe_url);
 				}),
