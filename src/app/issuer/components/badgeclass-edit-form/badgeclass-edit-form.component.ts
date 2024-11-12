@@ -199,7 +199,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		.addControl('badge_description', '', [Validators.required, Validators.maxLength(700)])
 		.addControl('badge_criteria_url', '')
 		.addControl('badge_criteria_text', '')
-		.addControl('badge_study_load', 0, [this.positiveIntegerOrNull, Validators.max(10000)])
+		.addControl('badge_study_load', 0, [this.positiveIntegerOrNull])
 		.addControl('badge_hours', 0, [this.positiveIntegerOrNull, Validators.max(10000)])
 		.addControl('badge_minutes', 0, [this.positiveIntegerOrNull, Validators.max(59)])
 		.addControl('badge_category', '', Validators.required)
