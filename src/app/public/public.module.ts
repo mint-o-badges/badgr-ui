@@ -148,7 +148,6 @@ export const routes: Routes = [
 	],
 	declarations: [
 		AboutComponent,
-		NewsletterComponent,
 		StartComponent,
 		ImpressumComponent,
 		PrivacyComponent,
