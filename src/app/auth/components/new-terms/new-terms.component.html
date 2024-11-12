@@ -12,7 +12,7 @@
                Bitte bestätige, dass du sie gelesen hast und akzeptierst.
            </span>
         </p>
-        <oeb-checkbox class="" id="remember-me" name="remember-me" [(ngModel)]="confirmed"
+        <oeb-checkbox class="tw-flex tw-justify-center" id="remember-me" name="remember-me" [(ngModel)]="confirmed"
             [text]="'TermsOfService.iConfirm' | translate">
         </oeb-checkbox>
         <oeb-button (click)="sendConfirmation()" class="tw-mt-4" hlmBtn type="submit" [text]="'TermsOfService.sendConfirmation' | translate ">
