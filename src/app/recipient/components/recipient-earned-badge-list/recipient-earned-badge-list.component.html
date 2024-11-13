@@ -122,6 +122,9 @@
 												[issuerTitle]="badge.badgeClass.issuer.name"
 												[badgeSlug]="badge.slug"
 												(shareClicked)="shareBadge(badge)"
+												[competencies]="
+													badge.getExtension('extensions:CompetencyExtension', [{}])
+												"
 											></bg-badgecard>
 										</div>
 									</div>
