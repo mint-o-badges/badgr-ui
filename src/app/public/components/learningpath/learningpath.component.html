@@ -98,7 +98,7 @@
 					<ng-template #progessTemplate>
 						<div class="tw-absolute tw-flex tw-flex-col tw-w-full tw-text-right tw-right-4">
 							<span hlmH1 class="tw-font-extrabold tw-text-purple"
-								>{{ ((minutesCompleted / minutesTotal) * 100).toFixed(0) }} %</span
+								>{{ progressValue() }} %</span
 							>
 							<span hlmP class="tw-mt-2 tw-text-oebblack"
 								>{{ minutesCompleted | hourPipe }} / {{ minutesTotal | hourPipe }}</span
@@ -118,7 +118,7 @@
 							<div class="tw-w-full tw-flex tw-justify-center tw-items-center">
 								<oeb-progress
 									class="tw-w-full tw-h-20 md:tw-h-32 tw-relative tw-inline-flex tw-overflow-hidden tw-rounded-3xl tw-bg-[var(--color-grayinteractive)] tw-items-center"
-									[value]="(minutesCompleted / minutesTotal) * 100"
+									[value]="progressValue()"
 									[template]="progessTemplate"
 								></oeb-progress>
 							</div>

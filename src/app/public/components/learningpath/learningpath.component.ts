@@ -80,6 +80,7 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 	}
 
 	ngAfterContentInit() {
+
 		this.tabs = [
 			{
 				title: 'Alle',
@@ -108,6 +109,10 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 			},
 		});
 	}
+
+	progressValue(): number {
+		return Math.floor((this.minutesCompleted / this.minutesTotal) * 100);
+	  }
 
 	requestPath() {
 		const service: PublicApiService = this.injector.get(PublicApiService);

@@ -54,12 +54,12 @@ type MatchOrProgressType = { match?: string, progress?: number };
 						</div>	
 						<ng-template #progressBar>
 							<div *ngIf="progress === 0 || progress" class="tw-mb-4 tw-w-full tw-mt-2 md:tw-mt-6 tw-flex tw-justify-center tw-items-center">
-								<oeb-progress class="tw-w-full tw-h-5 md:tw-h-7 tw-relative tw-inline-flex tw-overflow-hidden tw-rounded-3xl tw-bg-white tw-items-center" [value]="(progress/studyLoad*100).toFixed(0)" [template]="requested ? requestedTemplate : progressTemplate"></oeb-progress>
+								<oeb-progress class="tw-w-full tw-h-5 md:tw-h-7 tw-relative tw-inline-flex tw-overflow-hidden tw-rounded-3xl tw-bg-white tw-items-center" [value]="progressValue" [template]="requested ? requestedTemplate : progressTemplate"></oeb-progress>
 							</div>
 						</ng-template>
 						<ng-template #progressTemplate>
 							<div class="tw-absolute tw-w-full tw-text-left">
-								<span class="tw-ml-2 md:tw-text-sm tw-text-[8px] tw-text-purple">Lernpfad <span *ngIf="!completed">{{(progress/studyLoad*100).toFixed(0)}}%</span> abgeschlossen</span>
+								<span class="tw-ml-2 md:tw-text-sm tw-text-[8px] tw-text-purple">Lernpfad <span *ngIf="!completed">{{progressValue}}%</span> abgeschlossen</span>
 							</div>
 						</ng-template>	
 						<ng-template #requestedTemplate>
@@ -133,6 +133,11 @@ export class BgLearningPathCard {
 	  get isProgress(): boolean {
 		return this.progress !== null;
 	  }
+
+	  get progressValue(): number {
+		return Math.floor((this.progress / this.studyLoad) * 100);
+	  }
+
 	
 	  requestLearningPath() {
 		this.learningPathApiService.requestLearningPath(this.slug).then(res => {
