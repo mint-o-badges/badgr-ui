@@ -103,7 +103,7 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 	public openSuccessDialog() {
 		const dialogRef = this._hlmDialogService.open(SuccessDialogComponent, {
 			context: {
-				text: `Du nimmst am Lernpfad ${this.learningPath.name} teil!`,
+				text: `Du nimmst am Lernpfad <span class="tw-font-bold">${this.learningPath.name}</span> teil!`,
 				variant: 'success',
 			},
 		});
