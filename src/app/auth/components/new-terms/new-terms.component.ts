@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
 import { HlmDialogService } from "../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service";
 import { DangerDialogComponent } from "../../../common/dialogs/oeb-dialogs/danger-dialog.component";
-import { UserProfileApiService } from "../../../common/services/user-profile-api.service";
+import { UserProfileManager } from "../../../common/services/user-profile-manager.service";
 
 @Component({
     selector: "app-new-terms",
@@ -18,7 +18,7 @@ export class NewTermsComponent extends BaseRoutableComponent {
     router: Router,
     route: ActivatedRoute,
     private translate: TranslateService,
-    private userProfileApiService: UserProfileApiService
+		private profileManager: UserProfileManager,
 
   ) {
     super(router, route);
@@ -34,14 +34,9 @@ export class NewTermsComponent extends BaseRoutableComponent {
 
     }
     else{
-      this.router.navigate(['public/about/newsletter']);
-      this.userProfileApiService.getProfile().then(profile => {
-        this.userProfileApiService.
-        updateProfile({...profile,  agreed_terms_version: 2 }).then(
-          (profile) => {
-            console.log('Profile updated', profile);
-          }
-        );
+      this.router.navigate(['public/about/newsletter']);  
+      this.profileManager.userProfilePromise.then((profile) => {
+        profile.agreeToLatestTerms()
       });
     }
   }
