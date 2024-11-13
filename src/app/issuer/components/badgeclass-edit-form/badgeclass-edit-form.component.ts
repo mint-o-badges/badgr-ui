@@ -141,6 +141,10 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		return this.badgeClassForm.controls.badge_image.dirty || this.badgeClassForm.controls.badge_customImage.dirty;
 	}
 
+	get badgeStudyLoadDirty(){
+		return this.badgeClassForm.controls.badge_hours.dirty || this.badgeClassForm.controls.badge_minutes.dirty
+	}
+
 	readonly badgeClassPlaceholderImageUrl = '../../../../breakdown/static/images/placeholderavatar.svg';
 
 	/**
@@ -187,10 +191,10 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 	savePromise: Promise<BadgeClass> | null = null;
 	badgeClassForm = typedFormGroup([
-		this.criteriaRequired.bind(this),
-		this.imageValidation.bind(this),
-		this.noDuplicateCompetencies.bind(this),
-	])
+        this.criteriaRequired.bind(this),
+        this.imageValidation.bind(this),
+		this.maxStudyLoadValidation.bind(this),
+        this.noDuplicateCompetencies.bind(this)])
 		.addControl('badge_name', '', [
 			Validators.required,
 			Validators.maxLength(60),
@@ -205,9 +209,9 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		.addControl('badge_description', '', [Validators.required, Validators.maxLength(700)])
 		.addControl('badge_criteria_url', '')
 		.addControl('badge_criteria_text', '')
-		.addControl('badge_study_load', 0, [this.positiveIntegerOrNull, Validators.max(10000)])
-		.addControl('badge_hours', 0, [this.positiveIntegerOrNull, Validators.max(10000)])
-		.addControl('badge_minutes', 0, [this.positiveIntegerOrNull, Validators.max(59)])
+		.addControl('badge_study_load', 0, [this.positiveIntegerOrNull])
+		.addControl('badge_hours', 0, this.positiveIntegerOrNull)
+		.addControl('badge_minutes', 0, this.positiveIntegerOrNull)
 		.addControl('badge_category', '', Validators.required)
 		.addControl('badge_level', 'a1', Validators.required)
 		.addControl('badge_based_on', {
@@ -803,6 +807,21 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			return null;
 		}
 		return { mustChange: { value: this.forbiddenImage } };
+	}
+
+	maxStudyLoadValidation(): ValidationErrors | null {
+		if (!this.badgeClassForm) return null;
+
+		const value = this.badgeClassForm.value;
+
+		const minutes = value.badge_minutes;
+		if(minutes > 59){
+			return { maxMinutesError: true };
+		}
+		const hours = value.badge_hours;
+		if(hours > 10000){
+			return { maxHoursError: true };
+		}
 	}
 
 	async onSubmit() {

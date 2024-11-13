@@ -19,7 +19,7 @@ import { SessionService } from '../../../common/services/session.service';
 	templateUrl: './learningpath.component.html',
 })
 export class PublicLearningPathComponent implements OnInit, AfterContentInit {
-	
+
 	learningPathSlug: string;
 	isParticipating: boolean = false;
 	learningPath: PublicApiLearningPath;
@@ -103,13 +103,13 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 	public openSuccessDialog() {
 		const dialogRef = this._hlmDialogService.open(SuccessDialogComponent, {
 			context: {
-				text: `Du nimmst am Lernpfad ${this.learningPath.name} teil!`,
+				text: `Du nimmst am Lernpfad <span class="tw-font-bold">${this.learningPath.name}</span> teil!`,
 				variant: 'success',
 			},
 		});
 	}
 
-	requestPath(){
+	requestPath() {
 		const service: PublicApiService = this.injector.get(PublicApiService);
 		return service.getLearningPath(this.learningPathSlug).then((response) => {
 			this.learningPath = response;
@@ -138,8 +138,8 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 			];
 			this.crumbs = [
 				{ title: 'Lernpfade', routerLink: ['/catalog/learningpaths'] },
-				{ title: this.learningPath.name, routerLink: ['/public/learningpaths/'+this.learningPath.slug] },
-				
+				{ title: this.learningPath.name, routerLink: ['/public/learningpaths/' + this.learningPath.slug] },
+
 			];
 			if (response.progress === null) {
 				this.isParticipating = false;
@@ -153,7 +153,7 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 				(acc, b) => acc + b.badge.extensions['extensions:StudyLoadExtension'].StudyLoad,
 				0,
 			);
-			
+
 			this.minutesCompleted = response.completed_badges?.reduce(
 				(acc, b) => acc + b.extensions['extensions:StudyLoadExtension'].StudyLoad,
 				0,
@@ -174,7 +174,7 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 		this.learningPathApiService.participateInLearningPath(this.learningPathSlug).then(
 			(response) => {
 				//@ts-ignore
-				if(response.body.message === "Successfully joined the learning path"){
+				if (response.body.message === "Successfully joined the learning path") {
 					this.openSuccessDialog();
 				}
 				this.requestPath();
@@ -193,12 +193,12 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 		this.learningPathApiService.requestLearningPath(this.learningPath.slug).then(res => {
 			this.learningPath.requested = true;
 		})
-	  }
+	}
 
 	get learningPathReverseBadges() {
 		return [...this.learningPath.badges].reverse()
 	}
-	
+
 	get openBadgesReversed() {
 		return [...this.openBadges].reverse()
 	}
