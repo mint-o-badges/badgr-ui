@@ -154,6 +154,11 @@ export class SessionService {
                 resolve();
             },
             error: (err) => {
+                // If an error occurs it typically still means that the cookie gets deleted.
+                // So we should also update the local storage etc. accordingly
+                localStorage.removeItem(EXPIRATION_DATE_STORAGE_KEY);
+                sessionStorage.removeItem(EXPIRATION_DATE_STORAGE_KEY);
+                if (nextObservable) that.loggedInSubject.next(false);
                 that.messageService.reportFatalError('Logout Failed: ' + err);
                 reject('Logout failed: ' + err);
             }});
