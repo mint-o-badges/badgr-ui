@@ -124,7 +124,6 @@ import { LearningPathGraduatesDatatableComponent } from '../components/datatable
 import { LearningPathRequestsDatatableComponent } from '../components/datatable-learningpath-requests.component';
 import { OebIssuerCard } from './components/oeb-issuercard';
 import { HourPipe } from './pipes/hourPipe';
-import { BgSmallLearningPathCard } from './components/bg-small-learningpathcard';
 
 const DIRECTIVES = [
 	BgAwaitPromises,
@@ -145,7 +144,6 @@ export const COMMON_MODULE_COMPONENTS = [
 	BadgrButtonComponent,
 	BgBadgecard,
 	BgLearningPathCard,
-	BgSmallLearningPathCard,
 	BgBadgeDetail,
 	BgBreadcrumbsComponent,
 	BgFormFieldFileComponent,
@@ -192,7 +190,7 @@ const SERVICES = [
 	SharingService,
 	NounprojectService,
 	AiSkillsService,
-    ServerVersionService,
+	ServerVersionService,
 	PdfService,
 	CaptchaService,
 	EventsService,
