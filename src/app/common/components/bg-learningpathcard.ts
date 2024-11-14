@@ -87,7 +87,7 @@ export class BgLearningPathCard {
 	readonly badgeFailedImageUrl = '../../../breakdown/static/images/badge-failed.svg';
 	private _matchOrProgress: MatchOrProgressType;
 
-	constructor(private learningPathApiService: LearningPathApiService) {}
+	constructor(private learningPathApiService: LearningPathApiService) { }
 
 	@Input() slug: string;
 	@Input() issuerSlug: string;
@@ -108,40 +108,40 @@ export class BgLearningPathCard {
 	@Output() shareClicked = new EventEmitter<MouseEvent>();
 
 	@HostBinding('class') get hostClasses(): string {
-		if(this.isProgress && this.progress/this.studyLoad < 1){
+		if (this.isProgress && this.progress / this.studyLoad < 1) {
 			return 'tw-bg-[var(--color-lightgreen)] tw-border-purple tw-border'
 		}
-		else if(this.isProgress && this.progress/this.studyLoad === 1 && !this.completed && !this.requested){
+		else if (this.isProgress && this.progress / this.studyLoad === 1 && !this.completed && !this.requested) {
 			return 'tw-bg-[var(--color-lightgreen)] tw-border-green tw-border-4'
 		}
-		else{
+		else {
 			return 'tw-bg-white tw-border-purple tw-border'
-		}	
-	  } 
+		}
+	}
 
 	@Input() set matchOrProgress(value: MatchOrProgressType) {
 		if ('match' in value && 'progress' in value) {
-		  throw new Error('Only one of "match" or "progress" can be set.');
+			throw new Error('Only one of "match" or "progress" can be set.');
 		}
 		this._matchOrProgress = value;
-	  }
-	
-	  get isMatch(): (string | undefined) {
+	}
+
+	get isMatch(): (string | undefined) {
 		return this._matchOrProgress?.match;
-	  }
-	
-	  get isProgress(): boolean {
+	}
+
+	get isProgress(): boolean {
 		return this.progress !== null;
-	  }
+	}
 
-	  get progressValue(): number {
+	get progressValue(): number {
 		return Math.floor((this.progress / this.studyLoad) * 100);
-	  }
+	}
 
-	
-	  requestLearningPath() {
+
+	requestLearningPath() {
 		this.learningPathApiService.requestLearningPath(this.slug).then(res => {
 			this.requested = true;
 		})
-	  }
+	}
 }
