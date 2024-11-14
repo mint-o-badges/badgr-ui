@@ -70,7 +70,7 @@ type MatchOrProgressType = { match?: string, progress?: number };
 								<span class="tw-ml-2 md:tw-text-sm tw-text-[8px] tw-text-purple">{{'LearningPath.successRequestPath' | translate}}</span>
 							</div>
 						</ng-template>	
-						<oeb-button *ngIf="isProgress && progress/studyLoad === 1 && !completed && !requested" (click)="requestLearningPath()" [text]="'Lernpfad abholen'" width="full_width">							
+						<oeb-button *ngIf="isProgress && progress/studyLoad === 1 && !completed && !requested" (click)="requestLearningPath()" [text]="'Lernpfad-Badge abholen'" width="full_width">							
 						</oeb-button>
 					</div>
 					<div class="tw-flex tw-flex-row tw-gap-4 tw-text-[#6B7280] md:tw-text-sm tw-text-[8px] tw-mt-2 md:tw-mt-6 tw-items-end">
