@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { BrnDialogRef, injectBrnDialogContext } from '@spartan-ng/ui-dialog-brain';
+import { BrnDialogRef } from '@spartan-ng/ui-dialog-brain';
 import { OebDialogComponent } from '../../../components/oeb-dialog.component';
 import { lucideTriangleAlert } from '@ng-icons/lucide';
 import { HlmIconComponent, provideIcons } from '../../../components/spartan/ui-icon-helm/src';
@@ -28,25 +28,21 @@ import { TranslateModule } from '@ngx-translate/core';
 						[text]="'General.cancel' | translate"
 						(click)="closeDialog()"
 					></oeb-button>
-					<oeb-button size="md" [text]="'Issuer.giveBadge' | translate" (click)="deleteItem()"></oeb-button>
+					<oeb-button size="md" [text]="'Issuer.giveBadge' | translate" (click)="confirmBadge()"></oeb-button>
 				</div>
 			</div>
 		</oeb-dialog>
 	`,
 })
 export class EndOfEditDialogComponent {
-	private readonly _dialogContext = injectBrnDialogContext<{ text: string; recipient: any; variant: string }>();
-
 	private readonly _dialogRef = inject<BrnDialogRef>(BrnDialogRef);
-	protected readonly = this._dialogContext.variant;
-
 	constructor() {}
 
 	public closeDialog() {
-		this._dialogRef.close();
+		this._dialogRef.close('cancel');
 	}
 
-	public deleteItem() {
-		this._dialogRef.close();
+	public confirmBadge() {
+		this._dialogRef.close('confirm');
 	}
 }
