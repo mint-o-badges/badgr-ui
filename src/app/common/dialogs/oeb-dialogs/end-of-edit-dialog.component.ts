@@ -1,5 +1,5 @@
-import { Component, inject } from '@angular/core';
-import { BrnDialogRef } from '@spartan-ng/ui-dialog-brain';
+import { Component, inject, Output, EventEmitter } from '@angular/core';
+import { BrnDialogRef, injectBrnDialogContext } from '@spartan-ng/ui-dialog-brain';
 import { OebDialogComponent } from '../../../components/oeb-dialog.component';
 import { lucideTriangleAlert } from '@ng-icons/lucide';
 import { HlmIconComponent, provideIcons } from '../../../components/spartan/ui-icon-helm/src';
@@ -19,7 +19,13 @@ import { TranslateModule } from '@ngx-translate/core';
 				<div hlmH3 class="tw-font-bold !tw-text-black tw-uppercase">
 					{{ 'Badge.endOfEditDialogTitle' | translate }}
 				</div>
-				<div hlmP>{{ 'Badge.endOfEditDialogText' | translate }}</div>
+				<div hlmP>
+					{{
+						variant === 'qrcode'
+							? ('Badge.endOfEditDialogTextQR' | translate)
+							: ('Badge.endOfEditDialogText' | translate)
+					}}
+				</div>
 				<div hlmP class="tw-italic">{{ 'Badge.endOfEditDialogSubText' | translate }}</div>
 				<div class="tw-flex tw-flex-row tw-gap-4 tw-justify-center tw-mt-4">
 					<oeb-button
@@ -36,7 +42,13 @@ import { TranslateModule } from '@ngx-translate/core';
 })
 export class EndOfEditDialogComponent {
 	private readonly _dialogRef = inject<BrnDialogRef>(BrnDialogRef);
-	constructor() {}
+	private readonly _dialogContext = injectBrnDialogContext<{
+		text: string;
+		delete: any;
+		qrCodeRequested: boolean;
+		variant: string;
+	}>();
+	protected readonly variant = this._dialogContext.variant;
 
 	public closeDialog() {
 		this._dialogRef.close('cancel');
