@@ -545,7 +545,7 @@
 
 	<!-- add options -->
 	<div class="section formsection formsection-nohelp tw-text-oebblack">
-		<oeb-collapsible [trigger]="collapseDetailsTrigger">
+		<oeb-collapsible [trigger]="collapseDetailsTrigger" [id]="'optional-details'">
 			<ng-template #collapseDetailsTrigger>
 				<h2 class="tw-pt-1 tw-px-1 tw-text-xl tw-text-[var(--color-purple)] tw-mr-auto">{{'CreateBadge.optionalBadgeDetails' | translate }}</h2>
 			</ng-template>
