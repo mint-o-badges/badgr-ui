@@ -385,7 +385,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 		// transform minutes into hours and minutes
 		let competencies = badgeClass.extension['extensions:CompetencyExtension'].map(comp => {
-			return {...comp, hours: Math.floor(comp.studyLoad / 60), minutes: comp.studyLoad % 60 }
+			return { ...comp, hours: Math.floor(comp.studyLoad / 60), minutes: comp.studyLoad % 60 }
 		})
 
 		this.badgeClassForm.setValue({
@@ -449,7 +449,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	ngOnInit() {
 		super.ngOnInit();
 		let that = this;
-		console.log('KATEGORIEN', this.categoryOptions);
 
 		// Set badge category when editing a badge. As new select component doesn't show badge competencies
 		this.badgeCategory = this.badgeClassForm.rawControl.controls['badge_category'].value;
@@ -468,7 +467,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		});
 
 		this.fetchTags();
-		console.log('KATEGORIEN', this.categoryOptions);
 	}
 
 	ngAfterViewInit(): void {
