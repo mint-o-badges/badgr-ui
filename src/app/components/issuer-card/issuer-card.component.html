@@ -22,7 +22,7 @@
 
 	<div
 		hlmP
-		class="tw-font-normal tw-text-black tw-min-h-32"
+		class="tw-font-normal tw-text-black md:tw-min-h-32"
 		[truncatedText]="issuer?.description"
 		[maxLength]="250"
 	></div>
@@ -33,7 +33,7 @@
 		<div class="tw-flex tw-flex-row tw-gap-4">
 			<a
 				hlmP
-				class="tw-flex tw-flex-row tw-text-purple tw-font-semibold tw-items-center"
+				class="tw-flex tw-flex-row tw-text-purple tw-font-semibold tw-items-center hover:tw-underline"
 				[routerLink]="['/public/issuers/', issuer?.slug]"
 			>
 				<img src="assets/badges/badgeIcon.svg" alt="bade icon" class="tw-w-9" />
@@ -41,7 +41,7 @@
 			</a>
 			<a
 				hlmP
-				class="tw-flex tw-flex-row tw-text-purple tw-font-semibold tw-items-center"
+				class="tw-flex tw-flex-row tw-text-purple tw-font-semibold tw-items-center hover:tw-underline"
 				[routerLink]="['/public/issuers/', issuer?.slug]"
 			>
 				<img
