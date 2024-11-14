@@ -83,17 +83,6 @@
 				</div>
 			</div>
 
-			<p
-					hlmP 
-					size="sm"
-					id="maxHoursOrMinutesError"
-					[hidden]="!badgeStudyLoadDirty || !badgeClassForm.hasError('maxHoursError') && !badgeClassForm.hasError('maxMinutesError')"
-					class="tw-font-normal md:tw-pl-[13.5rem] u-text-error"
-				>
-					<span *ngIf="badgeClassForm.hasError('maxMinutesError')">{{'CreateBadge.minMaxError' | translate }}</span>
-					<span *ngIf="badgeClassForm.hasError('maxHoursError')">{{'CreateBadge.hoursMaxError' | translate }}</span>
-				</p>
-
 			<div class="tw-flex md:tw-flex-row tw-gap-3 md:tw-gap-8 tw-flex-col md:tw-items-center tw-justify-start">
 				<span class="input-label md:tw-flex-[0_0_10em]"> {{ 'Badge.title' | translate }}</span>
 				<div class="tw-flex tw-gap-2 tw-items-center">
@@ -689,6 +678,7 @@
 										></oeb-input>
 
 										<button
+											id="link-more-options-btn"
 											*ngIf="!showAdvanced[i]"
 											(click)="showAdvanced[i] = true"
 											type="button"
@@ -730,6 +720,7 @@
 				</li>
 				<li class="tw-mt-4">
 					<button
+					id="badge-validity-btn"
 						type="button"
 						(click)="expirationEnabled ? disableExpiration() : enableExpiration()"
 						class="options-dropdown"
@@ -760,6 +751,7 @@
 						<div class="formsection-x-body">
 							<div class="l-spacestack">
 								<oeb-input
+									id="duration-number"
 									[control]="expirationForm.rawControlMap.expires_amount"
 									[label]="count"
 									[fieldType]="'number'"
@@ -770,6 +762,7 @@
 									}"
 								></oeb-input>
 								<oeb-select
+									[id]="'duration-type'"
 									ariaLabel="chooseDuration"
 									[control]="expirationForm.rawControlMap.expires_duration"
 									[label]="duration"

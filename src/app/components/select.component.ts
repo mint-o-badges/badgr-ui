@@ -38,6 +38,7 @@ import { CustomValidatorMessages, messagesForValidationError } from './input.com
 			#selectInput
 			class="tw-text-oebblack"
 			[ngClass]="{ 'tw-pointer-events-none tw-opacity-50': disabled}"
+			[attr.id]="id"
 			brn-select
 			hlm
 		>
@@ -69,6 +70,7 @@ export class OebSelectComponent {
 	@Input() description: string;
 	@Input() placeholder: string;
 	@Input() disabled: boolean = false;
+	@Input() id: string = null;
 
 	@Input() options: FormFieldSelectOption[];
 	@Input() set optionMap(valueToLabelMap: { [value: string]: string }) {
