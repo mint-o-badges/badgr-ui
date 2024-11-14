@@ -54,12 +54,12 @@ type MatchOrProgressType = { match?: string, progress?: number };
 						</div>	
 						<ng-template #progressBar>
 							<div *ngIf="progress === 0 || progress" class="tw-mb-4 tw-w-full tw-mt-2 md:tw-mt-6 tw-flex tw-justify-center tw-items-center">
-								<oeb-progress class="tw-w-full tw-h-5 md:tw-h-7 tw-relative tw-inline-flex tw-overflow-hidden tw-rounded-3xl tw-bg-white tw-items-center" [value]="(progress/studyLoad*100).toFixed(0)" [template]="requested ? requestedTemplate : progressTemplate"></oeb-progress>
+								<oeb-progress class="tw-w-full tw-h-5 md:tw-h-7 tw-relative tw-inline-flex tw-overflow-hidden tw-rounded-3xl tw-bg-white tw-items-center" [value]="progressValue" [template]="requested ? requestedTemplate : progressTemplate"></oeb-progress>
 							</div>
 						</ng-template>
 						<ng-template #progressTemplate>
 							<div class="tw-absolute tw-w-full tw-text-left">
-								<span class="tw-ml-2 md:tw-text-sm tw-text-[8px] tw-text-purple">Lernpfad <span *ngIf="!completed">{{(progress/studyLoad*100).toFixed(0)}}%</span> abgeschlossen</span>
+								<span class="tw-ml-2 md:tw-text-sm tw-text-[8px] tw-text-purple">Lernpfad <span *ngIf="!completed">{{progressValue}}%</span> abgeschlossen</span>
 							</div>
 						</ng-template>	
 						<ng-template #requestedTemplate>
@@ -87,7 +87,7 @@ export class BgLearningPathCard {
 	readonly badgeFailedImageUrl = '../../../breakdown/static/images/badge-failed.svg';
 	private _matchOrProgress: MatchOrProgressType;
 
-	constructor(private learningPathApiService: LearningPathApiService) {}
+	constructor(private learningPathApiService: LearningPathApiService) { }
 
 	@Input() slug: string;
 	@Input() issuerSlug: string;
@@ -108,35 +108,40 @@ export class BgLearningPathCard {
 	@Output() shareClicked = new EventEmitter<MouseEvent>();
 
 	@HostBinding('class') get hostClasses(): string {
-		if(this.isProgress && this.progress/this.studyLoad < 1){
+		if (this.isProgress && this.progress / this.studyLoad < 1) {
 			return 'tw-bg-[var(--color-lightgreen)] tw-border-purple tw-border'
 		}
-		else if(this.isProgress && this.progress/this.studyLoad === 1 && !this.completed && !this.requested){
+		else if (this.isProgress && this.progress / this.studyLoad === 1 && !this.completed && !this.requested) {
 			return 'tw-bg-[var(--color-lightgreen)] tw-border-green tw-border-4'
 		}
-		else{
+		else {
 			return 'tw-bg-white tw-border-purple tw-border'
-		}	
-	  } 
+		}
+	}
 
 	@Input() set matchOrProgress(value: MatchOrProgressType) {
 		if ('match' in value && 'progress' in value) {
-		  throw new Error('Only one of "match" or "progress" can be set.');
+			throw new Error('Only one of "match" or "progress" can be set.');
 		}
 		this._matchOrProgress = value;
-	  }
-	
-	  get isMatch(): (string | undefined) {
+	}
+
+	get isMatch(): (string | undefined) {
 		return this._matchOrProgress?.match;
-	  }
-	
-	  get isProgress(): boolean {
+	}
+
+	get isProgress(): boolean {
 		return this.progress !== null;
-	  }
-	
-	  requestLearningPath() {
+	}
+
+	get progressValue(): number {
+		return Math.floor((this.progress / this.studyLoad) * 100);
+	}
+
+
+	requestLearningPath() {
 		this.learningPathApiService.requestLearningPath(this.slug).then(res => {
 			this.requested = true;
 		})
-	  }
+	}
 }

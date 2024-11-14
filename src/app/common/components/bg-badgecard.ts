@@ -6,18 +6,18 @@ import {
 	style,
 	transition,
 	trigger,
-  } from '@angular/animations';
+} from '@angular/animations';
 
 @Component({
 	selector: 'bg-badgecard',
 	animations: [
 		trigger('showCompetencies', [
-		  state('true', style({ height: AUTO_STYLE, visibility: AUTO_STYLE })),
-		  state('false', style({ height: '0', visibility: 'hidden' })),
-		  transition('false => true', animate(220 + 'ms ease-out')),
-		  transition('true => false', animate(220 + 'ms ease-in')),
+			state('true', style({ height: AUTO_STYLE, visibility: AUTO_STYLE })),
+			state('false', style({ height: '0', visibility: 'hidden' })),
+			transition('false => true', animate(220 + 'ms ease-out')),
+			transition('true => false', animate(220 + 'ms ease-in')),
 		]),
-	  ],
+	],
 	host: {
 		class: 'tw-rounded-[10px] tw-h-max tw-border-purple tw-border-solid tw-border tw-relative tw-p-3 tw-block tw-overflow-hidden oeb-badge-card',
 	},
@@ -111,7 +111,7 @@ import {
 				<div *ngFor="let competency of competencies">
 					<competency-accordion [name]="competency.name" [category]="competency.category"
 						[description]="competency.description" [escoID]="competency.escoID"
-						[studyload]="competency.studyLoad | studyload"></competency-accordion>
+						[studyload]="competency.studyLoad | hourPipe"></competency-accordion>
 				</div>
 			</div>
 		</div>
@@ -139,19 +139,19 @@ export class BgBadgecard {
 	checked = false;
 
 	@HostBinding('class') get hostClasses(): string {
-		return this.checked 
-		  ? 'tw-bg-[var(--color-lightgreen)]'   
-		  : 'tw-bg-white';  
-	  }
+		return this.checked
+			? 'tw-bg-[var(--color-lightgreen)]'
+			: 'tw-bg-white';
+	}
 	@HostBinding('class') get completedClass(): string {
-		return this.completed 
-		  ? 'tw-bg-[var(--color-green)]'   
-		  : 'tw-bg-white';  
-	  }
+		return this.completed
+			? 'tw-bg-[var(--color-green)]'
+			: 'tw-bg-white';
+	}
 
 
 	showCompetencies = false
-	toggleCompetencies(){
+	toggleCompetencies() {
 		this.showCompetencies = !this.showCompetencies;
 	}
 }
