@@ -28,6 +28,7 @@ import { AppConfigService } from '../../../common/app-config.service';
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { HlmDialogService } from './../../../components/spartan/ui-dialog-helm/src';
 import { SuccessDialogComponent } from '../../../common/dialogs/oeb-dialogs/success-dialog.component';
+import { EndOfEditDialogComponent } from '../../../common/dialogs/oeb-dialogs/end-of-edit-dialog.component';
 
 @Component({
 	selector: 'badgeclass-issue',
@@ -181,6 +182,7 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 
 	ngOnInit() {
 		super.ngOnInit();
+		this.openConfirmEditDialog();
 	}
 
 	enableEvidence() {
@@ -251,34 +253,39 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 		const expires =
 			this.expirationEnabled && formState.expires ? new Date(formState.expires).toISOString() : undefined;
 
-		this.issueBadgeFinished = this.badgeInstanceManager
-			.createBadgeInstance(this.issuerSlug, this.badgeSlug, {
-				issuer: this.issuerSlug,
-				badge_class: this.badgeSlug,
-				recipient_type: formState.recipient_type,
-				recipient_identifier: formState.recipient_identifier,
-				narrative: this.narrativeEnabled ? formState.narrative : '',
-				create_notification: formState.notify_earner,
-				evidence_items: this.evidenceEnabled ? cleanedEvidence : [],
-				extensions,
-				expires,
-			})
-			.then(() => this.badgeClass.update())
-			.then(
-				() => {
-					this.eventsService.recipientBadgesStale.next([]);
-					this.openSuccessDialog(formState.recipient_identifier);
-					this.router.navigate(['issuer/issuers', this.issuerSlug, 'badges', this.badgeClass.slug]);
-					this.messageService.setMessage('Badge awarded to ' + formState.recipient_identifier, 'success');
-				},
-				(error) => {
-					this.messageService.setMessage(
-						'Unable to award badge: ' + BadgrApiFailure.from(error).firstMessage,
-						'error',
-					);
-				},
-			)
-			.then(() => (this.issueBadgeFinished = null));
+		if (this.badgeClass.recipientCount === 0) {
+			// show a dialog that the badge has not been awarded to anyone yet that once its awarded you can't edit it anmyore
+
+			this.openConfirmEditDialog();
+		}
+		// this.issueBadgeFinished = this.badgeInstanceManager
+		// 	.createBadgeInstance(this.issuerSlug, this.badgeSlug, {
+		// 		issuer: this.issuerSlug,
+		// 		badge_class: this.badgeSlug,
+		// 		recipient_type: formState.recipient_type,
+		// 		recipient_identifier: formState.recipient_identifier,
+		// 		narrative: this.narrativeEnabled ? formState.narrative : '',
+		// 		create_notification: formState.notify_earner,
+		// 		evidence_items: this.evidenceEnabled ? cleanedEvidence : [],
+		// 		extensions,
+		// 		expires,
+		// 	})
+		// 	.then(() => this.badgeClass.update())
+		// 	.then(
+		// 		() => {
+		// 			this.eventsService.recipientBadgesStale.next([]);
+		// 			this.openSuccessDialog(formState.recipient_identifier);
+		// 			this.router.navigate(['issuer/issuers', this.issuerSlug, 'badges', this.badgeClass.slug]);
+		// 			this.messageService.setMessage('Badge awarded to ' + formState.recipient_identifier, 'success');
+		// 		},
+		// 		(error) => {
+		// 			this.messageService.setMessage(
+		// 				'Unable to award badge: ' + BadgrApiFailure.from(error).firstMessage,
+		// 				'error',
+		// 			);
+		// 		},
+		// 	)
+		// 	.then(() => (this.issueBadgeFinished = null));
 	}
 
 	async removeEvidence(i: number) {
@@ -302,7 +309,15 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 		const dialogRef = this._hlmDialogService.open(SuccessDialogComponent, {
 			context: {
 				recipient: recipient,
-				variant: "success"
+				variant: 'success',
+			},
+		});
+	}
+
+	public openConfirmEditDialog() {
+		const dialogRef = this._hlmDialogService.open(EndOfEditDialogComponent, {
+			context: {
+				text: 'Are you sure you want to award this badge?',
 			},
 		});
 	}
