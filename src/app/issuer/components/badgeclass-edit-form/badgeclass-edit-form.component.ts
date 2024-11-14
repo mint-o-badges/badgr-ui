@@ -466,7 +466,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			this.checkDuplicateCompetency();
 		});
 
-		this.fetchTags();
 	}
 
 	ngAfterViewInit(): void {
@@ -477,6 +476,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		this.customImageField.control.statusChanges.subscribe((e) => {
 			if (this.customImageField.control.value != null) this.imageField.control.reset();
 		});
+		this.fetchTags()
 	}
 
 	clearCompetencies() {
