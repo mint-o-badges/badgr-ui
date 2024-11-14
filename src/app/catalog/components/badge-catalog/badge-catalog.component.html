@@ -49,12 +49,7 @@
 				</div>
 				<div class="subtitle-wrapper">
 					<div class="tags-wrapper oeb-standard-padding-bottom">
-						<!-- <div class="tag" *ngFor="let tag of badgeClass.tags; last as last">{{ tag }}</div> -->
-						<div (click)="filterByTag(tag)" class="tag tag-wrapper tag-button"
-							[class.tag-button-pressed]="selectedTag == tag"
-							*ngFor="let tag of tags | slice: 0 : 3; last as last">
-							{{ tag }}
-						</div>
+							<div (click)="filterByTag(tag)" [class.tag-button-pressed]="selectedTag == tag" class="tag tag-wrapper tag-button" *ngFor="let tag of tags; last as last">{{ tag }}</div>
 					</div>
 					<div class="open-legend-button">
 						<a (click)="openLegend()">{{ 'Badge.framesMeaning' | translate }}</a>
