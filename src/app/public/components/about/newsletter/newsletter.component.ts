@@ -1,4 +1,4 @@
-import { Component, OnInit, inject} from '@angular/core';
+import { Component, ElementRef, OnInit, Renderer2, inject} from '@angular/core';
 import { SuccessDialogComponent } from '../../../../common/dialogs/oeb-dialogs/success-dialog.component';
 import { HlmDialogService } from '../../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -25,6 +25,8 @@ export class NewsletterComponent extends BaseRoutableComponent implements OnInit
         private translate: TranslateService, 
         private userProfileApiService: UserProfileApiService,
         private sessionService: SessionService,
+        private renderer: Renderer2,
+		private elementRef: ElementRef,
 		router: Router,
         route: ActivatedRoute
         ) {
@@ -32,6 +34,9 @@ export class NewsletterComponent extends BaseRoutableComponent implements OnInit
     }
 
     ngOnInit(): void {
+        const scriptElement = this.renderer.createElement('script');
+ 		scriptElement.src = 'https://sibforms.com/forms/end-form/build/main.js';
+  		this.renderer.appendChild(this.elementRef.nativeElement, scriptElement);
         this.userProfileApiService.getProfile().then(profile => {
             this.userProfileApiService.fetchEmails().then(emails => {
                 this.newsletterForm.setValue({
