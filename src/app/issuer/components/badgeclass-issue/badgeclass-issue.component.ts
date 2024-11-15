@@ -302,7 +302,7 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 		const dialogRef = this._hlmDialogService.open(SuccessDialogComponent, {
 			context: {
 				recipient: recipient,
-				variant: "success"
+				variant: 'success',
 			},
 		});
 	}

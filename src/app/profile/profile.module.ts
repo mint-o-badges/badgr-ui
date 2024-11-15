@@ -77,7 +77,7 @@ const routes: Routes = [
 		ChangePasswordComponent,
 		OAuthAppDetailComponent,
 		AddCredentialsDialog,
-		AppIntegrationDetailsDialog
+		AppIntegrationDetailsDialog,
 	],
 	providers: [
 		// UserProfileService,

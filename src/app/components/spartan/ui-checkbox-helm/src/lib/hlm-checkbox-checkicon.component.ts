@@ -13,9 +13,7 @@ import type { ClassValue } from 'clsx';
 	host: {
 		'[class]': '_computedClass()',
 	},
-	template: `
-		<hlm-icon size="base" [name]="iconName()" />
-	`,
+	template: ` <hlm-icon size="base" [name]="iconName()" /> `,
 })
 export class HlmCheckboxCheckIconComponent {
 	private _brnCheckbox = inject(BrnCheckboxComponent);

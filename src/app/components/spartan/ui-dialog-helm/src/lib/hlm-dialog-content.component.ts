@@ -1,5 +1,14 @@
 import { NgComponentOutlet } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation, computed, inject, input, signal } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	Input,
+	ViewEncapsulation,
+	computed,
+	inject,
+	input,
+	signal,
+} from '@angular/core';
 import { lucideX } from '@ng-icons/lucide';
 import { hlm } from '@spartan-ng/ui-core';
 import { BrnDialogCloseDirective, BrnDialogRef, injectBrnDialogContext } from '@spartan-ng/ui-dialog-brain';
@@ -9,7 +18,6 @@ import type { ClassValue } from 'clsx';
 import { HlmDialogCloseDirective } from './hlm-dialog-close.directive';
 import { VariantProps, cva } from 'class-variance-authority';
 
-
 export const dialogVariants = cva(
 	'tw-border-border tw-grid tw-w-full tw-max-w-lg tw-relative tw-gap-4 tw-border tw-shadow-lg tw-duration-200 data-[state=open]:tw-animate-in data-[state=closed]:tw-animate-out data-[state=closed]:tw-fade-out-0 data-[state=open]:tw-fade-in-0 data-[state=closed]:tw-zoom-out-95 data-[state=open]:tw-zoom-in-95 data-[state=closed]:tw-slide-out-to-top-[2%]  data-[state=open]:tw-slide-in-from-top-[2%] sm:tw-rounded-lg md:tw-w-full',
 	{
@@ -18,7 +26,7 @@ export const dialogVariants = cva(
 				default: 'tw-bg-white',
 				success: 'tw-bg-green',
 				danger: 'tw-bg-white tw-border-solid !tw-rounded-[20px] tw-border-[6px] !tw-border-[var(--color-red)]',
-			}
+			},
 		},
 		defaultVariants: {
 			variant: 'default',
@@ -62,10 +70,6 @@ export class HlmDialogContentComponent {
 
 	public readonly userClass = input<ClassValue>('', { alias: 'class' });
 	protected readonly _computedClass = computed(() =>
-		hlm(
-			dialogVariants({ variant: this._dialogContext.variant }),
-			this.userClass(),
-			this._dynamicComponentClass,
-		),
+		hlm(dialogVariants({ variant: this._dialogContext.variant }), this.userClass(), this._dynamicComponentClass),
 	);
 }

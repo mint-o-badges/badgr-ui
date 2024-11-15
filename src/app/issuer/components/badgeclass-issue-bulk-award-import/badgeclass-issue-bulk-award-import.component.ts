@@ -89,7 +89,6 @@ export class BadgeClassIssueBulkAwardImportComponent extends BaseAuthenticatedRo
 					destinationColumn = 'name';
 				}
 
-
 				theseColumnHeaders.push({
 					destColumn: destinationColumn ? destinationColumn : 'NA',
 					sourceName: columnHeaderName,
@@ -108,7 +107,7 @@ export class BadgeClassIssueBulkAwardImportComponent extends BaseAuthenticatedRo
 		const columnHeaders: ColumnHeaders[] = generateColumnHeaders();
 		this.columnHeadersCount = columnHeaders.length;
 
-        for (let row of rows) {
+		for (let row of rows) {
 			// Valid if all the cells in a row are not empty.
 			const rowIsValid: boolean = row.every((cell, i) => cell.length > 0);
 

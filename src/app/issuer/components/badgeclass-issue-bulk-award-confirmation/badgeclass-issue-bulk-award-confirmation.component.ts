@@ -72,10 +72,10 @@ export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRouta
 					}
 				: undefined;
 
-				assertion = {
-					recipient_identifier: row.email,
-					extensions: extensions,
-				};
+			assertion = {
+				recipient_identifier: row.email,
+				extensions: extensions,
+			};
 			assertions.push(assertion);
 		});
 
@@ -88,7 +88,7 @@ export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRouta
 			})
 			.then(
 				(result) => {
-					this.openSuccessDialog(assertions.length + " User")
+					this.openSuccessDialog(assertions.length + ' User');
 					this.router.navigate(['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug]);
 				},
 				(error) => {
@@ -120,7 +120,7 @@ export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRouta
 		const dialogRef = this._hlmDialogService.open(SuccessDialogComponent, {
 			context: {
 				recipient: recipient,
-				variant: "success"
+				variant: 'success',
 			},
 		});
 	}

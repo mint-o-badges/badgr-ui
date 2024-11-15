@@ -1,13 +1,9 @@
-import {
-    ApiLearningPath,
-    LearningPathRef
-} from '../../common/model/learningpath-api.model';
+import { ApiLearningPath, LearningPathRef } from '../../common/model/learningpath-api.model';
 import { ManagedEntity } from '../../common/model/managed-entity';
 import { ApiEntityRef } from '../../common/model/entity-ref';
 import { CommonEntityManager } from '../../entity-manager/services/common-entity-manager.service';
 
 export class LearningPath extends ManagedEntity<ApiLearningPath, LearningPathRef> {
-
 	get name(): string {
 		return this.apiModel.name;
 	}
@@ -37,7 +33,7 @@ export class LearningPath extends ManagedEntity<ApiLearningPath, LearningPathRef
 		return this.apiModel.issuer_id;
 	}
 
-	get issuer_name(){
+	get issuer_name() {
 		return this.apiModel.issuer_name;
 	}
 

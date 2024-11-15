@@ -2,7 +2,7 @@ import { Component, ContentChild, type ElementRef, ViewChild, computed, input } 
 import { provideIcons } from '@ng-icons/core';
 import { lucideChevronDown } from '@ng-icons/lucide';
 import { hlm } from '@spartan-ng/ui-core';
-import { HlmIconComponent } from "../../../ui-icon-helm/src";
+import { HlmIconComponent } from '../../../ui-icon-helm/src';
 import { BrnSelectTriggerDirective } from '@spartan-ng/ui-select-brain';
 import { type VariantProps, cva } from 'class-variance-authority';
 import type { ClassValue } from 'clsx';
