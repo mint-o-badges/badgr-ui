@@ -24,7 +24,11 @@ import { MessageService } from '../services/message.service';
 				<label class="forminput-x-label u-margin-bottom1x" for="image_field{{ uniqueIdSuffix }}">{{
 					label
 				}}</label>
-				<span *ngIf="sublabelRight" class="tw-mr-auto tw-ml-2 tw-font-[rubik] tw-text-oebblack tw-text-sm tw-font-normal">{{sublabelRight}}</span>
+				<span
+					*ngIf="sublabelRight"
+					class="tw-mr-auto tw-ml-2 tw-font-[rubik] tw-text-oebblack tw-text-sm tw-font-normal"
+					>{{ sublabelRight }}</span
+				>
 				<a
 					*ngIf="generateRandom"
 					(click)="$event.preventDefault(); generateRandomImage.emit()"
@@ -88,10 +92,7 @@ import { MessageService } from '../services/message.service';
 						>
 					</p>
 					<p *ngIf="loaderName != 'basic' && dropZoneInfo3" class="tw-mx-auto tw-mt-4">
-						<span
-							class="tw-text-oebblack tw-italic tw-text-sm tw-mt-4"
-							>{{ dropZoneInfo3 }}</span
-						>
+						<span class="tw-text-oebblack tw-italic tw-text-sm tw-mt-4">{{ dropZoneInfo3 }}</span>
 					</p>
 				</ng-container>
 			</label>
@@ -132,7 +133,7 @@ export class BgFormFieldImageComponent {
 	readonly imageFailedSrc = preloadImageURL('../../../breakdown/static/images/placeholderavatar-failed.svg');
 
 	@Output() imageUploaded = new EventEmitter();
-	@Output() imageRatioError = new EventEmitter<string>(); 
+	@Output() imageRatioError = new EventEmitter<string>();
 
 	@Input() control: FormControl;
 	@Input() label: string;
@@ -309,7 +310,8 @@ export function basicImageLoader(file: File | string): Promise<string> {
 // file can either be file or url to a file
 export function badgeImageLoader(file: File | string): Promise<string> {
 	// Max file size from https://github.com/mozilla/openbadges-backpack/blob/1193c04847c5fb9eb105c8fb508e1b7f6a39052c/controllers/backpack.js#L397
-	const maxFileSize = 1024 * 256;
+
+	const maxFileSize = 1024 * 1024 * 2; // 2MB max file size
 	const startingMaxDimension = 512;
 
 	if (typeof file == 'string') {
@@ -419,7 +421,8 @@ export function badgeImageLoader(file: File | string): Promise<string> {
 // file can either be file or url to a file
 export function issuerImageLoader(file: File | string): Promise<string> {
 	// Max file size from https://github.com/mozilla/openbadges-backpack/blob/1193c04847c5fb9eb105c8fb508e1b7f6a39052c/controllers/backpack.js#L397
-	const maxFileSize = 1024 * 256;
+
+	const maxFileSize = 1024 * 1024 * 2; // 2MB max file size
 	const startingMaxDimension = 512;
 
 	if (typeof file == 'string') {
@@ -473,9 +476,8 @@ export function issuerImageLoader(file: File | string): Promise<string> {
 		return readFileAsDataURL(file)
 			.then(loadImageURL)
 			.then((image) => {
-				
 				const tolerance = 0.05;
-				if(Math.abs(image.width / image.height - 1) > tolerance) {
+				if (Math.abs(image.width / image.height - 1) > tolerance) {
 					return Promise.reject(new Error('Image must be square'));
 				}
 
@@ -511,8 +513,10 @@ export function issuerImageLoader(file: File | string): Promise<string> {
 				return dataURL;
 			})
 			.catch((e) => {
-				if(e.message === 'Image must be square') {
-					this.imageRatioError.emit('Bitte lade ein Bild im quadratischen 1:1-Format hoch, damit es auf unserer Plattform optimal dargestellt werden kann');
+				if (e.message === 'Image must be square') {
+					this.imageRatioError.emit(
+						'Bitte lade ein Bild im quadratischen 1:1-Format hoch, damit es auf unserer Plattform optimal dargestellt werden kann',
+					);
 				}
 				throw new Error(`${file.name} is not a valid image file`);
 			});
