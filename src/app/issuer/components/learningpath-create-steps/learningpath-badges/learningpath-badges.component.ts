@@ -101,7 +101,7 @@ export class LearningPathBadgesComponent implements OnInit {
 		return new Promise(async (resolve, reject) => {
 			this.badgeClassService.allPublicBadges$.subscribe(
 				(badges) => {
-					this.badges = badges.slice().sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+					this.badges = badges.slice().filter((b) => b.extension['extensions:StudyLoadExtension'].StudyLoad > 0).sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
 					this.badgeResults = this.badges;
 
 					// this.badgesFormArray = this.learningPathForm.controls.badges.value.badges;
