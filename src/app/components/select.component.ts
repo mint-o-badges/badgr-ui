@@ -2,7 +2,6 @@ import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { OebInputErrorComponent } from './input.error.component';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { NgClass, NgFor, NgIf } from '@angular/common';
-import { TextSemibold } from './typography/text-semibold';
 import { HlmPDirective } from './spartan/ui-typography-helm/src/lib/hlm-p.directive';
 import { BrnSelectImports } from '@spartan-ng/ui-select-brain';
 import { HlmSelectModule } from './spartan/ui-select-helm/src/index';
@@ -19,7 +18,6 @@ import { CustomValidatorMessages, messagesForValidationError } from './input.com
 		NgFor,
 		NgIf,
 		ReactiveFormsModule,
-		TextSemibold,
 		NgClass,
 	],
 	template: ` <div [ngClass]="{ 'tw-mt-6 md:tw-mt-7': !noTopMargin }">

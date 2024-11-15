@@ -22,13 +22,13 @@ import { TranslateService } from "@ngx-translate/core";
     template: `
         <oeb-dialog [variant]="variant" class="tw-text-center tw-text-oebblack">
             <div class="tw-flex tw-justify-center">
-                <div class="oeb-icon-circle tw-my-6">
+                <div class="oeb-icon-circle tw-bg-white tw-my-6">
                     <hlm-icon class="tw-text-red" size='xxl' name="lucideTriangleAlert" />
                 </div>
             </div>
             <p hlmP class="tw-flex tw-flex-col tw-gap-2">
-                <span class="tw-font-extrabold tw-uppercase">Qr-Code Vergabe löschen</span>
-                <span> Möchtest du die QR-Code Vergabe wirklich löschen? 
+                <span class="tw-font-extrabold tw-uppercase">Qr-Code-Vergabe löschen</span>
+                <span> Möchtest du die QR-Code-Vergabe wirklich löschen? 
                     <span *ngIf="qrCodeRequested">Damit gehen alle noch offenen Badge-Anfragen verloren.</span>
                 </span>
             </p> 
