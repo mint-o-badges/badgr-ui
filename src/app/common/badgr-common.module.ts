@@ -124,9 +124,7 @@ import { LearningPathGraduatesDatatableComponent } from '../components/datatable
 import { LearningPathRequestsDatatableComponent } from '../components/datatable-learningpath-requests.component';
 import { OebIssuerCard } from './components/oeb-issuercard';
 import { HourPipe } from './pipes/hourPipe';
-import { BgSmallLearningPathCard } from './components/bg-small-learningpathcard';
 import { HlmBadgeDirective } from '../components/spartan/ui-badge-helm/src/lib/hlm-badge.directive';
-import { HlmButtonDirective } from '../components/spartan/ui-button-helm/src/lib/hlm-button.directive';
 import { IssuerCardComponent } from '../components/issuer-card/issuer-card.component';
 
 const DIRECTIVES = [
@@ -148,7 +146,6 @@ export const COMMON_MODULE_COMPONENTS = [
 	BadgrButtonComponent,
 	BgBadgecard,
 	BgLearningPathCard,
-	BgSmallLearningPathCard,
 	BgBadgeDetail,
 	BgBreadcrumbsComponent,
 	BgFormFieldFileComponent,
@@ -257,7 +254,6 @@ export const COMMON_IMPORTS = [
 	LearningPathGraduatesDatatableComponent,
 	LearningPathRequestsDatatableComponent,
 	HlmBadgeDirective,
-	HlmButtonDirective,
 ];
 
 @NgModule({
