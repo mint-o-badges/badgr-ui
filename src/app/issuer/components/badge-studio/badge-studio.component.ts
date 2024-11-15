@@ -237,7 +237,7 @@ export class BadgeStudioComponent implements OnInit, OnChanges {
 						const svgImage2 = new Image();
 						svgImage.onload = () => {
 							this.context2d.drawImage(svgImage, 0, 0, this.canvas.width, this.canvas.height);
-						}
+						};
 						svgImage2.onload = () => {
 							this.context2d.drawImage(
 								svgImage2,
@@ -284,7 +284,7 @@ export class BadgeStudioComponent implements OnInit, OnChanges {
 						svgImage.src = svgDataUrl;
 
 						// To resolve the issue of missing frame, we need to make sure that frame-image is aleady loaded before drawing badge-image
-						if(svgImage.complete){
+						if (svgImage.complete) {
 							svgImage2.src = this.imageToShow;
 						} else {
 							setTimeout(() => {

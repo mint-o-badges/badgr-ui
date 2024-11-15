@@ -10,9 +10,7 @@ import type { ClassValue } from 'clsx';
 		'[class]': '_computedClass()',
 	},
 	hostDirectives: [BrnMenuDirective],
-	template: `
-		<ng-content />
-	`,
+	template: ` <ng-content /> `,
 })
 export class HlmSubMenuComponent {
 	public readonly userClass = input<ClassValue>('', { alias: 'class' });

@@ -13,8 +13,6 @@ export const routes: Routes = [
 			publiclyAccessible: true,
 		} as BadgrRouteData,
 	},
-
-
 ];
 
 @NgModule({
@@ -24,9 +22,7 @@ export const routes: Routes = [
 		RouterModule.forChild(routes),
 		// DatatableComponent
 	],
-	declarations: [
-		ShowcaseComponent,
-	],
+	declarations: [ShowcaseComponent],
 	exports: [],
 	providers: [],
 })

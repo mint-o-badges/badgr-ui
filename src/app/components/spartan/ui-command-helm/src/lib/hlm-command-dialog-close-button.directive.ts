@@ -1,5 +1,5 @@
 import { Directive, computed, inject, input } from '@angular/core';
-import { HlmButtonDirective  } from '../../../ui-button-helm/src';
+import { HlmButtonDirective } from '../../../ui-button-helm/src';
 import { hlm } from '@spartan-ng/ui-core';
 import type { ClassValue } from 'clsx';
 

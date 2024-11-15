@@ -1,15 +1,14 @@
 <ng-container *bgAwaitPromises="[badgeClassLoaded]">
-    <div class="page-padding oeb">
-        <div class="oeb-breadcrumbs">
-            <bg-breadcrumbs [linkentries]="crumbs"></bg-breadcrumbs>
+	<div class="page-padding oeb">
+		<div class="oeb-breadcrumbs">
+			<bg-breadcrumbs [linkentries]="crumbs"></bg-breadcrumbs>
+		</div>
+		<div class="oeb-headline-container-sm">
+			<h1 hlmH1 class="tw-text-purple tw-font-extrabold">QR-Code-Vergabe bearbeiten</h1>
+		</div>
 
-        </div>
-        <div class="oeb-headline-container-sm">
-            <h1 hlmH1 class="tw-text-purple tw-font-extrabold">QR-Code-Vergabe bearbeiten</h1>
-        </div>
-       
-        <div class="tw-bg-lightpurple tw-rounded-3xl tw-mt-2 tw-p-10">
-            <edit-qr-form [editing]="true"></edit-qr-form>
-        </div>
-    </div>
-</ng-container>    
+		<div class="tw-bg-lightpurple tw-rounded-3xl tw-mt-2 tw-p-10">
+			<edit-qr-form [editing]="true"></edit-qr-form>
+		</div>
+	</div>
+</ng-container>

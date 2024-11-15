@@ -15,7 +15,13 @@ describe('IssuerStaffCreateDialogComponent', () => {
 	beforeEach(() => {
 		TestBed.configureTestingModule({
 			declarations: [IssuerStaffCreateDialogComponent],
-			imports: [RouterTestingModule, CommonModule, BadgrCommonModule, TranslateTestingModule.withTranslations('de', {}), ...COMMON_IMPORTS],
+			imports: [
+				RouterTestingModule,
+				CommonModule,
+				BadgrCommonModule,
+				TranslateTestingModule.withTranslations('de', {}),
+				...COMMON_IMPORTS,
+			],
 			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
 		}).compileComponents();
 		fixture = TestBed.createComponent(IssuerStaffCreateDialogComponent);

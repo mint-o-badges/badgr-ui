@@ -32,7 +32,12 @@ import { buttonVariants } from '../../../ui-button-helm/src/lib/hlm-button.direc
 		</button>
 
 		<div #tabListContainer class="tw-z-[1] tw-flex tw-grow tw-overflow-hidden " (keydown)="_handleKeydown($event)">
-			<div class="relative grow transition-transform" #tabList role="tablist" (cdkObserveContent)="_onContentChanges()">
+			<div
+				class="relative grow transition-transform"
+				#tabList
+				role="tablist"
+				(cdkObserveContent)="_onContentChanges()"
+			>
 				<div #tabListInner [class]="_tabListClass()">
 					<ng-content></ng-content>
 				</div>
@@ -71,7 +76,9 @@ export class HlmTabsPaginatedListComponent extends BrnTabsPaginatedListDirective
 	@ViewChild('previousPaginator') _previousPaginator!: ElementRef<HTMLElement>;
 
 	public readonly userClass = input<ClassValue>('', { alias: 'class' });
-	protected _computedClass = computed(() => hlm('tw-flex tw-overflow-hidden tw-relative tw-flex-shrink-0', this.userClass()));
+	protected _computedClass = computed(() =>
+		hlm('tw-flex tw-overflow-hidden tw-relative tw-flex-shrink-0', this.userClass()),
+	);
 
 	public readonly tabLisClass = input<ClassValue>('', { alias: 'class' });
 	protected _tabListClass = computed(() => hlm(listVariants(), this.tabLisClass()));

@@ -32,16 +32,17 @@ import { TranslateModule } from '@ngx-translate/core';
 import { QrCodeDatatableComponent } from '../components/datatable-qrcodes.component';
 import { IssuerDetailDatatableComponent } from '../components/datatable-issuer-detail.component';
 import { CompetencyAccordionComponent } from '../components/accordion.component';
-import {BadgeClassEditQrComponent} from './components/badgeclass-edit-qr/badgeclass-edit-qr.component';
+import { BadgeClassEditQrComponent } from './components/badgeclass-edit-qr/badgeclass-edit-qr.component';
 import { BadgeClassIssueQrComponent } from './components/badgeclass-issue-qr/badgeclass-issue-qr.component';
 import { BadgeClassGenerateQrComponent } from './components/badgeclass-generate-qr/badgeclass-generate-qr.component';
 import { QRCodeModule } from 'angularx-qrcode';
-import {QrCodeAwardsComponent} from './components/qrcode-awards/qrcode-awards.component';
+import { QrCodeAwardsComponent } from './components/qrcode-awards/qrcode-awards.component';
 import { QrCodeApiService } from './services/qrcode-api.service';
 import { BadgeRequestApiService } from './services/badgerequest-api.service';
 import { EditQrFormComponent } from './components/edit-qr-form/edit-qr-form.component';
 import { LearningPathUploadComponent } from './components/learningpath-upload/learningpath-upload.component';
-import { IssuerLearningPathComponent } from './components/issuer-learning-path/issuer-learning-path.component';import { IssuerEditFormComponent } from './components/issuer-edit-form/issuer-edit-form.component';
+import { IssuerLearningPathComponent } from './components/issuer-learning-path/issuer-learning-path.component';
+import { IssuerEditFormComponent } from './components/issuer-edit-form/issuer-edit-form.component';
 import { Issuer } from './models/issuer.model';
 
 const routes = [
@@ -156,7 +157,7 @@ const routes = [
 		IssuerListComponent,
 
 		IssuerStaffCreateDialogComponent,
-		IssuerLearningPathComponent
+		IssuerLearningPathComponent,
 	],
 	schemas: [CUSTOM_ELEMENTS_SCHEMA],
 	exports: [],
@@ -168,7 +169,7 @@ const routes = [
 		IssuerApiService,
 		IssuerManager,
 		QrCodeApiService,
-		BadgeRequestApiService
+		BadgeRequestApiService,
 	],
 })
 export class IssuerModule {}

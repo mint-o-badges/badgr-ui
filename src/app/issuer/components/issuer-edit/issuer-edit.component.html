@@ -2,13 +2,13 @@
 
 <div class="tw-relative tw-w-full oeb page-padding">
 	<div class="topbar">
-			<div class="topbar-x-breadcrumbs">
-				<bg-breadcrumbs [linkentries]="editIssuerCrumbs"> </bg-breadcrumbs>
-			</div>
-			<div class="oeb-headline-container-sm">
-				<h1 hlmH1 class="tw-text-purple">{{ 'Issuer.editInstitution' | translate }}</h1>
-				<p hlmP class="tw-font-normal">{{ 'Issuer.editInstitutionInfo' | translate }}</p>
-			</div>
+		<div class="topbar-x-breadcrumbs">
+			<bg-breadcrumbs [linkentries]="editIssuerCrumbs"> </bg-breadcrumbs>
+		</div>
+		<div class="oeb-headline-container-sm">
+			<h1 hlmH1 class="tw-text-purple">{{ 'Issuer.editInstitution' | translate }}</h1>
+			<p hlmP class="tw-font-normal">{{ 'Issuer.editInstitutionInfo' | translate }}</p>
+		</div>
 	</div>
 
 	<issuer-edit-form [issuer]="issuer" [issuerSlug]="issuerSlug"></issuer-edit-form>

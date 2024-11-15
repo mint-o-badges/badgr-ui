@@ -3,9 +3,7 @@ import { RecipientBadgeApiService } from '../../recipient/services/recipient-bad
 
 @Injectable()
 export class SharingService {
-	constructor(
-		private recipientBadgeApiService: RecipientBadgeApiService,
-	) {}
+	constructor(private recipientBadgeApiService: RecipientBadgeApiService) {}
 
 	shareWithProvider(
 		$event: Event,

@@ -100,9 +100,9 @@ export class UserProfile extends ManagedEntity<ApiUserProfile, UserProfileRef> {
 		return this.profileService.getProfile().then((m) => this.applyApiModel(m));
 	}
 
-    delete() {
-        return this.profileService.deleteOwnProfile();
-    }
+	delete() {
+		return this.profileService.deleteOwnProfile();
+	}
 
 	addEmail(email: string): Promise<UserProfileEmail> {
 		return this.profileService.addEmail(email).then((apiEmail) => this.emails.addOrUpdate(apiEmail));

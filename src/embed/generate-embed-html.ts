@@ -20,10 +20,10 @@ export function generateEmbedHtml(embedOptions) {
 
 	const shareUrl = embedOptions.recipientIdentifier
 		? options.shareUrl +
-		  '&identity__' +
-		  (embedOptions.recipientType || 'email') +
-		  '=' +
-		  embedOptions.recipientIdentifier
+			'&identity__' +
+			(embedOptions.recipientType || 'email') +
+			'=' +
+			embedOptions.recipientIdentifier
 		: options.shareUrl;
 
 	const blockquote = document.createElement('blockquote');

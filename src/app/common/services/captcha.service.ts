@@ -14,7 +14,7 @@ export class CaptchaService extends BaseHttpApiService {
 		protected http: HttpClient,
 		protected configService: AppConfigService,
 		protected messageService: MessageService,
-		protected translate: TranslateService
+		protected translate: TranslateService,
 	) {
 		super(loginService, http, configService, messageService);
 	}
@@ -30,29 +30,29 @@ export class CaptchaService extends BaseHttpApiService {
 
 	setupCaptcha(elementId: string, callback: (verified: boolean) => void): void {
 		this.getCaptcha().then((captcha) => {
-		  const captchaElement = document.querySelector(elementId);
-		  captchaElement.addEventListener('statechange', (ev: any) => {
-			if (ev.detail.state === 'verified') {
-			  callback(true);
-			}
-		  });
-		  // @ts-ignore
-		  captchaElement.configure({
-			challenge: {
-				algorithm: captcha.algorithm,
-				challenge: captcha.challenge,
-				salt: captcha.salt,
-				signature: captcha.signature,
-			},
-			strings: {
-				error: this.translate.instant('Captcha.error'),
-				footer: this.translate.instant('Captcha.footer'),
-				label: this.translate.instant('Captcha.label'),
-				verified: this.translate.instant('Captcha.verified'),
-				verifying: this.translate.instant('Captcha.verifying'),
-				waitAlert: this.translate.instant('Captcha.waitAlert'),
-			},
-		  });
+			const captchaElement = document.querySelector(elementId);
+			captchaElement.addEventListener('statechange', (ev: any) => {
+				if (ev.detail.state === 'verified') {
+					callback(true);
+				}
+			});
+			// @ts-ignore
+			captchaElement.configure({
+				challenge: {
+					algorithm: captcha.algorithm,
+					challenge: captcha.challenge,
+					salt: captcha.salt,
+					signature: captcha.signature,
+				},
+				strings: {
+					error: this.translate.instant('Captcha.error'),
+					footer: this.translate.instant('Captcha.footer'),
+					label: this.translate.instant('Captcha.label'),
+					verified: this.translate.instant('Captcha.verified'),
+					verifying: this.translate.instant('Captcha.verifying'),
+					waitAlert: this.translate.instant('Captcha.waitAlert'),
+				},
+			});
 		});
-	  }
+	}
 }

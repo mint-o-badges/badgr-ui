@@ -1,47 +1,63 @@
 <div class="oeb-section">
 	<div class="oeb-headline-container-sm">
-		<h1 hlmH1 class="tw-text-purple">{{'Issuer.multipleBadgeAwardHeadline' | translate}}</h1>
+		<h1 hlmH1 class="tw-text-purple">{{ 'Issuer.multipleBadgeAwardHeadline' | translate }}</h1>
 	</div>
 	<div class="oeb-standard-padding-bottom">
 		<p hlmP [innerHtml]="'Issuer.uploadListText' | translate"></p>
 		<ol class="tw-list-decimal tw-pl-8 tw-py-4">
-			<li hlmP> <div class="tw-flex tw-gap-2" > {{'Issuer.downloadExampleCSV' | translate}} <p  hlmP [innerHtml]="'Issuer.exampleCSVLink' | translate"></p> </div> </li>
-			<li hlmP>{{'Issuer.openInExcel' | translate}}</li>
+			<li hlmP>
+				<div class="tw-flex tw-gap-2">
+					{{ 'Issuer.downloadExampleCSV' | translate }}
+					<p hlmP [innerHtml]="'Issuer.exampleCSVLink' | translate"></p>
+				</div>
+			</li>
+			<li hlmP>{{ 'Issuer.openInExcel' | translate }}</li>
 			<li hlmP [innerHtml]="'Issuer.fillInList' | translate"></li>
-			<li hlmP>{{'Issuer.exportAsCSV' | translate}}</li>
-			<li hlmP>{{'Issuer.uploadCSV' | translate}}</li>
+			<li hlmP>{{ 'Issuer.exportAsCSV' | translate }}</li>
+			<li hlmP>{{ 'Issuer.uploadCSV' | translate }}</li>
 		</ol>
-		
 	</div>
 	<div class="oeb-standard-padding-bottom">
 		<div class="tw-py-6 tw-px-10 tw-bg-lightpurple tw-rounded-[20px]">
 			<div class="oeb-headline-container-sm">
-				<h3 hlmH3 class="tw-font-bold tw-text-purple">{{'Issuer.importList' | translate }}</h3>
+				<h3 hlmH3 class="tw-font-bold tw-text-purple">{{ 'Issuer.importList' | translate }}</h3>
 			</div>
 			<form [formGroup]="csvForm" class>
 				<fieldset>
-					<bg-formfield-file class="tw-bg-white" #fileField label="File" validFileTypes="text/plain,.csv"
-						[control]="csvForm.controls['zipFile']" [placeholderImage]="csvUploadIconUrl"
-						(fileData)="onFileDataReceived($event)">
+					<bg-formfield-file
+						class="tw-bg-white"
+						#fileField
+						label="File"
+						validFileTypes="text/plain,.csv"
+						[control]="csvForm.controls['zipFile']"
+						[placeholderImage]="csvUploadIconUrl"
+						(fileData)="onFileDataReceived($event)"
+					>
 					</bg-formfield-file>
 				</fieldset>
 			</form>
 			<div class="tw-flex tw-justify-end tw-gap-2 tw-mt-4">
-				<oeb-button class="tw-mr-4" variant="secondary" (click)="updateViewState('cancel')"
-					[text]="'General.cancel' | translate"></oeb-button>
-		
-				<oeb-button [class.button-is-disabled]="rawCsv === null" [disabled]="rawCsv ? null : true"
-					(click)="importAction()" [text]="'Issuer.import' | translate">
+				<oeb-button
+					class="tw-mr-4"
+					variant="secondary"
+					(click)="updateViewState('cancel')"
+					[text]="'General.cancel' | translate"
+				></oeb-button>
+
+				<oeb-button
+					[class.button-is-disabled]="rawCsv === null"
+					[disabled]="rawCsv ? null : true"
+					(click)="importAction()"
+					[text]="'Issuer.import' | translate"
+				>
 				</oeb-button>
 			</div>
 		</div>
 	</div>
-	
+
 	<div>
 		<p hlmP size="sm">
-			{{'Issuer.nameInPdfInfo' | translate}}
+			{{ 'Issuer.nameInPdfInfo' | translate }}
 		</p>
 	</div>
-
-	
 </div>

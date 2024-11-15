@@ -27,9 +27,7 @@ type MenuVariants = VariantProps<typeof menuVariants>;
 		'[class]': '_computedClass()',
 	},
 	hostDirectives: [BrnMenuDirective],
-	template: `
-		<ng-content />
-	`,
+	template: ` <ng-content /> `,
 })
 export class HlmMenuComponent {
 	public readonly userClass = input<ClassValue>('', { alias: 'class' });

@@ -136,7 +136,7 @@ const DIRECTIVES = [
 	// TooltipDirective,
 	BgPopupMenuTriggerDirective,
 	DynamicFilterPipe,
-	HourPipe
+	HourPipe,
 ];
 
 export const COMMON_MODULE_COMPONENTS = [
@@ -177,7 +177,7 @@ export const COMMON_MODULE_COMPONENTS = [
 	OebCompetency,
 	OebIssuerDetailComponent,
 	OebLearningPathDetailComponent,
-	OebIssuerCard
+	OebIssuerCard,
 ];
 
 const SERVICES = [
@@ -208,15 +208,49 @@ const SERVICES = [
 	NavigationService,
 	ZipService,
 	ApplicationCredentialsService,
-	LearningPathApiService
+	LearningPathApiService,
 ];
 
 const GUARDS = [AuthGuard];
 
 const PIPES = [UcFirstPipe, StudyLoadPipe, HourPipe];
 
-export const COMMON_IMPORTS = [CommonModule, SharedIconsModule, FormsModule, ReactiveFormsModule, HttpClientModule, RouterModule, OebInputComponent, OebInputErrorComponent, OebSelectComponent, OebSeparatorComponent, OebCollapsibleComponent, OebButtonComponent, OebProgressComponent, OebDropdownComponent, HlmH1Directive, HlmH2Directive, HlmH3Directive, HlmPDirective, HlmADirective, CompetencyAccordionComponent, OebCheckboxComponent, OebDialogComponent, SuccessDialogComponent, DangerDialogComponent, OebBackgroundComponent, OebTabsComponent, HlmIconModule, CountUpModule, HlmInputDirective, DatatableComponent, LearningPathDatatableComponent, LearningPathParticipantsDatatableComponent, LearningPathGraduatesDatatableComponent, LearningPathRequestsDatatableComponent];
-
+export const COMMON_IMPORTS = [
+	CommonModule,
+	SharedIconsModule,
+	FormsModule,
+	ReactiveFormsModule,
+	HttpClientModule,
+	RouterModule,
+	OebInputComponent,
+	OebInputErrorComponent,
+	OebSelectComponent,
+	OebSeparatorComponent,
+	OebCollapsibleComponent,
+	OebButtonComponent,
+	OebProgressComponent,
+	OebDropdownComponent,
+	HlmH1Directive,
+	HlmH2Directive,
+	HlmH3Directive,
+	HlmPDirective,
+	HlmADirective,
+	CompetencyAccordionComponent,
+	OebCheckboxComponent,
+	OebDialogComponent,
+	SuccessDialogComponent,
+	DangerDialogComponent,
+	OebBackgroundComponent,
+	OebTabsComponent,
+	HlmIconModule,
+	CountUpModule,
+	HlmInputDirective,
+	DatatableComponent,
+	LearningPathDatatableComponent,
+	LearningPathParticipantsDatatableComponent,
+	LearningPathGraduatesDatatableComponent,
+	LearningPathRequestsDatatableComponent,
+];
 
 @NgModule({
 	imports: [...COMMON_IMPORTS, FormsModule, LMarkdownEditorModule, TranslateModule],

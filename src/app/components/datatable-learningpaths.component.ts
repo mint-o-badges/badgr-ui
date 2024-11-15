@@ -74,5 +74,4 @@ export class LearningPathDatatableComponent {
 	@Input() issuer: Issuer;
 	@Output() actionElement = new EventEmitter();
 	@Output() redirectToLearningPathDetail = new EventEmitter();
-
 }

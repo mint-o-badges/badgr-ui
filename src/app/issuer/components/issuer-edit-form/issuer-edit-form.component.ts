@@ -1,35 +1,43 @@
-import { Component, OnInit, Input } from "@angular/core";
-import { typedFormGroup } from "../../../common/util/typed-forms";
-import { FormBuilder, Validators } from "@angular/forms";
-import { IssuerNameValidator } from "../../../common/validators/issuer-name.validator";
-import { UrlValidator } from "../../../common/validators/url.validator";
-import { UserProfileEmail } from "../../../common/model/user-profile.model";
-import { FormFieldSelectOption } from "../../../common/components/formfield-select";
-import { ApiIssuerForCreation, ApiIssuerForEditing } from "../../models/issuer-api.model";
-import { SessionService } from "../../../common/services/session.service";
-import { ActivatedRoute, Router } from "@angular/router";
-import { AppConfigService } from "../../../common/app-config.service";
-import { UserProfileManager } from "../../../common/services/user-profile-manager.service";
-import { QueryParametersService } from "../../../common/services/query-parameters.service";
-import { Title } from "@angular/platform-browser";
-import { MessageService } from "../../../common/services/message.service";
-import { TranslateService } from "@ngx-translate/core";
-import { IssuerManager } from "../../services/issuer-manager.service";
-import { preloadImageURL } from "../../../common/util/file-util";
-import { Issuer } from "../../models/issuer.model";
+import { Component, OnInit, Input } from '@angular/core';
+import { typedFormGroup } from '../../../common/util/typed-forms';
+import { FormBuilder, Validators } from '@angular/forms';
+import { IssuerNameValidator } from '../../../common/validators/issuer-name.validator';
+import { UrlValidator } from '../../../common/validators/url.validator';
+import { UserProfileEmail } from '../../../common/model/user-profile.model';
+import { FormFieldSelectOption } from '../../../common/components/formfield-select';
+import { ApiIssuerForCreation, ApiIssuerForEditing } from '../../models/issuer-api.model';
+import { SessionService } from '../../../common/services/session.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AppConfigService } from '../../../common/app-config.service';
+import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
+import { QueryParametersService } from '../../../common/services/query-parameters.service';
+import { Title } from '@angular/platform-browser';
+import { MessageService } from '../../../common/services/message.service';
+import { TranslateService } from '@ngx-translate/core';
+import { IssuerManager } from '../../services/issuer-manager.service';
+import { preloadImageURL } from '../../../common/util/file-util';
+import { Issuer } from '../../models/issuer.model';
 
 @Component({
 	selector: 'issuer-edit-form',
 	templateUrl: 'issuer-edit-form.component.html',
-	styleUrls: ['issuer-edit-form.component.scss']
+	styleUrls: ['issuer-edit-form.component.scss'],
 })
 export class IssuerEditFormComponent implements OnInit {
 	readonly issuerImagePlacholderUrl = preloadImageURL(
 		'../../../../breakdown/static/images/placeholderavatar-issuer.svg',
 	);
-    issuerForm = typedFormGroup()
-		.addControl('issuer_name', '', [Validators.required, Validators.maxLength(90), IssuerNameValidator.validIssuerName])
-		.addControl('issuer_description', '', [Validators.required, Validators.minLength(200), Validators.maxLength(300)])
+	issuerForm = typedFormGroup()
+		.addControl('issuer_name', '', [
+			Validators.required,
+			Validators.maxLength(90),
+			IssuerNameValidator.validIssuerName,
+		])
+		.addControl('issuer_description', '', [
+			Validators.required,
+			Validators.minLength(200),
+			Validators.maxLength(300),
+		])
 		.addControl('issuer_email', '', [
 			Validators.required,
 			/*Validators.maxLength(75),
@@ -41,7 +49,7 @@ export class IssuerEditFormComponent implements OnInit {
 		.addControl('issuer_street', '', Validators.required)
 		.addControl('issuer_streetnumber', '', Validators.required)
 		.addControl('issuer_zip', '', Validators.required)
-		.addControl('issuer_city', '', Validators.required)
+		.addControl('issuer_city', '', Validators.required);
 
 	emails: UserProfileEmail[];
 	emailsOptions: FormFieldSelectOption[];
@@ -50,7 +58,7 @@ export class IssuerEditFormComponent implements OnInit {
 
 	emailsLoaded: Promise<unknown>;
 
-	enterDescription: string; 
+	enterDescription: string;
 	issuerRequiredError: string;
 	invalidCharacterError: string = '';
 	selectFromMyFiles: string;
@@ -61,10 +69,9 @@ export class IssuerEditFormComponent implements OnInit {
 
 	@Input() issuerSlug: string;
 
-
 	@Input() set issuer(issuer: Issuer) {
-		if(this.existingIssuer !== issuer) {
-			this.existingIssuer = issuer; 
+		if (this.existingIssuer !== issuer) {
+			this.existingIssuer = issuer;
 			this.initFormFromExisting(issuer);
 		}
 	}
@@ -105,27 +112,26 @@ export class IssuerEditFormComponent implements OnInit {
 
 	ngOnInit() {
 		this.translate.get('Issuer.enterDescription').subscribe((translatedText: string) => {
-            this.enterDescription = translatedText;
+			this.enterDescription = translatedText;
 		});
 		this.translate.get('Issuer.enterName').subscribe((translatedText: string) => {
-            this.issuerRequiredError = translatedText;
+			this.issuerRequiredError = translatedText;
 		});
 		this.translate.get('RecBadge.selectFromMyFiles').subscribe((translatedText: string) => {
-            this.selectFromMyFiles = translatedText;
+			this.selectFromMyFiles = translatedText;
 		});
 		this.translate.get('Issuer.useImageFormat').subscribe((translatedText: string) => {
-            this.useImageFormat = translatedText;
+			this.useImageFormat = translatedText;
 		});
-
 	}
 
 	initFormFromExisting(issuer: Issuer) {
 		if (!issuer) return;
 		this.issuerForm.setValue({
 			issuer_name: issuer.name,
-            issuer_description: issuer.description,
+			issuer_description: issuer.description,
 			issuer_image: issuer.image,
-		    issuer_category: issuer.category,
+			issuer_category: issuer.category,
 			issuer_email: issuer.email,
 			issuer_city: issuer.city,
 			issuer_street: issuer.street,
@@ -141,29 +147,28 @@ export class IssuerEditFormComponent implements OnInit {
 		if (imageControl) {
 			imageControl.setErrors({ imageRatioError: error });
 		}
-		this.issuerForm.markTreeDirtyAndValidate()
+		this.issuerForm.markTreeDirtyAndValidate();
 	}
 
 	refreshProfile = () => {
 		// Load the profile
 		this.profileManager.userProfileSet.ensureLoaded();
-		this.profileManager.reloadUserProfileSet()
+		this.profileManager.reloadUserProfileSet();
 	};
-	
-	onSubmit() {
 
-		if(this.issuerForm.controls.issuer_image.rawControl.hasError('required')){
-			this.imageError = "Bitte wählen Sie ein Bild aus.";
-		}	
-		
+	onSubmit() {
+		if (this.issuerForm.controls.issuer_image.rawControl.hasError('required')) {
+			this.imageError = 'Bitte wählen Sie ein Bild aus.';
+		}
+
 		if (!this.issuerForm.markTreeDirtyAndValidate()) {
 			return;
 		}
 
 		const formState = this.issuerForm.value;
 
-		if(this.existingIssuer) {			
-			const issuer: ApiIssuerForEditing= {
+		if (this.existingIssuer) {
+			const issuer: ApiIssuerForEditing = {
 				name: formState.issuer_name,
 				description: formState.issuer_description,
 				email: formState.issuer_email,
@@ -173,22 +178,20 @@ export class IssuerEditFormComponent implements OnInit {
 				streetnumber: formState.issuer_streetnumber,
 				zip: formState.issuer_zip,
 				city: formState.issuer_city,
-			}
+			};
 			this.editIssuerFinished = this.issuerManager
-			.editIssuer(this.issuerSlug, issuer)
-			.then(
-				(newIssuer) => {
-					this.router.navigate(['issuer/issuers', newIssuer.slug]);
-					this.messageService.setMessage('Issuer created successfully.', 'success');
-				},
-				(error) => {
-					this.messageService.setMessage('Unable to create issuer: ' + error, 'error');
-				},
-			)
-			.then(() => (this.editIssuerFinished = null));
-		}
-		else{
-
+				.editIssuer(this.issuerSlug, issuer)
+				.then(
+					(newIssuer) => {
+						this.router.navigate(['issuer/issuers', newIssuer.slug]);
+						this.messageService.setMessage('Issuer created successfully.', 'success');
+					},
+					(error) => {
+						this.messageService.setMessage('Unable to create issuer: ' + error, 'error');
+					},
+				)
+				.then(() => (this.editIssuerFinished = null));
+		} else {
 			const issuer: ApiIssuerForCreation = {
 				name: formState.issuer_name,
 				description: formState.issuer_description,
@@ -201,11 +204,10 @@ export class IssuerEditFormComponent implements OnInit {
 				city: formState.issuer_city,
 			};
 
-
 			if (formState.issuer_image && String(formState.issuer_image).length > 0) {
 				issuer.image = formState.issuer_image;
 			}
-	
+
 			this.addIssuerFinished = this.issuerManager
 				.createIssuer(issuer)
 				.then(
@@ -219,10 +221,6 @@ export class IssuerEditFormComponent implements OnInit {
 				)
 				.then(() => (this.addIssuerFinished = null));
 		}
-		
-
-
-
 	}
 
 	get dataProcessorUrl() {

@@ -10,9 +10,7 @@ import type { ClassValue } from 'clsx';
 		role: 'table',
 		'[attr.aria-labelledby]': 'labeledBy()',
 	},
-	template: `
-		<ng-content />
-	`,
+	template: ` <ng-content /> `,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	encapsulation: ViewEncapsulation.None,
 })

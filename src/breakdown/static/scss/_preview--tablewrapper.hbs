@@ -1,37 +1,28 @@
-<!doctype html>
-<html lang="en">
+<html lang='en'>
 
-  <head>
-    {{render '@preview--head'}}
-    <style type="text/css">
-      table{
-	      border-collapse: collapse;
-      }
-      table th{
-	      text-align: left;
-      }
-      tbody tr > td:first-of-type{}
-      tbody tr > td{
-	      padding-left: 20px;
-      }
-    </style>
-  </head>
+	<head>
+		{{render '@preview--head'}}
+		<style type='text/css'>
+			table{ border-collapse: collapse; } table th{ text-align: left; } tbody tr > td:first-of-type{} tbody tr >
+			td{ padding-left: 20px; }
+		</style>
+	</head>
 
-  <body style="background-color:{{_target.meta.preview.bodyBackgroundColor}};">
+	<body style='background-color:{{_target.meta.preview.bodyBackgroundColor}};'>
 
-      <table>
-        <thead>
-          <tr>
-            {{#each _target.meta.preview.tableHeaders ~}}
-        	    <th>{{ this }}</th>
-            {{/each}}
-          </tr>
-        </thead>
-        <tbody>
-          {{{ yield }}}
-        </tbody>
-      </table>
+		<table>
+			<thead>
+				<tr>
+					{{#each _target.meta.preview.tableHeaders~}}
+						<th>{{this}}</th>
+					{{/each}}
+				</tr>
+			</thead>
+			<tbody>
+				{{{yield}}}
+			</tbody>
+		</table>
 
-  </body>
+	</body>
 
 </html>

@@ -33,7 +33,7 @@ export const routes: Routes = [
 	},
 	{
 		path: 'downloads/:pdfName',
-		component: PdfDownloadComponent
+		component: PdfDownloadComponent,
 	},
 	{
 		path: 'about',
@@ -133,7 +133,7 @@ export const routes: Routes = [
 		BadgrCommonModule,
 		CommonEntityManagerModule,
 		RouterModule.forChild(routes),
-		TranslateModule
+		TranslateModule,
 	],
 	declarations: [
 		AboutComponent,
@@ -148,7 +148,7 @@ export const routes: Routes = [
 		VerifyBadgeDialog,
 		FaqComponent,
 		PublicBadgeClassComponent,
-		PublicLearningPathComponent
+		PublicLearningPathComponent,
 	],
 	exports: [],
 	providers: [PublicApiService, BadgeRequestApiService, UserProfileApiService],

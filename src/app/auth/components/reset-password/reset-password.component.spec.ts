@@ -27,7 +27,12 @@ describe('ResetPasswordComponent', () => {
 	beforeEach(() => {
 		TestBed.configureTestingModule({
 			declarations: [ResetPasswordComponent],
-			imports: [RouterTestingModule, BadgrCommonModule, ...COMMON_IMPORTS, TranslateTestingModule.withTranslations('de', {})],
+			imports: [
+				RouterTestingModule,
+				BadgrCommonModule,
+				...COMMON_IMPORTS,
+				TranslateTestingModule.withTranslations('de', {}),
+			],
 			providers: [FormBuilder, Title, ...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 			teardown: { destroyAfterEach: false },

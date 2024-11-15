@@ -25,7 +25,7 @@ export class ApplicationCredentialsService extends BaseHttpApiService {
 			return Promise.reject('No user logged in');
 		}
 	}
-	
+
 	getMyCredentials() {
 		if (this.sessionService.isLoggedIn) {
 			return this.get('/v2/auth/applications').then((r) => r.body);

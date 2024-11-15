@@ -73,10 +73,10 @@ export class AppComponent implements OnInit, AfterViewInit {
 			routerLink: ['/catalog/learningpaths'],
 			icon: 'lucideRoute',
 		},
-	]
+	];
 	accountMenuItems: MenuItem[] = [
 		{
-			title: "Mein Profil",
+			title: 'Mein Profil',
 			routerLink: ['/profile/profile'],
 			icon: 'lucideUsers',
 		},
@@ -86,11 +86,11 @@ export class AppComponent implements OnInit, AfterViewInit {
 			icon: 'lucideRepeat2',
 		},
 		{
-			title: "Logout",
+			title: 'Logout',
 			routerLink: ['/auth/logout'],
 			icon: 'lucideLogOut',
 		},
-	]
+	];
 	/**
 	 * Permanently disables the curtain, making it impossible to show it even with the query parameter
 	 */
@@ -301,8 +301,8 @@ export class AppComponent implements OnInit, AfterViewInit {
 		this.shouldShowIssuersTab();
 
 		this.translate.get('General.institutions').subscribe((translatedText: string) => {
-            this.aboutBadgesMenuItems[2].title = translatedText;
-        });
+			this.aboutBadgesMenuItems[2].title = translatedText;
+		});
 
 		this.translate.get('LearningPath.learningpaths').subscribe((translatedText: string) => {
 			this.aboutBadgesMenuItems[3].title = translatedText;
@@ -315,7 +315,6 @@ export class AppComponent implements OnInit, AfterViewInit {
 		this.translate.get('NavItems.appIntegrations').subscribe((translatedText: string) => {
 			this.accountMenuItems[1].title = translatedText;
 		});
-
 	}
 
 	ngAfterViewInit() {

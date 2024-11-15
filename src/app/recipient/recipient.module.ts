@@ -66,7 +66,7 @@ const routes: Routes = [
 		CommonEntityManagerModule,
 		RouterModule.forChild(routes),
 		MozzTransitionModule,
-		TranslateModule
+		TranslateModule,
 	],
 	declarations: [
 		RecipientEarnedBadgeListComponent,

@@ -1,37 +1,39 @@
 <div class="oeb">
-<div class="page-padding">
-	<div class="oeb-breadcrumbs">
-		<bg-breadcrumbs [linkentries]="breadcrumbLinkEntries"></bg-breadcrumbs>
-	</div>
-	<div class="oeb-section-sm">
-		<div class="oeb-headline-container-sm">
-			<h1 hlmH1 class="tw-text-purple">
-				{{ 'Issuer.createBadge' | translate }}
-			</h1>
+	<div class="page-padding">
+		<div class="oeb-breadcrumbs">
+			<bg-breadcrumbs [linkentries]="breadcrumbLinkEntries"></bg-breadcrumbs>
 		</div>
-		<div class="tw-flex tw-flex-col tw-text-oebblack">
-			<p hlmP class="tw-font-normal md:!tw-leading-[31.2px]">{{ 'CreateBadge.chooseCategory' | translate }}</p>
-			<div class="tw-w-full">
-				<p hlmP class="tw-font-normal md:!tw-leading-[28.8px]">
-					<span class="tw-font-semibold tw-text-[var(--color-purple)] tw-whitespace-nowrap">
-						{{ 'Badge.competency' | translate }}&hyphen;Badges
-					</span>
-					{{ 'General.can' | translate }}
-					<span class="tw-hidden md:tw-inline">({{ 'CreateBadge.withAssistant' | translate }})</span>
-					{{ 'CreateBadge.competencyInfo' | translate }}.
-				</p>
-				<p hlmP class="tw-font-normal md:!tw-leading-[28.8px]">
-					<span class="tw-font-semibold tw-text-[var(--color-purple)] tw-whitespace-nowrap">
-						{{ 'Badge.participation' | translate }}&hyphen;Badges
-					</span>
-					{{ 'CreateBadge.participationInfo' | translate }}
-					<span class="tw-hidden md:tw-inline">{{ 'CreateBadge.noCompetencies' | translate }}</span
-					>.
-				</p>
+		<div class="oeb-section-sm">
+			<div class="oeb-headline-container-sm">
+				<h1 hlmH1 class="tw-text-purple">
+					{{ 'Issuer.createBadge' | translate }}
+				</h1>
 			</div>
-		</div>
+			<div class="tw-flex tw-flex-col tw-text-oebblack">
+				<p hlmP class="tw-font-normal md:!tw-leading-[31.2px]">
+					{{ 'CreateBadge.chooseCategory' | translate }}
+				</p>
+				<div class="tw-w-full">
+					<p hlmP class="tw-font-normal md:!tw-leading-[28.8px]">
+						<span class="tw-font-semibold tw-text-[var(--color-purple)] tw-whitespace-nowrap">
+							{{ 'Badge.competency' | translate }}&hyphen;Badges
+						</span>
+						{{ 'General.can' | translate }}
+						<span class="tw-hidden md:tw-inline">({{ 'CreateBadge.withAssistant' | translate }})</span>
+						{{ 'CreateBadge.competencyInfo' | translate }}.
+					</p>
+					<p hlmP class="tw-font-normal md:!tw-leading-[28.8px]">
+						<span class="tw-font-semibold tw-text-[var(--color-purple)] tw-whitespace-nowrap">
+							{{ 'Badge.participation' | translate }}&hyphen;Badges
+						</span>
+						{{ 'CreateBadge.participationInfo' | translate }}
+						<span class="tw-hidden md:tw-inline">{{ 'CreateBadge.noCompetencies' | translate }}</span
+						>.
+					</p>
+				</div>
+			</div>
 
-		<!-- <button
+			<!-- <button
 			type="submit"
 			class="button topbar-x-button"
 			(click)="copyBadge()"
@@ -49,22 +51,22 @@
 		>
 			Badge kopieren und bearbeiten
 		</button> -->
-	</div>
+		</div>
 
-	<div *bgAwaitPromises="[issuerLoaded]">
-		<div>
-			<badgeclass-edit-form
-				#badgeimage
-				(save)="badgeClassCreated($event)"
-				(cancel)="creationCanceled($event)"
-				[scrolled]="scrolled"
-				[issuerSlug]="issuerSlug"
-				[isForked]="isForked"
-				[initBadgeClass]="copiedBadgeClass"
-				submitText="Create Badge"
-				submittingText="Creating Badge..."
-			></badgeclass-edit-form>
+		<div *bgAwaitPromises="[issuerLoaded]">
+			<div>
+				<badgeclass-edit-form
+					#badgeimage
+					(save)="badgeClassCreated($event)"
+					(cancel)="creationCanceled($event)"
+					[scrolled]="scrolled"
+					[issuerSlug]="issuerSlug"
+					[isForked]="isForked"
+					[initBadgeClass]="copiedBadgeClass"
+					submitText="Create Badge"
+					submittingText="Creating Badge..."
+				></badgeclass-edit-form>
+			</div>
 		</div>
 	</div>
-</div>
 </div>

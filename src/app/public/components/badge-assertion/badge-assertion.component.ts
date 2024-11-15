@@ -22,10 +22,10 @@ import { PageConfig } from '../../../common/components/badge-detail/badge-detail
 
 @Component({
 	template: `<verify-badge-dialog
-					#verifyBadgeDialog
-					(verifiedBadgeAssertion)="onVerifiedBadgeAssertion($event)"
-				></verify-badge-dialog>
-	<bg-badgedetail [config]="config" [awaitPromises]="[assertionIdParam]"></bg-badgedetail>`,
+			#verifyBadgeDialog
+			(verifiedBadgeAssertion)="onVerifiedBadgeAssertion($event)"
+		></verify-badge-dialog>
+		<bg-badgedetail [config]="config" [awaitPromises]="[assertionIdParam]"></bg-badgedetail>`,
 })
 export class PublicBadgeAssertionComponent {
 	constructor(
@@ -57,8 +57,7 @@ export class PublicBadgeAssertionComponent {
 
 	awardedToDisplayName: string;
 
-	config: PageConfig 
-
+	config: PageConfig;
 
 	routerLinkForUrl = routerLinkForUrl;
 
@@ -169,14 +168,12 @@ export class PublicBadgeAssertionComponent {
 					headerButton: {
 						title: 'Verify Badge',
 						action: () => this.verifyBadge(),
-
 					},
 					menuitems: [
 						{
 							title: 'Download JSON',
 							icon: 'lucideDownload',
 							action: () => window.open(this.rawJsonUrl),
-
 						},
 						{
 							title: 'Download baked Image',
@@ -186,13 +183,16 @@ export class PublicBadgeAssertionComponent {
 						{
 							title: 'View Badge',
 							icon: 'lucideBadge',
-							routerLink: routerLinkForUrl(assertion.badge.hostedUrl || assertion.badge.id)
-						}
+							routerLink: routerLinkForUrl(assertion.badge.hostedUrl || assertion.badge.id),
+						},
 					],
 					badgeDescription: assertion.badge.description,
 					issuerSlug: assertion.badge.issuer['slug'],
 					slug: assertion.badge.id,
-					category: assertion.badge['extensions:CategoryExtension'].Category === 'competency' ? 'Kompetenz- Badge' : 'Teilnahme- Badge',
+					category:
+						assertion.badge['extensions:CategoryExtension'].Category === 'competency'
+							? 'Kompetenz- Badge'
+							: 'Teilnahme- Badge',
 					tags: assertion.badge.tags,
 					issuerName: assertion.badge.issuer.name,
 					issuerImagePlacholderUrl: this.issuerImagePlacholderUrl,
@@ -201,7 +201,7 @@ export class PublicBadgeAssertionComponent {
 					badgeFailedImageUrl: this.badgeFailedImageUrl,
 					badgeImage: assertion.badge.image,
 					competencies: assertion.badge['extensions:CompetencyExtension'],
-				}
+				};
 				if (assertion.revoked) {
 					if (assertion.revocationReason) {
 						this.messageService.reportFatalError('Assertion has been revoked:', assertion.revocationReason);

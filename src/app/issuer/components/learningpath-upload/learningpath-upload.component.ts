@@ -17,14 +17,14 @@ import { BadgrApiFailure } from '../../../common/services/api-failure';
 	templateUrl: './learningpath-upload.component.html',
 })
 export class LearningPathUploadComponent extends BaseAuthenticatedRoutableComponent {
-    jsonForm: FormGroup;
-    issuerSlug: string;
+	jsonForm: FormGroup;
+	issuerSlug: string;
 	issuer: Issuer;
 	issuerLoaded: Promise<unknown>;
 
 	breadcrumbLinkEntries: LinkEntry[] = [];
 
-    constructor(
+	constructor(
 		protected formBuilder: FormBuilder,
 		protected loginService: SessionService,
 		protected messageService: MessageService,
@@ -35,35 +35,37 @@ export class LearningPathUploadComponent extends BaseAuthenticatedRoutableCompon
 		protected title: Title,
 	) {
 		super(router, route, loginService);
-        this.jsonForm = formBuilder.group({
-            file: {}
-        })
-	    this.issuerSlug = this.route.snapshot.params['issuerSlug'];
-        this.issuerLoaded = this.issuerManager.issuerBySlug(this.issuerSlug).then((issuer) => {
+		this.jsonForm = formBuilder.group({
+			file: {},
+		});
+		this.issuerSlug = this.route.snapshot.params['issuerSlug'];
+		this.issuerLoaded = this.issuerManager.issuerBySlug(this.issuerSlug).then((issuer) => {
 			this.issuer = issuer;
 			this.breadcrumbLinkEntries = [
 				{ title: 'Meine Institutionen', routerLink: ['/issuer'] },
 				{ title: issuer.name, routerLink: ['/issuer/issuers', this.issuerSlug] },
-                { title: 'Lernpfade' },
-				{ title: 'Lernpfad hochladen', routerLink: ['/issuer/issuers', this.issuerSlug, '/learningpaths/upload'] },
+				{ title: 'Lernpfade' },
+				{
+					title: 'Lernpfad hochladen',
+					routerLink: ['/issuer/issuers', this.issuerSlug, '/learningpaths/upload'],
+				},
 			];
-        }); 
-    }
+		});
+	}
 	readonly csvUploadIconUrl = '../../../../breakdown/static/images/csvuploadicon.svg';
 
 	rawJson: string = null;
 
-    onFileDataReceived(data) {
+	onFileDataReceived(data) {
 		this.rawJson = data;
 	}
 
-
-    importAction() {
+	importAction() {
 		if (this.rawJson) {
 			const learningPath: ApiLearningPathForCreation = JSON.parse(this.rawJson);
-			learningPath["issuer_id"]=this.issuerSlug;
+			learningPath['issuer_id'] = this.issuerSlug;
 			this.learningPathApiService.createLearningPath(this.issuerSlug, learningPath).then(
-				(lp) => {	
+				(lp) => {
 					this.router.navigate(['/issuer/issuers', this.issuerSlug, 'learningpaths', lp.slug]);
 				},
 				(error) => {
@@ -71,7 +73,8 @@ export class LearningPathUploadComponent extends BaseAuthenticatedRoutableCompon
 						'Lernpfad konnte nicht erstellt werden: ' + BadgrApiFailure.from(error).firstMessage,
 						'error',
 					);
-				},);
+				},
+			);
 		}
 	}
 }

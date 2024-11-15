@@ -21,9 +21,7 @@ let captionIdSequence = 0;
 		'[class]': '_computedClass()',
 		'[id]': 'id()',
 	},
-	template: `
-		<ng-content />
-	`,
+	template: ` <ng-content /> `,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	encapsulation: ViewEncapsulation.None,
 })

@@ -17,11 +17,12 @@ export class ServerVersionService extends BaseHttpApiService {
 		super(loginService, http, configService, messageService);
 	}
 	getServerVersion(): Promise<string> {
-		return this.get<string>('/get-server-version',
-                                null, // queryParams
-                                false, // requireAuth
-                                false // useAuth
-                               ).then(
+		return this.get<string>(
+			'/get-server-version',
+			null, // queryParams
+			false, // requireAuth
+			false, // useAuth
+		).then(
 			(r) => r.body['message'],
 			(error) => {
 				throw new Error(error);

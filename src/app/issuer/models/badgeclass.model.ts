@@ -44,7 +44,7 @@ export class BadgeClass extends ManagedEntity<ApiBadgeClass, BadgeClassRef> {
 
 	get imageFrame(): boolean {
 		return this.apiModel.imageFrame !== undefined ? this.apiModel.imageFrame : true;
-	}	
+	}
 	set imageFrame(imageFrame: boolean) {
 		this.apiModel.imageFrame = imageFrame;
 	}
@@ -65,7 +65,7 @@ export class BadgeClass extends ManagedEntity<ApiBadgeClass, BadgeClassRef> {
 		return this.apiModel.recipient_count;
 	}
 
-	set recipientCount(count: number){
+	set recipientCount(count: number) {
 		this.apiModel.recipient_count = count;
 	}
 

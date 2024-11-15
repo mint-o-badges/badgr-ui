@@ -61,7 +61,6 @@ export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComp
 
 	pdfSrc: SafeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl('about:blank');
 
-
 	qrCodeMenu: MenuItem[] = [
 		{
 			title: 'Bearbeiten',
@@ -85,7 +84,7 @@ export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComp
 		protected badgeRequestApiService: BadgeRequestApiService,
 		protected translate: TranslateService,
 		protected qrCodeApiService: QrCodeApiService,
-		protected sanitizer: DomSanitizer
+		protected sanitizer: DomSanitizer,
 	) {
 		super(router, route, sessionService);
 
@@ -123,9 +122,9 @@ export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComp
 					},
 				];
 			});
-			this.badgeRequestApiService.getBadgeRequestsByQrCode(this.qrSlug).then((r) => {	
-				this.badgeRequested = r.body['requested_badges'].length > 0 ? true : false;
-			});
+		this.badgeRequestApiService.getBadgeRequestsByQrCode(this.qrSlug).then((r) => {
+			this.badgeRequested = r.body['requested_badges'].length > 0 ? true : false;
+		});
 	}
 
 	ngOnInit() {
@@ -175,17 +174,14 @@ export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComp
 	}
 
 	async saveAsImage(parent: any) {
-		let parentElement = null
-	
-		  parentElement = parent.qrcElement.nativeElement
-			.querySelector("canvas")
-			.toDataURL("image/png")
+		let parentElement = null;
 
-	
+		parentElement = parent.qrcElement.nativeElement.querySelector('canvas').toDataURL('image/png');
+
 		if (parentElement) {
-		  let data = await this.getQrCodePdf(parentElement)
+			let data = await this.getQrCodePdf(parentElement);
 		}
-	  }	
+	}
 
 	public openDangerDialog() {
 		const dialogRef = this._hlmDialogService.open(DangerDialogComponent, {
@@ -206,12 +202,12 @@ export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComp
 	async getQrCodePdf(base64QrImage: string) {
 		this.qrCodeApiService.getQrCodePdf(this.qrSlug, this.badgeClass.slug, base64QrImage).subscribe({
 			next: (blob: Blob) => {
-			  this.qrCodeApiService.downloadQrCode(blob, this.qrTitle, this.badgeClass.name);
+				this.qrCodeApiService.downloadQrCode(blob, this.qrTitle, this.badgeClass.name);
 			},
 			error: (error) => {
-			  console.error('Error downloading the QrCode', error);
-			}
-		  });
+				console.error('Error downloading the QrCode', error);
+			},
+		});
 	}
 
 	onChangeURL(url: SafeUrl) {
