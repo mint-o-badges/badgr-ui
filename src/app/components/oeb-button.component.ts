@@ -19,7 +19,7 @@ import { lucidePlus, lucideUpload, lucideCircleX } from '@ng-icons/lucide';
 		[size]="size"
 		[variant]="variant"
 	>
-		<hlm-icon *ngIf="icon" class="tw-mr-4" [size]="size" [name]="icon" />
+		<hlm-icon *ngIf="icon" [ngClass]="{ 'tw-mr-4': iconLeft }" [size]="size" [name]="icon" />
 		<img *ngIf="img" class="md:tw-h-[30px] tw-h-[20px] tw-pr-4" [src]="img" />
 		<span [ngClass]="{ 'tw-text-[15px]': fontSize15 }" [innerHTML]="showLoadingMessage && loadingMessage ? loadingMessage : text"></span>
 	</button> `,
@@ -37,6 +37,7 @@ export class OebButtonComponent {
 	@Input() icon: string = undefined;
 	@Input() type: string = 'submit';
 	@Input() fontSize15: boolean = false;
+	@Input() iconLeft: boolean = false;
 
 	@Input('disabled-when-requesting')
 	disabledWhenRequesting = false;
@@ -83,5 +84,5 @@ export class OebButtonComponent {
 			);
 		}
 	}
-	constructor(private messageService: MessageService) {}
+	constructor(private messageService: MessageService) { }
 }

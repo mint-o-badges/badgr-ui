@@ -42,12 +42,15 @@
 								ariaLabel="chooseABadgeCategory"
 							></oeb-select>
 						</div>
-						<button hlmBtn size="icon" *ngIf="badgesDisplay !== 'map'" (click)="openMap()">
-							<hlm-icon name="lucideMapPin" size="lg"></hlm-icon>
-						</button>
-						<button hlmBtn size="icon" *ngIf="badgesDisplay === 'map'" (click)="openGrid()">
-							<hlm-icon name="lucideGrid2x2" size="lg"></hlm-icon>
-						</button>
+						<oeb-button size="icon" *ngIf="badgesDisplay !== 'map'" (click)="openMap()" icon="lucideMapPin">
+						</oeb-button>
+						<oeb-button
+							size="icon"
+							*ngIf="badgesDisplay === 'map'"
+							(click)="openGrid()"
+							icon="lucideGrid2x2"
+						>
+						</oeb-button>
 					</div>
 				</div>
 
