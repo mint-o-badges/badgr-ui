@@ -1,5 +1,5 @@
 import { FormBuilder, ValidationErrors, Validators } from '@angular/forms';
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SignupModel } from '../../models/signup-model.type';
 import { SignupService } from '../../services/signup.service';
@@ -59,6 +59,8 @@ export class SignupComponent extends BaseRoutableComponent implements OnInit, Af
 		public oAuthManager: OAuthManager,
 		private sanitizer: DomSanitizer,
 		private captchaService: CaptchaService,
+		private renderer: Renderer2,
+		private elementRef: ElementRef,
 		router: Router,
 		route: ActivatedRoute,
 	) {
@@ -72,6 +74,9 @@ export class SignupComponent extends BaseRoutableComponent implements OnInit, Af
 	}
 
 	ngOnInit() {
+		const scriptElement = this.renderer.createElement('script');
+ 		scriptElement.src = 'https://sibforms.com/forms/end-form/build/main.js';
+  		this.renderer.appendChild(this.elementRef.nativeElement, scriptElement);
 		if (this.sessionService.isLoggedIn) {
 			this.router.navigate(['/userProfile']);
 		}
@@ -112,35 +117,58 @@ export class SignupComponent extends BaseRoutableComponent implements OnInit, Af
 
 		this.signupFinished = new Promise<void>((resolve, reject) => {
 			const source = this.route.snapshot.params['source'] || localStorage.getItem('source') || null;
-			this.signupService.submitSignup(signupUser, source).then(
-				() => {
-					this.sendSignupConfirmation(formState.username);
-					resolve();
-				},
-				(response: HttpErrorResponse) => {
-					const error = response.error;
-					const throttleMsg = BadgrApiFailure.messageIfThrottableError(error);
-
-					if (throttleMsg) {
-						this.messageService.reportHandledError(throttleMsg, error);
-					} else if (error) {
-						if (error.password) {
-							this.messageService.setMessage(
-								'Your password must be uncommon and at least 8 characters. Please try again.',
-								'error',
-							);
-						} else if (typeof error === 'object' && error.error) {
-							this.messageService.setMessage('' + error.error, 'error');
-						} else {
-							this.messageService.setMessage('' + error, 'error');
-						}
-					} else {
-						this.messageService.setMessage('Unable to signup.', 'error');
-					}
-					resolve();
-				},
-			);
-		}).then(() => (this.signupFinished = null));
+			const newsletterSubmitBtn = document.getElementById("newsletter-submit-button") as HTMLButtonElement;
+			let brevoError = false
+			if(this.signupForm.valid && formState.marketingOptIn){
+				newsletterSubmitBtn.click();
+				// add small delay to wait if an error message appears
+				setTimeout(() => {
+					const error = document.querySelector('.entry__error.entry__error--primary');
+					const labels = document.querySelectorAll('label');
+					const errorLabel = Array.from(labels).find(label => label.textContent.includes('Dieses Feld darf nicht leer sein.'));
+					if(errorLabel) {
+						brevoError = true
+						reject(new Error('Brevo form validation failed'));
+					} 
+					}, 100); 
+			}
+			// add delay to wait for brevo error
+			setTimeout(() => {
+				if(!brevoError){
+					this.signupService.submitSignup(signupUser, source).then(
+						() => {
+							this.sendSignupConfirmation(formState.username);
+							resolve();
+						},
+						(response: HttpErrorResponse) => {
+							const error = response.error;
+							const throttleMsg = BadgrApiFailure.messageIfThrottableError(error);
+		
+							if (throttleMsg) {
+								this.messageService.reportHandledError(throttleMsg, error);
+							} else if (error) {
+								if (error.password) {
+									this.messageService.setMessage(
+										'Your password must be uncommon and at least 8 characters. Please try again.',
+										'error',
+									);
+								} else if (typeof error === 'object' && error.error) {
+									this.messageService.setMessage('' + error.error, 'error');
+								} else {
+									this.messageService.setMessage('' + error, 'error');
+								}
+							} else {
+								this.messageService.setMessage('Unable to signup.', 'error');
+							}
+							resolve();
+						},
+					);
+				}
+				else{
+					reject(new Error('Brevo form validation failed'));
+				}
+			}, 150)
+		}).finally(() => (this.signupFinished = null));
 	}
 
 	sendSignupConfirmation(email) {
