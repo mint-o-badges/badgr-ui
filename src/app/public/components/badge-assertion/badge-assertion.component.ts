@@ -22,10 +22,10 @@ import { PageConfig } from '../../../common/components/badge-detail/badge-detail
 
 @Component({
 	template: `<verify-badge-dialog
-					#verifyBadgeDialog
-					(verifiedBadgeAssertion)="onVerifiedBadgeAssertion($event)"
-				></verify-badge-dialog>
-	<bg-badgedetail [config]="config" [awaitPromises]="[assertionIdParam]"></bg-badgedetail>`,
+			#verifyBadgeDialog
+			(verifiedBadgeAssertion)="onVerifiedBadgeAssertion($event)"
+		></verify-badge-dialog>
+		<bg-badgedetail [config]="config" [awaitPromises]="[assertionIdParam]"></bg-badgedetail>`,
 })
 export class PublicBadgeAssertionComponent {
 	constructor(
@@ -57,8 +57,7 @@ export class PublicBadgeAssertionComponent {
 
 	awardedToDisplayName: string;
 
-	config: PageConfig 
-
+	config: PageConfig;
 
 	routerLinkForUrl = routerLinkForUrl;
 
@@ -169,30 +168,50 @@ export class PublicBadgeAssertionComponent {
 					headerButton: {
 						title: 'Verify Badge',
 						action: () => this.verifyBadge(),
-
 					},
 					menuitems: [
 						{
 							title: 'Download JSON',
 							icon: 'lucideDownload',
-							action: () => window.open(this.rawJsonUrl),
-
+							action: () => {
+								const link = document.createElement('a');
+								link.href = this.rawJsonUrl;
+								link.download = 'badge-JSON.json'; // Specify the name of the downloaded file
+								document.body.appendChild(link);
+								link.click();
+								document.body.removeChild(link); // Clean up
+							},
 						},
 						{
 							title: 'Download baked Image',
 							icon: 'lucideDownload',
-							action: () => window.open(this.rawBakedUrl),
+							action: () => {
+								const link = document.createElement('a');
+								link.href = this.rawBakedUrl;
+
+								const urlParts = this.rawBakedUrl.split('/');
+								// infer the file name through the download link as the ending is not alwyays know (like in the json thing above)
+								const inferredFileName = urlParts[urlParts.length - 1] || 'downloadedFile';
+								link.download = inferredFileName; // Use the inferred file name or a generic name
+
+								document.body.appendChild(link);
+								link.click();
+								document.body.removeChild(link); // Clean up
+							},
 						},
 						{
 							title: 'View Badge',
 							icon: 'lucideBadge',
-							routerLink: routerLinkForUrl(assertion.badge.hostedUrl || assertion.badge.id)
-						}
+							routerLink: routerLinkForUrl(assertion.badge.hostedUrl || assertion.badge.id),
+						},
 					],
 					badgeDescription: assertion.badge.description,
 					issuerSlug: assertion.badge.issuer['slug'],
 					slug: assertion.badge.id,
-					category: assertion.badge['extensions:CategoryExtension'].Category === 'competency' ? 'Kompetenz- Badge' : 'Teilnahme- Badge',
+					category:
+						assertion.badge['extensions:CategoryExtension'].Category === 'competency'
+							? 'Kompetenz- Badge'
+							: 'Teilnahme- Badge',
 					tags: assertion.badge.tags,
 					issuerName: assertion.badge.issuer.name,
 					issuerImagePlacholderUrl: this.issuerImagePlacholderUrl,
@@ -201,7 +220,7 @@ export class PublicBadgeAssertionComponent {
 					badgeFailedImageUrl: this.badgeFailedImageUrl,
 					badgeImage: assertion.badge.image,
 					competencies: assertion.badge['extensions:CompetencyExtension'],
-				}
+				};
 				if (assertion.revoked) {
 					if (assertion.revocationReason) {
 						this.messageService.reportFatalError('Assertion has been revoked:', assertion.revocationReason);
