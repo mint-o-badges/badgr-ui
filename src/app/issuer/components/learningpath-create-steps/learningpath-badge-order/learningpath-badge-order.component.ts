@@ -34,7 +34,7 @@ import { FormControl, Validators } from '@angular/forms';
 	@Output() badgeListChanged = new EventEmitter<any>();
 
     ngOnInit(): void {
-			this.selectedBadgesLoaded = this.loadSelectedBadges();
+		this.selectedBadgesLoaded = this.loadSelectedBadges();
     }
 
 	// arrayLengthValidator(control: FormControl) {
@@ -68,7 +68,7 @@ import { FormControl, Validators } from '@angular/forms';
     }    
 
     async loadSelectedBadges(){
-		 const selectedBadges =	await this.badgeClassService.badgesByUrls(this.selectedBadgeUrls)
+		 const selectedBadges =	await this.badgeClassService.publicBadgesByUrls(this.selectedBadgeUrls)
 		 this.draggableList = selectedBadges.map((badge) => {
 			return {
 				id: badge.slug,
