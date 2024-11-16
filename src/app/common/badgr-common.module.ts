@@ -126,6 +126,7 @@ import { OebIssuerCard } from './components/oeb-issuercard';
 import { HourPipe } from './pipes/hourPipe';
 import { HlmBadgeDirective } from '../components/spartan/ui-badge-helm/src/lib/hlm-badge.directive';
 import { IssuerCardComponent } from '../components/issuer-card/issuer-card.component';
+import { CountUpDirective } from './directives/count-up.directive';
 
 const DIRECTIVES = [
 	BgAwaitPromises,
@@ -259,7 +260,7 @@ export const COMMON_IMPORTS = [
 @NgModule({
 	imports: [...COMMON_IMPORTS, FormsModule, LMarkdownEditorModule, TranslateModule],
 	providers: [BadgeClassManager, BadgeClassApiService],
-	declarations: [...DIRECTIVES, ...COMMON_MODULE_COMPONENTS, ...PIPES, ForwardRouteComponent, BadgeLegendComponent],
+	declarations: [...DIRECTIVES, ...COMMON_MODULE_COMPONENTS, ...PIPES, ForwardRouteComponent, BadgeLegendComponent, CountUpDirective],
 	exports: [...DIRECTIVES, ...COMMON_MODULE_COMPONENTS, ...PIPES, BadgeLegendComponent],
 })
 export class BadgrCommonModule {
