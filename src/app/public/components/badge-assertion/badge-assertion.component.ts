@@ -174,29 +174,40 @@ export class PublicBadgeAssertionComponent {
 							title: 'Download JSON',
 							icon: 'lucideDownload',
 							action: () => {
-								const link = document.createElement('a');
-								link.href = this.rawJsonUrl;
-								link.download = 'badge-JSON.json'; // Specify the name of the downloaded file
-								document.body.appendChild(link);
-								link.click();
-								document.body.removeChild(link); // Clean up
+								fetch(this.rawJsonUrl)
+									.then((response) => response.blob())
+									.then((blob) => {
+										const link = document.createElement('a');
+										const url = URL.createObjectURL(blob);
+										link.href = url;
+										link.download = 'badge-JSON.json'; // Specify the name of the downloaded file
+										document.body.appendChild(link);
+										link.click();
+										document.body.removeChild(link); // Clean up
+										URL.revokeObjectURL(url); // Clean up the URL object
+									})
+									.catch((error) => console.error('Download failed:', error));
 							},
 						},
 						{
 							title: 'Download baked Image',
 							icon: 'lucideDownload',
 							action: () => {
-								const link = document.createElement('a');
-								link.href = this.rawBakedUrl;
-
-								const urlParts = this.rawBakedUrl.split('/');
-								// infer the file name through the download link as the ending is not alwyays know (like in the json thing above)
-								const inferredFileName = urlParts[urlParts.length - 1] || 'downloadedFile';
-								link.download = inferredFileName; // Use the inferred file name or a generic name
-
-								document.body.appendChild(link);
-								link.click();
-								document.body.removeChild(link); // Clean up
+								fetch(this.rawBakedUrl)
+									.then((response) => response.blob())
+									.then((blob) => {
+										const link = document.createElement('a');
+										const url = URL.createObjectURL(blob);
+										const urlParts = this.rawBakedUrl.split('/');
+										const inferredFileName = urlParts[urlParts.length - 1] || 'downloadedFile';
+										link.href = url;
+										link.download = inferredFileName; // Use the inferred file name or a generic name
+										document.body.appendChild(link);
+										link.click();
+										document.body.removeChild(link); // Clean up
+										URL.revokeObjectURL(url); // Clean up the URL object
+									})
+									.catch((error) => console.error('Download failed:', error));
 							},
 						},
 						{
