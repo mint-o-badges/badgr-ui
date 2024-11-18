@@ -16,10 +16,9 @@ import { HlmPDirective } from './spartan/ui-typography-helm/src/lib/hlm-p.direct
 			<label class="tw-pb-[2px] tw-pl-[3px]" [attr.for]="inputName" *ngIf="label">
 				<span *ngIf="labelStyle; else baseLabel" [class]="labelStyle" [innerHTML]="label"></span>
 				<ng-template #baseLabel>
-				<span hlmP class="tw-text-oebblack tw-font-semibold" [innerHTML]="label"></span
-				>
+					<span hlmP class="tw-text-oebblack tw-font-semibold" [innerHTML]="label"></span>
 				</ng-template>
-				<span class="tw-pl-[3px] tw-text-oebblack" *ngIf="sublabelRight"> {{sublabelRight}}</span>
+				<span class="tw-pl-[3px] tw-text-oebblack" *ngIf="sublabelRight"> {{ sublabelRight }}</span>
 				<span *ngIf="optional">(OPTIONAL)</span>
 				<span *ngIf="formFieldAside">{{ formFieldAside }}</span>
 			</label>
@@ -165,6 +164,16 @@ export class OebInputComponent {
 			this.control.markAsDirty();
 			this.cacheControlState();
 		}
+
+		// Wenn der fieldType 'number' ist, nur numerische Eingaben erlauben
+		if (this.fieldType === 'number') {
+			const charCode = event.which ? event.which : event.keyCode;
+			const charStr = String.fromCharCode(charCode);
+			// Erlaubt nur Zahlen (0-9) und ggf. Dezimalpunkt oder Minuszeichen
+			if (!/^\d$/.test(charStr) && charStr !== '.' && charStr !== '-') {
+				event.preventDefault(); // Blockiert die Eingabe
+			}
+		}
 	}
 
 	handleKeyUp(event: KeyboardEvent) {
@@ -187,14 +196,17 @@ export const defaultValidatorMessages: {
 	validUrl: () => `Bitte gültige URL eingeben.`,
 	invalidTelephone: () => `Bitte gültige Telefonnummer eingeben`,
 	invalidEmail: () => `Bitte gültige E-Mail Adresse eingeben`,
-	maxlength: (label: string  | undefined, { actualLength, requiredLength }: { actualLength: number; requiredLength: number }) =>
+	maxlength: (
+		label: string | undefined,
+		{ actualLength, requiredLength }: { actualLength: number; requiredLength: number },
+	) =>
 		actualLength && requiredLength
 			? `${label ?? 'Text'} überschreitet maximale Länge von ${requiredLength} um ${actualLength - requiredLength} Zeichen`
 			: `${label ?? 'Text'} überschreitet maximale Länge.`,
-	minlength: (label: string , { actualLength, requiredLength }: { actualLength: number; requiredLength: number }) =>
-	actualLength && requiredLength
-		? `${label} unterschreitet erforderliche Länge von ${requiredLength} um ${requiredLength - actualLength} Zeichen`
-		: `${label} unterschreitet erforderliche Länge.`
+	minlength: (label: string, { actualLength, requiredLength }: { actualLength: number; requiredLength: number }) =>
+		actualLength && requiredLength
+			? `${label} unterschreitet erforderliche Länge von ${requiredLength} um ${requiredLength - actualLength} Zeichen`
+			: `${label} unterschreitet erforderliche Länge.`,
 };
 
 export function messagesForValidationError(
