@@ -79,6 +79,7 @@ import { FormControl, Validators } from '@angular/forms';
 				issuerName: badge.issuerName,
 			};
 		})
+		this.badgeListChanged.emit(this.draggableList);
 	}    
 
     onDragged(item: any, list: any[], effect: DropEffect) {
