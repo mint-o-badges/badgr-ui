@@ -227,7 +227,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				// but since it doesn't make sense to remove the
 				// default of 60 from unselected suggestions,
 				// this doesn't really matter
-				.addControl('ai_hours', 60, this.positiveInteger)
+				.addControl('ai_hours', 1, this.positiveInteger)
 				.addControl('ai_minutes', 0, this.positiveInteger)
 				.addControl('studyLoad', 60, [Validators.required, this.positiveInteger]),
 		)
@@ -239,9 +239,9 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				.addControl('description', '', Validators.required)
 				.addControl('escoID', '')
 				// limit of 1000000 is set so that users cant break the UI by entering a very long number
-				.addControl('studyLoad', 60, [Validators.required, this.positiveInteger, Validators.max(1000000)])
 				.addControl('hours', 1, [this.positiveIntegerOrNull, Validators.max(999)])
 				.addControl('minutes', 0, [this.positiveIntegerOrNull, Validators.max(59)])
+				.addControl('studyLoad', 60, [Validators.required, this.positiveInteger])
 				.addControl('category', '', Validators.required),
 		)
 		.addArray(
@@ -1025,9 +1025,9 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 						name: suggestions[index].preferred_label,
 						description: suggestions[index].description,
 						escoID: suggestions[index].concept_uri,
-						studyLoad: Number(aiCompetency.studyLoad),
-						hours: Number(Math.floor(aiCompetency.studyLoad / 60)),
-						minutes: Number(aiCompetency.studyLoad % 60),
+						studyLoad: Number(aiCompetency.hours * 60 + aiCompetency.minutes),
+						hours: Number(aiCompetency.hours),
+						minutes: Number(aiCompetency.minutes),
 						category: suggestions[index].type.includes('skill') ? 'skill' : 'knowledge',
 					}))
 					.filter((_, index) => formState.aiCompetencies[index].selected),
