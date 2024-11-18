@@ -54,7 +54,7 @@
 		"hideDetails": "Hide details",
 		"password": "Password",
 		"loading": "Loading...",
-        "warning": "Warning",
+		"warning": "Warning",
 		"page": "Page"
 	},
 	"NavItems": {
@@ -255,10 +255,10 @@
 		"characters": "characters",
 		"createdOn": "Created on",
 		"catalogHeadline": "Alle Badges in der Übersicht",
-		"requestedOn": "Requested on",	
-        "deletePart1": "Are you sure you want to delete the badge '",
-        "deletePart2": "'?",
-        "deleteConfirm": "Delete Badge"
+		"requestedOn": "Requested on",
+		"deletePart1": "Are you sure you want to delete the badge '",
+		"deletePart2": "'?",
+		"deleteConfirm": "Delete Badge"
 	},
 	"CreateBadge": {
 		"chooseBadgeCategory": "Choose Badge-Category",
@@ -285,7 +285,7 @@
 		"useOurEditor": "Use our editor",
 		"imageSublabel": "Choose an image/icon to be inserted into our frame.",
 		"useOwnVisual": "Use your own visual",
-		"uploadOwnDesign": "Upload your own badge design (max. 250 KB)",
+		"uploadOwnDesign": "Upload your own badge design (max. 2 MB)",
 		"imageErrorFork": "Please use a valid (and unique after fork) image for the badge",
 		"fillWithCompetencies": "fill badge with competencies",
 		"aiAssistant": "AI-Badge-Assistant",
@@ -326,9 +326,9 @@
 		"removeAlignmentInfo": "Are you sure you want to remove the alignment(s)?",
 		"irreversibleAction": "This action cannot be undone.",
 		"addAnotherCompetency": "Add another competency",
-		"giveBadgeTitle":"Please give the badge a title",
-		"changeBadgeTitle":"Please change the title",
-		"maxValue1000":"Maximum value is 1000",
+		"giveBadgeTitle": "Please give the badge a title",
+		"changeBadgeTitle": "Please change the title",
+		"maxValue1000": "Maximum value is 1000",
 		"imageTooLarge": "The image is too large. Please select an image with a size of up to 250 KB.",
 		"licenseInfo": "Badges are created under the license <a class='tw-underline tw-text-[#1400FF]' target='_blank' href='https://creativecommons.org/publicdomain/zero/1.0/legalcode.de'>CC BY 4.0'</a>.",
 		"requiredError": "Required",
@@ -361,12 +361,11 @@
 		"resendEmailFailed": "Failed to resend verification email. Please contact support.",
 		"newEmailSent": "A new verification email was sent to:",
 		"infoPersonalDataProcessing": "Information on the processing of your personal data can be found in our <a class='tw-underline tw-text-[#1400FF]' href='public/privacy'> Privacy Policy </a>",
-		"enterValidEmail":"Please enter a valid email address.",
-		"enterFirstName":"Please enter a first name",
-		"enterLastName":"Please enter a last name",
+		"enterValidEmail": "Please enter a valid email address.",
+		"enterFirstName": "Please enter a first name",
+		"enterLastName": "Please enter a last name",
 		"registerWithBildungsraum": "Register with Mein Bildungsraum",
 		"ageConfirm": "I confirm that I am at least 16 years old when registering or that I have the consent of my legal guardian to register on the platform."
-
 	},
 	"Captcha": {
 		"error": "Verification failed. Try again later.",
@@ -553,11 +552,11 @@
 		"deleteAppConfirm": "Do you really want to delete your app credentials?",
 		"authorized": "Authorized:",
 		"takeBack": "Take it back",
-        "deleteAccount": "Delete account?",
-        "deleteAccountConfirm": "Are you sure you want to delete your account? This can not be undone.",
-        "deleteAccountYes": "Delete account",
-        "deleteAccountSuccess": "Successfully deleted account",
-        "deleteAccountFailure": "Failed to delete account",
+		"deleteAccount": "Delete account?",
+		"deleteAccountConfirm": "Are you sure you want to delete your account? This can not be undone.",
+		"deleteAccountYes": "Delete account",
+		"deleteAccountSuccess": "Successfully deleted account",
+		"deleteAccountFailure": "Failed to delete account",
 		"ResetPassword": "Reset password",
 		"EnterNewPassword": "Enter a new password.",
 		"currentPassword": "Current password",
@@ -594,18 +593,17 @@
 		"list3": "Your learners scan the QR code with their smartphones and are directed to an input form where they enter their first name, last name, and email address. They then submit the form as a badge request.",
 		"list4": "You can see your learners' badge requests on the ",
 		"list4.2": "on OEB and can directly issue the badges. They will be sent to the learners via email."
-
 	},
 	"QrCode": {
 		"savedSuccessfully": "<span class='tw-font-bold'> The QR code assignment was successfully saved on the badge detail page.</span>",
 		"downloadedSuccessfully": "<span class='tw-font-bold'>You have successfully downloaded the QR-Code.</span><br> Check your download folder."
 	},
-	"OEBComponents":{
+	"OEBComponents": {
 		"fieldIsRequired": "This field is required"
 	},
 	"LearningPath": {
 		"learningpaths": "Learning Paths",
-		"catalogHeadline":"Overview of all learning paths",
+		"catalogHeadline": "Overview of all learning paths",
 		"partipate": "Participate",
 		"notParticipateAnymore": "Not participate anymore",
 		"searchLearningPaths": "Lernpfade durchsuchen",
