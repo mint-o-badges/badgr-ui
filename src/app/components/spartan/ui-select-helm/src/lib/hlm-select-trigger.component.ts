@@ -2,7 +2,7 @@ import { Component, ContentChild, type ElementRef, ViewChild, computed, input } 
 import { provideIcons } from '@ng-icons/core';
 import { lucideChevronDown } from '@ng-icons/lucide';
 import { hlm } from '@spartan-ng/ui-core';
-import { HlmIconComponent } from "../../../ui-icon-helm/src";
+import { HlmIconComponent } from '../../../ui-icon-helm/src';
 import { BrnSelectTriggerDirective } from '@spartan-ng/ui-select-brain';
 import { type VariantProps, cva } from 'class-variance-authority';
 import type { ClassValue } from 'clsx';
@@ -15,6 +15,7 @@ export const selectTriggerVariants = cva(
 				default: 'tw-h-10 tw-py-2 tw-px-4',
 				sm: 'tw-h-9 tw-px-3',
 				lg: 'tw-h-11 tw-px-8',
+				actionBar: 'tw-h-12 tw-py-2 tw-px-4',
 			},
 			error: {
 				auto: '[&.ng-invalid.ng-touched]:tw-text-destructive [&.ng-invalid.ng-touched]:tw-border-destructive [&.ng-invalid.ng-touched]:focus-visible:tw-ring-destructive',

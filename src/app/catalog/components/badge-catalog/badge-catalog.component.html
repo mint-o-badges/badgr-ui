@@ -20,6 +20,7 @@
 		<app-badge-legend *ngIf="showLegend" (closed)="closeLegend()"></app-badge-legend>
 
 		<div class="tw-relative">
+
 			<section class="">
 				<div class="tw-flex tw-items-center oeb-standard-padding-bottom tw-flex-wrap">
 					<div class="">
@@ -48,12 +49,7 @@
 				</div>
 				<div class="subtitle-wrapper">
 					<div class="tags-wrapper oeb-standard-padding-bottom">
-						<!-- <div class="tag" *ngFor="let tag of badgeClass.tags; last as last">{{ tag }}</div> -->
-						<div (click)="filterByTag(tag)" class="tag tag-wrapper tag-button"
-							[class.tag-button-pressed]="selectedTag == tag"
-							*ngFor="let tag of tags | slice: 0 : 3; last as last">
-							{{ tag }}
-						</div>
+							<div (click)="filterByTag(tag)" [class.tag-button-pressed]="selectedTag == tag" class="tag tag-wrapper tag-button" *ngFor="let tag of tags; last as last">{{ tag }}</div>
 					</div>
 					<div class="open-legend-button">
 						<a (click)="openLegend()">{{ 'Badge.framesMeaning' | translate }}</a>
@@ -66,7 +62,7 @@
 							[badgeImage]="badge.image" [badgeDescription]="badge.description" [badgeSlug]="badge.slug"
 							[issuerTitle]="badge.issuerName ? badge.issuerName : badge.issuer.name"
 							[badgeIssueDate]="badge.createdAt" public="true" [publicUrl]="badge.url" [badgeClass]="true"
-							[issuerSlug]="badge.issuerSlug"></bg-badgecard>
+							[issuerSlug]="badge.issuerSlug" [competencies]="badge.extension['extensions:CompetencyExtension']"></bg-badgecard>
 					</div>
 				</ng-container>
 				<ng-container *ngIf="groupBy == 'Issuer'">
@@ -84,7 +80,7 @@
 								[badgeSlug]="badge.slug"
 								[issuerTitle]="badge.issuerName ? badge.issuerName : badge.issuer.name"
 								[badgeIssueDate]="badge.createdAt" public="true" [publicUrl]="badge.url"
-								[badgeClass]="true"></bg-badgecard>
+								[badgeClass]="true" [competencies]="badge.extension['extensions:CompetencyExtension']"></bg-badgecard>
 						</div>
 					</ng-container>
 				</ng-container>
@@ -105,7 +101,7 @@
 								[badgeSlug]="badge.slug"
 								[issuerTitle]="badge.issuerName ? badge.issuerName : badge.issuer.name"
 								[badgeIssueDate]="badge.createdAt" public="true" [publicUrl]="badge.url"
-								[badgeClass]="true"></bg-badgecard>
+								[badgeClass]="true" [competencies]="badge.extension['extensions:CompetencyExtension']"></bg-badgecard>
 						</div>
 					</ng-container>
 				</ng-container>
