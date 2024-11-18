@@ -48,7 +48,7 @@ export class NewTermsComponent extends BaseRoutableComponent {
 			context: {
         caption: this.translate.instant('TermsOfService.cantUseWithoutConfirmation'),
 				variant: 'danger',
-        singleButtonText: this.translate.instant('TermsOfService.backToTerms')
+        singleButtonText: this.translate.instant('General.back')
 			},
 		});
 	}

@@ -56,7 +56,8 @@
 		"password": "Passwort",
 		"loading": "Laden...",
         "warning": "Warnung",
-		"page": "Seite"
+		"page": "Seite",
+		"back": "Zurück"
 	},
 	"NavItems": {
 		"register": "Registrieren",
