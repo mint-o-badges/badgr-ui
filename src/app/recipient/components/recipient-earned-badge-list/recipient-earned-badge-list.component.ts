@@ -164,7 +164,7 @@ export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutable
 			this.profileLoaded = profileManager.userProfileSet.updateList().then((p) => {
 				this.profile = profileManager.userProfile;
 				if (profileManager.userProfile.agreedTermsVersion !== profileManager.userProfile.latestTermsVersion) {
-					dialogService.newTermsDialog.openDialog();
+					// dialogService.newTermsDialog.openDialog();
 				}
 			});
 		}
