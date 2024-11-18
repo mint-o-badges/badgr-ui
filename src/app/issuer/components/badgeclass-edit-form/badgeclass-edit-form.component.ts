@@ -141,8 +141,8 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		return this.badgeClassForm.controls.badge_image.dirty || this.badgeClassForm.controls.badge_customImage.dirty;
 	}
 
-	get badgeStudyLoadDirty(){
-		return this.badgeClassForm.controls.badge_hours.dirty || this.badgeClassForm.controls.badge_minutes.dirty
+	get badgeStudyLoadDirty() {
+		return this.badgeClassForm.controls.badge_hours.dirty || this.badgeClassForm.controls.badge_minutes.dirty;
 	}
 
 	readonly badgeClassPlaceholderImageUrl = '../../../../breakdown/static/images/placeholderavatar.svg';
@@ -191,10 +191,11 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 	savePromise: Promise<BadgeClass> | null = null;
 	badgeClassForm = typedFormGroup([
-        this.criteriaRequired.bind(this),
-        this.imageValidation.bind(this),
-		    this.maxStudyLoadValidation.bind(this),
-        this.noDuplicateCompetencies.bind(this)])
+		this.criteriaRequired.bind(this),
+		this.imageValidation.bind(this),
+		this.maxStudyLoadValidation.bind(this),
+		this.noDuplicateCompetencies.bind(this),
+	])
 		.addControl('badge_name', '', [
 			Validators.required,
 			Validators.maxLength(60),
@@ -226,6 +227,8 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				// but since it doesn't make sense to remove the
 				// default of 60 from unselected suggestions,
 				// this doesn't really matter
+				.addControl('ai_hours', 60, this.positiveInteger)
+				.addControl('ai_minutes', 0, this.positiveInteger)
 				.addControl('studyLoad', 60, [Validators.required, this.positiveInteger]),
 		)
 		.addArray(
@@ -388,9 +391,9 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		}
 
 		// transform minutes into hours and minutes
-		let competencies = badgeClass.extension['extensions:CompetencyExtension'].map(comp => {
-			return { ...comp, hours: Math.floor(comp.studyLoad / 60), minutes: comp.studyLoad % 60 }
-		})
+		let competencies = badgeClass.extension['extensions:CompetencyExtension'].map((comp) => {
+			return { ...comp, hours: Math.floor(comp.studyLoad / 60), minutes: comp.studyLoad % 60 };
+		});
 
 		this.badgeClassForm.setValue({
 			badge_name: badgeClass.name,
@@ -422,9 +425,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			// based on ai suggestions, they can't be separated anymore and thus will
 			// be displayed as competencies entered by hand
 			aiCompetencies: [],
-			competencies: badgeClass.extension['extensions:CompetencyExtension']
-				? competencies
-				: [],
+			competencies: badgeClass.extension['extensions:CompetencyExtension'] ? competencies : [],
 			alignments: this.badgeClass.alignments.map((alignment) => ({
 				target_name: alignment.target_name,
 				target_url: alignment.target_url,
@@ -469,7 +470,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		this.badgeClassForm.controls.aiCompetencies.controls['selected'].statusChanges.subscribe((res) => {
 			this.checkDuplicateCompetency();
 		});
-
 	}
 
 	ngAfterViewInit(): void {
@@ -480,7 +480,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		this.customImageField.control.statusChanges.subscribe((e) => {
 			if (this.customImageField.control.value != null) this.imageField.control.reset();
 		});
-		this.fetchTags()
+		this.fetchTags();
 	}
 
 	clearCompetencies() {
@@ -789,11 +789,11 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		const value = this.badgeClassForm.value;
 
 		const minutes = value.badge_minutes;
-		if(minutes > 59){
+		if (minutes > 59) {
 			return { maxMinutesError: true };
 		}
 		const hours = value.badge_hours;
-		if(hours > 10000){
+		if (hours > 10000) {
 			return { maxHoursError: true };
 		}
 	}
