@@ -164,6 +164,16 @@ export class OebInputComponent {
 			this.control.markAsDirty();
 			this.cacheControlState();
 		}
+
+		// Wenn der fieldType 'number' ist, nur numerische Eingaben erlauben
+		if (this.fieldType === 'number') {
+			const charCode = event.which ? event.which : event.keyCode;
+			const charStr = String.fromCharCode(charCode);
+			// Erlaubt nur Zahlen (0-9) und ggf. Dezimalpunkt oder Minuszeichen
+			if (!/^\d$/.test(charStr) && charStr !== '.' && charStr !== '-') {
+				event.preventDefault(); // Blockiert die Eingabe
+			}
+		}
 	}
 
 	handleKeyUp(event: KeyboardEvent) {
