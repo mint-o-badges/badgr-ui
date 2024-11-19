@@ -227,8 +227,8 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				// but since it doesn't make sense to remove the
 				// default of 60 from unselected suggestions,
 				// this doesn't really matter
-				.addControl('ai_hours', 1, this.positiveInteger)
-				.addControl('ai_minutes', 0, this.positiveInteger)
+				.addControl('hours', 1, this.positiveIntegerOrNull)
+				.addControl('minutes', 0, this.positiveIntegerOrNull)
 				.addControl('studyLoad', 60, [Validators.required, this.positiveInteger]),
 		)
 		.addArray(
@@ -863,6 +863,8 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			}
 
 			const formState = this.badgeClassForm.value;
+			console.log(formState);
+
 			const expirationState = this.expirationEnabled ? this.expirationForm.value : undefined;
 
 			const studyLoadExtensionContextUrl = `${this.baseUrl}/static/extensions/StudyLoadExtension/context.json`;
@@ -978,7 +980,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 						amount: parseInt(expirationState.expires_amount, 10),
 					};
 				}
-
 				this.savePromise = this.badgeClassManager.createBadgeClass(this.issuerSlug, badgeClassData);
 			}
 
@@ -1012,7 +1013,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				name: String(competency.name),
 				description: String(competency.description),
 				escoID: String(competency.escoID),
-				studyLoad: Number(competency.hours * 60 + competency.minutes),
+				studyLoad: Number(competency.hours * 60) + Number(competency.minutes),
 				hours: Number(competency.hours),
 				minutes: Number(competency.minutes),
 				category: String(competency.category),
@@ -1025,7 +1026,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 						name: suggestions[index].preferred_label,
 						description: suggestions[index].description,
 						escoID: suggestions[index].concept_uri,
-						studyLoad: Number(aiCompetency.hours * 60 + aiCompetency.minutes),
+						studyLoad: Number(aiCompetency.hours * 60) + Number(aiCompetency.minutes)	,
 						hours: Number(aiCompetency.hours),
 						minutes: Number(aiCompetency.minutes),
 						category: suggestions[index].type.includes('skill') ? 'skill' : 'knowledge',

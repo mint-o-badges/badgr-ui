@@ -324,7 +324,7 @@
 											}}
 										</span>
 
-										<div class="tw-flex tw-gap-2">
+										<div class="tw-flex tw-gap-2 tw-mt-2 ">
 											<span class="tw-text-sm tw-text-[#6B6B6B] tw-font-light">
 												{{ 'RecBadgeDetail.duration' | translate }}</span
 											>
@@ -332,7 +332,7 @@
 											<oeb-input
 												class="tw-w-20"
 												[fieldType]="'number'"
-												[control]="aiCompetency.rawControlMap.ai_hours"
+												[control]="aiCompetency.rawControlMap.hours"
 												[errorMessage]="{ duration: requiredError }"
 												noTopMargin="true"
 											>
@@ -341,7 +341,7 @@
 											<oeb-input
 												class="tw-w-20"
 												[fieldType]="'number'"
-												[control]="aiCompetency.rawControlMap.ai_minutes"
+												[control]="aiCompetency.rawControlMap.minutes"
 												[errorMessage]="{ duration: requiredError }"
 												noTopMargin="true"
 											>
