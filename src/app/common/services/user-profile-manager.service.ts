@@ -32,6 +32,10 @@ export class UserProfileManager {
 		return this.userProfileSet.entities[0];
 	}
 
+	get userInstitutions() {
+		return this.profileService.getOwnedInstitutions();
+	}
+
 	/**
 	 * A promise for the loaded user profile.
 	 *

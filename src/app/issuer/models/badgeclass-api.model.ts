@@ -71,5 +71,6 @@ export interface ApiBadgeClass extends ApiBadgeClassForCreation {
 
 	issuerVerified: boolean;
 	issuerOwnerAcceptedTos: boolean;
+	issuerVerifiedIntendedUse: boolean;
 
 }

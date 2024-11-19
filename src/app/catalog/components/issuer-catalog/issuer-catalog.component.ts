@@ -96,7 +96,7 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 				(issuers) => {
 					this.issuers = issuers
 						.slice()
-						.filter((i) => i.apiModel.verified && i.ownerAcceptedTos && !i.apiModel.source_url)
+						.filter((i) => i.apiModel.verified && i.intendedUseVerified && !i.apiModel.source_url)
 						.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
 					this.issuerResults = this.issuers;
 					this.issuerResults.sort((a, b) => a.name.localeCompare(b.name));
