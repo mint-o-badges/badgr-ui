@@ -863,7 +863,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			}
 
 			const formState = this.badgeClassForm.value;
-			console.log(formState);
 
 			const expirationState = this.expirationEnabled ? this.expirationForm.value : undefined;
 
@@ -1026,7 +1025,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 						name: suggestions[index].preferred_label,
 						description: suggestions[index].description,
 						escoID: suggestions[index].concept_uri,
-						studyLoad: Number(aiCompetency.hours * 60) + Number(aiCompetency.minutes)	,
+						studyLoad: Number(aiCompetency.hours * 60) + Number(aiCompetency.minutes),
 						hours: Number(aiCompetency.hours),
 						minutes: Number(aiCompetency.minutes),
 						category: suggestions[index].type.includes('skill') ? 'skill' : 'knowledge',
