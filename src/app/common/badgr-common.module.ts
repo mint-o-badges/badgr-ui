@@ -125,6 +125,8 @@ import { LearningPathGraduatesDatatableComponent } from '../components/datatable
 import { LearningPathRequestsDatatableComponent } from '../components/datatable-learningpath-requests.component';
 import { OebIssuerCard } from './components/oeb-issuercard';
 import { HourPipe } from './pipes/hourPipe';
+import { HlmBadgeDirective } from '../components/spartan/ui-badge-helm/src/lib/hlm-badge.directive';
+import { IssuerCardComponent } from '../components/issuer-card/issuer-card.component';
 
 const DIRECTIVES = [
 	BgAwaitPromises,
@@ -177,6 +179,7 @@ export const COMMON_MODULE_COMPONENTS = [
 	NounprojectDialog,
 	OebCompetency,
 	OebIssuerDetailComponent,
+	IssuerCardComponent,
 	OebLearningPathDetailComponent,
 	OebIssuerCard,
 ];
@@ -252,6 +255,7 @@ export const COMMON_IMPORTS = [
 	LearningPathGraduatesDatatableComponent,
 	LearningPathRequestsDatatableComponent,
 	EndOfEditDialogComponent,
+	HlmBadgeDirective,
 ];
 
 @NgModule({
