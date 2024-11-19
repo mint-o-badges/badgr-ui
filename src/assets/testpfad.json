@@ -1,0 +1,10 @@
+{
+    "name": "Ein Test Lernpfad ",
+    "description": "Dieser Kurs erklärt wie du Lernpfade erstellst.",
+    "tags": ["python", "programming", "beginner"],
+    "participationBadge_id": "PARTICIPATION_BADGE_ID",
+    "badges": [
+      { "slug": "BADGE_ID", "order": 1 },
+      { "slug": "BADGE_ID2", "order": 2 }
+    ]
+  }

@@ -65,7 +65,7 @@
 					>
 						<dt>Minimale Dauer</dt>
 						<dd class="u-text">
-							{{ badgeClass.extension['extensions:StudyLoadExtension'].StudyLoad }} Minuten
+							{{ badgeClass.extension['extensions:StudyLoadExtension'].StudyLoad | hourPipe }}
 						</dd>
 					</div>
 					<!-- LEvel -->
@@ -243,7 +243,7 @@
 					</h3>
 					<div>
 						<div *ngFor="let competency of badgeClass['extensions:CompetencyExtension']; index as i">
-							<competency-accordion [name]="competency.name" [category]="competency.category" [description]="competency.description" [framework]="competency.framework" [framework_identifier]="competency.framework_identifier" [studyload]="competency.studyLoad | studyload"></competency-accordion>
+							<competency-accordion [name]="competency.name" [category]="competency.category" [description]="competency.description" [framework]="competency.framework" [framework_identifier]="competency.framework_identifier" [studyload]="competency.studyLoad | hourPipe"></competency-accordion>
 							</div>
 					</div>
 				</section>

@@ -1,22 +1,29 @@
 import { Component, Input, input } from '@angular/core';
 import { HlmButtonDirective } from './spartan/ui-button-helm/src';
-import { NgIf } from '@angular/common';
+import { NgIf, NgClass } from '@angular/common';
 import { MessageService } from '../common/services/message.service';
 import { HlmIconModule, provideIcons } from './spartan/ui-icon-helm/src';
 import { lucidePlus, lucideUpload, lucideCircleX } from '@ng-icons/lucide';
 
 @Component({
-  selector: 'oeb-button',
-  standalone: true,
-  imports: [HlmButtonDirective, NgIf, HlmIconModule],
-	providers: [MessageService, provideIcons({ lucideUpload, lucidePlus, lucideCircleX})],
-  template: `<button [type]="type" class="tw-relative" hlmBtn [disabled]="disabled" [width]="width" [size]="size" [variant]="variant">
-  			    <hlm-icon *ngIf="icon" class="tw-mr-4" [size]="size" [name]="icon" />
-                <img *ngIf="img" class="md:tw-h-[30px] tw-h-[20px] tw-pr-4" [src]="img"/>
-                <span [innerHTML]="showLoadingMessage && loadingMessage ? loadingMessage : text"></span>
-              </button> `,
+	selector: 'oeb-button',
+	standalone: true,
+	imports: [HlmButtonDirective, NgIf, NgClass, HlmIconModule],
+	providers: [MessageService, provideIcons({ lucideUpload, lucidePlus, lucideCircleX })],
+	template: `<button
+		[type]="type"
+		class="tw-relative"
+		hlmBtn
+		[disabled]="disabled"
+		[width]="width"
+		[size]="size"
+		[variant]="variant"
+	>
+		<hlm-icon *ngIf="icon" [ngClass]="{ 'tw-mr-4': iconLeft }" [size]="size" [name]="icon" />
+		<img *ngIf="img" class="md:tw-h-[30px] tw-h-[20px] tw-pr-4" [src]="img" />
+		<span [ngClass]="{ 'tw-text-[15px]': fontSize15 }" [innerHTML]="showLoadingMessage && loadingMessage ? loadingMessage : text"></span>
+	</button> `,
 })
-
 export class OebButtonComponent {
 	loadingPromise: Promise<unknown>;
 	promiseLoading = false;
@@ -28,7 +35,9 @@ export class OebButtonComponent {
 	@Input() text: string = undefined;
 	@Input() img: string = undefined;
 	@Input() icon: string = undefined;
-  	@Input() type: string = 'submit';
+	@Input() type: string = 'submit';
+	@Input() fontSize15: boolean = false;
+	@Input() iconLeft: boolean = false;
 
 	@Input('disabled-when-requesting')
 	disabledWhenRequesting = false;
@@ -75,5 +84,5 @@ export class OebButtonComponent {
 			);
 		}
 	}
-	constructor(private messageService: MessageService) {}
+	constructor(private messageService: MessageService) { }
 }

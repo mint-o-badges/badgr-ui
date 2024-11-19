@@ -19,7 +19,7 @@ import { Competency } from '../model/competency.model';
             <div class="tw-text-purple tw-flex tw-items-center tw-whitespace-nowrap">
                 <span hlmP size="sm" *ngIf="new" class="tw-bg-yellow tw-px-2 tw-mr-2 tw-rounded-[10px]">NEU</span>
                 <hlm-icon class="tw-mr-2" size="sm" name="lucideClock"/>
-                {{competency.studyLoad}} min
+                {{competency.studyLoad | hourPipe}}
             </div>
 		</div>
 	`,

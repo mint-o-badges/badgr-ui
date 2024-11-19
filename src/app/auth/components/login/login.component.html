@@ -2,7 +2,6 @@
 	<div>
 		<div class="tw-relative page-padding">
 			<div class="oeb-section">
-
 				<div class="tw-relative tw-z-20 oeb-headline-container-sm">
 					<h1 hlmH1 class="tw-font-normal tw-text-purple">
 						{{ 'Login.welcome' | translate }}
@@ -11,58 +10,99 @@
 						{{ 'General.oeb' | translate }}
 					</h1>
 
-					<p hlmP class="tw-text-oebblack tw-my-4 ">Du bist neu hier? <a hlmA href="#"
-							[routerLink]="['/signup']">{{ 'Login.createAccount' | translate }}</a>.</p>
+					<p hlmP class="tw-text-oebblack tw-my-4">
+						Du bist neu hier?
+						<a hlmA href="#" [routerLink]="['/signup']">{{ 'Login.createAccount' | translate }}</a
+						>.
+					</p>
 				</div>
 
 				<div class="tw-relative oeb-max-form-width">
 					<div
-						class="tw-block tw-absolute tw-right-[15%] tw-top-[-35%] md:tw-right-[-15%] md:tw-top-[-10%] tw-z-0 tw-opacity-80">
-						<img class="tw-h-[269px] tw-w-[235px] tw-rotate-[-17.58deg] md:tw-rotate-[-36.66deg]"
-							src="assets/oeb/images/startpage/hexagonCircles.svg" alt="Circles" />
+						class="tw-block tw-absolute tw-right-[15%] tw-top-[-35%] md:tw-right-[-15%] md:tw-top-[-10%] tw-z-0 tw-opacity-80"
+					>
+						<img
+							class="tw-h-[269px] tw-w-[235px] tw-rotate-[-17.58deg] md:tw-rotate-[-36.66deg]"
+							src="assets/oeb/images/startpage/hexagonCircles.svg"
+							alt="Circles"
+						/>
 					</div>
-					<form class="tw-relative tw-z-20" (ngSubmit)="submitAuth()" *ngIf="!features.disableRegistration"
-						novalidate>
+					<form
+						class="tw-relative tw-z-20"
+						(ngSubmit)="submitAuth()"
+						*ngIf="!features.disableRegistration"
+						novalidate
+					>
 						<!-- Email Field -->
-						<oeb-input [control]="loginForm.rawControlMap.username" label="E-Mail"
-							placeholder="Deine E-Mail Adresse" fieldType="email"
-							[error]="'Bitte gib Deine Email-Adresse ein.'" [autofocus]="true"
-							[initialValue]="verifiedEmail || ''" #usernameField></oeb-input>
-						<oeb-input hlmP [control]="loginForm.rawControlMap.password" label="Passwort"
-							class="tw-mt-6 md:tw-mt-[35px]" [error]="'Bitte gib Dein Passwort ein.'"
-							fieldType="password" placeholder="Dein Passwort" fieldType="password" [autofocus]="true"
-							#passwordField>
+						<oeb-input
+							[control]="loginForm.rawControlMap.username"
+							label="E-Mail"
+							placeholder="Deine E-Mail Adresse"
+							fieldType="email"
+							[error]="'Bitte gib Deine Email-Adresse ein.'"
+							[autofocus]="true"
+							[initialValue]="verifiedEmail || ''"
+							#usernameField
+						></oeb-input>
+						<oeb-input
+							hlmP
+							[control]="loginForm.rawControlMap.password"
+							label="Passwort"
+							class="tw-mt-6 md:tw-mt-[35px]"
+							[error]="'Bitte gib Dein Passwort ein.'"
+							fieldType="password"
+							placeholder="Dein Passwort"
+							fieldType="password"
+							[autofocus]="true"
+							#passwordField
+						>
 							<span label-additions>
-								<a hlmA class="tw-relative tw-text-purple tw-z-20 tw-font-semibold" href="#"
+								<a
+									hlmA
+									class="tw-relative tw-text-purple tw-z-20 tw-font-semibold"
+									href="#"
 									tabindex="-1"
-									[routerLink]="['/auth/request-password-reset', loginForm.rawControlMap.username.value]">{{
-									'Login.forgotPassword?' | translate }}</a>
+									[routerLink]="[
+										'/auth/request-password-reset',
+										loginForm.rawControlMap.username.value
+									]"
+									>{{ 'Login.forgotPassword?' | translate }}</a
+								>
 							</span>
 						</oeb-input>
 
 						<div class="tw-flex tw-gap-2 tw-items-center tw-justify-between tw-mt-11 md:tw-mt-[62px]">
 							<!-- Remember Me Checkout -->
-							<oeb-checkbox class="" id="remember-me" name="remember-me" type="checkbox"
-								[text]="'Login.stayLogged' | translate "
-								[control]="loginForm.rawControlMap.rememberMe">
+							<oeb-checkbox
+								class=""
+								id="remember-me"
+								name="remember-me"
+								type="checkbox"
+								[text]="'Login.stayLogged' | translate"
+								[control]="loginForm.rawControlMap.rememberMe"
+							>
 							</oeb-checkbox>
 
 							<!-- Submit Button -->
-							<oeb-button hlmBtn type="submit" [disabled]="!!loginFinished" text="Login"
-								[loading-promises]="[loginFinished]" loading-message="Signing In">
-								
+							<oeb-button
+								type="submit"
+								[disabled]="!!loginFinished"
+								text="Login"
+								[loading-promises]="[loginFinished]"
+								loading-message="Signing In"
+							>
 							</oeb-button>
 						</div>
 					</form>
 					<!-- Mein Bildungsraum -->
 					<div class="tw-flex tw-justify-end tw-mt-6 md:tw-mt-14">
-						<oeb-button img="assets/logos/mein-bildungsraum.svg"
-                            variant="blackborder"
-                            size="md"
-                            [text]='"Login.loginBildungsraum" | translate'
-                            (click)=bildungsraumLogin()
-                            [disabled]='isOidcDisabled()'>
-							
+						<oeb-button
+							img="assets/logos/mein-bildungsraum.svg"
+							variant="blackborder"
+							[text]="'Login.loginBildungsraum' | translate"
+							(click)="bildungsraumLogin()"
+							[disabled]="isOidcDisabled()"
+						>
 						</oeb-button>
 					</div>
 				</div>

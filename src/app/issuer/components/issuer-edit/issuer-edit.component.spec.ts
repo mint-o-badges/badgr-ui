@@ -47,12 +47,4 @@ describe('IssuerEditComponent', () => {
 	it('should run #ngOnInit()', () => {
 		const result = component.ngOnInit();
 	});
-
-	it('should run #onSubmit()', () => {
-		const result = component.onSubmit();
-	});
-
-	it('should run #urlBlurred()', () => {
-		const result = component.urlBlurred(new Event('blur'));
-	});
 });

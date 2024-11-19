@@ -16,7 +16,15 @@ import {
   lucideRepeat2,
   lucideLogOut,
   lucideQrCode,
-  lucideCloudUpload
+  lucideCloudUpload,
+  lucideRoute,
+  lucideClock,
+  lucideChevronUp,
+  lucideCheck,
+  lucideRocket,
+  lucideMapPin,
+	lucideSearch,
+	lucideGrid2x2,
 
 } from '@ng-icons/lucide';
 
@@ -38,7 +46,15 @@ import {
       lucideRepeat2,
       lucideLogOut,
       lucideQrCode,
-      lucideCloudUpload
+      lucideCloudUpload,
+      lucideRoute,
+      lucideClock,
+      lucideChevronUp,
+      lucideCheck,
+      lucideRocket,
+      lucideMapPin,
+      lucideSearch,
+      lucideGrid2x2,
     }),
   ],
 })

@@ -29,7 +29,6 @@ import { IssuerStaffComponent } from './components/issuer-staff/issuer-staff.com
 import { BadgeClassEditFormComponent } from './components/badgeclass-edit-form/badgeclass-edit-form.component';
 import { IssuerStaffCreateDialogComponent } from './components/issuer-staff-create-dialog/issuer-staff-create-dialog.component';
 import { TranslateModule } from '@ngx-translate/core';
-import { DatatableComponent } from '../components/datatable-badges.component';
 import { QrCodeDatatableComponent } from '../components/datatable-qrcodes.component';
 import { IssuerDetailDatatableComponent } from '../components/datatable-issuer-detail.component';
 import { CompetencyAccordionComponent } from '../components/accordion.component';
@@ -41,7 +40,9 @@ import {QrCodeAwardsComponent} from './components/qrcode-awards/qrcode-awards.co
 import { QrCodeApiService } from './services/qrcode-api.service';
 import { BadgeRequestApiService } from './services/badgerequest-api.service';
 import { EditQrFormComponent } from './components/edit-qr-form/edit-qr-form.component';
-
+import { LearningPathUploadComponent } from './components/learningpath-upload/learningpath-upload.component';
+import { IssuerLearningPathComponent } from './components/issuer-learning-path/issuer-learning-path.component';import { IssuerEditFormComponent } from './components/issuer-edit-form/issuer-edit-form.component';
+import { Issuer } from './models/issuer.model';
 
 const routes = [
 	/* Issuer */
@@ -72,6 +73,14 @@ const routes = [
 	{
 		path: 'issuers/:issuerSlug/badges/:badgeSlug',
 		component: BadgeClassDetailComponent,
+	},
+	{
+		path: 'issuers/:issuerSlug/learningpaths/upload',
+		component: LearningPathUploadComponent,
+	},
+	{
+		path: 'issuers/:issuerSlug/learningpaths/:learningPathSlug',
+		component: IssuerLearningPathComponent,
 	},
 	{
 		path: 'issuers/:issuerSlug/badges/:badgeSlug/qr',
@@ -115,8 +124,7 @@ const routes = [
 		QrCodeDatatableComponent,
 		IssuerDetailDatatableComponent,
 		QRCodeModule,
-		QrCodeAwardsComponent
-		// DatatableComponent
+		QrCodeAwardsComponent,
 	],
 	declarations: [
 		BadgeClassCreateComponent,
@@ -131,6 +139,7 @@ const routes = [
 
 		BadgeClassIssueBulkAwardComponent,
 		BadgeClassIssueBulkAwardImportComponent,
+		LearningPathUploadComponent,
 		BadgeClassIssueBulkAwardPreviewComponent,
 		BadgeclassIssueBulkAwardError,
 		BadgeclassIssueBulkAwardConformation,
@@ -142,10 +151,12 @@ const routes = [
 		IssuerCreateComponent,
 		IssuerDetailComponent,
 		IssuerEditComponent,
+		IssuerEditFormComponent,
 		IssuerStaffComponent,
 		IssuerListComponent,
 
 		IssuerStaffCreateDialogComponent,
+		IssuerLearningPathComponent
 	],
 	schemas: [CUSTOM_ELEMENTS_SCHEMA],
 	exports: [],

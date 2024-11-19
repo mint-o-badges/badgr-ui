@@ -65,13 +65,34 @@
 					<oeb-input 
 						class="tw-w-20" 
 						[fieldType]="'number'" 
-						[control]="badgeClassForm.rawControlMap.badge_study_load" 
+						[control]="badgeClassForm.rawControlMap.badge_hours" 
+						[errorMessage]="{ duration: requiredError }"
 						noTopMargin="true"
 					>
 					</oeb-input>
-					<span class="tw-text-oebblack md:tw-text-lg">{{ 'General.minutes' | translate }}</span>
+					<span class="tw-font-bold tw-text-purple" hlmP>:</span>
+					<oeb-input 
+						class="tw-w-20" 
+						[fieldType]="'number'" 
+						[control]="badgeClassForm.rawControlMap.badge_minutes" 
+						[errorMessage]="{ duration: requiredError }"
+						noTopMargin="true"
+					>
+					</oeb-input>
+					<span class="tw-text-oebblack md:tw-text-lg">{{ 'RecBadge.hours' | translate }}</span>
 				</div>
 			</div>
+
+			<p
+					hlmP 
+					size="sm"
+					id="maxHoursOrMinutesError"
+					[hidden]="!badgeStudyLoadDirty || !badgeClassForm.hasError('maxHoursError') && !badgeClassForm.hasError('maxMinutesError')"
+					class="tw-font-normal md:tw-pl-[13.5rem] u-text-error"
+				>
+					<span *ngIf="badgeClassForm.hasError('maxMinutesError')">{{'CreateBadge.minMaxError' | translate }}</span>
+					<span *ngIf="badgeClassForm.hasError('maxHoursError')">{{'CreateBadge.hoursMaxError' | translate }}</span>
+				</p>
 
 			<div class="tw-flex md:tw-flex-row tw-gap-3 md:tw-gap-8 tw-flex-col md:tw-items-center tw-justify-start">
 				<span class="input-label md:tw-flex-[0_0_10em]"> {{ 'Badge.title' | translate }}</span>
@@ -331,11 +352,11 @@
 							</p>
 							<div class="tw-flex tw-gap-2 tw-items-center tw-mt-4 ">
 								<label class="tw-text-oebblack tw-font-bold" for="studyLoad$i">
-									{{ 'General.minutes' | translate }}:
+									{{ 'RecBadgeDetail.duration' | translate }}:
 								</label>
 								<span
-									class="tw-flex tw-rounded-md tw-bg-white tw-border tw-border-solid tw-border-black tw-h-8 tw-w-8 tw-min-w-fit tw-items-center tw-justify-center"
-									>{{ competency.rawControlMap.studyLoad.value }}</span
+									class="tw-flex tw-rounded-md tw-bg-white tw-border tw-border-solid tw-border-black tw-h-8 tw-w-20 tw-min-w-fit tw-items-center tw-justify-center"
+									>{{ competency.rawControlMap.studyLoad.value | hourPipe }}</span
 								>
 							</div>
 						</div>
@@ -363,16 +384,27 @@
 										<oeb-input 
 											[fieldType]="'number'"
 											class="tw-max-w-24"
-											[control]="competency.rawControlMap.studyLoad"
+											[control]="competency.rawControlMap.hours"
 											[errorMessage]="{
-												required: 'Bitte gib die Dauer für den Erwerb der Kompetenz ein.'
+												duration: requiredError
+											}"
+											noTopMargin="true"
+										>
+										</oeb-input>
+										:
+										<oeb-input 
+											[fieldType]="'number'"
+											class="tw-max-w-24"
+											[control]="competency.rawControlMap.minutes"
+											[errorMessage]="{
+												duration: requiredError
 											}"
 											noTopMargin="true"
 											[readonly]="competency.controls['framework_identifier'].value ? true : false"
 										>
 										</oeb-input>
 
-										<span class="tw-text-oebblack">{{ 'General.minutes' | translate }}</span>
+										<span class="tw-text-oebblack">h</span>
 									</div>
 								</div>
 								
