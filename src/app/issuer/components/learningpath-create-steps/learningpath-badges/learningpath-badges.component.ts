@@ -19,7 +19,7 @@ type BadgeResult = BadgeClass & { selected?: boolean };
   styleUrls: ['../../learningpath-edit-form/learningpath-edit-form.component.scss']
 })
 export class LearningPathBadgesComponent implements OnInit {
-	@Output() selectedBadgesChanged = new EventEmitter<string[]>();
+	@Output() selectedBadgesChanged = new EventEmitter<{urls: string[], studyLoad: number}>();
 
     constructor(
         private translate: TranslateService,
@@ -41,6 +41,7 @@ export class LearningPathBadgesComponent implements OnInit {
 	tags: string[] = [];
     selectedTag: string = null;
 	order = 'asc';
+	studyLoad = 0;
 	private _searchQuery = '';
 	get searchQuery() {
 		return this._searchQuery;
@@ -62,18 +63,23 @@ export class LearningPathBadgesComponent implements OnInit {
 		return this.selectedBadgeUrls.includes(badgeUrl);
 	}
 
-	checkboxChange(event, badgeUrl: string) {
+	checkboxChange(event, badgeUrl: string, studyLoad: number) {
 		if(event){
 			this.selectedBadgeUrls.push(badgeUrl);
 			this.lpBadgesForm.controls.badges.push(
 				typedFormGroup().addControl('badgeUrl', badgeUrl)
 			)
+			this.studyLoad += studyLoad;
 		}
 		else {
 			this.selectedBadgeUrls.splice(this.selectedBadgeUrls.indexOf(badgeUrl), 1);
 			this.lpBadgesForm.controls.badges.removeAt(this.lpBadgesForm.controls.badges.value.findIndex(badge => badge.badgeUrl === badgeUrl))
+			this.studyLoad -= studyLoad;
 		}
-		this.selectedBadgesChanged.emit(this.selectedBadgeUrls);
+		this.selectedBadgesChanged.emit({
+			urls: this.selectedBadgeUrls, 
+			studyLoad: studyLoad
+		});
 	}
     groups: string [] = []
 	// groups = [this.translate.instant('Badge.category'), this.translate.instant('Badge.issuer'), '---'];

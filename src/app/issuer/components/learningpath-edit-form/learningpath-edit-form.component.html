@@ -1,11 +1,11 @@
 <form-message></form-message>
     <ng-container [formGroup]="learningPathForm">
-    <oeb-stepper [linear]="true">
+    <oeb-stepper>
         <cdk-step label="Lernpfad Details" [stepControl]="stepOne.lpDetailsForm" [optional]="false" errorMessage="Bitte vollständig ausfüllen">
             <learningpath-details #stepOne></learningpath-details>
         </cdk-step>
         <cdk-step label="Badges auswählen" [stepControl]="stepTwo.lpBadgesForm" [optional]="false" errorMessage="Wähle mindestens 3 Badges aus">
-            <learningpath-badges #stepTwo (selectedBadgesChanged)="updateSelectedBadgeUrls($event)"></learningpath-badges> 
+            <learningpath-badges #stepTwo (selectedBadgesChanged)="updateSelectedBadges($event)"></learningpath-badges> 
         </cdk-step>
         <cdk-step label="Badge-Reihenfolge">
             <ng-container *ngIf="step3Loaded">

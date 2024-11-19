@@ -37,6 +37,7 @@ import { LearningPathDetailsComponent } from '../learningpath-create-steps/learn
 import { LearningPathBadgesComponent } from '../learningpath-create-steps/learningpath-badges/learningpath-badges.component';
 import { LearningPathBadgeOrderComponent } from '../learningpath-create-steps/learningpath-badge-order/learningpath-badge-order.component';
 import { LearningPathTagsComponent } from '../learningpath-create-steps/learningpath-tags/learningpath-tags.component';
+import { AppConfigService } from '../../../common/app-config.service';
 
 interface DraggableItem {
 	content: string;
@@ -88,6 +89,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 	step3Loaded = false;
 	selectedBadgeUrls: string[] = [];
 	selectedBadges: BadgeClass[] = [];
+	studyLoad: number = 0;
 	savePromise: Promise<ApiLearningPath> | null = null;
 	selectedStep = 0;
 
@@ -98,6 +100,8 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 
 	lpTags: string [];	
 	badgeList: any[] = [];
+
+	baseUrl: string 
 
 	constructor(
 		protected formBuilder: FormBuilder,
@@ -111,9 +115,12 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 		private translate: TranslateService,
 		protected badgeInstanceManager: BadgeInstanceManager,
 		protected learningPathManager: LearningPathManager,
+		protected configService: AppConfigService,
+
 		// protected title: Title,
 	) {
 		super(router, route, loginService);
+		this.baseUrl = this.configService.apiConfig.baseUrl;
 		// this.selectedBadgesLoaded = this.loadSelectedBadges();
 	}
 	next: string
@@ -129,8 +136,9 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 		});
 	}
 
-	updateSelectedBadgeUrls(urls: string[]) {
+	updateSelectedBadges({urls, studyLoad} : {urls: string[], studyLoad: number}) {
 		this.selectedBadgeUrls = urls;
+		this.studyLoad = studyLoad;
 	}
 
 	updateTags(tags: string[]) {
@@ -191,9 +199,6 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 	async onSubmit() {
 		try {
 			const formState = this.learningPathForm.value;
-			console.log(formState)
-			console.log(this.lpTags)
-			console.log(this.badgeList)
 
 			let imageFrame = true;
 			if (this.stepOne.lpDetailsForm.controls.badge_customImage.value && this.stepOne.lpDetailsForm.valid) {
@@ -205,6 +210,9 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 				'*Folgende Kriterien sind auf Basis deiner Eingaben als Metadaten im Badge hinterlegt*: \n\n';
 			const participationText = `Du hast erfolgreich an **${this.stepOne.lpDetailsForm.controls.name.value}** teilgenommen.  \n\n `;
 
+			const studyLoadExtensionContextUrl = `${this.baseUrl}/static/extensions/StudyLoadExtension/context.json`;
+			const categoryExtensionContextUrl = `${this.baseUrl}/static/extensions/CategoryExtension/context.json`;
+
 			const participationBadge = await this.badgeClassService.createBadgeClass(this.issuerSlug, {
 				image: this.stepOne.lpDetailsForm.controls.badge_image.value,
 				name: this.stepOne.lpDetailsForm.controls.name.value,
@@ -212,6 +220,33 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 				tags: this.lpTags,
 				criteria_text: criteriaText,
 				criteria_url: '',
+				extensions: {
+					'extensions:StudyLoadExtension': {
+						'@context': studyLoadExtensionContextUrl,
+						type: ['Extension', 'extensions:StudyLoadExtension'],
+						StudyLoad: this.studyLoad,
+					},
+					'extensions:CategoryExtension': {
+						'@context': categoryExtensionContextUrl,
+						type: ['Extension', 'extensions:CategoryExtension'],
+						Category: 'participation',
+					},
+					// 'extensions:LevelExtension': {
+					// 	'@context': levelExtensionContextUrl,
+					// 	type: ['Extension', 'extensions:LevelExtension'],
+					// 	Level: String(formState.badge_level),
+					// },
+					// 'extensions:BasedOnExtension': {
+					// 	'@context': basedOnExtensionContextUrl,
+					// 	type: ['Extension', 'extensions:BasedOnExtension'],
+					// 	BasedOn: formState.badge_based_on,
+					// },
+					// 'extensions:CompetencyExtension': this.getCompetencyExtensions(
+					// 	suggestions,
+					// 	formState,
+					// 	competencyExtensionContextUrl,
+					// ),
+				},
 			});
 
 			const issuer = await this.issuerApiService.getIssuer(this.issuerSlug);

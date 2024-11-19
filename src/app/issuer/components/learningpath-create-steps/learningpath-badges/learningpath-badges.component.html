@@ -73,7 +73,7 @@
                             badge.extension['extensions:CompetencyExtension']
                         "
                         (ngModelChange)="checkboxChange($event, badge)"
-                        (checkboxChange)="checkboxChange($event, badge.url)"
+                        (checkboxChange)="checkboxChange($event, badge.url, badge.extension['extensions:StudyLoadExtension'].StudyLoad)"
                         [checked]="badgeChecked(badge.url)"
                     ></bg-badgecard>
                 </div>
