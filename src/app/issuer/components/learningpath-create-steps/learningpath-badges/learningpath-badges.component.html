@@ -3,11 +3,11 @@
         <h2 hlmH2 class="tw-font-bold">2. {{ 'LearningPath.chooseBadges' | translate }}</h2>
             
         <div class="tw-m-12 tw-rounded-2xl tw-p-6 tw-bg-[var(--color-lightpink)]">
-            <p class="tw-flex tw-flex-col tw-gap-2 tw-text-oebblack">
+            <p class="tw-flex tw-flex-col tw-gap-2 tw-text-oebblack tw-text-[18px] tw-leading-[23.4px]">
                 <span>{{ 'LearningPath.combineBadgeCategories' | translate}}</span>
-                <span> {{ 'LearningPath.min3Badges' | translate }}</span>
+                <span class="tw-italic"> {{ 'LearningPath.min3Badges' | translate }}</span>
             </p>
-            <div class="tw-flex tw-gap-2">
+            <div class="tw-flex tw-gap-2 tw-my-2">
                 <hlm-icon class="tw-text-purple tw-font-bold tw-bg-white tw-mr-4 tw-shrink-0" name="lucideCircleAlert" />
 
                 <p class="tw-text-purple">
@@ -52,7 +52,7 @@
                 </div>
             </div>
             <ng-container *ngIf="groupBy == '---'">
-                <div class="tw-grid tw-grid-cols-badges tw-gap-16">
+                <div class="tw-grid tw-grid-cols-badges tw-gap-16 tw-mt-4">
                     <bg-badgecard
                         *ngFor="let badge of badgeResults; let i = index"
                         [badgeTitle]="badge.name"
