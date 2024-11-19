@@ -6,7 +6,6 @@ import { MessageService } from './message.service';
 import { EventsService } from './events.service';
 import { ApiUserProfile, ApiUserProfileEmail, ApiUserProfileSocialAccount } from '../model/user-profile-api.model';
 import { HttpClient } from '@angular/common/http';
-import { Issuer } from '../../issuer/models/issuer.model';
 
 @Injectable()
 export class UserProfileApiService extends BaseHttpApiService {
@@ -70,10 +69,6 @@ export class UserProfileApiService extends BaseHttpApiService {
 
 	resendVerificationEmail(emailIdToVerify: number) {
 		return this.put('/v1/user/emails/' + emailIdToVerify, { resend: true });
-	}
-
-	getOwnedInstitutions(){
-		return this.get<Issuer[]>('/v1/user/institutions').then((r) => r.body);
 	}
 
 }

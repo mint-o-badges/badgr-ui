@@ -139,10 +139,6 @@ export class BadgeClass extends ManagedEntity<ApiBadgeClass, BadgeClassRef> {
 		return this.apiModel.issuerOwnerAcceptedTos;
 	}
 
-	get issuerVerifiedIntendedUse(): boolean {	
-		return this.apiModel.issuerVerifiedIntendedUse;
-	}
-
 	get alignments() {
 		return this.apiModel.alignment;
 	}
