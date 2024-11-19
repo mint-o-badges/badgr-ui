@@ -126,6 +126,7 @@ import { OebIssuerCard } from './components/oeb-issuercard';
 import { HourPipe } from './pipes/hourPipe';
 import { HlmBadgeDirective } from '../components/spartan/ui-badge-helm/src/lib/hlm-badge.directive';
 import { IssuerCardComponent } from '../components/issuer-card/issuer-card.component';
+import { ErrorDialogComponent } from './dialogs/oeb-dialogs/error-dialog.component';
 
 const DIRECTIVES = [
 	BgAwaitPromises,
@@ -244,6 +245,7 @@ export const COMMON_IMPORTS = [
 	SuccessDialogComponent,
 	DangerDialogComponent,
 	OebBackgroundComponent,
+	ErrorDialogComponent,
 	OebTabsComponent,
 	HlmIconModule,
 	CountUpModule,
