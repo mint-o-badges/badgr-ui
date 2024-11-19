@@ -12,60 +12,47 @@ import { HlmPDirective } from './spartan/ui-typography-helm/src/lib/hlm-p.direct
 	imports: [HlmInputDirective, HlmPDirective, OebInputErrorComponent, NgIf, NgClass, ReactiveFormsModule],
 	styleUrls: ['./input.component.scss'],
 	template: ` <div [ngClass]="{ 'tw-mt-6 md:tw-mt-7': !noTopMargin }">
-		<div class="tw-flex tw-justify-between">
-			<label class="tw-pb-[2px] tw-pl-[3px]" [attr.for]="inputName" *ngIf="label">
-				<span *ngIf="labelStyle; else baseLabel" [class]="labelStyle" [innerHTML]="label"></span>
-				<ng-template #baseLabel>
-					<span hlmP class="tw-text-oebblack tw-font-semibold" [innerHTML]="label"></span>
-				</ng-template>
-				<span class="tw-pl-[3px] tw-text-oebblack" *ngIf="sublabelRight"> {{ sublabelRight }}</span>
-				<span *ngIf="optional">(OPTIONAL)</span>
-				<span *ngIf="formFieldAside">{{ formFieldAside }}</span>
-			</label>
-			<ng-content
-				class="tw-relative tw-z-20 tw-font-semibold tw-text-[14px] md:tw-text-[20px] tw-leading-4 md:tw-leading-6"
-				select="[label-additions]"
-			></ng-content>
-		</div>
+		<div class="tw-flex tw-justify-between tw-items-center"></div>
 		<p class="tw-pl-[3px]" *ngIf="sublabel">
 			{{ sublabel }}
 		</p>
 		<label class="visuallyhidden" [attr.for]="inputName" *ngIf="ariaLabel">{{ ariaLabel }}</label>
-
-		<input
-			*ngIf="fieldType != 'textarea'"
-			(focus)="cacheControlState()"
-			(keypress)="handleKeyPress($event)"
-			(keyup)="handleKeyUp($event)"
-			(change)="postProcessInput()"
-			[formControl]="control"
-			[placeholder]="placeholder || ''"
-			[attr.maxlength]="maxchar"
-			[attr.max]="max"
-			[type]="fieldType"
-			#textInput
-			class="tw-w-full tw-border-solid tw-border-purple tw-bg-white"
-			hlmInput
-		/>
-		<textarea
-			*ngIf="fieldType === 'textarea'"
-			(focus)="cacheControlState()"
-			(keypress)="handleKeyPress($event)"
-			(keyup)="handleKeyUp($event)"
-			(change)="postProcessInput()"
-			[formControl]="control"
-			[placeholder]="placeholder || ''"
-			[attr.maxlength]="maxchar"
-			[attr.max]="max"
-			#textInput
-			class="tw-w-full tw-border-solid tw-border-purple tw-bg-white tw-min-h-[80px]"
-			hlmInput
-		></textarea>
-		<oeb-input-error
-			class="tw-text-red tw-pl-[3px]"
-			*ngIf="isErrorState"
-			[error]="errorMessageForDisplay"
-		></oeb-input-error>
+		<div class="tw-relative tw-w-full">
+			<input
+				*ngIf="fieldType != 'textarea'"
+				(focus)="cacheControlState()"
+				(keypress)="handleKeyPress($event)"
+				(keyup)="handleKeyUp($event)"
+				(change)="postProcessInput()"
+				[formControl]="control"
+				[placeholder]="placeholder || ''"
+				[attr.maxlength]="maxchar"
+				[attr.max]="max"
+				[type]="fieldType"
+				#textInput
+				class="tw-w-full tw-border-solid tw-border-purple tw-bg-white"
+				hlmInput
+			/>
+			<textarea
+				*ngIf="fieldType === 'textarea'"
+				(focus)="cacheControlState()"
+				(keypress)="handleKeyPress($event)"
+				(keyup)="handleKeyUp($event)"
+				(change)="postProcessInput()"
+				[formControl]="control"
+				[placeholder]="placeholder || ''"
+				[attr.maxlength]="maxchar"
+				[attr.max]="max"
+				#textInput
+				class="tw-w-full tw-border-solid tw-border-purple tw-bg-white tw-min-h-[80px]"
+				hlmInput
+			></textarea>
+			<oeb-input-error
+				class="tw-text-red tw-pl-[3px] tw-absolute tw-top-full tw-w-full"
+				*ngIf="isErrorState"
+				[error]="errorMessageForDisplay"
+			></oeb-input-error>
+		</div>
 	</div>`,
 })
 export class OebInputComponent {
