@@ -324,7 +324,7 @@
 											}}
 										</span>
 
-										<div class="tw-flex tw-gap-2 tw-mt-2 ">
+										<div class="tw-flex tw-gap-2 tw-mt-2">
 											<span class="tw-text-sm tw-text-[#6B6B6B] tw-font-light">
 												{{ 'RecBadgeDetail.duration' | translate }}</span
 											>
@@ -414,8 +414,10 @@
 									</label>
 									<span
 										class="tw-flex tw-rounded-md tw-bg-white tw-border tw-border-solid tw-border-black tw-h-8 tw-w-20 tw-min-w-fit tw-items-center tw-justify-center"
-										>{{ competency.rawControlMap.studyLoad.value | hourPipe }}</span
 									>
+										{{ competency.rawControlMap.hours.value }}h
+										{{ competency.rawControlMap.minutes.value }}m
+									</span>
 								</div>
 							</div>
 						</ng-container>
