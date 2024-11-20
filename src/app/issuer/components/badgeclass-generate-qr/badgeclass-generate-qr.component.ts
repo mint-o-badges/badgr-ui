@@ -141,7 +141,7 @@ export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComp
 				//@ts-ignore
 				(qrCode.valid_from && !isNaN(new Date(qrCode.valid_from)))
 			) {
-				if (new Date(this.valid_from) < new Date() && new Date(this.expires_at).toDateString() >= new Date().toDateString()) {
+				if (new Date(this.valid_from) < new Date() && new Date(this.expires_at) >= new Date(new Date().setHours(0,0,0,0))) {
 					this.valid = true;
 				} else {
 					this.valid = false;
