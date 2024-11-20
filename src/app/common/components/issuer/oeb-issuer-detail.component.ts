@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, ElementRef, ViewChild, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { MessageService } from '../../../common/services/message.service';
 import { Title } from '@angular/platform-browser';
@@ -10,6 +10,10 @@ import { IssuerManager } from '../../../issuer/services/issuer-manager.service';
 import { MatchingAlgorithm } from '../../dialogs/fork-badge-dialog/fork-badge-dialog.component';
 import { MenuItem } from '../badge-detail/badge-detail.component.types';
 import { TranslateService } from '@ngx-translate/core';
+import { ApiLearningPath } from '../../../common/model/learningpath-api.model';
+import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
+import { DangerDialogComponentTemplate } from '../../dialogs/oeb-dialogs/danger-dialog-template.component';
+import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
 import { BadgeRequestApiService } from '../../../issuer/services/badgerequest-api.service';
 
 @Component({
@@ -23,8 +27,11 @@ export class OebIssuerDetailComponent implements OnInit {
     @Input() issuerPlaceholderSrc: string;
     @Input() issuerActionsMenu: any;
     @Input() badges: BadgeClass[];
+    @Input() learningPaths: ApiLearningPath[];
     @Input() public: boolean = false;
     @Output() issuerDeleted = new EventEmitter();
+
+	learningPathsPromise: Promise<unknown>;
 
 	constructor(
 		private router: Router,
@@ -34,10 +41,12 @@ export class OebIssuerDetailComponent implements OnInit {
 		protected issuerManager: IssuerManager,
 		protected profileManager: UserProfileManager,
 		private configService: AppConfigService,
+		private learningPathApiService: LearningPathApiService,
 		private badgeRequestApiService: BadgeRequestApiService
 	) {
         
 	};
+    private readonly _hlmDialogService = inject(HlmDialogService);
 
 	menuItemsPublic: MenuItem[] = [
 		{
@@ -47,6 +56,7 @@ export class OebIssuerDetailComponent implements OnInit {
 			icon: 'lucideFileQuestion',
 		}	
 	]
+
 	menuItems: MenuItem[] = [
 		{
 			title: this.translate.instant('General.edit'),
@@ -65,6 +75,26 @@ export class OebIssuerDetailComponent implements OnInit {
 			icon: 'lucideUsers',
 		},
 	]
+	
+	tabs: any = undefined;
+	activeTab = 'Badges';
+
+	@ViewChild('badgesTemplate', { static: true }) badgesTemplate: ElementRef;
+	@ViewChild('learningPathTemplate', { static: true }) learningPathTemplate: ElementRef;
+
+	ngAfterContentInit() {
+		this.tabs = [
+			
+			{
+				title: 'Badges',
+				component: this.badgesTemplate,
+			},
+			{
+				title: 'Lernpfade',
+				component: this.learningPathTemplate,
+			},
+		];
+	}
 
 	badgeResults: BadgeResult[] = [];
 	maxDisplayedResults = 100;
@@ -88,18 +118,8 @@ export class OebIssuerDetailComponent implements OnInit {
 				return false;
 			}
 
+			this.badgeResults.push(new BadgeResult(badge, this.issuer.name, 0));
 
-			if (!this.badgeResults.find((r) => r.badge === badge)) {
-				if(!badge.slug){
-					this.badgeResults.push(new BadgeResult(badge, this.issuer.name, 0));
-				}
-				else{
-					this.badgeRequestApiService.getBadgeRequestsCountByBadgeClass(badge.slug).then((r) => {
-						// appending the results to the badgeResults array bound to the view template.
-						this.badgeResults.push(new BadgeResult(badge, this.issuer.name, r.body['request_count']));
-					})
-				}
-			}
 			return true;
 		};
 
@@ -108,8 +128,9 @@ export class OebIssuerDetailComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		// super.ngOnInit();
 		this.updateResults();
+		if(!this.public)
+			this.getLearningPathsForIssuerApi(this.issuer.slug);
 	}
 
     delete(event){
@@ -127,6 +148,33 @@ export class OebIssuerDetailComponent implements OnInit {
 	routeToBadgeDetail(badge, issuer){
 		this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug])
 	}
+	redirectToLearningPathDetail(learningPathSlug, issuer){
+		this.router.navigate(['/issuer/issuers/', issuer.slug, 'learningpaths', learningPathSlug])
+	}
+
+	public deleteLearningPath(learningPathSlug, issuer) {
+		const dialogRef = this._hlmDialogService.open(DangerDialogComponentTemplate, {
+			context: {
+				delete: () => this.deleteLearningPathApi(learningPathSlug, issuer),
+				// qrCodeRequested: () => {},
+				variant: "danger",
+				text: "Möchtest du diesen Lernpfad wirklich löschen?",
+				title: "Lernpfad löschen"
+			},
+		});
+	}
+
+	deleteLearningPathApi(learningPathSlug, issuer){
+		this.learningPathApiService.deleteLearningPath(issuer.slug, learningPathSlug).then(
+			() => this.learningPaths = this.learningPaths.filter(value => value.slug != learningPathSlug)
+		);
+	}
+
+	getLearningPathsForIssuerApi(issuerSlug){
+		this.learningPathsPromise = this.learningPathApiService.getLearningPathsForIssuer(issuerSlug).then(
+			(learningPaths) => this.learningPaths = learningPaths.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+		);
+	}
 
 	get rawJsonUrl() {
 		if(this.issuer)
@@ -139,6 +187,15 @@ export class OebIssuerDetailComponent implements OnInit {
 
 	routeToUrl(url){
 		window.location.href = url;
+	}
+
+	onTabChange(tab) {
+		this.activeTab = tab;
+	}
+
+	calculateStudyLoad(lp: any): number {
+		const totalStudyLoad = lp.badges.reduce((acc, b) => acc + b.badge['extensions:StudyLoadExtension'].StudyLoad, 0);
+		return totalStudyLoad;
 	}
 }
 

@@ -68,6 +68,11 @@ export class AppComponent implements OnInit, AfterViewInit {
 			routerLink: ['/catalog/issuers'],
 			icon: 'lucideWarehouse',
 		},
+		{
+			title: '',
+			routerLink: ['/catalog/learningpaths'],
+			icon: 'lucideRoute',
+		},
 	]
 	accountMenuItems: MenuItem[] = [
 		{
@@ -299,6 +304,10 @@ export class AppComponent implements OnInit, AfterViewInit {
             this.aboutBadgesMenuItems[2].title = translatedText;
         });
 
+		this.translate.get('LearningPath.learningpaths').subscribe((translatedText: string) => {
+			this.aboutBadgesMenuItems[3].title = translatedText;
+		});
+
 		this.translate.get('NavItems.myProfile').subscribe((translatedText: string) => {
 			this.accountMenuItems[0].title = translatedText;
 		});
@@ -306,6 +315,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 		this.translate.get('NavItems.appIntegrations').subscribe((translatedText: string) => {
 			this.accountMenuItems[1].title = translatedText;
 		});
+
 	}
 
 	ngAfterViewInit() {

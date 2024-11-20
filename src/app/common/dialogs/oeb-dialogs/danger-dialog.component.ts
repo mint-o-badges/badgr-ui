@@ -22,7 +22,7 @@ import { TranslateService } from "@ngx-translate/core";
     template: `
         <oeb-dialog [variant]="variant" class="tw-text-center tw-text-oebblack">
             <div class="tw-flex tw-justify-center">
-                <div class="oeb-icon-circle tw-my-6">
+                <div class="oeb-icon-circle tw-bg-white tw-my-6">
                     <hlm-icon class="tw-text-red" size='xxl' name="lucideTriangleAlert" />
                 </div>
             </div>

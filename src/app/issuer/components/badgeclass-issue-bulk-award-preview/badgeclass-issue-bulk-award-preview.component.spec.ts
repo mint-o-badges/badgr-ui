@@ -94,10 +94,6 @@ describe('BadgeClassIssueBulkAwardPreviewComponent', () => {
 		// const result = component.mapDestNameToSourceName(columnHeaderId, selected);
 	});
 
-	it('should run #getEvidenceFromRow()', async () => {
-		// const result = component.getEvidenceFromRow(row);
-	});
-
 	it('should run #getEmailFromRow()', async () => {
 		// const result = component.getEmailFromRow(row);
 	});
