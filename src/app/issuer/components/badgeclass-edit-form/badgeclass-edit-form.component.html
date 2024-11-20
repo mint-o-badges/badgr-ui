@@ -210,6 +210,7 @@
 								'CreateBadge.min70max1000Chars' | translate
 							}}</span>
 							<textarea
+								id="ai-competencies-description"
 								class="tw-bg-white tw-border tw-border-gray-300 tw-mt-2 tw-rounded-md tw-shadow-sm tw-p-2 tw-h-48 tw-resize-none tw-text-sm tw-text-gray-700"
 								[(ngModel)]="aiCompetenciesDescription"
 								[ngModelOptions]="{ standalone: true }"
@@ -220,6 +221,7 @@
 							</textarea>
 							<div class="tw-mt-4">
 								<oeb-button
+									[id]="'suggest-competencies-btn'"
 								    class="tw-whitespace-nowrap"
 									(click)="suggestCompetencies()"
 									type="button"
@@ -238,6 +240,7 @@
 								{{ 'CreateBadge.fitting' | translate }} {{ 'RecBadgeDetail.competencies' | translate }}
 							</h2>
 							<div
+								id="ai-competencies-suggestions-list"
 								class="tw-bg-[var(--color-lightpurple)] tw-mt-2 tw-border tw-border-gray-300 tw-rounded-2xl tw-shadow-sm tw-p-2 tw-h-24 tw-resize-none tw-text-sm tw-text-gray-700"
 								*ngIf="aiCompetenciesSuggestions.length == 0; else showAiCompetenciesSuggestions"
 							>
@@ -294,7 +297,7 @@
 					</div>
 				</div>
 			<hr class="tw-my-8 tw-border tw-border-[var(--color-purple)] tw-border-dashed" />
-				<oeb-collapsible [trigger]="collapseCompetenciesTrigger" [defaultOpen]="collapsedCompetenciesOpen">
+				<oeb-collapsible [id]="'competencies-by-hand-section'" [trigger]="collapseCompetenciesTrigger" [defaultOpen]="collapsedCompetenciesOpen">
 					<ng-template #collapseCompetenciesTrigger>
 						<span class="tw-list-item tw-text-3xl tw-font-normal tw-text-[var(--color-purple)] tw-mr-auto">{{
 							'CreateBadge.addCompetenciesByHand' | translate
@@ -357,6 +360,7 @@
 							<div class="tw-flex tw-flex-col md:tw-flex-row md:tw-justify-between tw-gap-5 md:tw-gap-0">
 								
 								<oeb-input 
+									id="{{'competencyTitle_'+i}}"
 									[fieldType]="'text'" 
 									[label]="competencyTitle"
 									[control]="competency.rawControlMap.name"
@@ -369,7 +373,8 @@
 									<span class="tw-font-semibold tw-text-[14px] md:tw-text-[20px] tw-leading-4 md:tw-leading-6 tw-font-[rubik] tw-pb-[5px] tw-pl-[3px]">{{ competencyDuration }}</span>
 
 									<div class="tw-flex tw-gap-2 tw-items-center">
-										<oeb-input 
+										<oeb-input
+											id="{{'competencyDurationHour_'+i}}" 
 											[fieldType]="'number'"
 											class="tw-max-w-24"
 											[control]="competency.rawControlMap.hours"
@@ -381,6 +386,7 @@
 										</oeb-input>
 										:
 										<oeb-input 
+											id="{{'competencyDurationMinutes_'+i}}" 
 											[fieldType]="'number'"
 											class="tw-max-w-24"
 											[control]="competency.rawControlMap.minutes"
@@ -396,6 +402,7 @@
 								</div>
 								
 								<oeb-select
+									id="{{'competencyCategory_'+i}}" 
 									ariaLabel="Wähle eine Kompetenz-Kategorie"
 									[control]="competency.rawControlMap.category"
 									[label]="competencyCategory"
@@ -409,16 +416,17 @@
 
 							</div>
 
-							<oeb-input 
+							<oeb-input
+								id="{{'competencyDescriptionInput_'+i}}"
 								[fieldType]="'textarea'" 
 								[label]="competencyDescription"
 								[control]="competency.rawControlMap.description"
-								id="competency_description_input"
 								[errorMessage]="{ required: enterDescription }"
 							>
 							</oeb-input>
 
-							<oeb-input 
+							<oeb-input
+								id="{{'escoIdentifierInput_'+i}}" 
 								label="Esco-Identifier (optional)"
 								[control]="competency.rawControlMap.escoID"
 								placeholder="z.B. esco/skill/00090cc1-1f27-439e-a4e0-19a87a501bfc"
@@ -437,6 +445,7 @@
 								></oeb-button>
 						
 								<oeb-button
+									id="{{'addCompetencyBtn_'+i}}"
 									size="sm"
 									type="button"
 									width="max_content"
@@ -579,12 +588,12 @@
 					</ng-template>
 				</div>
 					
-				<oeb-button 
+				<oeb-button
+					[id]="'add-tag-btn'" 
 					size="sm"
 					type="button" 
 					(click)="addTag()" 
-					text="{{ 'General.add' | translate }}"
-					[id]="'add-tag-btn'">
+					text="{{ 'General.add' | translate }}">
 				</oeb-button>
 			</div>
 			<div *ngIf="tags.size > 0" class="tw-flex tw-flex-wrap tw-gap-4 tw-w-[70%] tw-ml-[3.2rem]">
@@ -720,7 +729,7 @@
 				</li>
 				<li class="tw-mt-4">
 					<button
-					id="badge-validity-btn"
+						id="badge-validity-btn"
 						type="button"
 						(click)="expirationEnabled ? disableExpiration() : enableExpiration()"
 						class="options-dropdown"
