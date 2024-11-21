@@ -94,10 +94,10 @@
 							hlmP 
 							size="sm"
 							id="imageTextError"
-							[hidden]="!narrativeFieldDirty || !issueForm.hasError('maxNarrativeError') "
-							class="tw-font-normal md:tw-pl-[13.5rem] u-text-error"
+							[hidden]="!issueForm.hasError('maxNarrativeError') "
+							class="tw-font-normal md:tw-pl-[13.5rem] tw-text-red"
 						>
-							{{'Issuer.narrativeMaxLengthError' | translate }}.
+							{{'Issuer.narrativeMaxLengthError' | translate }}
 						</p>
 					</div>
 
