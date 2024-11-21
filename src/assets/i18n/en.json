@@ -226,7 +226,9 @@
 		"import": "Import",
 		"csvColumns": "CSV Spalten",
 		"csvError": "Die CSV Datei enthält Zeilen länger als ihre Überschrift. Bitte behebe diesen Fehler und versuche es erneut.",
-		"pdfCertificate": "PDF-Certificate"
+		"pdfCertificate": "PDF-Certificate",
+		"narrativeMaxLengthError": "Narrative should not exceed 280 characters."
+		
 	},
 	"Badge": {
 		"groupBy": "Group by",

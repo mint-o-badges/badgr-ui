@@ -250,7 +250,8 @@
 		"learningPathList5": "Lade deine JSON-Datei hoch:",
 		"learningPathRecipient": "Absolvent:innen",
 		"learningPathParticipants": "Teilnehmer:innen",
-		"learningPathCreateHeadline": "Erstelle deinen Lernpfad"
+		"learningPathCreateHeadline": "Erstelle deinen Lernpfad",
+		"narrativeMaxLengthError": "Narrativ darf maximal 280 Zeichen lang sein."
 	},
 	"Badge": {
 		"groupBy": "Gruppieren nach",

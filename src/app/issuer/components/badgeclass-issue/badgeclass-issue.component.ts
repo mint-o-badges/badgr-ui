@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, ValidationErrors, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { SessionService } from '../../../common/services/session.service';
@@ -70,7 +70,7 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 	dateError = false;
 
 	issuer: Issuer;
-	issueForm = typedFormGroup()
+	issueForm = typedFormGroup(this.narrativeValidation.bind(this))
 		.addControl('expires', '', this['expirationValidator'])
 		.addControl('recipientprofile_name', '', [Validators.required, Validators.maxLength(35)])
 		.addControl('recipient_type', 'email' as RecipientIdentifierType, [Validators.required], (control) => {
@@ -85,6 +85,10 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 			'evidence_items',
 			typedFormGroup().addControl('narrative', '').addControl('evidence_url', '').addControl('expiration', ''),
 		);
+
+	get narrativeFieldDirty() {
+		return this.issueForm.controls.narrative.dirty;
+	}		
 
 	badgeClass: BadgeClass;
 
@@ -305,5 +309,16 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 				variant: "success"
 			},
 		});
+	}
+
+	narrativeValidation(): ValidationErrors | null {
+		if (!this.issueForm) return null;
+
+		const value = this.issueForm.value;
+
+		const narrative = value.narrative;
+		if(narrative.length > 280){
+			return { maxNarrativeError: true };
+		}
 	}
 }

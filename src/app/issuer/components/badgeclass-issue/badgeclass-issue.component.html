@@ -90,6 +90,15 @@
 								[control]="issueForm.rawControlMap.narrative"
 								label="How did the recipient earn this badge?"></bg-formfield-markdown>
 						</div>
+						<p
+							hlmP 
+							size="sm"
+							id="imageTextError"
+							[hidden]="!narrativeFieldDirty || !issueForm.hasError('maxNarrativeError') "
+							class="tw-font-normal md:tw-pl-[13.5rem] u-text-error"
+						>
+							{{'Issuer.narrativeMaxLengthError' | translate }}.
+						</p>
 					</div>
 
 					<!-- Evidence -->
