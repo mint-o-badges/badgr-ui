@@ -792,6 +792,7 @@
 			class="tw-mr-4"
 			variant="secondary"
 			(click)="cancelClicked()"
+			[disabled]="!!savePromise"	
 			[disabled-when-requesting]="true"
 			text="{{ 'General.cancel' | translate }}"
 		></oeb-button>
