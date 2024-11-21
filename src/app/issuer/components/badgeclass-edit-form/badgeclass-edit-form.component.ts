@@ -887,7 +887,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 					'extensions:StudyLoadExtension': {
 						'@context': studyLoadExtensionContextUrl,
 						type: ['Extension', 'extensions:StudyLoadExtension'],
-						StudyLoad: Number(formState.badge_hours * 60 + formState.badge_minutes),
+						StudyLoad: Number(formState.badge_hours * 60) + Number(formState.badge_minutes),
 					},
 					'extensions:CategoryExtension': {
 						'@context': categoryExtensionContextUrl,
@@ -938,7 +938,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 						'extensions:StudyLoadExtension': {
 							'@context': studyLoadExtensionContextUrl,
 							type: ['Extension', 'extensions:StudyLoadExtension'],
-							StudyLoad: Number(formState.badge_hours * 60 + formState.badge_minutes),
+							StudyLoad: Number(formState.badge_hours * 60) + Number(formState.badge_minutes),
 						},
 						'extensions:CategoryExtension': {
 							'@context': categoryExtensionContextUrl,
@@ -1012,7 +1012,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				name: String(competency.name),
 				description: String(competency.description),
 				escoID: String(competency.escoID),
-				studyLoad: Number(competency.hours * 60 + competency.minutes),
+				studyLoad: Number(competency.hours * 60) + Number(competency.minutes),
 				hours: Number(competency.hours),
 				minutes: Number(competency.minutes),
 				category: String(competency.category),
