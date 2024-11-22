@@ -1,0 +1,32 @@
+name: Run the selenium end-to-end tests
+
+on:
+  pull_request:
+    branches:
+      - main
+
+env:
+
+jobs:
+  test:
+    name: E2E-tests
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Check out oeb-test
+        uses: actions/checkout@v4
+        with:
+          repository: 'mint-o-badges/oeb-test'
+      - name: Wait for Netlify Deploy
+        uses: probablyup/wait-for-netlify-action@3.2.0
+        id: waitForDeployment
+        with:
+          site_id: '08b6b283-7ce6-4a20-bbce-5900e4f90c14'
+        env:
+          NETLIFY_TOKEN: ${{ secrets.NETLIFY_TOKEN }}
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '19'
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run test # TODO: This probably won't be enough
