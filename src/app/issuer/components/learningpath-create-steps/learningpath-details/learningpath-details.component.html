@@ -24,10 +24,11 @@
 		<div
 			class="tw-flex tw-flex-col tw-gap-4 md:tw-flex-row tw-bg-white tw-p-8 tw-justify-evenly tw-items-center tw-mr-auto tw-rounded-2xl tw-h-fit tw-border tw-border-solid tw-border-purple"
 		>
-			<div class="tw-bg-[var(--color-lightpink)] tw-p-8 tw-rounded-[10px]">
+			<div class="tw-bg-[var(--color-lightpink)] tw-p-8 tw-rounded-[10px] md:tw-h-[450px]">
 				<bg-formfield-image
 					#imageField
 					[label]="useOurEditor"
+					[labelStyle]="'tw-w-full tw-text-oebblack tw-font-bold tw-text-[22px] tw-text-center tw-leading-[26.4px]'"
 					[sublabel]="imageSublabel"
 					[text_body]="selectFromMyFiles"
 					dropZoneInfo1="Drag & Drop"
@@ -47,12 +48,13 @@
 					>{{ 'General.fileformats' | translate }}: SVG {{ 'General.and' | translate }} PNG</span
 				>
 			</div>
-			<span>{{ 'General.or' | translate }}</span>
+			<span class="tw-text-oebblack tw-italic tw-text-[24px] tw-leading-[31.2px]">{{ 'General.or' | translate }}</span>
 			<hr class="md:tw-hidden tw-my-8 tw-w-full tw-border tw-border-[var(--color-purple)] tw-border-dashed" />
-			<div class="tw-bg-[var(--color-lightpink)] tw-p-8 tw-rounded-[10px]">
+			<div class="tw-bg-[var(--color-lightpink)] tw-p-8 tw-rounded-[10px] md:tw-h-[450px]">
 					<bg-formfield-image
 						#customImageField
 						[label]="useOwnVisual"
+						[labelStyle]="'tw-w-full tw-text-oebblack tw-font-bold tw-text-[22px] tw-text-center tw-leading-[26.4px]'"
 						[sublabel]="uploadOwnDesign"
 						text_body="{{ 'RecBadge.uploadOwnVisual' | translate }}"
 						imageLoaderName="basic"
