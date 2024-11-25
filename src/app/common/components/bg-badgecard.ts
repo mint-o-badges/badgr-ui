@@ -6,18 +6,19 @@ import {
 	style,
 	transition,
 	trigger,
-} from '@angular/animations';
+  } from '@angular/animations';
+import { FormControl } from '@angular/forms';
 
 @Component({
 	selector: 'bg-badgecard',
 	animations: [
 		trigger('showCompetencies', [
-			state('true', style({ height: AUTO_STYLE, visibility: AUTO_STYLE })),
-			state('false', style({ height: '0', visibility: 'hidden' })),
-			transition('false => true', animate(220 + 'ms ease-out')),
-			transition('true => false', animate(220 + 'ms ease-in')),
+		  state('true', style({ height: AUTO_STYLE, visibility: AUTO_STYLE })),
+		  state('false', style({ height: '0', visibility: 'hidden' })),
+		  transition('false => true', animate(220 + 'ms ease-out')),
+		  transition('true => false', animate(220 + 'ms ease-in')),
 		]),
-	],
+	  ],
 	host: {
 		class: 'tw-rounded-[10px] tw-h-max tw-border-purple tw-border-solid tw-border tw-relative tw-p-3 tw-block tw-overflow-hidden oeb-badge-card',
 	},
@@ -100,6 +101,7 @@ import {
 				<div class="tw-float-right tw-relative tw-ml-auto tw-mr-6 tw-min-h-20">
 					<oeb-checkbox *ngIf="checkboxControl" class="tw-absolute tw-top-0" [(ngModel)]="checked" [control]="checkboxControl">
 					</oeb-checkbox>
+					<oeb-checkbox *ngIf="showCheckbox" [(ngModel)]="checked" (ngModelChange)="changeCheckbox($event)"></oeb-checkbox>
 					<div *ngIf="competencies && competencies.length > 0" class="tw-absolute tw-bottom-0 tw-cursor-pointer" (click)="toggleCompetencies()">
 						<hlm-icon [name]=" showCompetencies ? 'lucideChevronUp' : 'lucideChevronDown'" />
 					</div>
@@ -133,25 +135,34 @@ export class BgBadgecard {
 	@Input() verifyUrl: string;
 	@Input() public = false;
 	@Input() competencies?: any[];
-	@Input() checkboxControl?: any;
+	@Input() checkboxControl?: FormControl;
+	@Input() showCheckbox = false;
 	@Output() shareClicked = new EventEmitter<MouseEvent>();
 	@Input() completed: Boolean = false;
-	checked = false;
+	@Output() checkboxChange = new EventEmitter<boolean>();
+	@Input() checked: boolean = false;
+
+	changeCheckbox(event: boolean){
+		this.checkboxChange.emit(event)
+	}
 
 	@HostBinding('class') get hostClasses(): string {
-		return this.checked
-			? 'tw-bg-[var(--color-lightgreen)]'
-			: 'tw-bg-white';
-	}
-	@HostBinding('class') get completedClass(): string {
-		return this.completed
-			? 'tw-bg-[var(--color-green)]'
-			: 'tw-bg-white';
+		return (this.checked || this.completed) 
+		  ? 'tw-bg-[var(--color-green)]'   
+		  : 'tw-bg-white';  
+	  }
+	// @HostBinding('class') get completedClass(): string {
+	// 	return this.completed 
+	// 	  ? 'tw-bg-[var(--color-green)]'   
+	// 	  : 'tw-bg-white';  
+	//   }
+
+	ngOnInit(){
 	}
 
 
 	showCompetencies = false
-	toggleCompetencies() {
+	toggleCompetencies(){
 		this.showCompetencies = !this.showCompetencies;
 	}
 }

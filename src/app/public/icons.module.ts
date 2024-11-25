@@ -25,6 +25,11 @@ import {
   lucideMapPin,
 	lucideSearch,
 	lucideGrid2x2,
+  lucideCircleAlert,
+  lucideStepBack,
+  lucideStepForward,
+  lucideArrowLeft,
+  lucideArrowRight,
 
 } from '@ng-icons/lucide';
 
@@ -55,6 +60,11 @@ import {
       lucideMapPin,
       lucideSearch,
       lucideGrid2x2,
+      lucideCircleAlert,
+      lucideStepBack,
+      lucideStepForward,
+      lucideArrowLeft,
+      lucideArrowRight,
     }),
   ],
 })
