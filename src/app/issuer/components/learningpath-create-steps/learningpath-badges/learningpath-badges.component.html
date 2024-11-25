@@ -75,6 +75,7 @@
                         (ngModelChange)="checkboxChange($event, badge)"
                         (checkboxChange)="checkboxChange($event, badge.url, badge.extension['extensions:StudyLoadExtension'].StudyLoad)"
                         [checked]="badgeChecked(badge.url)"
+                        [showCheckbox]="true"
                     ></bg-badgecard>
                 </div>
             </ng-container>

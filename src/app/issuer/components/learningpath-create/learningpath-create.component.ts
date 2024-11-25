@@ -74,7 +74,7 @@ export class LearningPathCreateComponent extends BaseAuthenticatedRoutableCompon
 	learningPathCreated(promise: Promise<LearningPath>) {
 		promise.then(
 			(lp) => {
-				this.router.navigate(['issuer/issuers', this.issuerSlug]).then(() => {
+				this.router.navigate(['issuer/issuers', this.issuerSlug, 'learningpaths', lp.slug]).then(() => {
 					this.openSuccessDialog();
 				});
 			},

@@ -101,7 +101,7 @@ import { FormControl } from '@angular/forms';
 				<div class="tw-float-right tw-relative tw-ml-auto tw-mr-6 tw-min-h-20">
 					<oeb-checkbox *ngIf="checkboxControl" class="tw-absolute tw-top-0" [(ngModel)]="checked" [control]="checkboxControl">
 					</oeb-checkbox>
-					<oeb-checkbox [(ngModel)]="checked" (ngModelChange)="changeCheckbox($event)"></oeb-checkbox>
+					<oeb-checkbox *ngIf="showCheckbox" [(ngModel)]="checked" (ngModelChange)="changeCheckbox($event)"></oeb-checkbox>
 					<div *ngIf="competencies && competencies.length > 0" class="tw-absolute tw-bottom-0 tw-cursor-pointer" (click)="toggleCompetencies()">
 						<hlm-icon [name]=" showCompetencies ? 'lucideChevronUp' : 'lucideChevronDown'" />
 					</div>
@@ -136,6 +136,7 @@ export class BgBadgecard {
 	@Input() public = false;
 	@Input() competencies?: any[];
 	@Input() checkboxControl?: FormControl;
+	@Input() showCheckbox = false;
 	@Output() shareClicked = new EventEmitter<MouseEvent>();
 	@Input() completed: Boolean = false;
 	@Output() checkboxChange = new EventEmitter<boolean>();
