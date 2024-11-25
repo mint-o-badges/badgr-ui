@@ -83,6 +83,17 @@
 				</div>
 			</div>
 
+			<p
+					hlmP 
+					size="sm"
+					id="maxHoursOrMinutesError"
+					[hidden]="!badgeStudyLoadDirty || !badgeClassForm.hasError('maxHoursError') && !badgeClassForm.hasError('maxMinutesError')"
+					class="tw-font-normal md:tw-pl-[13.5rem] u-text-error"
+				>
+					<span *ngIf="badgeClassForm.hasError('maxMinutesError')">{{'CreateBadge.minMaxError' | translate }}</span>
+					<span *ngIf="badgeClassForm.hasError('maxHoursError')">{{'CreateBadge.hoursMaxError' | translate }}</span>
+				</p>
+
 			<div class="tw-flex md:tw-flex-row tw-gap-3 md:tw-gap-8 tw-flex-col md:tw-items-center tw-justify-start">
 				<span class="input-label md:tw-flex-[0_0_10em]"> {{ 'Badge.title' | translate }}</span>
 				<div class="tw-flex tw-gap-2 tw-items-center">
@@ -781,6 +792,8 @@
 			class="tw-mr-4"
 			variant="secondary"
 			(click)="cancelClicked()"
+			[disabled]="!!savePromise"
+			[class.disabled]="!!savePromise"	
 			[disabled-when-requesting]="true"
 			text="{{ 'General.cancel' | translate }}"
 		></oeb-button>
