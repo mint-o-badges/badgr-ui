@@ -66,8 +66,10 @@
 							</p>
 						</div>
 					</div>
-					<div>
-						<p class="tw-text-oebblack tw-py-4">{{ issuer.description }}</p>
+					<div class="tw-py-4">
+						<p [class.tw-line-clamp-3]="issuerToBadgeInfo[issuer.issuerUrl]" class="tw-text-oebblack">
+							{{ issuer.description }}
+						</p>
 					</div>
 
 					<oeb-button
