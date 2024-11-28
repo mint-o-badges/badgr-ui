@@ -115,6 +115,7 @@ import { OebProgressComponent } from '../components/oeb-progress.component';
 import { OebSelectComponent } from '../components/select.component';
 import { OebCollapsibleComponent } from '../components/oeb-collapsible.component';
 import { OebSeparatorComponent } from '../components/oeb-separator.component';
+import { OebSpinnerComponent } from '../components/oeb-spinner.component';
 import { OebLearningPathDetailComponent } from './components/learningpath-detail/oeb-learning-path.component';
 
 import { SharedIconsModule } from '../public/icons.module';
@@ -230,6 +231,7 @@ export const COMMON_IMPORTS = [
 	OebInputErrorComponent,
 	OebSelectComponent,
 	OebSeparatorComponent,
+	OebSpinnerComponent,
 	OebCollapsibleComponent,
 	OebButtonComponent,
 	OebProgressComponent,
