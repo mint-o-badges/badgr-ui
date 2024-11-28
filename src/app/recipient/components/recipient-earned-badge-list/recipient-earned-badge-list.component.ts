@@ -235,12 +235,6 @@ export class RecipientEarnedBadgeListComponent
 	ngOnInit() {
 		super.ngOnInit();
 		if (this.route.snapshot.routeConfig.path === 'badges/import') this.launchImport(new Event('click'));
-		this.prepareTexts();
-
-		// Translate: to update predefined text when language is changed
-		this.translate.onLangChange.subscribe((event) => {
-			this.prepareTexts();
-		});
 	}
 
 	ngAfterContentInit() {
