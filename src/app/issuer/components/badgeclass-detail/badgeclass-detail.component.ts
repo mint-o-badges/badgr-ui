@@ -222,8 +222,8 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 					duration: this.badgeClass.extension['extensions:StudyLoadExtension'].StudyLoad,
 					category:
 						this.badgeClass.extension['extensions:CategoryExtension'].Category === 'competency'
-							? 'Kompetenz- Badge'
-							: 'Teilnahme- Badge',
+							? 'Kompetenz-Badge'
+							: 'Teilnahme-Badge',
 					tags: this.badgeClass.tags,
 					issuerName: this.badgeClass.issuerName,
 					issuerImagePlacholderUrl: this.issuerImagePlacholderUrl,
