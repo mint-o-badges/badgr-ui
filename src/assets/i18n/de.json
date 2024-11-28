@@ -59,7 +59,11 @@
 		"page": "Seite",
 		"learningPath": "Lernpfad",
 		"learningPaths": "Lernpfade",
-		"noLearningPaths": "Keine Lernpfade"
+		"noLearningPaths": "Keine Lernpfade",
+		"ascending": "Aufsteigend",
+		"descending": "Absteigend",
+		"dateAscending": "Älteste zuerst",
+		"dateDescending": "Neueste zuerst"
 	},
 	"NavItems": {
 		"register": "Registrieren",
@@ -281,7 +285,8 @@
 		"requestedOn": "Angefragt am",
 		"deletePart1": "Bist du sicher, dass du das Badge '",
 		"deletePart2": "' löschen möchtest?",
-		"deleteConfirm": "Badge löschen"
+		"deleteConfirm": "Badge löschen",
+		"sortBy": "Sortieren nach"
 	},
 	"CreateBadge": {
 		"chooseBadgeCategory": "Badge-Kategorie wählen",

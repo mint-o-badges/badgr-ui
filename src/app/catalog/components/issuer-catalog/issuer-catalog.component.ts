@@ -1,7 +1,6 @@
 import { AfterViewInit, Component, ElementRef, NgModule, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SessionService } from '../../../common/services/session.service';
-import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
 import { MessageService } from '../../../common/services/message.service';
 import { IssuerManager } from '../../../issuer/services/issuer-manager.service';
 import { Issuer } from '../../../issuer/models/issuer.model';
@@ -14,11 +13,6 @@ import { StringMatchingUtil } from '../../../common/util/string-matching-util';
 import { Map, NavigationControl, Popup } from 'maplibre-gl';
 import { TranslateService } from '@ngx-translate/core';
 import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
-
-import { HlmInputDirective } from '../../../components/spartan/ui-input-helm/src/lib/hlm-input.directive';
-import { HlmIconComponent } from '../../../components/spartan/ui-icon-helm/src/lib/hlm-icon.component';
-import { HlmBadgeDirective } from '../../../components/spartan/ui-badge-helm/src/lib/hlm-badge.directive';
-import { BadgeClassCategory } from '../../../issuer/models/badgeclass-api.model';
 import { FormControl } from '@angular/forms';
 
 @Component({
@@ -58,7 +52,15 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 			value: 'andere',
 		},
 	];
-
+	labelDateAsc = this.translate.instant('General.dateAscending');
+	labelDateDesc = this.translate.instant('General.dateDescending');
+	sortOptions = [
+		{ value: 'name_asc', label: 'A-Z' },
+		{ value: 'name_desc', label: 'Z-A' },
+		{ value: 'date_asc', label: this.labelDateAsc },
+		{ value: 'date_desc', label: this.labelDateDesc },
+	];
+	sortControl = new FormControl('name_asc');
 	private _searchQuery = '';
 	get searchQuery() {
 		return this._searchQuery;
@@ -113,6 +115,9 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 		// Subscribe to changes on the control
 		this.categoryControl.valueChanges.subscribe((value) => {
 			this.categoryFilter = value;
+		});
+		this.sortControl.valueChanges.subscribe((value) => {
+			this.changeOrder(value);
 		});
 	}
 
@@ -333,12 +338,12 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 					.setLngLat(coordinates)
 					.setHTML(
 						'<div style="padding:5px"><a href="public/issuers/' +
-						slug +
-						'">' +
-						name +
-						'</a><br><p>' +
-						desc +
-						'</p></div>',
+							slug +
+							'">' +
+							name +
+							'</a><br><p>' +
+							desc +
+							'</p></div>',
 					)
 					.addTo(this.mapObject);
 			});
@@ -386,14 +391,24 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 		}
 	}
 
-	changeOrder(order) {
-		if (order === 'asc') {
-			this.issuerResults.sort((a, b) => a.name.localeCompare(b.name));
-			this.issuerResultsByCategory.forEach((r) => r.issuers.sort((a, b) => a.name.localeCompare(b.name)));
-		} else {
-			this.issuerResults.sort((a, b) => b.name.localeCompare(a.name));
-			this.issuerResultsByCategory.forEach((r) => r.issuers.sort((a, b) => b.name.localeCompare(a.name)));
-		}
+	changeOrder(sortOption: string) {
+		const [sortBy, order] = sortOption.split('_') as ['name' | 'date', 'asc' | 'desc'];
+		const multiplier = order === 'asc' ? 1 : -1;
+
+		// Sortierfunktion
+		const sortFn = (a: any, b: any) => {
+			if (sortBy === 'name') {
+				return multiplier * a.name.localeCompare(b.name);
+			} else if (sortBy === 'date') {
+				const dateA = new Date(a.createdAt).getTime();
+				const dateB = new Date(b.createdAt).getTime();
+				return multiplier * (dateA - dateB);
+			}
+			return 0;
+		};
+
+		this.issuerResults.sort(sortFn);
+		this.issuerResultsByCategory.forEach((r) => r.issuer.sort(sortFn));
 	}
 
 	openMap() {
@@ -481,7 +496,7 @@ class MatchingIssuerCategory {
 		public category: string,
 		public issuer,
 		public issuers: Issuer[] = [],
-	) { }
+	) {}
 
 	addIssuer(issuer) {
 		if (issuer.category === this.category) {

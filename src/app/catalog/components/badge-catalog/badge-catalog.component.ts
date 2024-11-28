@@ -13,6 +13,7 @@ import { BadgeClassManager } from '../../../issuer/services/badgeclass-manager.s
 import { StringMatchingUtil } from '../../../common/util/string-matching-util';
 import { BadgeClassCategory } from '../../../issuer/models/badgeclass-api.model';
 import { TranslateService } from '@ngx-translate/core';
+import { FormControl } from '@angular/forms';
 
 @Component({
 	selector: 'app-badge-catalog',
@@ -39,6 +40,21 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 	issuers: string[] = [];
 	selectedTag: string = null;
 
+	sortOptions = [
+		{ value: 'name_asc', label: 'A-Z' },
+		{ value: 'name_desc', label: 'Z-A' },
+		{ value: 'date_asc', label: 'Älteste zuerst' },
+		{ value: 'date_desc', label: 'Neueste zuerst' },
+	];
+
+	sortControl = new FormControl('name_asc');
+
+	groupOptions = [
+		{ value: '---', label: '---' },
+		{ value: 'issuer', label: 'Issuer' },
+		{ value: 'category', label: 'Category' },
+	];
+	groupControl = new FormControl('---');
 	get theme() {
 		return this.configService.theme;
 	}
@@ -78,9 +94,15 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		return this._groupBy;
 	}
 	set groupBy(val: string) {
+		console.log(val);
 		this._groupBy = val;
 		this.updateResults();
 	}
+
+	trackById(index: number, item: any): any {
+		return item.id; // oder eine andere eindeutige Eigenschaft
+	}
+
 	groups = [this.translate.instant('Badge.category'), this.translate.instant('Badge.issuer'), '---'];
 	categoryOptions: { [key in BadgeClassCategory | 'noCategory']: string } = {
 		competency: this.translate.instant('Badge.competency'),
@@ -102,6 +124,13 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 
 		// subscribe to issuer and badge class changes
 		this.badgesLoaded = this.loadBadges();
+
+		this.sortControl.valueChanges.subscribe((value) => {
+			this.changeOrder(value);
+		});
+		this.groupControl.valueChanges.subscribe((value) => {
+			this.groupBy = value;
+		});
 	}
 
 	async loadBadges() {
@@ -172,25 +201,24 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		};
 	}
 
-	changeOrder(order) {
-		this.order = order;
-		if (this.order === 'asc') {
-			this.badgeResults.sort((a, b) => a.name.localeCompare(b.name));
-			this.badgeResultsByIssuer
-				.sort((a, b) => a.issuerName.localeCompare(b.issuerName))
-				.forEach((r) => r.badges.sort((a, b) => a.name.localeCompare(b.name)));
-			this.badgeResultsByCategory
-				.sort((a, b) => a.category.localeCompare(b.category))
-				.forEach((r) => r.badges.sort((a, b) => a.name.localeCompare(b.name)));
-		} else {
-			this.badgeResults.sort((a, b) => b.name.localeCompare(a.name));
-			this.badgeResultsByIssuer
-				.sort((a, b) => b.issuerName.localeCompare(a.issuerName))
-				.forEach((r) => r.badges.sort((a, b) => b.name.localeCompare(a.name)));
-			this.badgeResultsByCategory
-				.sort((a, b) => b.category.localeCompare(a.category))
-				.forEach((r) => r.badges.sort((a, b) => b.name.localeCompare(a.name)));
-		}
+	changeOrder(sortOption: string) {
+		const [sortBy, order] = sortOption.split('_') as ['name' | 'date', 'asc' | 'desc'];
+		const multiplier = order === 'asc' ? 1 : -1;
+
+		// Sortierfunktion
+		const sortFn = (a: any, b: any) => {
+			if (sortBy === 'name') {
+				return multiplier * a.name.localeCompare(b.name);
+			} else if (sortBy === 'date') {
+				const dateA = new Date(a.createdAt).getTime();
+				const dateB = new Date(b.createdAt).getTime();
+				return multiplier * (dateA - dateB);
+			}
+			return 0;
+		};
+
+		this.badgeResults.sort(sortFn);
+		this.badgeResultsByCategory.forEach((r) => r.badges.sort(sortFn));
 	}
 
 	private updateResults() {
@@ -249,8 +277,6 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 				addBadgeToResultsByIssuer(item);
 				addBadgeToResultsByCategory(item);
 			});
-
-		this.changeOrder(this.order);
 	}
 
 	openLegend() {
