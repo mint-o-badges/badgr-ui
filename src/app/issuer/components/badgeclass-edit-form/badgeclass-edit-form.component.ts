@@ -227,8 +227,8 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				// but since it doesn't make sense to remove the
 				// default of 60 from unselected suggestions,
 				// this doesn't really matter
-				.addControl('hours', 1, this.positiveIntegerOrNull)
-				.addControl('minutes', 0, this.positiveIntegerOrNull)
+				.addControl('hours', 1, [this.positiveIntegerOrNull, Validators.max(999)])
+				.addControl('minutes', 0, [this.positiveIntegerOrNull, Validators.max(59)])
 				.addControl('studyLoad', 60, [Validators.required, this.positiveInteger]),
 		)
 		.addArray(
