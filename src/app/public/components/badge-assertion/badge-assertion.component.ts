@@ -180,11 +180,11 @@ export class PublicBadgeAssertionComponent {
 										const link = document.createElement('a');
 										const url = URL.createObjectURL(blob);
 										link.href = url;
-										link.download = 'badge-JSON.json'; // Specify the name of the downloaded file
+										link.download = 'badge-JSON.json';
 										document.body.appendChild(link);
 										link.click();
-										document.body.removeChild(link); // Clean up
-										URL.revokeObjectURL(url); // Clean up the URL object
+										document.body.removeChild(link);
+										URL.revokeObjectURL(url);
 									})
 									.catch((error) => console.error('Download failed:', error));
 							},
@@ -201,11 +201,11 @@ export class PublicBadgeAssertionComponent {
 										const urlParts = this.rawBakedUrl.split('/');
 										const inferredFileName = urlParts[urlParts.length - 1] || 'downloadedFile';
 										link.href = url;
-										link.download = inferredFileName; // Use the inferred file name or a generic name
+										link.download = inferredFileName;
 										document.body.appendChild(link);
 										link.click();
-										document.body.removeChild(link); // Clean up
-										URL.revokeObjectURL(url); // Clean up the URL object
+										document.body.removeChild(link);
+										URL.revokeObjectURL(url);
 									})
 									.catch((error) => console.error('Download failed:', error));
 							},
@@ -219,6 +219,7 @@ export class PublicBadgeAssertionComponent {
 					badgeDescription: assertion.badge.description,
 					issuerSlug: assertion.badge.issuer['slug'],
 					slug: assertion.badge.id,
+					category:
 						assertion.badge['extensions:CategoryExtension'].Category === 'competency'
 							? 'Kompetenz- Badge'
 							: 'Teilnahme- Badge',
