@@ -223,13 +223,8 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			'aiCompetencies',
 			typedFormGroup()
 				.addControl('selected', false)
-				// Technically this is only required if selected,
-				// but since it doesn't make sense to remove the
-				// default of 60 from unselected suggestions,
-				// this doesn't really matter
 				.addControl('hours', 1, [this.positiveIntegerOrNull, Validators.max(999)])
-				.addControl('minutes', 0, [this.positiveIntegerOrNull, Validators.max(59)])
-				.addControl('studyLoad', 60, [Validators.required, this.positiveInteger]),
+				.addControl('minutes', 0, [this.positiveIntegerOrNull, Validators.max(59)]),
 		)
 		.addArray(
 			'competencies',
@@ -241,7 +236,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				// limit of 1000000 is set so that users cant break the UI by entering a very long number
 				.addControl('hours', 1, [this.positiveIntegerOrNull, Validators.max(999)])
 				.addControl('minutes', 0, [this.positiveIntegerOrNull, Validators.max(59)])
-				.addControl('studyLoad', 60, [Validators.required, this.positiveInteger])
 				.addControl('category', '', Validators.required),
 		)
 		.addArray(
@@ -888,7 +882,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 					'extensions:StudyLoadExtension': {
 						'@context': studyLoadExtensionContextUrl,
 						type: ['Extension', 'extensions:StudyLoadExtension'],
-						StudyLoad: Number(formState.badge_hours * 60 + formState.badge_minutes),
+						StudyLoad: Number(formState.badge_hours) * 60 + Number(formState.badge_minutes),
 					},
 					'extensions:CategoryExtension': {
 						'@context': categoryExtensionContextUrl,
@@ -939,7 +933,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 						'extensions:StudyLoadExtension': {
 							'@context': studyLoadExtensionContextUrl,
 							type: ['Extension', 'extensions:StudyLoadExtension'],
-							StudyLoad: Number(formState.badge_hours * 60 + formState.badge_minutes),
+							StudyLoad: Number(formState.badge_hours) * 60 + Number(formState.badge_minutes),
 						},
 						'extensions:CategoryExtension': {
 							'@context': categoryExtensionContextUrl,
