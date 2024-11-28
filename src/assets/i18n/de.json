@@ -654,5 +654,11 @@
 	},
 	"OEBComponents": {
 		"fieldIsRequired": "Dieses Feld ist erforderlich"
+	},
+	"ErrorDialog": {
+		"title": "Es ist ein Fehler passiert!",
+		"message": "Unten siehst du die Fehlermeldung. Wenn du glaubst, der Fehler liegt bei uns, kannst du die Fehlermeldung kopieren und uns per Mail schicken, oder du erstellst einen Issue auf GitHub.",
+		"copyButton": "Kopieren",
+		"createIssue": "Zu den GitHub Issues"
 	}
 }

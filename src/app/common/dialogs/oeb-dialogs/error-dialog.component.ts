@@ -23,7 +23,7 @@ import { NgIf } from '@angular/common';
 	providers: [provideIcons({ lucideCircleX, lucideGithub, lucideClipboard })],
 	template: `
 		<oeb-dialog variant="danger" class="tw-text-center tw-text-oebblack oeb">
-			<div class="tw-flex tw-flex-col tw-gap-2 tw-items-center tw-justify-center">
+			<div class="tw-flex tw-flex-col tw-gap-2 tw-items-center tw-justify-center tw-p-4">
 				<hlm-icon class="tw-text-red" size="xxxl" name="lucideCircleX   " />
 				<div hlmH3 class="tw-font-bold !tw-text-black tw-uppercase">
 					{{ 'ErrorDialog.title' | translate }}
@@ -31,7 +31,7 @@ import { NgIf } from '@angular/common';
 				<div hlmP class="tw-text-black">
 					{{ 'ErrorDialog.message' | translate }}
 				</div>
-				<div *ngIf="error">
+				<div class="tw-flex tw-flex-col tw-w-full tw-items-center" *ngIf="error">
 					<label for="errorTextarea" class="tw-block tw-text-left tw-mb-1">Error message:</label>
 					<textarea
 						#errorTextarea
@@ -57,14 +57,14 @@ import { NgIf } from '@angular/common';
 						{{ 'ErrorDialog.createIssue' | translate }}
 					</a>
 				</div>
-				<div class="tw-flex tw-flex-row tw-gap-4 tw-justify-center tw-mt-4">
+				<div class="tw-flex tw-flex-row tw-w-full tw-gap-4 tw-justify-center tw-mt-4">
 					<oeb-button
 						size="md"
 						variant="secondary"
 						[text]="'General.cancel' | translate"
 						(click)="closeDialog()"
 					></oeb-button>
-					<oeb-button size="md" [text]="'General.ok' | translate" (click)="confirm()"></oeb-button>
+					<oeb-button size="md" [text]="'Ok'" (click)="confirm()"></oeb-button>
 				</div>
 			</div>
 		</oeb-dialog>
