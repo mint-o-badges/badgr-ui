@@ -464,12 +464,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	}
 
 	ngOnInit() {
-		const dialogRef = this._hlmDialogService.open(ErrorDialogComponent, {
-			context: {
-				error: 'Unable to create Badge Class: <html> <head><title>413 Request Entity Too Large</title></head> <body> <center><h1>413 Request Entity Too Large</h1></center> <hr><center>nginx/1.25.4</center> </body> </html> ',
-			},
-		});
-
 		super.ngOnInit();
 		let that = this;
 
@@ -1003,12 +997,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 			this.save.emit(this.savePromise);
 		} catch (e) {
-			console.log(e);
-			const dialogRef = this._hlmDialogService.open(ErrorDialogComponent, {
-				context: {
-					error: e,
-				},
-			});
+			throw new Error('Not implemented');
 		}
 	}
 

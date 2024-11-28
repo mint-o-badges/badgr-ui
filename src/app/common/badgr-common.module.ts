@@ -1,4 +1,4 @@
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { ErrorHandler, ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { BgBadgecard } from './components/bg-badgecard';
@@ -127,6 +127,7 @@ import { HourPipe } from './pipes/hourPipe';
 import { HlmBadgeDirective } from '../components/spartan/ui-badge-helm/src/lib/hlm-badge.directive';
 import { IssuerCardComponent } from '../components/issuer-card/issuer-card.component';
 import { ErrorDialogComponent } from './dialogs/oeb-dialogs/error-dialog.component';
+import { GlobalErrorHandler } from '../globalErrorHandler.service';
 
 const DIRECTIVES = [
 	BgAwaitPromises,
@@ -260,7 +261,7 @@ export const COMMON_IMPORTS = [
 
 @NgModule({
 	imports: [...COMMON_IMPORTS, FormsModule, LMarkdownEditorModule, TranslateModule],
-	providers: [BadgeClassManager, BadgeClassApiService],
+	providers: [BadgeClassManager, BadgeClassApiService, { provide: ErrorHandler, useClass: GlobalErrorHandler }],
 	declarations: [...DIRECTIVES, ...COMMON_MODULE_COMPONENTS, ...PIPES, ForwardRouteComponent, BadgeLegendComponent],
 	exports: [...DIRECTIVES, ...COMMON_MODULE_COMPONENTS, ...PIPES, BadgeLegendComponent],
 })
