@@ -95,23 +95,22 @@
 				</div>
 
 				<p
+					class="tw-font-normal md:tw-pl-[13.5rem] u-text-error"
 					hlmP
 					size="sm"
-					id="maxHoursOrMinutesError"
-					[hidden]="
-						!badgeStudyLoadDirty ||
-						(!badgeClassForm.hasError('maxHoursError') && !badgeClassForm.hasError('maxMinutesError'))
-					"
-					class="tw-font-normal md:tw-pl-[13.5rem] u-text-error"
-				>
-					<span *ngIf="badgeClassForm.hasError('maxMinutesError')">{{
-						'CreateBadge.minMaxError' | translate
-					}}</span>
-					<span *ngIf="badgeClassForm.hasError('maxHoursError')">{{
-						'CreateBadge.hoursMaxError' | translate
-					}}</span>
-				</p>
-
+					[hidden]="!badgeClassForm.hasError('hoursAndMinutesError') && 
+								(!badgeStudyLoadDirty || (!badgeClassForm.hasError('maxHoursError') && !badgeClassForm.hasError('maxMinutesError')))"
+					>
+						<span *ngIf="badgeClassForm.hasError('hoursAndMinutesError')">
+							{{ 'CreateBadge.hoursAndMinutesError' | translate }}
+						</span>
+						<span *ngIf="badgeClassForm.hasError('maxMinutesError')">
+							{{ 'CreateBadge.minMaxError' | translate }}
+						</span>
+						<span *ngIf="badgeClassForm.hasError('maxHoursError')">
+							{{ 'CreateBadge.hoursMaxError' | translate }}
+						</span>
+					</p>
 				<div
 					class="tw-flex md:tw-flex-row tw-gap-3 md:tw-gap-8 tw-flex-col md:tw-items-center tw-justify-start"
 				>
@@ -468,7 +467,7 @@
 												noTopMargin="true"
 											>
 											</oeb-input>
-
+											  
 											<span class="tw-text-oebblack">h</span>
 										</div>
 									</div>

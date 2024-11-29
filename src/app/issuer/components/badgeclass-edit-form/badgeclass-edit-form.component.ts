@@ -86,7 +86,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 	giveBadgeTitle = this.translate.instant('CreateBadge.giveBadgeTitle');
 	changeBadgeTitle = this.translate.instant('CreateBadge.changeBadgeTitle');
-
+	hoursAndMinutesZeroError = "Either hours or minutes must be greater than 0.";
 	maxValue1000 = this.translate.instant('CreateBadge.maxValue1000');
 
 	imageTooLarge = this.translate.instant('CreateBadge.imageTooLarge');
@@ -195,7 +195,8 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		this.imageValidation.bind(this),
 		this.maxStudyLoadValidation.bind(this),
 		this.noDuplicateCompetencies.bind(this),
-	])
+		this.hoursAndMinutesValidator.bind(this),
+	],)
 		.addControl('badge_name', '', [
 			Validators.required,
 			Validators.maxLength(60),
@@ -211,7 +212,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		.addControl('badge_criteria_url', '')
 		.addControl('badge_criteria_text', '')
 		.addControl('badge_study_load', 0, [this.positiveIntegerOrNull])
-		.addControl('badge_hours', 0, this.positiveIntegerOrNull)
+		.addControl('badge_hours', 1, this.positiveIntegerOrNull)
 		.addControl('badge_minutes', 0, this.positiveIntegerOrNull)
 		.addControl('badge_category', '', Validators.required)
 		.addControl('badge_level', 'a1', Validators.required)
@@ -223,6 +224,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			'aiCompetencies',
 			typedFormGroup()
 				.addControl('selected', false)
+				.addControl('studyLoad', 60, [Validators.required, this.positiveInteger])
 				.addControl('hours', 1, [this.positiveIntegerOrNull, Validators.max(999)])
 				.addControl('minutes', 0, [this.positiveIntegerOrNull, Validators.max(59)]),
 		)
@@ -234,6 +236,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				.addControl('description', '', Validators.required)
 				.addControl('escoID', '')
 				// limit of 1000000 is set so that users cant break the UI by entering a very long number
+				.addControl('studyLoad', 60, [Validators.required, this.positiveInteger])
 				.addControl('hours', 1, [this.positiveIntegerOrNull, Validators.max(999)])
 				.addControl('minutes', 0, [this.positiveIntegerOrNull, Validators.max(59)])
 				.addControl('category', '', Validators.required),
@@ -751,6 +754,10 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		}
 	}
 
+
+
+
+
 	imageValidation(): ValidationErrors | null {
 		if (!this.badgeClassForm) return null;
 
@@ -791,6 +798,24 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			return { maxHoursError: true };
 		}
 	}
+
+	hoursAndMinutesValidator () : ValidationErrors | null {
+		if (!this.badgeClassForm) return null;
+
+		const hours = Number(this.badgeClassForm.value.badge_hours)
+		const minutes = Number(this.badgeClassForm.value.badge_minutes)
+		if (hours === 0 && minutes === 0) {
+		  return { hoursAndMinutesError: true};
+		}
+
+
+	   
+		return null;
+
+	}
+
+
+	  
 
 	async onSubmit() {
 		try {

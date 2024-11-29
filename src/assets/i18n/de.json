@@ -356,7 +356,8 @@
 		"licenseInfo": "Badges werden unter der <a class='tw-underline tw-text-[#1400FF]' target='_blank' href='https://creativecommons.org/publicdomain/zero/1.0/legalcode.de'> Lizenz CC0 1.0 </a> erstellt.",
 		"requiredError": "Erforderlich",
 		"hoursMaxError": "Stunden dürfen 10.000 nicht überschreiten.",
-		"minMaxError": "Bitte geben Sie eine gültige Anzahl von Minuten ein (0 bis 59)."
+		"minMaxError": "Bitte geben Sie eine gültige Anzahl von Minuten ein (0 bis 59).",
+		"hoursAndMinutesError": "Der Badge muss mindestens 1 Minute dauern."
 	},
 	"Signup": {
 		"youHaveAccount": "Du hast bereits einen Account?",
