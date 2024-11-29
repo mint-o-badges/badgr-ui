@@ -32,7 +32,7 @@ module.exports = {
 					300: 'var(--color-lightred)',
 				},
 				pink: 'var(--color-pink)',
-				green:{
+				green: {
 					DEFAULT: 'var(--color-green)',
 					400: '#66BB6A',
 				},
@@ -56,7 +56,7 @@ module.exports = {
 			},
 			animation: {
 				'spin-slow': 'spin 5000ms linear infinite',
-			}
+			},
 		},
 	},
 	plugins: [
