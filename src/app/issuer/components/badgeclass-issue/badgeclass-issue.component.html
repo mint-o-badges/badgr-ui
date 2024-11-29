@@ -252,12 +252,12 @@
 					</div>
 				</div>
 				<div class="tw-flex tw-justify-end">
-					<oeb-button class="tw-mr-4" variant="secondary"
+					<oeb-button class="tw-mr-4" variant="secondary" [disabled]="!!issueBadgeFinished" [class.disabled]="!!issueBadgeFinished"
 						[routerLink]="['/issuer/issuers', issuer.slug, 'badges', badgeClass.slug]" type="button"
 						[disabled-when-requesting]="true" [text]="'General.cancel' | translate">
 
 					</oeb-button>
-					<oeb-button type="submit" [disabled]="!!issueBadgeFinished"
+					<oeb-button type="submit" [disabled]="!!issueBadgeFinished" 
 						[loading-promises]="[issueBadgeFinished]" loading-message="Vergebe Badge" [text]="'Issuer.giveBadge' | translate">
 
 					</oeb-button>
