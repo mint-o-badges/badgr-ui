@@ -54,6 +54,7 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 	];
 	labelDateAsc = this.translate.instant('General.dateAscending');
 	labelDateDesc = this.translate.instant('General.dateDescending');
+	
 	sortOptions = [
 		{ value: 'name_asc', label: 'A-Z' },
 		{ value: 'name_desc', label: 'Z-A' },

@@ -43,15 +43,11 @@
 							</div>
 						</div>
 						<span>{{ 'Badge.sortBy' | translate }} </span>
-						<oeb-select
-							actionBar="true"
-							class="oeb lg:tw-w-[12rem]"
-							[options]="sortOptions"
+						<oeb-sort-select
 							[control]="sortControl"
-							[autofocus]="true"
-							noTopMargin="true"
-							ariaLabel="chooseABadgeCategory"
-						></oeb-select>
+							[result]="badgeResults"
+							></oeb-sort-select>
+						
 						<span id="badge-catalog-select-label">{{ 'Badge.groupBy' | translate }} </span>
 
 						<oeb-select

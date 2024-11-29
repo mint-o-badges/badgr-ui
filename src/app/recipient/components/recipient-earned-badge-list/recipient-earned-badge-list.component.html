@@ -80,14 +80,11 @@
 									></hlm-icon>
 								</div>
 								<span>{{ 'Badge.sortBy' | translate }} </span>
-								<oeb-select
-									actionBar="true"
-									class="oeb lg:tw-w-[10rem]"
-									[options]="sortOptions"
+								<oeb-sort-select
 									[control]="sortControl"
-									[autofocus]="true"
-									noTopMargin="true"
-								></oeb-select>
+									[result]="badgeResults"
+									[recipient]="true"
+									></oeb-sort-select>
 								<oeb-checkbox
 									class="tw-mt-2 md:tw-mt-0"
 									name="groupby"

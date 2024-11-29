@@ -40,12 +40,6 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 	issuers: string[] = [];
 	selectedTag: string = null;
 
-	sortOptions = [
-		{ value: 'name_asc', label: 'A-Z' },
-		{ value: 'name_desc', label: 'Z-A' },
-		{ value: 'date_asc', label: 'Älteste zuerst' },
-		{ value: 'date_desc', label: 'Neueste zuerst' },
-	];
 
 	sortControl = new FormControl('name_asc');
 
@@ -94,13 +88,12 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		return this._groupBy;
 	}
 	set groupBy(val: string) {
-		console.log(val);
 		this._groupBy = val;
 		this.updateResults();
 	}
 
 	trackById(index: number, item: any): any {
-		return item.id; // oder eine andere eindeutige Eigenschaft
+		return item.id;
 	}
 
 	groups = [this.translate.instant('Badge.category'), this.translate.instant('Badge.issuer'), '---'];
@@ -125,9 +118,9 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		// subscribe to issuer and badge class changes
 		this.badgesLoaded = this.loadBadges();
 
-		this.sortControl.valueChanges.subscribe((value) => {
-			this.changeOrder(value);
-		});
+		// this.sortControl.valueChanges.subscribe((value) => {
+		// 	this.changeOrder(value);
+		// });
 		this.groupControl.valueChanges.subscribe((value) => {
 			this.groupBy = value;
 		});
@@ -201,25 +194,7 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		};
 	}
 
-	changeOrder(sortOption: string) {
-		const [sortBy, order] = sortOption.split('_') as ['name' | 'date', 'asc' | 'desc'];
-		const multiplier = order === 'asc' ? 1 : -1;
 
-		// Sortierfunktion
-		const sortFn = (a: any, b: any) => {
-			if (sortBy === 'name') {
-				return multiplier * a.name.localeCompare(b.name);
-			} else if (sortBy === 'date') {
-				const dateA = new Date(a.createdAt).getTime();
-				const dateB = new Date(b.createdAt).getTime();
-				return multiplier * (dateA - dateB);
-			}
-			return 0;
-		};
-
-		this.badgeResults.sort(sortFn);
-		this.badgeResultsByCategory.forEach((r) => r.badges.sort(sortFn));
-	}
 
 	private updateResults() {
 		let that = this;

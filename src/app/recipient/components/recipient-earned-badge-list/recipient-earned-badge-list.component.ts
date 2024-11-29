@@ -100,19 +100,7 @@ export class RecipientEarnedBadgeListComponent
 
 	activeTab = 'Badges';
 	private _badgesDisplay: BadgeDispay = 'grid';
-
-	labelDateAsc = this.translate.instant('General.dateAscending');
-	labelDateDesc = this.translate.instant('General.dateDescending');
-
-	sortOptions = [
-		{ value: 'name_asc', label: 'A-Z' },
-		{ value: 'name_desc', label: 'Z-A' },
-		{ value: 'date_asc', label: this.labelDateAsc },
-		{ value: 'date_desc', label: this.labelDateDesc },
-	];
-
 	sortControl = new FormControl('name_asc');
-
 	get badgesDisplay() {
 		return this._badgesDisplay;
 	}
@@ -188,9 +176,7 @@ export class RecipientEarnedBadgeListComponent
 			});
 		}
 
-		this.sortControl.valueChanges.subscribe((value) => {
-			this.changeOrder(value);
-		});
+
 
 		this.mozillaTransitionOver = !!localStorage.getItem('mozillaTransitionOver') || false;
 
@@ -389,30 +375,10 @@ export class RecipientEarnedBadgeListComponent
 	}
 
 	trackById(index: number, item: any): any {
-		return item.id; // oder eine andere eindeutige Eigenschaft
+		return item.id; 
 	}
 
-	changeOrder(sortOption: string) {
-		const [sortBy, order] = sortOption.split('_') as ['name' | 'date', 'asc' | 'desc'];
-		const multiplier = order === 'asc' ? 1 : -1;
-		// Sortierfunktion
-		const sortFn = (a: any, b: any) => {
-			const nameA = a.badge.apiModel.json.badge.name;
-			const issuedOnA = new Date(a.badge.apiModel.json.issuedOn).getTime();
-			const issuedOnB = new Date(b.badge.apiModel.json.issuedOn).getTime();
-			const nameB = b.badge.apiModel.json.badge.name;
 
-			if (sortBy === 'name') {
-				console.log(a.badge.apiModel.json.badge.name, b);
-				return multiplier * nameA.localeCompare(nameB);
-			} else if (sortBy === 'date') {
-				return multiplier * (issuedOnA - issuedOnB);
-			}
-			return 0;
-		};
-
-		this.badgeResults.sort(sortFn);
-	}
 
 	private groupCompetencies(badges) {
 		let groupedCompetencies: EscoCompetencies = {};

@@ -605,6 +605,7 @@
 	},
 	"LearningPath": {
 		"learningpaths": "Learning Paths",
+		"noLearningPaths": "No learning paths",
 		"catalogHeadline":"Overview of all learning paths",
 		"partipate": "Participate",
 		"notParticipateAnymore": "Not participate anymore",

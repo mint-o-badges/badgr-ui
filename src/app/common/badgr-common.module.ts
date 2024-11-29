@@ -128,6 +128,7 @@ import { HourPipe } from './pipes/hourPipe';
 import { HlmBadgeDirective } from '../components/spartan/ui-badge-helm/src/lib/hlm-badge.directive';
 import { IssuerCardComponent } from '../components/issuer-card/issuer-card.component';
 import { CountUpDirective } from './directives/count-up.directive';
+import { OebSortSelectComponent } from '../components/oeb-sort-select.component';
 
 const DIRECTIVES = [
 	BgAwaitPromises,
@@ -183,6 +184,7 @@ export const COMMON_MODULE_COMPONENTS = [
 	IssuerCardComponent,
 	OebLearningPathDetailComponent,
 	OebIssuerCard,
+	OebSortSelectComponent
 ];
 
 const SERVICES = [

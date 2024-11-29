@@ -33,14 +33,10 @@
 							</div>
 
 							<span>{{ 'Badge.sortBy' | translate }} </span>
-							<oeb-select
-								actionBar="true"
-								class="oeb lg:tw-w-[12rem]"
-								[options]="sortOptions"
+							<oeb-sort-select
 								[control]="sortControl"
-								[autofocus]="true"
-								noTopMargin="true"
-							></oeb-select>
+								[result]="issuerResults"
+								></oeb-sort-select>
 							<oeb-select
 								actionBar="true"
 								class="md:tw-w-[180px] oeb"
