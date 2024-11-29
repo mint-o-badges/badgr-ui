@@ -42,6 +42,7 @@ export class IssuerEditFormComponent implements OnInit {
 		.addControl('issuer_streetnumber', '', Validators.required)
 		.addControl('issuer_zip', '', Validators.required)
 		.addControl('issuer_city', '', Validators.required)
+		.addControl('verify_intended_use', false, Validators.requiredTrue);
 
 	emails: UserProfileEmail[];
 	emailsOptions: FormFieldSelectOption[];
@@ -56,6 +57,13 @@ export class IssuerEditFormComponent implements OnInit {
 	selectFromMyFiles: string;
 	useImageFormat: string;
 	imageError: string;
+
+	herebyIConfirm: string;
+	iAmEligible: string; 
+	iAmResponsible: string;
+	noMisuse: string;
+
+	intendedUseCheckboxText: string; 
 
 	existingIssuer: Issuer | null = null;
 
@@ -117,6 +125,23 @@ export class IssuerEditFormComponent implements OnInit {
             this.useImageFormat = translatedText;
 		});
 
+		this.translate.get('Issuer.herebyIConfirm').subscribe((translatedText: string) => {	
+			this.herebyIConfirm = translatedText;
+		})
+
+		this.translate.get('Issuer.eligible').subscribe((translatedText: string) => {
+			this.iAmEligible = translatedText;
+		})
+
+		this.translate.get('Issuer.responsible').subscribe((translatedText: string) => {
+			this.iAmResponsible = translatedText;
+		})	
+
+		this.translate.get('Issuer.noMisuse').subscribe((translatedText: string) => {
+			this.noMisuse = translatedText;
+		})
+
+		this.intendedUseCheckboxText = this.herebyIConfirm + ' ' + '1.) ' +  this.iAmEligible + ' ' + this.iAmResponsible + ' ' + this.noMisuse;
 	}
 
 	initFormFromExisting(issuer: Issuer) {
@@ -132,6 +157,7 @@ export class IssuerEditFormComponent implements OnInit {
 			issuer_streetnumber: issuer.streetnumber,
 			issuer_zip: issuer.zip,
 			issuer_url: issuer.websiteUrl,
+			verify_intended_use: issuer.intendedUseVerified 
 		});
 	}
 
@@ -173,6 +199,7 @@ export class IssuerEditFormComponent implements OnInit {
 				streetnumber: formState.issuer_streetnumber,
 				zip: formState.issuer_zip,
 				city: formState.issuer_city,
+				intendedUseVerified: formState.verify_intended_use,
 			}
 			this.editIssuerFinished = this.issuerManager
 			.editIssuer(this.issuerSlug, issuer)
@@ -199,6 +226,7 @@ export class IssuerEditFormComponent implements OnInit {
 				streetnumber: formState.issuer_streetnumber,
 				zip: formState.issuer_zip,
 				city: formState.issuer_city,
+				intendedUseVerified: formState.verify_intended_use,
 			};
 
 

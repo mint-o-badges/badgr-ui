@@ -68,4 +68,8 @@ export interface ApiBadgeClass extends ApiBadgeClassForCreation {
 
 	json: ApiBadgeClassJsonld;
 	source_url: string;
+
+	issuerVerified: boolean;
+	issuerOwnerAcceptedTos: boolean;
+
 }

@@ -19,8 +19,9 @@ export const buttonVariants = cva(
 				yellow: 'tw-bg-yellow tw-text-purple hover:tw-bg-yellow hover:tw-text-purple tw-border-solid tw-border-yellow',
 				link: 'tw-underline-offset-4 hover:tw-underline tw-text-primary',
 				green: 'tw-bg-green tw-font-bold tw-text-purple tw-border-solid tw-border-purple hover:tw-bg-green-400 tw-border-solid tw-border-green hover:tw-border-green-400',
-				meinBildungsraum:
-					'button tw-shrink-0 tw-bg-white tw-text-oebblack tw-gap-[8px] md:tw-h-[64px] md:tw-py-[4px] md:tw-px-[16px] md:tw-text-[20px] md:tw-rounded-[10px] md:tw-border-[1px] tw-items-center tw-h-[44.8px] tw-py-[2.8px] tw-px-[11.2px] tw-text-[14px] tw-border-[0.7] tw-rounded-[7px] tw-font-normal md:tw-leading-[28px] tw-leading-[19.6px] tw-px-0',
+
+				white: 'tw-bg-white tw-text-oebblack tw-border-solid tw-border-purple !tw-font-normal',
+				meinBildungsraum:"button tw-shrink-0 tw-bg-white tw-text-oebblack tw-gap-[8px] md:tw-h-[64px] md:tw-py-[4px] md:tw-px-[16px] md:tw-text-[20px] md:tw-rounded-[10px] md:tw-border-[1px] tw-items-center tw-h-[44.8px] tw-py-[2.8px] tw-px-[11.2px] tw-text-[14px] tw-border-[0.7] tw-rounded-[7px] tw-font-normal md:tw-leading-[28px] tw-leading-[19.6px] tw-px-0"
 			},
 			size: {
 				default:

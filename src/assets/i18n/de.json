@@ -56,10 +56,12 @@
 		"password": "Passwort",
 		"loading": "Laden...",
 		"warning": "Warnung",
-		"page": "Seite",
 		"learningPath": "Lernpfad",
 		"learningPaths": "Lernpfade",
 		"noLearningPaths": "Keine Lernpfade"
+    "warning": "Warnung",
+		"page": "Seite",
+		"back": "Zurück"
 	},
 	"NavItems": {
 		"register": "Registrieren",
@@ -251,6 +253,10 @@
 		"learningPathRecipient": "Absolvent:innen",
 		"learningPathParticipants": "Teilnehmer:innen",
 		"learningPathCreateHeadline": "Erstelle deinen Lernpfad"
+		"herebyIConfirm": "Hiermit bestätige ich, dass ich: ",
+		"entitled": "...berechtigt bin, für die genannte Institution einen Account anzulegen sowie Badges zu erstellen und zu vergeben.",
+		"responsible": "...die Verantwortung für die Qualität der Kursangebote, der erstellten und vergebenen Badges sowie für die zugeordneten Kompetenzen trage.",
+		"noMisuse": "...die Plattform nur für die vorgesehenen Zwecke nutze und jeglichen Missbrauch ablehne."
 	},
 	"Badge": {
 		"groupBy": "Gruppieren nach",
@@ -376,9 +382,9 @@
 		"createAccountFor": "Account erstellen für",
 		"weCreatedYourAccount": "Wir haben deinen Account erstellt und dir eine Verifizierungs-E-Mail geschickt.",
 		"success_verify_email_heading": "Verifiziere deine E-Mail-Adresse",
-		"success_verify_email_desc": "Bitte überprüfe deine E-Mails und <span class='tw-text-purple'>klicke in der Mail auf „Meinen Account bestätigen”</span>, um deinen Account zu aktivieren.",
-		"success_verify_email_help": "Wenn du die Verifizierungs-E-Mail nicht innerhalb weniger Minuten erhältst, schaue in deinen Spam-Ordner. Wenn du die Mail auch dort nicht findest, <a class='tw-text-purple tw-not-italic' href='mailto:info@openbadges.education'>schreib uns</a>.",
-		"resendEmail": "E-Mail erneut senden",
+		"success_verify_email_desc": "Bitte überprüfe deinen Posteingang und <span class='tw-text-oebblack tw-font-bold'>klicke in der Verifizierungs-E-Mail auf „Meinen Account bestätigen”</span>, um deinen OEB-Account zu aktivieren.",
+		"success_verify_email_help": "Wenn du die E-Mail nicht innerhalb weniger Minuten erhältst, schaue in deinen Spam-Ordner. <br> Wenn du die Mail auch dort nicht findest, <a class='tw-underline tw-text-[#1400FF]' href='mailto:info@openbadges.education'>schreib uns</a>.",
+		"resendEmail": "Verifizierungs-E-Mail erneut senden",
 		"emailAlreadyConfirmed": "Deine E-Mail-Adresse wurde bereits bestätigt. Du kannst dich jetzt anmelden.",
 		"reachedResendEmailLimit": "Du hast das Limit für das erneute Senden von Bestätigungs-E-Mails erreicht. Überprüfe deinen Posteingang auf eine vorhandene Nachricht oder versuche es nach 5 Minuten erneut.",
 		"resendEmailFailed": "Das erneute Senden der Bestätigungs-E-Mail ist fehlgeschlagen. Bitte wende dich an den Support.",
@@ -392,7 +398,11 @@
 		"confirmPassword": "Bitte bestätige Dein Passwort",
 		"passwordsNotEqual": "Die Passwörter sind nicht gleich",
 		"registerWithBildungsraum": "Registrieren mit Mein Bildungsraum",
-		"ageConfirm": "Ich bestätige, dass ich bei Registrierung mindestens 16 Jahre alt bin oder mir für die Registrierung auf dieser Plattform eine Zustimmung meiner Personensorgeberechtigten vorliegt."
+		"ageConfirm": "Ich bestätige, dass ich bei Registrierung mindestens 16 Jahre alt bin oder mir für die Registrierung auf dieser Plattform eine Zustimmung meiner Personensorgeberechtigten vorliegt.",
+		"newsletterEmail": "Wir haben dir ebenfalls eine E-Mail zur Bestätigung deiner Newsletter-Anmeldung geschickt.",
+		"confirmNewsletter": "Klicke in der Newsletter-E-Mail auf <span class ='tw-font-bold'> „Newsletter-Anmeldung bestätigen” </span>, <br> um die Newsletter-Anmeldung abzuschließen.",
+		"newsletterEmailNotReceived": "Du hast keine Newsletter-E-Mail bekommen? Bitte übermittle deine Daten über <br> unser <a class='tw-underline tw-text-purple' href='public/about/newsletter'> Newsletter-Anmelde-Formular </a> oder <a class='tw-underline tw-text-purple' target='_blank' href='mailto:info@openbadges.education'>schreib uns.</a>",
+		"updatesOptInText": "<span class='tw-text-oebblack tw-font-bold'>Ja</span>, ich möchte E-Mail-Updates über Produkte und Serviceleistungen, zukünftige Webinare, Neuigkeiten und Events von Open Educational Badges erhalten."
 	},
 	"Captcha": {
 		"error": "Verifizierung fehlgeschlagen. Bitte erneut versuchen.",
@@ -439,6 +449,20 @@
 		"funding": "Förderung",
 		"fundingDesc": "Mit der Fördermaßnahme 'Open Photonik Pro' verfolgt das Bundesministerium für Bildung und Forschung (BMBF) das Ziel, neue Formen der Zusammenarbeit von Wissenschaft und Wirtschaft mit der Maker- und Gründerszene zu ermöglichen. Erschlossen werden sollen damit zusätzliche Innovationspfade und -potenziale. Gleichzeitig sollen Innovationszyklen deutlich verkürzt und die Vernetzung dieser Gruppen nachhaltig verbessert werden.",
 		"moreAboutFund": "Mehr zur Fördermaßnahme"
+	},
+	"Newsletter": {
+		"subscribe": "Newsletter abonnieren",
+		"confirmedSubscription": "<span class='tw-font-bold tw-text-oebblack'>Du hast deine Newsletter-Anmeldung erfolgreich bestätigt.</span>",
+		"cantUseWithoutSubscription": "Ohne Bestätigung der Nutzungsbedingungen kannst du Open Educational Badges leider nicht nutzen.",
+		"signup": "Newsletter-Anmeldung"
+	},
+	"TermsOfService": {
+		"newTerms": "Neue Nutzungsbedingungen",
+		"weReworkedTerms": "Wir haben unsere Nutzungsbedingungen überarbeitet. Bitte bestätige, dass du sie gelesen hast und akzeptierst.",
+		"iConfirm": "Ich habe die <a class='tw-underline tw-text-[#1400FF]' target='_blank' href='public/terms'> Nutzungsbedingungen</a> gelesen und stimme ihnen zu.",
+		"sendConfirmation": "Bestätigung absenden",
+		"cantUseWithoutConfirmation": "Ohne Bestätigung der Nutzungsbedingungen kannst du Open Educational Badges leider nicht nutzen.",
+		"backToTerms": "Zurück zu den Nutzungsbedingungen"
 	},
 	"FAQ": {
 		"youHaveQuestions": "Du hast Fragen?",
@@ -631,7 +655,10 @@
 	},
 	"QrCode": {
 		"savedSuccessfully": "<span class='tw-font-bold'> Die QR-Code-Vergabe wurde erfolgreich auf der Badge-Detail-Seite gespeichert.</span>",
-		"downloadedSuccessfully": "<span class='tw-font-bold'>Du hast den QR-Code erfolgreich heruntergeladen.</span><br> Schaue in deinem Download-Ordner nach."
+		"downloadedSuccessfully": "<span class='tw-font-bold'>Du hast den QR-Code erfolgreich heruntergeladen.</span><br> Schaue in deinem Download-Ordner nach.",
+		"deleteQrAward": "QR-Code-Vergabe löschen",
+		"deleteQrAwardConfirm": "Möchtest du die QR-Code-Vergabe wirklich löschen?",
+		"openRequestsWillBeLost": "Damit gehen alle noch offenen Badge-Anfragen verloren."
 	},
 	"LearningPath": {
 		"learningpaths": "Lernpfade",

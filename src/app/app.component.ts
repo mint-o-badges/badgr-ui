@@ -236,7 +236,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 	refreshProfile = () => {
 		this.profileManager.userProfileSet.changed$.subscribe((set) => {
 			if (set.entities.length && set.entities[0].agreedTermsVersion !== set.entities[0].latestTermsVersion) {
-				this.commonDialogsService.newTermsDialog.openDialog();
+				// this.commonDialogsService.newTermsDialog.openDialog();
 			}
 		});
 

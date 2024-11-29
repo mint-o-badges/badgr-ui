@@ -259,10 +259,10 @@ export const COMMON_IMPORTS = [
 ];
 
 @NgModule({
-	imports: [...COMMON_IMPORTS, FormsModule, LMarkdownEditorModule, TranslateModule],
+	imports: [...COMMON_IMPORTS, FormsModule, LMarkdownEditorModule, TranslateModule, SharedIconsModule],
 	providers: [BadgeClassManager, BadgeClassApiService],
 	declarations: [...DIRECTIVES, ...COMMON_MODULE_COMPONENTS, ...PIPES, ForwardRouteComponent, BadgeLegendComponent],
-	exports: [...DIRECTIVES, ...COMMON_MODULE_COMPONENTS, ...PIPES, BadgeLegendComponent],
+	exports: [...DIRECTIVES, ...COMMON_MODULE_COMPONENTS, ...PIPES, BadgeLegendComponent, SharedIconsModule],
 })
 export class BadgrCommonModule {
 	// Load BadgrCommonModule with forRoot() to preserve singleton status in lazy loaded modules.
