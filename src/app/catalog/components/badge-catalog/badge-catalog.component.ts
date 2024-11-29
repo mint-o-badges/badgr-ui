@@ -118,9 +118,7 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		// subscribe to issuer and badge class changes
 		this.badgesLoaded = this.loadBadges();
 
-		// this.sortControl.valueChanges.subscribe((value) => {
-		// 	this.changeOrder(value);
-		// });
+
 		this.groupControl.valueChanges.subscribe((value) => {
 			this.groupBy = value;
 		});
