@@ -82,6 +82,7 @@ import { MessageService } from '../services/message.service';
 					<p *ngIf="loaderName != 'basic' && dropZoneInfo2" class="dropzone-x-info2">
 						{{ 'General.or' | translate }}
 						<span
+							id="nounProject_span"
 							class="u-text-link tw-underline"
 							(click)="$event.preventDefault(); findNounproject($event)"
 							>{{ dropZoneInfo2 }}</span
