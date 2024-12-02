@@ -66,7 +66,7 @@
 						class="tw-w-20" 
 						[fieldType]="'number'" 
 						[control]="badgeClassForm.rawControlMap.badge_hours" 
-						[errorMessage]="{ duration: requiredError }"
+						[errorMessage]="{ duration: minMaxError }"
 						noTopMargin="true"
 					>
 					</oeb-input>
@@ -75,7 +75,7 @@
 						class="tw-w-20" 
 						[fieldType]="'number'" 
 						[control]="badgeClassForm.rawControlMap.badge_minutes" 
-						[errorMessage]="{ duration: requiredError }"
+						[errorMessage]="{ duration: minMaxError }"
 						noTopMargin="true"
 					>
 					</oeb-input>
@@ -87,8 +87,7 @@
 					hlmP 
 					size="sm"
 					id="maxHoursOrMinutesError"
-					[hidden]="!badgeStudyLoadDirty || !badgeClassForm.hasError('maxHoursError') && !badgeClassForm.hasError('maxMinutesError')"
-					class="tw-font-normal md:tw-pl-[13.5rem] u-text-error"
+					[hidden]="!badgeStudyLoadDirty || (!badgeClassForm.hasError('maxHoursError') && !badgeClassForm.hasError('maxMinutesError'))" class="tw-font-normal md:tw-pl-[13.5rem] u-text-error"
 				>
 					<span *ngIf="badgeClassForm.hasError('maxMinutesError')">{{'CreateBadge.minMaxError' | translate }}</span>
 					<span *ngIf="badgeClassForm.hasError('maxHoursError')">{{'CreateBadge.hoursMaxError' | translate }}</span>
