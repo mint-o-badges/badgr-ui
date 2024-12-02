@@ -604,11 +604,11 @@
 		"fieldIsRequired": "This field is required"
 	},
 	"ErrorDialog": {
-		"title": "An error has occured",
+		"title": "An error has occured!",
 		"message": "Below you see an error message. If you think this error is on us, write us an email or create an Issue in Github. Please copy the error message in your ticket.",
 		"copyButton" : "Copy",
 		"copyButtonAfter": "Copied!",
-		"createIssue": "Zu den Github Issues"
+		"createIssue": "To the GitHub issues"
 
 	},
 	"LearningPath": {
