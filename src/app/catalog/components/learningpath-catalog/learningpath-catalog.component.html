@@ -7,10 +7,16 @@
 				<div class="tw-z-10 tw-relative">
 					<h1 hlmH1 class="tw-text-purple">{{ 'LearningPath.catalogHeadline' | translate }}</h1>
 					<h1 hlmH1 class="lg:tw-pl-[10%] tw-font-extrabold tw-text-purple"> 
-						<span [countUp]="learningPaths.length">{{ learningPaths.length }}</span>{{ ' ' | i18nPlural: plural['learningPaths'] }} in  
-						<span [countUp]="issuersWithLps.length">{{ issuersWithLps.length }}</span>{{ ' ' | i18nPlural: plural['issuer'] }}
+						<ng-container *ngIf="learningPaths.length === 0">
+							{{ plural.learningPath['=0'] }}
+						</ng-container>
+						<ng-container *ngIf="learningPaths.length > 0">
+							<span [countUp]="learningPaths.length">{{ learningPaths.length }}</span>{{ ' ' | i18nPlural: plural['learningPath'] }} in  
+							<span [countUp]="issuersWithLps.length">{{ issuersWithLps.length }}</span>{{ ' ' | i18nPlural: plural['issuer'] }}
+						</ng-container>
 					</h1>
 				</div>
+				
 			</div>
 		</div>
 
