@@ -19,8 +19,8 @@ import { NgIf } from "@angular/common";
     template: `
         <oeb-dialog [variant]="variant" class="tw-text-center tw-text-purple">
             <div class="tw-flex tw-justify-center">
-                <div class="oeb-icon-circle tw-bg-white tw-my-6">
-                    <hlm-icon size='xxl' name="lucideCheck" />
+                <div class="oeb-icon-circle tw-my-6">
+            		<svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52"><circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/><path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/></svg>
                 </div>
             </div>
             <p *ngIf="recipient; else showText" hlmP class="tw-text-purple">Der Badge wurde erfolgreich an 
@@ -28,8 +28,9 @@ import { NgIf } from "@angular/common";
             <ng-template #showText>
                 <p hlmP class="tw-text-purple" [innerHTML]="text"></p>
             </ng-template>
-        </oeb-dialog>
+        </oeb-dialog> 
     `,
+    styleUrl: './success-dialog.component.scss'
 })
 export class SuccessDialogComponent {
     // @HostBinding('class') private readonly _class: string = 'tw-bg-red tw-bg-red';

@@ -192,11 +192,11 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 	savePromise: Promise<BadgeClass> | null = null;
 	badgeClassForm = typedFormGroup([
-		this.criteriaRequired.bind(this),
-		this.imageValidation.bind(this),
-		this.maxStudyLoadValidation.bind(this),
-		this.noDuplicateCompetencies.bind(this),
-	])
+
+        this.criteriaRequired.bind(this),
+        this.imageValidation.bind(this),
+		    this.maxStudyLoadValidation.bind(this),
+        this.noDuplicateCompetencies.bind(this)])
 		.addControl('badge_name', '', [
 			Validators.required,
 			Validators.maxLength(60),
@@ -390,9 +390,10 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		}
 
 		// transform minutes into hours and minutes
-		let competencies = badgeClass.extension['extensions:CompetencyExtension'].map((comp) => {
-			return { ...comp, hours: Math.floor(comp.studyLoad / 60), minutes: comp.studyLoad % 60 };
-		});
+
+		let competencies = badgeClass.extension['extensions:CompetencyExtension'].map(comp => {
+			return { ...comp, hours: Math.floor(comp.studyLoad / 60), minutes: comp.studyLoad % 60 }
+		})
 
 		this.badgeClassForm.setValue({
 			badge_name: badgeClass.name,
@@ -1110,6 +1111,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	noDuplicateCompetencies(): { duplicateCompetency: Boolean } | null {
 		if (this.checkDuplicateCompetency()) return { duplicateCompetency: true };
 	}
+
 
 	checkDuplicateCompetency(): String | null {
 		if (!this.badgeClassForm) return null;

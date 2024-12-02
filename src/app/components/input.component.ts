@@ -16,10 +16,9 @@ import { HlmPDirective } from './spartan/ui-typography-helm/src/lib/hlm-p.direct
 		<label class="tw-pb-[2px] tw-pl-[3px]" [attr.for]="inputName" *ngIf="label">
 				<span *ngIf="labelStyle; else baseLabel" [class]="labelStyle" [innerHTML]="label"></span>
 				<ng-template #baseLabel>
-				<span hlmP class="tw-text-oebblack tw-font-semibold" [innerHTML]="label"></span
-				>
+					<span hlmP class="tw-text-oebblack tw-font-semibold" [innerHTML]="label"></span>
 				</ng-template>
-				<span class="tw-pl-[3px] tw-text-oebblack" *ngIf="sublabelRight"> {{sublabelRight}}</span>
+				<span class="tw-pl-[3px] tw-text-oebblack" *ngIf="sublabelRight"> {{ sublabelRight }}</span>
 				<span *ngIf="optional">(OPTIONAL)</span>
 				<span *ngIf="formFieldAside">{{ formFieldAside }}</span>
 			</label>

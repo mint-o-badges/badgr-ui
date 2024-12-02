@@ -38,11 +38,15 @@ import { CustomValidatorMessages, messagesForValidationError } from './input.com
 			#selectInput
 			class="tw-text-oebblack"
 			[ngClass]="{ 'tw-pointer-events-none tw-opacity-50': disabled}"
+			[attr.id]="id"
 			brn-select
 			hlm
 		>
-			<hlm-select-trigger class="tw-w-full tw-border-solid tw-border-purple tw-bg-white">
-				<hlm-select-value class="tw-text-base" />
+			<hlm-select-trigger
+				[_size]="actionBar ? 'actionBar' : 'default'"
+				class="tw-w-full tw-border-solid tw-border-purple tw-bg-white "
+			>
+				<hlm-select-value class="tw-text-base " />
 			</hlm-select-trigger>
 			<hlm-select-content>
 				<hlm-option *ngIf="placeholder" selected value="">{{ placeholder }}</hlm-option>
@@ -69,7 +73,8 @@ export class OebSelectComponent {
 	@Input() description: string;
 	@Input() placeholder: string;
 	@Input() disabled: boolean = false;
-
+	@Input() id: string = null;
+	@Input() actionBar: boolean = false;
 	@Input() options: FormFieldSelectOption[];
 	@Input() set optionMap(valueToLabelMap: { [value: string]: string }) {
 		this.options = Object.getOwnPropertyNames(valueToLabelMap).map((value) => ({
