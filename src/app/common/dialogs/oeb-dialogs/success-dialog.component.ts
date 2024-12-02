@@ -28,7 +28,7 @@ import { NgIf } from "@angular/common";
             <ng-template #showText>
                 <p hlmP class="tw-text-purple" [innerHTML]="text"></p>
             </ng-template>
-        </oeb-dialog>
+        </oeb-dialog> 
     `,
     styleUrl: './success-dialog.component.scss'
 })
