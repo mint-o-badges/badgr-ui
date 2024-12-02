@@ -285,7 +285,7 @@
 		"useOurEditor": "Use our editor",
 		"imageSublabel": "Choose an image/icon to be inserted into our frame.",
 		"useOwnVisual": "Use your own visual",
-		"uploadOwnDesign": "Upload your own badge design (max. 250 KB)",
+		"uploadOwnDesign": "Upload your own badge design (max. 2 MB)",
 		"imageErrorFork": "Please use a valid (and unique after fork) image for the badge",
 		"fillWithCompetencies": "fill badge with competencies",
 		"aiAssistant": "AI-Badge-Assistant",

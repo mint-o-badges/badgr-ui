@@ -308,7 +308,7 @@
 		"useOurEditor": "Unseren Editor nutzen",
 		"imageSublabel": "Wähle ein Icon/Bild, das in unseren Badge-Rahmen eingesetzt wird.",
 		"useOwnVisual": "Eigenes Visual nutzen",
-		"uploadOwnDesign": "Lade ein eigenes Badge-Design hoch (max. 250 KB)",
+		"uploadOwnDesign": "Lade ein eigenes Badge-Design hoch (max. 2 MB)",
 		"imageErrorFork": "Bitte gib dem Badge ein gültiges (bei einem Fork eindeutiges) Bild",
 		"fillWithCompetencies": "Badge mit Kompetenzen befüllen",
 		"aiAssistant": "KI-Badge-Assistent",
