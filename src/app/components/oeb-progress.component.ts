@@ -1,5 +1,5 @@
 
-import { Component, Input, OnInit, TemplateRef } from '@angular/core';
+import { Component, Input, OnInit, TemplateRef, ChangeDetectorRef } from '@angular/core';
 import {
   BrnProgressComponent,
   BrnProgressIndicatorComponent,
@@ -12,7 +12,7 @@ import { NgTemplateOutlet, NgIf } from '@angular/common';
   standalone: true,
   imports: [BrnProgressComponent, BrnProgressIndicatorComponent, HlmProgressIndicatorDirective, NgTemplateOutlet, NgIf],
   template: `
-      <brn-progress [class]="class" hlm aria-labelledby='loading' [value]="value">
+      <brn-progress [class]="class" hlm aria-labelledby='loading' [value]="progressValue">
         <brn-progress-indicator hlm />
         <ng-container *ngIf="template">
           <ng-container *ngTemplateOutlet="template"></ng-container>
@@ -24,4 +24,15 @@ export class OebProgressComponent {
   @Input() value: number;
   @Input() class: string = '';
   @Input() template?: TemplateRef<any>;
+
+  constructor(private cdr: ChangeDetectorRef) {}
+  progressValue = 0;
+
+  ngOnInit() {
+    setTimeout(() => { 
+      this.progressValue = this.value
+      this.cdr.detectChanges();
+    }
+    , 1000);
+  }
 }

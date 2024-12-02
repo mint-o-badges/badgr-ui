@@ -114,6 +114,7 @@ import { OebProgressComponent } from '../components/oeb-progress.component';
 import { OebSelectComponent } from '../components/select.component';
 import { OebCollapsibleComponent } from '../components/oeb-collapsible.component';
 import { OebSeparatorComponent } from '../components/oeb-separator.component';
+import { OebSpinnerComponent } from '../components/oeb-spinner.component';
 import { OebLearningPathDetailComponent } from './components/learningpath-detail/oeb-learning-path.component';
 
 import { SharedIconsModule } from '../public/icons.module';
@@ -129,6 +130,7 @@ import { IssuerCardComponent } from '../components/issuer-card/issuer-card.compo
 import { ErrorDialogComponent } from './dialogs/oeb-dialogs/error-dialog.component';
 import { GlobalErrorHandler } from '../globalErrorHandler.service';
 import { ServerErrorInterceptor } from '../ServerErrorInterceptor';
+import { CountUpDirective } from './directives/count-up.directive';
 
 const DIRECTIVES = [
 	BgAwaitPromises,
@@ -232,6 +234,7 @@ export const COMMON_IMPORTS = [
 	OebInputErrorComponent,
 	OebSelectComponent,
 	OebSeparatorComponent,
+	OebSpinnerComponent,
 	OebCollapsibleComponent,
 	OebButtonComponent,
 	OebProgressComponent,
@@ -263,7 +266,7 @@ export const COMMON_IMPORTS = [
 @NgModule({
 	imports: [...COMMON_IMPORTS, FormsModule, LMarkdownEditorModule, TranslateModule],
 	providers: [BadgeClassManager, BadgeClassApiService, { provide: HTTP_INTERCEPTORS, useClass:ServerErrorInterceptor, multi:true}],
-	declarations: [...DIRECTIVES, ...COMMON_MODULE_COMPONENTS, ...PIPES, ForwardRouteComponent, BadgeLegendComponent],
+	declarations: [...DIRECTIVES, ...COMMON_MODULE_COMPONENTS, ...PIPES, ForwardRouteComponent, BadgeLegendComponent, CountUpDirective],
 	exports: [...DIRECTIVES, ...COMMON_MODULE_COMPONENTS, ...PIPES, BadgeLegendComponent],
 })
 export class BadgrCommonModule {
