@@ -10,7 +10,6 @@ export class GlobalErrorHandler implements ErrorHandler {
 	constructor() {}
 
 	handleError(error: any): void {
-		// Logge den Fehler (optional)
 		const dialogRef = this._hlmDialogService.open(ErrorDialogComponent, {
 			context: {
 				error: error,

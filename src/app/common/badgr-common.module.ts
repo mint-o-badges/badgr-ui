@@ -62,7 +62,7 @@ import { ExternalToolsManager } from '../externaltools/services/externaltools-ma
 import { ExternalToolsApiService } from '../externaltools/services/externaltools-api.service';
 import { ExternalToolLaunchComponent } from './components/external-tool-launch.component';
 import { AppConfigService } from './app-config.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AutosizeDirective } from './directives/autosize.directive';
 import { NavigationService } from './services/navigation.service';
 import { BgPopupMenu, BgPopupMenuTriggerDirective } from './components/bg-popup-menu.component';
@@ -128,6 +128,7 @@ import { HlmBadgeDirective } from '../components/spartan/ui-badge-helm/src/lib/h
 import { IssuerCardComponent } from '../components/issuer-card/issuer-card.component';
 import { ErrorDialogComponent } from './dialogs/oeb-dialogs/error-dialog.component';
 import { GlobalErrorHandler } from '../globalErrorHandler.service';
+import { ServerErrorInterceptor } from '../ServerErrorInterceptor';
 
 const DIRECTIVES = [
 	BgAwaitPromises,
@@ -261,7 +262,7 @@ export const COMMON_IMPORTS = [
 
 @NgModule({
 	imports: [...COMMON_IMPORTS, FormsModule, LMarkdownEditorModule, TranslateModule],
-	providers: [BadgeClassManager, BadgeClassApiService, { provide: ErrorHandler, useClass: GlobalErrorHandler }],
+	providers: [BadgeClassManager, BadgeClassApiService, { provide: HTTP_INTERCEPTORS, useClass:ServerErrorInterceptor, multi:true}],
 	declarations: [...DIRECTIVES, ...COMMON_MODULE_COMPONENTS, ...PIPES, ForwardRouteComponent, BadgeLegendComponent],
 	exports: [...DIRECTIVES, ...COMMON_MODULE_COMPONENTS, ...PIPES, BadgeLegendComponent],
 })
