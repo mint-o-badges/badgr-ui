@@ -12,7 +12,22 @@ import { HlmPDirective } from './spartan/ui-typography-helm/src/lib/hlm-p.direct
 	imports: [HlmInputDirective, HlmPDirective, OebInputErrorComponent, NgIf, NgClass, ReactiveFormsModule],
 	styleUrls: ['./input.component.scss'],
 	template: ` <div [ngClass]="{ 'tw-mt-6 md:tw-mt-7': !noTopMargin }">
-		<div class="tw-flex tw-justify-between tw-items-center"></div>
+		<div class="tw-flex tw-justify-between tw-items-center">
+		<label class="tw-pb-[2px] tw-pl-[3px]" [attr.for]="inputName" *ngIf="label">
+				<span *ngIf="labelStyle; else baseLabel" [class]="labelStyle" [innerHTML]="label"></span>
+				<ng-template #baseLabel>
+				<span hlmP class="tw-text-oebblack tw-font-semibold" [innerHTML]="label"></span
+				>
+				</ng-template>
+				<span class="tw-pl-[3px] tw-text-oebblack" *ngIf="sublabelRight"> {{sublabelRight}}</span>
+				<span *ngIf="optional">(OPTIONAL)</span>
+				<span *ngIf="formFieldAside">{{ formFieldAside }}</span>
+			</label>
+			<ng-content
+				class="tw-relative tw-z-20 tw-font-semibold tw-text-[14px] md:tw-text-[20px] tw-leading-4 md:tw-leading-6"
+				select="[label-additions]"
+			></ng-content>
+			</div>
 		<p class="tw-pl-[3px]" *ngIf="sublabel">
 			{{ sublabel }}
 		</p>
