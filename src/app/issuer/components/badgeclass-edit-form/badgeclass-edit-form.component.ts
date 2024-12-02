@@ -996,7 +996,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 			this.save.emit(this.savePromise);
 		} catch (e) {
-			throw new Error('Not implemented');
+			console.log(e)
 		}
 	}
 

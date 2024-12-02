@@ -446,10 +446,6 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 		};
 	}
 
-	doError() {
-		throw new Error('This is an error');
-	}
-
 	navigateToIssuer(issuerData) {
 		if (!this.loggedIn) {
 			this.router.navigate(['/public/issuers/', issuerData.slug]);

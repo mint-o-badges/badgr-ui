@@ -56,7 +56,7 @@ import { NgIf } from '@angular/common';
 							size="sm"
 							class="tw-inline-block tw-mr-2"
 						></hlm-icon>
-						{{ isCopied ? 'Kopiert!' : ('ErrorDialog.copyButton' | translate) }}
+						{{ isCopied ? ('ErrorDialog.copyButtonAfter' | translate) : ('ErrorDialog.copyButton' | translate) }}
 					</button>
 					</div>
 				</div>
