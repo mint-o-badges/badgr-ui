@@ -97,31 +97,23 @@
 		"serverDown": "Ups! Der Server antwortet nicht.",
 		"relodePage": "Bitte die Seite neu laden.",
 		"using": "using",
-
 		"headline1": "Gemeinsam machen wir",
 		"headline2": "Kompetenzerwerb sichtbar",
 		"text1": "Badges sind digitale Nachweise, die wie Zertifikate einfach und zeiteffizient vergeben und gesammelt werden können, um Lernerfolge und Kompetenzerwerb sichtbar zu machen - sowohl für digitale Lernangebote als auch für Angebote vor Ort.",
 		"badgesErstellen": "Jetzt <span class='bold'>Badges erstellen<span>",
-
 		"headline2_1": "Unsere Ziele für",
 		"headline2_2": "OPEN EDUCATIONAL BADGES",
-
 		"knowWhatIcan": "ICH WEIß, WAS ICH KANN!",
 		"knowWhatIcan_text": "Wir stärken die Souveränität der Lernenden, indem wir ihnen Transparenz über ihre Kompetenzen geben.",
-
 		"bridges": "Brücken bauen",
 		"bridges_text": "Wir machen den außerschulischen Kompetenzerwerb gleichwertig sichtbar und fördern ihn dadurch.",
-
 		"threeElementsHeadline": "Open Educational Badges besteht aus drei Elementen:",
 		"threeEleText1": "Einer <span class='bold'>technischen Lösung</span>, um Badges zu vergeben und zu sammeln. Diese Funktionalität kann über ein Plug-In in bestehende Lernumgebungen eingebettet werden.",
 		"threeEleText2": "Einem <span class='bold'>standardisierten, offenen und skalierbarem Kompetenz-Raster nach ESCO</span>, das die Wertigkeit der Badges sicherstellt und institutionsübergreifendes Lernen ermöglicht.",
 		"threeEleText3": "Einer <span class='bold'>offenen Community</span>, die Badges erstellt, vergibt, erwirbt und gleichzeitig ihre Qualität durch ein Community-Review-Prinzip sicherstellt.",
-
 		"threeEleFooter": "Open Educational Badges sind dadurch teilbar, skalierbar, anschlussfähig und so entsteht eine neue Währung, um Kompetenzen abzubilden.",
-
 		"headline3_1": "So kannst du Open Educational Badges nutzen.",
 		"headline3_2": "Für Institutionen und Bildungsakteur:innen",
-
 		"forEleHeadlinet1": "Konto anlegen und Institution erstellen",
 		"forEleText1": "Lege einen Account auf Open Educational Badges an und registriere deine Institution.",
 		"forEleHeadlinet2": "Badges erstellen",
@@ -130,7 +122,6 @@
 		"forEleText3": "Du kannst Badges per Email oder per QR-Code an deine Lernenden vergeben.",
 		"forEleHeadlinet4": "Lernende erhalten und sammeln Badges",
 		"forEleText4": "Lernende erhalten Badges mit den erworbenen Kompetenzen. Sie erlangen dadurch einen besseren Überblick über ihr Können.",
-
 		"usingOEB": "Diese Institutionen nutzen bereits Open Educational Badges"
 	},
 	"Issuer": {
@@ -356,7 +347,7 @@
 		"licenseInfo": "Badges werden unter der <a class='tw-underline tw-text-[#1400FF]' target='_blank' href='https://creativecommons.org/publicdomain/zero/1.0/legalcode.de'> Lizenz CC0 1.0 </a> erstellt.",
 		"requiredError": "Erforderlich",
 		"hoursMaxError": "Stunden dürfen 10.000 nicht überschreiten.",
-		"minMaxError": "Bitte gib eine positve Nummer ein."
+		"minMaxError": "Bitte gib eine positive Zahl ein."
 	},
 	"Signup": {
 		"youHaveAccount": "Du hast bereits einen Account?",
@@ -477,7 +468,6 @@
 		"collectShareLearningPath": "Sammle und teile digitale Lernpfade aus deinem Rucksack.",
 		"groupByInstitution": "Nach Institutionen gruppieren",
 		"institution": "Institution",
-
 		"greating": "Hallo",
 		"competencies": "Kompetenzen",
 		"studyingTime": "Lernzeit",
@@ -485,13 +475,11 @@
 		"newCompetencies": "Neue Kompetenzen",
 		"skills": "Fähigkeiten",
 		"knowledge": "Wissen",
-
 		"addRecievedBadge": "Füge ein Badge hinzu welches du bereits erhalten hast.",
 		"image": "Bild",
 		"close": "Schließen",
 		"enterURL": "URL eingeben",
 		"enterJSON": "JSON eingeben",
-
 		"selectFromFile": "aus Dateien auswählen",
 		"selectFromMyFiles": "aus meinen Dateien auswählen",
 		"chooseFromExistingIcons": "aus bestehenden Icons wählen",
@@ -500,7 +488,6 @@
 		"chooseAnotherFile": "andere Datei wählen",
 		"oneBadgeRequired": "Es ist mindestens eine Badge-Eingabe erforderlich.",
 		"uploadOwnVisual": "Komplettes Badge-Bild hochladen",
-
 		"importedSuccessfully": "Badge erfolgreich importiert.",
 		"uploadFailed": "Badge konnte nicht hochgeladen werden:",
 		"unknownError": "Der Upload des Badges ist aufgrund eines unbekannten Fehlers fehlgeschlagen"
