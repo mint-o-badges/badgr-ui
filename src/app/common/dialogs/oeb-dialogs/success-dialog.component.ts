@@ -1,10 +1,10 @@
-import { Component, HostBinding, inject } from "@angular/core";
-import { BrnDialogRef, injectBrnDialogContext } from "@spartan-ng/ui-dialog-brain";
-import { OebDialogComponent } from "../../../components/oeb-dialog.component";
-import { HlmPDirective } from "../../../components/spartan/ui-typography-helm/src";
-import { HlmIconComponent, HlmIconModule, provideIcons } from "../../../components/spartan/ui-icon-helm/src";
+import { Component, HostBinding, inject } from '@angular/core';
+import { BrnDialogRef, injectBrnDialogContext } from '@spartan-ng/ui-dialog-brain';
+import { OebDialogComponent } from '../../../components/oeb-dialog.component';
+import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/src';
+import { HlmIconComponent, HlmIconModule, provideIcons } from '../../../components/spartan/ui-icon-helm/src';
 import { lucideCheck } from '@ng-icons/lucide';
-import { NgIf } from "@angular/common";
+import { NgIf } from '@angular/common';
 
 @Component({
     selector: 'oeb-success-dialog',
@@ -33,15 +33,14 @@ import { NgIf } from "@angular/common";
     styleUrl: './success-dialog.component.scss'
 })
 export class SuccessDialogComponent {
-    // @HostBinding('class') private readonly _class: string = 'tw-bg-red tw-bg-red';
-    private readonly _dialogContext = injectBrnDialogContext<{ text: string, recipient: any, variant: string }>();
-    protected readonly recipient = this._dialogContext.recipient;
-    protected readonly text = this._dialogContext.text;
-    protected readonly variant = this._dialogContext.variant;
-    private readonly _dialogRef = inject<BrnDialogRef>(BrnDialogRef);
+	// @HostBinding('class') private readonly _class: string = 'tw-bg-red tw-bg-red';
+	private readonly _dialogContext = injectBrnDialogContext<{ text: string; recipient: any; variant: string }>();
+	protected readonly recipient = this._dialogContext.recipient;
+	protected readonly text = this._dialogContext.text;
+	protected readonly variant = this._dialogContext.variant;
+	private readonly _dialogRef = inject<BrnDialogRef>(BrnDialogRef);
 
-
-    public selectUser() {
-        this._dialogRef.close();
-    }
+	public selectUser() {
+		this._dialogRef.close();
+	}
 }

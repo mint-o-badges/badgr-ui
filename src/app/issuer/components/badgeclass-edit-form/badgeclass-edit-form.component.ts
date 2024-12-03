@@ -1,4 +1,14 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import {
+	AfterViewInit,
+	Component,
+	ElementRef,
+	EventEmitter,
+	inject,
+	Input,
+	OnInit,
+	Output,
+	ViewChild,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AbstractControl, FormBuilder, Validators, ValidatorFn, ValidationErrors, FormControl } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
@@ -33,6 +43,8 @@ import { Platform } from '@angular/cdk/platform'; // To detect the current platf
 import { NavigationService } from '../../../common/services/navigation.service';
 
 import { base64ByteSize } from '../../../common/util/file-util';
+import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
+import { ErrorDialogComponent } from '../../../common/dialogs/oeb-dialogs/error-dialog.component';
 
 @Component({
 	selector: 'badgeclass-edit-form',
@@ -40,6 +52,8 @@ import { base64ByteSize } from '../../../common/util/file-util';
 	styleUrl: './badgeclass-edit-form.component.css',
 })
 export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableComponent implements OnInit, AfterViewInit {
+	private readonly _hlmDialogService = inject(HlmDialogService);
+
 	baseUrl: string;
 	badgeCategory: string;
 
@@ -72,7 +86,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	competencyCategoryError = this.translate.instant('CreateBadge.competencyCategoryError');
 	competencyDescription =
 		this.translate.instant('Badge.competency') + '-' + this.translate.instant('General.description');
-
+	minMaxError = this.translate.instant('CreateBadge.minMaxError');
 	shortDescription = this.translate.instant('CreateBadge.shortDescription');
 	alignmentNameError = this.translate.instant('CreateBadge.alignmentNameError');
 	alignmentURLError = this.translate.instant('CreateBadge.alignmentURLError');
@@ -1003,7 +1017,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 			this.save.emit(this.savePromise);
 		} catch (e) {
-			console.log(e);
+			console.log(e)
 		}
 	}
 

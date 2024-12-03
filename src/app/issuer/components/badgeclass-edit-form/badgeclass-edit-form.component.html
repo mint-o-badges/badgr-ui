@@ -63,13 +63,15 @@
 						id="badgeclass_description_input"
 						[placeholder]="summarizedDescription"
 						[errorMessage]="{ required: enterDescription }"
-						noTopMargin="true"
-					>
-					</oeb-input>
-				</div>
-
+          </oeb-input>
+        </div>
 				<div
 					class="tw-flex md:tw-flex-row tw-gap-3 md:tw-gap-8 tw-flex-col md:tw-items-center tw-justify-start"
+			<p
+					hlmP 
+					size="sm"
+					id="maxHoursOrMinutesError"
+					[hidden]="!badgeStudyLoadDirty || (!badgeClassForm.hasError('maxHoursError') && !badgeClassForm.hasError('maxMinutesError'))" class="tw-font-normal md:tw-pl-[13.5rem] u-text-error"
 				>
 					<span class="input-label md:tw-flex-[0_0_10em]"> {{ 'RecBadgeDetail.duration' | translate }}</span>
 					<div class="tw-flex tw-gap-2 tw-items-center">
@@ -326,7 +328,7 @@
 											}}
 										</span>
 										<div class="tw-flex tw-gap-2 tw-items-center">
-											<oeb-input
+                    <oeb-input
 												class="tw-w-20"
 												[fieldType]="'number'"
 												[control]="aiCompetency.rawControlMap.hours"

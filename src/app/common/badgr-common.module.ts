@@ -1,4 +1,4 @@
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { ErrorHandler, ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { BgBadgecard } from './components/bg-badgecard';
@@ -62,7 +62,7 @@ import { ExternalToolsManager } from '../externaltools/services/externaltools-ma
 import { ExternalToolsApiService } from '../externaltools/services/externaltools-api.service';
 import { ExternalToolLaunchComponent } from './components/external-tool-launch.component';
 import { AppConfigService } from './app-config.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AutosizeDirective } from './directives/autosize.directive';
 import { NavigationService } from './services/navigation.service';
 import { BgPopupMenu, BgPopupMenuTriggerDirective } from './components/bg-popup-menu.component';
@@ -106,6 +106,7 @@ import { OebCompetency } from './components/oeb-competency';
 import { OebDialogComponent } from '../components/oeb-dialog.component';
 import { SuccessDialogComponent } from './dialogs/oeb-dialogs/success-dialog.component';
 import { DangerDialogComponent } from './dialogs/oeb-dialogs/danger-dialog.component';
+import { EndOfEditDialogComponent } from './dialogs/oeb-dialogs/end-of-edit-dialog.component';
 import { OebBackgroundComponent } from '../components/oeb-background.component';
 import { OebIssuerDetailComponent } from './components/issuer/oeb-issuer-detail.component';
 import { DatatableComponent } from '../components/datatable-badges.component';
@@ -127,6 +128,9 @@ import { OebIssuerCard } from './components/oeb-issuercard';
 import { HourPipe } from './pipes/hourPipe';
 import { HlmBadgeDirective } from '../components/spartan/ui-badge-helm/src/lib/hlm-badge.directive';
 import { IssuerCardComponent } from '../components/issuer-card/issuer-card.component';
+import { ErrorDialogComponent } from './dialogs/oeb-dialogs/error-dialog.component';
+import { GlobalErrorHandler } from '../globalErrorHandler.service';
+import { ServerErrorInterceptor } from '../ServerErrorInterceptor';
 import { CountUpDirective } from './directives/count-up.directive';
 
 const DIRECTIVES = [
@@ -247,6 +251,7 @@ export const COMMON_IMPORTS = [
 	SuccessDialogComponent,
 	DangerDialogComponent,
 	OebBackgroundComponent,
+	ErrorDialogComponent,
 	OebTabsComponent,
 	HlmIconModule,
 	CountUpModule,
@@ -256,12 +261,13 @@ export const COMMON_IMPORTS = [
 	LearningPathParticipantsDatatableComponent,
 	LearningPathGraduatesDatatableComponent,
 	LearningPathRequestsDatatableComponent,
+	EndOfEditDialogComponent,
 	HlmBadgeDirective,
 ];
 
 @NgModule({
 	imports: [...COMMON_IMPORTS, FormsModule, LMarkdownEditorModule, TranslateModule],
-	providers: [BadgeClassManager, BadgeClassApiService],
+	providers: [BadgeClassManager, BadgeClassApiService, { provide: HTTP_INTERCEPTORS, useClass:ServerErrorInterceptor, multi:true}],
 	declarations: [...DIRECTIVES, ...COMMON_MODULE_COMPONENTS, ...PIPES, ForwardRouteComponent, BadgeLegendComponent, CountUpDirective],
 	exports: [...DIRECTIVES, ...COMMON_MODULE_COMPONENTS, ...PIPES, BadgeLegendComponent],
 })
