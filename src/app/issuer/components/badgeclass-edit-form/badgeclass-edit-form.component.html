@@ -63,17 +63,26 @@
 						id="badgeclass_description_input"
 						[placeholder]="summarizedDescription"
 						[errorMessage]="{ required: enterDescription }"
-          </oeb-input>
-        </div>
+					></oeb-input>
+				</div>
 				<div
 					class="tw-flex md:tw-flex-row tw-gap-3 md:tw-gap-8 tw-flex-col md:tw-items-center tw-justify-start"
-			<p
-					hlmP 
-					size="sm"
-					id="maxHoursOrMinutesError"
-					[hidden]="!badgeStudyLoadDirty || (!badgeClassForm.hasError('maxHoursError') && !badgeClassForm.hasError('maxMinutesError'))" class="tw-font-normal md:tw-pl-[13.5rem] u-text-error"
 				>
-					<span class="input-label md:tw-flex-[0_0_10em]"> {{ 'RecBadgeDetail.duration' | translate }}</span>
+					<p
+						hlmP
+						size="sm"
+						id="maxHoursOrMinutesError"
+						[hidden]="
+							!badgeStudyLoadDirty ||
+							(!badgeClassForm.hasError('maxHoursError') && !badgeClassForm.hasError('maxMinutesError'))
+						"
+						class="tw-font-normal md:tw-pl-[13.5rem] u-text-error"
+					>
+						<span class="input-label md:tw-flex-[0_0_10em]">
+							{{ 'RecBadgeDetail.duration' | translate }}</span
+						>
+					</p>
+
 					<div class="tw-flex tw-gap-2 tw-items-center">
 						<oeb-input
 							class="tw-w-20"
@@ -100,19 +109,22 @@
 					class="tw-font-normal md:tw-pl-[13.5rem] u-text-error"
 					hlmP
 					size="sm"
-					[hidden]="!badgeClassForm.hasError('hoursAndMinutesError') && 
-								(!badgeStudyLoadDirty || (!badgeClassForm.hasError('maxHoursError') && !badgeClassForm.hasError('maxMinutesError')))"
-					>
-						<span *ngIf="badgeClassForm.hasError('hoursAndMinutesError')">
-							{{ 'CreateBadge.hoursAndMinutesError' | translate }}
-						</span>
-						<span *ngIf="badgeClassForm.hasError('maxMinutesError')">
-							{{ 'CreateBadge.minMaxError' | translate }}
-						</span>
-						<span *ngIf="badgeClassForm.hasError('maxHoursError')">
-							{{ 'CreateBadge.hoursMaxError' | translate }}
-						</span>
-					</p>
+					[hidden]="
+						!badgeClassForm.hasError('hoursAndMinutesError') &&
+						(!badgeStudyLoadDirty ||
+							(!badgeClassForm.hasError('maxHoursError') && !badgeClassForm.hasError('maxMinutesError')))
+					"
+				>
+					<span *ngIf="badgeClassForm.hasError('hoursAndMinutesError')">
+						{{ 'CreateBadge.hoursAndMinutesError' | translate }}
+					</span>
+					<span *ngIf="badgeClassForm.hasError('maxMinutesError')">
+						{{ 'CreateBadge.minMaxError' | translate }}
+					</span>
+					<span *ngIf="badgeClassForm.hasError('maxHoursError')">
+						{{ 'CreateBadge.hoursMaxError' | translate }}
+					</span>
+				</p>
 				<div
 					class="tw-flex md:tw-flex-row tw-gap-3 md:tw-gap-8 tw-flex-col md:tw-items-center tw-justify-start"
 				>
@@ -328,7 +340,7 @@
 											}}
 										</span>
 										<div class="tw-flex tw-gap-2 tw-items-center">
-                    <oeb-input
+											<oeb-input
 												class="tw-w-20"
 												[fieldType]="'number'"
 												[control]="aiCompetency.rawControlMap.hours"
@@ -469,7 +481,7 @@
 												noTopMargin="true"
 											>
 											</oeb-input>
-											  
+
 											<span class="tw-text-oebblack">h</span>
 										</div>
 									</div>
