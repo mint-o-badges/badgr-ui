@@ -92,7 +92,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	imageTooLarge = this.translate.instant('CreateBadge.imageTooLarge');
 
 	// To check custom-image size
-	maxCustomImageSize = 1024 * 250;
+	maxCustomImageSize = 1024 * 1024 * 2;
 	isCustomImageLarge: boolean = false;
 
 	@Input()
