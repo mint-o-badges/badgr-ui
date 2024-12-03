@@ -52,15 +52,7 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 			value: 'andere',
 		},
 	];
-	labelDateAsc = this.translate.instant('General.dateAscending');
-	labelDateDesc = this.translate.instant('General.dateDescending');
 	
-	sortOptions = [
-		{ value: 'name_asc', label: 'A-Z' },
-		{ value: 'name_desc', label: 'Z-A' },
-		{ value: 'date_asc', label: this.labelDateAsc },
-		{ value: 'date_desc', label: this.labelDateDesc },
-	];
 	sortControl = new FormControl('name_asc');
 	private _searchQuery = '';
 	get searchQuery() {
@@ -117,9 +109,7 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 		this.categoryControl.valueChanges.subscribe((value) => {
 			this.categoryFilter = value;
 		});
-		this.sortControl.valueChanges.subscribe((value) => {
-			this.changeOrder(value);
-		});
+
 	}
 
 	async loadIssuers() {
@@ -392,25 +382,7 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 		}
 	}
 
-	changeOrder(sortOption: string) {
-		const [sortBy, order] = sortOption.split('_') as ['name' | 'date', 'asc' | 'desc'];
-		const multiplier = order === 'asc' ? 1 : -1;
 
-		// Sortierfunktion
-		const sortFn = (a: any, b: any) => {
-			if (sortBy === 'name') {
-				return multiplier * a.name.localeCompare(b.name);
-			} else if (sortBy === 'date') {
-				const dateA = new Date(a.createdAt).getTime();
-				const dateB = new Date(b.createdAt).getTime();
-				return multiplier * (dateA - dateB);
-			}
-			return 0;
-		};
-
-		this.issuerResults.sort(sortFn);
-		this.issuerResultsByCategory.forEach((r) => r.issuer.sort(sortFn));
-	}
 
 	openMap() {
 		this.badgesDisplay = 'map';

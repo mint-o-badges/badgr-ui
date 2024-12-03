@@ -36,6 +36,12 @@ export class OebSortSelectComponent implements OnInit {
     });
   }
 
+  ngAfterViewInit():void {
+    // Default order by name ascending
+    this.changeOrder('name_asc')
+
+  }
+
 
   changeOrder(sortOption: string): void {
     const [sortBy, order] = sortOption.split('_') as ['name' | 'date', 'asc' | 'desc'];
