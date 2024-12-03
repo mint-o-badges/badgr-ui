@@ -11,7 +11,7 @@ import { HlmPDirective } from './spartan/ui-typography-helm/src/lib/hlm-p.direct
 	standalone: true,
 	imports: [HlmInputDirective, HlmPDirective, OebInputErrorComponent, NgIf, NgClass, ReactiveFormsModule],
 	styleUrls: ['./input.component.scss'],
-	template: ` <div [ngClass]="{ 'tw-mt-6 md:tw-mt-7': !noTopMargin }">
+	template: ` <div [ngClass]="{ 'tw-my-6 md:tw-mt-7': !noTopMargin }">
 		<div class="tw-flex tw-justify-between">
 			<label class="tw-pb-[2px] tw-pl-[3px]" [attr.for]="inputName" *ngIf="label">
 				<span *ngIf="labelStyle; else baseLabel" [class]="labelStyle" [innerHTML]="label"></span>
