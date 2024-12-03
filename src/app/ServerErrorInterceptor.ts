@@ -23,8 +23,7 @@ export class ServerErrorInterceptor implements HttpInterceptor {
       return next.handle(req).pipe(
         catchError((error: any) => {
           if (this.shouldIgnoreError(error)) {
-            // Ignorieren des spezifischen Fehlers
-            return of(); // Gibt einen leeren Observable-Stream zurück
+            return of(); 
           }
   
           if (this.isServerError(error, baseUrl)) {
@@ -34,8 +33,6 @@ export class ServerErrorInterceptor implements HttpInterceptor {
               },
             });
           }
-  
-          // Fehler an die nächste Instanz weiterleiten
           return throwError(() => error);
         })
       );
@@ -60,6 +57,10 @@ export class ServerErrorInterceptor implements HttpInterceptor {
       error.url?.startsWith(baseurl) 
     );
   }
+
+  // Helper function to decide which error should be ignored 
+  // some errors are already catched by  BadgrApiFailure class
+
 
   private shouldIgnoreError(error: any): boolean {
     return (
