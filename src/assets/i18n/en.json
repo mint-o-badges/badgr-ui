@@ -608,7 +608,8 @@
 		"message": "Below you see an error message. If you think this error is on us, write us an email or create an Issue in Github. Please copy the error message in your ticket.",
 		"copyButton" : "Copy",
 		"copyButtonAfter": "Copied!",
-		"createIssue": "To the GitHub issues"
+		"createIssue": "To the GitHub issues",
+		"sendEmail":"Send an email"
 
 	},
 	"LearningPath": {

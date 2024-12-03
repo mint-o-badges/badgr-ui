@@ -657,9 +657,10 @@
 	},
 	"ErrorDialog": {
 		"title": "Es ist ein Fehler passiert!",
-		"message": "Unten siehst du die Fehlermeldung. Wenn du glaubst, der Fehler liegt bei uns, kannst du die Fehlermeldung kopieren und uns per Mail schicken, oder du erstellst einen Issue auf GitHub.",
+		"message": "Unten siehst du die Fehlermeldung. Wenn du glaubst, der Fehler liegt bei uns, kannst du die Fehlermeldung kopieren und uns per Mail schicken, oder du erstellst ein Issue auf GitHub.",
 		"copyButton": "Kopieren",
 		"copyButtonAfter":"Kopiert!",
-		"createIssue": "Zu den GitHub Issues"
+		"createIssue": "Zu den GitHub Issues",
+		"sendEmail":"Sende eine Mail"
 	}
 }
