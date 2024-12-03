@@ -26,6 +26,9 @@ import {
 	lucideSearch,
 	lucideGrid2x2,
 	lucideArrowUpAZ,
+	lucideCircleX,
+	lucideGithub,
+	lucideMail
 } from '@ng-icons/lucide';
 
 @NgModule({
@@ -56,6 +59,9 @@ import {
 			lucideSearch,
 			lucideGrid2x2,
 			lucideArrowUpAZ,
+			lucideCircleX,
+			lucideGithub,
+			lucideMail
 		}),
 	],
 })
