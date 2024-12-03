@@ -98,10 +98,10 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 	lpDescription: string;
 	lpImage: string;
 
-	lpTags: string [];	
+	lpTags: string[];
 	badgeList: any[] = [];
 
-	baseUrl: string 
+	baseUrl: string
 
 	constructor(
 		protected formBuilder: FormBuilder,
@@ -124,7 +124,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 		// this.selectedBadgesLoaded = this.loadSelectedBadges();
 	}
 	next: string
-	previous: string;	
+	previous: string;
 
 
 	ngOnInit() {
@@ -136,7 +136,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 		});
 	}
 
-	updateSelectedBadges({urls, studyLoad} : {urls: string[], studyLoad: number}) {
+	updateSelectedBadges({ urls, studyLoad }: { urls: string[], studyLoad: number }) {
 		this.selectedBadgeUrls = urls;
 		this.studyLoad = studyLoad;
 	}
@@ -151,23 +151,22 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 
 	learningPathForm = typedFormGroup();
 
-	
 
 	ngAfterViewInit() {
 		this.stepper.selectionChange.subscribe((event) => {
-			if(this.stepOne.lpDetailsForm.rawControl.value.name){
+			if (this.stepOne.lpDetailsForm.rawControl.value.name) {
 				this.lpName = this.stepOne.lpDetailsForm.rawControl.value.name;
 			}
-			if(this.stepOne.lpDetailsForm.rawControl.value.description){
+			if (this.stepOne.lpDetailsForm.rawControl.value.description) {
 				this.lpDescription = this.stepOne.lpDetailsForm.rawControl.value.description;
 			}
-			if(this.stepOne.lpDetailsForm.rawControl.value.badge_image){
+			if (this.stepOne.lpDetailsForm.rawControl.value.badge_image) {
 				this.lpImage = this.stepOne.lpDetailsForm.rawControl.value.badge_image;
 			}
 			this.selectedStep = event.selectedIndex;
-			if(this.selectedStep === 2){
+			if (this.selectedStep === 2) {
 				this.step3Loaded = true;
-			} else{
+			} else {
 				this.step3Loaded = false;
 			}
 		})
@@ -181,17 +180,17 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 		this.learningPathForm.markTreeDirtyAndValidate();
 	}
 
-	getErrorMessage(){
-		if(this.stepOne.lpDetailsForm.hasError){
+	getErrorMessage() {
+		if (this.stepOne.lpDetailsForm.hasError) {
 			return this.stepOne.lpDetailsForm.errors.first();
-		}	
+		}
 	}
 
 	get issuerSlug() {
 		return this.route.snapshot.params['issuerSlug'];
 	}
 
-		
+
 	cancelClicked() {
 		// this.cancel.emit();
 	}
