@@ -8,7 +8,7 @@ import { BadgeClass } from '../issuer/models/badgeclass.model';
   template: `
     <oeb-select
       actionBar="true"
-      class="oeb lg:tw-w-[10rem]"
+      class="oeb tw-block lg:tw-w-[10rem]"
       [options]="sortOptions"
       [control]="control"
       [autofocus]="true"
