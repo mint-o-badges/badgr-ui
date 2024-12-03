@@ -35,7 +35,7 @@ import { NgClass, NgIf } from '@angular/common';
 		<div
 			class="tw-px-4 tw-py-6"
 			[ngClass]="{
-				' tw-border-red tw-border-solid tw-rounded-[20px] tw-border-4': variant === 'danger'
+				' tw-border-red tw-border-solid tw-rounded-[20px] tw-border-4 tw-bg-white': variant === 'danger'
 			}"
 		>
 			<hlm-dialog-header *ngIf="title">

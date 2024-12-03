@@ -106,6 +106,7 @@ import { OebCompetency } from './components/oeb-competency';
 import { OebDialogComponent } from '../components/oeb-dialog.component';
 import { SuccessDialogComponent } from './dialogs/oeb-dialogs/success-dialog.component';
 import { DangerDialogComponent } from './dialogs/oeb-dialogs/danger-dialog.component';
+import { EndOfEditDialogComponent } from './dialogs/oeb-dialogs/end-of-edit-dialog.component';
 import { OebBackgroundComponent } from '../components/oeb-background.component';
 import { OebIssuerDetailComponent } from './components/issuer/oeb-issuer-detail.component';
 import { DatatableComponent } from '../components/datatable-badges.component';
@@ -260,6 +261,7 @@ export const COMMON_IMPORTS = [
 	LearningPathParticipantsDatatableComponent,
 	LearningPathGraduatesDatatableComponent,
 	LearningPathRequestsDatatableComponent,
+	EndOfEditDialogComponent,
 	HlmBadgeDirective,
 ];
 
