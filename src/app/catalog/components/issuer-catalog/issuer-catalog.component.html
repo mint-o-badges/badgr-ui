@@ -6,7 +6,11 @@
 		</h2>
 		<ng-template [showLoader]="false" [bgAwaitPromises]="[issuersLoaded]">
 			<span hlmH2 class="!tw-text-oebblack w-font-normal tw-break-words">
-				{{ issuers.length | i18nPlural: plural['issuerText'] }}
+				<span [countUp]="issuers.length" >
+				</span>
+				<span >
+					{{ ' ' | i18nPlural: plural['issuerText'] }}
+				</span>
 			</span>
 		</ng-template>
 	</header>
