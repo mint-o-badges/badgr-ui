@@ -277,7 +277,7 @@
 		"deletePart1": "Bist du sicher, dass du das Badge '",
 		"deletePart2": "' löschen möchtest?",
 		"deleteConfirm": "Badge löschen",
-		"sortBy": "Sortieren nach"
+		"sortBy": "Sortieren nach",
 		"endOfEditDialogTitle": "Ende der Editier-funktion",
 		"endOfEditDialogText": "Sobald du den Badge einmal vergeben hast, kann er nicht mehr bearbeitet werden?",
 		"endOfEditDialogTextQR": "Sobald du eine QR-Code-Vergabe erstellt hast, kann der Badge nicht mehr bearbeitet werden.",
