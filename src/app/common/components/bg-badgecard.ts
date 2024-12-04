@@ -6,19 +6,19 @@ import {
 	style,
 	transition,
 	trigger,
-  } from '@angular/animations';
+} from '@angular/animations';
 import { FormControl } from '@angular/forms';
 
 @Component({
 	selector: 'bg-badgecard',
 	animations: [
 		trigger('showCompetencies', [
-		  state('true', style({ height: AUTO_STYLE, visibility: AUTO_STYLE })),
-		  state('false', style({ height: '0', visibility: 'hidden' })),
-		  transition('false => true', animate(220 + 'ms ease-out')),
-		  transition('true => false', animate(220 + 'ms ease-in')),
+			state('true', style({ height: AUTO_STYLE, visibility: AUTO_STYLE })),
+			state('false', style({ height: '0', visibility: 'hidden' })),
+			transition('false => true', animate(220 + 'ms ease-out')),
+			transition('true => false', animate(220 + 'ms ease-in')),
 		]),
-	  ],
+	],
 	host: {
 		class: 'tw-rounded-[10px] tw-h-max tw-border-purple tw-border-solid tw-border tw-relative tw-p-3 tw-block tw-overflow-hidden oeb-badge-card',
 	},
@@ -98,7 +98,7 @@ import { FormControl } from '@angular/forms';
 						</div>
 					</div>
 				</div>
-				<div class="tw-float-right tw-relative tw-ml-auto tw-mr-6 tw-min-h-20">
+				<div class="tw-float-right tw-relative tw-ml-auto tw-min-h-20">
 					<oeb-checkbox *ngIf="checkboxControl" class="tw-absolute tw-top-0" [(ngModel)]="checked" [control]="checkboxControl">
 					</oeb-checkbox>
 					<oeb-checkbox *ngIf="showCheckbox" [(ngModel)]="checked" (ngModelChange)="changeCheckbox($event)"></oeb-checkbox>
@@ -142,27 +142,27 @@ export class BgBadgecard {
 	@Output() checkboxChange = new EventEmitter<boolean>();
 	@Input() checked: boolean = false;
 
-	changeCheckbox(event: boolean){
+	changeCheckbox(event: boolean) {
 		this.checkboxChange.emit(event)
 	}
 
 	@HostBinding('class') get hostClasses(): string {
-		return (this.checked || this.completed) 
-		  ? 'tw-bg-[var(--color-green)]'   
-		  : 'tw-bg-white';  
-	  }
+		return (this.checked || this.completed)
+			? 'tw-bg-[var(--color-lightgreen)]'
+			: 'tw-bg-white';
+	}
 	// @HostBinding('class') get completedClass(): string {
 	// 	return this.completed 
 	// 	  ? 'tw-bg-[var(--color-green)]'   
 	// 	  : 'tw-bg-white';  
 	//   }
 
-	ngOnInit(){
+	ngOnInit() {
 	}
 
 
 	showCompetencies = false
-	toggleCompetencies(){
+	toggleCompetencies() {
 		this.showCompetencies = !this.showCompetencies;
 	}
 }
