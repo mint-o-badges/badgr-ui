@@ -813,19 +813,21 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			return { maxHoursError: true };
 		}
 	}
-
-	hoursAndMinutesValidatorCompetencies() : ValidationErrors | null {
+	hoursAndMinutesValidatorCompetencies(): ValidationErrors | null {
 		if (!this.badgeClassForm) return null;
-
-		const competenciesArray = this.badgeClassForm.value.competencies
-
-		const hasError = competenciesArray.some(competence => {
-			const hoursCompetence = Number(competence.hours);
-			const minutesCompetence = Number(competence.minutes);
-			return hoursCompetence === 0 && minutesCompetence === 0;
-		});
+	
+		const allCompetencies = [
+			...this.badgeClassForm.value.competencies,
+			...this.badgeClassForm.value.aiCompetencies.filter((comp) => comp.selected),
+		];
+	
+		const hasError = allCompetencies.some((competence) => 
+			Number(competence.hours) === 0 && Number(competence.minutes) === 0
+		);
+	
 		return hasError ? { competenceHoursMinutesZero: true } : null;
-		}
+	}
+	
 
 	hoursAndMinutesValidator () : ValidationErrors | null {
 		if (!this.badgeClassForm) return null;
