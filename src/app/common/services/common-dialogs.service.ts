@@ -18,7 +18,6 @@ export class CommonDialogsService {
 	nounprojectDialog: NounprojectDialog;
 	copyBadgeDialog: CopyBadgeDialog;
 	forkBadgeDialog: ForkBadgeDialog;
-
 	constructor() {}
 
 	init(

@@ -1,4 +1,4 @@
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { ErrorHandler, ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { BgBadgecard } from './components/bg-badgecard';
@@ -62,7 +62,7 @@ import { ExternalToolsManager } from '../externaltools/services/externaltools-ma
 import { ExternalToolsApiService } from '../externaltools/services/externaltools-api.service';
 import { ExternalToolLaunchComponent } from './components/external-tool-launch.component';
 import { AppConfigService } from './app-config.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AutosizeDirective } from './directives/autosize.directive';
 import { NavigationService } from './services/navigation.service';
 import { BgPopupMenu, BgPopupMenuTriggerDirective } from './components/bg-popup-menu.component';
@@ -106,6 +106,7 @@ import { OebCompetency } from './components/oeb-competency';
 import { OebDialogComponent } from '../components/oeb-dialog.component';
 import { SuccessDialogComponent } from './dialogs/oeb-dialogs/success-dialog.component';
 import { DangerDialogComponent } from './dialogs/oeb-dialogs/danger-dialog.component';
+import { EndOfEditDialogComponent } from './dialogs/oeb-dialogs/end-of-edit-dialog.component';
 import { OebBackgroundComponent } from '../components/oeb-background.component';
 import { OebIssuerDetailComponent } from './components/issuer/oeb-issuer-detail.component';
 import { DatatableComponent } from '../components/datatable-badges.component';
@@ -114,6 +115,7 @@ import { OebProgressComponent } from '../components/oeb-progress.component';
 import { OebSelectComponent } from '../components/select.component';
 import { OebCollapsibleComponent } from '../components/oeb-collapsible.component';
 import { OebSeparatorComponent } from '../components/oeb-separator.component';
+import { OebSpinnerComponent } from '../components/oeb-spinner.component';
 import { OebLearningPathDetailComponent } from './components/learningpath-detail/oeb-learning-path.component';
 
 import { SharedIconsModule } from '../public/icons.module';
@@ -124,7 +126,12 @@ import { LearningPathGraduatesDatatableComponent } from '../components/datatable
 import { LearningPathRequestsDatatableComponent } from '../components/datatable-learningpath-requests.component';
 import { OebIssuerCard } from './components/oeb-issuercard';
 import { HourPipe } from './pipes/hourPipe';
-import { BgSmallLearningPathCard } from './components/bg-small-learningpathcard';
+import { HlmBadgeDirective } from '../components/spartan/ui-badge-helm/src/lib/hlm-badge.directive';
+import { IssuerCardComponent } from '../components/issuer-card/issuer-card.component';
+import { ErrorDialogComponent } from './dialogs/oeb-dialogs/error-dialog.component';
+import { GlobalErrorHandler } from '../globalErrorHandler.service';
+import { ServerErrorInterceptor } from '../ServerErrorInterceptor';
+import { CountUpDirective } from './directives/count-up.directive';
 
 const DIRECTIVES = [
 	BgAwaitPromises,
@@ -137,7 +144,7 @@ const DIRECTIVES = [
 	// TooltipDirective,
 	BgPopupMenuTriggerDirective,
 	DynamicFilterPipe,
-	HourPipe
+	HourPipe,
 ];
 
 export const COMMON_MODULE_COMPONENTS = [
@@ -145,7 +152,6 @@ export const COMMON_MODULE_COMPONENTS = [
 	BadgrButtonComponent,
 	BgBadgecard,
 	BgLearningPathCard,
-	BgSmallLearningPathCard,
 	BgBadgeDetail,
 	BgBreadcrumbsComponent,
 	BgFormFieldFileComponent,
@@ -178,8 +184,9 @@ export const COMMON_MODULE_COMPONENTS = [
 	NounprojectDialog,
 	OebCompetency,
 	OebIssuerDetailComponent,
+	IssuerCardComponent,
 	OebLearningPathDetailComponent,
-	OebIssuerCard
+	OebIssuerCard,
 ];
 
 const SERVICES = [
@@ -192,7 +199,7 @@ const SERVICES = [
 	SharingService,
 	NounprojectService,
 	AiSkillsService,
-    ServerVersionService,
+	ServerVersionService,
 	PdfService,
 	CaptchaService,
 	EventsService,
@@ -210,20 +217,58 @@ const SERVICES = [
 	NavigationService,
 	ZipService,
 	ApplicationCredentialsService,
-	LearningPathApiService
+	LearningPathApiService,
 ];
 
 const GUARDS = [AuthGuard];
 
 const PIPES = [UcFirstPipe, StudyLoadPipe, HourPipe];
 
-export const COMMON_IMPORTS = [CommonModule, SharedIconsModule, FormsModule, ReactiveFormsModule, HttpClientModule, RouterModule, OebInputComponent, OebInputErrorComponent, OebSelectComponent, OebSeparatorComponent, OebCollapsibleComponent, OebButtonComponent, OebProgressComponent, OebDropdownComponent, HlmH1Directive, HlmH2Directive, HlmH3Directive, HlmPDirective, HlmADirective, CompetencyAccordionComponent, OebCheckboxComponent, OebDialogComponent, SuccessDialogComponent, DangerDialogComponent, OebBackgroundComponent, OebTabsComponent, HlmIconModule, CountUpModule, HlmInputDirective, DatatableComponent, LearningPathDatatableComponent, LearningPathParticipantsDatatableComponent, LearningPathGraduatesDatatableComponent, LearningPathRequestsDatatableComponent];
-
+export const COMMON_IMPORTS = [
+	CommonModule,
+	SharedIconsModule,
+	FormsModule,
+	ReactiveFormsModule,
+	HttpClientModule,
+	RouterModule,
+	OebInputComponent,
+	OebInputErrorComponent,
+	OebSelectComponent,
+	OebSeparatorComponent,
+	OebSpinnerComponent,
+	OebCollapsibleComponent,
+	OebButtonComponent,
+	OebProgressComponent,
+	OebDropdownComponent,
+	HlmH1Directive,
+	HlmH2Directive,
+	HlmH3Directive,
+	HlmPDirective,
+	HlmADirective,
+	CompetencyAccordionComponent,
+	OebCheckboxComponent,
+	OebDialogComponent,
+	SuccessDialogComponent,
+	DangerDialogComponent,
+	OebBackgroundComponent,
+	ErrorDialogComponent,
+	OebTabsComponent,
+	HlmIconModule,
+	CountUpModule,
+	HlmInputDirective,
+	DatatableComponent,
+	LearningPathDatatableComponent,
+	LearningPathParticipantsDatatableComponent,
+	LearningPathGraduatesDatatableComponent,
+	LearningPathRequestsDatatableComponent,
+	EndOfEditDialogComponent,
+	HlmBadgeDirective,
+];
 
 @NgModule({
 	imports: [...COMMON_IMPORTS, FormsModule, LMarkdownEditorModule, TranslateModule],
-	providers: [BadgeClassManager, BadgeClassApiService],
-	declarations: [...DIRECTIVES, ...COMMON_MODULE_COMPONENTS, ...PIPES, ForwardRouteComponent, BadgeLegendComponent],
+	providers: [BadgeClassManager, BadgeClassApiService, { provide: HTTP_INTERCEPTORS, useClass:ServerErrorInterceptor, multi:true}],
+	declarations: [...DIRECTIVES, ...COMMON_MODULE_COMPONENTS, ...PIPES, ForwardRouteComponent, BadgeLegendComponent, CountUpDirective],
 	exports: [...DIRECTIVES, ...COMMON_MODULE_COMPONENTS, ...PIPES, BadgeLegendComponent],
 })
 export class BadgrCommonModule {

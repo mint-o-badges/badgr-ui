@@ -55,8 +55,11 @@
 		"hideDetails": "Details verstecken",
 		"password": "Passwort",
 		"loading": "Laden...",
-        "warning": "Warnung",
-		"page": "Seite"
+		"warning": "Warnung",
+		"page": "Seite",
+		"learningPath": "Lernpfad",
+		"learningPaths": "Lernpfade",
+		"noLearningPaths": "Keine Lernpfade"
 	},
 	"NavItems": {
 		"register": "Registrieren",
@@ -94,31 +97,23 @@
 		"serverDown": "Ups! Der Server antwortet nicht.",
 		"relodePage": "Bitte die Seite neu laden.",
 		"using": "using",
-
 		"headline1": "Gemeinsam machen wir",
 		"headline2": "Kompetenzerwerb sichtbar",
 		"text1": "Badges sind digitale Nachweise, die wie Zertifikate einfach und zeiteffizient vergeben und gesammelt werden können, um Lernerfolge und Kompetenzerwerb sichtbar zu machen - sowohl für digitale Lernangebote als auch für Angebote vor Ort.",
 		"badgesErstellen": "Jetzt <span class='bold'>Badges erstellen<span>",
-
 		"headline2_1": "Unsere Ziele für",
 		"headline2_2": "OPEN EDUCATIONAL BADGES",
-
 		"knowWhatIcan": "ICH WEIß, WAS ICH KANN!",
 		"knowWhatIcan_text": "Wir stärken die Souveränität der Lernenden, indem wir ihnen Transparenz über ihre Kompetenzen geben.",
-
 		"bridges": "Brücken bauen",
 		"bridges_text": "Wir machen den außerschulischen Kompetenzerwerb gleichwertig sichtbar und fördern ihn dadurch.",
-
 		"threeElementsHeadline": "Open Educational Badges besteht aus drei Elementen:",
 		"threeEleText1": "Einer <span class='bold'>technischen Lösung</span>, um Badges zu vergeben und zu sammeln. Diese Funktionalität kann über ein Plug-In in bestehende Lernumgebungen eingebettet werden.",
 		"threeEleText2": "Einem <span class='bold'>standardisierten, offenen und skalierbarem Kompetenz-Raster nach ESCO</span>, das die Wertigkeit der Badges sicherstellt und institutionsübergreifendes Lernen ermöglicht.",
 		"threeEleText3": "Einer <span class='bold'>offenen Community</span>, die Badges erstellt, vergibt, erwirbt und gleichzeitig ihre Qualität durch ein Community-Review-Prinzip sicherstellt.",
-
 		"threeEleFooter": "Open Educational Badges sind dadurch teilbar, skalierbar, anschlussfähig und so entsteht eine neue Währung, um Kompetenzen abzubilden.",
-
 		"headline3_1": "So kannst du Open Educational Badges nutzen.",
 		"headline3_2": "Für Institutionen und Bildungsakteur:innen",
-
 		"forEleHeadlinet1": "Konto anlegen und Institution erstellen",
 		"forEleText1": "Lege einen Account auf Open Educational Badges an und registriere deine Institution.",
 		"forEleHeadlinet2": "Badges erstellen",
@@ -127,7 +122,6 @@
 		"forEleText3": "Du kannst Badges per Email oder per QR-Code an deine Lernenden vergeben.",
 		"forEleHeadlinet4": "Lernende erhalten und sammeln Badges",
 		"forEleText4": "Lernende erhalten Badges mit den erworbenen Kompetenzen. Sie erlangen dadurch einen besseren Überblick über ihr Können.",
-
 		"usingOEB": "Diese Institutionen nutzen bereits Open Educational Badges"
 	},
 	"Issuer": {
@@ -186,7 +180,7 @@
 		"addMember_newEmailPH": "Mitarbeiter E-Mail",
 		"addMember_failed": "Mitglied konnte nicht hinzugefügt werden",
 		"addMember_enterValidEmail": "Bitte gültige E-Mail Adresse eingeben",
-		"addMember_selectRole": "Bitte wählen Sie eine Personalrolle",
+		"addMember_selectRole": "Bitte wähle eine Personalrolle",
 		"createdOn": "Erstellt am",
 		"awarded": "Vergeben",
 		"editInstitution": "Institution bearbeiten",
@@ -225,15 +219,18 @@
 		"uploadFields": "E-Mail-Adresse, Name und Evidence (optional) beinhalten",
 		"uploadFormat": "CSV- oder TXT-Format",
 		"nameInPdfInfo": "* Zusammen mit dem Badge wird ein entsprechendes PDF-Zertifikat an die Empfänger:innen gesendet. In diesem werden Vor- und Nachname verwendet.",
-		"useThis" : "Benutze diese",
-		"exampleLink" : "Beispiel Vorlage",
-		"createCSVorTXT" : "um eine CSV oder TXT Datei zu erstellen",
+		"useThis": "Benutze diese",
+		"exampleLink": "Beispiel Vorlage",
+		"createCSVorTXT": "um eine CSV oder TXT Datei zu erstellen",
 		"importList": "Liste importieren",
 		"import": "Importieren",
 		"csvColumns": "CSV Spalten",
 		"csvError": "Die CSV Datei enthält Zeilen länger als ihre Überschrift. Bitte behebe diesen Fehler und versuche es erneut.",
 		"pdfCertificate": "PDF-Zertifikat",
 		"useImageFormat": "Bitte nutze ein Bild im quadratischen Format 1:1, damit es auf unserer Plattform optimal dargestellt werden kann.",
+		"institutionIssued": "Institution vergibt Badges über OEB",
+		"institutionsIssued": "Institutionen vergeben Badges über OEB",
+		"allCategories": "Alle Kategorien",
 		"learningPathHeadline": "Lernpfad hochladen",
 		"uploadLearningPathText": "Wenn du versiert im Umgang mit JSON-Dateien bist, kannst du den Lernpfad auch selbst anlegen. So geht’s:",
 		"learningPathHelp": "Momentan werden Lernpfade noch als JSON-Datei importiert. <b>Gerne erstellen wir diese Datei für dich</b>, schreibe einfach an <a class='tw-text-link tw-underline' href='mailto:lernpfad@openbadges.education'>lernpfad@openbadges.education</a>.",
@@ -245,7 +242,6 @@
 		"learningPathRecipient": "Absolvent:innen",
 		"learningPathParticipants": "Teilnehmer:innen",
 		"learningPathCreateHeadline": "Erstelle deinen Lernpfad"
-
 	},
 	"Badge": {
 		"groupBy": "Gruppieren nach",
@@ -274,9 +270,14 @@
 		"createdOn": "Erstellt am",
 		"catalogHeadline": "Alle Badges in der Übersicht",
 		"requestedOn": "Angefragt am",
-        "deletePart1": "Bist du sicher, dass du das Badge '",
-        "deletePart2": "' löschen möchtest?",
-        "deleteConfirm": "Badge löschen"
+		"deletePart1": "Bist du sicher, dass du das Badge '",
+		"deletePart2": "' löschen möchtest?",
+		"deleteConfirm": "Badge löschen",
+		"endOfEditDialogTitle": "Ende der Editier-funktion",
+		"endOfEditDialogText": "Sobald du den Badge einmal vergeben hast, kann er nicht mehr bearbeitet werden?",
+		"endOfEditDialogTextQR": "Sobald du eine QR-Code-Vergabe erstellt hast, kann der Badge nicht mehr bearbeitet werden.",
+		"endOfEditDialogSubText": "Bitte prüfe daher, ob du mit den Badge-Daten (Bild, Kurzbeschreibung, ggf. enthaltene Kompetenzen, ...) zufrieden bist."
+
 	},
 	"CreateBadge": {
 		"chooseBadgeCategory": "Badge-Kategorie wählen",
@@ -344,12 +345,14 @@
 		"removeAlignmentInfo": "Bist du sicher, dass du die Verknpüfung(en) entfernen möchtest? ",
 		"irreversibleAction": "Diese Aktion kann nicht rückgängig gemacht werden.",
 		"addAnotherCompetency": "Weitere Kompetenz hinzufügen",
-		"giveBadgeTitle":"Bitte gib dem Badge einen Titel",
-		"changeBadgeTitle":"Bitte ändere den Titel",
-		"maxValue1000":"Maximalwert ist 1000",
+		"giveBadgeTitle": "Bitte gib dem Badge einen Titel",
+		"changeBadgeTitle": "Bitte ändere den Titel",
+		"maxValue1000": "Maximalwert ist 1000",
 		"imageTooLarge": "Das Bild ist zu groß. Bitte wähle ein Bild mit einer Größe von maximal 250 KB.",
 		"licenseInfo": "Badges werden unter der <a class='tw-underline tw-text-[#1400FF]' target='_blank' href='https://creativecommons.org/publicdomain/zero/1.0/legalcode.de'> Lizenz CC0 1.0 </a> erstellt.",
-		"requiredError": "Erforderlich"
+		"requiredError": "Erforderlich",
+		"hoursMaxError": "Stunden dürfen 10.000 nicht überschreiten.",
+		"minMaxError": "Bitte gib eine positive Zahl ein."
 	},
 	"Signup": {
 		"youHaveAccount": "Du hast bereits einen Account?",
@@ -377,16 +380,15 @@
 		"resendEmailFailed": "Das erneute Senden der Bestätigungs-E-Mail ist fehlgeschlagen. Bitte wende dich an den Support.",
 		"newEmailSent": "Eine neue Bestätigungs-E-Mail wurde gesendet an: ",
 		"infoPersonalDataProcessing": "Informationen zur Verarbeitung Deiner personenbezogenen Daten findest du in unserer <a class='tw-underline tw-text-[#1400FF]' href='public/privacy'> Datenschutzerklärung</a>",
-		"enterValidEmail":"Bitte gib eine gültige Email Adresse ein.",
-		"enterFirstName":"Bitte gib einen Vornamen an",
-		"enterLastName":"Bitte gib einen Nachnamen an",
-		"enterPassword":"Bitte gib ein Passwort ein",
-		"passwordMustBe8Char":"Das Passwort muss mindestens 8 Zeichen lang sein",
-		"confirmPassword":"Bitte bestätige Dein Passwort",
-		"passwordsNotEqual":"Die Passwörter sind nicht gleich",
+		"enterValidEmail": "Bitte gib eine gültige Email Adresse ein.",
+		"enterFirstName": "Bitte gib einen Vornamen an",
+		"enterLastName": "Bitte gib einen Nachnamen an",
+		"enterPassword": "Bitte gib ein Passwort ein",
+		"passwordMustBe8Char": "Das Passwort muss mindestens 8 Zeichen lang sein",
+		"confirmPassword": "Bitte bestätige Dein Passwort",
+		"passwordsNotEqual": "Die Passwörter sind nicht gleich",
 		"registerWithBildungsraum": "Registrieren mit Mein Bildungsraum",
 		"ageConfirm": "Ich bestätige, dass ich bei Registrierung mindestens 16 Jahre alt bin oder mir für die Registrierung auf dieser Plattform eine Zustimmung meiner Personensorgeberechtigten vorliegt."
-
 	},
 	"Captcha": {
 		"error": "Verifizierung fehlgeschlagen. Bitte erneut versuchen.",
@@ -471,7 +473,6 @@
 		"collectShareLearningPath": "Sammle und teile digitale Lernpfade aus deinem Rucksack.",
 		"groupByInstitution": "Nach Institutionen gruppieren",
 		"institution": "Institution",
-
 		"greating": "Hallo",
 		"competencies": "Kompetenzen",
 		"studyingTime": "Lernzeit",
@@ -479,13 +480,11 @@
 		"newCompetencies": "Neue Kompetenzen",
 		"skills": "Fähigkeiten",
 		"knowledge": "Wissen",
-
 		"addRecievedBadge": "Füge ein Badge hinzu welches du bereits erhalten hast.",
 		"image": "Bild",
 		"close": "Schließen",
 		"enterURL": "URL eingeben",
 		"enterJSON": "JSON eingeben",
-
 		"selectFromFile": "aus Dateien auswählen",
 		"selectFromMyFiles": "aus meinen Dateien auswählen",
 		"chooseFromExistingIcons": "aus bestehenden Icons wählen",
@@ -494,7 +493,6 @@
 		"chooseAnotherFile": "andere Datei wählen",
 		"oneBadgeRequired": "Es ist mindestens eine Badge-Eingabe erforderlich.",
 		"uploadOwnVisual": "Komplettes Badge-Bild hochladen",
-
 		"importedSuccessfully": "Badge erfolgreich importiert.",
 		"uploadFailed": "Badge konnte nicht hochgeladen werden:",
 		"unknownError": "Der Upload des Badges ist aufgrund eines unbekannten Fehlers fehlgeschlagen"
@@ -549,7 +547,7 @@
 		"more": "Mehr",
 		"password": "Passwort",
 		"edit": "Bearbeiten",
-        "delete": "Löschen",
+		"delete": "Löschen",
 		"emailAddress": "Email Adresse",
 		"status": "Status",
 		"actions": "Aktionen",
@@ -579,11 +577,11 @@
 		"deleteAppConfirm": "Möchtest du deine App credentials wirklich löschen?",
 		"authorized": "Authorisiert:",
 		"takeBack": "Zurücknehmen",
-        "deleteAccount": "Account löschen?",
-        "deleteAccountConfirm": "Bist du dir sicher, dass du deinen Account löschen möchtest? Dies kann nicht rückgängig gemacht werden.",
-        "deleteAccountYes": "Account löschen",
-        "deleteAccountSuccess": "Account erfolgreich gelöscht",
-        "deleteAccountFailure": "Account konnte nicht gelöscht werden",
+		"deleteAccount": "Account löschen?",
+		"deleteAccountConfirm": "Bist du dir sicher, dass du deinen Account löschen möchtest? Dies kann nicht rückgängig gemacht werden.",
+		"deleteAccountYes": "Account löschen",
+		"deleteAccountSuccess": "Account erfolgreich gelöscht",
+		"deleteAccountFailure": "Account konnte nicht gelöscht werden",
 		"ResetPassword": "Passwort zurücksetzen",
 		"EnterNewPassword": "Gib ein neues Passwort ein.",
 		"currentPassword": "Aktuelles Passwort",
@@ -621,8 +619,7 @@
 		"list2": "Du zeigst deinen Lernenden den QR-Code – digital oder ausgedruckt.",
 		"list3": "Deine Lernenden scannen den QR-Code mit ihrem Smartphone und gelangen zu einer Eingabe-Maske, in der sie Vor- und Nachnamen sowie E-Mail-Adresse eingeben. Anschließend senden sie das Formular als Badge-Anfrage ab.",
 		"list4": "Du siehst die Badge-Anfragen deiner Lernenden auf der ",
-		"list4.2": "bei OEB und kannst die Badges direkt vergeben. Sie werden den Lernenden per E-Mail zugestellt."		
-
+		"list4.2": "bei OEB und kannst die Badges direkt vergeben. Sie werden den Lernenden per E-Mail zugestellt."
 	},
 	"QrCode": {
 		"savedSuccessfully": "<span class='tw-font-bold'> Die QR-Code-Vergabe wurde erfolgreich auf der Badge-Detail-Seite gespeichert.</span>",
@@ -630,7 +627,7 @@
 	},
 	"LearningPath": {
 		"learningpaths": "Lernpfade",
-		"catalogHeadline":"Alle Lernpfade in der Übersicht",
+		"catalogHeadline": "Alle Lernpfade in der Übersicht",
 		"participate": "Teilnehmen",
 		"notParticipateAnymore": "Nicht mehr teilnehmen",
 		"searchLearningPaths": "Lernpfade durchsuchen",
@@ -647,7 +644,15 @@
 		"continue": "Weiterlernen",
 		"finished": "Abgeschlossen"
 	},
-	"OEBComponents":{
+	"OEBComponents": {
 		"fieldIsRequired": "Dieses Feld ist erforderlich"
+	},
+	"ErrorDialog": {
+		"title": "Es ist ein Fehler passiert!",
+		"message": "Unten siehst du die Fehlermeldung. Wenn du glaubst, der Fehler liegt bei uns, kannst du die Fehlermeldung kopieren und uns per Mail schicken, oder du erstellst ein Issue auf GitHub.",
+		"copyButton": "Kopieren",
+		"copyButtonAfter":"Kopiert!",
+		"createIssue": "Zu den GitHub Issues",
+		"sendEmail":"Sende eine Mail"
 	}
 }

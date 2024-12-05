@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, NgModule, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SessionService } from '../../../common/services/session.service';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
@@ -15,6 +15,12 @@ import { Map, NavigationControl, Popup } from 'maplibre-gl';
 import { TranslateService } from '@ngx-translate/core';
 import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
 
+import { HlmInputDirective } from '../../../components/spartan/ui-input-helm/src/lib/hlm-input.directive';
+import { HlmIconComponent } from '../../../components/spartan/ui-icon-helm/src/lib/hlm-icon.component';
+import { HlmBadgeDirective } from '../../../components/spartan/ui-badge-helm/src/lib/hlm-badge.directive';
+import { BadgeClassCategory } from '../../../issuer/models/badgeclass-api.model';
+import { FormControl } from '@angular/forms';
+
 @Component({
 	selector: 'app-issuer-catalog',
 	templateUrl: './issuer-catalog.component.html',
@@ -28,6 +34,7 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 	Array = Array;
 
 	issuers: Issuer[] = null;
+	chooseABadgeCategory = this.translate.instant('CreateBadge.chooseABadgeCategory');
 
 	issuersLoaded: Promise<unknown>;
 	issuerResults: Issuer[] = [];
@@ -36,6 +43,21 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 	public badgesDisplay = 'grid';
 
 	issuerGeoJson;
+	categoryControl = new FormControl('');
+	categoryOptions = [
+		{
+			label: 'Schule',
+			value: 'schule',
+		},
+		{
+			label: 'Hochschule ',
+			value: 'hochschule',
+		},
+		{
+			label: 'Andere',
+			value: 'andere',
+		},
+	];
 
 	private _searchQuery = '';
 	get searchQuery() {
@@ -46,12 +68,13 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 		this.updateResults();
 	}
 
-	private _groupByCategory = false;
-	get groupByCategory() {
-		return this._groupByCategory;
+	private _categoryFilter = '';
+	get categoryFilter() {
+		return this._categoryFilter;
 	}
-	set groupByCategory(val: boolean) {
-		this._groupByCategory = val;
+
+	set categoryFilter(val: string) {
+		this._categoryFilter = val;
 		this.updateResults();
 	}
 
@@ -87,6 +110,10 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 
 		// subscribe to issuer and badge class changes
 		this.issuersLoaded = this.loadIssuers();
+		// Subscribe to changes on the control
+		this.categoryControl.valueChanges.subscribe((value) => {
+			this.categoryFilter = value;
+		});
 	}
 
 	async loadIssuers() {
@@ -177,31 +204,11 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 		// Clear Results
 		this.issuerResults = [];
 		this.issuerResultsByCategory = [];
-		const issuerResultsByCategoryLocal = {};
-
-		var addIssuerToResultsByCategory = function (item) {
-			that.issuerResults.push(item);
-
-			let categoryResults = issuerResultsByCategoryLocal[item.category];
-
-			if (!categoryResults) {
-				categoryResults = issuerResultsByCategoryLocal[item.category] = new MatchingIssuerCategory(
-					item.category,
-					'',
-				);
-
-				// append result to the issuerResults array bound to the view template.
-				that.issuerResultsByCategory.push(categoryResults);
-			}
-
-			categoryResults.addIssuer(item);
-
-			return true;
-		};
-
-		this.issuers.filter(MatchingAlgorithm.issuerMatcher(this.searchQuery)).forEach(addIssuerToResultsByCategory);
 
 		this.issuerResults.sort((a, b) => a.name.localeCompare(b.name));
+		this.issuerResults = this.issuers
+			.filter(MatchingAlgorithm.issuerMatcher(this.searchQuery))
+			.filter((issuer) => !this.categoryFilter || issuer.category === this.categoryFilter);
 		this.issuerResultsByCategory.forEach((r) => r.issuers.sort((a, b) => a.name.localeCompare(b.name)));
 		this.generateGeoJSON(this.issuerResults);
 	}
@@ -391,10 +398,16 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 
 	openMap() {
 		this.badgesDisplay = 'map';
+		this.updateResults();
 		let that = this;
 		setTimeout(function () {
 			that.mapObject.resize();
 		}, 10);
+	}
+
+	openGrid() {
+		this.badgesDisplay = 'grid';
+		this.updateResults();
 	}
 
 	prepareTexts() {
@@ -410,10 +423,20 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 				'=1': '1 Institution',
 				other: '# ' + this.translate.instant('General.institutions'),
 			},
+			issuerText: {
+				'=0': this.translate.instant('Issuer.institutionsIssued'),
+				'=1': '1 ' + this.translate.instant('Issuer.institutionIssued'),
+				other: '# ' + this.translate.instant('Issuer.institutionsIssued'),
+			},
 			badges: {
 				'=0': this.translate.instant('Issuer.noBadges'),
 				'=1': '<strong class="u-text-bold">1</strong> Badge',
 				other: '<strong class="u-text-bold">#</strong> Badges',
+			},
+			learningPath: {
+				'=0': this.translate.instant('General.noLearningPaths'),
+				'=1': '1 ' + this.translate.instant('General.learningPath'),
+				other: '# ' + this.translate.instant('General.learningPaths'),
 			},
 			recipient: {
 				'=0': this.translate.instant('Issuer.noRecipient'),
@@ -433,9 +456,11 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 				.then((emails) => {
 					// Search for primary email, since it's not alawys the first in list
 					const primaryEmail = emails.entities.find((email) => email.primary).email;
-					
+
 					const userEmail = emails.entities[0].email;
-					const isMember = issuerData.staff.entities.some((staffMember) => staffMember.email === primaryEmail);
+					const isMember = issuerData.staff.entities.some(
+						(staffMember) => staffMember.email === primaryEmail,
+					);
 					this.router.navigate([isMember ? '/issuer/issuers/' : '/public/issuers/', issuerData.slug]);
 				});
 		}
