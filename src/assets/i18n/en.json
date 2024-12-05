@@ -333,7 +333,7 @@
 		"licenseInfo": "Badges are created under the license <a class='tw-underline tw-text-[#1400FF]' target='_blank' href='https://creativecommons.org/publicdomain/zero/1.0/legalcode.de'>CC BY 4.0'</a>.",
 		"requiredError": "Required",
 		"hoursMaxError": "Hours cannot exceed 10000.",
-		"minMaxError": "Please enter a valid number of minutes (0 to 59)."
+		"minMaxError": "Please enter a valid number"
 	},
 	"Signup": {
 		"youHaveAccount": "You already have an account?",
@@ -602,6 +602,15 @@
 	},
 	"OEBComponents":{
 		"fieldIsRequired": "This field is required"
+	},
+	"ErrorDialog": {
+		"title": "An error has occured!",
+		"message": "Below you see an error message. If you think this error is on us, write us an email or create an Issue in Github. Please copy the error message in your ticket.",
+		"copyButton" : "Copy",
+		"copyButtonAfter": "Copied!",
+		"createIssue": "To the GitHub issues",
+		"sendEmail":"Send an email"
+
 	},
 	"LearningPath": {
 		"learningpaths": "Learning Paths",

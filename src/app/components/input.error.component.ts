@@ -12,7 +12,7 @@ import { HlmInputErrorDirective } from './spartan/ui-input-helm/src';
 		// '[class.invisible]': "touchedState() === 'UNTOUCHED'",
 	},
 	template: `
-		<p>{{ error }}</p>
+		<p class="tw-whitespace-nowrap">{{ error }}</p>
 	`,
 })
 export class OebInputErrorComponent {
