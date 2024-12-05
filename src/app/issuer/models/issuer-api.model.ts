@@ -31,7 +31,7 @@ export interface ApiIssuer {
 	staff: ApiIssuerStaff[];
 
 	badgeClassCount: number;
-
+	learningPathCount: number;
 	json: ApiIssuerJsonld;
 
 	verified: boolean;

@@ -111,6 +111,10 @@ export class Issuer extends ManagedEntity<ApiIssuer, IssuerRef> {
 		);		
 	}
 
+	get learningPathCount(): number {
+		return this.apiModel.learningPathCount;
+	}
+
 	async update(): Promise<this> {
 		this.applyApiModel(await this.issuerApiService.getIssuer(this.slug), true);
 		return this;
@@ -294,7 +298,7 @@ export class IssuerStaffMember extends ManagedEntity<ApiIssuerStaff, IssuerStaff
 	}
 }
 
-// ToDo: the following texts are already added to de/en.json files, please make sure to use their reference when reactivating English lang 
+// ToDo: the following texts are already added to de/en.json files, please make sure to use their reference when reactivating English lang
 export const issuerStaffRoles = [
 	{
 		slug: 'owner',

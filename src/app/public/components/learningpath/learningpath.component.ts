@@ -32,6 +32,8 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 	badge: PublicApiBadgeClassWithIssuer;
 	progressPercentage: number | undefined = undefined;
 	minutesCompleted: number;
+	hoursCompleted: number;
+	minutesCompletedRemainder: number;
 	minutesTotal: number;
 	tabs: Tab[] = undefined;
 	activeTab = 'Alle';
@@ -80,6 +82,7 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 	}
 
 	ngAfterContentInit() {
+
 		this.tabs = [
 			{
 				title: 'Alle',
@@ -108,6 +111,10 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 			},
 		});
 	}
+
+	progressValue(): number {
+		return Math.floor((this.minutesCompleted / this.minutesTotal) * 100);
+	  }
 
 	requestPath() {
 		const service: PublicApiService = this.injector.get(PublicApiService);
@@ -158,6 +165,8 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 				(acc, b) => acc + b.extensions['extensions:StudyLoadExtension'].StudyLoad,
 				0,
 			);
+			this.hoursCompleted = Math.floor(this.minutesCompleted / 60);
+			this.minutesCompletedRemainder = this.minutesCompleted % 60;
 			this.issuerLoaded = this.publicService.getIssuer(response.issuer_id).then((issuer) => {
 				this.issuer = issuer;
 			});
