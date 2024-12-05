@@ -1,76 +1,92 @@
 <div class="tw-mt-6 md:tw-mt-7 oeb-section tw-bg-[var(--color-lightgray)] tw-rounded-[25px] tw-p-[1.8em] tw-mb-[1.8em]">
-    <div class="tw-mx-5">
-    <h2 hlmH2 class="tw-text-purple tw-flex tw-gap-2"> 
-        <span class="tw-italic">Optional:</span>
-        <span>{{ 'LearningPath.addTag' | translate }}</span>
-    </h2>
-    <p hlmP class="tw-italic tw-mt-1" [innerHtml]="'CreateBadge.tagInfo' | translate">
-    </p>
+	<div class="tw-mx-5">
+		<h2 hlmH2 class="tw-text-purple tw-flex tw-gap-2">
+			<span class="tw-italic">Optional:</span>
+			<span>{{ 'LearningPath.addTag' | translate }}</span>
+		</h2>
+		<p hlmP class="tw-italic tw-mt-1" [innerHtml]="'CreateBadge.tagInfo' | translate"></p>
 
-    <div class="tw-flex tw-gap-2 oeb tw-mt-2">
-        <div class="tw-flex tw-gap-4 tw-items-center tw-mb-2">
-            <span class="tw-font-semibold tw-text-lg tw-text-oebblack tw-uppercase"> Tag</span>
+		<div class="tw-flex tw-gap-2 oeb tw-mt-2">
+			<div class="tw-flex tw-gap-4 tw-items-center tw-mb-2">
+				<span class="tw-font-semibold tw-text-lg tw-text-oebblack tw-uppercase"> Tag</span>
 
-            <div class="ng-autocomplete">
-                <ng-autocomplete
-                    name="addtag"
-                    id="addtag"
-                    #newTagInput
-                    [data]="existingTags"
-                    maxlength="50"
-                    [isLoading]="existingTagsLoading"
-                    searchKeyword="name"
-                    [placeholder]="'Einen Tag eingeben'"
-                    (keypress)="handleTagInputKeyPress($event)"
-                    [itemTemplate]="itemTemplate"
-                    [notFoundTemplate]="notFoundTemplate"
-                >
-                </ng-autocomplete>
+				<div class="ng-autocomplete">
+					<ng-autocomplete
+						name="addtag"
+						id="addtag"
+						#newTagInput
+						[data]="existingTags"
+						maxlength="50"
+						[isLoading]="existingTagsLoading"
+						searchKeyword="name"
+						[placeholder]="'Einen Tag eingeben'"
+						(keypress)="handleTagInputKeyPress($event)"
+						[itemTemplate]="itemTemplate"
+						[notFoundTemplate]="notFoundTemplate"
+					>
+					</ng-autocomplete>
 
-                <ng-template #itemTemplate let-item>
-                    <a [innerHTML]="item.name"></a>
-                </ng-template>
+					<ng-template #itemTemplate let-item>
+						<a [innerHTML]="item.name"></a>
+					</ng-template>
 
-                <ng-template #notFoundTemplate let-notFound>
-                    <div>{{ 'CreateBadge.tagDoesNotExist' | translate }}</div>
-                </ng-template>
-            </div>
-            <oeb-button 
-            size="sm"
-            type="button" 
-            (click)="addTag()" 
-            text="{{ 'General.add' | translate }}">
-        </oeb-button>
-        </div>
-
-    </div>
-    </div>
-
+					<ng-template #notFoundTemplate let-notFound>
+						<div>{{ 'CreateBadge.tagDoesNotExist' | translate }}</div>
+					</ng-template>
+				</div>
+				<oeb-button size="sm" type="button" (click)="addTag()" text="{{ 'General.add' | translate }}">
+				</oeb-button>
+			</div>
+		</div>
+		<div *ngIf="lpTags.size > 0" class="tw-flex tw-flex-wrap tw-gap-4 tw-w-[70%] tw-ml-[3.2rem]">
+			<div class="tw-flex tw-items-center tw-rounded-full tw-py-1 tw-mb-2" *ngFor="let tag of lpTags">
+				<oeb-button
+					variant="secondary"
+					size="xxs"
+					(click)="removeTag(tag)"
+					icon="lucideCircleX"
+					text="{{ tag }}"
+				>
+				</oeb-button>
+			</div>
+		</div>
+	</div>
 </div>
 
 <div class="tw-mt-6 md:tw-mt-7 oeb-section section">
-    <h2 hlmH2 class="tw-font-bold">{{ 'LearningPath.lpParticipationBadge' | translate }}</h2>
-    <p class="tw-text-[18px] tw-mt-2 tw-leading-[23.4px] tw-italic" hlmP [innerHtml]="'LearningPath.lpParticipationBadgeInfo' | translate"></p>
-    <p hlmP class="tw-text-[18px] tw-mt-2 tw-leading-[23.4px] tw-italic tw-font-bold" [innerHtml]="'LearningPath.lpDerivedData' | translate"></p>
-    <div class="tw-mt-6 tw-flex tw-gap-6">
-        <div class="tw-bg-white tw-flex tw-justify-center tw-items-center tw-border-purple tw-border-solid tw-border tw-rounded-[10px] tw-w-[260px] tw-h-[190px]">
-            <img
-						class="md:tw-w-[145px] md:tw-h-[145px] tw-w-[65px] tw-h-[65px]"
-						[loaded-src]="lpImage"
-						[loading-src]="badgeLoadingImageUrl"
-						[error-src]="badgeFailedImageUrl"
-						width="38"
+	<h2 hlmH2 class="tw-font-bold">{{ 'LearningPath.lpParticipationBadge' | translate }}</h2>
+	<p
+		class="tw-text-[18px] tw-mt-2 tw-leading-[23.4px] tw-italic"
+		hlmP
+		[innerHtml]="'LearningPath.lpParticipationBadgeInfo' | translate"
+	></p>
+	<p
+		hlmP
+		class="tw-text-[18px] tw-mt-2 tw-leading-[23.4px] tw-italic tw-font-bold"
+		[innerHtml]="'LearningPath.lpDerivedData' | translate"
+	></p>
+	<div class="tw-mt-6 tw-flex tw-gap-6">
+		<div
+			class="tw-bg-white tw-flex tw-justify-center tw-items-center tw-border-purple tw-border-solid tw-border tw-rounded-[10px] tw-w-[260px] tw-h-[190px]"
+		>
+			<img
+				class="md:tw-w-[145px] md:tw-h-[145px] tw-w-[65px] tw-h-[65px]"
+				[loaded-src]="lpImage"
+				[loading-src]="badgeLoadingImageUrl"
+				[error-src]="badgeFailedImageUrl"
+				width="38"
 			/>
-        </div>
-        <div class="tw-flex tw-flex-col tw-gap-2">
-            <h3 hlmH3 class="tw-text-oebblack tw-font-bold tw-uppercase tw-text-[18px] tw-leading-[21.6px]">Titel</h3>
-            <!-- <span> {{lpDetailsForm.rawControlMap.name.value}}</span> -->
-                <span>{{lpName}}</span>
+		</div>
+		<div class="tw-flex tw-flex-col tw-gap-2">
+			<h3 hlmH3 class="tw-text-oebblack tw-font-bold tw-uppercase tw-text-[18px] tw-leading-[21.6px]">Titel</h3>
+			<!-- <span> {{lpDetailsForm.rawControlMap.name.value}}</span> -->
+			<span>{{ lpName }}</span>
 
-            <h3 hlmH3 class="tw-text-oebblack tw-font-bold tw-uppercase tw-text-[18px] tw-leading-[21.6px]">Kurz-Beschreibung</h3>
-            <!-- <span> {{lpDetailsForm.rawControlMap.description.value}}</span> -->
-                <span>{{lpDescription}}</span>
-
-        </div>
-    </div>
+			<h3 hlmH3 class="tw-text-oebblack tw-font-bold tw-uppercase tw-text-[18px] tw-leading-[21.6px]">
+				Kurz-Beschreibung
+			</h3>
+			<!-- <span> {{lpDetailsForm.rawControlMap.description.value}}</span> -->
+			<span>{{ lpDescription }}</span>
+		</div>
+	</div>
 </div>

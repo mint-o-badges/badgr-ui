@@ -4,11 +4,11 @@ import { LearningPathManager } from "../../../../issuer/services/learningpath-ma
 import { LearningPath } from "../../../../issuer/models/learningpath.model";
 
 @Component({
-    selector: 'learningpath-tags',
-    templateUrl: './learningpath-tags.component.html',
-    styleUrls: ['../../learningpath-edit-form/learningpath-edit-form.component.scss']
-  })
-  export class LearningPathTagsComponent implements OnInit {
+	selector: 'learningpath-tags',
+	templateUrl: './learningpath-tags.component.html',
+	styleUrls: ['../../learningpath-edit-form/learningpath-edit-form.component.scss']
+})
+export class LearningPathTagsComponent implements OnInit {
 
 	@Input() lpName: string;
 	@Input() lpDescription: string;
@@ -17,23 +17,23 @@ import { LearningPath } from "../../../../issuer/models/learningpath.model";
 	@Output() tagsChanged = new EventEmitter<string[]>();
 
 
-    @ViewChild('newTagInput')
+	@ViewChild('newTagInput')
 	newTagInput: ElementRef<HTMLInputElement>;
- 
-    constructor(
+
+	constructor(
 		protected learningPathManager: LearningPathManager,
 
-    ){
+	) {
 
-    }
-    ngOnInit(): void {
-        this.fetchTags()
-        
-    }
+	}
+	ngOnInit(): void {
+		this.fetchTags()
+
+	}
 	readonly badgeLoadingImageUrl = '../../../breakdown/static/images/badge-loading.svg';
 	readonly badgeFailedImageUrl = '../../../breakdown/static/images/badge-failed.svg';
 
-    /**
+	/**
 	 * Indicates wether the existing tags are currently being loaded.
 	 * It is set in @see fetchTags
 	 */
@@ -49,7 +49,7 @@ import { LearningPath } from "../../../../issuer/models/learningpath.model";
 
 	lpTags = new Set<string>();
 
-    /**
+	/**
 	 * Fetches the tags from the @see badgeClassManager and selects the tags from them.
 	 * The tags are then assigned to @see existingTags in an appropriate format.
 	 * At the beginning, @see existingTagsLoading is set, once tags are loaded it's unset.
@@ -111,4 +111,3 @@ import { LearningPath } from "../../../../issuer/models/learningpath.model";
 		this.tagsChanged.emit(Array.from(this.lpTags));
 	}
 }
-  

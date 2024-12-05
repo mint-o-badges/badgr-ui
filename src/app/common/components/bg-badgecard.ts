@@ -98,11 +98,11 @@ import { FormControl } from '@angular/forms';
 						</div>
 					</div>
 				</div>
-				<div class="tw-float-right tw-relative tw-ml-auto tw-min-h-20">
+				<div class="tw-float-right tw-ml-auto tw-mr-2 tw-relative tw-min-h-20">
 					<oeb-checkbox *ngIf="checkboxControl" class="tw-absolute tw-top-0" [(ngModel)]="checked" [control]="checkboxControl">
 					</oeb-checkbox>
 					<oeb-checkbox *ngIf="showCheckbox" [(ngModel)]="checked" (ngModelChange)="changeCheckbox($event)"></oeb-checkbox>
-					<div *ngIf="competencies && competencies.length > 0" class="tw-absolute tw-bottom-0 tw-cursor-pointer" (click)="toggleCompetencies()">
+					<div *ngIf="competencies && competencies.length > 0" class="tw-absolute tw-bottom-0 tw-right-2 tw-cursor-pointer" (click)="toggleCompetencies()">
 						<hlm-icon [name]=" showCompetencies ? 'lucideChevronUp' : 'lucideChevronDown'" />
 					</div>
 				</div>	
