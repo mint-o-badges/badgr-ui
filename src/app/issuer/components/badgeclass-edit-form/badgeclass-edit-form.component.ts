@@ -210,6 +210,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		this.maxStudyLoadValidation.bind(this),
 		this.noDuplicateCompetencies.bind(this),
 		this.hoursAndMinutesValidator.bind(this),
+		this.hoursAndMinutesValidatorCompetencies.bind(this)
 	],)
 		.addControl('badge_name', '', [
 			Validators.required,
@@ -439,7 +440,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			competencies: badgeClass.extension['extensions:CompetencyExtension'] ? competencies : [],
 			alignments: this.badgeClass.alignments.map((alignment) => ({
 				target_name: alignment.target_name,
-				target_url: alignment.target_url,
+				target_url: alignment.target_url, 
 				target_description: alignment.target_description,
 				target_framework: alignment.target_framework,
 				target_code: alignment.target_code,
@@ -813,11 +814,25 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		}
 	}
 
+	hoursAndMinutesValidatorCompetencies() : ValidationErrors | null {
+		if (!this.badgeClassForm) return null;
+
+		const competenciesArray = this.badgeClassForm.value.competencies
+
+		const hasError = competenciesArray.some(competence => {
+			const hoursCompetence = Number(competence.hours);
+			const minutesCompetence = Number(competence.minutes);
+			return hoursCompetence === 0 && minutesCompetence === 0;
+		});
+		return hasError ? { competenceHoursMinutesZero: true } : null;
+		}
+
 	hoursAndMinutesValidator () : ValidationErrors | null {
 		if (!this.badgeClassForm) return null;
 
 		const hours = Number(this.badgeClassForm.value.badge_hours)
 		const minutes = Number(this.badgeClassForm.value.badge_minutes)
+		console.log(this.badgeClassForm.value)
 		if (hours === 0 && minutes === 0) {
 		  return { hoursAndMinutesError: true};
 		}
@@ -907,6 +922,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			const orgImageExtensionContextUrl = `${this.baseUrl}/static/extensions/OrgImageExtension/context.json`;
 
 			const suggestions = this.aiCompetenciesSuggestions;
+
 			if (this.existingBadgeClass) {
 				this.existingBadgeClass.name = formState.badge_name;
 				this.existingBadgeClass.description = formState.badge_description;

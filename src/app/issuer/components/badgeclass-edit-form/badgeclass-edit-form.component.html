@@ -209,6 +209,16 @@
 
 		<div class="section tw-text-oebblack tw-px-1" *ngIf="badgeCategory === 'competency'">
 			<h2 hlmH2 class="tw-font-bold">3. {{ 'CreateBadge.fillWithCompetencies' | translate }}</h2>
+			<p
+					class="tw-font-normal md:tw-mx-10 tw-mx-4 u-text-error"
+					hlmP
+					size="sm"
+				>
+				<span *ngIf="badgeClassForm.hasError('competenceHoursMinutesZero')">
+					{{ 'CreateBadge.competenceHoursMinutesZero' | translate}}
+				</span>
+				</p>
+
 			<ul class="tw-list-disc md:tw-mx-10 tw-mx-4">
 				<div>
 					<span

@@ -353,7 +353,8 @@
 		"requiredError": "Erforderlich",
 		"hoursMaxError": "Stunden dürfen 10.000 nicht überschreiten.",
 		"minMaxError": "Bitte gib eine positive Zahl ein.",
-		"hoursAndMinutesError": "Der Badge muss mindestens 1 Minute dauern."
+		"hoursAndMinutesError": "Der Badge muss mindestens 1 Minute dauern.",
+		"competenceHoursMinutesZero": "Eine deiner Kompetenzen hat eine Dauer von 0."
 	},
 	"Signup": {
 		"youHaveAccount": "Du hast bereits einen Account?",
