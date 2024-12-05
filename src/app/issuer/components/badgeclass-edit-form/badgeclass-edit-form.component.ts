@@ -100,7 +100,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 	giveBadgeTitle = this.translate.instant('CreateBadge.giveBadgeTitle');
 	changeBadgeTitle = this.translate.instant('CreateBadge.changeBadgeTitle');
-	hoursAndMinutesZeroError = "Either hours or minutes must be greater than 0.";
 	maxValue1000 = this.translate.instant('CreateBadge.maxValue1000');
 
 	imageTooLarge = this.translate.instant('CreateBadge.imageTooLarge');
@@ -813,6 +812,8 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			return { maxHoursError: true };
 		}
 	}
+
+	// Validator for competencies, displays error messages for all compentencies
 	hoursAndMinutesValidatorCompetencies(): ValidationErrors | null {
 		if (!this.badgeClassForm) return null;
 	
@@ -828,25 +829,18 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		return hasError ? { competenceHoursMinutesZero: true } : null;
 	}
 	
-
-	hoursAndMinutesValidator () : ValidationErrors | null {
+	// Validator for badge Duration, is displayed on the respective input
+	hoursAndMinutesValidatorBadgeDuration () : ValidationErrors | null {
 		if (!this.badgeClassForm) return null;
 
 		const hours = Number(this.badgeClassForm.value.badge_hours)
 		const minutes = Number(this.badgeClassForm.value.badge_minutes)
-		console.log(this.badgeClassForm.value)
 		if (hours === 0 && minutes === 0) {
 		  return { hoursAndMinutesError: true};
 		}
-
-
 	   
 		return null;
-
-	}
-
-
-	  
+	}  
 
 	async onSubmit() {
 		try {
