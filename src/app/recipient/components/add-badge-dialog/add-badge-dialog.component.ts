@@ -133,6 +133,9 @@ export class AddBadgeDialogComponent extends BaseDialog {
 						if(parsed_error?.response?.error?.[0]?.name === "VERIFY_RECIPIENT_IDENTIFIER"){
 							message = "Der Empfänger stimmt mit keiner Ihrer verifizierten E-Mail-Adressen überein.";
 						}
+						if(parsed_error?.response?.error?.[0]?.name === "DUPLICATE_BADGE"){
+							message = "Du hast diesen Badge bereits in deinem Rucksack.";
+						}
 					}	
 
 					this.messageService.reportAndThrowError(
