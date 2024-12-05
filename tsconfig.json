@@ -74,6 +74,9 @@
       ],
       "@spartan-ng/ui-progress-helm": [
         "./src/app/components/spartan/ui-progress-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-spinner-helm": [
+        "./src/app/components/spartan/ui-spinner-helm/src/index.ts"
       ]
     }
   }
