@@ -22,7 +22,7 @@ import { TranslateService } from '@ngx-translate/core';
 		},
 	],
 	template: ` <label class="tw-flex tw-items-center tw-mt-[0.25rem]" hlmP>
-			<hlm-checkbox [name]="name" [checked]="checked" (changed)="onChange($event)" [formControl]="control" class="tw-mr-2" />
+			<hlm-checkbox [name]="name" [checked]="checked" (changed)="onChange($event)" [formControl]="control" class="tw-mr-1" />
 			<div class="tw-flex tw-flex-col">
 				<span class="tw-pl-[3px]" [innerHTML]="text"></span>
 				<oeb-input-error

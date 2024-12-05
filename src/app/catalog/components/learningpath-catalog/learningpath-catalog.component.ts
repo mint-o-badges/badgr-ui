@@ -32,12 +32,15 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 	learningPathResultsByIssuer: MatchingLearningPathIssuer[] = [];
     learningPaths: LearningPath[] = [];
 	issuerResults: Issuer[] = [];
+	issuersWithLps: string[] = [];
 	baseUrl: string;
 	tags: string[] = [];
 	issuers: Issuer[] = null;
 	selectedTag: string = null;
 	loggedIn = false;
 	userBadges: string[] = [];
+	plural = {};
+
 
 	get theme() {
 		return this.configService.theme;
@@ -92,6 +95,13 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 				this.userBadges = badgeClassIds;
 			})				
 		}
+
+		this.prepareTexts();
+
+		// Translate: to update predefined text when language is changed
+		this.translate.onLangChange.subscribe((event) => {
+			this.prepareTexts();
+		});
 	}
 
 	private learningPathMatcher(inputPattern: string): (lp) => boolean {
@@ -103,6 +113,26 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 
 	private learningPathTagMatcher(tag: string) {
 		return (badge) => (tag ? badge.tags.includes(tag) : true);
+	}
+
+	prepareTexts() {
+		this.plural = {
+			issuer: {
+				'=0': this.translate.instant('Issuer.noInstitutions'),
+				'=1': '1 Institution',
+				other: '# ' + this.translate.instant('General.institutions'),
+			},
+			issuerText: {
+				'=0': this.translate.instant('Issuer.institutionsIssued'),
+				'=1': '1 ' + this.translate.instant('Issuer.institutionIssued'),
+				other: '# ' + this.translate.instant('Issuer.institutionsIssued'),
+			},
+			learningPath: {
+				'=0': this.translate.instant('General.noLearningPaths'),
+				'=1': '1 ' + this.translate.instant('General.learningPath'),
+				other: '# ' + this.translate.instant('General.learningPaths'),
+			},
+		};
 	}
 
 	changeOrder(order) {
@@ -215,8 +245,10 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 						lp.tags.forEach((tag) => {
 							this.tags.push(tag);
 						})
+						this.issuersWithLps = this.issuersWithLps.concat(lp.issuer_id)
 					});
 					this.tags = sortUnique(this.tags);
+					this.issuersWithLps = sortUnique(this.issuersWithLps);
 					this.updateResults();
 					resolve(lps);
 				},

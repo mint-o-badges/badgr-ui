@@ -32,6 +32,8 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 	badge: PublicApiBadgeClassWithIssuer;
 	progressPercentage: number | undefined = undefined;
 	minutesCompleted: number;
+	hoursCompleted: number;
+	minutesCompletedRemainder: number;
 	minutesTotal: number;
 	tabs: Tab[] = undefined;
 	activeTab = 'Alle';
@@ -163,6 +165,8 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 				(acc, b) => acc + b.extensions['extensions:StudyLoadExtension'].StudyLoad,
 				0,
 			);
+			this.hoursCompleted = Math.floor(this.minutesCompleted / 60);
+			this.minutesCompletedRemainder = this.minutesCompleted % 60;
 			this.issuerLoaded = this.publicService.getIssuer(response.issuer_id).then((issuer) => {
 				this.issuer = issuer;
 			});
