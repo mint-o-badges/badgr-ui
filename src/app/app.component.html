@@ -7,8 +7,11 @@
 				<span style="align-self: flex-start">Educational</span>
 				<span style="align-self: flex-start">Badges</span>
 			</div>
-			<img class="badge-logo" src="../assets/logos/curtain_logo.png"
-				alt="Logo for this website says: Coming soon: 01. April 2024" />
+			<img
+				class="badge-logo"
+				src="../assets/logos/curtain_logo.png"
+				alt="Logo for this website says: Coming soon: 01. April 2024"
+			/>
 		</div>
 		<style>
 			@font-face {
@@ -56,13 +59,15 @@
 		  </style>
 		  <link rel="stylesheet" href="https://sibforms.com/forms/end-form/build/sib-styles.css">
 	</header>
-	<div style="
+	<div
+		style="
 			background: linear-gradient(#6100f9 85%, #f5f5f5 15%);
 			display: flex;
 			flex-direction: column;
 			justify-content: center;
 			align-items: center;
-		">
+		"
+	>
 		<div style="height: 10%; text-align: center">
 			<h2 class="nunito-normal what-are-oeb">
 				Was sind <br />
@@ -70,18 +75,29 @@
 			</h2>
 		</div>
 		<div
-			class="video-container md:tw-w-[52%] tw-h-[370px] tw-border-purple tw-border-solid tw-border-4 tw-m-4 tw-box-border">
-			<iframe src="https://www.youtube.com/embed/H6lBdH75P7g" class="tw-w-full tw-h-full"
-				title="Open badges kurz erklärt" frameborder="0"
+			class="video-container md:tw-w-[52%] tw-h-[370px] tw-border-purple tw-border-solid tw-border-4 tw-m-4 tw-box-border"
+		>
+			<iframe
+				src="https://www.youtube.com/embed/H6lBdH75P7g"
+				class="tw-w-full tw-h-full"
+				title="Open badges kurz erklärt"
+				frameborder="0"
 				allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-				allowfullscreen></iframe>
+				allowfullscreen
+			></iframe>
 		</div>
 		<div class="iframe-container">
-			<iframe class="newsletter-form" src="https://2b1b89e9.sibforms.com/serve/MUIFAKojWi4x97UOmo2HdfRvnlJLK7yupo_
+			<iframe
+				class="newsletter-form"
+				src="https://2b1b89e9.sibforms.com/serve/MUIFAKojWi4x97UOmo2HdfRvnlJLK7yupo_
 				1AW0kPuwZAvaJKVrnY9pSznPf8Tjmv0QVrTBPNIJNbXonMqdxYOSWt8pVW1oJ433_rxMKy6MuYinwl
 				-1uOEueeJLYdc3CZWA109Ie3XYxT64NwBAAJD09w6xT_fhZ4Nsh-z-
-				Q4amYm0A3xXy6pWEdrUOuAEd1kAg6YUw7HLIi--v0" frameborder="0" scrolling="auto" allowfullscreen
-				style="display: block; margin-right: 2em; max-width: 100%; z-index: 50"></iframe>
+				Q4amYm0A3xXy6pWEdrUOuAEd1kAg6YUw7HLIi--v0"
+				frameborder="0"
+				scrolling="auto"
+				allowfullscreen
+				style="display: block; margin-right: 2em; max-width: 100%; z-index: 50"
+			></iframe>
 			<p class="nunito-normal form-paragraph">
 				Melde dich hier an und wir kontaktieren dich sofort, wenn du Badges erstellen kannst.
 			</p>
@@ -111,8 +127,10 @@
 </div>
 <header *ngIf="!curtain">
 	<nav class="oeb-navbar oeb-nav">
-		<a [class.logo-is-loading]="isRequestPending"
-			[href]="isOAuthAuthorizationInProcess ? '#' : theme.alternateLandingUrl || '/'">
+		<a
+			[class.logo-is-loading]="isRequestPending"
+			[href]="isOAuthAuthorizationInProcess ? '#' : theme.alternateLandingUrl || '/'"
+		>
 			<picture class="oeb-navbar-logo">
 				<source media="(min-width: 768px)" [srcset]="logoDesktop" />
 				<img [src]="logoSmall" alt="Logo" />
@@ -124,14 +142,26 @@
 			<nav class="tw-items-stretch tw-align-middle tw-hidden lg:tw-flex">
 				<div class="tw-flex tw-gap-8 tw-items-center">
 					<!-- About Badges Menu -->
-					<oeb-dropdown [menuItems]="aboutBadgesMenuItems" trigger="Über Badges" triggerStyle="oeb-navitem tw-cursor-pointer !tw-leading-none !tw-py-1"></oeb-dropdown>
+					<oeb-dropdown
+						[menuItems]="aboutBadgesMenuItems"
+						trigger="Über Badges"
+						triggerStyle="oeb-navitem tw-cursor-pointer !tw-leading-none !tw-py-1"
+					></oeb-dropdown>
 
-					<a *ngIf="!features.disableRegistration"
-						class="oeb-navitem" routerLinkActive="oeb-navitem-is-active" [routerLink]="['/public/about']">{{
-						'NavItems.aboutOpenEducationalBadges' | translate }}</a>
-					<a *ngIf="!features.disableRegistration"
-						class="oeb-navitem" routerLinkActive="oeb-navitem-is-active" [routerLink]="['/signup']">{{
-						'NavItems.register' | translate }}</a>
+					<a
+						*ngIf="!features.disableRegistration"
+						class="oeb-navitem"
+						routerLinkActive="oeb-navitem-is-active"
+						[routerLink]="['/public/about']"
+						>{{ 'NavItems.aboutOpenEducationalBadges' | translate }}</a
+					>
+					<a
+						*ngIf="!features.disableRegistration"
+						class="oeb-navitem"
+						routerLinkActive="oeb-navitem-is-active"
+						[routerLink]="['/signup']"
+						>{{ 'NavItems.register' | translate }}</a
+					>
 
 					<!-- ToDo: comment in when all pages are completely translated -->
 					<!-- Language -->
@@ -144,7 +174,12 @@
 							<span [ngStyle]="{ 'font-weight': selectedLng == 'en' ? 'bold' : 'normal' }">EN</span>
 						</button>
 					</div> -->
-					<oeb-button size="sm" class="tw-self-center" [routerLink]="['/auth/login']" text="Login"></oeb-button>
+					<oeb-button
+						size="sm"
+						class="tw-self-center"
+						[routerLink]="['/auth/login']"
+						text="Login"
+					></oeb-button>
 				</div>
 			</nav>
 		</ng-template>
@@ -153,30 +188,44 @@
 		<ng-template [ngIf]="loggedIn && !isOAuthAuthorizationInProcess">
 			<nav class="tw-hidden lg:tw-block">
 				<div class="tw-flex tw-gap-8 tw-items-center">
-					<oeb-dropdown [menuItems]="aboutBadgesMenuItems" trigger="Über Badges" triggerStyle="oeb-navitem tw-cursor-pointer !tw-leading-none !tw-py-1"></oeb-dropdown>
+					<oeb-dropdown
+						[menuItems]="aboutBadgesMenuItems"
+						trigger="Über Badges"
+						triggerStyle="oeb-navitem tw-cursor-pointer !tw-leading-none !tw-py-1"
+					></oeb-dropdown>
 
-					<a class="oeb-navitem"
-						routerLinkActive="oeb-navitem-is-active" [routerLink]="['public/about']">
+					<a class="oeb-navitem" routerLinkActive="oeb-navitem-is-active" [routerLink]="['public/about']">
 						{{ 'NavItems.aboutOpenEducationalBadges' | translate }}
 					</a>
-					<a class="oeb-navitem"
-						routerLinkActive="oeb-navitem-is-active" [routerLink]="['/recipient/badges']">{{ 'General.backpack'
-						| translate }}</a>
+					<a
+						class="oeb-navitem"
+						routerLinkActive="oeb-navitem-is-active"
+						[routerLink]="['/recipient/badges']"
+						>{{ 'General.backpack' | translate }}</a
+					>
 					<!-- <a class="oeb-navitem"
 						routerLinkActive="oeb-navitem-is-active" [routerLink]="['/recipient/badge-collections']">{{
 						'General.collections' | translate }}</a> -->
-					<a class="oeb-navitem tw-cursor-pointer"
-						*ngIf="theme.customMenu" routerLinkActive="oeb-navitem-is-active" [bgPopupMenuTrigger]="customMenu">
+					<a
+						class="oeb-navitem tw-cursor-pointer"
+						*ngIf="theme.customMenu"
+						routerLinkActive="oeb-navitem-is-active"
+						[bgPopupMenuTrigger]="customMenu"
+					>
 						{{ theme.customMenu.label }}
 						<svg class="navitem-x-icon" icon="icon_dropdown"></svg>
 					</a>
 
-					<a class="oeb-navitem"
-						routerLinkActive="oeb-navitem-is-active" [routerLink]="['/issuer']">{{ 'NavItems.myInstitutions' |
-						translate }}</a>
+					<a class="oeb-navitem" routerLinkActive="oeb-navitem-is-active" [routerLink]="['/issuer']">{{
+						'NavItems.myInstitutions' | translate
+					}}</a>
 
 					<!-- Account Menu -->
-					<oeb-dropdown [menuItems]="accountMenuItems" trigger="{{ 'General.account' | translate }}" triggerStyle="oeb-navitem tw-cursor-pointer !tw-leading-none !tw-py-1"></oeb-dropdown>
+					<oeb-dropdown
+						[menuItems]="accountMenuItems"
+						trigger="{{ 'General.account' | translate }}"
+						triggerStyle="oeb-navitem tw-cursor-pointer !tw-leading-none !tw-py-1"
+					></oeb-dropdown>
 
 					<!-- ToDo: comment in when all pages are completely translated -->
 					<!-- Language -->
@@ -193,8 +242,12 @@
 			</nav>
 		</ng-template>
 
-		<button class="menutoggle lg:tw-hidden" (click)="toggleMobileNav()" [class.menutoggle-is-active]="mobileNavOpen"
-			[class.menutoggle-light]="!theme.useColorNavbar">
+		<button
+			class="menutoggle lg:tw-hidden"
+			(click)="toggleMobileNav()"
+			[class.menutoggle-is-active]="mobileNavOpen"
+			[class.menutoggle-light]="!theme.useColorNavbar"
+		>
 			<span></span>
 			<span></span>
 			<span></span>
@@ -204,7 +257,7 @@
 
 	<!-- Nav dropdown menus -->
 
-	 <bg-popup-menu #appsMenu>
+	<bg-popup-menu #appsMenu>
 		<a class="menuitem" href="{{ lp.launch_url }}" *ngFor="let lp of launchpoints" target="_blank">
 			{{ lp.label }}
 		</a>
@@ -216,8 +269,12 @@
 		</a>
 	</bg-popup-menu>
 
-	<nav class="l-dialog mobilenav" [class.mobilenav-is-active]="mobileNavOpen" *ngIf="!loggedIn"
-		[class.mobilenav-light]="!theme.useColorNavbar">
+	<nav
+		class="l-dialog mobilenav"
+		[class.mobilenav-is-active]="mobileNavOpen"
+		*ngIf="!loggedIn"
+		[class.mobilenav-light]="!theme.useColorNavbar"
+	>
 		<div class="mobilenav-x-navitems">
 			<p class="mobilenav-x-label">{{ 'General.aboutBadges' | translate }}</p>
 
@@ -236,7 +293,7 @@
 			<a routerLinkActive="menuitem-is-active" [routerLink]="['/auth/login']">Login</a>
 			<a routerLinkActive="menuitem-is-active" [routerLink]="['/signup']">{{
 				'NavItems.register' | translate
-				}}</a>
+			}}</a>
 			<!-- ToDo: comment in when all pages are completely translated -->
 			<!-- mobile-nav language selection -->
 			<!-- <a
@@ -258,8 +315,12 @@
 		</div>
 	</nav>
 
-	<nav class="l-dialog mobilenav" [class.mobilenav-is-active]="mobileNavOpen"
-		*ngIf="loggedIn && !isOAuthAuthorizationInProcess" [class.mobilenav-light]="!theme.useColorNavbar">
+	<nav
+		class="l-dialog mobilenav"
+		[class.mobilenav-is-active]="mobileNavOpen"
+		*ngIf="loggedIn && !isOAuthAuthorizationInProcess"
+		[class.mobilenav-light]="!theme.useColorNavbar"
+	>
 		<div class="mobilenav-x-navitems">
 			<p class="mobilenav-x-label">{{ 'General.aboutBadges' | translate }}</p>
 			<a [routerLink]="['/public/faq']">FAQ</a>
@@ -291,8 +352,12 @@
 </header>
 
 <!-- Display a "curtain" instead of the normal page, if `curtain` is set to true-->
-<main *ngIf="!curtain" class="oeb-main o-container" [attr.inert]="mobileNavOpen ? '' : null"
-	[class.tw-hidden]="mobileNavOpen">
+<main
+	*ngIf="!curtain"
+	class="oeb-main o-container"
+	[attr.inert]="mobileNavOpen ? '' : null"
+	[class.tw-hidden]="mobileNavOpen"
+>
 	<router-outlet *ngIf="!hasFatalError"></router-outlet>
 	<!-- children go here -->
 	<article *ngIf="hasFatalError" class="l-containerxaxis l-containeryaxis">
@@ -314,7 +379,7 @@
 
 <!-- TODO: Assess dialog patterns - use inert polyfill -->
 <confirm-dialog #confirmDialog></confirm-dialog>
-<new-terms-dialog #newTermsDialog></new-terms-dialog>
+<!-- <new-terms-dialog #newTermsDialog></new-terms-dialog> -->
 <share-social-dialog #shareSocialDialog></share-social-dialog>
 <export-pdf-dialog #exportPdfDialog></export-pdf-dialog>
 <nounproject-dialog #nounprojectDialog></nounproject-dialog>
@@ -326,31 +391,52 @@
 
 <footer
 	*ngIf="!curtain"
-	class="tw-relative tw-w-full"
+	class="tw-relative tw-w-full tw-my-4"
 	style="background-color: var(--color-lightgreen); margin-top: 30px"
 >
 	<div class="page-padding">
-		<div class="tw-h-[144px] oeb-footer tw-flex tw-flex-row tw-items-center">
+		<div class="oeb-footer tw-flex tw-flex-row tw-items-center">
 			<div
-				class="tw-font-[rubik] tw-text-left tw-flex md:tw-flex-row md:tw-justify-between md:tw-gap-0 tw-flex-col-reverse tw-gap-[2em]">
-				<div>
-					<p class="text-semiBold md:tw-w-2/3 tw-text-purple tw-mt-[10px]"
-						*ngIf="theme.showPoweredByOSL && theme.providedBy">
+				class="tw-font-[rubik] tw-text-left tw-flex md:tw-flex-row md:tw-justify-between md:tw-gap-0 tw-flex-col-reverse tw-gap-[2em]"
+			>
+				<div class="tw-flex tw-flex-col tw-gap-2 tw-text-[18px] tw-leading-[23.4px] tw-text-oebblack">
+					<p class="md:tw-w-2/3 tw-mt#-[10px]" *ngIf="theme.showPoweredByOSL && theme.providedBy">
 						Open Educational Badges ist ein Gemeinschaftsprojekt von
 						<a href="https://matrix-gruppe.de/matrix-gemeinnuetzig/" target="_blank">matrix gGmbh</a>,
 						<a href="https://mycelia.education/" target="_blank">mycelia gGmbh</a> und der
 						<a href="https://opensenselab.org/" target="_blank">openSenseLab gGmbh</a>.
 					</p>
-				</div>
-
-				<div class="tw-flex tw-flex-col tw-min-w-fit">
-					<a class="tw-text-[14px] tw-leading-[16.8px] tw-font-semibold  md:tw-text-[20px] md:tw-font-medium md:tw-leading-[26px] tw-text-purple" [routerLink]="['/public/faq']">FAQ</a>
-					<div>
-						<a class="tw-text-[14px] tw-leading-[16.8px] tw-font-semibold  md:tw-text-[20px] md:tw-font-medium md:tw-leading-[26px] tw-text-purple" [href]="theme.termsOfServiceLink">{{ 'Start.imprint' | translate }}</a>
-						<span> | </span>
-						<a class="tw-text-[14px] tw-leading-[16.8px] tw-font-semibold  md:tw-text-[20px] md:tw-font-medium md:tw-leading-[26px] tw-text-purple" [href]="theme.privacyPolicyLink">{{ 'Start.privacyPolicy' | translate }}</a>
+					<div class="tw-flex tw-gap-2 md:tw-w-2/3 tw-mt-[10px]">
+						<img src="assets/oeb/images/issuerPage/oeb-beta-logo.svg" class="tw-w-[40px]" alt="Beta logo" />
+						<p >
+							Unsere Plattform befindet sich noch in der <a href="">Betaphase</a>. Du hast Fehler entdeckt?
+							Schreib uns gerne an
+							<a
+								class="tw-underline tw-cursor-pointer tw-text-link"
+								title="contact us"
+								href="mailto:hallo@openbadges.education"
+							>hallo&#64;openbadges.education</a>.
+						</p>
+					</div>
+					<div class="tw-flex md:tw-hidden tw-flex-col tw-justify-evenly">
+						<a class="tw-text-[14px] tw-leading-[16.8px] tw-font-semibold  md:tw-text-[20px] md:tw-font-medium md:tw-leading-[26px] tw-text-oebblack" [routerLink]="['/public/faq']">FAQ</a>
+						<a class="tw-text-[14px] tw-leading-[16.8px] tw-font-semibold  md:tw-text-[20px] md:tw-font-medium md:tw-leading-[26px] tw-text-oebblack" [href]="theme.termsOfServiceLink">{{ 'Start.imprint' | translate }}</a>
+						<a class="tw-text-[14px] tw-leading-[16.8px] tw-font-semibold  md:tw-text-[20px] md:tw-font-medium md:tw-leading-[26px] tw-text-oebblack" [href]="theme.privacyPolicyLink">{{ 'Start.privacyPolicy' | translate }}</a>
+						<a class="tw-text-[14px] tw-leading-[16.8px] tw-font-semibold  md:tw-text-[20px] md:tw-font-medium md:tw-leading-[26px] tw-text-oebblack" [routerLink]="['/public/terms']">Nutzungsbedingungen</a>
 					</div>
 				</div>
+
+				<oeb-button
+					[routerLink]="['/public/about/newsletter']"
+					[text]="'Newsletter.signup' | translate"
+					width="max_content"
+				></oeb-button>
+
+				<!-- <div class="tw-flex tw-flex-col tw-min-w-fit tw-text-right tw-justify-evenly">
+					<a class="tw-text-[14px] tw-leading-[16.8px] tw-font-semibold  md:tw-text-[20px] md:tw-font-medium md:tw-leading-[26px] tw-text-oebblack" [routerLink]="['/public/faq']">FAQ</a>
+					<a class="tw-text-[14px] tw-leading-[16.8px] tw-font-semibold  md:tw-text-[20px] md:tw-font-medium md:tw-leading-[26px] tw-text-oebblack" [href]="theme.termsOfServiceLink">{{ 'Start.imprint' | translate }}</a>
+					<a class="tw-text-[14px] tw-leading-[16.8px] tw-font-semibold  md:tw-text-[20px] md:tw-font-medium md:tw-leading-[26px] tw-text-oebblack" [href]="theme.privacyPolicyLink">{{ 'Start.privacyPolicy' | translate }}</a>
+				</div> -->
 			</div>
 		</div>
 	</div>
@@ -380,17 +466,23 @@
 </footer>
 
 <!-- Funder logos -->
-<div class="tw-relative tw-w-full" 	[class.tw-hidden]="mobileNavOpen">
-	<div class="page-padding logos-container">
+<div class="tw-relative tw-w-full " [class.tw-hidden]="mobileNavOpen">
+	<div class="page-padding oeb logos-container md:tw-flex md:tw-justify-between">
 		<img
-			class="tw-max-w-[257px]"
+			class="tw-max-w-full md:tw-max-w-[60%]"
 			alt="Telekom-Stiftung Logo"
-			src="assets/oeb/images/aboutpage/telekom_kooperation_logo_new.png"
+			src="assets/oeb/images/aboutpage/logoleiste_cropped.png"
 			alt="Telekom Stiftung Logo"
 		/>
-		<div class="funding-logos-container">
-			<img src="assets/oeb/images/aboutpage/bmbf_logo_new.jpg" class="tw-max-w-[279px]" alt="BMBF logo" />
-			<img src="assets/oeb/images/aboutpage/eu_logo_new.png" class="tw-w-[330px] sm:tw-w-[357px]" alt="EU logo" />
+		<div class="tw-hidden md:tw-flex tw-flex-col tw-min-w-fit tw-text-right tw-justify-evenly">
+			<a class="tw-text-[14px] tw-leading-[16.8px] tw-font-semibold  md:tw-text-[20px] md:tw-font-medium md:tw-leading-[26px] tw-text-oebblack" [routerLink]="['/public/faq']">FAQ</a>
+			<a class="tw-text-[14px] tw-leading-[16.8px] tw-font-semibold  md:tw-text-[20px] md:tw-font-medium md:tw-leading-[26px] tw-text-oebblack" [href]="theme.termsOfServiceLink">{{ 'Start.imprint' | translate }}</a>
+			<a class="tw-text-[14px] tw-leading-[16.8px] tw-font-semibold  md:tw-text-[20px] md:tw-font-medium md:tw-leading-[26px] tw-text-oebblack" [href]="theme.privacyPolicyLink">{{ 'Start.privacyPolicy' | translate }}</a>
+			<a class="tw-text-[14px] tw-leading-[16.8px] tw-font-semibold  md:tw-text-[20px] md:tw-font-medium md:tw-leading-[26px] tw-text-oebblack" [routerLink]="['/public/terms']">Nutzungsbedingungen</a>
 		</div>
+		<!-- <div class="funding-logos-container">
+			<img src="assets/oeb/images/aboutpage/bmbf_logo_new.jpg" class="tw-max-w-[200px]" alt="BMBF logo" />
+			<img src="assets/oeb/images/aboutpage/eu_logo_new.png" class="tw-w-[230px] sm:tw-w-[357px]" alt="EU logo" />
+		</div> -->
 	</div>
 </div>

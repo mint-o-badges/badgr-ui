@@ -105,7 +105,7 @@
 					</h3>
 					<div>
 						<div *ngFor="let competency of badgeClass['extensions:CompetencyExtension']; index as i">
-							<competency-accordion [name]="competency.name" [category]="competency.category" [description]="competency.description" [escoID]="competency.escoID" [studyload]="competency.studyLoad | hourPipe"></competency-accordion>
+							<competency-accordion [name]="competency.name" [category]="competency.category" [description]="competency.description" [framework]="competency.framework" [framework_identifier]="competency.framework_identifier" [studyload]="competency.studyLoad | hourPipe"></competency-accordion>
 						</div>
 					</div>
 				</section>
