@@ -335,7 +335,10 @@
 		"licenseInfo": "Badges are created under the license <a class='tw-underline tw-text-[#1400FF]' target='_blank' href='https://creativecommons.org/publicdomain/zero/1.0/legalcode.de'>CC BY 4.0'</a>.",
 		"requiredError": "Required",
 		"hoursMaxError": "Hours cannot exceed 10000.",
-		"minMaxError": "Please enter a valid number"
+		"minMaxError": "Please enter a valid number",
+		"hoursAndMinutesError": "The badge has to take at least 1 minute",
+		"competenceHoursMinutesZero": "One of your competencies has a duration of 0."
+
 	},
 	"Signup": {
 		"youHaveAccount": "You already have an account?",
