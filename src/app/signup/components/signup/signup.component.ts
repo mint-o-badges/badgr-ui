@@ -27,7 +27,6 @@ export class SignupComponent extends BaseRoutableComponent implements OnInit, Af
 	passwordMustBe8Char = this.translate.instant('Signup.passwordMustBe8Char');
 	confirmPassword = this.translate.instant('Signup.confirmPassword');
 	passwordsNotEqual = this.translate.instant('Signup.passwordsNotEqual');
-	
 
 	baseUrl: string;
 	signupForm = typedFormGroup()
@@ -83,20 +82,19 @@ export class SignupComponent extends BaseRoutableComponent implements OnInit, Af
 	ngAfterViewInit(): void {
 		this.captchaService.setupCaptcha('#altcha', (verified) => {
 			this.captchaVerified = verified;
-		  });
+		});
 	}
 
 	onSubmit() {
-		
 		if (!this.signupForm.markTreeDirtyAndValidate()) {
 			return;
 		}
-		
-		if(!this.captchaVerified){
+
+		if (!this.captchaVerified) {
 			this.messageService.setMessage(this.translate.instant('Captcha.pleaseVerify'), 'error');
 			return;
 		}
-		
+
 		const formState = this.signupForm.value;
 
 		const altcha = <HTMLInputElement>document.getElementsByName('altcha')[0];

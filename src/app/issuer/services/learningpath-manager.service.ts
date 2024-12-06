@@ -50,9 +50,6 @@ export class LearningPathManager extends BaseHttpApiService {
 		return this.allLearningPaths$
 			.pipe(first())
 			.toPromise()
-			.then(
-				(lps) =>
-					lps.find((l) => l.slug === learningPathSlug) 
-			);
+			.then((lps) => lps.find((l) => l.slug === learningPathSlug));
 	}
 }

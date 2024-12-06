@@ -1,4 +1,4 @@
-import { Component,  OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SessionService } from '../../../common/services/session.service';
 
 @Component({
@@ -9,7 +9,7 @@ import { SessionService } from '../../../common/services/session.service';
 export class StartComponent implements OnInit {
 	constructor(public sessionService: SessionService) {}
 	public loggedIn = false;
-	thumbnailSrc: string = "../../../../../assets/videos/thumbnail.svg";
+	thumbnailSrc: string = '../../../../../assets/videos/thumbnail.svg';
 	videoStarted = false;
 
 	ngOnInit() {
@@ -18,6 +18,7 @@ export class StartComponent implements OnInit {
 
 	startVideo() {
 		this.videoStarted = true;
-		(document.getElementById('video-iframe') as HTMLIFrameElement).src = "https://www.youtube.com/embed/H6lBdH75P7g?autoplay=1";
+		(document.getElementById('video-iframe') as HTMLIFrameElement).src =
+			'https://www.youtube.com/embed/H6lBdH75P7g?autoplay=1';
 	}
 }

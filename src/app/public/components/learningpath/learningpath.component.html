@@ -97,15 +97,13 @@
 				<div class="tw-col-span-2" *bgAwaitPromises="[issuerLoaded]">
 					<ng-template #progessTemplate>
 						<div class="tw-absolute tw-flex tw-flex-col tw-w-full tw-text-right tw-right-4">
-							<span hlmH1 class="tw-font-extrabold tw-text-purple"
-								>{{ progressValue() }} %</span
-							>
+							<span hlmH1 class="tw-font-extrabold tw-text-purple">{{ progressValue() }} %</span>
 							<span hlmP class="tw-mt-2 tw-text-oebblack tw-flex tw-justify-end">
 								<span [countUp]="hoursCompleted"></span>
 								<span>:</span>
 								<span [countUp]="minutesCompletedRemainder"></span>
 								<span> / </span>
-								<span> {{minutesTotal | hourPipe }}</span>
+								<span> {{ minutesTotal | hourPipe }}</span>
 							</span>
 						</div>
 					</ng-template>

@@ -42,7 +42,7 @@ export class BadgeclassIssueBulkAwardError extends BaseAuthenticatedRoutableComp
 			this.transformedImportData.invalidRowsTransformed.forEach((row) => {
 				formArray.push(
 					this.formBuilder.group({
-                        name: [row.name, Validators.required],
+						name: [row.name, Validators.required],
 						email: [row.email, Validators.compose([Validators.required, EmailValidator.validEmail])],
 					}),
 				);

@@ -86,82 +86,82 @@ export class LoginComponent extends BaseRoutableComponent implements OnInit, Aft
 		}
 	}
 
-    afterLogin() {
-        this.profileManager.reloadUserProfileSet().then(() => {
-            this.profileManager.userProfilePromise.then((profile) => {
-                if (profile) {
-                    // fetch user profile and emails to check if they are verified
-                    profile.emails.updateList().then(() => {
-                        if (profile.isVerified) {
-                            if (this.oAuthManager.isAuthorizationInProgress) {
-                                this.router.navigate(['/auth/oauth2/authorize']);
-                            } else {
-                                this.externalToolsManager.externaltoolsList.updateIfLoaded();
-                                // catch localStorage.redirectUri
-                                if (localStorage.redirectUri) {
-                                    const redirectUri = new URL(localStorage.redirectUri);
-                                    localStorage.removeItem('redirectUri');
-                                    window.location.replace(redirectUri.origin);
-                                    return false;
-                                } else {
-                                    // first time only do welcome
-                                    this.router.navigate([
-                                        localStorage.signup ? 'auth/welcome' : 'issuer',
-                                    ]);
-                                }
-                            }
-                        } else {
-                            this.router.navigate([
-                                'signup/success',
-                                encodeURIComponent(btoa(profile.emails.entities[0].email)),
-                            ]);
-                        }
-                    });
-                }
-            });
-        });
-    }
+	afterLogin() {
+		this.profileManager.reloadUserProfileSet().then(() => {
+			this.profileManager.userProfilePromise.then((profile) => {
+				if (profile) {
+					// fetch user profile and emails to check if they are verified
+					profile.emails.updateList().then(() => {
+						if (profile.isVerified) {
+							if (this.oAuthManager.isAuthorizationInProgress) {
+								this.router.navigate(['/auth/oauth2/authorize']);
+							} else {
+								this.externalToolsManager.externaltoolsList.updateIfLoaded();
+								// catch localStorage.redirectUri
+								if (localStorage.redirectUri) {
+									const redirectUri = new URL(localStorage.redirectUri);
+									localStorage.removeItem('redirectUri');
+									window.location.replace(redirectUri.origin);
+									return false;
+								} else {
+									// first time only do welcome
+									this.router.navigate([localStorage.signup ? 'auth/welcome' : 'issuer']);
+								}
+							}
+						} else {
+							this.router.navigate([
+								'signup/success',
+								encodeURIComponent(btoa(profile.emails.entities[0].email)),
+							]);
+						}
+					});
+				}
+			});
+		});
+	}
 
-    validateToken() {
+	validateToken() {
 		this.loginFinished = this.sessionService
 			.validateToken()
-			.then(() => this.afterLogin(),
-                  (response: HttpErrorResponse) => {
-                if (response.status == 401) {
-                    // Unauthorized: The user is not
-                    // authenticated in Django, meaning that the
-                    // OIDC authentication failed. The user
-                    // probably already knows this at this point
-                    this.router.navigate([], {
-                        queryParams: { validateToken: null },
-                        queryParamsHandling: 'merge'
-                    });
-                    // Don't display an error, since it might happen
-                    // quite easily that the user navigates to the
-                    // address containing ?validateToken
-                    console.error("Token validation failed. This means",
-                                  "that either the user accidently",
-                                  "navigated to the address with the",
-                                  "?validateToken query parameter, or",
-                                  "something weird happened");
-                }
-                else {
-					this.messageService.reportHandledError(
-						BadgrApiFailure.messageIfThrottableError(response.error) ||
-							this.translate.instant('Login.failLogin'),
-						response,
-					);
-                }
-            },)
+			.then(
+				() => this.afterLogin(),
+				(response: HttpErrorResponse) => {
+					if (response.status == 401) {
+						// Unauthorized: The user is not
+						// authenticated in Django, meaning that the
+						// OIDC authentication failed. The user
+						// probably already knows this at this point
+						this.router.navigate([], {
+							queryParams: { validateToken: null },
+							queryParamsHandling: 'merge',
+						});
+						// Don't display an error, since it might happen
+						// quite easily that the user navigates to the
+						// address containing ?validateToken
+						console.error(
+							'Token validation failed. This means',
+							'that either the user accidently',
+							'navigated to the address with the',
+							'?validateToken query parameter, or',
+							'something weird happened',
+						);
+					} else {
+						this.messageService.reportHandledError(
+							BadgrApiFailure.messageIfThrottableError(response.error) ||
+								this.translate.instant('Login.failLogin'),
+							response,
+						);
+					}
+				},
+			)
 			.then(() => (this.loginFinished = null));
-    }
+	}
 
-    bildungsraumLogin() {
-        if (this.isOidcDisabled())
-            return;
-        const endpoint = this.sessionService.baseUrl + '/oidc/authenticate';
-        window.location.href = endpoint;
-    }
+	bildungsraumLogin() {
+		if (this.isOidcDisabled()) return;
+		const endpoint = this.sessionService.baseUrl + '/oidc/authenticate';
+		window.location.href = endpoint;
+	}
 
 	submitAuth() {
 		if (!this.loginForm.markTreeDirtyAndValidate()) {
@@ -175,7 +175,8 @@ export class LoginComponent extends BaseRoutableComponent implements OnInit, Aft
 
 		this.loginFinished = this.sessionService
 			.login(credential)
-			.then(() => this.afterLogin(),
+			.then(
+				() => this.afterLogin(),
 				(response: HttpErrorResponse) =>
 					this.messageService.reportHandledError(
 						BadgrApiFailure.messageIfThrottableError(response.error) ||
@@ -187,11 +188,9 @@ export class LoginComponent extends BaseRoutableComponent implements OnInit, Aft
 	}
 
 	private handleQueryParamCases() {
-
-        this.route.queryParams.subscribe(params => {
-            if (params.hasOwnProperty('validateToken'))
-                this.validateToken();
-        });
+		this.route.queryParams.subscribe((params) => {
+			if (params.hasOwnProperty('validateToken')) this.validateToken();
+		});
 
 		try {
 			// Handle authcode exchange
@@ -256,8 +255,8 @@ export class LoginComponent extends BaseRoutableComponent implements OnInit, Aft
 		this.verifiedEmail = this.queryParams.queryStringValue('email');
 	}
 
-    isOidcDisabled(): boolean {
-        const prodUrl = "https://openbadges.education";
-        return location.origin === prodUrl;
-    }
+	isOidcDisabled(): boolean {
+		const prodUrl = 'https://openbadges.education';
+		return location.origin === prodUrl;
+	}
 }

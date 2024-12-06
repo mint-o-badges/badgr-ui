@@ -40,7 +40,6 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 	issuers: string[] = [];
 	selectedTag: string = null;
 
-
 	sortControl = new FormControl('name_asc');
 
 	groupOptions = [
@@ -118,7 +117,6 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		// subscribe to issuer and badge class changes
 		this.badgesLoaded = this.loadBadges();
 
-
 		this.groupControl.valueChanges.subscribe((value) => {
 			this.groupBy = value;
 		});
@@ -191,8 +189,6 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 			},
 		};
 	}
-
-
 
 	private updateResults() {
 		let that = this;

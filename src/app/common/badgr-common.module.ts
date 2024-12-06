@@ -188,7 +188,7 @@ export const COMMON_MODULE_COMPONENTS = [
 	IssuerCardComponent,
 	OebLearningPathDetailComponent,
 	OebIssuerCard,
-	OebSortSelectComponent
+	OebSortSelectComponent,
 ];
 
 const SERVICES = [
@@ -269,8 +269,19 @@ export const COMMON_IMPORTS = [
 
 @NgModule({
 	imports: [...COMMON_IMPORTS, FormsModule, LMarkdownEditorModule, TranslateModule],
-	providers: [BadgeClassManager, BadgeClassApiService, { provide: HTTP_INTERCEPTORS, useClass:ServerErrorInterceptor, multi:true}],
-	declarations: [...DIRECTIVES, ...COMMON_MODULE_COMPONENTS, ...PIPES, ForwardRouteComponent, BadgeLegendComponent, CountUpDirective],
+	providers: [
+		BadgeClassManager,
+		BadgeClassApiService,
+		{ provide: HTTP_INTERCEPTORS, useClass: ServerErrorInterceptor, multi: true },
+	],
+	declarations: [
+		...DIRECTIVES,
+		...COMMON_MODULE_COMPONENTS,
+		...PIPES,
+		ForwardRouteComponent,
+		BadgeLegendComponent,
+		CountUpDirective,
+	],
 	exports: [...DIRECTIVES, ...COMMON_MODULE_COMPONENTS, ...PIPES, BadgeLegendComponent],
 })
 export class BadgrCommonModule {

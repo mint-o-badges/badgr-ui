@@ -52,7 +52,7 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 			value: 'andere',
 		},
 	];
-	
+
 	sortControl = new FormControl('name_asc');
 	private _searchQuery = '';
 	get searchQuery() {
@@ -109,7 +109,6 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 		this.categoryControl.valueChanges.subscribe((value) => {
 			this.categoryFilter = value;
 		});
-
 	}
 
 	async loadIssuers() {
@@ -381,8 +380,6 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 			this.mapObject.getSource('issuers').setData(this.issuerGeoJson);
 		}
 	}
-
-
 
 	openMap() {
 		this.badgesDisplay = 'map';

@@ -2,7 +2,12 @@ import { AfterContentInit, Component, ElementRef, Injector, OnInit, ViewChild, i
 import { ActivatedRoute } from '@angular/router';
 import { PublicApiService } from '../../services/public-api.service';
 import { LoadedRouteParam } from '../../../common/util/loaded-route-param';
-import { PublicApiBadgeClass, PublicApiBadgeClassWithIssuer, PublicApiIssuer, PublicApiLearningPath } from '../../models/public-api.model';
+import {
+	PublicApiBadgeClass,
+	PublicApiBadgeClassWithIssuer,
+	PublicApiIssuer,
+	PublicApiLearningPath,
+} from '../../models/public-api.model';
 import { EmbedService } from '../../../common/services/embed.service';
 import { Title } from '@angular/platform-browser';
 import { AppConfigService } from '../../../common/app-config.service';
@@ -19,7 +24,6 @@ import { SessionService } from '../../../common/services/session.service';
 	templateUrl: './learningpath.component.html',
 })
 export class PublicLearningPathComponent implements OnInit, AfterContentInit {
-
 	learningPathSlug: string;
 	isParticipating: boolean = false;
 	learningPath: PublicApiLearningPath;
@@ -52,10 +56,7 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 	@ViewChild('openTemplate', { static: true }) openTemplate: ElementRef;
 	@ViewChild('finishedTemplate', { static: true }) finishedTemplate: ElementRef;
 
-
-	crumbs = [
-		{ title: 'Lernpfade', routerLink: ['/catalog/learningpaths'] }
-	];
+	crumbs = [{ title: 'Lernpfade', routerLink: ['/catalog/learningpaths'] }];
 
 	constructor(
 		private injector: Injector,
@@ -78,11 +79,10 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 	}
 
 	ngOnInit(): void {
-		this.loggedIn = this.sessionService.isLoggedIn
+		this.loggedIn = this.sessionService.isLoggedIn;
 	}
 
 	ngAfterContentInit() {
-
 		this.tabs = [
 			{
 				title: 'Alle',
@@ -114,17 +114,17 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 
 	progressValue(): number {
 		return Math.floor((this.minutesCompleted / this.minutesTotal) * 100);
-	  }
+	}
 
 	requestPath() {
 		const service: PublicApiService = this.injector.get(PublicApiService);
 		return service.getLearningPath(this.learningPathSlug).then((response) => {
 			this.learningPath = response;
 			this.totalBadgeCount = response.badges.length;
-			this.completedBadgeIds = response.completed_badges ? response.completed_badges.map((badge) => badge.slug) : [];
-			this.openBadges = response.badges.filter(
-				(badge) => !this.completedBadgeIds.includes(badge.badge.slug),
-			);
+			this.completedBadgeIds = response.completed_badges
+				? response.completed_badges.map((badge) => badge.slug)
+				: [];
+			this.openBadges = response.badges.filter((badge) => !this.completedBadgeIds.includes(badge.badge.slug));
 
 			this.tabs = [
 				{
@@ -139,14 +139,13 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 				},
 				{
 					title: 'Abgeschlossen',
-					count: (response.completed_badges ? response.completed_badges.length : 0),
+					count: response.completed_badges ? response.completed_badges.length : 0,
 					component: this.finishedTemplate,
 				},
 			];
 			this.crumbs = [
 				{ title: 'Lernpfade', routerLink: ['/catalog/learningpaths'] },
 				{ title: this.learningPath.name, routerLink: ['/public/learningpaths/' + this.learningPath.slug] },
-
 			];
 			if (response.progress === null) {
 				this.isParticipating = false;
@@ -170,20 +169,18 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 			this.issuerLoaded = this.publicService.getIssuer(response.issuer_id).then((issuer) => {
 				this.issuer = issuer;
 			});
-			this.badgeLoaded = this.publicService
-				.getBadgeClass(response.participationBadge_id)
-				.then((badge) => {
-					this.badge = badge;
-					return badge;
-				});
-		})
+			this.badgeLoaded = this.publicService.getBadgeClass(response.participationBadge_id).then((badge) => {
+				this.badge = badge;
+				return badge;
+			});
+		});
 	}
 
 	participate() {
 		this.learningPathApiService.participateInLearningPath(this.learningPathSlug).then(
 			(response) => {
 				//@ts-ignore
-				if (response.body.message === "Successfully joined the learning path") {
+				if (response.body.message === 'Successfully joined the learning path') {
 					this.openSuccessDialog();
 				}
 				this.requestPath();
@@ -199,16 +196,16 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 	}
 
 	requestLearningPath() {
-		this.learningPathApiService.requestLearningPath(this.learningPath.slug).then(res => {
+		this.learningPathApiService.requestLearningPath(this.learningPath.slug).then((res) => {
 			this.learningPath.requested = true;
-		})
+		});
 	}
 
 	get learningPathReverseBadges() {
-		return [...this.learningPath.badges].reverse()
+		return [...this.learningPath.badges].reverse();
 	}
 
 	get openBadgesReversed() {
-		return [...this.openBadges].reverse()
+		return [...this.openBadges].reverse();
 	}
 }

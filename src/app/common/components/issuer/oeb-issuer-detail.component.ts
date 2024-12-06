@@ -22,14 +22,13 @@ import { BadgeRequestApiService } from '../../../issuer/services/badgerequest-ap
 	styleUrl: './oeb-issuer-detail.component.scss',
 })
 export class OebIssuerDetailComponent implements OnInit {
-
-    @Input() issuer: Issuer;
-    @Input() issuerPlaceholderSrc: string;
-    @Input() issuerActionsMenu: any;
-    @Input() badges: BadgeClass[];
-    @Input() learningPaths: ApiLearningPath[];
-    @Input() public: boolean = false;
-    @Output() issuerDeleted = new EventEmitter();
+	@Input() issuer: Issuer;
+	@Input() issuerPlaceholderSrc: string;
+	@Input() issuerActionsMenu: any;
+	@Input() badges: BadgeClass[];
+	@Input() learningPaths: ApiLearningPath[];
+	@Input() public: boolean = false;
+	@Output() issuerDeleted = new EventEmitter();
 
 	learningPathsPromise: Promise<unknown>;
 
@@ -42,20 +41,18 @@ export class OebIssuerDetailComponent implements OnInit {
 		protected profileManager: UserProfileManager,
 		private configService: AppConfigService,
 		private learningPathApiService: LearningPathApiService,
-		private badgeRequestApiService: BadgeRequestApiService
-	) {
-        
-	};
-    private readonly _hlmDialogService = inject(HlmDialogService);
+		private badgeRequestApiService: BadgeRequestApiService,
+	) {}
+	private readonly _hlmDialogService = inject(HlmDialogService);
 
 	menuItemsPublic: MenuItem[] = [
 		{
 			title: this.translate.instant('Issuer.jsonView'),
-			action: (a:any) => this.routeToJson(),
+			action: (a: any) => this.routeToJson(),
 			// action: (a:any) => this.delete(a),
 			icon: 'lucideFileQuestion',
-		}	
-	]
+		},
+	];
 
 	menuItems: MenuItem[] = [
 		{
@@ -66,7 +63,7 @@ export class OebIssuerDetailComponent implements OnInit {
 		{
 			title: this.translate.instant('General.delete'),
 			// routerLink: ['/catalog/badges'],
-			action: (a:any) => this.delete(a),
+			action: (a: any) => this.delete(a),
 			icon: 'lucideTrash2',
 		},
 		{
@@ -74,8 +71,8 @@ export class OebIssuerDetailComponent implements OnInit {
 			routerLink: ['./staff'],
 			icon: 'lucideUsers',
 		},
-	]
-	
+	];
+
 	tabs: any = undefined;
 	activeTab = 'Badges';
 
@@ -84,7 +81,6 @@ export class OebIssuerDetailComponent implements OnInit {
 
 	ngAfterContentInit() {
 		this.tabs = [
-			
 			{
 				title: 'Badges',
 				component: this.badgesTemplate,
@@ -129,27 +125,26 @@ export class OebIssuerDetailComponent implements OnInit {
 
 	ngOnInit() {
 		this.updateResults();
-		if(!this.public)
-			this.getLearningPathsForIssuerApi(this.issuer.slug);
+		if (!this.public) this.getLearningPathsForIssuerApi(this.issuer.slug);
 	}
 
-    delete(event){
-        this.issuerDeleted.emit(event);
-    }
-
-    routeToBadgeAward(badge, issuer){
-		this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'issue'])
+	delete(event) {
+		this.issuerDeleted.emit(event);
 	}
 
-	routeToQRCodeAward(badge, issuer){
-		this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'qr'])
+	routeToBadgeAward(badge, issuer) {
+		this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'issue']);
 	}
 
-	routeToBadgeDetail(badge, issuer){
-		this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug])
+	routeToQRCodeAward(badge, issuer) {
+		this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'qr']);
 	}
-	redirectToLearningPathDetail(learningPathSlug, issuer){
-		this.router.navigate(['/issuer/issuers/', issuer.slug, 'learningpaths', learningPathSlug])
+
+	routeToBadgeDetail(badge, issuer) {
+		this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug]);
+	}
+	redirectToLearningPathDetail(learningPathSlug, issuer) {
+		this.router.navigate(['/issuer/issuers/', issuer.slug, 'learningpaths', learningPathSlug]);
 	}
 
 	public deleteLearningPath(learningPathSlug, issuer) {
@@ -157,35 +152,39 @@ export class OebIssuerDetailComponent implements OnInit {
 			context: {
 				delete: () => this.deleteLearningPathApi(learningPathSlug, issuer),
 				// qrCodeRequested: () => {},
-				variant: "danger",
-				text: "Möchtest du diesen Lernpfad wirklich löschen?",
-				title: "Lernpfad löschen"
+				variant: 'danger',
+				text: 'Möchtest du diesen Lernpfad wirklich löschen?',
+				title: 'Lernpfad löschen',
 			},
 		});
 	}
 
-	deleteLearningPathApi(learningPathSlug, issuer){
-		this.learningPathApiService.deleteLearningPath(issuer.slug, learningPathSlug).then(
-			() => this.learningPaths = this.learningPaths.filter(value => value.slug != learningPathSlug)
-		);
+	deleteLearningPathApi(learningPathSlug, issuer) {
+		this.learningPathApiService
+			.deleteLearningPath(issuer.slug, learningPathSlug)
+			.then(() => (this.learningPaths = this.learningPaths.filter((value) => value.slug != learningPathSlug)));
 	}
 
-	getLearningPathsForIssuerApi(issuerSlug){
-		this.learningPathsPromise = this.learningPathApiService.getLearningPathsForIssuer(issuerSlug).then(
-			(learningPaths) => this.learningPaths = learningPaths.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
-		);
+	getLearningPathsForIssuerApi(issuerSlug) {
+		this.learningPathsPromise = this.learningPathApiService
+			.getLearningPathsForIssuer(issuerSlug)
+			.then(
+				(learningPaths) =>
+					(this.learningPaths = learningPaths.sort(
+						(a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime(),
+					)),
+			);
 	}
 
 	get rawJsonUrl() {
-		if(this.issuer)
-			return `${this.configService.apiConfig.baseUrl}/public/issuers/${this.issuer.slug}.json`;
+		if (this.issuer) return `${this.configService.apiConfig.baseUrl}/public/issuers/${this.issuer.slug}.json`;
 	}
 
 	routeToJson() {
-		window.open(`${this.configService.apiConfig.baseUrl}/public/issuers/${this.issuer.slug}.json`, '_blank')
+		window.open(`${this.configService.apiConfig.baseUrl}/public/issuers/${this.issuer.slug}.json`, '_blank');
 	}
 
-	routeToUrl(url){
+	routeToUrl(url) {
 		window.location.href = url;
 	}
 
@@ -194,7 +193,10 @@ export class OebIssuerDetailComponent implements OnInit {
 	}
 
 	calculateStudyLoad(lp: any): number {
-		const totalStudyLoad = lp.badges.reduce((acc, b) => acc + b.badge['extensions:StudyLoadExtension'].StudyLoad, 0);
+		const totalStudyLoad = lp.badges.reduce(
+			(acc, b) => acc + b.badge['extensions:StudyLoadExtension'].StudyLoad,
+			0,
+		);
 		return totalStudyLoad;
 	}
 }
@@ -203,6 +205,6 @@ class BadgeResult {
 	constructor(
 		public badge: BadgeClass,
 		public issuerName: string,
-		public requestCount: number
+		public requestCount: number,
 	) {}
 }

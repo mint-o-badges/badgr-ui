@@ -242,7 +242,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				// default of 60 from unselected suggestions,
 				// this doesn't really matter
 				.addControl('studyLoad', 60, [Validators.required, this.positiveInteger])
-				.addControl('framework', 'esco', Validators.required)
+				.addControl('framework', 'esco', Validators.required),
 		)
 		.addArray(
 			'competencies',
@@ -999,7 +999,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 			this.save.emit(this.savePromise);
 		} catch (e) {
-			console.log(e)
+			console.log(e);
 		}
 	}
 
@@ -1034,7 +1034,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				category: String(competency.category),
 				source: competency.source === 'ai' ? 'ai' : 'manual',
 				framework: competency.framework,
-				'framework_identifier': String(competency['framework_identifier']),
+				framework_identifier: String(competency['framework_identifier']),
 			}))
 			.concat(
 				formState.aiCompetencies
@@ -1043,7 +1043,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 						type: ['Extension', 'extensions:CompetencyExtension'],
 						name: suggestions[index].preferred_label,
 						description: suggestions[index].description,
-						'framework_identifier': 'http://data.europa.eu' + suggestions[index].concept_uri,
+						framework_identifier: 'http://data.europa.eu' + suggestions[index].concept_uri,
 						studyLoad: Number(aiCompetency.studyLoad),
 						hours: Number(Math.floor(aiCompetency.studyLoad / 60)),
 						minutes: Number(aiCompetency.studyLoad % 60),

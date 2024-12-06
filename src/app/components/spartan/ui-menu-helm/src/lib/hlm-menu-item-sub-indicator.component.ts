@@ -9,9 +9,7 @@ import type { ClassValue } from 'clsx';
 	standalone: true,
 	providers: [provideIcons({ lucideChevronRight })],
 	imports: [HlmIconComponent],
-	template: `
-		<hlm-icon size="none" class="w-full h-full" name="lucideChevronRight" />
-	`,
+	template: ` <hlm-icon size="none" class="w-full h-full" name="lucideChevronRight" /> `,
 	host: {
 		'[class]': '_computedClass()',
 	},

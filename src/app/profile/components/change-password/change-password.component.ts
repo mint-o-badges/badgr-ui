@@ -49,7 +49,7 @@ export class ChangePasswordComponent extends BaseRoutableComponent {
 		router: Router,
 		protected configService: AppConfigService,
 		private _messageService: MessageService,
-		private translate: TranslateService
+		private translate: TranslateService,
 	) {
 		super(router, route);
 

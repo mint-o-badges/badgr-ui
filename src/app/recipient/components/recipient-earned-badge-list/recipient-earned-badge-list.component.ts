@@ -176,8 +176,6 @@ export class RecipientEarnedBadgeListComponent
 			});
 		}
 
-
-
 		this.mozillaTransitionOver = !!localStorage.getItem('mozillaTransitionOver') || false;
 
 		this.restoreDisplayState();
@@ -375,10 +373,8 @@ export class RecipientEarnedBadgeListComponent
 	}
 
 	trackById(index: number, item: any): any {
-		return item.id; 
+		return item.id;
 	}
-
-
 
 	private groupCompetencies(badges) {
 		let groupedCompetencies: EscoCompetencies = {};

@@ -5,12 +5,12 @@ import { NgIf } from '@angular/common';
 @Component({
 	selector: 'oeb-spinner',
 	standalone: true,
-	imports: [ HlmSpinnerComponent, NgIf],
+	imports: [HlmSpinnerComponent, NgIf],
 	template: `
-	<div class="tw-flex tw-flex-col tw-items-center tw-w-full">
-		<hlm-spinner />
-		<span *ngIf="text" class="tw-mt-6 tw-text-oebblack tw-animate-pulse">{{ text }}</span>
-	</div>
+		<div class="tw-flex tw-flex-col tw-items-center tw-w-full">
+			<hlm-spinner />
+			<span *ngIf="text" class="tw-mt-6 tw-text-oebblack tw-animate-pulse">{{ text }}</span>
+		</div>
 	`,
 })
 export class OebSpinnerComponent {

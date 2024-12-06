@@ -1,4 +1,4 @@
-@import url("../google-webfonts/rubik.scss");
+@import url('../google-webfonts/rubik.scss');
 
 .page-padding {
 	padding-right: calc(var(--gridspacing) * 2);
@@ -85,7 +85,6 @@
 		padding: 0em 24px;
 		@media (min-width: 768px) {
 			padding: 0em 40px;
-
 		}
 	}
 
@@ -127,9 +126,9 @@
 		color: var(--color-purple);
 		background-color: white;
 		padding-left: 5px;
-    	padding-right: 5px;
+		padding-right: 5px;
 		padding-top: 2px;
-    	padding-bottom: 2px;
+		padding-bottom: 2px;
 		border-radius: 95px;
 		border-style: solid;
 		border-width: 1.59px;
@@ -143,7 +142,6 @@
 			padding-bottom: 3.85px;
 		}
 	}
-
 }
 
 .oeb-icon-circle {
@@ -155,11 +153,14 @@
 }
 
 .oeb-slight-shadow {
-	box-shadow: 0px 2px 2px 0px #0000000D;
+	box-shadow: 0px 2px 2px 0px #0000000d;
 }
 
 .oeb-badge-card {
-	box-shadow: 0px 4px 8px 0px #0000000D, 0px 2px 2px 0px #0000001A, 0px 0px 0px 1px #0000001A;
+	box-shadow:
+		0px 4px 8px 0px #0000000d,
+		0px 2px 2px 0px #0000001a,
+		0px 0px 0px 1px #0000001a;
 }
 
 .oeb-stickyfooter {
@@ -167,10 +168,10 @@
 	min-height: 100vh;
 	grid-template-columns: 1fr;
 	grid-template-areas:
-	'nav   ' 
-	'loader' 
-	'main  ' 
-	'footer';
+		'nav   '
+		'loader'
+		'main  '
+		'footer';
 	grid-template-rows: 100px 6px 1fr auto;
 }
 

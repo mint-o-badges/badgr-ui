@@ -136,7 +136,7 @@
 				"serve": {
 					"builder": "@angular-devkit/build-angular:dev-server",
 					"options": {
-						"buildTarget": "badgr-ui-cli:build",
+						"buildTarget": "badgr-ui-cli:build"
 					},
 					"configurations": {
 						"production": {

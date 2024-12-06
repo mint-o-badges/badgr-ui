@@ -6,9 +6,8 @@
 		</h2>
 		<ng-template [showLoader]="false" [bgAwaitPromises]="[issuersLoaded]">
 			<span hlmH2 class="!tw-text-oebblack w-font-normal tw-break-words">
-				<span [countUp]="issuers.length" >
-				</span>
-				<span >
+				<span [countUp]="issuers.length"> </span>
+				<span>
 					{{ ' ' | i18nPlural: plural['issuerText'] }}
 				</span>
 			</span>
@@ -37,10 +36,7 @@
 							</div>
 
 							<span>{{ 'Badge.sortBy' | translate }} </span>
-							<oeb-sort-select
-								[control]="sortControl"
-								[result]="issuerResults"
-								></oeb-sort-select>
+							<oeb-sort-select [control]="sortControl" [result]="issuerResults"></oeb-sort-select>
 							<oeb-select
 								actionBar="true"
 								class="md:tw-w-[180px] oeb"

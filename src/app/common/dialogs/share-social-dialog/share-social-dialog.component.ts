@@ -90,7 +90,7 @@ export class ShareSocialDialog extends BaseDialog {
 					? `&expirationYear=${expiresDate.getFullYear()}&expirationMonth=${(
 							'0' +
 							(expiresDate.getMonth() + 1)
-					  ).slice(-2)}`
+						).slice(-2)}`
 					: ''
 			}&certUrl=${this.options.shareIdUrl}&certId=${this.options.shareIdUrl.split('/').slice(-1)}`;
 		});
