@@ -78,7 +78,7 @@
 						<div class="formsection-x-help">
 							<h3 class="u-text-body-bold">Was ist das Narrativ?</h3>
 							<p class="u-text u-margin-top1x u-margin-bottom2x">
-								Das Narrativ ist eine generelle Beschreibung des Erfolges bezogen auf das Badge.
+								Das Narrativ ist eine generelle Beschreibung des Erfolges bezogen auf das Badge. (Max. 160 Zeichen)
 							</p>
 							<!-- <a href="https://support.badgr.io/pages/viewpage.action?pageId=2981918"
 								class="u-text-outlink">Mehr Informationen
@@ -86,9 +86,9 @@
 							</a> -->
 						</div>
 						<div class="formsection-x-body">
-							<bg-formfield-markdown class="l-formsection-x-inputoffset"
-								[control]="issueForm.rawControlMap.narrative"
-								label="How did the recipient earn this badge?"></bg-formfield-markdown>
+							<oeb-input 
+								[maxchar] = "160"
+								[control]="issueForm.rawControlMap.narrative"/>
 						</div>
 					</div>
 
