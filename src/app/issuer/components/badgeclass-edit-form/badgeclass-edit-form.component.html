@@ -65,13 +65,33 @@
 					<oeb-input 
 						class="tw-w-20" 
 						[fieldType]="'number'" 
-						[control]="badgeClassForm.rawControlMap.badge_study_load" 
+						[control]="badgeClassForm.rawControlMap.badge_hours" 
+						[errorMessage]="{ duration: minMaxError }"
 						noTopMargin="true"
 					>
 					</oeb-input>
-					<span class="tw-text-oebblack md:tw-text-lg">{{ 'General.minutes' | translate }}</span>
+					<span class="tw-font-bold tw-text-purple" hlmP>:</span>
+					<oeb-input 
+						class="tw-w-20" 
+						[fieldType]="'number'" 
+						[control]="badgeClassForm.rawControlMap.badge_minutes" 
+						[errorMessage]="{ duration: minMaxError }"
+						noTopMargin="true"
+					>
+					</oeb-input>
+					<span class="tw-text-oebblack md:tw-text-lg">{{ 'RecBadge.hours' | translate }}</span>
 				</div>
 			</div>
+
+			<p
+					hlmP 
+					size="sm"
+					id="maxHoursOrMinutesError"
+					[hidden]="!badgeStudyLoadDirty || (!badgeClassForm.hasError('maxHoursError') && !badgeClassForm.hasError('maxMinutesError'))" class="tw-font-normal md:tw-pl-[13.5rem] u-text-error"
+				>
+					<span *ngIf="badgeClassForm.hasError('maxMinutesError')">{{'CreateBadge.minMaxError' | translate }}</span>
+					<span *ngIf="badgeClassForm.hasError('maxHoursError')">{{'CreateBadge.hoursMaxError' | translate }}</span>
+			</p>
 
 			<div class="tw-flex md:tw-flex-row tw-gap-3 md:tw-gap-8 tw-flex-col md:tw-items-center tw-justify-start">
 				<span class="input-label md:tw-flex-[0_0_10em]"> {{ 'Badge.title' | translate }}</span>
@@ -200,6 +220,7 @@
 								'CreateBadge.min70max1000Chars' | translate
 							}}</span>
 							<textarea
+								id="ai-competencies-description"
 								class="tw-bg-white tw-border tw-border-gray-300 tw-mt-2 tw-rounded-md tw-shadow-sm tw-p-2 tw-h-48 tw-resize-none tw-text-sm tw-text-gray-700"
 								[(ngModel)]="aiCompetenciesDescription"
 								[ngModelOptions]="{ standalone: true }"
@@ -210,6 +231,7 @@
 							</textarea>
 							<div class="tw-mt-4">
 								<oeb-button
+									[id]="'suggest-competencies-btn'"
 								    class="tw-whitespace-nowrap"
 									(click)="suggestCompetencies()"
 									type="button"
@@ -228,6 +250,7 @@
 								{{ 'CreateBadge.fitting' | translate }} {{ 'RecBadgeDetail.competencies' | translate }}
 							</h2>
 							<div
+								id="ai-competencies-suggestions-list"
 								class="tw-bg-[var(--color-lightpurple)] tw-mt-2 tw-border tw-border-gray-300 tw-rounded-2xl tw-shadow-sm tw-p-2 tw-h-24 tw-resize-none tw-text-sm tw-text-gray-700"
 								*ngIf="aiCompetenciesSuggestions.length == 0; else showAiCompetenciesSuggestions"
 							>
@@ -254,7 +277,7 @@
 											<h2 class="tw-whitespace-pre-wrap tw-text-sm tw-text-oebblack tw-font-bold">
 												{{ aiCompetenciesSuggestions[i].preferred_label }} <a href="http://data.europa.eu/{{aiCompetenciesSuggestions[i].concept_uri}}" target="_blank" class="tw-ml-2 !tw-text-[var(--color-link)]]"> <span class="tw-text-[var(--color-link)] tw-underline tw-font-normal">(E)</span></a>
 											</h2>
-											<oeb-checkbox class="tw-border-[var(--color-purple)]" name="checkboxAiSkill$i" id="checkboxAiSkill$i"
+											<oeb-checkbox class="tw-border-[var(--color-purple)]" name="{{'checkboxAiSkill_'+i}}" id="{{'checkboxAiSkill_'+i}}"
 												[control]="aiCompetency.rawControlMap.selected"
 												></oeb-checkbox>
 										</div>
@@ -263,7 +286,7 @@
 											{{ aiCompetenciesSuggestions[i].description }}
 										</p>
 										<span class="tw-text-sm tw-text-[#6B6B6B] tw-font-light">{{ 'Badge.category' | translate}}: {{ aiCompetenciesSuggestions[i].type.includes('skill') ? ('Badge.skill' | translate) : ('Badge.knowledge' | translate) }} </span>
-										<div class="tw-flex tw-gap-2 tw-items-center tw-mt-4">
+										<div class="tw-flex tw-gap-2 tw-items-center tw-mt-4 tw-mb-4">
 											<label class="tw-text-oebblack tw-font-bold" for="studyLoad$i">
 												{{ 'General.minutes' | translate }}:
 											</label>
@@ -284,7 +307,7 @@
 					</div>
 				</div>
 			<hr class="tw-my-8 tw-border tw-border-[var(--color-purple)] tw-border-dashed" />
-				<oeb-collapsible [trigger]="collapseCompetenciesTrigger" [defaultOpen]="collapsedCompetenciesOpen">
+				<oeb-collapsible [id]="'competencies-by-hand-section'" [trigger]="collapseCompetenciesTrigger" [defaultOpen]="collapsedCompetenciesOpen">
 					<ng-template #collapseCompetenciesTrigger>
 						<span class="tw-list-item tw-text-3xl tw-font-normal tw-text-[var(--color-purple)] tw-mr-auto">{{
 							'CreateBadge.addCompetenciesByHand' | translate
@@ -331,11 +354,11 @@
 							</p>
 							<div class="tw-flex tw-gap-2 tw-items-center tw-mt-4 ">
 								<label class="tw-text-oebblack tw-font-bold" for="studyLoad$i">
-									{{ 'General.minutes' | translate }}:
+									{{ 'RecBadgeDetail.duration' | translate }}:
 								</label>
 								<span
-									class="tw-flex tw-rounded-md tw-bg-white tw-border tw-border-solid tw-border-black tw-h-8 tw-w-8 tw-min-w-fit tw-items-center tw-justify-center"
-									>{{ competency.rawControlMap.studyLoad.value }}</span
+									class="tw-flex tw-rounded-md tw-bg-white tw-border tw-border-solid tw-border-black tw-h-8 tw-w-20 tw-min-w-fit tw-items-center tw-justify-center"
+									>{{ competency.rawControlMap.studyLoad.value | hourPipe }}</span
 								>
 							</div>
 						</div>
@@ -347,6 +370,7 @@
 							<div class="tw-flex tw-flex-col md:tw-flex-row md:tw-justify-between tw-gap-5 md:tw-gap-0">
 								
 								<oeb-input 
+									id="{{'competencyTitle_'+i}}"
 									[fieldType]="'text'" 
 									[label]="competencyTitle"
 									[control]="competency.rawControlMap.name"
@@ -359,22 +383,36 @@
 									<span class="tw-font-semibold tw-text-[14px] md:tw-text-[20px] tw-leading-4 md:tw-leading-6 tw-font-[rubik] tw-pb-[5px] tw-pl-[3px]">{{ competencyDuration }}</span>
 
 									<div class="tw-flex tw-gap-2 tw-items-center">
-										<oeb-input 
+										<oeb-input
+											id="{{'competencyDurationHour_'+i}}" 
 											[fieldType]="'number'"
 											class="tw-max-w-24"
-											[control]="competency.rawControlMap.studyLoad"
+											[control]="competency.rawControlMap.hours"
 											[errorMessage]="{
-												required: 'Bitte gib die Dauer für den Erwerb der Kompetenz ein.'
+												duration: requiredError
+											}"
+											noTopMargin="true"
+										>
+										</oeb-input>
+										:
+										<oeb-input 
+											id="{{'competencyDurationMinutes_'+i}}" 
+											[fieldType]="'number'"
+											class="tw-max-w-24"
+											[control]="competency.rawControlMap.minutes"
+											[errorMessage]="{
+												duration: requiredError
 											}"
 											noTopMargin="true"
 										>
 										</oeb-input>
 
-										<span class="tw-text-oebblack">{{ 'General.minutes' | translate }}</span>
+										<span class="tw-text-oebblack">h</span>
 									</div>
 								</div>
 								
 								<oeb-select
+									id="{{'competencyCategory_'+i}}" 
 									ariaLabel="Wähle eine Kompetenz-Kategorie"
 									[control]="competency.rawControlMap.category"
 									[label]="competencyCategory"
@@ -388,16 +426,17 @@
 
 							</div>
 
-							<oeb-input 
+							<oeb-input
+								id="{{'competencyDescriptionInput_'+i}}"
 								[fieldType]="'textarea'" 
 								[label]="competencyDescription"
 								[control]="competency.rawControlMap.description"
-								id="competency_description_input"
 								[errorMessage]="{ required: enterDescription }"
 							>
 							</oeb-input>
 
-							<oeb-input 
+							<oeb-input
+								id="{{'escoIdentifierInput_'+i}}" 
 								label="Esco-Identifier (optional)"
 								[control]="competency.rawControlMap.escoID"
 								placeholder="z.B. esco/skill/00090cc1-1f27-439e-a4e0-19a87a501bfc"
@@ -416,6 +455,7 @@
 								></oeb-button>
 						
 								<oeb-button
+									id="{{'addCompetencyBtn_'+i}}"
 									size="sm"
 									type="button"
 									width="max_content"
@@ -524,7 +564,7 @@
 
 	<!-- add options -->
 	<div class="section formsection formsection-nohelp tw-text-oebblack">
-		<oeb-collapsible [trigger]="collapseDetailsTrigger">
+		<oeb-collapsible [trigger]="collapseDetailsTrigger" [id]="'optional-details'">
 			<ng-template #collapseDetailsTrigger>
 				<h2 class="tw-pt-1 tw-px-1 tw-text-xl tw-text-[var(--color-purple)] tw-mr-auto">{{'CreateBadge.optionalBadgeDetails' | translate }}</h2>
 			</ng-template>
@@ -558,7 +598,8 @@
 					</ng-template>
 				</div>
 					
-				<oeb-button 
+				<oeb-button
+					[id]="'add-tag-btn'" 
 					size="sm"
 					type="button" 
 					(click)="addTag()" 
@@ -584,6 +625,7 @@
 			<ul class="tw-mt-4">
 				<li>
 					<button
+						id="link-standards-btn"
 						type="button"
 						(click)="alignmentsEnabled ? disableAlignments() : enableAlignments()"
 						class="options-dropdown"
@@ -655,6 +697,7 @@
 										></oeb-input>
 
 										<button
+											id="link-more-options-btn"
 											*ngIf="!showAdvanced[i]"
 											(click)="showAdvanced[i] = true"
 											type="button"
@@ -696,6 +739,7 @@
 				</li>
 				<li class="tw-mt-4">
 					<button
+						id="badge-validity-btn"
 						type="button"
 						(click)="expirationEnabled ? disableExpiration() : enableExpiration()"
 						class="options-dropdown"
@@ -726,6 +770,7 @@
 						<div class="formsection-x-body">
 							<div class="l-spacestack">
 								<oeb-input
+									id="duration-number"
 									[control]="expirationForm.rawControlMap.expires_amount"
 									[label]="count"
 									[fieldType]="'number'"
@@ -736,6 +781,7 @@
 									}"
 								></oeb-input>
 								<oeb-select
+									[id]="'duration-type'"
 									ariaLabel="chooseDuration"
 									[control]="expirationForm.rawControlMap.expires_duration"
 									[label]="duration"
@@ -760,6 +806,8 @@
 			class="tw-mr-4"
 			variant="secondary"
 			(click)="cancelClicked()"
+			[disabled]="!!savePromise"
+			[class.disabled]="!!savePromise"	
 			[disabled-when-requesting]="true"
 			text="{{ 'General.cancel' | translate }}"
 		></oeb-button>

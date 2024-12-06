@@ -47,8 +47,7 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 	issuerBadgeCount: string;
 	launchpoints: ApiExternalToolLaunchpoint[];
 
-	config: PageConfig 
-
+	config: PageConfig;
 
 	now = new Date();
 	compareDate = compareDate;
@@ -116,15 +115,14 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 							title: 'Löschen',
 							icon: 'lucideTrash2',
 							action: () => this.deleteBadge(this.badge),
-						}
-					
+						},
 					],
 					badgeDescription: this.badge.badgeClass.description,
 					issuerSlug: this.badge.badgeClass.issuer.id,
 					slug: this.badgeSlug,
 					issuedOn: this.badge.issueDate,
 					issuedTo: this.badge.recipientEmail,
-					category: this.category['Category'] === 'competency' ? 'Kompetenz- Badge' : 'Teilnahme- Badge',
+					category: this.category['Category'] === 'competency' ? 'Kompetenz-Badge' : 'Teilnahme-Badge',
 					duration: this.badge.getExtension('extensions:StudyLoadExtension', {}).StudyLoad,
 					tags: this.badge.badgeClass.tags,
 					issuerName: this.badge.badgeClass.issuer.name,
@@ -134,8 +132,9 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 					badgeFailedImageUrl: this.badgeFailedImageUrl,
 					badgeImage: this.badge.badgeClass.image,
 					competencies: this.competencies as CompetencyType[],
-
-				}
+					shareButton: true,
+					id: this.badge.badgeClass.id.split('/')[5],
+				};
 			})
 			.catch((e) => this.messageService.reportAndThrowError('Failed to load your badges', e));
 

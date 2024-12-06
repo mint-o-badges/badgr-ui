@@ -216,6 +216,23 @@
     <symbol id="icon_badge" viewBox="0 0 24 24">
       <path fill-rule="evenodd" d="M12 0L2 6v12l10 6 10-6V6L12 0zM5.5 16.019V7.982l6.5-3.9 6.5 3.9v8.037L12 19.918l-6.5-3.899zm1-7.471v6.904l5.5 3.3 5.5-3.3V8.548l-5.5-3.3-5.5 3.3z"/>
     </symbol>
+
+<symbol id="icon_badge_custom" viewBox="0 0 47 46">
+  <rect x="8.47266" y="12.8125" width="15.8054" height="7.80514" transform="rotate(-30 8.47266 12.8125)" fill="#492E98"/>
+  <rect x="15.2031" y="14.7129" width="15.8054" height="7.80514" transform="rotate(90 15.2031 14.7129)" fill="#492E98"/>
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M9.61411 14.7135L12.4091 19.5546L15.2042 17.9409L15.2042 14.7135L9.61411 14.7135Z" fill="#492E98"/>
+  <rect width="15.8054" height="7.80514" transform="matrix(0.866025 0.5 0.5 -0.866025 20.4746 11.6699)" fill="#492E98"/>
+  <rect width="15.8054" height="7.80514" transform="matrix(0.866025 -0.5 -0.5 -0.866025 24.4727 40.5254)" fill="#492E98"/>
+  <rect width="15.8054" height="7.80514" transform="matrix(-0.866025 -0.5 -0.5 0.866025 26.1914 33.748)" fill="#492E98"/>
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M23.2668 6.82944L26.0618 11.6706L23.2667 13.2843L20.4717 11.6706L23.2668 6.82944Z" fill="#492E98"/>
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M23.3973 38.5905L20.6023 33.7494L23.3973 32.1357L26.1923 33.7494L23.3973 38.5905Z" fill="#492E98"/>
+  <rect x="31.4648" y="30.7051" width="15.8054" height="7.80514" transform="rotate(-90 31.4648 30.7051)" fill="#492E98"/>
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M37.0539 30.7044L34.2588 25.8633L31.4638 27.477L31.4638 30.7044L37.0539 30.7044Z" fill="#492E98"/>
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M15.2041 27.4028L12.506 25.8451L9.808 30.5182L15.2041 30.5182L15.2041 27.4028Z" fill="#492E98"/>
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M36.8681 14.895L31.4721 14.895L31.4721 18.0104L34.1701 19.5681L36.8681 14.895Z" fill="#492E98"/>
+</symbol>
+
+
     <symbol id="icon_narrative" viewBox="0 0 24 24">
         <path fill-rule="evenodd" d="M5 3h14c1.1 0 2 .857 2 1.905v13.333c0 1.048-.9 1.905-2 1.905h-4L12 23l-3-2.857H5c-1.11 0-2-.857-2-1.905V4.905C3 3.857 3.89 3 5 3zm1 7v2h12v-2H6zm0 4v2h8v-2H6zm0-8v2h12V6H6z"/>
     </symbol>

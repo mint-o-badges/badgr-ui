@@ -6,14 +6,16 @@
 			<div class="oeb-headline-container tw-relative">
 				<div class="tw-z-10 tw-relative">
 					<h1 hlmH1 class="tw-text-purple">{{ 'Badge.catalogHeadline' | translate }}</h1>
-					<h1 hlmH1 class="lg:tw-pl-[10%] tw-font-extrabold tw-text-purple">
-						{{ badges.length | i18nPlural: plural['badges'] }} in {{ issuers.length | i18nPlural:
-						plural['issuer'] }}
+					<h1 hlmH1 class="lg:tw-pl-[10%] tw-font-extrabold tw-text-purple"> 
+						<span [countUp]="badges.length">{{ badges.length }}</span>{{ ' ' | i18nPlural: plural['badges'] }} in  
+						<span [countUp]="issuers.length">{{ issuers.length }}</span>{{ ' ' | i18nPlural: plural['issuer'] }}
 					</h1>
 				</div>
-				<oeb-background imgClass="md:tw-h-[400px] tw-h-[269px] tw-rotate-[-17.58deg] md:tw-rotate-[-36.66deg]"
+				<oeb-background
+					imgClass="md:tw-h-[400px] tw-h-[269px] tw-rotate-[-17.58deg] md:tw-rotate-[-36.66deg]"
 					class="tw-right-[5%] tw-top-[-10%] md:tw-right-[10%] md:tw-top-[-15%]"
-					image="assets/oeb/images/signuppage/circles.png"></oeb-background>
+					image="assets/oeb/images/signuppage/circles.png"
+				></oeb-background>
 			</div>
 		</div>
 
@@ -23,12 +25,16 @@
 			<section class="">
 				<div class="tw-flex tw-items-center oeb-standard-padding-bottom tw-flex-wrap">
 					<div class="">
-						<div class="tw-pb-2 md:tw-pb-0 ">
-							<input type="text" name="forminput" changeOrder
+						<div class="tw-pb-2 md:tw-pb-0">
+							<input
+								type="text"
+								name="forminput"
+								changeOrder
 								class="tw-w-[300px] tw-border-solid tw-border-purple tw-bg-white tw-mr-6"
-								placeholder="{{ 'Badge.searchBadges' | translate }}" [(ngModel)]="searchQuery"
-								hlmInput />
-
+								placeholder="{{ 'Badge.searchBadges' | translate }}"
+								[(ngModel)]="searchQuery"
+								hlmInput
+							/>
 						</div>
 					</div>
 					<div class="l-actionbar-x-groupby" *ngIf="badgesDisplay != 'map'">
@@ -48,10 +54,12 @@
 				</div>
 				<div class="subtitle-wrapper">
 					<div class="tags-wrapper oeb-standard-padding-bottom">
-						<!-- <div class="tag" *ngFor="let tag of badgeClass.tags; last as last">{{ tag }}</div> -->
-						<div (click)="filterByTag(tag)" class="tag tag-wrapper tag-button"
+						<div
+							(click)="filterByTag(tag)"
 							[class.tag-button-pressed]="selectedTag == tag"
-							*ngFor="let tag of tags | slice: 0 : 3; last as last">
+							class="tag tag-wrapper tag-button"
+							*ngFor="let tag of tags; last as last"
+						>
 							{{ tag }}
 						</div>
 					</div>
@@ -62,29 +70,46 @@
 				<ng-container *ngIf="groupBy == '---'">
 					<div class="tw-grid tw-grid-cols-badges tw-gap-16">
 						<!-- TODO: Fix the badgecard link for sharing and routing -->
-						<bg-badgecard *ngFor="let badge of badgeResults" [badgeTitle]="badge.name"
-							[badgeImage]="badge.image" [badgeDescription]="badge.description" [badgeSlug]="badge.slug"
+						<bg-badgecard
+							*ngFor="let badge of badgeResults"
+							[badgeTitle]="badge.name"
+							[badgeImage]="badge.image"
+							[badgeDescription]="badge.description"
+							[badgeSlug]="badge.slug"
 							[issuerTitle]="badge.issuerName ? badge.issuerName : badge.issuer.name"
-							[badgeIssueDate]="badge.createdAt" public="true" [publicUrl]="badge.url" [badgeClass]="true"
-							[issuerSlug]="badge.issuerSlug"></bg-badgecard>
+							[badgeIssueDate]="badge.createdAt"
+							public="true"
+							[publicUrl]="badge.url"
+							[badgeClass]="true"
+							[issuerSlug]="badge.issuerSlug"
+							[competencies]="badge.extension['extensions:CompetencyExtension']"
+						></bg-badgecard>
 					</div>
 				</ng-container>
 				<ng-container *ngIf="groupBy == 'Issuer'">
 					<ng-container *ngFor="let issuerGroup of badgeResultsByIssuer">
 						<h3 class="u-text-h3-semibold u-margin-bottom2x u-margin-top6x u-text-dark1">
 							{{ issuerGroup.issuerName }}
-							<span class="u-text-small-semibold-caps u-text-dark4 u-margin-left2x">{{
-								issuerGroup.badges.length }}
-								{{ issuerGroup.badges.length == 1 ? 'Badge' : 'Badges' }}</span>
+							<span class="u-text-small-semibold-caps u-text-dark4 u-margin-left2x"
+								>{{ issuerGroup.badges.length }}
+								{{ issuerGroup.badges.length == 1 ? 'Badge' : 'Badges' }}</span
+							>
 						</h3>
 						<div class="tw-grid tw-grid-cols-badges tw-gap-16">
 							<!-- TODO: Fix the badgecard link for sharing and routing -->
-							<bg-badgecard *ngFor="let badge of issuerGroup.badges" [badgeTitle]="badge.name"
-								[badgeImage]="badge.image" [badgeDescription]="badge.description"
+							<bg-badgecard
+								*ngFor="let badge of issuerGroup.badges"
+								[badgeTitle]="badge.name"
+								[badgeImage]="badge.image"
+								[badgeDescription]="badge.description"
 								[badgeSlug]="badge.slug"
 								[issuerTitle]="badge.issuerName ? badge.issuerName : badge.issuer.name"
-								[badgeIssueDate]="badge.createdAt" public="true" [publicUrl]="badge.url"
-								[badgeClass]="true"></bg-badgecard>
+								[badgeIssueDate]="badge.createdAt"
+								public="true"
+								[publicUrl]="badge.url"
+								[badgeClass]="true"
+								[competencies]="badge.extension['extensions:CompetencyExtension']"
+							></bg-badgecard>
 						</div>
 					</ng-container>
 				</ng-container>
@@ -94,18 +119,26 @@
 					<ng-container *ngFor="let categoryGroup of badgeResultsByCategory">
 						<h3 class="u-text-h3-semibold u-margin-bottom2x u-margin-top6x u-text-dark1">
 							{{ categoryOptions[categoryGroup.category] }}
-							<span class="u-text-small-semibold-caps u-text-dark4 u-margin-left2x">{{
-								categoryGroup.badges.length }}
-								{{ categoryGroup.badges.length == 1 ? 'Badge' : 'Badges' }}</span>
+							<span class="u-text-small-semibold-caps u-text-dark4 u-margin-left2x"
+								>{{ categoryGroup.badges.length }}
+								{{ categoryGroup.badges.length == 1 ? 'Badge' : 'Badges' }}</span
+							>
 						</h3>
 						<div class="tw-grid tw-grid-cols-badges tw-gap-16">
 							<!-- TODO: Fix the badgecard link for sharing and routing -->
-							<bg-badgecard *ngFor="let badge of categoryGroup.badges" [badgeTitle]="badge.name"
-								[badgeImage]="badge.image" [badgeDescription]="badge.description"
+							<bg-badgecard
+								*ngFor="let badge of categoryGroup.badges"
+								[badgeTitle]="badge.name"
+								[badgeImage]="badge.image"
+								[badgeDescription]="badge.description"
 								[badgeSlug]="badge.slug"
 								[issuerTitle]="badge.issuerName ? badge.issuerName : badge.issuer.name"
-								[badgeIssueDate]="badge.createdAt" public="true" [publicUrl]="badge.url"
-								[badgeClass]="true"></bg-badgecard>
+								[badgeIssueDate]="badge.createdAt"
+								public="true"
+								[publicUrl]="badge.url"
+								[badgeClass]="true"
+								[competencies]="badge.extension['extensions:CompetencyExtension']"
+							></bg-badgecard>
 						</div>
 					</ng-container>
 				</ng-container>
