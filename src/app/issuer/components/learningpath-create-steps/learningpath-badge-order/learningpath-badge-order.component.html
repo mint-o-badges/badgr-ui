@@ -35,34 +35,6 @@
 					</div>
 				</div>
 			</div>
-			<!-- <ul>
-            <li *ngFor="let item of draggableList; let i = index"  
-                dndDraggable
-                [dndDraggable]="item"
-                (dndDrop)="onDrop($event, i, items)"
-                [dndDropzone]="{ allowedTypes: ['item-type'] }"
-                class="tw-list-decimal">
-                <div>
-                {{item.content.name}}
-                </div> -->
-			<!-- <div  [dndDraggable] dndEffectAllowed="move" (dndMoved)="onDragged(item, draggableList, 'move')"> -->
-			<!-- <bg-badgecard
-                        [badgeTitle]="item.content.name"
-                        [badgeImage]="item.content.image"
-                        [badgeDescription]="item.content.description"
-                        [badgeSlug]="item.content.slug"
-                        [issuerTitle]="item.content.issuerName ? item.content.issuerName : item.content.issuer.name"
-                        [badgeIssueDate]="item.content.createdAt"
-                        public="true"
-                        [publicUrl]="item.content.url"
-                        [badgeClass]="true"
-                        [issuerSlug]="item.content.issuerSlug"
-                        [competencies]="item.content.extension['extensions:CompetencyExtension']"
-                        [checkboxControl]="true">
-                    </bg-badgecard> -->
-			<!-- </div> -->
-			<!-- </li>
-        </ul> -->
 		</div>
 	</div>
 </ng-template>
