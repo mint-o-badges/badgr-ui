@@ -241,7 +241,8 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				// but since it doesn't make sense to remove the
 				// default of 60 from unselected suggestions,
 				// this doesn't really matter
-				.addControl('studyLoad', 60, [Validators.required, this.positiveInteger]),
+				.addControl('studyLoad', 60, [Validators.required, this.positiveInteger])
+				.addControl('framework', 'esco', Validators.required)
 		)
 		.addArray(
 			'competencies',
@@ -249,12 +250,14 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				.addControl('added', false)
 				.addControl('name', '', Validators.required)
 				.addControl('description', '', Validators.required)
-				.addControl('escoID', '')
+				.addControl('framework_identifier', '')
 				// limit of 1000000 is set so that users cant break the UI by entering a very long number
 				.addControl('studyLoad', 60, [Validators.required, this.positiveInteger, Validators.max(1000000)])
 				.addControl('hours', 1, [this.positiveIntegerOrNull, Validators.max(999)])
 				.addControl('minutes', 0, [this.positiveIntegerOrNull, Validators.max(59)])
-				.addControl('category', '', Validators.required),
+				.addControl('category', '', Validators.required)
+				.addControl('framework', '')
+				.addControl('source', ''),
 		)
 		.addArray(
 			'alignments',
@@ -732,7 +735,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		if (
 			(value.name || '').trim().length > 0 ||
 			(value.description || '').trim().length > 0 ||
-			(value.escoID || '').trim().length > 0 ||
+			(value['framework_identifier'] || '').trim().length > 0 ||
 			(value.category || '').trim().length > 0
 		) {
 			if (
@@ -1013,7 +1016,9 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		type: string[];
 		name: string;
 		description: string;
-		escoId: string;
+		framework: string;
+		framework_identifier: string;
+		source: string;
 		studyLoad: number;
 		category: string;
 	} {
@@ -1023,11 +1028,13 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				type: ['Extension', 'extensions:CompetencyExtension'],
 				name: String(competency.name),
 				description: String(competency.description),
-				escoID: String(competency.escoID),
 				studyLoad: Number(competency.hours * 60 + competency.minutes),
 				hours: Number(competency.hours),
 				minutes: Number(competency.minutes),
 				category: String(competency.category),
+				source: competency.source === 'ai' ? 'ai' : 'manual',
+				framework: competency.framework,
+				'framework_identifier': String(competency['framework_identifier']),
 			}))
 			.concat(
 				formState.aiCompetencies
@@ -1036,11 +1043,13 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 						type: ['Extension', 'extensions:CompetencyExtension'],
 						name: suggestions[index].preferred_label,
 						description: suggestions[index].description,
-						escoID: suggestions[index].concept_uri,
+						'framework_identifier': 'http://data.europa.eu' + suggestions[index].concept_uri,
 						studyLoad: Number(aiCompetency.studyLoad),
 						hours: Number(Math.floor(aiCompetency.studyLoad / 60)),
 						minutes: Number(aiCompetency.studyLoad % 60),
 						category: suggestions[index].type.includes('skill') ? 'skill' : 'knowledge',
+						source: 'ai',
+						framework: 'esco',
 					}))
 					.filter((_, index) => formState.aiCompetencies[index].selected),
 			);
