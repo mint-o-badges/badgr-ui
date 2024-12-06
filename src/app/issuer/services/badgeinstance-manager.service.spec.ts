@@ -48,10 +48,6 @@ describe('BadgeInstanceManager', () => {
 		imports: [ ]
 	}));
 
-	beforeEach(inject([ SessionService ], (loginService: SessionService) => {
-		loginService.storeToken({ access_token: "MOCKTOKEN" });
-	}));
-
 
 	it('should load instances for a badge class',
 		inject(
