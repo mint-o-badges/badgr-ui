@@ -104,6 +104,10 @@ export class BadgeClass extends ManagedEntity<ApiBadgeClass, BadgeClassRef> {
 		return this.apiModel.source_url;
 	}
 
+	get issuerVerified() {
+		return this.apiModel.issuerVerified;
+	}
+
 	hasExtension(extensionName: string) {
 		return this.apiModel.extensions && extensionName in this.apiModel.extensions;
 	}
@@ -129,6 +133,10 @@ export class BadgeClass extends ManagedEntity<ApiBadgeClass, BadgeClassRef> {
 
 	get issuerSlug(): string {
 		return BadgeClass.issuerSlugFromUrl(this.issuerUrl);
+	}
+
+	get issuerOwnerAcceptedTos(): boolean {
+		return this.apiModel.issuerOwnerAcceptedTos;
 	}
 
 	get alignments() {

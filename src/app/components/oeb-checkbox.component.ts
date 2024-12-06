@@ -5,7 +5,7 @@ import { ControlValueAccessor, FormControl, FormGroup, NG_VALUE_ACCESSOR } from 
 import type { ClassValue } from 'clsx';
 import { hlm } from '@spartan-ng/ui-core';
 import { CustomValidatorMessages, messagesForValidationError } from './input.component';
-import { NgIf } from '@angular/common';
+import { NgIf, NgClass } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { OebInputErrorComponent } from './input.error.component';
 import { TranslateService } from '@ngx-translate/core';
@@ -13,7 +13,7 @@ import { TranslateService } from '@ngx-translate/core';
 @Component({
 	selector: 'oeb-checkbox',
 	standalone: true,
-	imports: [HlmPDirective, HlmCheckboxComponent, NgIf, OebInputErrorComponent, ReactiveFormsModule],
+	imports: [HlmPDirective, HlmCheckboxComponent, NgIf, NgClass, OebInputErrorComponent, ReactiveFormsModule],
 	providers: [
 		{
 			provide: NG_VALUE_ACCESSOR,
@@ -21,8 +21,8 @@ import { TranslateService } from '@ngx-translate/core';
 			multi: true,
 		},
 	],
-	template: ` <label class="tw-flex tw-items-center tw-mt-[0.25rem]" hlmP>
-			<hlm-checkbox [name]="name" [checked]="checked" (changed)="onChange($event)" [formControl]="control" class="tw-mr-1" />
+	template: ` <label [ngClass]="alignStart ? 'tw-items-start' : 'tw-items-center'" class="tw-flex tw-mt-[0.25rem]" hlmP>
+			<hlm-checkbox [name]="name" [checked]="checked" (changed)="onChange($event)" [formControl]="control" class="tw-mr-2" />
 			<div class="tw-flex tw-flex-col">
 				<span class="tw-pl-[3px]" [innerHTML]="text"></span>
 				<oeb-input-error
@@ -50,6 +50,7 @@ export class OebCheckboxComponent implements ControlValueAccessor {
 	@Input() label: string;
 	@Input() errorGroup: FormGroup;
 	@Input() errorGroupMessage: CustomValidatorMessages;
+	@Input() alignStart = false;
 
 	@Output() ngModelChange = new EventEmitter<string>();
 

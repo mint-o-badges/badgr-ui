@@ -430,13 +430,22 @@
 									>
 								</div>
 							</div>
-						</ng-container>
-						<ng-template #competencyForm>
-							<div
-								class="tw-border-[var(--color-purple)] tw-border tw-border-solid tw-rounded-md tw-p-6 tw-mt-4"
-							>
-								<div
-									class="tw-flex tw-flex-col md:tw-flex-row md:tw-justify-between tw-gap-5 md:tw-gap-0"
+						</div>
+					</ng-container>
+					<ng-template #competencyForm>
+						<div
+							class="tw-border-[var(--color-purple)] tw-border tw-border-solid tw-rounded-md tw-p-6 tw-mt-4"
+						>
+							<div class="tw-flex tw-flex-col md:tw-flex-row md:tw-justify-between tw-gap-5 md:tw-gap-0">
+								
+								<oeb-input 
+									id="{{'competencyTitle_'+i}}"
+									[fieldType]="'text'" 
+									[label]="competencyTitle"
+									[control]="competency.rawControlMap.name"
+									[errorMessage]="{ required: titleError }"
+									noTopMargin="true"
+									[readonly]="competency.controls['framework_identifier'].value ? true : false"
 								>
 									<oeb-input
 										id="{{ 'competencyTitle_' + i }}"
@@ -452,33 +461,31 @@
 										<span
 											class="tw-font-semibold tw-text-[14px] md:tw-text-[20px] tw-leading-4 md:tw-leading-6 tw-font-[rubik] tw-pb-[5px] tw-pl-[3px]"
 											>{{ competencyDuration }}</span
+									<div class="tw-flex tw-gap-2 tw-items-center">
+										<oeb-input
+											id="{{'competencyDurationHour_'+i}}" 
+											[fieldType]="'number'"
+											class="tw-max-w-24"
+											[control]="competency.rawControlMap.hours"
+											[errorMessage]="{
+												duration: requiredError
+											}"
+											noTopMargin="true"
+											[readonly]="competency.controls['framework_identifier'].value ? true : false"
 										>
-
-										<div class="tw-flex tw-gap-2 tw-items-center">
-											<oeb-input
-												id="{{ 'competencyDurationHour_' + i }}"
-												[fieldType]="'number'"
-												class="tw-max-w-24"
-												[control]="competency.rawControlMap.hours"
-												[errorMessage]="{
-													duration: requiredError
-												}"
-												noTopMargin="true"
-											>
-											</oeb-input>
-											:
-											<oeb-input
-												id="{{ 'competencyDurationMinutes_' + i }}"
-												[fieldType]="'number'"
-												class="tw-max-w-24"
-												[control]="competency.rawControlMap.minutes"
-												[errorMessage]="{
-													duration: requiredError
-												}"
-												noTopMargin="true"
-											>
-											</oeb-input>
-
+										</oeb-input>
+										:
+										<oeb-input 
+											id="{{'competencyDurationMinutes_'+i}}" 
+											[fieldType]="'number'"
+											class="tw-max-w-24"
+											[control]="competency.rawControlMap.minutes"
+											[errorMessage]="{
+												duration: requiredError
+											}"
+											noTopMargin="true"
+											[readonly]="competency.controls['framework_identifier'].value ? true : false"
+										>
 											<span class="tw-text-oebblack">h</span>
 										</div>
 									</div>
@@ -496,24 +503,37 @@
 										noTopMargin="true"
 									></oeb-select>
 								</div>
-
-								<oeb-input
-									id="{{ 'competencyDescriptionInput_' + i }}"
-									[fieldType]="'textarea'"
-									[label]="competencyDescription"
-									[control]="competency.rawControlMap.description"
-									[errorMessage]="{ required: enterDescription }"
-								>
-								</oeb-input>
-
-								<oeb-input
-									id="{{ 'escoIdentifierInput_' + i }}"
-									label="Esco-Identifier (optional)"
-									[control]="competency.rawControlMap.escoID"
-									placeholder="z.B. esco/skill/00090cc1-1f27-439e-a4e0-19a87a501bfc"
-								>
-								</oeb-input>
-
+								<oeb-select
+									id="{{'competencyCategory_'+i}}" 
+									ariaLabel="Wähle eine Kompetenz-Kategorie"
+									[control]="competency.rawControlMap.category"
+									[label]="competencyCategory"
+									[placeholder]="'Kategorie wählen'"
+									[optionMap]="competencyCategoryOptions"
+									[errorMessage]="{
+										required: competencyCategoryError
+									}"
+									noTopMargin="true"
+									[disabled]="competency.controls['framework_identifier'].value ? true : false"
+								></oeb-select>
+							<oeb-input
+								id="{{'competencyDescriptionInput_'+i}}"
+								[fieldType]="'textarea'" 
+								[label]="competencyDescription"
+								[control]="competency.rawControlMap.description"
+								[errorMessage]="{ required: enterDescription }"
+								[readonly]="competency.controls['framework_identifier'].value ? true : false"
+							>
+							</oeb-input>
+              <oeb-input
+								id="{{'escoIdentifierInput_'+i}}" 
+								*ngIf="competency.rawControlMap['framework_identifier'].value"
+								label="Framework-Identifier"
+								[control]="competency.rawControlMap['framework_identifier']"
+								[readonly]="true"
+								placeholder="z.B. http://data.europa.eu/esco/skill/7de3b70e-2568-420a-8528-69523d323e7a"
+							>
+							</oeb-input>
 								<div class="tw-flex tw-justify-between tw-flex-wrap sm:tw-flex-nowrap tw-gap-2 tw-mt-8">
 									<oeb-button
 										*ngIf="badgeClassForm.controls.competencies.controls.length > 0"
@@ -524,7 +544,6 @@
 										(click)="removeCompetency(competency)"
 										text="{{ 'General.remove' | translate }}"
 									></oeb-button>
-
 									<oeb-button
 										id="{{ 'addCompetencyBtn_' + i }}"
 										size="sm"
@@ -898,37 +917,34 @@
 							</div>
 						</li>
 					</ul>
-				</div>
-			</oeb-collapsible>
 		</div>
+	</oeb-collapsible>
+	</div>
+	
+	<div>
+		<p class="tw-text-end tw-text-oebblack tw-italic tw-text-lg" [innerHTML]="'CreateBadge.licenseInfo' | translate"> </p>
+	</div>
 
-		<div class="tw-hidden">
-			<p
-				class="tw-text-end tw-text-oebblack tw-italic tw-text-lg"
-				[innerHTML]="'CreateBadge.licenseInfo' | translate"
-			></p>
-		</div>
+	<div class="tw-flex tw-justify-between md:tw-justify-end tw-flex-wrap sm:tw-flex-nowrap tw-gap-2 tw-mt-8">
+		<oeb-button
+			class="tw-mr-4"
+			variant="secondary"
+			(click)="cancelClicked()"
+			[disabled]="!!savePromise"
+			[class.disabled]="!!savePromise"	
+			[disabled-when-requesting]="true"
+			text="{{ 'General.cancel' | translate }}"
+		></oeb-button>
 
-		<div class="tw-flex tw-justify-between md:tw-justify-end tw-flex-wrap sm:tw-flex-nowrap tw-gap-2 tw-mt-8">
-			<oeb-button
-				class="tw-mr-4"
-				variant="secondary"
-				(click)="cancelClicked()"
-				[disabled]="!!savePromise"
-				[class.disabled]="!!savePromise"
-				[disabled-when-requesting]="true"
-				text="{{ 'General.cancel' | translate }}"
-			></oeb-button>
-
-			<oeb-button
-				type="submit"
-				width="max_content"
-				[disabled]="!!savePromise"
-				[loading-promises]="[savePromise]"
-				loading-message="{{ submittingText }}"
-				text="{{ (existingBadgeClass ? 'General.saveChanges' : 'Issuer.createBadge') | translate }}"
-			>
-			</oeb-button>
-		</div>
-	</form>
+		<oeb-button
+			type="submit"
+			width="max_content"
+			[disabled]="!!savePromise"
+			[loading-promises]="[savePromise]"
+			loading-message="{{ submittingText }}"
+			text="{{ (existingBadgeClass ? 'General.saveChanges' : 'Issuer.createBadge') | translate }}"
+		>
+		</oeb-button>
+	</div>
+</form>
 </div>

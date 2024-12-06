@@ -25,6 +25,7 @@ import {
 	lucideMapPin,
 	lucideSearch,
 	lucideGrid2x2,
+	lucideArrowUpAZ,
 	lucideCircleX,
 	lucideGithub,
 	lucideMail
@@ -57,10 +58,10 @@ import {
 			lucideMapPin,
 			lucideSearch,
 			lucideGrid2x2,
+			lucideArrowUpAZ,
 			lucideCircleX,
 			lucideGithub,
 			lucideMail
-
 		}),
 	],
 })

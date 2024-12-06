@@ -35,6 +35,12 @@
 									class="tw-w-8 tw-h-8 tw-absolute tw-top-1/2 tw-right-2 -tw-translate-y-1/2 tw-pointer-events-none tw-text-purple"
 								></hlm-icon>
 							</div>
+
+							<span>{{ 'Badge.sortBy' | translate }} </span>
+							<oeb-sort-select
+								[control]="sortControl"
+								[result]="issuerResults"
+								></oeb-sort-select>
 							<oeb-select
 								actionBar="true"
 								class="md:tw-w-[180px] oeb"
@@ -43,18 +49,25 @@
 								placeholder="{{ 'Issuer.allCategories' | translate }}"
 								[autofocus]="true"
 								noTopMargin="true"
-								ariaLabel="chooseABadgeCategory"
 							></oeb-select>
 						</div>
-						<oeb-button size="icon" *ngIf="badgesDisplay !== 'map'" (click)="openMap()" icon="lucideMapPin">
-						</oeb-button>
-						<oeb-button
-							size="icon"
-							*ngIf="badgesDisplay === 'map'"
-							(click)="openGrid()"
-							icon="lucideGrid2x2"
-						>
-						</oeb-button>
+
+						<div class="tw-flex tw-gap-4 tw-items-center">
+							<oeb-button
+								size="icon"
+								*ngIf="badgesDisplay !== 'map'"
+								(click)="openMap()"
+								icon="lucideMapPin"
+							>
+							</oeb-button>
+							<oeb-button
+								size="icon"
+								*ngIf="badgesDisplay === 'map'"
+								(click)="openGrid()"
+								icon="lucideGrid2x2"
+							>
+							</oeb-button>
+						</div>
 					</div>
 				</div>
 

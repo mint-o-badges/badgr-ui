@@ -235,12 +235,25 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			issuerSlug: '',
 		})
 		.addArray(
+			'license',
+			typedFormGroup()
+				.addControl('id', 'CC-0', Validators.required)
+				.addControl('name', 'Public Domain', Validators.required)
+				.addControl(
+					'legalCode',
+					'https://creativecommons.org/publicdomain/zero/1.0/legalcode',
+					UrlValidator.validUrl,
+				),
+			Validators.required,
+		)
+		.addArray(
 			'aiCompetencies',
 			typedFormGroup()
 				.addControl('selected', false)
 				.addControl('studyLoad', 60, [Validators.required, this.positiveInteger])
 				.addControl('hours', 1, [this.positiveIntegerOrNull, Validators.max(999)])
 				.addControl('minutes', 0, [this.positiveIntegerOrNull, Validators.max(59)]),
+				.addControl('framework', 'esco', Validators.required)
 		)
 		.addArray(
 			'competencies',
@@ -248,12 +261,14 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				.addControl('added', false)
 				.addControl('name', '', Validators.required)
 				.addControl('description', '', Validators.required)
-				.addControl('escoID', '')
+				.addControl('framework_identifier', '')
 				// limit of 1000000 is set so that users cant break the UI by entering a very long number
 				.addControl('studyLoad', 60, [Validators.required, this.positiveInteger])
 				.addControl('hours', 1, [this.positiveIntegerOrNull, Validators.max(999)])
 				.addControl('minutes', 0, [this.positiveIntegerOrNull, Validators.max(59)])
-				.addControl('category', '', Validators.required),
+				.addControl('category', '', Validators.required)
+				.addControl('framework', '')
+				.addControl('source', ''),
 		)
 		.addArray(
 			'alignments',
@@ -432,6 +447,15 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				slug: badgeClass.slug,
 				issuerSlug: badgeClass.issuerSlug,
 			},
+			license: badgeClass.extension['extensions:LicenseExtension']
+				? [
+						{
+							id: badgeClass.extension['extensions:LicenseExtension'].id,
+							name: badgeClass.extension['extensions:LicenseExtension'].name,
+							legalCode: badgeClass.extension['extensions:LicenseExtension'].legalCode,
+						},
+					]
+				: this.badgeClassForm.controls.license.value,
 			// Note that, even though competencies might originally have been selected
 			// based on ai suggestions, they can't be separated anymore and thus will
 			// be displayed as competencies entered by hand
@@ -465,6 +489,10 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	ngOnInit() {
 		super.ngOnInit();
 		let that = this;
+
+		if (!that.existing) {
+			this.badgeClassForm.controls.license.addFromTemplate();
+		}
 
 		// Set badge category when editing a badge. As new select component doesn't show badge competencies
 		this.badgeCategory = this.badgeClassForm.rawControl.controls['badge_category'].value;
@@ -731,7 +759,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		if (
 			(value.name || '').trim().length > 0 ||
 			(value.description || '').trim().length > 0 ||
-			(value.escoID || '').trim().length > 0 ||
+			(value['framework_identifier'] || '').trim().length > 0 ||
 			(value.category || '').trim().length > 0
 		) {
 			if (
@@ -915,6 +943,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			const levelExtensionContextUrl = `${this.baseUrl}/static/extensions/LevelExtension/context.json`;
 			const basedOnExtensionContextUrl = `${this.baseUrl}/static/extensions/BasedOnExtension/context.json`;
 			const competencyExtensionContextUrl = `${this.baseUrl}/static/extensions/CompetencyExtension/context.json`;
+			const licenseExtensionContextUrl = `${this.baseUrl}/static/extensions/LicenseExtension/context.json`;
 			const orgImageExtensionContextUrl = `${this.baseUrl}/static/extensions/OrgImageExtension/context.json`;
 
 			const suggestions = this.aiCompetenciesSuggestions;
@@ -944,6 +973,13 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 						'@context': levelExtensionContextUrl,
 						type: ['Extension', 'extensions:LevelExtension'],
 						Level: String(formState.badge_level),
+					},
+					'extensions:LicenseExtension': {
+						'@context': licenseExtensionContextUrl,
+						type: ['Extension', 'extensions:LicenseExtension'],
+						id: formState.license[0].id,
+						name: formState.license[0].name,
+						legalCode: formState.license[0].legalCode,
 					},
 					'extensions:CompetencyExtension': this.getCompetencyExtensions(
 						suggestions,
@@ -1001,6 +1037,13 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 							type: ['Extension', 'extensions:BasedOnExtension'],
 							BasedOn: formState.badge_based_on,
 						},
+						'extensions:LicenseExtension': {
+							'@context': licenseExtensionContextUrl,
+							type: ['Extension', 'extensions:LicenseExtension'],
+							id: formState.license[0].id,
+							name: formState.license[0].name,
+							legalCode: formState.license[0].legalCode,
+						},
 						'extensions:CompetencyExtension': this.getCompetencyExtensions(
 							suggestions,
 							formState,
@@ -1046,7 +1089,9 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		type: string[];
 		name: string;
 		description: string;
-		escoId: string;
+		framework: string;
+		framework_identifier: string;
+		source: string;
 		studyLoad: number;
 		category: string;
 	} {
@@ -1061,6 +1106,9 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				hours: Number(competency.hours),
 				minutes: Number(competency.minutes),
 				category: String(competency.category),
+				source: competency.source === 'ai' ? 'ai' : 'manual',
+				framework: competency.framework,
+				'framework_identifier': String(competency['framework_identifier']),
 			}))
 			.concat(
 				formState.aiCompetencies
@@ -1069,11 +1117,13 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 						type: ['Extension', 'extensions:CompetencyExtension'],
 						name: suggestions[index].preferred_label,
 						description: suggestions[index].description,
-						escoID: suggestions[index].concept_uri,
+						'framework_identifier': 'http://data.europa.eu' + suggestions[index].concept_uri,
 						studyLoad: Number(aiCompetency.hours * 60) + Number(aiCompetency.minutes),
 						hours: Number(aiCompetency.hours),
 						minutes: Number(aiCompetency.minutes),
 						category: suggestions[index].type.includes('skill') ? 'skill' : 'knowledge',
+						source: 'ai',
+						framework: 'esco',
 					}))
 					.filter((_, index) => formState.aiCompetencies[index].selected),
 			);

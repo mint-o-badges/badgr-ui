@@ -132,6 +132,7 @@ import { ErrorDialogComponent } from './dialogs/oeb-dialogs/error-dialog.compone
 import { GlobalErrorHandler } from '../globalErrorHandler.service';
 import { ServerErrorInterceptor } from '../ServerErrorInterceptor';
 import { CountUpDirective } from './directives/count-up.directive';
+import { OebSortSelectComponent } from '../components/oeb-sort-select.component';
 
 const DIRECTIVES = [
 	BgAwaitPromises,
@@ -187,6 +188,7 @@ export const COMMON_MODULE_COMPONENTS = [
 	IssuerCardComponent,
 	OebLearningPathDetailComponent,
 	OebIssuerCard,
+	OebSortSelectComponent
 ];
 
 const SERVICES = [
@@ -266,10 +268,10 @@ export const COMMON_IMPORTS = [
 ];
 
 @NgModule({
-	imports: [...COMMON_IMPORTS, FormsModule, LMarkdownEditorModule, TranslateModule],
+	imports: [...COMMON_IMPORTS, FormsModule, LMarkdownEditorModule, TranslateModule, SharedIconsModule],
 	providers: [BadgeClassManager, BadgeClassApiService, { provide: HTTP_INTERCEPTORS, useClass:ServerErrorInterceptor, multi:true}],
 	declarations: [...DIRECTIVES, ...COMMON_MODULE_COMPONENTS, ...PIPES, ForwardRouteComponent, BadgeLegendComponent, CountUpDirective],
-	exports: [...DIRECTIVES, ...COMMON_MODULE_COMPONENTS, ...PIPES, BadgeLegendComponent],
+	exports: [...DIRECTIVES, ...COMMON_MODULE_COMPONENTS, ...PIPES, BadgeLegendComponent, SharedIconsModule],
 })
 export class BadgrCommonModule {
 	// Load BadgrCommonModule with forRoot() to preserve singleton status in lazy loaded modules.

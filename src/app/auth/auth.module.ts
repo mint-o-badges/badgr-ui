@@ -12,6 +12,7 @@ import { OAuth2AuthorizeComponent } from './components/oauth2-authorize/oauth2-a
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { NewTermsComponent } from './components/new-terms/new-terms.component';
 
 const routes: Routes = [
 	{
@@ -34,6 +35,10 @@ const routes: Routes = [
 	{
 		path: 'login/:name/:email',
 		component: LoginComponent,
+	},
+	{
+		path: 'new-terms',
+		component: NewTermsComponent,
 	},
 
 	/* OAuth2 */
@@ -83,6 +88,7 @@ const routes: Routes = [
 	],
 	declarations: [
 		LoginComponent,
+		NewTermsComponent,
 		RequestPasswordResetComponent,
 		ResetPasswordSent,
 		ResetPasswordComponent,
