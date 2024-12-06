@@ -109,9 +109,11 @@ import {
 		<div [@showCompetencies]="showCompetencies">
 			<div class="tw-pt-8">
 				<div *ngFor="let competency of competencies">
-					<competency-accordion [name]="competency.name" [category]="competency.category"
-						[description]="competency.description" [escoID]="competency.escoID"
-						[studyload]="competency.studyLoad | hourPipe"></competency-accordion>
+					<ng-container *ngIf="showCompetencies">
+						<competency-accordion [name]="competency.name" [category]="competency.category"
+							[description]="competency.description" [escoID]="competency.escoID"
+							[studyload]="competency.studyLoad | hourPipe"></competency-accordion>
+					</ng-container>
 				</div>
 			</div>
 		</div>
