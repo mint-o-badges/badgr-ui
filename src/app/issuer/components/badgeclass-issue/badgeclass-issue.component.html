@@ -48,11 +48,14 @@
 						fieldType="text" [autofocus]="true" [control]="issueForm.rawControlMap.recipientprofile_name"
 						#nameField></oeb-input>
 					<p hlmP class="tw-mt-1 tw-text-right" size="sm">{{'Issuer.nameWarning' | translate}}</p>
-					<div class="tw-flex tw-justify-end oeb-standard-padding-bottom">
-						<bg-formfield-select class="tw-self-end tw-mr-2" ariaLabel="Select Options"
+					<div class="tw-flex tw-justify-end oeb-standard-padding-bottom items-center">
+						<oeb-select 
+							class="tw-mr-2 tw-mt-[20px] lg:tw-mt-[30px]"
+							[optionMap]="identifierOptionMap"
 							[control]="issueForm.rawControlMap.recipient_type"
-							[optionMap]="identifierOptionMap"></bg-formfield-select>
-						<oeb-input class="tw-flex-grow" label="Identifier"
+							/>
+						<oeb-input class="tw-flex-grow" 
+							label="Identifier"
 							[control]="issueForm.rawControlMap.recipient_identifier"
 							ariaLabel="Identifier der Empfänger:in"
 							[fieldType]="recipientIdentifierFieldType"></oeb-input>
