@@ -395,8 +395,8 @@ export class RecipientEarnedBadgeListComponent
 						groupedCompetencies[competency.escoID].lastReceived = badge.issueDate;
 					}
 				} else {
-					groupedCompetencies[competency.escoID] = Object.create(competency);
-					groupedCompetencies[competency.escoID].lastReceived = badge.issueDate;
+					groupedCompetencies[competency.framework] = Object.create(competency);
+					groupedCompetencies[competency.framework].lastReceived = badge.issueDate;
 				}
 				this.totalStudyTime += competency.studyLoad;
 			});
