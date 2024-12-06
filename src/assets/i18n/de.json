@@ -244,7 +244,9 @@
 		"learningPathRecipient": "Absolvent:innen",
 		"learningPathParticipants": "Teilnehmer:innen",
 		"learningPathCreateHeadline": "Lernpfad erstellen",
-		"lpSubHeading": "Ein Lernpfad verbindet mehrere Badges zu einer größeren Lerneinheit."
+		"lpSubHeading": "Ein Lernpfad verbindet mehrere Badges zu einer größeren Lerneinheit.",
+		"loadingAllBadges": "Lade Badges...",
+		"loadAllBadges": "Alle Badges laden"
 	},
 	"Badge": {
 		"groupBy": "Gruppieren nach",

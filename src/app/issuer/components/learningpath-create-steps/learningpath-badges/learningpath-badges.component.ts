@@ -30,6 +30,8 @@ export class LearningPathBadgesComponent implements OnInit {
 	}
 
 	badgesLoaded: Promise<unknown>;
+	loadingPromise: Promise<unknown>;
+	allBadgesLoaded: boolean = false;
 	badges: BadgeClass[] = null;
 	badgeResults: BadgeResult[] = null;
 	selectedBadgeUrls: string[] = [];
@@ -126,6 +128,36 @@ export class LearningPathBadgesComponent implements OnInit {
 					this.tags = sortUnique(this.tags);
 					this.issuers = sortUnique(this.issuers);
 					this.updateResults();
+					resolve(badges);
+				},
+				(error) => {
+					this.messageService.reportAndThrowError('Failed to load badges', error);
+				},
+			);
+		});
+	}
+
+	loadAllBadges() {
+		this.loadingPromise = this.loadAllPublicBadges()
+	}
+	async loadAllPublicBadges() {
+		return new Promise(async (resolve, reject) => {
+			this.badgeClassService.allPublicBadges$.subscribe(
+				(badges) => {
+					this.badges = badges.slice().filter((b) => b.extension['extensions:StudyLoadExtension'].StudyLoad > 0).sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+					this.badgeResults = this.badges;
+
+					this.badgesFormArray = this.lpBadgesForm.controls.badges.value;
+					badges.forEach((badge) => {
+						this.badgesFormArray.push({ badge: badge, order: 0, selected: false });
+						this.tags = this.tags.concat(badge.tags);
+						this.issuers = this.issuers.concat(badge.issuer);
+					});
+
+					this.tags = sortUnique(this.tags);
+					this.issuers = sortUnique(this.issuers);
+					this.updateResults();
+					this.allBadgesLoaded = true;
 					resolve(badges);
 				},
 				(error) => {
