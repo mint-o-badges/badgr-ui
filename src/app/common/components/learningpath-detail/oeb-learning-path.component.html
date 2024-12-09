@@ -30,21 +30,37 @@
 								</div>
 							</div>
 						</div>
-						<oeb-button
-							[text]="'Lernpfad löschen'"
-							variant="secondary"
-							width="full_width"
-							(click)="deleteLearningPath(learningPath.slug, issuer)"
-							[disabled-when-requesting]="true"
-							[disabled]="!issuer.canCreateBadge"
-							[class]="issuer.canCreateBadge ? 'tw-whitespace-nowrap tw-hidden md:tw-block' : 'disabled'"
-						>
-						</oeb-button>
+						<div class="tw-flex tw-flex-col tw-gap-2">
+							<oeb-button
+								[text]="'Lernpfad bearbeiten'"
+								width="full_width"
+								[routerLink]=learningPathEditLink
+								[class]="issuer.canCreateBadge ? 'tw-whitespace-nowrap tw-hidden md:tw-block' : 'disabled'"
+								>
+							</oeb-button>
+							<oeb-button
+								[text]="'Lernpfad löschen'"
+								variant="secondary"
+								width="full_width"
+								(click)="deleteLearningPath(learningPath.slug, issuer)"
+								[disabled-when-requesting]="true"
+								[disabled]="!issuer.canCreateBadge"
+								[class]="issuer.canCreateBadge ? 'tw-whitespace-nowrap tw-hidden md:tw-block' : 'disabled'"
+							>
+							</oeb-button>
+						</div>
 					</div>
 
 					<p hlmP>{{ learningPath.description }}</p>
 
 					<div class="tw-mt-4 md:tw-hidden">
+						<oeb-button
+							class="tw-whitespace-nowrap tw-mb-2"
+							[text]="'Lernpfad bearbeiten'"
+							width="full_width"
+							[routerLink]=learningPathEditLink
+							[disabled-when-requesting]="true"
+						></oeb-button>
 						<oeb-button
 							class="tw-whitespace-nowrap"
 							[text]="'Lernpfad löschen'"
