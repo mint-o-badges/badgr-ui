@@ -208,7 +208,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		this.imageValidation.bind(this),
 		this.maxStudyLoadValidation.bind(this),
 		this.noDuplicateCompetencies.bind(this),
-		this.hoursAndMinutesValidator.bind(this),
+		this.hoursAndMinutesValidatorBadgeDuration.bind(this),
 		this.hoursAndMinutesValidatorCompetencies.bind(this)
 	],)
 		.addControl('badge_name', '', [
@@ -252,7 +252,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				.addControl('selected', false)
 				.addControl('studyLoad', 60, [Validators.required, this.positiveInteger])
 				.addControl('hours', 1, [this.positiveIntegerOrNull, Validators.max(999)])
-				.addControl('minutes', 0, [this.positiveIntegerOrNull, Validators.max(59)]),
+				.addControl('minutes', 0, [this.positiveIntegerOrNull, Validators.max(59)])
 				.addControl('framework', 'esco', Validators.required)
 		)
 		.addArray(
