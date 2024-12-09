@@ -87,6 +87,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	competencyDescription =
 		this.translate.instant('Badge.competency') + '-' + this.translate.instant('General.description');
 	minMaxError = this.translate.instant('CreateBadge.minMaxError');
+	hoursMaxError = this.translate.instant('CreateBadge.hoursMaxError');
 	shortDescription = this.translate.instant('CreateBadge.shortDescription');
 	alignmentNameError = this.translate.instant('CreateBadge.alignmentNameError');
 	alignmentURLError = this.translate.instant('CreateBadge.alignmentURLError');
@@ -1210,10 +1211,10 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		const val = parseFloat(control.value);
 
 		if (isNaN(val)) {
-			return { duration: 'Field cannot be empty, set to 0 if not needed' };
+			return { emptyField: 'Das Feld darf nicht leer sein.' };
 		}
 		if (!Number.isInteger(val) || val < 0) {
-			return { duration: 'Must be a positive integer or null' };
+			return { negativeDuration: 'Bitte geben Sie eine positive Zahl oder 0 ein.' };
 		}
 	}
 
