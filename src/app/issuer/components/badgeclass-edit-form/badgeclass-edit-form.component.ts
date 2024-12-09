@@ -1116,7 +1116,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				type: ['Extension', 'extensions:CompetencyExtension'],
 				name: String(competency.name),
 				description: String(competency.description),
-				escoID: String(competency.escoID),
 				studyLoad: Number(competency.hours * 60) + Number(competency.minutes),
 				hours: Number(competency.hours),
 				minutes: Number(competency.minutes),
