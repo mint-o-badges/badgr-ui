@@ -850,12 +850,18 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			...this.badgeClassForm.value.aiCompetencies.filter((comp) => comp.selected),
 		];
 	
-		const hasError = allCompetencies.some((competence) => 
-			Number(competence.hours) === 0 && Number(competence.minutes) === 0
+		// Suche nach dem ersten fehlerhaften Kompetenzfeld
+		const invalidCompetencyIndex = allCompetencies.findIndex(
+			(competence) => Number(competence.hours) === 0 && Number(competence.minutes) === 0
 		);
 	
-		return hasError ? { competenceHoursMinutesZero: true } : null;
+		if (invalidCompetencyIndex !== -1) {
+			return { competenceHoursMinutesZero: true, invalidIndex: invalidCompetencyIndex };
+		}
+	
+		return null;
 	}
+	
 	
 	// Validator for badge Duration, is displayed on the respective input
 	hoursAndMinutesValidatorBadgeDuration () : ValidationErrors | null {
@@ -929,6 +935,15 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 						this.imageSection.nativeElement.scrollIntoView(true);
 					} else {
 						firstInvalidInput.scrollIntoView({ behavior: 'smooth' });
+					}
+				}
+				const competencyError = this.badgeClassForm.errors?.['competenceHoursMinutesZero'];
+				if (competencyError) {
+					// On error scroll to competency headline
+					const competencySection = document.getElementById('fillWithCompetencies');
+					if (competencySection) {
+						competencySection.scrollIntoView({ behavior: 'smooth' });
+						competencySection.focus(); 
 					}
 				}
 				return;
