@@ -15,13 +15,14 @@ export interface ApiLearningPathForCreation {
     badges: Array<{ slug: string; order: number }>;
 }
 
-export interface ApiLearningPathForCreation {
+export interface ApiLearningPathForEditing {
     slug?: string;
     issuer_id: string;
     name: string;
     description: string;
     tags: string[];
     participationBadge_id: string;
+    participationBadge_image: string;
     badges: Array<{ slug: string; order: number }>;
 }
 
