@@ -403,7 +403,7 @@
 		"newsletterEmail": "Wir haben dir ebenfalls eine E-Mail zur Bestätigung deiner Newsletter-Anmeldung geschickt.",
 		"confirmNewsletter": "Klicke in der Newsletter-E-Mail auf <span class ='tw-font-bold'> „Newsletter-Anmeldung bestätigen” </span>, <br> um die Newsletter-Anmeldung abzuschließen.",
 		"newsletterEmailNotReceived": "Du hast keine Newsletter-E-Mail bekommen? Bitte übermittle deine Daten über <br> unser <a class='tw-underline tw-text-purple' href='public/about/newsletter'> Newsletter-Anmelde-Formular </a> oder <a class='tw-underline tw-text-purple' target='_blank' href='mailto:info@openbadges.education'>schreib uns.</a>",
-		"updatesOptInText": "<span class='tw-text-oebblack tw-font-bold'>Ja</span>, ich möchte E-Mail-Updates über Produkte und Serviceleistungen, zukünftige Webinare, Neuigkeiten und Events von Open Educational Badges erhalten."
+		"updatesOptInText": "<span class='tw-text-oebblack tw-font-bold'>Ja</span>, ich möchte auf dem Laufenden bleiben und den OEB-Newsletter abonnieren."
 	},
 	"Captcha": {
 		"error": "Verifizierung fehlgeschlagen. Bitte erneut versuchen.",
