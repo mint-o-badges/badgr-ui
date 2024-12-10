@@ -269,6 +269,8 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 					};
 				}),			  
 			})
+
+			this.save.emit(this.savePromise);
 				
 		}
 		else{

@@ -81,7 +81,7 @@ export class LearningPathEditComponent extends BaseAuthenticatedRoutableComponen
 	public openSuccessDialog() {
 		const dialogRef = this._hlmDialogService.open(SuccessDialogComponent, {
 			context: {
-				text: this.translate.instant('LearningPath.createdSuccessfully'),
+				text: this.translate.instant('LearningPath.savedSuccessfully'),
 				variant: 'success',
 			},
 		});

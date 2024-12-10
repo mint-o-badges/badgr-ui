@@ -657,7 +657,8 @@
 		"lpParticipationBadgeInfo": "Lernende können den Lernpfad-Badge bei dir anfordern, sobald sie alle im Lernpfad enthaltenen Badges erworben haben. <span class='tw-font-bold'>Du erhältst die Anfragen per E-Mail </span>.",
 		"lpDerivedData": "Folgende Daten haben wir für den Lernpfad-Teilnahme-Badge übernommen:",
 		"addTag": "Tag hinzufügen",
-		"createdSuccessfully": "Dein Lernpfad wurde erfolgreich erstellt."
+		"createdSuccessfully": "Dein Lernpfad wurde erfolgreich erstellt.",
+		"savedSuccessfully": "Deine Änderungen wurden erfolgreich gespeichert"
 	},
 	"LearningPathEditor": {
 		"shortDescription": "Zusammenfassende Beschreibung deines Lernpfades. Diese Kurzbeschreibung wird im Lernpfad-Badge gespeichert."
