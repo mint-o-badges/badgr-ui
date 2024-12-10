@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { typedFormGroup } from '../../../../common/util/typed-forms';
 import { ValidationErrors, Validators } from '@angular/forms';
@@ -8,6 +8,7 @@ import { BadgeClassManager } from '../../../../issuer/services/badgeclass-manage
 import { sortUnique } from '../../../../catalog/components/badge-catalog/badge-catalog.component';
 import { MessageService } from '../../../../common/services/message.service';
 import { StringMatchingUtil } from '../../../../common/util/string-matching-util';
+import { ApiLearningPath } from '../../../../common/model/learningpath-api.model';
 
 
 
@@ -21,6 +22,11 @@ type BadgeResult = BadgeClass & { selected?: boolean };
 export class LearningPathBadgesComponent implements OnInit {
 	@Output() selectedBadgesChanged = new EventEmitter<{ urls: string[], studyLoad: number }>();
 
+	@Input()
+	set learningPath (lp: ApiLearningPath) {
+		this.initFormFromExisting(lp);
+	}
+	
 	constructor(
 		private translate: TranslateService,
 		protected badgeClassService: BadgeClassManager,
@@ -59,6 +65,21 @@ export class LearningPathBadgesComponent implements OnInit {
 	set groupBy(val: string) {
 		this._groupBy = val;
 		this.updateResults();
+	}
+
+	initFormFromExisting(lp: ApiLearningPath) {
+		if (!lp) return;
+		lp.badges.forEach((b) => {
+			this.selectedBadgeUrls.push(b.badge.json.id);
+			this.lpBadgesForm.controls.badges.push(
+				typedFormGroup().addControl('badgeUrl', b.badge.json.id)
+			)
+			this.studyLoad += b.badge.extensions['extensions:StudyLoadExtension'].StudyLoad
+		})
+		this.selectedBadgesChanged.emit({
+			urls: this.selectedBadgeUrls,
+			studyLoad: this.studyLoad
+		});
 	}
 
 	badgeChecked(badgeUrl: string) {

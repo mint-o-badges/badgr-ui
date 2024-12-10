@@ -10,6 +10,8 @@
 			submittingText="Saving..."
 			(save)="learningPathCreated($event)"
 			(cancel)="creationCanceled()"
+			[learningPath]="learningPath"
+			[lpBadge]="learningPathBadge"
 		>
 		</learningpath-edit-form>
 	</div>

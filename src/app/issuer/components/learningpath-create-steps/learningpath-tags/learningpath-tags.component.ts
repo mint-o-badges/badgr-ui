@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild, Input, Output, EventEmitter }
 import { FormFieldSelectOption } from "../../../../common/components/formfield-select";
 import { LearningPathManager } from "../../../../issuer/services/learningpath-manager.service";
 import { LearningPath } from "../../../../issuer/models/learningpath.model";
+import { ApiLearningPath } from "../../../../common/model/learningpath-api.model";
 
 @Component({
 	selector: 'learningpath-tags',
@@ -13,6 +14,14 @@ export class LearningPathTagsComponent implements OnInit {
 	@Input() lpName: string;
 	@Input() lpDescription: string;
 	@Input() lpImage: string;
+
+	@Input()
+	set learningPath (lp: ApiLearningPath) {
+		lp.tags.forEach((t) => {
+			this.lpTags.add(t)
+		})
+		this.tagsChanged.emit(Array.from(this.lpTags));
+	}
 
 	@Output() tagsChanged = new EventEmitter<string[]>();
 

@@ -16,6 +16,9 @@ import { HlmDialogService } from "../../../components/spartan/ui-dialog-helm/src
 import { SuccessDialogComponent } from "../../../common/dialogs/oeb-dialogs/success-dialog.component";
 import { Issuer } from "../../models/issuer.model";
 import { IssuerManager } from "../../services/issuer-manager.service";
+import { ApiLearningPath } from "../../../common/model/learningpath-api.model";
+import { BadgeClass } from "../../models/badgeclass.model";
+import { BadgeClassApiService } from "../../services/badgeclass-api.service";
 
 @Component({
 	selector: 'learningpath-edit',
@@ -25,9 +28,14 @@ export class LearningPathEditComponent extends BaseAuthenticatedRoutableComponen
 
 	breadcrumbLinkEntries: LinkEntry[] = [];
 	issuerSlug: string;
+	lpSlug: string; 
 	issuer: Issuer;
 
 	issuerLoaded: Promise<unknown>;
+
+	learningPath: ApiLearningPath
+
+	learningPathBadge: BadgeClass
 
     constructor(
 		protected formBuilder: FormBuilder,
@@ -39,12 +47,14 @@ export class LearningPathEditComponent extends BaseAuthenticatedRoutableComponen
 		protected router: Router,
 		protected route: ActivatedRoute,
 		protected badgeClassService: BadgeClassManager,
+		protected badgeApiService: BadgeClassApiService,
 		private translate: TranslateService,
 		protected badgeInstanceManager: BadgeInstanceManager,	
 		// protected title: Title,
 	) {
 		super(router, route, loginService);
 		this.issuerSlug = this.route.snapshot.params['issuerSlug'];
+		this.lpSlug = this.route.snapshot.params['learningPathSlug']		
 
 		this.issuerLoaded = this.issuerManager.issuerBySlug(this.issuerSlug).then((issuer) => {
 			this.issuer = issuer;
@@ -59,6 +69,12 @@ export class LearningPathEditComponent extends BaseAuthenticatedRoutableComponen
     }
 
 	ngOnInit(){
+		this.learningPathApiService.getLearningPath(this.issuerSlug, this.lpSlug).then((lp) => {
+			this.learningPath = lp
+			this.badgeClassService.badgeByIssuerSlugAndSlug(this.issuerSlug, lp.participationBadge_id).then((lpBadge) => {
+				this.learningPathBadge = lpBadge
+			})
+		})
 	}
 
 	private readonly _hlmDialogService = inject(HlmDialogService);

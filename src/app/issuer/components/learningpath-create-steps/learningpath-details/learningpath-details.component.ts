@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild, Input} from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { typedFormGroup } from '../../../../common/util/typed-forms';
 import { FormGroup, FormGroupDirective, ValidationErrors, Validators } from '@angular/forms';
@@ -6,6 +6,7 @@ import { BgFormFieldImageComponent } from '../../../../common/components/formfie
 import { base64ByteSize } from '../../../../common/util/file-util';
 import { BadgeStudioComponent } from '../../badge-studio/badge-studio.component';
 import { StepperComponent } from '../../../../components/stepper/stepper.component';
+import { ApiLearningPath } from '../../../../common/model/learningpath-api.model';
 
 
 @Component({
@@ -27,6 +28,11 @@ export class LearningPathDetailsComponent implements OnInit, AfterViewInit {
 	@ViewChild('customImageField')
 	customImageField: BgFormFieldImageComponent;
 
+	@Input()
+	set learningPath (lp: ApiLearningPath) {
+		this.initFormFromExisting(lp);
+	}
+
 	readonly badgeClassPlaceholderImageUrl = '../../../../breakdown/static/images/placeholderavatar.svg';
 
   	allowedFileFormats = ['image/png', 'image/svg+xml'];
@@ -37,6 +43,18 @@ export class LearningPathDetailsComponent implements OnInit, AfterViewInit {
 	private rootFormGroup: FormGroupDirective
 	) {
   }
+
+	initFormFromExisting(lp: ApiLearningPath) {
+		if (!lp) return;
+
+		this.lpDetailsForm.setValue({
+			name: lp.name,
+			description: lp.description,
+			badge_image: lp.participationBadge_image,
+			badge_customImage: null
+		});
+
+	}
 
 	isCustomImageLarge = false;
 	maxCustomImageSize = 1024 * 250;
@@ -63,7 +81,6 @@ export class LearningPathDetailsComponent implements OnInit, AfterViewInit {
   get imageFieldDirty() {
 		return this.lpDetailsForm.controls.badge_image.dirty || this.lpDetailsForm.controls.badge_customImage.dirty;
 	}
-
 
   lpDetailsForm = typedFormGroup(this.imageValidation.bind(this))
 		.addControl('name', '', [Validators.required, Validators.maxLength(60)])
@@ -94,7 +111,6 @@ export class LearningPathDetailsComponent implements OnInit, AfterViewInit {
 	this.translate.get('RecBadge.selectFromMyFiles').subscribe((res: string) => {
 		this.selectFromMyFiles = res;
 	})
-
   }
 
 
