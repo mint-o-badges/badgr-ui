@@ -32,7 +32,7 @@ module.exports = {
 					300: 'var(--color-lightred)',
 				},
 				pink: 'var(--color-pink)',
-				green:{
+				green: {
 					DEFAULT: 'var(--color-green)',
 					400: '#66BB6A',
 				},
@@ -51,12 +51,13 @@ module.exports = {
 			},
 			gridTemplateColumns: {
 				badges: 'repeat(auto-fill, minmax(320px, 1fr))',
+				badgesLp: 'repeat(auto-fill, minmax(280px, 1fr))',
 				learningpaths: 'repeat(auto-fill, minmax(392px, 1fr))',
 				learningpathsSmall: 'repeat(auto-fill, minmax(208px, 1fr))',
 			},
 			animation: {
 				'spin-slow': 'spin 5000ms linear infinite',
-			}
+			},
 		},
 	},
 	plugins: [
