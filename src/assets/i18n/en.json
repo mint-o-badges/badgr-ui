@@ -350,7 +350,7 @@
 		"repeatPassword": "Reenter Password",
 		"createAccount": "Create Account",
 		"readTerms": "Please read and agree to the Terms of Service if you want to continue.",
-		"agreeToTerms1": "I have read and agree to the <a class='tw-underline tw-text-[#1400FF]' target='_blank' href='public/impressum'>terms of service</a>. ",
+		"agreeToTerms1": "I have read and agree to the <a class='tw-underline tw-text-[#1400FF]' target='_blank' href='public/terms'>terms of service</a>. ",
 		"registerWithUs": "Register with us",
 		"provideInfo": ", by providing the following information",
 		"signUpWith": "Sign Up With",

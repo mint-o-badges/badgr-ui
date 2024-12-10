@@ -375,7 +375,7 @@
 		"repeatPassword": "Passwort wiederholen",
 		"createAccount": "Account erstellen",
 		"readTerms": "Bitte lesen Sie die Nutzungsbedingungen und stimmen Sie ihnen zu, wenn Sie fortfahren möchten.",
-		"agreeToTerms1": "Ich habe die <a class='tw-underline tw-text-[#1400FF]' target='_blank' href='public/impressum'>Nutzungsbedingungen</a> gelesen und stimme ihnen zu. ",
+		"agreeToTerms1": "Ich habe die <a class='tw-underline tw-text-[#1400FF]' target='_blank' href='public/terms'>Nutzungsbedingungen</a> gelesen und stimme ihnen zu. ",
 		"registerWithUs": "Registrier Dich mit",
 		"provideInfo": ", indem Du die folgenden Informationen bereitstellst",
 		"signUpWith": "Anmelden mit",
