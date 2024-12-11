@@ -100,9 +100,13 @@
 							<span hlmH1 class="tw-font-extrabold tw-text-purple"
 								>{{ progressValue() }} %</span
 							>
-							<span hlmP class="tw-mt-2 tw-text-oebblack"
-								>{{ minutesCompleted | hourPipe }} / {{ minutesTotal | hourPipe }}</span
-							>
+							<span hlmP class="tw-mt-2 tw-text-oebblack tw-flex tw-justify-end">
+								<span [countUp]="hoursCompleted"></span>
+								<span>:</span>
+								<span [countUp]="minutesCompletedRemainder"></span>
+								<span> / </span>
+								<span> {{minutesTotal | hourPipe }}</span>
+							</span>
 						</div>
 					</ng-template>
 

@@ -330,7 +330,10 @@
 		"licenseInfo": "Badges are created under the license <a class='tw-underline tw-text-[#1400FF]' target='_blank' href='https://creativecommons.org/publicdomain/zero/1.0/legalcode.de'>CC BY 4.0'</a>.",
 		"requiredError": "Required",
 		"hoursMaxError": "Hours cannot exceed 10000.",
-		"minMaxError": "Please enter a valid number of minutes (0 to 59)."
+		"minMaxError": "Please enter a valid number",
+		"hoursAndMinutesError": "The badge has to take at least 1 minute",
+		"competenceHoursMinutesZero": "One of your competencies has a duration of 0."
+
 	},
 	"Signup": {
 		"youHaveAccount": "You already have an account?",
@@ -342,7 +345,7 @@
 		"repeatPassword": "Reenter Password",
 		"createAccount": "Create Account",
 		"readTerms": "Please read and agree to the Terms of Service if you want to continue.",
-		"agreeToTerms1": "I have read and agree to the <a class='tw-underline tw-text-[#1400FF]' target='_blank' href='public/impressum'>terms of service</a>. ",
+		"agreeToTerms1": "I have read and agree to the <a class='tw-underline tw-text-[#1400FF]' target='_blank' href='public/terms'>terms of service</a>. ",
 		"registerWithUs": "Register with us",
 		"provideInfo": ", by providing the following information",
 		"signUpWith": "Sign Up With",
@@ -409,6 +412,11 @@
 		"funding": "Funding",
 		"fundingDesc": "With the 'Open Photonics Pro' funding measure, the Federal Ministry of Education and Research (BMBF) aims to enable new forms of collaboration between science and business with the maker and start-up scene. The aim is to open up additional innovation paths and potential. At the same time, innovation cycles should be significantly shortened and the networking of these groups should be sustainably improved.",
 		"moreAboutFund": "More about the funding measure"
+	},
+	"Newsletter": {
+		"subscribe": "Subscribe to our newsletter",
+		"confirmedSubscription": "<span class='tw-font-bold tw-text-oebblack'>You have confirmed your newsletter subscription successfully.</span>",
+		"signup": "Newsletter Signup"
 	},
 	"FAQ": {
 		"Q1": "1. What are Open Educational Badges?",
@@ -594,9 +602,19 @@
 	"OEBComponents": {
 		"fieldIsRequired": "This field is required"
 	},
+	"ErrorDialog": {
+		"title": "An error has occured!",
+		"message": "Below you see an error message. If you think this error is on us, write us an email or create an Issue in Github. Please copy the error message in your ticket.",
+		"copyButton" : "Copy",
+		"copyButtonAfter": "Copied!",
+		"createIssue": "To the GitHub issues",
+		"sendEmail":"Send an email"
+
+	},
 	"LearningPath": {
 		"learningpaths": "Learning Paths",
-		"catalogHeadline": "Overview of all learning paths",
+		"noLearningPaths": "No learning paths",
+		"catalogHeadline":"Overview of all learning paths",
 		"partipate": "Participate",
 		"notParticipateAnymore": "Not participate anymore",
 		"searchLearningPaths": "Lernpfade durchsuchen",

@@ -1,12 +1,5 @@
 import { Component, EventEmitter, HostBinding, Input, Output } from '@angular/core';
-import {
-	AUTO_STYLE,
-	animate,
-	state,
-	style,
-	transition,
-	trigger,
-} from '@angular/animations';
+import { AUTO_STYLE, animate, state, style, transition, trigger } from '@angular/animations';
 import { FormControl } from '@angular/forms';
 
 @Component({
@@ -32,9 +25,17 @@ import { FormControl } from '@angular/forms';
 
 		<div class="tw-h-[100px]">
 			<div class="tw-flex tw-items-center tw-h-full">
-				<div *ngIf="completed" class="tw-absolute tw-top-[10px] tw-right-[10px] tw-flex tw-justify-center tw-items-center">
-					<div class="tw-bg-white tw-inline-flex tw-rounded-full tw-justify-center tw-items-center tw-border-solid tw-border-purple tw-border-[2px] ">
-						<hlm-icon class="tw-text-purple tw-box-border md:tw-w-[22px] tw-w-[16px] md:tw-h-[22px] tw-h-[16px]" name="lucideCheck" />
+				<div
+					*ngIf="completed"
+					class="tw-absolute tw-top-[10px] tw-right-[10px] tw-flex tw-justify-center tw-items-center"
+				>
+					<div
+						class="tw-bg-white tw-inline-flex tw-rounded-full tw-justify-center tw-items-center tw-border-solid tw-border-purple tw-border-[2px] "
+					>
+						<hlm-icon
+							class="tw-text-purple tw-box-border md:tw-w-[22px] tw-w-[16px] md:tw-h-[22px] tw-h-[16px]"
+							name="lucideCheck"
+						/>
 					</div>
 				</div>
 				<img
@@ -51,11 +52,9 @@ import { FormControl } from '@angular/forms';
 						[routerLink]="['../earned-badge', badgeSlug]"
 						hlmP
 						size="sm"
-						>{{ badgeTitle }}</a>
-					<a *ngIf="publicUrl"
-						class="tw-font-bold"
-						hlmP
-						size="sm" [href]="publicUrl">{{ badgeTitle }}</a>
+						>{{ badgeTitle }}</a
+					>
+					<a *ngIf="publicUrl" class="tw-font-bold" hlmP size="sm" [href]="publicUrl">{{ badgeTitle }}</a>
 
 					<div class="tw-pt-2 tw-flex tw-flex-col tw-flex-wrap">
 						<a
@@ -65,7 +64,8 @@ import { FormControl } from '@angular/forms';
 							*ngIf="issuerSlug; else noIssuerSlug"
 							class="badgecard-x-issuer"
 							[routerLink]="['../../public/issuers', issuerSlug]"
-							>{{ issuerTitle }}</a>
+							>{{ issuerTitle }}</a
+						>
 						<ng-template #noIssuerSlug>
 							<div class="badgecard-x-issuer">{{ issuerTitle }}</div>
 						</ng-template>
@@ -75,7 +75,7 @@ import { FormControl } from '@angular/forms';
 					<div class="tw-absolute tw-left-0 tw-bottom-2 tw-w-full">
 						<!-- Show Verify or Share Button unless public -->
 						<div class="tw-float-right tw-pr-4">
-						<!-- <a
+							<!-- <a
 								hlmA
 								hlmP
 								size="sm"
@@ -103,15 +103,17 @@ import { FormControl } from '@angular/forms';
 					<div *ngIf="competencies && competencies.length > 0" class="tw-absolute tw-bottom-0 tw-right-2 tw-cursor-pointer" (click)="toggleCompetencies()">
 						<hlm-icon [name]=" showCompetencies ? 'lucideChevronUp' : 'lucideChevronDown'" />
 					</div>
-				</div>	
 				</div>
+			</div>
 		</div>
 		<div [@showCompetencies]="showCompetencies">
 			<div class="tw-pt-8">
 				<div *ngFor="let competency of competencies">
-					<competency-accordion [name]="competency.name" [category]="competency.category"
-						[description]="competency.description" [escoID]="competency.escoID"
-						[studyload]="competency.studyLoad | hourPipe"></competency-accordion>
+					<ng-container *ngIf="showCompetencies">
+						<competency-accordion [name]="competency.name" [category]="competency.category"
+							[description]="competency.description" [escoID]="competency.escoID"
+							[studyload]="competency.studyLoad | hourPipe"></competency-accordion>
+					</ng-container>
 				</div>
 			</div>
 		</div>
@@ -158,8 +160,7 @@ export class BgBadgecard {
 	ngOnInit() {
 	}
 
-
-	showCompetencies = false
+	showCompetencies = false;
 	toggleCompetencies() {
 		this.showCompetencies = !this.showCompetencies;
 	}

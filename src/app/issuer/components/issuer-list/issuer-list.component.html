@@ -7,13 +7,15 @@
 				<h1 hlmH1 class="tw-text-purple oeb-standard-padding-bottom">{{ 'NavItems.myInstitutions' | translate }}</h1>
 				<p hlmP size="lg" class="tw-pb-3" [innerHTML]="'Issuer.myInstitutionsText' | translate"></p>
 				<p hlmP size="lg" class="tw-pb-3" [innerHTML]="'Issuer.myLearningPathText' | translate"></p>
-		<div class="tw-pt-[4rem] tw-pb-[2.4rem] md:tw-flex tw-justify-between md:tw-gap-4">
+		<div class="tw-pt-[4rem] tw-pb-[2.4rem] md:tw-flex tw-justify-between md:tw-gap-16">
 			<div class="oeb-standard-padding-bottom">
-				<h1 hlmH1 class="tw-text-purple oeb-standard-padding-bottom">{{ 'NavItems.myInstitutions' | translate }}</h1>
+				<h1 hlmH1 class="tw-text-purple oeb-standard-padding-bottom tw-font-bold">
+					{{ 'NavItems.myInstitutions' | translate }}
+				</h1>
 				<p hlmP size="lg" class="tw-pb-3" [innerHTML]="'Issuer.myInstitutionsText' | translate"></p>
 				<p hlmP size="lg" class="tw-pb-3" [innerHTML]="'Issuer.myLearningPathText' | translate"></p>
 			</div>
-			<div class="tw-border-purple tw-border tw-rounded-[20px]">
+			<div class="tw-border-purple tw-border tw-rounded-[20px] tw-text-right">
 				<oeb-button
 					class="md:tw-whitespace-nowrap"
 					variant="secondary"
@@ -22,11 +24,29 @@
 					[text]="'Issuer.createInstitution' | translate"
 				>
 				</oeb-button>
+				<div class="md:tw-block tw-hidden tw-mt-8 tw-max-w-[380px]">
+					<div class="tw-rounded-[20px] tw-text-oebblack tw-relative tw-flex tw-flex-row tw-items-center">
+						<img
+							class="tw-inline-block tw-h-[90px]"
+							alt="Plugin"
+							src="assets/oeb/images/issuerPage/oeb-beta-logo.svg"
+						/>
+						<div class="tw-flex md:tw-block tw-pb-4">
+							<p
+								class="tw-pt-4 tw-text-left tw-pl-4 md:tw-pl-0"
+								[innerHTML]="'Issuer.betaPhase' | translate"
+							></p>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
-		<div class="md:tw-flex">
-			<div class="tw-w-full tw-flex-grow md:tw-pr-8">
-				<div class="tw-border-purple tw-border tw-border-solid tw-rounded-[20px] tw-p-6 tw-my-6" *ngFor="let issuer of issuers">
+		<div class="md:tw-flex tw-gap-12">
+			<div class="tw-flex tw-flex-wrap tw-gap-16 tw-grow">
+				<div
+					class="tw-max-w-[600px] tw-grow tw-border-purple tw-border tw-border-solid tw-justify-between tw-flex tw-flex-col tw-rounded-[10px] tw-py-8 tw-px-6"
+					*ngFor="let issuer of issuers"
+				>
 					<div class="tw-flex">
 						<div class="tw-relative">
 							<img
@@ -38,96 +58,110 @@
 							/>
 						</div>
 						<div class="tw-flex tw-flex-col tw-justify-center tw-pl-4">
-							<a class="md:tw-text-[30px] md:tw-leading-[36px] tw-text-[20px] tw-leading-[24px] tw-text-purple tw-font-semibold" [routerLink]="['/issuer/issuers/', issuer.slug]">{{ issuer.name }}</a>
-							<p class="tw-text-oebblack tw-font-semibold md:tw-text-[20px] md:tw-leading-[24.4px] tw-text-[14px] tw-leading-[19.6px]">
-								{{ 'Issuer.yourRole' | translate }} 
+							<a
+								class="md:tw-text-[30px] md:tw-leading-[36px] tw-text-[20px] tw-leading-[24px] tw-text-purple tw-font-semibold"
+								[routerLink]="['/issuer/issuers/', issuer.slug]"
+								>{{ issuer.name }}</a
+							>
+							<p
+								class="tw-text-oebblack tw-pb-2 tw-font-semibold md:tw-text-[20px] md:tw-leading-[24.4px] tw-text-[14px] tw-leading-[19.6px]"
+							>
+								{{ 'Issuer.yourRole' | translate }}
 								{{ issuer.currentUserStaffMember?.roleInfo.label }}:in
 							</p>
 						</div>
 					</div>
-					<div>
-						<p class="tw-text-oebblack tw-py-4">{{issuer.description}}</p>
-					</div>
-					<div *ngFor="let issuerBadges of [issuerToBadgeInfo[issuer.issuerUrl]]">
-						<p class="tw-text-purple tw-font-medium tw-py-4 md:tw-text-[22px] md:tw-leading-[26.4px] tw-text-[16px] tw-leading-[19.2px]" *ngIf="!issuerBadges">
-							{{issuer.name}} {{ 'Issuer.myInstitutionsNoBadge' | translate }}
+					<div class="tw-pt-4 tw-pb-6">
+						<p [class.tw-line-clamp-3]="issuerToBadgeInfo[issuer.issuerUrl]" class="tw-text-oebblack">
+							{{ issuer.description }}
 						</p>
-						<p
-							*ngIf="issuerBadges"
-							class="tw-text-purple tw-font-medium tw-py-4 md:tw-text-[22px] md:tw-leading-[26.4px] tw-text-[16px] tw-leading-[19.2px]"
-							[innerHTML]="issuer.badgeClassCount | i18nPlural: plural['badges']"
-						></p>
-						<div *ngIf="issuerBadges" class="tw-flex tw-flex-wrap tw-gap-1 tw-pb-6 tw-items-center">
-							<div *ngFor="let badge of issuerBadges.badges">
-								<img
-									[src]="badge.image"
-									[title]="badge?.name"
-									[width]="80"
-									[height]="80"
-								/>
-							</div>
-							<!-- <div title="Neuen Badge erstellen" class="tw-ml-2 tw-text-[40px] tw-h-[80px] tw-w-[80px] tw-rounded-[50%] tw-bg-purple tw-text-white tw-justify-center tw-flex tw-items-center tw-font-bold">
-								+
-							</div> -->
-							<oeb-button
-								*ngIf="issuer.canCreateBadge"
-								class="tw-ml-4 md:tw-whitespace-nowrap tw-rounded-[50%] tw-overflow-hidden tw-font-bold tw-border-2 tw-border-solid tw-border-purple"
-								size="bigIcon"
-								[routerLink]="['/issuer/issuers/', issuer.slug, 'badges', 'create']"
-								[disabled-when-requesting]="true"
-								[text]="'+'"
-		
-							></oeb-button>
-							
-						</div>
 					</div>
-					<div>
-						
-					</div>
-					<div class="tw-flex tw-gap-4 tw-flex-wrap tw-justify-between tw-pt-2">
+
+					<oeb-button
+						[id]="'create-new-badge-btn-1'"
+						[class.disabled]="!issuer.canCreateBadge"
+						class="tw-whitespace-nowrap"
+						[routerLink]="['/issuer/issuers/', issuer.slug, 'badges', 'create']"
+						[disabled]="!issuer.currentUserStaffMember"
+						[text]="'Issuer.createBadge' | translate"
+						width="full_width"
+						*ngIf="!issuerToBadgeInfo[issuer.issuerUrl]"
+						size="mediumText"
+					>
+					</oeb-button>
+					<div *ngIf="issuerToBadgeInfo[issuer.issuerUrl]">
 						<oeb-button
 							[class.disabled]="!issuer.canCreateBadge"
 							class="tw-whitespace-nowrap tw-flex-grow"
 							[routerLink]="['/issuer/issuers/', issuer.slug]"
 							[disabled]="!issuer.currentUserStaffMember"
 							[text]="'Issuer.giveBadge' | translate"
-							variant="secondary"
 							width="full_width"
-							>
+							size="mediumText"
+						>
 						</oeb-button>
-						<oeb-button
-							[class.disabled]="!issuer.canCreateBadge"
-							class="tw-whitespace-nowrap tw-flex-grow"
-							[routerLink]="['/issuer/issuers/', issuer.slug, 'learningpaths', 'create']"
-							[disabled]="!issuer.canCreateBadge"
-							[text]="'Issuer.myInstitutionsCreateLearningPath' | translate"
-							variant="secondary"
-							width="full_width"
+						<div class="tw-flex tw-gap-2 tw-flex-wrap tw-justify-between tw-pt-2">
+							<oeb-button
+								[id]="'create-new-badge-btn-2'"
+								[class.disabled]="!issuer.canCreateBadge"
+								class="tw-whitespace-nowrap tw-flex-grow"
+								[routerLink]="['/issuer/issuers/', issuer.slug, 'badges', 'create']"
+								[disabled]="!issuer.currentUserStaffMember"
+								[text]="'Issuer.createBadge' | translate"
+								variant="secondary"
+								width="full_width"
+								size="mediumText"
+							>
+							</oeb-button>
+							<oeb-button
+								[class.disabled]="!issuer.canCreateBadge"
+								class="tw-whitespace-nowrap tw-flex-grow"
+								[routerLink]="['/issuer/issuers/', issuer.slug, 'learningpaths', 'create']"
+								[disabled]="!issuer.canCreateBadge"
+								[text]="'Issuer.myInstitutionsCreateLearningPath' | translate"
+								variant="secondary"
+								width="full_width"
+								size="mediumText"
 							>
 						</oeb-button>
 					</div>
 				</div>
 			</div>
-			<div class="md:tw-flex-[0_0_363px] md:tw-mt-6">
-				<div #pluginBox>
-					<div class="tw-bg-green tw-p-6 tw-rounded-[20px] tw-text-center tw-text-oebblack tw-relative">
-						<img (click)="pluginBoxElement.nativeElement.remove()" class="tw-cursor-pointer tw-inline-block tw-absolute tw-top-2 tw-right-2" alt="Close" src="assets/oeb/images/issuerPage/close.png" />
+			<div #pluginBox class="md:tw-flex-[0_0_363px] md:tw-mt-0 tw-mt-6">
+				<div>
+					<div class="tw-bg-green tw-p-6 tw-rounded-[10px] tw-text-center tw-text-oebblack tw-relative">
+						<img
+							(click)="pluginBoxElement.nativeElement.remove()"
+							class="tw-cursor-pointer tw-inline-block tw-absolute tw-top-2 tw-right-2"
+							alt="Close"
+							src="assets/oeb/images/issuerPage/close.png"
+						/>
 						<div class="tw-flex md:tw-block tw-pb-4">
 							<img class="tw-inline-block" alt="Plugin" src="assets/oeb/images/issuerPage/plugin.png" />
-							<p class="tw-pt-4 tw-text-left tw-pl-4 md:tw-pl-0 md:tw-text-center" [innerHTML]="'Issuer.askForPluginText' | translate"></p>
+							<p
+								class="tw-pt-4 tw-text-left tw-pl-4 md:tw-pl-0 md:tw-text-center"
+								[innerHTML]="'Issuer.askForPluginText' | translate"
+							></p>
 						</div>
-						<a href="mailto:hallo@openbadges.education?subject=Interesse an Plugin!" class="oeb-button oeb-purple-bg">
+						<a
+							href="mailto:hallo@openbadges.education?subject=Interesse an Plugin!"
+							class="oeb-button oeb-white-bg !tw-font-medium tw-border-purple tw-border-solid tw-border"
+						>
 							{{ 'Issuer.askForPlugin' | translate }}
 						</a>
 					</div>
 				</div>
-				<div>
-					<div class="tw-p-4 tw-rounded-[20px] tw-text-oebblack tw-relative tw-flex tw-flex-row tw-items-center ">
-						<img class="tw-inline-block tw-h-[90px]" alt="Plugin" src="assets/oeb/images/issuerPage/oeb-beta-logo.svg" />
-						<div class="tw-flex md:tw-block tw-pb-4">
-							<p class="tw-pt-4 tw-text-left tw-pl-4 md:tw-pl-0" [innerHTML]="'Issuer.betaPhase' | translate"></p>
-						</div>
-					</div>
+			</div>
+		</div>
+		<div class="tw-block md:tw-hidden tw-mt-8 tw-max-w-[380px]">
+			<div class="tw-rounded-[10px] tw-text-oebblack tw-relative tw-flex tw-flex-row tw-items-center">
+				<img
+					class="tw-inline-block tw-h-[90px]"
+					alt="Plugin"
+					src="assets/oeb/images/issuerPage/oeb-beta-logo.svg"
+				/>
+				<div class="tw-flex md:tw-block tw-pb-4">
+					<p class="tw-pt-4 tw-text-left tw-pl-4 md:tw-pl-0" [innerHTML]="'Issuer.betaPhase' | translate"></p>
 				</div>
 			</div>
 		</div>
