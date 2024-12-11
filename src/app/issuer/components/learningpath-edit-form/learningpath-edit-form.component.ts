@@ -265,8 +265,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 				},
 			}
 
-			this.existingLpBadge.save()	
-			
+			this.existingLpBadge.save()				
 
 			this.savePromise = this.learningPathApiService.updateLearningPath(this.issuerSlug, this.existingLearningPath.slug, {
 				...this.existingLearningPath,
@@ -275,10 +274,10 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 				participationBadge_id: this.existingLearningPath.participationBadge_id,
 				participationBadge_image: data.image,
 				tags: data.tags,
-				badges: this.existingLearningPath.badges.map((item) => {
+				badges: this.badgeList.map((item, index) => {
 					return {
 						slug: item.badge.slug,
-						order: item.order,
+						order: index,
 					};
 				}),			  
 			})
