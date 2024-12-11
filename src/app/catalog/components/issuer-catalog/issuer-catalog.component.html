@@ -1,18 +1,20 @@
 <form-message></form-message>
 <div class="oeb page-padding">
-	<header class="oeb-headline-container tw-relative oeb-section-sm tw-flex tw-flex-col">
-		<h2 hlmH1 class="tw-text-purple tw-font-black">
-			{{ 'General.institutions' | translate }}
-		</h2>
-		<ng-template [showLoader]="false" [bgAwaitPromises]="[issuersLoaded]">
-			<span hlmH2 class="!tw-text-oebblack w-font-normal tw-break-words">
-				<span [countUp]="issuers.length"> </span>
-				<span>
-					{{ ' ' | i18nPlural: plural['issuerText'] }}
+	<div class="oeb-section-sm">
+		<header class="oeb-headline-container tw-relative tw-flex tw-flex-col">
+			<h2 hlmH1 class="tw-text-oebblack">
+				{{ 'Issuer.institutionsHeadline' | translate }}
+			</h2>
+			<ng-template [showLoader]="false" [bgAwaitPromises]="[issuersLoaded]">
+				<span hlmH1 class="lg:tw-pl-[10%] tw-text-purple tw-font-extrabold tw-break-words">
+					<span [countUp]="issuers.length"> </span>
+					<span>
+						{{ ' ' | i18nPlural: plural['issuerText'] }}
+					</span>
 				</span>
-			</span>
-		</ng-template>
-	</header>
+			</ng-template>
+		</header>
+	</div>
 
 	<div>
 		<ng-template [showLoader]="true" [bgAwaitPromises]="[issuersLoaded]">

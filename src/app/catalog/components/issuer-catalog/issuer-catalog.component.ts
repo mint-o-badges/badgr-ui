@@ -52,7 +52,7 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 			value: 'andere',
 		},
 	];
-	
+
 	sortControl = new FormControl('name_asc');
 	private _searchQuery = '';
 	get searchQuery() {
@@ -329,12 +329,12 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 					.setLngLat(coordinates)
 					.setHTML(
 						'<div style="padding:5px"><a href="public/issuers/' +
-							slug +
-							'">' +
-							name +
-							'</a><br><p>' +
-							desc +
-							'</p></div>',
+						slug +
+						'">' +
+						name +
+						'</a><br><p>' +
+						desc +
+						'</p></div>',
 					)
 					.addTo(this.mapObject);
 			});
@@ -469,7 +469,7 @@ class MatchingIssuerCategory {
 		public category: string,
 		public issuer,
 		public issuers: Issuer[] = [],
-	) {}
+	) { }
 
 	addIssuer(issuer) {
 		if (issuer.category === this.category) {
