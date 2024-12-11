@@ -6,9 +6,11 @@
 			<div class="oeb-headline-container tw-relative">
 				<div class="tw-z-10 tw-relative">
 					<h1 hlmH1 class="tw-text-purple">{{ 'Badge.catalogHeadline' | translate }}</h1>
-					<h1 hlmH1 class="lg:tw-pl-[10%] tw-font-extrabold tw-text-purple"> 
-						<span [countUp]="badges.length">{{ badges.length }}</span>{{ ' ' | i18nPlural: plural['badges'] }} in  
-						<span [countUp]="issuers.length">{{ issuers.length }}</span>{{ ' ' | i18nPlural: plural['issuer'] }}
+					<h1 hlmH1 class="lg:tw-pl-[10%] tw-font-extrabold tw-text-purple">
+						<span [countUp]="badges.length">{{ badges.length }}</span
+						>{{ ' ' | i18nPlural: plural['badges'] }} in
+						<span [countUp]="issuers.length">{{ issuers.length }}</span
+						>{{ ' ' | i18nPlural: plural['issuer'] }}
 					</h1>
 				</div>
 				<oeb-background
@@ -43,11 +45,8 @@
 							</div>
 						</div>
 						<span>{{ 'Badge.sortBy' | translate }} </span>
-						<oeb-sort-select
-							[control]="sortControl"
-							[result]="badgeResults"
-							></oeb-sort-select>
-						
+						<oeb-sort-select [control]="sortControl" [result]="badgeResults"></oeb-sort-select>
+
 						<span id="badge-catalog-select-label">{{ 'Badge.groupBy' | translate }} </span>
 
 						<oeb-select
@@ -76,10 +75,11 @@
 					</div>
 				</div>
 				<ng-container *ngIf="groupBy == '---'">
-					<div class="tw-flex tw-gap-4 tw-flex-col lg:tw-grid lg:tw-grid-cols-badges lg:tw-gap-16">
+					<div class="tw-gap-6 tw-grid tw-grid-cols-badges" [@stagger]>
 						<!-- TODO: Fix the badgecard link for sharing and routing -->
 						<bg-badgecard
 							*ngFor="let badge of badgeResults; trackBy: trackById"
+							[@appearAnimation]="state"
 							[badgeTitle]="badge.name"
 							[badgeImage]="badge.image"
 							[badgeDescription]="badge.description"
@@ -103,7 +103,7 @@
 								{{ issuerGroup.badges.length == 1 ? 'Badge' : 'Badges' }}</span
 							>
 						</h3>
-						<div class="tw-grid tw-grid-cols-badges tw-gap-16">
+						<div class="tw-gap-6 tw-grid tw-grid-cols-badges">
 							<!-- TODO: Fix the badgecard link for sharing and routing -->
 							<bg-badgecard
 								*ngFor="let badge of issuerGroup.badges"
@@ -132,7 +132,7 @@
 								{{ categoryGroup.badges.length == 1 ? 'Badge' : 'Badges' }}</span
 							>
 						</h3>
-						<div class="tw-grid tw-grid-cols-badges tw-gap-16">
+						<div class="tw-gap-6 tw-grid tw-grid-cols-badges">
 							<!-- TODO: Fix the badgecard link for sharing and routing -->
 							<bg-badgecard
 								*ngFor="let badge of categoryGroup.badges"

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { animate, animateChild, query, stagger, state, style, transition, trigger } from '@angular/animations';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from '../../../common/services/message.service';
 //import {BadgeClassManager} from '../../services/badgeclass-manager.service';
@@ -19,6 +20,17 @@ import { FormControl } from '@angular/forms';
 	selector: 'app-badge-catalog',
 	templateUrl: './badge-catalog.component.html',
 	styleUrls: ['./badge-catalog.component.css'],
+	animations: [
+		trigger('appearAnimation', [
+			transition(':enter', [style({ transform: 'scale(80%)', opacity: '0' }), animate('.2s ease-out', style({ transform: 'scale(100%)', opacity: '1' }))]),
+		]),
+		trigger('stagger', [
+			transition(':enter', [
+				query(':enter', stagger('.03s', [animateChild()]))
+			])
+		])
+	],
+
 })
 export class BadgeCatalogComponent extends BaseRoutableComponent implements OnInit {
 	readonly issuerPlaceholderSrc = preloadImageURL('../../../../breakdown/static/images/placeholderavatar-issuer.svg');
@@ -286,7 +298,7 @@ class MatchingBadgeIssuer {
 		public issuerName: string,
 		public badge,
 		public badges: BadgeClass[] = [],
-	) {}
+	) { }
 
 	async addBadge(badge) {
 		if (badge.issuerName === this.issuerName) {
@@ -318,7 +330,7 @@ class MatchingBadgeCategory {
 		public category: string,
 		public badge,
 		public badges: BadgeClass[] = [],
-	) {}
+	) { }
 
 	async addBadge(badge) {
 		if (
