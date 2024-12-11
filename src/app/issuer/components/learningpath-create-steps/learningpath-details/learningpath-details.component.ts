@@ -52,14 +52,13 @@ export class LearningPathDetailsComponent implements OnInit, AfterViewInit {
   }
 
   initFormFromExisting(lp: ApiLearningPath, badge: BadgeClass) {
-	console.log(badge)
     if (!lp || !badge) return;
 
     this.lpDetailsForm.setValue({
       name: lp.name,
       description: lp.description,
-      badge_image: badge.apiModel.imageFrame ? lp.participationBadge_image : null,
-      badge_customImage: !badge.apiModel.imageFrame ? lp.participationBadge_image : null
+      badge_image: badge.imageFrame ? lp.participationBadge_image : null,
+      badge_customImage: !badge.imageFrame ? lp.participationBadge_image : null
     });
   }
 

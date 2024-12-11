@@ -295,6 +295,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 	
 				const participationBadge = await this.badgeClassService.createBadgeClass(this.issuerSlug, {
 					image: this.stepOne.lpDetailsForm.controls.badge_image.value,
+					imageFrame: imageFrame,
 					name: this.stepOne.lpDetailsForm.controls.name.value,
 					description: this.stepOne.lpDetailsForm.controls.description.value,
 					tags: this.lpTags,
