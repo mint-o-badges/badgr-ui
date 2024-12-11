@@ -85,9 +85,17 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 	submittingText: string;
 
 	@Input()
-	set learningPath(lp: ApiLearningPath) {
-		if (this.existingLearningPath !== lp) {
-			this.existingLearningPath = lp;
+	set learningPath(lp: LearningPath) {
+		this.existingLearningPath = {
+			badges: lp.badges,
+			issuer_id: lp.issuer_id,
+			issuer_name: lp.issuer_name,
+			participationBadge_id: lp.participationBadgeId,
+			name: lp.name,
+			tags: lp.tags,
+			description: lp.description,
+			participationBadge_image: lp.participationBadgeImage,
+			slug: lp.slug,
 		}
 	}
 
@@ -146,6 +154,8 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 
 
 	ngOnInit() {
+		console.log(this.existingLearningPath)
+		console.log(this.existingLpBadge)
 		this.translate.get('General.next').subscribe((next) => {
 			this.next = next;
 		});
@@ -191,7 +201,6 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 		this.learningPathForm
 			.add('details', this.stepOne.lpDetailsForm)
 		// .add('badges', this.stepThree.);
-
 	}
 
 	onStepChange(event: any): void {
@@ -233,7 +242,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 				image: this.stepOne.lpDetailsForm.controls.badge_image.value,
 				tags: Array.from(this.lpTags)
 			}
-
+			this.existingLpBadge.imageFrame = (this.stepOne.lpDetailsForm.controls.badge_customImage.value && this.stepOne.lpDetailsForm.valid) ? false : true;
 			this.existingLpBadge.image = this.stepOne.lpDetailsForm.controls.badge_image.value;
 			this.existingLpBadge.name= this.stepOne.lpDetailsForm.controls.name.value,
 			this.existingLpBadge.description= this.stepOne.lpDetailsForm.controls.description.value,
@@ -253,7 +262,8 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 				},
 			}
 
-			this.existingLpBadge.save()			
+			this.existingLpBadge.save()	
+			
 
 			this.savePromise = this.learningPathApiService.updateLearningPath(this.issuerSlug, this.existingLearningPath.slug, {
 				...this.existingLearningPath,

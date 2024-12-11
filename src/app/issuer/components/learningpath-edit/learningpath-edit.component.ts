@@ -19,6 +19,7 @@ import { IssuerManager } from "../../services/issuer-manager.service";
 import { ApiLearningPath } from "../../../common/model/learningpath-api.model";
 import { BadgeClass } from "../../models/badgeclass.model";
 import { BadgeClassApiService } from "../../services/badgeclass-api.service";
+import { LearningPathManager } from "../../services/learningpath-manager.service";
 
 @Component({
 	selector: 'learningpath-edit',
@@ -32,8 +33,9 @@ export class LearningPathEditComponent extends BaseAuthenticatedRoutableComponen
 	issuer: Issuer;
 
 	issuerLoaded: Promise<unknown>;
+	learningPathLoaded: Promise<unknown>;
 
-	learningPath: ApiLearningPath
+	learningPath: LearningPath
 
 	learningPathBadge: BadgeClass
 
@@ -49,7 +51,8 @@ export class LearningPathEditComponent extends BaseAuthenticatedRoutableComponen
 		protected badgeClassService: BadgeClassManager,
 		protected badgeApiService: BadgeClassApiService,
 		private translate: TranslateService,
-		protected badgeInstanceManager: BadgeInstanceManager,	
+		protected badgeInstanceManager: BadgeInstanceManager,
+		protected learningPathManager: LearningPathManager,	
 		// protected title: Title,
 	) {
 		super(router, route, loginService);
@@ -66,15 +69,28 @@ export class LearningPathEditComponent extends BaseAuthenticatedRoutableComponen
 					},
 			]
 		})
+		this.learningPathLoaded = this.loadLearningPath()
     }
 
+	async loadLearningPath() {
+		return new Promise(async (resolve, reject) => {
+			this.learningPathManager.allPublicLearningPaths$.subscribe(
+				async (lps) => {
+					this.learningPath = lps.find((lp) => lp.slug === this.lpSlug)
+					this.learningPathBadge = await this.badgeClassService.badgeByIssuerSlugAndSlug(
+						this.issuerSlug, 
+						this.learningPath.participationBadgeId
+					);
+					resolve(lps);
+				},
+				(error) => {
+					this.messageService.reportAndThrowError('Failed to load learningPath', error);
+				},
+			);
+		});
+	}
+
 	ngOnInit(){
-		this.learningPathApiService.getLearningPath(this.issuerSlug, this.lpSlug).then((lp) => {
-			this.learningPath = lp
-			this.badgeClassService.badgeByIssuerSlugAndSlug(this.issuerSlug, lp.participationBadge_id).then((lpBadge) => {
-				this.learningPathBadge = lpBadge
-			})
-		})
 	}
 
 	private readonly _hlmDialogService = inject(HlmDialogService);

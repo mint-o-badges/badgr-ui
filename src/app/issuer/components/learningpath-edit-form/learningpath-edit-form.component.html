@@ -7,7 +7,7 @@
 			[optional]="false"
 			errorMessage="Bitte vollständig ausfüllen"
 		>
-			<learningpath-details #stepOne [learningPath]="existingLearningPath"></learningpath-details>
+			<learningpath-details #stepOne [learningPathBadgeData]=" {learningPath: existingLearningPath, lpBadge: existingLpBadge }"></learningpath-details>
 		</cdk-step>
 		<cdk-step
 			label="Badges auswählen"

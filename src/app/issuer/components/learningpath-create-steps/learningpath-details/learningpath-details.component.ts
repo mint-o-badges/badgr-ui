@@ -7,7 +7,13 @@ import { base64ByteSize } from '../../../../common/util/file-util';
 import { BadgeStudioComponent } from '../../badge-studio/badge-studio.component';
 import { StepperComponent } from '../../../../components/stepper/stepper.component';
 import { ApiLearningPath } from '../../../../common/model/learningpath-api.model';
+import { BadgeClass } from '../../../../issuer/models/badgeclass.model';
+import { LearningPath } from '../../../../issuer/models/learningpath.model';
 
+interface LearningPathBadgeInput {
+	learningPath: ApiLearningPath;
+	lpBadge: BadgeClass;
+}
 
 @Component({
   selector: 'learningpath-details',
@@ -28,10 +34,11 @@ export class LearningPathDetailsComponent implements OnInit, AfterViewInit {
 	@ViewChild('customImageField')
 	customImageField: BgFormFieldImageComponent;
 
-	@Input()
-	set learningPath (lp: ApiLearningPath) {
-		this.initFormFromExisting(lp);
-	}
+	@Input() learningPathBadgeData: LearningPathBadgeInput;
+
+	existingLearningPath: LearningPath | null = null
+
+	existingLpBadge: BadgeClass | null = null
 
 	readonly badgeClassPlaceholderImageUrl = '../../../../breakdown/static/images/placeholderavatar.svg';
 
@@ -44,17 +51,17 @@ export class LearningPathDetailsComponent implements OnInit, AfterViewInit {
 	) {
   }
 
-	initFormFromExisting(lp: ApiLearningPath) {
-		if (!lp) return;
+  initFormFromExisting(lp: ApiLearningPath, badge: BadgeClass) {
+	console.log(badge)
+    if (!lp || !badge) return;
 
-		this.lpDetailsForm.setValue({
-			name: lp.name,
-			description: lp.description,
-			badge_image: lp.participationBadge_image,
-			badge_customImage: null
-		});
-
-	}
+    this.lpDetailsForm.setValue({
+      name: lp.name,
+      description: lp.description,
+      badge_image: badge.apiModel.imageFrame ? lp.participationBadge_image : null,
+      badge_customImage: !badge.apiModel.imageFrame ? lp.participationBadge_image : null
+    });
+  }
 
 	isCustomImageLarge = false;
 	maxCustomImageSize = 1024 * 250;
@@ -89,6 +96,10 @@ export class LearningPathDetailsComponent implements OnInit, AfterViewInit {
 		.addControl('badge_customImage', '');
 
   ngOnInit(): void {
+	this.initFormFromExisting(
+		this.learningPathBadgeData.learningPath, 
+		this.learningPathBadgeData.lpBadge
+	);
 	this.detailsForm = this.rootFormGroup.control
 	this.translate.get('CreateBadge.useOurEditor').subscribe((res: string) => {
 		this.useOurEditor = res;
@@ -122,7 +133,6 @@ export class LearningPathDetailsComponent implements OnInit, AfterViewInit {
 		this.lpDetailsForm.controls.badge_customImage.rawControl.valueChanges.subscribe((value) => {
 			if (this.customImageField.control.value != null) this.imageField.control.reset();
 		});
-
 	}
 
   generateRandomImage() {
