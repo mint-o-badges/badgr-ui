@@ -71,9 +71,10 @@
 
 				<ng-container *ngIf="badgesDisplay == 'grid'">
 					<ng-container *ngIf="!groupByCategory">
-						<div class="tw-grid tw-grid-cols-issuer tw-gap-6 tw-w-full">
+						<div class="tw-grid tw-grid-cols-issuer tw-gap-6 tw-w-full" [@stagger]>
 							<oeb-issuer-card
 								*ngFor="let issuer of issuerResults"
+								[@appearAnimation]="state"
 								[issuer]="issuer"
 								[plural]="plural"
 								(navigate)="navigateToIssuer(issuer)"

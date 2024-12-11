@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { animate, animateChild, query, stagger, state, style, transition, trigger } from '@angular/animations';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from '../../../common/services/message.service';
 //import {BadgeClassManager} from '../../services/badgeclass-manager.service';
@@ -15,21 +14,13 @@ import { StringMatchingUtil } from '../../../common/util/string-matching-util';
 import { BadgeClassCategory } from '../../../issuer/models/badgeclass-api.model';
 import { TranslateService } from '@ngx-translate/core';
 import { FormControl } from '@angular/forms';
+import { appearAnimation } from '../../../common/animations/animations';
 
 @Component({
 	selector: 'app-badge-catalog',
 	templateUrl: './badge-catalog.component.html',
 	styleUrls: ['./badge-catalog.component.css'],
-	animations: [
-		trigger('appearAnimation', [
-			transition(':enter', [style({ transform: 'scale(80%)', opacity: '0' }), animate('.2s ease-out', style({ transform: 'scale(100%)', opacity: '1' }))]),
-		]),
-		trigger('stagger', [
-			transition(':enter', [
-				query(':enter', stagger('.03s', [animateChild()]))
-			])
-		])
-	],
+	animations: [appearAnimation],
 
 })
 export class BadgeCatalogComponent extends BaseRoutableComponent implements OnInit {

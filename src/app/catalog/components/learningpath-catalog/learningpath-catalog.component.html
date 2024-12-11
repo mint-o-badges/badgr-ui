@@ -58,9 +58,10 @@
 					</div>
 				</div>
 				<ng-container *ngIf="!groupByInstitution">
-					<div class="tw-grid min-[450px]:tw-grid-cols-learningpaths tw-gap-6 tw-items-center">
+					<div class="tw-grid min-[450px]:tw-grid-cols-learningpaths tw-gap-6 tw-items-center" [@stagger]>
 						<bg-learningpathcard
 							*ngFor="let lp of learningPathResults"
+							[@appearAnimation]="state"
 							[badgeImage]="lp._apiModel.participationBadge_image"
 							[name]="lp.name"
 							[issuerTitle]="lp.issuer_name"
