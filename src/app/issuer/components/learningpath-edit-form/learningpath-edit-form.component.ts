@@ -276,7 +276,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 				tags: data.tags,
 				badges: this.badgeList.map((item, index) => {
 					return {
-						slug: item.badge.slug,
+						slug: item.slug,
 						order: index,
 					};
 				}),			  
