@@ -120,8 +120,9 @@ import { AUTO_STYLE, animate, state, style, transition, trigger } from '@angular
 				<div *ngFor="let competency of competencies">
 					<ng-container *ngIf="showCompetencies">
 						<competency-accordion [name]="competency.name" [category]="competency.category"
-							[description]="competency.description" [escoID]="competency.escoID"
-							[studyload]="competency.studyLoad | hourPipe"></competency-accordion>
+							[description]="competency.description" [framework]="competency.framework" 
+							[framework_identifier]="competency['framework_identifier']" [studyload]="competency.studyLoad | hourPipe">
+						</competency-accordion>
 					</ng-container>
 				</div>
 			</div>

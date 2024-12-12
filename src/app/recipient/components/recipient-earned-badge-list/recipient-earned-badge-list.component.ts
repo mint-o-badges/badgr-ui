@@ -389,14 +389,14 @@ export class RecipientEarnedBadgeListComponent
 		badges.forEach((badge) => {
 			let competencies = badge.getExtension('extensions:CompetencyExtension', [{}]);
 			competencies.forEach((competency) => {
-				if (groupedCompetencies[competency.escoID]) {
-					groupedCompetencies[competency.escoID].studyLoad += competency.studyLoad;
-					if (groupedCompetencies[competency.escoID].lastReceived < badge.issueDate) {
-						groupedCompetencies[competency.escoID].lastReceived = badge.issueDate;
+				if (groupedCompetencies[competency['framework_identifier']]) {
+					groupedCompetencies[competency['framework_identifier']].studyLoad += competency.studyLoad;
+					if (groupedCompetencies[competency['framework_identifier']].lastReceived < badge.issueDate) {
+						groupedCompetencies[competency['framework_identifier']].lastReceived = badge.issueDate;
 					}
 				} else {
-					groupedCompetencies[competency.framework] = Object.create(competency);
-					groupedCompetencies[competency.framework].lastReceived = badge.issueDate;
+					groupedCompetencies[competency['framework_identifier']] = Object.create(competency);
+					groupedCompetencies[competency['framework_identifier']].lastReceived = badge.issueDate;
 				}
 				this.totalStudyTime += competency.studyLoad;
 			});
@@ -407,14 +407,14 @@ export class RecipientEarnedBadgeListComponent
 			.forEach((badge) => {
 				let competencies = badge.getExtension('extensions:CompetencyExtension', [{}]);
 				competencies.forEach((competency) => {
-					if (newGroupedCompetencies[competency.escoID]) {
-						newGroupedCompetencies[competency.escoID].studyLoad += competency.studyLoad;
-						if (newGroupedCompetencies[competency.escoID].lastReceived < badge.issueDate) {
-							newGroupedCompetencies[competency.escoID].lastReceived = badge.issueDate;
+					if (newGroupedCompetencies[competency['framework_identifier']]) {
+						newGroupedCompetencies[competency['framework_identifier']].studyLoad += competency.studyLoad;
+						if (newGroupedCompetencies[competency['framework_identifier']].lastReceived < badge.issueDate) {
+							newGroupedCompetencies[competency['framework_identifier']].lastReceived = badge.issueDate;
 						}
 					} else {
-						newGroupedCompetencies[competency.escoID] = Object.create(competency);
-						newGroupedCompetencies[competency.escoID].lastReceived = badge.issueDate;
+						newGroupedCompetencies[competency['framework_identifier']] = Object.create(competency);
+						newGroupedCompetencies[competency['framework_identifier']].lastReceived = badge.issueDate;
 					}
 				});
 			});
