@@ -106,6 +106,14 @@
 							[competencies]="badge.extension['extensions:CompetencyExtension']"
 							[checked]="badgeChecked(badge.url)"
 							[showCheckbox]="true"
+							(ngModelChange)="checkboxChange($event, badge)"
+							(checkboxChange)="
+								checkboxChange(
+									$event,
+									badge.url,
+									badge.extension['extensions:StudyLoadExtension'].StudyLoad
+								)
+							"
 						></bg-badgecard>
 					</div>
 				</ng-container>
@@ -135,6 +143,14 @@
 							[competencies]="badge.extension['extensions:CompetencyExtension']"
 							[checked]="badgeChecked(badge.url)"
 							[showCheckbox]="true"
+							(ngModelChange)="checkboxChange($event, badge)"
+							(checkboxChange)="
+								checkboxChange(
+									$event,
+									badge.url,
+									badge.extension['extensions:StudyLoadExtension'].StudyLoad
+								)
+							"
 						></bg-badgecard>
 					</div>
 				</ng-container>

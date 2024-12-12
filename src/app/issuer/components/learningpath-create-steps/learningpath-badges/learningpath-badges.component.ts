@@ -264,7 +264,6 @@ export class LearningPathBadgesComponent implements OnInit {
 				addBadgeToResultsByIssuer(item);
 				addBadgeToResultsByCategory(item);
 			});
-		console.log(this.badgeResultsByCategory)
 	}
 
 	minSelectedBadges(): ValidationErrors | null {
