@@ -171,6 +171,18 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 				},
 			]
 		})
+		if(this.existingLearningPath){
+			this.updateBadgeList(this.existingLearningPath.badges.map((badge) => {
+				return {
+					id: badge.badge.slug,
+					name: badge.badge.name,
+					image: badge.badge.image,
+					description: badge.badge.description,
+					slug: badge.badge.slug,
+					issuerName: badge.badge.issuerName,
+				};
+			}))
+		}
 	}
 
 	updateSelectedBadges({ urls, studyLoad }: { urls: string[], studyLoad: number }) {
