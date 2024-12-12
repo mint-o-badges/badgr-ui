@@ -73,6 +73,7 @@
 					</div>
 
 					<oeb-button
+						[id]="'create-new-badge-btn-1'"
 						[class.disabled]="!issuer.canCreateBadge"
 						class="tw-whitespace-nowrap"
 						[routerLink]="['/issuer/issuers/', issuer.slug, 'badges', 'create']"
@@ -96,6 +97,7 @@
 						</oeb-button>
 						<div class="tw-flex tw-gap-2 tw-flex-wrap tw-justify-between tw-pt-2">
 							<oeb-button
+								[id]="'create-new-badge-btn-2'"
 								[class.disabled]="!issuer.canCreateBadge"
 								class="tw-whitespace-nowrap tw-flex-grow"
 								[routerLink]="['/issuer/issuers/', issuer.slug, 'badges', 'create']"
@@ -109,15 +111,14 @@
 							<oeb-button
 								[class.disabled]="!issuer.canCreateBadge"
 								class="tw-whitespace-nowrap tw-flex-grow"
-								[routerLink]="['/issuer/issuers/', issuer.slug, 'learningpaths', 'upload']"
+								[routerLink]="['/issuer/issuers/', issuer.slug, 'learningpaths', 'create']"
 								[disabled]="!issuer.canCreateBadge"
 								[text]="'Issuer.myInstitutionsCreateLearningPath' | translate"
 								variant="secondary"
 								width="full_width"
 								size="mediumText"
 							>
-							</oeb-button>
-						</div>
+						</oeb-button>
 					</div>
 				</div>
 			</div>

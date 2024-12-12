@@ -80,7 +80,7 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 			});
 		})
 		.addControl('recipient_identifier', '', [Validators.required, this['idValidator']])
-		.addControl('narrative', '', MdImgValidator.imageTest)
+		.addControl('narrative', '', [MdImgValidator.imageTest, Validators.maxLength(160)])
 		.addControl('notify_earner', true)
 		.addArray(
 			'evidence_items',

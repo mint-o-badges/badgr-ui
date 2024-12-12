@@ -1,0 +1,96 @@
+<section class="tw-mt-6 md:tw-mt-7 section oeb-section">
+	<h2 hlmH2 class="tw-font-bold">1. {{ 'LearningPath.enterDetails' | translate }}</h2>
+
+	<oeb-input
+		label="1. Lernpfad-Titel"
+		[control]="lpDetailsForm.rawControlMap.name"
+		[autofocus]="true"
+		[errorMessage]="{
+			required: 'Required'
+		}"
+		sublabelRight="(max 60 Zeichen)"
+	></oeb-input>
+	<oeb-input
+		label="2. Kurz-Beschreibung für Lernende"
+		[control]="lpDetailsForm.rawControlMap.description"
+		[fieldType]="'textarea'"
+		sublabelRight="(max 700 Zeichen)"
+		placeholder="{{ 'LearningPathEditor.shortDescription' | translate }}"
+	></oeb-input>
+
+	<div class="tw-mt-6 md:tw-mt-7 tw-relative" id="imageSection" #imageSection>
+		<!-- <span class="input-label md:tw-flex-[0_0_10em]"> Badge-{{ 'Issuer.image' | translate }}</span> -->
+		<span hlmP class="tw-text-oebblack tw-font-semibold" [innerHTML]="'3. Lernpfad-Bild'"></span>
+		<div
+			class="tw-flex tw-flex-col tw-gap-4 lg:tw-flex-row tw-bg-white tw-p-8 tw-justify-evenly tw-items-center tw-mr-auto tw-rounded-2xl tw-h-fit tw-border tw-border-solid tw-border-purple"
+		>
+			<div class="tw-bg-[var(--color-lightpink)] tw-p-8 tw-rounded-[10px] md:tw-h-[450px]">
+				<bg-formfield-image
+					#imageField
+					[label]="useOurEditor"
+					[labelStyle]="
+						'tw-w-full tw-text-oebblack tw-font-bold tw-text-[22px] tw-text-center tw-leading-[26.4px]'
+					"
+					[sublabel]="imageSublabel"
+					[text_body]="selectFromMyFiles"
+					dropZoneInfo1="Drag & Drop"
+					[dropZoneInfo2]="chooseFromExistingIcons"
+					imageLoaderName="badge"
+					[newDropZone]="true"
+					[generateRandom]="false"
+					[type]="'badge'"
+					[allowedFileFormats]="allowedFileFormats"
+					(generateRandomImage)="generateRandomImage()"
+					(imageUploaded)="generateUploadImage($event, lpDetailsForm.value)"
+					[placeholderImage]="badgeClassPlaceholderImageUrl"
+					[control]="lpDetailsForm.rawControlMap.badge_image"
+				>
+				</bg-formfield-image>
+				<span class="tw-italic tw-text-sm md:tw-flex md:tw-justify-center md:tw-items-center"
+					>{{ 'General.fileformats' | translate }}: SVG {{ 'General.and' | translate }} PNG</span
+				>
+			</div>
+			<span class="tw-text-oebblack tw-italic tw-text-[24px] tw-leading-[31.2px]">{{
+				'General.or' | translate
+			}}</span>
+			<hr class="md:tw-hidden tw-my-8 tw-w-full tw-border tw-border-[var(--color-purple)] tw-border-dashed" />
+			<div class="tw-bg-[var(--color-lightpink)] tw-p-8 tw-rounded-[10px] md:tw-h-[450px]">
+				<bg-formfield-image
+					#customImageField
+					[label]="useOwnVisual"
+					[labelStyle]="
+						'tw-w-full tw-text-oebblack tw-font-bold tw-text-[22px] tw-text-center tw-leading-[26.4px]'
+					"
+					[sublabel]="uploadOwnDesign"
+					text_body="{{ 'RecBadge.uploadOwnVisual' | translate }}"
+					imageLoaderName="basic"
+					[newDropZone]="true"
+					[type]="'badge'"
+					[allowedFileFormats]="allowedFileFormatsCustom"
+					[generateRandom]="false"
+					(generateRandomImage)="generateRandomImage()"
+					(imageUploaded)="generateCustomUploadImage($event)"
+					[placeholderImage]="badgeClassPlaceholderImageUrl"
+					[control]="lpDetailsForm.rawControlMap.badge_customImage"
+				>
+				</bg-formfield-image>
+				<span class="tw-italic tw-text-sm md:tw-flex md:tw-justify-center md:tw-items-center"
+					>{{ 'General.fileformats' | translate }}: PNG</span
+				>
+			</div>
+			<badge-studio #badgeStudio [formData]="lpDetailsForm.value" [hidden]="true"></badge-studio>
+		</div>
+	</div>
+	<p
+		hlmP
+		size="sm"
+		id="imageTextError"
+		[hidden]="!imageFieldDirty || !lpDetailsForm.hasError('imageRequired')"
+		class="tw-font-normal tw-text-center tw-w-full tw-text-red tw-mt-2"
+	>
+		{{ 'CreateBadge.imageRequiredError' | translate }}.
+	</p>
+	<p hlmP size="sm" [hidden]="!isCustomImageLarge" class="tw-font-normal md:tw-pl-[13.5rem] u-text-error">
+		{{ 'CreateBadge.imageTooLarge' | translate }}.
+	</p>
+</section>

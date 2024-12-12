@@ -44,6 +44,8 @@ export class OebLearningPathDetailComponent extends BaseRoutableComponent implem
 	loading: any;
 	pdfSrc: SafeResourceUrl;
 
+	learningPathEditLink
+
 	constructor(
 		private learningPathApiService: LearningPathApiService,
 		private badgeClassManager: BadgeClassManager,
@@ -69,6 +71,7 @@ export class OebLearningPathDetailComponent extends BaseRoutableComponent implem
 	}
 
 	ngOnInit(): void {
+		this.learningPathEditLink = ['/issuer/issuers', this.issuer.slug, 'learningpaths', this.learningPath.slug, 'edit']
 		
 	}
 

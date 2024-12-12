@@ -40,9 +40,21 @@ import {QrCodeAwardsComponent} from './components/qrcode-awards/qrcode-awards.co
 import { QrCodeApiService } from './services/qrcode-api.service';
 import { BadgeRequestApiService } from './services/badgerequest-api.service';
 import { EditQrFormComponent } from './components/edit-qr-form/edit-qr-form.component';
+import { LearningPathCreateComponent } from './components/learningpath-create/learningpath-create.component';
+import { LearningPathEditFormComponent } from './components/learningpath-edit-form/learningpath-edit-form.component';
+import { DndModule } from 'ngx-drag-drop';
+import { LearningPathManager } from './services/learningpath-manager.service';
+import { CdkStepperModule } from '@angular/cdk/stepper';
+import { CdkStepper } from '@angular/cdk/stepper';
+import { StepperComponent } from '../components/stepper/stepper.component';
+import { LearningPathDetailsComponent } from './components/learningpath-create-steps/learningpath-details/learningpath-details.component';
+import { LearningPathBadgesComponent } from './components/learningpath-create-steps/learningpath-badges/learningpath-badges.component';
+import { LearningPathBadgeOrderComponent } from './components/learningpath-create-steps/learningpath-badge-order/learningpath-badge-order.component';
+import { LearningPathTagsComponent } from './components/learningpath-create-steps/learningpath-tags/learningpath-tags.component';
 import { LearningPathUploadComponent } from './components/learningpath-upload/learningpath-upload.component';
 import { IssuerLearningPathComponent } from './components/issuer-learning-path/issuer-learning-path.component';import { IssuerEditFormComponent } from './components/issuer-edit-form/issuer-edit-form.component';
 import { Issuer } from './models/issuer.model';
+import { LearningPathEditComponent } from './components/learningpath-edit/learningpath-edit.component';
 
 const routes = [
 	/* Issuer */
@@ -77,6 +89,14 @@ const routes = [
 	{
 		path: 'issuers/:issuerSlug/learningpaths/upload',
 		component: LearningPathUploadComponent,
+	},
+	{
+		path: 'issuers/:issuerSlug/learningpaths/create',
+		component: LearningPathCreateComponent,
+	},
+	{
+		path: 'issuers/:issuerSlug/learningpaths/:learningPathSlug/edit',
+		component: LearningPathEditComponent,
 	},
 	{
 		path: 'issuers/:issuerSlug/learningpaths/:learningPathSlug',
@@ -125,6 +145,8 @@ const routes = [
 		IssuerDetailDatatableComponent,
 		QRCodeModule,
 		QrCodeAwardsComponent,
+		DndModule,
+		CdkStepperModule
 	],
 	declarations: [
 		BadgeClassCreateComponent,
@@ -140,6 +162,13 @@ const routes = [
 		BadgeClassIssueBulkAwardComponent,
 		BadgeClassIssueBulkAwardImportComponent,
 		LearningPathUploadComponent,
+		LearningPathCreateComponent,
+		LearningPathEditComponent,
+		LearningPathEditFormComponent,
+		LearningPathDetailsComponent,
+		LearningPathBadgesComponent,
+		LearningPathBadgeOrderComponent,
+		LearningPathTagsComponent,
 		BadgeClassIssueBulkAwardPreviewComponent,
 		BadgeclassIssueBulkAwardError,
 		BadgeclassIssueBulkAwardConformation,
@@ -156,19 +185,22 @@ const routes = [
 		IssuerListComponent,
 
 		IssuerStaffCreateDialogComponent,
-		IssuerLearningPathComponent
+		IssuerLearningPathComponent,
+		StepperComponent,
 	],
 	schemas: [CUSTOM_ELEMENTS_SCHEMA],
 	exports: [],
 	providers: [
 		BadgeClassApiService,
 		BadgeClassManager,
+		LearningPathManager,
 		BadgeInstanceApiService,
 		BadgeInstanceManager,
 		IssuerApiService,
 		IssuerManager,
 		QrCodeApiService,
-		BadgeRequestApiService
+		BadgeRequestApiService,
+		CdkStepper
 	],
 })
 export class IssuerModule {}

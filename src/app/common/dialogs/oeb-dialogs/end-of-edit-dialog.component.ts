@@ -34,7 +34,7 @@ import { TranslateModule } from '@ngx-translate/core';
 						[text]="'General.cancel' | translate"
 						(click)="closeDialog()"
 					></oeb-button>
-					<oeb-button size="md" [text]="'Issuer.giveBadge' | translate" (click)="confirmBadge()"></oeb-button>
+					<oeb-button [id]="'confirm-award-badge'" size="md" [text]="'Issuer.giveBadge' | translate" (click)="confirmBadge()"></oeb-button>
 				</div>
 			</div>
 		</oeb-dialog>

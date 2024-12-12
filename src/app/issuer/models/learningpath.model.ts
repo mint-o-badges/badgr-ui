@@ -52,6 +52,16 @@ export class LearningPath extends ManagedEntity<ApiLearningPath, LearningPathRef
 		return this.apiModel.requested;
 	}
 
+	get participationBadgeId(): string {
+		return this.apiModel.participationBadge_id
+	}
+
+	get participationBadgeImage(): string {
+		return this.apiModel.participationBadge_image
+	}
+
+	
+
 	constructor(
 		commonManager: CommonEntityManager,
 		initialEntity: ApiLearningPath = null,

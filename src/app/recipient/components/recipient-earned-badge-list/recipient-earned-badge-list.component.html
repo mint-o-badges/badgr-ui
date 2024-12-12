@@ -63,16 +63,28 @@
 
 						<!-- Badge Search, group and grid/list toggle -->
 						<div class="oeb-section-sm" *ngIf="allBadges.length > 0">
-							<div class="tw-flex tw-flex-wrap tw-items-center oeb-standard-padding-bottom">
-								<input
-									type="text"
-									name="forminput"
-									id="forminput"
-									placeholder="Badges durchsuchen"
-									[(ngModel)]="searchQuery"
-									class="tw-w-[256px] sm:tw-w-[300px] tw-border-solid tw-border-purple tw-bg-white tw-mr-6"
-									hlmInput
-								/>
+							<div class="tw-flex tw-flex-wrap tw-gap-4 tw-items-center oeb-standard-padding-bottom">
+								<div class="tw-flex tw-relative tw-items-center">
+									<input
+										type="text"
+										name="forminput"
+										changeOrder
+										class="!tw-bg-white tw-w-full tw-border-1 tw-border-purple md:tw-w-96 tw-border-solid tw-h-12 tw-rounded-lg tw-p-2"
+										placeholder="{{ 'Badge.searchBadges' | translate }}"
+										[(ngModel)]="searchQuery"
+										hlmInput
+									/>
+									<hlm-icon
+										name="lucideSearch"
+										class="tw-w-8 tw-h-8 tw-absolute tw-top-1/2 tw-right-2 -tw-translate-y-1/2 tw-pointer-events-none tw-text-purple"
+									></hlm-icon>
+								</div>
+								<span>{{ 'Badge.sortBy' | translate }} </span>
+								<oeb-sort-select
+									[control]="sortControl"
+									[result]="badgeResults"
+									[recipient]="true"
+									></oeb-sort-select>
 								<oeb-checkbox
 									class="tw-mt-2 md:tw-mt-0"
 									name="groupby"
@@ -87,7 +99,7 @@
 								<ng-template [ngIf]="!groupByIssuer">
 									<div class="l-grid l-grid-large tw-gap-10">
 										<bg-badgecard
-											*ngFor="let badgeResult of badgeResults"
+											*ngFor="let badgeResult of badgeResults; trackBy: trackById"
 											[badgeTitle]="badgeResult.badge.badgeClass.name"
 											[badgeImage]="badgeResult.badge.image"
 											[badgeIssueDate]="badgeResult?.badge?.issueDate"
