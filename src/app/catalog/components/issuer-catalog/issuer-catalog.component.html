@@ -6,7 +6,7 @@
 				{{ 'Issuer.institutionsHeadline' | translate }}
 			</h2>
 			<ng-template [showLoader]="false" [bgAwaitPromises]="[issuersLoaded]">
-				<span hlmH1 class="lg:tw-pl-[10%] tw-text-purple tw-font-extrabold tw-break-words">
+				<span hlmH1 class="lg:tw-pl-[10%] tw-text-purple tw-font-black tw-break-words">
 					<span [countUp]="issuers.length"> </span>
 					<span>
 						{{ ' ' | i18nPlural: plural['issuerText'] }}

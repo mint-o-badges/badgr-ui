@@ -4,6 +4,7 @@
 		"no": "Nein",
 		"name": "Name",
 		"institutions": "Institutionen",
+		"institutionsNav": "Institutionen A-Z",
 		"account": "Konto",
 		"backpack": "Mein Rucksack",
 		"list": "list",
@@ -660,6 +661,7 @@
 	},
 	"LearningPath": {
 		"learningpaths": "Lernpfade",
+		"learningpathsNav": "Lernpfade A-Z",
 		"catalogHeadline": "Alle Lernpfade in der Übersicht",
 		"participate": "Teilnehmen",
 		"notParticipateAnymore": "Nicht mehr teilnehmen",
