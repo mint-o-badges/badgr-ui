@@ -45,7 +45,7 @@
 							</div>
 						</div>
 						<span>{{ 'Badge.sortBy' | translate }} </span>
-						<oeb-sort-select [learningPath]="true" [control]="sortControl" [result]="learningPathResults"></oeb-sort-select>
+						<oeb-sort-select [disabled]="groupByInstitution" [learningPath]="true" [control]="sortControl" [result]="learningPathResults"></oeb-sort-select>
 						<oeb-checkbox
 							[text]="'Nach Institutionen gruppieren'"
 							name="'groupByInstitution'"

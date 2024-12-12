@@ -11,6 +11,7 @@ import { BadgeClass } from '../issuer/models/badgeclass.model';
       class="oeb tw-block lg:tw-w-[10rem]"
       [options]="sortOptions"
       [control]="control"
+      [disabled]="disabled"
       [autofocus]="true"
       noTopMargin="true"
     ></oeb-select>
@@ -21,6 +22,7 @@ export class OebSortSelectComponent implements OnInit {
   @Input() result: BadgeClass[] = []; 
   @Input() recipient: boolean = false;
   @Input () learningPath: boolean = false;
+  @Input() disabled: boolean = false;
   sortOptions: Array<{ value: string; label: string }> =  [
     { value: 'name_asc', label: 'A-Z' },
     { value: 'name_desc', label: 'Z-A' },
