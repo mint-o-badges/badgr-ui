@@ -4,6 +4,7 @@
 		"no": "No",
 		"name": "Name",
 		"institutions": "Institutions",
+		"institutionsNav": "Institutions A-Z",
 		"account": "Account",
 		"backpack": "My Backpack",
 		"list": "list",
@@ -608,6 +609,7 @@
 	},
 	"LearningPath": {
 		"learningpaths": "Learning Paths",
+		"learningpathsNav": "Learningpaths A-Z",
 		"noLearningPaths": "No learning paths",
 		"catalogHeadline": "Overview of all learning paths",
 		"partipate": "Participate",

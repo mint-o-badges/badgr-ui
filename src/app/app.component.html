@@ -290,12 +290,12 @@
 		<div class="mobilenav-x-navitems">
 			<p class="mobilenav-x-label">{{ 'General.aboutBadges' | translate }}</p>
 
-			<a routerLinkActive="menuitem-is-active" [routerLink]="['/catalog/badges']">Badges</a>
+			<a routerLinkActive="menuitem-is-active" [routerLink]="['/catalog/badges']">Badges A-Z</a>
 			<a routerLinkActive="menuitem-is-active" [routerLink]="['/catalog/issuers']">{{
-				'General.institutions' | translate
+				'General.institutionsNav' | translate
 			}}</a>
 			<a routerLinkActive="menuitem-is-active" [routerLink]="['/catalog/learningpaths']">{{
-				'LearningPath.learningpaths' | translate
+				'LearningPath.learningpathsNav' | translate
 			}}</a>
 			<hr class="mobilenav-x-rule" />
 
@@ -339,8 +339,8 @@
 			<p class="mobilenav-x-label">{{ 'General.aboutBadges' | translate }}</p>
 			<a [routerLink]="['/public/faq']">FAQ</a>
 			<a [routerLink]="['/catalog/badges']">Badges A-Z</a>
-			<a [routerLink]="['/catalog/issuers']">{{ 'General.institutions' | translate }}</a>
-			<a [routerLink]="['/catalog/learningpaths']">{{ 'LearningPath.learningpaths' | translate }}</a>
+			<a [routerLink]="['/catalog/issuers']">{{ 'General.institutionsNav' | translate }}</a>
+			<a [routerLink]="['/catalog/learningpaths']">{{ 'LearningPath.learningpathsNav' | translate }}</a>
 
 			<hr class="mobilenav-x-rule" />
 			<a [routerLink]="['/recipient/badges']">{{ 'General.backpack' | translate }}</a>
