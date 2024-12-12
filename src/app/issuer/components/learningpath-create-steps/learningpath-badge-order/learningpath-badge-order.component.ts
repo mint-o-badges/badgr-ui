@@ -69,7 +69,7 @@ import { FormControl, Validators } from '@angular/forms';
 
     async loadSelectedBadges(){
 		 const selectedBadges =	await this.badgeClassService.publicBadgesByUrls(this.selectedBadgeUrls)
-		 this.draggableList = selectedBadges.map((badge) => {
+		 this.draggableList = selectedBadges.reverse().map((badge) => {
 			return {
 				id: badge.slug,
 				name: badge.name,
