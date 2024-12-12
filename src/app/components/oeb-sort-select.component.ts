@@ -20,7 +20,7 @@ export class OebSortSelectComponent implements OnInit {
   @Input() control: FormControl = new FormControl('name_asc'); 
   @Input() result: BadgeClass[] = []; 
   @Input() recipient: boolean = false;
-
+  @Input () learningPath: boolean = false;
   sortOptions: Array<{ value: string; label: string }> =  [
     { value: 'name_asc', label: 'A-Z' },
     { value: 'name_desc', label: 'Z-A' },
@@ -53,6 +53,12 @@ export class OebSortSelectComponent implements OnInit {
             return {
               name: item.badge.apiModel.json.badge.name,
               createdOn: new Date(item.badge.apiModel.json.issuedOn).getTime(),
+            };
+          }
+          if (this.learningPath) {
+            return {
+              name: item.name,
+              createdOn: new Date(item.apiModel.created_at).getTime(),
             };
           }
           return {
