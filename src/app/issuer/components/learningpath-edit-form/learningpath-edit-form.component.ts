@@ -39,6 +39,7 @@ import { LearningPathBadgeOrderComponent } from '../learningpath-create-steps/le
 import { LearningPathTagsComponent } from '../learningpath-create-steps/learningpath-tags/learningpath-tags.component';
 import { AppConfigService } from '../../../common/app-config.service';
 import { BadgeClassApiService } from '../../services/badgeclass-api.service';
+import { UrlValidator } from '../../../common/validators/url.validator';
 
 interface DraggableItem {
 	content: string;
@@ -154,14 +155,22 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 
 
 	ngOnInit() {
-		console.log(this.existingLearningPath)
-		console.log(this.existingLpBadge)
 		this.translate.get('General.next').subscribe((next) => {
 			this.next = next;
 		});
 		this.translate.get('General.previous').subscribe((previous) => {
 			this.previous = previous;
 		});
+		this.learningPathForm.setValue({
+			license: 
+			[
+				{
+					id: 'CC-0',
+					name: 'Public Domain',
+					legalCode: 'https://creativecommons.org/publicdomain/zero/1.0/legalcode',
+				},
+			]
+		})
 	}
 
 	updateSelectedBadges({ urls, studyLoad }: { urls: string[], studyLoad: number }) {
@@ -177,7 +186,19 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 		this.badgeList = badges;
 	}
 
-	learningPathForm = typedFormGroup();
+	learningPathForm = typedFormGroup()
+		.addArray(
+			'license',
+			typedFormGroup()
+				.addControl('id', 'CC-0', Validators.required)
+				.addControl('name', 'Public Domain', Validators.required)
+				.addControl(
+					'legalCode',
+					'https://creativecommons.org/publicdomain/zero/1.0/legalcode',
+					UrlValidator.validUrl,
+				),
+			Validators.required,
+		);
 
 
 	ngAfterViewInit() {
@@ -201,6 +222,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 				this.step3Loaded = false;
 			}
 		})
+
 		this.learningPathForm
 			.add('details', this.stepOne.lpDetailsForm)
 		// .add('badges', this.stepThree.);
@@ -233,6 +255,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 
 		const studyLoadExtensionContextUrl = `${this.baseUrl}/static/extensions/StudyLoadExtension/context.json`;
 		const categoryExtensionContextUrl = `${this.baseUrl}/static/extensions/CategoryExtension/context.json`;
+		const licenseExtensionContextUrl = `${this.baseUrl}/static/extensions/LicenseExtension/context.json`;
 
 		const criteriaText =
 					'*Folgende Kriterien sind auf Basis deiner Eingaben als Metadaten im Badge hinterlegt*: \n\n';
@@ -263,6 +286,13 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 					type: ['Extension', 'extensions:CategoryExtension'],
 					Category: 'participation',
 				},
+				'extensions:LicenseExtension': {
+					'@context': licenseExtensionContextUrl,
+					type: ['Extension', 'extensions:LicenseExtension'],
+					id: this.learningPathForm.value.license[0].id,
+					name: this.learningPathForm.value.license[0].name,
+					legalCode: this.learningPathForm.value.license[0].legalCode,
+				},
 			}
 
 			this.existingLpBadge.save()				
@@ -286,9 +316,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 				
 		}
 		else{
-			try {
-				const formState = this.learningPathForm.value;
-	
+			try {	
 				let imageFrame = true;
 				if (this.stepOne.lpDetailsForm.controls.badge_customImage.value && this.stepOne.lpDetailsForm.valid) {
 					imageFrame = false;
@@ -313,6 +341,13 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 							'@context': categoryExtensionContextUrl,
 							type: ['Extension', 'extensions:CategoryExtension'],
 							Category: 'participation',
+						},
+						'extensions:LicenseExtension': {
+							'@context': licenseExtensionContextUrl,
+							type: ['Extension', 'extensions:LicenseExtension'],
+							id: this.learningPathForm.value.license[0].id,
+							name: this.learningPathForm.value.license[0].name,
+							legalCode: this.learningPathForm.value.license[0].legalCode,
 						},
 						// 'extensions:LevelExtension': {
 						// 	'@context': levelExtensionContextUrl,
