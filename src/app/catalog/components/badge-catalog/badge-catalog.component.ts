@@ -14,11 +14,14 @@ import { StringMatchingUtil } from '../../../common/util/string-matching-util';
 import { BadgeClassCategory } from '../../../issuer/models/badgeclass-api.model';
 import { TranslateService } from '@ngx-translate/core';
 import { FormControl } from '@angular/forms';
+import { appearAnimation } from '../../../common/animations/animations';
 
 @Component({
 	selector: 'app-badge-catalog',
 	templateUrl: './badge-catalog.component.html',
 	styleUrls: ['./badge-catalog.component.css'],
+	animations: [appearAnimation],
+
 })
 export class BadgeCatalogComponent extends BaseRoutableComponent implements OnInit {
 	readonly issuerPlaceholderSrc = preloadImageURL('../../../../breakdown/static/images/placeholderavatar-issuer.svg');
@@ -286,7 +289,7 @@ class MatchingBadgeIssuer {
 		public issuerName: string,
 		public badge,
 		public badges: BadgeClass[] = [],
-	) {}
+	) { }
 
 	async addBadge(badge) {
 		if (badge.issuerName === this.issuerName) {
@@ -318,7 +321,7 @@ class MatchingBadgeCategory {
 		public category: string,
 		public badge,
 		public badges: BadgeClass[] = [],
-	) {}
+	) { }
 
 	async addBadge(badge) {
 		if (

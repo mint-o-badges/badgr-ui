@@ -15,8 +15,7 @@ export interface Issuer {
 @Component({
 	selector: 'oeb-issuer-card',
 	templateUrl: './issuer-card.component.html',
-	styleUrls: ['./issuer-card.component.css'],
-	host: { style: 'display: contents;' },
+	styleUrls: ['./issuer-card.component.css']
 })
 export class IssuerCardComponent {
 	@Input() issuer: Issuer; // Single input for the entire object

@@ -1,7 +1,6 @@
-@import url("../styles/google-webfonts/inter.scss");
-@import url("../styles/google-webfonts/nunito.scss");
-@import url("../styles/google-webfonts/rubik.scss");
-
+@import url('../styles/google-webfonts/inter.scss');
+@import url('../styles/google-webfonts/nunito.scss');
+@import url('../styles/google-webfonts/rubik.scss');
 
 .flex-1 {
 	flex: 1;
@@ -271,14 +270,13 @@
 	align-items: center;
 }
 
-
 @media (max-width: 912px) {
 	.logos-container {
 		flex-direction: column;
 	}
 
 	.logos-container img {
-		margin-bottom: 2rem
+		margin-bottom: 2rem;
 	}
 
 	.funding-logos-container {
@@ -298,15 +296,13 @@
 	padding-left: calc(var(--gridspacing) * 2);
 
 	@media (min-width: 768px) {
-		padding-right: calc(var(--gridspacing) * 3);
-		padding-left: calc(var(--gridspacing) * 3);
+		padding-right: calc(var(--gridspacing) * 4);
+		padding-left: calc(var(--gridspacing) * 4);
 	}
-
-	@media (min-width: 1440px) {
-		padding-right: calc(50% - 720px);
-		padding-left: calc(50% - 720px);
+	@media (min-width: 1324px) {
+		padding-right: calc(50% - 612px);
+		padding-left: calc(50% - 612px);
 	}
-
 }
 
 @media (min-width: 768px) {
@@ -324,9 +320,8 @@
 	}
 }
 
-
 @media (min-width: 768px) {
-	.oeb-navbaritems> :not(:last-child) {
+	.oeb-navbaritems > :not(:last-child) {
 		margin-right: calc(var(--gridspacing) * 4);
 	}
 }
@@ -350,7 +345,6 @@
 		width: 24px;
 	}
 
-
 	&:after {
 		background-color: transparent;
 		bottom: -10px;
@@ -371,14 +365,12 @@
 	&:hover:after {
 		background-color: var(--color-buttonhover);
 	}
-	&:active:after
-	 {
+	&:active:after {
 		background-color: var(--color-purple);
 	}
 }
 .oeb-navitem.oeb-navitem-is-active {
-	&:after
-	{
+	&:after {
 		background-color: var(--color-purple);
 		opacity: 0.85;
 	}

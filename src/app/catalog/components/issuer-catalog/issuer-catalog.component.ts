@@ -14,11 +14,13 @@ import { Map, NavigationControl, Popup } from 'maplibre-gl';
 import { TranslateService } from '@ngx-translate/core';
 import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
 import { FormControl } from '@angular/forms';
+import { appearAnimation } from '../../../common/animations/animations';
 
 @Component({
 	selector: 'app-issuer-catalog',
 	templateUrl: './issuer-catalog.component.html',
 	styleUrls: ['./issuer-catalog.component.css'],
+	animations: [appearAnimation]
 })
 export class IssuerCatalogComponent extends BaseRoutableComponent implements OnInit, AfterViewInit {
 	readonly issuerPlaceholderSrc = preloadImageURL('../../../../breakdown/static/images/placeholderavatar-issuer.svg');
@@ -52,7 +54,7 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 			value: 'andere',
 		},
 	];
-	
+
 	sortControl = new FormControl('name_asc');
 	private _searchQuery = '';
 	get searchQuery() {
@@ -329,12 +331,12 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 					.setLngLat(coordinates)
 					.setHTML(
 						'<div style="padding:5px"><a href="public/issuers/' +
-							slug +
-							'">' +
-							name +
-							'</a><br><p>' +
-							desc +
-							'</p></div>',
+						slug +
+						'">' +
+						name +
+						'</a><br><p>' +
+						desc +
+						'</p></div>',
 					)
 					.addTo(this.mapObject);
 			});
@@ -469,7 +471,7 @@ class MatchingIssuerCategory {
 		public category: string,
 		public issuer,
 		public issuers: Issuer[] = [],
-	) {}
+	) { }
 
 	addIssuer(issuer) {
 		if (issuer.category === this.category) {

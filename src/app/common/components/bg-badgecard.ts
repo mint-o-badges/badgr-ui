@@ -12,7 +12,7 @@ import { AUTO_STYLE, animate, state, style, transition, trigger } from '@angular
 		]),
 	],
 	host: {
-		class: 'tw-rounded-[10px] tw-h-max tw-border-purple tw-border-solid tw-border tw-relative tw-p-3 tw-block tw-overflow-hidden oeb-badge-card',
+		class: 'tw-rounded-[10px] tw-h-max tw-max-w-[450px] tw-border-purple tw-border-solid tw-border tw-relative tw-p-3 tw-block tw-overflow-hidden oeb-badge-card',
 	},
 	template: `
 		<div

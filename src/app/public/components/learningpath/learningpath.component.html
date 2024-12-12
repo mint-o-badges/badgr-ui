@@ -97,15 +97,13 @@
 				<div class="tw-col-span-2" *bgAwaitPromises="[issuerLoaded]">
 					<ng-template #progessTemplate>
 						<div class="tw-absolute tw-flex tw-flex-col tw-w-full tw-text-right tw-right-4">
-							<span hlmH1 class="tw-font-extrabold tw-text-purple"
-								>{{ progressValue() }} %</span
-							>
+							<span hlmH1 class="tw-font-extrabold tw-text-purple">{{ progressValue() }} %</span>
 							<span hlmP class="tw-mt-2 tw-text-oebblack tw-flex tw-justify-end">
 								<span [countUp]="hoursCompleted"></span>
 								<span>:</span>
 								<span [countUp]="minutesCompletedRemainder"></span>
 								<span> / </span>
-								<span> {{minutesTotal | hourPipe }}</span>
+								<span> {{ minutesTotal | hourPipe }}</span>
 							</span>
 						</div>
 					</ng-template>
@@ -157,7 +155,7 @@
 				*ngFor="let badge of learningPathReverseBadges; let i = index"
 			>
 				<bg-badgecard
-					class="tw-w-[350px]"
+					class="tw-w-[340px]"
 					[badgeImage]="badge.badge.image"
 					[badgeTitle]="badge.badge.name"
 					[issuerTitle]="badge.badge.issuerName"
@@ -177,7 +175,7 @@
 		<ng-template [bgAwaitPromises]="[issuerLoaded, badgeLoaded, loaded]">
 			<div class="tw-relative tw-flex tw-gap-4 tw-pt-4" *ngFor="let badge of openBadgesReversed; let i = index">
 				<bg-badgecard
-					class="tw-w-[350px]"
+					class="tw-w-[340px]"
 					[badgeImage]="badge.badge.image"
 					[badgeTitle]="badge.badge.name"
 					[issuerTitle]="badge.badge.issuerName"
@@ -199,7 +197,7 @@
 				*ngFor="let badge of learningPath.completed_badges; let i = index"
 			>
 				<bg-badgecard
-					class="tw-w-[350px]"
+					class="tw-w-[340px]"
 					[badgeImage]="badge.image"
 					[badgeTitle]="badge.name"
 					[issuerTitle]="badge.issuerName"

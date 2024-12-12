@@ -6,28 +6,28 @@ type MatchOrProgressType = { match?: string, progress?: number };
 @Component({
 	selector: 'bg-learningpathcard',
 	host: {
-		class: 'tw-rounded-[10px] tw-w-[255px] md:tw-w-[392px] tw-border-solid tw-relative tw-p-4 md:tw-p-6 tw-block tw-overflow-hidden oeb-badge-card',
+		class: 'tw-rounded-[10px] tw-h-full tw-border-solid tw-relative tw-p-6 tw-block tw-overflow-hidden oeb-badge-card',
 	},
 	template: `
 		<a [routerLink]="['/public/learningpaths/', slug]">
 			<div class="tw-flex tw-flex-col tw-justify-between tw-h-full">
-				<div class="tw-bg-[var(--color-lightgray)] tw-w-full tw-relative md:tw-h-[175px] tw-h-[100px] tw-items-center tw-flex tw-justify-center tw-p-2 tw-rounded-[3px]">
+				<div class="tw-bg-[var(--color-lightgray)] tw-w-full tw-relative tw-h-[175px] tw-items-center tw-flex tw-justify-center tw-p-2 tw-rounded-[3px]">
 				<div *ngIf="!completed" class="tw-absolute tw-top-[10px] tw-right-[10px]">
-					<img src="/assets/oeb/images/learningPath/learningPathIcon.svg" class="md:tw-w-[30px] tw-w-[20px]"
+					<img src="/assets/oeb/images/learningPath/learningPathIcon.svg" class="tw-w-[30px]"
 						alt="LearningPath" />
 				</div>
 				<div *ngIf="completed" class="tw-absolute tw-top-[10px] tw-right-[10px] tw-flex tw-justify-center tw-items-center tw-gap-2">
 					<div class="tw-inline-block">
-						<img src="/assets/oeb/images/learningPath/learningPathIcon.svg" class="md:tw-w-[30px] tw-w-[20px]"
+						<img src="/assets/oeb/images/learningPath/learningPathIcon.svg" class="tw-w-[30px]"
 							alt="LearningPath" />
 					</div>
 					<div class="tw-bg-white tw-inline-flex tw-rounded-full tw-justify-center tw-items-center tw-border-solid tw-border-green tw-border-[3px] ">
-						<hlm-icon class="tw-text-purple tw-box-border md:tw-w-[26px] tw-w-[16px] md:tw-h-[26px] tw-h-[16px]" name="lucideCheck" />
+						<hlm-icon class="tw-text-purple tw-box-border tw-w-[26px] tw-h-[26px]" name="lucideCheck" />
 					</div>
 				</div>
 				
 					<img
-						class="md:tw-w-[145px] md:tw-h-[145px] tw-w-[65px] tw-h-[65px]"
+						class="tw-w-[145px] tw-h-[145px]"
 						[loaded-src]="badgeImage"
 						[loading-src]="badgeLoadingImageUrl"
 						[error-src]="badgeFailedImageUrl"
@@ -36,10 +36,10 @@ type MatchOrProgressType = { match?: string, progress?: number };
 				</div>
 				<div class="tw-flex tw-flex-col tw-flex-wrap tw-py-2 tw-text-oebblack tw-mt-2 tw-gap-1">
 					<span
-						class="tw-font-semibold tw-text-xs md:tw-text-[22px] md:tw-leading-[26px]"
+						class="tw-font-semibold tw-text-[22px] tw-leading-[26px]"
 						
 						>{{ name }}</span>
-						<a class="md:tw-text-[18px] md:tw-leading-[23.4px] tw-text-[10px] tw-leading-[13px]">{{issuerTitle}}</a>
+						<a class="tw-text-[18px] tw-leading-[23.4px]">{{issuerTitle}}</a>
 					<div class="tw-items-center">
 						<div *ngIf="!isProgress" class="oeb-standard-padding-bottom tw-gap-1 tw-flex tw-flex-wrap">
 							<div hlmP size="sm" class="oeb-tag"
@@ -53,13 +53,13 @@ type MatchOrProgressType = { match?: string, progress?: number };
 							</div>
 						</div>	
 						<ng-template #progressBar>
-							<div *ngIf="progress === 0 || progress" class="tw-mb-4 tw-w-full tw-mt-2 md:tw-mt-6 tw-flex tw-justify-center tw-items-center">
-								<oeb-progress class="tw-w-full tw-h-5 md:tw-h-7 tw-relative tw-inline-flex tw-overflow-hidden tw-rounded-3xl tw-bg-white tw-items-center" [value]="progressValue" [template]="requested ? requestedTemplate : progressTemplate"></oeb-progress>
+							<div *ngIf="progress === 0 || progress" class="tw-mb-4 tw-w-full tw-mt-6 tw-flex tw-justify-center tw-items-center">
+								<oeb-progress class="tw-w-full tw-h-7 tw-relative tw-inline-flex tw-overflow-hidden tw-rounded-3xl tw-bg-white tw-items-center" [value]="progressValue" [template]="requested ? requestedTemplate : progressTemplate"></oeb-progress>
 							</div>
 						</ng-template>
 						<ng-template #progressTemplate>
 							<div class="tw-absolute tw-w-full tw-text-left">
-								<span class="tw-ml-2 md:tw-text-sm tw-text-[8px] tw-text-purple">Lernpfad <span *ngIf="!completed">{{progressValue}}%</span> abgeschlossen</span>
+								<span class="tw-ml-2 tw-text-sm tw-text-purple">Lernpfad <span *ngIf="!completed">{{progressValue}}%</span> abgeschlossen</span>
 							</div>
 						</ng-template>	
 						<ng-template #requestedTemplate>
@@ -67,13 +67,13 @@ type MatchOrProgressType = { match?: string, progress?: number };
 								<span class="tw-bg-purple tw-rounded-[50%] tw-h-[20px] tw-w-[20px] tw-ml-2">
 									<hlm-icon variant="sm" class="tw-text-white tw-box-border" name="lucideCheck" />
 								</span>
-								<span class="tw-ml-2 md:tw-text-sm tw-text-[8px] tw-text-purple">{{'LearningPath.successRequestPath' | translate}}</span>
+								<span class="tw-ml-2 tw-text-sm tw-text-purple">{{'LearningPath.successRequestPath' | translate}}</span>
 							</div>
 						</ng-template>	
 						<oeb-button *ngIf="isProgress && progress/studyLoad === 1 && !completed && !requested" (click)="requestLearningPath()" [fontSize15]="true" [text]="'Lernpfad-Badge abholen'" width="full_width">							
 						</oeb-button>
 					</div>
-					<div class="tw-flex tw-flex-row tw-gap-4 tw-text-[#6B7280] md:tw-text-sm tw-text-[8px] tw-mt-2 md:tw-mt-6 tw-items-end">
+					<div class="tw-flex tw-flex-row tw-gap-4 tw-text-[#6B7280] tw-text-sm tw-mt-6 tw-items-end">
 						<hlm-icon name="lucideClock" />
 						<span>{{studyLoad | hourPipe}}</span>
 					</div>

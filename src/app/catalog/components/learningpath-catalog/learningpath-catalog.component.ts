@@ -17,11 +17,13 @@ import { sortUnique } from '../badge-catalog/badge-catalog.component';
 import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
 import { RecipientBadgeApiService } from '../../../recipient/services/recipient-badges-api.service';
 import { ApiRecipientBadgeInstance } from '../../../recipient/models/recipient-badge-api.model';
+import { appearAnimation } from '../../../common/animations/animations';
 
 @Component({
 	selector: 'app-learningpaths-catalog',
 	templateUrl: './learningpath-catalog.component.html',
 	styleUrls: ['../badge-catalog/badge-catalog.component.css'],
+	animations: [appearAnimation]
 })
 export class LearningPathsCatalogComponent extends BaseRoutableComponent implements OnInit {
 	learningPathsLoaded: Promise<unknown>;
@@ -30,7 +32,7 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 	order = 'asc';
 	learningPathResults: LearningPath[] = null;
 	learningPathResultsByIssuer: MatchingLearningPathIssuer[] = [];
-    learningPaths: LearningPath[] = [];
+	learningPaths: LearningPath[] = [];
 	issuerResults: Issuer[] = [];
 	issuersWithLps: string[] = [];
 	baseUrl: string;
@@ -81,19 +83,19 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 		private translate: TranslateService,
 	) {
 		super(router, route);
-        this.learningPathsLoaded = this.loadLearningPaths();
+		this.learningPathsLoaded = this.loadLearningPaths();
 		this.issuersLoaded = this.loadIssuers();
 		this.baseUrl = this.configService.apiConfig.baseUrl;
-    }
+	}
 
 	ngOnInit(): void {
 		this.loggedIn = this.sessionService.isLoggedIn;
 
-		if(this.loggedIn){
+		if (this.loggedIn) {
 			this.userBadgesLoaded = this.recipientBadgeApiService.listRecipientBadges().then((badges) => {
 				const badgeClassIds = badges.map((b) => b.json.badge.id);
 				this.userBadges = badgeClassIds;
-			})				
+			})
 		}
 
 		this.prepareTexts();
@@ -158,13 +160,13 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 		return `${userBadgeCount}/${totalBadges}`;
 	}
 
-	calculateLearningPathStatus(lp: LearningPath): { 'match' : string} | { 'progress' : number} {
-		if(lp.progress !=  null){
+	calculateLearningPathStatus(lp: LearningPath): { 'match': string } | { 'progress': number } {
+		if (lp.progress != null) {
 			const percentCompleted = lp.progress
-			return {'progress' : percentCompleted }
+			return { 'progress': percentCompleted }
 		}
-		else{
-			return {'match' : this.calculateMatch(lp)}
+		else {
+			return { 'match': this.calculateMatch(lp) }
 		}
 	}
 
@@ -236,9 +238,9 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 		this.updateResults();
 	}
 
-    async loadLearningPaths() { 
-        return new Promise(async (resolve, reject) => {
-            this.learningPathService.allPublicLearningPaths$.subscribe(
+	async loadLearningPaths() {
+		return new Promise(async (resolve, reject) => {
+			this.learningPathService.allPublicLearningPaths$.subscribe(
 				(lps) => {
 					this.learningPaths = lps
 					lps.forEach((lp) => {
@@ -255,8 +257,9 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 				(error) => {
 					this.messageService.reportAndThrowError('Failed to load learningPaths', error);
 				},
-        )})
-    }
+			)
+		})
+	}
 }
 
 class MatchingAlgorithm {

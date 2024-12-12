@@ -1,19 +1,20 @@
 <form-message></form-message>
 <div class="oeb page-padding">
-	<header class="oeb-headline-container tw-relative oeb-section-sm tw-flex tw-flex-col">
-		<h2 hlmH1 class="tw-text-purple tw-font-black">
-			{{ 'General.institutions' | translate }}
-		</h2>
-		<ng-template [showLoader]="false" [bgAwaitPromises]="[issuersLoaded]">
-			<span hlmH2 class="!tw-text-oebblack w-font-normal tw-break-words">
-				<span [countUp]="issuers.length" >
+	<div class="oeb-section-sm">
+		<header class="oeb-headline-container tw-relative tw-flex tw-flex-col">
+			<h2 hlmH1 class="tw-text-oebblack">
+				{{ 'Issuer.institutionsHeadline' | translate }}
+			</h2>
+			<ng-template [showLoader]="false" [bgAwaitPromises]="[issuersLoaded]">
+				<span hlmH1 class="lg:tw-pl-[10%] tw-text-purple tw-font-extrabold tw-break-words">
+					<span [countUp]="issuers.length"> </span>
+					<span>
+						{{ ' ' | i18nPlural: plural['issuerText'] }}
+					</span>
 				</span>
-				<span >
-					{{ ' ' | i18nPlural: plural['issuerText'] }}
-				</span>
-			</span>
-		</ng-template>
-	</header>
+			</ng-template>
+		</header>
+	</div>
 
 	<div>
 		<ng-template [showLoader]="true" [bgAwaitPromises]="[issuersLoaded]">
@@ -37,10 +38,7 @@
 							</div>
 
 							<span>{{ 'Badge.sortBy' | translate }} </span>
-							<oeb-sort-select
-								[control]="sortControl"
-								[result]="issuerResults"
-								></oeb-sort-select>
+							<oeb-sort-select [control]="sortControl" [result]="issuerResults"></oeb-sort-select>
 							<oeb-select
 								actionBar="true"
 								class="md:tw-w-[180px] oeb"
@@ -73,9 +71,10 @@
 
 				<ng-container *ngIf="badgesDisplay == 'grid'">
 					<ng-container *ngIf="!groupByCategory">
-						<div class="tw-flex tw-justify-between tw-flex-wrap tw-gap-4 tw-w-full">
+						<div class="tw-grid tw-grid-cols-issuer tw-gap-6 tw-w-full" [@stagger]>
 							<oeb-issuer-card
 								*ngFor="let issuer of issuerResults"
+								[@appearAnimation]="state"
 								[issuer]="issuer"
 								[plural]="plural"
 								(navigate)="navigateToIssuer(issuer)"
