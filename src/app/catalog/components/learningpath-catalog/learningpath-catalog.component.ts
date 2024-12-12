@@ -18,6 +18,7 @@ import { UserProfileManager } from '../../../common/services/user-profile-manage
 import { RecipientBadgeApiService } from '../../../recipient/services/recipient-badges-api.service';
 import { ApiRecipientBadgeInstance } from '../../../recipient/models/recipient-badge-api.model';
 import { appearAnimation } from '../../../common/animations/animations';
+import { FormControl } from '@angular/forms';
 
 @Component({
 	selector: 'app-learningpaths-catalog',
@@ -42,6 +43,7 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 	loggedIn = false;
 	userBadges: string[] = [];
 	plural = {};
+	sortControl = new FormControl('name_asc');
 
 
 	get theme() {

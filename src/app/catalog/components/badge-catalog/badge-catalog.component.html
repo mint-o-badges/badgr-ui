@@ -47,7 +47,7 @@
 							</div>
 						</div>
 						<span>{{ 'Badge.sortBy' | translate }} </span>
-						<oeb-sort-select [control]="sortControl" [result]="badgeResults"></oeb-sort-select>
+						<oeb-sort-select [disabled]="groupControl?.value !== '---'" [control]="sortControl" [result]="badgeResults"></oeb-sort-select>
 
 						<span id="badge-catalog-select-label">{{ 'Badge.groupBy' | translate }} </span>
 
