@@ -119,6 +119,25 @@ export class AddBadgeDialogComponent extends BaseDialog {
 						}
 					}
 
+					let parsed_error 
+
+					try {
+						parsed_error = JSON.parse(JSON.stringify(err));
+					}catch(e){
+						parsed_error = err
+					}
+
+					const errorDescription = parsed_error?.response?.error?.[0]?.description;
+					if (errorDescription) {
+						// once there are translations for errors on the server, we can remove this check
+						if(parsed_error?.response?.error?.[0]?.name === "VERIFY_RECIPIENT_IDENTIFIER"){
+							message = "Der Empfänger stimmt mit keiner Ihrer verifizierten E-Mail-Adressen überein.";
+						}
+						if(parsed_error?.response?.error?.[0]?.name === "DUPLICATE_BADGE"){
+							message = "Du hast diesen Badge bereits in deinem Rucksack.";
+						}
+					}	
+
 					this.messageService.reportAndThrowError(
 						message
 							? this.translate.instant('RecBadge.uploadFailed') + message
