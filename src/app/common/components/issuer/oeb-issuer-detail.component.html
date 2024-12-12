@@ -57,7 +57,7 @@
 				*ngIf="!public && activeTab == 'Lernpfade'"
 				[routerLink]="['./learningpaths/create']"
 				[disabled]="!issuer.canCreateBadge"
-				[text]="'Issuer.createLearningPath' | translate"
+				[text]="'Issuer.myInstitutionsCreateLearningPath' | translate"
 				[class]="issuer.canCreateBadge ? '' : 'disabled'"
 			>
 			</oeb-button>
