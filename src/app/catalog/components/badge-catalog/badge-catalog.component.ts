@@ -136,7 +136,8 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 						.slice()
 						.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
 					this.badgeResults = this.badges;
-					badges.forEach((badge) => {
+
+					this.badges.forEach((badge) => {
 						this.tags = this.tags.concat(badge.tags);
 						this.issuers = badge.issuerVerified ? this.issuers.concat(badge.issuer) : this.issuers;
 					});
@@ -224,7 +225,6 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 			}
 
 			issuerResults.addBadge(item);
-
 			return true;
 		};
 		var addBadgeToResultsByCategory = function (item) {
@@ -243,6 +243,7 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 				// append result to the categoryResults array bound to the view template.
 				that.badgeResultsByCategory.push(categoryResults);
 			}
+
 
 			categoryResults.addBadge(item);
 
