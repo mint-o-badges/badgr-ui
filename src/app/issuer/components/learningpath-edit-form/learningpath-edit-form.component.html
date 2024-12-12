@@ -7,7 +7,10 @@
 			[optional]="false"
 			errorMessage="Bitte vollständig ausfüllen"
 		>
-			<learningpath-details #stepOne [learningPathBadgeData]=" {learningPath: existingLearningPath, lpBadge: existingLpBadge }"></learningpath-details>
+			<learningpath-details
+				#stepOne
+				[learningPathBadgeData]="{ learningPath: existingLearningPath, lpBadge: existingLpBadge }"
+			></learningpath-details>
 		</cdk-step>
 		<cdk-step
 			label="Badges auswählen"
@@ -15,7 +18,11 @@
 			[optional]="false"
 			errorMessage="Wähle mindestens 3 Badges aus"
 		>
-			<learningpath-badges #stepTwo [learningPath]="existingLearningPath" (selectedBadgesChanged)="updateSelectedBadges($event)"></learningpath-badges>
+			<learningpath-badges
+				#stepTwo
+				[learningPath]="existingLearningPath"
+				(selectedBadgesChanged)="updateSelectedBadges($event)"
+			></learningpath-badges>
 		</cdk-step>
 		<cdk-step label="Badge-Reihenfolge">
 			<ng-container *ngIf="step3Loaded">
@@ -60,12 +67,11 @@
 		>
 		</oeb-button>
 	</div>
-	<div class="tw-flex tw-justify-end tw-flex-wrap tw-gap-2 tw-pt-8 tw-clear-both">
+	<div class="tw-flex tw-justify-end tw-flex-wrap tw-gap-4 tw-pt-8 tw-clear-both">
 		<oeb-button
-			class="tw-mr-4"
 			variant="secondary"
 			(click)="cancelClicked()"
-			[class.disabled]="!!savePromise"	
+			[class.disabled]="!!savePromise"
 			[disabled-when-requesting]="true"
 			text="{{ 'General.cancel' | translate }}"
 		></oeb-button>
