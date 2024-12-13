@@ -75,12 +75,12 @@ import { MessageService } from '../services/message.service';
 					<hlm-icon size="xl" name="lucideCloudUpload"></hlm-icon>
 					<p *ngIf="dropZoneInfo1" class="dropzone-x-info1">{{ dropZoneInfo1 }}</p>
 					<p class="dropzone-x-info2">
-						<span class="tw-inline-block tw-my-1" *ngIf="dropZoneInfo1"> {{ 'General.or' | translate }} </span>
+						<span class="tw-inline-block tw-my-1 tw-mr-1" *ngIf="dropZoneInfo1"> {{ 'General.or' | translate }}  </span>
 						<span class="u-text-link tw-underline tw-inline-block">{{ text_body }}</span>
 					</p>
 					<!-- dont let user select icon when uploading badge -->
 					<p *ngIf="loaderName != 'basic' && dropZoneInfo2" class="dropzone-x-info2">
-						<span class="tw-inline-block tw-my-1">{{ 'General.or' | translate }}</span>
+						<span class="tw-inline-block tw-my-1 tw-mr-1">{{ 'General.or' | translate }}</span>
 						<span
 							id="nounProject_span"
 							class="u-text-link tw-underline tw-inline-block"
