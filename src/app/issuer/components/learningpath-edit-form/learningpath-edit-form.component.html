@@ -1,0 +1,91 @@
+<form-message></form-message>
+<ng-container [formGroup]="learningPathForm.rawControl">
+	<oeb-stepper [linear]="existingLearningPath ? false : true">
+		<cdk-step
+			label="Lernpfad Details"
+			[stepControl]="stepOne.lpDetailsForm"
+			[optional]="false"
+			errorMessage="Bitte vollständig ausfüllen"
+		>
+			<learningpath-details
+				#stepOne
+				[learningPathBadgeData]="{ learningPath: existingLearningPath, lpBadge: existingLpBadge }"
+			></learningpath-details>
+		</cdk-step>
+		<cdk-step
+			label="Badges auswählen"
+			[stepControl]="stepTwo.lpBadgesForm"
+			[optional]="false"
+			errorMessage="Wähle mindestens 3 Badges aus"
+		>
+			<learningpath-badges
+				#stepTwo
+				[learningPath]="existingLearningPath"
+				(selectedBadgesChanged)="updateSelectedBadges($event)"
+			></learningpath-badges>
+		</cdk-step>
+		<cdk-step label="Badge-Reihenfolge">
+			<ng-container *ngIf="step3Loaded">
+				<learningpath-badge-order
+					(badgeListChanged)="updateBadgeList($event)"
+					#stepThree
+					[learningPath]="existingLearningPath"
+					[selectedBadgeUrls]="selectedBadgeUrls"
+					errorMessage="Wähle mindestens 3 Badges aus"
+				></learningpath-badge-order>
+			</ng-container>
+		</cdk-step>
+		<cdk-step label="Abschliessen">
+			<learningpath-tags
+				[learningPath]="existingLearningPath"
+				(tagsChanged)="updateTags($event)"
+				[lpName]="lpName"
+				[lpDescription]="lpDescription"
+				[lpImage]="lpImage"
+			></learningpath-tags>
+		</cdk-step>
+	</oeb-stepper>
+</ng-container>
+
+<form [formGroup]="learningPathForm.rawControl" #formElem (ngSubmit)="onSubmit()" novalidate>
+	<div class="tw-mt-8 tw-clear-both">
+		<oeb-button
+			class="tw-float-left"
+			[hidden]="selectedStep === 0"
+			type="button"
+			[text]="previous"
+			(click)="previousStep()"
+		>
+		</oeb-button>
+
+		<oeb-button
+			class="tw-float-right"
+			[disabled]="selectedStep == 3"
+			type="button"
+			[text]="next"
+			(click)="nextStep()"
+		>
+		</oeb-button>
+	</div>
+	<div class="tw-flex tw-justify-end tw-flex-wrap tw-gap-4 tw-pt-8 tw-clear-both">
+		<oeb-button
+			variant="secondary"
+			(click)="cancelClicked()"
+			[class.disabled]="!!savePromise"
+			[disabled-when-requesting]="true"
+			text="{{ 'General.cancel' | translate }}"
+		></oeb-button>
+
+		<oeb-button
+			type="submit"
+			width="max_content"
+			[disabled]="!!savePromise || learningPathForm.invalid || this.selectedBadgeUrls.length < 3"
+			[loading-promises]="[savePromise]"
+			loading-message="{{ submittingText }}"
+			text="{{
+				(existingLearningPath ? 'General.saveChanges' : 'Issuer.myInstitutionsCreateLearningPath') | translate
+			}}"
+		>
+		</oeb-button>
+	</div>
+</form>
