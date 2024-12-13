@@ -268,6 +268,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 		const studyLoadExtensionContextUrl = `${this.baseUrl}/static/extensions/StudyLoadExtension/context.json`;
 		const categoryExtensionContextUrl = `${this.baseUrl}/static/extensions/CategoryExtension/context.json`;
 		const licenseExtensionContextUrl = `${this.baseUrl}/static/extensions/LicenseExtension/context.json`;
+		const competencyExtensionContextUrl = `${this.baseUrl}/static/extensions/CompetencyExtension/context.json`;
 
 		const criteriaText =
 					'*Folgende Kriterien sind auf Basis deiner Eingaben als Metadaten im Badge hinterlegt*: \n\n';
@@ -305,6 +306,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 					name: this.learningPathForm.value.license[0].name,
 					legalCode: this.learningPathForm.value.license[0].legalCode,
 				},
+				'extensions:CompetencyExtension': {}
 			}
 
 			this.existingLpBadge.save()				
@@ -361,6 +363,8 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 							name: this.learningPathForm.value.license[0].name,
 							legalCode: this.learningPathForm.value.license[0].legalCode,
 						},
+						'extensions:CompetencyExtension': {}
+
 						// 'extensions:LevelExtension': {
 						// 	'@context': levelExtensionContextUrl,
 						// 	type: ['Extension', 'extensions:LevelExtension'],
