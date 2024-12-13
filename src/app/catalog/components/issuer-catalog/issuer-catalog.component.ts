@@ -20,7 +20,7 @@ import { appearAnimation } from '../../../common/animations/animations';
 	selector: 'app-issuer-catalog',
 	templateUrl: './issuer-catalog.component.html',
 	styleUrls: ['./issuer-catalog.component.css'],
-	animations: [appearAnimation]
+	animations: [appearAnimation],
 })
 export class IssuerCatalogComponent extends BaseRoutableComponent implements OnInit, AfterViewInit {
 	readonly issuerPlaceholderSrc = preloadImageURL('../../../../breakdown/static/images/placeholderavatar-issuer.svg');
@@ -111,7 +111,6 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 		this.categoryControl.valueChanges.subscribe((value) => {
 			this.categoryFilter = value;
 		});
-
 	}
 
 	async loadIssuers() {
@@ -331,12 +330,12 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 					.setLngLat(coordinates)
 					.setHTML(
 						'<div style="padding:5px"><a href="public/issuers/' +
-						slug +
-						'">' +
-						name +
-						'</a><br><p>' +
-						desc +
-						'</p></div>',
+							slug +
+							'">' +
+							name +
+							'</a><br><p>' +
+							desc +
+							'</p></div>',
 					)
 					.addTo(this.mapObject);
 			});
@@ -383,8 +382,6 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 			this.mapObject.getSource('issuers').setData(this.issuerGeoJson);
 		}
 	}
-
-
 
 	openMap() {
 		this.badgesDisplay = 'map';
@@ -471,7 +468,7 @@ class MatchingIssuerCategory {
 		public category: string,
 		public issuer,
 		public issuers: Issuer[] = [],
-	) { }
+	) {}
 
 	addIssuer(issuer) {
 		if (issuer.category === this.category) {

@@ -24,7 +24,7 @@ import { FormControl } from '@angular/forms';
 	selector: 'app-learningpaths-catalog',
 	templateUrl: './learningpath-catalog.component.html',
 	styleUrls: ['../badge-catalog/badge-catalog.component.css'],
-	animations: [appearAnimation]
+	animations: [appearAnimation],
 })
 export class LearningPathsCatalogComponent extends BaseRoutableComponent implements OnInit {
 	learningPathsLoaded: Promise<unknown>;
@@ -44,7 +44,6 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 	userBadges: string[] = [];
 	plural = {};
 	sortControl = new FormControl('name_asc');
-
 
 	get theme() {
 		return this.configService.theme;
@@ -97,7 +96,7 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 			this.userBadgesLoaded = this.recipientBadgeApiService.listRecipientBadges().then((badges) => {
 				const badgeClassIds = badges.map((b) => b.json.badge.id);
 				this.userBadges = badgeClassIds;
-			})
+			});
 		}
 
 		this.prepareTexts();
@@ -162,13 +161,12 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 		return `${userBadgeCount}/${totalBadges}`;
 	}
 
-	calculateLearningPathStatus(lp: LearningPath): { 'match': string } | { 'progress': number } {
+	calculateLearningPathStatus(lp: LearningPath): { match: string } | { progress: number } {
 		if (lp.progress != null) {
-			const percentCompleted = lp.progress
-			return { 'progress': percentCompleted }
-		}
-		else {
-			return { 'match': this.calculateMatch(lp) }
+			const percentCompleted = lp.progress;
+			return { progress: percentCompleted };
+		} else {
+			return { match: this.calculateMatch(lp) };
 		}
 	}
 
@@ -177,7 +175,10 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 	}
 
 	calculateStudyLoad(lp: LearningPath): number {
-		const totalStudyLoad = lp.badges.reduce((acc, b) => acc + b.badge.extensions['extensions:StudyLoadExtension'].StudyLoad, 0);
+		const totalStudyLoad = lp.badges.reduce(
+			(acc, b) => acc + b.badge.extensions['extensions:StudyLoadExtension'].StudyLoad,
+			0,
+		);
 		return totalStudyLoad;
 	}
 
@@ -244,12 +245,12 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 		return new Promise(async (resolve, reject) => {
 			this.learningPathService.allPublicLearningPaths$.subscribe(
 				(lps) => {
-					this.learningPaths = lps
+					this.learningPaths = lps;
 					lps.forEach((lp) => {
 						lp.tags.forEach((tag) => {
 							this.tags.push(tag);
-						})
-						this.issuersWithLps = this.issuersWithLps.concat(lp.issuer_id)
+						});
+						this.issuersWithLps = this.issuersWithLps.concat(lp.issuer_id);
 					});
 					this.tags = sortUnique(this.tags);
 					this.issuersWithLps = sortUnique(this.issuersWithLps);
@@ -259,8 +260,8 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 				(error) => {
 					this.messageService.reportAndThrowError('Failed to load learningPaths', error);
 				},
-			)
-		})
+			);
+		});
 	}
 }
 
@@ -278,8 +279,7 @@ class MatchingLearningPathIssuer {
 		public issuerName: string,
 		public learningpath,
 		public learningpaths: LearningPath[] = [],
-	) {
-	}
+	) {}
 
 	async addLp(learningpath) {
 		if (learningpath.issuer_name === this.issuerName) {

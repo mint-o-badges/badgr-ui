@@ -21,7 +21,6 @@ import { appearAnimation } from '../../../common/animations/animations';
 	templateUrl: './badge-catalog.component.html',
 	styleUrls: ['./badge-catalog.component.css'],
 	animations: [appearAnimation],
-
 })
 export class BadgeCatalogComponent extends BaseRoutableComponent implements OnInit {
 	readonly issuerPlaceholderSrc = preloadImageURL('../../../../breakdown/static/images/placeholderavatar-issuer.svg');
@@ -42,7 +41,6 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 	tags: string[] = [];
 	issuers: string[] = [];
 	selectedTag: string = null;
-
 
 	sortControl = new FormControl('name_asc');
 
@@ -120,7 +118,6 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 
 		// subscribe to issuer and badge class changes
 		this.badgesLoaded = this.loadBadges();
-
 
 		this.groupControl.valueChanges.subscribe((value) => {
 			this.groupBy = value;
@@ -200,8 +197,6 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		};
 	}
 
-
-
 	private updateResults() {
 		let that = this;
 		// Clear Results
@@ -243,7 +238,6 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 				// append result to the categoryResults array bound to the view template.
 				that.badgeResultsByCategory.push(categoryResults);
 			}
-
 
 			categoryResults.addBadge(item);
 
@@ -290,7 +284,7 @@ class MatchingBadgeIssuer {
 		public issuerName: string,
 		public badge,
 		public badges: BadgeClass[] = [],
-	) { }
+	) {}
 
 	async addBadge(badge) {
 		if (badge.issuerName === this.issuerName) {
@@ -322,7 +316,7 @@ class MatchingBadgeCategory {
 		public category: string,
 		public badge,
 		public badges: BadgeClass[] = [],
-	) { }
+	) {}
 
 	async addBadge(badge) {
 		if (
