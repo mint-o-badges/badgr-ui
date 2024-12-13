@@ -265,6 +265,10 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 
 	async onSubmit() {
 
+		if(this.stepper.selectedIndex == 1){
+			this.stepper.next()
+		}
+
 		const studyLoadExtensionContextUrl = `${this.baseUrl}/static/extensions/StudyLoadExtension/context.json`;
 		const categoryExtensionContextUrl = `${this.baseUrl}/static/extensions/CategoryExtension/context.json`;
 		const licenseExtensionContextUrl = `${this.baseUrl}/static/extensions/LicenseExtension/context.json`;
