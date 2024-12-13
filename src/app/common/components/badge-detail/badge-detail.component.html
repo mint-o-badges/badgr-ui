@@ -175,7 +175,7 @@
 								<dt class="tw-text-sm tw-text-oebblack tw-font-bold">Vergeben an</dt>
 								<dd class="tw-text-sm tw-break-all">&nbsp;{{ config.issuedTo }}</dd>
 							</div>
-							<div class="tw-text-oebblack tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
+							<div *ngIf="config.license" class="tw-text-oebblack tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
 								<dt class="tw-text-sm tw-text-oebblack tw-font-bold">Lizenz</dt>
 								<dd class="tw-text-sm tw-text-oebblack md:tw-ml-2 tw-flex">
 									<div

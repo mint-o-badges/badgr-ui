@@ -231,6 +231,7 @@ export class PublicBadgeAssertionComponent {
 					badgeFailedImageUrl: this.badgeFailedImageUrl,
 					badgeImage: assertion.badge.image,
 					competencies: assertion.badge['extensions:CompetencyExtension'],
+					license: assertion.badge['extensions:LicenseExtension'] ? true : false
 				};
 				if (assertion.revoked) {
 					if (assertion.revocationReason) {

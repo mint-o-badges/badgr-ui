@@ -237,6 +237,8 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 					badgeFailedImageUrl: this.badgeFailedImageUrl,
 					badgeImage: this.badgeClass.image,
 					competencies: this.badgeClass.extension['extensions:CompetencyExtension'],
+					license: this.badgeClass.extension['extensions:LicenseExtension'] ? true : false,
+
 				};
 				console.log(this.config);
 			},
