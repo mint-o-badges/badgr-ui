@@ -15,8 +15,9 @@ import { AppConfigService } from '../../../common/app-config.service';
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 
 @Component({
-	selector: 'recipient-earned-badge-detail',
-	templateUrl: 'recipient-badge-collection-detail.component.html',
+    selector: 'recipient-earned-badge-detail',
+    templateUrl: 'recipient-badge-collection-detail.component.html',
+    standalone: false
 })
 export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	readonly badgeLoadingImageUrl = '../../../../breakdown/static/images/badge-loading.svg';

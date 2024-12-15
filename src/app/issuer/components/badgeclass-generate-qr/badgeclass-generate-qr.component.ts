@@ -16,9 +16,10 @@ import { DatePipe } from '@angular/common';
 import { MenuItem } from '../../../common/components/badge-detail/badge-detail.component.types';
 
 @Component({
-	selector: 'badgeclass-generate-qr',
-	templateUrl: './badgeclass-generate-qr.component.html',
-	styleUrls: ['../../../public/components/about/about.component.css'],
+    selector: 'badgeclass-generate-qr',
+    templateUrl: './badgeclass-generate-qr.component.html',
+    styleUrls: ['../../../public/components/about/about.component.css'],
+    standalone: false
 })
 export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	static datePipe = new DatePipe('de');

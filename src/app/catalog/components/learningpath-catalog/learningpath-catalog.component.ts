@@ -19,9 +19,10 @@ import { RecipientBadgeApiService } from '../../../recipient/services/recipient-
 import { ApiRecipientBadgeInstance } from '../../../recipient/models/recipient-badge-api.model';
 
 @Component({
-	selector: 'app-learningpaths-catalog',
-	templateUrl: './learningpath-catalog.component.html',
-	styleUrls: ['../badge-catalog/badge-catalog.component.css'],
+    selector: 'app-learningpaths-catalog',
+    templateUrl: './learningpath-catalog.component.html',
+    styleUrls: ['../badge-catalog/badge-catalog.component.css'],
+    standalone: false
 })
 export class LearningPathsCatalogComponent extends BaseRoutableComponent implements OnInit {
 	learningPathsLoaded: Promise<unknown>;

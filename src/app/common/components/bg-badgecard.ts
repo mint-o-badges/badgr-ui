@@ -3,19 +3,19 @@ import { AUTO_STYLE, animate, state, style, transition, trigger } from '@angular
 import { FormControl } from '@angular/forms';
 
 @Component({
-	selector: 'bg-badgecard',
-	animations: [
-		trigger('showCompetencies', [
-			state('true', style({ height: AUTO_STYLE, visibility: AUTO_STYLE })),
-			state('false', style({ height: '0', visibility: 'hidden' })),
-			transition('false => true', animate(220 + 'ms ease-out')),
-			transition('true => false', animate(220 + 'ms ease-in')),
-		]),
-	],
-	host: {
-		class: 'tw-rounded-[10px] tw-h-max tw-border-purple tw-border-solid tw-border tw-relative tw-p-3 tw-block tw-overflow-hidden oeb-badge-card',
-	},
-	template: `
+    selector: 'bg-badgecard',
+    animations: [
+        trigger('showCompetencies', [
+            state('true', style({ height: AUTO_STYLE, visibility: AUTO_STYLE })),
+            state('false', style({ height: '0', visibility: 'hidden' })),
+            transition('false => true', animate(220 + 'ms ease-out')),
+            transition('true => false', animate(220 + 'ms ease-in')),
+        ]),
+    ],
+    host: {
+        class: 'tw-rounded-[10px] tw-h-max tw-border-purple tw-border-solid tw-border tw-relative tw-p-3 tw-block tw-overflow-hidden oeb-badge-card',
+    },
+    template: `
 		<div
 			class="tw-absolute tw-top-0 tw-left-0 tw-bg-purple tw-text-white tw-px-2 tw-py-1"
 			*ngIf="mostRelevantStatus"
@@ -118,6 +118,7 @@ import { FormControl } from '@angular/forms';
 			</div>
 		</div>
 	`,
+    standalone: false
 })
 export class BgBadgecard {
 	readonly badgeLoadingImageUrl = '../../../breakdown/static/images/badge-loading.svg';

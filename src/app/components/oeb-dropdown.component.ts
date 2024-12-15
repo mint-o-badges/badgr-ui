@@ -19,27 +19,26 @@ import { HlmIconModule } from './spartan/ui-icon-helm/src';
 import { SharedIconsModule } from '../public/icons.module';
 
 @Component({
-	selector: 'oeb-dropdown',
-	standalone: true,
-	imports: [
-		BrnMenuTriggerDirective,
-		HlmMenuComponent,
-		HlmSubMenuComponent,
-		HlmMenuItemDirective,
-		HlmMenuItemSubIndicatorComponent,
-		HlmMenuLabelComponent,
-		HlmMenuShortcutComponent,
-		HlmMenuSeparatorComponent,
-		HlmMenuItemIconDirective,
-		HlmMenuGroupComponent,
-		NgIf,
-		NgFor,
-		NgTemplateOutlet,
-		RouterModule,
-		HlmIconModule,
-		SharedIconsModule,
-	],
-	template: `
+    selector: 'oeb-dropdown',
+    imports: [
+        BrnMenuTriggerDirective,
+        HlmMenuComponent,
+        HlmSubMenuComponent,
+        HlmMenuItemDirective,
+        HlmMenuItemSubIndicatorComponent,
+        HlmMenuLabelComponent,
+        HlmMenuShortcutComponent,
+        HlmMenuSeparatorComponent,
+        HlmMenuItemIconDirective,
+        HlmMenuGroupComponent,
+        NgIf,
+        NgFor,
+        NgTemplateOutlet,
+        RouterModule,
+        HlmIconModule,
+        SharedIconsModule,
+    ],
+    template: `
 		<button [brnMenuTriggerFor]="menu">
 			<ngTemplateOutlet *ngIf="isTemplate; else stringTrigger" [ngTemplateOutlet]="trigger"></ngTemplateOutlet>
 			<ng-template #stringTrigger>
@@ -73,7 +72,7 @@ import { SharedIconsModule } from '../public/icons.module';
 			</hlm-menu>
 		</ng-template>
 	`,
-	styleUrls: ['../app.component.scss'],
+    styleUrls: ['../app.component.scss']
 })
 export class OebDropdownComponent {
 	@Input() trigger: any;

@@ -6,11 +6,12 @@ import { DatePipe } from '@angular/common';
  * slow.
  */
 @Component({
-	selector: 'time[date]',
-	host: {
-		datetime: '{{ htmlDateStr }}',
-	},
-	template: `{{ userDateStr }}`,
+    selector: 'time[date]',
+    host: {
+        datetime: '{{ htmlDateStr }}',
+    },
+    template: `{{ userDateStr }}`,
+    standalone: false
 })
 export class TimeComponent implements OnChanges {
 	static datePipe = new DatePipe('en-US');

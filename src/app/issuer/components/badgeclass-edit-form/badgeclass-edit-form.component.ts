@@ -47,9 +47,10 @@ import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src
 import { ErrorDialogComponent } from '../../../common/dialogs/oeb-dialogs/error-dialog.component';
 
 @Component({
-	selector: 'badgeclass-edit-form',
-	templateUrl: './badgeclass-edit-form.component.html',
-	styleUrl: './badgeclass-edit-form.component.css',
+    selector: 'badgeclass-edit-form',
+    templateUrl: './badgeclass-edit-form.component.html',
+    styleUrl: './badgeclass-edit-form.component.css',
+    standalone: false
 })
 export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableComponent implements OnInit, AfterViewInit {
 	private readonly _hlmDialogService = inject(HlmDialogService);

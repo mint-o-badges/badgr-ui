@@ -16,8 +16,9 @@ import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
-	selector: 'issuer-edit',
-	templateUrl: './issuer-edit.component.html',
+    selector: 'issuer-edit',
+    templateUrl: './issuer-edit.component.html',
+    standalone: false
 })
 export class IssuerEditComponent extends BaseAuthenticatedRoutableComponent{
 

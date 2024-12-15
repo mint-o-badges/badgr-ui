@@ -31,8 +31,8 @@ import { PdfService } from '../../../common/services/pdf.service';
 import { QrCodeApiService } from '../../services/qrcode-api.service';
 
 @Component({
-	selector: 'badgeclass-detail',
-	template: `
+    selector: 'badgeclass-detail',
+    template: `
 		<bg-badgedetail [config]="config" [awaitPromises]="[issuerLoaded, badgeClassLoaded]">
 			<qrcode-awards
 				(qrBadgeAward)="onQrBadgeAward()"
@@ -50,6 +50,7 @@ import { QrCodeApiService } from '../../services/qrcode-api.service';
 			></issuer-detail-datatable>
 		</bg-badgedetail>
 	`,
+    standalone: false
 })
 export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	readonly badgeFailedImageUrl = '../../../../breakdown/static/images/badge-failed.svg';

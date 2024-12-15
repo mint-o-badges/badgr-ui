@@ -11,17 +11,16 @@ import { OebInputErrorComponent } from './input.error.component';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-	selector: 'oeb-checkbox',
-	standalone: true,
-	imports: [HlmPDirective, HlmCheckboxComponent, NgIf, NgClass, OebInputErrorComponent, ReactiveFormsModule],
-	providers: [
-		{
-			provide: NG_VALUE_ACCESSOR,
-			useExisting: forwardRef(() => OebCheckboxComponent),
-			multi: true,
-		},
-	],
-	template: ` <label [ngClass]="alignStart ? 'tw-items-start' : 'tw-items-center'" class="tw-flex tw-mt-[0.25rem]" hlmP>
+    selector: 'oeb-checkbox',
+    imports: [HlmPDirective, HlmCheckboxComponent, NgIf, NgClass, OebInputErrorComponent, ReactiveFormsModule],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => OebCheckboxComponent),
+            multi: true,
+        },
+    ],
+    template: ` <label [ngClass]="alignStart ? 'tw-items-start' : 'tw-items-center'" class="tw-flex tw-mt-[0.25rem]" hlmP>
 			<hlm-checkbox [name]="name" [checked]="checked" (changed)="onChange($event)" [formControl]="control" class="tw-mr-2" />
 			<div class="tw-flex tw-flex-col">
 				<span class="tw-pl-[3px]" [innerHTML]="text"></span>
@@ -33,9 +32,9 @@ import { TranslateService } from '@ngx-translate/core';
 
 			</div>
 		</label>`,
-	host: {
-		'[class]': '_computedClass()',
-	},
+    host: {
+        '[class]': '_computedClass()',
+    }
 })
 export class OebCheckboxComponent implements ControlValueAccessor {
 	@Input() text: string;

@@ -3,8 +3,8 @@ import { BaseDialog } from '../../../common/dialogs/base-dialog';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-	selector: 'app-integration-details-dialog',
-	template: ` <dialog
+    selector: 'app-integration-details-dialog',
+    template: ` <dialog
 		aria-labelledby="addCredentialsDialog"
 		aria-describedby="dialog1Desc"
 		class="dialog dialog-is-active l-dialog"
@@ -42,6 +42,7 @@ import { TranslateService } from '@ngx-translate/core';
 		</div>
 
 	</dialog>`,
+    standalone: false
 })
 export class AppIntegrationDetailsDialog extends BaseDialog {
 

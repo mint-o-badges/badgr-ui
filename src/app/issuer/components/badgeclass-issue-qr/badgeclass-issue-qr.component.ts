@@ -14,8 +14,9 @@ import { SuccessDialogComponent } from "../../../common/dialogs/oeb-dialogs/succ
 import { TranslateService } from "@ngx-translate/core";
 
 @Component({
-	selector: 'badgeclass-issue-qr',
-	templateUrl: './badgeclass-issue-qr.component.html',
+    selector: 'badgeclass-issue-qr',
+    templateUrl: './badgeclass-issue-qr.component.html',
+    standalone: false
 })
 export class BadgeClassIssueQrComponent extends BaseAuthenticatedRoutableComponent{
 

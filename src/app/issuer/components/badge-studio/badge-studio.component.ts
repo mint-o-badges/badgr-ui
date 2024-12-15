@@ -8,10 +8,11 @@ import { HttpClient } from '@angular/common/http';
 // fabric classes, it contains another nested "fabric" property with those values. This seems to be the only way to get
 // it to work correctly.
 @Component({
-	selector: 'badge-studio',
-	host: {},
-	template: ` <canvas #canvas width="400" height="400"></canvas> `,
-	styleUrls: ['../../../../../node_modules/font-awesome/css/font-awesome.css'],
+    selector: 'badge-studio',
+    host: {},
+    template: ` <canvas #canvas width="400" height="400"></canvas> `,
+    styleUrls: ['../../../../../node_modules/font-awesome/css/font-awesome.css'],
+    standalone: false
 })
 export class BadgeStudioComponent implements OnInit, OnChanges {
 	get canvas() {

@@ -4,8 +4,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { BadgeClass } from '../issuer/models/badgeclass.model';
 
 @Component({
-  selector: 'oeb-sort-select',
-  template: `
+    selector: 'oeb-sort-select',
+    template: `
     <oeb-select
       actionBar="true"
       class="oeb tw-block lg:tw-w-[10rem]"
@@ -14,7 +14,8 @@ import { BadgeClass } from '../issuer/models/badgeclass.model';
       [autofocus]="true"
       noTopMargin="true"
     ></oeb-select>
-  ` 
+  `,
+    standalone: false
 })
 export class OebSortSelectComponent implements OnInit {
   @Input() control: FormControl = new FormControl('name_asc'); 

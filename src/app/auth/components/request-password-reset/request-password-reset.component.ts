@@ -8,9 +8,10 @@ import { BaseRoutableComponent } from '../../../common/pages/base-routable.compo
 import { typedFormGroup } from '../../../common/util/typed-forms';
 
 @Component({
-	selector: 'password-reset-request',
-	templateUrl: 'request-password-reset.component.html',
-	styleUrls: ['request-password-reset.component.scss'],
+    selector: 'password-reset-request',
+    templateUrl: 'request-password-reset.component.html',
+    styleUrls: ['request-password-reset.component.scss'],
+    standalone: false
 })
 export class RequestPasswordResetComponent extends BaseRoutableComponent {
 	readonly requestPasswordResetForm = typedFormGroup().addControl('username', '', [

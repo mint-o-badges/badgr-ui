@@ -4,11 +4,11 @@ import { LearningPathApiService } from '../services/learningpath-api.service';
 type MatchOrProgressType = { match?: string, progress?: number };
 
 @Component({
-	selector: 'bg-learningpathcard',
-	host: {
-		class: 'tw-rounded-[10px] tw-w-[255px] md:tw-w-[392px] tw-border-solid tw-relative tw-p-4 md:tw-p-6 tw-block tw-overflow-hidden oeb-badge-card',
-	},
-	template: `
+    selector: 'bg-learningpathcard',
+    host: {
+        class: 'tw-rounded-[10px] tw-w-[255px] md:tw-w-[392px] tw-border-solid tw-relative tw-p-4 md:tw-p-6 tw-block tw-overflow-hidden oeb-badge-card',
+    },
+    template: `
 		<a [routerLink]="['/public/learningpaths/', slug]">
 			<div class="tw-flex tw-flex-col tw-justify-between tw-h-full">
 				<div class="tw-bg-[var(--color-lightgray)] tw-w-full tw-relative md:tw-h-[175px] tw-h-[100px] tw-items-center tw-flex tw-justify-center tw-p-2 tw-rounded-[3px]">
@@ -81,6 +81,7 @@ type MatchOrProgressType = { match?: string, progress?: number };
 			</div>
 		</a>
 	`,
+    standalone: false
 })
 export class BgLearningPathCard {
 	readonly badgeLoadingImageUrl = '../../../breakdown/static/images/badge-loading.svg';

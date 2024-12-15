@@ -21,11 +21,12 @@ import { BadgeClassCategory, BadgeClassLevel } from './../../../issuer/models/ba
 import { PageConfig } from '../../../common/components/badge-detail/badge-detail.component.types';
 
 @Component({
-	template: `<verify-badge-dialog
+    template: `<verify-badge-dialog
 			#verifyBadgeDialog
 			(verifiedBadgeAssertion)="onVerifiedBadgeAssertion($event)"
 		></verify-badge-dialog>
 		<bg-badgedetail [config]="config" [awaitPromises]="[assertionIdParam]"></bg-badgedetail>`,
+    standalone: false
 })
 export class PublicBadgeAssertionComponent {
 	constructor(

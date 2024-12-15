@@ -10,7 +10,6 @@ import { TranslateService } from "@ngx-translate/core";
 
 @Component({
     selector: 'oeb-danger-dialog-template',
-    standalone: true,
     imports: [
         OebDialogComponent,
         OebButtonComponent,
@@ -36,7 +35,7 @@ import { TranslateService } from "@ngx-translate/core";
             <oeb-button class="tw-mr-4" [text]="deleteText" (click)="deleteItem()" ></oeb-button>
             </div>
         </oeb-dialog>
-    `,
+    `
 })
 export class DangerDialogComponentTemplate {
     // @HostBinding('class') private readonly _class: string = 'tw-bg-red tw-bg-red';

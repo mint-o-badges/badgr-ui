@@ -15,8 +15,9 @@ import {
 } from '../badgeclass-issue-bulk-award/badgeclass-issue-bulk-award.component';
 
 @Component({
-	selector: 'Badgeclass-issue-bulk-award-preview',
-	templateUrl: './badgeclass-issue-bulk-award-preview.component.html',
+    selector: 'Badgeclass-issue-bulk-award-preview',
+    templateUrl: './badgeclass-issue-bulk-award-preview.component.html',
+    standalone: false
 })
 export class BadgeClassIssueBulkAwardPreviewComponent extends BaseAuthenticatedRoutableComponent {
 	@Input() importPreviewData: BulkIssueImportPreviewData;

@@ -34,16 +34,17 @@ type EscoCompetencies = {
 };
 
 @Component({
-	selector: 'recipient-earned-badge-list',
-	templateUrl: './recipient-earned-badge-list.component.html',
-	providers: [
-		provideIcons({ lucideHexagon }),
-		provideIcons({ lucideMedal }),
-		provideIcons({ lucideClock }),
-		provideIcons({ lucideHand }),
-		provideIcons({ lucideBookOpen }),
-		provideIcons({ lucideHeart }),
-	],
+    selector: 'recipient-earned-badge-list',
+    templateUrl: './recipient-earned-badge-list.component.html',
+    providers: [
+        provideIcons({ lucideHexagon }),
+        provideIcons({ lucideMedal }),
+        provideIcons({ lucideClock }),
+        provideIcons({ lucideHand }),
+        provideIcons({ lucideBookOpen }),
+        provideIcons({ lucideHeart }),
+    ],
+    standalone: false
 })
 export class RecipientEarnedBadgeListComponent
 	extends BaseAuthenticatedRoutableComponent

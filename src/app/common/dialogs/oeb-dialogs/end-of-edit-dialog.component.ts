@@ -8,11 +8,10 @@ import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-	selector: 'app-end-of-edit-dialog',
-	standalone: true,
-	imports: [OebDialogComponent, HlmPDirective, HlmH3Directive, HlmIconComponent, OebButtonComponent, TranslateModule],
-	providers: [provideIcons({ lucideTriangleAlert })],
-	template: `
+    selector: 'app-end-of-edit-dialog',
+    imports: [OebDialogComponent, HlmPDirective, HlmH3Directive, HlmIconComponent, OebButtonComponent, TranslateModule],
+    providers: [provideIcons({ lucideTriangleAlert })],
+    template: `
 		<oeb-dialog variant="danger" class="tw-text-center tw-text-oebblack oeb">
 			<div class="tw-flex tw-flex-col tw-gap-2 tw-items-center tw-justify-center">
 				<hlm-icon class="tw-text-red" size="xxxl" name="lucideTriangleAlert" />
@@ -38,7 +37,7 @@ import { TranslateModule } from '@ngx-translate/core';
 				</div>
 			</div>
 		</oeb-dialog>
-	`,
+	`
 })
 export class EndOfEditDialogComponent {
 	private readonly _dialogRef = inject<BrnDialogRef>(BrnDialogRef);

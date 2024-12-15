@@ -8,9 +8,10 @@ import { ExternalToolsManager } from '../../../externaltools/services/externalto
 import { MessageService } from '../../../common/services/message.service';
 
 @Component({
-	selector: 'app-welcome',
-	templateUrl: './welcome.component.html',
-	styleUrls: ['./welcome.component.scss'],
+    selector: 'app-welcome',
+    templateUrl: './welcome.component.html',
+    styleUrls: ['./welcome.component.scss'],
+    standalone: false
 })
 export class WelcomeComponent /*extends BaseAuthenticatedRoutableComponent*/ implements OnInit {
 	constructor(

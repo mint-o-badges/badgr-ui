@@ -16,9 +16,10 @@ import { UserProfileManager } from '../../../common/services/user-profile-manage
 import { FormControl } from '@angular/forms';
 
 @Component({
-	selector: 'app-issuer-catalog',
-	templateUrl: './issuer-catalog.component.html',
-	styleUrls: ['./issuer-catalog.component.css'],
+    selector: 'app-issuer-catalog',
+    templateUrl: './issuer-catalog.component.html',
+    styleUrls: ['./issuer-catalog.component.css'],
+    standalone: false
 })
 export class IssuerCatalogComponent extends BaseRoutableComponent implements OnInit, AfterViewInit {
 	readonly issuerPlaceholderSrc = preloadImageURL('../../../../breakdown/static/images/placeholderavatar-issuer.svg');
