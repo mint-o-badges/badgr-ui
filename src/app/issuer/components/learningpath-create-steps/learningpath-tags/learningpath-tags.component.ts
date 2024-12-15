@@ -5,9 +5,10 @@ import { LearningPath } from "../../../../issuer/models/learningpath.model";
 import { ApiLearningPath } from "../../../../common/model/learningpath-api.model";
 
 @Component({
-	selector: 'learningpath-tags',
-	templateUrl: './learningpath-tags.component.html',
-	styleUrls: ['../../learningpath-edit-form/learningpath-edit-form.component.scss']
+    selector: 'learningpath-tags',
+    templateUrl: './learningpath-tags.component.html',
+    styleUrls: ['../../learningpath-edit-form/learningpath-edit-form.component.scss'],
+    standalone: false
 })
 export class LearningPathTagsComponent implements OnInit {
 

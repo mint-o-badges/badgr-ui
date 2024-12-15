@@ -28,15 +28,14 @@ export const dialogVariants = cva(
 export type DiealogVariants = VariantProps<typeof dialogVariants>;
 
 @Component({
-	selector: 'hlm-dialog-content',
-	standalone: true,
-	imports: [NgComponentOutlet, BrnDialogCloseDirective, HlmDialogCloseDirective, HlmIconComponent],
-	providers: [provideIcons({ lucideX })],
-	host: {
-		'[class]': '_computedClass()',
-		'[attr.data-state]': 'state()',
-	},
-	template: `
+    selector: 'hlm-dialog-content',
+    imports: [NgComponentOutlet, BrnDialogCloseDirective, HlmDialogCloseDirective, HlmIconComponent],
+    providers: [provideIcons({ lucideX })],
+    host: {
+        '[class]': '_computedClass()',
+        '[attr.data-state]': 'state()',
+    },
+    template: `
 		@if (component) {
 			<ng-container [ngComponentOutlet]="component" />
 		} @else {
@@ -48,8 +47,8 @@ export type DiealogVariants = VariantProps<typeof dialogVariants>;
 			<hlm-icon class="tw-flex tw-w-4 tw-h-4" size="none" name="lucideX" />
 		</button>
 	`,
-	changeDetection: ChangeDetectionStrategy.OnPush,
-	encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.None
 })
 export class HlmDialogContentComponent {
 	private readonly _dialogRef = inject(BrnDialogRef);

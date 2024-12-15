@@ -17,9 +17,10 @@ import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src
 import { BadgeRequestApiService } from '../../../issuer/services/badgerequest-api.service';
 
 @Component({
-	selector: 'oeb-issuer-detail',
-	templateUrl: './oeb-issuer-detail.component.html',
-	styleUrl: './oeb-issuer-detail.component.scss',
+    selector: 'oeb-issuer-detail',
+    templateUrl: './oeb-issuer-detail.component.html',
+    styleUrl: './oeb-issuer-detail.component.scss',
+    standalone: false
 })
 export class OebIssuerDetailComponent implements OnInit {
 

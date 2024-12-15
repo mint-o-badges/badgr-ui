@@ -8,18 +8,17 @@ import { Component, Input } from '@angular/core';
 import { lucideClock } from '@ng-icons/lucide';
 
 @Component({
-	selector: 'competency-accordion',
-	standalone: true,
-	providers: [provideIcons({ lucideClock })],
-	imports: [
-		HlmAccordionModule,
-		HlmIconModule,
-		TranslateModule,
-		BrnAccordionContentComponent,
-		RouterModule,
-		NgIf,
-	],
-	template: `
+    selector: 'competency-accordion',
+    providers: [provideIcons({ lucideClock })],
+    imports: [
+        HlmAccordionModule,
+        HlmIconModule,
+        TranslateModule,
+        BrnAccordionContentComponent,
+        RouterModule,
+        NgIf,
+    ],
+    template: `
 	<div class="tw-bg-[var(--color-lightgray)] tw-border tw-border-solid tw-border-purple tw-rounded-lg tw-mt-4"><div hlmAccordion>
 		<div hlmAccordionItem class="tw-px-2 tw-py-2">
 			<button
@@ -47,7 +46,7 @@ import { lucideClock } from '@ng-icons/lucide';
 			</brn-accordion-content>
 		</div>
 	</div>
-	</div> `,
+	</div> `
 })
 export class CompetencyAccordionComponent {
 	@Input() category: string;

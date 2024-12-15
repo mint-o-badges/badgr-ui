@@ -16,7 +16,7 @@ import { SessionService } from '../../../common/services/session.service';
 import { RecipientBadgeApiService } from '../../../recipient/services/recipient-badges-api.service';
 
 @Component({
-	template: `<bg-badgedetail [config]="config" [awaitPromises]="[badgeClass]">
+    template: `<bg-badgedetail [config]="config" [awaitPromises]="[badgeClass]">
 					<ng-template [bgAwaitPromises]="[learningPathsPromise]">
 						<div class="oeb" *ngIf="learningPaths.length > 0">
 							<oeb-separator class="tw-block tw-mb-8 tw-mt-8"></oeb-separator>
@@ -39,6 +39,7 @@ import { RecipientBadgeApiService } from '../../../recipient/services/recipient-
 						</div>	
 					</ng-template>
 				</bg-badgedetail>`,
+    standalone: false
 })
 export class PublicBadgeClassComponent {
 	readonly issuerImagePlaceholderUrl = preloadImageURL(

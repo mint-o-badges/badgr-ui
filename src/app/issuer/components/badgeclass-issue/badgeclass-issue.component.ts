@@ -31,8 +31,9 @@ import { SuccessDialogComponent } from '../../../common/dialogs/oeb-dialogs/succ
 import { EndOfEditDialogComponent } from '../../../common/dialogs/oeb-dialogs/end-of-edit-dialog.component';
 
 @Component({
-	selector: 'badgeclass-issue',
-	templateUrl: './badgeclass-issue.component.html',
+    selector: 'badgeclass-issue',
+    templateUrl: './badgeclass-issue.component.html',
+    standalone: false
 })
 export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	breadcrumbLinkEntries: LinkEntry[] = [];

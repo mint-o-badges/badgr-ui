@@ -8,19 +8,18 @@ import { HlmSelectModule } from './spartan/ui-select-helm/src/index';
 import { CustomValidatorMessages, messagesForValidationError } from './input.component';
 
 @Component({
-	selector: 'oeb-select ',
-	standalone: true,
-	imports: [
-		BrnSelectImports,
-		HlmSelectModule,
-		HlmPDirective,
-		OebInputErrorComponent,
-		NgFor,
-		NgIf,
-		ReactiveFormsModule,
-		NgClass,
-	],
-	template: ` <div [ngClass]="{ 'tw-mt-6 md:tw-mt-7': !noTopMargin }">
+    selector: 'oeb-select ',
+    imports: [
+        BrnSelectImports,
+        HlmSelectModule,
+        HlmPDirective,
+        OebInputErrorComponent,
+        NgFor,
+        NgIf,
+        ReactiveFormsModule,
+        NgClass,
+    ],
+    template: ` <div [ngClass]="{ 'tw-mt-6 md:tw-mt-7': !noTopMargin }">
 		<label class="tw-pb-[2px] tw-pl-[3px]" [attr.for]="inputName" *ngIf="label">
 			<span hlmP class="tw-text-oebblack tw-font-semibold" [innerHTML]="label"></span>
 			<span *ngIf="formFieldAside">{{ formFieldAside }}</span>
@@ -59,7 +58,7 @@ import { CustomValidatorMessages, messagesForValidationError } from './input.com
 			*ngIf="isErrorState"
 			[error]="errorMessageForDisplay"
 		></oeb-input-error>
-	</div>`,
+	</div>`
 })
 export class OebSelectComponent {
 	@Input() control: FormControl;

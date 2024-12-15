@@ -4,12 +4,12 @@ import { provideIcons } from '../../components/spartan/ui-icon-helm/src';
 import { Competency } from '../model/competency.model';
 
 @Component({
-	selector: 'oeb-competency',
+    selector: 'oeb-competency',
     providers: [provideIcons({ lucideClock })],
-	host: {
-		class: 'tw-rounded-[10px] tw-bg-oebgrey tw-border-purple tw-border-solid tw-border tw-relative tw-p-[calc(var(--gridspacing)*2)] tw-block tw-overflow-hidden',
-	},
-	template: `
+    host: {
+        class: 'tw-rounded-[10px] tw-bg-oebgrey tw-border-purple tw-border-solid tw-border tw-relative tw-p-[calc(var(--gridspacing)*2)] tw-block tw-overflow-hidden',
+    },
+    template: `
 		<div class="tw-flex tw-justify-between tw-items-center">
             <div>
                 <span hlmP size="sm" class="tw-text-oebblack tw-font-medium">{{competency.name}} </span>
@@ -23,6 +23,7 @@ import { Competency } from '../model/competency.model';
             </div>
 		</div>
 	`,
+    standalone: false
 })
 export class OebCompetency {
 	@Input() competency: Competency;

@@ -15,8 +15,9 @@ import { SuccessDialogComponent } from '../../../common/dialogs/oeb-dialogs/succ
 import { HlmDialogService } from './../../../components/spartan/ui-dialog-helm/src';
 
 @Component({
-	selector: 'badgeclass-issue-bulk-award-confirmation',
-	templateUrl: './badgeclass-issue-bulk-award-confirmation.component.html',
+    selector: 'badgeclass-issue-bulk-award-confirmation',
+    templateUrl: './badgeclass-issue-bulk-award-confirmation.component.html',
+    standalone: false
 })
 export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRoutableComponent {
 	@Input() transformedImportData: TransformedImportData;

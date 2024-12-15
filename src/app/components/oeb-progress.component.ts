@@ -8,17 +8,16 @@ import { HlmProgressIndicatorDirective } from './spartan/ui-progress-helm/src';
 import { NgTemplateOutlet, NgIf } from '@angular/common';
 
 @Component({
-  selector: 'oeb-progress',
-  standalone: true,
-  imports: [BrnProgressComponent, BrnProgressIndicatorComponent, HlmProgressIndicatorDirective, NgTemplateOutlet, NgIf],
-  template: `
+    selector: 'oeb-progress',
+    imports: [BrnProgressComponent, BrnProgressIndicatorComponent, HlmProgressIndicatorDirective, NgTemplateOutlet, NgIf],
+    template: `
       <brn-progress [class]="class" hlm aria-labelledby='loading' [value]="progressValue">
         <brn-progress-indicator hlm />
         <ng-container *ngIf="template">
           <ng-container *ngTemplateOutlet="template"></ng-container>
         </ng-container>
       </brn-progress>
-  `,
+  `
 })
 export class OebProgressComponent {
   @Input() value: number;

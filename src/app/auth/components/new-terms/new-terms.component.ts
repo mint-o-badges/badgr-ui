@@ -9,7 +9,8 @@ import { UserProfileManager } from "../../../common/services/user-profile-manage
 @Component({
     selector: "app-new-terms",
     templateUrl: "./new-terms.component.html",
-    })
+    standalone: false
+})
 export class NewTermsComponent extends BaseRoutableComponent {
 
   confirmed = false;

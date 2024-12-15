@@ -5,8 +5,8 @@ import { typedFormGroup } from '../../../common/util/typed-forms';
 import { Validators } from '@angular/forms';
 
 @Component({
-	selector: 'add-credentials-dialog',
-	template: ` <dialog
+    selector: 'add-credentials-dialog',
+    template: ` <dialog
 		aria-labelledby="addCredentialsDialog"
 		aria-describedby="dialog1Desc"
 		class="dialog dialog-is-active l-dialog"
@@ -40,6 +40,7 @@ import { Validators } from '@angular/forms';
 		</div>
 
 	</dialog>`,
+    standalone: false
 })
 export class AddCredentialsDialog extends BaseDialog {
 

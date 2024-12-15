@@ -14,22 +14,21 @@ import { NgIf, NgFor, NgTemplateOutlet, NgClass } from '@angular/common';
 
 
 @Component({
-  selector: 'oeb-collapsible',
-  providers: [provideIcons({lucideChevronRight })],
-  standalone: true,
-  imports: [
-    BrnCollapsibleComponent,
-    BrnCollapsibleTriggerDirective,
-    HlmButtonDirective,
-    BrnCollapsibleContentComponent,
-    HlmIconModule,
-    HlmIconComponent,
-    NgIf,
-    NgFor,
-    NgTemplateOutlet,
-    NgClass
-  ],
-  template: `    
+    selector: 'oeb-collapsible',
+    providers: [provideIcons({ lucideChevronRight })],
+    imports: [
+        BrnCollapsibleComponent,
+        BrnCollapsibleTriggerDirective,
+        HlmButtonDirective,
+        BrnCollapsibleContentComponent,
+        HlmIconModule,
+        HlmIconComponent,
+        NgIf,
+        NgFor,
+        NgTemplateOutlet,
+        NgClass
+    ],
+    template: `    
         <brn-collapsible class="tw-flex tw-flex-col" #collapsible>
             <button [attr.id]="id" brnCollapsibleTrigger type="button" hlmBtn variant="ghost" size="sm" class="tw-p-0" (click)="toggleOpen()">
             <ngTemplateOutlet *ngIf="isTemplate; else stringTrigger" [ngTemplateOutlet]="trigger"></ngTemplateOutlet>
@@ -48,7 +47,7 @@ import { NgIf, NgFor, NgTemplateOutlet, NgClass } from '@angular/common';
             </brn-collapsible-content>
         </brn-collapsible>
 
-  `,
+  `
 })
 export class OebCollapsibleComponent implements AfterViewInit {
     @Input() trigger: any;

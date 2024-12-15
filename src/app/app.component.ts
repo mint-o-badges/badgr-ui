@@ -38,13 +38,14 @@ import { MenuItem } from './common/components/badge-detail/badge-detail.componen
 // https://stackoverflow.com/questions/3680876/using-queryselectorall-to-retrieve-direct-children/21126966#21126966
 
 @Component({
-	selector: 'app-root',
-	host: {
-		'(document:click)': 'onDocumentClick($event)',
-		'[class.l-stickyfooter-chromeless]': '! showAppChrome',
-	},
-	templateUrl: './app.component.html',
-	styleUrls: ['./app.component.scss'],
+    selector: 'app-root',
+    host: {
+        '(document:click)': 'onDocumentClick($event)',
+        '[class.l-stickyfooter-chromeless]': '! showAppChrome',
+    },
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss'],
+    standalone: false
 })
 export class AppComponent implements OnInit, AfterViewInit {
 	/**

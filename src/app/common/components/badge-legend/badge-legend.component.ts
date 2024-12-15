@@ -1,9 +1,10 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
-	selector: 'app-badge-legend',
-	templateUrl: './badge-legend.component.html',
-	styleUrls: ['./badge-legend.component.css'],
+    selector: 'app-badge-legend',
+    templateUrl: './badge-legend.component.html',
+    styleUrls: ['./badge-legend.component.css'],
+    standalone: false
 })
 export class BadgeLegendComponent implements OnInit {
 	@Output() closed = new EventEmitter();

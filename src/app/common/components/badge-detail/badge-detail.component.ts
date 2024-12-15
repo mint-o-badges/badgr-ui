@@ -3,9 +3,10 @@ import type { PageConfig } from './badge-detail.component.types';
 import { CommonDialogsService } from '../../services/common-dialogs.service';
 
 @Component({
-	selector: 'bg-badgedetail',
-	templateUrl: './badge-detail.component.html',
-	styleUrls: ['./badge-detail.component.scss'],
+    selector: 'bg-badgedetail',
+    templateUrl: './badge-detail.component.html',
+    styleUrls: ['./badge-detail.component.scss'],
+    standalone: false
 })
 export class BgBadgeDetail {
 	@Input() config: PageConfig;

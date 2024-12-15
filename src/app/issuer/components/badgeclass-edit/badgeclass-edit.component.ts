@@ -22,8 +22,9 @@ import { AppConfigService } from '../../../common/app-config.service';
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 
 @Component({
-	selector: 'badgeclass-edit',
-	templateUrl: './badgeclass-edit.component.html',
+    selector: 'badgeclass-edit',
+    templateUrl: './badgeclass-edit.component.html',
+    standalone: false
 })
 export class BadgeClassEditComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	get issuerSlug() {

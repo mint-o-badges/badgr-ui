@@ -19,8 +19,9 @@ import { ApiLearningPath, ApiLearningPathParticipant, ApiLearningPathRequest } f
 import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
 
 @Component({
-	selector: 'issuer-learning-path',
-	templateUrl: './issuer-learning-path.component.html',
+    selector: 'issuer-learning-path',
+    templateUrl: './issuer-learning-path.component.html',
+    standalone: false
 })
 export class IssuerLearningPathComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	readonly issuerImagePlaceHolderUrl = preloadImageURL(

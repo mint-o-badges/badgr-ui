@@ -16,7 +16,8 @@ import type { Tab } from '../../../components/oeb-backpack-tabs.component';
 import { SessionService } from '../../../common/services/session.service';
 
 @Component({
-	templateUrl: './learningpath.component.html',
+    templateUrl: './learningpath.component.html',
+    standalone: false
 })
 export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 

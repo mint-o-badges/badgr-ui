@@ -18,8 +18,9 @@ import { TranslateService } from '@ngx-translate/core';
 import 'altcha';
 
 @Component({
-	selector: 'sign-up',
-	templateUrl: './signup.component.html',
+    selector: 'sign-up',
+    templateUrl: './signup.component.html',
+    standalone: false
 })
 export class SignupComponent extends BaseRoutableComponent implements OnInit, AfterViewInit {
 	// Translations

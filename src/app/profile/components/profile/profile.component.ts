@@ -22,8 +22,9 @@ import { TranslateService } from '@ngx-translate/core';
 import { animationFramePromise } from '../../../common/util/promise-util';
 
 @Component({
-	selector: 'userProfile',
-	templateUrl: './profile.component.html',
+    selector: 'userProfile',
+    templateUrl: './profile.component.html',
+    standalone: false
 })
 export class ProfileComponent extends BaseAuthenticatedRoutableComponent implements OnInit, OnDestroy {
 	emailForm = typedFormGroup().addControl('email', '', [Validators.required, EmailValidator.validEmail]);

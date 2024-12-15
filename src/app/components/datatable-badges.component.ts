@@ -9,18 +9,17 @@ import { OebButtonComponent } from './oeb-button.component';
 import { HlmPDirective } from '../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
 
 @Component({
-	selector: 'badges-datatable',
-	standalone: true,
-	imports: [
-		HlmTableModule,
-		HlmIconModule,
-		CommonModule,
+    selector: 'badges-datatable',
+    imports: [
+        HlmTableModule,
+        HlmIconModule,
+        CommonModule,
         OebButtonComponent,
-		TranslateModule,
-		RouterModule,
+        TranslateModule,
+        RouterModule,
         HlmPDirective
-        ],
-	template: `
+    ],
+    template: `
         <hlm-table class="tw-rounded-t-[20px] tw-overflow-hidden tw-w-full tw-max-w-[100%] tw-bg-lightpurple tw-border-purple tw-border">
             <hlm-caption>{{caption}}</hlm-caption>
             <hlm-trow class="tw-bg-purple tw-text-white tw-flex-wrap hover:tw-bg-purple">
@@ -82,7 +81,7 @@ import { HlmPDirective } from '../components/spartan/ui-typography-helm/src/lib/
                     </oeb-button>
                 </hlm-th>
             </hlm-trow>
-        </hlm-table>`,
+        </hlm-table>`
 })
 export class DatatableComponent {
 	@Input() caption: string = "";

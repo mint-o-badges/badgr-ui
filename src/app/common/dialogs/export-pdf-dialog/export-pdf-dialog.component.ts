@@ -14,9 +14,10 @@ import { PdfService } from '../../services/pdf.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
-	selector: 'export-pdf-dialog',
-	templateUrl: 'export-pdf-dialog.component.html',
-	styleUrls: ['export-pdf-dialog.component.css'],
+    selector: 'export-pdf-dialog',
+    templateUrl: 'export-pdf-dialog.component.html',
+    styleUrls: ['export-pdf-dialog.component.css'],
+    standalone: false
 })
 export class ExportPdfDialog extends BaseDialog {
 	badge: RecipientBadgeInstance | null = null;

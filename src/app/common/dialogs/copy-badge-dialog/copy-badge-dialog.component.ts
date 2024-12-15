@@ -14,9 +14,10 @@ import { groupIntoArray, groupIntoObject } from '../../util/array-reducers';
  * of this.
  */
 @Component({
-	selector: 'copy-badge-dialog',
-	templateUrl: 'copy-badge-dialog.component.html',
-	styleUrls: ['./copy-badge-dialog.component.css'],
+    selector: 'copy-badge-dialog',
+    templateUrl: 'copy-badge-dialog.component.html',
+    styleUrls: ['./copy-badge-dialog.component.css'],
+    standalone: false
 })
 export class CopyBadgeDialog extends BaseDialog {
 	Array = Array;

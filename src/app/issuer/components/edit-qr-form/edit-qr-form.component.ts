@@ -17,8 +17,9 @@ import { Location } from '@angular/common';
 import { EndOfEditDialogComponent } from '../../../common/dialogs/oeb-dialogs/end-of-edit-dialog.component';
 
 @Component({
-	selector: 'edit-qr-form',
-	templateUrl: './edit-qr-form.component.html',
+    selector: 'edit-qr-form',
+    templateUrl: './edit-qr-form.component.html',
+    standalone: false
 })
 export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent {
 	static datePipe = new DatePipe('de');

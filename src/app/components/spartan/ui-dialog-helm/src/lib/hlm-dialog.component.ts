@@ -3,22 +3,21 @@ import { BrnDialogComponent, BrnDialogOverlayComponent } from '@spartan-ng/ui-di
 import { HlmDialogOverlayDirective } from './hlm-dialog-overlay.directive';
 
 @Component({
-	selector: 'hlm-dialog',
-	standalone: true,
-	imports: [BrnDialogComponent, BrnDialogOverlayComponent, HlmDialogOverlayDirective],
-	providers: [
-		{
-			provide: BrnDialogComponent,
-			useExisting: forwardRef(() => HlmDialogComponent),
-		},
-	],
-	template: `
+    selector: 'hlm-dialog',
+    imports: [BrnDialogComponent, BrnDialogOverlayComponent, HlmDialogOverlayDirective],
+    providers: [
+        {
+            provide: BrnDialogComponent,
+            useExisting: forwardRef(() => HlmDialogComponent),
+        },
+    ],
+    template: `
 		<brn-dialog-overlay hlm />
 		<ng-content />
 	`,
-	changeDetection: ChangeDetectionStrategy.OnPush,
-	encapsulation: ViewEncapsulation.None,
-	exportAs: 'hlmDialog',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.None,
+    exportAs: 'hlmDialog'
 })
 export class HlmDialogComponent extends BrnDialogComponent {
 	constructor() {

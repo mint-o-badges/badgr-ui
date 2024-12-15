@@ -4,8 +4,9 @@ import { SessionService } from '../../../common/services/session.service';
 import { BaseRoutableComponent } from '../../../common/pages/base-routable.component';
 
 @Component({
-	selector: 'logout',
-	template: '',
+    selector: 'logout',
+    template: '',
+    standalone: false
 })
 export class LogoutComponent extends BaseRoutableComponent {
 	constructor(

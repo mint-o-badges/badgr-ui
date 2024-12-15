@@ -16,19 +16,18 @@ import { SuccessDialogComponent } from '../common/dialogs/oeb-dialogs/success-di
 import striptags from 'striptags';
 
 @Component({
-	selector: 'qrcodes-datatable',
-	standalone: true,
-	imports: [
-		HlmTableModule,
-		HlmIconModule,
-		CommonModule,
-		OebButtonComponent,
-		TranslateModule,
-		RouterModule,
-		SuccessDialogComponent,
-	],
-	providers: [BadgeRequestApiService, BadgeInstanceManager, BadgeClassManager, HlmDialogService],
-	template: ` <hlm-table
+    selector: 'qrcodes-datatable',
+    imports: [
+        HlmTableModule,
+        HlmIconModule,
+        CommonModule,
+        OebButtonComponent,
+        TranslateModule,
+        RouterModule,
+        SuccessDialogComponent,
+    ],
+    providers: [BadgeRequestApiService, BadgeInstanceManager, BadgeClassManager, HlmDialogService],
+    template: ` <hlm-table
 		class="tw-rounded-t-[20px] tw-overflow-hidden tw-w-full tw-max-w-[100%] tw-bg-[var(--color-darkgray)] tw-border-darkgrey tw-border-[1px] tw-border-solid"
 	>
 		<hlm-trow class="tw-bg-[var(--color-darkgray)] hover:!tw-bg-[var(--color-darkgray)] tw-text-white tw-flex-wrap">
@@ -62,7 +61,7 @@ import striptags from 'striptags';
 				></oeb-button>
 			</hlm-th>
 		</hlm-trow>
-	</hlm-table>`,
+	</hlm-table>`
 })
 export class QrCodeDatatableComponent implements OnInit {
 	@Input() caption: string = '';

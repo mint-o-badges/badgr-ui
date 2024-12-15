@@ -22,29 +22,28 @@ import { HlmPDirective } from "../../../../app/components/spartan/ui-typography-
 import { TranslateService } from "@ngx-translate/core";
 
 @Component({
-	selector: 'qrcode-awards',
-	templateUrl: './qrcode-awards.component.html',
-    standalone: true,
+    selector: 'qrcode-awards',
+    templateUrl: './qrcode-awards.component.html',
     providers: [BadgeRequestApiService, HlmDialogService, QrCodeApiService, TranslateService],
     imports: [
-		HlmAccordionModule,
-		HlmIconModule,
-		TranslateModule,
-		BrnAccordionContentComponent,
-		RouterModule,
-		NgIf,
-		NgFor,
-		NgClass,
-		OebSeparatorComponent,
-		OebButtonComponent,
-		OebDropdownComponent,
-		QrCodeDatatableComponent,
-		SharedIconsModule,
-		BadgrCommonModule,
-		DangerDialogComponent,
-		HlmH3Directive,
-		HlmPDirective
-	],
+        HlmAccordionModule,
+        HlmIconModule,
+        TranslateModule,
+        BrnAccordionContentComponent,
+        RouterModule,
+        NgIf,
+        NgFor,
+        NgClass,
+        OebSeparatorComponent,
+        OebButtonComponent,
+        OebDropdownComponent,
+        QrCodeDatatableComponent,
+        SharedIconsModule,
+        BadgrCommonModule,
+        DangerDialogComponent,
+        HlmH3Directive,
+        HlmPDirective
+    ]
 })
 
 export class QrCodeAwardsComponent {

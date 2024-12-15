@@ -16,9 +16,10 @@ import { TranslateService } from '@ngx-translate/core';
 import { FormControl } from '@angular/forms';
 
 @Component({
-	selector: 'app-badge-catalog',
-	templateUrl: './badge-catalog.component.html',
-	styleUrls: ['./badge-catalog.component.css'],
+    selector: 'app-badge-catalog',
+    templateUrl: './badge-catalog.component.html',
+    styleUrls: ['./badge-catalog.component.css'],
+    standalone: false
 })
 export class BadgeCatalogComponent extends BaseRoutableComponent implements OnInit {
 	readonly issuerPlaceholderSrc = preloadImageURL('../../../../breakdown/static/images/placeholderavatar-issuer.svg');
