@@ -129,7 +129,9 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 			this.badgeClassService.allPublicBadges$.subscribe(
 				async (badges) => {
 					this.badges = badges
-						.filter((badge) => badge.issuerVerified && badge.issuerOwnerAcceptedTos)
+						.filter((badge) => badge.issuerVerified 
+							// && badge.issuerOwnerAcceptedTos
+							)
 						.slice()
 						.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
 					this.badgeResults = this.badges;
