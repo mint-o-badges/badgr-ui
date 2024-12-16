@@ -21,13 +21,13 @@
 			<section>
 				<div class="tw-flex tw-items-center tw-rounded-lg tw-p-4 tw-bg-[#ECFEED] tw-mb-4">
 					<div
-						class="tw-flex tw-flex-col tw-gap-4 tw-w-full md:tw-items-center md:tw-justify-between md:tw-flex-row"
+						class="tw-flex tw-flex-col tw-gap-4 tw-w-full min-[880px]:tw-items-center min-[880px]:tw-justify-between min-[880px]:tw-flex-row"
 					>
-						<div class="tw-flex tw-flex-col md:tw-flex-row md:tw-items-center tw-gap-6">
+						<div class="tw-flex tw-flex-col min-[880px]:tw-flex-row min-[880px]:tw-items-center tw-gap-6">
 							<div class="tw-flex tw-relative tw-items-center">
 								<input
 									hlmInput
-									class="!tw-bg-white tw-w-full tw-border-1 tw-border-purple md:tw-w-96 tw-border-solid tw-h-12 tw-rounded-lg tw-p-2"
+									class="!tw-bg-white tw-w-full tw-border-1 tw-border-purple min-[880px]:tw-w-96 tw-border-solid tw-h-12 tw-rounded-lg tw-p-2"
 									placeholder="{{ 'Issuer.searchInstitutions' | translate }}"
 									[(ngModel)]="searchQuery"
 								/>
@@ -38,7 +38,7 @@
 							</div>
 
 							<span>{{ 'Badge.sortBy' | translate }} </span>
-							<oeb-sort-select  [control]="sortControl" [result]="issuerResults"></oeb-sort-select>
+							<oeb-sort-select [control]="sortControl" [result]="issuerResults"></oeb-sort-select>
 							<oeb-select
 								actionBar="true"
 								class="md:tw-w-[180px] oeb"
@@ -71,7 +71,7 @@
 
 				<ng-container *ngIf="badgesDisplay == 'grid'">
 					<ng-container *ngIf="!groupByCategory">
-						<div class="tw-grid tw-grid-cols-issuer tw-gap-6 tw-w-full" [@stagger]>
+						<div class="tw-grid sm:tw-grid-cols-issuer tw-gap-6 tw-w-full" [@stagger]>
 							<oeb-issuer-card
 								*ngFor="let issuer of issuerResults"
 								[@appearAnimation]="state"
