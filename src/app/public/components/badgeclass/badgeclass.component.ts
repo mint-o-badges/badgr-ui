@@ -75,6 +75,9 @@ export class PublicBadgeClassComponent {
 			const badgeClass = service.getBadgeClass(paramValue);
 			badgeClass.then((badge) => {
 				this.config = {
+					qrCodeButton: {
+						show: false
+					},
 					badgeTitle: badge.name,
 					badgeDescription: badge.description,
 					issuerSlug: badge.issuer['slug'],

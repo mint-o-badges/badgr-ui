@@ -100,6 +100,9 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 					// 	title: 'Badge teilen',
 					// 	action: () => this.shareBadge(),
 					// },
+					qrCodeButton: {
+						show: false
+					},
 					menuitems: [
 						{
 							title: 'Verifizieren',
