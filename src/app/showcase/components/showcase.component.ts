@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { EmailValidator } from '../../common/validators/email.validator';
 
@@ -10,6 +10,12 @@ import { MenuItem } from '../../common/components/badge-detail/badge-detail.comp
 	templateUrl: './oeb-showcase.component.html',
 })
 export class ShowcaseComponent {
+	tabs: any = undefined;
+	activeTab = 'Badges';
+
+	@ViewChild('badgesTemplate', { static: true }) badgesTemplate: ElementRef;
+	@ViewChild('learningPathTemplate', { static: true }) learningPathTemplate: ElementRef;
+
 	public badges = [
 		{
 			image: 'test',
@@ -76,4 +82,18 @@ export class ShowcaseComponent {
 		.addControl('username', '', [Validators.required, EmailValidator.validEmail])
 		.addControl('password', '', Validators.required)
 		.addControl('rememberMe', false);
+
+	ngAfterContentInit() {
+		//if you have dynamic content you might have to do it this way.
+		this.tabs = [
+			{
+				title: 'Badges',
+				component: this.badgesTemplate,
+			},
+			{
+				title: 'Lernpfade',
+				component: this.learningPathTemplate,
+			},
+		];
+	}
 }

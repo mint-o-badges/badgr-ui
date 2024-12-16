@@ -275,6 +275,19 @@
 							</div>
 						</div>
 					</div>
+					<div class="oeb-section">
+						<div class="oeb-headline-container-sm">
+							<h1 hlmH1 class="tw-font-extrabold tw-text-yellow tw-opacity-50">Reusable Components</h1>
+							<h2 hlmH2 class="tw-font-extrabold tw-text-red tw-relative tw-top-[-20px] tw-left-[20px]">
+								Tabs
+							</h2>
+							<oeb-backpack-tabs
+								[variant]="'lightpurple'"
+								[activeTab]="'Badges'"
+								[tabs]="tabs"
+							></oeb-backpack-tabs>
+						</div>
+					</div>
 					<div class="oeb-section tw-bg-yellow">
 						<div class="oeb-headline-container">
 							<h1 hlmH1 class="">Alles über Abstände</h1>
@@ -366,3 +379,14 @@
 		</div>
 	</div>
 </div>
+
+<ng-template #badgesTemplate>
+	<div>
+		<p>Badges here</p>
+	</div>
+</ng-template>
+<ng-template #learningPathTemplate>
+	<div>
+		<p>Learningpath here</p>
+	</div>
+</ng-template>
