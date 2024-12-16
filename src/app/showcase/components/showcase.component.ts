@@ -1,8 +1,9 @@
 import { Component, Input } from '@angular/core';
-import { Validators } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { EmailValidator } from '../../common/validators/email.validator';
 
 import { typedFormGroup } from '../../common/util/typed-forms';
+import { MenuItem } from '../../common/components/badge-detail/badge-detail.component.types';
 
 @Component({
 	selector: 'oeb-showcase',
@@ -27,6 +28,45 @@ export class ShowcaseComponent {
 			description: 'adskadjadalsd',
 			createdAt: '2009-03-15T13:45:30',
 			recipientCount: 0,
+		},
+	];
+
+	aboutBadgesMenuItems: MenuItem[] = [
+		{
+			title: 'FAQ',
+			routerLink: ['/public/faq'],
+			icon: 'lucideFileQuestion',
+		},
+		{
+			title: 'Badges A-Z',
+			routerLink: ['/catalog/badges'],
+			icon: 'lucideAward',
+		},
+		{
+			title: 'Issuer A-Z',
+			routerLink: ['/catalog/issuers'],
+			icon: 'lucideWarehouse',
+		},
+		{
+			title: 'Learningpath A-Z',
+			routerLink: ['/catalog/learningpaths'],
+			icon: 'lucideRoute',
+		},
+	];
+
+	categoryControl = new FormControl('');
+	categoryOptions = [
+		{
+			label: 'Schule',
+			value: 'schule',
+		},
+		{
+			label: 'Hochschule ',
+			value: 'hochschule',
+		},
+		{
+			label: 'Andere',
+			value: 'andere',
 		},
 	];
 

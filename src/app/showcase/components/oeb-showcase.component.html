@@ -164,112 +164,203 @@
 						</h2>
 					</div>
 
-					<badges-datatable [caption]="" [badges]="badges"></badges-datatable>
-				</div>
-
-				<div class="oeb-section">
-					<div class="oeb-headline-container-sm">
-						<h1 hlmH1 class="tw-font-extrabold tw-text-yellow tw-opacity-50">Reusable Components</h1>
-						<h2 hlmH2 class="tw-font-extrabold tw-text-red tw-relative tw-top-[-20px] tw-left-[20px]">
-							Accordion
-						</h2>
-					</div>
-
-					<competency-accordion
-						[category]="'Super Kategorie Hier'"
-						[description]="'Sehr spannend unbedingt durchlesen und aufklappen'"
-					/>
-				</div>
-
-				<div class="oeb-section">
-					<div class="oeb-headline-container-sm">
-						<h1 hlmH1 class="tw-font-extrabold tw-text-yellow tw-opacity-50">Reusable Components</h1>
-						<h2 hlmH2 class="tw-font-extrabold tw-text-red tw-relative tw-top-[-20px] tw-left-[20px]">
-							Spinner
-						</h2>
-					</div>
-
-					<oeb-spinner/>
-				</div>
-			<div class="oeb-section tw-bg-yellow">
-				<div class="oeb-headline-container">
-					<h1 hlmH1 class="">Alles über Abstände</h1>
-					<h1 hlmH1 class="tw-font-extrabold">Padding, Margin und co</h1>
-				</div>
-				<p class="oeb-standard-padding-bottom" hlmP>
-					The headline container makes sure that the text is far enough. The headline container makes sure
-					that the text is far enough. The headline container makes sure that the text is far enough. The
-					headline container makes sure that the text is far enough.
-				</p>
-				<p class="oeb-standard-padding-bottom" hlmP>
-					Because of the standard-padding-bottom this text is in the right distance too. Because of the
-					standard-padding-bottom this text is in the right distance too. Because of the
-					standard-padding-bottom this text is in the right distance too. Because of the
-					standard-padding-bottom this text is in the right distance too. Because of the
-					standard-padding-bottom this text is in the right distance too.
-				</p>
-
-				<div class="oeb-inset-padding">
 					<p hlmP>
-						If you are working in a colored container like this and dont want your content to be at the
-						border, than use oeb-inset-padding
+						Tables are individual because they differ in style and function. Copy one of the datatables and
+						adapt if you need a new one.
 					</p>
 				</div>
 
 				<div class="oeb-section">
-					<div class="oeb-inset-padding">
-						<div class="oeb-headline-container-sm">
-							<h1 hlmH1 class="">More narrow pages also exist</h1>
-							<h1 hlmH1 class="tw-font-extrabold">where the headline is closer to the content</h1>
-						</div>
-						<p hlmP>The content goes here.</p>
-						<form novalidate>
-							<!-- Email Field -->
-							<oeb-input
-								label="Input Elemente already have padding. You do not need to do anything."
-								placeholder="Deine E-Mail Adresse"
-								fieldType="email"
-								[error]="'Bitte gib Deine Email-Adresse ein.'"
-								[autofocus]="true"
-								[control]="loginForm.rawControlMap.username"
-								#usernameField
-							></oeb-input>
+					<div class="oeb-headline-container-sm">
+						<h1 hlmH1 class="tw-font-extrabold tw-text-yellow tw-opacity-50">Reusable Components</h1>
+						<h2 hlmH2 class="tw-font-extrabold tw-text-red tw-relative tw-top-[-20px] tw-left-[20px]">
+							Dropdown
+						</h2>
+						<oeb-dropdown
+							[menuItems]="aboutBadgesMenuItems"
+							trigger="Über Badges"
+							triggerStyle="oeb-navitem tw-cursor-pointer !tw-leading-none !tw-py-1"
+						></oeb-dropdown>
+					</div>
+				</div>
+				<div class="oeb-section">
+					<div class="oeb-headline-container-sm">
+						<h1 hlmH1 class="tw-font-extrabold tw-text-yellow tw-opacity-50">Reusable Components</h1>
+						<h2 hlmH2 class="tw-font-extrabold tw-text-red tw-relative tw-top-[-20px] tw-left-[20px]">
+							Select
+						</h2>
+						<oeb-select
+							actionBar="true"
+							class="md:tw-w-[180px] oeb"
+							[options]="categoryOptions"
+							[control]="categoryControl"
+							placeholder="--"
+							[autofocus]="true"
+							noTopMargin="true"
+						></oeb-select>
+					</div>
+				</div>
+				<div class="oeb-section">
+					<div class="oeb-headline-container-sm">
+						<h1 hlmH1 class="tw-font-extrabold tw-text-yellow tw-opacity-50">Reusable Components</h1>
+						<h2 hlmH2 class="tw-font-extrabold tw-text-red tw-relative tw-top-[-20px] tw-left-[20px]">
+							Collapsible
+						</h2>
+						<p>Currently only used for competencies but can be adapted for other content</p>
+						<oeb-collapsible [trigger]="collapseDetailsTrigger">
+							<ng-template #collapseDetailsTrigger>
+								<h2 class="tw-pt-1 tw-px-1 tw-text-xl tw-text-[var(--color-purple)] tw-mr-auto">
+									TRIGGER HERE
+								</h2>
+							</ng-template>
+							<div>
+								<p hlmP>Content goes here. Can Be anything.</p>
+							</div>
+						</oeb-collapsible>
+					</div>
 
-							<oeb-input
-								label="Area"
-								placeholder="Dein Text hier rein bitte"
-								fieldType="textarea"
-								[error]="'Bitte gib Deine Email-Adresse ein.'"
-								[autofocus]="true"
-								[control]="loginForm.rawControlMap.username"
-								#usernameField
-							></oeb-input>
-						</form>
+					<div class="oeb-section">
+						<div class="oeb-headline-container-sm">
+							<h1 hlmH1 class="tw-font-extrabold tw-text-yellow tw-opacity-50">Reusable Components</h1>
+							<h2 hlmH2 class="tw-font-extrabold tw-text-red tw-relative tw-top-[-20px] tw-left-[20px]">
+								Spinner
+							</h2>
+						</div>
+
+						<oeb-spinner />
 					</div>
-				</div>
-				<div class="oeb-section">
-					<div class="oeb-headline-container-sm">
-						<h1 hlmH1 class="">General padding guidline DESKTOP</h1>
-						<h1 hlmH1 class="tw-font-extrabold">If you need a padding/margin somewhere use one of these</h1>
+					<div class="oeb-section">
+						<div class="oeb-headline-container-sm">
+							<h1 hlmH1 class="tw-font-extrabold tw-text-yellow tw-opacity-50">Grid Layouts</h1>
+							<h2 hlmH2 class="tw-font-extrabold tw-text-red tw-relative tw-top-[-20px] tw-left-[20px]">
+								General rules for grids
+							</h2>
+							<p class="oeb-standard-padding-bottom">
+								Grid layouts can be found in the tailwind.config. Grids for Badges, Issuers and
+								Learningpaths can be found there. Generally use gap-6 (24px) for all grids. Try to keep
+								card layouts, dont resize cards too much. There is a animations predifined in
+								animations.ts which can be added to all grids.
+							</p>
+							<div class="tw-gap-6 tw-grid tw-grid-cols-badges">
+								<div
+									class="tw-rounded-[10px] tw-h-max tw-max-w-[450px] tw-border-purple tw-border-solid tw-border tw-relative tw-p-3 tw-block tw-overflow-hidden oeb-badge-card"
+								>
+									Test Card 1
+								</div>
+								<div
+									class="tw-rounded-[10px] tw-h-max tw-max-w-[450px] tw-border-purple tw-border-solid tw-border tw-relative tw-p-3 tw-block tw-overflow-hidden oeb-badge-card"
+								>
+									Test Card 2
+								</div>
+								<div
+									class="tw-rounded-[10px] tw-h-max tw-max-w-[450px] tw-border-purple tw-border-solid tw-border tw-relative tw-p-3 tw-block tw-overflow-hidden oeb-badge-card"
+								>
+									Test Card 3
+								</div>
+								<div
+									class="tw-rounded-[10px] tw-h-max tw-max-w-[450px] tw-border-purple tw-border-solid tw-border tw-relative tw-p-3 tw-block tw-overflow-hidden oeb-badge-card"
+								>
+									Test Card 4
+								</div>
+								<div
+									class="tw-rounded-[10px] tw-h-max tw-max-w-[450px] tw-border-purple tw-border-solid tw-border tw-relative tw-p-3 tw-block tw-overflow-hidden oeb-badge-card"
+								>
+									Test Card 5
+								</div>
+								<div
+									class="tw-rounded-[10px] tw-h-max tw-max-w-[450px] tw-border-purple tw-border-solid tw-border tw-relative tw-p-3 tw-block tw-overflow-hidden oeb-badge-card"
+								>
+									Test Card 6
+								</div>
+							</div>
+						</div>
 					</div>
-					<p hlmP class="tw-pl-[88px]">88px</p>
-					<p hlmP class="tw-pl-10">40px / tw-pl-10</p>
-					<p hlmP class="tw-pl-8">32px / tw-pl-8</p>
-					<p hlmP class="tw-pl-6">24px / tw-pl-6</p>
-					<p hlmP class="tw-pl-4">16px / tw-pl-4</p>
-					<p hlmP class="tw-pl-2">8px / tw-pl-2</p>
-					<p hlmP class="tw-pl-1">4px / tw-pl-1</p>
-				</div>
-				<div class="oeb-section">
-					<div class="oeb-headline-container-sm">
-						<h1 hlmH1 class="">General padding guidline MOBILE</h1>
-						<h1 hlmH1 class="tw-font-extrabold">If you need a padding/margin somewhere use one of these</h1>
+					<div class="oeb-section tw-bg-yellow">
+						<div class="oeb-headline-container">
+							<h1 hlmH1 class="">Alles über Abstände</h1>
+							<h1 hlmH1 class="tw-font-extrabold">Padding, Margin und co</h1>
+						</div>
+						<p class="oeb-standard-padding-bottom" hlmP>
+							The headline container makes sure that the text is far enough. The headline container makes
+							sure that the text is far enough. The headline container makes sure that the text is far
+							enough. The headline container makes sure that the text is far enough.
+						</p>
+						<p class="oeb-standard-padding-bottom" hlmP>
+							Because of the standard-padding-bottom this text is in the right distance too. Because of
+							the standard-padding-bottom this text is in the right distance too. Because of the
+							standard-padding-bottom this text is in the right distance too. Because of the
+							standard-padding-bottom this text is in the right distance too. Because of the
+							standard-padding-bottom this text is in the right distance too.
+						</p>
+
+						<div class="oeb-inset-padding">
+							<p hlmP>
+								If you are working in a colored container like this and dont want your content to be at
+								the border, than use oeb-inset-padding
+							</p>
+						</div>
+
+						<div class="oeb-section">
+							<div class="oeb-inset-padding">
+								<div class="oeb-headline-container-sm">
+									<h1 hlmH1 class="">More narrow pages also exist</h1>
+									<h1 hlmH1 class="tw-font-extrabold">where the headline is closer to the content</h1>
+								</div>
+								<p hlmP>The content goes here.</p>
+								<form novalidate>
+									<!-- Email Field -->
+									<oeb-input
+										label="Input Elemente already have padding. You do not need to do anything."
+										placeholder="Deine E-Mail Adresse"
+										fieldType="email"
+										[error]="'Bitte gib Deine Email-Adresse ein.'"
+										[autofocus]="true"
+										[control]="loginForm.rawControlMap.username"
+										#usernameField
+									></oeb-input>
+
+									<oeb-input
+										label="Area"
+										placeholder="Dein Text hier rein bitte"
+										fieldType="textarea"
+										[error]="'Bitte gib Deine Email-Adresse ein.'"
+										[autofocus]="true"
+										[control]="loginForm.rawControlMap.username"
+										#usernameField
+									></oeb-input>
+								</form>
+							</div>
+						</div>
+
+						<div class="oeb-section">
+							<div class="oeb-headline-container-sm">
+								<h1 hlmH1 class="">General padding guidline DESKTOP</h1>
+								<h1 hlmH1 class="tw-font-extrabold">
+									If you need a padding/margin somewhere use one of these
+								</h1>
+							</div>
+							<p hlmP class="tw-pl-[88px]">88px</p>
+							<p hlmP class="tw-pl-10">40px / tw-pl-10</p>
+							<p hlmP class="tw-pl-8">32px / tw-pl-8</p>
+							<p hlmP class="tw-pl-6">24px / tw-pl-6</p>
+							<p hlmP class="tw-pl-4">16px / tw-pl-4</p>
+							<p hlmP class="tw-pl-2">8px / tw-pl-2</p>
+							<p hlmP class="tw-pl-1">4px / tw-pl-1</p>
+						</div>
+						<div class="oeb-section">
+							<div class="oeb-headline-container-sm">
+								<h1 hlmH1 class="">General padding guidline MOBILE</h1>
+								<h1 hlmH1 class="tw-font-extrabold">
+									If you need a padding/margin somewhere use one of these
+								</h1>
+							</div>
+							<p hlmP class="tw-pl-10">40px / tw-pl-10</p>
+							<p hlmP class="tw-pl-6">24px / tw-pl-6</p>
+							<p hlmP class="tw-pl-4">16px / tw-pl-4</p>
+							<p hlmP class="tw-pl-2">8px / tw-pl-2</p>
+							<p hlmP class="tw-pl-1">4px / tw-pl-1</p>
+						</div>
 					</div>
-					<p hlmP class="tw-pl-10">40px / tw-pl-10</p>
-					<p hlmP class="tw-pl-6">24px / tw-pl-6</p>
-					<p hlmP class="tw-pl-4">16px / tw-pl-4</p>
-					<p hlmP class="tw-pl-2">8px / tw-pl-2</p>
-					<p hlmP class="tw-pl-1">4px / tw-pl-1</p>
 				</div>
 			</div>
 		</div>
