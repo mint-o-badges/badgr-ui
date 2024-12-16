@@ -12,7 +12,7 @@ import { AUTO_STYLE, animate, state, style, transition, trigger } from '@angular
 		]),
 	],
 	host: {
-		class: 'tw-rounded-[10px] tw-h-max tw-max-w-[450px] tw-border-purple tw-border-solid tw-border tw-relative tw-p-3 tw-block tw-overflow-hidden oeb-badge-card',
+		class: 'tw-rounded-[10px] tw-h-max tw-max-w-[450px] tw-border-purple tw-border-solid tw-border tw-relative tw-p-4 tw-block tw-overflow-hidden oeb-badge-card',
 	},
 	template: `
 		<div
@@ -38,11 +38,10 @@ import { AUTO_STYLE, animate, state, style, transition, trigger } from '@angular
 					</div>
 				</div>
 				<img
-					class="badgeimage badgeimage-{{ mostRelevantStatus }}"
+					class="oeb-badgeimage badgeimage-{{ mostRelevantStatus }}"
 					[loaded-src]="badgeImage"
 					[loading-src]="badgeLoadingImageUrl"
 					[error-src]="badgeFailedImageUrl"
-					width="80"
 				/>
 				<div class="tw-flex tw-flex-col tw-flex-wrap tw-pl-4 tw-py-2">
 					<a
@@ -97,7 +96,7 @@ import { AUTO_STYLE, animate, state, style, transition, trigger } from '@angular
 						</div>
 					</div>
 				</div>
-				<div class="tw-float-right tw-relative tw-ml-auto tw-mr-6 tw-min-h-20">
+				<div class="tw-float-right tw-relative tw-ml-auto tw-mr-6 tw-h-full">
 					<oeb-checkbox
 						*ngIf="checkboxControl"
 						class="tw-absolute tw-top-0"
@@ -110,20 +109,24 @@ import { AUTO_STYLE, animate, state, style, transition, trigger } from '@angular
 						class="tw-absolute tw-bottom-0 tw-cursor-pointer"
 						(click)="toggleCompetencies()"
 					>
-						<hlm-icon [name]="showCompetencies ? 'lucideChevronUp' : 'lucideChevronDown'" />
+						<hlm-icon size="lg" [name]="showCompetencies ? 'lucideChevronUp' : 'lucideChevronDown'" />
 					</div>
 				</div>
 			</div>
 		</div>
 		<div [@showCompetencies]="showCompetencies">
 			<div class="tw-pt-8">
-				<div *ngFor="let competency of competencies">
-					<ng-container *ngIf="showCompetencies">
-						<competency-accordion [name]="competency.name" [category]="competency.category"
-							[description]="competency.description" [escoID]="competency.escoID"
-							[studyload]="competency.studyLoad | hourPipe"></competency-accordion>
-					</ng-container>
-				</div>
+				<ng-container *ngIf="showCompetencies">
+					<div *ngFor="let competency of competencies">
+						<competency-accordion
+							[name]="competency.name"
+							[category]="competency.category"
+							[description]="competency.description"
+							[escoID]="competency.escoID"
+							[studyload]="competency.studyLoad | hourPipe"
+						></competency-accordion>
+					</div>
+				</ng-container>
 			</div>
 		</div>
 	`,
