@@ -170,9 +170,6 @@ export class RecipientEarnedBadgeListComponent
 			// force a refresh of the userProfileSet now that we are authenticated
 			this.profileLoaded = profileManager.userProfileSet.updateList().then((p) => {
 				this.profile = profileManager.userProfile;
-				if (profileManager.userProfile.agreedTermsVersion !== profileManager.userProfile.latestTermsVersion) {
-					dialogService.newTermsDialog.openDialog();
-				}
 			});
 		}
 
