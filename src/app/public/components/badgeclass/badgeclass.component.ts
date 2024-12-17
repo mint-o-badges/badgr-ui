@@ -89,6 +89,7 @@ export class PublicBadgeClassComponent {
 					badgeFailedImageUrl: this.badgeFailedImageUrl,
 					badgeImage: badge.image,
 					competencies: badge['extensions:CompetencyExtension'],
+					license: badge['extensions:LicenseExtension'] ? true : false,
 					crumbs: [{ title: 'Badges', routerLink: ['/catalog/badges'] }, { title: badge.name }],
 				}
 			})
