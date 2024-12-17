@@ -97,14 +97,15 @@ import { FormControl } from '@angular/forms';
 						</div>
 					</div>
 				</div>
-				<div class="tw-float-right tw-relative tw-ml-auto tw-mr-6 tw-h-full">
+				<div
+					class="tw-float-right tw-relative tw-ml-auto tw-flex tw-items-center tw-flex-col tw-mr-2 tw-h-full"
+				>
 					<oeb-checkbox
-						*ngIf="checkboxControl"
-						class="tw-absolute tw-top-0"
+						[noMargin]="true"
+						*ngIf="showCheckbox"
 						[(ngModel)]="checked"
-						[control]="checkboxControl"
-					>
-					</oeb-checkbox>
+						(ngModelChange)="changeCheckbox($event)"
+					></oeb-checkbox>
 					<div
 						*ngIf="competencies && competencies.length > 0"
 						class="tw-absolute tw-bottom-0 tw-cursor-pointer"
@@ -156,22 +157,19 @@ export class BgBadgecard {
 	@Input() checked: boolean = false;
 
 	changeCheckbox(event: boolean) {
-		this.checkboxChange.emit(event)
+		this.checkboxChange.emit(event);
 	}
 
 	@HostBinding('class') get hostClasses(): string {
-		return (this.checked || this.completed)
-			? 'tw-bg-[var(--color-lightgreen)]'
-			: 'tw-bg-white';
+		return this.checked || this.completed ? 'tw-bg-[var(--color-lightgreen)]' : 'tw-bg-white';
 	}
 	// @HostBinding('class') get completedClass(): string {
-	// 	return this.completed 
-	// 	  ? 'tw-bg-[var(--color-green)]'   
-	// 	  : 'tw-bg-white';  
+	// 	return this.completed
+	// 	  ? 'tw-bg-[var(--color-green)]'
+	// 	  : 'tw-bg-white';
 	//   }
 
-	ngOnInit() {
-	}
+	ngOnInit() {}
 
 	showCompetencies = false;
 	toggleCompetencies() {
