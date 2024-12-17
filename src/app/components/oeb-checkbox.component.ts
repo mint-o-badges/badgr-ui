@@ -39,7 +39,7 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class OebCheckboxComponent implements ControlValueAccessor {
 	@Input() text: string;
-	@Input() control: FormControl;
+	@Input() control: FormControl = new FormControl();
 	@Input() name: string;
 	@Output() checkedChange = new EventEmitter<boolean>();
 	@Input() ngModel: boolean;
@@ -62,7 +62,7 @@ export class OebCheckboxComponent implements ControlValueAccessor {
 	public readonly userClass = input<ClassValue>('', { alias: 'class' });
 	protected _computedClass = computed(() => hlm(this.userClass()));
 
-	onTouched = () => {};
+	onTouched = () => { };
 
 	writeValue(value: boolean): void {
 		this.checked = value;
@@ -76,7 +76,7 @@ export class OebCheckboxComponent implements ControlValueAccessor {
 		this.onTouched = fn;
 	}
 
-	setDisabledState?(isDisabled: boolean): void {}
+	setDisabledState?(isDisabled: boolean): void { }
 
 	get errorMessageForDisplay(): string {
 		return this.uncachedErrorMessage;
@@ -84,7 +84,7 @@ export class OebCheckboxComponent implements ControlValueAccessor {
 
 	get uncachedErrorMessage(): string {
 		const checkboxDefaultErrorText = { required: "Dieses Feld ist erforderlich" };
-		
+
 		return messagesForValidationError(this.label, checkboxDefaultErrorText, this.errorMessage).concat(
 			messagesForValidationError(this.label, this.errorGroup && this.errorGroup.errors, this.errorGroupMessage),
 		)[0]; // Only display the first error
@@ -93,7 +93,7 @@ export class OebCheckboxComponent implements ControlValueAccessor {
 	private cachedErrorState = null;
 
 	get controlErrorState() {
-		if(this.control){
+		if (this.control) {
 			return this.control.dirty && (!this.control.valid || (this.errorGroup && !this.errorGroup.valid));
 
 		}

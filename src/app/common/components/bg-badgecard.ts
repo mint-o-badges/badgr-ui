@@ -1,5 +1,6 @@
 import { Component, EventEmitter, HostBinding, Input, Output } from '@angular/core';
 import { AUTO_STYLE, animate, state, style, transition, trigger } from '@angular/animations';
+import { FormControl } from '@angular/forms';
 
 @Component({
 	selector: 'bg-badgecard',
@@ -147,16 +148,29 @@ export class BgBadgecard {
 	@Input() verifyUrl: string;
 	@Input() public = false;
 	@Input() competencies?: any[];
-	@Input() checkboxControl?: any;
+	@Input() checkboxControl?: FormControl;
+	@Input() showCheckbox = false;
 	@Output() shareClicked = new EventEmitter<MouseEvent>();
 	@Input() completed: Boolean = false;
-	checked = false;
+	@Output() checkboxChange = new EventEmitter<boolean>();
+	@Input() checked: boolean = false;
+
+	changeCheckbox(event: boolean) {
+		this.checkboxChange.emit(event)
+	}
 
 	@HostBinding('class') get hostClasses(): string {
-		return this.checked ? 'tw-bg-[var(--color-lightgreen)]' : 'tw-bg-white';
+		return (this.checked || this.completed)
+			? 'tw-bg-[var(--color-lightgreen)]'
+			: 'tw-bg-white';
 	}
-	@HostBinding('class') get completedClass(): string {
-		return this.completed ? 'tw-bg-[var(--color-green)]' : 'tw-bg-white';
+	// @HostBinding('class') get completedClass(): string {
+	// 	return this.completed 
+	// 	  ? 'tw-bg-[var(--color-green)]'   
+	// 	  : 'tw-bg-white';  
+	//   }
+
+	ngOnInit() {
 	}
 
 	showCompetencies = false;

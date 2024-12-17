@@ -87,21 +87,23 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent {
 					{ title: 'Award Badge' },
 				];
 			});
-
-		this.qrCodeApiService.getQrCode(this.qrSlug).then((qrCode) => {
-			this.qrForm.setValue({
-				title: qrCode.title,
-				createdBy: qrCode.createdBy,
-				valid_from: qrCode.valid_from
-					? EditQrFormComponent.datePipe.transform(new Date(qrCode.valid_from), 'yyyy-MM-dd')
-					: undefined,
-				expires_at: qrCode.expires_at
-					? EditQrFormComponent.datePipe.transform(new Date(qrCode.expires_at), 'yyyy-MM-dd')
-					: undefined,
-				badgeclass_id: qrCode.badgeclass_id,
-				issuer_id: qrCode.issuer_id,
+		
+		if(this.qrSlug){
+			this.qrCodeApiService.getQrCode(this.qrSlug).then((qrCode) => {
+				this.qrForm.setValue({
+					title: qrCode.title,
+					createdBy: qrCode.createdBy,
+					valid_from: qrCode.valid_from
+						? EditQrFormComponent.datePipe.transform(new Date(qrCode.valid_from), 'yyyy-MM-dd')
+						: undefined,
+					expires_at: qrCode.expires_at
+						? EditQrFormComponent.datePipe.transform(new Date(qrCode.expires_at), 'yyyy-MM-dd')
+						: undefined,
+					badgeclass_id: qrCode.badgeclass_id,
+					issuer_id: qrCode.issuer_id,
+				});
 			});
-		});
+		}
 
 		this.qrForm.setValue({
 			...this.qrForm.value,

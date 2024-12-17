@@ -132,6 +132,7 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 					badgeFailedImageUrl: this.badgeFailedImageUrl,
 					badgeImage: this.badge.badgeClass.image,
 					competencies: this.competencies as CompetencyType[],
+					license: this.badge.getExtension('extensions:LicenseExtension', {}) ? true : false,
 					shareButton: true,
 					id: this.badge.badgeClass.id.split('/')[5],
 				};

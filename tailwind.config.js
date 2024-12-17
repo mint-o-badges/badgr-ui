@@ -56,6 +56,8 @@ module.exports = {
 				myIssuersMobile: 'repeat(auto-fit, minmax(300px, 1fr))',
 				learningpaths: 'repeat(auto-fill, minmax(340px, 1fr))',
 				learningpathsBackpack: 'repeat(auto-fill, minmax(392px, 392px))',
+				badgesLp: 'repeat(auto-fill, minmax(290px, 1fr))',
+				learningpathsSmall: 'repeat(auto-fill, minmax(208px, 1fr))',
 			},
 			animation: {
 				'spin-slow': 'spin 5000ms linear infinite',

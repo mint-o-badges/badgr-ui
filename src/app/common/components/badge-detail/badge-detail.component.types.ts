@@ -67,6 +67,7 @@ export interface PageConfig {
 	badgeImage: string;
 	badgeDescription: string;
 	competencies?: CompetencyType[];
+	license?: boolean;
 	id?: string;
 	shareButton?: boolean;
 }
