@@ -395,7 +395,7 @@
 	style="background-color: var(--color-lightgreen); margin-top: 30px"
 >
 	<div class="page-padding">
-		<div class="oeb-footer tw-flex tw-flex-row tw-items-center">
+		<div class="oeb-footer tw-my-16 tw-flex tw-flex-row tw-items-center">
 			<div
 				class="tw-font-[rubik] tw-text-left tw-flex md:tw-flex-row md:tw-justify-between md:tw-gap-0 tw-flex-col-reverse tw-gap-[2em]"
 			>
@@ -406,10 +406,10 @@
 						<a class="tw-underline tw-text-link" href="https://mycelia.education/" target="_blank">mycelia gGmbH</a> und 
 						<a class="tw-underline tw-text-link" href="https://opensenselab.org/" target="_blank">openSenseLab gGmbH</a>.
 					</p>
-					<div class="tw-flex tw-gap-2 md:tw-w-2/3 tw-mt-[10px]">
-						<img src="assets/oeb/images/issuerPage/oeb-beta-logo.svg" class="tw-w-[40px]" alt="Beta logo" />
+					<div class="tw-flex tw-gap-2 tw-items-center tw-mt-[10px]">
+						<img src="assets/oeb/images/issuerPage/oeb-beta-logo.svg" class="md:tw-w-[100px] tw-w-[64px]" alt="Beta logo" />
 						<p >
-							Unsere Plattform befindet sich noch in der <a href="">Betaphase</a>. Du hast Fehler entdeckt?
+							Unsere Plattform befindet sich noch in der Betaphase. Du hast Fehler entdeckt?
 							Schreib uns gerne an
 							<a
 								class="tw-underline tw-cursor-pointer tw-text-link"
@@ -418,11 +418,11 @@
 							>hallo&#64;openbadges.education</a>.
 						</p>
 					</div>
-					<div class="tw-flex md:tw-hidden tw-flex-col tw-justify-evenly">
+					<div class="tw-flex md:tw-hidden tw-flex-col tw-gap-[7px]">
 						<a class="tw-text-[14px] tw-leading-[16.8px] tw-font-semibold  md:tw-text-[20px] md:tw-font-medium md:tw-leading-[26px] tw-text-oebblack" [routerLink]="['/public/faq']">FAQ</a>
-						<a class="tw-text-[14px] tw-leading-[16.8px] tw-font-semibold  md:tw-text-[20px] md:tw-font-medium md:tw-leading-[26px] tw-text-oebblack" [href]="theme.termsOfServiceLink">{{ 'Start.imprint' | translate }}</a>
-						<a class="tw-text-[14px] tw-leading-[16.8px] tw-font-semibold  md:tw-text-[20px] md:tw-font-medium md:tw-leading-[26px] tw-text-oebblack" [href]="theme.privacyPolicyLink">{{ 'Start.privacyPolicy' | translate }}</a>
-						<a class="tw-text-[14px] tw-leading-[16.8px] tw-font-semibold  md:tw-text-[20px] md:tw-font-medium md:tw-leading-[26px] tw-text-oebblack" [routerLink]="['/public/terms']">Nutzungsbedingungen</a>
+						<a class="tw-text-[14px] tw-leading-[16.8px] md:tw-text-[20px] md:tw-leading-[26px] tw-text-oebblack" [href]="theme.termsOfServiceLink">{{ 'Start.imprint' | translate }}</a>
+						<a class="tw-text-[14px] tw-leading-[16.8px] md:tw-text-[20px] md:tw-leading-[26px] tw-text-oebblack" [href]="theme.privacyPolicyLink">{{ 'Start.privacyPolicy' | translate }}</a>
+						<a class="tw-text-[14px] tw-leading-[16.8px] md:tw-text-[20px] md:tw-leading-[26px] tw-text-oebblack" [routerLink]="['/public/terms']">Nutzungsbedingungen</a>
 					</div>
 				</div>
 
@@ -474,11 +474,11 @@
 			src="assets/oeb/images/aboutpage/logoleiste_cropped.png"
 			alt="Telekom Stiftung Logo"
 		/>
-		<div class="tw-hidden md:tw-flex tw-flex-col tw-min-w-fit tw-text-right tw-justify-evenly">
+		<div class="tw-hidden md:tw-flex tw-flex-col tw-min-w-fit tw-text-right tw-gap-[7px]">
 			<a class="tw-text-[14px] tw-leading-[16.8px] tw-font-semibold  md:tw-text-[20px] md:tw-font-medium md:tw-leading-[26px] tw-text-oebblack" [routerLink]="['/public/faq']">FAQ</a>
-			<a class="tw-text-[14px] tw-leading-[16.8px] tw-font-semibold  md:tw-text-[20px] md:tw-font-medium md:tw-leading-[26px] tw-text-oebblack" [href]="theme.termsOfServiceLink">{{ 'Start.imprint' | translate }}</a>
-			<a class="tw-text-[14px] tw-leading-[16.8px] tw-font-semibold  md:tw-text-[20px] md:tw-font-medium md:tw-leading-[26px] tw-text-oebblack" [href]="theme.privacyPolicyLink">{{ 'Start.privacyPolicy' | translate }}</a>
-			<a class="tw-text-[14px] tw-leading-[16.8px] tw-font-semibold  md:tw-text-[20px] md:tw-font-medium md:tw-leading-[26px] tw-text-oebblack" [routerLink]="['/public/terms']">Nutzungsbedingungen</a>
+			<a class="tw-text-[14px] tw-leading-[16.8px] md:tw-text-[20px] md:tw-leading-[26px] tw-text-oebblack" [href]="theme.termsOfServiceLink">{{ 'Start.imprint' | translate }}</a>
+			<a class="tw-text-[14px] tw-leading-[16.8px] md:tw-text-[20px] md:tw-leading-[26px] tw-text-oebblack" [href]="theme.privacyPolicyLink">{{ 'Start.privacyPolicy' | translate }}</a>
+			<a class="tw-text-[14px] tw-leading-[16.8px] md:tw-text-[20px] md:tw-leading-[26px] tw-text-oebblack" [routerLink]="['/public/terms']">Nutzungsbedingungen</a>
 		</div>
 		<!-- <div class="funding-logos-container">
 			<img src="assets/oeb/images/aboutpage/bmbf_logo_new.jpg" class="tw-max-w-[200px]" alt="BMBF logo" />
