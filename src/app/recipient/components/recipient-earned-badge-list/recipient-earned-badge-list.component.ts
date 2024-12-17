@@ -162,9 +162,6 @@ export class RecipientEarnedBadgeListComponent
 		this.recipientBadgeManager.recipientBadgeList.changed$.subscribe((badges) =>
 			this.updateBadges(badges.entities),
 		);
-		this.recipientBadgeManager.recipientBadgeList.changed$.subscribe((badges) =>
-			this.updateBadges(badges.entities),
-		);
 
 		if (sessionService.isLoggedIn) {
 			// force a refresh of the userProfileSet now that we are authenticated
@@ -399,6 +396,7 @@ export class RecipientEarnedBadgeListComponent
 					groupedCompetencies[competency['framework_identifier']].lastReceived = badge.issueDate;
 				}
 				this.totalStudyTime += competency.studyLoad;
+				console.log(this.totalStudyTime)
 			});
 		});
 
