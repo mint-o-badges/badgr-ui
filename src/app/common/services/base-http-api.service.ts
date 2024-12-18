@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 // import { LoginService } from "../../auth/auth.service";
-import { SessionService } from './session.service';
+import { AuthorizationToken, SessionService } from './session.service';
 import { AppConfigService } from '../app-config.service';
 import { MessageService } from './message.service';
 import {
@@ -62,6 +62,10 @@ export abstract class BaseHttpApiService {
 	): Promise<HttpResponse<T>> {
 		const endpointUrl = path.startsWith('http') ? path : this.baseUrl + path;
 
+		if (useAuth && (requireAuth || this.sessionService.isLoggedIn)) {
+			headers = this.addAuthTokenHeader(headers, this.sessionService.requiredAuthToken);
+		}
+
 		headers = this.addJsonResponseHeader(headers);
 		this.messageService.incrementPendingRequestCount();
 
@@ -71,7 +75,6 @@ export abstract class BaseHttpApiService {
 				headers,
 				params: queryParams,
 				responseType: 'json',
-                withCredentials: useAuth && (requireAuth || this.sessionService.isLoggedIn)
 			}),
 		);
 	}
@@ -86,6 +89,9 @@ export abstract class BaseHttpApiService {
 	): Promise<HttpResponse<T>> {
 		const endpointUrl = path.startsWith('http') ? path : this.baseUrl + path;
 
+		if (useAuth && (requireAuth || this.sessionService.isLoggedIn)) {
+			headers = this.addAuthTokenHeader(headers, this.sessionService.requiredAuthToken);
+		}
 		headers = this.addJsonRequestHeader(headers);
 		headers = this.addJsonResponseHeader(headers);
 		this.messageService.incrementPendingRequestCount();
@@ -96,7 +102,6 @@ export abstract class BaseHttpApiService {
 				headers,
 				params: queryParams,
 				responseType: 'json',
-                withCredentials: useAuth && (requireAuth || this.sessionService.isLoggedIn)
 			}),
 		);
 	}
@@ -109,6 +114,7 @@ export abstract class BaseHttpApiService {
 	): Promise<HttpResponse<T>> {
 		const endpointUrl = path.startsWith('http') ? path : this.baseUrl + path;
 
+		headers = this.addAuthTokenHeader(headers, this.sessionService.requiredAuthToken);
 		headers = this.addJsonRequestHeader(headers);
 		headers = this.addJsonResponseHeader(headers);
 		this.messageService.incrementPendingRequestCount();
@@ -119,7 +125,6 @@ export abstract class BaseHttpApiService {
 				headers,
 				params: queryParams,
 				responseType: 'json',
-                withCredentials: true
 			}),
 		);
 	}
@@ -131,6 +136,7 @@ export abstract class BaseHttpApiService {
 		headers: HttpHeaders = new HttpHeaders(),
 	): Promise<HttpResponse<T>> {
 		const endpointUrl = path.startsWith('http') ? path : this.baseUrl + path;
+		headers = this.addAuthTokenHeader(headers, this.sessionService.requiredAuthToken);
 		headers = this.addJsonRequestHeader(headers);
 		headers = this.addJsonResponseHeader(headers);
 		this.messageService.incrementPendingRequestCount();
@@ -141,7 +147,6 @@ export abstract class BaseHttpApiService {
 				headers,
 				params: queryParams,
 				responseType: 'json',
-                withCredentials: true,
 				...(payload ? { body: JSON.stringify(payload) } : {}),
 			}),
 		);
@@ -205,6 +210,10 @@ export abstract class BaseHttpApiService {
 
 	private addJsonResponseHeader(headers: HttpHeaders) {
 		return headers.append('Accept', 'application/json');
+	}
+
+	private addAuthTokenHeader(headers: HttpHeaders, token: AuthorizationToken) {
+		return headers.append('Authorization', 'Bearer ' + token.access_token);
 	}
 
 	private async addTestingDelay<T>(value: T): Promise<T> {

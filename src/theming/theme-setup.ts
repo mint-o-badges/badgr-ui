@@ -1,5 +1,5 @@
 import { AppConfigService } from '../app/common/app-config.service';
-import { EXPIRATION_DATE_STORAGE_KEY } from '../app/common/services/session.service';
+import { TOKEN_STORAGE_KEY } from '../app/common/services/session.service';
 import { BadgrTheme } from './badgr-theme';
 
 /**
@@ -13,7 +13,7 @@ export function initializeTheme(configService: AppConfigService) {
 		let hasSession = false;
 
 		try {
-			if (localStorage.getItem(EXPIRATION_DATE_STORAGE_KEY) || sessionStorage.getItem(EXPIRATION_DATE_STORAGE_KEY)) {
+			if (localStorage.getItem(TOKEN_STORAGE_KEY) || sessionStorage.getItem(TOKEN_STORAGE_KEY)) {
 				hasSession = true;
 			}
 		} catch (e) {}

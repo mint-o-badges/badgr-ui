@@ -37,6 +37,8 @@ xdescribe('UserProfile', () => {
 	xit('should correctly alias fields', inject(
 		[CommonEntityManager, SessionService],
 		(commonManager: CommonEntityManager, sessionService: SessionService) => {
+			sessionService.storeToken({ access_token: 'testtoken' });
+
 			const userProfile = new UserProfile(commonManager).applyApiModel(apiUserProfile);
 			userProfile.emails.applyApiData(apiProfileEmails);
 			userProfile.socialAccounts.applyApiData(apiSocialAccounts);
