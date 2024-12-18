@@ -20,6 +20,10 @@ import { ApiQRCode } from "../../models/qrcode-api.model";
 import { HlmH3Directive } from "../../../../app/components/spartan/ui-typography-helm/src/lib/hlm-h3.directive";
 import { HlmPDirective } from "../../../../app/components/spartan/ui-typography-helm/src/lib/hlm-p.directive";
 import { TranslateService } from "@ngx-translate/core";
+import { InfoDialogComponent } from "../../../common/dialogs/oeb-dialogs/info-dialog.component";
+import { BadgeClass } from "../../models/badgeclass.model";
+import { Router } from "@angular/router";
+import { Issuer } from "../../models/issuer.model";
 
 @Component({
 	selector: 'qrcode-awards',
@@ -52,6 +56,7 @@ export class QrCodeAwardsComponent {
 	constructor(
 		private badgeRequestApiService: BadgeRequestApiService,
 		private qrCodeApiService: QrCodeApiService,
+		private router: Router,
 		private translate: TranslateService) {}
 	separatorStyle = "tw-block tw-my-2 tw-border-[var(--color-lightgray)]"
 
@@ -65,8 +70,8 @@ export class QrCodeAwardsComponent {
 
     @Input() awards: any[]
 	@Input() routerLinkText: string[]
-	@Input() issuerSlug: string
-	@Input() badgeClassSlug: string
+	@Input() issuer: Issuer
+	@Input() badgeClass: BadgeClass
 	@Output() qrBadgeAward = new EventEmitter<void>();
 
 
@@ -80,12 +85,12 @@ export class QrCodeAwardsComponent {
 				this.qrCodeMenus.push([
 					{
 						title: 'Zum QR-Code',
-						routerLink: ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeClassSlug, 'qr', award.slug,  'generate'],
+						routerLink: ['/issuer/issuers', this.issuer.slug, 'badges', this.badgeClass.slug, 'qr', award.slug,  'generate'],
 						icon: 'lucideQrCode',
 					},
 					{
 						title: 'Bearbeiten',
-						routerLink: ['/issuer/issuers/' , this.issuerSlug, 'badges' , this.badgeClassSlug, 'qr', award.slug, 'edit'],
+						routerLink: ['/issuer/issuers/' , this.issuer.slug, 'badges' , this.badgeClass.slug, 'qr', award.slug, 'edit'],
 						icon: 'lucidePencil',
 					},
 					{
@@ -113,13 +118,34 @@ export class QrCodeAwardsComponent {
 		});
 	}
 
+	routeToQrAward(badge: BadgeClass, issuer){
+		if(badge.recipientCount === 0){
+			const dialogRef =this._hlmDialogService.open(InfoDialogComponent, {
+				context: {
+					variant: "info",
+					caption: this.translate.instant("Badge.endOfEditDialogTitle"),
+					subtitle: this.translate.instant("Badge.endOfEditDialogTextQR"),
+					text: this.translate.instant("Badge.endOfEditDialogSubText"),
+					cancelText: this.translate.instant('General.previous'),
+					forwardText: this.translate.instant('Issuer.giveQr')
+				},
+			})
+			dialogRef.closed$.subscribe((result) => {
+				if (result === 'continue') this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'qr']);
+			});
+		}
+		else{
+			this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'qr'])
+		}	
+	}
+
 	deleteQRAward(data){
 		let index = this.awards.findIndex(award => award.slug == data.slug)
 		this.awards[index].request_count -= 1;
 	}
 
 	deleteQrCode(qrSlug: string) {
-		this.qrCodeApiService.deleteQrCode(this.issuerSlug, this.badgeClassSlug, qrSlug).then(() => {
+		this.qrCodeApiService.deleteQrCode(this.issuer.slug, this.badgeClass.slug, qrSlug).then(() => {
 			this.awards = this.awards.filter(value => value.slug != qrSlug)
 		}
 	)};
