@@ -15,49 +15,61 @@
 		</div>
 		<style>
 			@font-face {
-			  font-display: block;
-			  font-family: Roboto;
-			  src: url(https://assets.brevo.com/font/Roboto/Latin/normal/normal/7529907e9eaf8ebb5220c5f9850e3811.woff2) format("woff2"), url(https://assets.brevo.com/font/Roboto/Latin/normal/normal/25c678feafdc175a70922a116c9be3e7.woff) format("woff")
+				font-display: block;
+				font-family: Roboto;
+				src:
+					url(https://assets.brevo.com/font/Roboto/Latin/normal/normal/7529907e9eaf8ebb5220c5f9850e3811.woff2)
+						format('woff2'),
+					url(https://assets.brevo.com/font/Roboto/Latin/normal/normal/25c678feafdc175a70922a116c9be3e7.woff)
+						format('woff');
 			}
-		  
+
 			@font-face {
-			  font-display: fallback;
-			  font-family: Roboto;
-			  font-weight: 600;
-			  src: url(https://assets.brevo.com/font/Roboto/Latin/medium/normal/6e9caeeafb1f3491be3e32744bc30440.woff2) format("woff2"), url(https://assets.brevo.com/font/Roboto/Latin/medium/normal/71501f0d8d5aa95960f6475d5487d4c2.woff) format("woff")
+				font-display: fallback;
+				font-family: Roboto;
+				font-weight: 600;
+				src:
+					url(https://assets.brevo.com/font/Roboto/Latin/medium/normal/6e9caeeafb1f3491be3e32744bc30440.woff2)
+						format('woff2'),
+					url(https://assets.brevo.com/font/Roboto/Latin/medium/normal/71501f0d8d5aa95960f6475d5487d4c2.woff)
+						format('woff');
 			}
-		  
+
 			@font-face {
-			  font-display: fallback;
-			  font-family: Roboto;
-			  font-weight: 700;
-			  src: url(https://assets.brevo.com/font/Roboto/Latin/bold/normal/3ef7cf158f310cf752d5ad08cd0e7e60.woff2) format("woff2"), url(https://assets.brevo.com/font/Roboto/Latin/bold/normal/ece3a1d82f18b60bcce0211725c476aa.woff) format("woff")
+				font-display: fallback;
+				font-family: Roboto;
+				font-weight: 700;
+				src:
+					url(https://assets.brevo.com/font/Roboto/Latin/bold/normal/3ef7cf158f310cf752d5ad08cd0e7e60.woff2)
+						format('woff2'),
+					url(https://assets.brevo.com/font/Roboto/Latin/bold/normal/ece3a1d82f18b60bcce0211725c476aa.woff)
+						format('woff');
 			}
-		  
+
 			#sib-container input:-ms-input-placeholder {
-			  text-align: left;
-			  font-family: "Helvetica", sans-serif;
-			  color: #c0ccda;
+				text-align: left;
+				font-family: 'Helvetica', sans-serif;
+				color: #c0ccda;
 			}
-		  
+
 			#sib-container input::placeholder {
-			  text-align: left;
-			  font-family: "Helvetica", sans-serif;
-			  color: #c0ccda;
+				text-align: left;
+				font-family: 'Helvetica', sans-serif;
+				color: #c0ccda;
 			}
-		  
+
 			#sib-container textarea::placeholder {
-			  text-align: left;
-			  font-family: "Helvetica", sans-serif;
-			  color: #c0ccda;
+				text-align: left;
+				font-family: 'Helvetica', sans-serif;
+				color: #c0ccda;
 			}
-		  
+
 			#sib-container a {
-			  text-decoration: underline;
-			  color: #2BB2FC;
+				text-decoration: underline;
+				color: #2bb2fc;
 			}
-		  </style>
-		  <link rel="stylesheet" href="https://sibforms.com/forms/end-form/build/sib-styles.css">
+		</style>
+		<link rel="stylesheet" href="https://sibforms.com/forms/end-form/build/sib-styles.css" />
 	</header>
 	<div
 		style="
@@ -278,16 +290,18 @@
 		<div class="mobilenav-x-navitems">
 			<p class="mobilenav-x-label">{{ 'General.aboutBadges' | translate }}</p>
 
-			<a routerLinkActive="menuitem-is-active" [routerLink]="['/catalog/badges']">Badges</a>
+			<a routerLinkActive="menuitem-is-active" [routerLink]="['/catalog/badges']">Badges A-Z</a>
 			<a routerLinkActive="menuitem-is-active" [routerLink]="['/catalog/issuers']">{{
-				'General.institutions' | translate
-				}}</a>
-			<a routerLinkActive="menuitem-is-active" [routerLink]="['/catalog/learningpaths']">{{ 'LearningPath.learningpaths' | translate }}</a>
+				'General.institutionsNav' | translate
+			}}</a>
+			<a routerLinkActive="menuitem-is-active" [routerLink]="['/catalog/learningpaths']">{{
+				'LearningPath.learningpathsNav' | translate
+			}}</a>
 			<hr class="mobilenav-x-rule" />
 
 			<a routerLinkActive="menuitem-is-active" [routerLink]="['/public/about']">{{
 				'NavItems.aboutOpenEducationalBadges' | translate
-				}}</a>
+			}}</a>
 			<hr class="mobilenav-x-rule" />
 
 			<a routerLinkActive="menuitem-is-active" [routerLink]="['/auth/login']">Login</a>
@@ -325,8 +339,8 @@
 			<p class="mobilenav-x-label">{{ 'General.aboutBadges' | translate }}</p>
 			<a [routerLink]="['/public/faq']">FAQ</a>
 			<a [routerLink]="['/catalog/badges']">Badges A-Z</a>
-			<a [routerLink]="['/catalog/issuers']">{{ 'General.institutions' | translate }}</a>
-			<a [routerLink]="['/catalog/learningpaths']">{{ 'LearningPath.learningpaths' | translate }}</a>
+			<a [routerLink]="['/catalog/issuers']">{{ 'General.institutionsNav' | translate }}</a>
+			<a [routerLink]="['/catalog/learningpaths']">{{ 'LearningPath.learningpathsNav' | translate }}</a>
 
 			<hr class="mobilenav-x-rule" />
 			<a [routerLink]="['/recipient/badges']">{{ 'General.backpack' | translate }}</a>
@@ -408,21 +422,38 @@
 					</p>
 					<div class="tw-flex tw-gap-2 md:tw-w-2/3 tw-mt-[10px]">
 						<img src="assets/oeb/images/issuerPage/oeb-beta-logo.svg" class="tw-w-[40px]" alt="Beta logo" />
-						<p >
-							Unsere Plattform befindet sich noch in der <a href="">Betaphase</a>. Du hast Fehler entdeckt?
-							Schreib uns gerne an
+						<p>
+							Unsere Plattform befindet sich noch in der <a href="">Betaphase</a>. Du hast Fehler
+							entdeckt? Schreib uns gerne an
 							<a
 								class="tw-underline tw-cursor-pointer tw-text-link"
 								title="contact us"
 								href="mailto:hallo@openbadges.education"
-							>hallo&#64;openbadges.education</a>.
+								>hallo&#64;openbadges.education</a
+							>.
 						</p>
 					</div>
 					<div class="tw-flex md:tw-hidden tw-flex-col tw-justify-evenly">
-						<a class="tw-text-[14px] tw-leading-[16.8px] tw-font-semibold  md:tw-text-[20px] md:tw-font-medium md:tw-leading-[26px] tw-text-oebblack" [routerLink]="['/public/faq']">FAQ</a>
-						<a class="tw-text-[14px] tw-leading-[16.8px] tw-font-semibold  md:tw-text-[20px] md:tw-font-medium md:tw-leading-[26px] tw-text-oebblack" [href]="theme.termsOfServiceLink">{{ 'Start.imprint' | translate }}</a>
-						<a class="tw-text-[14px] tw-leading-[16.8px] tw-font-semibold  md:tw-text-[20px] md:tw-font-medium md:tw-leading-[26px] tw-text-oebblack" [href]="theme.privacyPolicyLink">{{ 'Start.privacyPolicy' | translate }}</a>
-						<a class="tw-text-[14px] tw-leading-[16.8px] tw-font-semibold  md:tw-text-[20px] md:tw-font-medium md:tw-leading-[26px] tw-text-oebblack" [routerLink]="['/public/terms']">Nutzungsbedingungen</a>
+						<a
+							class="tw-text-[14px] tw-leading-[16.8px] tw-font-semibold md:tw-text-[20px] md:tw-font-medium md:tw-leading-[26px] tw-text-oebblack"
+							[routerLink]="['/public/faq']"
+							>FAQ</a
+						>
+						<a
+							class="tw-text-[14px] tw-leading-[16.8px] tw-font-semibold md:tw-text-[20px] md:tw-font-medium md:tw-leading-[26px] tw-text-oebblack"
+							[href]="theme.termsOfServiceLink"
+							>{{ 'Start.imprint' | translate }}</a
+						>
+						<a
+							class="tw-text-[14px] tw-leading-[16.8px] tw-font-semibold md:tw-text-[20px] md:tw-font-medium md:tw-leading-[26px] tw-text-oebblack"
+							[href]="theme.privacyPolicyLink"
+							>{{ 'Start.privacyPolicy' | translate }}</a
+						>
+						<a
+							class="tw-text-[14px] tw-leading-[16.8px] tw-font-semibold md:tw-text-[20px] md:tw-font-medium md:tw-leading-[26px] tw-text-oebblack"
+							[routerLink]="['/public/terms']"
+							>Nutzungsbedingungen</a
+						>
 					</div>
 				</div>
 
@@ -443,30 +474,29 @@
 	<script>
 		window.REQUIRED_CODE_ERROR_MESSAGE = 'W�hlen Sie bitte einen L�ndervorwahl aus.';
 		window.LOCALE = 'de';
-		window.EMAIL_INVALID_MESSAGE = window.SMS_INVALID_MESSAGE = "Die eingegebenen Informationen sind nicht g�ltig. Bitte �berpr�fe das Feldformat und versuche es erneut.";
-	  
-		window.REQUIRED_ERROR_MESSAGE = "Dieses Feld darf nicht leer sein. ";
-	  
-		window.GENERIC_INVALID_MESSAGE = "Die eingegebenen Informationen sind nicht g�ltig. Bitte �berpr�fe das Feldformat und versuche es erneut.";
-	  
-	  
-	  
-	  
+		window.EMAIL_INVALID_MESSAGE = window.SMS_INVALID_MESSAGE =
+			'Die eingegebenen Informationen sind nicht g�ltig. Bitte �berpr�fe das Feldformat und versuche es erneut.';
+
+		window.REQUIRED_ERROR_MESSAGE = 'Dieses Feld darf nicht leer sein. ';
+
+		window.GENERIC_INVALID_MESSAGE =
+			'Die eingegebenen Informationen sind nicht g�ltig. Bitte �berpr�fe das Feldformat und versuche es erneut.';
+
 		window.translation = {
-		  common: {
-			selectedList: '{quantity} Liste ausgew�hlt',
-			selectedLists: '{quantity} Listen ausgew�hlt'
-		  }
+			common: {
+				selectedList: '{quantity} Liste ausgew�hlt',
+				selectedLists: '{quantity} Listen ausgew�hlt',
+			},
 		};
-	  
+
 		var AUTOHIDE = Boolean(0);
-	  </script>
-	  
-	  <script defer src="https://sibforms.com/forms/end-form/build/main.js"></script>
+	</script>
+
+	<script defer src="https://sibforms.com/forms/end-form/build/main.js"></script>
 </footer>
 
 <!-- Funder logos -->
-<div class="tw-relative tw-w-full " [class.tw-hidden]="mobileNavOpen">
+<div class="tw-relative tw-w-full" [class.tw-hidden]="mobileNavOpen">
 	<div class="page-padding oeb logos-container md:tw-flex md:tw-justify-between">
 		<img
 			class="tw-max-w-full md:tw-max-w-[60%]"
@@ -475,10 +505,26 @@
 			alt="Telekom Stiftung Logo"
 		/>
 		<div class="tw-hidden md:tw-flex tw-flex-col tw-min-w-fit tw-text-right tw-justify-evenly">
-			<a class="tw-text-[14px] tw-leading-[16.8px] tw-font-semibold  md:tw-text-[20px] md:tw-font-medium md:tw-leading-[26px] tw-text-oebblack" [routerLink]="['/public/faq']">FAQ</a>
-			<a class="tw-text-[14px] tw-leading-[16.8px] tw-font-semibold  md:tw-text-[20px] md:tw-font-medium md:tw-leading-[26px] tw-text-oebblack" [href]="theme.termsOfServiceLink">{{ 'Start.imprint' | translate }}</a>
-			<a class="tw-text-[14px] tw-leading-[16.8px] tw-font-semibold  md:tw-text-[20px] md:tw-font-medium md:tw-leading-[26px] tw-text-oebblack" [href]="theme.privacyPolicyLink">{{ 'Start.privacyPolicy' | translate }}</a>
-			<a class="tw-text-[14px] tw-leading-[16.8px] tw-font-semibold  md:tw-text-[20px] md:tw-font-medium md:tw-leading-[26px] tw-text-oebblack" [routerLink]="['/public/terms']">Nutzungsbedingungen</a>
+			<a
+				class="tw-text-[14px] tw-leading-[16.8px] tw-font-semibold md:tw-text-[20px] md:tw-font-medium md:tw-leading-[26px] tw-text-oebblack"
+				[routerLink]="['/public/faq']"
+				>FAQ</a
+			>
+			<a
+				class="tw-text-[14px] tw-leading-[16.8px] tw-font-semibold md:tw-text-[20px] md:tw-font-medium md:tw-leading-[26px] tw-text-oebblack"
+				[href]="theme.termsOfServiceLink"
+				>{{ 'Start.imprint' | translate }}</a
+			>
+			<a
+				class="tw-text-[14px] tw-leading-[16.8px] tw-font-semibold md:tw-text-[20px] md:tw-font-medium md:tw-leading-[26px] tw-text-oebblack"
+				[href]="theme.privacyPolicyLink"
+				>{{ 'Start.privacyPolicy' | translate }}</a
+			>
+			<a
+				class="tw-text-[14px] tw-leading-[16.8px] tw-font-semibold md:tw-text-[20px] md:tw-font-medium md:tw-leading-[26px] tw-text-oebblack"
+				[routerLink]="['/public/terms']"
+				>Nutzungsbedingungen</a
+			>
 		</div>
 		<!-- <div class="funding-logos-container">
 			<img src="assets/oeb/images/aboutpage/bmbf_logo_new.jpg" class="tw-max-w-[200px]" alt="BMBF logo" />

@@ -5,17 +5,14 @@
 		<div class="oeb-section-sm">
 			<div class="oeb-headline-container tw-relative">
 				<div class="tw-z-10 tw-relative">
-					<h1 hlmH1 class="tw-text-purple">{{ 'Badge.catalogHeadline' | translate }}</h1>
-					<h1 hlmH1 class="lg:tw-pl-[10%] tw-font-extrabold tw-text-purple"> 
-						<span [countUp]="badges.length">{{ badges.length }}</span>{{ ' ' | i18nPlural: plural['badges'] }} in  
-						<span [countUp]="issuers.length">{{ issuers.length }}</span>{{ ' ' | i18nPlural: plural['issuer'] }}
+					<h1 hlmH1 class="tw-text-oebblack">{{ 'Badge.catalogHeadline' | translate }}</h1>
+					<h1 hlmH1 class="lg:tw-pl-[10%] tw-font-black tw-text-purple">
+						<span [countUp]="badges.length">{{ badges.length }}</span
+						>{{ ' ' | i18nPlural: plural['badges'] }} in
+						<span [countUp]="issuers.length">{{ issuers.length }}</span
+						>{{ ' ' | i18nPlural: plural['issuer'] }}
 					</h1>
 				</div>
-				<oeb-background
-					imgClass="md:tw-h-[400px] tw-h-[269px] tw-rotate-[-17.58deg] md:tw-rotate-[-36.66deg]"
-					class="tw-right-[5%] tw-top-[-10%] md:tw-right-[10%] md:tw-top-[-15%]"
-					image="assets/oeb/images/signuppage/circles.png"
-				></oeb-background>
 			</div>
 		</div>
 
@@ -24,14 +21,16 @@
 		<div class="tw-relative">
 			<section class="">
 				<div class="tw-flex tw-items-center tw-rounded-lg tw-p-4 tw-bg-[#ECFEED] tw-mb-4 tw-gap-6">
-					<div class="tw-flex tw-flex-col tw-gap-4 tw-w-full md:tw-flex-row md:tw-items-center">
-						<div class="tw-flex tw-flex-col md:tw-flex-row md:tw-items-center tw-gap-6">
+					<div
+						class="tw-flex tw-flex-col tw-gap-4 tw-w-full min-[880px]:tw-flex-row min-[880px]:tw-items-center"
+					>
+						<div class="tw-flex tw-flex-col min-[880px]:tw-flex-row min-[880px]:tw-items-center tw-gap-6">
 							<div class="tw-flex tw-relative tw-items-center">
 								<input
 									type="text"
 									name="forminput"
 									changeOrder
-									class="!tw-bg-white tw-w-full tw-border-1 tw-border-purple md:tw-w-96 tw-border-solid tw-h-12 tw-rounded-lg tw-p-2"
+									class="!tw-bg-white tw-w-full tw-border-1 tw-border-purple min-[880px]:tw-w-96 tw-border-solid tw-h-12 tw-rounded-lg tw-p-2"
 									placeholder="{{ 'Badge.searchBadges' | translate }}"
 									[(ngModel)]="searchQuery"
 									hlmInput
@@ -43,11 +42,8 @@
 							</div>
 						</div>
 						<span>{{ 'Badge.sortBy' | translate }} </span>
-						<oeb-sort-select
-							[control]="sortControl"
-							[result]="badgeResults"
-							></oeb-sort-select>
-						
+						<oeb-sort-select [disabled]="groupControl?.value !== '---'" [control]="sortControl" [result]="badgeResults"></oeb-sort-select>
+
 						<span id="badge-catalog-select-label">{{ 'Badge.groupBy' | translate }} </span>
 
 						<oeb-select
@@ -76,10 +72,11 @@
 					</div>
 				</div>
 				<ng-container *ngIf="groupBy == '---'">
-					<div class="tw-flex tw-gap-4 tw-flex-col lg:tw-grid lg:tw-grid-cols-badges lg:tw-gap-16">
+					<div class="tw-gap-6 tw-grid tw-grid-cols-badges" [@stagger]>
 						<!-- TODO: Fix the badgecard link for sharing and routing -->
 						<bg-badgecard
 							*ngFor="let badge of badgeResults; trackBy: trackById"
+							[@appearAnimation]="state"
 							[badgeTitle]="badge.name"
 							[badgeImage]="badge.image"
 							[badgeDescription]="badge.description"
@@ -103,7 +100,7 @@
 								{{ issuerGroup.badges.length == 1 ? 'Badge' : 'Badges' }}</span
 							>
 						</h3>
-						<div class="tw-grid tw-grid-cols-badges tw-gap-16">
+						<div class="tw-gap-6 tw-grid tw-grid-cols-badges">
 							<!-- TODO: Fix the badgecard link for sharing and routing -->
 							<bg-badgecard
 								*ngFor="let badge of issuerGroup.badges"
@@ -132,7 +129,7 @@
 								{{ categoryGroup.badges.length == 1 ? 'Badge' : 'Badges' }}</span
 							>
 						</h3>
-						<div class="tw-grid tw-grid-cols-badges tw-gap-16">
+						<div class="tw-gap-6 tw-grid tw-grid-cols-badges">
 							<!-- TODO: Fix the badgecard link for sharing and routing -->
 							<bg-badgecard
 								*ngFor="let badge of categoryGroup.badges"

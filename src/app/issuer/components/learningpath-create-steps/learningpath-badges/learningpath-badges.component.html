@@ -2,12 +2,12 @@
 	<div class="tw-mt-6 md:tw-mt-7 oeb-section section">
 		<h2 hlmH2 class="tw-font-bold">2. {{ 'LearningPath.chooseBadges' | translate }}</h2>
 
-		<div class="tw-m-4 md:tw-m-12 tw-rounded-2xl tw-p-6 tw-bg-[var(--color-lightpink)]">
+		<div class="tw-m-4 md:tw-m-12 tw-rounded-2xl tw-p-6 md:tw-p-8 tw-bg-[var(--color-lightpink)]">
 			<p class="tw-flex tw-flex-col tw-gap-2 tw-text-oebblack tw-text-[18px] tw-leading-[23.4px]">
 				<span>{{ 'LearningPath.combineBadgeCategories' | translate }}</span>
 				<span class="tw-italic"> {{ 'LearningPath.min3Badges' | translate }}</span>
 			</p>
-			<div class="tw-flex tw-gap-2 tw-my-2">
+			<div class="tw-flex tw-gap-2 tw-my-4">
 				<hlm-icon
 					class="tw-text-purple tw-font-bold tw-bg-white tw-mr-4 tw-shrink-0"
 					name="lucideCircleAlert"
@@ -17,7 +17,7 @@
 					{{ 'LearningPath.chooseBadgesInfo' | translate }}
 				</p>
 			</div>
-			<div class="tw-flex tw-flex-wrap">
+			<div class="tw-flex tw-flex-wrap tw-py-6">
 				<!-- Search  -->
 				<div class="tw-pb-2 md:tw-pb-0">
 					<input
@@ -54,7 +54,7 @@
 				</div>
 			</div>
 			<ng-container *ngIf="groupBy == '---'">
-				<div class="tw-grid tw-grid-cols-badgesLp tw-gap-16 tw-mt-4">
+				<div class="tw-grid tw-grid-cols-badgesLp tw-gap-6 tw-mt-4">
 					<bg-badgecard
 						*ngFor="let badge of badgeResults; let i = index"
 						[badgeTitle]="badge.name"
@@ -90,7 +90,7 @@
 							{{ categoryGroup.badges.length == 1 ? 'Badge' : 'Badges' }}</span
 						>
 					</h3>
-					<div class="tw-grid tw-grid-cols-badgesLp tw-gap-16">
+					<div class="tw-grid tw-grid-cols-badgesLp tw-gap-6">
 						<!-- TODO: Fix the badgecard link for sharing and routing -->
 						<bg-badgecard
 							*ngFor="let badge of categoryGroup.badges"
@@ -127,7 +127,7 @@
 							{{ issuerGroup.badges.length == 1 ? 'Badge' : 'Badges' }}</span
 						>
 					</h3>
-					<div class="tw-grid tw-grid-cols-badgesLp tw-gap-16">
+					<div class="tw-grid sm:tw-grid-cols-badgesLp tw-gap-6">
 						<!-- TODO: Fix the badgecard link for sharing and routing -->
 						<bg-badgecard
 							*ngFor="let badge of issuerGroup.badges"
