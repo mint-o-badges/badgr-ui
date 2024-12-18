@@ -4,6 +4,7 @@
 		"no": "No",
 		"name": "Name",
 		"institutions": "Institutions",
+		"institutionsNav": "Institutions A-Z",
 		"account": "Account",
 		"backpack": "My Backpack",
 		"list": "list",
@@ -56,6 +57,7 @@
 		"loading": "Loading...",
 		"warning": "Warning",
 		"page": "Page",
+		"back": "Back"
 		"next": "Next",
 		"previous": "Previous"
 	},
@@ -222,6 +224,8 @@
 		"csvColumns": "CSV Spalten",
 		"csvError": "Die CSV Datei enthält Zeilen länger als ihre Überschrift. Bitte behebe diesen Fehler und versuche es erneut.",
 		"pdfCertificate": "PDF-Certificate",
+		"institutionsIssued": "Institutions are on OEB",
+		"institutionsHeadline": "All Institutions"
 		"loadingAllBadges": "Loading Badges...",
 		"loadAllBadges": "Load all Badges"
 	},
@@ -333,7 +337,6 @@
 		"minMaxError": "Please enter a valid number",
 		"hoursAndMinutesError": "The badge has to take at least 1 minute",
 		"competenceHoursMinutesZero": "One of your competencies has a duration of 0."
-
 	},
 	"Signup": {
 		"youHaveAccount": "You already have an account?",
@@ -605,16 +608,16 @@
 	"ErrorDialog": {
 		"title": "An error has occured!",
 		"message": "Below you see an error message. If you think this error is on us, write us an email or create an Issue in Github. Please copy the error message in your ticket.",
-		"copyButton" : "Copy",
+		"copyButton": "Copy",
 		"copyButtonAfter": "Copied!",
 		"createIssue": "To the GitHub issues",
-		"sendEmail":"Send an email"
-
+		"sendEmail": "Send an email"
 	},
 	"LearningPath": {
 		"learningpaths": "Learning Paths",
+		"learningpathsNav": "Learningpaths A-Z",
 		"noLearningPaths": "No learning paths",
-		"catalogHeadline":"Overview of all learning paths",
+		"catalogHeadline": "Overview of all learning paths",
 		"partipate": "Participate",
 		"notParticipateAnymore": "Not participate anymore",
 		"searchLearningPaths": "Lernpfade durchsuchen",

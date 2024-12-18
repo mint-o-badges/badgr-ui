@@ -13,7 +13,7 @@ import { FormControl } from '@angular/forms';
 		]),
 	],
 	host: {
-		class: 'tw-rounded-[10px] tw-h-max tw-border-purple tw-border-solid tw-border tw-relative tw-p-3 tw-block tw-overflow-hidden oeb-badge-card',
+		class: 'tw-rounded-[10px] tw-h-max tw-max-w-[450px] tw-border-purple tw-border-solid tw-border tw-relative tw-p-4 tw-block tw-overflow-hidden oeb-badge-card',
 	},
 	template: `
 		<div
@@ -39,11 +39,10 @@ import { FormControl } from '@angular/forms';
 					</div>
 				</div>
 				<img
-					class="badgeimage badgeimage-{{ mostRelevantStatus }}"
+					class="oeb-badgeimage badgeimage-{{ mostRelevantStatus }}"
 					[loaded-src]="badgeImage"
 					[loading-src]="badgeLoadingImageUrl"
 					[error-src]="badgeFailedImageUrl"
-					width="80"
 				/>
 				<div class="tw-flex tw-flex-col tw-flex-wrap tw-pl-4 tw-py-2">
 					<a
@@ -98,24 +97,39 @@ import { FormControl } from '@angular/forms';
 						</div>
 					</div>
 				</div>
-				<div class="tw-float-right tw-ml-auto tw-mr-2 tw-relative tw-min-h-20">
-					<oeb-checkbox *ngIf="showCheckbox" [(ngModel)]="checked" (ngModelChange)="changeCheckbox($event)"></oeb-checkbox>
-					<div *ngIf="competencies && competencies.length > 0" class="tw-absolute tw-bottom-0 tw-right-2 tw-cursor-pointer" (click)="toggleCompetencies()">
-						<hlm-icon [name]=" showCompetencies ? 'lucideChevronUp' : 'lucideChevronDown'" />
+				<div
+					class="tw-float-right tw-relative tw-ml-auto tw-flex tw-items-center tw-flex-col tw-mr-2 tw-h-full"
+				>
+					<oeb-checkbox
+						[noMargin]="true"
+						*ngIf="showCheckbox"
+						[(ngModel)]="checked"
+						(ngModelChange)="changeCheckbox($event)"
+					></oeb-checkbox>
+					<div
+						*ngIf="competencies && competencies.length > 0"
+						class="tw-absolute tw-bottom-0 tw-cursor-pointer"
+						(click)="toggleCompetencies()"
+					>
+						<hlm-icon size="lg" [name]="showCompetencies ? 'lucideChevronUp' : 'lucideChevronDown'" />
 					</div>
 				</div>
 			</div>
 		</div>
 		<div [@showCompetencies]="showCompetencies">
 			<div class="tw-pt-8">
-				<div *ngFor="let competency of competencies">
-					<ng-container *ngIf="showCompetencies">
-						<competency-accordion [name]="competency.name" [category]="competency.category"
-							[description]="competency.description" [framework]="competency.framework" 
-							[framework_identifier]="competency['framework_identifier']" [studyload]="competency.studyLoad | hourPipe">
-						</competency-accordion>
-					</ng-container>
-				</div>
+				<ng-container *ngIf="showCompetencies">
+					<div *ngFor="let competency of competencies">
+						<competency-accordion
+							[name]="competency.name"
+							[category]="competency.category"
+							[description]="competency.description"
+							[framework]="competency.framework" 
+							[framework_identifier]="competency['framework_identifier']"
+							[studyload]="competency.studyLoad | hourPipe"
+						></competency-accordion>
+					</div>
+				</ng-container>
 			</div>
 		</div>
 	`,
@@ -144,22 +158,19 @@ export class BgBadgecard {
 	@Input() checked: boolean = false;
 
 	changeCheckbox(event: boolean) {
-		this.checkboxChange.emit(event)
+		this.checkboxChange.emit(event);
 	}
 
 	@HostBinding('class') get hostClasses(): string {
-		return (this.checked || this.completed)
-			? 'tw-bg-[var(--color-lightgreen)]'
-			: 'tw-bg-white';
+		return this.checked || this.completed ? 'tw-bg-[var(--color-lightgreen)]' : 'tw-bg-white';
 	}
 	// @HostBinding('class') get completedClass(): string {
-	// 	return this.completed 
-	// 	  ? 'tw-bg-[var(--color-green)]'   
-	// 	  : 'tw-bg-white';  
+	// 	return this.completed
+	// 	  ? 'tw-bg-[var(--color-green)]'
+	// 	  : 'tw-bg-white';
 	//   }
 
-	ngOnInit() {
-	}
+	ngOnInit() {}
 
 	showCompetencies = false;
 	toggleCompetencies() {

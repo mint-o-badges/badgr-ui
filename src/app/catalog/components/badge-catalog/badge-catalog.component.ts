@@ -14,11 +14,13 @@ import { StringMatchingUtil } from '../../../common/util/string-matching-util';
 import { BadgeClassCategory } from '../../../issuer/models/badgeclass-api.model';
 import { TranslateService } from '@ngx-translate/core';
 import { FormControl } from '@angular/forms';
+import { appearAnimation } from '../../../common/animations/animations';
 
 @Component({
 	selector: 'app-badge-catalog',
 	templateUrl: './badge-catalog.component.html',
 	styleUrls: ['./badge-catalog.component.css'],
+	animations: [appearAnimation],
 })
 export class BadgeCatalogComponent extends BaseRoutableComponent implements OnInit {
 	readonly issuerPlaceholderSrc = preloadImageURL('../../../../breakdown/static/images/placeholderavatar-issuer.svg');
@@ -39,7 +41,6 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 	tags: string[] = [];
 	issuers: string[] = [];
 	selectedTag: string = null;
-
 
 	sortControl = new FormControl('name_asc');
 
@@ -118,7 +119,6 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		// subscribe to issuer and badge class changes
 		this.badgesLoaded = this.loadBadges();
 
-
 		this.groupControl.valueChanges.subscribe((value) => {
 			this.groupBy = value;
 		});
@@ -133,7 +133,8 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 						.slice()
 						.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
 					this.badgeResults = this.badges;
-					badges.forEach((badge) => {
+
+					this.badges.forEach((badge) => {
 						this.tags = this.tags.concat(badge.tags);
 						this.issuers = badge.issuerVerified ? this.issuers.concat(badge.issuer) : this.issuers;
 					});
@@ -196,8 +197,6 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		};
 	}
 
-
-
 	private updateResults() {
 		let that = this;
 		// Clear Results
@@ -221,7 +220,6 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 			}
 
 			issuerResults.addBadge(item);
-
 			return true;
 		};
 		var addBadgeToResultsByCategory = function (item) {
