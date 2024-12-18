@@ -51,8 +51,12 @@ module.exports = {
 			},
 			gridTemplateColumns: {
 				badges: 'repeat(auto-fill, minmax(320px, 1fr))',
+				issuer: 'repeat(auto-fill, minmax(450px, 1fr))',
+				myIssuers: 'repeat(auto-fit, minmax(600px, 600px))',
+				myIssuersMobile: 'repeat(auto-fit, minmax(300px, 1fr))',
+				learningpaths: 'repeat(auto-fill, minmax(340px, 1fr))',
+				learningpathsBackpack: 'repeat(auto-fill, minmax(392px, 392px))',
 				badgesLp: 'repeat(auto-fill, minmax(290px, 1fr))',
-				learningpaths: 'repeat(auto-fill, minmax(392px, 1fr))',
 				learningpathsSmall: 'repeat(auto-fill, minmax(208px, 1fr))',
 			},
 			animation: {
