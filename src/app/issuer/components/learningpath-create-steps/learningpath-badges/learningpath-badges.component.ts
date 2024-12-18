@@ -20,11 +20,12 @@ type BadgeResult = BadgeClass & { selected?: boolean };
 	styleUrls: ['../../learningpath-edit-form/learningpath-edit-form.component.scss']
 })
 export class LearningPathBadgesComponent implements OnInit {
-	@Output() selectedBadgesChanged = new EventEmitter<{ urls: string[], studyLoad: number }>();
+	// @Output() selectedBadgesChanged = new EventEmitter<{ urls: string[], studyLoad: number }>();
+	@Output() selectedBadgesChanged = new EventEmitter<{ badges: BadgeClass[], studyLoad: number}>()
 
 	@Input()
 	set learningPath (lp: ApiLearningPath) {
-		this.initFormFromExisting(lp);
+		// this.initFormFromExisting(lp);
 	}
 	
 	constructor(
@@ -41,6 +42,7 @@ export class LearningPathBadgesComponent implements OnInit {
 	badges: BadgeClass[] = null;
 	badgeResults: BadgeResult[] = null;
 	selectedBadgeUrls: string[] = [];
+	selectedBadges: BadgeClass[] = []
 	badgesFormArray: any;
 
 	badgeResultsByIssuer: MatchingBadgeIssuer[] = [];
@@ -67,42 +69,39 @@ export class LearningPathBadgesComponent implements OnInit {
 		this.updateResults();
 	}
 
-	initFormFromExisting(lp: ApiLearningPath) {
-		if (!lp) return;
-		lp.badges.forEach((b) => {
-			this.selectedBadgeUrls.push(b.badge.json.id);
-			this.lpBadgesForm.controls.badges.push(
-				typedFormGroup().addControl('badgeUrl', b.badge.json.id)
-			)
-			this.studyLoad += b.badge.extensions['extensions:StudyLoadExtension'].StudyLoad
-		})
-		this.selectedBadgesChanged.emit({
-			urls: this.selectedBadgeUrls,
-			studyLoad: this.studyLoad
-		});
+	// initFormFromExisting(lp: ApiLearningPath) {
+	// 	if (!lp) return;
+	// 	lp.badges.forEach((b) => {
+	// 		this.selectedBadgeUrls.push(b.badge.json.id);
+	// 		this.lpBadgesForm.controls.badges.push(
+	// 			typedFormGroup().addControl('badgeUrl', b.badge.json.id)
+	// 		)
+	// 		this.studyLoad += b.badge.extensions['extensions:StudyLoadExtension'].StudyLoad
+	// 	})
+	// 	this.selectedBadgesChanged.emit({
+	// 		urls: this.selectedBadgeUrls,
+	// 		studyLoad: this.studyLoad
+	// 	});
+	// }
+
+	badgeChecked(badge: BadgeClass) {
+		return this.selectedBadges.includes(badge);
 	}
 
-	badgeChecked(badgeUrl: string) {
-		return this.selectedBadgeUrls.includes(badgeUrl);
-	}
-
-	checkboxChange(event, badgeUrl: string, studyLoad: number) {
+	checkboxChange(event, badge: BadgeClass) {
 		if (event) {
-			this.selectedBadgeUrls.push(badgeUrl);
+			this.selectedBadges.push(badge)
 			this.lpBadgesForm.controls.badges.push(
-				typedFormGroup().addControl('badgeUrl', badgeUrl)
+				typedFormGroup().addControl('badge', badge)
 			)
-			this.studyLoad += studyLoad;
+			this.studyLoad += badge.extension['extensions:StudyLoadExtension'].StudyLoad;
 		}
 		else {
-			this.selectedBadgeUrls.splice(this.selectedBadgeUrls.indexOf(badgeUrl), 1);
-			this.lpBadgesForm.controls.badges.removeAt(this.lpBadgesForm.controls.badges.value.findIndex(badge => badge.badgeUrl === badgeUrl))
-			this.studyLoad -= studyLoad;
+			this.selectedBadges.splice(this.selectedBadges.indexOf(badge), 1)
+			this.lpBadgesForm.controls.badges.removeAt(this.lpBadgesForm.controls.badges.value.findIndex(badge => badge.badge === badge))
+			this.studyLoad -= badge.extension['extensions:StudyLoadExtension'].StudyLoad;
 		}
-		this.selectedBadgesChanged.emit({
-			urls: this.selectedBadgeUrls,
-			studyLoad: studyLoad
-		});
+		this.selectedBadgesChanged.emit({badges: this.selectedBadges, studyLoad: this.studyLoad})
 	}
 	groups: string[] = []
 	// groups = [this.translate.instant('Badge.category'), this.translate.instant('Badge.issuer'), '---'];
@@ -123,7 +122,7 @@ export class LearningPathBadgesComponent implements OnInit {
 	lpBadgesForm = typedFormGroup(this.minSelectedBadges.bind(this)).addArray(
 		'badges',
 		typedFormGroup()
-			.addControl('badgeUrl', '', Validators.required)
+			.addControl('badge', null, Validators.required)
 	)
 
 	async loadBadges() {
@@ -267,9 +266,9 @@ export class LearningPathBadgesComponent implements OnInit {
 	}
 
 	minSelectedBadges(): ValidationErrors | null {
-		return this.selectedBadgeUrls.length >= 3
+		return this.selectedBadges.length >= 3
 			? null
-			: { minSelectedBadges: { required: 3, actual: this.selectedBadgeUrls.length } }
+			: { minSelectedBadges: { required: 3, actual: this.selectedBadges.length } }
 	}
 	ngOnInit(): void {
 		this.groups[0] = "---"

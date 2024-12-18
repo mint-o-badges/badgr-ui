@@ -31,6 +31,7 @@
 					#stepThree
 					[learningPath]="existingLearningPath"
 					[selectedBadgeUrls]="selectedBadgeUrls"
+					[selectedBadges]="selectedBadges"
 					errorMessage="Wähle mindestens 3 Badges aus"
 				></learningpath-badge-order>
 			</ng-container>
@@ -79,7 +80,7 @@
 		<oeb-button
 			type="submit"
 			width="max_content"
-			[disabled]="!!savePromise || learningPathForm.invalid || this.selectedBadgeUrls.length < 3"
+			[disabled]="!!savePromise || learningPathForm.invalid || selectedBadges.length < 3"
 			[loading-promises]="[savePromise]"
 			loading-message="{{ submittingText }}"
 			text="{{

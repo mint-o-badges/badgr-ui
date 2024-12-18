@@ -72,11 +72,10 @@
 						(checkboxChange)="
 							checkboxChange(
 								$event,
-								badge.url,
-								badge.extension['extensions:StudyLoadExtension'].StudyLoad
+								badge
 							)
 						"
-						[checked]="badgeChecked(badge.url)"
+						[checked]="badgeChecked(badge)"
 						[showCheckbox]="true"
 					></bg-badgecard>
 				</div>
@@ -104,16 +103,15 @@
 							[publicUrl]="badge.url"
 							[badgeClass]="true"
 							[competencies]="badge.extension['extensions:CompetencyExtension']"
-							[checked]="badgeChecked(badge.url)"
 							[showCheckbox]="true"
 							(ngModelChange)="checkboxChange($event, badge)"
 							(checkboxChange)="
-								checkboxChange(
-									$event,
-									badge.url,
-									badge.extension['extensions:StudyLoadExtension'].StudyLoad
+							checkboxChange(
+								$event,
+								badge
 								)
 							"
+							[checked]="badgeChecked(badge)"
 						></bg-badgecard>
 					</div>
 				</ng-container>
@@ -141,16 +139,15 @@
 							[publicUrl]="badge.url"
 							[badgeClass]="true"
 							[competencies]="badge.extension['extensions:CompetencyExtension']"
-							[checked]="badgeChecked(badge.url)"
 							[showCheckbox]="true"
 							(ngModelChange)="checkboxChange($event, badge)"
 							(checkboxChange)="
-								checkboxChange(
-									$event,
-									badge.url,
-									badge.extension['extensions:StudyLoadExtension'].StudyLoad
+							checkboxChange(
+								$event,
+								badge
 								)
 							"
+							[checked]="badgeChecked(badge)"
 						></bg-badgecard>
 					</div>
 				</ng-container>

@@ -114,7 +114,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 	breadcrumbLinkEntries: LinkEntry[] = [];
 	step3Loaded = false;
 	selectedBadgeUrls: string[] = [];
-	selectedBadges: BadgeClass[] = [];
+	selectedBadges: any[] = [];
 	studyLoad: number = 0;
 	savePromise: Promise<ApiLearningPath> | null = null;
 	selectedStep = 0;
@@ -185,10 +185,43 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 		}
 	}
 
-	updateSelectedBadges({ urls, studyLoad }: { urls: string[], studyLoad: number }) {
-		this.selectedBadgeUrls = urls;
+	// updateSelectedBadges({ urls, studyLoad }: { urls: string[], studyLoad: number }) {
+	// 	this.selectedBadgeUrls = urls;
+	// 	this.studyLoad = studyLoad;
+	// }
+
+	updateSelectedBadges({ badges, studyLoad }: { badges: BadgeClass[] , studyLoad: number }) {
+		this.selectedBadges = badges;
 		this.studyLoad = studyLoad;
-	}
+	  
+		const badgeList = this.selectedBadges.map((badge, index) => ({
+		  id: badge.slug,
+		  name: badge.name,
+		  image: badge.image,
+		  description: badge.description,
+		  slug: badge.slug,
+		  issuerName: badge.issuerName,
+		  order: index
+		}));
+	  
+		this.updateBadgeList(badgeList);
+	  }
+
+	// updateSelectedBadges({ badges, studyLoad }: { badges: BadgeClass[], studyLoad: number }) {
+	// 	this.selectedBadges = badges;
+	// 	this.studyLoad = studyLoad;
+	// 	const badgeList = this.selectedBadges.reverse().map((badge) => {
+	// 		return {
+	// 			id: badge.slug,
+	// 			name: badge.name,
+	// 			image: badge.image,
+	// 			description: badge.description,
+	// 			slug: badge.slug,
+	// 			issuerName: badge.issuerName,
+	// 		};
+	// 	})
+	// 	this.updateBadgeList(badgeList)
+	// }
 
 	updateTags(tags: string[]) {
 		this.lpTags = tags;
@@ -196,6 +229,13 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 
 	updateBadgeList(badges: any[]) {
 		this.badgeList = badges;
+		this.selectedBadges = badges.map(badge => ({
+			slug: badge.id,
+			name: badge.name,
+			image: badge.image,
+			description: badge.description,
+			issuerName: badge.issuerName,
+		}));
 	}
 
 	learningPathForm = typedFormGroup()
@@ -321,7 +361,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 				badges: this.badgeList.map((item, index) => {
 					return {
 						slug: item.slug,
-						order: index,
+						order: item.order,
 					};
 				}),			  
 			})
