@@ -46,10 +46,6 @@ xdescribe('IssuerManager', () => {
 		httpTestingController = TestBed.inject(HttpTestingController);
 	});
 
-	beforeEach(inject([SessionService], (loginService: SessionService) => {
-		loginService.storeToken({ access_token: 'MOCKTOKEN' });
-	}));
-
 	it('should retrieve all issuers', inject(
 		[IssuerManager, SessionService],
 		(issuerManager: IssuerManager, loginService: SessionService) => {
@@ -130,6 +126,8 @@ xdescribe('IssuerManager', () => {
 					email: 'new@user.com',
 					first_name: 'New',
 					last_name: 'User',
+					agreed_terms_version: 0,
+					latest_terms_version: 0,	
 				},
 			};
 			const existingIssuerWithNewUser = {

@@ -21,7 +21,7 @@ import { RecipientBadgeApiService } from '../../../recipient/services/recipient-
 						<div class="oeb" *ngIf="learningPaths.length > 0">
 							<oeb-separator class="tw-block tw-mb-8 tw-mt-8"></oeb-separator>
 							<span class="tw-my-2 tw-text-oebblack tw-text-[22px] tw-leading-[26px] tw-font-semibold"> Dieser Badge ist Teil folgender Lernpfade: </span>
-							<div class="tw-mt-4 tw-flex tw-flex-wrap tw-gap-16">
+							<div class="tw-mt-8 tw-grid tw-grid-cols-learningpaths tw-gap-6">
 								<bg-learningpathcard *ngFor="let lp of learningPaths"
 									[name]="lp.name"
 									[badgeImage]="lp.participationBadge_image"
@@ -89,6 +89,7 @@ export class PublicBadgeClassComponent {
 					badgeFailedImageUrl: this.badgeFailedImageUrl,
 					badgeImage: badge.image,
 					competencies: badge['extensions:CompetencyExtension'],
+					license: badge['extensions:LicenseExtension'] ? true : false,
 					crumbs: [{ title: 'Badges', routerLink: ['/catalog/badges'] }, { title: badge.name }],
 				}
 			})
@@ -103,11 +104,11 @@ export class PublicBadgeClassComponent {
 	ngOnInit(): void {
 		this.loggedIn = this.sessionService.isLoggedIn;
 
-		if(this.loggedIn){
+		if (this.loggedIn) {
 			this.userBadgesLoaded = this.recipientBadgeApiService.listRecipientBadges().then((badges) => {
 				const badgeClassIds = badges.map((b) => b.json.badge.id);
 				this.userBadges = badgeClassIds;
-			})				
+			})
 		}
 	}
 
@@ -131,13 +132,13 @@ export class PublicBadgeClassComponent {
 		return `${userBadgeCount}/${totalBadges}`;
 	}
 
-	calculateLearningPathStatus(lp: LearningPath): { 'match' : string} | { 'progress' : number} {
-		if(lp.progress !=  null){
+	calculateLearningPathStatus(lp: LearningPath): { 'match': string } | { 'progress': number } {
+		if (lp.progress != null) {
 			const percentCompleted = lp.progress
-			return {'progress' : percentCompleted }
+			return { 'progress': percentCompleted }
 		}
-		else{
-			return {'match' : this.calculateMatch(lp)}
+		else {
+			return { 'match': this.calculateMatch(lp) }
 		}
 	}
 

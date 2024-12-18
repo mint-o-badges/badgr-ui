@@ -15,6 +15,17 @@ export interface ApiLearningPathForCreation {
     badges: Array<{ slug: string; order: number }>;
 }
 
+export interface ApiLearningPathForEditing {
+    slug?: string;
+    issuer_id: string;
+    name: string;
+    description: string;
+    tags: string[];
+    participationBadge_id: string;
+    participationBadge_image: string;
+    badges: Array<{ slug: string; order: number }>;
+}
+
 export interface ApiLearningPath {
     id?: number;
     slug?: string;
@@ -26,7 +37,7 @@ export interface ApiLearningPath {
     description: string;
     tags: string[];
     badges: Array<{ badge: any; order: number }>;
-    completed_badges: Array<any>
+    completed_badges?: Array<any>
     progress?: number | null;
     completed_at?: Date | null;
     created_at?: Date | null;

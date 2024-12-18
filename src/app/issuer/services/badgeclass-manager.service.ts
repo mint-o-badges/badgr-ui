@@ -142,6 +142,18 @@ export class BadgeClassManager extends BaseHttpApiService {
 			.then((badges) => badges.filter((b) => badgeUrls.indexOf(b.badgeUrl) >= 0));
 	}
 
+	publicBadgesByUrls(badgeUrls: string[]): Promise<BadgeClass[]> {
+		if (!badgeUrls || badgeUrls.length === 0) {
+			return Promise.resolve([]);
+		}
+
+		return this.allPublicBadges$
+			.pipe(first())
+			.toPromise()
+			.then((badges) => badges.filter((b) => badgeUrls.indexOf(b.badgeUrl) >= 0));
+	}
+
+
 	private throwError(message: string): never {
 		throw new Error(message);
 	}

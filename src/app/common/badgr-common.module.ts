@@ -128,6 +128,8 @@ import { OebIssuerCard } from './components/oeb-issuercard';
 import { HourPipe } from './pipes/hourPipe';
 import { HlmBadgeDirective } from '../components/spartan/ui-badge-helm/src/lib/hlm-badge.directive';
 import { IssuerCardComponent } from '../components/issuer-card/issuer-card.component';
+// import { OebStepperComponent } from '../components/stepper/stepper.component';
+import { CdkStepperModule } from '@angular/cdk/stepper';
 import { ErrorDialogComponent } from './dialogs/oeb-dialogs/error-dialog.component';
 import { GlobalErrorHandler } from '../globalErrorHandler.service';
 import { ServerErrorInterceptor } from '../ServerErrorInterceptor';
@@ -268,7 +270,7 @@ export const COMMON_IMPORTS = [
 ];
 
 @NgModule({
-	imports: [...COMMON_IMPORTS, FormsModule, LMarkdownEditorModule, TranslateModule, SharedIconsModule],
+	imports: [...COMMON_IMPORTS, FormsModule, LMarkdownEditorModule, TranslateModule, SharedIconsModule, CdkStepperModule],
 	providers: [BadgeClassManager, BadgeClassApiService, { provide: HTTP_INTERCEPTORS, useClass:ServerErrorInterceptor, multi:true}],
 	declarations: [...DIRECTIVES, ...COMMON_MODULE_COMPONENTS, ...PIPES, ForwardRouteComponent, BadgeLegendComponent, CountUpDirective],
 	exports: [...DIRECTIVES, ...COMMON_MODULE_COMPONENTS, ...PIPES, BadgeLegendComponent, SharedIconsModule],

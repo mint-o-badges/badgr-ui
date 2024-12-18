@@ -23,13 +23,13 @@ import { ApiLearningPathParticipant, ApiLearningPathRequest } from '../../model/
 	templateUrl: './oeb-learning-path.component.html',
 	styleUrl: './oeb-learning-path.component.scss',
 	animations: [
-        trigger('inOutAnimation', [
-            transition(':enter', [style({ transform: 'translateX(-120px)', opacity: '0' }), animate('.5s ease-out', style({ transform: 'translateX(0px)', opacity: '1' }))]),
-            // transition(':leave', [style({ opacity: '1' }), animate('.5s ease-out', style({ opacity: '0' }))]),
-        ]),
+		trigger('inOutAnimation', [
+			transition(':enter', [style({ transform: 'translateX(-120px)', opacity: '0' }), animate('.5s ease-out', style({ transform: 'translateX(0px)', opacity: '1' }))]),
+			// transition(':leave', [style({ opacity: '1' }), animate('.5s ease-out', style({ opacity: '0' }))]),
+		]),
 		trigger('stagger', [
 			transition(':enter', [
-			  	query(':enter', stagger('.3s', [animateChild()]))
+				query(':enter', stagger('.3s', [animateChild()]))
 			])
 		])
 	],
@@ -44,6 +44,8 @@ export class OebLearningPathDetailComponent extends BaseRoutableComponent implem
 	loading: any;
 	pdfSrc: SafeResourceUrl;
 
+	learningPathEditLink
+
 	constructor(
 		private learningPathApiService: LearningPathApiService,
 		private badgeClassManager: BadgeClassManager,
@@ -56,7 +58,7 @@ export class OebLearningPathDetailComponent extends BaseRoutableComponent implem
 		route: ActivatedRoute
 	) {
 		super(router, route);
-        
+
 	};
 	private readonly _hlmDialogService = inject(HlmDialogService);
 
@@ -69,7 +71,7 @@ export class OebLearningPathDetailComponent extends BaseRoutableComponent implem
 	}
 
 	ngOnInit(): void {
-		
+		this.learningPathEditLink = ['/issuer/issuers', this.issuer.slug, 'learningpaths', this.learningPath.slug, 'edit']		
 	}
 
 	public deleteLearningPath(learningPathSlug, issuer) {
@@ -84,7 +86,7 @@ export class OebLearningPathDetailComponent extends BaseRoutableComponent implem
 		});
 	}
 
-	deleteLearningPathApi(learningPathSlug, issuer){
+	deleteLearningPathApi(learningPathSlug, issuer) {
 		this.learningPathApiService.deleteLearningPath(issuer.slug, learningPathSlug).then(
 			() => {
 				this.router.navigate(['issuer/issuers']);
@@ -92,7 +94,7 @@ export class OebLearningPathDetailComponent extends BaseRoutableComponent implem
 		);
 	}
 
-	public giveBadge(req){
+	public giveBadge(req) {
 		this.loading = true;
 		let recipientProfileContextUrl = 'https://openbadgespec.org/extensions/recipientProfile/context.json';
 
@@ -100,55 +102,56 @@ export class OebLearningPathDetailComponent extends BaseRoutableComponent implem
 			.badgeByIssuerSlugAndSlug(this.issuer.slug, this.learningPath.participationBadge_id)
 			.then((badgeClass: BadgeClass) => {
 
-			this.loading = this.badgeInstanceManager
-				.createBadgeInstance(this.issuer.slug, this.learningPath.participationBadge_id, {
-					issuer: this.issuer.slug,
-					badge_class: this.learningPath.participationBadge_id,
-					recipient_type: 'email',
-					recipient_identifier: req.user.email,
-					narrative: '',
-					create_notification: true,
-					evidence_items: [],
-					extensions: {
-						...badgeClass.extension,
-						'extensions:recipientProfile': {
-							'@context': recipientProfileContextUrl,
-							type: ['Extension', 'extensions:RecipientProfile'],
-							name: req.user.name,
+				this.loading = this.badgeInstanceManager
+					.createBadgeInstance(this.issuer.slug, this.learningPath.participationBadge_id, {
+						issuer: this.issuer.slug,
+						badge_class: this.learningPath.participationBadge_id,
+						recipient_type: 'email',
+						recipient_identifier: req.user.email,
+						narrative: '',
+						create_notification: true,
+						evidence_items: [],
+						extensions: {
+							...badgeClass.extension,
+							'extensions:recipientProfile': {
+								'@context': recipientProfileContextUrl,
+								type: ['Extension', 'extensions:RecipientProfile'],
+								name: req.user.name,
+							},
 						},
-					},
-				})
-				.then(
-					() => {
-						this.router.navigate(['issuer/issuers', this.issuer.slug, 'badges', this.learningPath.participationBadge_id]);
-						this.openSuccessDialog(req.user.email);
-				
-						this.requests = this.requests.filter(
+					})
+					.then(
+						() => {
+							this.router.navigate(['issuer/issuers', this.issuer.slug, 'badges', this.learningPath.participationBadge_id]);
+							this.openSuccessDialog(req.user.email);
+
+							this.requests = this.requests.filter(
 								(request) => request.entity_id != req.entity_id,
 							);
-						this.learningPathApiService.deleteLearningPathRequest(req.entity_id);
-					},
-					(error) => {
-						this.messageService.setMessage(
-							'Unable to award badge: ' + BadgrApiFailure.from(error).firstMessage,
-							'error',
-						);
-					},
-				)
-				.then(() => {
-					this.loading = null
-					this.learningPathApiService.getLearningPathParticipants(this.learningPath.slug).then(
-						(participants) => {
-							// @ts-ignore
-							const participant = participants.body.filter((p) => p.user.slug === req.user.slug);
-							this.learningPathApiService.updateLearningPathParticipant(participant[0].entity_id, {
-								...participant[0],
-								completed_at: new Date(),
-							})
+							this.learningPathApiService.deleteLearningPathRequest(req.entity_id);
 						},
-					)}
+						(error) => {
+							this.messageService.setMessage(
+								'Unable to award badge: ' + BadgrApiFailure.from(error).firstMessage,
+								'error',
+							);
+						},
 					)
-				});
+					.then(() => {
+						this.loading = null
+						this.learningPathApiService.getLearningPathParticipants(this.learningPath.slug).then(
+							(participants) => {
+								// @ts-ignore
+								const participant = participants.body.filter((p) => p.user.slug === req.user.slug);
+								this.learningPathApiService.updateLearningPathParticipant(participant[0].entity_id, {
+									...participant[0],
+									completed_at: new Date(),
+								})
+							},
+						)
+					}
+					)
+			});
 	}
 
 	public openSuccessDialog(recipient) {
@@ -181,31 +184,31 @@ export class OebLearningPathDetailComponent extends BaseRoutableComponent implem
 			.then(async () => {
 
 				try {
-				  const [revokeResult, deleteResult] = await Promise.all([
-					this.badgeInstanceApiservice.revokeBadgeInstance(
-					  this.issuer.slug,
-					  this.learningPath.participationBadge_id,
-					  participationBadgeInstance.slug,
-					  'revoked'
-					),
-					this.learningPathApiService.deleteLearningPathParticipant(
-					  participant.entity_id
-					)
-				  ]);
-			  
-				  const response = await this.learningPathApiService.getLearningPathParticipants(
-					this.learningPath.slug
-				  );
-				  this.participants = response.body;
+					const [revokeResult, deleteResult] = await Promise.all([
+						this.badgeInstanceApiservice.revokeBadgeInstance(
+							this.issuer.slug,
+							this.learningPath.participationBadge_id,
+							participationBadgeInstance.slug,
+							'revoked'
+						),
+						this.learningPathApiService.deleteLearningPathParticipant(
+							participant.entity_id
+						)
+					]);
+
+					const response = await this.learningPathApiService.getLearningPathParticipants(
+						this.learningPath.slug
+					);
+					this.participants = response.body;
 				} catch (error) {
-				  console.error(error);
-				  throw error;
+					console.error(error);
+					throw error;
 				}
 			})
 
-	  }
+	}
 
-	downloadCertificate(participant: any ) {
+	downloadCertificate(participant: any) {
 		const instance = participant.participationBadgeAssertion;
 		this.pdfService.getPdf(instance.slug).then(
 			(url) => {
