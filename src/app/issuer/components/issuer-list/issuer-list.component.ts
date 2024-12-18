@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SessionService } from '../../../common/services/session.service';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
@@ -11,6 +11,8 @@ import { Title } from '@angular/platform-browser';
 import { preloadImageURL } from '../../../common/util/file-util';
 import { AppConfigService } from '../../../common/app-config.service';
 import { TranslateService } from '@ngx-translate/core';
+import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
+import { SuccessDialogComponent } from '../../../common/dialogs/oeb-dialogs/success-dialog.component';
 
 @Component({
 	selector: 'issuer-list',
@@ -116,7 +118,28 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 			console.log('lng:', event.lang);
 			this.prepareTexts();
 		});
+
+		this.route.queryParams.subscribe((params) => {
+			if(params.hasOwnProperty("newsletter_confirmed")){
+				this.openSuccessDialog();
+				this.router.navigate([], {
+					queryParams: { newsletter_confirmed: null },
+					queryParamsHandling: 'merge' 
+				});
+			}
+		})
 	}
+
+	private readonly _hlmDialogService = inject(HlmDialogService);
+	public openSuccessDialog() {
+		const dialogRef = this._hlmDialogService.open(SuccessDialogComponent, {
+			context: {
+                text: this.translate.instant('Newsletter.confirmedSubscription'),
+				variant: "success"
+			},
+		});
+	}
+
 
 	// initialize predefined text
 	prepareTexts() {

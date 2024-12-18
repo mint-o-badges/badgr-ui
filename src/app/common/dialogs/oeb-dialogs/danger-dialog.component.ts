@@ -1,4 +1,4 @@
-import { Component, HostBinding, inject } from '@angular/core';
+import { Component, HostBinding, Input, inject } from '@angular/core';
 import { BrnDialogRef, injectBrnDialogContext } from '@spartan-ng/ui-dialog-brain';
 import { OebDialogComponent } from '../../../components/oeb-dialog.component';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
@@ -16,36 +16,51 @@ import { TranslateService } from '@ngx-translate/core';
 	template: `
 		<oeb-dialog [variant]="variant" class="tw-text-center tw-text-oebblack">
 			<div class="tw-flex tw-justify-center">
-				<div class="oeb-icon-circle tw-bg-white tw-my-6">
+				<div class="oeb-icon-circle tw-my-4">
 					<hlm-icon class="tw-text-red" size="xxl" name="lucideTriangleAlert" />
 				</div>
 			</div>
-			<p hlmP class="tw-flex tw-flex-col tw-gap-2">
-				<span class="tw-font-extrabold tw-uppercase">Qr-Code-Vergabe löschen</span>
-				<span>
-					Möchtest du die QR-Code-Vergabe wirklich löschen?
+			<p hlmP class="tw-flex tw-flex-col tw-gap-2 tw-my-2">
+				<span class="tw-font-extrabold tw-uppercase">{{ caption }}</span>
+				<span *ngIf="text">
+					{{ text }}
 					<span *ngIf="qrCodeRequested">Damit gehen alle noch offenen Badge-Anfragen verloren.</span>
 				</span>
 			</p>
-			<div class="tw-flex tw-justify-around tw-mt-6">
-				<oeb-button variant="secondary" [text]="cancelText" (click)="closeDialog()"></oeb-button>
-				<oeb-button class="tw-mr-4" [text]="deleteText" (click)="deleteItem()"></oeb-button>
-			</div>
+			<oeb-button
+				(click)="clickSingleButton()"
+				size="sm"
+				*ngIf="singleButtonText; else TwoButtons"
+				[text]="singleButtonText"
+			>
+			</oeb-button>
+			<ng-template #TwoButtons>
+				<div class="tw-flex tw-justify-around tw-mt-6">
+					<oeb-button variant="secondary" [text]="cancelText" (click)="closeDialog()"></oeb-button>
+					<oeb-button class="tw-mr-4" [text]="deleteText" (click)="deleteItem()"></oeb-button>
+				</div>
+			</ng-template>
 		</oeb-dialog>
 	`,
 })
 export class DangerDialogComponent {
 	// @HostBinding('class') private readonly _class: string = 'tw-bg-red tw-bg-red';
 	private readonly _dialogContext = injectBrnDialogContext<{
+		caption: string;
 		text: string;
 		delete: any;
 		qrCodeRequested: boolean;
 		variant: string;
+		singleButtonText?: string;
+        singleButtonAction?: any;
 	}>();
+	protected readonly caption = this._dialogContext.caption;
 	protected readonly text = this._dialogContext.text;
 	protected readonly delete = this._dialogContext.delete;
 	protected readonly variant = this._dialogContext.variant;
 	protected readonly qrCodeRequested = this._dialogContext.qrCodeRequested;
+	protected readonly singleButtonText = this._dialogContext.singleButtonText;
+	protected readonly singleButtonAction = this._dialogContext.singleButtonAction;
 	private readonly _dialogRef = inject<BrnDialogRef>(BrnDialogRef);
 
 	constructor(private translate: TranslateService) {}
@@ -61,4 +76,11 @@ export class DangerDialogComponent {
 		this.delete();
 		this._dialogRef.close();
 	}
+
+    public clickSingleButton(){
+        if(this.singleButtonAction){
+            this.singleButtonAction();
+        }
+        this._dialogRef.close();
+    }
 }

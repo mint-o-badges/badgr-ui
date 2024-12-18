@@ -36,10 +36,10 @@
 				</div>
 			</div>
 		</div>
-		<div class="md:tw-flex tw-gap-12">
-			<div class="tw-flex tw-flex-wrap tw-gap-16 tw-grow">
+		<div class="md:tw-flex">
+			<div class="tw-grid tw-grid-cols-myIssuersMobile sm:tw-grid-cols-myIssuers tw-gap-6 tw-w-full tw-relative">
 				<div
-					class="tw-max-w-[600px] tw-grow tw-border-purple tw-border tw-border-solid tw-justify-between tw-flex tw-flex-col tw-rounded-[10px] tw-py-8 tw-px-6"
+					class="tw-grow tw-border-purple tw-border tw-border-solid tw-justify-between tw-flex tw-flex-col tw-rounded-[10px] tw-py-8 tw-px-6"
 					*ngFor="let issuer of issuers"
 				>
 					<div class="tw-flex">
@@ -73,6 +73,7 @@
 					</div>
 
 					<oeb-button
+						[id]="'create-new-badge-btn-1'"
 						[class.disabled]="!issuer.canCreateBadge"
 						class="tw-whitespace-nowrap"
 						[routerLink]="['/issuer/issuers/', issuer.slug, 'badges', 'create']"
@@ -96,6 +97,7 @@
 						</oeb-button>
 						<div class="tw-flex tw-gap-2 tw-flex-wrap tw-justify-between tw-pt-2">
 							<oeb-button
+								[id]="'create-new-badge-btn-2'"
 								[class.disabled]="!issuer.canCreateBadge"
 								class="tw-whitespace-nowrap tw-flex-grow"
 								[routerLink]="['/issuer/issuers/', issuer.slug, 'badges', 'create']"
@@ -109,15 +111,14 @@
 							<oeb-button
 								[class.disabled]="!issuer.canCreateBadge"
 								class="tw-whitespace-nowrap tw-flex-grow"
-								[routerLink]="['/issuer/issuers/', issuer.slug, 'learningpaths', 'upload']"
+								[routerLink]="['/issuer/issuers/', issuer.slug, 'learningpaths', 'create']"
 								[disabled]="!issuer.canCreateBadge"
 								[text]="'Issuer.myInstitutionsCreateLearningPath' | translate"
 								variant="secondary"
 								width="full_width"
 								size="mediumText"
 							>
-							</oeb-button>
-						</div>
+						</oeb-button>
 					</div>
 				</div>
 			</div>

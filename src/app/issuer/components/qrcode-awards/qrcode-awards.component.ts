@@ -19,12 +19,13 @@ import { QrCodeApiService } from "../../services/qrcode-api.service";
 import { ApiQRCode } from "../../models/qrcode-api.model";
 import { HlmH3Directive } from "../../../../app/components/spartan/ui-typography-helm/src/lib/hlm-h3.directive";
 import { HlmPDirective } from "../../../../app/components/spartan/ui-typography-helm/src/lib/hlm-p.directive";
+import { TranslateService } from "@ngx-translate/core";
 
 @Component({
 	selector: 'qrcode-awards',
 	templateUrl: './qrcode-awards.component.html',
     standalone: true,
-    providers: [BadgeRequestApiService, HlmDialogService, QrCodeApiService],
+    providers: [BadgeRequestApiService, HlmDialogService, QrCodeApiService, TranslateService],
     imports: [
 		HlmAccordionModule,
 		HlmIconModule,
@@ -50,7 +51,8 @@ export class QrCodeAwardsComponent {
 
 	constructor(
 		private badgeRequestApiService: BadgeRequestApiService,
-		private qrCodeApiService: QrCodeApiService,) {}
+		private qrCodeApiService: QrCodeApiService,
+		private translate: TranslateService) {}
 	separatorStyle = "tw-block tw-my-2 tw-border-[var(--color-lightgray)]"
 
 	getSvgFillColor(int: number) {
@@ -102,6 +104,8 @@ export class QrCodeAwardsComponent {
 	public openDangerDialog(qrSlug: string) {
 		const dialogRef = this._hlmDialogService.open(DangerDialogComponent, {
 			context: {
+				caption: this.translate.instant('QrCode.deleteQrAward'),
+				text: this.translate.instant('QrCode.deleteQrAwardConfirm'),
 				delete: () => this.deleteQrCode(qrSlug),
 				qrCodeRequested: this.awards.find(award => award.slug == qrSlug).request_count > 0,
 				variant: "danger"
