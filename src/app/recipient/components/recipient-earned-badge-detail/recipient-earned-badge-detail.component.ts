@@ -137,7 +137,7 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 					competencies: this.competencies as CompetencyType[],
 					license: this.badge.getExtension('extensions:LicenseExtension', {}) ? true : false,
 					shareButton: true,
-					id: this.badge.badgeClass.id.split('/')[5],
+					badgeInstanceSlug: this.badgeSlug,
 				};
 			})
 			.catch((e) => this.messageService.reportAndThrowError('Failed to load your badges', e));

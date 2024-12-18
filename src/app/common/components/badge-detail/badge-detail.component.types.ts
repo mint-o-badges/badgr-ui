@@ -77,4 +77,5 @@ export interface PageConfig {
 	license?: boolean;
 	id?: string;
 	shareButton?: boolean;
+	badgeInstanceSlug?: string
 }
