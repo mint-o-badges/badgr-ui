@@ -14,11 +14,13 @@ import { Map, NavigationControl, Popup } from 'maplibre-gl';
 import { TranslateService } from '@ngx-translate/core';
 import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
 import { FormControl } from '@angular/forms';
+import { appearAnimation } from '../../../common/animations/animations';
 
 @Component({
 	selector: 'app-issuer-catalog',
 	templateUrl: './issuer-catalog.component.html',
 	styleUrls: ['./issuer-catalog.component.css'],
+	animations: [appearAnimation],
 })
 export class IssuerCatalogComponent extends BaseRoutableComponent implements OnInit, AfterViewInit {
 	readonly issuerPlaceholderSrc = preloadImageURL('../../../../breakdown/static/images/placeholderavatar-issuer.svg');
@@ -52,7 +54,7 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 			value: 'andere',
 		},
 	];
-	
+
 	sortControl = new FormControl('name_asc');
 	private _searchQuery = '';
 	get searchQuery() {
@@ -109,7 +111,6 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 		this.categoryControl.valueChanges.subscribe((value) => {
 			this.categoryFilter = value;
 		});
-
 	}
 
 	async loadIssuers() {
@@ -383,8 +384,6 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 			this.mapObject.getSource('issuers').setData(this.issuerGeoJson);
 		}
 	}
-
-
 
 	openMap() {
 		this.badgesDisplay = 'map';

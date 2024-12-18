@@ -21,18 +21,27 @@ import { TranslateService } from '@ngx-translate/core';
 			multi: true,
 		},
 	],
-	template: ` <label [ngClass]="alignStart ? 'tw-items-start' : 'tw-items-center'" class="tw-flex tw-mt-[0.25rem]" hlmP>
-			<hlm-checkbox [name]="name" [checked]="checked" (changed)="onChange($event)" [formControl]="control" class="tw-mr-2" />
-			<div class="tw-flex tw-flex-col">
-				<span class="tw-pl-[3px]" [innerHTML]="text"></span>
-				<oeb-input-error
-					class="tw-text-red tw-pl-[3px]"
-					*ngIf="isErrorState"
-					[error]="errorMessageForDisplay"
-				></oeb-input-error>
-
-			</div>
-		</label>`,
+	template: `<label
+		[ngClass]="alignStart ? 'tw-items-start' : 'tw-items-center'"
+		class="tw-flex tw-mt-[0.25rem]"
+		hlmP
+	>
+		<hlm-checkbox
+			[name]="name"
+			[checked]="checked"
+			(changed)="onChange($event)"
+			[formControl]="control"
+			[class.tw-mr-2]="!noMargin"
+		/>
+		<div class="tw-flex tw-flex-col">
+			<span class="tw-pl-[3px]" [innerHTML]="text"></span>
+			<oeb-input-error
+				class="tw-text-red tw-pl-[3px]"
+				*ngIf="isErrorState"
+				[error]="errorMessageForDisplay"
+			></oeb-input-error>
+		</div>
+	</label>`,
 	host: {
 		'[class]': '_computedClass()',
 	},
@@ -51,9 +60,9 @@ export class OebCheckboxComponent implements ControlValueAccessor {
 	@Input() errorGroup: FormGroup;
 	@Input() errorGroupMessage: CustomValidatorMessages;
 	@Input() alignStart = false;
+	@Input() noMargin = false;
 
 	@Output() ngModelChange = new EventEmitter<string>();
-
 
 	onChange(event) {
 		this.ngModelChange.emit(event);
@@ -62,7 +71,7 @@ export class OebCheckboxComponent implements ControlValueAccessor {
 	public readonly userClass = input<ClassValue>('', { alias: 'class' });
 	protected _computedClass = computed(() => hlm(this.userClass()));
 
-	onTouched = () => { };
+	onTouched = () => {};
 
 	writeValue(value: boolean): void {
 		this.checked = value;
@@ -76,14 +85,14 @@ export class OebCheckboxComponent implements ControlValueAccessor {
 		this.onTouched = fn;
 	}
 
-	setDisabledState?(isDisabled: boolean): void { }
+	setDisabledState?(isDisabled: boolean): void {}
 
 	get errorMessageForDisplay(): string {
 		return this.uncachedErrorMessage;
 	}
 
 	get uncachedErrorMessage(): string {
-		const checkboxDefaultErrorText = { required: "Dieses Feld ist erforderlich" };
+		const checkboxDefaultErrorText = { required: 'Dieses Feld ist erforderlich' };
 
 		return messagesForValidationError(this.label, checkboxDefaultErrorText, this.errorMessage).concat(
 			messagesForValidationError(this.label, this.errorGroup && this.errorGroup.errors, this.errorGroupMessage),
@@ -95,7 +104,6 @@ export class OebCheckboxComponent implements ControlValueAccessor {
 	get controlErrorState() {
 		if (this.control) {
 			return this.control.dirty && (!this.control.valid || (this.errorGroup && !this.errorGroup.valid));
-
 		}
 	}
 
@@ -106,5 +114,4 @@ export class OebCheckboxComponent implements ControlValueAccessor {
 			return this.controlErrorState;
 		}
 	}
-
 }

@@ -8,13 +8,6 @@
 				alt="{{ issuer.name }} avatar"
 				class="tw-h-[70px] md:tw-h-[100px] tw-w-auto"
 			/>
-			<img
-				[loaded-src]="issuer?.image"
-				[loading-src]="issuerPlaceholderSrc"
-				[error-src]="issuerPlaceholderSrc"
-				alt="{{ issuer.name }} avatar"
-				class="tw-h-[70px] md:tw-h-[100px] tw-w-auto"
-			/>
 		</div>
 		<div class="tw-flex tw-flex-col tw-justify-center tw-pl-8 tw-max-w-[80%]">
 			<h1 hlmH1 class="tw-text-purple tw-font-semibold md:tw-text-[35px] xl:tw-text-[46px]">
@@ -176,7 +169,7 @@
 						/>
 					</div>
 				</div>
-				<div class="tw-grid tw-grid-cols-badges tw-gap-16">
+				<div class="tw-grid tw-grid-cols-badges tw-gap-6">
 					<bg-badgecard
 						*ngFor="let badge of badgeResults"
 						[badgeTitle]="badge.badge.name"
@@ -233,7 +226,7 @@
 					></learningpaths-datatable>
 
 					<ng-container *ngIf="public">
-						<div class="tw-grid tw-grid-cols-learningpaths tw-gap-12">
+						<div class="tw-grid tw-grid-cols-learningpaths tw-gap-6">
 							<bg-learningpathcard
 								*ngFor="let lp of learningPaths"
 								[badgeImage]="lp.image"

@@ -84,7 +84,7 @@
 									[control]="sortControl"
 									[result]="badgeResults"
 									[recipient]="true"
-									></oeb-sort-select>
+								></oeb-sort-select>
 								<oeb-checkbox
 									class="tw-mt-2 md:tw-mt-0"
 									name="groupby"
@@ -97,7 +97,7 @@
 							<ng-template [ngIf]="badgesDisplay == 'grid'">
 								<!-- ------------------ UNGROUPED ------------------  -->
 								<ng-template [ngIf]="!groupByIssuer">
-									<div class="l-grid l-grid-large tw-gap-10">
+									<div class="tw-gap-6 tw-grid tw-grid-cols-badges">
 										<bg-badgecard
 											*ngFor="let badgeResult of badgeResults; trackBy: trackById"
 											[badgeTitle]="badgeResult.badge.badgeClass.name"
@@ -124,7 +124,7 @@
 												{{ issuerGroup.badges.length == 1 ? 'Badge' : 'Badges' }}</span
 											>
 										</h3>
-										<div class="l-grid l-grid-large tw-gap-10">
+										<div class="tw-gap-6 tw-grid tw-grid-cols-badges">
 											<bg-badgecard
 												*ngFor="let badge of issuerGroup.badges"
 												[badgeTitle]="badge.badgeClass.name"
@@ -287,7 +287,7 @@
 								<h3 hlmH3 class="tw-uppercase tw-text-purple tw-font-bold tw-pb-4">
 									{{ 'LearningPath.getYourPath' | translate }}
 								</h3>
-								<div class="tw-grid tw-grid-cols-learningpaths tw-gap-16 tw-justify-items-center">
+								<div class="tw-grid min-[450px]:tw-grid-cols-learningpathsBackpack tw-gap-6">
 									<bg-learningpathcard
 										*ngFor="let lp of learningPathsReadyToRequest"
 										[badgeImage]="lp.participationBadge_image"
@@ -310,7 +310,7 @@
 								<h3 hlmH3 class="tw-uppercase tw-text-purple tw-font-bold tw-pb-4">
 									{{ 'LearningPath.continue' | translate }}
 								</h3>
-								<div class="tw-grid tw-grid-cols-learningpaths tw-gap-16 tw-justify-items-center">
+								<div class="tw-grid min-[450px]:tw-grid-cols-learningpathsBackpack tw-gap-6">
 									<bg-learningpathcard
 										*ngFor="let lp of learningPathsInProgress"
 										[badgeImage]="lp.participationBadge_image"
@@ -332,9 +332,7 @@
 								<h3 hlmH3 class="tw-uppercase tw-text-purple tw-font-bold tw-pb-4">
 									{{ 'LearningPath.finished' | translate }}
 								</h3>
-								<div
-									class="tw-grid tw-grid-cols-learningpaths tw-gap-16 md:tw-justify-items-start tw-justify-items-center"
-								>
+								<div class="tw-grid min-[450px]:tw-grid-cols-learningpathsBackpack tw-gap-6">
 									<bg-learningpathcard
 										*ngFor="let lp of learningPathsCompleted"
 										[badgeImage]="lp.participationBadge_image"
