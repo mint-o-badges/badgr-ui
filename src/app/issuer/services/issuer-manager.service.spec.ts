@@ -46,6 +46,10 @@ xdescribe('IssuerManager', () => {
 		httpTestingController = TestBed.inject(HttpTestingController);
 	});
 
+	beforeEach(inject([SessionService], (loginService: SessionService) => {
+		loginService.storeToken({ access_token: 'MOCKTOKEN' });
+	}));
+
 	it('should retrieve all issuers', inject(
 		[IssuerManager, SessionService],
 		(issuerManager: IssuerManager, loginService: SessionService) => {
