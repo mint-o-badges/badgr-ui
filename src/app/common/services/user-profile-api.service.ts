@@ -70,4 +70,5 @@ export class UserProfileApiService extends BaseHttpApiService {
 	resendVerificationEmail(emailIdToVerify: number) {
 		return this.put('/v1/user/emails/' + emailIdToVerify, { resend: true });
 	}
+
 }

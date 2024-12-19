@@ -25,11 +25,13 @@ import { CountUpDirective } from 'ngx-countup';
 import { Competency } from '../../../common/model/competency.model';
 import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
 import { LearningPath } from '../../../issuer/models/learningpath.model';
+import { FormControl } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 
 type BadgeDispay = 'grid' | 'list';
 type EscoCompetencies = {
-	[key: string]: Competency;		
-}
+	[key: string]: Competency;
+};
 
 @Component({
 	selector: 'recipient-earned-badge-list',
@@ -43,7 +45,10 @@ type EscoCompetencies = {
 		provideIcons({ lucideHeart }),
 	],
 })
-export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutableComponent implements OnInit, AfterContentInit {
+export class RecipientEarnedBadgeListComponent
+	extends BaseAuthenticatedRoutableComponent
+	implements OnInit, AfterContentInit
+{
 	readonly noBadgesImageUrl = '../../../../assets/@concentricsky/badgr-style/dist/images/image-empty-backpack.svg';
 	readonly badgeLoadingImageUrl = '../../../../breakdown/static/images/badge-loading.svg';
 	readonly badgeFailedImageUrl = '../../../../breakdown/static/images/badge-failed.svg';
@@ -84,7 +89,7 @@ export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutable
 
 	groupedUserCompetencies = {};
 	newGroupedUserCompetencies = {};
-	
+
 	totalStudyTime = 0;
 	public objectKeys = Object.keys;
 	public objectValues = Object.values;
@@ -92,10 +97,10 @@ export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutable
 	@ViewChild('countup') countup: CountUpDirective;
 	@ViewChild('countup2') countup2: CountUpDirective;
 	@ViewChild('badgesCounter') badgesCounter: CountUpDirective;
-	
+
 	activeTab = 'Badges';
 	private _badgesDisplay: BadgeDispay = 'grid';
-
+	sortControl = new FormControl('name_asc');
 	get badgesDisplay() {
 		return this._badgesDisplay;
 	}
@@ -137,6 +142,7 @@ export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutable
 		private learningPathApi: LearningPathApiService,
 		public configService: AppConfigService,
 		private profileManager: UserProfileManager,
+		private translate: TranslateService,
 	) {
 		super(router, route, sessionService);
 
@@ -145,16 +151,14 @@ export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutable
 		this.badgesLoaded = this.recipientBadgeManager.recipientBadgeList.loadedPromise.catch((e) =>
 			this.messageService.reportAndThrowError('Failed to load your badges', e),
 		);
-		this.learningpathLoaded = this.learningPathApi.getLearningPathsForUser().then((res) => {
-			this.allLearningPaths = res;
-			this.updateResults();
-		}).catch((e) =>
-			this.messageService.reportAndThrowError('Failed to load your badges', e),
-		);
+		this.learningpathLoaded = this.learningPathApi
+			.getLearningPathsForUser()
+			.then((res) => {
+				this.allLearningPaths = res;
+				this.updateResults();
+			})
+			.catch((e) => this.messageService.reportAndThrowError('Failed to load your badges', e));
 
-		this.recipientBadgeManager.recipientBadgeList.changed$.subscribe((badges) =>
-			this.updateBadges(badges.entities),
-		);
 		this.recipientBadgeManager.recipientBadgeList.changed$.subscribe((badges) =>
 			this.updateBadges(badges.entities),
 		);
@@ -163,11 +167,10 @@ export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutable
 			// force a refresh of the userProfileSet now that we are authenticated
 			this.profileLoaded = profileManager.userProfileSet.updateList().then((p) => {
 				this.profile = profileManager.userProfile;
-				if (profileManager.userProfile.agreedTermsVersion !== profileManager.userProfile.latestTermsVersion) {
-					dialogService.newTermsDialog.openDialog();
-				}
 			});
 		}
+
+
 
 		this.mozillaTransitionOver = !!localStorage.getItem('mozillaTransitionOver') || false;
 
@@ -213,10 +216,9 @@ export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutable
 		super.ngOnInit();
 		if (this.route.snapshot.routeConfig.path === 'badges/import') this.launchImport(new Event('click'));
 	}
-	
+
 	ngAfterContentInit() {
 		this.tabs = [
-			
 			{
 				title: 'Badges',
 				component: this.badgesTemplate,
@@ -333,18 +335,16 @@ export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutable
 
 			if (!this.learningPathResults.find((r) => r.learningPath === learningPath)) {
 				// appending the results to the badgeResults array bound to the view template.
-				if(learningPath.completed_at){
-					if (!this.learningPathsCompleted.find((r) => r === learningPath)){
+				if (learningPath.completed_at) {
+					if (!this.learningPathsCompleted.find((r) => r === learningPath)) {
 						this.learningPathsCompleted.push(learningPath);
 					}
-				}
-				else if(learningPath.progress / this.calculateStudyLoad(learningPath) == 1){
-					if (!this.learningPathsReadyToRequest.find((r) => r === learningPath)){
+				} else if (learningPath.progress / this.calculateStudyLoad(learningPath) == 1) {
+					if (!this.learningPathsReadyToRequest.find((r) => r === learningPath)) {
 						this.learningPathsReadyToRequest.push(learningPath);
 					}
-				}
-				else {
-					if (!this.learningPathsInProgress.find((r) => r === learningPath)){
+				} else {
+					if (!this.learningPathsInProgress.find((r) => r === learningPath)) {
 						this.learningPathsInProgress.push(learningPath);
 					}
 				}
@@ -360,64 +360,66 @@ export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutable
 		this.allIssuers.filter(MatchingAlgorithm.issuerMatcher(this.searchQuery)).forEach(addIssuerToResults);
 
 		this.allBadges.filter(MatchingAlgorithm.badgeMatcher(this._searchQuery)).forEach(addBadgeToResults);
-		this.allLearningPaths.filter(MatchingAlgorithm.learningPathMatcher(this._searchQuery)).forEach(addToLearningPathResults);
+		this.allLearningPaths
+			.filter(MatchingAlgorithm.learningPathMatcher(this._searchQuery))
+			.forEach(addToLearningPathResults);
 		this.badgeResults.sort((a, b) => b.badge.issueDate.getTime() - a.badge.issueDate.getTime());
 		this.issuerResults.forEach((r) => r.badges.sort((a, b) => b.issueDate.getTime() - a.issueDate.getTime()));
 		// this.learningPathResults.forEach((r) => r.sort((a, b) => b.issueDate.getTime() - a.issueDate.getTime()));
 	}
 
-	// exportPdf() {
-	// 	this.profileManager.userProfilePromise.then(
-	// 		(profile: UserProfile) => {
-	// 			this.dialogService.exportPdfDialog.openDialogForBackpack(this.badgeResults, profile)
-	// 				.catch((error) => console.log(error));
-	// 		},
-	// 		error => this.messageService.reportAndThrowError(
-	// 			"Failed to load userProfile", error
-	// 		)
-	// 	);
-	// }
+	trackById(index: number, item: any): any {
+		return item.id; 
+	}
+
+
 
 	private groupCompetencies(badges) {
-
-		let groupedCompetencies : EscoCompetencies = {};
-		let newGroupedCompetencies : EscoCompetencies = {};
+		let groupedCompetencies: EscoCompetencies = {};
+		let newGroupedCompetencies: EscoCompetencies = {};
 		this.groupedUserCompetencies = {};
 		this.newGroupedUserCompetencies = {};
 
 		badges.forEach((badge) => {
 			let competencies = badge.getExtension('extensions:CompetencyExtension', [{}]);
 			competencies.forEach((competency) => {
-				if (groupedCompetencies[competency.escoID]) {
-					groupedCompetencies[competency.escoID].studyLoad += competency.studyLoad;
-					if (groupedCompetencies[competency.escoID].lastReceived < badge.issueDate){
-						groupedCompetencies[competency.escoID].lastReceived = badge.issueDate;
+				if (groupedCompetencies[competency['framework_identifier']]) {
+					groupedCompetencies[competency['framework_identifier']].studyLoad += competency.studyLoad;
+					if (groupedCompetencies[competency['framework_identifier']].lastReceived < badge.issueDate) {
+						groupedCompetencies[competency['framework_identifier']].lastReceived = badge.issueDate;
 					}
 				} else {
-					groupedCompetencies[competency.escoID] = Object.create(competency);
-					groupedCompetencies[competency.escoID].lastReceived = badge.issueDate;
+					groupedCompetencies[competency['framework_identifier']] = Object.create(competency);
+					groupedCompetencies[competency['framework_identifier']].lastReceived = badge.issueDate;
 				}
 				this.totalStudyTime += competency.studyLoad;
+				console.log(this.totalStudyTime)
 			});
 		});
 
-		badges.filter(badge => badge.mostRelevantStatus).forEach((badge) => {
-			let competencies = badge.getExtension('extensions:CompetencyExtension', [{}]);
-			competencies.forEach((competency) => {
-				if (newGroupedCompetencies[competency.escoID]) {
-					newGroupedCompetencies[competency.escoID].studyLoad += competency.studyLoad;
-					if (newGroupedCompetencies[competency.escoID].lastReceived < badge.issueDate){
-						newGroupedCompetencies[competency.escoID].lastReceived = badge.issueDate;
+		badges
+			.filter((badge) => badge.mostRelevantStatus)
+			.forEach((badge) => {
+				let competencies = badge.getExtension('extensions:CompetencyExtension', [{}]);
+				competencies.forEach((competency) => {
+					if (newGroupedCompetencies[competency['framework_identifier']]) {
+						newGroupedCompetencies[competency['framework_identifier']].studyLoad += competency.studyLoad;
+						if (newGroupedCompetencies[competency['framework_identifier']].lastReceived < badge.issueDate) {
+							newGroupedCompetencies[competency['framework_identifier']].lastReceived = badge.issueDate;
+						}
+					} else {
+						newGroupedCompetencies[competency['framework_identifier']] = Object.create(competency);
+						newGroupedCompetencies[competency['framework_identifier']].lastReceived = badge.issueDate;
 					}
-				} else {
-					newGroupedCompetencies[competency.escoID] = Object.create(competency);
-					newGroupedCompetencies[competency.escoID].lastReceived = badge.issueDate;
-				}
+				});
 			});
-		});
 
-		this.groupedUserCompetencies = Object.values(groupedCompetencies).sort((a,b) => { return a.lastReceived.getTime() - b.lastReceived.getTime() });
-		this.newGroupedUserCompetencies = Object.values(newGroupedCompetencies).sort((a,b) => { return a.lastReceived.getTime() - b.lastReceived.getTime() });;
+		this.groupedUserCompetencies = Object.values(groupedCompetencies).sort((a, b) => {
+			return a.lastReceived.getTime() - b.lastReceived.getTime();
+		});
+		this.newGroupedUserCompetencies = Object.values(newGroupedCompetencies).sort((a, b) => {
+			return a.lastReceived.getTime() - b.lastReceived.getTime();
+		});
 	}
 
 	onTabChange(tab) {
@@ -425,10 +427,12 @@ export class RecipientEarnedBadgeListComponent extends BaseAuthenticatedRoutable
 	}
 
 	calculateStudyLoad(lp: LearningPath): number {
-		const totalStudyLoad = lp.badges.reduce((acc, b) => acc + b.badge.extensions['extensions:StudyLoadExtension'].StudyLoad, 0);
+		const totalStudyLoad = lp.badges.reduce(
+			(acc, b) => acc + b.badge.extensions['extensions:StudyLoadExtension'].StudyLoad,
+			0,
+		);
 		return totalStudyLoad;
 	}
-
 }
 
 class BadgeResult {
@@ -458,8 +462,7 @@ class MatchingLearningPathIssuer {
 	constructor(
 		public issuerName: string,
 		public learningpaths: LearningPath[] = [],
-	) {
-	}
+	) {}
 
 	async addLp(learningpath) {
 		if (learningpath.issuer_name === this.issuerName) {

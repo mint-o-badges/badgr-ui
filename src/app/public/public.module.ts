@@ -12,8 +12,10 @@ import { PublicBadgeCollectionComponent } from './components/badge-collection/ba
 import { BadgrRouteData } from '../common/services/navigation.service';
 import { VerifyBadgeDialog } from './components/verify-badge-dialog/verify-badge-dialog.component';
 import { AboutComponent } from './components/about/about.component';
+import { NewsletterComponent } from './components/about/newsletter/newsletter.component';
 import { StartComponent } from './components/start/start.component';
 import { ImpressumComponent } from './components/impressum/impressum.component';
+import { TermsComponent } from './components/terms-of-service/terms-of-service.component';
 import { FaqComponent } from './components/faq/faq.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { PrivacyComponent } from './components/privacy/privacy.component';
@@ -42,7 +44,13 @@ export const routes: Routes = [
 			publiclyAccessible: true,
 		} as BadgrRouteData,
 	},
-
+	// {
+	// 	path: 'about/newsletter',
+	// 	component: NewsletterComponent,
+	// 	data: {
+	// 		publiclyAccessible: true,
+	// 	} as BadgrRouteData,
+	// },
 	{
 		path: 'start',
 		component: StartComponent,
@@ -57,6 +65,13 @@ export const routes: Routes = [
 			publiclyAccessible: true,
 		} as BadgrRouteData,
 	},
+	// {
+	// 	path: 'terms',
+	// 	component: TermsComponent,
+	// 	data: {
+	// 		publiclyAccessible: true,
+	// 	} as BadgrRouteData,
+	// },
 	{
 		path: 'privacy',
 		component: PrivacyComponent,

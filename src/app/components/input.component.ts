@@ -11,7 +11,7 @@ import { HlmPDirective } from './spartan/ui-typography-helm/src/lib/hlm-p.direct
 	standalone: true,
 	imports: [HlmInputDirective, HlmPDirective, OebInputErrorComponent, NgIf, NgClass, ReactiveFormsModule],
 	styleUrls: ['./input.component.scss'],
-	template: ` <div [ngClass]="{ 'tw-my-6 md:tw-mt-7': !noTopMargin }">
+	template: ` <div [ngClass]="{ 'tw-my-6 md:tw-mt-7': !noTopMargin, 'tw-opacity-50 tw-pointer-events-none': readonly }">
 		<div class="tw-flex tw-justify-between">
 			<label class="tw-pb-[2px] tw-pl-[3px]" [attr.for]="inputName" *ngIf="label">
 				<span *ngIf="labelStyle; else baseLabel" [class]="labelStyle" [innerHTML]="label"></span>
@@ -44,7 +44,8 @@ import { HlmPDirective } from './spartan/ui-typography-helm/src/lib/hlm-p.direct
 				[attr.maxlength]="maxchar"
 				[attr.max]="max"
 				[type]="fieldType"
-				#textInput
+				[readonly]="readonly"
+			#textInput
 				class="tw-w-full tw-border-solid tw-border-purple tw-bg-white"
 				hlmInput
 			/>
@@ -58,7 +59,8 @@ import { HlmPDirective } from './spartan/ui-typography-helm/src/lib/hlm-p.direct
 				[placeholder]="placeholder || ''"
 				[attr.maxlength]="maxchar"
 				[attr.max]="max"
-				#textInput
+				[readonly]="readonly"
+			#textInput
 				class="tw-w-full tw-border-solid tw-border-purple tw-bg-white tw-min-h-[80px]"
 				hlmInput
 			></textarea>
@@ -83,6 +85,7 @@ export class OebInputComponent {
 	@Input() placeholder = '';
 	@Input() maxchar?: number = null;
 	@Input() max?: number;
+	@Input() readonly?: boolean = false;
 	@Input() sublabel?: string;
 	@Input() sublabelRight?: string;
 	@Input() autofocus = false;
@@ -142,10 +145,7 @@ export class OebInputComponent {
 
 	ngAfterViewInit() {
 		if (this.autofocus) {
-			// delay focus to prevent unwanted scrolling
-			setTimeout(() => {
-				this.focus();
-			}, 100);
+			this.focus();
 		}
 	}
 

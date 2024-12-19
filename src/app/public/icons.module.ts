@@ -25,6 +25,12 @@ import {
 	lucideMapPin,
 	lucideSearch,
 	lucideGrid2x2,
+	lucideCircleAlert,
+	lucideStepBack,
+	lucideStepForward,
+	lucideArrowLeft,
+	lucideArrowRight,
+	lucideArrowUpAZ,
 	lucideCircleX,
 	lucideGithub,
 	lucideMail
@@ -57,10 +63,15 @@ import {
 			lucideMapPin,
 			lucideSearch,
 			lucideGrid2x2,
+			lucideCircleAlert,
+			lucideStepBack,
+			lucideStepForward,
+			lucideArrowLeft,
+			lucideArrowRight,
+			lucideArrowUpAZ,
 			lucideCircleX,
 			lucideGithub,
 			lucideMail
-
 		}),
 	],
 })

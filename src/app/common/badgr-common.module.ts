@@ -106,7 +106,6 @@ import { OebCompetency } from './components/oeb-competency';
 import { OebDialogComponent } from '../components/oeb-dialog.component';
 import { SuccessDialogComponent } from './dialogs/oeb-dialogs/success-dialog.component';
 import { DangerDialogComponent } from './dialogs/oeb-dialogs/danger-dialog.component';
-import { EndOfEditDialogComponent } from './dialogs/oeb-dialogs/end-of-edit-dialog.component';
 import { OebBackgroundComponent } from '../components/oeb-background.component';
 import { OebIssuerDetailComponent } from './components/issuer/oeb-issuer-detail.component';
 import { DatatableComponent } from '../components/datatable-badges.component';
@@ -128,10 +127,13 @@ import { OebIssuerCard } from './components/oeb-issuercard';
 import { HourPipe } from './pipes/hourPipe';
 import { HlmBadgeDirective } from '../components/spartan/ui-badge-helm/src/lib/hlm-badge.directive';
 import { IssuerCardComponent } from '../components/issuer-card/issuer-card.component';
+// import { OebStepperComponent } from '../components/stepper/stepper.component';
+import { CdkStepperModule } from '@angular/cdk/stepper';
 import { ErrorDialogComponent } from './dialogs/oeb-dialogs/error-dialog.component';
 import { GlobalErrorHandler } from '../globalErrorHandler.service';
 import { ServerErrorInterceptor } from '../ServerErrorInterceptor';
 import { CountUpDirective } from './directives/count-up.directive';
+import { OebSortSelectComponent } from '../components/oeb-sort-select.component';
 
 const DIRECTIVES = [
 	BgAwaitPromises,
@@ -187,6 +189,7 @@ export const COMMON_MODULE_COMPONENTS = [
 	IssuerCardComponent,
 	OebLearningPathDetailComponent,
 	OebIssuerCard,
+	OebSortSelectComponent
 ];
 
 const SERVICES = [
@@ -261,15 +264,14 @@ export const COMMON_IMPORTS = [
 	LearningPathParticipantsDatatableComponent,
 	LearningPathGraduatesDatatableComponent,
 	LearningPathRequestsDatatableComponent,
-	EndOfEditDialogComponent,
 	HlmBadgeDirective,
 ];
 
 @NgModule({
-	imports: [...COMMON_IMPORTS, FormsModule, LMarkdownEditorModule, TranslateModule],
+	imports: [...COMMON_IMPORTS, FormsModule, LMarkdownEditorModule, TranslateModule, SharedIconsModule, CdkStepperModule],
 	providers: [BadgeClassManager, BadgeClassApiService, { provide: HTTP_INTERCEPTORS, useClass:ServerErrorInterceptor, multi:true}],
 	declarations: [...DIRECTIVES, ...COMMON_MODULE_COMPONENTS, ...PIPES, ForwardRouteComponent, BadgeLegendComponent, CountUpDirective],
-	exports: [...DIRECTIVES, ...COMMON_MODULE_COMPONENTS, ...PIPES, BadgeLegendComponent],
+	exports: [...DIRECTIVES, ...COMMON_MODULE_COMPONENTS, ...PIPES, BadgeLegendComponent, SharedIconsModule],
 })
 export class BadgrCommonModule {
 	// Load BadgrCommonModule with forRoot() to preserve singleton status in lazy loaded modules.
