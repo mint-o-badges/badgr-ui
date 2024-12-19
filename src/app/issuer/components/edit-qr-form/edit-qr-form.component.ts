@@ -14,7 +14,6 @@ import { SuccessDialogComponent } from '../../../common/dialogs/oeb-dialogs/succ
 import { TranslateService } from '@ngx-translate/core';
 import { DatePipe } from '@angular/common';
 import { Location } from '@angular/common';
-import { InfoDialogComponent } from '../../../common/dialogs/oeb-dialogs/info-dialog.component';
 
 @Component({
 	selector: 'edit-qr-form',

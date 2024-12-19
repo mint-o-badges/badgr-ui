@@ -38,8 +38,8 @@
                             </div>
                         </button>
                         <brn-accordion-content *ngIf="award.request_count > 0" hlm class="tw-text-white">
-                            <qrcodes-datatable caption="" [qrCodeId]="award.slug" [issuerSlug]="issuerSlug"
-                                [badgeSlug]="badgeClassSlug" (deletedQRAward)="deleteQRAward($event)"
+                            <qrcodes-datatable caption="" [qrCodeId]="award.slug" [issuerSlug]="issuer.slug"
+                                [badgeSlug]="badgeClass.slug" (deletedQRAward)="deleteQRAward($event)"
                                 (qrBadgeAward)="onQrBadgeAward()"></qrcodes-datatable>
                         </brn-accordion-content>
 
