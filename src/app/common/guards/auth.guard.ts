@@ -32,12 +32,12 @@ export class AuthGuard {
 			return false;
 		} 		
 		else {
-			this.userProfileApiService.getProfile().then(profile => {
-				if (profile.agreed_terms_version !== profile.latest_terms_version) {
-					this.router.navigate(['/auth/new-terms']);
-					return false;
-				}
-			});
+			// this.userProfileApiService.getProfile().then(profile => {
+			// 	if (profile.agreed_terms_version !== profile.latest_terms_version) {
+			// 		this.router.navigate(['/auth/new-terms']);
+			// 		return false;
+			// 	}
+			// });
 			return true;
 		}
 	}
