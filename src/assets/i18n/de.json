@@ -214,6 +214,7 @@
 		"awardedPerson": "Name der Empfänger:in",
 		"sendEmail": "Empfänger:in mit E-Mail benachrichtigen",
 		"giveBadge": "Badge vergeben",
+		"giveQr": "QR-Code-Vergabe erstellen",
 		"nameWarning": "Beachte: Der Name wird als Klartext im Badge gespeichert.",
 		"multipleBadgeAwardHeadline": "Badge an mehrere Lernende gleichzeitig vergeben",
 		"uploadListText": "Du kannst eine <span class='tw-font-bold'>Liste von Empfänger:innen importieren</span>, die den Badge gleichzeitig erhalten sollen. So geht's:",
@@ -291,7 +292,7 @@
 		"deleteConfirm": "Badge löschen",
 		"sortBy": "Sortieren nach",
 		"endOfEditDialogTitle": "Ende der Editier-funktion",
-		"endOfEditDialogText": "Sobald du den Badge einmal vergeben hast, kann er nicht mehr bearbeitet werden?",
+		"endOfEditDialogText": "Sobald du den Badge einmal vergeben hast, kann er nicht mehr bearbeitet werden.",
 		"endOfEditDialogTextQR": "Sobald du eine QR-Code-Vergabe erstellt hast, kann der Badge nicht mehr bearbeitet werden.",
 		"endOfEditDialogSubText": "Bitte prüfe daher, ob du mit den Badge-Daten (Bild, Kurzbeschreibung, ggf. enthaltene Kompetenzen, ...) zufrieden bist."
 	},

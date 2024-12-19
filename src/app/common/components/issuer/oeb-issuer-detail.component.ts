@@ -15,6 +15,7 @@ import { LearningPathApiService } from '../../../common/services/learningpath-ap
 import { DangerDialogComponentTemplate } from '../../dialogs/oeb-dialogs/danger-dialog-template.component';
 import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
 import { BadgeRequestApiService } from '../../../issuer/services/badgerequest-api.service';
+import { InfoDialogComponent } from '../../dialogs/oeb-dialogs/info-dialog.component';
 
 @Component({
 	selector: 'oeb-issuer-detail',
@@ -137,12 +138,46 @@ export class OebIssuerDetailComponent implements OnInit {
         this.issuerDeleted.emit(event);
     }
 
-    routeToBadgeAward(badge, issuer){
-		this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'issue'])
+    routeToBadgeAward(badge: BadgeClass, issuer){
+		if(badge.recipientCount === 0){
+			const dialogRef =this._hlmDialogService.open(InfoDialogComponent, {
+				context: {
+					variant: "info",
+					caption: this.translate.instant("Badge.endOfEditDialogTitle"),
+					subtitle: this.translate.instant("Badge.endOfEditDialogText"),
+					text: this.translate.instant("Badge.endOfEditDialogSubText"),
+					cancelText: this.translate.instant('General.cancel'),
+					forwardText: this.translate.instant('Issuer.giveBadge')
+				},
+			})
+			dialogRef.closed$.subscribe((result) => {
+				if (result === 'continue') this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'issue']);
+			});
+		}
+		else{
+			this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'issue'])
+		}		
 	}
 
 	routeToQRCodeAward(badge, issuer){
-		this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'qr'])
+		if(badge.recipientCount === 0){
+			const dialogRef =this._hlmDialogService.open(InfoDialogComponent, {
+				context: {
+					variant: "info",
+					caption: this.translate.instant("Badge.endOfEditDialogTitle"),
+					subtitle: this.translate.instant("Badge.endOfEditDialogTextQR"),
+					text: this.translate.instant("Badge.endOfEditDialogSubText"),
+					cancelText: this.translate.instant('General.previous'),
+					forwardText: this.translate.instant('Issuer.giveQr')
+				},
+			})
+			dialogRef.closed$.subscribe((result) => {
+				if (result === 'continue') this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'qr']);
+			});
+		}
+		else{
+			this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'qr'])
+		}	
 	}
 
 	routeToBadgeDetail(badge, issuer){

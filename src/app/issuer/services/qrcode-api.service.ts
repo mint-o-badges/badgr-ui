@@ -45,13 +45,11 @@ export class QrCodeApiService extends BaseHttpApiService {
 	}
 
 	getQrCodePdf(slug: string, badgeSlug: string, base64QrImage: string): Observable<Blob> {
+        const headers = new HttpHeaders().set('Authorization', `Bearer ${this.loginService.currentAuthToken.access_token}`);
 		const imageData = {
 			"image": base64QrImage
 		}
-		return this.http.post(`${this.baseUrl}/download-qrcode/${slug}/${badgeSlug}`, imageData, {
-            responseType: 'blob',
-            withCredentials: true
-        });
+		return this.http.post(`${this.baseUrl}/download-qrcode/${slug}/${badgeSlug}`, imageData, { headers: headers, responseType: 'blob' });
 	}
 
 	downloadQrCode(blob: Blob, qrCodeName: string, badgeName: string): void {
