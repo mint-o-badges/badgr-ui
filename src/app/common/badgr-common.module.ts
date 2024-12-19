@@ -134,6 +134,7 @@ import { GlobalErrorHandler } from '../globalErrorHandler.service';
 import { ServerErrorInterceptor } from '../ServerErrorInterceptor';
 import { CountUpDirective } from './directives/count-up.directive';
 import { OebSortSelectComponent } from '../components/oeb-sort-select.component';
+import { QrCodeApiService } from '../issuer/services/qrcode-api.service';
 
 const DIRECTIVES = [
 	BgAwaitPromises,
@@ -221,6 +222,7 @@ const SERVICES = [
 	ZipService,
 	ApplicationCredentialsService,
 	LearningPathApiService,
+	QrCodeApiService
 ];
 
 const GUARDS = [AuthGuard];
