@@ -361,45 +361,49 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 	}
 
 	routeToBadgeAward(badge: BadgeClass, issuer){
-		if(badge.recipientCount === 0){
-			const dialogRef =this._hlmDialogService.open(InfoDialogComponent, {
-				context: {
-					variant: "info",
-					caption: this.translate.instant("Badge.endOfEditDialogTitle"),
-					subtitle: this.translate.instant("Badge.endOfEditDialogText"),
-					text: this.translate.instant("Badge.endOfEditDialogSubText"),
-					cancelText: this.translate.instant('General.cancel'),
-					forwardText: this.translate.instant('Issuer.giveBadge')
-				},
-			})
-			dialogRef.closed$.subscribe((result) => {
-				if (result === 'continue') this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'issue']);
-			});
-		}
-		else{
-			this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'issue'])
-		}		
+		this.qrCodeApiService.getQrCodesForIssuerByBadgeClass(this.issuer.slug, badge.slug).then((qrCodes) => {
+			if(badge.recipientCount === 0 && qrCodes.length === 0){
+				const dialogRef =this._hlmDialogService.open(InfoDialogComponent, {
+					context: {
+						variant: "info",
+						caption: this.translate.instant("Badge.endOfEditDialogTitle"),
+						subtitle: this.translate.instant("Badge.endOfEditDialogText"),
+						text: this.translate.instant("Badge.endOfEditDialogSubText"),
+						cancelText: this.translate.instant('General.cancel'),
+						forwardText: this.translate.instant('Issuer.giveBadge')
+					},
+				})
+				dialogRef.closed$.subscribe((result) => {
+					if (result === 'continue') this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'issue']);
+				});
+			}
+			else{
+				this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'issue'])
+			}	
+		})	
 	}
 
 	routeToQRCodeAward(badge, issuer){
-		if(badge.recipientCount === 0){
-			const dialogRef =this._hlmDialogService.open(InfoDialogComponent, {
-				context: {
-					variant: "info",
-					caption: this.translate.instant("Badge.endOfEditDialogTitle"),
-					subtitle: this.translate.instant("Badge.endOfEditDialogTextQR"),
-					text: this.translate.instant("Badge.endOfEditDialogSubText"),
-					cancelText: this.translate.instant('General.previous'),
-					forwardText: this.translate.instant('Issuer.giveQr')
-				},
-			})
-			dialogRef.closed$.subscribe((result) => {
-				if (result === 'continue') this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'qr']);
-			});
-		}
-		else{
-			this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'qr'])
-		}	
+		this.qrCodeApiService.getQrCodesForIssuerByBadgeClass(this.issuer.slug, badge.slug).then((qrCodes) => {
+			if(badge.recipientCount === 0 && qrCodes.length === 0){
+				const dialogRef =this._hlmDialogService.open(InfoDialogComponent, {
+					context: {
+						variant: "info",
+						caption: this.translate.instant("Badge.endOfEditDialogTitle"),
+						subtitle: this.translate.instant("Badge.endOfEditDialogTextQR"),
+						text: this.translate.instant("Badge.endOfEditDialogSubText"),
+						cancelText: this.translate.instant('General.previous'),
+						forwardText: this.translate.instant('Issuer.giveQr')
+					},
+				})
+				dialogRef.closed$.subscribe((result) => {
+					if (result === 'continue') this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'qr']);
+				});
+			}
+			else{
+				this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'qr'])
+			}
+		})	
 	}
 
 	shareInstance(instance: BadgeInstance) {
