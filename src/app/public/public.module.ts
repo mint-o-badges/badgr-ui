@@ -44,13 +44,13 @@ export const routes: Routes = [
 			publiclyAccessible: true,
 		} as BadgrRouteData,
 	},
-	{
-		path: 'about/newsletter',
-		component: NewsletterComponent,
-		data: {
-			publiclyAccessible: true,
-		} as BadgrRouteData,
-	},
+	// {
+	// 	path: 'about/newsletter',
+	// 	component: NewsletterComponent,
+	// 	data: {
+	// 		publiclyAccessible: true,
+	// 	} as BadgrRouteData,
+	// },
 	{
 		path: 'start',
 		component: StartComponent,
@@ -65,13 +65,13 @@ export const routes: Routes = [
 			publiclyAccessible: true,
 		} as BadgrRouteData,
 	},
-	{
-		path: 'terms',
-		component: TermsComponent,
-		data: {
-			publiclyAccessible: true,
-		} as BadgrRouteData,
-	},
+	// {
+	// 	path: 'terms',
+	// 	component: TermsComponent,
+	// 	data: {
+	// 		publiclyAccessible: true,
+	// 	} as BadgrRouteData,
+	// },
 	{
 		path: 'privacy',
 		component: PrivacyComponent,

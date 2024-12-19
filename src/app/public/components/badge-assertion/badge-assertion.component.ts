@@ -169,6 +169,9 @@ export class PublicBadgeAssertionComponent {
 						title: 'Verify Badge',
 						action: () => this.verifyBadge(),
 					},
+					qrCodeButton: {
+						show: false,
+					},
 					menuitems: [
 						{
 							title: 'Download JSON',

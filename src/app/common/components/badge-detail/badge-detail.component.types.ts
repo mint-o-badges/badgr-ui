@@ -35,6 +35,13 @@ type HeaderButtonWithAction = HeaderButtonBase & {
 	action: () => void;
 };
 
+type QrCodeButton = {
+	show: boolean;
+	title?: string; 
+	disabled?: boolean;
+	action?: () => void;
+}
+
 type HeaderButton = HeaderButtonWithLink | HeaderButtonWithAction;
 
 export type CompetencyType = {
@@ -48,7 +55,7 @@ export interface PageConfig {
 	badgeTitle: string;
 	headerButton?: HeaderButton | null;
 	issueQrRouterLink?: string[] | null;
-	qrCodeButton?: boolean;
+	qrCodeButton?: QrCodeButton;
 	issuerSlug: string;
 	slug: string;
 	menuitems?: MenuItem[];
@@ -70,4 +77,5 @@ export interface PageConfig {
 	license?: boolean;
 	id?: string;
 	shareButton?: boolean;
+	badgeInstanceSlug?: string
 }

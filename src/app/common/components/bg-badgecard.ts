@@ -124,7 +124,8 @@ import { FormControl } from '@angular/forms';
 							[name]="competency.name"
 							[category]="competency.category"
 							[description]="competency.description"
-							[escoID]="competency.escoID"
+							[framework]="competency.framework" 
+							[framework_identifier]="competency['framework_identifier']"
 							[studyload]="competency.studyLoad | hourPipe"
 						></competency-accordion>
 					</div>

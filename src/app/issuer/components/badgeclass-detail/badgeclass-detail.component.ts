@@ -29,6 +29,9 @@ import { TranslateService } from '@ngx-translate/core';
 import { PageConfig } from '../../../common/components/badge-detail/badge-detail.component.types';
 import { PdfService } from '../../../common/services/pdf.service';
 import { QrCodeApiService } from '../../services/qrcode-api.service';
+import { InfoDialogComponent } from '../../../common/dialogs/oeb-dialogs/info-dialog.component';
+import { HlmDialogService } from "../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service";
+import { inject } from '@angular/core';
 
 @Component({
 	selector: 'badgeclass-detail',
@@ -37,8 +40,8 @@ import { QrCodeApiService } from '../../services/qrcode-api.service';
 			<qrcode-awards
 				(qrBadgeAward)="onQrBadgeAward()"
 				[awards]="qrCodeAwards"
-				[badgeClassSlug]="badgeSlug"
-				[issuerSlug]="issuerSlug"
+				[badgeClass]="badgeClass"
+				[issuer]="issuer"
 				[routerLinkText]="config?.issueQrRouterLink"
 			></qrcode-awards>
 			<issuer-detail-datatable
@@ -93,6 +96,9 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		'../../../../breakdown/static/images/placeholderavatar-issuer.svg',
 	);
 	launchpoints: ApiExternalToolLaunchpoint[];
+
+	private readonly _hlmDialogService = inject(HlmDialogService);
+
 
 	badgeClassLoaded: Promise<unknown>;
 	badgeInstancesLoaded: Promise<unknown>;
@@ -202,10 +208,15 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 					badgeTitle: this.badgeClass.name,
 					headerButton: {
 						title: 'Badge direkt vergeben',
-						routerLink: ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'issue'],
+						action: () => this.routeToBadgeAward(this.badgeClass, this.issuer),
+						// routerLink: ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'issue'],
 					},
 					issueQrRouterLink: ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'qr'],
-					qrCodeButton: true,
+					qrCodeButton: {
+						title: 'Badge über QR-Code vergeben',
+						show: true,
+						action: () => this.routeToQRCodeAward(this.badgeClass, this.issuer)
+					},
 					menuitems: [
 						{
 							title: 'Bearbeiten',
@@ -347,6 +358,52 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 					() => void 0,
 				);
 		}
+	}
+
+	routeToBadgeAward(badge: BadgeClass, issuer){
+		this.qrCodeApiService.getQrCodesForIssuerByBadgeClass(this.issuer.slug, badge.slug).then((qrCodes) => {
+			if(badge.recipientCount === 0 && qrCodes.length === 0){
+				const dialogRef =this._hlmDialogService.open(InfoDialogComponent, {
+					context: {
+						variant: "info",
+						caption: this.translate.instant("Badge.endOfEditDialogTitle"),
+						subtitle: this.translate.instant("Badge.endOfEditDialogText"),
+						text: this.translate.instant("Badge.endOfEditDialogSubText"),
+						cancelText: this.translate.instant('General.cancel'),
+						forwardText: this.translate.instant('Issuer.giveBadge')
+					},
+				})
+				dialogRef.closed$.subscribe((result) => {
+					if (result === 'continue') this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'issue']);
+				});
+			}
+			else{
+				this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'issue'])
+			}	
+		})	
+	}
+
+	routeToQRCodeAward(badge, issuer){
+		this.qrCodeApiService.getQrCodesForIssuerByBadgeClass(this.issuer.slug, badge.slug).then((qrCodes) => {
+			if(badge.recipientCount === 0 && qrCodes.length === 0){
+				const dialogRef =this._hlmDialogService.open(InfoDialogComponent, {
+					context: {
+						variant: "info",
+						caption: this.translate.instant("Badge.endOfEditDialogTitle"),
+						subtitle: this.translate.instant("Badge.endOfEditDialogTextQR"),
+						text: this.translate.instant("Badge.endOfEditDialogSubText"),
+						cancelText: this.translate.instant('General.previous'),
+						forwardText: this.translate.instant('Issuer.giveQr')
+					},
+				})
+				dialogRef.closed$.subscribe((result) => {
+					if (result === 'continue') this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'qr']);
+				});
+			}
+			else{
+				this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'qr'])
+			}
+		})	
 	}
 
 	shareInstance(instance: BadgeInstance) {
