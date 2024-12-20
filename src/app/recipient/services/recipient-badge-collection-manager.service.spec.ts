@@ -43,10 +43,6 @@ xdescribe('RecipientBadgeCollectionManger', () => {
 		httpTestingController = TestBed.inject(HttpTestingController);
 	});
 
-	beforeEach(inject([SessionService], (loginService: SessionService) => {
-		loginService.storeToken({ access_token: 'MOCKTOKEN' });
-	}));
-
 	it('should retrieve all recipient badge collections', inject(
 		[RecipientBadgeCollectionManager],
 		(recipientBadgeCollectionManager: RecipientBadgeCollectionManager) => {
