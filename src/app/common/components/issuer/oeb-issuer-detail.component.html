@@ -48,9 +48,9 @@
 			<oeb-button
 				class="tw-whitespace-nowrap"
 				*ngIf="!public && activeTab == 'Lernpfade'"
-				[routerLink]="['./learningpaths/upload']"
+				[routerLink]="['./learningpaths/create']"
 				[disabled]="!issuer.canCreateBadge"
-				[text]="'Issuer.createLearningPath' | translate"
+				[text]="'Issuer.myInstitutionsCreateLearningPath' | translate"
 				[class]="issuer.canCreateBadge ? '' : 'disabled'"
 			>
 			</oeb-button>
@@ -169,7 +169,7 @@
 						/>
 					</div>
 				</div>
-				<div class="tw-grid tw-grid-cols-badges tw-gap-16">
+				<div class="tw-grid tw-grid-cols-badges tw-gap-6">
 					<bg-badgecard
 						*ngFor="let badge of badgeResults"
 						[badgeTitle]="badge.badge.name"
@@ -226,7 +226,7 @@
 					></learningpaths-datatable>
 
 					<ng-container *ngIf="public">
-						<div class="tw-grid tw-grid-cols-learningpaths tw-gap-12">
+						<div class="tw-grid tw-grid-cols-learningpaths tw-gap-6">
 							<bg-learningpathcard
 								*ngFor="let lp of learningPaths"
 								[badgeImage]="lp.image"

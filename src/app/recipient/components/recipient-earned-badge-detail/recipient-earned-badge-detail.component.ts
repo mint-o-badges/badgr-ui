@@ -100,6 +100,9 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 					// 	title: 'Badge teilen',
 					// 	action: () => this.shareBadge(),
 					// },
+					qrCodeButton: {
+						show: false
+					},
 					menuitems: [
 						{
 							title: 'Verifizieren',
@@ -132,8 +135,9 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 					badgeFailedImageUrl: this.badgeFailedImageUrl,
 					badgeImage: this.badge.badgeClass.image,
 					competencies: this.competencies as CompetencyType[],
+					license: this.badge.getExtension('extensions:LicenseExtension', {}) ? true : false,
 					shareButton: true,
-					id: this.badge.badgeClass.id.split('/')[5],
+					badgeInstanceSlug: this.badgeSlug,
 				};
 			})
 			.catch((e) => this.messageService.reportAndThrowError('Failed to load your badges', e));

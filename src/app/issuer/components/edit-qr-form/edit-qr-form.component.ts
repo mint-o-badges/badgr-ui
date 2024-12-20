@@ -14,7 +14,6 @@ import { SuccessDialogComponent } from '../../../common/dialogs/oeb-dialogs/succ
 import { TranslateService } from '@ngx-translate/core';
 import { DatePipe } from '@angular/common';
 import { Location } from '@angular/common';
-import { EndOfEditDialogComponent } from '../../../common/dialogs/oeb-dialogs/end-of-edit-dialog.component';
 
 @Component({
 	selector: 'edit-qr-form',
@@ -87,21 +86,23 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent {
 					{ title: 'Award Badge' },
 				];
 			});
-
-		this.qrCodeApiService.getQrCode(this.qrSlug).then((qrCode) => {
-			this.qrForm.setValue({
-				title: qrCode.title,
-				createdBy: qrCode.createdBy,
-				valid_from: qrCode.valid_from
-					? EditQrFormComponent.datePipe.transform(new Date(qrCode.valid_from), 'yyyy-MM-dd')
-					: undefined,
-				expires_at: qrCode.expires_at
-					? EditQrFormComponent.datePipe.transform(new Date(qrCode.expires_at), 'yyyy-MM-dd')
-					: undefined,
-				badgeclass_id: qrCode.badgeclass_id,
-				issuer_id: qrCode.issuer_id,
+		
+		if(this.qrSlug){
+			this.qrCodeApiService.getQrCode(this.qrSlug).then((qrCode) => {
+				this.qrForm.setValue({
+					title: qrCode.title,
+					createdBy: qrCode.createdBy,
+					valid_from: qrCode.valid_from
+						? EditQrFormComponent.datePipe.transform(new Date(qrCode.valid_from), 'yyyy-MM-dd')
+						: undefined,
+					expires_at: qrCode.expires_at
+						? EditQrFormComponent.datePipe.transform(new Date(qrCode.expires_at), 'yyyy-MM-dd')
+						: undefined,
+					badgeclass_id: qrCode.badgeclass_id,
+					issuer_id: qrCode.issuer_id,
+				});
 			});
-		});
+		}
 
 		this.qrForm.setValue({
 			...this.qrForm.value,
@@ -168,45 +169,17 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent {
 		} else {
 			const formState = this.qrForm.value;
 
-			const generateQrCode = () =>
-				this.qrCodeApiService
-					.createQrCode(this.issuerSlug, this.badgeSlug, {
-						title: formState.title,
-						createdBy: formState.createdBy,
-						badgeclass_id: formState.badgeclass_id,
-						issuer_id: formState.issuer_id,
-						expires_at: formState.expires_at ? new Date(formState.expires_at).toISOString() : undefined,
-						valid_from: formState.valid_from ? new Date(formState.valid_from).toISOString() : undefined,
-					})
-					.then((qrcode) => {
-						this.openSuccessDialog();
-						this.router.navigate([
-							'/issuer/issuers',
-							this.issuerSlug,
-							'badges',
-							this.badgeSlug,
-							'qr',
-							qrcode.slug,
-							'generate',
-						]);
-					});
-
-			// if no badge has been awarded yet, show end of edit dialog
-			if (this.badgeClass.recipientCount === 0) {
-				const dialogRef = this._hlmDialogService.open(EndOfEditDialogComponent, {
-					context: {
-						variant: 'qrcode',
-						text: '',
-					},
-				});
-				// susbscribe to the result of the dialog
-				dialogRef.closed$.subscribe((result) => {
-					if (result === 'confirm') generateQrCode();
-				});
-				// if badge has been awarded, create badge instance with no dialog
-			} else {
-				generateQrCode();
-			}
-		}
-	}
+			this.qrCodeApiService.createQrCode(this.issuerSlug, this.badgeSlug, {
+				title: formState.title,
+				createdBy: formState.createdBy,
+				badgeclass_id: formState.badgeclass_id,
+				issuer_id: formState.issuer_id,
+				expires_at: formState.expires_at ? new Date(formState.expires_at).toISOString() : undefined ,
+				valid_from: formState.valid_from ? new Date(formState.valid_from).toISOString() : undefined
+			}).then((qrcode) => {
+					this.openSuccessDialog()
+					this.router.navigate(['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'qr', qrcode.slug, 'generate']);
+				}
+			)
+		}}   
 }

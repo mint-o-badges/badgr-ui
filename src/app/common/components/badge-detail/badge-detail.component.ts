@@ -18,10 +18,10 @@ export class BgBadgeDetail {
 		this.dialogService.shareSocialDialog.openDialog({
 			title: 'Badge teilen',
 			shareObjectType: 'BadgeInstance',
-			shareUrl: `${baseUrl}/public/badges/${this.config.id}`,
+			shareUrl: `${baseUrl}/public/assertions/${this.config.badgeInstanceSlug}`,
 			shareTitle: this.config.badgeTitle,
 			imageUrl: this.config.issuerImage,
-			shareIdUrl: `${baseUrl}/public/badges/${this.config.id}`,
+			shareIdUrl: `${baseUrl}/public/assertions/${this.config.badgeInstanceSlug}`,
 			shareSummary: this.config.badgeDescription,
 			shareEndpoint: 'certification',
 			embedOptions: [],
