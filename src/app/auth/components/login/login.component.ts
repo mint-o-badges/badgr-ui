@@ -197,55 +197,9 @@ export class LoginComponent extends BaseRoutableComponent implements OnInit, Aft
 			// Handle authcode exchange
 			const authCode = this.queryParams.queryStringValue('authCode', true);
 
-			// data
-			const redirectUri = localStorage.redirectUri;
-			const redirect = 'recipient';
 			if (authCode) {
-				this.sessionService.exchangeCodeForToken(authCode).then((token) => {
-					this.sessionService.storeToken(token);
-					this.externalToolsManager.externaltoolsList.updateIfLoaded();
-					redirectUri
-						? window.location.replace(redirectUri)
-						: (this.initFinished = this.router.navigate([redirect]));
-				});
-				return;
-			} else if (this.queryParams.queryStringValue('authToken', true)) {
-				this.sessionService.storeToken({
-					access_token: this.queryParams.queryStringValue('authToken', true),
-				});
-
-				this.externalToolsManager.externaltoolsList.updateIfLoaded();
-				redirectUri
-					? window.location.replace(redirectUri)
-					: (this.initFinished = this.router.navigate([redirect]));
-				return;
-			} else if (this.queryParams.queryStringValue('infoMessage', true)) {
-				this.messageService.reportInfoMessage(this.queryParams.queryStringValue('infoMessage', true), true);
-			} else if (this.queryParams.queryStringValue('authError', true)) {
-				this.sessionService.logout(false);
-				this.messageService.reportHandledError(
-					this.queryParams.queryStringValue('authError', true),
-					null,
-					true,
-				);
-			} else if (this.sessionService.isLoggedIn) {
-				this.externalToolsManager.externaltoolsList.updateIfLoaded();
-				this.initFinished = this.router.navigate([redirect]);
-				return;
-			}
-
-			this.initFinished = Promise.resolve(true);
-
-			// autologin, wait till get vars are processed and kick it to the end of the stack
-			if (this.sessionService.enabledExternalAuthProviders.length === 1 && this.features.disableRegistration) {
-				window.setTimeout(
-					() =>
-						this.sessionService.initiateUnauthenticatedExternalAuth(
-							this.sessionService.enabledExternalAuthProviders[0],
-						),
-					0,
-				);
-			}
+                throw new Error("query param authentication is deprecated!");
+            }
 		} finally {
 			this.queryParams.clearInitialQueryParams();
 		}
