@@ -13,6 +13,8 @@
 		"cancel": "Abbrechen",
 		"forward": "Weiter",
 		"or": "oder",
+		"of": "von",
+		"selected": "ausgewählt",
 		"and": "und",
 		"can": "können",
 		"search": "suchen",
@@ -290,11 +292,16 @@
 		"deletePart1": "Bist du sicher, dass du das Badge '",
 		"deletePart2": "' löschen möchtest?",
 		"deleteConfirm": "Badge löschen",
+		"deleteRequest": "Badge-Anfrage löschen",
+		"confirmDeleteRequest1": "Möchtest du die Badge-Anfrage von ",
+		"confirmDeleteRequest2": "wirklich löschen?",
 		"sortBy": "Sortieren nach",
 		"endOfEditDialogTitle": "Ende der Editier-funktion",
 		"endOfEditDialogText": "Sobald du den Badge einmal vergeben hast, kann er nicht mehr bearbeitet werden.",
 		"endOfEditDialogTextQR": "Sobald du eine QR-Code-Vergabe erstellt hast, kann der Badge nicht mehr bearbeitet werden.",
-		"endOfEditDialogSubText": "Bitte prüfe daher, ob du mit den Badge-Daten (Bild, Kurzbeschreibung, ggf. enthaltene Kompetenzen, ...) zufrieden bist."
+		"endOfEditDialogSubText": "Bitte prüfe daher, ob du mit den Badge-Daten (Bild, Kurzbeschreibung, ggf. enthaltene Kompetenzen, ...) zufrieden bist.",
+		"row": "Zeile",
+		"rows": "Zeilen"
 	},
 	"CreateBadge": {
 		"chooseBadgeCategory": "Badge-Kategorie wählen",
