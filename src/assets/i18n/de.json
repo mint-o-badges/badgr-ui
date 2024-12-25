@@ -69,7 +69,8 @@
 		"descending": "Absteigend",
 		"dateAscending": "Älteste zuerst",
 		"dateDescending": "Neueste zuerst",
-		"all": "Alle"
+		"all": "Alle",
+		"pleaseWait": "Bitte warten..."
 	},
 	"NavItems": {
 		"register": "Registrieren",
@@ -262,7 +263,8 @@
 		"learningPathEditHeadline": "Lernpfad bearbeiten",
 		"lpSubHeading": "Ein Lernpfad verbindet mehrere Badges zu einer größeren Lerneinheit.",
 		"loadingAllBadges": "Lade Badges...",
-		"loadAllBadges": "Alle Badges laden"
+		"loadAllBadges": "Alle Badges laden",
+		"waitWhileBadgesAreIssued": "Badges werden vergeben, bitte warten..."
 	},
 	"Badge": {
 		"groupBy": "Gruppieren nach",

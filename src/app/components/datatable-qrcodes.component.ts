@@ -267,7 +267,6 @@ import { HlmCommandInputWrapperComponent } from './spartan/ui-command-helm/src/l
 import { OebButtonComponent } from './oeb-button.component';
 import striptags from 'striptags';
 import { OebSpinnerComponent } from './oeb-spinner.component';
-import { OebProgressComponent } from './oeb-progress.component';
 import { BadgeInstanceBatchAssertion } from '../issuer/models/badgeinstance-api.model';
 
 
@@ -317,7 +316,6 @@ export type RequestedBadge = {
     HlmCommandInputWrapperComponent,
     OebButtonComponent,
     OebSpinnerComponent,
-    OebProgressComponent
 
   ],
   styleUrl: './datatable-qrcodes.component.scss',
@@ -373,11 +371,7 @@ export type RequestedBadge = {
     </div>
 
     @if(loading){
-      <oeb-spinner [text]="awardedBadges() + ' ' +  ('General.of' | translate) + ' ' + _selected().length + ' ' + ('Issuer.giveBadges' | translate) " /> 
-      <oeb-progress 
-        class="tw-w-1/2 tw-mt-1 tw-h-4 tw-mx-auto tw-relative tw-flex tw-overflow-hidden tw-rounded-3xl tw-bg-lightgrey tw-items-center"
-        [value]="progressValue()"
-      /> 
+      <oeb-spinner [text]="'General.pleaseWait' | translate" /> 
     } @else {
       <brn-table
         hlm
@@ -506,7 +500,6 @@ export class QrCodeDatatableComponent {
 	@Output() qrBadgeAward = new EventEmitter<void>();
 	requestedBadges: RequestedBadge[] = []
 	loading: Promise<unknown>;
-  awardedBadges = signal(0);
   public headerRowStyle = 'tw-flex tw-min-w-[100%] tw-w-fit tw-rounded-t-[20px] tw-border-b tw-border-darkgrey [&.cdk-table-sticky]:tw-bg-darkgrey ' +
   '[&.cdk-table-sticky>*]:tw-z-[101] [&.cdk-table-sticky]:before:tw-z-0 [&.cdk-table-sticky]:before:tw-block [&.cdk-table-sticky]:hover:before:tw-bg-muted/50 [&.cdk-table-sticky]:before:tw-absolute [&.cdk-table-sticky]:before:tw-inset-0'
 
@@ -805,8 +798,4 @@ export class QrCodeDatatableComponent {
   //           .then(() => (this.loading = null));
   //       });
 	// }
-
-  progressValue(){
-    return (this.awardedBadges() / this._selected().length) * 100 
-  }
 }

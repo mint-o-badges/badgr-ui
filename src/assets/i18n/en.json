@@ -62,7 +62,8 @@
 		"back": "Back",
 		"next": "Next",
 		"previous": "Previous",
-		"all": "All"
+		"all": "All",
+		"pleaseWait": "Please wait..."
 	},
 	"NavItems": {
 		"register": "Register",
