@@ -721,7 +721,7 @@ export class QrCodeDatatableComponent {
           () => {
             this.router.navigate(['issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug]);
             if(this._selected().length === 1){
-              const email = this._selected().filter((b) => b.email)
+              const email = this._selected().map((b) => b.email)
               this.openSuccessDialog(email)
             }
             else{
