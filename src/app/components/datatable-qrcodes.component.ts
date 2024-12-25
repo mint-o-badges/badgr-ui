@@ -667,10 +667,11 @@ export class QrCodeDatatableComponent {
   }
 
 	private readonly _hlmDialogService = inject(HlmDialogService);
-	public openSuccessDialog(recipient) {
+	public openSuccessDialog(recipient=null, text=null) {
 		const dialogRef = this._hlmDialogService.open(SuccessDialogComponent, {
 			context: {
 				recipient: recipient,
+        text: text,
 				variant: 'success',
 			},
 		});
@@ -692,7 +693,7 @@ export class QrCodeDatatableComponent {
 		const recipientProfileContextUrl = 'https://openbadgespec.org/extensions/recipientProfile/context.json';
     let assertion: BadgeInstanceBatchAssertion;
     this._selected().forEach((b) => {
-      const name = b.firstName + b.lastName
+      const name = b.firstName + ' ' + b.lastName
 
 			const extensions = name
 				? {
@@ -719,6 +720,13 @@ export class QrCodeDatatableComponent {
     }).then(
           () => {
             this.router.navigate(['issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug]);
+            if(this._selected().length === 1){
+              const email = this._selected().filter((b) => b.email)
+              this.openSuccessDialog(email)
+            }
+            else{
+              this.openSuccessDialog(null, this._selected().length + ' Badges erfolgreich vergeben')
+            }
             // this.openSuccessDialog(b.email);
             // this.requestedBadges = this.requestedBadges.filter(
             //   (awardBadge) => awardBadge.entity_id != b.entity_id,
