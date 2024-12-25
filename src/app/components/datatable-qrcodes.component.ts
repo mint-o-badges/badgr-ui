@@ -674,55 +674,55 @@ export class QrCodeDatatableComponent {
 		})
 	}
 
-  	issueBadges() {
-      this._selected().forEach((b) => {
-        this.badgeClassManager
-          .badgeByIssuerSlugAndSlug(this.issuerSlug, this.badgeSlug)
-          .then((badgeClass: BadgeClass) => {
-            const cleanedName = striptags(b.firstName + ' ' + b.lastName);
-    
-            this.loading = this.badgeInstanceManager
-              .createBadgeInstance(this.issuerSlug, this.badgeSlug, {
-                issuer: this.issuerSlug,
-                badge_class: this.badgeSlug,
-                recipient_type: 'email',
-                recipient_identifier: b.email,
-                narrative: '',
-                create_notification: true,
-                evidence_items: [],
-                extensions: {
-                  ...badgeClass.extension,
-                  'extensions:recipientProfile': {
-                    '@context': this.recipientProfileContextUrl,
-                    type: ['Extension', 'extensions:RecipientProfile'],
-                    name: cleanedName,
-                  },
+  issueBadges() {
+    this._selected().forEach((b) => {
+      this.badgeClassManager
+        .badgeByIssuerSlugAndSlug(this.issuerSlug, this.badgeSlug)
+        .then((badgeClass: BadgeClass) => {
+          const cleanedName = striptags(b.firstName + ' ' + b.lastName);
+  
+          this.loading = this.badgeInstanceManager
+            .createBadgeInstance(this.issuerSlug, this.badgeSlug, {
+              issuer: this.issuerSlug,
+              badge_class: this.badgeSlug,
+              recipient_type: 'email',
+              recipient_identifier: b.email,
+              narrative: '',
+              create_notification: true,
+              evidence_items: [],
+              extensions: {
+                ...badgeClass.extension,
+                'extensions:recipientProfile': {
+                  '@context': this.recipientProfileContextUrl,
+                  type: ['Extension', 'extensions:RecipientProfile'],
+                  name: cleanedName,
                 },
-              })
-              .then(
-                () => {
-                  this.router.navigate(['issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug]);
-                  this.openSuccessDialog(b.email);
-                  this.requestedBadges = this.requestedBadges.filter(
-                    (awardBadge) => awardBadge.entity_id != b.entity_id,
-                  );
-                  this.deletedQRAward.emit({
-                    id: b.entity_id,
-                    slug: this.qrCodeId,
-                    // badgeclass: b,
-                  });
-                  this.badgeRequestApiService.deleteRequest(b.entity_id);
-                  this.qrBadgeAward.emit();
-                },
-                (error) => {
-                  this.messageService.setMessage(
-                    'Unable to award badge: ' + BadgrApiFailure.from(error).firstMessage,
-                    'error',
-                  );
-                },
-              )
-              .then(() => (this.loading = null));
-          });
-      })
+              },
+            })
+            .then(
+              () => {
+                this.router.navigate(['issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug]);
+                this.openSuccessDialog(b.email);
+                this.requestedBadges = this.requestedBadges.filter(
+                  (awardBadge) => awardBadge.entity_id != b.entity_id,
+                );
+                this.deletedQRAward.emit({
+                  id: b.entity_id,
+                  slug: this.qrCodeId,
+                  // badgeclass: b,
+                });
+                this.badgeRequestApiService.deleteRequest(b.entity_id);
+                this.qrBadgeAward.emit();
+              },
+              (error) => {
+                this.messageService.setMessage(
+                  'Unable to award badge: ' + BadgrApiFailure.from(error).firstMessage,
+                  'error',
+                );
+              },
+            )
+            .then(() => (this.loading = null));
+        });
+    })
 	}
 }
