@@ -372,7 +372,7 @@ export type RequestedBadge = {
     </div>
 
     @if(loading){
-      <oeb-spinner [text]="awardedBadges + ' ' +  ('General.of' | translate) + ' ' + _selected().length + ' ' + ('Issuer.giveBadges' | translate) " /> 
+      <oeb-spinner [text]="awardedBadges() + ' ' +  ('General.of' | translate) + ' ' + _selected().length + ' ' + ('Issuer.giveBadges' | translate) " /> 
       <oeb-progress 
         class="tw-w-1/2 tw-mt-1 tw-h-4 tw-mx-auto tw-relative tw-flex tw-overflow-hidden tw-rounded-3xl tw-bg-lightgrey tw-items-center"
         [value]="progressValue()"
@@ -505,7 +505,7 @@ export class QrCodeDatatableComponent {
 	@Output() qrBadgeAward = new EventEmitter<void>();
 	requestedBadges: RequestedBadge[] = []
 	loading: Promise<unknown>;
-  awardedBadges: number = 0;
+  awardedBadges = signal(0);
   public headerRowStyle = 'tw-flex tw-min-w-[100%] tw-w-fit tw-rounded-t-[20px] tw-border-b tw-border-darkgrey [&.cdk-table-sticky]:tw-bg-darkgrey ' +
   '[&.cdk-table-sticky>*]:tw-z-[101] [&.cdk-table-sticky]:before:tw-z-0 [&.cdk-table-sticky]:before:tw-block [&.cdk-table-sticky]:hover:before:tw-bg-muted/50 [&.cdk-table-sticky]:before:tw-absolute [&.cdk-table-sticky]:before:tw-inset-0'
 
@@ -720,7 +720,7 @@ export class QrCodeDatatableComponent {
                 // this.requestedBadges = this.requestedBadges.filter(
                 //   (awardBadge) => awardBadge.entity_id != b.entity_id,
                 // );
-                this.awardedBadges ++
+                this.awardedBadges.update(count => count + 1);
                 this._requestedBadges.set(this._requestedBadges().filter(
                   (awardBadge) => awardBadge.entity_id != b.entity_id,
                 ))
@@ -745,6 +745,6 @@ export class QrCodeDatatableComponent {
 	}
 
   progressValue(){
-    return (this.awardedBadges / this._selected().length) * 100 
+    return (this.awardedBadges() / this._selected().length) * 100 
   }
 }
