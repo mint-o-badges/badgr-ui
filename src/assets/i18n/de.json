@@ -68,7 +68,8 @@
 		"ascending": "Aufsteigend",
 		"descending": "Absteigend",
 		"dateAscending": "Älteste zuerst",
-		"dateDescending": "Neueste zuerst"
+		"dateDescending": "Neueste zuerst",
+		"all": "Alle"
 	},
 	"NavItems": {
 		"register": "Registrieren",
@@ -216,6 +217,7 @@
 		"awardedPerson": "Name der Empfänger:in",
 		"sendEmail": "Empfänger:in mit E-Mail benachrichtigen",
 		"giveBadge": "Badge vergeben",
+		"giveBadges": "Badges vergeben",
 		"giveQr": "QR-Code-Vergabe erstellen",
 		"nameWarning": "Beachte: Der Name wird als Klartext im Badge gespeichert.",
 		"multipleBadgeAwardHeadline": "Badge an mehrere Lernende gleichzeitig vergeben",
@@ -301,7 +303,9 @@
 		"endOfEditDialogTextQR": "Sobald du eine QR-Code-Vergabe erstellt hast, kann der Badge nicht mehr bearbeitet werden.",
 		"endOfEditDialogSubText": "Bitte prüfe daher, ob du mit den Badge-Daten (Bild, Kurzbeschreibung, ggf. enthaltene Kompetenzen, ...) zufrieden bist.",
 		"row": "Zeile",
-		"rows": "Zeilen"
+		"rows": "Zeilen",
+		"request": "Anfrage",
+		"requests": "Anfragen"
 	},
 	"CreateBadge": {
 		"chooseBadgeCategory": "Badge-Kategorie wählen",
