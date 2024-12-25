@@ -268,6 +268,7 @@ import { OebButtonComponent } from './oeb-button.component';
 import striptags from 'striptags';
 import { OebSpinnerComponent } from './oeb-spinner.component';
 import { OebProgressComponent } from './oeb-progress.component';
+import { BadgeInstanceBatchAssertion } from '../issuer/models/badgeinstance-api.model';
 
 
 export type Payment = {
@@ -665,8 +666,6 @@ export class QrCodeDatatableComponent {
     }
   }
 
-  	recipientProfileContextUrl = 'https://openbadgespec.org/extensions/recipientProfile/context.json';
-
 	private readonly _hlmDialogService = inject(HlmDialogService);
 	public openSuccessDialog(recipient) {
 		const dialogRef = this._hlmDialogService.open(SuccessDialogComponent, {
@@ -689,60 +688,115 @@ export class QrCodeDatatableComponent {
 	}
 
   issueBadges() {
+    const assertions: BadgeInstanceBatchAssertion[] = [];
+		const recipientProfileContextUrl = 'https://openbadgespec.org/extensions/recipientProfile/context.json';
+    let assertion: BadgeInstanceBatchAssertion;
     this._selected().forEach((b) => {
-      this.badgeClassManager
-        .badgeByIssuerSlugAndSlug(this.issuerSlug, this.badgeSlug)
-        .then((badgeClass: BadgeClass) => {
-          const cleanedName = striptags(b.firstName + ' ' + b.lastName);
-  
-          this.loading = this.badgeInstanceManager
-            .createBadgeInstance(this.issuerSlug, this.badgeSlug, {
-              issuer: this.issuerSlug,
-              badge_class: this.badgeSlug,
-              recipient_type: 'email',
-              recipient_identifier: b.email,
-              narrative: '',
-              create_notification: true,
-              evidence_items: [],
-              extensions: {
-                ...badgeClass.extension,
-                'extensions:recipientProfile': {
-                  '@context': this.recipientProfileContextUrl,
-                  type: ['Extension', 'extensions:RecipientProfile'],
-                  name: cleanedName,
-                },
-              },
-            })
-            .then(
-              () => {
-                // this.router.navigate(['issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug]);
-                // this.openSuccessDialog(b.email);
-                // this.requestedBadges = this.requestedBadges.filter(
-                //   (awardBadge) => awardBadge.entity_id != b.entity_id,
-                // );
-                this.awardedBadges.update(count => count + 1);
-                this._requestedBadges.set(this._requestedBadges().filter(
-                  (awardBadge) => awardBadge.entity_id != b.entity_id,
-                ))
-                this.deletedQRAward.emit({
-                  id: b.entity_id,
-                  slug: this.qrCodeId,
-                  // badgeclass: b,
-                });
-                // this.badgeRequestApiService.deleteRequest(b.entity_id);
-                this.qrBadgeAward.emit();
-              },
-              (error) => {
-                this.messageService.setMessage(
-                  'Unable to award badge: ' + BadgrApiFailure.from(error).firstMessage,
-                  'error',
-                );
-              },
-            )
-            .then(() => (this.loading = null));
-        });
+      const name = b.firstName + b.lastName
+
+			const extensions = name
+				? {
+						'extensions:recipientProfile': {
+							'@context': recipientProfileContextUrl,
+							type: ['Extension', 'extensions:RecipientProfile'],
+							name: striptags(name),
+						},
+					}
+				: undefined;
+
+				assertion = {
+					recipient_identifier: b.email,
+					extensions: extensions,
+				};
+			assertions.push(assertion);
     })
-	}
+
+    this.loading = this.badgeInstanceManager.createBadgeInstanceBatched(this.issuerSlug, this.badgeSlug, {
+      issuer: this.issuerSlug,
+      badge_class: this.badgeSlug,
+      create_notification: true,
+      assertions,
+    }).then(
+          () => {
+            this.router.navigate(['issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug]);
+            // this.openSuccessDialog(b.email);
+            // this.requestedBadges = this.requestedBadges.filter(
+            //   (awardBadge) => awardBadge.entity_id != b.entity_id,
+            // );
+            // this.awardedBadges.update(count => count + 1);
+            // this._requestedBadges.set(this._requestedBadges().filter(
+            //   (awardBadge) => awardBadge.entity_id != b.entity_id,
+            // ))
+            // this.deletedQRAward.emit({
+            //   id: b.entity_id,
+            //   slug: this.qrCodeId,
+            //   // badgeclass: b,
+            // });
+            // this.badgeRequestApiService.deleteRequest(b.entity_id);
+            this.qrBadgeAward.emit();
+          },
+          (error) => {
+            this.messageService.setMessage(
+              'Unable to award badge: ' + BadgrApiFailure.from(error).firstMessage,
+              'error',
+            );
+          },
+        )
+        .then(() => (this.loading = null));
+  }
+
+  //   this.badgeClassManager
+  //       .badgeByIssuerSlugAndSlug(this.issuerSlug, this.badgeSlug)
+  //       .then((badgeClass: BadgeClass) => {
+  //         const cleanedName = striptags(b.firstName + ' ' + b.lastName);
+  
+  //         this.loading = this.badgeInstanceManager
+  //           .createBadgeInstance(this.issuerSlug, this.badgeSlug, {
+  //             issuer: this.issuerSlug,
+  //             badge_class: this.badgeSlug,
+  //             recipient_type: 'email',
+  //             recipient_identifier: b.email,
+  //             narrative: '',
+  //             create_notification: true,
+  //             evidence_items: [],
+  //             extensions: {
+  //               ...badgeClass.extension,
+  //               'extensions:recipientProfile': {
+  //                 '@context': recipientProfileContextUrl,
+  //                 type: ['Extension', 'extensions:RecipientProfile'],
+  //                 name: cleanedName,
+  //               },
+  //             },
+  //           })
+  //           .then(
+  //             () => {
+  //               // this.router.navigate(['issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug]);
+  //               // this.openSuccessDialog(b.email);
+  //               // this.requestedBadges = this.requestedBadges.filter(
+  //               //   (awardBadge) => awardBadge.entity_id != b.entity_id,
+  //               // );
+  //               this.awardedBadges.update(count => count + 1);
+  //               this._requestedBadges.set(this._requestedBadges().filter(
+  //                 (awardBadge) => awardBadge.entity_id != b.entity_id,
+  //               ))
+  //               this.deletedQRAward.emit({
+  //                 id: b.entity_id,
+  //                 slug: this.qrCodeId,
+  //                 // badgeclass: b,
+  //               });
+  //               // this.badgeRequestApiService.deleteRequest(b.entity_id);
+  //               this.qrBadgeAward.emit();
+  //             },
+  //             (error) => {
+  //               this.messageService.setMessage(
+  //                 'Unable to award badge: ' + BadgrApiFailure.from(error).firstMessage,
+  //                 'error',
+  //               );
+  //             },
+  //           )
+  //           .then(() => (this.loading = null));
+  //       });
+	// }
 
   progressValue(){
     return (this.awardedBadges() / this._selected().length) * 100 
