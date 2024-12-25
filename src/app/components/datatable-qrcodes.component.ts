@@ -264,6 +264,8 @@ import { TranslateService } from "@ngx-translate/core";
 import { ApiRequestedBadge } from '../issuer/models/badgerequest-api.model';
 import { I18nPluralPipe } from '@angular/common';
 import { HlmCommandInputWrapperComponent } from './spartan/ui-command-helm/src/lib/hlm-command-input-wrapper.component';
+import { OebButtonComponent } from './oeb-button.component';
+import striptags from 'striptags';
 
 
 export type Payment = {
@@ -298,8 +300,8 @@ export type RequestedBadge = {
 
     DecimalPipe,
     TitleCasePipe,
-	I18nPluralPipe,
-	DatePipe,
+	  I18nPluralPipe,
+	  DatePipe,
     HlmIconComponent,
     HlmInputDirective,
 
@@ -307,11 +309,13 @@ export type RequestedBadge = {
     HlmCheckboxComponent,
 
     BrnSelectModule,
-	HlmSelectModule,
-	TranslateModule,
-	HlmCommandInputWrapperComponent,
+    HlmSelectModule,
+    TranslateModule,
+    HlmCommandInputWrapperComponent,
+    OebButtonComponent
 
   ],
+  styleUrl: './datatable-qrcodes.component.scss',
   providers: [provideIcons({ lucideChevronDown, lucideEllipsis, lucideArrowUpDown }), TranslateService],
   host: {
     class: 'tw-w-full',
@@ -366,7 +370,7 @@ export type RequestedBadge = {
     <brn-table
       hlm
       stickyHeader
-      class="tw-mt-4 tw-block tw-min-h-[335px] tw-rounded-md"
+      class="tw-mt-4 tw-block tw-min-h-[335px] tw-max-h-[680px] tw-overflow-x-hidden tw-overflow-y-auto tw-rounded-md"
       [dataSource]="_filteredSortedPaginatedPayments()"
       [displayedColumns]="_allDisplayedColumns()"
       [trackBy]="_trackBy"
@@ -435,9 +439,9 @@ export type RequestedBadge = {
       class="tw-flex tw-flex-col tw-justify-between tw-mt-4 sm:tw-flex-row sm:tw-items-center"
       *brnPaginator="let ctx; totalElements: _totalElements(); pageSize: _pageSize(); onStateChange: _onStateChange"
     >
-      <span class="tw-text-sm tw-text-muted-foreground">{{ _selected().length }} {{ 'General.of' | translate}} {{ _totalElements() }} {{ ' ' | i18nPlural: plural['row'] }} {{ 'General.selected' | translate}}</span>
+      <span class="tw-text-sm tw-text-muted-foreground">{{ _selected().length }} {{ 'General.of' | translate}} {{ _totalElements() }} {{ ' ' | i18nPlural: plural['award'] }} {{ 'General.selected' | translate}}</span>
 	  <div class="tw-flex tw-mt-2 sm:tw-mt-0">
-	  <!-- 
+	  
         <brn-select class="tw-inline-block" placeholder="{{ _availablePageSizes[0] }}" [(ngModel)]="_pageSize">
           <hlm-select-trigger class="tw-inline-flex tw-mr-1 tw-w-15 tw-h-9">
             <hlm-select-value />
@@ -445,13 +449,14 @@ export type RequestedBadge = {
           <hlm-select-content>
             @for (size of _availablePageSizes; track size) {
               <hlm-option [value]="size">
-                {{ size === 10000 ? 'All' : size }}
+                {{ size === 10000 ? ('General.all' | translate) : size }}
               </hlm-option>
             }
           </hlm-select-content>
         </brn-select>
-		-->
-
+		
+      
+     @if(_requestedBadges().length > 10){
         <div class="tw-flex tw-space-x-1">
           <button size="sm" hlmBtn [disabled]="!ctx.decrementable()" (click)="ctx.decrement()">
             {{ 'General.previous' | translate}}
@@ -460,8 +465,18 @@ export type RequestedBadge = {
             {{'General.next' | translate}}
           </button>
         </div>
+      }
       </div>
-    </div>
+      </div>
+      <oeb-button 
+        size="sm"
+        class="tw-float-right tw-mt-4"
+        (click)="issueBadges()"
+        [disabled]="_selected().length === 0"
+        [text]="_selected().length > 1 ? 
+          ('Issuer.giveBadges' | translate)
+          : ('Issuer.giveBadge' | translate)">
+      </oeb-button>
   `,
 })
 export class QrCodeDatatableComponent {
@@ -486,7 +501,7 @@ export class QrCodeDatatableComponent {
   private readonly _debouncedFilter = toSignal(toObservable(this._rawFilterInput).pipe(debounceTime(300)));
 
   private readonly _displayedIndices = signal({ start: 0, end: 0 });
-  protected readonly _availablePageSizes = [10, 20, 10000];
+  protected readonly _availablePageSizes = [5, 10, 10000];
   protected readonly _pageSize = signal(this._availablePageSizes[0]);
 
   private readonly _selectionModel = new SelectionModel<RequestedBadge>(true);
@@ -571,20 +586,20 @@ export class QrCodeDatatableComponent {
   };
 
   plural = {
-	row: {
-		'=0': this.translate.instant('Badge.rows'),
-		'=1': this.translate.instant('Badge.row'),
-		other: this.translate.instant('Badge.rows'),
-		}
+    award: {
+      '=0': this.translate.instant('Badge.requests'),
+      '=1': this.translate.instant('Badge.request'),
+      other: this.translate.instant('Badge.requests'),
+    }
 	};
 
   prepareTexts(){
 	  this.plural = {
-		row: {
-			'=0': this.translate.instant('Badge.rows'),
-			'=1': this.translate.instant('Badge.row'),
-			other: this.translate.instant('Badge.rows'),
-		}
+      award: {
+        '=0': this.translate.instant('Badge.requests'),
+        '=1': this.translate.instant('Badge.request'),
+        other: this.translate.instant('Badge.requests'),
+      }
 	};
   }
 
@@ -648,13 +663,66 @@ export class QrCodeDatatableComponent {
 		});
 	}
 
-	public openDangerDialog(request){
+	public openDangerDialog(request: RequestedBadge){
 		const dialogRef = this._hlmDialogService.open(DangerDialogComponent, {
 			context: {
 				caption: this.translate.instant('Badge.deleteRequest'),
 				variant: 'danger',
-				text: `${this.translate.instant('Badge.confirmDeleteRequest1')} <span class="tw-font-bold">${request.email}</span>  ${this.translate.instant('Badge.confirmDeleteRequest2')}` 
+				text: `${this.translate.instant('Badge.confirmDeleteRequest1')} <span class="tw-font-bold">${request.email}</span>  ${this.translate.instant('Badge.confirmDeleteRequest2')}`,
+        delete: () => this.badgeRequestApiService.deleteRequest(request.entity_id) 
 			}
 		})
+	}
+
+  	issueBadges() {
+      this._selected().forEach((b) => {
+        this.badgeClassManager
+          .badgeByIssuerSlugAndSlug(this.issuerSlug, this.badgeSlug)
+          .then((badgeClass: BadgeClass) => {
+            const cleanedName = striptags(b.firstName + ' ' + b.lastName);
+    
+            this.loading = this.badgeInstanceManager
+              .createBadgeInstance(this.issuerSlug, this.badgeSlug, {
+                issuer: this.issuerSlug,
+                badge_class: this.badgeSlug,
+                recipient_type: 'email',
+                recipient_identifier: b.email,
+                narrative: '',
+                create_notification: true,
+                evidence_items: [],
+                extensions: {
+                  ...badgeClass.extension,
+                  'extensions:recipientProfile': {
+                    '@context': this.recipientProfileContextUrl,
+                    type: ['Extension', 'extensions:RecipientProfile'],
+                    name: cleanedName,
+                  },
+                },
+              })
+              .then(
+                () => {
+                  this.router.navigate(['issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug]);
+                  this.openSuccessDialog(b.email);
+                  this.requestedBadges = this.requestedBadges.filter(
+                    (awardBadge) => awardBadge.entity_id != b.entity_id,
+                  );
+                  this.deletedQRAward.emit({
+                    id: b.entity_id,
+                    slug: this.qrCodeId,
+                    // badgeclass: b,
+                  });
+                  this.badgeRequestApiService.deleteRequest(b.entity_id);
+                  this.qrBadgeAward.emit();
+                },
+                (error) => {
+                  this.messageService.setMessage(
+                    'Unable to award badge: ' + BadgrApiFailure.from(error).firstMessage,
+                    'error',
+                  );
+                },
+              )
+              .then(() => (this.loading = null));
+          });
+      })
 	}
 }
