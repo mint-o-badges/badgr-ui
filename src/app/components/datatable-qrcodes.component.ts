@@ -266,6 +266,7 @@ import { I18nPluralPipe } from '@angular/common';
 import { HlmCommandInputWrapperComponent } from './spartan/ui-command-helm/src/lib/hlm-command-input-wrapper.component';
 import { OebButtonComponent } from './oeb-button.component';
 import striptags from 'striptags';
+import { OebSpinnerComponent } from './oeb-spinner.component';
 
 
 export type Payment = {
@@ -312,7 +313,8 @@ export type RequestedBadge = {
     HlmSelectModule,
     TranslateModule,
     HlmCommandInputWrapperComponent,
-    OebButtonComponent
+    OebButtonComponent,
+    OebSpinnerComponent
 
   ],
   styleUrl: './datatable-qrcodes.component.scss',
@@ -320,7 +322,7 @@ export type RequestedBadge = {
   host: {
     class: 'tw-w-full',
   },
-  template: `
+  template: ` 
     <div class="tw-flex tw-flex-col tw-justify-between tw-gap-4 sm:tw-flex-row">
 		<label hlmLabel class="tw-font-semibold tw-text-[0.5rem] tw-w-full md:tw-w-80">
 			<span class="tw-px-3 tw-text-muted-foreground tw-text-sm">Nach E-Mail-Adresse suchen</span>
@@ -367,107 +369,112 @@ export type RequestedBadge = {
 	  -->
     </div>
 
-    <brn-table
-      hlm
-      stickyHeader
-      class="tw-mt-4 tw-block tw-min-h-[335px] tw-max-h-[680px] tw-overflow-x-hidden tw-overflow-y-auto tw-rounded-md"
-      [dataSource]="_filteredSortedPaginatedPayments()"
-      [displayedColumns]="_allDisplayedColumns()"
-      [trackBy]="_trackBy"
-	  [headerRowClasses]="headerRowStyle"
-	  [bodyRowClasses]="bodyRowStyle"
-    >
-      <brn-column-def name="select" class="tw-w-12">
-        <hlm-th *brnHeaderDef>
-          <hlm-checkbox [checked]="_checkboxState()" (changed)="handleHeaderCheckboxChange()" />
-        </hlm-th>
-        <hlm-td *brnCellDef="let element">
-          <hlm-checkbox [checked]="_isPaymentSelected(element)" (changed)="togglePayment(element)" />
-        </hlm-td>
-      </brn-column-def>
-      <brn-column-def name="email" class="tw-w-40">
-        <hlm-th class="tw-text-white" truncate *brnHeaderDef>ID</hlm-th>
-        <hlm-td class="tw-text-white" *brnCellDef="let element">
-          <span class="tw-text-oebblack">{{ element.email }}</span>
-        </hlm-td>
-      </brn-column-def>
-      <brn-column-def name="requestedOn" class="!tw-flex-1 tw-justify-center">
-        <hlm-th *brnHeaderDef>
-          <button hlmBtn size="sm" variant="ghost" (click)="handleEmailSortChange()">
-            <span class="tw-text-white tw-text-sm">{{'Badge.requestedOn' | translate}}</span>
-            <hlm-icon class="tw-ml-3 tw-text-white" size="sm" name="lucideArrowUpDown" />
+    @if(loading){
+      <oeb-spinner [text]="awardedBadges + ' ' +  ('General.of' | translate) + ' ' + _selected().length + ' ' + ('Issuer.giveBadges' | translate) " /> 
+    } @else {
+      <brn-table
+        hlm
+        stickyHeader
+        class="tw-mt-4 tw-block tw-min-h-[335px] tw-max-h-[680px] tw-overflow-x-hidden tw-overflow-y-auto tw-rounded-md"
+        [dataSource]="_filteredSortedPaginatedPayments()"
+        [displayedColumns]="_allDisplayedColumns()"
+        [trackBy]="_trackBy"
+      [headerRowClasses]="headerRowStyle"
+      [bodyRowClasses]="bodyRowStyle"
+      >
+        <brn-column-def name="select" class="tw-w-12">
+          <hlm-th *brnHeaderDef>
+            <hlm-checkbox [checked]="_checkboxState()" (changed)="handleHeaderCheckboxChange()" />
+          </hlm-th>
+          <hlm-td *brnCellDef="let element">
+            <hlm-checkbox [checked]="_isPaymentSelected(element)" (changed)="togglePayment(element)" />
+          </hlm-td>
+        </brn-column-def>
+        <brn-column-def name="email" class="tw-w-40">
+          <hlm-th class="tw-text-white" truncate *brnHeaderDef>ID</hlm-th>
+          <hlm-td class="tw-text-white" *brnCellDef="let element">
+            <span class="tw-text-oebblack">{{ element.email }}</span>
+          </hlm-td>
+        </brn-column-def>
+        <brn-column-def name="requestedOn" class="!tw-flex-1 tw-justify-center">
+          <hlm-th *brnHeaderDef>
+            <button hlmBtn size="sm" variant="ghost" (click)="handleEmailSortChange()">
+              <span class="tw-text-white tw-text-sm">{{'Badge.requestedOn' | translate}}</span>
+              <hlm-icon class="tw-ml-3 tw-text-white" size="sm" name="lucideArrowUpDown" />
+            </button>
+          </hlm-th>
+          <hlm-td class="!tw-flex-1 tw-justify-center" *brnCellDef="let element">
+            <span class="tw-text-oebblack">{{ element.requestedOn | date: 'dd.MM.yyyy' }}</span>
+          </hlm-td>
+        </brn-column-def>
+        <brn-column-def name="amount" class="tw-justify-end tw-w-20">
+          <hlm-th class="tw-text-white" *brnHeaderDef></hlm-th>
+          <hlm-td class="tw-font-medium tw-tabular-nums" *brnCellDef="let element">
+      <button (click)="openDangerDialog(element)">
+        <hlm-icon class="tw-ml-3 tw-text-oebblack" size="sm" name="lucideTrash2" />
           </button>
-        </hlm-th>
-        <hlm-td class="!tw-flex-1 tw-justify-center" *brnCellDef="let element">
-          <span class="tw-text-oebblack">{{ element.requestedOn | date: 'dd.MM.yyyy' }}</span>
         </hlm-td>
-      </brn-column-def>
-      <brn-column-def name="amount" class="tw-justify-end tw-w-20">
-        <hlm-th class="tw-text-white" *brnHeaderDef></hlm-th>
-        <hlm-td class="tw-font-medium tw-tabular-nums" *brnCellDef="let element">
-		<button (click)="openDangerDialog(element)">
-			<hlm-icon class="tw-ml-3 tw-text-oebblack" size="sm" name="lucideTrash2" />
-        </button>
-			</hlm-td>
-      </brn-column-def>
-      <brn-column-def name="actions" class="tw-w-16">
-        <hlm-th *brnHeaderDef></hlm-th>
-        <hlm-td *brnCellDef="let element">
-          <button hlmBtn variant="ghost" class="tw-h-6 tw-w-6 tw-p-0.5" align="end" [brnMenuTriggerFor]="menu">
-            <hlm-icon class="tw-w-4 tw-h-4" name="lucideEllipsis" />
-          </button>
-
-          <ng-template #menu>
-            <hlm-menu>
-              <hlm-menu-label>Actions</hlm-menu-label>
-              <hlm-menu-separator />
-              <hlm-menu-group>
-                <button hlmMenuItem>Copy payment ID</button>
-              </hlm-menu-group>
-              <hlm-menu-separator />
-              <hlm-menu-group>
-                <button hlmMenuItem>View customer</button>
-                <button hlmMenuItem>View payment details</button>
-              </hlm-menu-group>
-            </hlm-menu>
-          </ng-template>
-        </hlm-td>
-      </brn-column-def>
-      <div class="tw-flex tw-items-center tw-justify-center tw-p-20 tw-text-muted-foreground" brnNoDataRow>No data</div>
-    </brn-table>
-    <div
-      class="tw-flex tw-flex-col tw-justify-between tw-mt-4 sm:tw-flex-row sm:tw-items-center"
-      *brnPaginator="let ctx; totalElements: _totalElements(); pageSize: _pageSize(); onStateChange: _onStateChange"
-    >
-      <span class="tw-text-sm tw-text-muted-foreground">{{ _selected().length }} {{ 'General.of' | translate}} {{ _totalElements() }} {{ ' ' | i18nPlural: plural['award'] }} {{ 'General.selected' | translate}}</span>
-	  <div class="tw-flex tw-mt-2 sm:tw-mt-0">
-	  
-        <brn-select class="tw-inline-block" placeholder="{{ _availablePageSizes[0] }}" [(ngModel)]="_pageSize">
-          <hlm-select-trigger class="tw-inline-flex tw-mr-1 tw-w-15 tw-h-9">
-            <hlm-select-value />
-          </hlm-select-trigger>
-          <hlm-select-content>
-            @for (size of _availablePageSizes; track size) {
-              <hlm-option [value]="size">
-                {{ size === 10000 ? ('General.all' | translate) : size }}
-              </hlm-option>
-            }
-          </hlm-select-content>
-        </brn-select>
-		
+        </brn-column-def>
+        <brn-column-def name="actions" class="tw-w-16">
+          <hlm-th *brnHeaderDef></hlm-th>
+          <hlm-td *brnCellDef="let element">
+            <button hlmBtn variant="ghost" class="tw-h-6 tw-w-6 tw-p-0.5" align="end" [brnMenuTriggerFor]="menu">
+              <hlm-icon class="tw-w-4 tw-h-4" name="lucideEllipsis" />
+            </button>
+  
+            <ng-template #menu>
+              <hlm-menu>
+                <hlm-menu-label>Actions</hlm-menu-label>
+                <hlm-menu-separator />
+                <hlm-menu-group>
+                  <button hlmMenuItem>Copy payment ID</button>
+                </hlm-menu-group>
+                <hlm-menu-separator />
+                <hlm-menu-group>
+                  <button hlmMenuItem>View customer</button>
+                  <button hlmMenuItem>View payment details</button>
+                </hlm-menu-group>
+              </hlm-menu>
+            </ng-template>
+          </hlm-td>
+        </brn-column-def>
+        <div class="tw-flex tw-items-center tw-justify-center tw-p-20 tw-text-muted-foreground" brnNoDataRow>No data</div>
+      </brn-table>
+      <div
+        class="tw-flex tw-flex-col tw-justify-between tw-mt-4 sm:tw-flex-row sm:tw-items-center"
+        *brnPaginator="let ctx; totalElements: _totalElements(); pageSize: _pageSize(); onStateChange: _onStateChange"
+      >
+        <span class="tw-text-sm tw-text-muted-foreground">{{ _selected().length }} {{ 'General.of' | translate}} {{ _totalElements() }} {{ ' ' | i18nPlural: plural['award'] }} {{ 'General.selected' | translate}}</span>
+      <div class="tw-flex tw-mt-2 sm:tw-mt-0">
       
-     @if(_requestedBadges().length > 10){
-        <div class="tw-flex tw-space-x-1">
-          <button size="sm" hlmBtn [disabled]="!ctx.decrementable()" (click)="ctx.decrement()">
-            {{ 'General.previous' | translate}}
-          </button>
-          <button size="sm" hlmBtn [disabled]="!ctx.incrementable()" (click)="ctx.increment()">
-            {{'General.next' | translate}}
-          </button>
+          <brn-select class="tw-inline-block" placeholder="{{ _availablePageSizes[0] }}" [(ngModel)]="_pageSize">
+            <hlm-select-trigger class="tw-inline-flex tw-mr-1 tw-w-15 tw-h-9">
+              <hlm-select-value />
+            </hlm-select-trigger>
+            <hlm-select-content>
+              @for (size of _availablePageSizes; track size) {
+                <hlm-option [value]="size">
+                  {{ size === 10000 ? ('General.all' | translate) : size }}
+                </hlm-option>
+              }
+            </hlm-select-content>
+          </brn-select>
+      
+        
+       @if(_requestedBadges().length > 10){
+          <div class="tw-flex tw-space-x-1">
+            <button size="sm" hlmBtn [disabled]="!ctx.decrementable()" (click)="ctx.decrement()">
+              {{ 'General.previous' | translate}}
+            </button>
+            <button size="sm" hlmBtn [disabled]="!ctx.incrementable()" (click)="ctx.increment()">
+              {{'General.next' | translate}}
+            </button>
+          </div>
+        }
         </div>
-      }
-      </div>
-      </div>
+        </div>
+    }
+
       <oeb-button 
         size="sm"
         class="tw-float-right tw-mt-4"
@@ -492,6 +499,7 @@ export class QrCodeDatatableComponent {
 	@Output() qrBadgeAward = new EventEmitter<void>();
 	requestedBadges: RequestedBadge[] = []
 	loading: Promise<unknown>;
+  awardedBadges: number = 0;
   public headerRowStyle = 'tw-flex tw-min-w-[100%] tw-w-fit tw-rounded-t-[20px] tw-border-b tw-border-darkgrey [&.cdk-table-sticky]:tw-bg-darkgrey ' +
   '[&.cdk-table-sticky>*]:tw-z-[101] [&.cdk-table-sticky]:before:tw-z-0 [&.cdk-table-sticky]:before:tw-block [&.cdk-table-sticky]:hover:before:tw-bg-muted/50 [&.cdk-table-sticky]:before:tw-absolute [&.cdk-table-sticky]:before:tw-inset-0'
 
@@ -701,17 +709,21 @@ export class QrCodeDatatableComponent {
             })
             .then(
               () => {
-                this.router.navigate(['issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug]);
-                this.openSuccessDialog(b.email);
-                this.requestedBadges = this.requestedBadges.filter(
+                // this.router.navigate(['issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug]);
+                // this.openSuccessDialog(b.email);
+                // this.requestedBadges = this.requestedBadges.filter(
+                //   (awardBadge) => awardBadge.entity_id != b.entity_id,
+                // );
+                this.awardedBadges ++
+                this._requestedBadges.set(this._requestedBadges().filter(
                   (awardBadge) => awardBadge.entity_id != b.entity_id,
-                );
+                ))
                 this.deletedQRAward.emit({
                   id: b.entity_id,
                   slug: this.qrCodeId,
                   // badgeclass: b,
                 });
-                this.badgeRequestApiService.deleteRequest(b.entity_id);
+                // this.badgeRequestApiService.deleteRequest(b.entity_id);
                 this.qrBadgeAward.emit();
               },
               (error) => {
