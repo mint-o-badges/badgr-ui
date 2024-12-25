@@ -267,6 +267,7 @@ import { HlmCommandInputWrapperComponent } from './spartan/ui-command-helm/src/l
 import { OebButtonComponent } from './oeb-button.component';
 import striptags from 'striptags';
 import { OebSpinnerComponent } from './oeb-spinner.component';
+import { OebProgressComponent } from './oeb-progress.component';
 
 
 export type Payment = {
@@ -314,7 +315,8 @@ export type RequestedBadge = {
     TranslateModule,
     HlmCommandInputWrapperComponent,
     OebButtonComponent,
-    OebSpinnerComponent
+    OebSpinnerComponent,
+    OebProgressComponent
 
   ],
   styleUrl: './datatable-qrcodes.component.scss',
@@ -371,6 +373,10 @@ export type RequestedBadge = {
 
     @if(loading){
       <oeb-spinner [text]="awardedBadges + ' ' +  ('General.of' | translate) + ' ' + _selected().length + ' ' + ('Issuer.giveBadges' | translate) " /> 
+      <oeb-progress 
+        class="tw-w-1/2 tw-mt-1 tw-h-4 tw-mx-auto tw-relative tw-flex tw-overflow-hidden tw-rounded-3xl tw-bg-lightgrey tw-items-center"
+        [value]="progressValue()"
+      /> 
     } @else {
       <brn-table
         hlm
@@ -737,4 +743,8 @@ export class QrCodeDatatableComponent {
         });
     })
 	}
+
+  progressValue(){
+    return (this.awardedBadges / this._selected().length) * 100 
+  }
 }
