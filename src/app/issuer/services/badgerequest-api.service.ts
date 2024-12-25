@@ -33,4 +33,8 @@ export class BadgeRequestApiService extends BaseHttpApiService {
 	deleteRequest(requestId: string) {
 		return this.delete(`/deleteBadgeRequest/${requestId}`);
 	}
+
+	deleteRequests(requestIds: string[]){
+		return this.post('/deleteBadgeRequests', {ids: requestIds})
+	}
 }
