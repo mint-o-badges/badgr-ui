@@ -685,7 +685,7 @@ export class QrCodeDatatableComponent {
     const assertions: BadgeInstanceBatchAssertion[] = [];
 		const recipientProfileContextUrl = 'https://openbadgespec.org/extensions/recipientProfile/context.json';
     let assertion: BadgeInstanceBatchAssertion;
-    let ids: string[]
+    let ids: string[] = []
     this._selected().forEach((b) => {
       ids.push(b.entity_id)
       const name = b.firstName + ' ' + b.lastName
@@ -734,7 +734,7 @@ export class QrCodeDatatableComponent {
             //   // badgeclass: b,
             // });
             // this.badgeRequestApiService.deleteRequest(b.entity_id);
-            this.badgeRequestApiService.deleteRequests(ids)
+            this.badgeRequestApiService.deleteRequests(this.issuerSlug, this.badgeSlug, ids)
             this.qrBadgeAward.emit();
           },
           (error) => {
