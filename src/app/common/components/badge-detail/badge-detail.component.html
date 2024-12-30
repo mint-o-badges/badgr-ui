@@ -136,7 +136,7 @@
 								<dt class="tw-text-sm tw-text-oebblack tw-font-bold">
 									{{ 'RecBadgeDetail.duration' | translate }}
 								</dt>
-								<dd class="tw-text-sm tw-text-oebblack md:tw-ml-2">{{ config.duration | hourPipe }}</dd>
+								<dd class="tw-text-sm tw-text-oebblack md:tw-ml-2">{{ config.duration | hourPipe }} {{'RecBadge.hours' | translate }}</dd>
 							</div>
 
 							<div
@@ -226,7 +226,7 @@
 									[category]="competency.category"
 									[description]="competency.description"
 									[framework]="competency.framework" [framework_identifier]="competency.framework_identifier"
-									[studyload]="competency.studyLoad | hourPipe"
+									[studyload]="(competency.studyLoad | hourPipe) + ' h'"
 								></competency-accordion>
 							</div>
 						</div>
