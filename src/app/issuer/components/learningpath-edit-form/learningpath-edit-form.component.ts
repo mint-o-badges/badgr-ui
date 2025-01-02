@@ -346,7 +346,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 					name: this.learningPathForm.value.license[0].name,
 					legalCode: this.learningPathForm.value.license[0].legalCode,
 				},
-				'extensions:CompetencyExtension': {}
+				'extensions:CompetencyExtension': []
 			}
 
 			this.existingLpBadge.save()				
@@ -403,7 +403,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 							name: this.learningPathForm.value.license[0].name,
 							legalCode: this.learningPathForm.value.license[0].legalCode,
 						},
-						'extensions:CompetencyExtension': {}
+						'extensions:CompetencyExtension': []
 
 						// 'extensions:LevelExtension': {
 						// 	'@context': levelExtensionContextUrl,
