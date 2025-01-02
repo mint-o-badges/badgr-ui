@@ -35,8 +35,6 @@ Run the test suite with `npm run test`
 
 Run the e2e tests with `npm run e2e`
 
-## Build Instructions (for deployment)
-
 ### Configuration
 
 To build for production, a `environment.prod.ts` file must be present in `src/environments/`.
@@ -53,8 +51,7 @@ All files in `dist` constitute the build artifact.
 
 ## Deployment
 
-To get the image on the prod server, simply update the `release` branch and push it to github.
-The rest should happen automatically (thanks to github actions and watchtower keeping the deployed image up to date).
+Check out `deployment.md`.
 
 ## Commit Message Convention
 
