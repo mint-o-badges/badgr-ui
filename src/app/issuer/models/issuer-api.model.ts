@@ -46,7 +46,7 @@ export interface ApiIssuer {
 
 	lat?: number;
 	lon?: number;
-	intendedUseVerified?: boolean;
+	intendedUseVerified: boolean;
 }
 
 export type IssuerStaffRoleSlug = 'owner' | 'editor' | 'staff';
@@ -84,7 +84,7 @@ export interface ApiIssuerForCreation {
 	zip?: string;
 	city?: string;
 
-	intendedUseVerified?: boolean;
+	intendedUseVerified: boolean;
 
 	lat?: number;
 	lon?: number;
@@ -102,7 +102,7 @@ export interface ApiIssuerForEditing {
 	zip?: string;
 	city?: string;
 
-	intendedUseVerified?: boolean;
+	intendedUseVerified: boolean;
 
 	lat?: number;
 	lon?: number;
