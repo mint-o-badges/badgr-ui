@@ -23,7 +23,7 @@ import { TranslateService } from '@ngx-translate/core';
 			<p hlmP class="tw-flex tw-flex-col tw-gap-2 tw-my-2">
 				<span class="tw-font-extrabold md:tw-text-[18px] md:tw-leading-[23px]" [innerHtml]="caption"></span>
 				<span *ngIf="text">
-					{{ text }}
+					<p hlmP [innerHtml]="text"></p>
 					<span *ngIf="qrCodeRequested">Damit gehen alle noch offenen Badge-Anfragen verloren.</span>
 				</span>
 			</p>
