@@ -21,7 +21,7 @@ import { TranslateService } from '@ngx-translate/core';
 				</div>
 			</div>
 			<p hlmP class="tw-flex tw-flex-col tw-gap-2 tw-my-2">
-				<span class="tw-font-extrabold tw-uppercase">{{ caption }}</span>
+				<span class="tw-font-extrabold md:tw-text-[18px] md:tw-leading-[23px]" [innerHtml]="caption"></span>
 				<span *ngIf="text">
 					{{ text }}
 					<span *ngIf="qrCodeRequested">Damit gehen alle noch offenen Badge-Anfragen verloren.</span>
@@ -53,6 +53,7 @@ export class DangerDialogComponent {
 		variant: string;
 		singleButtonText?: string;
         singleButtonAction?: any;
+		captionStyle?: string;
 	}>();
 	protected readonly caption = this._dialogContext.caption;
 	protected readonly text = this._dialogContext.text;
