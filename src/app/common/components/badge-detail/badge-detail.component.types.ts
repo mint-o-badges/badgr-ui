@@ -78,4 +78,5 @@ export interface PageConfig {
 	id?: string;
 	shareButton?: boolean;
 	badgeInstanceSlug?: string
+	learningPaths?: any[]
 }
