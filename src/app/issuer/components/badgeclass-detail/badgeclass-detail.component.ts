@@ -29,13 +29,22 @@ import { TranslateService } from '@ngx-translate/core';
 import { PageConfig } from '../../../common/components/badge-detail/badge-detail.component.types';
 import { PdfService } from '../../../common/services/pdf.service';
 import { QrCodeApiService } from '../../services/qrcode-api.service';
+import { InfoDialogComponent } from '../../../common/dialogs/oeb-dialogs/info-dialog.component';
+import { HlmDialogService } from "../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service";
+import { inject } from '@angular/core';
 
 @Component({
 	selector: 'badgeclass-detail',
 	template: `
 		<bg-badgedetail [config]="config" [awaitPromises]="[issuerLoaded, badgeClassLoaded]">
-				<qrcode-awards (qrBadgeAward)="onQrBadgeAward()" [awards]="qrCodeAwards" [badgeClassSlug]="badgeSlug" [issuerSlug]="issuerSlug" [routerLinkText]="config?.issueQrRouterLink"></qrcode-awards>
-		<issuer-detail-datatable
+			<qrcode-awards
+				(qrBadgeAward)="onQrBadgeAward()"
+				[awards]="qrCodeAwards"
+				[badgeClass]="badgeClass"
+				[issuer]="issuer"
+				[routerLinkText]="config?.issueQrRouterLink"
+			></qrcode-awards>
+			<issuer-detail-datatable
 				[recipientCount]="recipientCount"
 				[_recipients]="instanceResults"
 				(actionElement)="revokeInstance($event)"
@@ -57,7 +66,6 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		return this.route.snapshot.params['badgeSlug'];
 	}
 
-
 	get confirmDialog() {
 		return this.dialogService.confirmDialog;
 	}
@@ -66,7 +74,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		return this.badgeClass ? this.badgeClass.recipientCount : null;
 	}
 
-	set recipientCount(value: number){
+	set recipientCount(value: number) {
 		this.badgeClass.recipientCount = value;
 	}
 
@@ -89,6 +97,9 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 	);
 	launchpoints: ApiExternalToolLaunchpoint[];
 
+	private readonly _hlmDialogService = inject(HlmDialogService);
+
+
 	badgeClassLoaded: Promise<unknown>;
 	badgeInstancesLoaded: Promise<unknown>;
 	assertionsLoaded: Promise<unknown>;
@@ -104,8 +115,8 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 
 	config: PageConfig;
 
-	qrCodeButtonText = "Badge über QR-Code vergeben"
-	qrCodeAwards = []
+	qrCodeButtonText = 'Badge über QR-Code vergeben';
+	qrCodeAwards = [];
 
 	pdfSrc: SafeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl('about:blank');
 	downloadStates: boolean[] = [false];
@@ -140,7 +151,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		private externalToolsManager: ExternalToolsManager,
 		protected pdfService: PdfService,
 		private sanitizer: DomSanitizer,
-        private translate: TranslateService,
+		private translate: TranslateService,
 	) {
 		super(router, route, sessionService);
 
@@ -165,8 +176,8 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		);
 
 		this.qrCodeApiService.getQrCodesForIssuerByBadgeClass(this.issuerSlug, this.badgeSlug).then((qrCodes) => {
-			this.qrCodeAwards = qrCodes
-		})
+			this.qrCodeAwards = qrCodes;
+		});
 
 		this.externalToolsManager.getToolLaunchpoints('issuer_assertion_action').then((launchpoints) => {
 			this.launchpoints = launchpoints;
@@ -197,16 +208,21 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 					badgeTitle: this.badgeClass.name,
 					headerButton: {
 						title: 'Badge direkt vergeben',
-						routerLink: ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'issue'],
+						action: () => this.routeToBadgeAward(this.badgeClass, this.issuer),
+						// routerLink: ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'issue'],
 					},
 					issueQrRouterLink: ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'qr'],
-					qrCodeButton: true,
+					qrCodeButton: {
+						title: 'Badge über QR-Code vergeben',
+						show: true,
+						action: () => this.routeToQRCodeAward(this.badgeClass, this.issuer)
+					},
 					menuitems: [
 						{
 							title: 'Bearbeiten',
 							routerLink: ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'edit'],
-							icon:  "lucidePencil",
-
+							disabled: this.badgeClass.recipientCount > 0,
+							icon: 'lucidePencil',
 						},
 						{
 							title: 'Löschen',
@@ -232,7 +248,10 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 					badgeFailedImageUrl: this.badgeFailedImageUrl,
 					badgeImage: this.badgeClass.image,
 					competencies: this.badgeClass.extension['extensions:CompetencyExtension'],
+					license: this.badgeClass.extension['extensions:LicenseExtension'] ? true : false,
+
 				};
+				console.log(this.config);
 			},
 			(error) => {
 				this.messageService.reportLoadingError(
@@ -245,7 +264,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 
 	onQrBadgeAward() {
 		this.loadInstances();
-		this.recipientCount += 1
+		this.recipientCount += 1;
 	}
 
 	ngOnInit() {
@@ -285,12 +304,14 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 	// To get and download badge certificate in pdf format
 	downloadCertificate(instance: BadgeInstance, badgeIndex: number) {
 		this.downloadStates[badgeIndex] = true;
-		this.pdfService.getPdf(instance.slug).then(
-			(url) => {
+		this.pdfService
+			.getPdf(instance.slug)
+			.then((url) => {
 				this.pdfSrc = url;
 				this.pdfService.downloadPdf(this.pdfSrc, this.badgeClass.name, instance.createdAt);
 				this.downloadStates[badgeIndex] = false;
-			}).catch((error) => {
+			})
+			.catch((error) => {
 				this.downloadStates[badgeIndex] = false;
 				console.log(error);
 			});
@@ -301,7 +322,10 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 			this.confirmDialog
 				.openResolveRejectDialog({
 					dialogTitle: this.translate.instant('General.warning'),
-					dialogBody: this.translate.instant('Badge.deletePart1') + `<strong>${this.badgeClass.name}</strong>` + this.translate.instant('Badge.deletePart2'),
+					dialogBody:
+						this.translate.instant('Badge.deletePart1') +
+						`<strong>${this.badgeClass.name}</strong>` +
+						this.translate.instant('Badge.deletePart2'),
 					resolveButtonLabel: this.translate.instant('Badge.deleteConfirm'),
 					rejectButtonLabel: this.translate.instant('General.cancel'),
 				})
@@ -334,6 +358,52 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 					() => void 0,
 				);
 		}
+	}
+
+	routeToBadgeAward(badge: BadgeClass, issuer){
+		this.qrCodeApiService.getQrCodesForIssuerByBadgeClass(this.issuer.slug, badge.slug).then((qrCodes) => {
+			if(badge.recipientCount === 0 && qrCodes.length === 0){
+				const dialogRef =this._hlmDialogService.open(InfoDialogComponent, {
+					context: {
+						variant: "info",
+						caption: this.translate.instant("Badge.endOfEditDialogTitle"),
+						subtitle: this.translate.instant("Badge.endOfEditDialogText"),
+						text: this.translate.instant("Badge.endOfEditDialogSubText"),
+						cancelText: this.translate.instant('General.cancel'),
+						forwardText: this.translate.instant('Issuer.giveBadge')
+					},
+				})
+				dialogRef.closed$.subscribe((result) => {
+					if (result === 'continue') this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'issue']);
+				});
+			}
+			else{
+				this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'issue'])
+			}	
+		})	
+	}
+
+	routeToQRCodeAward(badge, issuer){
+		this.qrCodeApiService.getQrCodesForIssuerByBadgeClass(this.issuer.slug, badge.slug).then((qrCodes) => {
+			if(badge.recipientCount === 0 && qrCodes.length === 0){
+				const dialogRef =this._hlmDialogService.open(InfoDialogComponent, {
+					context: {
+						variant: "info",
+						caption: this.translate.instant("Badge.endOfEditDialogTitle"),
+						subtitle: this.translate.instant("Badge.endOfEditDialogTextQR"),
+						text: this.translate.instant("Badge.endOfEditDialogSubText"),
+						cancelText: this.translate.instant('General.previous'),
+						forwardText: this.translate.instant('Issuer.giveQr')
+					},
+				})
+				dialogRef.closed$.subscribe((result) => {
+					if (result === 'continue') this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'qr']);
+				});
+			}
+			else{
+				this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'qr'])
+			}
+		})	
 	}
 
 	shareInstance(instance: BadgeInstance) {

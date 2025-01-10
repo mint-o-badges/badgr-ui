@@ -1,7 +1,6 @@
 import { AfterViewInit, Component, ElementRef, NgModule, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SessionService } from '../../../common/services/session.service';
-import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
 import { MessageService } from '../../../common/services/message.service';
 import { IssuerManager } from '../../../issuer/services/issuer-manager.service';
 import { Issuer } from '../../../issuer/models/issuer.model';
@@ -14,17 +13,14 @@ import { StringMatchingUtil } from '../../../common/util/string-matching-util';
 import { Map, NavigationControl, Popup } from 'maplibre-gl';
 import { TranslateService } from '@ngx-translate/core';
 import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
-
-import { HlmInputDirective } from '../../../components/spartan/ui-input-helm/src/lib/hlm-input.directive';
-import { HlmIconComponent } from '../../../components/spartan/ui-icon-helm/src/lib/hlm-icon.component';
-import { HlmBadgeDirective } from '../../../components/spartan/ui-badge-helm/src/lib/hlm-badge.directive';
-import { BadgeClassCategory } from '../../../issuer/models/badgeclass-api.model';
 import { FormControl } from '@angular/forms';
+import { appearAnimation } from '../../../common/animations/animations';
 
 @Component({
 	selector: 'app-issuer-catalog',
 	templateUrl: './issuer-catalog.component.html',
 	styleUrls: ['./issuer-catalog.component.css'],
+	animations: [appearAnimation],
 })
 export class IssuerCatalogComponent extends BaseRoutableComponent implements OnInit, AfterViewInit {
 	readonly issuerPlaceholderSrc = preloadImageURL('../../../../breakdown/static/images/placeholderavatar-issuer.svg');
@@ -59,6 +55,7 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 		},
 	];
 
+	sortControl = new FormControl('name_asc');
 	private _searchQuery = '';
 	get searchQuery() {
 		return this._searchQuery;
@@ -123,7 +120,7 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 				(issuers) => {
 					this.issuers = issuers
 						.slice()
-						.filter((i) => i.apiModel.verified && !i.apiModel.source_url)
+						.filter((i) => i.apiModel.verified && i.ownerAcceptedTos && !i.apiModel.source_url)
 						.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
 					this.issuerResults = this.issuers;
 					this.issuerResults.sort((a, b) => a.name.localeCompare(b.name));
@@ -333,12 +330,12 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 					.setLngLat(coordinates)
 					.setHTML(
 						'<div style="padding:5px"><a href="public/issuers/' +
-						slug +
-						'">' +
-						name +
-						'</a><br><p>' +
-						desc +
-						'</p></div>',
+							slug +
+							'">' +
+							name +
+							'</a><br><p>' +
+							desc +
+							'</p></div>',
 					)
 					.addTo(this.mapObject);
 			});
@@ -383,16 +380,6 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 			});
 		} else {
 			this.mapObject.getSource('issuers').setData(this.issuerGeoJson);
-		}
-	}
-
-	changeOrder(order) {
-		if (order === 'asc') {
-			this.issuerResults.sort((a, b) => a.name.localeCompare(b.name));
-			this.issuerResultsByCategory.forEach((r) => r.issuers.sort((a, b) => a.name.localeCompare(b.name)));
-		} else {
-			this.issuerResults.sort((a, b) => b.name.localeCompare(a.name));
-			this.issuerResultsByCategory.forEach((r) => r.issuers.sort((a, b) => b.name.localeCompare(a.name)));
 		}
 	}
 
@@ -481,7 +468,7 @@ class MatchingIssuerCategory {
 		public category: string,
 		public issuer,
 		public issuers: Issuer[] = [],
-	) { }
+	) {}
 
 	addIssuer(issuer) {
 		if (issuer.category === this.category) {

@@ -21,7 +21,7 @@ import { MessageService } from '../services/message.service';
 	template: `
 		<div class="forminput u-margin-bottom2x">
 			<div class="forminput-x-labelrow">
-				<label class="forminput-x-label u-margin-bottom1x" for="image_field{{ uniqueIdSuffix }}">{{
+				<label [class]="labelStyle" for="image_field{{ uniqueIdSuffix }}">{{
 					label
 				}}</label>
 				<span *ngIf="sublabelRight" class="tw-mr-auto tw-ml-2 tw-font-[rubik] tw-text-oebblack tw-text-sm tw-font-normal">{{sublabelRight}}</span>
@@ -33,7 +33,7 @@ import { MessageService } from '../services/message.service';
 					>{{ 'RecBadge.genRandomImage' | translate }}</a
 				>
 			</div>
-			<p class="forminput-x-sublabel" *ngIf="sublabel">{{ sublabel }}</p>
+			<p class="tw-text-sm tw-w-full tw-text-center tw-text-oebblack tw-mt-2 tw-italic tw-leading-[16.4px]" [innerHTML]="sublabel" *ngIf="sublabel"></p>
 			<input
 				type="file"
 				[accept]="allowedFileFormats"
@@ -45,7 +45,7 @@ import { MessageService } from '../services/message.service';
 			/>
 
 			<label
-				class="dropzone"
+				class="dropzone tw-mx-auto tw-mt-2 !tw-h-[250px] md:tw-min-w-[320px]"
 				#imageLabel
 				[attr.for]="'image_field' + uniqueIdSuffix"
 				(click)="clearFileInput()"
@@ -75,15 +75,15 @@ import { MessageService } from '../services/message.service';
 					<hlm-icon size="xl" name="lucideCloudUpload"></hlm-icon>
 					<p *ngIf="dropZoneInfo1" class="dropzone-x-info1">{{ dropZoneInfo1 }}</p>
 					<p class="dropzone-x-info2">
-						<span *ngIf="dropZoneInfo1"> {{ 'General.or' | translate }} </span>
-						<span class="u-text-link tw-underline">{{ text_body }}</span>
+						<span class="tw-inline-block tw-my-1 tw-mr-1" *ngIf="dropZoneInfo1"> {{ 'General.or' | translate }}  </span>
+						<span class="u-text-link tw-underline tw-inline-block">{{ text_body }}</span>
 					</p>
 					<!-- dont let user select icon when uploading badge -->
 					<p *ngIf="loaderName != 'basic' && dropZoneInfo2" class="dropzone-x-info2">
-						{{ 'General.or' | translate }}
+						<span class="tw-inline-block tw-my-1 tw-mr-1">{{ 'General.or' | translate }}</span>
 						<span
 							id="nounProject_span"
-							class="u-text-link tw-underline"
+							class="u-text-link tw-underline tw-inline-block"
 							(click)="$event.preventDefault(); findNounproject($event)"
 							>{{ dropZoneInfo2 }}</span
 						>
@@ -146,6 +146,7 @@ export class BgFormFieldImageComponent {
 	@Input() type: string = null;
 	@Input() errorMessage = 'Please provide a valid image file';
 	@Input() placeholderImage: string;
+	@Input() labelStyle = "forminput-x-label u-margin-bottom1x";
 	@Input() imageLoader: (file: File | string) => Promise<string> = basicImageLoader;
 
 	@Input() newDropZone = false;

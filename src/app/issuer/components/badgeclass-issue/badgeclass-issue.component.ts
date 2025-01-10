@@ -79,7 +79,7 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 			});
 		})
 		.addControl('recipient_identifier', '', [Validators.required, this['idValidator']])
-		.addControl('narrative', '', MdImgValidator.imageTest)
+		.addControl('narrative', '', [MdImgValidator.imageTest, Validators.maxLength(160)])
 		.addControl('notify_earner', true)
 		.addArray(
 			'evidence_items',
@@ -208,16 +208,6 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 		const cleanedEvidence = formState.evidence_items.filter((e) => e.narrative !== '' || e.evidence_url !== '');
 		const cleanedName = striptags(formState.recipientprofile_name);
 
-		// const studyLoadExtensionContextUrl =
-		// 	"http://localhost:8000/static/extensions/StudyLoadExtension/context.json";
-		// const studyLoadExtension = {
-		// 	"extensions:StudyLoadExtension": {
-		// 		"@context": studyLoadExtensionContextUrl,
-		// 		type: ["Extension", "extensions:StudyLoadExtension"],
-		// 		StudyLoad: 60,
-		// 	},
-		// };
-
 		const recipientProfileContextUrl = 'https://openbadgespec.org/extensions/recipientProfile/context.json';
 		const extensions = formState.recipientprofile_name
 			? {
@@ -251,7 +241,8 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 		const expires =
 			this.expirationEnabled && formState.expires ? new Date(formState.expires).toISOString() : undefined;
 
-		this.issueBadgeFinished = this.badgeInstanceManager
+			
+			this.issueBadgeFinished = this.badgeInstanceManager
 			.createBadgeInstance(this.issuerSlug, this.badgeSlug, {
 				issuer: this.issuerSlug,
 				badge_class: this.badgeSlug,
@@ -281,6 +272,17 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 			.then(() => (this.issueBadgeFinished = null));
 	}
 
+	private handleSuccess(recipientIdentifier: string) {
+		this.eventsService.recipientBadgesStale.next([]);
+		this.openSuccessDialog(recipientIdentifier);
+		this.router.navigate(['issuer/issuers', this.issuerSlug, 'badges', this.badgeClass.slug]);
+		this.messageService.setMessage(`Badge awarded to ${recipientIdentifier}`, 'success');
+	}
+
+	private handleError(error: any) {
+		this.messageService.setMessage(`Unable to award badge: ${BadgrApiFailure.from(error).firstMessage}`, 'error');
+	}
+
 	async removeEvidence(i: number) {
 		const evidence = this.issueForm.controls.evidence_items.value[i];
 
@@ -302,7 +304,7 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 		const dialogRef = this._hlmDialogService.open(SuccessDialogComponent, {
 			context: {
 				recipient: recipient,
-				variant: "success"
+				variant: 'success',
 			},
 		});
 	}
