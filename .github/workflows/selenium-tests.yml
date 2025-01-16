@@ -42,10 +42,7 @@ jobs:
       - name: print helpful information 3
         run: pwd && ls
         working-directory: /project
-      - name: print tree
-        run: ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'
-        working-directory: /project
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: '19'
           cache: 'npm'
