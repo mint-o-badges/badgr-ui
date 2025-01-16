@@ -30,6 +30,8 @@ jobs:
           repository: 'mint-o-badges/oeb-test'
             # TODO: Remove this
           ref: 'feat/automate-e2e'
+      - name: print helpful information
+        run: pwd && ls
       - name: move all except assets
         run: find ./ -maxdepth 1 -mindepth 1 -not -name 'assets' -exec mv '{}' /project \;
       - run: mv assets/* /project/assets
