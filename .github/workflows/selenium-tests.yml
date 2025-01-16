@@ -36,7 +36,7 @@ jobs:
           node-version: '19'
           cache: 'npm'
       - name: modify url
-        run: sed -i 's/^export const url = "[^"].*";$/export const url = "https:\/\/deploy-preview-{{ github.event.number }}--openeducationalbadges.netlify.app";/g' config.js
+        run: sed -i 's/^export const url = "[^"].*";$/export const url = "https:\/\/deploy-preview-${{ github.event.number }}--openeducationalbadges.netlify.app";/g' config.js
       - name: print configuration
         run: cat config.js
       - name: set secrets
@@ -49,4 +49,4 @@ jobs:
         env:
           NETLIFY_TOKEN: ${{ secrets.NETLIFY_TOKEN }}
       - name: run the actual tests
-        run: bash /project/entrypoint.sh
+        run: bash ./entrypoint.sh
