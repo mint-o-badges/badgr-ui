@@ -11,12 +11,30 @@ jobs:
   test:
     name: E2E-tests
     runs-on: ubuntu-latest
+    container:
+      image: node:19
+      volumes:
+        - ./:/project
+        - assets:/project/assets
+        - download:/tmp
+      working_dir: /project
+
+    services:
+      selenium:
+        image: selenium/standalone-chrome
+        options: --shm-size=2gb
+      volumes:
+        - assets:/project/assets
+        - download:/tmp
+      working_dir: /project
     
     steps:
       - name: Check out oeb-test
         uses: actions/checkout@v4
         with:
           repository: 'mint-o-badges/oeb-test'
+        # TODO: Remove this
+        ref: 'feat/automate-e2e'
       - name: Wait for Netlify Deploy
         uses: probablyup/wait-for-netlify-action@3.2.0
         id: waitForDeployment
@@ -28,5 +46,11 @@ jobs:
         with:
           node-version: '19'
           cache: 'npm'
-      - run: npm ci
-      - run: npm run test # TODO: This probably won't be enough
+      - name: modify url
+        run: sed -i 's/^export const url = "[^"].*";$/export const url = "https://deploy-preview-{{ github.event.number }}--openeducationalbadges.netlify.app$";/g' config.js
+      - name: print configuration
+        run: cat config.js
+      - name: set secrets
+        run: printf "export const username = '${{ secrets.STAGING_SELENIUM_USERNAME }}';\nexport const password = '${{ secrets.STAGING_SELENIUM_PASSWORD }}';\n" > example.secret.js
+      - name: run the actual tests
+        run: bash /project/entrypoint.sh
