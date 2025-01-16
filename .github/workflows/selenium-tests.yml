@@ -49,7 +49,7 @@ jobs:
         with:
           node-version: '19'
           cache: 'npm'
-        cache-dependency-path: /project/package-lock.json
+          cache-dependency-path: /project/package-lock.json
       - name: modify url
         run: sed -i 's/^export const url = "[^"].*";$/export const url = "https://deploy-preview-{{ github.event.number }}--openeducationalbadges.netlify.app$";/g' config.js
         working-directory: /project
