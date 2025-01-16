@@ -40,7 +40,7 @@ jobs:
       - name: print configuration
         run: cat config.js
       - name: set secrets
-        run: printf "export const username = '${{ secrets.STAGING_SELENIUM_USERNAME }}';\nexport const password = '${{ secrets.STAGING_SELENIUM_PASSWORD }}';\n" > example.secret.js
+        run: printf "export const username = '${{ secrets.STAGING_SELENIUM_USERNAME }}';\nexport const password = '${{ secrets.STAGING_SELENIUM_PASSWORD }}';\n" > secret.js
       - name: Wait for Netlify Deploy
         uses: probablyup/wait-for-netlify-action@3.2.0
         id: waitForDeployment
