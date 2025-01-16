@@ -15,7 +15,6 @@ jobs:
         - ./:/project
         - assets:/project/assets
         - download:/tmp
-      options: --workdir /project
 
     services:
       selenium:
@@ -32,18 +31,8 @@ jobs:
           repository: 'mint-o-badges/oeb-test'
             # TODO: Remove this
           ref: 'feat/automate-e2e'
-          sparse-checkout: |
-            /*
-            !assets
-      - name: Check out assets
-        uses: actions/checkout@v4
-        with:
-          repository: 'mint-o-badges/oeb-test'
-            # TODO: Remove this
-          ref: 'feat/automate-e2e'
-          sparse-checkout:
-            assets/*
-          path: assets
+      - run: mv * /project/
+      - run: cd /project
       - name: print tree
         run: ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'
       - uses: actions/setup-node@v3
