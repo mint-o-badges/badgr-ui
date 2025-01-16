@@ -38,9 +38,7 @@ jobs:
         run: find ./ -maxdepth 1 -mindepth 1 -not -name 'assets' -exec mv '{}' /project \;
       - run: mv assets/* /project/assets
       - name: print helpful information 2
-        run: ls && ls /project
-      - name: print helpful information 3
-        run: pwd && ls
+        run: pwd && ls && ls /project/package-lock.json
         working-directory: /project
       - uses: actions/setup-node@v4
         with:
