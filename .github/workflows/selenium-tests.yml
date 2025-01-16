@@ -33,7 +33,7 @@ jobs:
       - run: cp assets/* /assets
       - uses: actions/setup-node@v4
         with:
-          node-version: '19'
+          node-version: '23'
           cache: 'npm'
       - name: modify url
         run: sed -i 's/^export const url = "[^"].*";$/export const url = "https:\/\/deploy-preview-${{ github.event.number }}--openeducationalbadges.netlify.app";/g' config.js
