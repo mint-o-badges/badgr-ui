@@ -21,10 +21,10 @@ jobs:
       selenium:
         image: selenium/standalone-chrome
         options: --shm-size=2gb
-      volumes:
-        - assets:/project/assets
-        - download:/tmp
-      working_dir: /project
+        volumes:
+          - assets:/project/assets
+          - download:/tmp
+        working_dir: /project
     
     steps:
       - name: Check out oeb-test
