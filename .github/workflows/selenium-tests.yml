@@ -12,7 +12,7 @@ jobs:
     container:
       image: node:19
       volumes:
-        - assets:/project/assets
+        - assets:/assets
         - download:/tmp
 
     services:
@@ -30,30 +30,17 @@ jobs:
           repository: 'mint-o-badges/oeb-test'
             # TODO: Remove this
           ref: 'feat/automate-e2e'
-      - name: print helpful information
-        run: pwd && ls
-      - name: print to be moved things
-        run: find ./ -maxdepth 1 -mindepth 1 -not -name 'assets'
-      - name: move all except assets
-        run: find ./ -maxdepth 1 -mindepth 1 -not -name 'assets' -exec mv '{}' /project \;
-      - run: mv assets/* /project/assets
-      - name: print helpful information 2
-        run: pwd && ls && ls /project/package-lock.json
-        working-directory: /project
+      - run: cp assets/* /assets
       - uses: actions/setup-node@v4
         with:
           node-version: '19'
           cache: 'npm'
-          cache-dependency-path: /project/package-lock.json
       - name: modify url
         run: sed -i 's/^export const url = "[^"].*";$/export const url = "https://deploy-preview-{{ github.event.number }}--openeducationalbadges.netlify.app$";/g' config.js
-        working-directory: /project
       - name: print configuration
         run: cat config.js
-        working-directory: /project
       - name: set secrets
         run: printf "export const username = '${{ secrets.STAGING_SELENIUM_USERNAME }}';\nexport const password = '${{ secrets.STAGING_SELENIUM_PASSWORD }}';\n" > example.secret.js
-        working-directory: /project
       - name: Wait for Netlify Deploy
         uses: probablyup/wait-for-netlify-action@3.2.0
         id: waitForDeployment
@@ -63,4 +50,3 @@ jobs:
           NETLIFY_TOKEN: ${{ secrets.NETLIFY_TOKEN }}
       - name: run the actual tests
         run: bash /project/entrypoint.sh
-        working-directory: /project
