@@ -24,15 +24,15 @@ jobs:
         volumes:
           - assets:/project/assets
           - download:/tmp
-        working_dir: /project
+        options: --workdir /project
     
     steps:
       - name: Check out oeb-test
         uses: actions/checkout@v4
         with:
           repository: 'mint-o-badges/oeb-test'
-        # TODO: Remove this
-        ref: 'feat/automate-e2e'
+            # TODO: Remove this
+          ref: 'feat/automate-e2e'
       - name: Wait for Netlify Deploy
         uses: probablyup/wait-for-netlify-action@3.2.0
         id: waitForDeployment
