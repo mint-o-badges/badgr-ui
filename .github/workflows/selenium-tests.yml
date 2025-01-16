@@ -32,13 +32,20 @@ jobs:
           repository: 'mint-o-badges/oeb-test'
             # TODO: Remove this
           ref: 'feat/automate-e2e'
-      - name: Wait for Netlify Deploy
-        uses: probablyup/wait-for-netlify-action@3.2.0
-        id: waitForDeployment
+          sparse-checkout: |
+            /*
+            !assets
+      - name: Check out assets
+        uses: actions/checkout@v4
         with:
-          site_id: '08b6b283-7ce6-4a20-bbce-5900e4f90c14'
-        env:
-          NETLIFY_TOKEN: ${{ secrets.NETLIFY_TOKEN }}
+          repository: 'mint-o-badges/oeb-test'
+            # TODO: Remove this
+          ref: 'feat/automate-e2e'
+          sparse-checkout:
+            assets/*
+          path: assets
+      - name: print tree
+        run: ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'
       - uses: actions/setup-node@v3
         with:
           node-version: '19'
@@ -49,5 +56,12 @@ jobs:
         run: cat config.js
       - name: set secrets
         run: printf "export const username = '${{ secrets.STAGING_SELENIUM_USERNAME }}';\nexport const password = '${{ secrets.STAGING_SELENIUM_PASSWORD }}';\n" > example.secret.js
+      - name: Wait for Netlify Deploy
+        uses: probablyup/wait-for-netlify-action@3.2.0
+        id: waitForDeployment
+        with:
+          site_id: '08b6b283-7ce6-4a20-bbce-5900e4f90c14'
+        env:
+          NETLIFY_TOKEN: ${{ secrets.NETLIFY_TOKEN }}
       - name: run the actual tests
         run: bash /project/entrypoint.sh
