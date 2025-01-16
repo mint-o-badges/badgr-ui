@@ -32,7 +32,7 @@ jobs:
           ref: 'feat/automate-e2e'
       - run: mv !assets /project/
         shell: bash
-      - run mv assets/* /project/assets
+      - run: mv assets/* /project/assets
       - run: cd /project
       - name: print tree
         run: ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'
