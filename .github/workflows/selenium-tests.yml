@@ -10,7 +10,7 @@ jobs:
     name: E2E-tests
     runs-on: ubuntu-latest
     container:
-      image: node:19
+      image: node:23
       volumes:
         - assets:/assets
         - download:/tmp
@@ -41,6 +41,9 @@ jobs:
         run: cat config.js
       - name: set secrets
         run: printf "export const username = '${{ secrets.STAGING_SELENIUM_USERNAME }}';\nexport const password = '${{ secrets.STAGING_SELENIUM_PASSWORD }}';\n" > secret.js
+      - run: npm ci
+      - run: apt-get update
+      - run: apt-get install ghostscript graphicsmagick -y
       - name: Wait for Netlify Deploy
         uses: probablyup/wait-for-netlify-action@3.2.0
         id: waitForDeployment
@@ -49,4 +52,4 @@ jobs:
         env:
           NETLIFY_TOKEN: ${{ secrets.NETLIFY_TOKEN }}
       - name: run the actual tests
-        run: bash ./entrypoint.sh
+        run: BROWSER=chrome SELENIUM=chrome npm run test
