@@ -7,8 +7,8 @@
             <span class="tw-italic tw-text-[18px] tw-leading-[21.6px] tw-text-oebblack tw-mt-2">Du hast bisher keine
                 QR-Code-Vergabe erstellt</span>
         </div>
-        <oeb-button class="oeb-button tw-whitespace-nowrap !tw-p-0" variant="secondary" [routerLink]="routerLinkText"
-            text="Badge über QR Code vergeben"></oeb-button>
+        <oeb-button class="oeb-button tw-whitespace-nowrap !tw-p-0" variant="secondary"
+            text="Badge über QR Code vergeben" (click)="routeToQrAward(badgeClass, issuer)"></oeb-button>
     </div>
 
     <ng-template #showAwards>
@@ -38,8 +38,8 @@
                             </div>
                         </button>
                         <brn-accordion-content *ngIf="award.request_count > 0" hlm class="tw-text-white">
-                            <qrcodes-datatable caption="" [qrCodeId]="award.slug" [issuerSlug]="issuerSlug"
-                                [badgeSlug]="badgeClassSlug" (deletedQRAward)="deleteQRAward($event)"
+                            <qrcodes-datatable caption="" [qrCodeId]="award.slug" [issuerSlug]="issuer.slug"
+                                [badgeSlug]="badgeClass.slug" (deletedQRAward)="deleteQRAward($event)"
                                 (qrBadgeAward)="onQrBadgeAward()"></qrcodes-datatable>
                         </brn-accordion-content>
 

@@ -81,6 +81,11 @@ export class Issuer extends ManagedEntity<ApiIssuer, IssuerRef> {
 	get city(): string {
 		return this.apiModel.city;
 	}
+
+	get intendedUseVerified(): boolean {
+		return this.apiModel.intendedUseVerified;
+	}
+
 	get lat(): number {
 		return this.apiModel.lat;
 	}
@@ -97,6 +102,13 @@ export class Issuer extends ManagedEntity<ApiIssuer, IssuerRef> {
 		return badges.loaded
 			? badges.entities.filter((b) => b.issuerSlug === this.slug).length
 			: this.apiModel.badgeClassCount;
+	}
+
+	get ownerAcceptedTos(): boolean {
+		const owners = this.staff.entities.filter((staff) => staff.isOwner);
+		return owners.some(owner => 
+			owner.apiModel.user.agreed_terms_version === owner.apiModel.user.latest_terms_version
+		);		
 	}
 
 	get learningPathCount(): number {

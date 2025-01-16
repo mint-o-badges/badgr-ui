@@ -17,11 +17,14 @@ import { sortUnique } from '../badge-catalog/badge-catalog.component';
 import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
 import { RecipientBadgeApiService } from '../../../recipient/services/recipient-badges-api.service';
 import { ApiRecipientBadgeInstance } from '../../../recipient/models/recipient-badge-api.model';
+import { appearAnimation } from '../../../common/animations/animations';
+import { FormControl } from '@angular/forms';
 
 @Component({
 	selector: 'app-learningpaths-catalog',
 	templateUrl: './learningpath-catalog.component.html',
 	styleUrls: ['../badge-catalog/badge-catalog.component.css'],
+	animations: [appearAnimation],
 })
 export class LearningPathsCatalogComponent extends BaseRoutableComponent implements OnInit {
 	learningPathsLoaded: Promise<unknown>;
@@ -30,14 +33,17 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 	order = 'asc';
 	learningPathResults: LearningPath[] = null;
 	learningPathResultsByIssuer: MatchingLearningPathIssuer[] = [];
-    learningPaths: LearningPath[] = [];
+	learningPaths: LearningPath[] = [];
 	issuerResults: Issuer[] = [];
+	issuersWithLps: string[] = [];
 	baseUrl: string;
 	tags: string[] = [];
 	issuers: Issuer[] = null;
 	selectedTag: string = null;
 	loggedIn = false;
 	userBadges: string[] = [];
+	plural = {};
+	sortControl = new FormControl('name_asc');
 
 	get theme() {
 		return this.configService.theme;
@@ -78,20 +84,27 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 		private translate: TranslateService,
 	) {
 		super(router, route);
-        this.learningPathsLoaded = this.loadLearningPaths();
+		this.learningPathsLoaded = this.loadLearningPaths();
 		this.issuersLoaded = this.loadIssuers();
 		this.baseUrl = this.configService.apiConfig.baseUrl;
-    }
+	}
 
 	ngOnInit(): void {
 		this.loggedIn = this.sessionService.isLoggedIn;
 
-		if(this.loggedIn){
+		if (this.loggedIn) {
 			this.userBadgesLoaded = this.recipientBadgeApiService.listRecipientBadges().then((badges) => {
 				const badgeClassIds = badges.map((b) => b.json.badge.id);
 				this.userBadges = badgeClassIds;
-			})				
+			});
 		}
+
+		this.prepareTexts();
+
+		// Translate: to update predefined text when language is changed
+		this.translate.onLangChange.subscribe((event) => {
+			this.prepareTexts();
+		});
 	}
 
 	private learningPathMatcher(inputPattern: string): (lp) => boolean {
@@ -103,6 +116,26 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 
 	private learningPathTagMatcher(tag: string) {
 		return (badge) => (tag ? badge.tags.includes(tag) : true);
+	}
+
+	prepareTexts() {
+		this.plural = {
+			issuer: {
+				'=0': this.translate.instant('Issuer.noInstitutions'),
+				'=1': '1 Institution',
+				other: '# ' + this.translate.instant('General.institutions'),
+			},
+			issuerText: {
+				'=0': this.translate.instant('Issuer.institutionsIssued'),
+				'=1': '1 ' + this.translate.instant('Issuer.institutionIssued'),
+				other: '# ' + this.translate.instant('Issuer.institutionsIssued'),
+			},
+			learningPath: {
+				'=0': this.translate.instant('General.noLearningPaths'),
+				'=1': '1 ' + this.translate.instant('General.learningPath'),
+				other: '# ' + this.translate.instant('General.learningPaths'),
+			},
+		};
 	}
 
 	changeOrder(order) {
@@ -128,13 +161,12 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 		return `${userBadgeCount}/${totalBadges}`;
 	}
 
-	calculateLearningPathStatus(lp: LearningPath): { 'match' : string} | { 'progress' : number} {
-		if(lp.progress !=  null){
-			const percentCompleted = lp.progress
-			return {'progress' : percentCompleted }
-		}
-		else{
-			return {'match' : this.calculateMatch(lp)}
+	calculateLearningPathStatus(lp: LearningPath): { match: string } | { progress: number } {
+		if (lp.progress != null) {
+			const percentCompleted = lp.progress;
+			return { progress: percentCompleted };
+		} else {
+			return { match: this.calculateMatch(lp) };
 		}
 	}
 
@@ -143,7 +175,10 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 	}
 
 	calculateStudyLoad(lp: LearningPath): number {
-		const totalStudyLoad = lp.badges.reduce((acc, b) => acc + b.badge.extensions['extensions:StudyLoadExtension'].StudyLoad, 0);
+		const totalStudyLoad = lp.badges.reduce(
+			(acc, b) => acc + b.badge.extensions['extensions:StudyLoadExtension'].StudyLoad,
+			0,
+		);
 		return totalStudyLoad;
 	}
 
@@ -206,25 +241,28 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 		this.updateResults();
 	}
 
-    async loadLearningPaths() { 
-        return new Promise(async (resolve, reject) => {
-            this.learningPathService.allPublicLearningPaths$.subscribe(
+	async loadLearningPaths() {
+		return new Promise(async (resolve, reject) => {
+			this.learningPathService.allPublicLearningPaths$.subscribe(
 				(lps) => {
-					this.learningPaths = lps
+					this.learningPaths = lps.filter((lp) => lp.issuerOwnerAcceptedTos);
 					lps.forEach((lp) => {
 						lp.tags.forEach((tag) => {
 							this.tags.push(tag);
-						})
+						});
+						this.issuersWithLps = this.issuersWithLps.concat(lp.issuer_id);
 					});
 					this.tags = sortUnique(this.tags);
+					this.issuersWithLps = sortUnique(this.issuersWithLps);
 					this.updateResults();
 					resolve(lps);
 				},
 				(error) => {
 					this.messageService.reportAndThrowError('Failed to load learningPaths', error);
 				},
-        )})
-    }
+			);
+		});
+	}
 }
 
 class MatchingAlgorithm {
@@ -241,8 +279,7 @@ class MatchingLearningPathIssuer {
 		public issuerName: string,
 		public learningpath,
 		public learningpaths: LearningPath[] = [],
-	) {
-	}
+	) {}
 
 	async addLp(learningpath) {
 		if (learningpath.issuer_name === this.issuerName) {

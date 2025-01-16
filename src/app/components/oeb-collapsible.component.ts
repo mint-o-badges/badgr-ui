@@ -31,7 +31,7 @@ import { NgIf, NgFor, NgTemplateOutlet, NgClass } from '@angular/common';
   ],
   template: `    
         <brn-collapsible class="tw-flex tw-flex-col" #collapsible>
-            <button brnCollapsibleTrigger type="button" hlmBtn variant="ghost" size="sm" class="tw-p-0" (click)="toggleOpen()">
+            <button [attr.id]="id" brnCollapsibleTrigger type="button" hlmBtn variant="ghost" size="sm" class="tw-p-0" (click)="toggleOpen()">
             <ngTemplateOutlet *ngIf="isTemplate; else stringTrigger" [ngTemplateOutlet]="trigger"></ngTemplateOutlet>
             <ng-template #stringTrigger>
                 <button class="tw-flex tw-w-full !tw-justify-between tw-items-center">
@@ -53,6 +53,7 @@ import { NgIf, NgFor, NgTemplateOutlet, NgClass } from '@angular/common';
 export class OebCollapsibleComponent implements AfterViewInit {
     @Input() trigger: any;
     @Input() defaultOpen: boolean = false;
+    @Input() id: string = null;
     
     open = false;
 

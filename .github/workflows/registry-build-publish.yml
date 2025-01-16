@@ -27,6 +27,8 @@ jobs:
         uses: actions/setup-node@master
         with:
           node-version: ${{ matrix.node-version }}
+      - name: Verify npm cache
+        run: npm cache verify  
       - name: 📲 Install dependencies
         run: |
           npm install
@@ -58,7 +60,7 @@ jobs:
 
       - name: 📋 Extract metadata (tags, labels) for Docker
         id: meta
-        uses: docker/metadata-action@v5.5.1
+        uses: docker/metadata-action@v5.6.1
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           flavor: |

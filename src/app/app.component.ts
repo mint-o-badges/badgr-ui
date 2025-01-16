@@ -300,11 +300,11 @@ export class AppComponent implements OnInit, AfterViewInit {
 		);
 		this.shouldShowIssuersTab();
 
-		this.translate.get('General.institutions').subscribe((translatedText: string) => {
+		this.translate.get('General.institutionsNav').subscribe((translatedText: string) => {
             this.aboutBadgesMenuItems[2].title = translatedText;
         });
 
-		this.translate.get('LearningPath.learningpaths').subscribe((translatedText: string) => {
+		this.translate.get('LearningPath.learningpathsNav').subscribe((translatedText: string) => {
 			this.aboutBadgesMenuItems[3].title = translatedText;
 		});
 

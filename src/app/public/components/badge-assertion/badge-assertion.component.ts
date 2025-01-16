@@ -22,10 +22,10 @@ import { PageConfig } from '../../../common/components/badge-detail/badge-detail
 
 @Component({
 	template: `<verify-badge-dialog
-					#verifyBadgeDialog
-					(verifiedBadgeAssertion)="onVerifiedBadgeAssertion($event)"
-				></verify-badge-dialog>
-	<bg-badgedetail [config]="config" [awaitPromises]="[assertionIdParam]"></bg-badgedetail>`,
+			#verifyBadgeDialog
+			(verifiedBadgeAssertion)="onVerifiedBadgeAssertion($event)"
+		></verify-badge-dialog>
+		<bg-badgedetail [config]="config" [awaitPromises]="[assertionIdParam]"></bg-badgedetail>`,
 })
 export class PublicBadgeAssertionComponent {
 	constructor(
@@ -57,8 +57,7 @@ export class PublicBadgeAssertionComponent {
 
 	awardedToDisplayName: string;
 
-	config: PageConfig 
-
+	config: PageConfig;
 
 	routerLinkForUrl = routerLinkForUrl;
 
@@ -169,30 +168,64 @@ export class PublicBadgeAssertionComponent {
 					headerButton: {
 						title: 'Verify Badge',
 						action: () => this.verifyBadge(),
-
+					},
+					qrCodeButton: {
+						show: false,
 					},
 					menuitems: [
 						{
 							title: 'Download JSON',
 							icon: 'lucideDownload',
-							action: () => window.open(this.rawJsonUrl),
-
+							action: () => {
+								fetch(this.rawJsonUrl)
+									.then((response) => response.blob())
+									.then((blob) => {
+										const link = document.createElement('a');
+										const url = URL.createObjectURL(blob);
+										link.href = url;
+										link.download = 'badge-JSON.json';
+										document.body.appendChild(link);
+										link.click();
+										document.body.removeChild(link);
+										URL.revokeObjectURL(url);
+									})
+									.catch((error) => console.error('Download failed:', error));
+							},
 						},
 						{
 							title: 'Download baked Image',
 							icon: 'lucideDownload',
-							action: () => window.open(this.rawBakedUrl),
+							action: () => {
+								fetch(this.rawBakedUrl)
+									.then((response) => response.blob())
+									.then((blob) => {
+										const link = document.createElement('a');
+										const url = URL.createObjectURL(blob);
+										const urlParts = this.rawBakedUrl.split('/');
+										const inferredFileName = urlParts[urlParts.length - 1] || 'downloadedFile';
+										link.href = url;
+										link.download = inferredFileName;
+										document.body.appendChild(link);
+										link.click();
+										document.body.removeChild(link);
+										URL.revokeObjectURL(url);
+									})
+									.catch((error) => console.error('Download failed:', error));
+							},
 						},
 						{
 							title: 'View Badge',
 							icon: 'lucideBadge',
-							routerLink: routerLinkForUrl(assertion.badge.hostedUrl || assertion.badge.id)
-						}
+							routerLink: routerLinkForUrl(assertion.badge.hostedUrl || assertion.badge.id),
+						},
 					],
 					badgeDescription: assertion.badge.description,
 					issuerSlug: assertion.badge.issuer['slug'],
 					slug: assertion.badge.id,
-					category: assertion.badge['extensions:CategoryExtension'].Category === 'competency' ? 'Kompetenz- Badge' : 'Teilnahme- Badge',
+					category:
+						assertion.badge['extensions:CategoryExtension'].Category === 'competency'
+							? 'Kompetenz- Badge'
+							: 'Teilnahme- Badge',
 					tags: assertion.badge.tags,
 					issuerName: assertion.badge.issuer.name,
 					issuerImagePlacholderUrl: this.issuerImagePlacholderUrl,
@@ -201,7 +234,8 @@ export class PublicBadgeAssertionComponent {
 					badgeFailedImageUrl: this.badgeFailedImageUrl,
 					badgeImage: assertion.badge.image,
 					competencies: assertion.badge['extensions:CompetencyExtension'],
-				}
+					license: assertion.badge['extensions:LicenseExtension'] ? true : false
+				};
 				if (assertion.revoked) {
 					if (assertion.revocationReason) {
 						this.messageService.reportFatalError('Assertion has been revoked:', assertion.revocationReason);

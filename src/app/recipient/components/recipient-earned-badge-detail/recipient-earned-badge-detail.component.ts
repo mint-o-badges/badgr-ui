@@ -27,7 +27,7 @@ import { CompetencyType, PageConfig } from '../../../common/components/badge-det
 
 @Component({
 	selector: 'recipient-earned-badge-detail',
-	template: `<bg-badgedetail [config]="config" [awaitPromises]="[badgesLoaded]"></bg-badgedetail>`,
+	template: `<bg-badgedetail [config]="config" [awaitPromises]="[badgesLoaded]" [badge]="badge"></bg-badgedetail>`,
 })
 export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	readonly issuerImagePlacholderUrl = preloadImageURL(
@@ -100,6 +100,9 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 					// 	title: 'Badge teilen',
 					// 	action: () => this.shareBadge(),
 					// },
+					qrCodeButton: {
+						show: false
+					},
 					menuitems: [
 						{
 							title: 'Verifizieren',
@@ -122,7 +125,7 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 					slug: this.badgeSlug,
 					issuedOn: this.badge.issueDate,
 					issuedTo: this.badge.recipientEmail,
-					category: this.category['Category'] === 'competency' ? 'Kompetenz- Badge' : 'Teilnahme- Badge',
+					category: this.category['Category'] === 'competency' ? 'Kompetenz-Badge' : 'Teilnahme-Badge',
 					duration: this.badge.getExtension('extensions:StudyLoadExtension', {}).StudyLoad,
 					tags: this.badge.badgeClass.tags,
 					issuerName: this.badge.badgeClass.issuer.name,
@@ -132,8 +135,9 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 					badgeFailedImageUrl: this.badgeFailedImageUrl,
 					badgeImage: this.badge.badgeClass.image,
 					competencies: this.competencies as CompetencyType[],
+					license: this.badge.getExtension('extensions:LicenseExtension', {}) ? true : false,
 					shareButton: true,
-					id: this.badge.badgeClass.id.split('/')[5],
+					badgeInstanceSlug: this.badgeSlug,
 				};
 			})
 			.catch((e) => this.messageService.reportAndThrowError('Failed to load your badges', e));
