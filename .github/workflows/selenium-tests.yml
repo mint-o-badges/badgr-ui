@@ -52,4 +52,8 @@ jobs:
         env:
           NETLIFY_TOKEN: ${{ secrets.NETLIFY_TOKEN }}
       - name: run the actual tests
-        run: BROWSER=chrome SELENIUM=chrome npm run test
+        run: npm run test
+        env:
+          BROWSER: chrome
+            # TODO: ?
+            #SELENIUM: chrome
