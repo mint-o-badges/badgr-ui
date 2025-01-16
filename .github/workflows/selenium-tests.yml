@@ -32,10 +32,16 @@ jobs:
           ref: 'feat/automate-e2e'
       - name: print helpful information
         run: pwd && ls
+      - name: print to be moved things
+        run: find ./ -maxdepth 1 -mindepth 1 -not -name 'assets'
       - name: move all except assets
         run: find ./ -maxdepth 1 -mindepth 1 -not -name 'assets' -exec mv '{}' /project \;
       - run: mv assets/* /project/assets
+      - name: print helpful information 2
+        run: ls && ls /project
       - run: cd /project
+      - name: print helpful information 3
+        run: pwd && ls
       - name: print tree
         run: ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'
       - uses: actions/setup-node@v3
