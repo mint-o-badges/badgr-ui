@@ -14,6 +14,7 @@ import { PageConfig } from '../../../common/components/badge-detail/badge-detail
 import { LearningPath } from '../../../issuer/models/learningpath.model';
 import { SessionService } from '../../../common/services/session.service';
 import { RecipientBadgeApiService } from '../../../recipient/services/recipient-badges-api.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	template: `<bg-badgedetail [config]="config" [awaitPromises]="[badgeClass]">
@@ -36,7 +37,7 @@ import { RecipientBadgeApiService } from '../../../recipient/services/recipient-
 									[completed]="checkCompleted(lp)"
 								></bg-learningpathcard>
 							</div>
-						</div>	
+						</div>
 					</ng-template>
 				</bg-badgedetail>`,
 })
@@ -67,6 +68,7 @@ export class PublicBadgeClassComponent {
 		private title: Title,
 		private sessionService: SessionService,
 		private recipientBadgeApiService: RecipientBadgeApiService,
+		private translate: TranslateService
 	) {
 		title.setTitle(`Badge Class - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 
@@ -82,7 +84,7 @@ export class PublicBadgeClassComponent {
 					badgeDescription: badge.description,
 					issuerSlug: badge.issuer['slug'],
 					slug: badge.id,
-					category: badge['extensions:CategoryExtension'].Category === 'competency' ? 'Kompetenz-Badge' : 'Teilnahme-Badge',
+					category: this.translate.instant(`Badge.categories.${badge['extensions:CategoryExtension']?.Category || 'participation'}`),
 					duration: badge['extensions:StudyLoadExtension'].StudyLoad,
 					tags: badge.tags,
 					issuerName: badge.issuer.name,

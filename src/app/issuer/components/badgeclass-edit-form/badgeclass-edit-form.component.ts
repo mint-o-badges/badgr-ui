@@ -348,7 +348,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		years: this.translate.instant('General.years'),
 	};
 
-	categoryOptions: { [key in BadgeClassCategory]: string } = {
+	categoryOptions: Partial<{ [key in BadgeClassCategory]: string }> = {
 		competency: this.translate.instant('Badge.competency'),
 		participation: this.translate.instant('Badge.participation'),
 	};
@@ -464,7 +464,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			competencies: badgeClass.extension['extensions:CompetencyExtension'] ? competencies : [],
 			alignments: this.badgeClass.alignments.map((alignment) => ({
 				target_name: alignment.target_name,
-				target_url: alignment.target_url, 
+				target_url: alignment.target_url,
 				target_description: alignment.target_description,
 				target_framework: alignment.target_framework,
 				target_code: alignment.target_code,
@@ -845,25 +845,25 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	// Validator for competencies, displays error messages for all compentencies
 	hoursAndMinutesValidatorCompetencies(): ValidationErrors | null {
 		if (!this.badgeClassForm) return null;
-	
+
 		const allCompetencies = [
 			...this.badgeClassForm.value.competencies,
 			...this.badgeClassForm.value.aiCompetencies.filter((comp) => comp.selected),
 		];
-	
+
 		// Suche nach dem ersten fehlerhaften Kompetenzfeld
 		const invalidCompetencyIndex = allCompetencies.findIndex(
 			(competence) => Number(competence.hours) === 0 && Number(competence.minutes) === 0
 		);
-	
+
 		if (invalidCompetencyIndex !== -1) {
 			return { competenceHoursMinutesZero: true, invalidIndex: invalidCompetencyIndex };
 		}
-	
+
 		return null;
 	}
-	
-	
+
+
 	// Validator for badge Duration, is displayed on the respective input
 	hoursAndMinutesValidatorBadgeDuration () : ValidationErrors | null {
 		if (!this.badgeClassForm) return null;
@@ -873,9 +873,9 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		if (hours === 0 && minutes === 0) {
 		  return { hoursAndMinutesError: true};
 		}
-	   
+
 		return null;
-	}  
+	}
 
 	async onSubmit() {
 		try {
@@ -944,7 +944,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 					const competencySection = document.getElementById('fillWithCompetencies');
 					if (competencySection) {
 						competencySection.scrollIntoView({ behavior: 'smooth' });
-						competencySection.focus(); 
+						competencySection.focus();
 					}
 				}
 				return;

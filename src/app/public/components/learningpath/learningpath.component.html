@@ -17,14 +17,6 @@
 							<span>{{ minutesTotal | hourPipe }} {{ 'LearningPath.hours' | translate }}</span>
 						</div>
 					</div>
-					<form *ngIf="sessionService.isLoggedIn" (ngSubmit)="participate()" novalidate>
-						<oeb-button
-							*ngIf="!learningPath.requested && learningPath.progress / minutesTotal != 1"
-							[variant]="participantButtonVariant"
-							type="submit"
-							[text]="participationButtonText"
-						></oeb-button>
-					</form>
 					<oeb-button
 						*ngIf="
 							learningPath.progress &&

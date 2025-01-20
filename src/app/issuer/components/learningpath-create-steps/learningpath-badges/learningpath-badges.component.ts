@@ -27,7 +27,7 @@ export class LearningPathBadgesComponent implements OnInit {
 	set learningPath (lp: ApiLearningPath) {
 		// this.initFormFromExisting(lp);
 	}
-	
+
 	constructor(
 		private translate: TranslateService,
 		protected badgeClassService: BadgeClassManager,
@@ -108,6 +108,7 @@ export class LearningPathBadgesComponent implements OnInit {
 	categoryOptions: { [key in BadgeClassCategory | 'noCategory']: string } = {
 		competency: '',
 		participation: '',
+		learningpath: '',
 		noCategory: ''
 	};
 
@@ -287,6 +288,10 @@ export class LearningPathBadgesComponent implements OnInit {
 
 		this.translate.get('Badge.participation').subscribe((translatedText: string) => {
 			this.categoryOptions.participation = translatedText
+		})
+
+		this.translate.get('Badge.learningpath').subscribe((translatedText: string) => {
+			this.categoryOptions.learningpath = translatedText
 		})
 
 		this.translate.get('Badge.noCategory').subscribe((translatedText: string) => {

@@ -22,9 +22,9 @@ interface LearningPathBadgeInput {
 })
 
 export class LearningPathDetailsComponent implements OnInit, AfterViewInit {
-	
+
 	@ViewChild(StepperComponent) stepper: StepperComponent;
-	
+
 	@ViewChild('badgeStudio')
 	badgeStudio: BadgeStudioComponent;
 
@@ -57,6 +57,7 @@ export class LearningPathDetailsComponent implements OnInit, AfterViewInit {
     this.lpDetailsForm.setValue({
       name: lp.name,
       description: lp.description,
+			badge_category: 'learningpath',
       badge_image: badge.imageFrame ? lp.participationBadge_image : null,
       badge_customImage: !badge.imageFrame ? lp.participationBadge_image : null
     });
@@ -75,10 +76,10 @@ export class LearningPathDetailsComponent implements OnInit, AfterViewInit {
 	// chooseFromExistingIcons = this.translate.instant('RecBadge.chooseFromExistingIcons');
 	// selectFromMyFiles = this.translate.instant('RecBadge.selectFromMyFiles');
 
-	useOurEditor: string 
+	useOurEditor: string
 	imageSublabel: string
 	useOwnVisual: string
-  	uploadOwnVisual: string 
+  	uploadOwnVisual: string
 	uploadOwnDesign: string
 	chooseFromExistingIcons: string
 	selectFromMyFiles: string
@@ -92,11 +93,12 @@ export class LearningPathDetailsComponent implements OnInit, AfterViewInit {
 		.addControl('name', '', [Validators.required, Validators.maxLength(60)])
 		.addControl('description', '', [Validators.required, Validators.maxLength(700)])
 		.addControl('badge_image', '')
+		.addControl('badge_category', 'learningpath')
 		.addControl('badge_customImage', '');
 
   ngOnInit(): void {
 	this.initFormFromExisting(
-		this.learningPathBadgeData.learningPath, 
+		this.learningPathBadgeData.learningPath,
 		this.learningPathBadgeData.lpBadge
 	);
 	this.detailsForm = this.rootFormGroup.control
