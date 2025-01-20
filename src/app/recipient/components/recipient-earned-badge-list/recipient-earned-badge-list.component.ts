@@ -167,6 +167,9 @@ export class RecipientEarnedBadgeListComponent
 			// force a refresh of the userProfileSet now that we are authenticated
 			this.profileLoaded = profileManager.userProfileSet.updateList().then((p) => {
 				this.profile = profileManager.userProfile;
+				if (profileManager.userProfile.agreedTermsVersion !== profileManager.userProfile.latestTermsVersion) {
+					dialogService.newTermsDialog.openDialog();
+				}
 			});
 		}
 
@@ -383,17 +386,17 @@ export class RecipientEarnedBadgeListComponent
 		badges.forEach((badge) => {
 			let competencies = badge.getExtension('extensions:CompetencyExtension', [{}]);
 			competencies.forEach((competency) => {
-				if (groupedCompetencies[competency['framework_identifier']]) {
-					groupedCompetencies[competency['framework_identifier']].studyLoad += competency.studyLoad;
-					if (groupedCompetencies[competency['framework_identifier']].lastReceived < badge.issueDate) {
-						groupedCompetencies[competency['framework_identifier']].lastReceived = badge.issueDate;
+				const key = competency['framework_identifier'] || competency.name + String(competency.studyLoad);
+				if (groupedCompetencies[key]) {
+					groupedCompetencies[key].studyLoad += competency.studyLoad;
+					if (groupedCompetencies[key].lastReceived < badge.issueDate) {
+						groupedCompetencies[key].lastReceived = badge.issueDate;
 					}
 				} else {
-					groupedCompetencies[competency['framework_identifier']] = Object.create(competency);
-					groupedCompetencies[competency['framework_identifier']].lastReceived = badge.issueDate;
+					groupedCompetencies[key] = { ...competency };
+					groupedCompetencies[key].lastReceived = badge.issueDate;
 				}
 				this.totalStudyTime += competency.studyLoad;
-				console.log(this.totalStudyTime)
 			});
 		});
 
@@ -402,18 +405,19 @@ export class RecipientEarnedBadgeListComponent
 			.forEach((badge) => {
 				let competencies = badge.getExtension('extensions:CompetencyExtension', [{}]);
 				competencies.forEach((competency) => {
-					if (newGroupedCompetencies[competency['framework_identifier']]) {
-						newGroupedCompetencies[competency['framework_identifier']].studyLoad += competency.studyLoad;
-						if (newGroupedCompetencies[competency['framework_identifier']].lastReceived < badge.issueDate) {
-							newGroupedCompetencies[competency['framework_identifier']].lastReceived = badge.issueDate;
+					const key = competency['framework_identifier'] || competency.name + String(competency.studyLoad);
+					if (newGroupedCompetencies[key]) {
+						newGroupedCompetencies[key].studyLoad += competency.studyLoad;
+						if (newGroupedCompetencies[key].lastReceived < badge.issueDate) {
+							newGroupedCompetencies[key].lastReceived = badge.issueDate;
 						}
 					} else {
-						newGroupedCompetencies[competency['framework_identifier']] = Object.create(competency);
-						newGroupedCompetencies[competency['framework_identifier']].lastReceived = badge.issueDate;
+						newGroupedCompetencies[key] = { ...competency };
+						newGroupedCompetencies[key].lastReceived = badge.issueDate;
 					}
 				});
 			});
-
+		
 		this.groupedUserCompetencies = Object.values(groupedCompetencies).sort((a, b) => {
 			return a.lastReceived.getTime() - b.lastReceived.getTime();
 		});

@@ -42,6 +42,8 @@ export interface ApiLearningPath {
     completed_at?: Date | null;
     created_at?: Date | null;
     requested?: Boolean;
+	issuerOwnerAcceptedTos?: boolean;
+
 }
 
 
