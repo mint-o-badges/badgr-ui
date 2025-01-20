@@ -159,10 +159,14 @@ export class PublicBadgeAssertionComponent {
 	}
 
 	private createLoadedRouteParam() {
-		return new LoadedRouteParam(this.injector.get(ActivatedRoute), 'assertionId', (paramValue) => {
-			this.assertionId = paramValue;
-			const service: PublicApiService = this.injector.get(PublicApiService);
-			return service.getBadgeAssertion(paramValue).then((assertion) => {
+		return new LoadedRouteParam(this.injector.get(ActivatedRoute), 'assertionId', async (paramValue) => {
+			try {
+				this.assertionId = paramValue;
+				const service: PublicApiService = this.injector.get(PublicApiService);
+
+				const assertion = await service.getBadgeAssertion(paramValue)
+				const lps = await service.getLearningPathsForBadgeClass(assertion.slug)
+				
 				this.config = {
 					badgeTitle: assertion.badge.name,
 					headerButton: {
@@ -234,22 +238,28 @@ export class PublicBadgeAssertionComponent {
 					badgeFailedImageUrl: this.badgeFailedImageUrl,
 					badgeImage: assertion.badge.image,
 					competencies: assertion.badge['extensions:CompetencyExtension'],
-					license: assertion.badge['extensions:LicenseExtension'] ? true : false
-				};
-				if (assertion.revoked) {
-					if (assertion.revocationReason) {
-						this.messageService.reportFatalError('Assertion has been revoked:', assertion.revocationReason);
-					} else {
-						this.messageService.reportFatalError('Assertion has been revoked.', '');
-					}
-				} else if (this.showDownload) {
-					this.openSaveDialog(assertion);
+					license: assertion.badge['extensions:LicenseExtension'] ? true : false,
+					learningPaths: lps
 				}
-				if (assertion['extensions:recipientProfile'] && assertion['extensions:recipientProfile'].name) {
-					this.awardedToDisplayName = assertion['extensions:recipientProfile'].name;
+			if (assertion.revoked) {
+				if (assertion.revocationReason) {
+					this.messageService.reportFatalError('Assertion has been revoked:', assertion.revocationReason);
+				} else {
+					this.messageService.reportFatalError('Assertion has been revoked.', '');
 				}
-				return assertion;
-			});
-		});
-	}
+			} else if (this.showDownload) {
+				this.openSaveDialog(assertion);
+			}
+			if (assertion['extensions:recipientProfile'] && assertion['extensions:recipientProfile'].name) {
+				this.awardedToDisplayName = assertion['extensions:recipientProfile'].name;
+			}
+			return assertion;
+			}
+			catch(err){
+				console.error("Failed to fetch assertion data", err)
+			}
+
+		})
+		
 }
+}	

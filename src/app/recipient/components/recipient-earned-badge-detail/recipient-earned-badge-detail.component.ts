@@ -146,8 +146,7 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 				};
 			})
 			.finally(() => {
-				console.log(this.badge.badgeClass)
-				this.learningPathsLoaded = this.learningPathApiService.getLearningPathsForBadgeClass(this.badge.badgeClass.id).then(lp => {
+				this.learningPathsLoaded = this.learningPathApiService.getLearningPathsForBadgeClass(this.badge.slug).then(lp => {
 					this.learningPaths = lp;
 					this.config.learningPaths = lp
 				})
