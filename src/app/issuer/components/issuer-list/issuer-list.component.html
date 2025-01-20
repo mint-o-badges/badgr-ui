@@ -86,10 +86,8 @@
 					</oeb-button>
 					<div *ngIf="issuerToBadgeInfo[issuer.issuerUrl]">
 						<oeb-button
-							[class.disabled]="!issuer.canCreateBadge"
 							class="tw-whitespace-nowrap tw-flex-grow"
 							[routerLink]="['/issuer/issuers/', issuer.slug]"
-							[disabled]="!issuer.currentUserStaffMember"
 							[text]="'Issuer.giveBadge' | translate"
 							width="full_width"
 							size="mediumText"
