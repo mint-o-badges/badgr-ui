@@ -4,9 +4,10 @@ import { BaseRoutableComponent } from '../../../common/pages/base-routable.compo
 
 
 @Component({
-	selector: 'app-terms',
-	templateUrl: './terms-of-service.component.html',
-	styleUrls: ['./terms-of-service.component.css'],
+    selector: 'app-terms',
+    templateUrl: './terms-of-service.component.html',
+    styleUrls: ['./terms-of-service.component.css'],
+    standalone: false
 })
 export class TermsComponent extends BaseRoutableComponent implements OnInit {
 	constructor(

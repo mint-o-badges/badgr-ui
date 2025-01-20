@@ -17,10 +17,11 @@ import { FormControl } from '@angular/forms';
 import { appearAnimation } from '../../../common/animations/animations';
 
 @Component({
-	selector: 'app-badge-catalog',
-	templateUrl: './badge-catalog.component.html',
-	styleUrls: ['./badge-catalog.component.css'],
-	animations: [appearAnimation],
+    selector: 'app-badge-catalog',
+    templateUrl: './badge-catalog.component.html',
+    styleUrls: ['./badge-catalog.component.css'],
+    animations: [appearAnimation],
+    standalone: false
 })
 export class BadgeCatalogComponent extends BaseRoutableComponent implements OnInit {
 	readonly issuerPlaceholderSrc = preloadImageURL('../../../../breakdown/static/images/placeholderavatar-issuer.svg');

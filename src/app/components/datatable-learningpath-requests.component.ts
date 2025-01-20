@@ -8,17 +8,16 @@ import { OebButtonComponent } from './oeb-button.component';
 import { ApiLearningPathRequest } from '../common/model/learningpath-api.model';
 
 @Component({
-	selector: 'learningpath-requests-datatable',
-	standalone: true,
-	imports: [
-		HlmTableModule,
-		HlmIconModule,
-		CommonModule,
+    selector: 'learningpath-requests-datatable',
+    imports: [
+        HlmTableModule,
+        HlmIconModule,
+        CommonModule,
         OebButtonComponent,
-		TranslateModule,
-		RouterModule
-        ],
-	template: `
+        TranslateModule,
+        RouterModule
+    ],
+    template: `
         <hlm-table
             [ngClass]="requests.length > 0 ? 'tw-border-green' : 'tw-border-darkgrey'"
             class="tw-rounded-t-[20px] tw-overflow-hidden tw-w-full tw-max-w-[100%] tw-bg-white tw-border-[1px] tw-border-solid">
@@ -51,7 +50,7 @@ import { ApiLearningPathRequest } from '../common/model/learningpath-api.model';
                 </hlm-th>
             </hlm-trow>
         </hlm-table>
-        `,
+        `
 })
 export class LearningPathRequestsDatatableComponent {
 	@Input() caption: string = "";

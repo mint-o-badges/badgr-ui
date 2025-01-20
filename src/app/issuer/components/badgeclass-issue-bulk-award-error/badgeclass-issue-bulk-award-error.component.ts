@@ -10,8 +10,9 @@ import { TransformedImportData, ViewState } from '../badgeclass-issue-bulk-award
 import { UrlValidator } from '../../../common/validators/url.validator';
 
 @Component({
-	selector: 'badgeclass-issue-bulk-award-error',
-	templateUrl: './badgeclass-issue-bulk-award-error.component.html',
+    selector: 'badgeclass-issue-bulk-award-error',
+    templateUrl: './badgeclass-issue-bulk-award-error.component.html',
+    standalone: false
 })
 export class BadgeclassIssueBulkAwardError extends BaseAuthenticatedRoutableComponent implements OnInit {
 	@Input() transformedImportData: TransformedImportData;

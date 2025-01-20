@@ -16,9 +16,10 @@ interface LearningPathBadgeInput {
 }
 
 @Component({
-  selector: 'learningpath-details',
-  templateUrl: './learningpath-details.component.html',
-  styleUrls: ['../../learningpath-edit-form/learningpath-edit-form.component.scss']
+    selector: 'learningpath-details',
+    templateUrl: './learningpath-details.component.html',
+    styleUrls: ['../../learningpath-edit-form/learningpath-edit-form.component.scss'],
+    standalone: false
 })
 
 export class LearningPathDetailsComponent implements OnInit, AfterViewInit {

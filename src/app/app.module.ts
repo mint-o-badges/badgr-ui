@@ -1,4 +1,4 @@
-import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { NgModule, inject, provideAppInitializer } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
@@ -155,12 +155,10 @@ export function HttpLoaderFactory(http: HttpClient) {
 	providers: [
 		RecipientBadgeApiService,
 		{ provide: RouteReuseStrategy, useClass: BadgrRouteReuseStrategy },
-		{
-			provide: APP_INITIALIZER,
-			useFactory: appInitializerFn,
-			multi: true,
-			deps: [AppConfigService],
-		},
+		provideAppInitializer(() => {
+        const initializerFn = (appInitializerFn)(inject(AppConfigService));
+        return initializerFn();
+      }),
 	],
 })
 export class AppModule {}

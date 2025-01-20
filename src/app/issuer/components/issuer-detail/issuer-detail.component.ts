@@ -22,8 +22,9 @@ import { LearningPathApiService } from '../../../common/services/learningpath-ap
 import { ApiLearningPath } from '../../../common/model/learningpath-api.model';
 
 @Component({
-	selector: 'issuer-detail',
-	templateUrl: './issuer-detail.component.html',
+    selector: 'issuer-detail',
+    templateUrl: './issuer-detail.component.html',
+    standalone: false
 })
 export class IssuerDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	readonly issuerImagePlaceHolderUrl = preloadImageURL(

@@ -9,9 +9,10 @@ import { fromEvent } from 'rxjs';
 import { map, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
-	selector: 'nounproject-dialog',
-	templateUrl: 'nounproject-dialog.component.html',
-	styleUrls: ['./nounproject-dialog.component.css'],
+    selector: 'nounproject-dialog',
+    templateUrl: 'nounproject-dialog.component.html',
+    styleUrls: ['./nounproject-dialog.component.css'],
+    standalone: false
 })
 export class NounprojectDialog extends BaseDialog implements AfterViewInit {
 	Array = Array;

@@ -34,8 +34,8 @@ import { HlmDialogService } from "../../../components/spartan/ui-dialog-helm/src
 import { inject } from '@angular/core';
 
 @Component({
-	selector: 'badgeclass-detail',
-	template: `
+    selector: 'badgeclass-detail',
+    template: `
 		<bg-badgedetail [config]="config" [awaitPromises]="[issuerLoaded, badgeClassLoaded]">
 			<qrcode-awards
 				(qrBadgeAward)="onQrBadgeAward()"
@@ -53,6 +53,7 @@ import { inject } from '@angular/core';
 			></issuer-detail-datatable>
 		</bg-badgedetail>
 	`,
+    standalone: false
 })
 export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	readonly badgeFailedImageUrl = '../../../../breakdown/static/images/badge-failed.svg';

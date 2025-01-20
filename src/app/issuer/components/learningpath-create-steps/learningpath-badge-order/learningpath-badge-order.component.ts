@@ -20,8 +20,9 @@ import { BadgeClass } from '../../../../issuer/models/badgeclass.model';
 @Component({
     selector: 'learningpath-badge-order',
     templateUrl: './learningpath-badge-order.component.html',
-    styleUrls: ['../../learningpath-edit-form/learningpath-edit-form.component.scss']
-  })
+    styleUrls: ['../../learningpath-edit-form/learningpath-edit-form.component.scss'],
+    standalone: false
+})
   export class LearningPathBadgeOrderComponent implements OnInit {
     constructor(
 		protected badgeClassService: BadgeClassManager,

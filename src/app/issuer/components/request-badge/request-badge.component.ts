@@ -15,6 +15,7 @@ import { EmailValidator } from '../../../common/validators/email.validator';
 @Component({
     selector: 'request-badge',
     templateUrl: './request-badge.component.html',
+    standalone: false
 })
 
 export class RequestBadgeComponent extends BaseRoutableComponent{

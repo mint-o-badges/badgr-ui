@@ -9,11 +9,10 @@ import { listVariants } from './hlm-tabs-list.component';
 import { buttonVariants } from '../../../ui-button-helm/src/lib/hlm-button.directive';
 
 @Component({
-	selector: 'hlm-paginated-tabs-list',
-	standalone: true,
-	imports: [CdkObserveContent, HlmIconComponent],
-	providers: [provideIcons({ lucideChevronRight, lucideChevronLeft })],
-	template: `
+    selector: 'hlm-paginated-tabs-list',
+    imports: [CdkObserveContent, HlmIconComponent],
+    providers: [provideIcons({ lucideChevronRight, lucideChevronLeft })],
+    template: `
 		<button
 			#previousPaginator
 			data-pagination="previous"
@@ -56,9 +55,9 @@ import { buttonVariants } from '../../../ui-button-helm/src/lib/hlm-button.direc
 			<hlm-icon size="base" name="lucideChevronRight" />
 		</button>
 	`,
-	host: {
-		'[class]': '_computedClass()',
-	},
+    host: {
+        '[class]': '_computedClass()',
+    }
 })
 export class HlmTabsPaginatedListComponent extends BrnTabsPaginatedListDirective {
 	@ContentChildren(BrnTabsTriggerDirective, { descendants: false })

@@ -6,14 +6,13 @@ import { CommonDialogsService } from '../services/common-dialogs.service';
 import { CustomValidatorMessages, messagesForValidationError } from './formfield-text';
 
 @Component({
-	selector: 'bg-formfield-select',
-
-	host: {
-		class: 'forminput',
-		'[class.forminput-is-error]': 'isErrorState',
-		'[class.forminput-locked]': 'isLockedState',
-	},
-	template: `
+    selector: 'bg-formfield-select',
+    host: {
+        class: 'forminput',
+        '[class.forminput-is-error]': 'isErrorState',
+        '[class.forminput-locked]': 'isLockedState',
+    },
+    template: `
 		<label class="forminput-x-label" [attr.for]="inputName" *ngIf="label || includeLabelAsWrapper">
 			{{ label }}
 			<span *ngIf="formFieldAside">{{ formFieldAside }}</span>
@@ -41,6 +40,7 @@ import { CustomValidatorMessages, messagesForValidationError } from './formfield
 
 		<p class="forminput-x-error" *ngIf="isErrorState">{{ errorMessageForDisplay }}</p>
 	`,
+    standalone: false
 })
 export class FormFieldSelect implements OnChanges, AfterViewInit {
 	@Input() control: FormControl;

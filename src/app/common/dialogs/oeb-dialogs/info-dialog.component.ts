@@ -12,11 +12,10 @@ import { TranslateModule } from '@ngx-translate/core';
 
 
 @Component({
-	selector: 'oeb-info-dialog',
-	standalone: true,
-	imports: [OebDialogComponent, OebButtonComponent, HlmPDirective, HlmH3Directive, HlmIconComponent, NgIf, TranslateModule],
-	providers: [TranslateService, provideIcons({ lucideInfo })],
-	template: `
+    selector: 'oeb-info-dialog',
+    imports: [OebDialogComponent, OebButtonComponent, HlmPDirective, HlmH3Directive, HlmIconComponent, NgIf, TranslateModule],
+    providers: [TranslateService, provideIcons({ lucideInfo })],
+    template: `
 		<oeb-dialog [variant]="variant" class="tw-text-center tw-text-oebblack">
 			<div class="tw-flex tw-justify-center">
 				<div class="oeb-icon-circle tw-my-4">
@@ -48,7 +47,7 @@ import { TranslateModule } from '@ngx-translate/core';
 				</div>
 			</ng-template>
 		</oeb-dialog>
-	`,
+	`
 })
 export class InfoDialogComponent {
 	// @HostBinding('class') private readonly _class: string = 'tw-bg-red tw-bg-red';

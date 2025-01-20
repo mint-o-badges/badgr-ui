@@ -8,17 +8,17 @@ import { NounProjectIcon } from '../model/nounproject.model';
 import { MessageService } from '../services/message.service';
 
 @Component({
-	selector: 'bg-formfield-image',
-	host: {
-		'(drag)': 'stopEvent($event)',
-		'(dragstart)': 'stopEvent($event)',
-		'(dragover)': 'dragStart($event)',
-		'(dragenter)': 'dragStart($event)',
-		'(dragleave)': 'dragStop($event)',
-		'(dragend)': 'dragStop($event)',
-		'(drop)': 'drop($event)',
-	},
-	template: `
+    selector: 'bg-formfield-image',
+    host: {
+        '(drag)': 'stopEvent($event)',
+        '(dragstart)': 'stopEvent($event)',
+        '(dragover)': 'dragStart($event)',
+        '(dragenter)': 'dragStart($event)',
+        '(dragleave)': 'dragStop($event)',
+        '(dragend)': 'dragStop($event)',
+        '(drop)': 'drop($event)',
+    },
+    template: `
 		<div class="forminput u-margin-bottom2x">
 			<div class="forminput-x-labelrow">
 				<label [class]="labelStyle" for="image_field{{ uniqueIdSuffix }}">{{
@@ -100,6 +100,7 @@ import { MessageService } from '../services/message.service';
 			<p class="forminput-x-error" *ngIf="control.dirty && !control.valid">{{ errorMessage }}</p>
 		</div>
 	`,
+    standalone: false
 })
 export class BgFormFieldImageComponent {
 	@Input() set imageLoaderName(name: string) {

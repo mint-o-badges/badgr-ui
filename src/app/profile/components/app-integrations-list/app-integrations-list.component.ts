@@ -10,8 +10,9 @@ import { ApplicationCredentialsService } from '../../../common/services/applicat
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-	selector: 'app-integration-detail',
-	templateUrl: './app-integrations-list.component.html',
+    selector: 'app-integration-detail',
+    templateUrl: './app-integrations-list.component.html',
+    standalone: false
 })
 export class AppIntegrationListComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	constructor(

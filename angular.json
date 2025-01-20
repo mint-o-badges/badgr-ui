@@ -9,13 +9,16 @@
 			"projectType": "application",
 			"architect": {
 				"build": {
-					"builder": "@angular-devkit/build-angular:browser",
+					"builder": "@angular-devkit/build-angular:application",
 					"options": {
-						"outputPath": "dist",
-						"index": "src/index.html",
-						"main": "src/main.ts",
+						"outputPath": {
+              "base": "dist"
+            },
+            "index": "src/index.html",
 						"tsConfig": "src/tsconfig.app.json",
-						"polyfills": "src/polyfills.ts",
+						"polyfills": [
+              "src/polyfills.ts"
+            ],
 						"assets": [
 							"src/assets",
 							"src/breakdown",
@@ -46,13 +49,12 @@
 							"node_modules/ngx-markdown-editor/assets/highlight.js/highlight.min.js",
 							"node_modules/ngx-markdown-editor/assets/marked.min.js",
 							"node_modules/altcha/dist/altcha.js"
-						],
-						"vendorChunk": true,
-						"extractLicenses": false,
-						"buildOptimizer": false,
+            ],
+            "extractLicenses": false,
 						"sourceMap": true,
 						"optimization": false,
-						"namedChunks": true
+            "namedChunks": true,
+            "browser": "src/main.ts"
 					},
 					"configurations": {
 						"production": {
@@ -66,9 +68,7 @@
 							"outputHashing": "all",
 							"sourceMap": false,
 							"namedChunks": false,
-							"extractLicenses": true,
-							"vendorChunk": false,
-							"buildOptimizer": true,
+              "extractLicenses": true,
 							"index": {
 								"input": "src/index.production.html",
 								"output": "index.html"
@@ -91,9 +91,7 @@
 							"outputHashing": "all",
 							"sourceMap": false,
 							"namedChunks": false,
-							"extractLicenses": true,
-							"vendorChunk": false,
-							"buildOptimizer": true,
+              "extractLicenses": true,
 							"index": {
 								"input": "src/index.staging.html",
 								"output": "index.html"
@@ -116,9 +114,7 @@
 							"outputHashing": "all",
 							"sourceMap": false,
 							"namedChunks": false,
-							"extractLicenses": true,
-							"vendorChunk": false,
-							"buildOptimizer": true,
+              "extractLicenses": true,
 							"index": {
 								"input": "src/index.develop.html",
 								"output": "index.html"

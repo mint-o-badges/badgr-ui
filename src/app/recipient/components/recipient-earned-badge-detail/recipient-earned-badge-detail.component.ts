@@ -26,8 +26,9 @@ import { Issuer } from '../../../issuer/models/issuer.model';
 import { CompetencyType, PageConfig } from '../../../common/components/badge-detail/badge-detail.component.types';
 
 @Component({
-	selector: 'recipient-earned-badge-detail',
-	template: `<bg-badgedetail [config]="config" [awaitPromises]="[badgesLoaded]" [badge]="badge"></bg-badgedetail>`,
+    selector: 'recipient-earned-badge-detail',
+    template: `<bg-badgedetail [config]="config" [awaitPromises]="[badgesLoaded]" [badge]="badge"></bg-badgedetail>`,
+    standalone: false
 })
 export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	readonly issuerImagePlacholderUrl = preloadImageURL(

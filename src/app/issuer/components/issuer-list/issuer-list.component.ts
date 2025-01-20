@@ -15,8 +15,9 @@ import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src
 import { SuccessDialogComponent } from '../../../common/dialogs/oeb-dialogs/success-dialog.component';
 
 @Component({
-	selector: 'issuer-list',
-	templateUrl: './issuer-list.component.html',
+    selector: 'issuer-list',
+    templateUrl: './issuer-list.component.html',
+    standalone: false
 })
 export class IssuerListComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	readonly issuerPlaceholderSrc = preloadImageURL('../../../../breakdown/static/images/placeholderavatar-issuer.svg');

@@ -5,9 +5,10 @@ import { RecipientBadgeInstance } from '../../../recipient/models/recipient-badg
 import { BadgeInstance } from '../../../issuer/models/badgeinstance.model';
 
 @Component({
-	selector: 'bg-badgedetail',
-	templateUrl: './badge-detail.component.html',
-	styleUrls: ['./badge-detail.component.scss'],
+    selector: 'bg-badgedetail',
+    templateUrl: './badge-detail.component.html',
+    styleUrls: ['./badge-detail.component.scss'],
+    standalone: false
 })
 export class BgBadgeDetail {
 	@Input() config: PageConfig;

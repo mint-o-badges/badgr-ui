@@ -51,9 +51,10 @@ interface DraggableItem {
 type BadgeResult = BadgeClass & { selected?: boolean };
 
 @Component({
-	selector: 'learningpath-edit-form',
-	templateUrl: './learningpath-edit-form.component.html',
-	styleUrls: ['./learningpath-edit-form.component.scss'],
+    selector: 'learningpath-edit-form',
+    templateUrl: './learningpath-edit-form.component.html',
+    styleUrls: ['./learningpath-edit-form.component.scss'],
+    standalone: false
 })
 export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 

@@ -11,8 +11,9 @@ import { RecipientBadgeInstance } from '../../../recipient/models/recipient-badg
 import { BadgeInstance } from '../../../issuer/models/badgeinstance.model';
 
 @Component({
-	selector: 'share-social-dialog',
-	templateUrl: 'share-social-dialog.component.html',
+    selector: 'share-social-dialog',
+    templateUrl: 'share-social-dialog.component.html',
+    standalone: false
 })
 export class ShareSocialDialog extends BaseDialog {
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
