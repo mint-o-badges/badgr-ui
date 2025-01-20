@@ -494,6 +494,8 @@ export class QrCodeDatatableComponent {
 	@Input() issuerSlug: string = '';
 	@Input() badgeIssueLink: string[] = [];
 	@Input() actionElementText: string = 'Badge vergeben';
+	@Input() requestCount: number;
+	@Output() requestCountChange=new EventEmitter();
 	@Output() actionElement = new EventEmitter();
 	@Output() redirectToBadgeDetail = new EventEmitter();
 	@Output() deletedQRAward = new EventEmitter();
