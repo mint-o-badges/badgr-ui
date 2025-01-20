@@ -611,20 +611,26 @@ export class QrCodeDatatableComponent {
 	};
   }
 
-  ngOnInit(): void {
-    this.badgeRequestApiService.getBadgeRequestsByQrCode(this.qrCodeId)
-      .then((response: any) => {
-        this.requestedBadges = response.body.requested_badges.map(
-          (badge: ApiRequestedBadge) => this.transformRequestedBadge(badge)
-        );
-		this._requestedBadges.set(this.requestedBadges)
-      });
-	this.prepareTexts();
-	// Translate: to update predefined text when language is changed
-	this.translate.onLangChange.subscribe((event) => {
+	ngOnInit(): void {
+		this.getBadgeRequests();
 		this.prepareTexts();
-	});	  
-  }
+		// Translate: to update predefined text when language is changed
+		this.translate.onLangChange.subscribe((event) => {
+			this.prepareTexts();
+		});
+	}
+
+	getBadgeRequests() {
+		this.badgeRequestApiService.getBadgeRequestsByQrCode(this.qrCodeId).then((response: any) => {
+			this.requestedBadges = response.body.requested_badges.map((badge: ApiRequestedBadge) =>
+				this.transformRequestedBadge(badge),
+			);
+			this._requestedBadges.set(this.requestedBadges);
+
+			// Update request-count in parent component (qrcode-awards)
+			this.onRequestCountChanged(this.requestedBadges.length);
+		});
+	}
 
   protected togglePayment(payment: RequestedBadge) {
     this._selectionModel.toggle(payment);
@@ -676,9 +682,22 @@ export class QrCodeDatatableComponent {
 				caption: this.translate.instant('Badge.deleteRequest'),
 				variant: 'danger',
 				text: `${this.translate.instant('Badge.confirmDeleteRequest1')} <span class="tw-font-bold">${request.email}</span>  ${this.translate.instant('Badge.confirmDeleteRequest2')}`,
-        delete: () => this.badgeRequestApiService.deleteRequest(request.entity_id) 
-			}
-		})
+				delete: () => {
+					this.badgeRequestApiService
+						.deleteRequest(request.entity_id)
+						.then((res) => {
+							this.getBadgeRequests();
+						})
+						.catch((e) =>
+							this.messageService.reportAndThrowError('Ausgewählte Ausweisanforderung konnte nicht gelöscht werden', e),
+						);
+				},
+			},
+		});
+	}
+
+	onRequestCountChanged(updatedRequestCount){
+		this.requestCountChange.emit(this.requestCount=updatedRequestCount);
 	}
 
   issueBadges() {
