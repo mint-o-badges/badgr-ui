@@ -165,7 +165,7 @@ export class PublicBadgeAssertionComponent {
 				const service: PublicApiService = this.injector.get(PublicApiService);
 
 				const assertion = await service.getBadgeAssertion(paramValue)
-				const lps = await service.getLearningPathsForBadgeClass(assertion.slug)
+				const lps = await service.getLearningPathsForBadgeClass(assertion.badge.slug)
 				
 				this.config = {
 					badgeTitle: assertion.badge.name,
