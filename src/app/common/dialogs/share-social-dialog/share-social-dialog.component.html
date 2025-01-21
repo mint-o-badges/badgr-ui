@@ -15,7 +15,7 @@
 		</div>
 
 		<!-- Tab Navigation Bar -->
-		<!-- <nav aria-labelledby="heading-share-options" class="tabbar">
+		<nav aria-labelledby="heading-share-options" class="tabbar">
 			<button [class.tab-is-active]="currentTabId === 'link'" (click)="openTab('link')" class="tab">
 				<span class="visuallyhidden"> Open the </span> Link
 				<span class="visuallyhidden"> tab</span>
@@ -33,7 +33,7 @@
 				<span class="visuallyhidden"> Open the </span>HTML
 				<span class="visuallyhidden"> tab</span>
 			</button>
-		</nav> -->
+		</nav>
 
 		<!-- Link Tab -->
 		<div
@@ -119,13 +119,13 @@
 				<div>
 					<a [href]="linkedInCertURL"
 						><img
-							src="https://download.linkedin.com/desktop/add2profile/buttons/de_DE.png"
+							src="../../../breakdown/static/scss/images/linkedin_zum_profile_hinzufugen.png"
 							alt="LinkedIn Add to Profile button"
 					/></a>
 				</div>
 			</div>
 
-			<p class="u-text-bold u-margin-bottom3x">Auf Social Media teilen:</p>
+			<!-- <p class="u-text-bold u-margin-bottom3x">Auf Social Media teilen:</p>
 			<div class="l-grid l-grid-small">
 				<button
 					*ngIf="displayShareServiceType('Facebook')"
@@ -159,7 +159,7 @@
 				>
 					pinterest
 				</button>
-			</div>
+			</div> -->
 		</div>
 
 		<!-- Embed Tab -->

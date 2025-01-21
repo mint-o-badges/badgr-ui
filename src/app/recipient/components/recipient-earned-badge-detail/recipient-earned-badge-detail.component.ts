@@ -29,7 +29,7 @@ import { LearningPathApiService } from '../../../common/services/learningpath-ap
 
 @Component({
 	selector: 'recipient-earned-badge-detail',
-	template: `<bg-badgedetail [config]="config" [awaitPromises]="[badgesLoaded, learningPathsLoaded]"></bg-badgedetail>`,
+	template: `<bg-badgedetail [config]="config" [awaitPromises]="[badgesLoaded, learningPathsLoaded]" [badge]="badge"></bg-badgedetail>`,
 })
 export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	readonly issuerImagePlacholderUrl = preloadImageURL(

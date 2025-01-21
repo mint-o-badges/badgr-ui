@@ -60,6 +60,10 @@ export class LearningPath extends ManagedEntity<ApiLearningPath, LearningPathRef
 		return this.apiModel.participationBadge_image
 	}
 
+	get issuerOwnerAcceptedTos(): boolean {
+		return this.apiModel.issuerOwnerAcceptedTos;
+	}
+
 	
 
 	constructor(
