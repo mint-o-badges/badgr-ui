@@ -55,5 +55,4 @@ jobs:
         run: npm run test
         env:
           BROWSER: chrome
-            # TODO: ?
-            #SELENIUM: chrome
+          SELENIUM: selenium
