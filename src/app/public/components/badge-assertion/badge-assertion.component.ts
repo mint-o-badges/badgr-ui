@@ -71,6 +71,7 @@ export class PublicBadgeAssertionComponent {
 	categoryOptions: { [key in BadgeClassCategory]: string } = {
 		competency: 'Kompetenz-Badge',
 		participation: 'Teilnahme-Badge',
+		learningpath: 'Micro Degree',
 	};
 
 	levelOptions: { [key in BadgeClassLevel]: string } = {

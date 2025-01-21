@@ -283,6 +283,7 @@
 		"multiRecipients": "Empfänger:innen",
 		"participation": "Teilnahme",
 		"competency": "Kompetenz",
+		"learningpath": "Lernpfad",
 		"title": "Titel",
 		"createdOn": "Erstellt am",
 		"catalogHeadline": "Alle Badges in der Übersicht",
@@ -294,7 +295,12 @@
 		"endOfEditDialogTitle": "Ende der Editier-funktion",
 		"endOfEditDialogText": "Sobald du den Badge einmal vergeben hast, kann er nicht mehr bearbeitet werden.",
 		"endOfEditDialogTextQR": "Sobald du eine QR-Code-Vergabe erstellt hast, kann der Badge nicht mehr bearbeitet werden.",
-		"endOfEditDialogSubText": "Bitte prüfe daher, ob du mit den Badge-Daten (Bild, Kurzbeschreibung, ggf. enthaltene Kompetenzen, ...) zufrieden bist."
+		"endOfEditDialogSubText": "Bitte prüfe daher, ob du mit den Badge-Daten (Bild, Kurzbeschreibung, ggf. enthaltene Kompetenzen, ...) zufrieden bist.",
+		"categories": {
+			"competency": "Kompetenz-Badge",
+			"participation": "Teilnahme-Badge",
+			"learningpath": "Micro Degree"
+		}
 	},
 	"CreateBadge": {
 		"chooseBadgeCategory": "Badge-Kategorie wählen",

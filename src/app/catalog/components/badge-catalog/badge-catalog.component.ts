@@ -101,6 +101,7 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 	categoryOptions: { [key in BadgeClassCategory | 'noCategory']: string } = {
 		competency: this.translate.instant('Badge.competency'),
 		participation: this.translate.instant('Badge.participation'),
+		learningpath: this.translate.instant('Badge.learningpath'),
 		noCategory: this.translate.instant('Badge.noCategory'),
 	};
 
@@ -175,6 +176,7 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		this.categoryOptions = {
 			competency: this.translate.instant('Badge.competency'),
 			participation: this.translate.instant('Badge.participation'),
+			learningpath: this.translate.instant('Badge.learningpath'),
 			noCategory: this.translate.instant('Badge.noCategory'),
 		};
 		// 3. Plural
