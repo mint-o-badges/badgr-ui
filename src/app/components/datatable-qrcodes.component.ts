@@ -614,23 +614,16 @@ export class QrCodeDatatableComponent {
   }
 
 	ngOnInit(): void {
-		this.getBadgeRequests();
-		this.prepareTexts();
-		// Translate: to update predefined text when language is changed
-		this.translate.onLangChange.subscribe((event) => {
-			this.prepareTexts();
-		});
-	}
-
-	getBadgeRequests() {
-		this.badgeRequestApiService.getBadgeRequestsByQrCode(this.qrCodeId).then((response: any) => {
+    this.badgeRequestApiService.getBadgeRequestsByQrCode(this.qrCodeId).then((response: any) => {
 			this.requestedBadges = response.body.requested_badges.map((badge: ApiRequestedBadge) =>
 				this.transformRequestedBadge(badge),
 			);
 			this._requestedBadges.set(this.requestedBadges);
-
-			// Update request-count in parent component (qrcode-awards)
-			this.onRequestCountChanged(this.requestedBadges.length);
+		});
+		this.prepareTexts();
+		// Translate: to update predefined text when language is changed
+		this.translate.onLangChange.subscribe((event) => {
+			this.prepareTexts();
 		});
 	}
 
@@ -688,9 +681,8 @@ export class QrCodeDatatableComponent {
 					this.badgeRequestApiService
 						.deleteRequest(request.entity_id)
 						.then(() => {
-							// Refresh badge-requests
-							this.getBadgeRequests();
-              // Clear the selection in the selection model
+              this._requestedBadges.set(this._requestedBadges().filter((r) => r.entity_id != request.entity_id))
+              this.requestCountChange.emit(this._requestedBadges().length)  
               this._selectionModel.clear();
 						})
 						.catch((e) =>
@@ -699,10 +691,6 @@ export class QrCodeDatatableComponent {
 				},
 			},
 		});
-	}
-
-	onRequestCountChanged(updatedRequestCount){
-		this.requestCountChange.emit(this.requestCount=updatedRequestCount);
 	}
 
   issueBadges() {
@@ -759,8 +747,9 @@ export class QrCodeDatatableComponent {
             // });
             // this.badgeRequestApiService.deleteRequest(b.entity_id);
             this.badgeRequestApiService.deleteRequests(this.issuerSlug, this.badgeSlug, ids).then((res) => {
-                // Clear the selection in the selection model
-                this._selectionModel.clear();
+              this._requestedBadges.set(this._requestedBadges().filter((r) => !ids.includes(r.entity_id)))
+              this.requestCountChange.emit(this._requestedBadges().length)  
+              this._selectionModel.clear();
             })
             this.qrBadgeAward.emit();
           },
