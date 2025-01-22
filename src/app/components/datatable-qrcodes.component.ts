@@ -687,8 +687,11 @@ export class QrCodeDatatableComponent {
 				delete: () => {
 					this.badgeRequestApiService
 						.deleteRequest(request.entity_id)
-						.then((res) => {
+						.then(() => {
+							// Refresh badge-requests
 							this.getBadgeRequests();
+              // Clear the selection in the selection model
+              this._selectionModel.clear();
 						})
 						.catch((e) =>
 							this.messageService.reportAndThrowError('Ausgewählte Ausweisanforderung konnte nicht gelöscht werden', e),
@@ -755,7 +758,10 @@ export class QrCodeDatatableComponent {
             //   // badgeclass: b,
             // });
             // this.badgeRequestApiService.deleteRequest(b.entity_id);
-            this.badgeRequestApiService.deleteRequests(this.issuerSlug, this.badgeSlug, ids)
+            this.badgeRequestApiService.deleteRequests(this.issuerSlug, this.badgeSlug, ids).then((res) => {
+                // Clear the selection in the selection model
+                this._selectionModel.clear();
+            })
             this.qrBadgeAward.emit();
           },
           (error) => {
