@@ -13,6 +13,8 @@
 		"cancel": "Cancel",
 		"forward": "Ok",
 		"or": "or",
+		"of": "of",
+		"selected": "selected",
 		"and": "and",
 		"can": "can",
 		"search": "search",
@@ -57,9 +59,11 @@
 		"loading": "Loading...",
 		"warning": "Warning",
 		"page": "Page",
-		"back": "Back"
+		"back": "Back",
 		"next": "Next",
-		"previous": "Previous"
+		"previous": "Previous",
+		"all": "All",
+		"pleaseWait": "Please wait..."
 	},
 	"NavItems": {
 		"register": "Register",
@@ -203,7 +207,8 @@
 		"batchAwardText2": "zu vergeben",
 		"awardedPerson": "Name der Empfänger:in",
 		"sendEmail": "Empfänger:in mit E-Mail benachrichtigen",
-		"giveBadge": "Badge vergeben",
+		"giveBadge": "Award Badge",
+		"giveBadges": "Award Badges",
 		"nameWarning": "Beachte: Der Name wird als Klartext im Badge gespeichert.",
 		"multipleBadgeAwardHeadline": "Badge an mehrere Lernende gleichzeitig vergeben",
 		"uploadListText": "You can import a <span class='tw-font-bold'>list of recipients</span> who should receive the badge simultaneously. Here's how:",
@@ -225,7 +230,7 @@
 		"csvError": "Die CSV Datei enthält Zeilen länger als ihre Überschrift. Bitte behebe diesen Fehler und versuche es erneut.",
 		"pdfCertificate": "PDF-Certificate",
 		"institutionsIssued": "Institutions are on OEB",
-		"institutionsHeadline": "All Institutions"
+		"institutionsHeadline": "All Institutions",
 		"loadingAllBadges": "Loading Badges...",
 		"loadAllBadges": "Load all Badges"
 	},
@@ -259,7 +264,12 @@
 		"requestedOn": "Requested on",
 		"deletePart1": "Are you sure you want to delete the badge '",
 		"deletePart2": "'?",
-		"deleteConfirm": "Delete Badge"
+		"deleteConfirm": "Delete Badge",
+		"deleteRequest": "Delete Badge Request",
+		"confirmDeleteRequest1": "Do you really want to delete the badge request from ",
+		"confirmDeleteRequest2": " ",
+		"request": "request",
+		"requests": "requests"
 	},
 	"CreateBadge": {
 		"chooseBadgeCategory": "Choose Badge-Category",
