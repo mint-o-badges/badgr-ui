@@ -67,6 +67,7 @@ export class SessionService {
     }
 
 	login(credential: UserCredential, sessionOnlyStorage = false): Promise<AuthorizationTokenInformation> {
+
 		const endpoint = this.baseUrl + '/o/token';
 		const scope = 'rw:profile rw:issuer rw:backpack';
 		const client_id = 'public';
@@ -185,6 +186,13 @@ export class SessionService {
 	}
 
 	get isLoggedIn(): boolean {
+        // Remove old login token
+        if (localStorage.getItem('LoginService.token')) {
+            localStorage.removeItem('LoginService.token');
+            localStorage.removeItem('LoginService.refreshToken');
+            localStorage.removeItem(EXPIRATION_DATE_STORAGE_KEY);
+        }
+
 		if (sessionStorage.getItem(EXPIRATION_DATE_STORAGE_KEY) || localStorage.getItem(EXPIRATION_DATE_STORAGE_KEY)) {
 			const expirationString =
 				sessionStorage.getItem(EXPIRATION_DATE_STORAGE_KEY) ||
