@@ -54,5 +54,10 @@ jobs:
       - name: run the actual tests
         run: npm run test
         env:
-          BROWSER: chrome
+          # The name of the service where chrome is run
           SELENIUM: selenium
+      - uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: screenshots
+          path: screenshots/
