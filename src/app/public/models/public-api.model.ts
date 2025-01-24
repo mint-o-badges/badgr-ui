@@ -35,6 +35,7 @@ export interface PublicApiBadgeAssertion {
 		hashed: boolean;
 		identity: string;
 	};
+	slug: string;
 	// Extension to the spec containing the original URL of this assertion if it is not stored by Badgr
 	sourceUrl?: string;
 }
