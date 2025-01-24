@@ -1,0 +1,63 @@
+name: Run the selenium end-to-end tests
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    name: E2E-tests
+    runs-on: ubuntu-latest
+    container:
+      image: node:23
+      volumes:
+        - assets:/assets
+        - download:/tmp
+
+    services:
+      selenium:
+        image: selenium/standalone-chrome
+        options: --shm-size=2gb --workdir /project
+        volumes:
+          - assets:/project/assets
+          - download:/tmp
+    
+    steps:
+      - name: Check out oeb-test
+        uses: actions/checkout@v4
+        with:
+          repository: 'mint-o-badges/oeb-test'
+            # TODO: Remove this
+          ref: 'feat/automate-e2e'
+      - run: cp assets/* /assets
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '23'
+          cache: 'npm'
+      - name: modify url
+        run: sed -i 's/^export const url = "[^"].*";$/export const url = "https:\/\/deploy-preview-${{ github.event.number }}--openeducationalbadges.netlify.app";/g' config.js
+      - name: print configuration
+        run: cat config.js
+      - name: set secrets
+        run: printf "export const username = '${{ secrets.STAGING_SELENIUM_USERNAME }}';\nexport const password = '${{ secrets.STAGING_SELENIUM_PASSWORD }}';\n" > secret.js
+      - run: npm ci
+      - run: apt-get update
+      - run: apt-get install ghostscript graphicsmagick -y
+      - name: Wait for Netlify Deploy
+        uses: probablyup/wait-for-netlify-action@3.2.0
+        id: waitForDeployment
+        with:
+          site_id: '08b6b283-7ce6-4a20-bbce-5900e4f90c14'
+        env:
+          NETLIFY_TOKEN: ${{ secrets.NETLIFY_TOKEN }}
+      - name: run the actual tests
+        run: npm run test
+        env:
+          # The name of the service where chrome is run
+          SELENIUM: selenium
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: screenshots
+          path: screenshots/
