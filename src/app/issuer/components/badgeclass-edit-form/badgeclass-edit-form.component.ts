@@ -57,6 +57,8 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	baseUrl: string;
 	badgeCategory: string;
 
+	selectedAiCompetencies: Skill[] = []
+
 	// Translation
 	selectFromMyFiles = this.translate.instant('RecBadge.selectFromMyFiles');
 	chooseFromExistingIcons = this.translate.instant('RecBadge.chooseFromExistingIcons');
@@ -690,14 +692,26 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		this.aiSkillsService
 			.getAiSkills(this.aiCompetenciesDescription)
 			.then((skills) => {
-				this.aiCompetenciesSuggestions = skills;
 				let aiCompetencies = this.badgeClassForm.controls.aiCompetencies;
+				this.selectedAiCompetencies = aiCompetencies.value.map((c, i) => c.selected ? this.aiCompetenciesSuggestions[i] : null).filter(Boolean)
 				for (let i = aiCompetencies.length - 1; i >= 0; i--) {
 					aiCompetencies.removeAt(i);
 				}
+				this.aiCompetenciesSuggestions = [
+					...this.selectedAiCompetencies, 
+					...skills.filter(skill => 
+					  !this.selectedAiCompetencies.some(
+						existing => existing.concept_uri === skill.concept_uri
+					  )
+					)
+				];
 
-				skills.forEach((skill) => {
+				this.aiCompetenciesSuggestions.forEach((skill, i) => {
 					aiCompetencies.addFromTemplate();
+					if(this.selectedAiCompetencies.includes(skill)){
+						this.badgeClassForm.controls.aiCompetencies.controls[i]
+						.setValue({...this.badgeClassForm.controls.aiCompetencies.controls[i].value, selected: true});
+					}
 				});
 			})
 			.catch((error) => {
