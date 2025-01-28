@@ -180,7 +180,7 @@
 		"addMember_staffText": "Ability to issue badges created by Owners and Editors.",
 		"addMember_newEmail": "New Member Email",
 		"addMember_newEmailPH": "Staff Email",
-		"addMember_failed": "Failed to add member",
+		"addMember_failed": "Member not found",
 		"addMember_enterValidEmail": "Please enter valid email address",
 		"addMember_selectRole": "Please select a staff role",
 		"createdOn": "Created on",

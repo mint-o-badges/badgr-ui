@@ -189,7 +189,7 @@
 		"addMember_staffText": "Möglichkeit, von Inhabern und Redakteuren erstellte Badges zu vergeben.",
 		"addMember_newEmail": "E-Mail für neue Mitglieder",
 		"addMember_newEmailPH": "Mitarbeiter E-Mail",
-		"addMember_failed": "Mitglied konnte nicht hinzugefügt werden",
+		"addMember_failed": "Mitglied wurde nicht gefunden",
 		"addMember_enterValidEmail": "Bitte gültige E-Mail Adresse eingeben",
 		"addMember_selectRole": "Bitte wähle eine Personalrolle",
 		"createdOn": "Erstellt am",
