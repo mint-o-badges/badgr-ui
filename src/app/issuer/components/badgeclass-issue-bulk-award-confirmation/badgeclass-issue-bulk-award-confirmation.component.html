@@ -1,11 +1,11 @@
 <section class="oeb-section">
 	<div class="oeb-headline-container-sm">
-		<h1 hlmH1 class="tw-text-purple">Import Vorschau</h1>
+		<h1 hlmH1 class="tw-text-purple">Import-Vorschau</h1>
 	</div>
 	<p hlmP class="oeb-standard-padding-bottom">
 		<span>{{ transformedImportData.validRowsTransformed.size }} Zeilen konnten importiert werden.
 		{{ transformedImportData.duplicateRecords.length }} Zeilen sind Duplikate und werden ignoriert.</span><br>
-		<span>Klicke auf "Badges vergeben" um den Badge zu vergeben.</span>
+		<span>Klicke auf "Badges vergeben", um die Badges jetzt an deine Lernenden zu vergeben.</span>
 	</p>
 
 	<div class="oeb-standard-padding-bottom">
@@ -48,7 +48,7 @@
 			id="notify_earner"
 			type="checkbox"
 			[control]="issueForm.rawControlMap.notify_earner"
-			[text]="'Benachrichtige die Empfänger*in mit einer E-Mail'"
+			[text]="'Empfänger:in mit E-Mail benachrichtigen'"
 		></oeb-checkbox>
 	</div>
 
