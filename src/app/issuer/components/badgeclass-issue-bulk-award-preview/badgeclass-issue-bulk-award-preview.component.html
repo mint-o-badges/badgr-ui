@@ -5,7 +5,8 @@
 	<div class="select-csvUpload oeb-standard-padding-bottom">
 		<div class="oeb-standard-padding-bottom">
 			<p *ngIf="importPreviewData?.rows" hlmP>
-				Hier ist eine Vorschau der ersten
+				<span>
+				Hier siehst du eine Vorschau der ersten
 				{{
 				importPreviewData.rows.length < MAX_ROWS_TO_DISPLAY ? importPreviewData.rows.length :
 					MAX_ROWS_TO_DISPLAY }} von {{ importPreviewData.rows.length }} Zeilen deiner Datei.
