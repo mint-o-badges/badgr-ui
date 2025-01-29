@@ -13,6 +13,7 @@ import { BadgrApiFailure } from '../../../common/services/api-failure';
 import striptags from 'striptags';
 import { SuccessDialogComponent } from '../../../common/dialogs/oeb-dialogs/success-dialog.component';
 import { HlmDialogService } from './../../../components/spartan/ui-dialog-helm/src';
+import { typedFormGroup } from '../../../common/util/typed-forms';
 
 @Component({
 	selector: 'badgeclass-issue-bulk-award-confirmation',
@@ -27,7 +28,6 @@ export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRouta
 	buttonDisabledClass = true;
 	buttonDisabledAttribute = true;
 	issuer: string;
-	notifyEarner = true;
 
 	issueBadgeFinished: Promise<unknown>;
 
@@ -43,6 +43,9 @@ export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRouta
 		super(router, route, sessionService);
 		this.enableActionButton();
 	}
+
+	issueForm = typedFormGroup()
+		.addControl('notify_earner', true)
 
 	enableActionButton() {
 		this.buttonDisabledClass = false;
@@ -83,7 +86,7 @@ export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRouta
 			.createBadgeInstanceBatched(this.issuerSlug, this.badgeSlug, {
 				issuer: this.issuerSlug,
 				badge_class: this.badgeSlug,
-				create_notification: this.notifyEarner,
+				create_notification: this.issueForm.rawControlMap.notify_earner.value,
 				assertions,
 			})
 			.then(
@@ -109,10 +112,6 @@ export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRouta
 		if (!this.transformedImportData.validRowsTransformed.size) {
 			this.disableActionButton();
 		}
-	}
-
-	notifyChange(value) {
-		this.notifyEarner = value;
 	}
 
 	private readonly _hlmDialogService = inject(HlmDialogService);
