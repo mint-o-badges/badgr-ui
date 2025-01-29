@@ -237,7 +237,7 @@
 		"createCSVorTXT": "um eine CSV oder TXT Datei zu erstellen",
 		"importList": "Liste importieren",
 		"import": "Importieren",
-		"csvColumns": "CSV Spalten",
+		"csvColumns": "CSV-Spalten",
 		"csvError": "Die CSV Datei enthält Zeilen länger als ihre Überschrift. Bitte behebe diesen Fehler und versuche es erneut.",
 		"useImageFormat": "Bitte nutze ein Bild im quadratischen Format 1:1, damit es auf unserer Plattform optimal dargestellt werden kann.",
 		"pdfCertificate": "PDF-Zertifikat",

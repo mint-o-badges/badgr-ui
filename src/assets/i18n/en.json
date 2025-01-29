@@ -226,7 +226,7 @@
 		"createCSVorTXT": "um eine CSV oder TXT Datei zu erstellen",
 		"importList": "Liste importieren",
 		"import": "Import",
-		"csvColumns": "CSV Spalten",
+		"csvColumns": "CSV-Spalten",
 		"csvError": "Die CSV Datei enthält Zeilen länger als ihre Überschrift. Bitte behebe diesen Fehler und versuche es erneut.",
 		"pdfCertificate": "PDF-Certificate",
 		"institutionsIssued": "Institutions are on OEB",
