@@ -192,6 +192,7 @@ export class IssuerEditFormComponent implements OnInit {
 			const issuer: ApiIssuerForEditing= {
 				name: formState.issuer_name,
 				description: formState.issuer_description,
+				image: formState.issuer_image,
 				email: formState.issuer_email,
 				url: formState.issuer_url,
 				category: formState.issuer_category,

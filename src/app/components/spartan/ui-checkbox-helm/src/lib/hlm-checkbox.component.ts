@@ -56,7 +56,7 @@ export class HlmCheckboxComponent {
 	protected _computedClass = computed(() =>
 		hlm(
 			'tw-group tw-flex tw-border tw-border-purple tw-shrink-0 tw-cursor-pointer tw-items-center tw-rounded-[5px] focus-visible:tw-outline-none focus-visible:tw-ring-2 focus-visible:tw-ring-ring' +
-				' focus-visible:tw-ring-offset-2 focus-visible:tw-ring-offset-background data-[state=checked]:tw-text-background data-[state=checked]:tw-bg-purple data-[state=unchecked]:tw-bg-background',
+				' focus-visible:tw-ring-offset-2 focus-visible:tw-ring-offset-background data-[state=checked]:tw-text-background data-[state=checked]:tw-bg-purple data-[state=unchecked]:tw-bg-background data-[state=indeterminate]:tw-bg-white',
 			this.userClass(),
 			this.disabled() ? 'tw-cursor-not-allowed tw-opacity-50' : '',
 		),
