@@ -14,7 +14,19 @@ import { HlmDialogService } from './components/spartan/ui-dialog-helm/src/lib/hl
 @Injectable()
 export class ServerErrorInterceptor implements HttpInterceptor {
     private readonly _hlmDialogService = inject(HlmDialogService);
-
+    
+    private knownErrors = [
+      {
+        status: 400,
+        name: "DUPLICATE_BADGE",
+        description: "You already have this badge in your backpack",
+      },
+      {
+        status: 400,
+        error: "invalid_grant",
+        errorDescription: "Invalid credentials given.",
+      },
+    ];
     constructor() {}
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -63,11 +75,30 @@ export class ServerErrorInterceptor implements HttpInterceptor {
 
 
   private shouldIgnoreError(error: any): boolean {
-    return (
-      error instanceof HttpErrorResponse &&
-      error.status === 400 &&
-      error.error?.error === 'invalid_grant' &&
-      error.error?.error_description === 'Invalid credentials given.'
+    console.log(error?.error);
+  
+    if (!(error instanceof HttpErrorResponse)) {
+      return false;
+    }
+  
+    // Prüfen, ob der Fehler ein Array ist
+    if (Array.isArray(error.error)) {
+      return error.error.some((err: any) =>
+        this.knownErrors.some(
+          (knownError) =>
+            error.status === knownError.status &&
+            err.name === knownError.name &&
+            (!knownError.description || err.description === knownError.description)
+        )
+      );
+    }
+  
+    // Prüfen, ob der Fehler ein Objekt ist
+    return this.knownErrors.some(
+      (knownError) =>
+        error.status === knownError.status &&
+        error.error?.error === knownError.error &&
+        error.error?.error_description === knownError.errorDescription
     );
   }
 
