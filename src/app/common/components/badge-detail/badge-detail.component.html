@@ -91,17 +91,17 @@
 							<!-- Issuer Information -->
 
 							<div
-								class="tw-mt-4 tw-mx-auto tw-flex tw-items-center oeb-slight-shadow tw-pl-4 tw-py-4 tw-bg-white tw-rounded-[20px]"
+								class="tw-mt-4 tw-flex tw-flex-col oeb-slight-shadow tw-pl-4 tw-py-4 tw-bg-white tw-rounded-[20px]"
 							>
-								<div>
+								<div class="tw-mx-auto tw-items-center">
 									<img
-										class="tw-w-[37.1px] tw-h-[37.1px] md:tw-w-[53px] md:tw-h-[53px] issuer-image"
+										class="tw-w-28 tw-h-auto"
 										[loaded-src]="config.issuerImage"
 										[loading-src]="config.issuerImagePlacholderUrl"
 										[error-src]="config.issuerImagePlacholderUrl"
 									/>
 								</div>
-								<div class="tw-text-oebblack tw-ml-2">
+								<div class="tw-text-oebblack">
 									<dt class="tw-italic">{{ 'RecBadgeDetail.issuedBy' | translate }}:</dt>
 									<dd class="tw-break-words">
 										{{ config.issuerName }}
