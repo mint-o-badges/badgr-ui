@@ -7,6 +7,7 @@ import { BadgrEnvironment } from './badgr-environment';
 
 export const environment: BadgrEnvironment = {
 	production: false,
+	enableErrorInterceptor: true,
 	config: {
 		theme: {
 			welcomeMessage: 'Willkommen auf Open Educational Badges',
