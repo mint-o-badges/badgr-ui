@@ -245,7 +245,7 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 		return new Promise(async (resolve, reject) => {
 			this.learningPathService.allPublicLearningPaths$.subscribe(
 				(lps) => {
-					this.learningPaths = lps;
+					this.learningPaths = lps.filter((lp) => lp.issuerOwnerAcceptedTos);
 					lps.forEach((lp) => {
 						lp.tags.forEach((tag) => {
 							this.tags.push(tag);

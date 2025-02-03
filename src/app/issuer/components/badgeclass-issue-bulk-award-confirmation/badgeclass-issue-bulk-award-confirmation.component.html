@@ -1,11 +1,11 @@
 <section class="oeb-section">
 	<div class="oeb-headline-container-sm">
-		<h1 hlmH1 class="tw-text-purple">Import Vorschau</h1>
+		<h1 hlmH1 class="tw-text-purple">Import-Vorschau</h1>
 	</div>
 	<p hlmP class="oeb-standard-padding-bottom">
-		{{ transformedImportData.validRowsTransformed.size }} Zeilen können importiert werden.
-		{{ transformedImportData.duplicateRecords.length }} Zeilen sind Duplikate und werden ignoriert. Klicke auf BADGE
-		VERGEBEN um den Badge zu vergeben.
+		<span>{{ transformedImportData.validRowsTransformed.size }} Zeilen konnten importiert werden.
+		{{ transformedImportData.duplicateRecords.length }} Zeilen sind Duplikate und werden ignoriert.</span><br>
+		<span>Klicke auf "Badges vergeben", um die Badges jetzt an deine Lernenden zu vergeben.</span>
 	</p>
 
 	<div class="oeb-standard-padding-bottom">
@@ -47,9 +47,8 @@
 			name="notify_earner"
 			id="notify_earner"
 			type="checkbox"
-			(checkedChange)="notifyChange($event)"
-			[checked]="notifyEarner"
-			[text]="'Benachrichtige die Empfänger*in mit einer E-Mail'"
+			[control]="issueForm.rawControlMap.notify_earner"
+			[text]="'Empfänger:in mit E-Mail benachrichtigen'"
 		></oeb-checkbox>
 	</div>
 
@@ -66,7 +65,7 @@
 			[class.button-is-disabled]="buttonDisabledClass"
 			[disabled]="buttonDisabledAttribute"
 			(click)="dataConfirmed()"
-			text="Badge vergeben"
+			text="Badges vergeben"
 		>
 		</oeb-button>
 	</div>

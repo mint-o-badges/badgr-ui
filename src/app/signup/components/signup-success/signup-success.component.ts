@@ -30,11 +30,6 @@ export class SignupSuccessComponent implements OnInit {
 	email: string;
 
 	ngOnInit() {
-		// Ensure the user isn't logged in here, by removing relevant
-		// tokens. Don't trigger a change to the loggedInSubject
-		// observable though, since the user typically shouldn't
-		// be logged in at this point anyway.
-		this.sessionService.logout(false);
 		this.email = atob(decodeURIComponent(this.routeParams.snapshot.params['email']));
 	}
 
