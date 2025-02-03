@@ -3,6 +3,7 @@ import { BadgrEnvironment } from './badgr-environment';
 // The environment for the develop instance
 export const environment: BadgrEnvironment = {
 	production: true,
+	enableErrorInterceptor: true,
 	config: {
 		api: {
 			baseUrl: 'https://api.develop.openbadges.education',

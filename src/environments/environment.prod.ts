@@ -2,6 +2,7 @@ import { BadgrEnvironment } from './badgr-environment';
 
 export const environment: BadgrEnvironment = {
 	production: true,
+	enableErrorInterceptor: false,
 	config: {
 		api: {
 			baseUrl: 'https://api.openbadges.education',

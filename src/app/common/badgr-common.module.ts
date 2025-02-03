@@ -130,11 +130,10 @@ import { IssuerCardComponent } from '../components/issuer-card/issuer-card.compo
 // import { OebStepperComponent } from '../components/stepper/stepper.component';
 import { CdkStepperModule } from '@angular/cdk/stepper';
 import { ErrorDialogComponent } from './dialogs/oeb-dialogs/error-dialog.component';
-import { GlobalErrorHandler } from '../globalErrorHandler.service';
-import { ServerErrorInterceptor } from '../ServerErrorInterceptor';
 import { CountUpDirective } from './directives/count-up.directive';
 import { OebSortSelectComponent } from '../components/oeb-sort-select.component';
 import { QrCodeApiService } from '../issuer/services/qrcode-api.service';
+import { serverErrorInterceptorFactory } from '../server-error-interceptor.factory';
 
 const DIRECTIVES = [
 	BgAwaitPromises,
@@ -271,7 +270,7 @@ export const COMMON_IMPORTS = [
 
 @NgModule({
 	imports: [...COMMON_IMPORTS, FormsModule, LMarkdownEditorModule, TranslateModule, SharedIconsModule, CdkStepperModule],
-	providers: [BadgeClassManager, BadgeClassApiService, { provide: HTTP_INTERCEPTORS, useClass:ServerErrorInterceptor, multi:true}],
+	providers: [BadgeClassManager, BadgeClassApiService,  ...serverErrorInterceptorFactory()],
 	declarations: [...DIRECTIVES, ...COMMON_MODULE_COMPONENTS, ...PIPES, ForwardRouteComponent, BadgeLegendComponent, CountUpDirective],
 	exports: [...DIRECTIVES, ...COMMON_MODULE_COMPONENTS, ...PIPES, BadgeLegendComponent, SharedIconsModule],
 })
