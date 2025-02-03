@@ -124,7 +124,7 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 										const link = document.createElement('a');
 										const url = URL.createObjectURL(blob);
 										link.href = url;
-										link.download = this.badge.badgeClass.name + '_' + this.badge.badgeClass.slug + '.json';
+										link.download = `assertion-${this.badge.badgeClass.slug.trim()}.json`;
 										document.body.appendChild(link);
 										link.click();
 										document.body.removeChild(link);

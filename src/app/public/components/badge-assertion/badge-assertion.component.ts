@@ -187,7 +187,7 @@ export class PublicBadgeAssertionComponent {
 										const link = document.createElement('a');
 										const url = URL.createObjectURL(blob);
 										link.href = url;
-										link.download = 'badge-JSON.json';
+										link.download = `assertion-${this.badgeClass.slug.trim()}.json`;
 										document.body.appendChild(link);
 										link.click();
 										document.body.removeChild(link);
