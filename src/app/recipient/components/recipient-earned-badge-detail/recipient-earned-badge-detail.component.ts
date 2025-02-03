@@ -110,17 +110,36 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 					},
 					menuitems: [
 						{
-							title: 'Verifizieren',
+							title: 'Badge verifizieren',
 							icon: 'lucideBadgeCheck',
 							action: () => window.open(this.verifyUrl, '_blank'),
 						},
 						{
-							title: 'PDF exportieren',
+							title: 'JSON-Datei herunterladen',
+							icon: '	lucideFileCode',
+							action: () => {
+								fetch(this.rawJsonUrl)
+									.then((response) => response.blob())
+									.then((blob) => {
+										const link = document.createElement('a');
+										const url = URL.createObjectURL(blob);
+										link.href = url;
+										link.download = 'badge-JSON.json';
+										document.body.appendChild(link);
+										link.click();
+										document.body.removeChild(link);
+										URL.revokeObjectURL(url);
+									})
+									.catch((error) => console.error('Download failed:', error));
+							},
+						},
+						{
+							title: 'PDF-Zertifikat herunterladen',
 							icon: 'lucideFileText',
 							action: () => this.exportPdf(),
 						},
 						{
-							title: 'Löschen',
+							title: 'Badge aus Rucksack löschen',
 							icon: 'lucideTrash2',
 							action: () => this.deleteBadge(this.badge),
 						},
