@@ -112,7 +112,6 @@
 									"maximumWarning": "6kb"
 								}
 							],
-                            "proxyConfig": "src/previewProxy.conf.json",
 							"optimization": true,
 							"outputHashing": "all",
 							"sourceMap": false,
@@ -164,6 +163,9 @@
 					"options": {
 						"buildTarget": "badgr-ui-cli:build",
 					},
+                    "preview": {
+                        "proxyConfig": "src/previewProxy.conf.json",
+                    },
 					"configurations": {
 						"production": {
 							"buildTarget": "badgr-ui-cli:build:production"
