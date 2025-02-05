@@ -34,7 +34,8 @@ import {
 	lucideCircleX,
 	lucideGithub,
 	lucideMail,
-	lucideFileCode
+	lucideFileCode,
+	lucideX
 } from '@ng-icons/lucide';
 
 @NgModule({
@@ -73,7 +74,8 @@ import {
 			lucideCircleX,
 			lucideGithub,
 			lucideMail,
-			lucideFileCode
+			lucideFileCode,
+			lucideX
 		}),
 	],
 })
