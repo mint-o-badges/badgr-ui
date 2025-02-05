@@ -122,15 +122,11 @@
 			</div>
 			<div #pluginBox class="md:tw-flex-[0_0_363px] md:tw-mt-0 tw-mt-6">
 				<div>
-					<div class="tw-bg-green tw-p-6 tw-rounded-[10px] tw-text-center tw-text-oebblack tw-relative">
-						<img
-							(click)="pluginBoxElement.nativeElement.remove()"
-							class="tw-cursor-pointer tw-inline-block tw-absolute tw-top-2 tw-right-2"
-							alt="Close"
-							src="assets/oeb/images/issuerPage/close.png"
-						/>
+					<div class="tw-bg-lightgreen tw-p-6 tw-rounded-[10px] tw-text-center tw-text-oebblack tw-relative">
+						<hlm-icon (click)="pluginBoxElement.nativeElement.remove()" class="tw-w-4 tw-h-4 tw-ml-2 tw-cursor-pointer tw-inline-block tw-absolute tw-top-2 tw-right-2" name="lucideX" />
+
 						<div class="tw-flex md:tw-block tw-pb-4">
-							<img class="tw-inline-block" alt="Plugin" src="assets/oeb/images/issuerPage/plugin.png" />
+							<img class="tw-inline-block" alt="Plugin" src="assets/oeb/images/issuerPage/plugin.svg" />
 							<p
 								class="tw-pt-4 tw-text-left tw-pl-4 md:tw-pl-0 md:tw-text-center"
 								[innerHTML]="'Issuer.askForPluginText' | translate"
@@ -138,7 +134,7 @@
 						</div>
 						<a
 							href="mailto:hallo@openbadges.education?subject=Interesse an Plugin!"
-							class="oeb-button oeb-white-bg !tw-font-medium tw-border-purple tw-border-solid tw-border"
+							class="!tw-font-medium tw-text-link tw-underline tw-text-lg"
 						>
 							{{ 'Issuer.askForPlugin' | translate }}
 						</a>
