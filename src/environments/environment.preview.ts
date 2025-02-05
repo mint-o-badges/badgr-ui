@@ -5,7 +5,7 @@ export const environment: BadgrEnvironment = {
 	enableErrorInterceptor: true,
 	config: {
 		api: {
-			baseUrl: 'https://oeb-staging-api.netlify.app',
+			baseUrl: 'REPLACE-ME',
 		},
 		theme: {
 			welcomeMessage: 'Willkommen auf Open Educational Badges',
