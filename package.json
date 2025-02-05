@@ -11,6 +11,7 @@
     "verify-prod-environment": "[[ -f src/environments/environment.prod.ts ]] || (echo '\\033[0;31m!!!'; echo '\\033[0;31m!!! No envrionment.prod.ts file present. Copy environment.prod.ts.example and modify it for your environment or consult the README'; echo '\\033[0;31m!!!'; echo; exit -1)",
     "build:app": "ng build --output-hashing=all --aot --configuration production && html-minifier -c html-minifier.config.json -o dist/index.html < dist/index.html",
     "build:staging": "ng build --output-hashing=all --aot --configuration staging && html-minifier -c html-minifier.config.json -o dist/index.html < dist/index.html",
+    "build:preview": "ng build --output-hashing=all --aot --configuration preview && html-minifier -c html-minifier.config.json -o dist/index.html < dist/index.html",
     "build:develop": "ng build --output-hashing=all --aot --configuration develop && html-minifier -c html-minifier.config.json -o dist/index.html < dist/index.html",
     "build": "npm run build:app && npm run build:widgets",
     "test": "ng test --source-map=false",
