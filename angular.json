@@ -112,6 +112,7 @@
 									"maximumWarning": "6kb"
 								}
 							],
+                            "proxyConfig": "src/previewProxy.conf.json",
 							"optimization": true,
 							"outputHashing": "all",
 							"sourceMap": false,

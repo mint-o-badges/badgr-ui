@@ -1,0 +1,6 @@
+    {
+      "/api": {
+        "target": "https://api.staging.openbadges.education",
+        "secure": true
+      }
+    }
