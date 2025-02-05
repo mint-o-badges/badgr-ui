@@ -163,13 +163,14 @@
 					"options": {
 						"buildTarget": "badgr-ui-cli:build",
 					},
-                    "preview": {
-                        "proxyConfig": "src/previewProxy.conf.json",
-                    },
 					"configurations": {
 						"production": {
 							"buildTarget": "badgr-ui-cli:build:production"
-						}
+						},
+                        "preview": {
+                            "proxyConfig": "src/previewProxy.conf.js",
+                            "browserTarget": "proxy-for-angular:build:preview"
+                        }
 					}
 				},
 				"extract-i18n": {
