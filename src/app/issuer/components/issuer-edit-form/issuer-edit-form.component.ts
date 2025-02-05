@@ -161,11 +161,11 @@ export class IssuerEditFormComponent implements OnInit {
 		});
 	}
 
-	onImageRatioError(error: string) {
+	onImageError(error: string) {
 		this.imageError = error;
 		const imageControl = this.issuerForm.rawControlMap.issuer_image;
 		if (imageControl) {
-			imageControl.setErrors({ imageRatioError: error });
+			imageControl.setErrors({ imageError: error });
 		}
 		this.issuerForm.markTreeDirtyAndValidate()
 	}

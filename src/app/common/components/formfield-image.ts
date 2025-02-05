@@ -133,7 +133,8 @@ export class BgFormFieldImageComponent {
 	readonly imageFailedSrc = preloadImageURL('../../../breakdown/static/images/placeholderavatar-failed.svg');
 
 	@Output() imageUploaded = new EventEmitter();
-	@Output() imageRatioError = new EventEmitter<string>(); 
+	// Image error is emitted when the image is too large or not square
+	@Output() imageError = new EventEmitter<string>(); 
 
 	@Input() control: FormControl;
 	@Input() enableIconSearch: boolean = true; 
@@ -149,6 +150,7 @@ export class BgFormFieldImageComponent {
 	@Input() placeholderImage: string;
 	@Input() labelStyle = "forminput-x-label u-margin-bottom1x";
 	@Input() imageLoader: (file: File | string) => Promise<string> = basicImageLoader;
+	@Input() maxSizeInMB: number = null;
 
 	@Input() newDropZone = false;
 
@@ -476,9 +478,13 @@ export function issuerImageLoader(file: File | string): Promise<string> {
 		return readFileAsDataURL(file)
 			.then(loadImageURL)
 			.then((image) => {
-				
+				const imageSizeInMB = base64ByteSize(image.src) / (1024 * 1024);
 				const tolerance = 0.05;
-				if(Math.abs(image.width / image.height - 1) > tolerance) {
+
+				if(imageSizeInMB > this.maxSizeInMB) {
+					return Promise.reject(new Error('Image must be <= 2MB'));
+				}
+				else if(Math.abs(image.width / image.height - 1) > tolerance) {
 					return Promise.reject(new Error('Image must be square'));
 				}
 
@@ -514,8 +520,11 @@ export function issuerImageLoader(file: File | string): Promise<string> {
 				return dataURL;
 			})
 			.catch((e) => {
-				if(e.message === 'Image must be square') {
-					this.imageRatioError.emit('Bitte lade ein Bild im quadratischen 1:1-Format hoch, damit es auf unserer Plattform optimal dargestellt werden kann');
+				if(e.message === 'Image must be <= 2MB') {
+					this.imageError.emit('Das Bild ist zu groß. Bitte wähle ein Bild mit einer Größe von maximal 2 MB.');
+				}
+				else if(e.message === 'Image must be square') {
+					this.imageError.emit('Bitte lade ein Bild im quadratischen 1:1-Format hoch, damit es auf unserer Plattform optimal dargestellt werden kann');
 				}
 				throw new Error(`${file.name} is not a valid image file`);
 			});
