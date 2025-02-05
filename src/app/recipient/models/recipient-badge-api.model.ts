@@ -71,7 +71,6 @@ export interface ApiRecipientBadgeClass {
 	criteria_url?: string;
 	tags: string[];
 	issuer: ApiRecipientBadgeIssuer;
-	slug?: string;
 }
 
 export interface ApiRecipientBadgeInstanceJson {

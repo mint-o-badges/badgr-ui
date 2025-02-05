@@ -32,8 +32,6 @@ import { QrCodeApiService } from '../../services/qrcode-api.service';
 import { InfoDialogComponent } from '../../../common/dialogs/oeb-dialogs/info-dialog.component';
 import { HlmDialogService } from "../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service";
 import { inject } from '@angular/core';
-import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
-import { ApiLearningPath } from '../../../common/model/learningpath-api.model';
 
 @Component({
 	selector: 'badgeclass-detail',
@@ -106,8 +104,6 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 	badgeInstancesLoaded: Promise<unknown>;
 	assertionsLoaded: Promise<unknown>;
 	issuerLoaded: Promise<unknown>;
-	learningPaths: ApiLearningPath[];
-	learningPathsLoaded: Promise<ApiLearningPath[] | void>;
 	showAssertionCount = false;
 	badgeClass: BadgeClass;
 	allBadgeInstances: BadgeClassInstances;
@@ -156,7 +152,6 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		protected pdfService: PdfService,
 		private sanitizer: DomSanitizer,
 		private translate: TranslateService,
-		private learningPathApiService: LearningPathApiService
 	) {
 		super(router, route, sessionService);
 
@@ -179,11 +174,6 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 			(issuer) => (this.issuer = issuer),
 			(error) => this.messageService.reportLoadingError(`Cannot find issuer ${this.issuerSlug}`, error),
 		);
-
-		this.learningPathsLoaded = this.learningPathApiService.getLearningPathsForBadgeClass(this.badgeSlug).then(lp => {
-			this.learningPaths = lp;
-			this.config.learningPaths = lp
-		})
 
 		this.qrCodeApiService.getQrCodesForIssuerByBadgeClass(this.issuerSlug, this.badgeSlug).then((qrCodes) => {
 			this.qrCodeAwards = qrCodes;

@@ -27,10 +27,6 @@ export class BadgeClass extends ManagedEntity<ApiBadgeClass, BadgeClassRef> {
 		this.apiModel.name = name;
 	}
 
-	get slug(): string {
-		return this.apiModel.slug;
-	}
-
 	get description(): string {
 		return this.apiModel.description;
 	}

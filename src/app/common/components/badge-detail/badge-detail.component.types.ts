@@ -1,5 +1,3 @@
-import { PublicApiLearningPath } from '../../../public/models/public-api.model';
-import { ApiLearningPath } from '../../model/learningpath-api.model';
 import { LinkEntry } from '../bg-breadcrumbs/bg-breadcrumbs.component';
 
 type MenuItemBase = {
@@ -80,5 +78,4 @@ export interface PageConfig {
 	id?: string;
 	shareButton?: boolean;
 	badgeInstanceSlug?: string
-	learningPaths?: PublicApiLearningPath[] | ApiLearningPath[]
 }
