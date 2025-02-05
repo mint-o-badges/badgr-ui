@@ -481,10 +481,9 @@ export function issuerImageLoader(file: File | string): Promise<string> {
 				const imageSizeInMB = base64ByteSize(image.src) / (1024 * 1024);
 				const tolerance = 0.05;
 
-				if(imageSizeInMB > this.maxSizeInMB) {
-					return Promise.reject(new Error('Image must be <= 2MB'));
-				}
-				else if(Math.abs(image.width / image.height - 1) > tolerance) {
+				if (this.maxSizeInMB && imageSizeInMB > this.maxSizeInMB) {
+					return Promise.reject(new Error("Image is large"));
+				} else if (Math.abs(image.width / image.height - 1) > tolerance) {
 					return Promise.reject(new Error('Image must be square'));
 				}
 
@@ -520,8 +519,8 @@ export function issuerImageLoader(file: File | string): Promise<string> {
 				return dataURL;
 			})
 			.catch((e) => {
-				if(e.message === 'Image must be <= 2MB') {
-					this.imageError.emit('Das Bild ist zu groß. Bitte wähle ein Bild mit einer Größe von maximal 2 MB.');
+				if(e.message === 'Image is large') {
+					this.imageError.emit(`Das Bild ist zu groß. Bitte wähle ein Bild mit einer Größe von maximal ${this.maxSizeInMB} MB.`);
 				}
 				else if(e.message === 'Image must be square') {
 					this.imageError.emit('Bitte lade ein Bild im quadratischen 1:1-Format hoch, damit es auf unserer Plattform optimal dargestellt werden kann');
