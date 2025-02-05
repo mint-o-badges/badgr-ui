@@ -377,7 +377,7 @@ export type RequestedBadge = {
         hlm
         stickyHeader
         class="tw-mt-4 tw-block tw-min-h-[335px] tw-max-h-[680px] tw-overflow-x-hidden tw-overflow-y-auto tw-rounded-md"
-        [dataSource]="_filteredSortedPaginatedPayments()"
+        [dataSource]="_filteredSortedPayments()"
         [displayedColumns]="_allDisplayedColumns()"
         [trackBy]="_trackBy"
       [headerRowClasses]="headerRowStyle"
@@ -441,39 +441,6 @@ export type RequestedBadge = {
         </brn-column-def>
         <div class="tw-flex tw-items-center tw-justify-center tw-p-20 tw-text-muted-foreground" brnNoDataRow>No data</div>
       </brn-table>
-      <div
-        class="tw-flex tw-flex-col tw-justify-between tw-mt-4 sm:tw-flex-row sm:tw-items-center"
-        *brnPaginator="let ctx; totalElements: _totalElements(); pageSize: _pageSize(); onStateChange: _onStateChange"
-      >
-        <span class="tw-text-sm tw-text-muted-foreground">{{ _selected().length }} {{ 'General.of' | translate}} {{ _totalElements() }} {{ ' ' | i18nPlural: plural['award'] }} {{ 'General.selected' | translate}}</span>
-      <div class="tw-flex tw-mt-2 sm:tw-mt-0">
-      
-          <brn-select class="tw-inline-block" placeholder="{{ _availablePageSizes[0] }}" [(ngModel)]="_pageSize">
-            <hlm-select-trigger class="tw-inline-flex tw-mr-1 tw-w-15 tw-h-9">
-              <hlm-select-value />
-            </hlm-select-trigger>
-            <hlm-select-content>
-              @for (size of _availablePageSizes; track size) {
-                <hlm-option [value]="size">
-                  {{ size === 10000 ? ('General.all' | translate) : size }}
-                </hlm-option>
-              }
-            </hlm-select-content>
-          </brn-select>
-      
-        
-       @if(_requestedBadges().length > 10){
-          <div class="tw-flex tw-space-x-1">
-            <button size="sm" hlmBtn [disabled]="!ctx.decrementable()" (click)="ctx.decrement()">
-              {{ 'General.previous' | translate}}
-            </button>
-            <button size="sm" hlmBtn [disabled]="!ctx.incrementable()" (click)="ctx.increment()">
-              {{'General.next' | translate}}
-            </button>
-          </div>
-        }
-        </div>
-        </div>
     }
 
       <oeb-button 
@@ -510,10 +477,6 @@ export class QrCodeDatatableComponent {
   protected readonly _emailFilter = signal('');
   private readonly _debouncedFilter = toSignal(toObservable(this._rawFilterInput).pipe(debounceTime(300)));
 
-  private readonly _displayedIndices = signal({ start: 0, end: 0 });
-  protected readonly _availablePageSizes = [5, 10, 10000];
-  protected readonly _pageSize = signal(this._availablePageSizes[0]);
-
   private readonly _selectionModel = new SelectionModel<RequestedBadge>(true);
   protected readonly _isPaymentSelected = (payment: RequestedBadge) => this._selectionModel.isSelected(payment);
   protected readonly _selected = toSignal(this._selectionModel.changed.pipe(map((change) => change.source.selected)), {
@@ -541,24 +504,37 @@ export class QrCodeDatatableComponent {
   });
   private readonly _requestedOnSort = signal<'ASC' | 'DESC' | null>(null);
   private readonly _emailSort = signal<'ASC' | 'DESC'>('ASC');
-  protected readonly _filteredSortedPaginatedPayments = computed(() => {
+  protected readonly _filteredSortedPayments = computed(() => {
     const sort = this._emailSort();
-    const start = this._displayedIndices().start;
-    const end = this._displayedIndices().end + 1;
     const payments = this._filteredPayments();
     if (!sort) {
-      return payments.slice(start, end);
+      return payments;
     }
-    return [...payments]
-	  .sort((p1, p2) => {
-		const date1 = new Date(p1.requestedOn);
-		const date2 = new Date(p2.requestedOn);
-		return (sort === 'ASC' ? 1 : -1) * (date1.getTime() - date2.getTime());
-	  })
-      .slice(start, end);
+    return [...payments].sort((p1, p2) => {
+      const date1 = new Date(p1.requestedOn);
+		  const date2 = new Date(p2.requestedOn);
+      return (sort === 'ASC' ? 1 : -1) * (date1.getTime() - date2.getTime());
+    }
+    );
   });
+  // protected readonly _filteredSortedPaginatedPayments = computed(() => {
+  //   const sort = this._emailSort();
+  //   const start = this._displayedIndices().start;
+  //   const end = this._displayedIndices().end + 1;
+  //   const payments = this._filteredPayments();
+  //   if (!sort) {
+  //     return payments.slice(start, end);
+  //   }
+  //   return [...payments]
+	//   .sort((p1, p2) => {
+	// 	const date1 = new Date(p1.requestedOn);
+	// 	const date2 = new Date(p2.requestedOn);
+	// 	return (sort === 'ASC' ? 1 : -1) * (date1.getTime() - date2.getTime());
+	//   })
+  //     .slice(start, end);
+  // });
   protected readonly _allFilteredPaginatedPaymentsSelected = computed(() =>
-    this._filteredSortedPaginatedPayments().every((payment) => this._selected().includes(payment)),
+    this._filteredSortedPayments().every((payment) => this._selected().includes(payment)),
   );
   protected readonly _checkboxState = computed(() => {
     const noneSelected = this._selected().length === 0;
@@ -568,8 +544,6 @@ export class QrCodeDatatableComponent {
 
   protected readonly _trackBy: TrackByFunction<RequestedBadge> = (_: number, p: RequestedBadge) => p.entity_id;
   protected readonly _totalElements = computed(() => this._filteredPayments().length);
-  protected readonly _onStateChange = ({ startIndex, endIndex }: PaginatorState) =>
-    this._displayedIndices.set({ start: startIndex, end: endIndex });
 
   constructor(
 	private badgeRequestApiService: BadgeRequestApiService,
@@ -634,9 +608,9 @@ export class QrCodeDatatableComponent {
   protected handleHeaderCheckboxChange() {
     const previousCbState = this._checkboxState();
     if (previousCbState === 'indeterminate' || !previousCbState) {
-      this._selectionModel.select(...this._filteredSortedPaginatedPayments());
+      this._selectionModel.select(...this._filteredSortedPayments());
     } else {
-      this._selectionModel.deselect(...this._filteredSortedPaginatedPayments());
+      this._selectionModel.deselect(...this._filteredSortedPayments());
     }
   }
 

@@ -61,7 +61,7 @@ import { MessageService } from '../services/message.service';
 							{{ 'RecBadge.chooseAnotherFile' | translate }}
 						</button>
 						<button
-							*ngIf="loaderName != 'basic'"
+							*ngIf="loaderName != 'basic' && enableIconSearch"
 							(click)="$event.preventDefault(); findNounproject($event)"
 							type="button"
 							class="u-text-link"
@@ -136,6 +136,7 @@ export class BgFormFieldImageComponent {
 	@Output() imageRatioError = new EventEmitter<string>(); 
 
 	@Input() control: FormControl;
+	@Input() enableIconSearch: boolean = true; 
 	@Input() label: string;
 	@Input() sublabel: string;
 	@Input() sublabelRight: string;

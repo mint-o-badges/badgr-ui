@@ -107,7 +107,6 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 	assertionsLoaded: Promise<unknown>;
 	issuerLoaded: Promise<unknown>;
 	learningPaths: ApiLearningPath[];
-	learningPathsLoaded: Promise<ApiLearningPath[] | void>;
 	showAssertionCount = false;
 	badgeClass: BadgeClass;
 	allBadgeInstances: BadgeClassInstances;
@@ -180,11 +179,6 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 			(error) => this.messageService.reportLoadingError(`Cannot find issuer ${this.issuerSlug}`, error),
 		);
 
-		this.learningPathsLoaded = this.learningPathApiService.getLearningPathsForBadgeClass(this.badgeSlug).then(lp => {
-			this.learningPaths = lp;
-			this.config.learningPaths = lp
-		})
-
 		this.qrCodeApiService.getQrCodesForIssuerByBadgeClass(this.issuerSlug, this.badgeSlug).then((qrCodes) => {
 			this.qrCodeAwards = qrCodes;
 		});
@@ -194,13 +188,14 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		});
 	}
 
-	loadInstances(recipientQuery?: string) {
+	async loadInstances(recipientQuery?: string) {
 		const instances = new BadgeClassInstances(
 			this.badgeInstanceManager,
 			this.issuerSlug,
 			this.badgeSlug,
 			recipientQuery,
 		);
+		this.learningPaths = await this.learningPathApiService.getLearningPathsForBadgeClass(this.badgeSlug)
 		this.badgeInstancesLoaded = instances.loadedPromise.then(
 			(retInstances) => {
 				this.crumbs = [
@@ -259,6 +254,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 					badgeImage: this.badgeClass.image,
 					competencies: this.badgeClass.extension['extensions:CompetencyExtension'],
 					license: this.badgeClass.extension['extensions:LicenseExtension'] ? true : false,
+					learningPaths: this.learningPaths
 
 				};
 				console.log(this.config);
