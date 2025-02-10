@@ -8,7 +8,7 @@ import { Component, Input } from '@angular/core';
 	template: `
 		<article class="l-containerxaxis l-containeryaxis">
 			<div class="l-flex l-flex-column l-flex-justifycenter l-flex-aligncenter">
-				<h1 class="u-text-h3 u-margin-bottom2x">{{ errorMessage }}</h1>
+				<h1 class="u-text-h3 u-margin-bottom2x tw-text-purple">{{ errorMessage }}</h1>
 				<img class="u-width-form" [src]="unavailableImageSrc" />
 			</div>
 		</article>
