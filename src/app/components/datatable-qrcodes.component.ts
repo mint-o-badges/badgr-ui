@@ -729,7 +729,7 @@ export class QrCodeDatatableComponent {
           },
           (error) => {
             this.messageService.setMessage(
-              'Unable to award badge: ' + BadgrApiFailure.from(error).firstMessage,
+              'Fast geschafft! Deine Badges werden gerade vergeben – das kann ein paar Minuten dauern. Schau gleich auf der Badge-Detail-Seite nach, ob alles geklappt hat: Badge-Detail-Seite',
               'error',
             );
           },
