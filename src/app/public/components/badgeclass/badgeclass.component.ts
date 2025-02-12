@@ -18,7 +18,7 @@ import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	template: `<bg-badgedetail [config]="config" [awaitPromises]="[badgeClass]">
-					<ng-template [bgAwaitPromises]="[learningPathsPromise]">
+					<ng-template>
 						<div class="oeb" *ngIf="learningPaths.length > 0">
 							<oeb-separator class="tw-block tw-mb-8 tw-mt-8"></oeb-separator>
 							<span class="tw-my-2 tw-text-oebblack tw-text-[22px] tw-leading-[26px] tw-font-semibold"> Dieser Badge ist Teil folgender Lernpfade: </span>
