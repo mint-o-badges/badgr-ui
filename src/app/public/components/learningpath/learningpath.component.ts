@@ -130,8 +130,16 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 		});
 	}
 
+	private get rawUrl() {
+		return `${this.configService.apiConfig.baseUrl}/public/assertions/${this.badgeInstance.slug}`;
+	}
+
 	private get rawJsonUrl() {
 		return `${this.configService.apiConfig.baseUrl}/public/assertions/${this.badgeInstance.slug}.json`;
+	}
+
+	get rawBakedUrl() {
+		return `${this.rawUrl}/baked`;
 	}
 
 	progressValue(): number {
@@ -217,20 +225,22 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 	}
 
 	downloadMicroDegree(){
-		fetch(this.rawJsonUrl)
-					.then((response) => response.blob())
-					.then((blob) => {
-						const link = document.createElement('a');
-						const url = URL.createObjectURL(blob);
-						link.href = url;
-						link.download = `assertion-${this.badgeInstance.slug.trim()}.json`;
-						document.body.appendChild(link);
-						link.click();
-						document.body.removeChild(link);
-						URL.revokeObjectURL(url);
-					})
-					.catch((error) => console.error('Download failed:', error));
-		}
+		fetch(this.rawBakedUrl)
+						.then((response) => response.blob())
+						.then((blob) => {
+							const link = document.createElement('a');
+							const url = URL.createObjectURL(blob);
+							const urlParts = this.rawBakedUrl.split('/');
+							const inferredFileName = urlParts[urlParts.length - 1] || 'downloadedFile';
+							link.href = url;
+							link.download = inferredFileName;
+							document.body.appendChild(link);
+							link.click();
+							document.body.removeChild(link);
+							URL.revokeObjectURL(url);
+						})
+						.catch((error) => console.error('Download failed:', error));
+				}
 
 	participate() {
 		this.learningPathApiService.participateInLearningPath(this.learningPathSlug).then(
