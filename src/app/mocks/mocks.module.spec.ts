@@ -38,7 +38,6 @@ import { BaseHttpApiService } from '../common/services/base-http-api.service';
 import { NavigationService } from '../common/services/navigation.service';
 import { RecipientBadgeCollectionApiService } from '../recipient/services/recipient-badge-collection-api.service';
 import { ApplicationCredentialsService } from '../common/services/application-credentials.service.';
-import { CaptchaService } from '../common/services/captcha.service';
 import { QrCodeApiService } from '../issuer/services/qrcode-api.service';
 import { PdfService } from '../common/services/pdf.service';
 import { LearningPathApiService } from '../common/services/learningpath-api.service';
@@ -186,11 +185,6 @@ export class MockOAuthApiService {
 	listAuthorizations = () => new Promise(() => {});
 }
 
-@Injectable()
-export class MockCaptchaService {
-	getCaptcha = () => new Promise(() => {});
-	setupCaptcha = () => new Promise(() => {})
-}
 
 @Injectable()
 export class MockPdfService {
@@ -395,7 +389,6 @@ export let COMMON_MOCKS_PROVIDERS_WITH_SUBS = [];
 	RecipientBadgeCollectionManager,
 	RecipientBadgeManager,
 	ApplicationCredentialsService,
-	CaptchaService,
 	QrCodeApiService,
 	PdfService,
 	LearningPathApiService,

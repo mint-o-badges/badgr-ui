@@ -6,4 +6,5 @@ export interface Payload {
 	signature: string;
 	test?: boolean;
 	took: number;
+	maxnumber?: number;
 }
