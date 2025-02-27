@@ -8,21 +8,23 @@ import { BadgeClass } from '../issuer/models/badgeclass.model';
   template: `
     <oeb-select
       actionBar="true"
-      class="oeb tw-block lg:tw-w-[10rem]"
+      class="oeb tw-block tw-w-full"
       [options]="sortOptions"
       [control]="control"
       [disabled]="disabled"
       [autofocus]="true"
+			[placeholder]="placeholder"
       noTopMargin="true"
     ></oeb-select>
-  ` 
+  `
 })
 export class OebSortSelectComponent implements OnInit {
-  @Input() control: FormControl = new FormControl('name_asc'); 
-  @Input() result: BadgeClass[] = []; 
+  @Input() control: FormControl = new FormControl('name_asc');
+  @Input() result: BadgeClass[] = [];
   @Input() recipient: boolean = false;
-  @Input () learningPath: boolean = false;
+  @Input() learningPath: boolean = false;
   @Input() disabled: boolean = false;
+  @Input() placeholder: string|undefined;
   sortOptions: Array<{ value: string; label: string }> =  [
     { value: 'name_asc', label: 'A-Z' },
     { value: 'name_desc', label: 'Z-A' },
@@ -68,20 +70,20 @@ export class OebSortSelectComponent implements OnInit {
             createdOn: new Date(item.createdAt).getTime(),
           };
         };
-      
+
         const { name: nameA, createdOn: createdOnA } = getFields(a);
         const { name: nameB, createdOn: createdOnB } = getFields(b);
-      
+
         if (sortBy === 'name') {
           return multiplier * nameA.localeCompare(nameB);
         }
         if (sortBy === 'date') {
           return multiplier * (createdOnA - createdOnB);
         }
-      
+
         return 0;
       };
-      
+
     this.result.sort(sortFn);
   }
 }

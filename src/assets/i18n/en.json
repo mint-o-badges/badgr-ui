@@ -65,7 +65,8 @@
 		"previous": "Previous",
 		"all": "All",
 		"pleaseWait": "Please wait...",
-		"title": "Title"
+		"title": "Title",
+		"noResults": "No results"
 	},
 	"NavItems": {
 		"register": "Register",

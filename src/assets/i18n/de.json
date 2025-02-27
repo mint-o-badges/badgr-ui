@@ -72,7 +72,8 @@
 		"dateDescending": "Neueste zuerst",
 		"all": "Alle",
 		"pleaseWait": "Bitte warten...",
-		"title": "Titel"
+		"title": "Titel",
+		"noResults": "Keine Ergebnisse"
 	},
 	"NavItems": {
 		"register": "Registrieren",

@@ -124,7 +124,7 @@ import { FormControl } from '@angular/forms';
 							[name]="competency.name"
 							[category]="competency.category"
 							[description]="competency.description"
-							[framework]="competency.framework" 
+							[framework]="competency.framework"
 							[framework_identifier]="competency['framework_identifier']"
 							[studyload]="(competency.studyLoad | hourPipe) + ' h'"
 						></competency-accordion>
@@ -132,6 +132,7 @@ import { FormControl } from '@angular/forms';
 				</ng-container>
 			</div>
 		</div>
+		<!--<ul *ngIf="tags && tags.length" class="tw-mt-2 tw-leading-[0px]"><li class="tag tw-mt-2 tw-mr-2" *ngFor="let tag of tags">{{tag}}</li></ul>-->
 	`,
 })
 export class BgBadgecard {
@@ -156,6 +157,7 @@ export class BgBadgecard {
 	@Input() completed: Boolean = false;
 	@Output() checkboxChange = new EventEmitter<boolean>();
 	@Input() checked: boolean = false;
+	@Input() tags: string[] = [];
 
 	changeCheckbox(event: boolean) {
 		this.checkboxChange.emit(event);
