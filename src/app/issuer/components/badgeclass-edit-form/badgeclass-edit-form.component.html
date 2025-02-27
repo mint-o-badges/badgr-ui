@@ -473,7 +473,6 @@
 																duration: requiredError
 															}"
 															noTopMargin="true"
-															[readonly]="competency.controls['framework_identifier'].value ? true : false"
 														>
 														</oeb-input>
 														:
@@ -486,7 +485,6 @@
 																duration: requiredError
 															}"
 															noTopMargin="true"
-															[readonly]="competency.controls['framework_identifier'].value ? true : false"
 														>
 														</oeb-input>
 
@@ -540,16 +538,6 @@
 													(click)="removeCompetency(competency)"
 													text="{{ 'General.remove' | translate }}"
 												></oeb-button>
-
-												<oeb-button
-													id="{{'addCompetencyBtn_'+i}}"
-													size="sm"
-													type="button"
-													width="max_content"
-													(click)="addCompetency(competency)"
-													text="{{ 'General.add' | translate }}"
-												>
-												</oeb-button>
 											</div>
 										</div>
 									</ng-template>
