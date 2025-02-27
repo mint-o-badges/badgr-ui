@@ -53,4 +53,22 @@ export class AiSkillsService extends BaseHttpApiService {
 			},
 		);
 	}
+
+	getAiKeywordSkillsResult(query: string, language: string): Promise<AiSkillsResult> {
+		return this.get<AiSkillsResult>(`/aiskills-keywords/${this.toBase64Url(query)}?lang=${language}`).then(
+			(r) => r.body as AiSkillsResult,
+			(error) => {
+				throw new Error(JSON.parse(error.message).error);
+			},
+		);
+	}
+
+	getAiKeywordSkills(query: string, language = 'de'): Promise<Skill[]> {
+		return this.getAiKeywordSkillsResult(query, language).then(
+			(result: AiSkillsResult) => result.skills,
+			(error) => {
+				throw error;
+			},
+		);
+	}
 }
