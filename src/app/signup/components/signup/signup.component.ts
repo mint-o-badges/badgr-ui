@@ -13,7 +13,6 @@ import { OAuthManager } from '../../../common/services/oauth-manager.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { typedFormGroup } from '../../../common/util/typed-forms';
 import { BadgrApiFailure } from '../../../common/services/api-failure';
-import { CaptchaService } from '../../../common/services/captcha.service';
 import { TranslateService } from '@ngx-translate/core';
 import 'altcha';
 
@@ -52,13 +51,12 @@ export class SignupComponent extends BaseRoutableComponent implements OnInit, Af
 		fb: FormBuilder,
 		private title: Title,
 		public messageService: MessageService,
-		private configService: AppConfigService,
+		public configService: AppConfigService,
 		public sessionService: SessionService,
 		public signupService: SignupService,
 		public translate: TranslateService,
 		public oAuthManager: OAuthManager,
 		private sanitizer: DomSanitizer,
-		private captchaService: CaptchaService,
 		private renderer: Renderer2,
 		private elementRef: ElementRef,
 		router: Router,
@@ -85,9 +83,12 @@ export class SignupComponent extends BaseRoutableComponent implements OnInit, Af
 	}
 
 	ngAfterViewInit(): void {
-		this.captchaService.setupCaptcha('#altcha', (verified) => {
-			this.captchaVerified = verified;
-		  });
+			const captchaElement = document.querySelector('#altcha');
+			captchaElement.addEventListener('statechange', (ev: any) => {
+			  if (ev.detail.state === 'verified') {
+				this.captchaVerified = true;
+			  }
+			});
 	}
 
 	onSubmit() {

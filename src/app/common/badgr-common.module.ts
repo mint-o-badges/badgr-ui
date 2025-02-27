@@ -84,7 +84,6 @@ import { BadgeClassManager } from '../issuer/services/badgeclass-manager.service
 import { BadgeClassApiService } from '../issuer/services/badgeclass-api.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { ApplicationCredentialsService } from './services/application-credentials.service.';
-import { CaptchaService } from './services/captcha.service';
 
 import { OebInputComponent } from '../components/input.component';
 import { OebInputErrorComponent } from '../components/input.error.component';
@@ -203,7 +202,6 @@ const SERVICES = [
 	AiSkillsService,
 	ServerVersionService,
 	PdfService,
-	CaptchaService,
 	EventsService,
 	SessionService,
 	QueryParametersService,

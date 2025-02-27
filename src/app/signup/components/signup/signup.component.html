@@ -542,7 +542,7 @@
 					<div>
 						<div class="tw-mt-6">
 							<form>
-								<altcha-widget auto="onfocus" id="altcha" maxnumber="500000"></altcha-widget>
+								<altcha-widget [challengeurl]="configService.apiConfig.baseUrl + '/altcha' " id="altcha"></altcha-widget>
 							</form>
 						</div>
 						<div class="tw-flex tw-justify-end tw-flex-wrap sm:tw-flex-nowrap tw-gap-2 tw-mt-4">
