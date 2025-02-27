@@ -47,6 +47,7 @@ import { LearningPathManager } from './services/learningpath-manager.service';
 import { CdkStepperModule } from '@angular/cdk/stepper';
 import { CdkStepper } from '@angular/cdk/stepper';
 import { StepperComponent } from '../components/stepper/stepper.component';
+import { StepComponent } from '../components/stepper/step.component';
 import { LearningPathDetailsComponent } from './components/learningpath-create-steps/learningpath-details/learningpath-details.component';
 import { LearningPathBadgesComponent } from './components/learningpath-create-steps/learningpath-badges/learningpath-badges.component';
 import { LearningPathBadgeOrderComponent } from './components/learningpath-create-steps/learningpath-badge-order/learningpath-badge-order.component';
@@ -55,6 +56,7 @@ import { LearningPathUploadComponent } from './components/learningpath-upload/le
 import { IssuerLearningPathComponent } from './components/issuer-learning-path/issuer-learning-path.component';import { IssuerEditFormComponent } from './components/issuer-edit-form/issuer-edit-form.component';
 import { Issuer } from './models/issuer.model';
 import { LearningPathEditComponent } from './components/learningpath-edit/learningpath-edit.component';
+import { BadgeClassSelectTypeComponent } from './components/badgeclass-select-type/badgeclass-select-type.component';
 
 const routes = [
 	/* Issuer */
@@ -77,6 +79,14 @@ const routes = [
 	{
 		path: 'issuers/:issuerSlug/staff',
 		component: IssuerStaffComponent,
+	},
+	{
+		path: 'issuers/:issuerSlug/badges/select',
+		component: BadgeClassSelectTypeComponent,
+	},
+	{
+		path: 'issuers/:issuerSlug/badges/create/:category',
+		component: BadgeClassCreateComponent,
 	},
 	{
 		path: 'issuers/:issuerSlug/badges/create',
@@ -149,6 +159,7 @@ const routes = [
 		CdkStepperModule
 	],
 	declarations: [
+		BadgeClassSelectTypeComponent,
 		BadgeClassCreateComponent,
 		BadgeClassEditComponent,
 		BadgeClassEditFormComponent,
@@ -187,6 +198,7 @@ const routes = [
 		IssuerStaffCreateDialogComponent,
 		IssuerLearningPathComponent,
 		StepperComponent,
+		StepComponent,
 	],
 	schemas: [CUSTOM_ELEMENTS_SCHEMA],
 	exports: [],

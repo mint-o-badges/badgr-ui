@@ -8,6 +8,7 @@ import {
 	OnInit,
 	Output,
 	ViewChild,
+	isDevMode,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AbstractControl, FormBuilder, Validators, ValidatorFn, ValidationErrors, FormControl } from '@angular/forms';
@@ -46,6 +47,9 @@ import { base64ByteSize } from '../../../common/util/file-util';
 import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
 import { ErrorDialogComponent } from '../../../common/dialogs/oeb-dialogs/error-dialog.component';
 
+import { StepperComponent } from '../../../components/stepper/stepper.component';
+import { BadgeClassDetailsComponent } from '../badgeclass-create-steps/badgeclass-details/badgeclass-details.component';
+
 @Component({
 	selector: 'badgeclass-edit-form',
 	templateUrl: './badgeclass-edit-form.component.html',
@@ -57,7 +61,9 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	baseUrl: string;
 	badgeCategory: string;
 
+	aiCompetenciesLoading = false;
 	selectedAiCompetencies: Skill[] = []
+	isDevMode: boolean = false && isDevMode(); // DEBUG: enable to skip steps
 
 	// Translation
 	selectFromMyFiles = this.translate.instant('RecBadge.selectFromMyFiles');
@@ -80,7 +86,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	imageErrorFork = this.translate.instant('CreateBadge.imageErrorFork');
 
 	detailedDescription = this.translate.instant('CreateBadge.detailedDescription');
-	competencyTitle = this.translate.instant('Badge.competency') + '-' + this.translate.instant('Badge.title');
+	competencyTitle = this.translate.instant('Badge.competency') + '-' + this.translate.instant('General.title');
 	titleError = this.translate.instant('CreateBadge.titleError');
 	requiredError = this.translate.instant('CreateBadge.requiredError');
 	competencyDuration = this.translate.instant('CreateBadge.competencyDuration');
@@ -322,6 +328,9 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	issuerSlug: string;
 
 	@Input()
+	category: string;
+
+	@Input()
 	submitText: string;
 
 	@Input()
@@ -353,6 +362,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	categoryOptions: Partial<{ [key in BadgeClassCategory]: string }> = {
 		competency: this.translate.instant('Badge.competency'),
 		participation: this.translate.instant('Badge.participation'),
+		// learningpath: this.translate.instant('Badge.learningpath'),
 	};
 
 	competencyCategoryOptions = {
@@ -378,6 +388,14 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	existing = false;
 	showLegend = false;
 
+	@ViewChild(StepperComponent) stepper: StepperComponent;
+
+	@ViewChild('stepTwo') stepTwo!: BadgeClassDetailsComponent;
+
+	selectedStep = 0;
+	next: string
+	previous: string;
+
 	constructor(
 		sessionService: SessionService,
 		router: Router,
@@ -394,8 +412,8 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		private translate: TranslateService,
 		private navService: NavigationService,
 	) {
+
 		super(router, route, sessionService);
-		title.setTitle(`Create Badge - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 
 		this.baseUrl = this.configService.apiConfig.baseUrl;
 	}
@@ -424,6 +442,8 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			return { ...comp, hours: Math.floor(comp.studyLoad / 60), minutes: comp.studyLoad % 60 };
 		});
 
+		this.category = badgeClass.extension['extensions:CategoryExtension'] ? badgeClass.extension['extensions:CategoryExtension'].Category : 'participation';
+
 		this.badgeClassForm.setValue({
 			badge_name: badgeClass.name,
 			badge_image: this.existing && badgeClass.imageFrame ? badgeClass.image : null,
@@ -440,12 +460,8 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			badge_study_load: badgeClass.extension['extensions:StudyLoadExtension']
 				? badgeClass.extension['extensions:StudyLoadExtension'].StudyLoad
 				: null,
-			badge_category: badgeClass.extension['extensions:CategoryExtension']
-				? badgeClass.extension['extensions:CategoryExtension'].Category
-				: null,
-			badge_level: badgeClass.extension['extensions:LevelExtension']
-				? badgeClass.extension['extensions:LevelExtension'].Level
-				: null,
+			badge_category: this.category,
+			badge_level: badgeClass.extension['extensions:LevelExtension']?.Level || 'a1',	// a1 is default in formcontrol
 			badge_based_on: {
 				slug: badgeClass.slug,
 				issuerSlug: badgeClass.issuerSlug,
@@ -491,6 +507,14 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 	ngOnInit() {
 		super.ngOnInit();
+
+		this.translate.get('General.next').subscribe((next) => {
+			this.next = next;
+		});
+		this.translate.get('General.previous').subscribe((previous) => {
+			this.previous = previous;
+		});
+
 		let that = this;
 
 		if (!that.existing) {
@@ -498,10 +522,12 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		}
 
 		// Set badge category when editing a badge. As new select component doesn't show badge competencies
-		this.badgeCategory = this.badgeClassForm.rawControl.controls['badge_category'].value;
-		if (this.badgeCategory === 'competency') {
-			this.badgeClassForm.controls.competencies.addFromTemplate();
+		// FIXME: only runs when initializing the component via button click, not when refreshing the url
+		// maybe combine this with initFormFromExisting?
+		if (this.category && this.categoryOptions.hasOwnProperty(this.category)) {
+			this.badgeClassForm.rawControl.controls['badge_category'].setValue(this.category);
 		}
+		this.badgeCategory = this.badgeClassForm.rawControl.controls['badge_category'].value;
 
 		// update badge frame when a category is selected, unless no-hexagon-frame checkbox is checked
 		this.badgeClassForm.rawControl.controls['badge_category'].statusChanges.subscribe((res) => {
@@ -509,9 +535,39 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		});
 
 		// To check duplicate competencies only when one is selected
-		this.badgeClassForm.controls.aiCompetencies.controls['selected'].statusChanges.subscribe((res) => {
-			this.checkDuplicateCompetency();
-		});
+		if (this.badgeClassForm.controls.aiCompetencies.controls['selected']) {
+			this.badgeClassForm.controls.aiCompetencies.controls['selected'].statusChanges.subscribe((res) => {
+				this.checkDuplicateCompetency();
+			});
+		}
+
+
+		if (!this.existingBadgeClass) {
+			// restore values from sessionStorage for new badges
+			const sessionValues = sessionStorage.getItem('oeb-create-badgeclassvalues');
+			if (sessionValues) {
+				this.badgeClassForm.rawControl.patchValue(JSON.parse(sessionValues));
+			}
+			// restore values from sessionStorage
+			const saveableSessionValues = [
+				'badge_name', 'badge_description', 'badge_hours', 'badge_minutes',
+			];
+			const filterSessionValues = (values: Object) => {
+				const filteredValues = {};
+				for (const [k, v] of Object.entries(values)) {
+					if (saveableSessionValues.includes(k)) {
+						filteredValues[k] = v;
+					}
+				};
+				return filteredValues;
+			};
+			this.badgeClassForm.rawControl.valueChanges.subscribe(v => {
+				sessionStorage.setItem('oeb-create-badgeclassvalues', JSON.stringify(filterSessionValues(this.badgeClassForm.rawControl.value)));
+			});
+		} else {
+			// clear session storage when editing existing badges
+			sessionStorage.removeItem('oeb-create-badgeclassvalues');
+		}
 	}
 
 	ngAfterViewInit(): void {
@@ -523,6 +579,10 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			if (this.customImageField.control.value != null) this.imageField.control.reset();
 		});
 		this.fetchTags();
+
+		this.stepper.selectionChange.subscribe((event) => {
+			this.selectedStep = event.selectedIndex;
+		});
 	}
 
 	clearCompetencies() {
@@ -554,9 +614,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				this.badgeClassForm.controls['badge_category'].setValue(this.badgeCategory);
 				return;
 			}
-		}
-		if (currentBadgeCategory === 'competency') {
-			this.badgeClassForm.controls.competencies.addFromTemplate();
 		}
 		this.badgeCategory = currentBadgeCategory;
 
@@ -673,7 +730,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			return;
 		}
 		competency.controls['added'].setValue(true);
-		// this.badgeClassForm.controls.competencies.addFromTemplate();
 	}
 
 	addAnotherCompetency() {
@@ -686,9 +742,10 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	 * (@see badgeClassForm.controls.aiCompetencies) (and removes the old ones).
 	 */
 	suggestCompetencies() {
-		if (this.aiCompetenciesDescription.length == 0) {
+		if (this.aiCompetenciesDescription.length < 70) {
 			return;
 		}
+		this.aiCompetenciesLoading = true;
 		this.aiSkillsService
 			.getAiSkills(this.aiCompetenciesDescription)
 			.then((skills) => {
@@ -698,8 +755,8 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 					aiCompetencies.removeAt(i);
 				}
 				this.aiCompetenciesSuggestions = [
-					...this.selectedAiCompetencies, 
-					...skills.filter(skill => 
+					...this.selectedAiCompetencies,
+					...skills.filter(skill =>
 					  !this.selectedAiCompetencies.some(
 						existing => existing.concept_uri === skill.concept_uri
 					  )
@@ -713,8 +770,10 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 						.setValue({...this.badgeClassForm.controls.aiCompetencies.controls[i].value, selected: true});
 					}
 				});
+				this.aiCompetenciesLoading = false;
 			})
 			.catch((error) => {
+				this.aiCompetenciesLoading = false;
 				this.messageService.reportAndThrowError(`Failed to obtain ai skills: ${error.message}`, error);
 			});
 	}
@@ -798,6 +857,10 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 	criteriaRequired(): { [id: string]: boolean } | null {
 		if (!this.badgeClassForm) return null;
+
+		if (this.badgeClassForm.rawControl.controls.badge_category.value !== 'competency') {
+			return null;
+		}
 
 		const value = this.badgeClassForm.value;
 
@@ -1101,6 +1164,10 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			}
 
 			this.save.emit(this.savePromise);
+
+			// clear sessionStorage
+			sessionStorage.removeItem('oeb-create-badgeclassvalues');
+
 		} catch (e) {
 			console.log(e)
 		}
@@ -1263,5 +1330,28 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 	openLegend() {
 		this.showLegend = true;
+	}
+
+	// Stepper functions
+	nextStep(): void {
+		this.badgeClassForm.markTreeDirty();
+		this.stepper.next();
+	}
+
+	previousStep(): void {
+		this.stepper.previous();
+	}
+
+	lastStep(): boolean {
+		return this.stepper?.selectedIndex == this.stepper?.steps.length - 1;
+	}
+
+	validateFields(fields: string[]) {
+		// console.log(this.badgeClassForm.dirty);
+		return fields.every(c => this.badgeClassForm.controls[c].valid);
+	}
+
+	dirtyFields(fields: string[]) {
+		return fields.every(c => this.badgeClassForm.controls[c].dirty);
 	}
 }

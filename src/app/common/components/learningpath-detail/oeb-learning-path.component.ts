@@ -78,8 +78,8 @@ export class OebLearningPathDetailComponent extends BaseRoutableComponent implem
 				delete: () => this.deleteLearningPathApi(learningPathSlug, issuer),
 				// qrCodeRequested: () => {},
 				variant: "danger",
-				text: "Möchtest du diesen Lernpfad wirklich löschen?",
-				title: "Lernpfad löschen"
+				text: "Möchtest du diesen Micro Degree wirklich löschen?",
+				title: "Micro Degree löschen"
 			},
 		});
 	}

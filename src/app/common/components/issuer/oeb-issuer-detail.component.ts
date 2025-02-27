@@ -46,7 +46,7 @@ export class OebIssuerDetailComponent implements OnInit {
 		private learningPathApiService: LearningPathApiService,
 		private qrCodeApiService: QrCodeApiService
 	) {
-        
+
 	};
     private readonly _hlmDialogService = inject(HlmDialogService);
 
@@ -56,7 +56,7 @@ export class OebIssuerDetailComponent implements OnInit {
 			action: (a:any) => this.routeToJson(),
 			// action: (a:any) => this.delete(a),
 			icon: 'lucideFileQuestion',
-		}	
+		}
 	]
 
 	menuItems: MenuItem[] = [
@@ -77,7 +77,7 @@ export class OebIssuerDetailComponent implements OnInit {
 			icon: 'lucideUsers',
 		},
 	]
-	
+
 	tabs: any = undefined;
 	activeTab = 'Badges';
 
@@ -86,13 +86,13 @@ export class OebIssuerDetailComponent implements OnInit {
 
 	ngAfterContentInit() {
 		this.tabs = [
-			
+
 			{
 				title: 'Badges',
 				component: this.badgesTemplate,
 			},
 			{
-				title: 'Lernpfade',
+				title: 'Micro Degrees',
 				component: this.learningPathTemplate,
 			},
 		];
@@ -158,7 +158,7 @@ export class OebIssuerDetailComponent implements OnInit {
 			}
 			else{
 				this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'issue'])
-			}		
+			}
 		});
 	}
 
@@ -181,7 +181,7 @@ export class OebIssuerDetailComponent implements OnInit {
 			}
 			else{
 				this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'qr'])
-			}	
+			}
 		})
 	}
 
@@ -198,8 +198,8 @@ export class OebIssuerDetailComponent implements OnInit {
 				delete: () => this.deleteLearningPathApi(learningPathSlug, issuer),
 				// qrCodeRequested: () => {},
 				variant: "danger",
-				text: "Möchtest du diesen Lernpfad wirklich löschen?",
-				title: "Lernpfad löschen"
+				text: "Möchtest du diesen Micro Degree wirklich löschen?",
+				title: "Micro Degree löschen"
 			},
 		});
 	}

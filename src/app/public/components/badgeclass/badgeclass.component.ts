@@ -21,7 +21,7 @@ import { TranslateService } from '@ngx-translate/core';
 					<ng-template>
 						<div class="oeb" *ngIf="learningPaths.length > 0">
 							<oeb-separator class="tw-block tw-mb-8 tw-mt-8"></oeb-separator>
-							<span class="tw-my-2 tw-text-oebblack tw-text-[22px] tw-leading-[26px] tw-font-semibold"> Dieser Badge ist Teil folgender Lernpfade: </span>
+							<span class="tw-my-2 tw-text-oebblack tw-text-[22px] tw-leading-[26px] tw-font-semibold"> Dieser Badge ist Teil folgender Micro Degrees: </span>
 							<div class="tw-mt-8 tw-grid tw-grid-cols-learningpaths tw-gap-6">
 								<bg-learningpathcard *ngFor="let lp of learningPaths"
 									[name]="lp.name"
