@@ -116,7 +116,7 @@
 							<div class="" id="imageSection" #imageSection>
 								<span class="input-label md:tw-flex-[0_0_10em]"> Badge-{{ 'Issuer.image' | translate }}</span>
 								<div
-									class="tw-flex tw-flex-col tw-gap-4 md:tw-flex-row tw-bg-white tw-border tw-border-solid tw-border-[var(--color-purple)] tw-p-8 tw-justify-evenly tw-items-center tw-mr-auto tw-rounded-[10px]"
+									class="tw-flex tw-flex-col tw-gap-4 md:tw-flex-row tw-bg-white tw-border tw-border-solid tw-border-[var(--color-purple)] tw-p-8 tw-justify-evenly tw-mr-auto tw-rounded-[10px]"
 								>
 									<div class="tw-w-full tw-bg-[var(--color-lightgreen)] tw-rounded-[10px] tw-py-[16px] tw-px-[32px]">
 										<bg-formfield-image
@@ -141,12 +141,21 @@
 										<span class="tw-italic tw-text-sm md:tw-flex md:tw-justify-center md:tw-items-center"
 											>{{ 'General.fileformats' | translate }}: SVG {{ 'General.and' | translate }} PNG</span
 										>
+										<div class="tw-bg-white tw-w-full tw-rounded-[10px] tw-mt-2 tw-h-[80px] tw-flex tw-items-center tw-justify-between tw-px-2">
+											<div class="tw-relative">
+												<img [src]='getImagePath()' class="tw-h-[72px] tw-block">
+												<img src="../../../../breakdown/static/images/square.svg" class="tw-absolute tw-h-[11.56px] tw-top-0 tw-right-0">
+											</div>
+											<oeb-checkbox name="addIssuerLogo" id="addIssuerLogo"
+												[control]="" [text]="'<span class=\'tw-text-sm\'>Institutions-Logo ergänzen</span>'" [noMargin]="true"
+											></oeb-checkbox>
+										</div>
 									</div>
 									<!-- <hr
 										class="md:tw-hidden tw-my-8 tw-w-full tw-border tw-border-[var(--color-purple)] tw-border-dashed"
 									/> -->
 									<div class="tw-italic tw-self-start tw-mt-6 tw-text-[24px]">{{ 'General.or' | translate }}</div>
-									<div class="tw-w-full tw-bg-[var(--color-lightgreen)] tw-rounded-[10px] tw-py-[16px] tw-px-[32px]">
+									<div class="tw-w-full tw-bg-[var(--color-lightgreen)] tw-rounded-[10px] tw-py-[16px] tw-px-[32px] tw-max-h-[400px]">
 										<bg-formfield-image
 											#customImageField
 											[label]="useOwnVisual"

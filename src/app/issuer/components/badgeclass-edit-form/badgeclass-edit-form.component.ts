@@ -167,6 +167,11 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		return this.badgeClassForm.controls.badge_hours.dirty || this.badgeClassForm.controls.badge_minutes.dirty;
 	}
 
+	getImagePath(): string {
+		return `../../../../breakdown/static/badgestudio/shapes/${this.category}.svg`;
+	}
+	
+
 	readonly badgeClassPlaceholderImageUrl = '../../../../breakdown/static/images/placeholderavatar.svg';
 
 	/**
@@ -507,6 +512,8 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 	ngOnInit() {
 		super.ngOnInit();
+
+		console.log(this.category)
 
 		this.translate.get('General.next').subscribe((next) => {
 			this.next = next;
