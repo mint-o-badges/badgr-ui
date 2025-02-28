@@ -18,11 +18,11 @@ import { BadgeClassManager } from '../../services/badgeclass-manager.service';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-	templateUrl: 'badgeclass-create.component.html',
+	templateUrl: 'badgeclass-select-type.component.html',
+	styleUrls: ['./badgeclass-select-type.component.scss'],
 })
-export class BadgeClassCreateComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
+export class BadgeClassSelectTypeComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	issuerSlug: string;
-	category: string
 	issuer: Issuer;
 	issuerLoaded: Promise<unknown>;
 	breadcrumbLinkEntries: LinkEntry[] = [];
@@ -54,7 +54,6 @@ export class BadgeClassCreateComponent extends BaseAuthenticatedRoutableComponen
 		super(router, route, sessionService);
 		title.setTitle(`Create Badge - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 		this.issuerSlug = this.route.snapshot.params['issuerSlug'];
-		this.category = this.route.snapshot.params['category'];
 
 		this.issuerLoaded = this.issuerManager.issuerBySlug(this.issuerSlug).then((issuer) => {
 			this.issuer = issuer;
@@ -81,53 +80,5 @@ export class BadgeClassCreateComponent extends BaseAuthenticatedRoutableComponen
 
 	ngOnInit() {
 		super.ngOnInit();
-	}
-
-	badgeClassCreated(promise: Promise<BadgeClass>) {
-		promise.then(
-			(badgeClass) => this.router.navigate(['issuer/issuers', this.issuerSlug, 'badges', badgeClass.slug]),
-			(error) =>
-				this.messageService.reportAndThrowError(
-					`Unable to create Badge Class: ${BadgrApiFailure.from(error).firstMessage}`,
-					error,
-				),
-		);
-	}
-	creationCanceled() {
-		this.router.navigate(['issuer/issuers', this.issuerSlug]);
-	}
-
-	@HostListener('window:scroll')
-	onWindowScroll() {
-		var top = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
-		this.scrolled = this.badgeImage && top > this.badgeImage.componentElem.nativeElement.offsetTop;
-	}
-
-	copyBadge() {
-		this.dialogService.copyBadgeDialog
-			.openDialog(this.badges)
-			.then((data: BadgeClass | void) => {
-				if (data) {
-					this.copiedBadgeClass = data;
-					this.isForked = false;
-				}
-			})
-			.catch((error) => {
-				this.messageService.reportAndThrowError('Failed to load badges to copy', error);
-			});
-	}
-
-	forkBadge() {
-		this.dialogService.forkBadgeDialog
-			.openDialog(this.badges)
-			.then((data: BadgeClass | void) => {
-				if (data) {
-					this.copiedBadgeClass = data;
-					this.isForked = true;
-				}
-			})
-			.catch((error) => {
-				this.messageService.reportAndThrowError('Failed to load badges to fork', error);
-			});
 	}
 }

@@ -133,6 +133,7 @@ import { OebSortSelectComponent } from '../components/oeb-sort-select.component'
 import { QrCodeApiService } from '../issuer/services/qrcode-api.service';
 import { serverErrorInterceptorFactory } from '../server-error-interceptor.factory';
 import { AltchaComponent } from '../components/altcha.component';
+import { SortPipe } from './pipes/sortPipe';
 
 const DIRECTIVES = [
 	BgAwaitPromises,
@@ -146,6 +147,7 @@ const DIRECTIVES = [
 	BgPopupMenuTriggerDirective,
 	DynamicFilterPipe,
 	HourPipe,
+	SortPipe,
 ];
 
 export const COMMON_MODULE_COMPONENTS = [

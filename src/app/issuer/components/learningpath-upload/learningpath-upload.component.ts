@@ -44,10 +44,10 @@ export class LearningPathUploadComponent extends BaseAuthenticatedRoutableCompon
 			this.breadcrumbLinkEntries = [
 				{ title: 'Meine Institutionen', routerLink: ['/issuer'] },
 				{ title: issuer.name, routerLink: ['/issuer/issuers', this.issuerSlug] },
-                { title: 'Lernpfade' },
-				{ title: 'Lernpfad hochladen', routerLink: ['/issuer/issuers', this.issuerSlug, '/learningpaths/upload'] },
+                { title: 'Micro Degrees' },
+				{ title: 'Micro Degree hochladen', routerLink: ['/issuer/issuers', this.issuerSlug, '/learningpaths/upload'] },
 			];
-        }); 
+        });
     }
 	readonly csvUploadIconUrl = '../../../../breakdown/static/images/csvuploadicon.svg';
 
@@ -63,12 +63,12 @@ export class LearningPathUploadComponent extends BaseAuthenticatedRoutableCompon
 			const learningPath: ApiLearningPathForCreation = JSON.parse(this.rawJson);
 			learningPath["issuer_id"]=this.issuerSlug;
 			this.learningPathApiService.createLearningPath(this.issuerSlug, learningPath).then(
-				(lp) => {	
+				(lp) => {
 					this.router.navigate(['/issuer/issuers', this.issuerSlug, 'learningpaths', lp.slug]);
 				},
 				(error) => {
 					this.messageService.setMessage(
-						'Lernpfad konnte nicht erstellt werden: ' + BadgrApiFailure.from(error).firstMessage,
+						'Micro Degree konnte nicht erstellt werden: ' + BadgrApiFailure.from(error).firstMessage,
 						'error',
 					);
 				},);

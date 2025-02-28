@@ -45,7 +45,7 @@ import { MessageService } from '../services/message.service';
 			/>
 
 			<label
-				class="dropzone tw-mx-auto tw-mt-2 !tw-h-[250px] md:tw-min-w-[320px]"
+				class="dropzone tw-mx-auto tw-mt-2 !tw-h-[250px] md:tw-min-w-[300px]"
 				#imageLabel
 				[attr.for]="'image_field' + uniqueIdSuffix"
 				(click)="clearFileInput()"
@@ -73,17 +73,20 @@ import { MessageService } from '../services/message.service';
 
 				<ng-container *ngIf="!imageDataUrl">
 					<hlm-icon size="xl" name="lucideCloudUpload"></hlm-icon>
-					<p *ngIf="dropZoneInfo1" class="dropzone-x-info1">{{ dropZoneInfo1 }}</p>
+					<p *ngIf="dropZoneInfo1" class="dropzone-x-info1">
+						<span cass="tw-font-bold">{{ dropZoneInfo1 }} </span>
+						<span class="tw-inline-block tw-font-normal tw-my-1 tw-mr-1" *ngIf="dropZoneInfo1"> {{ 'General.or' | translate }}  </span>
+					</p>
 					<p class="dropzone-x-info2">
-						<span class="tw-inline-block tw-my-1 tw-mr-1" *ngIf="dropZoneInfo1"> {{ 'General.or' | translate }}  </span>
-						<span class="u-text-link tw-underline tw-inline-block">{{ text_body }}</span>
+
+						<span class="u-text-link tw-underline tw-inline-block tw-font-normal">{{ text_body }}</span>
 					</p>
 					<!-- dont let user select icon when uploading badge -->
 					<p *ngIf="loaderName != 'basic' && dropZoneInfo2" class="dropzone-x-info2">
 						<span class="tw-inline-block tw-my-1 tw-mr-1">{{ 'General.or' | translate }}</span>
 						<span
 							id="nounProject_span"
-							class="u-text-link tw-underline tw-inline-block"
+							class="u-text-link tw-underline tw-inline-block tw-font-normal"
 							(click)="$event.preventDefault(); findNounproject($event)"
 							>{{ dropZoneInfo2 }}</span
 						>
@@ -134,10 +137,10 @@ export class BgFormFieldImageComponent {
 
 	@Output() imageUploaded = new EventEmitter();
 	// Image error is emitted when the image is too large or not square
-	@Output() imageError = new EventEmitter<string>(); 
+	@Output() imageError = new EventEmitter<string>();
 
 	@Input() control: FormControl;
-	@Input() enableIconSearch: boolean = true; 
+	@Input() enableIconSearch: boolean = true;
 	@Input() label: string;
 	@Input() sublabel: string;
 	@Input() sublabelRight: string;
@@ -148,7 +151,7 @@ export class BgFormFieldImageComponent {
 	@Input() type: string = null;
 	@Input() errorMessage = 'Please provide a valid image file';
 	@Input() placeholderImage: string;
-	@Input() labelStyle = "forminput-x-label u-margin-bottom1x";
+	@Input() labelStyle = "forminput-x-label u-margin-bottom1x tw-w-full tw-text-center !tw-font-bold !tw-text-[22px]";
 	@Input() imageLoader: (file: File | string) => Promise<string> = basicImageLoader;
 	@Input() maxSizeInMB: number = null;
 

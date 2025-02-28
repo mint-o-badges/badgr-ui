@@ -1,11 +1,12 @@
 <div class="stepper">
 	<header>
 		<div
-			class="tw-justify-evenly tw-items-center tw-w-full tw-z-20 tw-relative tw-inline-flex tw-bg-[var(--color-lightgreen)] tw-p-4 tw-my-12 tw-rounded-2xl"
+			class="tw-justify-evenly tw-items-center tw-w-full tw-z-20 tw-relative tw-inline-flex tw-p-4 tw-my-12 tw-rounded-2xl"
 		>
 			<div class="steps-wrapper">
 				<button
 					class="step"
+					type="button"
 					*ngFor="let step of steps; let i = index"
 					[ngClass]="{
 						active: selectedIndex === i,

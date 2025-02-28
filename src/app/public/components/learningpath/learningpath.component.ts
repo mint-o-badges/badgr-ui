@@ -54,7 +54,7 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 
 
 	crumbs = [
-		{ title: 'Lernpfade', routerLink: ['/catalog/learningpaths'] }
+		{ title: 'Micro Degrees', routerLink: ['/catalog/learningpaths'] }
 	];
 
 	constructor(
@@ -102,16 +102,6 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 		];
 	}
 
-	private readonly _hlmDialogService = inject(HlmDialogService);
-	public openSuccessDialog() {
-		const dialogRef = this._hlmDialogService.open(SuccessDialogComponent, {
-			context: {
-				text: `Du nimmst am Lernpfad <span class="tw-font-bold">${this.learningPath.name}</span> teil!`,
-				variant: 'success',
-			},
-		});
-	}
-
 	progressValue(): number {
 		return Math.floor((this.minutesCompleted / this.minutesTotal) * 100);
 	  }
@@ -144,7 +134,7 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 				},
 			];
 			this.crumbs = [
-				{ title: 'Lernpfade', routerLink: ['/catalog/learningpaths'] },
+				{ title: 'Micro Degrees', routerLink: ['/catalog/learningpaths'] },
 				{ title: this.learningPath.name, routerLink: ['/public/learningpaths/' + this.learningPath.slug] },
 
 			];
@@ -177,21 +167,6 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 					return badge;
 				});
 		})
-	}
-
-	participate() {
-		this.learningPathApiService.participateInLearningPath(this.learningPathSlug).then(
-			(response) => {
-				//@ts-ignore
-				if (response.body.message === "Successfully joined the learning path") {
-					this.openSuccessDialog();
-				}
-				this.requestPath();
-			},
-			(err) => {
-				console.log(err);
-			},
-		);
 	}
 
 	onTabChange(tab) {

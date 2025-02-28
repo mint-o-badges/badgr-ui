@@ -1,10 +1,941 @@
-<div class="oeb">	
+<div class="oeb">
 	<form-message></form-message>
 	<app-badge-legend *ngIf="showLegend" (closed)="closeLegend()"></app-badge-legend>
-	
+
+
 	<form [formGroup]="badgeClassForm.rawControl" #formElem (ngSubmit)="onSubmit()" novalidate>
+		<ng-container [formGroup]="badgeClassForm.rawControl">
+			<oeb-stepper
+				[linear]="existingBadgeClass ? false : true"
+				[initialStep]="existingBadgeClass ? 0 : 1"
+			>
+				<oeb-step
+					label="Kategorie wählen"
+					[optional]="false"
+					[route]="['/issuer/issuers/' + issuerSlug + '/badges' + '/select']"
+					errorMessage="Bitte Kategorie wählen"
+					[completed]="true"
+					*ngIf="!existingBadgeClass"
+				>
+				</oeb-step>
+
+				<cdk-step
+					label="Details eingeben"
+					[optional]="false"
+					errorMessage="Bitte vollständig ausfüllen"
+					[completed]="(validateFields(['badge_description', 'badge_hours', 'badge_name']) && !imageValidation()) || isDevMode"
+					[hasError]="
+						((!validateFields(['badge_description', 'badge_hours', 'badge_name'])
+						&& dirtyFields(['badge_description', 'badge_hours', 'badge_name']))
+						|| (imageFieldDirty && imageValidation())) && !isDevMode"
+				>
+
+					<div class="section tw-text-oebblack tw-mt-6">
+						<div>
+							<h2 hlmH2 class="tw-font-bold">2. {{ 'CreateBadge.enterDetails' | translate }}</h2>
+						</div>
+						<div class="tw-flex tw-flex-col md:tw-mx-10 tw-justify-center tw-gap-7">
+
+							<div class="tw-mt-6">
+								<span class="input-label md:tw-flex-[0_0_10em]"> {{ 'Badge.title' | translate }}</span>
+								<span class="tw-text-oebblack tw-italic">  {{max60chars}}</span>
+								<div class="tw-flex tw-gap-2 tw-items-center">
+									<oeb-input
+											class="tw-w-full"
+											[control]="badgeClassForm.rawControlMap.badge_name"
+											noTopMargin="true"
+											[errorMessage]="{
+												required: giveBadgeTitle,
+												mustChange: changeBadgeTitle
+											}"
+										>
+									</oeb-input>
+								</div>
+							</div>
+
+							<div class="">
+								<span class="input-label md:tw-flex-[0_0_10em]">{{ 'RecBadgeDetail.duration_create' | translate }}</span>
+								<div class="tw-flex tw-gap-2 tw-items-center">
+									<oeb-input
+										class="tw-w-16"
+										[fieldType]="'number'"
+										[control]="badgeClassForm.rawControlMap.badge_hours"
+										[errorMessage]="{ duration: hoursMaxError }"
+										noTopMargin="true"
+									>
+									</oeb-input>
+									<span class="tw-text-oebblack md:tw-text-lg">{{ 'General.hours' | translate }}</span>
+									<oeb-input
+										class="tw-w-16"
+										[fieldType]="'number'"
+										[control]="badgeClassForm.rawControlMap.badge_minutes"
+										[errorMessage]="{ duration: minMaxError }"
+										noTopMargin="true"
+									>
+									</oeb-input>
+									<span class="tw-text-oebblack md:tw-text-lg">{{ 'General.minutes' | translate }}</span>
+								</div>
+							</div>
+
+							<p
+									hlmP
+									size="sm"
+									id="maxHoursOrMinutesError"
+									[hidden]="
+									!badgeClassForm.hasError('hoursAndMinutesError') &&
+									(!badgeStudyLoadDirty ||
+										(!badgeClassForm.hasError('maxHoursError') && !badgeClassForm.hasError('maxMinutesError')))
+								" class="tw-font-normal u-text-error"
+								>
+									<span *ngIf="badgeClassForm.hasError('hoursAndMinutesError')">{{ 'CreateBadge.hoursAndMinutesError' | translate }}</span>
+									<span *ngIf="badgeClassForm.hasError('maxMinutesError')">{{'CreateBadge.minMaxError' | translate }}</span>
+									<span *ngIf="badgeClassForm.hasError('maxHoursError')">{{'CreateBadge.hoursMaxError' | translate }}</span>
+							</p>
+
+
+							<div class="">
+								<span class="input-label tw-break-words md:tw-flex-[0_0_10em]">
+									{{ 'CreateBadge.short' | translate }}&shy;{{ 'General.description' | translate }}
+									{{ 'CreateBadge.forLearners' | translate }}
+								</span>
+								<span class="tw-text-oebblack tw-italic">
+									(max. 700 {{'General.characters' | translate }})
+								</span>
+								<oeb-input
+									class="tw-w-full tw-max-w-[750px]"
+									[fieldType]="'textarea'"
+									[control]="badgeClassForm.rawControlMap.badge_description"
+									id="badgeclass_description_input"
+									[placeholder]="summarizedDescription"
+									[errorMessage]="{ required: enterDescription }"
+									noTopMargin="true"
+								>
+								</oeb-input>
+							</div>
+
+							<div class="" id="imageSection" #imageSection>
+								<span class="input-label md:tw-flex-[0_0_10em]"> Badge-{{ 'Issuer.image' | translate }}</span>
+								<div
+									class="tw-flex tw-flex-col tw-gap-4 md:tw-flex-row tw-bg-white tw-border tw-border-solid tw-border-[var(--color-purple)] tw-p-8 tw-justify-evenly tw-items-center tw-mr-auto tw-rounded-[10px]"
+								>
+									<div class="tw-w-full tw-bg-[var(--color-lightgreen)] tw-rounded-[10px] tw-py-[16px] tw-px-[32px]">
+										<bg-formfield-image
+											#imageField
+											[label]="useOurEditor"
+											[sublabel]="imageSublabel"
+											[text_body]="selectFromMyFiles"
+											dropZoneInfo1="Drag & Drop"
+											[dropZoneInfo2]="chooseFromExistingIcons"
+											imageLoaderName="badge"
+											[newDropZone]="true"
+											[generateRandom]="false"
+											[type]="'badge'"
+											[allowedFileFormats]="allowedFileFormats"
+											(generateRandomImage)="generateRandomImage()"
+											(imageUploaded)="generateUploadImage($event, badgeClassForm.value)"
+											[placeholderImage]="badgeClassPlaceholderImageUrl"
+											[control]="badgeClassForm.rawControlMap.badge_image"
+											[errorMessage]="imageErrorFork"
+										>
+										</bg-formfield-image>
+										<span class="tw-italic tw-text-sm md:tw-flex md:tw-justify-center md:tw-items-center"
+											>{{ 'General.fileformats' | translate }}: SVG {{ 'General.and' | translate }} PNG</span
+										>
+									</div>
+									<!-- <hr
+										class="md:tw-hidden tw-my-8 tw-w-full tw-border tw-border-[var(--color-purple)] tw-border-dashed"
+									/> -->
+									<div class="tw-italic tw-self-start tw-mt-6 tw-text-[24px]">{{ 'General.or' | translate }}</div>
+									<div class="tw-w-full tw-bg-[var(--color-lightgreen)] tw-rounded-[10px] tw-py-[16px] tw-px-[32px]">
+										<bg-formfield-image
+											#customImageField
+											[label]="useOwnVisual"
+											[sublabel]="uploadOwnDesign"
+											[text_body]="uploadOwnVisual"
+											imageLoaderName="basic"
+											[newDropZone]="true"
+											[type]="'badge'"
+											[allowedFileFormats]="allowedFileFormatsCustom"
+											[generateRandom]="false"
+											(generateRandomImage)="generateRandomImage()"
+											(imageUploaded)="generateCustomUploadImage($event)"
+											[placeholderImage]="badgeClassPlaceholderImageUrl"
+											[control]="badgeClassForm.rawControlMap.badge_customImage"
+											[errorMessage]="imageErrorFork"
+										>
+										</bg-formfield-image>
+											<span class="tw-italic tw-text-sm md:tw-flex md:tw-justify-center md:tw-items-center"
+											>{{ 'General.fileformats' | translate }}: PNG,&nbsp; </span>
+
+									</div>
+									<badge-studio
+										[scrolled]="scrolled"
+										#badgeStudio
+										[formData]="badgeClassForm.value"
+										[hidden]="true"
+									></badge-studio>
+								</div>
+							</div>
+
+							<p
+								hlmP
+								size="sm"
+								id="imageTextError"
+								[hidden]="!imageFieldDirty || !badgeClassForm.hasError('imageRequired') "
+								class="tw-font-normal md:tw-pl-[13.5rem] u-text-error"
+							>
+								{{'CreateBadge.imageRequiredError' | translate }}.
+							</p>
+							<p
+								hlmP
+								size="sm"
+								[hidden]="!isCustomImageLarge"
+								class="tw-font-normal md:tw-pl-[13.5rem] u-text-error"
+							>
+								{{ 'CreateBadge.imageTooLarge' | translate }}.
+							</p>
+						</div>
+					</div>
+
+
+				</cdk-step>
+
+				<cdk-step
+					label="Enthaltene Kompetenzen"
+					[optional]="false"
+					errorMessage="Bitte Kompetenzen hinzufügen"
+					*ngIf="category === 'competency'"
+					[completed]="badgeClassForm.controls.aiCompetencies.valid && badgeClassForm.controls.competencies.valid && !badgeClassForm.hasError('competenceHoursMinutesZero')"
+					[hasError]="!badgeClassForm.controls.aiCompetencies.valid || !badgeClassForm.controls.competencies.valid || badgeClassForm.hasError('competenceHoursMinutesZero')"
+				>
+
+					<div class="section tw-text-oebblack tw-px-1 tw-mt-6" *ngIf="badgeCategory === 'competency'">
+						<h2 id="fillWithCompetencies" hlmH2 class="tw-font-bold">3. {{ 'CreateBadge.fillWithCompetencies' | translate }}</h2>
+						<p
+							class="tw-font-normal md:tw-mx-10 tw-mx-4 u-text-error"
+							hlmP
+							size="sm"
+						>
+							<span *ngIf="badgeClassForm.hasError('competenceHoursMinutesZero')">
+								{{ 'CreateBadge.competenceHoursMinutesZero' | translate}}
+							</span>
+						</p>
+						<ul class="tw-list-disc md:tw-mx-10 tw-mx-4">
+							<!-- <div>
+								<span
+									class="tw-list-item tw-list-inside tw-text-3xl tw-font-normal tw-text-[var(--color-purple)] tw-mt-2"
+									>{{ 'CreateBadge.useAiAssistant' | translate }}</span
+								>
+								<p hlmP class="tw-my-2">{{ 'CreateBadge.enterAiDescription' | translate }}</p>
+								<p hlmP class="tw-my-2">{{ 'CreateBadge.NoPersonalInformation' | translate }}</p>
+								<p hlmP class="tw-mb-2">{{ 'CreateBadge.addAiCompetencies' | translate }}</p>
+							</div> -->
+							<div
+								class="tw-mt-7 tw-p-12 tw-bg-[#CCD7FF] tw-rounded-md tw-mx-auto tw-relative"
+							>
+								<span class="tw-font-extrabold tw-text-xl tw-uppercase tw-relative"
+									>{{ 'CreateBadge.aiAssistant' | translate }}
+									<img
+										class="tw-absolute tw--top-10 tw--right-16 tw-w-16 tw-h-16"
+										src="assets/oeb/images/badge/icon-ai-skills.svg"
+									/>
+								</span>
+								<p class="tw-my-2 tw-mb-0 tw-italic tw-text-[var(--color-purple)]">{{ 'CreateBadge.NoPersonalInformation' | translate }}</p>
+
+								<hr class="tw-my-6 tw-w-full tw-border-solid tw-border-top-[1px] tw-border-white" />
+
+								<div class="">
+										<h2 class="tw-font-bold tw-inline-block">
+											{{ 'CreateBadge.myContentDescription' | translate }}
+										</h2>
+										<span class="tw-font-thin tw-italic tw-ml-2">{{
+											'CreateBadge.min70max1000Chars' | translate
+										}}</span>
+										<div class="
+											tw-absolute tw--top-4 tw--right-4 md:tw-top-4 md:tw-right-4
+											tw-bg-[var(--color-lightgreen)] tw-rounded-full tw-w-24 tw-h-24
+											tw-flex tw-items-center tw-justify-center tw-text-center
+											tw-rotate-[8deg] tw-text-[14px]
+										">
+											Denke<br>auch an<br>Soft Skills!
+										</div>
+										<div class="tw-relative">
+											<textarea
+												id="ai-competencies-description"
+												class="tw-bg-white tw-border tw-border-gray-300 tw-mt-2 tw-rounded-md tw-shadow-sm tw-p-2 tw-h-48 tw-resize-none tw-text-sm tw-text-gray-700 tw-w-full"
+												[(ngModel)]="aiCompetenciesDescription"
+												[ngModelOptions]="{ standalone: true }"
+												maxlength="1000"
+												minlength="70"
+												[placeholder]="detailedDescription"
+											>
+											</textarea>
+											<span
+												*ngIf="aiCompetenciesDescription.length"
+												class="tw-absolute tw-bottom-1 tw-right-2 tw-pointer-events-none"
+												[ngClass]="
+													aiCompetenciesDescription.length < 70
+														? 'tw-text-red'
+														: 'tw-text-gray-600'
+												"
+											>
+												{{aiCompetenciesDescription.length}} {{'General.characters' | translate}}
+											</span>
+										</div>
+										<div class="tw-mt-4 tw-flex tw-gap-4">
+											<oeb-button
+												[id]="'suggest-competencies-btn'"
+												class="tw-whitespace-nowrap"
+												(click)="suggestCompetencies()"
+												type="button"
+												[text]="suggestCompetenciesText"
+												[disabled]="aiCompetenciesDescription.length < 70 || aiCompetenciesLoading"
+											>
+												<span class="tw-font-bold">
+													{{ 'CreateBadge.suggestCompetencies' | translate }}
+												</span>
+											</oeb-button>
+											<img *ngIf="aiCompetenciesLoading" width="32" height="32" src="assets/oeb/images/badge/loading.svg">
+									</div>
+									<div class="tw-mt-6 md:tw-mt-8 tw-w-full" *ngIf="aiCompetenciesSuggestions.length != 0">
+										<h2 class="tw-font-bold tw-text-[22px] tw-mb-2">
+											{{ 'CreateBadge.fitting' | translate }} {{ 'CreateBadge.competencies' | translate }}
+										</h2>
+										<p class="tw-text-purple tw-italic tw-mb-4">
+											Wähle Kompetenzen durch Anklicken aus, um sie deinem Badge hinzuzufügen.
+										</p>
+										<ng-container
+											*ngFor="
+												let aiCompetency of badgeClassForm.controls.aiCompetencies.controls;
+												let i = index
+											"
+										>
+											<div
+												[ngClass]="
+													aiCompetency.rawControlMap.selected.value
+														? 'tw-bg-[var(--color-lightgreen)]'
+														: 'tw-bg-gray-100'
+												"
+												class="tw-border tw-border-solid tw-border-purple tw-rounded-md md:tw-w-2/3 tw-mx-auto md:tw-ml-0 tw-p-2 tw-mt-2"
+											>
+												<div class="tw-flex tw-justify-between tw-items-center">
+													<h2 class="tw-whitespace-pre-wrap tw-text-sm tw-text-oebblack tw-font-bold">
+														{{ aiCompetenciesSuggestions[i].preferred_label }} <a href="http://data.europa.eu/{{aiCompetenciesSuggestions[i].concept_uri}}" target="_blank" class="tw-ml-2 !tw-text-[var(--color-link)]]"> <span class="tw-text-[var(--color-link)] tw-underline tw-font-normal">(E)</span></a>
+													</h2>
+													<oeb-checkbox class="tw-border-[var(--color-purple)]" name="{{'checkboxAiSkill_'+i}}" id="{{'checkboxAiSkill_'+i}}"
+														[control]="aiCompetency.rawControlMap.selected"
+														class="tw--mt-[0.25rem] tw-mb-[0.25rem]"
+														[noMargin]="true"
+														></oeb-checkbox>
+												</div>
+												<hr class="tw-text-[var(--color-grayinteractive)] tw-my-1 tw-border-solid tw-border" />
+												<p class="tw-w-full tw-my-2 tw-text-sm tw-text-oebblack tw-whitespace-pre-wrap">{{ aiCompetenciesSuggestions[i].description }}</p>
+												<p class="tw-text-sm tw-my-2 tw-text-[#6B6B6B] tw-font-light">{{ 'Badge.category' | translate}}: {{ aiCompetenciesSuggestions[i].type.includes('skill') ? ('Badge.skill' | translate) : ('Badge.knowledge' | translate) }}</p>
+												<div class="tw-flex tw-gap-2 tw-items-center">
+													<oeb-input
+														class="tw-w-20"
+														[fieldType]="'number'"
+														[control]="aiCompetency.rawControlMap.hours"
+														[errorMessage]="{ duration: requiredError }"
+														noTopMargin="true"
+													>
+													</oeb-input>
+													<span class="tw-font-bold tw-text-purple" hlmP>:</span>
+													<oeb-input
+														class="tw-w-20"
+														[fieldType]="'number'"
+														[control]="aiCompetency.rawControlMap.minutes"
+														[errorMessage]="{ duration: requiredError }"
+														noTopMargin="true"
+													>
+													</oeb-input>
+													<span class="tw-text-oebblack md:tw-text-lg">{{
+														'RecBadge.hours' | translate
+													}}</span>
+												</div>
+											</div>
+										</ng-container>
+										<ng-container *ngIf="badgeClassForm.controls.aiCompetencies.controls.length">
+											<div class="tw-bg-purple tw-rounded-2xl tw-p-12 tw-text-white tw-mt-12">
+												<div class="tw-flex tw-gap-8 tw-items-start tw-flex-col md:tw-flex-row">
+													<img
+														class=""
+														src="assets/oeb/images/badge/icon-ai-betterresults.svg"
+													/>
+													<div class="tw-text-[18px]/[1.3em]">
+														<h2 class="tw-uppercase tw-font-bold tw-mb-4 tw-text-[30px]/[1.4em] tw-">Nichts passendes dabei?</h2>
+														<p class="tw-italic tw-mb-4">Probiere es mit einer ausführlicheren Beschreibung. </p>
+														<p>Hier ein paar <strong>Tipps</strong>:</p>
+														<ul class="tw-list-disc tw-pl-8">
+															<li class="tw-list-disc tw-my-1">Schreibe, was dein Lernangebot <u>fachlich</u> vermittelt.</li>
+															<li class="tw-list-disc tw-my-1">Beschreibe auch, <u>wie</u> das Lernen stattfindet.</li>
+															<li class="tw-list-disc tw-my-1">Oft können neben fachlichen Kompetenzen auch <u>Soft Skills</u> wie soziale, kommunikative oder Problemlösungs-Fähigkeiten erworben werden – bei Teamarbeit, Experimentieren, Planung, ... </li>
+														</ul>
+													</div>
+												</div>
+											</div>
+											<p class="tw-italic tw-mt-4">
+												Hinweis: KI-Unterstützung – der Badge-Assistent kann Fehler machen. Überprüfe daher die Vorschläge und melde dich bei fehlerhaften Ergebnissen gerne per <a class="tw-text-[var(--color-link)] tw-underline" href="mailto:hallo@openbadges.education">E-Mail</a>. <a class="tw-text-[var(--color-link)] tw-underline" href="https://openbadges.education/public/privacy" target="_blank">Datenschutz bei OEB</a>.
+											</p>
+										</ng-container>
+									</div>
+								</div>
+							</div>
+							<hr class="tw-my-8 tw-border tw-border-[var(--color-purple)] tw-border-dashed" />
+							<oeb-collapsible
+									[id]="'competencies-by-hand-section'"
+									[trigger]="collapseCompetenciesTrigger"
+									[defaultOpen]="collapsedCompetenciesOpen"
+									[closeable]="badgeClassForm.controls.competencies.controls.length == 0"
+									(toggled)="$event && badgeClassForm.controls.competencies.value.length == 0 && badgeClassForm.controls.competencies.addFromTemplate()"
+								>
+								<ng-template #collapseCompetenciesTrigger>
+									<span class="tw-text-3xl tw-font-normal tw-text-[var(--color-purple)] tw-mr-auto" [innerHTML]="'CreateBadge.addCompetenciesByHand' | translate"></span>
+								</ng-template>
+
+								<div
+									class="tw-flex tw-flex-col md:tw-flex-row md:tw-gap-4 tw-gap-2 md:tw-justify-between md:tw-items-center"
+								>
+									<p class="tw-text-oebblack tw-text-lg tw-leading-6">
+										{{ 'CreateBadge.addCompetenciesByHandInfo' | translate }}
+										<span class="tw-hidden md:tw-inline"
+											>, {{ 'CreateBadge.tofindFittingCompetencies' | translate }}</span>
+									</p>
+
+									<div class="button tw-bg-[var(--color-purple)]">
+										<a
+											class="tw-text-white"
+											href="https://esco.ec.europa.eu/de/classification/skill_main"
+											target="_blank"
+											>{{ 'CreateBadge.toEscoSearch' | translate }}</a
+										>
+									</div>
+								</div>
+
+								<ng-container *ngFor="let competency of badgeClassForm.controls.competencies.controls; let i = index">
+									<ng-container *ngIf="competency.controls['added'].value; else competencyForm">
+										<div
+											class="tw-bg-[var(--color-lightgray)] tw-rounded-2xl tw-border tw-border-solid tw-border-[var(--color-purple)] tw-p-4 tw-mt-2"
+										>
+											<div class="tw-flex tw-justify-between">
+												<h2 class="tw-whitespace-pre-wrap tw-text-oebblack tw-font-bold">
+													{{ competency.rawControlMap.name.value }}
+												</h2>
+												<oeb-checkbox class="tw-border-[var(--color-purple)]" name="competency$i" id="competency$i"
+																[control]="competency.rawControlMap.added"
+												></oeb-checkbox>
+											</div>
+											<p
+												class="tw-w-full tw-text-oebblack tw-mt-2 tw-italic tw-whitespace-pre-wrap tw-line-clamp-3"
+											>
+												{{ competency.rawControlMap.description.value }}
+											</p>
+											<div class="tw-flex tw-gap-2 tw-items-center tw-mt-4 ">
+												<label class="tw-text-oebblack tw-font-bold" for="studyLoad$i">
+													{{ 'RecBadgeDetail.duration' | translate }}:
+												</label>
+												<span
+												class="tw-flex tw-rounded-md tw-bg-white tw-border tw-border-solid tw-border-black tw-h-8 tw-w-20 tw-min-w-fit tw-items-center tw-justify-center"
+												>
+												{{ competency.rawControlMap.hours.value | number:'2.0' }}:{{ competency.rawControlMap.minutes.value | number:'2.0' }} h
+												</span>
+
+											</div>
+										</div>
+									</ng-container>
+									<ng-template #competencyForm>
+										<div
+											class="tw-border-[var(--color-purple)] tw-border tw-border-solid tw-rounded-md tw-p-6 tw-mt-4"
+										>
+											<div class="tw-flex tw-flex-col md:tw-flex-row md:tw-justify-between tw-gap-5 md:tw-gap-0">
+
+												<oeb-input
+													id="{{'competencyTitle_'+i}}"
+													[fieldType]="'text'"
+													[label]="competencyTitle"
+													[control]="competency.rawControlMap.name"
+													[errorMessage]="{ required: titleError }"
+													noTopMargin="true"
+													[readonly]="competency.controls['framework_identifier'].value ? true : false"
+												>
+												</oeb-input>
+
+												<div class="tw-flex tw-flex-col">
+													<span class="tw-font-semibold tw-text-[14px] md:tw-text-[20px] tw-leading-4 md:tw-leading-6 tw-font-[rubik] tw-pb-[5px] tw-pl-[3px]">{{ competencyDuration }}</span>
+
+													<div class="tw-flex tw-gap-2 tw-items-center">
+														<oeb-input
+															id="{{'competencyDurationHour_'+i}}"
+															[fieldType]="'number'"
+															class="tw-max-w-24"
+															[control]="competency.rawControlMap.hours"
+															[errorMessage]="{
+																duration: requiredError
+															}"
+															noTopMargin="true"
+														>
+														</oeb-input>
+														:
+														<oeb-input
+															id="{{'competencyDurationMinutes_'+i}}"
+															[fieldType]="'number'"
+															class="tw-max-w-24"
+															[control]="competency.rawControlMap.minutes"
+															[errorMessage]="{
+																duration: requiredError
+															}"
+															noTopMargin="true"
+														>
+														</oeb-input>
+
+														<span class="tw-text-oebblack">h</span>
+													</div>
+												</div>
+
+												<oeb-select
+													id="{{'competencyCategory_'+i}}"
+													ariaLabel="Wähle eine Kompetenz-Kategorie"
+													[control]="competency.rawControlMap.category"
+													[label]="competencyCategory"
+													[placeholder]="'Kategorie wählen'"
+													[optionMap]="competencyCategoryOptions"
+													[errorMessage]="{
+														required: competencyCategoryError
+													}"
+													noTopMargin="true"
+													[disabled]="competency.controls['framework_identifier'].value ? true : false"
+												></oeb-select>
+
+											</div>
+
+											<oeb-input
+												id="{{'competencyDescriptionInput_'+i}}"
+												[fieldType]="'textarea'"
+												[label]="competencyDescription"
+												[control]="competency.rawControlMap.description"
+												[errorMessage]="{ required: enterDescription }"
+												[readonly]="competency.controls['framework_identifier'].value ? true : false"
+											>
+											</oeb-input>
+
+											<oeb-input
+												id="{{'escoIdentifierInput_'+i}}"
+												*ngIf="competency.rawControlMap['framework_identifier'].value"
+												label="Framework-Identifier"
+												[control]="competency.rawControlMap['framework_identifier']"
+												[readonly]="true"
+												placeholder="z.B. http://data.europa.eu/esco/skill/7de3b70e-2568-420a-8528-69523d323e7a"
+											>
+											</oeb-input>
+
+											<div class="tw-flex tw-justify-between tw-flex-wrap sm:tw-flex-nowrap tw-gap-2 tw-mt-8">
+												<oeb-button
+													*ngIf="badgeClassForm.controls.competencies.controls.length > 0"
+													class="tw-mr-4"
+													variant="secondary"
+													size="sm"
+													type="button"
+													(click)="removeCompetency(competency)"
+													text="{{ 'General.remove' | translate }}"
+												></oeb-button>
+											</div>
+										</div>
+									</ng-template>
+								</ng-container>
+
+								<div class="tw-w-full tw-flex tw-justify-end">
+									<oeb-button
+										size="sm"
+										type="button"
+										class="tw-mt-2"
+										(click)="addAnotherCompetency()"
+										text="{{
+											(badgeClassForm.controls.competencies.controls.length > 0
+											? 'CreateBadge.addAnotherCompetency'
+											: 'General.add') | translate}}"
+											icon="lucidePlus"
+									>
+									</oeb-button>
+								</div>
+							</oeb-collapsible>
+						</ul>
+						<p
+							id="competencyDuplicateError"
+							*ngIf="badgeClassForm.hasError('duplicateCompetency')"
+							[hidden]="!badgeClassForm.hasError('duplicateCompetency')"
+							class="u-text u-margin-bottom2x u-text-error tw-w-full tw-text-center tw-mt-2"
+							>
+							{{ 'CreateBadge.duplicateCompetencyError' | translate }} '{{ checkDuplicateCompetency() }}'
+						</p>
+					</div>
+
+
+				</cdk-step>
+
+				<cdk-step
+					label="Tags"
+					[optional]="true"
+					errorMessage="Bitte Tags auswählen"
+				>
+
+					<div class="section tw-text-oebblack tw-mt-6">
+						<div>
+							<h2 *ngIf="badgeCategory !== 'competency'" hlmH2 class="tw-font-bold">3. Tags hinzufügen</h2>
+							<h2 *ngIf="badgeCategory === 'competency'" hlmH2 class="tw-font-bold">4. Tags hinzufügen</h2>
+						</div>
+						<p class="tw-italic tw-text-purple tw-mt-2">
+							{{ 'CreateBadge.tagInfo' | translate }}
+						</p>
+						<div class="formsection-x-body tw-mt-4">
+							<div class="tw-flex tw-gap-4 tw-items-center tw-mb-2">
+								<span class="tw-font-semibold tw-text-lg tw-text-oebblack tw-uppercase"> Tag</span>
+
+								<div class="ng-autocomplete">
+									<ng-autocomplete
+										name="addtag"
+										id="addtag"
+										#newTagInput
+										[data]="existingTags"
+										maxlength="50"
+										[isLoading]="existingTagsLoading"
+										searchKeyword="name"
+										[placeholder]="newTag"
+										(keypress)="handleTagInputKeyPress($event)"
+										[itemTemplate]="itemTemplate"
+										[notFoundTemplate]="notFoundTemplate"
+									>
+									</ng-autocomplete>
+
+									<ng-template #itemTemplate let-item>
+										<a [innerHTML]="item.name"></a>
+									</ng-template>
+
+									<ng-template #notFoundTemplate let-notFound>
+										<div>{{ 'CreateBadge.tagDoesNotExist' | translate }}</div>
+									</ng-template>
+								</div>
+
+								<oeb-button
+									[id]="'add-tag-btn'"
+									size="sm"
+									type="button"
+									(click)="addTag()"
+									text="{{ 'General.add' | translate }}">
+								</oeb-button>
+							</div>
+							<div *ngIf="tags.size > 0" class="tw-flex tw-flex-wrap tw-gap-4 tw-w-[70%] tw-ml-[3.2rem]">
+								<div
+									class="tw-flex tw-items-center  tw-rounded-full tw-py-1 tw-mb-2"
+									*ngFor="let tag of tags"
+								>
+									<oeb-button
+									variant="secondary"
+									size="xxs"
+									(click)="removeTag(tag)"
+									icon="lucideCircleX"
+									text="{{ tag }}">
+
+									</oeb-button>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+				</cdk-step>
+
+				<cdk-step
+					label="Abschluss"
+				>
+
+					<div class="section tw-text-oebblack tw-mt-6">
+						<oeb-collapsible [trigger]="collapseDetailsTrigger" [id]="'optional-details'" [closeable]="!alignmentsEnabled && !expirationEnabled">
+							<ng-template #collapseDetailsTrigger>
+								<h2 class="tw-pt-1 tw-px-1 tw-font-normal tw-text-[30px] tw-text-[var(--color-purple)] tw-mr-auto">{{'CreateBadge.optionalBadgeDetails' | translate }}</h2>
+							</ng-template>
+							<ul class="tw-mt-4">
+								<li>
+									<button
+										id="link-standards-btn"
+										type="button"
+										(click)="alignmentsEnabled ? disableAlignments() : enableAlignments()"
+										class="options-dropdown"
+									>
+										<span class="tw-text-md md:tw-text-lg">
+											{{ 'CreateBadge.alignEducationalFramework' | translate }}
+										</span>
+									</button>
+									<!-- alignments -->
+									<div class="formsection tw-mt-2 tw-bg-inherit tw-border-none" *ngIf="alignmentsEnabled">
+										<div class="formsection-x-title">
+											<h2 class="u-text-dark2">
+												{{ 'RecBadgeDetail.alignment' | translate }}
+												<span>(Optional)</span>
+											</h2>
+											<button type="button" (click)="disableAlignments()" class="buttonicon buttonicon-link">
+												<svg icon="icon_close"></svg>
+												<span class="visuallyhidden">Close</span>
+											</button>
+										</div>
+
+										<div class="formsection-x-help">
+											<h3 class="u-text-body-bold">
+												{{ 'CreateBadge.whatIsThe' | translate }} {{ 'RecBadgeDetail.alignment' | translate }}?
+											</h3>
+											<p class="u-text u-margin-top1x u-margin-bottom2x">
+												{{ 'CreateBadge.alignmentInfo' | translate }}
+											</p>
+										</div>
+										<div class="formsection-x-body">
+											<ng-container
+												*ngFor="let alignment of badgeClassForm.controls.alignments.controls; let i = index"
+											>
+												<div class="tw-mt-2 l-flex l-flex-1x l-flex-justifybetween u-margin-bottom2x">
+													<h3 class="u-text-body-bold u-text-dark1">
+														{{ alignment.controls.target_name.value }}
+													</h3>
+													<button
+														*ngIf="badgeClassForm.controls.alignments.controls.length > 1"
+														type="button"
+														(click)="removeAlignment(alignment)"
+														class="u-text-link"
+													>
+														{{ 'General.remove' | translate }}
+													</button>
+												</div>
+												<div class="forminput u-margin-bottom6x">
+													<div class="forminput-x-inputs">
+														<oeb-input
+															[control]="alignment.rawControlMap.target_name"
+															label="Name"
+															[errorMessage]="{ required: alignmentNameError }"
+															id="alignment_name_{{ i }}"
+														></oeb-input>
+
+														<oeb-input
+															[control]="alignment.rawControlMap.target_url"
+															label="URL"
+															[errorMessage]="{ required: alignmentURLError }"
+															[urlField]="true"
+															id="alignment_url_{{ i }}"
+														></oeb-input>
+
+														<oeb-input
+															[control]="alignment.rawControlMap.target_description"
+															[label]="shortDescription"
+															[multiline]="true"
+															id="alignment_description_{{ i }}"
+														></oeb-input>
+
+														<button
+															id="link-more-options-btn"
+															*ngIf="!showAdvanced[i]"
+															(click)="showAdvanced[i] = true"
+															type="button"
+															class="u-text-link-small u-margin-yaxis2x"
+														>
+															{{ 'General.show' | translate }}
+															{{ 'CreateBadge.additionalOptions' | translate }}
+														</button>
+
+														<ng-template [ngIf]="showAdvanced[i]">
+															<button
+																(click)="showAdvanced[i] = false"
+																type="button"
+																class="u-text-link-small u-margin-yaxis2x"
+															>
+																{{ 'General.hide' | translate }}
+																{{ 'CreateBadge.additionalOptions' | translate }}
+															</button>
+
+															<label class="forminput-x-label u-margin-top2x" for="forminput2">{{
+																'CreateBadge.frame' | translate
+															}}</label>
+															<input type="text" id="forminput2" name="forminput2" />
+
+															<label class="forminput-x-label u-margin-top2x" for="url">Code</label>
+															<input type="text" id="url" name="url" />
+														</ng-template>
+													</div>
+												</div>
+											</ng-container>
+
+											<div class="l-stack">
+												<button (click)="addAlignment()" type="button" class="button button-secondary">
+													{{ 'CreateBadge.addAlignment' | translate }}
+												</button>
+											</div>
+										</div>
+									</div>
+								</li>
+								<li class="tw-mt-4">
+									<button
+										id="badge-validity-btn"
+										type="button"
+										(click)="expirationEnabled ? disableExpiration() : enableExpiration()"
+										class="options-dropdown"
+									>
+										<span class="tw-text-md md:tw-text-lg">{{ 'CreateBadge.expiration' | translate }}</span>
+									</button>
+									<!-- expiration -->
+									<div *ngIf="expirationEnabled" class="formsection tw-bg-inherit tw-mt-2 tw-border-none">
+										<div class="formsection-x-title">
+											<h2 class="u-text-dark2">
+												{{ 'CreateBadge.expiration' | translate }}
+												<span>(Optional)</span>
+											</h2>
+											<button type="button" (click)="disableExpiration()" class="buttonicon buttonicon-link">
+												<svg icon="icon_close"></svg>
+												<span class="visuallyhidden">Schliessen</span>
+											</button>
+										</div>
+
+										<div class="formsection-x-help">
+											<h3 class="u-text-body-bold">
+												{{ 'CreateBadge.whatIsThe' | translate }} {{ 'CreateBadge.expiration' | translate }}?
+											</h3>
+											<p class="u-text u-margin-top1x u-margin-bottom2x">
+												{{ 'CreateBadge.expirationInfo' | translate }}
+											</p>
+										</div>
+										<div class="formsection-x-body">
+											<div class="l-spacestack">
+												<oeb-input
+													id="duration-number"
+													[control]="expirationForm.rawControlMap.expires_amount"
+													[label]="count"
+													[fieldType]="'number'"
+													[max]="1000"
+													[maxchar]="4"
+													[errorMessage]="{
+														max: maxValue1000
+													}"
+												></oeb-input>
+												<oeb-select
+													[id]="'duration-type'"
+													ariaLabel="chooseDuration"
+													[control]="expirationForm.rawControlMap.expires_duration"
+													[label]="duration"
+													[placeholder]="chooseDuration"
+													[optionMap]="durationOptions"
+												></oeb-select>
+											</div>
+										</div>
+									</div>
+								</li>
+							</ul>
+						</oeb-collapsible>
+					</div>
+
+					<div class="section tw-text-oebblack tw-mt-6">
+						<h2 hlmH2 class="tw-font-bold">Badge-{{ 'RecBadgeDetail.criteria' | translate }}</h2>
+						<div class="md:tw-mx-6">
+							<p class="tw-my-2 tw-italic tw-font-semibold">
+								{{ 'CreateBadge.criteriaInfo' | translate }}
+							</p>
+							<div class="mdeditor">
+								<div class="mdeditor-x-editor">
+									<!-- <p
+										[hidden]="!alignmentFieldDirty || !badgeClassForm.hasError('criteriaRequired')"
+										class="u-text u-margin-bottom2x u-text-error"
+									>
+										{{ 'CreateBadge.criteriaError' | translate }}
+									</p> -->
+
+									<bg-formfield-markdown
+										[control]="badgeClassForm.rawControlMap.badge_criteria_text"
+										label=" Wie bekommt man dieses Badge?"
+										class="tw-hidden"
+										[errorMessage]="''"
+									></bg-formfield-markdown>
+									<!-- <textarea id="criteria_textarea" class="tw-my-2" readonly>
+										{{criteriaText}}
+									</textarea> -->
+									<div >
+										<span *ngIf="badgeClassForm.controls.badge_name.value" class="tw-text-lg">
+											Du hast erfolgreich an
+											<span class="tw-italic tw-font-semibold">{{ badgeClassForm.controls.badge_name.value + ' ' }}</span> teilgenommen.</span
+										>
+										<div *ngIf="badgeCategory === 'competency'">
+											<span class="tw-font-bold tw-text-lg">Dabei hast du folgende Kompetenzen gestärkt: </span>
+											<ul class="tw-list-disc tw-mt-4">
+												<ng-container
+													*ngFor="
+														let aiCompetency of badgeClassForm.controls.aiCompetencies.controls;
+														let i = index
+													"
+												>
+													<li *ngIf="aiCompetency.rawControlMap.selected.value" class="tw-mx-6">
+														<span class="tw-text-lg">
+															{{ aiCompetenciesSuggestions[i].preferred_label }}
+														</span>
+													</li>
+												</ng-container>
+												<ng-container *ngFor="let competency of badgeClassForm.controls.competencies.controls">
+													<li *ngIf="competency.rawControlMap.added.value && competency.rawControlMap.name.value" class="tw-mx-6">
+														<span class="tw-text-lg">{{ competency.rawControlMap.name.value }}</span>
+													</li>
+												</ng-container>
+											</ul>
+										</div>
+									</div>
+								</div>
+
+								<!-- <div class="forminput u-margin-bottom2x md:tw-items-center tw-flex tw-gap-2 md:tw-flex-row tw-flex-col">
+									<span class="tw-font-bold tw-whitespace-nowrap">URL (optional)</span>
+									<bg-formfield-text
+										class="tw-w-full"
+										[control]="badgeClassForm.rawControlMap.badge_criteria_url"
+										[urlField]="true"
+										fieldType="url"
+										errorMessage="URL zu den Badge Kriterien"
+									></bg-formfield-text>
+								</div>  -->
+							</div>
+						</div>
+					</div>
+
+				</cdk-step>
+			</oeb-stepper>
+		</ng-container>
+
+
+		<div class="tw-flex tw-justify-between md:tw-justify-end tw-flex-wrap sm:tw-flex-nowrap tw-gap-2 tw-mt-8">
+			<oeb-button
+				class="tw-mr-4"
+				variant="secondary"
+				(click)="cancelClicked()"
+				[disabled]="!!savePromise"
+				[class.disabled]="!!savePromise"
+				[disabled-when-requesting]="true"
+				text="{{ 'General.cancel' | translate }}"
+			></oeb-button>
+
+			<oeb-button
+				class="tw-float-right"
+				*ngIf="!lastStep()"
+				type="button"
+				[text]="next"
+				(click)="nextStep()"
+			>
+			</oeb-button>
+
+			<oeb-button
+				id="create-badge-btn"
+				*ngIf="lastStep()"
+				type="submit"
+				width="max_content"
+				[disabled]="!!savePromise"
+				[loading-promises]="[savePromise]"
+				loading-message="{{ submittingText }}"
+				text="{{ (!existingBadgeClass ? (category === 'competency' ? 'Issuer.createCompetencyBadge' : 'Issuer.createParticipationBadge') : 'General.save') | translate }}"
+			>
+			</oeb-button>
+		</div>
+
+
 		<!-- Badge Category Panel -->
-		<div class="section tw-text-oebblack">
+		<!-- <div class="section tw-text-oebblack">
 			<div class="tw-flex tw-flex-col tw-gap-2">
 				<div class="tw-flex tw-flex-col md:tw-flex-row tw-gap-4 md:tw-gap-8">
 					<h2 hlmH2 class="tw-font-bold">1. {{ 'CreateBadge.chooseBadgeCategory' | translate }}</h2>
@@ -34,825 +965,10 @@
 					</div>
 				</div>
 			</div>
-		</div>
-	
-	
-		<div class="section tw-text-oebblack">
-			<div>
-				<h2 hlmH2 class="tw-font-bold">2. {{ 'CreateBadge.enterDetails' | translate }}</h2>
-			</div>
-			<div class="tw-flex tw-flex-col md:tw-mx-10 tw-justify-center tw-gap-7">
-				<div class="tw-flex tw-flex-col md:tw-flex-row tw-gap-3 md:tw-gap-8 md:tw-items-center tw-mt-6">
-					<span class="input-label tw-break-words md:tw-flex-[0_0_10em]">
-						{{ 'CreateBadge.short' | translate }}&shy;{{ 'General.description' | translate }}
-						{{ 'CreateBadge.forLearners' | translate }}</span
-					>
-					<oeb-input 
-						class="tw-w-full tw-max-w-[750px]" 
-						[fieldType]="'textarea'" 
-						[control]="badgeClassForm.rawControlMap.badge_description"
-						id="badgeclass_description_input"
-						[placeholder]="summarizedDescription"
-						[errorMessage]="{ required: enterDescription }"
-						noTopMargin="true"
-					>
-					</oeb-input>
-				</div>
-	
-				<div class="tw-flex md:tw-flex-row tw-gap-3  md:tw-gap-8 tw-flex-col md:tw-items-center tw-justify-start">
-					<span class="input-label md:tw-flex-[0_0_10em]"> {{ 'RecBadgeDetail.duration' | translate }}</span>
-					<div class="tw-flex tw-gap-2 tw-items-center">
-						<oeb-input 
-							class="tw-w-20" 
-							[fieldType]="'number'" 
-							[control]="badgeClassForm.rawControlMap.badge_hours" 
-							[errorMessage]="{ duration: hoursMaxError }"
-							noTopMargin="true"
-						>
-						</oeb-input>
-						<span class="tw-font-bold tw-text-purple" hlmP>:</span>
-						<oeb-input 
-							class="tw-w-20" 
-							[fieldType]="'number'" 
-							[control]="badgeClassForm.rawControlMap.badge_minutes" 
-							[errorMessage]="{ duration: minMaxError }"
-							noTopMargin="true"
-						>
-						</oeb-input>
-						<span class="tw-text-oebblack md:tw-text-lg">{{ 'RecBadge.hours' | translate }}</span>
-					</div>
-				</div>
-	
-				<p
-						hlmP 
-						size="sm"
-						id="maxHoursOrMinutesError"
-						[hidden]="
-						!badgeClassForm.hasError('hoursAndMinutesError') &&
-						(!badgeStudyLoadDirty ||
-							(!badgeClassForm.hasError('maxHoursError') && !badgeClassForm.hasError('maxMinutesError')))
-					" class="tw-font-normal md:tw-pl-[13.5rem] u-text-error"
-					>
-						<span *ngIf="badgeClassForm.hasError('hoursAndMinutesError')">{{ 'CreateBadge.hoursAndMinutesError' | translate }}</span>
-						<span *ngIf="badgeClassForm.hasError('maxMinutesError')">{{'CreateBadge.minMaxError' | translate }}</span>
-						<span *ngIf="badgeClassForm.hasError('maxHoursError')">{{'CreateBadge.hoursMaxError' | translate }}</span>
-				</p>
-	
-				<div class="tw-flex md:tw-flex-row tw-gap-3 md:tw-gap-8 tw-flex-col md:tw-items-center tw-justify-start">
-					<span class="input-label md:tw-flex-[0_0_10em]"> {{ 'Badge.title' | translate }}</span>
-					<div class="tw-flex tw-gap-2 tw-items-center">
-						<oeb-input 
-								[control]="badgeClassForm.rawControlMap.badge_name"
-								noTopMargin="true"
-								[errorMessage]="{
-									required: giveBadgeTitle,
-									mustChange: changeBadgeTitle
-								}"
-							>
-						</oeb-input>
-						<span class="tw-text-oebblack tw-italic">  {{max60chars}}</span>
-					</div>	
-				</div>
-				<div class="tw-flex md:tw-flex-row tw-gap-3 md:tw-gap-8 tw-flex-col" id="imageSection" #imageSection>
-					<span class="input-label md:tw-flex-[0_0_10em]"> Badge-{{ 'Issuer.image' | translate }}</span>
-					<div
-						class="tw-flex tw-flex-col tw-gap-4 md:tw-flex-row tw-bg-[var(--color-lightgreen)] tw-p-8 tw-justify-evenly tw-items-center tw-mr-auto tw-rounded-2xl"
-					>
-						<div class="tw-w-full">
-							<bg-formfield-image
-								#imageField
-								[label]="useOurEditor"
-								[sublabel]="imageSublabel"
-								[text_body]="selectFromMyFiles"
-								dropZoneInfo1="Drag & Drop"
-								[dropZoneInfo2]="chooseFromExistingIcons"
-								imageLoaderName="badge"
-								[newDropZone]="true"
-								[generateRandom]="false"
-								[type]="'badge'"
-								[allowedFileFormats]="allowedFileFormats"
-								(generateRandomImage)="generateRandomImage()"
-								(imageUploaded)="generateUploadImage($event, badgeClassForm.value)"
-								[placeholderImage]="badgeClassPlaceholderImageUrl"
-								[control]="badgeClassForm.rawControlMap.badge_image"
-								[errorMessage]="imageErrorFork"
-							>
-							</bg-formfield-image>
-							<span class="tw-italic tw-text-sm md:tw-flex md:tw-justify-center md:tw-items-center"
-								>{{ 'General.fileformats' | translate }}: SVG {{ 'General.and' | translate }} PNG</span
-							>
-						</div>
-						<hr
-							class="md:tw-hidden tw-my-8 tw-w-full tw-border tw-border-[var(--color-purple)] tw-border-dashed"
-						/>
-						<div class="tw-w-full">
-							<bg-formfield-image
-								#customImageField
-								[label]="useOwnVisual"
-								[sublabel]="uploadOwnDesign"
-								[text_body]="uploadOwnVisual"
-								imageLoaderName="basic"
-								[newDropZone]="true"
-								[type]="'badge'"
-								[allowedFileFormats]="allowedFileFormatsCustom"
-								[generateRandom]="false"
-								(generateRandomImage)="generateRandomImage()"
-								(imageUploaded)="generateCustomUploadImage($event)"
-								[placeholderImage]="badgeClassPlaceholderImageUrl"
-								[control]="badgeClassForm.rawControlMap.badge_customImage"
-								[errorMessage]="imageErrorFork"
-							>
-							</bg-formfield-image>
-								<span class="tw-italic tw-text-sm md:tw-flex md:tw-justify-center md:tw-items-center"
-								>{{ 'General.fileformats' | translate }}: PNG,&nbsp; </span>
-	
-						</div>
-						<badge-studio
-							[scrolled]="scrolled"
-							#badgeStudio
-							[formData]="badgeClassForm.value"
-							[hidden]="true"
-						></badge-studio>
-					</div>
-				</div>
-				
-				<p
-					hlmP 
-					size="sm"
-					id="imageTextError"
-					[hidden]="!imageFieldDirty || !badgeClassForm.hasError('imageRequired') "
-					class="tw-font-normal md:tw-pl-[13.5rem] u-text-error"
-				>
-					{{'CreateBadge.imageRequiredError' | translate }}.
-				</p>
-				<p
-					hlmP 
-					size="sm"
-					[hidden]="!isCustomImageLarge"
-					class="tw-font-normal md:tw-pl-[13.5rem] u-text-error"
-				>
-					{{ 'CreateBadge.imageTooLarge' | translate }}
-				</p>
-			</div>
-		</div>
-	
-		<div class="section tw-text-oebblack tw-px-1" *ngIf="badgeCategory === 'competency'">
-			<h2 id="fillWithCompetencies" hlmH2 class="tw-font-bold">3. {{ 'CreateBadge.fillWithCompetencies' | translate }}</h2>
-			<p
-			class="tw-font-normal md:tw-mx-10 tw-mx-4 u-text-error"
-			hlmP
-			size="sm"
-		>
-		<span *ngIf="badgeClassForm.hasError('competenceHoursMinutesZero')">
-			{{ 'CreateBadge.competenceHoursMinutesZero' | translate}}
-		</span>
-		</p>
-			<ul class="tw-list-disc md:tw-mx-10 tw-mx-4">
-					<div>
-						<span
-							class="tw-list-item tw-list-inside tw-text-3xl tw-font-normal tw-text-[var(--color-purple)] tw-mt-2"
-							>{{ 'CreateBadge.useAiAssistant' | translate }}</span
-						>
-						<p hlmP class="tw-my-2">{{ 'CreateBadge.enterAiDescription' | translate }}</p>
-						<p hlmP class="tw-my-2">{{ 'CreateBadge.NoPersonalInformation' | translate }}</p>
-						<p hlmP class="tw-mb-2">{{ 'CreateBadge.addAiCompetencies' | translate }}</p>
-					</div>
-					<div
-						class="tw-flex tw-flex-col tw-justify-center tw-items-center tw-mt-7 tw-p-4 tw-bg-[var(--color-purple)] tw-rounded-md tw-mx-auto"
-					>
-						<span
-							class="tw-text-[var(--color-green)] tw-font-extrabold tw-text-xl tw-leading-10 tw-text-center tw-py-2 tw-px-4"
-							>{{ 'CreateBadge.aiAssistant' | translate }}</span
-						>
-						<hr class="tw-my-2 tw-mx-10 tw-w-full tw-border tw-border-solid tw-border-[var(--color-green)]" />
-						<div class="tw-flex tw-flex-col md:tw-flex-row md:tw-gap-20 tw-w-full md:tw-p-16">
-							<div class="tw-flex tw-flex-col">
-								<h2 class="tw-text-white tw-uppercase tw-font-bold">
-									{{ 'CreateBadge.myContentDescription' | translate }}
-								</h2>
-								<span class="tw-font-thin tw-italic tw-text-white">{{
-									'CreateBadge.min70max1000Chars' | translate
-								}}</span>
-								<textarea
-									id="ai-competencies-description"
-									class="tw-bg-white tw-border tw-border-gray-300 tw-mt-2 tw-rounded-md tw-shadow-sm tw-p-2 tw-h-48 tw-resize-none tw-text-sm tw-text-gray-700"
-									[(ngModel)]="aiCompetenciesDescription"
-									[ngModelOptions]="{ standalone: true }"
-									maxlength="1000"
-									minlength="70"
-									[placeholder]="detailedDescription"
-								>
-								</textarea>
-								<div class="tw-mt-4">
-									<oeb-button
-										[id]="'suggest-competencies-btn'"
-										class="tw-whitespace-nowrap"
-										(click)="suggestCompetencies()"
-										type="button"
-										[text]="suggestCompetenciesText"
-										variant="green"
-										size="sm"
-									>
-										<span class="tw-font-bold">
-											{{ 'CreateBadge.suggestCompetencies' | translate }}
-										</span>
-									</oeb-button>
-								</div>
-							</div>
-							<div class="tw-mt-6 md:tw-mt-0 tw-w-full">
-								<h2 class="tw-text-white tw-uppercase tw-font-bold">
-									{{ 'CreateBadge.fitting' | translate }} {{ 'RecBadgeDetail.competencies' | translate }}
-								</h2>
-								<div
-									id="ai-competencies-suggestions-list"
-									class="tw-bg-[var(--color-lightpurple)] tw-mt-2 tw-border tw-border-gray-300 tw-rounded-2xl tw-shadow-sm tw-p-2 tw-h-24 tw-resize-none tw-text-sm tw-text-gray-700"
-									*ngIf="aiCompetenciesSuggestions.length == 0; else showAiCompetenciesSuggestions"
-								>
-									<p class="tw-italic tw-whitespace-pre-wrap">
-										{{ 'CreateBadge.suggestedCompetencies' | translate }}
-									</p>
-								</div>
-								<ng-template #showAiCompetenciesSuggestions>
-									<ng-container
-										*ngFor="
-											let aiCompetency of badgeClassForm.controls.aiCompetencies.controls;
-											let i = index
-										"
-									>
-										<div
-											[ngClass]="
-												aiCompetency.rawControlMap.selected.value
-													? 'tw-bg-[var(--color-lightgreen)]'
-													: 'tw-bg-[var(--color-lightgray)]'
-											"
-											class="tw-rounded-md md:tw-w-2/3 tw-mx-auto md:tw-ml-0 tw-p-6 tw-mt-2"
-										>
-											<div class="tw-flex tw-justify-between">
-												<h2 class="tw-whitespace-pre-wrap tw-text-sm tw-text-oebblack tw-font-bold">
-													{{ aiCompetenciesSuggestions[i].preferred_label }} <a href="http://data.europa.eu/{{aiCompetenciesSuggestions[i].concept_uri}}" target="_blank" class="tw-ml-2 !tw-text-[var(--color-link)]]"> <span class="tw-text-[var(--color-link)] tw-underline tw-font-normal">(E)</span></a>
-												</h2>
-												<oeb-checkbox class="tw-border-[var(--color-purple)]" name="{{'checkboxAiSkill_'+i}}" id="{{'checkboxAiSkill_'+i}}"
-													[control]="aiCompetency.rawControlMap.selected"
-													></oeb-checkbox>
-											</div>
-											<hr class="tw-text-[var(--color-grayinteractive)] tw-my-1 tw-border-solid tw-border" />
-											<p class="tw-w-full tw-my-2 tw-text-sm tw-text-oebblack tw-whitespace-pre-wrap">
-												{{ aiCompetenciesSuggestions[i].description }}
-											</p>
-											<span class="tw-text-sm tw-text-[#6B6B6B] tw-font-light">{{ 'Badge.category' | translate}}: {{ aiCompetenciesSuggestions[i].type.includes('skill') ? ('Badge.skill' | translate) : ('Badge.knowledge' | translate) }} </span>
-											<div class="tw-flex tw-gap-2 tw-items-center">
-												<oeb-input
-													class="tw-w-20"
-													[fieldType]="'number'"
-													[control]="aiCompetency.rawControlMap.hours"
-													[errorMessage]="{ duration: requiredError }"
-													noTopMargin="true"
-												>
-												</oeb-input>
-												<span class="tw-font-bold tw-text-purple" hlmP>:</span>
-												<oeb-input
-													class="tw-w-20"
-													[fieldType]="'number'"
-													[control]="aiCompetency.rawControlMap.minutes"
-													[errorMessage]="{ duration: requiredError }"
-													noTopMargin="true"
-												>
-												</oeb-input>
-												<span class="tw-text-oebblack md:tw-text-lg">{{
-													'RecBadge.hours' | translate
-												}}</span>
-											</div>
-										</div>
-									</ng-container>
-								</ng-template>
-							</div>
-						</div>
-					</div>
-				<hr class="tw-my-8 tw-border tw-border-[var(--color-purple)] tw-border-dashed" />
-					<oeb-collapsible [id]="'competencies-by-hand-section'" [trigger]="collapseCompetenciesTrigger" [defaultOpen]="collapsedCompetenciesOpen">
-						<ng-template #collapseCompetenciesTrigger>
-							<span class="tw-list-item tw-text-3xl tw-font-normal tw-text-[var(--color-purple)] tw-mr-auto">{{
-								'CreateBadge.addCompetenciesByHand' | translate
-							}}</span>
-						</ng-template>
-					
-					<div
-						class="tw-flex tw-flex-col md:tw-flex-row md:tw-gap-4 tw-gap-2 md:tw-justify-between md:tw-items-center"
-					>
-						<p class="tw-text-oebblack tw-text-lg tw-leading-6">
-							{{ 'CreateBadge.addCompetenciesByHandInfo' | translate }}
-							<span class="tw-hidden md:tw-inline"
-								>, {{ 'CreateBadge.tofindFittingCompetencies' | translate }}</span
-							>
-						</p>
-	
-						<div class="button tw-bg-[var(--color-purple)]">
-							<a
-								class="tw-text-white"
-								href="https://esco.ec.europa.eu/de/classification/skill_main"
-								target="_blank"
-								>{{ 'CreateBadge.toEscoSearch' | translate }}</a
-							>
-						</div>
-					</div>
-	
-					<ng-container *ngFor="let competency of badgeClassForm.controls.competencies.controls; let i = index">
-						<ng-container *ngIf="competency.controls['added'].value; else competencyForm">
-							<div
-								class="tw-bg-[var(--color-lightgray)] tw-rounded-2xl tw-border tw-border-solid tw-border-[var(--color-purple)] tw-p-4 tw-mt-2"
-							>
-								<div class="tw-flex tw-justify-between">
-									<h2 class="tw-whitespace-pre-wrap tw-text-oebblack tw-font-bold">
-										{{ competency.rawControlMap.name.value }}
-									</h2>
-									<oeb-checkbox class="tw-border-[var(--color-purple)]" name="competency$i" id="competency$i"
-													[control]="competency.rawControlMap.added"
-									></oeb-checkbox>
-								</div>
-								<p
-									class="tw-w-full tw-text-oebblack tw-mt-2 tw-italic tw-whitespace-pre-wrap tw-line-clamp-3"
-								>
-									{{ competency.rawControlMap.description.value }}
-								</p>
-								<div class="tw-flex tw-gap-2 tw-items-center tw-mt-4 ">
-									<label class="tw-text-oebblack tw-font-bold" for="studyLoad$i">
-										{{ 'RecBadgeDetail.duration' | translate }}:
-									</label>
-									<span
-									class="tw-flex tw-rounded-md tw-bg-white tw-border tw-border-solid tw-border-black tw-h-8 tw-w-20 tw-min-w-fit tw-items-center tw-justify-center"
-								  >
-									{{ competency.rawControlMap.hours.value | number:'2.0' }}:{{ competency.rawControlMap.minutes.value | number:'2.0' }} h
-								  </span>
-								  
-								</div>
-							</div>
-						</ng-container>
-						<ng-template #competencyForm>
-							<div
-								class="tw-border-[var(--color-purple)] tw-border tw-border-solid tw-rounded-md tw-p-6 tw-mt-4"
-							>
-								<div class="tw-flex tw-flex-col md:tw-flex-row md:tw-justify-between tw-gap-5 md:tw-gap-0">
-									
-									<oeb-input 
-										id="{{'competencyTitle_'+i}}"
-										[fieldType]="'text'" 
-										[label]="competencyTitle"
-										[control]="competency.rawControlMap.name"
-										[errorMessage]="{ required: titleError }"
-										noTopMargin="true"
-										[readonly]="competency.controls['framework_identifier'].value ? true : false"
-									>
-									</oeb-input>
-	
-									<div class="tw-flex tw-flex-col">
-										<span class="tw-font-semibold tw-text-[14px] md:tw-text-[20px] tw-leading-4 md:tw-leading-6 tw-font-[rubik] tw-pb-[5px] tw-pl-[3px]">{{ competencyDuration }}</span>
-	
-										<div class="tw-flex tw-gap-2 tw-items-center">
-											<oeb-input
-												id="{{'competencyDurationHour_'+i}}" 
-												[fieldType]="'number'"
-												class="tw-max-w-24"
-												[control]="competency.rawControlMap.hours"
-												[errorMessage]="{
-													duration: requiredError
-												}"
-												noTopMargin="true"
-												[readonly]="competency.controls['framework_identifier'].value ? true : false"
-											>
-											</oeb-input>
-											:
-											<oeb-input 
-												id="{{'competencyDurationMinutes_'+i}}" 
-												[fieldType]="'number'"
-												class="tw-max-w-24"
-												[control]="competency.rawControlMap.minutes"
-												[errorMessage]="{
-													duration: requiredError
-												}"
-												noTopMargin="true"
-												[readonly]="competency.controls['framework_identifier'].value ? true : false"
-											>
-											</oeb-input>
-	
-											<span class="tw-text-oebblack">h</span>
-										</div>
-									</div>
-									
-									<oeb-select
-										id="{{'competencyCategory_'+i}}" 
-										ariaLabel="Wähle eine Kompetenz-Kategorie"
-										[control]="competency.rawControlMap.category"
-										[label]="competencyCategory"
-										[placeholder]="'Kategorie wählen'"
-										[optionMap]="competencyCategoryOptions"
-										[errorMessage]="{
-											required: competencyCategoryError
-										}"
-										noTopMargin="true"
-										[disabled]="competency.controls['framework_identifier'].value ? true : false"
-									></oeb-select>
-	
-								</div>
-	
-								<oeb-input
-									id="{{'competencyDescriptionInput_'+i}}"
-									[fieldType]="'textarea'" 
-									[label]="competencyDescription"
-									[control]="competency.rawControlMap.description"
-									[errorMessage]="{ required: enterDescription }"
-									[readonly]="competency.controls['framework_identifier'].value ? true : false"
-								>
-								</oeb-input>
-	
-								<oeb-input
-									id="{{'escoIdentifierInput_'+i}}" 
-									*ngIf="competency.rawControlMap['framework_identifier'].value"
-									label="Framework-Identifier"
-									[control]="competency.rawControlMap['framework_identifier']"
-									[readonly]="true"
-									placeholder="z.B. http://data.europa.eu/esco/skill/7de3b70e-2568-420a-8528-69523d323e7a"
-								>
-								</oeb-input>
-	
-								<div class="tw-flex tw-justify-between tw-flex-wrap sm:tw-flex-nowrap tw-gap-2 tw-mt-8">
-									<oeb-button
-										*ngIf="badgeClassForm.controls.competencies.controls.length > 0"
-										class="tw-mr-4"
-										variant="secondary"
-										size="sm"
-										type="button"
-										(click)="removeCompetency(competency)"
-										text="{{ 'General.remove' | translate }}"
-									></oeb-button>
-							
-									<oeb-button
-										id="{{'addCompetencyBtn_'+i}}"
-										size="sm"
-										type="button"
-										width="max_content"
-										(click)="addCompetency(competency)"
-										text="{{ 'General.add' | translate }}"
-									>
-									</oeb-button>
-								</div>
-							</div>
-						</ng-template>
-					</ng-container>
-	
-					<div class="tw-w-full tw-flex tw-justify-end">
-						<oeb-button
-							size="sm"
-							type="button"
-							class="tw-mt-2"
-							(click)="addAnotherCompetency()"
-							text="{{
-								(badgeClassForm.controls.competencies.controls.length > 0		
-								? 'CreateBadge.addAnotherCompetency'		
-								: 'General.add') | translate}}"
-								icon="lucidePlus"
-						>
-						</oeb-button>
-					</div>
-				</oeb-collapsible>
-			</ul>
-			<p
-				id="competencyDuplicateError"
-				*ngIf="badgeClassForm.hasError('duplicateCompetency')"
-				[hidden]="!badgeClassForm.hasError('duplicateCompetency')"
-				class="u-text u-margin-bottom2x u-text-error tw-w-full tw-text-center tw-mt-2"
-				>
-				{{ 'CreateBadge.duplicateCompetencyError' | translate }} '{{ checkDuplicateCompetency() }}'
-			</p>
-		</div>
-	
-		<div class="section tw-text-oebblack">
-			<h2 hlmH2 class="tw-font-bold"><ng-container>{{ badgeCategory === 'competency' ? '4.' : '3.'}}</ng-container> Badge-{{ 'RecBadgeDetail.criteria' | translate }}</h2>
-			<div class="md:tw-mx-6">
-				<p class="tw-my-2 tw-italic tw-font-semibold">
-					{{ 'CreateBadge.criteriaInfo' | translate }}
-				</p>
-				<div class="mdeditor">
-					<div class="mdeditor-x-editor">
-						<p
-							[hidden]="!alignmentFieldDirty || !badgeClassForm.hasError('criteriaRequired')"
-							class="u-text u-margin-bottom2x u-text-error"
-						>
-							{{ 'CreateBadge.criteriaError' | translate }}
-						</p>
-	
-						<bg-formfield-markdown
-							[control]="badgeClassForm.rawControlMap.badge_criteria_text"
-							label=" Wie bekommt man dieses Badge?"
-							class="tw-hidden"
-							[errorMessage]="''"
-						></bg-formfield-markdown>
-						<!-- <textarea id="criteria_textarea" class="tw-my-2" readonly>
-							{{criteriaText}}
-						</textarea> -->
-						 <div >
-							<span *ngIf="badgeClassForm.controls.badge_name.value" class="tw-text-lg">
-								Du hast erfolgreich an
-								<span class="tw-italic tw-font-semibold">{{ badgeClassForm.controls.badge_name.value + ' ' }}</span> teilgenommen.</span
-							>
-							<div *ngIf="badgeCategory === 'competency'">
-								<span class="tw-font-bold tw-text-lg">Dabei hast du folgende Kompetenzen gestärkt: </span>
-								<ul class="tw-list-disc tw-mt-4">
-									<ng-container
-										*ngFor="
-											let aiCompetency of badgeClassForm.controls.aiCompetencies.controls;
-											let i = index
-										"
-									>
-										<li *ngIf="aiCompetency.rawControlMap.selected.value" class="tw-mx-6">
-											<span class="tw-text-lg">
-												{{ aiCompetenciesSuggestions[i].preferred_label }}
-											</span>
-										</li>
-									</ng-container>
-									<ng-container *ngFor="let competency of badgeClassForm.controls.competencies.controls">
-										<li *ngIf="competency.rawControlMap.added.value && competency.rawControlMap.name.value" class="tw-mx-6">
-											<span class="tw-text-lg">{{ competency.rawControlMap.name.value }}</span>
-										</li>
-									</ng-container>
-								</ul>
-							</div>
-						</div> 
-					</div>
-	
-					<!-- <div class="forminput u-margin-bottom2x md:tw-items-center tw-flex tw-gap-2 md:tw-flex-row tw-flex-col">
-						<span class="tw-font-bold tw-whitespace-nowrap">URL (optional)</span>
-						<bg-formfield-text
-							class="tw-w-full"
-							[control]="badgeClassForm.rawControlMap.badge_criteria_url"
-							[urlField]="true"
-							fieldType="url"
-							errorMessage="URL zu den Badge Kriterien"
-						></bg-formfield-text>
-					</div>  -->
-				</div>
-			</div>
-		</div>
-	
-		<!-- add options -->
-		<div class="section formsection formsection-nohelp tw-text-oebblack">
-			<oeb-collapsible [trigger]="collapseDetailsTrigger" [id]="'optional-details'">
-				<ng-template #collapseDetailsTrigger>
-					<h2 class="tw-pt-1 tw-px-1 tw-text-xl tw-text-[var(--color-purple)] tw-mr-auto">{{'CreateBadge.optionalBadgeDetails' | translate }}</h2>
-				</ng-template>
-			
-			<div class="formsection-x-body">
-				<div class="tw-flex tw-gap-4 tw-items-center tw-mb-2">
-					<span class="tw-font-semibold tw-text-lg tw-text-oebblack tw-uppercase"> Tag</span>
-	
-					<div class="ng-autocomplete">
-						<ng-autocomplete
-							name="addtag"
-							id="addtag"
-							#newTagInput
-							[data]="existingTags"
-							maxlength="50"
-							[isLoading]="existingTagsLoading"
-							searchKeyword="name"
-							[placeholder]="newTag"
-							(keypress)="handleTagInputKeyPress($event)"
-							[itemTemplate]="itemTemplate"
-							[notFoundTemplate]="notFoundTemplate"
-						>
-						</ng-autocomplete>
-	
-						<ng-template #itemTemplate let-item>
-							<a [innerHTML]="item.name"></a>
-						</ng-template>
-	
-						<ng-template #notFoundTemplate let-notFound>
-							<div>{{ 'CreateBadge.tagDoesNotExist' | translate }}</div>
-						</ng-template>
-					</div>
-						
-					<oeb-button
-						[id]="'add-tag-btn'" 
-						size="sm"
-						type="button" 
-						(click)="addTag()" 
-						text="{{ 'General.add' | translate }}">
-					</oeb-button>
-				</div>
-				<div *ngIf="tags.size > 0" class="tw-flex tw-flex-wrap tw-gap-4 tw-w-[70%] tw-ml-[3.2rem]">
-					<div
-						class="tw-flex tw-items-center  tw-rounded-full tw-py-1 tw-mb-2"
-						*ngFor="let tag of tags"
-					>
-						<oeb-button 
-						variant="secondary"
-						size="xxs"
-						(click)="removeTag(tag)" 
-						icon="lucideCircleX"
-						text="{{ tag }}">
-	
-						</oeb-button>
-					</div>
-				</div>
-				<span class="tw-italic">{{ 'CreateBadge.tagInfo' | translate }}</span>
-				<ul class="tw-mt-4">
-					<li>
-						<button
-							id="link-standards-btn"
-							type="button"
-							(click)="alignmentsEnabled ? disableAlignments() : enableAlignments()"
-							class="options-dropdown"
-						>
-							<span class="tw-text-md md:tw-text-lg">
-								{{ 'CreateBadge.alignEducationalFramework' | translate }}
-							</span>
-						</button>
-						<!-- alignments -->
-						<div class="formsection tw-mt-2 tw-bg-inherit tw-border-none" *ngIf="alignmentsEnabled">
-							<div class="formsection-x-title">
-								<h2 class="u-text-dark2">
-									{{ 'RecBadgeDetail.alignment' | translate }}
-									<span>(Optional)</span>
-								</h2>
-								<button type="button" (click)="disableAlignments()" class="buttonicon buttonicon-link">
-									<svg icon="icon_close"></svg>
-									<span class="visuallyhidden">Close</span>
-								</button>
-							</div>
-	
-							<div class="formsection-x-help">
-								<h3 class="u-text-body-bold">
-									{{ 'CreateBadge.whatIsThe' | translate }} {{ 'RecBadgeDetail.alignment' | translate }}?
-								</h3>
-								<p class="u-text u-margin-top1x u-margin-bottom2x">
-									{{ 'CreateBadge.alignmentInfo' | translate }}
-								</p>
-							</div>
-							<div class="formsection-x-body">
-								<ng-container
-									*ngFor="let alignment of badgeClassForm.controls.alignments.controls; let i = index"
-								>
-									<div class="tw-mt-2 l-flex l-flex-1x l-flex-justifybetween u-margin-bottom2x">
-										<h3 class="u-text-body-bold u-text-dark1">
-											{{ alignment.controls.target_name.value }}
-										</h3>
-										<button
-											*ngIf="badgeClassForm.controls.alignments.controls.length > 1"
-											type="button"
-											(click)="removeAlignment(alignment)"
-											class="u-text-link"
-										>
-											{{ 'General.remove' | translate }}
-										</button>
-									</div>
-									<div class="forminput u-margin-bottom6x">
-										<div class="forminput-x-inputs">
-											<oeb-input
-												[control]="alignment.rawControlMap.target_name"
-												label="Name"
-												[errorMessage]="{ required: alignmentNameError }"
-												id="alignment_name_{{ i }}"
-											></oeb-input>
-	
-											<oeb-input
-												[control]="alignment.rawControlMap.target_url"
-												label="URL"
-												[errorMessage]="{ required: alignmentURLError }"
-												[urlField]="true"
-												id="alignment_url_{{ i }}"
-											></oeb-input>
-	
-											<oeb-input
-												[control]="alignment.rawControlMap.target_description"
-												[label]="shortDescription"
-												[multiline]="true"
-												id="alignment_description_{{ i }}"
-											></oeb-input>
-	
-											<button
-												id="link-more-options-btn"
-												*ngIf="!showAdvanced[i]"
-												(click)="showAdvanced[i] = true"
-												type="button"
-												class="u-text-link-small u-margin-yaxis2x"
-											>
-												{{ 'General.show' | translate }}
-												{{ 'CreateBadge.additionalOptions' | translate }}
-											</button>
-	
-											<ng-template [ngIf]="showAdvanced[i]">
-												<button
-													(click)="showAdvanced[i] = false"
-													type="button"
-													class="u-text-link-small u-margin-yaxis2x"
-												>
-													{{ 'General.hide' | translate }}
-													{{ 'CreateBadge.additionalOptions' | translate }}
-												</button>
-	
-												<label class="forminput-x-label u-margin-top2x" for="forminput2">{{
-													'CreateBadge.frame' | translate
-												}}</label>
-												<input type="text" id="forminput2" name="forminput2" />
-	
-												<label class="forminput-x-label u-margin-top2x" for="url">Code</label>
-												<input type="text" id="url" name="url" />
-											</ng-template>
-										</div>
-									</div>
-								</ng-container>
-	
-								<div class="l-stack">
-									<button (click)="addAlignment()" type="button" class="button button-secondary">
-										{{ 'CreateBadge.addAlignment' | translate }}
-									</button>
-								</div>
-							</div>
-						</div>
-					</li>
-					<li class="tw-mt-4">
-						<button
-							id="badge-validity-btn"
-							type="button"
-							(click)="expirationEnabled ? disableExpiration() : enableExpiration()"
-							class="options-dropdown"
-						>
-							<span class="tw-text-md md:tw-text-lg">{{ 'CreateBadge.expiration' | translate }}</span>
-						</button>
-						<!-- expiration -->
-						<div *ngIf="expirationEnabled" class="formsection tw-bg-inherit tw-mt-2 tw-border-none">
-							<div class="formsection-x-title">
-								<h2 class="u-text-dark2">
-									{{ 'CreateBadge.expiration' | translate }}
-									<span>(Optional)</span>
-								</h2>
-								<button type="button" (click)="disableExpiration()" class="buttonicon buttonicon-link">
-									<svg icon="icon_close"></svg>
-									<span class="visuallyhidden">Schliessen</span>
-								</button>
-							</div>
-	
-							<div class="formsection-x-help">
-								<h3 class="u-text-body-bold">
-									{{ 'CreateBadge.whatIsThe' | translate }} {{ 'CreateBadge.expiration' | translate }}?
-								</h3>
-								<p class="u-text u-margin-top1x u-margin-bottom2x">
-									{{ 'CreateBadge.expirationInfo' | translate }}
-								</p>
-							</div>
-							<div class="formsection-x-body">
-								<div class="l-spacestack">
-									<oeb-input
-										id="duration-number"
-										[control]="expirationForm.rawControlMap.expires_amount"
-										[label]="count"
-										[fieldType]="'number'"
-										[max]="1000"
-										[maxchar]="4"
-										[errorMessage]="{
-											max: maxValue1000
-										}"
-									></oeb-input>
-									<oeb-select
-										[id]="'duration-type'"
-										ariaLabel="chooseDuration"
-										[control]="expirationForm.rawControlMap.expires_duration"
-										[label]="duration"
-										[placeholder]="chooseDuration"
-										[optionMap]="durationOptions"
-									></oeb-select>
-								</div>
-							</div>
-						</div>
-					</li>
-				</ul>
-			</div>
-		</oeb-collapsible>
-		</div>
-		
-		<div>
+		</div> -->
+
+		<div class="tw-mt-8">
 			<p class="tw-text-end tw-text-oebblack tw-italic tw-text-lg" [innerHTML]="'CreateBadge.licenseInfo' | translate"> </p>
-		</div>
-	
-		<div class="tw-flex tw-justify-between md:tw-justify-end tw-flex-wrap sm:tw-flex-nowrap tw-gap-2 tw-mt-8">
-			<oeb-button
-				class="tw-mr-4"
-				variant="secondary"
-				(click)="cancelClicked()"
-				[disabled]="!!savePromise"
-				[class.disabled]="!!savePromise"	
-				[disabled-when-requesting]="true"
-				text="{{ 'General.cancel' | translate }}"
-			></oeb-button>
-	
-			<oeb-button
-				id="create-badge-btn"
-				type="submit"
-				width="max_content"
-				[disabled]="!!savePromise"
-				[loading-promises]="[savePromise]"
-				loading-message="{{ submittingText }}"
-				text="{{ (existingBadgeClass ? 'General.saveChanges' : 'Issuer.createBadge') | translate }}"
-			>
-			</oeb-button>
 		</div>
 	</form>
 	</div>

@@ -272,14 +272,13 @@ export class LearningPathBadgesComponent implements OnInit {
 			: { minSelectedBadges: { required: 3, actual: this.selectedBadges.length } }
 	}
 	ngOnInit(): void {
-		this.groups[0] = "---"
 
 		this.translate.get('Badge.category').subscribe((translatedText: string) => {
-			this.groups[1] = translatedText
+			this.groups[0] = translatedText
 		})
 
 		this.translate.get('Badge.issuer').subscribe((translatedText: string) => {
-			this.groups[2] = translatedText
+			this.groups[1] = translatedText
 		})
 
 		this.translate.get('Badge.competency').subscribe((translatedText: string) => {
