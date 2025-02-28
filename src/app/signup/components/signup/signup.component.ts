@@ -89,6 +89,28 @@ export class SignupComponent extends BaseRoutableComponent implements OnInit, Af
 				this.captchaVerified = true;
 			  }
 			});
+			const translationKeys = [
+				'Captcha.error',
+				'Captcha.footer',
+				'Captcha.label',
+				'Captcha.verified',
+				'Captcha.verifying',
+				'Captcha.waitAlert'
+			];
+		
+			this.translate.get(translationKeys).subscribe(translations => {
+				//@ts-ignore
+				captchaElement.configure({
+					strings: {
+						error: translations['Captcha.error'],
+						footer: translations['Captcha.footer'],
+						label: translations['Captcha.label'],  
+						verified: translations['Captcha.verified'],
+						verifying: translations['Captcha.verifying'],
+						waitAlert: translations['Captcha.waitAlert'],
+					},
+				});
+			});
 	}
 
 	onSubmit() {
