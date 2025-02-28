@@ -7,4 +7,5 @@ export interface Payload {
 	test?: boolean;
 	took: number;
 	maxnumber?: number;
+	challenge_id: string;
 }

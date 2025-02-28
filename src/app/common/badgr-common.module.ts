@@ -132,6 +132,7 @@ import { CountUpDirective } from './directives/count-up.directive';
 import { OebSortSelectComponent } from '../components/oeb-sort-select.component';
 import { QrCodeApiService } from '../issuer/services/qrcode-api.service';
 import { serverErrorInterceptorFactory } from '../server-error-interceptor.factory';
+import { AltchaComponent } from '../components/altcha.component';
 
 const DIRECTIVES = [
 	BgAwaitPromises,
@@ -187,7 +188,7 @@ export const COMMON_MODULE_COMPONENTS = [
 	IssuerCardComponent,
 	OebLearningPathDetailComponent,
 	OebIssuerCard,
-	OebSortSelectComponent
+	OebSortSelectComponent,
 ];
 
 const SERVICES = [
@@ -262,6 +263,7 @@ export const COMMON_IMPORTS = [
 	LearningPathParticipantsDatatableComponent,
 	LearningPathGraduatesDatatableComponent,
 	HlmBadgeDirective,
+	AltchaComponent
 ];
 
 @NgModule({
