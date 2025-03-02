@@ -205,8 +205,8 @@
 					[optional]="false"
 					errorMessage="Bitte Kompetenzen hinzufügen"
 					*ngIf="category === 'competency'"
-					[completed]="badgeClassForm.controls.aiCompetencies.valid && badgeClassForm.controls.competencies.valid && !badgeClassForm.hasError('competenceHoursMinutesZero')"
-					[hasError]="!badgeClassForm.controls.aiCompetencies.valid || !badgeClassForm.controls.competencies.valid || badgeClassForm.hasError('competenceHoursMinutesZero')"
+					[completed]="badgeClassForm.controls.aiCompetencies.valid && badgeClassForm.controls.competencies.valid && !badgeClassForm.hasError('competenceHoursMinutesZero') && !badgeClassForm.hasError('competencyExceedsBadgeDuration')"
+					[hasError]="!badgeClassForm.controls.aiCompetencies.valid || !badgeClassForm.controls.competencies.valid || badgeClassForm.hasError('competenceHoursMinutesZero') || badgeClassForm.hasError('competenceHoursMinutesZero') || badgeClassForm.hasError('competencyExceedsBadgeDuration')"
 				>
 
 					<div class="section tw-text-oebblack tw-px-1 tw-mt-6" *ngIf="badgeCategory === 'competency'">
@@ -218,6 +218,9 @@
 						>
 							<span *ngIf="badgeClassForm.hasError('competenceHoursMinutesZero')">
 								{{ 'CreateBadge.competenceHoursMinutesZero' | translate}}
+							</span>
+							<span *ngIf="badgeClassForm.hasError('competencyExceedsBadgeDuration')">
+								{{ 'CreateBadge.competencyExceedsBadgeDuration' | translate}}
 							</span>
 						</p>
 						<ul class="tw-list-disc md:tw-mx-10 tw-mx-4">
