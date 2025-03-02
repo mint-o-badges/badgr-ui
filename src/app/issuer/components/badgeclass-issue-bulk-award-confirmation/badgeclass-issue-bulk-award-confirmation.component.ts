@@ -14,7 +14,6 @@ import striptags from 'striptags';
 import { SuccessDialogComponent } from '../../../common/dialogs/oeb-dialogs/success-dialog.component';
 import { HlmDialogService } from './../../../components/spartan/ui-dialog-helm/src';
 import { typedFormGroup } from '../../../common/util/typed-forms';
-import { BadgeInstanceApiService } from '../../services/badgeinstance-api.service';
 
 @Component({
 	selector: 'badgeclass-issue-bulk-award-confirmation',
@@ -34,7 +33,6 @@ export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRouta
 
 	constructor(
 		protected badgeInstanceManager: BadgeInstanceManager,
-		protected badgeInstanceApiService: BadgeInstanceApiService,
 		protected sessionService: SessionService,
 		protected router: Router,
 		protected route: ActivatedRoute,
@@ -84,49 +82,26 @@ export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRouta
 			assertions.push(assertion);
 		});
 
-		const checkStatus = async (taskId: string) => {
-			const response = await this.badgeInstanceApiService.checkBatchAssertionStatus(taskId, this.issuerSlug, this.badgeSlug);
-			if (response.body['status'] === 'SUCCESS') {
-			  return response.body['result'];
-			} else if (response.body['status'] === 'FAILURE') {
-			  throw new Error(response.body['result']);
-			}
-			console.log("response", response)
-			// Continue polling if still processing
-			await new Promise(resolve => setTimeout(resolve, 2000));
-			return checkStatus(taskId);
-		  };
-
-		this.badgeInstanceApiService.createBadgeInstanceBatchedAsync(this.issuerSlug, this.badgeSlug, {
-			issuer: this.issuerSlug,
-			badge_class: this.badgeSlug,
-			create_notification: this.issueForm.rawControlMap.notify_earner.value,
-			assertions,
-		}).then((response) => {
-			const taskId = response.body.task_id;
-			checkStatus(taskId)
-		})
-
-	// 	this.badgeInstanceManager
-	// 		.createBadgeInstanceBatched(this.issuerSlug, this.badgeSlug, {
-	// 			issuer: this.issuerSlug,
-	// 			badge_class: this.badgeSlug,
-	// 			create_notification: this.issueForm.rawControlMap.notify_earner.value,
-	// 			assertions,
-	// 		})
-	// 		.then(
-	// 			(result) => {
-	// 				this.openSuccessDialog(assertions.length + " User")
-	// 				this.router.navigate(['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug]);
-	// 			},
-	// 			(error) => {
-	// 				this.messageService.setMessage(
-	// 					'Fast geschafft! Deine Badges werden gerade vergeben – das kann ein paar Minuten dauern. Schau gleich auf der Badge-Detail-Seite nach, ob alles geklappt hat.' ,
-	// 					'error',
-	// 				);
-	// 			},
-	// 		);
-	 }
+		this.badgeInstanceManager
+			.createBadgeInstanceBatched(this.issuerSlug, this.badgeSlug, {
+				issuer: this.issuerSlug,
+				badge_class: this.badgeSlug,
+				create_notification: this.issueForm.rawControlMap.notify_earner.value,
+				assertions,
+			})
+			.then(
+				(result) => {
+					this.openSuccessDialog(assertions.length + " User")
+					this.router.navigate(['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug]);
+				},
+				(error) => {
+					this.messageService.setMessage(
+						'Fast geschafft! Deine Badges werden gerade vergeben – das kann ein paar Minuten dauern. Schau gleich auf der Badge-Detail-Seite nach, ob alles geklappt hat.' ,
+						'error',
+					);
+				},
+			);
+	}
 
 	updateViewState(state: ViewState) {
 		this.updateStateEmitter.emit(state);
