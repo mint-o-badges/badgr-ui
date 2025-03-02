@@ -49,6 +49,7 @@ import { ErrorDialogComponent } from '../../../common/dialogs/oeb-dialogs/error-
 
 import { StepperComponent } from '../../../components/stepper/stepper.component';
 import { BadgeClassDetailsComponent } from '../badgeclass-create-steps/badgeclass-details/badgeclass-details.component';
+import { Issuer } from '../../models/issuer.model';
 
 @Component({
 	selector: 'badgeclass-edit-form',
@@ -236,6 +237,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		])
 		.addControl('badge_image', '')
 		.addControl('badge_customImage', '')
+		.addControl('useIssuerImageInBadge', false)
 		.addControl('badge_description', '', [Validators.required, Validators.maxLength(700)])
 		.addControl('badge_criteria_url', '')
 		.addControl('badge_criteria_text', '')
@@ -330,7 +332,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	cancel = new EventEmitter<void>();
 
 	@Input()
-	issuerSlug: string;
+	issuer: Issuer;
 
 	@Input()
 	category: string;
@@ -453,6 +455,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			badge_name: badgeClass.name,
 			badge_image: this.existing && badgeClass.imageFrame ? badgeClass.image : null,
 			badge_customImage: this.existing && !badgeClass.imageFrame ? badgeClass.image : null,
+			useIssuerImageInBadge: false,
 			badge_description: badgeClass.description,
 			badge_criteria_url: badgeClass.criteria_url,
 			badge_criteria_text: badgeClass.criteria_text,
@@ -540,6 +543,12 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		this.badgeClassForm.rawControl.controls['badge_category'].statusChanges.subscribe((res) => {
 			this.handleBadgeCategoryChange();
 		});
+
+		this.badgeClassForm.rawControl.controls['useIssuerImageInBadge'].valueChanges.subscribe((res) => {
+			if(this.currentImage){
+				this.generateUploadImage(this.currentImage, this.badgeClassForm.value)
+			}
+		})
 
 		// To check duplicate competencies only when one is selected
 		if (this.badgeClassForm.controls.aiCompetencies.controls['selected']) {
@@ -1167,7 +1176,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 						amount: parseInt(expirationState.expires_amount, 10),
 					};
 				}
-				this.savePromise = this.badgeClassManager.createBadgeClass(this.issuerSlug, badgeClassData);
+				this.savePromise = this.badgeClassManager.createBadgeClass(this.issuer.slug, badgeClassData);
 			}
 
 			this.save.emit(this.savePromise);
@@ -1254,7 +1263,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	 */
 	generateUploadImage(image, formdata) {
 		this.currentImage = image.slice();
-		this.badgeStudio.generateUploadImage(image.slice(), formdata).then((imageUrl) => {
+		this.badgeStudio.generateUploadImage(image.slice(), formdata, this.issuer.image).then((imageUrl) => {
 			this.imageField.useDataUrl(imageUrl, 'BADGE');
 		});
 	}

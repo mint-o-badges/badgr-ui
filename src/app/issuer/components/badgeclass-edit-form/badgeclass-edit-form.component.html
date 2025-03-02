@@ -12,7 +12,7 @@
 				<oeb-step
 					label="Kategorie wählen"
 					[optional]="false"
-					[route]="['/issuer/issuers/' + issuerSlug + '/badges' + '/select']"
+					[route]="['/issuer/issuers/' + issuer.slug + '/badges' + '/select']"
 					errorMessage="Bitte Kategorie wählen"
 					[completed]="true"
 					*ngIf="!existingBadgeClass"
@@ -147,7 +147,7 @@
 												<img src="../../../../breakdown/static/images/square.svg" class="tw-absolute tw-h-[11.56px] tw-top-0 tw-right-0">
 											</div>
 											<oeb-checkbox name="addIssuerLogo" id="addIssuerLogo"
-												[control]="" [text]="'<span class=\'tw-text-sm\'>Institutions-Logo ergänzen</span>'" [noMargin]="true"
+												[control]="badgeClassForm.rawControlMap.useIssuerImageInBadge" [text]="'<span class=\'tw-text-sm\'>Institutions-Logo ergänzen</span>'" [noMargin]="true"
 											></oeb-checkbox>
 										</div>
 									</div>
