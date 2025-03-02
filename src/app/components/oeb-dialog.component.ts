@@ -33,10 +33,11 @@ import { NgClass, NgIf } from '@angular/common';
 	],
 	template: `
 		<div
-			class="tw-px-4 tw-py-6"
+			class="tw-px-4 tw-py-6 tw-rounded-[20px] tw-border-4 tw-bg-white tw-border-solid"
 			[ngClass]="{
-				' tw-border-red tw-border-solid tw-rounded-[20px] tw-border-4 tw-bg-white': variant === 'danger',
-				' tw-border-link tw-border-solid tw-rounded-[20px] tw-border-4 tw-bg-white': variant === 'info'
+				' tw-border-red': variant === 'danger',
+				' tw-border-link': variant === 'info',
+				'tw-border-purple': variant === 'default'
 			}"
 		>
 			<hlm-dialog-header *ngIf="title">
@@ -55,5 +56,5 @@ export class OebDialogComponent {
 	@Input() subtitle: string;
 	@Input() type: string;
 	@Input() footer: boolean = false;
-	@Input() variant: string;
+	@Input() variant: string = 'default';
 }

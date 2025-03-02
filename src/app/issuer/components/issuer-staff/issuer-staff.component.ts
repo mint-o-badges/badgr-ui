@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, inject, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
@@ -18,6 +18,13 @@ import { IssuerStaffRoleSlug } from '../../models/issuer-api.model';
 import { AppConfigService } from '../../../common/app-config.service';
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { IssuerStaffCreateDialogComponent } from '../issuer-staff-create-dialog/issuer-staff-create-dialog.component';
+import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src';
+import { DialogComponent } from '../../../components/dialog.component';
+import { TranslateService } from '@ngx-translate/core';
+import { typedFormGroup } from '../../../common/util/typed-forms';
+import { Validators } from '@angular/forms';
+import { EmailValidator } from '../../../common/validators/email.validator';
+
 
 @Component({
 	templateUrl: './issuer-staff.component.html',
@@ -29,6 +36,7 @@ export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent imp
 			(this._issuerStaffRoleOptions = issuerStaffRoles.map((r) => ({
 				label: r.label,
 				value: r.slug,
+				description: r.description
 			})))
 		);
 	}
@@ -46,9 +54,17 @@ export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent imp
 	issuerLoaded: Promise<Issuer>;
 	profileEmailsLoaded: Promise<UserProfileEmail[]>;
 	profileEmails: UserProfileEmail[] = [];
+	error: string = null;
+
 
 	@ViewChild('issuerStaffCreateDialog')
 	issuerStaffCreateDialog: IssuerStaffCreateDialogComponent;
+
+	@ViewChild('headerTemplate')
+	headerTemplate: TemplateRef<void>;
+
+	@ViewChild('addMemberFormTemplate')
+	addMemberFormTemplate: TemplateRef<void>;
 
 	breadcrumbLinkEntries: LinkEntry[] = [];
 
@@ -64,6 +80,7 @@ export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent imp
 		protected profileManager: UserProfileManager,
 		protected configService: AppConfigService,
 		protected dialogService: CommonDialogsService,
+		protected translate: TranslateService,
 	) {
 		super(router, route, loginService);
 		title.setTitle(`Manage Issuer Staff - ${this.configService.theme['serviceName'] || 'Badgr'}`);
@@ -84,6 +101,31 @@ export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent imp
 			.then((emails) => (this.profileEmails = emails.entities));
 	}
 
+	staffCreateForm = typedFormGroup()
+			.addControl('staffRole', 'staff' as IssuerStaffRoleSlug, Validators.required)
+			.addControl('staffEmail', '', [Validators.required, EmailValidator.validEmail]);
+
+	submitStaffCreate() {
+		if (!this.staffCreateForm.markTreeDirtyAndValidate()) {
+			return;
+		}
+
+		const formData = this.staffCreateForm.value;
+
+		return this.issuer.addStaffMember(formData.staffRole, formData.staffEmail).then(
+			() => {
+				this.error = null;
+				this.messageService.reportMinorSuccess(`Added ${formData.staffEmail} as ${formData.staffRole}`);
+				// this.closeModal();
+			},
+			(error) => {
+				const err = BadgrApiFailure.from(error);
+				console.log(err);
+				this.error =
+					BadgrApiFailure.messageIfThrottableError(err.overallMessage) || ''.concat(this.translate.instant('Issuer.addMember_failed'),": ",(err.firstMessage))
+			},
+		);
+	}			
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// Staff Editing
 
@@ -135,5 +177,20 @@ export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent imp
 		this.issuerStaffCreateDialog.openDialog();
 		// this.issuerStaffCreateDialog._issuerStaffRoleOptions = this._issuerStaffRoleOptions;
 		this.issuerStaffCreateDialog.issuer = this.issuer;
+	}
+
+	private readonly _hlmDialogService = inject(HlmDialogService);
+
+	public openDialog(text: string) {
+		this._hlmDialogService.open(DialogComponent, {
+			context: {
+				headerTemplate: this.headerTemplate,
+				text: text,
+				subtitle: 'Are you sure you want to proceed?',
+				content: this.addMemberFormTemplate,
+				variant: 'default',
+				footer: false,
+			},
+		});
 	}
 }

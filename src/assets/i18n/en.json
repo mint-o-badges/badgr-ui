@@ -176,7 +176,7 @@
 		"editMemberInstitute": "Edit the members of the institution.",
 		"membersHaveAccess": "These members have access to the institution.",
 		"addMember": "Add member",
-		"addMember_text": "New Staff Members must create and verify a Badgr account prior to being added to an issuer.",
+		"addMember_text": "In order to add a member, the person must <span class='tw-underline'> already have created and verified an account on OEB</span>.",
 		"addMember_chooseRole": "Choose Role",
 		"addMember_owner": "Owner",
 		"addMember_ownerText": "Ability to add and remove staff. Full rights to create, delete, and award badges. Ability to edit issuer details.",
