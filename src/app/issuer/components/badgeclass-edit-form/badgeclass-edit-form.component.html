@@ -132,7 +132,7 @@
 											[type]="'badge'"
 											[allowedFileFormats]="allowedFileFormats"
 											(generateRandomImage)="generateRandomImage()"
-											(imageUploaded)="generateUploadImage($event, badgeClassForm.value, this.badgeClassForm.value.useIssuerImageInBadge)"
+											(imageUploaded)="generateUploadImage($event, badgeClassForm.value, badgeClassForm.value.useIssuerImageInBadge)"
 											[placeholderImage]="badgeClassPlaceholderImageUrl"
 											[control]="badgeClassForm.rawControlMap.badge_image"
 											[errorMessage]="imageErrorFork"
@@ -141,15 +141,15 @@
 										<span class="tw-italic tw-text-sm md:tw-flex md:tw-justify-center md:tw-items-center"
 											>{{ 'General.fileformats' | translate }}: SVG {{ 'General.and' | translate }} PNG</span
 										>
-										<div class="tw-bg-white tw-w-full tw-rounded-[10px] tw-mt-2 tw-h-[80px] tw-flex tw-items-center tw-justify-between tw-px-2">
+										<!-- <div class="tw-bg-white tw-w-full tw-rounded-[10px] tw-mt-2 tw-h-[80px] tw-flex tw-items-center tw-justify-between tw-px-2">
 											<div class="tw-relative">
 												<img [src]='getImagePath()' class="tw-h-[72px] tw-block">
 												<img src="../../../../breakdown/static/images/square.svg" class="tw-absolute tw-h-[11.56px] tw-top-0 tw-right-0">
-											</div>
+											</div> -->
 											<oeb-checkbox name="addIssuerLogo" id="addIssuerLogo"
 												[control]="badgeClassForm.rawControlMap.useIssuerImageInBadge" [text]="'<span class=\'tw-text-sm\'>Institutions-Logo ergänzen</span>'" [noMargin]="true"
 											></oeb-checkbox>
-										</div>
+										<!-- </div> -->
 									</div>
 									<!-- <hr
 										class="md:tw-hidden tw-my-8 tw-w-full tw-border tw-border-[var(--color-purple)] tw-border-dashed"
