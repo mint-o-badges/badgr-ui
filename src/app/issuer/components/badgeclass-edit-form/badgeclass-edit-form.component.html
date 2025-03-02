@@ -132,7 +132,7 @@
 											[type]="'badge'"
 											[allowedFileFormats]="allowedFileFormats"
 											(generateRandomImage)="generateRandomImage()"
-											(imageUploaded)="generateUploadImage($event, badgeClassForm.value)"
+											(imageUploaded)="generateUploadImage($event, badgeClassForm.value, this.badgeClassForm.value.useIssuerImageInBadge)"
 											[placeholderImage]="badgeClassPlaceholderImageUrl"
 											[control]="badgeClassForm.rawControlMap.badge_image"
 											[errorMessage]="imageErrorFork"

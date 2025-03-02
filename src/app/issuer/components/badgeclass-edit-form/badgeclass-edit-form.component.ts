@@ -544,11 +544,12 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			this.handleBadgeCategoryChange();
 		});
 
-		this.badgeClassForm.rawControl.controls['useIssuerImageInBadge'].valueChanges.subscribe((res) => {
-			if(this.currentImage){
-				this.generateUploadImage(this.currentImage, this.badgeClassForm.value)
+		this.badgeClassForm.rawControl.controls['useIssuerImageInBadge'].valueChanges.subscribe((useIssuerImageInBadge) => {
+			if (this.currentImage) {
+				this.generateUploadImage(this.currentImage, this.badgeClassForm.value, useIssuerImageInBadge);
 			}
-		})
+		});
+		
 
 		// To check duplicate competencies only when one is selected
 		if (this.badgeClassForm.controls.aiCompetencies.controls['selected']) {
@@ -1261,9 +1262,9 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	 * @param image
 	 * @param formdata
 	 */
-	generateUploadImage(image, formdata) {
+	generateUploadImage(image, formdata, useIssuerImageInBadge=false) {
 		this.currentImage = image.slice();
-		this.badgeStudio.generateUploadImage(image.slice(), formdata, this.issuer.image).then((imageUrl) => {
+		this.badgeStudio.generateUploadImage(image.slice(), formdata, useIssuerImageInBadge,  this.issuer.image).then((imageUrl) => {
 			this.imageField.useDataUrl(imageUrl, 'BADGE');
 		});
 	}

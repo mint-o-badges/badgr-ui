@@ -166,154 +166,90 @@ export class BadgeStudioComponent implements OnInit, OnChanges {
 				}),
 		);
 	}
-	generateUploadImage(uploadedImage, formdata, issuerImage?: string): Promise<string> {
-		return this.fontPromise.then(
-			() =>
-				new Promise<string>((resolve, reject) => {
-					// const shapeColor = shapeColors[Math.floor(Math.random() * shapeColors.length)];
-					const shapeColor = shapeColorsTypes[formdata.badge_category];
 
-					const iconColor = '#0000000';
-					this.context2d.clearRect(0, 0, this.canvas.width, this.canvas.height);
-					var shapeImage = shapeImagesTypes[formdata.badge_category] || shapeImagesTypes['participation'];
-					// var shapeImage2 = "../../../../breakdown/static/badgestudio/shapes/noun_test.svg";
-					var shapeImage2 = 'https://static.thenounproject.com/png/1444428-200.png';
-					// Grab a random SVG from our set
-
-					const issuerLogoFrame = '../../../../breakdown/static/images/square.svg';
-
-					let imagePromises = [];
-					imagePromises.push(
-						this.http
-							.get(shapeImage, {
-								observe: 'body',
-								responseType: 'text',
-							})
-							.toPromise(),
-					);
-
-					imagePromises.push(
-						this.http
-						  .get(issuerLogoFrame, {
-							observe: 'body',
-							responseType: 'text',
-						  })
-						  .toPromise(),
-					  );
-
-					// imagePromises.push(this.http.get(
-					// 	// shapeImages[Math.floor(Math.random() * shapeImages.length)],
-					// 	shapeImage2,
-					// 	{
-					// 		responseType: "blob"
-					// 	}
-					// ).toPromise());
-
-					Promise.all(imagePromises).then((res) => {
-						const svgRoot = new DOMParser().parseFromString(res[0], 'image/svg+xml').documentElement;
-						const svgRoot2 = new DOMParser().parseFromString(res[1], "image/svg+xml").documentElement;
-						// console.log(uploadedImage);
-						// this.createImageFromBlob(uploadedImage);
-						this.imageToShow = uploadedImage;
-						// We need to attach the SVG to the window so we can compute the style of the elements for re-coloring
-						document.body.appendChild(svgRoot);
-						document.body.appendChild(svgRoot2);
-
-						// Re-color any non-white elements
-						Array.from(svgRoot.querySelectorAll('*'))
-							.filter((e) => 'style' in e) // Filter out elements that don't have a style to change (this fixes a bug in IE)
-							.forEach((e: HTMLElement) => {
-								const fill = window.getComputedStyle(e)['fill'];
-
-								if (!fill.match(/^rgb\(255,\s*255,\s*255\s*\)$/)) {
-									e.style.fill = shapeColor;
-								}
-							});
-
-						// And clean up the document
-						svgRoot.remove();
-						svgRoot2.remove();
-
-						// Work around https://bugzilla.mozilla.org/show_bug.cgi?id=700533
-						svgRoot.setAttribute('width', '' + this.canvas.width);
-						svgRoot.setAttribute('height', '' + this.canvas.height);
-						
-						// svgRoot2.setAttribute('width', '' + this.canvas.width);
-						// svgRoot2.setAttribute('height', '' + this.canvas.height);
-						
-
-						// Convert the SVG into a data URL that we can use to render into a canvas
-						const svgDataUrl =
-							'data:image/svg+xml;charset=utf-8,' +
-							encodeURIComponent(new XMLSerializer().serializeToString(svgRoot));
-						const svgDataUrl2 = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(new XMLSerializer().serializeToString(svgRoot2));
-						const svgImage = new Image();
-						const svgImage2 = new Image();
-						const svgImage3 = new Image()
-						svgImage3.crossOrigin = "Anonymous";
-						const issuerLogo = new Image()
-						issuerLogo.crossOrigin="Anonymous"
-						svgImage.onload = () => {
-							this.context2d.drawImage(svgImage, 0, 0, this.canvas.width, this.canvas.height);
-							svgImage3.src =svgDataUrl2;
-							
-						}
-						if(this.formData.useIssuerImageInBadge && issuerImage){
-							svgImage3.onload = () => {
-								this.context2d.drawImage(
-									svgImage3,
-									this.canvas.width - (this.canvas.width / 4) - 15,  
-									15,                                               
-									this.canvas.width / 4,
-									this.canvas.height / 4
-								);
-
-						
-								issuerLogo.onload = () => {
-									const borderPadding = 24;
-									const logoX = this.canvas.width - (this.canvas.width / 4) - 15 + borderPadding;
-									const logoY = 15 + borderPadding;
-									const logoWidth = this.canvas.width / 4 - (borderPadding * 2);
-									const logoHeight = this.canvas.height / 4 - (borderPadding * 2);
-									
-									this.context2d.drawImage(
-									issuerLogo,
-									logoX,
-									logoY,
-									logoWidth,
-									logoHeight
-									);
-								}
-								issuerLogo.src = issuerImage;
-							}
-
-						};
-
-						svgImage2.onload = () => {
-							this.context2d.drawImage(
-								svgImage2,
-								this.canvas.width / 4,
-								this.canvas.height / 4,
-								this.canvas.width / 2,
-								this.canvas.height / 2,
-							);
-
-							this.dataUrl = this.canvas.toDataURL();
-							resolve(this.dataUrl);
-						};
-
-
-
-						svgImage.src = svgDataUrl;
-
-						// To resolve the issue of missing frame, we need to make sure that frame-image is aleady loaded before drawing badge-image
-						setTimeout(() => {
-							svgImage2.src = this.imageToShow;
-						}, 100);
-					});
-				}),
-		);
+	async generateUploadImage(uploadedImage: string, formdata: any, useIssuerImageInBadge?: boolean,issuerImage?: string,): Promise<string> {
+		await this.fontPromise;
+	
+		const shapeColor = shapeColorsTypes[formdata.badge_category];
+		this.context2d.clearRect(0, 0, this.canvas.width, this.canvas.height);
+	
+		const shapeImage = shapeImagesTypes[formdata.badge_category] || shapeImagesTypes['participation'];
+		const issuerLogoFrame = '../../../../breakdown/static/images/square.svg';
+	
+		try {
+			const [shapeSvgText, issuerFrameSvgText] = await Promise.all([
+				this.http.get(shapeImage, { observe: 'body', responseType: 'text' }).toPromise(),
+				this.http.get(issuerLogoFrame, { observe: 'body', responseType: 'text' }).toPromise(),
+			]);
+	
+			const svgRoot = new DOMParser().parseFromString(shapeSvgText, 'image/svg+xml').documentElement;
+			const svgRoot2 = new DOMParser().parseFromString(issuerFrameSvgText, 'image/svg+xml').documentElement;
+	
+			this.imageToShow = uploadedImage;
+	
+			document.body.appendChild(svgRoot);
+			document.body.appendChild(svgRoot2);
+	
+			// Recolor non-white elements in the badge shape SVG
+			Array.from(svgRoot.querySelectorAll('*'))
+				.filter((e) => 'style' in e)
+				.forEach((e: HTMLElement) => {
+					const fill = window.getComputedStyle(e)['fill'];
+					if (!fill.match(/^rgb\(255,\s*255,\s*255\s*\)$/)) {
+						e.style.fill = shapeColor;
+					}
+				});
+	
+			svgRoot.remove();
+			svgRoot2.remove();
+	
+			svgRoot.setAttribute('width', '' + this.canvas.width);
+			svgRoot.setAttribute('height', '' + this.canvas.height);
+	
+			const svgDataUrl = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(new XMLSerializer().serializeToString(svgRoot));
+			const svgDataUrl2 = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(new XMLSerializer().serializeToString(svgRoot2));
+	
+			const svgImage = await addImage(svgDataUrl);
+			this.context2d.drawImage(svgImage, 0, 0, this.canvas.width, this.canvas.height);
+	
+			if (useIssuerImageInBadge && issuerImage) {
+				const svgImage3 = await addImage(svgDataUrl2);
+				this.context2d.drawImage(
+					svgImage3,
+					this.canvas.width - (this.canvas.width / 4) - 15,
+					15,
+					this.canvas.width / 4,
+					this.canvas.height / 4
+				);
+	
+				const issuerLogo = await addImage(issuerImage);
+				const borderPadding = 24;
+				const logoX = this.canvas.width - (this.canvas.width / 4) - 15 + borderPadding;
+				const logoY = 15 + borderPadding;
+				const logoWidth = this.canvas.width / 4 - (borderPadding * 2);
+				const logoHeight = this.canvas.height / 4 - (borderPadding * 2);
+				
+				this.context2d.drawImage(issuerLogo, logoX, logoY, logoWidth, logoHeight);
+			}
+	
+			const uploadedImageElement = await addImage(this.imageToShow);
+			this.context2d.drawImage(
+				uploadedImageElement,
+				this.canvas.width / 4,
+				this.canvas.height / 4,
+				this.canvas.width / 2,
+				this.canvas.height / 2
+			);
+	
+			this.dataUrl = this.canvas.toDataURL();
+			return this.dataUrl;
+	
+		} catch (error) {
+			console.error('Error generating upload image:', error);
+			throw error;
+		}
 	}
+	
 
 	generateTypeBadge(formData): Promise<string> {
 		return this.fontPromise.then(
@@ -446,15 +382,17 @@ export class BadgeStudioComponent implements OnInit, OnChanges {
 	}
 }
 
-async function addImage(src) {
+
+async function addImage(src: string):  Promise<HTMLImageElement> {
 	var image = new Image();
+	image.crossOrigin = "Anonymous"
 	let imagePromise = onload2promise(image);
 	image.src = src;
 	await imagePromise;
 	return imagePromise;
 }
 
-function onload2promise(obj) {
+function onload2promise(obj: HTMLImageElement):  Promise<HTMLImageElement> {
 	return new Promise((resolve, reject) => {
 		obj.onload = () => resolve(obj);
 		obj.onerror = reject;
