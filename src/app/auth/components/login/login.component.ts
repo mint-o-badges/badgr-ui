@@ -19,6 +19,8 @@ import { AppConfigService } from '../../../common/app-config.service';
 import { typedFormGroup } from '../../../common/util/typed-forms';
 import { BadgrApiFailure } from '../../../common/services/api-failure';
 import { TranslateService } from '@ngx-translate/core';
+import { HttpClient } from '@angular/common/http';
+import { UserProfileApiService } from '../../../common/services/user-profile-api.service';
 
 @Component({
 	selector: 'login',
@@ -45,6 +47,7 @@ export class LoginComponent extends BaseRoutableComponent implements OnInit, Aft
 
 	initFinished: Promise<unknown> = new Promise(() => {});
 	loginFinished: Promise<unknown>;
+	baseUrl: string
 
 	constructor(
 		private fb: FormBuilder,
@@ -56,7 +59,9 @@ export class LoginComponent extends BaseRoutableComponent implements OnInit, Aft
 		public oAuthManager: OAuthManager,
 		private externalToolsManager: ExternalToolsManager,
 		private profileManager: UserProfileManager,
+		private userProfileApiService: UserProfileApiService,
 		private sanitizer: DomSanitizer,
+		private http: HttpClient,
 		router: Router,
 		route: ActivatedRoute,
 		private translate: TranslateService,
@@ -64,6 +69,7 @@ export class LoginComponent extends BaseRoutableComponent implements OnInit, Aft
 		super(router, route);
 		title.setTitle(`Login - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 		this.handleQueryParamCases();
+		this.baseUrl = this.configService.apiConfig.baseUrl
 	}
 
 	sanitize(url: string) {
@@ -97,18 +103,19 @@ export class LoginComponent extends BaseRoutableComponent implements OnInit, Aft
                                 this.router.navigate(['/auth/oauth2/authorize']);
                             } else {
                                 this.externalToolsManager.externaltoolsList.updateIfLoaded();
-                                // catch localStorage.redirectUri
-                                if (localStorage.redirectUri) {
-                                    const redirectUri = new URL(localStorage.redirectUri);
-                                    localStorage.removeItem('redirectUri');
-                                    window.location.replace(redirectUri.origin);
-                                    return false;
-                                } else {
-                                    // first time only do welcome
-                                    this.router.navigate([
-                                        localStorage.signup ? 'auth/welcome' : 'issuer',
-                                    ]);
-                                }
+
+								this.http.post<{success: boolean, redirectPath: string}>(`${this.baseUrl}/v1/user/get-redirect-path`, {}, {withCredentials: true})
+								.subscribe({
+								  next: (response) => {
+									if (response.success && response.redirectPath) {
+									  this.router.navigateByUrl(response.redirectPath);
+									} else {
+									  this.router.navigate([localStorage.signup ? 'auth/welcome' : 'issuer',]);
+									}
+								  },
+								  error: () => this.router.navigate(['/public/start'])
+								});
+
                             }
                         } else {
                             this.router.navigate([
