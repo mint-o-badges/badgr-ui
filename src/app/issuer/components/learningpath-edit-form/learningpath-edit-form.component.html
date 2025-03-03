@@ -1,4 +1,4 @@
-<div class="tw-max-w-[1016px]">
+<div class="tw-max-w-[1016px]" *bgAwaitPromises="[issuerLoaded]">
 	<form-message></form-message>
 	<ng-container [formGroup]="learningPathForm.rawControl">
 		<oeb-stepper
@@ -25,6 +25,7 @@
 				<learningpath-details
 					#stepOne
 					[learningPathBadgeData]="{ learningPath: existingLearningPath, lpBadge: existingLpBadge }"
+					[issuer]="issuer"
 				></learningpath-details>
 			</cdk-step>
 			<cdk-step

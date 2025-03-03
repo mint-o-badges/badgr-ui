@@ -545,7 +545,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		});
 
 		this.badgeClassForm.rawControl.controls['useIssuerImageInBadge'].valueChanges.subscribe((useIssuerImageInBadge) => {
-			if (this.currentImage) {
+			if (this.currentImage && this.imageField.control.value) {
 				this.generateUploadImage(this.currentImage, this.badgeClassForm.value, useIssuerImageInBadge);
 			}
 		});
