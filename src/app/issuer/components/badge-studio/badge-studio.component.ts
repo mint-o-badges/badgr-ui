@@ -227,8 +227,6 @@ export class BadgeStudioComponent implements OnInit, OnChanges {
 					this.formData.badge_category == 'participation'
 						? 55
 						: 70;
-				console.log('xWidth', xWidth);
-				console.log(this.formData.badge_category)
 				const svgImage3 = await addImage(svgDataUrl2);
 				this.context2d.drawImage(
 					svgImage3,
