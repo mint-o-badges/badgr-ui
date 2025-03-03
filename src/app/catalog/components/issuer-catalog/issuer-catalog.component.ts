@@ -119,7 +119,7 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 			this.issuerManager.getAllIssuers().subscribe(
 				(issuers) => {
 					this.issuers = issuers
-						.slice()
+						.slice(0, 30)
 						.filter((i) => i.apiModel.verified && i.ownerAcceptedTos && !i.apiModel.source_url)
 						.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
 					this.issuerResults = this.issuers;

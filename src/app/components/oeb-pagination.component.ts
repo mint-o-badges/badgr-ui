@@ -29,10 +29,10 @@ import {
 					<hlm-pagination-previous link="/components/menubar" />
 				</li>
 				<li hlmPaginationItem>
-					<a hlmPaginationLink link="#">1</a>
+					<a hlmPaginationLink link="#" isActive>1</a>
 				</li>
 				<li hlmPaginationItem>
-					<a hlmPaginationLink link="#" isActive>2</a>
+					<a hlmPaginationLink link="#" >2</a>
 				</li>
 				<li hlmPaginationItem>
 					<a hlmPaginationLink link="#">3</a>

@@ -222,7 +222,7 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 			this.issuerManager.getAllIssuers().subscribe(
 				(issuers) => {
 					this.issuers = issuers
-						.slice()
+						.slice(0, 20)
 						.filter((i) => i.apiModel.verified && !i.apiModel.source_url)
 						.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
 					this.issuerResults = this.issuers;

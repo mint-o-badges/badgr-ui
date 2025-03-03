@@ -291,6 +291,10 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		this.tagsControl.setValue(this.tagsControl.value.filter(t => t != tag));
 	}
 
+	resetTags(){
+		this.tagsControl.setValue(null)
+	}
+
 	private badgeMatcher(inputPattern: string): (badge) => boolean {
 		const patternStr = StringMatchingUtil.normalizeString(inputPattern);
 		const patternExp = StringMatchingUtil.tryRegExp(patternStr);
