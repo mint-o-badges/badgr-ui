@@ -240,6 +240,8 @@ export class BadgeStudioComponent implements OnInit, OnChanges {
 				this.canvas.width / 2,
 				this.canvas.height / 2
 			);
+
+			console.log("uploaded img elmement", uploadedImageElement)
 	
 			this.dataUrl = this.canvas.toDataURL();
 			return this.dataUrl;
@@ -385,7 +387,7 @@ export class BadgeStudioComponent implements OnInit, OnChanges {
 
 async function addImage(src: string):  Promise<HTMLImageElement> {
 	var image = new Image();
-	// image.crossOrigin = "Anonymous"
+	image.crossOrigin = "anonymous"
 	let imagePromise = onload2promise(image);
 	image.src = src;
 	await imagePromise;
