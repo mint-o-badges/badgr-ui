@@ -134,7 +134,7 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 				async (badges) => {
 					this.badges = badges
 						.filter((badge) => badge.issuerVerified && badge.issuerOwnerAcceptedTos)
-						.slice()
+						.slice(0, 30)
 						.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
 					this.badgeResults = this.badges;
 
