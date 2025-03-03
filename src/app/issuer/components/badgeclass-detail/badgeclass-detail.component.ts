@@ -128,7 +128,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 	categoryOptions: { [key in BadgeClassCategory]: string } = {
 		competency: 'Kompetenz-Badge',
 		participation: 'Teilnahme-Badge',
-		learningpath: 'Micro-Degree',
+		learningpath: 'Micro Degree',
 	};
 
 	levelOptions: { [key in BadgeClassLevel]: string } = {

@@ -1,0 +1,59 @@
+
+.section {
+	background-color: #F5F5F5;
+	border-radius: 10px;
+	margin-bottom: 2em;
+	padding: 1.8em;
+
+	max-width: 1016px;
+}
+
+.badgeclass-select-container {
+	display: flex;
+}
+
+
+.oeb-badgeclass-select-container {
+
+	gap: 44px;
+
+	> a {
+		border: 1px solid var(--color-purple);
+		border-radius: 10px;
+		background-color: white;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		width: 100%;
+
+		padding: 32px 16px;
+		font-size: 18px;
+		line-height: 24px;
+
+		transition: all 0.1s ease;
+
+		img {
+			max-width: 136px;
+			margin-bottom: 12px;
+		}
+
+		> strong {
+			color: var(--color-purple);
+		}
+
+		p {
+			max-width: 256px;
+			text-align: center;
+		}
+
+		&:hover {
+			background-color: var(--color-buttonhover);
+			color: white;
+
+			strong {
+				color: white;
+			}
+		}
+	}
+
+}

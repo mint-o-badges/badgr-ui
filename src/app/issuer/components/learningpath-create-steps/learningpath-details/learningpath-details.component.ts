@@ -97,32 +97,59 @@ export class LearningPathDetailsComponent implements OnInit, AfterViewInit {
 		.addControl('badge_customImage', '');
 
   ngOnInit(): void {
-	this.initFormFromExisting(
-		this.learningPathBadgeData.learningPath,
-		this.learningPathBadgeData.lpBadge
-	);
-	this.detailsForm = this.rootFormGroup.control
-	this.translate.get('CreateBadge.useOurEditor').subscribe((res: string) => {
-		this.useOurEditor = res;
-	});
-	this.translate.get('CreateBadge.imageSublabel').subscribe((res: string) => {
-		this.imageSublabel = res;
-	});
-	this.translate.get('CreateBadge.useOwnVisual').subscribe((res: string) => {
-		this.useOwnVisual = res;
-	});
-	this.translate.get('CreateBadge.uploadOwnVisual').subscribe((res: string) => {
-		this.uploadOwnVisual = res;
-	});
-	this.translate.get('CreateBadge.uploadOwnDesign').subscribe((res: string) => {
-		this.uploadOwnDesign = res;
-	})
-	this.translate.get('RecBadge.chooseFromExistingIcons').subscribe((res: string) => {
-		this.chooseFromExistingIcons = res;
-	})
-	this.translate.get('RecBadge.selectFromMyFiles').subscribe((res: string) => {
-		this.selectFromMyFiles = res;
-	})
+		this.initFormFromExisting(
+			this.learningPathBadgeData.learningPath,
+			this.learningPathBadgeData.lpBadge
+		);
+
+		if (!this.existingLearningPath) {
+			// restore name and description from sessionStorage
+			const sessionValuesJSON = sessionStorage.getItem('oeb-create-badgeclassvalues');
+			if (sessionValuesJSON) {
+				const sessionValues = JSON.parse(sessionValuesJSON);
+				this.lpDetailsForm.rawControl.patchValue({
+					'name': sessionValues['badge_name'] || '',
+					'description': sessionValues['badge_description'] || '',
+				});
+			}
+			// save name and description to sessionStorage on Change
+			this.lpDetailsForm.rawControl.valueChanges.subscribe(v => {
+				let saveableSessionValues = {};
+				for (const [k, v] of Object.entries(this.lpDetailsForm.rawControl.value)) {
+					if (['name', 'description'].includes(k)) {
+						saveableSessionValues['badge_'+k] = v;
+					}
+				};
+				sessionStorage.setItem('oeb-create-badgeclassvalues', JSON.stringify(saveableSessionValues));
+			});
+		} else {
+			// clear session storage when editing existing badges
+			sessionStorage.removeItem('oeb-create-badgeclassvalues');
+		}
+
+
+		this.detailsForm = this.rootFormGroup.control
+		this.translate.get('CreateBadge.useOurEditor').subscribe((res: string) => {
+			this.useOurEditor = res;
+		});
+		this.translate.get('CreateBadge.imageSublabel').subscribe((res: string) => {
+			this.imageSublabel = res;
+		});
+		this.translate.get('CreateBadge.useOwnVisual').subscribe((res: string) => {
+			this.useOwnVisual = res;
+		});
+		this.translate.get('CreateBadge.uploadOwnVisual').subscribe((res: string) => {
+			this.uploadOwnVisual = res;
+		});
+		this.translate.get('CreateBadge.uploadOwnDesign').subscribe((res: string) => {
+			this.uploadOwnDesign = res;
+		})
+		this.translate.get('RecBadge.chooseFromExistingIcons').subscribe((res: string) => {
+			this.chooseFromExistingIcons = res;
+		})
+		this.translate.get('RecBadge.selectFromMyFiles').subscribe((res: string) => {
+			this.selectFromMyFiles = res;
+		})
   }
 
 

@@ -1,14 +1,14 @@
 	<div class="tw-mt-6 md:tw-mt-7 oeb-section section">
 		<h2 hlmH2 class="tw-font-bold">
-			3. {{ 'LearningPath.badgeSequence' | translate }} <span class="tw-italic">(optional)</span>
+			4. {{ 'LearningPath.badgeSequence' | translate }}
 		</h2>
-		<div class="tw-m-4 md:tw-m-12 tw-rounded-2xl tw-p-6 tw-bg-[var(--color-lightpink)]">
+		<div class="tw-m-4 md:tw-m-12 tw-rounded-2xl tw-p-6 tw-bg-[var(--color-white)]">
 			<p
 				hlmP
-				class="tw-text-oebblack tw-text-[18px] tw-leading-[23.4px] tw-italic"
+				class="tw-text-purple tw-text-[18px] tw-leading-[23.4px] tw-italic"
 				[innerHtml]="'LearningPath.dragDropInfo' | translate"
 			></p>
-			<div class="tw-grid tw-grid-cols-1">
+			<div class="tw-grid tw-grid-cols-1 tw-mt-4">
 				<div class="tw-list-decimal tw-mt-2" *ngFor="let item of draggableList; let i = index">
 					<div
 						class="md:tw-w-[392px] tw-flex tw-items-center tw-gap-4"

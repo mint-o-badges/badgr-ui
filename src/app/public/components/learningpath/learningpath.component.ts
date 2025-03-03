@@ -63,7 +63,7 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 
 
 	crumbs = [
-		{ title: 'Lernpfade', routerLink: ['/catalog/learningpaths'] }
+		{ title: 'Micro Degrees', routerLink: ['/catalog/learningpaths'] }
 	];
 
 	constructor(
@@ -174,7 +174,7 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 				},
 			];
 			this.crumbs = [
-				{ title: 'Lernpfade', routerLink: ['/catalog/learningpaths'] },
+				{ title: 'Micro Degrees', routerLink: ['/catalog/learningpaths'] },
 				{ title: this.learningPath.name, routerLink: ['/public/learningpaths/' + this.learningPath.slug] },
 
 			];
