@@ -7,6 +7,7 @@ import { BaseRoutableComponent } from '../../../../common/pages/base-routable.co
 import { typedFormGroup } from '../../../../common/util/typed-forms';
 import { Validators } from '@angular/forms';
 import { UserProfileApiService } from '../../../../common/services/user-profile-api.service';
+import { UserProfileManager } from '../../../../common/services/user-profile-manager.service';
 import { SessionService } from '../../../../common/services/session.service';
 
 @Component({
@@ -22,8 +23,9 @@ export class NewsletterComponent extends BaseRoutableComponent implements OnInit
     .addControl('firstName', '', Validators.required)
     .addControl('lastName', '', Validators.required)
     constructor(
-        private translate: TranslateService, 
+        private translate: TranslateService,
         private userProfileApiService: UserProfileApiService,
+				private userProfileManager: UserProfileManager,
         private sessionService: SessionService,
         private renderer: Renderer2,
 		private elementRef: ElementRef,
@@ -34,18 +36,18 @@ export class NewsletterComponent extends BaseRoutableComponent implements OnInit
     }
 
     ngOnInit(): void {
-        const scriptElement = this.renderer.createElement('script');
- 		scriptElement.src = 'https://sibforms.com/forms/end-form/build/main.js';
+			const scriptElement = this.renderer.createElement('script');
+ 			scriptElement.src = 'https://sibforms.com/forms/end-form/build/main.js';
   		this.renderer.appendChild(this.elementRef.nativeElement, scriptElement);
-        this.userProfileApiService.getProfile().then(profile => {
-            this.userProfileApiService.fetchEmails().then(emails => {
-                this.newsletterForm.setValue({
-                    email: emails[0].email,
-                    firstName: profile.first_name,
-                    lastName: profile.last_name
-                });
-            })
-        })
+			this.userProfileManager.userProfilePromise.then(profile => {
+				profile.emails.loadedPromise.then(emails => {
+					this.newsletterForm.setValue({
+						email: emails.entities[0].email,
+						firstName: profile.firstName,
+						lastName: profile.lastName
+					});
+				})
+			})
     }
 
 
