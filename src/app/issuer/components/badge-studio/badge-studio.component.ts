@@ -216,18 +216,18 @@ export class BadgeStudioComponent implements OnInit, OnChanges {
 				const svgImage3 = await addImage(svgDataUrl2);
 				this.context2d.drawImage(
 					svgImage3,
-					this.canvas.width - (this.canvas.width / 4) - 15,
-					15,
-					this.canvas.width / 4,
-					this.canvas.height / 4
+					this.canvas.width - (this.canvas.width / 4) - 70,
+					0,
+					this.canvas.width / 5,
+					this.canvas.height / 5
 				);
 	
 				const issuerLogo = await addImage(issuerImage);
-				const borderPadding = 24;
-				const logoX = this.canvas.width - (this.canvas.width / 4) - 15 + borderPadding;
-				const logoY = 15 + borderPadding;
-				const logoWidth = this.canvas.width / 4 - (borderPadding * 2);
-				const logoHeight = this.canvas.height / 4 - (borderPadding * 2);
+				const borderPadding = 12;
+				const logoX = this.canvas.width - (this.canvas.width / 4) - 70 + borderPadding;
+				const logoY = borderPadding;
+				const logoWidth = this.canvas.width / 5 - (borderPadding * 2);
+				const logoHeight = this.canvas.height / 5 - (borderPadding * 2);
 				
 				this.context2d.drawImage(issuerLogo, logoX, logoY, logoWidth, logoHeight);
 			}
