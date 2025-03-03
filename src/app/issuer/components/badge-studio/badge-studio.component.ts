@@ -385,7 +385,7 @@ export class BadgeStudioComponent implements OnInit, OnChanges {
 
 async function addImage(src: string):  Promise<HTMLImageElement> {
 	var image = new Image();
-	image.crossOrigin = "Anonymous"
+	// image.crossOrigin = "Anonymous"
 	let imagePromise = onload2promise(image);
 	image.src = src;
 	await imagePromise;
