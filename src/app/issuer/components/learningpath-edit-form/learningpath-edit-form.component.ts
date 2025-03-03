@@ -412,7 +412,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 						'extensions:CategoryExtension': {
 							'@context': categoryExtensionContextUrl,
 							type: ['Extension', 'extensions:CategoryExtension'],
-							Category: 'participation',
+							Category: 'learningpath',
 						},
 						'extensions:LicenseExtension': {
 							'@context': licenseExtensionContextUrl,

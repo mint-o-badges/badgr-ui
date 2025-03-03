@@ -64,6 +64,13 @@
 		</oeb-stepper>
 	</ng-container>
 
+	<div class="tw-flex tw-justify-end">
+		<p *ngIf="stepper?.selected?.hasError" class="tw-inline-block tw-text-red">
+			{{stepper.selected.errorMessage}}
+		</p>
+	</div>
+
+
 	<form [formGroup]="learningPathForm.rawControl" #formElem (ngSubmit)="onSubmit()" novalidate>
 		<div class="tw-flex tw-justify-between md:tw-justify-end tw-flex-wrap sm:tw-flex-nowrap tw-gap-2 tw-mt-8">
 			<!-- <oeb-button
@@ -94,7 +101,6 @@
 				(click)="nextStep()"
 			>
 			</oeb-button>
-
 
 			<oeb-button
 				*ngIf="selectedStep === 4"

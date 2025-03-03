@@ -65,7 +65,8 @@
 		"previous": "Previous",
 		"all": "All",
 		"pleaseWait": "Please wait...",
-		"title": "Title"
+		"title": "Title",
+		"noResults": "No results"
 	},
 	"NavItems": {
 		"register": "Register",
@@ -307,7 +308,7 @@
 		"NoPersonalInformation": "Please do not enter any biographical / personal information here.",
 		"addAiCompetencies": "Add appropriate suggested competencies to your badge by clicking.",
 		"myContentDescription": "Content description of the teaching offer",
-		"min70max1000Chars": "(At least 70 / maximum 1000 characters)",
+		"min70max1200Chars": "(At least 70 / maximum 1200 characters)",
 		"detailedDescription": "Detailed content description of the learning offer",
 		"suggestCompetencies": "Suggest Competencies",
 		"fitting": "Fitting",

@@ -148,4 +148,5 @@ export interface PublicApiLearningPath {
 	completed_badges?: any[];
 	progress: number;
 	requested?: boolean;
+	learningPathBadgeInstanceSlug?: string;
 }

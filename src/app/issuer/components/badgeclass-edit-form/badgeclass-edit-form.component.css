@@ -90,7 +90,7 @@
 
 .section {
 	background-color: var(--color-lightgray);
-	border-radius: 25px;
+	border-radius: 10px;
 	margin-bottom: 2em;
 	padding: 1.8em;
 }
