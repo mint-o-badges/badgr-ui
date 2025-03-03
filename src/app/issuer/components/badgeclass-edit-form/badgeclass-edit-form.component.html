@@ -146,11 +146,12 @@
 												<img [src]='getImagePath()' class="tw-h-[72px] tw-block">
 												<img src="../../../../breakdown/static/images/square.svg" class="tw-absolute tw-h-[11.56px] tw-top-0 tw-right-0">
 											</div> -->
-											<oeb-checkbox name="addIssuerLogo" id="addIssuerLogo"
-												[control]="badgeClassForm.rawControlMap.useIssuerImageInBadge" 
-												[text]="'<span class=\'tw-text-sm\'>Institutions-Logo ergänzen</span>'"
-												[noMargin]="true"
-											></oeb-checkbox>
+											<div class="tw-w-full tw-bg-white tw-p-4 tw-rounded-[10px] tw-mt-4">
+												<oeb-checkbox class="tw-mx-auto tw-min-w-[300px]" name="addIssuerLogo" id="addIssuerLogo"
+													[control]="badgeClassForm.rawControlMap.useIssuerImageInBadge" 
+													[text]="'<span class=\'tw-text-sm tw-font-bold\'>Institutions-Logo ergänzen</span>'"
+												></oeb-checkbox>
+											</div>
 										<!-- </div> -->
 									</div>
 									<!-- <hr
