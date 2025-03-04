@@ -65,7 +65,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 	@ViewChild('stepFour') stepFour!: LearningPathTagsComponent;
 
 	nextStep(): void {
-		this.learningPathForm.markTreeDirtyAndValidate();
+		// this.learningPathForm.markTreeDirtyAndValidate();
 		this.stepper.next();
 	}
 
@@ -81,6 +81,9 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 
 	@Output()
 	save = new EventEmitter<Promise<ApiLearningPath>>();
+
+	@Output()
+	cancel = new EventEmitter<void>();
 
 	@Input()
 	submittingText: string;
@@ -193,7 +196,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 	updateSelectedBadges({ badges, studyLoad }: { badges: BadgeClass[] , studyLoad: number }) {
 		this.selectedBadges = badges;
 		this.studyLoad = studyLoad;
-	  
+
 		const badgeList = this.selectedBadges.map((badge, index) => ({
 		  id: badge.slug,
 		  name: badge.name,
@@ -203,7 +206,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 		  issuerName: badge.issuerName,
 		  order: index
 		}));
-	  
+
 		this.updateBadgeList(badgeList);
 	  }
 
@@ -268,7 +271,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 				this.lpImage = this.stepOne.lpDetailsForm.rawControl.value.badge_customImage;
 			}
 			this.selectedStep = event.selectedIndex;
-			if (this.selectedStep === 2) {
+			if (this.selectedStep === 3) {
 				this.step3Loaded = true;
 			} else {
 				this.step3Loaded = false;
@@ -281,7 +284,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 	}
 
 	onStepChange(event: any): void {
-		this.learningPathForm.markTreeDirtyAndValidate();
+		// this.learningPathForm.markTreeDirtyAndValidate();
 	}
 
 	getErrorMessage() {
@@ -300,7 +303,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 
 
 	cancelClicked() {
-		// this.cancel.emit();
+		this.cancel.emit();
 	}
 
 	async onSubmit() {
@@ -368,10 +371,13 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 
 			this.save.emit(this.savePromise);
 
+			// clear sessionStorage
+			sessionStorage.removeItem('oeb-create-badgeclassvalues');
+
 		}
 		else{
 			this.savePromise = (async () => {
-			try {	
+			try {
 				let imageFrame = true;
 				if (this.stepOne.lpDetailsForm.controls.badge_customImage.value && this.stepOne.lpDetailsForm.valid) {
 					imageFrame = false;
@@ -395,7 +401,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 						'extensions:CategoryExtension': {
 							'@context': categoryExtensionContextUrl,
 							type: ['Extension', 'extensions:CategoryExtension'],
-							Category: 'participation',
+							Category: 'learningpath',
 						},
 						'extensions:LicenseExtension': {
 							'@context': licenseExtensionContextUrl,
@@ -441,6 +447,8 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 				});
 
 				this.save.emit(this.savePromise);
+				// clear sessionStorage
+				sessionStorage.removeItem('oeb-create-badgeclassvalues');
 			} catch (e) {
 				this.savePromise = null;
 				console.log(e);

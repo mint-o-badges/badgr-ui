@@ -84,7 +84,6 @@ import { BadgeClassManager } from '../issuer/services/badgeclass-manager.service
 import { BadgeClassApiService } from '../issuer/services/badgeclass-api.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { ApplicationCredentialsService } from './services/application-credentials.service.';
-import { CaptchaService } from './services/captcha.service';
 
 import { OebInputComponent } from '../components/input.component';
 import { OebInputErrorComponent } from '../components/input.error.component';
@@ -133,6 +132,8 @@ import { CountUpDirective } from './directives/count-up.directive';
 import { OebSortSelectComponent } from '../components/oeb-sort-select.component';
 import { QrCodeApiService } from '../issuer/services/qrcode-api.service';
 import { serverErrorInterceptorFactory } from '../server-error-interceptor.factory';
+import { AltchaComponent } from '../components/altcha.component';
+import { SortPipe } from './pipes/sortPipe';
 
 const DIRECTIVES = [
 	BgAwaitPromises,
@@ -146,6 +147,7 @@ const DIRECTIVES = [
 	BgPopupMenuTriggerDirective,
 	DynamicFilterPipe,
 	HourPipe,
+	SortPipe,
 ];
 
 export const COMMON_MODULE_COMPONENTS = [
@@ -188,7 +190,7 @@ export const COMMON_MODULE_COMPONENTS = [
 	IssuerCardComponent,
 	OebLearningPathDetailComponent,
 	OebIssuerCard,
-	OebSortSelectComponent
+	OebSortSelectComponent,
 ];
 
 const SERVICES = [
@@ -203,7 +205,6 @@ const SERVICES = [
 	AiSkillsService,
 	ServerVersionService,
 	PdfService,
-	CaptchaService,
 	EventsService,
 	SessionService,
 	QueryParametersService,
@@ -264,6 +265,7 @@ export const COMMON_IMPORTS = [
 	LearningPathParticipantsDatatableComponent,
 	LearningPathGraduatesDatatableComponent,
 	HlmBadgeDirective,
+	AltchaComponent
 ];
 
 @NgModule({

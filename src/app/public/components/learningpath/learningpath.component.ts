@@ -4,7 +4,7 @@ import { PublicApiService } from '../../services/public-api.service';
 import { LoadedRouteParam } from '../../../common/util/loaded-route-param';
 import { PublicApiBadgeClass, PublicApiBadgeClassWithIssuer, PublicApiIssuer, PublicApiLearningPath } from '../../models/public-api.model';
 import { EmbedService } from '../../../common/services/embed.service';
-import { Title } from '@angular/platform-browser';
+import { SafeResourceUrl, Title } from '@angular/platform-browser';
 import { AppConfigService } from '../../../common/app-config.service';
 import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
 import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
@@ -14,9 +14,13 @@ import { TranslateService } from '@ngx-translate/core';
 import { IssuerManager } from '../../../issuer/services/issuer-manager.service';
 import type { Tab } from '../../../components/oeb-backpack-tabs.component';
 import { SessionService } from '../../../common/services/session.service';
+import { PdfService } from '../../../common/services/pdf.service';
+import { RecipientBadgeManager } from '../../../recipient/services/recipient-badge-manager.service';
+import { RecipientBadgeInstance } from '../../../recipient/models/recipient-badge.model';
 
 @Component({
 	templateUrl: './learningpath.component.html',
+	providers: [RecipientBadgeManager]
 })
 export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 
@@ -38,10 +42,15 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 	tabs: Tab[] = undefined;
 	activeTab = 'Alle';
 	loggedIn = false;
+	badgeInstance: RecipientBadgeInstance | null = null
+
+	showDownloadButton = false; 
 
 	totalBadgeCount: number;
 	openBadgeCount: number;
 	finishedBadgeCount: number;
+
+	pdfSrc: SafeResourceUrl
 
 	openBadges: PublicApiBadgeClass[];
 	completedBadgeIds: PublicApiBadgeClass[];
@@ -54,7 +63,7 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 
 
 	crumbs = [
-		{ title: 'Lernpfade', routerLink: ['/catalog/learningpaths'] }
+		{ title: 'Micro Degrees', routerLink: ['/catalog/learningpaths'] }
 	];
 
 	constructor(
@@ -64,16 +73,25 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 		public publicService: PublicApiService,
 		private learningPathApiService: LearningPathApiService,
 		protected userProfileApiService: UserProfileApiService,
+		protected recipientBadgeManager: RecipientBadgeManager,
 		protected translate: TranslateService,
 		protected sessionService: SessionService,
+		private pdfService: PdfService,
 		public issuerManager: IssuerManager,
 		private title: Title,
 	) {
 		this.title.setTitle(`LearningPath - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 
-		this.loaded = new LoadedRouteParam(injector.get(ActivatedRoute), 'learningPathId', (paramValue) => {
+		this.loaded = new LoadedRouteParam(injector.get(ActivatedRoute), 'learningPathId',  async (paramValue) => {
 			this.learningPathSlug = paramValue;
-			return this.requestPath();
+			await this.requestPath();
+			if(this.progressValue() === 100){
+				this.showDownloadButton = true
+				this.recipientBadgeManager.recipientBadgeList.loadedPromise
+					.then((results) => {
+						this.badgeInstance = results.entityForSlug(this.learningPath.learningPathBadgeInstanceSlug)
+				})
+			}
 		});
 	}
 
@@ -112,6 +130,18 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 		});
 	}
 
+	private get rawUrl() {
+		return `${this.configService.apiConfig.baseUrl}/public/assertions/${this.badgeInstance.slug}`;
+	}
+
+	private get rawJsonUrl() {
+		return `${this.configService.apiConfig.baseUrl}/public/assertions/${this.badgeInstance.slug}.json`;
+	}
+
+	get rawBakedUrl() {
+		return `${this.rawUrl}/baked`;
+	}
+
 	progressValue(): number {
 		return Math.floor((this.minutesCompleted / this.minutesTotal) * 100);
 	  }
@@ -144,7 +174,7 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 				},
 			];
 			this.crumbs = [
-				{ title: 'Lernpfade', routerLink: ['/catalog/learningpaths'] },
+				{ title: 'Micro Degrees', routerLink: ['/catalog/learningpaths'] },
 				{ title: this.learningPath.name, routerLink: ['/public/learningpaths/' + this.learningPath.slug] },
 
 			];
@@ -178,6 +208,39 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 				});
 		})
 	}
+
+	downloadPdf(){
+		if(!this.badgeInstance){
+			return
+		}
+		else{
+			this.pdfService.getPdf(this.badgeInstance.slug).then(
+				(url) => {
+					this.pdfSrc = url;
+					this.pdfService.downloadPdf(this.pdfSrc, this.learningPath.name, new Date());
+				}).catch((error) => {
+					console.log(error);
+				});
+		}
+	}
+
+	downloadMicroDegree(){
+		fetch(this.rawBakedUrl)
+						.then((response) => response.blob())
+						.then((blob) => {
+							const link = document.createElement('a');
+							const url = URL.createObjectURL(blob);
+							const urlParts = this.rawBakedUrl.split('/');
+							const inferredFileName = urlParts[urlParts.length - 1] || 'downloadedFile';
+							link.href = url;
+							link.download = inferredFileName;
+							document.body.appendChild(link);
+							link.click();
+							document.body.removeChild(link);
+							URL.revokeObjectURL(url);
+						})
+						.catch((error) => console.error('Download failed:', error));
+				}
 
 	participate() {
 		this.learningPathApiService.participateInLearningPath(this.learningPathSlug).then(

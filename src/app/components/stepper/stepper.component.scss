@@ -4,11 +4,13 @@
     &.active {
       .step-bullet {
         background-color: var(--color-purple);
+				color: white;
       }
     }
     &.completed {
       .step-bullet {
         background-color: var(--color-purple);
+				color: white;
       }
     }
     &.error {
@@ -21,7 +23,8 @@
     }
     &.done {
       .step-bullet {
-        background-color: var(--color-purple);
+				background-color: var(--color-purple);
+				color: white;
       }
     }
 }
@@ -33,9 +36,9 @@
     align-items: center;
     height: 40px;
     width: 40px;
-    background-color: var(--color-darkgray);
+    background-color: var(--color-lightgray);
+		color: var(--color-purple);
     border-radius: 50%;
-    color: #fff;
     font-size: 1.3rem;
     text-align: center;
     text-decoration: none;
@@ -58,8 +61,8 @@
     content: "";
     position: absolute;
     width: 100%;
-    height: 3px;
-    background-color: var(--color-darkgray);
+    height: 1px;
+    background-color: var(--color-purple);
     top: 50%;
     left: -50%;
     z-index: -1;
@@ -79,5 +82,4 @@
   .steps-wrapper .step:first-child::after {
     display: none;
 }
-  
-  
+

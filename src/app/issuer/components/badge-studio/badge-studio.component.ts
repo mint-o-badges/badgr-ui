@@ -49,9 +49,14 @@ export class BadgeStudioComponent implements OnInit, OnChanges {
 					// const shapeColor = shapeColors[Math.floor(Math.random() * shapeColors.length)];
 					const shapeColor = shapeColorsTypes[this.formData.badge_category];
 
+					console.log(this.formData.badge_category);
+
 					const iconColor = '#0000000';
 					this.context2d.clearRect(0, 0, this.canvas.width, this.canvas.height);
 					var shapeImage = shapeImagesTypes[this.formData.badge_category] || this.formData.badge_category['participation']
+						// this.formData.badge_category === 'competency'
+						// 	? shapeImagesTypes['competency']
+						// 	: shapeImagesTypes['participation'];
 					// var shapeImage2 = "../../../../breakdown/static/badgestudio/shapes/noun_test.svg";
 					var shapeImage2 = 'https://static.thenounproject.com/png/1444428-200.png';
 					// Grab a random SVG from our set
@@ -162,6 +167,7 @@ export class BadgeStudioComponent implements OnInit, OnChanges {
 		);
 	}
 	generateUploadImage(uploadedImage, formdata): Promise<string> {
+		console.log(formdata);
 		return this.fontPromise.then(
 			() =>
 				new Promise<string>((resolve, reject) => {

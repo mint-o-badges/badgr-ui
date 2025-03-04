@@ -231,3 +231,38 @@ html {
 #altcha_checkbox {
 	appearance: auto;
 }
+
+// tag extensions
+.tag {
+	&-button {
+		cursor: pointer;
+	}
+	&-button-pressed {
+		background-color: var(--color-interactive1);
+		color: var(--color-light1);
+		border-color: var(--color-interactive1);
+	}
+	&-close {
+		padding-right: 32px;
+		background: transparent url(../../breakdown/static/scss/images/tooltip-close.svg) right 8px center no-repeat;
+		background-size: 12px 12px;
+	}
+	&-delete {
+		&:hover {
+			background-color: var(--color-lightpink);
+		}
+	}
+}
+
+// override brn-select default styles to display scrollbars
+[data-brn-select-viewport] {
+	scrollbar-width: thin !important;
+
+	&::-webkit-scrollbar {
+		display: initial!important;
+	}
+
+	hlm-option {
+		box-sizing: border-box;
+	}
+}
