@@ -396,7 +396,8 @@
 		"hoursMaxError": "Stunden dürfen 10.000 nicht überschreiten.",
 		"minMaxError": "Bitte geben Sie eine gültige Anzahl von Minuten ein (0 bis 59).",
 		"hoursAndMinutesError": "Der Badge muss mindestens 1 Minute dauern.",
-		"competenceHoursMinutesZero": "Eine deiner Kompetenzen hat eine Dauer von 0."
+		"competenceHoursMinutesZero": "Eine deiner Kompetenzen hat eine Dauer von 0.",
+		"competencyExceedsBadgeDuration": "Die Zeitangabe für die Stärkung einer einzelnen Kompetenz kann nicht größer sein als die Dauer deines Lernangebots/Badges an sich."
 	},
 	"Signup": {
 		"youHaveAccount": "Du hast bereits einen Account?",
