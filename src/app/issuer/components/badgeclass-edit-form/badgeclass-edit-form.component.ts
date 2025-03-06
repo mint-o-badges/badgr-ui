@@ -1017,6 +1017,16 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			(competence) => Number(competence.hours) === 0 && Number(competence.minutes) === 0
 		);
 
+		const badgeDurationInMinutes = Number(this.badgeClassForm.controls.badge_hours.value) * 60 + Number(this.badgeClassForm.controls.badge_minutes.value)
+
+		const competencyExceedsBadgeDurationIndex = allCompetencies.findIndex(
+			(competence) => Number(competence.hours * 60) + Number(competence.minutes) > badgeDurationInMinutes
+		);
+
+		if(competencyExceedsBadgeDurationIndex !== -1){
+			return { competencyExceedsBadgeDuration: true, invalidIndex: competencyExceedsBadgeDurationIndex };
+		}
+
 		if (invalidCompetencyIndex !== -1) {
 			return { competenceHoursMinutesZero: true, invalidIndex: invalidCompetencyIndex };
 		}
@@ -1027,6 +1037,18 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 	// Validator for badge Duration, is displayed on the respective input
 	hoursAndMinutesValidatorBadgeDuration () : ValidationErrors | null {
+		if (!this.badgeClassForm) return null;
+
+		const hours = Number(this.badgeClassForm.value.badge_hours)
+		const minutes = Number(this.badgeClassForm.value.badge_minutes)
+		if (hours === 0 && minutes === 0) {
+		  return { hoursAndMinutesError: true};
+		}
+
+		return null;
+	}
+
+	competencyDurationValidator () : ValidationErrors | null {
 		if (!this.badgeClassForm) return null;
 
 		const hours = Number(this.badgeClassForm.value.badge_hours)
