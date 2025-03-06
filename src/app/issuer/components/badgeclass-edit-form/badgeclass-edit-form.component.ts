@@ -474,7 +474,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			badge_name: badgeClass.name,
 			badge_image: this.existing && badgeClass.imageFrame ? badgeClass.image : null,
 			badge_customImage: this.existing && !badgeClass.imageFrame ? badgeClass.image : null,
-			useIssuerImageInBadge: false,
+			useIssuerImageInBadge: this.badgeClassForm.value.useIssuerImageInBadge,
 			badge_description: badgeClass.description,
 			badge_criteria_url: badgeClass.criteria_url,
 			badge_criteria_text: badgeClass.criteria_text,
