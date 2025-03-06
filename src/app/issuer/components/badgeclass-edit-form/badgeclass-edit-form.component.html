@@ -147,10 +147,9 @@
 												<img src="../../../../breakdown/static/images/square.svg" class="tw-absolute tw-h-[11.56px] tw-top-0 tw-right-0">
 											</div> -->
 											<div class="tw-w-full tw-bg-white tw-p-4 tw-rounded-[10px] tw-mt-4">
-												<oeb-checkbox class="tw-mx-auto tw-min-w-[300px]" name="addIssuerLogo" id="addIssuerLogo"
-													[control]="badgeClassForm.rawControlMap.useIssuerImageInBadge" 
-													[text]="'<span class=\'tw-text-sm tw-font-bold\'>Institutions-Logo ergänzen</span>'"
-												></oeb-checkbox>
+												<span class="tw-text-sm tw-text-oebblack tw-italic">
+													Dein Institutions-Logo wird automatisch im Badge-Bild ergänzt.
+												</span>
 											</div>
 										<!-- </div> -->
 									</div>
@@ -158,7 +157,7 @@
 										class="md:tw-hidden tw-my-8 tw-w-full tw-border tw-border-[var(--color-purple)] tw-border-dashed"
 									/> -->
 									<div class="tw-italic tw-self-start tw-mt-6 tw-text-[24px]">{{ 'General.or' | translate }}</div>
-									<div class="tw-w-full tw-bg-[var(--color-lightgreen)] tw-rounded-[10px] tw-py-[16px] tw-px-[32px] tw-max-h-[400px]">
+									<div class="tw-w-full tw-bg-[var(--color-lightgreen)] tw-rounded-[10px] tw-py-[16px] tw-px-[32px]">
 										<bg-formfield-image
 											#customImageField
 											[label]="useOwnVisual"
@@ -178,7 +177,12 @@
 										</bg-formfield-image>
 											<span class="tw-italic tw-text-sm md:tw-flex md:tw-justify-center md:tw-items-center"
 											>{{ 'General.fileformats' | translate }}: PNG,&nbsp; </span>
-
+											<div class="tw-w-full tw-bg-white tw-p-4 tw-rounded-[10px] tw-mt-4">
+												<oeb-checkbox class="tw-mx-auto tw-min-w-[300px]" name="addIssuerLogo" id="addIssuerLogo"
+													[control]="badgeClassForm.rawControlMap.useIssuerImageInBadge" 
+													[text]="'<span class=\'tw-text-sm tw-font-bold\'>Institutions-Logo ergänzen</span>'"
+												></oeb-checkbox>
+											</div>
 									</div>
 									<badge-studio
 										[scrolled]="scrolled"

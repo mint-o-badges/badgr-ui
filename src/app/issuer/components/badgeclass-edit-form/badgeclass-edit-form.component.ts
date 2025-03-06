@@ -244,7 +244,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		])
 		.addControl('badge_image', '')
 		.addControl('badge_customImage', '')
-		.addControl('useIssuerImageInBadge', false)
+		.addControl('useIssuerImageInBadge', true)
 		.addControl('badge_description', '', [Validators.required, Validators.maxLength(700)])
 		.addControl('badge_criteria_url', '')
 		.addControl('badge_criteria_text', '')
