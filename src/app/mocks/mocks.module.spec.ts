@@ -123,6 +123,7 @@ export class MockMessageService {
 
 @Injectable()
 export class MockAppConfigService {
+	apiConfig = { baseUrl: '' };
 	theme = (): BadgrTheme => {
 		return {
 			serviceName: 'Badger',
