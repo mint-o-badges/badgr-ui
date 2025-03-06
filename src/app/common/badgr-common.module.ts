@@ -196,7 +196,6 @@ export const COMMON_MODULE_COMPONENTS = [
 const SERVICES = [
 	CommonDialogsService,
 	CommonEntityManager,
-	IssuerManager,
 	IssuerApiService,
 	MessageService,
 	SettingsService,
@@ -208,9 +207,7 @@ const SERVICES = [
 	EventsService,
 	SessionService,
 	QueryParametersService,
-	UserProfileManager,
 	UserProfileApiService,
-	OAuthManager,
 	OAuthApiService,
 	EmbedService,
 	InitialLoadingIndicatorService,
@@ -270,7 +267,7 @@ export const COMMON_IMPORTS = [
 
 @NgModule({
 	imports: [...COMMON_IMPORTS, FormsModule, LMarkdownEditorModule, TranslateModule, SharedIconsModule, CdkStepperModule],
-	providers: [BadgeClassManager, BadgeClassApiService,  ...serverErrorInterceptorFactory()],
+	providers: [BadgeClassApiService,  ...serverErrorInterceptorFactory()],
 	declarations: [...DIRECTIVES, ...COMMON_MODULE_COMPONENTS, ...PIPES, ForwardRouteComponent, BadgeLegendComponent, CountUpDirective],
 	exports: [...DIRECTIVES, ...COMMON_MODULE_COMPONENTS, ...PIPES, BadgeLegendComponent, SharedIconsModule],
 })
