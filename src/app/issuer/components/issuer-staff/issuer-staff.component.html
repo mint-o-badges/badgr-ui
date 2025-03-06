@@ -31,19 +31,18 @@
 			<p class="u-text-h3-bold">{{ 'General.members' | translate }}</p>
 			<issuer-staff-create-dialog #issuerStaffCreateDialog></issuer-staff-create-dialog>
 			<ng-template #headerTemplate>
-				<h2 class="!tw-font-bold !tw-text-oebblack" hlmH2> {{'Issuer.addMember' | translate}}</h2>
-				<span class="tw-text-purple tw-italic tw-text-lg tw-mt-2" [innerHTML]="'Issuer.addMember_text' | translate">
+				<h1 class="tw-font-bold tw-text-oebblack tw-text-2xl" > {{'Issuer.addMember' | translate}}</h1>
+				<span class="tw-text-purple tw-italic tw-text-lg tw-mt-2 tw-leading-[130%]" [innerHTML]="'Issuer.addMember_text' | translate">
 				</span>
 			</ng-template>
 			<ng-template #addMemberFormTemplate> 
 				<form [formGroup]="staffCreateForm.rawControl" (ngSubmit)="submitStaffCreate()">
-					<bg-formfield-text
+					<oeb-input
 					[control]="staffCreateForm.rawControlMap.staffEmail"
 					label="{{ 'Issuer.addMember_newEmail' | translate }}"
-					errorMessage="{{ 'Issuer.addMember_enterValidEmail' | translate }}"
-					placeholder="{{ 'Issuer.addMember_newEmailPH' | translate }}"
-					class="forminput-light1 u-width-formsmall u-margin-top3x u-margin-bottom3x"
-					></bg-formfield-text>
+					error="{{'Issuer.addMember_newEmail' | translate}}"
+					>
+					</oeb-input>
 					<span class="tw-mt-6 tw-text-oebblack tw-text-lg tw-font-bold">{{ 'Issuer.addMember_chooseRole' | translate }}</span>
 					<bg-formfield-radio
 						*ngFor="let role of issuerStaffRoleOptions; last as last"
