@@ -1,0 +1,42 @@
+name: Comment indicating the status of the coolify preview
+
+on:
+  pull_request:
+    branches:
+      - main
+env:
+  pr: ${{ github.event.number }}
+
+jobs:
+  comment:
+    runs-on: ubuntu-latest
+    name: Comment and update the status of the coolify preview
+    defaults:
+      run:
+        working-directory: ./.github/scripts
+    outputs:
+      final_http_code: ${{ steps.poll.outputs.message }}
+    steps:
+      - name: Initial comment
+        uses: thollander/actions-comment-pull-request@v3
+        with:
+          message: Coolify build (probably) in progress...
+          comment-tag: coolify-status
+      - name: Poll the preview page
+        id: poll
+        run: ./poll-preview.sh >> $GITHUB_OUTPUT
+      - name: Inform of failure
+        if: ${{ steps.poll.outputs.final_http_code != 200 }}
+        uses: thollander/actions-comment-pull-request@v3
+        with:
+          message: Coolify build failed. HTTP code is ${{ steps.poll.outputs.final_http_code }}
+          comment-tag: coolify-status
+      - name: Fail
+        if: ${{ steps.poll.outputs.final_http_code != 200 }}
+        run: exit 1
+      - name: Inform of success
+        if: ${{ steps.poll.outputs.final_http_code == 200 }}
+        uses: thollander/actions-comment-pull-request@v3
+        with:
+          message: Coolify build successful. url: https://$pr.coolify.openbadges.education
+          comment-tag: coolify-status
