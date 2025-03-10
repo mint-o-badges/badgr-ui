@@ -397,7 +397,8 @@
 		"minMaxError": "Bitte geben Sie eine gültige Anzahl von Minuten ein (0 bis 59).",
 		"hoursAndMinutesError": "Der Badge muss mindestens 1 Minute dauern.",
 		"competenceHoursMinutesZero": "Eine deiner Kompetenzen hat eine Dauer von 0.",
-		"competencyExceedsBadgeDuration": "Die Zeitangabe für die Stärkung einer einzelnen Kompetenz kann nicht größer sein als die Dauer deines Lernangebots/Badges an sich."
+		"competencyExceedsBadgeDuration": "Die Zeitangabe für die Stärkung einer einzelnen Kompetenz kann nicht größer sein als die Dauer deines Lernangebots/Badges an sich.",
+		"issuerImageInBadgeImageInfo": "Dein Institutions-Logo wird automatisch im Badge-Bild ergänzt."
 	},
 	"Signup": {
 		"youHaveAccount": "Du hast bereits einen Account?",

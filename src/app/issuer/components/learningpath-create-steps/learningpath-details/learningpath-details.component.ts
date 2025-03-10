@@ -65,7 +65,7 @@ export class LearningPathDetailsComponent implements OnInit, AfterViewInit {
 			badge_category: 'learningpath',
       badge_image: badge.imageFrame ? lp.participationBadge_image : null,
       badge_customImage: !badge.imageFrame ? lp.participationBadge_image : null,
-	  useIssuerImageInBadge: false
+	  useIssuerImageInBadge: true
     });
   }
 
@@ -101,7 +101,7 @@ export class LearningPathDetailsComponent implements OnInit, AfterViewInit {
 		.addControl('badge_image', '')
 		.addControl('badge_category', 'learningpath')
 		.addControl('badge_customImage', '')
-		.addControl('useIssuerImageInBadge', false);
+		.addControl('useIssuerImageInBadge', true);
 
   ngOnInit(): void {
 		this.initFormFromExisting(
@@ -130,11 +130,6 @@ export class LearningPathDetailsComponent implements OnInit, AfterViewInit {
 				sessionStorage.setItem('oeb-create-badgeclassvalues', JSON.stringify(saveableSessionValues));
 			});
 
-			this.lpDetailsForm.rawControlMap.useIssuerImageInBadge.valueChanges.subscribe(v => {
-				if(this.currentImage && this.imageField.control.value){
-					this.generateUploadImage(this.currentImage, this.lpDetailsForm.value, v)
-				}
-			})
 		} else {
 			// clear session storage when editing existing badges
 			sessionStorage.removeItem('oeb-create-badgeclassvalues');

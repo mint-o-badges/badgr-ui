@@ -148,7 +148,7 @@
 											</div> -->
 											<div class="tw-w-full tw-bg-white tw-p-4 tw-rounded-[10px] tw-mt-4">
 												<span class="tw-text-sm tw-text-oebblack tw-italic">
-													Dein Institutions-Logo wird automatisch im Badge-Bild ergänzt.
+													{{ 'CreateBadge.issuerImageInBadgeImageInfo' | translate}}	
 												</span>
 											</div>
 										<!-- </div> -->
@@ -176,7 +176,7 @@
 										>
 										</bg-formfield-image>
 											<span class="tw-italic tw-text-sm md:tw-flex md:tw-justify-center md:tw-items-center"
-											>{{ 'General.fileformats' | translate }}: PNG,&nbsp; </span>
+											>{{ 'General.fileformats' | translate }}: PNG&nbsp; </span>
 											<!-- <div class="tw-w-full tw-bg-white tw-p-4 tw-rounded-[10px] tw-mt-4">
 												<oeb-checkbox class="tw-mx-auto tw-min-w-[300px]" name="addIssuerLogo" id="addIssuerLogo"
 													[control]="badgeClassForm.rawControlMap.useIssuerImageInBadge" 
@@ -290,7 +290,7 @@
 												class="tw-bg-white tw-border tw-border-gray-300 tw-mt-2 tw-rounded-md tw-shadow-sm tw-p-2 tw-h-48 tw-resize-none tw-text-sm tw-text-gray-700 tw-w-full"
 												[(ngModel)]="aiCompetenciesDescription"
 												[ngModelOptions]="{ standalone: true }"
-												maxlength="1000"
+												maxlength="1200"
 												minlength="70"
 												[placeholder]="detailedDescription"
 											>

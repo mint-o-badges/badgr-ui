@@ -350,7 +350,8 @@
 		"hoursMaxError": "Hours cannot exceed 10000.",
 		"minMaxError": "Please enter a valid number",
 		"hoursAndMinutesError": "The badge has to take at least 1 minute",
-		"competenceHoursMinutesZero": "One of your competencies has a duration of 0."
+		"competenceHoursMinutesZero": "One of your competencies has a duration of 0.",
+		"issuerImageInBadgeImageInfo": "Your institution logo is automatically added to the badge image."
 	},
 	"Signup": {
 		"youHaveAccount": "You already have an account?",
