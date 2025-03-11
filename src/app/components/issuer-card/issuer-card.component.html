@@ -40,6 +40,7 @@
 				<p [innerHTML]="issuer?.badgeClassCount | i18nPlural: plural['badges']"></p>
 			</a>
 			<a
+				*ngIf="issuer?.learningPathCount > 0"
 				hlmP
 				class="tw-flex tw-flex-row tw-text-purple tw-font-semibold tw-items-center hover:tw-underline"
 				[routerLink]="['/public/issuers/', issuer?.slug]"
