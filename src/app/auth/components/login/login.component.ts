@@ -14,13 +14,20 @@ import { QueryParametersService } from '../../../common/services/query-parameter
 import { OAuthManager } from '../../../common/services/oauth-manager.service';
 import { ExternalToolsManager } from '../../../externaltools/services/externaltools-manager.service';
 import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { AppConfigService } from '../../../common/app-config.service';
 import { typedFormGroup } from '../../../common/util/typed-forms';
 import { BadgrApiFailure } from '../../../common/services/api-failure';
 import { TranslateService } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { UserProfileApiService } from '../../../common/services/user-profile-api.service';
+
+interface RedirectResponse {
+	success: boolean;
+	redirectPath: string;
+  }
+  
+ type RedirectHttpResponse = HttpResponse<RedirectResponse>;
 
 @Component({
 	selector: 'login',
@@ -104,17 +111,25 @@ export class LoginComponent extends BaseRoutableComponent implements OnInit, Aft
                             } else {
                                 this.externalToolsManager.externaltoolsList.updateIfLoaded();
 
-								this.http.post<{success: boolean, redirectPath: string}>(`${this.baseUrl}/v1/user/get-redirect-path`, {}, {withCredentials: true})
-								.subscribe({
-								  next: (response) => {
-									if (response.success && response.redirectPath) {
-									  this.router.navigateByUrl(response.redirectPath);
+								this.userProfileApiService.getRedirectUrl().then((response: RedirectHttpResponse) => {
+									if(response.body.success && response.body.redirectPath){
+										this.router.navigateByUrl(response.body.redirectPath);
 									} else {
 									  this.router.navigate([localStorage.signup ? 'auth/welcome' : 'issuer',]);
 									}
-								  },
-								  error: () => this.router.navigate(['/public/start'])
-								});
+								}).catch(() => this.router.navigate(['/public/start']))
+
+								// this.http.post<{success: boolean, redirectPath: string}>(`${this.baseUrl}/v1/user/get-redirect-path`, {}, {withCredentials: true})
+								// .subscribe({
+								//   next: (response) => {
+								// 	if (response.success && response.redirectPath) {
+								// 	  this.router.navigateByUrl(response.redirectPath);
+								// 	} else {
+								// 	  this.router.navigate([localStorage.signup ? 'auth/welcome' : 'issuer',]);
+								// 	}
+								//   },
+								//   error: () => this.router.navigate(['/public/start'])
+								// });
 
                             }
                         } else {
