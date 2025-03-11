@@ -651,6 +651,6 @@
 		"finished": "Abgeschlossen"
 	},
 	"LearningPathEditor": {
-		"shortDescription": "short description"
+		"shortDescription": "Summarized description of your Micro Degree. This short description is saved in the Micro Degree."
 	}
 }

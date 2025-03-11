@@ -729,7 +729,7 @@
 		"savedSuccessfully": "Deine Änderungen wurden erfolgreich gespeichert"
 	},
 	"LearningPathEditor": {
-		"shortDescription": "Zusammenfassende Beschreibung deines Micro Degreess. Diese Kurzbeschreibung wird im Micro Degree-Badge gespeichert."
+		"shortDescription": "Zusammenfassende Beschreibung deines Micro Degrees. Diese Kurzbeschreibung wird im Micro Degree gespeichert."
 	},
 	"OEBComponents": {
 		"fieldIsRequired": "Dieses Feld ist erforderlich"
