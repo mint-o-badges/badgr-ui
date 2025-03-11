@@ -447,6 +447,7 @@
 												placeholder="Stichwort eingeben"
 												(focus)="keywordCompetenciesShowResults = true"
 												(focusout)="keywordCompetenciesInputFocusOut()"
+												(keydown.enter)="$event.preventDefault()"
 											>
 											<!-- <img
 												class="tw-absolute tw-top-2 tw-right-2 tw-w-6 tw-h-6 tw-pointer-events-none"
