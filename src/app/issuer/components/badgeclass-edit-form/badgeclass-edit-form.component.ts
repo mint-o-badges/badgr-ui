@@ -80,9 +80,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	chooseABadgeCategory = this.translate.instant('CreateBadge.chooseABadgeCategory');
 	summarizedDescription =
 		this.translate.instant('CreateBadge.summarizedDescription') +
-		'(max 700 ' +
-		this.translate.instant('General.characters') +
-		'). ' +
 		this.translate.instant('CreateBadge.descriptionSavedInBadge');
 	enterDescription = this.translate.instant('Issuer.enterDescription');
 	max60chars = '(max. 60 ' + this.translate.instant('General.characters') + ')';
