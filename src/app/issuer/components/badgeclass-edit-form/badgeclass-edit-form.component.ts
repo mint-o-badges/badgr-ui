@@ -1026,6 +1026,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 		const allCompetencies = [
 			...this.badgeClassForm.value.competencies,
+			...this.badgeClassForm.value.keywordCompetencies,
 			...this.badgeClassForm.value.aiCompetencies.filter((comp) => comp.selected),
 		];
 
