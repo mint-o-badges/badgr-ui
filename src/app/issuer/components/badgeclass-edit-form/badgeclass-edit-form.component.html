@@ -299,7 +299,8 @@
 												*ngIf="aiCompetenciesDescription.length"
 												class="tw-absolute tw-bottom-1 tw-right-2 tw-pointer-events-none"
 												[ngClass]="
-													aiCompetenciesDescription.length < 70
+													aiCompetenciesDescription.length < 70 ||
+													aiCompetenciesDescription.length == 1200
 														? 'tw-text-red'
 														: 'tw-text-gray-600'
 												"
