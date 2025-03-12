@@ -26,6 +26,7 @@ import { Issuer } from '../../../issuer/models/issuer.model';
 import { CompetencyType, PageConfig } from '../../../common/components/badge-detail/badge-detail.component.types';
 import { ApiLearningPath } from '../../../common/model/learningpath-api.model';
 import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'recipient-earned-badge-detail',
@@ -85,6 +86,7 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 		private configService: AppConfigService,
 		private externalToolsManager: ExternalToolsManager,
 		public queryParametersService: QueryParametersService,
+		private translate: TranslateService
 	) {
 		super(router, route, loginService);
 
@@ -149,7 +151,7 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 					slug: this.badgeSlug,
 					issuedOn: this.badge.issueDate,
 					issuedTo: this.badge.recipientEmail,
-					category: this.category['Category'] === 'competency' ? 'Kompetenz-Badge' : 'Teilnahme-Badge',
+					category: this.translate.instant(`Badge.categories.${this.category['Category'] || 'participation'}`),
 					duration: this.badge.getExtension('extensions:StudyLoadExtension', {}).StudyLoad,
 					tags: this.badge.badgeClass.tags,
 					issuerName: this.badge.badgeClass.issuer.name,
@@ -171,8 +173,8 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 				})
 			})
 			.catch((e) => this.messageService.reportAndThrowError('Failed to load your badges', e));
-		
-		
+
+
 
 		this.externalToolsManager.getToolLaunchpoints('earner_assertion_action').then((launchpoints) => {
 			this.launchpoints = launchpoints;

@@ -231,7 +231,7 @@ export class RecipientEarnedBadgeListComponent
 				component: this.badgesCompetency,
 			},
 			{
-				title: 'Lernpfade',
+				title: 'Micro Degrees',
 				component: this.learningPathTemplate,
 			},
 		];
@@ -372,7 +372,7 @@ export class RecipientEarnedBadgeListComponent
 	}
 
 	trackById(index: number, item: any): any {
-		return item.id; 
+		return item.id;
 	}
 
 
@@ -417,7 +417,7 @@ export class RecipientEarnedBadgeListComponent
 					}
 				});
 			});
-		
+
 		this.groupedUserCompetencies = Object.values(groupedCompetencies).sort((a, b) => {
 			return a.lastReceived.getTime() - b.lastReceived.getTime();
 		});

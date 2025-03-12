@@ -25,7 +25,7 @@ type MatchOrProgressType = { match?: string, progress?: number };
 						<hlm-icon class="tw-text-purple tw-box-border tw-w-[26px] tw-h-[26px]" name="lucideCheck" />
 					</div>
 				</div>
-				
+
 					<img
 						class="tw-w-[145px] tw-h-[145px]"
 						[loaded-src]="badgeImage"
@@ -37,7 +37,7 @@ type MatchOrProgressType = { match?: string, progress?: number };
 				<div class="tw-flex tw-flex-col tw-flex-wrap tw-py-2 tw-text-oebblack tw-mt-2 tw-gap-1">
 					<span
 						class="tw-font-semibold tw-text-[22px] tw-leading-[26px]"
-						
+
 						>{{ name }}</span>
 						<a class="tw-text-[18px] tw-leading-[23.4px]">{{issuerTitle}}</a>
 					<div class="tw-items-center">
@@ -45,13 +45,13 @@ type MatchOrProgressType = { match?: string, progress?: number };
 							<div hlmP size="sm" class="oeb-tag"
 								*ngFor="let tag of tags | slice: 0 : 3; last as last">
 								{{ tag }}
-							</div>									
+							</div>
 						</div>
 						<div *ngIf="isMatch; else progressBar">
 							<div class="tw-px-[11.55px] tw-py-[3.85px] tw-bg-lightpurple tw-rounded-[95px] tw-inline-block">
-								<span class="tw-text-sm tw-text-purple">{{this._matchOrProgress?.match}} Badges</span> 
+								<span class="tw-text-sm tw-text-purple">{{this._matchOrProgress?.match}} Badges</span>
 							</div>
-						</div>	
+						</div>
 						<ng-template #progressBar>
 							<div *ngIf="progress === 0 || progress" class="tw-mb-4 tw-w-full tw-mt-6 tw-flex tw-justify-center tw-items-center">
 								<oeb-progress class="tw-w-full tw-h-7 tw-relative tw-inline-flex tw-overflow-hidden tw-rounded-3xl tw-bg-white tw-items-center" [value]="progressValue" [template]="requested ? requestedTemplate : progressTemplate"></oeb-progress>
@@ -59,9 +59,9 @@ type MatchOrProgressType = { match?: string, progress?: number };
 						</ng-template>
 						<ng-template #progressTemplate>
 							<div class="tw-absolute tw-w-full tw-text-left">
-								<span class="tw-ml-2 tw-text-sm tw-text-purple">Lernpfad <span *ngIf="!completed">{{progressValue}}%</span> abgeschlossen</span>
+								<span class="tw-ml-2 tw-text-sm tw-text-purple">Micro Degree <span *ngIf="!completed">{{progressValue}}%</span> abgeschlossen</span>
 							</div>
-						</ng-template>	
+						</ng-template>
 						<ng-template #requestedTemplate>
 							<div class="tw-absolute tw-w-full tw-text-left tw-flex tw-items-center">
 								<span class="tw-bg-purple tw-rounded-[50%] tw-h-[20px] tw-w-[20px] tw-ml-2">
@@ -69,15 +69,13 @@ type MatchOrProgressType = { match?: string, progress?: number };
 								</span>
 								<span class="tw-ml-2 tw-text-sm tw-text-purple">{{'LearningPath.successRequestPath' | translate}}</span>
 							</div>
-						</ng-template>	
-						<oeb-button *ngIf="isProgress && progress/studyLoad === 1 && !completed && !requested" (click)="requestLearningPath()" [fontSize15]="true" [text]="'Lernpfad-Badge abholen'" width="full_width">							
-						</oeb-button>
+						</ng-template>
 					</div>
 					<div class="tw-flex tw-flex-row tw-gap-4 tw-text-[#6B7280] tw-text-sm tw-mt-6 tw-items-end">
 						<hlm-icon name="lucideClock" />
 						<span>{{studyLoad | hourPipe}} {{'RecBadge.hours' | translate}}</span>
 					</div>
-				</div>	
+				</div>
 			</div>
 		</a>
 	`,
@@ -136,12 +134,5 @@ export class BgLearningPathCard {
 
 	get progressValue(): number {
 		return Math.floor((this.progress / this.studyLoad) * 100);
-	}
-
-
-	requestLearningPath() {
-		this.learningPathApiService.requestLearningPath(this.slug).then(res => {
-			this.requested = true;
-		})
 	}
 }

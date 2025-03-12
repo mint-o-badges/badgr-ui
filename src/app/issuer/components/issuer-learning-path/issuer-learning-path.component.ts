@@ -15,7 +15,7 @@ import { AppConfigService } from '../../../common/app-config.service';
 import { CommonDialogsService } from '../../../common/services/common-dialogs.service';
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { MenuItem } from '../../../common/components/badge-detail/badge-detail.component.types';
-import { ApiLearningPath, ApiLearningPathParticipant, ApiLearningPathRequest } from '../../..//common/model/learningpath-api.model';
+import { ApiLearningPath, ApiLearningPathParticipant } from '../../..//common/model/learningpath-api.model';
 import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
 
 @Component({
@@ -40,8 +40,6 @@ export class IssuerLearningPathComponent extends BaseAuthenticatedRoutableCompon
 	issuerLoaded: Promise<unknown>;
 	learningPathLoaded: Promise<unknown>;
 	participantsLoaded: Promise<unknown>;
-	requestsLoaded: Promise<unknown>;
-	requests: ApiLearningPathRequest[];
 	participants: ApiLearningPathParticipant[];
 
 	profileEmailsLoaded: Promise<unknown>;
@@ -90,7 +88,7 @@ export class IssuerLearningPathComponent extends BaseAuthenticatedRoutableCompon
 				this.title.setTitle(
 					`Issuer - ${this.issuer.name} - ${this.configService.theme['serviceName'] || 'Badgr'}`,
 				);
-				
+
 				this.learningPathLoaded = new Promise<void>((resolve, reject) => {
 					this.learningPathApiService.getLearningPath(this.issuerSlug, this.learningPathSlug).then(
 						(result) => {
@@ -110,14 +108,6 @@ export class IssuerLearningPathComponent extends BaseAuthenticatedRoutableCompon
 						},
 					);
 				});
-				this.requestsLoaded = new Promise<void>((resolve, reject) => {
-					this.learningPathApiService.getLearningPathRequests(this.learningPathSlug).then(
-						(result) => {
-							this.requests = result.body['requested_learningpaths'];
-							resolve()
-						}
-					)
-				})
 				this.participantsLoaded = new Promise<void>((resolve, reject) => {
 					this.learningPathApiService.getLearningPathParticipants(this.learningPathSlug).then(
 						(result) => {

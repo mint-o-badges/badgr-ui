@@ -10,7 +10,7 @@
 					<div class="tw-grid md:tw-flex md:tw-justify-between md:tw-items-center md:tw-gap-10">
 						<h1
 							hlmH1
-							class="tw-text-purple tw-font-medium tw-hyphens-auto tw-break-words tw-mb-2 md:tw-mb-0"
+							class="tw-text-purple tw-font-extrabold tw-hyphens-auto tw-break-words tw-mb-2 md:tw-mb-0"
 						>
 							{{ config.badgeTitle }}
 						</h1>
@@ -206,7 +206,7 @@
 				</div>
 				<div class="md:tw-pb-8 md:tw-min-h-[800px] tw-w-full">
 					<div class="tw-text-oebblack tw-pt-0 tw-pb-4">
-						<h3 hlmH3 class="tw-font-semibold tw-text-oebblack tw-mb-4">Kurzbeschreibung</h3>
+						<h3 class="tw-font-semibold tw-leading-[26.4px] tw-text-[22px] tw-text-oebblack tw-mb-4">Kurzbeschreibung</h3>
 						<p hlmP class="tw-text-oebblack tw-w-full">{{ config.badgeDescription }}</p>
 					</div>
 					<!-- Kompetenzen -->
@@ -215,7 +215,7 @@
 						class="tw-text-oebblack tw-pb-8"
 					>
 						<h3
-							class="tw-text-[22px] tw-leading-[26.4px] tw-font-[500] tw-font-[rubik] tw-text-oebblack u-margin-bottom2x u-margin-top4x"
+							class="tw-text-[22px] tw-leading-[26.4px] tw-font-semibold tw-text-oebblack u-margin-bottom2x u-margin-top4x"
 						>
 							{{ 'RecBadgeDetail.competencies' | translate }}
 						</h3>
@@ -234,7 +234,7 @@
 					<ng-content></ng-content>
 						<div *ngIf="config.learningPaths.length > 0">
 							<oeb-separator class="tw-block tw-mb-8 tw-mt-8"></oeb-separator>
-							<span class="tw-my-2 tw-text-oebblack tw-text-[22px] tw-leading-[26px] tw-font-semibold"> Dieser Badge ist Teil folgender Lernpfade: </span>
+							<span class="tw-my-2 tw-text-oebblack tw-text-[22px] tw-leading-[26px] tw-font-semibold"> Dieser Badge ist Teil folgender Micro Degrees: </span>
 							<div class="tw-mt-8 tw-grid tw-grid-cols-learningpaths tw-gap-6">
 								<bg-learningpathcard *ngFor="let lp of config.learningPaths"
 									[name]="lp.name"
@@ -250,7 +250,7 @@
 									[completed]="checkCompleted(lp)"
 								></bg-learningpathcard>
 							</div>
-						</div>	
+						</div>
 				</div>
 			</div>
 		</div>

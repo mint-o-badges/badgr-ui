@@ -22,6 +22,7 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class BadgeClassCreateComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	issuerSlug: string;
+	category: string
 	issuer: Issuer;
 	issuerLoaded: Promise<unknown>;
 	breadcrumbLinkEntries: LinkEntry[] = [];
@@ -53,6 +54,7 @@ export class BadgeClassCreateComponent extends BaseAuthenticatedRoutableComponen
 		super(router, route, sessionService);
 		title.setTitle(`Create Badge - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 		this.issuerSlug = this.route.snapshot.params['issuerSlug'];
+		this.category = this.route.snapshot.params['category'];
 
 		this.issuerLoaded = this.issuerManager.issuerBySlug(this.issuerSlug).then((issuer) => {
 			this.issuer = issuer;

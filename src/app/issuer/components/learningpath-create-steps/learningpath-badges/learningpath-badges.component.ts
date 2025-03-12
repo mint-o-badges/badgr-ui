@@ -27,7 +27,7 @@ export class LearningPathBadgesComponent implements OnInit {
 	set learningPath (lp: ApiLearningPath) {
 		// this.initFormFromExisting(lp);
 	}
-	
+
 	constructor(
 		private translate: TranslateService,
 		protected badgeClassService: BadgeClassManager,
@@ -108,6 +108,7 @@ export class LearningPathBadgesComponent implements OnInit {
 	categoryOptions: { [key in BadgeClassCategory | 'noCategory']: string } = {
 		competency: '',
 		participation: '',
+		learningpath: '',
 		noCategory: ''
 	};
 
@@ -271,14 +272,13 @@ export class LearningPathBadgesComponent implements OnInit {
 			: { minSelectedBadges: { required: 3, actual: this.selectedBadges.length } }
 	}
 	ngOnInit(): void {
-		this.groups[0] = "---"
 
 		this.translate.get('Badge.category').subscribe((translatedText: string) => {
-			this.groups[1] = translatedText
+			this.groups[0] = translatedText
 		})
 
 		this.translate.get('Badge.issuer').subscribe((translatedText: string) => {
-			this.groups[2] = translatedText
+			this.groups[1] = translatedText
 		})
 
 		this.translate.get('Badge.competency').subscribe((translatedText: string) => {
@@ -287,6 +287,10 @@ export class LearningPathBadgesComponent implements OnInit {
 
 		this.translate.get('Badge.participation').subscribe((translatedText: string) => {
 			this.categoryOptions.participation = translatedText
+		})
+
+		this.translate.get('Badge.learningpath').subscribe((translatedText: string) => {
+			this.categoryOptions.learningpath = translatedText
 		})
 
 		this.translate.get('Badge.noCategory').subscribe((translatedText: string) => {

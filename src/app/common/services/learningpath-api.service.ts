@@ -65,27 +65,7 @@ export class LearningPathApiService extends BaseHttpApiService {
 		return this.post(`/learningpath/${lpSlug}/participate`, body);
 	}
 
-	getLearningPathParticipant(participantId: string){
-		return this.get(`/learningpath/participant/${participantId}`);
-	}
-
 	getLearningPathParticipants(lpSlug: string){
 		return this.get<ApiLearningPathParticipant[]>(`/v1/issuer/learningpath/${lpSlug}/participants`);
-	}
-
-	updateLearningPathParticipant(participantId: string, body: ApiLearningPathParticipant){
-		return this.put<ApiLearningPathParticipant>(`/learningpath/participant/${participantId}`, body);
-	}
-
-	deleteLearningPathParticipant(participantId: string){
-		return this.delete(`/learningpath/participant/${participantId}`);
-	}
-
-	requestLearningPath(lpId: string){
-		return this.post(`/request-learningpath/${lpId}`, null);
-	}
-
-	getLearningPathRequests(lpId: string){
-		return this.get(`/request-learningpath/${lpId}`);
 	}
 }

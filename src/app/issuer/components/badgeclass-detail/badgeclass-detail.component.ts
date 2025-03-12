@@ -40,6 +40,7 @@ import { ApiLearningPath } from '../../../common/model/learningpath-api.model';
 	template: `
 		<bg-badgedetail [config]="config" [awaitPromises]="[issuerLoaded, badgeClassLoaded]">
 			<qrcode-awards
+				*ngIf="config.qrCodeButton.show"
 				(qrBadgeAward)="onQrBadgeAward()"
 				[awards]="qrCodeAwards"
 				[badgeClass]="badgeClass"
@@ -127,6 +128,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 	categoryOptions: { [key in BadgeClassCategory]: string } = {
 		competency: 'Kompetenz-Badge',
 		participation: 'Teilnahme-Badge',
+		learningpath: 'Micro Degree',
 	};
 
 	levelOptions: { [key in BadgeClassLevel]: string } = {
@@ -241,10 +243,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 					createdAt: this.badgeClass.createdAt,
 					updatedAt: this.badgeClass.updatedAt,
 					duration: this.badgeClass.extension['extensions:StudyLoadExtension'].StudyLoad,
-					category:
-						this.badgeClass.extension['extensions:CategoryExtension'].Category === 'competency'
-							? 'Kompetenz-Badge'
-							: 'Teilnahme-Badge',
+					category: this.translate.instant(`Badge.categories.${this.badgeClass.extension['extensions:CategoryExtension']?.Category || 'participation'}`),
 					tags: this.badgeClass.tags,
 					issuerName: this.badgeClass.issuerName,
 					issuerImagePlacholderUrl: this.issuerImagePlacholderUrl,
@@ -257,6 +256,10 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 					learningPaths: this.learningPaths
 
 				};
+				if (this.badgeClass.extension['extensions:CategoryExtension']?.Category === 'learningpath') {
+					this.config.headerButton = null;
+					this.config.qrCodeButton.show = false;
+				}
 				console.log(this.config);
 			},
 			(error) => {
@@ -385,8 +388,8 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 			}
 			else{
 				this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'issue'])
-			}	
-		})	
+			}
+		})
 	}
 
 	routeToQRCodeAward(badge, issuer){
@@ -409,7 +412,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 			else{
 				this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'qr'])
 			}
-		})	
+		})
 	}
 
 	shareInstance(instance: BadgeInstance) {

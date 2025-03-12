@@ -9,7 +9,7 @@ export interface BadgeClassRef extends ApiEntityRef {}
 export type BadgeClassExpiresDuration = 'days' | 'weeks' | 'months' | 'years';
 
 export type BadgeClassLevel = 'a1' | 'a2' | 'b1' | 'b2' | 'c1' | 'c2';
-export type BadgeClassCategory = 'competency' | 'participation';
+export type BadgeClassCategory = 'competency' | 'participation' | 'learningpath';
 
 export interface ApiBadgeClassJsonld {
 	'@context': string;

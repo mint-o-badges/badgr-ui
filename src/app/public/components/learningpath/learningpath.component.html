@@ -17,26 +17,25 @@
 							<span>{{ minutesTotal | hourPipe }} {{ 'LearningPath.hours' | translate }}</span>
 						</div>
 					</div>
-					<form *ngIf="sessionService.isLoggedIn" (ngSubmit)="participate()" novalidate>
+
+					<section class="tw-flex tw-flex-col tw-gap-2" *ngIf="showDownloadButton">
+
 						<oeb-button
-							*ngIf="!learningPath.requested && learningPath.progress / minutesTotal != 1"
-							[variant]="participantButtonVariant"
-							type="submit"
-							[text]="participationButtonText"
+								type="button"
+								text="Micro Degree herunterladen"
+								width="full_width"
+								(click)="downloadMicroDegree()"
 						></oeb-button>
-					</form>
-					<oeb-button
-						*ngIf="
-							learningPath.progress &&
-							learningPath.progress / minutesTotal === 1 &&
-							!learningPath.completed_at &&
-							!learningPath.requested
-						"
-						(click)="requestLearningPath()"
-						[text]="'Lernpfad-Badge abholen'"
-						[fontSize15]="true"
-					>
-					</oeb-button>
+
+						<oeb-button
+								type="button"
+								variant="secondary"
+								width="full_width"
+								text="PDF-Zertifikat herunterladen"
+								(click)="downloadPdf()"
+						></oeb-button>
+					</section>
+
 
 					<div
 						*ngIf="learningPath.requested && !learningPath.completed_at"

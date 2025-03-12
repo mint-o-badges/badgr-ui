@@ -16,7 +16,6 @@ import { BaseRoutableComponent } from '../../pages/base-routable.component';
 import { BadgeInstanceApiService } from '../../../issuer/services/badgeinstance-api.service';
 import { PdfService } from '../../services/pdf.service';
 import { SafeResourceUrl } from '@angular/platform-browser';
-import { ApiLearningPathParticipant, ApiLearningPathRequest } from '../../model/learningpath-api.model';
 
 @Component({
 	selector: 'oeb-learning-path',
@@ -40,7 +39,6 @@ export class OebLearningPathDetailComponent extends BaseRoutableComponent implem
 	@Input() issuer;
 	@Input() badges;
 	@Input() participants;
-	@Input() requests: ApiLearningPathRequest[];
 	loading: any;
 	pdfSrc: SafeResourceUrl;
 
@@ -71,7 +69,7 @@ export class OebLearningPathDetailComponent extends BaseRoutableComponent implem
 	}
 
 	ngOnInit(): void {
-		this.learningPathEditLink = ['/issuer/issuers', this.issuer.slug, 'learningpaths', this.learningPath.slug, 'edit']		
+		this.learningPathEditLink = ['/issuer/issuers', this.issuer.slug, 'learningpaths', this.learningPath.slug, 'edit']
 	}
 
 	public deleteLearningPath(learningPathSlug, issuer) {
@@ -80,8 +78,8 @@ export class OebLearningPathDetailComponent extends BaseRoutableComponent implem
 				delete: () => this.deleteLearningPathApi(learningPathSlug, issuer),
 				// qrCodeRequested: () => {},
 				variant: "danger",
-				text: "Möchtest du diesen Lernpfad wirklich löschen?",
-				title: "Lernpfad löschen"
+				text: "Möchtest du diesen Micro Degree wirklich löschen?",
+				title: "Micro Degree löschen"
 			},
 		});
 	}
@@ -92,66 +90,6 @@ export class OebLearningPathDetailComponent extends BaseRoutableComponent implem
 				this.router.navigate(['issuer/issuers']);
 			}
 		);
-	}
-
-	public giveBadge(req) {
-		this.loading = true;
-		let recipientProfileContextUrl = 'https://openbadgespec.org/extensions/recipientProfile/context.json';
-
-		this.badgeClassManager
-			.badgeByIssuerSlugAndSlug(this.issuer.slug, this.learningPath.participationBadge_id)
-			.then((badgeClass: BadgeClass) => {
-
-				this.loading = this.badgeInstanceManager
-					.createBadgeInstance(this.issuer.slug, this.learningPath.participationBadge_id, {
-						issuer: this.issuer.slug,
-						badge_class: this.learningPath.participationBadge_id,
-						recipient_type: 'email',
-						recipient_identifier: req.user.email,
-						narrative: '',
-						create_notification: true,
-						evidence_items: [],
-						extensions: {
-							...badgeClass.extension,
-							'extensions:recipientProfile': {
-								'@context': recipientProfileContextUrl,
-								type: ['Extension', 'extensions:RecipientProfile'],
-								name: req.user.name,
-							},
-						},
-					})
-					.then(
-						() => {
-							this.router.navigate(['issuer/issuers', this.issuer.slug, 'badges', this.learningPath.participationBadge_id]);
-							this.openSuccessDialog(req.user.email);
-
-							this.requests = this.requests.filter(
-								(request) => request.entity_id != req.entity_id,
-							);
-							this.learningPathApiService.deleteLearningPathRequest(req.entity_id);
-						},
-						(error) => {
-							this.messageService.setMessage(
-								'Unable to award badge: ' + BadgrApiFailure.from(error).firstMessage,
-								'error',
-							);
-						},
-					)
-					.then(() => {
-						this.loading = null
-						this.learningPathApiService.getLearningPathParticipants(this.learningPath.slug).then(
-							(participants) => {
-								// @ts-ignore
-								const participant = participants.body.filter((p) => p.user.slug === req.user.slug);
-								this.learningPathApiService.updateLearningPathParticipant(participant[0].entity_id, {
-									...participant[0],
-									completed_at: new Date(),
-								})
-							},
-						)
-					}
-					)
-			});
 	}
 
 	public openSuccessDialog(recipient) {
@@ -184,15 +122,12 @@ export class OebLearningPathDetailComponent extends BaseRoutableComponent implem
 			.then(async () => {
 
 				try {
-					const [revokeResult, deleteResult] = await Promise.all([
+					const revokeResult = await Promise.all([
 						this.badgeInstanceApiservice.revokeBadgeInstance(
 							this.issuer.slug,
 							this.learningPath.participationBadge_id,
 							participationBadgeInstance.slug,
 							'revoked'
-						),
-						this.learningPathApiService.deleteLearningPathParticipant(
-							participant.entity_id
 						)
 					]);
 

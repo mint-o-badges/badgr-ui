@@ -40,6 +40,9 @@ import { LearningPathTagsComponent } from '../learningpath-create-steps/learning
 import { AppConfigService } from '../../../common/app-config.service';
 import { BadgeClassApiService } from '../../services/badgeclass-api.service';
 import { UrlValidator } from '../../../common/validators/url.validator';
+import { Issuer } from '../../models/issuer.model';
+import { IssuerManager } from '../../services/issuer-manager.service';
+
 
 interface DraggableItem {
 	content: string;
@@ -65,7 +68,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 	@ViewChild('stepFour') stepFour!: LearningPathTagsComponent;
 
 	nextStep(): void {
-		this.learningPathForm.markTreeDirtyAndValidate();
+		// this.learningPathForm.markTreeDirtyAndValidate();
 		this.stepper.next();
 	}
 
@@ -81,6 +84,9 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 
 	@Output()
 	save = new EventEmitter<Promise<ApiLearningPath>>();
+
+	@Output()
+	cancel = new EventEmitter<void>();
 
 	@Input()
 	submittingText: string;
@@ -102,7 +108,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 
 	existingLpBadge: BadgeClass | null = null
 
-	@Input() 
+	@Input()
 	set lpBadge(badge: BadgeClass){
 		if(this.existingLpBadge !== badge){
 			this.existingLpBadge = badge
@@ -127,13 +133,18 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 	lpTags: string[];
 	badgeList: any[] = [];
 
-	baseUrl: string
+	baseUrl: string;
+
+	issuer: Issuer
+	issuerLoaded: Promise<unknown>;
+
 
 	constructor(
 		protected formBuilder: FormBuilder,
 		protected loginService: SessionService,
 		protected messageService: MessageService,
 		protected learningPathApiService: LearningPathApiService,
+		protected issuerManager: IssuerManager,
 		protected issuerApiService: IssuerApiService,
 		protected router: Router,
 		protected route: ActivatedRoute,
@@ -149,6 +160,9 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 		super(router, route, loginService);
 		this.baseUrl = this.configService.apiConfig.baseUrl;
 		// this.selectedBadgesLoaded = this.loadSelectedBadges();
+		this.issuerLoaded = this.issuerManager.issuerBySlug(this.issuerSlug).then((issuer) => {
+			this.issuer = issuer;
+		})
 	}
 	next: string
 	previous: string;
@@ -162,7 +176,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 			this.previous = previous;
 		});
 		this.learningPathForm.setValue({
-			license: 
+			license:
 			[
 				{
 					id: 'CC-0',
@@ -193,7 +207,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 	updateSelectedBadges({ badges, studyLoad }: { badges: BadgeClass[] , studyLoad: number }) {
 		this.selectedBadges = badges;
 		this.studyLoad = studyLoad;
-	  
+
 		const badgeList = this.selectedBadges.map((badge, index) => ({
 		  id: badge.slug,
 		  name: badge.name,
@@ -203,7 +217,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 		  issuerName: badge.issuerName,
 		  order: index
 		}));
-	  
+
 		this.updateBadgeList(badgeList);
 	  }
 
@@ -268,7 +282,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 				this.lpImage = this.stepOne.lpDetailsForm.rawControl.value.badge_customImage;
 			}
 			this.selectedStep = event.selectedIndex;
-			if (this.selectedStep === 2) {
+			if (this.selectedStep === 3) {
 				this.step3Loaded = true;
 			} else {
 				this.step3Loaded = false;
@@ -281,7 +295,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 	}
 
 	onStepChange(event: any): void {
-		this.learningPathForm.markTreeDirtyAndValidate();
+		// this.learningPathForm.markTreeDirtyAndValidate();
 	}
 
 	getErrorMessage() {
@@ -300,7 +314,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 
 
 	cancelClicked() {
-		// this.cancel.emit();
+		this.cancel.emit();
 	}
 
 	async onSubmit() {
@@ -337,7 +351,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 				'extensions:CategoryExtension': {
 					'@context': categoryExtensionContextUrl,
 					type: ['Extension', 'extensions:CategoryExtension'],
-					Category: 'participation',
+					Category: 'learningpath',
 				},
 				'extensions:LicenseExtension': {
 					'@context': licenseExtensionContextUrl,
@@ -349,7 +363,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 				'extensions:CompetencyExtension': []
 			}
 
-			this.existingLpBadge.save()				
+			this.existingLpBadge.save()
 
 			this.savePromise = this.learningPathApiService.updateLearningPath(this.issuerSlug, this.existingLearningPath.slug, {
 				...this.existingLearningPath,
@@ -363,21 +377,24 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 						slug: item.slug,
 						order: item.order,
 					};
-				}),			  
+				}),
 			})
 
 			this.save.emit(this.savePromise);
-				
+
+			// clear sessionStorage
+			sessionStorage.removeItem('oeb-create-badgeclassvalues');
+
 		}
 		else{
 			this.savePromise = (async () => {
-			try {	
+			try {
 				let imageFrame = true;
 				if (this.stepOne.lpDetailsForm.controls.badge_customImage.value && this.stepOne.lpDetailsForm.valid) {
 					imageFrame = false;
 					this.stepOne.lpDetailsForm.controls.badge_image.setValue(this.stepOne.lpDetailsForm.controls.badge_customImage.value);
 				}
-	
+
 				const participationBadge = await this.badgeClassService.createBadgeClass(this.issuerSlug, {
 					image: this.stepOne.lpDetailsForm.controls.badge_image.value,
 					imageFrame: imageFrame,
@@ -395,7 +412,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 						'extensions:CategoryExtension': {
 							'@context': categoryExtensionContextUrl,
 							type: ['Extension', 'extensions:CategoryExtension'],
-							Category: 'participation',
+							Category: 'learningpath',
 						},
 						'extensions:LicenseExtension': {
 							'@context': licenseExtensionContextUrl,
@@ -423,9 +440,9 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 						// ),
 					},
 				});
-	
+
 				const issuer = await this.issuerApiService.getIssuer(this.issuerSlug);
-	
+
 				this.savePromise = this.learningPathApiService.createLearningPath(this.issuerSlug, {
 					issuer_id: issuer.slug,
 					name: this.stepOne.lpDetailsForm.controls.name.value,
@@ -439,8 +456,10 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 					}),
 					participationBadge_id: participationBadge.slug,
 				});
-	
+
 				this.save.emit(this.savePromise);
+				// clear sessionStorage
+				sessionStorage.removeItem('oeb-create-badgeclassvalues');
 			} catch (e) {
 				this.savePromise = null;
 				console.log(e);

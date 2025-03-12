@@ -14,9 +14,31 @@ import { PageConfig } from '../../../common/components/badge-detail/badge-detail
 import { LearningPath } from '../../../issuer/models/learningpath.model';
 import { SessionService } from '../../../common/services/session.service';
 import { RecipientBadgeApiService } from '../../../recipient/services/recipient-badges-api.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	template: `<bg-badgedetail [config]="config" [awaitPromises]="[badgeClass]">
+					<ng-template>
+						<div class="oeb" *ngIf="learningPaths.length > 0">
+							<oeb-separator class="tw-block tw-mb-8 tw-mt-8"></oeb-separator>
+							<span class="tw-my-2 tw-text-oebblack tw-text-[22px] tw-leading-[26px] tw-font-semibold"> Dieser Badge ist Teil folgender Micro Degrees: </span>
+							<div class="tw-mt-8 tw-grid tw-grid-cols-learningpaths tw-gap-6">
+								<bg-learningpathcard *ngFor="let lp of learningPaths"
+									[name]="lp.name"
+									[badgeImage]="lp.participationBadge_image"
+									[issuerTitle]="lp.issuer_name"
+									[description]="lp.description"
+									[slug]="lp.slug"
+									[tags]="lp.tags"
+									[studyLoad]="calculateStudyLoad(lp)"
+									[progress]="lp.progress"
+									[matchOrProgress]="calculateLearningPathStatus(lp)"
+									[requested]="lp.requested"
+									[completed]="checkCompleted(lp)"
+								></bg-learningpathcard>
+							</div>
+						</div>
+					</ng-template>
 				</bg-badgedetail>`,
 })
 export class PublicBadgeClassComponent {
@@ -45,6 +67,7 @@ export class PublicBadgeClassComponent {
 		private title: Title,
 		private sessionService: SessionService,
 		private recipientBadgeApiService: RecipientBadgeApiService,
+		private translate: TranslateService
 	) {
 		title.setTitle(`Badge Class - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 
@@ -63,7 +86,7 @@ export class PublicBadgeClassComponent {
 					badgeDescription: badge.description,
 					issuerSlug: badge.issuer['slug'],
 					slug: badge.id,
-					category: badge['extensions:CategoryExtension'].Category === 'competency' ? 'Kompetenz-Badge' : 'Teilnahme-Badge',
+					category: this.translate.instant(`Badge.categories.${badge['extensions:CategoryExtension']?.Category || 'participation'}`),
 					duration: badge['extensions:StudyLoadExtension'].StudyLoad,
 					tags: badge.tags,
 					issuerName: badge.issuer.name,

@@ -67,7 +67,7 @@
 						</div>
 					</div>
 					<div class="tw-pt-4 tw-pb-6">
-						<p [class.tw-line-clamp-3]="issuerToBadgeInfo[issuer.issuerUrl]" class="tw-text-oebblack">
+						<p [class.tw-line-clamp-3]="issuerToBadgeInfo[issuer.issuerUrl]" class="tw-text-oebblack tw-break-words">
 							{{ issuer.description }}
 						</p>
 					</div>
@@ -76,7 +76,7 @@
 						[id]="'create-new-badge-btn-1'"
 						[class.disabled]="!issuer.canCreateBadge"
 						class="tw-whitespace-nowrap"
-						[routerLink]="['/issuer/issuers/', issuer.slug, 'badges', 'create']"
+						[routerLink]="['/issuer/issuers/', issuer.slug, 'badges', 'select']"
 						[disabled]="!issuer.currentUserStaffMember"
 						[text]="'Issuer.createBadge' | translate"
 						width="full_width"
@@ -98,7 +98,7 @@
 								[id]="'create-new-badge-btn-2'"
 								[class.disabled]="!issuer.canCreateBadge"
 								class="tw-whitespace-nowrap tw-flex-grow"
-								[routerLink]="['/issuer/issuers/', issuer.slug, 'badges', 'create']"
+								[routerLink]="['/issuer/issuers/', issuer.slug, 'badges', 'select']"
 								[disabled]="!issuer.currentUserStaffMember"
 								[text]="'Issuer.createBadge' | translate"
 								variant="secondary"
@@ -106,17 +106,6 @@
 								size="mediumText"
 							>
 							</oeb-button>
-							<oeb-button
-								[class.disabled]="!issuer.canCreateBadge"
-								class="tw-whitespace-nowrap tw-flex-grow"
-								[routerLink]="['/issuer/issuers/', issuer.slug, 'learningpaths', 'create']"
-								[disabled]="!issuer.canCreateBadge"
-								[text]="'Issuer.myInstitutionsCreateLearningPath' | translate"
-								variant="secondary"
-								width="full_width"
-								size="mediumText"
-							>
-						</oeb-button>
 					</div>
 				</div>
 			</div>

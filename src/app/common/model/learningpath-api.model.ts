@@ -32,7 +32,7 @@ export interface ApiLearningPath {
     issuer_id: string;
     issuer_name: string;
     participationBadge_id: string;
-    participationBadge_image?: string; 
+    participationBadge_image?: string;
     name: string;
     description: string;
     tags: string[];
@@ -48,19 +48,13 @@ export interface ApiLearningPath {
 
 
 export interface ApiLearningPathParticipant {
-    id?: number; 
+    id?: number;
     slug?: string;
     entity_id?: string;
     user: ApiUserProfile;
     completed_badges: number;
     started_at: Date;
     completed_at: Date | null;
-}
-
-export interface ApiLearningPathRequest {
-    entity_id: string;
-    user: ApiUserProfile;
-    requestedOn: Date | null;
 }
 
 export interface LearningPathRef extends ApiEntityRef {}

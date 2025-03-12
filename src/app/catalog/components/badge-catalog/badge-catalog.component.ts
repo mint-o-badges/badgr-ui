@@ -33,7 +33,6 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 	badgeResults: BadgeClass[] = null;
 	badgeResultsByIssuer: MatchingBadgeIssuer[] = [];
 	badgeResultsByCategory: MatchingBadgeCategory[] = [];
-	order = 'asc';
 
 	badgesLoaded: Promise<unknown>;
 
@@ -42,14 +41,18 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 	issuers: string[] = [];
 	selectedTag: string = null;
 
-	sortControl = new FormControl('name_asc');
+	sortControl = new FormControl('');
 
 	groupOptions = [
-		{ value: '---', label: '---' },
-		{ value: 'issuer', label: 'Issuer' },
-		{ value: 'category', label: 'Category' },
+		{ value: '---', label: 'Nicht gruppieren' },
+		{ value: 'issuer', label: 'Institution' },
+		{ value: 'category', label: 'Kategorie' },
 	];
-	groupControl = new FormControl('---');
+	groupControl = new FormControl();
+
+	tagsOptions = [];
+	tagsControl = new FormControl();
+
 	get theme() {
 		return this.configService.theme;
 	}
@@ -84,7 +87,7 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		this.updateResults();
 	}
 
-	private _groupBy = '---';
+	private _groupBy = '';
 	get groupBy() {
 		return this._groupBy;
 	}
@@ -101,6 +104,7 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 	categoryOptions: { [key in BadgeClassCategory | 'noCategory']: string } = {
 		competency: this.translate.instant('Badge.competency'),
 		participation: this.translate.instant('Badge.participation'),
+		learningpath: this.translate.instant('Badge.learningpath'),
 		noCategory: this.translate.instant('Badge.noCategory'),
 	};
 
@@ -139,8 +143,18 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 						this.issuers = badge.issuerVerified ? this.issuers.concat(badge.issuer) : this.issuers;
 					});
 
-					this.tags = sortUnique(this.tags);
-					this.issuers = sortUnique(this.issuers);
+					// sortUnique sorts by frequency, we want to sort by tagname
+					// this.tags = sortUnique(this.tags);
+					this.tags = this.tags.filter((value, index, array) => array.indexOf(value) === index);
+					this.tags.sort();
+					this.tags.forEach(t => {
+						this.tagsOptions.push({
+							'label': t,
+							'value': t,
+						})
+					})
+					// this.issuers = sortUnique(this.issuers);
+					this.issuers = this.issuers.filter((value, index, array) => array.indexOf(value) === index);
 					this.updateResults();
 					resolve(badges);
 				},
@@ -167,6 +181,10 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		this.translate.onLangChange.subscribe((event) => {
 			this.prepareTexts();
 		});
+
+		this.tagsControl.valueChanges.subscribe(() => {
+			this.updateResults();
+		});
 	}
 	prepareTexts() {
 		// 1. Groups
@@ -175,6 +193,7 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		this.categoryOptions = {
 			competency: this.translate.instant('Badge.competency'),
 			participation: this.translate.instant('Badge.participation'),
+			learningpath: this.translate.instant('Badge.learningpath'),
 			noCategory: this.translate.instant('Badge.noCategory'),
 		};
 		// 3. Plural
@@ -245,7 +264,8 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		};
 		this.badges
 			.filter(this.badgeMatcher(this.searchQuery))
-			.filter(this.badgeTagMatcher(this.selectedTag))
+			// .filter((badge) => !this.tagsControl.value?.length || this.tagsControl.value.every(tag => badge.tags.includes(tag))) // badges have to match all tags
+			.filter((badge) => !this.tagsControl.value?.length || this.tagsControl.value.some(tag => badge.tags.includes(tag))) // badges have to match at least one tag
 			.filter((i) => !i.apiModel.source_url)
 			.forEach((item) => {
 				that.badgeResults.push(item);
@@ -267,15 +287,15 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		this.updateResults();
 	}
 
+	removeTag(tag) {
+		this.tagsControl.setValue(this.tagsControl.value.filter(t => t != tag));
+	}
+
 	private badgeMatcher(inputPattern: string): (badge) => boolean {
 		const patternStr = StringMatchingUtil.normalizeString(inputPattern);
 		const patternExp = StringMatchingUtil.tryRegExp(patternStr);
 
 		return (badge) => StringMatchingUtil.stringMatches(badge.name, patternStr, patternExp);
-	}
-
-	private badgeTagMatcher(tag: string) {
-		return (badge) => (tag ? badge.tags.includes(tag) : true);
 	}
 }
 
