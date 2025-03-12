@@ -118,6 +118,10 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 	imageTooLarge = this.translate.instant('CreateBadge.imageTooLarge');
 
+	competencyExceedsBadgeDurationError = this.translate.instant('CreateBadge.competencyExceedsBadgeDuration')
+	competenceHoursMinutesZeroError = this.translate.instant('CreateBadge.competenceHoursMinutesZero')
+    pleaseAddCompetencies = this.translate.instant('CreateBadge.pleaseAddCompetencies')
+
 	// To check custom-image size
 	maxCustomImageSize = 1024 * 1024 * 2;
 	isCustomImageLarge: boolean = false;
@@ -632,6 +636,19 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				this.keywordCompetenciesInput.nativeElement.focus();
 				this.keywordCompetenciesKeywordsChange();
 			});
+	}
+
+	getCompetencyPageError(){
+		if(this.badgeClassForm.valid) return 
+		if(this.badgeClassForm.hasError('competencyExceedsBadgeDuration') || this.badgeClassForm.hasError('competenceHoursMinutesZero')){
+			return 'Ungültige Kompetenz'
+		}
+		// else if(this.badgeClassForm.hasError('competenceHoursMinutesZero')){
+		// 	return this.competenceHoursMinutesZeroError
+		// }
+		else {
+			return this.pleaseAddCompetencies
+		}
 	}
 
 	clearCompetencies() {

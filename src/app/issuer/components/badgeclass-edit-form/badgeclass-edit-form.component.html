@@ -219,7 +219,7 @@
 				<cdk-step
 					label="Enthaltene Kompetenzen"
 					[optional]="false"
-					errorMessage="Bitte Kompetenzen hinzufügen"
+					[errorMessage]="getCompetencyPageError()"
 					*ngIf="category === 'competency'"
 					[completed]="
 						(getSelectedAiCompetencies().length > 0 || selectedKeywordCompetencies.length > 0 || badgeClassForm.controls.competencies.controls.length > 0)
