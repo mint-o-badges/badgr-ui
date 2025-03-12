@@ -58,4 +58,8 @@ export class BadgeClassApiService extends BaseHttpApiService {
 			badgeClassWithExtensions,
 		).then((r) => r.body);
 	}
+
+	getBadgeById(id: BadgeClassSlug) {
+		return this.get<ApiBadgeClass>('/v1/issuer/all-badges/find?identifier=' + id).then((r) => r.body);
+	}
 }

@@ -7,7 +7,7 @@
 		<ng-container [formGroup]="badgeClassForm.rawControl">
 			<oeb-stepper
 				[linear]="existingBadgeClass ? false : true"
-				[initialStep]="existingBadgeClass ? 0 : 1"
+				[initialStep]="existingBadgeClass || initialisedBadgeClass ? 0 : 1"
 			>
 				<oeb-step
 					label="Kategorie wählen"
@@ -15,7 +15,7 @@
 					[route]="['/issuer/issuers/' + issuer.slug + '/badges' + '/select']"
 					errorMessage="Bitte Kategorie wählen"
 					[completed]="true"
-					*ngIf="!existingBadgeClass"
+					*ngIf="!existingBadgeClass && !initialisedBadgeClass"
 				>
 				</oeb-step>
 
@@ -1048,6 +1048,17 @@
 									></bg-formfield-text>
 								</div>  -->
 							</div>
+						</div>
+					</div>
+
+					<div class="section tw-text-oebblack tw-mt-6">
+						<h2 hlmH2 class="tw-font-bold">{{ 'Badge.copyBadgeHeadline' | translate }}</h2>
+						<p class="tw-text-purple tw-italic" [innerHTML]="'Badge.copyBadgeDescription' | translate "></p>
+						<div class="tw-mt-2 tw-mb-2">
+							<oeb-checkbox
+								[control]="badgeClassForm.rawControlMap.copy_permissions_allow_others"
+								[text]="'Badge.copyLabelOthers' | translate"
+							/>
 						</div>
 					</div>
 

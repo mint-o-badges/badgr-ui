@@ -318,7 +318,12 @@
 			"competency": "Kompetenz-Badge",
 			"participation": "Teilnahme-Badge",
 			"learningpath": "Micro Degree"
-		}
+		},
+		"copyBadgeHeadline": "Kopier-Status auswählen",
+		"copyBadgeDescription": "Innerhalb der eigenen Institution können Badges immer kopiert werden.<br>Den Kopier-Status für <strong>andere</strong> Institutionen kannst du später jederzeit über das Menü auf der Badge-Detail-Seite aktualisieren.",
+		"copyLabelOthers": "Der Badge darf von <strong>anderen</strong> Institutionen kopiert werden.",
+		"copy": "Badge für eigene Institution kopieren",
+		"copyBadge": "Badge kopieren"
 	},
 	"CreateBadge": {
 		"chooseBadgeCategory": "Badge-Kategorie wählen",

@@ -272,7 +272,12 @@
 		"confirmDeleteRequest1": "Do you really want to delete the badge request from ",
 		"confirmDeleteRequest2": " ",
 		"request": "request",
-		"requests": "requests"
+		"requests": "requests",
+		"copyBadgeHeadline": "Select copy permissions",
+		"copyBadgeDescription": "Badges can always be copied within your own institution.<br>You can update the copy status for other institutions at any time via the menu on the badge details page.",
+		"copyLabelOthers": "<strong>Other</strong> institutions are allowed to copy this badge.",
+		"copy": "Copy Badge to own institution",
+		"copyBadge": "Copy Badge"
 	},
 	"CreateBadge": {
 		"chooseBadgeCategory": "Choose Badge-Category",
