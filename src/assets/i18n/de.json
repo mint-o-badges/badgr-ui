@@ -205,7 +205,7 @@
 		"issuerHasNoLearningPathYet": "hat noch keine Micro Degrees.",
 		"issuerHasBadges": "hat",
 		"myInstitutionsText": "Über deine Institutionen kannst du <span class='tw-font-medium'> Badges erstellen und anschließend an deine Lernenden vergeben</span>.",
-		"myLearningPathText": "Lernpfade werden im Zuge des Badge-Typs Micro Degree angelegt.",
+		"myLearningPathText": "<span class='tw-font-medium'>Lernpfade</span> werden im Zuge des Badge-Typs <span class='tw-font-medium'>Micro Degree</span> angelegt.",
 		"myInstitutionsNoBadge": "hat noch keine Badges, die sie vergeben kann.",
 		"myInstitutionsCreateBadge": "Neuen Badge erstellen",
 		"myInstitutionsCreateLearningPath": "Micro Degree erstellen",
