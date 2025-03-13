@@ -24,7 +24,8 @@ import { AppConfigService } from '../common/app-config.service';
       multi: true
     }
   ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  styles: ['#altcha_checkbox {appearance: auto;}']
 })
 export class AltchaComponent implements ControlValueAccessor, Validator {
   @ViewChild('altchaWidget', { static: true }) altchaWidget!: ElementRef;
