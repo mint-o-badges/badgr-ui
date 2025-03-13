@@ -49,6 +49,7 @@ import { ErrorDialogComponent } from '../../../common/dialogs/oeb-dialogs/error-
 
 import { StepperComponent } from '../../../components/stepper/stepper.component';
 import { BadgeClassDetailsComponent } from '../badgeclass-create-steps/badgeclass-details/badgeclass-details.component';
+import { Issuer } from '../../models/issuer.model';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 
 @Component({
@@ -78,10 +79,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	uploadOwnVisual = this.translate.instant('RecBadge.uploadOwnVisual');
 	chooseABadgeCategory = this.translate.instant('CreateBadge.chooseABadgeCategory');
 	summarizedDescription =
-		this.translate.instant('CreateBadge.summarizedDescription') +
-		'(max 700 ' +
-		this.translate.instant('General.characters') +
-		'). ' +
+		this.translate.instant('CreateBadge.summarizedDescription') + ' ' +
 		this.translate.instant('CreateBadge.descriptionSavedInBadge');
 	enterDescription = this.translate.instant('Issuer.enterDescription');
 	max60chars = '(max. 60 ' + this.translate.instant('General.characters') + ')';
@@ -119,6 +117,10 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	maxValue1000 = this.translate.instant('CreateBadge.maxValue1000');
 
 	imageTooLarge = this.translate.instant('CreateBadge.imageTooLarge');
+
+	competencyExceedsBadgeDurationError = this.translate.instant('CreateBadge.competencyExceedsBadgeDuration')
+	competenceHoursMinutesZeroError = this.translate.instant('CreateBadge.competenceHoursMinutesZero')
+    pleaseAddCompetencies = this.translate.instant('CreateBadge.pleaseAddCompetencies')
 
 	// To check custom-image size
 	maxCustomImageSize = 1024 * 1024 * 2;
@@ -173,6 +175,11 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	get badgeStudyLoadDirty() {
 		return this.badgeClassForm.controls.badge_hours.dirty || this.badgeClassForm.controls.badge_minutes.dirty;
 	}
+
+	getImagePath(): string {
+		return `../../../../breakdown/static/badgestudio/shapes/${this.category}.svg`;
+	}
+	
 
 	readonly badgeClassPlaceholderImageUrl = '../../../../breakdown/static/images/placeholderavatar.svg';
 
@@ -238,6 +245,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		])
 		.addControl('badge_image', '')
 		.addControl('badge_customImage', '')
+		.addControl('useIssuerImageInBadge', true)
 		.addControl('badge_description', '', [Validators.required, Validators.maxLength(700)])
 		.addControl('badge_criteria_url', '')
 		.addControl('badge_criteria_text', '')
@@ -344,7 +352,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	cancel = new EventEmitter<void>();
 
 	@Input()
-	issuerSlug: string;
+	issuer: Issuer;
 
 	@Input()
 	category: string;
@@ -467,6 +475,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			badge_name: badgeClass.name,
 			badge_image: this.existing && badgeClass.imageFrame ? badgeClass.image : null,
 			badge_customImage: this.existing && !badgeClass.imageFrame ? badgeClass.image : null,
+			useIssuerImageInBadge: this.badgeClassForm.value.useIssuerImageInBadge,
 			badge_description: badgeClass.description,
 			badge_criteria_url: badgeClass.criteria_url,
 			badge_criteria_text: badgeClass.criteria_text,
@@ -528,6 +537,8 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	ngOnInit() {
 		super.ngOnInit();
 
+		console.log(this.category)
+
 		this.translate.get('General.next').subscribe((next) => {
 			this.next = next;
 		});
@@ -553,6 +564,13 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		this.badgeClassForm.rawControl.controls['badge_category'].statusChanges.subscribe((res) => {
 			this.handleBadgeCategoryChange();
 		});
+
+		this.badgeClassForm.rawControl.controls['useIssuerImageInBadge'].valueChanges.subscribe((useIssuerImageInBadge) => {
+			if (this.currentImage && this.imageField.control.value) {
+				this.generateUploadImage(this.currentImage, this.badgeClassForm.value, useIssuerImageInBadge);
+			}
+		});
+		
 
 		// To check duplicate competencies only when one is selected
 		if (this.badgeClassForm.controls.aiCompetencies.controls['selected']) {
@@ -618,6 +636,19 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				this.keywordCompetenciesInput.nativeElement.focus();
 				this.keywordCompetenciesKeywordsChange();
 			});
+	}
+
+	getCompetencyPageError(){
+		if(this.badgeClassForm.valid) return 
+		if(this.badgeClassForm.hasError('competencyExceedsBadgeDuration') || this.badgeClassForm.hasError('competenceHoursMinutesZero')){
+			return 'Ungültige Kompetenz'
+		}
+		// else if(this.badgeClassForm.hasError('competenceHoursMinutesZero')){
+		// 	return this.competenceHoursMinutesZeroError
+		// }
+		else {
+			return this.pleaseAddCompetencies
+		}
 	}
 
 	clearCompetencies() {
@@ -1009,6 +1040,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 		const allCompetencies = [
 			...this.badgeClassForm.value.competencies,
+			...this.badgeClassForm.value.keywordCompetencies,
 			...this.badgeClassForm.value.aiCompetencies.filter((comp) => comp.selected),
 		];
 
@@ -1275,7 +1307,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 						amount: parseInt(expirationState.expires_amount, 10),
 					};
 				}
-				this.savePromise = this.badgeClassManager.createBadgeClass(this.issuerSlug, badgeClassData);
+				this.savePromise = this.badgeClassManager.createBadgeClass(this.issuer.slug, badgeClassData);
 			}
 
 			this.save.emit(this.savePromise);
@@ -1377,9 +1409,9 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	 * @param image
 	 * @param formdata
 	 */
-	generateUploadImage(image, formdata) {
+	generateUploadImage(image, formdata, useIssuerImageInBadge=false) {
 		this.currentImage = image.slice();
-		this.badgeStudio.generateUploadImage(image.slice(), formdata).then((imageUrl) => {
+		this.badgeStudio.generateUploadImage(image.slice(), formdata, useIssuerImageInBadge,  this.issuer.image).then((imageUrl) => {
 			this.imageField.useDataUrl(imageUrl, 'BADGE');
 		});
 	}

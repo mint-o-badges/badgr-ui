@@ -38,7 +38,7 @@
 		<div class="tw-flex tw-gap-2">
 			<oeb-button
 				class="tw-whitespace-nowrap"
-				*ngIf="!public && activeTab == 'Badges'"
+				*ngIf="!public"
 				[routerLink]="['./badges/select']"
 				[disabled]="!issuer.canCreateBadge"
 				[text]="'Issuer.createBadge' | translate"
@@ -81,7 +81,7 @@
 			*ngIf="!public"
 			width="full_width"
 			[class]="'tw-flex-grow tw-relative'.concat(issuer.canCreateBadge ? '' : ' disabled')"
-			[routerLink]="['./badges/create']"
+			[routerLink]="['./badges/select']"
 			[disabled]="!issuer.canCreateBadge"
 			[text]="'Issuer.createBadge' | translate"
 		>

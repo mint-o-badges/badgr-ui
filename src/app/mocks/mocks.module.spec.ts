@@ -1,4 +1,4 @@
-import { ElementRef, Injectable, NgModule, NgZone } from '@angular/core';
+import { ElementRef, Injectable, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Data, Params, Router } from '@angular/router';
 import { RecipientBadgeManager } from '../recipient/services/recipient-badge-manager.service';
@@ -42,6 +42,7 @@ import { QrCodeApiService } from '../issuer/services/qrcode-api.service';
 import { PdfService } from '../common/services/pdf.service';
 import { LearningPathApiService } from '../common/services/learningpath-api.service';
 import { ServerVersionService } from '../common/services/server-version.service';
+import { BadgeInstanceApiService } from '../issuer/services/badgeinstance-api.service';
 
 /*@Injectable()
 export class MockRouter { navigate = () => {jasmine.createSpy('navigate'); };}*/
@@ -289,10 +290,10 @@ export class MockRecipientBadgeCollectionManager {
 }
 
 @Injectable()
-export class MockBadgeCollectionManager {}
+export class MockBadgeInstanceManager {}
 
 @Injectable()
-export class MockBadgeInstanceManager {}
+export class MockBadgeInstanceApiService{}
 
 @Injectable()
 export class MockIssuerManager {
@@ -393,7 +394,8 @@ export let COMMON_MOCKS_PROVIDERS_WITH_SUBS = [];
 	QrCodeApiService,
 	PdfService,
 	LearningPathApiService,
-  	ServerVersionService
+  	ServerVersionService,
+	BadgeInstanceApiService
 
 ].forEach((m, i, a) => {
 	const thisMock = eval('Mock' + m.name);

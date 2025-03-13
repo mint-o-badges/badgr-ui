@@ -7,12 +7,12 @@
 		<ng-container [formGroup]="badgeClassForm.rawControl">
 			<oeb-stepper
 				[linear]="existingBadgeClass ? false : true"
-				[initialStep]="existingBadgeClass ? 0 : 2"
+				[initialStep]="existingBadgeClass ? 0 : 1"
 			>
 				<oeb-step
 					label="Kategorie wählen"
 					[optional]="false"
-					[route]="['/issuer/issuers/' + issuerSlug + '/badges' + '/select']"
+					[route]="['/issuer/issuers/' + issuer.slug + '/badges' + '/select']"
 					errorMessage="Bitte Kategorie wählen"
 					[completed]="true"
 					*ngIf="!existingBadgeClass"
@@ -116,7 +116,7 @@
 							<div class="" id="imageSection" #imageSection>
 								<span class="input-label md:tw-flex-[0_0_10em]"> Badge-{{ 'Issuer.image' | translate }}</span>
 								<div
-									class="tw-flex tw-flex-col tw-gap-4 md:tw-flex-row tw-bg-white tw-border tw-border-solid tw-border-[var(--color-purple)] tw-p-8 tw-justify-evenly tw-items-center tw-mr-auto tw-rounded-[10px]"
+									class="tw-flex tw-flex-col tw-gap-2 md:tw-flex-row tw-bg-white tw-border tw-border-solid tw-border-[var(--color-purple)] tw-p-8 tw-justify-evenly tw-mr-auto tw-rounded-[10px]"
 								>
 									<div class="tw-w-full tw-bg-[var(--color-lightgreen)] tw-rounded-[10px] tw-py-[16px] tw-px-[32px]">
 										<bg-formfield-image
@@ -132,7 +132,7 @@
 											[type]="'badge'"
 											[allowedFileFormats]="allowedFileFormats"
 											(generateRandomImage)="generateRandomImage()"
-											(imageUploaded)="generateUploadImage($event, badgeClassForm.value)"
+											(imageUploaded)="generateUploadImage($event, badgeClassForm.value, badgeClassForm.value.useIssuerImageInBadge)"
 											[placeholderImage]="badgeClassPlaceholderImageUrl"
 											[control]="badgeClassForm.rawControlMap.badge_image"
 											[errorMessage]="imageErrorFork"
@@ -141,12 +141,23 @@
 										<span class="tw-italic tw-text-sm md:tw-flex md:tw-justify-center md:tw-items-center"
 											>{{ 'General.fileformats' | translate }}: SVG {{ 'General.and' | translate }} PNG</span
 										>
+										<!-- <div class="tw-bg-white tw-w-full tw-rounded-[10px] tw-mt-2 tw-h-[80px] tw-flex tw-items-center tw-justify-between tw-px-2">
+											<div class="tw-relative">
+												<img [src]='getImagePath()' class="tw-h-[72px] tw-block">
+												<img src="../../../../breakdown/static/images/square.svg" class="tw-absolute tw-h-[11.56px] tw-top-0 tw-right-0">
+											</div> -->
+											<div class="tw-w-full tw-bg-white tw-p-4 tw-rounded-[10px] tw-mt-4">
+												<span class="tw-text-sm tw-text-oebblack tw-italic">
+													{{ 'CreateBadge.issuerImageInBadgeImageInfo' | translate}}
+												</span>
+											</div>
+										<!-- </div> -->
 									</div>
 									<!-- <hr
 										class="md:tw-hidden tw-my-8 tw-w-full tw-border tw-border-[var(--color-purple)] tw-border-dashed"
 									/> -->
 									<div class="tw-italic tw-self-start tw-mt-6 tw-text-[24px]">{{ 'General.or' | translate }}</div>
-									<div class="tw-w-full tw-bg-[var(--color-lightgreen)] tw-rounded-[10px] tw-py-[16px] tw-px-[32px]">
+									<div class="tw-w-full tw-bg-[var(--color-lightgreen)] tw-rounded-[10px] tw-py-[16px] tw-px-[32px] tw-max-h-[400px]">
 										<bg-formfield-image
 											#customImageField
 											[label]="useOwnVisual"
@@ -165,8 +176,13 @@
 										>
 										</bg-formfield-image>
 											<span class="tw-italic tw-text-sm md:tw-flex md:tw-justify-center md:tw-items-center"
-											>{{ 'General.fileformats' | translate }}: PNG,&nbsp; </span>
-
+											>{{ 'General.fileformats' | translate }}: PNG&nbsp; </span>
+											<!-- <div class="tw-w-full tw-bg-white tw-p-4 tw-rounded-[10px] tw-mt-4">
+												<oeb-checkbox class="tw-mx-auto tw-min-w-[300px]" name="addIssuerLogo" id="addIssuerLogo"
+													[control]="badgeClassForm.rawControlMap.useIssuerImageInBadge"
+													[text]="'<span class=\'tw-text-sm tw-font-bold\'>Institutions-Logo ergänzen</span>'"
+												></oeb-checkbox>
+											</div> -->
 									</div>
 									<badge-studio
 										[scrolled]="scrolled"
@@ -203,7 +219,7 @@
 				<cdk-step
 					label="Enthaltene Kompetenzen"
 					[optional]="false"
-					errorMessage="Bitte Kompetenzen hinzufügen"
+					[errorMessage]="getCompetencyPageError()"
 					*ngIf="category === 'competency'"
 					[completed]="
 						(getSelectedAiCompetencies().length > 0 || selectedKeywordCompetencies.length > 0 || badgeClassForm.controls.competencies.controls.length > 0)
@@ -274,7 +290,7 @@
 												class="tw-bg-white tw-border tw-border-gray-300 tw-mt-2 tw-rounded-md tw-shadow-sm tw-p-2 tw-h-48 tw-resize-none tw-text-sm tw-text-gray-700 tw-w-full"
 												[(ngModel)]="aiCompetenciesDescription"
 												[ngModelOptions]="{ standalone: true }"
-												maxlength="1000"
+												maxlength="1200"
 												minlength="70"
 												[placeholder]="detailedDescription"
 											>
@@ -423,7 +439,7 @@
 												#keywordCompetenciesInputModel="ngModel"
 												class="
 													tw-bg-white tw-border tw-border-solid tw-border-[var(--color-purple)] tw-rounded-md tw-shadow-sm
-													tw-p-2 tw-pr-10 tw-text-[18px]/[24px] tw-resize-none tw-text-sm tw-text-gray-700
+													tw-p-2 tw-pr-10 tw-resize-none tw-text-sm tw-text-gray-700
 													tw-w-full tw-max-w-[400px]
 												"
 												[(ngModel)]="keywordCompetenciesKeywords"
@@ -431,6 +447,7 @@
 												placeholder="Stichwort eingeben"
 												(focus)="keywordCompetenciesShowResults = true"
 												(focusout)="keywordCompetenciesInputFocusOut()"
+												(keydown.enter)="$event.preventDefault()"
 											>
 											<!-- <img
 												class="tw-absolute tw-top-2 tw-right-2 tw-w-6 tw-h-6 tw-pointer-events-none"
@@ -1000,8 +1017,18 @@
 														</span>
 													</li>
 												</ng-container>
+												<ng-container
+													*ngFor="
+														let keywordCompetency of badgeClassForm.controls.keywordCompetencies.controls;
+														let i = index
+													"
+												>
+													<li class="tw-mx-6">
+														<span class="tw-text-lg">{{ selectedKeywordCompetencies[i].preferred_label }}</span>
+													</li>
+												</ng-container>
 												<ng-container *ngFor="let competency of badgeClassForm.controls.competencies.controls">
-													<li *ngIf="competency.rawControlMap.added.value && competency.rawControlMap.name.value" class="tw-mx-6">
+													<li *ngIf="competency.rawControlMap.name.value" class="tw-mx-6">
 														<span class="tw-text-lg">{{ competency.rawControlMap.name.value }}</span>
 													</li>
 												</ng-container>

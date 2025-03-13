@@ -9,6 +9,7 @@ import { StepperComponent } from '../../../../components/stepper/stepper.compone
 import { ApiLearningPath } from '../../../../common/model/learningpath-api.model';
 import { BadgeClass } from '../../../../issuer/models/badgeclass.model';
 import { LearningPath } from '../../../../issuer/models/learningpath.model';
+import { Issuer } from '../../../../issuer/models/issuer.model';
 
 interface LearningPathBadgeInput {
 	learningPath: ApiLearningPath;
@@ -36,9 +37,13 @@ export class LearningPathDetailsComponent implements OnInit, AfterViewInit {
 
 	@Input() learningPathBadgeData: LearningPathBadgeInput;
 
+	@Input() issuer: Issuer
+
 	existingLearningPath: LearningPath | null = null
 
 	existingLpBadge: BadgeClass | null = null
+
+	currentImage;
 
 	readonly badgeClassPlaceholderImageUrl = '../../../../breakdown/static/images/placeholderavatar.svg';
 
@@ -59,7 +64,8 @@ export class LearningPathDetailsComponent implements OnInit, AfterViewInit {
       description: lp.description,
 			badge_category: 'learningpath',
       badge_image: badge.imageFrame ? lp.participationBadge_image : null,
-      badge_customImage: !badge.imageFrame ? lp.participationBadge_image : null
+      badge_customImage: !badge.imageFrame ? lp.participationBadge_image : null,
+	  useIssuerImageInBadge: true
     });
   }
 
@@ -94,7 +100,8 @@ export class LearningPathDetailsComponent implements OnInit, AfterViewInit {
 		.addControl('description', '', [Validators.required, Validators.maxLength(700)])
 		.addControl('badge_image', '')
 		.addControl('badge_category', 'learningpath')
-		.addControl('badge_customImage', '');
+		.addControl('badge_customImage', '')
+		.addControl('useIssuerImageInBadge', true);
 
   ngOnInit(): void {
 		this.initFormFromExisting(
@@ -122,6 +129,7 @@ export class LearningPathDetailsComponent implements OnInit, AfterViewInit {
 				};
 				sessionStorage.setItem('oeb-create-badgeclassvalues', JSON.stringify(saveableSessionValues));
 			});
+
 		} else {
 			// clear session storage when editing existing badges
 			sessionStorage.removeItem('oeb-create-badgeclassvalues');
@@ -169,8 +177,9 @@ export class LearningPathDetailsComponent implements OnInit, AfterViewInit {
 			.then((imageUrl) => this.imageField.useDataUrl(imageUrl, 'Auto-generated image'));
 	}
 
-	generateUploadImage(image, formdata) {
-		this.badgeStudio.generateUploadImage(image.slice(), formdata).then((imageUrl) => {
+	generateUploadImage(image, formdata, useIssuerImageInBadge=false) {
+		this.currentImage = image.slice()
+		this.badgeStudio.generateUploadImage(image.slice(), formdata, useIssuerImageInBadge, this.issuer.image).then((imageUrl) => {
 			this.imageField.useDataUrl(imageUrl, 'BADGE');
 		});
 	}
@@ -180,6 +189,7 @@ export class LearningPathDetailsComponent implements OnInit, AfterViewInit {
 			this.isCustomImageLarge = true;
 			return;
 		}
+		this.currentImage = image.slice()
 		this.customImageField.useDataUrl(image, 'BADGE');
 	}
 

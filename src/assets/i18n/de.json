@@ -339,7 +339,7 @@
 		"participationBadgeShortInfo": "bestätigen Teilnahme",
 		"short": "Kurz",
 		"forLearners": "für Lernende",
-		"summarizedDescription": "Zusammenfassende Beschreibung deiner Veranstaltung / deines Lernangebots ",
+		"summarizedDescription": "Zusammenfassende Beschreibung deiner Veranstaltung / deines Lernangebots.",
 		"descriptionSavedInBadge": "Diese Kurzbeschreibung wird im Badge gespeichert.",
 		"imageRequiredError": "Bitte nutze eine der Optionen um ein Bild für den Badge auszuwählen",
 		"useOurEditor": "Unseren Editor nutzen",
@@ -397,7 +397,11 @@
 		"minMaxError": "Bitte geben Sie eine gültige Anzahl von Minuten ein (0 bis 59).",
 		"hoursAndMinutesError": "Der Badge muss mindestens 1 Minute dauern.",
 		"competenceHoursMinutesZero": "Eine deiner Kompetenzen hat eine Dauer von 0.",
-		"competencyExceedsBadgeDuration": "Die Zeitangabe für die Stärkung einer einzelnen Kompetenz kann nicht größer sein als die Dauer deines Lernangebots/Badges an sich."
+		"competencyExceedsBadgeDuration": "Die Zeitangabe für die Stärkung einer einzelnen Kompetenz kann nicht größer sein als die Dauer deines Lernangebots/Badges an sich.",
+ 		"issuerImageInBadgeImageInfo": "Dein Institutions-Logo wird automatisch im Badge-Bild ergänzt.",
+		"pleaseAddCompetencies": "Bitte Kompetenzen hinzufügen",
+		"invalidCompetence": "Ungültige Kompetenz"
+
 	},
 	"Signup": {
 		"youHaveAccount": "Du hast bereits einen Account?",
@@ -728,7 +732,7 @@
 		"savedSuccessfully": "Deine Änderungen wurden erfolgreich gespeichert"
 	},
 	"LearningPathEditor": {
-		"shortDescription": "Zusammenfassende Beschreibung deines Micro Degreess. Diese Kurzbeschreibung wird im Micro Degree-Badge gespeichert."
+		"shortDescription": "Zusammenfassende Beschreibung deines Micro Degrees. Diese Kurzbeschreibung wird im Micro Degree gespeichert."
 	},
 	"OEBComponents": {
 		"fieldIsRequired": "Dieses Feld ist erforderlich"
