@@ -24,7 +24,7 @@
 			<div class="tw-flex tw-justify-evenly oeb-badgeclass-select-container tw-flex-col md:tw-flex-row">
 
 				<a
-					[routerLink]="['/issuer/issuers', issuerSlug, 'badges', 'create', 'participation']"
+					id="participation-badge" [routerLink]="['/issuer/issuers', issuerSlug, 'badges', 'create', 'participation']"
 				>
 					<img src="../../../../breakdown/static/badgestudio/shapes/participation.svg">
 					<strong>Teilnahme-Badge</strong>
@@ -32,15 +32,15 @@
 						dient als Bestätigung der Teilnahme an einer Veranstaltung – er enthält <u>keine</u> Kompetenzen.
 					</p>
 				</a>
-				<a
-					[routerLink]="['/issuer/issuers', issuerSlug, 'badges', 'create', 'competency']"
+				<a 
+					id="competency-badge" [routerLink]="['/issuer/issuers', issuerSlug, 'badges', 'create', 'competency']"
 				>
 					<img src="../../../../breakdown/static/badgestudio/shapes/competency.svg">
 					<strong>Kompetenz-Badge</strong>
 					<p>kann (mithilfe unseres KI-Assistenten) mit den Kompetenzen gefüllt werden, die deine Lernenden erwerben.</p>
 				</a>
 				<a
-					[routerLink]="['/issuer/issuers', issuerSlug, 'learningpaths', 'create']"
+					id="micro-degree" [routerLink]="['/issuer/issuers', issuerSlug, 'learningpaths', 'create']"
 				>
 					<img src="../../../../breakdown/static/badgestudio/shapes/learningpath.svg">
 
