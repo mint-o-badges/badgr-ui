@@ -27,7 +27,7 @@
 					[hasError]="
 						((!validateFields(['badge_description', 'badge_hours', 'badge_name'])
 						&& dirtyFields(['badge_description', 'badge_hours', 'badge_name']))
-						|| (imageFieldDirty && imageValidation())) && !isDevMode"
+						|| (imageFieldDirty && imageValidation()) || (maxStudyLoadValidation())) && !isDevMode"
 				>
 
 					<div class="section tw-text-oebblack tw-mt-6">
@@ -57,7 +57,7 @@
 								<span class="input-label md:tw-flex-[0_0_10em]">{{ 'RecBadgeDetail.duration_create' | translate }}</span>
 								<div class="tw-flex tw-gap-2 tw-items-center">
 									<oeb-input
-										class="tw-w-16"
+										class="tw-w-[75px]"
 										[fieldType]="'number'"
 										[control]="badgeClassForm.rawControlMap.badge_hours"
 										[errorMessage]="{ duration: hoursMaxError }"
@@ -66,7 +66,7 @@
 									</oeb-input>
 									<span class="tw-text-oebblack md:tw-text-lg">{{ 'General.hours' | translate }}</span>
 									<oeb-input
-										class="tw-w-16"
+										class="tw-w-[75px]"
 										[fieldType]="'number'"
 										[control]="badgeClassForm.rawControlMap.badge_minutes"
 										[errorMessage]="{ duration: minMaxError }"
@@ -223,12 +223,12 @@
 					*ngIf="category === 'competency'"
 					[completed]="
 						(getSelectedAiCompetencies().length > 0 || selectedKeywordCompetencies.length > 0 || badgeClassForm.controls.competencies.controls.length > 0)
-						&& (badgeClassForm.controls.aiCompetencies.valid && badgeClassForm.controls.competencies.valid && !badgeClassForm.hasError('competenceHoursMinutesZero') && !badgeClassForm.hasError('competencyExceedsBadgeDuration'))"
+						&& (badgeClassForm.controls.aiCompetencies.valid && badgeClassForm.controls.competencies.valid && badgeClassForm.controls.keywordCompetencies.valid && !badgeClassForm.hasError('competenceHoursMinutesZero') && !badgeClassForm.hasError('competencyExceedsBadgeDuration'))"
 					[hasError]="
 						(stepper?.selectedIndex == 2) &&
 						(
 							(!getSelectedAiCompetencies().length && !selectedKeywordCompetencies.length && !badgeClassForm.controls.competencies.controls.length)
-							|| (!badgeClassForm.controls.aiCompetencies.valid || !badgeClassForm.controls.competencies.valid || badgeClassForm.hasError('competenceHoursMinutesZero') || badgeClassForm.hasError('competencyExceedsBadgeDuration'))
+							|| (!badgeClassForm.controls.aiCompetencies.valid || !badgeClassForm.controls.competencies.valid || !badgeClassForm.controls.keywordCompetencies.valid || badgeClassForm.hasError('competenceHoursMinutesZero') || badgeClassForm.hasError('competencyExceedsBadgeDuration'))
 						)"
 				>
 				<div class="section tw-text-oebblack tw-px-1 tw-mt-6" *ngIf="badgeCategory === 'competency'">
@@ -244,6 +244,9 @@
 							<span *ngIf="badgeClassForm.hasError('competencyExceedsBadgeDuration')">
 								{{ 'CreateBadge.competencyExceedsBadgeDuration' | translate}}
 							</span>
+							<!-- <span *ngIf="badgeClassForm.hasError('maxMinutesCompetencyError')">
+								{{ 'CreateBadge.invalidCompetence' | translate }}
+							</span> -->
 						</p>
 						<ul class="tw-list-disc md:tw-mx-10 tw-mx-4">
 							<!-- <div>
