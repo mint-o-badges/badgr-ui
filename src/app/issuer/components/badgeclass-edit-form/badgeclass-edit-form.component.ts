@@ -640,7 +640,11 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 	getCompetencyPageError(){
 		if(this.badgeClassForm.valid) return 
-		if(this.badgeClassForm.hasError('competencyExceedsBadgeDuration') || this.badgeClassForm.hasError('competenceHoursMinutesZero')){
+		if(this.badgeClassForm.hasError('competencyExceedsBadgeDuration') 
+			|| this.badgeClassForm.hasError('competenceHoursMinutesZero')
+			|| this.badgeClassForm.hasError('maxMinutesCompetencyError')
+			|| this.badgeClassForm.hasError('maxHoursCompetencyError')
+		){
 			return 'Ungültige Kompetenz'
 		}
 		// else if(this.badgeClassForm.hasError('competenceHoursMinutesZero')){
@@ -1049,6 +1053,26 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			(competence) => Number(competence.hours) === 0 && Number(competence.minutes) === 0
 		);
 
+		if (invalidCompetencyIndex !== -1) {
+			return { competenceHoursMinutesZero: true, invalidIndex: invalidCompetencyIndex };
+		}
+
+		const invalidMaxMinutesCompetencyIndex = allCompetencies.findIndex(
+			(competence) => Number(competence.minutes) > 59
+		)
+
+		if(invalidMaxMinutesCompetencyIndex !== -1){
+			return { maxMinutesCompetencyError: true}
+		}
+
+		const invalidMaxHoursCompetencyIndex = allCompetencies.findIndex(
+			(competence) => Number(competence.hours) > 999
+		)
+
+		if(invalidMaxHoursCompetencyIndex !== -1){
+			return { maxHoursCompetencyError: true}
+		}
+
 		const badgeDurationInMinutes = Number(this.badgeClassForm.controls.badge_hours.value) * 60 + Number(this.badgeClassForm.controls.badge_minutes.value)
 
 		const competencyExceedsBadgeDurationIndex = allCompetencies.findIndex(
@@ -1057,10 +1081,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 		if(competencyExceedsBadgeDurationIndex !== -1){
 			return { competencyExceedsBadgeDuration: true, invalidIndex: competencyExceedsBadgeDurationIndex };
-		}
-
-		if (invalidCompetencyIndex !== -1) {
-			return { competenceHoursMinutesZero: true, invalidIndex: invalidCompetencyIndex };
 		}
 
 		return null;
@@ -1513,11 +1533,15 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 	validateFields(fields: string[]) {
 		// console.log(this.badgeClassForm.dirty);
-		return fields.every(c => this.badgeClassForm.controls[c].valid);
+		return fields.every(c => {
+			return this.badgeClassForm.controls[c].valid
+		});
 	}
 
 	dirtyFields(fields: string[]) {
-		return fields.every(c => this.badgeClassForm.controls[c].dirty);
+		return fields.every(c => {
+			return this.badgeClassForm.controls[c].dirty
+		});
 	}
 
 	// FIXME: calculates keywordCompeteniesSuggestions dropdown position and max height,
