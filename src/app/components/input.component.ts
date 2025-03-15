@@ -165,6 +165,7 @@ export class OebInputComponent {
 		if (event.code === 'Enter') {
 			this.control.markAsDirty();
 			this.cacheControlState();
+			event.preventDefault();
 		}
 		// If fieldType is number prevent strings and chars from entering
 		if (this.fieldType === 'number') {

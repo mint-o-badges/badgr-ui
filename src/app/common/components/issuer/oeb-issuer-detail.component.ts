@@ -119,6 +119,9 @@ export class OebIssuerDetailComponent implements OnInit {
 			if (this.badgeResults.length > this.maxDisplayedResults) {
 				return false;
 			}
+			if(badge.extension && badge.extension['extensions:CategoryExtension'].Category === "learningpath"){
+				return false;
+			}
 
 			this.badgeResults.push(new BadgeResult(badge, this.issuer.name, 0));
 

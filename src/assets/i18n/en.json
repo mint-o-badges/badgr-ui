@@ -294,7 +294,7 @@
 		"participationBadgeShortInfo": "confirm participation",
 		"short": "Short",
 		"forLearners": "for learners",
-		"summarizedDescription": "Summarized description of your learning offer ",
+		"summarizedDescription": "Summarized description of your learning offer.",
 		"descriptionSavedInBadge": "This description is saved in the badge.",
 		"imageRequiredError": "Please use one of the options to choose an image for the badge",
 		"useOurEditor": "Use our editor",
@@ -309,7 +309,7 @@
 		"NoPersonalInformation": "Please do not enter any biographical / personal information here.",
 		"addAiCompetencies": "Add appropriate suggested competencies to your badge by clicking.",
 		"myContentDescription": "Content description of the teaching offer",
-		"min70max1000Chars": "(At least 70 / maximum 1000 characters)",
+		"min70max1200Chars": "(At least 70 / maximum 1200 characters)",
 		"detailedDescription": "Detailed content description of the learning offer",
 		"suggestCompetencies": "Suggest Competencies",
 		"fitting": "Fitting",
@@ -351,7 +351,11 @@
 		"hoursMaxError": "Hours cannot exceed 10000.",
 		"minMaxError": "Please enter a valid number",
 		"hoursAndMinutesError": "The badge has to take at least 1 minute",
-		"competenceHoursMinutesZero": "One of your competencies has a duration of 0."
+		"competenceHoursMinutesZero": "One of your competencies has a duration of 0.",
+		"competencyExceedsBadgeDuration": "The time required to strengthen a single competence cannot be longer than the duration of your learning offer/badge itself.",
+		"issuerImageInBadgeImageInfo": "Your institution logo is automatically added to the badge image.",
+		"pleaseAddCompetencies": "Please add competencies",
+		"invalidCompetence": "Invalid competence"
 	},
 	"Signup": {
 		"youHaveAccount": "You already have an account?",
@@ -651,6 +655,6 @@
 		"finished": "Abgeschlossen"
 	},
 	"LearningPathEditor": {
-		"shortDescription": "short description"
+		"shortDescription": "Summarized description of your Micro Degree. This short description is saved in the Micro Degree."
 	}
 }

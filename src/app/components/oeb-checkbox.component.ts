@@ -32,6 +32,7 @@ import { TranslateService } from '@ngx-translate/core';
 			(changed)="onChange($event)"
 			[formControl]="control"
 			[class.tw-mr-2]="!noMargin"
+			[disabled]="disabled"
 		/>
 		<div class="tw-flex tw-flex-col">
 			<span class="tw-pl-[3px]" [innerHTML]="text"></span>
@@ -54,6 +55,7 @@ export class OebCheckboxComponent implements ControlValueAccessor {
 	@Input() ngModel: boolean;
 	@Input() value: string;
 	@Input() checked = false;
+	@Input() disabled = false;
 	@Input() error: string;
 	@Input() errorMessage: CustomValidatorMessages;
 	@Input() label: string;

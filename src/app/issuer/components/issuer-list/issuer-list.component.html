@@ -49,7 +49,7 @@
 								[loading-src]="issuerPlaceholderSrc"
 								[error-src]="issuerPlaceholderSrc"
 								alt="{{ issuer.name }} avatar"
-								class="tw-h-[70px] md:tw-h-[100px] tw-w-auto"
+								class="tw-h-[70px] md:tw-h-[100px] tw-w-auto tw-min-w-[70px] md:tw-min-w-[100px]"
 							/>
 						</div>
 						<div class="tw-flex tw-flex-col tw-justify-center tw-pl-4">
@@ -67,7 +67,7 @@
 						</div>
 					</div>
 					<div class="tw-pt-4 tw-pb-6">
-						<p [class.tw-line-clamp-3]="issuerToBadgeInfo[issuer.issuerUrl]" class="tw-text-oebblack">
+						<p [class.tw-line-clamp-3]="issuerToBadgeInfo[issuer.issuerUrl]" class="tw-text-oebblack tw-break-words">
 							{{ issuer.description }}
 						</p>
 					</div>
