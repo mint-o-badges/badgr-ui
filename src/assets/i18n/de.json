@@ -339,7 +339,7 @@
 		"participationBadgeShortInfo": "bestätigen Teilnahme",
 		"short": "Kurz",
 		"forLearners": "für Lernende",
-		"summarizedDescription": "Zusammenfassende Beschreibung deiner Veranstaltung / deines Lernangebots ",
+		"summarizedDescription": "Zusammenfassende Beschreibung deiner Veranstaltung / deines Lernangebots.",
 		"descriptionSavedInBadge": "Diese Kurzbeschreibung wird im Badge gespeichert.",
 		"imageRequiredError": "Bitte nutze eine der Optionen um ein Bild für den Badge auszuwählen",
 		"useOurEditor": "Unseren Editor nutzen",
@@ -391,12 +391,16 @@
 		"changeBadgeTitle": "Bitte ändere den Titel",
 		"maxValue1000": "Maximalwert ist 1000",
 		"imageTooLarge": "Das Bild ist zu groß. Bitte wähle ein Bild mit einer Größe von maximal 2 MB.",
-		"licenseInfo": "Badges werden unter der <a class='tw-underline tw-text-[#1400FF]' target='_blank' href='https://creativecommons.org/publicdomain/zero/1.0/legalcode.de'> Lizenz CC0 1.0 </a> erstellt.",
+		"licenseInfo": "Badges werden unter der <a class='tw-underline tw-text-[#1400FF]' target='_blank' href='https://creativecommons.org/publicdomain/zero/1.0/legalcode.de'> Lizenz CC0 1.0</a> erstellt.",
 		"requiredError": "Erforderlich",
 		"hoursMaxError": "Stunden dürfen 10.000 nicht überschreiten.",
 		"minMaxError": "Bitte geben Sie eine gültige Anzahl von Minuten ein (0 bis 59).",
 		"hoursAndMinutesError": "Der Badge muss mindestens 1 Minute dauern.",
-		"competenceHoursMinutesZero": "Eine deiner Kompetenzen hat eine Dauer von 0."
+		"competenceHoursMinutesZero": "Eine deiner Kompetenzen hat eine Dauer von 0.",
+		"competencyExceedsBadgeDuration": "Die Zeitangabe für die Stärkung einer einzelnen Kompetenz kann nicht größer sein als die Dauer deines Lernangebots/Badges an sich.",
+ 		"issuerImageInBadgeImageInfo": "Dein Institutions-Logo wird automatisch im Badge-Bild ergänzt.",
+		"pleaseAddCompetencies": "Bitte Kompetenzen hinzufügen",
+		"invalidCompetence": "Ungültige Kompetenz"
 	},
 	"Signup": {
 		"youHaveAccount": "Du hast bereits einen Account?",
@@ -727,7 +731,7 @@
 		"savedSuccessfully": "Deine Änderungen wurden erfolgreich gespeichert"
 	},
 	"LearningPathEditor": {
-		"shortDescription": "Zusammenfassende Beschreibung deines Micro Degreess. Diese Kurzbeschreibung wird im Micro Degree-Badge gespeichert."
+		"shortDescription": "Zusammenfassende Beschreibung deines Micro Degrees. Diese Kurzbeschreibung wird im Micro Degree gespeichert."
 	},
 	"OEBComponents": {
 		"fieldIsRequired": "Dieses Feld ist erforderlich"

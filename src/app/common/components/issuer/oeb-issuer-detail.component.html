@@ -6,7 +6,7 @@
 				[loading-src]="issuerPlaceholderSrc"
 				[error-src]="issuerPlaceholderSrc"
 				alt="{{ issuer.name }} avatar"
-				class="tw-h-[70px] md:tw-h-[100px] tw-w-auto"
+				class="tw-h-[70px] md:tw-h-[100px] tw-w-auto tw-min-w-[70px] md:tw-min-w-[100px]"
 			/>
 		</div>
 		<div class="tw-flex tw-flex-col tw-justify-center tw-pl-8 tw-max-w-[80%]">
@@ -38,7 +38,7 @@
 		<div class="tw-flex tw-gap-2">
 			<oeb-button
 				class="tw-whitespace-nowrap"
-				*ngIf="!public && activeTab == 'Badges'"
+				*ngIf="!public"
 				[routerLink]="['./badges/select']"
 				[disabled]="!issuer.canCreateBadge"
 				[text]="'Issuer.createBadge' | translate"
@@ -81,7 +81,7 @@
 			*ngIf="!public"
 			width="full_width"
 			[class]="'tw-flex-grow tw-relative'.concat(issuer.canCreateBadge ? '' : ' disabled')"
-			[routerLink]="['./badges/create']"
+			[routerLink]="['./badges/select']"
 			[disabled]="!issuer.canCreateBadge"
 			[text]="'Issuer.createBadge' | translate"
 		>
@@ -133,7 +133,7 @@
 			<h2
 				class="tw-font-medium md:tw-text-[22px] md:tw-leading-[26.4px] tw-text-purple tw-text-[16px] tw-leading-[19.2px] tw-py-4"
 			>
-				{{ issuer.name }} {{ 'Issuer.issuerHasBadges' | translate }} {{ badges.length }} Badge{{
+				{{ issuer.name }} {{ 'Issuer.issuerHasBadges' | translate }} {{ badgeResults.length }} Badge{{
 					badges.length == 1 ? '' : 's'
 				}}.
 			</h2>

@@ -85,7 +85,7 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 		this.loaded = new LoadedRouteParam(injector.get(ActivatedRoute), 'learningPathId',  async (paramValue) => {
 			this.learningPathSlug = paramValue;
 			await this.requestPath();
-			if(this.progressValue() === 100){
+			if(this.progressValue() === 100 && this.learningPath.learningPathBadgeInstanceSlug){
 				this.showDownloadButton = true
 				this.recipientBadgeManager.recipientBadgeList.loadedPromise
 					.then((results) => {
