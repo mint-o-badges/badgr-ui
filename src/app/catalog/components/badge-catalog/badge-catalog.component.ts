@@ -15,6 +15,8 @@ import { BadgeClassCategory } from '../../../issuer/models/badgeclass-api.model'
 import { TranslateService } from '@ngx-translate/core';
 import { FormControl } from '@angular/forms';
 import { appearAnimation } from '../../../common/animations/animations';
+import { BadgeClassApiService } from '../../../issuer/services/badgeclass-api.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
 	selector: 'app-badge-catalog',
@@ -35,6 +37,9 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 	badgeResultsByCategory: MatchingBadgeCategory[] = [];
 
 	badgesLoaded: Promise<unknown>;
+
+	nextLink: any
+	previousLink: any
 
 	showLegend = false;
 	tags: string[] = [];
@@ -113,6 +118,8 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		protected messageService: MessageService,
 		protected configService: AppConfigService,
 		protected badgeClassService: BadgeClassManager,
+		protected badgeClassApiService: BadgeClassApiService,
+		protected httpClient: HttpClient,
 		router: Router,
 		route: ActivatedRoute,
 		private translate: TranslateService,
@@ -128,14 +135,39 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		});
 	}
 
+	parsePaginationLinks(header: string | null) {
+		if (!header) return {};
+	  
+		const links: { [key: string]: string } = {};
+		header.split(',').forEach((part) => {
+		  const match = part.match(/<([^>]+)>; rel="([^"]+)"/);
+		  if (match) {
+			links[match[2]] = match[1]; 
+		  }
+		});
+	  
+		return links;
+	}
+	  
+
 	async loadBadges() {
 		return new Promise(async (resolve, reject) => {
 			this.badgeClassService.allPublicBadges$.subscribe(
 				async (badges) => {
 					this.badges = badges
 						.filter((badge) => badge.issuerVerified && badge.issuerOwnerAcceptedTos)
-						.slice(0, 30)
+						// .slice(0, 30)
 						.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+					
+					const paginationLinks = this.parsePaginationLinks(this.badgeClassService.paginationHeaders.get('Link'));
+
+					// this.currentPage = Math.floor(Number(new URL(url, window.location.origin).searchParams.get('offset')) / 20) + 1;
+					// this.totalPages = Math.ceil(this.totalItems / 20);
+					this.nextLink = paginationLinks['next'] || null;
+					console.log("nextLink", this.nextLink)
+					this.previousLink = paginationLinks['prev'] || null;
+					console.log("previousLink", this.previousLink)
+
 					this.badgeResults = this.badges;
 
 					this.badges.forEach((badge) => {
@@ -293,6 +325,13 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 
 	resetTags(){
 		this.tagsControl.setValue(null)
+	}
+
+	pageChange(event){
+		console.log(event)
+		this.httpClient.get<any[]>(event, { observe: 'response' }).subscribe((response) => {
+			console.log(response)
+		})
 	}
 
 	private badgeMatcher(inputPattern: string): (badge) => boolean {

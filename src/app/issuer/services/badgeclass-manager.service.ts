@@ -18,11 +18,13 @@ import { AnyRefType, EntityRef } from '../../common/model/entity-ref';
 import { ManagedEntityGrouping } from '../../common/model/entity-set';
 import { MessageService } from '../../common/services/message.service';
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { first, map } from 'rxjs/operators';
 
 @Injectable()
 export class BadgeClassManager extends BaseHttpApiService {
+	paginationHeaders: HttpHeaders | null = null;
+
 	badgesList = new StandaloneEntitySet<BadgeClass, ApiBadgeClass>(
 		(apiModel) => new BadgeClass(this.commonEntityManager),
 		(apiModel) => apiModel.json.id,
@@ -31,7 +33,11 @@ export class BadgeClassManager extends BaseHttpApiService {
 	allBadgesList = new StandaloneEntitySet<BadgeClass, ApiBadgeClass>(
 		(apiModel) => new BadgeClass(this.commonEntityManager),
 		(apiModel) => apiModel.json.id,
-		() => this.badgeClassApi.getAllBadgeClasses(),
+		() => this.badgeClassApi.getAllBadgeClasses().then((response) => {
+			console.log(response.headers.get('Link'))
+			this.paginationHeaders = response.headers;
+			return response.body; 
+		}),
 	);
 	badgesByIssuerUrl = new ManagedEntityGrouping<BadgeClass>(this.badgesList, (badgeClass) => badgeClass.issuerUrl);
 
