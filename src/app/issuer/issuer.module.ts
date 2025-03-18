@@ -56,7 +56,7 @@ import { IssuerLearningPathComponent } from './components/issuer-learning-path/i
 import { Issuer } from './models/issuer.model';
 import { LearningPathEditComponent } from './components/learningpath-edit/learningpath-edit.component';
 import { BadgeClassSelectTypeComponent } from './components/badgeclass-select-type/badgeclass-select-type.component';
-import { BrnSelectService } from '@spartan-ng/brain/select';
+import {QRCodeComponent} from 'angularx-qrcode'
 
 const routes = [
 	/* Issuer */
@@ -155,7 +155,8 @@ const routes = [
 		IssuerDetailDatatableComponent,
 		QrCodeAwardsComponent,
 		DndModule,
-		CdkStepperModule
+		CdkStepperModule,
+		QRCodeComponent
 	],
 	declarations: [
 		BadgeClassSelectTypeComponent,
@@ -212,7 +213,6 @@ const routes = [
 		QrCodeApiService,
 		BadgeRequestApiService,
 		CdkStepper,
-		BrnSelectService
 	],
 })
 export class IssuerModule {}

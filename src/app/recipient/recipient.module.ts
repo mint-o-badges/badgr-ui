@@ -19,7 +19,6 @@ import { RecipientBadgeCollectionSelectionDialogComponent } from './components/r
 import { RecipientBadgeSelectionDialog } from './components/recipient-badge-selection-dialog/recipient-badge-selection-dialog.component';
 import { MozzTransitionModule } from '../mozz-transition/mozz-transition.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { BrnSelectService } from '@spartan-ng/brain/select';
 
 const routes: Routes = [
 	/* Recipient Badges */
@@ -85,7 +84,6 @@ const routes: Routes = [
 		RecipientBadgeManager,
 		RecipientBadgeCollectionApiService,
 		RecipientBadgeCollectionManager,
-		BrnSelectService
 	],
 	exports: [],
 })
