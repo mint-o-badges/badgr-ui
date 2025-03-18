@@ -10,9 +10,10 @@ import { lucideCheck } from '@ng-icons/lucide';
 
 
 @Component({
-	selector: 'signup-success',
-	templateUrl: './signup-success.component.html',
-	providers: [provideIcons({ lucideCheck })],
+    selector: 'signup-success',
+    templateUrl: './signup-success.component.html',
+    providers: [provideIcons({ lucideCheck })],
+    standalone: false
 })
 export class SignupSuccessComponent implements OnInit {
 	constructor(

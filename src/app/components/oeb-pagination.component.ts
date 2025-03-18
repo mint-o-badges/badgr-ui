@@ -11,18 +11,17 @@ import {
 } from './spartan/ui-pagination-helm/src';
 
 @Component({
-	selector: 'oeb-pagination',
-	standalone: true,
-	imports: [
-		HlmPaginationDirective,
-		HlmPaginationContentDirective,
-		HlmPaginationItemDirective,
-		HlmPaginationPreviousComponent,
-		HlmPaginationNextComponent,
-		HlmPaginationLinkDirective,
-		HlmPaginationEllipsisComponent,
-	],
-	template: `
+    selector: 'oeb-pagination',
+    imports: [
+        HlmPaginationDirective,
+        HlmPaginationContentDirective,
+        HlmPaginationItemDirective,
+        HlmPaginationPreviousComponent,
+        HlmPaginationNextComponent,
+        HlmPaginationLinkDirective,
+        HlmPaginationEllipsisComponent,
+    ],
+    template: `
 		<nav hlmPagination>
 			<ul hlmPaginationContent>
 				<li hlmPaginationItem>
@@ -45,6 +44,6 @@ import {
 				</li>
 			</ul>
 		</nav>
-	`,
+	`
 })
 export class OebPaginationComponent {}

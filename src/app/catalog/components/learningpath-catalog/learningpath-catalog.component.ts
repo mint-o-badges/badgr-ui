@@ -21,10 +21,11 @@ import { appearAnimation } from '../../../common/animations/animations';
 import { FormControl } from '@angular/forms';
 
 @Component({
-	selector: 'app-learningpaths-catalog',
-	templateUrl: './learningpath-catalog.component.html',
-	styleUrls: ['../badge-catalog/badge-catalog.component.css'],
-	animations: [appearAnimation],
+    selector: 'app-learningpaths-catalog',
+    templateUrl: './learningpath-catalog.component.html',
+    styleUrls: ['../badge-catalog/badge-catalog.component.css'],
+    animations: [appearAnimation],
+    standalone: false
 })
 export class LearningPathsCatalogComponent extends BaseRoutableComponent implements OnInit {
 	learningPathsLoaded: Promise<unknown>;

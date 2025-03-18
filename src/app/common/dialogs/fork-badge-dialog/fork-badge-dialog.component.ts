@@ -18,9 +18,10 @@ import { groupIntoArray, groupIntoObject } from '../../util/array-reducers';
  * of this.
  */
 @Component({
-	selector: 'fork-badge-dialog',
-	templateUrl: 'fork-badge-dialog.component.html',
-	styleUrls: ['./fork-badge-dialog.component.css'],
+    selector: 'fork-badge-dialog',
+    templateUrl: 'fork-badge-dialog.component.html',
+    styleUrls: ['./fork-badge-dialog.component.css'],
+    standalone: false
 })
 export class ForkBadgeDialog extends BaseDialog {
 	Array = Array;

@@ -16,8 +16,9 @@ import { HlmDialogService } from './../../../components/spartan/ui-dialog-helm/s
 import { typedFormGroup } from '../../../common/util/typed-forms';
 
 @Component({
-	selector: 'badgeclass-issue-bulk-award-confirmation',
-	templateUrl: './badgeclass-issue-bulk-award-confirmation.component.html',
+    selector: 'badgeclass-issue-bulk-award-confirmation',
+    templateUrl: './badgeclass-issue-bulk-award-confirmation.component.html',
+    standalone: false
 })
 export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRoutableComponent {
 	@Input() transformedImportData: TransformedImportData;

@@ -5,7 +5,8 @@ import sanitizeHtml from 'sanitize-html';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Directive({
-	selector: '[bgMarkdown]',
+    selector: '[bgMarkdown]',
+    standalone: false
 })
 export class BgMarkdownComponent implements AfterViewChecked {
 	renderedHtml?: string;

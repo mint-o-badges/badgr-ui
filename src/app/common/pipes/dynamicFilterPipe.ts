@@ -2,7 +2,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 // This is a dynamic filter pipe that can filter any Object
 @Pipe({
-  name: 'dynamicFilter'
+    name: 'dynamicFilter',
+    standalone: false
 })
 export class DynamicFilterPipe implements PipeTransform {
 

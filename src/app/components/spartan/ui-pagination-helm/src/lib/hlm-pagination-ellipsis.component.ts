@@ -6,18 +6,17 @@ import { hlm } from '@spartan-ng/brain/core';
 import { ClassValue } from 'clsx';
 
 @Component({
-	selector: 'hlm-pagination-ellipsis',
-	standalone: true,
-	imports: [NgIcon, 
-		// HlmIconDirective
-	],
-	providers: [provideIcons({ lucideEllipsis })],
-	template: `
+    selector: 'hlm-pagination-ellipsis',
+    imports: [NgIcon,
+        // HlmIconDirective
+    ],
+    providers: [provideIcons({ lucideEllipsis })],
+    template: `
 		<span [class]="_computedClass()">
 			<ng-icon hlm size="sm" name="lucideEllipsis" />
 			<span class="tw-sr-only">More pages</span>
 		</span>
-	`,
+	`
 })
 export class HlmPaginationEllipsisComponent {
 	public readonly userClass = input<ClassValue>('', { alias: 'class' });

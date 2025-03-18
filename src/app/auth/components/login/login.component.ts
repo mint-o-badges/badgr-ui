@@ -21,9 +21,10 @@ import { BadgrApiFailure } from '../../../common/services/api-failure';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-	selector: 'login',
-	templateUrl: './login.component.html',
-	styleUrls: ['./login.component.scss'],
+    selector: 'login',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.scss'],
+    standalone: false
 })
 export class LoginComponent extends BaseRoutableComponent implements OnInit, AfterViewInit {
 	get theme() {

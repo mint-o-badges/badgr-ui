@@ -21,8 +21,8 @@ import { HlmPaginationPreviousComponent } from './hlm-pagination-previous.compon
 import { HlmPaginationDirective } from './hlm-pagination.directive';
 
 @Component({
-	selector: 'hlm-numbered-pagination',
-	template: `
+    selector: 'hlm-numbered-pagination',
+    template: `
 		<div class="tw-flex tw-items-center tw-justify-between tw-gap-2 tw-px-4 tw-py-2">
 			<div class="tw-flex tw-items-center tw-gap-1 tw-text-nowrap tw-text-sm tw-text-gray-600">
 				<b>{{ totalItems() }}</b>
@@ -72,20 +72,19 @@ import { HlmPaginationDirective } from './hlm-pagination.directive';
 			</brn-select>
 		</div>
 	`,
-	standalone: true,
-	imports: [
-		FormsModule,
-		HlmPaginationDirective,
-		HlmPaginationContentDirective,
-		HlmPaginationItemDirective,
-		HlmPaginationPreviousComponent,
-		HlmPaginationNextComponent,
-		HlmPaginationLinkDirective,
-		HlmPaginationEllipsisComponent,
-		BrnSelectImports,
-		HlmSelectImports,
-	],
-	changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [
+        FormsModule,
+        HlmPaginationDirective,
+        HlmPaginationContentDirective,
+        HlmPaginationItemDirective,
+        HlmPaginationPreviousComponent,
+        HlmPaginationNextComponent,
+        HlmPaginationLinkDirective,
+        HlmPaginationEllipsisComponent,
+        BrnSelectImports,
+        HlmSelectImports,
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HlmNumberedPaginationComponent {
 	/**

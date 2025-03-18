@@ -13,8 +13,9 @@ import {
 } from '../badgeclass-issue-bulk-award/badgeclass-issue-bulk-award.component';
 
 @Component({
-	selector: 'Badgeclass-issue-bulk-award-import',
-	templateUrl: './badgeclass-issue-bulk-award-import.component.html',
+    selector: 'Badgeclass-issue-bulk-award-import',
+    templateUrl: './badgeclass-issue-bulk-award-import.component.html',
+    standalone: false
 })
 export class BadgeClassIssueBulkAwardImportComponent extends BaseAuthenticatedRoutableComponent {
 	readonly csvUploadIconUrl = '../../../../breakdown/static/images/csvuploadicon.svg';

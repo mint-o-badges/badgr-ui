@@ -19,9 +19,10 @@ import { preloadImageURL } from "../../../common/util/file-util";
 import { Issuer } from "../../models/issuer.model";
 
 @Component({
-	selector: 'issuer-edit-form',
-	templateUrl: 'issuer-edit-form.component.html',
-	styleUrls: ['issuer-edit-form.component.scss']
+    selector: 'issuer-edit-form',
+    templateUrl: 'issuer-edit-form.component.html',
+    styleUrls: ['issuer-edit-form.component.scss'],
+    standalone: false
 })
 export class IssuerEditFormComponent implements OnInit {
 	readonly issuerImagePlacholderUrl = preloadImageURL(

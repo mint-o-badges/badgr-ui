@@ -16,8 +16,9 @@ import { DatePipe } from '@angular/common';
 import { Location } from '@angular/common';
 
 @Component({
-	selector: 'edit-qr-form',
-	templateUrl: './edit-qr-form.component.html',
+    selector: 'edit-qr-form',
+    templateUrl: './edit-qr-form.component.html',
+    standalone: false
 })
 export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent {
 	static datePipe = new DatePipe('de');

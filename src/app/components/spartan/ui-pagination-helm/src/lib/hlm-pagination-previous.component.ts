@@ -10,13 +10,12 @@ import { ClassValue } from 'clsx';
 import { HlmPaginationLinkDirective } from './hlm-pagination-link.directive';
 
 @Component({
-	selector: 'hlm-pagination-previous',
-	standalone: true,
-	imports: [HlmPaginationLinkDirective, NgIcon, 
-		// HlmIconDirective
-	],
-	providers: [provideIcons({ lucideChevronLeft })],
-	template: `
+    selector: 'hlm-pagination-previous',
+    imports: [HlmPaginationLinkDirective, NgIcon,
+        // HlmIconDirective
+    ],
+    providers: [provideIcons({ lucideChevronLeft })],
+    template: `
 		<a
 			[class]="_computedClass()"
 			hlmPaginationLink
@@ -28,7 +27,7 @@ import { HlmPaginationLinkDirective } from './hlm-pagination-link.directive';
 		>
 			<span [class.sr-only]="iconOnly()">{{ text() }}</span>
 		</a>
-	`,
+	`
 })
 export class HlmPaginationPreviousComponent {
 	public readonly userClass = input<ClassValue>('', { alias: 'class' });

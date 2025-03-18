@@ -30,8 +30,9 @@ import { HlmDialogService } from './../../../components/spartan/ui-dialog-helm/s
 import { SuccessDialogComponent } from '../../../common/dialogs/oeb-dialogs/success-dialog.component';
 
 @Component({
-	selector: 'badgeclass-issue',
-	templateUrl: './badgeclass-issue.component.html',
+    selector: 'badgeclass-issue',
+    templateUrl: './badgeclass-issue.component.html',
+    standalone: false
 })
 export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	breadcrumbLinkEntries: LinkEntry[] = [];
