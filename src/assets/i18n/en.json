@@ -158,7 +158,7 @@
 		"contactInstitution": "Contact institution",
 		"jsonView": "View JSON",
 		"viewOriginal": "View original",
-		"awardBadeges": "Create an institution to award badges.",
+		"awardBadges": "Create an institution <span class='tw-font-bold'>to award badges </span>.",
 		"imageOptional": "Image (Optional)",
 		"enterName": "Please enter a name",
 		"enterURL": "Please enter a URL",
