@@ -56,6 +56,7 @@ import { IssuerLearningPathComponent } from './components/issuer-learning-path/i
 import { Issuer } from './models/issuer.model';
 import { LearningPathEditComponent } from './components/learningpath-edit/learningpath-edit.component';
 import { BadgeClassSelectTypeComponent } from './components/badgeclass-select-type/badgeclass-select-type.component';
+import { BrnSelectService } from '@spartan-ng/brain/select';
 
 const routes = [
 	/* Issuer */
@@ -210,7 +211,8 @@ const routes = [
 		IssuerManager,
 		QrCodeApiService,
 		BadgeRequestApiService,
-		CdkStepper
+		CdkStepper,
+		BrnSelectService
 	],
 })
 export class IssuerModule {}

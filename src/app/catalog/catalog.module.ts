@@ -17,6 +17,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { LearningPathsCatalogComponent } from './components/learningpath-catalog/learningpath-catalog.component';
 import { LearningPathManager } from '../issuer/services/learningpath-manager.service';
 import { LearningPathApiService } from '../common/services/learningpath-api.service';
+import { BrnSelectService } from '@spartan-ng/brain/select';
 
 export const routes: Routes = [
 	{
@@ -57,7 +58,8 @@ export const routes: Routes = [
 		IssuerApiService,
 		IssuerManager,
 		LearningPathManager,
-		LearningPathApiService
+		LearningPathApiService,
+		BrnSelectService
 	],
 })
 export class CatalogModule {}

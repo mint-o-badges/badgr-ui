@@ -172,6 +172,12 @@
 				</p>
 			</section>
 		</div>
+		<oeb-pagination
+			[currentPage]="currentPage"
+			[totalPages]="totalPages"
+			[nextLink]="nextLink"
+			[previousLink]="previousLink"
+			(pageChange)="onPageChange($event)">
+		</oeb-pagination>
 	</ng-template>
-	<oeb-pagination></oeb-pagination>
 </div>

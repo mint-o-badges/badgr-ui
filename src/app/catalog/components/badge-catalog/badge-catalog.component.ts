@@ -54,6 +54,12 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 	tagsOptions = [];
 	tagsControl = new FormControl();
 
+	badgesPerPage = 30;
+	currentPage: number = 1;
+	totalPages: number;
+	nextLink: string;
+	previousLink: string;
+
 	get theme() {
 		return this.configService.theme;
 	}
@@ -85,7 +91,8 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 	}
 	set searchQuery(query) {
 		this._searchQuery = query;
-		this.updateResults();
+		// this.updateResults();
+		this.updatePaginatedResults();
 	}
 
 	private _groupBy = '';
@@ -94,7 +101,8 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 	}
 	set groupBy(val: string) {
 		this._groupBy = val;
-		this.updateResults();
+		// this.updateResults();
+		this.updatePaginatedResults();
 	}
 
 	trackById(index: number, item: any): any {
@@ -135,9 +143,11 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 				async (badges) => {
 					this.badges = badges
 						.filter((badge) => badge.issuerVerified && badge.issuerOwnerAcceptedTos)
-						.slice()
 						.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
-					this.badgeResults = this.badges;
+
+					this.totalPages = Math.ceil(this.badges.length / this.badgesPerPage);
+					this.updatePaginatedResults()
+
 
 					this.badges.forEach((badge) => {
 						this.tags = this.tags.concat(badge.tags);
@@ -156,7 +166,8 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 					})
 					// this.issuers = sortUnique(this.issuers);
 					this.issuers = this.issuers.filter((value, index, array) => array.indexOf(value) === index);
-					this.updateResults();
+					// this.updateResults();
+					console.log(this.badgeResults)
 					resolve(badges);
 				},
 				(error) => {
@@ -184,7 +195,8 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		});
 
 		this.tagsControl.valueChanges.subscribe(() => {
-			this.updateResults();
+			this.updatePaginatedResults()
+			// this.updateResults();
 		});
 	}
 	prepareTexts() {
@@ -275,6 +287,77 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 			});
 	}
 
+	private updatePaginatedResults() {
+		console.log("update results")
+		let that = this;
+		this.badgeResults = [];
+		this.badgeResultsByIssuer = [];
+		const badgeResultsByIssuerLocal = {};
+		this.badgeResultsByCategory = [];
+		const badgeResultsByCategoryLocal = {};
+	
+		const addBadgeToResultsByIssuer = function (item) {
+			let issuerResults = badgeResultsByIssuerLocal[item.issuerName];
+	
+			if (!issuerResults) {
+				issuerResults = badgeResultsByIssuerLocal[item.issuerName] = new MatchingBadgeIssuer(
+					item.issuerName,
+					'',
+				);
+				that.badgeResultsByIssuer.push(issuerResults);
+			}
+	
+			issuerResults.addBadge(item);
+			return true;
+		};
+	
+		const addBadgeToResultsByCategory = function (item) {
+			let itemCategory =
+				item.extension && item.extension['extensions:CategoryExtension']
+					? item.extension['extensions:CategoryExtension'].Category
+					: 'noCategory';
+			let categoryResults = badgeResultsByCategoryLocal[itemCategory];
+	
+			if (!categoryResults) {
+				categoryResults = badgeResultsByCategoryLocal[itemCategory] = new MatchingBadgeCategory(
+					itemCategory,
+					'',
+				);
+				that.badgeResultsByCategory.push(categoryResults);
+			}
+	
+			categoryResults.addBadge(item);
+			return true;
+		};
+	
+		let filteredBadges = this.badges
+			.filter(this.badgeMatcher(this.searchQuery))
+			.filter((badge) => 
+				!this.tagsControl.value?.length || this.tagsControl.value.some(tag => badge.tags.includes(tag))
+			) // Matches at least one tag
+			.filter((i) => !i.apiModel.source_url);
+			
+		that.badgeResults.forEach((item) => {
+			addBadgeToResultsByIssuer(item);
+			addBadgeToResultsByCategory(item);
+		});
+			
+		this.totalPages = Math.ceil(filteredBadges.length / this.badgesPerPage);
+		const start = (this.currentPage - 1) * this.badgesPerPage;
+		const end = start + this.badgesPerPage;
+	
+		that.badgeResults = filteredBadges.slice(start, end);
+	}
+	
+
+	onPageChange(newPage: number) {
+		console.log(newPage)
+		if (newPage >= 1 && newPage <= this.totalPages) {
+			this.currentPage = newPage;
+			this.updatePaginatedResults();
+		}
+	}
+
 	openLegend() {
 		this.showLegend = true;
 	}
@@ -285,11 +368,16 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 
 	filterByTag(tag) {
 		this.selectedTag = this.selectedTag == tag ? null : tag;
-		this.updateResults();
+		this.updatePaginatedResults()
+		// this.updateResults();
 	}
 
 	removeTag(tag) {
 		this.tagsControl.setValue(this.tagsControl.value.filter(t => t != tag));
+	}
+
+	pageChange(event){
+		console.log(event)
 	}
 
 	private badgeMatcher(inputPattern: string): (badge) => boolean {
