@@ -3,7 +3,7 @@ import { provideIcons } from '@ng-icons/core';
 import { lucideChevronDown } from '@ng-icons/lucide';
 import { hlm } from '@spartan-ng/ui-core';
 import { HlmIconComponent } from '../../../ui-icon-helm/src';
-import { BrnSelectTriggerDirective } from '@spartan-ng/ui-select-brain';
+import { BrnSelectTriggerDirective } from '@spartan-ng/brain/select';
 import { type VariantProps, cva } from 'class-variance-authority';
 import type { ClassValue } from 'clsx';
 
@@ -31,10 +31,10 @@ export const selectTriggerVariants = cva(
 type SelectTriggerVariants = VariantProps<typeof selectTriggerVariants>;
 
 @Component({
-    selector: 'hlm-select-trigger',
-    imports: [BrnSelectTriggerDirective, HlmIconComponent],
-    providers: [provideIcons({ lucideChevronDown })],
-    template: `
+	selector: 'hlm-select-trigger',
+	imports: [BrnSelectTriggerDirective, HlmIconComponent],
+	providers: [provideIcons({ lucideChevronDown })],
+	template: `
 		<button [class]="_computedClass()" #button hlmInput brnSelectTrigger type="button">
 			<ng-content />
 			@if (icon) {
@@ -43,7 +43,7 @@ type SelectTriggerVariants = VariantProps<typeof selectTriggerVariants>;
 				<hlm-icon class="tw-flex-none tw-w-4 tw-h-4 tw-ml-2 tw-text-purple" name="lucideChevronDown" />
 			}
 		</button>
-	`
+	`,
 })
 export class HlmSelectTriggerComponent {
 	@ViewChild('button', { static: true })

@@ -3,22 +3,21 @@ import { OebInputErrorComponent } from './input.error.component';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HlmPDirective } from './spartan/ui-typography-helm/src/lib/hlm-p.directive';
-import { BrnSelectImports } from '@spartan-ng/ui-select-brain';
+import { BrnSelectImports } from '@spartan-ng/brain/select';
 import { HlmSelectModule } from './spartan/ui-select-helm/src/index';
 import { CustomValidatorMessages, messagesForValidationError } from './input.component';
 
-
 @Component({
-    selector: 'oeb-select ',
-    imports: [
-        BrnSelectImports,
-        HlmSelectModule,
-        HlmPDirective,
-        OebInputErrorComponent,
-        ReactiveFormsModule,
-        CommonModule
-    ],
-    template: ` <div [ngClass]="{ 'tw-mt-6 md:tw-mt-7': !noTopMargin }">
+	selector: 'oeb-select ',
+	imports: [
+		BrnSelectImports,
+		HlmSelectModule,
+		HlmPDirective,
+		OebInputErrorComponent,
+		ReactiveFormsModule,
+		CommonModule,
+	],
+	template: ` <div [ngClass]="{ 'tw-mt-6 md:tw-mt-7': !noTopMargin }">
 		<label class="tw-pb-[2px] tw-pl-[3px]" [attr.for]="inputName" *ngIf="label">
 			<span hlmP class="tw-text-oebblack tw-font-semibold" [innerHTML]="label"></span>
 			<span *ngIf="formFieldAside">{{ formFieldAside }}</span>
@@ -35,7 +34,7 @@ import { CustomValidatorMessages, messagesForValidationError } from './input.com
 			(keypress)="handleKeyPress($event)"
 			#selectInput
 			class="tw-text-oebblack"
-			[ngClass]="{ 'tw-pointer-events-none tw-opacity-50': disabled}"
+			[ngClass]="{ 'tw-pointer-events-none tw-opacity-50': disabled }"
 			[attr.id]="id"
 			[placeholder]="placeholder"
 			[multiple]="multiple"
@@ -49,9 +48,9 @@ import { CustomValidatorMessages, messagesForValidationError } from './input.com
 				class="tw-w-full tw-border-solid tw-border-purple tw-bg-white "
 			>
 				<hlm-select-value *ngIf="!multiple" class="tw-text-base " />
-				<div *ngIf="multiple" class="tw-text-base">{{placeholder}}</div>
+				<div *ngIf="multiple" class="tw-text-base">{{ placeholder }}</div>
 			</hlm-select-trigger>
-			<hlm-select-content [ngStyle]="{'max-height.px': dropdownMaxHeight}">
+			<hlm-select-content [ngStyle]="{ 'max-height.px': dropdownMaxHeight }">
 				<hlm-option *ngFor="let option of options" [value]="option.value">{{ option.label }}</hlm-option>
 			</hlm-select-content>
 		</brn-select>
@@ -61,7 +60,7 @@ import { CustomValidatorMessages, messagesForValidationError } from './input.com
 			*ngIf="isErrorState"
 			[error]="errorMessageForDisplay"
 		></oeb-input-error>
-	</div>`
+	</div>`,
 })
 export class OebSelectComponent {
 	@Input() control: FormControl;
@@ -95,7 +94,7 @@ export class OebSelectComponent {
 
 	@Input() autofocus = false;
 	@Input() noTopMargin = false;
-	@Input() dropdownMaxHeight: number|undefined;
+	@Input() dropdownMaxHeight: number | undefined;
 
 	@ViewChild('selectInput') selectInput: ElementRef;
 

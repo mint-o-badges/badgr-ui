@@ -288,7 +288,6 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 	}
 
 	private updatePaginatedResults() {
-		console.log("update results")
 		let that = this;
 		this.badgeResults = [];
 		this.badgeResultsByIssuer = [];
@@ -351,7 +350,6 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 	
 
 	onPageChange(newPage: number) {
-		console.log(newPage)
 		if (newPage >= 1 && newPage <= this.totalPages) {
 			this.currentPage = newPage;
 			this.updatePaginatedResults();
@@ -376,9 +374,6 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		this.tagsControl.setValue(this.tagsControl.value.filter(t => t != tag));
 	}
 
-	pageChange(event){
-		console.log(event)
-	}
 
 	private badgeMatcher(inputPattern: string): (badge) => boolean {
 		const patternStr = StringMatchingUtil.normalizeString(inputPattern);

@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { BrnDialogRef, injectBrnDialogContext } from '@spartan-ng/ui-dialog-brain';
+import { BrnDialogRef, injectBrnDialogContext } from '@spartan-ng/brain/dialog';
 import { OebDialogComponent } from '../../../components/oeb-dialog.component';
 import { HlmIconComponent, provideIcons } from '../../../components/spartan/ui-icon-helm/src';
 import { lucideClipboard, lucideCircleX, lucideCheck } from '@ng-icons/lucide';
@@ -9,18 +9,18 @@ import { TranslateModule } from '@ngx-translate/core';
 import { NgIf } from '@angular/common';
 
 @Component({
-    selector: 'oeb-error-dialog',
-    imports: [
-        OebDialogComponent,
-        HlmPDirective,
-        HlmH3Directive,
-        HlmIconComponent,
-        OebButtonComponent,
-        TranslateModule,
-        NgIf,
-    ],
-    providers: [provideIcons({ lucideCircleX, lucideClipboard, lucideCheck })],
-    template: `
+	selector: 'oeb-error-dialog',
+	imports: [
+		OebDialogComponent,
+		HlmPDirective,
+		HlmH3Directive,
+		HlmIconComponent,
+		OebButtonComponent,
+		TranslateModule,
+		NgIf,
+	],
+	providers: [provideIcons({ lucideCircleX, lucideClipboard, lucideCheck })],
+	template: `
 		<oeb-dialog variant="danger" class="tw-text-center tw-text-oebblack oeb">
 			<div class="tw-flex tw-flex-col tw-gap-2 tw-items-center tw-justify-center tw-p-4">
 				<hlm-icon class="tw-text-red" size="xxxl" name="lucideCircleX" />
@@ -91,7 +91,7 @@ import { NgIf } from '@angular/common';
 				</div>
 			</div>
 		</oeb-dialog>
-	`
+	`,
 })
 export class ErrorDialogComponent {
 	private readonly _dialogContext = injectBrnDialogContext<{ error: any; variant: string }>();

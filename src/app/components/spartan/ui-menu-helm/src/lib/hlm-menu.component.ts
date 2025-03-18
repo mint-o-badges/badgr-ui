@@ -1,6 +1,6 @@
 import { Component, Input, computed, input, signal } from '@angular/core';
 import { hlm } from '@spartan-ng/ui-core';
-import { BrnMenuDirective } from '@spartan-ng/ui-menu-brain';
+import { BrnMenuDirective } from '@spartan-ng/brain/menu';
 import { type VariantProps, cva } from 'class-variance-authority';
 import type { ClassValue } from 'clsx';
 
@@ -27,9 +27,7 @@ type MenuVariants = VariantProps<typeof menuVariants>;
 		'[class]': '_computedClass()',
 	},
 	hostDirectives: [BrnMenuDirective],
-	template: `
-		<ng-content />
-	`,
+	template: ` <ng-content /> `,
 })
 export class HlmMenuComponent {
 	public readonly userClass = input<ClassValue>('', { alias: 'class' });

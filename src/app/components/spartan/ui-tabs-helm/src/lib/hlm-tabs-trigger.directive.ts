@@ -1,6 +1,6 @@
 import { Directive, Input, computed, signal, input } from '@angular/core';
 import { hlm } from '@spartan-ng/ui-core';
-import { BrnTabsTriggerDirective } from '@spartan-ng/ui-tabs-brain';
+import { BrnTabsTriggerDirective } from '@spartan-ng/brain/tabs';
 import { cva, VariantProps } from 'class-variance-authority';
 import type { ClassValue } from 'clsx';
 

@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { HlmButtonDirective } from './spartan/ui-button-helm/src';
-import { BrnDialogContentDirective, BrnDialogTriggerDirective } from '@spartan-ng/ui-dialog-brain';
+import { BrnDialogContentDirective, BrnDialogTriggerDirective } from '@spartan-ng/brain/dialog';
 import {
 	HlmDialogComponent,
 	HlmDialogContentComponent,
@@ -13,22 +13,22 @@ import { HlmInputDirective } from './spartan/ui-input-helm/src';
 import { NgClass, NgIf } from '@angular/common';
 
 @Component({
-    selector: 'oeb-dialog',
-    imports: [
-        BrnDialogTriggerDirective,
-        BrnDialogContentDirective,
-        HlmDialogComponent,
-        HlmDialogContentComponent,
-        HlmDialogHeaderComponent,
-        HlmDialogFooterComponent,
-        HlmDialogTitleDirective,
-        HlmDialogDescriptionDirective,
-        HlmInputDirective,
-        HlmButtonDirective,
-        NgIf,
-        NgClass,
-    ],
-    template: `
+	selector: 'oeb-dialog',
+	imports: [
+		BrnDialogTriggerDirective,
+		BrnDialogContentDirective,
+		HlmDialogComponent,
+		HlmDialogContentComponent,
+		HlmDialogHeaderComponent,
+		HlmDialogFooterComponent,
+		HlmDialogTitleDirective,
+		HlmDialogDescriptionDirective,
+		HlmInputDirective,
+		HlmButtonDirective,
+		NgIf,
+		NgClass,
+	],
+	template: `
 		<div
 			class="tw-px-4 tw-py-6"
 			[ngClass]="{
@@ -45,7 +45,7 @@ import { NgClass, NgIf } from '@angular/common';
 				<button hlmBtn type="submit">Save changes</button>
 			</hlm-dialog-footer>
 		</div>
-	`
+	`,
 })
 export class OebDialogComponent {
 	@Input() title: string;

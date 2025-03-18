@@ -1,5 +1,5 @@
 import { Component, HostBinding, Input, inject } from '@angular/core';
-import { BrnDialogRef, injectBrnDialogContext } from '@spartan-ng/ui-dialog-brain';
+import { BrnDialogRef, injectBrnDialogContext } from '@spartan-ng/brain/dialog';
 import { OebDialogComponent } from '../../../components/oeb-dialog.component';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/src';
@@ -9,10 +9,10 @@ import { NgIf } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-    selector: 'oeb-danger-dialog',
-    imports: [OebDialogComponent, OebButtonComponent, HlmPDirective, HlmIconComponent, NgIf],
-    providers: [TranslateService, provideIcons({ lucideTriangleAlert })],
-    template: `
+	selector: 'oeb-danger-dialog',
+	imports: [OebDialogComponent, OebButtonComponent, HlmPDirective, HlmIconComponent, NgIf],
+	providers: [TranslateService, provideIcons({ lucideTriangleAlert })],
+	template: `
 		<oeb-dialog [variant]="variant" class="tw-text-center tw-text-oebblack">
 			<div class="tw-flex tw-justify-center">
 				<div class="oeb-icon-circle tw-my-4">
@@ -40,7 +40,7 @@ import { TranslateService } from '@ngx-translate/core';
 				</div>
 			</ng-template>
 		</oeb-dialog>
-	`
+	`,
 })
 export class DangerDialogComponent {
 	// @HostBinding('class') private readonly _class: string = 'tw-bg-red tw-bg-red';
@@ -51,7 +51,7 @@ export class DangerDialogComponent {
 		qrCodeRequested: boolean;
 		variant: string;
 		singleButtonText?: string;
-        singleButtonAction?: any;
+		singleButtonAction?: any;
 		captionStyle?: string;
 	}>();
 	protected readonly caption = this._dialogContext.caption;
@@ -77,10 +77,10 @@ export class DangerDialogComponent {
 		this._dialogRef.close();
 	}
 
-    public clickSingleButton(){
-        if(this.singleButtonAction){
-            this.singleButtonAction();
-        }
-        this._dialogRef.close();
-    }
+	public clickSingleButton() {
+		if (this.singleButtonAction) {
+			this.singleButtonAction();
+		}
+		this._dialogRef.close();
+	}
 }

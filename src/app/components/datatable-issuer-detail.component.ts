@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { BadgrCommonModule } from '../common/badgr-common.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { BrnAccordionContentComponent } from '@spartan-ng/ui-accordion-brain';
+import { BrnAccordionContentComponent } from '@spartan-ng/brain/accordion';
 import { HlmIconModule } from './spartan/ui-icon-helm/src';
 import { RouterModule } from '@angular/router';
 import { Component, EventEmitter, Input, Output, computed, effect, input, signal } from '@angular/core';
@@ -18,24 +18,24 @@ import { HlmCommandInputWrapperComponent } from './spartan/ui-command-helm/src';
 import { OebButtonComponent } from './oeb-button.component';
 
 @Component({
-    selector: 'issuer-detail-datatable',
-    imports: [
-        FormsModule,
-        HlmTableModule,
-        HlmIconModule,
-        CommonModule,
-        BadgrCommonModule,
-        TranslateModule,
-        BrnAccordionContentComponent,
-        RouterModule,
-        HlmInputDirective,
-        HlmLabelDirective,
-        HlmIconComponent,
-        HlmCommandInputWrapperComponent,
-        OebButtonComponent,
-    ],
-    providers: [provideIcons({ lucideSearch })],
-    template: `
+	selector: 'issuer-detail-datatable',
+	imports: [
+		FormsModule,
+		HlmTableModule,
+		HlmIconModule,
+		CommonModule,
+		BadgrCommonModule,
+		TranslateModule,
+		BrnAccordionContentComponent,
+		RouterModule,
+		HlmInputDirective,
+		HlmLabelDirective,
+		HlmIconComponent,
+		HlmCommandInputWrapperComponent,
+		OebButtonComponent,
+	],
+	providers: [provideIcons({ lucideSearch })],
+	template: `
 		<div class="tw-p-[calc(var(--gridspacing)*2)] tw-mt-8">
 			<div class="tw-flex tw-items-center tw-justify-between tw-gap-4 sm:flex-col">
 				<div class="l-stack u-margin-bottom2x u-margin-top4x">
@@ -106,7 +106,7 @@ import { OebButtonComponent } from './oeb-button.component';
 				</hlm-trow>
 			</hlm-table>
 		</div>
-	`
+	`,
 })
 export class IssuerDetailDatatableComponent {
 	@Input() caption: string = '';
