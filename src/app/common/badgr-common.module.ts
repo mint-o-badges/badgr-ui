@@ -115,7 +115,6 @@ import { OebCollapsibleComponent } from '../components/oeb-collapsible.component
 import { OebSeparatorComponent } from '../components/oeb-separator.component';
 import { OebSpinnerComponent } from '../components/oeb-spinner.component';
 import { OebLearningPathDetailComponent } from './components/learningpath-detail/oeb-learning-path.component';
-import { OebPaginationComponent } from '../components/oeb-pagination.component';
 
 import { SharedIconsModule } from '../public/icons.module';
 import { LearningPathDatatableComponent } from '../components/datatable-learningpaths.component';
@@ -245,7 +244,6 @@ export const COMMON_IMPORTS = [
 	OebButtonComponent,
 	OebProgressComponent,
 	OebDropdownComponent,
-	OebPaginationComponent,
 	HlmH1Directive,
 	HlmH2Directive,
 	HlmH3Directive,
