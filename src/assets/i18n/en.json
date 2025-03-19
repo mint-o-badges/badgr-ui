@@ -235,7 +235,12 @@
 		"institutionsIssued": "Institutions are on OEB",
 		"institutionsHeadline": "All Institutions",
 		"loadingAllBadges": "Loading Badges...",
-		"loadAllBadges": "Load all Badges"
+		"loadAllBadges": "Load all Badges",
+		"rolesAndRights": "roles and rights in institutions",
+		"rolesAndRightsInfo1": "Infos about ",
+		"rolesAndRightsInfo2": "roles and rights",
+		"rolesAndRightsInfo3": " in institutions"
+
 	},
 	"Badge": {
 		"groupBy": "Group by",

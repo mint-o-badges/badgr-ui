@@ -269,7 +269,11 @@
 		"lpSubHeading": "Ein Micro Degree verbindet mehrere Badges zu einer größeren Lerneinheit.",
 		"loadingAllBadges": "Lade Badges...",
 		"loadAllBadges": "Alle Badges laden",
-		"waitWhileBadgesAreIssued": "Badges werden vergeben, bitte warten..."
+		"waitWhileBadgesAreIssued": "Badges werden vergeben, bitte warten...",
+		"rolesAndRights": "Rollen und Rechte innerhalb von Institutionen",
+		"rolesAndRightsInfo1": "Infos zu ",
+		"rolesAndRightsInfo2" : "Rollen und Rechten",
+		"rolesAndRightsInfo3": " innerhalb von Institutionen"
 	},
 	"Badge": {
 		"groupBy": "Gruppieren nach",

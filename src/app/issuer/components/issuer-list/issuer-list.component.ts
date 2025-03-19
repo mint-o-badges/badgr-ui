@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild, inject } from '@angular/core';
+import { Component, ElementRef, OnInit, TemplateRef, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SessionService } from '../../../common/services/session.service';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
@@ -13,6 +13,7 @@ import { AppConfigService } from '../../../common/app-config.service';
 import { TranslateService } from '@ngx-translate/core';
 import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
 import { SuccessDialogComponent } from '../../../common/dialogs/oeb-dialogs/success-dialog.component';
+import { DialogComponent } from '../../../components/dialog.component';
 
 @Component({
 	selector: 'issuer-list',
@@ -32,6 +33,12 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 	issuersLoaded: Promise<unknown>;
 	badgesLoaded: Promise<unknown>;
 	@ViewChild('pluginBox') public pluginBoxElement: ElementRef;
+
+	@ViewChild('headerTemplate')
+	headerTemplate: TemplateRef<void>;
+
+	@ViewChild('issuerInfoTemplate')
+	issuerInfoTemplate: TemplateRef<void>;
 
 	get theme() {
 		return this.configService.theme;
@@ -136,6 +143,18 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 			context: {
                 text: this.translate.instant('Newsletter.confirmedSubscription'),
 				variant: "success"
+			},
+		});
+	}
+
+	
+	public openIssuerInfoDialog() {
+		this._hlmDialogService.open(DialogComponent, {
+			context: {
+				headerTemplate: this.headerTemplate,
+				content: this.issuerInfoTemplate,
+				variant: 'default',
+				footer: false,
 			},
 		});
 	}
