@@ -12,8 +12,8 @@ import { Title } from '@angular/platform-browser';
 import { AppConfigService } from '../../../common/app-config.service';
 
 @Component({
-    templateUrl: './issuer.component.html',
-    standalone: false
+	templateUrl: './issuer.component.html',
+	standalone: false,
 })
 export class PublicIssuerComponent {
 	readonly issuerImagePlaceholderUrl = preloadImageURL(
@@ -22,7 +22,11 @@ export class PublicIssuerComponent {
 	readonly badgeLoadingImageUrl = '../../../../breakdown/static/images/badge-loading.svg';
 	readonly badgeFailedImageUrl = '../../../../breakdown/static/images/badge-failed.svg';
 
-	issuerIdParam: LoadedRouteParam<{ issuer: PublicApiIssuer; badges: PublicApiBadgeClass[], learningpaths: PublicApiLearningPath[] }>;
+	issuerIdParam: LoadedRouteParam<{
+		issuer: PublicApiIssuer;
+		badges: PublicApiBadgeClass[];
+		learningpaths: PublicApiLearningPath[];
+	}>;
 	routerLinkForUrl = routerLinkForUrl;
 	plural = {
 		badge: {

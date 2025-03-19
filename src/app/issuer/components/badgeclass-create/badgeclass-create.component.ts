@@ -18,12 +18,12 @@ import { BadgeClassManager } from '../../services/badgeclass-manager.service';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-    templateUrl: 'badgeclass-create.component.html',
-    standalone: false
+	templateUrl: 'badgeclass-create.component.html',
+	standalone: false,
 })
 export class BadgeClassCreateComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	issuerSlug: string;
-	category: string
+	category: string;
 	issuer: Issuer;
 	issuerLoaded: Promise<unknown>;
 	breadcrumbLinkEntries: LinkEntry[] = [];

@@ -10,6 +10,7 @@ import {
 	lucideAward,
 	lucideWarehouse,
 	lucideChevronRight,
+	lucideChevronLeft,
 	lucideUsers,
 	lucideDownload,
 	lucideBadge,
@@ -35,7 +36,7 @@ import {
 	lucideGithub,
 	lucideMail,
 	lucideFileCode,
-	lucideX
+	lucideX,
 } from '@ng-icons/lucide';
 
 @NgModule({
@@ -50,6 +51,7 @@ import {
 			lucideAward,
 			lucideWarehouse,
 			lucideChevronRight,
+			lucideChevronLeft,
 			lucideUsers,
 			lucideDownload,
 			lucideBadge,
@@ -75,7 +77,7 @@ import {
 			lucideGithub,
 			lucideMail,
 			lucideFileCode,
-			lucideX
+			lucideX,
 		}),
 	],
 })

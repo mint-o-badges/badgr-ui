@@ -16,9 +16,9 @@ import { HlmDialogService } from './../../../components/spartan/ui-dialog-helm/s
 import { typedFormGroup } from '../../../common/util/typed-forms';
 
 @Component({
-    selector: 'badgeclass-issue-bulk-award-confirmation',
-    templateUrl: './badgeclass-issue-bulk-award-confirmation.component.html',
-    standalone: false
+	selector: 'badgeclass-issue-bulk-award-confirmation',
+	templateUrl: './badgeclass-issue-bulk-award-confirmation.component.html',
+	standalone: false,
 })
 export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRoutableComponent {
 	@Input() transformedImportData: TransformedImportData;
@@ -45,8 +45,7 @@ export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRouta
 		this.enableActionButton();
 	}
 
-	issueForm = typedFormGroup()
-		.addControl('notify_earner', true)
+	issueForm = typedFormGroup().addControl('notify_earner', true);
 
 	enableActionButton() {
 		this.buttonDisabledClass = false;
@@ -59,7 +58,7 @@ export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRouta
 	}
 
 	dataConfirmed() {
-		if(this.buttonDisabledAttribute) return;
+		if (this.buttonDisabledAttribute) return;
 		this.disableActionButton();
 
 		const assertions: BadgeInstanceBatchAssertion[] = [];
@@ -77,10 +76,10 @@ export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRouta
 					}
 				: undefined;
 
-				assertion = {
-					recipient_identifier: row.email,
-					extensions: extensions,
-				};
+			assertion = {
+				recipient_identifier: row.email,
+				extensions: extensions,
+			};
 			assertions.push(assertion);
 		});
 
@@ -93,12 +92,12 @@ export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRouta
 			})
 			.then(
 				(result) => {
-					this.openSuccessDialog(assertions.length + " User")
+					this.openSuccessDialog(assertions.length + ' User');
 					this.router.navigate(['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug]);
 				},
 				(error) => {
 					this.messageService.setMessage(
-						'Fast geschafft! Deine Badges werden gerade vergeben – das kann ein paar Minuten dauern. Schau gleich auf der Badge-Detail-Seite nach, ob alles geklappt hat.' ,
+						'Fast geschafft! Deine Badges werden gerade vergeben – das kann ein paar Minuten dauern. Schau gleich auf der Badge-Detail-Seite nach, ob alles geklappt hat.',
 						'error',
 					);
 				},
@@ -121,7 +120,7 @@ export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRouta
 		const dialogRef = this._hlmDialogService.open(SuccessDialogComponent, {
 			context: {
 				recipient: recipient,
-				variant: "success"
+				variant: 'success',
 			},
 		});
 	}

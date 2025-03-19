@@ -6,13 +6,13 @@ import { lucideChevronLeft, lucideChevronRight } from '@ng-icons/lucide';
 import { hlm } from '@spartan-ng/brain/core';
 import { BrnTabsPaginatedListDirective, BrnTabsTriggerDirective } from '@spartan-ng/brain/tabs';
 import { buttonVariants } from '../../../ui-button-helm/src';
-import { HlmIconComponent } from '../../../ui-icon-helm/src';
+import { HlmIconDirective } from '../../../ui-icon-helm/src';
 import type { ClassValue } from 'clsx';
 import { listVariants } from './hlm-tabs-list.component';
 
 @Component({
 	selector: 'hlm-paginated-tabs-list',
-	imports: [CdkObserveContent, NgIcon, HlmIconComponent],
+	imports: [CdkObserveContent, NgIcon, NgIcon, HlmIconDirective],
 	providers: [provideIcons({ lucideChevronRight, lucideChevronLeft })],
 	template: `
 		<button
@@ -33,7 +33,12 @@ import { listVariants } from './hlm-tabs-list.component';
 		</button>
 
 		<div #tabListContainer class="z-[1] flex grow overflow-hidden" (keydown)="_handleKeydown($event)">
-			<div class="relative grow transition-transform" #tabList role="tablist" (cdkObserveContent)="_onContentChanges()">
+			<div
+				class="relative grow transition-transform"
+				#tabList
+				role="tablist"
+				(cdkObserveContent)="_onContentChanges()"
+			>
 				<div #tabListInner [class]="_tabListClass()">
 					<ng-content></ng-content>
 				</div>
@@ -73,7 +78,7 @@ export class HlmTabsPaginatedListComponent extends BrnTabsPaginatedListDirective
 
 	public readonly userClass = input<ClassValue>('', { alias: 'class' });
 	protected readonly _computedClass = computed(() =>
-		hlm('flex overflow-hidden relative gap-1 flex-shrink-0', this.userClass()),
+		hlm('tw-flex tw-overflow-hidden tw-relative tw-gap-1 tw-flex-shrink-0', this.userClass()),
 	);
 
 	public readonly tabLisClass = input<ClassValue>('', { alias: 'class' });
@@ -82,7 +87,7 @@ export class HlmTabsPaginatedListComponent extends BrnTabsPaginatedListDirective
 	public readonly paginationButtonClass = input<ClassValue>('', { alias: 'class' });
 	protected readonly _paginationButtonClass = computed(() =>
 		hlm(
-			'relative z-[2] select-none disabled:cursor-default',
+			'tw-relative tw-z-[2] tw-select-none disabled:tw-cursor-default',
 			buttonVariants({ variant: 'secondary', size: 'icon' }),
 			this.paginationButtonClass(),
 		),

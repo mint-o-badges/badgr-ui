@@ -1,14 +1,17 @@
+import { NgIcon } from '@ng-icons/core';
 import { Component, HostBinding, Input, inject } from '@angular/core';
 import { BrnDialogRef, injectBrnDialogContext } from '@spartan-ng/brain/dialog';
 import { OebDialogComponent } from '../../../components/oeb-dialog.component';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/src';
-import { HlmIconComponent, HlmIconModule, provideIcons } from '../../../components/spartan/ui-icon-helm/src';
+import { HlmIconDirective } from '../../../components/spartan/ui-icon-helm/src';
 import { HlmH3Directive } from '../../../components/spartan/ui-typography-helm/src';
 import { lucideInfo } from '@ng-icons/lucide';
 import { NgIf } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
 import { TranslateModule } from '@ngx-translate/core';
+import { provideIcons } from '@ng-icons/core';
+
 
 @Component({
 	selector: 'oeb-info-dialog',
@@ -17,7 +20,8 @@ import { TranslateModule } from '@ngx-translate/core';
 		OebButtonComponent,
 		HlmPDirective,
 		HlmH3Directive,
-		HlmIconComponent,
+		NgIcon,
+		HlmIconDirective,
 		NgIf,
 		TranslateModule,
 	],
@@ -26,7 +30,7 @@ import { TranslateModule } from '@ngx-translate/core';
 		<oeb-dialog [variant]="variant" class="tw-text-center tw-text-oebblack">
 			<div class="tw-flex tw-justify-center">
 				<div class="oeb-icon-circle tw-my-4">
-					<hlm-icon class="tw-text-link" size="xxl" name="lucideInfo" />
+					<ng-icon hlm class="tw-text-link" size="xxl" name="lucideInfo" />
 				</div>
 			</div>
 			<h3 hlmH3 class="tw-font-bold !tw-text-black tw-uppercase">

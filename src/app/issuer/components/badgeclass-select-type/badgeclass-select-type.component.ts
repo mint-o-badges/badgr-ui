@@ -18,9 +18,9 @@ import { BadgeClassManager } from '../../services/badgeclass-manager.service';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-    templateUrl: 'badgeclass-select-type.component.html',
-    styleUrls: ['./badgeclass-select-type.component.scss'],
-    standalone: false
+	templateUrl: 'badgeclass-select-type.component.html',
+	styleUrls: ['./badgeclass-select-type.component.scss'],
+	standalone: false,
 })
 export class BadgeClassSelectTypeComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	issuerSlug: string;

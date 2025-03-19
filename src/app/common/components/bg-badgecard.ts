@@ -3,19 +3,19 @@ import { AUTO_STYLE, animate, state, style, transition, trigger } from '@angular
 import { FormControl } from '@angular/forms';
 
 @Component({
-    selector: 'bg-badgecard',
-    animations: [
-        trigger('showCompetencies', [
-            state('true', style({ height: AUTO_STYLE, visibility: AUTO_STYLE })),
-            state('false', style({ height: '0', visibility: 'hidden' })),
-            transition('false => true', animate(220 + 'ms ease-out')),
-            transition('true => false', animate(220 + 'ms ease-in')),
-        ]),
-    ],
-    host: {
-        class: 'tw-rounded-[10px] tw-h-max tw-max-w-[450px] tw-border-purple tw-border-solid tw-border tw-relative tw-p-4 tw-block tw-overflow-hidden oeb-badge-card',
-    },
-    template: `
+	selector: 'bg-badgecard',
+	animations: [
+		trigger('showCompetencies', [
+			state('true', style({ height: AUTO_STYLE, visibility: AUTO_STYLE })),
+			state('false', style({ height: '0', visibility: 'hidden' })),
+			transition('false => true', animate(220 + 'ms ease-out')),
+			transition('true => false', animate(220 + 'ms ease-in')),
+		]),
+	],
+	host: {
+		class: 'tw-rounded-[10px] tw-h-max tw-max-w-[450px] tw-border-purple tw-border-solid tw-border tw-relative tw-p-4 tw-block tw-overflow-hidden oeb-badge-card',
+	},
+	template: `
 		<div
 			class="tw-absolute tw-top-0 tw-left-0 tw-bg-purple tw-text-white tw-px-2 tw-py-1"
 			*ngIf="mostRelevantStatus"
@@ -32,7 +32,8 @@ import { FormControl } from '@angular/forms';
 					<div
 						class="tw-bg-white tw-inline-flex tw-rounded-full tw-justify-center tw-items-center tw-border-solid tw-border-purple tw-border-[2px] "
 					>
-						<hlm-icon
+						<ng-icon
+							hlm
 							class="tw-text-purple tw-box-border md:tw-w-[22px] tw-w-[16px] md:tw-h-[22px] tw-h-[16px]"
 							name="lucideCheck"
 						/>
@@ -111,7 +112,7 @@ import { FormControl } from '@angular/forms';
 						class="tw-absolute tw-bottom-0 tw-cursor-pointer"
 						(click)="toggleCompetencies()"
 					>
-						<hlm-icon size="lg" [name]="showCompetencies ? 'lucideChevronUp' : 'lucideChevronDown'" />
+						<ng-icon hlm size="lg" [name]="showCompetencies ? 'lucideChevronUp' : 'lucideChevronDown'" />
 					</div>
 				</div>
 			</div>
@@ -134,7 +135,7 @@ import { FormControl } from '@angular/forms';
 		</div>
 		<!--<ul *ngIf="tags && tags.length" class="tw-mt-2 tw-leading-[0px]"><li class="tag tw-mt-2 tw-mr-2" *ngFor="let tag of tags">{{tag}}</li></ul>-->
 	`,
-    standalone: false
+	standalone: false,
 })
 export class BgBadgecard {
 	readonly badgeLoadingImageUrl = '../../../breakdown/static/images/badge-loading.svg';

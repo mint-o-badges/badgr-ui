@@ -1,21 +1,21 @@
 <div class="oeb">
-<div class="page-padding">
-	<div class="oeb-breadcrumbs">
-		<bg-breadcrumbs [linkentries]="breadcrumbLinkEntries"></bg-breadcrumbs>
-	</div>
-	<div class="oeb-section-sm tw-max-w-[1016px] !tw-pb-0">
-		<div class="oeb-headline-container-sm !tw-pb-0">
-			<h1 hlmH1 class="tw-text-purple tw-font-black">
-				<span *ngIf="category == 'participation'">
-					{{ 'Issuer.createParticipationBadge' | translate }}
-				</span>
-				<span *ngIf="category == 'competency'">
-					{{ 'Issuer.createCompetencyBadge' | translate }}
-				</span>
-			</h1>
+	<div class="page-padding">
+		<div class="oeb-breadcrumbs">
+			<bg-breadcrumbs [linkentries]="breadcrumbLinkEntries"></bg-breadcrumbs>
 		</div>
+		<div class="oeb-section-sm tw-max-w-[1016px] !tw-pb-0">
+			<div class="oeb-headline-container-sm !tw-pb-0">
+				<h1 hlmH1 class="tw-text-purple tw-font-black">
+					<span *ngIf="category == 'participation'">
+						{{ 'Issuer.createParticipationBadge' | translate }}
+					</span>
+					<span *ngIf="category == 'competency'">
+						{{ 'Issuer.createCompetencyBadge' | translate }}
+					</span>
+				</h1>
+			</div>
 
-		<!--
+			<!--
 		<div class="tw-flex tw-flex-col tw-text-oebblack">
 			<p hlmP class="tw-font-normal md:!tw-leading-[31.2px]">{{ 'CreateBadge.chooseCategory' | translate }}</p>
 			<div class="tw-w-full">
@@ -39,7 +39,7 @@
 		</div>
 		-->
 
-		<!-- <button
+			<!-- <button
 			type="submit"
 			class="button topbar-x-button"
 			(click)="copyBadge()"
@@ -57,23 +57,23 @@
 		>
 			Badge kopieren und bearbeiten
 		</button> -->
-	</div>
+		</div>
 
-	<div *bgAwaitPromises="[issuerLoaded]">
-		<div class="tw-max-w-[1016px]">
-			<badgeclass-edit-form
-				#badgeimage
-				(save)="badgeClassCreated($event)"
-				(cancel)="creationCanceled($event)"
-				[scrolled]="scrolled"
-				[issuer]="issuer"
-				[category]="category"
-				[isForked]="isForked"
-				[initBadgeClass]="copiedBadgeClass"
-				submitText="Create Badge"
-				submittingText="Creating Badge..."
-			></badgeclass-edit-form>
+		<div *bgAwaitPromises="[issuerLoaded]">
+			<div class="tw-max-w-[1016px]">
+				<badgeclass-edit-form
+					#badgeimage
+					(save)="badgeClassCreated($event)"
+					(cancel)="creationCanceled($event)"
+					[scrolled]="scrolled"
+					[issuer]="issuer"
+					[category]="category"
+					[isForked]="isForked"
+					[initBadgeClass]="copiedBadgeClass"
+					submitText="Create Badge"
+					submittingText="Creating Badge..."
+				></badgeclass-edit-form>
+			</div>
 		</div>
 	</div>
-</div>
 </div>

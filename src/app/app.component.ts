@@ -38,14 +38,14 @@ import { MenuItem } from './common/components/badge-detail/badge-detail.componen
 // https://stackoverflow.com/questions/3680876/using-queryselectorall-to-retrieve-direct-children/21126966#21126966
 
 @Component({
-    selector: 'app-root',
-    host: {
-        '(document:click)': 'onDocumentClick($event)',
-        '[class.l-stickyfooter-chromeless]': '! showAppChrome',
-    },
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss'],
-    standalone: false
+	selector: 'app-root',
+	host: {
+		'(document:click)': 'onDocumentClick($event)',
+		'[class.l-stickyfooter-chromeless]': '! showAppChrome',
+	},
+	templateUrl: './app.component.html',
+	styleUrls: ['./app.component.scss'],
+	standalone: false,
 })
 export class AppComponent implements OnInit, AfterViewInit {
 	/**
@@ -74,10 +74,10 @@ export class AppComponent implements OnInit, AfterViewInit {
 			routerLink: ['/catalog/learningpaths'],
 			icon: 'lucideRoute',
 		},
-	]
+	];
 	accountMenuItems: MenuItem[] = [
 		{
-			title: "Mein Profil",
+			title: 'Mein Profil',
 			routerLink: ['/profile/profile'],
 			icon: 'lucideUsers',
 		},
@@ -87,11 +87,11 @@ export class AppComponent implements OnInit, AfterViewInit {
 			icon: 'lucideRepeat2',
 		},
 		{
-			title: "Logout",
+			title: 'Logout',
 			routerLink: ['/auth/logout'],
 			icon: 'lucideLogOut',
 		},
-	]
+	];
 	/**
 	 * Permanently disables the curtain, making it impossible to show it even with the query parameter
 	 */
@@ -302,8 +302,8 @@ export class AppComponent implements OnInit, AfterViewInit {
 		this.shouldShowIssuersTab();
 
 		this.translate.get('General.institutionsNav').subscribe((translatedText: string) => {
-            this.aboutBadgesMenuItems[2].title = translatedText;
-        });
+			this.aboutBadgesMenuItems[2].title = translatedText;
+		});
 
 		this.translate.get('LearningPath.learningpathsNav').subscribe((translatedText: string) => {
 			this.aboutBadgesMenuItems[3].title = translatedText;
@@ -316,7 +316,6 @@ export class AppComponent implements OnInit, AfterViewInit {
 		this.translate.get('NavItems.appIntegrations').subscribe((translatedText: string) => {
 			this.accountMenuItems[1].title = translatedText;
 		});
-
 	}
 
 	ngAfterViewInit() {

@@ -13,19 +13,19 @@ import { LearningPathApiService } from '../../../common/services/learningpath-ap
 import { BadgrApiFailure } from '../../../common/services/api-failure';
 
 @Component({
-    selector: 'learningpath-upload',
-    templateUrl: './learningpath-upload.component.html',
-    standalone: false
+	selector: 'learningpath-upload',
+	templateUrl: './learningpath-upload.component.html',
+	standalone: false,
 })
 export class LearningPathUploadComponent extends BaseAuthenticatedRoutableComponent {
-    jsonForm: FormGroup;
-    issuerSlug: string;
+	jsonForm: FormGroup;
+	issuerSlug: string;
 	issuer: Issuer;
 	issuerLoaded: Promise<unknown>;
 
 	breadcrumbLinkEntries: LinkEntry[] = [];
 
-    constructor(
+	constructor(
 		protected formBuilder: FormBuilder,
 		protected loginService: SessionService,
 		protected messageService: MessageService,
@@ -36,33 +36,35 @@ export class LearningPathUploadComponent extends BaseAuthenticatedRoutableCompon
 		protected title: Title,
 	) {
 		super(router, route, loginService);
-        this.jsonForm = formBuilder.group({
-            file: {}
-        })
-	    this.issuerSlug = this.route.snapshot.params['issuerSlug'];
-        this.issuerLoaded = this.issuerManager.issuerBySlug(this.issuerSlug).then((issuer) => {
+		this.jsonForm = formBuilder.group({
+			file: {},
+		});
+		this.issuerSlug = this.route.snapshot.params['issuerSlug'];
+		this.issuerLoaded = this.issuerManager.issuerBySlug(this.issuerSlug).then((issuer) => {
 			this.issuer = issuer;
 			this.breadcrumbLinkEntries = [
 				{ title: 'Meine Institutionen', routerLink: ['/issuer'] },
 				{ title: issuer.name, routerLink: ['/issuer/issuers', this.issuerSlug] },
-                { title: 'Micro Degrees' },
-				{ title: 'Micro Degree hochladen', routerLink: ['/issuer/issuers', this.issuerSlug, '/learningpaths/upload'] },
+				{ title: 'Micro Degrees' },
+				{
+					title: 'Micro Degree hochladen',
+					routerLink: ['/issuer/issuers', this.issuerSlug, '/learningpaths/upload'],
+				},
 			];
-        });
-    }
+		});
+	}
 	readonly csvUploadIconUrl = '../../../../breakdown/static/images/csvuploadicon.svg';
 
 	rawJson: string = null;
 
-    onFileDataReceived(data) {
+	onFileDataReceived(data) {
 		this.rawJson = data;
 	}
 
-
-    importAction() {
+	importAction() {
 		if (this.rawJson) {
 			const learningPath: ApiLearningPathForCreation = JSON.parse(this.rawJson);
-			learningPath["issuer_id"]=this.issuerSlug;
+			learningPath['issuer_id'] = this.issuerSlug;
 			this.learningPathApiService.createLearningPath(this.issuerSlug, learningPath).then(
 				(lp) => {
 					this.router.navigate(['/issuer/issuers', this.issuerSlug, 'learningpaths', lp.slug]);
@@ -72,7 +74,8 @@ export class LearningPathUploadComponent extends BaseAuthenticatedRoutableCompon
 						'Micro Degree konnte nicht erstellt werden: ' + BadgrApiFailure.from(error).firstMessage,
 						'error',
 					);
-				},);
+				},
+			);
 		}
 	}
 }

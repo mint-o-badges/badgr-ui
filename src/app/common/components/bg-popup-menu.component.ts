@@ -6,13 +6,13 @@ import Popper, { Placement } from 'popper.js';
  * Directive that implements popper.js-based popup menus
  */
 @Component({
-    selector: 'bg-popup-menu',
-    template: '<ng-content></ng-content>',
-    host: {
-        class: 'menu',
-        '[attr.inert]': '(! isOpen) || undefined',
-    },
-    standalone: false
+	selector: 'bg-popup-menu',
+	template: '<ng-content></ng-content>',
+	host: {
+		class: 'menu',
+		'[attr.inert]': '(! isOpen) || undefined',
+	},
+	standalone: false,
 })
 export class BgPopupMenu implements OnDestroy, AfterViewInit, OnDestroy {
 	get componentElem(): HTMLElement {
@@ -137,11 +137,11 @@ export class BgPopupMenu implements OnDestroy, AfterViewInit, OnDestroy {
 }
 
 @Directive({
-    selector: '[bgPopupMenuTrigger]',
-    host: {
-        '(click)': 'handleClick()',
-    },
-    standalone: false
+	selector: '[bgPopupMenuTrigger]',
+	host: {
+		'(click)': 'handleClick()',
+	},
+	standalone: false,
 })
 export class BgPopupMenuTriggerDirective {
 	@Input('bgPopupMenuTrigger')

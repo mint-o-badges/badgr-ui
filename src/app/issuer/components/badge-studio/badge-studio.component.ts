@@ -8,11 +8,11 @@ import { HttpClient } from '@angular/common/http';
 // fabric classes, it contains another nested "fabric" property with those values. This seems to be the only way to get
 // it to work correctly.
 @Component({
-    selector: 'badge-studio',
-    host: {},
-    template: ` <canvas #canvas width="400" height="400"></canvas> `,
-    styleUrls: ['../../../../../node_modules/font-awesome/css/font-awesome.css'],
-    standalone: false
+	selector: 'badge-studio',
+	host: {},
+	template: ` <canvas #canvas width="400" height="400"></canvas> `,
+	styleUrls: ['../../../../../node_modules/font-awesome/css/font-awesome.css'],
+	standalone: false,
 })
 export class BadgeStudioComponent implements OnInit, OnChanges {
 	get canvas() {
@@ -224,15 +224,12 @@ export class BadgeStudioComponent implements OnInit, OnChanges {
 			this.context2d.drawImage(svgImage, 0, 0, this.canvas.width, this.canvas.height);
 
 			if (useIssuerImageInBadge && issuerImage) {
-				const xWidth =
-					this.formData.badge_category == 'participation'
-						? 55
-						: 70;
+				const xWidth = this.formData.badge_category == 'participation' ? 55 : 70;
 				const svgImage3 = await addImage(svgDataUrl2);
 				this.context2d.drawImage(
 					svgImage3,
 					this.canvas.width - this.canvas.width / 4 - xWidth,
-					this.formData.badge_category == "learningpath" ? 10 : 0,
+					this.formData.badge_category == 'learningpath' ? 10 : 0,
 					this.canvas.width / 5,
 					this.canvas.height / 5,
 				);
@@ -240,7 +237,7 @@ export class BadgeStudioComponent implements OnInit, OnChanges {
 				const issuerLogo = await addImage(issuerImage);
 				const borderPadding = 12;
 				const logoX = this.canvas.width - this.canvas.width / 4 - xWidth + borderPadding;
-				const logoY = (this.formData.badge_category == "learningpath" ? 10 : 0) + borderPadding;
+				const logoY = (this.formData.badge_category == 'learningpath' ? 10 : 0) + borderPadding;
 				const logoWidth = this.canvas.width / 5 - borderPadding * 2;
 				const logoHeight = this.canvas.height / 5 - borderPadding * 2;
 

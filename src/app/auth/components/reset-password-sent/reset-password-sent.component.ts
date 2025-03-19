@@ -5,9 +5,9 @@ import { AppConfigService } from '../../../common/app-config.service';
 import { BaseRoutableComponent } from '../../../common/pages/base-routable.component';
 
 @Component({
-    selector: 'password-reset-sent',
-    templateUrl: './reset-password-sent.component.html',
-    standalone: false
+	selector: 'password-reset-sent',
+	templateUrl: './reset-password-sent.component.html',
+	standalone: false,
 })
 export class ResetPasswordSent extends BaseRoutableComponent {
 	constructor(

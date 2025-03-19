@@ -13,29 +13,27 @@
 							<a hlmA [routerLink]="['/public/issuers/', issuer.slug]">{{ issuer.name }}</a>
 						</p>
 						<div class="tw-flex tw-flex-row tw-gap-2 tw-text-[#6B7280] tw-mt-1 tw-items-end">
-							<hlm-icon name="lucideClock" />
+							<ng-icon hlm name="lucideClock" />
 							<span>{{ minutesTotal | hourPipe }} {{ 'LearningPath.hours' | translate }}</span>
 						</div>
 					</div>
 
 					<section class="tw-flex tw-flex-col tw-gap-2" *ngIf="showDownloadButton">
-
 						<oeb-button
-								type="button"
-								text="Micro Degree herunterladen"
-								width="full_width"
-								(click)="downloadMicroDegree()"
+							type="button"
+							text="Micro Degree herunterladen"
+							width="full_width"
+							(click)="downloadMicroDegree()"
 						></oeb-button>
 
 						<oeb-button
-								type="button"
-								variant="secondary"
-								width="full_width"
-								text="PDF-Zertifikat herunterladen"
-								(click)="downloadPdf()"
+							type="button"
+							variant="secondary"
+							width="full_width"
+							text="PDF-Zertifikat herunterladen"
+							(click)="downloadPdf()"
 						></oeb-button>
 					</section>
-
 
 					<div
 						*ngIf="learningPath.requested && !learningPath.completed_at"
@@ -50,7 +48,7 @@
 					<ng-template #requestedTemplate>
 						<div class="tw-absolute tw-w-full tw-text-left tw-flex tw-items-center">
 							<span class="tw-bg-purple tw-rounded-[50%] tw-h-[20px] tw-w-[20px] tw-ml-2">
-								<hlm-icon variant="sm" class="tw-text-white tw-box-border" name="lucideCheck" />
+								<ng-icon hlm variant="sm" class="tw-text-white tw-box-border" name="lucideCheck" />
 							</span>
 							<span class="tw-ml-2 md:tw-text-sm tw-text-[8px] tw-text-purple">{{
 								'LearningPath.successRequestPath' | translate
@@ -113,7 +111,7 @@
 					>
 						<div class="tw-flex tw-flex-col tw-h-full">
 							<div class="tw-flex tw-flex-row tw-gap-2 tw-text-oebblack tw-mt-2 tw-pb-4 tw-items-end">
-								<hlm-icon class="tw-text-[#6B7280]" name="lucideClock" />
+								<ng-icon hlm class="tw-text-[#6B7280]" name="lucideClock" />
 								<span hlmP class="tw-font-medium">{{ 'LearningPath.myProgress' | translate }}</span>
 							</div>
 							<div class="tw-w-full tw-flex tw-justify-center tw-items-center">

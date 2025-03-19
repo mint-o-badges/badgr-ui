@@ -1,3 +1,4 @@
+import { NgIcon } from '@ng-icons/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { HlmIconModule } from './spartan/ui-icon-helm/src';
@@ -8,9 +9,9 @@ import { OebButtonComponent } from './oeb-button.component';
 import { Issuer } from '../issuer/models/issuer.model';
 
 @Component({
-    selector: 'learningpaths-datatable',
-    imports: [HlmTableModule, HlmIconModule, CommonModule, OebButtonComponent, TranslateModule, RouterModule],
-    template: ` <hlm-table
+	selector: 'learningpaths-datatable',
+	imports: [HlmTableModule, NgIcon, HlmIconModule, CommonModule, OebButtonComponent, TranslateModule, RouterModule],
+	template: ` <hlm-table
 		class="tw-rounded-[20px] tw-overflow-hidden tw-w-full tw-max-w-[100%] tw-bg-lightpurple tw-border-purple tw-border"
 	>
 		<hlm-trow class="tw-bg-purple tw-text-white tw-flex-wrap hover:tw-bg-purple">
@@ -65,7 +66,7 @@ import { Issuer } from '../issuer/models/issuer.model';
 				></oeb-button>
 			</hlm-th>
 		</hlm-trow>
-	</hlm-table>`
+	</hlm-table>`,
 })
 export class LearningPathDatatableComponent {
 	@Input() learningPaths: any[];
@@ -73,5 +74,4 @@ export class LearningPathDatatableComponent {
 	@Input() issuer: Issuer;
 	@Output() actionElement = new EventEmitter();
 	@Output() redirectToLearningPathDetail = new EventEmitter();
-
 }

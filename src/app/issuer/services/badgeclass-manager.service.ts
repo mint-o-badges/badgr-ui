@@ -153,7 +153,6 @@ export class BadgeClassManager extends BaseHttpApiService {
 			.then((badges) => badges.filter((b) => badgeUrls.indexOf(b.badgeUrl) >= 0));
 	}
 
-
 	private throwError(message: string): never {
 		throw new Error(message);
 	}

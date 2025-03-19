@@ -135,6 +135,7 @@ import { QrCodeApiService } from '../issuer/services/qrcode-api.service';
 import { serverErrorInterceptorFactory } from '../server-error-interceptor.factory';
 import { AltchaComponent } from '../components/altcha.component';
 import { SortPipe } from './pipes/sortPipe';
+import { PaginationIconOnlyComponent } from '../components/test-pagination.component';
 
 const DIRECTIVES = [
 	BgAwaitPromises,
@@ -222,7 +223,7 @@ const SERVICES = [
 	ZipService,
 	ApplicationCredentialsService,
 	LearningPathApiService,
-	QrCodeApiService
+	QrCodeApiService,
 ];
 
 const GUARDS = [AuthGuard];
@@ -246,6 +247,7 @@ export const COMMON_IMPORTS = [
 	OebProgressComponent,
 	OebDropdownComponent,
 	OebPaginationComponent,
+	PaginationIconOnlyComponent,
 	HlmH1Directive,
 	HlmH2Directive,
 	HlmH3Directive,
@@ -267,13 +269,27 @@ export const COMMON_IMPORTS = [
 	LearningPathParticipantsDatatableComponent,
 	LearningPathGraduatesDatatableComponent,
 	HlmBadgeDirective,
-	AltchaComponent
+	AltchaComponent,
 ];
 
 @NgModule({
-	imports: [...COMMON_IMPORTS, FormsModule, LMarkdownEditorModule, TranslateModule, SharedIconsModule, CdkStepperModule],
-	providers: [BadgeClassManager, BadgeClassApiService,  ...serverErrorInterceptorFactory()],
-	declarations: [...DIRECTIVES, ...COMMON_MODULE_COMPONENTS, ...PIPES, ForwardRouteComponent, BadgeLegendComponent, CountUpDirective],
+	imports: [
+		...COMMON_IMPORTS,
+		FormsModule,
+		LMarkdownEditorModule,
+		TranslateModule,
+		SharedIconsModule,
+		CdkStepperModule,
+	],
+	providers: [BadgeClassManager, BadgeClassApiService, ...serverErrorInterceptorFactory()],
+	declarations: [
+		...DIRECTIVES,
+		...COMMON_MODULE_COMPONENTS,
+		...PIPES,
+		ForwardRouteComponent,
+		BadgeLegendComponent,
+		CountUpDirective,
+	],
 	exports: [...DIRECTIVES, ...COMMON_MODULE_COMPONENTS, ...PIPES, BadgeLegendComponent, SharedIconsModule],
 })
 export class BadgrCommonModule {

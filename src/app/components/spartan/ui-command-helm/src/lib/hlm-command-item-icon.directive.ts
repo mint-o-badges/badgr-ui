@@ -1,23 +1,12 @@
-import { Directive, computed, inject, input } from '@angular/core';
-import { hlm } from '@spartan-ng/brain/core';
-import { HlmIconComponent } from '../../../ui-icon-helm/src';
-import type { ClassValue } from 'clsx';
+import { Directive } from '@angular/core';
+import { provideHlmIconConfig } from '../../../ui-icon-helm/src/index';
 
 @Directive({
-	selector: '[hlmCmdIcon]',
 	standalone: true,
+	selector: '[hlmCommandIcon]',
 	host: {
-		'[class]': '_computedClass()',
+		class: 'inline-flex mr-2 w-4 h-4',
 	},
+	providers: [provideHlmIconConfig({ size: 'sm' })],
 })
-export class HlmCommandItemIconDirective {
-	private _menuIcon = inject(HlmIconComponent, { host: true, optional: true });
-
-	constructor() {
-		if (!this._menuIcon) return;
-		this._menuIcon.size = 'none';
-	}
-
-	public readonly userClass = input<ClassValue>('', { alias: 'class' });
-	protected _computedClass = computed(() => hlm('mr-2 h-4 w-4', this.userClass()));
-}
+export class HlmCommandIconDirective {}

@@ -1,12 +1,15 @@
+import { NgIcon } from '@ng-icons/core';
 import { Component, inject } from '@angular/core';
 import { BrnDialogRef, injectBrnDialogContext } from '@spartan-ng/brain/dialog';
 import { OebDialogComponent } from '../../../components/oeb-dialog.component';
-import { HlmIconComponent, provideIcons } from '../../../components/spartan/ui-icon-helm/src';
+import { HlmIconDirective } from '../../../components/spartan/ui-icon-helm/src';
 import { lucideClipboard, lucideCircleX, lucideCheck } from '@ng-icons/lucide';
 import { HlmH3Directive, HlmPDirective } from '../../../components/spartan/ui-typography-helm/src';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgIf } from '@angular/common';
+import { provideIcons } from '@ng-icons/core';
+
 
 @Component({
 	selector: 'oeb-error-dialog',
@@ -14,7 +17,8 @@ import { NgIf } from '@angular/common';
 		OebDialogComponent,
 		HlmPDirective,
 		HlmH3Directive,
-		HlmIconComponent,
+		NgIcon,
+		HlmIconDirective,
 		OebButtonComponent,
 		TranslateModule,
 		NgIf,
@@ -23,7 +27,7 @@ import { NgIf } from '@angular/common';
 	template: `
 		<oeb-dialog variant="danger" class="tw-text-center tw-text-oebblack oeb">
 			<div class="tw-flex tw-flex-col tw-gap-2 tw-items-center tw-justify-center tw-p-4">
-				<hlm-icon class="tw-text-red" size="xxxl" name="lucideCircleX" />
+				<ng-icon hlm class="tw-text-red" size="xxxl" name="lucideCircleX" />
 				<div hlmH3 class="tw-font-bold !tw-text-black tw-uppercase">
 					{{ 'ErrorDialog.title' | translate }}
 				</div>
@@ -45,18 +49,20 @@ import { NgIf } from '@angular/common';
 							class="tw-mt-4 tw-bg-blue-500 tw-text-white tw-px-4 tw-py-2 tw-rounded hover:tw-bg-blue-600 tw-flex tw-items-center tw-justify-center"
 							(click)="copyErrorMessage()"
 						>
-							<hlm-icon
+							<ng-icon
+								hlm
 								*ngIf="isCopied"
 								name="lucideCheck"
 								size="sm"
 								class="tw-inline-block tw-mr-2"
-							></hlm-icon>
-							<hlm-icon
+							></ng-icon>
+							<ng-icon
+								hlm
 								*ngIf="!isCopied"
 								name="lucideClipboard"
 								size="sm"
 								class="tw-inline-block tw-mr-2"
-							></hlm-icon>
+							></ng-icon>
 							{{
 								isCopied
 									? ('ErrorDialog.copyButtonAfter' | translate)
@@ -67,7 +73,7 @@ import { NgIf } from '@angular/common';
 				</div>
 				<div class="tw-flex tw-gap-4">
 					<div class="tw-flex  tw-items-center tw-gap-2 tw-mt-4">
-						<hlm-icon name="lucideGithub" size="lg" />
+						<ng-icon hlm name="lucideGithub" size="lg" />
 						<a
 							href="https://github.com/mint-o-badges/badgr-ui/issues"
 							target="_blank"
@@ -77,7 +83,7 @@ import { NgIf } from '@angular/common';
 						</a>
 					</div>
 					<div class="tw-flex tw-items-center tw-gap-2 tw-mt-4">
-						<hlm-icon name="lucideMail" size="lg" />
+						<ng-icon hlm name="lucideMail" size="lg" />
 						<a
 							href="mailto:hallo@openbadges.education?subject=Frage%20zu%20Fehlermeldung"
 							class="tw-text-blue-500 hover:tw-underline"

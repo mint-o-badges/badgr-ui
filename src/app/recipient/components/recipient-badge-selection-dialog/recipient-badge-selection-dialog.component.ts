@@ -25,9 +25,9 @@ export interface RecipientBadgeSelectionDialogSettings {
 }
 
 @Component({
-    selector: 'recipient-badge-selection-dialog',
-    templateUrl: './recipient-badge-selection-dialog.component.html',
-    standalone: false
+	selector: 'recipient-badge-selection-dialog',
+	templateUrl: './recipient-badge-selection-dialog.component.html',
+	standalone: false,
 })
 export class RecipientBadgeSelectionDialog extends BaseDialog {
 	get searchQuery() {

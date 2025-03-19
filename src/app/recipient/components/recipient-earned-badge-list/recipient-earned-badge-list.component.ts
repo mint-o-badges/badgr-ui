@@ -19,7 +19,7 @@ import { AppConfigService } from '../../../common/app-config.service';
 import { ImportLauncherDirective } from '../../../mozz-transition/directives/import-launcher/import-launcher.directive';
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { UserProfile } from '../../../common/model/user-profile.model';
-import { provideIcons } from '../../../components/spartan/ui-icon-helm/src';
+import { provideIcons } from '@ng-icons/core';
 import { lucideHand, lucideHexagon, lucideMedal, lucideBookOpen, lucideClock, lucideHeart } from '@ng-icons/lucide';
 import { CountUpDirective } from 'ngx-countup';
 import { Competency } from '../../../common/model/competency.model';
@@ -34,17 +34,17 @@ type EscoCompetencies = {
 };
 
 @Component({
-    selector: 'recipient-earned-badge-list',
-    templateUrl: './recipient-earned-badge-list.component.html',
-    providers: [
-        provideIcons({ lucideHexagon }),
-        provideIcons({ lucideMedal }),
-        provideIcons({ lucideClock }),
-        provideIcons({ lucideHand }),
-        provideIcons({ lucideBookOpen }),
-        provideIcons({ lucideHeart }),
-    ],
-    standalone: false
+	selector: 'recipient-earned-badge-list',
+	templateUrl: './recipient-earned-badge-list.component.html',
+	providers: [
+		provideIcons({ lucideHexagon }),
+		provideIcons({ lucideMedal }),
+		provideIcons({ lucideClock }),
+		provideIcons({ lucideHand }),
+		provideIcons({ lucideBookOpen }),
+		provideIcons({ lucideHeart }),
+	],
+	standalone: false,
 })
 export class RecipientEarnedBadgeListComponent
 	extends BaseAuthenticatedRoutableComponent
@@ -173,8 +173,6 @@ export class RecipientEarnedBadgeListComponent
 				}
 			});
 		}
-
-
 
 		this.mozillaTransitionOver = !!localStorage.getItem('mozillaTransitionOver') || false;
 
@@ -375,8 +373,6 @@ export class RecipientEarnedBadgeListComponent
 	trackById(index: number, item: any): any {
 		return item.id;
 	}
-
-
 
 	private groupCompetencies(badges) {
 		let groupedCompetencies: EscoCompetencies = {};

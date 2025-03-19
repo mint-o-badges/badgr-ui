@@ -1,3 +1,4 @@
+import { NgIcon } from '@ng-icons/core';
 import { NgComponentOutlet } from '@angular/common';
 import {
 	ChangeDetectionStrategy,
@@ -12,11 +13,13 @@ import {
 import { lucideX } from '@ng-icons/lucide';
 import { hlm } from '@spartan-ng/brain/core';
 import { BrnDialogCloseDirective, BrnDialogRef, injectBrnDialogContext } from '@spartan-ng/brain/dialog';
-// import { HlmIconComponent, provideIcons } from '@spartan-ng/ui-icon-helm';
-import { HlmIconComponent, provideIcons } from '../../../../spartan/ui-icon-helm/src';
+// import { HlmIconDirective, provideIcons } from '@spartan-ng/ui-icon-helm';
+import { HlmIconDirective } from '../../../../spartan/ui-icon-helm/src';
 import type { ClassValue } from 'clsx';
 import { HlmDialogCloseDirective } from './hlm-dialog-close.directive';
 import { VariantProps, cva } from 'class-variance-authority';
+import { provideIcons } from '@ng-icons/core';
+
 
 export const dialogVariants = cva(
 	'tw-border-border tw-grid tw-w-full tw-max-w-lg tw-relative tw-gap-4 tw-border tw-shadow-lg tw-duration-200 data-[state=open]:tw-animate-in data-[state=closed]:tw-animate-out data-[state=closed]:tw-fade-out-0 data-[state=open]:tw-fade-in-0 data-[state=closed]:tw-zoom-out-95 data-[state=open]:tw-zoom-in-95 data-[state=closed]:tw-slide-out-to-top-[2%]  data-[state=open]:tw-slide-in-from-top-[2%] sm:tw-rounded-lg md:tw-w-full',
@@ -37,7 +40,7 @@ export type DiealogVariants = VariantProps<typeof dialogVariants>;
 
 @Component({
 	selector: 'hlm-dialog-content',
-	imports: [NgComponentOutlet, BrnDialogCloseDirective, HlmDialogCloseDirective, HlmIconComponent],
+	imports: [NgComponentOutlet, BrnDialogCloseDirective, HlmDialogCloseDirective, NgIcon, HlmIconDirective],
 	providers: [provideIcons({ lucideX })],
 	host: {
 		'[class]': '_computedClass()',
@@ -52,7 +55,7 @@ export type DiealogVariants = VariantProps<typeof dialogVariants>;
 
 		<button brnDialogClose hlm>
 			<span class="tw-sr-only">Close</span>
-			<hlm-icon class="tw-flex tw-w-4 tw-h-4" size="none" name="lucideX" />
+			<ng-icon hlm class="tw-flex tw-w-4 tw-h-4" size="none" name="lucideX" />
 		</button>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,

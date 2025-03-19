@@ -1,78 +1,81 @@
 <ng-template [bgAwaitPromises]="badgeClassLoaded">
-    <div class="page-padding oeb ">
-        <div class="oeb-headline-container-sm">
-            <h1 hlmH1 class="tw-text tw-text-oebblack">
-                {{ 'RequestBadge.requestBadge' | translate}}:
-            </h1>
-            <h1 hlmH1 class="tw-text-purple tw-font-extrabold">{{badgeClass.name}}</h1>
-        </div>
-        <div class="tw-flex tw-gap-4 tw-mt-4 tw-items-center oeb-max-form-width">
+	<div class="page-padding oeb">
+		<div class="oeb-headline-container-sm">
+			<h1 hlmH1 class="tw-text tw-text-oebblack">{{ 'RequestBadge.requestBadge' | translate }}:</h1>
+			<h1 hlmH1 class="tw-text-purple tw-font-extrabold">{{ badgeClass.name }}</h1>
+		</div>
+		<div class="tw-flex tw-gap-4 tw-mt-4 tw-items-center oeb-max-form-width">
+			<div class="tw-flex tw-items-center tw-bg-white tw-mx-auto tw-rounded-[20px]">
+				<img
+					class="tw-w-[120.88px] tw-min-w-[120.88px] md:tw-w-[172.69px] tw-mx-auto tw-block"
+					[loaded-src]="badgeClass.image"
+					[loading-src]="badgeLoadingImageUrl"
+					[error-src]="badgeFailedImageUrl"
+				/>
+			</div>
+			<div>
+				<p hlmP>
+					{{ 'RequestBadge.fillForm' | translate }}
+				</p>
+				<p hlmP>
+					{{ 'RequestBadge.requestBadgeInfo1' | translate }}
+					<span class="tw-italic">{{ badgeClass.name }}</span>
+					{{ 'RequestBadge.requestBadgeInfo2' | translate }}
+				</p>
+			</div>
+		</div>
 
-            <div
-                                    class="tw-flex tw-items-center tw-bg-white tw-mx-auto tw-rounded-[20px]">
-                                    <img class="tw-w-[120.88px] tw-min-w-[120.88px] md:tw-w-[172.69px] tw-mx-auto tw-block"
-                                        [loaded-src]="badgeClass.image" [loading-src]="badgeLoadingImageUrl"
-                                        [error-src]="badgeFailedImageUrl" />
-                                </div>
-            <div>
-                <p hlmP>
-                    {{ 'RequestBadge.fillForm' | translate}}
-                </p>
-                <p hlmP>
-                    {{ 'RequestBadge.requestBadgeInfo1' | translate}} <span class="tw-italic">{{badgeClass.name}}</span>
-                    {{ 'RequestBadge.requestBadgeInfo2' | translate}}
-    
-                </p>
-            </div>
-        </div>
-
-        <div class="oeb-section-sm oeb-max-form-width">
-            <form [formGroup]="requestForm.rawControl" (ngSubmit)="onSubmit()" novalidate>
-                <div class="tw-flex tw-flex-col">
-                    <oeb-input label="Vorname" [placeholder]=""
-                            fieldType="text" [control]="requestForm.rawControlMap.firstname"
-                            ></oeb-input>
-                    <oeb-input label="Nachname" [placeholder]=""
-                            fieldType="text" [control]="requestForm.rawControlMap.lastname"
-                            ></oeb-input>
-                    <p
-                        hlmP 
-                        size="sm"
-                        id="nameValidationError"
-                        [hidden]="!requestForm.hasError('maxLengthExceeded')"
-                        class="tw-font-normal tw-text-red tw-text-start tw-w-full tw-mt-2"
-                    >
-                        {{ 'RequestBadge.nameValidationError' | translate }}
-                    </p>        
-                    <oeb-input 
-						label="E-Mail" 
+		<div class="oeb-section-sm oeb-max-form-width">
+			<form [formGroup]="requestForm.rawControl" (ngSubmit)="onSubmit()" novalidate>
+				<div class="tw-flex tw-flex-col">
+					<oeb-input
+						label="Vorname"
 						[placeholder]=""
-                    	fieldType="email" 
-						[control]="requestForm.rawControlMap.email">
-                    ></oeb-input>    
-                    <oeb-input fieldType="hidden" [control]="requestForm.rawControlMap.qrCodeId"></oeb-input>    
-                </div>
+						fieldType="text"
+						[control]="requestForm.rawControlMap.firstname"
+					></oeb-input>
+					<oeb-input
+						label="Nachname"
+						[placeholder]=""
+						fieldType="text"
+						[control]="requestForm.rawControlMap.lastname"
+					></oeb-input>
+					<p
+						hlmP
+						size="sm"
+						id="nameValidationError"
+						[hidden]="!requestForm.hasError('maxLengthExceeded')"
+						class="tw-font-normal tw-text-red tw-text-start tw-w-full tw-mt-2"
+					>
+						{{ 'RequestBadge.nameValidationError' | translate }}
+					</p>
+					<oeb-input
+						label="E-Mail"
+						[placeholder]=""
+						fieldType="email"
+						[control]="requestForm.rawControlMap.email"
+					>
+						></oeb-input
+					>
+					<oeb-input fieldType="hidden" [control]="requestForm.rawControlMap.qrCodeId"></oeb-input>
+				</div>
 
-                <div class="oeb-standard-padding-bottom">
-                    <p hlmP class="tw-mt-6 md:tw-mt-7 tw-text-oebblack tw-leading-[18.2px] tw-mb-2">
-                        <span [innerHTML]="'RequestBadge.personalDataInfo' | translate" ></span>
-                    </p>
-                    
-                    <oeb-checkbox 
-						id="age-confirmation" 
-						name="age-confirmation" 
+				<div class="oeb-standard-padding-bottom">
+					<p hlmP class="tw-mt-6 md:tw-mt-7 tw-text-oebblack tw-leading-[18.2px] tw-mb-2">
+						<span [innerHTML]="'RequestBadge.personalDataInfo' | translate"></span>
+					</p>
+
+					<oeb-checkbox
+						id="age-confirmation"
+						name="age-confirmation"
 						type="checkbox"
-                        [text]="'RequestBadge.ageConfirmation' | translate "
-                        [control]="requestForm.rawControlMap.ageConfirmation">
-                    </oeb-checkbox>
-                </div>
-                <oeb-button type="submit" [text]="'RequestBadge.requestBadge' | translate">
-
-                </oeb-button>
-
-            </form>
-
-
-        </div>
-    </div>
+						[text]="'RequestBadge.ageConfirmation' | translate"
+						[control]="requestForm.rawControlMap.ageConfirmation"
+					>
+					</oeb-checkbox>
+				</div>
+				<oeb-button type="submit" [text]="'RequestBadge.requestBadge' | translate"> </oeb-button>
+			</form>
+		</div>
+	</div>
 </ng-template>

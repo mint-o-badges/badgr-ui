@@ -1,3 +1,4 @@
+import { NgIcon } from '@ng-icons/core';
 import { Component, Input, TemplateRef } from '@angular/core';
 import { BrnMenuTriggerDirective } from '@spartan-ng/brain/menu';
 import {
@@ -35,6 +36,7 @@ import { SharedIconsModule } from '../public/icons.module';
 		NgFor,
 		NgTemplateOutlet,
 		RouterModule,
+		NgIcon,
 		HlmIconModule,
 		SharedIconsModule,
 	],
@@ -44,7 +46,7 @@ import { SharedIconsModule } from '../public/icons.module';
 			<ng-template #stringTrigger>
 				<button [class]="triggerStyle">
 					{{ trigger }}
-					<hlm-icon class="tw-ml-2" name="lucideChevronDown" hlmMenuIcon />
+					<ng-icon hlm class="tw-ml-2" name="lucideChevronDown" hlmMenuIcon />
 				</button>
 			</ng-template>
 		</button>
@@ -54,7 +56,7 @@ import { SharedIconsModule } from '../public/icons.module';
 				<hlm-menu-label [size]="size" *ngIf="label">{{ label }}</hlm-menu-label>
 				<ng-container *ngFor="let menuItem of menuItems">
 					<button *ngIf="menuItem.action" (click)="menuItem.action($event)" [size]="size" hlmMenuItem>
-						<hlm-icon [class]="iconClass" *ngIf="menuItem.icon" name="{{ menuItem.icon }}" hlmMenuIcon />
+						<ng-icon hlm [class]="iconClass" *ngIf="menuItem.icon" name="{{ menuItem.icon }}" hlmMenuIcon />
 						{{ menuItem.title }}
 					</button>
 					<button
@@ -65,7 +67,7 @@ import { SharedIconsModule } from '../public/icons.module';
 						[size]="size"
 						hlmMenuItem
 					>
-						<hlm-icon [class]="iconClass" *ngIf="menuItem.icon" name="{{ menuItem.icon }}" hlmMenuIcon />
+						<ng-icon hlm [class]="iconClass" *ngIf="menuItem.icon" name="{{ menuItem.icon }}" hlmMenuIcon />
 						{{ menuItem.title }}
 					</button>
 				</ng-container>

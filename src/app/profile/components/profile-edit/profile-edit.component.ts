@@ -14,8 +14,8 @@ import { typedFormGroup } from '../../../common/util/typed-forms';
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 
 @Component({
-    templateUrl: './profile-edit.component.html',
-    standalone: false
+	templateUrl: './profile-edit.component.html',
+	standalone: false,
 })
 export class ProfileEditComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	profile: UserProfile;

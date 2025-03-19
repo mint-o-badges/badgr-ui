@@ -32,10 +32,10 @@ import { TranslateModule } from '@ngx-translate/core';
 import { QrCodeDatatableComponent } from '../components/datatable-qrcodes.component';
 import { IssuerDetailDatatableComponent } from '../components/datatable-issuer-detail.component';
 import { CompetencyAccordionComponent } from '../components/accordion.component';
-import {BadgeClassEditQrComponent} from './components/badgeclass-edit-qr/badgeclass-edit-qr.component';
+import { BadgeClassEditQrComponent } from './components/badgeclass-edit-qr/badgeclass-edit-qr.component';
 import { BadgeClassIssueQrComponent } from './components/badgeclass-issue-qr/badgeclass-issue-qr.component';
 import { BadgeClassGenerateQrComponent } from './components/badgeclass-generate-qr/badgeclass-generate-qr.component';
-import {QrCodeAwardsComponent} from './components/qrcode-awards/qrcode-awards.component';
+import { QrCodeAwardsComponent } from './components/qrcode-awards/qrcode-awards.component';
 import { QrCodeApiService } from './services/qrcode-api.service';
 import { BadgeRequestApiService } from './services/badgerequest-api.service';
 import { EditQrFormComponent } from './components/edit-qr-form/edit-qr-form.component';
@@ -52,11 +52,12 @@ import { LearningPathBadgesComponent } from './components/learningpath-create-st
 import { LearningPathBadgeOrderComponent } from './components/learningpath-create-steps/learningpath-badge-order/learningpath-badge-order.component';
 import { LearningPathTagsComponent } from './components/learningpath-create-steps/learningpath-tags/learningpath-tags.component';
 import { LearningPathUploadComponent } from './components/learningpath-upload/learningpath-upload.component';
-import { IssuerLearningPathComponent } from './components/issuer-learning-path/issuer-learning-path.component';import { IssuerEditFormComponent } from './components/issuer-edit-form/issuer-edit-form.component';
+import { IssuerLearningPathComponent } from './components/issuer-learning-path/issuer-learning-path.component';
+import { IssuerEditFormComponent } from './components/issuer-edit-form/issuer-edit-form.component';
 import { Issuer } from './models/issuer.model';
 import { LearningPathEditComponent } from './components/learningpath-edit/learningpath-edit.component';
 import { BadgeClassSelectTypeComponent } from './components/badgeclass-select-type/badgeclass-select-type.component';
-import {QRCodeComponent} from 'angularx-qrcode'
+import { QRCodeComponent } from 'angularx-qrcode';
 
 const routes = [
 	/* Issuer */
@@ -156,7 +157,7 @@ const routes = [
 		QrCodeAwardsComponent,
 		DndModule,
 		CdkStepperModule,
-		QRCodeComponent
+		QRCodeComponent,
 	],
 	declarations: [
 		BadgeClassSelectTypeComponent,

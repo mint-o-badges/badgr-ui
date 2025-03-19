@@ -13,10 +13,10 @@ import { ApiLearningPath } from '../../../../common/model/learningpath-api.model
 type BadgeResult = BadgeClass & { selected?: boolean };
 
 @Component({
-    selector: 'learningpath-badges',
-    templateUrl: './learningpath-badges.component.html',
-    styleUrls: ['../../learningpath-edit-form/learningpath-edit-form.component.scss'],
-    standalone: false
+	selector: 'learningpath-badges',
+	templateUrl: './learningpath-badges.component.html',
+	styleUrls: ['../../learningpath-edit-form/learningpath-edit-form.component.scss'],
+	standalone: false,
 })
 export class LearningPathBadgesComponent implements OnInit {
 	// @Output() selectedBadgesChanged = new EventEmitter<{ urls: string[], studyLoad: number }>();

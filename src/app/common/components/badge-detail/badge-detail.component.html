@@ -136,7 +136,9 @@
 								<dt class="tw-text-sm tw-text-oebblack tw-font-bold">
 									{{ 'RecBadgeDetail.duration' | translate }}
 								</dt>
-								<dd class="tw-text-sm tw-text-oebblack md:tw-ml-2">{{ config.duration | hourPipe }} {{'RecBadge.hours' | translate }}</dd>
+								<dd class="tw-text-sm tw-text-oebblack md:tw-ml-2">
+									{{ config.duration | hourPipe }} {{ 'RecBadge.hours' | translate }}
+								</dd>
 							</div>
 
 							<div
@@ -175,7 +177,10 @@
 								<dt class="tw-text-sm tw-text-oebblack tw-font-bold">Vergeben an</dt>
 								<dd class="tw-text-sm tw-break-all">&nbsp;{{ config.issuedTo }}</dd>
 							</div>
-							<div *ngIf="config.license" class="tw-text-oebblack tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
+							<div
+								*ngIf="config.license"
+								class="tw-text-oebblack tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col"
+							>
 								<dt class="tw-text-sm tw-text-oebblack tw-font-bold">Lizenz</dt>
 								<dd class="tw-text-sm tw-text-oebblack md:tw-ml-2 tw-flex">
 									<div
@@ -206,7 +211,9 @@
 				</div>
 				<div class="md:tw-pb-8 md:tw-min-h-[800px] tw-w-full">
 					<div class="tw-text-oebblack tw-pt-0 tw-pb-4">
-						<h3 class="tw-font-semibold tw-leading-[26.4px] tw-text-[22px] tw-text-oebblack tw-mb-4">Kurzbeschreibung</h3>
+						<h3 class="tw-font-semibold tw-leading-[26.4px] tw-text-[22px] tw-text-oebblack tw-mb-4">
+							Kurzbeschreibung
+						</h3>
 						<p hlmP class="tw-text-oebblack tw-w-full">{{ config.badgeDescription }}</p>
 					</div>
 					<!-- Kompetenzen -->
@@ -225,32 +232,36 @@
 									[name]="competency.name"
 									[category]="competency.category"
 									[description]="competency.description"
-									[framework]="competency.framework" [framework_identifier]="competency.framework_identifier"
+									[framework]="competency.framework"
+									[framework_identifier]="competency.framework_identifier"
 									[studyload]="(competency.studyLoad | hourPipe) + ' h'"
 								></competency-accordion>
 							</div>
 						</div>
 					</section>
 					<ng-content></ng-content>
-						<div *ngIf="config.learningPaths.length > 0">
-							<oeb-separator class="tw-block tw-mb-8 tw-mt-8"></oeb-separator>
-							<span class="tw-my-2 tw-text-oebblack tw-text-[22px] tw-leading-[26px] tw-font-semibold"> Dieser Badge ist Teil folgender Micro Degrees: </span>
-							<div class="tw-mt-8 tw-grid tw-grid-cols-learningpaths tw-gap-6">
-								<bg-learningpathcard *ngFor="let lp of config.learningPaths"
-									[name]="lp.name"
-									[badgeImage]="lp.participationBadge_image"
-									[issuerTitle]="lp.issuer_name"
-									[description]="lp.description"
-									[slug]="lp.slug"
-									[tags]="lp.tags"
-									[studyLoad]="calculateStudyLoad(lp)"
-									[progress]="lp.progress"
-									[matchOrProgress]="calculateLearningPathStatus(lp)"
-									[requested]="lp.requested"
-									[completed]="checkCompleted(lp)"
-								></bg-learningpathcard>
-							</div>
+					<div *ngIf="config.learningPaths.length > 0">
+						<oeb-separator class="tw-block tw-mb-8 tw-mt-8"></oeb-separator>
+						<span class="tw-my-2 tw-text-oebblack tw-text-[22px] tw-leading-[26px] tw-font-semibold">
+							Dieser Badge ist Teil folgender Micro Degrees:
+						</span>
+						<div class="tw-mt-8 tw-grid tw-grid-cols-learningpaths tw-gap-6">
+							<bg-learningpathcard
+								*ngFor="let lp of config.learningPaths"
+								[name]="lp.name"
+								[badgeImage]="lp.participationBadge_image"
+								[issuerTitle]="lp.issuer_name"
+								[description]="lp.description"
+								[slug]="lp.slug"
+								[tags]="lp.tags"
+								[studyLoad]="calculateStudyLoad(lp)"
+								[progress]="lp.progress"
+								[matchOrProgress]="calculateLearningPathStatus(lp)"
+								[requested]="lp.requested"
+								[completed]="checkCompleted(lp)"
+							></bg-learningpathcard>
 						</div>
+					</div>
 				</div>
 			</div>
 		</div>

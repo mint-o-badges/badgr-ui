@@ -5,17 +5,19 @@ import { NgIcon, provideIcons } from '@ng-icons/core';
 import { lucideChevronLeft } from '@ng-icons/lucide';
 import { hlm } from '@spartan-ng/brain/core';
 import { ButtonVariants } from '../../../ui-button-helm/src';
-// import { HlmIconDirective } from '@spartan-ng/ui-icon-helm';
+import { HlmIconDirective } from '../../../ui-icon-helm/src';
 import { ClassValue } from 'clsx';
 import { HlmPaginationLinkDirective } from './hlm-pagination-link.directive';
 
 @Component({
-    selector: 'hlm-pagination-previous',
-    imports: [HlmPaginationLinkDirective, NgIcon,
-        // HlmIconDirective
-    ],
-    providers: [provideIcons({ lucideChevronLeft })],
-    template: `
+	selector: 'hlm-pagination-previous',
+	imports: [
+		HlmPaginationLinkDirective,
+		NgIcon,
+		HlmIconDirective
+	],
+	providers: [provideIcons({ lucideChevronLeft })],
+	template: `
 		<a
 			[class]="_computedClass()"
 			hlmPaginationLink
@@ -27,7 +29,7 @@ import { HlmPaginationLinkDirective } from './hlm-pagination-link.directive';
 		>
 			<span [class.sr-only]="iconOnly()">{{ text() }}</span>
 		</a>
-	`
+	`,
 })
 export class HlmPaginationPreviousComponent {
 	public readonly userClass = input<ClassValue>('', { alias: 'class' });
@@ -43,5 +45,7 @@ export class HlmPaginationPreviousComponent {
 
 	protected readonly size = computed<ButtonVariants['size']>(() => (this.iconOnly() ? 'icon' : 'default'));
 
-	protected readonly _computedClass = computed(() => hlm('tw-gap-1', !this.iconOnly() ? 'tw-pl-2.5' : '', this.userClass()));
+	protected readonly _computedClass = computed(() =>
+		hlm('tw-gap-1', !this.iconOnly() ? 'tw-pl-2.5' : '', this.userClass()),
+	);
 }

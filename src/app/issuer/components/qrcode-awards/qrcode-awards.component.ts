@@ -1,3 +1,4 @@
+import { NgIcon } from '@ng-icons/core';
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges, inject } from '@angular/core';
 import { BrnAccordionContentComponent } from '@spartan-ng/brain/accordion';
 import { HlmAccordionModule } from '../../../components/spartan/ui-accordion-helm/src';
@@ -31,6 +32,7 @@ import { Issuer } from '../../models/issuer.model';
 	providers: [BadgeRequestApiService, HlmDialogService, QrCodeApiService, TranslateService],
 	imports: [
 		HlmAccordionModule,
+		NgIcon,
 		HlmIconModule,
 		TranslateModule,
 		BrnAccordionContentComponent,
