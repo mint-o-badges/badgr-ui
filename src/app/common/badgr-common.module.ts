@@ -135,7 +135,6 @@ import { QrCodeApiService } from '../issuer/services/qrcode-api.service';
 import { serverErrorInterceptorFactory } from '../server-error-interceptor.factory';
 import { AltchaComponent } from '../components/altcha.component';
 import { SortPipe } from './pipes/sortPipe';
-import { PaginationIconOnlyComponent } from '../components/test-pagination.component';
 
 const DIRECTIVES = [
 	BgAwaitPromises,
@@ -247,7 +246,6 @@ export const COMMON_IMPORTS = [
 	OebProgressComponent,
 	OebDropdownComponent,
 	OebPaginationComponent,
-	PaginationIconOnlyComponent,
 	HlmH1Directive,
 	HlmH2Directive,
 	HlmH3Directive,

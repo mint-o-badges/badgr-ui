@@ -11,11 +11,7 @@ import { HlmPaginationLinkDirective } from './hlm-pagination-link.directive';
 
 @Component({
 	selector: 'hlm-pagination-previous',
-	imports: [
-		HlmPaginationLinkDirective,
-		NgIcon,
-		HlmIconDirective
-	],
+	imports: [HlmPaginationLinkDirective, NgIcon, HlmIconDirective],
 	providers: [provideIcons({ lucideChevronLeft })],
 	template: `
 		<a
@@ -27,6 +23,7 @@ import { HlmPaginationLinkDirective } from './hlm-pagination-link.directive';
 			[size]="size()"
 			[attr.aria-label]="ariaLabel()"
 		>
+			<ng-icon hlm size="sm" name="lucideChevronLeft" />
 			<span [class.sr-only]="iconOnly()">{{ text() }}</span>
 		</a>
 	`,
@@ -45,7 +42,5 @@ export class HlmPaginationPreviousComponent {
 
 	protected readonly size = computed<ButtonVariants['size']>(() => (this.iconOnly() ? 'icon' : 'default'));
 
-	protected readonly _computedClass = computed(() =>
-		hlm('tw-gap-1', !this.iconOnly() ? 'tw-pl-2.5' : '', this.userClass()),
-	);
+	protected readonly _computedClass = computed(() => hlm('tw-gap-1', !this.iconOnly() ? 'tw-pl-2.5' : '', this.userClass()));
 }
