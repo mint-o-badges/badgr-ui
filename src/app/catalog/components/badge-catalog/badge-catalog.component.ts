@@ -55,7 +55,6 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 	tagsControl = new FormControl();
 
 	badgesPerPage = 30;
-	currentPage: number = 1;
 	totalPages: number;
 	nextLink: string;
 	previousLink: string;
@@ -108,6 +107,20 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 	trackById(index: number, item: any): any {
 		return item.id;
 	}
+
+	private _currentPage = 1;
+
+	get currentPage(): number {
+		return this._currentPage;
+	}
+
+	set currentPage(value: number) {
+		if (this._currentPage !== value) {
+		  this._currentPage = value;
+		  this.updatePaginatedResults();
+		}
+	  }
+
 
 	groups = [this.translate.instant('Badge.category'), this.translate.instant('Badge.issuer'), '---'];
 	categoryOptions: { [key in BadgeClassCategory | 'noCategory']: string } = {
@@ -351,12 +364,12 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		that.badgeResults = filteredBadges.slice(start, end);
 	}
 
-	onPageChange(newPage: number) {
-		if (newPage >= 1 && newPage <= this.totalPages) {
-			this.currentPage = newPage;
-			this.updatePaginatedResults();
-		}
-	}
+	// onPageChange(newPage: number) {
+	// 	if (newPage >= 1 && newPage <= this.totalPages) {
+	// 		this.currentPage = newPage;
+	// 		this.updatePaginatedResults();
+	// 	}
+	// }
 
 	openLegend() {
 		this.showLegend = true;

@@ -40,7 +40,7 @@ export class HlmPaginationPreviousComponent {
 		transform: booleanAttribute,
 	});
 
-	protected readonly size = computed<ButtonVariants['size']>(() => (this.iconOnly() ? 'icon' : 'default'));
+	protected readonly size = computed<ButtonVariants['size']>(() => (this.iconOnly() ? 'icon' : 'sm'));
 
 	protected readonly _computedClass = computed(() => hlm('tw-gap-1', !this.iconOnly() ? 'tw-pl-2.5' : '', this.userClass()));
 }

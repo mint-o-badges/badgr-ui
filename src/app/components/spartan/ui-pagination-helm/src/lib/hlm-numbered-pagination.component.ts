@@ -24,18 +24,12 @@ import { HlmPaginationDirective } from './hlm-pagination.directive';
 	selector: 'hlm-numbered-pagination',
 	template: `
 		<div class="tw-flex tw-items-center tw-justify-between tw-gap-2 tw-px-4 tw-py-2">
-			<div class="tw-flex tw-items-center tw-gap-1 tw-text-nowrap tw-text-sm tw-text-gray-600">
-				<b>{{ totalItems() }}</b>
-				total items |
-				<b>{{ pages().length }}</b>
-				pages
-			</div>
 
 			<nav hlmPagination>
 				<ul hlmPaginationContent>
 					@if (showEdges() && !isFirstPageActive()) {
 						<li hlmPaginationItem (click)="goToPrevious()">
-							<hlm-pagination-previous />
+							<hlm-pagination-previous iconOnly="true" />
 						</li>
 					}
 
@@ -57,23 +51,11 @@ import { HlmPaginationDirective } from './hlm-pagination.directive';
 
 					@if (showEdges() && !isLastPageActive()) {
 						<li hlmPaginationItem (click)="goToNext()">
-							<hlm-pagination-next />
+							<hlm-pagination-next iconOnly="true" />
 						</li>
 					}
 				</ul>
 			</nav>
-
-			<!-- Show Page Size selector -->
-			<brn-select [(ngModel)]="itemsPerPage" class="tw-ml-auto" placeholder="Page size">
-				<hlm-select-trigger class="tw-w-fit">
-					<hlm-select-value />
-				</hlm-select-trigger>
-				<hlm-select-content>
-					@for (pageSize of pageSizesWithCurrent(); track pageSize) {
-						<hlm-option [value]="pageSize">{{ pageSize }} / page</hlm-option>
-					}
-				</hlm-select-content>
-			</brn-select>
 		</div>
 	`,
 	imports: [
