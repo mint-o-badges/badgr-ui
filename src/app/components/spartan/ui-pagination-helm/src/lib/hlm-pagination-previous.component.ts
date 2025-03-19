@@ -24,7 +24,7 @@ import { HlmPaginationLinkDirective } from './hlm-pagination-link.directive';
 			[attr.aria-label]="ariaLabel()"
 		>
 			<ng-icon hlm size="sm" name="lucideChevronLeft" />
-			<span [class.sr-only]="iconOnly()">{{ text() }}</span>
+			<span [class.tw-sr-only]="iconOnly()">{{ text() }}</span>
 		</a>
 	`,
 })

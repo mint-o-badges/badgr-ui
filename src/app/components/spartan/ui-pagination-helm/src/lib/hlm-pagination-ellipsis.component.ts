@@ -2,14 +2,14 @@ import { Component, computed, input } from '@angular/core';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { lucideEllipsis } from '@ng-icons/lucide';
 import { hlm } from '@spartan-ng/brain/core';
-// import { HlmIconDirective } from '@spartan-ng/ui-icon-helm';
+import { HlmIconDirective } from '../../../ui-icon-helm/src';
 import { ClassValue } from 'clsx';
 
 @Component({
 	selector: 'hlm-pagination-ellipsis',
 	imports: [
 		NgIcon,
-		// HlmIconDirective
+		HlmIconDirective
 	],
 	providers: [provideIcons({ lucideEllipsis })],
 	template: `
