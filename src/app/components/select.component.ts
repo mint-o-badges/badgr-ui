@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild, TemplateRef } from '@angular/core';
 import { OebInputErrorComponent } from './input.error.component';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -6,6 +6,7 @@ import { HlmPDirective } from './spartan/ui-typography-helm/src/lib/hlm-p.direct
 import { BrnSelectImports } from '@spartan-ng/brain/select';
 import { HlmSelectModule } from './spartan/ui-select-helm/src/index';
 import { CustomValidatorMessages, messagesForValidationError } from './input.component';
+import { OebSeparatorComponent } from './oeb-separator.component';
 
 @Component({
 	selector: 'oeb-select ',
@@ -16,6 +17,7 @@ import { CustomValidatorMessages, messagesForValidationError } from './input.com
 		OebInputErrorComponent,
 		ReactiveFormsModule,
 		CommonModule,
+		OebSeparatorComponent
 	],
 	template: ` <div [ngClass]="{ 'tw-mt-6 md:tw-mt-7': !noTopMargin }">
 		<label class="tw-pb-[2px] tw-pl-[3px]" [attr.for]="inputName" *ngIf="label">
@@ -52,6 +54,10 @@ import { CustomValidatorMessages, messagesForValidationError } from './input.com
 			</hlm-select-trigger>
 			<hlm-select-content [ngStyle]="{ 'max-height.px': dropdownMaxHeight }">
 				<hlm-option *ngFor="let option of options" [value]="option.value">{{ option.label }}</hlm-option>
+				<div *ngIf="template">
+					<oeb-separator [separatorStyle]="'!tw-border-dashed'"></oeb-separator>
+					<ng-content *ngTemplateOutlet="template"></ng-content>
+				</div>
 			</hlm-select-content>
 		</brn-select>
 
@@ -95,8 +101,10 @@ export class OebSelectComponent {
 	@Input() autofocus = false;
 	@Input() noTopMargin = false;
 	@Input() dropdownMaxHeight: number | undefined;
+	@Input() template?: TemplateRef<any>;
 
 	@ViewChild('selectInput') selectInput: ElementRef;
+
 
 	private _unlocked = false;
 	@Input()

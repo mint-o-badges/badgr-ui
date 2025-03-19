@@ -73,7 +73,8 @@
 		"all": "Alle",
 		"pleaseWait": "Bitte warten...",
 		"title": "Titel",
-		"noResults": "Keine Ergebnisse"
+		"noResults": "Keine Ergebnisse",
+		"reset": "Zurücksetzen"
 	},
 	"NavItems": {
 		"register": "Registrieren",

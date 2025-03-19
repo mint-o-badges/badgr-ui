@@ -70,7 +70,23 @@
 							noTopMargin="true"
 							multiple="true"
 							[dropdownMaxHeight]="250"
-						></oeb-select>
+							></oeb-select>
+							<!-- Use this template to save the tag selection when filtering was moved to the server side  -->
+							<ng-template #tagFilterTemplate>
+								<div class="tw-w-full tw-flex tw-flex-col tw-gap-2">
+									<oeb-button width="full_width" size="sm" [text]="'General.save' | translate">
+	
+									</oeb-button>
+									<oeb-button 
+										width="full_width"
+										size="sm"
+										[text]="'General.reset' | translate"
+										variant="secondary"
+										(click)="resetTags()"
+										>
+									</oeb-button>
+								</div>
+							</ng-template>
 					</div>
 				</div>
 				<div class="subtitle-wrapper">
