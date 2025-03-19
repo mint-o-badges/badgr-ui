@@ -188,12 +188,17 @@
 				</p>
 			</section>
 		</div>
-		<oeb-pagination
+		<spartan-pagination-advanced [totalProducts]="badges.length" [(page)]="currentPage" >
+			
+		</spartan-pagination-advanced>
+		 <span>currentPage: {{currentPage}}</span>
+		<!-- <oeb-pagination
 			[currentPage]="currentPage"
 			[totalPages]="totalPages"
 			[nextLink]="nextLink"
 			[previousLink]="previousLink"
-			(pageChange)="onPageChange($event)">
-		</oeb-pagination>
+			(pageChange)="onPageChange($event)"
+		>
+		</oeb-pagination> -->
 	</ng-template>
 </div>

@@ -29,8 +29,12 @@ import { CommonModule } from '@angular/common';
 				<li hlmPaginationItem>
 					<hlm-pagination-previous (click)="changePage(currentPage - 1)" *ngIf="currentPage > 1" />
 				</li>
-				<li hlmPaginationItem *ngFor="let page of getPageNumbers();" (click)="changePage(page)">
+
+				<li hlmPaginationItem *ngFor="let page of getPageNumbers()" (click)="changePage(page)">
+					<hlm-pagination-ellipsis *ngIf="page === '...' " />
+					
 					<a hlmPaginationLink [isActive]="page === currentPage">{{ page }}</a>
+
 				</li>
 				
 				<li hlmPaginationItem>
