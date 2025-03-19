@@ -40,6 +40,9 @@ import { LearningPathTagsComponent } from '../learningpath-create-steps/learning
 import { AppConfigService } from '../../../common/app-config.service';
 import { BadgeClassApiService } from '../../services/badgeclass-api.service';
 import { UrlValidator } from '../../../common/validators/url.validator';
+import { Issuer } from '../../models/issuer.model';
+import { IssuerManager } from '../../services/issuer-manager.service';
+
 
 interface DraggableItem {
 	content: string;
@@ -130,13 +133,18 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 	lpTags: string[];
 	badgeList: any[] = [];
 
-	baseUrl: string
+	baseUrl: string;
+
+	issuer: Issuer
+	issuerLoaded: Promise<unknown>;
+
 
 	constructor(
 		protected formBuilder: FormBuilder,
 		protected loginService: SessionService,
 		protected messageService: MessageService,
 		protected learningPathApiService: LearningPathApiService,
+		protected issuerManager: IssuerManager,
 		protected issuerApiService: IssuerApiService,
 		protected router: Router,
 		protected route: ActivatedRoute,
@@ -152,6 +160,9 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 		super(router, route, loginService);
 		this.baseUrl = this.configService.apiConfig.baseUrl;
 		// this.selectedBadgesLoaded = this.loadSelectedBadges();
+		this.issuerLoaded = this.issuerManager.issuerBySlug(this.issuerSlug).then((issuer) => {
+			this.issuer = issuer;
+		})
 	}
 	next: string
 	previous: string;
@@ -401,7 +412,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 						'extensions:CategoryExtension': {
 							'@context': categoryExtensionContextUrl,
 							type: ['Extension', 'extensions:CategoryExtension'],
-							Category: 'participation',
+							Category: 'learningpath',
 						},
 						'extensions:LicenseExtension': {
 							'@context': licenseExtensionContextUrl,

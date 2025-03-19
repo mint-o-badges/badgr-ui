@@ -95,7 +95,7 @@
 							>
 								<div>
 									<img
-										class="tw-w-[37.1px] tw-h-[37.1px] md:tw-w-[53px] md:tw-h-[53px] issuer-image"
+										class="tw-min-w-[37.1px] tw-h-[37.1px] md:tw-min-w-[53px] md:tw-h-[53px] issuer-image"
 										[loaded-src]="config.issuerImage"
 										[loading-src]="config.issuerImagePlacholderUrl"
 										[error-src]="config.issuerImagePlacholderUrl"
@@ -206,7 +206,7 @@
 				</div>
 				<div class="md:tw-pb-8 md:tw-min-h-[800px] tw-w-full">
 					<div class="tw-text-oebblack tw-pt-0 tw-pb-4">
-						<h3 hlmH3 class="tw-font-semibold tw-text-oebblack tw-mb-4">Kurzbeschreibung</h3>
+						<h3 class="tw-font-semibold tw-leading-[26.4px] tw-text-[22px] tw-text-oebblack tw-mb-4">Kurzbeschreibung</h3>
 						<p hlmP class="tw-text-oebblack tw-w-full">{{ config.badgeDescription }}</p>
 					</div>
 					<!-- Kompetenzen -->
@@ -215,7 +215,7 @@
 						class="tw-text-oebblack tw-pb-8"
 					>
 						<h3
-							class="tw-text-[22px] tw-leading-[26.4px] tw-font-[500] tw-font-[rubik] tw-text-oebblack u-margin-bottom2x u-margin-top4x"
+							class="tw-text-[22px] tw-leading-[26.4px] tw-font-semibold tw-text-oebblack u-margin-bottom2x u-margin-top4x"
 						>
 							{{ 'RecBadgeDetail.competencies' | translate }}
 						</h3>

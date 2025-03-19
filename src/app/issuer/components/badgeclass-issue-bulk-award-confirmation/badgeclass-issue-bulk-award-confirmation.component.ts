@@ -60,6 +60,7 @@ export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRouta
 	}
 
 	dataConfirmed() {
+		if(this.buttonDisabledAttribute) return;
 		this.disableActionButton();
 
 		const assertions: BadgeInstanceBatchAssertion[] = [];

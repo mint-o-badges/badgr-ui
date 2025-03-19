@@ -10,21 +10,19 @@ import { MessageService } from '../../../../common/services/message.service';
 import { StringMatchingUtil } from '../../../../common/util/string-matching-util';
 import { ApiLearningPath } from '../../../../common/model/learningpath-api.model';
 
-
-
 type BadgeResult = BadgeClass & { selected?: boolean };
 
 @Component({
 	selector: 'learningpath-badges',
 	templateUrl: './learningpath-badges.component.html',
-	styleUrls: ['../../learningpath-edit-form/learningpath-edit-form.component.scss']
+	styleUrls: ['../../learningpath-edit-form/learningpath-edit-form.component.scss'],
 })
 export class LearningPathBadgesComponent implements OnInit {
 	// @Output() selectedBadgesChanged = new EventEmitter<{ urls: string[], studyLoad: number }>();
-	@Output() selectedBadgesChanged = new EventEmitter<{ badges: BadgeClass[], studyLoad: number}>()
+	@Output() selectedBadgesChanged = new EventEmitter<{ badges: BadgeClass[]; studyLoad: number }>();
 
 	@Input()
-	set learningPath (lp: ApiLearningPath) {
+	set learningPath(lp: ApiLearningPath) {
 		// this.initFormFromExisting(lp);
 	}
 
@@ -42,7 +40,7 @@ export class LearningPathBadgesComponent implements OnInit {
 	badges: BadgeClass[] = null;
 	badgeResults: BadgeResult[] = null;
 	selectedBadgeUrls: string[] = [];
-	selectedBadges: BadgeClass[] = []
+	selectedBadges: BadgeClass[] = [];
 	badgesFormArray: any;
 
 	badgeResultsByIssuer: MatchingBadgeIssuer[] = [];
@@ -90,26 +88,25 @@ export class LearningPathBadgesComponent implements OnInit {
 
 	checkboxChange(event, badge: BadgeClass) {
 		if (event) {
-			this.selectedBadges.push(badge)
-			this.lpBadgesForm.controls.badges.push(
-				typedFormGroup().addControl('badge', badge)
-			)
+			this.selectedBadges.push(badge);
+			this.lpBadgesForm.controls.badges.push(typedFormGroup().addControl('badge', badge));
 			this.studyLoad += badge.extension['extensions:StudyLoadExtension'].StudyLoad;
-		}
-		else {
-			this.selectedBadges.splice(this.selectedBadges.indexOf(badge), 1)
-			this.lpBadgesForm.controls.badges.removeAt(this.lpBadgesForm.controls.badges.value.findIndex(badge => badge.badge === badge))
+		} else {
+			this.selectedBadges.splice(this.selectedBadges.indexOf(badge), 1);
+			this.lpBadgesForm.controls.badges.removeAt(
+				this.lpBadgesForm.controls.badges.value.findIndex((badge) => badge.badge === badge),
+			);
 			this.studyLoad -= badge.extension['extensions:StudyLoadExtension'].StudyLoad;
 		}
-		this.selectedBadgesChanged.emit({badges: this.selectedBadges, studyLoad: this.studyLoad})
+		this.selectedBadgesChanged.emit({ badges: this.selectedBadges, studyLoad: this.studyLoad });
 	}
-	groups: string[] = []
+	groups: string[] = [];
 	// groups = [this.translate.instant('Badge.category'), this.translate.instant('Badge.issuer'), '---'];
 	categoryOptions: { [key in BadgeClassCategory | 'noCategory']: string } = {
 		competency: '',
 		participation: '',
 		learningpath: '',
-		noCategory: ''
+		noCategory: '',
 	};
 
 	// lpBadgesForm = typedFormGroup(this.minSelectedBadges.bind(this)).addArray(
@@ -122,9 +119,8 @@ export class LearningPathBadgesComponent implements OnInit {
 
 	lpBadgesForm = typedFormGroup(this.minSelectedBadges.bind(this)).addArray(
 		'badges',
-		typedFormGroup()
-			.addControl('badge', null, Validators.required)
-	)
+		typedFormGroup().addControl('badge', null, Validators.required),
+	);
 
 	async loadBadges() {
 		this.badges = [];
@@ -132,13 +128,22 @@ export class LearningPathBadgesComponent implements OnInit {
 		return new Promise(async (resolve, reject) => {
 			this.badgeClassService.badgesByIssuerUrl$.subscribe(
 				(badges) => {
-					Object.values(badges).forEach(badgeList => {
-						this.badges.push(...badgeList.slice().filter((b) => b.extension['extensions:StudyLoadExtension'].StudyLoad > 0).sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime()));
+					Object.values(badges).forEach((badgeList) => {
+						this.badges.push(
+							...badgeList
+								.slice()
+								.filter(
+									(b) =>
+										b.extension['extensions:StudyLoadExtension'].StudyLoad > 0 &&
+										b.extension['extensions:CategoryExtension'].Category !== 'learningpath',
+								)
+								.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime()),
+						);
 						this.badgesFormArray = this.lpBadgesForm.controls.badges.value;
 						this.tags = sortUnique(this.tags);
 						this.issuers = sortUnique(this.issuers);
 						this.updateResults();
-					})
+					});
 
 					this.badgeResults = this.badges;
 					this.badgeResults.forEach((badge) => {
@@ -159,13 +164,16 @@ export class LearningPathBadgesComponent implements OnInit {
 	}
 
 	loadAllBadges() {
-		this.loadingPromise = this.loadAllPublicBadges()
+		this.loadingPromise = this.loadAllPublicBadges();
 	}
 	async loadAllPublicBadges() {
 		return new Promise(async (resolve, reject) => {
 			this.badgeClassService.allPublicBadges$.subscribe(
 				(badges) => {
-					this.badges = badges.slice().filter((b) => b.extension['extensions:StudyLoadExtension'].StudyLoad > 0).sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+					this.badges = badges
+						.slice()
+						.filter((b) => b.extension['extensions:StudyLoadExtension'].StudyLoad > 0)
+						.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
 					this.badgeResults = this.badges;
 
 					this.badgesFormArray = this.lpBadgesForm.controls.badges.value;
@@ -269,33 +277,32 @@ export class LearningPathBadgesComponent implements OnInit {
 	minSelectedBadges(): ValidationErrors | null {
 		return this.selectedBadges.length >= 3
 			? null
-			: { minSelectedBadges: { required: 3, actual: this.selectedBadges.length } }
+			: { minSelectedBadges: { required: 3, actual: this.selectedBadges.length } };
 	}
 	ngOnInit(): void {
-
 		this.translate.get('Badge.category').subscribe((translatedText: string) => {
-			this.groups[0] = translatedText
-		})
+			this.groups[0] = translatedText;
+		});
 
 		this.translate.get('Badge.issuer').subscribe((translatedText: string) => {
-			this.groups[1] = translatedText
-		})
+			this.groups[1] = translatedText;
+		});
 
 		this.translate.get('Badge.competency').subscribe((translatedText: string) => {
-			this.categoryOptions.competency = translatedText
-		})
+			this.categoryOptions.competency = translatedText;
+		});
 
 		this.translate.get('Badge.participation').subscribe((translatedText: string) => {
-			this.categoryOptions.participation = translatedText
-		})
+			this.categoryOptions.participation = translatedText;
+		});
 
 		this.translate.get('Badge.learningpath').subscribe((translatedText: string) => {
-			this.categoryOptions.learningpath = translatedText
-		})
+			this.categoryOptions.learningpath = translatedText;
+		});
 
 		this.translate.get('Badge.noCategory').subscribe((translatedText: string) => {
-			this.categoryOptions.noCategory = translatedText
-		})
+			this.categoryOptions.noCategory = translatedText;
+		});
 	}
 }
 
@@ -304,8 +311,7 @@ class MatchingBadgeIssuer {
 		public issuerName: string,
 		public badge,
 		public badges: BadgeClass[] = [],
-
-	) { }
+	) {}
 	async addBadge(badge) {
 		if (badge.issuerName === this.issuerName) {
 			if (this.badges.indexOf(badge) < 0) {
@@ -319,7 +325,7 @@ class MatchingBadgeCategory {
 		public category: string,
 		public badge,
 		public badges: BadgeClass[] = [],
-	) { }
+	) {}
 	async addBadge(badge) {
 		if (
 			badge.extension &&
@@ -336,4 +342,3 @@ class MatchingBadgeCategory {
 		}
 	}
 }
-
