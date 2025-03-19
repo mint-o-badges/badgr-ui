@@ -1,5 +1,5 @@
 import { Directive, type DoCheck, ElementRef, Renderer2, computed, effect, inject, input, signal } from '@angular/core';
-import { hlm } from '@spartan-ng/ui-core';
+import { hlm } from '@spartan-ng/brain/core';
 import type { ClassValue } from 'clsx';
 
 @Directive({
@@ -16,14 +16,21 @@ export class HlmProgressIndicatorDirective implements DoCheck {
 
 	public readonly userClass = input<ClassValue>('', { alias: 'class' });
 	protected _computedClass = computed(() =>
-		hlm('tw-inline-flex tw-transform-gpu tw-h-full tw-w-full tw-flex-1 tw-bg-green tw-transition-all', this.userClass()),
+		hlm(
+			'tw-inline-flex tw-transform-gpu tw-h-full tw-w-full tw-flex-1 tw-bg-green tw-transition-all',
+			this.userClass(),
+		),
 	);
 
 	constructor() {
 		effect(() => {
 			// using renderer directly as hostbinding is one change detection cycle behind
 			const currentValue = this._value();
-			this._renderer.setStyle(this._element.nativeElement, 'transform', `translateX(-${100 - (currentValue || 100)}%)`);
+			this._renderer.setStyle(
+				this._element.nativeElement,
+				'transform',
+				`translateX(-${100 - (currentValue || 100)}%)`,
+			);
 			if (!currentValue) {
 				this._renderer.addClass(this._element.nativeElement, 'animate-indeterminate');
 			} else {

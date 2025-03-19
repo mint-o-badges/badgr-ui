@@ -8,7 +8,7 @@ import {
 const { fontFamily } = require('tailwindcss/defaultTheme');
 
 module.exports = {
-	presets: [require('@spartan-ng/ui-core/hlm-tailwind-preset')],
+	presets: [require('@spartan-ng/brain/hlm-tailwind-preset')],
 	safelist: ['overflow-hidden'],
 	prefix: 'tw-',
 	content: ['./src/**/*.{html,ts}', './components/**/*.{html,ts}'],

@@ -12,7 +12,7 @@ import {
 	type OnDestroy,
 } from '@angular/core';
 import { NgIconComponent, type IconName } from '@ng-icons/core';
-import { hlm } from '@spartan-ng/ui-core';
+import { hlm } from '@spartan-ng/brain/core';
 import { cva } from 'class-variance-authority';
 import type { ClassValue } from 'clsx';
 
@@ -49,11 +49,11 @@ const isDefinedSize = (size: IconSize): size is DefinedSizes => {
 const TAILWIND_H_W_PATTERN = /\b(h-\d+|w-\d+)\b/g;
 
 @Component({
-    selector: 'hlm-icon',
-    imports: [NgIconComponent],
-    encapsulation: ViewEncapsulation.None,
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    template: `
+	selector: 'hlm-icon',
+	imports: [NgIconComponent],
+	encapsulation: ViewEncapsulation.None,
+	changeDetection: ChangeDetectionStrategy.OnPush,
+	template: `
 		<ng-icon
 			[class]="ngIconCls()"
 			[size]="ngIconSize()"
@@ -62,9 +62,9 @@ const TAILWIND_H_W_PATTERN = /\b(h-\d+|w-\d+)\b/g;
 			[strokeWidth]="_strokeWidth()"
 		/>
 	`,
-    host: {
-        '[class]': '_computedClass()',
-    }
+	host: {
+		'[class]': '_computedClass()',
+	},
 })
 export class HlmIconComponent implements OnDestroy {
 	private readonly _host = inject(ElementRef);

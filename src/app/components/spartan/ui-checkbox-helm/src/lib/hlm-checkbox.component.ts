@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { BrnCheckboxComponent, indeterminateBooleanAttribute } from '@spartan-ng/brain/checkbox';
-import { hlm } from '@spartan-ng/ui-core';
+import { hlm } from '@spartan-ng/brain/core';
 import type { ClassValue } from 'clsx';
 import { HlmCheckboxCheckIconComponent } from './hlm-checkbox-checkicon.component';
 

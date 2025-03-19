@@ -10,7 +10,7 @@ import {
 	signal,
 } from '@angular/core';
 import { lucideX } from '@ng-icons/lucide';
-import { hlm } from '@spartan-ng/ui-core';
+import { hlm } from '@spartan-ng/brain/core';
 import { BrnDialogCloseDirective, BrnDialogRef, injectBrnDialogContext } from '@spartan-ng/brain/dialog';
 // import { HlmIconComponent, provideIcons } from '@spartan-ng/ui-icon-helm';
 import { HlmIconComponent, provideIcons } from '../../../../spartan/ui-icon-helm/src';

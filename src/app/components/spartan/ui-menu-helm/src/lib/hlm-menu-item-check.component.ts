@@ -1,20 +1,20 @@
 import { Component, computed, input } from '@angular/core';
 import { lucideCheck } from '@ng-icons/lucide';
-import { hlm } from '@spartan-ng/ui-core';
+import { hlm } from '@spartan-ng/brain/core';
 import { HlmIconComponent, provideIcons } from '../../../ui-icon-helm/src';
 import type { ClassValue } from 'clsx';
 
 @Component({
-    selector: 'hlm-menu-item-check',
-    providers: [provideIcons({ lucideCheck })],
-    imports: [HlmIconComponent],
-    template: `
+	selector: 'hlm-menu-item-check',
+	providers: [provideIcons({ lucideCheck })],
+	imports: [HlmIconComponent],
+	template: `
 		<!-- Using 1rem for size to mimick h-4 w-4 -->
 		<hlm-icon size="1rem" name="lucideCheck" />
 	`,
-    host: {
-        '[class]': '_computedClass()',
-    }
+	host: {
+		'[class]': '_computedClass()',
+	},
 })
 export class HlmMenuItemCheckComponent {
 	public readonly userClass = input<ClassValue>('', { alias: 'class' });

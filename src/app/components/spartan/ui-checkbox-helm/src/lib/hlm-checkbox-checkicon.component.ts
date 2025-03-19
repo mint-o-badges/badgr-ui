@@ -1,7 +1,7 @@
 import { Component, computed, inject, input } from '@angular/core';
 import { lucideCheck } from '@ng-icons/lucide';
 import { BrnCheckboxComponent } from '@spartan-ng/brain/checkbox';
-import { hlm } from '@spartan-ng/ui-core';
+import { hlm } from '@spartan-ng/brain/core';
 import { HlmIconComponent, provideIcons } from '../../../ui-icon-helm/src';
 import type { ClassValue } from 'clsx';
 
