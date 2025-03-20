@@ -24,13 +24,13 @@ import { CommonModule } from '@angular/common';
 		CommonModule
     ],
     template: `
-		<nav hlmPagination>
+		<nav hlmPagination class='tw-mt-4'>
 			<ul hlmPaginationContent>
 				<li hlmPaginationItem>
 					<hlm-pagination-previous (click)="changePage(currentPage - 1)" *ngIf="currentPage > 1" />
 				</li>
 				<li hlmPaginationItem *ngFor="let page of getPageNumbers();" (click)="changePage(page)">
-					<a hlmPaginationLink [class.active]="page === currentPage">{{ page }}</a>
+					<a hlmPaginationLink [isActive]="page === currentPage">{{ page }}</a>
 				</li>
 				
 				<li hlmPaginationItem>

@@ -5,14 +5,14 @@ import { NgIcon, provideIcons } from '@ng-icons/core';
 import { lucideChevronLeft } from '@ng-icons/lucide';
 import { hlm } from '@spartan-ng/brain/core';
 import { ButtonVariants } from '../../../ui-button-helm/src';
-// import { HlmIconDirective } from '@spartan-ng/ui-icon-helm';
+import { HlmIconDirective } from '../../../ui-icon-helm/src';
 import { ClassValue } from 'clsx';
 import { HlmPaginationLinkDirective } from './hlm-pagination-link.directive';
 
 @Component({
     selector: 'hlm-pagination-previous',
     imports: [HlmPaginationLinkDirective, NgIcon,
-        // HlmIconDirective
+        HlmIconDirective
     ],
     providers: [provideIcons({ lucideChevronLeft })],
     template: `
@@ -25,7 +25,7 @@ import { HlmPaginationLinkDirective } from './hlm-pagination-link.directive';
 			[size]="size()"
 			[attr.aria-label]="ariaLabel()"
 		>
-			<span [class.sr-only]="iconOnly()">{{ text() }}</span>
+			<span [class.tw-sr-only]="iconOnly()">{{ text() }}</span>
 		</a>
 	`
 })
