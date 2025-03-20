@@ -6,13 +6,13 @@ import { lucideChevronLeft, lucideChevronRight } from '@ng-icons/lucide';
 import { hlm } from '@spartan-ng/brain/core';
 import { BrnTabsPaginatedListDirective, BrnTabsTriggerDirective } from '@spartan-ng/brain/tabs';
 import { buttonVariants } from '../../../ui-button-helm/src';
-import { HlmIconComponent } from '../../../ui-icon-helm/src';
+import { HlmIconDirective } from '../../../ui-icon-helm/src';
 import type { ClassValue } from 'clsx';
 import { listVariants } from './hlm-tabs-list.component';
 
 @Component({
 	selector: 'hlm-paginated-tabs-list',
-	imports: [CdkObserveContent, NgIcon, HlmIconComponent],
+	imports: [CdkObserveContent, NgIcon, NgIcon, HlmIconDirective],
 	providers: [provideIcons({ lucideChevronRight, lucideChevronLeft })],
 	template: `
 		<button

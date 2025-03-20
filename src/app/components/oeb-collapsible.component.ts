@@ -1,3 +1,5 @@
+import { NgIcon } from '@ng-icons/core';
+import { NgIcon } from '@ng-icons/core';
 import {
 	Component,
 	Input,
@@ -11,7 +13,7 @@ import {
 } from '@angular/core';
 import { HlmButtonDirective } from './spartan/ui-button-helm/src';
 import { HlmIconModule } from './spartan/ui-icon-helm/src';
-import { HlmIconComponent } from './spartan/ui-icon-helm/src';
+import { HlmIconDirective } from './spartan/ui-icon-helm/src';
 import {
 	BrnCollapsibleComponent,
 	BrnCollapsibleContentComponent,
@@ -30,8 +32,8 @@ import { NgIf, NgFor, NgTemplateOutlet, NgClass } from '@angular/common';
 		BrnCollapsibleTriggerDirective,
 		HlmButtonDirective,
 		BrnCollapsibleContentComponent,
-		HlmIconModule,
-		HlmIconComponent,
+		NgIcon, HlmIconModule,
+		NgIcon, HlmIconDirective,
 		NgIf,
 		NgFor,
 		NgTemplateOutlet,
@@ -47,11 +49,11 @@ import { NgIf, NgFor, NgTemplateOutlet, NgClass } from '@angular/common';
 				<ng-template #stringTrigger>
 					<button class="tw-flex tw-w-full !tw-justify-between tw-items-center">
 						{{ trigger }}
-						<hlm-icon class="tw-ml-2" name="lucideChevronDown" hlmMenuIcon />
+						<ng-icon hlm class="tw-ml-2" name="lucideChevronDown" hlmMenuIcon />
 					</button>
 				</ng-template>
 				<div>
-					<hlm-icon
+					<ng-icon hlm
 						size="xl"
 						class="tw-text-purple"
 						[ngClass]="{ 'tw-rotate-90': collapsible.state() == 'open' }"

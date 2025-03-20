@@ -72,7 +72,7 @@ import { MessageService } from '../services/message.service';
 				</div>
 
 				<ng-container *ngIf="!imageDataUrl">
-					<hlm-icon size="xl" name="lucideCloudUpload"></hlm-icon>
+					<ng-icon hlm size="xl" name="lucideCloudUpload"></ng-icon>
 					<p *ngIf="dropZoneInfo1" class="dropzone-x-info1">
 						<span cass="tw-font-bold">{{ dropZoneInfo1 }} </span>
 						<span class="tw-inline-block tw-font-normal tw-my-1 tw-mr-1" *ngIf="dropZoneInfo1"> {{ 'General.or' | translate }}  </span>

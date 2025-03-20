@@ -1,16 +1,18 @@
+import { NgIcon } from '@ng-icons/core';
 import { NgIf } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { BrnAccordionContentComponent } from '@spartan-ng/brain/accordion';
 import { HlmAccordionModule } from './spartan/ui-accordion-helm/src';
-import { HlmIconModule, provideIcons } from './spartan/ui-icon-helm/src';
+import { HlmIconModule } from './spartan/ui-icon-helm/src';
 import { RouterModule } from '@angular/router';
 import { Component, Input } from '@angular/core';
 import { lucideClock } from '@ng-icons/lucide';
+import { provideIcons } from '@ng-icons/core';
 
 @Component({
 	selector: 'competency-accordion',
 	providers: [provideIcons({ lucideClock })],
-	imports: [HlmAccordionModule, HlmIconModule, TranslateModule, BrnAccordionContentComponent, RouterModule, NgIf],
+	imports: [HlmAccordionModule, NgIcon, HlmIconModule, TranslateModule, BrnAccordionContentComponent, RouterModule, NgIf],
 	template: `
 		<div class="tw-bg-[var(--color-lightgray)] tw-border tw-border-solid tw-border-purple tw-rounded-lg tw-mt-4">
 			<div hlmAccordion>
@@ -31,11 +33,11 @@ import { lucideClock } from '@ng-icons/lucide';
 								>
 							</div>
 							<div class="tw-text-purple tw-whitespace-nowrap tw-flex tw-items-center tw-gap-2 tw-mr-2">
-								<hlm-icon name="lucideClock" class="!tw-w-4 !tw-h-4" />
+								<ng-icon hlm name="lucideClock" class="!tw-w-4 !tw-h-4" />
 								<span>{{ studyload.toString() }} </span>
 							</div>
 						</div>
-						<hlm-icon hlmAccIcon class="tw-w-8 tw-h-8" />
+						<ng-icon hlm hlmAccIcon name="lucideChevronDown" class="tw-w-8 tw-h-8" />
 					</button>
 					<brn-accordion-content hlm>
 						<hr class="tw-w-full tw-my-2 tw-border tw-text-[#cfcece] tw-bg-[#cfcece] tw-border-solid" />

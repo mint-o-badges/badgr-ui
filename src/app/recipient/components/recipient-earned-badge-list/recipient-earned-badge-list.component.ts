@@ -19,7 +19,6 @@ import { AppConfigService } from '../../../common/app-config.service';
 import { ImportLauncherDirective } from '../../../mozz-transition/directives/import-launcher/import-launcher.directive';
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { UserProfile } from '../../../common/model/user-profile.model';
-import { provideIcons } from '../../../components/spartan/ui-icon-helm/src';
 import { lucideHand, lucideHexagon, lucideMedal, lucideBookOpen, lucideClock, lucideHeart } from '@ng-icons/lucide';
 import { CountUpDirective } from 'ngx-countup';
 import { Competency } from '../../../common/model/competency.model';
@@ -27,6 +26,7 @@ import { LearningPathApiService } from '../../../common/services/learningpath-ap
 import { LearningPath } from '../../../issuer/models/learningpath.model';
 import { FormControl } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
+import { provideIcons } from '@ng-icons/core';
 
 type BadgeDispay = 'grid' | 'list';
 type EscoCompetencies = {

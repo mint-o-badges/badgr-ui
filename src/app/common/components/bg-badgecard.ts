@@ -32,7 +32,7 @@ import { FormControl } from '@angular/forms';
 					<div
 						class="tw-bg-white tw-inline-flex tw-rounded-full tw-justify-center tw-items-center tw-border-solid tw-border-purple tw-border-[2px] "
 					>
-						<hlm-icon
+						<ng-icon hlm
 							class="tw-text-purple tw-box-border md:tw-w-[22px] tw-w-[16px] md:tw-h-[22px] tw-h-[16px]"
 							name="lucideCheck"
 						/>
@@ -111,7 +111,7 @@ import { FormControl } from '@angular/forms';
 						class="tw-absolute tw-bottom-0 tw-cursor-pointer"
 						(click)="toggleCompetencies()"
 					>
-						<hlm-icon size="lg" [name]="showCompetencies ? 'lucideChevronUp' : 'lucideChevronDown'" />
+						<ng-icon hlm size="lg" [name]="showCompetencies ? 'lucideChevronUp' : 'lucideChevronDown'" />
 					</div>
 				</div>
 			</div>

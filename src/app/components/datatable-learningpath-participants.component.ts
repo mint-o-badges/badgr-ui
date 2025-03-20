@@ -1,3 +1,4 @@
+import { NgIcon } from '@ng-icons/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { HlmIconModule } from './spartan/ui-icon-helm/src';
@@ -10,7 +11,7 @@ import { OebButtonComponent } from './oeb-button.component';
     selector: 'learningpath-participants-datatable',
     imports: [
         HlmTableModule,
-        HlmIconModule,
+        NgIcon, HlmIconModule,
         CommonModule,
         OebButtonComponent,
         TranslateModule,
