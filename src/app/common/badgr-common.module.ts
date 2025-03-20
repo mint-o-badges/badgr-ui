@@ -131,11 +131,13 @@ import { CdkStepperModule } from '@angular/cdk/stepper';
 import { ErrorDialogComponent } from './dialogs/oeb-dialogs/error-dialog.component';
 import { CountUpDirective } from './directives/count-up.directive';
 import { OebSortSelectComponent } from '../components/oeb-sort-select.component';
+import { OebGlobalSortSelectComponent } from '../components/oeb-global-sort-select.component';
 import { QrCodeApiService } from '../issuer/services/qrcode-api.service';
 import { serverErrorInterceptorFactory } from '../server-error-interceptor.factory';
 import { AltchaComponent } from '../components/altcha.component';
 import { SortPipe } from './pipes/sortPipe';
 import { PaginationAdvancedComponent } from '../components/oeb-numbered-pagination';
+import { NgIconsModule } from '@ng-icons/core'
 
 const DIRECTIVES = [
 	BgAwaitPromises,
@@ -193,6 +195,7 @@ export const COMMON_MODULE_COMPONENTS = [
 	OebLearningPathDetailComponent,
 	OebIssuerCard,
 	OebSortSelectComponent,
+	OebGlobalSortSelectComponent
 ];
 
 const SERVICES = [
@@ -270,6 +273,7 @@ export const COMMON_IMPORTS = [
 	LearningPathGraduatesDatatableComponent,
 	HlmBadgeDirective,
 	AltchaComponent,
+	NgIconsModule
 ];
 
 @NgModule({

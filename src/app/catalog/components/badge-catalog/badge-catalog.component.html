@@ -43,14 +43,15 @@
 							</div>
 						</div>
 
-						<oeb-sort-select
+						<oeb-global-sort-select
 							placeholder="{{ 'Badge.sortBy' | translate }}"
 							class="oeb tw-w-[12rem]"
 							[disabled]="!!groupControl?.value && groupControl?.value !== '---'"
 							[control]="sortControl"
 							[result]="badgeResults"
 						>
-						</oeb-sort-select>
+						</oeb-global-sort-select>
+						
 
 						<oeb-select
 							actionBar="true"
