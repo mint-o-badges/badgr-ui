@@ -1,23 +1,24 @@
+import { NgIcon } from '@ng-icons/core';
 import { Component, HostBinding, Input, inject } from '@angular/core';
-import { BrnDialogRef, injectBrnDialogContext } from '@spartan-ng/ui-dialog-brain';
+import { BrnDialogRef, injectBrnDialogContext } from '@spartan-ng/brain/dialog';
 import { OebDialogComponent } from '../../../components/oeb-dialog.component';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/src';
-import { HlmIconComponent, HlmIconModule, provideIcons } from '../../../components/spartan/ui-icon-helm/src';
+import { HlmIconDirective } from '../../../components/spartan/ui-icon-helm/src';
 import { lucideTriangleAlert } from '@ng-icons/lucide';
 import { NgIf } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
+import { provideIcons } from '@ng-icons/core';
 
 @Component({
 	selector: 'oeb-danger-dialog',
-	standalone: true,
-	imports: [OebDialogComponent, OebButtonComponent, HlmPDirective, HlmIconComponent, NgIf],
+	imports: [OebDialogComponent, OebButtonComponent, HlmPDirective, NgIcon, HlmIconDirective, NgIf],
 	providers: [TranslateService, provideIcons({ lucideTriangleAlert })],
 	template: `
 		<oeb-dialog [variant]="variant" class="tw-text-center tw-text-oebblack">
 			<div class="tw-flex tw-justify-center">
 				<div class="oeb-icon-circle tw-my-4">
-					<hlm-icon class="tw-text-red" size="xxl" name="lucideTriangleAlert" />
+					<ng-icon hlm class="tw-text-red" size="xxl" name="lucideTriangleAlert" />
 				</div>
 			</div>
 			<p hlmP class="tw-flex tw-flex-col tw-gap-2 tw-my-2">
@@ -52,7 +53,7 @@ export class DangerDialogComponent {
 		qrCodeRequested: boolean;
 		variant: string;
 		singleButtonText?: string;
-        singleButtonAction?: any;
+		singleButtonAction?: any;
 		captionStyle?: string;
 	}>();
 	protected readonly caption = this._dialogContext.caption;
@@ -78,10 +79,10 @@ export class DangerDialogComponent {
 		this._dialogRef.close();
 	}
 
-    public clickSingleButton(){
-        if(this.singleButtonAction){
-            this.singleButtonAction();
-        }
-        this._dialogRef.close();
-    }
+	public clickSingleButton() {
+		if (this.singleButtonAction) {
+			this.singleButtonAction();
+		}
+		this._dialogRef.close();
+	}
 }

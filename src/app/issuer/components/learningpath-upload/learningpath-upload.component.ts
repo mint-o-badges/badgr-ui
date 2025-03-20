@@ -13,8 +13,9 @@ import { LearningPathApiService } from '../../../common/services/learningpath-ap
 import { BadgrApiFailure } from '../../../common/services/api-failure';
 
 @Component({
-	selector: 'learningpath-upload',
-	templateUrl: './learningpath-upload.component.html',
+    selector: 'learningpath-upload',
+    templateUrl: './learningpath-upload.component.html',
+    standalone: false
 })
 export class LearningPathUploadComponent extends BaseAuthenticatedRoutableComponent {
     jsonForm: FormGroup;

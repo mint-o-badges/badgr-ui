@@ -17,10 +17,11 @@ import { FormControl } from '@angular/forms';
 import { appearAnimation } from '../../../common/animations/animations';
 
 @Component({
-	selector: 'app-issuer-catalog',
-	templateUrl: './issuer-catalog.component.html',
-	styleUrls: ['./issuer-catalog.component.css'],
-	animations: [appearAnimation],
+    selector: 'app-issuer-catalog',
+    templateUrl: './issuer-catalog.component.html',
+    styleUrls: ['./issuer-catalog.component.css'],
+    animations: [appearAnimation],
+    standalone: false
 })
 export class IssuerCatalogComponent extends BaseRoutableComponent implements OnInit, AfterViewInit {
 	readonly issuerPlaceholderSrc = preloadImageURL('../../../../breakdown/static/images/placeholderavatar-issuer.svg');

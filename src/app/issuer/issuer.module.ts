@@ -35,7 +35,6 @@ import { CompetencyAccordionComponent } from '../components/accordion.component'
 import {BadgeClassEditQrComponent} from './components/badgeclass-edit-qr/badgeclass-edit-qr.component';
 import { BadgeClassIssueQrComponent } from './components/badgeclass-issue-qr/badgeclass-issue-qr.component';
 import { BadgeClassGenerateQrComponent } from './components/badgeclass-generate-qr/badgeclass-generate-qr.component';
-import { QRCodeModule } from 'angularx-qrcode';
 import {QrCodeAwardsComponent} from './components/qrcode-awards/qrcode-awards.component';
 import { QrCodeApiService } from './services/qrcode-api.service';
 import { BadgeRequestApiService } from './services/badgerequest-api.service';
@@ -57,6 +56,7 @@ import { IssuerLearningPathComponent } from './components/issuer-learning-path/i
 import { Issuer } from './models/issuer.model';
 import { LearningPathEditComponent } from './components/learningpath-edit/learningpath-edit.component';
 import { BadgeClassSelectTypeComponent } from './components/badgeclass-select-type/badgeclass-select-type.component';
+import {QRCodeComponent} from 'angularx-qrcode'
 
 const routes = [
 	/* Issuer */
@@ -153,10 +153,10 @@ const routes = [
 		CompetencyAccordionComponent,
 		QrCodeDatatableComponent,
 		IssuerDetailDatatableComponent,
-		QRCodeModule,
 		QrCodeAwardsComponent,
 		DndModule,
-		CdkStepperModule
+		CdkStepperModule,
+		QRCodeComponent
 	],
 	declarations: [
 		BadgeClassSelectTypeComponent,
@@ -212,7 +212,7 @@ const routes = [
 		IssuerManager,
 		QrCodeApiService,
 		BadgeRequestApiService,
-		CdkStepper
+		CdkStepper,
 	],
 })
 export class IssuerModule {}

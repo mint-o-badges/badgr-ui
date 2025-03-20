@@ -36,8 +36,8 @@ import { LearningPathApiService } from '../../../common/services/learningpath-ap
 import { ApiLearningPath } from '../../../common/model/learningpath-api.model';
 
 @Component({
-	selector: 'badgeclass-detail',
-	template: `
+    selector: 'badgeclass-detail',
+    template: `
 		<bg-badgedetail [config]="config" [awaitPromises]="[issuerLoaded, badgeClassLoaded]">
 			<qrcode-awards
 				*ngIf="config.qrCodeButton.show"
@@ -56,6 +56,7 @@ import { ApiLearningPath } from '../../../common/model/learningpath-api.model';
 			></issuer-detail-datatable>
 		</bg-badgedetail>
 	`,
+    standalone: false
 })
 export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	readonly badgeFailedImageUrl = '../../../../breakdown/static/images/badge-failed.svg';

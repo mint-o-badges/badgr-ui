@@ -3,7 +3,7 @@ import { HlmCheckboxComponent } from './spartan/ui-checkbox-helm/src';
 import { HlmPDirective } from './spartan/ui-typography-helm/src/lib/hlm-p.directive';
 import { ControlValueAccessor, FormControl, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
 import type { ClassValue } from 'clsx';
-import { hlm } from '@spartan-ng/ui-core';
+import { hlm } from '@spartan-ng/brain/core';
 import { CustomValidatorMessages, messagesForValidationError } from './input.component';
 import { NgIf, NgClass } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -12,7 +12,6 @@ import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'oeb-checkbox',
-	standalone: true,
 	imports: [HlmPDirective, HlmCheckboxComponent, NgIf, NgClass, OebInputErrorComponent, ReactiveFormsModule],
 	providers: [
 		{

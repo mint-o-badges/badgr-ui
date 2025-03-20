@@ -18,8 +18,9 @@ import { Issuer } from "../../models/issuer.model";
 import { IssuerManager } from "../../services/issuer-manager.service";
 
 @Component({
-	selector: 'learningpath-create',
-	templateUrl: './learningpath-create.component.html',
+    selector: 'learningpath-create',
+    templateUrl: './learningpath-create.component.html',
+    standalone: false
 })
 export class LearningPathCreateComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 

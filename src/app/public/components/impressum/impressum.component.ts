@@ -3,9 +3,10 @@ import { VERSION } from '../../../../environments/version';
 import { ServerVersionService } from '../../../common/services/server-version.service';
 
 @Component({
-	selector: 'app-impressum',
-	templateUrl: './impressum.component.html',
-	styleUrls: ['./impressum.component.css'],
+    selector: 'app-impressum',
+    templateUrl: './impressum.component.html',
+    styleUrls: ['./impressum.component.css'],
+    standalone: false
 })
 export class ImpressumComponent implements OnInit {
 

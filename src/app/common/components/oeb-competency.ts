@@ -1,15 +1,14 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { lucideClock } from '@ng-icons/lucide';
-import { provideIcons } from '../../components/spartan/ui-icon-helm/src';
 import { Competency } from '../model/competency.model';
-
+import { provideIcons } from '@ng-icons/core';
 @Component({
-	selector: 'oeb-competency',
+    selector: 'oeb-competency',
     providers: [provideIcons({ lucideClock })],
-	host: {
-		class: 'tw-rounded-[10px] tw-bg-oebgrey tw-border-purple tw-border-solid tw-border tw-relative tw-p-[calc(var(--gridspacing)*2)] tw-block tw-overflow-hidden',
-	},
-	template: `
+    host: {
+        class: 'tw-rounded-[10px] tw-bg-oebgrey tw-border-purple tw-border-solid tw-border tw-relative tw-p-[calc(var(--gridspacing)*2)] tw-block tw-overflow-hidden',
+    },
+    template: `
 		<div class="tw-flex tw-justify-between tw-items-center">
             <div>
                 <span hlmP size="sm" class="tw-text-oebblack tw-font-medium">{{competency.name}} </span>
@@ -18,11 +17,12 @@ import { Competency } from '../model/competency.model';
             
             <div class="tw-text-purple tw-flex tw-items-center tw-whitespace-nowrap">
                 <span hlmP size="sm" *ngIf="new" class="tw-bg-yellow tw-px-2 tw-mr-2 tw-rounded-[10px]">NEU</span>
-                <hlm-icon class="tw-mr-2" size="sm" name="lucideClock"/>
+                <ng-icon hlm class="tw-mr-2" size="sm" name="lucideClock"/>
                 {{competency.studyLoad | hourPipe}} h
             </div>
 		</div>
 	`,
+    standalone: false
 })
 export class OebCompetency {
 	@Input() competency: Competency;

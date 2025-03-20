@@ -19,8 +19,9 @@ import { RecipientBadgeManager } from '../../../recipient/services/recipient-bad
 import { RecipientBadgeInstance } from '../../../recipient/models/recipient-badge.model';
 
 @Component({
-	templateUrl: './learningpath.component.html',
-	providers: [RecipientBadgeManager]
+    templateUrl: './learningpath.component.html',
+    providers: [RecipientBadgeManager],
+    standalone: false
 })
 export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 

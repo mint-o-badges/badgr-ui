@@ -4,11 +4,11 @@ import { Issuer } from '../../issuer/models/issuer.model';
 import { preloadImageURL } from '../util/file-util';
 
 @Component({
-	selector: '[bgIssuerLink]',
-	host: {
-		target: '_blank',
-	},
-	template: `
+    selector: '[bgIssuerLink]',
+    host: {
+        target: '_blank',
+    },
+    template: `
 		<img
 			[loaded-src]="bgIssuerLink?.image"
 			[loading-src]="issuerPlaceholderImageSrc"
@@ -17,6 +17,7 @@ import { preloadImageURL } from '../util/file-util';
 		/>
 		{{ bgIssuerLink?.name || 'Unknown Issuer' }}
 	`,
+    standalone: false
 })
 export class BgIssuerLinkComponent implements OnChanges {
 	readonly issuerPlaceholderImageSrc = preloadImageURL(

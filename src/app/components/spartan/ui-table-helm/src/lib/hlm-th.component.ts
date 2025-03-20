@@ -8,13 +8,12 @@ import {
 	inject,
 	input,
 } from '@angular/core';
-import { hlm } from '@spartan-ng/ui-core';
-import { BrnColumnDefComponent } from '@spartan-ng/ui-table-brain';
+import { hlm } from '@spartan-ng/brain/core';
+import { BrnColumnDefComponent } from '@spartan-ng/brain/table';
 import type { ClassValue } from 'clsx';
 
 @Component({
 	selector: 'hlm-th',
-	standalone: true,
 	imports: [NgTemplateOutlet],
 	host: {
 		'[class]': '_computedClass()',

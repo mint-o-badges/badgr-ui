@@ -19,9 +19,10 @@ import { InfoDialogComponent } from '../../dialogs/oeb-dialogs/info-dialog.compo
 import { QrCodeApiService } from '../../../issuer/services/qrcode-api.service';
 
 @Component({
-	selector: 'oeb-issuer-detail',
-	templateUrl: './oeb-issuer-detail.component.html',
-	styleUrl: './oeb-issuer-detail.component.scss',
+    selector: 'oeb-issuer-detail',
+    templateUrl: './oeb-issuer-detail.component.html',
+    styleUrl: './oeb-issuer-detail.component.scss',
+    standalone: false
 })
 export class OebIssuerDetailComponent implements OnInit {
 

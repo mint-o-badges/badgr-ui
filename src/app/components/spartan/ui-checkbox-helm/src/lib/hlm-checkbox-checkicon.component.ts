@@ -1,21 +1,20 @@
+import { NgIcon } from '@ng-icons/core';
 import { Component, computed, inject, input } from '@angular/core';
 import { lucideCheck } from '@ng-icons/lucide';
-import { BrnCheckboxComponent } from '@spartan-ng/ui-checkbox-brain';
-import { hlm } from '@spartan-ng/ui-core';
-import { HlmIconComponent, provideIcons } from '../../../ui-icon-helm/src';
+import { BrnCheckboxComponent } from '@spartan-ng/brain/checkbox';
+import { hlm } from '@spartan-ng/brain/core';
+import { HlmIconDirective } from '../../../ui-icon-helm/src';
 import type { ClassValue } from 'clsx';
+import { provideIcons } from '@ng-icons/core';
 
 @Component({
 	selector: 'hlm-checkbox-checkicon',
-	standalone: true,
-	imports: [HlmIconComponent],
+	imports: [NgIcon, HlmIconDirective],
 	providers: [provideIcons({ lucideCheck })],
 	host: {
 		'[class]': '_computedClass()',
 	},
-	template: `
-		<hlm-icon size="base" [name]="iconName()" />
-	`,
+	template: ` <ng-icon hlm size="base" [name]="iconName()" /> `,
 })
 export class HlmCheckboxCheckIconComponent {
 	private _brnCheckbox = inject(BrnCheckboxComponent);

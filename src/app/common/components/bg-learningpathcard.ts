@@ -4,11 +4,11 @@ import { LearningPathApiService } from '../services/learningpath-api.service';
 type MatchOrProgressType = { match?: string, progress?: number };
 
 @Component({
-	selector: 'bg-learningpathcard',
-	host: {
-		class: 'tw-rounded-[10px] tw-h-full tw-border-solid tw-relative tw-p-6 tw-block tw-overflow-hidden oeb-badge-card',
-	},
-	template: `
+    selector: 'bg-learningpathcard',
+    host: {
+        class: 'tw-rounded-[10px] tw-h-full tw-border-solid tw-relative tw-p-6 tw-block tw-overflow-hidden oeb-badge-card',
+    },
+    template: `
 		<a [routerLink]="['/public/learningpaths/', slug]">
 			<div class="tw-flex tw-flex-col tw-justify-between tw-h-full">
 				<div class="tw-bg-[var(--color-lightgray)] tw-w-full tw-relative tw-h-[175px] tw-items-center tw-flex tw-justify-center tw-p-2 tw-rounded-[3px]">
@@ -22,7 +22,7 @@ type MatchOrProgressType = { match?: string, progress?: number };
 							alt="LearningPath" />
 					</div>
 					<div class="tw-bg-white tw-inline-flex tw-rounded-full tw-justify-center tw-items-center tw-border-solid tw-border-green tw-border-[3px] ">
-						<hlm-icon class="tw-text-purple tw-box-border tw-w-[26px] tw-h-[26px]" name="lucideCheck" />
+						<ng-icon hlm class="tw-text-purple tw-box-border tw-w-[26px] tw-h-[26px]" name="lucideCheck" />
 					</div>
 				</div>
 
@@ -65,20 +65,21 @@ type MatchOrProgressType = { match?: string, progress?: number };
 						<ng-template #requestedTemplate>
 							<div class="tw-absolute tw-w-full tw-text-left tw-flex tw-items-center">
 								<span class="tw-bg-purple tw-rounded-[50%] tw-h-[20px] tw-w-[20px] tw-ml-2">
-									<hlm-icon variant="sm" class="tw-text-white tw-box-border" name="lucideCheck" />
+									<ng-icon hlm variant="sm" class="tw-text-white tw-box-border" name="lucideCheck" />
 								</span>
 								<span class="tw-ml-2 tw-text-sm tw-text-purple">{{'LearningPath.successRequestPath' | translate}}</span>
 							</div>
 						</ng-template>
 					</div>
 					<div class="tw-flex tw-flex-row tw-gap-4 tw-text-[#6B7280] tw-text-sm tw-mt-6 tw-items-end">
-						<hlm-icon name="lucideClock" />
+						<ng-icon hlm name="lucideClock" />
 						<span>{{studyLoad | hourPipe}} {{'RecBadge.hours' | translate}}</span>
 					</div>
 				</div>
 			</div>
 		</a>
 	`,
+    standalone: false
 })
 export class BgLearningPathCard {
 	readonly badgeLoadingImageUrl = '../../../breakdown/static/images/badge-loading.svg';

@@ -12,7 +12,8 @@ import { Title } from '@angular/platform-browser';
 import { AppConfigService } from '../../../common/app-config.service';
 
 @Component({
-	templateUrl: './issuer.component.html',
+    templateUrl: './issuer.component.html',
+    standalone: false
 })
 export class PublicIssuerComponent {
 	readonly issuerImagePlaceholderUrl = preloadImageURL(

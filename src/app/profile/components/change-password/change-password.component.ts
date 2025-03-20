@@ -14,8 +14,9 @@ import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcru
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-	selector: 'change-password',
-	templateUrl: './change-password.component.html',
+    selector: 'change-password',
+    templateUrl: './change-password.component.html',
+    standalone: false
 })
 export class ChangePasswordComponent extends BaseRoutableComponent {
 	changePasswordForm = typedFormGroup()

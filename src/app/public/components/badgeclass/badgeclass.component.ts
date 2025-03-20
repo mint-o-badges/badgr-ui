@@ -17,7 +17,7 @@ import { RecipientBadgeApiService } from '../../../recipient/services/recipient-
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-	template: `<bg-badgedetail [config]="config" [awaitPromises]="[badgeClass]">
+    template: `<bg-badgedetail [config]="config" [awaitPromises]="[badgeClass]">
 					<ng-template>
 						<div class="oeb" *ngIf="learningPaths.length > 0">
 							<oeb-separator class="tw-block tw-mb-8 tw-mt-8"></oeb-separator>
@@ -40,6 +40,7 @@ import { TranslateService } from '@ngx-translate/core';
 						</div>
 					</ng-template>
 				</bg-badgedetail>`,
+    standalone: false
 })
 export class PublicBadgeClassComponent {
 	readonly issuerImagePlaceholderUrl = preloadImageURL(

@@ -1,5 +1,5 @@
 import { Directive, computed, input } from '@angular/core';
-import { hlm } from '@spartan-ng/ui-core';
+import { hlm } from '@spartan-ng/brain/core';
 import type { ClassValue } from 'clsx';
 
 export const hlmH1 = 'md:tw-text-[46px] md:tw-leading-[55.2px] tw-text-[30px] tw-leading-[36px]';

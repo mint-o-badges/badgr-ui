@@ -8,7 +8,7 @@ import {
 	inject,
 	input,
 } from '@angular/core';
-import { hlm } from '@spartan-ng/ui-core';
+import { hlm } from '@spartan-ng/brain/core';
 import type { ClassValue } from 'clsx';
 import { HlmTableComponent } from '../index';
 
@@ -21,9 +21,7 @@ let captionIdSequence = 0;
 		'[class]': '_computedClass()',
 		'[id]': 'id()',
 	},
-	template: `
-		<ng-content />
-	`,
+	template: ` <ng-content /> `,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	encapsulation: ViewEncapsulation.None,
 })

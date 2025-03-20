@@ -4,8 +4,8 @@ import { EventsService } from '../services/events.service';
 import { Subscription } from 'rxjs';
 
 @Component({
-	selector: 'external-tool-launch',
-	template: `
+    selector: 'external-tool-launch',
+    template: `
 		<form
 			*ngIf="toolLaunchInfo"
 			#toolLaunchForm
@@ -21,6 +21,7 @@ import { Subscription } from 'rxjs';
 			/>
 		</form>
 	`,
+    standalone: false
 })
 export class ExternalToolLaunchComponent implements OnDestroy {
 	objectKeys = Object.keys;

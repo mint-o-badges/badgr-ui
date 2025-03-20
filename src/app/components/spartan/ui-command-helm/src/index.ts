@@ -6,7 +6,7 @@ import { HlmCommandEmptyDirective } from './lib/hlm-command-empty.directive';
 import { HlmCommandGroupDirective } from './lib/hlm-command-group.directive';
 import { HlmCommandInputWrapperComponent } from './lib/hlm-command-input-wrapper.component';
 import { HlmCommandInputDirective } from './lib/hlm-command-input.directive';
-import { HlmCommandItemIconDirective } from './lib/hlm-command-item-icon.directive';
+import { HlmCommandIconDirective } from './lib/hlm-command-item-icon.directive';
 import { HlmCommandItemDirective } from './lib/hlm-command-item.directive';
 import { HlmCommandListDirective } from './lib/hlm-command-list.directive';
 import { HlmCommandSeparatorDirective } from './lib/hlm-command-separator.directive';
@@ -35,7 +35,7 @@ export const HlmCommandImports = [
 	HlmCommandGroupDirective,
 	HlmCommandListDirective,
 	HlmCommandShortcutComponent,
-	HlmCommandItemIconDirective,
+	HlmCommandIconDirective,
 	HlmCommandEmptyDirective,
 	HlmCommandInputWrapperComponent,
 	HlmCommandDialogCloseButtonDirective,
