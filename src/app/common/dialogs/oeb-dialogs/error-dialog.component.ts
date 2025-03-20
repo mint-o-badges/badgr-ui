@@ -80,7 +80,7 @@ import { NgIf } from '@angular/common';
 					<div class="tw-flex tw-items-center tw-gap-2 tw-mt-4">
 						<hlm-icon name="lucideMail" size="lg" />
 						<a
-							href="mailto:hallo@openbadges.education?subject=Frage%20zu%20Fehlermeldung"
+							href="mailto:support@openbadges.education?subject=Frage%20zu%20Fehlermeldung"
 							class="tw-text-blue-500 hover:tw-underline"
 						>
 							{{ 'ErrorDialog.sendEmail' | translate }}

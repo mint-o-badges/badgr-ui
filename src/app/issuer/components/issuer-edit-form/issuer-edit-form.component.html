@@ -14,6 +14,7 @@
         (imageError)="onImageError($event)"
         [enableIconSearch]="false"
         maxSizeInMB="2"
+        [labelStyle]="'forminput-x-label u-margin-bottom1x'"
     ></bg-formfield-image>
     <span class="tw-text-oebblack tw-italic tw-text-lg">Dateiformat: PNG</span>
 
@@ -74,8 +75,6 @@
         #issuer_category
     ></oeb-select>
 
-    <h3 hlmH3 class="tw-font-bold tw-text-oebblack tw-mt-12">{{ 'General.address' | translate }}</h3>
-
     <oeb-input
         label="{{ 'General.street' | translate }}"
         [control]="issuerForm.rawControlMap.issuer_street"
@@ -111,9 +110,12 @@
 
     <div class="tw-mt-6 md:tw-mt-7">
         <oeb-checkbox alignStart="true" id="verify-intent" name="verify-intent"
-                [text]="'<ul>Hiermit bestätige ich, dass ich: <br>
+                [text]="'<ul>Hiermit bestätige ich, dass ich... <br>
+                <br>
                 1.) ...berechtigt bin, für die genannte Institution einen Account anzulegen sowie Badges zu erstellen und zu vergeben.<br>
+                <br>
                 2.) ...die Verantwortung für die Qualität der Kursangebote, der erstellten und vergebenen Badges sowie für die zugeordneten Kompetenzen trage. <br>
+                   <br>
                 3.) ...die Plattform nur für die vorgesehenen Zwecke nutze und jeglichen Missbrauch ablehne.</ul>' "
                 [control]="issuerForm.rawControlMap.verify_intended_use">
         </oeb-checkbox>
