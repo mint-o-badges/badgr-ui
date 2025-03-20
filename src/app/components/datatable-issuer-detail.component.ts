@@ -1,5 +1,4 @@
 import { NgIcon } from '@ng-icons/core';
-import { NgIcon } from '@ng-icons/core';
 import { CommonModule } from '@angular/common';
 import { BadgrCommonModule } from '../common/badgr-common.module';
 import { TranslateModule } from '@ngx-translate/core';
@@ -25,7 +24,6 @@ import { provideIcons } from '@ng-icons/core';
 	imports: [
 		FormsModule,
 		HlmTableModule,
-		NgIcon, HlmIconModule,
 		CommonModule,
 		BadgrCommonModule,
 		TranslateModule,

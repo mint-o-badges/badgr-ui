@@ -1,5 +1,4 @@
 import { NgIcon } from '@ng-icons/core';
-import { NgIcon } from '@ng-icons/core';
 import {
 	Component,
 	Input,
@@ -32,7 +31,6 @@ import { NgIf, NgFor, NgTemplateOutlet, NgClass } from '@angular/common';
 		BrnCollapsibleTriggerDirective,
 		HlmButtonDirective,
 		BrnCollapsibleContentComponent,
-		NgIcon, HlmIconModule,
 		NgIcon, HlmIconDirective,
 		NgIf,
 		NgFor,

@@ -2,8 +2,9 @@ import { NgIcon } from '@ng-icons/core';
 import { Component, computed, input } from '@angular/core';
 import { lucideCheck } from '@ng-icons/lucide';
 import { hlm } from '@spartan-ng/brain/core';
-import { HlmIconDirective, provideIcons } from '../../../ui-icon-helm/src';
+import { HlmIconDirective } from '../../../ui-icon-helm/src';
 import type { ClassValue } from 'clsx';
+import { provideIcons } from '@ng-icons/core';
 
 @Component({
 	selector: 'hlm-menu-item-check',
