@@ -59,6 +59,8 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 	nextLink: string;
 	previousLink: string;
 
+	sortOption: string | null = null; 
+
 	get theme() {
 		return this.configService.theme;
 	}
@@ -180,7 +182,6 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 					// this.issuers = sortUnique(this.issuers);
 					this.issuers = this.issuers.filter((value, index, array) => array.indexOf(value) === index);
 					// this.updateResults();
-					console.log(this.badgeResults)
 					resolve(badges);
 				},
 				(error) => {
@@ -210,6 +211,11 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		this.tagsControl.valueChanges.subscribe(() => {
 			this.updatePaginatedResults()
 			// this.updateResults();
+		});
+
+		this.sortControl.valueChanges.subscribe((value) => {
+			this.sortOption = value;
+			this.updatePaginatedResults(); 
 		});
 	}
 	prepareTexts() {
@@ -241,6 +247,28 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 			},
 		};
 	}
+
+	private applySorting(data: any[], sortOption: string): void {
+		const [sortBy, order] = sortOption.split('_') as ['name' | 'date', 'asc' | 'desc'];
+		const multiplier = order === 'asc' ? 1 : -1;
+	  
+		const sortFn = (a: any, b: any): number => {
+		  const nameA = a.name;
+		  const nameB = b.name;
+		  const createdOnA = new Date(a.createdAt).getTime();
+		  const createdOnB = new Date(b.createdAt).getTime();
+	  
+		  if (sortBy === 'name') {
+			return multiplier * nameA.localeCompare(nameB);
+		  }
+		  if (sortBy === 'date') {
+			return multiplier * (createdOnA - createdOnB);
+		  }
+		  return 0;
+		};
+	  
+		data.sort(sortFn);
+	  }
 
 	private updateResults() {
 		let that = this;
@@ -344,21 +372,26 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 	
 		let filteredBadges = this.badges
 			.filter(this.badgeMatcher(this.searchQuery))
-			.filter((badge) => 
-				!this.tagsControl.value?.length || this.tagsControl.value.some(tag => badge.tags.includes(tag))
+			.filter(
+				(badge) => 
+					!this.tagsControl.value?.length || this.tagsControl.value.some((tag) => badge.tags.includes(tag)),
 			) // Matches at least one tag
 			.filter((i) => !i.apiModel.source_url);
-			
-		that.badgeResults.forEach((item) => {
-			addBadgeToResultsByIssuer(item);
-			addBadgeToResultsByCategory(item);
-		});
-			
+
+		if (this.sortOption) {
+			this.applySorting(filteredBadges, this.sortOption);
+		}
+
 		this.totalPages = Math.ceil(filteredBadges.length / this.badgesPerPage);
 		const start = (this.currentPage - 1) * this.badgesPerPage;
 		const end = start + this.badgesPerPage;
 	
 		that.badgeResults = filteredBadges.slice(start, end);
+		
+		that.badgeResults.forEach((item) => {
+			addBadgeToResultsByIssuer(item);
+			addBadgeToResultsByCategory(item);
+		});
 	}
 	
 
