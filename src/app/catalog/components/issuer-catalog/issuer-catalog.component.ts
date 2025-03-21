@@ -63,7 +63,8 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 	}
 	set searchQuery(query) {
 		this._searchQuery = query;
-		this.updateResults();
+		// this.updateResults();
+		this.updatePaginatedResults()
 	}
 
 	private _categoryFilter = '';
@@ -73,8 +74,22 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 
 	set categoryFilter(val: string) {
 		this._categoryFilter = val;
-		this.updateResults();
+		// this.updateResults();
+		this.updatePaginatedResults()
 	}
+
+	private _currentPage = 1;
+
+	get currentPage(): number {
+		return this._currentPage;
+	}
+
+	set currentPage(value: number) {
+		if (this._currentPage !== value) {
+		  this._currentPage = value;
+		  this.updatePaginatedResults();
+		}
+	  }
 
 	get theme() {
 		return this.configService.theme;
@@ -82,6 +97,14 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 	get features() {
 		return this.configService.featuresConfig;
 	}
+
+	issuersPerPage = 30;
+	totalPages: number;
+	nextLink: string;
+	previousLink: string;
+
+	sortOption: string | null = null; 
+
 
 	issuerKeys = {};
 	plural = {};
@@ -120,15 +143,16 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 			this.issuerManager.getAllIssuers().subscribe(
 				(issuers) => {
 					this.issuers = issuers
-						.slice()
 						.filter((i) => i.apiModel.verified && i.ownerAcceptedTos && !i.apiModel.source_url)
 						.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
-					this.issuerResults = this.issuers;
-					this.issuerResults.sort((a, b) => a.name.localeCompare(b.name));
-					if (this.mapObject)
-						this.mapObject.on('load', function () {
-							that.generateGeoJSON(that.issuerResults);
-						});
+					this.totalPages = Math.ceil(this.issuers.length / this.issuersPerPage);
+					this.updatePaginatedResults()	
+					// this.issuerResults = this.issuers;
+					// this.issuerResults.sort((a, b) => a.name.localeCompare(b.name));
+					// if (this.mapObject)
+					// 	this.mapObject.on('load', function () {
+					// 		that.generateGeoJSON(that.issuerResults);
+					// 	});
 					resolve(issuers);
 				},
 				(error) => {
@@ -148,6 +172,11 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 		// Translate: to update predefined text when language is changed
 		this.translate.onLangChange.subscribe((event) => {
 			this.prepareTexts();
+		});
+		
+		this.sortControl.valueChanges.subscribe((value) => {
+			this.sortOption = value;
+			this.updatePaginatedResults(); 
 		});
 	}
 
@@ -210,6 +239,56 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 		this.issuerResultsByCategory.forEach((r) => r.issuers.sort((a, b) => a.name.localeCompare(b.name)));
 		this.generateGeoJSON(this.issuerResults);
 	}
+
+	private applySorting(data: any[], sortOption: string): void {
+		const [sortBy, order] = sortOption.split('_') as ['name' | 'date', 'asc' | 'desc'];
+		const multiplier = order === 'asc' ? 1 : -1;
+	  
+		const sortFn = (a: any, b: any): number => {
+		  const nameA = a.name;
+		  const nameB = b.name;
+		  const createdOnA = new Date(a.createdAt).getTime();
+		  const createdOnB = new Date(b.createdAt).getTime();
+	  
+		  if (sortBy === 'name') {
+			return multiplier * nameA.localeCompare(nameB);
+		  }
+		  if (sortBy === 'date') {
+			return multiplier * (createdOnA - createdOnB);
+		  }
+		  return 0;
+		};
+	  
+		data.sort(sortFn);
+	  }
+
+	private updatePaginatedResults() {
+		let that = this;
+		// Clear Results
+		this.issuerResults = [];
+		this.issuerResultsByCategory = [];
+
+		// this.issuerResults.sort((a, b) => a.name.localeCompare(b.name));
+
+		let filteredIssuers = this.issuers
+			.filter(MatchingAlgorithm.issuerMatcher(this.searchQuery))
+			.filter((issuer) => !this.categoryFilter || issuer.category === this.categoryFilter);
+
+		if (this.sortOption) {
+			this.applySorting(filteredIssuers, this.sortOption);
+		}	
+		this.totalPages = Math.ceil(filteredIssuers.length / this.issuersPerPage);
+		const start = (this.currentPage - 1) * this.issuersPerPage;
+		const end = start + this.issuersPerPage;
+	
+		that.issuerResults = filteredIssuers.slice(start, end);
+		// this.issuerResults = this.issuers
+		// 	.filter(MatchingAlgorithm.issuerMatcher(this.searchQuery))
+		// 	.filter((issuer) => !this.categoryFilter || issuer.category === this.categoryFilter);
+		// this.issuerResultsByCategory.forEach((r) => r.issuers.sort((a, b) => a.name.localeCompare(b.name)));
+		// this.generateGeoJSON(this.issuerResults);
+	}
+
 
 	generateGeoJSON(issuers) {
 		let featureCollection = [];
