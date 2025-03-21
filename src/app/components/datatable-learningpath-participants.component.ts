@@ -7,17 +7,16 @@ import { HlmTableModule } from './spartan/ui-table-helm/src';
 import { OebButtonComponent } from './oeb-button.component';
 
 @Component({
-	selector: 'learningpath-participants-datatable',
-	standalone: true,
-	imports: [
-		HlmTableModule,
-		HlmIconModule,
-		CommonModule,
+    selector: 'learningpath-participants-datatable',
+    imports: [
+        HlmTableModule,
+        HlmIconModule,
+        CommonModule,
         OebButtonComponent,
-		TranslateModule,
-		RouterModule
-        ],
-	template: `
+        TranslateModule,
+        RouterModule
+    ],
+    template: `
         <hlm-table class="tw-rounded-t-[20px] tw-overflow-hidden tw-w-full tw-max-w-[100%] tw-bg-white tw-border-purple tw-border">
             <hlm-trow class="tw-bg-darkgrey tw-text-white tw-flex-wrap hover:!tw-bg-darkgrey tw-justify-between md:tw-justify-normal">
                 <hlm-th class="!tw-text-white tw-w-28 md:tw-w-48">ID</hlm-th>
@@ -34,7 +33,7 @@ import { OebButtonComponent } from './oeb-button.component';
                    <p class="tw-whitespace-nowrap">{{participant.completed_badges.length}} / {{number_badges}} Badges</p>
                 </hlm-th>
             </hlm-trow>
-        </hlm-table>`,
+        </hlm-table>`
 })
 export class LearningPathParticipantsDatatableComponent {
 	@Input() caption: string = "";

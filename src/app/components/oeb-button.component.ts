@@ -6,11 +6,10 @@ import { HlmIconModule, provideIcons } from './spartan/ui-icon-helm/src';
 import { lucidePlus, lucideUpload, lucideCircleX } from '@ng-icons/lucide';
 
 @Component({
-	selector: 'oeb-button',
-	standalone: true,
-	imports: [HlmButtonDirective, NgIf, NgClass, HlmIconModule],
-	providers: [MessageService, provideIcons({ lucideUpload, lucidePlus, lucideCircleX })],
-	template: `<button
+    selector: 'oeb-button',
+    imports: [HlmButtonDirective, NgIf, NgClass, HlmIconModule],
+    providers: [MessageService, provideIcons({ lucideUpload, lucidePlus, lucideCircleX })],
+    template: `<button
 		[type]="type"
 		class="tw-relative"
 		hlmBtn
@@ -23,7 +22,7 @@ import { lucidePlus, lucideUpload, lucideCircleX } from '@ng-icons/lucide';
 		<hlm-icon *ngIf="icon" [ngClass]="{ 'tw-mr-4': iconLeft }" [size]="size" [name]="icon" />
 		<img *ngIf="img" class="md:tw-h-[30px] tw-h-[20px] tw-pr-4" [src]="img" />
 		<span [ngClass]="{ 'tw-text-[15px]': fontSize15 }" [innerHTML]="showLoadingMessage && loadingMessage ? loadingMessage : text"></span>
-	</button> `,
+	</button> `
 })
 export class OebButtonComponent {
 	loadingPromise: Promise<unknown>;

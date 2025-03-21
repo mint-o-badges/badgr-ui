@@ -53,9 +53,10 @@ import { Issuer } from '../../models/issuer.model';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 
 @Component({
-	selector: 'badgeclass-edit-form',
-	templateUrl: './badgeclass-edit-form.component.html',
-	styleUrl: './badgeclass-edit-form.component.css',
+    selector: 'badgeclass-edit-form',
+    templateUrl: './badgeclass-edit-form.component.html',
+    styleUrl: './badgeclass-edit-form.component.css',
+    standalone: false
 })
 export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableComponent implements OnInit, AfterViewInit {
 	private readonly _hlmDialogService = inject(HlmDialogService);

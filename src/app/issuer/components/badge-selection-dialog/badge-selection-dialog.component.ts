@@ -29,8 +29,8 @@ export interface BadgeSelectionDialogSettings {
 }
 
 @Component({
-	selector: 'badge-selection-dialog',
-	template: `
+    selector: 'badge-selection-dialog',
+    template: `
 		<dialog class="dialog dialog-large">
 			<section class="l-overflowlist">
 				<!-- Header and Search Area -->
@@ -195,6 +195,7 @@ export interface BadgeSelectionDialogSettings {
 			</section>
 		</dialog>
 	`,
+    standalone: false
 })
 export class BadgeSelectionDialog extends BaseDialog {
 	get searchQuery() {

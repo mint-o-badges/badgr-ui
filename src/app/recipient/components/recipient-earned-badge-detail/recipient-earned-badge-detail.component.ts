@@ -29,8 +29,9 @@ import { LearningPathApiService } from '../../../common/services/learningpath-ap
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-	selector: 'recipient-earned-badge-detail',
-	template: `<bg-badgedetail [config]="config" [awaitPromises]="[badgesLoaded, learningPathsLoaded]" [badge]="badge"></bg-badgedetail>`,
+    selector: 'recipient-earned-badge-detail',
+    template: `<bg-badgedetail [config]="config" [awaitPromises]="[badgesLoaded, learningPathsLoaded]" [badge]="badge"></bg-badgedetail>`,
+    standalone: false
 })
 export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	readonly issuerImagePlacholderUrl = preloadImageURL(

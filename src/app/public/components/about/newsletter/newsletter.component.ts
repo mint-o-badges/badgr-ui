@@ -10,9 +10,10 @@ import { UserProfileApiService } from '../../../../common/services/user-profile-
 import { SessionService } from '../../../../common/services/session.service';
 
 @Component({
-	selector: 'about-newsletter',
-	templateUrl: './newsletter.component.html',
-	styleUrls: ['../about.component.css'],
+    selector: 'about-newsletter',
+    templateUrl: './newsletter.component.html',
+    styleUrls: ['../about.component.css'],
+    standalone: false
 })
 export class NewsletterComponent extends BaseRoutableComponent implements OnInit {
 

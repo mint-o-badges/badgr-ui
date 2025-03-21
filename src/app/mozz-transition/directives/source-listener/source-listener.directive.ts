@@ -3,7 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { QueryParametersService } from '../../../common/services/query-parameters.service';
 
 @Directive({
-	selector: '[sourceListener]',
+    selector: '[sourceListener]',
+    standalone: false
 })
 export class SourceListenerDirective {
 	getVars = ['signup', 'source'];

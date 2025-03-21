@@ -11,17 +11,16 @@ import { OebInputErrorComponent } from './input.error.component';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-	selector: 'oeb-checkbox',
-	standalone: true,
-	imports: [HlmPDirective, HlmCheckboxComponent, NgIf, NgClass, OebInputErrorComponent, ReactiveFormsModule],
-	providers: [
-		{
-			provide: NG_VALUE_ACCESSOR,
-			useExisting: forwardRef(() => OebCheckboxComponent),
-			multi: true,
-		},
-	],
-	template: `<label
+    selector: 'oeb-checkbox',
+    imports: [HlmPDirective, HlmCheckboxComponent, NgIf, NgClass, OebInputErrorComponent, ReactiveFormsModule],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => OebCheckboxComponent),
+            multi: true,
+        },
+    ],
+    template: `<label
 		[ngClass]="alignStart ? 'tw-items-start' : 'tw-items-center'"
 		class="tw-flex tw-mt-[0.25rem]"
 		hlmP
@@ -43,9 +42,9 @@ import { TranslateService } from '@ngx-translate/core';
 			></oeb-input-error>
 		</div>
 	</label>`,
-	host: {
-		'[class]': '_computedClass()',
-	},
+    host: {
+        '[class]': '_computedClass()',
+    }
 })
 export class OebCheckboxComponent implements ControlValueAccessor {
 	@Input() text: string;

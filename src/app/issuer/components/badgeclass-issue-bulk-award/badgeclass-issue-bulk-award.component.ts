@@ -41,8 +41,9 @@ export interface ColumnHeaders {
 }
 
 @Component({
-	selector: 'Badgeclass-issue-bulk-award',
-	templateUrl: './badgeclass-issue-bulk-award.component.html',
+    selector: 'Badgeclass-issue-bulk-award',
+    templateUrl: './badgeclass-issue-bulk-award.component.html',
+    standalone: false
 })
 export class BadgeClassIssueBulkAwardComponent extends BaseAuthenticatedRoutableComponent {
 	importPreviewData: BulkIssueImportPreviewData;

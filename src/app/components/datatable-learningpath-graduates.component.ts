@@ -7,17 +7,16 @@ import { HlmTableModule } from './spartan/ui-table-helm/src';
 import { OebButtonComponent } from './oeb-button.component';
 
 @Component({
-	selector: 'learningpath-graduates-datatable',
-	standalone: true,
-	imports: [
-		HlmTableModule,
-		HlmIconModule,
-		CommonModule,
+    selector: 'learningpath-graduates-datatable',
+    imports: [
+        HlmTableModule,
+        HlmIconModule,
+        CommonModule,
         OebButtonComponent,
-		TranslateModule,
-		RouterModule
-        ],
-	template: `
+        TranslateModule,
+        RouterModule
+    ],
+    template: `
         <hlm-table class="tw-rounded-t-[20px] tw-overflow-hidden tw-w-full tw-max-w-[100%] tw-bg-lightpurple tw-border-purple tw-border">
             <hlm-trow class="tw-bg-purple tw-text-white tw-flex-wrap hover:tw-bg-purple">
                 <hlm-th class="!tw-text-white tw-w-28 md:tw-w-48">ID</hlm-th>
@@ -35,7 +34,7 @@ import { OebButtonComponent } from './oeb-button.component';
 
                 </hlm-th>
             </hlm-trow>
-        </hlm-table>`,
+        </hlm-table>`
 })
 export class LearningPathGraduatesDatatableComponent {
 	@Input() caption: string = "";

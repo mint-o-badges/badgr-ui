@@ -287,43 +287,35 @@ export type RequestedBadge = {
 }
 
 @Component({
-  selector: 'qrcodes-datatable',
-  standalone: true,
-  imports: [
-    FormsModule,
-
-    BrnMenuTriggerDirective,
-    HlmMenuModule,
-
-    BrnTableModule,
-    HlmTableModule,
-
-    HlmButtonModule,
-
-    DecimalPipe,
-    TitleCasePipe,
-	  I18nPluralPipe,
-	  DatePipe,
-    HlmIconComponent,
-    HlmInputDirective,
-
-    HlmCheckboxCheckIconComponent,
-    HlmCheckboxComponent,
-
-    BrnSelectModule,
-    HlmSelectModule,
-    TranslateModule,
-    HlmCommandInputWrapperComponent,
-    OebButtonComponent,
-    OebSpinnerComponent,
-
-  ],
-  styleUrl: './datatable-qrcodes.component.scss',
-  providers: [provideIcons({ lucideChevronDown, lucideEllipsis, lucideArrowUpDown }), TranslateService],
-  host: {
-    class: 'tw-w-full',
-  },
-  template: ` 
+    selector: 'qrcodes-datatable',
+    imports: [
+        FormsModule,
+        BrnMenuTriggerDirective,
+        HlmMenuModule,
+        BrnTableModule,
+        HlmTableModule,
+        HlmButtonModule,
+        DecimalPipe,
+        TitleCasePipe,
+        I18nPluralPipe,
+        DatePipe,
+        HlmIconComponent,
+        HlmInputDirective,
+        HlmCheckboxCheckIconComponent,
+        HlmCheckboxComponent,
+        BrnSelectModule,
+        HlmSelectModule,
+        TranslateModule,
+        HlmCommandInputWrapperComponent,
+        OebButtonComponent,
+        OebSpinnerComponent,
+    ],
+    styleUrl: './datatable-qrcodes.component.scss',
+    providers: [provideIcons({ lucideChevronDown, lucideEllipsis, lucideArrowUpDown }), TranslateService],
+    host: {
+        class: 'tw-w-full',
+    },
+    template: ` 
     <div class="tw-flex tw-flex-col tw-justify-between tw-gap-4 sm:tw-flex-row">
 		<label hlmLabel class="tw-font-semibold tw-text-[0.5rem] tw-w-full md:tw-w-80">
 			<span class="tw-px-3 tw-text-muted-foreground tw-text-sm">Nach E-Mail-Adresse suchen</span>
@@ -452,7 +444,7 @@ export type RequestedBadge = {
           ('Issuer.giveBadges' | translate)
           : ('Issuer.giveBadge' | translate)">
       </oeb-button>
-  `,
+  `
 })
 export class QrCodeDatatableComponent {
 	@Input() caption: string = '';

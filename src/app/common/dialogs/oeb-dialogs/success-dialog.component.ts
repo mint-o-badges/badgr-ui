@@ -8,7 +8,6 @@ import { NgIf } from '@angular/common';
 
 @Component({
     selector: 'oeb-success-dialog',
-    standalone: true,
     imports: [
         OebDialogComponent,
         HlmPDirective,

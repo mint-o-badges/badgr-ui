@@ -22,8 +22,9 @@ import { BadgeClassApiService } from "../../services/badgeclass-api.service";
 import { LearningPathManager } from "../../services/learningpath-manager.service";
 
 @Component({
-	selector: 'learningpath-edit',
-	templateUrl: './learningpath-edit.component.html',
+    selector: 'learningpath-edit',
+    templateUrl: './learningpath-edit.component.html',
+    standalone: false
 })
 export class LearningPathEditComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 

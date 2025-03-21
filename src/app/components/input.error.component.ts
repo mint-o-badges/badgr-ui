@@ -3,17 +3,16 @@ import { Component, Input } from '@angular/core';
 import { HlmInputErrorDirective } from './spartan/ui-input-helm/src';
 
 @Component({
-	selector: 'oeb-input-error',
-	standalone: true,
-	imports: [HlmInputErrorDirective],
-	host: {
-		class: 'tw-block tw-mt-0 md:tw-mt-1 tw-min-h-[20px] tw-mb-4',
-		// eslint-disable-next-line @angular-eslint/no-host-metadata-property
-		// '[class.invisible]': "touchedState() === 'UNTOUCHED'",
-	},
-	template: `
+    selector: 'oeb-input-error',
+    imports: [HlmInputErrorDirective],
+    host: {
+        class: 'tw-block tw-mt-0 md:tw-mt-1 tw-min-h-[20px] tw-mb-4',
+        // eslint-disable-next-line @angular-eslint/no-host-metadata-property
+        // '[class.invisible]': "touchedState() === 'UNTOUCHED'",
+    },
+    template: `
 		<p class="tw-whitespace-nowrap">{{ error }}</p>
-	`,
+	`
 })
 export class OebInputErrorComponent {
 	// private _formField = injectErrorField();

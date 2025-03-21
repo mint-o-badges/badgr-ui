@@ -16,8 +16,9 @@ import { SuccessDialogComponent } from '../../../common/dialogs/oeb-dialogs/succ
 import { DialogComponent } from '../../../components/dialog.component';
 
 @Component({
-	selector: 'issuer-list',
-	templateUrl: './issuer-list.component.html',
+    selector: 'issuer-list',
+    templateUrl: './issuer-list.component.html',
+    standalone: false
 })
 export class IssuerListComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	readonly issuerPlaceholderSrc = preloadImageURL('../../../../breakdown/static/images/placeholderavatar-issuer.svg');

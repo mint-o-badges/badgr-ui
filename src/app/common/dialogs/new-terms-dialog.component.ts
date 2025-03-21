@@ -5,8 +5,8 @@ import { UserProfileManager } from '../services/user-profile-manager.service';
 import { UserProfile } from '../model/user-profile.model';
 
 @Component({
-	selector: 'new-terms-dialog',
-	template: ` <dialog
+    selector: 'new-terms-dialog',
+    template: ` <dialog
 		aria-labelledby="updatedTermsDialog"
 		aria-describedby="dialog1Desc"
 		class="dialog dialog-is-active l-dialog"
@@ -47,6 +47,7 @@ import { UserProfile } from '../model/user-profile.model';
 			</div>
 		</div>
 	</dialog>`,
+    standalone: false
 })
 export class NewTermsDialog extends BaseDialog {
 	agreedToTerms = false;

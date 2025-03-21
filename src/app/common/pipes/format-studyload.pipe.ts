@@ -4,7 +4,8 @@ import { Pipe, PipeTransform } from '@angular/core';
  * Pipe that formats the studyload of a badge / competency.
  */
 @Pipe({
-	name: 'studyload',
+    name: 'studyload',
+    standalone: false
 })
 export class StudyLoadPipe implements PipeTransform {
 	transform(studyLoad: number): string {

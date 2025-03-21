@@ -27,7 +27,8 @@ import { EmailValidator } from '../../../common/validators/email.validator';
 
 
 @Component({
-	templateUrl: './issuer-staff.component.html',
+    templateUrl: './issuer-staff.component.html',
+    standalone: false
 })
 export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	get issuerStaffRoleOptions() {

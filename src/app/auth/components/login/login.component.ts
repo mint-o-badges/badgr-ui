@@ -30,9 +30,10 @@ interface RedirectResponse {
  type RedirectHttpResponse = HttpResponse<RedirectResponse>;
 
 @Component({
-	selector: 'login',
-	templateUrl: './login.component.html',
-	styleUrls: ['./login.component.scss'],
+    selector: 'login',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.scss'],
+    standalone: false
 })
 export class LoginComponent extends BaseRoutableComponent implements OnInit, AfterViewInit {
 	get theme() {

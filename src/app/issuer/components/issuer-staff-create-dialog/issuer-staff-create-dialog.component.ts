@@ -15,9 +15,10 @@ import { MemoizedProperty } from '../../../common/util/memoized-property-decorat
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-	selector: 'issuer-staff-create-dialog',
-	templateUrl: './issuer-staff-create-dialog.component.html',
-	styleUrls: ['./issuer-staff-create-dialog.component.css'],
+    selector: 'issuer-staff-create-dialog',
+    templateUrl: './issuer-staff-create-dialog.component.html',
+    styleUrls: ['./issuer-staff-create-dialog.component.css'],
+    standalone: false
 })
 export class IssuerStaffCreateDialogComponent extends BaseDialog {
 	staffCreateForm = typedFormGroup()
