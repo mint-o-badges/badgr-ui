@@ -53,6 +53,10 @@ All files in `dist` constitute the build artifact.
 
 Check out `deployment.md`.
 
+## Branches
+
+Development happens in feature branches (e.g. `feat/foo` or `fix/bar`). Those are then merged (via a PR) into `develop`. The `develop` branch is synchronized automatically with `develop.openbadges.education`. Once dev tests have completed on `develop.openbadges.education`, `develop` is merged (via a PR) into `main`. The `main` branch is synchronized automatically with `staging.openbadges.education`. Once this state is ready for a deployment, checkout `deployment.md` for informatoin on how to deploy to `openbadges.education`.
+
 ## Commit Message Convention
 
 We follow the [angular commit message convention](https://github.com/angular/angular/blob/68a6a07/CONTRIBUTING.md#commit) in this project to maintain a clean and organized commit history. Use `npx cz` instead of `git commit` to commit via the interactive prompt.
