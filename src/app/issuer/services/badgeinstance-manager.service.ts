@@ -4,7 +4,9 @@ import { BadgeInstanceApiService } from './badgeinstance-api.service';
 import { ApiBadgeInstanceForBatchCreation, ApiBadgeInstanceForCreation } from '../models/badgeinstance-api.model';
 import { CommonEntityManager } from '../../entity-manager/services/common-entity-manager.service';
 
-@Injectable()
+@Injectable({
+	providedIn: 'root',
+})
 export class BadgeInstanceManager {
 	private instancesByBadgeClass: { [badgeClassSlug: string]: BadgeClassInstances } = {};
 
