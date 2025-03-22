@@ -46,6 +46,14 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 	plural = {};
 	sortControl = new FormControl('name_asc');
 
+
+	badgesPerPage = 30;
+	totalPages: number;
+	nextLink: string;
+	previousLink: string;
+
+	sortOption: string | null = null; 
+
 	get theme() {
 		return this.configService.theme;
 	}
@@ -59,7 +67,8 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 	}
 	set searchQuery(query) {
 		this._searchQuery = query;
-		this.updateResults();
+		// this.updateResults();
+		this.updatePaginatedResults()
 	}
 
 	private _groupByInstitution = false;
@@ -68,8 +77,22 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 	}
 	set groupByInstitution(val: boolean) {
 		this._groupByInstitution = val;
-		this.updateResults();
+		// this.updateResults();
+		this.updatePaginatedResults()
 	}
+
+	private _currentPage = 1;
+
+	get currentPage(): number {
+		return this._currentPage;
+	}
+
+	set currentPage(value: number) {
+		if (this._currentPage !== value) {
+		  this._currentPage = value;
+		  this.updatePaginatedResults();
+		}
+	  }
 
 	constructor(
 		protected title: Title,
@@ -105,6 +128,11 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 		// Translate: to update predefined text when language is changed
 		this.translate.onLangChange.subscribe((event) => {
 			this.prepareTexts();
+		});
+
+		this.sortControl.valueChanges.subscribe((value) => {
+			this.sortOption = value;
+			this.updatePaginatedResults(); 
 		});
 	}
 
@@ -183,40 +211,82 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 		return totalStudyLoad;
 	}
 
-	private updateResults() {
+	// private updateResults() {
+	// 	let that = this;
+	// 	// Clear Results
+	// 	this.learningPathResults = [];
+	// 	this.learningPathResultsByIssuer = [];
+	// 	const learningPathResultsByIssuerLocal = {};
+
+	// 	var addLearningPathToResultsByIssuer = function (item) {
+	// 		let issuerResults = learningPathResultsByIssuerLocal[item.issuer_name];
+
+	// 		if (!issuerResults) {
+	// 			issuerResults = learningPathResultsByIssuerLocal[item.issuer_name] = new MatchingLearningPathIssuer(
+	// 				item.issuer_name,
+	// 				'',
+	// 			);
+
+	// 			// append result to the issuerResults array bound to the view template.
+	// 			that.learningPathResultsByIssuer.push(issuerResults);
+	// 		}
+
+	// 		issuerResults.addLp(item);
+
+	// 		return true;
+	// 	};
+
+	// 	this.learningPaths
+	// 		.filter(this.learningPathMatcher(this.searchQuery))
+	// 		.filter(this.learningPathTagMatcher(this.selectedTag))
+	// 		.forEach((item) => {
+	// 			that.learningPathResults.push(item);
+	// 			addLearningPathToResultsByIssuer(item);
+	// 		});
+	// 	this.changeOrder(this.order);
+	// }
+
+	private updatePaginatedResults() {
 		let that = this;
-		// Clear Results
 		this.learningPathResults = [];
-		this.learningPathResultsByIssuer = [];
-		const learningPathResultsByIssuerLocal = {};
-
-		var addLearningPathToResultsByIssuer = function (item) {
-			let issuerResults = learningPathResultsByIssuerLocal[item.issuer_name];
-
-			if (!issuerResults) {
-				issuerResults = learningPathResultsByIssuerLocal[item.issuer_name] = new MatchingLearningPathIssuer(
-					item.issuer_name,
-					'',
-				);
-
-				// append result to the issuerResults array bound to the view template.
-				that.learningPathResultsByIssuer.push(issuerResults);
-			}
-
-			issuerResults.addLp(item);
-
-			return true;
-		};
-
-		this.learningPaths
+	
+		let filteredMicroDegrees = this.learningPaths
 			.filter(this.learningPathMatcher(this.searchQuery))
 			.filter(this.learningPathTagMatcher(this.selectedTag))
-			.forEach((item) => {
-				that.learningPathResults.push(item);
-				addLearningPathToResultsByIssuer(item);
-			});
-		this.changeOrder(this.order);
+
+		if (this.sortOption) {
+			this.applySorting(filteredMicroDegrees, this.sortOption);
+		}
+
+		this.totalPages = Math.ceil(filteredMicroDegrees.length / this.badgesPerPage);
+		const start = (this.currentPage - 1) * this.badgesPerPage;
+		const end = start + this.badgesPerPage;
+	
+		that.learningPathResults = filteredMicroDegrees.slice(start, end);
 	}
+
+
+	private applySorting(data: any[], sortOption: string): void {
+		const [sortBy, order] = sortOption.split('_') as ['name' | 'date', 'asc' | 'desc'];
+		const multiplier = order === 'asc' ? 1 : -1;
+	  
+		const sortFn = (a: any, b: any): number => {
+		  const nameA = a.name;
+		  const nameB = b.name;
+		  const createdOnA = new Date(a.createdAt).getTime();
+		  const createdOnB = new Date(b.createdAt).getTime();
+	  
+		  if (sortBy === 'name') {
+			return multiplier * nameA.localeCompare(nameB);
+		  }
+		  if (sortBy === 'date') {
+			return multiplier * (createdOnA - createdOnB);
+		  }
+		  return 0;
+		};
+	  
+		data.sort(sortFn);
+	  }
 
 	async loadIssuers() {
 		return new Promise(async (resolve, reject) => {
@@ -239,7 +309,7 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 
 	filterByTag(tag) {
 		this.selectedTag = this.selectedTag == tag ? null : tag;
-		this.updateResults();
+		this.updatePaginatedResults();
 	}
 
 	async loadLearningPaths() {
@@ -255,7 +325,7 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 					});
 					this.tags = sortUnique(this.tags);
 					this.issuersWithLps = sortUnique(this.issuersWithLps);
-					this.updateResults();
+					this.updatePaginatedResults();
 					resolve(lps);
 				},
 				(error) => {

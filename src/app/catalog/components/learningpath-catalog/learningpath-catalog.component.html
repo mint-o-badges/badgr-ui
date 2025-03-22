@@ -44,8 +44,15 @@
 								></ng-icon>
 							</div>
 						</div>
-						<span>{{ 'Badge.sortBy' | translate }} </span>
-						<oeb-sort-select [disabled]="groupByInstitution" [learningPath]="true" [control]="sortControl" [result]="learningPathResults"></oeb-sort-select>
+						<oeb-global-sort-select
+							placeholder="{{ 'Badge.sortBy' | translate }}"
+							class="oeb tw-w-[12rem]"
+							[control]="sortControl"
+							[result]="learningPathResults"
+						>
+						</oeb-global-sort-select>
+						<!-- <span>{{ 'Badge.sortBy' | translate }} </span>
+						<oeb-sort-select [disabled]="groupByInstitution" [learningPath]="true" [control]="sortControl" [result]="learningPathResults"></oeb-sort-select> -->
 						<oeb-checkbox
 							[text]="'Nach Institutionen gruppieren'"
 							name="'groupByInstitution'"
@@ -113,5 +120,9 @@
 				</div>
 			</ng-container>
 		</ng-container>
+
+		<spartan-pagination-advanced [totalProducts]="learningPaths.length" [(page)]="currentPage" >
+			
+		</spartan-pagination-advanced>
 	</ng-template>
 </div>
