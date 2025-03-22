@@ -16,6 +16,6 @@ import { HlmNumberedPaginationComponent } from '../components/spartan/ui-paginat
 })
 export class PaginationAdvancedComponent {
   page = model(1);
-  pageSize = signal(30);
+  pageSize = model(30);
   totalProducts = input(0);
 }

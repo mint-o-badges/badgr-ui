@@ -47,7 +47,7 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 	sortControl = new FormControl('name_asc');
 
 
-	badgesPerPage = 30;
+	microDegreesPerPage = 20;
 	totalPages: number;
 	nextLink: string;
 	previousLink: string;
@@ -258,9 +258,9 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 			this.applySorting(filteredMicroDegrees, this.sortOption);
 		}
 
-		this.totalPages = Math.ceil(filteredMicroDegrees.length / this.badgesPerPage);
-		const start = (this.currentPage - 1) * this.badgesPerPage;
-		const end = start + this.badgesPerPage;
+		this.totalPages = Math.ceil(filteredMicroDegrees.length / this.microDegreesPerPage);
+		const start = (this.currentPage - 1) * this.microDegreesPerPage;
+		const end = start + this.microDegreesPerPage;
 	
 		that.learningPathResults = filteredMicroDegrees.slice(start, end);
 	}
