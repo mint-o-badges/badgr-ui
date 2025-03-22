@@ -51,13 +51,6 @@
 							[result]="learningPathResults"
 						>
 						</oeb-global-sort-select>
-						<!-- <span>{{ 'Badge.sortBy' | translate }} </span>
-						<oeb-sort-select [disabled]="groupByInstitution" [learningPath]="true" [control]="sortControl" [result]="learningPathResults"></oeb-sort-select> -->
-						<oeb-checkbox
-							[text]="'Nach Institutionen gruppieren'"
-							name="'groupByInstitution'"
-							[(ngModel)]="groupByInstitution"
-						/>
 					</div>
 				</div>
 				<div class="tw-grid-cols-2 tw-grid tw-items-center subtitle-wrapper">
@@ -121,8 +114,8 @@
 			</ng-container>
 		</ng-container>
 
-		<spartan-pagination-advanced [totalProducts]="learningPaths.length" [(page)]="currentPage" >
+		<oeb-numbered-pagination [totalProducts]="learningPaths.length" [(page)]="currentPage" >
 			
-		</spartan-pagination-advanced>
+		</oeb-numbered-pagination>
 	</ng-template>
 </div>

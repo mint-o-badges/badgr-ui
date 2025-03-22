@@ -3,7 +3,7 @@ import { Component, signal, input, EventEmitter, Output, model } from '@angular/
 import { HlmNumberedPaginationComponent } from '../components/spartan/ui-pagination-helm/src';
 
 @Component({
-	selector: 'spartan-pagination-advanced',
+	selector: 'oeb-numbered-pagination',
 	standalone: true,
 	imports: [HlmNumberedPaginationComponent],
 	template: `

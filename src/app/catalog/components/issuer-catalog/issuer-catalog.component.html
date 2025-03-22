@@ -46,7 +46,6 @@
 								[result]="issuerResults"
 							>
 							</oeb-global-sort-select>
-							<!-- <oeb-sort-select [control]="sortControl" [result]="issuerResults"></oeb-sort-select> -->
 							<oeb-select
 								actionBar="true"
 								class="md:tw-w-[180px] oeb"
@@ -91,9 +90,9 @@
 					</ng-container>
 				</ng-container>
 
-				<spartan-pagination-advanced [totalProducts]="issuers.length" [(page)]="currentPage" >
+				<oeb-numbered-pagination [totalProducts]="issuers.length" [(page)]="currentPage" >
 
-				</spartan-pagination-advanced>
+				</oeb-numbered-pagination>
 			</section>
 		</ng-template>
 		<div id="mapWrapper" class="tw-h-[45vh]" [hidden]="badgesDisplay != 'map'">
