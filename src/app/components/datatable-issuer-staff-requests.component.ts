@@ -20,7 +20,8 @@ import { HlmPDirective } from '../components/spartan/ui-typography-helm/src/lib/
         HlmPDirective
         ],
     template: `
-        <hlm-table class="tw-rounded-t-[20px] tw-overflow-hidden tw-w-full tw-max-w-[100%] tw-bg-white tw-border-lightgrey tw-border">
+        <span *ngIf="requests.length == 0">Keine offenen Anfragen</span>
+        <hlm-table *ngIf="requests.length > 0" class="tw-rounded-t-[20px] tw-overflow-hidden tw-w-full tw-max-w-[100%] tw-bg-white tw-border-lightgrey tw-border">
             <hlm-caption>{{caption}}</hlm-caption>
             <hlm-trow class="!tw-bg-lightgreen tw-text-oebblack tw-flex-wrap hover:tw-bg-lightgreen">
                 <!-- Name -->
@@ -63,6 +64,6 @@ import { HlmPDirective } from '../components/spartan/ui-typography-helm/src/lib/
 })
 export class IssuerStaffRequestsDatatableComponent {
     @Input() caption: string = "";
-    @Input() requests: any[]
+    @Input() requests: any[] = []
 
 }

@@ -54,16 +54,26 @@ interface DialogContext {
 				</hlm-dialog-header>
 
 				<div class="dialog-body">
-					<ng-container *ngTemplateOutlet="context.content"></ng-container>
+					<ng-container *ngIf="isTemplate(context.content); else textContent">
+						<ng-container *ngTemplateOutlet="context.content"></ng-container>
+					</ng-container>
+					<ng-template #textContent>
+						<p class='tw-text-center' [innerHTML]="context.content"></p>
+					</ng-template>						
 				</div>
 
 				<hlm-dialog-footer *ngIf="context.footer">
-					<ng-content select="[footer-actions]">
+					<ng-container *ngIf="isTemplate(context.footer); else defaultFooter">
+						<ng-container *ngTemplateOutlet="context.footer"></ng-container>
+					</ng-container>
+					<ng-template #defaultFooter>
+						<ng-content select="[footer-actions]">
 						<!-- Default action button if nothing projected -->
-						<button hlmBtn type="button" (click)="close()">
+						<oeb-button  type="button" (click)="close()">
 							{{ context.footerButtonText ?? 'Close' }}
-						</button>
-					</ng-content>
+						</oeb-button>
+						</ng-content>
+					</ng-template>
 				</hlm-dialog-footer>
 			</div>
 	`,
@@ -88,5 +98,17 @@ export class DialogComponent {
 
 	close() {
 		this.dialogRef.close();
+	}
+
+	public cancel() {
+		this.dialogRef.close('cancel');
+	}
+
+	public continue() {
+		this.dialogRef.close('continue');
+	}
+
+	isTemplate(content: any): boolean {
+		return content instanceof TemplateRef;
 	}
 }

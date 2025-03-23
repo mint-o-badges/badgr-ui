@@ -66,7 +66,9 @@
 		"all": "All",
 		"pleaseWait": "Please wait...",
 		"title": "Title",
-		"noResults": "No results"
+		"noResults": "No results",
+		"place": "place"
+
 	},
 	"NavItems": {
 		"register": "Register",
@@ -142,7 +144,10 @@
 		"noBadges": "No badges",
 		"recipient": "recipient",
 		"noRecipient": "No recipient",
-		"createInstitution": "Create an institution",
+		"createInstitution": "Create institution",
+		"createInstitutionNow": "Create institution now",
+		"createFirstInstitution": "Create your first institution now to create badges:",
+		"partOfInstitution": "You are of an already created institution?",
 		"noInstitutionYet": "You haven't created an institution yet!",
 		"institutionCreateInfo": "With institutions you can create badges and give them to users.",
 		"yourRole": "Your role:",
@@ -239,8 +244,9 @@
 		"rolesAndRights": "roles and rights in institutions",
 		"rolesAndRightsInfo1": "Infos about ",
 		"rolesAndRightsInfo2": "roles and rights",
-		"rolesAndRightsInfo3": " in institutions"
-
+		"rolesAndRightsInfo3": " in institutions",
+		"requestMembershipQuestion": "Do you really want to request a membership for",
+		"requestMembership": "Request Membership"
 	},
 	"Badge": {
 		"groupBy": "Group by",

@@ -9,16 +9,107 @@
 				</h1>
 				<p hlmP size="lg" class="tw-pb-3" [innerHTML]="'Issuer.myInstitutionsText' | translate"></p>
 				<p hlmP size="lg" class="tw-pb-3" [innerHTML]="'Issuer.myLearningPathText' | translate"></p>
+				<section *ngIf="issuers.length === 0" class="tw-flex tw-flex-col tw-gap-2 tw-mt-2">
+					<span
+						[innerHTML]="'Issuer.createFirstInstitution' | translate"
+						class="tw-text-2xl tw-italic tw-text-oebblack"
+					>
+					</span>
+					<oeb-button
+						class="md:tw-whitespace-nowrap"
+						[routerLink]="['/issuer/create']"
+						[disabled-when-requesting]="true"
+						[text]="'Issuer.createInstitutionNow' | translate"
+					>
+					</oeb-button>
+				</section>
+				<section class="tw-flex tw-flex-col tw-gap-2 tw-mt-12">
+					<span
+						[innerHTML]="'Issuer.partOfInstitution' | translate"
+						class="tw-text-2xl tw-italic tw-text-oebblack"
+					>
+					</span>
+					<div class="tw-flex tw-gap-4 tw-items-center tw-mt-2">
+						<div class="tw-relative tw-w-full tw-max-w-[600px]">
+							<input
+								#issuerSearchInput
+								#issuerSearchInputModel="ngModel"
+								class="tw-bg-white tw-border tw-border-solid tw-border-[var(--color-purple)] tw-rounded-md tw-shadow-sm tw-p-2 tw-pr-10 tw-resize-none tw-text-sm tw-text-gray-700 tw-w-full"
+								[(ngModel)]="issuerSearchQuery"
+								[ngModelOptions]="{ standalone: true }"
+								placeholder="Issuer suchen"
+								(focus)="issuersShowResults = true"
+								(focusout)="issuerSearchInputFocusOut()"
+								(keydown.enter)="$event.preventDefault()"
+							/>
+							<hlm-icon
+								size="lg"
+								class="tw-absolute tw-top-[3px] tw-right-1 tw-w-6 tw-h-6 tw-pointer-events-none tw-text-purple"
+								name="lucideSearch"
+							/>
+							<div
+								*ngIf="
+									issuersShowResults &&
+									(issuersLoading || issuerSearchResults.length || issuerSearchLoaded)
+								"
+								class="tw-absolute tw-mt-1 tw-z-10 tw-bg-white tw-rounded-md tw-shadow-sm tw-border tw-border-solid tw-border-gray-700 tw-w-full tw-overflow-auto"
+								[ngStyle]="{
+									'max-height.px': calculateDropdownMaxHeight(issuerSearchInput, 100),
+									'bottom.px': calculateDropdownBottom(issuerSearchInput, 100)
+								}"
+							>
+								<ul>
+									<li *ngIf="issuersLoading" class="tw-p-2 tw-cursor-default">Loading...</li>
+									<li
+										class="tw-p-2 hover:tw-bg-[var(--color-lightpurple)] tw-cursor-pointer tw-flex tw-items-center tw-gap-2"
+										(click)="selectIssuerFromDropdown(issuer)"
+										*ngFor="let issuer of issuerSearchResults"
+									>
+										<img [src]="'http://localhost:8000' + issuer.image" width="24" height="24" />
+										<span>{{ issuer.name }}</span>
+									</li>
+									<li
+										*ngIf="
+											issuerSearchResults.length == 0 &&
+											!keywordCompetenciesLoading &&
+											keywordCompetenciesLoaded
+										"
+										class="tw-p-2 tw-text-gray-500 tw-cursor-default"
+									>
+										Keine Ergebnisse
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<oeb-button
+						class="tw-max-w-[600px]"
+						width="full_width"
+						[disabled]="!selectedIssuer"
+						[text]="'Issuer.requestMembership' | translate"
+						(click)="openRequestStaffMembershipDialog()"
+					></oeb-button>
+					<ng-template #staffRequestFooterTemplate>
+						<div class="tw-flex tw-items-center tw-justify-between">
+							<oeb-button size="sm" variant="secondary" [text]="'General.cancel' | translate">
+
+							</oeb-button>
+							<oeb-button size="sm" [text]="'Issuer.requestMembership' | translate">
+
+							</oeb-button>
+
+						</div>
+					</ng-template>
+					<ng-template #successfullyRequestedMembershipHeaderTemplate>
+						<div class="tw-flex tw-justify-center">
+							<div class="oeb-icon-circle tw-my-6">
+								<svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52"><circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/><path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/></svg>
+							</div>
+						</div>
+					</ng-template>
+				</section>
 			</div>
 			<div class="tw-border-purple tw-border tw-rounded-[20px] tw-text-right">
-				<oeb-button
-					class="md:tw-whitespace-nowrap"
-					variant="secondary"
-					[routerLink]="['/issuer/create']"
-					[disabled-when-requesting]="true"
-					[text]="'Issuer.createInstitution' | translate"
-				>
-				</oeb-button>
 				<div class="tw-mt-8 tw-max-w-[380px]">
 					<div class="tw-flex tw-items-center tw-gap-2">
 						<hlm-icon class="tw-text-purple" size="xl" name="lucideInfo" />
@@ -41,21 +132,30 @@
 										class="tw-text-lg tw-text-oebblack tw-font-semibold"
 										[innerHTML]="'Issuer.addMember_owner' | translate"
 									></h3>
-									<p class="tw-text-oebblack tw-text-lg" [innerHTML]="'Issuer.addMember_ownerText' | translate"></p>
+									<p
+										class="tw-text-oebblack tw-text-lg"
+										[innerHTML]="'Issuer.addMember_ownerText' | translate"
+									></p>
 								</section>
 								<section class="tw-mb-2">
 									<h3
 										class="tw-text-lg tw-text-oebblack tw-font-semibold"
 										[innerHTML]="'Editor'"
 									></h3>
-									<p class="tw-text-oebblack tw-text-lg" [innerHTML]="'Issuer.addMember_editorText' | translate"></p>
+									<p
+										class="tw-text-oebblack tw-text-lg"
+										[innerHTML]="'Issuer.addMember_editorText' | translate"
+									></p>
 								</section>
 								<section class="tw-mb-2">
 									<h3
 										class="tw-text-lg tw-text-oebblack tw-font-semibold"
 										[innerHTML]="'Issuer.addMember_staff' | translate"
 									></h3>
-									<p class="tw-text-oebblack tw-text-lg" [innerHTML]="'Issuer.addMember_staffText' | translate"></p>
+									<p
+										class="tw-text-oebblack tw-text-lg"
+										[innerHTML]="'Issuer.addMember_staffText' | translate"
+									></p>
 								</section>
 							</ng-template>
 							<span [innerHTML]="'Issuer.rolesAndRightsInfo3' | translate"> </span>
