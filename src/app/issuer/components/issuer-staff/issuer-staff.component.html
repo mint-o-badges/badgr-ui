@@ -1,6 +1,6 @@
 <div *bgAwaitPromises="[issuerLoaded, profileEmailsLoaded]">
 	<form-message></form-message>
-	<div class="topbar topbar-withimage">
+	<div class="topbar topbar-withimage page-padding">
 		<div class="l-containerxaxis">
 			<div class="topbar-x-breadcrumbs">
 				<bg-breadcrumbs [linkentries]="breadcrumbLinkEntries"> </bg-breadcrumbs>
@@ -24,9 +24,14 @@
 				</div>
 			</div>
 		</div>
+		<issuer-staff-requests-datatable>
+
+		</issuer-staff-requests-datatable>
+		<issuer-staff-datatable [members]="issuer.staff" [roleOptions]="issuerStaffRoleOptions">
+		</issuer-staff-datatable>
 	</div>
 
-	<div class="l-containerxaxis l-containeryaxis">
+	<!-- <div class="l-containerxaxis l-containeryaxis">
 		<div class="l-stack u-margin-bottom2x" *ngIf="isCurrentUserIssuerOwner">
 			<p class="u-text-h3-bold">{{ 'General.members' | translate }}</p>
 			<issuer-staff-create-dialog #issuerStaffCreateDialog></issuer-staff-create-dialog>
@@ -174,5 +179,5 @@
 				</tr>
 			</tbody>
 		</table>
-	</div>
+	</div> -->
 </div>

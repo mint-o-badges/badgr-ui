@@ -108,6 +108,8 @@ import { DangerDialogComponent } from './dialogs/oeb-dialogs/danger-dialog.compo
 import { OebBackgroundComponent } from '../components/oeb-background.component';
 import { OebIssuerDetailComponent } from './components/issuer/oeb-issuer-detail.component';
 import { DatatableComponent } from '../components/datatable-badges.component';
+import { IssuerStaffDatatableComponent } from '../components/datatable-issuer-staff.component';
+import { IssuerStaffRequestsDatatableComponent } from '../components/datatable-issuer-staff-requests.component';
 
 import { OebProgressComponent } from '../components/oeb-progress.component';
 import { OebSelectComponent } from '../components/select.component';
@@ -261,6 +263,8 @@ export const COMMON_IMPORTS = [
 	CountUpModule,
 	HlmInputDirective,
 	DatatableComponent,
+	IssuerStaffDatatableComponent,
+	IssuerStaffRequestsDatatableComponent,
 	LearningPathDatatableComponent,
 	LearningPathParticipantsDatatableComponent,
 	LearningPathGraduatesDatatableComponent,
