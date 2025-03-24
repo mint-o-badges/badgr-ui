@@ -90,7 +90,7 @@
 					</ng-container>
 				</ng-container>
 
-				<oeb-numbered-pagination [totalProducts]="issuers.length" [(page)]="currentPage" >
+				<oeb-numbered-pagination *ngIf="(issuerResults.length >= 30 || currentPage == totalPages) && badgesDisplay != 'map'" [totalProducts]="issuers.length" [(page)]="currentPage" >
 
 				</oeb-numbered-pagination>
 			</section>

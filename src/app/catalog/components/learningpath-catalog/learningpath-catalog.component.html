@@ -116,6 +116,7 @@
 		</ng-container>
 
 		<oeb-numbered-pagination
+			*ngIf="learningPathResults.length >= 20 || currentPage == totalPages"
 			[totalProducts]="learningPaths.length"
 			[(page)]="currentPage"
 			[(pageSize)]="microDegreesPerPage"

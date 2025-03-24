@@ -52,7 +52,7 @@
 						</oeb-global-sort-select>
 						
 
-						<oeb-select
+						<!-- <oeb-select
 							actionBar="true"
 							placeholder="{{ 'Badge.groupBy' | translate }}"
 							class="oeb tw-w-[12rem]"
@@ -60,7 +60,7 @@
 							[control]="groupControl"
 							[autofocus]="true"
 							noTopMargin="true"
-						></oeb-select>
+						></oeb-select> -->
 
 						<oeb-select
 							actionBar="true"
@@ -190,8 +190,9 @@
 				</p>
 			</section>
 		</div>
-		<oeb-numbered-pagination [totalProducts]="badges.length" [(page)]="currentPage" >
-			
+		<spartan-button-with-icon></spartan-button-with-icon>
+		<oeb-numbered-pagination *ngIf="badgeResults.length >= 30 || currentPage == totalPages" [totalProducts]="badges.length" [(page)]="currentPage" >
+		 	
 		</oeb-numbered-pagination>
 	</ng-template>
 </div>
