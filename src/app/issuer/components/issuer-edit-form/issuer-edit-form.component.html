@@ -16,7 +16,7 @@
         maxSizeInMB="2"
         [labelStyle]="'forminput-x-label u-margin-bottom1x'"
     ></bg-formfield-image>
-    <span class="tw-text-oebblack tw-italic tw-text-lg">Dateiformat: PNG</span>
+    <span class="tw-text-oebblack tw-italic tw-text-lg">{{ 'General.fileformats' | translate }}: SVG {{ 'General.and' | translate }} PNG</span>
 
     <oeb-input
         label="{{ 'General.name' | translate }} der Institution"
@@ -24,7 +24,7 @@
         [fieldType]="'text'"
         [autofocus]="true"
         [errorMessage]="{ required: issuerRequiredError }"
-        sublabelRight="(max 90 Zeichen)"
+        sublabelRight="(max. 90 Zeichen)"
         #issuer_name_field
     ></oeb-input>
 
@@ -86,7 +86,6 @@
     <oeb-input
         label="{{ 'Issuer.houseNo' | translate }}"
         [control]="issuerForm.rawControlMap.issuer_streetnumber"
-        [fieldType]="'number'"
         errorMessage="{{ 'Issuer.enterHouseNo' | translate }}"
         #issuer_streetnumber_field
     ></oeb-input>
