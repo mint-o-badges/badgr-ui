@@ -305,7 +305,7 @@ export const issuerStaffRoles = [
 		label: 'Eigentümer:in',
 		indefiniteLabel: 'an owner',
 		description:
-			'Zugriff auf alle Funktionen inkl. Hinzufügen/Entfernen von Editor:innen und Mitarbeitenden, Bearbeitung der Institutionsdetails sowie Erstellen, Vergeben und Löschen von Badges inkl. Micro Degrees.',
+			'Zugriff auf alle Funktionen inkl. Hinzufügen/Entfernen von Editor:innen und Mitarbeiter:innen, Bearbeitung der Institutionsdetails sowie Erstellen, Vergeben und Löschen von Badges inkl. Micro Degrees.',
 	},
 	{
 		slug: 'editor',
