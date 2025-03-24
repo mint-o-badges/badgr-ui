@@ -15,6 +15,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
 import { FormControl } from '@angular/forms';
 import { appearAnimation } from '../../../common/animations/animations';
+import { applySorting } from '../../util/sorting';
 
 @Component({
     selector: 'app-issuer-catalog',
@@ -56,7 +57,7 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 		},
 	];
 
-	sortControl = new FormControl('name_asc');
+	sortControl = new FormControl();
 	private _searchQuery = '';
 	get searchQuery() {
 		return this._searchQuery;
@@ -240,27 +241,6 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 		this.generateGeoJSON(this.issuerResults);
 	}
 
-	private applySorting(data: any[], sortOption: string): void {
-		const [sortBy, order] = sortOption.split('_') as ['name' | 'date', 'asc' | 'desc'];
-		const multiplier = order === 'asc' ? 1 : -1;
-	  
-		const sortFn = (a: any, b: any): number => {
-		  const nameA = a.name;
-		  const nameB = b.name;
-		  const createdOnA = new Date(a.createdAt).getTime();
-		  const createdOnB = new Date(b.createdAt).getTime();
-	  
-		  if (sortBy === 'name') {
-			return multiplier * nameA.localeCompare(nameB);
-		  }
-		  if (sortBy === 'date') {
-			return multiplier * (createdOnA - createdOnB);
-		  }
-		  return 0;
-		};
-	  
-		data.sort(sortFn);
-	  }
 
 	private updatePaginatedResults() {
 		let that = this;
@@ -275,7 +255,7 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 			.filter((issuer) => !this.categoryFilter || issuer.category === this.categoryFilter);
 
 		if (this.sortOption) {
-			this.applySorting(filteredIssuers, this.sortOption);
+			applySorting(filteredIssuers, this.sortOption);
 		}	
 		this.totalPages = Math.ceil(filteredIssuers.length / this.issuersPerPage);
 		const start = (this.currentPage - 1) * this.issuersPerPage;

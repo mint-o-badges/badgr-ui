@@ -19,6 +19,7 @@ import { RecipientBadgeApiService } from '../../../recipient/services/recipient-
 import { ApiRecipientBadgeInstance } from '../../../recipient/models/recipient-badge-api.model';
 import { appearAnimation } from '../../../common/animations/animations';
 import { FormControl } from '@angular/forms';
+import { applySorting } from '../../util/sorting';
 
 @Component({
     selector: 'app-learningpaths-catalog',
@@ -44,7 +45,7 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 	loggedIn = false;
 	userBadges: string[] = [];
 	plural = {};
-	sortControl = new FormControl('name_asc');
+	sortControl = new FormControl();
 
 
 	microDegreesPerPage = 20;
@@ -255,7 +256,7 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 			.filter(this.learningPathTagMatcher(this.selectedTag))
 
 		if (this.sortOption) {
-			this.applySorting(filteredMicroDegrees, this.sortOption);
+			applySorting(filteredMicroDegrees, this.sortOption);
 		}
 
 		this.totalPages = Math.ceil(filteredMicroDegrees.length / this.microDegreesPerPage);
@@ -264,29 +265,6 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 	
 		that.learningPathResults = filteredMicroDegrees.slice(start, end);
 	}
-
-
-	private applySorting(data: any[], sortOption: string): void {
-		const [sortBy, order] = sortOption.split('_') as ['name' | 'date', 'asc' | 'desc'];
-		const multiplier = order === 'asc' ? 1 : -1;
-	  
-		const sortFn = (a: any, b: any): number => {
-		  const nameA = a.name;
-		  const nameB = b.name;
-		  const createdOnA = new Date(a.createdAt).getTime();
-		  const createdOnB = new Date(b.createdAt).getTime();
-	  
-		  if (sortBy === 'name') {
-			return multiplier * nameA.localeCompare(nameB);
-		  }
-		  if (sortBy === 'date') {
-			return multiplier * (createdOnA - createdOnB);
-		  }
-		  return 0;
-		};
-	  
-		data.sort(sortFn);
-	  }
 
 	async loadIssuers() {
 		return new Promise(async (resolve, reject) => {

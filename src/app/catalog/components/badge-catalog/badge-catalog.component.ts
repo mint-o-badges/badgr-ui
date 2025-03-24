@@ -15,6 +15,7 @@ import { BadgeClassCategory } from '../../../issuer/models/badgeclass-api.model'
 import { TranslateService } from '@ngx-translate/core';
 import { FormControl } from '@angular/forms';
 import { appearAnimation } from '../../../common/animations/animations';
+import { applySorting } from '../../util/sorting';
 
 @Component({
     selector: 'app-badge-catalog',
@@ -248,28 +249,6 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		};
 	}
 
-	private applySorting(data: any[], sortOption: string): void {
-		const [sortBy, order] = sortOption.split('_') as ['name' | 'date', 'asc' | 'desc'];
-		const multiplier = order === 'asc' ? 1 : -1;
-	  
-		const sortFn = (a: any, b: any): number => {
-		  const nameA = a.name;
-		  const nameB = b.name;
-		  const createdOnA = new Date(a.createdAt).getTime();
-		  const createdOnB = new Date(b.createdAt).getTime();
-	  
-		  if (sortBy === 'name') {
-			return multiplier * nameA.localeCompare(nameB);
-		  }
-		  if (sortBy === 'date') {
-			return multiplier * (createdOnA - createdOnB);
-		  }
-		  return 0;
-		};
-	  
-		data.sort(sortFn);
-	  }
-
 	private updateResults() {
 		let that = this;
 		// Clear Results
@@ -379,7 +358,7 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 			.filter((i) => !i.apiModel.source_url);
 
 		if (this.sortOption) {
-			this.applySorting(filteredBadges, this.sortOption);
+			applySorting(filteredBadges, this.sortOption);
 		}
 
 		this.totalPages = Math.ceil(filteredBadges.length / this.badgesPerPage);
