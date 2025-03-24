@@ -55,11 +55,11 @@ export class QrCodeApiService extends BaseHttpApiService {
 	}
 
 	downloadQrCode(blob: Blob, qrCodeName: string, badgeName: string): void {
-		const url = window.URL.createObjectURL(blob); 
+		const url = window.URL.createObjectURL(blob);
 		const link = document.createElement('a');
 		link.href = url;
 		link.download = `${qrCodeName}.pdf`;
 		link.click();
-		window.URL.revokeObjectURL(url); 
+		window.URL.revokeObjectURL(url);
 	  }
 }

@@ -7,7 +7,9 @@ import { StandaloneEntitySet } from '../../common/model/managed-entity-set';
 import { CommonEntityManager } from '../../entity-manager/services/common-entity-manager.service';
 import { first, map } from 'rxjs/operators';
 
-@Injectable()
+@Injectable({
+	providedIn: 'root',
+})
 export class IssuerManager {
 	issuersList = new StandaloneEntitySet<Issuer, ApiIssuer>(
 		(apiModel) => new Issuer(this.commonEntityManager),

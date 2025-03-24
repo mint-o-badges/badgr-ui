@@ -3,6 +3,7 @@ import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/ro
 import { SessionService } from '../services/session.service';
 import { OAuthManager } from '../services/oauth-manager.service';
 import { UserProfileApiService } from '../services/user-profile-api.service';
+import { UserProfileManager } from '../services/user-profile-manager.service';
 
 @Injectable()
 export class AuthGuard {
@@ -10,7 +11,7 @@ export class AuthGuard {
 		private sessionService: SessionService,
 		private router: Router,
 		private oAuthManager: OAuthManager,
-		private userProfileApiService: UserProfileApiService,	
+		private userProfileManager: UserProfileManager,
 	) {}
 
 	canActivate(
@@ -30,10 +31,10 @@ export class AuthGuard {
 		} else if (this.oAuthManager.isAuthorizationInProgress) {
 			this.router.navigate(['/auth/oauth2/authorize']);
 			return false;
-		} 		
+		}
 		else {
-			this.userProfileApiService.getProfile().then(profile => {
-				if (profile.agreed_terms_version !== profile.latest_terms_version) {
+			this.userProfileManager.userProfilePromise.then(profile => {
+				if (profile.agreedTermsVersion !== profile.latestTermsVersion) {
 					this.router.navigate(['/auth/new-terms']);
 					return false;
 				}

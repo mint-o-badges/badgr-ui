@@ -204,12 +204,8 @@ const routes = [
 	exports: [],
 	providers: [
 		BadgeClassApiService,
-		BadgeClassManager,
-		LearningPathManager,
 		BadgeInstanceApiService,
-		BadgeInstanceManager,
 		IssuerApiService,
-		IssuerManager,
 		QrCodeApiService,
 		BadgeRequestApiService,
 		CdkStepper

@@ -21,7 +21,9 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { first, map } from 'rxjs/operators';
 
-@Injectable()
+@Injectable({
+	providedIn: 'root',
+})
 export class BadgeClassManager extends BaseHttpApiService {
 	badgesList = new StandaloneEntitySet<BadgeClass, ApiBadgeClass>(
 		(apiModel) => new BadgeClass(this.commonEntityManager),

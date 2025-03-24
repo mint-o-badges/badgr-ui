@@ -5,7 +5,9 @@ import { AppIntegration } from '../models/app-integration.model';
 import { CommonEntityManager } from '../../entity-manager/services/common-entity-manager.service';
 import { AppIntegrationApiService } from './app-integration-api.service';
 
-@Injectable()
+@Injectable({
+	providedIn: 'root',
+})
 export class AppIntegrationManager {
 	appIntegrations = new StandaloneEntitySet<AppIntegration<ApiAppIntegration>, ApiAppIntegration>(
 		(apiEntity) => AppIntegration.integrationFor(this.commonManager, apiEntity),
