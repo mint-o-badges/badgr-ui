@@ -74,7 +74,9 @@
 		"pleaseWait": "Bitte warten...",
 		"title": "Titel",
 		"noResults": "Keine Ergebnisse",
-		"place": "stellen"
+		"place": "stellen",
+		"forwarded": "weitergeleitet",
+		"revoke": "zurücknehmen"
 	},
 	"NavItems": {
 		"register": "Registrieren",
@@ -279,7 +281,10 @@
 		"rolesAndRightsInfo2" : "Rollen und Rechten",
 		"rolesAndRightsInfo3": " innerhalb von Institutionen",
 		"requestMembershipQuestion": "Möchtest du wirklich eine Mitgliedsanfrage an",
-		"requestMembership": "Mitgliedsanfrage stellen"
+		"requestMembership": "Mitgliedsanfrage stellen",
+		"staffRequestForwarded": "Wir haben deine Mitgliedsanfrage an",
+		"staffRequestForwardedEmail": "Du bekommst eine E-Mail von uns, wenn die Anfrage bestätigt wird.",
+		"yourOpenStaffRequests": "Deine offenen Mitgliedsanfragen"
 	},
 	"Badge": {
 		"groupBy": "Gruppieren nach",

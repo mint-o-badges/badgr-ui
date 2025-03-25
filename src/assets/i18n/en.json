@@ -67,8 +67,9 @@
 		"pleaseWait": "Please wait...",
 		"title": "Title",
 		"noResults": "No results",
-		"place": "place"
-
+		"place": "place",
+		"forwarded": "forwarded",
+		"revoke": "revoke"
 	},
 	"NavItems": {
 		"register": "Register",
@@ -246,7 +247,10 @@
 		"rolesAndRightsInfo2": "roles and rights",
 		"rolesAndRightsInfo3": " in institutions",
 		"requestMembershipQuestion": "Do you really want to request a membership for",
-		"requestMembership": "Request Membership"
+		"requestMembership": "Request Membership",
+		"staffRequestForwarded": "We forwarded your request to",
+		"staffRequestForwardedEmail": "You will receive an email from us once the request is confirmed.",
+		"yourOpenStaffRequests": "Your open member requests"
 	},
 	"Badge": {
 		"groupBy": "Group by",

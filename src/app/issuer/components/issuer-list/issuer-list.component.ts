@@ -17,6 +17,9 @@ import { DialogComponent } from '../../../components/dialog.component';
 import { NgModel } from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { PublicApiService } from '../../../public/services/public-api.service';
+import { IssuerStaffRequestApiService } from '../../services/issuer-staff-request-api.service';
+import { UserProfileApiService } from '../../../common/services/user-profile-api.service';
+import { ApiStaffRequest } from '../../staffrequest-api.model';
 
 @Component({
 	selector: 'issuer-list',
@@ -67,6 +70,8 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 	issuerSearchResults: any[] = [];
 	selectedIssuer: Issuer | null = null;
 
+	staffRequests: ApiStaffRequest[] = []
+
 	issuersLoading = false;
 	issuerSearchLoaded = false;
 
@@ -99,6 +104,8 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 		router: Router,
 		route: ActivatedRoute,
 		private translate: TranslateService,
+		private issuerStaffRequestApiService: IssuerStaffRequestApiService,
+		private userProfileApiService: UserProfileApiService
 	) {
 		super(router, route, loginService);
 		title.setTitle(`Issuers - ${this.configService.theme['serviceName'] || 'Badgr'}`);
@@ -166,6 +173,8 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 				});
 			}
 		});
+
+		this.userProfileApiService.getIssuerStaffRequests().then(r =>  this.staffRequests = r.body)
 	}
 
 	async issuerSearchChange() {
@@ -235,21 +244,45 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 					${this.translate.instant('General.place') + '?'}
 					</span>
 					`,
-				variant: 'default',
-				footer: this.staffRequestFooterTemplate,
+				variant: 'info',
+				twoButtonFooter: true,
+				forwardText: this.translate.instant('Issuer.requestMembership')
 			},
 		});
 
-		dialogRef.closed$.subscribe((result) => {
-			if (result === 'continue') this.openSuccessfullyRequestedMembershipDialog();
+		dialogRef.closed$.subscribe( async (result) => {
+			if (result === 'continue') {
+				if(this.selectedIssuer){
+					const req = await this.issuerStaffRequestApiService.requestIssuerStaffMembership(this.selectedIssuer.slug)
+					console.log("req", req)
+
+				}
+				// this.openSuccessfullyRequestedMembershipDialog();
+			}
 		});
 	}
 
 	public openSuccessfullyRequestedMembershipDialog() {
 		this._hlmDialogService.open(DialogComponent, {
 			context: {
-				headerTemplate: this.successfullyRequestedMembershipHeaderTemplate,
-				content: this.issuerInfoTemplate,
+				headerTemplate: null,
+				content: `
+					<p class='tw-text-oebblack tw-text-lg'>
+						<span>
+						${this.translate.instant('Issuer.staffRequestForwarded')}
+						</span>
+						<span class='tw-font-bold'>
+						${this.selectedIssuer.name}
+						</span>
+						<span>
+						${this.translate.instant('General.forwarded') + '.'}
+						</span>
+					</p>
+					<br>
+					<span class='tw-text-oebblack tw-text-lg tw-mt-6'>
+					${this.translate.instant('Issuer.staffRequestForwardedEmail')}
+					</span>
+					`,
 				variant: 'success',
 				footer: false,
 			},

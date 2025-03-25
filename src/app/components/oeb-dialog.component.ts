@@ -33,11 +33,11 @@ import { NgClass, NgIf } from '@angular/common';
 	],
 	template: `
 		<div
-			class="tw-px-4 tw-py-6 tw-rounded-[20px] tw-border-4 tw-bg-white tw-border-solid"
+			class="tw-px-4 tw-py-6 tw-rounded-[20px] tw-border-purple tw-bg-white tw-border-4 tw-border-solid"
 			[ngClass]="{
-				' tw-border-red': variant === 'danger',
-				' tw-border-link': variant === 'info',
-				'tw-border-purple': variant === 'default'
+				'!tw-border-red !tw-bg-white !tw-border-4 !tw-border-solid': variant === 'danger',
+				'!tw-border-link !tw-bg-white !tw-border-4 !tw-border-solid': variant === 'info',
+				'!tw-border-green !tw-bg-green' : variant === 'success'
 			}"
 		>
 			<hlm-dialog-header *ngIf="title">

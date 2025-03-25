@@ -58,6 +58,7 @@ import { Issuer } from './models/issuer.model';
 import { LearningPathEditComponent } from './components/learningpath-edit/learningpath-edit.component';
 import { BadgeClassSelectTypeComponent } from './components/badgeclass-select-type/badgeclass-select-type.component';
 import { PublicApiService } from '../public/services/public-api.service';
+import { IssuerStaffRequestApiService } from './services/issuer-staff-request-api.service';
 
 const routes = [
 	/* Issuer */
@@ -214,7 +215,8 @@ const routes = [
 		QrCodeApiService,
 		BadgeRequestApiService,
 		CdkStepper,
-		PublicApiService
+		PublicApiService,
+		IssuerStaffRequestApiService
 	],
 })
 export class IssuerModule {}
