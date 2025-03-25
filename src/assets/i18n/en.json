@@ -610,7 +610,10 @@
 		"text1": "Alle deine Badges kannst du ab jetzt in deinem <span class='tw-font-medium tw-text-purple'>Ruckack sammeln</span>.",
 		"text2": "Wenn du<span class='tw-font-medium tw-text-purple'> Badges erstellen und vergeben möchtest</span>, lege dafür deine Institution an.",
 		"collectBadgesBtn": "Badges im Rucksack sammeln",
-		"awardBadgesBtn": "Institutionen erstellen und Badges vergeben"
+		"awardBadgesBtn": "Institutionen erstellen und Badges vergeben",
+		"whatNext": "What do you want to do next?",
+		"viaYourInstitution": "Via your <span class='tw-italic'>institution</span>.",
+		"inBackpack": "In the <span class='tw-italic'>backpack</span>."
 	},
 	"RequestBadge": {
 		"requestBadge": "Request Badge",
