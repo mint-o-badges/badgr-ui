@@ -20,6 +20,7 @@ import { CommonModule } from '@angular/common';
 
 interface DialogContext {
 	headerTemplate: TemplateRef<void>;
+
 	subtitle?: string;
 	variant: 'default' | 'danger' | 'info';
 	content: TemplateRef<void>;
@@ -49,8 +50,10 @@ interface DialogContext {
 	],
 	template: `
 			<div class="dialog-container" [ngClass]="dialogClass">
-				<hlm-dialog-header *ngIf="context.headerTemplate">
-					<ng-container *ngTemplateOutlet="context.headerTemplate"></ng-container>
+				<hlm-dialog-header>
+					<ng-container *ngIf="context.headerTemplate">
+						<ng-container *ngTemplateOutlet="context.headerTemplate"></ng-container>
+					</ng-container>
 				</hlm-dialog-header>
 
 				<div class="dialog-body">

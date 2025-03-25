@@ -31,10 +31,18 @@
 					</span>
 					<div class="tw-flex tw-gap-4 tw-items-center tw-mt-2">
 						<div class="tw-relative tw-w-full tw-max-w-[600px]">
+							<img
+								*ngIf="selectedIssuer"
+								[src]="'http://localhost:8000' + selectedIssuer.image"
+								width="24"
+								height="24"
+								class="tw-absolute tw-left-2 tw-top-1/2 tw-transform -tw-translate-y-1/2 tw-rounded-full"
+							/>
 							<input
 								#issuerSearchInput
 								#issuerSearchInputModel="ngModel"
 								class="tw-bg-white tw-border tw-border-solid tw-border-[var(--color-purple)] tw-rounded-md tw-shadow-sm tw-p-2 tw-pr-10 tw-resize-none tw-text-sm tw-text-gray-700 tw-w-full"
+								[ngClass]="selectedIssuer ? 'tw-pl-10' : ''"
 								[(ngModel)]="issuerSearchQuery"
 								[ngModelOptions]="{ standalone: true }"
 								placeholder="Issuer suchen"
@@ -89,6 +97,11 @@
 						[text]="'Issuer.requestMembership' | translate"
 						(click)="openRequestStaffMembershipDialog()"
 					></oeb-button>
+					<ng-template #headerQuestionMarkTemplate>
+						<div class="tw-mx-auto tw-flex">
+							<img src="assets/oeb/images/issuerPage/questionmark.svg" width="121" height="121" />
+						</div>
+					</ng-template>
 					<ng-template #staffRequestFooterTemplate>
 						<div class="tw-flex tw-items-center tw-justify-between">
 							<oeb-button size="sm" variant="secondary" [text]="'General.cancel' | translate">

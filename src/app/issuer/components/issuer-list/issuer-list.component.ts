@@ -40,6 +40,9 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 	@ViewChild('headerTemplate')
 	headerTemplate: TemplateRef<void>;
 
+	@ViewChild('headerQuestionMarkTemplate')
+	headerQuestionMarkTemplate: TemplateRef<void>;
+
 	@ViewChild('issuerInfoTemplate')
 	issuerInfoTemplate: TemplateRef<void>;
 
@@ -220,7 +223,7 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 	public openRequestStaffMembershipDialog() {
 		const dialogRef = this._hlmDialogService.open(DialogComponent, {
 			context: {
-				headerTemplate: null,
+				headerTemplate: this.headerQuestionMarkTemplate,
 				content: `
 					<span class='tw-text-oebblack tw-text-lg'>
 					${this.translate.instant('Issuer.requestMembershipQuestion')}
