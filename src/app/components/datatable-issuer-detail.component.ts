@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { BadgrCommonModule } from '../common/badgr-common.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { BrnAccordionContentComponent } from '@spartan-ng/ui-accordion-brain';
+
 import { HlmIconModule } from './spartan/ui-icon-helm/src';
 import { RouterModule } from '@angular/router';
 import { Component, EventEmitter, Input, Output, computed, effect, input, signal } from '@angular/core';
@@ -20,20 +20,19 @@ import { OebButtonComponent } from './oeb-button.component';
 @Component({
     selector: 'issuer-detail-datatable',
     imports: [
-        FormsModule,
-        HlmTableModule,
-        HlmIconModule,
-        CommonModule,
-        BadgrCommonModule,
-        TranslateModule,
-        BrnAccordionContentComponent,
-        RouterModule,
-        HlmInputDirective,
-        HlmLabelDirective,
-        HlmIconComponent,
-        HlmCommandInputWrapperComponent,
-        OebButtonComponent,
-    ],
+    FormsModule,
+    HlmTableModule,
+    HlmIconModule,
+    CommonModule,
+    BadgrCommonModule,
+    TranslateModule,
+    RouterModule,
+    HlmInputDirective,
+    HlmLabelDirective,
+    HlmIconComponent,
+    HlmCommandInputWrapperComponent,
+    OebButtonComponent
+],
     providers: [provideIcons({ lucideSearch })],
     template: `
 		<div class="tw-p-[calc(var(--gridspacing)*2)] tw-mt-8">

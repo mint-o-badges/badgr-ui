@@ -1,16 +1,11 @@
 import { Component, Input, TemplateRef } from '@angular/core';
 import { BrnMenuTriggerDirective } from '@spartan-ng/ui-menu-brain';
 import {
-	HlmMenuComponent,
-	HlmMenuGroupComponent,
-	HlmMenuItemDirective,
-	HlmMenuItemIconDirective,
-	HlmMenuItemSubIndicatorComponent,
-	HlmMenuItemVariants,
-	HlmMenuLabelComponent,
-	HlmMenuSeparatorComponent,
-	HlmMenuShortcutComponent,
-	HlmSubMenuComponent,
+  HlmMenuComponent,
+  HlmMenuItemDirective,
+  HlmMenuItemIconDirective,
+  HlmMenuItemVariants,
+  HlmMenuLabelComponent
 } from './spartan/ui-menu-helm/src/index';
 import { NgIf, NgFor, NgTemplateOutlet } from '@angular/common';
 import type { MenuItem } from '../common/components/badge-detail/badge-detail.component.types';
@@ -21,23 +16,18 @@ import { SharedIconsModule } from '../public/icons.module';
 @Component({
     selector: 'oeb-dropdown',
     imports: [
-        BrnMenuTriggerDirective,
-        HlmMenuComponent,
-        HlmSubMenuComponent,
-        HlmMenuItemDirective,
-        HlmMenuItemSubIndicatorComponent,
-        HlmMenuLabelComponent,
-        HlmMenuShortcutComponent,
-        HlmMenuSeparatorComponent,
-        HlmMenuItemIconDirective,
-        HlmMenuGroupComponent,
-        NgIf,
-        NgFor,
-        NgTemplateOutlet,
-        RouterModule,
-        HlmIconModule,
-        SharedIconsModule,
-    ],
+    BrnMenuTriggerDirective,
+    HlmMenuComponent,
+    HlmMenuItemDirective,
+    HlmMenuLabelComponent,
+    HlmMenuItemIconDirective,
+    NgIf,
+    NgFor,
+    NgTemplateOutlet,
+    RouterModule,
+    HlmIconModule,
+    SharedIconsModule
+],
     template: `
 		<button [brnMenuTriggerFor]="menu">
 			<ngTemplateOutlet *ngIf="isTemplate; else stringTrigger" [ngTemplateOutlet]="trigger"></ngTemplateOutlet>

@@ -1,10 +1,10 @@
 import { NgFor, NgIf } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { HlmInputErrorDirective } from './spartan/ui-input-helm/src';
+
 
 @Component({
     selector: 'oeb-input-error',
-    imports: [HlmInputErrorDirective],
+    imports: [],
     host: {
         class: 'tw-block tw-mt-0 md:tw-mt-1 tw-min-h-[20px] tw-mb-4',
         // eslint-disable-next-line @angular-eslint/no-host-metadata-property

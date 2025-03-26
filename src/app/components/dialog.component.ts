@@ -1,19 +1,11 @@
 import { Component, inject, Input, TemplateRef } from '@angular/core';
 import {
-	BrnDialogComponent,
-	BrnDialogTriggerDirective,
-	BrnDialogContentDirective,
-	BrnDialogCloseDirective,
-	BrnDialogRef,
-	injectBrnDialogContext
+  BrnDialogRef,
+  injectBrnDialogContext
 } from '@spartan-ng/ui-dialog-brain';
 import {
-	HlmDialogComponent,
-	HlmDialogContentComponent,
-	HlmDialogDescriptionDirective,
-	HlmDialogFooterComponent,
-	HlmDialogHeaderComponent,
-	HlmDialogTitleDirective,
+  HlmDialogFooterComponent,
+  HlmDialogHeaderComponent
 } from './spartan/ui-dialog-helm/src';
 import { HlmButtonDirective } from './spartan/ui-button-helm/src';
 import { CommonModule } from '@angular/common';
@@ -31,22 +23,11 @@ interface DialogContext {
 	selector: 'app-dialog',
 	standalone: true,
 	imports: [
-		BrnDialogComponent,
-		BrnDialogTriggerDirective,
-		BrnDialogContentDirective,
-		BrnDialogCloseDirective,
-
-		HlmDialogComponent,
-		HlmDialogContentComponent,
-		HlmDialogHeaderComponent,
-		HlmDialogFooterComponent,
-		HlmDialogTitleDirective,
-		HlmDialogDescriptionDirective,
-
-
-		HlmButtonDirective,
-		CommonModule
-	],
+    HlmDialogHeaderComponent,
+    HlmDialogFooterComponent,
+    HlmButtonDirective,
+    CommonModule
+],
 	template: `
 			<div class="dialog-container" [ngClass]="dialogClass">
 				<hlm-dialog-header *ngIf="context.headerTemplate">

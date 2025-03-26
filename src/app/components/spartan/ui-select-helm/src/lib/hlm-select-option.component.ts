@@ -3,7 +3,7 @@ import { NgIcon, provideIcons } from '@ng-icons/core';
 import { lucideCheck } from '@ng-icons/lucide';
 import { hlm } from '@spartan-ng/brain/core';
 import { BrnSelectOptionDirective } from '@spartan-ng/brain/select';
-import { HlmIconComponent } from '../../../ui-icon-helm/src';
+
 import type { ClassValue } from 'clsx';
 
 @Component({
@@ -26,7 +26,7 @@ import type { ClassValue } from 'clsx';
 			}
 		</span>
 	`,
-	imports: [NgIcon, HlmIconComponent],
+	imports: [NgIcon],
 })
 export class HlmSelectOptionComponent {
 	protected readonly _brnSelectOption = inject(BrnSelectOptionDirective, { host: true });

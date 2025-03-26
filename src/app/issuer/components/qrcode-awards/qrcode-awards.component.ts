@@ -18,7 +18,7 @@ import { DangerDialogComponent } from "../../../../app/common/dialogs/oeb-dialog
 import { QrCodeApiService } from "../../services/qrcode-api.service";
 import { ApiQRCode } from "../../models/qrcode-api.model";
 import { HlmH3Directive } from "../../../../app/components/spartan/ui-typography-helm/src/lib/hlm-h3.directive";
-import { HlmPDirective } from "../../../../app/components/spartan/ui-typography-helm/src/lib/hlm-p.directive";
+
 import { TranslateService } from "@ngx-translate/core";
 import { InfoDialogComponent } from "../../../common/dialogs/oeb-dialogs/info-dialog.component";
 import { BadgeClass } from "../../models/badgeclass.model";
@@ -30,24 +30,22 @@ import { Issuer } from "../../models/issuer.model";
     templateUrl: './qrcode-awards.component.html',
     providers: [BadgeRequestApiService, HlmDialogService, QrCodeApiService, TranslateService],
     imports: [
-        HlmAccordionModule,
-        HlmIconModule,
-        TranslateModule,
-        BrnAccordionContentComponent,
-        RouterModule,
-        NgIf,
-        NgFor,
-        NgClass,
-        OebSeparatorComponent,
-        OebButtonComponent,
-        OebDropdownComponent,
-        QrCodeDatatableComponent,
-        SharedIconsModule,
-        BadgrCommonModule,
-        DangerDialogComponent,
-        HlmH3Directive,
-        HlmPDirective
-    ]
+    HlmAccordionModule,
+    HlmIconModule,
+    TranslateModule,
+    BrnAccordionContentComponent,
+    RouterModule,
+    NgIf,
+    NgFor,
+    NgClass,
+    OebSeparatorComponent,
+    OebButtonComponent,
+    OebDropdownComponent,
+    QrCodeDatatableComponent,
+    SharedIconsModule,
+    BadgrCommonModule,
+    HlmH3Directive
+]
 })
 
 export class QrCodeAwardsComponent {
