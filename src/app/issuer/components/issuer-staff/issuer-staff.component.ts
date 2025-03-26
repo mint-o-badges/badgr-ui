@@ -27,7 +27,6 @@ import { EmailValidator } from '../../../common/validators/email.validator';
 import { IssuerStaffRequestApiService } from '../../services/issuer-staff-request-api.service';
 import { ApiStaffRequest } from '../../staffrequest-api.model';
 
-
 @Component({
 	templateUrl: './issuer-staff.component.html',
 })
@@ -38,7 +37,7 @@ export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent imp
 			(this._issuerStaffRoleOptions = issuerStaffRoles.map((r) => ({
 				label: r.label,
 				value: r.slug,
-				description: r.description
+				description: r.description,
 			})))
 		);
 	}
@@ -57,11 +56,10 @@ export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent imp
 	profileEmailsLoaded: Promise<UserProfileEmail[]>;
 	profileEmails: UserProfileEmail[] = [];
 	error: string = null;
-	
-	staffRequests: ApiStaffRequest[] = []
 
-	staffRequestsCaption: string | null = null
+	staffRequests: ApiStaffRequest[] = [];
 
+	staffRequestsCaption: string | null = null;
 
 	@ViewChild('issuerStaffCreateDialog')
 	issuerStaffCreateDialog: IssuerStaffCreateDialogComponent;
@@ -87,7 +85,7 @@ export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent imp
 		protected configService: AppConfigService,
 		protected dialogService: CommonDialogsService,
 		protected translate: TranslateService,
-		protected issuerStaffRequestApiService: IssuerStaffRequestApiService
+		protected issuerStaffRequestApiService: IssuerStaffRequestApiService,
 	) {
 		super(router, route, loginService);
 		title.setTitle(`Manage Issuer Staff - ${this.configService.theme['serviceName'] || 'Badgr'}`);
@@ -110,13 +108,13 @@ export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent imp
 
 	ngOnInit(): void {
 		this.issuerStaffRequestApiService.getStaffRequestsByIssuer(this.issuerSlug).then((r) => {
-			this.staffRequests = r.body  
-		})
+			this.staffRequests = r.body;
+		});
 	}
 
 	staffCreateForm = typedFormGroup()
-			.addControl('staffRole', 'staff' as IssuerStaffRoleSlug, Validators.required)
-			.addControl('staffEmail', '', [Validators.required, EmailValidator.validEmail]);
+		.addControl('staffRole', 'staff' as IssuerStaffRoleSlug, Validators.required)
+		.addControl('staffEmail', '', [Validators.required, EmailValidator.validEmail]);
 
 	submitStaffCreate() {
 		if (!this.staffCreateForm.markTreeDirtyAndValidate()) {
@@ -135,10 +133,11 @@ export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent imp
 				const err = BadgrApiFailure.from(error);
 				console.log(err);
 				this.error =
-					BadgrApiFailure.messageIfThrottableError(err.overallMessage) || ''.concat(this.translate.instant('Issuer.addMember_failed'),": ",(err.firstMessage))
+					BadgrApiFailure.messageIfThrottableError(err.overallMessage) ||
+					''.concat(this.translate.instant('Issuer.addMember_failed'), ': ', err.firstMessage);
 			},
 		);
-	}			
+	}
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// Staff Editing
 
@@ -207,7 +206,11 @@ export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent imp
 		});
 	}
 
-	deleteStaffRequest(event){
-		console.log(event)
+	deleteStaffRequest(event) {
+		console.log(event);
+	}
+
+	confirmStaffRequest(event) {
+		this.issuerStaffRequestApiService.confirmRequest(this.issuerSlug, event);
 	}
 }
