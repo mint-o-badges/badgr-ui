@@ -19,6 +19,49 @@
 					[text]="'Issuer.createInstitution' | translate"
 				>
 				</oeb-button>
+				<div class="tw-mt-8 tw-max-w-[380px]">
+					<div class="tw-flex tw-items-center tw-gap-2">
+						<hlm-icon class="tw-text-purple" size="xl" name="lucideInfo" />
+						<p class="tw-text-oebblack tw-text-left">
+							<span [innerHTML]="'Issuer.rolesAndRightsInfo1' | translate"> </span>
+							<oeb-button
+								size="smallText"
+								variant="link"
+								[text]="'Issuer.rolesAndRightsInfo2' | translate"
+								(click)="openIssuerInfoDialog()"
+							></oeb-button>
+							<ng-template #headerTemplate>
+								<h1 class="tw-font-bold tw-text-purple tw-text-3xl tw-mb-8">
+									{{ 'Issuer.rolesAndRights' | translate }}
+								</h1>
+							</ng-template>
+							<ng-template #issuerInfoTemplate>
+								<section class="tw-mb-2">
+									<h3
+										class="tw-text-lg tw-text-oebblack tw-font-semibold"
+										[innerHTML]="'Issuer.addMember_owner' | translate"
+									></h3>
+									<p class="tw-text-oebblack tw-text-lg" [innerHTML]="'Issuer.addMember_ownerText' | translate"></p>
+								</section>
+								<section class="tw-mb-2">
+									<h3
+										class="tw-text-lg tw-text-oebblack tw-font-semibold"
+										[innerHTML]="'Editor'"
+									></h3>
+									<p class="tw-text-oebblack tw-text-lg" [innerHTML]="'Issuer.addMember_editorText' | translate"></p>
+								</section>
+								<section class="tw-mb-2">
+									<h3
+										class="tw-text-lg tw-text-oebblack tw-font-semibold"
+										[innerHTML]="'Issuer.addMember_staff' | translate"
+									></h3>
+									<p class="tw-text-oebblack tw-text-lg" [innerHTML]="'Issuer.addMember_staffText' | translate"></p>
+								</section>
+							</ng-template>
+							<span [innerHTML]="'Issuer.rolesAndRightsInfo3' | translate"> </span>
+						</p>
+					</div>
+				</div>
 				<div class="md:tw-block tw-hidden tw-mt-8 tw-max-w-[380px]">
 					<div class="tw-rounded-[20px] tw-text-oebblack tw-relative tw-flex tw-flex-row tw-items-center">
 						<img
@@ -67,7 +110,10 @@
 						</div>
 					</div>
 					<div class="tw-pt-4 tw-pb-6">
-						<p [class.tw-line-clamp-3]="issuerToBadgeInfo[issuer.issuerUrl]" class="tw-text-oebblack tw-break-words">
+						<p
+							[class.tw-line-clamp-3]="issuerToBadgeInfo[issuer.issuerUrl]"
+							class="tw-text-oebblack tw-break-words"
+						>
 							{{ issuer.description }}
 						</p>
 					</div>
@@ -106,40 +152,54 @@
 								size="mediumText"
 							>
 							</oeb-button>
-					</div>
-				</div>
-			</div>
-			<div #pluginBox class="md:tw-flex-[0_0_363px] md:tw-mt-0 tw-mt-6">
-				<div>
-					<div class="tw-bg-lightgreen tw-p-6 tw-rounded-[10px] tw-text-center tw-text-oebblack tw-relative">
-						<hlm-icon (click)="pluginBoxElement.nativeElement.remove()" class="tw-w-4 tw-h-4 tw-ml-2 tw-cursor-pointer tw-inline-block tw-absolute tw-top-2 tw-right-2" name="lucideX" />
-
-						<div class="tw-flex md:tw-block tw-pb-4">
-							<img class="tw-inline-block" alt="Plugin" src="assets/oeb/images/issuerPage/plugin.svg" />
-							<p
-								class="tw-pt-4 tw-text-lg tw-text-left tw-pl-4 md:tw-pl-0 md:tw-text-center"
-								[innerHTML]="'Issuer.askForPluginText' | translate"
-							></p>
 						</div>
-						<a
-							href="mailto:hallo@openbadges.education?subject=Interesse an Plugin!"
-							class="!tw-font-medium tw-text-link tw-underline tw-text-lg"
+					</div>
+				</div>
+				<div #pluginBox class="md:tw-flex-[0_0_363px] md:tw-mt-0 tw-mt-6">
+					<div>
+						<div
+							class="tw-bg-lightgreen tw-p-6 tw-rounded-[10px] tw-text-center tw-text-oebblack tw-relative"
 						>
-							{{ 'Issuer.askForPlugin' | translate }}
-						</a>
+							<hlm-icon
+								(click)="pluginBoxElement.nativeElement.remove()"
+								class="tw-w-4 tw-h-4 tw-ml-2 tw-cursor-pointer tw-inline-block tw-absolute tw-top-2 tw-right-2"
+								name="lucideX"
+							/>
+
+							<div class="tw-flex md:tw-block tw-pb-4">
+								<img
+									class="tw-inline-block"
+									alt="Plugin"
+									src="assets/oeb/images/issuerPage/plugin.svg"
+								/>
+								<p
+									class="tw-pt-4 tw-text-lg tw-text-left tw-pl-4 md:tw-pl-0 md:tw-text-center"
+									[innerHTML]="'Issuer.askForPluginText' | translate"
+								></p>
+							</div>
+							<a
+								href="mailto:hallo@openbadges.education?subject=Interesse an Plugin!"
+								class="!tw-font-medium tw-text-link tw-underline tw-text-lg"
+							>
+								{{ 'Issuer.askForPlugin' | translate }}
+							</a>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-		<div class="tw-block md:tw-hidden tw-mt-8 tw-max-w-[380px]">
-			<div class="tw-rounded-[10px] tw-text-oebblack tw-relative tw-flex tw-flex-row tw-items-center">
-				<img
-					class="tw-inline-block tw-h-[90px]"
-					alt="Plugin"
-					src="assets/oeb/images/issuerPage/oeb-beta-logo.svg"
-				/>
-				<div class="tw-flex md:tw-block tw-pb-4">
-					<p class="tw-pt-4 tw-text-left tw-pl-4 md:tw-pl-0" [innerHTML]="'Issuer.betaPhase' | translate"></p>
+			<div class="tw-block md:tw-hidden tw-mt-8 tw-max-w-[380px]">
+				<div class="tw-rounded-[10px] tw-text-oebblack tw-relative tw-flex tw-flex-row tw-items-center">
+					<img
+						class="tw-inline-block tw-h-[90px]"
+						alt="Plugin"
+						src="assets/oeb/images/issuerPage/oeb-beta-logo.svg"
+					/>
+					<div class="tw-flex md:tw-block tw-pb-4">
+						<p
+							class="tw-pt-4 tw-text-left tw-pl-4 md:tw-pl-0"
+							[innerHTML]="'Issuer.betaPhase' | translate"
+						></p>
+					</div>
 				</div>
 			</div>
 		</div>

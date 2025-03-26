@@ -14,8 +14,9 @@
         (imageError)="onImageError($event)"
         [enableIconSearch]="false"
         maxSizeInMB="2"
+        [labelStyle]="'forminput-x-label u-margin-bottom1x'"
     ></bg-formfield-image>
-    <span class="tw-text-oebblack tw-italic tw-text-lg">Dateiformat: PNG</span>
+    <span class="tw-text-oebblack tw-italic tw-text-lg">{{ 'General.fileformats' | translate }}: SVG {{ 'General.and' | translate }} PNG</span>
 
     <oeb-input
         label="{{ 'General.name' | translate }} der Institution"
@@ -23,12 +24,12 @@
         [fieldType]="'text'"
         [autofocus]="true"
         [errorMessage]="{ required: issuerRequiredError }"
-        sublabelRight="(max 90 Zeichen)"
+        sublabelRight="(max. 90 Zeichen)"
         #issuer_name_field
     ></oeb-input>
 
     <oeb-input
-        [label]="'Website URL'"
+        [label]="'Webseiten-URL'"
         [control]="issuerForm.rawControlMap.issuer_url"
         [urlField]="true"
         [fieldType]="'url'"
@@ -74,8 +75,6 @@
         #issuer_category
     ></oeb-select>
 
-    <h3 hlmH3 class="tw-font-bold tw-text-oebblack tw-mt-12">{{ 'General.address' | translate }}</h3>
-
     <oeb-input
         label="{{ 'General.street' | translate }}"
         [control]="issuerForm.rawControlMap.issuer_street"
@@ -87,7 +86,6 @@
     <oeb-input
         label="{{ 'Issuer.houseNo' | translate }}"
         [control]="issuerForm.rawControlMap.issuer_streetnumber"
-        [fieldType]="'number'"
         errorMessage="{{ 'Issuer.enterHouseNo' | translate }}"
         #issuer_streetnumber_field
     ></oeb-input>
@@ -111,10 +109,13 @@
 
     <div class="tw-mt-6 md:tw-mt-7">
         <oeb-checkbox alignStart="true" id="verify-intent" name="verify-intent"
-                [text]="'<ul>Hiermit bestätige ich, dass ich: <br>
-                1.) ...berechtigt bin, für die genannte Institution einen Account anzulegen sowie Badges zu erstellen und zu vergeben.<br>
-                2.) ...die Verantwortung für die Qualität der Kursangebote, der erstellten und vergebenen Badges sowie für die zugeordneten Kompetenzen trage. <br>
-                3.) ...die Plattform nur für die vorgesehenen Zwecke nutze und jeglichen Missbrauch ablehne.</ul>' "
+                [text]="'<ul>Hiermit bestätige ich, dass ich... <br>
+                <br>
+                1. berechtigt bin, für die genannte Institution einen Account anzulegen sowie Badges zu erstellen und zu vergeben.<br>
+                <br>
+                2. die Verantwortung für die Qualität der Kursangebote, der erstellten und vergebenen Badges sowie für die zugeordneten Kompetenzen trage. <br>
+                   <br>
+                3. die Plattform nur für die vorgesehenen Zwecke nutze und jeglichen Missbrauch ablehne.</ul>' "
                 [control]="issuerForm.rawControlMap.verify_intended_use">
         </oeb-checkbox>
     </div>

@@ -158,7 +158,7 @@
 		"contactInstitution": "Contact institution",
 		"jsonView": "View JSON",
 		"viewOriginal": "View original",
-		"awardBadeges": "Create an institution to award badges.",
+		"awardBadges": "Create an institution <span class='tw-font-bold'>to award badges </span>.",
 		"imageOptional": "Image (Optional)",
 		"enterName": "Please enter a name",
 		"enterURL": "Please enter a URL",
@@ -176,7 +176,7 @@
 		"editMemberInstitute": "Edit the members of the institution.",
 		"membersHaveAccess": "These members have access to the institution.",
 		"addMember": "Add member",
-		"addMember_text": "New Staff Members must create and verify a Badgr account prior to being added to an issuer.",
+		"addMember_text": "In order to add a member, the person must <span class='tw-underline'> already have created and verified an account on OEB</span>.",
 		"addMember_chooseRole": "Choose Role",
 		"addMember_owner": "Owner",
 		"addMember_ownerText": "Ability to add and remove staff. Full rights to create, delete, and award badges. Ability to edit issuer details.",
@@ -200,7 +200,7 @@
 		"giveMyBadges": "Award Badges",
 		"askForPlugin": "Plugin anfragen",
 		"askForPluginText": "Unser <span class='tw-font-bold'>Plugin</span> bietet dir die Möglichkeit, Badges aus deiner eigenen digitalen Lehrumgebung heraus zu vergeben.",
-		"betaPhase": "Wir befinden uns noch in der Betaphase. <b>Du hast Fehler entdeckt? Schreib uns an <a class='tw-text-link' href='mailto:hallo@openbadges.education'>hallo@openbadges.education</a></b>.",
+		"betaPhase": "Wir befinden uns noch in der Betaphase. <b>Du hast Fehler entdeckt? Schreib uns an <a class='tw-text-link' href='mailto:support@openbadges.education'>support@openbadges.education</a></b>.",
 		"askForLearningPath": "Wir helfen dir, einen Micro Degree anzulegen. Schreibe an <a href='mailto:lernpfad@openbadges.education' class='tw-underline tw-text-[#1400FF]'>lernpfad@openbadges.education</a>.",
 		"award": "vergeben",
 		"badgePreview": "Preview Badge",
@@ -235,7 +235,12 @@
 		"institutionsIssued": "Institutions are on OEB",
 		"institutionsHeadline": "All Institutions",
 		"loadingAllBadges": "Loading Badges...",
-		"loadAllBadges": "Load all Badges"
+		"loadAllBadges": "Load all Badges",
+		"rolesAndRights": "roles and rights in institutions",
+		"rolesAndRightsInfo1": "Infos about ",
+		"rolesAndRightsInfo2": "roles and rights",
+		"rolesAndRightsInfo3": " in institutions"
+
 	},
 	"Badge": {
 		"groupBy": "Group by",
