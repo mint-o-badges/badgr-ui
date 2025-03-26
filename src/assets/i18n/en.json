@@ -69,7 +69,11 @@
 		"noResults": "No results",
 		"place": "place",
 		"forwarded": "forwarded",
-		"revoke": "revoke"
+		"revoke": "revoke",
+		"confirm": "Confirm",
+		"noRequests": "No request",
+		"oneRequest": "1 request",
+		"multiRequests": "# requests"
 	},
 	"NavItems": {
 		"register": "Register",
@@ -250,7 +254,10 @@
 		"requestMembership": "Request Membership",
 		"staffRequestForwarded": "We forwarded your request to",
 		"staffRequestForwardedEmail": "You will receive an email from us once the request is confirmed.",
-		"yourOpenStaffRequests": "Your open member requests"
+		"yourOpenStaffRequests": "Your open member requests",
+		"deleteStaffRequest": "Delete request",
+		"openStaffRequests": "Open staff requests"
+
 	},
 	"Badge": {
 		"groupBy": "Group by",

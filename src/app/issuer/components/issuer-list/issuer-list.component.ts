@@ -311,6 +311,11 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 		};
 	}
 
+	revokeStaffRequest(issuerId: string){
+		this.userProfileApiService.revokeIssuerStaffRequest(issuerId)
+			.then((r) => console.log("revoked", r))
+	}
+
 	calculateDropdownMaxHeight(el: HTMLElement, minHeight = 100) {
 		const rect = el.getBoundingClientRect();
 		let maxHeight = Math.ceil(window.innerHeight - rect.top - rect.height - 20);

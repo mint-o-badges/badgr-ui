@@ -25,12 +25,11 @@ import { OebSelectComponent } from './select.component';
         ],
     template: `
         <hlm-table class="tw-rounded-t-[20px] tw-overflow-hidden tw-w-full tw-max-w-[100%] tw-bg-white tw-border-lightgrey tw-border">
-            <hlm-caption>{{caption}}</hlm-caption>
             <hlm-trow class="!tw-bg-lightgrey tw-text-oebblack tw-flex-wrap hover:tw-bg-lightgrey">
                 <!-- Name -->
                 <hlm-th class="tw-text-oebblack tw-w-28 sm:tw-w-20 md:tw-w-40">Name</hlm-th>
                 <!-- E-Mail -->
-                <hlm-th class="tw-text-oebblack tw-justify-center !tw-flex-1 tw-w-24 sm:tw-w-28  md:tw-w-48 !tw-px-3 sm:!tw-px-4">E-Mail</hlm-th>
+                <hlm-th class="tw-text-oebblack tw-justify-center !tw-flex-1 !tw-px-3 sm:!tw-px-4">E-Mail</hlm-th>
                 <!-- Role -->
                 <hlm-th class="tw-text-oebblack tw-w-36 md:tw-w-40 sm:tw-grid sm:tw-pl-0">Rolle</hlm-th>
                 <!-- Actions -->
@@ -44,7 +43,7 @@ import { OebSelectComponent } from './select.component';
                       </div>
                     </div>
                 </hlm-th>
-                <hlm-th class="!tw-flex-1 tw-justify-center !tw-text-oebblack tw-w-24 sm:tw-w-28 md:tw-w-48 sm:tw-px-3 tw-px-4"><p hlmP class="tw-font-normal sm:!tw-text-[16px]">{{member.email}}</p></hlm-th>
+                <hlm-th class="!tw-flex-1 tw-justify-center !tw-text-oebblack sm:tw-px-3 tw-px-4"><p hlmP class="tw-font-normal sm:!tw-text-[16px]">{{member.email}}</p></hlm-th>
                 <hlm-th class="tw-w-36 md:tw-w-40 tw-justify-center !tw-text-oebblack sm:tw-grid">
                     <oeb-select
 							actionBar="true"
@@ -57,7 +56,7 @@ import { OebSelectComponent } from './select.component';
 					></oeb-select>
                 </hlm-th>
                 <hlm-th
-                    class="tw-justify-center sm:tw-justify-end !tw-text-oebblack tw-flex-col tw-h-fit sm:tw-w-max tw-w-full tw-gap-2 tw-my-2 tw-mt-7 sm:tw-mt-2"
+                    class="tw-justify-center sm:tw-justify-end !tw-text-oebblack tw-flex-col tw-h-fit sm:tw-w-max tw-w-full tw-gap-2 tw-my-2 tw-mt-7 sm:tw-mt-2 tw-min-w-48"
 
                 >
                     <span>Entfernen</span>

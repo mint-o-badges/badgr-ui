@@ -76,7 +76,11 @@
 		"noResults": "Keine Ergebnisse",
 		"place": "stellen",
 		"forwarded": "weitergeleitet",
-		"revoke": "zurücknehmen"
+		"revoke": "zurücknehmen",
+		"confirm": "Bestätigen",
+		"noRequests": "Keine Anfragen",
+		"oneRequest": "1 Anfrage",
+		"multiRequests": "# Anfragen"
 	},
 	"NavItems": {
 		"register": "Registrieren",
@@ -284,7 +288,9 @@
 		"requestMembership": "Mitgliedsanfrage stellen",
 		"staffRequestForwarded": "Wir haben deine Mitgliedsanfrage an",
 		"staffRequestForwardedEmail": "Du bekommst eine E-Mail von uns, wenn die Anfrage bestätigt wird.",
-		"yourOpenStaffRequests": "Deine offenen Mitgliedsanfragen"
+		"yourOpenStaffRequests": "Deine offenen Mitgliedsanfragen",
+		"deleteStaffRequest": "Anfrage löschen",
+		"openStaffRequests": "Offene Mitgliedsanfragen"
 	},
 	"Badge": {
 		"groupBy": "Gruppieren nach",

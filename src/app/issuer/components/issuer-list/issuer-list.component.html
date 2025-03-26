@@ -34,7 +34,7 @@
 						<ul class="tw-list-disc tw-list-inside">
 							<li *ngFor="let request of staffRequests;">
 								<span class="tw-text-lg tw-text-oebblack">{{request.issuer.name}}</span>
-								<span [innerHTML]="'General.revoke' | translate" class="tw-text-link tw-underline tw-text-lg tw-ml-2 tw-cursor-pointer"></span>
+								<span (click)="revokeStaffRequest(request.issuer.slug)" [innerHTML]="'General.revoke' | translate" class="tw-text-link tw-underline tw-text-lg tw-ml-2 tw-cursor-pointer"></span>
 							</li>
 						</ul>
 

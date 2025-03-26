@@ -75,11 +75,16 @@
 					</form>
 				</ng-template>
 			</div>
-		<issuer-staff-requests-datatable>
-
-		</issuer-staff-requests-datatable>
-		<issuer-staff-datatable [members]="issuer.staff" [roleOptions]="issuerStaffRoleOptions">
-		</issuer-staff-datatable>
+			<section class="tw-mt-8">
+				<issuer-staff-requests-datatable [requests]="staffRequests" (deleteStaffRequest)="deleteStaffRequest($event)">
+		
+				</issuer-staff-requests-datatable>
+			</section>
+			<section class="tw-mt-8">
+				<h2 hlmH2 class='!tw-text-oebblack tw-mb-2'>{{'General.members' | translate}} {{'General.of' | translate}} {{issuer.name}}</h2>
+				<issuer-staff-datatable [members]="issuer.staff" [roleOptions]="issuerStaffRoleOptions">
+				</issuer-staff-datatable>
+			</section>
 	</div>
 
 	<!-- <div class="l-containerxaxis l-containeryaxis">
