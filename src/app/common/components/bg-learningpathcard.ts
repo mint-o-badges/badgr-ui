@@ -36,10 +36,10 @@ type MatchOrProgressType = { match?: string, progress?: number };
 				</div>
 				<div class="tw-flex tw-flex-col tw-flex-wrap tw-py-2 tw-text-oebblack tw-mt-2 tw-gap-1">
 					<span
-						class="tw-font-semibold tw-text-[22px] tw-leading-[26px]"
+						class="tw-font-semibold tw-text-[22px] tw-leading-[26px] oeb-break-words"
 
 						>{{ name }}</span>
-						<a class="tw-text-[18px] tw-leading-[23.4px]">{{issuerTitle}}</a>
+						<a class="tw-text-[18px] tw-leading-[23.4px] oeb-break-words">{{issuerTitle}}</a>
 					<div class="tw-items-center">
 						<div *ngIf="!isProgress" class="oeb-standard-padding-bottom tw-gap-1 tw-flex tw-flex-wrap">
 							<div hlmP size="sm" class="oeb-tag"

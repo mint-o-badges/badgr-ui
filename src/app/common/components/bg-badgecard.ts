@@ -47,13 +47,14 @@ import { FormControl } from '@angular/forms';
 				<div class="tw-flex tw-flex-col tw-flex-wrap tw-pl-4 tw-py-2">
 					<a
 						*ngIf="badgeSlug && !publicUrl"
-						class="tw-font-bold"
+						class="tw-font-bold text-clamp title-clamp"
+						[title]="badgeTitle"
 						[routerLink]="['../earned-badge', badgeSlug]"
 						hlmP
 						size="sm"
 						>{{ badgeTitle }}</a
 					>
-					<a *ngIf="publicUrl" class="tw-font-bold" hlmP size="sm" [href]="publicUrl">{{ badgeTitle }}</a>
+					<a *ngIf="publicUrl" class="tw-font-bold title-clamp" hlmP size="sm" [href]="publicUrl">{{ badgeTitle }}</a>
 
 					<div class="tw-pt-2 tw-flex tw-flex-col tw-flex-wrap">
 						<a
@@ -61,7 +62,8 @@ import { FormControl } from '@angular/forms';
 							size="sm"
 							variant="light"
 							*ngIf="issuerSlug; else noIssuerSlug"
-							class="badgecard-x-issuer"
+							class="badgecard-x-issuer text-clamp issuer-clamp"
+							[title]="issuerTitle"
 							[routerLink]="['../../public/issuers', issuerSlug]"
 							>{{ issuerTitle }}</a
 						>
@@ -134,7 +136,23 @@ import { FormControl } from '@angular/forms';
 		</div>
 		<!--<ul *ngIf="tags && tags.length" class="tw-mt-2 tw-leading-[0px]"><li class="tag tw-mt-2 tw-mr-2" *ngFor="let tag of tags">{{tag}}</li></ul>-->
 	`,
-    standalone: false
+    standalone: false,
+	styles: [`
+		.text-clamp {
+			-webkit-line-clamp: 3;
+			-webkit-box-orient: vertical;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			display: -webkit-box;
+			word-break: break-word;
+		}
+		.title-clamp {
+			-webkit-line-clamp: 3;
+		}
+		.issuer-clamp {
+			-webkit-line-clamp: 1;
+		}
+	`]
 })
 export class BgBadgecard {
 	readonly badgeLoadingImageUrl = '../../../breakdown/static/images/badge-loading.svg';

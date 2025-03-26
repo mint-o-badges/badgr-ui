@@ -270,3 +270,8 @@ html {
 		box-sizing: border-box;
 	}
 }
+
+// tw-break-words uses overflow-wrap and does not cover all cases
+.oeb-break-words {
+	word-break: break-word;
+}

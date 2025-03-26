@@ -1,4 +1,5 @@
-import { AfterViewInit, Component, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, Renderer2, ViewChild, Inject } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 import { Router } from '@angular/router';
 
 import { MessageService } from './common/services/message.service';
@@ -202,6 +203,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 		protected issuerManager: IssuerManager,
 		private languageService: LanguageService, // Translation
 		private translate: TranslateService,
+		@Inject(DOCUMENT) private document: Document,
 	) {
 		// Initialize App language
 		this.languageService.setInitialAppLangauge();
@@ -315,6 +317,11 @@ export class AppComponent implements OnInit, AfterViewInit {
 
 		this.translate.get('NavItems.appIntegrations').subscribe((translatedText: string) => {
 			this.accountMenuItems[1].title = translatedText;
+		});
+
+		this.translate.onLangChange.subscribe(() => {
+			console.log('!!!!!!!!' + this.translate.currentLang)
+			this.document.documentElement.lang = this.translate.currentLang;
 		});
 
 	}
