@@ -6,12 +6,12 @@ import { MessageService } from '../services/message.service';
 import { AbstractBadgeComponent } from './abstract-badge.component';
 
 @Component({
-    selector: 'connected-badge',
-    host: {
-        class: 'card card-actionsright',
-        '[title]': "failed ? 'Cannot load badge ' + badgeIdDescription : badge?.name",
-    },
-    template: `
+	selector: 'connected-badge',
+	host: {
+		class: 'card card-actionsright',
+		'[title]': "failed ? 'Cannot load badge ' + badgeIdDescription : badge?.name",
+	},
+	template: `
 		<a
 			[routerLink]="['/issuer/issuers/', badge?.issuerSlug || '', 'badges', badge?.slug || '']"
 			class="card-x-main"
@@ -30,9 +30,9 @@ import { AbstractBadgeComponent } from './abstract-badge.component';
 			</button>
 		</div>
 	`,
-    // Inputs from superclass must be specified here again due to https://github.com/angular/angular/issues/5415
-    inputs: ['badge', 'issuerId', 'badgeSlug', 'badgeId', 'forceFailed'],
-    standalone: false
+	// Inputs from superclass must be specified here again due to https://github.com/angular/angular/issues/5415
+	inputs: ['badge', 'issuerId', 'badgeSlug', 'badgeId', 'forceFailed'],
+	standalone: false,
 })
 export class ConnectedBadgeComponent extends AbstractBadgeComponent {
 	@Output()

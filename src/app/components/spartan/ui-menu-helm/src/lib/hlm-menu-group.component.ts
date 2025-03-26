@@ -8,8 +8,6 @@ import { BrnMenuGroupDirective } from '@spartan-ng/ui-menu-brain';
 		class: 'block',
 	},
 	hostDirectives: [BrnMenuGroupDirective],
-	template: `
-		<ng-content />
-	`,
+	template: ` <ng-content /> `,
 })
 export class HlmMenuGroupComponent {}

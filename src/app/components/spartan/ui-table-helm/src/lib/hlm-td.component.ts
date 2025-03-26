@@ -13,12 +13,12 @@ import { BrnColumnDefComponent } from '@spartan-ng/ui-table-brain';
 import type { ClassValue } from 'clsx';
 
 @Component({
-    selector: 'hlm-td',
-    imports: [NgTemplateOutlet],
-    host: {
-        '[class]': '_computedClass()',
-    },
-    template: `
+	selector: 'hlm-td',
+	imports: [NgTemplateOutlet],
+	host: {
+		'[class]': '_computedClass()',
+	},
+	template: `
 		<ng-template #content>
 			<ng-content />
 		</ng-template>
@@ -30,8 +30,8 @@ import type { ClassValue } from 'clsx';
 			<ng-container [ngTemplateOutlet]="content" />
 		}
 	`,
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    encapsulation: ViewEncapsulation.None
+	changeDetection: ChangeDetectionStrategy.OnPush,
+	encapsulation: ViewEncapsulation.None,
 })
 export class HlmTdComponent {
 	private readonly _columnDef? = inject(BrnColumnDefComponent, { optional: true });
@@ -39,6 +39,10 @@ export class HlmTdComponent {
 
 	public readonly userClass = input<ClassValue>('', { alias: 'class' });
 	protected readonly _computedClass = computed(() =>
-		hlm('tw-flex tw-flex-none tw-p-4 tw-items-center [&:has([role=checkbox])]:tw-pr-0', this._columnDef?.class(), this.userClass()),
+		hlm(
+			'tw-flex tw-flex-none tw-p-4 tw-items-center [&:has([role=checkbox])]:tw-pr-0',
+			this._columnDef?.class(),
+			this.userClass(),
+		),
 	);
 }

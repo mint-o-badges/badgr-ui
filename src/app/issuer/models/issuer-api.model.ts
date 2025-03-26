@@ -59,7 +59,7 @@ export interface ApiIssuerStaff {
 		telephone?: string | string[];
 		url?: string | string[];
 		agreed_terms_version: number;
-		latest_terms_version: number;	
+		latest_terms_version: number;
 	};
 }
 

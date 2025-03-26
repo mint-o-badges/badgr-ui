@@ -25,15 +25,15 @@ import { UserProfileApiService } from '../../../common/services/user-profile-api
 interface RedirectResponse {
 	success: boolean;
 	redirectPath: string;
-  }
-  
- type RedirectHttpResponse = HttpResponse<RedirectResponse>;
+}
+
+type RedirectHttpResponse = HttpResponse<RedirectResponse>;
 
 @Component({
-    selector: 'login',
-    templateUrl: './login.component.html',
-    styleUrls: ['./login.component.scss'],
-    standalone: false
+	selector: 'login',
+	templateUrl: './login.component.html',
+	styleUrls: ['./login.component.scss'],
+	standalone: false,
 })
 export class LoginComponent extends BaseRoutableComponent implements OnInit, AfterViewInit {
 	get theme() {
@@ -55,7 +55,7 @@ export class LoginComponent extends BaseRoutableComponent implements OnInit, Aft
 
 	initFinished: Promise<unknown> = new Promise(() => {});
 	loginFinished: Promise<unknown>;
-	baseUrl: string
+	baseUrl: string;
 
 	constructor(
 		private fb: FormBuilder,
@@ -77,7 +77,7 @@ export class LoginComponent extends BaseRoutableComponent implements OnInit, Aft
 		super(router, route);
 		title.setTitle(`Login - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 		this.handleQueryParamCases();
-		this.baseUrl = this.configService.apiConfig.baseUrl
+		this.baseUrl = this.configService.apiConfig.baseUrl;
 	}
 
 	sanitize(url: string) {
@@ -100,25 +100,28 @@ export class LoginComponent extends BaseRoutableComponent implements OnInit, Aft
 		}
 	}
 
-    afterLogin() {
-        this.profileManager.reloadUserProfileSet().then(() => {
-            this.profileManager.userProfilePromise.then((profile) => {
-                if (profile) {
-                    // fetch user profile and emails to check if they are verified
-                    profile.emails.updateList().then(() => {
-                        if (profile.isVerified) {
-                            if (this.oAuthManager.isAuthorizationInProgress) {
-                                this.router.navigate(['/auth/oauth2/authorize']);
-                            } else {
-                                this.externalToolsManager.externaltoolsList.updateIfLoaded();
+	afterLogin() {
+		this.profileManager.reloadUserProfileSet().then(() => {
+			this.profileManager.userProfilePromise.then((profile) => {
+				if (profile) {
+					// fetch user profile and emails to check if they are verified
+					profile.emails.updateList().then(() => {
+						if (profile.isVerified) {
+							if (this.oAuthManager.isAuthorizationInProgress) {
+								this.router.navigate(['/auth/oauth2/authorize']);
+							} else {
+								this.externalToolsManager.externaltoolsList.updateIfLoaded();
 
-								this.userProfileApiService.getRedirectUrl().then((response: RedirectHttpResponse) => {
-									if(response.body.success && response.body.redirectPath){
-										this.router.navigateByUrl(response.body.redirectPath);
-									} else {
-									  this.router.navigate([localStorage.signup ? 'auth/welcome' : 'issuer',]);
-									}
-								}).catch(() => this.router.navigate(['/public/start']))
+								this.userProfileApiService
+									.getRedirectUrl()
+									.then((response: RedirectHttpResponse) => {
+										if (response.body.success && response.body.redirectPath) {
+											this.router.navigateByUrl(response.body.redirectPath);
+										} else {
+											this.router.navigate([localStorage.signup ? 'auth/welcome' : 'issuer']);
+										}
+									})
+									.catch(() => this.router.navigate(['/public/start']));
 
 								// this.http.post<{success: boolean, redirectPath: string}>(`${this.baseUrl}/v1/user/get-redirect-path`, {}, {withCredentials: true})
 								// .subscribe({
@@ -131,60 +134,61 @@ export class LoginComponent extends BaseRoutableComponent implements OnInit, Aft
 								//   },
 								//   error: () => this.router.navigate(['/public/start'])
 								// });
+							}
+						} else {
+							this.router.navigate([
+								'signup/success',
+								encodeURIComponent(btoa(profile.emails.entities[0].email)),
+							]);
+						}
+					});
+				}
+			});
+		});
+	}
 
-                            }
-                        } else {
-                            this.router.navigate([
-                                'signup/success',
-                                encodeURIComponent(btoa(profile.emails.entities[0].email)),
-                            ]);
-                        }
-                    });
-                }
-            });
-        });
-    }
-
-    validateToken() {
+	validateToken() {
 		this.loginFinished = this.sessionService
 			.validateToken()
-			.then(() => this.afterLogin(),
-                  (response: HttpErrorResponse) => {
-                if (response.status == 401) {
-                    // Unauthorized: The user is not
-                    // authenticated in Django, meaning that the
-                    // OIDC authentication failed. The user
-                    // probably already knows this at this point
-                    this.router.navigate([], {
-                        queryParams: { validateToken: null },
-                        queryParamsHandling: 'merge'
-                    });
-                    // Don't display an error, since it might happen
-                    // quite easily that the user navigates to the
-                    // address containing ?validateToken
-                    console.error("Token validation failed. This means",
-                                  "that either the user accidently",
-                                  "navigated to the address with the",
-                                  "?validateToken query parameter, or",
-                                  "something weird happened");
-                }
-                else {
-					this.messageService.reportHandledError(
-						BadgrApiFailure.messageIfThrottableError(response.error) ||
-							this.translate.instant('Login.failLogin'),
-						response,
-					);
-                }
-            },)
+			.then(
+				() => this.afterLogin(),
+				(response: HttpErrorResponse) => {
+					if (response.status == 401) {
+						// Unauthorized: The user is not
+						// authenticated in Django, meaning that the
+						// OIDC authentication failed. The user
+						// probably already knows this at this point
+						this.router.navigate([], {
+							queryParams: { validateToken: null },
+							queryParamsHandling: 'merge',
+						});
+						// Don't display an error, since it might happen
+						// quite easily that the user navigates to the
+						// address containing ?validateToken
+						console.error(
+							'Token validation failed. This means',
+							'that either the user accidently',
+							'navigated to the address with the',
+							'?validateToken query parameter, or',
+							'something weird happened',
+						);
+					} else {
+						this.messageService.reportHandledError(
+							BadgrApiFailure.messageIfThrottableError(response.error) ||
+								this.translate.instant('Login.failLogin'),
+							response,
+						);
+					}
+				},
+			)
 			.then(() => (this.loginFinished = null));
-    }
+	}
 
-    bildungsraumLogin() {
-        if (this.isOidcDisabled())
-            return;
-        const endpoint = this.sessionService.baseUrl + '/oidc/authenticate';
-        window.location.href = endpoint;
-    }
+	bildungsraumLogin() {
+		if (this.isOidcDisabled()) return;
+		const endpoint = this.sessionService.baseUrl + '/oidc/authenticate';
+		window.location.href = endpoint;
+	}
 
 	submitAuth() {
 		if (!this.loginForm.markTreeDirtyAndValidate()) {
@@ -198,7 +202,8 @@ export class LoginComponent extends BaseRoutableComponent implements OnInit, Aft
 
 		this.loginFinished = this.sessionService
 			.login(credential)
-			.then(() => this.afterLogin(),
+			.then(
+				() => this.afterLogin(),
 				(response: HttpErrorResponse) =>
 					this.messageService.reportHandledError(
 						BadgrApiFailure.messageIfThrottableError(response.error) ||
@@ -210,19 +215,17 @@ export class LoginComponent extends BaseRoutableComponent implements OnInit, Aft
 	}
 
 	private handleQueryParamCases() {
-
-        this.route.queryParams.subscribe(params => {
-            if (params.hasOwnProperty('validateToken'))
-                this.validateToken();
-        });
+		this.route.queryParams.subscribe((params) => {
+			if (params.hasOwnProperty('validateToken')) this.validateToken();
+		});
 
 		try {
 			// Handle authcode exchange
 			const authCode = this.queryParams.queryStringValue('authCode', true);
 
 			if (authCode) {
-                throw new Error("query param authentication is deprecated!");
-            }
+				throw new Error('query param authentication is deprecated!');
+			}
 		} finally {
 			this.queryParams.clearInitialQueryParams();
 		}
@@ -233,8 +236,8 @@ export class LoginComponent extends BaseRoutableComponent implements OnInit, Aft
 		this.verifiedEmail = this.queryParams.queryStringValue('email');
 	}
 
-    isOidcDisabled(): boolean {
-        const prodUrl = "https://openbadges.education";
-        return location.origin === prodUrl;
-    }
+	isOidcDisabled(): boolean {
+		const prodUrl = 'https://openbadges.education';
+		return location.origin === prodUrl;
+	}
 }

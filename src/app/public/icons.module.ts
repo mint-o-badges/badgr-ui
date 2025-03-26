@@ -77,7 +77,7 @@ import {
 			lucideMail,
 			lucideFileCode,
 			lucideX,
-			lucideInfo
+			lucideInfo,
 		}),
 	],
 })

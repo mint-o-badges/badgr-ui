@@ -3,19 +3,19 @@ import { AUTO_STYLE, animate, state, style, transition, trigger } from '@angular
 import { FormControl } from '@angular/forms';
 
 @Component({
-    selector: 'bg-badgecard',
-    animations: [
-        trigger('showCompetencies', [
-            state('true', style({ height: AUTO_STYLE, visibility: AUTO_STYLE })),
-            state('false', style({ height: '0', visibility: 'hidden' })),
-            transition('false => true', animate(220 + 'ms ease-out')),
-            transition('true => false', animate(220 + 'ms ease-in')),
-        ]),
-    ],
-    host: {
-        class: 'tw-rounded-[10px] tw-h-max tw-max-w-[450px] tw-border-purple tw-border-solid tw-border tw-relative tw-p-4 tw-block tw-overflow-hidden oeb-badge-card',
-    },
-    template: `
+	selector: 'bg-badgecard',
+	animations: [
+		trigger('showCompetencies', [
+			state('true', style({ height: AUTO_STYLE, visibility: AUTO_STYLE })),
+			state('false', style({ height: '0', visibility: 'hidden' })),
+			transition('false => true', animate(220 + 'ms ease-out')),
+			transition('true => false', animate(220 + 'ms ease-in')),
+		]),
+	],
+	host: {
+		class: 'tw-rounded-[10px] tw-h-max tw-max-w-[450px] tw-border-purple tw-border-solid tw-border tw-relative tw-p-4 tw-block tw-overflow-hidden oeb-badge-card',
+	},
+	template: `
 		<div
 			class="tw-absolute tw-top-0 tw-left-0 tw-bg-purple tw-text-white tw-px-2 tw-py-1"
 			*ngIf="mostRelevantStatus"
@@ -54,7 +54,9 @@ import { FormControl } from '@angular/forms';
 						size="sm"
 						>{{ badgeTitle }}</a
 					>
-					<a *ngIf="publicUrl" class="tw-font-bold title-clamp" hlmP size="sm" [href]="publicUrl">{{ badgeTitle }}</a>
+					<a *ngIf="publicUrl" class="tw-font-bold title-clamp" hlmP size="sm" [href]="publicUrl">{{
+						badgeTitle
+					}}</a>
 
 					<div class="tw-pt-2 tw-flex tw-flex-col tw-flex-wrap">
 						<a
@@ -136,23 +138,25 @@ import { FormControl } from '@angular/forms';
 		</div>
 		<!--<ul *ngIf="tags && tags.length" class="tw-mt-2 tw-leading-[0px]"><li class="tag tw-mt-2 tw-mr-2" *ngFor="let tag of tags">{{tag}}</li></ul>-->
 	`,
-    standalone: false,
-	styles: [`
-		.text-clamp {
-			-webkit-line-clamp: 3;
-			-webkit-box-orient: vertical;
-			overflow: hidden;
-			text-overflow: ellipsis;
-			display: -webkit-box;
-			word-break: break-word;
-		}
-		.title-clamp {
-			-webkit-line-clamp: 3;
-		}
-		.issuer-clamp {
-			-webkit-line-clamp: 1;
-		}
-	`]
+	standalone: false,
+	styles: [
+		`
+			.text-clamp {
+				-webkit-line-clamp: 3;
+				-webkit-box-orient: vertical;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				display: -webkit-box;
+				word-break: break-word;
+			}
+			.title-clamp {
+				-webkit-line-clamp: 3;
+			}
+			.issuer-clamp {
+				-webkit-line-clamp: 1;
+			}
+		`,
+	],
 })
 export class BgBadgecard {
 	readonly badgeLoadingImageUrl = '../../../breakdown/static/images/badge-loading.svg';

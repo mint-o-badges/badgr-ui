@@ -14,10 +14,10 @@ import { PdfService } from '../../services/pdf.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
-    selector: 'export-pdf-dialog',
-    templateUrl: 'export-pdf-dialog.component.html',
-    styleUrls: ['export-pdf-dialog.component.css'],
-    standalone: false
+	selector: 'export-pdf-dialog',
+	templateUrl: 'export-pdf-dialog.component.html',
+	styleUrls: ['export-pdf-dialog.component.css'],
+	standalone: false,
 })
 export class ExportPdfDialog extends BaseDialog {
 	badge: RecipientBadgeInstance | null = null;
@@ -63,17 +63,17 @@ export class ExportPdfDialog extends BaseDialog {
 	}
 
 	async openDialog(badge: RecipientBadgeInstance, markdown: HTMLElement): Promise<void> {
-		this.pdfIsLoading = true; 
+		this.pdfIsLoading = true;
 		this.pdfService.getPdf(badge.slug).then((url) => {
 			this.pdfSrc = url;
 			// set-time-out to fix the issue with viewing pdf from first time with safari
-			setTimeout( ()=> {
-				// Put below code within getpdf promise to avoid showing (previous pdf view / blank view) while loading pdf with chrome and firefox 
+			setTimeout(() => {
+				// Put below code within getpdf promise to avoid showing (previous pdf view / blank view) while loading pdf with chrome and firefox
 				this.badge = badge;
 				this.showModal();
-				this.pdfIsLoading = false; 
+				this.pdfIsLoading = false;
 			}, 10);
-		})
+		});
 	}
 
 	async openDialogForCollections(collection: RecipientBadgeCollection): Promise<void> {

@@ -10,9 +10,9 @@ import { ApplicationCredentialsService } from '../../../common/services/applicat
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-    selector: 'app-integration-detail',
-    templateUrl: './app-integrations-list.component.html',
-    standalone: false
+	selector: 'app-integration-detail',
+	templateUrl: './app-integrations-list.component.html',
+	standalone: false,
 })
 export class AppIntegrationListComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	constructor(
@@ -22,10 +22,9 @@ export class AppIntegrationListComponent extends BaseAuthenticatedRoutableCompon
 		public configService: AppConfigService,
 		private dialogService: CommonDialogsService,
 		private applicationCredentialsService: ApplicationCredentialsService,
-		private translate: TranslateService
+		private translate: TranslateService,
 	) {
 		super(router, route, loginService);
-
 	}
 
 	@ViewChild('addCredentialsDialog')
@@ -38,13 +37,13 @@ export class AppIntegrationListComponent extends BaseAuthenticatedRoutableCompon
 
 	ngOnInit() {
 		super.ngOnInit();
-		this.applicationCredentialsService.getMyCredentials().then(res => {
+		this.applicationCredentialsService.getMyCredentials().then((res) => {
 			this.applications = res;
-		})
+		});
 	}
 
 	openDialog() {
-		this.addCredentialsDialog.openDialog()
+		this.addCredentialsDialog.openDialog();
 	}
 
 	async revokeAccessTokens(app) {
@@ -57,18 +56,18 @@ export class AppIntegrationListComponent extends BaseAuthenticatedRoutableCompon
 			})
 		) {
 			//delete the App Credentials with client_id=name
-			this.applicationCredentialsService.deleteCredentials(app.clientId ?? app.client_id).then(res => {
-				this.applications = this.applications.filter(item => item.clientId != app.clientId)
-			})
+			this.applicationCredentialsService.deleteCredentials(app.clientId ?? app.client_id).then((res) => {
+				this.applications = this.applications.filter((item) => item.clientId != app.clientId);
+			});
 		}
 	}
 
-	addToken(token){
+	addToken(token) {
 		this.generatedToken = token;
-		this.applications.push(token)
+		this.applications.push(token);
 	}
 
-	selectApplication(application){
-		this.appIntegrationDetailsDialog.openDialog(application)
+	selectApplication(application) {
+		this.appIntegrationDetailsDialog.openDialog(application);
 	}
 }

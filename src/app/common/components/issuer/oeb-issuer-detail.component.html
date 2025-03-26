@@ -181,14 +181,16 @@
 		<div class="oeb-section-sm">
 			<ng-template [bgAwaitPromises]="learningPathsPromise">
 				<div *ngIf="!learningPaths?.length">
-					<p class="oeb-break-words" hlmP>{{ issuer.name }} {{ 'Issuer.issuerHasNoLearningPathYet' | translate }}</p>
+					<p class="oeb-break-words" hlmP>
+						{{ issuer.name }} {{ 'Issuer.issuerHasNoLearningPathYet' | translate }}
+					</p>
 				</div>
 				<div *ngIf="learningPaths && learningPaths.length > 0">
 					<h2
 						class="tw-font-medium md:tw-text-[22px] md:tw-leading-[26.4px] tw-text-purple tw-text-[16px] tw-leading-[19.2px] tw-py-4 oeb-break-words"
 					>
-						{{ issuer.name }} {{ 'Issuer.issuerHasBadges' | translate }}
-						{{ learningPaths.length }} Micro Degree{{ learningPaths.length == 1 ? '' : 's' }}.
+						{{ issuer.name }} {{ 'Issuer.issuerHasBadges' | translate }} {{ learningPaths.length }} Micro
+						Degree{{ learningPaths.length == 1 ? '' : 's' }}.
 					</h2>
 					<learningpaths-datatable
 						*ngIf="!public"

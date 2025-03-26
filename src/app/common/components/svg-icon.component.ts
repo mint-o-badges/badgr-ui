@@ -6,9 +6,9 @@ declare function require(path: string): string;
 const iconsSvgPath = preloadImageURL('../../../assets/@concentricsky/badgr-style/dist/images/icons.svg');
 
 @Component({
-    selector: 'svg[icon]',
-    template: ` <svg:use [attr.xlink:href]="iconHref"></svg:use> `,
-    standalone: false
+	selector: 'svg[icon]',
+	template: ` <svg:use [attr.xlink:href]="iconHref"></svg:use> `,
+	standalone: false,
 })
 export class SvgIconComponent {
 	@Input() icon: PatternLibraryIconName;

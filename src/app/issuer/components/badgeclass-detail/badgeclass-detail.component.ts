@@ -30,14 +30,14 @@ import { PageConfig } from '../../../common/components/badge-detail/badge-detail
 import { PdfService } from '../../../common/services/pdf.service';
 import { QrCodeApiService } from '../../services/qrcode-api.service';
 import { InfoDialogComponent } from '../../../common/dialogs/oeb-dialogs/info-dialog.component';
-import { HlmDialogService } from "../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service";
+import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
 import { inject } from '@angular/core';
 import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
 import { ApiLearningPath } from '../../../common/model/learningpath-api.model';
 
 @Component({
-    selector: 'badgeclass-detail',
-    template: `
+	selector: 'badgeclass-detail',
+	template: `
 		<bg-badgedetail [config]="config" [awaitPromises]="[issuerLoaded, badgeClassLoaded]">
 			<qrcode-awards
 				*ngIf="config.qrCodeButton.show"
@@ -56,7 +56,7 @@ import { ApiLearningPath } from '../../../common/model/learningpath-api.model';
 			></issuer-detail-datatable>
 		</bg-badgedetail>
 	`,
-    standalone: false
+	standalone: false,
 })
 export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	readonly badgeFailedImageUrl = '../../../../breakdown/static/images/badge-failed.svg';
@@ -102,7 +102,6 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 	launchpoints: ApiExternalToolLaunchpoint[];
 
 	private readonly _hlmDialogService = inject(HlmDialogService);
-
 
 	badgeClassLoaded: Promise<unknown>;
 	badgeInstancesLoaded: Promise<unknown>;
@@ -158,7 +157,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		protected pdfService: PdfService,
 		private sanitizer: DomSanitizer,
 		private translate: TranslateService,
-		private learningPathApiService: LearningPathApiService
+		private learningPathApiService: LearningPathApiService,
 	) {
 		super(router, route, sessionService);
 
@@ -198,7 +197,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 			this.badgeSlug,
 			recipientQuery,
 		);
-		this.learningPaths = await this.learningPathApiService.getLearningPathsForBadgeClass(this.badgeSlug)
+		this.learningPaths = await this.learningPathApiService.getLearningPathsForBadgeClass(this.badgeSlug);
 		this.badgeInstancesLoaded = instances.loadedPromise.then(
 			(retInstances) => {
 				this.crumbs = [
@@ -223,7 +222,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 					qrCodeButton: {
 						title: 'Badge über QR-Code vergeben',
 						show: true,
-						action: () => this.routeToQRCodeAward(this.badgeClass, this.issuer)
+						action: () => this.routeToQRCodeAward(this.badgeClass, this.issuer),
 					},
 					menuitems: [
 						{
@@ -244,7 +243,9 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 					createdAt: this.badgeClass.createdAt,
 					updatedAt: this.badgeClass.updatedAt,
 					duration: this.badgeClass.extension['extensions:StudyLoadExtension'].StudyLoad,
-					category: this.translate.instant(`Badge.categories.${this.badgeClass.extension['extensions:CategoryExtension']?.Category || 'participation'}`),
+					category: this.translate.instant(
+						`Badge.categories.${this.badgeClass.extension['extensions:CategoryExtension']?.Category || 'participation'}`,
+					),
 					tags: this.badgeClass.tags,
 					issuerName: this.badgeClass.issuerName,
 					issuerImagePlacholderUrl: this.issuerImagePlacholderUrl,
@@ -254,8 +255,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 					badgeImage: this.badgeClass.image,
 					competencies: this.badgeClass.extension['extensions:CompetencyExtension'],
 					license: this.badgeClass.extension['extensions:LicenseExtension'] ? true : false,
-					learningPaths: this.learningPaths
-
+					learningPaths: this.learningPaths,
 				};
 				if (this.badgeClass.extension['extensions:CategoryExtension']?.Category === 'learningpath') {
 					this.config.headerButton = null;
@@ -370,50 +370,50 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		}
 	}
 
-	routeToBadgeAward(badge: BadgeClass, issuer){
+	routeToBadgeAward(badge: BadgeClass, issuer) {
 		this.qrCodeApiService.getQrCodesForIssuerByBadgeClass(this.issuer.slug, badge.slug).then((qrCodes) => {
-			if(badge.recipientCount === 0 && qrCodes.length === 0){
-				const dialogRef =this._hlmDialogService.open(InfoDialogComponent, {
+			if (badge.recipientCount === 0 && qrCodes.length === 0) {
+				const dialogRef = this._hlmDialogService.open(InfoDialogComponent, {
 					context: {
-						variant: "info",
-						caption: this.translate.instant("Badge.endOfEditDialogTitle"),
-						subtitle: this.translate.instant("Badge.endOfEditDialogText"),
-						text: this.translate.instant("Badge.endOfEditDialogSubText"),
+						variant: 'info',
+						caption: this.translate.instant('Badge.endOfEditDialogTitle'),
+						subtitle: this.translate.instant('Badge.endOfEditDialogText'),
+						text: this.translate.instant('Badge.endOfEditDialogSubText'),
 						cancelText: this.translate.instant('General.cancel'),
-						forwardText: this.translate.instant('Issuer.giveBadge')
+						forwardText: this.translate.instant('Issuer.giveBadge'),
 					},
-				})
-				dialogRef.closed$.subscribe((result) => {
-					if (result === 'continue') this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'issue']);
 				});
+				dialogRef.closed$.subscribe((result) => {
+					if (result === 'continue')
+						this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'issue']);
+				});
+			} else {
+				this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'issue']);
 			}
-			else{
-				this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'issue'])
-			}
-		})
+		});
 	}
 
-	routeToQRCodeAward(badge, issuer){
+	routeToQRCodeAward(badge, issuer) {
 		this.qrCodeApiService.getQrCodesForIssuerByBadgeClass(this.issuer.slug, badge.slug).then((qrCodes) => {
-			if(badge.recipientCount === 0 && qrCodes.length === 0){
-				const dialogRef =this._hlmDialogService.open(InfoDialogComponent, {
+			if (badge.recipientCount === 0 && qrCodes.length === 0) {
+				const dialogRef = this._hlmDialogService.open(InfoDialogComponent, {
 					context: {
-						variant: "info",
-						caption: this.translate.instant("Badge.endOfEditDialogTitle"),
-						subtitle: this.translate.instant("Badge.endOfEditDialogTextQR"),
-						text: this.translate.instant("Badge.endOfEditDialogSubText"),
+						variant: 'info',
+						caption: this.translate.instant('Badge.endOfEditDialogTitle'),
+						subtitle: this.translate.instant('Badge.endOfEditDialogTextQR'),
+						text: this.translate.instant('Badge.endOfEditDialogSubText'),
 						cancelText: this.translate.instant('General.previous'),
-						forwardText: this.translate.instant('Issuer.giveQr')
+						forwardText: this.translate.instant('Issuer.giveQr'),
 					},
-				})
-				dialogRef.closed$.subscribe((result) => {
-					if (result === 'continue') this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'qr']);
 				});
+				dialogRef.closed$.subscribe((result) => {
+					if (result === 'continue')
+						this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'qr']);
+				});
+			} else {
+				this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'qr']);
 			}
-			else{
-				this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'qr'])
-			}
-		})
+		});
 	}
 
 	shareInstance(instance: BadgeInstance) {

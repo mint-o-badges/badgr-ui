@@ -1,83 +1,40 @@
 {
-  "compileOnSave": false,
-  "compilerOptions": {
-    "esModuleInterop": true,
-    "importHelpers": true,
-    "outDir": "./dist/out-tsc",
-    "sourceMap": true,
-    "declaration": false,
-    "moduleResolution": "node",
-    "experimentalDecorators": true,
-    "downlevelIteration": true,
-    "noImplicitAny": false,
-    "target": "ES2022",
-    "types": [
-      "node"
-    ],
-    "typeRoots": [
-      "node_modules/@types"
-    ],
-    "lib": [
-      "es7",
-      "es6",
-      "dom",
-      "esnext"
-    ],
-    "module": "commonjs",
-    "baseUrl": "./",
-    "useDefineForClassFields": false,
-    "paths": {
-      "@spartan-ng/ui-accordion-helm": [
-        "./src/app/components/spartan/ui-accordion-helm/src/index.ts"
-      ],
-      "@spartan-ng/ui-icon-helm": [
-        "./src/app/components/spartan/ui-icon-helm/src/index.ts"
-      ],
-      "@spartan-ng/ui-table-helm": [
-        "./src/app/components/spartan/ui-table-helm/src/index.ts"
-      ],
-      "@spartan-ng/ui-input-helm": [
-        "./src/app/components/spartan/ui-input-helm/src/index.ts"
-      ],
-      "@spartan-ng/ui-button-helm": [
-        "./src/app/components/spartan/ui-button-helm/src/index.ts"
-      ],
-      "@spartan-ng/ui-typography-helm": [
-        "./src/app/components/spartan/ui-typography-helm/src/index.ts"
-      ],
-      "@spartan-ng/ui-checkbox-helm": [
-        "./src/app/components/spartan/ui-checkbox-helm/src/index.ts"
-      ],
-      "@spartan-ng/ui-label-helm": [
-        "./src/app/components/spartan/ui-table-helm/src/index.ts"
-      ],
-      "@spartan-ng/ui-command-helm": [
-        "./src/app/components/spartan/ui-command-helm/src/index.ts"
-      ],
-      "@spartan-ng/ui-tabs-helm": [
-        "./src/app/components/spartan/ui-tabs-helm/src/index.ts"
-      ],
-      "@spartan-ng/ui-dialog-helm": [
-        "./src/app/components/spartan/ui-dialog-helm/src/index.ts"
-      ],
-      "@spartan-ng/ui-select-helm": [
-        "./src/app/components/spartan/ui-select-helm/src/index.ts"
-      ],
-      "@spartan-ng/ui-separator-helm": [
-        "./src/app/components/spartan/ui-separator-helm/src/index.ts"
-      ],
-      "@spartan-ng/ui-menu-helm": [
-        "./src/app/components/spartan/ui-menu-helm/src/index.ts"
-      ],
-      "@spartan-ng/ui-badge-helm": [
-        "./src/app/components/spartan/ui-badge-helm/src/index.ts"
-      ],
-      "@spartan-ng/ui-progress-helm": [
-        "./src/app/components/spartan/ui-progress-helm/src/index.ts"
-      ],
-      "@spartan-ng/ui-spinner-helm": [
-        "./src/app/components/spartan/ui-spinner-helm/src/index.ts"
-      ]
-    }
-  }
+	"compileOnSave": false,
+	"compilerOptions": {
+		"esModuleInterop": true,
+		"importHelpers": true,
+		"outDir": "./dist/out-tsc",
+		"sourceMap": true,
+		"declaration": false,
+		"moduleResolution": "node",
+		"experimentalDecorators": true,
+		"downlevelIteration": true,
+		"noImplicitAny": false,
+		"target": "ES2022",
+		"types": ["node"],
+		"typeRoots": ["node_modules/@types"],
+		"lib": ["es7", "es6", "dom", "esnext"],
+		"module": "commonjs",
+		"baseUrl": "./",
+		"useDefineForClassFields": false,
+		"paths": {
+			"@spartan-ng/ui-accordion-helm": ["./src/app/components/spartan/ui-accordion-helm/src/index.ts"],
+			"@spartan-ng/ui-icon-helm": ["./src/app/components/spartan/ui-icon-helm/src/index.ts"],
+			"@spartan-ng/ui-table-helm": ["./src/app/components/spartan/ui-table-helm/src/index.ts"],
+			"@spartan-ng/ui-input-helm": ["./src/app/components/spartan/ui-input-helm/src/index.ts"],
+			"@spartan-ng/ui-button-helm": ["./src/app/components/spartan/ui-button-helm/src/index.ts"],
+			"@spartan-ng/ui-typography-helm": ["./src/app/components/spartan/ui-typography-helm/src/index.ts"],
+			"@spartan-ng/ui-checkbox-helm": ["./src/app/components/spartan/ui-checkbox-helm/src/index.ts"],
+			"@spartan-ng/ui-label-helm": ["./src/app/components/spartan/ui-table-helm/src/index.ts"],
+			"@spartan-ng/ui-command-helm": ["./src/app/components/spartan/ui-command-helm/src/index.ts"],
+			"@spartan-ng/ui-tabs-helm": ["./src/app/components/spartan/ui-tabs-helm/src/index.ts"],
+			"@spartan-ng/ui-dialog-helm": ["./src/app/components/spartan/ui-dialog-helm/src/index.ts"],
+			"@spartan-ng/ui-select-helm": ["./src/app/components/spartan/ui-select-helm/src/index.ts"],
+			"@spartan-ng/ui-separator-helm": ["./src/app/components/spartan/ui-separator-helm/src/index.ts"],
+			"@spartan-ng/ui-menu-helm": ["./src/app/components/spartan/ui-menu-helm/src/index.ts"],
+			"@spartan-ng/ui-badge-helm": ["./src/app/components/spartan/ui-badge-helm/src/index.ts"],
+			"@spartan-ng/ui-progress-helm": ["./src/app/components/spartan/ui-progress-helm/src/index.ts"],
+			"@spartan-ng/ui-spinner-helm": ["./src/app/components/spartan/ui-spinner-helm/src/index.ts"]
+		}
+	}
 }

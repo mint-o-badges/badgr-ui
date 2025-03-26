@@ -221,7 +221,7 @@ const SERVICES = [
 	ZipService,
 	ApplicationCredentialsService,
 	LearningPathApiService,
-	QrCodeApiService
+	QrCodeApiService,
 ];
 
 const GUARDS = [AuthGuard];
@@ -265,13 +265,27 @@ export const COMMON_IMPORTS = [
 	LearningPathParticipantsDatatableComponent,
 	LearningPathGraduatesDatatableComponent,
 	HlmBadgeDirective,
-	AltchaComponent
+	AltchaComponent,
 ];
 
 @NgModule({
-	imports: [...COMMON_IMPORTS, FormsModule, LMarkdownEditorModule, TranslateModule, SharedIconsModule, CdkStepperModule],
-	providers: [BadgeClassManager, BadgeClassApiService,  ...serverErrorInterceptorFactory()],
-	declarations: [...DIRECTIVES, ...COMMON_MODULE_COMPONENTS, ...PIPES, ForwardRouteComponent, BadgeLegendComponent, CountUpDirective],
+	imports: [
+		...COMMON_IMPORTS,
+		FormsModule,
+		LMarkdownEditorModule,
+		TranslateModule,
+		SharedIconsModule,
+		CdkStepperModule,
+	],
+	providers: [BadgeClassManager, BadgeClassApiService, ...serverErrorInterceptorFactory()],
+	declarations: [
+		...DIRECTIVES,
+		...COMMON_MODULE_COMPONENTS,
+		...PIPES,
+		ForwardRouteComponent,
+		BadgeLegendComponent,
+		CountUpDirective,
+	],
 	exports: [...DIRECTIVES, ...COMMON_MODULE_COMPONENTS, ...PIPES, BadgeLegendComponent, SharedIconsModule],
 })
 export class BadgrCommonModule {

@@ -34,17 +34,17 @@ type EscoCompetencies = {
 };
 
 @Component({
-    selector: 'recipient-earned-badge-list',
-    templateUrl: './recipient-earned-badge-list.component.html',
-    providers: [
-        provideIcons({ lucideHexagon }),
-        provideIcons({ lucideMedal }),
-        provideIcons({ lucideClock }),
-        provideIcons({ lucideHand }),
-        provideIcons({ lucideBookOpen }),
-        provideIcons({ lucideHeart }),
-    ],
-    standalone: false
+	selector: 'recipient-earned-badge-list',
+	templateUrl: './recipient-earned-badge-list.component.html',
+	providers: [
+		provideIcons({ lucideHexagon }),
+		provideIcons({ lucideMedal }),
+		provideIcons({ lucideClock }),
+		provideIcons({ lucideHand }),
+		provideIcons({ lucideBookOpen }),
+		provideIcons({ lucideHeart }),
+	],
+	standalone: false,
 })
 export class RecipientEarnedBadgeListComponent
 	extends BaseAuthenticatedRoutableComponent
@@ -173,8 +173,6 @@ export class RecipientEarnedBadgeListComponent
 				}
 			});
 		}
-
-
 
 		this.mozillaTransitionOver = !!localStorage.getItem('mozillaTransitionOver') || false;
 
@@ -375,8 +373,6 @@ export class RecipientEarnedBadgeListComponent
 	trackById(index: number, item: any): any {
 		return item.id;
 	}
-
-
 
 	private groupCompetencies(badges) {
 		let groupedCompetencies: EscoCompetencies = {};

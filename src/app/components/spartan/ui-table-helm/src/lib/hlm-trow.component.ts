@@ -9,9 +9,7 @@ import type { ClassValue } from 'clsx';
 		'[class]': '_computedClass()',
 		role: 'row',
 	},
-	template: `
-		<ng-content />
-	`,
+	template: ` <ng-content /> `,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	encapsulation: ViewEncapsulation.None,
 })

@@ -25,10 +25,9 @@ import { typedFormGroup } from '../../../common/util/typed-forms';
 import { Validators } from '@angular/forms';
 import { EmailValidator } from '../../../common/validators/email.validator';
 
-
 @Component({
-    templateUrl: './issuer-staff.component.html',
-    standalone: false
+	templateUrl: './issuer-staff.component.html',
+	standalone: false,
 })
 export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	get issuerStaffRoleOptions() {
@@ -37,7 +36,7 @@ export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent imp
 			(this._issuerStaffRoleOptions = issuerStaffRoles.map((r) => ({
 				label: r.label,
 				value: r.slug,
-				description: r.description
+				description: r.description,
 			})))
 		);
 	}
@@ -56,7 +55,6 @@ export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent imp
 	profileEmailsLoaded: Promise<UserProfileEmail[]>;
 	profileEmails: UserProfileEmail[] = [];
 	error: string = null;
-
 
 	@ViewChild('issuerStaffCreateDialog')
 	issuerStaffCreateDialog: IssuerStaffCreateDialogComponent;
@@ -103,8 +101,8 @@ export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent imp
 	}
 
 	staffCreateForm = typedFormGroup()
-			.addControl('staffRole', 'staff' as IssuerStaffRoleSlug, Validators.required)
-			.addControl('staffEmail', '', [Validators.required, EmailValidator.validEmail]);
+		.addControl('staffRole', 'staff' as IssuerStaffRoleSlug, Validators.required)
+		.addControl('staffEmail', '', [Validators.required, EmailValidator.validEmail]);
 
 	submitStaffCreate() {
 		if (!this.staffCreateForm.markTreeDirtyAndValidate()) {
@@ -123,10 +121,11 @@ export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent imp
 				const err = BadgrApiFailure.from(error);
 				console.log(err);
 				this.error =
-					BadgrApiFailure.messageIfThrottableError(err.overallMessage) || ''.concat(this.translate.instant('Issuer.addMember_failed'),": ",(err.firstMessage))
+					BadgrApiFailure.messageIfThrottableError(err.overallMessage) ||
+					''.concat(this.translate.instant('Issuer.addMember_failed'), ': ', err.firstMessage);
 			},
 		);
-	}			
+	}
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// Staff Editing
 

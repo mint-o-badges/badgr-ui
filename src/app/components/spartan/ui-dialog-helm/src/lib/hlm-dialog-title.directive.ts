@@ -13,5 +13,7 @@ import type { ClassValue } from 'clsx';
 })
 export class HlmDialogTitleDirective {
 	public readonly userClass = input<ClassValue>('', { alias: 'class' });
-	protected _computedClass = computed(() => hlm('tw-text-lg tw-font-semibold tw-leading-none tw-tracking-tight', this.userClass()));
+	protected _computedClass = computed(() =>
+		hlm('tw-text-lg tw-font-semibold tw-leading-none tw-tracking-tight', this.userClass()),
+	);
 }

@@ -5,8 +5,8 @@ import { Component, OnInit } from '@angular/core';
  * Component that redirects the user to a different view. Used for working around https://github.com/angular/angular/issues/9811#issuecomment-248043993
  */
 @Component({
-    template: '',
-    standalone: false
+	template: '',
+	standalone: false,
 })
 export class ForwardRouteComponent implements OnInit {
 	constructor(

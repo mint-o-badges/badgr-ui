@@ -1,11 +1,11 @@
 import { Component, Input, TemplateRef } from '@angular/core';
 import { BrnMenuTriggerDirective } from '@spartan-ng/ui-menu-brain';
 import {
-  HlmMenuComponent,
-  HlmMenuItemDirective,
-  HlmMenuItemIconDirective,
-  HlmMenuItemVariants,
-  HlmMenuLabelComponent
+	HlmMenuComponent,
+	HlmMenuItemDirective,
+	HlmMenuItemIconDirective,
+	HlmMenuItemVariants,
+	HlmMenuLabelComponent,
 } from './spartan/ui-menu-helm/src/index';
 import { NgIf, NgFor, NgTemplateOutlet } from '@angular/common';
 import type { MenuItem } from '../common/components/badge-detail/badge-detail.component.types';
@@ -14,21 +14,21 @@ import { HlmIconModule } from './spartan/ui-icon-helm/src';
 import { SharedIconsModule } from '../public/icons.module';
 
 @Component({
-    selector: 'oeb-dropdown',
-    imports: [
-    BrnMenuTriggerDirective,
-    HlmMenuComponent,
-    HlmMenuItemDirective,
-    HlmMenuLabelComponent,
-    HlmMenuItemIconDirective,
-    NgIf,
-    NgFor,
-    NgTemplateOutlet,
-    RouterModule,
-    HlmIconModule,
-    SharedIconsModule
-],
-    template: `
+	selector: 'oeb-dropdown',
+	imports: [
+		BrnMenuTriggerDirective,
+		HlmMenuComponent,
+		HlmMenuItemDirective,
+		HlmMenuLabelComponent,
+		HlmMenuItemIconDirective,
+		NgIf,
+		NgFor,
+		NgTemplateOutlet,
+		RouterModule,
+		HlmIconModule,
+		SharedIconsModule,
+	],
+	template: `
 		<button [brnMenuTriggerFor]="menu">
 			<ngTemplateOutlet *ngIf="isTemplate; else stringTrigger" [ngTemplateOutlet]="trigger"></ngTemplateOutlet>
 			<ng-template #stringTrigger>
@@ -62,7 +62,7 @@ import { SharedIconsModule } from '../public/icons.module';
 			</hlm-menu>
 		</ng-template>
 	`,
-    styleUrls: ['../app.component.scss']
+	styleUrls: ['../app.component.scss'],
 })
 export class OebDropdownComponent {
 	@Input() trigger: any;

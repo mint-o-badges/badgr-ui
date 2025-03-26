@@ -13,9 +13,9 @@ import { shareCollectionDialogOptionsFor } from '../recipient-badge-collection-d
 import { AppConfigService } from '../../../common/app-config.service';
 
 @Component({
-    selector: 'recipient-badge-collection-list',
-    templateUrl: './recipient-badge-collection-list.component.html',
-    standalone: false
+	selector: 'recipient-badge-collection-list',
+	templateUrl: './recipient-badge-collection-list.component.html',
+	standalone: false,
 })
 export class RecipientBadgeCollectionListComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	readonly noCollectionsImageUrl =

@@ -42,7 +42,6 @@ export class UserProfileApiService extends BaseHttpApiService {
 		return this.delete('/v1/user/profile');
 	}
 
-
 	fetchEmails() {
 		return this.get<ApiUserProfileEmail[]>('/v1/user/emails').then((r) => r.body);
 	}
@@ -71,8 +70,7 @@ export class UserProfileApiService extends BaseHttpApiService {
 		return this.put('/v1/user/emails/' + emailIdToVerify, { resend: true });
 	}
 
-	getRedirectUrl(){
-		return this.post('/v1/user/get-redirect-path', {})
+	getRedirectUrl() {
+		return this.post('/v1/user/get-redirect-path', {});
 	}
-
 }

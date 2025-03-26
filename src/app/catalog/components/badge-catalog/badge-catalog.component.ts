@@ -17,11 +17,11 @@ import { FormControl } from '@angular/forms';
 import { appearAnimation } from '../../../common/animations/animations';
 
 @Component({
-    selector: 'app-badge-catalog',
-    templateUrl: './badge-catalog.component.html',
-    styleUrls: ['./badge-catalog.component.css'],
-    animations: [appearAnimation],
-    standalone: false
+	selector: 'app-badge-catalog',
+	templateUrl: './badge-catalog.component.html',
+	styleUrls: ['./badge-catalog.component.css'],
+	animations: [appearAnimation],
+	standalone: false,
 })
 export class BadgeCatalogComponent extends BaseRoutableComponent implements OnInit {
 	readonly issuerPlaceholderSrc = preloadImageURL('../../../../breakdown/static/images/placeholderavatar-issuer.svg');
@@ -148,12 +148,12 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 					// this.tags = sortUnique(this.tags);
 					this.tags = this.tags.filter((value, index, array) => array.indexOf(value) === index);
 					this.tags.sort();
-					this.tags.forEach(t => {
+					this.tags.forEach((t) => {
 						this.tagsOptions.push({
-							'label': t,
-							'value': t,
-						})
-					})
+							label: t,
+							value: t,
+						});
+					});
 					// this.issuers = sortUnique(this.issuers);
 					this.issuers = this.issuers.filter((value, index, array) => array.indexOf(value) === index);
 					this.updateResults();
@@ -266,7 +266,10 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		this.badges
 			.filter(this.badgeMatcher(this.searchQuery))
 			// .filter((badge) => !this.tagsControl.value?.length || this.tagsControl.value.every(tag => badge.tags.includes(tag))) // badges have to match all tags
-			.filter((badge) => !this.tagsControl.value?.length || this.tagsControl.value.some(tag => badge.tags.includes(tag))) // badges have to match at least one tag
+			.filter(
+				(badge) =>
+					!this.tagsControl.value?.length || this.tagsControl.value.some((tag) => badge.tags.includes(tag)),
+			) // badges have to match at least one tag
 			.filter((i) => !i.apiModel.source_url)
 			.forEach((item) => {
 				that.badgeResults.push(item);
@@ -289,7 +292,7 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 	}
 
 	removeTag(tag) {
-		this.tagsControl.setValue(this.tagsControl.value.filter(t => t != tag));
+		this.tagsControl.setValue(this.tagsControl.value.filter((t) => t != tag));
 	}
 
 	private badgeMatcher(inputPattern: string): (badge) => boolean {

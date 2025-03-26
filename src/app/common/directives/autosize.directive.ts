@@ -40,8 +40,8 @@ import { isPlatformBrowser } from '@angular/common';
  */
 
 @Directive({
-    selector: 'textarea[autosize]',
-    standalone: false
+	selector: 'textarea[autosize]',
+	standalone: false,
 })
 export class AutosizeDirective implements AfterViewChecked {
 	private el: HTMLElement;

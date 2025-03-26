@@ -22,8 +22,8 @@ const messageStatusTypeToNotificationMap: { [key in string]: Notification } = {
 };
 
 @Component({
-    selector: 'form-message',
-    template: ` <div class="l-toast">
+	selector: 'form-message',
+	template: ` <div class="l-toast">
 		<div
 			*ngIf="msg"
 			class="notification notification-toast {{ notification.submodule }}"
@@ -42,7 +42,7 @@ const messageStatusTypeToNotificationMap: { [key in string]: Notification } = {
 			</button>
 		</div>
 	</div>`,
-    standalone: false
+	standalone: false,
 })
 export class FormMessageComponent implements OnInit, OnDestroy {
 	messageDismissed = false;
