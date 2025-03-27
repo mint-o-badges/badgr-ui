@@ -8,6 +8,7 @@ import { OebButtonComponent } from './oeb-button.component';
 import { HlmPDirective } from '../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
 import { FormControl } from '@angular/forms';
 import { OebSelectComponent } from './select.component';
+import { IssuerStaffMember } from '../issuer/models/issuer.model';
 
 @Component({
 	selector: 'issuer-staff-datatable',
@@ -35,7 +36,7 @@ import { OebSelectComponent } from './select.component';
 			<!-- Actions -->
 			<hlm-th class="tw-text-oebblack tw-w-[25%] tw-px-4"></hlm-th>
 		</hlm-trow>
-		<hlm-trow *ngFor="let member of members" class="tw-border-purple tw-flex-wrap tw-py-2">
+		<hlm-trow *ngFor="let member of members" class="tw-border-lightgrey tw-flex-wrap tw-py-2">
 			<hlm-th class="tw-w-[25%] tw-px-4 tw-items-center ">
 				<span class="tw-font-normal tw-text-lg tw-text-oebblack tw-truncate">{{ member.nameLabel }}</span>
 			</hlm-th>
@@ -65,7 +66,7 @@ import { OebSelectComponent } from './select.component';
 })
 export class IssuerStaffDatatableComponent {
 	@Input() caption: string = '';
-	@Input() members: any[];
+	@Input() members: IssuerStaffMember[];
 	@Input() roleOptions: any[];
 	@Output() removeStaffMember = new EventEmitter();
 
