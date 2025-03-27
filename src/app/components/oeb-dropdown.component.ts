@@ -36,7 +36,8 @@ import { SharedIconsModule } from '../public/icons.module';
 		NgFor,
 		NgTemplateOutlet,
 		RouterModule,
-		NgIcon, HlmIconModule,
+		NgIcon,
+		HlmIconModule,
 		SharedIconsModule,
 	],
 	template: `

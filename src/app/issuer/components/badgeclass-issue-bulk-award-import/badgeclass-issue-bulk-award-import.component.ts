@@ -13,9 +13,9 @@ import {
 } from '../badgeclass-issue-bulk-award/badgeclass-issue-bulk-award.component';
 
 @Component({
-    selector: 'Badgeclass-issue-bulk-award-import',
-    templateUrl: './badgeclass-issue-bulk-award-import.component.html',
-    standalone: false
+	selector: 'Badgeclass-issue-bulk-award-import',
+	templateUrl: './badgeclass-issue-bulk-award-import.component.html',
+	standalone: false,
 })
 export class BadgeClassIssueBulkAwardImportComponent extends BaseAuthenticatedRoutableComponent {
 	readonly csvUploadIconUrl = '../../../../breakdown/static/images/csvuploadicon.svg';
@@ -90,7 +90,6 @@ export class BadgeClassIssueBulkAwardImportComponent extends BaseAuthenticatedRo
 					destinationColumn = 'name';
 				}
 
-
 				theseColumnHeaders.push({
 					destColumn: destinationColumn ? destinationColumn : 'NA',
 					sourceName: columnHeaderName,
@@ -109,7 +108,7 @@ export class BadgeClassIssueBulkAwardImportComponent extends BaseAuthenticatedRo
 		const columnHeaders: ColumnHeaders[] = generateColumnHeaders();
 		this.columnHeadersCount = columnHeaders.length;
 
-        for (let row of rows) {
+		for (let row of rows) {
 			// Valid if all the cells in a row are not empty.
 			const rowIsValid: boolean = row.every((cell, i) => cell.length > 0);
 

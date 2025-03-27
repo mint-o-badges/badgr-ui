@@ -31,7 +31,8 @@ import { NgIf, NgFor, NgTemplateOutlet, NgClass } from '@angular/common';
 		BrnCollapsibleTriggerDirective,
 		HlmButtonDirective,
 		BrnCollapsibleContentComponent,
-		NgIcon, HlmIconDirective,
+		NgIcon,
+		HlmIconDirective,
 		NgIf,
 		NgFor,
 		NgTemplateOutlet,
@@ -51,7 +52,8 @@ import { NgIf, NgFor, NgTemplateOutlet, NgClass } from '@angular/common';
 					</button>
 				</ng-template>
 				<div>
-					<ng-icon hlm
+					<ng-icon
+						hlm
 						size="xl"
 						class="tw-text-purple"
 						[ngClass]="{ 'tw-rotate-90': collapsible.state() == 'open' }"

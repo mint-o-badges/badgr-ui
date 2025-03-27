@@ -4,13 +4,13 @@ import type { ButtonVariants } from './hlm-button.directive';
 export interface BrnButtonConfig {
 	variant: ButtonVariants['variant'];
 	size: ButtonVariants['size'];
-    width: ButtonVariants['width']
+	width: ButtonVariants['width'];
 }
 
 const defaultConfig: BrnButtonConfig = {
 	variant: 'default',
 	size: 'default',
-    width: 'default'
+	width: 'default',
 };
 
 const BrnButtonConfigToken = new InjectionToken<BrnButtonConfig>('BrnButtonConfig');

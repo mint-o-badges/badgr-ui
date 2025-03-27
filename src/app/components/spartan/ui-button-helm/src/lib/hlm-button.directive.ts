@@ -68,14 +68,18 @@ export class HlmButtonDirective {
 	public readonly userClass = input<ClassValue>('', { alias: 'class' });
 
 	protected readonly _computedClass = computed(() =>
-		hlm(buttonVariants({ variant: this.variant(), size: this.size(), width: this.width() }), this.userClass(), this._additionalClasses()),
+		hlm(
+			buttonVariants({ variant: this.variant(), size: this.size(), width: this.width() }),
+			this.userClass(),
+			this._additionalClasses(),
+		),
 	);
 
 	public readonly variant = input<ButtonVariants['variant']>(this._config.variant);
 
 	public readonly size = input<ButtonVariants['size']>(this._config.size);
 
-	public readonly width = input<ButtonVariants['width']>(this._config.width)
+	public readonly width = input<ButtonVariants['width']>(this._config.width);
 
 	setClass(classes: string): void {
 		this._additionalClasses.set(classes);

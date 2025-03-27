@@ -22,11 +22,11 @@ import { FormControl } from '@angular/forms';
 import { applySorting } from '../../util/sorting';
 
 @Component({
-    selector: 'app-learningpaths-catalog',
-    templateUrl: './learningpath-catalog.component.html',
-    styleUrls: ['../badge-catalog/badge-catalog.component.css'],
-    animations: [appearAnimation],
-    standalone: false
+	selector: 'app-learningpaths-catalog',
+	templateUrl: './learningpath-catalog.component.html',
+	styleUrls: ['../badge-catalog/badge-catalog.component.css'],
+	animations: [appearAnimation],
+	standalone: false,
 })
 export class LearningPathsCatalogComponent extends BaseRoutableComponent implements OnInit {
 	learningPathsLoaded: Promise<unknown>;
@@ -47,13 +47,12 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 	plural = {};
 	sortControl = new FormControl();
 
-
 	microDegreesPerPage = 20;
 	totalPages: number;
 	nextLink: string;
 	previousLink: string;
 
-	sortOption: string | null = null; 
+	sortOption: string | null = null;
 
 	get theme() {
 		return this.configService.theme;
@@ -69,7 +68,7 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 	set searchQuery(query) {
 		this._searchQuery = query;
 		// this.updateResults();
-		this.updatePaginatedResults()
+		this.updatePaginatedResults();
 	}
 
 	private _groupByInstitution = false;
@@ -79,7 +78,7 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 	set groupByInstitution(val: boolean) {
 		this._groupByInstitution = val;
 		// this.updateResults();
-		this.updatePaginatedResults()
+		this.updatePaginatedResults();
 	}
 
 	private _currentPage = 1;
@@ -90,10 +89,10 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 
 	set currentPage(value: number) {
 		if (this._currentPage !== value) {
-		  this._currentPage = value;
-		  this.updatePaginatedResults();
+			this._currentPage = value;
+			this.updatePaginatedResults();
 		}
-	  }
+	}
 
 	constructor(
 		protected title: Title,
@@ -133,7 +132,7 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 
 		this.sortControl.valueChanges.subscribe((value) => {
 			this.sortOption = value;
-			this.updatePaginatedResults(); 
+			this.updatePaginatedResults();
 		});
 	}
 
@@ -250,10 +249,10 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 	private updatePaginatedResults() {
 		let that = this;
 		this.learningPathResults = [];
-	
+
 		let filteredMicroDegrees = this.learningPaths
 			.filter(this.learningPathMatcher(this.searchQuery))
-			.filter(this.learningPathTagMatcher(this.selectedTag))
+			.filter(this.learningPathTagMatcher(this.selectedTag));
 
 		if (this.sortOption) {
 			applySorting(filteredMicroDegrees, this.sortOption);
@@ -262,7 +261,7 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 		this.totalPages = Math.ceil(filteredMicroDegrees.length / this.microDegreesPerPage);
 		const start = (this.currentPage - 1) * this.microDegreesPerPage;
 		const end = start + this.microDegreesPerPage;
-	
+
 		that.learningPathResults = filteredMicroDegrees.slice(start, end);
 	}
 

@@ -5,9 +5,9 @@ import { EmailValidator } from '../../common/validators/email.validator';
 import { typedFormGroup } from '../../common/util/typed-forms';
 
 @Component({
-    selector: 'oeb-showcase',
-    templateUrl: './oeb-showcase.component.html',
-    standalone: false
+	selector: 'oeb-showcase',
+	templateUrl: './oeb-showcase.component.html',
+	standalone: false,
 })
 export class ShowcaseComponent {
 	public badges = [

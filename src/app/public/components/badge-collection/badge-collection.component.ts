@@ -11,8 +11,8 @@ import { Title } from '@angular/platform-browser';
 import { AppConfigService } from '../../../common/app-config.service';
 
 @Component({
-    templateUrl: 'badge-collection.component.html',
-    standalone: false
+	templateUrl: 'badge-collection.component.html',
+	standalone: false,
 })
 export class PublicBadgeCollectionComponent {
 	readonly issuerImagePlacholderUrl = preloadImageURL(

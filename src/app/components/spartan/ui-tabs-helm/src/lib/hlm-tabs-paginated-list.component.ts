@@ -33,7 +33,12 @@ import { listVariants } from './hlm-tabs-list.component';
 		</button>
 
 		<div #tabListContainer class="z-[1] flex grow overflow-hidden" (keydown)="_handleKeydown($event)">
-			<div class="relative grow transition-transform" #tabList role="tablist" (cdkObserveContent)="_onContentChanges()">
+			<div
+				class="relative grow transition-transform"
+				#tabList
+				role="tablist"
+				(cdkObserveContent)="_onContentChanges()"
+			>
 				<div #tabListInner [class]="_tabListClass()">
 					<ng-content></ng-content>
 				</div>

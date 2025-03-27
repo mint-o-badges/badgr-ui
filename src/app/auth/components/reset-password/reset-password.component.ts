@@ -11,9 +11,9 @@ import { typedFormGroup } from '../../../common/util/typed-forms';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 
 @Component({
-    selector: 'change-password',
-    templateUrl: './reset-password.component.html',
-    standalone: false
+	selector: 'change-password',
+	templateUrl: './reset-password.component.html',
+	standalone: false,
 })
 export class ResetPasswordComponent extends BaseRoutableComponent {
 	changePasswordForm = typedFormGroup()

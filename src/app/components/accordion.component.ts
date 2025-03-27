@@ -12,7 +12,15 @@ import { provideIcons } from '@ng-icons/core';
 @Component({
 	selector: 'competency-accordion',
 	providers: [provideIcons({ lucideClock })],
-	imports: [HlmAccordionModule, NgIcon, HlmIconModule, TranslateModule, BrnAccordionContentComponent, RouterModule, NgIf],
+	imports: [
+		HlmAccordionModule,
+		NgIcon,
+		HlmIconModule,
+		TranslateModule,
+		BrnAccordionContentComponent,
+		RouterModule,
+		NgIf,
+	],
 	template: `
 		<div class="tw-bg-[var(--color-lightgray)] tw-border tw-border-solid tw-border-purple tw-rounded-lg tw-mt-4">
 			<div hlmAccordion>

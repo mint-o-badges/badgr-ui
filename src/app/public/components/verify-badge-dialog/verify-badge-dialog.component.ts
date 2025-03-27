@@ -23,9 +23,9 @@ export enum ExpiryState {
 }
 
 @Component({
-    selector: 'verify-badge-dialog',
-    templateUrl: './verify-badge-dialog.component.html',
-    standalone: false
+	selector: 'verify-badge-dialog',
+	templateUrl: './verify-badge-dialog.component.html',
+	standalone: false,
 })
 export class VerifyBadgeDialog extends BaseDialog {
 	constructor(

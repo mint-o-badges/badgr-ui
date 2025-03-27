@@ -19,9 +19,9 @@ import { ApiLearningPath, ApiLearningPathParticipant } from '../../..//common/mo
 import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
 
 @Component({
-    selector: 'issuer-learning-path',
-    templateUrl: './issuer-learning-path.component.html',
-    standalone: false
+	selector: 'issuer-learning-path',
+	templateUrl: './issuer-learning-path.component.html',
+	standalone: false,
 })
 export class IssuerLearningPathComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	readonly issuerImagePlaceHolderUrl = preloadImageURL(
@@ -58,7 +58,7 @@ export class IssuerLearningPathComponent extends BaseAuthenticatedRoutableCompon
 		protected profileManager: UserProfileManager,
 		private configService: AppConfigService,
 		private dialogService: CommonDialogsService,
-		private learningPathApiService: LearningPathApiService
+		private learningPathApiService: LearningPathApiService,
 	) {
 		super(router, route, loginService);
 
@@ -67,21 +67,23 @@ export class IssuerLearningPathComponent extends BaseAuthenticatedRoutableCompon
 		this.issuerSlug = this.route.snapshot.params['issuerSlug'];
 		this.learningPathSlug = this.route.snapshot.params['learningPathSlug'];
 
-		this.menuitems = [{
-			title: 'Bearbeiten',
-			routerLink: ['./edit'],
-			icon: 'lucidePencil',
-		},
-		{
-			title: 'Löschen',
-			action: ($event) => this.delete($event),
-			icon: 'lucideTrash2',
-		},
-		{
-			title: 'Mitglieder bearbeiten',
-			routerLink: ['./staff'],
-			icon: 'lucideUsers',
-		}]
+		this.menuitems = [
+			{
+				title: 'Bearbeiten',
+				routerLink: ['./edit'],
+				icon: 'lucidePencil',
+			},
+			{
+				title: 'Löschen',
+				action: ($event) => this.delete($event),
+				icon: 'lucideTrash2',
+			},
+			{
+				title: 'Mitglieder bearbeiten',
+				routerLink: ['./staff'],
+				icon: 'lucideUsers',
+			},
+		];
 
 		this.issuerLoaded = this.issuerManager.issuerBySlug(this.issuerSlug).then(
 			(issuer) => {
@@ -110,13 +112,11 @@ export class IssuerLearningPathComponent extends BaseAuthenticatedRoutableCompon
 					);
 				});
 				this.participantsLoaded = new Promise<void>((resolve, reject) => {
-					this.learningPathApiService.getLearningPathParticipants(this.learningPathSlug).then(
-						(result) => {
-							this.participants = result.body;
-							resolve()
-						}
-					)
-				})
+					this.learningPathApiService.getLearningPathParticipants(this.learningPathSlug).then((result) => {
+						this.participants = result.body;
+						resolve();
+					});
+				});
 			},
 			(error) => {
 				this.messageService.reportLoadingError(
@@ -162,11 +162,11 @@ export class IssuerLearningPathComponent extends BaseAuthenticatedRoutableCompon
 		super.ngOnInit();
 	}
 
-	routeToBadgeAward(badge, issuer){
-		this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'issue'])
+	routeToBadgeAward(badge, issuer) {
+		this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'issue']);
 	}
 
-	routeToBadgeDetail(badge, issuer){
-		this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug])
+	routeToBadgeDetail(badge, issuer) {
+		this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug]);
 	}
 }

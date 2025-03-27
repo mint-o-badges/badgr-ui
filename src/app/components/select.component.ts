@@ -17,7 +17,7 @@ import { OebSeparatorComponent } from './oeb-separator.component';
 		OebInputErrorComponent,
 		ReactiveFormsModule,
 		CommonModule,
-		OebSeparatorComponent
+		OebSeparatorComponent,
 	],
 	template: ` <div [ngClass]="{ 'tw-mt-6 md:tw-mt-7': !noTopMargin }">
 		<label class="tw-pb-[2px] tw-pl-[3px]" [attr.for]="inputName" *ngIf="label">
@@ -104,7 +104,6 @@ export class OebSelectComponent {
 	@Input() template?: TemplateRef<any>;
 
 	@ViewChild('selectInput') selectInput: ElementRef;
-
 
 	private _unlocked = false;
 	@Input()

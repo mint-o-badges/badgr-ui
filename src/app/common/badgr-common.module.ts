@@ -137,7 +137,7 @@ import { serverErrorInterceptorFactory } from '../server-error-interceptor.facto
 import { AltchaComponent } from '../components/altcha.component';
 import { SortPipe } from './pipes/sortPipe';
 import { PaginationAdvancedComponent } from '../components/oeb-numbered-pagination';
-import { NgIconsModule } from '@ng-icons/core'
+import { NgIconsModule } from '@ng-icons/core';
 import { HlmIconDirective } from '../components/spartan/ui-icon-helm/src';
 
 const DIRECTIVES = [
@@ -196,7 +196,7 @@ export const COMMON_MODULE_COMPONENTS = [
 	OebLearningPathDetailComponent,
 	OebIssuerCard,
 	OebSortSelectComponent,
-	OebGlobalSortSelectComponent
+	OebGlobalSortSelectComponent,
 ];
 
 const SERVICES = [
@@ -227,7 +227,7 @@ const SERVICES = [
 	ZipService,
 	ApplicationCredentialsService,
 	LearningPathApiService,
-	QrCodeApiService
+	QrCodeApiService,
 ];
 
 const GUARDS = [AuthGuard];
@@ -275,13 +275,27 @@ export const COMMON_IMPORTS = [
 	HlmBadgeDirective,
 	AltchaComponent,
 	NgIconsModule,
-	HlmIconDirective
+	HlmIconDirective,
 ];
 
 @NgModule({
-	imports: [...COMMON_IMPORTS, FormsModule, LMarkdownEditorModule, TranslateModule, SharedIconsModule, CdkStepperModule],
-	providers: [BadgeClassManager, BadgeClassApiService,  ...serverErrorInterceptorFactory()],
-	declarations: [...DIRECTIVES, ...COMMON_MODULE_COMPONENTS, ...PIPES, ForwardRouteComponent, BadgeLegendComponent, CountUpDirective],
+	imports: [
+		...COMMON_IMPORTS,
+		FormsModule,
+		LMarkdownEditorModule,
+		TranslateModule,
+		SharedIconsModule,
+		CdkStepperModule,
+	],
+	providers: [BadgeClassManager, BadgeClassApiService, ...serverErrorInterceptorFactory()],
+	declarations: [
+		...DIRECTIVES,
+		...COMMON_MODULE_COMPONENTS,
+		...PIPES,
+		ForwardRouteComponent,
+		BadgeLegendComponent,
+		CountUpDirective,
+	],
 	exports: [...DIRECTIVES, ...COMMON_MODULE_COMPONENTS, ...PIPES, BadgeLegendComponent, SharedIconsModule],
 })
 export class BadgrCommonModule {

@@ -9,9 +9,9 @@ import '../thirdparty/scopedQuerySelectorShim';
 // https://stackoverflow.com/questions/3680876/using-queryselectorall-to-retrieve-direct-children/21126966#21126966
 
 @Component({
-    selector: 'initial-redirect',
-    template: ``,
-    standalone: false
+	selector: 'initial-redirect',
+	template: ``,
+	standalone: false,
 })
 export class InitialRedirectComponent {
 	constructor(

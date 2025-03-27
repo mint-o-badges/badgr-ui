@@ -1,4 +1,3 @@
-
 import { Component, signal, input, EventEmitter, Output, model } from '@angular/core';
 import { HlmNumberedPaginationComponent } from '../components/spartan/ui-pagination-helm/src';
 
@@ -7,15 +6,11 @@ import { HlmNumberedPaginationComponent } from '../components/spartan/ui-paginat
 	standalone: true,
 	imports: [HlmNumberedPaginationComponent],
 	template: `
-    <hlm-numbered-pagination
-      [(currentPage)]="page"
-      [(itemsPerPage)]="pageSize"
-      [totalItems]="totalProducts()"
-    />
+		<hlm-numbered-pagination [(currentPage)]="page" [(itemsPerPage)]="pageSize" [totalItems]="totalProducts()" />
 	`,
 })
 export class PaginationAdvancedComponent {
-  page = model(1);
-  pageSize = model(30);
-  totalProducts = input(0);
+	page = model(1);
+	pageSize = model(30);
+	totalProducts = input(0);
 }

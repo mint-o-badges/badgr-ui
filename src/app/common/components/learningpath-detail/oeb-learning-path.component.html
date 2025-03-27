@@ -45,7 +45,9 @@
 								(click)="deleteLearningPath(learningPath.slug, issuer)"
 								[disabled-when-requesting]="true"
 								[disabled]="!issuer.canCreateBadge"
-								[class]="issuer.canCreateBadge ? 'tw-whitespace-nowrap tw-hidden md:tw-block' : 'disabled'"
+								[class]="
+									issuer.canCreateBadge ? 'tw-whitespace-nowrap tw-hidden md:tw-block' : 'disabled'
+								"
 							>
 							</oeb-button>
 						</div>

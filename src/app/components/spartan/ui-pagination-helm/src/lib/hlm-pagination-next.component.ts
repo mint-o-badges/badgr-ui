@@ -10,12 +10,10 @@ import { ClassValue } from 'clsx';
 import { HlmPaginationLinkDirective } from './hlm-pagination-link.directive';
 
 @Component({
-    selector: 'hlm-pagination-next',
-    imports: [HlmPaginationLinkDirective, NgIcon,
-        HlmIconDirective
-    ],
-    providers: [provideIcons({ lucideChevronRight })],
-    template: `
+	selector: 'hlm-pagination-next',
+	imports: [HlmPaginationLinkDirective, NgIcon, HlmIconDirective],
+	providers: [provideIcons({ lucideChevronRight })],
+	template: `
 		<a
 			[class]="_computedClass()"
 			hlmPaginationLink
@@ -28,7 +26,7 @@ import { HlmPaginationLinkDirective } from './hlm-pagination-link.directive';
 			<span [class.tw-sr-only]="iconOnly()">{{ text() }}</span>
 			<ng-icon hlm size="sm" name="lucideChevronRight" />
 		</a>
-	`
+	`,
 })
 export class HlmPaginationNextComponent {
 	public readonly userClass = input<ClassValue>('', { alias: 'class' });
@@ -44,5 +42,7 @@ export class HlmPaginationNextComponent {
 
 	protected readonly size = computed<ButtonVariants['size']>(() => (this.iconOnly() ? 'icon' : 'default'));
 
-	protected readonly _computedClass = computed(() => hlm('tw-gap-1', !this.iconOnly() ? 'tw-pr-2.5' : '', this.userClass()));
+	protected readonly _computedClass = computed(() =>
+		hlm('tw-gap-1', !this.iconOnly() ? 'tw-pr-2.5' : '', this.userClass()),
+	);
 }

@@ -2,8 +2,8 @@ import { Component, ElementRef, Renderer2 } from '@angular/core';
 import { BaseDialog } from './base-dialog';
 
 @Component({
-    selector: 'markdown-hints-dialog',
-    template: `
+	selector: 'markdown-hints-dialog',
+	template: `
 		<dialog
 			aria-labelledby="markdownHintsDialog"
 			aria-describedby="dialog1Desc"
@@ -41,7 +41,7 @@ import { BaseDialog } from './base-dialog';
 			</div>
 		</dialog>
 	`,
-    standalone: false
+	standalone: false,
 })
 export class MarkdownHintsDialog extends BaseDialog {
 	constructor(componentElem: ElementRef, renderer: Renderer2) {

@@ -42,7 +42,6 @@ export class UserProfileApiService extends BaseHttpApiService {
 		return this.delete('/v1/user/profile');
 	}
 
-
 	fetchEmails() {
 		return this.get<ApiUserProfileEmail[]>('/v1/user/emails').then((r) => r.body);
 	}
@@ -70,5 +69,4 @@ export class UserProfileApiService extends BaseHttpApiService {
 	resendVerificationEmail(emailIdToVerify: number) {
 		return this.put('/v1/user/emails/' + emailIdToVerify, { resend: true });
 	}
-
 }

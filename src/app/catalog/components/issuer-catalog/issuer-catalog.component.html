@@ -31,7 +31,8 @@
 									placeholder="{{ 'Issuer.searchInstitutions' | translate }}"
 									[(ngModel)]="searchQuery"
 								/>
-								<ng-icon hlm
+								<ng-icon
+									hlm
 									name="lucideSearch"
 									class="tw-w-8 tw-h-8 tw-absolute tw-top-1/2 tw-right-2 -tw-translate-y-1/2 tw-pointer-events-none tw-text-purple"
 								></ng-icon>
@@ -90,8 +91,11 @@
 					</ng-container>
 				</ng-container>
 
-				<oeb-numbered-pagination *ngIf="(issuerResults.length >= 30 || currentPage == totalPages) && badgesDisplay != 'map'" [totalProducts]="issuers.length" [(page)]="currentPage" >
-
+				<oeb-numbered-pagination
+					*ngIf="(issuerResults.length >= 30 || currentPage == totalPages) && badgesDisplay != 'map'"
+					[totalProducts]="issuers.length"
+					[(page)]="currentPage"
+				>
 				</oeb-numbered-pagination>
 			</section>
 		</ng-template>

@@ -11,9 +11,9 @@ import { typedFormGroup } from '../../../common/util/typed-forms';
 import { RecipientBadgeCollection } from '../../models/recipient-badge-collection.model';
 
 @Component({
-    selector: 'recipient-badge-collection-edit-form',
-    templateUrl: './recipient-badge-collection-edit-form.component.html',
-    standalone: false
+	selector: 'recipient-badge-collection-edit-form',
+	templateUrl: './recipient-badge-collection-edit-form.component.html',
+	standalone: false,
 })
 export class RecipientBadgeCollectionEditFormComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	@Input() badgeCollection: RecipientBadgeCollection;

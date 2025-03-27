@@ -18,11 +18,11 @@ import { appearAnimation } from '../../../common/animations/animations';
 import { applySorting } from '../../util/sorting';
 
 @Component({
-    selector: 'app-badge-catalog',
-    templateUrl: './badge-catalog.component.html',
-    styleUrls: ['./badge-catalog.component.css'],
-    animations: [appearAnimation],
-    standalone: false
+	selector: 'app-badge-catalog',
+	templateUrl: './badge-catalog.component.html',
+	styleUrls: ['./badge-catalog.component.css'],
+	animations: [appearAnimation],
+	standalone: false,
 })
 export class BadgeCatalogComponent extends BaseRoutableComponent implements OnInit {
 	readonly issuerPlaceholderSrc = preloadImageURL('../../../../breakdown/static/images/placeholderavatar-issuer.svg');
@@ -60,7 +60,7 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 	nextLink: string;
 	previousLink: string;
 
-	sortOption: string | null = null; 
+	sortOption: string | null = null;
 
 	get theme() {
 		return this.configService.theme;
@@ -119,11 +119,10 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 
 	set currentPage(value: number) {
 		if (this._currentPage !== value) {
-		  this._currentPage = value;
-		  this.updatePaginatedResults();
+			this._currentPage = value;
+			this.updatePaginatedResults();
 		}
-	  }
-
+	}
 
 	groups = [this.translate.instant('Badge.category'), this.translate.instant('Badge.issuer'), '---'];
 	categoryOptions: { [key in BadgeClassCategory | 'noCategory']: string } = {
@@ -162,8 +161,7 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 						.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
 
 					this.totalPages = Math.ceil(this.badges.length / this.badgesPerPage);
-					this.updatePaginatedResults()
-
+					this.updatePaginatedResults();
 
 					this.badges.forEach((badge) => {
 						this.tags = this.tags.concat(badge.tags);
@@ -174,12 +172,12 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 					// this.tags = sortUnique(this.tags);
 					this.tags = this.tags.filter((value, index, array) => array.indexOf(value) === index);
 					this.tags.sort();
-					this.tags.forEach(t => {
+					this.tags.forEach((t) => {
 						this.tagsOptions.push({
-							'label': t,
-							'value': t,
-						})
-					})
+							label: t,
+							value: t,
+						});
+					});
 					// this.issuers = sortUnique(this.issuers);
 					this.issuers = this.issuers.filter((value, index, array) => array.indexOf(value) === index);
 					// this.updateResults();
@@ -210,13 +208,13 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		});
 
 		this.tagsControl.valueChanges.subscribe(() => {
-			this.updatePaginatedResults()
+			this.updatePaginatedResults();
 			// this.updateResults();
 		});
 
 		this.sortControl.valueChanges.subscribe((value) => {
 			this.sortOption = value;
-			this.updatePaginatedResults(); 
+			this.updatePaginatedResults();
 		});
 	}
 	prepareTexts() {
@@ -298,7 +296,10 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		this.badges
 			.filter(this.badgeMatcher(this.searchQuery))
 			// .filter((badge) => !this.tagsControl.value?.length || this.tagsControl.value.every(tag => badge.tags.includes(tag))) // badges have to match all tags
-			.filter((badge) => !this.tagsControl.value?.length || this.tagsControl.value.some(tag => badge.tags.includes(tag))) // badges have to match at least one tag
+			.filter(
+				(badge) =>
+					!this.tagsControl.value?.length || this.tagsControl.value.some((tag) => badge.tags.includes(tag)),
+			) // badges have to match at least one tag
 			.filter((i) => !i.apiModel.source_url)
 			.forEach((item) => {
 				that.badgeResults.push(item);
@@ -314,10 +315,10 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		const badgeResultsByIssuerLocal = {};
 		this.badgeResultsByCategory = [];
 		const badgeResultsByCategoryLocal = {};
-	
+
 		const addBadgeToResultsByIssuer = function (item) {
 			let issuerResults = badgeResultsByIssuerLocal[item.issuerName];
-	
+
 			if (!issuerResults) {
 				issuerResults = badgeResultsByIssuerLocal[item.issuerName] = new MatchingBadgeIssuer(
 					item.issuerName,
@@ -325,18 +326,18 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 				);
 				that.badgeResultsByIssuer.push(issuerResults);
 			}
-	
+
 			issuerResults.addBadge(item);
 			return true;
 		};
-	
+
 		const addBadgeToResultsByCategory = function (item) {
 			let itemCategory =
 				item.extension && item.extension['extensions:CategoryExtension']
 					? item.extension['extensions:CategoryExtension'].Category
 					: 'noCategory';
 			let categoryResults = badgeResultsByCategoryLocal[itemCategory];
-	
+
 			if (!categoryResults) {
 				categoryResults = badgeResultsByCategoryLocal[itemCategory] = new MatchingBadgeCategory(
 					itemCategory,
@@ -344,15 +345,15 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 				);
 				that.badgeResultsByCategory.push(categoryResults);
 			}
-	
+
 			categoryResults.addBadge(item);
 			return true;
 		};
-	
+
 		let filteredBadges = this.badges
 			.filter(this.badgeMatcher(this.searchQuery))
 			.filter(
-				(badge) => 
+				(badge) =>
 					!this.tagsControl.value?.length || this.tagsControl.value.some((tag) => badge.tags.includes(tag)),
 			) // Matches at least one tag
 			.filter((i) => !i.apiModel.source_url);
@@ -364,15 +365,14 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		this.totalPages = Math.ceil(filteredBadges.length / this.badgesPerPage);
 		const start = (this.currentPage - 1) * this.badgesPerPage;
 		const end = start + this.badgesPerPage;
-	
+
 		that.badgeResults = filteredBadges.slice(start, end);
-		
+
 		that.badgeResults.forEach((item) => {
 			addBadgeToResultsByIssuer(item);
 			addBadgeToResultsByCategory(item);
 		});
 	}
-	
 
 	// onPageChange(newPage: number) {
 	// 	if (newPage >= 1 && newPage <= this.totalPages) {
@@ -391,14 +391,13 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 
 	filterByTag(tag) {
 		this.selectedTag = this.selectedTag == tag ? null : tag;
-		this.updatePaginatedResults()
+		this.updatePaginatedResults();
 		// this.updateResults();
 	}
 
 	removeTag(tag) {
-		this.tagsControl.setValue(this.tagsControl.value.filter(t => t != tag));
+		this.tagsControl.setValue(this.tagsControl.value.filter((t) => t != tag));
 	}
-
 
 	private badgeMatcher(inputPattern: string): (badge) => boolean {
 		const patternStr = StringMatchingUtil.normalizeString(inputPattern);

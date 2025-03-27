@@ -32,7 +32,8 @@ import { Issuer } from '../../models/issuer.model';
 	providers: [BadgeRequestApiService, HlmDialogService, QrCodeApiService, TranslateService],
 	imports: [
 		HlmAccordionModule,
-		NgIcon, HlmIconModule,
+		NgIcon,
+		HlmIconModule,
 		TranslateModule,
 		BrnAccordionContentComponent,
 		RouterModule,

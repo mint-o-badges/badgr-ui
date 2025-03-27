@@ -33,7 +33,9 @@
 									class="tw-bg-white tw-rounded-[10px] tw-border-purple tw-border-solid tw-border tw-h-[90px] tw-p-4"
 								>
 									<div class="tw-whitespace-nowrap tw-flex tw-items-center tw-mb-2">
-										<ng-icon hlm class="tw-mr-2" size="sm" name="lucideHexagon" /><span hlmP size="sm"
+										<ng-icon hlm class="tw-mr-2" size="sm" name="lucideHexagon" /><span
+											hlmP
+											size="sm"
 											>Badges</span
 										>
 									</div>
@@ -74,7 +76,8 @@
 										[(ngModel)]="searchQuery"
 										hlmInput
 									/>
-									<ng-icon hlm
+									<ng-icon
+										hlm
 										name="lucideSearch"
 										class="tw-w-8 tw-h-8 tw-absolute tw-top-1/2 tw-right-2 -tw-translate-y-1/2 tw-pointer-events-none tw-text-purple"
 									></ng-icon>
@@ -175,9 +178,11 @@
 									class="tw-bg-white tw-rounded-[10px] tw-border-purple tw-border-solid tw-border tw-h-[90px] tw-p-4"
 								>
 									<div class="tw-whitespace-nowrap tw-flex tw-items-center tw-mb-2">
-										<ng-icon hlm class="tw-mr-2" size="sm" name="lucideClock" /><span hlmP size="sm">{{
-											'RecBadge.studyingTime' | translate
-										}}</span>
+										<ng-icon hlm class="tw-mr-2" size="sm" name="lucideClock" /><span
+											hlmP
+											size="sm"
+											>{{ 'RecBadge.studyingTime' | translate }}</span
+										>
 									</div>
 									<p hlmP class="tw-text-purple tw-font-bold" *ngIf="!!allBadges">
 										<span #countup2 [countUp]="totalStudyTime / 60">0</span>

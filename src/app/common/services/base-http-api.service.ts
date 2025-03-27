@@ -71,7 +71,7 @@ export abstract class BaseHttpApiService {
 				headers,
 				params: queryParams,
 				responseType: 'json',
-                withCredentials: useAuth && (requireAuth || this.sessionService.isLoggedIn)
+				withCredentials: useAuth && (requireAuth || this.sessionService.isLoggedIn),
 			}),
 		);
 	}
@@ -96,7 +96,7 @@ export abstract class BaseHttpApiService {
 				headers,
 				params: queryParams,
 				responseType: 'json',
-                withCredentials: useAuth && (requireAuth || this.sessionService.isLoggedIn)
+				withCredentials: useAuth && (requireAuth || this.sessionService.isLoggedIn),
 			}),
 		);
 	}
@@ -119,7 +119,7 @@ export abstract class BaseHttpApiService {
 				headers,
 				params: queryParams,
 				responseType: 'json',
-                withCredentials: true
+				withCredentials: true,
 			}),
 		);
 	}
@@ -141,7 +141,7 @@ export abstract class BaseHttpApiService {
 				headers,
 				params: queryParams,
 				responseType: 'json',
-                withCredentials: true,
+				withCredentials: true,
 				...(payload ? { body: JSON.stringify(payload) } : {}),
 			}),
 		);

@@ -16,7 +16,8 @@ import { provideIcons } from '@ng-icons/core';
 		OebDialogComponent,
 		HlmPDirective,
 		HlmH3Directive,
-		NgIcon, HlmIconDirective,
+		NgIcon,
+		HlmIconDirective,
 		OebButtonComponent,
 		TranslateModule,
 		NgIf,
@@ -47,13 +48,15 @@ import { provideIcons } from '@ng-icons/core';
 							class="tw-mt-4 tw-bg-blue-500 tw-text-white tw-px-4 tw-py-2 tw-rounded hover:tw-bg-blue-600 tw-flex tw-items-center tw-justify-center"
 							(click)="copyErrorMessage()"
 						>
-							<ng-icon hlm
+							<ng-icon
+								hlm
 								*ngIf="isCopied"
 								name="lucideCheck"
 								size="sm"
 								class="tw-inline-block tw-mr-2"
 							></ng-icon>
-							<ng-icon hlm
+							<ng-icon
+								hlm
 								*ngIf="!isCopied"
 								name="lucideClipboard"
 								size="sm"

@@ -20,8 +20,8 @@ import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcru
 import { IssuerStaffCreateDialogComponent } from '../issuer-staff-create-dialog/issuer-staff-create-dialog.component';
 
 @Component({
-    templateUrl: './issuer-staff.component.html',
-    standalone: false
+	templateUrl: './issuer-staff.component.html',
+	standalone: false,
 })
 export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	get issuerStaffRoleOptions() {

@@ -21,52 +21,47 @@ import { HlmPaginationPreviousComponent } from './hlm-pagination-previous.compon
 import { HlmPaginationDirective } from './hlm-pagination.directive';
 
 @Component({
-    selector: 'hlm-numbered-pagination',
-    template: `
+	selector: 'hlm-numbered-pagination',
+	template: `
 		<div class="tw-flex tw-items-center tw-justify-between tw-gap-2 tw-px-4 tw-py-2">
-
 			<nav hlmPagination>
 				<ul hlmPaginationContent>
 					@if (showEdges() && !isFirstPageActive()) {
-						<li hlmPaginationItem (click)="goToPrevious()">
-							<hlm-pagination-previous iconOnly="true" />
-						</li>
-					}
-
-					@for (page of pages(); track page) {
-						<li hlmPaginationItem>
-							@if (page === '...') {
-								<hlm-pagination-ellipsis />
-							} @else {
-								<a hlmPaginationLink [isActive]="currentPage() === page" (click)="currentPage.set(page)">
-									{{ page }}
-								</a>
-							}
-						</li>
-					}
-
-					@if (showEdges() && !isLastPageActive()) {
-						<li hlmPaginationItem (click)="goToNext()">
-							<hlm-pagination-next iconOnly="true" />
-						</li>
+					<li hlmPaginationItem (click)="goToPrevious()">
+						<hlm-pagination-previous iconOnly="true" />
+					</li>
+					} @for (page of pages(); track page) {
+					<li hlmPaginationItem>
+						@if (page === '...') {
+						<hlm-pagination-ellipsis />
+						} @else {
+						<a hlmPaginationLink [isActive]="currentPage() === page" (click)="currentPage.set(page)">
+							{{ page }}
+						</a>
+						}
+					</li>
+					} @if (showEdges() && !isLastPageActive()) {
+					<li hlmPaginationItem (click)="goToNext()">
+						<hlm-pagination-next iconOnly="true" />
+					</li>
 					}
 				</ul>
 			</nav>
 		</div>
 	`,
-    imports: [
-        FormsModule,
-        HlmPaginationDirective,
-        HlmPaginationContentDirective,
-        HlmPaginationItemDirective,
-        HlmPaginationPreviousComponent,
-        HlmPaginationNextComponent,
-        HlmPaginationLinkDirective,
-        HlmPaginationEllipsisComponent,
-        BrnSelectImports,
-        HlmSelectImports,
-    ],
-    changeDetection: ChangeDetectionStrategy.OnPush
+	imports: [
+		FormsModule,
+		HlmPaginationDirective,
+		HlmPaginationContentDirective,
+		HlmPaginationItemDirective,
+		HlmPaginationPreviousComponent,
+		HlmPaginationNextComponent,
+		HlmPaginationLinkDirective,
+		HlmPaginationEllipsisComponent,
+		BrnSelectImports,
+		HlmSelectImports,
+	],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HlmNumberedPaginationComponent {
 	/**

@@ -1,13 +1,13 @@
 import { AfterViewChecked, Component, ElementRef, Input, ViewChild } from '@angular/core';
 
 @Component({
-    selector: 'show-more',
-    host: {
-        class: 'showmore',
-        '[class.showmore-is-open]': 'isOpen',
-        '[class.showmore-is-loaded]': 'loaded',
-    },
-    template: `
+	selector: 'show-more',
+	host: {
+		class: 'showmore',
+		'[class.showmore-is-open]': 'isOpen',
+		'[class.showmore-is-loaded]': 'loaded',
+	},
+	template: `
 		<div #container class="showmore-x-container">
 			<div #content class="showmore-x-content">
 				<ng-content></ng-content>
@@ -18,7 +18,7 @@ import { AfterViewChecked, Component, ElementRef, Input, ViewChild } from '@angu
 			<div class="showmore-x-buttoninside">{{ isOpen ? 'Show Less' : 'Show More' }}</div>
 		</button>
 	`,
-    standalone: false
+	standalone: false,
 })
 export class ShowMore implements AfterViewChecked {
 	@Input()

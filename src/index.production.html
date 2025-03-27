@@ -6,7 +6,10 @@
 
 		<!-- Open Graph properties to improve SEO -->
 		<meta property="og:title" content="Open Educational Badges" />
-		<meta property="og:description" content="Open Educational Badges ist ein Gemeinschaftsprojekt und wird durch unterschiedliche Partner:innen ermöglicht. Unser Ziel ist es, ein Instrument zur standardisierten Dokumentation von Kompetenzen aufzubauen." />
+		<meta
+			property="og:description"
+			content="Open Educational Badges ist ein Gemeinschaftsprojekt und wird durch unterschiedliche Partner:innen ermöglicht. Unser Ziel ist es, ein Instrument zur standardisierten Dokumentation von Kompetenzen aufzubauen."
+		/>
 		<meta property="og:image" content="https://openbadges.education/assets/logos/Logo-Square.png" />
 
 		<base href="/" />
@@ -88,7 +91,11 @@
 		<script src="/assets/ace-builds/ace.js"></script>
 
 		<!-- Include umami tracking -->
-		<script defer src="https://umami.opensenselab.org/script.js" data-website-id="a46e7b01-b422-4ae7-8f9c-692ec65e78aa"></script>
+		<script
+			defer
+			src="https://umami.opensenselab.org/script.js"
+			data-website-id="a46e7b01-b422-4ae7-8f9c-692ec65e78aa"
+		></script>
 
 		<!-- It's commented out till we figure out if this is the best option to resvole 'marked is not defined' console error -->
 		<!-- To resolve 'marked is not defined' when relaoding create-badge page -->
@@ -126,25 +133,24 @@
 		<script>
 			window.REQUIRED_CODE_ERROR_MESSAGE = 'Wählen Sie bitte einen Ländervorwahl aus.';
 			window.LOCALE = 'de';
-			window.EMAIL_INVALID_MESSAGE = window.SMS_INVALID_MESSAGE = "Die eingegebenen Informationen sind nicht gültig. Bitte überprüfe das Feldformat und versuche es erneut.";
-		  
-			window.REQUIRED_ERROR_MESSAGE = "Dieses Feld darf nicht leer sein. ";
-		  
-			window.GENERIC_INVALID_MESSAGE = "Die eingegebenen Informationen sind nicht gültig. Bitte überprüfe das Feldformat und versuche es erneut.";
-		  
-		  
-		  
-		  
+			window.EMAIL_INVALID_MESSAGE = window.SMS_INVALID_MESSAGE =
+				'Die eingegebenen Informationen sind nicht gültig. Bitte überprüfe das Feldformat und versuche es erneut.';
+
+			window.REQUIRED_ERROR_MESSAGE = 'Dieses Feld darf nicht leer sein. ';
+
+			window.GENERIC_INVALID_MESSAGE =
+				'Die eingegebenen Informationen sind nicht gültig. Bitte überprüfe das Feldformat und versuche es erneut.';
+
 			window.translation = {
-			  common: {
-				selectedList: '{quantity} Liste ausgewählt',
-				selectedLists: '{quantity} Listen ausgewählt'
-			  }
+				common: {
+					selectedList: '{quantity} Liste ausgewählt',
+					selectedLists: '{quantity} Listen ausgewählt',
+				},
 			};
-		  
+
 			var AUTOHIDE = Boolean(0);
-		  </script>
-		  
-		  <script defer src="https://sibforms.com/forms/end-form/build/main.js"></script>
+		</script>
+
+		<script defer src="https://sibforms.com/forms/end-form/build/main.js"></script>
 	</footer>
 </html>

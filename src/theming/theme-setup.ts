@@ -13,7 +13,10 @@ export function initializeTheme(configService: AppConfigService) {
 		let hasSession = false;
 
 		try {
-			if (localStorage.getItem(EXPIRATION_DATE_STORAGE_KEY) || sessionStorage.getItem(EXPIRATION_DATE_STORAGE_KEY)) {
+			if (
+				localStorage.getItem(EXPIRATION_DATE_STORAGE_KEY) ||
+				sessionStorage.getItem(EXPIRATION_DATE_STORAGE_KEY)
+			) {
 				hasSession = true;
 			}
 		} catch (e) {}

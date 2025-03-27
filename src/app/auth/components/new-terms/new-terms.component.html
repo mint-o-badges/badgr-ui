@@ -1,23 +1,32 @@
 <div class="oeb page-padding">
-    <div class="tw-rounded-[20px] tw-p-10 tw-mt-10 tw-bg-green tw-flex tw-flex-col tw-justify-center tw-text-center">
-        <h1 class="tw-text-purple tw-text-[46px] tw-leading-[50px] tw-font-bold">
-            {{ 'TermsOfService.newTerms' | translate }}
-            <!-- Neue Nutzungsbedingungen -->
-        </h1> 
-        <p class="tw-text-3xl tw-text-oebblack tw-font-semibold tw-flex tw-flex-col tw-my-6">
-           <span>
-            Wir haben unsere <a [routerLink]="['/public/terms']" class="tw-text-purple" target="_blank"> Nutzungsbedingungen</a> überarbeitet.
-           </span>
-           <span>
-               Bitte bestätige, dass du sie gelesen hast und akzeptierst.
-           </span>
-        </p>
-        <oeb-checkbox class="tw-flex tw-justify-center" id="remember-me" name="remember-me" [(ngModel)]="confirmed"
-            [text]="'TermsOfService.iConfirm' | translate">
-        </oeb-checkbox>
-        <oeb-button (click)="sendConfirmation()" class="tw-mt-4" hlmBtn type="submit" [text]="'TermsOfService.sendConfirmation' | translate ">
-            
-        </oeb-button>
-    </div>
-
+	<div class="tw-rounded-[20px] tw-p-10 tw-mt-10 tw-bg-green tw-flex tw-flex-col tw-justify-center tw-text-center">
+		<h1 class="tw-text-purple tw-text-[46px] tw-leading-[50px] tw-font-bold">
+			{{ 'TermsOfService.newTerms' | translate }}
+			<!-- Neue Nutzungsbedingungen -->
+		</h1>
+		<p class="tw-text-3xl tw-text-oebblack tw-font-semibold tw-flex tw-flex-col tw-my-6">
+			<span>
+				Wir haben unsere
+				<a [routerLink]="['/public/terms']" class="tw-text-purple" target="_blank"> Nutzungsbedingungen</a>
+				überarbeitet.
+			</span>
+			<span> Bitte bestätige, dass du sie gelesen hast und akzeptierst. </span>
+		</p>
+		<oeb-checkbox
+			class="tw-flex tw-justify-center"
+			id="remember-me"
+			name="remember-me"
+			[(ngModel)]="confirmed"
+			[text]="'TermsOfService.iConfirm' | translate"
+		>
+		</oeb-checkbox>
+		<oeb-button
+			(click)="sendConfirmation()"
+			class="tw-mt-4"
+			hlmBtn
+			type="submit"
+			[text]="'TermsOfService.sendConfirmation' | translate"
+		>
+		</oeb-button>
+	</div>
 </div>

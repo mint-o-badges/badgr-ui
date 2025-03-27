@@ -29,9 +29,13 @@ import { LearningPathApiService } from '../../../common/services/learningpath-ap
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-    selector: 'recipient-earned-badge-detail',
-    template: `<bg-badgedetail [config]="config" [awaitPromises]="[badgesLoaded, learningPathsLoaded]" [badge]="badge"></bg-badgedetail>`,
-    standalone: false
+	selector: 'recipient-earned-badge-detail',
+	template: `<bg-badgedetail
+		[config]="config"
+		[awaitPromises]="[badgesLoaded, learningPathsLoaded]"
+		[badge]="badge"
+	></bg-badgedetail>`,
+	standalone: false,
 })
 export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	readonly issuerImagePlacholderUrl = preloadImageURL(
@@ -87,7 +91,7 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 		private configService: AppConfigService,
 		private externalToolsManager: ExternalToolsManager,
 		public queryParametersService: QueryParametersService,
-		private translate: TranslateService
+		private translate: TranslateService,
 	) {
 		super(router, route, loginService);
 
@@ -109,7 +113,7 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 					// 	action: () => this.shareBadge(),
 					// },
 					qrCodeButton: {
-						show: false
+						show: false,
 					},
 					menuitems: [
 						{
@@ -152,7 +156,9 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 					slug: this.badgeSlug,
 					issuedOn: this.badge.issueDate,
 					issuedTo: this.badge.recipientEmail,
-					category: this.translate.instant(`Badge.categories.${this.category['Category'] || 'participation'}`),
+					category: this.translate.instant(
+						`Badge.categories.${this.category['Category'] || 'participation'}`,
+					),
 					duration: this.badge.getExtension('extensions:StudyLoadExtension', {}).StudyLoad,
 					tags: this.badge.badgeClass.tags,
 					issuerName: this.badge.badgeClass.issuer.name,
@@ -168,14 +174,14 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 				};
 			})
 			.finally(() => {
-				this.learningPathsLoaded = this.learningPathApiService.getLearningPathsForBadgeClass(this.badge.badgeClass.slug).then(lp => {
-					this.learningPaths = lp;
-					this.config.learningPaths = lp
-				})
+				this.learningPathsLoaded = this.learningPathApiService
+					.getLearningPathsForBadgeClass(this.badge.badgeClass.slug)
+					.then((lp) => {
+						this.learningPaths = lp;
+						this.config.learningPaths = lp;
+					});
 			})
 			.catch((e) => this.messageService.reportAndThrowError('Failed to load your badges', e));
-
-
 
 		this.externalToolsManager.getToolLaunchpoints('earner_assertion_action').then((launchpoints) => {
 			this.launchpoints = launchpoints;

@@ -18,11 +18,11 @@ import { appearAnimation } from '../../../common/animations/animations';
 import { applySorting } from '../../util/sorting';
 
 @Component({
-    selector: 'app-issuer-catalog',
-    templateUrl: './issuer-catalog.component.html',
-    styleUrls: ['./issuer-catalog.component.css'],
-    animations: [appearAnimation],
-    standalone: false
+	selector: 'app-issuer-catalog',
+	templateUrl: './issuer-catalog.component.html',
+	styleUrls: ['./issuer-catalog.component.css'],
+	animations: [appearAnimation],
+	standalone: false,
 })
 export class IssuerCatalogComponent extends BaseRoutableComponent implements OnInit, AfterViewInit {
 	readonly issuerPlaceholderSrc = preloadImageURL('../../../../breakdown/static/images/placeholderavatar-issuer.svg');
@@ -65,7 +65,7 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 	set searchQuery(query) {
 		this._searchQuery = query;
 		// this.updateResults();
-		this.updatePaginatedResults()
+		this.updatePaginatedResults();
 	}
 
 	private _categoryFilter = '';
@@ -76,7 +76,7 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 	set categoryFilter(val: string) {
 		this._categoryFilter = val;
 		// this.updateResults();
-		this.updatePaginatedResults()
+		this.updatePaginatedResults();
 	}
 
 	private _currentPage = 1;
@@ -87,10 +87,10 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 
 	set currentPage(value: number) {
 		if (this._currentPage !== value) {
-		  this._currentPage = value;
-		  this.updatePaginatedResults();
+			this._currentPage = value;
+			this.updatePaginatedResults();
 		}
-	  }
+	}
 
 	get theme() {
 		return this.configService.theme;
@@ -104,8 +104,7 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 	nextLink: string;
 	previousLink: string;
 
-	sortOption: string | null = null; 
-
+	sortOption: string | null = null;
 
 	issuerKeys = {};
 	plural = {};
@@ -147,7 +146,7 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 						.filter((i) => i.apiModel.verified && i.ownerAcceptedTos && !i.apiModel.source_url)
 						.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
 					this.totalPages = Math.ceil(this.issuers.length / this.issuersPerPage);
-					this.updatePaginatedResults()	
+					this.updatePaginatedResults();
 					// this.issuerResults = this.issuers;
 					// this.issuerResults.sort((a, b) => a.name.localeCompare(b.name));
 					// if (this.mapObject)
@@ -174,10 +173,10 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 		this.translate.onLangChange.subscribe((event) => {
 			this.prepareTexts();
 		});
-		
+
 		this.sortControl.valueChanges.subscribe((value) => {
 			this.sortOption = value;
-			this.updatePaginatedResults(); 
+			this.updatePaginatedResults();
 		});
 	}
 
@@ -241,7 +240,6 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 		this.generateGeoJSON(this.issuerResults);
 	}
 
-
 	private updatePaginatedResults() {
 		let that = this;
 		// Clear Results
@@ -256,11 +254,11 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 
 		if (this.sortOption) {
 			applySorting(filteredIssuers, this.sortOption);
-		}	
+		}
 		this.totalPages = Math.ceil(filteredIssuers.length / this.issuersPerPage);
 		const start = (this.currentPage - 1) * this.issuersPerPage;
 		const end = start + this.issuersPerPage;
-	
+
 		that.issuerResults = filteredIssuers.slice(start, end);
 		// this.issuerResults = this.issuers
 		// 	.filter(MatchingAlgorithm.issuerMatcher(this.searchQuery))
@@ -268,7 +266,6 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 		// this.issuerResultsByCategory.forEach((r) => r.issuers.sort((a, b) => a.name.localeCompare(b.name)));
 		// this.generateGeoJSON(this.issuerResults);
 	}
-
 
 	generateGeoJSON(issuers) {
 		let featureCollection = [];

@@ -8,10 +8,10 @@ import { MessageService } from '../../../common/services/message.service';
 import { UserProfileApiService } from '../../../common/services/user-profile-api.service';
 
 @Component({
-    selector: 'import-modal',
-    templateUrl: './import-modal.component.html',
-    styleUrls: ['./import-modal.component.css'],
-    standalone: false
+	selector: 'import-modal',
+	templateUrl: './import-modal.component.html',
+	styleUrls: ['./import-modal.component.css'],
+	standalone: false,
 })
 export class ImportModalComponent extends BaseDialog implements OnInit {
 	@ViewChild('importModalDialog')
