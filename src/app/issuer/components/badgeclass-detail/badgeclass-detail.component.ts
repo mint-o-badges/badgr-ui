@@ -232,6 +232,16 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 							icon: 'lucidePencil',
 						},
 						{
+							title: 'Kopieren (diese Institution)',
+							action: () => { this.router.navigate(['/issuer/issuers', this.issuer.slug, 'badges', 'create'], { state: { 'copybadgeid' : this.badgeSlug } }); },
+							icon: 'lucideCopy',
+						},
+						{
+							title: 'Kopierstatus bearbeiten',
+							routerLink: ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'copypermissions'],
+							icon: 'lucideCopyX',
+						},
+						{
 							title: 'Löschen',
 							icon: 'lucideTrash2',
 							action: () => this.deleteBadge(),
@@ -261,7 +271,6 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 					this.config.headerButton = null;
 					this.config.qrCodeButton.show = false;
 				}
-				console.log(this.config);
 			},
 			(error) => {
 				this.messageService.reportLoadingError(

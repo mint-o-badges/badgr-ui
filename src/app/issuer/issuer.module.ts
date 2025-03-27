@@ -57,6 +57,7 @@ import { IssuerEditFormComponent } from './components/issuer-edit-form/issuer-ed
 import { Issuer } from './models/issuer.model';
 import { LearningPathEditComponent } from './components/learningpath-edit/learningpath-edit.component';
 import { BadgeClassSelectTypeComponent } from './components/badgeclass-select-type/badgeclass-select-type.component';
+import { BadgeClassEditCopyPermissionsComponent } from './components/badgeclass-edit-copypermissions/badgeclass-edit-copypermissions';
 
 const routes = [
 	/* Issuer */
@@ -129,6 +130,10 @@ const routes = [
 		component: BadgeClassEditComponent,
 	},
 	{
+		path: 'issuers/:issuerSlug/badges/:badgeSlug/copypermissions',
+		component: BadgeClassEditCopyPermissionsComponent,
+	},
+	{
 		path: 'issuers/:issuerSlug/badges/:badgeSlug/issue',
 		component: BadgeClassIssueComponent,
 	},
@@ -161,6 +166,7 @@ const routes = [
 		BadgeClassSelectTypeComponent,
 		BadgeClassCreateComponent,
 		BadgeClassEditComponent,
+		BadgeClassEditCopyPermissionsComponent,
 		BadgeClassEditFormComponent,
 		BadgeClassIssueComponent,
 		BadgeClassIssueQrComponent,

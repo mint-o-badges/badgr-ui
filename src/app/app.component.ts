@@ -30,6 +30,7 @@ import { ImportModalComponent } from './mozz-transition/components/import-modal/
 import { ExportPdfDialog } from './common/dialogs/export-pdf-dialog/export-pdf-dialog.component';
 import { CopyBadgeDialog } from './common/dialogs/copy-badge-dialog/copy-badge-dialog.component';
 import { ForkBadgeDialog } from './common/dialogs/fork-badge-dialog/fork-badge-dialog.component';
+import { SelectIssuerDialog } from './common/dialogs/select-issuer-dialog/select-issuer-dialog.component';
 import { LanguageService } from './common/services/language.service';
 import { TranslateService } from '@ngx-translate/core';
 import { MenuItem } from './common/components/badge-detail/badge-detail.component.types';
@@ -144,6 +145,9 @@ export class AppComponent implements OnInit, AfterViewInit {
 
 	@ViewChild('forkBadgeDialog')
 	private forkBadgeDialog: ForkBadgeDialog;
+
+	@ViewChild('selectIssuerDialog')
+	private selectIssuerDialog: SelectIssuerDialog;
 
 	@ViewChild('issuerLink')
 	private issuerLink: unknown;
@@ -335,6 +339,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 			this.nounprojectDialog,
 			this.copyBadgeDialog,
 			this.forkBadgeDialog,
+			this.selectIssuerDialog
 		);
 	}
 

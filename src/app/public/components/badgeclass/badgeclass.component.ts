@@ -1,5 +1,5 @@
 import { Component, Injector } from '@angular/core';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { preloadImageURL } from '../../../common/util/file-util';
 import { PublicApiService } from '../../services/public-api.service';
@@ -15,6 +15,13 @@ import { LearningPath } from '../../../issuer/models/learningpath.model';
 import { SessionService } from '../../../common/services/session.service';
 import { RecipientBadgeApiService } from '../../../recipient/services/recipient-badges-api.service';
 import { TranslateService } from '@ngx-translate/core';
+import { IssuerManager } from '../../../issuer/services/issuer-manager.service';
+import { CommonDialogsService } from '../../../common/services/common-dialogs.service';
+import { Issuer } from '../../../issuer/models/issuer.model';
+import { BadgeClassApiService } from '../../../issuer/services/badgeclass-api.service';
+import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
+import { BadgeClassManager } from '../../../issuer/services/badgeclass-manager.service';
+import { BadgeClass } from '../../../issuer/models/badgeclass.model';
 
 @Component({
 	template: `<bg-badgedetail [config]="config" [awaitPromises]="[badgeClass]">
@@ -62,6 +69,8 @@ export class PublicBadgeClassComponent {
 	userBadges: string[] = [];
 	loggedIn = false;
 	userBadgesLoaded: Promise<unknown>;
+	userIssuers: Issuer[] = [];
+	issuerBadge: BadgeClass = null;
 
 	constructor(
 		private injector: Injector,
@@ -71,6 +80,11 @@ export class PublicBadgeClassComponent {
 		private sessionService: SessionService,
 		private recipientBadgeApiService: RecipientBadgeApiService,
 		private translate: TranslateService,
+		protected issuerManager: IssuerManager,
+		protected dialogService: CommonDialogsService,
+		private router: Router,
+		protected badgeClassManager: BadgeClassManager,
+		protected userProfileManager: UserProfileManager,
 	) {
 		title.setTitle(`Badge Class - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 
@@ -105,6 +119,39 @@ export class PublicBadgeClassComponent {
 					crumbs: [{ title: 'Badges', routerLink: ['/catalog/badges'] }, { title: badge.name }],
 					learningPaths: this.learningPaths,
 				};
+
+				// wait for user profile, emails, issuer to check if user can copy
+				this.userProfileManager.userProfilePromise.then((profile) => {
+					profile.emails.loadedPromise.then(() => {
+						this.issuerManager.allIssuers$.subscribe((issuers) => {
+							this.userIssuers = issuers;
+							const canCopy = issuers.some((issuer) => issuer.canCreateBadge);
+							if (canCopy) {
+								// fetch real badge information to check if badge may be copied
+								const slug = badge.id.substring(badge.id.lastIndexOf('/') + 1);
+								// badgeClassApiService.getBadgeBySlug(slug).then(apiBadge => {
+								badgeClassManager.issuerBadgeById(slug).then((issuerBadge) => {
+									if (issuerBadge) {
+										this.issuerBadge = issuerBadge;
+										if (
+											issuerBadge.canCopy('others') ||
+											(issuerBadge.canCopy('issuer') &&
+												issuers.some((issuer) => issuer.url == issuerBadge.issuer))
+										) {
+											this.config = {
+												...this.config,
+												headerButton: {
+													title: this.translate.instant('Badge.copy'),
+													action: this.copyBadge.bind(this),
+												},
+											};
+										}
+									}
+								});
+							}
+						});
+					});
+				});
 			});
 
 			return badgeClass;
@@ -161,5 +208,23 @@ export class PublicBadgeClassComponent {
 
 	checkCompleted(lp: LearningPath): boolean {
 		return lp.completed_at != null;
+	}
+
+	copyBadge() {
+		if (this.userIssuers.length == 1) {
+			// copy
+			this.router.navigate(['/issuer/issuers', this.userIssuers[0].slug, 'badges', 'create'], {
+				state: { copybadgeid: this.badgeClass.id },
+			});
+		} else if (this.userIssuers.length > 1) {
+			// select issuer
+			this.dialogService.selectIssuerDialog.openDialog().then((issuer: Issuer | void) => {
+				if (issuer) {
+					this.router.navigate(['/issuer/issuers', issuer.slug, 'badges', 'create'], {
+						state: { copybadgeid: this.issuerBadge.slug },
+					});
+				}
+			});
+		}
 	}
 }

@@ -2,6 +2,7 @@ import {
 	ApiBadgeClass,
 	ApiBadgeClassAlignment,
 	ApiBadgeClassExpiration,
+	BadgeClassCopyPermissions,
 	BadgeClassExpiresDuration,
 	BadgeClassRef,
 	BadgeClassUrl,
@@ -148,6 +149,17 @@ export class BadgeClass extends ManagedEntity<ApiBadgeClass, BadgeClassRef> {
 	}
 	set alignments(alignments: ApiBadgeClassAlignment[]) {
 		this.apiModel.alignment = alignments;
+	}
+
+	get copyPermissions(): BadgeClassCopyPermissions[] {
+		return this.apiModel.copy_permissions;
+	}
+	set copyPermissions(permissions: BadgeClassCopyPermissions[]) {
+		this.apiModel.copy_permissions = permissions;
+	}
+
+	canCopy(key: BadgeClassCopyPermissions) {
+		return this.copyPermissions.indexOf(key) !== -1;
 	}
 
 	get issuer() {

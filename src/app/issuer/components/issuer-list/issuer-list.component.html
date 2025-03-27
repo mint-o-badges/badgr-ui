@@ -7,7 +7,11 @@
 				<h1 hlmH1 class="tw-text-purple oeb-standard-padding-bottom tw-font-bold">
 					{{ 'NavItems.myInstitutions' | translate }}
 				</h1>
-				<p hlmP size="lg" class="tw-pb-3" [innerHTML]="'Issuer.myInstitutionsText' | translate"></p>
+				<p hlmP size="lg" class="tw-pb-3">
+					<span [innerHTML]="'Issuer.myInstitutionsText' | translate"></span>
+					<span [innerHTML]="'Issuer.copyBadgesOfOtherIssuers' | translate"></span>
+				</p>
+
 				<p hlmP size="lg" class="tw-pb-3" [innerHTML]="'Issuer.myLearningPathText' | translate"></p>
 			</div>
 			<div class="tw-border-purple tw-border tw-rounded-[20px] tw-text-right">

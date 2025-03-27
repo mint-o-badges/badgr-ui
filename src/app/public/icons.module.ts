@@ -37,6 +37,8 @@ import {
 	lucideFileCode,
 	lucideX,
 	lucideInfo,
+	lucideCopy,
+	lucideCopyX,
 } from '@ng-icons/lucide';
 
 @NgModule({
@@ -78,6 +80,8 @@ import {
 			lucideFileCode,
 			lucideX,
 			lucideInfo,
+			lucideCopy,
+			lucideCopyX,
 		}),
 	],
 })
