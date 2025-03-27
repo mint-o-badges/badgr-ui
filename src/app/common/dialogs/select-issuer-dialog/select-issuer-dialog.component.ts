@@ -15,6 +15,7 @@ import { BaseDialog } from '../base-dialog';
 	selector: 'select-issuer-dialog',
 	templateUrl: 'select-issuer-dialog.component.html',
 	styleUrls: ['./select-issuer-dialog.component.css'],
+	standalone: false,
 })
 export class SelectIssuerDialog extends BaseDialog {
 	Array = Array;

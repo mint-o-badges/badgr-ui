@@ -48,7 +48,6 @@ import { MenuItem } from './common/components/badge-detail/badge-detail.componen
 	templateUrl: './app.component.html',
 	styleUrls: ['./app.component.scss'],
 	standalone: false,
-	standalone: false,
 })
 export class AppComponent implements OnInit, AfterViewInit {
 	/**

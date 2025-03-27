@@ -14,12 +14,9 @@ import { NgClass, NgIf } from '@angular/common';
 	imports: [
 		BrnDialogTriggerDirective,
 		BrnDialogContentDirective,
-		HlmDialogComponent,
-		HlmDialogContentComponent,
 		HlmDialogHeaderComponent,
 		HlmDialogFooterComponent,
 		HlmDialogDescriptionDirective,
-		HlmInputDirective,
 		HlmButtonDirective,
 		NgIf,
 		NgClass,

@@ -1,5 +1,5 @@
 import { Component, inject, Input, TemplateRef } from '@angular/core';
-import { BrnDialogRef, injectBrnDialogContext } from '@spartan-ng/ui-dialog-brain';
+import { BrnDialogRef, injectBrnDialogContext } from '@spartan-ng/brain/dialog';
 import { HlmDialogFooterComponent, HlmDialogHeaderComponent } from './spartan/ui-dialog-helm/src';
 import { HlmButtonDirective } from './spartan/ui-button-helm/src';
 import { CommonModule } from '@angular/common';

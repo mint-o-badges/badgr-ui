@@ -279,6 +279,7 @@ import striptags from 'striptags';
 import { OebSpinnerComponent } from './oeb-spinner.component';
 import { BadgeInstanceBatchAssertion } from '../issuer/models/badgeinstance-api.model';
 import { provideIcons } from '@ng-icons/core';
+import { I18nPluralPipe } from '@angular/common';
 
 export type Payment = {
 	id: string;

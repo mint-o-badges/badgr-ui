@@ -22,24 +22,22 @@ import { BadgeClassCopyPermissions } from '../../models/badgeclass-api.model';
 @Component({
 	templateUrl: 'badgeclass-edit-copypermissions.component.html',
 	styleUrl: './badgeclass-edit-copypermissions.component.css',
+	standalone: false,
 })
 export class BadgeClassEditCopyPermissionsComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	issuerSlug: string;
 	badgeSlug: string;
-	category: string
+	category: string;
 	issuer: Issuer;
 	issuerLoaded: Promise<unknown>;
 	badgeClass: BadgeClass;
 	badgeClassLoaded: Promise<unknown>;
 	breadcrumbLinkEntries: LinkEntry[] = [];
 
-
 	@ViewChild('formElem')
 	formElem: ElementRef<HTMLFormElement>;
 
-	badgeClassForm = typedFormGroup()
-		.addControl('copy_permissions_allow_others', false)
-	;
+	badgeClassForm = typedFormGroup().addControl('copy_permissions_allow_others', false);
 
 	savePromise: Promise<BadgeClass> | null = null;
 
@@ -110,12 +108,14 @@ export class BadgeClassEditCopyPermissionsComponent extends BaseAuthenticatedRou
 	async onSubmit() {
 		const formState = this.badgeClassForm.value;
 		const copy_permissions: BadgeClassCopyPermissions[] = ['issuer'];
-		if (formState.copy_permissions_allow_others) { copy_permissions.push('others'); }
+		if (formState.copy_permissions_allow_others) {
+			copy_permissions.push('others');
+		}
 		this.badgeClass.copyPermissions = copy_permissions;
 		try {
 			this.savePromise = this.badgeClass.save();
 			await this.savePromise;
-		} catch(e) {
+		} catch (e) {
 			this.messageService.reportAndThrowError(
 				`Unable to save Badge Class: ${BadgrApiFailure.from(e).firstMessage}`,
 				e,
