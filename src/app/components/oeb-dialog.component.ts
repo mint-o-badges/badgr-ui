@@ -36,7 +36,7 @@ import { NgClass, NgIf } from '@angular/common';
 			class="tw-px-4 tw-py-6"
 			[ngClass]="{
 				' tw-border-red': variant === 'danger',
-				' tw-border-link': variant === 'info',
+				' tw-border-link tw-rounded-[20px] tw-border-4 tw-bg-white tw-border-solid': variant === 'info',
 				'tw-border-purple': variant === 'default'
 			}"
 		>
