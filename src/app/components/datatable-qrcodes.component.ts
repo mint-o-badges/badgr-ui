@@ -272,7 +272,7 @@ import { Router } from '@angular/router';
 import { DangerDialogComponent } from '../common/dialogs/oeb-dialogs/danger-dialog.component';
 import { TranslateService } from '@ngx-translate/core';
 import { ApiRequestedBadge } from '../issuer/models/badgerequest-api.model';
-import { I18nPluralPipe } from '@angular/common';
+
 import { HlmCommandInputWrapperComponent } from './spartan/ui-command-helm/src/lib/hlm-command-input-wrapper.component';
 import { OebButtonComponent } from './oeb-button.component';
 import striptags from 'striptags';
@@ -374,84 +374,84 @@ export type RequestedBadge = {
 		</div>
 
 		@if (loading) {
-		<oeb-spinner [text]="'General.pleaseWait' | translate" />
+			<oeb-spinner [text]="'General.pleaseWait' | translate" />
 		} @else {
-		<brn-table
-			hlm
-			stickyHeader
-			class="tw-mt-4 tw-block tw-min-h-[335px] tw-max-h-[680px] tw-overflow-x-hidden tw-overflow-y-auto tw-rounded-md"
-			[dataSource]="_filteredSortedPayments()"
-			[displayedColumns]="_allDisplayedColumns()"
-			[trackBy]="_trackBy"
-			[headerRowClasses]="headerRowStyle"
-			[bodyRowClasses]="bodyRowStyle"
-		>
-			<brn-column-def name="select" class="tw-w-12">
-				<hlm-th *brnHeaderDef>
-					<hlm-checkbox [checked]="_checkboxState()" (changed)="handleHeaderCheckboxChange()" />
-				</hlm-th>
-				<hlm-td *brnCellDef="let element">
-					<hlm-checkbox [checked]="_isPaymentSelected(element)" (changed)="togglePayment(element)" />
-				</hlm-td>
-			</brn-column-def>
-			<brn-column-def name="email" class="tw-w-40">
-				<hlm-th class="tw-text-white" truncate *brnHeaderDef>ID</hlm-th>
-				<hlm-td class="tw-text-white" *brnCellDef="let element">
-					<span class="tw-text-oebblack">{{ element.email }}</span>
-				</hlm-td>
-			</brn-column-def>
-			<brn-column-def name="requestedOn" class="!tw-flex-1 tw-justify-center">
-				<hlm-th *brnHeaderDef>
-					<button hlmBtn size="sm" variant="ghost" (click)="handleEmailSortChange()">
-						<span class="tw-text-white tw-text-sm">{{ 'Badge.requestedOn' | translate }}</span>
-						<ng-icon hlm class="tw-ml-3 tw-text-white" size="sm" name="lucideArrowUpDown" />
-					</button>
-				</hlm-th>
-				<hlm-td class="!tw-flex-1 tw-justify-center" *brnCellDef="let element">
-					<span class="tw-text-oebblack">{{ element.requestedOn | date: 'dd.MM.yyyy' }}</span>
-				</hlm-td>
-			</brn-column-def>
-			<brn-column-def name="amount" class="tw-justify-end tw-w-20">
-				<hlm-th class="tw-text-white" *brnHeaderDef></hlm-th>
-				<hlm-td class="tw-font-medium tw-tabular-nums" *brnCellDef="let element">
-					<button (click)="openDangerDialog(element)">
-						<ng-icon hlm class="tw-ml-3 tw-text-oebblack" size="sm" name="lucideTrash2" />
-					</button>
-				</hlm-td>
-			</brn-column-def>
-			<brn-column-def name="actions" class="tw-w-16">
-				<hlm-th *brnHeaderDef></hlm-th>
-				<hlm-td *brnCellDef="let element">
-					<button
-						hlmBtn
-						variant="ghost"
-						class="tw-h-6 tw-w-6 tw-p-0.5"
-						align="end"
-						[brnMenuTriggerFor]="menu"
-					>
-						<ng-icon hlm class="tw-w-4 tw-h-4" name="lucideEllipsis" />
-					</button>
+			<brn-table
+				hlm
+				stickyHeader
+				class="tw-mt-4 tw-block tw-min-h-[335px] tw-max-h-[680px] tw-overflow-x-hidden tw-overflow-y-auto tw-rounded-md"
+				[dataSource]="_filteredSortedPayments()"
+				[displayedColumns]="_allDisplayedColumns()"
+				[trackBy]="_trackBy"
+				[headerRowClasses]="headerRowStyle"
+				[bodyRowClasses]="bodyRowStyle"
+			>
+				<brn-column-def name="select" class="tw-w-12">
+					<hlm-th *brnHeaderDef>
+						<hlm-checkbox [checked]="_checkboxState()" (changed)="handleHeaderCheckboxChange()" />
+					</hlm-th>
+					<hlm-td *brnCellDef="let element">
+						<hlm-checkbox [checked]="_isPaymentSelected(element)" (changed)="togglePayment(element)" />
+					</hlm-td>
+				</brn-column-def>
+				<brn-column-def name="email" class="tw-w-40">
+					<hlm-th class="tw-text-white" truncate *brnHeaderDef>ID</hlm-th>
+					<hlm-td class="tw-text-white" *brnCellDef="let element">
+						<span class="tw-text-oebblack">{{ element.email }}</span>
+					</hlm-td>
+				</brn-column-def>
+				<brn-column-def name="requestedOn" class="!tw-flex-1 tw-justify-center">
+					<hlm-th *brnHeaderDef>
+						<button hlmBtn size="sm" variant="ghost" (click)="handleEmailSortChange()">
+							<span class="tw-text-white tw-text-sm">{{ 'Badge.requestedOn' | translate }}</span>
+							<ng-icon hlm class="tw-ml-3 tw-text-white" size="sm" name="lucideArrowUpDown" />
+						</button>
+					</hlm-th>
+					<hlm-td class="!tw-flex-1 tw-justify-center" *brnCellDef="let element">
+						<span class="tw-text-oebblack">{{ element.requestedOn | date: 'dd.MM.yyyy' }}</span>
+					</hlm-td>
+				</brn-column-def>
+				<brn-column-def name="amount" class="tw-justify-end tw-w-20">
+					<hlm-th class="tw-text-white" *brnHeaderDef></hlm-th>
+					<hlm-td class="tw-font-medium tw-tabular-nums" *brnCellDef="let element">
+						<button (click)="openDangerDialog(element)">
+							<ng-icon hlm class="tw-ml-3 tw-text-oebblack" size="sm" name="lucideTrash2" />
+						</button>
+					</hlm-td>
+				</brn-column-def>
+				<brn-column-def name="actions" class="tw-w-16">
+					<hlm-th *brnHeaderDef></hlm-th>
+					<hlm-td *brnCellDef="let element">
+						<button
+							hlmBtn
+							variant="ghost"
+							class="tw-h-6 tw-w-6 tw-p-0.5"
+							align="end"
+							[brnMenuTriggerFor]="menu"
+						>
+							<ng-icon hlm class="tw-w-4 tw-h-4" name="lucideEllipsis" />
+						</button>
 
-					<ng-template #menu>
-						<hlm-menu>
-							<hlm-menu-label>Actions</hlm-menu-label>
-							<hlm-menu-separator />
-							<hlm-menu-group>
-								<button hlmMenuItem>Copy payment ID</button>
-							</hlm-menu-group>
-							<hlm-menu-separator />
-							<hlm-menu-group>
-								<button hlmMenuItem>View customer</button>
-								<button hlmMenuItem>View payment details</button>
-							</hlm-menu-group>
-						</hlm-menu>
-					</ng-template>
-				</hlm-td>
-			</brn-column-def>
-			<div class="tw-flex tw-items-center tw-justify-center tw-p-20 tw-text-muted-foreground" brnNoDataRow>
-				No data
-			</div>
-		</brn-table>
+						<ng-template #menu>
+							<hlm-menu>
+								<hlm-menu-label>Actions</hlm-menu-label>
+								<hlm-menu-separator />
+								<hlm-menu-group>
+									<button hlmMenuItem>Copy payment ID</button>
+								</hlm-menu-group>
+								<hlm-menu-separator />
+								<hlm-menu-group>
+									<button hlmMenuItem>View customer</button>
+									<button hlmMenuItem>View payment details</button>
+								</hlm-menu-group>
+							</hlm-menu>
+						</ng-template>
+					</hlm-td>
+				</brn-column-def>
+				<div class="tw-flex tw-items-center tw-justify-center tw-p-20 tw-text-muted-foreground" brnNoDataRow>
+					No data
+				</div>
+			</brn-table>
 		}
 
 		<oeb-button
@@ -704,7 +704,7 @@ export class QrCodeDatatableComponent {
 							type: ['Extension', 'extensions:RecipientProfile'],
 							name: striptags(name),
 						},
-				  }
+					}
 				: undefined;
 
 			assertion = {

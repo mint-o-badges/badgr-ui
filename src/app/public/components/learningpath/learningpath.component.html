@@ -6,8 +6,8 @@
 		<div class="oeb-section tw-bg-lightpurple">
 			<div class="page-padding tw-flex tw-justify-between tw-flex-wrap tw-gap-8">
 				<div class="tw-grow">
-					<div class="oeb-headline-container">
-						<h1 class="tw-text-oebblack tw-font-extrabold" hlmH1>{{ learningPath.name }}</h1>
+					<div class="oeb-headline-container tw-max-w-[370px] md:tw-max-w-[770px]">
+						<h1 class="tw-text-oebblack tw-font-extrabold tw-break-words" hlmH1>{{ learningPath.name }}</h1>
 						<p size="sm" hlmP class="tw-text-oebblack tw-mt-2">
 							{{ 'LearningPath.lpFrom' | translate }}
 							<a hlmA [routerLink]="['/public/issuers/', issuer.slug]">{{ issuer.name }}</a>
@@ -76,7 +76,7 @@
 		<div class="page-padding">
 			<div class="md:tw-grid md:tw-gap-8 md:tw-grid-cols-5">
 				<div class="tw-col-span-3">
-					<div class="oeb-section-sm">
+					<div class="oeb-section-sm oeb-break-words">
 						<h3 hlmH3 class="tw-text-oebblack tw-font-bold">{{ 'LearningPath.desc' | translate }}</h3>
 						<p hlmP>{{ learningPath.description }}</p>
 					</div>

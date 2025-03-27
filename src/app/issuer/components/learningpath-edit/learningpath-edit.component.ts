@@ -53,8 +53,8 @@ export class LearningPathEditComponent extends BaseAuthenticatedRoutableComponen
 		private translate: TranslateService,
 		protected badgeInstanceManager: BadgeInstanceManager,
 		protected learningPathManager: LearningPathManager,
-	) // protected title: Title,
-	{
+		// protected title: Title,
+	) {
 		super(router, route, loginService);
 		this.issuerSlug = this.route.snapshot.params['issuerSlug'];
 		this.lpSlug = this.route.snapshot.params['learningPathSlug'];

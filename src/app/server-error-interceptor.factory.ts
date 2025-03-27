@@ -10,6 +10,6 @@ export function serverErrorInterceptorFactory() {
 					useClass: ServerErrorInterceptor,
 					multi: true,
 				},
-		  ]
+			]
 		: [];
 }

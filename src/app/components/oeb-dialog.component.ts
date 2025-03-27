@@ -2,14 +2,11 @@ import { Component, Input } from '@angular/core';
 import { HlmButtonDirective } from './spartan/ui-button-helm/src';
 import { BrnDialogContentDirective, BrnDialogTriggerDirective } from '@spartan-ng/brain/dialog';
 import {
-	HlmDialogComponent,
-	HlmDialogContentComponent,
 	HlmDialogDescriptionDirective,
 	HlmDialogFooterComponent,
 	HlmDialogHeaderComponent,
-	HlmDialogTitleDirective,
 } from './spartan/ui-dialog-helm/src';
-import { HlmInputDirective } from './spartan/ui-input-helm/src';
+
 import { NgClass, NgIf } from '@angular/common';
 
 @Component({
@@ -21,7 +18,6 @@ import { NgClass, NgIf } from '@angular/common';
 		HlmDialogContentComponent,
 		HlmDialogHeaderComponent,
 		HlmDialogFooterComponent,
-		HlmDialogTitleDirective,
 		HlmDialogDescriptionDirective,
 		HlmInputDirective,
 		HlmButtonDirective,
@@ -32,8 +28,9 @@ import { NgClass, NgIf } from '@angular/common';
 		<div
 			class="tw-px-4 tw-py-6"
 			[ngClass]="{
-				' tw-border-red tw-border-solid tw-rounded-[20px] tw-border-4 tw-bg-white': variant === 'danger',
-				' tw-border-link tw-border-solid tw-rounded-[20px] tw-border-4 tw-bg-white': variant === 'info'
+				' tw-border-red': variant === 'danger',
+				' tw-border-link': variant === 'info',
+				'tw-border-purple': variant === 'default'
 			}"
 		>
 			<hlm-dialog-header *ngIf="title">
@@ -52,5 +49,5 @@ export class OebDialogComponent {
 	@Input() subtitle: string;
 	@Input() type: string;
 	@Input() footer: boolean = false;
-	@Input() variant: string;
+	@Input() variant: string = 'default';
 }

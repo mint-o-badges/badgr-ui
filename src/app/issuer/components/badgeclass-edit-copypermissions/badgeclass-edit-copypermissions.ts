@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
@@ -16,28 +16,32 @@ import { AppConfigService } from '../../../common/app-config.service';
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { BadgeClassManager } from '../../services/badgeclass-manager.service';
 import { TranslateService } from '@ngx-translate/core';
+import { typedFormGroup } from '../../../common/util/typed-forms';
+import { BadgeClassCopyPermissions } from '../../models/badgeclass-api.model';
 
 @Component({
-	templateUrl: 'badgeclass-create.component.html',
-	standalone: false,
+	templateUrl: 'badgeclass-edit-copypermissions.component.html',
+	styleUrl: './badgeclass-edit-copypermissions.component.css',
 })
-export class BadgeClassCreateComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
+export class BadgeClassEditCopyPermissionsComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	issuerSlug: string;
-	category: string;
+	badgeSlug: string;
+	category: string
 	issuer: Issuer;
 	issuerLoaded: Promise<unknown>;
+	badgeClass: BadgeClass;
+	badgeClassLoaded: Promise<unknown>;
 	breadcrumbLinkEntries: LinkEntry[] = [];
-	scrolled = false;
-	copiedBadgeClass: BadgeClass = null;
-	/**
-	 * Indicates wether the "copiedBadgeClass" is a forked copy, or a 1:1 copy
-	 */
-	isForked = false;
 
-	badgesLoaded: Promise<unknown>;
-	badges: BadgeClass[] = null;
 
-	@ViewChild('badgeimage') badgeImage;
+	@ViewChild('formElem')
+	formElem: ElementRef<HTMLFormElement>;
+
+	badgeClassForm = typedFormGroup()
+		.addControl('copy_permissions_allow_others', false)
+	;
+
+	savePromise: Promise<BadgeClass> | null = null;
 
 	constructor(
 		sessionService: SessionService,
@@ -47,42 +51,41 @@ export class BadgeClassCreateComponent extends BaseAuthenticatedRoutableComponen
 		protected title: Title,
 		protected messageService: MessageService,
 		protected issuerManager: IssuerManager,
-		protected badgeClassService: BadgeClassManager,
+		protected badgeManager: BadgeClassManager,
 		private configService: AppConfigService,
 		protected dialogService: CommonDialogsService,
 		private translate: TranslateService,
 	) {
 		super(router, route, sessionService);
-		this.translate.get('Issuer.createBadge').subscribe((str) => {
+		this.translate.get('Badge.copyBadgeHeadline').subscribe((str) => {
 			title.setTitle(`${str} - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 		});
 
 		this.issuerSlug = this.route.snapshot.params['issuerSlug'];
-		this.category = this.route.snapshot.params['category'];
+		this.badgeSlug = this.route.snapshot.params['badgeSlug'];
 
-		const breadcrumbPromises: Promise<unknown>[] = [];
+		this.badgeClassLoaded = badgeManager.badgeByIssuerSlugAndSlug(this.issuerSlug, this.badgeSlug).then(
+			(badgeClass) => {
+				this.badgeClass = badgeClass;
+				this.badgeClassForm.setValue({
+					copy_permissions_allow_others: badgeClass.canCopy('others'),
+				});
+			},
+			(error) =>
+				this.messageService.reportLoadingError(
+					`Cannot find badge ${this.issuerSlug} / ${this.badgeSlug}`,
+					error,
+				),
+		);
+
 		this.issuerLoaded = this.issuerManager.issuerBySlug(this.issuerSlug).then((issuer) => {
 			this.issuer = issuer;
-		});
-		breadcrumbPromises.push(this.issuerLoaded);
-
-		const state = this.router.getCurrentNavigation().extras.state;
-		if (state && state.copybadgeid) {
-			breadcrumbPromises.push(
-				this.badgeClassService.issuerBadgeById(state.copybadgeid).then((badge) => {
-					this.category = 'competency';
-					this.copiedBadgeClass = badge;
-				})
-			)
-		}
-
-		Promise.all(breadcrumbPromises).then(() => {
 			this.breadcrumbLinkEntries = [
 				{ title: 'Issuers', routerLink: ['/issuer'] },
 				{ title: this.issuer.name, routerLink: ['/issuer/issuers', this.issuerSlug] },
-				{ title: this.copiedBadgeClass ? this.translate.instant('Badge.copyBadge') : this.translate.instant('Issuer.createBadge') },
+				{ title: this.translate.instant('Badge.copyBadgeHeadline') },
 			];
-		})
+		});
 	}
 
 	ngOnInit() {
@@ -99,41 +102,26 @@ export class BadgeClassCreateComponent extends BaseAuthenticatedRoutableComponen
 				),
 		);
 	}
-	creationCanceled() {
-		this.router.navigate(['issuer/issuers', this.issuerSlug]);
+
+	cancelClicked() {
+		this.router.navigate(['issuer/issuers', this.issuerSlug, 'badges', this.badgeClass.slug]);
 	}
 
-	@HostListener('window:scroll')
-	onWindowScroll() {
-		var top = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
-		this.scrolled = this.badgeImage && top > this.badgeImage.componentElem.nativeElement.offsetTop;
+	async onSubmit() {
+		const formState = this.badgeClassForm.value;
+		const copy_permissions: BadgeClassCopyPermissions[] = ['issuer'];
+		if (formState.copy_permissions_allow_others) { copy_permissions.push('others'); }
+		this.badgeClass.copyPermissions = copy_permissions;
+		try {
+			this.savePromise = this.badgeClass.save();
+			await this.savePromise;
+		} catch(e) {
+			this.messageService.reportAndThrowError(
+				`Unable to save Badge Class: ${BadgrApiFailure.from(e).firstMessage}`,
+				e,
+			);
+		}
+
+		this.cancelClicked();
 	}
-
-	// copyBadge() {
-	// 	this.dialogService.copyBadgeDialog
-	// 		.openDialog(this.badges)
-	// 		.then((data: BadgeClass | void) => {
-	// 			if (data) {
-	// 				this.copiedBadgeClass = data;
-	// 				this.isForked = false;
-	// 			}
-	// 		})
-	// 		.catch((error) => {
-	// 			this.messageService.reportAndThrowError('Failed to load badges to copy', error);
-	// 		});
-	// }
-
-	// forkBadge() {
-	// 	this.dialogService.forkBadgeDialog
-	// 		.openDialog(this.badges)
-	// 		.then((data: BadgeClass | void) => {
-	// 			if (data) {
-	// 				this.copiedBadgeClass = data;
-	// 				this.isForked = true;
-	// 			}
-	// 		})
-	// 		.catch((error) => {
-	// 			this.messageService.reportAndThrowError('Failed to load badges to fork', error);
-	// 		});
-	// }
 }

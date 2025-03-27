@@ -3,15 +3,10 @@ import { Component, Input, TemplateRef } from '@angular/core';
 import { BrnMenuTriggerDirective } from '@spartan-ng/brain/menu';
 import {
 	HlmMenuComponent,
-	HlmMenuGroupComponent,
 	HlmMenuItemDirective,
 	HlmMenuItemIconDirective,
-	HlmMenuItemSubIndicatorComponent,
 	HlmMenuItemVariants,
 	HlmMenuLabelComponent,
-	HlmMenuSeparatorComponent,
-	HlmMenuShortcutComponent,
-	HlmSubMenuComponent,
 } from './spartan/ui-menu-helm/src/index';
 import { NgIf, NgFor, NgTemplateOutlet } from '@angular/common';
 import type { MenuItem } from '../common/components/badge-detail/badge-detail.component.types';
@@ -24,14 +19,9 @@ import { SharedIconsModule } from '../public/icons.module';
 	imports: [
 		BrnMenuTriggerDirective,
 		HlmMenuComponent,
-		HlmSubMenuComponent,
 		HlmMenuItemDirective,
-		HlmMenuItemSubIndicatorComponent,
 		HlmMenuLabelComponent,
-		HlmMenuShortcutComponent,
-		HlmMenuSeparatorComponent,
 		HlmMenuItemIconDirective,
-		HlmMenuGroupComponent,
 		NgIf,
 		NgFor,
 		NgTemplateOutlet,

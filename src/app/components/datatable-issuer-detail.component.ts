@@ -27,7 +27,6 @@ import { provideIcons } from '@ng-icons/core';
 		CommonModule,
 		BadgrCommonModule,
 		TranslateModule,
-		BrnAccordionContentComponent,
 		RouterModule,
 		HlmInputDirective,
 		HlmLabelDirective,

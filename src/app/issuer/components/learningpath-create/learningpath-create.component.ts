@@ -41,8 +41,8 @@ export class LearningPathCreateComponent extends BaseAuthenticatedRoutableCompon
 		protected badgeClassService: BadgeClassManager,
 		private translate: TranslateService,
 		protected badgeInstanceManager: BadgeInstanceManager,
-	) // protected title: Title,
-	{
+		// protected title: Title,
+	) {
 		super(router, route, loginService);
 		this.issuerSlug = this.route.snapshot.params['issuerSlug'];
 

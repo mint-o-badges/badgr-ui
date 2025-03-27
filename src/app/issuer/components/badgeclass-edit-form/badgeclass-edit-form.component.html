@@ -4,14 +4,17 @@
 
 	<form [formGroup]="badgeClassForm.rawControl" #formElem (ngSubmit)="onSubmit()" novalidate>
 		<ng-container [formGroup]="badgeClassForm.rawControl">
-			<oeb-stepper [linear]="existingBadgeClass ? false : true" [initialStep]="existingBadgeClass ? 0 : 1">
+			<oeb-stepper
+				[linear]="existingBadgeClass ? false : true"
+				[initialStep]="existingBadgeClass || initialisedBadgeClass ? 0 : 1"
+			>
 				<oeb-step
 					label="Kategorie wählen"
 					[optional]="false"
 					[route]="['/issuer/issuers/' + issuer.slug + '/badges' + '/select']"
 					errorMessage="Bitte Kategorie wählen"
 					[completed]="true"
-					*ngIf="!existingBadgeClass"
+					*ngIf="!existingBadgeClass && !initialisedBadgeClass"
 				>
 				</oeb-step>
 
@@ -255,10 +258,10 @@
 							selectedKeywordCompetencies.length > 0 ||
 							badgeClassForm.controls.competencies.controls.length > 0) &&
 						badgeClassForm.controls.aiCompetencies.valid &&
-							badgeClassForm.controls.competencies.valid &&
-							badgeClassForm.controls.keywordCompetencies.valid &&
-							!badgeClassForm.hasError('competenceHoursMinutesZero') &&
-							!badgeClassForm.hasError('competencyExceedsBadgeDuration')
+						badgeClassForm.controls.competencies.valid &&
+						badgeClassForm.controls.keywordCompetencies.valid &&
+						!badgeClassForm.hasError('competenceHoursMinutesZero') &&
+						!badgeClassForm.hasError('competencyExceedsBadgeDuration')
 					"
 					[hasError]="
 						stepper?.selectedIndex == 2 &&
@@ -266,10 +269,10 @@
 							!selectedKeywordCompetencies.length &&
 							!badgeClassForm.controls.competencies.controls.length) ||
 							!badgeClassForm.controls.aiCompetencies.valid ||
-								!badgeClassForm.controls.competencies.valid ||
-								!badgeClassForm.controls.keywordCompetencies.valid ||
-								badgeClassForm.hasError('competenceHoursMinutesZero') ||
-								badgeClassForm.hasError('competencyExceedsBadgeDuration'))
+							!badgeClassForm.controls.competencies.valid ||
+							!badgeClassForm.controls.keywordCompetencies.valid ||
+							badgeClassForm.hasError('competenceHoursMinutesZero') ||
+							badgeClassForm.hasError('competencyExceedsBadgeDuration'))
 					"
 				>
 					<div class="section tw-text-oebblack tw-px-1 tw-mt-6" *ngIf="badgeCategory === 'competency'">
@@ -501,7 +504,7 @@
 												Ergebnissen gerne per
 												<a
 													class="tw-text-[var(--color-link)] tw-underline"
-													href="mailto:hallo@openbadges.education"
+													href="mailto:support@openbadges.education"
 													>E-Mail</a
 												>.
 												<a
@@ -1288,6 +1291,17 @@
 									></bg-formfield-text>
 								</div>  -->
 							</div>
+						</div>
+					</div>
+
+					<div class="section tw-text-oebblack tw-mt-6">
+						<h2 hlmH2 class="tw-font-bold">{{ 'Badge.copyBadgeHeadline' | translate }}</h2>
+						<p class="tw-text-purple tw-italic" [innerHTML]="'Badge.copyBadgeDescription' | translate"></p>
+						<div class="tw-mt-2 tw-mb-2">
+							<oeb-checkbox
+								[control]="badgeClassForm.rawControlMap.copy_permissions_allow_others"
+								[text]="'Badge.copyLabelOthers' | translate"
+							/>
 						</div>
 					</div>
 				</cdk-step>

@@ -31,6 +31,7 @@ import { MessageService } from '../../../common/services/message.service';
 import {
 	ApiBadgeClassForCreation,
 	BadgeClassCategory,
+	BadgeClassCopyPermissions,
 	BadgeClassExpiresDuration,
 	BadgeClassLevel,
 } from '../../models/badgeclass-api.model';
@@ -319,7 +320,9 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				.addControl('target_description', '')
 				.addControl('target_framework', '')
 				.addControl('target_code', ''),
-		);
+		)
+		.addControl('copy_permissions_allow_others', false);
+
 	@ViewChild('badgeStudio')
 	badgeStudio: BadgeStudioComponent;
 
@@ -483,8 +486,8 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 		this.badgeClassForm.setValue({
 			badge_name: badgeClass.name,
-			badge_image: this.existing && badgeClass.imageFrame ? badgeClass.image : null,
-			badge_customImage: this.existing && !badgeClass.imageFrame ? badgeClass.image : null,
+			badge_image: badgeClass.imageFrame ? badgeClass.image : null,
+			badge_customImage: !badgeClass.imageFrame ? badgeClass.image : null,
 			useIssuerImageInBadge: this.badgeClassForm.value.useIssuerImageInBadge,
 			badge_description: badgeClass.description,
 			badge_criteria_url: badgeClass.criteria_url,
@@ -511,7 +514,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 							name: badgeClass.extension['extensions:LicenseExtension'].name,
 							legalCode: badgeClass.extension['extensions:LicenseExtension'].legalCode,
 						},
-				  ]
+					]
 				: this.badgeClassForm.controls.license.value,
 			// Note that, even though competencies might originally have been selected
 			// based on ai suggestions, they can't be separated anymore and thus will
@@ -526,6 +529,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				target_framework: alignment.target_framework,
 				target_code: alignment.target_code,
 			})),
+			copy_permissions_allow_others: this.existing ? badgeClass.canCopy('others') : false,
 		});
 
 		if (this.badgeClassForm.controls.competencies.controls.length > 0) {
@@ -546,8 +550,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 	ngOnInit() {
 		super.ngOnInit();
-
-		console.log(this.category);
 
 		this.translate.get('General.next').subscribe((next) => {
 			this.next = next;
@@ -1224,6 +1226,11 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			const aiCompetenciesSuggestions = this.aiCompetenciesSuggestions;
 			const keywordCompetenciesResults = this.selectedKeywordCompetencies;
 
+			const copy_permissions: BadgeClassCopyPermissions[] = ['issuer'];
+			if (formState.copy_permissions_allow_others) {
+				copy_permissions.push('others');
+			}
+
 			if (this.existingBadgeClass) {
 				this.existingBadgeClass.name = formState.badge_name;
 				this.existingBadgeClass.description = formState.badge_description;
@@ -1281,6 +1288,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				} else {
 					this.existingBadgeClass.clearExpires();
 				}
+				this.existingBadgeClass.copyPermissions = copy_permissions;
 
 				this.savePromise = this.existingBadgeClass.save();
 			} else {
@@ -1328,6 +1336,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 							competencyExtensionContextUrl,
 						),
 					},
+					copy_permissions: copy_permissions,
 				} as ApiBadgeClassForCreation;
 				if (this.currentImage) {
 					badgeClassData.extensions = {

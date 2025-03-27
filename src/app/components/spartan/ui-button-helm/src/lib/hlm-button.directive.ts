@@ -18,7 +18,7 @@ export const buttonVariants = cva(
 				blackborder:
 					'tw-bg-white tw-text-oebblack tw-font-medium hover:tw-bg-lightpurple tw-border-solid tw-border-black',
 				yellow: 'tw-bg-yellow tw-text-purple hover:tw-bg-yellow hover:tw-text-purple tw-border-solid tw-border-yellow',
-				link: 'tw-underline-offset-4 hover:tw-underline tw-text-primary',
+				link: 'tw-underline-offset-4 tw-underline tw-text-link',
 				green: 'tw-bg-green tw-font-bold tw-text-purple tw-border-solid tw-border-purple hover:tw-bg-green-400 tw-border-solid tw-border-green hover:tw-border-green-400',
 				white: 'tw-bg-white tw-text-oebblack tw-border-solid tw-border-purple !tw-font-normal',
 				meinBildungsraum:
@@ -35,6 +35,7 @@ export const buttonVariants = cva(
 				bigIcon: 'tw-h-[76px] tw-w-[76px] tw-text-[40px]',
 				mediumText:
 					'md:tw-py-[15px] sm:tw-px-[32px] md:tw-px-[50px] md:tw-text-[20px] md:tw-leading-[30px] tw-py-[10.5px] tw-px-[30px] tw-text-[14px] tw-leading-[21px] tw-border-2 tw-font-medium',
+				smallText: 'tw-text-sm',
 			},
 			width: {
 				default: '',

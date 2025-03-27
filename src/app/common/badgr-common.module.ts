@@ -71,6 +71,7 @@ import { BgMarkdownComponent } from './directives/bg-markdown.component';
 import { BgBreadcrumbsComponent } from './components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { CopyBadgeDialog } from './dialogs/copy-badge-dialog/copy-badge-dialog.component';
 import { ForkBadgeDialog } from './dialogs/fork-badge-dialog/fork-badge-dialog.component';
+import { SelectIssuerDialog } from './dialogs/select-issuer-dialog/select-issuer-dialog.component';
 import { MarkdownHintsDialog } from './dialogs/markdown-hints-dialog.component';
 import { IssuerManager } from '../issuer/services/issuer-manager.service';
 import { IssuerApiService } from '../issuer/services/issuer-api.service';
@@ -182,6 +183,7 @@ export const COMMON_MODULE_COMPONENTS = [
 	ShareSocialDialog,
 	CopyBadgeDialog,
 	ForkBadgeDialog,
+	SelectIssuerDialog,
 	MarkdownHintsDialog,
 	ShowMore,
 	SvgIconComponent,

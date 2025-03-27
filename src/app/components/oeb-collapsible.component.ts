@@ -21,7 +21,7 @@ import {
 } from '@spartan-ng/brain/collapsible';
 import { provideIcons } from '@ng-icons/core';
 import { lucideChevronRight } from '@ng-icons/lucide';
-import { NgIf, NgFor, NgTemplateOutlet, NgClass } from '@angular/common';
+import { NgIf, NgTemplateOutlet, NgClass } from '@angular/common';
 
 @Component({
 	selector: 'oeb-collapsible',
@@ -34,7 +34,6 @@ import { NgIf, NgFor, NgTemplateOutlet, NgClass } from '@angular/common';
 		NgIcon,
 		HlmIconDirective,
 		NgIf,
-		NgFor,
 		NgTemplateOutlet,
 		NgClass,
 	],

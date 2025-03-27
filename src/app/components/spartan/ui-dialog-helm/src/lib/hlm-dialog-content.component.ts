@@ -46,9 +46,9 @@ export type DiealogVariants = VariantProps<typeof dialogVariants>;
 	},
 	template: `
 		@if (component) {
-		<ng-container [ngComponentOutlet]="component" />
+			<ng-container [ngComponentOutlet]="component" />
 		} @else {
-		<ng-content />
+			<ng-content />
 		}
 
 		<button brnDialogClose hlm>

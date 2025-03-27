@@ -10,7 +10,7 @@
 					<div class="tw-grid md:tw-flex md:tw-justify-between md:tw-items-center md:tw-gap-10">
 						<h1
 							hlmH1
-							class="tw-text-purple tw-font-extrabold tw-hyphens-auto tw-break-words tw-mb-2 md:tw-mb-0"
+							class="tw-text-purple tw-font-extrabold tw-hyphens-auto tw-break-words tw-mb-2 md:tw-mb-0 oeb-break-words"
 						>
 							{{ config.badgeTitle }}
 						</h1>
@@ -175,7 +175,7 @@
 								class="tw-flex tw-text-oebblack tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col"
 							>
 								<dt class="tw-text-sm tw-text-oebblack tw-font-bold">Vergeben an</dt>
-								<dd class="tw-text-sm tw-break-all">&nbsp;{{ config.issuedTo }}</dd>
+								<dd class="tw-text-sm tw-break-words">&nbsp;{{ config.issuedTo }}</dd>
 							</div>
 							<div
 								*ngIf="config.license"
@@ -210,7 +210,7 @@
 					</div>
 				</div>
 				<div class="md:tw-pb-8 md:tw-min-h-[800px] tw-w-full">
-					<div class="tw-text-oebblack tw-pt-0 tw-pb-4">
+					<div class="tw-text-oebblack tw-pt-0 tw-pb-4 oeb-break-words">
 						<h3 class="tw-font-semibold tw-leading-[26.4px] tw-text-[22px] tw-text-oebblack tw-mb-4">
 							Kurzbeschreibung
 						</h3>

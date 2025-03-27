@@ -46,7 +46,6 @@ import { Issuer } from '../../models/issuer.model';
 		QrCodeDatatableComponent,
 		SharedIconsModule,
 		BadgrCommonModule,
-		DangerDialogComponent,
 		HlmH3Directive,
 		HlmPDirective,
 	],

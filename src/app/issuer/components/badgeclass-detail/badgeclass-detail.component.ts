@@ -232,6 +232,26 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 							icon: 'lucidePencil',
 						},
 						{
+							title: 'Kopieren (diese Institution)',
+							action: () => {
+								this.router.navigate(['/issuer/issuers', this.issuer.slug, 'badges', 'create'], {
+									state: { copybadgeid: this.badgeSlug },
+								});
+							},
+							icon: 'lucideCopy',
+						},
+						{
+							title: 'Kopierstatus bearbeiten',
+							routerLink: [
+								'/issuer/issuers',
+								this.issuerSlug,
+								'badges',
+								this.badgeSlug,
+								'copypermissions',
+							],
+							icon: 'lucideCopyX',
+						},
+						{
 							title: 'Löschen',
 							icon: 'lucideTrash2',
 							action: () => this.deleteBadge(),
@@ -244,9 +264,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 					updatedAt: this.badgeClass.updatedAt,
 					duration: this.badgeClass.extension['extensions:StudyLoadExtension'].StudyLoad,
 					category: this.translate.instant(
-						`Badge.categories.${
-							this.badgeClass.extension['extensions:CategoryExtension']?.Category || 'participation'
-						}`,
+						`Badge.categories.${this.badgeClass.extension['extensions:CategoryExtension']?.Category || 'participation'}`,
 					),
 					tags: this.badgeClass.tags,
 					issuerName: this.badgeClass.issuerName,
@@ -263,7 +281,6 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 					this.config.headerButton = null;
 					this.config.qrCodeButton.show = false;
 				}
-				console.log(this.config);
 			},
 			(error) => {
 				this.messageService.reportLoadingError(

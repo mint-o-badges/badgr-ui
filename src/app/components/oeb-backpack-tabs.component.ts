@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { HlmTabsModule, HlmTabsTriggerDirective } from './spartan/ui-tabs-helm/src';
-import { JsonPipe, NgIf, NgFor, NgTemplateOutlet } from '@angular/common';
+import { NgIf, NgFor, NgTemplateOutlet } from '@angular/common';
 
 export const bg = 'tw-block tw-absolute tw-z-0 tw-opacity-80';
 
@@ -12,7 +12,7 @@ export type Tab = {
 
 @Component({
 	selector: 'oeb-backpack-tabs',
-	imports: [HlmTabsModule, HlmTabsTriggerDirective, NgIf, NgFor, JsonPipe, NgTemplateOutlet],
+	imports: [HlmTabsModule, HlmTabsTriggerDirective, NgIf, NgFor, NgTemplateOutlet],
 	template: `<hlm-tabs class="tw-block tw-w-full" [tab]="activeTab" (tabActivated)="onTabChange($event)">
 		<hlm-tabs-list class="tw-w-full tw-max-w-[660px] tw-flex tw-justify-between" aria-label="tabs">
 			<ng-container *ngFor="let tab of tabs">

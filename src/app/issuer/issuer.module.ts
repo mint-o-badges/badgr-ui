@@ -130,6 +130,10 @@ const routes = [
 		component: BadgeClassEditComponent,
 	},
 	{
+		path: 'issuers/:issuerSlug/badges/:badgeSlug/copypermissions',
+		component: BadgeClassEditCopyPermissionsComponent,
+	},
+	{
 		path: 'issuers/:issuerSlug/badges/:badgeSlug/issue',
 		component: BadgeClassIssueComponent,
 	},
@@ -163,6 +167,7 @@ const routes = [
 		BadgeClassSelectTypeComponent,
 		BadgeClassCreateComponent,
 		BadgeClassEditComponent,
+		BadgeClassEditCopyPermissionsComponent,
 		BadgeClassEditFormComponent,
 		BadgeClassIssueComponent,
 		BadgeClassIssueQrComponent,

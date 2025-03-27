@@ -1,4 +1,5 @@
-import { AfterViewInit, Component, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, Renderer2, ViewChild, Inject } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 import { Router } from '@angular/router';
 
 import { MessageService } from './common/services/message.service';
@@ -29,6 +30,7 @@ import { ImportModalComponent } from './mozz-transition/components/import-modal/
 import { ExportPdfDialog } from './common/dialogs/export-pdf-dialog/export-pdf-dialog.component';
 import { CopyBadgeDialog } from './common/dialogs/copy-badge-dialog/copy-badge-dialog.component';
 import { ForkBadgeDialog } from './common/dialogs/fork-badge-dialog/fork-badge-dialog.component';
+import { SelectIssuerDialog } from './common/dialogs/select-issuer-dialog/select-issuer-dialog.component';
 import { LanguageService } from './common/services/language.service';
 import { TranslateService } from '@ngx-translate/core';
 import { MenuItem } from './common/components/badge-detail/badge-detail.component.types';
@@ -45,6 +47,7 @@ import { MenuItem } from './common/components/badge-detail/badge-detail.componen
 	},
 	templateUrl: './app.component.html',
 	styleUrls: ['./app.component.scss'],
+	standalone: false,
 	standalone: false,
 })
 export class AppComponent implements OnInit, AfterViewInit {
@@ -144,6 +147,9 @@ export class AppComponent implements OnInit, AfterViewInit {
 	@ViewChild('forkBadgeDialog')
 	private forkBadgeDialog: ForkBadgeDialog;
 
+	@ViewChild('selectIssuerDialog')
+	private selectIssuerDialog: SelectIssuerDialog;
+
 	@ViewChild('issuerLink')
 	private issuerLink: unknown;
 
@@ -202,6 +208,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 		protected issuerManager: IssuerManager,
 		private languageService: LanguageService, // Translation
 		private translate: TranslateService,
+		@Inject(DOCUMENT) private document: Document,
 	) {
 		// Initialize App language
 		this.languageService.setInitialAppLangauge();
@@ -316,6 +323,11 @@ export class AppComponent implements OnInit, AfterViewInit {
 		this.translate.get('NavItems.appIntegrations').subscribe((translatedText: string) => {
 			this.accountMenuItems[1].title = translatedText;
 		});
+
+		this.translate.onLangChange.subscribe(() => {
+			console.log('!!!!!!!!' + this.translate.currentLang);
+			this.document.documentElement.lang = this.translate.currentLang;
+		});
 	}
 
 	ngAfterViewInit() {
@@ -328,6 +340,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 			this.nounprojectDialog,
 			this.copyBadgeDialog,
 			this.forkBadgeDialog,
+			this.selectIssuerDialog,
 		);
 	}
 

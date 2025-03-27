@@ -7,7 +7,11 @@
 				<h1 hlmH1 class="tw-text-purple oeb-standard-padding-bottom tw-font-bold">
 					{{ 'NavItems.myInstitutions' | translate }}
 				</h1>
-				<p hlmP size="lg" class="tw-pb-3" [innerHTML]="'Issuer.myInstitutionsText' | translate"></p>
+				<p hlmP size="lg" class="tw-pb-3">
+					<span [innerHTML]="'Issuer.myInstitutionsText' | translate"></span>
+					<span [innerHTML]="'Issuer.copyBadgesOfOtherIssuers' | translate"></span>
+				</p>
+
 				<p hlmP size="lg" class="tw-pb-3" [innerHTML]="'Issuer.myLearningPathText' | translate"></p>
 			</div>
 			<div class="tw-border-purple tw-border tw-rounded-[20px] tw-text-right">
@@ -19,6 +23,58 @@
 					[text]="'Issuer.createInstitution' | translate"
 				>
 				</oeb-button>
+				<div class="tw-mt-8 tw-max-w-[380px]">
+					<div class="tw-flex tw-items-center tw-gap-2">
+						<hlm-icon class="tw-text-purple" size="xl" name="lucideInfo" />
+						<p class="tw-text-oebblack tw-text-left">
+							<span [innerHTML]="'Issuer.rolesAndRightsInfo1' | translate"> </span>
+							<oeb-button
+								size="smallText"
+								variant="link"
+								[text]="'Issuer.rolesAndRightsInfo2' | translate"
+								(click)="openIssuerInfoDialog()"
+							></oeb-button>
+							<ng-template #headerTemplate>
+								<h1 class="tw-font-bold tw-text-purple tw-text-3xl tw-mb-8">
+									{{ 'Issuer.rolesAndRights' | translate }}
+								</h1>
+							</ng-template>
+							<ng-template #issuerInfoTemplate>
+								<section class="tw-mb-2">
+									<h3
+										class="tw-text-lg tw-text-oebblack tw-font-semibold"
+										[innerHTML]="'Issuer.addMember_owner' | translate"
+									></h3>
+									<p
+										class="tw-text-oebblack tw-text-lg"
+										[innerHTML]="'Issuer.addMember_ownerText' | translate"
+									></p>
+								</section>
+								<section class="tw-mb-2">
+									<h3
+										class="tw-text-lg tw-text-oebblack tw-font-semibold"
+										[innerHTML]="'Editor'"
+									></h3>
+									<p
+										class="tw-text-oebblack tw-text-lg"
+										[innerHTML]="'Issuer.addMember_editorText' | translate"
+									></p>
+								</section>
+								<section class="tw-mb-2">
+									<h3
+										class="tw-text-lg tw-text-oebblack tw-font-semibold"
+										[innerHTML]="'Issuer.addMember_staff' | translate"
+									></h3>
+									<p
+										class="tw-text-oebblack tw-text-lg"
+										[innerHTML]="'Issuer.addMember_staffText' | translate"
+									></p>
+								</section>
+							</ng-template>
+							<span [innerHTML]="'Issuer.rolesAndRightsInfo3' | translate"> </span>
+						</p>
+					</div>
+				</div>
 				<div class="md:tw-block tw-hidden tw-mt-8 tw-max-w-[380px]">
 					<div class="tw-rounded-[20px] tw-text-oebblack tw-relative tw-flex tw-flex-row tw-items-center">
 						<img
@@ -52,7 +108,7 @@
 								class="tw-h-[70px] md:tw-h-[100px] tw-w-auto tw-min-w-[70px] md:tw-min-w-[100px]"
 							/>
 						</div>
-						<div class="tw-flex tw-flex-col tw-justify-center tw-pl-4">
+						<div class="tw-flex tw-flex-col tw-justify-center tw-pl-4 oeb-break-words">
 							<a
 								class="md:tw-text-[30px] md:tw-leading-[36px] tw-text-[20px] tw-leading-[24px] tw-text-purple tw-font-semibold"
 								[routerLink]="['/issuer/issuers/', issuer.slug]"

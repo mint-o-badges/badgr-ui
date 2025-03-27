@@ -86,7 +86,7 @@ const ROUTE_CONFIG: Routes = [
 					path: 'showcase',
 					loadChildren: () => import('./showcase/showcase.module').then((m) => m.ShowcaseModule),
 				},
-		  ]
+			]
 		: []),
 
 	// Legacy Auth Redirects
