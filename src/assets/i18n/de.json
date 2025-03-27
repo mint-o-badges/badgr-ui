@@ -272,8 +272,9 @@
 		"waitWhileBadgesAreIssued": "Badges werden vergeben, bitte warten...",
 		"rolesAndRights": "Rollen und Rechte innerhalb von Institutionen",
 		"rolesAndRightsInfo1": "Infos zu ",
-		"rolesAndRightsInfo2" : "Rollen und Rechten",
-		"rolesAndRightsInfo3": " innerhalb von Institutionen"
+		"rolesAndRightsInfo2": "Rollen und Rechten",
+		"rolesAndRightsInfo3": " innerhalb von Institutionen",
+		"copyBadgesOfOtherIssuers": " Du kannst auch Badges anderer Institutionen <a class='tw-underline tw-text-[#1400FF]' hlmA href='https://openbadges.education/catalog/badges'>kopieren</a>."
 	},
 	"Badge": {
 		"groupBy": "Gruppieren nach",
@@ -407,7 +408,7 @@
 		"hoursAndMinutesError": "Der Badge muss mindestens 1 Minute dauern.",
 		"competenceHoursMinutesZero": "Eine deiner Kompetenzen hat eine Dauer von 0.",
 		"competencyExceedsBadgeDuration": "Die Zeitangabe für die Stärkung einer einzelnen Kompetenz kann nicht größer sein als die Dauer deines Lernangebots/Badges an sich.",
- 		"issuerImageInBadgeImageInfo": "Dein Institutions-Logo wird automatisch im Badge-Bild ergänzt.",
+		"issuerImageInBadgeImageInfo": "Dein Institutions-Logo wird automatisch im Badge-Bild ergänzt.",
 		"pleaseAddCompetencies": "Bitte Kompetenzen hinzufügen",
 		"invalidCompetence": "Ungültige Kompetenz"
 	},

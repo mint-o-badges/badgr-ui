@@ -239,8 +239,8 @@
 		"rolesAndRights": "roles and rights in institutions",
 		"rolesAndRightsInfo1": "Infos about ",
 		"rolesAndRightsInfo2": "roles and rights",
-		"rolesAndRightsInfo3": " in institutions"
-
+		"rolesAndRightsInfo3": " in institutions",
+		"copyBadgesOfOtherIssuers": "You can also <a class='tw-underline tw-text-[#1400FF]' hlmA href='https://openbadges.education/catalog/badges'>copy</a> badges of other institutions."
 	},
 	"Badge": {
 		"groupBy": "Group by",

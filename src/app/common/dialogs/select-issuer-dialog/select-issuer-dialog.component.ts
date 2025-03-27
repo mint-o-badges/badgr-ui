@@ -5,7 +5,6 @@ import { Issuer } from '../../../issuer/models/issuer.model';
 import { IssuerManager } from '../../../issuer/services/issuer-manager.service';
 import { BaseDialog } from '../base-dialog';
 
-
 /**
  * The dialog used in the badge creation component to copy an existing badge.
  *
@@ -38,11 +37,9 @@ export class SelectIssuerDialog extends BaseDialog {
 	async openDialog(): Promise<Issuer | void> {
 		this.showModal();
 
-		this.issuerManager.allIssuers$.subscribe(
-			(issuers) => {
-				this.issuers = issuers;
-			}
-		);
+		this.issuerManager.allIssuers$.subscribe((issuers) => {
+			this.issuers = issuers.filter((issuer) => issuer.canCreateBadge);
+		});
 
 		return new Promise<Issuer | void>((resolve, reject) => {
 			this.resolveFunc = resolve;

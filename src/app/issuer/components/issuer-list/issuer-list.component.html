@@ -7,7 +7,11 @@
 				<h1 hlmH1 class="tw-text-purple oeb-standard-padding-bottom tw-font-bold">
 					{{ 'NavItems.myInstitutions' | translate }}
 				</h1>
-				<p hlmP size="lg" class="tw-pb-3" [innerHTML]="'Issuer.myInstitutionsText' | translate"></p>
+				<p hlmP size="lg" class="tw-pb-3">
+					<span [innerHTML]="'Issuer.myInstitutionsText' | translate"></span>
+					<span [innerHTML]="'Issuer.copyBadgesOfOtherIssuers' | translate"></span>
+				</p>
+
 				<p hlmP size="lg" class="tw-pb-3" [innerHTML]="'Issuer.myLearningPathText' | translate"></p>
 			</div>
 			<div class="tw-border-purple tw-border tw-rounded-[20px] tw-text-right">
@@ -41,21 +45,30 @@
 										class="tw-text-lg tw-text-oebblack tw-font-semibold"
 										[innerHTML]="'Issuer.addMember_owner' | translate"
 									></h3>
-									<p class="tw-text-oebblack tw-text-lg" [innerHTML]="'Issuer.addMember_ownerText' | translate"></p>
+									<p
+										class="tw-text-oebblack tw-text-lg"
+										[innerHTML]="'Issuer.addMember_ownerText' | translate"
+									></p>
 								</section>
 								<section class="tw-mb-2">
 									<h3
 										class="tw-text-lg tw-text-oebblack tw-font-semibold"
 										[innerHTML]="'Editor'"
 									></h3>
-									<p class="tw-text-oebblack tw-text-lg" [innerHTML]="'Issuer.addMember_editorText' | translate"></p>
+									<p
+										class="tw-text-oebblack tw-text-lg"
+										[innerHTML]="'Issuer.addMember_editorText' | translate"
+									></p>
 								</section>
 								<section class="tw-mb-2">
 									<h3
 										class="tw-text-lg tw-text-oebblack tw-font-semibold"
 										[innerHTML]="'Issuer.addMember_staff' | translate"
 									></h3>
-									<p class="tw-text-oebblack tw-text-lg" [innerHTML]="'Issuer.addMember_staffText' | translate"></p>
+									<p
+										class="tw-text-oebblack tw-text-lg"
+										[innerHTML]="'Issuer.addMember_staffText' | translate"
+									></p>
 								</section>
 							</ng-template>
 							<span [innerHTML]="'Issuer.rolesAndRightsInfo3' | translate"> </span>
