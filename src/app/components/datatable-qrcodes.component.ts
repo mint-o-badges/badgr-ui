@@ -232,7 +232,7 @@ import { NgIcon } from '@ng-icons/core';
 // }
 
 import { SelectionModel } from '@angular/cdk/collections';
-import { DecimalPipe, TitleCasePipe, DatePipe } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import {
 	Component,
 	TrackByFunction,
@@ -248,7 +248,7 @@ import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { lucideArrowUpDown, lucideChevronDown, lucideEllipsis } from '@ng-icons/lucide';
 import { HlmButtonModule } from './spartan/ui-button-helm/src';
-import { HlmCheckboxCheckIconComponent, HlmCheckboxComponent } from './spartan/ui-checkbox-helm/src';
+import { HlmCheckboxComponent } from './spartan/ui-checkbox-helm/src';
 import { HlmIconDirective } from './spartan/ui-icon-helm/src';
 import { HlmInputDirective } from './spartan/ui-input-helm/src';
 import { BrnMenuTriggerDirective } from '@spartan-ng/brain/menu';
@@ -279,7 +279,7 @@ import striptags from 'striptags';
 import { OebSpinnerComponent } from './oeb-spinner.component';
 import { BadgeInstanceBatchAssertion } from '../issuer/models/badgeinstance-api.model';
 import { provideIcons } from '@ng-icons/core';
-import { I18nPluralPipe } from '@angular/common';
+
 
 export type Payment = {
 	id: string;
@@ -300,28 +300,24 @@ export type RequestedBadge = {
 @Component({
 	selector: 'qrcodes-datatable',
 	imports: [
-		FormsModule,
-		BrnMenuTriggerDirective,
-		HlmMenuModule,
-		BrnTableModule,
-		HlmTableModule,
-		HlmButtonModule,
-		DecimalPipe,
-		TitleCasePipe,
-		I18nPluralPipe,
-		DatePipe,
-		NgIcon,
-		HlmIconDirective,
-		HlmInputDirective,
-		HlmCheckboxCheckIconComponent,
-		HlmCheckboxComponent,
-		BrnSelectModule,
-		HlmSelectModule,
-		TranslateModule,
-		HlmCommandInputWrapperComponent,
-		OebButtonComponent,
-		OebSpinnerComponent,
-	],
+    FormsModule,
+    BrnMenuTriggerDirective,
+    HlmMenuModule,
+    BrnTableModule,
+    HlmTableModule,
+    HlmButtonModule,
+    DatePipe,
+    NgIcon,
+    HlmIconDirective,
+    HlmInputDirective,
+    HlmCheckboxComponent,
+    BrnSelectModule,
+    HlmSelectModule,
+    TranslateModule,
+    HlmCommandInputWrapperComponent,
+    OebButtonComponent,
+    OebSpinnerComponent
+],
 	styleUrl: './datatable-qrcodes.component.scss',
 	providers: [provideIcons({ lucideChevronDown, lucideEllipsis, lucideArrowUpDown }), TranslateService],
 	host: {

@@ -6,13 +6,13 @@ import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/src';
 import { HlmIconDirective } from '../../../components/spartan/ui-icon-helm/src';
 import { lucideTriangleAlert } from '@ng-icons/lucide';
-import { NgIf } from '@angular/common';
+
 import { TranslateService } from '@ngx-translate/core';
 import { provideIcons } from '@ng-icons/core';
 
 @Component({
 	selector: 'oeb-danger-dialog-template',
-	imports: [OebDialogComponent, OebButtonComponent, HlmPDirective, NgIcon, HlmIconDirective, NgIf],
+	imports: [OebDialogComponent, OebButtonComponent, HlmPDirective, NgIcon, HlmIconDirective],
 	providers: [TranslateService, provideIcons({ lucideTriangleAlert })],
 	template: `
 		<oeb-dialog [variant]="variant" class="tw-text-center tw-text-oebblack">

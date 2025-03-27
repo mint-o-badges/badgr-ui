@@ -1,4 +1,4 @@
-import { NgIcon } from '@ng-icons/core';
+
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { HlmIconModule } from './spartan/ui-icon-helm/src';
@@ -12,15 +12,14 @@ import { HlmPDirective } from '../components/spartan/ui-typography-helm/src/lib/
 @Component({
 	selector: 'badges-datatable',
 	imports: [
-		HlmTableModule,
-		NgIcon,
-		HlmIconModule,
-		CommonModule,
-		OebButtonComponent,
-		TranslateModule,
-		RouterModule,
-		HlmPDirective,
-	],
+    HlmTableModule,
+    HlmIconModule,
+    CommonModule,
+    OebButtonComponent,
+    TranslateModule,
+    RouterModule,
+    HlmPDirective
+],
 	template: ` <hlm-table
 		class="tw-rounded-t-[20px] tw-overflow-hidden tw-w-full tw-max-w-[100%] tw-bg-lightpurple tw-border-purple tw-border"
 	>

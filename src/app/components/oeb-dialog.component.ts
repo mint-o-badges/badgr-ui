@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { HlmButtonDirective } from './spartan/ui-button-helm/src';
-import { BrnDialogContentDirective, BrnDialogTriggerDirective } from '@spartan-ng/brain/dialog';
+
 import {
 	HlmDialogDescriptionDirective,
 	HlmDialogFooterComponent,
@@ -12,15 +12,13 @@ import { NgClass, NgIf } from '@angular/common';
 @Component({
 	selector: 'oeb-dialog',
 	imports: [
-		BrnDialogTriggerDirective,
-		BrnDialogContentDirective,
-		HlmDialogHeaderComponent,
-		HlmDialogFooterComponent,
-		HlmDialogDescriptionDirective,
-		HlmButtonDirective,
-		NgIf,
-		NgClass,
-	],
+    HlmDialogHeaderComponent,
+    HlmDialogFooterComponent,
+    HlmDialogDescriptionDirective,
+    HlmButtonDirective,
+    NgIf,
+    NgClass
+],
 	template: `
 		<div
 			class="tw-px-4 tw-py-6"

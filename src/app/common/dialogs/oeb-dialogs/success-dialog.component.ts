@@ -1,16 +1,16 @@
-import { NgIcon } from '@ng-icons/core';
+
 import { Component, HostBinding, inject } from '@angular/core';
 import { BrnDialogRef, injectBrnDialogContext } from '@spartan-ng/brain/dialog';
 import { OebDialogComponent } from '../../../components/oeb-dialog.component';
 import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/src';
-import { HlmIconDirective } from '../../../components/spartan/ui-icon-helm/src';
+
 import { lucideCheck } from '@ng-icons/lucide';
 import { NgIf } from '@angular/common';
 import { provideIcons } from '@ng-icons/core';
 
 @Component({
 	selector: 'oeb-success-dialog',
-	imports: [OebDialogComponent, HlmPDirective, NgIcon, HlmIconDirective, NgIf],
+	imports: [OebDialogComponent, HlmPDirective, NgIf],
 	providers: [provideIcons({ lucideCheck })],
 	template: `
 		<oeb-dialog [variant]="variant" class="tw-text-center tw-text-purple">

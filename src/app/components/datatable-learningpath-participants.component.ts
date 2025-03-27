@@ -1,15 +1,15 @@
-import { NgIcon } from '@ng-icons/core';
+
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { HlmIconModule } from './spartan/ui-icon-helm/src';
 import { RouterModule } from '@angular/router';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { HlmTableModule } from './spartan/ui-table-helm/src';
-import { OebButtonComponent } from './oeb-button.component';
+
 
 @Component({
 	selector: 'learningpath-participants-datatable',
-	imports: [HlmTableModule, NgIcon, HlmIconModule, CommonModule, OebButtonComponent, TranslateModule, RouterModule],
+	imports: [HlmTableModule, HlmIconModule, CommonModule, TranslateModule, RouterModule],
 	template: ` <hlm-table
 		class="tw-rounded-t-[20px] tw-overflow-hidden tw-w-full tw-max-w-[100%] tw-bg-white tw-border-purple tw-border"
 	>
