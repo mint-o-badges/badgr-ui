@@ -55,7 +55,7 @@ import { FormControl } from '@angular/forms';
 						size="sm"
 						>{{ badgeTitle }}</a
 					>
-					<a *ngIf="publicUrl" class="tw-font-bold title-clamp" hlmP size="sm" [href]="publicUrl">{{
+					<a *ngIf="publicUrl" class="tw-font-bold text-clamp title-clamp" hlmP size="sm" [href]="publicUrl">{{
 						badgeTitle
 					}}</a>
 
@@ -116,7 +116,7 @@ import { FormControl } from '@angular/forms';
 						class="tw-absolute tw-bottom-0 tw-cursor-pointer"
 						(click)="toggleCompetencies()"
 					>
-						<ng-icon hlm size="lg" [name]="showCompetencies ? 'lucideChevronUp' : 'lucideChevronDown'" />
+						<ng-icon hlm class="tw-block tw--mb-4" size="lg" [name]="showCompetencies ? 'lucideChevronUp' : 'lucideChevronDown'" />
 					</div>
 				</div>
 			</div>
