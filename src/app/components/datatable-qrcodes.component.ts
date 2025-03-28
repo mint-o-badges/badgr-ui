@@ -280,7 +280,6 @@ import { OebSpinnerComponent } from './oeb-spinner.component';
 import { BadgeInstanceBatchAssertion } from '../issuer/models/badgeinstance-api.model';
 import { provideIcons } from '@ng-icons/core';
 
-
 export type Payment = {
 	id: string;
 	amount: number;
@@ -300,24 +299,24 @@ export type RequestedBadge = {
 @Component({
 	selector: 'qrcodes-datatable',
 	imports: [
-    FormsModule,
-    BrnMenuTriggerDirective,
-    HlmMenuModule,
-    BrnTableModule,
-    HlmTableModule,
-    HlmButtonModule,
-    DatePipe,
-    NgIcon,
-    HlmIconDirective,
-    HlmInputDirective,
-    HlmCheckboxComponent,
-    BrnSelectModule,
-    HlmSelectModule,
-    TranslateModule,
-    HlmCommandInputWrapperComponent,
-    OebButtonComponent,
-    OebSpinnerComponent
-],
+		FormsModule,
+		BrnMenuTriggerDirective,
+		HlmMenuModule,
+		BrnTableModule,
+		HlmTableModule,
+		HlmButtonModule,
+		DatePipe,
+		NgIcon,
+		HlmIconDirective,
+		HlmInputDirective,
+		HlmCheckboxComponent,
+		BrnSelectModule,
+		HlmSelectModule,
+		TranslateModule,
+		HlmCommandInputWrapperComponent,
+		OebButtonComponent,
+		OebSpinnerComponent,
+	],
 	styleUrl: './datatable-qrcodes.component.scss',
 	providers: [provideIcons({ lucideChevronDown, lucideEllipsis, lucideArrowUpDown }), TranslateService],
 	host: {

@@ -12,13 +12,13 @@ import { NgClass, NgIf } from '@angular/common';
 @Component({
 	selector: 'oeb-dialog',
 	imports: [
-    HlmDialogHeaderComponent,
-    HlmDialogFooterComponent,
-    HlmDialogDescriptionDirective,
-    HlmButtonDirective,
-    NgIf,
-    NgClass
-],
+		HlmDialogHeaderComponent,
+		HlmDialogFooterComponent,
+		HlmDialogDescriptionDirective,
+		HlmButtonDirective,
+		NgIf,
+		NgClass,
+	],
 	template: `
 		<div
 			class="tw-px-4 tw-py-6"

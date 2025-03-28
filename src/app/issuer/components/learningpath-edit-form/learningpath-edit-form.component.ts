@@ -152,8 +152,8 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 		protected badgeInstanceManager: BadgeInstanceManager,
 		protected learningPathManager: LearningPathManager,
 		protected configService: AppConfigService,
-	) // protected title: Title,
-	{
+	) {
+		// protected title: Title,
 		super(router, route, loginService);
 		this.baseUrl = this.configService.apiConfig.baseUrl;
 		// this.selectedBadgesLoaded = this.loadSelectedBadges();

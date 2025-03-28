@@ -217,7 +217,7 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 						type: ['Extension', 'extensions:RecipientProfile'],
 						name: cleanedName,
 					},
-			  }
+				}
 			: undefined;
 
 		// const extensions = studyLoadExtension;

@@ -23,11 +23,11 @@ import type { ClassValue } from 'clsx';
 			<ng-content />
 		</ng-template>
 		@if (truncate()) {
-		<span class="tw-flex-1 tw-truncate">
-			<ng-container [ngTemplateOutlet]="content" />
-		</span>
+			<span class="tw-flex-1 tw-truncate">
+				<ng-container [ngTemplateOutlet]="content" />
+			</span>
 		} @else {
-		<ng-container [ngTemplateOutlet]="content" />
+			<ng-container [ngTemplateOutlet]="content" />
 		}
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,

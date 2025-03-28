@@ -72,17 +72,21 @@ export class BadgeClassCreateComponent extends BaseAuthenticatedRoutableComponen
 				this.badgeClassService.issuerBadgeById(state.copybadgeid).then((badge) => {
 					this.category = 'competency';
 					this.copiedBadgeClass = badge;
-				})
-			)
+				}),
+			);
 		}
 
 		Promise.all(breadcrumbPromises).then(() => {
 			this.breadcrumbLinkEntries = [
 				{ title: 'Issuers', routerLink: ['/issuer'] },
 				{ title: this.issuer.name, routerLink: ['/issuer/issuers', this.issuerSlug] },
-				{ title: this.copiedBadgeClass ? this.translate.instant('Badge.copyBadge') : this.translate.instant('Issuer.createBadge') },
+				{
+					title: this.copiedBadgeClass
+						? this.translate.instant('Badge.copyBadge')
+						: this.translate.instant('Issuer.createBadge'),
+				},
 			];
-		})
+		});
 	}
 
 	ngOnInit() {

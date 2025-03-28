@@ -27,23 +27,29 @@ import { HlmPaginationDirective } from './hlm-pagination.directive';
 			<nav hlmPagination>
 				<ul hlmPaginationContent>
 					@if (showEdges() && !isFirstPageActive()) {
-					<li hlmPaginationItem (click)="goToPrevious()">
-						<hlm-pagination-previous iconOnly="true" />
-					</li>
-					} @for (page of pages(); track page) {
-					<li hlmPaginationItem>
-						@if (page === '...') {
-						<hlm-pagination-ellipsis />
-						} @else {
-						<a hlmPaginationLink [isActive]="currentPage() === page" (click)="currentPage.set(page)">
-							{{ page }}
-						</a>
-						}
-					</li>
-					} @if (showEdges() && !isLastPageActive()) {
-					<li hlmPaginationItem (click)="goToNext()">
-						<hlm-pagination-next iconOnly="true" />
-					</li>
+						<li hlmPaginationItem (click)="goToPrevious()">
+							<hlm-pagination-previous iconOnly="true" />
+						</li>
+					}
+					@for (page of pages(); track page) {
+						<li hlmPaginationItem>
+							@if (page === '...') {
+								<hlm-pagination-ellipsis />
+							} @else {
+								<a
+									hlmPaginationLink
+									[isActive]="currentPage() === page"
+									(click)="currentPage.set(page)"
+								>
+									{{ page }}
+								</a>
+							}
+						</li>
+					}
+					@if (showEdges() && !isLastPageActive()) {
+						<li hlmPaginationItem (click)="goToNext()">
+							<hlm-pagination-next iconOnly="true" />
+						</li>
 					}
 				</ul>
 			</nav>

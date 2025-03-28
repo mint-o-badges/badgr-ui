@@ -206,13 +206,13 @@ export const defaultValidatorMessages: {
 		actualLength && requiredLength
 			? `${label ?? 'Text'} überschreitet maximale Länge von ${requiredLength} um ${
 					actualLength - requiredLength
-			  } Zeichen`
+				} Zeichen`
 			: `${label ?? 'Text'} überschreitet maximale Länge.`,
 	minlength: (label: string, { actualLength, requiredLength }: { actualLength: number; requiredLength: number }) =>
 		actualLength && requiredLength
 			? `${label} unterschreitet erforderliche Länge von ${requiredLength} um ${
 					requiredLength - actualLength
-			  } Zeichen`
+				} Zeichen`
 			: `${label} unterschreitet erforderliche Länge.`,
 };
 

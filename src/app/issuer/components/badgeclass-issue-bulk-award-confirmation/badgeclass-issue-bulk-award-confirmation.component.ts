@@ -73,7 +73,7 @@ export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRouta
 							type: ['Extension', 'extensions:RecipientProfile'],
 							name: striptags(row.name),
 						},
-				  }
+					}
 				: undefined;
 
 			assertion = {
