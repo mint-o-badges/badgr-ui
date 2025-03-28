@@ -1,64 +1,127 @@
 import { Component, inject, Input, TemplateRef } from '@angular/core';
-import { BrnDialogRef, injectBrnDialogContext } from '@spartan-ng/brain/dialog';
-import { HlmDialogFooterComponent, HlmDialogHeaderComponent } from './spartan/ui-dialog-helm/src';
+import {
+	BrnDialogCloseDirective,
+	BrnDialogComponent,
+	BrnDialogContentDirective,
+	BrnDialogRef,
+	BrnDialogTriggerDirective,
+	injectBrnDialogContext,
+} from '@spartan-ng/brain/dialog';
+import {
+	HlmDialogComponent,
+	HlmDialogContentComponent,
+	HlmDialogDescriptionDirective,
+	HlmDialogFooterComponent,
+	HlmDialogHeaderComponent,
+	HlmDialogTitleDirective,
+} from './spartan/ui-dialog-helm/src';
 import { HlmButtonDirective } from './spartan/ui-button-helm/src';
 import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { OebButtonComponent } from './oeb-button.component';
+import { OebDialogComponent } from './oeb-dialog.component';
 
 interface DialogContext {
 	headerTemplate: TemplateRef<void>;
+	tite?: string;
 	subtitle?: string;
-	variant: 'default' | 'danger' | 'info';
+	variant: 'danger' | 'info' | 'success';
 	content: TemplateRef<void>;
+	twoButtonFooter?: boolean;
 	footer?: boolean;
-	footerButtonText?: string;
+	forwardText?: string;
 }
 
 @Component({
 	selector: 'app-dialog',
 	standalone: true,
-	imports: [HlmDialogHeaderComponent, HlmDialogFooterComponent, HlmButtonDirective, CommonModule],
-	template: `
-		<div class="dialog-container" [ngClass]="dialogClass">
-			<hlm-dialog-header *ngIf="context.headerTemplate">
-				<ng-container *ngTemplateOutlet="context.headerTemplate"></ng-container>
-			</hlm-dialog-header>
+	imports: [
+		BrnDialogComponent,
+		BrnDialogTriggerDirective,
+		BrnDialogContentDirective,
+		BrnDialogCloseDirective,
 
-			<div class="dialog-body">
-				<ng-container *ngTemplateOutlet="context.content"></ng-container>
-			</div>
+		HlmDialogComponent,
+		HlmDialogContentComponent,
+		HlmDialogHeaderComponent,
+		HlmDialogFooterComponent,
+		HlmDialogTitleDirective,
+		HlmDialogDescriptionDirective,
 
-			<hlm-dialog-footer *ngIf="context.footer">
-				<ng-content select="[footer-actions]">
-					<!-- Default action button if nothing projected -->
-					<button hlmBtn type="button" (click)="close()">
-						{{ context.footerButtonText ?? 'Close' }}
-					</button>
-				</ng-content>
-			</hlm-dialog-footer>
-		</div>
-	`,
-	styles: [
-		`
-			.dialog-container {
-				@apply tw-px-6 tw-py-6 tw-rounded-[10px] tw-bg-white tw-border-solid tw-border-4;
-			}
-		`,
+		HlmButtonDirective,
+		CommonModule,
+		TranslateModule,
+		OebButtonComponent,
+		OebDialogComponent,
 	],
+	template: `
+		<oeb-dialog [variant]="context.variant">
+			<ng-container *ngIf="context.headerTemplate">
+				<ng-container *ngTemplateOutlet="context.headerTemplate"></ng-container>
+			</ng-container>
+			<ng-container *ngIf="context.variant == 'success'">
+				<div class="tw-text-center tw-text-purple">
+					<div class="tw-flex tw-justify-center">
+						<div class="oeb-icon-circle tw-my-6">
+							<svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+								<circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none" />
+								<path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+							</svg>
+						</div>
+					</div>
+				</div>
+			</ng-container>
+
+			<ng-container *ngIf="isTemplate(context.content); else textContent">
+				<ng-container *ngTemplateOutlet="context.content"></ng-container>
+			</ng-container>
+			<ng-template #textContent>
+				<p class="tw-text-center" [innerHTML]="context.content"></p>
+			</ng-template>
+
+			<ng-container *ngIf="context.twoButtonFooter">
+				<div class="tw-flex tw-justify-between tw-gap-2 tw-mt-6">
+					<oeb-button
+						size="md"
+						variant="secondary"
+						[text]="'General.cancel' | translate"
+						(click)="cancel()"
+					></oeb-button>
+					<oeb-button
+						width="max_content"
+						size="md"
+						class="tw-mr-4"
+						[text]="context.forwardText"
+						(click)="continue()"
+					></oeb-button>
+				</div>
+			</ng-container>
+		</oeb-dialog>
+	`,
+	styleUrl: './dialog.component.scss',
 })
 export class DialogComponent {
 	private readonly _dialogContext = injectBrnDialogContext<DialogContext>();
 	private readonly dialogRef = inject<BrnDialogRef>(BrnDialogRef);
 	protected readonly context = this._dialogContext;
 
-	get dialogClass() {
-		return {
-			'tw-border-red': this.context.variant === 'danger',
-			'tw-border-link': this.context.variant === 'info',
-			'tw-border-purple': this.context.variant === 'default',
-		};
-	}
-
 	close() {
 		this.dialogRef.close();
+	}
+
+	public cancel() {
+		this.dialogRef.close('cancel');
+	}
+
+	public continue() {
+		this.dialogRef.close('continue');
+	}
+
+	isTemplate(content: any): boolean {
+		return content instanceof TemplateRef;
+	}
+
+	ngOnInit() {
+		console.log(this.context);
 	}
 }

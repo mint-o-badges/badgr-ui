@@ -57,6 +57,8 @@ import { IssuerEditFormComponent } from './components/issuer-edit-form/issuer-ed
 import { Issuer } from './models/issuer.model';
 import { LearningPathEditComponent } from './components/learningpath-edit/learningpath-edit.component';
 import { BadgeClassSelectTypeComponent } from './components/badgeclass-select-type/badgeclass-select-type.component';
+import { PublicApiService } from '../public/services/public-api.service';
+import { IssuerStaffRequestApiService } from './services/issuer-staff-request-api.service';
 import { QRCodeComponent } from 'angularx-qrcode';
 import { BadgeClassEditCopyPermissionsComponent } from './components/badgeclass-edit-copypermissions/badgeclass-edit-copypermissions';
 
@@ -220,6 +222,8 @@ const routes = [
 		QrCodeApiService,
 		BadgeRequestApiService,
 		CdkStepper,
+		PublicApiService,
+		IssuerStaffRequestApiService,
 	],
 })
 export class IssuerModule {}

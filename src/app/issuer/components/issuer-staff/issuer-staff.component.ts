@@ -24,6 +24,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { typedFormGroup } from '../../../common/util/typed-forms';
 import { Validators } from '@angular/forms';
 import { EmailValidator } from '../../../common/validators/email.validator';
+import { IssuerStaffRequestApiService } from '../../services/issuer-staff-request-api.service';
+import { ApiStaffRequest } from '../../staffrequest-api.model';
 
 @Component({
 	templateUrl: './issuer-staff.component.html',
@@ -56,6 +58,10 @@ export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent imp
 	profileEmails: UserProfileEmail[] = [];
 	error: string = null;
 
+	staffRequests: ApiStaffRequest[] = [];
+
+	staffRequestsCaption: string | null = null;
+
 	@ViewChild('issuerStaffCreateDialog')
 	issuerStaffCreateDialog: IssuerStaffCreateDialogComponent;
 
@@ -80,6 +86,7 @@ export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent imp
 		protected configService: AppConfigService,
 		protected dialogService: CommonDialogsService,
 		protected translate: TranslateService,
+		protected issuerStaffRequestApiService: IssuerStaffRequestApiService,
 	) {
 		super(router, route, loginService);
 		title.setTitle(`Manage Issuer Staff - ${this.configService.theme['serviceName'] || 'Badgr'}`);
@@ -98,6 +105,12 @@ export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent imp
 		this.profileEmailsLoaded = this.profileManager.userProfilePromise
 			.then((profile) => profile.emails.loadedPromise)
 			.then((emails) => (this.profileEmails = emails.entities));
+	}
+
+	ngOnInit(): void {
+		this.issuerStaffRequestApiService.getStaffRequestsByIssuer(this.issuerSlug).then((r) => {
+			this.staffRequests = r.body;
+		});
 	}
 
 	staffCreateForm = typedFormGroup()
@@ -192,5 +205,13 @@ export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent imp
 				footer: false,
 			},
 		});
+	}
+
+	deleteStaffRequest(event) {
+		console.log(event);
+	}
+
+	confirmStaffRequest(event) {
+		this.issuerStaffRequestApiService.confirmRequest(this.issuerSlug, event);
 	}
 }
