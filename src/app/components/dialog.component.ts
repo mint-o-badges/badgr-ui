@@ -1,6 +1,20 @@
 import { Component, inject, Input, TemplateRef } from '@angular/core';
-import { BrnDialogRef, injectBrnDialogContext } from '@spartan-ng/brain/dialog';
-import { HlmDialogFooterComponent, HlmDialogHeaderComponent } from './spartan/ui-dialog-helm/src';
+import {
+	BrnDialogCloseDirective,
+	BrnDialogComponent,
+	BrnDialogContentDirective,
+	BrnDialogRef,
+	BrnDialogTriggerDirective,
+	injectBrnDialogContext,
+} from '@spartan-ng/brain/dialog';
+import {
+	HlmDialogComponent,
+	HlmDialogContentComponent,
+	HlmDialogDescriptionDirective,
+	HlmDialogFooterComponent,
+	HlmDialogHeaderComponent,
+	HlmDialogTitleDirective,
+} from './spartan/ui-dialog-helm/src';
 import { HlmButtonDirective } from './spartan/ui-button-helm/src';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
