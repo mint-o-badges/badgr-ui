@@ -16,6 +16,7 @@ import { TranslateService } from '@ngx-translate/core';
 @Component({
 	selector: 'change-password',
 	templateUrl: './change-password.component.html',
+	standalone: false,
 })
 export class ChangePasswordComponent extends BaseRoutableComponent {
 	changePasswordForm = typedFormGroup()
@@ -49,7 +50,7 @@ export class ChangePasswordComponent extends BaseRoutableComponent {
 		router: Router,
 		protected configService: AppConfigService,
 		private _messageService: MessageService,
-		private translate: TranslateService
+		private translate: TranslateService,
 	) {
 		super(router, route);
 

@@ -26,6 +26,7 @@ import { PageConfig } from '../../../common/components/badge-detail/badge-detail
 			(verifiedBadgeAssertion)="onVerifiedBadgeAssertion($event)"
 		></verify-badge-dialog>
 		<bg-badgedetail [config]="config" [awaitPromises]="[assertionIdParam]"></bg-badgedetail>`,
+	standalone: false,
 })
 export class PublicBadgeAssertionComponent {
 	constructor(
@@ -165,9 +166,9 @@ export class PublicBadgeAssertionComponent {
 				this.assertionId = paramValue;
 				const service: PublicApiService = this.injector.get(PublicApiService);
 
-				const assertion = await service.getBadgeAssertion(paramValue)
-				const lps = await service.getLearningPathsForBadgeClass(assertion.badge.slug)
-				
+				const assertion = await service.getBadgeAssertion(paramValue);
+				const lps = await service.getLearningPathsForBadgeClass(assertion.badge.slug);
+
 				this.config = {
 					badgeTitle: assertion.badge.name,
 					headerButton: {
@@ -240,27 +241,24 @@ export class PublicBadgeAssertionComponent {
 					badgeImage: assertion.badge.image,
 					competencies: assertion.badge['extensions:CompetencyExtension'],
 					license: assertion.badge['extensions:LicenseExtension'] ? true : false,
-					learningPaths: lps
+					learningPaths: lps,
+				};
+				if (assertion.revoked) {
+					if (assertion.revocationReason) {
+						this.messageService.reportFatalError('Assertion has been revoked:', assertion.revocationReason);
+					} else {
+						this.messageService.reportFatalError('Assertion has been revoked.', '');
+					}
+				} else if (this.showDownload) {
+					this.openSaveDialog(assertion);
 				}
-			if (assertion.revoked) {
-				if (assertion.revocationReason) {
-					this.messageService.reportFatalError('Assertion has been revoked:', assertion.revocationReason);
-				} else {
-					this.messageService.reportFatalError('Assertion has been revoked.', '');
+				if (assertion['extensions:recipientProfile'] && assertion['extensions:recipientProfile'].name) {
+					this.awardedToDisplayName = assertion['extensions:recipientProfile'].name;
 				}
-			} else if (this.showDownload) {
-				this.openSaveDialog(assertion);
+				return assertion;
+			} catch (err) {
+				console.error('Failed to fetch assertion data', err);
 			}
-			if (assertion['extensions:recipientProfile'] && assertion['extensions:recipientProfile'].name) {
-				this.awardedToDisplayName = assertion['extensions:recipientProfile'].name;
-			}
-			return assertion;
-			}
-			catch(err){
-				console.error("Failed to fetch assertion data", err)
-			}
-
-		})
-		
+		});
+	}
 }
-}	

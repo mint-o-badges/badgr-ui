@@ -21,10 +21,12 @@ import { MessageService } from '../services/message.service';
 	template: `
 		<div class="forminput u-margin-bottom2x">
 			<div class="forminput-x-labelrow">
-				<label [class]="labelStyle" for="image_field{{ uniqueIdSuffix }}">{{
-					label
-				}}</label>
-				<span *ngIf="sublabelRight" class="tw-mr-auto tw-ml-2 tw-font-[rubik] tw-text-oebblack tw-text-sm tw-font-normal">{{sublabelRight}}</span>
+				<label [class]="labelStyle" for="image_field{{ uniqueIdSuffix }}">{{ label }}</label>
+				<span
+					*ngIf="sublabelRight"
+					class="tw-mr-auto tw-ml-2 tw-font-[rubik] tw-text-oebblack tw-text-sm tw-font-normal"
+					>{{ sublabelRight }}</span
+				>
 				<a
 					*ngIf="generateRandom"
 					(click)="$event.preventDefault(); generateRandomImage.emit()"
@@ -33,7 +35,11 @@ import { MessageService } from '../services/message.service';
 					>{{ 'RecBadge.genRandomImage' | translate }}</a
 				>
 			</div>
-			<p class="tw-text-sm tw-w-full tw-text-center tw-text-oebblack tw-mt-2 tw-italic tw-leading-[16.4px]" [innerHTML]="sublabel" *ngIf="sublabel"></p>
+			<p
+				class="tw-text-sm tw-w-full tw-text-center tw-text-oebblack tw-mt-2 tw-italic tw-leading-[16.4px]"
+				[innerHTML]="sublabel"
+				*ngIf="sublabel"
+			></p>
 			<input
 				type="file"
 				[accept]="allowedFileFormats"
@@ -72,13 +78,14 @@ import { MessageService } from '../services/message.service';
 				</div>
 
 				<ng-container *ngIf="!imageDataUrl">
-					<hlm-icon size="xl" name="lucideCloudUpload"></hlm-icon>
+					<ng-icon hlm size="xl" name="lucideCloudUpload"></ng-icon>
 					<p *ngIf="dropZoneInfo1" class="dropzone-x-info1">
 						<span cass="tw-font-bold">{{ dropZoneInfo1 }} </span>
-						<span class="tw-inline-block tw-font-normal tw-my-1 tw-mr-1" *ngIf="dropZoneInfo1"> {{ 'General.or' | translate }}  </span>
+						<span class="tw-inline-block tw-font-normal tw-my-1 tw-mr-1" *ngIf="dropZoneInfo1">
+							{{ 'General.or' | translate }}
+						</span>
 					</p>
 					<p class="dropzone-x-info2">
-
 						<span class="u-text-link tw-underline tw-inline-block tw-font-normal">{{ text_body }}</span>
 					</p>
 					<!-- dont let user select icon when uploading badge -->
@@ -92,10 +99,7 @@ import { MessageService } from '../services/message.service';
 						>
 					</p>
 					<p *ngIf="loaderName != 'basic' && dropZoneInfo3" class="tw-mx-auto tw-mt-4">
-						<span
-							class="tw-text-oebblack tw-italic tw-text-sm tw-mt-4"
-							>{{ dropZoneInfo3 }}</span
-						>
+						<span class="tw-text-oebblack tw-italic tw-text-sm tw-mt-4">{{ dropZoneInfo3 }}</span>
 					</p>
 				</ng-container>
 			</label>
@@ -103,6 +107,7 @@ import { MessageService } from '../services/message.service';
 			<p class="forminput-x-error" *ngIf="control.dirty && !control.valid">{{ errorMessage }}</p>
 		</div>
 	`,
+	standalone: false,
 })
 export class BgFormFieldImageComponent {
 	@Input() set imageLoaderName(name: string) {
@@ -151,7 +156,7 @@ export class BgFormFieldImageComponent {
 	@Input() type: string = null;
 	@Input() errorMessage = 'Please provide a valid image file';
 	@Input() placeholderImage: string;
-	@Input() labelStyle = "forminput-x-label u-margin-bottom1x tw-w-full tw-text-center !tw-font-bold !tw-text-[22px]";
+	@Input() labelStyle = 'forminput-x-label u-margin-bottom1x tw-w-full tw-text-center !tw-font-bold !tw-text-[22px]';
 	@Input() imageLoader: (file: File | string) => Promise<string> = basicImageLoader;
 	@Input() maxSizeInMB: number = null;
 
@@ -485,7 +490,7 @@ export function issuerImageLoader(file: File | string): Promise<string> {
 				const tolerance = 0.05;
 
 				if (this.maxSizeInMB && imageSizeInMB > this.maxSizeInMB) {
-					return Promise.reject(new Error("Image is large"));
+					return Promise.reject(new Error('Image is large'));
 				} else if (Math.abs(image.width / image.height - 1) > tolerance) {
 					return Promise.reject(new Error('Image must be square'));
 				}
@@ -522,11 +527,14 @@ export function issuerImageLoader(file: File | string): Promise<string> {
 				return dataURL;
 			})
 			.catch((e) => {
-				if(e.message === 'Image is large') {
-					this.imageError.emit(`Das Bild ist zu groß. Bitte wähle ein Bild mit einer Größe von maximal ${this.maxSizeInMB} MB.`);
-				}
-				else if(e.message === 'Image must be square') {
-					this.imageError.emit('Bitte lade ein Bild im quadratischen 1:1-Format hoch, damit es auf unserer Plattform optimal dargestellt werden kann');
+				if (e.message === 'Image is large') {
+					this.imageError.emit(
+						`Das Bild ist zu groß. Bitte wähle ein Bild mit einer Größe von maximal ${this.maxSizeInMB} MB.`,
+					);
+				} else if (e.message === 'Image must be square') {
+					this.imageError.emit(
+						'Bitte lade ein Bild im quadratischen 1:1-Format hoch, damit es auf unserer Plattform optimal dargestellt werden kann',
+					);
 				}
 				throw new Error(`${file.name} is not a valid image file`);
 			});

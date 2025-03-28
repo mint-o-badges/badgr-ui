@@ -14,6 +14,7 @@ import { AppConfigService } from '../../../common/app-config.service';
 @Component({
 	// selector: 'logout',
 	templateUrl: './oauth2-authorize.component.html',
+	standalone: false,
 })
 export class OAuth2AuthorizeComponent extends BaseRoutableComponent {
 	readonly authLinkLogoSrc = this.theme.logoImg.small;

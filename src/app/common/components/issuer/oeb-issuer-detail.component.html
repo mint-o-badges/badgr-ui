@@ -9,7 +9,7 @@
 				class="tw-h-[70px] md:tw-h-[100px] tw-w-auto tw-min-w-[70px] md:tw-min-w-[100px]"
 			/>
 		</div>
-		<div class="tw-flex tw-flex-col tw-justify-center tw-pl-8 tw-max-w-[80%]">
+		<div class="tw-flex tw-flex-col tw-justify-center tw-pl-8 tw-max-w-[80%] oeb-break-words">
 			<h1 hlmH1 class="tw-text-purple tw-font-semibold md:tw-text-[35px] xl:tw-text-[46px]">
 				{{ issuer.name }}
 			</h1>
@@ -26,7 +26,7 @@
 					class="tw-text-oebblack tw-font-semibold md:tw-text-[20px] md:tw-leading-[24.4px] tw-text-[14px] tw-leading-[19.6px]"
 				>
 					{{ 'Issuer.yourRole' | translate }}
-					{{ issuer.currentUserStaffMember?.roleInfo.label }}:in
+					{{ issuer.currentUserStaffMember?.roleInfo.label }}
 				</p>
 			</ng-container>
 		</div>
@@ -70,7 +70,7 @@
 	</div>
 </div>
 <div>
-	<p class="tw-text-oebblack tw-py-4">{{ issuer.description }}</p>
+	<p class="tw-text-oebblack oeb-break-words tw-py-4">{{ issuer.description }}</p>
 </div>
 <div class="topbar-x-buttons tw-grid md:tw-hidden">
 	<p *ngIf="issuer.apiModel && !issuer.apiModel.verified" class="u-margin-top1x u-width-paragraph">
@@ -123,13 +123,13 @@
 	<ng-template #badgesTemplate>
 		<section class="oeb-section-sm" *ngIf="!badges?.length">
 			<h2
-				class="tw-font-medium md:tw-text-[22px] md:tw-leading-[26.4px] tw-text-purple tw-text-[16px] tw-leading-[19.2px]"
+				class="tw-font-medium md:tw-text-[22px] md:tw-leading-[26.4px] tw-text-purple tw-text-[16px] tw-leading-[19.2px] oeb-break-words"
 			>
 				{{ issuer.name }} {{ 'Issuer.issuerHasNoBadgesYet' | translate }}
 			</h2>
 		</section>
 
-		<section class="oeb-section-sm tw-relative" *ngIf="badges?.length">
+		<section class="oeb-section-sm tw-relative oeb-break-words" *ngIf="badges?.length">
 			<h2
 				class="tw-font-medium md:tw-text-[22px] md:tw-leading-[26.4px] tw-text-purple tw-text-[16px] tw-leading-[19.2px] tw-py-4"
 			>
@@ -181,14 +181,16 @@
 		<div class="oeb-section-sm">
 			<ng-template [bgAwaitPromises]="learningPathsPromise">
 				<div *ngIf="!learningPaths?.length">
-					<p hlmP>{{ issuer.name }} {{ 'Issuer.issuerHasNoLearningPathYet' | translate }}</p>
+					<p class="oeb-break-words" hlmP>
+						{{ issuer.name }} {{ 'Issuer.issuerHasNoLearningPathYet' | translate }}
+					</p>
 				</div>
 				<div *ngIf="learningPaths && learningPaths.length > 0">
 					<h2
-						class="tw-font-medium md:tw-text-[22px] md:tw-leading-[26.4px] tw-text-purple tw-text-[16px] tw-leading-[19.2px] tw-py-4"
+						class="tw-font-medium md:tw-text-[22px] md:tw-leading-[26.4px] tw-text-purple tw-text-[16px] tw-leading-[19.2px] tw-py-4 oeb-break-words"
 					>
-						{{ issuer.name }} {{ 'Issuer.issuerHasBadges' | translate }}
-						{{ learningPaths.length }} Micro Degree{{ learningPaths.length == 1 ? '' : 's' }}.
+						{{ issuer.name }} {{ 'Issuer.issuerHasBadges' | translate }} {{ learningPaths.length }} Micro
+						Degree{{ learningPaths.length == 1 ? '' : 's' }}.
 					</h2>
 					<learningpaths-datatable
 						*ngIf="!public"

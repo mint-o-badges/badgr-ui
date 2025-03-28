@@ -10,6 +10,7 @@ export type BadgeClassExpiresDuration = 'days' | 'weeks' | 'months' | 'years';
 
 export type BadgeClassLevel = 'a1' | 'a2' | 'b1' | 'b2' | 'c1' | 'c2';
 export type BadgeClassCategory = 'competency' | 'participation' | 'learningpath';
+export type BadgeClassCopyPermissions = 'issuer' | 'others';
 
 export interface ApiBadgeClassJsonld {
 	'@context': string;
@@ -37,6 +38,7 @@ export interface ApiBadgeClassForCreation {
 	tags?: string[];
 	alignment?: ApiBadgeClassAlignment[];
 	expires?: ApiBadgeClassExpiration;
+	copy_permissions?: BadgeClassCopyPermissions[];
 }
 
 export interface ApiBadgeClassAlignment {
@@ -64,12 +66,11 @@ export interface ApiBadgeClass extends ApiBadgeClassForCreation {
 	created_at: string;
 	created_by: string;
 
-	updated_at?: string
+	updated_at?: string;
 
 	json: ApiBadgeClassJsonld;
 	source_url: string;
 
 	issuerVerified: boolean;
 	issuerOwnerAcceptedTos: boolean;
-
 }

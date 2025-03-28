@@ -1,20 +1,6 @@
 import { Component, inject, Input, TemplateRef } from '@angular/core';
-import {
-	BrnDialogComponent,
-	BrnDialogTriggerDirective,
-	BrnDialogContentDirective,
-	BrnDialogCloseDirective,
-	BrnDialogRef,
-	injectBrnDialogContext
-} from '@spartan-ng/ui-dialog-brain';
-import {
-	HlmDialogComponent,
-	HlmDialogContentComponent,
-	HlmDialogDescriptionDirective,
-	HlmDialogFooterComponent,
-	HlmDialogHeaderComponent,
-	HlmDialogTitleDirective,
-} from './spartan/ui-dialog-helm/src';
+import { BrnDialogRef, injectBrnDialogContext } from '@spartan-ng/brain/dialog';
+import { HlmDialogFooterComponent, HlmDialogHeaderComponent } from './spartan/ui-dialog-helm/src';
 import { HlmButtonDirective } from './spartan/ui-button-helm/src';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
@@ -48,45 +34,57 @@ interface DialogContext {
 		HlmDialogTitleDirective,
 		HlmDialogDescriptionDirective,
 
-
 		HlmButtonDirective,
 		CommonModule,
 		TranslateModule,
 		OebButtonComponent,
-		OebDialogComponent
+		OebDialogComponent,
 	],
 	template: `
-			<oeb-dialog [variant]="context.variant">
-				<ng-container *ngIf="context.headerTemplate">
-					<ng-container *ngTemplateOutlet="context.headerTemplate"></ng-container>
-				</ng-container>
-				<ng-container *ngIf="context.variant == 'success'">
-					<div class="tw-text-center tw-text-purple">	
-						<div class="tw-flex tw-justify-center">
-							<div class="oeb-icon-circle tw-my-6">
-								<svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52"><circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/><path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/></svg>
-							</div>
+		<oeb-dialog [variant]="context.variant">
+			<ng-container *ngIf="context.headerTemplate">
+				<ng-container *ngTemplateOutlet="context.headerTemplate"></ng-container>
+			</ng-container>
+			<ng-container *ngIf="context.variant == 'success'">
+				<div class="tw-text-center tw-text-purple">
+					<div class="tw-flex tw-justify-center">
+						<div class="oeb-icon-circle tw-my-6">
+							<svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+								<circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none" />
+								<path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+							</svg>
 						</div>
-					</div>	
-				</ng-container>
-				
-
-				<ng-container *ngIf="isTemplate(context.content); else textContent">
-					<ng-container *ngTemplateOutlet="context.content"></ng-container>
-				</ng-container>
-				<ng-template #textContent>
-					<p class='tw-text-center' [innerHTML]="context.content"></p>
-				</ng-template>						
-
-				<ng-container *ngIf="context.twoButtonFooter">
-					<div class="tw-flex tw-justify-between tw-gap-2 tw-mt-6">
-						<oeb-button size="md" variant="secondary" [text]="'General.cancel' | translate" (click)="cancel()"></oeb-button>
-						<oeb-button width="max_content" size="md" class="tw-mr-4" [text]="context.forwardText" (click)="continue()"></oeb-button>
 					</div>
-				</ng-container>
-			</oeb-dialog>
+				</div>
+			</ng-container>
+
+			<ng-container *ngIf="isTemplate(context.content); else textContent">
+				<ng-container *ngTemplateOutlet="context.content"></ng-container>
+			</ng-container>
+			<ng-template #textContent>
+				<p class="tw-text-center" [innerHTML]="context.content"></p>
+			</ng-template>
+
+			<ng-container *ngIf="context.twoButtonFooter">
+				<div class="tw-flex tw-justify-between tw-gap-2 tw-mt-6">
+					<oeb-button
+						size="md"
+						variant="secondary"
+						[text]="'General.cancel' | translate"
+						(click)="cancel()"
+					></oeb-button>
+					<oeb-button
+						width="max_content"
+						size="md"
+						class="tw-mr-4"
+						[text]="context.forwardText"
+						(click)="continue()"
+					></oeb-button>
+				</div>
+			</ng-container>
+		</oeb-dialog>
 	`,
-	styleUrl: './dialog.component.scss'
+	styleUrl: './dialog.component.scss',
 })
 export class DialogComponent {
 	private readonly _dialogContext = injectBrnDialogContext<DialogContext>();
@@ -109,7 +107,7 @@ export class DialogComponent {
 		return content instanceof TemplateRef;
 	}
 
-	ngOnInit(){
-		console.log(this.context)
+	ngOnInit() {
+		console.log(this.context);
 	}
 }

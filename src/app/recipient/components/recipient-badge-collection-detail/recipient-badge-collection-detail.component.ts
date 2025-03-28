@@ -17,6 +17,7 @@ import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcru
 @Component({
 	selector: 'recipient-earned-badge-detail',
 	templateUrl: 'recipient-badge-collection-detail.component.html',
+	standalone: false,
 })
 export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	readonly badgeLoadingImageUrl = '../../../../breakdown/static/images/badge-loading.svg';

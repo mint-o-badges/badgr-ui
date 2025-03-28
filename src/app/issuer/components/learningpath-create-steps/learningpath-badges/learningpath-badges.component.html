@@ -30,7 +30,7 @@
 									[(ngModel)]="groupBy"
 									#selectInput
 									class="border tw-font-normal"
-									[ngClass]="{'tw-font-bold!': groupBy != '---'}"
+									[ngClass]="{ 'tw-font-bold!': groupBy != '---' }"
 									[ngModelOptions]="{ standalone: true }"
 									id="badge-catalog-select"
 								>
@@ -60,12 +60,7 @@
 						[issuerSlug]="badge.issuerSlug"
 						[competencies]="badge.extension['extensions:CompetencyExtension']"
 						(ngModelChange)="checkboxChange($event, badge)"
-						(checkboxChange)="
-							checkboxChange(
-								$event,
-								badge
-							)
-						"
+						(checkboxChange)="checkboxChange($event, badge)"
 						[checked]="badgeChecked(badge)"
 						[showCheckbox]="true"
 					></bg-badgecard>
@@ -96,12 +91,7 @@
 							[competencies]="badge.extension['extensions:CompetencyExtension']"
 							[showCheckbox]="true"
 							(ngModelChange)="checkboxChange($event, badge)"
-							(checkboxChange)="
-							checkboxChange(
-								$event,
-								badge
-								)
-							"
+							(checkboxChange)="checkboxChange($event, badge)"
 							[checked]="badgeChecked(badge)"
 						></bg-badgecard>
 					</div>
@@ -132,12 +122,7 @@
 							[competencies]="badge.extension['extensions:CompetencyExtension']"
 							[showCheckbox]="true"
 							(ngModelChange)="checkboxChange($event, badge)"
-							(checkboxChange)="
-							checkboxChange(
-								$event,
-								badge
-								)
-							"
+							(checkboxChange)="checkboxChange($event, badge)"
 							[checked]="badgeChecked(badge)"
 						></bg-badgecard>
 					</div>

@@ -8,10 +8,11 @@ import { HlmPDirective } from './spartan/ui-typography-helm/src/lib/hlm-p.direct
 
 @Component({
 	selector: 'oeb-input',
-	standalone: true,
 	imports: [HlmInputDirective, HlmPDirective, OebInputErrorComponent, NgIf, NgClass, ReactiveFormsModule],
 	styleUrls: ['./input.component.scss'],
-	template: ` <div [ngClass]="{ 'tw-my-6 md:tw-mt-7': !noTopMargin, 'tw-opacity-50 tw-pointer-events-none': readonly }">
+	template: ` <div
+		[ngClass]="{ 'tw-my-6 md:tw-mt-7': !noTopMargin, 'tw-opacity-50 tw-pointer-events-none': readonly }"
+	>
 		<div class="tw-flex tw-justify-between">
 			<label class="tw-pb-[2px] tw-pl-[3px]" [attr.for]="inputName" *ngIf="label">
 				<span *ngIf="labelStyle; else baseLabel" [class]="labelStyle" [innerHTML]="label"></span>
@@ -45,7 +46,7 @@ import { HlmPDirective } from './spartan/ui-typography-helm/src/lib/hlm-p.direct
 				[attr.max]="max"
 				[type]="fieldType"
 				[readonly]="readonly"
-			#textInput
+				#textInput
 				class="tw-w-full tw-border-solid tw-border-purple tw-bg-white"
 				hlmInput
 			/>
@@ -60,7 +61,7 @@ import { HlmPDirective } from './spartan/ui-typography-helm/src/lib/hlm-p.direct
 				[attr.maxlength]="maxchar"
 				[attr.max]="max"
 				[readonly]="readonly"
-			#textInput
+				#textInput
 				class="tw-w-full tw-border-solid tw-border-purple tw-bg-white tw-min-h-[80px]"
 				hlmInput
 			></textarea>
@@ -182,9 +183,6 @@ export class OebInputComponent {
 		this.remainingCharactersNum = this.maxchar - (this.control.value ? this.control.value.length : 0);
 	}
 
-
-
-
 	public postProcessInput() {
 		if (this.urlField) {
 			UrlValidator.addMissingHttpToControl(this.control);
@@ -206,11 +204,15 @@ export const defaultValidatorMessages: {
 		{ actualLength, requiredLength }: { actualLength: number; requiredLength: number },
 	) =>
 		actualLength && requiredLength
-			? `${label ?? 'Text'} überschreitet maximale Länge von ${requiredLength} um ${actualLength - requiredLength} Zeichen`
+			? `${label ?? 'Text'} überschreitet maximale Länge von ${requiredLength} um ${
+					actualLength - requiredLength
+				} Zeichen`
 			: `${label ?? 'Text'} überschreitet maximale Länge.`,
 	minlength: (label: string, { actualLength, requiredLength }: { actualLength: number; requiredLength: number }) =>
 		actualLength && requiredLength
-			? `${label} unterschreitet erforderliche Länge von ${requiredLength} um ${requiredLength - actualLength} Zeichen`
+			? `${label} unterschreitet erforderliche Länge von ${requiredLength} um ${
+					requiredLength - actualLength
+				} Zeichen`
 			: `${label} unterschreitet erforderliche Länge.`,
 };
 

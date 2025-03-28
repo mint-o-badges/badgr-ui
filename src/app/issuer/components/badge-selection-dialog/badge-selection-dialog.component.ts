@@ -195,6 +195,7 @@ export interface BadgeSelectionDialogSettings {
 			</section>
 		</dialog>
 	`,
+	standalone: false,
 })
 export class BadgeSelectionDialog extends BaseDialog {
 	get searchQuery() {

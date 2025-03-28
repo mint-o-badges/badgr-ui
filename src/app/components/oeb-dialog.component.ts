@@ -1,43 +1,31 @@
 import { Component, Input } from '@angular/core';
 import { HlmButtonDirective } from './spartan/ui-button-helm/src';
-import { BrnDialogContentDirective, BrnDialogTriggerDirective } from '@spartan-ng/ui-dialog-brain';
+
 import {
-	HlmDialogComponent,
-	HlmDialogContentComponent,
 	HlmDialogDescriptionDirective,
 	HlmDialogFooterComponent,
 	HlmDialogHeaderComponent,
-	HlmDialogTitleDirective,
 } from './spartan/ui-dialog-helm/src';
-import { HlmInputDirective } from './spartan/ui-input-helm/src';
+
 import { NgClass, NgIf } from '@angular/common';
 
 @Component({
 	selector: 'oeb-dialog',
-	standalone: true,
 	imports: [
-		BrnDialogTriggerDirective,
-		BrnDialogContentDirective,
-
-		HlmDialogComponent,
-		HlmDialogContentComponent,
 		HlmDialogHeaderComponent,
 		HlmDialogFooterComponent,
-		HlmDialogTitleDirective,
 		HlmDialogDescriptionDirective,
-
-		HlmInputDirective,
 		HlmButtonDirective,
 		NgIf,
 		NgClass,
 	],
 	template: `
 		<div
-			class="tw-px-4 tw-py-6 tw-rounded-[20px] tw-border-purple tw-bg-white tw-border-4 tw-border-solid"
+			class="tw-px-4 tw-py-6"
 			[ngClass]="{
 				'!tw-border-red !tw-bg-white !tw-border-4 !tw-border-solid': variant === 'danger',
 				'!tw-border-link !tw-bg-white !tw-border-4 !tw-border-solid': variant === 'info',
-				'!tw-border-green !tw-bg-green' : variant === 'success'
+				'!tw-border-green !tw-bg-green': variant === 'success'
 			}"
 		>
 			<hlm-dialog-header *ngIf="title">

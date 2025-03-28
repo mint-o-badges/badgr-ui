@@ -7,6 +7,7 @@ import { BaseRoutableComponent } from '../../../common/pages/base-routable.compo
 @Component({
 	selector: 'password-reset-sent',
 	templateUrl: './reset-password-sent.component.html',
+	standalone: false,
 })
 export class ResetPasswordSent extends BaseRoutableComponent {
 	constructor(

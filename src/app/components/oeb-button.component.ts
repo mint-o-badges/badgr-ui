@@ -2,14 +2,15 @@ import { Component, Input, input } from '@angular/core';
 import { HlmButtonDirective } from './spartan/ui-button-helm/src';
 import { NgIf, NgClass } from '@angular/common';
 import { MessageService } from '../common/services/message.service';
-import { HlmIconModule, provideIcons } from './spartan/ui-icon-helm/src';
-import { lucidePlus, lucideUpload, lucideCircleX } from '@ng-icons/lucide';
+import { lucidePlus, lucideUpload, lucideCircleX, lucideMapPin } from '@ng-icons/lucide';
+import { provideIcons } from '@ng-icons/core';
+import { HlmIconDirective } from './spartan/ui-icon-helm/src';
+import { NgIcon } from '@ng-icons/core';
 
 @Component({
 	selector: 'oeb-button',
-	standalone: true,
-	imports: [HlmButtonDirective, NgIf, NgClass, HlmIconModule],
-	providers: [MessageService, provideIcons({ lucideUpload, lucidePlus, lucideCircleX })],
+	imports: [HlmButtonDirective, HlmIconDirective, NgIf, NgClass, NgIcon],
+	providers: [MessageService, provideIcons({ lucideUpload, lucidePlus, lucideCircleX, lucideMapPin })],
 	template: `<button
 		[type]="type"
 		class="tw-relative"
@@ -20,9 +21,12 @@ import { lucidePlus, lucideUpload, lucideCircleX } from '@ng-icons/lucide';
 		[variant]="variant"
 		[attr.id]="id"
 	>
-		<hlm-icon *ngIf="icon" [ngClass]="{ 'tw-mr-4': iconLeft }" [size]="size" [name]="icon" />
+		<ng-icon hlm *ngIf="icon" [ngClass]="{ 'tw-mr-4': iconLeft }" size="lg" [name]="icon" />
 		<img *ngIf="img" class="md:tw-h-[30px] tw-h-[20px] tw-pr-4" [src]="img" />
-		<span [ngClass]="{ 'tw-text-[15px]': fontSize15 }" [innerHTML]="showLoadingMessage && loadingMessage ? loadingMessage : text"></span>
+		<span
+			[ngClass]="{ 'tw-text-[15px]': fontSize15 }"
+			[innerHTML]="showLoadingMessage && loadingMessage ? loadingMessage : text"
+		></span>
 	</button> `,
 })
 export class OebButtonComponent {
@@ -86,5 +90,5 @@ export class OebButtonComponent {
 			);
 		}
 	}
-	constructor(private messageService: MessageService) { }
+	constructor(private messageService: MessageService) {}
 }

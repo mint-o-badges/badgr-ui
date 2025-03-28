@@ -1,7 +1,8 @@
+import { NgIcon } from '@ng-icons/core';
 import { CommonModule } from '@angular/common';
 import { BadgrCommonModule } from '../common/badgr-common.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { BrnAccordionContentComponent } from '@spartan-ng/ui-accordion-brain';
+import { BrnAccordionContentComponent } from '@spartan-ng/brain/accordion';
 import { HlmIconModule } from './spartan/ui-icon-helm/src';
 import { RouterModule } from '@angular/router';
 import { Component, EventEmitter, Input, Output, computed, effect, input, signal } from '@angular/core';
@@ -12,26 +13,25 @@ import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { debounceTime } from 'rxjs';
 import { BadgeInstance } from '../issuer/models/badgeinstance.model';
 import { FormsModule } from '@angular/forms';
-import { HlmIconComponent, provideIcons } from './spartan/ui-icon-helm/src';
+import { HlmIconDirective } from './spartan/ui-icon-helm/src';
 import { lucideSearch } from '@ng-icons/lucide';
 import { HlmCommandInputWrapperComponent } from './spartan/ui-command-helm/src';
 import { OebButtonComponent } from './oeb-button.component';
+import { provideIcons } from '@ng-icons/core';
 
 @Component({
 	selector: 'issuer-detail-datatable',
-	standalone: true,
 	imports: [
 		FormsModule,
 		HlmTableModule,
-		HlmIconModule,
 		CommonModule,
 		BadgrCommonModule,
 		TranslateModule,
-		BrnAccordionContentComponent,
 		RouterModule,
 		HlmInputDirective,
 		HlmLabelDirective,
-		HlmIconComponent,
+		NgIcon,
+		HlmIconDirective,
 		HlmCommandInputWrapperComponent,
 		OebButtonComponent,
 	],
@@ -53,7 +53,7 @@ import { OebButtonComponent } from './oeb-button.component';
 							[ngModel]="_emailFilter()"
 							(ngModelChange)="_rawFilterInput.set($event)"
 						/>
-						<hlm-icon size="lg" class="tw-absolute  tw-right-6 tw-text-purple" name="lucideSearch" />
+						<ng-icon hlm size="lg" class="tw-absolute  tw-right-6 tw-text-purple" name="lucideSearch" />
 					</hlm-cmd-input-wrapper>
 				</label>
 			</div>

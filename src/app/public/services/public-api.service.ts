@@ -10,7 +10,7 @@ import {
 	PublicApiBadgeClassWithIssuer,
 	PublicApiBadgeCollectionWithBadgeClassAndIssuer,
 	PublicApiIssuer,
-	PublicApiLearningPath
+	PublicApiLearningPath,
 } from '../models/public-api.model';
 import { stripQueryParamsFromUrl } from '../../common/util/url-util';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -88,19 +88,29 @@ export class PublicApiService extends BaseHttpApiService {
 		return this.get<PublicApiLearningPath[]>(url, null, false, false).then((r) => r.body);
 	}
 
-	getIssuerWithBadgesAndLps(issuerId: string): Promise<{ issuer: PublicApiIssuer; badges: PublicApiBadgeClass[], learningpaths: PublicApiLearningPath[] }> {
-		return Promise.all([this.getIssuer(issuerId), this.getIssuerBadges(issuerId), this.getIssuerLearningPaths(issuerId)]).then(([issuer, badges, learningpaths]) => ({
+	getIssuerWithBadgesAndLps(
+		issuerId: string,
+	): Promise<{ issuer: PublicApiIssuer; badges: PublicApiBadgeClass[]; learningpaths: PublicApiLearningPath[] }> {
+		return Promise.all([
+			this.getIssuer(issuerId),
+			this.getIssuerBadges(issuerId),
+			this.getIssuerLearningPaths(issuerId),
+		]).then(([issuer, badges, learningpaths]) => ({
 			issuer,
 			badges,
-			learningpaths
+			learningpaths,
 		}));
 	}
 
-	getIssuerWithlearningPaths(issuerId: string): Promise<{ issuer: PublicApiIssuer; learningPaths: PublicApiLearningPath[] }> {
-		return Promise.all([this.getIssuer(issuerId), this.getIssuerLearningPaths(issuerId)]).then(([issuer, learningPaths]) => ({
-			issuer,
-			learningPaths,
-		}));
+	getIssuerWithlearningPaths(
+		issuerId: string,
+	): Promise<{ issuer: PublicApiIssuer; learningPaths: PublicApiLearningPath[] }> {
+		return Promise.all([this.getIssuer(issuerId), this.getIssuerLearningPaths(issuerId)]).then(
+			([issuer, learningPaths]) => ({
+				issuer,
+				learningPaths,
+			}),
+		);
 	}
 
 	getBadgeCollection(shareHash: string): Promise<PublicApiBadgeCollectionWithBadgeClassAndIssuer> {
@@ -119,7 +129,9 @@ export class PublicApiService extends BaseHttpApiService {
 	}
 
 	getLearningPathsForBadgeClass(badgeClassSlug: string) {
-		const url = badgeClassSlug.startsWith('http') ? badgeClassSlug : `/public/badges/${badgeClassSlug}/learningpaths`;
+		const url = badgeClassSlug.startsWith('http')
+			? badgeClassSlug
+			: `/public/badges/${badgeClassSlug}/learningpaths`;
 
 		return this.get<PublicApiLearningPath[]>(url, null, false, true).then((r) => r.body);
 	}

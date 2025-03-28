@@ -1,4 +1,4 @@
-import { Component, } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
@@ -14,13 +14,12 @@ import { AppConfigService } from '../../../common/app-config.service';
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { TranslateService } from '@ngx-translate/core';
 
-
 @Component({
 	selector: 'issuer-edit',
 	templateUrl: './issuer-edit.component.html',
+	standalone: false,
 })
-export class IssuerEditComponent extends BaseAuthenticatedRoutableComponent{
-
+export class IssuerEditComponent extends BaseAuthenticatedRoutableComponent {
 	issuer: Issuer;
 	issuerSlug: string;
 
@@ -38,7 +37,6 @@ export class IssuerEditComponent extends BaseAuthenticatedRoutableComponent{
 		protected configService: AppConfigService,
 		protected issuerManager: IssuerManager,
 		protected translate: TranslateService,
-
 	) {
 		super(router, route, loginService);
 		title.setTitle(`Edit Issuer - ${this.configService.theme['serviceName'] || 'Badgr'}`);
@@ -63,6 +61,5 @@ export class IssuerEditComponent extends BaseAuthenticatedRoutableComponent{
 				this.messageService.reportLoadingError(`Issuer '${this.issuerSlug}' does not exist.`, error);
 			},
 		);
-
 	}
 }

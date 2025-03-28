@@ -47,6 +47,7 @@ import { UserProfile } from '../model/user-profile.model';
 			</div>
 		</div>
 	</dialog>`,
+	standalone: false,
 })
 export class NewTermsDialog extends BaseDialog {
 	agreedToTerms = false;

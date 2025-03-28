@@ -7,6 +7,7 @@ import { ExportPdfDialog } from '../dialogs/export-pdf-dialog/export-pdf-dialog.
 import { NounprojectDialog } from '../dialogs/nounproject-dialog/nounproject-dialog.component';
 import { CopyBadgeDialog } from '../dialogs/copy-badge-dialog/copy-badge-dialog.component';
 import { ForkBadgeDialog } from '../dialogs/fork-badge-dialog/fork-badge-dialog.component';
+import { SelectIssuerDialog } from '../dialogs/select-issuer-dialog/select-issuer-dialog.component';
 
 @Injectable()
 export class CommonDialogsService {
@@ -18,6 +19,7 @@ export class CommonDialogsService {
 	nounprojectDialog: NounprojectDialog;
 	copyBadgeDialog: CopyBadgeDialog;
 	forkBadgeDialog: ForkBadgeDialog;
+	selectIssuerDialog: SelectIssuerDialog;
 	constructor() {}
 
 	init(
@@ -29,6 +31,7 @@ export class CommonDialogsService {
 		nounprojectDialog: NounprojectDialog,
 		copyBadgeDialog: CopyBadgeDialog,
 		forkBadgeDialog: ForkBadgeDialog,
+		selectIssuerDialog: SelectIssuerDialog,
 	) {
 		this.confirmDialog = confirmDialog;
 		this.shareSocialDialog = shareSocialDialog;
@@ -38,5 +41,6 @@ export class CommonDialogsService {
 		this.nounprojectDialog = nounprojectDialog;
 		this.copyBadgeDialog = copyBadgeDialog;
 		this.forkBadgeDialog = forkBadgeDialog;
+		this.selectIssuerDialog = selectIssuerDialog;
 	}
 }

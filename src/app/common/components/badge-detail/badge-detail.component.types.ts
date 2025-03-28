@@ -39,10 +39,10 @@ type HeaderButtonWithAction = HeaderButtonBase & {
 
 type QrCodeButton = {
 	show: boolean;
-	title?: string; 
+	title?: string;
 	disabled?: boolean;
 	action?: () => void;
-}
+};
 
 type HeaderButton = HeaderButtonWithLink | HeaderButtonWithAction;
 
@@ -79,6 +79,6 @@ export interface PageConfig {
 	license?: boolean;
 	id?: string;
 	shareButton?: boolean;
-	badgeInstanceSlug?: string
-	learningPaths?: PublicApiLearningPath[] | ApiLearningPath[]
+	badgeInstanceSlug?: string;
+	learningPaths?: PublicApiLearningPath[] | ApiLearningPath[];
 }

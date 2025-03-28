@@ -13,6 +13,7 @@ import { typedFormGroup } from '../../../common/util/typed-forms';
 @Component({
 	selector: 'create-recipient-badge-collection',
 	templateUrl: './recipient-badge-collection-create.component.html',
+	standalone: false,
 })
 export class RecipientBadgeCollectionCreateComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	badgeCollectionForm = typedFormGroup()

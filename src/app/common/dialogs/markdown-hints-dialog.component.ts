@@ -41,6 +41,7 @@ import { BaseDialog } from './base-dialog';
 			</div>
 		</dialog>
 	`,
+	standalone: false,
 })
 export class MarkdownHintsDialog extends BaseDialog {
 	constructor(componentElem: ElementRef, renderer: Renderer2) {

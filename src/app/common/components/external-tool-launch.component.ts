@@ -21,6 +21,7 @@ import { Subscription } from 'rxjs';
 			/>
 		</form>
 	`,
+	standalone: false,
 })
 export class ExternalToolLaunchComponent implements OnDestroy {
 	objectKeys = Object.keys;

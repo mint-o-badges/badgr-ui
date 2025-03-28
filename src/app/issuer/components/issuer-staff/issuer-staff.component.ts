@@ -29,6 +29,7 @@ import { ApiStaffRequest } from '../../staffrequest-api.model';
 
 @Component({
 	templateUrl: './issuer-staff.component.html',
+	standalone: false,
 })
 export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	get issuerStaffRoleOptions() {

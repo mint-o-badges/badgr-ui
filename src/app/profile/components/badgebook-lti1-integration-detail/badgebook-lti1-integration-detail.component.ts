@@ -11,6 +11,7 @@ import { AppConfigService } from '../../../common/app-config.service';
 @Component({
 	selector: 'badgebook-lti1-detail',
 	templateUrl: './badgebook-lti1-integration-detail.component.html',
+	standalone: false,
 })
 export class BadgebookLti1DetailComponent extends AppIntegrationDetailComponent<BadebookLti1Integration> {
 	readonly externalAppsBadgrImageUrl =
@@ -40,6 +41,7 @@ export class BadgebookLti1DetailComponent extends AppIntegrationDetailComponent<
 		<span>{{ caption }}<span> (Open Thumbnail)</span></span>
 		<img srcset="{{ imagePath }} 2x" [src]="imagePath" alt="thumbnail description" #addAppConfigurationImage />
 	</a>`,
+	standalone: false,
 })
 export class IntegrationImageComponent {
 	imagePath: string;

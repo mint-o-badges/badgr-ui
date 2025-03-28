@@ -1,7 +1,8 @@
 <div class="oeb page-padding tw-overflow-hidden tw-relative">
-	
 	<div class="tw-py-[5.7rem] md:tw-py-[7.2rem] tw-relative">
-		<div class="md:tw-block tw-absolute  tw-opacity-40  lg:tw-opacity-50 tw-left-[auto] tw-right-[10%] tw-top-[50px] lg:tw-left-[-150px] lg:tw-top-[35px] tw-z-0">
+		<div
+			class="md:tw-block tw-absolute tw-opacity-40 lg:tw-opacity-50 tw-left-[auto] tw-right-[10%] tw-top-[50px] lg:tw-left-[-150px] lg:tw-top-[35px] tw-z-0"
+		>
 			<img class="tw-h-[180px] md:tw-h-[228px]" src="assets/oeb/images/welcomepage/sun.png" alt="sun" />
 		</div>
 		<h1
@@ -13,21 +14,25 @@
 			<div class="tw-pt-7 tw-relative tw-z-10">
 				<p
 					class="tw-font-normal md:tw-text-[24px] md:tw-leading-[28.8px] tw-text-black tw-text-[16px] tw-leading-[22.4px] tw-pb-2"
-					 [innerHTML]="'Welcome.whatNext' | translate">
-				</p>
+					[innerHTML]="'Welcome.whatNext' | translate"
+				></p>
 			</div>
-	
+
 			<div class="tw-flex tw-flex-col lg:tw-flex-row tw-gap-[2rem] tw-mt-10">
 				<section class="tw-flex tw-flex-col">
-					<button class="oeb-button oeb-purple-bg md:!tw-font-bold"
-						[routerLink]="'/issuer/create'"
-					>
+					<button class="oeb-button oeb-purple-bg md:!tw-font-bold" [routerLink]="'/issuer/create'">
 						{{ 'Welcome.awardBadgesBtn' | translate }}
 					</button>
-					<span class="tw-mt-1 tw-text-oebblack" [innerHTML]="'Welcome.viaYourInstitution' | translate"></span>
+					<span
+						class="tw-mt-1 tw-text-oebblack"
+						[innerHTML]="'Welcome.viaYourInstitution' | translate"
+					></span>
 				</section>
 				<section class="tw-flex tw-flex-col">
-					<button class="oeb-button oeb-white-bg md:!tw-font-bold tw-border-purple tw-border tw-border-solid" [routerLink]="'/recipient/badges'">
+					<button
+						class="oeb-button oeb-white-bg md:!tw-font-bold tw-border-purple tw-border tw-border-solid"
+						[routerLink]="'/recipient/badges'"
+					>
 						{{ 'Welcome.collectBadgesBtn' | translate }}
 					</button>
 					<span class="tw-mt-1 tw-text-oebblack" [innerHTML]="'Welcome.inBackpack' | translate"></span>
@@ -37,8 +42,12 @@
 	</div>
 
 	<div>
-		<div class="tw-p-4 tw-rounded-[20px] tw-text-oebblack tw-relative tw-flex tw-flex-row tw-items-center ">
-			<img class="tw-inline-block tw-h-[90px]" alt="Plugin" src="assets/oeb/images/issuerPage/oeb-beta-logo.svg" />
+		<div class="tw-p-4 tw-rounded-[20px] tw-text-oebblack tw-relative tw-flex tw-flex-row tw-items-center">
+			<img
+				class="tw-inline-block tw-h-[90px]"
+				alt="Plugin"
+				src="assets/oeb/images/issuerPage/oeb-beta-logo.svg"
+			/>
 			<div class="tw-flex md:tw-block tw-pb-4 tw-max-w-[500px]">
 				<p class="tw-pt-4 tw-text-left tw-pl-4 md:tw-pl-0" [innerHTML]="'Issuer.betaPhase' | translate"></p>
 			</div>

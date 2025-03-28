@@ -23,18 +23,17 @@ import { SafeResourceUrl } from '@angular/platform-browser';
 	styleUrl: './oeb-learning-path.component.scss',
 	animations: [
 		trigger('inOutAnimation', [
-			transition(':enter', [style({ transform: 'translateX(-120px)', opacity: '0' }), animate('.5s ease-out', style({ transform: 'translateX(0px)', opacity: '1' }))]),
+			transition(':enter', [
+				style({ transform: 'translateX(-120px)', opacity: '0' }),
+				animate('.5s ease-out', style({ transform: 'translateX(0px)', opacity: '1' })),
+			]),
 			// transition(':leave', [style({ opacity: '1' }), animate('.5s ease-out', style({ opacity: '0' }))]),
 		]),
-		trigger('stagger', [
-			transition(':enter', [
-				query(':enter', stagger('.3s', [animateChild()]))
-			])
-		])
+		trigger('stagger', [transition(':enter', [query(':enter', stagger('.3s', [animateChild()]))])]),
 	],
+	standalone: false,
 })
 export class OebLearningPathDetailComponent extends BaseRoutableComponent implements OnInit {
-
 	@Input() learningPath;
 	@Input() issuer;
 	@Input() badges;
@@ -42,7 +41,7 @@ export class OebLearningPathDetailComponent extends BaseRoutableComponent implem
 	loading: any;
 	pdfSrc: SafeResourceUrl;
 
-	learningPathEditLink
+	learningPathEditLink;
 
 	constructor(
 		private learningPathApiService: LearningPathApiService,
@@ -53,13 +52,11 @@ export class OebLearningPathDetailComponent extends BaseRoutableComponent implem
 		private badgeInstanceApiservice: BadgeInstanceApiService,
 		private pdfService: PdfService,
 		public router: Router,
-		route: ActivatedRoute
+		route: ActivatedRoute,
 	) {
 		super(router, route);
-
-	};
+	}
 	private readonly _hlmDialogService = inject(HlmDialogService);
-
 
 	filterFunction(t): boolean {
 		return t.completed_at;
@@ -69,7 +66,13 @@ export class OebLearningPathDetailComponent extends BaseRoutableComponent implem
 	}
 
 	ngOnInit(): void {
-		this.learningPathEditLink = ['/issuer/issuers', this.issuer.slug, 'learningpaths', this.learningPath.slug, 'edit']
+		this.learningPathEditLink = [
+			'/issuer/issuers',
+			this.issuer.slug,
+			'learningpaths',
+			this.learningPath.slug,
+			'edit',
+		];
 	}
 
 	public deleteLearningPath(learningPathSlug, issuer) {
@@ -77,19 +80,17 @@ export class OebLearningPathDetailComponent extends BaseRoutableComponent implem
 			context: {
 				delete: () => this.deleteLearningPathApi(learningPathSlug, issuer),
 				// qrCodeRequested: () => {},
-				variant: "danger",
-				text: "Möchtest du diesen Micro Degree wirklich löschen?",
-				title: "Micro Degree löschen"
+				variant: 'danger',
+				text: 'Möchtest du diesen Micro Degree wirklich löschen?',
+				title: 'Micro Degree löschen',
 			},
 		});
 	}
 
 	deleteLearningPathApi(learningPathSlug, issuer) {
-		this.learningPathApiService.deleteLearningPath(issuer.slug, learningPathSlug).then(
-			() => {
-				this.router.navigate(['issuer/issuers']);
-			}
-		);
+		this.learningPathApiService.deleteLearningPath(issuer.slug, learningPathSlug).then(() => {
+			this.router.navigate(['issuer/issuers']);
+		});
 	}
 
 	public openSuccessDialog(recipient) {
@@ -120,41 +121,41 @@ export class OebLearningPathDetailComponent extends BaseRoutableComponent implem
 				rejectButtonLabel: 'Abbrechen',
 			})
 			.then(async () => {
-
 				try {
 					const revokeResult = await Promise.all([
 						this.badgeInstanceApiservice.revokeBadgeInstance(
 							this.issuer.slug,
 							this.learningPath.participationBadge_id,
 							participationBadgeInstance.slug,
-							'revoked'
-						)
+							'revoked',
+						),
 					]);
 
 					const response = await this.learningPathApiService.getLearningPathParticipants(
-						this.learningPath.slug
+						this.learningPath.slug,
 					);
 					this.participants = response.body;
 				} catch (error) {
 					console.error(error);
 					throw error;
 				}
-			})
-
+			});
 	}
 
 	downloadCertificate(participant: any) {
 		const instance = participant.participationBadgeAssertion;
-		this.pdfService.getPdf(instance.slug).then(
-			(url) => {
+		this.pdfService
+			.getPdf(instance.slug)
+			.then((url) => {
 				this.pdfSrc = url;
 				this.pdfService.downloadPdf(this.pdfSrc, this.learningPath.name, new Date(instance.json.issuedOn));
-			}).catch((error) => {
+			})
+			.catch((error) => {
 				console.log(error);
 			});
 	}
 
 	get learningPathReverseBadges() {
-		return [...this.learningPath.badges].reverse()
+		return [...this.learningPath.badges].reverse();
 	}
 }

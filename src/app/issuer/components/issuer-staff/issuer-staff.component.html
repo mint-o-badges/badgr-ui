@@ -112,19 +112,24 @@
 			<p class="u-text-h3-bold">{{ 'General.members' | translate }}</p>
 			<issuer-staff-create-dialog #issuerStaffCreateDialog></issuer-staff-create-dialog>
 			<ng-template #headerTemplate>
-				<h1 class="tw-font-bold tw-text-oebblack tw-text-2xl" > {{'Issuer.addMember' | translate}}</h1>
-				<span class="tw-text-purple tw-italic tw-text-lg tw-mt-2 tw-leading-[130%]" [innerHTML]="'Issuer.addMember_text' | translate">
+				<h1 class="tw-font-bold tw-text-oebblack tw-text-2xl">{{ 'Issuer.addMember' | translate }}</h1>
+				<span
+					class="tw-text-purple tw-italic tw-text-lg tw-mt-2 tw-leading-[130%]"
+					[innerHTML]="'Issuer.addMember_text' | translate"
+				>
 				</span>
 			</ng-template>
-			<ng-template #addMemberFormTemplate> 
+			<ng-template #addMemberFormTemplate>
 				<form [formGroup]="staffCreateForm.rawControl" (ngSubmit)="submitStaffCreate()">
 					<oeb-input
-					[control]="staffCreateForm.rawControlMap.staffEmail"
-					label="{{ 'Issuer.addMember_newEmail' | translate }}"
-					error="{{'Issuer.addMember_newEmail' | translate}}"
+						[control]="staffCreateForm.rawControlMap.staffEmail"
+						label="{{ 'Issuer.addMember_newEmail' | translate }}"
+						error="{{ 'Issuer.addMember_newEmail' | translate }}"
 					>
 					</oeb-input>
-					<span class="tw-mt-6 tw-text-oebblack tw-text-lg tw-font-bold">{{ 'Issuer.addMember_chooseRole' | translate }}</span>
+					<span class="tw-mt-6 tw-text-oebblack tw-text-lg tw-font-bold">{{
+						'Issuer.addMember_chooseRole' | translate
+					}}</span>
 					<bg-formfield-radio
 						*ngFor="let role of issuerStaffRoleOptions; last as last"
 						[control]="staffCreateForm.rawControlMap.staffRole"
@@ -136,7 +141,7 @@
 						errorMessage="{{ 'Issuer.addMember_selectRole' | translate }}"
 					></bg-formfield-radio>
 					<br />
-	
+
 					<div class="notification notification-warning notification-is-active" *ngIf="error">
 						<div class="notification-x-icon">
 							<svg>
@@ -148,26 +153,29 @@
 							<p>{{ error }}</p>
 						</div>
 					</div>
-	
+
 					<div class="tw-w-full tw-justify-between tw-flex">
-						<oeb-button 
-						  type="button" 
-						  size="md"
-						  variant="secondary"
-						  (click)="$event.preventDefault();"
-						  [text]="'General.cancel' | translate">
+						<oeb-button
+							type="button"
+							size="md"
+							variant="secondary"
+							(click)="$event.preventDefault()"
+							[text]="'General.cancel' | translate"
+						>
 						</oeb-button>
 						<oeb-button
 							size="md"
 							[text]="'Issuer.addMember' | translate"
 							[disabled]="staffCreateForm.invalid"
-							>
+						>
 							{{ 'Issuer.addMember' | translate }}
 						</oeb-button>
 					</div>
 				</form>
 			</ng-template>
-			<button class="button button-secondary" (click)="openDialog(this.translate.instant('Issuer.addMember'))">{{ 'Issuer.addMember' | translate }}</button>
+			<button class="button button-secondary" (click)="openDialog(this.translate.instant('Issuer.addMember'))">
+				{{ 'Issuer.addMember' | translate }}
+			</button>
 		</div>
 
 		<table class="datatable datatable-roundheaders datatable-onlyfirstcolumntablet datatable-verticalalignmiddle">

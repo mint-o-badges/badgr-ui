@@ -106,9 +106,9 @@ export class Issuer extends ManagedEntity<ApiIssuer, IssuerRef> {
 
 	get ownerAcceptedTos(): boolean {
 		const owners = this.staff.entities.filter((staff) => staff.isOwner);
-		return owners.some(owner => 
-			owner.apiModel.user.agreed_terms_version === owner.apiModel.user.latest_terms_version
-		);		
+		return owners.some(
+			(owner) => owner.apiModel.user.agreed_terms_version === owner.apiModel.user.latest_terms_version,
+		);
 	}
 
 	get learningPathCount(): number {
@@ -305,20 +305,20 @@ export const issuerStaffRoles = [
 		label: 'Eigentümer:in',
 		indefiniteLabel: 'an owner',
 		description:
-			'Zugriff auf alle Funktionen inkl. Hinzufügen/Entfernen von Editor:innen und Mitarbeitenden, Bearbeitung der Institutionsdetails sowie Erstellen, Vergeben und Löschen von Badges inkl. Micro Degrees.',
+			'Zugriff auf alle Funktionen inkl. Hinzufügen/Entfernen von Editor:innen und Mitarbeiter:innen, Bearbeitung der Institutionsdetails sowie Erstellen, Vergeben und Löschen von Badges inkl. Micro Degrees.',
 	},
 	{
 		slug: 'editor',
 		label: 'Editor',
 		indefiniteLabel: 'an editor',
-		description:
-			'Rechte zum Erstellen, Vergeben und Löschen von Badges inkl. Micro Degrees.',
+		description: 'Rechte zum Erstellen, Vergeben und Löschen von Badges inkl. Micro Degrees.',
 	},
 	{
 		slug: 'staff',
 		label: 'Mitarbeiter:in',
 		indefiniteLabel: 'a staff member',
-		description: 'Kann die von Eigentümer:innen und/oder Editor:innen erstellten Badges vergeben (inkl. QR-Code-Vergaben erstellen, bearbeiten und löschen).',
+		description:
+			'Kann die von Eigentümer:innen und/oder Editor:innen erstellten Badges vergeben (inkl. QR-Code-Vergaben erstellen, bearbeiten und löschen).',
 	},
 ];
 export function issuerRoleInfoFor(slug: IssuerStaffRoleSlug) {

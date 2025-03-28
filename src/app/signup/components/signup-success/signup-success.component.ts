@@ -8,11 +8,11 @@ import { TranslateService } from '@ngx-translate/core';
 import { provideIcons } from '@ng-icons/core';
 import { lucideCheck } from '@ng-icons/lucide';
 
-
 @Component({
 	selector: 'signup-success',
 	templateUrl: './signup-success.component.html',
 	providers: [provideIcons({ lucideCheck })],
+	standalone: false,
 })
 export class SignupSuccessComponent implements OnInit {
 	constructor(
@@ -22,7 +22,7 @@ export class SignupSuccessComponent implements OnInit {
 		private configService: AppConfigService,
 		private router: Router,
 		private messageService: MessageService,
-		private translate: TranslateService
+		private translate: TranslateService,
 	) {
 		title.setTitle(`Verification - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 	}
@@ -59,10 +59,7 @@ export class SignupSuccessComponent implements OnInit {
 						err,
 					);
 				} else {
-					this.messageService.reportAndThrowError(
-						this.translate.instant('Signup.resendEmailFailed'),
-						err,
-					);
+					this.messageService.reportAndThrowError(this.translate.instant('Signup.resendEmailFailed'), err);
 				}
 			},
 		);

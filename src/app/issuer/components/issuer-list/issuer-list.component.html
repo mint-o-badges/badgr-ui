@@ -7,7 +7,11 @@
 				<h1 hlmH1 class="tw-text-purple oeb-standard-padding-bottom tw-font-bold">
 					{{ 'NavItems.myInstitutions' | translate }}
 				</h1>
-				<p hlmP size="lg" class="tw-pb-3" [innerHTML]="'Issuer.myInstitutionsText' | translate"></p>
+				<p hlmP size="lg" class="tw-pb-3">
+					<span [innerHTML]="'Issuer.myInstitutionsText' | translate"></span>
+					<span [innerHTML]="'Issuer.copyBadgesOfOtherIssuers' | translate"></span>
+				</p>
+
 				<p hlmP size="lg" class="tw-pb-3" [innerHTML]="'Issuer.myLearningPathText' | translate"></p>
 				<section *ngIf="issuers.length === 0" class="tw-flex tw-flex-col tw-gap-2 tw-mt-2">
 					<span
@@ -227,7 +231,7 @@
 								class="tw-h-[70px] md:tw-h-[100px] tw-w-auto tw-min-w-[70px] md:tw-min-w-[100px]"
 							/>
 						</div>
-						<div class="tw-flex tw-flex-col tw-justify-center tw-pl-4">
+						<div class="tw-flex tw-flex-col tw-justify-center tw-pl-4 oeb-break-words">
 							<a
 								class="md:tw-text-[30px] md:tw-leading-[36px] tw-text-[20px] tw-leading-[24px] tw-text-purple tw-font-semibold"
 								[routerLink]="['/issuer/issuers/', issuer.slug]"
@@ -292,7 +296,8 @@
 						<div
 							class="tw-bg-lightgreen tw-p-6 tw-rounded-[10px] tw-text-center tw-text-oebblack tw-relative"
 						>
-							<hlm-icon
+							<ng-icon
+								hlm
 								(click)="pluginBoxElement.nativeElement.remove()"
 								class="tw-w-4 tw-h-4 tw-ml-2 tw-cursor-pointer tw-inline-block tw-absolute tw-top-2 tw-right-2"
 								name="lucideX"

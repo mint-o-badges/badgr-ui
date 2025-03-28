@@ -12,7 +12,7 @@ import {
 	type OnDestroy,
 } from '@angular/core';
 import { NgIconComponent, type IconName } from '@ng-icons/core';
-import { hlm } from '@spartan-ng/ui-core';
+import { hlm } from '@spartan-ng/brain/core';
 import { cva } from 'class-variance-authority';
 import type { ClassValue } from 'clsx';
 
@@ -50,7 +50,6 @@ const TAILWIND_H_W_PATTERN = /\b(h-\d+|w-\d+)\b/g;
 
 @Component({
 	selector: 'hlm-icon',
-	standalone: true,
 	imports: [NgIconComponent],
 	encapsulation: ViewEncapsulation.None,
 	changeDetection: ChangeDetectionStrategy.OnPush,

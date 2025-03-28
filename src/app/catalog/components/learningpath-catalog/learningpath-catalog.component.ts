@@ -19,12 +19,14 @@ import { RecipientBadgeApiService } from '../../../recipient/services/recipient-
 import { ApiRecipientBadgeInstance } from '../../../recipient/models/recipient-badge-api.model';
 import { appearAnimation } from '../../../common/animations/animations';
 import { FormControl } from '@angular/forms';
+import { applySorting } from '../../util/sorting';
 
 @Component({
 	selector: 'app-learningpaths-catalog',
 	templateUrl: './learningpath-catalog.component.html',
 	styleUrls: ['../badge-catalog/badge-catalog.component.css'],
 	animations: [appearAnimation],
+	standalone: false,
 })
 export class LearningPathsCatalogComponent extends BaseRoutableComponent implements OnInit {
 	learningPathsLoaded: Promise<unknown>;
@@ -32,6 +34,7 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 	userBadgesLoaded: Promise<unknown>;
 	order = 'asc';
 	learningPathResults: LearningPath[] = null;
+	filteredMicroDegrees: LearningPath[] = null;
 	learningPathResultsByIssuer: MatchingLearningPathIssuer[] = [];
 	learningPaths: LearningPath[] = [];
 	issuerResults: Issuer[] = [];
@@ -43,7 +46,14 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 	loggedIn = false;
 	userBadges: string[] = [];
 	plural = {};
-	sortControl = new FormControl('name_asc');
+	sortControl = new FormControl();
+
+	microDegreesPerPage = 20;
+	totalPages: number;
+	nextLink: string;
+	previousLink: string;
+
+	sortOption: string | null = null;
 
 	get theme() {
 		return this.configService.theme;
@@ -58,7 +68,9 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 	}
 	set searchQuery(query) {
 		this._searchQuery = query;
-		this.updateResults();
+		// this.updateResults();
+		this.updatePaginatedResults();
+		this.currentPage = 1;
 	}
 
 	private _groupByInstitution = false;
@@ -67,7 +79,25 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 	}
 	set groupByInstitution(val: boolean) {
 		this._groupByInstitution = val;
-		this.updateResults();
+		// this.updateResults();
+		this.updatePaginatedResults();
+	}
+
+	isFiltered() {
+		return Boolean(this.searchQuery);
+	}
+
+	private _currentPage = 1;
+
+	get currentPage(): number {
+		return this._currentPage;
+	}
+
+	set currentPage(value: number) {
+		if (this._currentPage !== value) {
+			this._currentPage = value;
+			this.updatePaginatedResults();
+		}
 	}
 
 	constructor(
@@ -104,6 +134,11 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 		// Translate: to update predefined text when language is changed
 		this.translate.onLangChange.subscribe((event) => {
 			this.prepareTexts();
+		});
+
+		this.sortControl.valueChanges.subscribe((value) => {
+			this.sortOption = value;
+			this.updatePaginatedResults();
 		});
 	}
 
@@ -182,39 +217,58 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 		return totalStudyLoad;
 	}
 
-	private updateResults() {
+	// private updateResults() {
+	// 	let that = this;
+	// 	// Clear Results
+	// 	this.learningPathResults = [];
+	// 	this.learningPathResultsByIssuer = [];
+	// 	const learningPathResultsByIssuerLocal = {};
+
+	// 	var addLearningPathToResultsByIssuer = function (item) {
+	// 		let issuerResults = learningPathResultsByIssuerLocal[item.issuer_name];
+
+	// 		if (!issuerResults) {
+	// 			issuerResults = learningPathResultsByIssuerLocal[item.issuer_name] = new MatchingLearningPathIssuer(
+	// 				item.issuer_name,
+	// 				'',
+	// 			);
+
+	// 			// append result to the issuerResults array bound to the view template.
+	// 			that.learningPathResultsByIssuer.push(issuerResults);
+	// 		}
+
+	// 		issuerResults.addLp(item);
+
+	// 		return true;
+	// 	};
+
+	// 	this.learningPaths
+	// 		.filter(this.learningPathMatcher(this.searchQuery))
+	// 		.filter(this.learningPathTagMatcher(this.selectedTag))
+	// 		.forEach((item) => {
+	// 			that.learningPathResults.push(item);
+	// 			addLearningPathToResultsByIssuer(item);
+	// 		});
+	// 	this.changeOrder(this.order);
+	// }
+
+	private updatePaginatedResults() {
 		let that = this;
-		// Clear Results
 		this.learningPathResults = [];
-		this.learningPathResultsByIssuer = [];
-		const learningPathResultsByIssuerLocal = {};
 
-		var addLearningPathToResultsByIssuer = function (item) {
-			let issuerResults = learningPathResultsByIssuerLocal[item.issuer_name];
-
-			if (!issuerResults) {
-				issuerResults = learningPathResultsByIssuerLocal[item.issuer_name] = new MatchingLearningPathIssuer(
-					item.issuer_name,
-					'',
-				);
-
-				// append result to the issuerResults array bound to the view template.
-				that.learningPathResultsByIssuer.push(issuerResults);
-			}
-
-			issuerResults.addLp(item);
-
-			return true;
-		};
-
-		this.learningPaths
+		this.filteredMicroDegrees = this.learningPaths
 			.filter(this.learningPathMatcher(this.searchQuery))
-			.filter(this.learningPathTagMatcher(this.selectedTag))
-			.forEach((item) => {
-				that.learningPathResults.push(item);
-				addLearningPathToResultsByIssuer(item);
-			});
-		this.changeOrder(this.order);
+			.filter(this.learningPathTagMatcher(this.selectedTag));
+
+		if (this.sortOption) {
+			applySorting(this.filteredMicroDegrees, this.sortOption);
+		}
+
+		this.totalPages = Math.ceil(this.filteredMicroDegrees.length / this.microDegreesPerPage);
+		const start = (this.currentPage - 1) * this.microDegreesPerPage;
+		const end = start + this.microDegreesPerPage;
+
+		that.learningPathResults = this.filteredMicroDegrees.slice(start, end);
 	}
 
 	async loadIssuers() {
@@ -238,7 +292,7 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 
 	filterByTag(tag) {
 		this.selectedTag = this.selectedTag == tag ? null : tag;
-		this.updateResults();
+		this.updatePaginatedResults();
 	}
 
 	async loadLearningPaths() {
@@ -254,7 +308,7 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 					});
 					this.tags = sortUnique(this.tags);
 					this.issuersWithLps = sortUnique(this.issuersWithLps);
-					this.updateResults();
+					this.updatePaginatedResults();
 					resolve(lps);
 				},
 				(error) => {

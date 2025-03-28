@@ -32,7 +32,8 @@ import { FormControl } from '@angular/forms';
 					<div
 						class="tw-bg-white tw-inline-flex tw-rounded-full tw-justify-center tw-items-center tw-border-solid tw-border-purple tw-border-[2px] "
 					>
-						<hlm-icon
+						<ng-icon
+							hlm
 							class="tw-text-purple tw-box-border md:tw-w-[22px] tw-w-[16px] md:tw-h-[22px] tw-h-[16px]"
 							name="lucideCheck"
 						/>
@@ -47,13 +48,16 @@ import { FormControl } from '@angular/forms';
 				<div class="tw-flex tw-flex-col tw-flex-wrap tw-pl-4 tw-py-2">
 					<a
 						*ngIf="badgeSlug && !publicUrl"
-						class="tw-font-bold"
+						class="tw-font-bold text-clamp title-clamp"
+						[title]="badgeTitle"
 						[routerLink]="['../earned-badge', badgeSlug]"
 						hlmP
 						size="sm"
 						>{{ badgeTitle }}</a
 					>
-					<a *ngIf="publicUrl" class="tw-font-bold" hlmP size="sm" [href]="publicUrl">{{ badgeTitle }}</a>
+					<a *ngIf="publicUrl" class="tw-font-bold title-clamp" hlmP size="sm" [href]="publicUrl">{{
+						badgeTitle
+					}}</a>
 
 					<div class="tw-pt-2 tw-flex tw-flex-col tw-flex-wrap">
 						<a
@@ -61,7 +65,8 @@ import { FormControl } from '@angular/forms';
 							size="sm"
 							variant="light"
 							*ngIf="issuerSlug; else noIssuerSlug"
-							class="badgecard-x-issuer"
+							class="badgecard-x-issuer text-clamp issuer-clamp"
+							[title]="issuerTitle"
 							[routerLink]="['../../public/issuers', issuerSlug]"
 							>{{ issuerTitle }}</a
 						>
@@ -111,7 +116,7 @@ import { FormControl } from '@angular/forms';
 						class="tw-absolute tw-bottom-0 tw-cursor-pointer"
 						(click)="toggleCompetencies()"
 					>
-						<hlm-icon size="lg" [name]="showCompetencies ? 'lucideChevronUp' : 'lucideChevronDown'" />
+						<ng-icon hlm size="lg" [name]="showCompetencies ? 'lucideChevronUp' : 'lucideChevronDown'" />
 					</div>
 				</div>
 			</div>
@@ -134,6 +139,25 @@ import { FormControl } from '@angular/forms';
 		</div>
 		<!--<ul *ngIf="tags && tags.length" class="tw-mt-2 tw-leading-[0px]"><li class="tag tw-mt-2 tw-mr-2" *ngFor="let tag of tags">{{tag}}</li></ul>-->
 	`,
+	standalone: false,
+	styles: [
+		`
+			.text-clamp {
+				-webkit-line-clamp: 3;
+				-webkit-box-orient: vertical;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				display: -webkit-box;
+				word-break: break-word;
+			}
+			.title-clamp {
+				-webkit-line-clamp: 3;
+			}
+			.issuer-clamp {
+				-webkit-line-clamp: 1;
+			}
+		`,
+	],
 })
 export class BgBadgecard {
 	readonly badgeLoadingImageUrl = '../../../breakdown/static/images/badge-loading.svg';
