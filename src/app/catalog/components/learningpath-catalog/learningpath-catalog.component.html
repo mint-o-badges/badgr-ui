@@ -114,7 +114,10 @@
 				</div>
 			</ng-container>
 		</ng-container>
-		<div class="tw-mt-8" *ngIf="learningPathResults.length >= 20 || currentPage == totalPages">
+		<div
+			class="tw-mt-8"
+			*ngIf="learningPathResults.length >= 20 || (currentPage == totalPages && currentPage != 1)"
+		>
 			<oeb-numbered-pagination
 				[totalProducts]="isFiltered() ? learningPathResults.length : learningPaths.length"
 				[(page)]="currentPage"

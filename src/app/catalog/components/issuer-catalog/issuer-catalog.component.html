@@ -93,7 +93,10 @@
 
 				<div
 					class="tw-mt-8"
-					*ngIf="(issuerResults.length >= 30 || currentPage == totalPages) && badgesDisplay != 'map'"
+					*ngIf="
+						(issuerResults.length >= 30 || (currentPage == totalPages && currentPage != 1)) &&
+						badgesDisplay != 'map'
+					"
 				>
 					<oeb-numbered-pagination
 						[totalProducts]="isFiltered() ? issuerResults.length : issuers.length"
