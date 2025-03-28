@@ -70,7 +70,7 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 	issuerSearchResults: any[] = [];
 	selectedIssuer: Issuer | null = null;
 
-	staffRequests: ApiStaffRequest[] = []
+	staffRequests: ApiStaffRequest[] = [];
 
 	issuersLoading = false;
 	issuerSearchLoaded = false;
@@ -105,7 +105,7 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 		route: ActivatedRoute,
 		private translate: TranslateService,
 		private issuerStaffRequestApiService: IssuerStaffRequestApiService,
-		private userProfileApiService: UserProfileApiService
+		private userProfileApiService: UserProfileApiService,
 	) {
 		super(router, route, loginService);
 		title.setTitle(`Issuers - ${this.configService.theme['serviceName'] || 'Badgr'}`);
@@ -174,7 +174,7 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 			}
 		});
 
-		this.userProfileApiService.getIssuerStaffRequests().then(r =>  this.staffRequests = r.body)
+		this.userProfileApiService.getIssuerStaffRequests().then((r) => (this.staffRequests = r.body));
 	}
 
 	async issuerSearchChange() {
@@ -246,18 +246,22 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 					`,
 				variant: 'info',
 				twoButtonFooter: true,
-				forwardText: this.translate.instant('Issuer.requestMembership')
+				forwardText: this.translate.instant('Issuer.requestMembership'),
 			},
 		});
 
-		dialogRef.closed$.subscribe( async (result) => {
+		dialogRef.closed$.subscribe(async (result) => {
 			if (result === 'continue') {
-				if(this.selectedIssuer){
-					const req = await this.issuerStaffRequestApiService.requestIssuerStaffMembership(this.selectedIssuer.slug)
-					console.log("req", req)
-
+				if (this.selectedIssuer) {
+					const req = await this.issuerStaffRequestApiService.requestIssuerStaffMembership(
+						this.selectedIssuer.slug,
+					);
+					if (req.ok) {
+						this.openSuccessfullyRequestedMembershipDialog();
+					} else {
+						console.error('staff request was not received:', req.status);
+					}
 				}
-				// this.openSuccessfullyRequestedMembershipDialog();
 			}
 		});
 	}
@@ -311,9 +315,8 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 		};
 	}
 
-	revokeStaffRequest(issuerId: string){
-		this.userProfileApiService.revokeIssuerStaffRequest(issuerId)
-			.then((r) => console.log("revoked", r))
+	revokeStaffRequest(issuerId: string) {
+		this.userProfileApiService.revokeIssuerStaffRequest(issuerId).then((r) => console.log('revoked', r));
 	}
 
 	calculateDropdownMaxHeight(el: HTMLElement, minHeight = 100) {

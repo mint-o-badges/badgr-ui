@@ -29,15 +29,24 @@
 						class="tw-text-2xl tw-italic tw-text-oebblack"
 					>
 					</span>
-					<section class="tw-bg-lightpurple tw-p-4 tw-w-full tw-max-w-[600px] tw-rounded-[10px]" *ngIf="staffRequests.length > 0">
-						<h2 [innerHTML]="'Issuer.yourOpenStaffRequests' | translate" class="tw-text-2xl tw-text-purple tw-font-bold"></h2>
+					<section
+						class="tw-bg-lightpurple tw-p-4 tw-w-full tw-max-w-[600px] tw-rounded-[10px]"
+						*ngIf="staffRequests.length > 0"
+					>
+						<h2
+							[innerHTML]="'Issuer.yourOpenStaffRequests' | translate"
+							class="tw-text-2xl tw-text-purple tw-font-bold"
+						></h2>
 						<ul class="tw-list-disc tw-list-inside">
-							<li *ngFor="let request of staffRequests;">
-								<span class="tw-text-lg tw-text-oebblack">{{request.issuer.name}}</span>
-								<span (click)="revokeStaffRequest(request.issuer.slug)" [innerHTML]="'General.revoke' | translate" class="tw-text-link tw-underline tw-text-lg tw-ml-2 tw-cursor-pointer"></span>
+							<li *ngFor="let request of staffRequests">
+								<span class="tw-text-lg tw-text-oebblack">{{ request.issuer.name }}</span>
+								<span
+									(click)="revokeStaffRequest(request.issuer.slug)"
+									[innerHTML]="'General.revoke' | translate"
+									class="tw-text-link tw-underline tw-text-lg tw-ml-2 tw-cursor-pointer"
+								></span>
 							</li>
 						</ul>
-
 					</section>
 					<div class="tw-flex tw-gap-4 tw-items-center tw-mt-2">
 						<div class="tw-relative tw-w-full tw-max-w-[600px]">
@@ -115,13 +124,24 @@
 					<ng-template #successfullyRequestedMembershipContentTemplate>
 						<div class="tw-flex tw-justify-center">
 							<div class="oeb-icon-circle tw-my-6">
-								<svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52"><circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/><path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/></svg>
+								<svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+									<circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none" />
+									<path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+								</svg>
 							</div>
 						</div>
 					</ng-template>
 				</section>
 			</div>
 			<div class="tw-border-purple tw-border tw-rounded-[20px] tw-text-right">
+				<oeb-button
+					*ngIf="issuers.length > 0"
+					class="md:tw-whitespace-nowrap"
+					variant="secondary"
+					[routerLink]="['/issuer/create']"
+					[disabled-when-requesting]="true"
+					[text]="'Issuer.createInstitution' | translate"
+				></oeb-button>
 				<div class="tw-mt-8 tw-max-w-[380px]">
 					<div class="tw-flex tw-items-center tw-gap-2">
 						<hlm-icon class="tw-text-purple" size="xl" name="lucideInfo" />
