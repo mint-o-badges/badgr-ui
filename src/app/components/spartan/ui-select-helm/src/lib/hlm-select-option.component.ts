@@ -26,7 +26,7 @@ import type { ClassValue } from 'clsx';
 			}
 		</span>
 	`,
-	imports: [NgIcon, NgIcon, HlmIconDirective],
+	imports: [NgIcon, HlmIconDirective],
 })
 export class HlmSelectOptionComponent {
 	protected readonly _brnSelectOption = inject(BrnSelectOptionDirective, { host: true });
