@@ -36,6 +36,8 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 	badgeResultsByIssuer: MatchingBadgeIssuer[] = [];
 	badgeResultsByCategory: MatchingBadgeCategory[] = [];
 
+	filteredBadges: BadgeClass[] = null;
+
 	badgesLoaded: Promise<unknown>;
 
 	showLegend = false;
@@ -358,7 +360,7 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 			return true;
 		};
 
-		let filteredBadges = this.badges
+		this.filteredBadges = this.badges
 			.filter(this.badgeMatcher(this.searchQuery))
 			.filter(
 				(badge) =>
@@ -367,14 +369,14 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 			.filter((i) => !i.apiModel.source_url);
 
 		if (this.sortOption) {
-			applySorting(filteredBadges, this.sortOption);
+			applySorting(this.filteredBadges, this.sortOption);
 		}
 
-		this.totalPages = Math.ceil(filteredBadges.length / this.badgesPerPage);
+		this.totalPages = Math.ceil(this.filteredBadges.length / this.badgesPerPage);
 		const start = (this.currentPage - 1) * this.badgesPerPage;
 		const end = start + this.badgesPerPage;
 
-		that.badgeResults = filteredBadges.slice(start, end);
+		that.badgeResults = this.filteredBadges.slice(start, end);
 
 		// that.badgeResults.forEach((item) => {
 		// 	addBadgeToResultsByIssuer(item);

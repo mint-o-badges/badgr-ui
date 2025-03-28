@@ -99,7 +99,7 @@
 					"
 				>
 					<oeb-numbered-pagination
-						[totalProducts]="isFiltered() ? issuerResults.length : issuers.length"
+						[totalProducts]="isFiltered() ? filteredIssuers.length : issuers.length"
 						[(page)]="currentPage"
 					>
 					</oeb-numbered-pagination>

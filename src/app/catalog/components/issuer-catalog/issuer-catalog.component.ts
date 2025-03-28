@@ -37,6 +37,8 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 	issuersLoaded: Promise<unknown>;
 	issuerResults: Issuer[] = [];
 	issuerResultsByCategory: MatchingIssuerCategory[] = [];
+	filteredIssuers: Issuer[] = [];
+
 	order = 'asc';
 	public badgesDisplay = 'grid';
 
@@ -254,18 +256,18 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 
 		// this.issuerResults.sort((a, b) => a.name.localeCompare(b.name));
 
-		let filteredIssuers = this.issuers
+		this.filteredIssuers = this.issuers
 			.filter(MatchingAlgorithm.issuerMatcher(this.searchQuery))
 			.filter((issuer) => !this.categoryFilter || issuer.category === this.categoryFilter);
 
 		if (this.sortOption) {
-			applySorting(filteredIssuers, this.sortOption);
+			applySorting(this.filteredIssuers, this.sortOption);
 		}
-		this.totalPages = Math.ceil(filteredIssuers.length / this.issuersPerPage);
+		this.totalPages = Math.ceil(this.filteredIssuers.length / this.issuersPerPage);
 		const start = (this.currentPage - 1) * this.issuersPerPage;
 		const end = start + this.issuersPerPage;
 
-		that.issuerResults = filteredIssuers.slice(start, end);
+		that.issuerResults = this.filteredIssuers.slice(start, end);
 		// this.issuerResults = this.issuers
 		// 	.filter(MatchingAlgorithm.issuerMatcher(this.searchQuery))
 		// 	.filter((issuer) => !this.categoryFilter || issuer.category === this.categoryFilter);

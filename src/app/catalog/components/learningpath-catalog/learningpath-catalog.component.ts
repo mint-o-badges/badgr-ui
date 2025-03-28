@@ -34,6 +34,7 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 	userBadgesLoaded: Promise<unknown>;
 	order = 'asc';
 	learningPathResults: LearningPath[] = null;
+	filteredMicroDegrees: LearningPath[] = null;
 	learningPathResultsByIssuer: MatchingLearningPathIssuer[] = [];
 	learningPaths: LearningPath[] = [];
 	issuerResults: Issuer[] = [];
@@ -255,19 +256,19 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 		let that = this;
 		this.learningPathResults = [];
 
-		let filteredMicroDegrees = this.learningPaths
+		this.filteredMicroDegrees = this.learningPaths
 			.filter(this.learningPathMatcher(this.searchQuery))
 			.filter(this.learningPathTagMatcher(this.selectedTag));
 
 		if (this.sortOption) {
-			applySorting(filteredMicroDegrees, this.sortOption);
+			applySorting(this.filteredMicroDegrees, this.sortOption);
 		}
 
-		this.totalPages = Math.ceil(filteredMicroDegrees.length / this.microDegreesPerPage);
+		this.totalPages = Math.ceil(this.filteredMicroDegrees.length / this.microDegreesPerPage);
 		const start = (this.currentPage - 1) * this.microDegreesPerPage;
 		const end = start + this.microDegreesPerPage;
 
-		that.learningPathResults = filteredMicroDegrees.slice(start, end);
+		that.learningPathResults = this.filteredMicroDegrees.slice(start, end);
 	}
 
 	async loadIssuers() {
