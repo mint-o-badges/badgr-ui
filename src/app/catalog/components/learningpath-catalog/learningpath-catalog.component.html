@@ -114,13 +114,13 @@
 				</div>
 			</ng-container>
 		</ng-container>
-
-		<oeb-numbered-pagination
-			*ngIf="learningPathResults.length >= 20 || currentPage == totalPages"
-			[totalProducts]="learningPaths.length"
-			[(page)]="currentPage"
-			[(pageSize)]="microDegreesPerPage"
-		>
-		</oeb-numbered-pagination>
+		<div class="tw-mt-8" *ngIf="learningPathResults.length >= 20 || currentPage == totalPages">
+			<oeb-numbered-pagination
+				[totalProducts]="isFiltered() ? learningPathResults.length : learningPaths.length"
+				[(page)]="currentPage"
+				[(pageSize)]="microDegreesPerPage"
+			>
+			</oeb-numbered-pagination>
+		</div>
 	</ng-template>
 </div>

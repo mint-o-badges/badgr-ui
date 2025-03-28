@@ -66,6 +66,7 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 		this._searchQuery = query;
 		// this.updateResults();
 		this.updatePaginatedResults();
+		this.currentPage = 1;
 	}
 
 	private _categoryFilter = '';
@@ -77,6 +78,11 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 		this._categoryFilter = val;
 		// this.updateResults();
 		this.updatePaginatedResults();
+		this.currentPage = 1;
+	}
+
+	isFiltered() {
+		return Boolean(this.searchQuery || this.categoryFilter);
 	}
 
 	private _currentPage = 1;

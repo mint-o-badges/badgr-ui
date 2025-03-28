@@ -91,12 +91,16 @@
 					</ng-container>
 				</ng-container>
 
-				<oeb-numbered-pagination
+				<div
+					class="tw-mt-8"
 					*ngIf="(issuerResults.length >= 30 || currentPage == totalPages) && badgesDisplay != 'map'"
-					[totalProducts]="issuers.length"
-					[(page)]="currentPage"
 				>
-				</oeb-numbered-pagination>
+					<oeb-numbered-pagination
+						[totalProducts]="isFiltered() ? issuerResults.length : issuers.length"
+						[(page)]="currentPage"
+					>
+					</oeb-numbered-pagination>
+				</div>
 			</section>
 		</ng-template>
 		<div id="mapWrapper" class="tw-h-[45vh]" [hidden]="badgesDisplay != 'map'">

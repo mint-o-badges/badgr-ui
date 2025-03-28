@@ -191,12 +191,12 @@
 				</p>
 			</section>
 		</div>
-		<spartan-button-with-icon></spartan-button-with-icon>
-		<oeb-numbered-pagination
-			*ngIf="badgeResults.length >= 30 || currentPage == totalPages"
-			[totalProducts]="badges.length"
-			[(page)]="currentPage"
-		>
-		</oeb-numbered-pagination>
+		<div class="tw-mt-8" *ngIf="badgeResults.length >= 30 || currentPage == totalPages">
+			<oeb-numbered-pagination
+				[totalProducts]="isFiltered() ? badgeResults.length : badges.length"
+				[(page)]="currentPage"
+			>
+			</oeb-numbered-pagination>
+		</div>
 	</ng-template>
 </div>

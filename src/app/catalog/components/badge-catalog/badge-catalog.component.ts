@@ -95,6 +95,7 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		this._searchQuery = query;
 		// this.updateResults();
 		this.updatePaginatedResults();
+		this.currentPage = 1;
 	}
 
 	private _groupBy = '';
@@ -105,6 +106,10 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		this._groupBy = val;
 		// this.updateResults();
 		this.updatePaginatedResults();
+	}
+
+	isFiltered() {
+		return Boolean(this.searchQuery || this.tagsControl.value?.length);
 	}
 
 	trackById(index: number, item: any): any {
@@ -209,12 +214,15 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 
 		this.tagsControl.valueChanges.subscribe(() => {
 			this.updatePaginatedResults();
+			this.currentPage = 1;
 			// this.updateResults();
 		});
 
 		this.sortControl.valueChanges.subscribe((value) => {
+			console.log(value);
 			this.sortOption = value;
 			this.updatePaginatedResults();
+			this.currentPage = 1;
 		});
 	}
 	prepareTexts() {
@@ -368,10 +376,10 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 
 		that.badgeResults = filteredBadges.slice(start, end);
 
-		that.badgeResults.forEach((item) => {
-			addBadgeToResultsByIssuer(item);
-			addBadgeToResultsByCategory(item);
-		});
+		// that.badgeResults.forEach((item) => {
+		// 	addBadgeToResultsByIssuer(item);
+		// 	addBadgeToResultsByCategory(item);
+		// });
 	}
 
 	// onPageChange(newPage: number) {

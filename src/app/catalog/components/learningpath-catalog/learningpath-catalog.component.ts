@@ -69,6 +69,7 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 		this._searchQuery = query;
 		// this.updateResults();
 		this.updatePaginatedResults();
+		this.currentPage = 1;
 	}
 
 	private _groupByInstitution = false;
@@ -79,6 +80,10 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 		this._groupByInstitution = val;
 		// this.updateResults();
 		this.updatePaginatedResults();
+	}
+
+	isFiltered() {
+		return Boolean(this.searchQuery);
 	}
 
 	private _currentPage = 1;
