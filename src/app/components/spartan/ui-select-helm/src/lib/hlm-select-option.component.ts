@@ -18,7 +18,7 @@ import type { ClassValue } from 'clsx';
 		<ng-content />
 		<span
 			[attr.dir]="_brnSelectOption.dir()"
-			class="absolute left-2 flex h-3.5 w-3.5 items-center justify-center rtl:left-auto rtl:right-2"
+			class="tw-absolute tw-left-2 tw-flex tw-h-3.5 tw-w-3.5 tw-items-center tw-justify-center rtl:tw-left-auto rtl:tw-right-2"
 			[attr.data-state]="this._brnSelectOption.checkedState()"
 		>
 			@if (this._brnSelectOption.selected()) {
@@ -26,7 +26,7 @@ import type { ClassValue } from 'clsx';
 			}
 		</span>
 	`,
-	imports: [NgIcon, NgIcon, HlmIconDirective],
+	imports: [NgIcon, HlmIconDirective],
 })
 export class HlmSelectOptionComponent {
 	protected readonly _brnSelectOption = inject(BrnSelectOptionDirective, { host: true });
