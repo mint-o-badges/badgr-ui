@@ -407,6 +407,8 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 
 	removeTag(tag) {
 		this.tagsControl.setValue(this.tagsControl.value.filter((t) => t != tag));
+		this.updatePaginatedResults();
+		this.currentPage = 1;
 	}
 
 	private badgeMatcher(inputPattern: string): (badge) => boolean {

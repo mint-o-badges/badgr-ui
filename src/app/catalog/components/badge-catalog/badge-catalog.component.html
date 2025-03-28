@@ -191,7 +191,7 @@
 				</p>
 			</section>
 		</div>
-		<div class="tw-mt-8" *ngIf="badgeResults.length > 30 || (currentPage == totalPages && currentPage != 1)">
+		<div class="tw-mt-8" *ngIf="badgeResults.length >= 30 || (currentPage == totalPages && currentPage != 1)">
 			<oeb-numbered-pagination
 				[totalProducts]="isFiltered() ? filteredBadges.length : badges.length"
 				[(page)]="currentPage"
