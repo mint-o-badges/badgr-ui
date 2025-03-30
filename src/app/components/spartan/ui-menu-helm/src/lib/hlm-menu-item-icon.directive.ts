@@ -13,5 +13,5 @@ import type { ClassValue } from 'clsx';
 })
 export class HlmMenuItemIconDirective {
 	public readonly userClass = input<ClassValue>('', { alias: 'class' });
-	protected _computedClass = computed(() => hlm('mr-2', this.userClass()));
+	protected _computedClass = computed(() => hlm('tw-mr-2', this.userClass()));
 }
