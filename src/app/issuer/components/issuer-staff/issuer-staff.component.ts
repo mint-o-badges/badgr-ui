@@ -26,6 +26,7 @@ import { Validators } from '@angular/forms';
 import { EmailValidator } from '../../../common/validators/email.validator';
 import { IssuerStaffRequestApiService } from '../../services/issuer-staff-request-api.service';
 import { ApiStaffRequest } from '../../staffrequest-api.model';
+import { BrnDialogRef } from '@spartan-ng/brain/dialog';
 
 @Component({
 	templateUrl: './issuer-staff.component.html',
@@ -60,7 +61,11 @@ export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent imp
 
 	staffRequests: ApiStaffRequest[] = [];
 
+	selectedStaffRequestEmail: string | null = null;
+
 	staffRequestsCaption: string | null = null;
+
+	dialogRef: BrnDialogRef<any> = null;
 
 	@ViewChild('issuerStaffCreateDialog')
 	issuerStaffCreateDialog: IssuerStaffCreateDialogComponent;
@@ -68,8 +73,14 @@ export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent imp
 	@ViewChild('headerTemplate')
 	headerTemplate: TemplateRef<void>;
 
+	@ViewChild('headerConfirmStaffTemplate')
+	headerConfirmStaffTemplate: TemplateRef<void>;
+
 	@ViewChild('addMemberFormTemplate')
 	addMemberFormTemplate: TemplateRef<void>;
+
+	@ViewChild('staffRequestRoleTemplate')
+	staffRequestRoleTemplate: TemplateRef<void>;
 
 	breadcrumbLinkEntries: LinkEntry[] = [];
 
@@ -117,6 +128,37 @@ export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent imp
 		.addControl('staffRole', 'staff' as IssuerStaffRoleSlug, Validators.required)
 		.addControl('staffEmail', '', [Validators.required, EmailValidator.validEmail]);
 
+	staffRequestRoleForm = typedFormGroup().addControl(
+		'staffRole',
+		'staff' as IssuerStaffRoleSlug,
+		Validators.required,
+	);
+
+	submitStaffRequestRoleForm() {
+		if (!this.staffRequestRoleForm.markTreeDirtyAndValidate()) {
+			return;
+		}
+		const formData = this.staffRequestRoleForm.value;
+
+		return this.issuer.addStaffMember(formData.staffRole, this.selectedStaffRequestEmail).then(
+			() => {
+				this.error = null;
+				this.messageService.reportMinorSuccess(
+					`Added ${this.selectedStaffRequestEmail} as ${formData.staffRole}`,
+				);
+				this.closeDialog();
+			},
+			(error) => {
+				const err = BadgrApiFailure.from(error);
+				console.log(err);
+				this.closeDialog();
+				this.error =
+					BadgrApiFailure.messageIfThrottableError(err.overallMessage) ||
+					''.concat(this.translate.instant('Issuer.addMember_failed'), ': ', err.firstMessage);
+			},
+		);
+	}
+
 	submitStaffCreate() {
 		if (!this.staffCreateForm.markTreeDirtyAndValidate()) {
 			return;
@@ -128,11 +170,13 @@ export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent imp
 			() => {
 				this.error = null;
 				this.messageService.reportMinorSuccess(`Added ${formData.staffEmail} as ${formData.staffRole}`);
+				this.closeDialog();
 				// this.closeModal();
 			},
 			(error) => {
 				const err = BadgrApiFailure.from(error);
 				console.log(err);
+				this.closeDialog();
 				this.error =
 					BadgrApiFailure.messageIfThrottableError(err.overallMessage) ||
 					''.concat(this.translate.instant('Issuer.addMember_failed'), ': ', err.firstMessage);
@@ -195,7 +239,7 @@ export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent imp
 	private readonly _hlmDialogService = inject(HlmDialogService);
 
 	public openDialog(text: string) {
-		this._hlmDialogService.open(DialogComponent, {
+		const dialogRef = this._hlmDialogService.open(DialogComponent, {
 			context: {
 				headerTemplate: this.headerTemplate,
 				text: text,
@@ -205,13 +249,33 @@ export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent imp
 				footer: false,
 			},
 		});
+		this.dialogRef = dialogRef;
 	}
 
 	deleteStaffRequest(event) {
 		console.log(event);
 	}
 
-	confirmStaffRequest(event) {
-		this.issuerStaffRequestApiService.confirmRequest(this.issuerSlug, event);
+	closeDialog() {
+		if (this.dialogRef) {
+			this.dialogRef.close();
+		}
+	}
+
+	confirmStaffRequest(event: ApiStaffRequest) {
+		//@ts-ignore
+		this.selectedStaffRequestEmail = event.user.email;
+		const dialogRef = this._hlmDialogService.open(DialogComponent, {
+			context: {
+				headerTemplate: this.headerConfirmStaffTemplate,
+				content: this.staffRequestRoleTemplate,
+				footer: false,
+				templateContext: {
+					email: this.selectedStaffRequestEmail,
+				},
+			},
+		});
+		this.dialogRef = dialogRef;
+		// this.issuerStaffRequestApiService.confirmRequest(this.issuerSlug, event);
 	}
 }

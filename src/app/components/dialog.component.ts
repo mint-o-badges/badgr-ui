@@ -25,11 +25,9 @@ interface DialogContext {
 	headerTemplate: TemplateRef<void>;
 	tite?: string;
 	subtitle?: string;
-	variant: 'danger' | 'info' | 'success';
+	variant: 'danger' | 'info' | 'success' | 'default';
 	content: TemplateRef<void>;
-	twoButtonFooter?: boolean;
-	footer?: boolean;
-	forwardText?: string;
+	templateContext?: Record<string, any>;
 }
 
 @Component({
@@ -55,9 +53,11 @@ interface DialogContext {
 		OebDialogComponent,
 	],
 	template: `
-		<oeb-dialog [variant]="context.variant">
+		<oeb-dialog [variant]="context.variant || 'default'">
 			<ng-container *ngIf="context.headerTemplate">
-				<ng-container *ngTemplateOutlet="context.headerTemplate"></ng-container>
+				<ng-container
+					*ngTemplateOutlet="context.headerTemplate; context: context.templateContext || {}"
+				></ng-container>
 			</ng-container>
 			<ng-container *ngIf="context.variant == 'success'">
 				<div class="tw-text-center tw-text-purple">
@@ -78,24 +78,6 @@ interface DialogContext {
 			<ng-template #textContent>
 				<p class="tw-text-center" [innerHTML]="context.content"></p>
 			</ng-template>
-
-			<ng-container *ngIf="context.twoButtonFooter">
-				<div class="tw-flex tw-justify-between tw-gap-2 tw-mt-6">
-					<oeb-button
-						size="md"
-						variant="secondary"
-						[text]="'General.cancel' | translate"
-						(click)="cancel()"
-					></oeb-button>
-					<oeb-button
-						width="max_content"
-						size="md"
-						class="tw-mr-4"
-						[text]="context.forwardText"
-						(click)="continue()"
-					></oeb-button>
-				</div>
-			</ng-container>
 		</oeb-dialog>
 	`,
 	styleUrl: './dialog.component.scss',

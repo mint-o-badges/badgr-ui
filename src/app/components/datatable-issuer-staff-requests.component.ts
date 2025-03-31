@@ -60,7 +60,7 @@ import { ApiStaffRequest } from '../issuer/staffrequest-api.model';
 				<!-- Actions Column -->
 				<hlm-th class="tw-w-[25%] tw-px-4 tw-flex tw-items-center tw-gap-2">
 					<oeb-button
-						(click)="confirmRequest(request.entity_id)"
+						(click)="confirmRequest(request)"
 						size="sm"
 						[text]="'General.confirm' | translate"
 					></oeb-button>
@@ -79,13 +79,13 @@ export class IssuerStaffRequestsDatatableComponent {
 	@Input() caption: string = '';
 	@Input() requests: ApiStaffRequest[] = [];
 	@Output() deleteStaffRequest = new EventEmitter<string>();
-	@Output() confirmStaffRequest = new EventEmitter<string>();
+	@Output() confirmStaffRequest = new EventEmitter<ApiStaffRequest>();
 
 	deleteRequest(requestId: string) {
 		this.deleteStaffRequest.emit(requestId);
 	}
 
-	confirmRequest(requestId: string) {
-		this.confirmStaffRequest.emit(requestId);
+	confirmRequest(request: ApiStaffRequest) {
+		this.confirmStaffRequest.emit(request);
 	}
 }

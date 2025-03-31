@@ -34,6 +34,16 @@
 				>
 				</span>
 			</ng-template>
+			<ng-template #headerConfirmStaffTemplate let-email="email">
+				<h1 class="tw-font-bold tw-text-oebblack tw-text-2xl">
+					{{ 'Issuer.confirmStaffRequest' | translate }}
+				</h1>
+				<p class="tw-text-oebblack tw-text-lg tw-mt-2 tw-mb-4 tw-leading-[130%]">
+					<span [innerHTML]="'Issuer.confirmStaffRequestText1' | translate"></span>
+					<span class="tw-font-bold">{{ email }}</span>
+					<span [innerHTML]="'Issuer.confirmStaffRequestText2' | translate"></span>
+				</p>
+			</ng-template>
 			<ng-template #addMemberFormTemplate>
 				<form [formGroup]="staffCreateForm.rawControl" (ngSubmit)="submitStaffCreate()">
 					<oeb-input
@@ -74,7 +84,7 @@
 							type="button"
 							size="md"
 							variant="secondary"
-							(click)="$event.preventDefault()"
+							(click)="$event.preventDefault(); closeDialog()"
 							[text]="'General.cancel' | translate"
 						>
 						</oeb-button>
@@ -82,6 +92,56 @@
 							size="md"
 							[text]="'Issuer.addMember' | translate"
 							[disabled]="staffCreateForm.invalid"
+						>
+							{{ 'Issuer.addMember' | translate }}
+						</oeb-button>
+					</div>
+				</form>
+			</ng-template>
+			<ng-template #staffRequestRoleTemplate>
+				<form [formGroup]="staffRequestRoleForm.rawControl" (ngSubmit)="submitStaffRequestRoleForm()">
+					<span class="tw-text-oebblack tw-text-lg tw-font-bold">{{
+						'Issuer.addMember_chooseRole' | translate
+					}}</span>
+					<section class="tw-mt-4">
+						<bg-formfield-radio
+							*ngFor="let role of issuerStaffRoleOptions; last as last"
+							[control]="staffCreateForm.rawControlMap.staffRole"
+							[name]="'staffRole'"
+							[label]="role.label"
+							[value]="role.value"
+							[sublabel]="role.description"
+							[last]="last"
+							errorMessage="{{ 'Issuer.addMember_selectRole' | translate }}"
+						></bg-formfield-radio>
+					</section>
+					<br />
+
+					<div class="notification notification-warning notification-is-active" *ngIf="error">
+						<div class="notification-x-icon">
+							<svg>
+								<use xlink:href="/images/icons.svg#icon_priority_high"></use>
+							</svg>
+						</div>
+						<div class="notification-x-text">
+							<h2>{{ 'Issuer.addMember_failed' | translate }}!</h2>
+							<p>{{ error }}</p>
+						</div>
+					</div>
+
+					<div class="tw-w-full tw-justify-between tw-flex">
+						<oeb-button
+							type="button"
+							size="md"
+							variant="secondary"
+							(click)="$event.preventDefault(); closeDialog()"
+							[text]="'General.cancel' | translate"
+						>
+						</oeb-button>
+						<oeb-button
+							size="md"
+							[text]="'Issuer.addMember' | translate"
+							[disabled]="staffRequestRoleForm.invalid"
 						>
 							{{ 'Issuer.addMember' | translate }}
 						</oeb-button>

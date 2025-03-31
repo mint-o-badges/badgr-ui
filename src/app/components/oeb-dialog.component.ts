@@ -25,7 +25,8 @@ import { NgClass, NgIf } from '@angular/common';
 			[ngClass]="{
 				'!tw-border-red !tw-bg-white !tw-border-4 !tw-border-solid': variant === 'danger',
 				'!tw-border-link !tw-bg-white !tw-border-4 !tw-border-solid': variant === 'info',
-				'!tw-border-green !tw-bg-green': variant === 'success'
+				'!tw-border-green !tw-bg-green': variant === 'success',
+				'tw-border-purple tw-border-2 tw-border-solid tw-rounded-[10px]': variant === 'default'
 			}"
 		>
 			<hlm-dialog-header *ngIf="title">

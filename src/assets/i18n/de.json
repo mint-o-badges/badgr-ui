@@ -292,7 +292,10 @@
 		"staffRequestForwardedEmail": "Du bekommst eine E-Mail von uns, wenn die Anfrage bestätigt wird.",
 		"yourOpenStaffRequests": "Deine offenen Mitgliedsanfragen",
 		"deleteStaffRequest": "Anfrage löschen",
-		"openStaffRequests": "Offene Mitgliedsanfragen"
+		"openStaffRequests": "Offene Mitgliedsanfragen",
+		"confirmStaffRequest": "Mitgliedsanfrage bestätigen",
+		"confirmStaffRequestText1": "Wenn ",
+		"confirmStaffRequestText2": " Mitglied deiner Institution sein soll, wähle die passende Rolle aus und bestätige die Anfrage:"
 	},
 	"Badge": {
 		"groupBy": "Gruppieren nach",

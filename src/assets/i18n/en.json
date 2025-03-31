@@ -258,6 +258,9 @@
 		"yourOpenStaffRequests": "Your open member requests",
 		"deleteStaffRequest": "Delete request",
 		"openStaffRequests": "Open staff requests",
+		"confirmStaffRequest": "Confirm staff request",
+		"confirmStaffRequestText1": "If ",
+		"confirmStaffRequestText2": " should be a member of your institution choose the fitting role and confirm the request:",
 		"copyBadgesOfOtherIssuers": "You can also <a class='tw-underline tw-text-[#1400FF]' hlmA href='https://openbadges.education/catalog/badges'>copy</a> badges of other institutions."
 	},
 	"Badge": {
