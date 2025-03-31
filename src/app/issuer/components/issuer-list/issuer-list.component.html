@@ -125,6 +125,35 @@
 							<img src="assets/oeb/images/issuerPage/questionmark.svg" width="121" height="121" />
 						</div>
 					</ng-template>
+					<ng-template #requestStaffMembershipTemplate let-issuername="issuername">
+						<p>
+							<span
+								class="tw-text-oebblack tw-text-lg"
+								[innerHTML]="'Issuer.requestMembershipQuestion' | translate"
+							>
+							</span>
+							<span class="tw-text-oebblack tw-text-lg tw-font-bold">
+								{{ issuername }}
+							</span>
+							<span class="tw-text-oebblack tw-text-lg" [innerHTML]="'General.place' | translate"> </span>
+						</p>
+						<div class="tw-w-full tw-justify-between tw-flex">
+							<oeb-button
+								type="button"
+								size="md"
+								variant="secondary"
+								(click)="closeDialog()"
+								[text]="'General.cancel' | translate"
+							>
+							</oeb-button>
+							<oeb-button
+								(click)="requestMembership()"
+								size="md"
+								[text]="'Issuer.requestMembership' | translate"
+							>
+							</oeb-button>
+						</div>
+					</ng-template>
 					<ng-template #successfullyRequestedMembershipContentTemplate>
 						<div class="tw-flex tw-justify-center">
 							<div class="oeb-icon-circle tw-my-6">

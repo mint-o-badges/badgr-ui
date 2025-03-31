@@ -20,6 +20,7 @@ import { PublicApiService } from '../../../public/services/public-api.service';
 import { IssuerStaffRequestApiService } from '../../services/issuer-staff-request-api.service';
 import { UserProfileApiService } from '../../../common/services/user-profile-api.service';
 import { ApiStaffRequest } from '../../staffrequest-api.model';
+import { BrnDialogRef } from '@spartan-ng/brain/dialog';
 
 @Component({
 	selector: 'issuer-list',
@@ -46,6 +47,9 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 
 	@ViewChild('headerQuestionMarkTemplate')
 	headerQuestionMarkTemplate: TemplateRef<void>;
+
+	@ViewChild('requestStaffMembershipTemplate')
+	requestStaffMembershipTemplate: TemplateRef<void>;
 
 	@ViewChild('issuerInfoTemplate')
 	issuerInfoTemplate: TemplateRef<void>;
@@ -75,6 +79,8 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 
 	issuersLoading = false;
 	issuerSearchLoaded = false;
+
+	dialogRef: BrnDialogRef<any> = null;
 
 	plural = {
 		issuer: {
@@ -209,6 +215,22 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 			});
 	}
 
+	closeDialog() {
+		if (this.dialogRef) {
+			this.dialogRef.close();
+		}
+	}
+
+	async requestMembership() {
+		const req = await this.issuerStaffRequestApiService.requestIssuerStaffMembership(this.selectedIssuer.slug);
+		if (req.ok) {
+			this.closeDialog();
+			this.openSuccessfullyRequestedMembershipDialog();
+		} else {
+			console.error('staff request was not received:', req.status);
+		}
+	}
+
 	private readonly _hlmDialogService = inject(HlmDialogService);
 	public openSuccessDialog() {
 		const dialogRef = this._hlmDialogService.open(SuccessDialogComponent, {
@@ -220,7 +242,7 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 	}
 
 	public openIssuerInfoDialog() {
-		this._hlmDialogService.open(DialogComponent, {
+		const dialogRef = this._hlmDialogService.open(DialogComponent, {
 			context: {
 				headerTemplate: this.headerTemplate,
 				content: this.issuerInfoTemplate,
@@ -228,43 +250,23 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 				footer: false,
 			},
 		});
+
+		this.dialogRef = dialogRef;
 	}
 
 	public openRequestStaffMembershipDialog() {
+		console.log(this.selectedIssuer.name);
 		const dialogRef = this._hlmDialogService.open(DialogComponent, {
 			context: {
 				headerTemplate: this.headerQuestionMarkTemplate,
-				content: `
-					<span class='tw-text-oebblack tw-text-lg'>
-					${this.translate.instant('Issuer.requestMembershipQuestion')}
-					</span>
-					<span class='tw-text-oebblack tw-text-lg tw-font-bold'>
-					${this.selectedIssuer.name}
-					</span>
-					<span class='tw-text-oebblack tw-text-lg'>
-					${this.translate.instant('General.place') + '?'}
-					</span>
-					`,
+				content: this.requestStaffMembershipTemplate,
 				variant: 'info',
-				twoButtonFooter: true,
-				forwardText: this.translate.instant('Issuer.requestMembership'),
+				templateContext: {
+					issuername: this.selectedIssuer.name,
+				},
 			},
 		});
-
-		dialogRef.closed$.subscribe(async (result) => {
-			if (result === 'continue') {
-				if (this.selectedIssuer) {
-					const req = await this.issuerStaffRequestApiService.requestIssuerStaffMembership(
-						this.selectedIssuer.slug,
-					);
-					if (req.ok) {
-						this.openSuccessfullyRequestedMembershipDialog();
-					} else {
-						console.error('staff request was not received:', req.status);
-					}
-				}
-			}
-		});
+		this.dialogRef = dialogRef;
 	}
 
 	public openSuccessfullyRequestedMembershipDialog() {

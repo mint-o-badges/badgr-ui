@@ -73,7 +73,9 @@ interface DialogContext {
 			</ng-container>
 
 			<ng-container *ngIf="isTemplate(context.content); else textContent">
-				<ng-container *ngTemplateOutlet="context.content"></ng-container>
+				<ng-container
+					*ngTemplateOutlet="context.content; context: context.templateContext || {}"
+				></ng-container>
 			</ng-container>
 			<ng-template #textContent>
 				<p class="tw-text-center" [innerHTML]="context.content"></p>

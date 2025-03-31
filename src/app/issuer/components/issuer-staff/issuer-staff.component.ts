@@ -147,6 +147,10 @@ export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent imp
 					`Added ${this.selectedStaffRequestEmail} as ${formData.staffRole}`,
 				);
 				this.closeDialog();
+				this.staffRequests = this.staffRequests.filter(
+					//@ts-ignore
+					(req) => req.user.email != this.selectedStaffRequestEmail,
+				);
 			},
 			(error) => {
 				const err = BadgrApiFailure.from(error);
@@ -207,6 +211,7 @@ export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent imp
 	}
 
 	async removeMember(member: IssuerStaffMember) {
+		console.log('member', member);
 		if (
 			!(await this.dialogService.confirmDialog.openTrueFalseDialog({
 				dialogTitle: `Remove ${member.nameLabel}?`,
@@ -253,7 +258,9 @@ export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent imp
 	}
 
 	deleteStaffRequest(event) {
-		console.log(event);
+		this.issuerStaffRequestApiService.deleteRequest(this.issuerSlug, event).then(() => {
+			this.staffRequests = this.staffRequests.filter((req) => req.entity_id != event);
+		});
 	}
 
 	closeDialog() {

@@ -24,6 +24,7 @@
 			</div>
 			<oeb-button
 				[text]="'Issuer.addMember' | translate"
+				size="mediumText"
 				(click)="openDialog(this.translate.instant('Issuer.addMember'))"
 			></oeb-button>
 			<ng-template #headerTemplate>
@@ -93,7 +94,6 @@
 							[text]="'Issuer.addMember' | translate"
 							[disabled]="staffCreateForm.invalid"
 						>
-							{{ 'Issuer.addMember' | translate }}
 						</oeb-button>
 					</div>
 				</form>
@@ -149,8 +149,11 @@
 				</form>
 			</ng-template>
 		</div>
-		<section class="tw-mt-8" *ngIf="staffRequests.length > 0">
+		<section class="tw-mt-8">
 			<h2 hlmH2 class="!tw-text-oebblack tw-mb-2">{{ 'Issuer.openStaffRequests' | translate }}</h2>
+			<span class="tw-text-oebblack tw-italic tw-text-lg" *ngIf="staffRequests.length == 0">{{
+				'Issuer.noOpenStaffRequests' | translate
+			}}</span>
 			<issuer-staff-requests-datatable
 				[requests]="staffRequests"
 				(deleteStaffRequest)="deleteStaffRequest($event)"
@@ -162,7 +165,11 @@
 			<h2 hlmH2 class="!tw-text-oebblack tw-mb-2">
 				{{ 'General.members' | translate }} {{ 'General.of' | translate }} {{ issuer.name }}
 			</h2>
-			<issuer-staff-datatable [members]="issuer.staff" [roleOptions]="issuerStaffRoleOptions">
+			<issuer-staff-datatable
+				[members]="issuer.staff"
+				[roleOptions]="issuerStaffRoleOptions"
+				(removeStaffMember)="removeMember($event)"
+			>
 			</issuer-staff-datatable>
 		</section>
 	</div>

@@ -55,11 +55,9 @@ import { IssuerStaffMember } from '../issuer/models/issuer.model';
 				></oeb-select>
 			</hlm-th>
 			<hlm-th class="tw-w-[25%] tw-px-4 tw-text-center tw-flex tw-justify-end">
-				<span
-					(click)="removeMember(member.entity_id)"
-					class="tw-text-link tw-underline tw-text-sm tw-cursor-pointer"
-					>{{ 'General.remove' | translate }}</span
-				>
+				<span (click)="removeMember(member)" class="tw-text-link tw-underline tw-text-sm tw-cursor-pointer">{{
+					'General.remove' | translate
+				}}</span>
 			</hlm-th>
 		</hlm-trow>
 	</hlm-table>`,
@@ -76,7 +74,7 @@ export class IssuerStaffDatatableComponent {
 		console.log(this.roleOptions);
 	}
 
-	removeMember(memberId: string) {
-		this.removeStaffMember.emit(memberId);
+	removeMember(member: IssuerStaffMember) {
+		this.removeStaffMember.emit(member);
 	}
 }

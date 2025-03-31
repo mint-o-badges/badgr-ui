@@ -295,7 +295,8 @@
 		"openStaffRequests": "Offene Mitgliedsanfragen",
 		"confirmStaffRequest": "Mitgliedsanfrage bestätigen",
 		"confirmStaffRequestText1": "Wenn ",
-		"confirmStaffRequestText2": " Mitglied deiner Institution sein soll, wähle die passende Rolle aus und bestätige die Anfrage:"
+		"confirmStaffRequestText2": " Mitglied deiner Institution sein soll, wähle die passende Rolle aus und bestätige die Anfrage:",
+		"noOpenStaffRequests": "Keine offenen Anfragen"
 	},
 	"Badge": {
 		"groupBy": "Gruppieren nach",
