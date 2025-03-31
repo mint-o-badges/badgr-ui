@@ -46,7 +46,7 @@ import { SharedIconsModule } from '../public/icons.module';
 				<hlm-menu-label [size]="size" *ngIf="label">{{ label }}</hlm-menu-label>
 				<ng-container *ngFor="let menuItem of menuItems">
 					<button *ngIf="menuItem.action" (click)="menuItem.action($event)" [size]="size" hlmMenuItem>
-						<ng-icon hlm [class]="iconClass" *ngIf="menuItem.icon" name="{{ menuItem.icon }}" hlmMenuIcon />
+						<ng-icon hlm [size]="iconClass" *ngIf="menuItem.icon" name="{{ menuItem.icon }}" hlmMenuIcon />
 						{{ menuItem.title }}
 					</button>
 					<button
