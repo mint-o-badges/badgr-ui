@@ -98,8 +98,8 @@
 					</div>
 				</form>
 			</ng-template>
-			<ng-template #staffRequestRoleTemplate>
-				<form [formGroup]="staffRequestRoleForm.rawControl" (ngSubmit)="submitStaffRequestRoleForm()">
+			<ng-template #staffRequestRoleTemplate let-requestid="requestid">
+				<form [formGroup]="staffRequestRoleForm.rawControl" (ngSubmit)="submitStaffRequestRoleForm(requestid)">
 					<span class="tw-text-oebblack tw-text-lg tw-font-bold">{{
 						'Issuer.addMember_chooseRole' | translate
 					}}</span>

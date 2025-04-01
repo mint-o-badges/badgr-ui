@@ -63,7 +63,7 @@ import { IssuerStaffRoleSlug } from '../issuer/models/issuer-api.model';
 			</hlm-th>
 			<hlm-th class="md:tw-w-[25%] tw-w-full tw-px-4 tw-text-center tw-flex md:tw-justify-end">
 				<span
-					*ngIf="!isCurrentUserIssuerOwner"
+					*ngIf="member != issuer.currentUserStaffMember"
 					(click)="removeMember(member)"
 					class="tw-text-link tw-underline tw-text-sm tw-cursor-pointer"
 					>{{ 'General.remove' | translate }}</span

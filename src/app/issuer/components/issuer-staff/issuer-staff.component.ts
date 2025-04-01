@@ -134,7 +134,7 @@ export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent imp
 		Validators.required,
 	);
 
-	submitStaffRequestRoleForm() {
+	submitStaffRequestRoleForm(requestid: string) {
 		if (!this.staffRequestRoleForm.markTreeDirtyAndValidate()) {
 			return;
 		}
@@ -142,6 +142,7 @@ export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent imp
 
 		return this.issuer.addStaffMember(formData.staffRole, this.selectedStaffRequestEmail).then(
 			() => {
+				this.issuerStaffRequestApiService.confirmRequest(this.issuerSlug, requestid);
 				this.error = null;
 				this.messageService.reportMinorSuccess(
 					`Added ${this.selectedStaffRequestEmail} as ${formData.staffRole}`,
@@ -279,6 +280,7 @@ export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent imp
 				footer: false,
 				templateContext: {
 					email: this.selectedStaffRequestEmail,
+					requestid: event.entity_id,
 				},
 			},
 		});
