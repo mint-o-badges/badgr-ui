@@ -169,6 +169,7 @@
 				[members]="issuer.staff"
 				[roleOptions]="issuerStaffRoleOptions"
 				(removeStaffMember)="removeMember($event)"
+				(roleChanged)="changeMemberRole($event.member, $event.roleSlug)"
 			>
 			</issuer-staff-datatable>
 		</section>
