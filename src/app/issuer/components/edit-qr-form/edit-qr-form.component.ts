@@ -51,7 +51,8 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent {
 		.addControl('valid_from', '', DateValidator.validDate)
 		.addControl('expires_at', '', [DateValidator.validDate, this.validDateRange.bind(this)])
 		.addControl('badgeclass_id', '', Validators.required)
-		.addControl('issuer_id', '', Validators.required);
+		.addControl('issuer_id', '', Validators.required)
+		.addControl('notifications', false);
 
 	constructor(
 		route: ActivatedRoute,
@@ -101,6 +102,7 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent {
 						: undefined,
 					badgeclass_id: qrCode.badgeclass_id,
 					issuer_id: qrCode.issuer_id,
+					notifications: qrCode.notifications,
 				});
 			});
 		}

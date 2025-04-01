@@ -655,7 +655,8 @@
 	},
 	"QrCode": {
 		"savedSuccessfully": "<span class='tw-font-bold'> The QR code assignment was successfully saved on the badge detail page.</span>",
-		"downloadedSuccessfully": "<span class='tw-font-bold'>You have successfully downloaded the QR-Code.</span><br> Check your download folder."
+		"downloadedSuccessfully": "<span class='tw-font-bold'>You have successfully downloaded the QR-Code.</span><br> Check your download folder.",
+		"receiveEmails": "Ich möchte per E-Mail über neue QR-Code-Anfragen benachrichtigt werden"
 	},
 	"OEBComponents": {
 		"fieldIsRequired": "This field is required"
