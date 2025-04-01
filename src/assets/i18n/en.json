@@ -67,7 +67,8 @@
 		"pleaseWait": "Please wait...",
 		"title": "Title",
 		"noResults": "No results",
-		"reset": "Reset"
+		"reset": "Reset",
+		"exam": "Exam"
 	},
 	"NavItems": {
 		"register": "Register",
@@ -283,7 +284,10 @@
 		"copyBadgeDescription": "Badges can always be copied within your own institution.<br>You can update the copy status for other institutions at any time via the menu on the badge details page.",
 		"copyLabelOthers": "<strong>Other</strong> institutions are allowed to copy this badge.",
 		"copy": "Copy Badge to own institution",
-		"copyBadge": "Copy Badge"
+		"copyBadge": "Copy Badge",
+		"awardCriteria": "Vergabe-Kriterien",
+		"criteriaDesc": "What criteria do learners have to meet to receive the badge?",
+		"addOwnCriteria": "Add own Criteria"
 	},
 	"CreateBadge": {
 		"chooseBadgeCategory": "Choose Badge-Category",
@@ -342,7 +346,8 @@
 		"alignEducationalFramework": "link to educational standards",
 		"frame": "Frame",
 		"expiration": "Expiration",
-		"expirationInfo": "Describe the duration for which this badge is generally valid. This information can also be changed during the award process. Badges will be marked as expired after the validity period expires.",
+		"expirationInfo": "This information can also be changed during the award process. Badges will be marked as expired after the validity period expires.",
+		"validUntil": "The badge is valid until ",
 		"chooseDuration": "Choose duration",
 		"optionalBadgeDetails": "Optional Badge-Details",
 		"newTag": "New Tag...",

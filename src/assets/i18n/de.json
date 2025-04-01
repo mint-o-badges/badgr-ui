@@ -74,7 +74,8 @@
 		"pleaseWait": "Bitte warten...",
 		"title": "Titel",
 		"noResults": "Keine Ergebnisse",
-		"reset": "Zurücksetzen"
+		"reset": "Zurücksetzen",
+		"exam": "Prüfung"
 	},
 	"NavItems": {
 		"register": "Registrieren",
@@ -325,11 +326,22 @@
 			"participation": "Teilnahme-Badge",
 			"learningpath": "Micro Degree"
 		},
-		"copyBadgeHeadline": "Kopier-Status auswählen",
-		"copyBadgeDescription": "Innerhalb der eigenen Institution können Badges immer kopiert werden.<br>Den Kopier-Status für <strong>andere</strong> Institutionen kannst du später jederzeit über das Menü auf der Badge-Detail-Seite aktualisieren.",
+		"copyBadgeHeadline": "Kopier-Status",
+		"copyBadgeDescription1": "Innerhalb der eigenen Institution können Badges immer kopiert werden.",
+		"copyBadgeDescription2": "Den Kopier-Status für <strong>andere</strong> Institutionen kannst du später jederzeit über das Menü auf der Badge-Detail-Seite aktualisieren.",
 		"copyLabelOthers": "Der Badge darf von <strong>anderen</strong> Institutionen kopiert werden.",
 		"copy": "Badge für eigene Institution kopieren",
-		"copyBadge": "Badge kopieren"
+		"copyBadge": "Badge kopieren",
+		"awardCriteria": "Vergabe-Kriterien",
+		"criteriaDesc": "Welche Anforderungen müssen deine Lernenden erfüllen, um den Badge zu erhalten?",
+		"activeParticipation": "Aktive Teilnahme",
+		"selfReflection": "Selbstreflexion",
+		"achievedIndividualLearning": "Individuelles Lernziel erreicht",
+		"presence90": "90% Anwesenheit",
+		"practicalApplication": "Praxis-Awendung",
+		"onlineCourseCompleted": "Online-Kurs abgeschlossen",
+		"projectCompleted": "Projekt-Abschluss",
+		"addOwnCriteria": "Eigenes Kriterium hinzufügen"
 	},
 	"CreateBadge": {
 		"chooseBadgeCategory": "Badge-Kategorie wählen",
@@ -388,7 +400,8 @@
 		"alignEducationalFramework": "Verknüpfung zu Bildungs-Standards",
 		"frame": "Rahmen",
 		"expiration": "Gültigkeit",
-		"expirationInfo": "Beschreiben Sie die Dauer, für die dieses Badge allgemein gültig ist. Diese Information kann auch bei der Vergabe geändert werden. Badges werden nach Ablauf der Gültigkeit als abgelaufen markiert.",
+		"expirationInfo": "Diese Information kann auch bei der Vergabe geändert werden. Badges werden nach Ablauf der Gültigkeit als abgelaufen markiert.",
+		"validUntil": "Der Badge ist gültig bis ",
 		"chooseDuration": "Wähle Dauer",
 		"optionalBadgeDetails": "Optionale Badge-Details",
 		"newTag": "Einen Tag eingeben...",

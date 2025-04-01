@@ -322,6 +322,21 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				.addControl('target_code', ''),
 		)
 		.addControl('copy_permissions_allow_others', false);
+	// .addArray(
+	// 	'criteria',
+	// 	typedFormGroup()
+	// 		.addControl('activeParticipation', false)
+	// 		.addControl('selfReflection', false)
+	// 		.addControl('achievedIndividualLearning', false)
+	// 		.addControl('presence90', false)
+	// 		.addControl('practicalApplication', false)
+	// 		.addControl('onlineCourseCompleted', false)
+	// 		.addControl('projectCompleted', false)
+	// 		.addControl('addOwnCriteria', false)
+	// 		.addControl('portfolio', false)
+	// 		.addControl('peerFeedback', false)
+	// 		.addArray('customCriteria', typedFormGroup().addControl('customCriteria', '')),
+	// );
 
 	@ViewChild('badgeStudio')
 	badgeStudio: BadgeStudioComponent;
