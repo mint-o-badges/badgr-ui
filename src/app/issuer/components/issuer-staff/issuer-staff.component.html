@@ -167,6 +167,8 @@
 			</h2>
 			<issuer-staff-datatable
 				[members]="issuer.staff"
+				[issuer]="issuer"
+				[isCurrentUserIssuerOwner]="isCurrentUserIssuerOwner"
 				[roleOptions]="issuerStaffRoleOptions"
 				(removeStaffMember)="removeMember($event)"
 				(roleChanged)="changeMemberRole($event.member, $event.roleSlug)"

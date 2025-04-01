@@ -8,7 +8,7 @@ import { OebButtonComponent } from './oeb-button.component';
 import { HlmPDirective } from '../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
 import { FormControl } from '@angular/forms';
 import { OebSelectComponent } from './select.component';
-import { IssuerStaffMember } from '../issuer/models/issuer.model';
+import { Issuer, IssuerStaffMember } from '../issuer/models/issuer.model';
 import { IssuerStaffRoleSlug } from '../issuer/models/issuer-api.model';
 
 @Component({
@@ -45,12 +45,14 @@ import { IssuerStaffRoleSlug } from '../issuer/models/issuer-api.model';
 				><p hlmP class="tw-font-normal tw-text-lg tw-text-oebblack tw-truncate">{{ member.email }}</p></hlm-th
 			>
 			<hlm-th class="tw-w-36 md:tw-w-48 !tw-text-oebblack sm:tw-grid">
-				<div class="forminput forminput-full">
+				<div class="forminput forminput-full" *ngIf="isCurrentUserIssuerOwner">
 					<div class="forminput-x-inputs">
 						<select
 							class="!tw-border-purple !tw-border-solid !tw-text-oebblack tw-rounded-[10px] tw-text-lg"
 							[ngModel]="member.roleSlug"
+							[disabled]="member == issuer.currentUserStaffMember"
 							(change)="changeRole(member, $event.target.value)"
+							*ngIf="isCurrentUserIssuerOwner"
 						>
 							<option *ngFor="let role of roleOptions" [value]="role.value">
 								{{ role.label }}
@@ -60,9 +62,12 @@ import { IssuerStaffRoleSlug } from '../issuer/models/issuer-api.model';
 				</div>
 			</hlm-th>
 			<hlm-th class="md:tw-w-[25%] tw-w-full tw-px-4 tw-text-center tw-flex md:tw-justify-end">
-				<span (click)="removeMember(member)" class="tw-text-link tw-underline tw-text-sm tw-cursor-pointer">{{
-					'General.remove' | translate
-				}}</span>
+				<span
+					*ngIf="!isCurrentUserIssuerOwner"
+					(click)="removeMember(member)"
+					class="tw-text-link tw-underline tw-text-sm tw-cursor-pointer"
+					>{{ 'General.remove' | translate }}</span
+				>
 			</hlm-th>
 		</hlm-trow>
 	</hlm-table>`,
@@ -70,6 +75,8 @@ import { IssuerStaffRoleSlug } from '../issuer/models/issuer-api.model';
 export class IssuerStaffDatatableComponent {
 	@Input() caption: string = '';
 	@Input() members: IssuerStaffMember[];
+	@Input() issuer: Issuer;
+	@Input() isCurrentUserIssuerOwner: boolean;
 	@Input() roleOptions: string[];
 	@Output() removeStaffMember = new EventEmitter();
 	@Output() roleChanged = new EventEmitter<{ member: IssuerStaffMember; roleSlug: IssuerStaffRoleSlug }>();

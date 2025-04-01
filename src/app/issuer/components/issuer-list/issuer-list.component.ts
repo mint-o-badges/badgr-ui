@@ -225,6 +225,7 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 		const req = await this.issuerStaffRequestApiService.requestIssuerStaffMembership(this.selectedIssuer.slug);
 		if (req.ok) {
 			this.closeDialog();
+			this.staffRequests.push(req.body as ApiStaffRequest);
 			this.openSuccessfullyRequestedMembershipDialog();
 		} else {
 			console.error('staff request was not received:', req.status);
