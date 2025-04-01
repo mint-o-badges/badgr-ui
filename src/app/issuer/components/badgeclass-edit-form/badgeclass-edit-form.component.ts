@@ -137,6 +137,8 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	maxCustomImageSize = 1024 * 1024 * 2;
 	isCustomImageLarge: boolean = false;
 
+	pendingInitialization: BadgeClass | null = null;
+
 	@Input()
 	set badgeClass(badgeClass: BadgeClass) {
 		if (this.existingBadgeClass !== badgeClass) {
@@ -146,11 +148,14 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		}
 	}
 
-	@Input()
-	set initBadgeClass(badgeClass: BadgeClass) {
+	@Input() set initBadgeClass(badgeClass: BadgeClass) {
 		if (this.initialisedBadgeClass !== badgeClass) {
 			this.initialisedBadgeClass = badgeClass;
-			this.initFormFromExisting(this.initialisedBadgeClass);
+			if (this.badgeStudio) {
+				this.initFormFromExisting(this.initialisedBadgeClass);
+			} else {
+				this.pendingInitialization = this.initialisedBadgeClass;
+			}
 		}
 	}
 
@@ -539,6 +544,9 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		this.currentImage = badgeClass.extension['extensions:OrgImageExtension']
 			? badgeClass.extension['extensions:OrgImageExtension'].OrgImage
 			: undefined;
+
+		this.generateUploadImage(this.currentImage, this.badgeClassForm.value, true);
+
 		this.tags = new Set();
 		this.badgeClass.tags.forEach((t) => this.tags.add(t));
 
@@ -579,6 +587,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 		this.badgeClassForm.rawControl.controls['useIssuerImageInBadge'].valueChanges.subscribe(
 			(useIssuerImageInBadge) => {
+				console.log('val changed', useIssuerImageInBadge);
 				if (this.currentImage && this.imageField.control.value) {
 					this.generateUploadImage(this.currentImage, this.badgeClassForm.value, useIssuerImageInBadge);
 				}
@@ -622,6 +631,11 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	}
 
 	ngAfterViewInit(): void {
+		if (this.pendingInitialization) {
+			this.initFormFromExisting(this.pendingInitialization);
+			this.pendingInitialization = null;
+		}
+
 		this.imageField.control.statusChanges.subscribe((e) => {
 			if (this.imageField.control.value != null) this.customImageField.control.reset();
 		});
@@ -1455,6 +1469,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	 * @param formdata
 	 */
 	generateUploadImage(image, formdata, useIssuerImageInBadge = false) {
+		console.log('img gen');
 		this.currentImage = image.slice();
 		this.badgeStudio
 			.generateUploadImage(image.slice(), formdata, useIssuerImageInBadge, this.issuer.image)

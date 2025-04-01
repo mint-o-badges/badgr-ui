@@ -70,7 +70,7 @@ export class BadgeClassCreateComponent extends BaseAuthenticatedRoutableComponen
 		if (state && state.copybadgeid) {
 			breadcrumbPromises.push(
 				this.badgeClassService.issuerBadgeById(state.copybadgeid).then((badge) => {
-					this.category = 'competency';
+					this.category = badge.extension['extensions:CategoryExtension'].Category;
 					this.copiedBadgeClass = badge;
 				}),
 			);
