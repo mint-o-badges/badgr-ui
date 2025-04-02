@@ -441,6 +441,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 							// 	competencyExtensionContextUrl,
 							// ),
 						},
+						copy_permissions: ['issuer'],
 					});
 
 					const issuer = await this.issuerApiService.getIssuer(this.issuerSlug);

@@ -213,6 +213,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 				this.config = {
 					crumbs: this.crumbs,
 					badgeTitle: this.badgeClass.name,
+					badgeCriteria: this.badgeClass.criteria_text,
 					headerButton: {
 						title: 'Badge direkt vergeben',
 						action: () => this.routeToBadgeAward(this.badgeClass, this.issuer),

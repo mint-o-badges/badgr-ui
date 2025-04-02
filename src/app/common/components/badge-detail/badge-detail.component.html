@@ -110,6 +110,19 @@
 							</div>
 						</div>
 						<dl clss="tw-min-w-[150px]">
+							<div class="tw-bg-white tw-px-4 tw-py-1 tw-rounded-2xl">
+								<oeb-collapsible [closeIcon]="'lucideChevronDown'" [trigger]="collapseCriteriaTrigger">
+									<ng-template #collapseCriteriaTrigger>
+										<span
+											class="tw-text-lg tw-font-bold tw-text-oebblack"
+											[innerHTML]="'Badge.awardCriteria' | translate"
+										></span>
+									</ng-template>
+									<div>
+										{{ config.badgeCriteria }}
+									</div>
+								</oeb-collapsible>
+							</div>
 							<div class="tw-flex tw-items-start md:tw-flex-row tw-flex-col">
 								<dt class="tw-text-oebblack tw-font-bold md:tw-py-2 md:tw-mr-2 tw-mb-1">Tags</dt>
 								<dd class="tw-text-oebblack">

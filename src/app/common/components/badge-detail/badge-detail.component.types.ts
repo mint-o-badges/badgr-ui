@@ -75,6 +75,7 @@ export interface PageConfig {
 	badgeFailedImageUrl: string;
 	badgeImage: string;
 	badgeDescription: string;
+	badgeCriteria: string | null;
 	competencies?: CompetencyType[];
 	license?: boolean;
 	id?: string;

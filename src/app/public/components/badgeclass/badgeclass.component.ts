@@ -101,6 +101,7 @@ export class PublicBadgeClassComponent {
 					},
 					badgeTitle: badge.name,
 					badgeDescription: badge.description,
+					badgeCriteria: typeof badge.criteria == 'string' ? badge.criteria : null,
 					issuerSlug: badge.issuer['slug'],
 					slug: badge.id,
 					category: this.translate.instant(

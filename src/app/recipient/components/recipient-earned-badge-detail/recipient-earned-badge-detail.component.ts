@@ -152,6 +152,7 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 						},
 					],
 					badgeDescription: this.badge.badgeClass.description,
+					badgeCriteria: this.badge.badgeClass.criteria_text,
 					issuerSlug: this.badge.badgeClass.issuer.id,
 					slug: this.badgeSlug,
 					issuedOn: this.badge.issueDate,

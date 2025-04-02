@@ -831,7 +831,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	}
 
 	addNewOwnCriteria() {
-		console.log('adding own criteria');
 		this.badgeClassForm.controls.customCriteria.addFromTemplate();
 	}
 
@@ -1244,6 +1243,8 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 			const formState = this.badgeClassForm.value;
 
+			console.log('formState', formState.criteria);
+
 			const expirationState = this.expirationEnabled ? this.expirationForm.value : undefined;
 
 			const studyLoadExtensionContextUrl = `${this.baseUrl}/static/extensions/StudyLoadExtension/context.json`;
@@ -1368,6 +1369,8 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 						),
 					},
 					copy_permissions: copy_permissions,
+					// criteria: formState.criteria,
+					customCriteria: formState.customCriteria,
 				} as ApiBadgeClassForCreation;
 				if (this.currentImage) {
 					badgeClassData.extensions = {
