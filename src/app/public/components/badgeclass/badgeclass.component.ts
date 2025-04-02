@@ -136,6 +136,8 @@ export class PublicBadgeClassComponent {
 										if (
 											issuerBadge.canCopy('others') ||
 											(issuerBadge.canCopy('issuer') &&
+												issuerBadge.extension['extensions:CategoryExtension'].Category !=
+													'learningpath' &&
 												issuers.some((issuer) => issuer.url == issuerBadge.issuer))
 										) {
 											this.config = {
