@@ -321,22 +321,27 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				.addControl('target_framework', '')
 				.addControl('target_code', ''),
 		)
-		.addControl('copy_permissions_allow_others', false);
-	// .addArray(
-	// 	'criteria',
-	// 	typedFormGroup()
-	// 		.addControl('activeParticipation', false)
-	// 		.addControl('selfReflection', false)
-	// 		.addControl('achievedIndividualLearning', false)
-	// 		.addControl('presence90', false)
-	// 		.addControl('practicalApplication', false)
-	// 		.addControl('onlineCourseCompleted', false)
-	// 		.addControl('projectCompleted', false)
-	// 		.addControl('addOwnCriteria', false)
-	// 		.addControl('portfolio', false)
-	// 		.addControl('peerFeedback', false)
-	// 		.addArray('customCriteria', typedFormGroup().addControl('customCriteria', '')),
-	// );
+		.addControl('copy_permissions_allow_others', false)
+		.addArray(
+			'criteria',
+			typedFormGroup()
+				.addControl('activeParticipation', false)
+				.addControl('selfReflection', false)
+				.addControl('achievedIndividualLearning', false)
+				.addControl('presence90', false)
+				.addControl('practicalApplication', false)
+				.addControl('onlineCourseCompleted', false)
+				.addControl('projectCompleted', false)
+				.addControl('addOwnCriteria', false)
+				.addControl('portfolio', false)
+				.addControl('peerFeedback', false),
+		)
+		.addArray(
+			'customCriteria',
+			typedFormGroup()
+				.addControl('name', '', Validators.max(50))
+				.addControl('description', '', Validators.max(300)),
+		);
 
 	@ViewChild('badgeStudio')
 	badgeStudio: BadgeStudioComponent;
@@ -536,6 +541,8 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			// be displayed as competencies entered by hand
 			aiCompetencies: [],
 			keywordCompetencies: [],
+			criteria: [],
+			customCriteria: [],
 			competencies: badgeClass.extension['extensions:CompetencyExtension'] ? competencies : [],
 			alignments: this.badgeClass.alignments.map((alignment) => ({
 				target_name: alignment.target_name,
@@ -821,6 +828,15 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 	addAlignment() {
 		this.badgeClassForm.controls.alignments.addFromTemplate();
+	}
+
+	addNewOwnCriteria() {
+		console.log('adding own criteria');
+		this.badgeClassForm.controls.customCriteria.addFromTemplate();
+	}
+
+	removeCustomCriteria(index: number) {
+		this.badgeClassForm.controls.customCriteria.removeAt(index);
 	}
 
 	addCompetency(competency: typeof this.badgeClassForm.controls.competencies) {

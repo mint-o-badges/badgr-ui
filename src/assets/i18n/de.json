@@ -341,7 +341,9 @@
 		"practicalApplication": "Praxis-Awendung",
 		"onlineCourseCompleted": "Online-Kurs abgeschlossen",
 		"projectCompleted": "Projekt-Abschluss",
-		"addOwnCriteria": "Eigenes Kriterium hinzufügen"
+		"addOwnCriteria": "Eigenes Kriterium hinzufügen",
+		"enterOwnCriteria": "Eigenes Kriterium eingeben",
+		"enterOwnCriteriaDesc": "Hier kannst du Erläuterungen eintragen (max. 300 Zeichen)"
 	},
 	"CreateBadge": {
 		"chooseBadgeCategory": "Badge-Kategorie wählen",

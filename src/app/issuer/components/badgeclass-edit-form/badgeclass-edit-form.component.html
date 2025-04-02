@@ -1045,18 +1045,56 @@
 									[control]="badgeClassForm.rawControlMap.copy_permissions_allow_others"
 									[text]="'Badge.projectCompleted' | translate"
 								/>
-								<oeb-checkbox
-									[control]="badgeClassForm.rawControlMap.copy_permissions_allow_others"
-									[text]="'Badge.addOwnCriteria' | translate"
-								/>
 							</div>
 							<oeb-button
 								class="tw-col-span-1"
 								size="sm"
+								type="button"
 								variant="secondary"
 								[text]="'Badge.addOwnCriteria' | translate"
+								(click)="addNewOwnCriteria()"
 							></oeb-button>
 						</div>
+						<ng-container
+							*ngFor="let criteria of badgeClassForm.controls.customCriteria.controls; let i = index"
+						>
+							<section
+								class="tw-border-[var(--color-purple)] tw-bg-[var(--color-lightpurple)] tw-border tw-border-solid tw-rounded-md tw-p-6 tw-mt-4"
+							>
+								<div class="tw-flex tw-gap-2">
+									<oeb-input
+										id="{{ 'customCriteriaTitle_' + i }}"
+										[fieldType]="'text'"
+										[control]="criteria.rawControlMap.name"
+										[errorMessage]="{ required: titleError }"
+										noTopMargin="true"
+										class="tw-w-full"
+										[placeholder]="'Badge.enterOwnCriteria' | translate"
+										[sublabelRight]="'(max. 50 Zeichen)'"
+									>
+									</oeb-input>
+									<oeb-button
+										icon="lucideTrash2"
+										type="button"
+										iconLeft="true"
+										size="sm"
+										variant="secondary"
+										[text]="'General.delete' | translate"
+										(click)="removeCustomCriteria(i)"
+									>
+									</oeb-button>
+								</div>
+
+								<oeb-input
+									id="{{ 'customCriteriaDescription_' + i }}"
+									[fieldType]="'textarea'"
+									[control]="criteria.rawControlMap.description"
+									[errorMessage]="{ required: enterDescription }"
+									[placeholder]="'Badge.enterOwnCriteriaDesc' | translate"
+								>
+								</oeb-input>
+							</section>
+						</ng-container>
 					</div>
 					<div class="section tw-text-oebblack tw-mt-6">
 						<h2 hlmH2 class="tw-pt-1 tw-px-1 tw-mr-auto !tw-text-oebblack">
