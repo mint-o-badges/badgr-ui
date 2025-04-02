@@ -151,11 +151,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	@Input() set initBadgeClass(badgeClass: BadgeClass) {
 		if (this.initialisedBadgeClass !== badgeClass) {
 			this.initialisedBadgeClass = badgeClass;
-			if (this.badgeStudio) {
-				this.initFormFromExisting(this.initialisedBadgeClass);
-			} else {
-				this.pendingInitialization = this.initialisedBadgeClass;
-			}
+			this.initFormFromExisting(this.initialisedBadgeClass);
 		}
 	}
 
@@ -545,7 +541,9 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			? badgeClass.extension['extensions:OrgImageExtension'].OrgImage
 			: undefined;
 
-		this.generateUploadImage(this.currentImage, this.badgeClassForm.value, true);
+		setTimeout(() => {
+			this.generateUploadImage(this.currentImage, this.badgeClassForm.value, true, true);
+		}, 1);
 
 		this.tags = new Set();
 		this.badgeClass.tags.forEach((t) => this.tags.add(t));
@@ -631,11 +629,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	}
 
 	ngAfterViewInit(): void {
-		if (this.pendingInitialization) {
-			this.initFormFromExisting(this.pendingInitialization);
-			this.pendingInitialization = null;
-		}
-
 		this.imageField.control.statusChanges.subscribe((e) => {
 			if (this.imageField.control.value != null) this.customImageField.control.reset();
 		});
@@ -1468,13 +1461,12 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	 * @param image
 	 * @param formdata
 	 */
-	generateUploadImage(image, formdata, useIssuerImageInBadge = false) {
-		console.log('img gen');
+	generateUploadImage(image, formdata, useIssuerImageInBadge = true, initializing = false) {
 		this.currentImage = image.slice();
 		this.badgeStudio
 			.generateUploadImage(image.slice(), formdata, useIssuerImageInBadge, this.issuer.image)
 			.then((imageUrl) => {
-				this.imageField.useDataUrl(imageUrl, 'BADGE');
+				this.imageField.useDataUrl(imageUrl, 'BADGE', initializing);
 			});
 	}
 

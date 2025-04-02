@@ -223,7 +223,7 @@ export class BgFormFieldImageComponent {
 		}
 	}
 
-	useDataUrl(dataUrl: string, name = 'Unknown', isCategoryChanged = false) {
+	useDataUrl(dataUrl: string, name = 'Unknown', isCategoryChanged = false, initializing = false) {
 		// From https://stackoverflow.com/questions/4998908/convert-data-uri-to-file-then-append-to-formdata
 		function dataURItoBlob(dataURI): Blob {
 			// convert base64/URLEncoded data component to raw binary data held in a string
@@ -251,14 +251,14 @@ export class BgFormFieldImageComponent {
 			lastModifiedDate: new Date(),
 		}) as unknown as File;
 
-		this.updateFile(file, isCategoryChanged);
+		this.updateFile(file, isCategoryChanged, initializing);
 	}
 
 	private updateFiles(files: FileList) {
-		this.updateFile(files[0], false);
+		this.updateFile(files[0], false, false);
 	}
 
-	private updateFile(file: File | string, isCategoryChanged) {
+	private updateFile(file: File | string, isCategoryChanged, initializing) {
 		this.imageName = typeof file == 'string' ? 'icon' : file.name;
 		this.imageDataUrl = null;
 		this.imageProvided = false;
@@ -267,7 +267,7 @@ export class BgFormFieldImageComponent {
 
 		this.imageLoader(file).then(
 			(dataUrl) => {
-				if (this.type === 'badge' && !this.generated && !isCategoryChanged) {
+				if (this.type === 'badge' && !this.generated && !isCategoryChanged && !initializing) {
 					this.imageUploaded.emit(dataUrl);
 					this.generated = true;
 					// this.generateRandom = true;
@@ -293,7 +293,7 @@ export class BgFormFieldImageComponent {
 			.then((icon: NounProjectIcon) => {
 				if (icon) {
 					this.generated = false;
-					this.updateFile(icon.thumbnail_url, false);
+					this.updateFile(icon.thumbnail_url, false, false);
 				}
 			})
 			.catch((error) => {
