@@ -585,7 +585,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 		this.badgeClassForm.rawControl.controls['useIssuerImageInBadge'].valueChanges.subscribe(
 			(useIssuerImageInBadge) => {
-				console.log('val changed', useIssuerImageInBadge);
 				if (this.currentImage && this.imageField.control.value) {
 					this.generateUploadImage(this.currentImage, this.badgeClassForm.value, useIssuerImageInBadge);
 				}
