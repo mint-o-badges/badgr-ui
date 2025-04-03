@@ -329,8 +329,12 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 		};
 	}
 
-	revokeStaffRequest(issuerId: string) {
-		this.userProfileApiService.revokeIssuerStaffRequest(issuerId).then((r) => console.log('revoked', r));
+	revokeStaffRequest(requestId: string) {
+		this.userProfileApiService.revokeIssuerStaffRequest(requestId).then((r) => {
+			if (r.ok) {
+				this.staffRequests = this.staffRequests.filter((req) => req.entity_id != requestId);
+			}
+		});
 	}
 
 	calculateDropdownMaxHeight(el: HTMLElement, minHeight = 100) {

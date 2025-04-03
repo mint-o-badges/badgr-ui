@@ -18,7 +18,7 @@ export class IssuerStaffRequestApiService extends BaseHttpApiService {
 	}
 
 	requestIssuerStaffMembership(issuerId: string) {
-		return this.post(`/v1/user/issuerStaffRequest/${issuerId}`, null);
+		return this.post(`/v1/user/issuerStaffRequest/issuer/${issuerId}`, null);
 	}
 
 	getStaffRequestsByIssuer(issuerSlug: string) {

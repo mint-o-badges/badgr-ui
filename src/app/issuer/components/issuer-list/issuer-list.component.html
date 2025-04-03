@@ -45,7 +45,7 @@
 							<li *ngFor="let request of staffRequests">
 								<span class="tw-text-lg tw-text-oebblack">{{ request.issuer.name }}</span>
 								<span
-									(click)="revokeStaffRequest(request.issuer.slug)"
+									(click)="revokeStaffRequest(request.entity_id)"
 									[innerHTML]="'General.revoke' | translate"
 									class="tw-text-link tw-underline tw-text-lg tw-ml-2 tw-cursor-pointer"
 								></span>

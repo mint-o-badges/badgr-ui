@@ -79,7 +79,7 @@ export class UserProfileApiService extends BaseHttpApiService {
 		return this.get<ApiStaffRequest[]>('/v1/user/issuerStaffRequests');
 	}
 
-	revokeIssuerStaffRequest(issuerId: string) {
-		return this.delete(`/v1/user/issuerStaffRequest/${issuerId}`);
+	revokeIssuerStaffRequest(requestId: string) {
+		return this.delete(`/v1/user/issuerStaffRequest/request/${requestId}`);
 	}
 }
