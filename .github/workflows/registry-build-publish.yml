@@ -33,8 +33,6 @@ jobs:
             - name: Format
               run: |
                   npx prettier --check .
-                  npx prettier --write src/app/public/components/learningpath/learningpath.component.html
-                  cat src/app/public/components/learningpath/learningpath.component.html
             - name: 📝 Test
               run: npm run test-headless
 
