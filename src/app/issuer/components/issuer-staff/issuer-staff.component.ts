@@ -156,7 +156,6 @@ export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent imp
 			(error) => {
 				const err = BadgrApiFailure.from(error);
 				console.log(err);
-				this.closeDialog();
 				this.error =
 					BadgrApiFailure.messageIfThrottableError(err.overallMessage) ||
 					''.concat(this.translate.instant('Issuer.addMember_failed'), ': ', err.firstMessage);

@@ -21,6 +21,7 @@ import { IssuerStaffRequestApiService } from '../../services/issuer-staff-reques
 import { UserProfileApiService } from '../../../common/services/user-profile-api.service';
 import { ApiStaffRequest } from '../../staffrequest-api.model';
 import { BrnDialogRef } from '@spartan-ng/brain/dialog';
+import { BadgrApiFailure } from '../../../common/services/api-failure';
 
 @Component({
 	selector: 'issuer-list',
@@ -221,15 +222,24 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 		}
 	}
 
-	async requestMembership() {
-		const req = await this.issuerStaffRequestApiService.requestIssuerStaffMembership(this.selectedIssuer.slug);
-		if (req.ok) {
-			this.closeDialog();
-			this.staffRequests.push(req.body as ApiStaffRequest);
-			this.openSuccessfullyRequestedMembershipDialog();
-		} else {
-			console.error('staff request was not received:', req.status);
-		}
+	requestMembership() {
+		this.issuerStaffRequestApiService.requestIssuerStaffMembership(this.selectedIssuer.slug).then(
+			(res) => {
+				if (res.ok) {
+					this.closeDialog();
+					this.staffRequests.push(res.body as ApiStaffRequest);
+					this.openSuccessfullyRequestedMembershipDialog();
+				}
+			},
+			(error) => {
+				this.closeDialog();
+				const err = BadgrApiFailure.from(error);
+				BadgrApiFailure.messageIfThrottableError(err.overallMessage) ||
+					''.concat(this.translate.instant('Issuer.addMember_failed'), ': ', err.firstMessage);
+				//@ts-ignore
+				this.messageService.reportAndThrowError(err.payload.response.error.detail);
+			},
+		);
 	}
 
 	private readonly _hlmDialogService = inject(HlmDialogService);
