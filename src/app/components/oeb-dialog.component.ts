@@ -20,15 +20,7 @@ import { NgClass, NgIf } from '@angular/common';
 		NgClass,
 	],
 	template: `
-		<div
-			class="tw-px-4 tw-py-6"
-			[ngClass]="{
-				'!tw-border-red !tw-bg-white !tw-border-4 !tw-border-solid': variant === 'danger',
-				'!tw-border-link !tw-bg-white !tw-border-4 !tw-border-solid': variant === 'info',
-				'!tw-border-green !tw-bg-green': variant === 'success',
-				'tw-border-purple tw-border-2 tw-border-solid tw-rounded-[10px]': variant === 'default'
-			}"
-		>
+		<div class="tw-px-4 tw-py-6">
 			<hlm-dialog-header *ngIf="title">
 				<h3 hlmH3>{{ title }}</h3>
 				<p hlmP hlmDialogDescription>{{ subtitle }}</p>
