@@ -186,13 +186,11 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 	}
 
 	async issuerSearchChange() {
-		console.log('search changed');
 		if (this.issuerSearchQuery.length >= 3) {
 			this.issuersLoading = true;
 			try {
 				this.issuerSearchResults = [];
 				this.issuerSearchResults = await this.publicApiService.searchIssuers(this.issuerSearchQuery);
-				console.log(this.issuerSearchResults[0].image);
 			} catch (error) {
 				this.messageService.reportAndThrowError(`Failed to issuers: ${error.message}`, error);
 			}
@@ -204,7 +202,6 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 	selectIssuerFromDropdown(issuer) {
 		this.issuerSearchQuery = issuer.name;
 		this.selectedIssuer = issuer;
-		console.log(this.selectedIssuer);
 	}
 
 	ngAfterViewInit() {
@@ -266,7 +263,6 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 	}
 
 	public openRequestStaffMembershipDialog() {
-		console.log(this.selectedIssuer.name);
 		const dialogRef = this._hlmDialogService.open(DialogComponent, {
 			context: {
 				headerTemplate: this.headerQuestionMarkTemplate,

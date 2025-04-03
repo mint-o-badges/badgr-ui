@@ -88,8 +88,4 @@ export class IssuerStaffDatatableComponent {
 	changeRole(member: IssuerStaffMember, roleSlug: IssuerStaffRoleSlug) {
 		this.roleChanged.emit({ member, roleSlug });
 	}
-
-	ngOnInit() {
-		console.log(this.members);
-	}
 }
