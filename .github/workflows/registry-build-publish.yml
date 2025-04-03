@@ -32,8 +32,7 @@ jobs:
               run: npm ci
             - name: Format
               run: |
-                npx prettier --find-config-path src/app/public/components/learningpath/learningpath.component.html
-                npx prettier --check .
+                  npx prettier --check .
             - name: 📝 Test
               run: npm run test-headless
 
