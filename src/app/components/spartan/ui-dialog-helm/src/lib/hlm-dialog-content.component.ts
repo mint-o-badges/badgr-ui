@@ -53,7 +53,7 @@ export type DiealogVariants = VariantProps<typeof dialogVariants>;
 
 		<button brnDialogClose hlm>
 			<span class="tw-sr-only">Close</span>
-			<ng-icon hlm class="tw-flex tw-w-4 tw-h-4" size="none" name="lucideX" />
+			<ng-icon hlm class="tw-flex tw-w-4 tw-h-4" size="sm" name="lucideX" />
 		</button>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,

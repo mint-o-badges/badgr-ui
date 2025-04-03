@@ -59,4 +59,4 @@ Development happens in feature branches (e.g. `feat/foo` or `fix/bar`). Those ar
 
 ## Commit Message Convention
 
-We follow the [angular commit message convention](https://github.com/angular/angular/blob/68a6a07/CONTRIBUTING.md#commit) in this project to maintain a clean and organized commit history. Use `npx cz` instead of `git commit` to commit via the interactive prompt.
+We follow the [angular commit message convention](https://github.com/angular/angular/blob/main/contributing-docs/commit-message-guidelines.md) in this project to maintain a clean and organized commit history. Use `npx cz` instead of `git commit` to commit via the interactive prompt.

@@ -57,6 +57,10 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 			label: 'Andere',
 			value: 'andere',
 		},
+		{
+			label: 'Alle Kategorien',
+			value: '',
+		},
 	];
 
 	sortControl = new FormControl();
