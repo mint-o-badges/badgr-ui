@@ -233,8 +233,13 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 				const err = BadgrApiFailure.from(error);
 				BadgrApiFailure.messageIfThrottableError(err.overallMessage) ||
 					''.concat(this.translate.instant('Issuer.addMember_failed'), ': ', err.firstMessage);
-				//@ts-ignore
-				this.messageService.reportAndThrowError(err.payload.response.error.detail);
+				if (err.fieldMessages.error) {
+					this.messageService.reportAndThrowError(err.fieldMessages.error);
+				} else {
+					this.messageService.reportAndThrowError(
+						'Etwas ist schiefgelaufen! Bitte probiere es erneut oder kontaktiere unseren Support.',
+					);
+				}
 			},
 		);
 	}
