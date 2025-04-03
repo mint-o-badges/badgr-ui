@@ -31,7 +31,9 @@ jobs:
             - name: 📲 Install dependencies
               run: npm ci
             - name: Format
-              run: npx prettier --check .
+              run: |
+                npx prettier --find-config-path src/app/public/components/learningpath/learningpath.component.html
+                npx prettier --check .
             - name: 📝 Test
               run: npm run test-headless
 
