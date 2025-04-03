@@ -15,6 +15,7 @@ export const selectTriggerVariants = cva(
 				default: 'tw-h-10 tw-py-2 tw-px-4',
 				sm: 'tw-h-9 tw-px-3',
 				lg: 'tw-h-11 tw-px-8',
+				actionBar: 'tw-h-12 tw-py-2 tw-px-4',
 			},
 			error: {
 				auto: '[&.ng-invalid.ng-touched]:tw-text-destructive [&.ng-invalid.ng-touched]:tw-border-destructive [&.ng-invalid.ng-touched]:tw-focus-visible:tw-ring-destructive',
