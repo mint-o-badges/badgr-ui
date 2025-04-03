@@ -652,7 +652,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	}
 
 	getCompetencyPageError() {
-		console.log('error', this.badgeClassForm.valid);
 		if (this.badgeClassForm.valid) return;
 		if (
 			this.badgeClassForm.hasError('competencyExceedsBadgeDuration') ||
@@ -1062,10 +1061,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			...this.badgeClassForm.value.keywordCompetencies,
 			...this.badgeClassForm.value.aiCompetencies.filter((comp) => comp.selected),
 		];
-
-		if (allCompetencies.length == 0) {
-			return { emptyCompetencies: true };
-		}
 
 		// Suche nach dem ersten fehlerhaften Kompetenzfeld
 		const invalidCompetencyIndex = allCompetencies.findIndex(
@@ -1539,33 +1534,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			else check.add(name);
 		return null;
 	}
-
-	// noEmptyCompetencies(): { emptyCompetencies: Boolean } | null {
-	// 	if(!this.badgeClassForm) return null;
-	// 	const competencies = this.badgeClassForm.controls.competencies.value
-	// 	if (this.checkDuplicateCompetency()) return { emptyCompetencies: true };
-	// }
-
-	// checkDuplicateCompetency(): String | null {
-	// 	if (!this.badgeClassForm) return null;
-
-	// 	const inHandCompetencies = this.badgeClassForm.controls.competencies.value
-	// 		// Hand competencies get added automatically at submitting
-	// 		//filter(c => c.added).
-	// 		.map((c) => c.name);
-
-	// 	const newSelectedAICompetencies = this.badgeClassForm.controls.aiCompetencies.value
-	// 		.map((c, i) => (c.selected ? this.aiCompetenciesSuggestions[i].preferred_label : ''))
-	// 		.filter(String);
-
-	// 	const all = inHandCompetencies.concat(newSelectedAICompetencies);
-	// 	const check = new Set();
-
-	// 	for (const name of all)
-	// 		if (check.has(name)) return name;
-	// 		else check.add(name);
-	// 	return null;
-	// }
 
 	closeLegend() {
 		this.showLegend = false;
