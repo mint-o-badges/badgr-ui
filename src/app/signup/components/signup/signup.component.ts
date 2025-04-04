@@ -195,8 +195,10 @@ export class SignupComponent extends BaseRoutableComponent implements OnInit, Af
 		}).finally(() => (this.signupFinished = null));
 	}
 
-	sendSignupConfirmation(email: string, signedUpForNewsletter: boolean) : void {
-		this.router.navigate(['signup/success', encodeURIComponent(btoa(email))], { queryParams: { signedUpForNewsletter: signedUpForNewsletter } });
+	sendSignupConfirmation(email: string, signedUpForNewsletter: boolean): void {
+		this.router.navigate(['signup/success', encodeURIComponent(btoa(email))], {
+			queryParams: { signedUpForNewsletter: signedUpForNewsletter },
+		});
 	}
 
 	get showMarketingOptIn() {

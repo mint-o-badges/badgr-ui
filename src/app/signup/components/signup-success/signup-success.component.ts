@@ -31,10 +31,10 @@ export class SignupSuccessComponent implements OnInit {
 	signedUpForNewsletter: boolean;
 
 	ngOnInit() {
-		this.email = atob(decodeURIComponent(this.routeParams.snapshot.params['email']));		
-		this.signedUpForNewsletter = this.routeParams.snapshot.queryParamMap.has("signedUpForNewsletter") ? 
-			this.routeParams.snapshot.queryParamMap.get("signedUpForNewsletter") === "true" : 
-			false;
+		this.email = atob(decodeURIComponent(this.routeParams.snapshot.params['email']));
+		this.signedUpForNewsletter = this.routeParams.snapshot.queryParamMap.has('signedUpForNewsletter')
+			? this.routeParams.snapshot.queryParamMap.get('signedUpForNewsletter') === 'true'
+			: false;
 	}
 
 	get helpEmailUrl() {
