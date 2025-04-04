@@ -4,7 +4,10 @@
 
 	<form [formGroup]="badgeClassForm.rawControl" #formElem (ngSubmit)="onSubmit()" novalidate>
 		<ng-container [formGroup]="badgeClassForm.rawControl">
-			<oeb-stepper linear="true" [initialStep]="existingBadgeClass || initialisedBadgeClass ? 0 : 1">
+			<oeb-stepper
+				[linear]="existingBadgeClass ? false : true"
+				[initialStep]="existingBadgeClass || initialisedBadgeClass ? 0 : 1"
+			>
 				<oeb-step
 					label="Kategorie wählen"
 					[optional]="false"
@@ -258,16 +261,18 @@
 						badgeClassForm.controls.competencies.valid &&
 						badgeClassForm.controls.keywordCompetencies.valid &&
 						!badgeClassForm.hasError('competenceHoursMinutesZero') &&
-						!badgeClassForm.hasError('competencyExceedsBadgeDuration') &&
-						!badgeClassForm.hasError('emptyCompetencies')
+						!badgeClassForm.hasError('competencyExceedsBadgeDuration')
 					"
 					[hasError]="
-						!badgeClassForm.controls.aiCompetencies.valid ||
-						!badgeClassForm.controls.competencies.valid ||
-						!badgeClassForm.controls.keywordCompetencies.valid ||
-						badgeClassForm.hasError('competenceHoursMinutesZero') ||
-						badgeClassForm.hasError('competencyExceedsBadgeDuration') ||
-						badgeClassForm.hasError('emptyCompetencies')
+						stepper?.selectedIndex == 2 &&
+						((!getSelectedAiCompetencies().length &&
+							!selectedKeywordCompetencies.length &&
+							!badgeClassForm.controls.competencies.controls.length) ||
+							!badgeClassForm.controls.aiCompetencies.valid ||
+							!badgeClassForm.controls.competencies.valid ||
+							!badgeClassForm.controls.keywordCompetencies.valid ||
+							badgeClassForm.hasError('competenceHoursMinutesZero') ||
+							badgeClassForm.hasError('competencyExceedsBadgeDuration'))
 					"
 				>
 					<div class="section tw-text-oebblack tw-px-1 tw-mt-6" *ngIf="badgeCategory === 'competency'">
