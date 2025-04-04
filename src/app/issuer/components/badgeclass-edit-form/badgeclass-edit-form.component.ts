@@ -137,6 +137,8 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	maxCustomImageSize = 1024 * 1024 * 2;
 	isCustomImageLarge: boolean = false;
 
+	pendingInitialization: BadgeClass | null = null;
+
 	@Input()
 	set badgeClass(badgeClass: BadgeClass) {
 		if (this.existingBadgeClass !== badgeClass) {
@@ -146,8 +148,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		}
 	}
 
-	@Input()
-	set initBadgeClass(badgeClass: BadgeClass) {
+	@Input() set initBadgeClass(badgeClass: BadgeClass) {
 		if (this.initialisedBadgeClass !== badgeClass) {
 			this.initialisedBadgeClass = badgeClass;
 			this.initFormFromExisting(this.initialisedBadgeClass);
@@ -539,6 +540,11 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		this.currentImage = badgeClass.extension['extensions:OrgImageExtension']
 			? badgeClass.extension['extensions:OrgImageExtension'].OrgImage
 			: undefined;
+
+		setTimeout(() => {
+			this.generateUploadImage(this.currentImage, this.badgeClassForm.value, true, true);
+		}, 1);
+
 		this.tags = new Set();
 		this.badgeClass.tags.forEach((t) => this.tags.add(t));
 
@@ -1458,12 +1464,12 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	 * @param image
 	 * @param formdata
 	 */
-	generateUploadImage(image, formdata, useIssuerImageInBadge = false) {
+	generateUploadImage(image, formdata, useIssuerImageInBadge = true, initializing = false) {
 		this.currentImage = image.slice();
 		this.badgeStudio
 			.generateUploadImage(image.slice(), formdata, useIssuerImageInBadge, this.issuer.image)
 			.then((imageUrl) => {
-				this.imageField.useDataUrl(imageUrl, 'BADGE');
+				this.imageField.useDataUrl(imageUrl, 'BADGE', initializing);
 			});
 	}
 

@@ -322,7 +322,7 @@ export class ExportPdfDialog extends BaseDialog {
 					align: 'justify',
 				});
 				xPos += 70 * (12 / 14);
-				let datum = this.pdfService.dateToString(this.badge.issueDate, '.');
+				let datum = this.badge.issueDate.toLocaleDateString('de-DE');
 				this.doc.text(datum, xPos, yPos, {
 					align: 'justify',
 				});
@@ -339,7 +339,11 @@ export class ExportPdfDialog extends BaseDialog {
 	}
 
 	downloadPdf() {
-		this.pdfService.downloadPdf(this.pdfSrc, this.badge.badgeClass.name, this.badge._issueDate);
+		this.pdfService.downloadPdf(
+			this.pdfSrc,
+			this.badge.badgeClass.name.trim().replace(' ', '_'),
+			this.badge._issueDate,
+		);
 	}
 }
 
