@@ -67,7 +67,9 @@
 		"pleaseWait": "Please wait...",
 		"title": "Title",
 		"noResults": "No results",
-		"reset": "Reset"
+		"reset": "Reset",
+		"create": "create",
+		"copy": "copy"
 	},
 	"NavItems": {
 		"register": "Register",

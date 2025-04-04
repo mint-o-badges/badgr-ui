@@ -74,7 +74,9 @@
 		"pleaseWait": "Bitte warten...",
 		"title": "Titel",
 		"noResults": "Keine Ergebnisse",
-		"reset": "Zurücksetzen"
+		"reset": "Zurücksetzen",
+		"create": "erstellen",
+		"copy": "kopieren"
 	},
 	"NavItems": {
 		"register": "Registrieren",
