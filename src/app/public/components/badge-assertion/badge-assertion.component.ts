@@ -167,7 +167,6 @@ export class PublicBadgeAssertionComponent {
 			try {
 				this.assertionId = paramValue;
 				const service: PublicApiService = this.injector.get(PublicApiService);
-
 				const assertion = await service.getBadgeAssertion(paramValue);
 				const lps = await service.getLearningPathsForBadgeClass(assertion.badge.slug);
 
@@ -190,6 +189,11 @@ export class PublicBadgeAssertionComponent {
 							title: 'Download JSON-Datei',
 							icon: '	lucideFileCode',
 							action: () => this.exportJson(),
+						},
+						{
+							title: 'Download PDF-Zertifikat',
+							icon: 'lucideFileText',
+							action: () => this.exportPdf(),
 						},
 						{
 							title: 'View Badge',
@@ -265,5 +269,9 @@ export class PublicBadgeAssertionComponent {
 				URL.revokeObjectURL(url);
 			})
 			.catch((error) => console.error('Download failed:', error));
+	}
+
+	exportPdf() {
+		this.dialogService.exportPdfDialog.openDialog(this.assertion).catch((error) => console.log(error));
 	}
 }
