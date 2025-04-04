@@ -142,6 +142,7 @@ import { SortPipe } from './pipes/sortPipe';
 import { PaginationAdvancedComponent } from '../components/oeb-numbered-pagination';
 import { NgIconsModule } from '@ng-icons/core';
 import { HlmIconDirective } from '../components/spartan/ui-icon-helm/src';
+import { HlmTableModule } from './../components/spartan/ui-table-helm/src';
 
 const DIRECTIVES = [
 	BgAwaitPromises,
@@ -282,6 +283,7 @@ export const COMMON_IMPORTS = [
 	AltchaComponent,
 	NgIconsModule,
 	HlmIconDirective,
+	HlmTableModule,
 ];
 
 @NgModule({
