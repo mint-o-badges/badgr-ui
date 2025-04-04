@@ -18,7 +18,7 @@ import { provideIcons } from '@ng-icons/core';
 		<oeb-dialog [variant]="variant" class="tw-text-center tw-text-oebblack">
 			<div class="tw-flex tw-justify-center">
 				<div class="oeb-icon-circle tw-my-4">
-					<ng-icon hlm class="tw-text-red" size="xxl" name="lucideTriangleAlert" />
+					<ng-icon hlm class="tw-text-red" size="xl" name="lucideTriangleAlert" />
 				</div>
 			</div>
 			<p hlmP class="tw-flex tw-flex-col tw-gap-2 tw-my-2">

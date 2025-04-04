@@ -22,6 +22,7 @@ import { SessionService } from '../../../common/services/session.service';
 import { PdfService } from '../../../common/services/pdf.service';
 import { RecipientBadgeManager } from '../../../recipient/services/recipient-badge-manager.service';
 import { RecipientBadgeInstance } from '../../../recipient/models/recipient-badge.model';
+import { HourPipe } from '../../../common/pipes/hourPipe';
 
 @Component({
 	templateUrl: './learningpath.component.html',
@@ -194,8 +195,6 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 				(acc, b) => acc + b.extensions['extensions:StudyLoadExtension'].StudyLoad,
 				0,
 			);
-			this.hoursCompleted = Math.floor(this.minutesCompleted / 60);
-			this.minutesCompletedRemainder = this.minutesCompleted % 60;
 			this.issuerLoaded = this.publicService.getIssuer(response.issuer_id).then((issuer) => {
 				this.issuer = issuer;
 			});
@@ -204,6 +203,11 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 				return badge;
 			});
 		});
+	}
+
+	formatCountUpMinutes(x: number) {
+		const p = new HourPipe();
+		return p.transform(x);
 	}
 
 	downloadPdf() {
