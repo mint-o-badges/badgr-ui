@@ -162,7 +162,7 @@ export class SignupComponent extends BaseRoutableComponent implements OnInit, Af
 				if (!brevoError) {
 					this.signupService.submitSignup(signupUser, source).then(
 						() => {
-							this.sendSignupConfirmation(formState.username);
+							this.sendSignupConfirmation(formState.username, formState.marketingOptIn);
 							resolve();
 						},
 						(response: HttpErrorResponse) => {
@@ -195,8 +195,8 @@ export class SignupComponent extends BaseRoutableComponent implements OnInit, Af
 		}).finally(() => (this.signupFinished = null));
 	}
 
-	sendSignupConfirmation(email) {
-		this.router.navigate(['signup/success', encodeURIComponent(btoa(email))]);
+	sendSignupConfirmation(email: string, signedUpForNewsletter: boolean) : void {
+		this.router.navigate(['signup/success', encodeURIComponent(btoa(email))], { queryParams: { signedUpForNewsletter: signedUpForNewsletter } });
 	}
 
 	get showMarketingOptIn() {
