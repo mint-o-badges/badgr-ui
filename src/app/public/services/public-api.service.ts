@@ -136,7 +136,7 @@ export class PublicApiService extends BaseHttpApiService {
 		return this.get<PublicApiLearningPath[]>(url, null, false, true).then((r) => r.body);
 	}
 
-	searchIssuers(searchterm: string){
-		return this.get<Issuer[]>(`/public/issuers/search/${searchterm}`).then((response) => response.body)
+	searchIssuers(searchterm: string) {
+		return this.get<Issuer[]>(`/public/issuers/search/${searchterm}`).then((response) => response.body);
 	}
 }
