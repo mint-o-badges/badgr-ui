@@ -29,7 +29,7 @@ import { provideIcons } from '@ng-icons/core';
 		<oeb-dialog [variant]="variant" class="tw-text-center tw-text-oebblack">
 			<div class="tw-flex tw-justify-center">
 				<div class="oeb-icon-circle tw-my-4">
-					<ng-icon hlm class="tw-text-link" size="xxl" name="lucideInfo" />
+					<ng-icon hlm class="tw-text-link" size="xl" name="lucideInfo" />
 				</div>
 			</div>
 			<h3 hlmH3 class="tw-font-bold !tw-text-black tw-uppercase">
