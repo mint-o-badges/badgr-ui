@@ -106,7 +106,7 @@
 					<section class="tw-mt-4">
 						<bg-formfield-radio
 							*ngFor="let role of issuerStaffRoleOptions; last as last"
-							[control]="staffCreateForm.rawControlMap.staffRole"
+							[control]="staffRequestRoleForm.rawControlMap.staffRole"
 							[name]="'staffRole'"
 							[label]="role.label"
 							[value]="role.value"
