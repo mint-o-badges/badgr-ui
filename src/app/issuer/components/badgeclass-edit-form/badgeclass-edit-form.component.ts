@@ -598,7 +598,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			});
 		}
 
-		if (!this.existingBadgeClass) {
+		if (!this.existingBadgeClass && !this.initialisedBadgeClass) {
 			// restore values from sessionStorage for new badges
 			const sessionValues = sessionStorage.getItem('oeb-create-badgeclassvalues');
 			if (sessionValues) {
