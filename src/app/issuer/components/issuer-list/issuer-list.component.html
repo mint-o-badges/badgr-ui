@@ -56,7 +56,7 @@
 						<div class="tw-relative tw-w-full tw-max-w-[600px]">
 							<img
 								*ngIf="selectedIssuer"
-								[src]="'http://localhost:8000' + selectedIssuer.image"
+								[src]="selectedIssuer.image"
 								width="24"
 								height="24"
 								class="tw-absolute tw-left-2 tw-top-1/2 tw-transform -tw-translate-y-1/2 tw-rounded-full"
@@ -96,7 +96,7 @@
 										(click)="selectIssuerFromDropdown(issuer)"
 										*ngFor="let issuer of issuerSearchResults"
 									>
-										<img [src]="'http://localhost:8000' + issuer.image" width="24" height="24" />
+										<img [src]="issuer.image" width="24" height="24" />
 										<span>{{ issuer.name }}</span>
 									</li>
 									<li
