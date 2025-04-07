@@ -70,6 +70,13 @@
 		"reset": "Reset",
 		"create": "create",
 		"copy": "copy"
+		"place": "place",
+		"forwarded": "forwarded",
+		"revoke": "revoke",
+		"confirm": "Confirm",
+		"noRequests": "No request",
+		"oneRequest": "1 request",
+		"multiRequests": "# requests"
 	},
 	"NavItems": {
 		"register": "Register",
@@ -145,7 +152,10 @@
 		"noBadges": "No badges",
 		"recipient": "recipient",
 		"noRecipient": "No recipient",
-		"createInstitution": "Create an institution",
+		"createInstitution": "Create institution",
+		"createInstitutionNow": "Create institution now",
+		"createFirstInstitution": "Create your first institution now to create badges:",
+		"partOfInstitution": "You are of an already created institution?",
 		"noInstitutionYet": "You haven't created an institution yet!",
 		"institutionCreateInfo": "With institutions you can create badges and give them to users.",
 		"yourRole": "Your role:",
@@ -243,6 +253,16 @@
 		"rolesAndRightsInfo1": "Infos about ",
 		"rolesAndRightsInfo2": "roles and rights",
 		"rolesAndRightsInfo3": " in institutions",
+		"requestMembershipQuestion": "Do you really want to request a membership for",
+		"requestMembership": "Request Membership",
+		"staffRequestForwarded": "We forwarded your request to",
+		"staffRequestForwardedEmail": "You will receive an email from us once the request is confirmed.",
+		"yourOpenStaffRequests": "Your open member requests",
+		"deleteStaffRequest": "Delete request",
+		"openStaffRequests": "Open staff requests",
+		"confirmStaffRequest": "Confirm staff request",
+		"confirmStaffRequestText1": "If ",
+		"confirmStaffRequestText2": " should be a member of your institution choose the fitting role and confirm the request:",
 		"copyBadgesOfOtherIssuers": "You can also <a class='tw-underline tw-text-[#1400FF]' hlmA href='https://openbadges.education/catalog/badges'>copy</a> badges of other institutions."
 	},
 	"Badge": {
@@ -612,7 +632,10 @@
 		"text1": "Alle deine Badges kannst du ab jetzt in deinem <span class='tw-font-medium tw-text-purple'>Ruckack sammeln</span>.",
 		"text2": "Wenn du<span class='tw-font-medium tw-text-purple'> Badges erstellen und vergeben möchtest</span>, lege dafür deine Institution an.",
 		"collectBadgesBtn": "Badges im Rucksack sammeln",
-		"awardBadgesBtn": "Institutionen erstellen und Badges vergeben"
+		"awardBadgesBtn": "Institutionen erstellen und Badges vergeben",
+		"whatNext": "What do you want to do next?",
+		"viaYourInstitution": "Via your <span class='tw-italic'>institution</span>.",
+		"inBackpack": "In the <span class='tw-italic'>backpack</span>."
 	},
 	"RequestBadge": {
 		"requestBadge": "Request Badge",

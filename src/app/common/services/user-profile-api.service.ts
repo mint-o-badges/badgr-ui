@@ -6,6 +6,7 @@ import { MessageService } from './message.service';
 import { EventsService } from './events.service';
 import { ApiUserProfile, ApiUserProfileEmail, ApiUserProfileSocialAccount } from '../model/user-profile-api.model';
 import { HttpClient } from '@angular/common/http';
+import { ApiStaffRequest } from '../../issuer/staffrequest-api.model';
 
 @Injectable()
 export class UserProfileApiService extends BaseHttpApiService {
@@ -72,5 +73,13 @@ export class UserProfileApiService extends BaseHttpApiService {
 
 	getRedirectUrl() {
 		return this.post('/v1/user/get-redirect-path', {});
+	}
+
+	getIssuerStaffRequests() {
+		return this.get<ApiStaffRequest[]>('/v1/user/issuerStaffRequests');
+	}
+
+	revokeIssuerStaffRequest(requestId: string) {
+		return this.delete(`/v1/user/issuerStaffRequest/request/${requestId}`);
 	}
 }

@@ -77,6 +77,13 @@
 		"reset": "Zurücksetzen",
 		"create": "erstellen",
 		"copy": "kopieren"
+		"place": "stellen",
+		"forwarded": "weitergeleitet",
+		"revoke": "zurücknehmen",
+		"confirm": "Bestätigen",
+		"noRequests": "Keine Anfragen",
+		"oneRequest": "1 Anfrage",
+		"multiRequests": "# Anfragen"
 	},
 	"NavItems": {
 		"register": "Registrieren",
@@ -153,6 +160,9 @@
 		"recipient": "Empfänger",
 		"noRecipient": "Kein Empfänger",
 		"createInstitution": "Institution erstellen",
+		"createInstitutionNow": "Jetzt Institution erstellen",
+		"createFirstInstitution": "Erstelle jetzt deine erste Institution, um Badges zu vergeben:",
+		"partOfInstitution": "Du gehörst zu einer bereits erstellten Institution?",
 		"noInstitutionYet": "Du hast noch keine Institution erstellt!",
 		"institutionCreateInfo": "Mit Institutionen kannst du Badges erstellen und an Nutzer*innen vergeben.",
 		"yourRole": "Deine Rolle:",
@@ -275,9 +285,20 @@
 		"waitWhileBadgesAreIssued": "Badges werden vergeben, bitte warten...",
 		"rolesAndRights": "Rollen und Rechte innerhalb von Institutionen",
 		"rolesAndRightsInfo1": "Infos zu ",
+		"copyBadgesOfOtherIssuers": " Du kannst auch Badges anderer Institutionen <a class='tw-underline tw-text-[#1400FF]' hlmA href='https://openbadges.education/catalog/badges'>kopieren</a>.",
 		"rolesAndRightsInfo2": "Rollen und Rechten",
 		"rolesAndRightsInfo3": " innerhalb von Institutionen",
-		"copyBadgesOfOtherIssuers": " Du kannst auch Badges anderer Institutionen <a class='tw-underline tw-text-[#1400FF]' hlmA href='https://openbadges.education/catalog/badges'>kopieren</a>."
+		"requestMembershipQuestion": "Möchtest du wirklich eine Mitgliedsanfrage an",
+		"requestMembership": "Mitgliedsanfrage stellen",
+		"staffRequestForwarded": "Wir haben deine Mitgliedsanfrage an",
+		"staffRequestForwardedEmail": "Du bekommst eine E-Mail von uns, wenn die Anfrage bestätigt wird.",
+		"yourOpenStaffRequests": "Deine offenen Mitgliedsanfragen",
+		"deleteStaffRequest": "Anfrage löschen",
+		"openStaffRequests": "Offene Mitgliedsanfragen",
+		"confirmStaffRequest": "Mitgliedsanfrage bestätigen",
+		"confirmStaffRequestText1": "Wenn ",
+		"confirmStaffRequestText2": " Mitglied deiner Institution sein soll, wähle die passende Rolle aus und bestätige die Anfrage:",
+		"noOpenStaffRequests": "Keine offenen Anfragen"
 	},
 	"Badge": {
 		"groupBy": "Gruppieren nach",
@@ -680,8 +701,11 @@
 		"heading": "Schön, dass du da bist!",
 		"text1": "Alle deine Badges kannst du ab jetzt in deinem <span class='tw-font-medium tw-text-purple'>Ruckack sammeln</span>.",
 		"text2": "Wenn du<span class='tw-font-medium tw-text-purple'> Badges erstellen und vergeben möchtest</span>, lege dafür deine Institution an.",
-		"collectBadgesBtn": "Badges im Rucksack sammeln",
-		"awardBadgesBtn": "Institutionen erstellen und Badges vergeben"
+		"collectBadgesBtn": "Badges sammeln",
+		"awardBadgesBtn": "Badges vergeben",
+		"whatNext": "Was möchtest du als nächstes tun?",
+		"viaYourInstitution": "Über deine <span class='tw-italic'>Institution</span>.",
+		"inBackpack": "Im <span class='tw-italic'>Rucksack</span>."
 	},
 	"RequestBadge": {
 		"requestBadge": "Badge anfordern",

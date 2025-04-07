@@ -117,33 +117,24 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 					},
 					menuitems: [
 						{
+							title: 'Download Badge-Bild',
+							icon: 'lucideImage',
+							action: () => this.exportPng(),
+						},
+						{
+							title: 'Download JSON-Datei',
+							icon: '	lucideFileCode',
+							action: () => this.exportJson(),
+						},
+						{
+							title: 'Download PDF-Zertifikat',
+							icon: 'lucideFileText',
+							action: () => this.exportPdf(),
+						},
+						{
 							title: 'Badge verifizieren',
 							icon: 'lucideBadgeCheck',
 							action: () => window.open(this.verifyUrl, '_blank'),
-						},
-						{
-							title: 'JSON-Datei herunterladen',
-							icon: '	lucideFileCode',
-							action: () => {
-								fetch(this.rawJsonUrl)
-									.then((response) => response.blob())
-									.then((blob) => {
-										const link = document.createElement('a');
-										const url = URL.createObjectURL(blob);
-										link.href = url;
-										link.download = `assertion-${this.badge.badgeClass.slug.trim()}.json`;
-										document.body.appendChild(link);
-										link.click();
-										document.body.removeChild(link);
-										URL.revokeObjectURL(url);
-									})
-									.catch((error) => console.error('Download failed:', error));
-							},
-						},
-						{
-							title: 'PDF-Zertifikat herunterladen',
-							icon: 'lucideFileText',
-							action: () => this.exportPdf(),
 						},
 						{
 							title: 'Badge aus Rucksack löschen',
@@ -305,9 +296,41 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 		});
 	}
 
+	exportPng() {
+		fetch(this.rawBakedUrl)
+			.then((response) => response.blob())
+			.then((blob) => {
+				const link = document.createElement('a');
+				const url = URL.createObjectURL(blob);
+				const urlParts = this.rawBakedUrl.split('/');
+				link.href = url;
+				link.download = `${this.badge.issueDate.toISOString().split('T')[0]}-${this.badge.badgeClass.name.trim().replace(' ', '_')}.png`;
+				document.body.appendChild(link);
+				link.click();
+				document.body.removeChild(link);
+				URL.revokeObjectURL(url);
+			})
+			.catch((error) => console.error('Download failed:', error));
+	}
+
+	exportJson() {
+		fetch(this.rawJsonUrl)
+			.then((response) => response.blob())
+			.then((blob) => {
+				const link = document.createElement('a');
+				const url = URL.createObjectURL(blob);
+				link.href = url;
+				link.download = `${this.badge.issueDate.toISOString().split('T')[0]}-${this.badge.badgeClass.name.trim().replace(' ', '_')}.json`;
+				document.body.appendChild(link);
+				link.click();
+				document.body.removeChild(link);
+				URL.revokeObjectURL(url);
+			})
+			.catch((error) => console.error('Download failed:', error));
+	}
+
 	exportPdf() {
 		let markdown = window.document.getElementById('recipient-earned-badge-detail-markdown-display') as HTMLElement;
-
 		this.dialogService.exportPdfDialog.openDialog(this.badge, markdown).catch((error) => console.log(error));
 	}
 }

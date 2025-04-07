@@ -1569,7 +1569,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	}
 
 	validateFields(fields: string[]) {
-		// console.log(this.badgeClassForm.dirty);
 		return fields.every((c) => {
 			return this.badgeClassForm.controls[c].valid;
 		});

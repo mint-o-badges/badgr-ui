@@ -109,6 +109,8 @@ import { DangerDialogComponent } from './dialogs/oeb-dialogs/danger-dialog.compo
 import { OebBackgroundComponent } from '../components/oeb-background.component';
 import { OebIssuerDetailComponent } from './components/issuer/oeb-issuer-detail.component';
 import { DatatableComponent } from '../components/datatable-badges.component';
+import { IssuerStaffDatatableComponent } from '../components/datatable-issuer-staff.component';
+import { IssuerStaffRequestsDatatableComponent } from '../components/datatable-issuer-staff-requests.component';
 
 import { OebProgressComponent } from '../components/oeb-progress.component';
 import { OebSelectComponent } from '../components/select.component';
@@ -140,6 +142,7 @@ import { SortPipe } from './pipes/sortPipe';
 import { PaginationAdvancedComponent } from '../components/oeb-numbered-pagination';
 import { NgIconsModule } from '@ng-icons/core';
 import { HlmIconDirective } from '../components/spartan/ui-icon-helm/src';
+import { HlmTableModule } from './../components/spartan/ui-table-helm/src';
 
 const DIRECTIVES = [
 	BgAwaitPromises,
@@ -271,6 +274,8 @@ export const COMMON_IMPORTS = [
 	CountUpModule,
 	HlmInputDirective,
 	DatatableComponent,
+	IssuerStaffDatatableComponent,
+	IssuerStaffRequestsDatatableComponent,
 	LearningPathDatatableComponent,
 	LearningPathParticipantsDatatableComponent,
 	LearningPathGraduatesDatatableComponent,
@@ -278,6 +283,7 @@ export const COMMON_IMPORTS = [
 	AltchaComponent,
 	NgIconsModule,
 	HlmIconDirective,
+	HlmTableModule,
 ];
 
 @NgModule({

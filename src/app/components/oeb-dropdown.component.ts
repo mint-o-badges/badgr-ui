@@ -93,7 +93,7 @@ export class OebDropdownComponent {
 			case 'lg':
 				return '1.75rem';
 			default:
-				return '1.5rem';
+				return '1.25rem';
 		}
 	}
 }

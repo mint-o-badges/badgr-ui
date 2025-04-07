@@ -19,6 +19,7 @@ import { Title } from '@angular/platform-browser';
 import { VerifyBadgeDialog } from '../verify-badge-dialog/verify-badge-dialog.component';
 import { BadgeClassCategory, BadgeClassLevel } from './../../../issuer/models/badgeclass-api.model';
 import { PageConfig } from '../../../common/components/badge-detail/badge-detail.component.types';
+import { CommonDialogsService } from '../../../common/services/common-dialogs.service';
 
 @Component({
 	template: `<verify-badge-dialog
@@ -35,6 +36,7 @@ export class PublicBadgeAssertionComponent {
 		public messageService: MessageService,
 		public configService: AppConfigService,
 		public queryParametersService: QueryParametersService,
+		private dialogService: CommonDialogsService,
 		private title: Title,
 	) {
 		title.setTitle(`Assertion - ${this.configService.theme['serviceName'] || 'Badgr'}`);
@@ -172,7 +174,7 @@ export class PublicBadgeAssertionComponent {
 				this.config = {
 					badgeTitle: assertion.badge.name,
 					headerButton: {
-						title: 'Verify Badge',
+						title: 'Badge verifizieren',
 						action: () => this.verifyBadge(),
 					},
 					qrCodeButton: {
@@ -180,44 +182,14 @@ export class PublicBadgeAssertionComponent {
 					},
 					menuitems: [
 						{
-							title: 'Download JSON',
-							icon: 'lucideDownload',
-							action: () => {
-								fetch(this.rawJsonUrl)
-									.then((response) => response.blob())
-									.then((blob) => {
-										const link = document.createElement('a');
-										const url = URL.createObjectURL(blob);
-										link.href = url;
-										link.download = `assertion-${this.badgeClass.slug.trim()}.json`;
-										document.body.appendChild(link);
-										link.click();
-										document.body.removeChild(link);
-										URL.revokeObjectURL(url);
-									})
-									.catch((error) => console.error('Download failed:', error));
-							},
+							title: 'Download Badge-Bild',
+							icon: 'lucideImage',
+							action: () => this.exportPng(),
 						},
 						{
-							title: 'Download baked Image',
-							icon: 'lucideDownload',
-							action: () => {
-								fetch(this.rawBakedUrl)
-									.then((response) => response.blob())
-									.then((blob) => {
-										const link = document.createElement('a');
-										const url = URL.createObjectURL(blob);
-										const urlParts = this.rawBakedUrl.split('/');
-										const inferredFileName = urlParts[urlParts.length - 1] || 'downloadedFile';
-										link.href = url;
-										link.download = inferredFileName;
-										document.body.appendChild(link);
-										link.click();
-										document.body.removeChild(link);
-										URL.revokeObjectURL(url);
-									})
-									.catch((error) => console.error('Download failed:', error));
-							},
+							title: 'Download JSON-Datei',
+							icon: '	lucideFileCode',
+							action: () => this.exportJson(),
 						},
 						{
 							title: 'View Badge',
@@ -260,5 +232,38 @@ export class PublicBadgeAssertionComponent {
 				console.error('Failed to fetch assertion data', err);
 			}
 		});
+	}
+
+	exportPng() {
+		fetch(this.rawBakedUrl)
+			.then((response) => response.blob())
+			.then((blob) => {
+				const link = document.createElement('a');
+				const url = URL.createObjectURL(blob);
+				const urlParts = this.rawBakedUrl.split('/');
+				link.href = url;
+				link.download = `${new Date(this.assertion.issuedOn).toISOString().split('T')[0]}-${this.assertion.badge.name.trim().replace(' ', '_')}.png`;
+				document.body.appendChild(link);
+				link.click();
+				document.body.removeChild(link);
+				URL.revokeObjectURL(url);
+			})
+			.catch((error) => console.error('Download failed:', error));
+	}
+
+	exportJson() {
+		fetch(this.rawJsonUrl)
+			.then((response) => response.blob())
+			.then((blob) => {
+				const link = document.createElement('a');
+				const url = URL.createObjectURL(blob);
+				link.href = url;
+				link.download = `${new Date(this.assertion.issuedOn).toISOString().split('T')[0]}-${this.assertion.badge.name.trim().replace(' ', '_')}.json`;
+				document.body.appendChild(link);
+				link.click();
+				document.body.removeChild(link);
+				URL.revokeObjectURL(url);
+			})
+			.catch((error) => console.error('Download failed:', error));
 	}
 }
