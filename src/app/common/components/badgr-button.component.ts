@@ -13,6 +13,7 @@ import { MessageService } from '../services/message.service';
 		<ng-content *ngIf="!showLoadindMessage"></ng-content>
 		<ng-container *ngIf="showLoadindMessage && loadingMessage">{{ loadingMessage }}</ng-container>
 	`,
+	standalone: false,
 })
 export class BadgrButtonComponent {
 	loadingPromise: Promise<unknown>;

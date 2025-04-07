@@ -20,6 +20,7 @@ import { TranslateService } from '@ngx-translate/core';
 @Component({
 	templateUrl: 'badgeclass-select-type.component.html',
 	styleUrls: ['./badgeclass-select-type.component.scss'],
+	standalone: false,
 })
 export class BadgeClassSelectTypeComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	issuerSlug: string;
@@ -52,7 +53,10 @@ export class BadgeClassSelectTypeComponent extends BaseAuthenticatedRoutableComp
 		private translate: TranslateService,
 	) {
 		super(router, route, sessionService);
-		title.setTitle(`Create Badge - ${this.configService.theme['serviceName'] || 'Badgr'}`);
+
+		this.translate.get('Issuer.createBadge').subscribe((str) => {
+			title.setTitle(`${str} - ${this.configService.theme['serviceName'] || 'Badgr'}`);
+		});
 		this.issuerSlug = this.route.snapshot.params['issuerSlug'];
 
 		this.issuerLoaded = this.issuerManager.issuerBySlug(this.issuerSlug).then((issuer) => {
@@ -60,7 +64,7 @@ export class BadgeClassSelectTypeComponent extends BaseAuthenticatedRoutableComp
 			this.breadcrumbLinkEntries = [
 				{ title: 'Issuers', routerLink: ['/issuer'] },
 				{ title: issuer.name, routerLink: ['/issuer/issuers', this.issuerSlug] },
-				{ title: 'Create Badge' },
+				{ title: this.translate.instant('Issuer.createBadge') },
 			];
 
 			this.badgesLoaded = new Promise<void>((resolve, reject) => {

@@ -11,6 +11,7 @@ import { DatePipe } from '@angular/common';
 		datetime: '{{ htmlDateStr }}',
 	},
 	template: `{{ userDateStr }}`,
+	standalone: false,
 })
 export class TimeComponent implements OnChanges {
 	static datePipe = new DatePipe('en-US');

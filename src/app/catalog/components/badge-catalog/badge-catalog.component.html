@@ -35,22 +35,24 @@
 									[(ngModel)]="searchQuery"
 									hlmInput
 								/>
-								<hlm-icon
+								<ng-icon
+									hlm
 									name="lucideSearch"
 									class="tw-w-8 tw-h-8 tw-absolute tw-top-1/2 tw-right-2 -tw-translate-y-1/2 tw-pointer-events-none tw-text-purple"
-								></hlm-icon>
+								></ng-icon>
 							</div>
 						</div>
 
-						<oeb-sort-select
+						<oeb-global-sort-select
 							placeholder="{{ 'Badge.sortBy' | translate }}"
 							class="oeb tw-w-[12rem]"
 							[disabled]="!!groupControl?.value && groupControl?.value !== '---'"
 							[control]="sortControl"
-							[result]="badgeResults">
-						</oeb-sort-select>
+							[result]="badgeResults"
+						>
+						</oeb-global-sort-select>
 
-						<oeb-select
+						<!-- <oeb-select
 							actionBar="true"
 							placeholder="{{ 'Badge.groupBy' | translate }}"
 							class="oeb tw-w-[12rem]"
@@ -58,7 +60,7 @@
 							[control]="groupControl"
 							[autofocus]="true"
 							noTopMargin="true"
-						></oeb-select>
+						></oeb-select> -->
 
 						<oeb-select
 							actionBar="true"
@@ -71,12 +73,31 @@
 							multiple="true"
 							[dropdownMaxHeight]="250"
 						></oeb-select>
+						<!-- Use this template to save the tag selection when filtering was moved to the server side  -->
+						<ng-template #tagFilterTemplate>
+							<div class="tw-w-full tw-flex tw-flex-col tw-gap-2">
+								<oeb-button width="full_width" size="sm" [text]="'General.save' | translate">
+								</oeb-button>
+								<oeb-button
+									width="full_width"
+									size="sm"
+									[text]="'General.reset' | translate"
+									variant="secondary"
+									(click)="resetTags()"
+								>
+								</oeb-button>
+							</div>
+						</ng-template>
 					</div>
 				</div>
 				<div class="subtitle-wrapper">
 					<ul class="tags-wrapper oeb-standard-padding-bottom">
-						<li *ngFor="let tag of tagsControl.value | sort" class="tag tag-close tag-delete tag-button tw-mr-2" (click)="removeTag(tag)">
-							{{tag}}
+						<li
+							*ngFor="let tag of tagsControl.value | sort"
+							class="tag tag-close tag-delete tag-button tw-mr-2"
+							(click)="removeTag(tag)"
+						>
+							{{ tag }}
 						</li>
 					</ul>
 					<div class="open-legend-button">
@@ -105,7 +126,9 @@
 					</div>
 				</ng-container>
 				<ng-container *ngIf="groupBy == 'issuer'">
-					<ng-container *ngFor="let issuerGroup of badgeResultsByIssuer | sort:{key: 'issuerName', inplace: true}">
+					<ng-container
+						*ngFor="let issuerGroup of badgeResultsByIssuer | sort: { key: 'issuerName', inplace: true }"
+					>
 						<h3 class="u-text-h3-semibold u-margin-bottom2x u-margin-top6x u-text-dark1">
 							{{ issuerGroup.issuerName }}
 							<span class="u-text-small-semibold-caps u-text-dark4 u-margin-left2x"
@@ -162,15 +185,19 @@
 				</ng-container>
 				<p
 					*ngIf="!badgeResults.length"
-					class="
-						tw-m-auto tw-max-w-[300px] tw-p-4
-						tw-border-solid tw-border-[1px] tw-border-[var(--color-blue)] tw-rounded-lg
-						tw-bg-[var(--color-lightpurple)] tw-text-center
-					"
+					class="tw-m-auto tw-max-w-[300px] tw-p-4 tw-border-solid tw-border-[1px] tw-border-[var(--color-blue)] tw-rounded-lg tw-bg-[var(--color-lightpurple)] tw-text-center"
 				>
 					{{ 'General.noResults' | translate }}
 				</p>
 			</section>
+		</div>
+		<div class="tw-mt-8" *ngIf="badgeResults.length >= 30 || (currentPage == totalPages && currentPage != 1)">
+			<oeb-numbered-pagination
+				[totalProducts]="isFiltered() ? filteredBadges.length : badges.length"
+				[(page)]="currentPage"
+				[(pageSize)]="badgesPerPage"
+			>
+			</oeb-numbered-pagination>
 		</div>
 	</ng-template>
 </div>

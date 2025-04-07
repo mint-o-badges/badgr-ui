@@ -17,6 +17,7 @@ import {
 @Component({
 	selector: 'Badgeclass-issue-bulk-award-preview',
 	templateUrl: './badgeclass-issue-bulk-award-preview.component.html',
+	standalone: false,
 })
 export class BadgeClassIssueBulkAwardPreviewComponent extends BaseAuthenticatedRoutableComponent {
 	@Input() importPreviewData: BulkIssueImportPreviewData;
@@ -108,8 +109,7 @@ export class BadgeClassIssueBulkAwardPreviewComponent extends BaseAuthenticatedR
 			emptyCellsAreOptional = row.every((cell, index) => {
 				if (cell.length) {
 					return true;
-				} 
-				else {
+				} else {
 					return false;
 				}
 			});
@@ -124,7 +124,7 @@ export class BadgeClassIssueBulkAwardPreviewComponent extends BaseAuthenticatedR
 		this.importPreviewData.invalidRows.forEach((row) => {
 			this.invalidRowsTransformed.push({
 				email: this.getEmailFromRow(row),
-				name: this.getNameFromRow(row)
+				name: this.getNameFromRow(row),
 			});
 		});
 	}
@@ -133,8 +133,7 @@ export class BadgeClassIssueBulkAwardPreviewComponent extends BaseAuthenticatedR
 		this.importPreviewData.validRows.forEach((row) => {
 			this.validRowsTransformed.add({
 				email: this.getEmailFromRow(row),
-				name: this.getNameFromRow(row)
-
+				name: this.getNameFromRow(row),
 			});
 		});
 	}

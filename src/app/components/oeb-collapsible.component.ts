@@ -1,44 +1,45 @@
-import { Component, Input, TemplateRef, ViewChild, AfterViewInit, SimpleChanges, Output, EventEmitter, effect } from '@angular/core';
+import { NgIcon } from '@ng-icons/core';
+import {
+	Component,
+	Input,
+	TemplateRef,
+	ViewChild,
+	AfterViewInit,
+	SimpleChanges,
+	Output,
+	EventEmitter,
+	effect,
+} from '@angular/core';
 import { HlmButtonDirective } from './spartan/ui-button-helm/src';
 import { HlmIconModule } from './spartan/ui-icon-helm/src';
-import { HlmIconComponent } from './spartan/ui-icon-helm/src';
+import { HlmIconDirective } from './spartan/ui-icon-helm/src';
 import {
 	BrnCollapsibleComponent,
 	BrnCollapsibleContentComponent,
 	BrnCollapsibleTriggerDirective,
 	BrnCollapsibleState,
-} from '@spartan-ng/ui-collapsible-brain';
+} from '@spartan-ng/brain/collapsible';
 import { provideIcons } from '@ng-icons/core';
 import { lucideChevronRight } from '@ng-icons/lucide';
-import { NgIf, NgFor, NgTemplateOutlet, NgClass } from '@angular/common';
+import { NgIf, NgTemplateOutlet, NgClass } from '@angular/common';
 
 @Component({
 	selector: 'oeb-collapsible',
 	providers: [provideIcons({ lucideChevronRight })],
-	standalone: true,
 	imports: [
 		BrnCollapsibleComponent,
 		BrnCollapsibleTriggerDirective,
 		HlmButtonDirective,
 		BrnCollapsibleContentComponent,
-		HlmIconModule,
-		HlmIconComponent,
+		NgIcon,
+		HlmIconDirective,
 		NgIf,
-		NgFor,
 		NgTemplateOutlet,
 		NgClass,
 	],
 	template: `
 		<brn-collapsible class="tw-flex tw-flex-col" #collapsible [disabled]="disabled()">
-			<button
-				[attr.id]="id"
-				brnCollapsibleTrigger
-				type="button"
-				hlmBtn
-				variant="ghost"
-				size="sm"
-				class="!tw-p-0"
-			>
+			<button [attr.id]="id" brnCollapsibleTrigger type="button" hlmBtn variant="ghost" size="sm" class="!tw-p-0">
 				<ngTemplateOutlet
 					*ngIf="isTemplate; else stringTrigger"
 					[ngTemplateOutlet]="trigger"
@@ -46,11 +47,12 @@ import { NgIf, NgFor, NgTemplateOutlet, NgClass } from '@angular/common';
 				<ng-template #stringTrigger>
 					<button class="tw-flex tw-w-full !tw-justify-between tw-items-center">
 						{{ trigger }}
-						<hlm-icon class="tw-ml-2" name="lucideChevronDown" hlmMenuIcon />
+						<ng-icon hlm class="tw-ml-2" name="lucideChevronDown" hlmMenuIcon />
 					</button>
 				</ng-template>
 				<div>
-					<hlm-icon
+					<ng-icon
+						hlm
 						size="xl"
 						class="tw-text-purple"
 						[ngClass]="{ 'tw-rotate-90': collapsible.state() == 'open' }"
@@ -69,7 +71,7 @@ export class OebCollapsibleComponent implements AfterViewInit {
 	@Input() defaultOpen: boolean = false;
 	@Input() id: string = null;
 	@Input() closeable: boolean = true;
-	@Output() toggled = new EventEmitter<boolean>()
+	@Output() toggled = new EventEmitter<boolean>();
 
 	@ViewChild('collapsible') collapsible: BrnCollapsibleComponent;
 
@@ -93,7 +95,6 @@ export class OebCollapsibleComponent implements AfterViewInit {
 		if (changes.closeable.currentValue != changes.closeable.previousValue) {
 			this.closeable = changes.closeable.currentValue;
 		}
-
 	}
 
 	// disable if open and not closeable

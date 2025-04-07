@@ -16,6 +16,7 @@ type AddBadgeDialogTabName = 'upload' | 'url' | 'json';
 @Component({
 	selector: 'add-badge-dialog',
 	templateUrl: './add-badge-dialog.component.html',
+	standalone: false,
 })
 export class AddBadgeDialogComponent extends BaseDialog {
 	static defaultOptions = {} as AddBadgeDialogOptions;

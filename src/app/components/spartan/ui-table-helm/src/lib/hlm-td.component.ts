@@ -8,13 +8,12 @@ import {
 	inject,
 	input,
 } from '@angular/core';
-import { hlm } from '@spartan-ng/ui-core';
-import { BrnColumnDefComponent } from '@spartan-ng/ui-table-brain';
+import { hlm } from '@spartan-ng/brain/core';
+import { BrnColumnDefComponent } from '@spartan-ng/brain/table';
 import type { ClassValue } from 'clsx';
 
 @Component({
 	selector: 'hlm-td',
-	standalone: true,
 	imports: [NgTemplateOutlet],
 	host: {
 		'[class]': '_computedClass()',
@@ -40,6 +39,10 @@ export class HlmTdComponent {
 
 	public readonly userClass = input<ClassValue>('', { alias: 'class' });
 	protected readonly _computedClass = computed(() =>
-		hlm('tw-flex tw-flex-none tw-p-4 tw-items-center [&:has([role=checkbox])]:tw-pr-0', this._columnDef?.class(), this.userClass()),
+		hlm(
+			'tw-flex tw-flex-none tw-p-4 tw-items-center [&:has([role=checkbox])]:tw-pr-0',
+			this._columnDef?.class(),
+			this.userClass(),
+		),
 	);
 }

@@ -57,7 +57,7 @@ export const routes: Routes = [
 		IssuerApiService,
 		IssuerManager,
 		LearningPathManager,
-		LearningPathApiService
+		LearningPathApiService,
 	],
 })
 export class CatalogModule {}

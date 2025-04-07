@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
  */
 @Component({
 	template: '',
+	standalone: false,
 })
 export class ForwardRouteComponent implements OnInit {
 	constructor(

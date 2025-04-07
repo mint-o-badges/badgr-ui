@@ -19,6 +19,7 @@ import { Title } from '@angular/platform-browser';
 import { VerifyBadgeDialog } from '../verify-badge-dialog/verify-badge-dialog.component';
 import { BadgeClassCategory, BadgeClassLevel } from './../../../issuer/models/badgeclass-api.model';
 import { PageConfig } from '../../../common/components/badge-detail/badge-detail.component.types';
+import { CommonDialogsService } from '../../../common/services/common-dialogs.service';
 
 @Component({
 	template: `<verify-badge-dialog
@@ -26,6 +27,7 @@ import { PageConfig } from '../../../common/components/badge-detail/badge-detail
 			(verifiedBadgeAssertion)="onVerifiedBadgeAssertion($event)"
 		></verify-badge-dialog>
 		<bg-badgedetail [config]="config" [awaitPromises]="[assertionIdParam]"></bg-badgedetail>`,
+	standalone: false,
 })
 export class PublicBadgeAssertionComponent {
 	constructor(
@@ -34,6 +36,7 @@ export class PublicBadgeAssertionComponent {
 		public messageService: MessageService,
 		public configService: AppConfigService,
 		public queryParametersService: QueryParametersService,
+		private dialogService: CommonDialogsService,
 		private title: Title,
 	) {
 		title.setTitle(`Assertion - ${this.configService.theme['serviceName'] || 'Badgr'}`);
@@ -164,14 +167,13 @@ export class PublicBadgeAssertionComponent {
 			try {
 				this.assertionId = paramValue;
 				const service: PublicApiService = this.injector.get(PublicApiService);
+				const assertion = await service.getBadgeAssertion(paramValue);
+				const lps = await service.getLearningPathsForBadgeClass(assertion.badge.slug);
 
-				const assertion = await service.getBadgeAssertion(paramValue)
-				const lps = await service.getLearningPathsForBadgeClass(assertion.badge.slug)
-				
 				this.config = {
 					badgeTitle: assertion.badge.name,
 					headerButton: {
-						title: 'Verify Badge',
+						title: 'Badge verifizieren',
 						action: () => this.verifyBadge(),
 					},
 					qrCodeButton: {
@@ -179,44 +181,19 @@ export class PublicBadgeAssertionComponent {
 					},
 					menuitems: [
 						{
-							title: 'Download JSON',
-							icon: 'lucideDownload',
-							action: () => {
-								fetch(this.rawJsonUrl)
-									.then((response) => response.blob())
-									.then((blob) => {
-										const link = document.createElement('a');
-										const url = URL.createObjectURL(blob);
-										link.href = url;
-										link.download = `assertion-${this.badgeClass.slug.trim()}.json`;
-										document.body.appendChild(link);
-										link.click();
-										document.body.removeChild(link);
-										URL.revokeObjectURL(url);
-									})
-									.catch((error) => console.error('Download failed:', error));
-							},
+							title: 'Download Badge-Bild',
+							icon: 'lucideImage',
+							action: () => this.exportPng(),
 						},
 						{
-							title: 'Download baked Image',
-							icon: 'lucideDownload',
-							action: () => {
-								fetch(this.rawBakedUrl)
-									.then((response) => response.blob())
-									.then((blob) => {
-										const link = document.createElement('a');
-										const url = URL.createObjectURL(blob);
-										const urlParts = this.rawBakedUrl.split('/');
-										const inferredFileName = urlParts[urlParts.length - 1] || 'downloadedFile';
-										link.href = url;
-										link.download = inferredFileName;
-										document.body.appendChild(link);
-										link.click();
-										document.body.removeChild(link);
-										URL.revokeObjectURL(url);
-									})
-									.catch((error) => console.error('Download failed:', error));
-							},
+							title: 'Download JSON-Datei',
+							icon: '	lucideFileCode',
+							action: () => this.exportJson(),
+						},
+						{
+							title: 'Download PDF-Zertifikat',
+							icon: 'lucideFileText',
+							action: () => this.exportPdf(),
 						},
 						{
 							title: 'View Badge',
@@ -240,27 +217,61 @@ export class PublicBadgeAssertionComponent {
 					badgeImage: assertion.badge.image,
 					competencies: assertion.badge['extensions:CompetencyExtension'],
 					license: assertion.badge['extensions:LicenseExtension'] ? true : false,
-					learningPaths: lps
+					learningPaths: lps,
+				};
+				if (assertion.revoked) {
+					if (assertion.revocationReason) {
+						this.messageService.reportFatalError('Assertion has been revoked:', assertion.revocationReason);
+					} else {
+						this.messageService.reportFatalError('Assertion has been revoked.', '');
+					}
+				} else if (this.showDownload) {
+					this.openSaveDialog(assertion);
 				}
-			if (assertion.revoked) {
-				if (assertion.revocationReason) {
-					this.messageService.reportFatalError('Assertion has been revoked:', assertion.revocationReason);
-				} else {
-					this.messageService.reportFatalError('Assertion has been revoked.', '');
+				if (assertion['extensions:recipientProfile'] && assertion['extensions:recipientProfile'].name) {
+					this.awardedToDisplayName = assertion['extensions:recipientProfile'].name;
 				}
-			} else if (this.showDownload) {
-				this.openSaveDialog(assertion);
+				return assertion;
+			} catch (err) {
+				console.error('Failed to fetch assertion data', err);
 			}
-			if (assertion['extensions:recipientProfile'] && assertion['extensions:recipientProfile'].name) {
-				this.awardedToDisplayName = assertion['extensions:recipientProfile'].name;
-			}
-			return assertion;
-			}
-			catch(err){
-				console.error("Failed to fetch assertion data", err)
-			}
+		});
+	}
 
-		})
-		
+	exportPng() {
+		fetch(this.rawBakedUrl)
+			.then((response) => response.blob())
+			.then((blob) => {
+				const link = document.createElement('a');
+				const url = URL.createObjectURL(blob);
+				const urlParts = this.rawBakedUrl.split('/');
+				link.href = url;
+				link.download = `${new Date(this.assertion.issuedOn).toISOString().split('T')[0]}-${this.assertion.badge.name.trim().replace(' ', '_')}.png`;
+				document.body.appendChild(link);
+				link.click();
+				document.body.removeChild(link);
+				URL.revokeObjectURL(url);
+			})
+			.catch((error) => console.error('Download failed:', error));
+	}
+
+	exportJson() {
+		fetch(this.rawJsonUrl)
+			.then((response) => response.blob())
+			.then((blob) => {
+				const link = document.createElement('a');
+				const url = URL.createObjectURL(blob);
+				link.href = url;
+				link.download = `${new Date(this.assertion.issuedOn).toISOString().split('T')[0]}-${this.assertion.badge.name.trim().replace(' ', '_')}.json`;
+				document.body.appendChild(link);
+				link.click();
+				document.body.removeChild(link);
+				URL.revokeObjectURL(url);
+			})
+			.catch((error) => console.error('Download failed:', error));
+	}
+
+	exportPdf() {
+		this.dialogService.exportPdfDialog.openDialog(this.assertion).catch((error) => console.log(error));
+	}
 }
-}	

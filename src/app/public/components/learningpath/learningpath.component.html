@@ -6,36 +6,34 @@
 		<div class="oeb-section tw-bg-lightpurple">
 			<div class="page-padding tw-flex tw-justify-between tw-flex-wrap tw-gap-8">
 				<div class="tw-grow">
-					<div class="oeb-headline-container">
-						<h1 class="tw-text-oebblack tw-font-extrabold" hlmH1>{{ learningPath.name }}</h1>
+					<div class="oeb-headline-container tw-max-w-[370px] md:tw-max-w-[770px]">
+						<h1 class="tw-text-oebblack tw-font-extrabold tw-break-words" hlmH1>{{ learningPath.name }}</h1>
 						<p size="sm" hlmP class="tw-text-oebblack tw-mt-2">
 							{{ 'LearningPath.lpFrom' | translate }}
 							<a hlmA [routerLink]="['/public/issuers/', issuer.slug]">{{ issuer.name }}</a>
 						</p>
 						<div class="tw-flex tw-flex-row tw-gap-2 tw-text-[#6B7280] tw-mt-1 tw-items-end">
-							<hlm-icon name="lucideClock" />
+							<ng-icon hlm name="lucideClock" />
 							<span>{{ minutesTotal | hourPipe }} {{ 'LearningPath.hours' | translate }}</span>
 						</div>
 					</div>
 
 					<section class="tw-flex tw-flex-col tw-gap-2" *ngIf="showDownloadButton">
-
 						<oeb-button
-								type="button"
-								text="Micro Degree herunterladen"
-								width="full_width"
-								(click)="downloadMicroDegree()"
+							type="button"
+							text="Micro Degree herunterladen"
+							width="full_width"
+							(click)="downloadMicroDegree()"
 						></oeb-button>
 
 						<oeb-button
-								type="button"
-								variant="secondary"
-								width="full_width"
-								text="PDF-Zertifikat herunterladen"
-								(click)="downloadPdf()"
+							type="button"
+							variant="secondary"
+							width="full_width"
+							text="PDF-Zertifikat herunterladen"
+							(click)="downloadPdf()"
 						></oeb-button>
 					</section>
-
 
 					<div
 						*ngIf="learningPath.requested && !learningPath.completed_at"
@@ -50,7 +48,7 @@
 					<ng-template #requestedTemplate>
 						<div class="tw-absolute tw-w-full tw-text-left tw-flex tw-items-center">
 							<span class="tw-bg-purple tw-rounded-[50%] tw-h-[20px] tw-w-[20px] tw-ml-2">
-								<hlm-icon variant="sm" class="tw-text-white tw-box-border" name="lucideCheck" />
+								<ng-icon hlm variant="sm" class="tw-text-white tw-box-border" name="lucideCheck" />
 							</span>
 							<span class="tw-ml-2 md:tw-text-sm tw-text-[8px] tw-text-purple">{{
 								'LearningPath.successRequestPath' | translate
@@ -78,7 +76,7 @@
 		<div class="page-padding">
 			<div class="md:tw-grid md:tw-gap-8 md:tw-grid-cols-5">
 				<div class="tw-col-span-3">
-					<div class="oeb-section-sm">
+					<div class="oeb-section-sm oeb-break-words">
 						<h3 hlmH3 class="tw-text-oebblack tw-font-bold">{{ 'LearningPath.desc' | translate }}</h3>
 						<p hlmP>{{ learningPath.description }}</p>
 					</div>
@@ -98,9 +96,10 @@
 						<div class="tw-absolute tw-flex tw-flex-col tw-w-full tw-text-right tw-right-4">
 							<span hlmH1 class="tw-font-extrabold tw-text-purple">{{ progressValue() }} %</span>
 							<span hlmP class="tw-mt-2 tw-text-oebblack tw-flex tw-justify-end">
-								<span [countUp]="hoursCompleted"></span>
-								<span>:</span>
-								<span [countUp]="minutesCompletedRemainder"></span>
+								<span
+									[countUp]="minutesCompleted"
+									[options]="{ formattingFn: formatCountUpMinutes }"
+								></span>
 								<span> / </span>
 								<span> {{ minutesTotal | hourPipe }} h</span>
 							</span>
@@ -113,7 +112,7 @@
 					>
 						<div class="tw-flex tw-flex-col tw-h-full">
 							<div class="tw-flex tw-flex-row tw-gap-2 tw-text-oebblack tw-mt-2 tw-pb-4 tw-items-end">
-								<hlm-icon class="tw-text-[#6B7280]" name="lucideClock" />
+								<ng-icon hlm class="tw-text-[#6B7280]" name="lucideClock" />
 								<span hlmP class="tw-font-medium">{{ 'LearningPath.myProgress' | translate }}</span>
 							</div>
 							<div class="tw-w-full tw-flex tw-justify-center tw-items-center">
@@ -125,10 +124,10 @@
 							</div>
 							<div
 								*ngIf="learningPath.completed_badges"
-								class="tw-flex md:tw--space-x-6 tw--space-x-4 tw-pt-4 pt-pb-4"
+								class="tw-flex tw-overflow-x-auto tw-overflow-y-hidden tw-w-full md:tw--space-x-6 tw--space-x-4 tw-pt-4 pt-pb-4"
 							>
 								<div
-									class="hover:tw-scale-105 hover:tw-z-10 tw-transform tw-ease-in-out tw-transition tw-duration-200"
+									class="tw-flex-shrink-0 hover:tw-scale-105 hover:tw-z-10 tw-transform tw-ease-in-out tw-transition tw-duration-200"
 									*ngFor="let badge of learningPath.completed_badges"
 								>
 									<img

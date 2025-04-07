@@ -6,6 +6,7 @@ import { BaseRoutableComponent } from '../../../common/pages/base-routable.compo
 @Component({
 	selector: 'logout',
 	template: '',
+	standalone: false,
 })
 export class LogoutComponent extends BaseRoutableComponent {
 	constructor(
@@ -19,13 +20,11 @@ export class LogoutComponent extends BaseRoutableComponent {
 	ngOnInit() {
 		super.ngOnInit();
 
-        const that = this;
-		this.loginService.logout()
-            .then((r) => {
-                if (that.loginService.isOidcLogin())
-                    window.location.href = `${that.loginService.baseUrl}/oidcview/logoutRedirect/`
-                else
-                    window.location.replace('/auth');
-            });
+		const that = this;
+		this.loginService.logout().then((r) => {
+			if (that.loginService.isOidcLogin())
+				window.location.href = `${that.loginService.baseUrl}/oidcview/logoutRedirect/`;
+			else window.location.replace('/auth');
+		});
 	}
 }

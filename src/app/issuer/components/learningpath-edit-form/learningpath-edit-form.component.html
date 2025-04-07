@@ -1,11 +1,7 @@
 <div class="tw-max-w-[1016px]">
 	<form-message></form-message>
 	<ng-container [formGroup]="learningPathForm.rawControl">
-		<oeb-stepper
-			[linear]="existingLearningPath ? false : true"
-			[initialStep]="existingLearningPath ? 0 : 1"
-		>
-
+		<oeb-stepper [linear]="existingLearningPath ? false : true" [initialStep]="existingLearningPath ? 0 : 1">
 			<oeb-step
 				label="Kategorie wählen"
 				[optional]="false"
@@ -66,10 +62,9 @@
 
 	<div class="tw-flex tw-justify-end">
 		<p *ngIf="stepper?.selected?.hasError" class="tw-inline-block tw-text-red">
-			{{stepper.selected.errorMessage}}
+			{{ stepper.selected.errorMessage }}
 		</p>
 	</div>
-
 
 	<form [formGroup]="learningPathForm.rawControl" #formElem (ngSubmit)="onSubmit()" novalidate>
 		<div class="tw-flex tw-justify-between md:tw-justify-end tw-flex-wrap sm:tw-flex-nowrap tw-gap-2 tw-mt-8">
@@ -94,13 +89,7 @@
 				text="{{ 'General.cancel' | translate }}"
 			></oeb-button>
 
-			<oeb-button
-				*ngIf="selectedStep < 4"
-				type="button"
-				[text]="next"
-				(click)="nextStep()"
-			>
-			</oeb-button>
+			<oeb-button *ngIf="selectedStep < 4" type="button" [text]="next" (click)="nextStep()"> </oeb-button>
 
 			<oeb-button
 				*ngIf="selectedStep === 4"
@@ -110,7 +99,8 @@
 				[loading-promises]="[savePromise]"
 				loading-message="{{ submittingText }}"
 				text="{{
-					(existingLearningPath ? 'General.saveChanges' : 'Issuer.myInstitutionsCreateLearningPath') | translate
+					(existingLearningPath ? 'General.saveChanges' : 'Issuer.myInstitutionsCreateLearningPath')
+						| translate
 				}}"
 			>
 			</oeb-button>

@@ -16,6 +16,7 @@ import Tether from 'tether';
 			</div>
 		</div>
 	`,
+	standalone: false,
 })
 export class TooltipComponent implements AfterViewInit, OnDestroy {
 	@Input() position = {

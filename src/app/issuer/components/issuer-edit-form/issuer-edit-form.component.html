@@ -1,165 +1,171 @@
 <form (ngSubmit)="onSubmit()" class="oeb-max-form-width tw-mt-6" novalidate>
-    <bg-formfield-image
-        #imageField
-        label="{{ 'Issuer.imageLogo' | translate }}"
-        sublabelRight="(Format 1:1 / quadratisch)"
-        imageLoaderName="issuer"
-        [text_body]="selectFromMyFiles"
-        dropZoneInfo1="Drag & Drop"
-        [dropZoneInfo3]="useImageFormat"
-        [placeholderImage]="issuerImagePlacholderUrl"
-        [control]="issuerForm.rawControlMap.issuer_image"
-        [allowedFileFormats]="['image/png', 'image/svg+xml']"
-        [errorMessage]="imageError"
-        (imageError)="onImageError($event)"
-        [enableIconSearch]="false"
-        maxSizeInMB="2"
-        [labelStyle]="'forminput-x-label u-margin-bottom1x'"
-    ></bg-formfield-image>
-    <span class="tw-text-oebblack tw-italic tw-text-lg">{{ 'General.fileformats' | translate }}: SVG {{ 'General.and' | translate }} PNG</span>
+	<bg-formfield-image
+		#imageField
+		label="{{ 'Issuer.imageLogo' | translate }}"
+		sublabelRight="(Format 1:1 / quadratisch)"
+		imageLoaderName="issuer"
+		[text_body]="selectFromMyFiles"
+		dropZoneInfo1="Drag & Drop"
+		[dropZoneInfo3]="useImageFormat"
+		[placeholderImage]="issuerImagePlacholderUrl"
+		[control]="issuerForm.rawControlMap.issuer_image"
+		[allowedFileFormats]="['image/png', 'image/svg+xml']"
+		[errorMessage]="imageError"
+		(imageError)="onImageError($event)"
+		[enableIconSearch]="false"
+		maxSizeInMB="2"
+		[labelStyle]="'forminput-x-label u-margin-bottom1x'"
+	></bg-formfield-image>
+	<span class="tw-text-oebblack tw-italic tw-text-lg"
+		>{{ 'General.fileformats' | translate }}: SVG {{ 'General.and' | translate }} PNG</span
+	>
 
-    <oeb-input
-        label="{{ 'General.name' | translate }} der Institution"
-        [control]="issuerForm.rawControlMap.issuer_name"
-        [fieldType]="'text'"
-        [autofocus]="true"
-        [errorMessage]="{ required: issuerRequiredError }"
-        sublabelRight="(max. 90 Zeichen)"
-        #issuer_name_field
-    ></oeb-input>
+	<oeb-input
+		label="{{ 'General.name' | translate }} der Institution"
+		[control]="issuerForm.rawControlMap.issuer_name"
+		[fieldType]="'text'"
+		[autofocus]="true"
+		[errorMessage]="{ required: issuerRequiredError }"
+		sublabelRight="(max. 90 Zeichen)"
+		#issuer_name_field
+	></oeb-input>
 
-    <oeb-input
-        [label]="'Webseiten-URL'"
-        [control]="issuerForm.rawControlMap.issuer_url"
-        [urlField]="true"
-        [fieldType]="'url'"
-        errorMessage="{{ 'Issuer.enterURL' | translate }}"
-        #issuer_url_field
-    ></oeb-input>
+	<oeb-input
+		[label]="'Webseiten-URL'"
+		[control]="issuerForm.rawControlMap.issuer_url"
+		[urlField]="true"
+		[fieldType]="'url'"
+		errorMessage="{{ 'Issuer.enterURL' | translate }}"
+		#issuer_url_field
+	></oeb-input>
 
-    <oeb-select
-        [control]="issuerForm.rawControlMap.issuer_email"
-        label="{{ 'General.contact' | translate }}-E-Mail"
-        placeholder="{{ 'Issuer.enterValidEmail' | translate }}"
-        [options]="emailsOptions"
-        errorMessage="{{ 'Issuer.enterValidEmail' | translate }}"
-        #issuer_contact_Email
-    ></oeb-select>
+	<oeb-select
+		[control]="issuerForm.rawControlMap.issuer_email"
+		label="{{ 'General.contact' | translate }}-E-Mail"
+		placeholder="{{ 'Issuer.enterValidEmail' | translate }}"
+		[options]="emailsOptions"
+		errorMessage="{{ 'Issuer.enterValidEmail' | translate }}"
+		#issuer_contact_Email
+	></oeb-select>
 
-    <oeb-input
-        label="{{ 'CreateBadge.shortDescription' | translate }}"
-        [control]="issuerForm.rawControlMap.issuer_description"
-        [fieldType]="'textarea'"
-        [errorMessage]="{ required: enterDescription }"
-        sublabelRight="(mind. 200 / max. 300 Zeichen)"
-    ></oeb-input>
+	<oeb-input
+		label="{{ 'CreateBadge.shortDescription' | translate }}"
+		[control]="issuerForm.rawControlMap.issuer_description"
+		[fieldType]="'textarea'"
+		[errorMessage]="{ required: enterDescription }"
+		sublabelRight="(mind. 200 / max. 300 Zeichen)"
+	></oeb-input>
 
-    <oeb-select
-        [control]="issuerForm.rawControlMap.issuer_category"
-        label="{{ 'General.category' | translate }}"
-        placeholder="{{ 'Issuer.enterCategory' | translate }}"
-        [options]="[
-            {
-                label: 'Schule (Grundschulen, weiterführende Schulen, Berufsschulen, Institutionen formaler schulischer Bildung)',
-                value: 'schule'
-            },
-            {
-                label: 'Hochschule (Universitäten. Fachhochschulen, ...)',
-                value: 'hochschule'
-            },
-            {
-                label: 'Andere (Bibliotheken, Museen, FabLabs, Unternehmen, Vereine, ...)',
-                value: 'andere'
-            }
-        ]"
-        #issuer_category
-    ></oeb-select>
+	<oeb-select
+		[control]="issuerForm.rawControlMap.issuer_category"
+		label="{{ 'General.category' | translate }}"
+		placeholder="{{ 'Issuer.enterCategory' | translate }}"
+		[options]="[
+			{
+				label: 'Schule (Grundschulen, weiterführende Schulen, Berufsschulen, Institutionen formaler schulischer Bildung)',
+				value: 'schule'
+			},
+			{
+				label: 'Hochschule (Universitäten. Fachhochschulen, ...)',
+				value: 'hochschule'
+			},
+			{
+				label: 'Andere (Bibliotheken, Museen, FabLabs, Unternehmen, Vereine, ...)',
+				value: 'andere'
+			}
+		]"
+		#issuer_category
+	></oeb-select>
 
-    <oeb-input
-        label="{{ 'General.street' | translate }}"
-        [control]="issuerForm.rawControlMap.issuer_street"
-        [fieldType]="'text'"
-        errorMessage="{{ 'Issuer.enterStreet' | translate }}"
-        #issuer_street_field
-    ></oeb-input>
+	<oeb-input
+		label="{{ 'General.street' | translate }}"
+		[control]="issuerForm.rawControlMap.issuer_street"
+		[fieldType]="'text'"
+		errorMessage="{{ 'Issuer.enterStreet' | translate }}"
+		#issuer_street_field
+	></oeb-input>
 
-    <oeb-input
-        label="{{ 'Issuer.houseNo' | translate }}"
-        [control]="issuerForm.rawControlMap.issuer_streetnumber"
-        errorMessage="{{ 'Issuer.enterHouseNo' | translate }}"
-        #issuer_streetnumber_field
-    ></oeb-input>
+	<oeb-input
+		label="{{ 'Issuer.houseNo' | translate }}"
+		[control]="issuerForm.rawControlMap.issuer_streetnumber"
+		errorMessage="{{ 'Issuer.enterHouseNo' | translate }}"
+		#issuer_streetnumber_field
+	></oeb-input>
 
-    <oeb-input
-        class="oeb-input-hide-arrows"
-        label="{{ 'General.postalCode' | translate }}"
-        [control]="issuerForm.rawControlMap.issuer_zip"
-        [fieldType]="'number'"
-        errorMessage="{{ 'Issuer.enterPostalCode' | translate }}"
-        #issuer_zip_field
-    ></oeb-input>
+	<oeb-input
+		class="oeb-input-hide-arrows"
+		label="{{ 'General.postalCode' | translate }}"
+		[control]="issuerForm.rawControlMap.issuer_zip"
+		[fieldType]="'number'"
+		errorMessage="{{ 'Issuer.enterPostalCode' | translate }}"
+		#issuer_zip_field
+	></oeb-input>
 
-    <oeb-input
-        label="{{ 'General.city' | translate }}"
-        [control]="issuerForm.rawControlMap.issuer_city"
-        [fieldType]="'text'"
-        errorMessage="{{ 'Issuer.enterCity' | translate }}"
-        #issuer_city_field
-    ></oeb-input>
+	<oeb-input
+		label="{{ 'General.city' | translate }}"
+		[control]="issuerForm.rawControlMap.issuer_city"
+		[fieldType]="'text'"
+		errorMessage="{{ 'Issuer.enterCity' | translate }}"
+		#issuer_city_field
+	></oeb-input>
 
-    <div class="tw-mt-6 md:tw-mt-7">
-        <oeb-checkbox alignStart="true" id="verify-intent" name="verify-intent"
-                [text]="'<ul>Hiermit bestätige ich, dass ich... <br>
+	<div class="tw-mt-6 md:tw-mt-7">
+		<oeb-checkbox
+			alignStart="true"
+			id="verify-intent"
+			name="verify-intent"
+			[text]="
+				'<ul>Hiermit bestätige ich, dass ich... <br>
                 <br>
                 1. berechtigt bin, für die genannte Institution einen Account anzulegen sowie Badges zu erstellen und zu vergeben.<br>
                 <br>
                 2. die Verantwortung für die Qualität der Kursangebote, der erstellten und vergebenen Badges sowie für die zugeordneten Kompetenzen trage. <br>
                    <br>
-                3. die Plattform nur für die vorgesehenen Zwecke nutze und jeglichen Missbrauch ablehne.</ul>' "
-                [control]="issuerForm.rawControlMap.verify_intended_use">
-        </oeb-checkbox>
-    </div>
+                3. die Plattform nur für die vorgesehenen Zwecke nutze und jeglichen Missbrauch ablehne.</ul>'
+			"
+			[control]="issuerForm.rawControlMap.verify_intended_use"
+		>
+		</oeb-checkbox>
+	</div>
 
-    <label
-        [class.checkbox-is-error]="
-            issuerForm.rawControlMap.agreedTerms.dirty && !issuerForm.rawControlMap.agreedTerms.valid
-        "
-        *ngIf="dataProcessorUrl"
-        class="checkbox l-marginBottom-2x"
-        for="terms"
-    >
-        <input name="terms" id="terms" type="checkbox" [formControl]="issuerForm.rawControlMap.agreedTerms" />
-        <span class="checkbox-x-text"
-            >Ich habe die <a target="_blank" [href]="dataProcessorUrl">Datenschutzrichtlinien</a> gelesen und
-            stimme ihnen zu.
-            <div
-                *ngIf="
-                    issuerForm.rawControlMap.agreedTerms.dirty && !issuerForm.rawControlMap.agreedTerms.valid
-                "
-                class="checkbox-x-errortext"
-            >
-                {{ 'Issuer.readPolicy' | translate }}
-            </div>
-        </span>
-    </label>
+	<label
+		[class.checkbox-is-error]="
+			issuerForm.rawControlMap.agreedTerms.dirty && !issuerForm.rawControlMap.agreedTerms.valid
+		"
+		*ngIf="dataProcessorUrl"
+		class="checkbox l-marginBottom-2x"
+		for="terms"
+	>
+		<input name="terms" id="terms" type="checkbox" [formControl]="issuerForm.rawControlMap.agreedTerms" />
+		<span class="checkbox-x-text"
+			>Ich habe die <a target="_blank" [href]="dataProcessorUrl">Datenschutzrichtlinien</a> gelesen und stimme
+			ihnen zu.
+			<div
+				*ngIf="issuerForm.rawControlMap.agreedTerms.dirty && !issuerForm.rawControlMap.agreedTerms.valid"
+				class="checkbox-x-errortext"
+			>
+				{{ 'Issuer.readPolicy' | translate }}
+			</div>
+		</span>
+	</label>
 
-    <div class="tw-flex tw-justify-between tw-flex-wrap sm:tw-flex-nowrap tw-gap-2 tw-mt-4">
-        <oeb-button
-            class="tw-mr-4"
-            variant="secondary"
-            [routerLink]="['/issuer']"
-            [disabled-when-requesting]="true"
-            text="{{ 'General.cancel' | translate }}"
-        ></oeb-button>
+	<div class="tw-flex tw-justify-between tw-flex-wrap sm:tw-flex-nowrap tw-gap-2 tw-mt-4">
+		<oeb-button
+			class="tw-mr-4"
+			variant="secondary"
+			[routerLink]="['/issuer']"
+			[disabled-when-requesting]="true"
+			text="{{ 'General.cancel' | translate }}"
+		></oeb-button>
 
-        <oeb-button
-            type="submit"
-            width="max_content"
-            [disabled]="!!addIssuerFinished"
-            text="{{ existingIssuer ? ('General.save' | translate) : ('Issuer.createInstitution' | translate) }}"
-            [loading-promises]="[addIssuerFinished]"
-            loading-message="Hinzufügen"
-        >
-        </oeb-button>
-    </div>
+		<oeb-button
+			type="submit"
+			width="max_content"
+			[disabled]="!!addIssuerFinished"
+			text="{{ existingIssuer ? ('General.save' | translate) : ('Issuer.createInstitution' | translate) }}"
+			[loading-promises]="[addIssuerFinished]"
+			loading-message="Hinzufügen"
+		>
+		</oeb-button>
+	</div>
 </form>

@@ -1,49 +1,61 @@
 <div *bgAwaitPromises="[issuerLoaded, profileEmailsLoaded]">
 	<form-message></form-message>
-	<div class="topbar topbar-withimage">
-		<div class="l-containerxaxis">
-			<div class="topbar-x-breadcrumbs">
-				<bg-breadcrumbs [linkentries]="breadcrumbLinkEntries"> </bg-breadcrumbs>
-			</div>
-			<div class="topbar-x-wrap">
-				<img *ngIf="issuer.image" class="topbar-x-image" [src]="issuer.image" alt="{{ issuer.name }} logo " />
+	<div class="oeb page-padding">
+		<div class="oeb-breadcrumbs">
+			<bg-breadcrumbs [linkentries]="breadcrumbLinkEntries"> </bg-breadcrumbs>
+		</div>
+		<div class="tw-flex tw-items-center tw-justify-between">
+			<div class="tw-gap-4 tw-flex tw-items-center">
+				<img
+					*ngIf="issuer.image"
+					class="md:tw-w-[93px] tw-w-[70px] tw-min-w-[70px]"
+					[src]="issuer.image"
+					alt="{{ issuer.name }} logo "
+				/>
 				<img
 					*ngIf="!issuer.image"
 					class="topbar-x-image"
 					[src]="issuerImagePlaceHolderUrl"
 					alt="Default issuer image"
 				/>
-				<h1 class="topbar-x-heading">
+				<h1 hlmH1 class="tw-font-extrabold tw-text-purple">
 					{{ (isCurrentUserIssuerOwner ? 'Issuer.editMembers' : 'General.members') | translate }}
 				</h1>
-				<div class="topbar-x-subheading">
-					{{
-						(isCurrentUserIssuerOwner ? 'Issuer.editMemberInstitute' : 'Issuer.membersHaveAccess')
-							| translate
-					}}
-				</div>
 			</div>
-		</div>
-	</div>
-
-	<div class="l-containerxaxis l-containeryaxis">
-		<div class="l-stack u-margin-bottom2x" *ngIf="isCurrentUserIssuerOwner">
-			<p class="u-text-h3-bold">{{ 'General.members' | translate }}</p>
-			<issuer-staff-create-dialog #issuerStaffCreateDialog></issuer-staff-create-dialog>
+			<oeb-button
+				[text]="'Issuer.addMember' | translate"
+				size="mediumText"
+				(click)="openDialog(this.translate.instant('Issuer.addMember'))"
+			></oeb-button>
 			<ng-template #headerTemplate>
-				<h1 class="tw-font-bold tw-text-oebblack tw-text-2xl" > {{'Issuer.addMember' | translate}}</h1>
-				<span class="tw-text-purple tw-italic tw-text-lg tw-mt-2 tw-leading-[130%]" [innerHTML]="'Issuer.addMember_text' | translate">
+				<h1 class="tw-font-bold tw-text-oebblack tw-text-2xl">{{ 'Issuer.addMember' | translate }}</h1>
+				<span
+					class="tw-text-purple tw-italic tw-text-lg tw-mt-2 tw-leading-[130%]"
+					[innerHTML]="'Issuer.addMember_text' | translate"
+				>
 				</span>
 			</ng-template>
-			<ng-template #addMemberFormTemplate> 
+			<ng-template #headerConfirmStaffTemplate let-email="email">
+				<h1 class="tw-font-bold tw-text-oebblack tw-text-2xl">
+					{{ 'Issuer.confirmStaffRequest' | translate }}
+				</h1>
+				<p class="tw-text-oebblack tw-text-lg tw-mt-2 tw-mb-4 tw-leading-[130%]">
+					<span [innerHTML]="'Issuer.confirmStaffRequestText1' | translate"></span>
+					<span class="tw-font-bold">{{ email }}</span>
+					<span [innerHTML]="'Issuer.confirmStaffRequestText2' | translate"></span>
+				</p>
+			</ng-template>
+			<ng-template #addMemberFormTemplate>
 				<form [formGroup]="staffCreateForm.rawControl" (ngSubmit)="submitStaffCreate()">
 					<oeb-input
-					[control]="staffCreateForm.rawControlMap.staffEmail"
-					label="{{ 'Issuer.addMember_newEmail' | translate }}"
-					error="{{'Issuer.addMember_newEmail' | translate}}"
+						[control]="staffCreateForm.rawControlMap.staffEmail"
+						label="{{ 'Issuer.addMember_newEmail' | translate }}"
+						error="{{ 'Issuer.addMember_newEmail' | translate }}"
 					>
 					</oeb-input>
-					<span class="tw-mt-6 tw-text-oebblack tw-text-lg tw-font-bold">{{ 'Issuer.addMember_chooseRole' | translate }}</span>
+					<span class="tw-mt-6 tw-text-oebblack tw-text-lg tw-font-bold">{{
+						'Issuer.addMember_chooseRole' | translate
+					}}</span>
 					<bg-formfield-radio
 						*ngFor="let role of issuerStaffRoleOptions; last as last"
 						[control]="staffCreateForm.rawControlMap.staffRole"
@@ -55,7 +67,7 @@
 						errorMessage="{{ 'Issuer.addMember_selectRole' | translate }}"
 					></bg-formfield-radio>
 					<br />
-	
+
 					<div class="notification notification-warning notification-is-active" *ngIf="error">
 						<div class="notification-x-icon">
 							<svg>
@@ -67,112 +79,152 @@
 							<p>{{ error }}</p>
 						</div>
 					</div>
-	
+
 					<div class="tw-w-full tw-justify-between tw-flex">
-						<oeb-button 
-						  type="button" 
-						  size="md"
-						  variant="secondary"
-						  (click)="$event.preventDefault();"
-						  [text]="'General.cancel' | translate">
+						<oeb-button
+							type="button"
+							size="md"
+							variant="secondary"
+							(click)="$event.preventDefault(); closeDialog()"
+							[text]="'General.cancel' | translate"
+						>
 						</oeb-button>
 						<oeb-button
 							size="md"
 							[text]="'Issuer.addMember' | translate"
 							[disabled]="staffCreateForm.invalid"
-							>
+						>
+						</oeb-button>
+					</div>
+				</form>
+			</ng-template>
+			<ng-template #staffRequestRoleTemplate let-requestid="requestid">
+				<form [formGroup]="staffRequestRoleForm.rawControl" (ngSubmit)="submitStaffRequestRoleForm(requestid)">
+					<span class="tw-text-oebblack tw-text-lg tw-font-bold">{{
+						'Issuer.addMember_chooseRole' | translate
+					}}</span>
+					<section class="tw-mt-4">
+						<bg-formfield-radio
+							*ngFor="let role of issuerStaffRoleOptions; last as last"
+							[control]="staffRequestRoleForm.rawControlMap.staffRole"
+							[name]="'staffRole'"
+							[label]="role.label"
+							[value]="role.value"
+							[sublabel]="role.description"
+							[last]="last"
+							errorMessage="{{ 'Issuer.addMember_selectRole' | translate }}"
+						></bg-formfield-radio>
+					</section>
+					<br />
+
+					<div class="notification notification-warning notification-is-active" *ngIf="error">
+						<div class="notification-x-icon">
+							<svg>
+								<use xlink:href="/images/icons.svg#icon_priority_high"></use>
+							</svg>
+						</div>
+						<div class="notification-x-text">
+							<h2>{{ 'Issuer.addMember_failed' | translate }}!</h2>
+							<p>{{ error }}</p>
+						</div>
+					</div>
+
+					<div class="tw-w-full tw-justify-between tw-flex">
+						<oeb-button
+							type="button"
+							size="md"
+							variant="secondary"
+							(click)="$event.preventDefault(); closeDialog()"
+							[text]="'General.cancel' | translate"
+						>
+						</oeb-button>
+						<oeb-button
+							size="md"
+							[text]="'Issuer.addMember' | translate"
+							[disabled]="staffRequestRoleForm.invalid"
+						>
 							{{ 'Issuer.addMember' | translate }}
 						</oeb-button>
 					</div>
 				</form>
 			</ng-template>
-			<button class="button button-secondary" (click)="openDialog(this.translate.instant('Issuer.addMember'))">{{ 'Issuer.addMember' | translate }}</button>
 		</div>
-
-		<table class="datatable datatable-roundheaders datatable-onlyfirstcolumntablet datatable-verticalalignmiddle">
-			<thead class="datatable-x-head">
-				<tr class="datatable-x-header">
-					<th class="datatable-x-cell">Name</th>
-					<th class="datatable-x-cell">ID</th>
-					<th class="datatable-x-cell">{{ 'General.role' | translate }}</th>
-				</tr>
-			</thead>
-			<tbody class="datatable-x-body">
-				<tr *ngFor="let member of issuer.staff" class="datatable-x-row">
-					<td class="datatable-x-cell u-text-body">
-						{{ member.nameLabel }}
-						<div class="l-flex l-flex-column l-flex-2x u-hidden-mintablet u-margin-top2x">
-							<p class="u-text-small u-text-breakword">
-								{{ memberId(member) }}
-							</p>
-							<div class="forminput forminput-full" *ngIf="isCurrentUserIssuerOwner">
-								<div class="forminput-x-label">Role</div>
-								<div class="forminput-x-inputs">
-									<select
-										[ngModel]="member.roleSlug"
-										[disabled]="member == issuer.currentUserStaffMember"
-										(change)="changeMemberRole(member, $event.target.value)"
-										*ngIf="isCurrentUserIssuerOwner"
-									>
-										<option *ngFor="let role of issuerStaffRoleOptions" [value]="role.value">
-											{{ role.label }}
-										</option>
-									</select>
-								</div>
-							</div>
-							<span *ngIf="!isCurrentUserIssuerOwner">
-								{{ member.roleInfo.label }}
-							</span>
-							<div *ngIf="isCurrentUserIssuerOwner">
-								<button
-									class="u-text-link-small"
-									type="button"
-									[disabled-when-requesting]="true"
-									(click)="removeMember(member)"
-									*ngIf="member != issuer.currentUserStaffMember"
+		<section class="tw-mt-8">
+			<h2 hlmH2 class="!tw-text-oebblack tw-mb-2">{{ 'Issuer.openStaffRequests' | translate }}</h2>
+			<span class="tw-text-oebblack tw-italic tw-text-lg" *ngIf="staffRequests.length == 0">{{
+				'Issuer.noOpenStaffRequests' | translate
+			}}</span>
+			<issuer-staff-requests-datatable
+				[requests]="staffRequests"
+				(deleteStaffRequest)="deleteStaffRequest($event)"
+				(confirmStaffRequest)="confirmStaffRequest($event)"
+			>
+			</issuer-staff-requests-datatable>
+		</section>
+		<section class="tw-mt-8">
+			<h2 hlmH2 class="!tw-text-oebblack tw-mb-2">
+				{{ 'General.members' | translate }} {{ 'General.of' | translate }} {{ issuer.name }}
+			</h2>
+			<hlm-table
+				class="tw-rounded-t-[20px] tw-overflow-hidden tw-w-full tw-max-w-[100%] tw-bg-white tw-border-lightgrey tw-border"
+			>
+				<hlm-trow class="!tw-bg-lightgrey tw-text-oebblack tw-flex-wrap hover:tw-bg-lightgrey">
+					<!-- Name -->
+					<hlm-th class="tw-text-oebblack md:tw-w-[25%] tw-w-[33%] tw-px-4">Name</hlm-th>
+					<!-- E-Mail -->
+					<hlm-th class="tw-text-oebblack md:tw-w-[25%] tw-w-[33%] tw-px-4">E-Mail</hlm-th>
+					<!-- Role -->
+					<hlm-th class="tw-text-oebblack md:tw-w-[25%] tw-w-[33%] tw-px-4">Rolle</hlm-th>
+					<!-- Actions -->
+					<hlm-th class="tw-text-oebblack md:tw-w-[25%] tw-w-0 tw-px-4"></hlm-th>
+				</hlm-trow>
+				<hlm-trow *ngFor="let member of issuer.staff" class="tw-border-lightgrey tw-flex-wrap tw-py-2">
+					<hlm-th class="md:tw-w-[25%] tw-w-[33%] tw-px-4 tw-items-center">
+						<span class="tw-font-normal tw-text-lg tw-text-oebblack tw-truncate">{{
+							member.nameLabel
+						}}</span>
+					</hlm-th>
+					<hlm-th class="md:tw-w-[25%] tw-w-[33%] tw-px-4 tw-text-center tw-flex tw-items-center"
+						><p hlmP class="tw-font-normal tw-text-lg tw-text-oebblack tw-truncate">
+							{{ member.email }}
+						</p></hlm-th
+					>
+					<hlm-th class="tw-w-36 md:tw-w-48 !tw-text-oebblack sm:tw-grid">
+						<div class="forminput forminput-full" *ngIf="isCurrentUserIssuerOwner">
+							<div class="forminput-x-inputs">
+								<select
+									class="!tw-border-purple !tw-border-solid !tw-text-oebblack tw-rounded-[10px] tw-text-lg"
+									[ngModel]="member.roleSlug"
+									[disabled]="member == issuer.currentUserStaffMember"
+									(change)="changeMemberRole(member, $event.target.value)"
+									*ngIf="isCurrentUserIssuerOwner"
 								>
-									{{ 'General.remove' | translate }}
-								</button>
+									<option *ngFor="let role of issuerStaffRoleOptions" [value]="role.value">
+										{{ role.label }}
+									</option>
+								</select>
 							</div>
 						</div>
-					</td>
-					<td class="datatable-x-cell u-text-small">
-						{{ memberId(member) }}
-					</td>
-					<td class="datatable-x-cell">
-						<div class="l-flex l-flex-aligncenter l-flex-2x">
-							<span *ngIf="!isCurrentUserIssuerOwner">
-								{{ member.roleInfo.label }}
-							</span>
-							<div class="forminput" *ngIf="isCurrentUserIssuerOwner">
-								<div class="forminput-x-inputs">
-									<select
-										[ngModel]="member.roleSlug"
-										[disabled]="member == issuer.currentUserStaffMember"
-										(change)="changeMemberRole(member, $event.target.value)"
-										*ngIf="isCurrentUserIssuerOwner"
-									>
-										<option *ngFor="let role of issuerStaffRoleOptions" [value]="role.value">
-											{{ role.label }}
-										</option>
-									</select>
-								</div>
-							</div>
-							<div *ngIf="isCurrentUserIssuerOwner" class="u-margin-leftauto">
-								<button
-									class="u-text-link-small"
-									type="button"
-									[disabled-when-requesting]="true"
-									(click)="removeMember(member)"
-									*ngIf="member != issuer.currentUserStaffMember"
-								>
-									{{ 'General.remove' | translate }}
-								</button>
-							</div>
-						</div>
-					</td>
-				</tr>
-			</tbody>
-		</table>
+					</hlm-th>
+					<hlm-th class="md:tw-w-[25%] tw-w-full tw-px-4 tw-text-center tw-flex md:tw-justify-end">
+						<span
+							*ngIf="member != issuer.currentUserStaffMember"
+							(click)="removeMember(member)"
+							class="tw-text-link tw-underline tw-text-sm tw-cursor-pointer"
+							>{{ 'General.remove' | translate }}</span
+						>
+					</hlm-th>
+				</hlm-trow>
+			</hlm-table>
+			<!-- <issuer-staff-datatable
+				[members]="issuer.staff"
+				[issuer]="issuer"
+				[isCurrentUserIssuerOwner]="isCurrentUserIssuerOwner"
+				[roleOptions]="issuerStaffRoleOptions"
+				(removeStaffMember)="removeMember($event)"
+				(roleChanged)="changeMemberRole($event.member, $event.roleSlug)"
+			>
+			</issuer-staff-datatable> -->
+		</section>
 	</div>
 </div>

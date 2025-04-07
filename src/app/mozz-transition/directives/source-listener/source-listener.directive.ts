@@ -4,6 +4,7 @@ import { QueryParametersService } from '../../../common/services/query-parameter
 
 @Directive({
 	selector: '[sourceListener]',
+	standalone: false,
 })
 export class SourceListenerDirective {
 	getVars = ['signup', 'source'];

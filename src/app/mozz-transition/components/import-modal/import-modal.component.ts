@@ -11,6 +11,7 @@ import { UserProfileApiService } from '../../../common/services/user-profile-api
 	selector: 'import-modal',
 	templateUrl: './import-modal.component.html',
 	styleUrls: ['./import-modal.component.css'],
+	standalone: false,
 })
 export class ImportModalComponent extends BaseDialog implements OnInit {
 	@ViewChild('importModalDialog')

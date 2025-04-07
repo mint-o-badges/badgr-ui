@@ -1,17 +1,17 @@
 import { Component, computed, input } from '@angular/core';
+import { NgIcon, provideIcons } from '@ng-icons/core';
 import { lucideCheck } from '@ng-icons/lucide';
-import { hlm } from '@spartan-ng/ui-core';
-import { HlmIconComponent, provideIcons } from '../../../ui-icon-helm/src';
+import { hlm } from '@spartan-ng/brain/core';
+import { HlmIconDirective } from '../../../ui-icon-helm/src';
 import type { ClassValue } from 'clsx';
 
 @Component({
 	selector: 'hlm-menu-item-check',
-	standalone: true,
 	providers: [provideIcons({ lucideCheck })],
-	imports: [HlmIconComponent],
+	imports: [NgIcon, HlmIconDirective],
 	template: `
 		<!-- Using 1rem for size to mimick h-4 w-4 -->
-		<hlm-icon size="1rem" name="lucideCheck" />
+		<ng-icon hlm size="1rem" name="lucideCheck" />
 	`,
 	host: {
 		'[class]': '_computedClass()',

@@ -187,7 +187,6 @@ export class MockOAuthApiService {
 	listAuthorizations = () => new Promise(() => {});
 }
 
-
 @Injectable()
 export class MockPdfService {
 	getPdf = () => new Promise(() => {});
@@ -197,7 +196,7 @@ export class MockPdfService {
 
 @Injectable()
 export class MockServerVersionService {
-    getServerVersion = () => new Promise(() => "");
+	getServerVersion = () => new Promise(() => '');
 }
 
 export const commonDialog = {
@@ -246,7 +245,7 @@ export class MockRecipientBadgeManager {
 		removeRecipientBadge: new Promise(() => {}),
 		addRecipientBadge: new Promise(() => {}),
 		getBadgeShareUrlForProvider: new Promise(() => {}),
-		getCollectionShareUrlForProvider: new Promise(() => {})
+		getCollectionShareUrlForProvider: new Promise(() => {}),
 	};
 }
 
@@ -293,7 +292,7 @@ export class MockRecipientBadgeCollectionManager {
 export class MockBadgeInstanceManager {}
 
 @Injectable()
-export class MockBadgeInstanceApiService{}
+export class MockBadgeInstanceApiService {}
 
 @Injectable()
 export class MockIssuerManager {
@@ -353,7 +352,7 @@ export class MockLearningPathApiService {
 	getLearningPath = () => new Promise(() => {});
 	getPublicLearningPath = () => new Promise(() => {});
 	getLearningPathsForIssuer = () => new Promise(() => {});
-	getLearningPathsForUser  = () => new Promise(() => {});
+	getLearningPathsForUser = () => new Promise(() => {});
 }
 
 export let COMMON_MOCKS_PROVIDERS = [];
@@ -394,9 +393,8 @@ export let COMMON_MOCKS_PROVIDERS_WITH_SUBS = [];
 	QrCodeApiService,
 	PdfService,
 	LearningPathApiService,
-  	ServerVersionService,
-	BadgeInstanceApiService
-
+	ServerVersionService,
+	BadgeInstanceApiService,
 ].forEach((m, i, a) => {
 	const thisMock = eval('Mock' + m.name);
 	COMMON_MOCKS_PROVIDERS.push(thisMock);

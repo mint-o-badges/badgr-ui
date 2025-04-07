@@ -44,6 +44,7 @@ export interface ConfirmDialogOptions {
 			</div>
 		</dialog>
 	`,
+	standalone: false,
 })
 export class ConfirmDialog extends BaseDialog {
 	static defaultOptions = {

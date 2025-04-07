@@ -13,6 +13,7 @@ import { Subscription } from 'rxjs';
 	host: {
 		'[class.menuitem]': 'true',
 	},
+	standalone: false,
 })
 export class MenuItemDirective implements OnDestroy {
 	menuItem: boolean;

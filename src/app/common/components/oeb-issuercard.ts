@@ -10,7 +10,7 @@ import { Issuer } from '../../issuer/models/issuer.model';
 		<div class="tw-flex tw-flex-col tw-h-full">
 			<div class="tw-flex-row tw-flex tw-items-center">
 				<img [src]="issuer.image" width="80" />
-				<div class="tw-flex tw-flex-col tw-flex-wrap tw-pl-4 tw-py-2 tw-break-all">
+				<div class="tw-flex tw-flex-col tw-flex-wrap tw-pl-4 tw-py-2 tw-break-words">
 					<a [routerLink]="['/public/issuers', issuer.slug]" hlmP>{{ issuer.name }}</a>
 					<p class="tw-font-bold" hlmP size="sm">{{ issuer.email }}</p>
 				</div>
@@ -20,6 +20,7 @@ import { Issuer } from '../../issuer/models/issuer.model';
 			</div>
 		</div>
 	`,
+	standalone: false,
 })
 export class OebIssuerCard {
 	readonly badgeLoadingImageUrl = '../../../breakdown/static/images/badge-loading.svg';

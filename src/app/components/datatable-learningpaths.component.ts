@@ -9,7 +9,6 @@ import { Issuer } from '../issuer/models/issuer.model';
 
 @Component({
 	selector: 'learningpaths-datatable',
-	standalone: true,
 	imports: [HlmTableModule, HlmIconModule, CommonModule, OebButtonComponent, TranslateModule, RouterModule],
 	template: ` <hlm-table
 		class="tw-rounded-[20px] tw-overflow-hidden tw-w-full tw-max-w-[100%] tw-bg-lightpurple tw-border-purple tw-border"
@@ -74,5 +73,4 @@ export class LearningPathDatatableComponent {
 	@Input() issuer: Issuer;
 	@Output() actionElement = new EventEmitter();
 	@Output() redirectToLearningPathDetail = new EventEmitter();
-
 }

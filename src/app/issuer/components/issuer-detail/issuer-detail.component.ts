@@ -24,6 +24,7 @@ import { ApiLearningPath } from '../../../common/model/learningpath-api.model';
 @Component({
 	selector: 'issuer-detail',
 	templateUrl: './issuer-detail.component.html',
+	standalone: false,
 })
 export class IssuerDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	readonly issuerImagePlaceHolderUrl = preloadImageURL(
@@ -47,7 +48,7 @@ export class IssuerDetailComponent extends BaseAuthenticatedRoutableComponent im
 	profileEmailsLoaded: Promise<unknown>;
 	crumbs: LinkEntry[];
 
-	menuitems: MenuItem[]	= [];
+	menuitems: MenuItem[] = [];
 
 	constructor(
 		loginService: SessionService,
@@ -73,7 +74,8 @@ export class IssuerDetailComponent extends BaseAuthenticatedRoutableComponent im
 			this.launchpoints = launchpoints.filter((lp) => Boolean(lp));
 		});
 
-		this.menuitems = [{
+		this.menuitems = [
+			{
 				title: 'Bearbeiten',
 				routerLink: ['./edit'],
 				icon: 'lucidePencil',
@@ -87,8 +89,8 @@ export class IssuerDetailComponent extends BaseAuthenticatedRoutableComponent im
 				title: 'Mitglieder bearbeiten',
 				routerLink: ['./staff'],
 				icon: 'lucideUsers',
-			}
-		]
+			},
+		];
 
 		this.issuerLoaded = this.issuerManager.issuerBySlug(this.issuerSlug).then(
 			(issuer) => {
@@ -164,11 +166,11 @@ export class IssuerDetailComponent extends BaseAuthenticatedRoutableComponent im
 		super.ngOnInit();
 	}
 
-	routeToBadgeAward(badge, issuer){
-		this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'issue'])
+	routeToBadgeAward(badge, issuer) {
+		this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'issue']);
 	}
 
-	routeToBadgeDetail(badge, issuer){
-		this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug])
+	routeToBadgeDetail(badge, issuer) {
+		this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug]);
 	}
 }

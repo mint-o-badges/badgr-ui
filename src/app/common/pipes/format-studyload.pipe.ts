@@ -5,6 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
  */
 @Pipe({
 	name: 'studyload',
+	standalone: false,
 })
 export class StudyLoadPipe implements PipeTransform {
 	transform(studyLoad: number): string {
