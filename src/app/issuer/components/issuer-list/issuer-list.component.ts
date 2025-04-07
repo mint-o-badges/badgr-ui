@@ -226,6 +226,8 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 					this.closeDialog();
 					this.staffRequests.push(res.body as ApiStaffRequest);
 					this.openSuccessfullyRequestedMembershipDialog();
+					this.selectedIssuer = null;
+					this.issuerSearchQuery = '';
 				}
 			},
 			(error) => {
