@@ -335,9 +335,9 @@
 					<span class="tw-text-oebblack tw-text-lg tw-font-bold">
 						{{ issuername }}
 					</span>
-					<span class="tw-text-oebblack tw-text-lg" [innerHTML]="'General.place' | translate"> </span>
+					<span class="tw-text-oebblack tw-text-lg" [innerHTML]="('General.place' | translate) + '?'"></span>
 				</p>
-				<div class="tw-w-full tw-justify-between tw-flex">
+				<div class="tw-w-full tw-justify-between tw-flex tw-mt-4">
 					<oeb-button
 						type="button"
 						size="md"
