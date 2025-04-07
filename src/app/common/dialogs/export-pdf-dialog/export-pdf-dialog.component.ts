@@ -66,9 +66,7 @@ export class ExportPdfDialog extends BaseDialog {
 	async openDialog(badge: RecipientBadgeInstance | PublicApiBadgeAssertionWithBadgeClass): Promise<void> {
 		this.pdfIsLoading = true;
 
-		const slug = badge instanceof RecipientBadgeInstance ? badge.slug : badge.slug;
-		console.log(badge, slug);
-		this.pdfService.getPdf(slug).then((url) => {
+		this.pdfService.getPdf(badge.slug).then((url) => {
 			this.pdfSrc = url;
 			// set-time-out to fix the issue with viewing pdf from first time with safari
 			setTimeout(() => {
