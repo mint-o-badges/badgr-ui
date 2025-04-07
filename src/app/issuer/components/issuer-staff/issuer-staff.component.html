@@ -28,9 +28,9 @@
 				(click)="openDialog(this.translate.instant('Issuer.addMember'))"
 			></oeb-button>
 			<ng-template #headerTemplate>
-				<h1 class="tw-font-bold tw-text-oebblack tw-text-2xl">{{ 'Issuer.addMember' | translate }}</h1>
+				<h1 class="tw-font-bold tw-text-oebblack tw-text-2xl tw-mb-4">{{ 'Issuer.addMember' | translate }}</h1>
 				<span
-					class="tw-text-purple tw-italic tw-text-lg tw-mt-2 tw-leading-[130%]"
+					class="tw-text-purple tw-italic tw-text-lg tw-leading-[130%]"
 					[innerHTML]="'Issuer.addMember_text' | translate"
 				>
 				</span>
@@ -49,6 +49,7 @@
 				<form [formGroup]="staffCreateForm.rawControl" (ngSubmit)="submitStaffCreate()">
 					<oeb-input
 						[control]="staffCreateForm.rawControlMap.staffEmail"
+						labelStyle="tw-text-oebblack tw-text-lg tw-font-bold"
 						label="{{ 'Issuer.addMember_newEmail' | translate }}"
 						error="{{ 'Issuer.addMember_newEmail' | translate }}"
 					>
