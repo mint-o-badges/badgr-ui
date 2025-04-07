@@ -225,7 +225,7 @@
 		"giveMyBadges": "Meine Badges vergeben",
 		"askForPlugin": "Plugin anfragen",
 		"askForPluginText": "Unser <span class='tw-font-bold'>Plugin</span> bietet dir die Möglichkeit, Badges aus deiner eigenen digitalen Lehrumgebung heraus zu vergeben.",
-		"betaPhase": "Unsere Plattform befindet sich noch in der Betaphase. <b>Du hast Fehler entdeckt? Schreib uns an <a class='tw-text-link' href='mailto:support@openbadges.education'>support@openbadges.education</a></b>.",
+		"betaPhase": "Unsere Plattform befindet sich noch in der Betaphase. <b>Du hast Fehler entdeckt? Schreib uns an <a class='tw-text-link tw-underline' href='mailto:support@openbadges.education'>support@openbadges.education</a></b>.",
 		"askForLearningPath": "Wir helfen dir, einen Micro Degree anzulegen. Schreibe an <a href='mailto:lernpfad@openbadges.education' class='tw-underline tw-text-[#1400FF]'>lernpfad@openbadges.education</a>.",
 		"award": "vergeben",
 		"badgePreview": "Vorschau Badge",
@@ -298,7 +298,9 @@
 		"confirmStaffRequest": "Mitgliedsanfrage bestätigen",
 		"confirmStaffRequestText1": "Wenn ",
 		"confirmStaffRequestText2": " Mitglied deiner Institution sein soll, wähle die passende Rolle aus und bestätige die Anfrage:",
-		"noOpenStaffRequests": "Keine offenen Anfragen"
+		"noOpenStaffRequests": "Keine offenen Anfragen",
+		"ownInstitution": "eigene Institution",
+		"allInstitutions": "alle Institutionen"
 	},
 	"Badge": {
 		"groupBy": "Gruppieren nach",
@@ -352,7 +354,8 @@
 		"copyBadgeDescription": "Innerhalb der eigenen Institution können Badges immer kopiert werden.<br>Den Kopier-Status für <strong>andere</strong> Institutionen kannst du später jederzeit über das Menü auf der Badge-Detail-Seite aktualisieren.",
 		"copyLabelOthers": "Der Badge darf von <strong>anderen</strong> Institutionen kopiert werden.",
 		"copy": "Badge für eigene Institution kopieren",
-		"copyBadge": "Badge kopieren"
+		"copyBadge": "Badge kopieren",
+		"copyableFor": "Kopierbar für"
 	},
 	"CreateBadge": {
 		"chooseBadgeCategory": "Badge-Kategorie wählen",
