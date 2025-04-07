@@ -146,7 +146,6 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent {
 		}
 
 		if (this.editing) {
-			console.log('editing');
 			const formState = this.qrForm.value;
 			this.qrCodeApiService
 				.updateQrCode(this.issuerSlug, this.badgeSlug, this.qrSlug, {
@@ -156,6 +155,7 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent {
 					valid_from: formState.valid_from ? new Date(formState.valid_from).toISOString() : undefined,
 					badgeclass_id: this.badgeSlug,
 					issuer_id: this.issuerSlug,
+					notifications: formState.notifications,
 				})
 				.then((qrcode) => {
 					this.openSuccessDialog();
@@ -180,6 +180,7 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent {
 					issuer_id: formState.issuer_id,
 					expires_at: formState.expires_at ? new Date(formState.expires_at).toISOString() : undefined,
 					valid_from: formState.valid_from ? new Date(formState.valid_from).toISOString() : undefined,
+					notifications: formState.notifications,
 				})
 				.then((qrcode) => {
 					this.openSuccessDialog();
