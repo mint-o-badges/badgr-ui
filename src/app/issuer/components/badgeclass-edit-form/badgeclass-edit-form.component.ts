@@ -1069,7 +1069,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			...this.badgeClassForm.value.aiCompetencies.filter((comp) => comp.selected),
 		];
 
-		if (allCompetencies.length == 0) {
+		if (this.badgeClassForm.controls.badge_category.value == 'competency' && allCompetencies.length == 0) {
 			return { emptyCompetencies: true };
 		}
 
@@ -1139,6 +1139,9 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	}
 
 	async onSubmit() {
+		console.log('valid', this.badgeClassForm.valid);
+		console.log(this.badgeClassForm.value);
+		console.log('errors', this.badgeClassForm.errors);
 		try {
 			if (this.badgeClassForm.rawControl.controls.badge_category.value === 'competency') {
 				this.badgeClassForm.controls.competencies.rawControls.forEach((control, i) => {
