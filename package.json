@@ -36,7 +36,7 @@
 		"@angular/forms": "19.2.2",
 		"@angular/platform-browser": "19.2.2",
 		"@angular/platform-browser-dynamic": "19.2.2",
-		"@angular/router": "19.2.2",
+		"@angular/router": "19.2.5",
 		"@angularclass/request-idle-callback": "1.0.7",
 		"@concentricsky/badgr-style": "^20.1.2",
 		"@ng-icons/core": "^29.3.0",
