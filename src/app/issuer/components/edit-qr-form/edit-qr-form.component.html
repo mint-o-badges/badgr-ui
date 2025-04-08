@@ -73,8 +73,23 @@
 						></oeb-input>
 					</div>
 				</div>
+
+				<div *ngIf="!editing">
+					<span
+						class="tw-mt-6 md:tw-mt-7 tw-text-oebblack tw-font-semibold md:tw-leading-[28px] md:tw-text-[20px] tw-leading-[19px] tw-text-[14px]"
+						>Benachrichtigung</span
+					>
+					<oeb-checkbox
+						class="oeb-standard-padding-bottom"
+						type="checkbox"
+						[text]="'QrCode.receiveEmails' | translate"
+						[control]="qrForm.rawControlMap.notifications"
+					>
+					</oeb-checkbox>
+				</div>
+
 				<ng-template #editButtons>
-					<div class="tw-flex tw-gap-12 oeb-standard-padding-bottom">
+					<div class="tw-flex tw-gap-12">
 						<oeb-input
 							label="Start-Datum"
 							[errorMessage]="'Bitte gib ein Datum in der Form YYYY/mm/dd an'"
@@ -88,6 +103,19 @@
 							fieldType="date"
 						></oeb-input>
 					</div>
+
+					<span
+						class="tw-mt-6 md:tw-mt-7 tw-text-oebblack tw-font-semibold md:tw-leading-[28px] md:tw-text-[20px] tw-leading-[19px] tw-text-[14px]"
+						>Benachrichtigung</span
+					>
+					<oeb-checkbox
+						class="oeb-standard-padding-bottom"
+						type="checkbox"
+						[text]="'QrCode.receiveEmails' | translate"
+						[control]="qrForm.rawControlMap.notifications"
+					>
+					</oeb-checkbox>
+
 					<div class="tw-flex tw-flex-col md:tw-flex-row tw-gap-4 tw-mt-2 tw-w-full">
 						<oeb-button
 							variant="secondary"
@@ -106,18 +134,14 @@
 						</oeb-button>
 					</div>
 				</ng-template>
-				<span
-					class="tw-mt-6 md:tw-mt-7 tw-text-oebblack tw-font-semibold md:tw-leading-[28px] md:tw-text-[20px] tw-leading-[19px] tw-text-[14px]"
-					>Benachrichtigung</span
+
+				<oeb-button
+					*ngIf="!editing"
+					class="tw-whitespace-nowrap tw-mt-6"
+					type="submit"
+					text="QR-Code generieren"
 				>
-				<oeb-checkbox
-					class=""
-					type="checkbox"
-					[text]="'QrCode.receiveEmails' | translate"
-					[control]="qrForm.rawControlMap.notifications"
-				>
-				</oeb-checkbox>
-				<oeb-button class="tw-whitespace-nowrap tw-mt-6" type="submit" text="QR-Code generieren"> </oeb-button>
+				</oeb-button>
 			</div>
 		</div>
 	</form>
