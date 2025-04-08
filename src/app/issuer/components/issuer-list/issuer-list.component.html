@@ -2,7 +2,7 @@
 
 <div class="oeb tw-overflow-hidden tw-w-full tw-relative">
 	<div class="page-padding">
-		<div class="tw-pt-[4rem] tw-pb-[2.4rem] md:tw-flex tw-justify-between md:tw-gap-16">
+		<div class="tw-pt-[4rem] md:tw-flex tw-justify-between md:tw-gap-16">
 			<div class="oeb-standard-padding-bottom">
 				<h1 hlmH1 class="tw-text-purple oeb-standard-padding-bottom tw-font-bold">
 					{{ 'NavItems.myInstitutions' | translate }}
@@ -37,8 +37,13 @@
 					[disabled-when-requesting]="true"
 					[text]="'Issuer.createInstitution' | translate"
 				></oeb-button>
-				<div class="tw-mt-8 tw-max-w-[380px]">
-					<div class="tw-flex tw-items-center tw-gap-2">
+				<div class="md:tw-block tw-hidden tw-mt-8 tw-max-w-[400px]">
+					<!-- Plugin box for desktop when issuers.length == 0 -->
+					<ng-container
+						*ngTemplateOutlet="pluginBoxTemplate; context: { mobile: false, showWhenEmpty: true }"
+					></ng-container>
+
+					<div class="tw-flex tw-items-center tw-gap-2 tw-mt-2">
 						<ng-icon hlm class="tw-text-purple tw-min-w-10" size="lg" name="lucideInfo" />
 						<p class="tw-text-oebblack tw-text-left">
 							<span [innerHTML]="'Issuer.rolesAndRightsInfo1' | translate"> </span>
@@ -88,12 +93,11 @@
 							<span [innerHTML]="'Issuer.rolesAndRightsInfo3' | translate"> </span>
 						</p>
 					</div>
-				</div>
-				<div class="md:tw-block tw-hidden tw-mt-8 tw-max-w-[380px]">
+
 					<div class="tw-rounded-[20px] tw-text-oebblack tw-relative tw-flex tw-flex-row tw-items-center">
 						<img
 							class="tw-inline-block tw-h-[90px]"
-							alt="Plugin"
+							alt="Beta Logo"
 							src="assets/oeb/images/issuerPage/oeb-beta-logo.svg"
 						/>
 						<div class="tw-flex md:tw-block tw-pb-4">
@@ -182,56 +186,12 @@
 						</div>
 					</div>
 				</div>
-				<div #pluginBox class="md:tw-flex-[0_0_363px] md:tw-mt-0 tw-mt-6">
-					<div>
-						<div
-							class="tw-bg-lightgreen tw-p-6 tw-rounded-[10px] tw-text-center tw-text-oebblack tw-relative"
-						>
-							<ng-icon
-								hlm
-								(click)="pluginBoxElement.nativeElement.remove()"
-								class="tw-w-4 tw-h-4 tw-ml-2 tw-cursor-pointer tw-inline-block tw-absolute tw-top-2 tw-right-2"
-								name="lucideX"
-							/>
-
-							<div class="tw-flex md:tw-block tw-pb-4">
-								<img
-									class="tw-inline-block"
-									alt="Plugin"
-									src="assets/oeb/images/issuerPage/plugin.svg"
-								/>
-								<p
-									class="tw-pt-4 tw-text-lg tw-text-left tw-pl-4 md:tw-pl-0 md:tw-text-center"
-									[innerHTML]="'Issuer.askForPluginText' | translate"
-								></p>
-							</div>
-							<a
-								href="mailto:hallo@openbadges.education?subject=Interesse an Plugin!"
-								class="!tw-font-medium tw-text-link tw-underline tw-text-lg"
-							>
-								{{ 'Issuer.askForPlugin' | translate }}
-							</a>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="tw-block md:tw-hidden tw-mt-8 tw-max-w-[380px]">
-				<div class="tw-rounded-[10px] tw-text-oebblack tw-relative tw-flex tw-flex-row tw-items-center">
-					<img
-						class="tw-inline-block tw-h-[90px]"
-						alt="Plugin"
-						src="assets/oeb/images/issuerPage/oeb-beta-logo.svg"
-					/>
-					<div class="tw-flex md:tw-block tw-pb-4">
-						<p
-							class="tw-pt-4 tw-text-left tw-pl-4 md:tw-pl-0"
-							[innerHTML]="'Issuer.betaPhase' | translate"
-						></p>
-					</div>
-				</div>
+				<ng-container
+					*ngTemplateOutlet="pluginBoxTemplate; context: { mobile: false, showWhenEmpty: false }"
+				></ng-container>
 			</div>
 		</div>
-		<section class="tw-flex tw-flex-col tw-gap-2 tw-mt-12">
+		<section class="tw-flex tw-flex-col tw-gap-2" [ngClass]="issuers.length > 0 ? 'tw-mt-12' : ''">
 			<span [innerHTML]="'Issuer.partOfInstitution' | translate" class="tw-text-2xl tw-italic tw-text-oebblack">
 			</span>
 			<section
@@ -361,5 +321,67 @@
 				</div>
 			</ng-template>
 		</section>
+		<div class="tw-block md:tw-hidden tw-mt-8 tw-max-w-[600px]">
+			<div class="tw-flex tw-items-center tw-gap-2 tw-mt-2">
+				<ng-icon hlm class="tw-text-purple tw-min-w-10" size="lg" name="lucideInfo" />
+				<p class="tw-text-oebblack tw-text-left">
+					<span [innerHTML]="'Issuer.rolesAndRightsInfo1' | translate"> </span>
+					<oeb-button
+						size="smallText"
+						variant="link"
+						[text]="'Issuer.rolesAndRightsInfo2' | translate"
+						(click)="openIssuerInfoDialog()"
+					></oeb-button>
+					<span [innerHTML]="'Issuer.rolesAndRightsInfo3' | translate"> </span>
+				</p>
+			</div>
+			<ng-container
+				*ngTemplateOutlet="pluginBoxTemplate; context: { mobile: true, showWhenEmpty: true }"
+			></ng-container>
+			<div class="tw-rounded-[10px] tw-text-oebblack tw-relative tw-flex tw-flex-row tw-items-center">
+				<img
+					class="tw-inline-block tw-h-[90px]"
+					alt="Plugin"
+					src="assets/oeb/images/issuerPage/oeb-beta-logo.svg"
+				/>
+				<div class="tw-flex md:tw-block tw-pb-4">
+					<p class="tw-pt-4 tw-text-left tw-pl-4 md:tw-pl-0" [innerHTML]="'Issuer.betaPhase' | translate"></p>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
+
+<ng-template #pluginBoxTemplate let-showWhenEmpty="showWhenEmpty" let-mobile="mobile">
+	<div
+		*ngIf="(issuers.length === 0 && showWhenEmpty) || (issuers.length > 0 && !showWhenEmpty)"
+		#pluginBox
+		class="md:tw-flex-[0_0_363px] md:tw-mt-0 tw-mt-6"
+		[class.md:tw-w-[400px]]="mobile === false && showWhenEmpty"
+	>
+		<div>
+			<div class="tw-bg-lightgreen tw-p-6 tw-rounded-[10px] tw-text-center tw-text-oebblack tw-relative">
+				<ng-icon
+					hlm
+					(click)="pluginBoxElement.nativeElement.remove()"
+					class="tw-w-4 tw-h-4 tw-ml-2 tw-cursor-pointer tw-inline-block tw-absolute tw-top-2 tw-right-2"
+					name="lucideX"
+				/>
+
+				<div class="tw-flex md:tw-block tw-pb-4">
+					<img class="tw-inline-block" alt="Plugin" src="assets/oeb/images/issuerPage/plugin.svg" />
+					<p
+						class="tw-pt-4 tw-text-lg tw-text-left tw-pl-4 md:tw-pl-0 md:tw-text-center"
+						[innerHTML]="'Issuer.askForPluginText' | translate"
+					></p>
+				</div>
+				<a
+					href="mailto:hallo@openbadges.education?subject=Interesse an Plugin!"
+					class="!tw-font-medium tw-text-link tw-underline tw-text-lg"
+				>
+					{{ 'Issuer.askForPlugin' | translate }}
+				</a>
+			</div>
+		</div>
+	</div>
+</ng-template>
