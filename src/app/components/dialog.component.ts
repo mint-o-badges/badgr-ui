@@ -1,24 +1,13 @@
 import { Component, inject, Input, TemplateRef } from '@angular/core';
 import {
-	BrnDialogCloseDirective,
-	BrnDialogComponent,
-	BrnDialogContentDirective,
-	BrnDialogRef,
-	BrnDialogTriggerDirective,
-	injectBrnDialogContext,
+  BrnDialogRef,
+  injectBrnDialogContext
 } from '@spartan-ng/brain/dialog';
-import {
-	HlmDialogComponent,
-	HlmDialogContentComponent,
-	HlmDialogDescriptionDirective,
-	HlmDialogFooterComponent,
-	HlmDialogHeaderComponent,
-	HlmDialogTitleDirective,
-} from './spartan/ui-dialog-helm/src';
-import { HlmButtonDirective } from './spartan/ui-button-helm/src';
+
+
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-import { OebButtonComponent } from './oeb-button.component';
+
 import { OebDialogComponent } from './oeb-dialog.component';
 
 interface DialogContext {
@@ -34,24 +23,10 @@ interface DialogContext {
 	selector: 'app-dialog',
 	standalone: true,
 	imports: [
-		BrnDialogComponent,
-		BrnDialogTriggerDirective,
-		BrnDialogContentDirective,
-		BrnDialogCloseDirective,
-
-		HlmDialogComponent,
-		HlmDialogContentComponent,
-		HlmDialogHeaderComponent,
-		HlmDialogFooterComponent,
-		HlmDialogTitleDirective,
-		HlmDialogDescriptionDirective,
-
-		HlmButtonDirective,
-		CommonModule,
-		TranslateModule,
-		OebButtonComponent,
-		OebDialogComponent,
-	],
+    CommonModule,
+    TranslateModule,
+    OebDialogComponent
+],
 	template: `
 		<oeb-dialog [variant]="context.variant || 'default'">
 			<ng-container *ngIf="context.headerTemplate">
