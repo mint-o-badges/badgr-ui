@@ -32,7 +32,7 @@
 						hlmAccordionItem
 						class="tw-h-full tw-px-2 tw-py-2"
 						(click)="$event.stopPropagation()"
-						[isOpened]="defaultUnfolded"
+						[isOpened]="defaultUnfolded && i === 0"
 					>
 						<button
 							type="button"
