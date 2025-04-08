@@ -28,7 +28,12 @@
 					[ngClass]="award.request_count > 0 ? 'tw-bg-[var(--color-green)]' : 'tw-bg-[var(--color-darkgray)]'"
 					class="tw-border-0 tw-border-solid tw-border-purple tw-rounded-lg tw-pb-0 tw-w-full"
 				>
-					<div hlmAccordionItem class="tw-h-full tw-px-2 tw-py-2" (click)="$event.stopPropagation()">
+					<div
+						hlmAccordionItem
+						class="tw-h-full tw-px-2 tw-py-2"
+						(click)="$event.stopPropagation()"
+						[isOpened]="defaultUnfolded"
+					>
 						<button
 							type="button"
 							class="tw-w-full hover:tw-no-underline"

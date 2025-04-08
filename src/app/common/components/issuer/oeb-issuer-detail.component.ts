@@ -207,8 +207,14 @@ export class OebIssuerDetailComponent implements OnInit {
 		});
 	}
 
-	routeToBadgeDetail(badge, issuer) {
-		this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug]);
+	routeToBadgeDetail(badge, issuer, focusRequests: boolean = false) {
+		const extras = focusRequests
+			? {
+					queryParams: { focusRequests: 'true' },
+				}
+			: {};
+
+		this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug], extras);
 	}
 	redirectToLearningPathDetail(learningPathSlug, issuer) {
 		this.router.navigate(['/issuer/issuers/', issuer.slug, 'learningpaths', learningPathSlug]);

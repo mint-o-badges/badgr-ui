@@ -41,7 +41,7 @@ import { HlmPDirective } from '../components/spartan/ui-typography-helm/src/lib/
 		<hlm-trow *ngFor="let badge of badges" class="tw-border-purple tw-flex-wrap tw-py-2">
 			<hlm-th
 				class="tw-w-28 md:tw-w-48 tw-cursor-pointer tw-flex-col tw-items-baseline tw-gap-1 md:tw-gap-2 md:tw-items-center md:tw-flex-row"
-				(click)="redirectToBadgeDetail.emit(badge.badge)"
+				(click)="redirectToBadgeDetail.emit({ badge: badge.badge, focusRequests: false })"
 			>
 				<img
 					class="l-flex-x-shrink0 badgeimage badgeimage-small"
@@ -57,7 +57,7 @@ import { HlmPDirective } from '../components/spartan/ui-typography-helm/src/lib/
 					>
 						<span
 							class="tw-text-oebblack tw-cursor-pointer"
-							(click)="redirectToBadgeDetail.emit(badge.badge)"
+							(click)="redirectToBadgeDetail.emit({ badge: badge.badge, focusRequests: false })"
 							>{{ badge.badge.name }}</span
 						>
 					</div>
@@ -108,7 +108,7 @@ import { HlmPDirective } from '../components/spartan/ui-typography-helm/src/lib/
 					size="xs"
 					width="full_width"
 					class="tw-w-full"
-					(click)="redirectToBadgeDetail.emit(badge.badge)"
+					(click)="redirectToBadgeDetail.emit({ badge: badge.badge, focusRequests: true })"
 					[text]="badge.requestCount + ' offene Anfragen'"
 				>
 				</oeb-button>
@@ -123,7 +123,7 @@ export class DatatableComponent {
 	@Input() qrCodeAwardText: string = 'QR-Code-Vergabe';
 	@Output() directBadgeAward = new EventEmitter();
 	@Output() qrCodeAward = new EventEmitter();
-	@Output() redirectToBadgeDetail = new EventEmitter();
+	@Output() redirectToBadgeDetail = new EventEmitter<{ badge: BadgeClass; focusRequests: boolean }>();
 }
 
 export interface DatatableBadgeResult {

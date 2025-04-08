@@ -144,7 +144,7 @@
 					[badges]="badgeResults"
 					(directBadgeAward)="routeToBadgeAward($event, issuer)"
 					(qrCodeAward)="routeToQRCodeAward($event, issuer)"
-					(redirectToBadgeDetail)="routeToBadgeDetail($event, issuer)"
+					(redirectToBadgeDetail)="routeToBadgeDetail($event.badge, issuer, $event.focusRequests)"
 				></badges-datatable>
 			</ng-template>
 
