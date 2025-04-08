@@ -157,9 +157,9 @@ export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent imp
 		}
 		const formData = this.staffRequestRoleForm.value;
 
-		return this.issuer.addStaffMember(formData.staffRole, this.selectedStaffRequestEmail).then(
+		return this.issuerStaffRequestApiService.confirmRequest(this.issuerSlug, requestid).then(
 			() => {
-				this.issuerStaffRequestApiService.confirmRequest(this.issuerSlug, requestid);
+				this.issuer.addStaffMember(formData.staffRole, this.selectedStaffRequestEmail);
 				this.error = null;
 				this.messageService.reportMinorSuccess(
 					`Added ${this.selectedStaffRequestEmail} as ${formData.staffRole}`,
