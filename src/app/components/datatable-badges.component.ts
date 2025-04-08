@@ -118,7 +118,7 @@ import { HlmPDirective } from '../components/spartan/ui-typography-helm/src/lib/
 })
 export class DatatableComponent {
 	@Input() caption: string = '';
-	@Input() badges: BadgeResult[];
+	@Input() badges: DatatableBadgeResult[];
 	@Input() directBadgeAwardText: string = 'Badge direkt vergeben';
 	@Input() qrCodeAwardText: string = 'QR-Code-Vergabe';
 	@Output() directBadgeAward = new EventEmitter();
@@ -126,9 +126,7 @@ export class DatatableComponent {
 	@Output() redirectToBadgeDetail = new EventEmitter();
 }
 
-class BadgeResult {
-	constructor(
-		public badge: BadgeClass,
-		public issuerName: string,
-	) {}
+export interface DatatableBadgeResult {
+	badge: BadgeClass;
+	requestCount: number;
 }
