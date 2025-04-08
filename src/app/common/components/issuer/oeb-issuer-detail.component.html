@@ -137,14 +137,16 @@
 					badges.length == 1 ? '' : 's'
 				}}.
 			</h2>
-			<badges-datatable
-				*ngIf="!public"
-				[caption]=""
-				[badges]="badgeResults"
-				(directBadgeAward)="routeToBadgeAward($event, issuer)"
-				(qrCodeAward)="routeToQRCodeAward($event, issuer)"
-				(redirectToBadgeDetail)="routeToBadgeDetail($event, issuer)"
-			></badges-datatable>
+			<ng-template [bgAwaitPromises]="requestsLoaded">
+				<badges-datatable
+					*ngIf="!public"
+					[caption]=""
+					[badges]="badgeResults"
+					(directBadgeAward)="routeToBadgeAward($event, issuer)"
+					(qrCodeAward)="routeToQRCodeAward($event, issuer)"
+					(redirectToBadgeDetail)="routeToBadgeDetail($event, issuer)"
+				></badges-datatable>
+			</ng-template>
 
 			<ng-container *ngIf="public">
 				<div *ngIf="badges.length > 0">
