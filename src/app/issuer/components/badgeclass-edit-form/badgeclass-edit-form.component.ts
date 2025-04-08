@@ -639,6 +639,8 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 		this.stepper.selectionChange.subscribe((event) => {
 			this.selectedStep = event.selectedIndex;
+			this.badgeClassForm.rawControl.setValidators(this.createCompetenciesValidator());
+			this.badgeClassForm.rawControl.updateValueAndValidity();
 		});
 
 		// debounce ai competencies keyword search input
@@ -658,7 +660,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	}
 
 	getCompetencyPageError() {
-		console.log('error', this.badgeClassForm.valid);
 		if (this.badgeClassForm.valid) return;
 		if (
 			this.badgeClassForm.hasError('competencyExceedsBadgeDuration') ||
@@ -1059,6 +1060,30 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		}
 	}
 
+	createCompetenciesValidator(): ValidatorFn {
+		return (control: AbstractControl): ValidationErrors | null => {
+			if (!this.badgeClassForm) return null;
+
+			const allCompetencies = [
+				...this.badgeClassForm.value.competencies,
+				...this.badgeClassForm.value.keywordCompetencies,
+				...this.badgeClassForm.value.aiCompetencies.filter((comp) => comp.selected),
+			];
+
+			const isAtCompetenciesStep = this.existingBadgeClass ? this.selectedStep >= 1 : this.selectedStep >= 2;
+
+			if (
+				this.badgeClassForm.controls.badge_category.value == 'competency' &&
+				isAtCompetenciesStep &&
+				allCompetencies.length == 0
+			) {
+				return { emptyCompetencies: true };
+			}
+
+			return null;
+		};
+	}
+
 	// Validator for competencies, displays error messages for all compentencies
 	hoursAndMinutesValidatorCompetencies(): ValidationErrors | null {
 		if (!this.badgeClassForm) return null;
@@ -1068,10 +1093,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			...this.badgeClassForm.value.keywordCompetencies,
 			...this.badgeClassForm.value.aiCompetencies.filter((comp) => comp.selected),
 		];
-
-		if (this.badgeClassForm.controls.badge_category.value == 'competency' && allCompetencies.length == 0) {
-			return { emptyCompetencies: true };
-		}
 
 		// Suche nach dem ersten fehlerhaften Kompetenzfeld
 		const invalidCompetencyIndex = allCompetencies.findIndex(
