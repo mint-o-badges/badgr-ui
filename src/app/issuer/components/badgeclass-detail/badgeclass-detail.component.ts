@@ -276,6 +276,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 					competencies: this.badgeClass.extension['extensions:CompetencyExtension'],
 					license: this.badgeClass.extension['extensions:LicenseExtension'] ? true : false,
 					learningPaths: this.learningPaths,
+					copy_permissions: this.badgeClass.copyPermissions,
 				};
 				if (this.badgeClass.extension['extensions:CategoryExtension']?.Category === 'learningpath') {
 					this.config.headerButton = null;
