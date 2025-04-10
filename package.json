@@ -89,7 +89,7 @@
 		"@angular-builders/dev-server": "^7.3.1",
 		"@angular-devkit/build-angular": "19.2.3",
 		"@angular/compiler-cli": "19.2.2",
-		"@angular/language-service": "19.2.2",
+		"@angular/language-service": "19.2.5",
 		"@commitlint/cli": "^19.3.0",
 		"@commitlint/config-angular": "^19.3.0",
 		"@spartan-ng/cli": "^0.0.1-alpha.423",
