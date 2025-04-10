@@ -11,14 +11,7 @@ import { ApiStaffRequest } from '../issuer/staffrequest-api.model';
 @Component({
 	selector: 'issuer-staff-requests-datatable',
 	standalone: true,
-	imports: [
-    HlmTableModule,
-    HlmIconModule,
-    CommonModule,
-    OebButtonComponent,
-    TranslateModule,
-    RouterModule
-],
+	imports: [HlmTableModule, HlmIconModule, CommonModule, OebButtonComponent, TranslateModule, RouterModule],
 	template: `
 		<hlm-table
 			*ngIf="requests.length > 0"

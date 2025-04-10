@@ -1,9 +1,5 @@
 import { Component, inject, Input, TemplateRef } from '@angular/core';
-import {
-  BrnDialogRef,
-  injectBrnDialogContext
-} from '@spartan-ng/brain/dialog';
-
+import { BrnDialogRef, injectBrnDialogContext } from '@spartan-ng/brain/dialog';
 
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
@@ -22,11 +18,7 @@ interface DialogContext {
 @Component({
 	selector: 'app-dialog',
 	standalone: true,
-	imports: [
-    CommonModule,
-    TranslateModule,
-    OebDialogComponent
-],
+	imports: [CommonModule, TranslateModule, OebDialogComponent],
 	template: `
 		<oeb-dialog [variant]="context.variant || 'default'">
 			<ng-container *ngIf="context.headerTemplate">
