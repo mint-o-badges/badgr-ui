@@ -309,7 +309,7 @@ export const issuerStaffRoles = [
 	},
 	{
 		slug: 'editor',
-		label: 'Editor',
+		label: 'Editor:in',
 		indefiniteLabel: 'an editor',
 		description: 'Rechte zum Erstellen, Vergeben und Löschen von Badges inkl. Micro Degrees.',
 	},

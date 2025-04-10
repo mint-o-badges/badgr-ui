@@ -213,7 +213,7 @@
 		"giveMyBadges": "Award Badges",
 		"askForPlugin": "Plugin anfragen",
 		"askForPluginText": "Unser <span class='tw-font-bold'>Plugin</span> bietet dir die Möglichkeit, Badges aus deiner eigenen digitalen Lehrumgebung heraus zu vergeben.",
-		"betaPhase": "Wir befinden uns noch in der Betaphase. <b>Du hast Fehler entdeckt? Schreib uns an <a class='tw-text-link' href='mailto:support@openbadges.education'>support@openbadges.education</a></b>.",
+		"betaPhase": "Wir befinden uns noch in der Betaphase. <b>Du hast Fehler entdeckt? Schreib uns an <a class='tw-text-link tw-underline' href='mailto:support@openbadges.education'>support@openbadges.education</a></b>.",
 		"askForLearningPath": "Wir helfen dir, einen Micro Degree anzulegen. Schreibe an <a href='mailto:lernpfad@openbadges.education' class='tw-underline tw-text-[#1400FF]'>lernpfad@openbadges.education</a>.",
 		"award": "vergeben",
 		"badgePreview": "Preview Badge",
@@ -263,7 +263,9 @@
 		"confirmStaffRequest": "Confirm staff request",
 		"confirmStaffRequestText1": "If ",
 		"confirmStaffRequestText2": " should be a member of your institution choose the fitting role and confirm the request:",
-		"copyBadgesOfOtherIssuers": "You can also <a class='tw-underline tw-text-[#1400FF]' hlmA href='https://openbadges.education/catalog/badges'>copy</a> badges of other institutions."
+		"copyBadgesOfOtherIssuers": "You can also <a class='tw-underline tw-text-[#1400FF]' hlmA href='https://openbadges.education/catalog/badges'>copy</a> badges of other institutions.",
+		"ownInstitution": "own institutions",
+		"allInstitutions": "all institutions"
 	},
 	"Badge": {
 		"groupBy": "Group by",
@@ -305,7 +307,8 @@
 		"copyBadgeDescription": "Badges can always be copied within your own institution.<br>You can update the copy status for other institutions at any time via the menu on the badge details page.",
 		"copyLabelOthers": "<strong>Other</strong> institutions are allowed to copy this badge.",
 		"copy": "Copy Badge to own institution",
-		"copyBadge": "Copy Badge"
+		"copyBadge": "Copy Badge",
+		"copyableFor": "Copyable for"
 	},
 	"CreateBadge": {
 		"chooseBadgeCategory": "Choose Badge-Category",

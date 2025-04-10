@@ -31,6 +31,23 @@ import { BrnDialogRef } from '@spartan-ng/brain/dialog';
 @Component({
 	templateUrl: './issuer-staff.component.html',
 	standalone: false,
+	styles: [
+		`
+			::ng-deep .radio .radio-x-text {
+				--typography-size: 18px;
+				line-height: 130%;
+				font-weight: bold;
+				padding-left: var(--gridspacing);
+				color: var(--color-black);
+			}
+
+			::ng-deep .forminput p {
+				color: var(--color-black);
+				--typography-size: 18px;
+				line-height: 130%;
+			}
+		`,
+	],
 })
 export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	get issuerStaffRoleOptions() {

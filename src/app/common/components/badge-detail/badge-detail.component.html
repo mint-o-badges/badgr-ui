@@ -110,6 +110,20 @@
 							</div>
 						</div>
 						<dl clss="tw-min-w-[150px]">
+							<div class="tw-flex tw-flex-row tw-gap-1" *ngIf="config.copy_permissions">
+								<dt
+									class="tw-text-oebblack tw-font-bold"
+									[innerHTML]="('Badge.copyableFor' | translate) + ': '"
+								></dt>
+								<dd
+									class="tw-text-oebblack tw-italic"
+									[innerHTML]="
+										config.copy_permissions.includes('others')
+											? ('Issuer.allInstitutions' | translate)
+											: ('Issuer.ownInstitution' | translate)
+									"
+								></dd>
+							</div>
 							<div class="tw-flex tw-items-start md:tw-flex-row tw-flex-col">
 								<dt class="tw-text-oebblack tw-font-bold md:tw-py-2 md:tw-mr-2 tw-mb-1">Tags</dt>
 								<dd class="tw-text-oebblack">
