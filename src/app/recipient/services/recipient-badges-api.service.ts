@@ -28,7 +28,7 @@ export class RecipientBadgeApiService extends BaseHttpApiService {
 	}
 
 	addRecipientBadge(badgeInfo: RecipientBadgeInstanceCreationInfo) {
-		return this.post<ApiRecipientBadgeInstance>('/v1/earner/badges?json_format=plain', badgeInfo).then(
+		return this.post<ApiRecipientBadgeInstance>('/v1/earner/imported-badges?json_format=plain', badgeInfo).then(
 			(r) => r.body,
 		);
 	}

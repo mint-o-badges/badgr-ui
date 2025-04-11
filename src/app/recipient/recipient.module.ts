@@ -67,6 +67,7 @@ const routes: Routes = [
 		RouterModule.forChild(routes),
 		MozzTransitionModule,
 		TranslateModule,
+		AddBadgeDialogComponent,
 	],
 	declarations: [
 		RecipientEarnedBadgeListComponent,
@@ -77,7 +78,6 @@ const routes: Routes = [
 		RecipientBadgeCollectionSelectionDialogComponent,
 		RecipientBadgeSelectionDialog,
 		RecipientEarnedBadgeDetailComponent,
-		AddBadgeDialogComponent,
 	],
 	providers: [
 		RecipientBadgeApiService,

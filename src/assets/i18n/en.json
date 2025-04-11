@@ -499,6 +499,7 @@
 	},
 	"RecBadge": {
 		"addBadge": "Add badge",
+		"uploadBadge": "Upload Badge",
 		"fromMozilla": "Coming from Mozilla?",
 		"closeNotification": "Close Notification",
 		"noBadgesYet": "You don't have any badges yet",

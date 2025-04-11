@@ -1,25 +1,113 @@
-import { Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
+import { Component, ViewChild, TemplateRef, inject, AfterViewInit } from '@angular/core';
 import { RecipientBadgeManager } from '../../services/recipient-badge-manager.service';
 import { FormBuilder } from '@angular/forms';
 import { UrlValidator } from '../../../common/validators/url.validator';
 import { JsonValidator } from '../../../common/validators/json.validator';
 import { MessageService } from '../../../common/services/message.service';
 import { BadgrApiFailure } from '../../../common/services/api-failure';
-import { BaseDialog } from '../../../common/dialogs/base-dialog';
 import { preloadImageURL } from '../../../common/util/file-util';
-import { FormFieldText } from '../../../common/components/formfield-text';
 import { TypedFormControl, typedFormGroup } from '../../../common/util/typed-forms';
 import { TranslateService } from '@ngx-translate/core';
-
-type AddBadgeDialogTabName = 'upload' | 'url' | 'json';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src';
+import { BrnDialogRef } from '@spartan-ng/brain/dialog';
+import { DialogComponent } from '../../../components/dialog.component';
+import { OebTabsComponent, Tab } from '../../../components/oeb-backpack-tabs.component';
+import { TranslateModule } from '@ngx-translate/core';
+import {
+	UploadTabComponent,
+	JsonTabComponent,
+	UrlTabComponent,
+} from '../upload-badge-tabs/upload-badge-tabs.component';
 
 @Component({
 	selector: 'add-badge-dialog',
-	templateUrl: './add-badge-dialog.component.html',
-	standalone: false,
+	standalone: true,
+	imports: [
+		CommonModule,
+		ReactiveFormsModule,
+		UploadTabComponent,
+		UrlTabComponent,
+		JsonTabComponent,
+		TranslateModule,
+		OebTabsComponent,
+	],
+	template: `
+		<!-- Template for the dialog header -->
+		<ng-template #dialogHeader>
+			<h2 id="addBadgeDialog" class="u-text-body-bold-caps text-dark1">
+				{{ 'RecBadge.addBadge' | translate }}
+			</h2>
+		</ng-template>
+
+		<!-- Tab content templates -->
+		<ng-template #uploadTabTemplate>
+			<app-upload-tab
+				[form]="addRecipientBadgeForm"
+				[uploadBadgeImageUrl]="uploadBadgeImageUrl"
+				(controlUpdated)="controlUpdated($event)"
+			></app-upload-tab>
+		</ng-template>
+
+		<ng-template #urlTabTemplate>
+			<app-url-tab [form]="addRecipientBadgeForm" (controlUpdated)="controlUpdated($event)"></app-url-tab>
+		</ng-template>
+
+		<ng-template #jsonTabTemplate>
+			<app-json-tab [form]="addRecipientBadgeForm" (controlUpdated)="controlUpdated($event)"></app-json-tab>
+		</ng-template>
+
+		<!-- Dialog content template -->
+		<ng-template #dialogContent>
+			<form [formGroup]="addRecipientBadgeForm.rawControl" (ngSubmit)="submitBadgeRecipientForm()">
+				<p class="u-padding-yaxis2x u-responsivepadding-xaxis border-light3 u-text-body u-background-light3">
+					{{ 'RecBadge.addRecievedBadge' | translate }}
+				</p>
+
+				<oeb-backpack-tabs
+					[tabs]="tabs"
+					[activeTab]="currentTab"
+					(onTabChanged)="currentTab = $event"
+				></oeb-backpack-tabs>
+
+				<div *ngIf="formError" class="u-padding-all3x">
+					<div class="notification notification-warning notification-is-active">
+						<div class="notification-x-icon">
+							<svg icon="icon_priority_high"></svg>
+						</div>
+						<div class="notification-x-text">
+							<h2>Uh Oh...</h2>
+							<p>{{ formError }}</p>
+						</div>
+						<button class="notification-x-close buttonicon buttonicon-clear" (click)="clearFormError()">
+							<svg icon="icon_close"></svg>
+							<span class="visuallyhidden">{{ 'RecBadge.closeNotification' | translate }}</span>
+						</button>
+					</div>
+				</div>
+
+				<div class="u-responsivepadding-xaxis u-responsivepadding-yaxis l-stack l-stack-right">
+					<button
+						class="button"
+						type="submit"
+						[loading-promises]="[badgeUploadPromise]"
+						loading-message="Hinzufügen"
+					>
+						{{ 'RecBadge.addBadge' | translate }}
+					</button>
+				</div>
+			</form>
+		</ng-template>
+	`,
 })
-export class AddBadgeDialogComponent extends BaseDialog {
-	static defaultOptions = {} as AddBadgeDialogOptions;
+export class AddBadgeDialogComponent implements AfterViewInit {
+	@ViewChild('dialogHeader') dialogHeader: TemplateRef<void>;
+	@ViewChild('dialogContent') dialogContent: TemplateRef<void>;
+	@ViewChild('uploadTabTemplate') uploadTabTemplate: TemplateRef<void>;
+	@ViewChild('urlTabTemplate') urlTabTemplate: TemplateRef<void>;
+	@ViewChild('jsonTabTemplate') jsonTabTemplate: TemplateRef<void>;
+
 	readonly uploadBadgeImageUrl = '../../../../breakdown/static/images/image-uplodBadge.svg';
 	readonly pasteBadgeImageUrl = preloadImageURL('../../../../breakdown/static/images/image-uplodBadgeUrl.svg');
 
@@ -28,32 +116,39 @@ export class AddBadgeDialogComponent extends BaseDialog {
 		.addControl('url', '', UrlValidator.validUrl)
 		.addControl('assertion', '', JsonValidator.validJson);
 
-	showAdvance = false;
 	formError: string;
-
-	currentTab: AddBadgeDialogTabName = 'upload';
-
-	options: AddBadgeDialogOptions = AddBadgeDialogComponent.defaultOptions;
-	resolveFunc: () => void = () => {};
-	rejectFunc: (err?: unknown) => void;
-
+	currentTab: string = 'upload';
 	badgeUploadPromise: Promise<unknown>;
+	tabs: Tab[] = [];
 
-	@ViewChild('jsonField')
-	private jsonField: FormFieldText;
-
-	@ViewChild('urlField')
-	private urlField: FormFieldText;
+	private dialogRef: BrnDialogRef;
+	private _hlmDialogService = inject(HlmDialogService);
 
 	constructor(
-		componentElem: ElementRef,
-		renderer: Renderer2,
 		protected recipientBadgeManager: RecipientBadgeManager,
 		protected formBuilder: FormBuilder,
 		protected messageService: MessageService,
 		private translate: TranslateService,
-	) {
-		super(componentElem, renderer);
+	) {}
+
+	ngAfterViewInit() {
+		// Initialize tabs after view is initialized to get template references
+		setTimeout(() => {
+			this.tabs = [
+				{
+					title: this.translate.instant('RecBadge.image'),
+					component: this.uploadTabTemplate,
+				},
+				{
+					title: 'URL',
+					component: this.urlTabTemplate,
+				},
+				{
+					title: 'JSON',
+					component: this.jsonTabTemplate,
+				},
+			];
+		});
 	}
 
 	isJson = (str) => {
@@ -66,31 +161,41 @@ export class AddBadgeDialogComponent extends BaseDialog {
 	};
 
 	/**
-	 * Opens the confirm dialog with the given options. If the user clicks the "true" button, the promise will be
-	 * resolved, otherwise, it will be rejected.
-	 *
-	 * @param customOptions Options for the dialog
+	 * Opens the badge dialog
 	 * @returns {Promise<void>}
 	 */
-	openDialog(customOptions: AddBadgeDialogOptions): Promise<void> {
-		this.options = Object.assign({}, AddBadgeDialogComponent.defaultOptions, customOptions);
+	openDialog(): Promise<void> {
 		this.addRecipientBadgeForm.reset();
-		this.showModal();
+		this.currentTab = this.translate.instant('RecBadge.image');
+
+		// Wait for the template refs to be available
+		setTimeout(() => {
+			this.dialogRef = this._hlmDialogService.open(DialogComponent, {
+				context: {
+					headerTemplate: this.dialogHeader,
+					variant: 'default',
+					content: this.dialogContent,
+				},
+			});
+		});
 
 		return new Promise<void>((resolve, reject) => {
-			this.resolveFunc = resolve;
-			this.rejectFunc = reject;
+			this.dialogRef?.closed$.subscribe((result) => {
+				if (result === 'cancel') {
+					reject();
+				} else {
+					resolve();
+				}
+			});
 		});
 	}
 
 	closeDialog() {
-		this.closeModal();
-		this.resolveFunc();
+		this.dialogRef?.close();
 	}
 
 	get formHasBadgeValue() {
 		const formState = this.addRecipientBadgeForm.value;
-
 		return !!(formState.assertion || formState.image || formState.url);
 	}
 
@@ -128,8 +233,8 @@ export class AddBadgeDialogComponent extends BaseDialog {
 					);
 				})
 				.catch((e) => {
-					this.closeModal();
-					this.rejectFunc(e);
+					this.closeDialog();
+					throw e;
 				});
 		} else {
 			this.formError = this.translate.instant('RecBadge.oneBadgeRequired');
@@ -149,5 +254,3 @@ export class AddBadgeDialogComponent extends BaseDialog {
 		this.formError = undefined;
 	}
 }
-
-export interface AddBadgeDialogOptions {}

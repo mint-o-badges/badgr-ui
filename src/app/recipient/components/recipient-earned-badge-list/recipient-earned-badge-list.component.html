@@ -12,11 +12,38 @@
 					<oeb-button
 						icon="lucideUpload"
 						iconLeft="true"
-						(click)="addBadge()"
+						(click)="uploadBadge()"
 						[disabled-when-requesting]="true"
-						[text]="'RecBadge.addBadge' | translate"
+						[text]="'RecBadge.uploadBadge' | translate"
 					>
 					</oeb-button>
+					<ng-template #headerTemplate>
+						<h2 hlmH2>Badge hochladen</h2>
+						<span>Füge einen Badge hinzu den du bereits erhalten hast</span>
+					</ng-template>
+					<ng-template #badgeUploadContentTemplate>
+						<form [formGroup]="addRecipientBadgeForm.rawControl" (ngSubmit)="submitBadgeRecipientForm()">
+							<app-badge-tabs
+								[form]="addRecipientBadgeForm"
+								[uploadBadgeImageUrl]="uploadBadgeImageUrl"
+								[formError]="formError"
+								(formErrorCleared)="clearFormError()"
+								(controlChange)="controlUpdated($event)"
+								(tabChange)="onTabChange($event)"
+							></app-badge-tabs>
+
+							<div class="u-responsivepadding-xaxis u-responsivepadding-yaxis l-stack l-stack-right">
+								<button
+									class="button"
+									type="submit"
+									[loading-promises]="[badgeUploadPromise]"
+									loading-message="Hinzufügen"
+								>
+									{{ 'RecBadge.addBadge' | translate }}
+								</button>
+							</div>
+						</form>
+					</ng-template>
 				</div>
 			</ng-template>
 			<div class="oeb-section-sm">

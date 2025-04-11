@@ -1,4 +1,13 @@
-import { Component, ContentChild, ElementRef, OnInit, ViewChild, AfterContentInit } from '@angular/core';
+import {
+	Component,
+	ContentChild,
+	ElementRef,
+	OnInit,
+	ViewChild,
+	AfterContentInit,
+	inject,
+	TemplateRef,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
@@ -27,6 +36,8 @@ import { LearningPath } from '../../../issuer/models/learningpath.model';
 import { FormControl } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { provideIcons } from '@ng-icons/core';
+import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src';
+import { DialogComponent } from '../../../components/dialog.component';
 
 type BadgeDispay = 'grid' | 'list';
 type EscoCompetencies = {
@@ -58,6 +69,9 @@ export class RecipientEarnedBadgeListComponent
 	addBadgeDialog: AddBadgeDialogComponent;
 
 	@ViewChild(ImportLauncherDirective) importLauncherDirective: ImportLauncherDirective;
+
+	@ViewChild('headerTemplate')
+	headerTemplate: TemplateRef<void>;
 
 	allBadges: RecipientBadgeInstance[] = [];
 	badgesLoaded: Promise<unknown>;
@@ -130,6 +144,8 @@ export class RecipientEarnedBadgeListComponent
 		this.saveDisplayState();
 		this.updateResults();
 	}
+
+	private readonly _hlmDialogService = inject(HlmDialogService);
 
 	constructor(
 		router: Router,
@@ -237,7 +253,14 @@ export class RecipientEarnedBadgeListComponent
 	}
 
 	addBadge() {
-		this.addBadgeDialog.openDialog({}).then(
+		this.addBadgeDialog.openDialog().then(
+			() => {},
+			() => {},
+		);
+	}
+
+	uploadBadge() {
+		this.addBadgeDialog.openDialog().then(
 			() => {},
 			() => {},
 		);
