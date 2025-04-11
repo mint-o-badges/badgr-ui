@@ -1,4 +1,4 @@
-import { Component, Injector } from '@angular/core';
+import { Component, inject, Injector, TemplateRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { preloadImageURL } from '../../../common/util/file-util';
@@ -22,34 +22,12 @@ import { BadgeClassApiService } from '../../../issuer/services/badgeclass-api.se
 import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
 import { BadgeClassManager } from '../../../issuer/services/badgeclass-manager.service';
 import { BadgeClass } from '../../../issuer/models/badgeclass.model';
+import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src';
+import { DialogComponent } from '../../../components/dialog.component';
+import { BrnDialogRef } from '@spartan-ng/brain/dialog';
 
 @Component({
-	template: `<bg-badgedetail [config]="config" [awaitPromises]="[badgeClass]">
-		<ng-template>
-			<div class="oeb" *ngIf="learningPaths.length > 0">
-				<oeb-separator class="tw-block tw-mb-8 tw-mt-8"></oeb-separator>
-				<span class="tw-my-2 tw-text-oebblack tw-text-[22px] tw-leading-[26px] tw-font-semibold">
-					Dieser Badge ist Teil folgender Micro Degrees:
-				</span>
-				<div class="tw-mt-8 tw-grid tw-grid-cols-learningpaths tw-gap-6">
-					<bg-learningpathcard
-						*ngFor="let lp of learningPaths"
-						[name]="lp.name"
-						[badgeImage]="lp.participationBadge_image"
-						[issuerTitle]="lp.issuer_name"
-						[description]="lp.description"
-						[slug]="lp.slug"
-						[tags]="lp.tags"
-						[studyLoad]="calculateStudyLoad(lp)"
-						[progress]="lp.progress"
-						[matchOrProgress]="calculateLearningPathStatus(lp)"
-						[requested]="lp.requested"
-						[completed]="checkCompleted(lp)"
-					></bg-learningpathcard>
-				</div>
-			</div>
-		</ng-template>
-	</bg-badgedetail>`,
+	templateUrl: './badgeclass.component.html',
 	standalone: false,
 })
 export class PublicBadgeClassComponent {
@@ -58,6 +36,14 @@ export class PublicBadgeClassComponent {
 	);
 	readonly badgeLoadingImageUrl = '../../../../breakdown/static/images/badge-loading.svg';
 	readonly badgeFailedImageUrl = '../../../../breakdown/static/images/badge-failed.svg';
+
+	private _hlmDialogService = inject(HlmDialogService);
+
+	@ViewChild('issuerSelection')
+	issuerSelection: TemplateRef<void>;
+
+	@ViewChild('headerTemplate')
+	headerTemplate: TemplateRef<void>;
 
 	badgeIdParam: LoadedRouteParam<PublicApiBadgeClassWithIssuer>;
 	routerLinkForUrl = routerLinkForUrl;
@@ -71,6 +57,8 @@ export class PublicBadgeClassComponent {
 	userBadgesLoaded: Promise<unknown>;
 	userIssuers: Issuer[] = [];
 	issuerBadge: BadgeClass = null;
+	dialogRef: BrnDialogRef<unknown> = null;
+	selectedIssuer: Issuer = null;
 
 	constructor(
 		private injector: Injector,
@@ -118,6 +106,7 @@ export class PublicBadgeClassComponent {
 					license: badge['extensions:LicenseExtension'] ? true : false,
 					crumbs: [{ title: 'Badges', routerLink: ['/catalog/badges'] }, { title: badge.name }],
 					learningPaths: this.learningPaths,
+					copy_permissions: badge.copy_permissions,
 				};
 
 				// wait for user profile, emails, issuer to check if user can copy
@@ -212,6 +201,19 @@ export class PublicBadgeClassComponent {
 		return lp.completed_at != null;
 	}
 
+	closeDialog() {
+		if (this.dialogRef) {
+			this.dialogRef.close();
+		}
+	}
+
+	routeToBadgeCreation(issuer: Issuer) {
+		this.closeDialog();
+		this.router.navigate(['/issuer/issuers', issuer.slug, 'badges', 'create'], {
+			state: { copybadgeid: this.issuerBadge.slug },
+		});
+	}
+
 	copyBadge() {
 		if (this.userIssuers.length == 1) {
 			// copy
@@ -219,14 +221,14 @@ export class PublicBadgeClassComponent {
 				state: { copybadgeid: this.badgeClass.id },
 			});
 		} else if (this.userIssuers.length > 1) {
-			// select issuer
-			this.dialogService.selectIssuerDialog.openDialog().then((issuer: Issuer | void) => {
-				if (issuer) {
-					this.router.navigate(['/issuer/issuers', issuer.slug, 'badges', 'create'], {
-						state: { copybadgeid: this.issuerBadge.slug },
-					});
-				}
+			const dialogRef = this._hlmDialogService.open(DialogComponent, {
+				context: {
+					headerTemplate: this.headerTemplate,
+					content: this.issuerSelection,
+				},
 			});
+
+			this.dialogRef = dialogRef;
 		}
 	}
 }
