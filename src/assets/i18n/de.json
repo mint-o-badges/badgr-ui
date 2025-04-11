@@ -355,7 +355,9 @@
 		"copyLabelOthers": "Der Badge darf von <strong>anderen</strong> Institutionen kopiert werden.",
 		"copy": "Badge für eigene Institution kopieren",
 		"copyBadge": "Badge kopieren",
-		"copyableFor": "Kopierbar für"
+		"copyableFor": "Kopierbar für",
+		"copyForWhatInstitution": "Für welche deiner Institutionen soll der Badge kopiert werden?",
+		"copyPermissionInfo": "Der Kopier-Status dieses Badges erlaubt nur das Kopieren innerhalb der Institution, daher wird nur diese hier angezeigt."
 	},
 	"CreateBadge": {
 		"chooseBadgeCategory": "Badge-Kategorie wählen",

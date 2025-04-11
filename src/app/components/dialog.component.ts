@@ -21,11 +21,14 @@ interface DialogContext {
 	imports: [CommonModule, TranslateModule, OebDialogComponent],
 	template: `
 		<oeb-dialog [variant]="context.variant || 'default'">
-			<ng-container *ngIf="context.headerTemplate">
+			<ng-container *ngIf="isTemplate(context.headerTemplate); else textHeader">
 				<ng-container
 					*ngTemplateOutlet="context.headerTemplate; context: context.templateContext || {}"
 				></ng-container>
 			</ng-container>
+			<ng-template #textHeader>
+				<p class="tw-text-center" [innerHTML]="context.caption"></p>
+			</ng-template>
 			<ng-container *ngIf="context.variant == 'success'">
 				<div class="tw-text-center tw-text-purple">
 					<div class="tw-flex tw-justify-center">
