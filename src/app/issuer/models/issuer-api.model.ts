@@ -47,6 +47,7 @@ export interface ApiIssuer {
 	lat?: number;
 	lon?: number;
 	intendedUseVerified: boolean;
+	ownerAcceptedTos: boolean;
 }
 
 export type IssuerStaffRoleSlug = 'owner' | 'editor' | 'staff';

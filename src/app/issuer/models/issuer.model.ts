@@ -110,10 +110,7 @@ export class Issuer extends ManagedEntity<ApiIssuer, IssuerRef> {
 	}
 
 	get ownerAcceptedTos(): boolean {
-		const owners = this.staff.entities.filter((staff) => staff.isOwner);
-		return owners.some(
-			(owner) => owner.apiModel.user.agreed_terms_version === owner.apiModel.user.latest_terms_version,
-		);
+		return this.apiModel.ownerAcceptedTos;
 	}
 
 	get learningPathCount(): number {
