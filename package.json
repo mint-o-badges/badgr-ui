@@ -67,7 +67,7 @@
 		"inert-polyfill": "^0.2.5",
 		"jspdf": "^2.5.1",
 		"maplibre-gl": "4.5.2",
-		"marked": "^11.0.0",
+		"marked": "^15.0.8",
 		"ngx-countup": "^13.2.0",
 		"ngx-drag-drop": "^19.0.0",
 		"popper.js": "^1.15.0",
