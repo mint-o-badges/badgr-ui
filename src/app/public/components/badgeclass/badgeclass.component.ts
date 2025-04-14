@@ -114,7 +114,9 @@ export class PublicBadgeClassComponent {
 					profile.emails.loadedPromise.then(() => {
 						this.issuerManager.allIssuers$.subscribe((issuers) => {
 							this.userIssuers = issuers;
-							const canCopy = issuers.some((issuer) => issuer.canCreateBadge);
+							const canCopy = issuers.some((issuer) => {
+								return issuer.slug === badge.issuer['slug'] && issuer.canCreateBadge;
+							});
 							if (canCopy) {
 								// fetch real badge information to check if badge may be copied
 								const slug = badge.id.substring(badge.id.lastIndexOf('/') + 1);
