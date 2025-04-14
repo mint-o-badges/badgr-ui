@@ -124,7 +124,7 @@ export class PublicBadgeClassComponent {
 				this.userProfileManager.userProfilePromise.then((profile) => {
 					profile.emails.loadedPromise.then(() => {
 						this.issuerManager.allIssuers$.subscribe((issuers) => {
-							this.userIssuers = issuers;
+							this.userIssuers = issuers.filter((issuer) => issuer.canCreateBadge);
 							const canCopy = issuers.some((issuer) => issuer.canCreateBadge);
 							const canCopyInOwnInstitution = issuers.some((issuer) => {
 								return issuer.slug === badge.issuer['slug'] && issuer.canCreateBadge;
