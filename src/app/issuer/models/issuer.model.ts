@@ -2,6 +2,7 @@ import {
 	ApiIssuer,
 	ApiIssuerStaff,
 	IssuerRef,
+	IssuerSlug,
 	IssuerStaffRef,
 	IssuerStaffRoleSlug,
 	IssuerUrl,
@@ -40,6 +41,10 @@ export class Issuer extends ManagedEntity<ApiIssuer, IssuerRef> {
 
 	get issuerUrl(): IssuerUrl {
 		return this.apiModel.json.id;
+	}
+
+	get slug(): IssuerSlug {
+		return this.apiModel.slug;
 	}
 
 	get name(): string {
