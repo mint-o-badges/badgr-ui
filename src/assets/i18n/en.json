@@ -76,7 +76,10 @@
 		"confirm": "Confirm",
 		"noRequests": "No request",
 		"oneRequest": "1 request",
-		"multiRequests": "# requests"
+		"multiRequests": "# requests",
+		"sendUsYourBadge": "Send your badge to <a class='tw-text-link tw-underline' href='mailto:support@openbadges.education'>support@openbadges.education</a> and we will be glad to take a look. ",
+		"thisDidNotWork": "Unfortunately this did not work.",
+		"toMyProfile": "To my profile"
 	},
 	"NavItems": {
 		"register": "Register",
@@ -528,7 +531,10 @@
 		"uploadOwnVisual": "Upload complete badge image",
 		"importedSuccessfully": "Badge successfully imported.",
 		"uploadFailed": "Failed to upload badge:",
-		"unknownError": "Badge upload failed due to an unknown error"
+		"unknownError": "Badge upload failed due to an unknown error",
+		"badgeUploadVersionError": "Unfortunately uploading this badge version is not possible.",
+		"uploadEmailDoesNotMatchError": "The email address in the badge does not match the email in your OEB profile.",
+		"addEmailToUpload": "Add the email address to your profile to upload the badge."
 	},
 	"EditBadge": {
 		"editBadge": "Edit badge",

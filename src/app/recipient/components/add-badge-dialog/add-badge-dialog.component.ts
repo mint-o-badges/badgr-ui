@@ -20,6 +20,10 @@ import {
 	JsonTabComponent,
 	UrlTabComponent,
 } from '../upload-badge-tabs/upload-badge-tabs.component';
+import { NgIcon } from '@ng-icons/core';
+import { provideIcons } from '@ng-icons/core';
+import { lucideCircleX, lucideX } from '@ng-icons/lucide';
+import { Dialog } from '@angular/cdk/dialog';
 
 @Component({
 	selector: 'add-badge-dialog',
@@ -32,13 +36,33 @@ import {
 		JsonTabComponent,
 		TranslateModule,
 		OebTabsComponent,
+		NgIcon,
 	],
+	providers: [provideIcons({ lucideCircleX })],
 	template: `
 		<!-- Template for the dialog header -->
 		<ng-template #dialogHeader>
 			<h2 id="addBadgeDialog" class="u-text-body-bold-caps text-dark1">
 				{{ 'RecBadge.addBadge' | translate }}
 			</h2>
+		</ng-template>
+
+		<!-- Template for the dialog failure header -->
+		<ng-template #failureHeader>
+			<div class="tw-items-center tw-w-full tw-justify-center tw-flex">
+				<ng-icon hlm name="lucideCircleX" class="!tw-h-28 !tw-w-28 tw-text-purple"></ng-icon>
+			</div>
+		</ng-template>
+
+		<ng-template #failureContent let-message="message" let-text="text">
+			<div>
+				<p class="tw-text-lg tw-text-oebblack tw-text-center tw-font-bold tw-mt-2">{{ message }}</p>
+				<p class="tw-mt-2 tw-text-purple tw-italic tw-text-center">{{ text }}</p>
+			</div>
+			<!-- <div class="tw-flex" *ngIf="buttontext">
+				<oeb-button variant="secondary" [text]="'General.cancel' | translate"></oeb-button>
+				<oeb-button [text]="'General.toMyProfile' | translate"></oeb-button>
+			</div> -->
 		</ng-template>
 
 		<!-- Tab content templates -->
@@ -107,6 +131,8 @@ export class AddBadgeDialogComponent implements AfterViewInit {
 	@ViewChild('uploadTabTemplate') uploadTabTemplate: TemplateRef<void>;
 	@ViewChild('urlTabTemplate') urlTabTemplate: TemplateRef<void>;
 	@ViewChild('jsonTabTemplate') jsonTabTemplate: TemplateRef<void>;
+	@ViewChild('failureHeader') failureHeader: TemplateRef<void>;
+	@ViewChild('failureContent') failureContent: TemplateRef<void>;
 
 	readonly uploadBadgeImageUrl = '../../../../breakdown/static/images/image-uplodBadge.svg';
 	readonly pasteBadgeImageUrl = preloadImageURL('../../../../breakdown/static/images/image-uplodBadgeUrl.svg');
@@ -211,9 +237,50 @@ export class AddBadgeDialogComponent implements AfterViewInit {
 				})
 				.catch((err) => {
 					let message = BadgrApiFailure.from(err).firstMessage;
+					console.log('message', message);
+					switch (message) {
+						case 'VERIFY_RECIPIENT_IDENTIFIER':
+							this._hlmDialogService.open(DialogComponent, {
+								context: {
+									headerTemplate: this.failureHeader,
+									content: this.failureContent,
+									templateContext: {
+										message: this.translate.instant('RecBadge.uploadEmailDoesNotMatchError'),
+										text: this.translate.instant('RecBadge.addEmailToUpload'),
+										// buttontext: this.translate.instant('General.toMyProfile'),
+									},
+								},
+							});
+
+						case 'INVALID_BADGE_VERSION':
+							this._hlmDialogService.open(DialogComponent, {
+								context: {
+									headerTemplate: this.failureHeader,
+									content: this.failureContent,
+									templateContext: {
+										message: this.translate.instant('RecBadge.badgeUploadVersionError'),
+										text: this.translate.instant('General.sendUsYourBadge'),
+									},
+								},
+							});
+
+						default:
+							this._hlmDialogService.open(DialogComponent, {
+								context: {
+									headerTemplate: this.failureHeader,
+									content: this.failureContent,
+									templateContext: {
+										message: this.translate.instant('General.thisDidNotWork'),
+										text: this.translate.instant('General.sendUsYourBadge'),
+									},
+								},
+							});
+					}
 
 					// display human readable description of first error if provided by server
 					if (this.isJson(message)) {
+						console.log('msg', message);
+						console.log('err', err);
 						const jsonErr = JSON.parse(message);
 						if (err.response && err.response._body) {
 							const body = JSON.parse(err.response._body);

@@ -83,7 +83,10 @@
 		"confirm": "Bestätigen",
 		"noRequests": "Keine Anfragen",
 		"oneRequest": "1 Anfrage",
-		"multiRequests": "# Anfragen"
+		"multiRequests": "# Anfragen",
+		"sendUsYourBadge": "Sende deinen Badge gerne an support@openbadges.education, dann schauen wir uns die Datei an. ",
+		"thisDidNotWork": "Das hat leider nicht funktioniert.",
+		"toMyProfile": "Zu meinem Profil"
 	},
 	"NavItems": {
 		"register": "Registrieren",
@@ -599,7 +602,10 @@
 		"uploadOwnVisual": "Komplettes Badge-Bild hochladen",
 		"importedSuccessfully": "Badge erfolgreich importiert.",
 		"uploadFailed": "Badge konnte nicht hochgeladen werden:",
-		"unknownError": "Der Upload des Badges ist aufgrund eines unbekannten Fehlers fehlgeschlagen"
+		"unknownError": "Der Upload des Badges ist aufgrund eines unbekannten Fehlers fehlgeschlagen",
+		"badgeUploadVersionError": "Das Hochladen dieser Badge-Version ist leider nicht möglich.",
+		"uploadEmailDoesNotMatchError": "Die im Badge hinterlegte E-Mail-Adresse stimmt nicht mit deiner auf OEB hinterlegten E-Mail-Adresse überein.",
+		"addEmailToUpload": "Füge die E-Mail-Adresse deinem Profil hinzu, um den Badge hochzuladen."
 	},
 	"RecBadgeDetail": {
 		"shareBadge": "Badge teilen",
