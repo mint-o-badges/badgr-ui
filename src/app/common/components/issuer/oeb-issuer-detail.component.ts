@@ -18,6 +18,7 @@ import { BadgeRequestApiService } from '../../../issuer/services/badgerequest-ap
 import { InfoDialogComponent } from '../../dialogs/oeb-dialogs/info-dialog.component';
 import { QrCodeApiService } from '../../../issuer/services/qrcode-api.service';
 import { ApiQRCode } from '../../../issuer/models/qrcode-api.model';
+import { SessionService } from '../../services/session.service';
 
 @Component({
 	selector: 'oeb-issuer-detail',
@@ -47,6 +48,7 @@ export class OebIssuerDetailComponent implements OnInit {
 		private configService: AppConfigService,
 		private learningPathApiService: LearningPathApiService,
 		private qrCodeApiService: QrCodeApiService,
+		private sessionService: SessionService,
 	) {}
 	private readonly _hlmDialogService = inject(HlmDialogService);
 
@@ -114,18 +116,20 @@ export class OebIssuerDetailComponent implements OnInit {
 		this.badgeResults.length = 0;
 
 		// The promise only exists for the bgAwaitPromises to work in the template
-		this.requestsLoaded = Promise.all(
-			this.badges.map((b) =>
-				this.qrCodeApiService
-					.getQrCodesForIssuerByBadgeClass(b.issuerSlug, b.slug)
-					.then((p) => ({ key: b.slug, value: p })),
-			),
-		).then((d) =>
-			d.reduce((map, obj) => {
-				map.set(obj.key, obj.value);
-				return map;
-			}, new Map<string, ApiQRCode[]>()),
-		);
+		if (this.sessionService.isLoggedIn) {
+			this.requestsLoaded = Promise.all(
+				this.badges.map((b) =>
+					this.qrCodeApiService
+						.getQrCodesForIssuerByBadgeClass(b.issuerSlug, b.slug)
+						.then((p) => ({ key: b.slug, value: p })),
+				),
+			).then((d) =>
+				d.reduce((map, obj) => {
+					map.set(obj.key, obj.value);
+					return map;
+				}, new Map<string, ApiQRCode[]>()),
+			);
+		}
 		const requestMap = await this.requestsLoaded;
 
 		const addBadgeToResults = async (badge: BadgeClass) => {
@@ -152,8 +156,8 @@ export class OebIssuerDetailComponent implements OnInit {
 		this.badgeResults.sort((a, b) => b.badge.createdAt.getTime() - a.badge.createdAt.getTime());
 	}
 
-	ngOnInit() {
-		this.updateResults();
+	async ngOnInit() {
+		await this.updateResults();
 		if (!this.public) this.getLearningPathsForIssuerApi(this.issuer.slug);
 	}
 
