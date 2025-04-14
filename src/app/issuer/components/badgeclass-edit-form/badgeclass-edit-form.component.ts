@@ -516,7 +516,13 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 							legalCode: badgeClass.extension['extensions:LicenseExtension'].legalCode,
 						},
 					]
-				: this.badgeClassForm.controls.license.value,
+				: [
+						{
+							id: 'CC-0',
+							name: 'Public Domain',
+							legalCode: 'https://creativecommons.org/publicdomain/zero/1.0/legalcode',
+						},
+					],
 			// Note that, even though competencies might originally have been selected
 			// based on ai suggestions, they can't be separated anymore and thus will
 			// be displayed as competencies entered by hand
