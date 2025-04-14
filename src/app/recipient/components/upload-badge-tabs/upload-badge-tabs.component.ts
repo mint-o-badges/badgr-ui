@@ -9,14 +9,19 @@ import { BadgrCommonModule } from '../../../common/badgr-common.module';
 	standalone: true,
 	imports: [CommonModule, TranslateModule, BadgrCommonModule],
 	template: `
-		<div class="u-padding-all3x">
+		<div class="tw-p-6">
 			<bg-formfield-image
 				imageLoaderName="basic"
 				[placeholderImage]="uploadBadgeImageUrl"
 				[control]="form.rawControlMap.image"
 				(change)="onControlUpdated(form.controls.image)"
-				class="formimage-badgeUpload"
+				class="tw-bg-purple"
+				[text_body]="'RecBadge.selectFromMyFiles' | translate"
+				dropZoneInfo1="Drag & Drop"
 			></bg-formfield-image>
+			<span class="tw-mt-2 tw-text-oebblack tw-italic tw-text-sm">
+				{{ 'RecBadge.versionUploadInfo' | translate }}.
+			</span>
 		</div>
 	`,
 })

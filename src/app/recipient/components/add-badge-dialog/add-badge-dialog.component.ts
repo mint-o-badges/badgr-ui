@@ -23,7 +23,7 @@ import {
 import { NgIcon } from '@ng-icons/core';
 import { provideIcons } from '@ng-icons/core';
 import { lucideCircleX, lucideX } from '@ng-icons/lucide';
-import { Dialog } from '@angular/cdk/dialog';
+import { HlmH2Directive } from '../../../components/spartan/ui-typography-helm/src';
 
 @Component({
 	selector: 'add-badge-dialog',
@@ -37,12 +37,13 @@ import { Dialog } from '@angular/cdk/dialog';
 		TranslateModule,
 		OebTabsComponent,
 		NgIcon,
+		HlmH2Directive,
 	],
 	providers: [provideIcons({ lucideCircleX })],
 	template: `
 		<!-- Template for the dialog header -->
 		<ng-template #dialogHeader>
-			<h2 id="addBadgeDialog" class="u-text-body-bold-caps text-dark1">
+			<h2 hlmH2 id="addBadgeDialog" class="!tw-text-oebblack tw-font-bold">
 				{{ 'RecBadge.addBadge' | translate }}
 			</h2>
 		</ng-template>
@@ -85,7 +86,7 @@ import { Dialog } from '@angular/cdk/dialog';
 		<!-- Dialog content template -->
 		<ng-template #dialogContent>
 			<form [formGroup]="addRecipientBadgeForm.rawControl" (ngSubmit)="submitBadgeRecipientForm()">
-				<p class="u-padding-yaxis2x u-responsivepadding-xaxis border-light3 u-text-body u-background-light3">
+				<p class="tw-text-oebblack tw-text-lg tw-py-2">
 					{{ 'RecBadge.addRecievedBadge' | translate }}
 				</p>
 
@@ -251,6 +252,7 @@ export class AddBadgeDialogComponent implements AfterViewInit {
 									},
 								},
 							});
+							break;
 
 						case 'INVALID_BADGE_VERSION':
 							this._hlmDialogService.open(DialogComponent, {
@@ -263,6 +265,7 @@ export class AddBadgeDialogComponent implements AfterViewInit {
 									},
 								},
 							});
+							break;
 
 						default:
 							this._hlmDialogService.open(DialogComponent, {
@@ -278,26 +281,26 @@ export class AddBadgeDialogComponent implements AfterViewInit {
 					}
 
 					// display human readable description of first error if provided by server
-					if (this.isJson(message)) {
-						console.log('msg', message);
-						console.log('err', err);
-						const jsonErr = JSON.parse(message);
-						if (err.response && err.response._body) {
-							const body = JSON.parse(err.response._body);
-							if (body && body.length > 0 && body[0].description) {
-								message = body[0].description;
-							}
-						} else if (jsonErr.length) {
-							message = jsonErr[0].result || jsonErr[0].description;
-						}
-					}
+					// if (this.isJson(message)) {
+					// 	console.log('msg', message);
+					// 	console.log('err', err);
+					// 	const jsonErr = JSON.parse(message);
+					// 	if (err.response && err.response._body) {
+					// 		const body = JSON.parse(err.response._body);
+					// 		if (body && body.length > 0 && body[0].description) {
+					// 			message = body[0].description;
+					// 		}
+					// 	} else if (jsonErr.length) {
+					// 		message = jsonErr[0].result || jsonErr[0].description;
+					// 	}
+					// }
 
-					this.messageService.reportAndThrowError(
-						message
-							? this.translate.instant('RecBadge.uploadFailed') + message
-							: this.translate.instant('RecBadge.unknownError'),
-						err,
-					);
+					// this.messageService.reportAndThrowError(
+					// 	message
+					// 		? this.translate.instant('RecBadge.uploadFailed') + message
+					// 		: this.translate.instant('RecBadge.unknownError'),
+					// 	err,
+					// );
 				})
 				.catch((e) => {
 					this.closeDialog();

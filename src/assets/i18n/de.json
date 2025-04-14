@@ -587,7 +587,7 @@
 		"newCompetencies": "Neue Kompetenzen",
 		"skills": "Fähigkeiten",
 		"knowledge": "Wissen",
-		"addRecievedBadge": "Füge ein Badge hinzu welches du bereits erhalten hast.",
+		"addRecievedBadge": "Füge einen Badge hinzu, den du bereits erhalten hast.",
 		"image": "Bild",
 		"close": "Schließen",
 		"enterURL": "URL eingeben",
@@ -605,7 +605,8 @@
 		"unknownError": "Der Upload des Badges ist aufgrund eines unbekannten Fehlers fehlgeschlagen",
 		"badgeUploadVersionError": "Das Hochladen dieser Badge-Version ist leider nicht möglich.",
 		"uploadEmailDoesNotMatchError": "Die im Badge hinterlegte E-Mail-Adresse stimmt nicht mit deiner auf OEB hinterlegten E-Mail-Adresse überein.",
-		"addEmailToUpload": "Füge die E-Mail-Adresse deinem Profil hinzu, um den Badge hochzuladen."
+		"addEmailToUpload": "Füge die E-Mail-Adresse deinem Profil hinzu, um den Badge hochzuladen.",
+		"versionUploadInfo": "Momentan können leider nur Badges der Version 2.0 hochgeladen werden"
 	},
 	"RecBadgeDetail": {
 		"shareBadge": "Badge teilen",
