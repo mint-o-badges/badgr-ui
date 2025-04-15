@@ -228,9 +228,13 @@
 						<svg class="navitem-x-icon" icon="icon_dropdown"></svg>
 					</a>
 
-					<a class="oeb-navitem" routerLinkActive="oeb-navitem-is-active" *ngIf="showIssuersTab()" [routerLink]="['/issuer']">{{
-						'NavItems.myInstitutions' | translate
-					}}</a>
+					<a
+						class="oeb-navitem"
+						routerLinkActive="oeb-navitem-is-active"
+						*ngIf="showIssuersTab()"
+						[routerLink]="['/issuer']"
+						>{{ 'NavItems.myInstitutions' | translate }}</a
+					>
 
 					<!-- Account Menu -->
 					<oeb-dropdown
