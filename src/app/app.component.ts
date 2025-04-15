@@ -238,7 +238,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 		if (this.embedService.isEmbedded) {
 			// Enable the embedded indicator class on the body
 			renderer.addClass(document.body, 'embeddedcontainer');
-		}
+		}		
 	}
 
 	refreshProfile = () => {
@@ -248,19 +248,16 @@ export class AppComponent implements OnInit, AfterViewInit {
 			}
 
 			// for issuers tab which can only be loaded when the user is verified
-			if (set.entities.length > 0 && set.entities[0].isVerified)
+			if(set.entities.length > 0 && set.entities[0].isVerified)
 				this.issuerManager.allIssuers$.subscribe(
-					(issuers) => {
-						this.issuers = issuers.slice().sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
-						this.shouldShowIssuersTab();
-					},
-					(error) => {
-						this.messageService.reportAndThrowError(
-							this.translate.instant('Issuer.failLoadissuers'),
-							error,
-						);
-					},
-				);
+				(issuers) => {
+					this.issuers = issuers.slice().sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+					this.shouldShowIssuersTab();
+				},
+				(error) => {
+					this.messageService.reportAndThrowError(this.translate.instant('Issuer.failLoadissuers'), error);
+				},
+			);
 		});
 
 		// Load the profile
@@ -273,7 +270,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 	}
 
 	shouldShowIssuersTab = () =>
-		this.showIssuersTab.set(!this.features.disableIssuers && this.issuers && this.issuers.length > 0);
+		(this.showIssuersTab.set(!this.features.disableIssuers && this.issuers && this.issuers.length > 0));
 
 	toggleMobileNav() {
 		this.mobileNavOpen = !this.mobileNavOpen;
