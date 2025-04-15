@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, Renderer2, ViewChild, Inject } from '@angular/core';
+import { AfterViewInit, Component, OnInit, Renderer2, ViewChild, Inject, signal } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { Router } from '@angular/router';
 
@@ -119,6 +119,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 	launchpoints?: ApiExternalToolLaunchpoint[];
 	issuers: Issuer[];
 	issuersLoaded: Promise<unknown>;
+	showIssuersTab = signal(false);
 
 	copyrightYear = new Date().getFullYear();
 
@@ -237,7 +238,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 		if (this.embedService.isEmbedded) {
 			// Enable the embedded indicator class on the body
 			renderer.addClass(document.body, 'embeddedcontainer');
-		}
+		}		
 	}
 
 	refreshProfile = () => {
@@ -245,30 +246,31 @@ export class AppComponent implements OnInit, AfterViewInit {
 			if (set.entities.length && set.entities[0].agreedTermsVersion !== set.entities[0].latestTermsVersion) {
 				this.commonDialogsService.newTermsDialog.openDialog();
 			}
+
+			// for issuers tab which can only be loaded when the user is verified
+			if(set.entities.length > 0 && set.entities[0].isVerified)
+				this.issuerManager.allIssuers$.subscribe(
+				(issuers) => {
+					this.issuers = issuers.slice().sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+					this.shouldShowIssuersTab();
+				},
+				(error) => {
+					this.messageService.reportAndThrowError(this.translate.instant('Issuer.failLoadissuers'), error);
+				},
+			);
 		});
 
 		// Load the profile
 		this.profileManager.userProfileSet.ensureLoaded();
-
-		// for issuers tab
-		this.issuerManager.allIssuers$.subscribe(
-			(issuers) => {
-				this.issuers = issuers.slice().sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
-				this.shouldShowIssuersTab();
-			},
-			(error) => {
-				this.messageService.reportAndThrowError(this.translate.instant('Issuer.failLoadissuers'), error);
-			},
-		);
+		this.shouldShowIssuersTab();
 	};
 
 	dismissUnsupportedBrowserMessage() {
 		this.isUnsupportedBrowser = false;
 	}
 
-	showIssuersTab = false;
 	shouldShowIssuersTab = () =>
-		(this.showIssuersTab = !this.features.disableIssuers || (this.issuers && this.issuers.length > 0));
+		(this.showIssuersTab.set(!this.features.disableIssuers && this.issuers && this.issuers.length > 0));
 
 	toggleMobileNav() {
 		this.mobileNavOpen = !this.mobileNavOpen;
