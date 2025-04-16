@@ -47,10 +47,19 @@ import { FormControl } from '@angular/forms';
 				/>
 				<div class="tw-flex tw-flex-col tw-flex-wrap tw-pl-4 tw-py-2">
 					<a
-						*ngIf="badgeSlug && !publicUrl"
+						*ngIf="badgeSlug && !publicUrl && !imported"
 						class="tw-font-bold text-clamp title-clamp"
 						[title]="badgeTitle"
 						[routerLink]="['../earned-badge', badgeSlug]"
+						hlmP
+						size="sm"
+						>{{ badgeTitle }}</a
+					>
+					<a
+						*ngIf="badgeSlug && !publicUrl && imported"
+						class="tw-font-bold text-clamp title-clamp"
+						[title]="badgeTitle"
+						[routerLink]="['../imported-badge', badgeSlug]"
 						hlmP
 						size="sm"
 						>{{ badgeTitle }}</a
@@ -192,6 +201,7 @@ export class BgBadgecard {
 	@Output() checkboxChange = new EventEmitter<boolean>();
 	@Input() checked: boolean = false;
 	@Input() tags: string[] = [];
+	@Input() imported: boolean = false;
 
 	changeCheckbox(event: boolean) {
 		this.checkboxChange.emit(event);

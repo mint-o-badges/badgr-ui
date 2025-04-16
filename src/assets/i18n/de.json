@@ -84,7 +84,7 @@
 		"noRequests": "Keine Anfragen",
 		"oneRequest": "1 Anfrage",
 		"multiRequests": "# Anfragen",
-		"sendUsYourBadge": "Sende deinen Badge gerne an support@openbadges.education, dann schauen wir uns die Datei an. ",
+		"sendUsYourBadge": "Sende deinen Badge gerne an <a class='tw-text-link tw-underline' href='mailto:support@openbadges.education'>support@openbadges.education</a>, dann schauen wir uns die Datei an. ",
 		"thisDidNotWork": "Das hat leider nicht funktioniert.",
 		"toMyProfile": "Zu meinem Profil"
 	},
@@ -603,7 +603,8 @@
 		"importedSuccessfully": "Badge erfolgreich importiert.",
 		"uploadFailed": "Badge konnte nicht hochgeladen werden:",
 		"unknownError": "Der Upload des Badges ist aufgrund eines unbekannten Fehlers fehlgeschlagen",
-		"badgeUploadVersionError": "Das Hochladen dieser Badge-Version ist leider nicht möglich.",
+		"duplicateBadge": "Du hast diesen Badge bereits in deinem Rucksack",
+		"badgeUploadVersionError": "Das Hochladen dieser Badge-Version ist leider nicht möglich. Aktuell unterstützen wir nur Badges bis einschließlich OB Version 2.1.",
 		"uploadEmailDoesNotMatchError": "Die im Badge hinterlegte E-Mail-Adresse stimmt nicht mit deiner auf OEB hinterlegten E-Mail-Adresse überein.",
 		"addEmailToUpload": "Füge die E-Mail-Adresse deinem Profil hinzu, um den Badge hochzuladen.",
 		"versionUploadInfo": "Momentan können leider nur Badges der Version 2.0 hochgeladen werden"

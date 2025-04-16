@@ -24,6 +24,8 @@ import { NgIcon } from '@ng-icons/core';
 import { provideIcons } from '@ng-icons/core';
 import { lucideCircleX, lucideX } from '@ng-icons/lucide';
 import { HlmH2Directive } from '../../../components/spartan/ui-typography-helm/src';
+import { Router } from '@angular/router';
+import { OebButtonComponent } from '../../../components/oeb-button.component';
 
 @Component({
 	selector: 'add-badge-dialog',
@@ -38,6 +40,7 @@ import { HlmH2Directive } from '../../../components/spartan/ui-typography-helm/s
 		OebTabsComponent,
 		NgIcon,
 		HlmH2Directive,
+		OebButtonComponent,
 	],
 	providers: [provideIcons({ lucideCircleX })],
 	template: `
@@ -55,15 +58,18 @@ import { HlmH2Directive } from '../../../components/spartan/ui-typography-helm/s
 			</div>
 		</ng-template>
 
-		<ng-template #failureContent let-message="message" let-text="text">
+		<ng-template #failureContent let-message="message" let-text="text" let-buttontext="buttontext">
 			<div>
 				<p class="tw-text-lg tw-text-oebblack tw-text-center tw-font-bold tw-mt-2">{{ message }}</p>
-				<p class="tw-mt-2 tw-text-purple tw-italic tw-text-center">{{ text }}</p>
+				<p [innerHTML]="text" class="tw-mt-2 tw-text-purple tw-italic tw-text-center"></p>
 			</div>
-			<!-- <div class="tw-flex" *ngIf="buttontext">
-				<oeb-button variant="secondary" [text]="'General.cancel' | translate"></oeb-button>
-				<oeb-button [text]="'General.toMyProfile' | translate"></oeb-button>
-			</div> -->
+			<div class="tw-flex tw-justify-center tw-items-center" *ngIf="buttontext">
+				<oeb-button
+					(click)="routeToUserProfile()"
+					size="md"
+					[text]="'General.toMyProfile' | translate"
+				></oeb-button>
+			</div>
 		</ng-template>
 
 		<!-- Tab content templates -->
@@ -156,6 +162,7 @@ export class AddBadgeDialogComponent implements AfterViewInit {
 		protected formBuilder: FormBuilder,
 		protected messageService: MessageService,
 		private translate: TranslateService,
+		private router: Router,
 	) {}
 
 	ngAfterViewInit() {
@@ -226,6 +233,11 @@ export class AddBadgeDialogComponent implements AfterViewInit {
 		return !!(formState.assertion || formState.image || formState.url);
 	}
 
+	routeToUserProfile() {
+		this.router.navigate(['profile', 'profile']);
+		this.closeDialog();
+	}
+
 	submitBadgeRecipientForm() {
 		const formState = this.addRecipientBadgeForm.value;
 
@@ -239,23 +251,37 @@ export class AddBadgeDialogComponent implements AfterViewInit {
 				.catch((err) => {
 					let message = BadgrApiFailure.from(err).firstMessage;
 					console.log('message', message);
+					this.closeDialog();
 					switch (message) {
 						case 'VERIFY_RECIPIENT_IDENTIFIER':
-							this._hlmDialogService.open(DialogComponent, {
+							this.dialogRef = this._hlmDialogService.open(DialogComponent, {
 								context: {
 									headerTemplate: this.failureHeader,
 									content: this.failureContent,
 									templateContext: {
 										message: this.translate.instant('RecBadge.uploadEmailDoesNotMatchError'),
 										text: this.translate.instant('RecBadge.addEmailToUpload'),
-										// buttontext: this.translate.instant('General.toMyProfile'),
+										buttontext: this.translate.instant('General.toMyProfile'),
 									},
 								},
 							});
 							break;
 
+						case 'DUPLICATE_BADGE': 
+							this.dialogRef = this._hlmDialogService.open(DialogComponent, {
+								context: {
+									headerTemplate: this.failureHeader,
+									content: this.failureContent,
+									templateContext: {
+										message: this.translate.instant('RecBadge.uploadFailed'),
+										text: this.translate.instant('RecBadge.duplicateBadge') 
+									},
+								},
+							});
+							break;	
+
 						case 'INVALID_BADGE_VERSION':
-							this._hlmDialogService.open(DialogComponent, {
+							this.dialogRef = this._hlmDialogService.open(DialogComponent, {
 								context: {
 									headerTemplate: this.failureHeader,
 									content: this.failureContent,
@@ -268,7 +294,7 @@ export class AddBadgeDialogComponent implements AfterViewInit {
 							break;
 
 						default:
-							this._hlmDialogService.open(DialogComponent, {
+							this.dialogRef = this._hlmDialogService.open(DialogComponent, {
 								context: {
 									headerTemplate: this.failureHeader,
 									content: this.failureContent,

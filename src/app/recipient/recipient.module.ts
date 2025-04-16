@@ -19,6 +19,7 @@ import { RecipientBadgeCollectionSelectionDialogComponent } from './components/r
 import { RecipientBadgeSelectionDialog } from './components/recipient-badge-selection-dialog/recipient-badge-selection-dialog.component';
 import { MozzTransitionModule } from '../mozz-transition/mozz-transition.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { ImportedBadgeDetailComponent } from './components/imported-badge-detail/imported-badge-detail.component';
 
 const routes: Routes = [
 	/* Recipient Badges */
@@ -38,6 +39,10 @@ const routes: Routes = [
 	{
 		path: 'earned-badge/:badgeSlug',
 		component: RecipientEarnedBadgeDetailComponent,
+	},
+	{
+		path: 'imported-badge/:badgeSlug',
+		component: ImportedBadgeDetailComponent,
 	},
 
 	/* Recipient Badge Collections */
@@ -78,6 +83,7 @@ const routes: Routes = [
 		RecipientBadgeCollectionSelectionDialogComponent,
 		RecipientBadgeSelectionDialog,
 		RecipientEarnedBadgeDetailComponent,
+		ImportedBadgeDetailComponent,
 	],
 	providers: [
 		RecipientBadgeApiService,
