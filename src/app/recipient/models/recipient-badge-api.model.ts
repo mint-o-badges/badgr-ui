@@ -138,6 +138,7 @@ export interface ApiImportedBadgeInstance {
 		type: 'image';
 		id: string;
 	};
+	extensions: object
 }
 
 interface ApiImportedBadgeInstanceBadge {

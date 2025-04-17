@@ -96,8 +96,25 @@ export class ImportedBadgeDetailComponent extends BaseAuthenticatedRoutableCompo
 		super(router, route, loginService);
 
 		this.badgeLoaded = this.recipientBadgeApiService.getImportedBadge(this.badgeSlug).then((r) => {
-			console.log('imported badge', r);
 			this.badge = r;
+			if('extensions:CompetencyExtension' in this.badge.extensions){
+
+				const comps = this.badge.extensions['extensions:CompetencyExtension'] as Array<unknown>
+				this.competencies = comps.map((c) => {
+					return {
+						"name": c["extensions:name"],
+						"description": c["extensions:description"],
+						"studyLoad": c["extensions:studyLoad"],
+						"category": c["extensions:category"],
+						"framework": c["extensions:framework"], 						
+						"framework_identifier": c["extensions:framework_identifier"], 						
+
+					}
+				});
+			}
+			if('extensions:CategoryExtension' in this.badge.extensions){
+				this.category = this.badge.extensions['extensions:CategoryExtension'] as object
+			}
 			this.crumbs = [
 				{ title: 'Mein Rucksack', routerLink: ['/recipient/badges'] },
 				{ title: this.badge.json.badge.name, routerLink: ['/earned-badge/' + this.badge.id] },
@@ -110,11 +127,6 @@ export class ImportedBadgeDetailComponent extends BaseAuthenticatedRoutableCompo
 					show: false,
 				},
 				menuitems: [
-					// {
-					// 	title: 'Download Badge-Bild',
-					// 	icon: 'lucideImage',
-					// 	action: () => this.exportPng(),
-					// },
 					// {
 					// 	title: 'Download JSON-Datei',
 					// 	icon: '	lucideFileCode',
@@ -140,102 +152,24 @@ export class ImportedBadgeDetailComponent extends BaseAuthenticatedRoutableCompo
 				issuerSlug: this.badge.json.badge.issuer.name,
 				slug: this.badgeSlug,
 				issuedOn: this.badge.json.issuedOn,
-				// issuedTo: this.badge.recipientEmail,
-				category: 'participation',
-				duration: '0',
+				issuedTo: this.badge.json.recipient.identity,
+				category: this.translate.instant(
+					`Badge.categories.${this.category['extensions:Category'] || 'participation'}`,
+				),
 				tags: [],
 				issuerName: this.badge.json.badge.issuer.name,
 				issuerImagePlacholderUrl: this.issuerImagePlacholderUrl,
-				issuerImage: this.badge.issuerImagePreview.id,
+				issuerImage: this.badge.json.badge.issuer.image,
 				badgeLoadingImageUrl: this.badgeLoadingImageUrl,
 				badgeFailedImageUrl: this.badgeFailedImageUrl,
-				badgeImage: this.badge.imagePreview.id,
+				badgeImage: this.badge.json.badge.image,
 				learningPaths: [],
-				// competencies: this.competencies as CompetencyType[],
+				competencies: this.competencies as CompetencyType[],
 				// license: this.badge.getExtension('extensions:LicenseExtension', {}) ? true : false,
 				// shareButton: true,
 				// badgeInstanceSlug: this.badgeSlug,
 			};
 		});
-
-		// this.badgesLoaded = this.recipientBadgeManager.recipientBadgeList.loadedPromise
-		// 	.then((r) => {
-		// 		this.updateBadge(r);
-		// 		this.competencies = this.badge.getExtension('extensions:CompetencyExtension', [{}]);
-		// 		this.category = this.badge.getExtension('extensions:CategoryExtension', {});
-		// 		this.crumbs = [
-		// 			{ title: 'Mein Rucksack', routerLink: ['/recipient/badges'] },
-		// 			{ title: this.badge.badgeClass.name, routerLink: ['/earned-badge/' + this.badge.slug] },
-		// 		];
-		// 		this.config = {
-		// 			crumbs: this.crumbs,
-		// 			badgeTitle: this.badge.badgeClass.name,
-		// 			// uncomment after the sharing of a badge is discussed from a data privacy perspective
-		// 			// headerButton: {
-		// 			// 	title: 'Badge teilen',
-		// 			// 	action: () => this.shareBadge(),
-		// 			// },
-		// 			qrCodeButton: {
-		// 				show: false,
-		// 			},
-		// 			menuitems: [
-		// 				{
-		// 					title: 'Download Badge-Bild',
-		// 					icon: 'lucideImage',
-		// 					action: () => this.exportPng(),
-		// 				},
-		// 				{
-		// 					title: 'Download JSON-Datei',
-		// 					icon: '	lucideFileCode',
-		// 					action: () => this.exportJson(),
-		// 				},
-		// 				{
-		// 					title: 'Download PDF-Zertifikat',
-		// 					icon: 'lucideFileText',
-		// 					action: () => this.exportPdf(),
-		// 				},
-		// 				{
-		// 					title: 'Badge verifizieren',
-		// 					icon: 'lucideBadgeCheck',
-		// 					action: () => window.open(this.verifyUrl, '_blank'),
-		// 				},
-		// 				{
-		// 					title: 'Badge aus Rucksack löschen',
-		// 					icon: 'lucideTrash2',
-		// 					action: () => this.deleteBadge(this.badge),
-		// 				},
-		// 			],
-		// 			badgeDescription: this.badge.badgeClass.description,
-		// 			issuerSlug: this.badge.badgeClass.issuer.id,
-		// 			slug: this.badgeSlug,
-		// 			issuedOn: this.badge.issueDate,
-		// 			issuedTo: this.badge.recipientEmail,
-		// 			category: this.translate.instant(
-		// 				`Badge.categories.${this.category['Category'] || 'participation'}`,
-		// 			),
-		// 			duration: this.badge.getExtension('extensions:StudyLoadExtension', {}).StudyLoad,
-		// 			tags: this.badge.badgeClass.tags,
-		// 			issuerName: this.badge.badgeClass.issuer.name,
-		// 			issuerImagePlacholderUrl: this.issuerImagePlacholderUrl,
-		// 			issuerImage: this.badge.badgeClass?.issuer?.image,
-		// 			badgeLoadingImageUrl: this.badgeLoadingImageUrl,
-		// 			badgeFailedImageUrl: this.badgeFailedImageUrl,
-		// 			badgeImage: this.badge.badgeClass.image,
-		// 			competencies: this.competencies as CompetencyType[],
-		// 			license: this.badge.getExtension('extensions:LicenseExtension', {}) ? true : false,
-		// 			shareButton: true,
-		// 			badgeInstanceSlug: this.badgeSlug,
-		// 		};
-		// 	})
-		// 	.finally(() => {
-		// 		this.learningPathsLoaded = this.learningPathApiService
-		// 			.getLearningPathsForBadgeClass(this.badge.badgeClass.slug)
-		// 			.then((lp) => {
-		// 				this.learningPaths = lp;
-		// 				this.config.learningPaths = lp;
-		// 			});
-		// 	})
-		// 	.catch((e) => this.messageService.reportAndThrowError('Failed to load your badges', e));
 
 		this.externalToolsManager.getToolLaunchpoints('earner_assertion_action').then((launchpoints) => {
 			this.launchpoints = launchpoints;
@@ -358,23 +292,6 @@ export class ImportedBadgeDetailComponent extends BaseAuthenticatedRoutableCompo
 		this.externalToolsManager.getLaunchInfo(launchpoint, this.badgeSlug).then((launchInfo) => {
 			this.eventService.externalToolLaunch.next(launchInfo);
 		});
-	}
-
-	exportPng() {
-		fetch(this.rawBakedUrl)
-			.then((response) => response.blob())
-			.then((blob) => {
-				const link = document.createElement('a');
-				const url = URL.createObjectURL(blob);
-				const urlParts = this.rawBakedUrl.split('/');
-				link.href = url;
-				link.download = `${this.badge.json.issuedOn.toISOString().split('T')[0]}-${this.badge.json.badge.name.trim().replace(' ', '_')}.png`;
-				document.body.appendChild(link);
-				link.click();
-				document.body.removeChild(link);
-				URL.revokeObjectURL(url);
-			})
-			.catch((error) => console.error('Download failed:', error));
 	}
 
 	exportJson() {
