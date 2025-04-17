@@ -73,6 +73,10 @@ export class RecipientBadgeInstance extends ManagedEntity<ApiRecipientBadgeInsta
 	get criteriaUrl(): string {
 		return this.badgeClass.criteria_url || this.badgeClass.criteria || null;
 	}
+
+	get imported(): boolean {
+		return this.apiModel.imported;
+	}
 	/**
 	 * Cached copy of the immutable issueDate for optimization
 	 */
