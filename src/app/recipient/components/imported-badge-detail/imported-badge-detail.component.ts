@@ -153,9 +153,9 @@ export class ImportedBadgeDetailComponent extends BaseAuthenticatedRoutableCompo
 				slug: this.badgeSlug,
 				issuedOn: this.badge.json.issuedOn,
 				issuedTo: this.badge.json.recipient.identity,
-				category: this.translate.instant(
+				category: this.category ? this.translate.instant(
 					`Badge.categories.${this.category['extensions:Category'] || 'participation'}`,
-				),
+				) : null,
 				tags: [],
 				issuerName: this.badge.json.badge.issuer.name,
 				issuerImagePlacholderUrl: this.issuerImagePlacholderUrl,
@@ -164,7 +164,7 @@ export class ImportedBadgeDetailComponent extends BaseAuthenticatedRoutableCompo
 				badgeFailedImageUrl: this.badgeFailedImageUrl,
 				badgeImage: this.badge.json.badge.image,
 				learningPaths: [],
-				competencies: this.competencies as CompetencyType[],
+				competencies:  this.competencies as CompetencyType[],
 				// license: this.badge.getExtension('extensions:LicenseExtension', {}) ? true : false,
 				// shareButton: true,
 				// badgeInstanceSlug: this.badgeSlug,
