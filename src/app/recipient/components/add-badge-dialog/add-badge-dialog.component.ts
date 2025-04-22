@@ -201,28 +201,38 @@ export class AddBadgeDialogComponent implements AfterViewInit {
 	openDialog(): Promise<void> {
 		this.addRecipientBadgeForm.reset();
 		this.currentTab = this.translate.instant('RecBadge.image');
-
-		// Wait for the template refs to be available
-		setTimeout(() => {
-			this.dialogRef = this._hlmDialogService.open(DialogComponent, {
-				context: {
-					headerTemplate: this.dialogHeader,
-					variant: 'default',
-					content: this.dialogContent,
-				},
-			});
-		});
-
+	  
 		return new Promise<void>((resolve, reject) => {
-			this.dialogRef?.closed$.subscribe((result) => {
-				if (result === 'cancel') {
-					reject();
-				} else {
-					resolve();
-				}
+
+		  // wait for temlate refs to be available
+		  setTimeout(() => {
+			this.dialogRef = this._hlmDialogService.open(DialogComponent, {
+			  context: {
+				headerTemplate: this.dialogHeader,
+				variant: 'default',
+				content: this.dialogContent,
+			  },
 			});
+						
+			if (this.dialogRef && this.dialogRef.closed$) {
+			  this.dialogRef.closed$.subscribe(
+				(result) => {
+				  if (result === 'cancel') {
+					reject();
+				  } else {
+					resolve();
+				  }
+				},
+				(error) => {
+				  reject(error);
+				}
+			  );
+			} else {
+			  reject(new Error('Dialog reference not properly initialized'));
+			}
+		  });
 		});
-	}
+	  }
 
 	closeDialog() {
 		this.dialogRef?.close();

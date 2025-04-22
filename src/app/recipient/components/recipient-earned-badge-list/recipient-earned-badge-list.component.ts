@@ -280,7 +280,9 @@ export class RecipientEarnedBadgeListComponent
 
 	uploadBadge() {
 		this.addBadgeDialog.openDialog().then(
-			() => {},
+			() => {
+				this.loadImportedBadges()
+			},
 			() => {},
 		);
 	}
