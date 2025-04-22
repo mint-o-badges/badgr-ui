@@ -70,6 +70,7 @@ export class QrCodeAwardsComponent {
 	@Input() routerLinkText: string[];
 	@Input() issuer: Issuer;
 	@Input() badgeClass: BadgeClass;
+	@Input() defaultUnfolded: boolean | undefined = false;
 	@Output() qrBadgeAward = new EventEmitter<void>();
 
 	requestedBadges: any[] = [];

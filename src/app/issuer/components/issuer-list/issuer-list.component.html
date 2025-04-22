@@ -13,7 +13,7 @@
 				</p>
 
 				<p hlmP size="lg" class="tw-pb-3" [innerHTML]="'Issuer.myLearningPathText' | translate"></p>
-				<section *ngIf="issuers.length === 0" class="tw-flex tw-flex-col tw-gap-2 tw-mt-2">
+				<section *ngIf="issuers?.length === 0" class="tw-flex tw-flex-col tw-gap-2 tw-mt-2">
 					<span
 						[innerHTML]="'Issuer.createFirstInstitution' | translate"
 						class="tw-text-2xl tw-italic tw-text-oebblack"
@@ -30,7 +30,7 @@
 			</div>
 			<div class="tw-border-purple tw-border tw-rounded-[20px] md:tw-text-right tw-text-center tw-max-w-[600px]">
 				<oeb-button
-					*ngIf="issuers.length > 0"
+					*ngIf="issuers?.length > 0"
 					class="md:tw-whitespace-nowrap"
 					variant="secondary"
 					[routerLink]="['/issuer/create']"
@@ -191,7 +191,7 @@
 				></ng-container>
 			</div>
 		</div>
-		<section class="tw-flex tw-flex-col tw-gap-2" [ngClass]="issuers.length > 0 ? 'tw-mt-12' : ''">
+		<section class="tw-flex tw-flex-col tw-gap-2" [ngClass]="issuers?.length > 0 ? 'tw-mt-12' : ''">
 			<span [innerHTML]="'Issuer.partOfInstitution' | translate" class="tw-text-2xl tw-italic tw-text-oebblack">
 			</span>
 			<section
@@ -354,7 +354,7 @@
 
 <ng-template #pluginBoxTemplate let-showWhenEmpty="showWhenEmpty" let-mobile="mobile">
 	<div
-		*ngIf="(issuers.length === 0 && showWhenEmpty) || (issuers.length > 0 && !showWhenEmpty)"
+		*ngIf="(issuers?.length === 0 && showWhenEmpty) || (issuers?.length > 0 && !showWhenEmpty)"
 		#pluginBox
 		class="md:tw-flex-[0_0_363px] md:tw-mt-0 tw-mt-6"
 		[class.md:tw-w-[400px]]="mobile === false && showWhenEmpty"

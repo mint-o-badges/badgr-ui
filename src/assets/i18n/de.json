@@ -735,7 +735,8 @@
 		"downloadedSuccessfully": "<span class='tw-font-bold'>Du hast den QR-Code erfolgreich heruntergeladen.</span><br> Schaue in deinem Download-Ordner nach.",
 		"deleteQrAward": "QR-Code-Vergabe löschen",
 		"deleteQrAwardConfirm": "Möchtest du die QR-Code-Vergabe wirklich löschen?",
-		"openRequestsWillBeLost": "Damit gehen alle noch offenen Badge-Anfragen verloren."
+		"openRequestsWillBeLost": "Damit gehen alle noch offenen Badge-Anfragen verloren.",
+		"receiveEmails": "Ich möchte per E-Mail über neue QR-Code-Anfragen benachrichtigt werden"
 	},
 	"LearningPath": {
 		"learningpaths": "Micro Degrees",

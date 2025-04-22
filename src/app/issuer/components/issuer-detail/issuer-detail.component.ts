@@ -20,6 +20,7 @@ import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcru
 import { MenuItem } from '../../../common/components/badge-detail/badge-detail.component.types';
 import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
 import { ApiLearningPath } from '../../../common/model/learningpath-api.model';
+import { first, firstValueFrom } from 'rxjs';
 
 @Component({
 	selector: 'issuer-detail',
@@ -103,24 +104,19 @@ export class IssuerDetailComponent extends BaseAuthenticatedRoutableComponent im
 					{ title: this.issuer.name, routerLink: ['/issuer/issuers/' + this.issuer.slug] },
 				];
 
-				this.badgesLoaded = new Promise<void>((resolve, reject) => {
-					this.badgeClassService.badgesByIssuerUrl$.subscribe(
-						(badgesByIssuer) => {
-							const cmp = (a, b) => (a === b ? 0 : a < b ? -1 : 1);
-							this.badges = (badgesByIssuer[this.issuer.issuerUrl] || []).sort((a, b) =>
-								cmp(b.createdAt, a.createdAt),
-							);
-							resolve();
-						},
-						(error) => {
-							this.messageService.reportAndThrowError(
-								`Failed to load badges for ${this.issuer ? this.issuer.name : this.issuerSlug}`,
-								error,
-							);
-							resolve();
-						},
-					);
-				});
+				this.badgesLoaded = firstValueFrom(this.badgeClassService.badgesByIssuerUrl$)
+					.then((badgesByIssuer) => {
+						const cmp = (a, b) => (a === b ? 0 : a < b ? -1 : 1);
+						this.badges = (badgesByIssuer[this.issuer.issuerUrl] || []).sort((a, b) =>
+							cmp(b.createdAt, a.createdAt),
+						);
+					})
+					.catch((error) => {
+						this.messageService.reportAndThrowError(
+							`Failed to load badges for ${this.issuer ? this.issuer.name : this.issuerSlug}`,
+							error,
+						);
+					});
 			},
 			(error) => {
 				this.messageService.reportLoadingError(

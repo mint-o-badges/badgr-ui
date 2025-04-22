@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, Renderer2, ViewChild, Inject } from '@angular/core';
+import { AfterViewInit, Component, OnInit, Renderer2, ViewChild, Inject, signal, computed } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { Router } from '@angular/router';
 
@@ -117,8 +117,10 @@ export class AppComponent implements OnInit, AfterViewInit {
 	mobileNavOpen = false;
 	isUnsupportedBrowser = false;
 	launchpoints?: ApiExternalToolLaunchpoint[];
-	issuers: Issuer[];
-	issuersLoaded: Promise<unknown>;
+	issuers = signal<Issuer[] | undefined>(undefined);
+	showIssuersTab = computed(() => {
+		return !this.features.disableIssuers && this.issuers() !== undefined;
+	});
 
 	copyrightYear = new Date().getFullYear();
 
@@ -245,30 +247,33 @@ export class AppComponent implements OnInit, AfterViewInit {
 			if (set.entities.length && set.entities[0].agreedTermsVersion !== set.entities[0].latestTermsVersion) {
 				this.commonDialogsService.newTermsDialog.openDialog();
 			}
+
+			// for issuers tab which can only be loaded when the user is verified
+			this.profileManager.userProfile.emails.updateList().then(() => {
+				if (this.profileManager.userProfile.isVerified)
+					this.issuerManager.allIssuers$.subscribe(
+						(issuers) => {
+							this.issuers.set(
+								issuers.slice().sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime()),
+							);
+						},
+						(error) => {
+							this.messageService.reportAndThrowError(
+								this.translate.instant('Issuer.failLoadissuers'),
+								error,
+							);
+						},
+					);
+			});
 		});
 
 		// Load the profile
 		this.profileManager.userProfileSet.ensureLoaded();
-
-		// for issuers tab
-		this.issuerManager.allIssuers$.subscribe(
-			(issuers) => {
-				this.issuers = issuers.slice().sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
-				this.shouldShowIssuersTab();
-			},
-			(error) => {
-				this.messageService.reportAndThrowError(this.translate.instant('Issuer.failLoadissuers'), error);
-			},
-		);
 	};
 
 	dismissUnsupportedBrowserMessage() {
 		this.isUnsupportedBrowser = false;
 	}
-
-	showIssuersTab = false;
-	shouldShowIssuersTab = () =>
-		(this.showIssuersTab = !this.features.disableIssuers || (this.issuers && this.issuers.length > 0));
 
 	toggleMobileNav() {
 		this.mobileNavOpen = !this.mobileNavOpen;
@@ -305,7 +310,6 @@ export class AppComponent implements OnInit, AfterViewInit {
 				if (loggedIn) this.refreshProfile();
 			}),
 		);
-		this.shouldShowIssuersTab();
 
 		this.translate.get('General.institutionsNav').subscribe((translatedText: string) => {
 			this.aboutBadgesMenuItems[2].title = translatedText;

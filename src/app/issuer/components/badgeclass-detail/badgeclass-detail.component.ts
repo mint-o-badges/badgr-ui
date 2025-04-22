@@ -1,4 +1,4 @@
-import { Component, OnInit, SecurityContext } from '@angular/core';
+import { afterRenderEffect, Component, ElementRef, Input, OnInit, SecurityContext, ViewChild } from '@angular/core';
 
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from '../../../common/services/message.service';
@@ -34,19 +34,23 @@ import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src
 import { inject } from '@angular/core';
 import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
 import { ApiLearningPath } from '../../../common/model/learningpath-api.model';
+import { ViewportScroller } from '@angular/common';
 
 @Component({
 	selector: 'badgeclass-detail',
 	template: `
 		<bg-badgedetail [config]="config" [awaitPromises]="[issuerLoaded, badgeClassLoaded]">
-			<qrcode-awards
-				*ngIf="config.qrCodeButton.show"
-				(qrBadgeAward)="onQrBadgeAward()"
-				[awards]="qrCodeAwards"
-				[badgeClass]="badgeClass"
-				[issuer]="issuer"
-				[routerLinkText]="config?.issueQrRouterLink"
-			></qrcode-awards>
+			<div #qrAwards>
+				<qrcode-awards
+					*ngIf="config.qrCodeButton.show"
+					(qrBadgeAward)="onQrBadgeAward()"
+					[awards]="qrCodeAwards"
+					[badgeClass]="badgeClass"
+					[issuer]="issuer"
+					[routerLinkText]="config?.issueQrRouterLink"
+					[defaultUnfolded]="focusRequests"
+				></qrcode-awards>
+			</div>
 			<issuer-detail-datatable
 				[recipientCount]="recipientCount"
 				[_recipients]="instanceResults"
@@ -59,6 +63,8 @@ import { ApiLearningPath } from '../../../common/model/learningpath-api.model';
 	standalone: false,
 })
 export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
+	@ViewChild('qrAwards') qrAwards!: ElementRef;
+
 	readonly badgeFailedImageUrl = '../../../../breakdown/static/images/badge-failed.svg';
 	readonly badgeLoadingImageUrl = '../../../../breakdown/static/images/badge-loading.svg';
 
@@ -116,6 +122,8 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 	resultsPerPage = 100;
 	issuer: Issuer;
 	crumbs: LinkEntry[];
+	focusRequests: boolean;
+	hasScrolled: boolean = false;
 
 	config: PageConfig;
 
@@ -188,6 +196,10 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		this.externalToolsManager.getToolLaunchpoints('issuer_assertion_action').then((launchpoints) => {
 			this.launchpoints = launchpoints;
 		});
+	}
+
+	ngAfterViewChecked() {
+		this.focusRequestsOnPage();
 	}
 
 	async loadInstances(recipientQuery?: string) {
@@ -299,6 +311,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 
 	ngOnInit() {
 		super.ngOnInit();
+		this.focusRequests = this.route.snapshot.queryParamMap.get('focusRequests') === 'true';
 	}
 
 	revokeInstance(instance: BadgeInstance) {
@@ -452,6 +465,13 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 			recipientType: badge.recipientType,
 			badge,
 		});
+	}
+
+	private focusRequestsOnPage() {
+		if (this.focusRequests && this.qrAwards && !this.hasScrolled) {
+			if (this.qrAwards.nativeElement.offsetTop > 0) this.hasScrolled = true;
+			this.qrAwards.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+		}
 	}
 
 	private updateResults() {

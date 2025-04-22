@@ -6,4 +6,5 @@ export interface ApiQRCode {
 	expires_at?: any;
 	badgeclass_id?: string;
 	issuer_id?: string;
+	notifications?: boolean;
 }
