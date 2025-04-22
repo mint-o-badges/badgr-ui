@@ -7,7 +7,7 @@
 			[control]="lpDetailsForm.rawControlMap.name"
 			[autofocus]="true"
 			[errorMessage]="{
-				required: 'Required'
+				required: 'OEBComponents.fieldIsRequired' | translate
 			}"
 			sublabelRight="(max. 60 Zeichen)"
 		></oeb-input>
@@ -17,6 +17,9 @@
 			[fieldType]="'textarea'"
 			sublabelRight="(max. 700 Zeichen)"
 			placeholder="{{ 'LearningPathEditor.shortDescription' | translate }}"
+			[errorMessage]="{
+				required: 'OEBComponents.fieldIsRequired' | translate
+			}"
 		></oeb-input>
 
 		<div class="tw-mt-6 md:tw-mt-7 tw-relative" id="imageSection" #imageSection>
