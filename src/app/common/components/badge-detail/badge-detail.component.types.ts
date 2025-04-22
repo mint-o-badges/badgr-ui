@@ -1,6 +1,7 @@
 import { PublicApiLearningPath } from '../../../public/models/public-api.model';
 import { ApiLearningPath } from '../../model/learningpath-api.model';
 import { LinkEntry } from '../bg-breadcrumbs/bg-breadcrumbs.component';
+import { BadgeClassCopyPermissions } from '../../../issuer/models/badgeclass-api.model';
 
 type MenuItemBase = {
 	title: string;
@@ -82,4 +83,5 @@ export interface PageConfig {
 	shareButton?: boolean;
 	badgeInstanceSlug?: string;
 	learningPaths?: PublicApiLearningPath[] | ApiLearningPath[];
+	copy_permissions?: BadgeClassCopyPermissions[];
 }

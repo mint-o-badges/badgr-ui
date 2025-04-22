@@ -46,7 +46,7 @@ import { SharedIconsModule } from '../public/icons.module';
 				<hlm-menu-label [size]="size" *ngIf="label">{{ label }}</hlm-menu-label>
 				<ng-container *ngFor="let menuItem of menuItems">
 					<button *ngIf="menuItem.action" (click)="menuItem.action($event)" [size]="size" hlmMenuItem>
-						<ng-icon hlm [class]="iconClass" *ngIf="menuItem.icon" name="{{ menuItem.icon }}" hlmMenuIcon />
+						<ng-icon hlm [size]="iconClass" *ngIf="menuItem.icon" name="{{ menuItem.icon }}" hlmMenuIcon />
 						{{ menuItem.title }}
 					</button>
 					<button
@@ -57,7 +57,14 @@ import { SharedIconsModule } from '../public/icons.module';
 						[size]="size"
 						hlmMenuItem
 					>
-						<ng-icon hlm [class]="iconClass" *ngIf="menuItem.icon" name="{{ menuItem.icon }}" hlmMenuIcon />
+						<ng-icon
+							hlm
+							class="tw-mr-3"
+							[size]="iconClass"
+							*ngIf="menuItem.icon"
+							name="{{ menuItem.icon }}"
+							hlmMenuIcon
+						/>
 						{{ menuItem.title }}
 					</button>
 				</ng-container>
@@ -82,11 +89,11 @@ export class OebDropdownComponent {
 	get iconClass(): string {
 		switch (this.size) {
 			case 'sm':
-				return 'tw-h-4 tw-w-4 !tw-mr-3';
+				return '1.25rem';
 			case 'lg':
-				return 'tw-h-6 tw-w-6 !tw-mr-3';
+				return '1.75rem';
 			default:
-				return 'tw-h-5 tw-w-5 !tw-mr-3';
+				return '1.25rem';
 		}
 	}
 }

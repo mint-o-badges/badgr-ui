@@ -15,6 +15,7 @@ import {
 import { stripQueryParamsFromUrl } from '../../common/util/url-util';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ApiV2Wrapper } from '../../common/model/api-v2-wrapper';
+import { Issuer } from '../../issuer/models/issuer.model';
 
 @Injectable()
 export class PublicApiService extends BaseHttpApiService {
@@ -133,5 +134,9 @@ export class PublicApiService extends BaseHttpApiService {
 			: `/public/badges/${badgeClassSlug}/learningpaths`;
 
 		return this.get<PublicApiLearningPath[]>(url, null, false, true).then((r) => r.body);
+	}
+
+	searchIssuers(searchterm: string) {
+		return this.get<Issuer[]>(`/public/issuers/search/${searchterm}`).then((response) => response.body);
 	}
 }

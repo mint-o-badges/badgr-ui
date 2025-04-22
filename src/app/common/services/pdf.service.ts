@@ -44,17 +44,7 @@ export class PdfService {
 		// https://stackoverflow.com/questions/55849415/type-saferesourceurl-is-not-assignable-to-type-string
 		const url = this.sanitizer.sanitize(SecurityContext.RESOURCE_URL, pdfSrc);
 		link.href = url;
-		link.download = badgeName + ' - ' + this.dateToString(issueDate, '') + '.pdf';
+		link.download = `${issueDate.toISOString().split('T')[0]}-${badgeName}.pdf`;
 		link.click();
-	}
-
-	dateToString(date: Date, seperator: string) {
-		return (
-			('0' + date.getDate()).slice(-2) +
-			seperator +
-			('0' + (date.getMonth() + 1)).slice(-2) +
-			seperator +
-			date.getFullYear()
-		);
 	}
 }

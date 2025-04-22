@@ -137,6 +137,8 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	maxCustomImageSize = 1024 * 1024 * 2;
 	isCustomImageLarge: boolean = false;
 
+	pendingInitialization: BadgeClass | null = null;
+
 	@Input()
 	set badgeClass(badgeClass: BadgeClass) {
 		if (this.existingBadgeClass !== badgeClass) {
@@ -146,8 +148,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		}
 	}
 
-	@Input()
-	set initBadgeClass(badgeClass: BadgeClass) {
+	@Input() set initBadgeClass(badgeClass: BadgeClass) {
 		if (this.initialisedBadgeClass !== badgeClass) {
 			this.initialisedBadgeClass = badgeClass;
 			this.initFormFromExisting(this.initialisedBadgeClass);
@@ -561,6 +562,11 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		this.currentImage = badgeClass.extension['extensions:OrgImageExtension']
 			? badgeClass.extension['extensions:OrgImageExtension'].OrgImage
 			: undefined;
+
+		setTimeout(() => {
+			this.generateUploadImage(this.currentImage, this.badgeClassForm.value, true, true);
+		}, 1);
+
 		this.tags = new Set();
 		this.badgeClass.tags.forEach((t) => this.tags.add(t));
 
@@ -614,7 +620,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			});
 		}
 
-		if (!this.existingBadgeClass) {
+		if (!this.existingBadgeClass && !this.initialisedBadgeClass) {
 			// restore values from sessionStorage for new badges
 			const sessionValues = sessionStorage.getItem('oeb-create-badgeclassvalues');
 			if (sessionValues) {
@@ -655,6 +661,8 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 		this.stepper.selectionChange.subscribe((event) => {
 			this.selectedStep = event.selectedIndex;
+			this.badgeClassForm.rawControl.setValidators(this.createCompetenciesValidator());
+			this.badgeClassForm.rawControl.updateValueAndValidity();
 		});
 
 		// debounce ai competencies keyword search input
@@ -1082,6 +1090,30 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		}
 	}
 
+	createCompetenciesValidator(): ValidatorFn {
+		return (control: AbstractControl): ValidationErrors | null => {
+			if (!this.badgeClassForm) return null;
+
+			const allCompetencies = [
+				...this.badgeClassForm.value.competencies,
+				...this.badgeClassForm.value.keywordCompetencies,
+				...this.badgeClassForm.value.aiCompetencies.filter((comp) => comp.selected),
+			];
+
+			const isAtCompetenciesStep = this.existingBadgeClass ? this.selectedStep >= 1 : this.selectedStep >= 2;
+
+			if (
+				this.badgeClassForm.controls.badge_category.value == 'competency' &&
+				isAtCompetenciesStep &&
+				allCompetencies.length == 0
+			) {
+				return { emptyCompetencies: true };
+			}
+
+			return null;
+		};
+	}
+
 	// Validator for competencies, displays error messages for all compentencies
 	hoursAndMinutesValidatorCompetencies(): ValidationErrors | null {
 		if (!this.badgeClassForm) return null;
@@ -1488,12 +1520,12 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	 * @param image
 	 * @param formdata
 	 */
-	generateUploadImage(image, formdata, useIssuerImageInBadge = false) {
+	generateUploadImage(image, formdata, useIssuerImageInBadge = true, initializing = false) {
 		this.currentImage = image.slice();
 		this.badgeStudio
 			.generateUploadImage(image.slice(), formdata, useIssuerImageInBadge, this.issuer.image)
 			.then((imageUrl) => {
-				this.imageField.useDataUrl(imageUrl, 'BADGE');
+				this.imageField.useDataUrl(imageUrl, 'BADGE', initializing);
 			});
 	}
 
@@ -1593,7 +1625,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	}
 
 	validateFields(fields: string[]) {
-		// console.log(this.badgeClassForm.dirty);
 		return fields.every((c) => {
 			return this.badgeClassForm.controls[c].valid;
 		});

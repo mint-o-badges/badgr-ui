@@ -12,6 +12,7 @@ import { UserProfileManager } from '../../services/user-profile-manager.service'
 import { MessageService } from '../../services/message.service';
 import { PdfService } from '../../services/pdf.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { PublicApiBadgeAssertionWithBadgeClass } from '../../../public/models/public-api.model';
 
 @Component({
 	selector: 'export-pdf-dialog',
@@ -20,7 +21,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 	standalone: false,
 })
 export class ExportPdfDialog extends BaseDialog {
-	badge: RecipientBadgeInstance | null = null;
+	badge: RecipientBadgeInstance | PublicApiBadgeAssertionWithBadgeClass | null = null;
 	collection: RecipientBadgeCollection | null = null;
 	badgeResults: BadgeResult[] | null = null;
 	badgePdf: string | null = null;
@@ -62,8 +63,9 @@ export class ExportPdfDialog extends BaseDialog {
 		);
 	}
 
-	async openDialog(badge: RecipientBadgeInstance, markdown: HTMLElement): Promise<void> {
+	async openDialog(badge: RecipientBadgeInstance | PublicApiBadgeAssertionWithBadgeClass): Promise<void> {
 		this.pdfIsLoading = true;
+
 		this.pdfService.getPdf(badge.slug).then((url) => {
 			this.pdfSrc = url;
 			// set-time-out to fix the issue with viewing pdf from first time with safari
@@ -322,8 +324,14 @@ export class ExportPdfDialog extends BaseDialog {
 					align: 'justify',
 				});
 				xPos += 70 * (12 / 14);
-				let datum = this.pdfService.dateToString(this.badge.issueDate, '.');
-				this.doc.text(datum, xPos, yPos, {
+
+				let date: string = '';
+				if (this.badge instanceof RecipientBadgeInstance)
+					date = this.badge.issueDate.toLocaleDateString('de-DE');
+				else if (this.badge satisfies PublicApiBadgeAssertionWithBadgeClass)
+					date = new Date(this.badge.issuedOn).toLocaleDateString('de-DE');
+
+				this.doc.text(date, xPos, yPos, {
 					align: 'justify',
 				});
 				yPos += 12;
@@ -339,7 +347,18 @@ export class ExportPdfDialog extends BaseDialog {
 	}
 
 	downloadPdf() {
-		this.pdfService.downloadPdf(this.pdfSrc, this.badge.badgeClass.name, this.badge._issueDate);
+		let name: string = '';
+		let issueDate: Date = new Date(0);
+
+		if (this.badge instanceof RecipientBadgeInstance) {
+			name = this.badge.badgeClass.name;
+			issueDate = this.badge.issueDate;
+		} else if (this.badge satisfies PublicApiBadgeAssertionWithBadgeClass) {
+			name = this.badge.slug;
+			issueDate = new Date(this.badge.issuedOn);
+		}
+
+		this.pdfService.downloadPdf(this.pdfSrc, name.trim().replace(' ', '_'), issueDate);
 	}
 }
 

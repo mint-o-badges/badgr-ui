@@ -17,6 +17,8 @@ import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src
 import { BadgeRequestApiService } from '../../../issuer/services/badgerequest-api.service';
 import { InfoDialogComponent } from '../../dialogs/oeb-dialogs/info-dialog.component';
 import { QrCodeApiService } from '../../../issuer/services/qrcode-api.service';
+import { ApiQRCode } from '../../../issuer/models/qrcode-api.model';
+import { SessionService } from '../../services/session.service';
 
 @Component({
 	selector: 'oeb-issuer-detail',
@@ -34,6 +36,7 @@ export class OebIssuerDetailComponent implements OnInit {
 	@Output() issuerDeleted = new EventEmitter();
 
 	learningPathsPromise: Promise<unknown>;
+	requestsLoaded: Promise<Map<string, ApiQRCode[]>>;
 
 	constructor(
 		private router: Router,
@@ -45,6 +48,7 @@ export class OebIssuerDetailComponent implements OnInit {
 		private configService: AppConfigService,
 		private learningPathApiService: LearningPathApiService,
 		private qrCodeApiService: QrCodeApiService,
+		private sessionService: SessionService,
 	) {}
 	private readonly _hlmDialogService = inject(HlmDialogService);
 
@@ -107,11 +111,28 @@ export class OebIssuerDetailComponent implements OnInit {
 		this.updateResults();
 	}
 
-	private updateResults() {
+	private async updateResults() {
 		// Clear Results
 		this.badgeResults.length = 0;
 
-		const addBadgeToResults = (badge: BadgeClass) => {
+		// The promise only exists for the bgAwaitPromises to work in the template
+		if (this.sessionService.isLoggedIn) {
+			this.requestsLoaded = Promise.all(
+				this.badges.map((b) =>
+					this.qrCodeApiService
+						.getQrCodesForIssuerByBadgeClass(b.issuerSlug, b.slug)
+						.then((p) => ({ key: b.slug, value: p })),
+				),
+			).then((d) =>
+				d.reduce((map, obj) => {
+					map.set(obj.key, obj.value);
+					return map;
+				}, new Map<string, ApiQRCode[]>()),
+			);
+		}
+		const requestMap = await this.requestsLoaded;
+
+		const addBadgeToResults = async (badge: BadgeClass) => {
 			// Restrict Length
 			if (this.badgeResults.length > this.maxDisplayedResults) {
 				return false;
@@ -120,7 +141,13 @@ export class OebIssuerDetailComponent implements OnInit {
 				return false;
 			}
 
-			this.badgeResults.push(new BadgeResult(badge, this.issuer.name, 0));
+			this.badgeResults.push(
+				new BadgeResult(
+					badge,
+					this.issuer.name,
+					requestMap.has(badge.slug) ? requestMap.get(badge.slug).length : 0,
+				),
+			);
 
 			return true;
 		};
@@ -129,8 +156,8 @@ export class OebIssuerDetailComponent implements OnInit {
 		this.badgeResults.sort((a, b) => b.badge.createdAt.getTime() - a.badge.createdAt.getTime());
 	}
 
-	ngOnInit() {
-		this.updateResults();
+	async ngOnInit() {
+		await this.updateResults();
 		if (!this.public) this.getLearningPathsForIssuerApi(this.issuer.slug);
 	}
 
@@ -184,8 +211,14 @@ export class OebIssuerDetailComponent implements OnInit {
 		});
 	}
 
-	routeToBadgeDetail(badge, issuer) {
-		this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug]);
+	routeToBadgeDetail(badge, issuer, focusRequests: boolean = false) {
+		const extras = focusRequests
+			? {
+					queryParams: { focusRequests: 'true' },
+				}
+			: {};
+
+		this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug], extras);
 	}
 	redirectToLearningPathDetail(learningPathSlug, issuer) {
 		this.router.navigate(['/issuer/issuers/', issuer.slug, 'learningpaths', learningPathSlug]);
@@ -245,7 +278,7 @@ export class OebIssuerDetailComponent implements OnInit {
 	}
 }
 
-class BadgeResult {
+export class BadgeResult {
 	constructor(
 		public badge: BadgeClass,
 		public issuerName: string,

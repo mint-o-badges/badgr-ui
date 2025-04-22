@@ -75,7 +75,16 @@
 		"title": "Titel",
 		"noResults": "Keine Ergebnisse",
 		"reset": "Zurücksetzen",
-		"exam": "Prüfung"
+		"exam": "Prüfung",
+		"create": "erstellen",
+		"copy": "kopieren",
+		"place": "stellen",
+		"forwarded": "weitergeleitet",
+		"revoke": "zurücknehmen",
+		"confirm": "Bestätigen",
+		"noRequests": "Keine Anfragen",
+		"oneRequest": "1 Anfrage",
+		"multiRequests": "# Anfragen"
 	},
 	"NavItems": {
 		"register": "Registrieren",
@@ -152,6 +161,9 @@
 		"recipient": "Empfänger",
 		"noRecipient": "Kein Empfänger",
 		"createInstitution": "Institution erstellen",
+		"createInstitutionNow": "Jetzt Institution erstellen",
+		"createFirstInstitution": "Erstelle jetzt deine erste Institution, um Badges zu vergeben:",
+		"partOfInstitution": "Du gehörst zu einer bereits erstellten Institution?",
 		"noInstitutionYet": "Du hast noch keine Institution erstellt!",
 		"institutionCreateInfo": "Mit Institutionen kannst du Badges erstellen und an Nutzer*innen vergeben.",
 		"yourRole": "Deine Rolle:",
@@ -214,7 +226,7 @@
 		"giveMyBadges": "Meine Badges vergeben",
 		"askForPlugin": "Plugin anfragen",
 		"askForPluginText": "Unser <span class='tw-font-bold'>Plugin</span> bietet dir die Möglichkeit, Badges aus deiner eigenen digitalen Lehrumgebung heraus zu vergeben.",
-		"betaPhase": "Unsere Plattform befindet sich noch in der Betaphase. <b>Du hast Fehler entdeckt? Schreib uns an <a class='tw-text-link' href='mailto:support@openbadges.education'>support@openbadges.education</a></b>.",
+		"betaPhase": "Unsere Plattform befindet sich noch in der Betaphase. <b>Du hast Fehler entdeckt? Schreib uns an <a class='tw-text-link tw-underline' href='mailto:support@openbadges.education'>support@openbadges.education</a></b>.",
 		"askForLearningPath": "Wir helfen dir, einen Micro Degree anzulegen. Schreibe an <a href='mailto:lernpfad@openbadges.education' class='tw-underline tw-text-[#1400FF]'>lernpfad@openbadges.education</a>.",
 		"award": "vergeben",
 		"badgePreview": "Vorschau Badge",
@@ -274,9 +286,22 @@
 		"waitWhileBadgesAreIssued": "Badges werden vergeben, bitte warten...",
 		"rolesAndRights": "Rollen und Rechte innerhalb von Institutionen",
 		"rolesAndRightsInfo1": "Infos zu ",
+		"copyBadgesOfOtherIssuers": " Du kannst auch Badges anderer Institutionen <a class='tw-underline tw-text-[#1400FF]' hlmA href='https://openbadges.education/catalog/badges'>kopieren</a>.",
 		"rolesAndRightsInfo2": "Rollen und Rechten",
 		"rolesAndRightsInfo3": " innerhalb von Institutionen",
-		"copyBadgesOfOtherIssuers": " Du kannst auch Badges anderer Institutionen <a class='tw-underline tw-text-[#1400FF]' hlmA href='https://openbadges.education/catalog/badges'>kopieren</a>."
+		"requestMembershipQuestion": "Möchtest du wirklich eine Mitgliedsanfrage an",
+		"requestMembership": "Mitgliedsanfrage stellen",
+		"staffRequestForwarded": "Wir haben deine Mitgliedsanfrage an",
+		"staffRequestForwardedEmail": "Du bekommst eine E-Mail von uns, wenn die Anfrage bestätigt wird.",
+		"yourOpenStaffRequests": "Deine offenen Mitgliedsanfragen",
+		"deleteStaffRequest": "Anfrage löschen",
+		"openStaffRequests": "Offene Mitgliedsanfragen",
+		"confirmStaffRequest": "Mitgliedsanfrage bestätigen",
+		"confirmStaffRequestText1": "Wenn ",
+		"confirmStaffRequestText2": " Mitglied deiner Institution sein soll, wähle die passende Rolle aus und bestätige die Anfrage:",
+		"noOpenStaffRequests": "Keine offenen Anfragen",
+		"ownInstitution": "eigene Institution",
+		"allInstitutions": "alle Institutionen"
 	},
 	"Badge": {
 		"groupBy": "Gruppieren nach",
@@ -332,6 +357,9 @@
 		"copyLabelOthers": "Der Badge darf von <strong>anderen</strong> Institutionen kopiert werden.",
 		"copy": "Badge für eigene Institution kopieren",
 		"copyBadge": "Badge kopieren",
+		"copyableFor": "Kopierbar für",
+		"copyForWhatInstitution": "Für welche deiner Institutionen soll der Badge kopiert werden?",
+		"copyPermissionInfo": "Der Kopier-Status dieses Badges erlaubt nur das Kopieren innerhalb der Institution, daher wird nur diese hier angezeigt.",
 		"awardCriteria": "Vergabe-Kriterien",
 		"criteriaDesc": "Welche Anforderungen müssen deine Lernenden erfüllen, um den Badge zu erhalten?",
 		"activeParticipation": "Aktive Teilnahme",
@@ -693,8 +721,11 @@
 		"heading": "Schön, dass du da bist!",
 		"text1": "Alle deine Badges kannst du ab jetzt in deinem <span class='tw-font-medium tw-text-purple'>Ruckack sammeln</span>.",
 		"text2": "Wenn du<span class='tw-font-medium tw-text-purple'> Badges erstellen und vergeben möchtest</span>, lege dafür deine Institution an.",
-		"collectBadgesBtn": "Badges im Rucksack sammeln",
-		"awardBadgesBtn": "Institutionen erstellen und Badges vergeben"
+		"collectBadgesBtn": "Badges sammeln",
+		"awardBadgesBtn": "Badges vergeben",
+		"whatNext": "Was möchtest du als nächstes tun?",
+		"viaYourInstitution": "Über deine <span class='tw-italic'>Institution</span>.",
+		"inBackpack": "Im <span class='tw-italic'>Rucksack</span>."
 	},
 	"RequestBadge": {
 		"requestBadge": "Badge anfordern",
@@ -719,7 +750,8 @@
 		"downloadedSuccessfully": "<span class='tw-font-bold'>Du hast den QR-Code erfolgreich heruntergeladen.</span><br> Schaue in deinem Download-Ordner nach.",
 		"deleteQrAward": "QR-Code-Vergabe löschen",
 		"deleteQrAwardConfirm": "Möchtest du die QR-Code-Vergabe wirklich löschen?",
-		"openRequestsWillBeLost": "Damit gehen alle noch offenen Badge-Anfragen verloren."
+		"openRequestsWillBeLost": "Damit gehen alle noch offenen Badge-Anfragen verloren.",
+		"receiveEmails": "Ich möchte per E-Mail über neue QR-Code-Anfragen benachrichtigt werden"
 	},
 	"LearningPath": {
 		"learningpaths": "Micro Degrees",

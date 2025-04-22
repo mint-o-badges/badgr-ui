@@ -7,7 +7,7 @@ import {
 	HlmDialogHeaderComponent,
 } from './spartan/ui-dialog-helm/src';
 
-import { NgClass, NgIf } from '@angular/common';
+import { NgIf } from '@angular/common';
 
 @Component({
 	selector: 'oeb-dialog',
@@ -17,17 +17,9 @@ import { NgClass, NgIf } from '@angular/common';
 		HlmDialogDescriptionDirective,
 		HlmButtonDirective,
 		NgIf,
-		NgClass,
 	],
 	template: `
-		<div
-			class="tw-px-4 tw-py-6"
-			[ngClass]="{
-				' tw-border-red': variant === 'danger',
-				' tw-border-link': variant === 'info',
-				'tw-border-purple': variant === 'default'
-			}"
-		>
+		<div class="tw-px-4 tw-py-6">
 			<hlm-dialog-header *ngIf="title">
 				<h3 hlmH3>{{ title }}</h3>
 				<p hlmP hlmDialogDescription>{{ subtitle }}</p>

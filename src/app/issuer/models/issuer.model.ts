@@ -2,6 +2,7 @@ import {
 	ApiIssuer,
 	ApiIssuerStaff,
 	IssuerRef,
+	IssuerSlug,
 	IssuerStaffRef,
 	IssuerStaffRoleSlug,
 	IssuerUrl,
@@ -40,6 +41,10 @@ export class Issuer extends ManagedEntity<ApiIssuer, IssuerRef> {
 
 	get issuerUrl(): IssuerUrl {
 		return this.apiModel.json.id;
+	}
+
+	get slug(): IssuerSlug {
+		return this.apiModel.slug;
 	}
 
 	get name(): string {
@@ -105,10 +110,7 @@ export class Issuer extends ManagedEntity<ApiIssuer, IssuerRef> {
 	}
 
 	get ownerAcceptedTos(): boolean {
-		const owners = this.staff.entities.filter((staff) => staff.isOwner);
-		return owners.some(
-			(owner) => owner.apiModel.user.agreed_terms_version === owner.apiModel.user.latest_terms_version,
-		);
+		return this.apiModel.ownerAcceptedTos;
 	}
 
 	get learningPathCount(): number {
@@ -309,7 +311,7 @@ export const issuerStaffRoles = [
 	},
 	{
 		slug: 'editor',
-		label: 'Editor',
+		label: 'Editor:in',
 		indefiniteLabel: 'an editor',
 		description: 'Rechte zum Erstellen, Vergeben und Löschen von Badges inkl. Micro Degrees.',
 	},
