@@ -140,6 +140,8 @@
 					class="tw-whitespace-nowrap tw-mt-6"
 					type="submit"
 					text="QR-Code generieren"
+					[loading-promises]="qrCodePromise"
+					disabled-when-requesting="true"
 				>
 				</oeb-button>
 			</div>
