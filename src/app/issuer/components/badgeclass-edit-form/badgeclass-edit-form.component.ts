@@ -323,26 +323,24 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				.addControl('target_code', ''),
 		)
 		.addControl('copy_permissions_allow_others', false)
-		.addArray(
-			'criteria',
-			typedFormGroup()
-				.addControl('activeParticipation', false)
-				.addControl('selfReflection', false)
-				.addControl('achievedIndividualLearning', false)
-				.addControl('presence90', false)
-				.addControl('practicalApplication', false)
-				.addControl('onlineCourseCompleted', false)
-				.addControl('projectCompleted', false)
-				.addControl('addOwnCriteria', false)
-				.addControl('portfolio', false)
-				.addControl('peerFeedback', false),
-		)
-		.addArray(
-			'customCriteria',
-			typedFormGroup()
-				.addControl('name', '', Validators.max(50))
-				.addControl('description', '', Validators.max(300)),
-		);
+
+	criteriaForm = typedFormGroup()
+			.addControl('activeParticipation', false)
+			.addControl('selfReflection', false)
+			.addControl('achievedIndividualLearning', false)
+			.addControl('presence90', false)
+			.addControl('practicalApplication', false)
+			.addControl('onlineCourseCompleted', false)
+			.addControl('projectCompleted', false)
+			.addControl('addOwnCriteria', false)
+			.addControl('portfolio', false)
+			.addControl('peerFeedback', false)
+			.addArray(
+				'customCriteria',
+				typedFormGroup()
+					.addControl('name', '', Validators.max(50))
+					.addControl('description', '', Validators.max(300)),
+			);
 
 	@ViewChild('badgeStudio')
 	badgeStudio: BadgeStudioComponent;
@@ -407,7 +405,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// Expiration
-	expirationEnabled = false;
+	expirationEnabled = true;
 	expirationForm = typedFormGroup()
 		.addControl('expires_amount', '', [Validators.required, this.positiveInteger, Validators.max(1000)])
 		.addControl('expires_duration', '', Validators.required);
@@ -438,6 +436,19 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		c1: 'C1 Leader*in',
 		c2: 'C2 Vorreiter*in',
 	};
+
+	criteriaOptions = [
+		{ controlName: 'activeParticipation', text: this.translate.instant('Badge.activeParticipation')},
+		{ controlName: 'selfReflection', text: this.translate.instant('Badge.selfReflection') },
+		{ controlName: 'peerFeedback', text: 'Peer-Feedback' },
+		{ controlName: 'achievedIndividualLearning', text: this.translate.instant('Badge.achievedIndividualLearning')},
+		{ controlName: 'presence90', text: this.translate.instant('Badge.presence90') },
+		{ controlName: 'practicalApplication', text: this.translate.instant('Badge.practicalApplication')},
+		{ controlName: 'onlineCourseCompleted', text: this.translate.instant('Badge.onlineCourseCompleted') },
+		{ controlName: 'portfolio', text: 'Portfolio' },
+		{ controlName: 'projectCompleted', text: this.translate.instant('Badge.projectCompleted') },
+		{ controlName: 'exam', text: this.translate.instant('General.exam') },
+	];
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// Alignments
@@ -542,8 +553,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			// be displayed as competencies entered by hand
 			aiCompetencies: [],
 			keywordCompetencies: [],
-			criteria: [],
-			customCriteria: [],
 			competencies: badgeClass.extension['extensions:CompetencyExtension'] ? competencies : [],
 			alignments: this.badgeClass.alignments.map((alignment) => ({
 				target_name: alignment.target_name,
@@ -839,11 +848,11 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	}
 
 	addNewOwnCriteria() {
-		this.badgeClassForm.controls.customCriteria.addFromTemplate();
+		this.criteriaForm.controls.customCriteria.addFromTemplate();
 	}
 
 	removeCustomCriteria(index: number) {
-		this.badgeClassForm.controls.customCriteria.removeAt(index);
+		this.criteriaForm.controls.customCriteria.removeAt(index);
 	}
 
 	addCompetency(competency: typeof this.badgeClassForm.controls.competencies) {
@@ -1199,42 +1208,25 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				});
 			}
 
-			let criteriaText =
-				'*Folgende Kriterien sind auf Basis deiner Eingaben als Metadaten im Badge hinterlegt*: \n\n';
-			let participationText = `Du hast erfolgreich an **${this.badgeClassForm.value.badge_name}** teilgenommen.  \n\n `;
-			let competenciesTextCaption = 'Dabei hast du folgende Kompetenzen gestärkt: \n\n';
+			const criteriaControls = this.criteriaForm.value;
+			const selectedCriteria = Object.keys(criteriaControls)
+			.filter(key => key !== 'customCriteria' && criteriaControls[key]);
 
-			let competenciesText = this.badgeClassForm.value.competencies
-				.map((competency) => {
-					return `- ${competency.name} \n`;
-				})
-				.join('');
+			// const customCriteriaNames = criteriaControls.customCriteria
+			// ? criteriaControls.customCriteria.map(item => item.name).filter(name => name)
+			// : [];
 
-			let aiCompetenciesText = this.badgeClassForm.controls.aiCompetencies.controls
-				.map((aiCompetency, index) => {
-					if (aiCompetency.controls.selected.value) {
-						return `- ${this.aiCompetenciesSuggestions[index].preferred_label} \n`;
-					}
-				})
-				.join('');
-
-			let keywordCompetenciesText = this.badgeClassForm.controls.keywordCompetencies.controls
-				.map((_keywordCompetency, index) => {
-					return `- ${this.selectedKeywordCompetencies[index].preferred_label} \n`;
-				})
-				.join('');
+			// const allCriteria = [...selectedCriteria, ...customCriteriaNames];
+			// const criteriaText = allCriteria.join(', ');
+			const criteriaText = selectedCriteria.join(', ')
+			console.log(criteriaText)
 
 			if (this.badgeCategory === 'competency') {
 				this.badgeClassForm.controls.badge_criteria_text.setValue(
-					criteriaText +
-						participationText +
-						competenciesTextCaption +
-						competenciesText +
-						aiCompetenciesText +
-						keywordCompetenciesText,
-				);
+					criteriaText 
+				)
 			} else {
-				this.badgeClassForm.controls.badge_criteria_text.setValue(criteriaText + participationText);
+				this.badgeClassForm.controls.badge_criteria_text.setValue(criteriaText);
 			}
 
 			let imageFrame = true;
@@ -1275,7 +1267,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 			const formState = this.badgeClassForm.value;
 
-			console.log('formState', formState.criteria);
+			console.log('formState', this.criteriaForm.value);
 
 			const expirationState = this.expirationEnabled ? this.expirationForm.value : undefined;
 
@@ -1363,6 +1355,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 					imageFrame: imageFrame,
 					criteria_text: formState.badge_criteria_text,
 					criteria_url: formState.badge_criteria_url,
+					customCriteria: this.criteriaForm.value.customCriteria,
 					tags: Array.from(this.tags),
 					alignment: this.alignmentsEnabled ? formState.alignments : [],
 					extensions: {
@@ -1401,8 +1394,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 						),
 					},
 					copy_permissions: copy_permissions,
-					// criteria: formState.criteria,
-					customCriteria: formState.customCriteria,
 				} as ApiBadgeClassForCreation;
 				if (this.currentImage) {
 					badgeClassData.extensions = {

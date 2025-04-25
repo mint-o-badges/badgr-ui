@@ -76,7 +76,7 @@ export interface PageConfig {
 	badgeFailedImageUrl: string;
 	badgeImage: string;
 	badgeDescription: string;
-	badgeCriteria: string | null;
+	badgeCriteria: Array<string | object>;
 	competencies?: CompetencyType[];
 	license?: boolean;
 	id?: string;
@@ -84,4 +84,6 @@ export interface PageConfig {
 	badgeInstanceSlug?: string;
 	learningPaths?: PublicApiLearningPath[] | ApiLearningPath[];
 	copy_permissions?: BadgeClassCopyPermissions[];
+	criteria?: string[]
+	customCriteria?: Array<object>
 }

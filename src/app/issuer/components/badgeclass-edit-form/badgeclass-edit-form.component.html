@@ -1008,44 +1008,12 @@
 						></span>
 						<div class="tw-mt-2 tw-mb-2 tw-grid tw-grid-cols-3">
 							<div class="tw-grid tw-grid-cols-2 tw-col-span-2">
-								<!-- <ng-container
-									*ngFor="let criteria of badgeClassForm.controls.criteria.controls; let i = index"
-								>
-									<oeb-checkbox [control]="">
-
-									</oeb-checkbox> -->
-								<oeb-checkbox
-									[control]="badgeClassForm.rawControlMap.copy_permissions_allow_others"
-									[text]="'Badge.activeParticipation' | translate"
-								/>
-								<oeb-checkbox
-									[control]="badgeClassForm.rawControlMap.copy_permissions_allow_others"
-									text="Peer-Feedback"
-								/>
-								<oeb-checkbox
-									[control]="badgeClassForm.rawControlMap.copy_permissions_allow_others"
-									[text]="'Badge.achievedIndividualLearning' | translate"
-								/>
-								<oeb-checkbox
-									[control]="badgeClassForm.rawControlMap.copy_permissions_allow_others"
-									[text]="'Badge.presence90' | translate"
-								/>
-								<oeb-checkbox
-									[control]="badgeClassForm.rawControlMap.copy_permissions_allow_others"
-									[text]="'Badge.practicalApplication' | translate"
-								/>
-								<oeb-checkbox
-									[control]="badgeClassForm.rawControlMap.copy_permissions_allow_others"
-									[text]="'Badge.onlineCourseCompleted' | translate"
-								/>
-								<oeb-checkbox
-									[control]="badgeClassForm.rawControlMap.copy_permissions_allow_others"
-									text="Portfolio"
-								/>
-								<oeb-checkbox
-									[control]="badgeClassForm.rawControlMap.copy_permissions_allow_others"
-									[text]="'Badge.projectCompleted' | translate"
-								/>
+								<ng-container *ngFor="let option of criteriaOptions">
+									<oeb-checkbox
+									  [control]="criteriaForm.rawControlMap[option.controlName]"
+									  [text]="option.text"
+									></oeb-checkbox>
+								  </ng-container>
 							</div>
 							<oeb-button
 								class="tw-col-span-1"
@@ -1057,7 +1025,7 @@
 							></oeb-button>
 						</div>
 						<ng-container
-							*ngFor="let criteria of badgeClassForm.controls.customCriteria.controls; let i = index"
+							*ngFor="let criteria of criteriaForm.controls.customCriteria.controls; let i = index"
 						>
 							<section
 								class="tw-border-[var(--color-purple)] tw-bg-[var(--color-lightpurple)] tw-border tw-border-solid tw-rounded-md tw-p-6 tw-mt-4"
@@ -1103,11 +1071,39 @@
 						</h2>
 						<span
 							class="tw-text-purple tw-italic tw-text-lg tw-mt-2"
-							[innerHTML]="'Badge.criteriaDesc' | translate"
+							[innerHTML]="'CreateBadge.expirationInfo' | translate"
 						></span>
-						<div class="tw-mt-2 tw-mb-2 tw-flex tw-gap-2">
-							<span [innerHTML]="'CreateBadge.validUntil' | translate"></span>
-						</div>
+						<div class="formsection-x-body">
+							<div class="l-spacestack">
+								<oeb-input
+									id="duration-number"
+									[control]="expirationForm.rawControlMap.expires_amount"
+									[label]="count"
+									[fieldType]="'number'"
+									[max]="1000"
+									[maxchar]="4"
+									[errorMessage]="{
+										max: maxValue1000
+									}"
+								></oeb-input>
+								<oeb-select
+									[id]="'duration-type'"
+									ariaLabel="chooseDuration"
+									[control]="expirationForm.rawControlMap.expires_duration"
+									[label]="duration"
+									[placeholder]="chooseDuration"
+									[optionMap]="durationOptions"
+								></oeb-select>
+							</div>
+							</div>
+						<!-- <div class="tw-mt-2 tw-mb-2 tw-flex tw-gap-2"> -->
+							<!-- <span [innerHTML]="'CreateBadge.validUntil' | translate"></span> -->
+							<!-- <oeb-input
+								[errorMessage]="'Bitte gib ein Datum in der Form tt/mm/jjjj an'"
+								[control]="expirationForm.rawControlMap.expires"
+								fieldType="date"
+							></oeb-input> -->
+						<!-- </div> -->
 					</div>
 				</cdk-step>
 			</oeb-stepper>

@@ -6,6 +6,7 @@ import {
 	BadgeClassExpiresDuration,
 	BadgeClassRef,
 	BadgeClassUrl,
+	CustomCriteria,
 } from './badgeclass-api.model';
 import { IssuerUrl } from './issuer-api.model';
 import { ManagedEntity } from '../../common/model/managed-entity';
@@ -80,6 +81,10 @@ export class BadgeClass extends ManagedEntity<ApiBadgeClass, BadgeClassRef> {
 	set criteria_text(criteriaText: string) {
 		this.apiModel.json.criteria_text = criteriaText;
 		this.apiModel.criteria_text = criteriaText;
+	}
+
+	get customCriteria(): CustomCriteria[] {
+		return this.apiModel.customCriteria
 	}
 
 	get criteria_url(): string {
