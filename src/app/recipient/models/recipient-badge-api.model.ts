@@ -67,6 +67,7 @@ export interface ApiRecipientBadgeClass {
 	description: string;
 	image: string;
 	criteria?: string;
+	customCriteria?: Array<{name: string; description: string;}>
 	criteria_text?: string;
 	criteria_url?: string;
 	tags: string[];

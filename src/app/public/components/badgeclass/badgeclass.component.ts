@@ -83,14 +83,14 @@ export class PublicBadgeClassComponent {
 				this.learningPaths = lp;
 			});
 			badgeClass.then((badge) => {
-				console.log(badge.criteria)
 				this.config = {
 					qrCodeButton: {
 						show: false,
 					},
 					badgeTitle: badge.name,
 					badgeDescription: badge.description,
-					badgeCriteria: typeof badge.criteria == 'string' ? badge.criteria.split(",") : null,
+					badgeCriteria: typeof badge.criteria != 'string' ? badge.criteria.narrative.split(",") : null,
+					customCriteria: badge.customCriteria,
 					issuerSlug: badge.issuer['slug'],
 					slug: badge.id,
 					category: this.translate.instant(
