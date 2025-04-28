@@ -62,10 +62,6 @@ export interface PublicApiBadgeClass {
 				criteriaUrl: string;
 		  }
 		| string;
-	customCriteria: Array<{
-		name: string; 
-		description: string;
-	}>	
 	alignment: Array<{
 		frameworkName?: string;
 		targetName: string;

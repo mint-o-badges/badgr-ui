@@ -35,8 +35,8 @@ export interface ApiBadgeClassForCreation {
 	image: string;
 	imageFrame?: boolean;
 	description: string;
-	criteria_url: string;
-	criteria_text: string;
+	criteria_url?: string;
+	criteria_text?: string;
 
 	extensions?: object;
 
@@ -44,7 +44,7 @@ export interface ApiBadgeClassForCreation {
 	alignment?: ApiBadgeClassAlignment[];
 	expires?: ApiBadgeClassExpiration;
 	copy_permissions?: BadgeClassCopyPermissions[];
-	criteria?: any;
+	criteria?: object;
 	customCriteria?: CustomCriteria[];
 }
 

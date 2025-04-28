@@ -83,10 +83,6 @@ export class BadgeClass extends ManagedEntity<ApiBadgeClass, BadgeClassRef> {
 		this.apiModel.criteria_text = criteriaText;
 	}
 
-	get customCriteria(): CustomCriteria[] {
-		return this.apiModel.customCriteria
-	}
-
 	get criteria_url(): string {
 		return this.apiModel.criteria_url;
 	}
@@ -94,6 +90,14 @@ export class BadgeClass extends ManagedEntity<ApiBadgeClass, BadgeClassRef> {
 		this.apiModel.json.criteriaUrl = criteriaUrl;
 		this.apiModel.criteria_url = criteriaUrl;
 	}
+
+	get critera(): object {
+		return this.apiModel.criteria
+	}
+
+	set criteria(criteria: object) {
+		this.apiModel.criteria = criteria;
+	} 
 
 	get tags(): string[] {
 		return this.apiModel.tags;

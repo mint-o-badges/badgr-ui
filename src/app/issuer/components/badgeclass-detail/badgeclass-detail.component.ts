@@ -227,7 +227,6 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 					crumbs: this.crumbs,
 					badgeTitle: this.badgeClass.name,
 					badgeCriteria: criteria,
-					customCriteria: JSON.parse(JSON.stringify(this.badgeClass.customCriteria)),
 					headerButton: {
 						title: 'Badge direkt vergeben',
 						action: () => this.routeToBadgeAward(this.badgeClass, this.issuer),

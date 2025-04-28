@@ -1008,10 +1008,10 @@
 						></span>
 						<div class="tw-mt-2 tw-mb-2 tw-grid tw-grid-cols-3">
 							<div class="tw-grid tw-grid-cols-2 tw-col-span-2">
-								<ng-container *ngFor="let option of criteriaOptions">
+								  <ng-container *ngFor="let criteriaGroup of criteriaSelectionsForm.controls.selections.controls; let i = index">
 									<oeb-checkbox
-									  [control]="criteriaForm.rawControlMap[option.controlName]"
-									  [text]="option.text"
+									  [control]="criteriaGroup.rawControlMap.selected"
+									  [text]="criteriaGroup.controls.text.value"
 									></oeb-checkbox>
 								  </ng-container>
 							</div>
@@ -1024,8 +1024,9 @@
 								(click)="addNewOwnCriteria()"
 							></oeb-button>
 						</div>
+						
 						<ng-container
-							*ngFor="let criteria of criteriaForm.controls.customCriteria.controls; let i = index"
+							*ngFor="let criteria of badgeClassForm.controls.criteria.controls; let i = index"
 						>
 							<section
 								class="tw-border-[var(--color-purple)] tw-bg-[var(--color-lightpurple)] tw-border tw-border-solid tw-rounded-md tw-p-6 tw-mt-4"
@@ -1049,7 +1050,7 @@
 										size="sm"
 										variant="secondary"
 										[text]="'General.delete' | translate"
-										(click)="removeCustomCriteria(i)"
+										(click)="removeCriteria(criteria.rawControlMap.name.value)"
 									>
 									</oeb-button>
 								</div>
