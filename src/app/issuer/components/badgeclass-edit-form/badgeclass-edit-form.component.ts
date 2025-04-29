@@ -9,6 +9,7 @@ import {
 	Output,
 	ViewChild,
 	isDevMode,
+	SimpleChanges,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
@@ -546,7 +547,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				target_framework: alignment.target_framework,
 				target_code: alignment.target_code,
 			})),
-			criteria: badgeClass.criteria as any,
+			criteria: badgeClass.apiModel.criteria,
 			copy_permissions_allow_others: this.existing ? badgeClass.canCopy('others') : false,
 		});
 
@@ -571,22 +572,23 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		}
 	}
 
+
 	ngOnInit() {
 		super.ngOnInit();
 
-		if(!this.existing){
 		this.criteriaOptions.forEach(option => {
 			const selectionGroup = typedFormGroup()
 			  .addControl('controlName', option.controlName)
-			  .addControl('selected', false)
+			  .addControl('selected', false )
 			  .addControl('text', option.text);
 			  
 			this.criteriaSelectionsForm.controls.selections.push(selectionGroup);
 		  });
+
 		  
 		  this.criteriaSelectionsForm.controls.selections.controls.forEach((group, index) => {
 			group.controls.selected.rawControl.valueChanges.subscribe(isSelected => {
-			  const controlName = group.controls.controlName.value;
+			  const controlName = group.controls.text.value;
 			  
 			  if (isSelected) {
 				this.addCriteriaIfNotExists(controlName);
@@ -595,41 +597,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			  }
 			});
 		  });
-		}
-
-		// if(!this.existing){
-		// 	this.criteriaOptions.forEach(option => {
-		// 		const criteriaGroupForBadge = typedFormGroup()
-		// 		  .addControl('name', option.controlName)
-		// 		  .addControl('description', '')
-		// 		  .addControl('selected', false)
-		// 		  .addControl('displayText', option.text);
-				
-		// 		const criteriaGroupForCheckbox = typedFormGroup()
-		// 		  .addControl('name', option.controlName)
-		// 		  .addControl('description', '')
-		// 		  .addControl('selected', false)
-		// 		  .addControl('displayText', option.text);
-				
-		// 		this.badgeClassForm.controls.criteria.push(criteriaGroupForBadge);
-		// 		this.criteriaFormCheckboxes.controls.checkboxes.push(criteriaGroupForCheckbox);
-		// 	  });
-		// }
-		// this.criteriaOptions.forEach((option, index) => {
-		// 	const criteriaGroup = this.criteriaFormCheckboxes.controls.checkboxes.controls.at(index);
-			
-		// 	criteriaGroup.rawControl.controls['selected'].valueChanges.subscribe((isSelected) => {
-		// 		if (isSelected) {
-		// 		  const newIndex = this.badgeClassForm.controls.criteria.controls.length;
-		// 		  this.badgeClassForm.controls.criteria.addFromTemplate();
-				  
-		// 		  const newCriteria = this.badgeClassForm.controls.criteria.controls.at(newIndex);
-				  
-		// 		  newCriteria.controls.name.setValue(option.controlName);
-		// 		  newCriteria.controls.description.setValue(''); 
-		// 		  				}
-		// 	  });
-		//   });
 
 		this.translate.get('General.next').subscribe((next) => {
 			this.next = next;
@@ -704,6 +671,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	}
 
 	ngAfterViewInit(): void {
+
 		this.imageField.control.statusChanges.subscribe((e) => {
 			if (this.imageField.control.value != null) this.customImageField.control.reset();
 		});
@@ -734,6 +702,26 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			this.keywordCompetenciesKeywordsChange();
 		});
 	}
+
+	ngOnChanges(changes: SimpleChanges): void {
+		if (changes['badgeClass'] && changes['badgeClass'].currentValue) {
+		  if (this.badgeClassForm.controls.criteria.controls.length > 0) {
+			const existingCriteriaNames = this.badgeClassForm.controls.criteria.controls.map(
+			  criteriaGroup => criteriaGroup.controls.name.value
+			);
+			
+			
+			this.criteriaSelectionsForm.controls.selections.controls.forEach(selectionGroup => {
+			  const controlText = selectionGroup.controls.text.value;
+			  
+			  if (existingCriteriaNames.includes(controlText)) {
+				selectionGroup.controls.selected.setValue(true);
+			  }
+			});
+		  }
+	  
+		}
+	  }
 
 	addCriteriaIfNotExists(controlName: string) {
 		if (this.findCriteriaIndex(controlName) === -1) {
@@ -933,12 +921,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 	addNewOwnCriteria() {
 		this.badgeClassForm.controls.criteria.addFromTemplate();
-	}
-
-	removeCustomCriteria(index: number) {
-		this.badgeClassForm.controls.criteria.removeAt(index);
-		this.criteriaSelectionsForm.controls.selections.controls.at(index).controls.selected.setValue(false);
-
 	}
 
 	addCompetency(competency: typeof this.badgeClassForm.controls.competencies) {
@@ -1338,6 +1320,8 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				this.existingBadgeClass.imageFrame = imageFrame;
 				this.existingBadgeClass.alignments = this.alignmentsEnabled ? formState.alignments : [];
 				this.existingBadgeClass.tags = Array.from(this.tags);
+				this.existingBadgeClass.criteria = formState.criteria,
+				this.existingBadgeClass.criteria_text = "",
 				this.existingBadgeClass.extension = {
 					...this.existingBadgeClass.extension,
 					'extensions:StudyLoadExtension': {

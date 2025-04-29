@@ -25,11 +25,6 @@ export interface ApiBadgeClassJsonld {
 	issuer: string;
 }
 
-export interface CustomCriteria {
-	name: string;
-	description?: string;
-}
-
 export interface ApiBadgeClassForCreation {
 	name: string;
 	image: string;
@@ -44,8 +39,7 @@ export interface ApiBadgeClassForCreation {
 	alignment?: ApiBadgeClassAlignment[];
 	expires?: ApiBadgeClassExpiration;
 	copy_permissions?: BadgeClassCopyPermissions[];
-	criteria?: object;
-	customCriteria?: CustomCriteria[];
+	criteria?: Array<{name: string; description: string;}>;
 }
 
 export interface ApiBadgeClassAlignment {

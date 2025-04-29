@@ -112,7 +112,7 @@
 						<dl clss="tw-min-w-[150px]">
 							<div *ngIf="config.badgeCriteria" class="tw-bg-white tw-mb-4 tw-rounded-[10px]">
 								<ng-template [bgAwaitPromises]="[badgeInstancesLoaded]">
-									<oeb-collapsible [trigger]="collapseCriteriaTrigger" closeIcon="lucideChevronDown" [defaultOpen]="config.customCriteria ? true : false" [id]="">
+									<oeb-collapsible [trigger]="collapseCriteriaTrigger" closeIcon="lucideChevronDown" [defaultOpen]="config.badgeCriteria.length > 0" [id]="">
 										<ng-template #collapseCriteriaTrigger>
 											<dt class="tw-mr-auto tw-flex tw-justify-center tw-items-center tw-px-2">
 												<ng-icon hlm name="lucideAward" 
@@ -129,15 +129,10 @@
 										<dd>
 											<ul class="tw-pr-2 tw-pl-8 tw-list-inside tw-list-disc">
 												<li class="tw-mb-1" *ngFor="let criteria of config.badgeCriteria">
-													<span class="tw-text-oebblack">{{ criteria }}</span>
-												</li>
-											</ul>
-											<ul *ngIf="config.customCriteria" class="tw-pr-2 tw-pl-8 tw-list-inside tw-list-disc">
-												<li class="tw-mb-1" *ngFor="let criteria of config.customCriteria">
-														<span class="tw-text-oebblack">{{criteria.name}}</span>
-														<p *ngIf="criteria.description" class="tw-text-oebblack tw-italic tw-font-thin tw-ml-4 tw-mt-1">
-															{{criteria.description}}
-														</p>
+													<span class="tw-text-oebblack">{{ criteria.name }}</span>
+													<p *ngIf="criteria.description" class="tw-text-oebblack tw-italic tw-font-thin tw-ml-4 tw-mt-1">
+														{{criteria.description}}
+													</p>
 												</li>
 											</ul>
 										</dd>

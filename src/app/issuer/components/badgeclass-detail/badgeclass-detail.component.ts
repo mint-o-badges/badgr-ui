@@ -222,11 +222,10 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 				];
 				this.allBadgeInstances = retInstances;
 				this.updateResults();
-				const criteria = this.badgeClass.criteria_text.trim().startsWith("*") ? null :  this.badgeClass.criteria_text.split(",")
 				this.config = {
 					crumbs: this.crumbs,
 					badgeTitle: this.badgeClass.name,
-					badgeCriteria: criteria,
+					badgeCriteria: this.badgeClass.apiModel.criteria,
 					headerButton: {
 						title: 'Badge direkt vergeben',
 						action: () => this.routeToBadgeAward(this.badgeClass, this.issuer),
