@@ -54,8 +54,8 @@
 									</span>
 								</div>
 
-								<ng-icon hlm *ngIf="award.request_count > 0" hlmAccIcon class="tw-w-8 tw-h-8" />
 							</div>
+							<ng-icon hlm *ngIf="award.request_count > 0" name="lucideChevronDown" hlmAccIcon class="tw-w-8 tw-h-8" />
 						</button>
 						<brn-accordion-content *ngIf="award.request_count > 0" hlm class="tw-text-white">
 							<qrcodes-datatable
