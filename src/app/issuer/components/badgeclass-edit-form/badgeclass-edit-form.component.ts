@@ -485,6 +485,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			? badgeClass.extension['extensions:CategoryExtension'].Category
 			: 'participation';
 
+
 		this.badgeClassForm.setValue({
 			badge_name: badgeClass.name,
 			badge_image: badgeClass.imageFrame ? badgeClass.image : null,
@@ -516,7 +517,13 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 							legalCode: badgeClass.extension['extensions:LicenseExtension'].legalCode,
 						},
 					]
-				: this.badgeClassForm.controls.license.value,
+				: [
+						{
+							id: 'CC-0',
+							name: 'Public Domain',
+							legalCode: 'https://creativecommons.org/publicdomain/zero/1.0/legalcode',
+						},
+					],
 			// Note that, even though competencies might originally have been selected
 			// based on ai suggestions, they can't be separated anymore and thus will
 			// be displayed as competencies entered by hand
@@ -542,7 +549,11 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			: undefined;
 
 		setTimeout(() => {
-			this.generateUploadImage(this.currentImage, this.badgeClassForm.value, true, true);
+			if(badgeClass.imageFrame){
+				// regenerating the upload image for the issuer image in case it changed via copying 
+				// or if it was not part of the badge image yet
+				this.generateUploadImage(this.currentImage, this.badgeClassForm.value, true, true);
+			}
 		}, 1);
 
 		this.tags = new Set();
