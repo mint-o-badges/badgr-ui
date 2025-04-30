@@ -6,9 +6,6 @@
 			label="1. Micro Degree-Titel"
 			[control]="lpDetailsForm.rawControlMap.name"
 			[autofocus]="true"
-			[errorMessage]="{
-				required: 'Required'
-			}"
 			sublabelRight="(max. 60 Zeichen)"
 		></oeb-input>
 		<oeb-input
@@ -17,6 +14,7 @@
 			[fieldType]="'textarea'"
 			sublabelRight="(max. 700 Zeichen)"
 			placeholder="{{ 'LearningPathEditor.shortDescription' | translate }}"
+			
 		></oeb-input>
 
 		<div class="tw-mt-6 md:tw-mt-7 tw-relative" id="imageSection" #imageSection>
