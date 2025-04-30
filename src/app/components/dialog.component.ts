@@ -71,8 +71,4 @@ export class DialogComponent {
 	isTemplate(content: any): boolean {
 		return content instanceof TemplateRef;
 	}
-
-	ngOnInit() {
-		console.log(this.context);
-	}
 }

@@ -86,7 +86,10 @@
 		"multiRequests": "# Anfragen",
 		"sendUsYourBadge": "Sende deinen Badge gerne an <a class='tw-text-link tw-underline' href='mailto:support@openbadges.education'>support@openbadges.education</a>, dann schauen wir uns die Datei an. ",
 		"thisDidNotWork": "Das hat leider nicht funktioniert.",
-		"toMyProfile": "Zu meinem Profil"
+		"toMyProfile": "Zu meinem Profil",
+		"imported": "importiert",
+		"new": "neu",
+		"expired": "abgelaufen"
 	},
 	"NavItems": {
 		"register": "Registrieren",

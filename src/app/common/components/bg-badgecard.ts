@@ -13,14 +13,14 @@ import { FormControl } from '@angular/forms';
 		]),
 	],
 	host: {
-		class: 'tw-rounded-[10px] tw-h-max tw-max-w-[450px] tw-border-purple tw-border-solid tw-border tw-relative tw-p-4 tw-block tw-overflow-hidden oeb-badge-card',
+		class: 'tw-rounded-[10px] tw-h-max tw-max-w-[450px] tw-border-solid tw-border-purple tw-border tw-relative tw-p-4 tw-pt-8 tw-block tw-overflow-hidden oeb-badge-card',
 	},
 	template: `
 		<div
 			class="tw-absolute tw-top-0 tw-left-0 tw-bg-purple tw-text-white tw-px-2 tw-py-1"
 			*ngIf="mostRelevantStatus"
 		>
-			{{ mostRelevantStatus }}
+			{{ 'General.' + mostRelevantStatus | translate }}
 		</div>
 
 		<div class="tw-h-[100px]">
@@ -126,7 +126,7 @@ import { FormControl } from '@angular/forms';
 						(ngModelChange)="changeCheckbox($event)"
 					></oeb-checkbox>
 					<div
-						*ngIf="competencies && competencies.length > 0"
+						*ngIf="competencies && competencies.length > 0 && !imported"
 						class="tw-absolute tw-bottom-0 tw-cursor-pointer"
 						(click)="toggleCompetencies()"
 					>
@@ -190,7 +190,7 @@ export class BgBadgecard {
 	@Input() badgeIssueDate: string;
 	@Input() badgeClass: string;
 	@Input() issuerTitle: string;
-	@Input() mostRelevantStatus: 'expired' | 'new' | 'pending' | undefined;
+	@Input() mostRelevantStatus: 'expired' | 'new' | 'pending' | 'imported' | undefined;
 	@Input() verifyUrl: string;
 	@Input() public = false;
 	@Input() competencies?: any[];

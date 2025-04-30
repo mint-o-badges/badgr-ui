@@ -44,29 +44,33 @@ import { OebButtonComponent } from '../../../components/oeb-button.component';
 	],
 	providers: [provideIcons({ lucideCircleX })],
 	template: `
-		<!-- Template for the dialog header -->
 		<ng-template #dialogHeader>
 			<h2 hlmH2 id="addBadgeDialog" class="!tw-text-oebblack tw-font-bold">
 				{{ 'RecBadge.addBadge' | translate }}
 			</h2>
 		</ng-template>
 
-		<!-- Template for the dialog failure header -->
 		<ng-template #failureHeader>
 			<div class="tw-items-center tw-w-full tw-justify-center tw-flex">
-				<ng-icon hlm name="lucideCircleX" class="!tw-h-28 !tw-w-28 tw-text-purple"></ng-icon>
+				<ng-icon (click)="this.closeDialog()" hlm name="lucideCircleX" class="!tw-h-28 !tw-w-28 tw-text-purple"></ng-icon>
 			</div>
 		</ng-template>
 
 		<ng-template #failureContent let-message="message" let-text="text" let-buttontext="buttontext">
-			<div>
-				<p class="tw-text-lg tw-text-oebblack tw-text-center tw-font-bold tw-mt-2">{{ message }}</p>
+			<div class="tw-px-4">
+				<p class="tw-text-lg tw-text-oebblack tw-text-center tw-font-bold tw-mt-2 tw-leading-[130%]">{{ message }}</p>
 				<p [innerHTML]="text" class="tw-mt-2 tw-text-purple tw-italic tw-text-center"></p>
 			</div>
-			<div class="tw-flex tw-justify-center tw-items-center" *ngIf="buttontext">
+			<div class="tw-flex tw-justify-center tw-items-center tw-mt-2 tw-gap-2" *ngIf="buttontext">
+				<oeb-button 
+					size="sm" 
+					(click)="closeDialog()" 
+					[text]="'General.cancel' | translate"
+					variant="secondary">
+				</oeb-button>
 				<oeb-button
 					(click)="routeToUserProfile()"
-					size="md"
+					size="sm"
 					[text]="'General.toMyProfile' | translate"
 				></oeb-button>
 			</div>
