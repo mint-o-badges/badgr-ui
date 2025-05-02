@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 import { BgBadgecard } from './components/bg-badgecard';
 import { BgLearningPathCard } from './components/bg-learningpathcard';
 import { BgBadgeDetail } from './components/badge-detail/badge-detail.component';
-
+import { OebSwitchComponent } from '../components/oeb-switch.component'
 import { BgAwaitPromises } from './directives/bg-await-promises';
 import { BgImageStatusPlaceholderDirective } from './directives/bg-image-status-placeholder.directive';
 import { MenuItemDirective } from './directives/bg-menuitem.directive';
@@ -253,6 +253,7 @@ export const COMMON_IMPORTS = [
 	OebSpinnerComponent,
 	OebCollapsibleComponent,
 	OebButtonComponent,
+	OebSwitchComponent,
 	OebProgressComponent,
 	OebDropdownComponent,
 	OebPaginationComponent,
