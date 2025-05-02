@@ -357,6 +357,115 @@
 						</div>
 					</ng-template>
 				</ng-template>
+				<ng-template #collectionTemplate>
+					<!-- <ng-template [bgAwaitPromises]="[learningpathLoaded]"> -->
+						<!-- No badges, empty state! -->
+						<section class="tw-mt-8" *ngIf="collections.length == 0">
+							<div class="tw-flex tw-justify-between">
+								<div>
+
+									<h2 class="tw-text-oebblack md:tw-text-[22px] tw-leading-[120%] tw-font-bold tw-uppercase">
+										{{ 'BadgeCollection.useCollectionsForApplications' | translate }}
+									</h2>
+									<p class="tw-mt-2 tw-text-oebblack tw-text-lg">{{ 'BadgeCollection.collectionInfoText' | translate }}</p>
+									<p class="tw-mt-2 tw-text-purple tw-text-lg">{{ 'BadgeCollection.addLink' | translate }}</p>
+									
+									<div class="tw-mt-4">
+										<oeb-button
+										 (click)="routeToCollectionCreation()"
+										 [text]="'BadgeCollection.createCollectionNow' | translate">
+										</oeb-button>
+									</div>
+								</div>
+								<div>
+									
+								</div>
+							</div>
+						</section>
+
+						<div class="oeb-section-sm" *ngIf="collections.length > 0">
+							<div class="tw-flex tw-flex-wrap tw-items-center">
+								<input
+									type="text"
+									name="forminput"
+									id="forminput"
+									placeholder="Micro Degrees durchsuchen"
+									[(ngModel)]="searchQuery"
+									class="tw-w-[300px] tw-border-solid tw-border-purple tw-bg-white tw-mr-6"
+									hlmInput
+								/>
+							</div>
+						</div>
+
+						<div>
+							<!-- <div class="oeb-section-sm" *ngIf="learningPathsReadyToRequest.length > 0">
+								<h3 hlmH3 class="tw-uppercase tw-text-purple tw-font-bold tw-pb-4">
+									{{ 'LearningPath.getYourPath' | translate }}
+								</h3>
+								<div class="tw-grid min-[450px]:tw-grid-cols-learningpathsBackpack tw-gap-6">
+									<bg-learningpathcard
+										*ngFor="let lp of learningPathsReadyToRequest"
+										[badgeImage]="lp.participationBadge_image"
+										[name]="lp.name"
+										[issuerTitle]="lp.issuer_name"
+										[description]="lp.description"
+										[tags]="lp.tags"
+										[slug]="lp.slug"
+										[studyLoad]="calculateStudyLoad(lp)"
+										[completed]="lp.completed"
+										[progress]="lp.progress"
+										[completed]="lp.completed"
+										[requested]="lp.requested"
+										[matchOrProgress]="{ progress: lp.progress / calculateStudyLoad(lp) }"
+									></bg-learningpathcard>
+								</div>
+							</div> -->
+
+							<!-- <div class="oeb-section-sm" *ngIf="learningPathsInProgress.length > 0">
+								<h3 hlmH3 class="tw-uppercase tw-text-purple tw-font-bold tw-pb-4">
+									{{ 'LearningPath.continue' | translate }}
+								</h3>
+								<div class="tw-grid min-[450px]:tw-grid-cols-learningpathsBackpack tw-gap-6">
+									<bg-learningpathcard
+										*ngFor="let lp of learningPathsInProgress"
+										[badgeImage]="lp.participationBadge_image"
+										[name]="lp.name"
+										[issuerTitle]="lp.issuer_name"
+										[description]="lp.description"
+										[tags]="lp.tags"
+										[slug]="lp.slug"
+										[progress]="lp.progress"
+										[completed]="lp.completed"
+										[requested]="lp.requested"
+										[studyLoad]="calculateStudyLoad(lp)"
+										[matchOrProgress]="{ progress: lp.progress / calculateStudyLoad(lp) }"
+									></bg-learningpathcard>
+								</div>
+							</div> -->
+
+							<!-- <div class="oeb-section-sm" *ngIf="learningPathsCompleted.length > 0">
+								<h3 hlmH3 class="tw-uppercase tw-text-purple tw-font-bold tw-pb-4">
+									{{ 'LearningPath.finished' | translate }}
+								</h3>
+								<div class="tw-grid min-[450px]:tw-grid-cols-learningpathsBackpack tw-gap-6">
+									<bg-learningpathcard
+										*ngFor="let lp of learningPathsCompleted"
+										[badgeImage]="lp.participationBadge_image"
+										[name]="lp.name"
+										[issuerTitle]="lp.issuer_name"
+										[description]="lp.description"
+										[tags]="lp.tags"
+										[slug]="lp.slug"
+										[progress]="lp.progress"
+										[completed]="true"
+										[studyLoad]="calculateStudyLoad(lp)"
+										[matchOrProgress]="{ progress: lp.progress / calculateStudyLoad(lp) }"
+									></bg-learningpathcard>
+								</div>
+							</div> -->
+						</div>
+					<!-- </ng-template> -->
+				</ng-template>
 			</div>
 		</div>
 		<add-badge-dialog #addBadgeDialog></add-badge-dialog>

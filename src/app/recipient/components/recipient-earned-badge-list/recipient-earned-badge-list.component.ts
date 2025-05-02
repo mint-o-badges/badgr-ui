@@ -65,6 +65,8 @@ export class RecipientEarnedBadgeListComponent
 	learningpathLoaded: Promise<unknown>;
 	allIssuers: ApiRecipientBadgeIssuer[] = [];
 	allLearningPaths: any[] = [];
+	collections: any[] = [];
+
 
 	badgeResults: BadgeResult[] = [];
 	learningPathResults: any[] = [];
@@ -87,6 +89,8 @@ export class RecipientEarnedBadgeListComponent
 	@ViewChild('badgesTemplate', { static: true }) badgesTemplate: ElementRef;
 	@ViewChild('badgesCompetency', { static: true }) badgesCompetency: ElementRef;
 	@ViewChild('learningPathTemplate', { static: true }) learningPathTemplate: ElementRef;
+	@ViewChild('collectionTemplate', { static: true }) collectionTemplate: ElementRef;
+
 
 	groupedUserCompetencies = {};
 	newGroupedUserCompetencies = {};
@@ -233,6 +237,10 @@ export class RecipientEarnedBadgeListComponent
 				title: 'Micro Degrees',
 				component: this.learningPathTemplate,
 			},
+			{
+				title: "Meine Sammlungen",
+				component: this.collectionTemplate
+			}
 		];
 	}
 
@@ -433,6 +441,11 @@ export class RecipientEarnedBadgeListComponent
 			0,
 		);
 		return totalStudyLoad;
+	}
+
+	routeToCollectionCreation(){
+		console.log("routed")
+		this.router.navigate(['recipient/badge-collections/create'])
 	}
 }
 

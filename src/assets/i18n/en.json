@@ -574,10 +574,19 @@
 		"share": "Share",
 		"orginzeBadges": "Organize your badges into collections.",
 		"collectionName": "Name of the collections",
+		"collectionNamePlaceholder": "Tech & Code – My digital skills for the future",
 		"enterCollectioName": "Please enter a name for the collection",
 		"remainingChar": "remaining characters",
-		"description": "Description",
-		"provideDescription": "Please provide a description"
+		"description": "Description of the collection",
+		"provideDescription": "Please provide a description",
+		"myCollections": "My collections",
+		"useCollectionsForApplication": "Use collections for applications",
+		"collectionInfoText": "Organize your badges into collections and download the respective PDF or create a direct-link for sharing.",
+		"addLink": "",
+		"createCollectionNow": "Create collection now",
+		"addBadges": "Add badges to collection",
+		"skipStep": "You can skip this step and add badges later."
+
 	},
 	"Profile": {
 		"more": "More",
