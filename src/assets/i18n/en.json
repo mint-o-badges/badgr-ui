@@ -310,7 +310,10 @@
 		"copyBadge": "Copy Badge",
 		"copyableFor": "Copyable for",
 		"copyForWhatInstitution": "For which of your institutions do you want to copy the badge?",
-		"copyPermissionInfo": "The copy status of this badge only allows copying inside this institution."
+		"copyPermissionInfo": "The copy status of this badge only allows copying inside this institution.",
+		"awardingInProgress": "Badge awarding in progress",
+		"willBeAwardedSoon": "We will have awarded the badges soon!"
+
 	},
 	"CreateBadge": {
 		"chooseBadgeCategory": "Choose Badge-Category",
