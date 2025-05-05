@@ -18,6 +18,7 @@ import { AppConfigService } from '../../../common/app-config.service';
 			<div class="l-containerhorizontal l-containervertical l-childrenvertical wrap"></div>
 		</main>
 	`,
+	standalone: false,
 })
 export class PublicComponent extends BaseRoutableComponent implements OnInit {
 	constructor(

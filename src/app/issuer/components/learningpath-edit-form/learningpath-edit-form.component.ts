@@ -40,6 +40,8 @@ import { LearningPathTagsComponent } from '../learningpath-create-steps/learning
 import { AppConfigService } from '../../../common/app-config.service';
 import { BadgeClassApiService } from '../../services/badgeclass-api.service';
 import { UrlValidator } from '../../../common/validators/url.validator';
+import { Issuer } from '../../models/issuer.model';
+import { IssuerManager } from '../../services/issuer-manager.service';
 
 interface DraggableItem {
 	content: string;
@@ -54,9 +56,9 @@ type BadgeResult = BadgeClass & { selected?: boolean };
 	selector: 'learningpath-edit-form',
 	templateUrl: './learningpath-edit-form.component.html',
 	styleUrls: ['./learningpath-edit-form.component.scss'],
+	standalone: false,
 })
 export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
-
 	@ViewChild(StepperComponent) stepper: StepperComponent;
 
 	@ViewChild('stepOne') stepOne!: LearningPathDetailsComponent;
@@ -76,11 +78,14 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 	badgeCardChecked = false;
 
 	onCheckedChange(event) {
-		console.log(event)
+		console.log(event);
 	}
 
 	@Output()
 	save = new EventEmitter<Promise<ApiLearningPath>>();
+
+	@Output()
+	cancel = new EventEmitter<void>();
 
 	@Input()
 	submittingText: string;
@@ -97,15 +102,15 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 			description: lp.description,
 			participationBadge_image: lp.participationBadgeImage,
 			slug: lp.slug,
-		}
+		};
 	}
 
-	existingLpBadge: BadgeClass | null = null
+	existingLpBadge: BadgeClass | null = null;
 
 	@Input()
-	set lpBadge(badge: BadgeClass){
-		if(this.existingLpBadge !== badge){
-			this.existingLpBadge = badge
+	set lpBadge(badge: BadgeClass) {
+		if (this.existingLpBadge !== badge) {
+			this.existingLpBadge = badge;
 		}
 	}
 
@@ -116,7 +121,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 	selectedBadgeUrls: string[] = [];
 	selectedBadges: any[] = [];
 	studyLoad: number = 0;
-	savePromise: Promise<ApiLearningPath> | Promise<void> | null  = null;
+	savePromise: Promise<ApiLearningPath> | Promise<void> | null = null;
 	selectedStep = 0;
 
 	detailsForm: any;
@@ -127,13 +132,17 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 	lpTags: string[];
 	badgeList: any[] = [];
 
-	baseUrl: string
+	baseUrl: string;
+
+	issuer: Issuer;
+	issuerLoaded: Promise<unknown>;
 
 	constructor(
 		protected formBuilder: FormBuilder,
 		protected loginService: SessionService,
 		protected messageService: MessageService,
 		protected learningPathApiService: LearningPathApiService,
+		protected issuerManager: IssuerManager,
 		protected issuerApiService: IssuerApiService,
 		protected router: Router,
 		protected route: ActivatedRoute,
@@ -143,16 +152,17 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 		protected badgeInstanceManager: BadgeInstanceManager,
 		protected learningPathManager: LearningPathManager,
 		protected configService: AppConfigService,
-
-		// protected title: Title,
 	) {
+		// protected title: Title,
 		super(router, route, loginService);
 		this.baseUrl = this.configService.apiConfig.baseUrl;
 		// this.selectedBadgesLoaded = this.loadSelectedBadges();
+		this.issuerLoaded = this.issuerManager.issuerBySlug(this.issuerSlug).then((issuer) => {
+			this.issuer = issuer;
+		});
 	}
-	next: string
+	next: string;
 	previous: string;
-
 
 	ngOnInit() {
 		this.translate.get('General.next').subscribe((next) => {
@@ -162,26 +172,27 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 			this.previous = previous;
 		});
 		this.learningPathForm.setValue({
-			license:
-			[
+			license: [
 				{
 					id: 'CC-0',
 					name: 'Public Domain',
 					legalCode: 'https://creativecommons.org/publicdomain/zero/1.0/legalcode',
 				},
-			]
-		})
-		if(this.existingLearningPath){
-			this.updateBadgeList(this.existingLearningPath.badges.map((badge) => {
-				return {
-					id: badge.badge.slug,
-					name: badge.badge.name,
-					image: badge.badge.image,
-					description: badge.badge.description,
-					slug: badge.badge.slug,
-					issuerName: badge.badge.issuerName,
-				};
-			}))
+			],
+		});
+		if (this.existingLearningPath) {
+			this.updateBadgeList(
+				this.existingLearningPath.badges.map((badge) => {
+					return {
+						id: badge.badge.slug,
+						name: badge.badge.name,
+						image: badge.badge.image,
+						description: badge.badge.description,
+						slug: badge.badge.slug,
+						issuerName: badge.badge.issuerName,
+					};
+				}),
+			);
 		}
 	}
 
@@ -190,22 +201,22 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 	// 	this.studyLoad = studyLoad;
 	// }
 
-	updateSelectedBadges({ badges, studyLoad }: { badges: BadgeClass[] , studyLoad: number }) {
+	updateSelectedBadges({ badges, studyLoad }: { badges: BadgeClass[]; studyLoad: number }) {
 		this.selectedBadges = badges;
 		this.studyLoad = studyLoad;
-	  
+
 		const badgeList = this.selectedBadges.map((badge, index) => ({
-		  id: badge.slug,
-		  name: badge.name,
-		  image: badge.image,
-		  description: badge.description,
-		  slug: badge.slug,
-		  issuerName: badge.issuerName,
-		  order: index
+			id: badge.slug,
+			name: badge.name,
+			image: badge.image,
+			description: badge.description,
+			slug: badge.slug,
+			issuerName: badge.issuerName,
+			order: index,
 		}));
-	  
+
 		this.updateBadgeList(badgeList);
-	  }
+	}
 
 	// updateSelectedBadges({ badges, studyLoad }: { badges: BadgeClass[], studyLoad: number }) {
 	// 	this.selectedBadges = badges;
@@ -229,7 +240,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 
 	updateBadgeList(badges: any[]) {
 		this.badgeList = badges;
-		this.selectedBadges = badges.map(badge => ({
+		this.selectedBadges = badges.map((badge) => ({
 			slug: badge.id,
 			name: badge.name,
 			image: badge.image,
@@ -238,20 +249,18 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 		}));
 	}
 
-	learningPathForm = typedFormGroup()
-		.addArray(
-			'license',
-			typedFormGroup()
-				.addControl('id', 'CC-0', Validators.required)
-				.addControl('name', 'Public Domain', Validators.required)
-				.addControl(
-					'legalCode',
-					'https://creativecommons.org/publicdomain/zero/1.0/legalcode',
-					UrlValidator.validUrl,
-				),
-			Validators.required,
-		);
-
+	learningPathForm = typedFormGroup().addArray(
+		'license',
+		typedFormGroup()
+			.addControl('id', 'CC-0', Validators.required)
+			.addControl('name', 'Public Domain', Validators.required)
+			.addControl(
+				'legalCode',
+				'https://creativecommons.org/publicdomain/zero/1.0/legalcode',
+				UrlValidator.validUrl,
+			),
+		Validators.required,
+	);
 
 	ngAfterViewInit() {
 		this.stepper.selectionChange.subscribe((event) => {
@@ -268,20 +277,19 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 				this.lpImage = this.stepOne.lpDetailsForm.rawControl.value.badge_customImage;
 			}
 			this.selectedStep = event.selectedIndex;
-			if (this.selectedStep === 2) {
+			if (this.selectedStep === 3) {
 				this.step3Loaded = true;
 			} else {
 				this.step3Loaded = false;
 			}
-		})
+		});
 
-		this.learningPathForm
-			.add('details', this.stepOne.lpDetailsForm)
+		this.learningPathForm.add('details', this.stepOne.lpDetailsForm);
 		// .add('badges', this.stepThree.);
 	}
 
 	onStepChange(event: any): void {
-		this.learningPathForm.markTreeDirtyAndValidate();
+		// this.learningPathForm.markTreeDirtyAndValidate();
 	}
 
 	getErrorMessage() {
@@ -294,158 +302,172 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 		return this.route.snapshot.params['issuerSlug'];
 	}
 
-	get lpSlug(){
+	get lpSlug() {
 		return this.route.snapshot.params['learningPathSlug'];
 	}
 
-
 	cancelClicked() {
-		// this.cancel.emit();
+		this.cancel.emit();
 	}
 
 	async onSubmit() {
-
 		const studyLoadExtensionContextUrl = `${this.baseUrl}/static/extensions/StudyLoadExtension/context.json`;
 		const categoryExtensionContextUrl = `${this.baseUrl}/static/extensions/CategoryExtension/context.json`;
 		const licenseExtensionContextUrl = `${this.baseUrl}/static/extensions/LicenseExtension/context.json`;
 		const competencyExtensionContextUrl = `${this.baseUrl}/static/extensions/CompetencyExtension/context.json`;
 
 		const criteriaText =
-					'*Folgende Kriterien sind auf Basis deiner Eingaben als Metadaten im Badge hinterlegt*: \n\n';
+			'*Folgende Kriterien sind auf Basis deiner Eingaben als Metadaten im Badge hinterlegt*: \n\n';
 		const participationText = `Du hast erfolgreich an **${this.stepOne.lpDetailsForm.controls.name.value}** teilgenommen.  \n\n `;
 
-		if(this.existingLearningPath && this.existingLpBadge){
+		if (this.existingLearningPath && this.existingLpBadge) {
 			const data = {
 				name: this.stepOne.lpDetailsForm.controls.name.value,
 				description: this.stepOne.lpDetailsForm.controls.description.value,
 				image: this.stepOne.lpDetailsForm.controls.badge_image.value,
-				tags: Array.from(this.lpTags)
-			}
-			this.existingLpBadge.imageFrame = (this.stepOne.lpDetailsForm.controls.badge_customImage.value && this.stepOne.lpDetailsForm.valid) ? false : true;
+				tags: Array.from(this.lpTags),
+			};
+			this.existingLpBadge.imageFrame =
+				this.stepOne.lpDetailsForm.controls.badge_customImage.value && this.stepOne.lpDetailsForm.valid
+					? false
+					: true;
 			this.existingLpBadge.image = this.stepOne.lpDetailsForm.controls.badge_image.value;
-			this.existingLpBadge.name= this.stepOne.lpDetailsForm.controls.name.value,
-			this.existingLpBadge.description= this.stepOne.lpDetailsForm.controls.description.value,
-			this.existingLpBadge.tags= this.lpTags,
-			this.existingLpBadge.criteria_text= criteriaText,
-			this.existingLpBadge.criteria_url= '',
-			this.existingLpBadge.extension= {
-				'extensions:StudyLoadExtension': {
-					'@context': studyLoadExtensionContextUrl,
-					type: ['Extension', 'extensions:StudyLoadExtension'],
-					StudyLoad: this.studyLoad,
-				},
-				'extensions:CategoryExtension': {
-					'@context': categoryExtensionContextUrl,
-					type: ['Extension', 'extensions:CategoryExtension'],
-					Category: 'learningpath',
-				},
-				'extensions:LicenseExtension': {
-					'@context': licenseExtensionContextUrl,
-					type: ['Extension', 'extensions:LicenseExtension'],
-					id: this.learningPathForm.value.license[0].id,
-					name: this.learningPathForm.value.license[0].name,
-					legalCode: this.learningPathForm.value.license[0].legalCode,
-				},
-				'extensions:CompetencyExtension': []
-			}
-
-			this.existingLpBadge.save()
-
-			this.savePromise = this.learningPathApiService.updateLearningPath(this.issuerSlug, this.existingLearningPath.slug, {
-				...this.existingLearningPath,
-				name: data.name,
-				description: data.description,
-				participationBadge_id: this.existingLearningPath.participationBadge_id,
-				participationBadge_image: data.image,
-				tags: data.tags,
-				badges: this.badgeList.map((item, index) => {
-					return {
-						slug: item.slug,
-						order: item.order,
-					};
-				}),
-			})
-
-			this.save.emit(this.savePromise);
-
-		}
-		else{
-			this.savePromise = (async () => {
-			try {	
-				let imageFrame = true;
-				if (this.stepOne.lpDetailsForm.controls.badge_customImage.value && this.stepOne.lpDetailsForm.valid) {
-					imageFrame = false;
-					this.stepOne.lpDetailsForm.controls.badge_image.setValue(this.stepOne.lpDetailsForm.controls.badge_customImage.value);
-				}
-
-				const participationBadge = await this.badgeClassService.createBadgeClass(this.issuerSlug, {
-					image: this.stepOne.lpDetailsForm.controls.badge_image.value,
-					imageFrame: imageFrame,
-					name: this.stepOne.lpDetailsForm.controls.name.value,
-					description: this.stepOne.lpDetailsForm.controls.description.value,
-					tags: this.lpTags,
-					criteria_text: criteriaText,
-					criteria_url: '',
-					extensions: {
-						'extensions:StudyLoadExtension': {
-							'@context': studyLoadExtensionContextUrl,
-							type: ['Extension', 'extensions:StudyLoadExtension'],
-							StudyLoad: this.studyLoad,
-						},
-						'extensions:CategoryExtension': {
-							'@context': categoryExtensionContextUrl,
-							type: ['Extension', 'extensions:CategoryExtension'],
-							Category: 'participation',
-						},
-						'extensions:LicenseExtension': {
-							'@context': licenseExtensionContextUrl,
-							type: ['Extension', 'extensions:LicenseExtension'],
-							id: this.learningPathForm.value.license[0].id,
-							name: this.learningPathForm.value.license[0].name,
-							legalCode: this.learningPathForm.value.license[0].legalCode,
-						},
-						'extensions:CompetencyExtension': []
-
-						// 'extensions:LevelExtension': {
-						// 	'@context': levelExtensionContextUrl,
-						// 	type: ['Extension', 'extensions:LevelExtension'],
-						// 	Level: String(formState.badge_level),
-						// },
-						// 'extensions:BasedOnExtension': {
-						// 	'@context': basedOnExtensionContextUrl,
-						// 	type: ['Extension', 'extensions:BasedOnExtension'],
-						// 	BasedOn: formState.badge_based_on,
-						// },
-						// 'extensions:CompetencyExtension': this.getCompetencyExtensions(
-						// 	suggestions,
-						// 	formState,
-						// 	competencyExtensionContextUrl,
-						// ),
+			(this.existingLpBadge.name = this.stepOne.lpDetailsForm.controls.name.value),
+				(this.existingLpBadge.description = this.stepOne.lpDetailsForm.controls.description.value),
+				(this.existingLpBadge.tags = this.lpTags),
+				(this.existingLpBadge.criteria_text = criteriaText),
+				(this.existingLpBadge.criteria_url = ''),
+				(this.existingLpBadge.extension = {
+					'extensions:StudyLoadExtension': {
+						'@context': studyLoadExtensionContextUrl,
+						type: ['Extension', 'extensions:StudyLoadExtension'],
+						StudyLoad: this.studyLoad,
 					},
+					'extensions:CategoryExtension': {
+						'@context': categoryExtensionContextUrl,
+						type: ['Extension', 'extensions:CategoryExtension'],
+						Category: 'learningpath',
+					},
+					'extensions:LicenseExtension': {
+						'@context': licenseExtensionContextUrl,
+						type: ['Extension', 'extensions:LicenseExtension'],
+						id: this.learningPathForm.value.license[0].id,
+						name: this.learningPathForm.value.license[0].name,
+						legalCode: this.learningPathForm.value.license[0].legalCode,
+					},
+					'extensions:CompetencyExtension': [],
 				});
 
-				const issuer = await this.issuerApiService.getIssuer(this.issuerSlug);
+			this.existingLpBadge.save();
 
-				this.savePromise = this.learningPathApiService.createLearningPath(this.issuerSlug, {
-					issuer_id: issuer.slug,
-					name: this.stepOne.lpDetailsForm.controls.name.value,
-					description: this.stepOne.lpDetailsForm.controls.description.value,
-					tags: this.lpTags,
+			this.savePromise = this.learningPathApiService.updateLearningPath(
+				this.issuerSlug,
+				this.existingLearningPath.slug,
+				{
+					...this.existingLearningPath,
+					name: data.name,
+					description: data.description,
+					participationBadge_id: this.existingLearningPath.participationBadge_id,
+					participationBadge_image: data.image,
+					tags: data.tags,
 					badges: this.badgeList.map((item, index) => {
 						return {
 							slug: item.slug,
-							order: index,
+							order: item.order,
 						};
 					}),
-					participationBadge_id: participationBadge.slug,
-				});
+				},
+			);
 
-				this.save.emit(this.savePromise);
-			} catch (e) {
-				this.savePromise = null;
-				console.log(e);
-			}
-		})();
+			this.save.emit(this.savePromise);
+
+			// clear sessionStorage
+			sessionStorage.removeItem('oeb-create-badgeclassvalues');
+		} else {
+			this.savePromise = (async () => {
+				try {
+					let imageFrame = true;
+					if (
+						this.stepOne.lpDetailsForm.controls.badge_customImage.value &&
+						this.stepOne.lpDetailsForm.valid
+					) {
+						imageFrame = false;
+						this.stepOne.lpDetailsForm.controls.badge_image.setValue(
+							this.stepOne.lpDetailsForm.controls.badge_customImage.value,
+						);
+					}
+
+					const participationBadge = await this.badgeClassService.createBadgeClass(this.issuerSlug, {
+						image: this.stepOne.lpDetailsForm.controls.badge_image.value,
+						imageFrame: imageFrame,
+						name: this.stepOne.lpDetailsForm.controls.name.value,
+						description: this.stepOne.lpDetailsForm.controls.description.value,
+						tags: this.lpTags,
+						criteria_text: criteriaText,
+						criteria_url: '',
+						extensions: {
+							'extensions:StudyLoadExtension': {
+								'@context': studyLoadExtensionContextUrl,
+								type: ['Extension', 'extensions:StudyLoadExtension'],
+								StudyLoad: this.studyLoad,
+							},
+							'extensions:CategoryExtension': {
+								'@context': categoryExtensionContextUrl,
+								type: ['Extension', 'extensions:CategoryExtension'],
+								Category: 'learningpath',
+							},
+							'extensions:LicenseExtension': {
+								'@context': licenseExtensionContextUrl,
+								type: ['Extension', 'extensions:LicenseExtension'],
+								id: this.learningPathForm.value.license[0].id,
+								name: this.learningPathForm.value.license[0].name,
+								legalCode: this.learningPathForm.value.license[0].legalCode,
+							},
+							'extensions:CompetencyExtension': [],
+
+							// 'extensions:LevelExtension': {
+							// 	'@context': levelExtensionContextUrl,
+							// 	type: ['Extension', 'extensions:LevelExtension'],
+							// 	Level: String(formState.badge_level),
+							// },
+							// 'extensions:BasedOnExtension': {
+							// 	'@context': basedOnExtensionContextUrl,
+							// 	type: ['Extension', 'extensions:BasedOnExtension'],
+							// 	BasedOn: formState.badge_based_on,
+							// },
+							// 'extensions:CompetencyExtension': this.getCompetencyExtensions(
+							// 	suggestions,
+							// 	formState,
+							// 	competencyExtensionContextUrl,
+							// ),
+						},
+						copy_permissions: ['issuer'],
+					});
+
+					const issuer = await this.issuerApiService.getIssuer(this.issuerSlug);
+
+					this.savePromise = this.learningPathApiService.createLearningPath(this.issuerSlug, {
+						issuer_id: issuer.slug,
+						name: this.stepOne.lpDetailsForm.controls.name.value,
+						description: this.stepOne.lpDetailsForm.controls.description.value,
+						tags: this.lpTags,
+						badges: this.badgeList.map((item, index) => {
+							return {
+								slug: item.slug,
+								order: index,
+							};
+						}),
+						participationBadge_id: participationBadge.slug,
+					});
+
+					this.save.emit(this.savePromise);
+					// clear sessionStorage
+					sessionStorage.removeItem('oeb-create-badgeclassvalues');
+				} catch (e) {
+					this.savePromise = null;
+					console.log(e);
+				}
+			})();
 		}
 	}
 }

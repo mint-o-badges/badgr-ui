@@ -1,44 +1,28 @@
-<!doctype html>
-<html lang="en">
+<html lang='en'>
 
-  <head>
-    {{render '@preview--head'}}
-    <style type="text/css">
-      table {
-        table-layout: fixed;
-        width: 100%;
-      }
-      td,
-      th {
-        border-bottom: 1px solid lightgrey;
-        padding: 1em;
-      }
-      td:first-child {
-        font-weight: bold;
-        text-align: left;
-      }
-      thead th {
-        border-bottom-width: 3px;
-        font-weight: bold;
-        text-align: left;
-      }
-    </style>
-  </head>
+	<head>
+		{{render '@preview--head'}}
+		<style type='text/css'>
+			table { table-layout: fixed; width: 100%; } td, th { border-bottom: 1px solid lightgrey; padding: 1em; }
+			td:first-child { font-weight: bold; text-align: left; } thead th { border-bottom-width: 3px; font-weight:
+			bold; text-align: left; }
+		</style>
+	</head>
 
-  <body>
+	<body>
 
-      <table>
-        <thead>
-          <tr>
-            <th scope="col">Module</th>
-            <th scope="col">Demo</th>
-          </tr>
-        </thead>
-        <tbody>
-          {{{ yield }}}
-        </tbody>
-      </table>
+		<table>
+			<thead>
+				<tr>
+					<th scope='col'>Module</th>
+					<th scope='col'>Demo</th>
+				</tr>
+			</thead>
+			<tbody>
+				{{{yield}}}
+			</tbody>
+		</table>
 
-  </body>
+	</body>
 
 </html>

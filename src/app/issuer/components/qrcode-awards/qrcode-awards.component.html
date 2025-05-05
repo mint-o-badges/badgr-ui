@@ -1,67 +1,97 @@
 <div class="oeb">
-    <oeb-separator [class]="separatorStyle"></oeb-separator>
-    <div class="tw-flex tw-flex-col lg:tw-flex-row tw-items-center tw-justify-between tw-gap-2"
-        *ngIf="awards.length === 0; else showAwards">
-        <div class="tw-flex tw-flex-col">
-            <h3 hlmH3 class="tw-text-purple tw-font-bold">QR-CODE-VERGABEN</h3>
-            <span class="tw-italic tw-text-[18px] tw-leading-[21.6px] tw-text-oebblack tw-mt-2">Du hast bisher keine
-                QR-Code-Vergabe erstellt</span>
-        </div>
-        <oeb-button class="oeb-button tw-whitespace-nowrap !tw-p-0" variant="secondary"
-            text="Badge über QR Code vergeben" (click)="routeToQrAward(badgeClass, issuer)"></oeb-button>
-    </div>
+	<oeb-separator [class]="separatorStyle"></oeb-separator>
+	<div
+		class="tw-flex tw-flex-col lg:tw-flex-row tw-items-center tw-justify-between tw-gap-2"
+		*ngIf="awards.length === 0; else showAwards"
+	>
+		<div class="tw-flex tw-flex-col">
+			<h3 hlmH3 class="tw-text-purple tw-font-bold">QR-CODE-VERGABEN</h3>
+			<span class="tw-italic tw-text-[18px] tw-leading-[21.6px] tw-text-oebblack tw-mt-2"
+				>Du hast bisher keine QR-Code-Vergabe erstellt</span
+			>
+		</div>
+		<oeb-button
+			class="oeb-button tw-whitespace-nowrap !tw-p-0"
+			variant="secondary"
+			text="Badge über QR Code vergeben"
+			(click)="routeToQrAward(badgeClass, issuer)"
+		></oeb-button>
+	</div>
 
-    <ng-template #showAwards>
-        <div class="oeb-standard-padding-bottom">
-            <h3 hlmH3 size="default" class="tw-text-purple tw-font-bold">QR-CODE-VERGABEN</h3>
-        </div>
-        <div hlmAccordion class="tw-flex tw-gap-2">
-            <div *ngFor="let award of awards; index as i " class="tw-flex tw-gap-2">
-                <div [ngClass]="award.request_count > 0 ? 'tw-bg-[var(--color-green)]' : 'tw-bg-[var(--color-darkgray)]'"
-                    class="tw-border-0 tw-border-solid tw-border-purple tw-rounded-lg tw-pb-0 tw-w-full">
-                    <div hlmAccordionItem class="tw-h-full tw-px-2 tw-py-2" (click)="$event.stopPropagation()">
-                        <button type="button" class="tw-w-full hover:tw-no-underline" hlmAccordionTrigger
-                            [disabled]="award.request_count === 0">
-                            <div [ngClass]="award.request_count > 0 ? 'tw-text-oebblack' : 'tw-text-white'"
-                                class="tw-w-full tw-flex tw-justify-between tw-items-center">
-                                <div>
-                                    <span class="tw-font-bold">
-                                        {{award.title}}
-                                    </span>
-                                    <span class="tw-ml-2">
-                                        ( {{award.request_count}} offene Badge {{award.request_count === 1 ? "Anfrage" : "Anfragen"}})
-                                    </span>
-                                </div>
+	<ng-template #showAwards>
+		<div class="oeb-standard-padding-bottom">
+			<h3 hlmH3 size="default" class="tw-text-purple tw-font-bold">QR-CODE-VERGABEN</h3>
+		</div>
+		<div hlmAccordion class="tw-flex tw-gap-2">
+			<div *ngFor="let award of awards; index as i" class="tw-flex tw-gap-2">
+				<div
+					[ngClass]="award.request_count > 0 ? 'tw-bg-[var(--color-green)]' : 'tw-bg-[var(--color-darkgray)]'"
+					class="tw-border-0 tw-border-solid tw-border-purple tw-rounded-lg tw-pb-0 tw-w-full"
+				>
+					<div
+						hlmAccordionItem
+						class="tw-h-full tw-px-2 tw-py-2"
+						(click)="$event.stopPropagation()"
+						[isOpened]="defaultUnfolded && i === 0"
+					>
+						<button
+							type="button"
+							class="tw-w-full hover:tw-no-underline"
+							hlmAccordionTrigger
+							[disabled]="award.request_count === 0"
+						>
+							<div
+								[ngClass]="award.request_count > 0 ? 'tw-text-oebblack' : 'tw-text-white'"
+								class="tw-w-full tw-flex tw-justify-between tw-items-center"
+							>
+								<div>
+									<span class="tw-font-bold">
+										{{ award.title }}
+									</span>
+									<span class="tw-ml-2">
+										( {{ award.request_count }} offene Badge
+										{{ award.request_count === 1 ? 'Anfrage' : 'Anfragen' }})
+									</span>
+								</div>
 
-                                <hlm-icon *ngIf="award.request_count > 0" hlmAccIcon class="tw-w-8 tw-h-8" />
+								<ng-icon hlm *ngIf="award.request_count > 0" hlmAccIcon class="tw-w-8 tw-h-8" />
+							</div>
+						</button>
+						<brn-accordion-content *ngIf="award.request_count > 0" hlm class="tw-text-white">
+							<qrcodes-datatable
+								caption=""
+								[qrCodeId]="award.slug"
+								[issuerSlug]="issuer.slug"
+								[badgeSlug]="badgeClass.slug"
+								(deletedQRAward)="deleteQRAward($event)"
+								(qrBadgeAward)="onQrBadgeAward()"
+								[(requestCount)]="award.request_count"
+							></qrcodes-datatable>
+						</brn-accordion-content>
+					</div>
+				</div>
+				<div class="tw-flex tw-items-start" (click)="$event.stopPropagation()">
+					<oeb-dropdown
+						[trigger]="svgTrigger"
+						[ngClass]="
+							award.request_count > 0 ? 'tw-bg-[var(--color-green)]' : 'tw-bg-[var(--color-darkgray)]'
+						"
+						class="tw-items-center tw-justify-center tw-flex tw-cursor-pointer tw-rounded-[7px]"
+						[menuItems]="qrCodeMenus[i]"
+					></oeb-dropdown>
 
-                            </div>
-                        </button>
-                        <brn-accordion-content *ngIf="award.request_count > 0" hlm class="tw-text-white">
-                            <qrcodes-datatable caption="" [qrCodeId]="award.slug" [issuerSlug]="issuer.slug"
-                                [badgeSlug]="badgeClass.slug" (deletedQRAward)="deleteQRAward($event)"
-                                (qrBadgeAward)="onQrBadgeAward()" [(requestCount)]="award.request_count"></qrcodes-datatable>
-                        </brn-accordion-content>
+					<ng-template #svgTrigger>
+						<svg
+							class="tw-w-[44.8px] tw-h-[44.8px] md:tw-w-[64.15px] md:tw-h-[64.15px]"
+							[attr.fill]="getSvgFillColor(award.request_count)"
+							icon="icon_more"
+						></svg>
+						<span class="visuallyhidden">Mehr</span>
+					</ng-template>
+				</div>
+			</div>
+		</div>
+	</ng-template>
 
-                    </div>
-
-                </div>
-                <div class="tw-flex tw-items-start" (click)="$event.stopPropagation()">
-                    <oeb-dropdown [trigger]="svgTrigger"
-                        [ngClass]="award.request_count > 0 ? 'tw-bg-[var(--color-green)]' : 'tw-bg-[var(--color-darkgray)]'"
-                        class="tw-items-center tw-justify-center tw-flex tw-cursor-pointer tw-rounded-[7px]"
-                        [menuItems]="qrCodeMenus[i]"></oeb-dropdown>
-
-                    <ng-template #svgTrigger>
-                        <svg class="tw-w-[44.8px] tw-h-[44.8px] md:tw-w-[64.15px] md:tw-h-[64.15px]"
-                            [attr.fill]="getSvgFillColor(award.request_count)" icon="icon_more"></svg>
-                        <span class="visuallyhidden">Mehr</span>
-                    </ng-template>
-                </div>
-            </div>
-        </div>
-    </ng-template>
-
-    <oeb-separator [class]="separatorStyle"></oeb-separator>
-
+	<oeb-separator [class]="separatorStyle"></oeb-separator>
 </div>

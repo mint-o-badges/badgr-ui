@@ -2,6 +2,7 @@ import {
 	ApiIssuer,
 	ApiIssuerStaff,
 	IssuerRef,
+	IssuerSlug,
 	IssuerStaffRef,
 	IssuerStaffRoleSlug,
 	IssuerUrl,
@@ -40,6 +41,10 @@ export class Issuer extends ManagedEntity<ApiIssuer, IssuerRef> {
 
 	get issuerUrl(): IssuerUrl {
 		return this.apiModel.json.id;
+	}
+
+	get slug(): IssuerSlug {
+		return this.apiModel.slug;
 	}
 
 	get name(): string {
@@ -105,10 +110,7 @@ export class Issuer extends ManagedEntity<ApiIssuer, IssuerRef> {
 	}
 
 	get ownerAcceptedTos(): boolean {
-		const owners = this.staff.entities.filter((staff) => staff.isOwner);
-		return owners.some(owner => 
-			owner.apiModel.user.agreed_terms_version === owner.apiModel.user.latest_terms_version
-		);		
+		return this.apiModel.ownerAcceptedTos;
 	}
 
 	get learningPathCount(): number {
@@ -302,23 +304,23 @@ export class IssuerStaffMember extends ManagedEntity<ApiIssuerStaff, IssuerStaff
 export const issuerStaffRoles = [
 	{
 		slug: 'owner',
-		label: 'Eigentümer',
+		label: 'Eigentümer:in',
 		indefiniteLabel: 'an owner',
 		description:
-			'Möglichkeit, Mitarbeiter hinzuzufügen und zu entfernen. Volle Rechte zum Erstellen, Löschen und Verleihen von Abzeichen. Möglichkeit, Ausstellerdetails zu bearbeiten.',
+			'Zugriff auf alle Funktionen inkl. Hinzufügen/Entfernen von Editor:innen und Mitarbeiter:innen, Bearbeitung der Institutionsdetails sowie Erstellen, Vergeben und Löschen von Badges inkl. Micro Degrees.',
 	},
 	{
 		slug: 'editor',
-		label: 'Editor',
+		label: 'Editor:in',
 		indefiniteLabel: 'an editor',
-		description:
-			'Volle Rechte zum Erstellen, Löschen und Vergeben von Badges. Möglichkeit, Ausstellerdetails zu bearbeiten.',
+		description: 'Rechte zum Erstellen, Vergeben und Löschen von Badges inkl. Micro Degrees.',
 	},
 	{
 		slug: 'staff',
-		label: 'Mitarbeiter',
+		label: 'Mitarbeiter:in',
 		indefiniteLabel: 'a staff member',
-		description: 'Möglichkeit, von Inhabern und Redakteuren erstellte Badges zu vergeben.',
+		description:
+			'Kann die von Eigentümer:innen und/oder Editor:innen erstellten Badges vergeben (inkl. QR-Code-Vergaben erstellen, bearbeiten und löschen).',
 	},
 ];
 export function issuerRoleInfoFor(slug: IssuerStaffRoleSlug) {

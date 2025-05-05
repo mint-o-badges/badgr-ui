@@ -47,6 +47,7 @@ export interface ApiIssuer {
 	lat?: number;
 	lon?: number;
 	intendedUseVerified: boolean;
+	ownerAcceptedTos: boolean;
 }
 
 export type IssuerStaffRoleSlug = 'owner' | 'editor' | 'staff';
@@ -59,7 +60,7 @@ export interface ApiIssuerStaff {
 		telephone?: string | string[];
 		url?: string | string[];
 		agreed_terms_version: number;
-		latest_terms_version: number;	
+		latest_terms_version: number;
 	};
 }
 

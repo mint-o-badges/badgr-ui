@@ -13,6 +13,7 @@ import { AppConfigService } from '../../../common/app-config.service';
 @Component({
 	selector: 'oauth-app-detail-component',
 	templateUrl: './oauth-app-detail.html',
+	standalone: false,
 })
 export class OAuthAppDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	app: OAuth2AppAuthorization;

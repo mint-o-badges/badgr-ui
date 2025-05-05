@@ -2,6 +2,7 @@
  * TypeScript type information for a portion of the Open Badges v2.0 Specification, from
  * https://www.imsglobal.org/sites/default/files/Badges/OBv2p0/index.html
  */
+import { BadgeClassCopyPermissions } from '../../issuer/models/badgeclass-api.model';
 import { BadgeClass } from '../../issuer/models/badgeclass.model';
 import { Issuer } from '../../issuer/models/issuer.model';
 
@@ -73,6 +74,7 @@ export interface PublicApiBadgeClass {
 	// Extension to the spec containing the original URL of this assertion if it is not stored by Badgr
 	sourceUrl?: string;
 	badge?: any;
+	copy_permissions?: BadgeClassCopyPermissions[];
 }
 export interface PublicApiBadgeClassWithIssuer extends PublicApiBadgeClass {
 	issuer: PublicApiIssuer;
@@ -148,4 +150,5 @@ export interface PublicApiLearningPath {
 	completed_badges?: any[];
 	progress: number;
 	requested?: boolean;
+	learningPathBadgeInstanceSlug?: string;
 }

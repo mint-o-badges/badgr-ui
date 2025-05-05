@@ -4,6 +4,7 @@ import { Component, Input } from '@angular/core';
 	selector: 'markdown-display',
 	host: {},
 	template: ` <div class="markdown" [bgMarkdown]="value"></div> `,
+	standalone: false,
 })
 export class MarkdownDisplay {
 	@Input() value = '';

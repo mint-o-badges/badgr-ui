@@ -71,6 +71,7 @@ import { BgMarkdownComponent } from './directives/bg-markdown.component';
 import { BgBreadcrumbsComponent } from './components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { CopyBadgeDialog } from './dialogs/copy-badge-dialog/copy-badge-dialog.component';
 import { ForkBadgeDialog } from './dialogs/fork-badge-dialog/fork-badge-dialog.component';
+import { SelectIssuerDialog } from './dialogs/select-issuer-dialog/select-issuer-dialog.component';
 import { MarkdownHintsDialog } from './dialogs/markdown-hints-dialog.component';
 import { IssuerManager } from '../issuer/services/issuer-manager.service';
 import { IssuerApiService } from '../issuer/services/issuer-api.service';
@@ -84,7 +85,6 @@ import { BadgeClassManager } from '../issuer/services/badgeclass-manager.service
 import { BadgeClassApiService } from '../issuer/services/badgeclass-api.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { ApplicationCredentialsService } from './services/application-credentials.service.';
-import { CaptchaService } from './services/captcha.service';
 
 import { OebInputComponent } from '../components/input.component';
 import { OebInputErrorComponent } from '../components/input.error.component';
@@ -109,6 +109,8 @@ import { DangerDialogComponent } from './dialogs/oeb-dialogs/danger-dialog.compo
 import { OebBackgroundComponent } from '../components/oeb-background.component';
 import { OebIssuerDetailComponent } from './components/issuer/oeb-issuer-detail.component';
 import { DatatableComponent } from '../components/datatable-badges.component';
+import { IssuerStaffDatatableComponent } from '../components/datatable-issuer-staff.component';
+import { IssuerStaffRequestsDatatableComponent } from '../components/datatable-issuer-staff-requests.component';
 
 import { OebProgressComponent } from '../components/oeb-progress.component';
 import { OebSelectComponent } from '../components/select.component';
@@ -116,6 +118,7 @@ import { OebCollapsibleComponent } from '../components/oeb-collapsible.component
 import { OebSeparatorComponent } from '../components/oeb-separator.component';
 import { OebSpinnerComponent } from '../components/oeb-spinner.component';
 import { OebLearningPathDetailComponent } from './components/learningpath-detail/oeb-learning-path.component';
+import { OebPaginationComponent } from '../components/oeb-pagination.component';
 
 import { SharedIconsModule } from '../public/icons.module';
 import { LearningPathDatatableComponent } from '../components/datatable-learningpaths.component';
@@ -131,8 +134,15 @@ import { CdkStepperModule } from '@angular/cdk/stepper';
 import { ErrorDialogComponent } from './dialogs/oeb-dialogs/error-dialog.component';
 import { CountUpDirective } from './directives/count-up.directive';
 import { OebSortSelectComponent } from '../components/oeb-sort-select.component';
+import { OebGlobalSortSelectComponent } from '../components/oeb-global-sort-select.component';
 import { QrCodeApiService } from '../issuer/services/qrcode-api.service';
 import { serverErrorInterceptorFactory } from '../server-error-interceptor.factory';
+import { AltchaComponent } from '../components/altcha.component';
+import { SortPipe } from './pipes/sortPipe';
+import { PaginationAdvancedComponent } from '../components/oeb-numbered-pagination';
+import { NgIconsModule } from '@ng-icons/core';
+import { HlmIconDirective } from '../components/spartan/ui-icon-helm/src';
+import { HlmTableModule } from './../components/spartan/ui-table-helm/src';
 
 const DIRECTIVES = [
 	BgAwaitPromises,
@@ -146,6 +156,7 @@ const DIRECTIVES = [
 	BgPopupMenuTriggerDirective,
 	DynamicFilterPipe,
 	HourPipe,
+	SortPipe,
 ];
 
 export const COMMON_MODULE_COMPONENTS = [
@@ -175,6 +186,7 @@ export const COMMON_MODULE_COMPONENTS = [
 	ShareSocialDialog,
 	CopyBadgeDialog,
 	ForkBadgeDialog,
+	SelectIssuerDialog,
 	MarkdownHintsDialog,
 	ShowMore,
 	SvgIconComponent,
@@ -188,7 +200,8 @@ export const COMMON_MODULE_COMPONENTS = [
 	IssuerCardComponent,
 	OebLearningPathDetailComponent,
 	OebIssuerCard,
-	OebSortSelectComponent
+	OebSortSelectComponent,
+	OebGlobalSortSelectComponent,
 ];
 
 const SERVICES = [
@@ -203,7 +216,6 @@ const SERVICES = [
 	AiSkillsService,
 	ServerVersionService,
 	PdfService,
-	CaptchaService,
 	EventsService,
 	SessionService,
 	QueryParametersService,
@@ -220,7 +232,7 @@ const SERVICES = [
 	ZipService,
 	ApplicationCredentialsService,
 	LearningPathApiService,
-	QrCodeApiService
+	QrCodeApiService,
 ];
 
 const GUARDS = [AuthGuard];
@@ -243,6 +255,8 @@ export const COMMON_IMPORTS = [
 	OebButtonComponent,
 	OebProgressComponent,
 	OebDropdownComponent,
+	OebPaginationComponent,
+	PaginationAdvancedComponent,
 	HlmH1Directive,
 	HlmH2Directive,
 	HlmH3Directive,
@@ -260,16 +274,36 @@ export const COMMON_IMPORTS = [
 	CountUpModule,
 	HlmInputDirective,
 	DatatableComponent,
+	IssuerStaffDatatableComponent,
+	IssuerStaffRequestsDatatableComponent,
 	LearningPathDatatableComponent,
 	LearningPathParticipantsDatatableComponent,
 	LearningPathGraduatesDatatableComponent,
 	HlmBadgeDirective,
+	AltchaComponent,
+	NgIconsModule,
+	HlmIconDirective,
+	HlmTableModule,
 ];
 
 @NgModule({
-	imports: [...COMMON_IMPORTS, FormsModule, LMarkdownEditorModule, TranslateModule, SharedIconsModule, CdkStepperModule],
-	providers: [BadgeClassManager, BadgeClassApiService,  ...serverErrorInterceptorFactory()],
-	declarations: [...DIRECTIVES, ...COMMON_MODULE_COMPONENTS, ...PIPES, ForwardRouteComponent, BadgeLegendComponent, CountUpDirective],
+	imports: [
+		...COMMON_IMPORTS,
+		FormsModule,
+		LMarkdownEditorModule,
+		TranslateModule,
+		SharedIconsModule,
+		CdkStepperModule,
+	],
+	providers: [BadgeClassManager, BadgeClassApiService, ...serverErrorInterceptorFactory()],
+	declarations: [
+		...DIRECTIVES,
+		...COMMON_MODULE_COMPONENTS,
+		...PIPES,
+		ForwardRouteComponent,
+		BadgeLegendComponent,
+		CountUpDirective,
+	],
 	exports: [...DIRECTIVES, ...COMMON_MODULE_COMPONENTS, ...PIPES, BadgeLegendComponent, SharedIconsModule],
 })
 export class BadgrCommonModule {

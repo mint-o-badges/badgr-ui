@@ -2,6 +2,7 @@ import {
 	ApiBadgeClass,
 	ApiBadgeClassAlignment,
 	ApiBadgeClassExpiration,
+	BadgeClassCopyPermissions,
 	BadgeClassExpiresDuration,
 	BadgeClassRef,
 	BadgeClassUrl,
@@ -48,7 +49,7 @@ export class BadgeClass extends ManagedEntity<ApiBadgeClass, BadgeClassRef> {
 
 	get imageFrame(): boolean {
 		return this.apiModel.imageFrame !== undefined ? this.apiModel.imageFrame : true;
-	}	
+	}
 	set imageFrame(imageFrame: boolean) {
 		this.apiModel.imageFrame = imageFrame;
 	}
@@ -69,7 +70,7 @@ export class BadgeClass extends ManagedEntity<ApiBadgeClass, BadgeClassRef> {
 		return this.apiModel.recipient_count;
 	}
 
-	set recipientCount(count: number){
+	set recipientCount(count: number) {
 		this.apiModel.recipient_count = count;
 	}
 
@@ -148,6 +149,17 @@ export class BadgeClass extends ManagedEntity<ApiBadgeClass, BadgeClassRef> {
 	}
 	set alignments(alignments: ApiBadgeClassAlignment[]) {
 		this.apiModel.alignment = alignments;
+	}
+
+	get copyPermissions(): BadgeClassCopyPermissions[] {
+		return this.apiModel.copy_permissions;
+	}
+	set copyPermissions(permissions: BadgeClassCopyPermissions[]) {
+		this.apiModel.copy_permissions = permissions;
+	}
+
+	canCopy(key: BadgeClassCopyPermissions) {
+		return this.copyPermissions.indexOf(key) !== -1;
 	}
 
 	get issuer() {

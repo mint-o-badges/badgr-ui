@@ -1,17 +1,18 @@
 import { CdkObserveContent } from '@angular/cdk/observers';
-import { Component, ContentChildren, ElementRef, QueryList, ViewChild, computed, input } from '@angular/core';
+import { Component, type ElementRef, computed, contentChildren, input, viewChild } from '@angular/core';
+import { toObservable } from '@angular/core/rxjs-interop';
+import { NgIcon, provideIcons } from '@ng-icons/core';
 import { lucideChevronLeft, lucideChevronRight } from '@ng-icons/lucide';
-import { hlm } from '@spartan-ng/ui-core';
-import { HlmIconComponent, provideIcons } from '../../../ui-icon-helm/src';
-import { BrnTabsPaginatedListDirective, BrnTabsTriggerDirective } from '@spartan-ng/ui-tabs-brain';
-import { ClassValue } from 'clsx';
+import { hlm } from '@spartan-ng/brain/core';
+import { BrnTabsPaginatedListDirective, BrnTabsTriggerDirective } from '@spartan-ng/brain/tabs';
+import { buttonVariants } from '../../../ui-button-helm/src';
+import { HlmIconDirective } from '../../../ui-icon-helm/src';
+import type { ClassValue } from 'clsx';
 import { listVariants } from './hlm-tabs-list.component';
-import { buttonVariants } from '../../../ui-button-helm/src/lib/hlm-button.directive';
 
 @Component({
 	selector: 'hlm-paginated-tabs-list',
-	standalone: true,
-	imports: [CdkObserveContent, HlmIconComponent],
+	imports: [CdkObserveContent, NgIcon, NgIcon, HlmIconDirective],
 	providers: [provideIcons({ lucideChevronRight, lucideChevronLeft })],
 	template: `
 		<button
@@ -20,19 +21,24 @@ import { buttonVariants } from '../../../ui-button-helm/src/lib/hlm-button.direc
 			type="button"
 			aria-hidden="true"
 			tabindex="-1"
-			[class.tw-flex]="_showPaginationControls()"
-			[class.tw-hidden]="!_showPaginationControls()"
+			[class.flex]="_showPaginationControls()"
+			[class.hidden]="!_showPaginationControls()"
 			[class]="_paginationButtonClass()"
 			[disabled]="_disableScrollBefore || null"
 			(click)="_handlePaginatorClick('before')"
 			(mousedown)="_handlePaginatorPress('before', $event)"
 			(touchend)="_stopInterval()"
 		>
-			<hlm-icon size="base" name="lucideChevronLeft" />
+			<ng-icon hlm size="base" name="lucideChevronLeft" />
 		</button>
 
-		<div #tabListContainer class="tw-z-[1] tw-flex tw-grow tw-overflow-hidden " (keydown)="_handleKeydown($event)">
-			<div class="relative grow transition-transform" #tabList role="tablist" (cdkObserveContent)="_onContentChanges()">
+		<div #tabListContainer class="z-[1] flex grow overflow-hidden" (keydown)="_handleKeydown($event)">
+			<div
+				class="relative grow transition-transform"
+				#tabList
+				role="tablist"
+				(cdkObserveContent)="_onContentChanges()"
+			>
 				<div #tabListInner [class]="_tabListClass()">
 					<ng-content></ng-content>
 				</div>
@@ -45,15 +51,15 @@ import { buttonVariants } from '../../../ui-button-helm/src/lib/hlm-button.direc
 			type="button"
 			aria-hidden="true"
 			tabindex="-1"
-			[class.tw-flex]="_showPaginationControls()"
-			[class.tw-hidden]="!_showPaginationControls()"
+			[class.flex]="_showPaginationControls()"
+			[class.hidden]="!_showPaginationControls()"
 			[class]="_paginationButtonClass()"
 			[disabled]="_disableScrollAfter || null"
 			(click)="_handlePaginatorClick('after')"
 			(mousedown)="_handlePaginatorPress('after', $event)"
 			(touchend)="_stopInterval()"
 		>
-			<hlm-icon size="base" name="lucideChevronRight" />
+			<ng-icon hlm size="base" name="lucideChevronRight" />
 		</button>
 	`,
 	host: {
@@ -61,25 +67,27 @@ import { buttonVariants } from '../../../ui-button-helm/src/lib/hlm-button.direc
 	},
 })
 export class HlmTabsPaginatedListComponent extends BrnTabsPaginatedListDirective {
-	@ContentChildren(BrnTabsTriggerDirective, { descendants: false })
-	_items!: QueryList<BrnTabsTriggerDirective>;
-	@ViewChild('tabListContainer', { static: true })
-	_tabListContainer!: ElementRef;
-	@ViewChild('tabList', { static: true }) _tabList!: ElementRef;
-	@ViewChild('tabListInner', { static: true }) _tabListInner!: ElementRef;
-	@ViewChild('nextPaginator') _nextPaginator!: ElementRef<HTMLElement>;
-	@ViewChild('previousPaginator') _previousPaginator!: ElementRef<HTMLElement>;
+	public readonly _items = contentChildren(BrnTabsTriggerDirective, { descendants: false });
+	public readonly _itemsChanges = toObservable(this._items);
+
+	public readonly _tabListContainer = viewChild.required<ElementRef<HTMLElement>>('tabListContainer');
+	public readonly _tabList = viewChild.required<ElementRef<HTMLElement>>('tabList');
+	public readonly _tabListInner = viewChild.required<ElementRef<HTMLElement>>('tabListInner');
+	public readonly _nextPaginator = viewChild.required<ElementRef<HTMLElement>>('nextPaginator');
+	public readonly _previousPaginator = viewChild.required<ElementRef<HTMLElement>>('previousPaginator');
 
 	public readonly userClass = input<ClassValue>('', { alias: 'class' });
-	protected _computedClass = computed(() => hlm('tw-flex tw-overflow-hidden tw-relative tw-flex-shrink-0', this.userClass()));
+	protected readonly _computedClass = computed(() =>
+		hlm('flex overflow-hidden relative gap-1 flex-shrink-0', this.userClass()),
+	);
 
 	public readonly tabLisClass = input<ClassValue>('', { alias: 'class' });
-	protected _tabListClass = computed(() => hlm(listVariants(), this.tabLisClass()));
+	protected readonly _tabListClass = computed(() => hlm(listVariants(), this.tabLisClass()));
 
 	public readonly paginationButtonClass = input<ClassValue>('', { alias: 'class' });
-	protected _paginationButtonClass = computed(() =>
+	protected readonly _paginationButtonClass = computed(() =>
 		hlm(
-			'tw-relative tw-z-[2] tw-select-none data-[pagination=previous]:tw-pr-1 data-[pagination=next]:tw-pl-1 disabled:tw-cursor-default',
+			'relative z-[2] select-none disabled:cursor-default',
 			buttonVariants({ variant: 'secondary', size: 'icon' }),
 			this.paginationButtonClass(),
 		),

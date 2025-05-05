@@ -1,12 +1,11 @@
-<div class="tw-mt-6 md:tw-mt-7 oeb-section tw-bg-[var(--color-lightgray)] tw-rounded-[25px] tw-p-[1.8em] tw-mb-[1.8em]">
-	<div class="tw-mx-5">
-		<h2 hlmH2 class="tw-text-purple tw-flex tw-gap-2">
-			<span class="tw-italic">Optional:</span>
+<div class="section tw-mt-6 oeb-section tw-bg-[var(--color-lightgray)] tw-rounded-[25px]">
+	<div>
+		<h2 hlmH2 class="tw-text-purple tw-flex tw-gap-2 tw-font-bold">
 			<span>{{ 'LearningPath.addTag' | translate }}</span>
 		</h2>
-		<p hlmP class="tw-italic tw-mt-1" [innerHtml]="'CreateBadge.tagInfo' | translate"></p>
+		<p class="tw-italic tw-text-purple tw-mt-2" [innerHtml]="'CreateBadge.tagInfo' | translate"></p>
 
-		<div class="tw-flex tw-gap-2 oeb tw-mt-2">
+		<div class="tw-flex tw-gap-2 oeb tw-mt-4">
 			<div class="tw-flex tw-gap-4 tw-items-center tw-mb-2">
 				<span class="tw-font-semibold tw-text-lg tw-text-oebblack tw-uppercase"> Tag</span>
 
@@ -56,18 +55,13 @@
 <div class="tw-mt-6 md:tw-mt-7 oeb-section section">
 	<h2 hlmH2 class="tw-font-bold">{{ 'LearningPath.lpParticipationBadge' | translate }}</h2>
 	<p
-		class="tw-text-[18px] tw-mt-2 tw-leading-[23.4px] tw-italic"
-		hlmP
-		[innerHtml]="'LearningPath.lpParticipationBadgeInfo' | translate"
-	></p>
-	<p
 		hlmP
 		class="tw-text-[18px] tw-mt-2 tw-leading-[23.4px] tw-italic tw-font-bold"
 		[innerHtml]="'LearningPath.lpDerivedData' | translate"
 	></p>
 	<div class="tw-mt-6 tw-flex tw-gap-6">
 		<div
-			class="tw-bg-white tw-flex tw-justify-center tw-items-center tw-border-purple tw-border-solid tw-border tw-rounded-[10px] tw-w-[260px] tw-h-[190px]"
+			class="tw-bg-white tw-flex tw-justify-center tw-items-center tw-border-purple tw-border-solid tw-border tw-rounded-[10px] tw-min-w-[260px] tw-w-[260px] tw-h-[190px]"
 		>
 			<img
 				class="md:tw-w-[145px] tw-w-[65px]"
@@ -89,4 +83,15 @@
 			<span>{{ lpDescription }}</span>
 		</div>
 	</div>
+</div>
+<p class="tw-italic tw-text-[24px]/[1.2em] tw-mt-12">
+	Den Abschluss-Badge <strong class="tw-text-purple">Micro Degree</strong> erhalten Lernende automatisiert per E-Mail,
+	sobald sie alle darin enthaltenen Badges erworben haben.
+</p>
+
+<div class="tw-mt-8">
+	<p
+		class="tw-text-end tw-text-oebblack tw-italic tw-text-lg"
+		[innerHTML]="'CreateBadge.licenseInfo' | translate"
+	></p>
 </div>

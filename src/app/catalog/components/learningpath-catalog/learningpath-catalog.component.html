@@ -38,20 +38,20 @@
 									[(ngModel)]="searchQuery"
 									hlmInput
 								/>
-								<hlm-icon
+								<ng-icon
+									hlm
 									name="lucideSearch"
 									class="tw-w-8 tw-h-8 tw-absolute tw-top-1/2 tw-right-2 -tw-translate-y-1/2 tw-pointer-events-none tw-text-purple"
-								></hlm-icon>
+								></ng-icon>
 							</div>
 						</div>
-						<span>{{ 'Badge.sortBy' | translate }} </span>
-						<oeb-sort-select [disabled]="groupByInstitution" [learningPath]="true" [control]="sortControl" [result]="learningPathResults"></oeb-sort-select>
-						<oeb-checkbox
-							[text]="'Nach Institutionen gruppieren'"
-							name="'groupByInstitution'"
-							[(ngModel)]="groupByInstitution"
-							[noMargin]="true"
-						/>					
+						<oeb-global-sort-select
+							placeholder="{{ 'Badge.sortBy' | translate }}"
+							class="oeb tw-w-[12rem]"
+							[control]="sortControl"
+							[result]="learningPathResults"
+						>
+						</oeb-global-sort-select>
 					</div>
 				</div>
 				<div class="tw-grid-cols-2 tw-grid tw-items-center subtitle-wrapper">
@@ -114,5 +114,16 @@
 				</div>
 			</ng-container>
 		</ng-container>
+		<div
+			class="tw-mt-8"
+			*ngIf="learningPathResults.length >= 20 || (currentPage == totalPages && currentPage != 1)"
+		>
+			<oeb-numbered-pagination
+				[totalProducts]="isFiltered() ? filteredMicroDegrees.length : learningPaths.length"
+				[(page)]="currentPage"
+				[(pageSize)]="microDegreesPerPage"
+			>
+			</oeb-numbered-pagination>
+		</div>
 	</ng-template>
 </div>

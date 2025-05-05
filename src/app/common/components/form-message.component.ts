@@ -42,6 +42,7 @@ const messageStatusTypeToNotificationMap: { [key in string]: Notification } = {
 			</button>
 		</div>
 	</div>`,
+	standalone: false,
 })
 export class FormMessageComponent implements OnInit, OnDestroy {
 	messageDismissed = false;

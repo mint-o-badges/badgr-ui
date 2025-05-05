@@ -19,7 +19,6 @@ import { AppConfigService } from '../../../common/app-config.service';
 import { ImportLauncherDirective } from '../../../mozz-transition/directives/import-launcher/import-launcher.directive';
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { UserProfile } from '../../../common/model/user-profile.model';
-import { provideIcons } from '../../../components/spartan/ui-icon-helm/src';
 import { lucideHand, lucideHexagon, lucideMedal, lucideBookOpen, lucideClock, lucideHeart } from '@ng-icons/lucide';
 import { CountUpDirective } from 'ngx-countup';
 import { Competency } from '../../../common/model/competency.model';
@@ -27,6 +26,7 @@ import { LearningPathApiService } from '../../../common/services/learningpath-ap
 import { LearningPath } from '../../../issuer/models/learningpath.model';
 import { FormControl } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
+import { provideIcons } from '@ng-icons/core';
 
 type BadgeDispay = 'grid' | 'list';
 type EscoCompetencies = {
@@ -44,6 +44,7 @@ type EscoCompetencies = {
 		provideIcons({ lucideBookOpen }),
 		provideIcons({ lucideHeart }),
 	],
+	standalone: false,
 })
 export class RecipientEarnedBadgeListComponent
 	extends BaseAuthenticatedRoutableComponent
@@ -173,8 +174,6 @@ export class RecipientEarnedBadgeListComponent
 			});
 		}
 
-
-
 		this.mozillaTransitionOver = !!localStorage.getItem('mozillaTransitionOver') || false;
 
 		this.restoreDisplayState();
@@ -231,7 +230,7 @@ export class RecipientEarnedBadgeListComponent
 				component: this.badgesCompetency,
 			},
 			{
-				title: 'Lernpfade',
+				title: 'Micro Degrees',
 				component: this.learningPathTemplate,
 			},
 		];
@@ -372,10 +371,8 @@ export class RecipientEarnedBadgeListComponent
 	}
 
 	trackById(index: number, item: any): any {
-		return item.id; 
+		return item.id;
 	}
-
-
 
 	private groupCompetencies(badges) {
 		let groupedCompetencies: EscoCompetencies = {};
@@ -417,7 +414,7 @@ export class RecipientEarnedBadgeListComponent
 					}
 				});
 			});
-		
+
 		this.groupedUserCompetencies = Object.values(groupedCompetencies).sort((a, b) => {
 			return a.lastReceived.getTime() - b.lastReceived.getTime();
 		});

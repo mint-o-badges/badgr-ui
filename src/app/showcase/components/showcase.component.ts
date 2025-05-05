@@ -7,6 +7,7 @@ import { typedFormGroup } from '../../common/util/typed-forms';
 @Component({
 	selector: 'oeb-showcase',
 	templateUrl: './oeb-showcase.component.html',
+	standalone: false,
 })
 export class ShowcaseComponent {
 	public badges = [

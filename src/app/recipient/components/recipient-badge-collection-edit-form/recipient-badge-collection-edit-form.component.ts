@@ -13,6 +13,7 @@ import { RecipientBadgeCollection } from '../../models/recipient-badge-collectio
 @Component({
 	selector: 'recipient-badge-collection-edit-form',
 	templateUrl: './recipient-badge-collection-edit-form.component.html',
+	standalone: false,
 })
 export class RecipientBadgeCollectionEditFormComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	@Input() badgeCollection: RecipientBadgeCollection;

@@ -33,7 +33,9 @@
 									class="tw-bg-white tw-rounded-[10px] tw-border-purple tw-border-solid tw-border tw-h-[90px] tw-p-4"
 								>
 									<div class="tw-whitespace-nowrap tw-flex tw-items-center tw-mb-2">
-										<hlm-icon class="tw-mr-2" size="sm" name="lucideHexagon" /><span hlmP size="sm"
+										<ng-icon hlm class="tw-mr-2" size="sm" name="lucideHexagon" /><span
+											hlmP
+											size="sm"
 											>Badges</span
 										>
 									</div>
@@ -74,10 +76,11 @@
 										[(ngModel)]="searchQuery"
 										hlmInput
 									/>
-									<hlm-icon
+									<ng-icon
+										hlm
 										name="lucideSearch"
 										class="tw-w-8 tw-h-8 tw-absolute tw-top-1/2 tw-right-2 -tw-translate-y-1/2 tw-pointer-events-none tw-text-purple"
-									></hlm-icon>
+									></ng-icon>
 								</div>
 								<span>{{ 'Badge.sortBy' | translate }} </span>
 								<oeb-sort-select
@@ -156,7 +159,7 @@
 									class="tw-bg-white tw-rounded-[10px] tw-border-purple tw-border-solid tw-border tw-h-[90px] tw-p-4"
 								>
 									<div class="tw-whitespace-nowrap tw-flex tw-items-center tw-mb-2">
-										<hlm-icon class="tw-mr-2" size="sm" name="lucideHexagon" /><span
+										<ng-icon hlm class="tw-mr-2" size="sm" name="lucideHexagon" /><span
 											hlmP
 											size="sm"
 											>{{ 'RecBadge.competencies' | translate }}</span
@@ -175,9 +178,11 @@
 									class="tw-bg-white tw-rounded-[10px] tw-border-purple tw-border-solid tw-border tw-h-[90px] tw-p-4"
 								>
 									<div class="tw-whitespace-nowrap tw-flex tw-items-center tw-mb-2">
-										<hlm-icon class="tw-mr-2" size="sm" name="lucideClock" /><span hlmP size="sm">{{
-											'RecBadge.studyingTime' | translate
-										}}</span>
+										<ng-icon hlm class="tw-mr-2" size="sm" name="lucideClock" /><span
+											hlmP
+											size="sm"
+											>{{ 'RecBadge.studyingTime' | translate }}</span
+										>
 									</div>
 									<p hlmP class="tw-text-purple tw-font-bold" *ngIf="!!allBadges">
 										<span #countup2 [countUp]="totalStudyTime / 60">0</span>
@@ -193,7 +198,7 @@
 							>
 								<div class="tw-w-full lg:tw-w-[270px] lg:tw-flex-shrink-0 lg:tw-pb-0 tw-pb-4">
 									<div class="tw-flex tw-items-center">
-										<hlm-icon class="tw-mr-2" name="lucideHeart" />
+										<ng-icon hlm class="tw-mr-2" name="lucideHeart" />
 										<h3 hlmH3 class="tw-font-medium tw-text-oebblack tw-ml-2">
 											{{ 'RecBadge.newCompetencies' | translate }}
 										</h3>
@@ -212,7 +217,7 @@
 							<div class="lg:tw-flex tw-flex-wrap oeb-standard-padding-bottom">
 								<div class="tw-w-full lg:tw-w-[270px] lg:tw-flex-shrink-0 lg:tw-pb-0 tw-pb-4">
 									<div class="tw-flex tw-items-center">
-										<hlm-icon class="tw-mr-2" name="lucideHand" />
+										<ng-icon hlm class="tw-mr-2" name="lucideHand" />
 										<h3 hlmH3 class="tw-font-medium tw-text-oebblack tw-ml-2">
 											{{ 'RecBadge.skills' | translate }}
 										</h3>
@@ -233,7 +238,7 @@
 							<div class="lg:tw-flex tw-flex-wrap oeb-standard-padding-bottom">
 								<div class="tw-w-full lg:tw-w-[270px] lg:tw-flex-shrink-0 lg:tw-pb-0 tw-pb-4">
 									<div class="tw-flex tw-items-center">
-										<hlm-icon class="tw-mr-2" name="lucideBookOpen" />
+										<ng-icon hlm class="tw-mr-2" name="lucideBookOpen" />
 										<h3 hlmH3 class="tw-font-medium tw-text-oebblack tw-ml-2">
 											{{ 'RecBadge.knowledge' | translate }}
 										</h3>
@@ -275,7 +280,7 @@
 									type="text"
 									name="forminput"
 									id="forminput"
-									placeholder="Lernpfade durchsuchen"
+									placeholder="Micro Degrees durchsuchen"
 									[(ngModel)]="searchQuery"
 									class="tw-w-[300px] tw-border-solid tw-border-purple tw-bg-white tw-mr-6"
 									hlmInput

@@ -31,14 +31,22 @@
 									placeholder="{{ 'Issuer.searchInstitutions' | translate }}"
 									[(ngModel)]="searchQuery"
 								/>
-								<hlm-icon
+								<ng-icon
+									hlm
 									name="lucideSearch"
 									class="tw-w-8 tw-h-8 tw-absolute tw-top-1/2 tw-right-2 -tw-translate-y-1/2 tw-pointer-events-none tw-text-purple"
-								></hlm-icon>
+								></ng-icon>
 							</div>
 
 							<span>{{ 'Badge.sortBy' | translate }} </span>
-							<oeb-sort-select [control]="sortControl" [result]="issuerResults"></oeb-sort-select>
+							<oeb-global-sort-select
+								placeholder="{{ 'Badge.sortBy' | translate }}"
+								class="oeb tw-w-[12rem]"
+								[disabled]="!!categoryControl.value && categoryControl.value !== '---'"
+								[control]="sortControl"
+								[result]="issuerResults"
+							>
+							</oeb-global-sort-select>
 							<oeb-select
 								actionBar="true"
 								class="md:tw-w-[180px] oeb"
@@ -82,6 +90,20 @@
 						</div>
 					</ng-container>
 				</ng-container>
+
+				<div
+					class="tw-mt-8"
+					*ngIf="
+						(issuerResults.length >= 30 || (currentPage == totalPages && currentPage != 1)) &&
+						badgesDisplay != 'map'
+					"
+				>
+					<oeb-numbered-pagination
+						[totalProducts]="isFiltered() ? filteredIssuers.length : issuers.length"
+						[(page)]="currentPage"
+					>
+					</oeb-numbered-pagination>
+				</div>
 			</section>
 		</ng-template>
 		<div id="mapWrapper" class="tw-h-[45vh]" [hidden]="badgesDisplay != 'map'">

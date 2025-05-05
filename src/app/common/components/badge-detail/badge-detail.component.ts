@@ -9,6 +9,7 @@ import { BadgeInstance } from '../../../issuer/models/badgeinstance.model';
 	selector: 'bg-badgedetail',
 	templateUrl: './badge-detail.component.html',
 	styleUrls: ['./badge-detail.component.scss'],
+	standalone: false,
 })
 export class BgBadgeDetail {
 	@Input() config: PageConfig;
@@ -21,7 +22,7 @@ export class BgBadgeDetail {
 		if (lp.progress != null) {
 			const percentCompleted = lp.progress;
 			return { progress: percentCompleted };
-		} 
+		}
 		// else {
 		// 	return { match: this.calculateMatch(lp) };
 		// }
@@ -51,7 +52,7 @@ export class BgBadgeDetail {
 			shareSummary: this.config.badgeDescription,
 			shareEndpoint: 'certification',
 			embedOptions: [],
-			badge: this.badge
+			badge: this.badge,
 		});
 	}
 }

@@ -22,7 +22,7 @@ html {
 	--color-purple: #492e98;
 	--color-brightpurple: #9747ff;
 	--color-buttonhover: #6e30f2;
-	--color-red: #FF4849;
+	--color-red: #ff4849;
 	--color-lightred: #ff8383;
 	--color-pink: #ffbab9;
 	--color-lightpink: #fff6f6;
@@ -31,7 +31,7 @@ html {
 	--color-green: #93f993;
 	--color-white: #ffffff;
 	--color-lightgray: #f5f5f5;
-	--color-darkgray: #6B6B6B;
+	--color-darkgray: #6b6b6b;
 	--color-grayinteractive: #cfcece;
 	--color-lightpurple: #f1f0ff;
 	--color-interactive1: var(--color-purple);
@@ -228,6 +228,50 @@ html {
 	}
 }
 
+#altcha {
+	appearance: auto;
+}
+
 #altcha_checkbox {
 	appearance: auto;
+}
+
+// tag extensions
+.tag {
+	&-button {
+		cursor: pointer;
+	}
+	&-button-pressed {
+		background-color: var(--color-interactive1);
+		color: var(--color-light1);
+		border-color: var(--color-interactive1);
+	}
+	&-close {
+		padding-right: 32px;
+		background: transparent url(../../breakdown/static/scss/images/tooltip-close.svg) right 8px center no-repeat;
+		background-size: 12px 12px;
+	}
+	&-delete {
+		&:hover {
+			background-color: var(--color-lightpink);
+		}
+	}
+}
+
+// override brn-select default styles to display scrollbars
+[data-brn-select-viewport] {
+	scrollbar-width: thin !important;
+
+	&::-webkit-scrollbar {
+		display: initial !important;
+	}
+
+	hlm-option {
+		box-sizing: border-box;
+	}
+}
+
+// tw-break-words uses overflow-wrap and does not cover all cases
+.oeb-break-words {
+	word-break: break-word;
 }

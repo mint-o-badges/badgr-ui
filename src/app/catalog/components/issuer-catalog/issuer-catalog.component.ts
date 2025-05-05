@@ -15,12 +15,14 @@ import { TranslateService } from '@ngx-translate/core';
 import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
 import { FormControl } from '@angular/forms';
 import { appearAnimation } from '../../../common/animations/animations';
+import { applySorting } from '../../util/sorting';
 
 @Component({
 	selector: 'app-issuer-catalog',
 	templateUrl: './issuer-catalog.component.html',
 	styleUrls: ['./issuer-catalog.component.css'],
 	animations: [appearAnimation],
+	standalone: false,
 })
 export class IssuerCatalogComponent extends BaseRoutableComponent implements OnInit, AfterViewInit {
 	readonly issuerPlaceholderSrc = preloadImageURL('../../../../breakdown/static/images/placeholderavatar-issuer.svg');
@@ -35,6 +37,8 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 	issuersLoaded: Promise<unknown>;
 	issuerResults: Issuer[] = [];
 	issuerResultsByCategory: MatchingIssuerCategory[] = [];
+	filteredIssuers: Issuer[] = [];
+
 	order = 'asc';
 	public badgesDisplay = 'grid';
 
@@ -53,16 +57,22 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 			label: 'Andere',
 			value: 'andere',
 		},
+		{
+			label: 'Alle Kategorien',
+			value: '',
+		},
 	];
 
-	sortControl = new FormControl('name_asc');
+	sortControl = new FormControl();
 	private _searchQuery = '';
 	get searchQuery() {
 		return this._searchQuery;
 	}
 	set searchQuery(query) {
 		this._searchQuery = query;
-		this.updateResults();
+		// this.updateResults();
+		this.updatePaginatedResults();
+		this.currentPage = 1;
 	}
 
 	private _categoryFilter = '';
@@ -72,7 +82,26 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 
 	set categoryFilter(val: string) {
 		this._categoryFilter = val;
-		this.updateResults();
+		// this.updateResults();
+		this.updatePaginatedResults();
+		this.currentPage = 1;
+	}
+
+	isFiltered() {
+		return Boolean(this.searchQuery || this.categoryFilter);
+	}
+
+	private _currentPage = 1;
+
+	get currentPage(): number {
+		return this._currentPage;
+	}
+
+	set currentPage(value: number) {
+		if (this._currentPage !== value) {
+			this._currentPage = value;
+			this.updatePaginatedResults();
+		}
 	}
 
 	get theme() {
@@ -81,6 +110,13 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 	get features() {
 		return this.configService.featuresConfig;
 	}
+
+	issuersPerPage = 30;
+	totalPages: number;
+	nextLink: string;
+	previousLink: string;
+
+	sortOption: string | null = null;
 
 	issuerKeys = {};
 	plural = {};
@@ -119,15 +155,16 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 			this.issuerManager.getAllIssuers().subscribe(
 				(issuers) => {
 					this.issuers = issuers
-						.slice()
 						.filter((i) => i.apiModel.verified && i.ownerAcceptedTos && !i.apiModel.source_url)
 						.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
-					this.issuerResults = this.issuers;
-					this.issuerResults.sort((a, b) => a.name.localeCompare(b.name));
-					if (this.mapObject)
-						this.mapObject.on('load', function () {
-							that.generateGeoJSON(that.issuerResults);
-						});
+					this.totalPages = Math.ceil(this.issuers.length / this.issuersPerPage);
+					this.updatePaginatedResults();
+					// this.issuerResults = this.issuers;
+					// this.issuerResults.sort((a, b) => a.name.localeCompare(b.name));
+					// if (this.mapObject)
+					// 	this.mapObject.on('load', function () {
+					// 		that.generateGeoJSON(that.issuerResults);
+					// 	});
 					resolve(issuers);
 				},
 				(error) => {
@@ -147,6 +184,11 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 		// Translate: to update predefined text when language is changed
 		this.translate.onLangChange.subscribe((event) => {
 			this.prepareTexts();
+		});
+
+		this.sortControl.valueChanges.subscribe((value) => {
+			this.sortOption = value;
+			this.updatePaginatedResults();
 		});
 	}
 
@@ -208,6 +250,33 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 			.filter((issuer) => !this.categoryFilter || issuer.category === this.categoryFilter);
 		this.issuerResultsByCategory.forEach((r) => r.issuers.sort((a, b) => a.name.localeCompare(b.name)));
 		this.generateGeoJSON(this.issuerResults);
+	}
+
+	private updatePaginatedResults() {
+		let that = this;
+		// Clear Results
+		this.issuerResults = [];
+		this.issuerResultsByCategory = [];
+
+		// this.issuerResults.sort((a, b) => a.name.localeCompare(b.name));
+
+		this.filteredIssuers = this.issuers
+			.filter(MatchingAlgorithm.issuerMatcher(this.searchQuery))
+			.filter((issuer) => !this.categoryFilter || issuer.category === this.categoryFilter);
+
+		if (this.sortOption) {
+			applySorting(this.filteredIssuers, this.sortOption);
+		}
+		this.totalPages = Math.ceil(this.filteredIssuers.length / this.issuersPerPage);
+		const start = (this.currentPage - 1) * this.issuersPerPage;
+		const end = start + this.issuersPerPage;
+
+		that.issuerResults = this.filteredIssuers.slice(start, end);
+		// this.issuerResults = this.issuers
+		// 	.filter(MatchingAlgorithm.issuerMatcher(this.searchQuery))
+		// 	.filter((issuer) => !this.categoryFilter || issuer.category === this.categoryFilter);
+		// this.issuerResultsByCategory.forEach((r) => r.issuers.sort((a, b) => a.name.localeCompare(b.name)));
+		// this.generateGeoJSON(this.issuerResults);
 	}
 
 	generateGeoJSON(issuers) {

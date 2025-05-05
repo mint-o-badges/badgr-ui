@@ -4,6 +4,6 @@ import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-a
 @Component({
 	selector: 'issuer-create',
 	templateUrl: './issuer-create.component.html',
+	standalone: false,
 })
-export class IssuerCreateComponent extends BaseAuthenticatedRoutableComponent {
-}
+export class IssuerCreateComponent extends BaseAuthenticatedRoutableComponent {}

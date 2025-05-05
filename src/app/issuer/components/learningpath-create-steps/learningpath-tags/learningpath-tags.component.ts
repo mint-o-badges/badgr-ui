@@ -1,43 +1,36 @@
-import { Component, ElementRef, OnInit, ViewChild, Input, Output, EventEmitter } from "@angular/core";
-import { FormFieldSelectOption } from "../../../../common/components/formfield-select";
-import { LearningPathManager } from "../../../../issuer/services/learningpath-manager.service";
-import { LearningPath } from "../../../../issuer/models/learningpath.model";
-import { ApiLearningPath } from "../../../../common/model/learningpath-api.model";
+import { Component, ElementRef, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
+import { FormFieldSelectOption } from '../../../../common/components/formfield-select';
+import { LearningPathManager } from '../../../../issuer/services/learningpath-manager.service';
+import { LearningPath } from '../../../../issuer/models/learningpath.model';
+import { ApiLearningPath } from '../../../../common/model/learningpath-api.model';
 
 @Component({
 	selector: 'learningpath-tags',
 	templateUrl: './learningpath-tags.component.html',
-	styleUrls: ['../../learningpath-edit-form/learningpath-edit-form.component.scss']
+	styleUrls: ['../../learningpath-edit-form/learningpath-edit-form.component.scss'],
+	standalone: false,
 })
 export class LearningPathTagsComponent implements OnInit {
-
 	@Input() lpName: string;
 	@Input() lpDescription: string;
 	@Input() lpImage: string;
 
 	@Input()
-	set learningPath (lp: ApiLearningPath) {
+	set learningPath(lp: ApiLearningPath) {
 		lp.tags.forEach((t) => {
-			this.lpTags.add(t)
-		})
+			this.lpTags.add(t);
+		});
 		this.tagsChanged.emit(Array.from(this.lpTags));
 	}
 
 	@Output() tagsChanged = new EventEmitter<string[]>();
 
-
 	@ViewChild('newTagInput')
 	newTagInput: ElementRef<HTMLInputElement>;
 
-	constructor(
-		protected learningPathManager: LearningPathManager,
-
-	) {
-
-	}
+	constructor(protected learningPathManager: LearningPathManager) {}
 	ngOnInit(): void {
-		this.fetchTags()
-
+		this.fetchTags();
 	}
 	readonly badgeLoadingImageUrl = '../../../breakdown/static/images/badge-loading.svg';
 	readonly badgeFailedImageUrl = '../../../breakdown/static/images/badge-failed.svg';

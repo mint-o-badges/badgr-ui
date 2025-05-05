@@ -11,6 +11,7 @@ import { MessageService } from '../../../common/services/message.service';
 	selector: 'app-welcome',
 	templateUrl: './welcome.component.html',
 	styleUrls: ['./welcome.component.scss'],
+	standalone: false,
 })
 export class WelcomeComponent /*extends BaseAuthenticatedRoutableComponent*/ implements OnInit {
 	constructor(
@@ -40,9 +41,9 @@ export class WelcomeComponent /*extends BaseAuthenticatedRoutableComponent*/ imp
 			const authCode = this.queryParams.queryStringValue('authCode', true);
 			const redirect = 'auth/welcome';
 			if (authCode) {
-                throw new Error("query param authentication is deprecated!");
+				throw new Error('query param authentication is deprecated!');
 			} else if (this.queryParams.queryStringValue('authToken', true)) {
-                throw new Error("query param authentication is deprecated!");
+				throw new Error('query param authentication is deprecated!');
 			} else if (this.queryParams.queryStringValue('infoMessage', true)) {
 				this.messageService.reportInfoMessage(this.queryParams.queryStringValue('infoMessage', true), true);
 			} else if (this.queryParams.queryStringValue('authError', true)) {

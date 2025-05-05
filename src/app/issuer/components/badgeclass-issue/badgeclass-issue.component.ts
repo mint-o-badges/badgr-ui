@@ -32,6 +32,7 @@ import { SuccessDialogComponent } from '../../../common/dialogs/oeb-dialogs/succ
 @Component({
 	selector: 'badgeclass-issue',
 	templateUrl: './badgeclass-issue.component.html',
+	standalone: false,
 })
 export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	breadcrumbLinkEntries: LinkEntry[] = [];
@@ -241,8 +242,7 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 		const expires =
 			this.expirationEnabled && formState.expires ? new Date(formState.expires).toISOString() : undefined;
 
-			
-			this.issueBadgeFinished = this.badgeInstanceManager
+		this.issueBadgeFinished = this.badgeInstanceManager
 			.createBadgeInstance(this.issuerSlug, this.badgeSlug, {
 				issuer: this.issuerSlug,
 				badge_class: this.badgeSlug,

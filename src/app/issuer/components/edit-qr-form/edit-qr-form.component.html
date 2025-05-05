@@ -1,67 +1,147 @@
 <div *bgAwaitPromises="[badgeClassLoaded]">
-    <form [formGroup]="qrForm.rawControl" (ngSubmit)="onSubmit()" novalidate>
-        <div class="tw-flex tw-flex-col md:tw-flex-row tw-gap-6">
-            <div class="tw-flex tw-flex-row tw-justify-center">
-                <div>
-                    <div
-                        class="tw-flex tw-items-center tw-px-4 tw-bg-white tw-mx-auto md:tw-py-8 tw-py-4 tw-rounded-[20px] oeb-slight-shadow tw-grow-0 tw-shrink-0">
-                        <img class="md:tw-max-w-[200px] tw-max-w-[150px] tw-mx-auto tw-block"
-                            [loaded-src]="badgeClass.image" [loading-src]="badgeLoadingImageUrl"
-                            [error-src]="badgeFailedImageUrl" />
-                    </div>
-                </div>
-                <div class="tw-ml-4 md:tw-hidden tw-justify-center tw-items-center tw-flex">
-                    <h2 class=" tw-text-purple tw-text-3xl">QR-Code-Vergabe erstellen für <br> <span
-                            class="tw-font-extrabold">{{badgeClass.name}}</span></h2>
-                </div>
-            </div>
+	<form [formGroup]="qrForm.rawControl" (ngSubmit)="onSubmit()" novalidate>
+		<div class="tw-flex tw-flex-col md:tw-flex-row tw-gap-6">
+			<div class="tw-flex tw-flex-row tw-justify-center">
+				<div>
+					<div
+						class="tw-flex tw-items-center tw-px-4 tw-bg-white tw-mx-auto md:tw-py-8 tw-py-4 tw-rounded-[20px] oeb-slight-shadow tw-grow-0 tw-shrink-0"
+					>
+						<img
+							class="md:tw-max-w-[200px] tw-max-w-[150px] tw-mx-auto tw-block"
+							[loaded-src]="badgeClass.image"
+							[loading-src]="badgeLoadingImageUrl"
+							[error-src]="badgeFailedImageUrl"
+						/>
+					</div>
+				</div>
+				<div class="tw-ml-4 md:tw-hidden tw-justify-center tw-items-center tw-flex">
+					<h2 class="tw-text-purple tw-text-3xl">
+						QR-Code-Vergabe erstellen für <br />
+						<span class="tw-font-extrabold">{{ badgeClass.name }}</span>
+					</h2>
+				</div>
+			</div>
 
+			<div class="tw-flex tw-flex-col tw-w-full">
+				<h2 class="tw-hidden md:tw-block tw-text-purple tw-text-3xl">
+					QR-Code-Vergabe erstellen für <br />
+					<span class="tw-font-extrabold">{{ badgeClass.name }}</span>
+				</h2>
+				<oeb-input
+					label="Titel"
+					[placeholder]="'Badge Vergabe Juni 2024'"
+					fieldType="text"
+					[autofocus]="true"
+					[control]="qrForm.rawControlMap.title"
+				></oeb-input>
+				<oeb-input
+					label="Name Ersteller:in"
+					[placeholder]="'Mein Vorname und Nachname'"
+					fieldType="text"
+					[control]="qrForm.rawControlMap.createdBy"
+				></oeb-input>
+				<input [formControl]="qrForm.rawControlMap.badgeclass_id" type="hidden" />
+				<input [formControl]="qrForm.rawControlMap.issuer_id" type="hidden" />
 
-            <div class="tw-flex tw-flex-col tw-w-full ">
-                <h2 class="tw-hidden md:tw-block tw-text-purple tw-text-3xl">QR-Code-Vergabe erstellen für <br> <span
-                        class="tw-font-extrabold">{{badgeClass.name}}</span></h2>
-                <oeb-input label="Titel" [placeholder]="'Badge Vergabe Juni 2024'" fieldType="text" [autofocus]="true"
-                    [control]="qrForm.rawControlMap.title" ></oeb-input>
-                <oeb-input label="Name Ersteller:in" [placeholder]="'Mein Vorname und Nachname'" fieldType="text"
-                    [autofocus]="true" [control]="qrForm.rawControlMap.createdBy"></oeb-input>
-                <input [formControl]="qrForm.rawControlMap.badgeclass_id" type="hidden" />
-                <input [formControl]="qrForm.rawControlMap.issuer_id" type="hidden" />
+				<span
+					class="tw-mt-6 md:tw-mt-7 tw-text-oebblack tw-font-semibold md:tw-leading-[28px] md:tw-text-[20px] tw-leading-[19px] tw-text-[14px]"
+					>Gültigkeit des QR-Codes <span class="tw-font-normal">(optional)</span></span
+				>
 
+				<div
+					*ngIf="!editing; else editButtons"
+					class="tw-flex tw-flex-col xl:tw-flex-row tw-gap-2 tw-justify-between xl:tw-items-end"
+				>
+					<div class="tw-flex md:tw-justify-between tw-gap-12">
+						<oeb-input
+							labelStyle="tw-text-oebblack"
+							label="Start-Datum"
+							[errorMessage]="'Bitte gib ein Datum in der Form YYYY/mm/dd an'"
+							[control]="qrForm.rawControlMap.valid_from"
+							fieldType="date"
+						></oeb-input>
+						<oeb-input
+							labelStyle="tw-text-oebblack"
+							label="End-Datum"
+							[errorMessage]="{
+								expiresBeforeValidFrom: 'Das Ablaufdatum muss nach dem Start-Datum liegen',
+								invalidDate: 'Bitte gib ein Datum in der Form YYYY/mm/dd an'
+							}"
+							[control]="qrForm.rawControlMap.expires_at"
+							fieldType="date"
+						></oeb-input>
+					</div>
+				</div>
 
-                <span
-                    class="tw-mt-6 md:tw-mt-7 tw-text-oebblack tw-font-semibold md:tw-leading-[28px] md:tw-text-[20px] tw-leading-[19px] tw-text-[14px]">Gültigkeit
-                    des QR-Codes <span class="tw-font-normal">(optional)</span></span>
+				<div *ngIf="!editing">
+					<span
+						class="tw-mt-6 md:tw-mt-7 tw-text-oebblack tw-font-semibold md:tw-leading-[28px] md:tw-text-[20px] tw-leading-[19px] tw-text-[14px]"
+						>Benachrichtigung</span
+					>
+					<oeb-checkbox
+						class="oeb-standard-padding-bottom"
+						type="checkbox"
+						[text]="'QrCode.receiveEmails' | translate"
+						[control]="qrForm.rawControlMap.notifications"
+					>
+					</oeb-checkbox>
+				</div>
 
-                <div *ngIf="!editing; else editButtons"
-                    class="tw-flex tw-flex-col xl:tw-flex-row tw-gap-2 tw-justify-between xl:tw-items-end">
-                    <div class="tw-flex md:tw-justify-between tw-gap-12">
-                        <oeb-input labelStyle="tw-text-oebblack" label="Start-Datum" [errorMessage]="'Bitte gib ein Datum in der Form YYYY/mm/dd an'"
-                            [control]="qrForm.rawControlMap.valid_from" fieldType="date"></oeb-input>
-                        <oeb-input labelStyle="tw-text-oebblack" label="End-Datum" [errorMessage]="{ expiresBeforeValidFrom: 'Das Ablaufdatum muss nach dem Start-Datum liegen', invalidDate: 'Bitte gib ein Datum in der Form YYYY/mm/dd an' }"
-                            [control]="qrForm.rawControlMap.expires_at" fieldType="date"></oeb-input>
-                    </div>
-                    <oeb-button class="tw-whitespace-nowrap" width="full_width" type="submit" text="QR-Code generieren">
-                    </oeb-button>
+				<ng-template #editButtons>
+					<div class="tw-flex tw-gap-12">
+						<oeb-input
+							label="Start-Datum"
+							[errorMessage]="'Bitte gib ein Datum in der Form YYYY/mm/dd an'"
+							[control]="qrForm.rawControlMap.valid_from"
+							fieldType="date"
+						></oeb-input>
+						<oeb-input
+							label="End-Datum"
+							[errorMessage]="'Bitte gib ein Datum in der Form YYYY/mm/dd an'"
+							[control]="qrForm.rawControlMap.expires_at"
+							fieldType="date"
+						></oeb-input>
+					</div>
 
-                </div>
-                <ng-template #editButtons>
-                    <div class="tw-flex tw-gap-12 oeb-standard-padding-bottom">
-                        <oeb-input label="Start-Datum" [errorMessage]="'Bitte gib ein Datum in der Form YYYY/mm/dd an'"
-                            [control]="qrForm.rawControlMap.valid_from" fieldType="date"></oeb-input>
-                        <oeb-input label="End-Datum" [errorMessage]="'Bitte gib ein Datum in der Form YYYY/mm/dd an'"
-                            [control]="qrForm.rawControlMap.expires_at" fieldType="date"></oeb-input>
-                    </div>
-                    <div class="tw-flex tw-flex-col md:tw-flex-row tw-gap-4 tw-mt-2 tw-w-full">
-                        <oeb-button variant="secondary" width="full_width" type="button" (click)="previousPage()"
-                            [text]="'General.cancel' | translate">
-                        </oeb-button>
-                        <oeb-button class="tw-whitespace-nowrap" width="full_width" type="submit"
-                            [text]="'General.saveChanges' | translate">
-                        </oeb-button>
-                    </div>
-                </ng-template>
-            </div>
-        </div>
+					<span
+						class="tw-mt-6 md:tw-mt-7 tw-text-oebblack tw-font-semibold md:tw-leading-[28px] md:tw-text-[20px] tw-leading-[19px] tw-text-[14px]"
+						>Benachrichtigung</span
+					>
+					<oeb-checkbox
+						class="oeb-standard-padding-bottom"
+						type="checkbox"
+						[text]="'QrCode.receiveEmails' | translate"
+						[control]="qrForm.rawControlMap.notifications"
+					>
+					</oeb-checkbox>
 
-    </form>
+					<div class="tw-flex tw-flex-col md:tw-flex-row tw-gap-4 tw-mt-2 tw-w-full">
+						<oeb-button
+							variant="secondary"
+							width="full_width"
+							type="button"
+							(click)="previousPage()"
+							[text]="'General.cancel' | translate"
+						>
+						</oeb-button>
+						<oeb-button
+							class="tw-whitespace-nowrap"
+							width="full_width"
+							type="submit"
+							[text]="'General.saveChanges' | translate"
+						>
+						</oeb-button>
+					</div>
+				</ng-template>
+
+				<oeb-button
+					*ngIf="!editing"
+					class="tw-whitespace-nowrap tw-mt-6"
+					type="submit"
+					text="QR-Code generieren"
+				>
+				</oeb-button>
+			</div>
+		</div>
+	</form>
 </div>

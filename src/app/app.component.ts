@@ -1,4 +1,5 @@
-import { AfterViewInit, Component, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, Renderer2, ViewChild, Inject, signal, computed } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 import { Router } from '@angular/router';
 
 import { MessageService } from './common/services/message.service';
@@ -29,6 +30,7 @@ import { ImportModalComponent } from './mozz-transition/components/import-modal/
 import { ExportPdfDialog } from './common/dialogs/export-pdf-dialog/export-pdf-dialog.component';
 import { CopyBadgeDialog } from './common/dialogs/copy-badge-dialog/copy-badge-dialog.component';
 import { ForkBadgeDialog } from './common/dialogs/fork-badge-dialog/fork-badge-dialog.component';
+import { SelectIssuerDialog } from './common/dialogs/select-issuer-dialog/select-issuer-dialog.component';
 import { LanguageService } from './common/services/language.service';
 import { TranslateService } from '@ngx-translate/core';
 import { MenuItem } from './common/components/badge-detail/badge-detail.component.types';
@@ -45,6 +47,7 @@ import { MenuItem } from './common/components/badge-detail/badge-detail.componen
 	},
 	templateUrl: './app.component.html',
 	styleUrls: ['./app.component.scss'],
+	standalone: false,
 })
 export class AppComponent implements OnInit, AfterViewInit {
 	/**
@@ -73,10 +76,10 @@ export class AppComponent implements OnInit, AfterViewInit {
 			routerLink: ['/catalog/learningpaths'],
 			icon: 'lucideRoute',
 		},
-	]
+	];
 	accountMenuItems: MenuItem[] = [
 		{
-			title: "Mein Profil",
+			title: 'Mein Profil',
 			routerLink: ['/profile/profile'],
 			icon: 'lucideUsers',
 		},
@@ -86,11 +89,11 @@ export class AppComponent implements OnInit, AfterViewInit {
 			icon: 'lucideRepeat2',
 		},
 		{
-			title: "Logout",
+			title: 'Logout',
 			routerLink: ['/auth/logout'],
 			icon: 'lucideLogOut',
 		},
-	]
+	];
 	/**
 	 * Permanently disables the curtain, making it impossible to show it even with the query parameter
 	 */
@@ -114,8 +117,10 @@ export class AppComponent implements OnInit, AfterViewInit {
 	mobileNavOpen = false;
 	isUnsupportedBrowser = false;
 	launchpoints?: ApiExternalToolLaunchpoint[];
-	issuers: Issuer[];
-	issuersLoaded: Promise<unknown>;
+	issuers = signal<Issuer[] | undefined>(undefined);
+	showIssuersTab = computed(() => {
+		return !this.features.disableIssuers && this.issuers() !== undefined;
+	});
 
 	copyrightYear = new Date().getFullYear();
 
@@ -142,6 +147,9 @@ export class AppComponent implements OnInit, AfterViewInit {
 
 	@ViewChild('forkBadgeDialog')
 	private forkBadgeDialog: ForkBadgeDialog;
+
+	@ViewChild('selectIssuerDialog')
+	private selectIssuerDialog: SelectIssuerDialog;
 
 	@ViewChild('issuerLink')
 	private issuerLink: unknown;
@@ -201,6 +209,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 		protected issuerManager: IssuerManager,
 		private languageService: LanguageService, // Translation
 		private translate: TranslateService,
+		@Inject(DOCUMENT) private document: Document,
 	) {
 		// Initialize App language
 		this.languageService.setInitialAppLangauge();
@@ -212,7 +221,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
 		// @ts-ignore
 		// Start umami tracking
-		umami.track();
+		// umami.track();
 
 		messageService.useRouter(router);
 
@@ -238,30 +247,33 @@ export class AppComponent implements OnInit, AfterViewInit {
 			if (set.entities.length && set.entities[0].agreedTermsVersion !== set.entities[0].latestTermsVersion) {
 				this.commonDialogsService.newTermsDialog.openDialog();
 			}
+
+			// for issuers tab which can only be loaded when the user is verified
+			this.profileManager.userProfile.emails.updateList().then(() => {
+				if (this.profileManager.userProfile.isVerified)
+					this.issuerManager.allIssuers$.subscribe(
+						(issuers) => {
+							this.issuers.set(
+								issuers.slice().sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime()),
+							);
+						},
+						(error) => {
+							this.messageService.reportAndThrowError(
+								this.translate.instant('Issuer.failLoadissuers'),
+								error,
+							);
+						},
+					);
+			});
 		});
 
 		// Load the profile
 		this.profileManager.userProfileSet.ensureLoaded();
-
-		// for issuers tab
-		this.issuerManager.allIssuers$.subscribe(
-			(issuers) => {
-				this.issuers = issuers.slice().sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
-				this.shouldShowIssuersTab();
-			},
-			(error) => {
-				this.messageService.reportAndThrowError(this.translate.instant('Issuer.failLoadissuers'), error);
-			},
-		);
 	};
 
 	dismissUnsupportedBrowserMessage() {
 		this.isUnsupportedBrowser = false;
 	}
-
-	showIssuersTab = false;
-	shouldShowIssuersTab = () =>
-		(this.showIssuersTab = !this.features.disableIssuers || (this.issuers && this.issuers.length > 0));
 
 	toggleMobileNav() {
 		this.mobileNavOpen = !this.mobileNavOpen;
@@ -298,11 +310,10 @@ export class AppComponent implements OnInit, AfterViewInit {
 				if (loggedIn) this.refreshProfile();
 			}),
 		);
-		this.shouldShowIssuersTab();
 
 		this.translate.get('General.institutionsNav').subscribe((translatedText: string) => {
-            this.aboutBadgesMenuItems[2].title = translatedText;
-        });
+			this.aboutBadgesMenuItems[2].title = translatedText;
+		});
 
 		this.translate.get('LearningPath.learningpathsNav').subscribe((translatedText: string) => {
 			this.aboutBadgesMenuItems[3].title = translatedText;
@@ -316,6 +327,10 @@ export class AppComponent implements OnInit, AfterViewInit {
 			this.accountMenuItems[1].title = translatedText;
 		});
 
+		this.translate.onLangChange.subscribe(() => {
+			console.log('!!!!!!!!' + this.translate.currentLang);
+			this.document.documentElement.lang = this.translate.currentLang;
+		});
 	}
 
 	ngAfterViewInit() {
@@ -328,6 +343,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 			this.nounprojectDialog,
 			this.copyBadgeDialog,
 			this.forkBadgeDialog,
+			this.selectIssuerDialog,
 		);
 	}
 

@@ -24,6 +24,7 @@ import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcru
 @Component({
 	selector: 'badgeclass-edit',
 	templateUrl: './badgeclass-edit.component.html',
+	standalone: false,
 })
 export class BadgeClassEditComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	get issuerSlug() {

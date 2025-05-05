@@ -45,9 +45,9 @@ import { preloadImageURL } from '../util/file-util';
 			*ngIf="awardedIconSize > 0"
 		/>
 	`,
-
 	// Inputs from superclass must be specified here again due to https://github.com/angular/angular/issues/5415
 	inputs: ['badge', 'issuerId', 'badgeSlug', 'badgeId', 'forceFailed'],
+	standalone: false,
 })
 export class BadgeImageComponent extends AbstractBadgeComponent {
 	readonly greenCheckCircleUrl = preloadImageURL(

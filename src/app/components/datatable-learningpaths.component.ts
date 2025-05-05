@@ -9,13 +9,12 @@ import { Issuer } from '../issuer/models/issuer.model';
 
 @Component({
 	selector: 'learningpaths-datatable',
-	standalone: true,
 	imports: [HlmTableModule, HlmIconModule, CommonModule, OebButtonComponent, TranslateModule, RouterModule],
 	template: ` <hlm-table
 		class="tw-rounded-[20px] tw-overflow-hidden tw-w-full tw-max-w-[100%] tw-bg-lightpurple tw-border-purple tw-border"
 	>
 		<hlm-trow class="tw-bg-purple tw-text-white tw-flex-wrap hover:tw-bg-purple">
-			<hlm-th class="!tw-text-white tw-w-28 sm:tw-w-20 md:tw-w-40">Lernpfad</hlm-th>
+			<hlm-th class="!tw-text-white tw-w-28 sm:tw-w-20 md:tw-w-40">Micro Degree</hlm-th>
 			<hlm-th class="!tw-text-white tw-justify-center !tw-flex-1">{{ 'Badge.createdOn' | translate }}</hlm-th>
 			<hlm-th class="!tw-text-white tw-w-36 md:tw-w-40">{{
 				'Issuer.learningPathParticipants' | translate
@@ -74,5 +73,4 @@ export class LearningPathDatatableComponent {
 	@Input() issuer: Issuer;
 	@Output() actionElement = new EventEmitter();
 	@Output() redirectToLearningPathDetail = new EventEmitter();
-
 }

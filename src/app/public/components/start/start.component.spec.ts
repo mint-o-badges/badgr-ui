@@ -4,7 +4,7 @@ import { StartComponent } from './start.component';
 import { TranslateTestingModule } from 'ngx-translate-testing';
 import { COMMON_MOCKS_PROVIDERS_WITH_SUBS } from '../../../mocks/mocks.module.spec';
 import { BadgrCommonModule, COMMON_IMPORTS } from '../../../common/badgr-common.module';
-import { RouterTestingModule } from "@angular/router/testing";
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('StartComponent', () => {
 	let component: StartComponent;
@@ -13,7 +13,12 @@ describe('StartComponent', () => {
 	beforeEach(waitForAsync(() => {
 		TestBed.configureTestingModule({
 			declarations: [StartComponent],
-			imports: [...COMMON_IMPORTS, BadgrCommonModule, RouterTestingModule, TranslateTestingModule.withTranslations('de', {})],
+			imports: [
+				...COMMON_IMPORTS,
+				BadgrCommonModule,
+				RouterTestingModule,
+				TranslateTestingModule.withTranslations('de', {}),
+			],
 			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
 			teardown: { destroyAfterEach: false },
 		}).compileComponents();

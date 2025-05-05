@@ -18,6 +18,7 @@ import { Location } from '@angular/common';
 @Component({
 	selector: 'edit-qr-form',
 	templateUrl: './edit-qr-form.component.html',
+	standalone: false,
 })
 export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent {
 	static datePipe = new DatePipe('de');
@@ -50,7 +51,8 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent {
 		.addControl('valid_from', '', DateValidator.validDate)
 		.addControl('expires_at', '', [DateValidator.validDate, this.validDateRange.bind(this)])
 		.addControl('badgeclass_id', '', Validators.required)
-		.addControl('issuer_id', '', Validators.required);
+		.addControl('issuer_id', '', Validators.required)
+		.addControl('notifications', false);
 
 	constructor(
 		route: ActivatedRoute,
@@ -86,8 +88,8 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent {
 					{ title: 'Award Badge' },
 				];
 			});
-		
-		if(this.qrSlug){
+
+		if (this.qrSlug) {
 			this.qrCodeApiService.getQrCode(this.qrSlug).then((qrCode) => {
 				this.qrForm.setValue({
 					title: qrCode.title,
@@ -100,6 +102,7 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent {
 						: undefined,
 					badgeclass_id: qrCode.badgeclass_id,
 					issuer_id: qrCode.issuer_id,
+					notifications: qrCode.notifications,
 				});
 			});
 		}
@@ -143,7 +146,6 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent {
 		}
 
 		if (this.editing) {
-			console.log('editing');
 			const formState = this.qrForm.value;
 			this.qrCodeApiService
 				.updateQrCode(this.issuerSlug, this.badgeSlug, this.qrSlug, {
@@ -153,6 +155,7 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent {
 					valid_from: formState.valid_from ? new Date(formState.valid_from).toISOString() : undefined,
 					badgeclass_id: this.badgeSlug,
 					issuer_id: this.issuerSlug,
+					notifications: formState.notifications,
 				})
 				.then((qrcode) => {
 					this.openSuccessDialog();
@@ -169,17 +172,28 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent {
 		} else {
 			const formState = this.qrForm.value;
 
-			this.qrCodeApiService.createQrCode(this.issuerSlug, this.badgeSlug, {
-				title: formState.title,
-				createdBy: formState.createdBy,
-				badgeclass_id: formState.badgeclass_id,
-				issuer_id: formState.issuer_id,
-				expires_at: formState.expires_at ? new Date(formState.expires_at).toISOString() : undefined ,
-				valid_from: formState.valid_from ? new Date(formState.valid_from).toISOString() : undefined
-			}).then((qrcode) => {
-					this.openSuccessDialog()
-					this.router.navigate(['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'qr', qrcode.slug, 'generate']);
-				}
-			)
-		}}   
+			this.qrCodeApiService
+				.createQrCode(this.issuerSlug, this.badgeSlug, {
+					title: formState.title,
+					createdBy: formState.createdBy,
+					badgeclass_id: formState.badgeclass_id,
+					issuer_id: formState.issuer_id,
+					expires_at: formState.expires_at ? new Date(formState.expires_at).toISOString() : undefined,
+					valid_from: formState.valid_from ? new Date(formState.valid_from).toISOString() : undefined,
+					notifications: formState.notifications,
+				})
+				.then((qrcode) => {
+					this.openSuccessDialog();
+					this.router.navigate([
+						'/issuer/issuers',
+						this.issuerSlug,
+						'badges',
+						this.badgeSlug,
+						'qr',
+						qrcode.slug,
+						'generate',
+					]);
+				});
+		}
+	}
 }

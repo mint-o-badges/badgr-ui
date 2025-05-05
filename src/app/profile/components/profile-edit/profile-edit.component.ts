@@ -15,6 +15,7 @@ import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcru
 
 @Component({
 	templateUrl: './profile-edit.component.html',
+	standalone: false,
 })
 export class ProfileEditComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	profile: UserProfile;

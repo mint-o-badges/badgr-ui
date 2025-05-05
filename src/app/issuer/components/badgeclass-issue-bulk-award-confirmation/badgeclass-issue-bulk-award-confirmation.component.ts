@@ -19,6 +19,7 @@ import { BadgeInstanceApiService } from '../../services/badgeinstance-api.servic
 @Component({
 	selector: 'badgeclass-issue-bulk-award-confirmation',
 	templateUrl: './badgeclass-issue-bulk-award-confirmation.component.html',
+	standalone: false,
 })
 export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRoutableComponent {
 	@Input() transformedImportData: TransformedImportData;
@@ -46,8 +47,7 @@ export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRouta
 		this.enableActionButton();
 	}
 
-	issueForm = typedFormGroup()
-		.addControl('notify_earner', true)
+	issueForm = typedFormGroup().addControl('notify_earner', true);
 
 	enableActionButton() {
 		this.buttonDisabledClass = false;
@@ -60,6 +60,7 @@ export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRouta
 	}
 
 	dataConfirmed() {
+		if (this.buttonDisabledAttribute) return;
 		this.disableActionButton();
 
 		const assertions: BadgeInstanceBatchAssertion[] = [];
@@ -77,10 +78,10 @@ export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRouta
 					}
 				: undefined;
 
-				assertion = {
-					recipient_identifier: row.email,
-					extensions: extensions,
-				};
+			assertion = {
+				recipient_identifier: row.email,
+				extensions: extensions,
+			};
 			assertions.push(assertion);
 		});
 
@@ -144,7 +145,7 @@ export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRouta
 		const dialogRef = this._hlmDialogService.open(SuccessDialogComponent, {
 			context: {
 				recipient: recipient,
-				variant: "success"
+				variant: 'success',
 			},
 		});
 	}
