@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { BgBadgecard } from './components/bg-badgecard';
 import { BgLearningPathCard } from './components/bg-learningpathcard';
+import { BgCollectionCard } from './bg-collectioncard';
 import { BgBadgeDetail } from './components/badge-detail/badge-detail.component';
 import { OebSwitchComponent } from '../components/oeb-switch.component'
 import { BgAwaitPromises } from './directives/bg-await-promises';
@@ -164,6 +165,7 @@ export const COMMON_MODULE_COMPONENTS = [
 	BadgrButtonComponent,
 	BgBadgecard,
 	BgLearningPathCard,
+	BgCollectionCard,
 	BgBadgeDetail,
 	BgBreadcrumbsComponent,
 	BgFormFieldFileComponent,

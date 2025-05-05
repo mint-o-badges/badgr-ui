@@ -13,6 +13,7 @@ import { ShareSocialDialogOptions } from '../../../common/dialogs/share-social-d
 import { addQueryParamsToUrl } from '../../../common/util/url-util';
 import { AppConfigService } from '../../../common/app-config.service';
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
+import { MenuItem } from '../../../common/components/badge-detail/badge-detail.component.types';
 
 @Component({
 	selector: 'recipient-earned-badge-detail',
@@ -33,6 +34,10 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 	collection: RecipientBadgeCollection = new RecipientBadgeCollection(null);
 	crumbs: LinkEntry[];
 
+	menuItems: MenuItem[]
+
+	
+
 	constructor(
 		router: Router,
 		route: ActivatedRoute,
@@ -47,6 +52,24 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 		super(router, route, loginService);
 
 		title.setTitle(`Collections - ${this.configService.theme['serviceName'] || 'Badgr'}`);
+
+		this.menuItems = [
+			{
+				title: 'Bearbeiten',
+				icon: 'lucidePencil',
+				action: () => console.log("")
+			},
+			{
+				title: 'PDF herunterladen',
+				icon: 'lucideFileText',
+				action: () => console.log(""),
+			},
+			{
+				title: 'Löschen',
+				icon: 'lucideTrash2',
+				action: () => console.log(),
+			},
+		]
 
 		this.collectionLoadedPromise = Promise.all([
 			this.recipientBadgeCollectionManager.recipientBadgeCollectionList.loadedPromise,
@@ -73,6 +96,7 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 
 	ngOnInit() {
 		super.ngOnInit();
+		console.log("menuitems", this.menuItems)
 	}
 
 	manageBadges() {

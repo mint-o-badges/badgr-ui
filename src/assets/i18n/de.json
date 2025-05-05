@@ -83,7 +83,8 @@
 		"confirm": "Bestätigen",
 		"noRequests": "Keine Anfragen",
 		"oneRequest": "1 Anfrage",
-		"multiRequests": "# Anfragen"
+		"multiRequests": "# Anfragen",
+		"public": "Öffentlich"
 	},
 	"NavItems": {
 		"register": "Registrieren",
@@ -656,7 +657,8 @@
 		"addLink": "Füge den Link oder das PDF deiner Bewerbung hinzu und verweise im Anschreiben darauf. (Zum Beispiel: „In der beigefügten Badge-Sammlung finden Sie eine Übersicht meiner Fähigkeiten im Bereich…“)",
 		"createCollectionNow": "Jetzt Sammlung anlegen",
 		"addBadges": "Badges zu Sammlung hinzufügen",
-		"skipStep": "Du kannst diesen Schritt überspringen und später Badges hinzufügen."
+		"skipStep": "Du kannst diesen Schritt überspringen und später Badges hinzufügen.",
+		"badgesInCollection": "Badges in der Sammlung"
 	},
 	"Profile": {
 		"more": "Mehr",

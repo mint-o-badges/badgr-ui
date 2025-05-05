@@ -76,7 +76,8 @@
 		"confirm": "Confirm",
 		"noRequests": "No request",
 		"oneRequest": "1 request",
-		"multiRequests": "# requests"
+		"multiRequests": "# requests",
+		"public": "Public"
 	},
 	"NavItems": {
 		"register": "Register",
@@ -585,8 +586,8 @@
 		"addLink": "",
 		"createCollectionNow": "Create collection now",
 		"addBadges": "Add badges to collection",
-		"skipStep": "You can skip this step and add badges later."
-
+		"skipStep": "You can skip this step and add badges later.",
+		"badgesInCollection": "badges in the collection"
 	},
 	"Profile": {
 		"more": "More",

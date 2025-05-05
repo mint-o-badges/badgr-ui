@@ -358,7 +358,7 @@
 					</ng-template>
 				</ng-template>
 				<ng-template #collectionTemplate>
-					<!-- <ng-template [bgAwaitPromises]="[learningpathLoaded]"> -->
+					<ng-template [bgAwaitPromises]="[collectionsLoaded]">
 						<!-- No badges, empty state! -->
 						<section class="tw-mt-8" *ngIf="collections.length == 0">
 							<div class="tw-flex tw-justify-between">
@@ -384,6 +384,11 @@
 						</section>
 
 						<div class="oeb-section-sm" *ngIf="collections.length > 0">
+							<h2 class="tw-text-oebblack md:tw-text-[22px] tw-leading-[120%] tw-font-bold tw-uppercase tw-items-center tw-flex">
+								{{ 'BadgeCollection.useCollectionsForApplications' | translate }}
+								<ng-icon (click)="openCollectionInfoDialog()" hlm class="tw-text-purple tw-min-w-10 tw-ml-2" size="lg" name="lucideInfo" />
+							</h2>
+
 							<div class="tw-flex tw-flex-wrap tw-items-center">
 								<input
 									type="text"
@@ -395,6 +400,22 @@
 									hlmInput
 								/>
 							</div>
+							<div class="tw-grid min-[450px]:tw-grid-cols-badges tw-gap-6">
+								<bg-collectioncard
+									*ngFor="let collection of collections"
+									[name]="collection.name"
+									[slug]="collection.slug"
+								></bg-collectioncard>
+							</div>
+							<oeb-button 
+								[text]="'BadgeCollection.createCollection' | translate"
+								variant="secondary"
+								(click)="routeToCollectionCreation()"
+								size="md"
+								class="tw-mt-4 tw-float-right"
+								>
+
+							</oeb-button>
 						</div>
 
 						<div>
@@ -464,7 +485,32 @@
 								</div>
 							</div> -->
 						</div>
-					<!-- </ng-template> -->
+					</ng-template>
+				</ng-template>
+				<ng-template #collectionInfoHeaderTemplate>
+					<h2 class="tw-text-[22px] tw-text-purple tw-font-bold tw-leading-[120%]">{{'BadgeCollection.useCollectionsForApplications' | translate }}</h2>
+				</ng-template>
+				<ng-template #collectionInfoContentTemplate>
+					<p class="tw-text-lg tw-text-oebblack tw-mt-2" [innerHTML]="'BadgeCollection.collectionInfoText'  | translate">
+					</p>
+					<p class="tw-text-lg tw-text-purple tw-italic tw-mt-1" [innerHTML]="'BadgeCollection.addLink' | translate">
+					</p>
+					<div class="tw-flex tw-justify-center tw-gap-2 tw-mt-4">
+						<oeb-button 
+							variant="secondary"
+							[text]="'General.cancel' | translate"
+							size="md"
+							(click)="closeDialog()"
+							>
+
+						</oeb-button>
+						<oeb-button
+							[text]="'Issuer.requestMembership' | translate"
+							size="md"
+							>
+						</oeb-button>
+
+					</div>
 				</ng-template>
 			</div>
 		</div>

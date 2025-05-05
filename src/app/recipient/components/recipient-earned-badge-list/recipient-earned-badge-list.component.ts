@@ -1,4 +1,4 @@
-import { Component, ContentChild, ElementRef, OnInit, ViewChild, AfterContentInit } from '@angular/core';
+import { Component, ContentChild, ElementRef, OnInit, ViewChild, AfterContentInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
@@ -27,6 +27,11 @@ import { LearningPath } from '../../../issuer/models/learningpath.model';
 import { FormControl } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { provideIcons } from '@ng-icons/core';
+import { RecipientBadgeCollectionApiService } from '../../services/recipient-badge-collection-api.service';
+import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
+import { DialogComponent } from '../../../components/dialog.component';
+import { BrnDialogRef } from '@spartan-ng/brain/dialog';
+
 
 type BadgeDispay = 'grid' | 'list';
 type EscoCompetencies = {
@@ -63,6 +68,7 @@ export class RecipientEarnedBadgeListComponent
 	badgesLoaded: Promise<unknown>;
 	profileLoaded: Promise<unknown>;
 	learningpathLoaded: Promise<unknown>;
+	collectionsLoaded: Promise<unknown>;
 	allIssuers: ApiRecipientBadgeIssuer[] = [];
 	allLearningPaths: any[] = [];
 	collections: any[] = [];
@@ -90,6 +96,11 @@ export class RecipientEarnedBadgeListComponent
 	@ViewChild('badgesCompetency', { static: true }) badgesCompetency: ElementRef;
 	@ViewChild('learningPathTemplate', { static: true }) learningPathTemplate: ElementRef;
 	@ViewChild('collectionTemplate', { static: true }) collectionTemplate: ElementRef;
+	@ViewChild('collectionInfoHeaderTemplate', {static: true}) collectionInfoHeaderTemplate : ElementRef
+	@ViewChild('collectionInfoContentTemplate', {static: true}) collectionInfoContentTemplate : ElementRef
+
+	dialogRef: BrnDialogRef<any> = null;
+	
 
 
 	groupedUserCompetencies = {};
@@ -148,6 +159,7 @@ export class RecipientEarnedBadgeListComponent
 		public configService: AppConfigService,
 		private profileManager: UserProfileManager,
 		private translate: TranslateService,
+		public recipientBadgeCollectionApiService: RecipientBadgeCollectionApiService,
 	) {
 		super(router, route, sessionService);
 
@@ -164,6 +176,11 @@ export class RecipientEarnedBadgeListComponent
 			})
 			.catch((e) => this.messageService.reportAndThrowError('Failed to load your badges', e));
 
+		this.collectionsLoaded = this.recipientBadgeCollectionApiService.listRecipientBadgeCollections()
+		.then((res) => {
+			console.log("res", res)
+			this.collections = res;
+		})	
 		this.recipientBadgeManager.recipientBadgeList.changed$.subscribe((badges) =>
 			this.updateBadges(badges.entities),
 		);
@@ -182,6 +199,20 @@ export class RecipientEarnedBadgeListComponent
 
 		this.restoreDisplayState();
 	}
+
+	private readonly _hlmDialogService = inject(HlmDialogService);
+	public openCollectionInfoDialog() {
+			const dialogRef = this._hlmDialogService.open(DialogComponent, {
+				context: {
+					headerTemplate: this.collectionInfoHeaderTemplate,
+					content: this.collectionInfoContentTemplate,
+					variant: 'default',
+					footer: false,
+				},
+			});
+	
+			this.dialogRef = dialogRef;
+		}
 
 	// NOTE: Mozz import functionality
 	launchImport = ($event: Event) => {
@@ -242,6 +273,12 @@ export class RecipientEarnedBadgeListComponent
 				component: this.collectionTemplate
 			}
 		];
+	}
+
+	closeDialog() {
+		if (this.dialogRef) {
+			this.dialogRef.close();
+		}
 	}
 
 	addBadge() {

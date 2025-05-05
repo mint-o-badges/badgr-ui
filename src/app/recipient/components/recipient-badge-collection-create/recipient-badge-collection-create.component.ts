@@ -15,6 +15,7 @@ import { sortUnique } from '../../../catalog/components/badge-catalog/badge-cata
 import { StringMatchingUtil } from '../../../common/util/string-matching-util';
 import { TranslateService } from '@ngx-translate/core';
 import { BadgeClassCategory } from '../../../issuer/models/badgeclass-api.model';
+import { RecipientBadgeApiService } from '../../services/recipient-badges-api.service';
 
 type BadgeResult = BadgeClass & { selected?: boolean };
 
@@ -31,7 +32,9 @@ export class RecipientBadgeCollectionCreateComponent extends BaseAuthenticatedRo
 
 	badgesForm = typedFormGroup().addArray(
 		'badges',
-		typedFormGroup().addControl('badge', null, Validators.required),
+		typedFormGroup()
+			.addControl('id', null, Validators.required)
+			.addControl('description', '', Validators.required)
 	);		
 	createCollectionPromise: Promise<unknown>;
 	badgesLoaded: Promise<unknown>;
@@ -84,6 +87,7 @@ export class RecipientBadgeCollectionCreateComponent extends BaseAuthenticatedRo
 		private configService: AppConfigService,
 		private recipientBadgeCollectionManager: RecipientBadgeCollectionManager,
 		protected badgeClassService: BadgeClassManager,
+		protected recipientBadgeApiService: RecipientBadgeApiService,
 		private translate: TranslateService,		
 	) {
 		super(router, route, loginService);
@@ -111,11 +115,13 @@ export class RecipientBadgeCollectionCreateComponent extends BaseAuthenticatedRo
 	checkboxChange(event, badge: BadgeClass) {
 		if (event) {
 			this.selectedBadges.push(badge);
-			this.badgesForm.controls.badges.push(typedFormGroup().addControl('badge', badge));
+			this.badgesForm.controls.badges.push(typedFormGroup()
+				.addControl('id', badge.slug)
+				.addControl('description', badge.description));
 		} else {
 			this.selectedBadges.splice(this.selectedBadges.indexOf(badge), 1);
 			this.badgesForm.controls.badges.removeAt(
-				this.badgesForm.controls.badges.value.findIndex((badge) => badge.badge === badge),
+				this.badgesForm.controls.badges.value.findIndex((badge) => badge.id === badge),
 			);
 		}
 	}
@@ -178,6 +184,16 @@ export class RecipientBadgeCollectionCreateComponent extends BaseAuthenticatedRo
 			});
 	}
 
+	async loadRecipientBadgeInstances(){
+		return new Promise(async (resolve, reject) => {
+			this.recipientBadgeApiService.listRecipientBadges()
+			.then((res) => {
+				console.log("res", res)
+			})		
+			
+		})
+	}
+
 	async loadBadges() {
 			this.badges = [];
 			this.badgeResults = [];
@@ -224,11 +240,13 @@ export class RecipientBadgeCollectionCreateComponent extends BaseAuthenticatedRo
 			return;
 		}
 
+		console.log("badgesForm", this.badgesForm.controls.badges.value)
+
 		const collectionForCreation: ApiRecipientBadgeCollectionForCreation = {
 			name: formState.collectionName,
 			description: formState.collectionDescription,
 			published: false,
-			badges: [],
+			badges: this.badgesForm.controls.badges.value,
 		};
 
 		this.createCollectionPromise = this.recipientBadgeCollectionManager
