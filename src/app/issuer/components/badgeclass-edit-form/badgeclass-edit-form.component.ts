@@ -485,6 +485,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			? badgeClass.extension['extensions:CategoryExtension'].Category
 			: 'participation';
 
+
 		this.badgeClassForm.setValue({
 			badge_name: badgeClass.name,
 			badge_image: badgeClass.imageFrame ? badgeClass.image : null,
@@ -548,7 +549,11 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			: undefined;
 
 		setTimeout(() => {
-			this.generateUploadImage(this.currentImage, this.badgeClassForm.value, true, true);
+			if(badgeClass.imageFrame){
+				// regenerating the upload image for the issuer image in case it changed via copying 
+				// or if it was not part of the badge image yet
+				this.generateUploadImage(this.currentImage, this.badgeClassForm.value, true, true);
+			}
 		}, 1);
 
 		this.tags = new Set();
