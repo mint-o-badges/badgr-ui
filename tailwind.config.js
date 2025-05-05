@@ -8,7 +8,7 @@ import {
 const { fontFamily } = require('tailwindcss/defaultTheme');
 
 module.exports = {
-	presets: [require('@spartan-ng/ui-core/hlm-tailwind-preset')],
+	presets: [require('@spartan-ng/brain/hlm-tailwind-preset')],
 	safelist: ['overflow-hidden'],
 	prefix: 'tw-',
 	content: ['./src/**/*.{html,ts}', './components/**/*.{html,ts}'],
@@ -32,7 +32,7 @@ module.exports = {
 					300: 'var(--color-lightred)',
 				},
 				pink: 'var(--color-pink)',
-				green:{
+				green: {
 					DEFAULT: 'var(--color-green)',
 					400: '#66BB6A',
 				},
@@ -43,6 +43,7 @@ module.exports = {
 				link: 'var(--color-link)',
 				oebgrey: 'var(--color-lightgray)',
 				darkgrey: 'var(--color-darkgray)',
+				lightgrey: 'var(--color-lightgray)',
 				grey: {
 					DEFAULT: '#808080',
 					40: '#666666',
@@ -51,6 +52,16 @@ module.exports = {
 			},
 			gridTemplateColumns: {
 				badges: 'repeat(auto-fill, minmax(320px, 1fr))',
+				issuer: 'repeat(auto-fill, minmax(450px, 1fr))',
+				myIssuers: 'repeat(auto-fit, minmax(600px, 600px))',
+				myIssuersMobile: 'repeat(auto-fit, minmax(300px, 1fr))',
+				learningpaths: 'repeat(auto-fill, minmax(340px, 1fr))',
+				learningpathsBackpack: 'repeat(auto-fill, minmax(392px, 392px))',
+				badgesLp: 'repeat(auto-fill, minmax(290px, 1fr))',
+				learningpathsSmall: 'repeat(auto-fill, minmax(208px, 1fr))',
+			},
+			animation: {
+				'spin-slow': 'spin 5000ms linear infinite',
 			},
 		},
 	},

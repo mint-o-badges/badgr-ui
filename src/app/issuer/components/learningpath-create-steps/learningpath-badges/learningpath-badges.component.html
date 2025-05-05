@@ -1,0 +1,139 @@
+<ng-template [showLoader]="true" [bgAwaitPromises]="badgesLoaded">
+	<div class="tw-mt-6 md:tw-mt-7 oeb-section section">
+		<h2 hlmH2 class="tw-font-bold">3. {{ 'LearningPath.chooseBadges' | translate }}</h2>
+
+		<div class="tw-m-4 md:tw-m-12 tw-rounded-2xl tw-p-6 md:tw-p-8 tw-bg-white">
+			<p class="tw-flex tw-flex-col tw-gap-2 tw-text-purple tw-text-[18px] tw-leading-[23.4px]">
+				<span class="tw-italic">{{ 'LearningPath.combineBadgeCategories' | translate }}</span>
+				<span> {{ 'LearningPath.min3Badges' | translate }}</span>
+			</p>
+			<div class="tw-flex tw-flex-wrap tw-py-6">
+				<!-- Search  -->
+				<div class="tw-pb-2 md:tw-pb-0">
+					<input
+						type="text"
+						name="forminput"
+						changeOrder
+						class="tw-border-solid tw-border-purple tw-bg-white tw-mr-6"
+						placeholder="{{ 'Badge.searchBadges' | translate }}"
+						[(ngModel)]="searchQuery"
+						[ngModelOptions]="{ standalone: true }"
+						hlmInput
+					/>
+				</div>
+
+				<div class="l-actionbar-x-groupby">
+					<label class="l-flex l-flex-2x">
+						<div class="forminput">
+							<div class="forminput-x-inputs">
+								<select
+									[(ngModel)]="groupBy"
+									#selectInput
+									class="border tw-font-normal"
+									[ngClass]="{ 'tw-font-bold!': groupBy != '---' }"
+									[ngModelOptions]="{ standalone: true }"
+									id="badge-catalog-select"
+								>
+									<option [ngValue]="'---'">{{ 'Badge.groupBy' | translate }}</option>
+									<option *ngFor="let option of groups" [value]="option">
+										{{ option }}
+									</option>
+								</select>
+							</div>
+						</div>
+					</label>
+				</div>
+			</div>
+			<ng-container *ngIf="groupBy == '---'">
+				<div class="tw-grid tw-grid-cols-badgesLp tw-gap-6 tw-mt-4">
+					<bg-badgecard
+						*ngFor="let badge of badgeResults; let i = index"
+						[badgeTitle]="badge.name"
+						[badgeImage]="badge.image"
+						[badgeDescription]="badge.description"
+						[badgeSlug]="badge.slug"
+						[issuerTitle]="badge.issuerName ? badge.issuerName : badge.issuer.name"
+						[badgeIssueDate]="badge.createdAt"
+						public="true"
+						[publicUrl]="badge.url"
+						[badgeClass]="true"
+						[issuerSlug]="badge.issuerSlug"
+						[competencies]="badge.extension['extensions:CompetencyExtension']"
+						(ngModelChange)="checkboxChange($event, badge)"
+						(checkboxChange)="checkboxChange($event, badge)"
+						[checked]="badgeChecked(badge)"
+						[showCheckbox]="true"
+					></bg-badgecard>
+				</div>
+			</ng-container>
+			<ng-container *ngIf="groupBy == 'Kategorie' || groupBy == 'Category'">
+				<ng-container *ngFor="let categoryGroup of badgeResultsByCategory">
+					<h3 class="u-text-h3-semibold u-margin-bottom2x u-margin-top6x u-text-dark1">
+						{{ categoryOptions[categoryGroup.category] }}
+						<span class="u-text-small-semibold-caps u-text-dark4 u-margin-left2x"
+							>{{ categoryGroup.badges.length }}
+							{{ categoryGroup.badges.length == 1 ? 'Badge' : 'Badges' }}</span
+						>
+					</h3>
+					<div class="tw-grid tw-grid-cols-badgesLp tw-gap-6">
+						<!-- TODO: Fix the badgecard link for sharing and routing -->
+						<bg-badgecard
+							*ngFor="let badge of categoryGroup.badges"
+							[badgeTitle]="badge.name"
+							[badgeImage]="badge.image"
+							[badgeDescription]="badge.description"
+							[badgeSlug]="badge.slug"
+							[issuerTitle]="badge.issuerName ? badge.issuerName : badge.issuer.name"
+							[badgeIssueDate]="badge.createdAt"
+							public="true"
+							[publicUrl]="badge.url"
+							[badgeClass]="true"
+							[competencies]="badge.extension['extensions:CompetencyExtension']"
+							[showCheckbox]="true"
+							(ngModelChange)="checkboxChange($event, badge)"
+							(checkboxChange)="checkboxChange($event, badge)"
+							[checked]="badgeChecked(badge)"
+						></bg-badgecard>
+					</div>
+				</ng-container>
+			</ng-container>
+			<ng-container *ngIf="groupBy == 'Issuer'">
+				<ng-container *ngFor="let issuerGroup of badgeResultsByIssuer">
+					<h3 class="u-text-h3-semibold u-margin-bottom2x u-margin-top6x u-text-dark1">
+						{{ issuerGroup.issuerName }}
+						<span class="u-text-small-semibold-caps u-text-dark4 u-margin-left2x"
+							>{{ issuerGroup.badges.length }}
+							{{ issuerGroup.badges.length == 1 ? 'Badge' : 'Badges' }}</span
+						>
+					</h3>
+					<div class="tw-grid sm:tw-grid-cols-badgesLp tw-gap-6">
+						<!-- TODO: Fix the badgecard link for sharing and routing -->
+						<bg-badgecard
+							*ngFor="let badge of issuerGroup.badges"
+							[badgeTitle]="badge.name"
+							[badgeImage]="badge.image"
+							[badgeDescription]="badge.description"
+							[badgeSlug]="badge.slug"
+							[issuerTitle]="badge.issuerName ? badge.issuerName : badge.issuer.name"
+							[badgeIssueDate]="badge.createdAt"
+							public="true"
+							[publicUrl]="badge.url"
+							[badgeClass]="true"
+							[competencies]="badge.extension['extensions:CompetencyExtension']"
+							[showCheckbox]="true"
+							(ngModelChange)="checkboxChange($event, badge)"
+							(checkboxChange)="checkboxChange($event, badge)"
+							[checked]="badgeChecked(badge)"
+						></bg-badgecard>
+					</div>
+				</ng-container>
+			</ng-container>
+			<p *ngIf="selectedBadges.length == 1" class="tw-mt-6">
+				Du hast {{ selectedBadges.length }} Badge für den Micro Degree ausgewählt.
+			</p>
+			<p *ngIf="selectedBadges.length > 1" class="tw-mt-6">
+				Du hast {{ selectedBadges.length }} Badges für den Micro Degree ausgewählt.
+			</p>
+		</div>
+	</div>
+</ng-template>

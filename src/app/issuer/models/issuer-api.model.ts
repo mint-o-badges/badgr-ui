@@ -31,7 +31,7 @@ export interface ApiIssuer {
 	staff: ApiIssuerStaff[];
 
 	badgeClassCount: number;
-
+	learningPathCount: number;
 	json: ApiIssuerJsonld;
 
 	verified: boolean;
@@ -46,6 +46,8 @@ export interface ApiIssuer {
 
 	lat?: number;
 	lon?: number;
+	intendedUseVerified: boolean;
+	ownerAcceptedTos: boolean;
 }
 
 export type IssuerStaffRoleSlug = 'owner' | 'editor' | 'staff';
@@ -57,6 +59,8 @@ export interface ApiIssuerStaff {
 		email?: string;
 		telephone?: string | string[];
 		url?: string | string[];
+		agreed_terms_version: number;
+		latest_terms_version: number;
 	};
 }
 
@@ -81,6 +85,8 @@ export interface ApiIssuerForCreation {
 	zip?: string;
 	city?: string;
 
+	intendedUseVerified: boolean;
+
 	lat?: number;
 	lon?: number;
 }
@@ -96,6 +102,8 @@ export interface ApiIssuerForEditing {
 	streetnumber?: string;
 	zip?: string;
 	city?: string;
+
+	intendedUseVerified: boolean;
 
 	lat?: number;
 	lon?: number;

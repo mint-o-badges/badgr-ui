@@ -94,6 +94,9 @@ export class BadgrApiFailure {
 	 */
 	get fieldMessages(): { [name: string]: string } | null {
 		function errorFromJson(json) {
+			if (json && typeof json === 'object' && json.response && typeof json.response === 'string') {
+				return { error: json.response };
+			}
 			if (Array.isArray(json)) {
 				return json.map((a) => errorFromJson(a) || {}).reduce((a, b) => Object.assign(a, b), {});
 			} else if (typeof json === 'object') {
@@ -131,8 +134,8 @@ export class BadgrApiFailure {
 
 function bodyFromResponse(res: HttpResponseBase): string | null {
 	if (res instanceof HttpResponse) {
-		return res.body ? '' + res.body : null;
+		return res.body ? res.body : null;
 	} else if (res instanceof HttpErrorResponse) {
-		return res.error ? '' + res.error : null;
+		return res.error ? res.error : null;
 	}
 }

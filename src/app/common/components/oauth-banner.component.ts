@@ -13,6 +13,7 @@ import { OAuthManager } from '../services/oauth-manager.service';
 			<div><img [src]="authLinkBadgrLogoSrc" height="72" alt="Logo" /></div>
 		</ng-template>
 	`,
+	standalone: false,
 })
 export class OAuthBannerComponent {
 	readonly authLinkBadgrLogoSrc = '../../../breakdown/static/images/logo.svg';

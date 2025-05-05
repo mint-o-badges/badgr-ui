@@ -22,6 +22,7 @@ import { QueryParametersService } from '../../../common/services/query-parameter
 import { RouterTestingModule } from '@angular/router/testing';
 import { BadgrCommonModule, COMMON_IMPORTS } from '../../../common/badgr-common.module';
 import { COMMON_MOCKS_PROVIDERS_WITH_SUBS } from '../../../mocks/mocks.module.spec';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('RecipientEarnedBadgeDetailComponent', () => {
 	let fixture;
@@ -30,7 +31,13 @@ describe('RecipientEarnedBadgeDetailComponent', () => {
 	beforeEach(() => {
 		TestBed.configureTestingModule({
 			declarations: [RecipientEarnedBadgeDetailComponent],
-			imports: [RouterTestingModule, CommonModule, BadgrCommonModule, ...COMMON_IMPORTS],
+			imports: [
+				RouterTestingModule,
+				CommonModule,
+				BadgrCommonModule,
+				...COMMON_IMPORTS,
+				TranslateModule.forRoot(),
+			],
 			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		}).compileComponents();

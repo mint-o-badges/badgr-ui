@@ -17,6 +17,7 @@ import {
 @Component({
 	selector: 'Badgeclass-issue-bulk-award-preview',
 	templateUrl: './badgeclass-issue-bulk-award-preview.component.html',
+	standalone: false,
 })
 export class BadgeClassIssueBulkAwardPreviewComponent extends BaseAuthenticatedRoutableComponent {
 	@Input() importPreviewData: BulkIssueImportPreviewData;
@@ -106,12 +107,7 @@ export class BadgeClassIssueBulkAwardPreviewComponent extends BaseAuthenticatedR
 
 		this.importPreviewData.invalidRows.forEach((row) => {
 			emptyCellsAreOptional = row.every((cell, index) => {
-				if (!cell.length && index !== this.destNameToColumnHeaderMap['evidence']) {
-					return false;
-				}
 				if (cell.length) {
-					return true;
-				} else if (!cell.length && index === this.destNameToColumnHeaderMap['evidence']) {
 					return true;
 				} else {
 					return false;
@@ -127,9 +123,8 @@ export class BadgeClassIssueBulkAwardPreviewComponent extends BaseAuthenticatedR
 	transformInvalidRows() {
 		this.importPreviewData.invalidRows.forEach((row) => {
 			this.invalidRowsTransformed.push({
-				evidence: this.getEvidenceFromRow(row),
 				email: this.getEmailFromRow(row),
-				name: this.getNameFromRow(row)
+				name: this.getNameFromRow(row),
 			});
 		});
 	}
@@ -137,10 +132,8 @@ export class BadgeClassIssueBulkAwardPreviewComponent extends BaseAuthenticatedR
 	transformValidRows() {
 		this.importPreviewData.validRows.forEach((row) => {
 			this.validRowsTransformed.add({
-				evidence: this.getEvidenceFromRow(row),
 				email: this.getEmailFromRow(row),
-				name: this.getNameFromRow(row)
-
+				name: this.getNameFromRow(row),
 			});
 		});
 	}
@@ -172,10 +165,6 @@ export class BadgeClassIssueBulkAwardPreviewComponent extends BaseAuthenticatedR
 		});
 
 		this.isEmailColumnHeaderMapped() ? this.enableActionButton() : this.disableActionButton();
-	}
-
-	getEvidenceFromRow(row) {
-		return this.getCellFromRowByDestName('evidence', row);
 	}
 
 	getEmailFromRow(row) {

@@ -10,10 +10,12 @@ import {
 	PublicApiBadgeClassWithIssuer,
 	PublicApiBadgeCollectionWithBadgeClassAndIssuer,
 	PublicApiIssuer,
+	PublicApiLearningPath,
 } from '../models/public-api.model';
 import { stripQueryParamsFromUrl } from '../../common/util/url-util';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ApiV2Wrapper } from '../../common/model/api-v2-wrapper';
+import { Issuer } from '../../issuer/models/issuer.model';
 
 @Injectable()
 export class PublicApiService extends BaseHttpApiService {
@@ -78,11 +80,37 @@ export class PublicApiService extends BaseHttpApiService {
 		return this.get<PublicApiBadgeClass[]>(url, null, false, false).then((r) => r.body);
 	}
 
-	getIssuerWithBadges(issuerId: string): Promise<{ issuer: PublicApiIssuer; badges: PublicApiBadgeClass[] }> {
-		return Promise.all([this.getIssuer(issuerId), this.getIssuerBadges(issuerId)]).then(([issuer, badges]) => ({
+	getIssuerLearningPaths(issuerId: string): Promise<PublicApiLearningPath[]> {
+		const url = issuerId.startsWith('http')
+			? stripQueryParamsFromUrl(issuerId) + '/learningpaths'
+			: `/public/issuers/${issuerId}/learningpaths`;
+
+		return this.get<PublicApiLearningPath[]>(url, null, false, false).then((r) => r.body);
+	}
+
+	getIssuerWithBadgesAndLps(
+		issuerId: string,
+	): Promise<{ issuer: PublicApiIssuer; badges: PublicApiBadgeClass[]; learningpaths: PublicApiLearningPath[] }> {
+		return Promise.all([
+			this.getIssuer(issuerId),
+			this.getIssuerBadges(issuerId),
+			this.getIssuerLearningPaths(issuerId),
+		]).then(([issuer, badges, learningpaths]) => ({
 			issuer,
 			badges,
+			learningpaths,
 		}));
+	}
+
+	getIssuerWithlearningPaths(
+		issuerId: string,
+	): Promise<{ issuer: PublicApiIssuer; learningPaths: PublicApiLearningPath[] }> {
+		return Promise.all([this.getIssuer(issuerId), this.getIssuerLearningPaths(issuerId)]).then(
+			([issuer, learningPaths]) => ({
+				issuer,
+				learningPaths,
+			}),
+		);
 	}
 
 	getBadgeCollection(shareHash: string): Promise<PublicApiBadgeCollectionWithBadgeClassAndIssuer> {
@@ -92,5 +120,23 @@ export class PublicApiService extends BaseHttpApiService {
 			false,
 			false,
 		).then((r) => r.body);
+	}
+
+	getLearningPath(lpId: string) {
+		const url = lpId.startsWith('http') ? lpId : `/public/learningpaths/${lpId}`;
+
+		return this.get<PublicApiLearningPath>(url, null, false, true).then((r) => r.body);
+	}
+
+	getLearningPathsForBadgeClass(badgeClassSlug: string) {
+		const url = badgeClassSlug.startsWith('http')
+			? badgeClassSlug
+			: `/public/badges/${badgeClassSlug}/learningpaths`;
+
+		return this.get<PublicApiLearningPath[]>(url, null, false, true).then((r) => r.body);
+	}
+
+	searchIssuers(searchterm: string) {
+		return this.get<Issuer[]>(`/public/issuers/search/${searchterm}`).then((response) => response.body);
 	}
 }

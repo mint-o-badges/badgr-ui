@@ -18,6 +18,7 @@ import { TranslateService } from '@ngx-translate/core';
 	selector: 'issuer-staff-create-dialog',
 	templateUrl: './issuer-staff-create-dialog.component.html',
 	styleUrls: ['./issuer-staff-create-dialog.component.css'],
+	standalone: false,
 })
 export class IssuerStaffCreateDialogComponent extends BaseDialog {
 	staffCreateForm = typedFormGroup()
@@ -38,7 +39,7 @@ export class IssuerStaffCreateDialogComponent extends BaseDialog {
 		protected profileManager: UserProfileManager,
 		protected configService: AppConfigService,
 		protected dialogService: CommonDialogsService,
-		private translate: TranslateService
+		private translate: TranslateService,
 	) {
 		super(componentElem, renderer);
 	}
@@ -78,7 +79,8 @@ export class IssuerStaffCreateDialogComponent extends BaseDialog {
 				const err = BadgrApiFailure.from(error);
 				console.log(err);
 				this.error =
-					BadgrApiFailure.messageIfThrottableError(err.overallMessage) || ''.concat(this.translate.instant('Issuer.addMember_failed'),": ",(err.firstMessage))
+					BadgrApiFailure.messageIfThrottableError(err.overallMessage) ||
+					''.concat(this.translate.instant('Issuer.addMember_failed'), ': ', err.firstMessage);
 			},
 		);
 	}

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
 import { SessionService } from '../services/session.service';
 import { OAuthManager } from '../services/oauth-manager.service';
+import { UserProfileApiService } from '../services/user-profile-api.service';
 
 @Injectable()
 export class AuthGuard {
@@ -9,6 +10,7 @@ export class AuthGuard {
 		private sessionService: SessionService,
 		private router: Router,
 		private oAuthManager: OAuthManager,
+		private userProfileApiService: UserProfileApiService,
 	) {}
 
 	canActivate(
@@ -29,6 +31,12 @@ export class AuthGuard {
 			this.router.navigate(['/auth/oauth2/authorize']);
 			return false;
 		} else {
+			this.userProfileApiService.getProfile().then((profile) => {
+				if (profile.agreed_terms_version !== profile.latest_terms_version) {
+					this.router.navigate(['/auth/new-terms']);
+					return false;
+				}
+			});
 			return true;
 		}
 	}

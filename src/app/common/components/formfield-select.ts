@@ -7,7 +7,6 @@ import { CustomValidatorMessages, messagesForValidationError } from './formfield
 
 @Component({
 	selector: 'bg-formfield-select',
-
 	host: {
 		class: 'forminput',
 		'[class.forminput-is-error]': 'isErrorState',
@@ -41,6 +40,7 @@ import { CustomValidatorMessages, messagesForValidationError } from './formfield
 
 		<p class="forminput-x-error" *ngIf="isErrorState">{{ errorMessageForDisplay }}</p>
 	`,
+	standalone: false,
 })
 export class FormFieldSelect implements OnChanges, AfterViewInit {
 	@Input() control: FormControl;

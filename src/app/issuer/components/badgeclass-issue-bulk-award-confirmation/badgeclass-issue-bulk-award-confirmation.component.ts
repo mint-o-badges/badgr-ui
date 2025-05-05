@@ -13,10 +13,12 @@ import { BadgrApiFailure } from '../../../common/services/api-failure';
 import striptags from 'striptags';
 import { SuccessDialogComponent } from '../../../common/dialogs/oeb-dialogs/success-dialog.component';
 import { HlmDialogService } from './../../../components/spartan/ui-dialog-helm/src';
+import { typedFormGroup } from '../../../common/util/typed-forms';
 
 @Component({
 	selector: 'badgeclass-issue-bulk-award-confirmation',
 	templateUrl: './badgeclass-issue-bulk-award-confirmation.component.html',
+	standalone: false,
 })
 export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRoutableComponent {
 	@Input() transformedImportData: TransformedImportData;
@@ -27,7 +29,6 @@ export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRouta
 	buttonDisabledClass = true;
 	buttonDisabledAttribute = true;
 	issuer: string;
-	notifyEarner = true;
 
 	issueBadgeFinished: Promise<unknown>;
 
@@ -44,6 +45,8 @@ export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRouta
 		this.enableActionButton();
 	}
 
+	issueForm = typedFormGroup().addControl('notify_earner', true);
+
 	enableActionButton() {
 		this.buttonDisabledClass = false;
 		this.buttonDisabledAttribute = null;
@@ -55,6 +58,7 @@ export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRouta
 	}
 
 	dataConfirmed() {
+		if (this.buttonDisabledAttribute) return;
 		this.disableActionButton();
 
 		const assertions: BadgeInstanceBatchAssertion[] = [];
@@ -72,18 +76,10 @@ export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRouta
 					}
 				: undefined;
 
-			if (row.evidence) {
-				assertion = {
-					recipient_identifier: row.email,
-					evidence_items: [{ evidence_url: row.evidence }],
-					extensions: extensions,
-				};
-			} else {
-				assertion = {
-					recipient_identifier: row.email,
-					extensions: extensions,
-				};
-			}
+			assertion = {
+				recipient_identifier: row.email,
+				extensions: extensions,
+			};
 			assertions.push(assertion);
 		});
 
@@ -91,17 +87,17 @@ export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRouta
 			.createBadgeInstanceBatched(this.issuerSlug, this.badgeSlug, {
 				issuer: this.issuerSlug,
 				badge_class: this.badgeSlug,
-				create_notification: this.notifyEarner,
+				create_notification: this.issueForm.rawControlMap.notify_earner.value,
 				assertions,
 			})
 			.then(
 				(result) => {
-					this.openSuccessDialog(assertions.length + " User")
+					this.openSuccessDialog(assertions.length + ' User');
 					this.router.navigate(['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug]);
 				},
 				(error) => {
 					this.messageService.setMessage(
-						'Unable to award badge: ' + BadgrApiFailure.from(error).firstMessage,
+						'Fast geschafft! Deine Badges werden gerade vergeben – das kann ein paar Minuten dauern. Schau gleich auf der Badge-Detail-Seite nach, ob alles geklappt hat.',
 						'error',
 					);
 				},
@@ -119,16 +115,12 @@ export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRouta
 		}
 	}
 
-	notifyChange(value) {
-		this.notifyEarner = value;
-	}
-
 	private readonly _hlmDialogService = inject(HlmDialogService);
 	public openSuccessDialog(recipient) {
 		const dialogRef = this._hlmDialogService.open(SuccessDialogComponent, {
 			context: {
 				recipient: recipient,
-				variant: "success"
+				variant: 'success',
 			},
 		});
 	}

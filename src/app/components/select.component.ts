@@ -1,26 +1,23 @@
-import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild, TemplateRef } from '@angular/core';
 import { OebInputErrorComponent } from './input.error.component';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { NgClass, NgFor, NgIf } from '@angular/common';
-import { TextSemibold } from './typography/text-semibold';
+import { CommonModule } from '@angular/common';
 import { HlmPDirective } from './spartan/ui-typography-helm/src/lib/hlm-p.directive';
-import { BrnSelectImports } from '@spartan-ng/ui-select-brain';
+import { BrnSelectImports } from '@spartan-ng/brain/select';
 import { HlmSelectModule } from './spartan/ui-select-helm/src/index';
 import { CustomValidatorMessages, messagesForValidationError } from './input.component';
+import { OebSeparatorComponent } from './oeb-separator.component';
 
 @Component({
 	selector: 'oeb-select ',
-	standalone: true,
 	imports: [
 		BrnSelectImports,
 		HlmSelectModule,
 		HlmPDirective,
 		OebInputErrorComponent,
-		NgFor,
-		NgIf,
 		ReactiveFormsModule,
-		TextSemibold,
-		NgClass,
+		CommonModule,
+		OebSeparatorComponent,
 	],
 	template: ` <div [ngClass]="{ 'tw-mt-6 md:tw-mt-7': !noTopMargin }">
 		<label class="tw-pb-[2px] tw-pl-[3px]" [attr.for]="inputName" *ngIf="label">
@@ -39,16 +36,28 @@ import { CustomValidatorMessages, messagesForValidationError } from './input.com
 			(keypress)="handleKeyPress($event)"
 			#selectInput
 			class="tw-text-oebblack"
-			[ngClass]="{ 'tw-pointer-events-none tw-opacity-50': disabled}"
+			[ngClass]="{ 'tw-pointer-events-none tw-opacity-50': disabled }"
+			[attr.id]="id"
+			[placeholder]="placeholder"
+			[multiple]="multiple"
 			brn-select
 			hlm
 		>
-			<hlm-select-trigger class="tw-w-full tw-border-solid tw-border-purple tw-bg-white">
-				<hlm-select-value class="tw-text-base" />
+			<div *ngIf="placeholder" brnSelectLabel class="tw-hidden"></div>
+
+			<hlm-select-trigger
+				[_size]="actionBar ? 'actionBar' : 'default'"
+				class="tw-w-full tw-border-solid tw-border-purple tw-bg-white "
+			>
+				<hlm-select-value *ngIf="!multiple" class="tw-text-base " />
+				<div *ngIf="multiple" class="tw-text-base">{{ placeholder }}</div>
 			</hlm-select-trigger>
-			<hlm-select-content>
-				<hlm-option *ngIf="placeholder" selected value="">{{ placeholder }}</hlm-option>
+			<hlm-select-content [ngStyle]="{ 'max-height.px': dropdownMaxHeight }">
 				<hlm-option *ngFor="let option of options" [value]="option.value">{{ option.label }}</hlm-option>
+				<div *ngIf="template">
+					<oeb-separator [separatorStyle]="'!tw-border-dashed'"></oeb-separator>
+					<ng-content *ngTemplateOutlet="template"></ng-content>
+				</div>
 			</hlm-select-content>
 		</brn-select>
 
@@ -70,8 +79,10 @@ export class OebSelectComponent {
 	@Input() multiline = false;
 	@Input() description: string;
 	@Input() placeholder: string;
+	@Input() multiple: boolean = false;
 	@Input() disabled: boolean = false;
-
+	@Input() id: string = null;
+	@Input() actionBar: boolean = false;
 	@Input() options: FormFieldSelectOption[];
 	@Input() set optionMap(valueToLabelMap: { [value: string]: string }) {
 		this.options = Object.getOwnPropertyNames(valueToLabelMap).map((value) => ({
@@ -89,6 +100,8 @@ export class OebSelectComponent {
 
 	@Input() autofocus = false;
 	@Input() noTopMargin = false;
+	@Input() dropdownMaxHeight: number | undefined;
+	@Input() template?: TemplateRef<any>;
 
 	@ViewChild('selectInput') selectInput: ElementRef;
 

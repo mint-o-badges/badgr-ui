@@ -1,0 +1,129 @@
+<form-message></form-message>
+
+<div class="oeb page-padding">
+	<ng-template [showLoader]="true" [bgAwaitPromises]="[learningPathsLoaded, issuersLoaded]">
+		<div class="oeb-section-sm">
+			<div class="oeb-headline-container tw-relative">
+				<div class="tw-z-10 tw-relative">
+					<h1 hlmH1 class="tw-text-oebblack">{{ 'LearningPath.catalogHeadline' | translate }}</h1>
+					<h1 hlmH1 class="lg:tw-pl-[10%] tw-font-black tw-text-purple">
+						<ng-container *ngIf="learningPaths.length === 0">
+							{{ plural.learningPath['=0'] }}
+						</ng-container>
+						<ng-container *ngIf="learningPaths.length > 0">
+							<span [countUp]="learningPaths.length">{{ learningPaths.length }}</span
+							>{{ ' ' | i18nPlural: plural['learningPath'] }} in
+							<span [countUp]="issuersWithLps.length">{{ issuersWithLps.length }}</span
+							>{{ ' ' | i18nPlural: plural['issuer'] }}
+						</ng-container>
+					</h1>
+				</div>
+			</div>
+		</div>
+
+		<div class="tw-relative">
+			<section class="">
+				<div class="tw-flex tw-items-center tw-rounded-lg tw-p-4 tw-bg-[#ECFEED] tw-mb-4 tw-gap-6">
+					<div
+						class="tw-flex tw-flex-col tw-gap-4 tw-w-full min-[880px]:tw-flex-row min-[880px]:tw-items-center"
+					>
+						<div class="tw-flex tw-flex-col min-[880px]:tw-flex-row min-[880px]:tw-items-center tw-gap-6">
+							<div class="tw-flex tw-relative tw-items-center">
+								<input
+									type="text"
+									name="forminput"
+									changeOrder
+									class="!tw-bg-white tw-w-full tw-border-1 tw-border-purple min-[880px]:tw-w-96 tw-border-solid tw-h-12 tw-rounded-lg tw-p-2"
+									placeholder="{{ 'LearningPath.searchLearningPaths' | translate }}"
+									[(ngModel)]="searchQuery"
+									hlmInput
+								/>
+								<ng-icon
+									hlm
+									name="lucideSearch"
+									class="tw-w-8 tw-h-8 tw-absolute tw-top-1/2 tw-right-2 -tw-translate-y-1/2 tw-pointer-events-none tw-text-purple"
+								></ng-icon>
+							</div>
+						</div>
+						<oeb-global-sort-select
+							placeholder="{{ 'Badge.sortBy' | translate }}"
+							class="oeb tw-w-[12rem]"
+							[control]="sortControl"
+							[result]="learningPathResults"
+						>
+						</oeb-global-sort-select>
+					</div>
+				</div>
+				<div class="tw-grid-cols-2 tw-grid tw-items-center subtitle-wrapper">
+					<div class="tags-wrapper oeb-standard-padding-bottom">
+						<div
+							(click)="filterByTag(tag)"
+							class="tag tag-wrapper tag-button"
+							[class.tag-button-pressed]="selectedTag == tag"
+							*ngFor="let tag of tags; last as last"
+						>
+							{{ tag }}
+						</div>
+					</div>
+				</div>
+				<ng-container *ngIf="!groupByInstitution">
+					<div class="tw-grid min-[450px]:tw-grid-cols-learningpaths tw-gap-6 tw-items-center" [@stagger]>
+						<bg-learningpathcard
+							*ngFor="let lp of learningPathResults"
+							[@appearAnimation]="state"
+							[badgeImage]="lp._apiModel.participationBadge_image"
+							[name]="lp.name"
+							[issuerTitle]="lp.issuer_name"
+							[description]="lp.description"
+							[tags]="lp.tags"
+							[slug]="lp.slug"
+							[studyLoad]="calculateStudyLoad(lp)"
+							[completed]="checkCompleted(lp)"
+							[requested]="lp.requested"
+							[progress]="lp.progress"
+							[matchOrProgress]="calculateLearningPathStatus(lp)"
+						></bg-learningpathcard>
+					</div>
+				</ng-container>
+			</section>
+		</div>
+		<ng-container *ngIf="groupByInstitution">
+			<ng-container *ngFor="let issuerGroup of learningPathResultsByIssuer">
+				<h3 class="u-text-h3-semibold u-margin-bottom2x u-margin-top6x u-text-dark1">
+					{{ issuerGroup.issuerName }}
+					<span class="u-text-small-semibold-caps u-text-dark4 u-margin-left2x"
+						>{{ issuerGroup.learningpaths.length }}
+						{{ issuerGroup.learningpaths.length == 1 ? 'LearningPath' : 'LearningPaths' }}</span
+					>
+				</h3>
+				<div class="tw-grid min-[450px]:tw-grid-cols-learningpaths tw-gap-6 tw-items-center">
+					<bg-learningpathcard
+						*ngFor="let lp of issuerGroup.learningpaths"
+						[badgeImage]="lp._apiModel.participationBadge_image"
+						[name]="lp.name"
+						[issuerTitle]="lp.issuer_name"
+						[description]="lp.description"
+						[tags]="lp.tags"
+						[slug]="lp.slug"
+						[studyLoad]="calculateStudyLoad(lp)"
+						[progress]="lp.progress"
+						[requested]="lp.requested"
+						[matchOrProgress]="calculateLearningPathStatus(lp)"
+						[completed]="checkCompleted(lp)"
+					></bg-learningpathcard>
+				</div>
+			</ng-container>
+		</ng-container>
+		<div
+			class="tw-mt-8"
+			*ngIf="learningPathResults.length >= 20 || (currentPage == totalPages && currentPage != 1)"
+		>
+			<oeb-numbered-pagination
+				[totalProducts]="isFiltered() ? filteredMicroDegrees.length : learningPaths.length"
+				[(page)]="currentPage"
+				[(pageSize)]="microDegreesPerPage"
+			>
+			</oeb-numbered-pagination>
+		</div>
+	</ng-template>
+</div>

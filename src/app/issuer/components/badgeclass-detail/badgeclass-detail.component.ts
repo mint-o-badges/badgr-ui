@@ -1,4 +1,4 @@
-import { Component, OnInit, SecurityContext } from '@angular/core';
+import { afterRenderEffect, Component, ElementRef, Input, OnInit, SecurityContext, ViewChild } from '@angular/core';
 
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from '../../../common/services/message.service';
@@ -29,13 +29,29 @@ import { TranslateService } from '@ngx-translate/core';
 import { PageConfig } from '../../../common/components/badge-detail/badge-detail.component.types';
 import { PdfService } from '../../../common/services/pdf.service';
 import { QrCodeApiService } from '../../services/qrcode-api.service';
+import { InfoDialogComponent } from '../../../common/dialogs/oeb-dialogs/info-dialog.component';
+import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
+import { inject } from '@angular/core';
+import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
+import { ApiLearningPath } from '../../../common/model/learningpath-api.model';
+import { ViewportScroller } from '@angular/common';
 
 @Component({
 	selector: 'badgeclass-detail',
 	template: `
 		<bg-badgedetail [config]="config" [awaitPromises]="[issuerLoaded, badgeClassLoaded]">
-				<qrcode-awards (qrBadgeAward)="onQrBadgeAward()" [awards]="qrCodeAwards" [badgeClassSlug]="badgeSlug" [issuerSlug]="issuerSlug" [routerLinkText]="config?.issueQrRouterLink"></qrcode-awards>
-		<issuer-detail-datatable
+			<div #qrAwards>
+				<qrcode-awards
+					*ngIf="config.qrCodeButton.show"
+					(qrBadgeAward)="onQrBadgeAward()"
+					[awards]="qrCodeAwards"
+					[badgeClass]="badgeClass"
+					[issuer]="issuer"
+					[routerLinkText]="config?.issueQrRouterLink"
+					[defaultUnfolded]="focusRequests"
+				></qrcode-awards>
+			</div>
+			<issuer-detail-datatable
 				[recipientCount]="recipientCount"
 				[_recipients]="instanceResults"
 				(actionElement)="revokeInstance($event)"
@@ -44,8 +60,11 @@ import { QrCodeApiService } from '../../services/qrcode-api.service';
 			></issuer-detail-datatable>
 		</bg-badgedetail>
 	`,
+	standalone: false,
 })
 export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
+	@ViewChild('qrAwards') qrAwards!: ElementRef;
+
 	readonly badgeFailedImageUrl = '../../../../breakdown/static/images/badge-failed.svg';
 	readonly badgeLoadingImageUrl = '../../../../breakdown/static/images/badge-loading.svg';
 
@@ -57,7 +76,6 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		return this.route.snapshot.params['badgeSlug'];
 	}
 
-
 	get confirmDialog() {
 		return this.dialogService.confirmDialog;
 	}
@@ -66,7 +84,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		return this.badgeClass ? this.badgeClass.recipientCount : null;
 	}
 
-	set recipientCount(value: number){
+	set recipientCount(value: number) {
 		this.badgeClass.recipientCount = value;
 	}
 
@@ -89,10 +107,13 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 	);
 	launchpoints: ApiExternalToolLaunchpoint[];
 
+	private readonly _hlmDialogService = inject(HlmDialogService);
+
 	badgeClassLoaded: Promise<unknown>;
 	badgeInstancesLoaded: Promise<unknown>;
 	assertionsLoaded: Promise<unknown>;
 	issuerLoaded: Promise<unknown>;
+	learningPaths: ApiLearningPath[];
 	showAssertionCount = false;
 	badgeClass: BadgeClass;
 	allBadgeInstances: BadgeClassInstances;
@@ -101,11 +122,13 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 	resultsPerPage = 100;
 	issuer: Issuer;
 	crumbs: LinkEntry[];
+	focusRequests: boolean;
+	hasScrolled: boolean = false;
 
 	config: PageConfig;
 
-	qrCodeButtonText = "Badge über QR-Code vergeben"
-	qrCodeAwards = []
+	qrCodeButtonText = 'Badge über QR-Code vergeben';
+	qrCodeAwards = [];
 
 	pdfSrc: SafeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl('about:blank');
 	downloadStates: boolean[] = [false];
@@ -113,6 +136,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 	categoryOptions: { [key in BadgeClassCategory]: string } = {
 		competency: 'Kompetenz-Badge',
 		participation: 'Teilnahme-Badge',
+		learningpath: 'Micro Degree',
 	};
 
 	levelOptions: { [key in BadgeClassLevel]: string } = {
@@ -140,7 +164,8 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		private externalToolsManager: ExternalToolsManager,
 		protected pdfService: PdfService,
 		private sanitizer: DomSanitizer,
-        private translate: TranslateService,
+		private translate: TranslateService,
+		private learningPathApiService: LearningPathApiService,
 	) {
 		super(router, route, sessionService);
 
@@ -165,25 +190,30 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		);
 
 		this.qrCodeApiService.getQrCodesForIssuerByBadgeClass(this.issuerSlug, this.badgeSlug).then((qrCodes) => {
-			this.qrCodeAwards = qrCodes
-		})
+			this.qrCodeAwards = qrCodes;
+		});
 
 		this.externalToolsManager.getToolLaunchpoints('issuer_assertion_action').then((launchpoints) => {
 			this.launchpoints = launchpoints;
 		});
 	}
 
-	loadInstances(recipientQuery?: string) {
+	ngAfterViewChecked() {
+		this.focusRequestsOnPage();
+	}
+
+	async loadInstances(recipientQuery?: string) {
 		const instances = new BadgeClassInstances(
 			this.badgeInstanceManager,
 			this.issuerSlug,
 			this.badgeSlug,
 			recipientQuery,
 		);
+		this.learningPaths = await this.learningPathApiService.getLearningPathsForBadgeClass(this.badgeSlug);
 		this.badgeInstancesLoaded = instances.loadedPromise.then(
 			(retInstances) => {
 				this.crumbs = [
-					{ title: 'Issuers', routerLink: ['/issuer/issuers'] },
+					{ title: 'Meine Institutionen', routerLink: ['/issuer/issuers'] },
 					{ title: this.issuer.name, routerLink: ['/issuer/issuers/' + this.issuerSlug] },
 					{
 						title: this.badgeClass.name,
@@ -197,16 +227,41 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 					badgeTitle: this.badgeClass.name,
 					headerButton: {
 						title: 'Badge direkt vergeben',
-						routerLink: ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'issue'],
+						action: () => this.routeToBadgeAward(this.badgeClass, this.issuer),
+						// routerLink: ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'issue'],
 					},
 					issueQrRouterLink: ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'qr'],
-					qrCodeButton: true,
+					qrCodeButton: {
+						title: 'Badge über QR-Code vergeben',
+						show: true,
+						action: () => this.routeToQRCodeAward(this.badgeClass, this.issuer),
+					},
 					menuitems: [
 						{
 							title: 'Bearbeiten',
 							routerLink: ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'edit'],
-							icon:  "lucidePencil",
-
+							disabled: this.badgeClass.recipientCount > 0,
+							icon: 'lucidePencil',
+						},
+						{
+							title: 'Kopieren (diese Institution)',
+							action: () => {
+								this.router.navigate(['/issuer/issuers', this.issuer.slug, 'badges', 'create'], {
+									state: { copybadgeid: this.badgeSlug },
+								});
+							},
+							icon: 'lucideCopy',
+						},
+						{
+							title: 'Kopierstatus bearbeiten',
+							routerLink: [
+								'/issuer/issuers',
+								this.issuerSlug,
+								'badges',
+								this.badgeSlug,
+								'copypermissions',
+							],
+							icon: 'lucideCopyX',
 						},
 						{
 							title: 'Löschen',
@@ -220,10 +275,9 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 					createdAt: this.badgeClass.createdAt,
 					updatedAt: this.badgeClass.updatedAt,
 					duration: this.badgeClass.extension['extensions:StudyLoadExtension'].StudyLoad,
-					category:
-						this.badgeClass.extension['extensions:CategoryExtension'].Category === 'competency'
-							? 'Kompetenz- Badge'
-							: 'Teilnahme- Badge',
+					category: this.translate.instant(
+						`Badge.categories.${this.badgeClass.extension['extensions:CategoryExtension']?.Category || 'participation'}`,
+					),
 					tags: this.badgeClass.tags,
 					issuerName: this.badgeClass.issuerName,
 					issuerImagePlacholderUrl: this.issuerImagePlacholderUrl,
@@ -232,7 +286,14 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 					badgeFailedImageUrl: this.badgeFailedImageUrl,
 					badgeImage: this.badgeClass.image,
 					competencies: this.badgeClass.extension['extensions:CompetencyExtension'],
+					license: this.badgeClass.extension['extensions:LicenseExtension'] ? true : false,
+					learningPaths: this.learningPaths,
+					copy_permissions: this.badgeClass.copyPermissions,
 				};
+				if (this.badgeClass.extension['extensions:CategoryExtension']?.Category === 'learningpath') {
+					this.config.headerButton = null;
+					this.config.qrCodeButton.show = false;
+				}
 			},
 			(error) => {
 				this.messageService.reportLoadingError(
@@ -245,11 +306,12 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 
 	onQrBadgeAward() {
 		this.loadInstances();
-		this.recipientCount += 1
+		this.recipientCount += 1;
 	}
 
 	ngOnInit() {
 		super.ngOnInit();
+		this.focusRequests = this.route.snapshot.queryParamMap.get('focusRequests') === 'true';
 	}
 
 	revokeInstance(instance: BadgeInstance) {
@@ -285,12 +347,14 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 	// To get and download badge certificate in pdf format
 	downloadCertificate(instance: BadgeInstance, badgeIndex: number) {
 		this.downloadStates[badgeIndex] = true;
-		this.pdfService.getPdf(instance.slug).then(
-			(url) => {
+		this.pdfService
+			.getPdf(instance.slug)
+			.then((url) => {
 				this.pdfSrc = url;
 				this.pdfService.downloadPdf(this.pdfSrc, this.badgeClass.name, instance.createdAt);
 				this.downloadStates[badgeIndex] = false;
-			}).catch((error) => {
+			})
+			.catch((error) => {
 				this.downloadStates[badgeIndex] = false;
 				console.log(error);
 			});
@@ -301,7 +365,10 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 			this.confirmDialog
 				.openResolveRejectDialog({
 					dialogTitle: this.translate.instant('General.warning'),
-					dialogBody: this.translate.instant('Badge.deletePart1') + `<strong>${this.badgeClass.name}</strong>` + this.translate.instant('Badge.deletePart2'),
+					dialogBody:
+						this.translate.instant('Badge.deletePart1') +
+						`<strong>${this.badgeClass.name}</strong>` +
+						this.translate.instant('Badge.deletePart2'),
 					resolveButtonLabel: this.translate.instant('Badge.deleteConfirm'),
 					rejectButtonLabel: this.translate.instant('General.cancel'),
 				})
@@ -336,6 +403,52 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		}
 	}
 
+	routeToBadgeAward(badge: BadgeClass, issuer) {
+		this.qrCodeApiService.getQrCodesForIssuerByBadgeClass(this.issuer.slug, badge.slug).then((qrCodes) => {
+			if (badge.recipientCount === 0 && qrCodes.length === 0) {
+				const dialogRef = this._hlmDialogService.open(InfoDialogComponent, {
+					context: {
+						variant: 'info',
+						caption: this.translate.instant('Badge.endOfEditDialogTitle'),
+						subtitle: this.translate.instant('Badge.endOfEditDialogText'),
+						text: this.translate.instant('Badge.endOfEditDialogSubText'),
+						cancelText: this.translate.instant('General.cancel'),
+						forwardText: this.translate.instant('Issuer.giveBadge'),
+					},
+				});
+				dialogRef.closed$.subscribe((result) => {
+					if (result === 'continue')
+						this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'issue']);
+				});
+			} else {
+				this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'issue']);
+			}
+		});
+	}
+
+	routeToQRCodeAward(badge, issuer) {
+		this.qrCodeApiService.getQrCodesForIssuerByBadgeClass(this.issuer.slug, badge.slug).then((qrCodes) => {
+			if (badge.recipientCount === 0 && qrCodes.length === 0) {
+				const dialogRef = this._hlmDialogService.open(InfoDialogComponent, {
+					context: {
+						variant: 'info',
+						caption: this.translate.instant('Badge.endOfEditDialogTitle'),
+						subtitle: this.translate.instant('Badge.endOfEditDialogTextQR'),
+						text: this.translate.instant('Badge.endOfEditDialogSubText'),
+						cancelText: this.translate.instant('General.previous'),
+						forwardText: this.translate.instant('Issuer.giveQr'),
+					},
+				});
+				dialogRef.closed$.subscribe((result) => {
+					if (result === 'continue')
+						this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'qr']);
+				});
+			} else {
+				this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'qr']);
+			}
+		});
+	}
+
 	shareInstance(instance: BadgeInstance) {
 		this.dialogService.shareSocialDialog.openDialog(this.badgeShareDialogOptionsFor(instance));
 	}
@@ -352,6 +465,13 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 			recipientType: badge.recipientType,
 			badge,
 		});
+	}
+
+	private focusRequestsOnPage() {
+		if (this.focusRequests && this.qrAwards && !this.hasScrolled) {
+			if (this.qrAwards.nativeElement.offsetTop > 0) this.hasScrolled = true;
+			this.qrAwards.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+		}
 	}
 
 	private updateResults() {

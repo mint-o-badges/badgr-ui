@@ -6,6 +6,7 @@ import { MessageService } from '../../../common/services/message.service';
 
 @Directive({
 	selector: '[importLauncher]',
+	standalone: false,
 })
 export class ImportLauncherDirective implements OnInit {
 	constructor(

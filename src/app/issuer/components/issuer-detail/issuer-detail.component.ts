@@ -12,16 +12,20 @@ import { Title } from '@angular/platform-browser';
 import { preloadImageURL } from '../../../common/util/file-util';
 import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
 import { UserProfileEmail } from '../../../common/model/user-profile.model';
-import { ApiExternalToolLaunchpoint } from 'app/externaltools/models/externaltools-api.model';
-import { ExternalToolsManager } from 'app/externaltools/services/externaltools-manager.service';
+import { ApiExternalToolLaunchpoint } from '../../../externaltools/models/externaltools-api.model';
+import { ExternalToolsManager } from '../../../externaltools/services/externaltools-manager.service';
 import { AppConfigService } from '../../../common/app-config.service';
 import { CommonDialogsService } from '../../../common/services/common-dialogs.service';
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { MenuItem } from '../../../common/components/badge-detail/badge-detail.component.types';
+import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
+import { ApiLearningPath } from '../../../common/model/learningpath-api.model';
+import { first, firstValueFrom } from 'rxjs';
 
 @Component({
 	selector: 'issuer-detail',
 	templateUrl: './issuer-detail.component.html',
+	standalone: false,
 })
 export class IssuerDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	readonly issuerImagePlaceHolderUrl = preloadImageURL(
@@ -33,17 +37,19 @@ export class IssuerDetailComponent extends BaseAuthenticatedRoutableComponent im
 	issuer: Issuer;
 	issuerSlug: string;
 	badges: BadgeClass[];
+	learningPaths: ApiLearningPath[];
 	launchpoints: ApiExternalToolLaunchpoint[];
 
 	profileEmails: UserProfileEmail[] = [];
 
 	issuerLoaded: Promise<unknown>;
 	badgesLoaded: Promise<unknown>;
+	learningPathsLoaded: Promise<unknown>;
 
 	profileEmailsLoaded: Promise<unknown>;
 	crumbs: LinkEntry[];
 
-	menuitems: MenuItem[]	= [];
+	menuitems: MenuItem[] = [];
 
 	constructor(
 		loginService: SessionService,
@@ -53,6 +59,7 @@ export class IssuerDetailComponent extends BaseAuthenticatedRoutableComponent im
 		protected title: Title,
 		protected issuerManager: IssuerManager,
 		protected badgeClassService: BadgeClassManager,
+		protected learningPathsService: LearningPathApiService,
 		protected profileManager: UserProfileManager,
 		private configService: AppConfigService,
 		private externalToolsManager: ExternalToolsManager,
@@ -68,23 +75,23 @@ export class IssuerDetailComponent extends BaseAuthenticatedRoutableComponent im
 			this.launchpoints = launchpoints.filter((lp) => Boolean(lp));
 		});
 
-		this.menuitems = [{
-			title: 'Bearbeiten',
-			routerLink: ['./edit'],
-			icon: 'lucidePencil',
-		},
-		{
-			title: 'Löschen',
-			action: ($event) => this.delete($event),
-			icon: 'lucideTrash2',
-		},
-		{
-			title: 'Mitglieder bearbeiten',
-			routerLink: ['./staff'],
-			icon: 'lucideUsers',
-		}
-		
-	]
+		this.menuitems = [
+			{
+				title: 'Bearbeiten',
+				routerLink: ['./edit'],
+				icon: 'lucidePencil',
+			},
+			{
+				title: 'Löschen',
+				action: ($event) => this.delete($event),
+				icon: 'lucideTrash2',
+			},
+			{
+				title: 'Mitglieder bearbeiten',
+				routerLink: ['./staff'],
+				icon: 'lucideUsers',
+			},
+		];
 
 		this.issuerLoaded = this.issuerManager.issuerBySlug(this.issuerSlug).then(
 			(issuer) => {
@@ -93,28 +100,23 @@ export class IssuerDetailComponent extends BaseAuthenticatedRoutableComponent im
 					`Issuer - ${this.issuer.name} - ${this.configService.theme['serviceName'] || 'Badgr'}`,
 				);
 				this.crumbs = [
-					{ title: 'Issuers', routerLink: ['/issuer/issuers'] },
+					{ title: 'Meine Institutionen', routerLink: ['/issuer/issuers'] },
 					{ title: this.issuer.name, routerLink: ['/issuer/issuers/' + this.issuer.slug] },
 				];
 
-				this.badgesLoaded = new Promise<void>((resolve, reject) => {
-					this.badgeClassService.badgesByIssuerUrl$.subscribe(
-						(badgesByIssuer) => {
-							const cmp = (a, b) => (a === b ? 0 : a < b ? -1 : 1);
-							this.badges = (badgesByIssuer[this.issuer.issuerUrl] || []).sort((a, b) =>
-								cmp(b.createdAt, a.createdAt),
-							);
-							resolve();
-						},
-						(error) => {
-							this.messageService.reportAndThrowError(
-								`Failed to load badges for ${this.issuer ? this.issuer.name : this.issuerSlug}`,
-								error,
-							);
-							resolve();
-						},
-					);
-				});
+				this.badgesLoaded = firstValueFrom(this.badgeClassService.badgesByIssuerUrl$)
+					.then((badgesByIssuer) => {
+						const cmp = (a, b) => (a === b ? 0 : a < b ? -1 : 1);
+						this.badges = (badgesByIssuer[this.issuer.issuerUrl] || []).sort((a, b) =>
+							cmp(b.createdAt, a.createdAt),
+						);
+					})
+					.catch((error) => {
+						this.messageService.reportAndThrowError(
+							`Failed to load badges for ${this.issuer ? this.issuer.name : this.issuerSlug}`,
+							error,
+						);
+					});
 			},
 			(error) => {
 				this.messageService.reportLoadingError(
@@ -160,11 +162,11 @@ export class IssuerDetailComponent extends BaseAuthenticatedRoutableComponent im
 		super.ngOnInit();
 	}
 
-	routeToBadgeAward(badge, issuer){
-		this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'issue'])
+	routeToBadgeAward(badge, issuer) {
+		this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'issue']);
 	}
 
-	routeToBadgeDetail(badge, issuer){
-		this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug])
+	routeToBadgeDetail(badge, issuer) {
+		this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug]);
 	}
 }

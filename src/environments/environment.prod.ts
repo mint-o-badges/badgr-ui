@@ -2,6 +2,7 @@ import { BadgrEnvironment } from './badgr-environment';
 
 export const environment: BadgrEnvironment = {
 	production: true,
+	enableErrorInterceptor: false,
 	config: {
 		api: {
 			baseUrl: 'https://api.openbadges.education',
@@ -31,7 +32,7 @@ export const environment: BadgrEnvironment = {
 			],
 			useColorNavbar: true,
 			termsOfServiceLink: 'public/impressum',
-			privacyPolicyLink:'public/privacy',
+			privacyPolicyLink: 'public/privacy',
 			showApiDocsLink: false,
 			cssCustomProps: {
 				'--color-interactive1': '#492E98',

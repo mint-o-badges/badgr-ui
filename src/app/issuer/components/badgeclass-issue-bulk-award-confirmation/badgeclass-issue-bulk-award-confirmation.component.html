@@ -1,21 +1,21 @@
 <section class="oeb-section">
 	<div class="oeb-headline-container-sm">
-		<h1 hlmH1 class="tw-text-purple">Import Vorschau</h1>
+		<h1 hlmH1 class="tw-text-purple">Import-Vorschau</h1>
 	</div>
 	<p hlmP class="oeb-standard-padding-bottom">
-		{{ transformedImportData.validRowsTransformed.size }} Zeilen können importiert werden.
-		{{ transformedImportData.duplicateRecords.length }} Zeilen sind Duplikate und werden ignoriert. Klicke
-		auf BADGE VERGEBEN um den Badge zu vergeben.
+		<span
+			>{{ transformedImportData.validRowsTransformed.size }} Zeilen konnten importiert werden.
+			{{ transformedImportData.duplicateRecords.length }} Zeilen sind Duplikate und werden ignoriert.</span
+		><br />
+		<span>Klicke auf "Badges vergeben", um die Badges jetzt an deine Lernenden zu vergeben.</span>
 	</p>
 
 	<div class="oeb-standard-padding-bottom">
-
 		<table class="datatable datatable-roundheaders datatable-headers">
 			<thead class="datatable-x-head">
 				<tr class="datatable-x-header">
 					<th class="datatable-x-cell" scope="col">E-Mail</th>
 					<th class="datatable-x-cell" scope="col">Name</th>
-					<th class="datatable-x-cell" scope="col">Nachweis</th>
 					<th class="datatable-x-cell">
 						<!-- header for remove link-->
 					</th>
@@ -30,11 +30,12 @@
 						{{ row.name }}
 					</td>
 					<td class="datatable-x-cell">
-						{{ row.evidence }}
-					</td>
-					<td class="datatable-x-cell">
-						<oeb-button variant="secondary" size="xs" text="Entfernen"
-							(click)="removeValidRowsTransformed(row)"></oeb-button>
+						<oeb-button
+							variant="secondary"
+							size="xs"
+							text="Entfernen"
+							(click)="removeValidRowsTransformed(row)"
+						></oeb-button>
 					</td>
 				</tr>
 			</tbody>
@@ -44,17 +45,30 @@
 	</div>
 	<div class="oeb-standard-padding-bottom">
 		<h3 hlmH3 class="tw-text-purple">Benachrichtigung</h3>
-		<oeb-checkbox name="notify_earner" id="notify_earner" type="checkbox" (checkedChange)="notifyChange($event)"
-			[checked]="notifyEarner" [text]="'Benachrichtige die Empfänger*in mit einer E-Mail'"></oeb-checkbox>
+		<oeb-checkbox
+			name="notify_earner"
+			id="notify_earner"
+			type="checkbox"
+			[control]="issueForm.rawControlMap.notify_earner"
+			[text]="'Empfänger:in mit E-Mail benachrichtigen'"
+		></oeb-checkbox>
 	</div>
 
 	<!-- BUTTONS -->
 	<div class="tw-flex tw-justify-end tw-gap-2 tw-mt-4">
-		<oeb-button hlmBtn class="tw-mr-4" variant="secondary" (click)="updateViewState('import')"
-			text="Abbrechen"></oeb-button>
+		<oeb-button
+			class="tw-mr-4"
+			variant="secondary"
+			(click)="updateViewState('import')"
+			text="Abbrechen"
+		></oeb-button>
 
-		<oeb-button [class.button-is-disabled]="buttonDisabledClass" [disabled]="buttonDisabledAttribute"
-			(click)="dataConfirmed()" text="Badge vergeben">
+		<oeb-button
+			[class.button-is-disabled]="buttonDisabledClass"
+			[disabled]="buttonDisabledAttribute"
+			(click)="dataConfirmed()"
+			text="Badges vergeben"
+		>
 		</oeb-button>
 	</div>
 </section>

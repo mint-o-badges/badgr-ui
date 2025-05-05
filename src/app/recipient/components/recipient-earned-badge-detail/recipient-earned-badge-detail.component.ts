@@ -24,10 +24,18 @@ import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcru
 import { BadgeInstance } from '../../../issuer/models/badgeinstance.model';
 import { Issuer } from '../../../issuer/models/issuer.model';
 import { CompetencyType, PageConfig } from '../../../common/components/badge-detail/badge-detail.component.types';
+import { ApiLearningPath } from '../../../common/model/learningpath-api.model';
+import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'recipient-earned-badge-detail',
-	template: `<bg-badgedetail [config]="config" [awaitPromises]="[badgesLoaded]"></bg-badgedetail>`,
+	template: `<bg-badgedetail
+		[config]="config"
+		[awaitPromises]="[badgesLoaded, learningPathsLoaded]"
+		[badge]="badge"
+	></bg-badgedetail>`,
+	standalone: false,
 })
 export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	readonly issuerImagePlacholderUrl = preloadImageURL(
@@ -40,6 +48,8 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 	collectionSelectionDialog: RecipientBadgeCollectionSelectionDialogComponent;
 
 	badgesLoaded: Promise<unknown>;
+	learningPaths: ApiLearningPath[];
+	learningPathsLoaded: Promise<ApiLearningPath[] | void>;
 	badges: RecipientBadgeInstance[] = [];
 	competencies: object[];
 	category: object;
@@ -47,8 +57,7 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 	issuerBadgeCount: string;
 	launchpoints: ApiExternalToolLaunchpoint[];
 
-	config: PageConfig 
-
+	config: PageConfig;
 
 	now = new Date();
 	compareDate = compareDate;
@@ -74,6 +83,7 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 		route: ActivatedRoute,
 		loginService: SessionService,
 		private recipientBadgeManager: RecipientBadgeManager,
+		private learningPathApiService: LearningPathApiService,
 		private title: Title,
 		private messageService: MessageService,
 		private eventService: EventsService,
@@ -81,6 +91,7 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 		private configService: AppConfigService,
 		private externalToolsManager: ExternalToolsManager,
 		public queryParametersService: QueryParametersService,
+		private translate: TranslateService,
 	) {
 		super(router, route, loginService);
 
@@ -101,30 +112,44 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 					// 	title: 'Badge teilen',
 					// 	action: () => this.shareBadge(),
 					// },
+					qrCodeButton: {
+						show: false,
+					},
 					menuitems: [
 						{
-							title: 'Verifizieren',
-							icon: 'lucideBadgeCheck',
-							action: () => window.open(this.verifyUrl, '_blank'),
+							title: 'Download Badge-Bild',
+							icon: 'lucideImage',
+							action: () => this.exportPng(),
 						},
 						{
-							title: 'PDF exportieren',
+							title: 'Download JSON-Datei',
+							icon: '	lucideFileCode',
+							action: () => this.exportJson(),
+						},
+						{
+							title: 'Download PDF-Zertifikat',
 							icon: 'lucideFileText',
 							action: () => this.exportPdf(),
 						},
 						{
-							title: 'Löschen',
+							title: 'Badge verifizieren',
+							icon: 'lucideBadgeCheck',
+							action: () => window.open(this.verifyUrl, '_blank'),
+						},
+						{
+							title: 'Badge aus Rucksack löschen',
 							icon: 'lucideTrash2',
 							action: () => this.deleteBadge(this.badge),
-						}
-					
+						},
 					],
 					badgeDescription: this.badge.badgeClass.description,
 					issuerSlug: this.badge.badgeClass.issuer.id,
 					slug: this.badgeSlug,
 					issuedOn: this.badge.issueDate,
 					issuedTo: this.badge.recipientEmail,
-					category: this.category['Category'] === 'competency' ? 'Kompetenz- Badge' : 'Teilnahme- Badge',
+					category: this.translate.instant(
+						`Badge.categories.${this.category['Category'] || 'participation'}`,
+					),
 					duration: this.badge.getExtension('extensions:StudyLoadExtension', {}).StudyLoad,
 					tags: this.badge.badgeClass.tags,
 					issuerName: this.badge.badgeClass.issuer.name,
@@ -134,8 +159,18 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 					badgeFailedImageUrl: this.badgeFailedImageUrl,
 					badgeImage: this.badge.badgeClass.image,
 					competencies: this.competencies as CompetencyType[],
-
-				}
+					license: this.badge.getExtension('extensions:LicenseExtension', {}) ? true : false,
+					shareButton: true,
+					badgeInstanceSlug: this.badgeSlug,
+				};
+			})
+			.finally(() => {
+				this.learningPathsLoaded = this.learningPathApiService
+					.getLearningPathsForBadgeClass(this.badge.badgeClass.slug)
+					.then((lp) => {
+						this.learningPaths = lp;
+						this.config.learningPaths = lp;
+					});
 			})
 			.catch((e) => this.messageService.reportAndThrowError('Failed to load your badges', e));
 
@@ -261,10 +296,41 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 		});
 	}
 
-	exportPdf() {
-		let markdown = window.document.getElementById('recipient-earned-badge-detail-markdown-display') as HTMLElement;
+	exportPng() {
+		fetch(this.rawBakedUrl)
+			.then((response) => response.blob())
+			.then((blob) => {
+				const link = document.createElement('a');
+				const url = URL.createObjectURL(blob);
+				const urlParts = this.rawBakedUrl.split('/');
+				link.href = url;
+				link.download = `${this.badge.issueDate.toISOString().split('T')[0]}-${this.badge.badgeClass.name.trim().replace(' ', '_')}.png`;
+				document.body.appendChild(link);
+				link.click();
+				document.body.removeChild(link);
+				URL.revokeObjectURL(url);
+			})
+			.catch((error) => console.error('Download failed:', error));
+	}
 
-		this.dialogService.exportPdfDialog.openDialog(this.badge, markdown).catch((error) => console.log(error));
+	exportJson() {
+		fetch(this.rawJsonUrl)
+			.then((response) => response.blob())
+			.then((blob) => {
+				const link = document.createElement('a');
+				const url = URL.createObjectURL(blob);
+				link.href = url;
+				link.download = `${this.badge.issueDate.toISOString().split('T')[0]}-${this.badge.badgeClass.name.trim().replace(' ', '_')}.json`;
+				document.body.appendChild(link);
+				link.click();
+				document.body.removeChild(link);
+				URL.revokeObjectURL(url);
+			})
+			.catch((error) => console.error('Download failed:', error));
+	}
+
+	exportPdf() {
+		this.dialogService.exportPdfDialog.openDialog(this.badge).catch((error) => console.log(error));
 	}
 }
 

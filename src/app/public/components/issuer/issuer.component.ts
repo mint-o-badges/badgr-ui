@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { preloadImageURL } from '../../../common/util/file-util';
 import { PublicApiService } from '../../services/public-api.service';
 import { LoadedRouteParam } from '../../../common/util/loaded-route-param';
-import { PublicApiBadgeClass, PublicApiIssuer } from '../../models/public-api.model';
+import { PublicApiBadgeClass, PublicApiIssuer, PublicApiLearningPath } from '../../models/public-api.model';
 import { EmbedService } from '../../../common/services/embed.service';
 import { addQueryParamsToUrl, stripQueryParamsFromUrl } from '../../../common/util/url-util';
 import { routerLinkForUrl } from '../public/public.component';
@@ -13,6 +13,7 @@ import { AppConfigService } from '../../../common/app-config.service';
 
 @Component({
 	templateUrl: './issuer.component.html',
+	standalone: false,
 })
 export class PublicIssuerComponent {
 	readonly issuerImagePlaceholderUrl = preloadImageURL(
@@ -21,7 +22,11 @@ export class PublicIssuerComponent {
 	readonly badgeLoadingImageUrl = '../../../../breakdown/static/images/badge-loading.svg';
 	readonly badgeFailedImageUrl = '../../../../breakdown/static/images/badge-failed.svg';
 
-	issuerIdParam: LoadedRouteParam<{ issuer: PublicApiIssuer; badges: PublicApiBadgeClass[] }>;
+	issuerIdParam: LoadedRouteParam<{
+		issuer: PublicApiIssuer;
+		badges: PublicApiBadgeClass[];
+		learningpaths: PublicApiLearningPath[];
+	}>;
 	routerLinkForUrl = routerLinkForUrl;
 	plural = {
 		badge: {
@@ -41,7 +46,7 @@ export class PublicIssuerComponent {
 
 		this.issuerIdParam = new LoadedRouteParam(injector.get(ActivatedRoute), 'issuerId', (paramValue) => {
 			const service: PublicApiService = injector.get(PublicApiService);
-			return service.getIssuerWithBadges(paramValue);
+			return service.getIssuerWithBadgesAndLps(paramValue);
 		});
 	}
 
@@ -51,6 +56,11 @@ export class PublicIssuerComponent {
 	get badgeClasses(): PublicApiBadgeClass[] {
 		return this.issuerIdParam.value.badges;
 	}
+
+	get learningPaths(): PublicApiLearningPath[] {
+		return this.issuerIdParam.value.learningpaths;
+	}
+
 	private get rawJsonUrl() {
 		return stripQueryParamsFromUrl(this.issuer.id) + '.json';
 	}

@@ -12,6 +12,7 @@ import { map, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 	selector: 'nounproject-dialog',
 	templateUrl: 'nounproject-dialog.component.html',
 	styleUrls: ['./nounproject-dialog.component.css'],
+	standalone: false,
 })
 export class NounprojectDialog extends BaseDialog implements AfterViewInit {
 	Array = Array;
@@ -97,7 +98,6 @@ export class NounprojectDialog extends BaseDialog implements AfterViewInit {
 								result.tag_slugs = tag_slugs;
 							});
 							this.icons = results;
-							console.log('icons: ' + results);
 							if (results.length < 10) {
 								// currently we only request 10 at a time, but this could be changed in the server
 								this.endOfResults = true;

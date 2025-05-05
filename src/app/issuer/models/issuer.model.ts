@@ -2,6 +2,7 @@ import {
 	ApiIssuer,
 	ApiIssuerStaff,
 	IssuerRef,
+	IssuerSlug,
 	IssuerStaffRef,
 	IssuerStaffRoleSlug,
 	IssuerUrl,
@@ -40,6 +41,10 @@ export class Issuer extends ManagedEntity<ApiIssuer, IssuerRef> {
 
 	get issuerUrl(): IssuerUrl {
 		return this.apiModel.json.id;
+	}
+
+	get slug(): IssuerSlug {
+		return this.apiModel.slug;
 	}
 
 	get name(): string {
@@ -81,6 +86,11 @@ export class Issuer extends ManagedEntity<ApiIssuer, IssuerRef> {
 	get city(): string {
 		return this.apiModel.city;
 	}
+
+	get intendedUseVerified(): boolean {
+		return this.apiModel.intendedUseVerified;
+	}
+
 	get lat(): number {
 		return this.apiModel.lat;
 	}
@@ -97,6 +107,14 @@ export class Issuer extends ManagedEntity<ApiIssuer, IssuerRef> {
 		return badges.loaded
 			? badges.entities.filter((b) => b.issuerSlug === this.slug).length
 			: this.apiModel.badgeClassCount;
+	}
+
+	get ownerAcceptedTos(): boolean {
+		return this.apiModel.ownerAcceptedTos;
+	}
+
+	get learningPathCount(): number {
+		return this.apiModel.learningPathCount;
 	}
 
 	async update(): Promise<this> {
@@ -122,19 +140,28 @@ export class Issuer extends ManagedEntity<ApiIssuer, IssuerRef> {
 		return this.update();
 	}
 
-    /**
-     * Evaluates if the current user can create badges.
-     * This is the case if all of the following conditions are fulfilled:
-     * - the issuer is verified
-     * - there is a logged in user
-     * - the logged in user has either the owner or editor role for this issuer
-     *
-     * @returns {boolean}
-     */
-    get canCreateBadge(): boolean {
-        return this.apiModel.verified &&
-            (this.currentUserStaffMember?.canEdit ?? false);
-    }
+	/**
+	 * Evaluates if the current user can edit issuer.
+	 * This is only if the user is an owner.
+	 *
+	 * @returns {boolean}
+	 */
+	get canUpdateDeleteIssuer(): boolean {
+		return this.currentUserStaffMember?.canEditIssuer ?? false;
+	}
+
+	/**
+	 * Evaluates if the current user can create badges.
+	 * This is the case if all of the following conditions are fulfilled:
+	 * - the issuer is verified
+	 * - there is a logged in user
+	 * - the logged in user has either the owner or editor role for this issuer
+	 *
+	 * @returns {boolean}
+	 */
+	get canCreateBadge(): boolean {
+		return this.apiModel.verified && (this.currentUserStaffMember?.canEditBadge ?? false);
+	}
 
 	get currentUserStaffMember(): IssuerStaffMember {
 		if (this.profileManager.userProfile && this.profileManager.userProfile.emails.entities) {
@@ -188,16 +215,27 @@ export class IssuerStaffMember extends ManagedEntity<ApiIssuerStaff, IssuerStaff
 		return this.roleSlug === 'editor';
 	}
 
-    /**
-     * Evaluates if the user has the permission to make edits,
-     * specifically to create badges. This is the case if the user
-     * is either an owner, or an editor.
-     *
-     * @returns {boolean}
-     */
-    get canEdit(): boolean {
-        return this.isOwner || this.isEditor;
-    }
+	/**
+	 * Evaluates if the user has the permission to make edits,
+	 * specifically to create/edit issuer. This is only if the user
+	 * is an owner.
+	 *
+	 * @returns {boolean}
+	 */
+	get canEditIssuer(): boolean {
+		return this.isOwner;
+	}
+
+	/**
+	 * Evaluates if the user has the permission to make edits,
+	 * specifically to create badges. This is the case if the user
+	 * is either an owner, or an editor.
+	 *
+	 * @returns {boolean}
+	 */
+	get canEditBadge(): boolean {
+		return this.isOwner || this.isEditor;
+	}
 
 	/**
 	 * Returns a label to use for this member based on the name if it's available (e.g. "Luke Skywalker"), or the email
@@ -262,27 +300,27 @@ export class IssuerStaffMember extends ManagedEntity<ApiIssuerStaff, IssuerStaff
 	}
 }
 
-// ToDo: the following texts are already added to de/en.json files, please make sure to use their reference when reactivating English lang 
+// ToDo: the following texts are already added to de/en.json files, please make sure to use their reference when reactivating English lang
 export const issuerStaffRoles = [
 	{
 		slug: 'owner',
-		label: 'Eigentümer',
+		label: 'Eigentümer:in',
 		indefiniteLabel: 'an owner',
 		description:
-			'Möglichkeit, Mitarbeiter hinzuzufügen und zu entfernen. Volle Rechte zum Erstellen, Löschen und Verleihen von Abzeichen. Möglichkeit, Ausstellerdetails zu bearbeiten.',
+			'Zugriff auf alle Funktionen inkl. Hinzufügen/Entfernen von Editor:innen und Mitarbeiter:innen, Bearbeitung der Institutionsdetails sowie Erstellen, Vergeben und Löschen von Badges inkl. Micro Degrees.',
 	},
 	{
 		slug: 'editor',
-		label: 'Editor',
+		label: 'Editor:in',
 		indefiniteLabel: 'an editor',
-		description:
-			'Volle Rechte zum Erstellen, Löschen und Vergeben von Badges. Möglichkeit, Ausstellerdetails zu bearbeiten.',
+		description: 'Rechte zum Erstellen, Vergeben und Löschen von Badges inkl. Micro Degrees.',
 	},
 	{
 		slug: 'staff',
-		label: 'Mitarbeiter',
+		label: 'Mitarbeiter:in',
 		indefiniteLabel: 'a staff member',
-		description: 'Möglichkeit, von Inhabern und Redakteuren erstellte Badges zu vergeben.',
+		description:
+			'Kann die von Eigentümer:innen und/oder Editor:innen erstellten Badges vergeben (inkl. QR-Code-Vergaben erstellen, bearbeiten und löschen).',
 	},
 ];
 export function issuerRoleInfoFor(slug: IssuerStaffRoleSlug) {

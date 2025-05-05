@@ -28,11 +28,10 @@ export interface BulkIssueImportPreviewData {
 
 export interface BulkIssueData {
 	email: string;
-	evidence: string;
 	name: string;
 }
 
-export type DestSelectOptions = 'email'| 'evidence' | 'name' | 'NA' ;
+export type DestSelectOptions = 'email' | 'name' | 'NA';
 
 export type ViewState = 'import' | 'importPreview' | 'importError' | 'importConformation' | 'cancel' | 'exit';
 
@@ -44,6 +43,7 @@ export interface ColumnHeaders {
 @Component({
 	selector: 'Badgeclass-issue-bulk-award',
 	templateUrl: './badgeclass-issue-bulk-award.component.html',
+	standalone: false,
 })
 export class BadgeClassIssueBulkAwardComponent extends BaseAuthenticatedRoutableComponent {
 	importPreviewData: BulkIssueImportPreviewData;

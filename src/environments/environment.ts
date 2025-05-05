@@ -7,6 +7,7 @@ import { BadgrEnvironment } from './badgr-environment';
 
 export const environment: BadgrEnvironment = {
 	production: false,
+	enableErrorInterceptor: true,
 	config: {
 		theme: {
 			welcomeMessage: 'Willkommen auf Open Educational Badges',
@@ -33,7 +34,7 @@ export const environment: BadgrEnvironment = {
 			],
 			useColorNavbar: true,
 			termsOfServiceLink: 'public/impressum',
-			privacyPolicyLink:'public/privacy',
+			privacyPolicyLink: 'public/privacy',
 			showApiDocsLink: false,
 			cssCustomProps: {
 				'--color-interactive1': '#492E98',

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation, computed, input } from '@angular/core';
-import { hlm } from '@spartan-ng/ui-core';
+import { hlm } from '@spartan-ng/brain/core';
 import type { ClassValue } from 'clsx';
 
 @Component({
@@ -9,9 +9,7 @@ import type { ClassValue } from 'clsx';
 		'[class]': '_computedClass()',
 		role: 'row',
 	},
-	template: `
-		<ng-content />
-	`,
+	template: ` <ng-content /> `,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	encapsulation: ViewEncapsulation.None,
 })

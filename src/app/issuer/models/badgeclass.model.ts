@@ -2,6 +2,7 @@ import {
 	ApiBadgeClass,
 	ApiBadgeClassAlignment,
 	ApiBadgeClassExpiration,
+	BadgeClassCopyPermissions,
 	BadgeClassExpiresDuration,
 	BadgeClassRef,
 	BadgeClassUrl,
@@ -27,6 +28,10 @@ export class BadgeClass extends ManagedEntity<ApiBadgeClass, BadgeClassRef> {
 		this.apiModel.name = name;
 	}
 
+	get slug(): string {
+		return this.apiModel.slug;
+	}
+
 	get description(): string {
 		return this.apiModel.description;
 	}
@@ -44,7 +49,7 @@ export class BadgeClass extends ManagedEntity<ApiBadgeClass, BadgeClassRef> {
 
 	get imageFrame(): boolean {
 		return this.apiModel.imageFrame !== undefined ? this.apiModel.imageFrame : true;
-	}	
+	}
 	set imageFrame(imageFrame: boolean) {
 		this.apiModel.imageFrame = imageFrame;
 	}
@@ -65,7 +70,7 @@ export class BadgeClass extends ManagedEntity<ApiBadgeClass, BadgeClassRef> {
 		return this.apiModel.recipient_count;
 	}
 
-	set recipientCount(count: number){
+	set recipientCount(count: number) {
 		this.apiModel.recipient_count = count;
 	}
 
@@ -104,6 +109,10 @@ export class BadgeClass extends ManagedEntity<ApiBadgeClass, BadgeClassRef> {
 		return this.apiModel.source_url;
 	}
 
+	get issuerVerified() {
+		return this.apiModel.issuerVerified;
+	}
+
 	hasExtension(extensionName: string) {
 		return this.apiModel.extensions && extensionName in this.apiModel.extensions;
 	}
@@ -131,11 +140,26 @@ export class BadgeClass extends ManagedEntity<ApiBadgeClass, BadgeClassRef> {
 		return BadgeClass.issuerSlugFromUrl(this.issuerUrl);
 	}
 
+	get issuerOwnerAcceptedTos(): boolean {
+		return this.apiModel.issuerOwnerAcceptedTos;
+	}
+
 	get alignments() {
 		return this.apiModel.alignment;
 	}
 	set alignments(alignments: ApiBadgeClassAlignment[]) {
 		this.apiModel.alignment = alignments;
+	}
+
+	get copyPermissions(): BadgeClassCopyPermissions[] {
+		return this.apiModel.copy_permissions;
+	}
+	set copyPermissions(permissions: BadgeClassCopyPermissions[]) {
+		this.apiModel.copy_permissions = permissions;
+	}
+
+	canCopy(key: BadgeClassCopyPermissions) {
+		return this.copyPermissions.indexOf(key) !== -1;
 	}
 
 	get issuer() {

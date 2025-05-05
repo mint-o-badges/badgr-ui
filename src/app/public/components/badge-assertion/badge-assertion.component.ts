@@ -19,13 +19,15 @@ import { Title } from '@angular/platform-browser';
 import { VerifyBadgeDialog } from '../verify-badge-dialog/verify-badge-dialog.component';
 import { BadgeClassCategory, BadgeClassLevel } from './../../../issuer/models/badgeclass-api.model';
 import { PageConfig } from '../../../common/components/badge-detail/badge-detail.component.types';
+import { CommonDialogsService } from '../../../common/services/common-dialogs.service';
 
 @Component({
 	template: `<verify-badge-dialog
-					#verifyBadgeDialog
-					(verifiedBadgeAssertion)="onVerifiedBadgeAssertion($event)"
-				></verify-badge-dialog>
-	<bg-badgedetail [config]="config" [awaitPromises]="[assertionIdParam]"></bg-badgedetail>`,
+			#verifyBadgeDialog
+			(verifiedBadgeAssertion)="onVerifiedBadgeAssertion($event)"
+		></verify-badge-dialog>
+		<bg-badgedetail [config]="config" [awaitPromises]="[assertionIdParam]"></bg-badgedetail>`,
+	standalone: false,
 })
 export class PublicBadgeAssertionComponent {
 	constructor(
@@ -34,6 +36,7 @@ export class PublicBadgeAssertionComponent {
 		public messageService: MessageService,
 		public configService: AppConfigService,
 		public queryParametersService: QueryParametersService,
+		private dialogService: CommonDialogsService,
 		private title: Title,
 	) {
 		title.setTitle(`Assertion - ${this.configService.theme['serviceName'] || 'Badgr'}`);
@@ -57,8 +60,7 @@ export class PublicBadgeAssertionComponent {
 
 	awardedToDisplayName: string;
 
-	config: PageConfig 
-
+	config: PageConfig;
 
 	routerLinkForUrl = routerLinkForUrl;
 
@@ -72,6 +74,7 @@ export class PublicBadgeAssertionComponent {
 	categoryOptions: { [key in BadgeClassCategory]: string } = {
 		competency: 'Kompetenz-Badge',
 		participation: 'Teilnahme-Badge',
+		learningpath: 'Micro Degree',
 	};
 
 	levelOptions: { [key in BadgeClassLevel]: string } = {
@@ -160,39 +163,51 @@ export class PublicBadgeAssertionComponent {
 	}
 
 	private createLoadedRouteParam() {
-		return new LoadedRouteParam(this.injector.get(ActivatedRoute), 'assertionId', (paramValue) => {
-			this.assertionId = paramValue;
-			const service: PublicApiService = this.injector.get(PublicApiService);
-			return service.getBadgeAssertion(paramValue).then((assertion) => {
+		return new LoadedRouteParam(this.injector.get(ActivatedRoute), 'assertionId', async (paramValue) => {
+			try {
+				this.assertionId = paramValue;
+				const service: PublicApiService = this.injector.get(PublicApiService);
+				const assertion = await service.getBadgeAssertion(paramValue);
+				const lps = await service.getLearningPathsForBadgeClass(assertion.badge.slug);
+
 				this.config = {
 					badgeTitle: assertion.badge.name,
 					headerButton: {
-						title: 'Verify Badge',
+						title: 'Badge verifizieren',
 						action: () => this.verifyBadge(),
-
+					},
+					qrCodeButton: {
+						show: false,
 					},
 					menuitems: [
 						{
-							title: 'Download JSON',
-							icon: 'lucideDownload',
-							action: () => window.open(this.rawJsonUrl),
-
+							title: 'Download Badge-Bild',
+							icon: 'lucideImage',
+							action: () => this.exportPng(),
 						},
 						{
-							title: 'Download baked Image',
-							icon: 'lucideDownload',
-							action: () => window.open(this.rawBakedUrl),
+							title: 'Download JSON-Datei',
+							icon: '	lucideFileCode',
+							action: () => this.exportJson(),
+						},
+						{
+							title: 'Download PDF-Zertifikat',
+							icon: 'lucideFileText',
+							action: () => this.exportPdf(),
 						},
 						{
 							title: 'View Badge',
 							icon: 'lucideBadge',
-							routerLink: routerLinkForUrl(assertion.badge.hostedUrl || assertion.badge.id)
-						}
+							routerLink: routerLinkForUrl(assertion.badge.hostedUrl || assertion.badge.id),
+						},
 					],
 					badgeDescription: assertion.badge.description,
 					issuerSlug: assertion.badge.issuer['slug'],
 					slug: assertion.badge.id,
-					category: assertion.badge['extensions:CategoryExtension'].Category === 'competency' ? 'Kompetenz- Badge' : 'Teilnahme- Badge',
+					category:
+						assertion.badge['extensions:CategoryExtension'].Category === 'competency'
+							? 'Kompetenz- Badge'
+							: 'Teilnahme- Badge',
 					tags: assertion.badge.tags,
 					issuerName: assertion.badge.issuer.name,
 					issuerImagePlacholderUrl: this.issuerImagePlacholderUrl,
@@ -201,7 +216,9 @@ export class PublicBadgeAssertionComponent {
 					badgeFailedImageUrl: this.badgeFailedImageUrl,
 					badgeImage: assertion.badge.image,
 					competencies: assertion.badge['extensions:CompetencyExtension'],
-				}
+					license: assertion.badge['extensions:LicenseExtension'] ? true : false,
+					learningPaths: lps,
+				};
 				if (assertion.revoked) {
 					if (assertion.revocationReason) {
 						this.messageService.reportFatalError('Assertion has been revoked:', assertion.revocationReason);
@@ -215,7 +232,46 @@ export class PublicBadgeAssertionComponent {
 					this.awardedToDisplayName = assertion['extensions:recipientProfile'].name;
 				}
 				return assertion;
-			});
+			} catch (err) {
+				console.error('Failed to fetch assertion data', err);
+			}
 		});
+	}
+
+	exportPng() {
+		fetch(this.rawBakedUrl)
+			.then((response) => response.blob())
+			.then((blob) => {
+				const link = document.createElement('a');
+				const url = URL.createObjectURL(blob);
+				const urlParts = this.rawBakedUrl.split('/');
+				link.href = url;
+				link.download = `${new Date(this.assertion.issuedOn).toISOString().split('T')[0]}-${this.assertion.badge.name.trim().replace(' ', '_')}.png`;
+				document.body.appendChild(link);
+				link.click();
+				document.body.removeChild(link);
+				URL.revokeObjectURL(url);
+			})
+			.catch((error) => console.error('Download failed:', error));
+	}
+
+	exportJson() {
+		fetch(this.rawJsonUrl)
+			.then((response) => response.blob())
+			.then((blob) => {
+				const link = document.createElement('a');
+				const url = URL.createObjectURL(blob);
+				link.href = url;
+				link.download = `${new Date(this.assertion.issuedOn).toISOString().split('T')[0]}-${this.assertion.badge.name.trim().replace(' ', '_')}.json`;
+				document.body.appendChild(link);
+				link.click();
+				document.body.removeChild(link);
+				URL.revokeObjectURL(url);
+			})
+			.catch((error) => console.error('Download failed:', error));
+	}
+
+	exportPdf() {
+		this.dialogService.exportPdfDialog.openDialog(this.assertion).catch((error) => console.log(error));
 	}
 }

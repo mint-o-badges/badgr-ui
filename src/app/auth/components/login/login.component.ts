@@ -14,16 +14,26 @@ import { QueryParametersService } from '../../../common/services/query-parameter
 import { OAuthManager } from '../../../common/services/oauth-manager.service';
 import { ExternalToolsManager } from '../../../externaltools/services/externaltools-manager.service';
 import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { AppConfigService } from '../../../common/app-config.service';
 import { typedFormGroup } from '../../../common/util/typed-forms';
 import { BadgrApiFailure } from '../../../common/services/api-failure';
 import { TranslateService } from '@ngx-translate/core';
+import { HttpClient } from '@angular/common/http';
+import { UserProfileApiService } from '../../../common/services/user-profile-api.service';
+
+interface RedirectResponse {
+	success: boolean;
+	redirectPath: string;
+}
+
+type RedirectHttpResponse = HttpResponse<RedirectResponse>;
 
 @Component({
 	selector: 'login',
 	templateUrl: './login.component.html',
 	styleUrls: ['./login.component.scss'],
+	standalone: false,
 })
 export class LoginComponent extends BaseRoutableComponent implements OnInit, AfterViewInit {
 	get theme() {
@@ -45,6 +55,7 @@ export class LoginComponent extends BaseRoutableComponent implements OnInit, Aft
 
 	initFinished: Promise<unknown> = new Promise(() => {});
 	loginFinished: Promise<unknown>;
+	baseUrl: string;
 
 	constructor(
 		private fb: FormBuilder,
@@ -56,7 +67,9 @@ export class LoginComponent extends BaseRoutableComponent implements OnInit, Aft
 		public oAuthManager: OAuthManager,
 		private externalToolsManager: ExternalToolsManager,
 		private profileManager: UserProfileManager,
+		private userProfileApiService: UserProfileApiService,
 		private sanitizer: DomSanitizer,
+		private http: HttpClient,
 		router: Router,
 		route: ActivatedRoute,
 		private translate: TranslateService,
@@ -64,6 +77,7 @@ export class LoginComponent extends BaseRoutableComponent implements OnInit, Aft
 		super(router, route);
 		title.setTitle(`Login - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 		this.handleQueryParamCases();
+		this.baseUrl = this.configService.apiConfig.baseUrl;
 	}
 
 	sanitize(url: string) {
@@ -86,82 +100,95 @@ export class LoginComponent extends BaseRoutableComponent implements OnInit, Aft
 		}
 	}
 
-    afterLogin() {
-        this.profileManager.reloadUserProfileSet().then(() => {
-            this.profileManager.userProfilePromise.then((profile) => {
-                if (profile) {
-                    // fetch user profile and emails to check if they are verified
-                    profile.emails.updateList().then(() => {
-                        if (profile.isVerified) {
-                            if (this.oAuthManager.isAuthorizationInProgress) {
-                                this.router.navigate(['/auth/oauth2/authorize']);
-                            } else {
-                                this.externalToolsManager.externaltoolsList.updateIfLoaded();
-                                // catch localStorage.redirectUri
-                                if (localStorage.redirectUri) {
-                                    const redirectUri = new URL(localStorage.redirectUri);
-                                    localStorage.removeItem('redirectUri');
-                                    window.location.replace(redirectUri.origin);
-                                    return false;
-                                } else {
-                                    // first time only do welcome
-                                    this.router.navigate([
-                                        localStorage.signup ? 'auth/welcome' : 'issuer',
-                                    ]);
-                                }
-                            }
-                        } else {
-                            this.router.navigate([
-                                'signup/success',
-                                encodeURIComponent(btoa(profile.emails.entities[0].email)),
-                            ]);
-                        }
-                    });
-                }
-            });
-        });
-    }
+	afterLogin() {
+		this.profileManager.reloadUserProfileSet().then(() => {
+			this.profileManager.userProfilePromise.then((profile) => {
+				if (profile) {
+					// fetch user profile and emails to check if they are verified
+					profile.emails.updateList().then(() => {
+						if (profile.isVerified) {
+							if (this.oAuthManager.isAuthorizationInProgress) {
+								this.router.navigate(['/auth/oauth2/authorize']);
+							} else {
+								this.externalToolsManager.externaltoolsList.updateIfLoaded();
 
-    validateToken() {
+								this.userProfileApiService
+									.getRedirectUrl()
+									.then((response: RedirectHttpResponse) => {
+										if (response.body.success && response.body.redirectPath) {
+											this.router.navigateByUrl(response.body.redirectPath);
+										} else {
+											this.router.navigate([localStorage.signup ? 'auth/welcome' : 'issuer']);
+										}
+									})
+									.catch(() => this.router.navigate(['/public/start']));
+
+								// this.http.post<{success: boolean, redirectPath: string}>(`${this.baseUrl}/v1/user/get-redirect-path`, {}, {withCredentials: true})
+								// .subscribe({
+								//   next: (response) => {
+								// 	if (response.success && response.redirectPath) {
+								// 	  this.router.navigateByUrl(response.redirectPath);
+								// 	} else {
+								// 	  this.router.navigate([localStorage.signup ? 'auth/welcome' : 'issuer',]);
+								// 	}
+								//   },
+								//   error: () => this.router.navigate(['/public/start'])
+								// });
+							}
+						} else {
+							this.router.navigate([
+								'signup/success',
+								encodeURIComponent(btoa(profile.emails.entities[0].email)),
+							]);
+						}
+					});
+				}
+			});
+		});
+	}
+
+	validateToken() {
 		this.loginFinished = this.sessionService
 			.validateToken()
-			.then(() => this.afterLogin(),
-                  (response: HttpErrorResponse) => {
-                if (response.status == 401) {
-                    // Unauthorized: The user is not
-                    // authenticated in Django, meaning that the
-                    // OIDC authentication failed. The user
-                    // probably already knows this at this point
-                    this.router.navigate([], {
-                        queryParams: { validateToken: null },
-                        queryParamsHandling: 'merge'
-                    });
-                    // Don't display an error, since it might happen
-                    // quite easily that the user navigates to the
-                    // address containing ?validateToken
-                    console.error("Token validation failed. This means",
-                                  "that either the user accidently",
-                                  "navigated to the address with the",
-                                  "?validateToken query parameter, or",
-                                  "something weird happened");
-                }
-                else {
-					this.messageService.reportHandledError(
-						BadgrApiFailure.messageIfThrottableError(response.error) ||
-							this.translate.instant('Login.failLogin'),
-						response,
-					);
-                }
-            },)
+			.then(
+				() => this.afterLogin(),
+				(response: HttpErrorResponse) => {
+					if (response.status == 401) {
+						// Unauthorized: The user is not
+						// authenticated in Django, meaning that the
+						// OIDC authentication failed. The user
+						// probably already knows this at this point
+						this.router.navigate([], {
+							queryParams: { validateToken: null },
+							queryParamsHandling: 'merge',
+						});
+						// Don't display an error, since it might happen
+						// quite easily that the user navigates to the
+						// address containing ?validateToken
+						console.error(
+							'Token validation failed. This means',
+							'that either the user accidently',
+							'navigated to the address with the',
+							'?validateToken query parameter, or',
+							'something weird happened',
+						);
+					} else {
+						this.messageService.reportHandledError(
+							BadgrApiFailure.messageIfThrottableError(response.error) ||
+								this.translate.instant('Login.failLogin'),
+							response,
+						);
+					}
+				},
+			)
 			.then(() => (this.loginFinished = null));
-    }
+	}
 
-    bildungsraumLogin() {
-        if (this.isOidcDisabled())
-            return;
-        const endpoint = this.sessionService.baseUrl + '/oidc/authenticate';
-        window.location.href = endpoint;
-    }
+	bildungsraumLogin() {
+		if (this.isOidcDisabled()) return;
+		const endpoint = this.sessionService.baseUrl + '/oidc/authenticate';
+		window.location.href = endpoint;
+	}
 
 	submitAuth() {
 		if (!this.loginForm.markTreeDirtyAndValidate()) {
@@ -175,7 +202,8 @@ export class LoginComponent extends BaseRoutableComponent implements OnInit, Aft
 
 		this.loginFinished = this.sessionService
 			.login(credential)
-			.then(() => this.afterLogin(),
+			.then(
+				() => this.afterLogin(),
 				(response: HttpErrorResponse) =>
 					this.messageService.reportHandledError(
 						BadgrApiFailure.messageIfThrottableError(response.error) ||
@@ -187,64 +215,16 @@ export class LoginComponent extends BaseRoutableComponent implements OnInit, Aft
 	}
 
 	private handleQueryParamCases() {
-
-        this.route.queryParams.subscribe(params => {
-            if (params.hasOwnProperty('validateToken'))
-                this.validateToken();
-        });
+		this.route.queryParams.subscribe((params) => {
+			if (params.hasOwnProperty('validateToken')) this.validateToken();
+		});
 
 		try {
 			// Handle authcode exchange
 			const authCode = this.queryParams.queryStringValue('authCode', true);
 
-			// data
-			const redirectUri = localStorage.redirectUri;
-			const redirect = 'recipient';
 			if (authCode) {
-				this.sessionService.exchangeCodeForToken(authCode).then((token) => {
-					this.sessionService.storeToken(token);
-					this.externalToolsManager.externaltoolsList.updateIfLoaded();
-					redirectUri
-						? window.location.replace(redirectUri)
-						: (this.initFinished = this.router.navigate([redirect]));
-				});
-				return;
-			} else if (this.queryParams.queryStringValue('authToken', true)) {
-				this.sessionService.storeToken({
-					access_token: this.queryParams.queryStringValue('authToken', true),
-				});
-
-				this.externalToolsManager.externaltoolsList.updateIfLoaded();
-				redirectUri
-					? window.location.replace(redirectUri)
-					: (this.initFinished = this.router.navigate([redirect]));
-				return;
-			} else if (this.queryParams.queryStringValue('infoMessage', true)) {
-				this.messageService.reportInfoMessage(this.queryParams.queryStringValue('infoMessage', true), true);
-			} else if (this.queryParams.queryStringValue('authError', true)) {
-				this.sessionService.logout(false);
-				this.messageService.reportHandledError(
-					this.queryParams.queryStringValue('authError', true),
-					null,
-					true,
-				);
-			} else if (this.sessionService.isLoggedIn) {
-				this.externalToolsManager.externaltoolsList.updateIfLoaded();
-				this.initFinished = this.router.navigate([redirect]);
-				return;
-			}
-
-			this.initFinished = Promise.resolve(true);
-
-			// autologin, wait till get vars are processed and kick it to the end of the stack
-			if (this.sessionService.enabledExternalAuthProviders.length === 1 && this.features.disableRegistration) {
-				window.setTimeout(
-					() =>
-						this.sessionService.initiateUnauthenticatedExternalAuth(
-							this.sessionService.enabledExternalAuthProviders[0],
-						),
-					0,
-				);
+				throw new Error('query param authentication is deprecated!');
 			}
 		} finally {
 			this.queryParams.clearInitialQueryParams();
@@ -256,8 +236,8 @@ export class LoginComponent extends BaseRoutableComponent implements OnInit, Aft
 		this.verifiedEmail = this.queryParams.queryStringValue('email');
 	}
 
-    isOidcDisabled(): boolean {
-        const prodUrl = "https://openbadges.education";
-        return location.origin === prodUrl;
-    }
+	isOidcDisabled(): boolean {
+		const prodUrl = 'https://openbadges.education';
+		return location.origin === prodUrl;
+	}
 }

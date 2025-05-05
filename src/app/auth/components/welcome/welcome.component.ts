@@ -11,6 +11,7 @@ import { MessageService } from '../../../common/services/message.service';
 	selector: 'app-welcome',
 	templateUrl: './welcome.component.html',
 	styleUrls: ['./welcome.component.scss'],
+	standalone: false,
 })
 export class WelcomeComponent /*extends BaseAuthenticatedRoutableComponent*/ implements OnInit {
 	constructor(
@@ -40,28 +41,9 @@ export class WelcomeComponent /*extends BaseAuthenticatedRoutableComponent*/ imp
 			const authCode = this.queryParams.queryStringValue('authCode', true);
 			const redirect = 'auth/welcome';
 			if (authCode) {
-				this.sessionService
-					.exchangeCodeForToken(authCode)
-					.then((token) => {
-						this.sessionService.storeToken(token);
-						this.externalToolsManager.externaltoolsList.updateIfLoaded();
-						// we're already here!
-						this.initFinished = this.router.navigate([redirect]);
-					})
-					.catch((error) => {
-						this.sessionService.logout();
-						this.messageService.reportHandledError(error.error.error, null, true);
-						this.initFinished = this.router.navigate(['login']);
-					});
-				return;
+				throw new Error('query param authentication is deprecated!');
 			} else if (this.queryParams.queryStringValue('authToken', true)) {
-				this.sessionService.storeToken({
-					access_token: this.queryParams.queryStringValue('authToken', true),
-				});
-
-				this.externalToolsManager.externaltoolsList.updateIfLoaded();
-				this.initFinished = this.router.navigate([redirect]);
-				return;
+				throw new Error('query param authentication is deprecated!');
 			} else if (this.queryParams.queryStringValue('infoMessage', true)) {
 				this.messageService.reportInfoMessage(this.queryParams.queryStringValue('infoMessage', true), true);
 			} else if (this.queryParams.queryStringValue('authError', true)) {

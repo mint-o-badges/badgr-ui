@@ -12,6 +12,7 @@ import { UrlValidator } from '../../../common/validators/url.validator';
 @Component({
 	selector: 'badgeclass-issue-bulk-award-error',
 	templateUrl: './badgeclass-issue-bulk-award-error.component.html',
+	standalone: false,
 })
 export class BadgeclassIssueBulkAwardError extends BaseAuthenticatedRoutableComponent implements OnInit {
 	@Input() transformedImportData: TransformedImportData;
@@ -42,8 +43,7 @@ export class BadgeclassIssueBulkAwardError extends BaseAuthenticatedRoutableComp
 			this.transformedImportData.invalidRowsTransformed.forEach((row) => {
 				formArray.push(
 					this.formBuilder.group({
-						evidence: [row.evidence, Validators.compose([UrlValidator.validUrl])],
-                        name: [row.name, Validators.required],
+						name: [row.name, Validators.required],
 						email: [row.email, Validators.compose([Validators.required, EmailValidator.validEmail])],
 					}),
 				);
@@ -62,7 +62,6 @@ export class BadgeclassIssueBulkAwardError extends BaseAuthenticatedRoutableComp
 		} else {
 			this.importErrorForm.value['users'].forEach((row) => {
 				this.transformedImportData.validRowsTransformed.add({
-					evidence: row['evidence'] ? row['evidence'].trim() : null,
 					name: row['name'] ? row['name'].trim() : null,
 					email: row['email'] ? row['email'].trim() : null,
 				});

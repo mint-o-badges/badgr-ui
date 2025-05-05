@@ -1,0 +1,27 @@
+<dialog
+	aria-labelledby="CopyBadgeDialog"
+	aria-describedby="dialog1Desc"
+	class="dialog dialog-is-active l-dialog"
+	role="dialog"
+>
+	<div class="dialog-x-box o-container">
+		<div class="dialog-x-header u-background-light3">
+			<h1>Für welche deiner Institutionen soll der Badge kopiert werden?</h1>
+			<button (click)="closeDialog()" class="buttonicon buttonicon-link">
+				<svg icon="icon_close"></svg>
+				<span class="visuallyhidden">Close</span>
+			</button>
+		</div>
+		<div class="u-responsivepadding-yaxis u-responsivepadding-xaxis" tabindex="-1" id="sharelink">
+			<div class="tw-mb-8">
+				<ng-container *ngFor="let issuer of issuers">
+					<label class="radio tw-mb-2">
+						<input type="radio" [(ngModel)]="selectedIssuer" [value]="issuer" />
+						<span class="radio-x-text">{{ issuer.name }}</span>
+					</label>
+				</ng-container>
+			</div>
+			<button class="button" [disabled]="!selectedIssuer" (click)="closeDialog(selectedIssuer)">Weiter</button>
+		</div>
+	</div>
+</dialog>

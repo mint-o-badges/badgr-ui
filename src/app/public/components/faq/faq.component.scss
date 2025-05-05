@@ -1,13 +1,13 @@
 .accordion {
-    cursor: pointer;
-    width: 100%;
-    border: none;
-    text-align: left;
-    outline: none;
-    font-size: 28px;
+	cursor: pointer;
+	width: 100%;
+	border: none;
+	text-align: left;
+	outline: none;
+	font-size: 28px;
 	font-weight: 600;
 	line-height: 36px;
-    transition: 0.4s;
+	transition: 0.4s;
 }
 
 @media (max-width: 768px) {
@@ -15,34 +15,35 @@
 		font-size: 20px;
 		line-height: 28px;
 	}
- }
+}
 
-.active, .accordion:hover {
-    font-weight: 700;
+.active,
+.accordion:hover {
+	font-weight: 700;
 }
 
 .accordion:after {
-    content: '';
+	content: '';
 	background-image: url('../../../../assets/oeb/images/faqpage/down-arrow-svgrepo-com.svg');
 	background-repeat: no-repeat;
 	background-position: right 10px bottom 50%;
 	padding: 1rem;
 	padding-right: 30px !important;
 	background-size: 30px 30px;
-    float: right;
-    margin-left: 5px;
+	float: right;
+	margin-left: 5px;
 	color: var(--color-red);
 }
 
 .active:after {
-    content: '';
+	content: '';
 	background-image: url('../../../../assets/oeb/images/faqpage/chevron-angle-svgrepo-com.svg');
 }
 
 .panel {
-    padding: 0 18px;
-    background-color: white;
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.2s ease-out;
+	padding: 0 18px;
+	background-color: white;
+	max-height: 0;
+	overflow: hidden;
+	transition: max-height 0.2s ease-out;
 }

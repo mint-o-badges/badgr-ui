@@ -17,7 +17,6 @@ import { CommonDialogsService } from '../services/common-dialogs.service';
 
 @Component({
 	selector: 'bg-formfield-text',
-
 	host: {
 		class: 'forminput',
 		'[class.forminput-is-error]': 'isErrorState',
@@ -30,7 +29,7 @@ import { CommonDialogsService } from '../services/common-dialogs.service';
 		<div class="forminput-x-labelrow">
 			<label class="forminput-x-label" [attr.for]="inputName" *ngIf="label || includeLabelAsWrapper">
 				{{ label }} <span *ngIf="optional">(OPTIONAL)</span>
-				<span class="forminput-x-formFieldAside"  *ngIf="formFieldAside">{{ formFieldAside }}</span>
+				<span class="forminput-x-formFieldAside" *ngIf="formFieldAside">{{ formFieldAside }}</span>
 				<button type="button" *ngIf="isLockedState" (click)="unlock()">(unlock)</button>
 			</label>
 			<ng-content class="forminput-x-helplink" select="[label-additions]"></ng-content>
@@ -83,7 +82,7 @@ import { CommonDialogsService } from '../services/common-dialogs.service';
 		</div>
 		<p class="forminput-x-error" *ngIf="isErrorState">{{ errorMessageForDisplay }}</p>
 	`,
-	// styleUrl: './formfield-text.css',
+	standalone: false,
 })
 export class FormFieldText implements OnChanges, AfterViewInit {
 	@Input()

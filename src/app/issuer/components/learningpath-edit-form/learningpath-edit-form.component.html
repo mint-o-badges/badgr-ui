@@ -1,0 +1,132 @@
+<div class="tw-max-w-[1016px]">
+	<form-message></form-message>
+	<ng-container [formGroup]="learningPathForm.rawControl">
+		<oeb-stepper [linear]="existingLearningPath ? false : true" [initialStep]="existingLearningPath ? 0 : 1">
+			<oeb-step
+				label="Kategorie wählen"
+				[optional]="false"
+				[route]="['/issuer/issuers/' + issuerSlug + '/badges' + '/select']"
+				errorMessage="Bitte Kategorie wählen"
+				[completed]="true"
+				*ngIf="!existingLearningPath"
+			>
+			</oeb-step>
+
+			<cdk-step
+				label="Details eingeben"
+				[stepControl]="stepOne.lpDetailsForm"
+				[optional]="false"
+				errorMessage="Bitte vollständig ausfüllen"
+			>
+				<learningpath-details
+					#stepOne
+					[learningPathBadgeData]="{ learningPath: existingLearningPath, lpBadge: existingLpBadge }"
+					[issuer]="issuer"
+				></learningpath-details>
+			</cdk-step>
+			<cdk-step
+				label="Enthaltene Badges"
+				[stepControl]="stepTwo.lpBadgesForm"
+				[optional]="false"
+				errorMessage="Wähle mindestens 3 Badges aus"
+			>
+				<learningpath-badges
+					#stepTwo
+					[learningPath]="existingLearningPath"
+					(selectedBadgesChanged)="updateSelectedBadges($event)"
+				></learningpath-badges>
+			</cdk-step>
+			<cdk-step label="Badge-Reihenfolge">
+				<ng-container *ngIf="step3Loaded">
+					<learningpath-badge-order
+						(badgeListChanged)="updateBadgeList($event)"
+						#stepThree
+						[learningPath]="existingLearningPath"
+						[selectedBadgeUrls]="selectedBadgeUrls"
+						[selectedBadges]="selectedBadges"
+						errorMessage="Wähle mindestens 3 Badges aus"
+					></learningpath-badge-order>
+				</ng-container>
+			</cdk-step>
+			<cdk-step label="Abschluss">
+				<learningpath-tags
+					[learningPath]="existingLearningPath"
+					(tagsChanged)="updateTags($event)"
+					[lpName]="lpName"
+					[lpDescription]="lpDescription"
+					[lpImage]="lpImage"
+				></learningpath-tags>
+			</cdk-step>
+		</oeb-stepper>
+	</ng-container>
+
+	<div class="tw-flex tw-justify-end">
+		<p *ngIf="stepper?.selected?.hasError" class="tw-inline-block tw-text-red">
+			{{ stepper.selected.errorMessage }}
+		</p>
+	</div>
+
+	<form [formGroup]="learningPathForm.rawControl" #formElem (ngSubmit)="onSubmit()" novalidate>
+		<div class="tw-flex tw-justify-between md:tw-justify-end tw-flex-wrap sm:tw-flex-nowrap tw-gap-2 tw-mt-8">
+			<!-- <oeb-button
+				class="tw-float-left"
+				variant="secondary"
+				[hidden]="selectedStep < 1"
+				type="button"
+				[text]="previous"
+				(click)="previousStep()"
+			>
+			</oeb-button> -->
+
+			<oeb-button
+				class="tw-mr-4"
+				type="button"
+				variant="secondary"
+				(click)="cancelClicked()"
+				[disabled]="!!savePromise"
+				[class.disabled]="!!savePromise"
+				[disabled-when-requesting]="true"
+				text="{{ 'General.cancel' | translate }}"
+			></oeb-button>
+
+			<oeb-button *ngIf="selectedStep < 4" type="button" [text]="next" (click)="nextStep()"> </oeb-button>
+
+			<oeb-button
+				*ngIf="selectedStep === 4"
+				type="submit"
+				width="max_content"
+				[disabled]="!!savePromise || learningPathForm.invalid || selectedBadges.length < 3"
+				[loading-promises]="[savePromise]"
+				loading-message="{{ submittingText }}"
+				text="{{
+					(existingLearningPath ? 'General.saveChanges' : 'Issuer.myInstitutionsCreateLearningPath')
+						| translate
+				}}"
+			>
+			</oeb-button>
+		</div>
+		<!--
+		<div class="tw-flex tw-justify-end tw-flex-wrap tw-gap-4 tw-pt-8 tw-clear-both">
+			<oeb-button
+				variant="secondary"
+				(click)="cancelClicked()"
+				[class.disabled]="!!savePromise"
+				[disabled-when-requesting]="true"
+				text="{{ 'General.cancel' | translate }}"
+			></oeb-button>
+
+			<oeb-button
+				type="submit"
+				width="max_content"
+				[disabled]="!!savePromise || learningPathForm.invalid || selectedBadges.length < 3"
+				[loading-promises]="[savePromise]"
+				loading-message="{{ submittingText }}"
+				text="{{
+					(existingLearningPath ? 'General.saveChanges' : 'Issuer.myInstitutionsCreateLearningPath') | translate
+				}}"
+			>
+			</oeb-button>
+		</div>
+		-->
+	</form>
+</div>

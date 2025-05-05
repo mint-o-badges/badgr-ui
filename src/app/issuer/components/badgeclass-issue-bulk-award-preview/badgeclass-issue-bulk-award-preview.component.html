@@ -1,30 +1,43 @@
 <section class="oeb-section">
 	<div class="oeb-headline-container-sm">
-		<h1 hlmH1 class="tw-text-purple">{{'Issuer.csvColumns' | translate}}</h1>
+		<h1 hlmH1 class="tw-text-purple">{{ 'Issuer.csvColumns' | translate }}</h1>
 	</div>
 	<div class="select-csvUpload oeb-standard-padding-bottom">
 		<div class="oeb-standard-padding-bottom">
 			<p *ngIf="importPreviewData?.rows" hlmP>
-				Hier ist eine Vorschau der ersten
-				{{
-				importPreviewData.rows.length < MAX_ROWS_TO_DISPLAY ? importPreviewData.rows.length :
-					MAX_ROWS_TO_DISPLAY }} von {{ importPreviewData.rows.length }} Zeilen deiner Datei. Wähle die
-					entsprechende Überschrift welche zu der jeweiligen Spalte deiner CSV Datei passt. </p>
+				<span>
+					Hier siehst du eine Vorschau der ersten
+					{{
+						importPreviewData.rows.length < MAX_ROWS_TO_DISPLAY
+							? importPreviewData.rows.length
+							: MAX_ROWS_TO_DISPLAY
+					}}
+					von {{ importPreviewData.rows.length }} Zeilen deiner Datei.
+				</span>
+				<br />
+				<span> Wähle die Überschrift, die zu der jeweiligen Spalte deiner CSV-Datei passt. </span>
+			</p>
 		</div>
 		<table class="datatable datatable-roundheaders datatable-headers">
 			<thead class="datatable-x-head">
 				<tr class="datatable-x-header">
-					<th class="datatable-x-cell" scope="col"
-						*ngFor="let columnHeaderName of importPreviewData.columnHeaders; let columnId = index">
+					<th
+						class="datatable-x-cell"
+						scope="col"
+						*ngFor="let columnHeaderName of importPreviewData.columnHeaders; let columnId = index"
+					>
 						<label class="forminput">
 							<div class="forminput-x-inputs">
-								<select name="select" [id]="'select' + columnId" #selectDest
+								<select
+									name="select"
+									[id]="'select' + columnId"
+									#selectDest
 									[value]="columnHeaderName.destColumn"
-									(change)="mapDestNameToSourceName(columnId, selectDest.value)">
+									(change)="mapDestNameToSourceName(columnId, selectDest.value)"
+								>
 									<option value="NA">N/A</option>
 									<option value="email">E-Mail</option>
 									<option value="name">Name</option>
-									<option value="evidence">Nachweis URL</option>
 								</select>
 							</div>
 						</label>
@@ -42,8 +55,10 @@
 						{{ cell }}
 					</td>
 					<ng-template [ngIf]="row.length < columnHeadersCount">
-						<td class="datatable-x-cell"
-							*ngFor="let spacer of createRange(columnHeadersCount - row.length)"></td>
+						<td
+							class="datatable-x-cell"
+							*ngFor="let spacer of createRange(columnHeadersCount - row.length)"
+						></td>
 					</ng-template>
 				</tr>
 			</tbody>
@@ -52,17 +67,25 @@
 
 	<!-- BUTTONS -->
 	<div class="tw-flex tw-justify-end tw-gap-2 tw-mt-4">
-		<oeb-button class="tw-mr-4" variant="secondary" (click)="updateViewState('import')"
-			[text]="'General.cancel' | translate"></oeb-button>
+		<oeb-button
+			class="tw-mr-4"
+			variant="secondary"
+			(click)="updateViewState('import')"
+			[text]="'General.cancel' | translate"
+		></oeb-button>
 
-		<oeb-button [class.button-is-disabled]="buttonDisabledClass" [disabled]="buttonDisabledAttribute"
-			(click)="generateImportPreview()" [text]="'General.forward' | translate">
+		<oeb-button
+			[class.button-is-disabled]="buttonDisabledClass"
+			[disabled]="buttonDisabledAttribute"
+			(click)="generateImportPreview()"
+			[text]="'General.forward' | translate"
+		>
 		</oeb-button>
 	</div>
 </section>
 
 <div *ngIf="rowIsLongerThanHeader">
 	<p hlmP>
-		{{'Issuer.csvError' | translate}}
+		{{ 'Issuer.csvError' | translate }}
 	</p>
 </div>

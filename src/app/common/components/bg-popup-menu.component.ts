@@ -12,6 +12,7 @@ import Popper, { Placement } from 'popper.js';
 		class: 'menu',
 		'[attr.inert]': '(! isOpen) || undefined',
 	},
+	standalone: false,
 })
 export class BgPopupMenu implements OnDestroy, AfterViewInit, OnDestroy {
 	get componentElem(): HTMLElement {
@@ -140,6 +141,7 @@ export class BgPopupMenu implements OnDestroy, AfterViewInit, OnDestroy {
 	host: {
 		'(click)': 'handleClick()',
 	},
+	standalone: false,
 })
 export class BgPopupMenuTriggerDirective {
 	@Input('bgPopupMenuTrigger')

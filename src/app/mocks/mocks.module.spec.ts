@@ -1,4 +1,4 @@
-import { ElementRef, Injectable, NgModule, NgZone } from '@angular/core';
+import { ElementRef, Injectable, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Data, Params, Router } from '@angular/router';
 import { RecipientBadgeManager } from '../recipient/services/recipient-badge-manager.service';
@@ -38,9 +38,11 @@ import { BaseHttpApiService } from '../common/services/base-http-api.service';
 import { NavigationService } from '../common/services/navigation.service';
 import { RecipientBadgeCollectionApiService } from '../recipient/services/recipient-badge-collection-api.service';
 import { ApplicationCredentialsService } from '../common/services/application-credentials.service.';
-import { CaptchaService } from '../common/services/captcha.service';
 import { QrCodeApiService } from '../issuer/services/qrcode-api.service';
 import { PdfService } from '../common/services/pdf.service';
+import { LearningPathApiService } from '../common/services/learningpath-api.service';
+import { ServerVersionService } from '../common/services/server-version.service';
+import { BadgeInstanceApiService } from '../issuer/services/badgeinstance-api.service';
 
 /*@Injectable()
 export class MockRouter { navigate = () => {jasmine.createSpy('navigate'); };}*/
@@ -122,6 +124,7 @@ export class MockMessageService {
 
 @Injectable()
 export class MockAppConfigService {
+	apiConfig = { baseUrl: '' };
 	theme = (): BadgrTheme => {
 		return {
 			serviceName: 'Badger',
@@ -139,7 +142,6 @@ export class MockAppConfigService {
 			},
 		};
 	};
-
 	featuresConfig = {};
 }
 
@@ -157,6 +159,8 @@ export class MockPublicApiService {
 	getBadgeCollection = () => new Promise(() => {});
 	getBadgeClass = () => new Promise(() => {});
 	getIssuerWithBadges = () => new Promise(() => {});
+	getIssuerWithBadgesAndLps = () => new Promise(() => {});
+	getLearningPathsForBadgeClass = () => new Promise(() => {});
 }
 
 @Injectable()
@@ -184,16 +188,15 @@ export class MockOAuthApiService {
 }
 
 @Injectable()
-export class MockCaptchaService {
-	getCaptcha = () => new Promise(() => {});
-	setupCaptcha = () => new Promise(() => {})
-}
-
-@Injectable()
 export class MockPdfService {
 	getPdf = () => new Promise(() => {});
 	downloadPdf = () => new Promise(() => {});
 	dateToString = () => new Promise(() => {});
+}
+
+@Injectable()
+export class MockServerVersionService {
+	getServerVersion = () => new Promise(() => '');
 }
 
 export const commonDialog = {
@@ -230,6 +233,7 @@ export class MockOAuthManager {
 
 @Injectable()
 export class MockRecipientBadgeManager {
+	baseUrl = '';
 	recipientBadgeList = {
 		changed$: new Observable(),
 		loadedPromise: new Promise(() => {}),
@@ -237,6 +241,11 @@ export class MockRecipientBadgeManager {
 	};
 	recipientBadgeApiService = {
 		saveInstance: new Promise(() => {}),
+		listRecipientBadges: new Promise(() => {}),
+		removeRecipientBadge: new Promise(() => {}),
+		addRecipientBadge: new Promise(() => {}),
+		getBadgeShareUrlForProvider: new Promise(() => {}),
+		getCollectionShareUrlForProvider: new Promise(() => {}),
 	};
 }
 
@@ -280,10 +289,10 @@ export class MockRecipientBadgeCollectionManager {
 }
 
 @Injectable()
-export class MockBadgeCollectionManager {}
+export class MockBadgeInstanceManager {}
 
 @Injectable()
-export class MockBadgeInstanceManager {}
+export class MockBadgeInstanceApiService {}
 
 @Injectable()
 export class MockIssuerManager {
@@ -338,6 +347,13 @@ export class MockApplicationCredentialsService {
 	getMyCredentials = () => new Promise(() => {});
 	deleteCredentials = () => new Promise(() => {});
 }
+@Injectable()
+export class MockLearningPathApiService {
+	getLearningPath = () => new Promise(() => {});
+	getPublicLearningPath = () => new Promise(() => {});
+	getLearningPathsForIssuer = () => new Promise(() => {});
+	getLearningPathsForUser = () => new Promise(() => {});
+}
 
 export let COMMON_MOCKS_PROVIDERS = [];
 export let COMMON_MOCKS_PROVIDERS_WITH_SUBS = [];
@@ -374,9 +390,11 @@ export let COMMON_MOCKS_PROVIDERS_WITH_SUBS = [];
 	RecipientBadgeCollectionManager,
 	RecipientBadgeManager,
 	ApplicationCredentialsService,
-	CaptchaService,
 	QrCodeApiService,
-	PdfService
+	PdfService,
+	LearningPathApiService,
+	ServerVersionService,
+	BadgeInstanceApiService,
 ].forEach((m, i, a) => {
 	const thisMock = eval('Mock' + m.name);
 	COMMON_MOCKS_PROVIDERS.push(thisMock);

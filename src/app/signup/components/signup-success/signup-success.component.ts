@@ -5,10 +5,14 @@ import { Title } from '@angular/platform-browser';
 import { AppConfigService } from '../../../common/app-config.service';
 import { MessageService } from '../../../common/services/message.service';
 import { TranslateService } from '@ngx-translate/core';
+import { provideIcons } from '@ng-icons/core';
+import { lucideCheck } from '@ng-icons/lucide';
 
 @Component({
 	selector: 'signup-success',
 	templateUrl: './signup-success.component.html',
+	providers: [provideIcons({ lucideCheck })],
+	standalone: false,
 })
 export class SignupSuccessComponent implements OnInit {
 	constructor(
@@ -18,20 +22,19 @@ export class SignupSuccessComponent implements OnInit {
 		private configService: AppConfigService,
 		private router: Router,
 		private messageService: MessageService,
-		private translate: TranslateService
+		private translate: TranslateService,
 	) {
 		title.setTitle(`Verification - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 	}
 
 	email: string;
+	signedUpForNewsletter: boolean;
 
 	ngOnInit() {
-		// Ensure the user isn't logged in here, by removing relevant
-		// tokens. Don't trigger a change to the loggedInSubject
-		// observable though, since the user typically shouldn't
-		// be logged in at this point anyway.
-		this.sessionService.logout(false);
 		this.email = atob(decodeURIComponent(this.routeParams.snapshot.params['email']));
+		this.signedUpForNewsletter = this.routeParams.snapshot.queryParamMap.has('signedUpForNewsletter')
+			? this.routeParams.snapshot.queryParamMap.get('signedUpForNewsletter') === 'true'
+			: false;
 	}
 
 	get helpEmailUrl() {
@@ -60,10 +63,7 @@ export class SignupSuccessComponent implements OnInit {
 						err,
 					);
 				} else {
-					this.messageService.reportAndThrowError(
-						this.translate.instant('Signup.resendEmailFailed'),
-						err,
-					);
+					this.messageService.reportAndThrowError(this.translate.instant('Signup.resendEmailFailed'), err);
 				}
 			},
 		);

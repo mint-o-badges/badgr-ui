@@ -1,7 +1,6 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, NgModule, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SessionService } from '../../../common/services/session.service';
-import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
 import { MessageService } from '../../../common/services/message.service';
 import { IssuerManager } from '../../../issuer/services/issuer-manager.service';
 import { Issuer } from '../../../issuer/models/issuer.model';
@@ -14,11 +13,16 @@ import { StringMatchingUtil } from '../../../common/util/string-matching-util';
 import { Map, NavigationControl, Popup } from 'maplibre-gl';
 import { TranslateService } from '@ngx-translate/core';
 import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
+import { FormControl } from '@angular/forms';
+import { appearAnimation } from '../../../common/animations/animations';
+import { applySorting } from '../../util/sorting';
 
 @Component({
 	selector: 'app-issuer-catalog',
 	templateUrl: './issuer-catalog.component.html',
 	styleUrls: ['./issuer-catalog.component.css'],
+	animations: [appearAnimation],
+	standalone: false,
 })
 export class IssuerCatalogComponent extends BaseRoutableComponent implements OnInit, AfterViewInit {
 	readonly issuerPlaceholderSrc = preloadImageURL('../../../../breakdown/static/images/placeholderavatar-issuer.svg');
@@ -28,31 +32,76 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 	Array = Array;
 
 	issuers: Issuer[] = null;
+	chooseABadgeCategory = this.translate.instant('CreateBadge.chooseABadgeCategory');
 
 	issuersLoaded: Promise<unknown>;
 	issuerResults: Issuer[] = [];
 	issuerResultsByCategory: MatchingIssuerCategory[] = [];
+	filteredIssuers: Issuer[] = [];
+
 	order = 'asc';
 	public badgesDisplay = 'grid';
 
 	issuerGeoJson;
+	categoryControl = new FormControl('');
+	categoryOptions = [
+		{
+			label: 'Schule',
+			value: 'schule',
+		},
+		{
+			label: 'Hochschule ',
+			value: 'hochschule',
+		},
+		{
+			label: 'Andere',
+			value: 'andere',
+		},
+		{
+			label: 'Alle Kategorien',
+			value: '',
+		},
+	];
 
+	sortControl = new FormControl();
 	private _searchQuery = '';
 	get searchQuery() {
 		return this._searchQuery;
 	}
 	set searchQuery(query) {
 		this._searchQuery = query;
-		this.updateResults();
+		// this.updateResults();
+		this.updatePaginatedResults();
+		this.currentPage = 1;
 	}
 
-	private _groupByCategory = false;
-	get groupByCategory() {
-		return this._groupByCategory;
+	private _categoryFilter = '';
+	get categoryFilter() {
+		return this._categoryFilter;
 	}
-	set groupByCategory(val: boolean) {
-		this._groupByCategory = val;
-		this.updateResults();
+
+	set categoryFilter(val: string) {
+		this._categoryFilter = val;
+		// this.updateResults();
+		this.updatePaginatedResults();
+		this.currentPage = 1;
+	}
+
+	isFiltered() {
+		return Boolean(this.searchQuery || this.categoryFilter);
+	}
+
+	private _currentPage = 1;
+
+	get currentPage(): number {
+		return this._currentPage;
+	}
+
+	set currentPage(value: number) {
+		if (this._currentPage !== value) {
+			this._currentPage = value;
+			this.updatePaginatedResults();
+		}
 	}
 
 	get theme() {
@@ -61,6 +110,13 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 	get features() {
 		return this.configService.featuresConfig;
 	}
+
+	issuersPerPage = 30;
+	totalPages: number;
+	nextLink: string;
+	previousLink: string;
+
+	sortOption: string | null = null;
 
 	issuerKeys = {};
 	plural = {};
@@ -87,6 +143,10 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 
 		// subscribe to issuer and badge class changes
 		this.issuersLoaded = this.loadIssuers();
+		// Subscribe to changes on the control
+		this.categoryControl.valueChanges.subscribe((value) => {
+			this.categoryFilter = value;
+		});
 	}
 
 	async loadIssuers() {
@@ -95,15 +155,16 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 			this.issuerManager.getAllIssuers().subscribe(
 				(issuers) => {
 					this.issuers = issuers
-						.slice()
-						.filter((i) => i.apiModel.verified && !i.apiModel.source_url)
+						.filter((i) => i.apiModel.verified && i.ownerAcceptedTos && !i.apiModel.source_url)
 						.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
-					this.issuerResults = this.issuers;
-					this.issuerResults.sort((a, b) => a.name.localeCompare(b.name));
-					if (this.mapObject)
-						this.mapObject.on('load', function () {
-							that.generateGeoJSON(that.issuerResults);
-						});
+					this.totalPages = Math.ceil(this.issuers.length / this.issuersPerPage);
+					this.updatePaginatedResults();
+					// this.issuerResults = this.issuers;
+					// this.issuerResults.sort((a, b) => a.name.localeCompare(b.name));
+					// if (this.mapObject)
+					// 	this.mapObject.on('load', function () {
+					// 		that.generateGeoJSON(that.issuerResults);
+					// 	});
 					resolve(issuers);
 				},
 				(error) => {
@@ -123,6 +184,11 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 		// Translate: to update predefined text when language is changed
 		this.translate.onLangChange.subscribe((event) => {
 			this.prepareTexts();
+		});
+
+		this.sortControl.valueChanges.subscribe((value) => {
+			this.sortOption = value;
+			this.updatePaginatedResults();
 		});
 	}
 
@@ -177,33 +243,40 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 		// Clear Results
 		this.issuerResults = [];
 		this.issuerResultsByCategory = [];
-		const issuerResultsByCategoryLocal = {};
-
-		var addIssuerToResultsByCategory = function (item) {
-			that.issuerResults.push(item);
-
-			let categoryResults = issuerResultsByCategoryLocal[item.category];
-
-			if (!categoryResults) {
-				categoryResults = issuerResultsByCategoryLocal[item.category] = new MatchingIssuerCategory(
-					item.category,
-					'',
-				);
-
-				// append result to the issuerResults array bound to the view template.
-				that.issuerResultsByCategory.push(categoryResults);
-			}
-
-			categoryResults.addIssuer(item);
-
-			return true;
-		};
-
-		this.issuers.filter(MatchingAlgorithm.issuerMatcher(this.searchQuery)).forEach(addIssuerToResultsByCategory);
 
 		this.issuerResults.sort((a, b) => a.name.localeCompare(b.name));
+		this.issuerResults = this.issuers
+			.filter(MatchingAlgorithm.issuerMatcher(this.searchQuery))
+			.filter((issuer) => !this.categoryFilter || issuer.category === this.categoryFilter);
 		this.issuerResultsByCategory.forEach((r) => r.issuers.sort((a, b) => a.name.localeCompare(b.name)));
 		this.generateGeoJSON(this.issuerResults);
+	}
+
+	private updatePaginatedResults() {
+		let that = this;
+		// Clear Results
+		this.issuerResults = [];
+		this.issuerResultsByCategory = [];
+
+		// this.issuerResults.sort((a, b) => a.name.localeCompare(b.name));
+
+		this.filteredIssuers = this.issuers
+			.filter(MatchingAlgorithm.issuerMatcher(this.searchQuery))
+			.filter((issuer) => !this.categoryFilter || issuer.category === this.categoryFilter);
+
+		if (this.sortOption) {
+			applySorting(this.filteredIssuers, this.sortOption);
+		}
+		this.totalPages = Math.ceil(this.filteredIssuers.length / this.issuersPerPage);
+		const start = (this.currentPage - 1) * this.issuersPerPage;
+		const end = start + this.issuersPerPage;
+
+		that.issuerResults = this.filteredIssuers.slice(start, end);
+		// this.issuerResults = this.issuers
+		// 	.filter(MatchingAlgorithm.issuerMatcher(this.searchQuery))
+		// 	.filter((issuer) => !this.categoryFilter || issuer.category === this.categoryFilter);
+		// this.issuerResultsByCategory.forEach((r) => r.issuers.sort((a, b) => a.name.localeCompare(b.name)));
+		// this.generateGeoJSON(this.issuerResults);
 	}
 
 	generateGeoJSON(issuers) {
@@ -379,22 +452,18 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 		}
 	}
 
-	changeOrder(order) {
-		if (order === 'asc') {
-			this.issuerResults.sort((a, b) => a.name.localeCompare(b.name));
-			this.issuerResultsByCategory.forEach((r) => r.issuers.sort((a, b) => a.name.localeCompare(b.name)));
-		} else {
-			this.issuerResults.sort((a, b) => b.name.localeCompare(a.name));
-			this.issuerResultsByCategory.forEach((r) => r.issuers.sort((a, b) => b.name.localeCompare(a.name)));
-		}
-	}
-
 	openMap() {
 		this.badgesDisplay = 'map';
+		this.updateResults();
 		let that = this;
 		setTimeout(function () {
 			that.mapObject.resize();
 		}, 10);
+	}
+
+	openGrid() {
+		this.badgesDisplay = 'grid';
+		this.updateResults();
 	}
 
 	prepareTexts() {
@@ -410,10 +479,20 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 				'=1': '1 Institution',
 				other: '# ' + this.translate.instant('General.institutions'),
 			},
+			issuerText: {
+				'=0': this.translate.instant('Issuer.institutionsIssued'),
+				'=1': '1 ' + this.translate.instant('Issuer.institutionIssued'),
+				other: '# ' + this.translate.instant('Issuer.institutionsIssued'),
+			},
 			badges: {
 				'=0': this.translate.instant('Issuer.noBadges'),
 				'=1': '<strong class="u-text-bold">1</strong> Badge',
 				other: '<strong class="u-text-bold">#</strong> Badges',
+			},
+			learningPath: {
+				'=0': this.translate.instant('General.noLearningPaths'),
+				'=1': '1 ' + this.translate.instant('General.learningPath'),
+				other: '# ' + this.translate.instant('General.learningPaths'),
 			},
 			recipient: {
 				'=0': this.translate.instant('Issuer.noRecipient'),
@@ -433,9 +512,11 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 				.then((emails) => {
 					// Search for primary email, since it's not alawys the first in list
 					const primaryEmail = emails.entities.find((email) => email.primary).email;
-					
+
 					const userEmail = emails.entities[0].email;
-					const isMember = issuerData.staff.entities.some((staffMember) => staffMember.email === primaryEmail);
+					const isMember = issuerData.staff.entities.some(
+						(staffMember) => staffMember.email === primaryEmail,
+					);
 					this.router.navigate([isMember ? '/issuer/issuers/' : '/public/issuers/', issuerData.slug]);
 				});
 		}

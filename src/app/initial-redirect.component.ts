@@ -11,6 +11,7 @@ import '../thirdparty/scopedQuerySelectorShim';
 @Component({
 	selector: 'initial-redirect',
 	template: ``,
+	standalone: false,
 })
 export class InitialRedirectComponent {
 	constructor(

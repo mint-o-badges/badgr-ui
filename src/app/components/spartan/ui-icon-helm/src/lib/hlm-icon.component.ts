@@ -12,11 +12,11 @@ import {
 	type OnDestroy,
 } from '@angular/core';
 import { NgIconComponent, type IconName } from '@ng-icons/core';
-import { hlm } from '@spartan-ng/ui-core';
+import { hlm } from '@spartan-ng/brain/core';
 import { cva } from 'class-variance-authority';
 import type { ClassValue } from 'clsx';
 
-const DEFINED_SIZES = ['xxs', 'xs', 'sm', 'base', 'lg', 'xl', 'xxl', 'none'] as const;
+const DEFINED_SIZES = ['xxs', 'xs', 'sm', 'base', 'lg', 'xl', 'xxl', 'xxxl', 'none'] as const;
 
 type DefinedSizes = (typeof DEFINED_SIZES)[number];
 
@@ -30,6 +30,7 @@ export const iconVariants = cva('tw-inline-flex', {
 			lg: 'tw-h-8 tw-w-8',
 			xl: 'tw-h-12 tw-w-12',
 			xxl: 'tw-h-16 tw-w-16',
+			xxxl: 'tw-h-20 tw-w-20',
 			none: '',
 		} satisfies Record<DefinedSizes, string>,
 	},
@@ -49,7 +50,6 @@ const TAILWIND_H_W_PATTERN = /\b(h-\d+|w-\d+)\b/g;
 
 @Component({
 	selector: 'hlm-icon',
-	standalone: true,
 	imports: [NgIconComponent],
 	encapsulation: ViewEncapsulation.None,
 	changeDetection: ChangeDetectionStrategy.OnPush,
@@ -87,7 +87,8 @@ export class HlmIconComponent implements OnDestroy {
 		const hostClasses = this._hostClasses();
 		const userCls = this.userCls();
 		const variant = isDefinedSize(size) ? size : 'none';
-		const classes = variant === 'none' && size === 'none' ? hostClasses : hostClasses.replace(TAILWIND_H_W_PATTERN, '');
+		const classes =
+			variant === 'none' && size === 'none' ? hostClasses : hostClasses.replace(TAILWIND_H_W_PATTERN, '');
 		return hlm(iconVariants({ variant }), userCls, classes);
 	});
 

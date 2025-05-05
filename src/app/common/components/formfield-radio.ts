@@ -14,7 +14,6 @@ import { CommonDialogsService } from '../services/common-dialogs.service';
 
 @Component({
 	selector: 'bg-formfield-radio',
-
 	host: {
 		class: 'forminput',
 		'[class.forminput-is-error]': 'isErrorState',
@@ -34,6 +33,7 @@ import { CommonDialogsService } from '../services/common-dialogs.service';
 		</div>
 		<p class="forminput-x-error" *ngIf="!control.valid && control.dirty && last">{{ errorMessageForDisplay }}</p>
 	`,
+	standalone: false,
 })
 export class FormFieldRadio implements OnChanges, AfterViewInit {
 	set unlocked(unlocked: boolean) {

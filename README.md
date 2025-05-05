@@ -35,8 +35,6 @@ Run the test suite with `npm run test`
 
 Run the e2e tests with `npm run e2e`
 
-## Build Instructions (for deployment)
-
 ### Configuration
 
 To build for production, a `environment.prod.ts` file must be present in `src/environments/`.
@@ -53,9 +51,12 @@ All files in `dist` constitute the build artifact.
 
 ## Deployment
 
-To get the image on the prod server, simply update the `release` branch and push it to github.
-The rest should happen automatically (thanks to github actions and watchtower keeping the deployed image up to date).
+Check out `deployment.md`.
+
+## Branches
+
+Development happens in feature branches (e.g. `feat/foo` or `fix/bar`). Those are then merged (via a PR) into `develop`. The `develop` branch is synchronized automatically with `develop.openbadges.education`. Once dev tests have completed on `develop.openbadges.education`, `develop` is merged (via a PR) into `main`. The `main` branch is synchronized automatically with `staging.openbadges.education`. Once this state is ready for a deployment, checkout `deployment.md` for informatoin on how to deploy to `openbadges.education`.
 
 ## Commit Message Convention
 
-We follow the [angular commit message convention](https://github.com/angular/angular/blob/68a6a07/CONTRIBUTING.md#commit) in this project to maintain a clean and organized commit history. Use `npx cz` instead of `git commit` to commit via the interactive prompt.
+We follow the [angular commit message convention](https://github.com/angular/angular/blob/main/contributing-docs/commit-message-guidelines.md) in this project to maintain a clean and organized commit history. Use `npx cz` instead of `git commit` to commit via the interactive prompt.

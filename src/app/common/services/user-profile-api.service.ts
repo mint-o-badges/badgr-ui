@@ -6,6 +6,7 @@ import { MessageService } from './message.service';
 import { EventsService } from './events.service';
 import { ApiUserProfile, ApiUserProfileEmail, ApiUserProfileSocialAccount } from '../model/user-profile-api.model';
 import { HttpClient } from '@angular/common/http';
+import { ApiStaffRequest } from '../../issuer/staffrequest-api.model';
 
 @Injectable()
 export class UserProfileApiService extends BaseHttpApiService {
@@ -42,7 +43,6 @@ export class UserProfileApiService extends BaseHttpApiService {
 		return this.delete('/v1/user/profile');
 	}
 
-
 	fetchEmails() {
 		return this.get<ApiUserProfileEmail[]>('/v1/user/emails').then((r) => r.body);
 	}
@@ -69,5 +69,17 @@ export class UserProfileApiService extends BaseHttpApiService {
 
 	resendVerificationEmail(emailIdToVerify: number) {
 		return this.put('/v1/user/emails/' + emailIdToVerify, { resend: true });
+	}
+
+	getRedirectUrl() {
+		return this.post('/v1/user/get-redirect-path', {});
+	}
+
+	getIssuerStaffRequests() {
+		return this.get<ApiStaffRequest[]>('/v1/user/issuerStaffRequests');
+	}
+
+	revokeIssuerStaffRequest(requestId: string) {
+		return this.delete(`/v1/user/issuerStaffRequest/request/${requestId}`);
 	}
 }

@@ -17,6 +17,7 @@ import { preloadImageURL } from '../util/file-util';
 		/>
 		{{ bgIssuerLink?.name || 'Unknown Issuer' }}
 	`,
+	standalone: false,
 })
 export class BgIssuerLinkComponent implements OnChanges {
 	readonly issuerPlaceholderImageSrc = preloadImageURL(

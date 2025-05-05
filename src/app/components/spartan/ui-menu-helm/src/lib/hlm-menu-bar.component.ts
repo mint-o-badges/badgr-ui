@@ -1,6 +1,6 @@
 import { Component, computed, input } from '@angular/core';
-import { hlm } from '@spartan-ng/ui-core';
-import { BrnMenuBarDirective } from '@spartan-ng/ui-menu-brain';
+import { hlm } from '@spartan-ng/brain/core';
+import { BrnMenuBarDirective } from '@spartan-ng/brain/menu';
 import type { ClassValue } from 'clsx';
 
 @Component({
@@ -15,6 +15,9 @@ import type { ClassValue } from 'clsx';
 export class HlmMenuBarComponent {
 	public readonly userClass = input<ClassValue>('', { alias: 'class' });
 	protected _computedClass = computed(() =>
-		hlm('tw-border-border tw-flex tw-h-10 tw-items-center tw-space-x-1 tw-rounded-md tw-border tw-bg-background tw-p-1', this.userClass()),
+		hlm(
+			'tw-border-border tw-flex tw-h-10 tw-items-center tw-space-x-1 tw-rounded-md tw-border tw-bg-background tw-p-1',
+			this.userClass(),
+		),
 	);
 }
