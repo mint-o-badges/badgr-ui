@@ -97,7 +97,7 @@ jobs:
 
             - name: 🏗️ Build and push Docker image
               if: github.ref != 'refs/heads/develop'
-              uses: docker/build-push-action@v5.3.0
+              uses: docker/build-push-action@v6.16.0
               with:
                   context: .
                   push: true
@@ -106,7 +106,7 @@ jobs:
             - name: 🏗️ Build and push Docker Staging image
               # Only build main images for Staging
               if: github.ref == 'refs/heads/main'
-              uses: docker/build-push-action@v5.3.0
+              uses: docker/build-push-action@v6.16.0
               with:
                   context: .
                   push: true
@@ -116,7 +116,7 @@ jobs:
             - name: 🏗️ Build and push Docker develop image
               # Only build develop images for Staging
               if: github.ref == 'refs/heads/develop'
-              uses: docker/build-push-action@v5.3.0
+              uses: docker/build-push-action@v6.16.0
               with:
                   context: .
                   push: true
