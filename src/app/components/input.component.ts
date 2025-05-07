@@ -1,5 +1,5 @@
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
-import { HlmInputDirective } from './spartan/ui-input-helm/src';
+import { HlmInputDirective, InputVariants } from './spartan/ui-input-helm/src';
 import { OebInputErrorComponent } from './input.error.component';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { NgClass, NgIf } from '@angular/common';
@@ -61,8 +61,10 @@ import { HlmPDirective } from './spartan/ui-typography-helm/src/lib/hlm-p.direct
 				[attr.maxlength]="maxchar"
 				[attr.max]="max"
 				[readonly]="readonly"
+				[size]="size"
 				#textInput
-				class="tw-w-full tw-border-solid tw-border-purple tw-bg-white tw-min-h-[80px]"
+				class="tw-w-full tw-border-solid tw-border-purple tw-bg-white"
+				[ngClass]="{ 'tw-min-h-20': size === 'default', 'tw-min-h-32': size === 'lg' }"
 				hlmInput
 			></textarea>
 			<oeb-input-error
@@ -91,6 +93,7 @@ export class OebInputComponent {
 	@Input() sublabelRight?: string;
 	@Input() autofocus = false;
 	@Input() noTopMargin = false;
+	@Input() size: InputVariants['size'] = "default"
 
 	@ViewChild('textInput') textInput: ElementRef;
 	@ViewChild('textareaInput') textareaInput: ElementRef;

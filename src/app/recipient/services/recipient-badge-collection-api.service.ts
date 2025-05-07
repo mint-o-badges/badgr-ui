@@ -40,4 +40,9 @@ export class RecipientBadgeCollectionApiService extends BaseHttpApiService {
 			apiModel,
 		).then((r) => r.body);
 	}
+
+	getCollectionBadges(collectionSlug: string){
+		return this.get(`/v1/earner/collections/${collectionSlug}/badges`)
+			.then((r) => r.body)
+	}
 }

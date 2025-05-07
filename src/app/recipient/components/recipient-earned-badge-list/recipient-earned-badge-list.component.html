@@ -359,7 +359,7 @@
 				</ng-template>
 				<ng-template #collectionTemplate>
 					<ng-template [bgAwaitPromises]="[collectionsLoaded]">
-						<!-- No badges, empty state! -->
+						<!-- No collections, empty state! -->
 						<section class="tw-mt-8" *ngIf="collections.length == 0">
 							<div class="tw-flex tw-justify-between">
 								<div>
@@ -367,44 +367,30 @@
 									<h2 class="tw-text-oebblack md:tw-text-[22px] tw-leading-[120%] tw-font-bold tw-uppercase">
 										{{ 'BadgeCollection.useCollectionsForApplications' | translate }}
 									</h2>
-									<p class="tw-mt-2 tw-text-oebblack tw-text-lg">{{ 'BadgeCollection.collectionInfoText' | translate }}</p>
+									<p class="tw-mt-4 tw-text-oebblack tw-text-lg">{{ 'BadgeCollection.collectionInfoText' | translate }}</p>
 									<p class="tw-mt-2 tw-text-purple tw-text-lg">{{ 'BadgeCollection.addLink' | translate }}</p>
 									
-									<div class="tw-mt-4">
+									<div class="tw-mt-6">
 										<oeb-button
 										 (click)="routeToCollectionCreation()"
 										 [text]="'BadgeCollection.createCollectionNow' | translate">
 										</oeb-button>
 									</div>
 								</div>
-								<div>
-									
-								</div>
+								<img class="tw-hidden md:tw-flex" src="assets/oeb/images/backpack/collection_visual.svg"  />
 							</div>
 						</section>
 
 						<div class="oeb-section-sm" *ngIf="collections.length > 0">
-							<h2 class="tw-text-oebblack md:tw-text-[22px] tw-leading-[120%] tw-font-bold tw-uppercase tw-items-center tw-flex">
+							<h2 class="tw-text-oebblack md:tw-text-[22px] tw-leading-[120%] tw-font-bold tw-uppercase tw-items-center tw-flex tw-mb-4">
 								{{ 'BadgeCollection.useCollectionsForApplications' | translate }}
-								<ng-icon (click)="openCollectionInfoDialog()" hlm class="tw-text-purple tw-min-w-10 tw-ml-2" size="lg" name="lucideInfo" />
+								<ng-icon (c#lick)="openCollectionInfoDialog()" hlm class="tw-text-purple tw-min-w-10 tw-ml-2" size="lg" name="lucideInfo" />
 							</h2>
 
-							<div class="tw-flex tw-flex-wrap tw-items-center">
-								<input
-									type="text"
-									name="forminput"
-									id="forminput"
-									placeholder="Micro Degrees durchsuchen"
-									[(ngModel)]="searchQuery"
-									class="tw-w-[300px] tw-border-solid tw-border-purple tw-bg-white tw-mr-6"
-									hlmInput
-								/>
-							</div>
 							<div class="tw-grid min-[450px]:tw-grid-cols-badges tw-gap-6">
 								<bg-collectioncard
 									*ngFor="let collection of collections"
-									[name]="collection.name"
-									[slug]="collection.slug"
+									[collection]="collection"
 								></bg-collectioncard>
 							</div>
 							<oeb-button 
@@ -495,22 +481,6 @@
 					</p>
 					<p class="tw-text-lg tw-text-purple tw-italic tw-mt-1" [innerHTML]="'BadgeCollection.addLink' | translate">
 					</p>
-					<div class="tw-flex tw-justify-center tw-gap-2 tw-mt-4">
-						<oeb-button 
-							variant="secondary"
-							[text]="'General.cancel' | translate"
-							size="md"
-							(click)="closeDialog()"
-							>
-
-						</oeb-button>
-						<oeb-button
-							[text]="'Issuer.requestMembership' | translate"
-							size="md"
-							>
-						</oeb-button>
-
-					</div>
 				</ng-template>
 			</div>
 		</div>
