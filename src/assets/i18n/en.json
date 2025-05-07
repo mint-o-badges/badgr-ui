@@ -587,7 +587,12 @@
 		"createCollectionNow": "Create collection now",
 		"addBadges": "Add badges to collection",
 		"skipStep": "You can skip this step and add badges later.",
-		"badgesInCollection": "badges in the collection"
+		"badgesInCollection": "badges in the collection",
+		"removeBadge": "Remove Badge from collection?",
+		"removeBadgeConfirm1": "Möchtest du den Badge ",
+		"removeBadgeConfirm2": " wirklich aus dieser Sammlung entfernen?",
+		"removeBadgeConfirmation": "Yes, remove"
+
 	},
 	"Profile": {
 		"more": "More",

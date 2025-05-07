@@ -658,7 +658,11 @@
 		"createCollectionNow": "Jetzt Sammlung anlegen",
 		"addBadges": "Badges zu Sammlung hinzufügen",
 		"skipStep": "Du kannst diesen Schritt überspringen und später Badges hinzufügen.",
-		"badgesInCollection": "Badges in der Sammlung"
+		"badgesInCollection": "Badges in der Sammlung",
+		"removeBadge": "Badge aus Sammlung entfernen?",
+		"removeBadgeConfirm1": "Möchtest du den Badge ",
+		"removeBadgeConfirm2": " wirklich aus dieser Sammlung entfernen?",
+		"removeBadgeConfirmation": "Ja, entfernen"
 	},
 	"Profile": {
 		"more": "Mehr",

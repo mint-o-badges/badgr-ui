@@ -179,14 +179,34 @@
 					
 
 					<div class="l-flex l-flex-1x l-flex-justifyend u-margin-top2x">
-						<a
+						<!-- <oeb-button
+							variant="secondary"
+							[text]="'General.cancel' | translate "
 							[routerLink]="['/recipient/badge-collections']"
 							class="button button-secondary"
 							[disabled-when-requesting]="true"
-							>{{ 'General.cancel' | translate }}</a
+							></oeb-button
+						> -->
+						<oeb-button 
+						  variant="secondary" 
+						  [text]="'General.cancel' | translate "
+						  [routerLink]="['/recipient/badge-collections']"
+						  size="md"
+
+						  >
+
+						</oeb-button>
+
+						<oeb-button 
+							[text]="'BadgeCollection.createCollection' | translate"
+							type="submit"
+							[disabled]="!!createCollectionPromise"
+							size="md"
 						>
 
-						<button
+						</oeb-button>
+
+						<!-- <button
 							type="submit"
 							class="button"
 							[disabled]="!!createCollectionPromise"
@@ -194,7 +214,7 @@
 							loading-message="Hinzufügen"
 						>
 							{{ 'BadgeCollection.createCollection' | translate }}
-						</button>
+						</button> -->
 					</div>
 				</fieldset>
 			</form>

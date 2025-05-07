@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { RecipientBadgeCollectionApiService } from '../recipient/services/recipient-badge-collection-api.service';
 import { RecipientBadgeCollection } from '../recipient/models/recipient-badge-collection.model';
 
 @Component({
@@ -63,24 +62,11 @@ export class BgCollectionCard {
 	readonly badgeFailedImageUrl = '../../../breakdown/static/images/badge-failed.svg';
 	@Input() collection: RecipientBadgeCollection = null
 
-	constructor(
-		private recipientBadgeCollectionApiService: RecipientBadgeCollectionApiService
-	){
-
-	}
-
-	togglePublished(){
-		
-	}
-
-
-
-	// @HostBinding('class') get hostClasses(): string {
-	// 	return this.checked || this.completed ? 'tw-bg-[var(--color-lightgreen)]' : 'tw-bg-white';
-	// }
+	togglePublished(){		
+		this.collection.save()	
+	  }
 
 	ngOnInit() {
-		console.log("badges", this.collection.badges)
 	}
 
 	

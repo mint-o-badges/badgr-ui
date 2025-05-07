@@ -40,66 +40,25 @@
 
 						</div>
 					</div>
-					<div class="oeb-headline-container-sm">
+					<div class="oeb-headline-container-sm tw-flex tw-justify-between tw-items-center">
 						<h1 hlmH1 class="tw-text-purple tw-font-black">
 							{{ collection?.name }}
 						</h1>
+						<div class="tw-mt-4 tw-items-center">
+							<label hlmLabel>
+								<hlm-switch 
+									[(ngModel)]="collection.published" 
+									(ngModelChange)="togglePublished()"
+								>
+			
+								</hlm-switch>
+							</label>
+							{{'General.public' | translate}}
+						</div>
 					</div>
 						<p class="tw-text-oebblack tw-text-lg">
 							{{collection?.description}}
 						</p>
-
-						<div class="switch u-margin-top2x">
-							<fieldset class="switch-x-container">
-								<div class="switch-x-inputcontainer">
-									<label class="switch-x-label">
-										<input
-											class="switch-x-toggletrack"
-											type="checkbox"
-											[(ngModel)]="collectionPublished"
-										/>
-										<span class="switch-x-labeltext">Öffentlich</span>
-										<div class="switch-x-toggle"></div>
-									</label>
-								</div>
-							</fieldset>
-						</div>
-					<div class="topbar-x-checkboxbuttonform">
-						<div class="l-primarymore">
-							<button
-								class="button"
-								[class.button-is-disabled]="!collection?.published"
-								[disabled]="!collection?.published"
-								(click)="shareCollection()"
-							>
-								Sammlung teilen
-							</button>
-							<button class="buttonicon buttonicon-secondary" [bgPopupMenuTrigger]="collectionActionMenu">
-								<svg icon="icon_more"></svg>
-								<span class="visuallyhidden">mehr</span>
-							</button>
-							<bg-popup-menu #collectionActionMenu>
-								<button
-									class="menuitem"
-									routerLinkActive="menuitem-is-active"
-									(click)="editForm.startEditing()"
-								>
-									<svg icon="icon_edit"></svg>
-									Bearbeiten
-								</button>
-								<!-- <button
-									class="menuitem"
-									(click)="exportPdf()"
-									loading-message="Loading badge..."
-									[disabled-when-requesting]="true"
-									><svg icon="icon_file"></svg>Export to PDF</button> -->
-								<button class="menuitem" routerLinkActive="menuitem-is-active" (click)="deleteCollection()">
-									<svg icon="icon_remove"></svg>
-									Löschen
-								</button>
-							</bg-popup-menu>
-						</div>
-					</div>
 				</ng-container>
 
 				<recipient-badge-collection-edit-form
@@ -116,27 +75,33 @@
 		   *ngIf="collection?.badgeEntries.length === 0">
 			0 {{ 'BadgeCollection.badgesInCollection' | translate }}
 		</span>
-		<!-- <ng-container *ngIf="collection?.badgeEntries.length === 0">
-			<div class="emptysection l-emptysection">
-				<h2 class="emptysection-x-headline">Deine Sammlung ist leer</h2>
-				<p class="emptysection-x-copy">Hier ist es noch ziemlich leer. Füge ein paar Badges hinzu!</p>
-				<div class="emptysection-x-buttons">
-					<button class="button button-secondary" type="button" (click)="manageBadges()">Badge hinzufügen</button>
-				</div>
-				<div class="emptysection-x-imagecontainer">
-					<img alt="Illustration" class="emptysection-x-image" [src]="noCollectionsImageUrl" />
-				</div>
-			</div>
-		</ng-container> -->
 
 		<!-- List of Badges in Collection -->
-		<ng-container *ngIf="collection?.badgeEntries.length > 0">
-			<div class="l-stack u-margin-bottom2x">
-				<h2 class="u-text-h3-semibold u-text-dark2">{{ badgesInCollectionCount }}</h2>
-				<button class="button button-secondary" type="button" (click)="manageBadges()">Badges hinzufügen</button>
+		<ng-container *ngIf="collection?.badgeEntries.length">
+			<div class="oeb-headline-container-sm">
+				<h2 class="tw-text-oebblack tw-text-[22px] tw-font-semiold tw-leading-[120%]">{{ badgesInCollectionCount }}</h2>
 			</div>
 
-			<table class="datatable datatable-roundheaders datatable-verticalalignmiddle datatable-onlyfirstcolumn">
+			<div class="tw-gap-6 tw-grid tw-grid-cols-badges">
+				<bg-badgecard
+					*ngFor="let entry of collection?.badgeEntries; trackBy: trackById"
+					[badgeTitle]="entry.badge.name"
+					[badgeImage]="entry.badge.image"
+					[badgeIssueDate]="badgeResult?.badge?.issueDate"
+					[mostRelevantStatus]="entry.badge.mostRelevantStatus"
+					[issuerTitle]="entry.badge.badgeClass.issuer.name"
+					[issuerSlug]="entry.badge.badgeClass.issuer.slug"
+					[badgeSlug]="entry.badge.slug"
+					(shareClicked)="shareBadge(entry.badge)"
+					[competencies]="
+						entry.badge.getExtension('extensions:CompetencyExtension', [{}])
+					"
+					showXIcon="true"
+					(closeEmit)="removeBadge($event)"
+				></bg-badgecard>
+			</div>
+
+			<!-- <table class="datatable datatable-roundheaders datatable-verticalalignmiddle datatable-onlyfirstcolumn">
 				<thead class="datatable-x-head">
 					<tr class="datatable-x-header">
 						<th class="datatable-x-cell" scope="col">Badge</th>
@@ -186,10 +151,55 @@
 						</td>
 					</tr>
 				</tbody>
-			</table>
+			</table> -->
 		</ng-container>
 	</section>
 </div>
 </div>
+
+<ng-template #dangerDialogHeaderTemplate>
+	<div class="tw-w-full tw-flex tw-justify-center">
+		<ng-icon hlm name="lucideCircleAlert" size="2xl" class="tw-text-red">
+		</ng-icon>
+	</div>
+
+</ng-template>
+
+<ng-template let-badgename="badgename" #deleteBadgeDialogContentTemplate>
+	<div class="tw-flex tw-flex-col tw-gap-2 tw-mt-2 tw-text-center tw-text-lg">
+		<span class="tw-text-oebblack tw-font-bold">
+			{{'BadgeCollection.removeBadge' | translate }}
+		</span>
+
+		<p class="tw-text-oebblack">
+			<span>
+				{{'BadgeCollection.removeBadgeConfirm1' | translate}}
+			</span>
+			<span class="tw-font-bold">{{badgename}}</span>
+			<span>
+				{{'BadgeCollection.removeBadgeConfirm2' | translate }}
+			</span>
+		</p>
+
+	</div>
+
+	<div class="tw-flex tw-justify-evenly tw-mt-4">
+		<oeb-button 
+			variant="secondary"
+			[text]="'General.cancel' | translate"
+			size="sm"
+			(click)="closeDialog()"
+		>
+		</oeb-button>
+		<oeb-button 
+			[text]="'BadgeCollection.removeBadgeConfirmation' | translate"
+			size="sm"
+			(click)="closeDialogContinue()"
+			>
+
+		</oeb-button>
+
+	</div>
+</ng-template>
 
 <recipient-badge-selection-dialog #recipientBadgeDialog></recipient-badge-selection-dialog>

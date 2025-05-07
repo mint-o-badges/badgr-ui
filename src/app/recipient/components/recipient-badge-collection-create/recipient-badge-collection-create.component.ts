@@ -118,12 +118,12 @@ export class RecipientBadgeCollectionCreateComponent extends BaseAuthenticatedRo
 		title.setTitle(`Create Collection - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 		// this.badgesLoaded = this.loadBadges();
 		this.updateData()
-		this.translate.get('Badge.category').subscribe((translatedText: string) => {
-			this.groups[0] = translatedText;
-		});
+		// this.translate.get('Badge.category').subscribe((translatedText: string) => {
+		// 	this.groups[0] = translatedText;
+		// });
 
 		this.translate.get('Badge.issuer').subscribe((translatedText: string) => {
-			this.groups[1] = translatedText;
+			this.groups[0] = translatedText;
 		});
 	}
 

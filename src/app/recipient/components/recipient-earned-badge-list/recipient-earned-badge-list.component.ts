@@ -31,7 +31,8 @@ import { RecipientBadgeCollectionApiService } from '../../services/recipient-bad
 import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
 import { DialogComponent } from '../../../components/dialog.component';
 import { BrnDialogRef } from '@spartan-ng/brain/dialog';
-
+import { RecipientBadgeCollectionManager } from '../../services/recipient-badge-collection-manager.service';
+import { forkJoin } from 'rxjs';
 
 type BadgeDispay = 'grid' | 'list';
 type EscoCompetencies = {
@@ -90,7 +91,7 @@ export class RecipientEarnedBadgeListComponent
 	crumbs: LinkEntry[] = [{ title: 'Mein Rucksack', routerLink: ['/recipient/badges'] }];
 	profile: UserProfile;
 	running = false;
-	tabs: any = undefined;
+	tabs: any[] = [];
 	@ViewChild('overViewTemplate', { static: true }) overViewTemplate: ElementRef;
 	@ViewChild('badgesTemplate', { static: true }) badgesTemplate: ElementRef;
 	@ViewChild('badgesCompetency', { static: true }) badgesCompetency: ElementRef;
@@ -100,8 +101,7 @@ export class RecipientEarnedBadgeListComponent
 	@ViewChild('collectionInfoContentTemplate', {static: true}) collectionInfoContentTemplate : ElementRef
 
 	dialogRef: BrnDialogRef<any> = null;
-	
-
+	translatedTitles: string[] = [];
 
 	groupedUserCompetencies = {};
 	newGroupedUserCompetencies = {};
@@ -114,7 +114,7 @@ export class RecipientEarnedBadgeListComponent
 	@ViewChild('countup2') countup2: CountUpDirective;
 	@ViewChild('badgesCounter') badgesCounter: CountUpDirective;
 
-	activeTab = 'Badges';
+	activeTab: string = '';
 	private _badgesDisplay: BadgeDispay = 'grid';
 	sortControl = new FormControl('name_asc');
 	get badgesDisplay() {
@@ -160,6 +160,7 @@ export class RecipientEarnedBadgeListComponent
 		private profileManager: UserProfileManager,
 		private translate: TranslateService,
 		public recipientBadgeCollectionApiService: RecipientBadgeCollectionApiService,
+		private recipientBadgeCollectionManager: RecipientBadgeCollectionManager
 	) {
 		super(router, route, sessionService);
 
@@ -176,10 +177,12 @@ export class RecipientEarnedBadgeListComponent
 			})
 			.catch((e) => this.messageService.reportAndThrowError('Failed to load your badges', e));
 
-		this.collectionsLoaded = this.recipientBadgeCollectionApiService.listRecipientBadgeCollections()
-		.then((res) => {
-			console.log("res", res)
-			this.collections = res;
+		this.collectionsLoaded = Promise.all([
+			this.recipientBadgeCollectionManager.recipientBadgeCollectionList.loadedPromise,
+			this.recipientBadgeManager.recipientBadgeList.loadedPromise,
+		])
+		.then(([list]) => {	
+			this.collections = list.entities
 		})	
 		this.recipientBadgeManager.recipientBadgeList.changed$.subscribe((badges) =>
 			this.updateBadges(badges.entities),
@@ -251,28 +254,56 @@ export class RecipientEarnedBadgeListComponent
 
 	ngOnInit() {
 		super.ngOnInit();
+		this.route.queryParams.subscribe(params => {
+			if (params['tab']) {
+			  this.activeTab = params['tab'];
+			}
+		});
+
+		// Pre-load all translations
+		forkJoin({
+			badges: this.translate.get('General.badges'),
+			competencies: this.translate.get('CreateBadge.competencies'),
+			learningpaths: this.translate.get('General.learningPaths'),
+			collections: this.translate.get('BadgeCollection.myCollections')
+		  }).subscribe(translations => {
+			this.translatedTitles = [
+			  translations.badges,
+			  translations.competencies,
+			  translations.learningpaths,
+			  translations.collections
+			];
+			
+			if (!this.activeTab) {
+			  this.activeTab = this.translatedTitles[0];
+			}
+		  });
 		if (this.route.snapshot.routeConfig.path === 'badges/import') this.launchImport(new Event('click'));
 	}
 
 	ngAfterContentInit() {
-		this.tabs = [
-			{
-				title: 'Badges',
-				component: this.badgesTemplate,
-			},
-			{
-				title: 'Kompetenzen',
-				component: this.badgesCompetency,
-			},
-			{
-				title: 'Micro Degrees',
-				component: this.learningPathTemplate,
-			},
-			{
-				title: "Meine Sammlungen",
-				component: this.collectionTemplate
-			}
-		];
+		// Wait for view initialization to get template references
+		setTimeout(() => {
+
+			this.tabs = [
+				{
+				  title: this.translatedTitles[0],
+				  component: this.badgesTemplate,
+				},
+				{
+				  title: this.translatedTitles[1],
+				  component: this.badgesCompetency,
+				},
+				{
+				  title: this.translatedTitles[2],
+				  component: this.learningPathTemplate,
+				},
+				{
+				  title: this.translatedTitles[3],
+				  component: this.collectionTemplate
+				}
+			  ];
+		})
 	}
 
 	closeDialog() {
@@ -470,6 +501,11 @@ export class RecipientEarnedBadgeListComponent
 
 	onTabChange(tab) {
 		this.activeTab = tab;
+
+		this.router.navigate([], {
+			relativeTo: this.route,
+			queryParams: { tab: tab },
+		});
 	}
 
 	calculateStudyLoad(lp: LearningPath): number {
