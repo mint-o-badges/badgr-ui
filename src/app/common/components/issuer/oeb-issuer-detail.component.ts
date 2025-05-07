@@ -166,9 +166,8 @@ export class OebIssuerDetailComponent implements OnInit {
 	}
 
 	getRequestCount(badge: BadgeClass, requestMap:  Map<string, ApiQRCode[]>): number{
-		if(requestMap.has(badge.slug)) {
+		if(requestMap?.has(badge.slug)) {
 			const qrCode = requestMap.get(badge.slug)
-			console.log("qr", qrCode)
 			if(qrCode.length){
 				return qrCode[0].request_count
 			}
