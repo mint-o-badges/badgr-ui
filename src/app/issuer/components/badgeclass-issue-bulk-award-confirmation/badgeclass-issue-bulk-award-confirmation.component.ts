@@ -15,7 +15,7 @@ import { SuccessDialogComponent } from '../../../common/dialogs/oeb-dialogs/succ
 import { HlmDialogService } from './../../../components/spartan/ui-dialog-helm/src';
 import { typedFormGroup } from '../../../common/util/typed-forms';
 import { BadgeInstanceApiService } from '../../services/badgeinstance-api.service';
-import { TaskStatus, TaskStatusService } from '../../../common/services/task.service';
+import { TaskStatusService } from '../../../common/services/task.service';
 
 @Component({
 	selector: 'badgeclass-issue-bulk-award-confirmation',
@@ -65,11 +65,11 @@ export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRouta
 		if (this.buttonDisabledAttribute) return;
 		this.disableActionButton();
 	
-		const assertions: any[] = [];
+		const assertions: BadgeInstanceBatchAssertion[] = [];
 		const recipientProfileContextUrl = 'https://openbadgespec.org/extensions/recipientProfile/context.json';
 		
 		this.transformedImportData.validRowsTransformed.forEach((row) => {
-		  let assertion: any;
+		  let assertion: BadgeInstanceBatchAssertion;
 	
 		  const extensions = row.name
 			? {
@@ -87,6 +87,8 @@ export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRouta
 		  };
 		  assertions.push(assertion);
 		});
+
+		localStorage.setItem('batchAwardCount', assertions.length.toString());
 	
 		this.badgeInstanceApiService.createBadgeInstanceBatchedAsync(this.issuerSlug, this.badgeSlug, {
 		  issuer: this.issuerSlug,

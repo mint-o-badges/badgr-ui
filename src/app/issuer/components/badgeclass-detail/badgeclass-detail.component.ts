@@ -157,6 +157,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 	processingSuccess = false;
 	processingError: string | null = null;
 	processingResult: any = null;
+	batchAwardCount: string | null = null; 
 
 	constructor(
 		protected title: Title,
@@ -323,7 +324,9 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 	ngOnInit() {
 		super.ngOnInit();
 		const taskId = this.taskService.getTaskId();
-		if (taskId) {
+		this.batchAwardCount = localStorage.getItem('batchAwardCount');
+		console.log("count", this.batchAwardCount)
+		if (taskId && this.batchAwardCount) {
 			this.checkPendingTask();
 		}
 		this.focusRequests = this.route.snapshot.queryParamMap.get('focusRequests') === 'true';
@@ -546,12 +549,16 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 				this.processingResult = result.result;
 				this.isProcessing = false;
 				this.taskService.clearTaskId(); 
+				this.recipientCount += parseInt(this.batchAwardCount, 10)
+				this.batchAwardCount = null 
+				localStorage.removeItem('batchAwardCount')
 			  } else if (result.status === TaskStatus.FAILURE || result.status === TaskStatus.REVOKED) {
 				this.processingError = typeof result.result === 'string' 
 				  ? result.result 
 				  : `An error occurred while processing task ${taskId}`;
 				this.isProcessing = false;
 				this.taskService.clearTaskId(); 
+				localStorage.removeItem('batchAwardCount')
 			  }
 			},
 			error: (error) => {
