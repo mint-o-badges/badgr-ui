@@ -95,7 +95,8 @@
 		"validationCompleteForm": "Bitte vollständig ausfüllen",
 		"select": "Auswählen",
 		"loadMore": "Mehr laden",
-		"searchByEmail": "Nach E-Mail-Adresse suchen"
+		"searchByEmail": "Nach E-Mail-Adresse suchen",
+		"openNewWindow": "In neuem Fenster öffnen"
 	},
 	"NavItems": {
 		"register": "Registrieren",
@@ -554,7 +555,10 @@
 		"enterNewPasswordConfirmation": "Bitte bestätige dein neues Passwort",
 		"passwordsNotMatch": "Passwörter stimmen nicht überein",
 		"changePassword": "Passwort ändern",
-		"newPassword": "Neues Passwort"
+		"newPassword": "Neues Passwort",
+		"areYouNew": "Du bist neu hier?",
+		"yourEmail": "Deine E-Mail Adresse",
+		"yourPassword": "Dein Passwort"
 	},
 	"Legend": {
 		"legendTitle": "Legende",
@@ -673,7 +677,14 @@
 		"viewAlignmentUrl": "Besuche Verknüpfungs-URL",
 		"narrative": "Narrativ",
 		"evidence": "Nachweis",
-		"viewEvidenceUrl": "Besuche Nachweis-URL"
+		"viewEvidenceUrl": "Besuche Nachweis-URL",
+		"downloadImage": "Download Badge-Bild",
+		"downloadJson": "Download JSON-Datei",
+		"downloadPDF": "Download PDF-Zertifikat",
+		"verifyBadge": "Badge verifizieren",
+		"deleteBadge": "Badge aus Rucksack löschen",
+		"copyShareLink": "Kopiere diesen Link zum teilen",
+		"addToProfile": "Zum Profil hinzufügen"
 	},
 	"EditBadge": {
 		"editBadge": "Badge editieren",
@@ -746,7 +757,8 @@
 		"PasswordsNotMatch": "Passwörter stimmen nicht überein",
 		"dontHavePassword": "Du hast dein aktuelles Passwort nicht?",
 		"clickHere": "Hier Klicken",
-		"resetByEmail": "zum Zurücksetzen per E-Mail."
+		"resetByEmail": "zum Zurücksetzen per E-Mail.",
+		"emails": "E-Mails"
 	},
 	"Welcome": {
 		"heading": "Schön, dass du da bist!",

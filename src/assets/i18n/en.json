@@ -95,7 +95,8 @@
 		"validationCompleteForm": "Please fill out completely",
 		"select": "Select",
 		"loadMore": "Load more",
-		"searchByEmail": "Search by email address"
+		"searchByEmail": "Search by email address",
+		"openNewWindow": "Open in new window"
   },
   "NavItems": {
     "register": "Register",
@@ -550,7 +551,10 @@
     "enterNewPasswordConfirmation": "Please confirm your new password",
     "passwordsNotMatch": "Passwords do not match",
     "changePassword": "Change password",
-    "newPassword": "New password"
+    "newPassword": "New password",
+		"areYouNew": "No account yet?",
+		"yourEmail": "Your email address",
+		"yourPassword": "Your password"
   },
   "Legend": {
     "legendTitle": "Legend",
@@ -669,7 +673,14 @@
     "viewAlignmentUrl": "Visit link URL",
     "narrative": "Narrative",
     "evidence": "Evidence",
-    "viewEvidenceUrl": "Visit evidence URL"
+    "viewEvidenceUrl": "Visit evidence URL",
+		"downloadImage": "Download Badge image",
+		"downloadJson": "Download JSON file",
+		"downloadPDF": "Download PDF certificate",
+		"verifyBadge": "Badge verify",
+		"deleteBadge": "Remove Badge from Backpack",
+		"copyShareLink": "Copy this link to share",
+		"addToProfile": "Add to profile"
   },
   "EditBadge": {
     "editBadge": "Edit badge",
@@ -742,7 +753,8 @@
     "PasswordsNotMatch": "Passwords do not match",
     "dontHavePassword": "You don't have your current password?",
     "clickHere": "Click here",
-    "resetByEmail": "to reset by email."
+    "resetByEmail": "to reset by email.",
+		"emails": "Emails"
   },
   "Welcome": {
     "heading": "Nice to see you!",

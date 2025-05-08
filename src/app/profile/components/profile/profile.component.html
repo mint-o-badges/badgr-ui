@@ -34,12 +34,12 @@
 
 	<div class="l-containerxaxis l-containeryaxis">
 		<div class="l-stack u-margin-yaxis3x">
-			<p class="u-text-h3-bold u-text-dark2">Emails</p>
+			<p class="u-text-h3-bold u-text-dark2">{{ 'Profile.emails' | translate }}</p>
 			<form class="table-x-tr table-x-active" [formGroup]="emailForm.rawControl" (ngSubmit)="submitEmailForm()">
 				<div class="forminput forminput-withbutton forminput-light1 u-width-formsmall">
 					<bg-formfield-text
 						[control]="emailForm.rawControlMap.email"
-						errorMessage="Bitte gib eine gültige Email Adresse ein"
+						[errorMessage]="'Issuer.enterValidEmail' | translate"
 						fieldType="email"
 						placeholder="{{ 'Profile.emailAddress' | translate }}..."
 						inlineButtonText="{{ 'Profile.add' | translate }}"

@@ -117,27 +117,27 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 					},
 					menuitems: [
 						{
-							title: 'Download Badge-Bild',
+							title: 'RecBadgeDetail.downloadImage',
 							icon: 'lucideImage',
 							action: () => this.exportPng(),
 						},
 						{
-							title: 'Download JSON-Datei',
-							icon: '	lucideFileCode',
+							title: 'RecBadgeDetail.downloadJson',
+							icon: 'lucideFileCode',
 							action: () => this.exportJson(),
 						},
 						{
-							title: 'Download PDF-Zertifikat',
+							title: 'RecBadgeDetail.downloadPDF',
 							icon: 'lucideFileText',
 							action: () => this.exportPdf(),
 						},
 						{
-							title: 'Badge verifizieren',
+							title: 'RecBadgeDetail.verifyBadge',
 							icon: 'lucideBadgeCheck',
 							action: () => window.open(this.verifyUrl, '_blank'),
 						},
 						{
-							title: 'Badge aus Rucksack löschen',
+							title: 'RecBadgeDetail.deleteBadge',
 							icon: 'lucideTrash2',
 							action: () => this.deleteBadge(this.badge),
 						},
@@ -362,7 +362,7 @@ interface BadgeShareOptions {
 
 export function badgeShareDialogOptions(options: BadgeShareOptions): ShareSocialDialogOptions {
 	return {
-		title: 'Badge Teilen',
+		title: this.translate.instant('RecBadgeDetail.shareBadge'),
 		shareObjectType: 'BadgeInstance',
 		shareUrl: options.shareUrl,
 		shareTitle: options.badgeClassName,
