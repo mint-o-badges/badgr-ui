@@ -84,7 +84,11 @@
 		"noRequests": "Keine Anfragen",
 		"oneRequest": "1 Anfrage",
 		"multiRequests": "# Anfragen",
-		"license": "Lizenz"
+		"license": "Lizenz",
+		"language": {
+			"de": "Deutsch",
+			"en": "Englisch"
+		}
 	},
 	"NavItems": {
 		"register": "Registrieren",
@@ -445,7 +449,17 @@
 		"competencyExceedsBadgeDuration": "Die Zeitangabe für die Stärkung einer einzelnen Kompetenz kann nicht größer sein als die Dauer deines Lernangebots/Badges an sich.",
 		"issuerImageInBadgeImageInfo": "Dein Institutions-Logo wird automatisch im Badge-Bild ergänzt.",
 		"pleaseAddCompetencies": "Bitte Kompetenzen hinzufügen",
-		"invalidCompetence": "Ungültige Kompetenz"
+		"invalidCompetence": "Ungültige Kompetenz",
+		"competencyOptions": "Du hast zwei Möglichkeiten, händisch Kompetenzen zu ergänzen.",
+		"escoSearch": {
+			"headline": "ESCO-Kompetenz",
+			"description": "Damit unsere Badges inhaltlich standardisiert und vergleichbar sind, nutzt der KI-Assistent <a class='tw-text-[var(--color-link)] tw-underline' href='https://esco.ec.europa.eu/de/about-esco' target='_blank'>die Europäische Klassifizierung für Kompetenzen (ESCO)</a>. Du kannst hier selbst nach passenden Kompetenzen suchen und sie hinzufügen:",
+			"search": "ESCO-Datenbank durchsuchen",
+			"inputPlaceholder": "Stichwort eingeben",
+			"resultsIn": "Ergebnisse auf"
+		},
+		"competencyOwn": "Eigene Kompetenz",
+		"competencyOwnDescription": "Falls die ESCO-Suche dir keine passende Kompetenz liefert, kannst du hier händisch eine selbst definierte Kompetenz ergänzen:"
 	},
 	"Signup": {
 		"youHaveAccount": "Du hast bereits einen Account?",

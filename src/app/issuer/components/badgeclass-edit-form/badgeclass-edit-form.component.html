@@ -533,22 +533,13 @@
 
 								<div class="tw-bg-white tw-p-8 tw-rounded-2xl">
 									<p class="tw-text-purple tw-italic">
-										Du hast zwei Möglichkeiten, händisch Kompetenzen zu ergänzen.
+										{{ 'CreateBadge.competencyOptions' | translate }}
 									</p>
 
-									<h2 class="tw-font-bold tw-text-xl tw-mt-6">1. ESCO-Kompetenz</h2>
-									<p>
-										Damit unsere Badges inhaltlich standardisiert und vergleichbar sind, nutzt der
-										KI-Assistent
-										<a
-											class="tw-text-[var(--color-link)] tw-underline"
-											href="https://esco.ec.europa.eu/de/about-esco"
-											target="_blank"
-											>die Europäische Klassifizierung für Kompetenzen (ESCO)</a
-										>. Du kannst hier selbst nach passenden Kompetenzen suchen und sie hinzufügen:
-									</p>
+									<h2 class="tw-font-bold tw-text-xl tw-mt-6">1. {{ 'CreateBadge.escoSearch.headline' | translate }}</h2>
+									<p [innerHTML]="'CreateBadge.escoSearch.description' | translate"></p>
 
-									<h3 class="tw-mt-8 tw-font-bold">ESCO-Datenbank durchsuchen</h3>
+									<h3 class="tw-mt-8 tw-font-bold">{{ 'CreateBadge.escoSearch.search' | translate }}</h3>
 
 									<div class="tw-flex tw-gap-4 tw-items-center tw-mt-2">
 										<div class="tw-relative">
@@ -558,7 +549,7 @@
 												class="tw-bg-white tw-border tw-border-solid tw-border-[var(--color-purple)] tw-rounded-md tw-shadow-sm tw-p-2 tw-pr-10 tw-resize-none tw-text-sm tw-text-gray-700 tw-w-full tw-max-w-[400px]"
 												[(ngModel)]="keywordCompetenciesKeywords"
 												[ngModelOptions]="{ standalone: true }"
-												placeholder="Stichwort eingeben"
+												[placeholder]="'CreateBadge.escoSearch.inputPlaceholder' | translate"
 												(focus)="keywordCompetenciesShowResults = true"
 												(focusout)="keywordCompetenciesInputFocusOut()"
 												(keydown.enter)="$event.preventDefault()"
@@ -618,15 +609,15 @@
 										</div>
 										<div class="forminput">
 											<div class="forminput-x-inputs tw-flex tw-gap-2 tw-items-center">
-												<span>Ergebnisse auf</span>
+												<span>{{ 'CreateBadge.escoSearch.resultsIn' | translate }}</span>
 												<select
 													#keywordCompetenciesLanguageSelectModel="ngModel"
 													class="tw-p-2"
 													[(ngModel)]="keywordCompetenciesLanguage"
 													[ngModelOptions]="{ standalone: true }"
 												>
-													<option value="de">Deutsch</option>
-													<option value="en">Englisch</option>
+													<option value="de">{{ 'General.language.de' | translate }}</option>
+													<option value="en">{{ 'General.language.en' | translate }}</option>
 												</select>
 											</div>
 										</div>
@@ -722,11 +713,8 @@
 										class="tw-my-8 tw-border-t-[1px] tw-border-[var(--color-purple)] tw-border-dashed"
 									/>
 
-									<h2 class="tw-font-bold tw-text-xl">2. Eigene Kompetenz</h2>
-									<p>
-										Falls die ESCO-Suche dir keine passende Kompetenz liefert, kannst du hier
-										händisch eine selbst definierte Kompetenz ergänzen:
-									</p>
+									<h2 class="tw-font-bold tw-text-xl">2. {{ 'CreateBadge.competencyOwn' | translate }}</h2>
+									<p>{{ 'CreateBadge.competencyOwnDescription' | translate }}</p>
 
 									<ng-container
 										*ngFor="
