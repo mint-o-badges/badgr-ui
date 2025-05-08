@@ -213,7 +213,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 		private titleService: Title,
 		protected issuerManager: IssuerManager,
 		private languageService: LanguageService, // Translation
-		private translate: TranslateService,
+		protected translate: TranslateService,
 		@Inject(DOCUMENT) private document: Document,
 	) {
 		// Initialize App language

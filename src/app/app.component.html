@@ -538,9 +538,17 @@
 <div class="tw-relative tw-w-full" [class.tw-hidden]="mobileNavOpen">
 	<div class="page-padding oeb logos-container md:tw-flex md:tw-justify-between">
 		<img
+			*ngIf="translate.currentLang == 'de'"
 			class="tw-max-w-full md:tw-max-w-[60%]"
 			alt="Telekom-Stiftung Logo"
 			src="assets/oeb/images/aboutpage/logoleiste_cropped.png"
+			alt="Telekom Stiftung Logo"
+		/>
+		<img
+			*ngIf="translate.currentLang != 'de'"
+			class="tw-max-w-full md:tw-max-w-[60%]"
+			alt="Telekom-Stiftung Logo"
+			src="assets/oeb/images/aboutpage/logoleiste_en.png"
 			alt="Telekom Stiftung Logo"
 		/>
 		<div class="tw-hidden md:tw-flex tw-flex-col tw-min-w-fit tw-text-right tw-gap-[7px]">

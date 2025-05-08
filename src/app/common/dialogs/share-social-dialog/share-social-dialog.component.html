@@ -117,11 +117,20 @@
 			<div class="u-margin-bottom3x">
 				<p class="u-text-bold u-margin-bottom3x">{{ 'RecBadgeDetail.addToProfile' | translate }}:</p>
 				<div>
-					<a [href]="linkedInCertURL"
-						><img
+					<a [href]="linkedInCertURL">
+						<img
+							*ngIf="translate.currentLang == 'de'"
 							src="../../../breakdown/static/scss/images/linkedin_zum_profile_hinzufugen.png"
+							width="208"
 							alt="LinkedIn Add to Profile button"
-					/></a>
+						/>
+						<img
+							*ngIf="translate.currentLang != 'de'"
+							src="../../../breakdown/static/scss/images/linkedin_en.png"
+							width="208"
+							alt="LinkedIn Add to Profile button"
+						/>
+					</a>
 				</div>
 			</div>
 
