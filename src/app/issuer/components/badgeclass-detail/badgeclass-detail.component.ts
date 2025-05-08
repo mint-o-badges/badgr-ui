@@ -35,6 +35,8 @@ import { inject } from '@angular/core';
 import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
 import { ApiLearningPath } from '../../../common/model/learningpath-api.model';
 import { ViewportScroller } from '@angular/common';
+import { TaskStatus, TaskStatusService } from '../../../common/services/task.service';
+import { Subscription } from 'rxjs';
 
 @Component({
 	selector: 'badgeclass-detail',
@@ -57,6 +59,7 @@ import { ViewportScroller } from '@angular/common';
 				(actionElement)="revokeInstance($event)"
 				(downloadCertificate)="downloadCertificate($event.instance, $event.badgeIndex)"
 				[downloadStates]="downloadStates"
+				[awardInProgress]="isProcessing"
 			></issuer-detail-datatable>
 		</bg-badgedetail>
 	`,
@@ -109,6 +112,8 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 
 	private readonly _hlmDialogService = inject(HlmDialogService);
 
+	private statusSubscription: Subscription | null = null;
+
 	badgeClassLoaded: Promise<unknown>;
 	badgeInstancesLoaded: Promise<unknown>;
 	assertionsLoaded: Promise<unknown>;
@@ -148,6 +153,11 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		c2: 'C2 Vorreiter*in',
 	};
 
+	isProcessing = false;
+	processingSuccess = false;
+	processingError: string | null = null;
+	processingResult: any = null;
+
 	constructor(
 		protected title: Title,
 		protected messageService: MessageService,
@@ -166,6 +176,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		private sanitizer: DomSanitizer,
 		private translate: TranslateService,
 		private learningPathApiService: LearningPathApiService,
+		private taskService: TaskStatusService
 	) {
 		super(router, route, sessionService);
 
@@ -311,7 +322,17 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 
 	ngOnInit() {
 		super.ngOnInit();
+		const taskId = this.taskService.getTaskId();
+		if (taskId) {
+			this.checkPendingTask();
+		}
 		this.focusRequests = this.route.snapshot.queryParamMap.get('focusRequests') === 'true';
+	}
+
+	ngOnDestroy() {
+		if (this.statusSubscription) {
+		  this.statusSubscription.unsubscribe();
+		}
 	}
 
 	revokeInstance(instance: BadgeInstance) {
@@ -507,13 +528,38 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 			this.eventService.externalToolLaunch.next(launchInfo);
 		});
 	}
-}
 
-class MatchingAlgorithm {
-	static instanceMatcher(inputPattern: string): (instance: BadgeInstance) => boolean {
-		const patternStr = StringMatchingUtil.normalizeString(inputPattern);
-		const patternExp = StringMatchingUtil.tryRegExp(patternStr);
-
-		return (instance) => StringMatchingUtil.stringMatches(instance.recipientIdentifier, patternStr, patternExp);
-	}
+	checkPendingTask() {
+		const taskId = this.taskService.getTaskId();
+		
+		if (taskId) {
+		  this.isProcessing = true;
+		  
+		  this.statusSubscription = this.taskService.pollTaskStatus(
+			taskId, 
+			this.issuerSlug, 
+			this.badgeSlug
+		  ).subscribe({
+			next: (result) => {
+			  if (result.status === TaskStatus.SUCCESS) {
+				this.processingSuccess = true;
+				this.processingResult = result.result;
+				this.isProcessing = false;
+				this.taskService.clearTaskId(); 
+			  } else if (result.status === TaskStatus.FAILURE || result.status === TaskStatus.REVOKED) {
+				this.processingError = typeof result.result === 'string' 
+				  ? result.result 
+				  : `An error occurred while processing task ${taskId}`;
+				this.isProcessing = false;
+				this.taskService.clearTaskId(); 
+			  }
+			},
+			error: (error) => {
+			  console.error(`Error checking task status for task ${taskId}:`, error);
+			  this.processingError = `Failed to check status for task ${taskId}`;
+			  this.isProcessing = false;
+			}
+		  });
+		}
+	  }
 }

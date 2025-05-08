@@ -59,7 +59,7 @@ import { OebSpinnerComponent } from './oeb-spinner.component';
 					</hlm-cmd-input-wrapper>
 				</label>
 			</div>
-			<div class="tw-border-green tw-p-2 tw-border-solid tw-border-4 tw-rounded-[10px] tw-w-full tw-flex md:tw-gap-6 tw-gap-2 tw-items-center">
+			<div *ngIf="awardInProgress" class="tw-border-green tw-p-2 tw-border-solid tw-border-4 tw-rounded-[10px] tw-w-full tw-flex md:tw-gap-6 tw-gap-2 tw-items-center">
 				<oeb-spinner size="lg"></oeb-spinner>
 				<div class="tw-text-oebblack tw-text-lg tw-flex tw-flex-col tw-gap-1">
 					<span class="tw-text-lg tw-font-bold tw-uppercase">{{'Badge.awardingInProgress' | translate}}</span>
@@ -126,6 +126,7 @@ export class IssuerDetailDatatableComponent {
 	@Input() downloadStates;
 	@Output() actionElement = new EventEmitter();
 	@Output() downloadCertificate = new EventEmitter<object>();
+	@Input() awardInProgress: boolean = false
 
 	_recipients = input.required<BadgeInstance[]>();
 

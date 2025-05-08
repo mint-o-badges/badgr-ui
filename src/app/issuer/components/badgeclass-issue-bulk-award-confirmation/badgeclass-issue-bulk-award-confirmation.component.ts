@@ -15,6 +15,7 @@ import { SuccessDialogComponent } from '../../../common/dialogs/oeb-dialogs/succ
 import { HlmDialogService } from './../../../components/spartan/ui-dialog-helm/src';
 import { typedFormGroup } from '../../../common/util/typed-forms';
 import { BadgeInstanceApiService } from '../../services/badgeinstance-api.service';
+import { TaskStatus, TaskStatusService } from '../../../common/services/task.service';
 
 @Component({
 	selector: 'badgeclass-issue-bulk-award-confirmation',
@@ -42,6 +43,7 @@ export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRouta
 		protected messageService: MessageService,
 		protected formBuilder: FormBuilder,
 		protected title: Title,
+		protected taskService: TaskStatusService
 	) {
 		super(router, route, sessionService);
 		this.enableActionButton();
@@ -62,72 +64,46 @@ export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRouta
 	dataConfirmed() {
 		if (this.buttonDisabledAttribute) return;
 		this.disableActionButton();
-
-		const assertions: BadgeInstanceBatchAssertion[] = [];
+	
+		const assertions: any[] = [];
 		const recipientProfileContextUrl = 'https://openbadgespec.org/extensions/recipientProfile/context.json';
+		
 		this.transformedImportData.validRowsTransformed.forEach((row) => {
-			let assertion: BadgeInstanceBatchAssertion;
-
-			const extensions = row.name
-				? {
-						'extensions:recipientProfile': {
-							'@context': recipientProfileContextUrl,
-							type: ['Extension', 'extensions:RecipientProfile'],
-							name: striptags(row.name),
-						},
-					}
-				: undefined;
-
-			assertion = {
-				recipient_identifier: row.email,
-				extensions: extensions,
-			};
-			assertions.push(assertion);
-		});
-
-		const checkStatus = async (taskId: string) => {
-			const response = await this.badgeInstanceApiService.checkBatchAssertionStatus(taskId, this.issuerSlug, this.badgeSlug);
-			if (response.body['status'] === 'SUCCESS') {
-			  return response.body['result'];
-			} else if (response.body['status'] === 'FAILURE') {
-			  throw new Error(response.body['result']);
-			}
-			console.log("response", response)
-			// Continue polling if still processing
-			await new Promise(resolve => setTimeout(resolve, 2000));
-			return checkStatus(taskId);
+		  let assertion: any;
+	
+		  const extensions = row.name
+			? {
+				'extensions:recipientProfile': {
+				  '@context': recipientProfileContextUrl,
+				  type: ['Extension', 'extensions:RecipientProfile'],
+				  name: striptags(row.name),
+				},
+			  }
+			: undefined;
+	
+		  assertion = {
+			recipient_identifier: row.email,
+			extensions: extensions,
 		  };
-
+		  assertions.push(assertion);
+		});
+	
 		this.badgeInstanceApiService.createBadgeInstanceBatchedAsync(this.issuerSlug, this.badgeSlug, {
-			issuer: this.issuerSlug,
-			badge_class: this.badgeSlug,
-			create_notification: this.issueForm.rawControlMap.notify_earner.value,
-			assertions,
+		  issuer: this.issuerSlug,
+		  badge_class: this.badgeSlug,
+		  create_notification: this.issueForm.rawControlMap.notify_earner.value,
+		  assertions,
 		}).then((response) => {
-			const taskId = response.body.task_id;
-			checkStatus(taskId)
-		})
-
-	// 	this.badgeInstanceManager
-	// 		.createBadgeInstanceBatched(this.issuerSlug, this.badgeSlug, {
-	// 			issuer: this.issuerSlug,
-	// 			badge_class: this.badgeSlug,
-	// 			create_notification: this.issueForm.rawControlMap.notify_earner.value,
-	// 			assertions,
-	// 		})
-	// 		.then(
-	// 			(result) => {
-	// 				this.openSuccessDialog(assertions.length + " User")
-	// 				this.router.navigate(['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug]);
-	// 			},
-	// 			(error) => {
-	// 				this.messageService.setMessage(
-	// 					'Fast geschafft! Deine Badges werden gerade vergeben – das kann ein paar Minuten dauern. Schau gleich auf der Badge-Detail-Seite nach, ob alles geklappt hat.' ,
-	// 					'error',
-	// 				);
-	// 			},
-	// 		);
-	 }
+		  const taskId = response.body.task_id;
+		  
+		  this.taskService.setTaskId(taskId);
+		  
+		  this.router.navigate(['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug]);
+		}).catch(error => {
+		  console.error('Error creating badge batch:', error);
+		  this.buttonDisabledAttribute = false;
+		});
+	  }
 
 	updateViewState(state: ViewState) {
 		this.updateStateEmitter.emit(state);
