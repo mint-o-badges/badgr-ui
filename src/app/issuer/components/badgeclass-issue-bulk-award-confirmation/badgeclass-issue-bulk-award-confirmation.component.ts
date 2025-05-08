@@ -43,7 +43,7 @@ export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRouta
 		protected messageService: MessageService,
 		protected formBuilder: FormBuilder,
 		protected title: Title,
-		protected taskService: TaskStatusService
+		protected taskService: TaskStatusService,
 	) {
 		super(router, route, sessionService);
 		this.enableActionButton();
@@ -64,48 +64,51 @@ export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRouta
 	dataConfirmed() {
 		if (this.buttonDisabledAttribute) return;
 		this.disableActionButton();
-	
+
 		const assertions: BadgeInstanceBatchAssertion[] = [];
 		const recipientProfileContextUrl = 'https://openbadgespec.org/extensions/recipientProfile/context.json';
-		
+
 		this.transformedImportData.validRowsTransformed.forEach((row) => {
-		  let assertion: BadgeInstanceBatchAssertion;
-	
-		  const extensions = row.name
-			? {
-				'extensions:recipientProfile': {
-				  '@context': recipientProfileContextUrl,
-				  type: ['Extension', 'extensions:RecipientProfile'],
-				  name: striptags(row.name),
-				},
-			  }
-			: undefined;
-	
-		  assertion = {
-			recipient_identifier: row.email,
-			extensions: extensions,
-		  };
-		  assertions.push(assertion);
+			let assertion: BadgeInstanceBatchAssertion;
+
+			const extensions = row.name
+				? {
+						'extensions:recipientProfile': {
+							'@context': recipientProfileContextUrl,
+							type: ['Extension', 'extensions:RecipientProfile'],
+							name: striptags(row.name),
+						},
+					}
+				: undefined;
+
+			assertion = {
+				recipient_identifier: row.email,
+				extensions: extensions,
+			};
+			assertions.push(assertion);
 		});
 
 		localStorage.setItem('batchAwardCount', assertions.length.toString());
-	
-		this.badgeInstanceApiService.createBadgeInstanceBatchedAsync(this.issuerSlug, this.badgeSlug, {
-		  issuer: this.issuerSlug,
-		  badge_class: this.badgeSlug,
-		  create_notification: this.issueForm.rawControlMap.notify_earner.value,
-		  assertions,
-		}).then((response) => {
-		  const taskId = response.body.task_id;
-		  
-		  this.taskService.setTaskId(taskId);
-		  
-		  this.router.navigate(['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug]);
-		}).catch(error => {
-		  console.error('Error creating badge batch:', error);
-		  this.buttonDisabledAttribute = false;
-		});
-	  }
+
+		this.badgeInstanceApiService
+			.createBadgeInstanceBatchedAsync(this.issuerSlug, this.badgeSlug, {
+				issuer: this.issuerSlug,
+				badge_class: this.badgeSlug,
+				create_notification: this.issueForm.rawControlMap.notify_earner.value,
+				assertions,
+			})
+			.then((response) => {
+				const taskId = response.body.task_id;
+
+				this.taskService.setTaskId(taskId);
+
+				this.router.navigate(['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug]);
+			})
+			.catch((error) => {
+				console.error('Error creating badge batch:', error);
+				this.buttonDisabledAttribute = false;
+			});
+	}
 
 	updateViewState(state: ViewState) {
 		this.updateStateEmitter.emit(state);
