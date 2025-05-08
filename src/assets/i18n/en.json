@@ -472,16 +472,16 @@
     "issuerImageInBadgeImageInfo": "Your institution's logo will automatically be added to the badge image.",
     "pleaseAddCompetencies": "Please add skills",
     "invalidCompetence": "Invalid skill",
-		"competencyOptions": "[translate] Du hast zwei Möglichkeiten, händisch Kompetenzen zu ergänzen.",
+		"competencyOptions": "You have two options for adding skills manually.",
 		"escoSearch": {
 			"headline": "ESCO Competencies",
-			"description": "[translate] Damit unsere Badges inhaltlich standardisiert und vergleichbar sind, nutzt der KI-Assistent <a class='tw-text-[var(--color-link)] tw-underline' href='https://esco.ec.europa.eu/de/about-esco' target='_blank'>die Europäische Klassifizierung für Kompetenzen (ESCO)</a>. Du kannst hier selbst nach passenden Kompetenzen suchen und sie hinzufügen:",
+			"description": "To ensure our badges are standardized and comparable in terms of content, the AI assistant uses <a class='tw-text-[var(--color-link)] tw-underline' href='https://esco.ec.europa.eu/en/about-esco' target='_blank'>the European Classification of Skills, Competences and Occupations (ESCO)</a>. You can search for suitable skills yourself here and add them:",
 			"search": "Search ESCO database",
 			"inputPlaceholder": "Enter keyword",
 			"resultsIn": "Results in"
 		},
 		"competencyOwn": "Own competency",
-		"competencyOwnDescription": "[translate] Falls die ESCO-Suche dir keine passende Kompetenz liefert, kannst du hier händisch eine selbst definierte Kompetenz ergänzen:",
+		"competencyOwnDescription": "If the ESCO search does not provide a suitable skill, you can manually add a self-defined skill here:",
 		"stepFinish": "Finish"
   },
   "Signup": {
@@ -793,7 +793,7 @@
     "deleteQrAwardConfirm": "Do you really want to delete the QR code award?",
     "openRequestsWillBeLost": "All still open badge requests will be lost as a result.",
     "receiveEmails": "I would like to be notified by email about new QR code requests",
-		"description": "[translate]: Wenn du hier eine QR-Code-Vergabe anlegst, können deine Lernenden den so generierten QR-Code abscannen und sich den Badge darüber selbst abholen.",
+		"description": "If you create a QR code here, your learners can scan the generated QR code and collect the badge themselves.",
 		"howItWorks": "How it works:",
 		"create": "Create QR Code for",
 		"titlePlaceholder": "Badge Award June 2024",
