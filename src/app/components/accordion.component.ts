@@ -6,12 +6,12 @@ import { HlmAccordionModule } from './spartan/ui-accordion-helm/src';
 import { HlmIconModule } from './spartan/ui-icon-helm/src';
 import { RouterModule } from '@angular/router';
 import { Component, Input } from '@angular/core';
-import { lucideClock } from '@ng-icons/lucide';
+import { lucideClock, lucideChevronDown } from '@ng-icons/lucide';
 import { provideIcons } from '@ng-icons/core';
 
 @Component({
 	selector: 'competency-accordion',
-	providers: [provideIcons({ lucideClock })],
+	providers: [provideIcons({ lucideClock, lucideChevronDown })],
 	imports: [
 		HlmAccordionModule,
 		NgIcon,

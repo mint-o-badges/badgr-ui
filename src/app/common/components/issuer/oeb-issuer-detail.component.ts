@@ -145,7 +145,7 @@ export class OebIssuerDetailComponent implements OnInit {
 				new BadgeResult(
 					badge,
 					this.issuer.name,
-					requestMap.has(badge.slug) ? requestMap.get(badge.slug).length : 0,
+					this.getRequestCount(badge, requestMap)
 				),
 			);
 
@@ -163,6 +163,16 @@ export class OebIssuerDetailComponent implements OnInit {
 
 	delete(event) {
 		this.issuerDeleted.emit(event);
+	}
+
+	getRequestCount(badge: BadgeClass, requestMap:  Map<string, ApiQRCode[]>): number{
+		if(requestMap?.has(badge.slug)) {
+			const qrCode = requestMap.get(badge.slug)
+			if(qrCode.length){
+				return qrCode[0].request_count
+			}
+			return 0
+		}  
 	}
 
 	routeToBadgeAward(badge: BadgeClass, issuer) {
