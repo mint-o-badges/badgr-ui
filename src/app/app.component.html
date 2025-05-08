@@ -448,7 +448,7 @@
 				class="tw-font-[rubik] tw-text-left tw-flex md:tw-flex-row md:tw-justify-between md:tw-gap-0 tw-flex-col-reverse tw-gap-[2em]"
 			>
 				<div class="tw-flex tw-flex-col tw-gap-2 tw-text-[18px] tw-leading-[23.4px] tw-text-oebblack">
-					<p class="md:tw-w-2/3 tw-mt#-[10px]" *ngIf="theme.showPoweredByOSL && theme.providedBy">
+					<p class="md:tw-w-2/3 tw-mt#-[10px]" *ngIf="theme.showPoweredByOSL && theme.providedBy" [innerHTML]="'Start.poweredBy' | translate">
 						Open Educational Badges ist ein Gemeinschaftsprojekt von
 						<a
 							class="tw-underline tw-text-link"
@@ -470,16 +470,7 @@
 							class="md:tw-w-[100px] tw-w-[64px]"
 							alt="Beta logo"
 						/>
-						<p>
-							Unsere Plattform befindet sich noch in der Betaphase. Du hast Fehler entdeckt? Schreib uns
-							gerne an
-							<a
-								class="tw-underline tw-cursor-pointer tw-text-link"
-								title="contact us"
-								href="mailto:support@openbadges.education"
-								>support&#64;openbadges.education</a
-							>.
-						</p>
+						<p [innerHTML]="'Issuer.betaPhase' | translate"></p>
 					</div>
 					<div class="tw-flex md:tw-hidden tw-flex-col tw-gap-[7px]">
 						<a

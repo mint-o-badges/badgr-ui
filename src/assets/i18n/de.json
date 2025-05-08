@@ -88,7 +88,8 @@
 		"language": {
 			"de": "Deutsch",
 			"en": "Englisch"
-		}
+		},
+		"close": "Schliessen"
 	},
 	"NavItems": {
 		"register": "Registrieren",
@@ -231,7 +232,7 @@
 		"giveMyBadges": "Meine Badges vergeben",
 		"askForPlugin": "Plugin anfragen",
 		"askForPluginText": "Unser <span class='tw-font-bold'>Plugin</span> bietet dir die Möglichkeit, Badges aus deiner eigenen digitalen Lehrumgebung heraus zu vergeben.",
-		"betaPhase": "Unsere Plattform befindet sich noch in der Betaphase. <b>Du hast Fehler entdeckt? Schreib uns an <a class='tw-text-link tw-underline' href='mailto:support@openbadges.education'>support@openbadges.education</a></b>.",
+		"betaPhase": "Unsere Plattform befindet sich noch in der Betaphase. <b>Du hast Fehler entdeckt? Schreib uns gerne an <a class='tw-text-link tw-underline' href='mailto:support@openbadges.education'>support@openbadges.education</a></b>.",
 		"askForLearningPath": "Wir helfen dir, einen Micro Degree anzulegen. Schreibe an <a href='mailto:lernpfad@openbadges.education' class='tw-underline tw-text-[#1400FF]'>lernpfad@openbadges.education</a>.",
 		"award": "vergeben",
 		"badgePreview": "Vorschau Badge",
@@ -267,7 +268,12 @@
 		"pdfCertificate": "PDF-Zertifikat",
 		"institutionIssued": "Institution vergibt Badges über OEB",
 		"institutionsIssued": "Institutionen sind auf OEB registriert",
-		"allCategories": "Alle Kategorien",
+		"categories": {
+			"allCategories": "Alle Kategorien",
+			"schule": "Schule",
+			"hochschule": "Hochschule",
+			"andere": "andere"
+		},
 		"learningPathHeadline": "Micro Degree hochladen",
 		"uploadLearningPathText": "Wenn du versiert im Umgang mit JSON-Dateien bist, kannst du den Micro Degree auch selbst anlegen. So geht’s:",
 		"learningPathHelp": "Momentan werden Micro Degrees noch als JSON-Datei importiert. <b>Gerne erstellen wir diese Datei für dich</b>, schreibe einfach an <a class='tw-text-link tw-underline' href='mailto:lernpfad@openbadges.education'>lernpfad@openbadges.education</a>.",

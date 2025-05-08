@@ -88,7 +88,8 @@
 		"language": {
 			"de": "German",
 			"en": "English"
-		}
+		},
+		"close": "Close"
   },
   "NavItems": {
     "register": "Register",
@@ -267,7 +268,12 @@
     "pdfCertificate": "PDF certificate",
     "institutionIssued": "Institution awards badges via OEB",
     "institutionsIssued": "Institutions are registered on OEB",
-    "allCategories": "All categories",
+		"categories": {
+			"allCategories": "All categories",
+			"schule": "School",
+			"hochschule": "College",
+			"andere": "Others"
+		},
     "learningPathHeadline": "Upload Micro Degree",
     "uploadLearningPathText": "If you are familiar with JSON files, you can also create the Micro Degree yourself. Here's how:",
     "learningPathHelp": "Currently, Micro Degrees are imported as JSON files. <b>We would be happy to create this file for you</b>, just write to <a class='tw-text-link tw-underline' href='mailto:lernpfad@openbadges.education'>lernpfad@openbadges.education</a>.",
