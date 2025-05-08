@@ -3,6 +3,7 @@
     "yes": "Yes",
     "no": "No",
     "name": "Name",
+		"email": "Email",
     "institutions": "Institutions",
     "institutionsNav": "Institutions A-Z",
     "account": "Account",
@@ -89,7 +90,8 @@
 			"de": "German",
 			"en": "English"
 		},
-		"close": "Close"
+		"close": "Close",
+		"notification": "Notification"
   },
   "NavItems": {
     "register": "Register",
@@ -209,6 +211,7 @@
     "addMember_chooseRole": "Choose role",
     "addMember_owner": "Owner",
     "addMember_ownerText": "Access to all functions including adding/removing editors and staff, editing institution details, as well as creating, awarding, and deleting badges including Micro Degrees.",
+		"addMember_editor": "Editor",
     "addMember_editorText": "Rights to create, award, and delete badges including Micro Degrees.",
     "addMember_staff": "Staff",
     "addMember_staffText": "Can award badges created by owners and/or editors (including creating, editing, and deleting QR code awards).",
@@ -373,7 +376,8 @@
 		"copyThisIssuer": "Copy (this institution)",
 		"editCopyStatus": "Edit copy status",
 		"award": "Award Badge",
-		"awardQRCode": "Award Badge using QR-Code"
+		"awardQRCode": "Award Badge using QR-Code",
+		"partOfLearningPath": "This Badge is part of the following Micro Degrees:"
   },
   "CreateBadge": {
     "chooseBadgeCategory": "Choose badge category",
@@ -757,12 +761,23 @@
     "list4.2": "at OEB and can award the badges directly. They will be sent to the learners by email."
   },
   "QrCode": {
+		"qrAward": "QR code awarding",
     "savedSuccessfully": "<span class='tw-font-bold'> The QR code award has been successfully saved on the badge detail page.</span>",
     "downloadedSuccessfully": "<span class='tw-font-bold'>You have successfully downloaded the QR code.</span><br> Check your download folder.",
     "deleteQrAward": "Delete QR code award",
     "deleteQrAwardConfirm": "Do you really want to delete the QR code award?",
     "openRequestsWillBeLost": "All still open badge requests will be lost as a result.",
-    "receiveEmails": "I would like to be notified by email about new QR code requests"
+    "receiveEmails": "I would like to be notified by email about new QR code requests",
+		"description": "[translate]: Wenn du hier eine QR-Code-Vergabe anlegst, können deine Lernenden den so generierten QR-Code abscannen und sich den Badge darüber selbst abholen.",
+		"howItWorks": "How it works:",
+		"create": "Create QR Code for",
+		"titlePlaceholder": "Badge Award June 2024",
+		"creatorName": "Creator name",
+		"creatorNamePlaceholder": "My first and last name",
+		"expiration": "QR Code expiration date",
+		"expirationStart": "Start date",
+		"expirationEnd": "End date",
+		"buttonCreate": "Create QR Code"
   },
   "LearningPath": {
     "learningpaths": "Micro Degrees",
@@ -784,6 +799,12 @@
     "continue": "Continue learning",
     "finished": "Finished",
     "enterDetails": "Enter Micro Degree details",
+		"includedBadges": "Contained Badges",
+		"badgeTabs": {
+			"all": "All",
+			"inprogress": "In progress",
+			"finished": "finished"
+		},
     "chooseBadges": "Choose included badges",
     "badgeSequence": "Order of badges in the Micro Degree",
     "combineBadgeCategories": "You can combine competency badges and participation badges.",

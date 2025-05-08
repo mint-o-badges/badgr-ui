@@ -3,6 +3,7 @@
 		"yes": "Ja",
 		"no": "Nein",
 		"name": "Name",
+		"email": "E-Mail",
 		"institutions": "Institutionen",
 		"institutionsNav": "Institutionen A-Z",
 		"account": "Konto",
@@ -89,7 +90,8 @@
 			"de": "Deutsch",
 			"en": "Englisch"
 		},
-		"close": "Schliessen"
+		"close": "Schliessen",
+		"notification": "Benachrichtigung"
 	},
 	"NavItems": {
 		"register": "Registrieren",
@@ -194,7 +196,7 @@
 		"enterValidEmail": "Bitte gib eine gültige E-Mail Adresse an",
 		"enterDescription": "Bitte gib eine Beschreibung an",
 		"enterCategory": "Bitte gib eine Kategorie an",
-		"enterStreet": "Bitte gib eine Strasse an",
+		"enterStreet": "Bitte gib eine addMember_staffStrasse an",
 		"enterHouseNo": "Bitte gib eine Hausnummer an",
 		"enterPostalCode": "Bitte gib eine Postleitzahl an",
 		"enterCity": "Bitte gib eine Stadt an",
@@ -209,6 +211,7 @@
 		"addMember_chooseRole": "Rolle wählen",
 		"addMember_owner": "Eigentümer:in",
 		"addMember_ownerText": "Zugriff auf alle Funktionen inkl. Hinzufügen/Entfernen von Editor:innen und Mitarbeiter:innen, Bearbeitung der Institutionsdetails sowie Erstellen, Vergeben und Löschen von Badges inkl. Micro Degrees.",
+		"addMember_editor": "Editor:in",
 		"addMember_editorText": "Rechte zum Erstellen, Vergeben und Löschen von Badges inkl. Micro Degrees.",
 		"addMember_staff": "Mitarbeiter:in",
 		"addMember_staffText": "Kann die von Eigentümer:innen und/oder Editor:innen erstellten Badges vergeben (inkl. QR-Code-Vergaben erstellen, bearbeiten und löschen).",
@@ -373,7 +376,8 @@
 		"copyThisIssuer": "Kopieren (diese Institution)",
 		"editCopyStatus": "Kopierstatus bearbeiten",
 		"award": "Badge direkt vergeben",
-		"awardQRCode": "Badge über QR-Code vergeben"
+		"awardQRCode": "Badge über QR-Code vergeben",
+		"partOfLearningPath": "Dieser Badge ist Teil folgender Micro Degrees:"
 	},
 	"CreateBadge": {
 		"chooseBadgeCategory": "Badge-Kategorie wählen",
@@ -757,12 +761,23 @@
 		"list4.2": "bei OEB und kannst die Badges direkt vergeben. Sie werden den Lernenden per E-Mail zugestellt."
 	},
 	"QrCode": {
+		"qrAward": "QR-Code-Vergabe",
 		"savedSuccessfully": "<span class='tw-font-bold'> Die QR-Code-Vergabe wurde erfolgreich auf der Badge-Detail-Seite gespeichert.</span>",
 		"downloadedSuccessfully": "<span class='tw-font-bold'>Du hast den QR-Code erfolgreich heruntergeladen.</span><br> Schaue in deinem Download-Ordner nach.",
 		"deleteQrAward": "QR-Code-Vergabe löschen",
 		"deleteQrAwardConfirm": "Möchtest du die QR-Code-Vergabe wirklich löschen?",
 		"openRequestsWillBeLost": "Damit gehen alle noch offenen Badge-Anfragen verloren.",
-		"receiveEmails": "Ich möchte per E-Mail über neue QR-Code-Anfragen benachrichtigt werden"
+		"receiveEmails": "Ich möchte per E-Mail über neue QR-Code-Anfragen benachrichtigt werden",
+		"description": "Wenn du hier eine QR-Code-Vergabe anlegst, können deine Lernenden den so generierten QR-Code abscannen und sich den Badge darüber selbst abholen.",
+		"howItWorks": "So funktioniert's:",
+		"create": "QR-Code-Vergabe erstellen für",
+		"titlePlaceholder": "Badge Vergabe Juni 2024",
+		"creatorName": "Name Ersteller:in",
+		"creatorNamePlaceholder": "Mein Vorname und Nachname",
+		"expiration": "Gültigkeit des QR-Codes",
+		"expirationStart": "Start-Datum",
+		"expirationEnd": "End-Datum",
+		"buttonCreate": "QR-Code generieren"
 	},
 	"LearningPath": {
 		"learningpaths": "Micro Degrees",
@@ -784,6 +799,12 @@
 		"continue": "Weiterlernen",
 		"finished": "Abgeschlossen",
 		"enterDetails": "Micro Degree-Details eingeben",
+		"includedBadges": "Enthaltene Badges",
+		"badgeTabs": {
+			"all": "Alle",
+			"inprogress": "Offen",
+			"finished": "Abgeschlossen"
+		},
 		"chooseBadges": "Enthaltene Badges wählen",
 		"badgeSequence": "Reihenfolge der Badges im Micro Degree",
 		"combineBadgeCategories": "Du kannst Kompetenz-Badges und Teilnahme-Badges kombinieren.",

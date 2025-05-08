@@ -16,7 +16,7 @@
 				</div>
 				<div class="tw-ml-4 md:tw-hidden tw-justify-center tw-items-center tw-flex">
 					<h2 class="tw-text-purple tw-text-3xl">
-						QR-Code-Vergabe erstellen für <br />
+						{{ 'QrCode.create' | translate }} <br />
 						<span class="tw-font-extrabold">{{ badgeClass.name }}</span>
 					</h2>
 				</div>
@@ -24,19 +24,19 @@
 
 			<div class="tw-flex tw-flex-col tw-w-full">
 				<h2 class="tw-hidden md:tw-block tw-text-purple tw-text-3xl">
-					QR-Code-Vergabe erstellen für <br />
+					{{ 'QrCode.create' | translate }} <br />
 					<span class="tw-font-extrabold">{{ badgeClass.name }}</span>
 				</h2>
 				<oeb-input
-					label="Titel"
-					[placeholder]="'Badge Vergabe Juni 2024'"
+					[label]="'General.title' | translate"
+					[placeholder]="'QrCode.titlePlaceholder' | translate"
 					fieldType="text"
 					[autofocus]="true"
 					[control]="qrForm.rawControlMap.title"
 				></oeb-input>
 				<oeb-input
-					label="Name Ersteller:in"
-					[placeholder]="'Mein Vorname und Nachname'"
+					[label]="'QrCode.creatorName' | translate"
+					[placeholder]="'QrCode.creatorNamePlaceholder' | translate"
 					fieldType="text"
 					[control]="qrForm.rawControlMap.createdBy"
 				></oeb-input>
@@ -45,7 +45,7 @@
 
 				<span
 					class="tw-mt-6 md:tw-mt-7 tw-text-oebblack tw-font-semibold md:tw-leading-[28px] md:tw-text-[20px] tw-leading-[19px] tw-text-[14px]"
-					>Gültigkeit des QR-Codes <span class="tw-font-normal">(optional)</span></span
+					>{{ 'QrCode.expiration' | translate }} <span class="tw-font-normal">(optional)</span></span
 				>
 
 				<div
@@ -55,14 +55,14 @@
 					<div class="tw-flex md:tw-justify-between tw-gap-12">
 						<oeb-input
 							labelStyle="tw-text-oebblack"
-							label="Start-Datum"
+							[label]="'QrCode.expirationStart' | translate"
 							[errorMessage]="'Bitte gib ein Datum in der Form YYYY/mm/dd an'"
 							[control]="qrForm.rawControlMap.valid_from"
 							fieldType="date"
 						></oeb-input>
 						<oeb-input
 							labelStyle="tw-text-oebblack"
-							label="End-Datum"
+							[label]="'QrCode.expirationEnd' | translate"
 							[errorMessage]="{
 								expiresBeforeValidFrom: 'Das Ablaufdatum muss nach dem Start-Datum liegen',
 								invalidDate: 'Bitte gib ein Datum in der Form YYYY/mm/dd an'
@@ -76,7 +76,7 @@
 				<div *ngIf="!editing">
 					<span
 						class="tw-mt-6 md:tw-mt-7 tw-text-oebblack tw-font-semibold md:tw-leading-[28px] md:tw-text-[20px] tw-leading-[19px] tw-text-[14px]"
-						>Benachrichtigung</span
+						>{{ 'General.notification' | translate }}</span
 					>
 					<oeb-checkbox
 						class="oeb-standard-padding-bottom"
@@ -105,7 +105,7 @@
 
 					<span
 						class="tw-mt-6 md:tw-mt-7 tw-text-oebblack tw-font-semibold md:tw-leading-[28px] md:tw-text-[20px] tw-leading-[19px] tw-text-[14px]"
-						>Benachrichtigung</span
+						>{{ 'General.notification' | translate }}</span
 					>
 					<oeb-checkbox
 						class="oeb-standard-padding-bottom"
@@ -138,7 +138,7 @@
 					*ngIf="!editing"
 					class="tw-whitespace-nowrap tw-mt-6"
 					type="submit"
-					text="QR-Code generieren"
+					[text]="'QrCode.buttonCreate' | translate"
 				>
 				</oeb-button>
 			</div>
