@@ -768,6 +768,7 @@
   },
   "QrCode": {
 		"qrAward": "QR code awarding",
+		"qrAwards": "QR Code awarding",
     "savedSuccessfully": "<span class='tw-font-bold'> The QR code award has been successfully saved on the badge detail page.</span>",
     "downloadedSuccessfully": "<span class='tw-font-bold'>You have successfully downloaded the QR code.</span><br> Check your download folder.",
     "deleteQrAward": "Delete QR code award",
@@ -783,7 +784,15 @@
 		"expiration": "QR Code expiration date",
 		"expirationStart": "Start date",
 		"expirationEnd": "End date",
-		"buttonCreate": "Create QR Code"
+		"buttonCreate": "Create QR Code",
+		"noQrCodes": "You have not created any QR Codes yet",
+		"openRequestsOne": "1 open Badge request",
+		"openRequests": "{{ count }} open Badge requests",
+		"showQrCode": "Show QR code",
+		"creator": "Creator",
+		"validity": "QR code validity",
+		"download": "Download QR code",
+		"toBadgeDetail": "To Badge detail page"
   },
   "LearningPath": {
     "learningpaths": "Micro Degrees",

@@ -380,7 +380,11 @@
 		"editCopyStatus": "Kopierstatus bearbeiten",
 		"award": "Badge direkt vergeben",
 		"awardQRCode": "Badge über QR-Code vergeben",
-		"partOfLearningPath": "Dieser Badge ist Teil folgender Micro Degrees:"
+		"partOfLearningPath": "Dieser Badge ist Teil folgender Micro Degrees:",
+		"creator": "Kampagnen-Ersteller:in",
+		"validity": "Gültigkeit des QR-Codes",
+		"download": "Download QR-Code",
+		"toBadgeDetail": "Zur Badge Detail-Seite"
 	},
 	"CreateBadge": {
 		"chooseBadgeCategory": "Kategorie wählen",
@@ -768,6 +772,7 @@
 	},
 	"QrCode": {
 		"qrAward": "QR-Code-Vergabe",
+		"qrAwards": "QR-Code-Vergaben",
 		"savedSuccessfully": "<span class='tw-font-bold'> Die QR-Code-Vergabe wurde erfolgreich auf der Badge-Detail-Seite gespeichert.</span>",
 		"downloadedSuccessfully": "<span class='tw-font-bold'>Du hast den QR-Code erfolgreich heruntergeladen.</span><br> Schaue in deinem Download-Ordner nach.",
 		"deleteQrAward": "QR-Code-Vergabe löschen",
@@ -783,7 +788,11 @@
 		"expiration": "Gültigkeit des QR-Codes",
 		"expirationStart": "Start-Datum",
 		"expirationEnd": "End-Datum",
-		"buttonCreate": "QR-Code generieren"
+		"buttonCreate": "QR-Code generieren",
+		"noQrCodes": "Du hast bisher keine QR-Code-Vergabe erstellt",
+		"openRequestsOne": "1 offene Badge-Anfrage",
+		"openRequests": "{{ count }} offene Badge-Anfragen",
+		"showQrCode": "Zum QR-Code"
 	},
 	"LearningPath": {
 		"learningpaths": "Micro Degrees",
