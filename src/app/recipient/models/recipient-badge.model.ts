@@ -71,7 +71,11 @@ export class RecipientBadgeInstance extends ManagedEntity<ApiRecipientBadgeInsta
 	}
 
 	get criteriaUrl(): string {
-		return this.badgeClass.criteria_url || this.badgeClass.criteria || null;
+		return this.badgeClass.criteria_url || null;
+	}
+
+	get criteria(): Array<{name: string; description: string}>{
+		return this.criteria
 	}
 	/**
 	 * Cached copy of the immutable issueDate for optimization
