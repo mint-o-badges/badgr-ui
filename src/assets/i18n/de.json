@@ -170,7 +170,8 @@
 		"noInstitutions": "Keine Institutionen",
 		"searchInstitutions": "Institutionen durchsuchen",
 		"noBadges": "Keine Badges",
-		"recipient": "Empfänger",
+		"recipient": "Empfänger:in",
+		"recipients": "Empfänger:innen",
 		"noRecipient": "Kein Empfänger",
 		"createInstitution": "Institution erstellen",
 		"createInstitutionNow": "Jetzt Institution erstellen",
@@ -319,7 +320,10 @@
 		"confirmStaffRequestText2": " Mitglied deiner Institution sein soll, wähle die passende Rolle aus und bestätige die Anfrage:",
 		"noOpenStaffRequests": "Keine offenen Anfragen",
 		"ownInstitution": "eigene Institution",
-		"allInstitutions": "alle Institutionen"
+		"allInstitutions": "alle Institutionen",
+		"revokeBadgeWarning": "Bist du sicher, dass du \"{{ badge }}\" von {{ recipient }} zurücknehmen möchtest?",
+		"revokeSuccess": "Badge von {{ recipient}} zurücknehmen",
+		"revokeError": "Widerrufen des Badges von {{ recipient }} fehlgeschlagen"
 	},
 	"Badge": {
 		"groupBy": "Gruppieren nach",
@@ -353,6 +357,7 @@
 		"deletePart2": "' löschen möchtest?",
 		"deleteConfirm": "Badge löschen",
 		"deleteRequest": "Badge-Anfrage löschen",
+		"deleteInstancesLeft": "Alle vergebenen Badges müssen zurückgezogen werden, bevor der Badge gelöscht werden kann.",
 		"confirmDeleteRequest1": "Möchtest du die Badge-Anfrage von ",
 		"confirmDeleteRequest2": "wirklich löschen?",
 		"sortBy": "Sortieren nach",
@@ -839,7 +844,8 @@
 		"title": "Micro Degree-Titel",
 		"description": "Kurz-Beschreibung für Lernende",
 		"selectedBadges": "Du hast {{ count }} Badges für den Micro Degree ausgewählt",
-		"selectedBadgesOne": "Du hast 1 Badge für den Micro Degree ausgewählt"
+		"selectedBadgesOne": "Du hast 1 Badge für den Micro Degree ausgewählt",
+		"deleteWarning": "Möchtest du diesen Micro Degree wirklich löschen?"
 	},
 	"LearningPathEditor": {
 		"shortDescription": "Zusammenfassende Beschreibung deines Micro Degrees. Diese Kurzbeschreibung wird im Micro Degree gespeichert."

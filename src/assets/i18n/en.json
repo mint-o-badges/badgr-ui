@@ -171,6 +171,7 @@
     "searchInstitutions": "Search institutions",
     "noBadges": "No badges",
     "recipient": "Recipient",
+    "recipients": "Recipients",
     "noRecipient": "No recipient",
     "createInstitution": "Create institution",
     "createInstitutionNow": "Create institution now",
@@ -319,7 +320,10 @@
     "confirmStaffRequestText2": " should be a member of your institution, select the appropriate role and confirm the request:",
     "noOpenStaffRequests": "No open requests",
     "ownInstitution": "own institution",
-    "allInstitutions": "all institutions"
+    "allInstitutions": "all institutions",
+		"revokeBadgeWarning": "Are you sure you want to revoke \"{{ badge }}\" from {{ recipient }}?",
+		"revokeSuccess": "Revoked Badge from {{ recipient}}",
+		"revokeError": "Revoking Badge from {{ recipient }} failed"
   },
   "Badge": {
     "groupBy": "Group by",
@@ -353,6 +357,7 @@
     "deletePart2": "'?",
     "deleteConfirm": "Delete badge",
     "deleteRequest": "Delete badge request",
+		"deleteInstancesLeft": "All awarded Badges must be revoked before you can delete the Badge.",
     "confirmDeleteRequest1": "Do you really want to delete the badge request from ",
     "confirmDeleteRequest2": "?",
     "sortBy": "Sort by",
@@ -839,7 +844,8 @@
 		"title": "Micro Degree title",
 		"description": "Short description for learners",
 		"selectedBadges": "You selected {{ count }} Badges for the Micro Degree",
-		"selectedBadgesOne": "You selected 1 Badge for the Micro Degree"
+		"selectedBadgesOne": "You selected 1 Badge for the Micro Degree",
+		"deleteWarning": "Do you really want to delete this Micro Degree?"
   },
   "LearningPathEditor": {
     "shortDescription": "Summarized description of your Micro Degree. This short description will be saved in the Micro Degree."
