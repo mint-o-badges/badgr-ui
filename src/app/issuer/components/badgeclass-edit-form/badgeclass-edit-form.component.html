@@ -6,7 +6,7 @@
 		<ng-container [formGroup]="badgeClassForm.rawControl">
 			<oeb-stepper linear="true" [initialStep]="existingBadgeClass || initialisedBadgeClass ? 0 : 1">
 				<oeb-step
-					label="Kategorie wählen"
+					[label]="'CreateBadge.chooseBadgeCategory' | translate"
 					[optional]="false"
 					[route]="['/issuer/issuers/' + issuer.slug + '/badges' + '/select']"
 					errorMessage="Bitte Kategorie wählen"
@@ -16,9 +16,9 @@
 				</oeb-step>
 
 				<cdk-step
-					label="Details eingeben"
+					[label]="'CreateBadge.enterDetailsStep' | translate"
 					[optional]="false"
-					errorMessage="Bitte vollständig ausfüllen"
+					[errorMessage]="'General.validationCompleteForm' | translate"
 					[completed]="
 						(validateFields(['badge_description', 'badge_hours', 'badge_name']) && !imageValidation()) ||
 						isDevMode
@@ -791,7 +791,7 @@
 													ariaLabel="Wähle eine Kompetenz-Kategorie"
 													[control]="competency.rawControlMap.category"
 													[label]="competencyCategory"
-													[placeholder]="'Kategorie wählen'"
+													[placeholder]="'CreateBadge.chooseCompetencyCategory' | translate"
 													[optionMap]="competencyCategoryOptions"
 													[errorMessage]="{
 														required: competencyCategoryError
@@ -896,10 +896,10 @@
 					<div class="section tw-text-oebblack tw-mt-6">
 						<div>
 							<h2 *ngIf="badgeCategory !== 'competency'" hlmH2 class="tw-font-bold">
-								3. Tags hinzufügen
+								3. {{'CreateBadge.addTags' | translate}}
 							</h2>
 							<h2 *ngIf="badgeCategory === 'competency'" hlmH2 class="tw-font-bold">
-								4. Tags hinzufügen
+								4. {{'CreateBadge.addTags' | translate}}
 							</h2>
 						</div>
 						<p class="tw-italic tw-text-purple tw-mt-2">
@@ -962,7 +962,7 @@
 					</div>
 				</cdk-step>
 
-				<cdk-step label="Abschluss">
+				<cdk-step [label]="'CreateBadge.stepFinish' | translate">
 					<div class="section tw-text-oebblack tw-mt-6">
 						<oeb-collapsible
 							[trigger]="collapseDetailsTrigger"

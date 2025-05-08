@@ -91,7 +91,10 @@
 			"en": "Englisch"
 		},
 		"close": "Schliessen",
-		"notification": "Benachrichtigung"
+		"notification": "Benachrichtigung",
+		"validationCompleteForm": "Bitte vollständig ausfüllen",
+		"select": "Auswählen",
+		"loadMore": "Mehr laden"
 	},
 	"NavItems": {
 		"register": "Registrieren",
@@ -380,13 +383,14 @@
 		"partOfLearningPath": "Dieser Badge ist Teil folgender Micro Degrees:"
 	},
 	"CreateBadge": {
-		"chooseBadgeCategory": "Badge-Kategorie wählen",
+		"chooseBadgeCategory": "Kategorie wählen",
 		"chooseABadgeCategory": "Wähle eine Badge-Kategorie",
 		"chooseCategory": "Wähle aus zwei Badge-Kategorien:",
 		"competencyInfo": "mit Kompetenzen gefüllt werden, die deine Lernenden erwerben",
 		"withAssistant": "mithilfe unseres KI-Badge-Assistenten",
 		"participationInfo": "dienen als Bestätigung der Teilnahme an einer Veranstaltung",
 		"noCompetencies": "und enthalten keine Kompetenzen",
+		"enterDetailsStep": "Details eingeben",
 		"enterDetails": "Badge-Details eingeben",
 		"criteriaInfo": "Folgende Kriterien sind auf Basis deiner Eingaben als Metadaten im Badge hinterlegt:",
 		"criteriaError": "Entweder Text oder eine URL sind verpflichtend.",
@@ -425,7 +429,7 @@
 		"toEscoSearch": "Zur ESCO-Suche",
 		"titleError": "Bitte gib einen Titel für die Kompetenz ein",
 		"competencyDuration": "Dauer Kompetenz-Erwerb",
-		"chooseCompetencyCategory": "Wähle Kategorie",
+		"chooseCompetencyCategory": "Kategorie wählen",
 		"competencyCategoryError": "Bitte wähle die Kategorie der Kompetenz aus.",
 		"alignmentInfo": "Open Badges können optional mit Bildungsstandards verknüpft werden. Diese Verknüpfungsinformation kann für Menschen wichtig sein, die sehen welche Badges man erhalten hat oder für Menschen, die sich überlegen ein bestimmtes Badge zu erhalten.",
 		"shortDescription": "Kurzbeschreibung",
@@ -439,6 +443,7 @@
 		"expirationInfo": "Beschreiben Sie die Dauer, für die dieses Badge allgemein gültig ist. Diese Information kann auch bei der Vergabe geändert werden. Badges werden nach Ablauf der Gültigkeit als abgelaufen markiert.",
 		"chooseDuration": "Wähle Dauer",
 		"optionalBadgeDetails": "Optionale Badge-Details",
+		"addTags": "Tags hinzufügen",
 		"newTag": "Einen Tag eingeben...",
 		"tagDoesNotExist": "Dieser Tag existiert noch nicht",
 		"tagInfo": "Tags verschlagworten Badges und helfen Lernenden auf OEB bei der Suche von Badges zu bestimmten Themen.",
@@ -469,7 +474,8 @@
 			"resultsIn": "Ergebnisse auf"
 		},
 		"competencyOwn": "Eigene Kompetenz",
-		"competencyOwnDescription": "Falls die ESCO-Suche dir keine passende Kompetenz liefert, kannst du hier händisch eine selbst definierte Kompetenz ergänzen:"
+		"competencyOwnDescription": "Falls die ESCO-Suche dir keine passende Kompetenz liefert, kannst du hier händisch eine selbst definierte Kompetenz ergänzen:",
+		"stepFinish": "Abschluss"
 	},
 	"Signup": {
 		"youHaveAccount": "Du hast bereits einen Account?",
@@ -806,6 +812,7 @@
 			"finished": "Abgeschlossen"
 		},
 		"chooseBadges": "Enthaltene Badges wählen",
+		"badgeSequenceStep": "Badge-Reihenfolge",
 		"badgeSequence": "Reihenfolge der Badges im Micro Degree",
 		"combineBadgeCategories": "Du kannst Kompetenz-Badges und Teilnahme-Badges kombinieren.",
 		"min3Badges": "Der Micro Degree muss mindestens 3 Badges enthalten.",
@@ -818,7 +825,11 @@
 		"lpDerivedData": "Folgende Daten haben wir für den Micro Degree übernommen:",
 		"addTag": "Tag hinzufügen",
 		"createdSuccessfully": "Dein Micro Degree wurde erfolgreich erstellt.",
-		"savedSuccessfully": "Deine Änderungen wurden erfolgreich gespeichert"
+		"savedSuccessfully": "Deine Änderungen wurden erfolgreich gespeichert",
+		"title": "Micro Degree-Titel",
+		"description": "Kurz-Beschreibung für Lernende",
+		"selectedBadges": "Du hast {{ count }} Badges für den Micro Degree ausgewählt",
+		"selectedBadgesOne": "Du hast 1 Badge für den Micro Degree ausgewählt"
 	},
 	"LearningPathEditor": {
 		"shortDescription": "Zusammenfassende Beschreibung deines Micro Degrees. Diese Kurzbeschreibung wird im Micro Degree gespeichert."
@@ -833,5 +844,10 @@
 		"copyButtonAfter": "Kopiert!",
 		"createIssue": "Zu den GitHub Issues",
 		"sendEmail": "Sende eine Mail"
+	},
+	"NounProject": {
+		"searchIcon": "Icon suchen",
+		"loading": "Lädt...",
+		"noIconsFoundFor": "Kein Icon gefunden für"
 	}
 }

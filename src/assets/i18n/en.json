@@ -91,7 +91,10 @@
 			"en": "English"
 		},
 		"close": "Close",
-		"notification": "Notification"
+		"notification": "Notification",
+		"validationCompleteForm": "Please fill out completely",
+		"select": "Select",
+		"loadMore": "Load more"
   },
   "NavItems": {
     "register": "Register",
@@ -380,13 +383,14 @@
 		"partOfLearningPath": "This Badge is part of the following Micro Degrees:"
   },
   "CreateBadge": {
-    "chooseBadgeCategory": "Choose badge category",
+    "chooseBadgeCategory": "Choose category",
     "chooseABadgeCategory": "Choose a badge category",
     "chooseCategory": "Choose from two badge categories:",
     "competencyInfo": "can be filled with skills that your learners acquire",
     "withAssistant": "with the help of our AI badge assistant",
     "participationInfo": "serve as confirmation of participation in an event",
     "noCompetencies": "and do not contain skills",
+		"enterDetailsStep": "Enter details",
     "enterDetails": "Enter badge details",
     "criteriaInfo": "The following criteria are stored as metadata in the badge based on your entries:",
     "criteriaError": "Either text or a URL is mandatory.",
@@ -439,6 +443,7 @@
     "expirationInfo": "Describe how long this badge is generally valid. This information can also be changed when awarding the badge. Badges are marked as expired after their validity period has expired.",
     "chooseDuration": "Choose duration",
     "optionalBadgeDetails": "Optional badge details",
+		"addTags": "Add tags",
     "newTag": "Enter a tag...",
     "tagDoesNotExist": "This tag does not exist yet",
     "tagInfo": "Tags help categorize badges and help learners on OEB search for badges on specific topics.",
@@ -460,16 +465,17 @@
     "issuerImageInBadgeImageInfo": "Your institution's logo will automatically be added to the badge image.",
     "pleaseAddCompetencies": "Please add skills",
     "invalidCompetence": "Invalid skill",
-		"competencyOptions": "Du hast zwei Möglichkeiten, händisch Kompetenzen zu ergänzen.",
+		"competencyOptions": "[translate] Du hast zwei Möglichkeiten, händisch Kompetenzen zu ergänzen.",
 		"escoSearch": {
 			"headline": "ESCO Competencies",
-			"description": "Damit unsere Badges inhaltlich standardisiert und vergleichbar sind, nutzt der KI-Assistent <a class='tw-text-[var(--color-link)] tw-underline' href='https://esco.ec.europa.eu/de/about-esco' target='_blank'>die Europäische Klassifizierung für Kompetenzen (ESCO)</a>. Du kannst hier selbst nach passenden Kompetenzen suchen und sie hinzufügen:",
+			"description": "[translate] Damit unsere Badges inhaltlich standardisiert und vergleichbar sind, nutzt der KI-Assistent <a class='tw-text-[var(--color-link)] tw-underline' href='https://esco.ec.europa.eu/de/about-esco' target='_blank'>die Europäische Klassifizierung für Kompetenzen (ESCO)</a>. Du kannst hier selbst nach passenden Kompetenzen suchen und sie hinzufügen:",
 			"search": "Search ESCO database",
 			"inputPlaceholder": "Enter keyword",
 			"resultsIn": "Results in"
 		},
 		"competencyOwn": "Own competency",
-		"competencyOwnDescription": "Falls die ESCO-Suche dir keine passende Kompetenz liefert, kannst du hier händisch eine selbst definierte Kompetenz ergänzen:"
+		"competencyOwnDescription": "[translate] Falls die ESCO-Suche dir keine passende Kompetenz liefert, kannst du hier händisch eine selbst definierte Kompetenz ergänzen:",
+		"stepFinish": "Finish"
   },
   "Signup": {
     "youHaveAccount": "Already have an account?",
@@ -806,6 +812,7 @@
 			"finished": "finished"
 		},
     "chooseBadges": "Choose included badges",
+		"badgeSequenceStep": "Badge order",
     "badgeSequence": "Order of badges in the Micro Degree",
     "combineBadgeCategories": "You can combine competency badges and participation badges.",
     "min3Badges": "The Micro Degree must contain at least 3 badges.",
@@ -818,7 +825,11 @@
     "lpDerivedData": "We have adopted the following data for the Micro Degree:",
     "addTag": "Add tag",
     "createdSuccessfully": "Your Micro Degree has been created successfully.",
-    "savedSuccessfully": "Your changes have been saved successfully"
+    "savedSuccessfully": "Your changes have been saved successfully",
+		"title": "Micro Degree title",
+		"description": "Short description for learners",
+		"selectedBadges": "You selected {{ count }} Badges for the Micro Degree",
+		"selectedBadgesOne": "You selected 1 Badge for the Micro Degree"
   },
   "LearningPathEditor": {
     "shortDescription": "Summarized description of your Micro Degree. This short description will be saved in the Micro Degree."
@@ -833,5 +844,10 @@
     "copyButtonAfter": "Copied!",
     "createIssue": "Go to GitHub Issues",
     "sendEmail": "Send an email"
-  }
+  },
+	"NounProject": {
+		"searchIcon": "Search Icon",
+		"loading": "Loading...",
+		"noIconsFoundFor": "No icons found for"
+	}
 }
