@@ -226,25 +226,25 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 					crumbs: this.crumbs,
 					badgeTitle: this.badgeClass.name,
 					headerButton: {
-						title: 'Badge direkt vergeben',
+						title: 'Badge.award',
 						action: () => this.routeToBadgeAward(this.badgeClass, this.issuer),
 						// routerLink: ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'issue'],
 					},
 					issueQrRouterLink: ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'qr'],
 					qrCodeButton: {
-						title: 'Badge über QR-Code vergeben',
+						title: 'Badge.awardQRCode',
 						show: true,
 						action: () => this.routeToQRCodeAward(this.badgeClass, this.issuer),
 					},
 					menuitems: [
 						{
-							title: 'Bearbeiten',
+							title: 'General.edit',
 							routerLink: ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'edit'],
 							disabled: this.badgeClass.recipientCount > 0,
 							icon: 'lucidePencil',
 						},
 						{
-							title: 'Kopieren (diese Institution)',
+							title: 'Badge.copyThisIssuer',
 							action: () => {
 								this.router.navigate(['/issuer/issuers', this.issuer.slug, 'badges', 'create'], {
 									state: { copybadgeid: this.badgeSlug },
@@ -253,7 +253,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 							icon: 'lucideCopy',
 						},
 						{
-							title: 'Kopierstatus bearbeiten',
+							title: 'Badge.editCopyStatus',
 							routerLink: [
 								'/issuer/issuers',
 								this.issuerSlug,
@@ -264,7 +264,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 							icon: 'lucideCopyX',
 						},
 						{
-							title: 'Löschen',
+							title: 'General.delete',
 							icon: 'lucideTrash2',
 							action: () => this.deleteBadge(),
 						},

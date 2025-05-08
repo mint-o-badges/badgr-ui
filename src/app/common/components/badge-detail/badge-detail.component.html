@@ -19,7 +19,7 @@
 								<oeb-button
 									*ngIf="config.headerButton.routerLink"
 									class="tw-whitespace-nowrap tw-grow"
-									[text]="config.headerButton.title"
+									[text]="config.headerButton.title | translate"
 									width="full_width"
 									[routerLink]="config.headerButton.routerLink"
 									[disabled-when-requesting]="true"
@@ -31,7 +31,7 @@
 									width="full_width"
 									(click)="config.headerButton.action()"
 									[disabled-when-requesting]="true"
-									[text]="config.headerButton.title"
+									[text]="config.headerButton.title | translate"
 								></oeb-button>
 							</ng-container>
 							<oeb-button
@@ -64,7 +64,7 @@
 							*ngIf="config.qrCodeButton?.show"
 							class="oeb-button !tw-p-0 tw-mt-2 tw-w-full md:tw-w-fit md:tw-ml-auto md:tw-h-[64px] tw-h-[45px] tw-flex tw-items-center tw-justify-center tw-text-xl tw-rounded-[7px]"
 							variant="secondary"
-							[text]="config.qrCodeButton?.title"
+							[text]="config.qrCodeButton?.title | translate"
 							(click)="config.qrCodeButton?.action()"
 						></oeb-button>
 					</div>
@@ -195,7 +195,7 @@
 								*ngIf="config.license"
 								class="tw-text-oebblack tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col"
 							>
-								<dt class="tw-text-sm tw-text-oebblack tw-font-bold">Lizenz</dt>
+								<dt class="tw-text-sm tw-text-oebblack tw-font-bold">{{ 'General.license' | translate }}</dt>
 								<dd class="tw-text-sm tw-text-oebblack md:tw-ml-2 tw-flex">
 									<div
 										class="tw-ml-1 tw-w-5 tw-h-5 tw-flex tw-items-center tw-justify-center tw-border-solid tw-border-[1px] tw-border-oebblack tw-rounded-full"
@@ -226,7 +226,7 @@
 				<div class="md:tw-pb-8 md:tw-min-h-[800px] tw-w-full">
 					<div class="tw-text-oebblack tw-pt-0 tw-pb-4 oeb-break-words">
 						<h3 class="tw-font-semibold tw-leading-[26.4px] tw-text-[22px] tw-text-oebblack tw-mb-4">
-							Kurzbeschreibung
+							{{ 'CreateBadge.shortDescription' | translate }}
 						</h3>
 						<p hlmP class="tw-text-oebblack tw-w-full">{{ config.badgeDescription }}</p>
 					</div>

@@ -83,7 +83,8 @@
     "confirm": "Confirm",
     "noRequests": "No requests",
     "oneRequest": "1 request",
-    "multiRequests": "# requests"
+    "multiRequests": "# requests",
+		"license": "License"
   },
   "NavItems": {
     "register": "Register",
@@ -358,7 +359,11 @@
     "copyBadge": "Copy badge",
     "copyableFor": "Copyable for",
     "copyForWhatInstitution": "For which of your institutions should the badge be copied?",
-    "copyPermissionInfo": "The copy status of this badge only allows copying within the institution, so only this one is displayed here."
+    "copyPermissionInfo": "The copy status of this badge only allows copying within the institution, so only this one is displayed here.",
+		"copyThisIssuer": "Copy (this institution)",
+		"editCopyStatus": "Edit copy status",
+		"award": "Award Badge",
+		"awardQRCode": "Award Badge using QR-Code"
   },
   "CreateBadge": {
     "chooseBadgeCategory": "Choose badge category",

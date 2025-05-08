@@ -13,7 +13,7 @@
 		<oeb-button
 			class="oeb-button tw-whitespace-nowrap !tw-p-0"
 			variant="secondary"
-			text="Badge über QR Code vergeben"
+			[text]="'Badge.awardQRCode' | translate"
 			(click)="routeToQrAward(badgeClass, issuer)"
 		></oeb-button>
 	</div>

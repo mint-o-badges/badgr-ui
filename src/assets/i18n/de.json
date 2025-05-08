@@ -83,7 +83,8 @@
 		"confirm": "Bestätigen",
 		"noRequests": "Keine Anfragen",
 		"oneRequest": "1 Anfrage",
-		"multiRequests": "# Anfragen"
+		"multiRequests": "# Anfragen",
+		"license": "Lizenz"
 	},
 	"NavItems": {
 		"register": "Registrieren",
@@ -358,7 +359,11 @@
 		"copyBadge": "Badge kopieren",
 		"copyableFor": "Kopierbar für",
 		"copyForWhatInstitution": "Für welche deiner Institutionen soll der Badge kopiert werden?",
-		"copyPermissionInfo": "Der Kopier-Status dieses Badges erlaubt nur das Kopieren innerhalb der Institution, daher wird nur diese hier angezeigt."
+		"copyPermissionInfo": "Der Kopier-Status dieses Badges erlaubt nur das Kopieren innerhalb der Institution, daher wird nur diese hier angezeigt.",
+		"copyThisIssuer": "Kopieren (diese Institution)",
+		"editCopyStatus": "Kopierstatus bearbeiten",
+		"award": "Badge direkt vergeben",
+		"awardQRCode": "Badge über QR-Code vergeben"
 	},
 	"CreateBadge": {
 		"chooseBadgeCategory": "Badge-Kategorie wählen",
