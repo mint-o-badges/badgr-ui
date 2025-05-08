@@ -94,7 +94,8 @@
 		"notification": "Notification",
 		"validationCompleteForm": "Please fill out completely",
 		"select": "Select",
-		"loadMore": "Load more"
+		"loadMore": "Load more",
+		"searchByEmail": "Search by email address"
   },
   "NavItems": {
     "register": "Register",
