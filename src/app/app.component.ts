@@ -57,7 +57,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
 	aboutBadgesMenuItems: MenuItem[] = [
 		{
-			title: 'FAQ',
+			title: 'NavItems.faq',
 			routerLink: ['/public/faq'],
 			icon: 'lucideFileQuestion',
 		},
@@ -67,24 +67,29 @@ export class AppComponent implements OnInit, AfterViewInit {
 			icon: 'lucideAward',
 		},
 		{
-			title: '',
+			title: 'General.institutionsNav',
 			routerLink: ['/catalog/issuers'],
 			icon: 'lucideWarehouse',
 		},
 		{
-			title: '',
+			title: 'LearningPath.learningpathsNav',
 			routerLink: ['/catalog/learningpaths'],
 			icon: 'lucideRoute',
 		},
 	];
 	accountMenuItems: MenuItem[] = [
 		{
-			title: 'Mein Profil',
+			title: 'General.backpack',
+			routerLink: ['/recipient/badges'],
+			icon: 'lucideHexagon',
+		},
+		{
+			title: 'NavItems.myProfile',
 			routerLink: ['/profile/profile'],
 			icon: 'lucideUsers',
 		},
 		{
-			title: 'App Integrationen',
+			title: 'NavItems.appIntegrations',
 			routerLink: ['/profile/app-integrations'],
 			icon: 'lucideRepeat2',
 		},
@@ -240,6 +245,17 @@ export class AppComponent implements OnInit, AfterViewInit {
 			// Enable the embedded indicator class on the body
 			renderer.addClass(document.body, 'embeddedcontainer');
 		}
+
+		let language = window.localStorage.getItem('lang');
+		if (!language) {
+			if (navigator.language.toLocaleLowerCase().indexOf('de') == 0) {
+				language = 'de';
+			} else {
+				language = 'en';
+			}
+			window.localStorage.setItem('lang', language);
+		}
+		this.languageService.setLanguage(language);
 	}
 
 	refreshProfile = () => {
@@ -311,24 +327,23 @@ export class AppComponent implements OnInit, AfterViewInit {
 			}),
 		);
 
-		this.translate.get('General.institutionsNav').subscribe((translatedText: string) => {
-			this.aboutBadgesMenuItems[2].title = translatedText;
-		});
+		// this.translate.get('General.institutionsNav').subscribe((translatedText: string) => {
+		// 	this.aboutBadgesMenuItems[2].title = translatedText;
+		// });
 
-		this.translate.get('LearningPath.learningpathsNav').subscribe((translatedText: string) => {
-			this.aboutBadgesMenuItems[3].title = translatedText;
-		});
+		// this.translate.get('LearningPath.learningpathsNav').subscribe((translatedText: string) => {
+		// 	this.aboutBadgesMenuItems[3].title = translatedText;
+		// });
 
-		this.translate.get('NavItems.myProfile').subscribe((translatedText: string) => {
-			this.accountMenuItems[0].title = translatedText;
-		});
+		// this.translate.get('NavItems.myProfile').subscribe((translatedText: string) => {
+		// 	this.accountMenuItems[1].title = translatedText;
+		// });
 
-		this.translate.get('NavItems.appIntegrations').subscribe((translatedText: string) => {
-			this.accountMenuItems[1].title = translatedText;
-		});
+		// this.translate.get('NavItems.appIntegrations').subscribe((translatedText: string) => {
+		// 	this.accountMenuItems[2].title = translatedText;
+		// });
 
 		this.translate.onLangChange.subscribe(() => {
-			console.log('!!!!!!!!' + this.translate.currentLang);
 			this.document.documentElement.lang = this.translate.currentLang;
 		});
 	}
@@ -358,6 +373,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
 	// For changing language based on selection
 	changeLng(lng) {
+		window.localStorage.setItem('lang', lng);
 		this.languageService.setLanguage(lng);
 	}
 }
