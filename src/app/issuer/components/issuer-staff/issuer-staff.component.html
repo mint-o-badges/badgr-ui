@@ -173,9 +173,9 @@
 					<!-- Name -->
 					<hlm-th class="tw-text-oebblack md:tw-w-[25%] tw-w-[33%] tw-px-4">Name</hlm-th>
 					<!-- E-Mail -->
-					<hlm-th class="tw-text-oebblack md:tw-w-[25%] tw-w-[33%] tw-px-4">E-Mail</hlm-th>
+					<hlm-th class="tw-text-oebblack md:tw-w-[25%] tw-w-[33%] tw-px-4">{{ 'General.email' | translate }}</hlm-th>
 					<!-- Role -->
-					<hlm-th class="tw-text-oebblack md:tw-w-[25%] tw-w-[33%] tw-px-4">Rolle</hlm-th>
+					<hlm-th class="tw-text-oebblack md:tw-w-[25%] tw-w-[33%] tw-px-4">{{ 'General.role' | translate }}</hlm-th>
 					<!-- Actions -->
 					<hlm-th class="tw-text-oebblack md:tw-w-[25%] tw-w-0 tw-px-4"></hlm-th>
 				</hlm-trow>
@@ -201,7 +201,7 @@
 									*ngIf="isCurrentUserIssuerOwner"
 								>
 									<option *ngFor="let role of issuerStaffRoleOptions" [value]="role.value">
-										{{ role.label }}
+										{{ role.label | translate }}
 									</option>
 								</select>
 							</div>

@@ -226,7 +226,7 @@ export class RecipientEarnedBadgeListComponent
 				component: this.badgesTemplate,
 			},
 			{
-				title: 'Kompetenzen',
+				title: 'RecBadge.competencies',
 				component: this.badgesCompetency,
 			},
 			{

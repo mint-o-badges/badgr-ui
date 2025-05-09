@@ -85,7 +85,7 @@ import { HlmPDirective } from '../components/spartan/ui-typography-helm/src/lib/
 					width="full_width"
 					class="tw-w-full"
 					(click)="directBadgeAward.emit(badge.badge)"
-					[text]="directBadgeAwardText"
+					[text]="directBadgeAwardText | translate"
 					*ngIf="badge.badge.extension['extensions:CategoryExtension']?.Category !== 'learningpath'"
 				>
 				</oeb-button>
@@ -95,7 +95,7 @@ import { HlmPDirective } from '../components/spartan/ui-typography-helm/src/lib/
 					width="full_width"
 					class="tw-w-full"
 					(click)="qrCodeAward.emit(badge.badge)"
-					[text]="qrCodeAwardText"
+					[text]="qrCodeAwardText | translate"
 					*ngIf="badge.badge.extension['extensions:CategoryExtension']?.Category !== 'learningpath'"
 				>
 				</oeb-button>
@@ -119,8 +119,8 @@ import { HlmPDirective } from '../components/spartan/ui-typography-helm/src/lib/
 export class DatatableComponent {
 	@Input() caption: string = '';
 	@Input() badges: DatatableBadgeResult[];
-	@Input() directBadgeAwardText: string = 'Badge direkt vergeben';
-	@Input() qrCodeAwardText: string = 'QR-Code-Vergabe';
+	@Input() directBadgeAwardText: string = 'Badge.award';
+	@Input() qrCodeAwardText: string = 'QrCode.qrAward';
 	@Output() directBadgeAward = new EventEmitter();
 	@Output() qrCodeAward = new EventEmitter();
 	@Output() redirectToBadgeDetail = new EventEmitter<{ badge: BadgeClass; focusRequests: boolean }>();

@@ -11,7 +11,7 @@
 					</h1>
 
 					<p hlmP class="tw-text-oebblack tw-my-4">
-						Du bist neu hier?
+						{{ 'Login.areYouNew' | translate }}
 						<a hlmA href="#" [routerLink]="['/signup']">{{ 'Login.createAccount' | translate }}</a
 						>.
 					</p>
@@ -36,8 +36,8 @@
 						<!-- Email Field -->
 						<oeb-input
 							[control]="loginForm.rawControlMap.username"
-							label="E-Mail"
-							placeholder="Deine E-Mail Adresse"
+							[label]="'General.email' | translate"
+							[placeholder]="'Login.yourEmail' | translate"
 							fieldType="email"
 							[error]="'Bitte gib Deine Email-Adresse ein.'"
 							[autofocus]="true"
@@ -47,11 +47,11 @@
 						<oeb-input
 							hlmP
 							[control]="loginForm.rawControlMap.password"
-							label="Passwort"
+							[label]="'General.password' | translate"
 							class="tw-mt-6 md:tw-mt-[35px]"
 							[error]="'Bitte gib Dein Passwort ein.'"
 							fieldType="password"
-							placeholder="Dein Passwort"
+							[placeholder]="'Login.yourPassword' | translate"
 							fieldType="password"
 							#passwordField
 						>
