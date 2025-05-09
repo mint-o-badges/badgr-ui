@@ -998,7 +998,7 @@
 							/>
 						</div>
 					</div>
-					<div *ngIf="category=='competency'" class="section tw-text-oebblack tw-mt-6">
+					<div *ngIf="category == 'competency'" class="section tw-text-oebblack tw-mt-6">
 						<h2 hlmH2 class="tw-pt-1 tw-px-1 tw-mr-auto !tw-text-oebblack">
 							{{ 'Badge.awardCriteria' | translate }}
 						</h2>
@@ -1008,12 +1008,17 @@
 						></span>
 						<div class="tw-mt-2 tw-mb-2 tw-grid tw-grid-cols-3">
 							<div class="tw-grid tw-grid-cols-2 tw-col-span-2">
-								  <ng-container *ngFor="let criteriaGroup of criteriaSelectionsForm.controls.selections.controls; let i = index">
+								<ng-container
+									*ngFor="
+										let criteriaGroup of criteriaSelectionsForm.controls.selections.controls;
+										let i = index
+									"
+								>
 									<oeb-checkbox
-									  [control]="criteriaGroup.rawControlMap.selected"
-									  [text]="criteriaGroup.controls.text.value"
+										[control]="criteriaGroup.rawControlMap.selected"
+										[text]="criteriaGroup.controls.text.value"
 									></oeb-checkbox>
-								  </ng-container>
+								</ng-container>
 							</div>
 							<oeb-button
 								class="tw-col-span-1"
@@ -1024,10 +1029,8 @@
 								(click)="addNewOwnCriteria()"
 							></oeb-button>
 						</div>
-						
-						<ng-container
-							*ngFor="let criteria of badgeClassForm.controls.criteria.controls; let i = index"
-						>
+
+						<ng-container *ngFor="let criteria of badgeClassForm.controls.criteria.controls; let i = index">
 							<section
 								class="tw-border-[var(--color-purple)] tw-bg-[var(--color-lightpurple)] tw-border tw-border-solid tw-rounded-md tw-p-6 tw-mt-4"
 							>
@@ -1038,6 +1041,7 @@
 										[control]="criteria.rawControlMap.name"
 										[errorMessage]="{ required: titleError }"
 										noTopMargin="true"
+										[readonly]="isPredefinedCriteria(criteria)"
 										class="tw-w-full"
 										[placeholder]="'Badge.enterOwnCriteria' | translate"
 										[sublabelRight]="'(max. 50 Zeichen)'"
@@ -1096,10 +1100,10 @@
 									[optionMap]="durationOptions"
 								></oeb-select>
 							</div>
-							</div>
+						</div>
 						<!-- <div class="tw-mt-2 tw-mb-2 tw-flex tw-gap-2"> -->
-							<!-- <span [innerHTML]="'CreateBadge.validUntil' | translate"></span> -->
-							<!-- <oeb-input
+						<!-- <span [innerHTML]="'CreateBadge.validUntil' | translate"></span> -->
+						<!-- <oeb-input
 								[errorMessage]="'Bitte gib ein Datum in der Form tt/mm/jjjj an'"
 								[control]="expirationForm.rawControlMap.expires"
 								fieldType="date"
