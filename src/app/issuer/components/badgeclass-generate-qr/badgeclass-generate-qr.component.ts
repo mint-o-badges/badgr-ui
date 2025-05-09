@@ -234,7 +234,7 @@ export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComp
 			const link = document.createElement('a');
 			link.href = url;
 			// name of the file
-			link.download = `${this.qrTitle}-qrcode`;
+			link.download = `${this.qrTitle}-qrcode.png`;
 			link.click();
 		}
 	}
