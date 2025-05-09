@@ -61,8 +61,13 @@
 					</div>
 				</div>
 			</div>
-			<div class="tw-max-w-[668px]">
-				<oeb-button width="full_width" text="Download QR-Code" (click)="saveAsImage(parent)"></oeb-button>
+			<div class="tw-max-w-[668px] tw-flex tw-justify-between">
+				<oeb-button
+					size="md"
+					[text]="'QrCode.downloadPoster' | translate"
+					(click)="savePdf(parent)"
+				></oeb-button>
+				<oeb-button size="md" text="Download QR-Code-PNG" (click)="saveAsImage(parent)"></oeb-button>
 			</div>
 			<oeb-button
 				[routerLink]="['/issuer/issuers', this.issuerSlug, 'badges', badgeClass.slug]"
