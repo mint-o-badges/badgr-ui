@@ -10,7 +10,7 @@ export const inputVariants = cva(
 			size: {
 				default: 'tw-h-10 tw-py-2 tw-px-4',
 				sm: 'tw-h-9 tw-px-3',
-				lg: 'tw-h-11 tw-px-8',
+				lg: 'tw-h-11 tw-px-4 tw-py-2',
 			},
 			error: {
 				auto: '[&.ng-invalid.ng-touched]:tw-text-destructive [&.ng-invalid.ng-touched]:tw-border-destructive [&.ng-invalid.ng-touched]:focus-visible:tw-ring-destructive [&.ng-invalid.ng-dirty]:tw-text-destructive [&.ng-invalid.ng-dirty]:tw-border-destructive [&.ng-invalid.ng-dirty]:focus-visible:tw-ring-destructive',
@@ -23,7 +23,7 @@ export const inputVariants = cva(
 		},
 	},
 );
-type InputVariants = VariantProps<typeof inputVariants>;
+export type InputVariants = VariantProps<typeof inputVariants>;
 
 @Directive({
 	selector: '[hlmInput]',
