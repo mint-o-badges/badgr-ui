@@ -13,7 +13,7 @@
 					<div class="tw-flex tw-justify-between tw-items-center">
 						<h1 hlmH1 class="tw-text-purple"> {{'General.collection' | translate }}</h1>
 						<div class="tw-flex tw-gap-2">
-							<oeb-button 
+							<oeb-button
 								[text]="'BadgeCollection.share' | translate"
 								icon="lucideUpload"
 								iconLeft="true"
@@ -44,13 +44,13 @@
 						<h1 hlmH1 class="tw-text-purple tw-font-black">
 							{{ collection?.name }}
 						</h1>
-						<div class="tw-mt-4 tw-items-center">
+						<div class="tw-mt-4 tw-flex tw-gap-2 tw-items-center">
 							<label hlmLabel>
-								<hlm-switch 
-									[(ngModel)]="collection.published" 
+								<hlm-switch
+									[(ngModel)]="collection.published"
 									(ngModelChange)="togglePublished()"
 								>
-			
+
 								</hlm-switch>
 							</label>
 							{{'General.public' | translate}}
@@ -184,14 +184,14 @@
 	</div>
 
 	<div class="tw-flex tw-justify-evenly tw-mt-4">
-		<oeb-button 
+		<oeb-button
 			variant="secondary"
 			[text]="'General.cancel' | translate"
 			size="sm"
 			(click)="closeDialog()"
 		>
 		</oeb-button>
-		<oeb-button 
+		<oeb-button
 			[text]="'BadgeCollection.removeBadgeConfirmation' | translate"
 			size="sm"
 			(click)="closeDialogContinue()"
