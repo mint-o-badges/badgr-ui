@@ -14,6 +14,7 @@ import { SuccessDialogComponent } from '../../../common/dialogs/oeb-dialogs/succ
 import { TranslateService } from '@ngx-translate/core';
 import { DatePipe } from '@angular/common';
 import { Location } from '@angular/common';
+import { ApiQRCode } from '../../models/qrcode-api.model';
 
 @Component({
 	selector: 'edit-qr-form',
@@ -24,6 +25,8 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent {
 	static datePipe = new DatePipe('de');
 
 	@Input() editing: boolean = false;
+
+	qrCodePromise : Promise<any> | null = null;
 
 	get issuerSlug() {
 		return this.route.snapshot.params['issuerSlug'];
@@ -147,7 +150,7 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent {
 
 		if (this.editing) {
 			const formState = this.qrForm.value;
-			this.qrCodeApiService
+			this.qrCodePromise = this.qrCodeApiService
 				.updateQrCode(this.issuerSlug, this.badgeSlug, this.qrSlug, {
 					title: formState.title,
 					createdBy: formState.createdBy,
@@ -171,8 +174,7 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent {
 				});
 		} else {
 			const formState = this.qrForm.value;
-
-			this.qrCodeApiService
+			this.qrCodePromise = this.qrCodeApiService
 				.createQrCode(this.issuerSlug, this.badgeSlug, {
 					title: formState.title,
 					createdBy: formState.createdBy,
