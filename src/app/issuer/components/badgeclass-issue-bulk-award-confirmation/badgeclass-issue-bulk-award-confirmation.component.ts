@@ -14,6 +14,8 @@ import striptags from 'striptags';
 import { SuccessDialogComponent } from '../../../common/dialogs/oeb-dialogs/success-dialog.component';
 import { HlmDialogService } from './../../../components/spartan/ui-dialog-helm/src';
 import { typedFormGroup } from '../../../common/util/typed-forms';
+import { BadgeInstanceApiService } from '../../services/badgeinstance-api.service';
+import { TaskStatusService } from '../../../common/services/task.service';
 
 @Component({
 	selector: 'badgeclass-issue-bulk-award-confirmation',
@@ -34,12 +36,14 @@ export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRouta
 
 	constructor(
 		protected badgeInstanceManager: BadgeInstanceManager,
+		protected badgeInstanceApiService: BadgeInstanceApiService,
 		protected sessionService: SessionService,
 		protected router: Router,
 		protected route: ActivatedRoute,
 		protected messageService: MessageService,
 		protected formBuilder: FormBuilder,
 		protected title: Title,
+		protected taskService: TaskStatusService,
 	) {
 		super(router, route, sessionService);
 		this.enableActionButton();
@@ -63,6 +67,7 @@ export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRouta
 
 		const assertions: BadgeInstanceBatchAssertion[] = [];
 		const recipientProfileContextUrl = 'https://openbadgespec.org/extensions/recipientProfile/context.json';
+
 		this.transformedImportData.validRowsTransformed.forEach((row) => {
 			let assertion: BadgeInstanceBatchAssertion;
 
@@ -83,25 +88,26 @@ export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRouta
 			assertions.push(assertion);
 		});
 
-		this.badgeInstanceManager
-			.createBadgeInstanceBatched(this.issuerSlug, this.badgeSlug, {
+		localStorage.setItem('batchAwardCount', assertions.length.toString());
+
+		this.badgeInstanceApiService
+			.createBadgeInstanceBatchedAsync(this.issuerSlug, this.badgeSlug, {
 				issuer: this.issuerSlug,
 				badge_class: this.badgeSlug,
 				create_notification: this.issueForm.rawControlMap.notify_earner.value,
 				assertions,
 			})
-			.then(
-				(result) => {
-					this.openSuccessDialog(assertions.length + ' User');
-					this.router.navigate(['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug]);
-				},
-				(error) => {
-					this.messageService.setMessage(
-						'Fast geschafft! Deine Badges werden gerade vergeben – das kann ein paar Minuten dauern. Schau gleich auf der Badge-Detail-Seite nach, ob alles geklappt hat.',
-						'error',
-					);
-				},
-			);
+			.then((response) => {
+				const taskId = response.body.task_id;
+
+				this.taskService.setTaskId(taskId);
+
+				this.router.navigate(['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug]);
+			})
+			.catch((error) => {
+				console.error('Error creating badge batch:', error);
+				this.buttonDisabledAttribute = false;
+			});
 	}
 
 	updateViewState(state: ViewState) {

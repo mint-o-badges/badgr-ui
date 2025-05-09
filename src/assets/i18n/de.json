@@ -357,7 +357,9 @@
 		"copyBadge": "Badge kopieren",
 		"copyableFor": "Kopierbar für",
 		"copyForWhatInstitution": "Für welche deiner Institutionen soll der Badge kopiert werden?",
-		"copyPermissionInfo": "Der Kopier-Status dieses Badges erlaubt nur das Kopieren innerhalb der Institution, daher wird nur diese hier angezeigt."
+		"copyPermissionInfo": "Der Kopier-Status dieses Badges erlaubt nur das Kopieren innerhalb der Institution, daher wird nur diese hier angezeigt.",
+		"awardingInProgress": "Badge-Vergabe läuft",
+		"willBeAwardedSoon": "Gleich haben wir alle Badges verschickt!"
 	},
 	"CreateBadge": {
 		"chooseBadgeCategory": "Badge-Kategorie wählen",

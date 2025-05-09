@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { HlmSpinnerComponent } from './spartan/ui-spinner-helm/src';
+import { HlmSpinnerComponent, SpinnerVariants } from './spartan/ui-spinner-helm/src';
 import { NgIf } from '@angular/common';
 
 @Component({
@@ -7,11 +7,13 @@ import { NgIf } from '@angular/common';
 	imports: [HlmSpinnerComponent, NgIf],
 	template: `
 		<div class="tw-flex tw-flex-col tw-items-center tw-w-full">
-			<hlm-spinner />
+			<hlm-spinner [size]="size" />
 			<span *ngIf="text" class="tw-mt-6 tw-text-oebblack tw-animate-pulse">{{ text }}</span>
 		</div>
 	`,
 })
 export class OebSpinnerComponent {
 	@Input() text: string;
+	@Input() size: SpinnerVariants['size']
+	@Input() variant: SpinnerVariants['variant'] 
 }
