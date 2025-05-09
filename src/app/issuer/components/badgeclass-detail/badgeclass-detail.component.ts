@@ -241,7 +241,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 						{
 							title: 'Bearbeiten',
 							routerLink: ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'edit'],
-							disabled: this.badgeClass.recipientCount > 0,
+							disabled: this.badgeClass.recipientCount > 0 || !this.issuer.canEditBadge,
 							icon: 'lucidePencil',
 						},
 						{
@@ -252,6 +252,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 								});
 							},
 							icon: 'lucideCopy',
+							disabled: !this.issuer.canCreateBadge
 						},
 						{
 							title: 'Kopierstatus bearbeiten',
@@ -263,11 +264,13 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 								'copypermissions',
 							],
 							icon: 'lucideCopyX',
+							disabled: !this.issuer.canEditBadge
 						},
 						{
 							title: 'Löschen',
 							icon: 'lucideTrash2',
 							action: () => this.deleteBadge(),
+							disabled: !this.issuer.canDeleteBadge
 						},
 					],
 					badgeDescription: this.badgeClass.description,
