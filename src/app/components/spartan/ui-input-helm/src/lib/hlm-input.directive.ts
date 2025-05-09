@@ -13,7 +13,7 @@ export const inputVariants = cva(
 				lg: 'tw-h-11 tw-px-8',
 			},
 			error: {
-				auto: '[&.ng-invalid.ng-touched]:tw-text-destructive [&.ng-invalid.ng-touched]:tw-border-destructive [&.ng-invalid.ng-touched]:focus-visible:tw-ring-destructive',
+				auto: '[&.ng-invalid.ng-touched]:tw-text-destructive [&.ng-invalid.ng-touched]:tw-border-destructive [&.ng-invalid.ng-touched]:focus-visible:tw-ring-destructive [&.ng-invalid.ng-dirty]:tw-text-destructive [&.ng-invalid.ng-dirty]:tw-border-destructive [&.ng-invalid.ng-dirty]:focus-visible:tw-ring-destructive',
 				true: 'tw-text-destructive tw-border-destructive focus-visible:tw-ring-destructive',
 			},
 		},
