@@ -72,11 +72,11 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 				icon: 'lucidePencil',
 				action: () => console.log("")
 			},
-			{
-				title: 'PDF herunterladen',
-				icon: 'lucideFileText',
-				action: () => console.log(""),
-			},
+			// {
+			// 	title: 'PDF herunterladen',
+			// 	icon: 'lucideFileText',
+			// 	action: () => console.log(""),
+			// },
 			{
 				title: 'Löschen',
 				icon: 'lucideTrash2',
@@ -174,7 +174,7 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 				}
 			},
 		});
-		
+
 		this.dialogRef = dialogRef
 	}
 
@@ -191,7 +191,7 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 					this.collection.deleteCollection().then(
 						() => {
 							this.messageService.reportMinorSuccess(`Deleted collection '${this.collection.name}'`);
-							this.router.navigate(['/recipient/badges'], 
+							this.router.navigate(['/recipient/badges'],
 								{
 									queryParams: { tab: this.translate.instant('BadgeCollection.myCollections') },
 								});
@@ -268,8 +268,8 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 		}
 	}
 
-	togglePublished(){		
-		this.collection.save()	
+	togglePublished(){
+		this.collection.save()
 	}
 
 	shareCollection() {

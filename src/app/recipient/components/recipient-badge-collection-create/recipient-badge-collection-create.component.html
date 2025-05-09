@@ -39,7 +39,7 @@
 					</div>
 
 					<ng-template [showLoader]="true" [bgAwaitPromises]="badgesLoaded">
-						<div class="tw-mt-6 md:tw-mt-7 section">				
+						<div class="tw-mt-6 md:tw-mt-7 section">
 							<div class="tw-rounded-2xl tw-p-8 md:tw-p-10 tw-bg-white tw-border-purple tw-border-solid tw-border">
 								<h2 class="tw-text-oebblack tw-text-[22px] tw-font-bold tw-mb-4">
 									{{'BadgeCollection.addBadges' | translate }}
@@ -61,7 +61,7 @@
 											hlmInput
 										/>
 									</div>
-					
+
 									<div class="l-actionbar-x-groupby">
 										<label class="l-flex l-flex-2x">
 											<div class="forminput">
@@ -104,7 +104,7 @@
 											[showCheckbox]="true"
 										></bg-badgecard>
 									</div>
-								</ng-container> 
+								</ng-container>
 								<ng-container *ngIf="groupBy == 'Kategorie' || groupBy == 'Category'">
 									<ng-container *ngFor="let categoryGroup of badgeResultsByCategory">
 										<h3 class="u-text-h3-semibold u-margin-bottom2x u-margin-top6x u-text-dark1">
@@ -145,7 +145,7 @@
 												{{ issuerGroup.badges.length == 1 ? 'Badge' : 'Badges' }}</span
 											>
 										</h3>
-										<div class="tw-grid sm:tw-grid-cols-badgesLp tw-gap-6"> 
+										<div class="tw-grid sm:tw-grid-cols-badgesLp tw-gap-6">
 											<!-- TODO: Fix the badgecard link for sharing and routing -->
 											<bg-badgecard
 												*ngFor="let badge of issuerGroup.badges"
@@ -176,7 +176,7 @@
 								</div>
 							</div>
 					</ng-template>
-					
+
 
 					<div class="l-flex l-flex-1x l-flex-justifyend u-margin-top2x">
 						<!-- <oeb-button
@@ -187,8 +187,8 @@
 							[disabled-when-requesting]="true"
 							></oeb-button
 						> -->
-						<oeb-button 
-						  variant="secondary" 
+						<oeb-button
+						  variant="secondary"
 						  [text]="'General.cancel' | translate "
 						  [routerLink]="['/recipient/badge-collections']"
 						  size="md"
@@ -197,11 +197,12 @@
 
 						</oeb-button>
 
-						<oeb-button 
+						<oeb-button
 							[text]="'BadgeCollection.createCollection' | translate"
 							type="submit"
 							[disabled]="!!createCollectionPromise"
 							size="md"
+							class="tw-mb-[40px]"
 						>
 
 						</oeb-button>
@@ -220,4 +221,4 @@
 			</form>
 		</div>
 	</div>
-</main> 
+</main>
