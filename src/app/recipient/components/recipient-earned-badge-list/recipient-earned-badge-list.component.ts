@@ -1,4 +1,13 @@
-import { Component, ContentChild, ElementRef, OnInit, ViewChild, AfterContentInit } from '@angular/core';
+import {
+	Component,
+	ContentChild,
+	ElementRef,
+	OnInit,
+	ViewChild,
+	AfterContentInit,
+	inject,
+	TemplateRef,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
@@ -27,6 +36,8 @@ import { LearningPath } from '../../../issuer/models/learningpath.model';
 import { FormControl } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { provideIcons } from '@ng-icons/core';
+import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src';
+import { RecipientBadgeApiService } from '../../services/recipient-badges-api.service';
 
 type BadgeDispay = 'grid' | 'list';
 type EscoCompetencies = {
@@ -59,10 +70,15 @@ export class RecipientEarnedBadgeListComponent
 
 	@ViewChild(ImportLauncherDirective) importLauncherDirective: ImportLauncherDirective;
 
+	@ViewChild('headerTemplate')
+	headerTemplate: TemplateRef<void>;
+
 	allBadges: RecipientBadgeInstance[] = [];
+	importedBadges: RecipientBadgeInstance[] = [];
 	badgesLoaded: Promise<unknown>;
 	profileLoaded: Promise<unknown>;
 	learningpathLoaded: Promise<unknown>;
+	importedBadgesLoaded: Promise<unknown>;
 	allIssuers: ApiRecipientBadgeIssuer[] = [];
 	allLearningPaths: any[] = [];
 
@@ -101,7 +117,7 @@ export class RecipientEarnedBadgeListComponent
 
 	activeTab = 'Badges';
 	private _badgesDisplay: BadgeDispay = 'grid';
-	sortControl = new FormControl('name_asc');
+	sortControl = new FormControl('date_desc');
 	get badgesDisplay() {
 		return this._badgesDisplay;
 	}
@@ -131,6 +147,8 @@ export class RecipientEarnedBadgeListComponent
 		this.updateResults();
 	}
 
+	private readonly _hlmDialogService = inject(HlmDialogService);
+
 	constructor(
 		router: Router,
 		route: ActivatedRoute,
@@ -144,6 +162,7 @@ export class RecipientEarnedBadgeListComponent
 		public configService: AppConfigService,
 		private profileManager: UserProfileManager,
 		private translate: TranslateService,
+		private recipientBadgeApiService: RecipientBadgeApiService,
 	) {
 		super(router, route, sessionService);
 
@@ -152,6 +171,7 @@ export class RecipientEarnedBadgeListComponent
 		this.badgesLoaded = this.recipientBadgeManager.recipientBadgeList.loadedPromise.catch((e) =>
 			this.messageService.reportAndThrowError('Failed to load your badges', e),
 		);
+
 		this.learningpathLoaded = this.learningPathApi
 			.getLearningPathsForUser()
 			.then((res) => {
@@ -159,10 +179,6 @@ export class RecipientEarnedBadgeListComponent
 				this.updateResults();
 			})
 			.catch((e) => this.messageService.reportAndThrowError('Failed to load your badges', e));
-
-		this.recipientBadgeManager.recipientBadgeList.changed$.subscribe((badges) =>
-			this.updateBadges(badges.entities),
-		);
 
 		if (sessionService.isLoggedIn) {
 			// force a refresh of the userProfileSet now that we are authenticated
@@ -215,8 +231,27 @@ export class RecipientEarnedBadgeListComponent
 	}
 
 	ngOnInit() {
+		this.loadImportedBadges();
+
+		this.recipientBadgeManager.recipientBadgeList.changed$.subscribe((badges) => {
+			const combinedBadges = [...this.importedBadges, ...badges.entities];
+			this.updateBadges(combinedBadges);
+		});
 		super.ngOnInit();
 		if (this.route.snapshot.routeConfig.path === 'badges/import') this.launchImport(new Event('click'));
+	}
+
+	private loadImportedBadges() {
+		this.recipientBadgeApiService
+			.listImportedBadges()
+			.then((res) => {
+				this.importedBadges = res;
+				// Force an update after loading imported badges
+				const currentBadges = this.recipientBadgeManager.recipientBadgeList.entities || [];
+				const combinedBadges = [...this.importedBadges, ...currentBadges];
+				this.updateBadges(combinedBadges);
+			})
+			.catch((e) => this.messageService.reportAndThrowError('Failed to load imported badges', e));
 	}
 
 	ngAfterContentInit() {
@@ -237,8 +272,17 @@ export class RecipientEarnedBadgeListComponent
 	}
 
 	addBadge() {
-		this.addBadgeDialog.openDialog({}).then(
+		this.addBadgeDialog.openDialog().then(
 			() => {},
+			() => {},
+		);
+	}
+
+	uploadBadge() {
+		this.addBadgeDialog.openDialog().then(
+			() => {
+				this.loadImportedBadges()
+			},
 			() => {},
 		);
 	}
