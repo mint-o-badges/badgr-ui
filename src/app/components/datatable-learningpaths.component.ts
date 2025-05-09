@@ -60,8 +60,8 @@ import { Issuer } from '../issuer/models/issuer.model';
 					width="full_width"
 					(click)="actionElement.emit(learningPath.slug)"
 					[text]="actionElementText"
-					[disabled]="!issuer.canCreateBadge"
-					[class]="issuer.canCreateBadge ? '' : 'disabled'"
+					[disabled]="!issuer.canDeleteBadge"
+					[class]="issuer.canDeleteBadge ? '' : 'disabled'"
 				></oeb-button>
 			</hlm-th>
 		</hlm-trow>
