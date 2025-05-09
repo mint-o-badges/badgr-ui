@@ -43,7 +43,9 @@ export class OebButtonComponent {
 	readonly loadingMessage = input<string>('Loading', { alias: 'loading-message' });
 	readonly loadingWhenRequesting = input<boolean>(false, { alias: 'loading-when-requesting' });
 	readonly disableWhenRequesting = input<boolean>(false, { alias: 'disabled-when-requesting' });
-	readonly loadingPromise = input<Promise<unknown> | Promise<unknown>[]>(undefined, { alias: 'loading-promises' });
+	readonly loadingPromise = input<Promise<unknown> | Promise<unknown | undefined | null>[]>(undefined, {
+		alias: 'loading-promises',
+	});
 	readonly loadingPromise$ = toObservable(this.loadingPromise);
 	readonly promiseIsLoading = signal(false);
 	private loadingSubscription?: Subscription;
@@ -81,7 +83,7 @@ export class OebButtonComponent {
 	}
 
 	ngOnDestroy() {
-		this.loadingSubscription.unsubscribe();
+		this.loadingSubscription?.unsubscribe();
 	}
 
 	/**
@@ -93,7 +95,7 @@ export class OebButtonComponent {
 	 * @returns Promise to be used to decide whether to disable the button or null if
 	 * there are no promises in the input.
 	 */
-	transformPromisesInput(input: any): Promise<unknown[]> | null {
+	transformPromisesInput(input: Promise<unknown> | Promise<unknown>[] | undefined | null): Promise<unknown[]> | null {
 		if (!input) return null;
 
 		let promises: Array<Promise<unknown>> = [];
