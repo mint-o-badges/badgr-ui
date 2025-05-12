@@ -31,7 +31,7 @@ export class RecipientBadgeManager {
 		});
 	}
 
-	createRecipientBadge(badgeInfo: RecipientBadgeInstanceCreationInfo): Promise<RecipientBadgeInstance> {
+	createRecipientBadge(badgeInfo: RecipientBadgeInstanceCreationInfo): Promise<ApiRecipientBadgeInstance> {
 		// Ensure there aren't any null or undefined values in the request, despite not being needed, they cause validation
 		// errors in the API.
 		const payload: RecipientBadgeInstanceCreationInfo = Object.assign({}, badgeInfo);
@@ -43,7 +43,6 @@ export class RecipientBadgeManager {
 
 		return this.recipientBadgeApiService
 			.addRecipientBadge(payload)
-			.then((newBadge) => this.recipientBadgeList.addOrUpdate(newBadge));
 	}
 
 	deleteRecipientBadge(badge: RecipientBadgeInstance) {

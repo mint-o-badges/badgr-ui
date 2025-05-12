@@ -153,7 +153,7 @@
 									"
 								></dd>
 							</div>
-							<div class="tw-flex tw-items-start md:tw-flex-row tw-flex-col">
+							<div *ngIf="config.tags.length > 0" class="tw-flex tw-items-start md:tw-flex-row tw-flex-col">
 								<dt class="tw-text-oebblack tw-font-bold md:tw-py-2 md:tw-mr-2 tw-mb-1">Tags</dt>
 								<dd class="tw-text-oebblack">
 									<div
@@ -165,7 +165,7 @@
 								</dd>
 							</div>
 
-							<div class="tw-flex tw-text-oebblack tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
+							<div *ngIf="config.category" class="tw-flex tw-text-oebblack tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
 								<dt class="tw-text-sm tw-text-oebblack tw-font-bold">
 									{{ 'General.category' | translate }}
 								</dt>

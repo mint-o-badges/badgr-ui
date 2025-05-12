@@ -28,6 +28,8 @@ export class HlmIconDirective {
 				return '32px';
 			case 'xl':
 				return '48px';
+			case '2xl':
+				return '120px'	
 			default: {
 				return size;
 			}

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from '../../../common/services/message.service';
 import { Title } from '@angular/platform-browser';
@@ -13,6 +13,12 @@ import { ShareSocialDialogOptions } from '../../../common/dialogs/share-social-d
 import { addQueryParamsToUrl } from '../../../common/util/url-util';
 import { AppConfigService } from '../../../common/app-config.service';
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
+import { MenuItem } from '../../../common/components/badge-detail/badge-detail.component.types';
+import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
+import { DialogComponent } from '../../../components/dialog.component';
+import { RecipientBadgeInstance } from '../../models/recipient-badge.model';
+import { BrnDialogRef } from '@spartan-ng/brain/dialog';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'recipient-earned-badge-detail',
@@ -29,9 +35,20 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 	@ViewChild('recipientBadgeDialog')
 	recipientBadgeDialog: RecipientBadgeSelectionDialog;
 
+	@ViewChild('dangerDialogHeaderTemplate')
+	dangerDialogHeaderTemplate: ElementRef
+
+	@ViewChild('deleteBadgeDialogContentTemplate')
+	deleteBadgeDialogContentTemplate: ElementRef
+
 	collectionLoadedPromise: Promise<unknown>;
 	collection: RecipientBadgeCollection = new RecipientBadgeCollection(null);
 	crumbs: LinkEntry[];
+
+	menuItems: MenuItem[]
+
+
+	dialogRef: BrnDialogRef<any> = null;
 
 	constructor(
 		router: Router,
@@ -43,10 +60,29 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 		private recipientBadgeCollectionManager: RecipientBadgeCollectionManager,
 		private configService: AppConfigService,
 		private dialogService: CommonDialogsService,
+		private translate: TranslateService
 	) {
 		super(router, route, loginService);
 
 		title.setTitle(`Collections - ${this.configService.theme['serviceName'] || 'Badgr'}`);
+
+		this.menuItems = [
+			{
+				title: 'Bearbeiten',
+				icon: 'lucidePencil',
+				action: () => console.log("")
+			},
+			// {
+			// 	title: 'PDF herunterladen',
+			// 	icon: 'lucideFileText',
+			// 	action: () => console.log(""),
+			// },
+			{
+				title: 'Löschen',
+				icon: 'lucideTrash2',
+				action: () => this.deleteCollection(),
+			},
+		]
 
 		this.collectionLoadedPromise = Promise.all([
 			this.recipientBadgeCollectionManager.recipientBadgeCollectionList.loadedPromise,
@@ -75,6 +111,32 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 		super.ngOnInit();
 	}
 
+	closeDialog() {
+		if (this.dialogRef) {
+			this.dialogRef.close();
+		}
+	}
+
+	closeDialogContinue() {
+		if (this.dialogRef) {
+			this.dialogRef.close('continue');
+		}
+	}
+
+	removeBadge(badgeSlug: string){
+		this.recipientBadgeManager.recipientBadgeList.loadedPromise.then((res) => {
+			const badge = res.entityForSlug(badgeSlug)
+			this.openBadgeDeleteDialog(badge)
+			this.dialogRef.closed$.subscribe((result) => {
+				if (result === 'continue'){
+					this.collection.removeBadge(res.entityForSlug(badgeSlug))
+					this.collection.save()
+				}
+			});
+
+		})
+	}
+
 	manageBadges() {
 		this.recipientBadgeDialog
 			.openDialog({
@@ -100,6 +162,22 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 			});
 	}
 
+	private readonly _hlmDialogService = inject(HlmDialogService);
+	public openBadgeDeleteDialog(badge: RecipientBadgeInstance) {
+		const dialogRef = this._hlmDialogService.open(DialogComponent, {
+			context: {
+				headerTemplate: this.dangerDialogHeaderTemplate,
+				content: this.deleteBadgeDialogContentTemplate,
+				variant: 'danger',
+				templateContext: {
+					badgename: badge.apiModel.json.badge.name
+				}
+			},
+		});
+
+		this.dialogRef = dialogRef
+	}
+
 	deleteCollection() {
 		this.dialogService.confirmDialog
 			.openResolveRejectDialog({
@@ -113,7 +191,10 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 					this.collection.deleteCollection().then(
 						() => {
 							this.messageService.reportMinorSuccess(`Deleted collection '${this.collection.name}'`);
-							this.router.navigate(['/recipient/badge-collections']);
+							this.router.navigate(['/recipient/badges'],
+								{
+									queryParams: { tab: this.translate.instant('BadgeCollection.myCollections') },
+								});
 						},
 						(error) => this.messageService.reportHandledError(`Failed to delete collection`, error),
 					);
@@ -185,6 +266,10 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 					),
 			);
 		}
+	}
+
+	togglePublished(){
+		this.collection.save()
 	}
 
 	shareCollection() {

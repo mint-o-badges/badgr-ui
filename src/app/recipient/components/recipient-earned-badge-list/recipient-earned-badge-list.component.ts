@@ -1,4 +1,13 @@
-import { Component, ContentChild, ElementRef, OnInit, ViewChild, AfterContentInit } from '@angular/core';
+import {
+	Component,
+	ContentChild,
+	ElementRef,
+	OnInit,
+	ViewChild,
+	AfterContentInit,
+	inject,
+	TemplateRef,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
@@ -27,6 +36,13 @@ import { LearningPath } from '../../../issuer/models/learningpath.model';
 import { FormControl } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { provideIcons } from '@ng-icons/core';
+import { RecipientBadgeCollectionApiService } from '../../services/recipient-badge-collection-api.service';
+import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
+import { DialogComponent } from '../../../components/dialog.component';
+import { BrnDialogRef } from '@spartan-ng/brain/dialog';
+import { RecipientBadgeCollectionManager } from '../../services/recipient-badge-collection-manager.service';
+import { forkJoin } from 'rxjs';
+import { RecipientBadgeApiService } from '../../services/recipient-badges-api.service';
 
 type BadgeDispay = 'grid' | 'list';
 type EscoCompetencies = {
@@ -59,12 +75,19 @@ export class RecipientEarnedBadgeListComponent
 
 	@ViewChild(ImportLauncherDirective) importLauncherDirective: ImportLauncherDirective;
 
+	@ViewChild('headerTemplate')
+	headerTemplate: TemplateRef<void>;
+
 	allBadges: RecipientBadgeInstance[] = [];
+	importedBadges: RecipientBadgeInstance[] = [];
 	badgesLoaded: Promise<unknown>;
 	profileLoaded: Promise<unknown>;
 	learningpathLoaded: Promise<unknown>;
+	collectionsLoaded: Promise<unknown>;
+	importedBadgesLoaded: Promise<unknown>;
 	allIssuers: ApiRecipientBadgeIssuer[] = [];
 	allLearningPaths: any[] = [];
+	collections: any[] = [];
 
 	badgeResults: BadgeResult[] = [];
 	learningPathResults: any[] = [];
@@ -82,11 +105,17 @@ export class RecipientEarnedBadgeListComponent
 	crumbs: LinkEntry[] = [{ title: 'Mein Rucksack', routerLink: ['/recipient/badges'] }];
 	profile: UserProfile;
 	running = false;
-	tabs: any = undefined;
+	tabs: any[] = [];
 	@ViewChild('overViewTemplate', { static: true }) overViewTemplate: ElementRef;
 	@ViewChild('badgesTemplate', { static: true }) badgesTemplate: ElementRef;
 	@ViewChild('badgesCompetency', { static: true }) badgesCompetency: ElementRef;
 	@ViewChild('learningPathTemplate', { static: true }) learningPathTemplate: ElementRef;
+	@ViewChild('collectionTemplate', { static: true }) collectionTemplate: ElementRef;
+	@ViewChild('collectionInfoHeaderTemplate', { static: true }) collectionInfoHeaderTemplate: ElementRef;
+	@ViewChild('collectionInfoContentTemplate', { static: true }) collectionInfoContentTemplate: ElementRef;
+
+	dialogRef: BrnDialogRef<any> = null;
+	translatedTitles: string[] = [];
 
 	groupedUserCompetencies = {};
 	newGroupedUserCompetencies = {};
@@ -99,9 +128,9 @@ export class RecipientEarnedBadgeListComponent
 	@ViewChild('countup2') countup2: CountUpDirective;
 	@ViewChild('badgesCounter') badgesCounter: CountUpDirective;
 
-	activeTab = 'Badges';
+	activeTab: string = '';
 	private _badgesDisplay: BadgeDispay = 'grid';
-	sortControl = new FormControl('name_asc');
+	sortControl = new FormControl('date_desc');
 	get badgesDisplay() {
 		return this._badgesDisplay;
 	}
@@ -144,6 +173,9 @@ export class RecipientEarnedBadgeListComponent
 		public configService: AppConfigService,
 		private profileManager: UserProfileManager,
 		private translate: TranslateService,
+		public recipientBadgeCollectionApiService: RecipientBadgeCollectionApiService,
+		private recipientBadgeCollectionManager: RecipientBadgeCollectionManager,
+		private recipientBadgeApiService: RecipientBadgeApiService,
 	) {
 		super(router, route, sessionService);
 
@@ -152,6 +184,7 @@ export class RecipientEarnedBadgeListComponent
 		this.badgesLoaded = this.recipientBadgeManager.recipientBadgeList.loadedPromise.catch((e) =>
 			this.messageService.reportAndThrowError('Failed to load your badges', e),
 		);
+
 		this.learningpathLoaded = this.learningPathApi
 			.getLearningPathsForUser()
 			.then((res) => {
@@ -160,6 +193,12 @@ export class RecipientEarnedBadgeListComponent
 			})
 			.catch((e) => this.messageService.reportAndThrowError('Failed to load your badges', e));
 
+		this.collectionsLoaded = Promise.all([
+			this.recipientBadgeCollectionManager.recipientBadgeCollectionList.loadedPromise,
+			this.recipientBadgeManager.recipientBadgeList.loadedPromise,
+		]).then(([list]) => {
+			this.collections = list.entities;
+		});
 		this.recipientBadgeManager.recipientBadgeList.changed$.subscribe((badges) =>
 			this.updateBadges(badges.entities),
 		);
@@ -177,6 +216,20 @@ export class RecipientEarnedBadgeListComponent
 		this.mozillaTransitionOver = !!localStorage.getItem('mozillaTransitionOver') || false;
 
 		this.restoreDisplayState();
+	}
+
+	private readonly _hlmDialogService = inject(HlmDialogService);
+	public openCollectionInfoDialog() {
+		const dialogRef = this._hlmDialogService.open(DialogComponent, {
+			context: {
+				headerTemplate: this.collectionInfoHeaderTemplate,
+				content: this.collectionInfoContentTemplate,
+				variant: 'default',
+				footer: false,
+			},
+		});
+
+		this.dialogRef = dialogRef;
 	}
 
 	// NOTE: Mozz import functionality
@@ -215,30 +268,95 @@ export class RecipientEarnedBadgeListComponent
 	}
 
 	ngOnInit() {
+		this.loadImportedBadges();
+
+		this.recipientBadgeManager.recipientBadgeList.changed$.subscribe((badges) => {
+			const combinedBadges = [...this.importedBadges, ...badges.entities];
+			this.updateBadges(combinedBadges);
+		});
 		super.ngOnInit();
+		this.route.queryParams.subscribe((params) => {
+			if (params['tab']) {
+				this.activeTab = params['tab'];
+			}
+		});
+
+		// Pre-load all translations
+		forkJoin({
+			badges: this.translate.get('General.badges'),
+			competencies: this.translate.get('CreateBadge.competencies'),
+			learningpaths: this.translate.get('General.learningPaths'),
+			collections: this.translate.get('BadgeCollection.myCollections'),
+		}).subscribe((translations) => {
+			this.translatedTitles = [
+				translations.badges,
+				translations.competencies,
+				translations.learningpaths,
+				translations.collections,
+			];
+
+			if (!this.activeTab) {
+				this.activeTab = this.translatedTitles[0];
+			}
+		});
 		if (this.route.snapshot.routeConfig.path === 'badges/import') this.launchImport(new Event('click'));
 	}
 
+	private loadImportedBadges() {
+		this.recipientBadgeApiService
+			.listImportedBadges()
+			.then((res) => {
+				this.importedBadges = res;
+				// Force an update after loading imported badges
+				const currentBadges = this.recipientBadgeManager.recipientBadgeList.entities || [];
+				const combinedBadges = [...this.importedBadges, ...currentBadges];
+				this.updateBadges(combinedBadges);
+			})
+			.catch((e) => this.messageService.reportAndThrowError('Failed to load imported badges', e));
+	}
+
 	ngAfterContentInit() {
-		this.tabs = [
-			{
-				title: 'Badges',
-				component: this.badgesTemplate,
-			},
-			{
-				title: 'Kompetenzen',
-				component: this.badgesCompetency,
-			},
-			{
-				title: 'Micro Degrees',
-				component: this.learningPathTemplate,
-			},
-		];
+		// Wait for view initialization to get template references
+		setTimeout(() => {
+			this.tabs = [
+				{
+					title: this.translatedTitles[0],
+					component: this.badgesTemplate,
+				},
+				{
+					title: this.translatedTitles[1],
+					component: this.badgesCompetency,
+				},
+				{
+					title: this.translatedTitles[2],
+					component: this.learningPathTemplate,
+				},
+				{
+					title: this.translatedTitles[3],
+					component: this.collectionTemplate,
+				},
+			];
+		});
+	}
+
+	closeDialog() {
+		if (this.dialogRef) {
+			this.dialogRef.close();
+		}
 	}
 
 	addBadge() {
-		this.addBadgeDialog.openDialog({}).then(
+		this.addBadgeDialog.openDialog().then(
 			() => {},
+			() => {},
+		);
+	}
+
+	uploadBadge() {
+		this.addBadgeDialog.openDialog().then(
+			() => {
+				this.loadImportedBadges();
+			},
 			() => {},
 		);
 	}
@@ -425,6 +543,11 @@ export class RecipientEarnedBadgeListComponent
 
 	onTabChange(tab) {
 		this.activeTab = tab;
+
+		this.router.navigate([], {
+			relativeTo: this.route,
+			queryParams: { tab: tab },
+		});
 	}
 
 	calculateStudyLoad(lp: LearningPath): number {
@@ -433,6 +556,11 @@ export class RecipientEarnedBadgeListComponent
 			0,
 		);
 		return totalStudyLoad;
+	}
+
+	routeToCollectionCreation() {
+		console.log('routed');
+		this.router.navigate(['recipient/badge-collections/create']);
 	}
 }
 

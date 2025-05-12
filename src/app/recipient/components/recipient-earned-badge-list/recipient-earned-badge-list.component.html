@@ -12,17 +12,44 @@
 					<oeb-button
 						icon="lucideUpload"
 						iconLeft="true"
-						(click)="addBadge()"
+						(click)="uploadBadge()"
 						[disabled-when-requesting]="true"
-						[text]="'RecBadge.addBadge' | translate"
+						[text]="'RecBadge.uploadBadge' | translate"
 					>
 					</oeb-button>
+					<ng-template #headerTemplate>
+						<h2 hlmH2>Badge hochladen</h2>
+						<span>Füge einen Badge hinzu den du bereits erhalten hast</span>
+					</ng-template>
+					<ng-template #badgeUploadContentTemplate>
+						<form [formGroup]="addRecipientBadgeForm.rawControl" (ngSubmit)="submitBadgeRecipientForm()">
+							<app-badge-tabs
+								[form]="addRecipientBadgeForm"
+								[uploadBadgeImageUrl]="uploadBadgeImageUrl"
+								[formError]="formError"
+								(formErrorCleared)="clearFormError()"
+								(controlChange)="controlUpdated($event)"
+								(tabChange)="onTabChange($event)"
+							></app-badge-tabs>
+
+							<div class="u-responsivepadding-xaxis u-responsivepadding-yaxis l-stack l-stack-right">
+								<button
+									class="button"
+									type="submit"
+									[loading-promises]="[badgeUploadPromise]"
+									loading-message="Hinzufügen"
+								>
+									{{ 'RecBadge.addBadge' | translate }}
+								</button>
+							</div>
+						</form>
+					</ng-template>
 				</div>
 			</ng-template>
 			<div class="oeb-section-sm">
 				<oeb-backpack-tabs
 					(onTabChanged)="onTabChange($event)"
-					[activeTab]="'Badges'"
+					[activeTab]="activeTab"
 					[tabs]="tabs"
 				></oeb-backpack-tabs>
 				<ng-template #badgesTemplate>
@@ -115,6 +142,7 @@
 											[competencies]="
 												badgeResult.badge.getExtension('extensions:CompetencyExtension', [{}])
 											"
+											[imported]="badgeResult.badge.imported"
 										></bg-badgecard>
 									</div>
 								</ng-template>
@@ -356,6 +384,131 @@
 							</div>
 						</div>
 					</ng-template>
+				</ng-template>
+				<ng-template #collectionTemplate>
+					<ng-template [bgAwaitPromises]="[collectionsLoaded]">
+						<!-- No collections, empty state! -->
+						<section class="tw-mt-8" *ngIf="collections.length == 0">
+							<div class="tw-flex tw-justify-between">
+								<div>
+
+									<h2 class="tw-text-oebblack md:tw-text-[22px] tw-leading-[120%] tw-font-bold tw-uppercase">
+										{{ 'BadgeCollection.useCollectionsForApplications' | translate }}
+									</h2>
+									<p class="tw-mt-4 tw-text-oebblack tw-text-lg">{{ 'BadgeCollection.collectionInfoText' | translate }}</p>
+									<p class="tw-mt-2 tw-text-purple tw-text-lg">{{ 'BadgeCollection.addLink' | translate }}</p>
+									
+									<div class="tw-mt-6">
+										<oeb-button
+										 (click)="routeToCollectionCreation()"
+										 [text]="'BadgeCollection.createCollectionNow' | translate">
+										</oeb-button>
+									</div>
+								</div>
+								<img class="tw-hidden md:tw-flex" src="assets/oeb/images/backpack/collection_visual.svg"  />
+							</div>
+						</section>
+
+						<div class="oeb-section-sm" *ngIf="collections.length > 0">
+							<h2 class="tw-text-oebblack md:tw-text-[22px] tw-leading-[120%] tw-font-bold tw-uppercase tw-items-center tw-flex tw-mb-4">
+								{{ 'BadgeCollection.useCollectionsForApplications' | translate }}
+								<ng-icon (c#lick)="openCollectionInfoDialog()" hlm class="tw-text-purple tw-min-w-10 tw-ml-2" size="lg" name="lucideInfo" />
+							</h2>
+
+							<div class="tw-grid min-[450px]:tw-grid-cols-badges tw-gap-6">
+								<bg-collectioncard
+									*ngFor="let collection of collections"
+									[collection]="collection"
+								></bg-collectioncard>
+							</div>
+							<oeb-button 
+								[text]="'BadgeCollection.createCollection' | translate"
+								variant="secondary"
+								(click)="routeToCollectionCreation()"
+								size="md"
+								class="tw-mt-4 tw-float-right"
+								>
+
+							</oeb-button>
+						</div>
+
+						<div>
+							<!-- <div class="oeb-section-sm" *ngIf="learningPathsReadyToRequest.length > 0">
+								<h3 hlmH3 class="tw-uppercase tw-text-purple tw-font-bold tw-pb-4">
+									{{ 'LearningPath.getYourPath' | translate }}
+								</h3>
+								<div class="tw-grid min-[450px]:tw-grid-cols-learningpathsBackpack tw-gap-6">
+									<bg-learningpathcard
+										*ngFor="let lp of learningPathsReadyToRequest"
+										[badgeImage]="lp.participationBadge_image"
+										[name]="lp.name"
+										[issuerTitle]="lp.issuer_name"
+										[description]="lp.description"
+										[tags]="lp.tags"
+										[slug]="lp.slug"
+										[studyLoad]="calculateStudyLoad(lp)"
+										[completed]="lp.completed"
+										[progress]="lp.progress"
+										[completed]="lp.completed"
+										[requested]="lp.requested"
+										[matchOrProgress]="{ progress: lp.progress / calculateStudyLoad(lp) }"
+									></bg-learningpathcard>
+								</div>
+							</div> -->
+
+							<!-- <div class="oeb-section-sm" *ngIf="learningPathsInProgress.length > 0">
+								<h3 hlmH3 class="tw-uppercase tw-text-purple tw-font-bold tw-pb-4">
+									{{ 'LearningPath.continue' | translate }}
+								</h3>
+								<div class="tw-grid min-[450px]:tw-grid-cols-learningpathsBackpack tw-gap-6">
+									<bg-learningpathcard
+										*ngFor="let lp of learningPathsInProgress"
+										[badgeImage]="lp.participationBadge_image"
+										[name]="lp.name"
+										[issuerTitle]="lp.issuer_name"
+										[description]="lp.description"
+										[tags]="lp.tags"
+										[slug]="lp.slug"
+										[progress]="lp.progress"
+										[completed]="lp.completed"
+										[requested]="lp.requested"
+										[studyLoad]="calculateStudyLoad(lp)"
+										[matchOrProgress]="{ progress: lp.progress / calculateStudyLoad(lp) }"
+									></bg-learningpathcard>
+								</div>
+							</div> -->
+
+							<!-- <div class="oeb-section-sm" *ngIf="learningPathsCompleted.length > 0">
+								<h3 hlmH3 class="tw-uppercase tw-text-purple tw-font-bold tw-pb-4">
+									{{ 'LearningPath.finished' | translate }}
+								</h3>
+								<div class="tw-grid min-[450px]:tw-grid-cols-learningpathsBackpack tw-gap-6">
+									<bg-learningpathcard
+										*ngFor="let lp of learningPathsCompleted"
+										[badgeImage]="lp.participationBadge_image"
+										[name]="lp.name"
+										[issuerTitle]="lp.issuer_name"
+										[description]="lp.description"
+										[tags]="lp.tags"
+										[slug]="lp.slug"
+										[progress]="lp.progress"
+										[completed]="true"
+										[studyLoad]="calculateStudyLoad(lp)"
+										[matchOrProgress]="{ progress: lp.progress / calculateStudyLoad(lp) }"
+									></bg-learningpathcard>
+								</div>
+							</div> -->
+						</div>
+					</ng-template>
+				</ng-template>
+				<ng-template #collectionInfoHeaderTemplate>
+					<h2 class="tw-text-[22px] tw-text-purple tw-font-bold tw-leading-[120%]">{{'BadgeCollection.useCollectionsForApplications' | translate }}</h2>
+				</ng-template>
+				<ng-template #collectionInfoContentTemplate>
+					<p class="tw-text-lg tw-text-oebblack tw-mt-2" [innerHTML]="'BadgeCollection.collectionInfoText'  | translate">
+					</p>
+					<p class="tw-text-lg tw-text-purple tw-italic tw-mt-1" [innerHTML]="'BadgeCollection.addLink' | translate">
+					</p>
 				</ng-template>
 			</div>
 		</div>
