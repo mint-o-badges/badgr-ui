@@ -160,6 +160,8 @@ export class RecipientEarnedBadgeListComponent
 		this.updateResults();
 	}
 
+	private readonly _hlmDialogService = inject(HlmDialogService);
+
 	constructor(
 		router: Router,
 		route: ActivatedRoute,
