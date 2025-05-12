@@ -751,7 +751,8 @@
 		"deleteQrAward": "QR-Code-Vergabe löschen",
 		"deleteQrAwardConfirm": "Möchtest du die QR-Code-Vergabe wirklich löschen?",
 		"openRequestsWillBeLost": "Damit gehen alle noch offenen Badge-Anfragen verloren.",
-		"receiveEmails": "Ich möchte per E-Mail über neue QR-Code-Anfragen benachrichtigt werden"
+		"receiveEmails": "Ich möchte per E-Mail über neue QR-Code-Anfragen benachrichtigt werden",
+		"downloadPoster": "Download QR-Code-Plakat"
 	},
 	"LearningPath": {
 		"learningpaths": "Micro Degrees",
