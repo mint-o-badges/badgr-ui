@@ -391,44 +391,61 @@
 						<section class="tw-mt-8" *ngIf="collections.length == 0">
 							<div class="tw-flex tw-justify-between">
 								<div>
-
-									<h2 class="tw-text-oebblack md:tw-text-[22px] tw-leading-[120%] tw-font-bold tw-uppercase">
+									<h2
+										class="tw-text-oebblack md:tw-text-[22px] tw-leading-[120%] tw-font-bold tw-uppercase"
+									>
 										{{ 'BadgeCollection.useCollectionsForApplications' | translate }}
 									</h2>
-									<p class="tw-mt-4 tw-text-oebblack tw-text-lg">{{ 'BadgeCollection.collectionInfoText' | translate }}</p>
-									<p class="tw-mt-2 tw-text-purple tw-text-lg">{{ 'BadgeCollection.addLink' | translate }}</p>
-									
+									<p class="tw-mt-4 tw-text-oebblack tw-text-lg">
+										{{ 'BadgeCollection.collectionInfoText' | translate }}
+									</p>
+									<p class="tw-mt-2 tw-text-purple tw-text-lg">
+										{{ 'BadgeCollection.addLink' | translate }}
+									</p>
+
 									<div class="tw-mt-6">
 										<oeb-button
-										 (click)="routeToCollectionCreation()"
-										 [text]="'BadgeCollection.createCollectionNow' | translate">
+											(click)="routeToCollectionCreation()"
+											[text]="'BadgeCollection.createCollectionNow' | translate"
+										>
 										</oeb-button>
 									</div>
 								</div>
-								<img class="tw-hidden md:tw-flex" src="assets/oeb/images/backpack/collection_visual.svg"  />
+								<img
+									class="tw-hidden md:tw-flex"
+									src="assets/oeb/images/backpack/collection_visual.svg"
+								/>
 							</div>
 						</section>
 
 						<div class="oeb-section-sm" *ngIf="collections.length > 0">
-							<h2 class="tw-text-oebblack md:tw-text-[22px] tw-leading-[120%] tw-font-bold tw-uppercase tw-items-center tw-flex tw-mb-4">
+							<h2
+								class="tw-text-oebblack md:tw-text-[22px] tw-leading-[120%] tw-font-bold tw-uppercase tw-items-center tw-flex tw-mb-4"
+							>
 								{{ 'BadgeCollection.useCollectionsForApplications' | translate }}
-								<ng-icon (c#lick)="openCollectionInfoDialog()" hlm class="tw-text-purple tw-min-w-10 tw-ml-2" size="lg" name="lucideInfo" />
+								<ng-icon
+									(c#lick)="openCollectionInfoDialog()"
+									hlm
+									class="tw-text-purple tw-min-w-10 tw-ml-2"
+									size="lg"
+									name="lucideInfo"
+								/>
 							</h2>
 
 							<div class="tw-grid min-[450px]:tw-grid-cols-badges tw-gap-6">
 								<bg-collectioncard
 									*ngFor="let collection of collections"
 									[collection]="collection"
+									(share)="openShareDialog()"
 								></bg-collectioncard>
 							</div>
-							<oeb-button 
+							<oeb-button
 								[text]="'BadgeCollection.createCollection' | translate"
 								variant="secondary"
 								(click)="routeToCollectionCreation()"
 								size="md"
 								class="tw-mt-4 tw-float-right"
-								>
-
+							>
 							</oeb-button>
 						</div>
 
@@ -502,13 +519,44 @@
 					</ng-template>
 				</ng-template>
 				<ng-template #collectionInfoHeaderTemplate>
-					<h2 class="tw-text-[22px] tw-text-purple tw-font-bold tw-leading-[120%]">{{'BadgeCollection.useCollectionsForApplications' | translate }}</h2>
+					<h2 class="tw-text-[22px] tw-text-purple tw-font-bold tw-leading-[120%]">
+						{{ 'BadgeCollection.useCollectionsForApplications' | translate }}
+					</h2>
 				</ng-template>
 				<ng-template #collectionInfoContentTemplate>
-					<p class="tw-text-lg tw-text-oebblack tw-mt-2" [innerHTML]="'BadgeCollection.collectionInfoText'  | translate">
-					</p>
-					<p class="tw-text-lg tw-text-purple tw-italic tw-mt-1" [innerHTML]="'BadgeCollection.addLink' | translate">
-					</p>
+					<p
+						class="tw-text-lg tw-text-oebblack tw-mt-2"
+						[innerHTML]="'BadgeCollection.collectionInfoText' | translate"
+					></p>
+					<p
+						class="tw-text-lg tw-text-purple tw-italic tw-mt-1"
+						[innerHTML]="'BadgeCollection.addLink' | translate"
+					></p>
+				</ng-template>
+				<ng-template #shareDialogHeaderTemplate>
+					<h2 class="tw-text-purple tw-font-bold tw-text-[22px] tw-leading-[120%]">
+						{{ 'BadgeCollection.shareCollection' | translate }}
+					</h2>
+				</ng-template>
+				<ng-template #shareDialogContentTemplate>
+					<div class="tw-flex tw-relative tw-items-center tw-my-2">
+						<input
+							type="text"
+							name="forminput"
+							readonly
+							changeOrder
+							class="!tw-bg-white tw-w-full tw-border-1 tw-border-purple min-[880px]:tw-w-96 tw-border-solid tw-h-12 tw-rounded-lg tw-p-2"
+							[(ngModel)]="searchQuery"
+							hlmInput
+						/>
+						<ng-icon
+							hlm
+							name="lucideCopy"
+							class="tw-w-8 tw-h-8 tw-absolute tw-top-1/2 tw-right-2 -tw-translate-y-1/2 tw-pointer-events-none tw-text-purple"
+							(click)="copyToClipboard()"
+						></ng-icon>
+					</div>
+					<oeb-button size="sm" [text]="'QR-Code herunterladen'"> </oeb-button>
 				</ng-template>
 			</div>
 		</div>

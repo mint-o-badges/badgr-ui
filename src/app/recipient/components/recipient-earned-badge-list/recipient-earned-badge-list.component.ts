@@ -113,6 +113,8 @@ export class RecipientEarnedBadgeListComponent
 	@ViewChild('collectionTemplate', { static: true }) collectionTemplate: ElementRef;
 	@ViewChild('collectionInfoHeaderTemplate', { static: true }) collectionInfoHeaderTemplate: ElementRef;
 	@ViewChild('collectionInfoContentTemplate', { static: true }) collectionInfoContentTemplate: ElementRef;
+	@ViewChild('shareDialogContentTemplate', { static: true }) shareDialogContentTemplate: ElementRef;
+	@ViewChild('shareDialogHeaderTemplate', { static: true }) shareDialogHeaderTemplate: ElementRef;
 
 	dialogRef: BrnDialogRef<any> = null;
 	translatedTitles: string[] = [];
@@ -232,6 +234,18 @@ export class RecipientEarnedBadgeListComponent
 		this.dialogRef = dialogRef;
 	}
 
+	openShareDialog() {
+		const dialogRef = this._hlmDialogService.open(DialogComponent, {
+			context: {
+				headerTemplate: this.shareDialogHeaderTemplate,
+				content: this.shareDialogContentTemplate,
+				footer: false,
+			},
+		});
+
+		this.dialogRef = dialogRef;
+	}
+
 	// NOTE: Mozz import functionality
 	launchImport = ($event: Event) => {
 		$event.preventDefault();
@@ -266,6 +280,14 @@ export class RecipientEarnedBadgeListComponent
 			// We can't always save to local storage
 		}
 	}
+
+	async copyToClipboard(text: string): Promise<boolean>{	
+		await navigator.clipboard.writeText(text);
+		return true;
+	  } catch (err) {
+		console.error('Failed to copy text: ', err);
+		return false;
+	  }
 
 	ngOnInit() {
 		this.loadImportedBadges();
