@@ -96,6 +96,12 @@ export class OebDropdownComponent {
 		return this.trigger instanceof TemplateRef;
 	}
 
+	/**
+	 * Checks given {@link menuItems} input for enabled items.
+	 * Used to disable the trigger depending on its return value.
+	 * @returns true when {@link menuItems} is undefined or empty or
+	 * any of the menu items is not disabled, false otherwise.
+	 */
 	get hasEnabledMenuItem(): boolean {
 		if (this.menuItems === undefined || this.menuItems === null || this.menuItems.length === 0) return true;
 		return this.menuItems.find((m) => !m.disabled) !== undefined;
