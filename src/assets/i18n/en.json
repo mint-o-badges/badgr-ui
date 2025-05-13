@@ -387,7 +387,7 @@
 		"addAnotherCompetency": "Add another competency",
 		"giveBadgeTitle": "Please give the badge a title",
 		"changeBadgeTitle": "Please change the title",
-		"maxValue1000": "Maximum value is 1000",
+		"maxValue1000": "Must be less than 1000",
 		"imageTooLarge": "The image is too large. Please select an image with a size of up to 2 MB.",
 		"licenseInfo": "Badges are created under the license <a class='tw-underline tw-text-[#1400FF]' target='_blank' href='https://creativecommons.org/publicdomain/zero/1.0/legalcode.de'>CC BY 4.0'</a>.",
 		"requiredError": "Required",

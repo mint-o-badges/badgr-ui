@@ -450,7 +450,7 @@
 		"addAnotherCompetency": "Weitere Kompetenz hinzufügen",
 		"giveBadgeTitle": "Bitte gib dem Badge einen Titel",
 		"changeBadgeTitle": "Bitte ändere den Titel",
-		"maxValue1000": "Maximalwert ist 1000",
+		"maxValue1000": "Muss kleiner als 1000 sein",
 		"imageTooLarge": "Das Bild ist zu groß. Bitte wähle ein Bild mit einer Größe von maximal 2 MB.",
 		"licenseInfo": "Badges werden unter der <a class='tw-underline tw-text-[#1400FF]' target='_blank' href='https://creativecommons.org/publicdomain/zero/1.0/legalcode.de'> Lizenz CC0 1.0</a> erstellt.",
 		"requiredError": "Erforderlich",

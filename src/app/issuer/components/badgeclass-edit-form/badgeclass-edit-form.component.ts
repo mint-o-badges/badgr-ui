@@ -63,7 +63,7 @@ import { Issuer } from '../../models/issuer.model';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 
 const MAX_STUDYLOAD_HRS: number = 10_000;
-const MAX_HRS_PER_COMPETENCY: number = 1_000;
+const MAX_HRS_PER_COMPETENCY: number = 999;
 
 @Component({
 	selector: 'badgeclass-edit-form',
