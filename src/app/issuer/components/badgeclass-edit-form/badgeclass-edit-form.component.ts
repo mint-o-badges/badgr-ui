@@ -62,6 +62,9 @@ import { BadgeClassDetailsComponent } from '../badgeclass-create-steps/badgeclas
 import { Issuer } from '../../models/issuer.model';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 
+const MAX_STUDYLOAD_HRS: number = 10_000;
+const MAX_HRS_PER_COMPETENCY: number = 1_000;
+
 @Component({
 	selector: 'badgeclass-edit-form',
 	templateUrl: './badgeclass-edit-form.component.html',
@@ -70,7 +73,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs';
 })
 export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableComponent implements OnInit, AfterViewInit {
 	private readonly _hlmDialogService = inject(HlmDialogService);
-
+	
 	baseUrl: string;
 	badgeCategory: string;
 
@@ -298,7 +301,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			typedFormGroup()
 				.addControl('selected', false)
 				.addControl('studyLoad', 60, [Validators.required, this.positiveInteger])
-				.addControl('hours', 1, [this.positiveIntegerOrNull, Validators.max(999)])
+				.addControl('hours', 1, [this.positiveIntegerOrNull, Validators.max(MAX_HRS_PER_COMPETENCY)])
 				.addControl('minutes', 0, [this.positiveIntegerOrNull, Validators.max(59)])
 				.addControl('framework', 'esco', Validators.required),
 		)
@@ -306,7 +309,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			'keywordCompetencies',
 			typedFormGroup()
 				.addControl('studyLoad', 60, [Validators.required, this.positiveInteger])
-				.addControl('hours', 1, [this.positiveIntegerOrNull, Validators.max(999)])
+				.addControl('hours', 1, [this.positiveIntegerOrNull, Validators.max(MAX_HRS_PER_COMPETENCY)])
 				.addControl('minutes', 0, [this.positiveIntegerOrNull, Validators.max(59)])
 				.addControl('framework', 'esco', Validators.required),
 		)
@@ -319,7 +322,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				.addControl('framework_identifier', '')
 				// limit of 1000000 is set so that users cant break the UI by entering a very long number
 				.addControl('studyLoad', 60, [Validators.required, this.positiveInteger])
-				.addControl('hours', 1, [this.positiveIntegerOrNull, Validators.max(999)])
+				.addControl('hours', 1, [this.positiveIntegerOrNull, Validators.max(MAX_HRS_PER_COMPETENCY)])
 				.addControl('minutes', 0, [this.positiveIntegerOrNull, Validators.max(59)])
 				.addControl('category', '', Validators.required)
 				.addControl('framework', '')
@@ -1149,7 +1152,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			return { maxMinutesError: true };
 		}
 		const hours = value.badge_hours;
-		if (hours > 10000) {
+		if (hours > MAX_STUDYLOAD_HRS) {
 			return { maxHoursError: true };
 		}
 	}
