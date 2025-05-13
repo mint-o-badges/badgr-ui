@@ -325,7 +325,6 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		super.ngOnInit();
 		const taskId = this.taskService.getTaskId();
 		this.batchAwardCount = localStorage.getItem('batchAwardCount');
-		console.log('count', this.batchAwardCount);
 		if (taskId && this.batchAwardCount) {
 			this.checkPendingTask();
 		}
