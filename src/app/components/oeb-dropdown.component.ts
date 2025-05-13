@@ -31,10 +31,14 @@ import { SharedIconsModule } from '../public/icons.module';
 		SharedIconsModule,
 	],
 	template: `
-		<button [brnMenuTriggerFor]="menu">
+		<button
+			[brnMenuTriggerFor]="menu"
+			[disabled]="!hasEnabledMenuItem"
+			class="disabled:tw-pointer-events-none disabled:tw-opacity-50"
+		>
 			<ngTemplateOutlet *ngIf="isTemplate; else stringTrigger" [ngTemplateOutlet]="trigger"></ngTemplateOutlet>
 			<ng-template #stringTrigger>
-				<button [class]="triggerStyle">
+				<button [class]="triggerStyle" [disabled]="!hasEnabledMenuItem">
 					{{ trigger }}
 					<ng-icon hlm class="tw-ml-2" name="lucideChevronDown" hlmMenuIcon />
 				</button>
@@ -83,13 +87,18 @@ export class OebDropdownComponent {
 	@Input() trigger: any;
 	@Input() size: HlmMenuItemVariants['size'] = 'default';
 	@Input() inset: HlmMenuItemVariants['inset'] = false;
-	@Input() triggerStyle: string = 'tw-border tw-border-solid tw-border-purple tw-px-1 tw-py-2 tw-rounded-xl';
+	@Input() triggerStyle: string = 'tw-border tw-border-solid tw-border-purple tw-px-1 tw-py-2 tw-rounded-xl disabled:tw-pointer-events-none disabled:tw-opacity-50';
 	@Input() label?: string = '';
 	@Input() class?: string = '';
 	@Input() menuItems: MenuItem[];
 
 	get isTemplate(): boolean {
 		return this.trigger instanceof TemplateRef;
+	}
+
+	get hasEnabledMenuItem(): boolean {
+		if (this.menuItems === undefined || this.menuItems === null || this.menuItems.length === 0) return true;
+		return this.menuItems.find((m) => !m.disabled) !== undefined;
 	}
 
 	get iconClass(): string {
