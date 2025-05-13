@@ -835,10 +835,10 @@
 															<oeb-input
 																id="{{ 'competencyDurationHour_' + i }}"
 																[fieldType]="'number'"
-																class="tw-max-w-24"
+																class="tw-max-w-40"
 																[control]="competency.rawControlMap.hours"
 																[errorMessage]="{
-																	duration: requiredError
+																	max: maxValue1000
 																}"
 																noTopMargin="true"
 															>
@@ -847,10 +847,10 @@
 															<oeb-input
 																id="{{ 'competencyDurationMinutes_' + i }}"
 																[fieldType]="'number'"
-																class="tw-max-w-24"
+																class="tw-max-w-40"
 																[control]="competency.rawControlMap.minutes"
 																[errorMessage]="{
-																	duration: requiredError
+																	max: minMaxError
 																}"
 																noTopMargin="true"
 															>
