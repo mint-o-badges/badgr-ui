@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, timer } from 'rxjs';
-import { switchMap, takeWhile, catchError } from 'rxjs/operators';
+import { switchMap, takeWhile, catchError, shareReplay } from 'rxjs/operators';
 import { BaseHttpApiService } from './base-http-api.service';
 import { SessionService } from './session.service';
 import { AppConfigService } from '../app-config.service';
@@ -78,6 +78,7 @@ export class TaskStatusService extends BaseHttpApiService {
 
 				return result.status !== TaskStatus.SUCCESS && result.status !== TaskStatus.FAILURE;
 			}, true),
+			shareReplay(1),
 			catchError((error) => {
 				console.error('Error polling task status:', error);
 				throw error;
