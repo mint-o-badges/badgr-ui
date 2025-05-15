@@ -54,7 +54,7 @@ export class IssuerManager {
 	}
 
 	issuerBySlug(issuerSlug: IssuerSlug): Promise<Issuer> {
-		return this.allIssuers$
+		return this.getAllIssuers()
 			.pipe(first())
 			.toPromise()
 			.then(
