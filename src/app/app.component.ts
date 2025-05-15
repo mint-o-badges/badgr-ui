@@ -245,17 +245,6 @@ export class AppComponent implements OnInit, AfterViewInit {
 			// Enable the embedded indicator class on the body
 			renderer.addClass(document.body, 'embeddedcontainer');
 		}
-
-		let language = window.localStorage.getItem('lang');
-		if (!language) {
-			if (navigator.language.toLocaleLowerCase().indexOf('de') == 0) {
-				language = 'de';
-			} else {
-				language = 'en';
-			}
-			window.localStorage.setItem('lang', language);
-		}
-		this.languageService.setLanguage(language);
 	}
 
 	refreshProfile = () => {
