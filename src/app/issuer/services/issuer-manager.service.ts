@@ -33,7 +33,7 @@ export class IssuerManager {
 			.then((newIssuer) => this.issuersList.addOrUpdate(newIssuer));
 	}
 
-	get allIssuers$(): Observable<Issuer[]> {
+	get myIssuers$(): Observable<Issuer[]> {
 		return this.issuersList.loaded$.pipe(map((l) => l.entities));
 	}
 
