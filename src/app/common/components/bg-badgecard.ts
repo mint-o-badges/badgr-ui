@@ -13,14 +13,14 @@ import { FormControl } from '@angular/forms';
 		]),
 	],
 	host: {
-		class: 'tw-rounded-[10px] tw-h-max tw-max-w-[450px] tw-border-purple tw-border-solid tw-border tw-relative tw-p-4 tw-block tw-overflow-hidden oeb-badge-card',
+		class: 'tw-rounded-[10px] tw-h-max tw-max-w-[450px] tw-border-solid tw-border-purple tw-border tw-relative tw-p-4 tw-pt-8 tw-block tw-overflow-hidden oeb-badge-card',
 	},
 	template: `
 		<div
 			class="tw-absolute tw-top-0 tw-left-0 tw-bg-purple tw-text-white tw-px-2 tw-py-1"
 			*ngIf="mostRelevantStatus"
 		>
-			{{ mostRelevantStatus }}
+			{{ 'General.' + mostRelevantStatus | translate }}
 		</div>
 
 		<div class="tw-h-[100px]">
@@ -47,10 +47,19 @@ import { FormControl } from '@angular/forms';
 				/>
 				<div class="tw-flex tw-flex-col tw-flex-wrap tw-pl-4 tw-py-2">
 					<a
-						*ngIf="badgeSlug && !publicUrl"
+						*ngIf="badgeSlug && !publicUrl && !imported"
 						class="tw-font-bold text-clamp title-clamp"
 						[title]="badgeTitle"
 						[routerLink]="['../earned-badge', badgeSlug]"
+						hlmP
+						size="sm"
+						>{{ badgeTitle }}</a
+					>
+					<a
+						*ngIf="badgeSlug && !publicUrl && imported"
+						class="tw-font-bold text-clamp title-clamp"
+						[title]="badgeTitle"
+						[routerLink]="['../imported-badge', badgeSlug]"
 						hlmP
 						size="sm"
 						>{{ badgeTitle }}</a
@@ -116,8 +125,9 @@ import { FormControl } from '@angular/forms';
 						[(ngModel)]="checked"
 						(ngModelChange)="changeCheckbox($event)"
 					></oeb-checkbox>
+					<ng-icon *ngIf="showXIcon" hlm name="lucideX" class="tw-w-8 tw-h-8" (click)="closeFn()"></ng-icon>
 					<div
-						*ngIf="competencies && competencies.length > 0"
+						*ngIf="competencies && competencies.length > 0 && !imported"
 						class="tw-absolute tw-bottom-0 tw-cursor-pointer"
 						(click)="toggleCompetencies()"
 					>
@@ -181,7 +191,7 @@ export class BgBadgecard {
 	@Input() badgeIssueDate: string;
 	@Input() badgeClass: string;
 	@Input() issuerTitle: string;
-	@Input() mostRelevantStatus: 'expired' | 'new' | 'pending' | undefined;
+	@Input() mostRelevantStatus: 'expired' | 'new' | 'pending' | 'imported' | undefined;
 	@Input() verifyUrl: string;
 	@Input() public = false;
 	@Input() competencies?: any[];
@@ -190,11 +200,18 @@ export class BgBadgecard {
 	@Output() shareClicked = new EventEmitter<MouseEvent>();
 	@Input() completed: Boolean = false;
 	@Output() checkboxChange = new EventEmitter<boolean>();
+	@Output() closeEmit = new EventEmitter<any>();
 	@Input() checked: boolean = false;
 	@Input() tags: string[] = [];
+	@Input() showXIcon = false;
+	@Input() imported: boolean = false;
 
 	changeCheckbox(event: boolean) {
 		this.checkboxChange.emit(event);
+	}
+
+	closeFn() {
+		this.closeEmit.emit(this.badgeSlug);
 	}
 
 	@HostBinding('class') get hostClasses(): string {

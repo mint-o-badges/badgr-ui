@@ -61,16 +61,24 @@
 					</div>
 				</div>
 			</div>
-			<div class="tw-max-w-[668px]">
-				<oeb-button width="full_width" [text]="'QrCode.download' | translate" (click)="saveAsImage(parent)"></oeb-button>
+			<div class="tw-max-w-[630px]">
+				<div class="tw-max-w-100 tw-flex tw-gap-4 tw-justify-between tw-pb-5">
+					<oeb-button
+						size="md"
+						[text]="'QrCode.downloadPoster' | translate"
+						(click)="savePdf(parent)"
+					></oeb-button>
+					<oeb-button size="md" text="Download QR-Code-PNG" (click)="saveAsImage(parent)"></oeb-button>
+				</div>
+				<oeb-button
+					[routerLink]="['/issuer/issuers', this.issuerSlug, 'badges', badgeClass.slug]"
+					class="tw-max-w-100"
+					width="full_width"
+					variant="secondary"
+					size="md"
+					[text]="'QrCode.toBadgeDetail' | translate"
+				></oeb-button>
 			</div>
-			<oeb-button
-				[routerLink]="['/issuer/issuers', this.issuerSlug, 'badges', badgeClass.slug]"
-				class="tw-max-w-[668px]"
-				width="full_width"
-				variant="secondary"
-				[text]="'QrCode.toBadgeDetail' | translate"
-			></oeb-button>
 		</div>
 	</div>
 </ng-template>

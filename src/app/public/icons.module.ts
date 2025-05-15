@@ -43,6 +43,7 @@ import {
 	lucideGlobe,
 	lucideHexagon,
 	lucideUser,
+	lucideUpload
 } from '@ng-icons/lucide';
 
 @NgModule({
@@ -90,6 +91,7 @@ import {
 			lucideGlobe,
 			lucideHexagon,
 			lucideUser,
+			lucideUpload,
 		}),
 	],
 })

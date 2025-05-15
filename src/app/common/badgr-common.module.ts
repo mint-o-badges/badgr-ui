@@ -3,8 +3,10 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { BgBadgecard } from './components/bg-badgecard';
 import { BgLearningPathCard } from './components/bg-learningpathcard';
+import { BgCollectionCard } from './bg-collectioncard';
 import { BgBadgeDetail } from './components/badge-detail/badge-detail.component';
-
+import { OebSwitchComponent } from '../components/oeb-switch.component'
+import { HlmSwitchComponent } from '../components/spartan/ui-switch-helm/src';
 import { BgAwaitPromises } from './directives/bg-await-promises';
 import { BgImageStatusPlaceholderDirective } from './directives/bg-image-status-placeholder.directive';
 import { MenuItemDirective } from './directives/bg-menuitem.directive';
@@ -164,6 +166,7 @@ export const COMMON_MODULE_COMPONENTS = [
 	BadgrButtonComponent,
 	BgBadgecard,
 	BgLearningPathCard,
+	BgCollectionCard,
 	BgBadgeDetail,
 	BgBreadcrumbsComponent,
 	BgFormFieldFileComponent,
@@ -253,10 +256,12 @@ export const COMMON_IMPORTS = [
 	OebSpinnerComponent,
 	OebCollapsibleComponent,
 	OebButtonComponent,
+	OebSwitchComponent,
 	OebProgressComponent,
 	OebDropdownComponent,
 	OebPaginationComponent,
 	PaginationAdvancedComponent,
+	HlmSwitchComponent,
 	HlmH1Directive,
 	HlmH2Directive,
 	HlmH3Directive,

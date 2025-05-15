@@ -110,6 +110,35 @@
 							</div>
 						</div>
 						<dl clss="tw-min-w-[150px]">
+							<div *ngIf="config.badgeCriteria" class="tw-bg-white tw-mb-4 tw-rounded-[10px]">
+								<ng-template [bgAwaitPromises]="[badgeInstancesLoaded]">
+									<oeb-collapsible [trigger]="collapseCriteriaTrigger" closeIcon="lucideChevronDown" [defaultOpen]="config.badgeCriteria.length > 0" [id]="">
+										<ng-template #collapseCriteriaTrigger>
+											<dt class="tw-mr-auto tw-flex tw-justify-center tw-items-center tw-px-2">
+												<ng-icon hlm name="lucideAward" 
+													class="tw-w-8 tw-h-8 tw-text-purple"
+												>
+	
+												</ng-icon>
+												<span
+													class="tw-text-oebblack tw-font-bold tw-text-sm tw-ml-1"
+													[innerHTML]="'Badge.awardCriteria' | translate"
+												></span>
+											</dt>
+										</ng-template>
+										<dd>
+											<ul class="tw-pr-2 tw-pl-8 tw-list-inside tw-list-disc">
+												<li class="tw-mb-1" *ngFor="let criteria of config.badgeCriteria">
+													<span class="tw-text-oebblack">{{ criteria.name }}</span>
+													<p *ngIf="criteria.description" class="tw-text-oebblack tw-italic tw-font-thin tw-ml-4 tw-mt-1">
+														{{criteria.description}}
+													</p>
+												</li>
+											</ul>
+										</dd>
+									</oeb-collapsible>
+								</ng-template>
+							</div>
 							<div class="tw-flex tw-flex-row tw-gap-1" *ngIf="config.copy_permissions">
 								<dt
 									class="tw-text-oebblack tw-font-bold"
@@ -124,7 +153,7 @@
 									"
 								></dd>
 							</div>
-							<div class="tw-flex tw-items-start md:tw-flex-row tw-flex-col">
+							<div *ngIf="config.tags.length > 0" class="tw-flex tw-items-start md:tw-flex-row tw-flex-col">
 								<dt class="tw-text-oebblack tw-font-bold md:tw-py-2 md:tw-mr-2 tw-mb-1">Tags</dt>
 								<dd class="tw-text-oebblack">
 									<div
@@ -136,7 +165,7 @@
 								</dd>
 							</div>
 
-							<div class="tw-flex tw-text-oebblack tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
+							<div *ngIf="config.category" class="tw-flex tw-text-oebblack tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
 								<dt class="tw-text-sm tw-text-oebblack tw-font-bold">
 									{{ 'General.category' | translate }}
 								</dt>

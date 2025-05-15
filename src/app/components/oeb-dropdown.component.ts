@@ -33,10 +33,14 @@ import { TranslateModule } from '@ngx-translate/core';
 		TranslateModule
 	],
 	template: `
-		<button [brnMenuTriggerFor]="menu">
+		<button
+			[brnMenuTriggerFor]="menu"
+			[disabled]="!hasEnabledMenuItem"
+			class="disabled:tw-pointer-events-none disabled:tw-opacity-50"
+		>
 			<ngTemplateOutlet *ngIf="isTemplate; else stringTrigger" [ngTemplateOutlet]="trigger"></ngTemplateOutlet>
 			<ng-template #stringTrigger>
-				<button [class]="triggerStyle">
+				<button [class]="triggerStyle" [disabled]="!hasEnabledMenuItem">
 					{{ trigger | translate }}
 					<ng-icon hlm class="tw-ml-2" name="lucideChevronDown" hlmMenuIcon />
 				</button>
@@ -47,7 +51,13 @@ import { TranslateModule } from '@ngx-translate/core';
 			<hlm-menu [size]="size" [inset]="inset" class="tw-border-[var(--color-purple)] tw-border-2">
 				<hlm-menu-label [size]="size" *ngIf="label">{{ label }}</hlm-menu-label>
 				<ng-container *ngFor="let menuItem of menuItems">
-					<button *ngIf="menuItem.action" (click)="menuItem.action($event)" [size]="size" hlmMenuItem>
+					<button
+						*ngIf="menuItem.action"
+						(click)="menuItem.action($event)"
+						[size]="size"
+						[disabled]="menuItem.disabled"
+						hlmMenuItem
+					>
 						<ng-icon hlm [size]="iconClass" *ngIf="menuItem.icon" name="{{ menuItem.icon }}" hlmMenuIcon />
 						{{ menuItem.title | translate }}
 					</button>
@@ -79,13 +89,24 @@ export class OebDropdownComponent {
 	@Input() trigger: any;
 	@Input() size: HlmMenuItemVariants['size'] = 'default';
 	@Input() inset: HlmMenuItemVariants['inset'] = false;
-	@Input() triggerStyle: string = 'tw-border tw-border-solid tw-border-purple tw-px-1 tw-py-2 tw-rounded-xl';
+	@Input() triggerStyle: string = 'tw-border tw-border-solid tw-border-purple tw-px-1 tw-py-2 tw-rounded-xl disabled:tw-pointer-events-none disabled:tw-opacity-50';
 	@Input() label?: string = '';
 	@Input() class?: string = '';
 	@Input() menuItems: MenuItem[];
 
 	get isTemplate(): boolean {
 		return this.trigger instanceof TemplateRef;
+	}
+
+	/**
+	 * Checks given {@link menuItems} input for enabled items.
+	 * Used to disable the trigger depending on its return value.
+	 * @returns true when {@link menuItems} is undefined or empty or
+	 * any of the menu items is not disabled, false otherwise.
+	 */
+	get hasEnabledMenuItem(): boolean {
+		if (this.menuItems === undefined || this.menuItems === null || this.menuItems.length === 0) return true;
+		return this.menuItems.find((m) => !m.disabled) !== undefined;
 	}
 
 	get iconClass(): string {

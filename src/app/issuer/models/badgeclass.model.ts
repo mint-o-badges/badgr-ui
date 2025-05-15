@@ -90,6 +90,14 @@ export class BadgeClass extends ManagedEntity<ApiBadgeClass, BadgeClassRef> {
 		this.apiModel.criteria_url = criteriaUrl;
 	}
 
+	get critera(): Array<{name: string; description: string;}> {
+		return this.apiModel.criteria
+	}
+
+	set criteria(criteria: Array<{name: string; description: string;}>) {
+		this.apiModel.criteria = criteria;
+	} 
+
 	get tags(): string[] {
 		return this.apiModel.tags;
 	}

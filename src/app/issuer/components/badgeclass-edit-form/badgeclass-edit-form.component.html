@@ -823,10 +823,10 @@
 															<oeb-input
 																id="{{ 'competencyDurationHour_' + i }}"
 																[fieldType]="'number'"
-																class="tw-max-w-24"
+																class="tw-max-w-40"
 																[control]="competency.rawControlMap.hours"
 																[errorMessage]="{
-																	duration: requiredError
+																	max: maxValue1000
 																}"
 																noTopMargin="true"
 															>
@@ -835,10 +835,10 @@
 															<oeb-input
 																id="{{ 'competencyDurationMinutes_' + i }}"
 																[fieldType]="'number'"
-																class="tw-max-w-24"
+																class="tw-max-w-40"
 																[control]="competency.rawControlMap.minutes"
 																[errorMessage]="{
-																	duration: requiredError
+																	max: minMaxError
 																}"
 																noTopMargin="true"
 															>
@@ -962,330 +962,141 @@
 					</div>
 				</cdk-step>
 
-				<cdk-step [label]="'CreateBadge.stepFinish' | translate">
-					<div class="section tw-text-oebblack tw-mt-6">
-						<oeb-collapsible
-							[trigger]="collapseDetailsTrigger"
-							[id]="'optional-details'"
-							[closeable]="!alignmentsEnabled && !expirationEnabled"
-						>
-							<ng-template #collapseDetailsTrigger>
-								<h2
-									class="tw-pt-1 tw-px-1 tw-font-normal tw-text-[30px] tw-text-[var(--color-purple)] tw-mr-auto"
-								>
-									{{ 'CreateBadge.optionalBadgeDetails' | translate }}
-								</h2>
-							</ng-template>
-							<ul class="tw-mt-4">
-								<li>
-									<button
-										id="link-standards-btn"
-										type="button"
-										(click)="alignmentsEnabled ? disableAlignments() : enableAlignments()"
-										class="options-dropdown"
-									>
-										<span class="tw-text-md md:tw-text-lg">
-											{{ 'CreateBadge.alignEducationalFramework' | translate }}
-										</span>
-									</button>
-									<!-- alignments -->
-									<div
-										class="formsection tw-mt-2 tw-bg-inherit tw-border-none"
-										*ngIf="alignmentsEnabled"
-									>
-										<div class="formsection-x-title">
-											<h2 class="u-text-dark2">
-												{{ 'RecBadgeDetail.alignment' | translate }}
-												<span>(Optional)</span>
-											</h2>
-											<button
-												type="button"
-												(click)="disableAlignments()"
-												class="buttonicon buttonicon-link"
-											>
-												<svg icon="icon_close"></svg>
-												<span class="visuallyhidden">{{ 'General.close' | translate }}</span>
-											</button>
-										</div>
-
-										<div class="formsection-x-help">
-											<h3 class="u-text-body-bold">
-												{{ 'CreateBadge.whatIsThe' | translate }}
-												{{ 'RecBadgeDetail.alignment' | translate }}?
-											</h3>
-											<p class="u-text u-margin-top1x u-margin-bottom2x">
-												{{ 'CreateBadge.alignmentInfo' | translate }}
-											</p>
-										</div>
-										<div class="formsection-x-body">
-											<ng-container
-												*ngFor="
-													let alignment of badgeClassForm.controls.alignments.controls;
-													let i = index
-												"
-											>
-												<div
-													class="tw-mt-2 l-flex l-flex-1x l-flex-justifybetween u-margin-bottom2x"
-												>
-													<h3 class="u-text-body-bold u-text-dark1">
-														{{ alignment.controls.target_name.value }}
-													</h3>
-													<button
-														*ngIf="badgeClassForm.controls.alignments.controls.length > 1"
-														type="button"
-														(click)="removeAlignment(alignment)"
-														class="u-text-link"
-													>
-														{{ 'General.remove' | translate }}
-													</button>
-												</div>
-												<div class="forminput u-margin-bottom6x">
-													<div class="forminput-x-inputs">
-														<oeb-input
-															[control]="alignment.rawControlMap.target_name"
-															label="Name"
-															[errorMessage]="{ required: alignmentNameError }"
-															id="alignment_name_{{ i }}"
-														></oeb-input>
-
-														<oeb-input
-															[control]="alignment.rawControlMap.target_url"
-															label="URL"
-															[errorMessage]="{ required: alignmentURLError }"
-															[urlField]="true"
-															id="alignment_url_{{ i }}"
-														></oeb-input>
-
-														<oeb-input
-															[control]="alignment.rawControlMap.target_description"
-															[label]="shortDescription"
-															[multiline]="true"
-															id="alignment_description_{{ i }}"
-														></oeb-input>
-
-														<button
-															id="link-more-options-btn"
-															*ngIf="!showAdvanced[i]"
-															(click)="showAdvanced[i] = true"
-															type="button"
-															class="u-text-link-small u-margin-yaxis2x"
-														>
-															{{ 'General.show' | translate }}
-															{{ 'CreateBadge.additionalOptions' | translate }}
-														</button>
-
-														<ng-template [ngIf]="showAdvanced[i]">
-															<button
-																(click)="showAdvanced[i] = false"
-																type="button"
-																class="u-text-link-small u-margin-yaxis2x"
-															>
-																{{ 'General.hide' | translate }}
-																{{ 'CreateBadge.additionalOptions' | translate }}
-															</button>
-
-															<label
-																class="forminput-x-label u-margin-top2x"
-																for="forminput2"
-																>{{ 'CreateBadge.frame' | translate }}</label
-															>
-															<input type="text" id="forminput2" name="forminput2" />
-
-															<label class="forminput-x-label u-margin-top2x" for="url"
-																>Code</label
-															>
-															<input type="text" id="url" name="url" />
-														</ng-template>
-													</div>
-												</div>
-											</ng-container>
-
-											<div class="l-stack">
-												<button
-													(click)="addAlignment()"
-													type="button"
-													class="button button-secondary"
-												>
-													{{ 'CreateBadge.addAlignment' | translate }}
-												</button>
-											</div>
-										</div>
-									</div>
-								</li>
-								<li class="tw-mt-4">
-									<button
-										id="badge-validity-btn"
-										type="button"
-										(click)="expirationEnabled ? disableExpiration() : enableExpiration()"
-										class="options-dropdown"
-									>
-										<span class="tw-text-md md:tw-text-lg">{{
-											'CreateBadge.expiration' | translate
-										}}</span>
-									</button>
-									<!-- expiration -->
-									<div
-										*ngIf="expirationEnabled"
-										class="formsection tw-bg-inherit tw-mt-2 tw-border-none"
-									>
-										<div class="formsection-x-title">
-											<h2 class="u-text-dark2">
-												{{ 'CreateBadge.expiration' | translate }}
-												<span>(Optional)</span>
-											</h2>
-											<button
-												type="button"
-												(click)="disableExpiration()"
-												class="buttonicon buttonicon-link"
-											>
-												<svg icon="icon_close"></svg>
-												<span class="visuallyhidden">{{ 'General.close' | translate }}</span>
-											</button>
-										</div>
-
-										<div class="formsection-x-help">
-											<h3 class="u-text-body-bold">
-												{{ 'CreateBadge.whatIsThe' | translate }}
-												{{ 'CreateBadge.expiration' | translate }}?
-											</h3>
-											<p class="u-text u-margin-top1x u-margin-bottom2x">
-												{{ 'CreateBadge.expirationInfo' | translate }}
-											</p>
-										</div>
-										<div class="formsection-x-body">
-											<div class="l-spacestack">
-												<oeb-input
-													id="duration-number"
-													[control]="expirationForm.rawControlMap.expires_amount"
-													[label]="count"
-													[fieldType]="'number'"
-													[max]="1000"
-													[maxchar]="4"
-													[errorMessage]="{
-														max: maxValue1000
-													}"
-												></oeb-input>
-												<oeb-select
-													[id]="'duration-type'"
-													ariaLabel="chooseDuration"
-													[control]="expirationForm.rawControlMap.expires_duration"
-													[label]="duration"
-													[placeholder]="chooseDuration"
-													[optionMap]="durationOptions"
-												></oeb-select>
-											</div>
-										</div>
-									</div>
-								</li>
-							</ul>
-						</oeb-collapsible>
-					</div>
+				<cdk-step label="Abschluss">
+					<h2 hlmH2 class="tw-pt-1 tw-px-1 tw-mr-auto !tw-text-oebblack !tw-font-bold">
+						{{ 'CreateBadge.optionalBadgeDetails' | translate }}
+					</h2>
 
 					<div class="section tw-text-oebblack tw-mt-6">
-						<h2 hlmH2 class="tw-font-bold">Badge-{{ 'RecBadgeDetail.criteria' | translate }}</h2>
-						<div class="md:tw-mx-6">
-							<p class="tw-my-2 tw-italic tw-font-semibold">
-								{{ 'CreateBadge.criteriaInfo' | translate }}
-							</p>
-							<div class="mdeditor">
-								<div class="mdeditor-x-editor">
-									<!-- <p
-										[hidden]="!alignmentFieldDirty || !badgeClassForm.hasError('criteriaRequired')"
-										class="u-text u-margin-bottom2x u-text-error"
-									>
-										{{ 'CreateBadge.criteriaError' | translate }}
-									</p> -->
-
-									<bg-formfield-markdown
-										[control]="badgeClassForm.rawControlMap.badge_criteria_text"
-										label=" Wie bekommt man dieses Badge?"
-										class="tw-hidden"
-										[errorMessage]="''"
-									></bg-formfield-markdown>
-									<!-- <textarea id="criteria_textarea" class="tw-my-2" readonly>
-										{{criteriaText}}
-									</textarea> -->
-									<div>
-										<span *ngIf="badgeClassForm.controls.badge_name.value" class="tw-text-lg">
-											Du hast erfolgreich an
-											<span class="tw-italic tw-font-semibold">{{
-												badgeClassForm.controls.badge_name.value + ' '
-											}}</span>
-											teilgenommen.</span
-										>
-										<div *ngIf="badgeCategory === 'competency'">
-											<span class="tw-font-bold tw-text-lg"
-												>Dabei hast du folgende Kompetenzen gestärkt:
-											</span>
-											<ul class="tw-list-disc tw-mt-4">
-												<ng-container
-													*ngFor="
-														let aiCompetency of badgeClassForm.controls.aiCompetencies
-															.controls;
-														let i = index
-													"
-												>
-													<li
-														*ngIf="aiCompetency.rawControlMap.selected.value"
-														class="tw-mx-6"
-													>
-														<span class="tw-text-lg">
-															{{ aiCompetenciesSuggestions[i].preferred_label }}
-														</span>
-													</li>
-												</ng-container>
-												<ng-container
-													*ngFor="
-														let keywordCompetency of badgeClassForm.controls
-															.keywordCompetencies.controls;
-														let i = index
-													"
-												>
-													<li class="tw-mx-6">
-														<span class="tw-text-lg">{{
-															selectedKeywordCompetencies[i].preferred_label
-														}}</span>
-													</li>
-												</ng-container>
-												<ng-container
-													*ngFor="
-														let competency of badgeClassForm.controls.competencies.controls
-													"
-												>
-													<li *ngIf="competency.rawControlMap.name.value" class="tw-mx-6">
-														<span class="tw-text-lg">{{
-															competency.rawControlMap.name.value
-														}}</span>
-													</li>
-												</ng-container>
-											</ul>
-										</div>
-									</div>
-								</div>
-
-								<!-- <div class="forminput u-margin-bottom2x md:tw-items-center tw-flex tw-gap-2 md:tw-flex-row tw-flex-col">
-									<span class="tw-font-bold tw-whitespace-nowrap">URL (optional)</span>
-									<bg-formfield-text
-										class="tw-w-full"
-										[control]="badgeClassForm.rawControlMap.badge_criteria_url"
-										[urlField]="true"
-										fieldType="url"
-										errorMessage="URL zu den Badge Kriterien"
-									></bg-formfield-text>
-								</div>  -->
-							</div>
-						</div>
-					</div>
-
-					<div class="section tw-text-oebblack tw-mt-6">
-						<h2 hlmH2 class="tw-font-bold">{{ 'Badge.copyBadgeHeadline' | translate }}</h2>
-						<p class="tw-text-purple tw-italic" [innerHTML]="'Badge.copyBadgeDescription' | translate"></p>
+						<h2 hlmH2 class="!tw-text-oebblack">
+							{{ 'Badge.copyBadgeHeadline' | translate }}
+						</h2>
+						<span
+							class="tw-text-oebblack tw-italic tw-text-lg"
+							[innerHTML]="'Badge.copyBadgeDescription1' | translate"
+						></span>
+						<span
+							class="tw-text-purple tw-italic tw-text-lg tw-mt-2"
+							[innerHTML]="'Badge.copyBadgeDescription2' | translate"
+						></span>
 						<div class="tw-mt-2 tw-mb-2">
 							<oeb-checkbox
 								[control]="badgeClassForm.rawControlMap.copy_permissions_allow_others"
 								[text]="'Badge.copyLabelOthers' | translate"
 							/>
 						</div>
+					</div>
+					<div *ngIf="category == 'competency'" class="section tw-text-oebblack tw-mt-6">
+						<h2 hlmH2 class="tw-pt-1 tw-px-1 tw-mr-auto !tw-text-oebblack">
+							{{ 'Badge.awardCriteria' | translate }}
+						</h2>
+						<span
+							class="tw-text-purple tw-italic tw-text-lg tw-mt-2"
+							[innerHTML]="'Badge.criteriaDesc' | translate"
+						></span>
+						<div class="tw-mt-2 tw-mb-2 tw-grid tw-grid-cols-3">
+							<div class="tw-grid tw-grid-cols-2 tw-col-span-2">
+								<ng-container
+									*ngFor="
+										let criteriaGroup of criteriaSelectionsForm.controls.selections.controls;
+										let i = index
+									"
+								>
+									<oeb-checkbox
+										[control]="criteriaGroup.rawControlMap.selected"
+										[text]="criteriaGroup.controls.text.value"
+									></oeb-checkbox>
+								</ng-container>
+							</div>
+							<oeb-button
+								class="tw-col-span-1"
+								size="sm"
+								type="button"
+								variant="secondary"
+								[text]="'Badge.addOwnCriteria' | translate"
+								(click)="addNewOwnCriteria()"
+							></oeb-button>
+						</div>
+
+						<ng-container *ngFor="let criteria of badgeClassForm.controls.criteria.controls; let i = index">
+							<section
+								class="tw-border-[var(--color-purple)] tw-bg-[var(--color-lightpurple)] tw-border tw-border-solid tw-rounded-md tw-p-6 tw-mt-4"
+							>
+								<div class="tw-flex tw-gap-2">
+									<oeb-input
+										id="{{ 'criteriaTitle_' + i }}"
+										[fieldType]="'text'"
+										[control]="criteria.rawControlMap.name"
+										[errorMessage]="{ required: titleError }"
+										noTopMargin="true"
+										[readonly]="isPredefinedCriteria(criteria)"
+										class="tw-w-full"
+										[placeholder]="'Badge.enterOwnCriteria' | translate"
+										[sublabelRight]="'(max. 50 Zeichen)'"
+									>
+									</oeb-input>
+									<oeb-button
+										icon="lucideTrash2"
+										type="button"
+										iconLeft="true"
+										size="sm"
+										variant="secondary"
+										[text]="'General.delete' | translate"
+										(click)="removeCriteria(criteria.rawControlMap.name.value)"
+									>
+									</oeb-button>
+								</div>
+
+								<oeb-input
+									id="{{ 'criteriaDescription_' + i }}"
+									[fieldType]="'textarea'"
+									[control]="criteria.rawControlMap.description"
+									[errorMessage]="{ required: enterDescription }"
+									[placeholder]="'Badge.enterOwnCriteriaDesc' | translate"
+								>
+								</oeb-input>
+							</section>
+						</ng-container>
+					</div>
+					<div class="section tw-text-oebblack tw-mt-6">
+						<h2 hlmH2 class="tw-pt-1 tw-px-1 tw-mr-auto !tw-text-oebblack">
+							{{ 'CreateBadge.expiration' | translate }}
+						</h2>
+						<span
+							class="tw-text-purple tw-italic tw-text-lg tw-mt-2"
+							[innerHTML]="'CreateBadge.expirationInfo' | translate"
+						></span>
+						<div class="formsection-x-body">
+							<div class="l-spacestack">
+								<oeb-input
+									id="duration-number"
+									[control]="expirationForm.rawControlMap.expires_amount"
+									[label]="count"
+									[fieldType]="'number'"
+									[max]="1000"
+									[maxchar]="4"
+									[errorMessage]="{
+										max: maxValue1000
+									}"
+								></oeb-input>
+								<oeb-select
+									[id]="'duration-type'"
+									ariaLabel="chooseDuration"
+									[control]="expirationForm.rawControlMap.expires_duration"
+									[label]="duration"
+									[placeholder]="chooseDuration"
+									[optionMap]="durationOptions"
+								></oeb-select>
+							</div>
+						</div>
+						<!-- <div class="tw-mt-2 tw-mb-2 tw-flex tw-gap-2"> -->
+						<!-- <span [innerHTML]="'CreateBadge.validUntil' | translate"></span> -->
+						<!-- <oeb-input
+								[errorMessage]="'Bitte gib ein Datum in der Form tt/mm/jjjj an'"
+								[control]="expirationForm.rawControlMap.expires"
+								fieldType="date"
+							></oeb-input> -->
+						<!-- </div> -->
 					</div>
 				</cdk-step>
 			</oeb-stepper>

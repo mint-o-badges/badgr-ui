@@ -76,11 +76,12 @@
 		"title": "Title",
 		"noResults": "No results",
 		"reset": "Reset",
-		"create": "Create",
-		"copy": "Copy",
-		"place": "Place",
-		"forwarded": "Forwarded",
-		"revoke": "Revoke",
+		"exam": "Exam",
+		"create": "create",
+		"copy": "copy",
+		"place": "place",
+		"forwarded": "forwarded",
+		"revoke": "revoke",
 		"confirm": "Confirm",
 		"noRequests": "No requests",
 		"oneRequest": "1 request",
@@ -96,7 +97,14 @@
 		"select": "Select",
 		"loadMore": "Load more",
 		"searchByEmail": "Search by email address",
-		"openNewWindow": "Open in new window"
+		"openNewWindow": "Open in new window",
+		"public": "Public",
+		"sendUsYourBadge": "Send your badge to <a class='tw-text-link tw-underline' href='mailto:support@openbadges.education'>support@openbadges.education</a> and we will be glad to take a look. ",
+		"thisDidNotWork": "Unfortunately this did not work.",
+		"toMyProfile": "To my profile",
+		"imported": "imported",
+		"new": "new",
+		"expired": "expired"
 	},
 	"NavItems": {
 		"register": "Register",
@@ -448,6 +456,7 @@
 		"frame": "Frame",
 		"expiration": "Validity",
 		"expirationInfo": "Describe how long this badge is generally valid. This information can also be changed when awarding the badge. Badges are marked as expired after their validity period has expired.",
+		"validUntil": "The badge is valid until ",
 		"chooseDuration": "Choose duration",
 		"optionalBadgeDetails": "Optional badge details",
 		"addTags": "Add tags",
@@ -460,9 +469,10 @@
 		"addAnotherCompetency": "Add another skill",
 		"giveBadgeTitle": "Please give the badge a title",
 		"changeBadgeTitle": "Please change the title",
-		"maxValue1000": "Maximum value is 1000",
+		"maxValue1000": "Must be less than 1000",
 		"imageTooLarge": "The image is too large. Please choose an image with a maximum size of 2 MB.",
 		"licenseInfo": "Badges are created under the <a class='tw-underline tw-text-[#1400FF]' target='_blank' href='https://creativecommons.org/publicdomain/zero/1.0/legalcode.de'>CC0 1.0 license</a>.",
+
 		"requiredError": "Required",
 		"hoursMaxError": "Hours cannot exceed 10,000.",
 		"minMaxError": "Please enter a valid number of minutes (0 to 59).",
@@ -618,6 +628,7 @@
 		"addBadge": "Add badge",
 		"fromMozilla": "Is it from Mozilla?",
 		"closeNotification": "Close notification",
+		"uploadBadge": "Upload Badge",
 		"noBadgesYet": "You don't have any badges yet",
 		"noLearningPathYet": "You don't have any Micro Degrees yet",
 		"collectShareBadges": "Collect and share digital badges from your backpack.",
@@ -646,7 +657,18 @@
 		"uploadOwnVisual": "Upload complete badge image",
 		"importedSuccessfully": "Badge imported successfully.",
 		"uploadFailed": "Could not upload badge:",
-		"unknownError": "The badge upload failed due to an unknown error"
+		"unknownError": "The badge upload failed due to an unknown error",
+		"badgeUploadVersionError": "Unfortunately uploading this badge version is not possible.",
+		"uploadEmailDoesNotMatchError": "The email address in the badge does not match the email in your OEB profile.",
+		"addEmailToUpload": "Add the email address to your profile to upload the badge.",
+		"versionUploadInfo": "Unfortunately at the moment only badges of version 2.0 can be uploaded"
+	},
+	"EditBadge": {
+		"editBadge": "Edit badge",
+		"editBadgeInfo": "Edit the information about this achievement.",
+		"removeCompetency": "Remove competency",
+		"removeCompetencyInfo": "Are you sure you want to remove this competency?",
+		"cancel": "Cancel"
 	},
 	"RecBadgeDetail": {
 		"shareBadge": "Share badge",
@@ -682,12 +704,6 @@
 		"copyShareLink": "Copy this link to share",
 		"addToProfile": "Add to profile"
 	},
-	"EditBadge": {
-		"editBadge": "Edit badge",
-		"editBadgeInfo": "Edit the information of this badge.",
-		"removeCompetency": "Delete skill",
-		"removeCompetencyInfo": "Do you really want to delete this skill?"
-	},
 	"BadgeCollection": {
 		"addCollection": "Add collection",
 		"earnedBy": "earned by",
@@ -696,11 +712,24 @@
 		"createCollection": "Create collection",
 		"share": "Share",
 		"orginzeBadges": "Organize your badges in collections.",
+		"collectionNamePlaceholder": "Tech & Code – My digital skills for the future",
 		"collectionName": "Collection name",
 		"enterCollectioName": "Please enter a collection name",
 		"remainingChar": "remaining characters",
-		"description": "Description",
-		"provideDescription": "Please provide a description"
+		"description": "Description of the collection",
+		"provideDescription": "Please provide a description",
+		"myCollections": "My collections",
+		"useCollectionsForApplication": "Use collections for applications",
+		"collectionInfoText": "Organize your badges into collections and download the respective PDF or create a direct-link for sharing.",
+		"addLink": "",
+		"createCollectionNow": "Create collection now",
+		"addBadges": "Add badges to collection",
+		"skipStep": "You can skip this step and add badges later.",
+		"badgesInCollection": "badges in the collection",
+		"removeBadge": "Remove Badge from collection?",
+		"removeBadgeConfirm1": "Möchtest du den Badge ",
+		"removeBadgeConfirm2": " wirklich aus dieser Sammlung entfernen?",
+		"removeBadgeConfirmation": "Yes, remove"
 	},
 	"Profile": {
 		"more": "More",
@@ -810,7 +839,8 @@
 		"creator": "Creator",
 		"validity": "QR code validity",
 		"download": "Download QR code",
-		"toBadgeDetail": "To Badge detail page"
+		"toBadgeDetail": "To Badge detail page",
+		"downloadPoster": "Download QR-Code-Poster"
 	},
 	"LearningPath": {
 		"learningpaths": "Micro Degrees",
@@ -857,7 +887,7 @@
 		"description": "Short description for learners",
 		"selectedBadges": "You selected {{ count }} Badges for the Micro Degree",
 		"selectedBadgesOne": "You selected 1 Badge for the Micro Degree",
-		"deleteWarning": "Do you really want to delete this Micro Degree?"
+		"deleteWarning": "Do you really want to delete this Micro Degree?",
 	},
 	"LearningPathEditor": {
 		"shortDescription": "Summarized description of your Micro Degree. This short description will be saved in the Micro Degree."

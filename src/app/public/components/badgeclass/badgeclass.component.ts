@@ -89,6 +89,7 @@ export class PublicBadgeClassComponent {
 					},
 					badgeTitle: badge.name,
 					badgeDescription: badge.description,
+					badgeCriteria: badge.criteria['narrative'],
 					issuerSlug: badge.issuer['slug'],
 					slug: badge.id,
 					category: this.translate.instant(

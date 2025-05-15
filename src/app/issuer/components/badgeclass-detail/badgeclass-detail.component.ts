@@ -225,6 +225,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 				this.config = {
 					crumbs: this.crumbs,
 					badgeTitle: this.badgeClass.name,
+					badgeCriteria: this.badgeClass.apiModel.criteria,
 					headerButton: {
 						title: 'Badge.award',
 						action: () => this.routeToBadgeAward(this.badgeClass, this.issuer),
@@ -240,7 +241,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 						{
 							title: 'General.edit',
 							routerLink: ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'edit'],
-							disabled: this.badgeClass.recipientCount > 0,
+							disabled: this.badgeClass.recipientCount > 0 || !this.issuer.canEditBadge,
 							icon: 'lucidePencil',
 						},
 						{
@@ -251,6 +252,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 								});
 							},
 							icon: 'lucideCopy',
+							disabled: !this.issuer.canCreateBadge
 						},
 						{
 							title: 'Badge.editCopyStatus',
@@ -262,11 +264,13 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 								'copypermissions',
 							],
 							icon: 'lucideCopyX',
+							disabled: !this.issuer.canEditBadge
 						},
 						{
 							title: 'General.delete',
 							icon: 'lucideTrash2',
 							action: () => this.deleteBadge(),
+							disabled: !this.issuer.canDeleteBadge
 						},
 					],
 					badgeDescription: this.badgeClass.description,
