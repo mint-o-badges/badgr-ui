@@ -316,22 +316,6 @@ export class AppComponent implements OnInit, AfterViewInit {
 			}),
 		);
 
-		// this.translate.get('General.institutionsNav').subscribe((translatedText: string) => {
-		// 	this.aboutBadgesMenuItems[2].title = translatedText;
-		// });
-
-		// this.translate.get('LearningPath.learningpathsNav').subscribe((translatedText: string) => {
-		// 	this.aboutBadgesMenuItems[3].title = translatedText;
-		// });
-
-		// this.translate.get('NavItems.myProfile').subscribe((translatedText: string) => {
-		// 	this.accountMenuItems[1].title = translatedText;
-		// });
-
-		// this.translate.get('NavItems.appIntegrations').subscribe((translatedText: string) => {
-		// 	this.accountMenuItems[2].title = translatedText;
-		// });
-
 		this.translate.onLangChange.subscribe(() => {
 			this.document.documentElement.lang = this.translate.currentLang;
 		});
