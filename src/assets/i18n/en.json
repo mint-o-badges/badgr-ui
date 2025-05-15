@@ -887,7 +887,7 @@
 		"description": "Short description for learners",
 		"selectedBadges": "You selected {{ count }} Badges for the Micro Degree",
 		"selectedBadgesOne": "You selected 1 Badge for the Micro Degree",
-		"deleteWarning": "Do you really want to delete this Micro Degree?",
+		"deleteWarning": "Do you really want to delete this Micro Degree?"
 	},
 	"LearningPathEditor": {
 		"shortDescription": "Summarized description of your Micro Degree. This short description will be saved in the Micro Degree."
