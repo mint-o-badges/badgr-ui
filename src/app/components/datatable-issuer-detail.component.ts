@@ -92,7 +92,7 @@ import { provideIcons } from '@ng-icons/core';
 							width="full_width"
 							class="tw-w-full"
 							(click)="actionElement.emit(recipient)"
-							[text]="actionElementText || ('General.revoke' | translate)"
+							[text]="actionElementText | translate"
 						></oeb-button>
 
 						<oeb-button
@@ -112,7 +112,7 @@ import { provideIcons } from '@ng-icons/core';
 export class IssuerDetailDatatableComponent {
 	@Input() caption: string = '';
 	@Input() recipientCount: number = 0;
-	@Input() actionElementText: string = '';
+	@Input() actionElementText: string = 'General.revoke';
 	@Input() downloadStates;
 	@Output() actionElement = new EventEmitter();
 	@Output() downloadCertificate = new EventEmitter<object>();
