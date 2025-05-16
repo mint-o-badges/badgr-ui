@@ -54,7 +54,7 @@ export class OebIssuerDetailComponent implements OnInit {
 
 	menuItemsPublic: MenuItem[] = [
 		{
-			title: this.translate.instant('Issuer.jsonView'),
+			title: 'Issuer.jsonView',
 			action: (a: any) => this.routeToJson(),
 			// action: (a:any) => this.delete(a),
 			icon: 'lucideFileQuestion',
@@ -63,18 +63,18 @@ export class OebIssuerDetailComponent implements OnInit {
 
 	menuItems: MenuItem[] = [
 		{
-			title: this.translate.instant('General.edit'),
+			title: 'General.edit',
 			routerLink: ['./edit'],
 			icon: 'lucidePencil',
 		},
 		{
-			title: this.translate.instant('General.delete'),
+			title: 'General.delete',
 			// routerLink: ['/catalog/badges'],
 			action: (a: any) => this.delete(a),
 			icon: 'lucideTrash2',
 		},
 		{
-			title: this.translate.instant('General.members'),
+			title: 'General.members',
 			routerLink: ['./staff'],
 			icon: 'lucideUsers',
 		},

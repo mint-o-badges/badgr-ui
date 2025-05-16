@@ -52,11 +52,11 @@
 						<span>{{ issuer }}</span>
 					</div>
 					<div class="tw-flex tw-flex-col">
-						<span class="tw-font-bold">Kampagnen-Ersteller:in</span>
+						<span class="tw-font-bold">{{ 'QrCode.creator' | translate }}</span>
 						<span>{{ creator }}</span>
 					</div>
 					<div class="tw-flex tw-flex-col" *ngIf="validity">
-						<span class="tw-font-bold">Gültigkeit des QR-Codes</span>
+						<span class="tw-font-bold">{{ 'QrCode.validity' | translate }}</span>
 						<span>{{ validity }}</span>
 					</div>
 				</div>
@@ -76,7 +76,7 @@
 					width="full_width"
 					variant="secondary"
 					size="md"
-					text="Zur Badge Detail Seite"
+					[text]="'QrCode.toBadgeDetail' | translate"
 				></oeb-button>
 			</div>
 		</div>

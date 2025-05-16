@@ -3,18 +3,18 @@
 
 	<div class="md:tw-mx-10">
 		<oeb-input
-			label="1. Micro Degree-Titel"
+			[label]="'1. ' + ('LearningPath.title' | translate)"
 			[control]="lpDetailsForm.rawControlMap.name"
 			[autofocus]="true"
-			sublabelRight="(max. 60 Zeichen)"
+			[sublabelRight]="'(max. 60 ' + ('General.characters' | translate) + ')'"
 		></oeb-input>
 		<oeb-input
-			label="2. Kurz-Beschreibung für Lernende"
+			[label]="'2. ' + ('LearningPath.description' | translate)"
 			[control]="lpDetailsForm.rawControlMap.description"
 			[fieldType]="'textarea'"
-			sublabelRight="(max. 700 Zeichen)"
+			sublabelRight="'(max. 700 ' + ('General.characters' | translate) + ')'"
 			placeholder="{{ 'LearningPathEditor.shortDescription' | translate }}"
-			
+
 		></oeb-input>
 
 		<div class="tw-mt-6 md:tw-mt-7 tw-relative" id="imageSection" #imageSection>

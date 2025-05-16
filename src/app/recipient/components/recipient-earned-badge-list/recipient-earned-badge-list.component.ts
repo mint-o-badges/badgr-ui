@@ -281,24 +281,6 @@ export class RecipientEarnedBadgeListComponent
 			}
 		});
 
-		// Pre-load all translations
-		forkJoin({
-			badges: this.translate.get('General.badges'),
-			competencies: this.translate.get('CreateBadge.competencies'),
-			learningpaths: this.translate.get('General.learningPaths'),
-			collections: this.translate.get('BadgeCollection.myCollections'),
-		}).subscribe((translations) => {
-			this.translatedTitles = [
-				translations.badges,
-				translations.competencies,
-				translations.learningpaths,
-				translations.collections,
-			];
-
-			if (!this.activeTab) {
-				this.activeTab = this.translatedTitles[0];
-			}
-		});
 		if (this.route.snapshot.routeConfig.path === 'badges/import') this.launchImport(new Event('click'));
 	}
 
@@ -316,27 +298,24 @@ export class RecipientEarnedBadgeListComponent
 	}
 
 	ngAfterContentInit() {
-		// Wait for view initialization to get template references
-		setTimeout(() => {
-			this.tabs = [
-				{
-					title: this.translatedTitles[0],
-					component: this.badgesTemplate,
-				},
-				{
-					title: this.translatedTitles[1],
-					component: this.badgesCompetency,
-				},
-				{
-					title: this.translatedTitles[2],
-					component: this.learningPathTemplate,
-				},
-				{
-					title: this.translatedTitles[3],
-					component: this.collectionTemplate,
-				},
-			];
-		});
+		this.tabs = [
+			{
+				title: 'Badges',
+				component: this.badgesTemplate,
+			},
+			{
+				title: 'RecBadge.competencies',
+				component: this.badgesCompetency,
+			},
+			{
+				title: 'Micro Degrees',
+				component: this.learningPathTemplate,
+			},
+			{
+				title: 'BadgeCollection.myCollections',
+				component: this.collectionTemplate,
+			}
+		];
 	}
 
 	closeDialog() {

@@ -7,6 +7,7 @@ import { NounprojectService } from '../../services/nounproject.service';
 import { NounProjectIcon } from '../../model/nounproject.model';
 import { fromEvent } from 'rxjs';
 import { map, debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'nounproject-dialog',
@@ -47,6 +48,7 @@ export class NounprojectDialog extends BaseDialog implements AfterViewInit {
 		componentElem: ElementRef<HTMLElement>,
 		protected nounprojectService: NounprojectService,
 		renderer: Renderer2,
+		public translate: TranslateService,
 	) {
 		super(componentElem, renderer);
 	}

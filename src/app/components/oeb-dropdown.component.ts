@@ -8,11 +8,12 @@ import {
 	HlmMenuItemVariants,
 	HlmMenuLabelComponent,
 } from './spartan/ui-menu-helm/src/index';
-import { NgIf, NgFor, NgTemplateOutlet } from '@angular/common';
+import { NgIf, NgFor, NgTemplateOutlet, AsyncPipe } from '@angular/common';
 import type { MenuItem } from '../common/components/badge-detail/badge-detail.component.types';
 import { RouterModule } from '@angular/router';
 import { HlmIconModule } from './spartan/ui-icon-helm/src';
 import { SharedIconsModule } from '../public/icons.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
 	selector: 'oeb-dropdown',
@@ -29,6 +30,7 @@ import { SharedIconsModule } from '../public/icons.module';
 		NgIcon,
 		HlmIconModule,
 		SharedIconsModule,
+		TranslateModule
 	],
 	template: `
 		<button
@@ -39,7 +41,7 @@ import { SharedIconsModule } from '../public/icons.module';
 			<ngTemplateOutlet *ngIf="isTemplate; else stringTrigger" [ngTemplateOutlet]="trigger"></ngTemplateOutlet>
 			<ng-template #stringTrigger>
 				<button [class]="triggerStyle" [disabled]="!hasEnabledMenuItem">
-					{{ trigger }}
+					{{ trigger | translate }}
 					<ng-icon hlm class="tw-ml-2" name="lucideChevronDown" hlmMenuIcon />
 				</button>
 			</ng-template>
@@ -57,7 +59,7 @@ import { SharedIconsModule } from '../public/icons.module';
 						hlmMenuItem
 					>
 						<ng-icon hlm [size]="iconClass" *ngIf="menuItem.icon" name="{{ menuItem.icon }}" hlmMenuIcon />
-						{{ menuItem.title }}
+						{{ menuItem.title | translate }}
 					</button>
 					<button
 						routerLinkActive="tw-bg-lightpurple"
@@ -75,7 +77,7 @@ import { SharedIconsModule } from '../public/icons.module';
 							name="{{ menuItem.icon }}"
 							hlmMenuIcon
 						/>
-						{{ menuItem.title }}
+						{{ menuItem.title | translate }}
 					</button>
 				</ng-container>
 			</hlm-menu>
