@@ -348,7 +348,6 @@ export class AppComponent implements OnInit, AfterViewInit {
 
 	// For changing language based on selection
 	changeLng(lng) {
-		window.localStorage.setItem('lang', lng);
 		this.languageService.setLanguage(lng);
 	}
 }

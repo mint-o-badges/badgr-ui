@@ -37,6 +37,7 @@ export class LanguageService {
 
 	// To set language
 	setLanguage(lng) {
+		window.localStorage.setItem('lang', lng);
 		this.translate.use(lng.toLowerCase());
 		this.setSelectedLngValue(lng);
 	}
