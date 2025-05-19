@@ -16,6 +16,7 @@ import { BaseRoutableComponent } from '../../pages/base-routable.component';
 import { BadgeInstanceApiService } from '../../../issuer/services/badgeinstance-api.service';
 import { PdfService } from '../../services/pdf.service';
 import { SafeResourceUrl } from '@angular/platform-browser';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'oeb-learning-path',
@@ -53,6 +54,7 @@ export class OebLearningPathDetailComponent extends BaseRoutableComponent implem
 		private pdfService: PdfService,
 		public router: Router,
 		route: ActivatedRoute,
+		private translate: TranslateService
 	) {
 		super(router, route);
 	}
@@ -81,8 +83,8 @@ export class OebLearningPathDetailComponent extends BaseRoutableComponent implem
 				delete: () => this.deleteLearningPathApi(learningPathSlug, issuer),
 				// qrCodeRequested: () => {},
 				variant: 'danger',
-				text: 'Möchtest du diesen Micro Degree wirklich löschen?',
-				title: 'Micro Degree löschen',
+				text: this.translate.instant('LearningPath.deleteWarning'),
+				title: this.translate.instant('General.delete'),
 			},
 		});
 	}
@@ -115,10 +117,10 @@ export class OebLearningPathDetailComponent extends BaseRoutableComponent implem
 
 		this.confirmDialog
 			.openResolveRejectDialog({
-				dialogTitle: 'Warnung',
-				dialogBody: `Bist du sicher, dass du <strong>${this.learningPath.name}</strong> von <strong>${participationBadgeInstance.recipientIdentifier}</strong> zurücknehmen möchtest?`,
-				resolveButtonLabel: 'Zurücknehmen',
-				rejectButtonLabel: 'Abbrechen',
+				dialogTitle: this.translate.instant('General.warning'),
+				dialogBody: this.translate.instant('Issuer.revokeBadgeWarning', { "badge": this.learningPath.name, "recipient": participationBadgeInstance.recipientIdentifier }),
+				resolveButtonLabel: this.translate.instant('General.revoke'),
+				rejectButtonLabel: this.translate.instant('General.cancel'),
 			})
 			.then(async () => {
 				try {

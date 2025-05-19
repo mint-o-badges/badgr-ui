@@ -7,14 +7,20 @@
 			<div class="oeb-headline-container-sm !tw-pb-0">
 				<h1 hlmH1 class="tw-text-purple tw-font-black">
 					<span *ngIf="category == 'participation'">
+						<span *ngIf="translate.currentLang == 'en'">{{
+							copiedBadgeClass ? ('General.copy' | translate) : ('General.create' | translate)
+						}}</span>
 						{{ 'Badge.participation' | translate }}-Badge
-						<span>{{
+						<span *ngIf="translate.currentLang == 'de'">{{
 							copiedBadgeClass ? ('General.copy' | translate) : ('General.create' | translate)
 						}}</span>
 					</span>
 					<span *ngIf="category == 'competency'">
+						<span *ngIf="translate.currentLang == 'en'">{{
+							copiedBadgeClass ? ('General.copy' | translate) : ('General.create' | translate)
+						}}</span>
 						{{ 'Badge.competency' | translate }}-Badge
-						<span>{{
+						<span *ngIf="translate.currentLang == 'de'">{{
 							copiedBadgeClass ? ('General.copy' | translate) : ('General.create' | translate)
 						}}</span>
 					</span>

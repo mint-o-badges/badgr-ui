@@ -3,6 +3,7 @@
 		"yes": "Ja",
 		"no": "Nein",
 		"name": "Name",
+		"email": "E-Mail",
 		"institutions": "Institutionen",
 		"institutionsNav": "Institutionen A-Z",
 		"account": "Konto",
@@ -85,6 +86,18 @@
 		"noRequests": "Keine Anfragen",
 		"oneRequest": "1 Anfrage",
 		"multiRequests": "# Anfragen",
+		"license": "Lizenz",
+		"language": {
+			"de": "Deutsch",
+			"en": "Englisch"
+		},
+		"close": "Schliessen",
+		"notification": "Benachrichtigung",
+		"validationCompleteForm": "Bitte vollständig ausfüllen",
+		"select": "Auswählen",
+		"loadMore": "Mehr laden",
+		"searchByEmail": "Nach E-Mail-Adresse suchen",
+		"openNewWindow": "In neuem Fenster öffnen",
 		"public": "Öffentlich",
 		"sendUsYourBadge": "Sende deinen Badge gerne an <a class='tw-text-link tw-underline' href='mailto:support@openbadges.education'>support@openbadges.education</a>, dann schauen wir uns die Datei an. ",
 		"thisDidNotWork": "Das hat leider nicht funktioniert.",
@@ -101,7 +114,8 @@
 		"appIntegrations": "App Integrationen",
 		"openMenu": "Menü öffnen",
 		"logout": "Ausloggen",
-		"myProfile": "Mein Profil"
+		"myProfile": "Mein Profil",
+		"faq": "FAQ"
 	},
 	"Start": {
 		"desc1": "Ein lernerzentrierter Ansatz",
@@ -165,7 +179,8 @@
 		"noInstitutions": "Keine Institutionen",
 		"searchInstitutions": "Institutionen durchsuchen",
 		"noBadges": "Keine Badges",
-		"recipient": "Empfänger",
+		"recipient": "Empfänger:in",
+		"recipients": "Empfänger:innen",
 		"noRecipient": "Kein Empfänger",
 		"createInstitution": "Institution erstellen",
 		"createInstitutionNow": "Jetzt Institution erstellen",
@@ -195,7 +210,7 @@
 		"enterValidEmail": "Bitte gib eine gültige E-Mail Adresse an",
 		"enterDescription": "Bitte gib eine Beschreibung an",
 		"enterCategory": "Bitte gib eine Kategorie an",
-		"enterStreet": "Bitte gib eine Strasse an",
+		"enterStreet": "Bitte gib eine addMember_staffStrasse an",
 		"enterHouseNo": "Bitte gib eine Hausnummer an",
 		"enterPostalCode": "Bitte gib eine Postleitzahl an",
 		"enterCity": "Bitte gib eine Stadt an",
@@ -210,6 +225,7 @@
 		"addMember_chooseRole": "Rolle wählen",
 		"addMember_owner": "Eigentümer:in",
 		"addMember_ownerText": "Zugriff auf alle Funktionen inkl. Hinzufügen/Entfernen von Editor:innen und Mitarbeiter:innen, Bearbeitung der Institutionsdetails sowie Erstellen, Vergeben und Löschen von Badges inkl. Micro Degrees.",
+		"addMember_editor": "Editor:in",
 		"addMember_editorText": "Rechte zum Erstellen, Vergeben und Löschen von Badges inkl. Micro Degrees.",
 		"addMember_staff": "Mitarbeiter:in",
 		"addMember_staffText": "Kann die von Eigentümer:innen und/oder Editor:innen erstellten Badges vergeben (inkl. QR-Code-Vergaben erstellen, bearbeiten und löschen).",
@@ -233,7 +249,7 @@
 		"giveMyBadges": "Meine Badges vergeben",
 		"askForPlugin": "Plugin anfragen",
 		"askForPluginText": "Unser <span class='tw-font-bold'>Plugin</span> bietet dir die Möglichkeit, Badges aus deiner eigenen digitalen Lehrumgebung heraus zu vergeben.",
-		"betaPhase": "Unsere Plattform befindet sich noch in der Betaphase. <b>Du hast Fehler entdeckt? Schreib uns an <a class='tw-text-link tw-underline' href='mailto:support@openbadges.education'>support@openbadges.education</a></b>.",
+		"betaPhase": "Unsere Plattform befindet sich noch in der Betaphase. <b>Du hast Fehler entdeckt? Schreib uns gerne an <a class='tw-text-link tw-underline' href='mailto:support@openbadges.education'>support@openbadges.education</a></b>.",
 		"askForLearningPath": "Wir helfen dir, einen Micro Degree anzulegen. Schreibe an <a href='mailto:lernpfad@openbadges.education' class='tw-underline tw-text-[#1400FF]'>lernpfad@openbadges.education</a>.",
 		"award": "vergeben",
 		"badgePreview": "Vorschau Badge",
@@ -269,7 +285,12 @@
 		"pdfCertificate": "PDF-Zertifikat",
 		"institutionIssued": "Institution vergibt Badges über OEB",
 		"institutionsIssued": "Institutionen sind auf OEB registriert",
-		"allCategories": "Alle Kategorien",
+		"categories": {
+			"allCategories": "Alle Kategorien",
+			"schule": "Schule",
+			"hochschule": "Hochschule",
+			"andere": "andere"
+		},
 		"learningPathHeadline": "Micro Degree hochladen",
 		"uploadLearningPathText": "Wenn du versiert im Umgang mit JSON-Dateien bist, kannst du den Micro Degree auch selbst anlegen. So geht’s:",
 		"learningPathHelp": "Momentan werden Micro Degrees noch als JSON-Datei importiert. <b>Gerne erstellen wir diese Datei für dich</b>, schreibe einfach an <a class='tw-text-link tw-underline' href='mailto:lernpfad@openbadges.education'>lernpfad@openbadges.education</a>.",
@@ -308,7 +329,10 @@
 		"confirmStaffRequestText2": " Mitglied deiner Institution sein soll, wähle die passende Rolle aus und bestätige die Anfrage:",
 		"noOpenStaffRequests": "Keine offenen Anfragen",
 		"ownInstitution": "eigene Institution",
-		"allInstitutions": "alle Institutionen"
+		"allInstitutions": "alle Institutionen",
+		"revokeBadgeWarning": "Bist du sicher, dass du \"{{ badge }}\" von {{ recipient }} zurücknehmen möchtest?",
+		"revokeSuccess": "Badge von {{ recipient}} zurücknehmen",
+		"revokeError": "Widerrufen des Badges von {{ recipient }} fehlgeschlagen"
 	},
 	"Badge": {
 		"groupBy": "Gruppieren nach",
@@ -342,6 +366,7 @@
 		"deletePart2": "' löschen möchtest?",
 		"deleteConfirm": "Badge löschen",
 		"deleteRequest": "Badge-Anfrage löschen",
+		"deleteInstancesLeft": "Alle vergebenen Badges müssen zurückgezogen werden, bevor der Badge gelöscht werden kann.",
 		"confirmDeleteRequest1": "Möchtest du die Badge-Anfrage von ",
 		"confirmDeleteRequest2": "wirklich löschen?",
 		"sortBy": "Sortieren nach",
@@ -367,6 +392,11 @@
 		"copyableFor": "Kopierbar für",
 		"copyForWhatInstitution": "Für welche deiner Institutionen soll der Badge kopiert werden?",
 		"copyPermissionInfo": "Der Kopier-Status dieses Badges erlaubt nur das Kopieren innerhalb der Institution, daher wird nur diese hier angezeigt.",
+		"copyThisIssuer": "Kopieren (diese Institution)",
+		"editCopyStatus": "Kopierstatus bearbeiten",
+		"award": "Badge direkt vergeben",
+		"awardQRCode": "Badge über QR-Code vergeben",
+		"partOfLearningPath": "Dieser Badge ist Teil folgender Micro Degrees:",
 		"awardCriteria": "Vergabe-Kriterien",
 		"criteriaDesc": "Welche Anforderungen müssen deine Lernenden erfüllen, um den Badge zu erhalten?",
 		"activeParticipation": "Aktive Teilnahme",
@@ -381,13 +411,14 @@
 		"enterOwnCriteriaDesc": "Hier kannst du Erläuterungen eintragen (max. 300 Zeichen)"
 	},
 	"CreateBadge": {
-		"chooseBadgeCategory": "Badge-Kategorie wählen",
+		"chooseBadgeCategory": "Kategorie wählen",
 		"chooseABadgeCategory": "Wähle eine Badge-Kategorie",
 		"chooseCategory": "Wähle aus zwei Badge-Kategorien:",
 		"competencyInfo": "mit Kompetenzen gefüllt werden, die deine Lernenden erwerben",
 		"withAssistant": "mithilfe unseres KI-Badge-Assistenten",
 		"participationInfo": "dienen als Bestätigung der Teilnahme an einer Veranstaltung",
 		"noCompetencies": "und enthalten keine Kompetenzen",
+		"enterDetailsStep": "Details eingeben",
 		"enterDetails": "Badge-Details eingeben",
 		"criteriaInfo": "Folgende Kriterien sind auf Basis deiner Eingaben als Metadaten im Badge hinterlegt:",
 		"criteriaError": "Entweder Text oder eine URL sind verpflichtend.",
@@ -426,7 +457,7 @@
 		"toEscoSearch": "Zur ESCO-Suche",
 		"titleError": "Bitte gib einen Titel für die Kompetenz ein",
 		"competencyDuration": "Dauer Kompetenz-Erwerb",
-		"chooseCompetencyCategory": "Wähle Kategorie",
+		"chooseCompetencyCategory": "Kategorie wählen",
 		"competencyCategoryError": "Bitte wähle die Kategorie der Kompetenz aus.",
 		"alignmentInfo": "Open Badges können optional mit Bildungsstandards verknüpft werden. Diese Verknüpfungsinformation kann für Menschen wichtig sein, die sehen welche Badges man erhalten hat oder für Menschen, die sich überlegen ein bestimmtes Badge zu erhalten.",
 		"shortDescription": "Kurzbeschreibung",
@@ -441,6 +472,7 @@
 		"validUntil": "Der Badge ist gültig bis ",
 		"chooseDuration": "Wähle Dauer",
 		"optionalBadgeDetails": "Optionale Badge-Details",
+		"addTags": "Tags hinzufügen",
 		"newTag": "Einen Tag eingeben...",
 		"tagDoesNotExist": "Dieser Tag existiert noch nicht",
 		"tagInfo": "Tags verschlagworten Badges und helfen Lernenden auf OEB bei der Suche von Badges zu bestimmten Themen.",
@@ -461,7 +493,18 @@
 		"competencyExceedsBadgeDuration": "Die Zeitangabe für die Stärkung einer einzelnen Kompetenz kann nicht größer sein als die Dauer deines Lernangebots/Badges an sich.",
 		"issuerImageInBadgeImageInfo": "Dein Institutions-Logo wird automatisch im Badge-Bild ergänzt.",
 		"pleaseAddCompetencies": "Bitte Kompetenzen hinzufügen",
-		"invalidCompetence": "Ungültige Kompetenz"
+		"invalidCompetence": "Ungültige Kompetenz",
+		"competencyOptions": "Du hast zwei Möglichkeiten, händisch Kompetenzen zu ergänzen.",
+		"escoSearch": {
+			"headline": "ESCO-Kompetenz",
+			"description": "Damit unsere Badges inhaltlich standardisiert und vergleichbar sind, nutzt der KI-Assistent <a class='tw-text-[var(--color-link)] tw-underline' href='https://esco.ec.europa.eu/de/about-esco' target='_blank'>die Europäische Klassifizierung für Kompetenzen (ESCO)</a>. Du kannst hier selbst nach passenden Kompetenzen suchen und sie hinzufügen:",
+			"search": "ESCO-Datenbank durchsuchen",
+			"inputPlaceholder": "Stichwort eingeben",
+			"resultsIn": "Ergebnisse auf"
+		},
+		"competencyOwn": "Eigene Kompetenz",
+		"competencyOwnDescription": "Falls die ESCO-Suche dir keine passende Kompetenz liefert, kannst du hier händisch eine selbst definierte Kompetenz ergänzen:",
+		"stepFinish": "Abschluss"
 	},
 	"Signup": {
 		"youHaveAccount": "Du hast bereits einen Account?",
@@ -530,7 +573,10 @@
 		"enterNewPasswordConfirmation": "Bitte bestätige dein neues Passwort",
 		"passwordsNotMatch": "Passwörter stimmen nicht überein",
 		"changePassword": "Passwort ändern",
-		"newPassword": "Neues Passwort"
+		"newPassword": "Neues Passwort",
+		"areYouNew": "Du bist neu hier?",
+		"yourEmail": "Deine E-Mail Adresse",
+		"yourPassword": "Dein Passwort"
 	},
 	"Legend": {
 		"legendTitle": "Legende",
@@ -630,6 +676,12 @@
 		"addEmailToUpload": "Füge die E-Mail-Adresse deinem Profil hinzu, um den Badge hochzuladen.",
 		"versionUploadInfo": "Momentan können leider nur Badges der Version 2.0 hochgeladen werden"
 	},
+	"EditBadge": {
+		"editBadge": "Badge editieren",
+		"editBadgeInfo": "Editiere die Information dieses Badges.",
+		"removeCompetency": "Kompetenz löschen",
+		"removeCompetencyInfo": "Möchtest du diese Kompetenz wirklich löschen?"
+	},
 	"RecBadgeDetail": {
 		"shareBadge": "Badge teilen",
 		"verify": "Verifizieren",
@@ -655,13 +707,14 @@
 		"viewAlignmentUrl": "Besuche Verknüpfungs-URL",
 		"narrative": "Narrativ",
 		"evidence": "Nachweis",
-		"viewEvidenceUrl": "Besuche Nachweis-URL"
-	},
-	"EditBadge": {
-		"editBadge": "Badge editieren",
-		"editBadgeInfo": "Editiere die Information dieses Badges.",
-		"removeCompetency": "Kompetenz löschen",
-		"removeCompetencyInfo": "Möchtest du diese Kompetenz wirklich löschen?"
+		"viewEvidenceUrl": "Besuche Nachweis-URL",
+		"downloadImage": "Download Badge-Bild",
+		"downloadJson": "Download JSON-Datei",
+		"downloadPDF": "Download PDF-Zertifikat",
+		"verifyBadge": "Badge verifizieren",
+		"deleteBadge": "Badge aus Rucksack löschen",
+		"copyShareLink": "Kopiere diesen Link zum teilen",
+		"addToProfile": "Zum Profil hinzufügen"
 	},
 	"BadgeCollection": {
 		"addCollection": "Sammlung hinzufügen",
@@ -742,7 +795,8 @@
 		"PasswordsNotMatch": "Passwörter stimmen nicht überein",
 		"dontHavePassword": "Du hast dein aktuelles Passwort nicht?",
 		"clickHere": "Hier Klicken",
-		"resetByEmail": "zum Zurücksetzen per E-Mail."
+		"resetByEmail": "zum Zurücksetzen per E-Mail.",
+		"emails": "E-Mails"
 	},
 	"Welcome": {
 		"heading": "Schön, dass du da bist!",
@@ -773,12 +827,32 @@
 		"list4.2": "bei OEB und kannst die Badges direkt vergeben. Sie werden den Lernenden per E-Mail zugestellt."
 	},
 	"QrCode": {
+		"qrAward": "QR-Code-Vergabe",
+		"qrAwards": "QR-Code-Vergaben",
 		"savedSuccessfully": "<span class='tw-font-bold'> Die QR-Code-Vergabe wurde erfolgreich auf der Badge-Detail-Seite gespeichert.</span>",
 		"downloadedSuccessfully": "<span class='tw-font-bold'>Du hast den QR-Code erfolgreich heruntergeladen.</span><br> Schaue in deinem Download-Ordner nach.",
 		"deleteQrAward": "QR-Code-Vergabe löschen",
 		"deleteQrAwardConfirm": "Möchtest du die QR-Code-Vergabe wirklich löschen?",
 		"openRequestsWillBeLost": "Damit gehen alle noch offenen Badge-Anfragen verloren.",
 		"receiveEmails": "Ich möchte per E-Mail über neue QR-Code-Anfragen benachrichtigt werden",
+		"description": "Wenn du hier eine QR-Code-Vergabe anlegst, können deine Lernenden den so generierten QR-Code abscannen und sich den Badge darüber selbst abholen.",
+		"howItWorks": "So funktioniert's:",
+		"create": "QR-Code-Vergabe erstellen für",
+		"titlePlaceholder": "Badge Vergabe Juni 2024",
+		"creatorName": "Name Ersteller:in",
+		"creatorNamePlaceholder": "Mein Vorname und Nachname",
+		"expiration": "Gültigkeit des QR-Codes",
+		"expirationStart": "Start-Datum",
+		"expirationEnd": "End-Datum",
+		"buttonCreate": "QR-Code generieren",
+		"noQrCodes": "Du hast bisher keine QR-Code-Vergabe erstellt",
+		"openRequestsOne": "1 offene Badge-Anfrage",
+		"openRequests": "{{ count }} offene Badge-Anfragen",
+		"showQrCode": "Zum QR-Code",
+		"creator": "Kampagnen-Ersteller:in",
+		"validity": "Gültigkeit des QR-Codes",
+		"download": "Download QR-Code",
+		"toBadgeDetail": "Zur Badge Detail-Seite",
 		"downloadPoster": "Download QR-Code-Plakat"
 	},
 	"LearningPath": {
@@ -801,7 +875,14 @@
 		"continue": "Weiterlernen",
 		"finished": "Abgeschlossen",
 		"enterDetails": "Micro Degree-Details eingeben",
+		"includedBadges": "Enthaltene Badges",
+		"badgeTabs": {
+			"all": "Alle",
+			"inprogress": "Offen",
+			"finished": "Abgeschlossen"
+		},
 		"chooseBadges": "Enthaltene Badges wählen",
+		"badgeSequenceStep": "Badge-Reihenfolge",
 		"badgeSequence": "Reihenfolge der Badges im Micro Degree",
 		"combineBadgeCategories": "Du kannst Kompetenz-Badges und Teilnahme-Badges kombinieren.",
 		"min3Badges": "Der Micro Degree muss mindestens 3 Badges enthalten.",
@@ -814,7 +895,12 @@
 		"lpDerivedData": "Folgende Daten haben wir für den Micro Degree übernommen:",
 		"addTag": "Tag hinzufügen",
 		"createdSuccessfully": "Dein Micro Degree wurde erfolgreich erstellt.",
-		"savedSuccessfully": "Deine Änderungen wurden erfolgreich gespeichert"
+		"savedSuccessfully": "Deine Änderungen wurden erfolgreich gespeichert",
+		"title": "Micro Degree-Titel",
+		"description": "Kurz-Beschreibung für Lernende",
+		"selectedBadges": "Du hast {{ count }} Badges für den Micro Degree ausgewählt",
+		"selectedBadgesOne": "Du hast 1 Badge für den Micro Degree ausgewählt",
+		"deleteWarning": "Möchtest du diesen Micro Degree wirklich löschen?"
 	},
 	"LearningPathEditor": {
 		"shortDescription": "Zusammenfassende Beschreibung deines Micro Degrees. Diese Kurzbeschreibung wird im Micro Degree gespeichert."
@@ -829,5 +915,10 @@
 		"copyButtonAfter": "Kopiert!",
 		"createIssue": "Zu den GitHub Issues",
 		"sendEmail": "Sende eine Mail"
+	},
+	"NounProject": {
+		"searchIcon": "Icon suchen",
+		"loading": "Lädt...",
+		"noIconsFoundFor": "Kein Icon gefunden für"
 	}
 }

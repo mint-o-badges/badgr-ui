@@ -66,12 +66,12 @@ export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComp
 
 	qrCodeMenu: MenuItem[] = [
 		{
-			title: 'Bearbeiten',
+			title: 'General.edit',
 			icon: 'lucidePencil',
 			routerLink: [this.editQrCodeLink],
 		},
 		{
-			title: 'Löschen',
+			title: 'General.delete',
 			icon: 'lucideTrash2',
 			action: () => {
 				this.openDangerDialog();

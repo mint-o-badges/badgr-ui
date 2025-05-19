@@ -59,7 +59,7 @@ import { Issuer } from '../issuer/models/issuer.model';
 					size="xs"
 					width="full_width"
 					(click)="actionElement.emit(learningPath.slug)"
-					[text]="actionElementText"
+					[text]="actionElementText | translate"
 					[disabled]="!issuer.canDeleteBadge"
 					[class]="issuer.canDeleteBadge ? '' : 'disabled'"
 				></oeb-button>
@@ -69,7 +69,7 @@ import { Issuer } from '../issuer/models/issuer.model';
 })
 export class LearningPathDatatableComponent {
 	@Input() learningPaths: any[];
-	@Input() actionElementText: string = 'Löschen';
+	@Input() actionElementText: string = 'General.delete';
 	@Input() issuer: Issuer;
 	@Output() actionElement = new EventEmitter();
 	@Output() redirectToLearningPathDetail = new EventEmitter();

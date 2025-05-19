@@ -129,10 +129,10 @@
 				</ng-container>
 			</ng-container>
 			<p *ngIf="selectedBadges.length == 1" class="tw-mt-6">
-				Du hast {{ selectedBadges.length }} Badge für den Micro Degree ausgewählt.
+				{{ 'LearningPath.selectedBadgesOne' | translate }}
 			</p>
 			<p *ngIf="selectedBadges.length > 1" class="tw-mt-6">
-				Du hast {{ selectedBadges.length }} Badges für den Micro Degree ausgewählt.
+				{{ 'LearningPath.selectedBadges' | translate : { count: selectedBadges.length } }}
 			</p>
 		</div>
 	</div>

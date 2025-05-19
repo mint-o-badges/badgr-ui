@@ -7,6 +7,7 @@ import { BrnSelectImports } from '@spartan-ng/brain/select';
 import { HlmSelectModule } from './spartan/ui-select-helm/src/index';
 import { CustomValidatorMessages, messagesForValidationError } from './input.component';
 import { OebSeparatorComponent } from './oeb-separator.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
 	selector: 'oeb-select ',
@@ -18,6 +19,7 @@ import { OebSeparatorComponent } from './oeb-separator.component';
 		ReactiveFormsModule,
 		CommonModule,
 		OebSeparatorComponent,
+		TranslateModule
 	],
 	template: ` <div [ngClass]="{ 'tw-mt-6 md:tw-mt-7': !noTopMargin }">
 		<label class="tw-pb-[2px] tw-pl-[3px]" [attr.for]="inputName" *ngIf="label">
@@ -53,7 +55,7 @@ import { OebSeparatorComponent } from './oeb-separator.component';
 				<div *ngIf="multiple" class="tw-text-base">{{ placeholder }}</div>
 			</hlm-select-trigger>
 			<hlm-select-content [ngStyle]="{ 'max-height.px': dropdownMaxHeight }">
-				<hlm-option *ngFor="let option of options" [value]="option.value">{{ option.label }}</hlm-option>
+				<hlm-option *ngFor="let option of options" [value]="option.value">{{ option.label | translate }}</hlm-option>
 				<div *ngIf="template">
 					<oeb-separator [separatorStyle]="'!tw-border-dashed'"></oeb-separator>
 					<ng-content *ngTemplateOutlet="template"></ng-content>

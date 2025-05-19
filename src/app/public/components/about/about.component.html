@@ -1,9 +1,11 @@
-<div class="oeb">
+<div class="oeb" *ngIf="translate.currentLang == 'de'">
 	<div class="page-padding">
 		<div style="display: flex">
 			<div class="tw-pt-[6rem] tw-pb-[4.4rem] main-paragraph">
-				<h1>Gemeinsam setzen wir</h1>
-				<h1 class="h1-black heading-sec">Open Educational Badges um</h1>
+				<h1>
+					Gemeinsam setzen wir<br>
+					<span class="h1-black heading-sec">Open Educational Badges um</span>
+				</h1>
 				<p class="text-big">
 					Open Educational Badges ist ein Gemeinschaftsprojekt und wird durch unterschiedliche Partner:innen
 					ermöglicht. Unser Ziel ist es, ein Tool aufzubauen, das Lernerfahrungen und Kompetenzerwerb
@@ -387,6 +389,397 @@
 						>
 							<!-- used (! rule)to override class h2-bold text color -->
 							<h2 class="h2-bold !tw-text-white">Ein individuelles Plugin anfragen</h2>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="oeb" *ngIf="translate.currentLang == 'en'">
+	<div class="page-padding">
+		<div style="display: flex">
+			<div class="tw-pt-[6rem] tw-pb-[4.4rem] main-paragraph">
+				<h1>
+					Together we are implementing<br>
+					<span class="h1-black heading-sec">Open Educational Badges</span>
+				</h1>
+				<p class="text-big">
+					Open Educational Badges is a joint project and is made possible by various partners. Our goal is to build a tool that makes learning experiences and the acquisition of skills visibly standardized.
+				</p>
+			</div>
+
+			<div class="logos-group">
+				<div>
+					<img
+						class="badge-logo"
+						src="../assets/oeb/images/aboutpage/badgegroup-desktop.png"
+						alt="group of three logos"
+					/>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Project Description & group logo-->
+
+	<!--  Supported by-->
+	<div class="supportby-section">
+		<div class="page-padding">
+			<div class="l-containerxaxis l-containeryaxis">
+				<h1 class="h1-black" style="margin-top: 5%">Who is behind the initiative?</h1>
+
+				<div class="supporter-main-style">
+					<div>
+						<img src="../assets/logos/Logo-Matrix.png" alt="Matrix logo" />
+						<p class="text-big">
+							Matrix is responsible for the community as well as the planning and implementation
+							of user tests in the real-world labs. Additionally, it serves as the interface both
+							to the STEM community and to the “Mein Bildungsraum” project.
+						</p>
+					</div>
+					<div>
+						<img src="../assets/logos/Logo-Mycelia.png" alt="Mycelia logo" />
+						<p class="text-big">
+							Mycelia is responsible for the conceptual development and translates the concept into
+							user flows and concrete UX/UI designs. In addition, mycelia coordinates the
+							accompanying scientific research and impact evaluation.
+						</p>
+					</div>
+
+					<div>
+						<img src="../assets/logos/Logo_Open-Sense-Lab.png" alt="OSL logo" />
+						<p class="text-big">
+							Since the beginning of the project, OpenSenseLab has been responsible
+							for the technical implementation of the badges platform on the 2.1
+							and 3.0 standards and implements all new features.
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Projects within OEB -->
+	<div>
+		<div class="page-padding">
+			<div>
+				<h1 class="h1-black" style="margin-top: 8%">
+					Projects within OEB and their Funding Partners
+				</h1>
+
+				<p class="text-big" style="margin-top: 1em">
+					The Open Educational Badges project is being realized through various research and funding projects.
+					A scientific, experimental, and innovative approach is important to us and a decisive criterion
+					for breaking new ground in certification.
+				</p>
+				<p class="text-big" style="margin-top: 0.5em">
+					Without our partners and sponsors, this would not be possible. We would therefore like to express
+					our gratitude that aspects of the overarching idea behind Open Educational Badges can be realized
+					within the framework of the following projects.
+				</p>
+			</div>
+
+			<div class="projects-style">
+				<div>
+					<div class="projects-logo-style">
+						<img src="../assets/logos/Logo-MyBadges.png" alt="MyBadges logo" />
+					</div>
+					<div class="projects-desc-style">
+						<h3>myBadges</h3>
+						<p class="text">
+							The myBadges pilot project has developed a competency-based credentialing system that maps individually
+							acquired learning experiences – both in formal and non-formal as well as informal learning contexts.
+							It thus forms a crucial bridge for evidencing acquired professional and social skills regardless of
+							the learning environment. Furthermore, it enables learners to gain more transparency about their
+							own competency level and supports learner-centered action. In the first pilot phase, six institutions
+							were involved, which developed over 120 different badges. The myBadges pilot project is a collaboration
+							between Junge Tüftler gGmbH, mycelia gGmbH, and re:edu GmbH & Co KG and the Deutsche Telekom Stiftung
+							and is supported by the University of Münster.
+						</p>
+					</div>
+					<div class="supporter-mobile tw-mb-[140px]">
+						<img
+							src="../assets/oeb/images/aboutpage/telekom_kooperation_logo_new.png"
+							class="tw-w-[257px]"
+							alt="Telekom-Stiftung logo"
+						/>
+					</div>
+				</div>
+
+				<div>
+					<div class="projects-logo-style">
+						<img
+							class="mintobadge-logo"
+							src="../assets/logos/Logo-MintOBadges.png"
+							alt="MintOBadges logo"
+						/>
+					</div>
+					<div class="projects-desc-style">
+						<h3>MINT.OBadges</h3>
+						<p class="text">
+							MINT.OBadges is a practice-oriented research project. It aims to successfully establish Open Educational Badges (OEB)
+							in extracurricular courses with a STEM focus. Educational initiatives should be empowered to document the acquisition
+							of skills through their offerings in a low-threshold and compatible manner. For this purpose, the technical standard
+							is supplemented by a content component (ESCO Standard). The development of an AI badge assistant facilitates the
+							classification and awarding for the initiatives. Through testing in digital and analog real-world labs, the integration
+							of OEB is being researched and corresponding communities are being activated. The MINT.OBadges research project is
+							jointly implemented by matrix gGmbH, mycelia gGmbH, and openSenseLab gGmbH as a consortium and connected to
+							“Mein Bildungsraum”. The project is funded by the Federal Ministry of Education and Research.
+						</p>
+					</div>
+					<div class="supporter-mobile tw-flex tw-flex-col tw-items-center">
+						<img
+							src="../assets/oeb/images/aboutpage/bmbf_logo_new.jpg"
+							class="tw-w-[279px]"
+							alt="BMBF logo"
+						/>
+						<img src="../assets/oeb/images/aboutpage/eu_logo_new.png" class="tw-w-[357px]" alt="EU logo" />
+					</div>
+				</div>
+
+				<div>
+					<div class="projects-logo-style">
+						<img src="../assets/logos/Logo-KlimaCampus.png" alt="KlimaCampus logo" />
+					</div>
+					<div class="projects-desc-style">
+						<h3>Klima Campus</h3>
+						<p class="text">
+							The Klima Campus is a transformative learning space that informs young people about Natural Climate Protection
+							and motivates them to take action. The aim is to spread the acceptance of Natural Climate Protection throughout
+							society and thus reduce greenhouse gas (GHG) emissions in the medium and long term, both by changing individual
+							behaviors and through structural changes. Through the Klima Campus and the associated activities,
+							skills are acquired - these are documented by Open Educational Badges and made transparent for the learners.
+							The Klima Campus is a project of mycelia gGmbH and is funded by the Federal Ministry for the Environment,
+							Nature Conservation, Nuclear Safety and Consumer Protection.
+						</p>
+					</div>
+					<div class="supporter-mobile tw-mb-[130px]">
+						<img src="../assets/oeb/images/aboutpage/bmuv_logo_new.png" alt="BMUV logo" />
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="tw-relative tw-w-full tw-bg-lightpurple">
+		<div class="page-padding">
+			<div>
+				<h1 class="h1-black tw-py-8">Integration with Mein Bildungsraum</h1>
+			</div>
+			<div class="tw-bg-white tw-px-10 tw-py-8">
+				<div class="tw-flex tw-flex-col md:tw-flex-row">
+					<div class="md:tw-w-[390px] tw-flex-shrink-0">
+						<img src="../assets/oeb/images/aboutpage/mbr-logo.svg" alt="MBR logo" />
+					</div>
+					<div class="tw-flex tw-items-center">
+						<p
+							class="tw-text-oebblack md:tw-text-[20px] md:tw-leading-[24.4px] tw-text-[14px] tw-leading-[19.6px]"
+						>
+							The integration of the OEB platform with Mein Bildungsraum is currently in the development phase.
+							<span class="tw-font-semibold tw-text-purple"
+								>In the future, once you have an account with Mein Bildungsraum, you will be able
+								to easily log in to OEB using a single sign-on procedure to receive
+								and award badges.</span
+							>.
+						</p>
+					</div>
+				</div>
+
+				<p
+					class="tw-py-6 md:tw-text-[20px] tw-text-black md:tw-leading-[26px] tw-text-[14px] tw-leading-[19.6px]"
+				>
+					A central component of Mein Bildungsraum is the self-determined collection of educational credentials
+					in the Mein-Bildungsraum-Wallet app, where you can centrally store all your educational credentials.
+					This naturally includes Open Educational Badges!
+				</p>
+				<h3
+					class="tw-font-medium md:tw-text-[22px] md:tw-leading-[26.4px] tw-text-[14px] tw-leading-[16.8px] tw-py-4"
+				>
+					Here's how it works:
+				</h3>
+				<div class="tw-flex tw-flex-col xl:tw-flex-row">
+					<div
+						class="xl:tw-w-[22%] xl:tw-pb-0 tw-pb-12 xl:tw-pr-8 tw-flex tw-flex-col tw-justify-between tw-relative"
+					>
+						<div class="tw-flex tw-items-center tw-justify-center tw-flex-grow tw-relative">
+							<div
+								class="xl:tw-block tw-hidden tw-box-border tw-absolute tw-right-0 tw-bg-top tw-top-0 tw-scale-y-[0.8] tw-w-full tw-h-full"
+							>
+								<div
+									class="tw-w-full tw-h-[150px] tw-translate-x-[70%] tw-translate-y-[47%] tw-bg-repeat-x tw-bg-[url('assets/oeb/images/startpage/red_lines_cut.png')]"
+								></div>
+							</div>
+							<img
+								class="tw-z-10"
+								src="../assets/oeb/images/aboutpage/login-window.svg"
+								alt="LoginForm"
+							/>
+						</div>
+						<div class="tw-bg-white tw-z-10 tw-relative tw-pb-2">
+							<p
+								class="xl:tw-h-[140px] xl:tw-text-left !tw-text-center tw-align-bottom tw-pt-2 xl:tw-pt-6 md:tw-text-[18px] tw-text-oebblack md:tw-leading-[22.4px] tw-text-[14px] tw-leading-[19.6px]"
+							>
+								You log in to OEB with your Mein Bildungsraum account.
+							</p>
+						</div>
+						<div class="tw-block xl:tw-hidden tw-w-full tw-absolute tw-text-center tw-top-0">
+							<img
+								class="tw-relative tw-inline-block"
+								src="../assets/oeb/images/aboutpage/red_lines_long.svg"
+								alt="RedLines"
+							/>
+						</div>
+					</div>
+					<div
+						class="xl:tw-w-[22%] xl:tw-pb-0 tw-pb-12 xl:tw-px-8 tw-flex tw-flex-col tw-justify-between tw-relative"
+					>
+						<div class="tw-flex tw-items-center tw-justify-center tw-flex-grow tw-relative">
+							<img
+								class="tw-max-h-[85%] tw-z-10"
+								src="../assets/oeb/images/aboutpage/qr-code.svg"
+								alt="QR-Code"
+							/>
+							<div
+								class="xl:tw-block tw-hidden tw-box-border tw-absolute tw-right-0 tw-bg-top tw-top-0 tw-scale-y-[0.8] tw-w-full tw-h-full"
+							>
+								<div
+									class="tw-w-full tw-h-[150px] tw-translate-x-[70%] tw-translate-y-[47%] tw-bg-repeat-x tw-bg-[url('assets/oeb/images/startpage/red_lines_cut.png')]"
+								></div>
+							</div>
+						</div>
+						<div class="tw-bg-white tw-z-10 tw-relative tw-pb-2">
+							<p
+								class="xl:tw-h-[140px] xl:tw-text-left !tw-text-center tw-align-bottom tw-pt-2 xl:tw-pt-6 md:tw-text-[18px] tw-text-oebblack md:tw-leading-[22.4px] tw-text-[14px] tw-leading-[19.6px]"
+							>
+								You link the Mein-Bildungsraum-Wallet app via QR code and grant authorization for it.
+							</p>
+						</div>
+						<div
+							class="tw-block xl:tw-hidden tw-w-full tw-absolute tw-text-center tw-top-[50%] tw-overflow-hidden tw-max-h-[200px]"
+						>
+							<img
+								class="tw-relative tw-inline-block"
+								src="../assets/oeb/images/aboutpage/red_lines_long.svg"
+								alt="RedLines"
+							/>
+						</div>
+					</div>
+					<div
+						class="xl:tw-w-[22%] xl:tw-px-8 xl:tw-pb-0 lg:tw-pb-32 sm:tw-pb-28 tw-pb-20 tw-flex tw-flex-col tw-justify-between tw-relative"
+					>
+						<div class="tw-flex tw-items-center tw-justify-center tw-flex-grow tw-relative">
+							<img
+								class="tw-max-h-[75%] tw-z-10"
+								src="../assets/oeb/images/aboutpage/hexagon.svg"
+								alt="Green Hexagon"
+							/>
+							<div
+								class="xl:tw-block tw-hidden tw-box-border tw-absolute tw-right-[-48%] tw-top-[-33%] tw-scale-y-[0.8] tw-w-full tw-h-full"
+							>
+								<img src="assets/oeb/images/aboutpage/double_red_line.png" />
+								<!-- <div class="tw-w-full tw-h-full tw-translate-x-[20%] tw-bg-[url('assets/oeb/images/aboutpage/double_red_line.png')]"></div> -->
+							</div>
+						</div>
+						<div class="tw-bg-white tw-z-10 tw-relative tw-hidden xl:tw-block">
+							<p
+								class="xl:tw-h-[140px] xl:tw-text-left tw-align-bottom tw-pt-6 md:tw-text-[18px] tw-text-oebblack md:tw-leading-[22.4px] tw-text-[14px] tw-leading-[19.6px] !tw-text-center"
+							>
+								You receive a badge.
+							</p>
+						</div>
+						<div
+							class="tw-block xl:tw-hidden tw-w-full tw-absolute tw-text-center tw-top-[25%] tw-overflow-hidden tw-max-h-[200px]"
+						>
+							<img
+								class="tw-relative tw-inline-block"
+								src="../assets/oeb/images/aboutpage/double_red_2.svg"
+								alt="RedLines"
+							/>
+						</div>
+					</div>
+					<div
+						class="xl:tw-w-[32%] xl:tw-pl-8 tw-flex xl:tw-flex-col tw-relative tw-top-[-30px] xl:tw-top-[-65px] xl:tw-justify-normal tw-justify-center tw-z-10 tw-bg-white xl:tw-bg-transparent"
+					>
+						<div
+							class="tw-flex tw-flex-col xl:tw-flex-row tw-items-center xl:tw-w-auto tw-flex-[1_1_0] tw-max-w-[200px]"
+						>
+							<img
+								class="tw-z-10"
+								src="../assets/oeb/images/aboutpage/oeb-hexagon.svg"
+								alt="Green Hexagon with oeb"
+							/>
+							<p
+								class="tw-pl-4 md:tw-text-[18px] tw-text-oebblack md:tw-leading-[22.4px] tw-text-[14px] tw-leading-[19.6px]"
+							>
+								The badge appears in your backpack on OEB.
+							</p>
+						</div>
+						<div
+							class="tw-flex tw-items-center tw-flex-col xl:tw-flex-row xl:tw-w-auto tw-flex-[1_1_0] tw-max-w-[200px]"
+						>
+							<img
+								class="tw-z-10"
+								src="../assets/oeb/images/aboutpage/mbr-hexagon.svg"
+								alt="Green Hexagon with mbr"
+							/>
+							<p
+								class="tw-pl-4 md:tw-text-[18px] tw-text-oebblack md:tw-leading-[22.4px] tw-text-[14px] tw-leading-[19.6px]"
+							>
+								Additionally, the badge automatically lands in your wallet app from Mein Bildungsraum.
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--  Want to join -->
+	<div class="join-us-style">
+		<div class="page-padding">
+			<div class="l-containerxaxis l-containeryaxis">
+				<h1 class="h1-black" style="margin-top: 1em">Want to join us?</h1>
+
+				<div>
+					<p class="text-big">Click on the tiles to get in touch with us.</p>
+
+					<div class="join-us-group-cards">
+						<a
+							class="join-us-card tw-w-[60%] tw-bg-green"
+							href="mailto:{{ mailAddress }}?subject={{ mailBody }}"
+						>
+							<h2 class="h2-bold">Use Open Educational Badges Now</h2>
+						</a>
+
+						<a
+							class="join-us-card tw-w-[40%] tw-bg-pink"
+							href="mailto:{{ mailAddress }}?subject={{ mailBody }}"
+						>
+							<h2 class="h2-bold">Conduct a Project Around OEB</h2>
+						</a>
+					</div>
+
+					<div class="join-us-group-cards">
+						<a
+							class="join-us-card tw-w-[30%] tw-bg-purple"
+							href="mailto:{{ mailAddress }}?subject={{ mailBody }}"
+						>
+							<!-- used (! rule) to override class h2-bold text color -->
+							<h2 class="h2-bold !tw-text-white">Promote OEB</h2>
+						</a>
+						<a
+							class="join-us-card tw-w-[40%] tw-bg-yellow"
+							href="mailto:{{ mailAddress }}?subject={{ mailBody }}"
+						>
+							<h2 class="h2-bold">Get Actively Involved in Open Educational Badges</h2>
+						</a>
+						<a
+							class="join-us-card tw-w-[30%] tw-bg-red"
+							href="mailto:{{ mailAddress }}?subject={{ mailBody }}"
+						>
+							<!-- used (! rule)to override class h2-bold text color -->
+							<h2 class="h2-bold !tw-text-white">Request an Individual Plugin</h2>
 						</a>
 					</div>
 				</div>

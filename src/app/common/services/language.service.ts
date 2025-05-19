@@ -16,21 +16,16 @@ export class LanguageService {
 	}
 
 	setInitialAppLangauge() {
-		// 1. check if device default lang can be fetched and it's one of the supported language
-		// 2. use german as a default lang
-		let browserLang = this.translate.getBrowserCultureLang(); // Get browser lang
-		let browserLangVal = browserLang.toLowerCase().slice(0, 2);
-
-		//ToDo: comment in when all pages are completely translated
-		/* if (lngs.includes(browserLangVal)) {
-			this.translate.setDefaultLang(browserLangVal);
-			this.setLanguage(browserLangVal);
-		} else {
-			this.setLanguage('de'); // german is the default lang if browser lang is not supported
-		} */
-
-		// set language to german only
-		this.setLanguage('de');
+		let language = window.localStorage.getItem('lang');
+		if (!language) {
+			if (navigator.language.toLocaleLowerCase().indexOf('de') == 0) {
+				language = 'de';
+			} else {
+				language = 'en';
+			}
+			window.localStorage.setItem('lang', language);
+		}
+		this.setLanguage(language);
 	}
 
 	getLangauges() {
@@ -42,6 +37,7 @@ export class LanguageService {
 
 	// To set language
 	setLanguage(lng) {
+		window.localStorage.setItem('lang', lng);
 		this.translate.use(lng.toLowerCase());
 		this.setSelectedLngValue(lng);
 	}

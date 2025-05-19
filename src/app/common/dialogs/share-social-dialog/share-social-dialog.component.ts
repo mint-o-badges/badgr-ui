@@ -9,6 +9,7 @@ import { generateEmbedHtml } from '../../../../embed/generate-embed-html';
 import { animationFramePromise } from '../../util/promise-util';
 import { RecipientBadgeInstance } from '../../../recipient/models/recipient-badge.model';
 import { BadgeInstance } from '../../../issuer/models/badgeinstance.model';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'share-social-dialog',
@@ -55,6 +56,7 @@ export class ShareSocialDialog extends BaseDialog {
 		renderer: Renderer2,
 		private domSanitizer: DomSanitizer,
 		private sharingService: SharingService,
+		public translate: TranslateService,
 	) {
 		super(componentElem, renderer);
 
