@@ -276,7 +276,7 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 	}
 
 	exportPdf() {
-		this.pdfService
+		this.pdfService.getPdf(this.collection.slug, 'collections')
 		// this.dialogService.exportPdfDialog.openDialogForCollections(this.collection)
 		// 	.catch((error) => console.log(error));
 	}
