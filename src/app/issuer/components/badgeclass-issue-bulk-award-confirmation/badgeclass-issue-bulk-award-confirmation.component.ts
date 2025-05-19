@@ -98,10 +98,6 @@ export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRouta
 				assertions,
 			})
 			.then((response) => {
-				const taskId = response.body.task_id;
-
-				this.taskService.setTaskId(taskId);
-
 				this.router.navigate(['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug]);
 			})
 			.catch((error) => {

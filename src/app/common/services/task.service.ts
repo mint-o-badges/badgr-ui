@@ -26,11 +26,6 @@ export interface TaskResult {
 	providedIn: 'root',
 })
 export class TaskStatusService extends BaseHttpApiService {
-	private taskIdSource = new BehaviorSubject<string | null>(null);
-	public currentTaskId$ = this.taskIdSource.asObservable();
-
-	private taskStatusSource = new BehaviorSubject<TaskResult | null>(null);
-	public currentTaskStatus$ = this.taskStatusSource.asObservable();
 	constructor(
 		protected loginService: SessionService,
 		protected http: HttpClient,
@@ -40,29 +35,17 @@ export class TaskStatusService extends BaseHttpApiService {
 		super(loginService, http, configService, messageService);
 	}
 
-	setTaskId(taskId: string): void {
-		localStorage.setItem('currentTaskId', taskId);
-		this.taskIdSource.next(taskId);
-	}
-
-	getTaskId(): string | null {
-		const taskId = localStorage.getItem('currentTaskId');
-		if (taskId && !this.taskIdSource.value) {
-			this.taskIdSource.next(taskId);
-		}
-		return taskId;
-	}
-
-	clearTaskId(): void {
-		localStorage.removeItem('currentTaskId');
-		this.taskIdSource.next(null);
-		this.taskStatusSource.next(null);
-	}
-
 	checkTaskStatus(taskId: string, issuerSlug: string, badgeSlug: string): Promise<TaskResult> {
 		const endpoint = `/v1/issuer/issuers/${issuerSlug}/badges/${badgeSlug}/batch-assertions/status/${taskId}`;
-
 		return this.get<TaskResult>(endpoint).then((r) => r.body);
+	}
+
+	async getBadgeAwardingTasks(
+		issuerSlug: string,
+		badgeSlug: string,
+	): Promise<{ taskId: string; batchAwardCount: number }[]> {
+		const endpoint = `/v1/issuer/issuers/${issuerSlug}/badges/${badgeSlug}/batch-assertions`;
+		return (await this.get<{ taskId: string; batchAwardCount: number }[]>(endpoint)).body;
 	}
 
 	pollTaskStatus(
@@ -74,13 +57,11 @@ export class TaskStatusService extends BaseHttpApiService {
 		return timer(0, intervalMs).pipe(
 			switchMap(() => this.checkTaskStatus(taskId, issuerSlug, badgeSlug)),
 			takeWhile((result: TaskResult) => {
-				this.taskStatusSource.next(result);
-
 				return result.status !== TaskStatus.SUCCESS && result.status !== TaskStatus.FAILURE;
 			}, true),
 			shareReplay(1),
 			catchError((error) => {
-				console.error('Error polling task status:', error);
+				console.error(`Error polling task status with id ${taskId}:`, error);
 				throw error;
 			}),
 		);

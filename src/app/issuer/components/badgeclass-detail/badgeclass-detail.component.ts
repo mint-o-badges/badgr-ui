@@ -1,4 +1,4 @@
-import { afterRenderEffect, Component, ElementRef, Input, OnInit, SecurityContext, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from '../../../common/services/message.service';
@@ -8,7 +8,6 @@ import { Issuer } from '../../models/issuer.model';
 import { DomSanitizer, SafeResourceUrl, Title } from '@angular/platform-browser';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
 import { SessionService } from '../../../common/services/session.service';
-import { StringMatchingUtil } from '../../../common/util/string-matching-util';
 import { CommonDialogsService } from '../../../common/services/common-dialogs.service';
 import { BadgeInstanceManager } from '../../services/badgeinstance-manager.service';
 import { BadgeClassInstances, BadgeInstance } from '../../models/badgeinstance.model';
@@ -34,9 +33,8 @@ import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src
 import { inject } from '@angular/core';
 import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
 import { ApiLearningPath } from '../../../common/model/learningpath-api.model';
-import { ViewportScroller } from '@angular/common';
-import { TaskStatus, TaskStatusService } from '../../../common/services/task.service';
-import { Subscription } from 'rxjs';
+import { TaskResult, TaskStatus, TaskStatusService } from '../../../common/services/task.service';
+import { catchError, map, merge, of, Subscription } from 'rxjs';
 
 @Component({
 	selector: 'badgeclass-detail',
@@ -59,7 +57,7 @@ import { Subscription } from 'rxjs';
 				(actionElement)="revokeInstance($event)"
 				(downloadCertificate)="downloadCertificate($event.instance, $event.badgeIndex)"
 				[downloadStates]="downloadStates"
-				[awardInProgress]="isProcessing"
+				[awardInProgress]="isProcessingAwardingTasks"
 			></issuer-detail-datatable>
 		</bg-badgedetail>
 	`,
@@ -153,11 +151,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		c2: 'C2 Vorreiter*in',
 	};
 
-	isProcessing = false;
-	processingSuccess = false;
-	processingError: string | null = null;
-	processingResult: any = null;
-	batchAwardCount: string | null = null;
+	isProcessingAwardingTasks = false;
 
 	constructor(
 		protected title: Title,
@@ -234,6 +228,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 				];
 				this.allBadgeInstances = retInstances;
 				this.updateResults();
+				this.checkPendingAwardingTasks();
 				this.config = {
 					crumbs: this.crumbs,
 					badgeTitle: this.badgeClass.name,
@@ -323,11 +318,6 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 
 	ngOnInit() {
 		super.ngOnInit();
-		const taskId = this.taskService.getTaskId();
-		this.batchAwardCount = localStorage.getItem('batchAwardCount');
-		if (taskId && this.batchAwardCount) {
-			this.checkPendingTask();
-		}
 		this.focusRequests = this.route.snapshot.queryParamMap.get('focusRequests') === 'true';
 	}
 
@@ -531,40 +521,47 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		});
 	}
 
-	checkPendingTask() {
-		const taskId = this.taskService.getTaskId();
+	/**
+	 * Checks the backend for any pending tasks that will
+	 * award badges once fulfilled.
+	 */
+	async checkPendingAwardingTasks() {
+		const badgeAwardingTasks = await this.taskService.getBadgeAwardingTasks(this.issuerSlug, this.badgeSlug);
 
-		if (taskId) {
-			this.isProcessing = true;
+		// Update the total number of recipients and add the number
+		// that is being awarded via batch awarding
+		this.recipientCount += badgeAwardingTasks.map((i) => i.batchAwardCount).reduce((prev, curr) => prev + curr, 0);
 
-			this.statusSubscription = this.taskService
-				.pollTaskStatus(taskId, this.issuerSlug, this.badgeSlug)
-				.subscribe({
-					next: (result) => {
-						if (result.status === TaskStatus.SUCCESS) {
-							this.processingSuccess = true;
-							this.processingResult = result.result;
-							this.isProcessing = false;
-							this.taskService.clearTaskId();
-							this.recipientCount += parseInt(this.batchAwardCount, 10);
-							this.batchAwardCount = null;
-							localStorage.removeItem('batchAwardCount');
-						} else if (result.status === TaskStatus.FAILURE || result.status === TaskStatus.REVOKED) {
-							this.processingError =
-								typeof result.result === 'string'
-									? result.result
-									: `An error occurred while processing task ${taskId}`;
-							this.isProcessing = false;
-							this.taskService.clearTaskId();
-							localStorage.removeItem('batchAwardCount');
-						}
-					},
-					error: (error) => {
-						console.error(`Error checking task status for task ${taskId}:`, error);
-						this.processingError = `Failed to check status for task ${taskId}`;
-						this.isProcessing = false;
-					},
-				});
-		}
+		if (badgeAwardingTasks.length > 0) this.isProcessingAwardingTasks = true;
+
+		let errCount = 0;
+
+		this.statusSubscription = merge(
+			// Create an observable for each awarding task
+			...badgeAwardingTasks.map(({ taskId, batchAwardCount }) =>
+				this.taskService.pollTaskStatus(taskId, this.issuerSlug, this.badgeSlug).pipe(
+					// Make sure the observable never crashes on error but instead returns task failure
+					catchError((error) =>
+						of({ task_id: taskId, status: TaskStatus.FAILURE, result: error } as TaskResult),
+					),
+					map(result => ({ result, batchAwardCount }))
+				),
+			),
+		).subscribe({
+			next: (update) => {
+				if (update.result.status === TaskStatus.SUCCESS) {
+					this.recipientCount += update.batchAwardCount;
+				} else if (update.result.status === TaskStatus.FAILURE || update.result.status === TaskStatus.REVOKED) {
+					errCount++;
+				}
+			},
+			error: (error) => {
+				console.error(`Error checking task status`, error);
+				errCount++;
+			},
+			complete: () => {
+				this.isProcessingAwardingTasks = false;
+			},
+		});
 	}
 }
