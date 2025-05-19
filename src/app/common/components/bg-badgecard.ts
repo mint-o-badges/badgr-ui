@@ -223,7 +223,8 @@ export class BgBadgecard {
 	// 	  : 'tw-bg-white';
 	//   }
 
-	ngOnInit() {}
+	ngOnInit() {
+	}
 
 	showCompetencies = false;
 	toggleCompetencies() {

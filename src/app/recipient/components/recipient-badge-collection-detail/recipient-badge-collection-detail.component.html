@@ -18,8 +18,8 @@
 								icon="lucideUpload"
 								iconLeft="true"
 								variant="secondary"
-								[disabled]="!collection?.published"
-								(click)="shareCollection()"
+								[disabled]
+								disabled="true"
 							>
 							</oeb-button>
 
@@ -85,9 +85,9 @@
 			<div class="tw-gap-6 tw-grid tw-grid-cols-badges">
 				<bg-badgecard
 					*ngFor="let entry of collection?.badgeEntries; trackBy: trackById"
-					[badgeTitle]="entry.badge.name"
+					[badgeTitle]="entry.badge.apiModel.json.badge.name"
 					[badgeImage]="entry.badge.image"
-					[badgeIssueDate]="badgeResult?.badge?.issueDate"
+					[badgeIssueDate]="entry.badge.apiModel.json.issuedOn"
 					[mostRelevantStatus]="entry.badge.mostRelevantStatus"
 					[issuerTitle]="entry.badge.badgeClass.issuer.name"
 					[issuerSlug]="entry.badge.badgeClass.issuer.slug"

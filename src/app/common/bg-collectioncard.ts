@@ -48,7 +48,7 @@ import { RecipientBadgeCollection } from '../recipient/models/recipient-badge-co
                     <oeb-button 
 						[text]="'BadgeCollection.share' | translate"
 						size="sm"
-						[disabled]="!collection.published"
+						disabled="true"
 					>
                     </oeb-button>
                 </footer>
