@@ -113,7 +113,7 @@ export class PublicBadgeClassComponent {
 				// wait for user profile, emails, issuer to check if user can copy
 				this.userProfileManager.userProfilePromise.then((profile) => {
 					profile.emails.loadedPromise.then(() => {
-						this.issuerManager.allIssuers$.subscribe((issuers) => {
+						this.issuerManager.myIssuers$.subscribe((issuers) => {
 							this.userIssuers = issuers.filter((issuer) => issuer.canCreateBadge);
 							const canCopy = issuers.some((issuer) => issuer.canCreateBadge);
 							const canCopyInOwnInstitution = issuers.some((issuer) => {

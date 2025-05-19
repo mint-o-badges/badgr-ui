@@ -258,7 +258,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 			// for issuers tab which can only be loaded when the user is verified
 			this.profileManager.userProfile.emails.updateList().then(() => {
 				if (this.profileManager.userProfile.isVerified)
-					this.issuerManager.allIssuers$.subscribe(
+					this.issuerManager.myIssuers$.subscribe(
 						(issuers) => {
 							this.issuers.set(
 								issuers.slice().sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime()),
