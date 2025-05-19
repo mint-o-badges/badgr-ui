@@ -18,7 +18,7 @@ import { FormControl } from '@angular/forms';
 	template: `
 		<div
 			class="tw-absolute tw-top-0 tw-right-0 tw-bg-purple tw-text-white tw-px-2 tw-py-1"
-			*ngIf="mostRelevantStatus"
+			*ngIf="mostRelevantStatus && !showXIcon"
 		>
 			{{ 'General.' + mostRelevantStatus | translate }}
 		</div>
