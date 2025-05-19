@@ -252,7 +252,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 								});
 							},
 							icon: 'lucideCopy',
-							disabled: !this.issuer.canCreateBadge
+							disabled: !this.issuer.canCreateBadge,
 						},
 						{
 							title: 'Kopierstatus bearbeiten',
@@ -264,13 +264,13 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 								'copypermissions',
 							],
 							icon: 'lucideCopyX',
-							disabled: !this.issuer.canEditBadge
+							disabled: !this.issuer.canEditBadge,
 						},
 						{
 							title: 'Löschen',
 							icon: 'lucideTrash2',
 							action: () => this.deleteBadge(),
-							disabled: !this.issuer.canDeleteBadge
+							disabled: !this.issuer.canDeleteBadge,
 						},
 					],
 					badgeDescription: this.badgeClass.description,
@@ -352,7 +352,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 	downloadCertificate(instance: BadgeInstance, badgeIndex: number) {
 		this.downloadStates[badgeIndex] = true;
 		this.pdfService
-			.getPdf(instance.slug)
+			.getPdf(instance.slug, 'badges')
 			.then((url) => {
 				this.pdfSrc = url;
 				this.pdfService.downloadPdf(this.pdfSrc, this.badgeClass.name, instance.createdAt);

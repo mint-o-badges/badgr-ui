@@ -145,7 +145,7 @@ export class OebLearningPathDetailComponent extends BaseRoutableComponent implem
 	downloadCertificate(participant: any) {
 		const instance = participant.participationBadgeAssertion;
 		this.pdfService
-			.getPdf(instance.slug)
+			.getPdf(instance.slug, 'badges')
 			.then((url) => {
 				this.pdfSrc = url;
 				this.pdfService.downloadPdf(this.pdfSrc, this.learningPath.name, new Date(instance.json.issuedOn));
