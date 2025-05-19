@@ -13,11 +13,11 @@ import { FormControl } from '@angular/forms';
 		]),
 	],
 	host: {
-		class: 'tw-rounded-[10px] tw-h-max tw-max-w-[450px] tw-border-solid tw-border-purple tw-border tw-relative tw-p-4 tw-pt-8 tw-block tw-overflow-hidden oeb-badge-card',
+		class: 'tw-rounded-[10px] tw-h-max tw-max-w-[450px] tw-border-solid tw-border-purple tw-border tw-relative tw-p-4 tw-block tw-overflow-hidden oeb-badge-card',
 	},
 	template: `
 		<div
-			class="tw-absolute tw-top-0 tw-left-0 tw-bg-purple tw-text-white tw-px-2 tw-py-1"
+			class="tw-absolute tw-top-0 tw-right-0 tw-bg-purple tw-text-white tw-px-2 tw-py-1"
 			*ngIf="mostRelevantStatus"
 		>
 			{{ 'General.' + mostRelevantStatus | translate }}
