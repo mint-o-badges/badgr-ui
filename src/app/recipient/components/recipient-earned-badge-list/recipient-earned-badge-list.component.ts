@@ -304,7 +304,7 @@ export class RecipientEarnedBadgeListComponent
 				component: this.badgesTemplate,
 			},
 			{
-				title: 'RecBadge.competencies',
+				title: this.translate.instant('RecBadge.competencies'),
 				component: this.badgesCompetency,
 			},
 			{
