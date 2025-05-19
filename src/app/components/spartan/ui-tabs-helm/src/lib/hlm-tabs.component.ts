@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { BrnTabsDirective } from '@spartan-ng/brain/tabs';
 
 @Component({
@@ -12,7 +12,12 @@ import { BrnTabsDirective } from '@spartan-ng/brain/tabs';
 		},
 	],
 	template: '<ng-content/>',
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HlmTabsComponent {
 	public readonly tab = input.required<string>();
+
+	ngOnInit(){
+		console.log("active", this.tab)
+	}
 }
