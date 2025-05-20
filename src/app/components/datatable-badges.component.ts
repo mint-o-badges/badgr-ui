@@ -33,7 +33,7 @@ import { HlmPDirective } from '../components/spartan/ui-typography-helm/src/lib/
 			>
 			<!-- Recipients -->
 			<hlm-th class="!tw-text-white tw-w-36 md:tw-w-40 sm:tw-grid sm:tw-pl-0">{{
-				'Badge.multiRecipients' | translate
+				'Badge.multiRecipients' | translate | titlecase
 			}}</hlm-th>
 			<!-- Badge/QR-code award -->
 			<hlm-th class="!tw-text-white tw-justify-end sm:tw-w-48 tw-w-0 !tw-p-0"></hlm-th>
@@ -109,7 +109,11 @@ import { HlmPDirective } from '../components/spartan/ui-typography-helm/src/lib/
 					width="full_width"
 					class="tw-w-full"
 					(click)="redirectToBadgeDetail.emit({ badge: badge.badge, focusRequests: true })"
-					[text]="badge.requestCount + ' offene Anfragen'"
+					[text]="
+						badge.requestCount == 1
+							? badge.requestCount + ' ' +  ('Badge.openRequestsOne' | translate)
+							: badge.requestCount + ' '  +('Badge.openRequests' | translate)
+					"
 				>
 				</oeb-button>
 			</hlm-th>

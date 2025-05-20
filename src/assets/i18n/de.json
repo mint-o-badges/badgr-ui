@@ -104,7 +104,10 @@
 		"toMyProfile": "Zu meinem Profil",
 		"imported": "importiert",
 		"new": "neu",
-		"expired": "abgelaufen"
+		"expired": "abgelaufen",
+		"emailAddress":"E-Mail-Adresse",
+		"tos": "Nutzungsbedingungen",
+		"change": "ändern"
 	},
 	"NavItems": {
 		"register": "Registrieren",
@@ -261,6 +264,7 @@
 		"sendEmail": "Empfänger:in mit E-Mail benachrichtigen",
 		"giveBadge": "Badge vergeben",
 		"giveBadges": "Badges vergeben",
+		"badgeAwardInProgress": "Vergebe Badge",
 		"giveQr": "QR-Code-Vergabe erstellen",
 		"nameWarning": "Beachte: Der Name wird als Klartext im Badge gespeichert.",
 		"multipleBadgeAwardHeadline": "Badge an mehrere Lernende gleichzeitig vergeben",
@@ -301,7 +305,7 @@
 		"learningPathList5": "Lade deine JSON-Datei hoch:",
 		"learningPathRecipient": "Absolvent:innen",
 		"learningPathParticipants": "Teilnehmer:innen",
-		"herebyIConfirm": "Hiermit bestätige ich, dass ich: ",
+		"herebyIConfirm": "<ul>Hiermit bestätige ich, dass ich...<br><br>1. berechtigt bin, für die genannte Institution einen Account anzulegen sowie Badges zu erstellen und zu vergeben.<br><br> 2. die Verantwortung für die Qualität der Kursangebote, der erstellten und vergebenen Badges sowie für die zugeordneten Kompetenzen trage. <br> <br> 3. die Plattform nur für die vorgesehenen Zwecke nutze und jeglichen Missbrauch ablehne.</ul> ",
 		"entitled": "...berechtigt bin, für die genannte Institution einen Account anzulegen sowie Badges zu erstellen und zu vergeben.",
 		"responsible": "...die Verantwortung für die Qualität der Kursangebote, der erstellten und vergebenen Badges sowie für die zugeordneten Kompetenzen trage.",
 		"noMisuse": "...die Plattform nur für die vorgesehenen Zwecke nutze und jeglichen Missbrauch ablehne.",
@@ -332,7 +336,25 @@
 		"allInstitutions": "alle Institutionen",
 		"revokeBadgeWarning": "Bist du sicher, dass du \"{{ badge }}\" von {{ recipient }} zurücknehmen möchtest?",
 		"revokeSuccess": "Badge von {{ recipient}} zurücknehmen",
-		"revokeError": "Widerrufen des Badges von {{ recipient }} fehlgeschlagen"
+		"revokeError": "Widerrufen des Badges von {{ recipient }} fehlgeschlagen",
+		"searchIssuer": "Institution suchen",
+		"staffOwnerRights": "Zugriff auf alle Funktionen inkl. Hinzufügen/Entfernen von Editor:innen und Mitarbeiter:innen, Bearbeitung der Institutionsdetails sowie Erstellen, Vergeben und Löschen von Badges inkl. Micro Degrees.",
+		"staffEditorRights": "Rechte zum Erstellen, Vergeben und Löschen von Badges inkl. Micro Degrees.",
+		"staffMemberRights": "Kann die von Eigentümer:innen und/oder Editor:innen erstellten Badges vergeben (inkl. QR-Code-Vergaben erstellen, bearbeiten und löschen).",
+		"imageFormat": "(Format 1:1 / quadratisch)",
+		"nameOfIssuer": "Name der Institution",
+		"wesbiteUrl": "Webseiten-URL",
+		"schoolLabel": "Schule (Grundschulen, weiterführende Schulen, Berufsschulen, Institutionen formaler schulischer Bildung)",
+		"universityLabel": "Hochschule (Universitäten. Fachhochschulen, ...)",
+		"othersLabel": "Andere (Bibliotheken, Museen, FabLabs, Unternehmen, Vereine, ...)",
+		"imageRequiredError": "Bitte wähle ein Bild aus.",
+		"csvPreview": "Hier siehst du eine Vorschau der ersten",
+		"rowsOfYourFile": "Zeilen deiner Datei.",
+		"chooseColumn": "Wähle die Überschrift, die zu der jeweiligen Spalte deiner CSV-Datei passt.",
+		"importPreview": "Import-Vorschau",
+		"rowsWereImported": "Zeilen konnten importiert werden.",
+		"rowsAreDuplicates": "Zeilen sind Duplikate und werden ignoriert.",
+		"clickOnAwardBadges": "Klicke auf \"Badges vergeben\", um die Badges jetzt an deine Lernenden zu vergeben."
 	},
 	"Badge": {
 		"groupBy": "Gruppieren nach",
@@ -378,13 +400,15 @@
 		"rows": "Zeilen",
 		"request": "Anfrage",
 		"requests": "Anfragen",
+		"openRequestsOne": "offene Anfrage",
+		"openRequests": "offene Anfragen",
 		"categories": {
 			"competency": "Kompetenz-Badge",
 			"participation": "Teilnahme-Badge",
 			"learningpath": "Micro Degree"
 		},
 		"copyBadgeHeadline": "Kopier-Status",
-		"copyBadgeDescription1": "Innerhalb der eigenen Institution können Badges immer kopiert werden.",
+		"copyBadgeDescription1": "Innerhalb der eigenen Institution können Badges immer kopiert werden. ",
 		"copyBadgeDescription2": "Den Kopier-Status für <strong>andere</strong> Institutionen kannst du später jederzeit über das Menü auf der Badge-Detail-Seite aktualisieren.",
 		"copyLabelOthers": "Der Badge darf von <strong>anderen</strong> Institutionen kopiert werden.",
 		"copy": "Badge für eigene Institution kopieren",
@@ -408,12 +432,17 @@
 		"projectCompleted": "Projekt-Abschluss",
 		"addOwnCriteria": "Eigenes Kriterium hinzufügen",
 		"enterOwnCriteria": "Eigenes Kriterium eingeben",
-		"enterOwnCriteriaDesc": "Hier kannst du Erläuterungen eintragen (max. 300 Zeichen)"
+		"enterOwnCriteriaDesc": "Hier kannst du Erläuterungen eintragen (max. 300 Zeichen)",
+		"participationBadgeInfo": "dient als Bestätigung der Teilnahme an einer Veranstaltung – er enthält <u>keine</u> Kompetenzen.",
+		"competencyBadgeInfo": "kann (mithilfe unseres KI-Assistenten) mit den Kompetenzen gefüllt werden, die deine Lernenden erwerben.",
+		"learningPathBadgeInfo": "verbindet mehrere Badges zu einer größeren Lerneinheit. Wenn Lernende alle Badges dieses „Lernpfades” erworben haben, erhalten sie automatisch den Abschluss Micro Degree.",
+		"lastEdited": "Zuletzt editiert",
+		"badgeSuccessfullyCreated": "Der Badge wurde erfolgreich an {{recipient}} vergeben"
 	},
 	"CreateBadge": {
 		"chooseBadgeCategory": "Kategorie wählen",
 		"chooseABadgeCategory": "Wähle eine Badge-Kategorie",
-		"chooseCategory": "Wähle aus zwei Badge-Kategorien:",
+		"chooseCategory": "Badge-Kategorien wählen",
 		"competencyInfo": "mit Kompetenzen gefüllt werden, die deine Lernenden erwerben",
 		"withAssistant": "mithilfe unseres KI-Badge-Assistenten",
 		"participationInfo": "dienen als Bestätigung der Teilnahme an einer Veranstaltung",
@@ -504,7 +533,11 @@
 		},
 		"competencyOwn": "Eigene Kompetenz",
 		"competencyOwnDescription": "Falls die ESCO-Suche dir keine passende Kompetenz liefert, kannst du hier händisch eine selbst definierte Kompetenz ergänzen:",
-		"stepFinish": "Abschluss"
+		"stepFinish": "Abschluss",
+		"weHelpCreateBadge": "Wir helfen dir, in wenigen Schritten deinen Badge zu erstellen.",
+		"letsGo": "Los geht's!",
+		"closing": "Abschluss"
+
 	},
 	"Signup": {
 		"youHaveAccount": "Du hast bereits einen Account?",
@@ -854,7 +887,8 @@
 		"validity": "Gültigkeit des QR-Codes",
 		"download": "Download QR-Code",
 		"toBadgeDetail": "Zur Badge Detail-Seite",
-		"downloadPoster": "Download QR-Code-Plakat"
+		"downloadPoster": "Download QR-Code-Plakat",
+		"badgeDetailPage": "Badge Detail Seite"
 	},
 	"LearningPath": {
 		"learningpaths": "Micro Degrees",
@@ -899,9 +933,17 @@
 		"savedSuccessfully": "Deine Änderungen wurden erfolgreich gespeichert",
 		"title": "Micro Degree-Titel",
 		"description": "Kurz-Beschreibung für Lernende",
+		"shortDescription": "Kurz-Beschreibung",
 		"selectedBadges": "Du hast {{ count }} Badges für den Micro Degree ausgewählt",
 		"selectedBadgesOne": "Du hast 1 Badge für den Micro Degree ausgewählt",
-		"deleteWarning": "Möchtest du diesen Micro Degree wirklich löschen?"
+		"deleteWarning": "Möchtest du diesen Micro Degree wirklich löschen?",
+		"mdImage": "Micro-Degree Bild",
+		"lastBadgeInfo": "Den Abschluss-Badge <strong class='tw-text-purple'>Micro Degree</strong> erhalten Lernende automatisiert per E-Mail, sobald sie alle darin enthaltenen Badges erworben haben.",
+		"finishedOn": "Abgeschlossen am",
+		"deleteMd": "Micro Degree löschen",
+		"mdUsers": "Micro Degree-Nutzende",
+		"searchMds": "Micro Degrees durchsuchen"
+
 	},
 	"LearningPathEditor": {
 		"shortDescription": "Zusammenfassende Beschreibung deines Micro Degrees. Diese Kurzbeschreibung wird im Micro Degree gespeichert."

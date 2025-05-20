@@ -180,7 +180,7 @@
 									{{ 'RecBadgeDetail.duration' | translate }}
 								</dt>
 								<dd class="tw-text-sm tw-text-oebblack md:tw-ml-2">
-									{{ config.duration | hourPipe }} {{ 'RecBadge.hours' | translate }}
+									{{ config.duration | hourPipe }} {{ 'RecBadge.hours' | translate | lowercase }}
 								</dd>
 							</div>
 
@@ -188,7 +188,7 @@
 								*ngIf="config.updatedAt"
 								class="tw-flex tw-text-oebblack tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col"
 							>
-								<dt class="tw-text-sm tw-text-oebblack tw-font-bold">Zuletzt editiert</dt>
+								<dt class="tw-text-sm tw-text-oebblack tw-font-bold">{{'Badge.lastEdited' | translate }}</dt>
 								<dd class="tw-text-sm tw-text-oebblack md:tw-ml-2">
 									<time [date]="config.updatedAt" format="dd.MM.y"></time>
 								</dd>

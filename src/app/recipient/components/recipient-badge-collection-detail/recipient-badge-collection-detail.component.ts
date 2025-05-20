@@ -68,7 +68,7 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 
 		this.menuItems = [
 			{
-				title: 'Bearbeiten',
+				title: this.translate.instant('General.edit'),
 				icon: 'lucidePencil',
 				action: () => console.log("")
 			},
@@ -78,7 +78,7 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 			// 	action: () => console.log(""),
 			// },
 			{
-				title: 'Löschen',
+				title: this.translate.instant('General.delete'),
 				icon: 'lucideTrash2',
 				action: () => this.deleteCollection(),
 			},
