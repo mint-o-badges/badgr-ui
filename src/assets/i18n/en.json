@@ -437,7 +437,8 @@
 		"participationBadgeInfo": "serves as confirmation of participation in an event - it contains <u>no</u> competencies.",
 		"competencyBadgeInfo": "can be filled (with the help of our AI assistant) with the skills that your learners acquire.",
 		"learningPathBadgeInfo": "combines several badges into a larger learning unit. When learners have earned all the badges on this “learning path”, they automatically receive the Micro Degree.",
-		"lastEdited": "Last edited"
+		"lastEdited": "Last edited",
+		"badgeSuccessfullyCreated": "The badge has been awarded to {{ recipient }} successfully."
 
 	},
 	"CreateBadge": {

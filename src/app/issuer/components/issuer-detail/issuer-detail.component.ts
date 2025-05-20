@@ -41,10 +41,6 @@ export class IssuerDetailComponent extends BaseAuthenticatedRoutableComponent im
 	learningPaths: ApiLearningPath[];
 	launchpoints: ApiExternalToolLaunchpoint[];
 
-	editMembers = "Mitglieder bearbeiten"
-	edit = "Bearbeiten"
-	deleteString = "Löschen"
-
 	profileEmails: UserProfileEmail[] = [];
 
 	issuerLoaded: Promise<unknown>;
@@ -75,18 +71,6 @@ export class IssuerDetailComponent extends BaseAuthenticatedRoutableComponent im
 	) {
 		super(router, route, loginService);
 
-		this.translate.get('Issuer.editMembers').subscribe((str) => {
-			this.editMembers = str
-		});
-
-		this.translate.get('General.edit').subscribe((str) => {
-			this.edit = str
-		})
-
-		this.translate.get('General.delete').subscribe((str) => {
-			this.deleteString = str
-		})
-
 		title.setTitle(`Issuer Detail - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 
 		this.issuerSlug = this.route.snapshot.params['issuerSlug'];
@@ -97,17 +81,17 @@ export class IssuerDetailComponent extends BaseAuthenticatedRoutableComponent im
 
 		this.menuitems = [
 			{
-				title: this.edit,
+				title: this.translate.instant('General.edit'),
 				routerLink: ['./edit'],
 				icon: 'lucidePencil',
 			},
 			{
-				title: this.deleteString,
+				title: this.translate.instant('General.delete'),
 				action: ($event) => this.delete($event),
 				icon: 'lucideTrash2',
 			},
 			{
-				title: this.editMembers,
+				title: this.translate.instant('Issuer.editMembers'),
 				routerLink: ['./staff'],
 				icon: 'lucideUsers',
 			},
@@ -181,7 +165,6 @@ export class IssuerDetailComponent extends BaseAuthenticatedRoutableComponent im
 	ngOnInit() {
 		super.ngOnInit();
 		this.translate.get('NavItems.myInstitutions').subscribe((str) => {
-			console.log(str)
 			this.myInstitutions = str
 		})
 	}

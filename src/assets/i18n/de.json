@@ -436,7 +436,8 @@
 		"participationBadgeInfo": "dient als Bestätigung der Teilnahme an einer Veranstaltung – er enthält <u>keine</u> Kompetenzen.",
 		"competencyBadgeInfo": "kann (mithilfe unseres KI-Assistenten) mit den Kompetenzen gefüllt werden, die deine Lernenden erwerben.",
 		"learningPathBadgeInfo": "verbindet mehrere Badges zu einer größeren Lerneinheit. Wenn Lernende alle Badges dieses „Lernpfades” erworben haben, erhalten sie automatisch den Abschluss Micro Degree.",
-		"lastEdited": "Zuletzt editiert"
+		"lastEdited": "Zuletzt editiert",
+		"badgeSuccessfullyCreated": "Der Badge wurde erfolgreich an {{recipient}} vergeben"
 	},
 	"CreateBadge": {
 		"chooseBadgeCategory": "Kategorie wählen",
