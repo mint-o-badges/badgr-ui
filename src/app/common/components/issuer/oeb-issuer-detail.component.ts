@@ -241,7 +241,7 @@ export class OebIssuerDetailComponent implements OnInit {
 				// qrCodeRequested: () => {},
 				variant: 'danger',
 				text: 'Möchtest du diesen Micro Degree wirklich löschen?',
-				title: 'Micro Degree löschen',
+				title: this.translate.instant('LearningPath.deleteMd')
 			},
 		});
 	}

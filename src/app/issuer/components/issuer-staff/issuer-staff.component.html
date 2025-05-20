@@ -61,9 +61,9 @@
 						*ngFor="let role of issuerStaffRoleOptions; last as last"
 						[control]="staffCreateForm.rawControlMap.staffRole"
 						[name]="'staffRole'"
-						[label]="role.label"
+						label="{{role.label | translate}}"
 						[value]="role.value"
-						[sublabel]="role.description"
+						[sublabel]="role.description | translate"
 						[last]="last"
 						errorMessage="{{ 'Issuer.addMember_selectRole' | translate }}"
 					></bg-formfield-radio>
@@ -109,9 +109,9 @@
 							*ngFor="let role of issuerStaffRoleOptions; last as last"
 							[control]="staffRequestRoleForm.rawControlMap.staffRole"
 							[name]="'staffRole'"
-							[label]="role.label"
+							label="{{role.label | translate}}"
 							[value]="role.value"
-							[sublabel]="role.description"
+							sublabel="{{role.description | translate}}"
 							[last]="last"
 							errorMessage="{{ 'Issuer.addMember_selectRole' | translate }}"
 						></bg-formfield-radio>

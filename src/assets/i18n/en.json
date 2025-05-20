@@ -106,8 +106,8 @@
 		"new": "new",
 		"expired": "expired",
 		"emailAddress":"E-mail address",
-		"tos": "Terms of Service"
-
+		"tos": "Terms of Service",
+		"change": "change"
 	},
 	"NavItems": {
 		"register": "Register",
@@ -305,7 +305,7 @@
 		"learningPathList5": "Upload your JSON file:",
 		"learningPathRecipient": "Graduates",
 		"learningPathParticipants": "Participants",
-		"herebyIConfirm": "I hereby confirm that I: ",
+		"herebyIConfirm": "<ul>I hereby confirm that I... <br><br>1. am authorized to create an account for the named institution and to create and award badges. <br><br>2. am responsible for the quality of the courses offered, the badges created and awarded and for the competences assigned.<br><br> 3. use the platform only for the intended purposes and reject any misuse.</ul>",
 		"entitled": "...am authorized to create an account for the aforementioned institution and to create and award badges.",
 		"responsible": "...bear the responsibility for the quality of the course offerings, the created and awarded badges, as well as for the assigned skills.",
 		"noMisuse": "...will only use the platform for its intended purposes and reject any misuse.",
@@ -337,7 +337,25 @@
 		"revokeBadgeWarning": "Are you sure you want to revoke \"{{ badge }}\" from {{ recipient }}?",
 		"revokeSuccess": "Revoked Badge from {{ recipient}}",
 		"revokeError": "Revoking Badge from {{ recipient }} failed",
-		"searchIssuer": "search Institution"
+		"searchIssuer": "search Institution",
+		"staffOwnerRights": "Access to all functions including adding/removing editors and employees, editing institution details and creating, assigning and deleting badges including micro degrees.",
+		"staffEditorRights": "Rights to create, assign and delete badges, including micro-degrees.",
+		"staffMemberRights": "Can assign badges created by owners and/or editors (including creating, editing and deleting QR code assignments).",
+		"imageFormat": "(Format 1:1 / square)",
+		"nameOfIssuer": "Name of Institution",
+		"wesbiteUrl": "Website-URL",
+		"schoolLabel": "School (elementary school, secondary schools, vocational schools, institutions of formal education)",
+		"universityLabel": "University (universities, universities of applied sciences, ...)",
+		"othersLabel": "Others (libraries, museums, FabLabs, companies, associations, ...)",
+		"imageRequiredError": "Please choose an image.",
+		"csvPreview": "Here you can see a preview of the first",
+		"rowsOfYourFile": "rows of your file.",
+		"chooseColumn": "Select the heading that matches the respective column of your CSV file.",
+		"importPreview": "Import preview",
+		"rowsWereImported": "rows could be imported.",
+		"rowsAreDuplicates": "rows are duplicates and are ignored.",
+		"clickOnAwardBadges": "Click on \"award badges\" to award the badges to your learners now."
+
 	},
 	"Badge": {
 		"groupBy": "Group by",
@@ -685,6 +703,7 @@
 		"uploadOwnVisual": "Upload complete badge image",
 		"importedSuccessfully": "Badge imported successfully.",
 		"uploadFailed": "Could not upload badge:",
+		"duplicateBadge": "You already have this badge in your backpack",
 		"unknownError": "The badge upload failed due to an unknown error",
 		"badgeUploadVersionError": "Unfortunately uploading this badge version is not possible.",
 		"uploadEmailDoesNotMatchError": "The email address in the badge does not match the email in your OEB profile.",
@@ -914,10 +933,15 @@
 		"savedSuccessfully": "Your changes have been saved successfully",
 		"title": "Micro Degree title",
 		"description": "Short description for learners",
+		"shortDescription": "Short description",
 		"selectedBadges": "You selected {{ count }} Badges for the Micro Degree",
 		"selectedBadgesOne": "You selected 1 Badge for the Micro Degree",
 		"deleteWarning": "Do you really want to delete this Micro Degree?",
-		"mdImage": "Micro degree image"
+		"mdImage": "Micro degree image",
+		"lastBadgeInfo": "Learners automatically receive the <strong class='tw-text-purple'>Micro Degree</strong> badge by e-mail, as soon as they have earned all the badges it contains.",
+		"finishedOn": "finished on",
+		"deleteMd": "delete micro degree",
+		"mdUsers": "Micro Degree users"
 	},
 	"LearningPathEditor": {
 		"shortDescription": "Summarized description of your Micro Degree. This short description will be saved in the Micro Degree."

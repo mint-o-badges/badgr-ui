@@ -21,6 +21,7 @@ import { MenuItem } from '../../../common/components/badge-detail/badge-detail.c
 import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
 import { ApiLearningPath } from '../../../common/model/learningpath-api.model';
 import { first, firstValueFrom } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'issuer-detail',
@@ -40,6 +41,10 @@ export class IssuerDetailComponent extends BaseAuthenticatedRoutableComponent im
 	learningPaths: ApiLearningPath[];
 	launchpoints: ApiExternalToolLaunchpoint[];
 
+	editMembers = "Mitglieder bearbeiten"
+	edit = "Bearbeiten"
+	deleteString = "Löschen"
+
 	profileEmails: UserProfileEmail[] = [];
 
 	issuerLoaded: Promise<unknown>;
@@ -50,6 +55,8 @@ export class IssuerDetailComponent extends BaseAuthenticatedRoutableComponent im
 	crumbs: LinkEntry[];
 
 	menuitems: MenuItem[] = [];
+
+	myInstitutions = "Meine Institutionen"
 
 	constructor(
 		loginService: SessionService,
@@ -64,8 +71,21 @@ export class IssuerDetailComponent extends BaseAuthenticatedRoutableComponent im
 		private configService: AppConfigService,
 		private externalToolsManager: ExternalToolsManager,
 		private dialogService: CommonDialogsService,
+		private translate: TranslateService
 	) {
 		super(router, route, loginService);
+
+		this.translate.get('Issuer.editMembers').subscribe((str) => {
+			this.editMembers = str
+		});
+
+		this.translate.get('General.edit').subscribe((str) => {
+			this.edit = str
+		})
+
+		this.translate.get('General.delete').subscribe((str) => {
+			this.deleteString = str
+		})
 
 		title.setTitle(`Issuer Detail - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 
@@ -77,17 +97,17 @@ export class IssuerDetailComponent extends BaseAuthenticatedRoutableComponent im
 
 		this.menuitems = [
 			{
-				title: 'Bearbeiten',
+				title: this.edit,
 				routerLink: ['./edit'],
 				icon: 'lucidePencil',
 			},
 			{
-				title: 'Löschen',
+				title: this.deleteString,
 				action: ($event) => this.delete($event),
 				icon: 'lucideTrash2',
 			},
 			{
-				title: 'Mitglieder bearbeiten',
+				title: this.editMembers,
 				routerLink: ['./staff'],
 				icon: 'lucideUsers',
 			},
@@ -100,7 +120,7 @@ export class IssuerDetailComponent extends BaseAuthenticatedRoutableComponent im
 					`Issuer - ${this.issuer.name} - ${this.configService.theme['serviceName'] || 'Badgr'}`,
 				);
 				this.crumbs = [
-					{ title: 'Meine Institutionen', routerLink: ['/issuer/issuers'] },
+					{ title: this.translate.instant('NavItems.myInstitutions'), routerLink: ['/issuer/issuers'] },
 					{ title: this.issuer.name, routerLink: ['/issuer/issuers/' + this.issuer.slug] },
 				];
 
@@ -160,6 +180,10 @@ export class IssuerDetailComponent extends BaseAuthenticatedRoutableComponent im
 
 	ngOnInit() {
 		super.ngOnInit();
+		this.translate.get('NavItems.myInstitutions').subscribe((str) => {
+			console.log(str)
+			this.myInstitutions = str
+		})
 	}
 
 	routeToBadgeAward(badge, issuer) {

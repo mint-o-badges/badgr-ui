@@ -14,7 +14,7 @@ import { OebButtonComponent } from './oeb-button.component';
 	>
 		<hlm-trow class="tw-bg-purple tw-text-white tw-flex-wrap hover:tw-bg-purple">
 			<hlm-th class="!tw-text-white tw-w-28 md:tw-w-48">ID</hlm-th>
-			<hlm-th class="!tw-text-white tw-justify-center !tw-flex-1">Abgeschlossen am</hlm-th>
+			<hlm-th class="!tw-text-white tw-justify-center !tw-flex-1">{{'LearningPath.finishedOn' | translate }}</hlm-th>
 			<hlm-th class="!tw-text-white tw-justify-end sm:tw-w-48 tw-w-0 !tw-p-0"></hlm-th>
 		</hlm-trow>
 		<hlm-trow *ngFor="let participant of participants" class="tw-border-purple tw-flex-wrap tw-py-2">

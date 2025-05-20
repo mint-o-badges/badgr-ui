@@ -106,7 +106,8 @@
 		"new": "neu",
 		"expired": "abgelaufen",
 		"emailAddress":"E-Mail-Adresse",
-		"tos": "Nutzungsbedingungen"
+		"tos": "Nutzungsbedingungen",
+		"change": "ändern"
 	},
 	"NavItems": {
 		"register": "Registrieren",
@@ -304,7 +305,7 @@
 		"learningPathList5": "Lade deine JSON-Datei hoch:",
 		"learningPathRecipient": "Absolvent:innen",
 		"learningPathParticipants": "Teilnehmer:innen",
-		"herebyIConfirm": "Hiermit bestätige ich, dass ich: ",
+		"herebyIConfirm": "<ul>Hiermit bestätige ich, dass ich...<br><br>1. berechtigt bin, für die genannte Institution einen Account anzulegen sowie Badges zu erstellen und zu vergeben.<br><br> 2. die Verantwortung für die Qualität der Kursangebote, der erstellten und vergebenen Badges sowie für die zugeordneten Kompetenzen trage. <br> <br> 3. die Plattform nur für die vorgesehenen Zwecke nutze und jeglichen Missbrauch ablehne.</ul> ",
 		"entitled": "...berechtigt bin, für die genannte Institution einen Account anzulegen sowie Badges zu erstellen und zu vergeben.",
 		"responsible": "...die Verantwortung für die Qualität der Kursangebote, der erstellten und vergebenen Badges sowie für die zugeordneten Kompetenzen trage.",
 		"noMisuse": "...die Plattform nur für die vorgesehenen Zwecke nutze und jeglichen Missbrauch ablehne.",
@@ -336,7 +337,24 @@
 		"revokeBadgeWarning": "Bist du sicher, dass du \"{{ badge }}\" von {{ recipient }} zurücknehmen möchtest?",
 		"revokeSuccess": "Badge von {{ recipient}} zurücknehmen",
 		"revokeError": "Widerrufen des Badges von {{ recipient }} fehlgeschlagen",
-		"searchIssuer": "Institution suchen"
+		"searchIssuer": "Institution suchen",
+		"staffOwnerRights": "Zugriff auf alle Funktionen inkl. Hinzufügen/Entfernen von Editor:innen und Mitarbeiter:innen, Bearbeitung der Institutionsdetails sowie Erstellen, Vergeben und Löschen von Badges inkl. Micro Degrees.",
+		"staffEditorRights": "Rechte zum Erstellen, Vergeben und Löschen von Badges inkl. Micro Degrees.",
+		"staffMemberRights": "Kann die von Eigentümer:innen und/oder Editor:innen erstellten Badges vergeben (inkl. QR-Code-Vergaben erstellen, bearbeiten und löschen).",
+		"imageFormat": "(Format 1:1 / quadratisch)",
+		"nameOfIssuer": "Name der Institution",
+		"wesbiteUrl": "Webseiten-URL",
+		"schoolLabel": "Schule (Grundschulen, weiterführende Schulen, Berufsschulen, Institutionen formaler schulischer Bildung)",
+		"universityLabel": "Hochschule (Universitäten. Fachhochschulen, ...)",
+		"othersLabel": "Andere (Bibliotheken, Museen, FabLabs, Unternehmen, Vereine, ...)",
+		"imageRequiredError": "Bitte wähle ein Bild aus.",
+		"csvPreview": "Hier siehst du eine Vorschau der ersten",
+		"rowsOfYourFile": "Zeilen deiner Datei.",
+		"chooseColumn": "Wähle die Überschrift, die zu der jeweiligen Spalte deiner CSV-Datei passt.",
+		"importPreview": "Import-Vorschau",
+		"rowsWereImported": "Zeilen konnten importiert werden.",
+		"rowsAreDuplicates": "Zeilen sind Duplikate und werden ignoriert.",
+		"clickOnAwardBadges": "Klicke auf \"Badges vergeben\", um die Badges jetzt an deine Lernenden zu vergeben."
 	},
 	"Badge": {
 		"groupBy": "Gruppieren nach",
@@ -913,10 +931,15 @@
 		"savedSuccessfully": "Deine Änderungen wurden erfolgreich gespeichert",
 		"title": "Micro Degree-Titel",
 		"description": "Kurz-Beschreibung für Lernende",
+		"shortDescription": "Kurz-Beschreibung",
 		"selectedBadges": "Du hast {{ count }} Badges für den Micro Degree ausgewählt",
 		"selectedBadgesOne": "Du hast 1 Badge für den Micro Degree ausgewählt",
 		"deleteWarning": "Möchtest du diesen Micro Degree wirklich löschen?",
-		"mdImage": "Micro-Degree Bild"
+		"mdImage": "Micro-Degree Bild",
+		"lastBadgeInfo": "Den Abschluss-Badge <strong class='tw-text-purple'>Micro Degree</strong> erhalten Lernende automatisiert per E-Mail, sobald sie alle darin enthaltenen Badges erworben haben.",
+		"finishedOn": "Abgeschlossen am",
+		"deleteMd": "Micro Degree löschen",
+		"mdUsers": "Micro Degree-Nutzende"
 
 	},
 	"LearningPathEditor": {

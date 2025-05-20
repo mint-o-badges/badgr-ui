@@ -84,6 +84,9 @@ export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent imp
 
 	dialogRef: BrnDialogRef<any> = null;
 
+	editMembers = "Mitglieder bearbeiten"
+	members = "Mitglieder"
+
 	@ViewChild('issuerStaffCreateDialog')
 	issuerStaffCreateDialog: IssuerStaffCreateDialogComponent;
 
@@ -125,10 +128,18 @@ export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent imp
 			this.breadcrumbLinkEntries = [
 				{ title: 'Issuers', routerLink: ['/issuer'] },
 				{ title: issuer.name, routerLink: ['/issuer/issuers', this.issuerSlug] },
-				{ title: this.isCurrentUserIssuerOwner ? 'Mitglieder bearbeiten' : 'Mitglieder' },
+				{ title: this.isCurrentUserIssuerOwner ? this.editMembers : this.members },
 			];
 			return issuer;
 		});
+
+		this.translate.get('Issuer.editMembers').subscribe((str) => {
+			this.editMembers = str
+		})
+
+		this.translate.get('General.members').subscribe((str) => {
+			this.members = str
+		})
 
 		this.profileEmailsLoaded = this.profileManager.userProfilePromise
 			.then((profile) => profile.emails.loadedPromise)
