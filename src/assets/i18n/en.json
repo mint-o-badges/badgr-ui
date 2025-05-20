@@ -673,7 +673,8 @@
 		"badgeUploadVersionError": "Unfortunately uploading this badge version is not possible.",
 		"uploadEmailDoesNotMatchError": "The email address in the badge does not match the email in your OEB profile.",
 		"addEmailToUpload": "Add the email address to your profile to upload the badge.",
-		"versionUploadInfo": "Unfortunately at the moment only badges of version 2.0 can be uploaded"
+		"versionUploadInfo": "Unfortunately at the moment only badges of version 2.1 can be uploaded",
+		"addingBadge": "Adding Badge ..."
 	},
 	"EditBadge": {
 		"editBadge": "Edit badge",
