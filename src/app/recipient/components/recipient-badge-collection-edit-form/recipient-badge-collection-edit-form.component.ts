@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
@@ -9,11 +9,22 @@ import { AppConfigService } from '../../../common/app-config.service';
 import { RecipientBadgeCollectionManager } from '../../services/recipient-badge-collection-manager.service';
 import { typedFormGroup } from '../../../common/util/typed-forms';
 import { RecipientBadgeCollection } from '../../models/recipient-badge-collection.model';
+import { FormMessageComponent } from '../../../common/components/form-message.component';
+import { NgIf } from '@angular/common';
+import { FormFieldText } from '../../../common/components/formfield-text';
+import { BadgrButtonComponent } from '../../../common/components/badgr-button.component';
 
 @Component({
-	selector: 'recipient-badge-collection-edit-form',
-	templateUrl: './recipient-badge-collection-edit-form.component.html',
-	standalone: false,
+    selector: 'recipient-badge-collection-edit-form',
+    templateUrl: './recipient-badge-collection-edit-form.component.html',
+    imports: [
+        FormMessageComponent,
+        NgIf,
+        FormsModule,
+        ReactiveFormsModule,
+        FormFieldText,
+        BadgrButtonComponent,
+    ],
 })
 export class RecipientBadgeCollectionEditFormComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	@Input() badgeCollection: RecipientBadgeCollection;

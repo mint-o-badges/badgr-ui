@@ -16,17 +16,25 @@ import { ApiExternalToolLaunchpoint } from '../../../externaltools/models/extern
 import { ExternalToolsManager } from '../../../externaltools/services/externaltools-manager.service';
 import { AppConfigService } from '../../../common/app-config.service';
 import { CommonDialogsService } from '../../../common/services/common-dialogs.service';
-import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
+import { LinkEntry, BgBreadcrumbsComponent } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { MenuItem } from '../../../common/components/badge-detail/badge-detail.component.types';
 import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
 import { ApiLearningPath } from '../../../common/model/learningpath-api.model';
 import { first, firstValueFrom } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
+import { FormMessageComponent } from '../../../common/components/form-message.component';
+import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
+import { OebIssuerDetailComponent } from '../../../common/components/issuer/oeb-issuer-detail.component';
 
 @Component({
-	selector: 'issuer-detail',
-	templateUrl: './issuer-detail.component.html',
-	standalone: false,
+    selector: 'issuer-detail',
+    templateUrl: './issuer-detail.component.html',
+    imports: [
+        FormMessageComponent,
+        BgAwaitPromises,
+        BgBreadcrumbsComponent,
+        OebIssuerDetailComponent,
+    ],
 })
 export class IssuerDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	readonly issuerImagePlaceHolderUrl = preloadImageURL(

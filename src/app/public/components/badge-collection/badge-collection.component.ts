@@ -9,10 +9,23 @@ import { EmbedService } from '../../../common/services/embed.service';
 import { routerLinkForUrl } from '../public/public.component';
 import { Title } from '@angular/platform-browser';
 import { AppConfigService } from '../../../common/app-config.service';
+import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
+import { NgIf, NgFor, SlicePipe } from '@angular/common';
+import { BgImageStatusPlaceholderDirective } from '../../../common/directives/bg-image-status-placeholder.directive';
+import { BgBadgecard } from '../../../common/components/bg-badgecard';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-	templateUrl: 'badge-collection.component.html',
-	standalone: false,
+    templateUrl: 'badge-collection.component.html',
+    imports: [
+        BgAwaitPromises,
+        NgIf,
+        NgFor,
+        BgImageStatusPlaceholderDirective,
+        BgBadgecard,
+        SlicePipe,
+        TranslatePipe,
+    ],
 })
 export class PublicBadgeCollectionComponent {
 	readonly issuerImagePlacholderUrl = preloadImageURL(

@@ -23,16 +23,15 @@ describe('PublicBadgeClassComponent', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			declarations: [PublicBadgeClassComponent],
-			imports: [RouterTestingModule, CommonModule, BadgrCommonModule, ...COMMON_IMPORTS],
-			providers: [
-				...COMMON_MOCKS_PROVIDERS_WITH_SUBS,
-				RecipientBadgeApiService,
-				AppConfigService,
-				{ provide: 'config', useValue: { api: { baseUrl: '' }, features: {} } },
-			],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		}).compileComponents();
+    imports: [RouterTestingModule, CommonModule, BadgrCommonModule, ...COMMON_IMPORTS, PublicBadgeClassComponent],
+    providers: [
+        ...COMMON_MOCKS_PROVIDERS_WITH_SUBS,
+        RecipientBadgeApiService,
+        AppConfigService,
+        { provide: 'config', useValue: { api: { baseUrl: '' }, features: {} } },
+    ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+}).compileComponents();
 		fixture = TestBed.createComponent(PublicBadgeClassComponent);
 		component = fixture.debugElement.componentInstance;
 	});

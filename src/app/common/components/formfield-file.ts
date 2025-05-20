@@ -2,22 +2,27 @@ import { Component, ElementRef, EventEmitter, Input, Output } from '@angular/cor
 import { FormControl } from '@angular/forms';
 import { preloadImageURL, readFileAsText } from '../util/file-util';
 import { DomSanitizer } from '@angular/platform-browser';
+import { SvgIconComponent } from './svg-icon.component';
+import { NgIf } from '@angular/common';
+import { HlmPDirective } from '../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
+import { HlmADirective } from '../../components/spartan/ui-typography-helm/src/lib/hlm-a.directive';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-	selector: 'bg-formfield-file',
-	host: {
-		class: 'dropzone',
-		'[class.dropzone-is-dragging]': 'isDragging',
-		'[class.dropzone-is-error]': 'fileErrorMessage || (control?.dirty && !control?.valid)',
-		'(drag)': 'stopEvent($event)',
-		'(dragstart)': 'stopEvent($event)',
-		'(dragover)': 'dragStart($event)',
-		'(dragenter)': 'dragStart($event)',
-		'(dragleave)': 'dragStop($event)',
-		'(dragend)': 'dragStop($event)',
-		'(drop)': 'drop($event)',
-	},
-	template: `
+    selector: 'bg-formfield-file',
+    host: {
+        class: 'dropzone',
+        '[class.dropzone-is-dragging]': 'isDragging',
+        '[class.dropzone-is-error]': 'fileErrorMessage || (control?.dirty && !control?.valid)',
+        '(drag)': 'stopEvent($event)',
+        '(dragstart)': 'stopEvent($event)',
+        '(dragover)': 'dragStart($event)',
+        '(dragenter)': 'dragStart($event)',
+        '(dragleave)': 'dragStop($event)',
+        '(dragend)': 'dragStop($event)',
+        '(drop)': 'drop($event)',
+    },
+    template: `
 		<p class="visuallyhidden">
 			{{ label }}
 			<ng-content select="[label-additions]"></ng-content>
@@ -48,7 +53,13 @@ import { DomSanitizer } from '@angular/platform-browser';
 		</label>
 		<p class="dropzone-x-error" *ngIf="control?.dirty && !control?.valid">{{ errorMessage }}</p>
 	`,
-	standalone: false,
+    imports: [
+        SvgIconComponent,
+        NgIf,
+        HlmPDirective,
+        HlmADirective,
+        TranslatePipe,
+    ],
 })
 export class BgFormFieldFileComponent {
 	private get element(): HTMLElement {

@@ -4,15 +4,28 @@ import { SessionService } from '../../../common/services/session.service';
 import { Title } from '@angular/platform-browser';
 import { AppConfigService } from '../../../common/app-config.service';
 import { MessageService } from '../../../common/services/message.service';
-import { TranslateService } from '@ngx-translate/core';
-import { provideIcons } from '@ng-icons/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+import { provideIcons, NgIcon } from '@ng-icons/core';
 import { lucideCheck } from '@ng-icons/lucide';
+import { FormMessageComponent } from '../../../common/components/form-message.component';
+import { OAuthBannerComponent } from '../../../common/components/oauth-banner.component';
+import { HlmIconDirective } from '../../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
+import { OebButtonComponent } from '../../../components/oeb-button.component';
+import { NgIf } from '@angular/common';
 
 @Component({
-	selector: 'signup-success',
-	templateUrl: './signup-success.component.html',
-	providers: [provideIcons({ lucideCheck })],
-	standalone: false,
+    selector: 'signup-success',
+    templateUrl: './signup-success.component.html',
+    providers: [provideIcons({ lucideCheck })],
+    imports: [
+        FormMessageComponent,
+        OAuthBannerComponent,
+        NgIcon,
+        HlmIconDirective,
+        OebButtonComponent,
+        NgIf,
+        TranslatePipe,
+    ],
 })
 export class SignupSuccessComponent implements OnInit {
 	constructor(

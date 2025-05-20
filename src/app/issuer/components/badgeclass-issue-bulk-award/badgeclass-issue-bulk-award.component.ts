@@ -10,7 +10,15 @@ import { BadgeClass } from '../../models/badgeclass.model';
 import { Issuer } from '../../models/issuer.model';
 import { BadgeClassManager } from '../../services/badgeclass-manager.service';
 import { AppConfigService } from '../../../common/app-config.service';
-import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
+import { LinkEntry, BgBreadcrumbsComponent } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
+import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
+import { OebBackgroundComponent } from '../../../components/oeb-background.component';
+import { FormMessageComponent } from '../../../common/components/form-message.component';
+import { NgIf } from '@angular/common';
+import { BadgeClassIssueBulkAwardImportComponent } from '../badgeclass-issue-bulk-award-import/badgeclass-issue-bulk-award-import.component';
+import { BadgeClassIssueBulkAwardPreviewComponent } from '../badgeclass-issue-bulk-award-preview/badgeclass-issue-bulk-award-preview.component';
+import { BadgeclassIssueBulkAwardConformation } from '../badgeclass-issue-bulk-award-confirmation/badgeclass-issue-bulk-award-confirmation.component';
+import { BadgeclassIssueBulkAwardError } from '../badgeclass-issue-bulk-award-error/badgeclass-issue-bulk-award-error.component';
 
 export interface TransformedImportData {
 	duplicateRecords: BulkIssueData[];
@@ -41,9 +49,19 @@ export interface ColumnHeaders {
 }
 
 @Component({
-	selector: 'Badgeclass-issue-bulk-award',
-	templateUrl: './badgeclass-issue-bulk-award.component.html',
-	standalone: false,
+    selector: 'Badgeclass-issue-bulk-award',
+    templateUrl: './badgeclass-issue-bulk-award.component.html',
+    imports: [
+        BgAwaitPromises,
+        OebBackgroundComponent,
+        BgBreadcrumbsComponent,
+        FormMessageComponent,
+        NgIf,
+        BadgeClassIssueBulkAwardImportComponent,
+        BadgeClassIssueBulkAwardPreviewComponent,
+        BadgeclassIssueBulkAwardConformation,
+        BadgeclassIssueBulkAwardError,
+    ],
 })
 export class BadgeClassIssueBulkAwardComponent extends BaseAuthenticatedRoutableComponent {
 	importPreviewData: BulkIssueImportPreviewData;

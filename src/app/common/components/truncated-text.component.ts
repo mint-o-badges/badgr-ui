@@ -1,12 +1,11 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 
 @Component({
-	selector: '[truncatedText]',
-	host: {
-		'[title]': 'rawText',
-	},
-	template: `{{ processedText }}`,
-	standalone: false,
+    selector: '[truncatedText]',
+    host: {
+        '[title]': 'rawText',
+    },
+    template: `{{ processedText }}`,
 })
 export class TruncatedTextComponent implements OnChanges {
 	@Input('truncatedText')

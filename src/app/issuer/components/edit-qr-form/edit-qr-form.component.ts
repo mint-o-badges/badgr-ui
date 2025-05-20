@@ -6,20 +6,35 @@ import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-a
 import { SessionService } from '../../../common/services/session.service';
 import { BadgeClass } from '../../models/badgeclass.model';
 import { typedFormGroup } from '../../../common/util/typed-forms';
-import { FormControl, ValidationErrors, Validators } from '@angular/forms';
+import { FormControl, ValidationErrors, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DateValidator } from '../../../common/validators/date.validator';
 import { QrCodeApiService } from '../../services/qrcode-api.service';
 import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
 import { SuccessDialogComponent } from '../../../common/dialogs/oeb-dialogs/success-dialog.component';
-import { TranslateService } from '@ngx-translate/core';
-import { DatePipe } from '@angular/common';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+import { DatePipe, NgIf } from '@angular/common';
 import { Location } from '@angular/common';
 import { ApiQRCode } from '../../models/qrcode-api.model';
+import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
+import { BgImageStatusPlaceholderDirective } from '../../../common/directives/bg-image-status-placeholder.directive';
+import { OebInputComponent } from '../../../components/input.component';
+import { OebCheckboxComponent } from '../../../components/oeb-checkbox.component';
+import { OebButtonComponent } from '../../../components/oeb-button.component';
 
 @Component({
-	selector: 'edit-qr-form',
-	templateUrl: './edit-qr-form.component.html',
-	standalone: false,
+    selector: 'edit-qr-form',
+    templateUrl: './edit-qr-form.component.html',
+    imports: [
+        BgAwaitPromises,
+        FormsModule,
+        ReactiveFormsModule,
+        BgImageStatusPlaceholderDirective,
+        OebInputComponent,
+        NgIf,
+        OebCheckboxComponent,
+        OebButtonComponent,
+        TranslatePipe,
+    ],
 })
 export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent {
 	static datePipe = new DatePipe('de');

@@ -1,5 +1,5 @@
 import { AfterContentInit, Component, ElementRef, Injector, OnInit, ViewChild, inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { PublicApiService } from '../../services/public-api.service';
 import { LoadedRouteParam } from '../../../common/util/loaded-route-param';
 import {
@@ -15,7 +15,7 @@ import { LearningPathApiService } from '../../../common/services/learningpath-ap
 import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
 import { SuccessDialogComponent } from '../../../common/dialogs/oeb-dialogs/success-dialog.component';
 import { UserProfileApiService } from '../../../common/services/user-profile-api.service';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { IssuerManager } from '../../../issuer/services/issuer-manager.service';
 import type { Tab } from '../../../components/oeb-backpack-tabs.component';
 import { SessionService } from '../../../common/services/session.service';
@@ -23,11 +23,48 @@ import { PdfService } from '../../../common/services/pdf.service';
 import { RecipientBadgeManager } from '../../../recipient/services/recipient-badge-manager.service';
 import { RecipientBadgeInstance } from '../../../recipient/models/recipient-badge.model';
 import { HourPipe } from '../../../common/pipes/hourPipe';
+import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
+import { BgBreadcrumbsComponent } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
+import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
+import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
+import { HlmADirective } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-a.directive';
+import { NgIcon } from '@ng-icons/core';
+import { HlmIconDirective } from '../../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
+import { NgIf, NgFor } from '@angular/common';
+import { OebButtonComponent } from '../../../components/oeb-button.component';
+import { OebProgressComponent } from '../../../components/oeb-progress.component';
+import { BgImageStatusPlaceholderDirective } from '../../../common/directives/bg-image-status-placeholder.directive';
+import { HlmH3Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h3.directive';
+import { OebTabsComponent } from '../../../components/oeb-backpack-tabs.component';
+import { CountUpModule } from 'ngx-countup';
+import { OebIssuerCard } from '../../../common/components/oeb-issuercard';
+import { BgBadgecard } from '../../../common/components/bg-badgecard';
 
 @Component({
-	templateUrl: './learningpath.component.html',
-	providers: [RecipientBadgeManager],
-	standalone: false,
+    templateUrl: './learningpath.component.html',
+    providers: [RecipientBadgeManager],
+    imports: [
+        BgAwaitPromises,
+        BgBreadcrumbsComponent,
+        HlmH1Directive,
+        HlmPDirective,
+        HlmADirective,
+        RouterLink,
+        NgIcon,
+        HlmIconDirective,
+        NgIf,
+        OebButtonComponent,
+        OebProgressComponent,
+        BgImageStatusPlaceholderDirective,
+        HlmH3Directive,
+        OebTabsComponent,
+        CountUpModule,
+        NgFor,
+        OebIssuerCard,
+        BgBadgecard,
+        HourPipe,
+        TranslatePipe,
+    ],
 })
 export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 	learningPathSlug: string;

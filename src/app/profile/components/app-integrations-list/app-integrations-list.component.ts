@@ -7,12 +7,21 @@ import { AppConfigService } from '../../../common/app-config.service';
 import { AddCredentialsDialog } from '../app-integration-add-credentials-dialog/add-credentials-dialog.component';
 import { AppIntegrationDetailsDialog } from '../app-integration-details-dialog/app-integration-details-dialog.component';
 import { ApplicationCredentialsService } from '../../../common/services/application-credentials.service.';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+import { FormMessageComponent } from '../../../common/components/form-message.component';
+import { NgIf, NgFor } from '@angular/common';
 
 @Component({
-	selector: 'app-integration-detail',
-	templateUrl: './app-integrations-list.component.html',
-	standalone: false,
+    selector: 'app-integration-detail',
+    templateUrl: './app-integrations-list.component.html',
+    imports: [
+        FormMessageComponent,
+        NgIf,
+        AddCredentialsDialog,
+        AppIntegrationDetailsDialog,
+        NgFor,
+        TranslatePipe,
+    ],
 })
 export class AppIntegrationListComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	constructor(

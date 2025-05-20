@@ -1,6 +1,6 @@
 import { Component, ElementRef, Renderer2 } from '@angular/core';
 import { BaseDialog } from '../../../common/dialogs/base-dialog';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EmailValidator } from '../../../common/validators/email.validator';
 import { IssuerStaffRoleSlug } from '../../models/issuer-api.model';
 import { BadgrApiFailure } from '../../../common/services/api-failure';
@@ -12,13 +12,26 @@ import { AppConfigService } from '../../../common/app-config.service';
 import { CommonDialogsService } from '../../../common/services/common-dialogs.service';
 import { typedFormGroup } from '../../../common/util/typed-forms';
 import { MemoizedProperty } from '../../../common/util/memoized-property-decorator';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+import { SvgIconComponent } from '../../../common/components/svg-icon.component';
+import { NgFor, NgIf } from '@angular/common';
+import { FormFieldRadio } from '../../../common/components/formfield-radio';
+import { FormFieldText } from '../../../common/components/formfield-text';
 
 @Component({
-	selector: 'issuer-staff-create-dialog',
-	templateUrl: './issuer-staff-create-dialog.component.html',
-	styleUrls: ['./issuer-staff-create-dialog.component.css'],
-	standalone: false,
+    selector: 'issuer-staff-create-dialog',
+    templateUrl: './issuer-staff-create-dialog.component.html',
+    styleUrls: ['./issuer-staff-create-dialog.component.css'],
+    imports: [
+        SvgIconComponent,
+        FormsModule,
+        ReactiveFormsModule,
+        NgFor,
+        FormFieldRadio,
+        FormFieldText,
+        NgIf,
+        TranslatePipe,
+    ],
 })
 export class IssuerStaffCreateDialogComponent extends BaseDialog {
 	staffCreateForm = typedFormGroup()

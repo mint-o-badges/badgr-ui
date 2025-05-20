@@ -9,19 +9,31 @@ import {
 	EffectAllowed,
 	DndModule,
 } from 'ngx-drag-drop';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { BadgeClassManager } from '../../../../issuer/services/badgeclass-manager.service';
 import { HlmDialogService } from '../../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
 import { DangerDialogComponent } from '../../../../common/dialogs/oeb-dialogs/danger-dialog.component';
 import { typedFormGroup } from '../../../../common/util/typed-forms';
 import { FormControl, Validators } from '@angular/forms';
 import { BadgeClass } from '../../../../issuer/models/badgeclass.model';
+import { HlmH2Directive } from '../../../../components/spartan/ui-typography-helm/src/lib/hlm-h2.directive';
+import { HlmPDirective } from '../../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
+import { NgFor } from '@angular/common';
+import { BgBadgecard } from '../../../../common/components/bg-badgecard';
 
 @Component({
-	selector: 'learningpath-badge-order',
-	templateUrl: './learningpath-badge-order.component.html',
-	styleUrls: ['../../learningpath-edit-form/learningpath-edit-form.component.scss'],
-	standalone: false,
+    selector: 'learningpath-badge-order',
+    templateUrl: './learningpath-badge-order.component.html',
+    styleUrls: ['../../learningpath-edit-form/learningpath-edit-form.component.scss'],
+    imports: [
+        HlmH2Directive,
+        HlmPDirective,
+        NgFor,
+        DndDraggableDirective,
+        DndDropzoneDirective,
+        BgBadgecard,
+        TranslatePipe,
+    ],
 })
 export class LearningPathBadgeOrderComponent implements OnInit {
 	constructor(

@@ -138,33 +138,34 @@ export function HttpLoaderFactory(http: HttpClient) {
 }
 
 @NgModule({
-	imports: [
-		...COMMON_IMPORTS,
-		BrowserModule,
-		RouterModule.forRoot(ROUTE_CONFIG, {}),
-		BadgrCommonModule.forRoot(),
-		BrowserAnimationsModule,
-		MozzTransitionModule,
-		TranslateModule.forRoot({
-			loader: {
-				provide: TranslateLoader,
-				// useFactory: (createTranslateLoader),
-				useFactory: HttpLoaderFactory,
-				deps: [HttpClient],
-			},
-		}),
-	],
-	declarations: [AppComponent, InitialRedirectComponent],
-	bootstrap: [AppComponent],
-	providers: [
-		RecipientBadgeApiService,
-		{ provide: RouteReuseStrategy, useClass: BadgrRouteReuseStrategy },
-		{
-			provide: APP_INITIALIZER,
-			useFactory: appInitializerFn,
-			multi: true,
-			deps: [AppConfigService],
-		},
-	],
+    imports: [
+        ...COMMON_IMPORTS,
+        BrowserModule,
+        RouterModule.forRoot(ROUTE_CONFIG, {}),
+        BadgrCommonModule.forRoot(),
+        BrowserAnimationsModule,
+        MozzTransitionModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                // useFactory: (createTranslateLoader),
+                useFactory: HttpLoaderFactory,
+                deps: [HttpClient],
+            },
+        }),
+        InitialRedirectComponent,
+    ],
+    declarations: [AppComponent],
+    bootstrap: [AppComponent],
+    providers: [
+        RecipientBadgeApiService,
+        { provide: RouteReuseStrategy, useClass: BadgrRouteReuseStrategy },
+        {
+            provide: APP_INITIALIZER,
+            useFactory: appInitializerFn,
+            multi: true,
+            deps: [AppConfigService],
+        },
+    ],
 })
 export class AppModule {}

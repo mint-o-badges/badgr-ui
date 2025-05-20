@@ -1,12 +1,18 @@
 import { Component, Input } from '@angular/core';
 import { RecipientBadgeCollection } from '../recipient/models/recipient-badge-collection.model';
+import { RouterLink } from '@angular/router';
+import { NgIf, NgFor } from '@angular/common';
+import { HlmSwitchComponent } from '../components/spartan/ui-switch-helm/src/lib/hlm-switch.component';
+import { FormsModule } from '@angular/forms';
+import { OebButtonComponent } from '../components/oeb-button.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-	selector: 'bg-collectioncard',
-	host: {
-		class: 'tw-rounded-[10px] tw-bg-white tw-h-max tw-max-w-[450px] tw-border-purple tw-border-solid tw-border tw-relative tw-p-4 tw-block tw-overflow-hidden oeb-badge-card',
-	},
-	template: `
+    selector: 'bg-collectioncard',
+    host: {
+        class: 'tw-rounded-[10px] tw-bg-white tw-h-max tw-max-w-[450px] tw-border-purple tw-border-solid tw-border tw-relative tw-p-4 tw-block tw-overflow-hidden oeb-badge-card',
+    },
+    template: `
 	
 		<div class="tw-h-[200px]" >
 			<div class="tw-flex tw-flex-col tw-items-center tw-h-full tw-w-full">
@@ -55,7 +61,15 @@ import { RecipientBadgeCollection } from '../recipient/models/recipient-badge-co
 			</div>
 		</div>
 	`,
-	standalone: false,
+    imports: [
+        RouterLink,
+        NgIf,
+        NgFor,
+        HlmSwitchComponent,
+        FormsModule,
+        OebButtonComponent,
+        TranslatePipe,
+    ],
 })
 export class BgCollectionCard {
 	readonly badgeLoadingImageUrl = '../../../breakdown/static/images/badge-loading.svg';

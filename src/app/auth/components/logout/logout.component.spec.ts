@@ -18,11 +18,10 @@ describe('LogoutComponent', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			declarations: [LogoutComponent],
-			imports: [RouterTestingModule, BadgrCommonModule, ...COMMON_IMPORTS],
-			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		}).compileComponents();
+    imports: [RouterTestingModule, BadgrCommonModule, ...COMMON_IMPORTS, LogoutComponent],
+    providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+}).compileComponents();
 		fixture = TestBed.createComponent(LogoutComponent);
 		component = fixture.debugElement.componentInstance;
 	});

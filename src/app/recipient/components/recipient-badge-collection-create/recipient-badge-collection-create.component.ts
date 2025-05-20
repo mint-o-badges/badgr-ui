@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { ApiRecipientBadgeCollectionForCreation } from '../../models/recipient-badge-collection-api.model';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
@@ -13,7 +13,7 @@ import { BadgeClass } from '../../../issuer/models/badgeclass.model';
 import { BadgeClassManager } from '../../../issuer/services/badgeclass-manager.service';
 import { sortUnique } from '../../../catalog/components/badge-catalog/badge-catalog.component';
 import { StringMatchingUtil } from '../../../common/util/string-matching-util';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { BadgeClassCategory } from '../../../issuer/models/badgeclass-api.model';
 import { RecipientBadgeApiService } from '../../services/recipient-badges-api.service';
 import { RecipientBadgeManager } from '../../services/recipient-badge-manager.service';
@@ -21,14 +21,37 @@ import { RecipientBadgeInstance } from '../../models/recipient-badge.model';
 import { ApiRecipientBadgeIssuer } from '../../models/recipient-badge-api.model';
 import { groupIntoArray, groupIntoObject } from '../../../common/util/array-reducers';
 import { BadgeInstanceUrl } from '../../../issuer/models/badgeinstance-api.model';
+import { FormMessageComponent } from '../../../common/components/form-message.component';
+import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
+import { OebInputComponent } from '../../../components/input.component';
+import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
+import { HlmInputDirective } from '../../../components/spartan/ui-input-helm/src/lib/hlm-input.directive';
+import { NgClass, NgFor, NgIf } from '@angular/common';
+import { BgBadgecard } from '../../../common/components/bg-badgecard';
+import { OebButtonComponent } from '../../../components/oeb-button.component';
 
 
 type BadgeSortBy = 'name' | 'newest-first' | 'oldest-first';
 
 @Component({
-	selector: 'create-recipient-badge-collection',
-	templateUrl: './recipient-badge-collection-create.component.html',
-	standalone: false,
+    selector: 'create-recipient-badge-collection',
+    templateUrl: './recipient-badge-collection-create.component.html',
+    imports: [
+        FormMessageComponent,
+        HlmH1Directive,
+        FormsModule,
+        ReactiveFormsModule,
+        OebInputComponent,
+        BgAwaitPromises,
+        HlmInputDirective,
+        NgClass,
+        NgFor,
+        NgIf,
+        BgBadgecard,
+        OebButtonComponent,
+        RouterLink,
+        TranslatePipe,
+    ],
 })
 export class RecipientBadgeCollectionCreateComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	badgeCollectionForm = typedFormGroup()

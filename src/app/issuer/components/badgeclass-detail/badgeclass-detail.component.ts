@@ -34,11 +34,14 @@ import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src
 import { inject } from '@angular/core';
 import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
 import { ApiLearningPath } from '../../../common/model/learningpath-api.model';
-import { ViewportScroller } from '@angular/common';
+import { ViewportScroller, NgIf } from '@angular/common';
+import { BgBadgeDetail } from '../../../common/components/badge-detail/badge-detail.component';
+import { QrCodeAwardsComponent } from '../qrcode-awards/qrcode-awards.component';
+import { IssuerDetailDatatableComponent } from '../../../components/datatable-issuer-detail.component';
 
 @Component({
-	selector: 'badgeclass-detail',
-	template: `
+    selector: 'badgeclass-detail',
+    template: `
 		<bg-badgedetail [config]="config" [awaitPromises]="[issuerLoaded, badgeClassLoaded]">
 			<div #qrAwards>
 				<qrcode-awards
@@ -60,7 +63,12 @@ import { ViewportScroller } from '@angular/common';
 			></issuer-detail-datatable>
 		</bg-badgedetail>
 	`,
-	standalone: false,
+    imports: [
+        BgBadgeDetail,
+        NgIf,
+        QrCodeAwardsComponent,
+        IssuerDetailDatatableComponent,
+    ],
 })
 export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	@ViewChild('qrAwards') qrAwards!: ElementRef;

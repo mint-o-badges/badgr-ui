@@ -1,12 +1,14 @@
 import { Component, Input } from '@angular/core';
 import { Issuer } from '../../issuer/models/issuer.model';
+import { HlmPDirective } from '../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
+import { RouterLink } from '@angular/router';
 
 @Component({
-	selector: 'oeb-issuerCard',
-	host: {
-		class: 'tw-rounded-[10px] tw-bg-white tw-border-[#CFCECE] tw-border-solid tw-border tw-relative tw-p-3 tw-block tw-overflow-hidden',
-	},
-	template: `
+    selector: 'oeb-issuerCard',
+    host: {
+        class: 'tw-rounded-[10px] tw-bg-white tw-border-[#CFCECE] tw-border-solid tw-border tw-relative tw-p-3 tw-block tw-overflow-hidden',
+    },
+    template: `
 		<div class="tw-flex tw-flex-col tw-h-full">
 			<div class="tw-flex-row tw-flex tw-items-center">
 				<img [src]="issuer.image" width="80" />
@@ -20,7 +22,7 @@ import { Issuer } from '../../issuer/models/issuer.model';
 			</div>
 		</div>
 	`,
-	standalone: false,
+    imports: [HlmPDirective, RouterLink],
 })
 export class OebIssuerCard {
 	readonly badgeLoadingImageUrl = '../../../breakdown/static/images/badge-loading.svg';

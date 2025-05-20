@@ -1,17 +1,27 @@
 import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { BaseDialog } from '../../../common/dialogs/base-dialog';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule } from '@angular/forms';
 import { ZipService } from '../../../common/util/zip-service/zip-service.service';
 import { ZipEntry } from '../../../common/util/zip-service/interfaces/zip-entry.interface';
 import { RecipientBadgeManager } from '../../../recipient/services/recipient-badge-manager.service';
 import { MessageService } from '../../../common/services/message.service';
 import { UserProfileApiService } from '../../../common/services/user-profile-api.service';
+import { SvgIconComponent } from '../../../common/components/svg-icon.component';
+import { NgIf, NgFor, I18nPluralPipe } from '@angular/common';
+import { BgFormFieldFileComponent } from '../../../common/components/formfield-file';
 
 @Component({
-	selector: 'import-modal',
-	templateUrl: './import-modal.component.html',
-	styleUrls: ['./import-modal.component.css'],
-	standalone: false,
+    selector: 'import-modal',
+    templateUrl: './import-modal.component.html',
+    styleUrls: ['./import-modal.component.css'],
+    imports: [
+        SvgIconComponent,
+        NgIf,
+        NgFor,
+        FormsModule,
+        BgFormFieldFileComponent,
+        I18nPluralPipe,
+    ],
 })
 export class ImportModalComponent extends BaseDialog implements OnInit {
 	@ViewChild('importModalDialog')

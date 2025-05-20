@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 
-import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, Validators, FormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { EmailValidator } from '../../../common/validators/email.validator';
 import { UserCredential } from '../../../common/model/user-credential.type';
 import { SessionService } from '../../../common/services/session.service';
@@ -18,9 +18,17 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { AppConfigService } from '../../../common/app-config.service';
 import { typedFormGroup } from '../../../common/util/typed-forms';
 import { BadgrApiFailure } from '../../../common/services/api-failure';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { UserProfileApiService } from '../../../common/services/user-profile-api.service';
+import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
+import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
+import { HlmADirective } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-a.directive';
+import { NgIf } from '@angular/common';
+import { OebInputComponent } from '../../../components/input.component';
+import { OebCheckboxComponent } from '../../../components/oeb-checkbox.component';
+import { OebButtonComponent } from '../../../components/oeb-button.component';
+import { FormMessageComponent } from '../../../common/components/form-message.component';
 
 interface RedirectResponse {
 	success: boolean;
@@ -30,10 +38,22 @@ interface RedirectResponse {
 type RedirectHttpResponse = HttpResponse<RedirectResponse>;
 
 @Component({
-	selector: 'login',
-	templateUrl: './login.component.html',
-	styleUrls: ['./login.component.scss'],
-	standalone: false,
+    selector: 'login',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.scss'],
+    imports: [
+        HlmH1Directive,
+        HlmPDirective,
+        HlmADirective,
+        RouterLink,
+        NgIf,
+        FormsModule,
+        OebInputComponent,
+        OebCheckboxComponent,
+        OebButtonComponent,
+        FormMessageComponent,
+        TranslatePipe,
+    ],
 })
 export class LoginComponent extends BaseRoutableComponent implements OnInit, AfterViewInit {
 	get theme() {

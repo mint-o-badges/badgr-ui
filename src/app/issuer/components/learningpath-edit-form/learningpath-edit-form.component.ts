@@ -1,6 +1,6 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
-import { FormArray, FormBuilder, FormControl, ValidationErrors, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, ValidationErrors, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SessionService } from '../../../common/services/session.service';
 import { MessageService } from '../../../common/services/message.service';
 import { IssuerApiService } from '../../services/issuer-api.service';
@@ -25,7 +25,7 @@ import { typedFormGroup } from '../../../common/util/typed-forms';
 import { LearningPath } from '../../models/learningpath.model';
 import { BadgeStudioComponent } from '../badge-studio/badge-studio.component';
 import { BgFormFieldImageComponent } from '../../../common/components/formfield-image';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { BadgeInstanceManager } from '../../services/badgeinstance-manager.service';
 import { ApiLearningPath, ApiLearningPathForCreation } from '../../../common/model/learningpath-api.model';
 import { BadgeClassCategory } from '../../models/badgeclass-api.model';
@@ -42,6 +42,11 @@ import { BadgeClassApiService } from '../../services/badgeclass-api.service';
 import { UrlValidator } from '../../../common/validators/url.validator';
 import { Issuer } from '../../models/issuer.model';
 import { IssuerManager } from '../../services/issuer-manager.service';
+import { FormMessageComponent } from '../../../common/components/form-message.component';
+import { NgIf } from '@angular/common';
+import { StepComponent } from '../../../components/stepper/step.component';
+import { CdkStep } from '@angular/cdk/stepper';
+import { OebButtonComponent } from '../../../components/oeb-button.component';
 
 interface DraggableItem {
 	content: string;
@@ -53,10 +58,24 @@ interface DraggableItem {
 type BadgeResult = BadgeClass & { selected?: boolean };
 
 @Component({
-	selector: 'learningpath-edit-form',
-	templateUrl: './learningpath-edit-form.component.html',
-	styleUrls: ['./learningpath-edit-form.component.scss'],
-	standalone: false,
+    selector: 'learningpath-edit-form',
+    templateUrl: './learningpath-edit-form.component.html',
+    styleUrls: ['./learningpath-edit-form.component.scss'],
+    imports: [
+        FormMessageComponent,
+        FormsModule,
+        ReactiveFormsModule,
+        StepperComponent,
+        NgIf,
+        StepComponent,
+        CdkStep,
+        LearningPathDetailsComponent,
+        LearningPathBadgesComponent,
+        LearningPathBadgeOrderComponent,
+        LearningPathTagsComponent,
+        OebButtonComponent,
+        TranslatePipe,
+    ],
 })
 export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	@ViewChild(StepperComponent) stepper: StepperComponent;

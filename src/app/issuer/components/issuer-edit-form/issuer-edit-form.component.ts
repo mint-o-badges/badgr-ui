@@ -1,28 +1,45 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { typedFormGroup } from '../../../common/util/typed-forms';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IssuerNameValidator } from '../../../common/validators/issuer-name.validator';
 import { UrlValidator } from '../../../common/validators/url.validator';
 import { UserProfileEmail } from '../../../common/model/user-profile.model';
 import { FormFieldSelectOption } from '../../../common/components/formfield-select';
 import { ApiIssuerForCreation, ApiIssuerForEditing } from '../../models/issuer-api.model';
 import { SessionService } from '../../../common/services/session.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AppConfigService } from '../../../common/app-config.service';
 import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
 import { QueryParametersService } from '../../../common/services/query-parameters.service';
 import { Title } from '@angular/platform-browser';
 import { MessageService } from '../../../common/services/message.service';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { IssuerManager } from '../../services/issuer-manager.service';
 import { preloadImageURL } from '../../../common/util/file-util';
 import { Issuer } from '../../models/issuer.model';
+import { BgFormFieldImageComponent } from '../../../common/components/formfield-image';
+import { OebInputComponent } from '../../../components/input.component';
+import { OebSelectComponent } from '../../../components/select.component';
+import { OebCheckboxComponent } from '../../../components/oeb-checkbox.component';
+import { NgIf } from '@angular/common';
+import { OebButtonComponent } from '../../../components/oeb-button.component';
 
 @Component({
-	selector: 'issuer-edit-form',
-	templateUrl: 'issuer-edit-form.component.html',
-	styleUrls: ['issuer-edit-form.component.scss'],
-	standalone: false,
+    selector: 'issuer-edit-form',
+    templateUrl: 'issuer-edit-form.component.html',
+    styleUrls: ['issuer-edit-form.component.scss'],
+    imports: [
+        FormsModule,
+        BgFormFieldImageComponent,
+        OebInputComponent,
+        OebSelectComponent,
+        OebCheckboxComponent,
+        NgIf,
+        ReactiveFormsModule,
+        OebButtonComponent,
+        RouterLink,
+        TranslatePipe,
+    ],
 })
 export class IssuerEditFormComponent implements OnInit {
 	readonly issuerImagePlacholderUrl = preloadImageURL(

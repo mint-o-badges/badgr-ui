@@ -2,10 +2,12 @@ import { Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
 import { ApiExternalToolLaunchInfo } from '../../externaltools/models/externaltools-api.model';
 import { EventsService } from '../services/events.service';
 import { Subscription } from 'rxjs';
+import { NgIf, NgFor } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
-	selector: 'external-tool-launch',
-	template: `
+    selector: 'external-tool-launch',
+    template: `
 		<form
 			*ngIf="toolLaunchInfo"
 			#toolLaunchForm
@@ -21,7 +23,11 @@ import { Subscription } from 'rxjs';
 			/>
 		</form>
 	`,
-	standalone: false,
+    imports: [
+        NgIf,
+        FormsModule,
+        NgFor,
+    ],
 })
 export class ExternalToolLaunchComponent implements OnDestroy {
 	objectKeys = Object.keys;

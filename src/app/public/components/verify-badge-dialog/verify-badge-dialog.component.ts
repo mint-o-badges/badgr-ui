@@ -6,6 +6,10 @@ import { preloadImageURL } from '../../../common/util/file-util';
 import { PublicApiService } from '../../services/public-api.service';
 import { MessageService } from '../../../common/services/message.service';
 import { ApiV2Wrapper } from '../../../common/model/api-v2-wrapper';
+import { SvgIconComponent } from '../../../common/components/svg-icon.component';
+import { NgIf, NgClass, NgSwitch, NgSwitchCase } from '@angular/common';
+import { BgImageStatusPlaceholderDirective } from '../../../common/directives/bg-image-status-placeholder.directive';
+import { TimeComponent } from '../../../common/components/time.component';
 // import { RecipientBadgeManager } from '../../../recipient/services/recipient-badge-manager.service';
 
 const sha256 = require('tiny-sha256') as (email: string) => string;
@@ -23,9 +27,17 @@ export enum ExpiryState {
 }
 
 @Component({
-	selector: 'verify-badge-dialog',
-	templateUrl: './verify-badge-dialog.component.html',
-	standalone: false,
+    selector: 'verify-badge-dialog',
+    templateUrl: './verify-badge-dialog.component.html',
+    imports: [
+        SvgIconComponent,
+        NgIf,
+        BgImageStatusPlaceholderDirective,
+        NgClass,
+        NgSwitch,
+        NgSwitchCase,
+        TimeComponent,
+    ],
 })
 export class VerifyBadgeDialog extends BaseDialog {
 	constructor(

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SessionService } from '../../../common/services/session.service';
 import { MessageService } from '../../../common/services/message.service';
@@ -8,11 +8,18 @@ import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-a
 import { EmailValidator } from '../../../common/validators/email.validator';
 import { TransformedImportData, ViewState } from '../badgeclass-issue-bulk-award/badgeclass-issue-bulk-award.component';
 import { UrlValidator } from '../../../common/validators/url.validator';
+import { NgFor } from '@angular/common';
+import { FormFieldText } from '../../../common/components/formfield-text';
 
 @Component({
-	selector: 'badgeclass-issue-bulk-award-error',
-	templateUrl: './badgeclass-issue-bulk-award-error.component.html',
-	standalone: false,
+    selector: 'badgeclass-issue-bulk-award-error',
+    templateUrl: './badgeclass-issue-bulk-award-error.component.html',
+    imports: [
+        FormsModule,
+        ReactiveFormsModule,
+        NgFor,
+        FormFieldText,
+    ],
 })
 export class BadgeclassIssueBulkAwardError extends BaseAuthenticatedRoutableComponent implements OnInit {
 	@Input() transformedImportData: TransformedImportData;

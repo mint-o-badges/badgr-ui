@@ -27,18 +27,18 @@ describe('ChangePasswordComponent', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			declarations: [ChangePasswordComponent],
-			imports: [
-				RouterTestingModule,
-				CommonModule,
-				BadgrCommonModule,
-				...COMMON_IMPORTS,
-				TranslateTestingModule.withTranslations('de', {}),
-			],
-			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-			teardown: { destroyAfterEach: false },
-		}).compileComponents();
+    imports: [
+        RouterTestingModule,
+        CommonModule,
+        BadgrCommonModule,
+        ...COMMON_IMPORTS,
+        TranslateTestingModule.withTranslations('de', {}),
+        ChangePasswordComponent,
+    ],
+    providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    teardown: { destroyAfterEach: false },
+}).compileComponents();
 		fixture = TestBed.createComponent(ChangePasswordComponent);
 		component = fixture.debugElement.componentInstance;
 	});

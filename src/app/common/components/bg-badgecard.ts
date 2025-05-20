@@ -1,21 +1,33 @@
 import { Component, EventEmitter, HostBinding, Input, Output } from '@angular/core';
 import { AUTO_STYLE, animate, state, style, transition, trigger } from '@angular/animations';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormsModule } from '@angular/forms';
+import { NgIf, NgFor } from '@angular/common';
+import { NgIcon } from '@ng-icons/core';
+import { HlmIconDirective } from '../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
+import { BgImageStatusPlaceholderDirective } from '../directives/bg-image-status-placeholder.directive';
+import { HlmPDirective } from '../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
+import { RouterLink } from '@angular/router';
+import { TimeComponent } from './time.component';
+import { HlmADirective } from '../../components/spartan/ui-typography-helm/src/lib/hlm-a.directive';
+import { OebCheckboxComponent } from '../../components/oeb-checkbox.component';
+import { CompetencyAccordionComponent } from '../../components/accordion.component';
+import { TranslatePipe } from '@ngx-translate/core';
+import { HourPipe } from '../pipes/hourPipe';
 
 @Component({
-	selector: 'bg-badgecard',
-	animations: [
-		trigger('showCompetencies', [
-			state('true', style({ height: AUTO_STYLE, visibility: AUTO_STYLE })),
-			state('false', style({ height: '0', visibility: 'hidden' })),
-			transition('false => true', animate(220 + 'ms ease-out')),
-			transition('true => false', animate(220 + 'ms ease-in')),
-		]),
-	],
-	host: {
-		class: 'tw-rounded-[10px] tw-h-max tw-max-w-[450px] tw-border-solid tw-border-purple tw-border tw-relative tw-p-4 tw-pt-8 tw-block tw-overflow-hidden oeb-badge-card',
-	},
-	template: `
+    selector: 'bg-badgecard',
+    animations: [
+        trigger('showCompetencies', [
+            state('true', style({ height: AUTO_STYLE, visibility: AUTO_STYLE })),
+            state('false', style({ height: '0', visibility: 'hidden' })),
+            transition('false => true', animate(220 + 'ms ease-out')),
+            transition('true => false', animate(220 + 'ms ease-in')),
+        ]),
+    ],
+    host: {
+        class: 'tw-rounded-[10px] tw-h-max tw-max-w-[450px] tw-border-solid tw-border-purple tw-border tw-relative tw-p-4 tw-pt-8 tw-block tw-overflow-hidden oeb-badge-card',
+    },
+    template: `
 		<div
 			class="tw-absolute tw-top-0 tw-left-0 tw-bg-purple tw-text-white tw-px-2 tw-py-1"
 			*ngIf="mostRelevantStatus"
@@ -159,9 +171,8 @@ import { FormControl } from '@angular/forms';
 		</div>
 		<!--<ul *ngIf="tags && tags.length" class="tw-mt-2 tw-leading-[0px]"><li class="tag tw-mt-2 tw-mr-2" *ngFor="let tag of tags">{{tag}}</li></ul>-->
 	`,
-	standalone: false,
-	styles: [
-		`
+    styles: [
+        `
 			.text-clamp {
 				-webkit-line-clamp: 3;
 				-webkit-box-orient: vertical;
@@ -177,7 +188,23 @@ import { FormControl } from '@angular/forms';
 				-webkit-line-clamp: 1;
 			}
 		`,
-	],
+    ],
+    imports: [
+        NgIf,
+        NgIcon,
+        HlmIconDirective,
+        BgImageStatusPlaceholderDirective,
+        HlmPDirective,
+        RouterLink,
+        TimeComponent,
+        HlmADirective,
+        OebCheckboxComponent,
+        FormsModule,
+        NgFor,
+        CompetencyAccordionComponent,
+        TranslatePipe,
+        HourPipe,
+    ],
 })
 export class BgBadgecard {
 	readonly badgeLoadingImageUrl = '../../../breakdown/static/images/badge-loading.svg';

@@ -9,11 +9,23 @@ import { OAuth2AppAuthorization } from '../../../common/model/oauth.model';
 import { CommonDialogsService } from '../../../common/services/common-dialogs.service';
 import { flatten } from '../../../common/util/array-reducers';
 import { AppConfigService } from '../../../common/app-config.service';
+import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
+import { FormMessageComponent } from '../../../common/components/form-message.component';
+import { TimeComponent } from '../../../common/components/time.component';
+import { NgIf, NgFor } from '@angular/common';
+import { SvgIconComponent } from '../../../common/components/svg-icon.component';
 
 @Component({
-	selector: 'oauth-app-detail-component',
-	templateUrl: './oauth-app-detail.html',
-	standalone: false,
+    selector: 'oauth-app-detail-component',
+    templateUrl: './oauth-app-detail.html',
+    imports: [
+        BgAwaitPromises,
+        FormMessageComponent,
+        TimeComponent,
+        NgIf,
+        SvgIconComponent,
+        NgFor,
+    ],
 })
 export class OAuthAppDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	app: OAuth2AppAuthorization;

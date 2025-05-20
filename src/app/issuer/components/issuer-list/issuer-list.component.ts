@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, TemplateRef, ViewChild, inject } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SessionService } from '../../../common/services/session.service';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
 import { MessageService } from '../../../common/services/message.service';
@@ -10,11 +10,11 @@ import { BadgeClass } from '../../models/badgeclass.model';
 import { Title } from '@angular/platform-browser';
 import { preloadImageURL } from '../../../common/util/file-util';
 import { AppConfigService } from '../../../common/app-config.service';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
 import { SuccessDialogComponent } from '../../../common/dialogs/oeb-dialogs/success-dialog.component';
 import { DialogComponent } from '../../../components/dialog.component';
-import { NgModel } from '@angular/forms';
+import { NgModel, FormsModule } from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { PublicApiService } from '../../../public/services/public-api.service';
 import { IssuerStaffRequestApiService } from '../../services/issuer-staff-request-api.service';
@@ -22,11 +22,35 @@ import { UserProfileApiService } from '../../../common/services/user-profile-api
 import { ApiStaffRequest } from '../../staffrequest-api.model';
 import { BrnDialogRef } from '@spartan-ng/brain/dialog';
 import { BadgrApiFailure } from '../../../common/services/api-failure';
+import { FormMessageComponent } from '../../../common/components/form-message.component';
+import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
+import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
+import { NgIf, NgTemplateOutlet, NgFor, NgClass, NgStyle } from '@angular/common';
+import { OebButtonComponent } from '../../../components/oeb-button.component';
+import { NgIcon } from '@ng-icons/core';
+import { HlmIconDirective } from '../../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
+import { BgImageStatusPlaceholderDirective } from '../../../common/directives/bg-image-status-placeholder.directive';
 
 @Component({
-	selector: 'issuer-list',
-	templateUrl: './issuer-list.component.html',
-	standalone: false,
+    selector: 'issuer-list',
+    templateUrl: './issuer-list.component.html',
+    imports: [
+        FormMessageComponent,
+        HlmH1Directive,
+        HlmPDirective,
+        NgIf,
+        OebButtonComponent,
+        RouterLink,
+        NgTemplateOutlet,
+        NgIcon,
+        HlmIconDirective,
+        NgFor,
+        BgImageStatusPlaceholderDirective,
+        NgClass,
+        FormsModule,
+        NgStyle,
+        TranslatePipe,
+    ],
 })
 export class IssuerListComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	readonly issuerPlaceholderSrc = preloadImageURL('../../../../breakdown/static/images/placeholderavatar-issuer.svg');

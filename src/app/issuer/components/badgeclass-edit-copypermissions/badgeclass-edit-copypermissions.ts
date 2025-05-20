@@ -1,6 +1,6 @@
 import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
@@ -13,16 +13,33 @@ import { BadgrApiFailure } from '../../../common/services/api-failure';
 import { CommonDialogsService } from '../../../common/services/common-dialogs.service';
 import { BadgeClass } from '../../models/badgeclass.model';
 import { AppConfigService } from '../../../common/app-config.service';
-import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
+import { LinkEntry, BgBreadcrumbsComponent } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { BadgeClassManager } from '../../services/badgeclass-manager.service';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { typedFormGroup } from '../../../common/util/typed-forms';
 import { BadgeClassCopyPermissions } from '../../models/badgeclass-api.model';
+import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
+import { NgIf } from '@angular/common';
+import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
+import { HlmH2Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h2.directive';
+import { OebCheckboxComponent } from '../../../components/oeb-checkbox.component';
+import { OebButtonComponent } from '../../../components/oeb-button.component';
 
 @Component({
-	templateUrl: 'badgeclass-edit-copypermissions.component.html',
-	styleUrl: './badgeclass-edit-copypermissions.component.css',
-	standalone: false,
+    templateUrl: 'badgeclass-edit-copypermissions.component.html',
+    styleUrl: './badgeclass-edit-copypermissions.component.css',
+    imports: [
+        BgBreadcrumbsComponent,
+        HlmH1Directive,
+        NgIf,
+        BgAwaitPromises,
+        FormsModule,
+        ReactiveFormsModule,
+        HlmH2Directive,
+        OebCheckboxComponent,
+        OebButtonComponent,
+        TranslatePipe,
+    ],
 })
 export class BadgeClassEditCopyPermissionsComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	issuerSlug: string;

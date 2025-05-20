@@ -65,32 +65,30 @@ const routes: Routes = [
 ];
 
 @NgModule({
-	imports: [
-		...COMMON_IMPORTS,
-		BadgrCommonModule,
-		CommonEntityManagerModule,
-		RouterModule.forChild(routes),
-		MozzTransitionModule,
-		TranslateModule,
-		AddBadgeDialogComponent,
-	],
-	declarations: [
-		RecipientEarnedBadgeListComponent,
-		RecipientBadgeCollectionListComponent,
-		RecipientBadgeCollectionCreateComponent,
-		RecipientBadgeCollectionDetailComponent,
-		RecipientBadgeCollectionEditFormComponent,
-		RecipientBadgeCollectionSelectionDialogComponent,
-		RecipientBadgeSelectionDialog,
-		RecipientEarnedBadgeDetailComponent,
-		ImportedBadgeDetailComponent,
-	],
-	providers: [
-		RecipientBadgeApiService,
-		RecipientBadgeManager,
-		RecipientBadgeCollectionApiService,
-		RecipientBadgeCollectionManager,
-	],
-	exports: [],
+    imports: [
+        ...COMMON_IMPORTS,
+        BadgrCommonModule,
+        CommonEntityManagerModule,
+        RouterModule.forChild(routes),
+        MozzTransitionModule,
+        TranslateModule,
+        AddBadgeDialogComponent,
+        RecipientEarnedBadgeListComponent,
+        RecipientBadgeCollectionListComponent,
+        RecipientBadgeCollectionCreateComponent,
+        RecipientBadgeCollectionDetailComponent,
+        RecipientBadgeCollectionEditFormComponent,
+        RecipientBadgeCollectionSelectionDialogComponent,
+        RecipientBadgeSelectionDialog,
+        RecipientEarnedBadgeDetailComponent,
+        ImportedBadgeDetailComponent,
+    ],
+    providers: [
+        RecipientBadgeApiService,
+        RecipientBadgeManager,
+        RecipientBadgeCollectionApiService,
+        RecipientBadgeCollectionManager,
+    ],
+    exports: [],
 })
 export class RecipientModule {}

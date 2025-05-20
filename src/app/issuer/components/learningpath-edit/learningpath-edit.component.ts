@@ -6,10 +6,10 @@ import { MessageService } from '../../../common/services/message.service';
 import { IssuerApiService } from '../../services/issuer-api.service';
 import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
+import { LinkEntry, BgBreadcrumbsComponent } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { BadgeClassManager } from '../../services/badgeclass-manager.service';
 import { LearningPath } from '../../models/learningpath.model';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { BadgeInstanceManager } from '../../services/badgeinstance-manager.service';
 import { BadgrApiFailure } from '../../../common/services/api-failure';
 import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
@@ -20,11 +20,24 @@ import { ApiLearningPath } from '../../../common/model/learningpath-api.model';
 import { BadgeClass } from '../../models/badgeclass.model';
 import { BadgeClassApiService } from '../../services/badgeclass-api.service';
 import { LearningPathManager } from '../../services/learningpath-manager.service';
+import { FormMessageComponent } from '../../../common/components/form-message.component';
+import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
+import { HlmH3Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h3.directive';
+import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
+import { LearningPathEditFormComponent } from '../learningpath-edit-form/learningpath-edit-form.component';
 
 @Component({
-	selector: 'learningpath-edit',
-	templateUrl: './learningpath-edit.component.html',
-	standalone: false,
+    selector: 'learningpath-edit',
+    templateUrl: './learningpath-edit.component.html',
+    imports: [
+        BgBreadcrumbsComponent,
+        FormMessageComponent,
+        HlmH1Directive,
+        HlmH3Directive,
+        BgAwaitPromises,
+        LearningPathEditFormComponent,
+        TranslatePipe,
+    ],
 })
 export class LearningPathEditComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	breadcrumbLinkEntries: LinkEntry[] = [];

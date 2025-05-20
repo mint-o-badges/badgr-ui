@@ -6,21 +6,32 @@ import { MessageService } from '../../../common/services/message.service';
 import { IssuerApiService } from '../../services/issuer-api.service';
 import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
+import { LinkEntry, BgBreadcrumbsComponent } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { BadgeClassManager } from '../../services/badgeclass-manager.service';
 import { LearningPath } from '../../models/learningpath.model';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { BadgeInstanceManager } from '../../services/badgeinstance-manager.service';
 import { BadgrApiFailure } from '../../../common/services/api-failure';
 import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
 import { SuccessDialogComponent } from '../../../common/dialogs/oeb-dialogs/success-dialog.component';
 import { Issuer } from '../../models/issuer.model';
 import { IssuerManager } from '../../services/issuer-manager.service';
+import { FormMessageComponent } from '../../../common/components/form-message.component';
+import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
+import { HlmH3Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h3.directive';
+import { LearningPathEditFormComponent } from '../learningpath-edit-form/learningpath-edit-form.component';
 
 @Component({
-	selector: 'learningpath-create',
-	templateUrl: './learningpath-create.component.html',
-	standalone: false,
+    selector: 'learningpath-create',
+    templateUrl: './learningpath-create.component.html',
+    imports: [
+        BgBreadcrumbsComponent,
+        FormMessageComponent,
+        HlmH1Directive,
+        HlmH3Directive,
+        LearningPathEditFormComponent,
+        TranslatePipe,
+    ],
 })
 export class LearningPathCreateComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	breadcrumbLinkEntries: LinkEntry[] = [];

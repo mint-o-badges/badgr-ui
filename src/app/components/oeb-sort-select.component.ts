@@ -2,10 +2,11 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { BadgeClass } from '../issuer/models/badgeclass.model';
+import { OebSelectComponent } from './select.component';
 
 @Component({
-	selector: 'oeb-sort-select',
-	template: `
+    selector: 'oeb-sort-select',
+    template: `
 		<oeb-select
 			actionBar="true"
 			class="oeb tw-block tw-w-full"
@@ -17,7 +18,7 @@ import { BadgeClass } from '../issuer/models/badgeclass.model';
 			noTopMargin="true"
 		></oeb-select>
 	`,
-	standalone: false,
+    imports: [OebSelectComponent],
 })
 export class OebSortSelectComponent implements OnInit {
 	@Input() control: FormControl = new FormControl('name_asc');

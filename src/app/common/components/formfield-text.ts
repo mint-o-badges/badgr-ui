@@ -10,22 +10,24 @@ import {
 	ViewChild,
 } from '@angular/core';
 
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { UrlValidator } from '../validators/url.validator';
 import { CommonDialogsService } from '../services/common-dialogs.service';
+import { NgIf } from '@angular/common';
+import { BadgrButtonComponent } from './badgr-button.component';
 
 @Component({
-	selector: 'bg-formfield-text',
-	host: {
-		class: 'forminput',
-		'[class.forminput-is-error]': 'isErrorState',
-		'[class.forminput-locked]': 'isLockedState',
-		'[class.forminput-monospaced]': 'monospaced',
-		'[class.forminput-withbutton]': 'inlineButtonText',
-		'[class.forminput-withsublabel]': 'sublabel',
-	},
-	template: `
+    selector: 'bg-formfield-text',
+    host: {
+        class: 'forminput',
+        '[class.forminput-is-error]': 'isErrorState',
+        '[class.forminput-locked]': 'isLockedState',
+        '[class.forminput-monospaced]': 'monospaced',
+        '[class.forminput-withbutton]': 'inlineButtonText',
+        '[class.forminput-withsublabel]': 'sublabel',
+    },
+    template: `
 		<div class="forminput-x-labelrow">
 			<label class="forminput-x-label" [attr.for]="inputName" *ngIf="label || includeLabelAsWrapper">
 				{{ label }} <span *ngIf="optional">(OPTIONAL)</span>
@@ -82,7 +84,12 @@ import { CommonDialogsService } from '../services/common-dialogs.service';
 		</div>
 		<p class="forminput-x-error" *ngIf="isErrorState">{{ errorMessageForDisplay }}</p>
 	`,
-	standalone: false,
+    imports: [
+        NgIf,
+        FormsModule,
+        ReactiveFormsModule,
+        BadgrButtonComponent,
+    ],
 })
 export class FormFieldText implements OnChanges, AfterViewInit {
 	@Input()

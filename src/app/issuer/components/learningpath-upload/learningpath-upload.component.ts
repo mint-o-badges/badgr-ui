@@ -1,21 +1,39 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SessionService } from '../../../common/services/session.service';
 import { MessageService } from '../../../common/services/message.service';
 import { Title } from '@angular/platform-browser';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
-import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
+import { LinkEntry, BgBreadcrumbsComponent } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { Issuer } from '../../models/issuer.model';
 import { IssuerManager } from '../../services/issuer-manager.service';
 import { ApiLearningPathForCreation } from '../../../common/model/learningpath-api.model';
 import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
 import { BadgrApiFailure } from '../../../common/services/api-failure';
+import { FormMessageComponent } from '../../../common/components/form-message.component';
+import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
+import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
+import { HlmH3Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h3.directive';
+import { BgFormFieldFileComponent } from '../../../common/components/formfield-file';
+import { OebButtonComponent } from '../../../components/oeb-button.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-	selector: 'learningpath-upload',
-	templateUrl: './learningpath-upload.component.html',
-	standalone: false,
+    selector: 'learningpath-upload',
+    templateUrl: './learningpath-upload.component.html',
+    imports: [
+        BgBreadcrumbsComponent,
+        FormMessageComponent,
+        HlmH1Directive,
+        HlmPDirective,
+        HlmH3Directive,
+        FormsModule,
+        ReactiveFormsModule,
+        BgFormFieldFileComponent,
+        OebButtonComponent,
+        TranslatePipe,
+    ],
 })
 export class LearningPathUploadComponent extends BaseAuthenticatedRoutableComponent {
 	jsonForm: FormGroup;

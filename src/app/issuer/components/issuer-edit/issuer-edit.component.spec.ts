@@ -25,17 +25,17 @@ describe('IssuerEditComponent', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			declarations: [IssuerEditComponent],
-			imports: [
-				RouterTestingModule,
-				CommonModule,
-				BadgrCommonModule,
-				TranslateTestingModule.withTranslations('de', {}),
-				...COMMON_IMPORTS,
-			],
-			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		}).compileComponents();
+    imports: [
+        RouterTestingModule,
+        CommonModule,
+        BadgrCommonModule,
+        TranslateTestingModule.withTranslations('de', {}),
+        ...COMMON_IMPORTS,
+        IssuerEditComponent,
+    ],
+    providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+}).compileComponents();
 		fixture = TestBed.createComponent(IssuerEditComponent);
 		component = fixture.debugElement.componentInstance;
 	});

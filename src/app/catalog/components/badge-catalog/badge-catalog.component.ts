@@ -12,17 +12,52 @@ import { BadgeClass } from '../../../issuer/models/badgeclass.model';
 import { BadgeClassManager } from '../../../issuer/services/badgeclass-manager.service';
 import { StringMatchingUtil } from '../../../common/util/string-matching-util';
 import { BadgeClassCategory } from '../../../issuer/models/badgeclass-api.model';
-import { TranslateService } from '@ngx-translate/core';
-import { FormControl } from '@angular/forms';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+import { FormControl, FormsModule } from '@angular/forms';
 import { appearAnimation } from '../../../common/animations/animations';
 import { applySorting } from '../../util/sorting';
+import { FormMessageComponent } from '../../../common/components/form-message.component';
+import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
+import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
+import { CountUpModule } from 'ngx-countup';
+import { NgIf, NgFor, I18nPluralPipe } from '@angular/common';
+import { BadgeLegendComponent } from '../../../common/components/badge-legend/badge-legend.component';
+import { HlmInputDirective } from '../../../components/spartan/ui-input-helm/src/lib/hlm-input.directive';
+import { NgIcon } from '@ng-icons/core';
+import { HlmIconDirective } from '../../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
+import { OebGlobalSortSelectComponent } from '../../../components/oeb-global-sort-select.component';
+import { OebSelectComponent } from '../../../components/select.component';
+import { OebButtonComponent } from '../../../components/oeb-button.component';
+import { BgBadgecard } from '../../../common/components/bg-badgecard';
+import { PaginationAdvancedComponent } from '../../../components/oeb-numbered-pagination';
+import { SortPipe } from '../../../common/pipes/sortPipe';
 
 @Component({
-	selector: 'app-badge-catalog',
-	templateUrl: './badge-catalog.component.html',
-	styleUrls: ['./badge-catalog.component.css'],
-	animations: [appearAnimation],
-	standalone: false,
+    selector: 'app-badge-catalog',
+    templateUrl: './badge-catalog.component.html',
+    styleUrls: ['./badge-catalog.component.css'],
+    animations: [appearAnimation],
+    imports: [
+        FormMessageComponent,
+        BgAwaitPromises,
+        HlmH1Directive,
+        CountUpModule,
+        NgIf,
+        BadgeLegendComponent,
+        FormsModule,
+        HlmInputDirective,
+        NgIcon,
+        HlmIconDirective,
+        OebGlobalSortSelectComponent,
+        OebSelectComponent,
+        OebButtonComponent,
+        NgFor,
+        BgBadgecard,
+        PaginationAdvancedComponent,
+        I18nPluralPipe,
+        SortPipe,
+        TranslatePipe,
+    ],
 })
 export class BadgeCatalogComponent extends BaseRoutableComponent implements OnInit {
 	readonly issuerPlaceholderSrc = preloadImageURL('../../../../breakdown/static/images/placeholderavatar-issuer.svg');

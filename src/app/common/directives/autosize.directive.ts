@@ -39,10 +39,7 @@ import { isPlatformBrowser } from '@angular/common';
  * SOFTWARE.
  */
 
-@Directive({
-	selector: 'textarea[autosize]',
-	standalone: false,
-})
+@Directive({ selector: 'textarea[autosize]', })
 export class AutosizeDirective implements AfterViewChecked {
 	private el: HTMLElement;
 	private _minHeight: string;

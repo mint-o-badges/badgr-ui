@@ -14,11 +14,26 @@ import striptags from 'striptags';
 import { SuccessDialogComponent } from '../../../common/dialogs/oeb-dialogs/success-dialog.component';
 import { HlmDialogService } from './../../../components/spartan/ui-dialog-helm/src';
 import { typedFormGroup } from '../../../common/util/typed-forms';
+import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
+import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
+import { NgFor } from '@angular/common';
+import { OebButtonComponent } from '../../../components/oeb-button.component';
+import { HlmH3Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h3.directive';
+import { OebCheckboxComponent } from '../../../components/oeb-checkbox.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-	selector: 'badgeclass-issue-bulk-award-confirmation',
-	templateUrl: './badgeclass-issue-bulk-award-confirmation.component.html',
-	standalone: false,
+    selector: 'badgeclass-issue-bulk-award-confirmation',
+    templateUrl: './badgeclass-issue-bulk-award-confirmation.component.html',
+    imports: [
+        HlmH1Directive,
+        HlmPDirective,
+        NgFor,
+        OebButtonComponent,
+        HlmH3Directive,
+        OebCheckboxComponent,
+        TranslatePipe,
+    ],
 })
 export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRoutableComponent {
 	@Input() transformedImportData: TransformedImportData;

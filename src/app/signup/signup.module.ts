@@ -29,18 +29,18 @@ const routes = [
 ];
 
 @NgModule({
-	imports: [
-		...COMMON_IMPORTS,
-		RouterModule,
-		FormsModule,
-		ReactiveFormsModule,
-		BadgrCommonModule,
-		RouterModule.forChild(routes),
-		TranslateModule,
-	],
-	schemas: [CUSTOM_ELEMENTS_SCHEMA],
-	declarations: [SignupComponent, SignupSuccessComponent],
-	exports: [],
-	providers: [SignupService],
+    imports: [
+        ...COMMON_IMPORTS,
+        RouterModule,
+        FormsModule,
+        ReactiveFormsModule,
+        BadgrCommonModule,
+        RouterModule.forChild(routes),
+        TranslateModule,
+        SignupComponent, SignupSuccessComponent,
+    ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    exports: [],
+    providers: [SignupService],
 })
 export class SignupModule {}

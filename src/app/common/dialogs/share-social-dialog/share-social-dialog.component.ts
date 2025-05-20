@@ -9,12 +9,21 @@ import { generateEmbedHtml } from '../../../../embed/generate-embed-html';
 import { animationFramePromise } from '../../util/promise-util';
 import { RecipientBadgeInstance } from '../../../recipient/models/recipient-badge.model';
 import { BadgeInstance } from '../../../issuer/models/badgeinstance.model';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+import { SvgIconComponent } from '../../components/svg-icon.component';
+import { NgIf, NgFor } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
-	selector: 'share-social-dialog',
-	templateUrl: 'share-social-dialog.component.html',
-	standalone: false,
+    selector: 'share-social-dialog',
+    templateUrl: 'share-social-dialog.component.html',
+    imports: [
+        SvgIconComponent,
+        NgIf,
+        FormsModule,
+        NgFor,
+        TranslatePipe,
+    ],
 })
 export class ShareSocialDialog extends BaseDialog {
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

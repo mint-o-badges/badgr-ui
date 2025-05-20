@@ -79,24 +79,22 @@ const routes: Routes = [
 ];
 
 @NgModule({
-	imports: [
-		...COMMON_IMPORTS,
-		BadgrCommonModule,
-		CommonEntityManagerModule,
-		RouterModule.forChild(routes),
-		TranslateModule,
-	],
-	declarations: [
-		LoginComponent,
-		NewTermsComponent,
-		RequestPasswordResetComponent,
-		ResetPasswordSent,
-		ResetPasswordComponent,
-		LogoutComponent,
-		OAuth2AuthorizeComponent,
-		WelcomeComponent,
-	],
-	exports: [],
-	providers: [],
+    imports: [
+        ...COMMON_IMPORTS,
+        BadgrCommonModule,
+        CommonEntityManagerModule,
+        RouterModule.forChild(routes),
+        TranslateModule,
+        LoginComponent,
+        NewTermsComponent,
+        RequestPasswordResetComponent,
+        ResetPasswordSent,
+        ResetPasswordComponent,
+        LogoutComponent,
+        OAuth2AuthorizeComponent,
+        WelcomeComponent,
+    ],
+    exports: [],
+    providers: [],
 })
 export class AuthModule {}

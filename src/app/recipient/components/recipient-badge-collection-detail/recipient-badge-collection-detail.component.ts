@@ -12,18 +12,49 @@ import { SessionService } from '../../../common/services/session.service';
 import { ShareSocialDialogOptions } from '../../../common/dialogs/share-social-dialog/share-social-dialog.component';
 import { addQueryParamsToUrl } from '../../../common/util/url-util';
 import { AppConfigService } from '../../../common/app-config.service';
-import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
+import { LinkEntry, BgBreadcrumbsComponent } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { MenuItem } from '../../../common/components/badge-detail/badge-detail.component.types';
 import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
 import { DialogComponent } from '../../../components/dialog.component';
 import { RecipientBadgeInstance } from '../../models/recipient-badge.model';
 import { BrnDialogRef } from '@spartan-ng/brain/dialog';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+import { FormMessageComponent } from '../../../common/components/form-message.component';
+import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
+import { NgIf, NgFor } from '@angular/common';
+import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
+import { OebButtonComponent } from '../../../components/oeb-button.component';
+import { OebDropdownComponent } from '../../../components/oeb-dropdown.component';
+import { SvgIconComponent } from '../../../common/components/svg-icon.component';
+import { HlmSwitchComponent } from '../../../components/spartan/ui-switch-helm/src/lib/hlm-switch.component';
+import { FormsModule } from '@angular/forms';
+import { RecipientBadgeCollectionEditFormComponent } from '../recipient-badge-collection-edit-form/recipient-badge-collection-edit-form.component';
+import { BgBadgecard } from '../../../common/components/bg-badgecard';
+import { NgIcon } from '@ng-icons/core';
+import { HlmIconDirective } from '../../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
 
 @Component({
-	selector: 'recipient-earned-badge-detail',
-	templateUrl: 'recipient-badge-collection-detail.component.html',
-	standalone: false,
+    selector: 'recipient-earned-badge-detail',
+    templateUrl: 'recipient-badge-collection-detail.component.html',
+    imports: [
+        FormMessageComponent,
+        BgBreadcrumbsComponent,
+        BgAwaitPromises,
+        NgIf,
+        HlmH1Directive,
+        OebButtonComponent,
+        OebDropdownComponent,
+        SvgIconComponent,
+        HlmSwitchComponent,
+        FormsModule,
+        RecipientBadgeCollectionEditFormComponent,
+        NgFor,
+        BgBadgecard,
+        NgIcon,
+        HlmIconDirective,
+        RecipientBadgeSelectionDialog,
+        TranslatePipe,
+    ],
 })
 export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	readonly badgeLoadingImageUrl = '../../../../breakdown/static/images/badge-loading.svg';

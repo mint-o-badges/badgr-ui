@@ -1,17 +1,28 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, forwardRef } from '@angular/core';
 import { BadebookLti1Integration } from '../../models/app-integration.model';
 import { AppIntegrationDetailComponent } from '../app-integration-detail/app-integration-detail.component';
 import { SessionService } from '../../../common/services/session.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { MessageService } from '../../../common/services/message.service';
 import { AppIntegrationManager } from '../../services/app-integration-manager.service';
 import { AppConfigService } from '../../../common/app-config.service';
+import { FormMessageComponent } from '../../../common/components/form-message.component';
+import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
+import { SvgIconComponent } from '../../../common/components/svg-icon.component';
+import { BgCopyInputDirective } from '../../../common/directives/bg-copy-input.directive';
 
 @Component({
-	selector: 'badgebook-lti1-detail',
-	templateUrl: './badgebook-lti1-integration-detail.component.html',
-	standalone: false,
+    selector: 'badgebook-lti1-detail',
+    templateUrl: './badgebook-lti1-integration-detail.component.html',
+    imports: [
+        FormMessageComponent,
+        BgAwaitPromises,
+        SvgIconComponent,
+        BgCopyInputDirective,
+        RouterLink,
+        forwardRef(() => IntegrationImageComponent),
+    ],
 })
 export class BadgebookLti1DetailComponent extends AppIntegrationDetailComponent<BadebookLti1Integration> {
 	readonly externalAppsBadgrImageUrl =
@@ -36,12 +47,11 @@ export class BadgebookLti1DetailComponent extends AppIntegrationDetailComponent<
 }
 
 @Component({
-	selector: '[integration-image]',
-	template: ` <a class="integrationthumb" href="javascript: void(0)" (click)="imageClick()" data-index="2">
+    selector: '[integration-image]',
+    template: ` <a class="integrationthumb" href="javascript: void(0)" (click)="imageClick()" data-index="2">
 		<span>{{ caption }}<span> (Open Thumbnail)</span></span>
 		<img srcset="{{ imagePath }} 2x" [src]="imagePath" alt="thumbnail description" #addAppConfigurationImage />
 	</a>`,
-	standalone: false,
 })
 export class IntegrationImageComponent {
 	imagePath: string;

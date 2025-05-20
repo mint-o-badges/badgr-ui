@@ -1,6 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
-import { ActivatedRoute, Route, Router } from '@angular/router';
+import { LinkEntry, BgBreadcrumbsComponent } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
+import { ActivatedRoute, Route, Router, RouterLink } from '@angular/router';
 import { BadgeClassManager } from '../../services/badgeclass-manager.service';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
 import { SessionService } from '../../../common/services/session.service';
@@ -10,17 +10,33 @@ import { BadgeRequestApiService } from '../../services/badgerequest-api.service'
 import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
 import { SuccessDialogComponent } from '../../../common/dialogs/oeb-dialogs/success-dialog.component';
 import { DangerDialogComponent } from '../../../common/dialogs/oeb-dialogs/danger-dialog.component';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { QrCodeApiService } from '../../services/qrcode-api.service';
-import { DatePipe } from '@angular/common';
+import { DatePipe, NgIf } from '@angular/common';
 import { MenuItem } from '../../../common/components/badge-detail/badge-detail.component.types';
-import { QRCodeElementType, FixMeLater } from 'angularx-qrcode';
+import { QRCodeElementType, FixMeLater, QRCodeComponent } from 'angularx-qrcode';
+import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
+import { OebDropdownComponent } from '../../../components/oeb-dropdown.component';
+import { SvgIconComponent } from '../../../common/components/svg-icon.component';
+import { BgImageStatusPlaceholderDirective } from '../../../common/directives/bg-image-status-placeholder.directive';
+import { OebButtonComponent } from '../../../components/oeb-button.component';
 
 @Component({
-	selector: 'badgeclass-generate-qr',
-	templateUrl: './badgeclass-generate-qr.component.html',
-	styleUrls: ['../../../public/components/about/about.component.css'],
-	standalone: false,
+    selector: 'badgeclass-generate-qr',
+    templateUrl: './badgeclass-generate-qr.component.html',
+    styleUrls: ['../../../public/components/about/about.component.css'],
+    imports: [
+        BgAwaitPromises,
+        BgBreadcrumbsComponent,
+        OebDropdownComponent,
+        SvgIconComponent,
+        QRCodeComponent,
+        BgImageStatusPlaceholderDirective,
+        NgIf,
+        OebButtonComponent,
+        RouterLink,
+        TranslatePipe,
+    ],
 })
 export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	static datePipe = new DatePipe('de');

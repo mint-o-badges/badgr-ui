@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 import { EmailValidator } from '../../../common/validators/email.validator';
 import { MessageService } from '../../../common/services/message.service';
@@ -18,13 +18,36 @@ import { QueryParametersService } from '../../../common/services/query-parameter
 import { OAuthApiService } from '../../../common/services/oauth-api.service';
 import { AppConfigService } from '../../../common/app-config.service';
 import { typedFormGroup } from '../../../common/util/typed-forms';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { animationFramePromise } from '../../../common/util/promise-util';
+import { FormMessageComponent } from '../../../common/components/form-message.component';
+import { SourceListenerDirective } from '../../../mozz-transition/directives/source-listener/source-listener.directive';
+import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
+import { BgPopupMenuTriggerDirective, BgPopupMenu } from '../../../common/components/bg-popup-menu.component';
+import { SvgIconComponent } from '../../../common/components/svg-icon.component';
+import { MenuItemDirective } from '../../../common/directives/bg-menuitem.directive';
+import { FormFieldText } from '../../../common/components/formfield-text';
+import { NgFor, NgIf } from '@angular/common';
 
 @Component({
-	selector: 'userProfile',
-	templateUrl: './profile.component.html',
-	standalone: false,
+    selector: 'userProfile',
+    templateUrl: './profile.component.html',
+    imports: [
+        FormMessageComponent,
+        SourceListenerDirective,
+        BgAwaitPromises,
+        RouterLink,
+        BgPopupMenuTriggerDirective,
+        SvgIconComponent,
+        BgPopupMenu,
+        MenuItemDirective,
+        FormsModule,
+        ReactiveFormsModule,
+        FormFieldText,
+        NgFor,
+        NgIf,
+        TranslatePipe,
+    ],
 })
 export class ProfileComponent extends BaseAuthenticatedRoutableComponent implements OnInit, OnDestroy {
 	emailForm = typedFormGroup().addControl('email', '', [Validators.required, EmailValidator.validEmail]);

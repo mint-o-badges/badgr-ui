@@ -29,13 +29,13 @@ import { ImportLauncherDirective } from '../../../mozz-transition/directives/imp
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { UserProfile } from '../../../common/model/user-profile.model';
 import { lucideHand, lucideHexagon, lucideMedal, lucideBookOpen, lucideClock, lucideHeart } from '@ng-icons/lucide';
-import { CountUpDirective } from 'ngx-countup';
+import { CountUpDirective, CountUpModule } from 'ngx-countup';
 import { Competency } from '../../../common/model/competency.model';
 import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
 import { LearningPath } from '../../../issuer/models/learningpath.model';
-import { FormControl } from '@angular/forms';
-import { TranslateService } from '@ngx-translate/core';
-import { provideIcons } from '@ng-icons/core';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+import { provideIcons, NgIcon } from '@ng-icons/core';
 import { RecipientBadgeCollectionApiService } from '../../services/recipient-badge-collection-api.service';
 import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
 import { DialogComponent } from '../../../components/dialog.component';
@@ -43,6 +43,24 @@ import { BrnDialogRef } from '@spartan-ng/brain/dialog';
 import { RecipientBadgeCollectionManager } from '../../services/recipient-badge-collection-manager.service';
 import { forkJoin } from 'rxjs';
 import { RecipientBadgeApiService } from '../../services/recipient-badges-api.service';
+import { FormMessageComponent } from '../../../common/components/form-message.component';
+import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
+import { HlmH2Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h2.directive';
+import { OebButtonComponent } from '../../../components/oeb-button.component';
+import { BadgrButtonComponent } from '../../../common/components/badgr-button.component';
+import { OebTabsComponent } from '../../../components/oeb-backpack-tabs.component';
+import { HlmIconDirective } from '../../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
+import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
+import { NgIf, NgFor } from '@angular/common';
+import { HlmInputDirective } from '../../../components/spartan/ui-input-helm/src/lib/hlm-input.directive';
+import { OebSortSelectComponent } from '../../../components/oeb-sort-select.component';
+import { OebCheckboxComponent } from '../../../components/oeb-checkbox.component';
+import { BgBadgecard } from '../../../common/components/bg-badgecard';
+import { HlmH3Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h3.directive';
+import { OebCompetency } from '../../../common/components/oeb-competency';
+import { BgLearningPathCard } from '../../../common/components/bg-learningpathcard';
+import { BgCollectionCard } from '../../../common/bg-collectioncard';
+import { DynamicFilterPipe } from '../../../common/pipes/dynamicFilterPipe';
 
 type BadgeDispay = 'grid' | 'list';
 type EscoCompetencies = {
@@ -50,17 +68,44 @@ type EscoCompetencies = {
 };
 
 @Component({
-	selector: 'recipient-earned-badge-list',
-	templateUrl: './recipient-earned-badge-list.component.html',
-	providers: [
-		provideIcons({ lucideHexagon }),
-		provideIcons({ lucideMedal }),
-		provideIcons({ lucideClock }),
-		provideIcons({ lucideHand }),
-		provideIcons({ lucideBookOpen }),
-		provideIcons({ lucideHeart }),
-	],
-	standalone: false,
+    selector: 'recipient-earned-badge-list',
+    templateUrl: './recipient-earned-badge-list.component.html',
+    providers: [
+        provideIcons({ lucideHexagon }),
+        provideIcons({ lucideMedal }),
+        provideIcons({ lucideClock }),
+        provideIcons({ lucideHand }),
+        provideIcons({ lucideBookOpen }),
+        provideIcons({ lucideHeart }),
+    ],
+    imports: [
+        ImportLauncherDirective,
+        FormMessageComponent,
+        BgAwaitPromises,
+        HlmH2Directive,
+        OebButtonComponent,
+        FormsModule,
+        ReactiveFormsModule,
+        BadgrButtonComponent,
+        OebTabsComponent,
+        NgIcon,
+        HlmIconDirective,
+        HlmPDirective,
+        NgIf,
+        CountUpModule,
+        HlmInputDirective,
+        OebSortSelectComponent,
+        OebCheckboxComponent,
+        NgFor,
+        BgBadgecard,
+        HlmH3Directive,
+        OebCompetency,
+        BgLearningPathCard,
+        BgCollectionCard,
+        AddBadgeDialogComponent,
+        DynamicFilterPipe,
+        TranslatePipe,
+    ],
 })
 export class RecipientEarnedBadgeListComponent
 	extends BaseAuthenticatedRoutableComponent

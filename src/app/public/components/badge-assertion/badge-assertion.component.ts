@@ -20,14 +20,15 @@ import { VerifyBadgeDialog } from '../verify-badge-dialog/verify-badge-dialog.co
 import { BadgeClassCategory, BadgeClassLevel } from './../../../issuer/models/badgeclass-api.model';
 import { PageConfig } from '../../../common/components/badge-detail/badge-detail.component.types';
 import { CommonDialogsService } from '../../../common/services/common-dialogs.service';
+import { BgBadgeDetail } from '../../../common/components/badge-detail/badge-detail.component';
 
 @Component({
-	template: `<verify-badge-dialog
+    template: `<verify-badge-dialog
 			#verifyBadgeDialog
 			(verifiedBadgeAssertion)="onVerifiedBadgeAssertion($event)"
 		></verify-badge-dialog>
 		<bg-badgedetail [config]="config" [awaitPromises]="[assertionIdParam]"></bg-badgedetail>`,
-	standalone: false,
+    imports: [VerifyBadgeDialog, BgBadgeDetail],
 })
 export class PublicBadgeAssertionComponent {
 	constructor(

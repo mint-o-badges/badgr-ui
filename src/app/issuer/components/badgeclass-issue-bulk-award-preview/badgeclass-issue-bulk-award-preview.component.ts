@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SessionService } from '../../../common/services/session.service';
 import { MessageService } from '../../../common/services/message.service';
@@ -13,11 +13,24 @@ import {
 	TransformedImportData,
 	ViewState,
 } from '../badgeclass-issue-bulk-award/badgeclass-issue-bulk-award.component';
+import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
+import { NgIf, NgFor } from '@angular/common';
+import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
+import { OebButtonComponent } from '../../../components/oeb-button.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-	selector: 'Badgeclass-issue-bulk-award-preview',
-	templateUrl: './badgeclass-issue-bulk-award-preview.component.html',
-	standalone: false,
+    selector: 'Badgeclass-issue-bulk-award-preview',
+    templateUrl: './badgeclass-issue-bulk-award-preview.component.html',
+    imports: [
+        HlmH1Directive,
+        NgIf,
+        HlmPDirective,
+        NgFor,
+        FormsModule,
+        OebButtonComponent,
+        TranslatePipe,
+    ],
 })
 export class BadgeClassIssueBulkAwardPreviewComponent extends BaseAuthenticatedRoutableComponent {
 	@Input() importPreviewData: BulkIssueImportPreviewData;

@@ -12,10 +12,9 @@ describe('ImportModalComponent', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			declarations: [ImportModalComponent],
-			imports: [RouterTestingModule, CommonModule, BadgrCommonModule, ...COMMON_IMPORTS],
-			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
-		}).compileComponents();
+    imports: [RouterTestingModule, CommonModule, BadgrCommonModule, ...COMMON_IMPORTS, ImportModalComponent],
+    providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
+}).compileComponents();
 		fixture = TestBed.createComponent(ImportModalComponent);
 		component = fixture.componentInstance;
 		fixture.detectChanges();

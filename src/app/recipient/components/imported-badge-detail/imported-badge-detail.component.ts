@@ -29,11 +29,12 @@ import { LearningPathApiService } from '../../../common/services/learningpath-ap
 import { TranslateService } from '@ngx-translate/core';
 import { RecipientBadgeApiService } from '../../services/recipient-badges-api.service';
 import { ApiImportedBadgeInstance } from '../../models/recipient-badge-api.model';
+import { BgBadgeDetail } from '../../../common/components/badge-detail/badge-detail.component';
 
 @Component({
-	selector: 'recipient-earned-badge-detail',
-	template: `<bg-badgedetail [config]="config" [awaitPromises]="[badgeLoaded]" [badge]="badge"></bg-badgedetail>`,
-	standalone: false,
+    selector: 'recipient-earned-badge-detail',
+    template: `<bg-badgedetail [config]="config" [awaitPromises]="[badgeLoaded]" [badge]="badge"></bg-badgedetail>`,
+    imports: [BgBadgeDetail],
 })
 export class ImportedBadgeDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	readonly issuerImagePlacholderUrl = preloadImageURL(

@@ -15,11 +15,11 @@ describe('ForkBadgeDialog', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			declarations: [ForkBadgeDialog],
-			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
-			// Since this is a dialog, not a classical component, this schema has to be used
-			schemas: [NO_ERRORS_SCHEMA],
-		}).compileComponents();
+    imports: [ForkBadgeDialog],
+    providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
+    // Since this is a dialog, not a classical component, this schema has to be used
+    schemas: [NO_ERRORS_SCHEMA],
+}).compileComponents();
 		fixture = TestBed.createComponent(ForkBadgeDialog);
 		fixture.detectChanges();
 		component = fixture.debugElement.componentInstance;

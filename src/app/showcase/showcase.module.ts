@@ -16,14 +16,13 @@ export const routes: Routes = [
 ];
 
 @NgModule({
-	imports: [
-		...COMMON_IMPORTS,
-		BadgrCommonModule,
-		RouterModule.forChild(routes),
-		// DatatableComponent
-	],
-	declarations: [ShowcaseComponent],
-	exports: [],
-	providers: [],
+    imports: [
+        ...COMMON_IMPORTS,
+        BadgrCommonModule,
+        RouterModule.forChild(routes),
+        ShowcaseComponent,
+    ],
+    exports: [],
+    providers: [],
 })
 export class ShowcaseModule {}

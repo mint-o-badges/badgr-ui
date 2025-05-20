@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MessageService } from '../../../common/services/message.service';
 import { Title } from '@angular/platform-browser';
 import { RecipientBadgeCollectionManager } from '../../services/recipient-badge-collection-manager.service';
@@ -11,11 +11,28 @@ import { RecipientBadgeManager } from '../../services/recipient-badge-manager.se
 import { CommonDialogsService } from '../../../common/services/common-dialogs.service';
 import { shareCollectionDialogOptionsFor } from '../recipient-badge-collection-detail/recipient-badge-collection-detail.component';
 import { AppConfigService } from '../../../common/app-config.service';
+import { FormMessageComponent } from '../../../common/components/form-message.component';
+import { NgIf, NgFor, NgStyle, SlicePipe } from '@angular/common';
+import { BadgrButtonComponent } from '../../../common/components/badgr-button.component';
+import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
+import { BgImageStatusPlaceholderDirective } from '../../../common/directives/bg-image-status-placeholder.directive';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-	selector: 'recipient-badge-collection-list',
-	templateUrl: './recipient-badge-collection-list.component.html',
-	standalone: false,
+    selector: 'recipient-badge-collection-list',
+    templateUrl: './recipient-badge-collection-list.component.html',
+    imports: [
+        FormMessageComponent,
+        NgIf,
+        BadgrButtonComponent,
+        RouterLink,
+        BgAwaitPromises,
+        NgFor,
+        BgImageStatusPlaceholderDirective,
+        NgStyle,
+        SlicePipe,
+        TranslatePipe,
+    ],
 })
 export class RecipientBadgeCollectionListComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	readonly noCollectionsImageUrl =

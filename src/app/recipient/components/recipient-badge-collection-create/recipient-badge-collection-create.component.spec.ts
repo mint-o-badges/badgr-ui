@@ -24,18 +24,18 @@ describe('RecipientBadgeCollectionCreateComponent', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			declarations: [RecipientBadgeCollectionCreateComponent],
-			imports: [
-				RouterTestingModule,
-				CommonModule,
-				BadgrCommonModule,
-				TranslateTestingModule.withTranslations('de', {}),
-				...COMMON_IMPORTS,
-			],
-			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-			teardown: { destroyAfterEach: false },
-		}).compileComponents();
+    imports: [
+        RouterTestingModule,
+        CommonModule,
+        BadgrCommonModule,
+        TranslateTestingModule.withTranslations('de', {}),
+        ...COMMON_IMPORTS,
+        RecipientBadgeCollectionCreateComponent,
+    ],
+    providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    teardown: { destroyAfterEach: false },
+}).compileComponents();
 		fixture = TestBed.createComponent(RecipientBadgeCollectionCreateComponent);
 		component = fixture.debugElement.componentInstance;
 	});

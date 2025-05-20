@@ -4,6 +4,9 @@ import { AppConfigService } from '../../../common/app-config.service';
 import { Issuer } from '../../../issuer/models/issuer.model';
 import { IssuerManager } from '../../../issuer/services/issuer-manager.service';
 import { BaseDialog } from '../base-dialog';
+import { SvgIconComponent } from '../../components/svg-icon.component';
+import { NgFor } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 /**
  * The dialog used in the badge creation component to copy an existing badge.
@@ -12,10 +15,14 @@ import { BaseDialog } from '../base-dialog';
  * of this.
  */
 @Component({
-	selector: 'select-issuer-dialog',
-	templateUrl: 'select-issuer-dialog.component.html',
-	styleUrls: ['./select-issuer-dialog.component.css'],
-	standalone: false,
+    selector: 'select-issuer-dialog',
+    templateUrl: 'select-issuer-dialog.component.html',
+    styleUrls: ['./select-issuer-dialog.component.css'],
+    imports: [
+        SvgIconComponent,
+        NgFor,
+        FormsModule,
+    ],
 })
 export class SelectIssuerDialog extends BaseDialog {
 	Array = Array;

@@ -19,12 +19,22 @@ import { BadgeInstanceManager } from '../../services/badgeinstance-manager.servi
 import { BadgeClassInstances, BadgeInstance } from '../../models/badgeinstance.model';
 import { EventsService } from '../../../common/services/events.service';
 import { AppConfigService } from '../../../common/app-config.service';
-import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
+import { LinkEntry, BgBreadcrumbsComponent } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
+import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
+import { FormMessageComponent } from '../../../common/components/form-message.component';
+import { BadgeClassEditFormComponent } from '../badgeclass-edit-form/badgeclass-edit-form.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-	selector: 'badgeclass-edit',
-	templateUrl: './badgeclass-edit.component.html',
-	standalone: false,
+    selector: 'badgeclass-edit',
+    templateUrl: './badgeclass-edit.component.html',
+    imports: [
+        BgAwaitPromises,
+        FormMessageComponent,
+        BgBreadcrumbsComponent,
+        BadgeClassEditFormComponent,
+        TranslatePipe,
+    ],
 })
 export class BadgeClassEditComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	get issuerSlug() {

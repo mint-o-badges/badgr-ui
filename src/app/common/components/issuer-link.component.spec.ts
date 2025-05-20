@@ -22,11 +22,10 @@ describe('BgIssuerLinkComponent', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			declarations: [BgIssuerLinkComponent, BadgrButtonComponent, BgImageStatusPlaceholderDirective],
-			imports: [RouterTestingModule, CommonModule, ...COMMON_IMPORTS],
-			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		}).compileComponents();
+    imports: [RouterTestingModule, CommonModule, ...COMMON_IMPORTS, BgIssuerLinkComponent, BadgrButtonComponent, BgImageStatusPlaceholderDirective],
+    providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+}).compileComponents();
 		fixture = TestBed.createComponent(BgIssuerLinkComponent);
 		component = fixture.debugElement.componentInstance;
 	});

@@ -6,6 +6,12 @@ import { BadgeClassManager } from '../../../issuer/services/badgeclass-manager.s
 import { BaseDialog } from '../base-dialog';
 import { StringMatchingUtil } from '../../util/string-matching-util';
 import { groupIntoArray, groupIntoObject } from '../../util/array-reducers';
+import { SvgIconComponent } from '../../components/svg-icon.component';
+import { FormsModule } from '@angular/forms';
+import { BgAwaitPromises } from '../../directives/bg-await-promises';
+import { NgFor, NgIf } from '@angular/common';
+import { BgImageStatusPlaceholderDirective } from '../../directives/bg-image-status-placeholder.directive';
+import { RouterLink } from '@angular/router';
 
 /**
  * The dialog used in the badge creation component to copy an existing badge.
@@ -14,10 +20,18 @@ import { groupIntoArray, groupIntoObject } from '../../util/array-reducers';
  * of this.
  */
 @Component({
-	selector: 'copy-badge-dialog',
-	templateUrl: 'copy-badge-dialog.component.html',
-	styleUrls: ['./copy-badge-dialog.component.css'],
-	standalone: false,
+    selector: 'copy-badge-dialog',
+    templateUrl: 'copy-badge-dialog.component.html',
+    styleUrls: ['./copy-badge-dialog.component.css'],
+    imports: [
+        SvgIconComponent,
+        FormsModule,
+        BgAwaitPromises,
+        NgFor,
+        NgIf,
+        BgImageStatusPlaceholderDirective,
+        RouterLink,
+    ],
 })
 export class CopyBadgeDialog extends BaseDialog {
 	Array = Array;

@@ -16,23 +16,35 @@ import { UserProfileManager } from '../../../common/services/user-profile-manage
 import { UserProfileEmail } from '../../../common/model/user-profile.model';
 import { IssuerStaffRoleSlug } from '../../models/issuer-api.model';
 import { AppConfigService } from '../../../common/app-config.service';
-import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
+import { LinkEntry, BgBreadcrumbsComponent } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { IssuerStaffCreateDialogComponent } from '../issuer-staff-create-dialog/issuer-staff-create-dialog.component';
 import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src';
 import { DialogComponent } from '../../../components/dialog.component';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { typedFormGroup } from '../../../common/util/typed-forms';
-import { Validators } from '@angular/forms';
+import { Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EmailValidator } from '../../../common/validators/email.validator';
 import { IssuerStaffRequestApiService } from '../../services/issuer-staff-request-api.service';
 import { ApiStaffRequest } from '../../staffrequest-api.model';
 import { BrnDialogRef } from '@spartan-ng/brain/dialog';
+import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
+import { FormMessageComponent } from '../../../common/components/form-message.component';
+import { NgIf, NgFor } from '@angular/common';
+import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
+import { OebButtonComponent } from '../../../components/oeb-button.component';
+import { OebInputComponent } from '../../../components/input.component';
+import { FormFieldRadio } from '../../../common/components/formfield-radio';
+import { HlmH2Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h2.directive';
+import { IssuerStaffRequestsDatatableComponent } from '../../../components/datatable-issuer-staff-requests.component';
+import { HlmTableComponent } from '../../../components/spartan/ui-table-helm/src/lib/hlm-table.component';
+import { HlmTrowComponent } from '../../../components/spartan/ui-table-helm/src/lib/hlm-trow.component';
+import { HlmThComponent } from '../../../components/spartan/ui-table-helm/src/lib/hlm-th.component';
+import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
 
 @Component({
-	templateUrl: './issuer-staff.component.html',
-	standalone: false,
-	styles: [
-		`
+    templateUrl: './issuer-staff.component.html',
+    styles: [
+        `
 			::ng-deep .radio .radio-x-text {
 				--typography-size: 18px;
 				line-height: 130%;
@@ -47,7 +59,27 @@ import { BrnDialogRef } from '@spartan-ng/brain/dialog';
 				line-height: 130%;
 			}
 		`,
-	],
+    ],
+    imports: [
+        BgAwaitPromises,
+        FormMessageComponent,
+        BgBreadcrumbsComponent,
+        NgIf,
+        HlmH1Directive,
+        OebButtonComponent,
+        FormsModule,
+        ReactiveFormsModule,
+        OebInputComponent,
+        NgFor,
+        FormFieldRadio,
+        HlmH2Directive,
+        IssuerStaffRequestsDatatableComponent,
+        HlmTableComponent,
+        HlmTrowComponent,
+        HlmThComponent,
+        HlmPDirective,
+        TranslatePipe,
+    ],
 })
 export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	get issuerStaffRoleOptions() {

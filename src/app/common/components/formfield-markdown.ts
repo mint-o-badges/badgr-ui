@@ -8,13 +8,14 @@ import {
 	ViewChild,
 	ViewEncapsulation,
 } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule } from '@angular/forms';
 
 import { CommonDialogsService } from '../services/common-dialogs.service';
 import { CustomValidatorMessages, messagesForValidationError } from './formfield-text';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { HttpClient } from '@angular/common/http';
 import { AppConfigService } from '../app-config.service';
+import { LMarkdownEditorModule } from 'ngx-markdown-editor';
 
 interface UploadResult {
 	isImg: boolean;
@@ -23,17 +24,17 @@ interface UploadResult {
 }
 
 @Component({
-	selector: 'bg-formfield-markdown',
-	host: {
-		class: 'forminput',
-		'[class.forminput-is-error]': 'isErrorState',
-		'[class.forminput-locked]': 'isLockedState',
-	},
-	template: ` <md-editor (input)="change()" [(ngModel)]="markdown_content" [upload]="doUpload" (paste)="change()">
+    selector: 'bg-formfield-markdown',
+    host: {
+        class: 'forminput',
+        '[class.forminput-is-error]': 'isErrorState',
+        '[class.forminput-locked]': 'isLockedState',
+    },
+    template: ` <md-editor (input)="change()" [(ngModel)]="markdown_content" [upload]="doUpload" (paste)="change()">
 	</md-editor>`,
-	styleUrls: ['./formfield-markdown.css'],
-	encapsulation: ViewEncapsulation.ShadowDom,
-	standalone: false,
+    styleUrls: ['./formfield-markdown.css'],
+    encapsulation: ViewEncapsulation.ShadowDom,
+    imports: [LMarkdownEditorModule, FormsModule],
 })
 export class FormFieldMarkdown implements OnChanges, AfterViewInit {
 	markdown_content = '';

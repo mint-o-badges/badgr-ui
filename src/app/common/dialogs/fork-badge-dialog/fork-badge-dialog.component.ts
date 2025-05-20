@@ -6,6 +6,12 @@ import { BadgeClassManager } from '../../../issuer/services/badgeclass-manager.s
 import { BaseDialog } from '../base-dialog';
 import { StringMatchingUtil } from '../../util/string-matching-util';
 import { groupIntoArray, groupIntoObject } from '../../util/array-reducers';
+import { SvgIconComponent } from '../../components/svg-icon.component';
+import { FormsModule } from '@angular/forms';
+import { BgAwaitPromises } from '../../directives/bg-await-promises';
+import { NgFor, NgIf } from '@angular/common';
+import { BgImageStatusPlaceholderDirective } from '../../directives/bg-image-status-placeholder.directive';
+import { RouterLink } from '@angular/router';
 
 // TODO: This currently is an (almost) exact copy of the `CopyBadgeDialog`.
 // On the long term, there should probably be a base copy dialog or something,
@@ -18,10 +24,18 @@ import { groupIntoArray, groupIntoObject } from '../../util/array-reducers';
  * of this.
  */
 @Component({
-	selector: 'fork-badge-dialog',
-	templateUrl: 'fork-badge-dialog.component.html',
-	styleUrls: ['./fork-badge-dialog.component.css'],
-	standalone: false,
+    selector: 'fork-badge-dialog',
+    templateUrl: 'fork-badge-dialog.component.html',
+    styleUrls: ['./fork-badge-dialog.component.css'],
+    imports: [
+        SvgIconComponent,
+        FormsModule,
+        BgAwaitPromises,
+        NgFor,
+        NgIf,
+        BgImageStatusPlaceholderDirective,
+        RouterLink,
+    ],
 })
 export class ForkBadgeDialog extends BaseDialog {
 	Array = Array;

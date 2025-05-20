@@ -18,11 +18,10 @@ describe('ForwardRouteComponent', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			declarations: [ForwardRouteComponent],
-			imports: [RouterTestingModule, CommonModule, ...COMMON_IMPORTS],
-			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		}).compileComponents();
+    imports: [RouterTestingModule, CommonModule, ...COMMON_IMPORTS, ForwardRouteComponent],
+    providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+}).compileComponents();
 		fixture = TestBed.createComponent(ForwardRouteComponent);
 		component = fixture.debugElement.componentInstance;
 	});

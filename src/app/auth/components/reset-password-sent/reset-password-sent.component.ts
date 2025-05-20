@@ -3,11 +3,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SessionService } from '../../../common/services/session.service';
 import { AppConfigService } from '../../../common/app-config.service';
 import { BaseRoutableComponent } from '../../../common/pages/base-routable.component';
+import { FormMessageComponent } from '../../../common/components/form-message.component';
+import { OAuthBannerComponent } from '../../../common/components/oauth-banner.component';
 
 @Component({
-	selector: 'password-reset-sent',
-	templateUrl: './reset-password-sent.component.html',
-	standalone: false,
+    selector: 'password-reset-sent',
+    templateUrl: './reset-password-sent.component.html',
+    imports: [FormMessageComponent, OAuthBannerComponent],
 })
 export class ResetPasswordSent extends BaseRoutableComponent {
 	constructor(
