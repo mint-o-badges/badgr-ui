@@ -6,10 +6,11 @@ import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/sr
 import { lucideCheck } from '@ng-icons/lucide';
 import { NgIf } from '@angular/common';
 import { provideIcons } from '@ng-icons/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
 	selector: 'oeb-success-dialog',
-	imports: [OebDialogComponent, HlmPDirective, NgIf],
+	imports: [OebDialogComponent, HlmPDirective, NgIf, TranslateModule],
 	providers: [provideIcons({ lucideCheck })],
 	template: `
 		<oeb-dialog [variant]="variant" class="tw-text-center tw-text-purple">
@@ -22,7 +23,7 @@ import { provideIcons } from '@ng-icons/core';
 				</div>
 			</div>
 			<p *ngIf="recipient; else showText" hlmP class="tw-text-purple">
-				<span [translate]="'Badge.badgeSuccessfullyCreated'" [translateParams]="{ recipient: recipient}">
+				<span [translate]="'Badge.badgeSuccessfullyCreated'" [translateParams]="{ recipient: recipient }">
 				</span>
 			</p>
 
