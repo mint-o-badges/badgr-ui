@@ -104,7 +104,8 @@
 		"toMyProfile": "To my profile",
 		"imported": "imported",
 		"new": "new",
-		"expired": "expired"
+		"expired": "expired",
+		"readmore": "read more"
 	},
 	"NavItems": {
 		"register": "Register",

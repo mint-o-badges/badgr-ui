@@ -6,7 +6,7 @@ import { BadgrCommonModule, COMMON_IMPORTS } from './common/badgr-common.module'
 import { InitialRedirectComponent } from './initial-redirect.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { RouteReuseStrategy, RouterModule, Routes } from '@angular/router';
+import { Route, RouteReuseStrategy, RouterModule, Routes, UrlMatcher, UrlMatchResult, UrlSegment, UrlSegmentGroup } from '@angular/router';
 import { ForwardRouteComponent } from './common/pages/forward-route.component';
 import { BadgrRouteReuseStrategy } from './common/util/route-reuse-strategy';
 import { ProfileModule } from './profile/profile.module';
@@ -24,6 +24,9 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../environments/environment';
 import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
+import { CmsPageComponent } from './common/components/cms/cms-page.component';
+import { CmsPostListComponent } from './common/components/cms/cms-post-list/cms-post-list.component';
+
 registerLocaleData(localeDe);
 // Force AuthModule and ProfileModule to get included in the main module. We don't want them lazy loaded because
 // they basically always need to be present. We have have functions that return them, but use strings in the Routes
@@ -34,6 +37,32 @@ export function authModule() {
 export function profileModule() {
 	return ProfileModule;
 }
+
+const cmsSlugMatcher = (
+		segments: UrlSegment[],
+		group: UrlSegmentGroup,
+		route: Route,
+		type: string
+	): UrlMatchResult => {
+		if (segments[0].path == type) {
+			const slugSegments = segments.slice(1);
+			const mergedPath = slugSegments.map(segment => segment.path).join('/');
+			const mergedSegment: UrlSegment = new UrlSegment(mergedPath, { id: mergedPath });
+			return ({ consumed: segments, posParams: { slug: mergedSegment } });
+		}
+		return null;
+	};
+const cmsPageMatcher: UrlMatcher = (
+		segments: UrlSegment[],
+		group: UrlSegmentGroup,
+		route: Route
+	): UrlMatchResult => cmsSlugMatcher(segments, group, route, "page");
+const cmsPostMatcher: UrlMatcher = (
+		segments: UrlSegment[],
+		group: UrlSegmentGroup,
+		route: Route
+	): UrlMatchResult => cmsSlugMatcher(segments, group, route, "post");
+
 
 const ROUTE_CONFIG: Routes = [
 	{
@@ -110,6 +139,23 @@ const ROUTE_CONFIG: Routes = [
 		redirectTo: '/auth/change-password/:token',
 		pathMatch: 'full',
 	},
+
+	// CMS contents
+	{
+		component: CmsPageComponent,
+		data: { cmsContentType: 'page' },
+		matcher: cmsPageMatcher
+	},
+	{
+		component: CmsPageComponent,
+		data: { cmsContentType: 'post' },
+		matcher: cmsPostMatcher
+	},
+	{
+		path: 'news',
+		component: CmsPostListComponent,
+	},
+
 	// catchall
 	{
 		path: '**',

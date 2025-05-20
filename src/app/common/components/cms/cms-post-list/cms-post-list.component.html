@@ -1,0 +1,76 @@
+<div class="page-padding oeb">
+
+	<div class="tw-pt-[6rem] tw-pl-[104px] tw-pb-[42px] main-paragraph">
+		<h1>
+			Neuigkeiten<br>
+			<span class="h1-black heading-sec">findest du hier...</span>
+		</h1>
+	</div>
+
+	@if (posts && posts[0]) {
+		<div class="md:tw-flex tw-items-end tw-gap-[24px] tw-text-black">
+			@if (posts[0].post_thumbnail) {
+				<img class="md:tw-w-[50%] tw-aspect-[1.22]" [src]="posts[0].post_thumbnail" alt="posts[0].post_title">
+			}
+			<div class="tw-flex tw-flex-1 tw-flex-col tw-justify-bottom tw-mt-8 md:tw-mt-0">
+
+				@if (posts[0].post_tags) {
+					<ul class="oeb-tags">
+							@for (tag of posts[0].post_tags; track tag) {
+								<li>{{tag}}</li>
+							}
+					</ul>
+				}
+				<h2
+					class="tw-font-black tw-mt-4 tw-uppercase tw-text-[30px]/[1.2em]"
+					[innerHTML]="posts[0].post_title"
+				>
+				</h2>
+				<div class="tw-text-[24px]/[1.3em]">
+					<span [innerHTML]="posts[0].post_excerpt || posts[0].post_content"></span>
+					<a class="tw-text-link tw-underline" href="{{posts[0].slug}}">
+						{{ "General.readmore" | translate }}
+					</a>
+				</div>
+			</div>
+		</div>
+	}
+
+	<ul class="tw-grid tw-grid-cols-1 md:tw-grid-cols-2 lg:tw-grid-cols-3 tw-gap-[24px] tw-mt-[100px] tw-mb-[50px]">
+	@for(post of posts; track post.ID) {
+		@if ($index > 0) {
+			<li class="oeb-card">
+				<a href="{{post.slug}}">
+					<div class="oeb-card__image">
+						@if (post.post_thumbnail) {
+							<img [src]="post.post_thumbnail" alt="post.post_title">
+						}
+					</div>
+					<div class="oeb-card__content-wrap">
+						<ng-icon
+							hlm
+							name="lucideSquareArrowOutUpRight"
+						></ng-icon>
+						<div class="oeb-card__content">
+							<h2
+								class="tw-font-black"
+								[innerHTML]="post.post_title"
+							>
+							</h2>
+							<div [innerHTML]="post.post_excerpt || post.post_content"></div>
+							@if (post.post_tags) {
+								<ul class="oeb-tags tw-mt-4">
+										@for (tag of post.post_tags; track tag) {
+											<li>{{tag}}</li>
+										}
+								</ul>
+							}
+						</div>
+					</div>
+				</a>
+			</li>
+		}
+	}
+	</ul>
+
+</div>

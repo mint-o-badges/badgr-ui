@@ -34,6 +34,8 @@ import { SelectIssuerDialog } from './common/dialogs/select-issuer-dialog/select
 import { LanguageService } from './common/services/language.service';
 import { TranslateService } from '@ngx-translate/core';
 import { MenuItem } from './common/components/badge-detail/badge-detail.component.types';
+import { CmsApiMenu } from './common/model/cms-api.model';
+import { CmsManager } from './common/services/cms-manager.service';
 
 // Shim in support for the :scope attribute
 // See https://github.com/lazd/scopedQuerySelectorShim and
@@ -129,6 +131,10 @@ export class AppComponent implements OnInit, AfterViewInit {
 
 	copyrightYear = new Date().getFullYear();
 
+	cmsMenus: CmsApiMenu;
+	headerCmsItems: MenuItem[] = [];
+
+
 	@ViewChild('confirmDialog')
 	private confirmDialog: ConfirmDialog;
 
@@ -215,6 +221,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 		private languageService: LanguageService, // Translation
 		protected translate: TranslateService,
 		@Inject(DOCUMENT) private document: Document,
+		cmsManager: CmsManager,
 	) {
 		// Initialize App language
 		this.languageService.setInitialAppLangauge();
@@ -247,6 +254,24 @@ export class AppComponent implements OnInit, AfterViewInit {
 			// Enable the embedded indicator class on the body
 			renderer.addClass(document.body, 'embeddedcontainer');
 		}
+
+
+		cmsManager.menus$.subscribe((menu) => {
+			this.cmsMenus = menu;
+			if (menu.header[translate.currentLang]) {
+				const headerItems = [{
+					title: 'News',
+					routerLink: ['/news/'],
+				}];
+				menu.header[translate.currentLang].forEach((item) => {
+					headerItems.push({
+						title: item.title,
+						routerLink: [`${item.url}`],
+					},)
+				})
+				this.headerCmsItems = headerItems;
+			}
+		});
 	}
 
 	refreshProfile = () => {

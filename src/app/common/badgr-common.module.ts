@@ -146,6 +146,14 @@ import { NgIconsModule } from '@ng-icons/core';
 import { HlmIconDirective } from '../components/spartan/ui-icon-helm/src';
 import { HlmTableModule } from './../components/spartan/ui-table-helm/src';
 
+// CMS contents
+import { ShadowDomComponent } from './components/shadow-dom.component';
+import { CmsApiService } from './services/cms-api.service';
+import { CmsContentComponent } from './components/cms/cms-content.component';
+import { CmsPageComponent } from './components/cms/cms-page.component';
+import { CmsPostListComponent } from './components/cms/cms-post-list/cms-post-list.component';
+import { CmsManager } from './services/cms-manager.service';
+
 const DIRECTIVES = [
 	BgAwaitPromises,
 	BgImageStatusPlaceholderDirective,
@@ -205,6 +213,10 @@ export const COMMON_MODULE_COMPONENTS = [
 	OebIssuerCard,
 	OebSortSelectComponent,
 	OebGlobalSortSelectComponent,
+	ShadowDomComponent,
+	CmsContentComponent,
+	CmsPageComponent,
+	CmsPostListComponent,
 ];
 
 const SERVICES = [
@@ -236,6 +248,8 @@ const SERVICES = [
 	ApplicationCredentialsService,
 	LearningPathApiService,
 	QrCodeApiService,
+	CmsApiService,
+	CmsManager
 ];
 
 const GUARDS = [AuthGuard];

@@ -160,6 +160,13 @@
 						triggerStyle="oeb-navitem tw-cursor-pointer !tw-leading-none !tw-py-1"
 					></oeb-dropdown>
 
+					<oeb-dropdown
+						*ngIf="headerCmsItems.length"
+						[menuItems]="headerCmsItems"
+						trigger="CMS Inhalte"
+						triggerStyle="oeb-navitem tw-cursor-pointer !tw-leading-none !tw-py-1"
+					/>
+
 					<a
 						*ngIf="!features.disableRegistration"
 						class="oeb-navitem"
@@ -211,6 +218,13 @@
 						trigger="General.aboutBadges"
 						triggerStyle="oeb-navitem tw-cursor-pointer !tw-leading-none !tw-py-1"
 					></oeb-dropdown>
+
+					<oeb-dropdown
+						*ngIf="headerCmsItems.length"
+						[menuItems]="headerCmsItems"
+						trigger="CMS Inhalte"
+						triggerStyle="oeb-navitem tw-cursor-pointer !tw-leading-none !tw-py-1"
+					/>
 
 					<a class="oeb-navitem" routerLinkActive="oeb-navitem-is-active" [routerLink]="['public/about']">
 						{{ 'NavItems.aboutOpenEducationalBadges' | translate }}
@@ -544,26 +558,18 @@
 			alt="Telekom Stiftung Logo"
 		/>
 		<div class="tw-hidden md:tw-flex tw-flex-col tw-min-w-fit tw-text-right tw-gap-[7px]">
-			<a
-				class="tw-text-[14px] tw-leading-[16.8px] tw-font-semibold md:tw-text-[20px] md:tw-font-medium md:tw-leading-[26px] tw-text-oebblack"
-				[routerLink]="['/public/faq']"
-				>FAQ</a
-			>
-			<a
-				class="tw-text-[14px] tw-leading-[16.8px] md:tw-text-[20px] md:tw-leading-[26px] tw-text-oebblack"
-				[href]="theme.termsOfServiceLink"
-				>{{ 'Start.imprint' | translate }}</a
-			>
-			<a
-				class="tw-text-[14px] tw-leading-[16.8px] md:tw-text-[20px] md:tw-leading-[26px] tw-text-oebblack"
-				[href]="theme.privacyPolicyLink"
-				>{{ 'Start.privacyPolicy' | translate }}</a
-			>
-			<a
-				class="tw-text-[14px] tw-leading-[16.8px] md:tw-text-[20px] md:tw-leading-[26px] tw-text-oebblack"
-				[routerLink]="['/public/terms']"
-				>Nutzungsbedingungen</a
-			>
+			<ng-container *ngIf="cmsMenus && cmsMenus.footer.de; else menuFooterDefault">
+				<a
+					*ngFor="let item of cmsMenus.footer[translate.currentLang]"
+					href="{{item.url}}"
+				>{{item.title}}</a>
+			</ng-container>
+			<ng-template #menuFooterDefault>
+				<a class="tw-text-[14px] tw-leading-[16.8px] tw-font-semibold  md:tw-text-[20px] md:tw-font-medium md:tw-leading-[26px] tw-text-oebblack" [routerLink]="['/public/faq']">FAQ</a>
+				<a class="tw-text-[14px] tw-leading-[16.8px] md:tw-text-[20px] md:tw-leading-[26px] tw-text-oebblack" [href]="theme.termsOfServiceLink">{{ 'Start.imprint' | translate }}</a>
+				<a class="tw-text-[14px] tw-leading-[16.8px] md:tw-text-[20px] md:tw-leading-[26px] tw-text-oebblack" [href]="theme.privacyPolicyLink">{{ 'Start.privacyPolicy' | translate }}</a>
+				<a class="tw-text-[14px] tw-leading-[16.8px] md:tw-text-[20px] md:tw-leading-[26px] tw-text-oebblack" [routerLink]="['/public/terms']">Nutzungsbedingungen</a>
+			</ng-template>
 		</div>
 		<!-- <div class="funding-logos-container">
 			<img src="assets/oeb/images/aboutpage/bmbf_logo_new.jpg" class="tw-max-w-[200px]" alt="BMBF logo" />
