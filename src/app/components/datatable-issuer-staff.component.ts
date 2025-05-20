@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-import { HlmIconModule } from './spartan/ui-icon-helm/src';
+
 import { RouterModule } from '@angular/router';
 import { Component, Input, Output, EventEmitter, ChangeDetectorRef, SimpleChanges } from '@angular/core';
 import { HlmTableModule } from './spartan/ui-table-helm/src';
@@ -12,7 +12,7 @@ import { FormFieldSelectOption } from '../common/components/formfield-select';
 @Component({
 	selector: 'issuer-staff-datatable',
 	standalone: true,
-	imports: [HlmTableModule, HlmIconModule, CommonModule, TranslateModule, RouterModule, HlmPDirective],
+	imports: [HlmTableModule, CommonModule, TranslateModule, RouterModule, HlmPDirective],
 	template: `
 		<hlm-table
 			class="tw-rounded-t-[20px] tw-overflow-hidden tw-w-full tw-max-w-[100%] tw-bg-white tw-border-lightgrey tw-border"

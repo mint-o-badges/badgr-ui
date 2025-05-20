@@ -2,7 +2,7 @@ import { NgIcon } from '@ng-icons/core';
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges, inject } from '@angular/core';
 import { BrnAccordionContentComponent } from '@spartan-ng/brain/accordion';
 import { HlmAccordionModule } from '../../../components/spartan/ui-accordion-helm/src';
-import { HlmIconModule } from '../../../components/spartan/ui-icon-helm/src';
+
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
 import { NgFor, NgIf, NgClass } from '@angular/common';
@@ -25,29 +25,30 @@ import { InfoDialogComponent } from '../../../common/dialogs/oeb-dialogs/info-di
 import { BadgeClass } from '../../models/badgeclass.model';
 import { Router } from '@angular/router';
 import { Issuer } from '../../models/issuer.model';
+import { HlmIconDirective } from '../../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
 
 @Component({
 	selector: 'qrcode-awards',
 	templateUrl: './qrcode-awards.component.html',
 	providers: [BadgeRequestApiService, HlmDialogService, QrCodeApiService, TranslateService],
 	imports: [
-		HlmAccordionModule,
-		NgIcon,
-		HlmIconModule,
-		TranslateModule,
-		BrnAccordionContentComponent,
-		RouterModule,
-		NgIf,
-		NgFor,
-		NgClass,
-		OebSeparatorComponent,
-		OebButtonComponent,
-		OebDropdownComponent,
-		QrCodeDatatableComponent,
-		SharedIconsModule,
-		BadgrCommonModule,
-		HlmH3Directive,
-	],
+    HlmAccordionModule,
+    NgIcon,
+    HlmIconDirective,
+    TranslateModule,
+    BrnAccordionContentComponent,
+    RouterModule,
+    NgIf,
+    NgFor,
+    NgClass,
+    OebSeparatorComponent,
+    OebButtonComponent,
+    OebDropdownComponent,
+    QrCodeDatatableComponent,
+    SharedIconsModule,
+    BadgrCommonModule,
+    HlmH3Directive
+],
 })
 export class QrCodeAwardsComponent {
 	constructor(

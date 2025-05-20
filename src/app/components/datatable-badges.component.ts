@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-import { HlmIconModule } from './spartan/ui-icon-helm/src';
+
 import { RouterModule } from '@angular/router';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { HlmTableModule } from './spartan/ui-table-helm/src';
@@ -12,7 +12,6 @@ import { HlmPDirective } from '../components/spartan/ui-typography-helm/src/lib/
 	selector: 'badges-datatable',
 	imports: [
 		HlmTableModule,
-		HlmIconModule,
 		CommonModule,
 		OebButtonComponent,
 		TranslateModule,
