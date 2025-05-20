@@ -95,7 +95,7 @@
 							>
 								<div>
 									<img
-										class="tw-min-w-[37.1px] tw-h-[37.1px] md:tw-min-w-[53px] md:tw-h-[53px] issuer-image"
+										class="tw-min-w-[37.1px] tw-h-[37.1px] md:tw-min-w-[53px] md:tw-h-[53px] issuer-image tw-aspect-square"
 										[loaded-src]="config.issuerImage"
 										[loading-src]="config.issuerImagePlacholderUrl"
 										[error-src]="config.issuerImagePlacholderUrl"
@@ -120,7 +120,10 @@
 									>
 										<ng-template #collapseCriteriaTrigger>
 											<dt class="tw-mr-auto tw-flex tw-justify-center tw-items-center tw-px-2">
-												<ng-icon hlm name="lucideAward" class="tw-w-8 tw-h-8 tw-text-purple">
+												<ng-icon hlm name="lucideAward"
+													class="tw-w-8 tw-h-8 tw-text-purple"
+												>
+
 												</ng-icon>
 												<span
 													class="tw-text-oebblack tw-font-bold tw-text-sm tw-ml-1"
