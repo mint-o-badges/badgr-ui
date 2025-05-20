@@ -384,7 +384,8 @@
 			"learningpath": "Micro Degree"
 		},
 		"copyBadgeHeadline": "Select copy status",
-		"copyBadgeDescription": "Within your own institution, badges can always be copied.<br>You can update the copy status for <strong>other</strong> institutions at any time later via the menu on the badge detail page.",
+		"copyBadgeDescription1": "Within your own institution, badges can always be copied.",
+		"copyBadgeDescription2": "You can update the copy status for <strong>other</strong> institutions at any time later via the menu on the badge detail page.",
 		"copyLabelOthers": "The badge may be copied by <strong>other</strong> institutions.",
 		"copy": "Copy badge for own institution",
 		"copyBadge": "Copy badge",
@@ -395,7 +396,19 @@
 		"editCopyStatus": "Edit copy status",
 		"award": "Award Badge",
 		"awardQRCode": "Award Badge using QR-Code",
-		"partOfLearningPath": "This Badge is part of the following Micro Degrees:"
+		"partOfLearningPath": "This Badge is part of the following Micro Degrees:",
+		"awardCriteria": "Award Criteria",
+		"criteriaDesc": "What requirements should your learners meet to receive the badge?",
+		"activeParticipation": "Active Participation",
+		"selfReflection": "Self-Reflection",
+		"achievedIndividualLearning": "Individual Learning Goal Achieved",
+		"presence90": "90% Attendance",
+		"practicalApplication": "Practical Application",
+		"onlineCourseCompleted": "Online Course Completed",
+		"projectCompleted": "Project Completed",
+		"addOwnCriteria": "Add Own Criterion",
+		"enterOwnCriteria": "Enter Own Criterion",
+		"enterOwnCriteriaDesc": "You can enter explanations here (max. 300 characters)"
 	},
 	"CreateBadge": {
 		"chooseBadgeCategory": "Choose category",
@@ -472,7 +485,6 @@
 		"maxValue1000": "Must be less than 1000",
 		"imageTooLarge": "The image is too large. Please choose an image with a maximum size of 2 MB.",
 		"licenseInfo": "Badges are created under the <a class='tw-underline tw-text-[#1400FF]' target='_blank' href='https://creativecommons.org/publicdomain/zero/1.0/legalcode.de'>CC0 1.0 license</a>.",
-
 		"requiredError": "Required",
 		"hoursMaxError": "Hours cannot exceed 10,000.",
 		"minMaxError": "Please enter a valid number of minutes (0 to 59).",
@@ -626,9 +638,9 @@
 	},
 	"RecBadge": {
 		"addBadge": "Add badge",
+		"uploadBadge": "Upload Badge",
 		"fromMozilla": "Is it from Mozilla?",
 		"closeNotification": "Close notification",
-		"uploadBadge": "Upload Badge",
 		"noBadgesYet": "You don't have any badges yet",
 		"noLearningPathYet": "You don't have any Micro Degrees yet",
 		"collectShareBadges": "Collect and share digital badges from your backpack.",
