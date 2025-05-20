@@ -70,7 +70,8 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 			{
 				title: 'Bearbeiten',
 				icon: 'lucidePencil',
-				action: () => console.log("")
+				action: () => console.log(""),
+				disabled: true
 			},
 			// {
 			// 	title: 'PDF herunterladen',

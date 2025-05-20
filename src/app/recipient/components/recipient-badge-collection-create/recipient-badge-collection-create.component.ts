@@ -50,6 +50,8 @@ export class RecipientBadgeCollectionCreateComponent extends BaseAuthenticatedRo
 	tags: string[] = [];
 	selectedTag: string = null;
 
+	myCollections = this.translate.instant('BadgeCollection.myCollections')
+
 	private _searchQuery = '';
 	get searchQuery() {
 		return this._searchQuery;
