@@ -397,10 +397,6 @@
 		"award": "Badge direkt vergeben",
 		"awardQRCode": "Badge über QR-Code vergeben",
 		"partOfLearningPath": "Dieser Badge ist Teil folgender Micro Degrees:",
-		"creator": "Kampagnen-Ersteller:in",
-		"validity": "Gültigkeit des QR-Codes",
-		"download": "Download QR-Code",
-		"toBadgeDetail": "Zur Badge Detail-Seite",
 		"awardCriteria": "Vergabe-Kriterien",
 		"criteriaDesc": "Welche Anforderungen müssen deine Lernenden erfüllen, um den Badge zu erhalten?",
 		"activeParticipation": "Aktive Teilnahme",
@@ -680,6 +676,12 @@
 		"addEmailToUpload": "Füge die E-Mail-Adresse deinem Profil hinzu, um den Badge hochzuladen.",
 		"versionUploadInfo": "Momentan können leider nur Badges der Version 2.0 hochgeladen werden"
 	},
+	"EditBadge": {
+		"editBadge": "Badge editieren",
+		"editBadgeInfo": "Editiere die Information dieses Badges.",
+		"removeCompetency": "Kompetenz löschen",
+		"removeCompetencyInfo": "Möchtest du diese Kompetenz wirklich löschen?"
+	},
 	"RecBadgeDetail": {
 		"shareBadge": "Badge teilen",
 		"verify": "Verifizieren",
@@ -713,12 +715,6 @@
 		"deleteBadge": "Badge aus Rucksack löschen",
 		"copyShareLink": "Kopiere diesen Link zum teilen",
 		"addToProfile": "Zum Profil hinzufügen"
-	},
-	"EditBadge": {
-		"editBadge": "Badge editieren",
-		"editBadgeInfo": "Editiere die Information dieses Badges.",
-		"removeCompetency": "Kompetenz löschen",
-		"removeCompetencyInfo": "Möchtest du diese Kompetenz wirklich löschen?"
 	},
 	"BadgeCollection": {
 		"addCollection": "Sammlung hinzufügen",
@@ -853,6 +849,10 @@
 		"openRequestsOne": "1 offene Badge-Anfrage",
 		"openRequests": "{{ count }} offene Badge-Anfragen",
 		"showQrCode": "Zum QR-Code",
+		"creator": "Kampagnen-Ersteller:in",
+		"validity": "Gültigkeit des QR-Codes",
+		"download": "Download QR-Code",
+		"toBadgeDetail": "Zur Badge Detail-Seite",
 		"downloadPoster": "Download QR-Code-Plakat"
 	},
 	"LearningPath": {
