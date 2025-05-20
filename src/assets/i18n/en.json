@@ -764,9 +764,10 @@
 		"enterCollectioName": "Please enter a collection name",
 		"remainingChar": "remaining characters",
 		"description": "Description of the collection",
+		"descriptionPlaceholder": "These badges show that I not only understand the digital world, but also actively shape it. From programming and algorithms to IT security - I know the tools of the future and use them creatively to solve technical challenges.",
 		"provideDescription": "Please provide a description",
-		"myCollections": "My collections",
-		"useCollectionsForApplication": "Use collections for applications",
+		"myCollections": "My Collections",
+		"useCollectionsForApplications": "Use collections for applications",
 		"collectionInfoText": "Organize your badges into collections and download the respective PDF or create a direct-link for sharing.",
 		"addLink": "",
 		"createCollectionNow": "Create collection now",
@@ -914,7 +915,7 @@
 		"badgeTabs": {
 			"all": "All",
 			"inprogress": "In progress",
-			"finished": "finished"
+			"finished": "Finished"
 		},
 		"chooseBadges": "Choose included badges",
 		"badgeSequenceStep": "Badge order",
@@ -941,7 +942,9 @@
 		"lastBadgeInfo": "Learners automatically receive the <strong class='tw-text-purple'>Micro Degree</strong> badge by e-mail, as soon as they have earned all the badges it contains.",
 		"finishedOn": "finished on",
 		"deleteMd": "delete micro degree",
-		"mdUsers": "Micro Degree users"
+		"mdUsers": "Micro Degree users",
+		"searchMds": "search micro degrees"
+
 	},
 	"LearningPathEditor": {
 		"shortDescription": "Summarized description of your Micro Degree. This short description will be saved in the Micro Degree."

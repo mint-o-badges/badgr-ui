@@ -22,7 +22,12 @@ import { provideIcons } from '@ng-icons/core';
 				</div>
 			</div>
 			<p *ngIf="recipient; else showText" hlmP class="tw-text-purple">
-				Der Badge wurde erfolgreich an <span class="tw-font-bold">{{ recipient }}</span> vergeben.
+				<span *ngIf="translate.currentLang == 'de'; else showEnglishText">
+					Der Badge wurde erfolgreich an <span class="tw-font-bold">{{ recipient }}</span> vergeben.
+				</span>
+				<ng-template #showEnglishText>
+					<span> The badge has been awarded to <span class="tw-font-bold">{{ recipient }}</span> successfully. </span>
+				</ng-template>	
 			</p>
 			<ng-template #showText>
 				<p hlmP class="tw-text-purple" [innerHTML]="text"></p>

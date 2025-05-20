@@ -939,7 +939,8 @@
 		"lastBadgeInfo": "Den Abschluss-Badge <strong class='tw-text-purple'>Micro Degree</strong> erhalten Lernende automatisiert per E-Mail, sobald sie alle darin enthaltenen Badges erworben haben.",
 		"finishedOn": "Abgeschlossen am",
 		"deleteMd": "Micro Degree löschen",
-		"mdUsers": "Micro Degree-Nutzende"
+		"mdUsers": "Micro Degree-Nutzende",
+		"searchMds": "Micro Degrees durchsuchen"
 
 	},
 	"LearningPathEditor": {
