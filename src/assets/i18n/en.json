@@ -104,7 +104,10 @@
 		"toMyProfile": "To my profile",
 		"imported": "imported",
 		"new": "new",
-		"expired": "expired"
+		"expired": "expired",
+		"emailAddress":"E-mail address",
+		"tos": "Terms of Service"
+
 	},
 	"NavItems": {
 		"register": "Register",
@@ -261,6 +264,7 @@
 		"sendEmail": "Notify recipient by email",
 		"giveBadge": "Award badge",
 		"giveBadges": "Award badges",
+		"badgeAwardInProgress": "Award badge",
 		"giveQr": "Create QR code award",
 		"nameWarning": "Note: The name will be saved as plain text in the badge.",
 		"multipleBadgeAwardHeadline": "Award badge to multiple learners simultaneously",
@@ -332,7 +336,8 @@
 		"allInstitutions": "all institutions",
 		"revokeBadgeWarning": "Are you sure you want to revoke \"{{ badge }}\" from {{ recipient }}?",
 		"revokeSuccess": "Revoked Badge from {{ recipient}}",
-		"revokeError": "Revoking Badge from {{ recipient }} failed"
+		"revokeError": "Revoking Badge from {{ recipient }} failed",
+		"searchIssuer": "search Institution"
 	},
 	"Badge": {
 		"groupBy": "Group by",
@@ -378,13 +383,15 @@
 		"rows": "rows",
 		"request": "Request",
 		"requests": "Requests",
+		"openRequestsOne": "open request",
+		"openRequests": "open requests",
 		"categories": {
 			"competency": "Competency Badge",
 			"participation": "Participation Badge",
 			"learningpath": "Micro Degree"
 		},
 		"copyBadgeHeadline": "Select copy status",
-		"copyBadgeDescription1": "Within your own institution, badges can always be copied.",
+		"copyBadgeDescription1": "Within your own institution, badges can always be copied. ",
 		"copyBadgeDescription2": "You can update the copy status for <strong>other</strong> institutions at any time later via the menu on the badge detail page.",
 		"copyLabelOthers": "The badge may be copied by <strong>other</strong> institutions.",
 		"copy": "Copy badge for own institution",
@@ -395,7 +402,7 @@
 		"copyThisIssuer": "Copy (this institution)",
 		"editCopyStatus": "Edit copy status",
 		"award": "Award Badge",
-		"awardQRCode": "Award Badge using QR-Code",
+		"awardQRCode": "Award Badge using QR Code",
 		"partOfLearningPath": "This Badge is part of the following Micro Degrees:",
 		"awardCriteria": "Award Criteria",
 		"criteriaDesc": "What requirements should your learners meet to receive the badge?",
@@ -408,12 +415,17 @@
 		"projectCompleted": "Project Completed",
 		"addOwnCriteria": "Add Own Criterion",
 		"enterOwnCriteria": "Enter Own Criterion",
-		"enterOwnCriteriaDesc": "You can enter explanations here (max. 300 characters)"
+		"enterOwnCriteriaDesc": "You can enter explanations here (max. 300 characters)",
+		"participationBadgeInfo": "serves as confirmation of participation in an event - it contains <u>no</u> competencies.",
+		"competencyBadgeInfo": "can be filled (with the help of our AI assistant) with the skills that your learners acquire.",
+		"learningPathBadgeInfo": "combines several badges into a larger learning unit. When learners have earned all the badges on this “learning path”, they automatically receive the Micro Degree.",
+		"lastEdited": "Last edited"
+
 	},
 	"CreateBadge": {
 		"chooseBadgeCategory": "Choose category",
 		"chooseABadgeCategory": "Choose a badge category",
-		"chooseCategory": "Choose from two badge categories:",
+		"chooseCategory": "Choose badge category",
 		"competencyInfo": "can be filled with skills that your learners acquire",
 		"withAssistant": "with the help of our AI badge assistant",
 		"participationInfo": "serve as confirmation of participation in an event",
@@ -504,7 +516,11 @@
 		},
 		"competencyOwn": "Own competency",
 		"competencyOwnDescription": "If the ESCO search does not provide a suitable skill, you can manually add a self-defined skill here:",
-		"stepFinish": "Finish"
+		"stepFinish": "Finish",
+		"weHelpCreateBadge": "We'll help you create your badge in just a few steps.",
+		"letsGo": "Let's go!",
+		"closing": "Closing"
+
 	},
 	"Signup": {
 		"youHaveAccount": "Already have an account?",
@@ -845,14 +861,15 @@
 		"expirationEnd": "End date",
 		"buttonCreate": "Create QR Code",
 		"noQrCodes": "You have not created any QR Codes yet",
-		"openRequestsOne": "1 open Badge request",
-		"openRequests": "{{ count }} open Badge requests",
+		"openRequestsOne": "1 open badge request",
+		"openRequests": "{{ count }} open badge requests",
 		"showQrCode": "Show QR code",
 		"creator": "Creator",
 		"validity": "QR code validity",
 		"download": "Download QR code",
 		"toBadgeDetail": "To Badge detail page",
-		"downloadPoster": "Download QR-Code-Poster"
+		"downloadPoster": "Download QR-Code-Poster",
+		"badgeDetailPage": "badge detail page"
 	},
 	"LearningPath": {
 		"learningpaths": "Micro Degrees",
@@ -874,7 +891,7 @@
 		"continue": "Continue learning",
 		"finished": "Finished",
 		"enterDetails": "Enter Micro Degree details",
-		"includedBadges": "Contained Badges",
+		"includedBadges": "Contained badges",
 		"badgeTabs": {
 			"all": "All",
 			"inprogress": "In progress",
@@ -899,7 +916,8 @@
 		"description": "Short description for learners",
 		"selectedBadges": "You selected {{ count }} Badges for the Micro Degree",
 		"selectedBadgesOne": "You selected 1 Badge for the Micro Degree",
-		"deleteWarning": "Do you really want to delete this Micro Degree?"
+		"deleteWarning": "Do you really want to delete this Micro Degree?",
+		"mdImage": "Micro degree image"
 	},
 	"LearningPathEditor": {
 		"shortDescription": "Summarized description of your Micro Degree. This short description will be saved in the Micro Degree."

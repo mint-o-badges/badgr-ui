@@ -92,7 +92,7 @@ import { provideIcons } from '@ng-icons/core';
 							width="full_width"
 							class="tw-w-full"
 							(click)="actionElement.emit(recipient)"
-							[text]="actionElementText | translate"
+							[text]="actionElementText | translate | titlecase"
 						></oeb-button>
 
 						<oeb-button

@@ -104,7 +104,9 @@
 		"toMyProfile": "Zu meinem Profil",
 		"imported": "importiert",
 		"new": "neu",
-		"expired": "abgelaufen"
+		"expired": "abgelaufen",
+		"emailAddress":"E-Mail-Adresse",
+		"tos": "Nutzungsbedingungen"
 	},
 	"NavItems": {
 		"register": "Registrieren",
@@ -261,6 +263,7 @@
 		"sendEmail": "Empfänger:in mit E-Mail benachrichtigen",
 		"giveBadge": "Badge vergeben",
 		"giveBadges": "Badges vergeben",
+		"badgeAwardInProgress": "Vergebe Badge",
 		"giveQr": "QR-Code-Vergabe erstellen",
 		"nameWarning": "Beachte: Der Name wird als Klartext im Badge gespeichert.",
 		"multipleBadgeAwardHeadline": "Badge an mehrere Lernende gleichzeitig vergeben",
@@ -332,7 +335,8 @@
 		"allInstitutions": "alle Institutionen",
 		"revokeBadgeWarning": "Bist du sicher, dass du \"{{ badge }}\" von {{ recipient }} zurücknehmen möchtest?",
 		"revokeSuccess": "Badge von {{ recipient}} zurücknehmen",
-		"revokeError": "Widerrufen des Badges von {{ recipient }} fehlgeschlagen"
+		"revokeError": "Widerrufen des Badges von {{ recipient }} fehlgeschlagen",
+		"searchIssuer": "Institution suchen"
 	},
 	"Badge": {
 		"groupBy": "Gruppieren nach",
@@ -378,13 +382,15 @@
 		"rows": "Zeilen",
 		"request": "Anfrage",
 		"requests": "Anfragen",
+		"openRequestsOne": "offene Anfrage",
+		"openRequests": "offene Anfragen",
 		"categories": {
 			"competency": "Kompetenz-Badge",
 			"participation": "Teilnahme-Badge",
 			"learningpath": "Micro Degree"
 		},
 		"copyBadgeHeadline": "Kopier-Status",
-		"copyBadgeDescription1": "Innerhalb der eigenen Institution können Badges immer kopiert werden.",
+		"copyBadgeDescription1": "Innerhalb der eigenen Institution können Badges immer kopiert werden. ",
 		"copyBadgeDescription2": "Den Kopier-Status für <strong>andere</strong> Institutionen kannst du später jederzeit über das Menü auf der Badge-Detail-Seite aktualisieren.",
 		"copyLabelOthers": "Der Badge darf von <strong>anderen</strong> Institutionen kopiert werden.",
 		"copy": "Badge für eigene Institution kopieren",
@@ -408,12 +414,16 @@
 		"projectCompleted": "Projekt-Abschluss",
 		"addOwnCriteria": "Eigenes Kriterium hinzufügen",
 		"enterOwnCriteria": "Eigenes Kriterium eingeben",
-		"enterOwnCriteriaDesc": "Hier kannst du Erläuterungen eintragen (max. 300 Zeichen)"
+		"enterOwnCriteriaDesc": "Hier kannst du Erläuterungen eintragen (max. 300 Zeichen)",
+		"participationBadgeInfo": "dient als Bestätigung der Teilnahme an einer Veranstaltung – er enthält <u>keine</u> Kompetenzen.",
+		"competencyBadgeInfo": "kann (mithilfe unseres KI-Assistenten) mit den Kompetenzen gefüllt werden, die deine Lernenden erwerben.",
+		"learningPathBadgeInfo": "verbindet mehrere Badges zu einer größeren Lerneinheit. Wenn Lernende alle Badges dieses „Lernpfades” erworben haben, erhalten sie automatisch den Abschluss Micro Degree.",
+		"lastEdited": "Zuletzt editiert"
 	},
 	"CreateBadge": {
 		"chooseBadgeCategory": "Kategorie wählen",
 		"chooseABadgeCategory": "Wähle eine Badge-Kategorie",
-		"chooseCategory": "Wähle aus zwei Badge-Kategorien:",
+		"chooseCategory": "Badge-Kategorien wählen",
 		"competencyInfo": "mit Kompetenzen gefüllt werden, die deine Lernenden erwerben",
 		"withAssistant": "mithilfe unseres KI-Badge-Assistenten",
 		"participationInfo": "dienen als Bestätigung der Teilnahme an einer Veranstaltung",
@@ -504,7 +514,11 @@
 		},
 		"competencyOwn": "Eigene Kompetenz",
 		"competencyOwnDescription": "Falls die ESCO-Suche dir keine passende Kompetenz liefert, kannst du hier händisch eine selbst definierte Kompetenz ergänzen:",
-		"stepFinish": "Abschluss"
+		"stepFinish": "Abschluss",
+		"weHelpCreateBadge": "Wir helfen dir, in wenigen Schritten deinen Badge zu erstellen.",
+		"letsGo": "Los geht's!",
+		"closing": "Abschluss"
+
 	},
 	"Signup": {
 		"youHaveAccount": "Du hast bereits einen Account?",
@@ -853,7 +867,8 @@
 		"validity": "Gültigkeit des QR-Codes",
 		"download": "Download QR-Code",
 		"toBadgeDetail": "Zur Badge Detail-Seite",
-		"downloadPoster": "Download QR-Code-Plakat"
+		"downloadPoster": "Download QR-Code-Plakat",
+		"badgeDetailPage": "Badge Detail Seite"
 	},
 	"LearningPath": {
 		"learningpaths": "Micro Degrees",
@@ -900,7 +915,9 @@
 		"description": "Kurz-Beschreibung für Lernende",
 		"selectedBadges": "Du hast {{ count }} Badges für den Micro Degree ausgewählt",
 		"selectedBadgesOne": "Du hast 1 Badge für den Micro Degree ausgewählt",
-		"deleteWarning": "Möchtest du diesen Micro Degree wirklich löschen?"
+		"deleteWarning": "Möchtest du diesen Micro Degree wirklich löschen?",
+		"mdImage": "Micro-Degree Bild"
+
 	},
 	"LearningPathEditor": {
 		"shortDescription": "Zusammenfassende Beschreibung deines Micro Degrees. Diese Kurzbeschreibung wird im Micro Degree gespeichert."
