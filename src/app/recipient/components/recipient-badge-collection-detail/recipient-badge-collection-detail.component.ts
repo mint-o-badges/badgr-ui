@@ -91,10 +91,12 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 		])
 			.then(([list]) => {
 				this.collection = list.entityForSlug(this.collectionSlug);
-				this.crumbs = [
-					{ title: 'Collections', routerLink: ['/recipient/badge-collections'] },
-					{ title: this.collection.name, routerLink: ['/collection/' + this.collection.slug] },
-				];
+				this.translate.get('BadgeCollection.myCollections').subscribe(str => {
+					this.crumbs = [
+						{ title: str, routerLink: ['/recipient/badges'], queryParams: { tab: str } },
+						{ title: this.collection.name, routerLink: ['/collection/' + this.collection.slug] },
+					];
+				});
 				return this.collection;
 			})
 			.then((collection) => collection.badgesPromise)
