@@ -15,7 +15,7 @@ export class CmsPostListComponent implements OnInit {
 
 	constructor(
 		protected cmsApiService: CmsApiService,
-		protected languageService: LanguageService
+		public languageService: LanguageService
 	) {
 
 	}

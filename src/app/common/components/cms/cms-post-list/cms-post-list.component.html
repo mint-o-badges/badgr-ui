@@ -1,10 +1,16 @@
 <div class="page-padding oeb">
 
-	<div class="tw-pt-[6rem] tw-pl-[104px] tw-pb-[42px] main-paragraph">
-		<h1>
-			Neuigkeiten<br>
-			<span class="h1-black heading-sec">findest du hier...</span>
-		</h1>
+	<div class="tw-pt-[6rem] tw-pb-[42px] main-paragraph">
+		@if (languageService.getSelectedLngValue() == 'de') {
+			<h1 class="tw-pl-[104px]">
+				Neuigkeiten<br>
+				<span class="h1-black heading-sec">findest du hier...</span>
+			</h1>
+		} @else {
+			<h1>
+				<span class="h1-black">OEB News</span>
+			</h1>
+		}
 	</div>
 
 	@if (posts && posts[0]) {

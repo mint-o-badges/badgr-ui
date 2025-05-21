@@ -27,11 +27,6 @@ export class CmsContentComponent {
 		public configService: AppConfigService,
 		private cmsManager: CmsManager,
 	) {
-		// styles for <link> elements
-		// this.styleUrls = [
-		// 	`${this.configService.apiConfig.baseUrl}/cms/style`
-		// ];
-
 		// styles as <style> element
 		cmsManager.styles$.subscribe((s) => {
 			this.styles = s;

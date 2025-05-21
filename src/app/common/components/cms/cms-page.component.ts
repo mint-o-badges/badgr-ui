@@ -34,10 +34,7 @@ export class CmsPageComponent implements OnInit, OnChanges {
 			slug = this.route.snapshot.params['slug'];
 		}
 		if (slug) {
-			console.log("1: " + slug);
-			console.log(this.route)
 			this.route.data.subscribe(async (data) => {
-				console.log([2, data]);
 				this.type = 'page';
 				if (data.cmsContentType) {
 					this.type = data.cmsContentType;

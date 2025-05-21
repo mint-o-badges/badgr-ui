@@ -33,7 +33,9 @@ export class ShadowDomComponent {
 	}
 
 	ngOnChanges() {
+
 		if (this.assetWrap) {
+			const shadowRoot = this.assetWrap.nativeElement.getRootNode();
 			if (this.styles) {
 				// create style tag via js api, because angular won't allow it in template
 				if (!this.styleEl) {
@@ -54,12 +56,14 @@ export class ShadowDomComponent {
 		}
 		if (this.assetWrap) {
 			if (this.script) {
-				// create style tag via js api, because angular won't allow it in template
+				// create script tag via js api, because angular won't allow it in template
 				if (!this.scriptEl) {
-					this.scriptEl = document.createElement('script');
-					this.scriptEl.src = this.script;
-					console.log([2, this.assetWrap]);
-					this.assetWrap.nativeElement.appendChild(this.scriptEl);
+					// delay inserting scripts to make sure HTML DOM was inserted
+					setTimeout(() => {
+						this.scriptEl = document.createElement('script');
+						this.scriptEl.src = this.script;
+						this.assetWrap.nativeElement.appendChild(this.scriptEl);
+					}, 100)
 				}
 			}
 		}
