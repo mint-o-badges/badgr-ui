@@ -8,7 +8,7 @@ import * as deepmerge from 'deepmerge';
 import { animationFramePromise } from './util/promise-util';
 import { initializeTheme } from '../../theming/theme-setup';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AppConfigService {
 	get apiConfig(): ApiConfig {
 		return this.config.api;

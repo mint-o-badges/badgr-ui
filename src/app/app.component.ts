@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, OnInit, Renderer2, ViewChild, Inject, signal, computed } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
-import { Router } from '@angular/router';
+import { DOCUMENT, NgIf, NgStyle, NgFor } from '@angular/common';
+import { Router, RouterLinkActive, RouterLink, RouterOutlet } from '@angular/router';
 
 import { MessageService } from './common/services/message.service';
 import { SessionService } from './common/services/session.service';
@@ -32,22 +32,55 @@ import { CopyBadgeDialog } from './common/dialogs/copy-badge-dialog/copy-badge-d
 import { ForkBadgeDialog } from './common/dialogs/fork-badge-dialog/fork-badge-dialog.component';
 import { SelectIssuerDialog } from './common/dialogs/select-issuer-dialog/select-issuer-dialog.component';
 import { LanguageService } from './common/services/language.service';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { MenuItem } from './common/components/badge-detail/badge-detail.component.types';
+import { SourceListenerDirective } from './mozz-transition/directives/source-listener/source-listener.directive';
+import { OebDropdownComponent } from './components/oeb-dropdown.component';
+import { OebButtonComponent } from './components/oeb-button.component';
+import { NgIcon } from '@ng-icons/core';
+import { HlmIconDirective } from './components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
+import { BgPopupMenuTriggerDirective, BgPopupMenu } from './common/components/bg-popup-menu.component';
+import { SvgIconComponent } from './common/components/svg-icon.component';
+import { MenuItemDirective } from './common/directives/bg-menuitem.directive';
 
 // Shim in support for the :scope attribute
 // See https://github.com/lazd/scopedQuerySelectorShim and
 // https://stackoverflow.com/questions/3680876/using-queryselectorall-to-retrieve-direct-children/21126966#21126966
 
 @Component({
-	selector: 'app-root',
-	host: {
-		'(document:click)': 'onDocumentClick($event)',
-		'[class.l-stickyfooter-chromeless]': '! showAppChrome',
-	},
-	templateUrl: './app.component.html',
-	styleUrls: ['./app.component.scss'],
-	standalone: false,
+    selector: 'app-root',
+    host: {
+        '(document:click)': 'onDocumentClick($event)',
+        '[class.l-stickyfooter-chromeless]': '! showAppChrome',
+    },
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss'],
+    imports: [
+        SourceListenerDirective,
+        NgIf,
+        OebDropdownComponent,
+        RouterLinkActive,
+        RouterLink,
+        OebButtonComponent,
+        NgStyle,
+        NgIcon,
+        HlmIconDirective,
+        BgPopupMenuTriggerDirective,
+        SvgIconComponent,
+        BgPopupMenu,
+        NgFor,
+        MenuItemDirective,
+        RouterOutlet,
+        ConfirmDialog,
+        ShareSocialDialog,
+        ExportPdfDialog,
+        NounprojectDialog,
+        CopyBadgeDialog,
+        ForkBadgeDialog,
+        MarkdownHintsDialog,
+        SelectIssuerDialog,
+        TranslatePipe,
+    ],
 })
 export class AppComponent implements OnInit, AfterViewInit {
 	/**

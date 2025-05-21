@@ -9,7 +9,7 @@ import { CopyBadgeDialog } from '../dialogs/copy-badge-dialog/copy-badge-dialog.
 import { ForkBadgeDialog } from '../dialogs/fork-badge-dialog/fork-badge-dialog.component';
 import { SelectIssuerDialog } from '../dialogs/select-issuer-dialog/select-issuer-dialog.component';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CommonDialogsService {
 	confirmDialog: ConfirmDialog;
 	shareSocialDialog: ShareSocialDialog;

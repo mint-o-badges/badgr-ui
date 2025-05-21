@@ -15,7 +15,7 @@ import { CommonDialogsService } from './common-dialogs.service';
 
 const OAUTH_STATE_STORAGE_NAME = 'oauthState';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class OAuthManager {
 	readonly authorizedApps = new StandaloneEntitySet<OAuth2AppAuthorization, ApiOAuth2AppAuthorization>(
 		() => new OAuth2AppAuthorization(this.commonEntityManager),

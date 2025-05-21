@@ -1,14 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, SecurityContext } from '@angular/core';
 import { AppConfigService } from '../app-config.service';
-import { BaseHttpApiService } from './base-http-api.service';
 import { MessageService } from './message.service';
 import { SessionService } from './session.service';
-import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { map } from 'rxjs';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class PdfService {
 	baseUrl: string;
 

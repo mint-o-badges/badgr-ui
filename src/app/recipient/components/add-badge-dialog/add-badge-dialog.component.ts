@@ -10,7 +10,6 @@ import { TypedFormControl, typedFormGroup } from '../../../common/util/typed-for
 import { TranslateService } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src';
 import { BrnDialogRef } from '@spartan-ng/brain/dialog';
 import { DialogComponent } from '../../../components/dialog.component';
 import { OebTabsComponent, Tab } from '../../../components/oeb-backpack-tabs.component';
@@ -22,10 +21,11 @@ import {
 } from '../upload-badge-tabs/upload-badge-tabs.component';
 import { NgIcon } from '@ng-icons/core';
 import { provideIcons } from '@ng-icons/core';
-import { lucideCircleX, lucideX } from '@ng-icons/lucide';
-import { HlmH2Directive } from '../../../components/spartan/ui-typography-helm/src';
+import { lucideCircleX } from '@ng-icons/lucide';
 import { Router } from '@angular/router';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
+import { HlmH2Directive } from 'src/app/components/spartan/ui-typography-helm/src/lib/hlm-h2.directive';
+import { HlmDialogService } from 'src/app/components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
 
 @Component({
 	selector: 'add-badge-dialog',

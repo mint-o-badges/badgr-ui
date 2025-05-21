@@ -12,7 +12,7 @@ import { ExternalToolsApiService } from './externaltools-api.service';
 import { Observable } from 'rxjs';
 import { first, map } from 'rxjs/operators';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ExternalToolsManager {
 	externaltoolsList = new StandaloneEntitySet<ExternalTool, ApiExternalTool>(
 		(apiModel) => new ExternalTool(this.commonEntityManager),

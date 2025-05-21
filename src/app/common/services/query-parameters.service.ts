@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class QueryParametersService {
 	constructor(private route: ActivatedRoute) {}
 

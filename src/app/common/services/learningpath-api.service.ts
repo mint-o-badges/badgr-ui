@@ -11,7 +11,7 @@ import {
 import { MessageService } from '../../common/services/message.service';
 import { HttpClient } from '@angular/common/http';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class LearningPathApiService extends BaseHttpApiService {
 	constructor(
 		protected loginService: SessionService,

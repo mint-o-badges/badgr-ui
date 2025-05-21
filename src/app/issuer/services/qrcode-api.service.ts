@@ -1,14 +1,14 @@
-import { Injectable, SecurityContext } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { BaseHttpApiService } from '../../common/services/base-http-api.service';
 import { SessionService } from '../../common/services/session.service';
 import { AppConfigService } from '../../common/app-config.service';
 import { ApiQRCode } from '../models/qrcode-api.model';
 import { MessageService } from '../../common/services/message.service';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, map } from 'rxjs';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { DomSanitizer } from '@angular/platform-browser';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class QrCodeApiService extends BaseHttpApiService {
 	constructor(
 		protected loginService: SessionService,

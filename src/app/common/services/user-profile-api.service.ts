@@ -8,7 +8,7 @@ import { ApiUserProfile, ApiUserProfileEmail, ApiUserProfileSocialAccount } from
 import { HttpClient } from '@angular/common/http';
 import { ApiStaffRequest } from '../../issuer/staffrequest-api.model';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class UserProfileApiService extends BaseHttpApiService {
 	constructor(
 		protected sessionService: SessionService,

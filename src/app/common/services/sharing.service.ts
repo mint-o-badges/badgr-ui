@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { RecipientBadgeApiService } from '../../recipient/services/recipient-badges-api.service';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class SharingService {
 	constructor(private recipientBadgeApiService: RecipientBadgeApiService) {}
 

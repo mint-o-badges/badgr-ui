@@ -4,7 +4,7 @@ import { QueryParametersService } from './query-parameters.service';
 /**
  * Service to detect whether Badgr is being viewed in an embedded context, such as an iframe.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class EmbedService {
 	readonly embedVersion: number | null;
 	readonly embedSize: {

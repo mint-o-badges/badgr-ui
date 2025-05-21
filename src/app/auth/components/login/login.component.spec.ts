@@ -10,7 +10,7 @@ import { BadgrCommonModule, COMMON_IMPORTS } from '../../../common/badgr-common.
 import { CommonEntityManagerModule } from '../../../entity-manager/entity-manager.module';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateTestingModule } from 'ngx-translate-testing';
-import { RecipientModule } from '../../../recipient/recipient.module';
+import { RecipientModule } from '../../../recipient/recipient.routes';
 
 describe('LoginComponent', () => {
 	let fixture;

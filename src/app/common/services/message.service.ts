@@ -16,7 +16,7 @@ type MessageStatusType = 'success' | 'error' | 'info' | 'load-error' | 'fatal-er
  * A service for displaying application-level messages to the user, such notable API results (failure to load or
  * new object creation, etc...)
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class MessageService {
 	message: FlashMessage;
 	subject = new UpdatableSubject<FlashMessage>();

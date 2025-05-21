@@ -23,7 +23,7 @@ export class BadgrApiError extends Error {
 	}
 }
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export abstract class BaseHttpApiService {
 	baseUrl: string;
 
