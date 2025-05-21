@@ -347,7 +347,7 @@ export class BadgeSelectionDialog extends BaseDialog {
 		this.badgesLoaded = combineLatest(
 			this.badgeManager.badgesByIssuerUrl$,
 			this.badgeManager.allBadges$,
-			this.issuerManager.allIssuers$,
+			this.issuerManager.myIssuers$,
 		)
 			.pipe(first())
 			.toPromise()

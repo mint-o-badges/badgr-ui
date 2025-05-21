@@ -473,6 +473,8 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		super(router, route, sessionService);
 
 		this.baseUrl = this.configService.apiConfig.baseUrl;
+
+		this.keywordCompetenciesLanguage = translate.currentLang;
 	}
 
 	initFormFromExisting(badgeClass: BadgeClass) {
@@ -567,7 +569,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 		setTimeout(() => {
 			if(badgeClass.imageFrame){
-				// regenerating the upload image for the issuer image in case it changed via copying 
+				// regenerating the upload image for the issuer image in case it changed via copying
 				// or if it was not part of the badge image yet
 				this.generateUploadImage(this.currentImage, this.badgeClassForm.value, true, true);
 			}

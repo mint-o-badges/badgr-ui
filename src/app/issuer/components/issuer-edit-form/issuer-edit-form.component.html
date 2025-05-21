@@ -2,7 +2,7 @@
 	<bg-formfield-image
 		#imageField
 		label="{{ 'Issuer.imageLogo' | translate }}"
-		sublabelRight="(Format 1:1 / quadratisch)"
+		sublabelRight="{{'Issuer.imageFormat' | translate }}"
 		imageLoaderName="issuer"
 		[text_body]="selectFromMyFiles"
 		dropZoneInfo1="Drag & Drop"
@@ -21,17 +21,17 @@
 	>
 
 	<oeb-input
-		label="{{ 'General.name' | translate }} der Institution"
+		label="{{ 'Issuer.nameOfIssuer' | translate }}"
 		[control]="issuerForm.rawControlMap.issuer_name"
 		[fieldType]="'text'"
 		[autofocus]="true"
 		[errorMessage]="{ required: issuerRequiredError }"
-		sublabelRight="(max. 90 Zeichen)"
+		sublabelRight="(max. 90 {{'General.characters' | translate}})"
 		#issuer_name_field
 	></oeb-input>
 
 	<oeb-input
-		[label]="'Webseiten-URL'"
+		label="{{'Issuer.websiteUrl' | translate}}"
 		[control]="issuerForm.rawControlMap.issuer_url"
 		[urlField]="true"
 		[fieldType]="'url'"
@@ -53,7 +53,7 @@
 		[control]="issuerForm.rawControlMap.issuer_description"
 		[fieldType]="'textarea'"
 		[errorMessage]="{ required: enterDescription }"
-		sublabelRight="(mind. 200 / max. 300 Zeichen)"
+		sublabelRight="(min. 200 / max. 300 {{'General.characters' | translate}})"
 	></oeb-input>
 
 	<oeb-select
@@ -62,15 +62,15 @@
 		placeholder="{{ 'Issuer.enterCategory' | translate }}"
 		[options]="[
 			{
-				label: 'Schule (Grundschulen, weiterführende Schulen, Berufsschulen, Institutionen formaler schulischer Bildung)',
+				label: 'Issuer.schoolLabel' | translate,
 				value: 'schule'
 			},
 			{
-				label: 'Hochschule (Universitäten. Fachhochschulen, ...)',
+				label: 'Issuer.universityLabel' | translate ,
 				value: 'hochschule'
 			},
 			{
-				label: 'Andere (Bibliotheken, Museen, FabLabs, Unternehmen, Vereine, ...)',
+				label: 'Issuer.othersLabel' | translate,
 				value: 'andere'
 			}
 		]"
@@ -114,15 +114,7 @@
 			alignStart="true"
 			id="verify-intent"
 			name="verify-intent"
-			[text]="
-				'<ul>Hiermit bestätige ich, dass ich... <br>
-                <br>
-                1. berechtigt bin, für die genannte Institution einen Account anzulegen sowie Badges zu erstellen und zu vergeben.<br>
-                <br>
-                2. die Verantwortung für die Qualität der Kursangebote, der erstellten und vergebenen Badges sowie für die zugeordneten Kompetenzen trage. <br>
-                   <br>
-                3. die Plattform nur für die vorgesehenen Zwecke nutze und jeglichen Missbrauch ablehne.</ul>'
-			"
+			[text]="'Issuer.herebyIConfirm' | translate"
 			[control]="issuerForm.rawControlMap.verify_intended_use"
 		>
 		</oeb-checkbox>

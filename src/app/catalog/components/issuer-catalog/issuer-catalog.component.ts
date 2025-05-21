@@ -46,19 +46,19 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 	categoryControl = new FormControl('');
 	categoryOptions = [
 		{
-			label: 'Schule',
+			label: 'Issuer.categories.schule',
 			value: 'schule',
 		},
 		{
-			label: 'Hochschule ',
+			label: 'Issuer.categories.hochschule',
 			value: 'hochschule',
 		},
 		{
-			label: 'Andere',
+			label: 'Issuer.categories.andere',
 			value: 'andere',
 		},
 		{
-			label: 'Alle Kategorien',
+			label: 'Issuer.categories.allCategories',
 			value: '',
 		},
 	];

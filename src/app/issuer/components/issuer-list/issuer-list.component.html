@@ -136,7 +136,7 @@
 								class="tw-text-oebblack tw-pb-2 tw-font-semibold md:tw-text-[20px] md:tw-leading-[24.4px] tw-text-[14px] tw-leading-[19.6px]"
 							>
 								{{ 'Issuer.yourRole' | translate }}
-								{{ issuer.currentUserStaffMember?.roleInfo.label }}
+								{{ issuer.currentUserStaffMember?.roleInfo.label | translate }}
 							</p>
 						</div>
 					</div>
@@ -229,7 +229,7 @@
 						[ngClass]="selectedIssuer ? 'tw-pl-10' : ''"
 						[(ngModel)]="issuerSearchQuery"
 						[ngModelOptions]="{ standalone: true }"
-						placeholder="Institution suchen"
+						[placeholder]="'Issuer.searchIssuer' | translate"
 						(focus)="issuersShowResults = true"
 						(focusout)="issuerSearchInputFocusOut()"
 						(keydown.enter)="$event.preventDefault()"

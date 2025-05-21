@@ -3,7 +3,7 @@
 	<ng-container [formGroup]="learningPathForm.rawControl">
 		<oeb-stepper [linear]="existingLearningPath ? false : true" [initialStep]="existingLearningPath ? 0 : 1">
 			<oeb-step
-				label="Kategorie wählen"
+			[label]="'CreateBadge.chooseBadgeCategory' | translate"
 				[optional]="false"
 				[route]="['/issuer/issuers/' + issuerSlug + '/badges' + '/select']"
 				errorMessage="Bitte Kategorie wählen"
@@ -13,10 +13,10 @@
 			</oeb-step>
 
 			<cdk-step
-				label="Details eingeben"
+				[label]="'CreateBadge.enterDetailsStep' | translate"
 				[stepControl]="stepOne.lpDetailsForm"
 				[optional]="false"
-				errorMessage="Bitte vollständig ausfüllen"
+				[errorMessage]="'General.validationCompleteForm' | translate"
 			>
 				<learningpath-details
 					#stepOne
@@ -25,7 +25,7 @@
 				></learningpath-details>
 			</cdk-step>
 			<cdk-step
-				label="Enthaltene Badges"
+				[label]="'LearningPath.includedBadges' | translate"
 				[stepControl]="stepTwo.lpBadgesForm"
 				[optional]="false"
 				errorMessage="Wähle mindestens 3 Badges aus"
@@ -36,7 +36,7 @@
 					(selectedBadgesChanged)="updateSelectedBadges($event)"
 				></learningpath-badges>
 			</cdk-step>
-			<cdk-step label="Badge-Reihenfolge">
+			<cdk-step [label]="'LearningPath.badgeSequenceStep' | translate">
 				<ng-container *ngIf="step3Loaded">
 					<learningpath-badge-order
 						(badgeListChanged)="updateBadgeList($event)"
@@ -48,7 +48,7 @@
 					></learningpath-badge-order>
 				</ng-container>
 			</cdk-step>
-			<cdk-step label="Abschluss">
+			<cdk-step [label]="'CreateBadge.stepFinish' | translate">
 				<learningpath-tags
 					[learningPath]="existingLearningPath"
 					(tagsChanged)="updateTags($event)"
