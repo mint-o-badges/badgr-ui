@@ -4,7 +4,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { BadgrCommonModule, COMMON_IMPORTS } from '../common/badgr-common.module';
 
 import { RecipientBadgeCollectionDetailComponent } from './components/recipient-badge-collection-detail/recipient-badge-collection-detail.component';
-import { RecipientBadgeCollectionListComponent } from './components/recipient-badge-collection-list/recipient-badge-collection-list.component';
 import { RecipientEarnedBadgeDetailComponent } from './components/recipient-earned-badge-detail/recipient-earned-badge-detail.component';
 import { RecipientEarnedBadgeListComponent } from './components/recipient-earned-badge-list/recipient-earned-badge-list.component';
 import { AddBadgeDialogComponent } from './components/add-badge-dialog/add-badge-dialog.component';
@@ -47,10 +46,6 @@ const routes: Routes = [
 
 	/* Recipient Badge Collections */
 	{
-		path: 'badge-collections',
-		component: RecipientBadgeCollectionListComponent,
-	},
-	{
 		path: 'badge-collections/create',
 		component: RecipientBadgeCollectionCreateComponent,
 	},
@@ -76,7 +71,6 @@ const routes: Routes = [
 	],
 	declarations: [
 		RecipientEarnedBadgeListComponent,
-		RecipientBadgeCollectionListComponent,
 		RecipientBadgeCollectionCreateComponent,
 		RecipientBadgeCollectionDetailComponent,
 		RecipientBadgeCollectionEditFormComponent,
