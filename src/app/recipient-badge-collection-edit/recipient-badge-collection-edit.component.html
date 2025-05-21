@@ -3,10 +3,11 @@
 		<div class="tw-bg-lightpurple oeb-inset-padding">
 			<header class="md:tw-flex tw-justify-between tw-items-center oeb-section-sm !tw-pb-0">
 				<h1 hlmH1 class="tw-text-purple tw-font-black">
-					{{ 'BadgeCollection.createCollection' | translate }}
+					{{ 'BadgeCollection.editCollection' | translate }}
 				</h1>
 			</header>
-			<recipient-badge-collection-edit-form></recipient-badge-collection-edit-form>
+			<recipient-badge-collection-edit-form [badgeCollection]="collection">
+			</recipient-badge-collection-edit-form>
 		</div>
 	</div>
 </main>

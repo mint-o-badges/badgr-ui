@@ -105,7 +105,7 @@
 		"imported": "imported",
 		"new": "new",
 		"expired": "expired",
-		"emailAddress":"E-mail address",
+		"emailAddress": "E-mail address",
 		"tos": "Terms of Service",
 		"change": "change"
 	},
@@ -355,7 +355,6 @@
 		"rowsWereImported": "rows could be imported.",
 		"rowsAreDuplicates": "rows are duplicates and are ignored.",
 		"clickOnAwardBadges": "Click on \"award badges\" to award the badges to your learners now."
-
 	},
 	"Badge": {
 		"groupBy": "Group by",
@@ -439,7 +438,6 @@
 		"learningPathBadgeInfo": "combines several badges into a larger learning unit. When learners have earned all the badges on this “learning path”, they automatically receive the Micro Degree.",
 		"lastEdited": "Last edited",
 		"badgeSuccessfullyCreated": "The badge has been awarded to {{ recipient }} successfully."
-
 	},
 	"CreateBadge": {
 		"chooseBadgeCategory": "Choose category",
@@ -539,7 +537,6 @@
 		"weHelpCreateBadge": "We'll help you create your badge in just a few steps.",
 		"letsGo": "Let's go!",
 		"closing": "Closing"
-
 	},
 	"Signup": {
 		"youHaveAccount": "Already have an account?",
@@ -759,6 +756,7 @@
 		"noCollections": "You have no collections",
 		"collectionInfo": "With collections you can organize and share your received badges.",
 		"createCollection": "Create collection",
+		"editCollection": "Edit collection",
 		"share": "Share",
 		"orginzeBadges": "Organize your badges in collections.",
 		"collectionNamePlaceholder": "Tech & Code – My digital skills for the future",
@@ -779,7 +777,10 @@
 		"removeBadge": "Remove Badge from collection?",
 		"removeBadgeConfirm1": "Möchtest du den Badge ",
 		"removeBadgeConfirm2": " wirklich aus dieser Sammlung entfernen?",
-		"removeBadgeConfirmation": "Yes, remove"
+		"removeBadgeConfirmation": "Yes, remove",
+		"youHave": "You have selected",
+		"oneBadge": " badge for this collection.",
+		"multiBadges": " badges for this collection."
 	},
 	"Profile": {
 		"more": "More",
@@ -946,7 +947,6 @@
 		"deleteMd": "delete micro degree",
 		"mdUsers": "Micro Degree users",
 		"searchMds": "search micro degrees"
-
 	},
 	"LearningPathEditor": {
 		"shortDescription": "Summarized description of your Micro Degree. This short description will be saved in the Micro Degree."
