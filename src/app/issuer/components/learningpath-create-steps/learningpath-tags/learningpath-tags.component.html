@@ -18,7 +18,7 @@
 						maxlength="50"
 						[isLoading]="existingTagsLoading"
 						searchKeyword="name"
-						[placeholder]="'Einen Tag eingeben'"
+						placeholder="{{'CreateBadge.newTag' | translate}}"
 						(keypress)="handleTagInputKeyPress($event)"
 						[itemTemplate]="itemTemplate"
 						[notFoundTemplate]="notFoundTemplate"
@@ -77,16 +77,14 @@
 			<span>{{ lpName }}</span>
 
 			<h3 hlmH3 class="tw-text-oebblack tw-font-bold tw-uppercase tw-text-[18px] tw-leading-[21.6px]">
-				Kurz-Beschreibung
+				{{'LearningPath.shortDescription' | translate }}
 			</h3>
 			<!-- <span> {{lpDetailsForm.rawControlMap.description.value}}</span> -->
 			<span>{{ lpDescription }}</span>
 		</div>
 	</div>
 </div>
-<p class="tw-italic tw-text-[24px]/[1.2em] tw-mt-12">
-	Den Abschluss-Badge <strong class="tw-text-purple">Micro Degree</strong> erhalten Lernende automatisiert per E-Mail,
-	sobald sie alle darin enthaltenen Badges erworben haben.
+<p class="tw-italic tw-text-[24px]/[1.2em] tw-mt-12" [innerHTML]="'LearningPath.lasBadgeInfo' | translate ">
 </p>
 
 <div class="tw-mt-8">

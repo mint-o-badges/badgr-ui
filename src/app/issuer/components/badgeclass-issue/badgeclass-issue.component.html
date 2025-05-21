@@ -344,7 +344,7 @@
 						type="submit"
 						[disabled]="!!issueBadgeFinished"
 						[loading-promises]="[issueBadgeFinished]"
-						loading-message="Vergebe Badge"
+						[loading-message]="'Issuer.badgeAwardInProgress' | translate"
 						[text]="'Issuer.giveBadge' | translate"
 					>
 					</oeb-button>

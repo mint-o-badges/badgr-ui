@@ -229,7 +229,7 @@
 						[ngClass]="selectedIssuer ? 'tw-pl-10' : ''"
 						[(ngModel)]="issuerSearchQuery"
 						[ngModelOptions]="{ standalone: true }"
-						placeholder="Institution suchen"
+						[placeholder]="'Issuer.searchIssuer' | translate"
 						(focus)="issuersShowResults = true"
 						(focusout)="issuerSearchInputFocusOut()"
 						(keydown.enter)="$event.preventDefault()"

@@ -83,7 +83,7 @@ type MatchOrProgressType = { match?: string; progress?: number };
 							<div class="tw-absolute tw-w-full tw-text-left">
 								<span class="tw-ml-2 tw-text-sm tw-text-purple"
 									>Micro Degree
-									<span *ngIf="!completed">{{ progressValue }}%</span> {{ 'LearningPath.finished' | translate }}</span
+									<span *ngIf="!completed">{{ progressValue }}%</span> {{ 'LearningPath.finished' | translate | lowercase }}</span
 								>
 							</div>
 						</ng-template>
@@ -100,7 +100,7 @@ type MatchOrProgressType = { match?: string; progress?: number };
 					</div>
 					<div class="tw-flex tw-flex-row tw-gap-4 tw-text-[#6B7280] tw-text-sm tw-mt-6 tw-items-end">
 						<ng-icon hlm name="lucideClock" />
-						<span>{{ studyLoad | hourPipe }} {{ 'RecBadge.hours' | translate }}</span>
+						<span>{{ studyLoad | hourPipe }} {{ 'RecBadge.hours' | translate | lowercase }}</span>
 					</div>
 				</div>
 			</div>

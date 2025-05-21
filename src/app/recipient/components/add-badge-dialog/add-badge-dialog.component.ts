@@ -62,9 +62,9 @@ import { OebButtonComponent } from '../../../components/oeb-button.component';
 				<p [innerHTML]="text" class="tw-mt-2 tw-text-purple tw-italic tw-text-center"></p>
 			</div>
 			<div class="tw-flex tw-justify-center tw-items-center tw-mt-2 tw-gap-2" *ngIf="buttontext">
-				<oeb-button 
-					size="sm" 
-					(click)="closeDialog()" 
+				<oeb-button
+					size="sm"
+					(click)="closeDialog()"
 					[text]="'General.cancel' | translate"
 					variant="secondary">
 				</oeb-button>
@@ -123,14 +123,14 @@ import { OebButtonComponent } from '../../../components/oeb-button.component';
 				</div>
 
 				<div class="u-responsivepadding-xaxis u-responsivepadding-yaxis l-stack l-stack-right">
-					<button
-						class="button"
+					<oeb-button
 						type="submit"
-						[loading-promises]="[badgeUploadPromise]"
-						loading-message="Hinzufügen"
-					>
-						{{ 'RecBadge.addBadge' | translate }}
-					</button>
+						[loading-promises]="badgeUploadPromise"
+						[disabled-when-requesting]="true"
+						[loading-message]="'RecBadge.addingBadge' | translate"
+						width="full_width"
+						[text]="'RecBadge.addBadge' | translate"
+					/>
 				</div>
 			</form>
 		</ng-template>
@@ -205,7 +205,7 @@ export class AddBadgeDialogComponent implements AfterViewInit {
 	openDialog(): Promise<void> {
 		this.addRecipientBadgeForm.reset();
 		this.currentTab = this.translate.instant('RecBadge.image');
-	  
+
 		return new Promise<void>((resolve, reject) => {
 
 		  // wait for temlate refs to be available
@@ -217,7 +217,7 @@ export class AddBadgeDialogComponent implements AfterViewInit {
 				content: this.dialogContent,
 			  },
 			});
-						
+
 			if (this.dialogRef && this.dialogRef.closed$) {
 			  this.dialogRef.closed$.subscribe(
 				(result) => {
@@ -281,18 +281,18 @@ export class AddBadgeDialogComponent implements AfterViewInit {
 							});
 							break;
 
-						case 'DUPLICATE_BADGE': 
+						case 'DUPLICATE_BADGE':
 							this.dialogRef = this._hlmDialogService.open(DialogComponent, {
 								context: {
 									headerTemplate: this.failureHeader,
 									content: this.failureContent,
 									templateContext: {
 										message: this.translate.instant('RecBadge.uploadFailed'),
-										text: this.translate.instant('RecBadge.duplicateBadge') 
+										text: this.translate.instant('RecBadge.duplicateBadge')
 									},
 								},
 							});
-							break;	
+							break;
 
 						case 'INVALID_BADGE_VERSION':
 							this.dialogRef = this._hlmDialogService.open(DialogComponent, {

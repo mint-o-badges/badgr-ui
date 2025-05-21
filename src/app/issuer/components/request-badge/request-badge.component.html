@@ -29,13 +29,13 @@
 			<form [formGroup]="requestForm.rawControl" (ngSubmit)="onSubmit()" novalidate>
 				<div class="tw-flex tw-flex-col">
 					<oeb-input
-						label="Vorname"
+						[label]="'Signup.fName' | translate "
 						[placeholder]=""
 						fieldType="text"
 						[control]="requestForm.rawControlMap.firstname"
 					></oeb-input>
 					<oeb-input
-						label="Nachname"
+						[label]="'Signup.lName' | translate"
 						[placeholder]=""
 						fieldType="text"
 						[control]="requestForm.rawControlMap.lastname"

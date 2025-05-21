@@ -104,7 +104,10 @@
 		"toMyProfile": "To my profile",
 		"imported": "imported",
 		"new": "new",
-		"expired": "expired"
+		"expired": "expired",
+		"emailAddress":"E-mail address",
+		"tos": "Terms of Service",
+		"change": "change"
 	},
 	"NavItems": {
 		"register": "Register",
@@ -261,6 +264,7 @@
 		"sendEmail": "Notify recipient by email",
 		"giveBadge": "Award badge",
 		"giveBadges": "Award badges",
+		"badgeAwardInProgress": "Award badge",
 		"giveQr": "Create QR code award",
 		"nameWarning": "Note: The name will be saved as plain text in the badge.",
 		"multipleBadgeAwardHeadline": "Award badge to multiple learners simultaneously",
@@ -301,7 +305,7 @@
 		"learningPathList5": "Upload your JSON file:",
 		"learningPathRecipient": "Graduates",
 		"learningPathParticipants": "Participants",
-		"herebyIConfirm": "I hereby confirm that I: ",
+		"herebyIConfirm": "<ul>I hereby confirm that I... <br><br>1. am authorized to create an account for the named institution and to create and award badges. <br><br>2. am responsible for the quality of the courses offered, the badges created and awarded and for the competences assigned.<br><br> 3. use the platform only for the intended purposes and reject any misuse.</ul>",
 		"entitled": "...am authorized to create an account for the aforementioned institution and to create and award badges.",
 		"responsible": "...bear the responsibility for the quality of the course offerings, the created and awarded badges, as well as for the assigned skills.",
 		"noMisuse": "...will only use the platform for its intended purposes and reject any misuse.",
@@ -332,7 +336,26 @@
 		"allInstitutions": "all institutions",
 		"revokeBadgeWarning": "Are you sure you want to revoke \"{{ badge }}\" from {{ recipient }}?",
 		"revokeSuccess": "Revoked Badge from {{ recipient}}",
-		"revokeError": "Revoking Badge from {{ recipient }} failed"
+		"revokeError": "Revoking Badge from {{ recipient }} failed",
+		"searchIssuer": "search Institution",
+		"staffOwnerRights": "Access to all functions including adding/removing editors and employees, editing institution details and creating, assigning and deleting badges including micro degrees.",
+		"staffEditorRights": "Rights to create, assign and delete badges, including micro-degrees.",
+		"staffMemberRights": "Can assign badges created by owners and/or editors (including creating, editing and deleting QR code assignments).",
+		"imageFormat": "(Format 1:1 / square)",
+		"nameOfIssuer": "Name of Institution",
+		"wesbiteUrl": "Website-URL",
+		"schoolLabel": "School (elementary school, secondary schools, vocational schools, institutions of formal education)",
+		"universityLabel": "University (universities, universities of applied sciences, ...)",
+		"othersLabel": "Others (libraries, museums, FabLabs, companies, associations, ...)",
+		"imageRequiredError": "Please choose an image.",
+		"csvPreview": "Here you can see a preview of the first",
+		"rowsOfYourFile": "rows of your file.",
+		"chooseColumn": "Select the heading that matches the respective column of your CSV file.",
+		"importPreview": "Import preview",
+		"rowsWereImported": "rows could be imported.",
+		"rowsAreDuplicates": "rows are duplicates and are ignored.",
+		"clickOnAwardBadges": "Click on \"award badges\" to award the badges to your learners now."
+
 	},
 	"Badge": {
 		"groupBy": "Group by",
@@ -378,13 +401,15 @@
 		"rows": "rows",
 		"request": "Request",
 		"requests": "Requests",
+		"openRequestsOne": "open request",
+		"openRequests": "open requests",
 		"categories": {
 			"competency": "Competency Badge",
 			"participation": "Participation Badge",
 			"learningpath": "Micro Degree"
 		},
 		"copyBadgeHeadline": "Select copy status",
-		"copyBadgeDescription1": "Within your own institution, badges can always be copied.",
+		"copyBadgeDescription1": "Within your own institution, badges can always be copied. ",
 		"copyBadgeDescription2": "You can update the copy status for <strong>other</strong> institutions at any time later via the menu on the badge detail page.",
 		"copyLabelOthers": "The badge may be copied by <strong>other</strong> institutions.",
 		"copy": "Copy badge for own institution",
@@ -395,7 +420,7 @@
 		"copyThisIssuer": "Copy (this institution)",
 		"editCopyStatus": "Edit copy status",
 		"award": "Award Badge",
-		"awardQRCode": "Award Badge using QR-Code",
+		"awardQRCode": "Award Badge using QR Code",
 		"partOfLearningPath": "This Badge is part of the following Micro Degrees:",
 		"awardCriteria": "Award Criteria",
 		"criteriaDesc": "What requirements should your learners meet to receive the badge?",
@@ -408,12 +433,18 @@
 		"projectCompleted": "Project Completed",
 		"addOwnCriteria": "Add Own Criterion",
 		"enterOwnCriteria": "Enter Own Criterion",
-		"enterOwnCriteriaDesc": "You can enter explanations here (max. 300 characters)"
+		"enterOwnCriteriaDesc": "You can enter explanations here (max. 300 characters)",
+		"participationBadgeInfo": "serves as confirmation of participation in an event - it contains <u>no</u> competencies.",
+		"competencyBadgeInfo": "can be filled (with the help of our AI assistant) with the skills that your learners acquire.",
+		"learningPathBadgeInfo": "combines several badges into a larger learning unit. When learners have earned all the badges on this “learning path”, they automatically receive the Micro Degree.",
+		"lastEdited": "Last edited",
+		"badgeSuccessfullyCreated": "The badge has been awarded to {{ recipient }} successfully."
+
 	},
 	"CreateBadge": {
 		"chooseBadgeCategory": "Choose category",
 		"chooseABadgeCategory": "Choose a badge category",
-		"chooseCategory": "Choose from two badge categories:",
+		"chooseCategory": "Choose badge category",
 		"competencyInfo": "can be filled with skills that your learners acquire",
 		"withAssistant": "with the help of our AI badge assistant",
 		"participationInfo": "serve as confirmation of participation in an event",
@@ -504,7 +535,11 @@
 		},
 		"competencyOwn": "Own competency",
 		"competencyOwnDescription": "If the ESCO search does not provide a suitable skill, you can manually add a self-defined skill here:",
-		"stepFinish": "Finish"
+		"stepFinish": "Finish",
+		"weHelpCreateBadge": "We'll help you create your badge in just a few steps.",
+		"letsGo": "Let's go!",
+		"closing": "Closing"
+
 	},
 	"Signup": {
 		"youHaveAccount": "Already have an account?",
@@ -669,11 +704,13 @@
 		"uploadOwnVisual": "Upload complete badge image",
 		"importedSuccessfully": "Badge imported successfully.",
 		"uploadFailed": "Could not upload badge:",
+		"duplicateBadge": "You already have this badge in your backpack",
 		"unknownError": "The badge upload failed due to an unknown error",
 		"badgeUploadVersionError": "Unfortunately uploading this badge version is not possible.",
 		"uploadEmailDoesNotMatchError": "The email address in the badge does not match the email in your OEB profile.",
 		"addEmailToUpload": "Add the email address to your profile to upload the badge.",
-		"versionUploadInfo": "Unfortunately at the moment only badges of version 2.0 can be uploaded"
+		"versionUploadInfo": "Unfortunately at the moment only badges of version 2.1 can be uploaded",
+		"addingBadge": "Adding Badge ..."
 	},
 	"EditBadge": {
 		"editBadge": "Edit badge",
@@ -729,9 +766,10 @@
 		"enterCollectioName": "Please enter a collection name",
 		"remainingChar": "remaining characters",
 		"description": "Description of the collection",
+		"descriptionPlaceholder": "These badges show that I not only understand the digital world, but also actively shape it. From programming and algorithms to IT security - I know the tools of the future and use them creatively to solve technical challenges.",
 		"provideDescription": "Please provide a description",
-		"myCollections": "My collections",
-		"useCollectionsForApplication": "Use collections for applications",
+		"myCollections": "My Collections",
+		"useCollectionsForApplications": "Use collections for applications",
 		"collectionInfoText": "Organize your badges into collections and download the respective PDF or create a direct-link for sharing.",
 		"addLink": "",
 		"createCollectionNow": "Create collection now",
@@ -845,14 +883,15 @@
 		"expirationEnd": "End date",
 		"buttonCreate": "Create QR Code",
 		"noQrCodes": "You have not created any QR Codes yet",
-		"openRequestsOne": "1 open Badge request",
-		"openRequests": "{{ count }} open Badge requests",
+		"openRequestsOne": "1 open badge request",
+		"openRequests": "{{ count }} open badge requests",
 		"showQrCode": "Show QR code",
 		"creator": "Creator",
 		"validity": "QR code validity",
 		"download": "Download QR code",
 		"toBadgeDetail": "To Badge detail page",
-		"downloadPoster": "Download QR-Code-Poster"
+		"downloadPoster": "Download QR-Code-Poster",
+		"badgeDetailPage": "badge detail page"
 	},
 	"LearningPath": {
 		"learningpaths": "Micro Degrees",
@@ -874,11 +913,11 @@
 		"continue": "Continue learning",
 		"finished": "Finished",
 		"enterDetails": "Enter Micro Degree details",
-		"includedBadges": "Contained Badges",
+		"includedBadges": "Contained badges",
 		"badgeTabs": {
 			"all": "All",
 			"inprogress": "In progress",
-			"finished": "finished"
+			"finished": "Finished"
 		},
 		"chooseBadges": "Choose included badges",
 		"badgeSequenceStep": "Badge order",
@@ -897,9 +936,17 @@
 		"savedSuccessfully": "Your changes have been saved successfully",
 		"title": "Micro Degree title",
 		"description": "Short description for learners",
+		"shortDescription": "Short description",
 		"selectedBadges": "You selected {{ count }} Badges for the Micro Degree",
 		"selectedBadgesOne": "You selected 1 Badge for the Micro Degree",
-		"deleteWarning": "Do you really want to delete this Micro Degree?"
+		"deleteWarning": "Do you really want to delete this Micro Degree?",
+		"mdImage": "Micro degree image",
+		"lastBadgeInfo": "Learners automatically receive the <strong class='tw-text-purple'>Micro Degree</strong> badge by e-mail, as soon as they have earned all the badges it contains.",
+		"finishedOn": "finished on",
+		"deleteMd": "delete micro degree",
+		"mdUsers": "Micro Degree users",
+		"searchMds": "search micro degrees"
+
 	},
 	"LearningPathEditor": {
 		"shortDescription": "Summarized description of your Micro Degree. This short description will be saved in the Micro Degree."
