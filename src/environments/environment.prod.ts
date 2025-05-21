@@ -5,7 +5,7 @@ export const environment: BadgrEnvironment = {
 	enableErrorInterceptor: false,
 	config: {
 		api: {
-			baseUrl: 'https://badgr-cms.rincewind.esirion.de',
+			baseUrl: 'https://api.openbadges.education',
 		},
 		theme: {
 			welcomeMessage: 'Willkommen auf Open Educational Badges',
