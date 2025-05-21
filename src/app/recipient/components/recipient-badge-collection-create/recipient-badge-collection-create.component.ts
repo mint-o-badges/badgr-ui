@@ -357,8 +357,6 @@ export class RecipientBadgeCollectionCreateComponent extends BaseAuthenticatedRo
 			return;
 		}
 
-		console.log("selectedBadges", this.selectedBadges)
-
 		const collectionForCreation: ApiRecipientBadgeCollectionForCreation = {
 			name: formState.collectionName,
 			description: formState.collectionDescription,

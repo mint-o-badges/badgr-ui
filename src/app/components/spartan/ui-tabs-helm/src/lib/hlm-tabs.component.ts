@@ -16,8 +16,4 @@ import { BrnTabsDirective } from '@spartan-ng/brain/tabs';
 })
 export class HlmTabsComponent {
 	public readonly tab = input.required<string>();
-
-	ngOnInit(){
-		console.log("active", this.tab)
-	}
 }
