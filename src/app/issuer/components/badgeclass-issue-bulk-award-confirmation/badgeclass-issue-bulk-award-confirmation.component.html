@@ -1,13 +1,13 @@
 <section class="oeb-section">
 	<div class="oeb-headline-container-sm">
-		<h1 hlmH1 class="tw-text-purple">Import-Vorschau</h1>
+		<h1 hlmH1 class="tw-text-purple">{{ 'Issuer.importPreview' | translate }}</h1>
 	</div>
 	<p hlmP class="oeb-standard-padding-bottom">
 		<span
-			>{{ transformedImportData.validRowsTransformed.size }} Zeilen konnten importiert werden.
-			{{ transformedImportData.duplicateRecords.length }} Zeilen sind Duplikate und werden ignoriert.</span
+			>{{ transformedImportData.validRowsTransformed.size }} {{ 'Issuer.rowsWereImported' | translate }}
+			{{ transformedImportData.duplicateRecords.length }} {{ 'Issuer.rowsAreDuplicates' | translate }}</span
 		><br />
-		<span>Klicke auf "Badges vergeben", um die Badges jetzt an deine Lernenden zu vergeben.</span>
+		<span>{{ 'Issuer.clickOnAwardBadges' | translate }}</span>
 	</p>
 
 	<div class="oeb-standard-padding-bottom">
@@ -44,13 +44,13 @@
 		</table>
 	</div>
 	<div class="oeb-standard-padding-bottom">
-		<h3 hlmH3 class="tw-text-purple">Benachrichtigung</h3>
+		<h3 hlmH3 class="tw-text-purple">{{ 'General.notification' | translate }}</h3>
 		<oeb-checkbox
 			name="notify_earner"
 			id="notify_earner"
 			type="checkbox"
 			[control]="issueForm.rawControlMap.notify_earner"
-			[text]="'Empfänger:in mit E-Mail benachrichtigen'"
+			[text]="'Issuer.sendEmail' | translate"
 		></oeb-checkbox>
 	</div>
 
@@ -60,14 +60,14 @@
 			class="tw-mr-4"
 			variant="secondary"
 			(click)="updateViewState('import')"
-			text="Abbrechen"
+			text="{{ 'General.cancel' | translate }}"
 		></oeb-button>
 
 		<oeb-button
 			[class.button-is-disabled]="buttonDisabledClass"
 			[disabled]="buttonDisabledAttribute"
 			(click)="dataConfirmed()"
-			text="Badges vergeben"
+			text="{{ 'Issuer.giveBadges' | translate }}"
 		>
 		</oeb-button>
 	</div>

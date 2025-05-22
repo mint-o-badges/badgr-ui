@@ -52,7 +52,7 @@
 								class="md:tw-w-[180px] oeb"
 								[options]="categoryOptions"
 								[control]="categoryControl"
-								placeholder="{{ 'Issuer.allCategories' | translate }}"
+								placeholder="{{ 'Issuer.categories.allCategories' | translate }}"
 								[autofocus]="true"
 								noTopMargin="true"
 							></oeb-select>
@@ -116,15 +116,15 @@
 					</li>
 					<li>
 						<div class="color schule"></div>
-						Schule
+						{{ 'Issuer.categories.schule' | translate }}
 					</li>
 					<li>
 						<div class="color hochschule"></div>
-						Hochschule
+						{{ 'Issuer.categories.hochschule' | translate }}
 					</li>
 					<li>
 						<div class="color andere"></div>
-						Andere
+						{{ 'Issuer.categories.andere' | translate }}
 					</li>
 				</ul>
 			</div>

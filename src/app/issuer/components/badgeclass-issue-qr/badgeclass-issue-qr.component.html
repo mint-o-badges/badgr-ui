@@ -4,14 +4,13 @@
 			<bg-breadcrumbs [linkentries]="crumbs"></bg-breadcrumbs>
 		</div>
 		<div class="oeb-headline-container-sm">
-			<h1 hlmH1 class="tw-text-purple tw-font-extrabold">Badge über QR-Code vergeben</h1>
+			<h1 hlmH1 class="tw-text-purple tw-font-extrabold">{{ 'Badge.awardQRCode' | translate }}</h1>
 			<p hlmP size="lg" class="tw-text-oebblack tw-my-4">
-				Wenn du hier eine QR-Code-Vergabe anlegst, können deine Lernenden den so generierten QR-Code abscannen
-				und sich den Badge darüber selbst abholen.
+				{{ 'QrCode.description' | translate }}
 			</p>
 		</div>
 		<div class="tw-text-oebblack">
-			<span hlmP class="tw-font-bold">So funktioniert's:</span>
+			<span hlmP class="tw-font-bold">{{ 'QrCode.howItWorks' | translate }}</span>
 			<ol class="tw-list-decimal tw-list-inside tw-my-2">
 				<li class="tw-pt-1" hlmP [innerHTML]="'IssueQr.list1' | translate"></li>
 				<li class="tw-pt-1" hlmP [innerHTML]="'IssueQr.list2' | translate"></li>

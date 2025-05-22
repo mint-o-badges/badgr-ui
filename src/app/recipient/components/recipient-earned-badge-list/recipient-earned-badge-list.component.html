@@ -308,7 +308,7 @@
 									type="text"
 									name="forminput"
 									id="forminput"
-									placeholder="Micro Degrees durchsuchen"
+									placeholder="{{ 'LearningPath.searchMds' | translate }}"
 									[(ngModel)]="searchQuery"
 									class="tw-w-[300px] tw-border-solid tw-border-purple tw-bg-white tw-mr-6"
 									hlmInput
@@ -424,7 +424,7 @@
 							>
 								{{ 'BadgeCollection.useCollectionsForApplications' | translate }}
 								<ng-icon
-									(c#lick)="openCollectionInfoDialog()"
+									(click)="openCollectionInfoDialog()"
 									hlm
 									class="tw-text-purple tw-min-w-10 tw-ml-2"
 									size="lg"

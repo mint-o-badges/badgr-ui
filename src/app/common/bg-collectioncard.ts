@@ -17,7 +17,9 @@ import { RecipientBadgeCollection } from '../recipient/models/recipient-badge-co
 					</h2>
 				</a>
 				<div class="tw-my-5" *ngIf="!collection.badges.length">
-					<span class="tw-text-oebblack tw-text-lg"> Diese Sammlung enthält noch keine Badges </span>
+					<span class="tw-text-oebblack tw-text-lg">{{
+						'BadgeCollection.noBadgesInThisCollectionYet' | translate
+					}}</span>
 				</div>
 				<div
 					*ngIf="collection.badges.length"
@@ -35,11 +37,15 @@ import { RecipientBadgeCollection } from '../recipient/models/recipient-badge-co
 					</div>
 				</div>
 				<footer class="tw-flex tw-justify-between tw-items-center tw-w-full tw-mt-4">
-					<div class="tw-items-center">
-						<label hlmLabel>
-							<hlm-switch [(ngModel)]="collection.published" (ngModelChange)="togglePublished()">
+					<div class="tw-items-center tw-w-full">
+						<!-- <label hlmLabel class="tw-flex tw-gap-4">
+							<hlm-switch
+								[(ngModel)]="collection.published"
+								(ngModelChange)="togglePublished()"
+							>
 							</hlm-switch>
-						</label>
+							<span class="tw-text-oebblack tw-text-lg">{{'General.public' | translate }}</span>
+						</label> -->
 					</div>
 					<oeb-button
 						[text]="'BadgeCollection.share' | translate"

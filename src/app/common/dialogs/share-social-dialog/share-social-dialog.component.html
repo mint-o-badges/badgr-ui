@@ -59,7 +59,9 @@
 			</ng-template>
 
 			<div class="forminput forminput-hasiconleft forminput-withbutton u-margin-bottom3x" *ngIf="options">
-				<label class="forminput-x-label" for="link-input">Kopiere diesen Link zum teilen</label>
+				<label class="forminput-x-label" for="link-input">{{
+					'RecBadgeDetail.copyShareLink' | translate
+				}}</label>
 				<div class="forminput-x-inputs">
 					<svg class="forminput-x-icon" icon="icon_link"></svg>
 
@@ -79,15 +81,15 @@
 							[hidden]="!copySupported"
 							class="button button-secondary button-informinput"
 						>
-							Copy
+							{{ 'General.copy' | translate }}
 						</button>
 					</div>
 				</div>
 			</div>
 
-			<a *ngIf="options" [href]="currentShareUrl" target="_blank" class="u-text-link-small"
-				>In neuem Fenster öffnen</a
-			>
+			<a *ngIf="options" [href]="currentShareUrl" target="_blank" class="u-text-link-small">{{
+				'General.openNewWindow' | translate
+			}}</a>
 		</div>
 
 		<!-- Social Tab -->
@@ -115,13 +117,22 @@
 			</ng-template>
 
 			<div class="u-margin-bottom3x">
-				<p class="u-text-bold u-margin-bottom3x">Zum Profil hinzufügen:</p>
+				<p class="u-text-bold u-margin-bottom3x">{{ 'RecBadgeDetail.addToProfile' | translate }}:</p>
 				<div>
-					<a [href]="linkedInCertURL"
-						><img
+					<a [href]="linkedInCertURL">
+						<img
+							*ngIf="translate.currentLang == 'de'"
 							src="../../../breakdown/static/scss/images/linkedin_zum_profile_hinzufugen.png"
+							width="208"
 							alt="LinkedIn Add to Profile button"
-					/></a>
+						/>
+						<img
+							*ngIf="translate.currentLang != 'de'"
+							src="../../../breakdown/static/scss/images/linkedin_en.png"
+							width="208"
+							alt="LinkedIn Add to Profile button"
+						/>
+					</a>
 				</div>
 			</div>
 

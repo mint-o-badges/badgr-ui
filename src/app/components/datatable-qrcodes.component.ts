@@ -325,7 +325,9 @@ export type RequestedBadge = {
 	template: `
 		<div class="tw-flex tw-flex-col tw-justify-between tw-gap-4 sm:tw-flex-row">
 			<label hlmLabel class="tw-font-semibold tw-text-[0.5rem] tw-w-full md:tw-w-80">
-				<span class="tw-px-3 tw-text-muted-foreground tw-text-sm">Nach E-Mail-Adresse suchen</span>
+				<span class="tw-px-3 tw-text-muted-foreground tw-text-sm">{{
+					'General.searchByEmail' | translate
+				}}</span>
 				<hlm-cmd-input-wrapper class="tw-relative tw-px-0 tw-mt-1 tw-border-b-0">
 					<input
 						hlmInput
@@ -346,7 +348,7 @@ export type RequestedBadge = {
       />
 	  -->
 
-			<!-- 
+			<!--
 	  <button hlmBtn variant="outline" align="end" [brnMenuTriggerFor]="menu">
         Columns
         <ng-icon hlm name="lucideChevronDown" class="tw-ml-2" size="sm" />

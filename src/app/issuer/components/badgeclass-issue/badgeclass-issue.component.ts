@@ -28,6 +28,7 @@ import { AppConfigService } from '../../../common/app-config.service';
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { HlmDialogService } from './../../../components/spartan/ui-dialog-helm/src';
 import { SuccessDialogComponent } from '../../../common/dialogs/oeb-dialogs/success-dialog.component';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'badgeclass-issue',
@@ -94,7 +95,7 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 	badgeClassLoaded: Promise<unknown>;
 
 	identifierOptionMap = {
-		email: 'E-Mail Adresse',
+		email: this.translate.instant('General.emailAddress'),
 		url: 'URL',
 		// telephone: "Telephone",
 	};
@@ -136,6 +137,7 @@ export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent
 		protected badgeInstanceManager: BadgeInstanceManager,
 		protected dialogService: CommonDialogsService,
 		protected configService: AppConfigService,
+		protected translate: TranslateService,
 		sessionService: SessionService,
 		router: Router,
 		route: ActivatedRoute,

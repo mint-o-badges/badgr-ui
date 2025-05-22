@@ -4,6 +4,7 @@ import { CommonDialogsService } from '../../services/common-dialogs.service';
 import { LearningPath } from '../../../issuer/models/learningpath.model';
 import { RecipientBadgeInstance } from '../../../recipient/models/recipient-badge.model';
 import { BadgeInstance } from '../../../issuer/models/badgeinstance.model';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'bg-badgedetail',
@@ -16,7 +17,10 @@ export class BgBadgeDetail {
 	@Input() awaitPromises?: Promise<any>[];
 	@Input() badge?: RecipientBadgeInstance | BadgeInstance;
 
-	constructor(private dialogService: CommonDialogsService) {}
+	constructor(
+		private dialogService: CommonDialogsService,
+		private translate: TranslateService,
+	) {}
 
 	calculateLearningPathStatus(lp: LearningPath): { match: string } | { progress: number } {
 		if (lp.progress != null) {
@@ -43,7 +47,7 @@ export class BgBadgeDetail {
 	shareBadge() {
 		const baseUrl = window.location.origin;
 		this.dialogService.shareSocialDialog.openDialog({
-			title: 'Badge teilen',
+			title: this.translate.instant('RecBadgeDetail.shareBadge'),
 			shareObjectType: 'BadgeInstance',
 			shareUrl: `${baseUrl}/public/assertions/${this.config.badgeInstanceSlug}`,
 			shareTitle: this.config.badgeTitle,

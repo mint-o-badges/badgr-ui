@@ -4,7 +4,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { BadgrCommonModule, COMMON_IMPORTS } from '../common/badgr-common.module';
 
 import { RecipientBadgeCollectionDetailComponent } from './components/recipient-badge-collection-detail/recipient-badge-collection-detail.component';
-import { RecipientBadgeCollectionListComponent } from './components/recipient-badge-collection-list/recipient-badge-collection-list.component';
 import { RecipientEarnedBadgeDetailComponent } from './components/recipient-earned-badge-detail/recipient-earned-badge-detail.component';
 import { RecipientEarnedBadgeListComponent } from './components/recipient-earned-badge-list/recipient-earned-badge-list.component';
 import { AddBadgeDialogComponent } from './components/add-badge-dialog/add-badge-dialog.component';
@@ -20,6 +19,7 @@ import { RecipientBadgeSelectionDialog } from './components/recipient-badge-sele
 import { MozzTransitionModule } from '../mozz-transition/mozz-transition.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { ImportedBadgeDetailComponent } from './components/imported-badge-detail/imported-badge-detail.component';
+import { RecipientBadgeCollectionEditComponent } from '../recipient-badge-collection-edit/recipient-badge-collection-edit.component';
 
 const routes: Routes = [
 	/* Recipient Badges */
@@ -47,12 +47,12 @@ const routes: Routes = [
 
 	/* Recipient Badge Collections */
 	{
-		path: 'badge-collections',
-		component: RecipientBadgeCollectionListComponent,
-	},
-	{
 		path: 'badge-collections/create',
 		component: RecipientBadgeCollectionCreateComponent,
+	},
+	{
+		path: 'badge-collections/:collectionSlug/edit',
+		component: RecipientBadgeCollectionEditComponent,
 	},
 	{
 		path: 'badge-collections/collection/:collectionSlug',
@@ -76,8 +76,8 @@ const routes: Routes = [
 	],
 	declarations: [
 		RecipientEarnedBadgeListComponent,
-		RecipientBadgeCollectionListComponent,
 		RecipientBadgeCollectionCreateComponent,
+		RecipientBadgeCollectionEditComponent,
 		RecipientBadgeCollectionDetailComponent,
 		RecipientBadgeCollectionEditFormComponent,
 		RecipientBadgeCollectionSelectionDialogComponent,

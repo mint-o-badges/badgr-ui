@@ -40,7 +40,10 @@ import {
 	lucideInfo,
 	lucideCopy,
 	lucideCopyX,
-	lucideUpload
+	lucideGlobe,
+	lucideHexagon,
+	lucideUser,
+	lucideUpload,
 } from '@ng-icons/lucide';
 
 @NgModule({
@@ -85,7 +88,10 @@ import {
 			lucideInfo,
 			lucideCopy,
 			lucideCopyX,
-			lucideUpload
+			lucideGlobe,
+			lucideHexagon,
+			lucideUser,
+			lucideUpload,
 		}),
 	],
 })

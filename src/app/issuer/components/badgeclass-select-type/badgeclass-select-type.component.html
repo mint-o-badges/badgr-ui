@@ -11,39 +11,30 @@
 			</div>
 			<div class="tw-flex tw-flex-col tw-text-oebblack">
 				<p hlmP class="tw-font-normal md:!tw-leading-[31.2px]">
-					Wir helfen dir, in wenigen Schritten deinen Badge zu erstellen.<br />
-					<strong>Los geht's!</strong>
+					{{ 'CreateBadge.weHelpCreateBadge' | translate }}<br />
+					<strong>{{ 'CreateBadge.letsGo' | translate }}</strong>
 				</p>
 			</div>
 
 			<div class="section tw-text-oebblack tw-mt-6">
-				<h2 hlmH2 class="tw-font-bold tw-mb-6">1. Badge-Kategorie wählen</h2>
+				<h2 hlmH2 class="tw-font-bold tw-mb-6">1. {{ 'CreateBadge.chooseCategory' | translate }}</h2>
 
 				<div class="tw-flex tw-justify-evenly oeb-badgeclass-select-container tw-flex-col md:tw-flex-row">
 					<a [routerLink]="['/issuer/issuers', issuerSlug, 'badges', 'create', 'participation']">
 						<img src="../../../../breakdown/static/badgestudio/shapes/participation.svg" />
-						<strong>Teilnahme-Badge</strong>
-						<p>
-							dient als Bestätigung der Teilnahme an einer Veranstaltung – er enthält
-							<u>keine</u> Kompetenzen.
-						</p>
+						<strong>{{ 'Badge.categories.participation' | translate }}</strong>
+						<p [innerHTML]="'Badge.participationBadgeInfo' | translate"></p>
 					</a>
 					<a [routerLink]="['/issuer/issuers', issuerSlug, 'badges', 'create', 'competency']">
 						<img src="../../../../breakdown/static/badgestudio/shapes/competency.svg" />
-						<strong>Kompetenz-Badge</strong>
-						<p>
-							kann (mithilfe unseres KI-Assistenten) mit den Kompetenzen gefüllt werden, die deine
-							Lernenden erwerben.
-						</p>
+						<strong>{{ 'Badge.categories.competency' | translate }}</strong>
+						<p [innerHTML]="'Badge.competencyBadgeInfo' | translate"></p>
 					</a>
 					<a [routerLink]="['/issuer/issuers', issuerSlug, 'learningpaths', 'create']">
 						<img src="../../../../breakdown/static/badgestudio/shapes/learningpath.svg" />
 
-						<strong>Micro Degree</strong>
-						<p>
-							verbindet mehrere Badges zu einer größeren Lerneinheit. Wenn Lernende alle Badges dieses
-							„Lernpfades” erworben haben, erhalten sie automatisch den Abschluss Micro Degree.
-						</p>
+						<strong>{{ 'Badge.categories.learningpath' | translate }}</strong>
+						<p [innerHTML]="'Badge.learningPathBadgeInfo' | translate"></p>
 					</a>
 				</div>
 			</div>

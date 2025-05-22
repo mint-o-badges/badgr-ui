@@ -33,7 +33,7 @@ import { HlmPDirective } from '../components/spartan/ui-typography-helm/src/lib/
 			>
 			<!-- Recipients -->
 			<hlm-th class="!tw-text-white tw-w-36 md:tw-w-40 sm:tw-grid sm:tw-pl-0">{{
-				'Badge.multiRecipients' | translate
+				'Badge.multiRecipients' | translate | titlecase
 			}}</hlm-th>
 			<!-- Badge/QR-code award -->
 			<hlm-th class="!tw-text-white tw-justify-end sm:tw-w-48 tw-w-0 !tw-p-0"></hlm-th>
@@ -85,7 +85,7 @@ import { HlmPDirective } from '../components/spartan/ui-typography-helm/src/lib/
 					width="full_width"
 					class="tw-w-full"
 					(click)="directBadgeAward.emit(badge.badge)"
-					[text]="directBadgeAwardText"
+					[text]="directBadgeAwardText | translate"
 					*ngIf="badge.badge.extension['extensions:CategoryExtension']?.Category !== 'learningpath'"
 				>
 				</oeb-button>
@@ -95,7 +95,7 @@ import { HlmPDirective } from '../components/spartan/ui-typography-helm/src/lib/
 					width="full_width"
 					class="tw-w-full"
 					(click)="qrCodeAward.emit(badge.badge)"
-					[text]="qrCodeAwardText"
+					[text]="qrCodeAwardText | translate"
 					*ngIf="badge.badge.extension['extensions:CategoryExtension']?.Category !== 'learningpath'"
 				>
 				</oeb-button>
@@ -109,7 +109,11 @@ import { HlmPDirective } from '../components/spartan/ui-typography-helm/src/lib/
 					width="full_width"
 					class="tw-w-full"
 					(click)="redirectToBadgeDetail.emit({ badge: badge.badge, focusRequests: true })"
-					[text]="badge.requestCount + ' offene Anfragen'"
+					[text]="
+						badge.requestCount == 1
+							? badge.requestCount + ' ' + ('Badge.openRequestsOne' | translate)
+							: badge.requestCount + ' ' + ('Badge.openRequests' | translate)
+					"
 				>
 				</oeb-button>
 			</hlm-th>
@@ -119,8 +123,8 @@ import { HlmPDirective } from '../components/spartan/ui-typography-helm/src/lib/
 export class DatatableComponent {
 	@Input() caption: string = '';
 	@Input() badges: DatatableBadgeResult[];
-	@Input() directBadgeAwardText: string = 'Badge direkt vergeben';
-	@Input() qrCodeAwardText: string = 'QR-Code-Vergabe';
+	@Input() directBadgeAwardText: string = 'Badge.award';
+	@Input() qrCodeAwardText: string = 'QrCode.qrAward';
 	@Output() directBadgeAward = new EventEmitter();
 	@Output() qrCodeAward = new EventEmitter();
 	@Output() redirectToBadgeDetail = new EventEmitter<{ badge: BadgeClass; focusRequests: boolean }>();

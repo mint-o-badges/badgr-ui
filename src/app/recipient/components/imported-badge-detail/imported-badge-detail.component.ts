@@ -97,23 +97,21 @@ export class ImportedBadgeDetailComponent extends BaseAuthenticatedRoutableCompo
 
 		this.badgeLoaded = this.recipientBadgeApiService.getImportedBadge(this.badgeSlug).then((r) => {
 			this.badge = r;
-			if('extensions:CompetencyExtension' in this.badge.extensions){
-
-				const comps = this.badge.extensions['extensions:CompetencyExtension'] as Array<unknown>
+			if ('extensions:CompetencyExtension' in this.badge.extensions) {
+				const comps = this.badge.extensions['extensions:CompetencyExtension'] as Array<unknown>;
 				this.competencies = comps.map((c) => {
 					return {
-						"name": c["extensions:name"],
-						"description": c["extensions:description"],
-						"studyLoad": c["extensions:studyLoad"],
-						"category": c["extensions:category"],
-						"framework": c["extensions:framework"], 						
-						"framework_identifier": c["extensions:framework_identifier"], 						
-
-					}
+						name: c['extensions:name'],
+						description: c['extensions:description'],
+						studyLoad: c['extensions:studyLoad'],
+						category: c['extensions:category'],
+						framework: c['extensions:framework'],
+						framework_identifier: c['extensions:framework_identifier'],
+					};
 				});
 			}
-			if('extensions:CategoryExtension' in this.badge.extensions){
-				this.category = this.badge.extensions['extensions:CategoryExtension'] as object
+			if ('extensions:CategoryExtension' in this.badge.extensions) {
+				this.category = this.badge.extensions['extensions:CategoryExtension'] as object;
 			}
 			this.crumbs = [
 				{ title: 'Mein Rucksack', routerLink: ['/recipient/badges'] },
@@ -126,6 +124,7 @@ export class ImportedBadgeDetailComponent extends BaseAuthenticatedRoutableCompo
 				qrCodeButton: {
 					show: false,
 				},
+				badgeCriteria: null,
 				menuitems: [
 					// {
 					// 	title: 'Download JSON-Datei',
@@ -153,9 +152,11 @@ export class ImportedBadgeDetailComponent extends BaseAuthenticatedRoutableCompo
 				slug: this.badgeSlug,
 				issuedOn: this.badge.json.issuedOn,
 				issuedTo: this.badge.json.recipient.identity,
-				category: this.category ? this.translate.instant(
-					`Badge.categories.${this.category['extensions:Category'] || 'participation'}`,
-				) : null,
+				category: this.category
+					? this.translate.instant(
+							`Badge.categories.${this.category['extensions:Category'] || 'participation'}`,
+						)
+					: null,
 				tags: [],
 				issuerName: this.badge.json.badge.issuer.name,
 				issuerImagePlacholderUrl: this.issuerImagePlacholderUrl,
@@ -164,7 +165,7 @@ export class ImportedBadgeDetailComponent extends BaseAuthenticatedRoutableCompo
 				badgeFailedImageUrl: this.badgeFailedImageUrl,
 				badgeImage: this.badge.json.badge.image,
 				learningPaths: [],
-				competencies:  this.competencies as CompetencyType[],
+				competencies: this.competencies as CompetencyType[],
 				// license: this.badge.getExtension('extensions:LicenseExtension', {}) ? true : false,
 				// shareButton: true,
 				// badgeInstanceSlug: this.badgeSlug,

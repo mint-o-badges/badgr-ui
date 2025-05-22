@@ -34,13 +34,15 @@ import { DomSanitizer } from '@angular/platform-browser';
 			<svg class="dropzone-x-icon" icon="icon_upload"></svg>
 			<div class="dropzone-x-text tw-text-center" *ngIf="!fileErrorMessage">
 				<div *ngIf="!fileProvided && !fileLoading" hlmP>
-					<span class="tw-font-bold">Drag and Drop</span> oder <br /><a hlmA class="tw-font-bold"
-						>aus meinen Dateien auswählen</a
+					<span class="tw-font-bold">Drag and Drop</span> {{ 'General.or' | translate }} <br /><a
+						hlmA
+						class="tw-font-bold"
+						>{{ 'RecBadge.selectFromMyFiles' | translate }}</a
 					>
 				</div>
 				<div *ngIf="fileLoading" class="dropzone-x-info1">Loading File...</div>
 				<div *ngIf="fileName" class="dropzone-x-info1">{{ fileName }}</div>
-				<div *ngIf="fileName" class="u-text-link">Change</div>
+				<div *ngIf="fileName" class="u-text-link">{{ 'General.change' | translate }}</div>
 			</div>
 
 			<div *ngIf="fileErrorMessage" class="dropzone-x-error">{{ fileErrorMessage }}</div>

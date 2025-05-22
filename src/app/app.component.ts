@@ -57,7 +57,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
 	aboutBadgesMenuItems: MenuItem[] = [
 		{
-			title: 'FAQ',
+			title: 'NavItems.faq',
 			routerLink: ['/public/faq'],
 			icon: 'lucideFileQuestion',
 		},
@@ -67,24 +67,29 @@ export class AppComponent implements OnInit, AfterViewInit {
 			icon: 'lucideAward',
 		},
 		{
-			title: '',
+			title: 'General.institutionsNav',
 			routerLink: ['/catalog/issuers'],
 			icon: 'lucideWarehouse',
 		},
 		{
-			title: '',
+			title: 'LearningPath.learningpathsNav',
 			routerLink: ['/catalog/learningpaths'],
 			icon: 'lucideRoute',
 		},
 	];
 	accountMenuItems: MenuItem[] = [
 		{
-			title: 'Mein Profil',
+			title: 'General.backpack',
+			routerLink: ['/recipient/badges'],
+			icon: 'lucideHexagon',
+		},
+		{
+			title: 'NavItems.myProfile',
 			routerLink: ['/profile/profile'],
 			icon: 'lucideUsers',
 		},
 		{
-			title: 'App Integrationen',
+			title: 'NavItems.appIntegrations',
 			routerLink: ['/profile/app-integrations'],
 			icon: 'lucideRepeat2',
 		},
@@ -208,7 +213,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 		private titleService: Title,
 		protected issuerManager: IssuerManager,
 		private languageService: LanguageService, // Translation
-		private translate: TranslateService,
+		protected translate: TranslateService,
 		@Inject(DOCUMENT) private document: Document,
 	) {
 		// Initialize App language
@@ -219,11 +224,11 @@ export class AppComponent implements OnInit, AfterViewInit {
 			}
 		});
 
-		try{
+		try {
 			// @ts-ignore
 			// Start umami tracking
 			umami.track();
-		}catch(e){}
+		} catch (e) {}
 
 		messageService.useRouter(router);
 
@@ -253,7 +258,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 			// for issuers tab which can only be loaded when the user is verified
 			this.profileManager.userProfile.emails.updateList().then(() => {
 				if (this.profileManager.userProfile.isVerified)
-					this.issuerManager.allIssuers$.subscribe(
+					this.issuerManager.myIssuers$.subscribe(
 						(issuers) => {
 							this.issuers.set(
 								issuers.slice().sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime()),
@@ -313,24 +318,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 			}),
 		);
 
-		this.translate.get('General.institutionsNav').subscribe((translatedText: string) => {
-			this.aboutBadgesMenuItems[2].title = translatedText;
-		});
-
-		this.translate.get('LearningPath.learningpathsNav').subscribe((translatedText: string) => {
-			this.aboutBadgesMenuItems[3].title = translatedText;
-		});
-
-		this.translate.get('NavItems.myProfile').subscribe((translatedText: string) => {
-			this.accountMenuItems[0].title = translatedText;
-		});
-
-		this.translate.get('NavItems.appIntegrations').subscribe((translatedText: string) => {
-			this.accountMenuItems[1].title = translatedText;
-		});
-
 		this.translate.onLangChange.subscribe(() => {
-			console.log('!!!!!!!!' + this.translate.currentLang);
 			this.document.documentElement.lang = this.translate.currentLang;
 		});
 	}

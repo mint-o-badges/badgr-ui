@@ -19,7 +19,7 @@
 								<oeb-button
 									*ngIf="config.headerButton.routerLink"
 									class="tw-whitespace-nowrap tw-grow"
-									[text]="config.headerButton.title"
+									[text]="config.headerButton.title | translate"
 									width="full_width"
 									[routerLink]="config.headerButton.routerLink"
 									[disabled-when-requesting]="true"
@@ -31,7 +31,7 @@
 									width="full_width"
 									(click)="config.headerButton.action()"
 									[disabled-when-requesting]="true"
-									[text]="config.headerButton.title"
+									[text]="config.headerButton.title | translate"
 								></oeb-button>
 							</ng-container>
 							<oeb-button
@@ -64,7 +64,7 @@
 							*ngIf="config.qrCodeButton?.show"
 							class="oeb-button !tw-p-0 tw-mt-2 tw-w-full md:tw-w-fit md:tw-ml-auto md:tw-h-[64px] tw-h-[45px] tw-flex tw-items-center tw-justify-center tw-text-xl tw-rounded-[7px]"
 							variant="secondary"
-							[text]="config.qrCodeButton?.title"
+							[text]="config.qrCodeButton?.title | translate"
 							(click)="config.qrCodeButton?.action()"
 						></oeb-button>
 					</div>
@@ -110,6 +110,40 @@
 							</div>
 						</div>
 						<dl clss="tw-min-w-[150px]">
+							<div *ngIf="config.badgeCriteria" class="tw-bg-white tw-mb-4 tw-rounded-[10px]">
+								<ng-template [bgAwaitPromises]="[badgeInstancesLoaded]">
+									<oeb-collapsible
+										[trigger]="collapseCriteriaTrigger"
+										closeIcon="lucideChevronDown"
+										[defaultOpen]="config.badgeCriteria.length > 0"
+										[id]=""
+									>
+										<ng-template #collapseCriteriaTrigger>
+											<dt class="tw-mr-auto tw-flex tw-justify-center tw-items-center tw-px-2">
+												<ng-icon hlm name="lucideAward" class="tw-w-8 tw-h-8 tw-text-purple">
+												</ng-icon>
+												<span
+													class="tw-text-oebblack tw-font-bold tw-text-sm tw-ml-1"
+													[innerHTML]="'Badge.awardCriteria' | translate"
+												></span>
+											</dt>
+										</ng-template>
+										<dd>
+											<ul class="tw-pr-2 tw-pl-8 tw-list-inside tw-list-disc">
+												<li class="tw-mb-1" *ngFor="let criteria of config.badgeCriteria">
+													<span class="tw-text-oebblack">{{ criteria.name }}</span>
+													<p
+														*ngIf="criteria.description"
+														class="tw-text-oebblack tw-italic tw-font-thin tw-ml-4 tw-mt-1"
+													>
+														{{ criteria.description }}
+													</p>
+												</li>
+											</ul>
+										</dd>
+									</oeb-collapsible>
+								</ng-template>
+							</div>
 							<div class="tw-flex tw-flex-row tw-gap-1" *ngIf="config.copy_permissions">
 								<dt
 									class="tw-text-oebblack tw-font-bold"
@@ -124,7 +158,10 @@
 									"
 								></dd>
 							</div>
-							<div *ngIf="config.tags.length > 0" class="tw-flex tw-items-start md:tw-flex-row tw-flex-col">
+							<div
+								*ngIf="config.tags.length > 0"
+								class="tw-flex tw-items-start md:tw-flex-row tw-flex-col"
+							>
 								<dt class="tw-text-oebblack tw-font-bold md:tw-py-2 md:tw-mr-2 tw-mb-1">Tags</dt>
 								<dd class="tw-text-oebblack">
 									<div
@@ -136,7 +173,10 @@
 								</dd>
 							</div>
 
-							<div *ngIf="config.category" class="tw-flex tw-text-oebblack tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
+							<div
+								*ngIf="config.category"
+								class="tw-flex tw-text-oebblack tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col"
+							>
 								<dt class="tw-text-sm tw-text-oebblack tw-font-bold">
 									{{ 'General.category' | translate }}
 								</dt>
@@ -151,7 +191,7 @@
 									{{ 'RecBadgeDetail.duration' | translate }}
 								</dt>
 								<dd class="tw-text-sm tw-text-oebblack md:tw-ml-2">
-									{{ config.duration | hourPipe }} {{ 'RecBadge.hours' | translate }}
+									{{ config.duration | hourPipe }} {{ 'RecBadge.hours' | translate | lowercase }}
 								</dd>
 							</div>
 
@@ -159,7 +199,9 @@
 								*ngIf="config.updatedAt"
 								class="tw-flex tw-text-oebblack tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col"
 							>
-								<dt class="tw-text-sm tw-text-oebblack tw-font-bold">Zuletzt editiert</dt>
+								<dt class="tw-text-sm tw-text-oebblack tw-font-bold">
+									{{ 'Badge.lastEdited' | translate }}
+								</dt>
 								<dd class="tw-text-sm tw-text-oebblack md:tw-ml-2">
 									<time [date]="config.updatedAt" format="dd.MM.y"></time>
 								</dd>
@@ -188,14 +230,18 @@
 								*ngIf="config.issuedTo"
 								class="tw-flex tw-text-oebblack tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col"
 							>
-								<dt class="tw-text-sm tw-text-oebblack tw-font-bold">Vergeben an</dt>
+								<dt class="tw-text-sm tw-text-oebblack tw-font-bold">
+									{{ 'RecBadgeDetail.awardedTo' | translate }}
+								</dt>
 								<dd class="tw-text-sm tw-break-words">&nbsp;{{ config.issuedTo }}</dd>
 							</div>
 							<div
 								*ngIf="config.license"
 								class="tw-text-oebblack tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col"
 							>
-								<dt class="tw-text-sm tw-text-oebblack tw-font-bold">Lizenz</dt>
+								<dt class="tw-text-sm tw-text-oebblack tw-font-bold">
+									{{ 'General.license' | translate }}
+								</dt>
 								<dd class="tw-text-sm tw-text-oebblack md:tw-ml-2 tw-flex">
 									<div
 										class="tw-ml-1 tw-w-5 tw-h-5 tw-flex tw-items-center tw-justify-center tw-border-solid tw-border-[1px] tw-border-oebblack tw-rounded-full"
@@ -226,7 +272,7 @@
 				<div class="md:tw-pb-8 md:tw-min-h-[800px] tw-w-full">
 					<div class="tw-text-oebblack tw-pt-0 tw-pb-4 oeb-break-words">
 						<h3 class="tw-font-semibold tw-leading-[26.4px] tw-text-[22px] tw-text-oebblack tw-mb-4">
-							Kurzbeschreibung
+							{{ 'CreateBadge.shortDescription' | translate }}
 						</h3>
 						<p hlmP class="tw-text-oebblack tw-w-full">{{ config.badgeDescription }}</p>
 					</div>
@@ -257,7 +303,7 @@
 					<div *ngIf="config.learningPaths.length > 0">
 						<oeb-separator class="tw-block tw-mb-8 tw-mt-8"></oeb-separator>
 						<span class="tw-my-2 tw-text-oebblack tw-text-[22px] tw-leading-[26px] tw-font-semibold">
-							Dieser Badge ist Teil folgender Micro Degrees:
+							{{ 'Badge.partOfLearningPath' | translate }}
 						</span>
 						<div class="tw-mt-8 tw-grid tw-grid-cols-learningpaths tw-gap-6">
 							<bg-learningpathcard

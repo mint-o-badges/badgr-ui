@@ -59,8 +59,8 @@ export class RecipientBadgeInstance extends ManagedEntity<ApiRecipientBadgeInsta
 	get mostRelevantStatus(): BadgeMostRelevantStatusType | null {
 		if (this.expiresDate && this.expiresDate < new Date()) {
 			return 'expired';
-		} else if(this.apiModel.imported){
-			return 'imported'
+		} else if (this.apiModel.imported) {
+			return 'imported';
 		} else if (this.apiModel.pending) {
 			return 'pending';
 		} else if (this.apiModel.acceptance === 'Unaccepted') {
@@ -73,7 +73,11 @@ export class RecipientBadgeInstance extends ManagedEntity<ApiRecipientBadgeInsta
 	}
 
 	get criteriaUrl(): string {
-		return this.badgeClass.criteria_url || this.badgeClass.criteria || null;
+		return this.badgeClass.criteria_url || null;
+	}
+
+	get criteria(): Array<{ name: string; description: string }> {
+		return this.criteria;
 	}
 
 	get imported(): boolean {

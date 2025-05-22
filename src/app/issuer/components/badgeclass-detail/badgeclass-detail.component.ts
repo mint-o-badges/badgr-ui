@@ -225,35 +225,37 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 				this.config = {
 					crumbs: this.crumbs,
 					badgeTitle: this.badgeClass.name,
+					badgeCriteria: this.badgeClass.apiModel.criteria,
 					headerButton: {
-						title: 'Badge direkt vergeben',
+						title: 'Badge.award',
 						action: () => this.routeToBadgeAward(this.badgeClass, this.issuer),
 						// routerLink: ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'issue'],
 					},
 					issueQrRouterLink: ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'qr'],
 					qrCodeButton: {
-						title: 'Badge über QR-Code vergeben',
+						title: 'Badge.awardQRCode',
 						show: true,
 						action: () => this.routeToQRCodeAward(this.badgeClass, this.issuer),
 					},
 					menuitems: [
 						{
-							title: 'Bearbeiten',
+							title: 'General.edit',
 							routerLink: ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'edit'],
-							disabled: this.badgeClass.recipientCount > 0,
+							disabled: this.badgeClass.recipientCount > 0 || !this.issuer.canEditBadge,
 							icon: 'lucidePencil',
 						},
 						{
-							title: 'Kopieren (diese Institution)',
+							title: 'Badge.copyThisIssuer',
 							action: () => {
 								this.router.navigate(['/issuer/issuers', this.issuer.slug, 'badges', 'create'], {
 									state: { copybadgeid: this.badgeSlug },
 								});
 							},
 							icon: 'lucideCopy',
+							disabled: !this.issuer.canCreateBadge,
 						},
 						{
-							title: 'Kopierstatus bearbeiten',
+							title: 'Badge.editCopyStatus',
 							routerLink: [
 								'/issuer/issuers',
 								this.issuerSlug,
@@ -262,11 +264,13 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 								'copypermissions',
 							],
 							icon: 'lucideCopyX',
+							disabled: !this.issuer.canEditBadge,
 						},
 						{
-							title: 'Löschen',
+							title: 'General.delete',
 							icon: 'lucideTrash2',
 							action: () => this.deleteBadge(),
+							disabled: !this.issuer.canDeleteBadge,
 						},
 					],
 					badgeDescription: this.badgeClass.description,
@@ -317,17 +321,22 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 	revokeInstance(instance: BadgeInstance) {
 		this.confirmDialog
 			.openResolveRejectDialog({
-				dialogTitle: 'Warnung',
-				dialogBody: `Bist du sicher, dass du <strong>${this.badgeClass.name}</strong> von <strong>${instance.recipientIdentifier}</strong> zurücknehmen möchtest?`,
-				resolveButtonLabel: 'Zurücknehmen',
-				rejectButtonLabel: 'Abbrechen',
+				dialogTitle: this.translate.instant('General.warning'),
+				dialogBody: this.translate.instant('Issuer.revokeBadgeWarning', {
+					badge: this.badgeClass.name,
+					recipient: instance.recipientIdentifier,
+				}),
+				resolveButtonLabel: this.translate.instant('General.revoke'),
+				rejectButtonLabel: this.translate.instant('General.cancel'),
 			})
 			.then(
 				() => {
 					instance.revokeBadgeInstance('Manually revoked by Issuer').then(
 						(result) => {
 							this.messageService.reportMinorSuccess(
-								`Badge von ${instance.recipientIdentifier} zurücknehmen`,
+								this.translate.instant('Issuer.revokeSuccess', {
+									recipient: instance.recipientIdentifier,
+								}),
 							);
 							this.badgeClass.update();
 							// this.updateResults();
@@ -336,7 +345,9 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 						},
 						(error) =>
 							this.messageService.reportAndThrowError(
-								`Widerrufen des Badges von ${instance.recipientIdentifier} fehlgeschlagen`,
+								this.translate.instant('Issuer.revokeError', {
+									recipient: instance.recipientIdentifier,
+								}),
 							),
 					);
 				},
@@ -392,7 +403,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 			this.confirmDialog
 				.openResolveRejectDialog({
 					dialogTitle: 'Error',
-					dialogBody: `All instances of <strong>${this.badgeClass.name}</strong> must be revoked before you can delete it`,
+					dialogBody: this.translate.instant('Badge.deleteInstancesLeft'),
 					resolveButtonLabel: 'Ok',
 					showRejectButton: false,
 				})

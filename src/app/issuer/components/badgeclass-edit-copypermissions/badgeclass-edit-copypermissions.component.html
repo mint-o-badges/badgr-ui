@@ -21,7 +21,14 @@
 				<form [formGroup]="badgeClassForm.rawControl" #formElem (ngSubmit)="onSubmit()" novalidate>
 					<div class="section tw-text-oebblack tw-mt-6">
 						<h2 hlmH2 class="tw-font-bold">{{ 'Badge.copyBadgeHeadline' | translate }}</h2>
-						<p class="tw-text-purple tw-italic" [innerHTML]="'Badge.copyBadgeDescription' | translate"></p>
+						<p
+							class="tw-text-purple tw-italic"
+							[innerHTML]="
+								('Badge.copyBadgeDescription1' | translate) +
+								'<br />' +
+								('Badge.copyBadgeDescription2' | translate)
+							"
+						></p>
 						<div class="tw-mt-2 tw-mb-2">
 							<oeb-checkbox
 								[control]="badgeClassForm.rawControlMap.copy_permissions_allow_others"
