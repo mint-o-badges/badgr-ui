@@ -187,7 +187,7 @@ export class IssuerEditFormComponent implements OnInit {
 
 	onSubmit() {
 		if (this.issuerForm.controls.issuer_image.rawControl.hasError('required')) {
-			this.imageError = 'Bitte wähle ein Bild aus.';
+			this.imageError = this.translate.instant('Issuer.imageRequiredError');
 		}
 
 		if (!this.issuerForm.markTreeDirtyAndValidate()) {

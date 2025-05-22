@@ -246,7 +246,7 @@
 				</cdk-step>
 
 				<cdk-step
-					label="Enthaltene Kompetenzen"
+					[label]="'RecBadgeDetail.competencies' | translate "
 					[optional]="false"
 					[errorMessage]="getCompetencyPageError()"
 					*ngIf="category === 'competency'"
@@ -962,7 +962,7 @@
 					</div>
 				</cdk-step>
 
-				<cdk-step label="Abschluss">
+				<cdk-step [label]="'CreateBadge.closing' | translate ">
 					<h2 hlmH2 class="tw-pt-1 tw-px-1 tw-mr-auto !tw-text-oebblack !tw-font-bold">
 						{{ 'CreateBadge.optionalBadgeDetails' | translate }}
 					</h2>
@@ -1059,7 +1059,7 @@
 						</ng-container>
 					</div>
 					<div class="section tw-text-oebblack tw-mt-6">
-						<h2 hlmH2 class="tw-pt-1 tw-px-1 tw-mr-auto !tw-text-oebblack">
+						<h2 hlmH2 class="!tw-text-oebblack">
 							{{ 'CreateBadge.expiration' | translate }}
 						</h2>
 						<span

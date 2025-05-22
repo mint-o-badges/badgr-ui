@@ -202,7 +202,7 @@ export class PublicBadgeAssertionComponent {
 						},
 					],
 					badgeDescription: assertion.badge.description,
-					badgeCriteria: assertion.badge.badgeClass.criteria_text.split(","),
+					badgeCriteria: typeof(assertion.badge.criteria) != "string" ? assertion.badge.criteria.narrative  : null,
 					issuerSlug: assertion.badge.issuer['slug'],
 					slug: assertion.badge.id,
 					category:
