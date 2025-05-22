@@ -58,7 +58,7 @@ export interface PublicApiBadgeClass {
 	criteria:
 		| {
 				id: string;
-				narrative: string;
+				narrative: Array<string | object>;
 				criteriaUrl: string;
 		  }
 		| string;

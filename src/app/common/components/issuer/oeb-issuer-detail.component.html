@@ -41,7 +41,11 @@
 				*ngIf="!public"
 				[routerLink]="activeTab === 'Badges' ? ['./badges/select'] : ['./learningpaths/create']"
 				[disabled]="!issuer.canCreateBadge"
-				[text]="activeTab === 'Badges' ? ('Issuer.createBadge' | translate) : ('Issuer.myInstitutionsCreateLearningPath' | translate)"
+				[text]="
+					activeTab === 'Badges'
+						? ('Issuer.createBadge' | translate)
+						: ('Issuer.myInstitutionsCreateLearningPath' | translate)
+				"
 				[class]="issuer.canCreateBadge ? '' : 'disabled'"
 			>
 			</oeb-button>
@@ -83,7 +87,11 @@
 			[class]="'tw-flex-grow tw-relative'.concat(issuer.canCreateBadge ? '' : ' disabled')"
 			[routerLink]="activeTab === 'Badges' ? ['./badges/select'] : ['./learningpaths/create']"
 			[disabled]="!issuer.canCreateBadge"
-			[text]="activeTab === 'Badges' ? ('Issuer.createBadge' | translate) : ('Issuer.myInstitutionsCreateLearningPath' | translate)"
+			[text]="
+				activeTab === 'Badges'
+					? ('Issuer.createBadge' | translate)
+					: ('Issuer.myInstitutionsCreateLearningPath' | translate)
+			"
 		>
 		</oeb-button>
 		<oeb-button
@@ -116,7 +124,7 @@
 	<oeb-backpack-tabs
 		[variant]="'lightpurple'"
 		(onTabChanged)="onTabChange($event)"
-		[activeTab]="'Badges'"
+		[activeTab]="activeTab"
 		[tabs]="tabs"
 	></oeb-backpack-tabs>
 

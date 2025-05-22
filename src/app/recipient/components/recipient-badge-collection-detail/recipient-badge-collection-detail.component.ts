@@ -36,17 +36,16 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 	recipientBadgeDialog: RecipientBadgeSelectionDialog;
 
 	@ViewChild('dangerDialogHeaderTemplate')
-	dangerDialogHeaderTemplate: ElementRef
+	dangerDialogHeaderTemplate: ElementRef;
 
 	@ViewChild('deleteBadgeDialogContentTemplate')
-	deleteBadgeDialogContentTemplate: ElementRef
+	deleteBadgeDialogContentTemplate: ElementRef;
 
 	collectionLoadedPromise: Promise<unknown>;
 	collection: RecipientBadgeCollection = new RecipientBadgeCollection(null);
 	crumbs: LinkEntry[];
 
-	menuItems: MenuItem[]
-
+	menuItems: MenuItem[];
 
 	dialogRef: BrnDialogRef<any> = null;
 
@@ -60,7 +59,7 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 		private recipientBadgeCollectionManager: RecipientBadgeCollectionManager,
 		private configService: AppConfigService,
 		private dialogService: CommonDialogsService,
-		private translate: TranslateService
+		private translate: TranslateService,
 	) {
 		super(router, route, loginService);
 
@@ -70,7 +69,7 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 			{
 				title: this.translate.instant('General.edit'),
 				icon: 'lucidePencil',
-				action: () => console.log("")
+				action: () => this.router.navigate([`/recipient/badge-collections/${this.collectionSlug}/edit`]),
 			},
 			// {
 			// 	title: 'PDF herunterladen',
@@ -82,7 +81,7 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 				icon: 'lucideTrash2',
 				action: () => this.deleteCollection(),
 			},
-		]
+		];
 
 		this.collectionLoadedPromise = Promise.all([
 			this.recipientBadgeCollectionManager.recipientBadgeCollectionList.loadedPromise,
@@ -90,10 +89,12 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 		])
 			.then(([list]) => {
 				this.collection = list.entityForSlug(this.collectionSlug);
-				this.crumbs = [
-					{ title: 'Collections', routerLink: ['/recipient/badge-collections'] },
-					{ title: this.collection.name, routerLink: ['/collection/' + this.collection.slug] },
-				];
+				this.translate.get('BadgeCollection.myCollections').subscribe((str) => {
+					this.crumbs = [
+						{ title: str, routerLink: ['/recipient/badges'], queryParams: { tab: 'collections' } },
+						{ title: this.collection.name, routerLink: ['/collection/' + this.collection.slug] },
+					];
+				});
 				return this.collection;
 			})
 			.then((collection) => collection.badgesPromise)
@@ -123,18 +124,17 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 		}
 	}
 
-	removeBadge(badgeSlug: string){
+	removeBadge(badgeSlug: string) {
 		this.recipientBadgeManager.recipientBadgeList.loadedPromise.then((res) => {
-			const badge = res.entityForSlug(badgeSlug)
-			this.openBadgeDeleteDialog(badge)
+			const badge = res.entityForSlug(badgeSlug);
+			this.openBadgeDeleteDialog(badge);
 			this.dialogRef.closed$.subscribe((result) => {
-				if (result === 'continue'){
-					this.collection.removeBadge(res.entityForSlug(badgeSlug))
-					this.collection.save()
+				if (result === 'continue') {
+					this.collection.removeBadge(res.entityForSlug(badgeSlug));
+					this.collection.save();
 				}
 			});
-
-		})
+		});
 	}
 
 	manageBadges() {
@@ -170,12 +170,12 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 				content: this.deleteBadgeDialogContentTemplate,
 				variant: 'danger',
 				templateContext: {
-					badgename: badge.apiModel.json.badge.name
-				}
+					badgename: badge.apiModel.json.badge.name,
+				},
 			},
 		});
 
-		this.dialogRef = dialogRef
+		this.dialogRef = dialogRef;
 	}
 
 	deleteCollection() {
@@ -191,10 +191,9 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 					this.collection.deleteCollection().then(
 						() => {
 							this.messageService.reportMinorSuccess(`Deleted collection '${this.collection.name}'`);
-							this.router.navigate(['/recipient/badges'],
-								{
-									queryParams: { tab: this.translate.instant('BadgeCollection.myCollections') },
-								});
+							this.router.navigate(['/recipient/badges'], {
+								queryParams: { tab: 'collections' },
+							});
 						},
 						(error) => this.messageService.reportHandledError(`Failed to delete collection`, error),
 					);
@@ -268,8 +267,8 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 		}
 	}
 
-	togglePublished(){
-		this.collection.save()
+	togglePublished() {
+		this.collection.save();
 	}
 
 	shareCollection() {

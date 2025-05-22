@@ -105,7 +105,7 @@
 		"imported": "importiert",
 		"new": "neu",
 		"expired": "abgelaufen",
-		"emailAddress":"E-Mail-Adresse",
+		"emailAddress": "E-Mail-Adresse",
 		"tos": "Nutzungsbedingungen",
 		"change": "ändern"
 	},
@@ -537,7 +537,6 @@
 		"weHelpCreateBadge": "Wir helfen dir, in wenigen Schritten deinen Badge zu erstellen.",
 		"letsGo": "Los geht's!",
 		"closing": "Abschluss"
-
 	},
 	"Signup": {
 		"youHaveAccount": "Du hast bereits einen Account?",
@@ -756,6 +755,7 @@
 		"noCollections": "Du hast keine Sammlungen",
 		"collectionInfo": "Mit Sammlungen kannst du deine erhaltenen Badges organisieren und teilen.",
 		"createCollection": "Sammlung anlegen",
+		"editCollection": "Sammlung bearbeiten",
 		"share": "Teilen",
 		"orginzeBadges": "Organisiere deine Badges in Sammlungen.",
 		"collectionName": "Name der Sammlung",
@@ -776,7 +776,11 @@
 		"removeBadge": "Badge aus Sammlung entfernen?",
 		"removeBadgeConfirm1": "Möchtest du den Badge ",
 		"removeBadgeConfirm2": " wirklich aus dieser Sammlung entfernen?",
-		"removeBadgeConfirmation": "Ja, entfernen"
+		"removeBadgeConfirmation": "Ja, entfernen",
+		"youHave": "Du hast",
+		"oneBadge": " Badge für die Sammlung ausgewählt.",
+		"multiBadges": " Badges für die Sammlung ausgewählt.",
+		"noBadgesInThisCollectionYet": "Diese Sammlung enthält noch keine Badges."
 	},
 	"Profile": {
 		"more": "Mehr",
@@ -943,7 +947,6 @@
 		"deleteMd": "Micro Degree löschen",
 		"mdUsers": "Micro Degree-Nutzende",
 		"searchMds": "Micro Degrees durchsuchen"
-
 	},
 	"LearningPathEditor": {
 		"shortDescription": "Zusammenfassende Beschreibung deines Micro Degrees. Diese Kurzbeschreibung wird im Micro Degree gespeichert."

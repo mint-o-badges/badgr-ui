@@ -1,6 +1,6 @@
 <div class="breadcrumbs">
 	<ng-container *ngFor="let link of linkentries; let i = index; let last = last">
-		<a *ngIf="!last" class="breadcrumbs-x-link" [routerLink]="link.routerLink">
+		<a *ngIf="!last" class="breadcrumbs-x-link" [routerLink]="link.routerLink" [queryParams]="link.queryParams">
 			<svg class="breadcrumbs-x-icon icon icon-dark2" icon="icon_arrow"></svg>
 			<span class="breadcrumbs-x-text">
 				{{ link.title }}
