@@ -74,7 +74,7 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 				action: () => this.router.navigate([`/recipient/badge-collections/${this.collectionSlug}/edit`]),
 			},
 			{
-				title: 'PDF herunterladen',
+				title: this.translate.instant('BadgeCollection.downloadPdf'),
 				icon: 'lucideFileText',
 				action: () => this.exportPdf(),
 			},
@@ -278,9 +278,9 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 	}
 
 	exportPdf() {
-		this.pdfService.getPdf(this.collection.slug, 'collections');
-		// this.dialogService.exportPdfDialog.openDialogForCollections(this.collection)
-		// 	.catch((error) => console.log(error));
+		this.pdfService.getPdf(this.collection.slug, 'collections').then((res) => {
+			this.pdfService.downloadPdf(res, this.collection.name, new Date());
+		});
 	}
 }
 
