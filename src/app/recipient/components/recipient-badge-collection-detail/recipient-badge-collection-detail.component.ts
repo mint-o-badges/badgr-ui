@@ -192,7 +192,7 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 						() => {
 							this.messageService.reportMinorSuccess(`Deleted collection '${this.collection.name}'`);
 							this.router.navigate(['/recipient/badges'], {
-								queryParams: { tab: this.translate.instant('BadgeCollection.myCollections') },
+								queryParams: { tab: 'collections' },
 							});
 						},
 						(error) => this.messageService.reportHandledError(`Failed to delete collection`, error),
