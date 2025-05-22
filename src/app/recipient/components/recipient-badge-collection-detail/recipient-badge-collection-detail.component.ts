@@ -91,7 +91,7 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 				this.collection = list.entityForSlug(this.collectionSlug);
 				this.translate.get('BadgeCollection.myCollections').subscribe((str) => {
 					this.crumbs = [
-						{ title: str, routerLink: ['/recipient/badges'], queryParams: { tab: str } },
+						{ title: str, routerLink: ['/recipient/badges'], queryParams: { tab: 'collections' } },
 						{ title: this.collection.name, routerLink: ['/collection/' + this.collection.slug] },
 					];
 				});

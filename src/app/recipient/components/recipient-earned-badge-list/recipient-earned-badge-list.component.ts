@@ -128,7 +128,7 @@ export class RecipientEarnedBadgeListComponent
 	@ViewChild('countup2') countup2: CountUpDirective;
 	@ViewChild('badgesCounter') badgesCounter: CountUpDirective;
 
-	activeTab: string = 'Badges';
+	activeTab: string = 'badges';
 	private _badgesDisplay: BadgeDispay = 'grid';
 	sortControl = new FormControl('date_desc');
 	get badgesDisplay() {
@@ -300,21 +300,25 @@ export class RecipientEarnedBadgeListComponent
 	ngAfterContentInit() {
 		this.tabs = [
 			{
+				key: 'badges',
 				title: 'Badges',
 				component: this.badgesTemplate,
 			},
 			{
+				key: 'competencies',
 				title: this.translate.instant('RecBadge.competencies'),
 				component: this.badgesCompetency,
 			},
 			{
+				key: 'microdegrees',
 				title: 'Micro Degrees',
 				component: this.learningPathTemplate,
 			},
 			{
+				key: 'collections',
 				title: this.translate.instant('BadgeCollection.myCollections'),
 				component: this.collectionTemplate,
-			}
+			},
 		];
 	}
 
