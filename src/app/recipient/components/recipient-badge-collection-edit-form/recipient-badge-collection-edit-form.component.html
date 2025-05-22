@@ -174,7 +174,7 @@
 					variant="secondary"
 					[text]="'General.cancel' | translate"
 					[routerLink]="['/recipient/badges']"
-					[queryParams]="{ tab: myCollections }"
+					[queryParams]="{ tab: 'collections' }"
 					size="md"
 				>
 				</oeb-button>
@@ -182,7 +182,9 @@
 				<oeb-button
 					text="{{ (!editing ? 'BadgeCollection.createCollection' : 'General.save') | translate }}"
 					type="submit"
-					[disabled]="!!createCollectionPromise"
+					[disabled]="!!savePromise"
+					[loading-promises]="savePromise"
+					[disabled-when-requesting]="true"
 					size="md"
 					class="tw-mb-[40px]"
 				>

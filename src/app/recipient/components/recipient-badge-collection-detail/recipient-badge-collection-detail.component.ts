@@ -93,7 +93,7 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 				this.collection = list.entityForSlug(this.collectionSlug);
 				this.translate.get('BadgeCollection.myCollections').subscribe((str) => {
 					this.crumbs = [
-						{ title: str, routerLink: ['/recipient/badges'], queryParams: { tab: str } },
+						{ title: str, routerLink: ['/recipient/badges'], queryParams: { tab: 'collections' } },
 						{ title: this.collection.name, routerLink: ['/collection/' + this.collection.slug] },
 					];
 				});
@@ -194,7 +194,7 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 						() => {
 							this.messageService.reportMinorSuccess(`Deleted collection '${this.collection.name}'`);
 							this.router.navigate(['/recipient/badges'], {
-								queryParams: { tab: this.translate.instant('BadgeCollection.myCollections') },
+								queryParams: { tab: 'collections' },
 							});
 						},
 						(error) => this.messageService.reportHandledError(`Failed to delete collection`, error),

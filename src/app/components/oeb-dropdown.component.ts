@@ -30,7 +30,7 @@ import { TranslateModule } from '@ngx-translate/core';
 		NgIcon,
 		HlmIconModule,
 		SharedIconsModule,
-		TranslateModule
+		TranslateModule,
 	],
 	template: `
 		<button
@@ -89,7 +89,8 @@ export class OebDropdownComponent {
 	@Input() trigger: any;
 	@Input() size: HlmMenuItemVariants['size'] = 'default';
 	@Input() inset: HlmMenuItemVariants['inset'] = false;
-	@Input() triggerStyle: string = 'tw-border tw-border-solid tw-border-purple tw-px-1 tw-py-2 tw-rounded-xl disabled:tw-pointer-events-none disabled:tw-opacity-50';
+	@Input() triggerStyle: string =
+		'tw-border tw-border-solid tw-border-purple tw-px-1 tw-py-2 tw-rounded-xl disabled:tw-pointer-events-none disabled:tw-opacity-50';
 	@Input() label?: string = '';
 	@Input() class?: string = '';
 	@Input() menuItems: MenuItem[];

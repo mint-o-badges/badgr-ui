@@ -34,7 +34,6 @@
 		"postalCode": "Postal Code",
 		"description": "Description",
 		"city": "City",
-		"emptyString": "",
 		"member": "Member",
 		"members": "Members",
 		"role": "Role",
@@ -258,8 +257,8 @@
 		"badgePreview": "Badge preview",
 		"certPreview": "PDF certificate preview",
 		"batchAwardText1": "Award the badge to one learner or",
-		"batchAwardTextLink": "click here to award the badge to multiple learners simultaneously",
-		"batchAwardText2": "",
+		"batchAwardTextLink": "click here ",
+		"batchAwardText2": "to award the badge to multiple learners simultaneously",
 		"awardedPerson": "Recipient's name",
 		"sendEmail": "Notify recipient by email",
 		"giveBadge": "Award badge",
@@ -343,7 +342,7 @@
 		"staffMemberRights": "Can assign badges created by owners and/or editors (including creating, editing and deleting QR code assignments).",
 		"imageFormat": "(Format 1:1 / square)",
 		"nameOfIssuer": "Name of Institution",
-		"wesbiteUrl": "Website-URL",
+		"websiteUrl": "Website-URL",
 		"schoolLabel": "School (elementary school, secondary schools, vocational schools, institutions of formal education)",
 		"universityLabel": "University (universities, universities of applied sciences, ...)",
 		"othersLabel": "Others (libraries, museums, FabLabs, companies, associations, ...)",
@@ -361,7 +360,7 @@
 		"framesMeaning": "What do the frames and colors mean?",
 		"searchBadges": "Search badges",
 		"category": "Category",
-		"issuer": "Issuer",
+		"issuer": "Institution",
 		"membership": "Membership",
 		"ability": "Meta-skill",
 		"archievement": "Participation / Achievement",
@@ -536,7 +535,8 @@
 		"stepFinish": "Finish",
 		"weHelpCreateBadge": "We'll help you create your badge in just a few steps.",
 		"letsGo": "Let's go!",
-		"closing": "Closing"
+		"closing": "Closing",
+		"alignment": "link"
 	},
 	"Signup": {
 		"youHaveAccount": "Already have an account?",
@@ -714,7 +714,9 @@
 		"editBadgeInfo": "Edit the information about this achievement.",
 		"removeCompetency": "Remove competency",
 		"removeCompetencyInfo": "Are you sure you want to remove this competency?",
-		"cancel": "Cancel"
+		"cancel": "Cancel",
+		"save": "Save",
+		"saving": "Saving"
 	},
 	"RecBadgeDetail": {
 		"shareBadge": "Share badge",
@@ -769,7 +771,7 @@
 		"myCollections": "My Collections",
 		"useCollectionsForApplications": "Use collections for applications",
 		"collectionInfoText": "Organize your badges into collections and download the respective PDF or create a direct-link for sharing.",
-		"addLink": "",
+		"addLink": "Add the link or PDF to your application and refer to it in your cover letter. (For example: “In the attached badge collection you will find an overview of my skills in the field of...”)",
 		"createCollectionNow": "Create collection now",
 		"addBadges": "Add badges to collection",
 		"skipStep": "You can skip this step and add badges later.",
@@ -781,6 +783,7 @@
 		"youHave": "You have selected",
 		"oneBadge": " badge for this collection.",
 		"multiBadges": " badges for this collection.",
+		"noBadgesInThisCollectionYet": "This collection does not contain any badges yet.",
 		"downloadPdf": "Download PDF"
 	},
 	"Profile": {

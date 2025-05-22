@@ -34,12 +34,18 @@ export class RecipientBadgeCollectionEditFormComponent extends BaseAuthenticated
 	@Input()
 	set badgeCollection(collection: RecipientBadgeCollection) {
 		this.editing = true;
+		if (this.existingCollection !== collection) {
+			this.existingCollection = collection;
+		}
 		this.initFormFromExisting(collection);
+
 		this.badgeCollectionForm.setValue({
-			collectionName: collection.name,
-			collectionDescription: collection.description,
+			collectionName: this.existingCollection.name,
+			collectionDescription: this.existingCollection.description,
 		});
 	}
+
+	existingCollection: RecipientBadgeCollection | null = null;
 
 	editing = false;
 
@@ -49,9 +55,6 @@ export class RecipientBadgeCollectionEditFormComponent extends BaseAuthenticated
 
 	savePromise: Promise<unknown>;
 	badgesLoaded: Promise<unknown>;
-
-	createCollectionPromise: Promise<unknown>;
-
 	private loadedData = false;
 	hasMultipleIssuers = true;
 	restrictToIssuerId: string = null;
@@ -264,33 +267,48 @@ export class RecipientBadgeCollectionEditFormComponent extends BaseAuthenticated
 			return;
 		}
 
-		const collectionForCreation: ApiRecipientBadgeCollectionForCreation = {
-			name: formState.collectionName,
-			description: formState.collectionDescription,
-			published: false,
-			badges: [],
-		};
+		if (!this.editing) {
+			const collectionForCreation: ApiRecipientBadgeCollectionForCreation = {
+				name: formState.collectionName,
+				description: formState.collectionDescription,
+				published: false,
+				badges: [],
+			};
 
-		this.selectedBadges.forEach((badge) => badge.markAccepted());
+			this.selectedBadges.forEach((badge) => badge.markAccepted());
 
-		this.createCollectionPromise = this.recipientBadgeCollectionManager
-			.createRecipientBadgeCollection(collectionForCreation)
-			.then(
-				(collection) => {
-					collection.updateBadges(this.selectedBadges);
-					collection.save().then(
-						(success) => {
-							this.router.navigate(['/recipient/badge-collections/collection', collection.slug]);
-							this.messageService.reportMinorSuccess('Collection created successfully.');
-						},
-						(failure) => this.messageService.reportHandledError('Unable to create collection', failure),
-					);
+			this.savePromise = this.recipientBadgeCollectionManager
+				.createRecipientBadgeCollection(collectionForCreation)
+				.then(
+					(collection) => {
+						collection.updateBadges(this.selectedBadges);
+						collection.save().then(
+							(success) => {
+								this.router.navigate(['/recipient/badge-collections/collection', collection.slug]);
+								this.messageService.reportMinorSuccess('Collection created successfully.');
+							},
+							(failure) => this.messageService.reportHandledError('Unable to create collection', failure),
+						);
+					},
+					(error) => {
+						this.messageService.reportHandledError('Unable to create collection', error);
+					},
+				)
+				.then(() => (this.savePromise = null));
+		} else {
+			this.existingCollection.name = formState.collectionName;
+			this.existingCollection.description = formState.collectionDescription;
+
+			this.selectedBadges.forEach((badge) => badge.markAccepted());
+			this.existingCollection.updateBadges(this.selectedBadges);
+			this.existingCollection.save().then(
+				(success) => {
+					this.router.navigate(['/recipient/badge-collections/collection', this.existingCollection.slug]);
+					this.messageService.reportMinorSuccess('Collection saved successfully.');
 				},
-				(error) => {
-					this.messageService.reportHandledError('Unable to create collection', error);
-				},
-			)
-			.then(() => (this.createCollectionPromise = null));
+				(failure) => this.messageService.reportHandledError('Unable to save collection', failure),
+			);
+		}
 	}
 }
 

@@ -10,9 +10,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class AboutComponent implements OnInit {
 	mailAddress = 'support@openbadges.education';
 	mailBody = 'Interesse an Open Educational Badges';
-	constructor(
-		public translate: TranslateService,
-	) {}
+	constructor(public translate: TranslateService) {}
 
 	ngOnInit() {}
 }

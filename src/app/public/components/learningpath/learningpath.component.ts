@@ -46,7 +46,7 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 	minutesCompletedRemainder: number;
 	minutesTotal: number;
 	tabs: Tab[] = undefined;
-	activeTab = 'LearningPath.badgeTabs.all';
+	activeTab = 'all';
 	loggedIn = false;
 	badgeInstance: RecipientBadgeInstance | null = null;
 
@@ -104,16 +104,19 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 	ngAfterContentInit() {
 		this.tabs = [
 			{
+				key: 'all',
 				title: 'LearningPath.badgeTabs.all',
 				count: this.totalBadgeCount,
 				component: this.allTemplate,
 			},
 			{
+				key: 'inprogress',
 				title: 'LearningPath.badgeTabs.inprogress',
 				count: this.openBadgeCount,
 				component: this.openTemplate,
 			},
 			{
+				key: 'finished',
 				title: 'LearningPath.badgeTabs.finished',
 				count: this.finishedBadgeCount,
 				component: this.finishedTemplate,
@@ -159,16 +162,19 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 
 			this.tabs = [
 				{
+					key: 'all',
 					title: 'LearningPath.badgeTabs.all',
 					count: this.totalBadgeCount,
 					component: this.allTemplate,
 				},
 				{
+					key: 'inprogress',
 					title: 'LearningPath.badgeTabs.inprogress',
 					count: this.totalBadgeCount - (response.completed_badges ? response.completed_badges.length : 0),
 					component: this.openTemplate,
 				},
 				{
+					key: 'finished',
 					title: 'LearningPath.badgeTabs.finished',
 					count: response.completed_badges ? response.completed_badges.length : 0,
 					component: this.finishedTemplate,

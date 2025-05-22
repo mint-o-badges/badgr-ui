@@ -73,7 +73,7 @@ const MAX_HRS_PER_COMPETENCY: number = 999;
 })
 export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableComponent implements OnInit, AfterViewInit {
 	private readonly _hlmDialogService = inject(HlmDialogService);
-	
+
 	baseUrl: string;
 	badgeCategory: string;
 
@@ -505,7 +505,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			? badgeClass.extension['extensions:CategoryExtension'].Category
 			: 'participation';
 
-
 		this.badgeClassForm.setValue({
 			badge_name: badgeClass.name,
 			badge_image: badgeClass.imageFrame ? badgeClass.image : null,
@@ -568,7 +567,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			: undefined;
 
 		setTimeout(() => {
-			if(badgeClass.imageFrame){
+			if (badgeClass.imageFrame) {
 				// regenerating the upload image for the issuer image in case it changed via copying
 				// or if it was not part of the badge image yet
 				this.generateUploadImage(this.currentImage, this.badgeClassForm.value, true, true);
@@ -1077,7 +1076,9 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 					dialogTitle: this.translate.instant('CreateBadge.removeAlignment') + '?',
 					dialogBody: this.translate.instant('CreateBadge.removeAlignmentInfo'),
 					resolveButtonLabel:
-						this.translate.instant('General.remove') + ' ' + this.translate.instant('Badge.alignment'),
+						this.translate.instant('General.remove') +
+						' ' +
+						this.translate.instant('CreateBadge.alignment'),
 					rejectButtonLabel: this.translate.instant('General.cancel'),
 				}))
 			) {

@@ -34,7 +34,6 @@
 		"postalCode": "Postleitzahl",
 		"description": "Beschreibung",
 		"city": "Stadt",
-		"emptyString": "",
 		"member": "Mitglied",
 		"members": "Mitglieder",
 		"role": "Rolle",
@@ -343,7 +342,7 @@
 		"staffMemberRights": "Kann die von Eigentümer:innen und/oder Editor:innen erstellten Badges vergeben (inkl. QR-Code-Vergaben erstellen, bearbeiten und löschen).",
 		"imageFormat": "(Format 1:1 / quadratisch)",
 		"nameOfIssuer": "Name der Institution",
-		"wesbiteUrl": "Webseiten-URL",
+		"websiteUrl": "Webseiten-URL",
 		"schoolLabel": "Schule (Grundschulen, weiterführende Schulen, Berufsschulen, Institutionen formaler schulischer Bildung)",
 		"universityLabel": "Hochschule (Universitäten. Fachhochschulen, ...)",
 		"othersLabel": "Andere (Bibliotheken, Museen, FabLabs, Unternehmen, Vereine, ...)",
@@ -361,7 +360,7 @@
 		"framesMeaning": "Was bedeuten die Rahmen und Farben?",
 		"searchBadges": "Badges durchsuchen",
 		"category": "Kategorie",
-		"issuer": "Issuer",
+		"issuer": "Institution",
 		"membership": "Mitgliedschaft",
 		"ability": "Metakompetenz",
 		"archievement": "Teilnahme / Erfolg",
@@ -536,7 +535,8 @@
 		"stepFinish": "Abschluss",
 		"weHelpCreateBadge": "Wir helfen dir, in wenigen Schritten deinen Badge zu erstellen.",
 		"letsGo": "Los geht's!",
-		"closing": "Abschluss"
+		"closing": "Abschluss",
+		"alignment": "bestätigen"
 	},
 	"Signup": {
 		"youHaveAccount": "Du hast bereits einen Account?",
@@ -713,7 +713,10 @@
 		"editBadge": "Badge editieren",
 		"editBadgeInfo": "Editiere die Information dieses Badges.",
 		"removeCompetency": "Kompetenz löschen",
-		"removeCompetencyInfo": "Möchtest du diese Kompetenz wirklich löschen?"
+		"removeCompetencyInfo": "Möchtest du diese Kompetenz wirklich löschen?",
+		"cancel": "Abbrechen",
+		"save": "Speichern",
+		"saving": "Speichere"
 	},
 	"RecBadgeDetail": {
 		"shareBadge": "Badge teilen",
@@ -780,6 +783,7 @@
 		"youHave": "Du hast",
 		"oneBadge": " Badge für die Sammlung ausgewählt.",
 		"multiBadges": " Badges für die Sammlung ausgewählt.",
+		"noBadgesInThisCollectionYet": "Diese Sammlung enthält noch keine Badges.",
 		"downloadPdf": "PDF herunterladen"
 	},
 	"Profile": {

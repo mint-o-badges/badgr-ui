@@ -322,7 +322,10 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		this.confirmDialog
 			.openResolveRejectDialog({
 				dialogTitle: this.translate.instant('General.warning'),
-				dialogBody: this.translate.instant('Issuer.revokeBadgeWarning', { "badge": this.badgeClass.name, "recipient": instance.recipientIdentifier }),
+				dialogBody: this.translate.instant('Issuer.revokeBadgeWarning', {
+					badge: this.badgeClass.name,
+					recipient: instance.recipientIdentifier,
+				}),
 				resolveButtonLabel: this.translate.instant('General.revoke'),
 				rejectButtonLabel: this.translate.instant('General.cancel'),
 			})
@@ -331,7 +334,9 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 					instance.revokeBadgeInstance('Manually revoked by Issuer').then(
 						(result) => {
 							this.messageService.reportMinorSuccess(
-								this.translate.instant('Issuer.revokeSuccess', { "recipient": instance.recipientIdentifier })
+								this.translate.instant('Issuer.revokeSuccess', {
+									recipient: instance.recipientIdentifier,
+								}),
 							);
 							this.badgeClass.update();
 							// this.updateResults();
@@ -340,7 +345,9 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 						},
 						(error) =>
 							this.messageService.reportAndThrowError(
-								this.translate.instant('Issuer.revokeError', { "recipient": instance.recipientIdentifier })
+								this.translate.instant('Issuer.revokeError', {
+									recipient: instance.recipientIdentifier,
+								}),
 							),
 					);
 				},
