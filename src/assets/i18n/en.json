@@ -34,7 +34,6 @@
 		"postalCode": "Postal Code",
 		"description": "Description",
 		"city": "City",
-		"emptyString": "",
 		"member": "Member",
 		"members": "Members",
 		"role": "Role",
@@ -258,8 +257,8 @@
 		"badgePreview": "Badge preview",
 		"certPreview": "PDF certificate preview",
 		"batchAwardText1": "Award the badge to one learner or",
-		"batchAwardTextLink": "click here to award the badge to multiple learners simultaneously",
-		"batchAwardText2": "",
+		"batchAwardTextLink": "click here ",
+		"batchAwardText2": "to award the badge to multiple learners simultaneously",
 		"awardedPerson": "Recipient's name",
 		"sendEmail": "Notify recipient by email",
 		"giveBadge": "Award badge",
@@ -536,7 +535,8 @@
 		"stepFinish": "Finish",
 		"weHelpCreateBadge": "We'll help you create your badge in just a few steps.",
 		"letsGo": "Let's go!",
-		"closing": "Closing"
+		"closing": "Closing",
+		"alignment": "link"
 	},
 	"Signup": {
 		"youHaveAccount": "Already have an account?",
@@ -771,7 +771,7 @@
 		"myCollections": "My Collections",
 		"useCollectionsForApplications": "Use collections for applications",
 		"collectionInfoText": "Organize your badges into collections and download the respective PDF or create a direct-link for sharing.",
-		"addLink": "",
+		"addLink": "Add the link or PDF to your application and refer to it in your cover letter. (For example: “In the attached badge collection you will find an overview of my skills in the field of...”)",
 		"createCollectionNow": "Create collection now",
 		"addBadges": "Add badges to collection",
 		"skipStep": "You can skip this step and add badges later.",

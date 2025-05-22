@@ -496,8 +496,8 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 			},
 			recipient: {
 				'=0': this.translate.instant('Issuer.noRecipient'),
-				'=1': '1 ' + this.translate.instant('General.recipient'),
-				other: '# ' + this.translate.instant('General.recipient'),
+				'=1': '1 ' + this.translate.instant('Issuer.recipient'),
+				other: '# ' + this.translate.instant('Issuer.recipients'),
 			},
 		};
 	}

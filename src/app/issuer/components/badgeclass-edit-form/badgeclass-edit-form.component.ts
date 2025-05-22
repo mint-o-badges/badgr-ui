@@ -1076,7 +1076,9 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 					dialogTitle: this.translate.instant('CreateBadge.removeAlignment') + '?',
 					dialogBody: this.translate.instant('CreateBadge.removeAlignmentInfo'),
 					resolveButtonLabel:
-						this.translate.instant('General.remove') + ' ' + this.translate.instant('Badge.alignment'),
+						this.translate.instant('General.remove') +
+						' ' +
+						this.translate.instant('CreateBadge.alignment'),
 					rejectButtonLabel: this.translate.instant('General.cancel'),
 				}))
 			) {
