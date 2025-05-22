@@ -1,41 +1,193 @@
 <main>
 	<form-message></form-message>
 
-	<div *ngIf="isEditing">
-		<form [formGroup]="badgeCollectionForm.rawControl" (ngSubmit)="onSubmit(badgeCollectionForm.value)" novalidate>
-			<fieldset>
-				<bg-formfield-text
-					[autofocus]="true"
+	<form [formGroup]="badgeCollectionForm.rawControl" (ngSubmit)="onSubmit(badgeCollectionForm.value)" novalidate>
+		<fieldset aria-labelledby="heading-add-badge-collection" role="group">
+			<legend class="visuallyhidden" id="heading-add-badge-collection">
+				{{ 'BadgeCollection.createCollection' | translate }}
+			</legend>
+			<div class="tw-w-[600px]">
+				<oeb-input
 					[control]="badgeCollectionForm.rawControlMap.collectionName"
-					[errorMessage]="{ required: 'Please enter a collection name' }"
-					[label]="'Name'"
-					[maxchar]="128"
-					[sublabel]="' remaining characters'"
-				></bg-formfield-text>
-				<bg-formfield-text
-					class="u-margin-top3x"
+					label="{{ 'BadgeCollection.collectionName' | translate }}"
+					[max]="50"
+					errorMessage=" {{ 'BadgeCollection.enterCollectioName' | translate }}"
+					[autofocus]="true"
+					[sublabelRight]="'max. 50 ' + ('General.characters' | translate)"
+					[placeholder]="'BadgeCollection.collectionNamePlaceholder' | translate"
+				>
+				</oeb-input>
+				<oeb-input
 					[control]="badgeCollectionForm.rawControlMap.collectionDescription"
-					[errorMessage]="{ required: 'Please enter a description' }"
-					[label]="'Description'"
-					[maxchar]="255"
-					[multiline]="true"
-					[sublabel]="' remaining characters'"
-				></bg-formfield-text>
-				<div class="l-flex l-flex-2x u-margin-top2x">
-					<a class="button button-secondary" [disabled-when-requesting]="true" (click)="cancelEditing()"
-						>Cancel</a
+					label="{{ 'BadgeCollection.description' | translate }}"
+					errorMessage="{{ 'BadgeCollection.provideDescription' | translate }}"
+					[max]="300"
+					size="lg"
+					fieldType="textarea"
+					[sublabelRight]="'max. 300 ' + ('General.characters' | translate)"
+					[placeholder]="'BadgeCollection.descriptionPlaceholder' | translate"
+				>
+				</oeb-input>
+			</div>
+
+			<ng-template [showLoader]="true" [bgAwaitPromises]="badgesLoaded">
+				<div class="tw-mt-6 md:tw-mt-7 section">
+					<div
+						class="tw-rounded-2xl tw-p-8 md:tw-p-10 tw-bg-white tw-border-purple tw-border-solid tw-border"
 					>
-					<button
-						class="button"
-						type="submit"
-						[disabled]="!!savePromise"
-						[loading-promises]="[savePromise]"
-						loading-message="Saving"
-					>
-						Save
-					</button>
+						<h2 class="tw-text-oebblack tw-text-[22px] tw-font-bold tw-mb-4">
+							{{ 'BadgeCollection.addBadges' | translate }}
+						</h2>
+						<span class="tw-text-lg tw-text-purple tw-italic">
+							{{ 'BadgeCollection.skipStep' | translate }}
+						</span>
+						<div class="tw-flex tw-flex-wrap tw-py-6">
+							<!-- Search  -->
+							<div class="tw-pb-2 md:tw-pb-0">
+								<input
+									type="text"
+									name="forminput"
+									changeOrder
+									class="tw-border-solid tw-border-purple tw-bg-white tw-mr-6"
+									placeholder="{{ 'Badge.searchBadges' | translate }}"
+									[(ngModel)]="searchQuery"
+									[ngModelOptions]="{ standalone: true }"
+									hlmInput
+								/>
+							</div>
+
+							<div class="l-actionbar-x-groupby">
+								<label class="l-flex l-flex-2x">
+									<div class="forminput">
+										<div class="forminput-x-inputs">
+											<select
+												[(ngModel)]="groupBy"
+												#selectInput
+												class="border tw-font-normal"
+												[ngClass]="{ 'tw-font-bold!': groupBy != '---' }"
+												[ngModelOptions]="{ standalone: true }"
+												id="badge-catalog-select"
+											>
+												<option [ngValue]="'---'">{{ 'Badge.groupBy' | translate }}</option>
+												<option *ngFor="let option of groups" [value]="option">
+													{{ option }}
+												</option>
+											</select>
+										</div>
+									</div>
+								</label>
+							</div>
+						</div>
+						<ng-container *ngIf="groupBy == '---'">
+							<div class="tw-grid tw-grid-cols-badgesLp tw-gap-6 tw-mt-4">
+								<bg-badgecard
+									*ngFor="let badge of badgeResults; let i = index"
+									[badgeTitle]="badge.badge.apiModel.json.badge.name"
+									[badgeImage]="badge.badge.apiModel.json.badge.image"
+									[badgeDescription]="badge.badge.apiModel.json.badge.description"
+									[badgeSlug]="badge.badge.apiModel.json.badge.slug"
+									[issuerTitle]="badge.badge.apiModel.json.badge.issuer.name"
+									[badgeIssueDate]="badge.badge.createdAt"
+									public="true"
+									[publicUrl]="badge.badge.url"
+									[badgeClass]="true"
+									[issuerSlug]="badge.badge.issuerSlug"
+									(ngModelChange)="checkboxChange($event, badge.badge)"
+									(checkboxChange)="checkboxChange($event, badge.badge)"
+									[checked]="badgeChecked(badge.badge)"
+									[showCheckbox]="true"
+								></bg-badgecard>
+							</div>
+						</ng-container>
+						<ng-container *ngIf="groupBy == 'Kategorie' || groupBy == 'Category'">
+							<ng-container *ngFor="let categoryGroup of badgeResultsByCategory">
+								<h3 class="u-text-h3-semibold u-margin-bottom2x u-margin-top6x u-text-dark1">
+									{{ categoryOptions[categoryGroup.category] }}
+									<span class="u-text-small-semibold-caps u-text-dark4 u-margin-left2x"
+										>{{ categoryGroup.badges.length }}
+										{{ categoryGroup.badges.length == 1 ? 'Badge' : 'Badges' }}</span
+									>
+								</h3>
+								<div class="tw-grid tw-grid-cols-badgesLp tw-gap-6">
+									<!-- TODO: Fix the badgecard link for sharing and routing -->
+									<bg-badgecard
+										*ngFor="let badge of categoryGroup.badges"
+										[badgeTitle]="badge.name"
+										[badgeImage]="badge.image"
+										[badgeDescription]="badge.description"
+										[badgeSlug]="badge.slug"
+										[issuerTitle]="badge.issuerName ? badge.issuerName : badge.issuer.name"
+										[badgeIssueDate]="badge.createdAt"
+										public="true"
+										[publicUrl]="badge.url"
+										[badgeClass]="true"
+										[competencies]="badge.extension['extensions:CompetencyExtension']"
+										[showCheckbox]="true"
+										(ngModelChange)="checkboxChange($event, badge)"
+										(checkboxChange)="checkboxChange($event, badge)"
+										[checked]="badgeChecked(badge)"
+									></bg-badgecard>
+								</div>
+							</ng-container>
+						</ng-container>
+						<ng-container *ngIf="groupBy == 'Issuer'">
+							<ng-container *ngFor="let issuerGroup of issuerResults">
+								<h3 class="u-text-h3-semibold u-margin-bottom2x u-margin-top6x u-text-dark1">
+									{{ issuerGroup.issuer?.name }}
+									<span class="u-text-small-semibold-caps u-text-dark4 u-margin-left2x"
+										>{{ issuerGroup.badges.length }}
+										{{ issuerGroup.badges.length == 1 ? 'Badge' : 'Badges' }}</span
+									>
+								</h3>
+								<div class="tw-grid sm:tw-grid-cols-badgesLp tw-gap-6">
+									<!-- TODO: Fix the badgecard link for sharing and routing -->
+									<bg-badgecard
+										*ngFor="let badge of issuerGroup.badges"
+										[badgeTitle]="badge._apiModel.json.badge.name"
+										[badgeImage]="badge._apiModel.json.badge.image"
+										[badgeDescription]="badge._apiModel.json.badge.description"
+										[badgeSlug]="badge._apiModel.json.badge.slug"
+										[issuerTitle]="badge._apiModel.json.badge.issuer.name"
+										[badgeIssueDate]="badge._apiModel.json.badge.createdAt"
+										public="true"
+										[publicUrl]="badge.url"
+										[badgeClass]="true"
+										[competencies]="badge._apiModel.extensions['extensions:CompetencyExtension']"
+										[showCheckbox]="true"
+										(ngModelChange)="checkboxChange($event, badge)"
+										(checkboxChange)="checkboxChange($event, badge)"
+										[checked]="badgeChecked(badge)"
+									></bg-badgecard>
+								</div>
+							</ng-container>
+						</ng-container>
+						<p class="tw-mt-6">
+							{{ 'BadgeCollection.youHave' | translate }} {{ selectedBadges.length }}
+							{{ selectedBadges.length | i18nPlural: plural.badges | translate }}
+						</p>
+					</div>
 				</div>
-			</fieldset>
-		</form>
-	</div>
+			</ng-template>
+
+			<div class="l-flex l-flex-1x l-flex-justifyend u-margin-top2x">
+				<oeb-button
+					variant="secondary"
+					[text]="'General.cancel' | translate"
+					[routerLink]="['/recipient/badges']"
+					[queryParams]="{ tab: myCollections }"
+					size="md"
+				>
+				</oeb-button>
+
+				<oeb-button
+					text="{{ (!editing ? 'BadgeCollection.createCollection' : 'General.save') | translate }}"
+					type="submit"
+					[disabled]="!!createCollectionPromise"
+					size="md"
+					class="tw-mb-[40px]"
+				>
+				</oeb-button>
+			</div>
+		</fieldset>
+	</form>
 </main>

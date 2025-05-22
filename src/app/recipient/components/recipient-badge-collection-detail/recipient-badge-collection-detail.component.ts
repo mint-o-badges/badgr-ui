@@ -61,7 +61,7 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 		private configService: AppConfigService,
 		private dialogService: CommonDialogsService,
 		private translate: TranslateService,
-		private pdfService: PdfService
+		private pdfService: PdfService,
 	) {
 		super(router, route, loginService);
 
@@ -71,7 +71,7 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 			{
 				title: this.translate.instant('General.edit'),
 				icon: 'lucidePencil',
-				action: () => console.log(''),
+				action: () => this.router.navigate([`/recipient/badge-collections/${this.collectionSlug}/edit`]),
 			},
 			{
 				title: 'PDF herunterladen',
@@ -91,10 +91,12 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 		])
 			.then(([list]) => {
 				this.collection = list.entityForSlug(this.collectionSlug);
-				this.crumbs = [
-					{ title: 'Collections', routerLink: ['/recipient/badge-collections'] },
-					{ title: this.collection.name, routerLink: ['/collection/' + this.collection.slug] },
-				];
+				this.translate.get('BadgeCollection.myCollections').subscribe((str) => {
+					this.crumbs = [
+						{ title: str, routerLink: ['/recipient/badges'], queryParams: { tab: str } },
+						{ title: this.collection.name, routerLink: ['/collection/' + this.collection.slug] },
+					];
+				});
 				return this.collection;
 			})
 			.then((collection) => collection.badgesPromise)
@@ -276,7 +278,7 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 	}
 
 	exportPdf() {
-		this.pdfService.getPdf(this.collection.slug, 'collections')
+		this.pdfService.getPdf(this.collection.slug, 'collections');
 		// this.dialogService.exportPdfDialog.openDialogForCollections(this.collection)
 		// 	.catch((error) => console.log(error));
 	}

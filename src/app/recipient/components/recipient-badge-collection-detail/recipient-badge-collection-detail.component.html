@@ -4,22 +4,20 @@
 		<bg-breadcrumbs [linkentries]="crumbs"> </bg-breadcrumbs>
 	</div>
 	<div class="tw-bg-lightpurple oeb-inset-padding">
-	<header>
-		<div>
-		</div>
-		<div class="oeb-section-sm">
-			<div *bgAwaitPromises="[collectionLoadedPromise]">
-				<ng-container *ngIf="!editForm.isEditing">
+		<header>
+			<div></div>
+			<div class="oeb-section-sm">
+				<div *bgAwaitPromises="[collectionLoadedPromise]">
 					<div class="tw-flex tw-justify-between tw-items-center">
-						<h1 hlmH1 class="tw-text-purple"> {{'General.collection' | translate }}</h1>
+						<h1 hlmH1 class="tw-text-purple">{{ 'General.collection' | translate }}</h1>
 						<div class="tw-flex tw-gap-2">
 							<oeb-button
 								[text]="'BadgeCollection.share' | translate"
 								icon="lucideUpload"
 								iconLeft="true"
 								variant="secondary"
-								[disabled]="!collection?.published"
-								(click)="shareCollection()"
+								[disabled]
+								disabled="true"
 							>
 							</oeb-button>
 
@@ -37,7 +35,6 @@
 								></svg>
 								<span class="visuallyhidden">Mehr</span>
 							</ng-template>
-
 						</div>
 					</div>
 					<div class="oeb-headline-container-sm tw-flex tw-justify-between tw-items-center">
@@ -46,159 +43,89 @@
 						</h1>
 						<div class="tw-mt-4 tw-flex tw-gap-2 tw-items-center">
 							<label hlmLabel>
-								<hlm-switch
-									[(ngModel)]="collection.published"
-									(ngModelChange)="togglePublished()"
-								>
-
+								<hlm-switch [(ngModel)]="collection.published" (ngModelChange)="togglePublished()">
 								</hlm-switch>
 							</label>
-							{{'General.public' | translate}}
+							{{ 'General.public' | translate }}
 						</div>
 					</div>
-						<p class="tw-text-oebblack tw-text-lg">
-							{{collection?.description}}
-						</p>
-				</ng-container>
-
-				<recipient-badge-collection-edit-form
-					[badgeCollection]="collection"
-					#editForm
-				></recipient-badge-collection-edit-form>
+					<p class="tw-text-oebblack tw-text-lg">
+						{{ collection?.description }}
+					</p>
+				</div>
 			</div>
-		</div>
-	</header>
+		</header>
 
-	<section class="l-containerxaxis l-containeryaxis" *bgAwaitPromises="[collectionLoadedPromise]">
-		<!-- Empty State for badges -->
-		<span class="tw-text-oebblack tw-font-bold tw-text-[22px] tw-leading-[120%]"
-		   *ngIf="collection?.badgeEntries.length === 0">
-			0 {{ 'BadgeCollection.badgesInCollection' | translate }}
-		</span>
+		<section class="l-containerxaxis l-containeryaxis" *bgAwaitPromises="[collectionLoadedPromise]">
+			<!-- Empty State for badges -->
+			<span
+				class="tw-text-oebblack tw-font-bold tw-text-[22px] tw-leading-[120%]"
+				*ngIf="collection?.badgeEntries.length === 0"
+			>
+				0 {{ 'BadgeCollection.badgesInCollection' | translate }}
+			</span>
 
-		<!-- List of Badges in Collection -->
-		<ng-container *ngIf="collection?.badgeEntries.length">
-			<div class="oeb-headline-container-sm">
-				<h2 class="tw-text-oebblack tw-text-[22px] tw-font-semiold tw-leading-[120%]">{{ badgesInCollectionCount }}</h2>
-			</div>
+			<!-- List of Badges in Collection -->
+			<ng-container *ngIf="collection?.badgeEntries.length">
+				<div class="oeb-headline-container-sm">
+					<h2 class="tw-text-oebblack tw-text-[22px] tw-font-semiold tw-leading-[120%]">
+						{{ badgesInCollectionCount }}
+					</h2>
+				</div>
 
-			<div class="tw-gap-6 tw-grid tw-grid-cols-badges">
-				<bg-badgecard
-					*ngFor="let entry of collection?.badgeEntries; trackBy: trackById"
-					[badgeTitle]="entry.badge.name"
-					[badgeImage]="entry.badge.image"
-					[badgeIssueDate]="badgeResult?.badge?.issueDate"
-					[mostRelevantStatus]="entry.badge.mostRelevantStatus"
-					[issuerTitle]="entry.badge.badgeClass.issuer.name"
-					[issuerSlug]="entry.badge.badgeClass.issuer.slug"
-					[badgeSlug]="entry.badge.slug"
-					(shareClicked)="shareBadge(entry.badge)"
-					[competencies]="
-						entry.badge.getExtension('extensions:CompetencyExtension', [{}])
-					"
-					showXIcon="true"
-					(closeEmit)="removeBadge($event)"
-				></bg-badgecard>
-			</div>
-
-			<!-- <table class="datatable datatable-roundheaders datatable-verticalalignmiddle datatable-onlyfirstcolumn">
-				<thead class="datatable-x-head">
-					<tr class="datatable-x-header">
-						<th class="datatable-x-cell" scope="col">Badge</th>
-						<th class="datatable-x-cell" scope="col">Institution</th>
-						<th class="datatable-x-cell" scope="col">Vergeben am</th>
-						<th class="datatable-x-cell" scope="col"><span class="visuallyhidden">Actions</span></th>
-					</tr>
-				</thead>
-				<tbody class="datatable-x-body">
-					<tr class="datatable-x-row" *ngFor="let entry of collection?.badgeEntries">
-						<th class="datatable-x-cell">
-							<a
-								[routerLink]="['/recipient/earned-badge', entry.badge.slug]"
-								class="l-flex l-flex-1x l-flex-aligncenter"
-							>
-								<img
-									[loaded-src]="entry.badge.image"
-									[loading-src]="badgeLoadingImageUrl"
-									[error-src]="badgeFailedImageUrl"
-									[ngStyle]="entry.badge.isExpired && { filter: 'grayscale(1)' }"
-									width="40"
-									height="40"
-								/>
-								<p class="u-text-link u-text-breakword">{{ entry.badge.badgeClass.name }}</p>
-								<span
-									*ngIf="entry.badge.mostRelevantStatus"
-									class="u-margin-right1x badgestatus badgestatus-{{ entry.badge.mostRelevantStatus }}"
-								>
-									{{ entry.badge.mostRelevantStatus }}
-								</span>
-							</a>
-							<div class="u-hidden-minmobilelarge u-margin-top1x">
-								<a class="u-text-link-small" (click)="removeEntry(entry)">Entfernen</a>
-							</div>
-						</th>
-						<td class="datatable-x-cell">{{ entry.badge.badgeClass.issuer.name }}</td>
-						<td class="datatable-x-cell"><time [date]="entry.badge.issueDate" format="longDate"></time></td>
-						<td class="datatable-x-cell">
-							<button
-								class="u-text-link-small u-margin-leftauto"
-								type="button"
-								(click)="removeEntry(entry)"
-								[disabled-when-requesting]="true"
-							>
-								Remove
-							</button>
-						</td>
-					</tr>
-				</tbody>
-			</table> -->
-		</ng-container>
-	</section>
-</div>
+				<div class="tw-gap-6 tw-grid tw-grid-cols-badges">
+					<bg-badgecard
+						*ngFor="let entry of collection?.badgeEntries; trackBy: trackById"
+						[badgeTitle]="entry.badge.apiModel.json.badge.name"
+						[badgeImage]="entry.badge.image"
+						[badgeIssueDate]="entry.badge.apiModel.json.issuedOn"
+						[mostRelevantStatus]="entry.badge.mostRelevantStatus"
+						[issuerTitle]="entry.badge.badgeClass.issuer.name"
+						[issuerSlug]="entry.badge.badgeClass.issuer.slug"
+						[badgeSlug]="entry.badge.slug"
+						(shareClicked)="shareBadge(entry.badge)"
+						[competencies]="entry.badge.getExtension('extensions:CompetencyExtension', [{}])"
+						showXIcon="true"
+						(closeEmit)="removeBadge($event)"
+					></bg-badgecard>
+				</div>
+			</ng-container>
+		</section>
+	</div>
 </div>
 
 <ng-template #dangerDialogHeaderTemplate>
 	<div class="tw-w-full tw-flex tw-justify-center">
-		<ng-icon hlm name="lucideCircleAlert" size="2xl" class="tw-text-red">
-		</ng-icon>
+		<ng-icon hlm name="lucideCircleAlert" size="2xl" class="tw-text-red"> </ng-icon>
 	</div>
-
 </ng-template>
 
 <ng-template let-badgename="badgename" #deleteBadgeDialogContentTemplate>
 	<div class="tw-flex tw-flex-col tw-gap-2 tw-mt-2 tw-text-center tw-text-lg">
 		<span class="tw-text-oebblack tw-font-bold">
-			{{'BadgeCollection.removeBadge' | translate }}
+			{{ 'BadgeCollection.removeBadge' | translate }}
 		</span>
 
 		<p class="tw-text-oebblack">
 			<span>
-				{{'BadgeCollection.removeBadgeConfirm1' | translate}}
+				{{ 'BadgeCollection.removeBadgeConfirm1' | translate }}
 			</span>
-			<span class="tw-font-bold">{{badgename}}</span>
+			<span class="tw-font-bold">{{ badgename }}</span>
 			<span>
-				{{'BadgeCollection.removeBadgeConfirm2' | translate }}
+				{{ 'BadgeCollection.removeBadgeConfirm2' | translate }}
 			</span>
 		</p>
-
 	</div>
 
 	<div class="tw-flex tw-justify-evenly tw-mt-4">
-		<oeb-button
-			variant="secondary"
-			[text]="'General.cancel' | translate"
-			size="sm"
-			(click)="closeDialog()"
-		>
+		<oeb-button variant="secondary" [text]="'General.cancel' | translate" size="sm" (click)="closeDialog()">
 		</oeb-button>
 		<oeb-button
 			[text]="'BadgeCollection.removeBadgeConfirmation' | translate"
 			size="sm"
 			(click)="closeDialogContinue()"
-			>
-
+		>
 		</oeb-button>
-
 	</div>
 </ng-template>
 
