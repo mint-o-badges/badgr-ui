@@ -65,9 +65,7 @@ export class OebCheckboxComponent implements ControlValueAccessor {
 
 	@Output() ngModelChange = new EventEmitter<string>();
 
-	constructor(private translate: TranslateService){
-
-	}
+	constructor(private translate: TranslateService) {}
 
 	onChange(event) {
 		this.ngModelChange.emit(event);

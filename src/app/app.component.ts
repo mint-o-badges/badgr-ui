@@ -224,11 +224,11 @@ export class AppComponent implements OnInit, AfterViewInit {
 			}
 		});
 
-		try{
+		try {
 			// @ts-ignore
 			// Start umami tracking
 			umami.track();
-		}catch(e){}
+		} catch (e) {}
 
 		messageService.useRouter(router);
 

@@ -61,7 +61,7 @@
 						*ngFor="let role of issuerStaffRoleOptions; last as last"
 						[control]="staffCreateForm.rawControlMap.staffRole"
 						[name]="'staffRole'"
-						label="{{role.label | translate}}"
+						label="{{ role.label | translate }}"
 						[value]="role.value"
 						[sublabel]="role.description | translate"
 						[last]="last"
@@ -109,9 +109,9 @@
 							*ngFor="let role of issuerStaffRoleOptions; last as last"
 							[control]="staffRequestRoleForm.rawControlMap.staffRole"
 							[name]="'staffRole'"
-							label="{{role.label | translate}}"
+							label="{{ role.label | translate }}"
 							[value]="role.value"
-							sublabel="{{role.description | translate}}"
+							sublabel="{{ role.description | translate }}"
 							[last]="last"
 							errorMessage="{{ 'Issuer.addMember_selectRole' | translate }}"
 						></bg-formfield-radio>
@@ -173,9 +173,13 @@
 					<!-- Name -->
 					<hlm-th class="tw-text-oebblack md:tw-w-[25%] tw-w-[33%] tw-px-4">Name</hlm-th>
 					<!-- E-Mail -->
-					<hlm-th class="tw-text-oebblack md:tw-w-[25%] tw-w-[33%] tw-px-4">{{ 'General.email' | translate }}</hlm-th>
+					<hlm-th class="tw-text-oebblack md:tw-w-[25%] tw-w-[33%] tw-px-4">{{
+						'General.email' | translate
+					}}</hlm-th>
 					<!-- Role -->
-					<hlm-th class="tw-text-oebblack md:tw-w-[25%] tw-w-[33%] tw-px-4">{{ 'General.role' | translate }}</hlm-th>
+					<hlm-th class="tw-text-oebblack md:tw-w-[25%] tw-w-[33%] tw-px-4">{{
+						'General.role' | translate
+					}}</hlm-th>
 					<!-- Actions -->
 					<hlm-th class="tw-text-oebblack md:tw-w-[25%] tw-w-0 tw-px-4"></hlm-th>
 				</hlm-trow>
