@@ -175,12 +175,21 @@
 
 							<div
 								*ngIf="config.version"
-								class="tw-flex tw-text-oebblack tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col"
+								class="tw-flex tw-text-oebblack tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col tw-items-center"
 							>
 								<dt class="tw-text-sm tw-text-oebblack tw-font-bold">
 									{{ 'Badge.standard' | translate }}
 								</dt>
-								<dd class="tw-text-sm tw-text-oebblack md:tw-ml-2">{{ config.version }}</dd>
+								<dd class="tw-text-sm tw-text-oebblack md:tw-ml-2 tw-flex tw-items-center tw-gap-1">
+									{{ config.version }}
+									<info-icon>
+										@if (config.version == '3.0') {
+											<span [innerHTML]="'Badge.standard-info-30' | translate"></span>
+										} @else {
+											<span [innerHTML]="'Badge.standard-info-20' | translate"></span>
+										}
+									</info-icon>
+								</dd>
 							</div>
 
 							<div *ngIf="config.category" class="tw-flex tw-text-oebblack tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">

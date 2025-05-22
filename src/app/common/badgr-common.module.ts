@@ -145,6 +145,7 @@ import { PaginationAdvancedComponent } from '../components/oeb-numbered-paginati
 import { NgIconsModule } from '@ng-icons/core';
 import { HlmIconDirective } from '../components/spartan/ui-icon-helm/src';
 import { HlmTableModule } from './../components/spartan/ui-table-helm/src';
+import { InfoIcon } from './components/info-icon.component';
 
 const DIRECTIVES = [
 	BgAwaitPromises,
@@ -205,6 +206,7 @@ export const COMMON_MODULE_COMPONENTS = [
 	OebIssuerCard,
 	OebSortSelectComponent,
 	OebGlobalSortSelectComponent,
+	InfoIcon
 ];
 
 const SERVICES = [

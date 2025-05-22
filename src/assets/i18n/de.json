@@ -437,7 +437,9 @@
 		"learningPathBadgeInfo": "verbindet mehrere Badges zu einer größeren Lerneinheit. Wenn Lernende alle Badges dieses „Lernpfades” erworben haben, erhalten sie automatisch den Abschluss Micro Degree.",
 		"lastEdited": "Zuletzt editiert",
 		"badgeSuccessfullyCreated": "Der Badge wurde erfolgreich an {{recipient}} vergeben",
-		"standard": "Badge-Standard"
+		"standard": "Badge-Standard",
+		"standard-info-20": "Alle Badges, die vor Juni 2025 auf OEB erstellt wurden, haben den 2.0-Standard. Weitere Infos dazu findest du in unseren <a class='tw-underline' href='/public/faq'>FAQ</a>.",
+		"standard-info-30": "Seit Juni 2025 werden alle Badges auf OEB im neuen, zukunfts-sicheren 3.0-Standard erstellt. Weitere Infos dazu findest du in unseren <a class='tw-underline' href='/public/faq'>FAQ</a>."
 	},
 	"CreateBadge": {
 		"chooseBadgeCategory": "Kategorie wählen",

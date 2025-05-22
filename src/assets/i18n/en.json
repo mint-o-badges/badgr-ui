@@ -437,7 +437,9 @@
 		"learningPathBadgeInfo": "combines several badges into a larger learning unit. When learners have earned all the badges on this “learning path”, they automatically receive the Micro Degree.",
 		"lastEdited": "Last edited",
 		"badgeSuccessfullyCreated": "The badge has been awarded to {{ recipient }} successfully.",
-		"standard": "Badge standard"
+		"standard": "Badge standard",
+		"standard-info-20": "Badges awarded on OEB before June 2025 adhered to the OpenBadges 2.0 specification. Read more about this in our <a class='tw-underline' href='/public/faq'>FAQ</a>.",
+		"standard-info-30": "Since June 2025 Badges on OEB are awarded according to the new, future proof OpenBadges 3.0 specification. Read more about this in our <a class='tw-underline' href='/public/faq'>FAQ</a>."
 	},
 	"CreateBadge": {
 		"chooseBadgeCategory": "Choose category",
