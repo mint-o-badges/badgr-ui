@@ -26,7 +26,8 @@ export interface PublicApiBadgeAssertion {
 		  }
 		| string;
 	narrative: string;
-	issuedOn: string;
+	issuedOn?: string;
+	validFrom?: string;
 	expires?: string;
 	revoked?: boolean;
 	revocationReason?: string;
@@ -46,7 +47,7 @@ export interface PublicApiBadgeAssertionWithBadgeClass extends PublicApiBadgeAss
 }
 
 export interface PublicApiBadgeClass {
-	'@context': 'https://w3id.org/openbadges/v2';
+	'@context': string | Array<string>;
 	description: string;
 	type: 'BadgeClass';
 	id: string;

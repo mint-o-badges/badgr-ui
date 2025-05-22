@@ -174,9 +174,16 @@
 							</div>
 
 							<div
-								*ngIf="config.category"
+								*ngIf="config.version"
 								class="tw-flex tw-text-oebblack tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col"
 							>
+								<dt class="tw-text-sm tw-text-oebblack tw-font-bold">
+									{{ 'Badge.standard' | translate }}
+								</dt>
+								<dd class="tw-text-sm tw-text-oebblack md:tw-ml-2">{{ config.version }}</dd>
+							</div>
+
+							<div *ngIf="config.category" class="tw-flex tw-text-oebblack tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
 								<dt class="tw-text-sm tw-text-oebblack tw-font-bold">
 									{{ 'General.category' | translate }}
 								</dt>

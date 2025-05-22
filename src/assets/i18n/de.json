@@ -436,7 +436,8 @@
 		"competencyBadgeInfo": "kann (mithilfe unseres KI-Assistenten) mit den Kompetenzen gefüllt werden, die deine Lernenden erwerben.",
 		"learningPathBadgeInfo": "verbindet mehrere Badges zu einer größeren Lerneinheit. Wenn Lernende alle Badges dieses „Lernpfades” erworben haben, erhalten sie automatisch den Abschluss Micro Degree.",
 		"lastEdited": "Zuletzt editiert",
-		"badgeSuccessfullyCreated": "Der Badge wurde erfolgreich an {{recipient}} vergeben"
+		"badgeSuccessfullyCreated": "Der Badge wurde erfolgreich an {{recipient}} vergeben",
+		"standard": "Badge-Standard"
 	},
 	"CreateBadge": {
 		"chooseBadgeCategory": "Kategorie wählen",
@@ -745,7 +746,11 @@
 		"evidence": "Nachweis",
 		"viewEvidenceUrl": "Besuche Nachweis-URL",
 		"downloadImage": "Download Badge-Bild",
+		"downloadImage20": "Download Badge-Bild (2.0)",
+		"downloadImage30": "Download Badge-Bild (3.0)",
 		"downloadJson": "Download JSON-Datei",
+		"downloadJson20": "Download JSON-Datei (2.0)",
+		"downloadJson30": "Download JSON-Datei (3.0)",
 		"downloadPDF": "Download PDF-Zertifikat",
 		"verifyBadge": "Badge verifizieren",
 		"deleteBadge": "Badge aus Rucksack löschen",

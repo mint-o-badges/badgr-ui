@@ -436,7 +436,8 @@
 		"competencyBadgeInfo": "can be filled (with the help of our AI assistant) with the skills that your learners acquire.",
 		"learningPathBadgeInfo": "combines several badges into a larger learning unit. When learners have earned all the badges on this “learning path”, they automatically receive the Micro Degree.",
 		"lastEdited": "Last edited",
-		"badgeSuccessfullyCreated": "The badge has been awarded to {{ recipient }} successfully."
+		"badgeSuccessfullyCreated": "The badge has been awarded to {{ recipient }} successfully.",
+		"standard": "Badge standard"
 	},
 	"CreateBadge": {
 		"chooseBadgeCategory": "Choose category",
@@ -745,9 +746,13 @@
 		"evidence": "Evidence",
 		"viewEvidenceUrl": "Visit evidence URL",
 		"downloadImage": "Download Badge image",
+		"downloadImage20": "Download Badge image (2.0)",
+		"downloadImage30": "Download Badge image (3.0)",
 		"downloadJson": "Download JSON file",
+		"downloadJson20": "Download JSON file (2.0)",
+		"downloadJson30": "Download JSON file (3.0)",
 		"downloadPDF": "Download PDF certificate",
-		"verifyBadge": "Badge verify",
+		"verifyBadge": "Verify Badge",
 		"deleteBadge": "Remove Badge from Backpack",
 		"copyShareLink": "Copy this link to share",
 		"addToProfile": "Add to profile"

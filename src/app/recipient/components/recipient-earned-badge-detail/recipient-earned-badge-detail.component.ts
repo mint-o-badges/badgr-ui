@@ -104,6 +104,9 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 					{ title: 'Mein Rucksack', routerLink: ['/recipient/badges'] },
 					{ title: this.badge.badgeClass.name, routerLink: ['/earned-badge/' + this.badge.slug] },
 				];
+				// @ts-ignore
+				const context = this.badge.apiModel.json['@context'];
+				const assertionVersion = Array.isArray(context) && context.some((c => c.indexOf('purl.imsglobal.org/spec/ob/v3p0') != -1)) ? '3.0' : '2.0';
 				this.config = {
 					crumbs: this.crumbs,
 					badgeTitle: this.badge.badgeClass.name,
@@ -117,12 +120,12 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 					},
 					menuitems: [
 						{
-							title: 'RecBadgeDetail.downloadImage',
+							title: assertionVersion == '3.0' ? 'RecBadgeDetail.downloadImage30' : 'RecBadgeDetail.downloadImage20',
 							icon: 'lucideImage',
 							action: () => this.exportPng(),
 						},
 						{
-							title: 'RecBadgeDetail.downloadJson',
+							title: assertionVersion == '3.0' ? 'RecBadgeDetail.downloadJson30' : 'RecBadgeDetail.downloadJson20',
 							icon: 'lucideFileCode',
 							action: () => this.exportJson(),
 						},
@@ -163,6 +166,7 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 					license: this.badge.getExtension('extensions:LicenseExtension', {}) ? true : false,
 					shareButton: true,
 					badgeInstanceSlug: this.badgeSlug,
+					version: assertionVersion
 				};
 			})
 			.finally(() => {
