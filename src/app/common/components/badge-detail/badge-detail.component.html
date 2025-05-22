@@ -112,13 +112,15 @@
 						<dl clss="tw-min-w-[150px]">
 							<div *ngIf="config.badgeCriteria" class="tw-bg-white tw-mb-4 tw-rounded-[10px]">
 								<ng-template [bgAwaitPromises]="[badgeInstancesLoaded]">
-									<oeb-collapsible [trigger]="collapseCriteriaTrigger" closeIcon="lucideChevronDown" [defaultOpen]="config.badgeCriteria.length > 0" [id]="">
+									<oeb-collapsible
+										[trigger]="collapseCriteriaTrigger"
+										closeIcon="lucideChevronDown"
+										[defaultOpen]="config.badgeCriteria.length > 0"
+										[id]=""
+									>
 										<ng-template #collapseCriteriaTrigger>
 											<dt class="tw-mr-auto tw-flex tw-justify-center tw-items-center tw-px-2">
-												<ng-icon hlm name="lucideAward" 
-													class="tw-w-8 tw-h-8 tw-text-purple"
-												>
-	
+												<ng-icon hlm name="lucideAward" class="tw-w-8 tw-h-8 tw-text-purple">
 												</ng-icon>
 												<span
 													class="tw-text-oebblack tw-font-bold tw-text-sm tw-ml-1"
@@ -130,8 +132,11 @@
 											<ul class="tw-pr-2 tw-pl-8 tw-list-inside tw-list-disc">
 												<li class="tw-mb-1" *ngFor="let criteria of config.badgeCriteria">
 													<span class="tw-text-oebblack">{{ criteria.name }}</span>
-													<p *ngIf="criteria.description" class="tw-text-oebblack tw-italic tw-font-thin tw-ml-4 tw-mt-1">
-														{{criteria.description}}
+													<p
+														*ngIf="criteria.description"
+														class="tw-text-oebblack tw-italic tw-font-thin tw-ml-4 tw-mt-1"
+													>
+														{{ criteria.description }}
 													</p>
 												</li>
 											</ul>
@@ -153,7 +158,10 @@
 									"
 								></dd>
 							</div>
-							<div *ngIf="config.tags.length > 0" class="tw-flex tw-items-start md:tw-flex-row tw-flex-col">
+							<div
+								*ngIf="config.tags.length > 0"
+								class="tw-flex tw-items-start md:tw-flex-row tw-flex-col"
+							>
 								<dt class="tw-text-oebblack tw-font-bold md:tw-py-2 md:tw-mr-2 tw-mb-1">Tags</dt>
 								<dd class="tw-text-oebblack">
 									<div
@@ -165,7 +173,10 @@
 								</dd>
 							</div>
 
-							<div *ngIf="config.category" class="tw-flex tw-text-oebblack tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
+							<div
+								*ngIf="config.category"
+								class="tw-flex tw-text-oebblack tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col"
+							>
 								<dt class="tw-text-sm tw-text-oebblack tw-font-bold">
 									{{ 'General.category' | translate }}
 								</dt>
@@ -188,7 +199,9 @@
 								*ngIf="config.updatedAt"
 								class="tw-flex tw-text-oebblack tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col"
 							>
-								<dt class="tw-text-sm tw-text-oebblack tw-font-bold">{{'Badge.lastEdited' | translate }}</dt>
+								<dt class="tw-text-sm tw-text-oebblack tw-font-bold">
+									{{ 'Badge.lastEdited' | translate }}
+								</dt>
 								<dd class="tw-text-sm tw-text-oebblack md:tw-ml-2">
 									<time [date]="config.updatedAt" format="dd.MM.y"></time>
 								</dd>
@@ -217,14 +230,18 @@
 								*ngIf="config.issuedTo"
 								class="tw-flex tw-text-oebblack tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col"
 							>
-								<dt class="tw-text-sm tw-text-oebblack tw-font-bold">{{ 'RecBadgeDetail.awardedTo' | translate }}</dt>
+								<dt class="tw-text-sm tw-text-oebblack tw-font-bold">
+									{{ 'RecBadgeDetail.awardedTo' | translate }}
+								</dt>
 								<dd class="tw-text-sm tw-break-words">&nbsp;{{ config.issuedTo }}</dd>
 							</div>
 							<div
 								*ngIf="config.license"
 								class="tw-text-oebblack tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col"
 							>
-								<dt class="tw-text-sm tw-text-oebblack tw-font-bold">{{ 'General.license' | translate }}</dt>
+								<dt class="tw-text-sm tw-text-oebblack tw-font-bold">
+									{{ 'General.license' | translate }}
+								</dt>
 								<dd class="tw-text-sm tw-text-oebblack md:tw-ml-2 tw-flex">
 									<div
 										class="tw-ml-1 tw-w-5 tw-h-5 tw-flex tw-items-center tw-justify-center tw-border-solid tw-border-[1px] tw-border-oebblack tw-rounded-full"

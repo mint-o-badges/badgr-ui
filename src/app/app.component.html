@@ -191,13 +191,8 @@
 						<button (click)="changeLng('en')" class="tw-text-purple tw-text-[length:inherit]">
 							<span [ngStyle]="{ 'font-weight': selectedLng == 'en' ? 'bold' : 'normal' }">EN</span>
 						</button>
-						<ng-icon
-							hlm
-							name="lucideGlobe"
-							class="tw-ml-1"
-						></ng-icon>
+						<ng-icon hlm name="lucideGlobe" class="tw-ml-1"></ng-icon>
 					</div>
-
 				</div>
 			</nav>
 		</ng-template>
@@ -243,11 +238,7 @@
 						triggerStyle="oeb-navitem tw-cursor-pointer !tw-leading-none !tw-py-1"
 					></oeb-dropdown>
 					<ng-template #accountMenuTrigger>
-						<ng-icon
-							hlm
-							name="lucideUser"
-							size="32px"
-						></ng-icon>
+						<ng-icon hlm name="lucideUser" size="32px"></ng-icon>
 					</ng-template>
 
 					<!-- Language -->
@@ -259,11 +250,7 @@
 						<button (click)="changeLng('en')" class="tw-text-purple tw-text-[length:inherit]">
 							<span [ngStyle]="{ 'font-weight': selectedLng == 'en' ? 'bold' : 'normal' }">EN</span>
 						</button>
-						<ng-icon
-							hlm
-							name="lucideGlobe"
-							class="tw-ml-1"
-						></ng-icon>
+						<ng-icon hlm name="lucideGlobe" class="tw-ml-1"></ng-icon>
 					</div>
 				</div>
 			</nav>
@@ -303,7 +290,6 @@
 		[class.mobilenav-light]="!theme.useColorNavbar"
 	>
 		<div class="mobilenav-x-navitems">
-
 			<!-- Language -->
 			<div class="mobilenav-x-label tw-flex tw-gap-1 tw-items-center tw-text-white tw-mb-8 tw-mt-8">
 				<button (click)="changeLng('de')" class="tw-text-white tw-text-[14px]/[1.2em]">
@@ -440,7 +426,11 @@
 				class="tw-font-[rubik] tw-text-left tw-flex md:tw-flex-row md:tw-justify-between md:tw-gap-0 tw-flex-col-reverse tw-gap-[2em]"
 			>
 				<div class="tw-flex tw-flex-col tw-gap-2 tw-text-[18px] tw-leading-[23.4px] tw-text-oebblack">
-					<p class="md:tw-w-2/3 tw-mt#-[10px]" *ngIf="theme.showPoweredByOSL && theme.providedBy" [innerHTML]="'Start.poweredBy' | translate">
+					<p
+						class="md:tw-w-2/3 tw-mt#-[10px]"
+						*ngIf="theme.showPoweredByOSL && theme.providedBy"
+						[innerHTML]="'Start.poweredBy' | translate"
+					>
 						Open Educational Badges ist ein Gemeinschaftsprojekt von
 						<a
 							class="tw-underline tw-text-link"
@@ -483,7 +473,7 @@
 						<a
 							class="tw-text-[14px] tw-leading-[16.8px] md:tw-text-[20px] md:tw-leading-[26px] tw-text-oebblack"
 							[routerLink]="['/public/terms']"
-							>{{ 'General.tos' | translate}}</a
+							>{{ 'General.tos' | translate }}</a
 						>
 					</div>
 				</div>
@@ -562,7 +552,7 @@
 			<a
 				class="tw-text-[14px] tw-leading-[16.8px] md:tw-text-[20px] md:tw-leading-[26px] tw-text-oebblack"
 				[routerLink]="['/public/terms']"
-				>{{'General.tos' | translate }}</a
+				>{{ 'General.tos' | translate }}</a
 			>
 		</div>
 		<!-- <div class="funding-logos-container">

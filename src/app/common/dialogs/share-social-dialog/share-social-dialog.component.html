@@ -59,7 +59,9 @@
 			</ng-template>
 
 			<div class="forminput forminput-hasiconleft forminput-withbutton u-margin-bottom3x" *ngIf="options">
-				<label class="forminput-x-label" for="link-input">{{ 'RecBadgeDetail.copyShareLink' | translate }}</label>
+				<label class="forminput-x-label" for="link-input">{{
+					'RecBadgeDetail.copyShareLink' | translate
+				}}</label>
 				<div class="forminput-x-inputs">
 					<svg class="forminput-x-icon" icon="icon_link"></svg>
 
@@ -85,9 +87,9 @@
 				</div>
 			</div>
 
-			<a *ngIf="options" [href]="currentShareUrl" target="_blank" class="u-text-link-small"
-				>{{ 'General.openNewWindow' | translate }}</a
-			>
+			<a *ngIf="options" [href]="currentShareUrl" target="_blank" class="u-text-link-small">{{
+				'General.openNewWindow' | translate
+			}}</a>
 		</div>
 
 		<!-- Social Tab -->

@@ -3,7 +3,7 @@
 	<ng-container [formGroup]="learningPathForm.rawControl">
 		<oeb-stepper [linear]="existingLearningPath ? false : true" [initialStep]="existingLearningPath ? 0 : 1">
 			<oeb-step
-			[label]="'CreateBadge.chooseBadgeCategory' | translate"
+				[label]="'CreateBadge.chooseBadgeCategory' | translate"
 				[optional]="false"
 				[route]="['/issuer/issuers/' + issuerSlug + '/badges' + '/select']"
 				errorMessage="Bitte Kategorie wählen"

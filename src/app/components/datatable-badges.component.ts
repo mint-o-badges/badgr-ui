@@ -111,8 +111,8 @@ import { HlmPDirective } from '../components/spartan/ui-typography-helm/src/lib/
 					(click)="redirectToBadgeDetail.emit({ badge: badge.badge, focusRequests: true })"
 					[text]="
 						badge.requestCount == 1
-							? badge.requestCount + ' ' +  ('Badge.openRequestsOne' | translate)
-							: badge.requestCount + ' '  +('Badge.openRequests' | translate)
+							? badge.requestCount + ' ' + ('Badge.openRequestsOne' | translate)
+							: badge.requestCount + ' ' + ('Badge.openRequests' | translate)
 					"
 				>
 				</oeb-button>
