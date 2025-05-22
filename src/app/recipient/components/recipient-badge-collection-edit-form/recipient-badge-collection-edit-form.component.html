@@ -182,7 +182,9 @@
 				<oeb-button
 					text="{{ (!editing ? 'BadgeCollection.createCollection' : 'General.save') | translate }}"
 					type="submit"
-					[disabled]="!!createCollectionPromise"
+					[disabled]="!!savePromise"
+					[loading-promises]="savePromise"
+					disabled-when-requesting="true"
 					size="md"
 					class="tw-mb-[40px]"
 				>
