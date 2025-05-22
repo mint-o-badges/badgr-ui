@@ -17,7 +17,9 @@ import { RecipientBadgeCollection } from '../recipient/models/recipient-badge-co
 					</h2>
 				</a>
 				<div class="tw-my-5" *ngIf="!collection.badges.length">
-					<span class="tw-text-oebblack tw-text-lg">{{"BadgeCollection.noBadgesInThisCollectionYet" | translate }}</span>
+					<span class="tw-text-oebblack tw-text-lg">{{
+						'BadgeCollection.noBadgesInThisCollectionYet' | translate
+					}}</span>
 				</div>
 				<div
 					*ngIf="collection.badges.length"

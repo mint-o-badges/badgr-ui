@@ -36,8 +36,7 @@
 			"@spartan-ng/ui-table-helm": ["./src/app/components/spartan/ui-table-helm/src/index.ts"],
 			"@spartan-ng/ui-tabs-helm": ["./src/app/components/spartan/ui-tabs-helm/src/index.ts"],
 			"@spartan-ng/ui-typography-helm": ["./src/app/components/spartan/ui-typography-helm/src/index.ts"],
-			"@spartan-ng/ui-switch-helm": ["./src/app/components/spartan/ui-switch-helm/src/index.ts"
-        ]
+			"@spartan-ng/ui-switch-helm": ["./src/app/components/spartan/ui-switch-helm/src/index.ts"]
 		}
 	}
 }

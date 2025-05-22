@@ -19,7 +19,7 @@ export class BgBadgeDetail {
 
 	constructor(
 		private dialogService: CommonDialogsService,
-		private translate: TranslateService
+		private translate: TranslateService,
 	) {}
 
 	calculateLearningPathStatus(lp: LearningPath): { match: string } | { progress: number } {

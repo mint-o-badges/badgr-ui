@@ -11,33 +11,30 @@
 			</div>
 			<div class="tw-flex tw-flex-col tw-text-oebblack">
 				<p hlmP class="tw-font-normal md:!tw-leading-[31.2px]">
-					{{'CreateBadge.weHelpCreateBadge' | translate}}<br />
-					<strong>{{'CreateBadge.letsGo' | translate }}</strong>
+					{{ 'CreateBadge.weHelpCreateBadge' | translate }}<br />
+					<strong>{{ 'CreateBadge.letsGo' | translate }}</strong>
 				</p>
 			</div>
 
 			<div class="section tw-text-oebblack tw-mt-6">
-				<h2 hlmH2 class="tw-font-bold tw-mb-6">1. {{'CreateBadge.chooseCategory' | translate }}</h2>
+				<h2 hlmH2 class="tw-font-bold tw-mb-6">1. {{ 'CreateBadge.chooseCategory' | translate }}</h2>
 
 				<div class="tw-flex tw-justify-evenly oeb-badgeclass-select-container tw-flex-col md:tw-flex-row">
 					<a [routerLink]="['/issuer/issuers', issuerSlug, 'badges', 'create', 'participation']">
 						<img src="../../../../breakdown/static/badgestudio/shapes/participation.svg" />
-						<strong>{{'Badge.categories.participation' | translate}}</strong>
-						<p [innerHTML]="'Badge.participationBadgeInfo' | translate">
-						</p>
+						<strong>{{ 'Badge.categories.participation' | translate }}</strong>
+						<p [innerHTML]="'Badge.participationBadgeInfo' | translate"></p>
 					</a>
 					<a [routerLink]="['/issuer/issuers', issuerSlug, 'badges', 'create', 'competency']">
 						<img src="../../../../breakdown/static/badgestudio/shapes/competency.svg" />
-						<strong>{{'Badge.categories.competency' | translate}}</strong>
-						<p [innerHTML]="'Badge.competencyBadgeInfo' | translate">
-						</p>
+						<strong>{{ 'Badge.categories.competency' | translate }}</strong>
+						<p [innerHTML]="'Badge.competencyBadgeInfo' | translate"></p>
 					</a>
 					<a [routerLink]="['/issuer/issuers', issuerSlug, 'learningpaths', 'create']">
 						<img src="../../../../breakdown/static/badgestudio/shapes/learningpath.svg" />
 
-						<strong>{{'Badge.categories.learningpath' | translate}}</strong>
-						<p [innerHTML]="'Badge.learningPathBadgeInfo' | translate">
-						</p>
+						<strong>{{ 'Badge.categories.learningpath' | translate }}</strong>
+						<p [innerHTML]="'Badge.learningPathBadgeInfo' | translate"></p>
 					</a>
 				</div>
 			</div>

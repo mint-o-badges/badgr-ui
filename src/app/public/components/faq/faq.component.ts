@@ -32,12 +32,7 @@ export class FaqComponent implements OnInit {
 			},
 			{
 				Q: 'FAQ.Q2',
-				A: [
-					{ text: 'FAQ.A2.1' },
-					{ text: 'FAQ.A2.2' },
-					{ text: 'FAQ.A2.3' },
-					{ text: 'FAQ.A2.4' },
-				],
+				A: [{ text: 'FAQ.A2.1' }, { text: 'FAQ.A2.2' }, { text: 'FAQ.A2.3' }, { text: 'FAQ.A2.4' }],
 			},
 			{
 				Q: 'FAQ.Q3',

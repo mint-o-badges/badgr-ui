@@ -246,7 +246,7 @@
 				</cdk-step>
 
 				<cdk-step
-					[label]="'RecBadgeDetail.competencies' | translate "
+					[label]="'RecBadgeDetail.competencies' | translate"
 					[optional]="false"
 					[errorMessage]="getCompetencyPageError()"
 					*ngIf="category === 'competency'"
@@ -536,10 +536,14 @@
 										{{ 'CreateBadge.competencyOptions' | translate }}
 									</p>
 
-									<h2 class="tw-font-bold tw-text-xl tw-mt-6">1. {{ 'CreateBadge.escoSearch.headline' | translate }}</h2>
+									<h2 class="tw-font-bold tw-text-xl tw-mt-6">
+										1. {{ 'CreateBadge.escoSearch.headline' | translate }}
+									</h2>
 									<p [innerHTML]="'CreateBadge.escoSearch.description' | translate"></p>
 
-									<h3 class="tw-mt-8 tw-font-bold">{{ 'CreateBadge.escoSearch.search' | translate }}</h3>
+									<h3 class="tw-mt-8 tw-font-bold">
+										{{ 'CreateBadge.escoSearch.search' | translate }}
+									</h3>
 
 									<div class="tw-flex tw-gap-4 tw-items-center tw-mt-2">
 										<div class="tw-relative">
@@ -713,7 +717,9 @@
 										class="tw-my-8 tw-border-t-[1px] tw-border-[var(--color-purple)] tw-border-dashed"
 									/>
 
-									<h2 class="tw-font-bold tw-text-xl">2. {{ 'CreateBadge.competencyOwn' | translate }}</h2>
+									<h2 class="tw-font-bold tw-text-xl">
+										2. {{ 'CreateBadge.competencyOwn' | translate }}
+									</h2>
 									<p>{{ 'CreateBadge.competencyOwnDescription' | translate }}</p>
 
 									<ng-container
@@ -896,10 +902,10 @@
 					<div class="section tw-text-oebblack tw-mt-6">
 						<div>
 							<h2 *ngIf="badgeCategory !== 'competency'" hlmH2 class="tw-font-bold">
-								3. {{'CreateBadge.addTags' | translate}}
+								3. {{ 'CreateBadge.addTags' | translate }}
 							</h2>
 							<h2 *ngIf="badgeCategory === 'competency'" hlmH2 class="tw-font-bold">
-								4. {{'CreateBadge.addTags' | translate}}
+								4. {{ 'CreateBadge.addTags' | translate }}
 							</h2>
 						</div>
 						<p class="tw-italic tw-text-purple tw-mt-2">
@@ -962,7 +968,7 @@
 					</div>
 				</cdk-step>
 
-				<cdk-step [label]="'CreateBadge.closing' | translate ">
+				<cdk-step [label]="'CreateBadge.closing' | translate">
 					<h2 hlmH2 class="tw-pt-1 tw-px-1 tw-mr-auto !tw-text-oebblack !tw-font-bold">
 						{{ 'CreateBadge.optionalBadgeDetails' | translate }}
 					</h2>

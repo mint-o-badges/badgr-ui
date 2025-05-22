@@ -26,7 +26,7 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent {
 
 	@Input() editing: boolean = false;
 
-	qrCodePromise : Promise<any> | null = null;
+	qrCodePromise: Promise<any> | null = null;
 
 	get issuerSlug() {
 		return this.route.snapshot.params['issuerSlug'];

@@ -5,7 +5,7 @@ import { BgBadgecard } from './components/bg-badgecard';
 import { BgLearningPathCard } from './components/bg-learningpathcard';
 import { BgCollectionCard } from './bg-collectioncard';
 import { BgBadgeDetail } from './components/badge-detail/badge-detail.component';
-import { OebSwitchComponent } from '../components/oeb-switch.component'
+import { OebSwitchComponent } from '../components/oeb-switch.component';
 import { HlmSwitchComponent } from '../components/spartan/ui-switch-helm/src';
 import { BgAwaitPromises } from './directives/bg-await-promises';
 import { BgImageStatusPlaceholderDirective } from './directives/bg-image-status-placeholder.directive';

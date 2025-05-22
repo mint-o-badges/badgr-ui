@@ -41,7 +41,8 @@ import { provideIcons } from '@ng-icons/core';
 			<div class="tw-flex tw-items-center tw-justify-between tw-gap-4 sm:flex-col">
 				<div class="l-stack u-margin-bottom2x u-margin-top4x">
 					<h3 class="md:tw-text-xl tw-text-sm tw-font-semibold tw-font-[rubik] tw-text-oebblack">
-						{{ recipientCount }} Badge {{ recipientCount == 1 ? ('Issuer.recipient' | translate) : ('Issuer.recipients' | translate) }}
+						{{ recipientCount }} Badge
+						{{ recipientCount == 1 ? ('Issuer.recipient' | translate) : ('Issuer.recipients' | translate) }}
 					</h3>
 				</div>
 				<label hlmLabel class="tw-font-semibold tw-text-[0.5rem] tw-w-full">
@@ -63,7 +64,9 @@ import { provideIcons } from '@ng-icons/core';
 				<hlm-caption>{{ caption }}</hlm-caption>
 				<hlm-trow class="tw-bg-purple tw-text-white tw-flex-wrap hover:tw-bg-purple">
 					<hlm-th class="!tw-text-white tw-w-40">ID</hlm-th>
-					<hlm-th class="!tw-text-white tw-justify-center xl:tw-pr-12 !tw-flex-1">{{ 'RecBadgeDetail.issuedOn' | translate }}</hlm-th>
+					<hlm-th class="!tw-text-white tw-justify-center xl:tw-pr-12 !tw-flex-1">{{
+						'RecBadgeDetail.issuedOn' | translate
+					}}</hlm-th>
 					<hlm-th class="!tw-text-white tw-justify-end xl:tw-w-40 tw-w-0 !tw-p-0"></hlm-th>
 				</hlm-trow>
 				<hlm-trow

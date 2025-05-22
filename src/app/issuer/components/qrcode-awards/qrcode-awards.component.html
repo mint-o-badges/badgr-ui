@@ -6,9 +6,9 @@
 	>
 		<div class="tw-flex tw-flex-col">
 			<h3 hlmH3 class="tw-text-purple tw-font-bold">{{ 'QrCode.qrAwards' | translate }}</h3>
-			<span class="tw-italic tw-text-[18px] tw-leading-[21.6px] tw-text-oebblack tw-mt-2"
-				>{{ 'QrCode.noQrCodes' | translate }}</span
-			>
+			<span class="tw-italic tw-text-[18px] tw-leading-[21.6px] tw-text-oebblack tw-mt-2">{{
+				'QrCode.noQrCodes' | translate
+			}}</span>
 		</div>
 		<oeb-button
 			class="oeb-button tw-whitespace-nowrap !tw-p-0"
@@ -49,12 +49,21 @@
 										{{ award.title }}
 									</span>
 									<span class="tw-ml-2">
-										({{award.request_count == 1 ? ('QrCode.openRequestsOne' | translate) : ('QrCode.openRequests' | translate : {count: award.request_count})}})
+										({{
+											award.request_count == 1
+												? ('QrCode.openRequestsOne' | translate)
+												: ('QrCode.openRequests' | translate: { count: award.request_count })
+										}})
 									</span>
 								</div>
-
 							</div>
-							<ng-icon hlm *ngIf="award.request_count > 0" name="lucideChevronDown" hlmAccIcon class="tw-w-8 tw-h-8" />
+							<ng-icon
+								hlm
+								*ngIf="award.request_count > 0"
+								name="lucideChevronDown"
+								hlmAccIcon
+								class="tw-w-8 tw-h-8"
+							/>
 						</button>
 						<brn-accordion-content *ngIf="award.request_count > 0" hlm class="tw-text-white">
 							<qrcodes-datatable
