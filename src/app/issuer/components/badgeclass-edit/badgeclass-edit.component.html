@@ -23,8 +23,8 @@
 			[badgeClass]="badgeClass"
 			[scrolled]="scrolled"
 			isForked="false"
-			submitText="Save Changes"
-			submittingText="Saving..."
+			[submitText]="'EditBadge.save' | translate"
+			[submittingText]="('EditBadge.saving' | translate) + ' ...'"
 		></badgeclass-edit-form>
 	</div>
 </ng-container>
