@@ -343,7 +343,7 @@
 		"staffMemberRights": "Can assign badges created by owners and/or editors (including creating, editing and deleting QR code assignments).",
 		"imageFormat": "(Format 1:1 / square)",
 		"nameOfIssuer": "Name of Institution",
-		"wesbiteUrl": "Website-URL",
+		"websiteUrl": "Website-URL",
 		"schoolLabel": "School (elementary school, secondary schools, vocational schools, institutions of formal education)",
 		"universityLabel": "University (universities, universities of applied sciences, ...)",
 		"othersLabel": "Others (libraries, museums, FabLabs, companies, associations, ...)",
@@ -361,7 +361,7 @@
 		"framesMeaning": "What do the frames and colors mean?",
 		"searchBadges": "Search badges",
 		"category": "Category",
-		"issuer": "Issuer",
+		"issuer": "Institution",
 		"membership": "Membership",
 		"ability": "Meta-skill",
 		"archievement": "Participation / Achievement",
@@ -714,7 +714,9 @@
 		"editBadgeInfo": "Edit the information about this achievement.",
 		"removeCompetency": "Remove competency",
 		"removeCompetencyInfo": "Are you sure you want to remove this competency?",
-		"cancel": "Cancel"
+		"cancel": "Cancel",
+		"save": "Save",
+		"saving": "Saving"
 	},
 	"RecBadgeDetail": {
 		"shareBadge": "Share badge",
@@ -947,7 +949,8 @@
 		"finishedOn": "finished on",
 		"deleteMd": "delete micro degree",
 		"mdUsers": "Micro Degree users",
-		"searchMds": "search micro degrees"
+		"searchMds": "search micro degrees",
+		"saving": "Saving"
 	},
 	"LearningPathEditor": {
 		"shortDescription": "Summarized description of your Micro Degree. This short description will be saved in the Micro Degree."
