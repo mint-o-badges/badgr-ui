@@ -780,7 +780,8 @@
 		"removeBadgeConfirmation": "Yes, remove",
 		"youHave": "You have selected",
 		"oneBadge": " badge for this collection.",
-		"multiBadges": " badges for this collection."
+		"multiBadges": " badges for this collection.",
+		"noBadgesInThisCollectionYet": "This collection does not contain any badges yet."
 	},
 	"Profile": {
 		"more": "More",
