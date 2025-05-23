@@ -436,7 +436,7 @@
 								<bg-collectioncard
 									*ngFor="let collection of collections"
 									[collection]="collection"
-									(share)="openShareDialog()"
+									(share)="openShareDialog(collection)"
 								></bg-collectioncard>
 							</div>
 							<oeb-button
@@ -538,15 +538,16 @@
 						{{ 'BadgeCollection.shareCollection' | translate }}
 					</h2>
 				</ng-template>
-				<ng-template #shareDialogContentTemplate>
-					<div class="tw-flex tw-relative tw-items-center tw-my-2">
+				<ng-template #shareDialogContentTemplate let-shareUrl="share_url">
+					<share-dialog-template></share-dialog-template>
+					<!-- <div class="tw-flex tw-relative tw-items-center tw-my-2">
 						<input
 							type="text"
 							name="forminput"
 							readonly
 							changeOrder
 							class="!tw-bg-white tw-w-full tw-border-1 tw-border-purple min-[880px]:tw-w-96 tw-border-solid tw-h-12 tw-rounded-lg tw-p-2"
-							[(ngModel)]="searchQuery"
+							[(ngModel)]="shareUrl"
 							hlmInput
 						/>
 						<ng-icon
@@ -556,7 +557,7 @@
 							(click)="copyToClipboard()"
 						></ng-icon>
 					</div>
-					<oeb-button size="sm" [text]="'QR-Code herunterladen'"> </oeb-button>
+					<oeb-button size="sm" [text]="'QR-Code herunterladen'"> </oeb-button> -->
 				</ng-template>
 			</div>
 		</div>

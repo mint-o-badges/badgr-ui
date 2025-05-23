@@ -41,8 +41,9 @@ import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src
 import { DialogComponent } from '../../../components/dialog.component';
 import { BrnDialogRef } from '@spartan-ng/brain/dialog';
 import { RecipientBadgeCollectionManager } from '../../services/recipient-badge-collection-manager.service';
-import { forkJoin } from 'rxjs';
 import { RecipientBadgeApiService } from '../../services/recipient-badges-api.service';
+import { RecipientBadgeCollection } from '../../models/recipient-badge-collection.model';
+import { ShareDialogTemplateComponent } from '../../../common/dialogs/oeb-dialogs/share-dialog-template.component';
 
 type BadgeDispay = 'grid' | 'list';
 type EscoCompetencies = {
@@ -234,12 +235,11 @@ export class RecipientEarnedBadgeListComponent
 		this.dialogRef = dialogRef;
 	}
 
-	openShareDialog() {
-		const dialogRef = this._hlmDialogService.open(DialogComponent, {
+	openShareDialog(collection: RecipientBadgeCollection) {
+		const dialogRef = this._hlmDialogService.open(ShareDialogTemplateComponent, {
 			context: {
-				headerTemplate: this.shareDialogHeaderTemplate,
-				content: this.shareDialogContentTemplate,
-				footer: false,
+				collection: collection,
+				caption: this.translate.instant('BadgeCollection.shareCollection'),
 			},
 		});
 
@@ -281,13 +281,14 @@ export class RecipientEarnedBadgeListComponent
 		}
 	}
 
-	async copyToClipboard(text: string): Promise<boolean>{	
+	async copyToClipboard(text: string): Promise<boolean> {
 		await navigator.clipboard.writeText(text);
 		return true;
-	  } catch (err) {
+	}
+	catch(err) {
 		console.error('Failed to copy text: ', err);
 		return false;
-	  }
+	}
 
 	ngOnInit() {
 		this.loadImportedBadges();
