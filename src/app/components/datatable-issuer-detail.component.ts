@@ -1,39 +1,41 @@
 import { NgIcon } from '@ng-icons/core';
 import { CommonModule } from '@angular/common';
-import { BadgrCommonModule } from '../common/badgr-common.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { BrnAccordionContentComponent } from '@spartan-ng/brain/accordion';
-
 import { RouterModule } from '@angular/router';
 import { Component, EventEmitter, Input, Output, computed, effect, input, signal } from '@angular/core';
-import { HlmTableModule } from './spartan/ui-table-helm/src';
-import { HlmInputDirective } from './spartan/ui-input-helm/src';
-import { HlmLabelDirective } from './spartan/ui-label-helm/src';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { debounceTime } from 'rxjs';
 import { BadgeInstance } from '../issuer/models/badgeinstance.model';
 import { FormsModule } from '@angular/forms';
-import { HlmIconDirective } from './spartan/ui-icon-helm/src';
 import { lucideSearch } from '@ng-icons/lucide';
-import { HlmCommandInputWrapperComponent } from './spartan/ui-command-helm/src';
 import { OebButtonComponent } from './oeb-button.component';
 import { provideIcons } from '@ng-icons/core';
+import { HlmCommandInputWrapperComponent } from './spartan/ui-command-helm/src/lib/hlm-command-input-wrapper.component';
+import { HlmIconDirective } from './spartan/ui-icon-helm/src/lib/hlm-icon.directive';
+import { HlmInputDirective } from './spartan/ui-input-helm/src/lib/hlm-input.directive';
+import { HlmLabelDirective } from './spartan/ui-label-helm/src/lib/hlm-label.directive';
+import { HlmCaptionComponent } from './spartan/ui-table-helm/src/lib/hlm-caption.component';
+import { HlmTableComponent } from './spartan/ui-table-helm/src/lib/hlm-table.component';
+import { HlmThComponent } from './spartan/ui-table-helm/src/lib/hlm-th.component';
+import { HlmTrowComponent } from './spartan/ui-table-helm/src/lib/hlm-trow.component';
 
 @Component({
 	selector: 'issuer-detail-datatable',
 	imports: [
 		FormsModule,
-		HlmTableModule,
 		CommonModule,
-		BadgrCommonModule,
 		TranslateModule,
 		RouterModule,
+		HlmTableComponent,
 		HlmInputDirective,
 		HlmLabelDirective,
 		NgIcon,
 		HlmIconDirective,
 		HlmCommandInputWrapperComponent,
 		OebButtonComponent,
+		HlmCaptionComponent,
+		HlmTrowComponent,
+		HlmThComponent,
 	],
 	providers: [provideIcons({ lucideSearch })],
 	template: `
@@ -41,7 +43,8 @@ import { provideIcons } from '@ng-icons/core';
 			<div class="tw-flex tw-items-center tw-justify-between tw-gap-4 sm:flex-col">
 				<div class="l-stack u-margin-bottom2x u-margin-top4x">
 					<h3 class="md:tw-text-xl tw-text-sm tw-font-semibold tw-font-[rubik] tw-text-oebblack">
-						{{ recipientCount }} Badge {{ recipientCount == 1 ? ('Issuer.recipient' | translate) : ('Issuer.recipients' | translate) }}
+						{{ recipientCount }} Badge
+						{{ recipientCount == 1 ? ('Issuer.recipient' | translate) : ('Issuer.recipients' | translate) }}
 					</h3>
 				</div>
 				<label hlmLabel class="tw-font-semibold tw-text-[0.5rem] tw-w-full">
@@ -63,7 +66,9 @@ import { provideIcons } from '@ng-icons/core';
 				<hlm-caption>{{ caption }}</hlm-caption>
 				<hlm-trow class="tw-bg-purple tw-text-white tw-flex-wrap hover:tw-bg-purple">
 					<hlm-th class="!tw-text-white tw-w-40">ID</hlm-th>
-					<hlm-th class="!tw-text-white tw-justify-center xl:tw-pr-12 !tw-flex-1">{{ 'RecBadgeDetail.issuedOn' | translate }}</hlm-th>
+					<hlm-th class="!tw-text-white tw-justify-center xl:tw-pr-12 !tw-flex-1">{{
+						'RecBadgeDetail.issuedOn' | translate
+					}}</hlm-th>
 					<hlm-th class="!tw-text-white tw-justify-end xl:tw-w-40 tw-w-0 !tw-p-0"></hlm-th>
 				</hlm-trow>
 				<hlm-trow

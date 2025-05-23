@@ -1,22 +1,27 @@
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-
 import { RouterModule } from '@angular/router';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { HlmTableModule } from './spartan/ui-table-helm/src';
 import { BadgeClass } from '../issuer/models/badgeclass.model';
 import { OebButtonComponent } from './oeb-button.component';
 import { HlmPDirective } from '../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
+import { HlmCaptionComponent } from './spartan/ui-table-helm/src/lib/hlm-caption.component';
+import { HlmTableComponent } from './spartan/ui-table-helm/src/lib/hlm-table.component';
+import { HlmThComponent } from './spartan/ui-table-helm/src/lib/hlm-th.component';
+import { HlmTrowComponent } from './spartan/ui-table-helm/src/lib/hlm-trow.component';
 
 @Component({
 	selector: 'badges-datatable',
 	imports: [
-		HlmTableModule,
 		CommonModule,
+		HlmTableComponent,
 		OebButtonComponent,
 		TranslateModule,
 		RouterModule,
 		HlmPDirective,
+		HlmCaptionComponent,
+		HlmTrowComponent,
+		HlmThComponent,
 	],
 	template: ` <hlm-table
 		class="tw-rounded-t-[20px] tw-overflow-hidden tw-w-full tw-max-w-[100%] tw-bg-lightpurple tw-border-purple tw-border"
@@ -110,8 +115,8 @@ import { HlmPDirective } from '../components/spartan/ui-typography-helm/src/lib/
 					(click)="redirectToBadgeDetail.emit({ badge: badge.badge, focusRequests: true })"
 					[text]="
 						badge.requestCount == 1
-							? badge.requestCount + ' ' +  ('Badge.openRequestsOne' | translate)
-							: badge.requestCount + ' '  +('Badge.openRequests' | translate)
+							? badge.requestCount + ' ' + ('Badge.openRequestsOne' | translate)
+							: badge.requestCount + ' ' + ('Badge.openRequests' | translate)
 					"
 				>
 				</oeb-button>

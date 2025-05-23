@@ -248,16 +248,9 @@ import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { lucideArrowUpDown, lucideChevronDown, lucideEllipsis } from '@ng-icons/lucide';
 
-import { HlmCheckboxComponent } from './spartan/ui-checkbox-helm/src';
-import { HlmIconDirective } from './spartan/ui-icon-helm/src';
-import { HlmInputDirective } from './spartan/ui-input-helm/src';
 import { BrnMenuTriggerDirective } from '@spartan-ng/brain/menu';
-import { HlmMenuModule } from './spartan/ui-menu-helm/src';
-import { BrnTableModule, PaginatorState, useBrnColumnManager } from '@spartan-ng/brain/table';
-import { HlmTableModule } from './spartan/ui-table-helm/src';
+import { BrnTableModule, useBrnColumnManager } from '@spartan-ng/brain/table';
 import { BrnSelectModule } from '@spartan-ng/brain/select';
-import { HlmSelectModule } from './spartan/ui-select-helm/src';
-import { hlmMuted } from './spartan/ui-typography-helm/src';
 import { debounceTime, map } from 'rxjs';
 import { HlmDialogService } from './spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
 import { SuccessDialogComponent } from '../common/dialogs/oeb-dialogs/success-dialog.component';
@@ -265,9 +258,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { BadgeRequestApiService } from '../issuer/services/badgerequest-api.service';
 import { BadgeInstanceManager } from '../issuer/services/badgeinstance-manager.service';
 import { BadgeClassManager } from '../issuer/services/badgeclass-manager.service';
-import { BadgeClass } from '../issuer/models/badgeclass.model';
 import { MessageService } from '../common/services/message.service';
-import { BadgrApiFailure } from '../common/services/api-failure';
 import { Router } from '@angular/router';
 import { DangerDialogComponent } from '../common/dialogs/oeb-dialogs/danger-dialog.component';
 import { TranslateService } from '@ngx-translate/core';
@@ -280,6 +271,9 @@ import { OebSpinnerComponent } from './oeb-spinner.component';
 import { BadgeInstanceBatchAssertion } from '../issuer/models/badgeinstance-api.model';
 import { provideIcons } from '@ng-icons/core';
 import { HlmButtonDirective } from './spartan/ui-button-helm/src/lib/hlm-button.directive';
+import { HlmCheckboxComponent } from './spartan/ui-checkbox-helm/src/lib/hlm-checkbox.component';
+import { HlmIconDirective } from './spartan/ui-icon-helm/src/lib/hlm-icon.directive';
+import { HlmInputDirective } from './spartan/ui-input-helm/src/lib/hlm-input.directive';
 
 export type Payment = {
 	id: string;
@@ -300,24 +294,21 @@ export type RequestedBadge = {
 @Component({
 	selector: 'qrcodes-datatable',
 	imports: [
-    FormsModule,
-    BrnMenuTriggerDirective,
-    HlmMenuModule,
-    BrnTableModule,
-    HlmTableModule,
-    HlmButtonDirective,
-    DatePipe,
-    NgIcon,
-    HlmIconDirective,
-    HlmInputDirective,
-    HlmCheckboxComponent,
-    BrnSelectModule,
-    HlmSelectModule,
-    TranslateModule,
-    HlmCommandInputWrapperComponent,
-    OebButtonComponent,
-    OebSpinnerComponent
-],
+		FormsModule,
+		BrnMenuTriggerDirective,
+		BrnTableModule,
+		HlmButtonDirective,
+		DatePipe,
+		NgIcon,
+		HlmIconDirective,
+		HlmInputDirective,
+		HlmCheckboxComponent,
+		BrnSelectModule,
+		TranslateModule,
+		HlmCommandInputWrapperComponent,
+		OebButtonComponent,
+		OebSpinnerComponent,
+	],
 	styleUrl: './datatable-qrcodes.component.scss',
 	providers: [provideIcons({ lucideChevronDown, lucideEllipsis, lucideArrowUpDown }), TranslateService],
 	host: {
@@ -326,7 +317,9 @@ export type RequestedBadge = {
 	template: `
 		<div class="tw-flex tw-flex-col tw-justify-between tw-gap-4 sm:tw-flex-row">
 			<label hlmLabel class="tw-font-semibold tw-text-[0.5rem] tw-w-full md:tw-w-80">
-				<span class="tw-px-3 tw-text-muted-foreground tw-text-sm">{{ 'General.searchByEmail' | translate }}</span>
+				<span class="tw-px-3 tw-text-muted-foreground tw-text-sm">{{
+					'General.searchByEmail' | translate
+				}}</span>
 				<hlm-cmd-input-wrapper class="tw-relative tw-px-0 tw-mt-1 tw-border-b-0">
 					<input
 						hlmInput

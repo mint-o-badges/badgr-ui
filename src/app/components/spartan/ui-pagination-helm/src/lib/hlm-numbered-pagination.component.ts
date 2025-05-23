@@ -11,7 +11,6 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrnSelectImports } from '@spartan-ng/brain/select';
-import { HlmSelectImports } from '../../../ui-select-helm/src';
 import { HlmPaginationContentDirective } from './hlm-pagination-content.directive';
 import { HlmPaginationEllipsisComponent } from './hlm-pagination-ellipsis.component';
 import { HlmPaginationItemDirective } from './hlm-pagination-item.directive';
@@ -65,7 +64,6 @@ import { HlmPaginationDirective } from './hlm-pagination.directive';
 		HlmPaginationLinkDirective,
 		HlmPaginationEllipsisComponent,
 		BrnSelectImports,
-		HlmSelectImports,
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })

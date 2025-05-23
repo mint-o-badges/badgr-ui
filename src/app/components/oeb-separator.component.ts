@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { HlmSeparatorDirective } from './spartan/ui-separator-helm/src';
 import { BrnSeparatorComponent } from '@spartan-ng/brain/separator';
+import { HlmSeparatorDirective } from './spartan/ui-separator-helm/src/lib/hlm-separator.directive';
 
 @Component({
 	selector: 'oeb-separator',

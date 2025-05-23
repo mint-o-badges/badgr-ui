@@ -1,17 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-
 import { RouterModule } from '@angular/router';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { HlmTableModule } from './spartan/ui-table-helm/src';
 import { OebButtonComponent } from './oeb-button.component';
-
 import { ApiStaffRequest } from '../issuer/staffrequest-api.model';
 
 @Component({
 	selector: 'issuer-staff-requests-datatable',
 	standalone: true,
-	imports: [HlmTableModule, CommonModule, OebButtonComponent, TranslateModule, RouterModule],
+	imports: [CommonModule, OebButtonComponent, TranslateModule, RouterModule],
 	template: `
 		<hlm-table
 			*ngIf="requests.length > 0"

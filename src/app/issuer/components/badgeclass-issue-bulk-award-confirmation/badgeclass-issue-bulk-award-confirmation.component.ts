@@ -6,13 +6,10 @@ import { MessageService } from '../../../common/services/message.service';
 import { Title } from '@angular/platform-browser';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
 import { TransformedImportData, ViewState } from '../badgeclass-issue-bulk-award/badgeclass-issue-bulk-award.component';
-
 import { BadgeInstanceManager } from '../../services/badgeinstance-manager.service';
 import { BadgeInstanceBatchAssertion } from '../../models/badgeinstance-api.model';
-import { BadgrApiFailure } from '../../../common/services/api-failure';
 import striptags from 'striptags';
 import { SuccessDialogComponent } from '../../../common/dialogs/oeb-dialogs/success-dialog.component';
-import { HlmDialogService } from './../../../components/spartan/ui-dialog-helm/src';
 import { typedFormGroup } from '../../../common/util/typed-forms';
 import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
 import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
@@ -21,19 +18,20 @@ import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { HlmH3Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h3.directive';
 import { OebCheckboxComponent } from '../../../components/oeb-checkbox.component';
 import { TranslatePipe } from '@ngx-translate/core';
+import { HlmDialogService } from '~/components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
 
 @Component({
-    selector: 'badgeclass-issue-bulk-award-confirmation',
-    templateUrl: './badgeclass-issue-bulk-award-confirmation.component.html',
-    imports: [
-        HlmH1Directive,
-        HlmPDirective,
-        NgFor,
-        OebButtonComponent,
-        HlmH3Directive,
-        OebCheckboxComponent,
-        TranslatePipe,
-    ],
+	selector: 'badgeclass-issue-bulk-award-confirmation',
+	templateUrl: './badgeclass-issue-bulk-award-confirmation.component.html',
+	imports: [
+		HlmH1Directive,
+		HlmPDirective,
+		NgFor,
+		OebButtonComponent,
+		HlmH3Directive,
+		OebCheckboxComponent,
+		TranslatePipe,
+	],
 })
 export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRoutableComponent {
 	@Input() transformedImportData: TransformedImportData;

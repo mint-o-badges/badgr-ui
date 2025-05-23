@@ -10,18 +10,16 @@ import {
 	EventEmitter,
 	effect,
 } from '@angular/core';
-import { HlmButtonDirective } from './spartan/ui-button-helm/src';
-
-import { HlmIconDirective } from './spartan/ui-icon-helm/src';
 import {
 	BrnCollapsibleComponent,
 	BrnCollapsibleContentComponent,
 	BrnCollapsibleTriggerDirective,
-	BrnCollapsibleState,
 } from '@spartan-ng/brain/collapsible';
 import { provideIcons } from '@ng-icons/core';
 import { lucideChevronRight } from '@ng-icons/lucide';
 import { NgIf, NgTemplateOutlet, NgClass } from '@angular/common';
+import { HlmButtonDirective } from './spartan/ui-button-helm/src/lib/hlm-button.directive';
+import { HlmIconDirective } from './spartan/ui-icon-helm/src/lib/hlm-icon.directive';
 
 @Component({
 	selector: 'oeb-collapsible',

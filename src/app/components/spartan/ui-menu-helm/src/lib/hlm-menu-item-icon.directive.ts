@@ -1,7 +1,7 @@
 import { Directive, computed, input } from '@angular/core';
 import { hlm } from '@spartan-ng/brain/core';
-import { provideHlmIconConfig } from '../../../ui-icon-helm/src';
 import type { ClassValue } from 'clsx';
+import { provideHlmIconConfig } from '~/components/spartan/ui-icon-helm/src/lib/hlm-icon.token';
 
 @Directive({
 	selector: '[hlmMenuIcon]',

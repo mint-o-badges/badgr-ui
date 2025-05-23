@@ -1,38 +1,32 @@
 import { NgIcon } from '@ng-icons/core';
 import { Component, Input, TemplateRef } from '@angular/core';
 import { BrnMenuTriggerDirective } from '@spartan-ng/brain/menu';
-import {
-	HlmMenuComponent,
-	HlmMenuItemDirective,
-	HlmMenuItemIconDirective,
-	HlmMenuItemVariants,
-	HlmMenuLabelComponent,
-} from './spartan/ui-menu-helm/src/index';
-import { NgIf, NgFor, NgTemplateOutlet, AsyncPipe } from '@angular/common';
+import { NgIf, NgFor, NgTemplateOutlet } from '@angular/common';
 import type { MenuItem } from '../common/components/badge-detail/badge-detail.component.types';
 import { RouterModule } from '@angular/router';
-
-import { SharedIconsModule } from '../public/icons.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { HlmIconDirective } from './spartan/ui-icon-helm/src/lib/hlm-icon.directive';
+import { HlmMenuItemIconDirective } from './spartan/ui-menu-helm/src/lib/hlm-menu-item-icon.directive';
+import { HlmMenuItemDirective, HlmMenuItemVariants } from './spartan/ui-menu-helm/src/lib/hlm-menu-item.directive';
+import { HlmMenuLabelComponent } from './spartan/ui-menu-helm/src/lib/hlm-menu-label.component';
+import { HlmMenuComponent } from './spartan/ui-menu-helm/src/lib/hlm-menu.component';
 
 @Component({
 	selector: 'oeb-dropdown',
 	imports: [
-    BrnMenuTriggerDirective,
-    HlmMenuComponent,
-    HlmMenuItemDirective,
-    HlmMenuLabelComponent,
-    HlmMenuItemIconDirective,
-    NgIf,
-    NgFor,
-    NgTemplateOutlet,
-    RouterModule,
-    NgIcon,
-    HlmIconDirective,
-    SharedIconsModule,
-    TranslateModule
-],
+		BrnMenuTriggerDirective,
+		HlmMenuComponent,
+		HlmMenuItemDirective,
+		HlmMenuLabelComponent,
+		HlmMenuItemIconDirective,
+		NgIf,
+		NgFor,
+		NgTemplateOutlet,
+		RouterModule,
+		NgIcon,
+		HlmIconDirective,
+		TranslateModule,
+	],
 	template: `
 		<button
 			[brnMenuTriggerFor]="menu"
@@ -90,7 +84,8 @@ export class OebDropdownComponent {
 	@Input() trigger: any;
 	@Input() size: HlmMenuItemVariants['size'] = 'default';
 	@Input() inset: HlmMenuItemVariants['inset'] = false;
-	@Input() triggerStyle: string = 'tw-border tw-border-solid tw-border-purple tw-px-1 tw-py-2 tw-rounded-xl disabled:tw-pointer-events-none disabled:tw-opacity-50';
+	@Input() triggerStyle: string =
+		'tw-border tw-border-solid tw-border-purple tw-px-1 tw-py-2 tw-rounded-xl disabled:tw-pointer-events-none disabled:tw-opacity-50';
 	@Input() label?: string = '';
 	@Input() class?: string = '';
 	@Input() menuItems: MenuItem[];

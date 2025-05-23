@@ -24,8 +24,8 @@ import { provideIcons } from '@ng-icons/core';
 import { lucideCircleX } from '@ng-icons/lucide';
 import { Router } from '@angular/router';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
-import { HlmH2Directive } from 'src/app/components/spartan/ui-typography-helm/src/lib/hlm-h2.directive';
-import { HlmDialogService } from 'src/app/components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
+import { HlmDialogService } from '~/components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
+import { HlmH2Directive } from '~/components/spartan/ui-typography-helm/src/lib/hlm-h2.directive';
 
 @Component({
 	selector: 'add-badge-dialog',
@@ -52,21 +52,24 @@ import { HlmDialogService } from 'src/app/components/spartan/ui-dialog-helm/src/
 
 		<ng-template #failureHeader>
 			<div class="tw-items-center tw-w-full tw-justify-center tw-flex">
-				<ng-icon (click)="this.closeDialog()" hlm name="lucideCircleX" class="!tw-h-28 !tw-w-28 tw-text-purple"></ng-icon>
+				<ng-icon
+					(click)="this.closeDialog()"
+					hlm
+					name="lucideCircleX"
+					class="!tw-h-28 !tw-w-28 tw-text-purple"
+				></ng-icon>
 			</div>
 		</ng-template>
 
 		<ng-template #failureContent let-message="message" let-text="text" let-buttontext="buttontext">
 			<div class="tw-px-4">
-				<p class="tw-text-lg tw-text-oebblack tw-text-center tw-font-bold tw-mt-2 tw-leading-[130%]">{{ message }}</p>
+				<p class="tw-text-lg tw-text-oebblack tw-text-center tw-font-bold tw-mt-2 tw-leading-[130%]">
+					{{ message }}
+				</p>
 				<p [innerHTML]="text" class="tw-mt-2 tw-text-purple tw-italic tw-text-center"></p>
 			</div>
 			<div class="tw-flex tw-justify-center tw-items-center tw-mt-2 tw-gap-2" *ngIf="buttontext">
-				<oeb-button
-					size="sm"
-					(click)="closeDialog()"
-					[text]="'General.cancel' | translate"
-					variant="secondary">
+				<oeb-button size="sm" (click)="closeDialog()" [text]="'General.cancel' | translate" variant="secondary">
 				</oeb-button>
 				<oeb-button
 					(click)="routeToUserProfile()"
@@ -207,36 +210,35 @@ export class AddBadgeDialogComponent implements AfterViewInit {
 		this.currentTab = this.translate.instant('RecBadge.image');
 
 		return new Promise<void>((resolve, reject) => {
+			// wait for temlate refs to be available
+			setTimeout(() => {
+				this.dialogRef = this._hlmDialogService.open(DialogComponent, {
+					context: {
+						headerTemplate: this.dialogHeader,
+						variant: 'default',
+						content: this.dialogContent,
+					},
+				});
 
-		  // wait for temlate refs to be available
-		  setTimeout(() => {
-			this.dialogRef = this._hlmDialogService.open(DialogComponent, {
-			  context: {
-				headerTemplate: this.dialogHeader,
-				variant: 'default',
-				content: this.dialogContent,
-			  },
-			});
-
-			if (this.dialogRef && this.dialogRef.closed$) {
-			  this.dialogRef.closed$.subscribe(
-				(result) => {
-				  if (result === 'cancel') {
-					reject();
-				  } else {
-					resolve();
-				  }
-				},
-				(error) => {
-				  reject(error);
+				if (this.dialogRef && this.dialogRef.closed$) {
+					this.dialogRef.closed$.subscribe(
+						(result) => {
+							if (result === 'cancel') {
+								reject();
+							} else {
+								resolve();
+							}
+						},
+						(error) => {
+							reject(error);
+						},
+					);
+				} else {
+					reject(new Error('Dialog reference not properly initialized'));
 				}
-			  );
-			} else {
-			  reject(new Error('Dialog reference not properly initialized'));
-			}
-		  });
+			});
 		});
-	  }
+	}
 
 	closeDialog() {
 		this.dialogRef?.close();
@@ -288,7 +290,7 @@ export class AddBadgeDialogComponent implements AfterViewInit {
 									content: this.failureContent,
 									templateContext: {
 										message: this.translate.instant('RecBadge.uploadFailed'),
-										text: this.translate.instant('RecBadge.duplicateBadge')
+										text: this.translate.instant('RecBadge.duplicateBadge'),
 									},
 								},
 							});

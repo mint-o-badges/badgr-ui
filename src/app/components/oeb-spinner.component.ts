@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { HlmSpinnerComponent } from './spartan/ui-spinner-helm/src';
 import { NgIf } from '@angular/common';
+import { HlmSpinnerComponent } from './spartan/ui-spinner-helm/src/lib/hlm-spinner.component';
 
 @Component({
 	selector: 'oeb-spinner',

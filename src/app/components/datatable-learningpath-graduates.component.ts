@@ -3,18 +3,30 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { RouterModule } from '@angular/router';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { HlmTableModule } from './spartan/ui-table-helm/src';
 import { OebButtonComponent } from './oeb-button.component';
+import { HlmTableComponent } from './spartan/ui-table-helm/src/lib/hlm-table.component';
+import { HlmTrowComponent } from './spartan/ui-table-helm/src/lib/hlm-trow.component';
+import { HlmThComponent } from './spartan/ui-table-helm/src/lib/hlm-th.component';
 
 @Component({
 	selector: 'learningpath-graduates-datatable',
-	imports: [HlmTableModule, CommonModule, OebButtonComponent, TranslateModule, RouterModule],
+	imports: [
+		CommonModule,
+		OebButtonComponent,
+		TranslateModule,
+		RouterModule,
+		HlmTableComponent,
+		HlmTrowComponent,
+		HlmThComponent,
+	],
 	template: ` <hlm-table
 		class="tw-rounded-t-[20px] tw-overflow-hidden tw-w-full tw-max-w-[100%] tw-bg-lightpurple tw-border-purple tw-border"
 	>
 		<hlm-trow class="tw-bg-purple tw-text-white tw-flex-wrap hover:tw-bg-purple">
 			<hlm-th class="!tw-text-white tw-w-28 md:tw-w-48">ID</hlm-th>
-			<hlm-th class="!tw-text-white tw-justify-center !tw-flex-1">{{'LearningPath.finishedOn' | translate }}</hlm-th>
+			<hlm-th class="!tw-text-white tw-justify-center !tw-flex-1">{{
+				'LearningPath.finishedOn' | translate
+			}}</hlm-th>
 			<hlm-th class="!tw-text-white tw-justify-end sm:tw-w-48 tw-w-0 !tw-p-0"></hlm-th>
 		</hlm-trow>
 		<hlm-trow *ngFor="let participant of participants" class="tw-border-purple tw-flex-wrap tw-py-2">

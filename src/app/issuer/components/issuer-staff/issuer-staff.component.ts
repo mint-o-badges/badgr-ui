@@ -1,8 +1,6 @@
 import { Component, inject, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
-
 import { SessionService } from '../../../common/services/session.service';
 import { MessageService } from '../../../common/services/message.service';
 import { IssuerManager } from '../../services/issuer-manager.service';
@@ -18,7 +16,6 @@ import { IssuerStaffRoleSlug } from '../../models/issuer-api.model';
 import { AppConfigService } from '../../../common/app-config.service';
 import { LinkEntry, BgBreadcrumbsComponent } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { IssuerStaffCreateDialogComponent } from '../issuer-staff-create-dialog/issuer-staff-create-dialog.component';
-import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src';
 import { DialogComponent } from '../../../components/dialog.component';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { typedFormGroup } from '../../../common/util/typed-forms';
@@ -40,11 +37,12 @@ import { HlmTableComponent } from '../../../components/spartan/ui-table-helm/src
 import { HlmTrowComponent } from '../../../components/spartan/ui-table-helm/src/lib/hlm-trow.component';
 import { HlmThComponent } from '../../../components/spartan/ui-table-helm/src/lib/hlm-th.component';
 import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
+import { HlmDialogService } from '~/components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
 
 @Component({
-    templateUrl: './issuer-staff.component.html',
-    styles: [
-        `
+	templateUrl: './issuer-staff.component.html',
+	styles: [
+		`
 			::ng-deep .radio .radio-x-text {
 				--typography-size: 18px;
 				line-height: 130%;
@@ -59,27 +57,27 @@ import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/sr
 				line-height: 130%;
 			}
 		`,
-    ],
-    imports: [
-        BgAwaitPromises,
-        FormMessageComponent,
-        BgBreadcrumbsComponent,
-        NgIf,
-        HlmH1Directive,
-        OebButtonComponent,
-        FormsModule,
-        ReactiveFormsModule,
-        OebInputComponent,
-        NgFor,
-        FormFieldRadio,
-        HlmH2Directive,
-        IssuerStaffRequestsDatatableComponent,
-        HlmTableComponent,
-        HlmTrowComponent,
-        HlmThComponent,
-        HlmPDirective,
-        TranslatePipe,
-    ],
+	],
+	imports: [
+		BgAwaitPromises,
+		FormMessageComponent,
+		BgBreadcrumbsComponent,
+		NgIf,
+		HlmH1Directive,
+		OebButtonComponent,
+		FormsModule,
+		ReactiveFormsModule,
+		OebInputComponent,
+		NgFor,
+		FormFieldRadio,
+		HlmH2Directive,
+		IssuerStaffRequestsDatatableComponent,
+		HlmTableComponent,
+		HlmTrowComponent,
+		HlmThComponent,
+		HlmPDirective,
+		TranslatePipe,
+	],
 })
 export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	get issuerStaffRoleOptions() {
@@ -157,7 +155,11 @@ export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent imp
 			this.breadcrumbLinkEntries = [
 				{ title: 'Issuers', routerLink: ['/issuer'] },
 				{ title: issuer.name, routerLink: ['/issuer/issuers', this.issuerSlug] },
-				{ title: this.isCurrentUserIssuerOwner ? this.translate.instant('Issuer.editMembers') : this.translate.instant('General.members') },
+				{
+					title: this.isCurrentUserIssuerOwner
+						? this.translate.instant('Issuer.editMembers')
+						: this.translate.instant('General.members'),
+				},
 			];
 			return issuer;
 		});

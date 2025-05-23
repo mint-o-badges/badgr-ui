@@ -6,13 +6,10 @@ import { SessionService } from '../../../common/services/session.service';
 import { MessageService } from '../../../common/services/message.service';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
 import { EmailValidator, ValidationResult } from '../../../common/validators/email.validator';
-import { UrlValidator } from '../../../common/validators/url.validator';
 import { MdImgValidator } from '../../../common/validators/md-img.validator';
-
 import { BadgeInstanceManager } from '../../services/badgeinstance-manager.service';
 import { BadgeClassManager } from '../../services/badgeclass-manager.service';
 import { IssuerManager } from '../../services/issuer-manager.service';
-
 import { Issuer } from '../../models/issuer.model';
 import { BadgeClass } from '../../models/badgeclass.model';
 import { CommonDialogsService } from '../../../common/services/common-dialogs.service';
@@ -26,7 +23,6 @@ import striptags from 'striptags';
 import { DateValidator } from '../../../common/validators/date.validator';
 import { AppConfigService } from '../../../common/app-config.service';
 import { LinkEntry, BgBreadcrumbsComponent } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
-import { HlmDialogService } from './../../../components/spartan/ui-dialog-helm/src';
 import { SuccessDialogComponent } from '../../../common/dialogs/oeb-dialogs/success-dialog.component';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
@@ -42,34 +38,35 @@ import { NgIf, NgFor, NgClass, DatePipe } from '@angular/common';
 import { SvgIconComponent } from '../../../common/components/svg-icon.component';
 import { FormFieldMarkdown } from '../../../common/components/formfield-markdown';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
+import { HlmDialogService } from '~/components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
 
 @Component({
-    selector: 'badgeclass-issue',
-    templateUrl: './badgeclass-issue.component.html',
-    imports: [
-        BgAwaitPromises,
-        FormMessageComponent,
-        BgBreadcrumbsComponent,
-        FormsModule,
-        ReactiveFormsModule,
-        HlmH1Directive,
-        BgImageStatusPlaceholderDirective,
-        HlmPDirective,
-        HlmADirective,
-        RouterLink,
-        OebInputComponent,
-        OebSelectComponent,
-        OebCheckboxComponent,
-        NgIf,
-        SvgIconComponent,
-        NgFor,
-        FormFieldMarkdown,
-        FormFieldText,
-        NgClass,
-        OebButtonComponent,
-        DatePipe,
-        TranslatePipe,
-    ],
+	selector: 'badgeclass-issue',
+	templateUrl: './badgeclass-issue.component.html',
+	imports: [
+		BgAwaitPromises,
+		FormMessageComponent,
+		BgBreadcrumbsComponent,
+		FormsModule,
+		ReactiveFormsModule,
+		HlmH1Directive,
+		BgImageStatusPlaceholderDirective,
+		HlmPDirective,
+		HlmADirective,
+		RouterLink,
+		OebInputComponent,
+		OebSelectComponent,
+		OebCheckboxComponent,
+		NgIf,
+		SvgIconComponent,
+		NgFor,
+		FormFieldMarkdown,
+		FormFieldText,
+		NgClass,
+		OebButtonComponent,
+		DatePipe,
+		TranslatePipe,
+	],
 })
 export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	breadcrumbLinkEntries: LinkEntry[] = [];

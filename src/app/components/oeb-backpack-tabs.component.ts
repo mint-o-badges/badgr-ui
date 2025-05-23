@@ -1,7 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { HlmTabsModule, HlmTabsTriggerDirective } from './spartan/ui-tabs-helm/src';
 import { NgIf, NgFor, NgTemplateOutlet } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
+import { HlmTabsTriggerDirective } from './spartan/ui-tabs-helm/src/lib/hlm-tabs-trigger.directive';
+import { HlmTabsComponent } from './spartan/ui-tabs-helm/src/lib/hlm-tabs.component';
+import { HlmTabsListComponent } from './spartan/ui-tabs-helm/src/lib/hlm-tabs-list.component';
 
 export const bg = 'tw-block tw-absolute tw-z-0 tw-opacity-80';
 
@@ -13,7 +15,15 @@ export type Tab = {
 
 @Component({
 	selector: 'oeb-backpack-tabs',
-	imports: [HlmTabsModule, HlmTabsTriggerDirective, NgIf, NgFor, NgTemplateOutlet, TranslateModule],
+	imports: [
+		HlmTabsTriggerDirective,
+		NgIf,
+		NgFor,
+		NgTemplateOutlet,
+		TranslateModule,
+		HlmTabsComponent,
+		HlmTabsListComponent,
+	],
 	template: `<hlm-tabs class="tw-block tw-w-full" [tab]="activeTab" (tabActivated)="onTabChange($event)">
 		<hlm-tabs-list class="tw-w-full tw-max-w-[660px] tw-flex tw-justify-between" aria-label="tabs">
 			<ng-container *ngFor="let tab of tabs">

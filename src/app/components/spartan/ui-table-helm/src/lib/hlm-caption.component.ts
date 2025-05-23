@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { hlm } from '@spartan-ng/brain/core';
 import type { ClassValue } from 'clsx';
-import { HlmTableComponent } from '../index';
+import { HlmTableComponent } from './hlm-table.component';
 
 let captionIdSequence = 0;
 

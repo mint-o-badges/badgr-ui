@@ -3,9 +3,9 @@ import { Component, computed, inject, input } from '@angular/core';
 import { lucideCheck } from '@ng-icons/lucide';
 import { BrnCheckboxComponent } from '@spartan-ng/brain/checkbox';
 import { hlm } from '@spartan-ng/brain/core';
-import { HlmIconDirective } from '../../../ui-icon-helm/src';
 import type { ClassValue } from 'clsx';
 import { provideIcons } from '@ng-icons/core';
+import { HlmIconDirective } from '~/components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
 
 @Component({
 	selector: 'hlm-checkbox-checkicon',

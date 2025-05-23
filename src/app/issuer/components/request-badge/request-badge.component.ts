@@ -6,7 +6,6 @@ import { BadgeRequestApiService } from '../../services/badgerequest-api.service'
 import { BaseRoutableComponent } from '../../../common/pages/base-routable.component';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SuccessDialogComponent } from '../../../common/dialogs/oeb-dialogs/success-dialog.component';
-import { HlmDialogService } from './../../../components/spartan/ui-dialog-helm/src';
 import { PublicApiService } from '../../../public/services/public-api.service';
 import { BadgeRequest } from '../../models/badgerequest-api.model';
 import { PublicApiBadgeClassWithIssuer } from '../../../public/models/public-api.model';
@@ -18,22 +17,23 @@ import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/sr
 import { OebInputComponent } from '../../../components/input.component';
 import { OebCheckboxComponent } from '../../../components/oeb-checkbox.component';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
+import { HlmDialogService } from '~/components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
 
 @Component({
-    selector: 'request-badge',
-    templateUrl: './request-badge.component.html',
-    imports: [
-        BgAwaitPromises,
-        HlmH1Directive,
-        BgImageStatusPlaceholderDirective,
-        HlmPDirective,
-        FormsModule,
-        ReactiveFormsModule,
-        OebInputComponent,
-        OebCheckboxComponent,
-        OebButtonComponent,
-        TranslatePipe,
-    ],
+	selector: 'request-badge',
+	templateUrl: './request-badge.component.html',
+	imports: [
+		BgAwaitPromises,
+		HlmH1Directive,
+		BgImageStatusPlaceholderDirective,
+		HlmPDirective,
+		FormsModule,
+		ReactiveFormsModule,
+		OebInputComponent,
+		OebCheckboxComponent,
+		OebButtonComponent,
+		TranslatePipe,
+	],
 })
 export class RequestBadgeComponent extends BaseRoutableComponent {
 	constructor(

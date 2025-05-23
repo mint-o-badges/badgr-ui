@@ -3,16 +3,26 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { RouterModule } from '@angular/router';
 import { Component, Input, Output, EventEmitter, ChangeDetectorRef, SimpleChanges } from '@angular/core';
-import { HlmTableModule } from './spartan/ui-table-helm/src';
 import { HlmPDirective } from '../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
 import { Issuer, IssuerStaffMember, issuerStaffRoles } from '../issuer/models/issuer.model';
 import { IssuerStaffRoleSlug } from '../issuer/models/issuer-api.model';
 import { FormFieldSelectOption } from '../common/components/formfield-select';
+import { HlmTableComponent } from './spartan/ui-table-helm/src/lib/hlm-table.component';
+import { HlmTrowComponent } from './spartan/ui-table-helm/src/lib/hlm-trow.component';
+import { HlmThComponent } from './spartan/ui-table-helm/src/lib/hlm-th.component';
 
 @Component({
 	selector: 'issuer-staff-datatable',
 	standalone: true,
-	imports: [HlmTableModule, CommonModule, TranslateModule, RouterModule, HlmPDirective],
+	imports: [
+		CommonModule,
+		HlmTableComponent,
+		TranslateModule,
+		RouterModule,
+		HlmPDirective,
+		HlmTrowComponent,
+		HlmThComponent,
+	],
 	template: `
 		<hlm-table
 			class="tw-rounded-t-[20px] tw-overflow-hidden tw-w-full tw-max-w-[100%] tw-bg-white tw-border-lightgrey tw-border"

@@ -4,22 +4,22 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HlmPDirective } from './spartan/ui-typography-helm/src/lib/hlm-p.directive';
 import { BrnSelectImports } from '@spartan-ng/brain/select';
-import { HlmSelectModule } from './spartan/ui-select-helm/src/index';
 import { CustomValidatorMessages, messagesForValidationError } from './input.component';
 import { OebSeparatorComponent } from './oeb-separator.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { HlmSelectTriggerComponent } from './spartan/ui-select-helm/src/lib/hlm-select-trigger.component';
 
 @Component({
 	selector: 'oeb-select ',
 	imports: [
 		BrnSelectImports,
-		HlmSelectModule,
 		HlmPDirective,
 		OebInputErrorComponent,
 		ReactiveFormsModule,
 		CommonModule,
 		OebSeparatorComponent,
-		TranslateModule
+		TranslateModule,
+		HlmSelectTriggerComponent,
 	],
 	template: ` <div [ngClass]="{ 'tw-mt-6 md:tw-mt-7': !noTopMargin }">
 		<label class="tw-pb-[2px] tw-pl-[3px]" [attr.for]="inputName" *ngIf="label">
@@ -55,7 +55,9 @@ import { TranslateModule } from '@ngx-translate/core';
 				<div *ngIf="multiple" class="tw-text-base">{{ placeholder }}</div>
 			</hlm-select-trigger>
 			<hlm-select-content [ngStyle]="{ 'max-height.px': dropdownMaxHeight }">
-				<hlm-option *ngFor="let option of options" [value]="option.value">{{ option.label | translate }}</hlm-option>
+				<hlm-option *ngFor="let option of options" [value]="option.value">{{
+					option.label | translate
+				}}</hlm-option>
 				<div *ngIf="template">
 					<oeb-separator [separatorStyle]="'!tw-border-dashed'"></oeb-separator>
 					<ng-content *ngTemplateOutlet="template"></ng-content>

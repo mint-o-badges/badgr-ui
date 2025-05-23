@@ -1,5 +1,4 @@
 import { Component, EventEmitter, forwardRef, computed, input, Input, Output } from '@angular/core';
-import { HlmCheckboxComponent } from './spartan/ui-checkbox-helm/src';
 import { HlmPDirective } from './spartan/ui-typography-helm/src/lib/hlm-p.directive';
 import { ControlValueAccessor, FormControl, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
 import type { ClassValue } from 'clsx';
@@ -9,6 +8,7 @@ import { NgIf, NgClass } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { OebInputErrorComponent } from './input.error.component';
 import { TranslateService } from '@ngx-translate/core';
+import { HlmCheckboxComponent } from './spartan/ui-checkbox-helm/src/lib/hlm-checkbox.component';
 
 @Component({
 	selector: 'oeb-checkbox',
@@ -65,9 +65,7 @@ export class OebCheckboxComponent implements ControlValueAccessor {
 
 	@Output() ngModelChange = new EventEmitter<string>();
 
-	constructor(private translate: TranslateService){
-
-	}
+	constructor(private translate: TranslateService) {}
 
 	onChange(event) {
 		this.ngModelChange.emit(event);
