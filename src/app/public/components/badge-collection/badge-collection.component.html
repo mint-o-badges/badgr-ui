@@ -20,31 +20,43 @@
 
 	<!-- Regular View -->
 	<main *ngIf="!embedService.isEmbedded">
-		<div class="topbar">
-			<div class="l-containerxaxis">
-				<div class="topbar-x-heading">
-					{{ collection.name }}
-				</div>
-				<div class="topbar-x-subheading">
-					Badges {{ 'NavItems.myInstitutions' | translate }} {{ collection.owner.firstName }}
-					{{ collection.owner.lastName }}
+		<div class="page-padding oeb">
+			<div class="tw-bg-lightpurple oeb-inset-padding">
+				<header class="oeb-section-sm">
+					<div class="oeb-headline-container-sm">
+						<h2 class="tw-text-purple tw-text-[22px] tw-leading-[120%]">
+							{{ 'General.collection' | translate }} {{ 'General.of' | translate }}
+							{{ collection.owner.firstName }} {{ collection.owner.lastName }}
+						</h2>
+					</div>
+					<div class="oeb-headline-container-sm">
+						<h2 class="tw-text-purple tw-text-[22px] tw-font-semibold tw-leading-[120%]">
+							{{ collection.name }}
+						</h2>
+					</div>
+					<div class="oeb-headline-container-sm">
+						<p class="tw-text-lg tw-text-oebblack">
+							{{ collection.description }}
+						</p>
+					</div>
+				</header>
+
+				<div class="tw-gap-6 tw-grid tw-grid-cols-badges">
+					<bg-badgecard
+						*ngFor="let badge of collection.badges"
+						[badgeTitle]="badge.badge.name"
+						[badgeImage]="badge.image"
+						[badgeDescription]="badge.badge.description"
+						[badgeIssueDate]="badge?.issuedOn"
+						[mostRelevantStatus]="badge.badge.mostRelevantStatus"
+						[issuerTitle]="badge.badge.issuer.name"
+						[public]="true"
+						[publicUrl]="getBadgeUrl(badge)"
+						[competencies]="badge.badge['extensions:CompetencyExtension']"
+					>
+					</bg-badgecard>
 				</div>
 			</div>
-		</div>
-
-		<div class="l-containerxaxis l-containeryaxis l-grid l-grid-4up">
-			<bg-badgecard
-				*ngFor="let badge of collection.badges"
-				[badgeTitle]="badge.badge.name"
-				[badgeImage]="badge.image"
-				[badgeDescription]="badge.badge.description"
-				[badgeIssueDate]="badge?.issuedOn"
-				[mostRelevantStatus]="badge.badge.mostRelevantStatus"
-				[issuerTitle]="badge.badge.issuer.name"
-				[public]="true"
-				[publicUrl]="getBadgeUrl(badge)"
-			>
-			</bg-badgecard>
 		</div>
 	</main>
 </ng-template>

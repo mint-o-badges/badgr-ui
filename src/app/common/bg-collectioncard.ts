@@ -38,14 +38,11 @@ import { RecipientBadgeCollection } from '../recipient/models/recipient-badge-co
 				</div>
 				<footer class="tw-flex tw-justify-between tw-items-center tw-w-full tw-mt-4">
 					<div class="tw-items-center tw-w-full">
-						<!-- <label hlmLabel class="tw-flex tw-gap-4">
-							<hlm-switch
-								[(ngModel)]="collection.published"
-								(ngModelChange)="togglePublished()"
-							>
+						<label hlmLabel class="tw-flex tw-gap-4">
+							<hlm-switch [(ngModel)]="collection.published" (ngModelChange)="togglePublished()">
 							</hlm-switch>
-							<span class="tw-text-oebblack tw-text-lg">{{'General.public' | translate }}</span>
-						</label> -->
+							<span class="tw-text-oebblack tw-text-lg">{{ 'General.public' | translate }}</span>
+						</label>
 					</div>
 					<oeb-button
 						[text]="'BadgeCollection.share' | translate"
