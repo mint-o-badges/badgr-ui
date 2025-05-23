@@ -783,7 +783,8 @@
 		"youHave": "You have selected",
 		"oneBadge": " badge for this collection.",
 		"multiBadges": " badges for this collection.",
-		"noBadgesInThisCollectionYet": "This collection does not contain any badges yet."
+		"noBadgesInThisCollectionYet": "This collection does not contain any badges yet.",
+		"downloadPdf": "Download PDF"
 	},
 	"Profile": {
 		"more": "More",
@@ -949,8 +950,7 @@
 		"finishedOn": "finished on",
 		"deleteMd": "delete micro degree",
 		"mdUsers": "Micro Degree users",
-		"searchMds": "search micro degrees",
-		"saving": "Saving"
+		"searchMds": "search micro degrees"
 	},
 	"LearningPathEditor": {
 		"shortDescription": "Summarized description of your Micro Degree. This short description will be saved in the Micro Degree."

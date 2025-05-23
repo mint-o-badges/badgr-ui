@@ -19,6 +19,7 @@ import { DialogComponent } from '../../../components/dialog.component';
 import { RecipientBadgeInstance } from '../../models/recipient-badge.model';
 import { BrnDialogRef } from '@spartan-ng/brain/dialog';
 import { TranslateService } from '@ngx-translate/core';
+import { PdfService } from '../../../common/services/pdf.service';
 
 @Component({
 	selector: 'recipient-earned-badge-detail',
@@ -60,6 +61,7 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 		private configService: AppConfigService,
 		private dialogService: CommonDialogsService,
 		private translate: TranslateService,
+		private pdfService: PdfService,
 	) {
 		super(router, route, loginService);
 
@@ -71,11 +73,11 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 				icon: 'lucidePencil',
 				action: () => this.router.navigate([`/recipient/badge-collections/${this.collectionSlug}/edit`]),
 			},
-			// {
-			// 	title: 'PDF herunterladen',
-			// 	icon: 'lucideFileText',
-			// 	action: () => console.log(""),
-			// },
+			{
+				title: this.translate.instant('BadgeCollection.downloadPdf'),
+				icon: 'lucideFileText',
+				action: () => this.exportPdf(),
+			},
 			{
 				title: this.translate.instant('General.delete'),
 				icon: 'lucideTrash2',
@@ -275,10 +277,11 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 		this.dialogService.shareSocialDialog.openDialog(shareCollectionDialogOptionsFor(this.collection));
 	}
 
-	// exportPdf() {
-	// 	this.dialogService.exportPdfDialog.openDialogForCollections(this.collection)
-	// 		.catch((error) => console.log(error));
-	// }
+	exportPdf() {
+		this.pdfService.getPdf(this.collection.slug, 'collections').then((res) => {
+			this.pdfService.downloadPdf(res, this.collection.name, new Date());
+		});
+	}
 }
 
 export function shareCollectionDialogOptionsFor(collection: RecipientBadgeCollection): ShareSocialDialogOptions {
