@@ -1,16 +1,12 @@
-import { AfterViewInit, Component, Directive, ElementRef, Input, NgZone, OnInit, Renderer2 } from '@angular/core';
-import { OnDestroy } from '@angular/core';
-import Popper, { Placement } from 'popper.js';
+import { Component, Input, OnInit } from '@angular/core';
+import { NgIcon } from '@ng-icons/core';
 
-/**
- * Directive that implements popper.js-based popup menus
- */
 @Component({
 	selector: 'info-icon',
 	template: `
 		<div class="oeb-infoicon tw-relative tw-flex tw-items-center" [class]="{'oeb-infoicon--init': init}">
-			<ng-icon hlm name="lucideInfo" class="tw-w-4 tw-h-4 tw-text-purple"></ng-icon>
-			<div class="oeb-infoicon__description tw-text-white tw-bg-purple tw-py-2 tw-px-3 tw-rounded-[10px] tw-ml-1 tw-w-[{{width}}px]">
+			<ng-icon hlm name="lucideInfo" size="24px" class="tw-text-purple"></ng-icon>
+			<div class="oeb-infoicon__description tw-text-white tw-bg-purple tw-py-2 tw-px-3 tw-rounded-[10px] tw-ml-1" [style]="{ 'width': width + 'px' }">
 				<ng-content/>
 			</div>
 		</div>
@@ -31,7 +27,10 @@ import Popper, { Placement } from 'popper.js';
 			visibility: visible;
 		}
 	`],
-	standalone: false,
+	standalone: true,
+	imports: [
+		NgIcon
+	]
 })
 export class InfoIcon implements OnInit {
 	@Input() width = 200;

@@ -206,7 +206,6 @@ export const COMMON_MODULE_COMPONENTS = [
 	OebIssuerCard,
 	OebSortSelectComponent,
 	OebGlobalSortSelectComponent,
-	InfoIcon
 ];
 
 const SERVICES = [
@@ -291,6 +290,7 @@ export const COMMON_IMPORTS = [
 	NgIconsModule,
 	HlmIconDirective,
 	HlmTableModule,
+	InfoIcon
 ];
 
 @NgModule({
