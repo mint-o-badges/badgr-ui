@@ -23,7 +23,7 @@ export class RecipientBadgeInstance extends ManagedEntity<ApiRecipientBadgeInsta
 		return this.apiModel.json.badge;
 	}
 	get issueDate(): Date {
-		return this._issueDate ? this._issueDate : (this._issueDate = new Date(this.apiModel.json.issuedOn));
+		return this._issueDate ? this._issueDate : (this._issueDate = new Date(this.apiModel.json.issuedOn || this.apiModel.json.validFrom));
 	}
 	get image(): string {
 		return this.apiModel.image;
