@@ -775,6 +775,7 @@
 		"createCollectionNow": "Jetzt Sammlung anlegen",
 		"addBadges": "Badges zu Sammlung hinzufügen",
 		"skipStep": "Du kannst diesen Schritt überspringen und später Badges hinzufügen.",
+		"ob3Disclaimer": "Momentan können noch keine fremden 3.0-Badges hinzugefügt werden.",
 		"badgesInCollection": "Badges in der Sammlung",
 		"removeBadge": "Badge aus Sammlung entfernen?",
 		"removeBadgeConfirm1": "Möchtest du den Badge ",
@@ -786,7 +787,8 @@
 		"noBadgesInThisCollectionYet": "Diese Sammlung enthält noch keine Badges.",
 		"downloadPdf": "PDF herunterladen",
 		"deleteCollection": "Sammlung löschen",
-		"deleteText": "Bist du sicher, dass du die Sammlung {{ collectionname }} löschen möchtest?"
+		"deleteText": "Bist du sicher, dass du die Sammlung {{ collectionname }} löschen möchtest?",
+		"searchBadges": "Meine Badges durchsuchen"
 	},
 	"Profile": {
 		"more": "Mehr",

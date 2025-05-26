@@ -775,6 +775,7 @@
 		"createCollectionNow": "Create collection now",
 		"addBadges": "Add badges to collection",
 		"skipStep": "You can skip this step and add badges later.",
+		"ob3Disclaimer": "At the moment, no external 3.0 badges can be added.",
 		"badgesInCollection": "badges in the collection",
 		"removeBadge": "Remove Badge from collection?",
 		"removeBadgeConfirm1": "Möchtest du den Badge ",
@@ -786,7 +787,8 @@
 		"noBadgesInThisCollectionYet": "This collection does not contain any badges yet.",
 		"downloadPdf": "Download PDF",
 		"deleteCollection": "Delete Collection",
-		"deleteText": "Are you sure you want to delete collection {{ collectionname }}?"
+		"deleteText": "Are you sure you want to delete collection {{ collectionname }}?",
+		"searchBadges": "Search my badges"
 	},
 	"Profile": {
 		"more": "More",
