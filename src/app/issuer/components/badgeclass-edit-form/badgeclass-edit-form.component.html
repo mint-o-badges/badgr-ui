@@ -901,10 +901,14 @@
 				<cdk-step label="Tags" [optional]="true" errorMessage="Bitte Tags auswählen">
 					<div class="section tw-text-oebblack tw-mt-6">
 						<div>
-							<h2 *ngIf="badgeCategory !== 'competency'" hlmH2 class="tw-font-bold">
+							<h2 *ngIf="badgeCategory !== 'competency' || existingBadgeClass" hlmH2 class="tw-font-bold">
 								3. {{ 'CreateBadge.addTags' | translate }}
 							</h2>
-							<h2 *ngIf="badgeCategory === 'competency'" hlmH2 class="tw-font-bold">
+							<h2
+								*ngIf="badgeCategory === 'competency' && !existingBadgeClass"
+								hlmH2
+								class="tw-font-bold"
+							>
 								4. {{ 'CreateBadge.addTags' | translate }}
 							</h2>
 						</div>
