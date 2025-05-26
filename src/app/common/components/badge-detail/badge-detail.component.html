@@ -110,20 +110,23 @@
 							</div>
 						</div>
 						<dl clss="tw-min-w-[150px]">
-							<div *ngIf="config.badgeCriteria" class="tw-bg-white tw-mb-4 tw-rounded-[10px]">
+							<div
+								*ngIf="config.badgeCriteria && config.category == competencyBadge"
+								class="tw-bg-white tw-mb-4 tw-rounded-[10px]"
+							>
 								<ng-template [bgAwaitPromises]="[badgeInstancesLoaded]">
 									<oeb-collapsible
 										[trigger]="collapseCriteriaTrigger"
 										closeIcon="lucideChevronDown"
-										[defaultOpen]="config.badgeCriteria.length > 0"
+										[defaultOpen]="
+											typeof(config.badgeCriteria) != 'string' && config.badgeCriteria.length
+										"
 										[id]=""
+										*ngIf="config.badgeCriteria.length || config.competencies.length"
 									>
 										<ng-template #collapseCriteriaTrigger>
 											<dt class="tw-mr-auto tw-flex tw-justify-center tw-items-center tw-px-2">
-												<ng-icon hlm name="lucideAward"
-													class="tw-w-8 tw-h-8 tw-text-purple"
-												>
-
+												<ng-icon hlm name="lucideAward" class="tw-w-8 tw-h-8 tw-text-purple">
 												</ng-icon>
 												<span
 													class="tw-text-oebblack tw-font-bold tw-text-sm tw-ml-1"
@@ -131,7 +134,12 @@
 												></span>
 											</dt>
 										</ng-template>
-										<dd>
+										<dd
+											*ngIf="
+												typeof(config.badgeCriteria) != 'string' && config.badgeCriteria.length;
+												else showCompetencies
+											"
+										>
 											<ul class="tw-pr-2 tw-pl-8 tw-list-inside tw-list-disc">
 												<li class="tw-mb-1" *ngFor="let criteria of config.badgeCriteria">
 													<span class="tw-text-oebblack">{{ criteria.name }}</span>
@@ -144,6 +152,13 @@
 												</li>
 											</ul>
 										</dd>
+										<ng-template #showCompetencies>
+											<ul class="tw-pr-2 tw-pl-8 tw-list-inside tw-list-disc">
+												<li class="tw-mb-1" *ngFor="let competency of config.competencies">
+													<span class="tw-text-oebblack">{{ competency.name }}</span>
+												</li>
+											</ul>
+										</ng-template>
 									</oeb-collapsible>
 								</ng-template>
 							</div>
