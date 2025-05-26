@@ -784,7 +784,9 @@
 		"oneBadge": " badge for this collection.",
 		"multiBadges": " badges for this collection.",
 		"noBadgesInThisCollectionYet": "This collection does not contain any badges yet.",
-		"downloadPdf": "Download PDF"
+		"downloadPdf": "Download PDF",
+		"deleteCollection": "Delete Collection",
+		"deleteText": "Are you sure you want to delete collection {{ collectionname }}?"
 	},
 	"Profile": {
 		"more": "More",

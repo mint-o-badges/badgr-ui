@@ -784,7 +784,9 @@
 		"oneBadge": " Badge für die Sammlung ausgewählt.",
 		"multiBadges": " Badges für die Sammlung ausgewählt.",
 		"noBadgesInThisCollectionYet": "Diese Sammlung enthält noch keine Badges.",
-		"downloadPdf": "PDF herunterladen"
+		"downloadPdf": "PDF herunterladen",
+		"deleteCollection": "Sammlung löschen",
+		"deleteText": "Bist du sicher, dass du die Sammlung {{ collectionname }} löschen möchtest?"
 	},
 	"Profile": {
 		"more": "Mehr",

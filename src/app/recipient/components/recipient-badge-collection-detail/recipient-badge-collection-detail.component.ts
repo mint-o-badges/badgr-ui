@@ -42,6 +42,9 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 	@ViewChild('deleteBadgeDialogContentTemplate')
 	deleteBadgeDialogContentTemplate: ElementRef;
 
+	@ViewChild('deleteCollectionDialogContentTemplate')
+	deleteCollectionDialogContentTemplate: ElementRef;
+
 	collectionLoadedPromise: Promise<unknown>;
 	collection: RecipientBadgeCollection = new RecipientBadgeCollection(null);
 	crumbs: LinkEntry[];
@@ -139,6 +142,23 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 		});
 	}
 
+	deleteCollection() {
+		this.openCollectionDeleteDialog();
+		this.dialogRef.closed$.subscribe((result) => {
+			if (result === 'continue') {
+				this.collection.deleteCollection().then(
+					() => {
+						this.messageService.reportMinorSuccess(`Deleted collection '${this.collection.name}'`);
+						this.router.navigate(['/recipient/badges'], {
+							queryParams: { tab: 'collections' },
+						});
+					},
+					(error) => this.messageService.reportHandledError(`Failed to delete collection`, error),
+				);
+			}
+		});
+	}
+
 	manageBadges() {
 		this.recipientBadgeDialog
 			.openDialog({
@@ -180,29 +200,44 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 		this.dialogRef = dialogRef;
 	}
 
-	deleteCollection() {
-		this.dialogService.confirmDialog
-			.openResolveRejectDialog({
-				dialogTitle: 'Delete Collection',
-				dialogBody: `Are you sure you want to delete collection ${this.collection.name}?`,
-				resolveButtonLabel: 'Delete Collection',
-				rejectButtonLabel: 'Cancel',
-			})
-			.then(
-				() => {
-					this.collection.deleteCollection().then(
-						() => {
-							this.messageService.reportMinorSuccess(`Deleted collection '${this.collection.name}'`);
-							this.router.navigate(['/recipient/badges'], {
-								queryParams: { tab: 'collections' },
-							});
-						},
-						(error) => this.messageService.reportHandledError(`Failed to delete collection`, error),
-					);
+	public openCollectionDeleteDialog() {
+		const dialogRef = this._hlmDialogService.open(DialogComponent, {
+			context: {
+				headerTemplate: this.dangerDialogHeaderTemplate,
+				content: this.deleteCollectionDialogContentTemplate,
+				variant: 'danger',
+				templateContext: {
+					collectionname: this.collection.name,
 				},
-				() => {},
-			);
+			},
+		});
+
+		this.dialogRef = dialogRef;
 	}
+
+	// deleteCollection() {
+	// 	this.dialogService.confirmDialog
+	// 		.openResolveRejectDialog({
+	// 			dialogTitle: 'Delete Collection',
+	// 			dialogBody: `Are you sure you want to delete collection ${this.collection.name}?`,
+	// 			resolveButtonLabel: 'Delete Collection',
+	// 			rejectButtonLabel: 'Cancel',
+	// 		})
+	// 		.then(
+	// 			() => {
+	// 				this.collection.deleteCollection().then(
+	// 					() => {
+	// 						this.messageService.reportMinorSuccess(`Deleted collection '${this.collection.name}'`);
+	// 						this.router.navigate(['/recipient/badges'], {
+	// 							queryParams: { tab: 'collections' },
+	// 						});
+	// 					},
+	// 					(error) => this.messageService.reportHandledError(`Failed to delete collection`, error),
+	// 				);
+	// 			},
+	// 			() => {},
+	// 		);
+	// }
 
 	removeEntry(entry: RecipientBadgeCollectionEntry) {
 		this.dialogService.confirmDialog
