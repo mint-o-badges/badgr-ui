@@ -215,30 +215,6 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 		this.dialogRef = dialogRef;
 	}
 
-	// deleteCollection() {
-	// 	this.dialogService.confirmDialog
-	// 		.openResolveRejectDialog({
-	// 			dialogTitle: 'Delete Collection',
-	// 			dialogBody: `Are you sure you want to delete collection ${this.collection.name}?`,
-	// 			resolveButtonLabel: 'Delete Collection',
-	// 			rejectButtonLabel: 'Cancel',
-	// 		})
-	// 		.then(
-	// 			() => {
-	// 				this.collection.deleteCollection().then(
-	// 					() => {
-	// 						this.messageService.reportMinorSuccess(`Deleted collection '${this.collection.name}'`);
-	// 						this.router.navigate(['/recipient/badges'], {
-	// 							queryParams: { tab: 'collections' },
-	// 						});
-	// 					},
-	// 					(error) => this.messageService.reportHandledError(`Failed to delete collection`, error),
-	// 				);
-	// 			},
-	// 			() => {},
-	// 		);
-	// }
-
 	removeEntry(entry: RecipientBadgeCollectionEntry) {
 		this.dialogService.confirmDialog
 			.openResolveRejectDialog({
