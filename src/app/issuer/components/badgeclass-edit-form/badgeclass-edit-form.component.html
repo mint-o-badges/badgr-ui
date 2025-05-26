@@ -901,10 +901,14 @@
 				<cdk-step label="Tags" [optional]="true" errorMessage="Bitte Tags auswählen">
 					<div class="section tw-text-oebblack tw-mt-6">
 						<div>
-							<h2 *ngIf="badgeCategory !== 'competency'" hlmH2 class="tw-font-bold">
+							<h2 *ngIf="badgeCategory !== 'competency' || existingBadgeClass" hlmH2 class="tw-font-bold">
 								3. {{ 'CreateBadge.addTags' | translate }}
 							</h2>
-							<h2 *ngIf="badgeCategory === 'competency'" hlmH2 class="tw-font-bold">
+							<h2
+								*ngIf="badgeCategory === 'competency' && !existingBadgeClass"
+								hlmH2
+								class="tw-font-bold"
+							>
 								4. {{ 'CreateBadge.addTags' | translate }}
 							</h2>
 						</div>
@@ -1001,7 +1005,7 @@
 							[innerHTML]="'Badge.criteriaDesc' | translate"
 						></span>
 						<div class="tw-mt-2 tw-mb-2 tw-grid tw-grid-cols-3">
-							<div class="tw-grid tw-grid-cols-2 tw-col-span-2">
+							<div class="tw-grid tw-grid-cols-2 tw-col-span-2 tw-gap-4">
 								<ng-container
 									*ngFor="
 										let criteriaGroup of criteriaSelectionsForm.controls.selections.controls;
@@ -1018,7 +1022,7 @@
 								class="tw-col-span-1"
 								size="sm"
 								type="button"
-								variant="secondary"
+								variant="white"
 								[text]="'Badge.addOwnCriteria' | translate"
 								(click)="addNewOwnCriteria()"
 							></oeb-button>
@@ -1073,7 +1077,7 @@
 							[innerHTML]="'CreateBadge.expirationInfo' | translate"
 						></span>
 						<div class="formsection-x-body">
-							<div class="l-spacestack">
+							<div class="tw-w-fit tw-flex tw-gap-6">
 								<oeb-input
 									id="duration-number"
 									[control]="expirationForm.rawControlMap.expires_amount"
