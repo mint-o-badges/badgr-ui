@@ -75,7 +75,7 @@
 		"title": "Titel",
 		"noResults": "Keine Ergebnisse",
 		"reset": "Zurücksetzen",
-		"exam": "Prüfung",
+		"exam": "Test / Prüfung",
 		"create": "erstellen",
 		"copy": "kopieren",
 		"place": "stellen",
@@ -426,7 +426,7 @@
 		"selfReflection": "Selbstreflexion",
 		"achievedIndividualLearning": "Individuelles Lernziel erreicht",
 		"presence90": "90% Anwesenheit",
-		"practicalApplication": "Praxis-Awendung",
+		"practicalApplication": "Praxis-Anwendung",
 		"onlineCourseCompleted": "Online-Kurs abgeschlossen",
 		"projectCompleted": "Projekt-Abschluss",
 		"addOwnCriteria": "Eigenes Kriterium hinzufügen",
@@ -775,6 +775,7 @@
 		"createCollectionNow": "Jetzt Sammlung anlegen",
 		"addBadges": "Badges zu Sammlung hinzufügen",
 		"skipStep": "Du kannst diesen Schritt überspringen und später Badges hinzufügen.",
+		"ob3Disclaimer": "Momentan können noch keine fremden 3.0-Badges hinzugefügt werden.",
 		"badgesInCollection": "Badges in der Sammlung",
 		"removeBadge": "Badge aus Sammlung entfernen?",
 		"removeBadgeConfirm1": "Möchtest du den Badge ",
@@ -784,7 +785,10 @@
 		"oneBadge": " Badge für die Sammlung ausgewählt.",
 		"multiBadges": " Badges für die Sammlung ausgewählt.",
 		"noBadgesInThisCollectionYet": "Diese Sammlung enthält noch keine Badges.",
-		"downloadPdf": "PDF herunterladen"
+		"downloadPdf": "PDF herunterladen",
+		"deleteCollection": "Sammlung löschen",
+		"deleteText": "Bist du sicher, dass du die Sammlung {{ collectionname }} löschen möchtest?",
+		"searchBadges": "Meine Badges durchsuchen"
 	},
 	"Profile": {
 		"more": "Mehr",
