@@ -264,6 +264,7 @@ export class RecipientBadgeCollectionEditFormComponent extends BaseAuthenticated
 
 	onSubmit(formState?: CreateBadgeCollectionForm<string>) {
 		if (!this.badgeCollectionForm.markTreeDirtyAndValidate()) {
+			window?.scrollTo({ left: 0, top: 0, behavior: 'smooth' });
 			return;
 		}
 
