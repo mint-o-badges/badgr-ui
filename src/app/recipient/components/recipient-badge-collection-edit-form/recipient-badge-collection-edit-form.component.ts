@@ -51,7 +51,7 @@ export class RecipientBadgeCollectionEditFormComponent extends BaseAuthenticated
 
 	badgeCollectionForm = typedFormGroup()
 		.addControl('collectionName', '', [Validators.required, Validators.maxLength(128)])
-		.addControl('collectionDescription', '', [Validators.required, Validators.maxLength(255)]);
+		.addControl('collectionDescription', '', [Validators.maxLength(255)]);
 
 	savePromise: Promise<unknown>;
 	badgesLoaded: Promise<unknown>;
