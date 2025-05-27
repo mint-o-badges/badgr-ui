@@ -41,7 +41,11 @@ import { TranslateModule } from '@ngx-translate/core';
 			<ngTemplateOutlet *ngIf="isTemplate; else stringTrigger" [ngTemplateOutlet]="trigger"></ngTemplateOutlet>
 			<ng-template #stringTrigger>
 				<button [class]="triggerStyle" [disabled]="!hasEnabledMenuItem">
-					{{ trigger | translate }}
+					@if (noTranslate) {
+						{{ trigger }}
+					} @else {
+						{{ trigger | translate }}
+					}
 					<ng-icon hlm class="tw-ml-2" name="lucideChevronDown" hlmMenuIcon />
 				</button>
 			</ng-template>
@@ -59,7 +63,11 @@ import { TranslateModule } from '@ngx-translate/core';
 						hlmMenuItem
 					>
 						<ng-icon hlm [size]="iconClass" *ngIf="menuItem.icon" name="{{ menuItem.icon }}" hlmMenuIcon />
-						{{ menuItem.title | translate }}
+							@if (noTranslate) {
+								{{ menuItem.title }}
+							} @else {
+								{{ menuItem.title | translate }}
+							}
 					</button>
 					<button
 						routerLinkActive="tw-bg-lightpurple"
@@ -77,7 +85,11 @@ import { TranslateModule } from '@ngx-translate/core';
 							name="{{ menuItem.icon }}"
 							hlmMenuIcon
 						/>
-						{{ menuItem.title | translate }}
+						@if (noTranslate) {
+							{{ menuItem.title }}
+						} @else {
+							{{ menuItem.title | translate }}
+						}
 					</button>
 				</ng-container>
 			</hlm-menu>
@@ -93,6 +105,7 @@ export class OebDropdownComponent {
 	@Input() label?: string = '';
 	@Input() class?: string = '';
 	@Input() menuItems: MenuItem[];
+	@Input() noTranslate = false;
 
 	get isTemplate(): boolean {
 		return this.trigger instanceof TemplateRef;
