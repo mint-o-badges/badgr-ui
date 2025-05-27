@@ -9,7 +9,7 @@ import { Issuer } from '../../issuer/models/issuer.model';
 	template: `
 		<div class="tw-flex tw-flex-col tw-h-full">
 			<div class="tw-flex-row tw-flex tw-items-center">
-				<img [src]="issuer.image" width="80" />
+				<img [src]="issuer.image" class="tw-aspect-square" width="80"/>
 				<div class="tw-flex tw-flex-col tw-flex-wrap tw-pl-4 tw-py-2 tw-break-words">
 					<a [routerLink]="['/public/issuers', issuer.slug]" hlmP>{{ issuer.name }}</a>
 					<p class="tw-font-bold" hlmP size="sm">{{ issuer.email }}</p>

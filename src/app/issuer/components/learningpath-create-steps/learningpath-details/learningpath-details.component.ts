@@ -71,15 +71,6 @@ export class LearningPathDetailsComponent implements OnInit, AfterViewInit {
 	maxCustomImageSize = 1024 * 250;
 
 	detailsForm: FormGroup;
-
-	// useOurEditor = this.translate.instant('CreateBadge.useOurEditor');
-	// imageSublabel = this.translate.instant('CreateBadge.imageSublabel');
-	// useOwnVisual = this.translate.instant('CreateBadge.useOwnVisual');
-	// uploadOwnVisual = this.translate.instant('CreateBadge.uploadOwnVisual');
-	// uploadOwnDesign = this.translate.instant('CreateBadge.uploadOwnDesign');
-	// chooseFromExistingIcons = this.translate.instant('RecBadge.chooseFromExistingIcons');
-	// selectFromMyFiles = this.translate.instant('RecBadge.selectFromMyFiles');
-
 	useOurEditor: string;
 	imageSublabel: string;
 	useOwnVisual: string;
@@ -138,7 +129,7 @@ export class LearningPathDetailsComponent implements OnInit, AfterViewInit {
 		this.translate.get('CreateBadge.useOwnVisual').subscribe((res: string) => {
 			this.useOwnVisual = res;
 		});
-		this.translate.get('CreateBadge.uploadOwnVisual').subscribe((res: string) => {
+		this.translate.get('RecBadge.uploadOwnVisual').subscribe((res: string) => {
 			this.uploadOwnVisual = res;
 		});
 		this.translate.get('CreateBadge.uploadOwnDesign').subscribe((res: string) => {

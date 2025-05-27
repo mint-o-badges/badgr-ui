@@ -148,7 +148,7 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 
 	loadIssuers = () => {
 		return new Promise<void>((resolve, reject) => {
-			this.issuerManager.allIssuers$.subscribe(
+			this.issuerManager.myIssuers$.subscribe(
 				(issuers) => {
 					this.issuers = issuers.slice().sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
 					resolve();

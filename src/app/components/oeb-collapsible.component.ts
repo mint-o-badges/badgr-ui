@@ -55,8 +55,11 @@ import { NgIf, NgTemplateOutlet, NgClass } from '@angular/common';
 						hlm
 						size="xl"
 						class="tw-text-purple"
-						[ngClass]="{ 'tw-rotate-90': collapsible.state() == 'open' }"
-						name="lucideChevronRight"
+						[ngClass]="{
+							'tw-rotate-90': collapsible.state() == 'open' && closeIcon == 'lucideChevronRight',
+							'tw-rotate-180': collapsible.state() == 'open' && closeIcon == 'lucideChevronDown'
+						}"
+						[name]="closeIcon"
 					/>
 				</div>
 			</button>
@@ -71,6 +74,7 @@ export class OebCollapsibleComponent implements AfterViewInit {
 	@Input() defaultOpen: boolean = false;
 	@Input() id: string = null;
 	@Input() closeable: boolean = true;
+	@Input() closeIcon = 'lucideChevronRight';
 	@Output() toggled = new EventEmitter<boolean>();
 
 	@ViewChild('collapsible') collapsible: BrnCollapsibleComponent;

@@ -38,7 +38,7 @@ export class SelectIssuerDialog extends BaseDialog {
 	async openDialog(): Promise<Issuer | void> {
 		this.showModal();
 
-		this.issuerManager.allIssuers$.subscribe((issuers) => {
+		this.issuerManager.myIssuers$.subscribe((issuers) => {
 			this.issuers = issuers.filter((issuer) => issuer.canCreateBadge);
 		});
 

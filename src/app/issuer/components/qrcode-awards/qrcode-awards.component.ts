@@ -82,7 +82,7 @@ export class QrCodeAwardsComponent {
 			this.awards.forEach((award) => {
 				this.qrCodeMenus.push([
 					{
-						title: 'Zum QR-Code',
+						title: 'QrCode.showQrCode',
 						routerLink: [
 							'/issuer/issuers',
 							this.issuer.slug,
@@ -95,7 +95,7 @@ export class QrCodeAwardsComponent {
 						icon: 'lucideQrCode',
 					},
 					{
-						title: 'Bearbeiten',
+						title: 'General.edit',
 						routerLink: [
 							'/issuer/issuers/',
 							this.issuer.slug,
@@ -108,7 +108,7 @@ export class QrCodeAwardsComponent {
 						icon: 'lucidePencil',
 					},
 					{
-						title: 'Löschen',
+						title: 'General.delete',
 						action: () => this.openDangerDialog(award.slug),
 						icon: 'lucideTrash2',
 					},
