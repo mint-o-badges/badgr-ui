@@ -789,7 +789,8 @@
 		"downloadPdf": "PDF herunterladen",
 		"deleteCollection": "Sammlung löschen",
 		"deleteText": "Bist du sicher, dass du die Sammlung {{ collectionname }} löschen möchtest?",
-		"searchBadges": "Meine Badges durchsuchen"
+		"searchBadges": "Meine Badges durchsuchen",
+		"downloadQrCode": "QR-Code herunterladen"
 	},
 	"Profile": {
 		"more": "Mehr",

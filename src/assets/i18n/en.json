@@ -790,7 +790,8 @@
 		"downloadPdf": "Download PDF",
 		"deleteCollection": "Delete Collection",
 		"deleteText": "Are you sure you want to delete collection {{ collectionname }}?",
-		"searchBadges": "Search my badges"
+		"searchBadges": "Search my badges",
+		"downloadQrCode": "Download QR-Code"
 	},
 	"Profile": {
 		"more": "More",
