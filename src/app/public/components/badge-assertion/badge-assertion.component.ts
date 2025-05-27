@@ -20,6 +20,7 @@ import { VerifyBadgeDialog } from '../verify-badge-dialog/verify-badge-dialog.co
 import { BadgeClassCategory, BadgeClassLevel } from './../../../issuer/models/badgeclass-api.model';
 import { PageConfig } from '../../../common/components/badge-detail/badge-detail.component.types';
 import { CommonDialogsService } from '../../../common/services/common-dialogs.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	template: `<verify-badge-dialog
@@ -38,6 +39,7 @@ export class PublicBadgeAssertionComponent {
 		public queryParametersService: QueryParametersService,
 		private dialogService: CommonDialogsService,
 		private title: Title,
+		private translate: TranslateService,
 	) {
 		title.setTitle(`Assertion - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 		this.assertionIdParam = this.createLoadedRouteParam();
@@ -69,21 +71,6 @@ export class PublicBadgeAssertionComponent {
 			'=1': 'Expired',
 			'=0': 'Expires',
 		},
-	};
-
-	categoryOptions: { [key in BadgeClassCategory]: string } = {
-		competency: 'Kompetenz-Badge',
-		participation: 'Teilnahme-Badge',
-		learningpath: 'Micro Degree',
-	};
-
-	levelOptions: { [key in BadgeClassLevel]: string } = {
-		a1: 'A1 Einsteiger*in',
-		a2: 'A2 Entdecker*in',
-		b1: 'B1 Insider*in',
-		b2: 'B2 Expert*in',
-		c1: 'C1 Leader*in',
-		c2: 'C2 Vorreiter*in',
 	};
 
 	get showDownload() {
@@ -208,8 +195,8 @@ export class PublicBadgeAssertionComponent {
 					slug: assertion.badge.id,
 					category:
 						assertion.badge['extensions:CategoryExtension'].Category === 'competency'
-							? 'Kompetenz- Badge'
-							: 'Teilnahme- Badge',
+							? this.translate.instant('Badge.categories.competency')
+							: this.translate.instant('Badge.categories.participation'),
 					tags: assertion.badge.tags,
 					issuerName: assertion.badge.issuer.name,
 					issuerImagePlacholderUrl: this.issuerImagePlacholderUrl,

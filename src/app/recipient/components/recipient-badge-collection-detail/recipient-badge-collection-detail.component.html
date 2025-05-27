@@ -129,4 +129,21 @@
 	</div>
 </ng-template>
 
+<ng-template let-collectionname="collectionname" #deleteCollectionDialogContentTemplate>
+	<div class="tw-flex tw-flex-col tw-gap-2 tw-mt-2 tw-text-center tw-text-lg">
+		<span class="tw-text-oebblack tw-font-bold">
+			{{ 'BadgeCollection.deleteCollection' | translate }}
+		</span>
+
+		<span [translate]="'BadgeCollection.deleteText'" [translateParams]="{ collectionname: collectionname }"> </span>
+	</div>
+
+	<div class="tw-flex tw-justify-evenly tw-mt-4">
+		<oeb-button variant="secondary" [text]="'General.cancel' | translate" size="sm" (click)="closeDialog()">
+		</oeb-button>
+		<oeb-button [text]="'BadgeCollection.deleteCollection' | translate" size="sm" (click)="closeDialogContinue()">
+		</oeb-button>
+	</div>
+</ng-template>
+
 <recipient-badge-selection-dialog #recipientBadgeDialog></recipient-badge-selection-dialog>

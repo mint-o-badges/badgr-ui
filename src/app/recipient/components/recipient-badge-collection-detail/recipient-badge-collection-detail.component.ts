@@ -20,6 +20,7 @@ import { RecipientBadgeInstance } from '../../models/recipient-badge.model';
 import { BrnDialogRef } from '@spartan-ng/brain/dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { ShareDialogTemplateComponent } from '../../../common/dialogs/oeb-dialogs/share-dialog-template.component';
+import { PdfService } from '../../../common/services/pdf.service';
 
 @Component({
 	selector: 'recipient-earned-badge-detail',
@@ -42,6 +43,9 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 	@ViewChild('deleteBadgeDialogContentTemplate')
 	deleteBadgeDialogContentTemplate: ElementRef;
 
+	@ViewChild('deleteCollectionDialogContentTemplate')
+	deleteCollectionDialogContentTemplate: ElementRef;
+
 	collectionLoadedPromise: Promise<unknown>;
 	collection: RecipientBadgeCollection = new RecipientBadgeCollection(null);
 	crumbs: LinkEntry[];
@@ -61,6 +65,7 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 		private configService: AppConfigService,
 		private dialogService: CommonDialogsService,
 		private translate: TranslateService,
+		private pdfService: PdfService,
 	) {
 		super(router, route, loginService);
 
@@ -72,11 +77,11 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 				icon: 'lucidePencil',
 				action: () => this.router.navigate([`/recipient/badge-collections/${this.collectionSlug}/edit`]),
 			},
-			// {
-			// 	title: 'PDF herunterladen',
-			// 	icon: 'lucideFileText',
-			// 	action: () => console.log(""),
-			// },
+			{
+				title: this.translate.instant('BadgeCollection.downloadPdf'),
+				icon: 'lucideFileText',
+				action: () => this.exportPdf(),
+			},
 			{
 				title: this.translate.instant('General.delete'),
 				icon: 'lucideTrash2',
@@ -138,6 +143,23 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 		});
 	}
 
+	deleteCollection() {
+		this.openCollectionDeleteDialog();
+		this.dialogRef.closed$.subscribe((result) => {
+			if (result === 'continue') {
+				this.collection.deleteCollection().then(
+					() => {
+						this.messageService.reportMinorSuccess(`Deleted collection '${this.collection.name}'`);
+						this.router.navigate(['/recipient/badges'], {
+							queryParams: { tab: 'collections' },
+						});
+					},
+					(error) => this.messageService.reportHandledError(`Failed to delete collection`, error),
+				);
+			}
+		});
+	}
+
 	manageBadges() {
 		this.recipientBadgeDialog
 			.openDialog({
@@ -190,28 +212,19 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 		this.dialogRef = dialogRef;
 	}
 
-	deleteCollection() {
-		this.dialogService.confirmDialog
-			.openResolveRejectDialog({
-				dialogTitle: 'Delete Collection',
-				dialogBody: `Are you sure you want to delete collection ${this.collection.name}?`,
-				resolveButtonLabel: 'Delete Collection',
-				rejectButtonLabel: 'Cancel',
-			})
-			.then(
-				() => {
-					this.collection.deleteCollection().then(
-						() => {
-							this.messageService.reportMinorSuccess(`Deleted collection '${this.collection.name}'`);
-							this.router.navigate(['/recipient/badges'], {
-								queryParams: { tab: 'collections' },
-							});
-						},
-						(error) => this.messageService.reportHandledError(`Failed to delete collection`, error),
-					);
+	public openCollectionDeleteDialog() {
+		const dialogRef = this._hlmDialogService.open(DialogComponent, {
+			context: {
+				headerTemplate: this.dangerDialogHeaderTemplate,
+				content: this.deleteCollectionDialogContentTemplate,
+				variant: 'danger',
+				templateContext: {
+					collectionname: this.collection.name,
 				},
-				() => {},
-			);
+			},
+		});
+
+		this.dialogRef = dialogRef;
 	}
 
 	removeEntry(entry: RecipientBadgeCollectionEntry) {
@@ -287,10 +300,11 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 		this.dialogService.shareSocialDialog.openDialog(shareCollectionDialogOptionsFor(this.collection));
 	}
 
-	// exportPdf() {
-	// 	this.dialogService.exportPdfDialog.openDialogForCollections(this.collection)
-	// 		.catch((error) => console.log(error));
-	// }
+	exportPdf() {
+		this.pdfService.getPdf(this.collection.slug, 'collections').then((res) => {
+			this.pdfService.downloadPdf(res, this.collection.name, new Date());
+		});
+	}
 }
 
 export function shareCollectionDialogOptionsFor(collection: RecipientBadgeCollection): ShareSocialDialogOptions {

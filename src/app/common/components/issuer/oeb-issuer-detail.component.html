@@ -6,7 +6,7 @@
 				[loading-src]="issuerPlaceholderSrc"
 				[error-src]="issuerPlaceholderSrc"
 				alt="{{ issuer.name }} avatar"
-				class="tw-h-[70px] md:tw-h-[100px] tw-w-auto tw-min-w-[70px] md:tw-min-w-[100px]"
+				class="tw-h-[70px] md:tw-h-[100px] tw-w-auto tw-min-w-[70px] md:tw-min-w-[100px] tw-aspect-square"
 			/>
 		</div>
 		<div class="tw-flex tw-flex-col tw-justify-center tw-pl-8 tw-max-w-[80%] oeb-break-words">
@@ -39,10 +39,10 @@
 			<oeb-button
 				class="tw-whitespace-nowrap"
 				*ngIf="!public"
-				[routerLink]="activeTab === 'Badges' ? ['./badges/select'] : ['./learningpaths/create']"
+				[routerLink]="activeTab === 'badges' ? ['./badges/select'] : ['./learningpaths/create']"
 				[disabled]="!issuer.canCreateBadge"
 				[text]="
-					activeTab === 'Badges'
+					activeTab === 'badges'
 						? ('Issuer.createBadge' | translate)
 						: ('Issuer.myInstitutionsCreateLearningPath' | translate)
 				"
@@ -85,10 +85,10 @@
 			*ngIf="!public"
 			width="full_width"
 			[class]="'tw-flex-grow tw-relative'.concat(issuer.canCreateBadge ? '' : ' disabled')"
-			[routerLink]="activeTab === 'Badges' ? ['./badges/select'] : ['./learningpaths/create']"
+			[routerLink]="activeTab === 'badges' ? ['./badges/select'] : ['./learningpaths/create']"
 			[disabled]="!issuer.canCreateBadge"
 			[text]="
-				activeTab === 'Badges'
+				activeTab === 'badges'
 					? ('Issuer.createBadge' | translate)
 					: ('Issuer.myInstitutionsCreateLearningPath' | translate)
 			"

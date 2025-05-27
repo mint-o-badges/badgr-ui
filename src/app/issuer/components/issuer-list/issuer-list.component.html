@@ -123,7 +123,7 @@
 								[loading-src]="issuerPlaceholderSrc"
 								[error-src]="issuerPlaceholderSrc"
 								alt="{{ issuer.name }} avatar"
-								class="tw-h-[70px] md:tw-h-[100px] tw-w-auto tw-min-w-[70px] md:tw-min-w-[100px]"
+								class="tw-h-[70px] md:tw-h-[100px] tw-w-auto tw-min-w-[70px] md:tw-min-w-[100px] tw-aspect-square"
 							/>
 						</div>
 						<div class="tw-flex tw-flex-col tw-justify-center tw-pl-4 oeb-break-words">
@@ -256,7 +256,7 @@
 								(click)="selectIssuerFromDropdown(issuer)"
 								*ngFor="let issuer of issuerSearchResults"
 							>
-								<img [src]="issuer.image" width="24" height="24" />
+								<img [src]="issuer.image" width="24" class="tw-aspect-square" />
 								<span>{{ issuer.name }}</span>
 							</li>
 							<li

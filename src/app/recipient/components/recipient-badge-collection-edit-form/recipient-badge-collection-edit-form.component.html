@@ -13,7 +13,7 @@
 					[max]="50"
 					errorMessage=" {{ 'BadgeCollection.enterCollectioName' | translate }}"
 					[autofocus]="true"
-					[sublabelRight]="'max. 50 ' + ('General.characters' | translate)"
+					[sublabelRight]="'(max. 50 ' + ('General.characters' | translate) + ')'"
 					[placeholder]="'BadgeCollection.collectionNamePlaceholder' | translate"
 				>
 				</oeb-input>
@@ -24,7 +24,7 @@
 					[max]="300"
 					size="lg"
 					fieldType="textarea"
-					[sublabelRight]="'max. 300 ' + ('General.characters' | translate)"
+					[sublabelRight]="'(optional, max. 300 ' + ('General.characters' | translate) + ')'"
 					[placeholder]="'BadgeCollection.descriptionPlaceholder' | translate"
 				>
 				</oeb-input>
@@ -38,9 +38,14 @@
 						<h2 class="tw-text-oebblack tw-text-[22px] tw-font-bold tw-mb-4">
 							{{ 'BadgeCollection.addBadges' | translate }}
 						</h2>
-						<span class="tw-text-lg tw-text-purple tw-italic">
-							{{ 'BadgeCollection.skipStep' | translate }}
-						</span>
+						<p class="tw-flex tw-flex-col tw-gap-1">
+							<span class="tw-text-lg tw-text-purple tw-italic">
+								{{ 'BadgeCollection.skipStep' | translate }}
+							</span>
+							<span class="tw-text-lg tw-text-purple tw-italic">
+								{{ 'BadgeCollection.ob3Disclaimer' | translate }}
+							</span>
+						</p>
 						<div class="tw-flex tw-flex-wrap tw-py-6">
 							<!-- Search  -->
 							<div class="tw-pb-2 md:tw-pb-0">
@@ -49,7 +54,7 @@
 									name="forminput"
 									changeOrder
 									class="tw-border-solid tw-border-purple tw-bg-white tw-mr-6"
-									placeholder="{{ 'Badge.searchBadges' | translate }}"
+									placeholder="{{ 'BadgeCollection.searchBadges' | translate }}"
 									[(ngModel)]="searchQuery"
 									[ngModelOptions]="{ standalone: true }"
 									hlmInput

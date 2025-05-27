@@ -10,6 +10,7 @@
 					</h2>
 
 					<oeb-button
+						*ngIf="activeTab === 'badges'"
 						icon="lucideUpload"
 						iconLeft="true"
 						(click)="uploadBadge()"
@@ -180,7 +181,7 @@
 				</ng-template>
 
 				<ng-template #badgesCompetency>
-					<div class="oeb-headline-container-sm" *ngIf="activeTab === 'Kompetenzen'">
+					<div class="oeb-headline-container-sm" *ngIf="activeTab === 'competencies'">
 						<div class="oeb-section-sm">
 							<div class="tw-grid tw-grid-cols-1 md:tw-grid-cols-3 tw-gap-3">
 								<div
@@ -399,7 +400,7 @@
 									<p class="tw-mt-4 tw-text-oebblack tw-text-lg">
 										{{ 'BadgeCollection.collectionInfoText' | translate }}
 									</p>
-									<p class="tw-mt-2 tw-text-purple tw-text-lg">
+									<p class="tw-mt-2 tw-text-purple tw-text-lg tw-italic">
 										{{ 'BadgeCollection.addLink' | translate }}
 									</p>
 
