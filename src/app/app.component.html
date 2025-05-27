@@ -160,20 +160,24 @@
 						triggerStyle="oeb-navitem tw-cursor-pointer !tw-leading-none !tw-py-1"
 					></oeb-dropdown>
 
-					<oeb-dropdown
-						*ngIf="headerCmsItems.length"
-						[menuItems]="headerCmsItems"
-						trigger="CMS Inhalte"
-						triggerStyle="oeb-navitem tw-cursor-pointer !tw-leading-none !tw-py-1"
-					/>
+					@if (cmsMenus && cmsMenus.header[translate.currentLang]) {
+						@for (item of cmsMenus.header[translate.currentLang]; track item.id) {
+							@if (item.children.length) {
+								<oeb-dropdown
+									[menuItems]="item.children | CmsMenuItems"
+									[trigger]="item.title"
+									triggerStyle="oeb-navitem tw-cursor-pointer !tw-leading-none !tw-py-1"
+								/>
+							} @else {
+								<a
+									class="oeb-navitem"
+									routerLinkActive="oeb-navitem-is-active"
+									[routerLink]="[ item.url ]"
+								>{{item.title}}</a>
+							}
+						}
+					}
 
-					<a
-						*ngIf="!features.disableRegistration"
-						class="oeb-navitem"
-						routerLinkActive="oeb-navitem-is-active"
-						[routerLink]="['/public/about']"
-						>{{ 'NavItems.aboutOpenEducationalBadges' | translate }}</a
-					>
 					<a
 						*ngIf="!features.disableRegistration"
 						class="oeb-navitem"
@@ -219,16 +223,24 @@
 						triggerStyle="oeb-navitem tw-cursor-pointer !tw-leading-none !tw-py-1"
 					></oeb-dropdown>
 
-					<oeb-dropdown
-						*ngIf="headerCmsItems.length"
-						[menuItems]="headerCmsItems"
-						trigger="CMS Inhalte"
-						triggerStyle="oeb-navitem tw-cursor-pointer !tw-leading-none !tw-py-1"
-					/>
 
-					<a class="oeb-navitem" routerLinkActive="oeb-navitem-is-active" [routerLink]="['public/about']">
-						{{ 'NavItems.aboutOpenEducationalBadges' | translate }}
-					</a>
+					@if (cmsMenus && cmsMenus.header[translate.currentLang]) {
+						@for (item of cmsMenus.header[translate.currentLang]; track item.id) {
+							@if (item.children.length) {
+								<oeb-dropdown
+									[menuItems]="item.children | CmsMenuItems"
+									[trigger]="item.title"
+									triggerStyle="oeb-navitem tw-cursor-pointer !tw-leading-none !tw-py-1"
+								/>
+							} @else {
+								<a
+									class="oeb-navitem"
+									routerLinkActive="oeb-navitem-is-active"
+									[routerLink]="[ item.url ]"
+								>{{item.title}}</a>
+							}
+						}
+					}
 
 					<a
 						class="oeb-navitem tw-cursor-pointer"
@@ -338,6 +350,21 @@
 			<a routerLinkActive="menuitem-is-active" [routerLink]="['/catalog/learningpaths']">{{
 				'LearningPath.learningpathsNav' | translate
 			}}</a>
+
+			@if (cmsMenus && cmsMenus.header[translate.currentLang]) {
+				@for (item of cmsMenus.header[translate.currentLang]; track item.id) {
+					<hr class="mobilenav-x-rule" />
+					@if (item.children.length) {
+						<p class="mobilenav-x-label">{{ item.title }}</p>
+						@for (child of item.children; track child.id) {
+							<a [routerLink]="[ child.url ]">{{child.title}}</a>
+						}
+					} @else {
+						<a [routerLink]="item.url">{{item.title}}</a>
+					}
+				}
+			}
+
 			<hr class="mobilenav-x-rule" />
 
 			<a routerLinkActive="menuitem-is-active" [routerLink]="['/public/about']">{{
@@ -380,6 +407,20 @@
 			<a [routerLink]="['/catalog/badges']">Badges A-Z</a>
 			<a [routerLink]="['/catalog/issuers']">{{ 'General.institutionsNav' | translate }}</a>
 			<a [routerLink]="['/catalog/learningpaths']">{{ 'LearningPath.learningpathsNav' | translate }}</a>
+
+			@if (cmsMenus && cmsMenus.header[translate.currentLang]) {
+				@for (item of cmsMenus.header[translate.currentLang]; track item.id) {
+					<hr class="mobilenav-x-rule" />
+					@if (item.children.length) {
+						<p class="mobilenav-x-label">{{ item.title }}</p>
+						@for (child of item.children; track child.id) {
+							<a [routerLink]="[ child.url ]">{{child.title}}</a>
+						}
+					} @else {
+						<a [routerLink]="item.url">{{item.title}}</a>
+					}
+				}
+			}
 
 			<hr class="mobilenav-x-rule" />
 			<a [routerLink]="['/recipient/badges']">{{ 'General.backpack' | translate }}</a>

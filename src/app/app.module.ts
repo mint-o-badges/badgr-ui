@@ -26,6 +26,7 @@ import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
 import { CmsPageComponent } from './common/components/cms/cms-page.component';
 import { CmsPostListComponent } from './common/components/cms/cms-post-list/cms-post-list.component';
+import { CmsMenuItemsPipe } from './common/pipes/cmsMenuItems.pipe';
 
 registerLocaleData(localeDe);
 // Force AuthModule and ProfileModule to get included in the main module. We don't want them lazy loaded because
@@ -199,6 +200,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 				deps: [HttpClient],
 			},
 		}),
+		CmsMenuItemsPipe
 	],
 	declarations: [AppComponent, InitialRedirectComponent],
 	bootstrap: [AppComponent],

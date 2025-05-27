@@ -1,6 +1,8 @@
 export interface CmsApiMenuItem {
 	id: number;
 	title: string;
+	url: string;
+	children: CmsApiMenuItem[]
 }
 export interface CmsApiMenu {
 	header: {

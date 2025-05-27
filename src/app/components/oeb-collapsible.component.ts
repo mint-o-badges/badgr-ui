@@ -81,7 +81,9 @@ export class OebCollapsibleComponent implements AfterViewInit {
 
 	constructor() {
 		effect(() => {
-			this.toggled.emit(this.collapsible.state() == 'open');
+			if (this.collapsible) {
+				this.toggled.emit(this.collapsible.state() == 'open');
+			}
 		});
 	}
 
@@ -96,7 +98,7 @@ export class OebCollapsibleComponent implements AfterViewInit {
 	}
 
 	ngOnChanges(changes: SimpleChanges) {
-		if (changes.closeable.currentValue != changes.closeable.previousValue) {
+		if (changes.closeable && changes.closeable.currentValue != changes.closeable.previousValue) {
 			this.closeable = changes.closeable.currentValue;
 		}
 	}

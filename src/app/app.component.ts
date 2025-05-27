@@ -258,19 +258,6 @@ export class AppComponent implements OnInit, AfterViewInit {
 
 		cmsManager.menus$.subscribe((menu) => {
 			this.cmsMenus = menu;
-			if (menu.header[translate.currentLang]) {
-				const headerItems = [{
-					title: 'News',
-					routerLink: ['/news/'],
-				}];
-				menu.header[translate.currentLang].forEach((item) => {
-					headerItems.push({
-						title: item.title,
-						routerLink: [`${item.url}`],
-					},)
-				})
-				this.headerCmsItems = headerItems;
-			}
 		});
 	}
 
