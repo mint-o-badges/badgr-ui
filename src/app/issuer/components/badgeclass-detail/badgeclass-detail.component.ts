@@ -73,7 +73,6 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 
 	currentTaskStatus: TaskResult | null = null;
 	isTaskActive: boolean = false;
-	taskProgress: string = '';
 
 	private taskSubscription: Subscription | null = null;
 
@@ -344,7 +343,6 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 			this.isTaskActive = true;
 
 			this.currentTaskStatus = this.taskService.getLastTaskStatus(this.badgeSlug);
-			this.updateTaskProgress();
 
 			this.subscribeToTaskUpdates();
 		}
@@ -354,7 +352,6 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		this.taskSubscription = this.taskService.getTaskUpdatesForBadge(this.badgeSlug).subscribe(
 			(taskResult: TaskResult) => {
 				this.currentTaskStatus = taskResult;
-				this.updateTaskProgress();
 
 				if (taskResult.status === TaskStatus.SUCCESS) {
 					this.handleTaskSuccess(taskResult);
@@ -369,31 +366,6 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		);
 	}
 
-	private updateTaskProgress() {
-		if (!this.currentTaskStatus) return;
-
-		switch (this.currentTaskStatus.status) {
-			case TaskStatus.PENDING:
-				this.taskProgress = 'Batch award task is queued...';
-				break;
-			case TaskStatus.STARTED:
-				this.taskProgress = 'Processing batch award...';
-				break;
-			case TaskStatus.RETRY:
-				this.taskProgress = 'Retrying batch award...';
-				break;
-			case TaskStatus.SUCCESS:
-				const successCount = this.currentTaskStatus.result?.successful_count || 'all';
-				this.taskProgress = `Successfully awarded ${successCount} badges!`;
-				break;
-			case TaskStatus.FAILURE:
-				this.taskProgress = 'Batch award failed. Please try again.';
-				break;
-			default:
-				this.taskProgress = 'Processing...';
-		}
-	}
-
 	private handleTaskSuccess(taskResult: TaskResult) {
 		this.isTaskActive = false;
 
@@ -401,12 +373,6 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		if (awardCount) {
 			this.recipientCount += awardCount;
 		}
-		// const message = awardCount
-		// 	? `Successfully awarded ${awardCount} badge${awardCount !== 1 ? 's' : ''}!`
-		// 	: 'Batch award completed successfully!';
-
-		// this.messageService.reportMajorSuccess(message);
-
 		// Refresh datatable
 		this.loadInstances();
 	}
@@ -415,7 +381,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		this.isTaskActive = false;
 
 		const errorMessage = taskResult.result?.error || 'Batch award process failed';
-		this.messageService.reportHandledError('Batch Award Failed', errorMessage);
+		this.messageService.reportHandledError(this.translate.instant('Issuer.batchAwardFailed'), errorMessage);
 	}
 
 	cancelTaskPolling() {
@@ -423,7 +389,6 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 			this.taskService.stopTaskPolling(this.badgeSlug);
 			this.isTaskActive = false;
 			this.currentTaskStatus = null;
-			this.taskProgress = '';
 
 			if (this.taskSubscription) {
 				this.taskSubscription.unsubscribe();

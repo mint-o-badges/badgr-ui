@@ -259,6 +259,7 @@
 		"batchAwardText1": "Award the badge to one learner or",
 		"batchAwardTextLink": "click here ",
 		"batchAwardText2": "to award the badge to multiple learners simultaneously",
+		"batchAwardFailed": "Batch award failed",
 		"awardedPerson": "Recipient's name",
 		"sendEmail": "Notify recipient by email",
 		"giveBadge": "Award badge",
