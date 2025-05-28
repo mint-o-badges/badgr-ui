@@ -790,7 +790,8 @@
     "deleteCollection": "Delete Collection",
     "deleteText": "Are you sure you want to delete collection {{ collectionname }}?",
     "searchBadges": "Search my badges",
-    "downloadQrCode": "Download QR-Code"
+    "downloadQrCode": "Download QR-Code",
+    "copiedToClipboard": "Copied to clipboard!"
   },
   "Profile": {
     "more": "More",

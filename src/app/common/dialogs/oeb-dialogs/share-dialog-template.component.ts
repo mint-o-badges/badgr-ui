@@ -1,19 +1,17 @@
-import { NgIcon } from '@ng-icons/core';
-import { Component } from '@angular/core';
+import { Component, NgZone, signal, WritableSignal } from '@angular/core';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
-import { HlmIconDirective } from '../../../components/spartan/ui-icon-helm/src';
 import { TranslateModule } from '@ngx-translate/core';
 import { provideIcons } from '@ng-icons/core';
 import { lucideCopy } from '@ng-icons/lucide';
 import { injectBrnDialogContext } from '@spartan-ng/brain/dialog';
 import { RecipientBadgeCollection } from '../../../recipient/models/recipient-badge-collection.model';
-import { QRCodeElementType, FixMeLater, QRCodeComponent } from 'angularx-qrcode';
+import { QRCodeElementType, QRCodeComponent } from 'angularx-qrcode';
 import { SafeUrl } from '@angular/platform-browser';
 import { saveAsImage } from '../../util/qrcode-util';
 
 @Component({
 	selector: 'share-dialog-template',
-	imports: [OebButtonComponent, NgIcon, HlmIconDirective, TranslateModule, QRCodeComponent],
+	imports: [OebButtonComponent, TranslateModule, QRCodeComponent],
 	providers: [provideIcons({ lucideCopy })],
 	template: `
 		<div class="tw-my-4 tw-px-6 tw-flex tw-flex-col tw-gap-6">
@@ -26,18 +24,21 @@ import { saveAsImage } from '../../util/qrcode-util';
 					name="forminput"
 					readonly
 					changeOrder
-					class="!tw-bg-white focus:tw-outline-none tw-w-full tw-border-1 tw-border-purple min-[880px]:tw-w-96 tw-border-solid tw-h-12 tw-rounded-lg tw-p-2"
+					class="!tw-bg-white focus:tw-outline-none tw-w-full tw-border-1 tw-border-purple min-[880px]:tw-w-96 tw-border-solid tw-h-12 tw-rounded-lg"
 					hlmInput
 					(click)="$event.target.select()"
 					[value]="collection.shareUrl"
 					#urlInput
 				/>
-				<button
-					class="tw-w-8 tw-h-8 tw-absolute tw-top-1/2 tw-right-2 -tw-translate-y-1/2 tw-text-white tw-bg-purple tw-flex tw-justify-center tw-items-center tw-rounded-md"
+				<oeb-button
+					class="tw-absolute tw-top-1/2 tw-right-0 -tw-translate-y-1/2 tw-scale-75"
 					(click)="copyToClipboard(urlInput)"
-				>
-					<ng-icon hlm name="lucideCopy"></ng-icon>
-				</button>
+					icon="lucideCopy"
+					[size]="'icon'"
+				/>
+				<span [hidden]="!copied()" class="tw-absolute tw-top-full">{{
+					'BadgeCollection.copiedToClipboard' | translate
+				}}</span>
 			</div>
 			<div class="tw-mt-2">
 				<oeb-button
@@ -53,7 +54,8 @@ import { saveAsImage } from '../../util/qrcode-util';
 	`,
 })
 export class ShareDialogTemplateComponent {
-	constructor() {}
+	constructor(private zone: NgZone) {}
+	private readonly COPY_NOTIF_TIMEOUT_MS: number = 3000;
 
 	private readonly _dialogContext = injectBrnDialogContext<{
 		caption: string;
@@ -65,26 +67,25 @@ export class ShareDialogTemplateComponent {
 	public qrCodeDownloadLink: SafeUrl = '';
 	public elementType: QRCodeElementType = 'canvas';
 	qrData: string;
+	copied: WritableSignal<boolean> = signal(false);
 
 	ngOnInit() {
 		this.qrData = this.collection.shareUrl;
 	}
 
-	copyToClipboard(input: HTMLInputElement) {
-		// Inspired by https://stackoverflow.com/questions/400212/how-do-i-copy-to-the-clipboard-in-javascript
-
-		const inputWasDisabled = input.disabled;
-		input.disabled = false;
-		input.select();
-
-		// Invoke browser support
+	async copyToClipboard(input: HTMLInputElement) {
+		const valueToCopy = input.value;
 		try {
-			if (document.execCommand('copy')) {
-				return;
-			}
+			await navigator.clipboard.writeText(valueToCopy);
+			this.zone.run(() => {
+				this.copied.set(true);
+				window.setTimeout(() => {
+					this.copied.set(false);
+				}, this.COPY_NOTIF_TIMEOUT_MS);
+			});
 		} catch (err) {
-		} finally {
-			input.disabled = inputWasDisabled;
+			console.warn(err);
+			this.copied.set(false);
 		}
 	}
 
