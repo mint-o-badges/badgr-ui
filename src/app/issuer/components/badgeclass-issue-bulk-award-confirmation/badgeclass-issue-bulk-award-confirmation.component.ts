@@ -15,8 +15,7 @@ import { SuccessDialogComponent } from '../../../common/dialogs/oeb-dialogs/succ
 import { HlmDialogService } from './../../../components/spartan/ui-dialog-helm/src';
 import { typedFormGroup } from '../../../common/util/typed-forms';
 import { BadgeInstanceApiService } from '../../services/badgeinstance-api.service';
-import { TaskStatusService } from '../../../common/services/task.service';
-import { TaskStatus, TaskResult } from '../../../common/task-manager.service';
+import { TaskStatus, TaskResult, TaskPollingManagerService } from '../../../common/task-manager.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -48,7 +47,7 @@ export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRouta
 		protected messageService: MessageService,
 		protected formBuilder: FormBuilder,
 		protected title: Title,
-		protected taskService: TaskStatusService,
+		protected taskService: TaskPollingManagerService,
 	) {
 		super(router, route, sessionService);
 		this.enableActionButton();
@@ -127,7 +126,7 @@ export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRouta
 			this.taskSubscription.unsubscribe();
 		}
 
-		this.taskSubscription = this.taskService.startBatchTask(taskId, this.issuerSlug, this.badgeSlug).subscribe(
+		this.taskSubscription = this.taskService.startTaskPolling(taskId, this.issuerSlug, this.badgeSlug).subscribe(
 			(taskResult: TaskResult) => {
 				this.currentTaskStatus = taskResult;
 

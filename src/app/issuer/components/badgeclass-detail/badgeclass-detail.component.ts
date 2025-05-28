@@ -35,8 +35,7 @@ import { inject } from '@angular/core';
 import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
 import { ApiLearningPath } from '../../../common/model/learningpath-api.model';
 import { ViewportScroller } from '@angular/common';
-import { TaskStatusService } from '../../../common/services/task.service';
-import { TaskResult, TaskStatus } from '../../../common/task-manager.service';
+import { TaskResult, TaskStatus, TaskPollingManagerService } from '../../../common/task-manager.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -180,7 +179,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		private sanitizer: DomSanitizer,
 		private translate: TranslateService,
 		private learningPathApiService: LearningPathApiService,
-		private taskService: TaskStatusService,
+		private taskService: TaskPollingManagerService,
 	) {
 		super(router, route, sessionService);
 
