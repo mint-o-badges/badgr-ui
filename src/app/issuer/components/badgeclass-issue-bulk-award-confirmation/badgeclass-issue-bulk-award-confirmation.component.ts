@@ -17,6 +17,7 @@ import { typedFormGroup } from '../../../common/util/typed-forms';
 import { BadgeInstanceApiService } from '../../services/badgeinstance-api.service';
 import { TaskStatus, TaskResult, TaskPollingManagerService } from '../../../common/task-manager.service';
 import { Subscription } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'badgeclass-issue-bulk-award-confirmation',
@@ -48,6 +49,7 @@ export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRouta
 		protected formBuilder: FormBuilder,
 		protected title: Title,
 		protected taskService: TaskPollingManagerService,
+		protected translate: TranslateService,
 	) {
 		super(router, route, sessionService);
 		this.enableActionButton();
@@ -152,11 +154,11 @@ export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRouta
 
 	private handleTaskFailure(taskResult: TaskResult) {
 		const errorMessage = taskResult.result?.error || 'An error occurred during the batch award process.';
-		this.messageService.reportHandledError('Batch award failed', errorMessage);
+		this.messageService.reportHandledError(this.translate.instant('Issuer.batchAwardFailed'), errorMessage);
 	}
 
 	private handleTaskError(error: any) {
-		this.messageService.reportHandledError('Failed to monitor batch award progress', error);
+		this.messageService.reportHandledError(this.translate.instant('Issuer.failedBatchMonitoring'), error);
 	}
 
 	updateViewState(state: ViewState) {

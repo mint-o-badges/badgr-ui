@@ -260,6 +260,7 @@
 		"batchAwardTextLink": "klicke hier, um den Badge an mehrere Lernende gleichzeitig",
 		"batchAwardText2": "zu vergeben",
 		"batchAwardFailed": "Badge-Massenvergabe fehlgeschlagen",
+		"failedBatchMonitoring": "Fortschitt der Vergabe konnte nicht ermittelt werden",
 		"awardedPerson": "Name der Empfänger:in",
 		"sendEmail": "Empfänger:in mit E-Mail benachrichtigen",
 		"giveBadge": "Badge vergeben",

@@ -260,6 +260,7 @@
 		"batchAwardTextLink": "click here ",
 		"batchAwardText2": "to award the badge to multiple learners simultaneously",
 		"batchAwardFailed": "Batch award failed",
+		"failedBatchMonitoring": "Failed to monitor batch award progress",
 		"awardedPerson": "Recipient's name",
 		"sendEmail": "Notify recipient by email",
 		"giveBadge": "Award badge",
