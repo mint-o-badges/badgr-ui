@@ -146,21 +146,12 @@ export class ShareSocialDialog extends BaseDialog {
 		}
 	}
 
-	copyToClipboard(input: HTMLInputElement) {
-		// Inspired by https://stackoverflow.com/questions/400212/how-do-i-copy-to-the-clipboard-in-javascript
-
-		const inputWasDisabled = input.disabled;
-		input.disabled = false;
-		input.select();
-
-		// Invoke browser support
+	async copyToClipboard(input: HTMLInputElement) {
+		const valueToCopy = input.value;
 		try {
-			if (document.execCommand('copy')) {
-				return;
-			}
+			await navigator.clipboard.writeText(valueToCopy);
 		} catch (err) {
-		} finally {
-			input.disabled = inputWasDisabled;
+			console.warn(err);
 		}
 	}
 

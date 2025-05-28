@@ -437,6 +437,7 @@
 								<bg-collectioncard
 									*ngFor="let collection of collections"
 									[collection]="collection"
+									(share)="openShareDialog(collection)"
 								></bg-collectioncard>
 							</div>
 							<oeb-button
@@ -532,6 +533,14 @@
 						class="tw-text-lg tw-text-purple tw-italic tw-mt-1"
 						[innerHTML]="'BadgeCollection.addLink' | translate"
 					></p>
+				</ng-template>
+				<ng-template #shareDialogHeaderTemplate>
+					<h2 class="tw-text-purple tw-font-bold tw-text-[22px] tw-leading-[120%]">
+						{{ 'BadgeCollection.shareCollection' | translate }}
+					</h2>
+				</ng-template>
+				<ng-template #shareDialogContentTemplate let-shareUrl="share_url">
+					<share-dialog-template></share-dialog-template>
 				</ng-template>
 			</div>
 		</div>

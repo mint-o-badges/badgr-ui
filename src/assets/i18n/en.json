@@ -760,9 +760,10 @@
 		"createCollection": "Create collection",
 		"editCollection": "Edit collection",
 		"share": "Share",
+		"shareCollection": "Share collection",
 		"orginzeBadges": "Organize your badges in collections.",
-		"collectionNamePlaceholder": "Tech & Code – My digital skills for the future",
 		"collectionName": "Collection name",
+		"collectionNamePlaceholder": "Tech & Code – My digital skills for the future",
 		"enterCollectioName": "Please enter a collection name",
 		"remainingChar": "remaining characters",
 		"description": "Description of the collection",
@@ -778,8 +779,8 @@
 		"ob3Disclaimer": "At the moment, no external 3.0 badges can be added.",
 		"badgesInCollection": "badges in the collection",
 		"removeBadge": "Remove Badge from collection?",
-		"removeBadgeConfirm1": "Möchtest du den Badge ",
-		"removeBadgeConfirm2": " wirklich aus dieser Sammlung entfernen?",
+		"removeBadgeConfirm1": "Do you really want to remove the badge ",
+		"removeBadgeConfirm2": "from this collection?",
 		"removeBadgeConfirmation": "Yes, remove",
 		"youHave": "You have selected",
 		"oneBadge": " badge for this collection.",
@@ -788,7 +789,9 @@
 		"downloadPdf": "Download PDF",
 		"deleteCollection": "Delete Collection",
 		"deleteText": "Are you sure you want to delete collection {{ collectionname }}?",
-		"searchBadges": "Search my badges"
+		"searchBadges": "Search my badges",
+		"downloadQrCode": "Download QR-Code",
+		"copiedToClipboard": "Copied to clipboard!"
 	},
 	"Profile": {
 		"more": "More",

@@ -19,6 +19,7 @@ import { DialogComponent } from '../../../components/dialog.component';
 import { RecipientBadgeInstance } from '../../models/recipient-badge.model';
 import { BrnDialogRef } from '@spartan-ng/brain/dialog';
 import { TranslateService } from '@ngx-translate/core';
+import { ShareDialogTemplateComponent } from '../../../common/dialogs/oeb-dialogs/share-dialog-template.component';
 import { PdfService } from '../../../common/services/pdf.service';
 
 @Component({
@@ -194,6 +195,17 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 				templateContext: {
 					badgename: badge.apiModel.json.badge.name,
 				},
+			},
+		});
+
+		this.dialogRef = dialogRef;
+	}
+
+	openShareDialog(collection: RecipientBadgeCollection) {
+		const dialogRef = this._hlmDialogService.open(ShareDialogTemplateComponent, {
+			context: {
+				collection: collection,
+				caption: this.translate.instant('BadgeCollection.shareCollection'),
 			},
 		});
 
