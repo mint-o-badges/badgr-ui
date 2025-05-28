@@ -15,19 +15,19 @@ env:
 
 jobs:
     lint:
-      name: 🔍 Formatting & Linting
-      runs-on: ubuntu-latest
-      steps:
-        - name: ⬇️  Checkout repository
-          uses: actions/checkout@v4.2.2
-        - name: 🔨 Setup node
-          uses: actions/setup-node@v4.4.0
-          with:
-              node-version-file: '.nvmrc'
-        - name: 📲 Install dependencies
-          run: npm ci
-        - name: Prettier
-          run: npx prettier --check .
+        name: 🔍 Formatting & Linting
+        runs-on: ubuntu-latest
+        steps:
+            - name: ⬇️  Checkout repository
+              uses: actions/checkout@v4.2.2
+            - name: 🔨 Setup node
+              uses: actions/setup-node@v4.4.0
+              with:
+                  node-version-file: '.nvmrc'
+            - name: 📲 Install dependencies
+              run: npm ci
+            - name: Prettier
+              run: npx prettier --check .
     # test:
     #     name: 🧪 Test
     #     runs-on: ubuntu-latest
