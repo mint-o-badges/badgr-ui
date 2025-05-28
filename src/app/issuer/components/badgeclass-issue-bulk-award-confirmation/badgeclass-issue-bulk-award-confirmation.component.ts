@@ -132,9 +132,7 @@ export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRouta
 			(taskResult: TaskResult) => {
 				this.currentTaskStatus = taskResult;
 
-				if (taskResult.status === TaskStatus.SUCCESS) {
-					this.handleTaskSuccess(taskResult);
-				} else if (taskResult.status === TaskStatus.FAILURE) {
+				if (taskResult.status === TaskStatus.FAILURE) {
 					this.handleTaskFailure(taskResult);
 				}
 			},
@@ -143,13 +141,6 @@ export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRouta
 				this.handleTaskError(error);
 			},
 		);
-	}
-
-	private handleTaskSuccess(taskResult: TaskResult) {
-		const awardCount = taskResult.result?.data.length;
-		const message = `Successfully awarded ${awardCount} badge${awardCount !== 1 ? 's' : ''}!`;
-
-		this.messageService.reportMajorSuccess(message);
 	}
 
 	private handleTaskFailure(taskResult: TaskResult) {
