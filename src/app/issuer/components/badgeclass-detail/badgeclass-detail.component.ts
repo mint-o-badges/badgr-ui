@@ -35,7 +35,8 @@ import { inject } from '@angular/core';
 import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
 import { ApiLearningPath } from '../../../common/model/learningpath-api.model';
 import { ViewportScroller } from '@angular/common';
-import { TaskStatus, TaskStatusService } from '../../../common/services/task.service';
+import { TaskStatusService } from '../../../common/services/task.service';
+import { TaskResult, TaskStatus } from '../../../common/task-manager.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -59,7 +60,7 @@ import { Subscription } from 'rxjs';
 				(actionElement)="revokeInstance($event)"
 				(downloadCertificate)="downloadCertificate($event.instance, $event.badgeIndex)"
 				[downloadStates]="downloadStates"
-				[awardInProgress]="isProcessing"
+				[awardInProgress]="isTaskProcessing || isTaskPending"
 			></issuer-detail-datatable>
 		</bg-badgedetail>
 	`,
@@ -70,6 +71,14 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 
 	readonly badgeFailedImageUrl = '../../../../breakdown/static/images/badge-failed.svg';
 	readonly badgeLoadingImageUrl = '../../../../breakdown/static/images/badge-loading.svg';
+
+	currentTaskStatus: TaskResult | null = null;
+	isTaskActive: boolean = false;
+	taskProgress: string = '';
+
+	private taskSubscription: Subscription | null = null;
+
+	TaskStatus = TaskStatus;
 
 	get issuerSlug() {
 		return this.route.snapshot.params['issuerSlug'];
@@ -152,12 +161,6 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		c1: 'C1 Leader*in',
 		c2: 'C2 Vorreiter*in',
 	};
-
-	isProcessing = false;
-	processingSuccess = false;
-	processingError: string | null = null;
-	processingResult: any = null;
-	batchAwardCount: string | null = null;
 
 	constructor(
 		protected title: Title,
@@ -327,18 +330,132 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 
 	ngOnInit() {
 		super.ngOnInit();
-		const taskId = this.taskService.getTaskId();
-		this.batchAwardCount = localStorage.getItem('batchAwardCount');
-		if (taskId && this.batchAwardCount) {
-			this.checkPendingTask();
-		}
+		this.checkForActiveTask();
 		this.focusRequests = this.route.snapshot.queryParamMap.get('focusRequests') === 'true';
 	}
 
 	ngOnDestroy() {
-		if (this.statusSubscription) {
-			this.statusSubscription.unsubscribe();
+		if (this.taskSubscription) {
+			this.taskSubscription.unsubscribe();
 		}
+	}
+
+	private checkForActiveTask() {
+		if (this.taskService.hasActiveTask(this.badgeSlug)) {
+			this.isTaskActive = true;
+
+			this.currentTaskStatus = this.taskService.getLastTaskStatus(this.badgeSlug);
+			this.updateTaskProgress();
+
+			this.subscribeToTaskUpdates();
+		}
+	}
+
+	private subscribeToTaskUpdates() {
+		this.taskSubscription = this.taskService.getTaskUpdatesForBadge(this.badgeSlug).subscribe(
+			(taskResult: TaskResult) => {
+				this.currentTaskStatus = taskResult;
+				this.updateTaskProgress();
+
+				if (taskResult.status === TaskStatus.SUCCESS) {
+					this.handleTaskSuccess(taskResult);
+				} else if (taskResult.status === TaskStatus.FAILURE) {
+					this.handleTaskFailure(taskResult);
+				}
+			},
+			(error) => {
+				console.error('Error receiving task status updates:', error);
+				this.isTaskActive = false;
+			},
+		);
+	}
+
+	private updateTaskProgress() {
+		if (!this.currentTaskStatus) return;
+
+		switch (this.currentTaskStatus.status) {
+			case TaskStatus.PENDING:
+				this.taskProgress = 'Batch award task is queued...';
+				break;
+			case TaskStatus.STARTED:
+				this.taskProgress = 'Processing batch award...';
+				break;
+			case TaskStatus.RETRY:
+				this.taskProgress = 'Retrying batch award...';
+				break;
+			case TaskStatus.SUCCESS:
+				const successCount = this.currentTaskStatus.result?.successful_count || 'all';
+				this.taskProgress = `Successfully awarded ${successCount} badges!`;
+				break;
+			case TaskStatus.FAILURE:
+				this.taskProgress = 'Batch award failed. Please try again.';
+				break;
+			default:
+				this.taskProgress = 'Processing...';
+		}
+	}
+
+	private handleTaskSuccess(taskResult: TaskResult) {
+		this.isTaskActive = false;
+
+		const awardCount = taskResult.result?.data.length;
+		if (awardCount) {
+			this.recipientCount += awardCount;
+		}
+		// const message = awardCount
+		// 	? `Successfully awarded ${awardCount} badge${awardCount !== 1 ? 's' : ''}!`
+		// 	: 'Batch award completed successfully!';
+
+		// this.messageService.reportMajorSuccess(message);
+
+		// Refresh datatable
+		this.loadInstances();
+	}
+
+	private handleTaskFailure(taskResult: TaskResult) {
+		this.isTaskActive = false;
+
+		const errorMessage = taskResult.result?.error || 'Batch award process failed';
+		this.messageService.reportHandledError('Batch Award Failed', errorMessage);
+	}
+
+	cancelTaskPolling() {
+		if (this.isTaskActive) {
+			this.taskService.stopTaskPolling(this.badgeSlug);
+			this.isTaskActive = false;
+			this.currentTaskStatus = null;
+			this.taskProgress = '';
+
+			if (this.taskSubscription) {
+				this.taskSubscription.unsubscribe();
+				this.taskSubscription = null;
+			}
+		}
+	}
+
+	get isTaskPending(): boolean {
+		return this.currentTaskStatus?.status === TaskStatus.PENDING;
+	}
+
+	get isTaskProcessing(): boolean {
+		return (
+			this.currentTaskStatus?.status === TaskStatus.STARTED || this.currentTaskStatus?.status === TaskStatus.RETRY
+		);
+	}
+
+	get isTaskCompleted(): boolean {
+		return (
+			this.currentTaskStatus?.status === TaskStatus.SUCCESS ||
+			this.currentTaskStatus?.status === TaskStatus.FAILURE
+		);
+	}
+
+	get isTaskSuccessful(): boolean {
+		return this.currentTaskStatus?.status === TaskStatus.SUCCESS;
+	}
+
+	get isTaskFailed(): boolean {
+		return this.currentTaskStatus?.status === TaskStatus.FAILURE;
 	}
 
 	revokeInstance(instance: BadgeInstance) {
@@ -540,42 +657,5 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		this.externalToolsManager.getLaunchInfo(launchpoint, instanceSlug).then((launchInfo) => {
 			this.eventService.externalToolLaunch.next(launchInfo);
 		});
-	}
-
-	checkPendingTask() {
-		const taskId = this.taskService.getTaskId();
-
-		if (taskId) {
-			this.isProcessing = true;
-
-			this.statusSubscription = this.taskService
-				.pollTaskStatus(taskId, this.issuerSlug, this.badgeSlug)
-				.subscribe({
-					next: (result) => {
-						if (result.status === TaskStatus.SUCCESS) {
-							this.processingSuccess = true;
-							this.processingResult = result.result;
-							this.isProcessing = false;
-							this.taskService.clearTaskId();
-							this.recipientCount += parseInt(this.batchAwardCount, 10);
-							this.batchAwardCount = null;
-							localStorage.removeItem('batchAwardCount');
-						} else if (result.status === TaskStatus.FAILURE || result.status === TaskStatus.REVOKED) {
-							this.processingError =
-								typeof result.result === 'string'
-									? result.result
-									: `An error occurred while processing task ${taskId}`;
-							this.isProcessing = false;
-							this.taskService.clearTaskId();
-							localStorage.removeItem('batchAwardCount');
-						}
-					},
-					error: (error) => {
-						console.error(`Error checking task status for task ${taskId}:`, error);
-						this.processingError = `Failed to check status for task ${taskId}`;
-						this.isProcessing = false;
-					},
-				});
-		}
 	}
 }

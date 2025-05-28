@@ -93,10 +93,6 @@ export class BadgeInstanceApiService extends BaseHttpApiService {
 		);
 	}
 
-	checkBatchAssertionStatus(taskId: string, issuerSlug: IssuerSlug, badgeSlug: BadgeClassSlug){
-		return this.get(`/v1/issuer/issuers/${issuerSlug}/badges/${badgeSlug}/batch-assertions/status/${taskId}`)
-	}
-
 	listBadgeInstances(
 		issuerSlug: string,
 		badgeSlug: string,

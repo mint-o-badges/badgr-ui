@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject, OnDestroy } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SessionService } from '../../../common/services/session.service';
@@ -16,13 +16,15 @@ import { HlmDialogService } from './../../../components/spartan/ui-dialog-helm/s
 import { typedFormGroup } from '../../../common/util/typed-forms';
 import { BadgeInstanceApiService } from '../../services/badgeinstance-api.service';
 import { TaskStatusService } from '../../../common/services/task.service';
+import { TaskStatus, TaskResult } from '../../../common/task-manager.service';
+import { Subscription } from 'rxjs';
 
 @Component({
 	selector: 'badgeclass-issue-bulk-award-confirmation',
 	templateUrl: './badgeclass-issue-bulk-award-confirmation.component.html',
 	standalone: false,
 })
-export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRoutableComponent {
+export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRoutableComponent implements OnDestroy {
 	@Input() transformedImportData: TransformedImportData;
 	@Input() badgeSlug: string;
 	@Input() issuerSlug: string;
@@ -33,6 +35,9 @@ export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRouta
 	issuer: string;
 
 	issueBadgeFinished: Promise<unknown>;
+
+	private taskSubscription: Subscription | null = null;
+	currentTaskStatus: TaskResult | null = null;
 
 	constructor(
 		protected badgeInstanceManager: BadgeInstanceManager,
@@ -47,6 +52,12 @@ export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRouta
 	) {
 		super(router, route, sessionService);
 		this.enableActionButton();
+	}
+
+	ngOnDestroy() {
+		if (this.taskSubscription) {
+			this.taskSubscription.unsubscribe();
+		}
 	}
 
 	issueForm = typedFormGroup().addControl('notify_earner', true);
@@ -88,8 +99,6 @@ export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRouta
 			assertions.push(assertion);
 		});
 
-		localStorage.setItem('batchAwardCount', assertions.length.toString());
-
 		this.badgeInstanceApiService
 			.createBadgeInstanceBatchedAsync(this.issuerSlug, this.badgeSlug, {
 				issuer: this.issuerSlug,
@@ -99,15 +108,56 @@ export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRouta
 			})
 			.then((response) => {
 				const taskId = response.body.task_id;
-
-				this.taskService.setTaskId(taskId);
+				this.startTaskPolling(taskId);
 
 				this.router.navigate(['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug]);
 			})
 			.catch((error) => {
 				console.error('Error creating badge batch:', error);
-				this.buttonDisabledAttribute = false;
+				this.enableActionButton(); // Re-enable the button on error
+
+				// Show error message to user
+				this.messageService.reportHandledError('Failed to start batch award process. Please try again.', error);
 			});
+	}
+
+	private startTaskPolling(taskId: string) {
+		// Clean up any existing subscription
+		if (this.taskSubscription) {
+			this.taskSubscription.unsubscribe();
+		}
+
+		this.taskSubscription = this.taskService.startBatchTask(taskId, this.issuerSlug, this.badgeSlug).subscribe(
+			(taskResult: TaskResult) => {
+				this.currentTaskStatus = taskResult;
+
+				if (taskResult.status === TaskStatus.SUCCESS) {
+					this.handleTaskSuccess(taskResult);
+				} else if (taskResult.status === TaskStatus.FAILURE) {
+					this.handleTaskFailure(taskResult);
+				}
+			},
+			(error) => {
+				console.error('Error polling batch award task status:', error);
+				this.handleTaskError(error);
+			},
+		);
+	}
+
+	private handleTaskSuccess(taskResult: TaskResult) {
+		const awardCount = taskResult.result?.data.length;
+		const message = `Successfully awarded ${awardCount} badge${awardCount !== 1 ? 's' : ''}!`;
+
+		this.messageService.reportMajorSuccess(message);
+	}
+
+	private handleTaskFailure(taskResult: TaskResult) {
+		const errorMessage = taskResult.result?.error || 'An error occurred during the batch award process.';
+		this.messageService.reportHandledError('Batch award failed', errorMessage);
+	}
+
+	private handleTaskError(error: any) {
+		this.messageService.reportHandledError('Failed to monitor batch award progress', error);
 	}
 
 	updateViewState(state: ViewState) {

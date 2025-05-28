@@ -1,88 +1,53 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, timer } from 'rxjs';
-import { switchMap, takeWhile, catchError, shareReplay } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { BaseHttpApiService } from './base-http-api.service';
 import { SessionService } from './session.service';
 import { AppConfigService } from '../app-config.service';
 import { MessageService } from './message.service';
-
-export enum TaskStatus {
-	PENDING = 'PENDING',
-	STARTED = 'STARTED',
-	SUCCESS = 'SUCCESS',
-	FAILURE = 'FAILURE',
-	RETRY = 'RETRY',
-	REVOKED = 'REVOKED',
-}
-
-export interface TaskResult {
-	task_id: string;
-	status: TaskStatus;
-	result: any;
-}
+import { TaskPollingManagerService, TaskResult } from '../task-manager.service';
 
 @Injectable({
 	providedIn: 'root',
 })
 export class TaskStatusService extends BaseHttpApiService {
-	private taskIdSource = new BehaviorSubject<string | null>(null);
-	public currentTaskId$ = this.taskIdSource.asObservable();
-
-	private taskStatusSource = new BehaviorSubject<TaskResult | null>(null);
-	public currentTaskStatus$ = this.taskStatusSource.asObservable();
 	constructor(
 		protected loginService: SessionService,
 		protected http: HttpClient,
 		protected configService: AppConfigService,
 		protected messageService: MessageService,
+		private taskPollingManager: TaskPollingManagerService,
 	) {
 		super(loginService, http, configService, messageService);
 	}
 
-	setTaskId(taskId: string): void {
-		localStorage.setItem('currentTaskId', taskId);
-		this.taskIdSource.next(taskId);
+	/**
+	 * Start a new batch task and begin polling
+	 */
+	startBatchTask(taskId: string, issuerSlug: string, badgeSlug: string): Observable<TaskResult> {
+		return this.taskPollingManager.startTaskPolling(taskId, issuerSlug, badgeSlug);
 	}
 
-	getTaskId(): string | null {
-		const taskId = localStorage.getItem('currentTaskId');
-		if (taskId && !this.taskIdSource.value) {
-			this.taskIdSource.next(taskId);
-		}
-		return taskId;
+	/**
+	 * Get the active task observable for a badge (if any)
+	 */
+	getActiveTaskObservable(badgeSlug: string): Observable<TaskResult> | null {
+		return this.taskPollingManager.getTaskObservable(badgeSlug);
 	}
 
-	clearTaskId(): void {
-		localStorage.removeItem('currentTaskId');
-		this.taskIdSource.next(null);
-		this.taskStatusSource.next(null);
+	getTaskUpdatesForBadge(badgeSlug: string): Observable<TaskResult> {
+		return this.taskPollingManager.getTaskUpdatesForBadge(badgeSlug);
 	}
 
-	checkTaskStatus(taskId: string, issuerSlug: string, badgeSlug: string): Promise<TaskResult> {
-		const endpoint = `/v1/issuer/issuers/${issuerSlug}/badges/${badgeSlug}/batch-assertions/status/${taskId}`;
-
-		return this.get<TaskResult>(endpoint).then((r) => r.body);
+	getLastTaskStatus(badgeSlug: string): TaskResult | null {
+		return this.taskPollingManager.getLastTaskStatus(badgeSlug);
 	}
 
-	pollTaskStatus(
-		taskId: string,
-		issuerSlug: string,
-		badgeSlug: string,
-		intervalMs: number = 2000,
-	): Observable<TaskResult> {
-		return timer(0, intervalMs).pipe(
-			switchMap(() => this.checkTaskStatus(taskId, issuerSlug, badgeSlug)),
-			takeWhile((result: TaskResult) => {
-				this.taskStatusSource.next(result);
+	hasActiveTask(badgeSlug: string): boolean {
+		return this.taskPollingManager.hasActiveTask(badgeSlug);
+	}
 
-				return result.status !== TaskStatus.SUCCESS && result.status !== TaskStatus.FAILURE;
-			}, true),
-			shareReplay(1),
-			catchError((error) => {
-				console.error('Error polling task status:', error);
-				throw error;
-			}),
-		);
+	stopTaskPolling(badgeSlug: string): void {
+		this.taskPollingManager.stopTaskPolling(badgeSlug);
 	}
 }
