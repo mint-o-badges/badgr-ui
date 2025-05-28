@@ -35,6 +35,8 @@ import { inject } from '@angular/core';
 import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
 import { ApiLearningPath } from '../../../common/model/learningpath-api.model';
 import { ViewportScroller } from '@angular/common';
+import { TaskResult, TaskStatus, TaskPollingManagerService } from '../../../common/task-manager.service';
+import { Subscription } from 'rxjs';
 
 @Component({
 	selector: 'badgeclass-detail',
@@ -57,6 +59,7 @@ import { ViewportScroller } from '@angular/common';
 				(actionElement)="revokeInstance($event)"
 				(downloadCertificate)="downloadCertificate($event.instance, $event.badgeIndex)"
 				[downloadStates]="downloadStates"
+				[awardInProgress]="isTaskProcessing || isTaskPending"
 			></issuer-detail-datatable>
 		</bg-badgedetail>
 	`,
@@ -67,6 +70,13 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 
 	readonly badgeFailedImageUrl = '../../../../breakdown/static/images/badge-failed.svg';
 	readonly badgeLoadingImageUrl = '../../../../breakdown/static/images/badge-loading.svg';
+
+	currentTaskStatus: TaskResult | null = null;
+	isTaskActive: boolean = false;
+
+	private taskSubscription: Subscription | null = null;
+
+	TaskStatus = TaskStatus;
 
 	get issuerSlug() {
 		return this.route.snapshot.params['issuerSlug'];
@@ -108,6 +118,8 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 	launchpoints: ApiExternalToolLaunchpoint[];
 
 	private readonly _hlmDialogService = inject(HlmDialogService);
+
+	private statusSubscription: Subscription | null = null;
 
 	badgeClassLoaded: Promise<unknown>;
 	badgeInstancesLoaded: Promise<unknown>;
@@ -166,6 +178,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		private sanitizer: DomSanitizer,
 		private translate: TranslateService,
 		private learningPathApiService: LearningPathApiService,
+		private taskService: TaskPollingManagerService,
 	) {
 		super(router, route, sessionService);
 
@@ -315,7 +328,98 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 
 	ngOnInit() {
 		super.ngOnInit();
+		this.checkForActiveTask();
 		this.focusRequests = this.route.snapshot.queryParamMap.get('focusRequests') === 'true';
+	}
+
+	ngOnDestroy() {
+		if (this.taskSubscription) {
+			this.taskSubscription.unsubscribe();
+		}
+	}
+
+	private checkForActiveTask() {
+		if (this.taskService.hasActiveTask(this.badgeSlug)) {
+			this.isTaskActive = true;
+
+			this.currentTaskStatus = this.taskService.getLastTaskStatus(this.badgeSlug);
+
+			this.subscribeToTaskUpdates();
+		}
+	}
+
+	private subscribeToTaskUpdates() {
+		this.taskSubscription = this.taskService.getTaskUpdatesForBadge(this.badgeSlug).subscribe(
+			(taskResult: TaskResult) => {
+				this.currentTaskStatus = taskResult;
+
+				if (taskResult.status === TaskStatus.SUCCESS) {
+					this.handleTaskSuccess(taskResult);
+				} else if (taskResult.status === TaskStatus.FAILURE) {
+					this.handleTaskFailure(taskResult);
+				}
+			},
+			(error) => {
+				console.error('Error receiving task status updates:', error);
+				this.isTaskActive = false;
+			},
+		);
+	}
+
+	private handleTaskSuccess(taskResult: TaskResult) {
+		this.isTaskActive = false;
+
+		const awardCount = taskResult.result?.data.length;
+		if (awardCount) {
+			this.recipientCount += awardCount;
+		}
+		// Refresh datatable
+		this.loadInstances();
+	}
+
+	private handleTaskFailure(taskResult: TaskResult) {
+		this.isTaskActive = false;
+
+		const errorMessage = taskResult.result?.error || 'Batch award process failed';
+		this.messageService.reportHandledError(this.translate.instant('Issuer.batchAwardFailed'), errorMessage);
+	}
+
+	cancelTaskPolling() {
+		if (this.isTaskActive) {
+			this.taskService.stopTaskPolling(this.badgeSlug);
+			this.isTaskActive = false;
+			this.currentTaskStatus = null;
+
+			if (this.taskSubscription) {
+				this.taskSubscription.unsubscribe();
+				this.taskSubscription = null;
+			}
+		}
+	}
+
+	get isTaskPending(): boolean {
+		return this.currentTaskStatus?.status === TaskStatus.PENDING;
+	}
+
+	get isTaskProcessing(): boolean {
+		return (
+			this.currentTaskStatus?.status === TaskStatus.STARTED || this.currentTaskStatus?.status === TaskStatus.RETRY
+		);
+	}
+
+	get isTaskCompleted(): boolean {
+		return (
+			this.currentTaskStatus?.status === TaskStatus.SUCCESS ||
+			this.currentTaskStatus?.status === TaskStatus.FAILURE
+		);
+	}
+
+	get isTaskSuccessful(): boolean {
+		return this.currentTaskStatus?.status === TaskStatus.SUCCESS;
+	}
+
+	get isTaskFailed(): boolean {
+		return this.currentTaskStatus?.status === TaskStatus.FAILURE;
 	}
 
 	revokeInstance(instance: BadgeInstance) {
@@ -517,14 +621,5 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		this.externalToolsManager.getLaunchInfo(launchpoint, instanceSlug).then((launchInfo) => {
 			this.eventService.externalToolLaunch.next(launchInfo);
 		});
-	}
-}
-
-class MatchingAlgorithm {
-	static instanceMatcher(inputPattern: string): (instance: BadgeInstance) => boolean {
-		const patternStr = StringMatchingUtil.normalizeString(inputPattern);
-		const patternExp = StringMatchingUtil.tryRegExp(patternStr);
-
-		return (instance) => StringMatchingUtil.stringMatches(instance.recipientIdentifier, patternStr, patternExp);
 	}
 }

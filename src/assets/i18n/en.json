@@ -259,6 +259,8 @@
 		"batchAwardText1": "Award the badge to one learner or",
 		"batchAwardTextLink": "click here ",
 		"batchAwardText2": "to award the badge to multiple learners simultaneously",
+		"batchAwardFailed": "Batch award failed",
+		"failedBatchMonitoring": "Failed to monitor batch award progress",
 		"awardedPerson": "Recipient's name",
 		"sendEmail": "Notify recipient by email",
 		"giveBadge": "Award badge",
@@ -413,8 +415,6 @@
 		"copy": "Copy badge for own institution",
 		"copyBadge": "Copy badge",
 		"copyableFor": "Copyable for",
-		"copyForWhatInstitution": "For which of your institutions should the badge be copied?",
-		"copyPermissionInfo": "The copy status of this badge only allows copying within the institution, so only this one is displayed here.",
 		"copyThisIssuer": "Copy (this institution)",
 		"editCopyStatus": "Edit copy status",
 		"award": "Award Badge",
@@ -436,7 +436,11 @@
 		"competencyBadgeInfo": "can be filled (with the help of our AI assistant) with the skills that your learners acquire.",
 		"learningPathBadgeInfo": "combines several badges into a larger learning unit. When learners have earned all the badges on this “learning path”, they automatically receive the Micro Degree.",
 		"lastEdited": "Last edited",
-		"badgeSuccessfullyCreated": "The badge has been awarded to {{ recipient }} successfully."
+		"badgeSuccessfullyCreated": "The badge has been awarded to {{ recipient }} successfully.",
+		"copyForWhatInstitution": "For which of your institutions do you want to copy the badge?",
+		"copyPermissionInfo": "The copy status of this badge only allows copying inside this institution.",
+		"awardingInProgress": "Badge awarding in progress",
+		"willBeAwardedSoon": "We will have awarded the badges soon!"
 	},
 	"CreateBadge": {
 		"chooseBadgeCategory": "Choose category",
