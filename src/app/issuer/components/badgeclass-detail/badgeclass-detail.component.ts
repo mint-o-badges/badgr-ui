@@ -372,7 +372,9 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 							icon: 'lucidePencil',
 						},
 						{
-							title: 'Badge.copy',
+							title: this.badgeClass.copyPermissions.includes('others')
+								? 'General.copy'
+								: 'Badge.copyThisIssuer',
 							action: this.copyBadge.bind(this),
 							icon: 'lucideCopy',
 							disabled: !this.issuer.canCreateBadge,
