@@ -1139,7 +1139,9 @@
 				width="max_content"
 				[disabled]="!!savePromise"
 				[loading-promises]="[savePromise]"
-				loading-message="{{ submittingText }}"
+				loading-message="{{
+					((!existingBadgeClass ? 'Issuer.creatingBadge' : 'EditBadge.saving') | translate) + ' ...'
+				}}"
 				text="{{
 					(!existingBadgeClass
 						? category === 'competency'

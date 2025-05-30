@@ -355,7 +355,8 @@
 		"importPreview": "Import-Vorschau",
 		"rowsWereImported": "Zeilen konnten importiert werden.",
 		"rowsAreDuplicates": "Zeilen sind Duplikate und werden ignoriert.",
-		"clickOnAwardBadges": "Klicke auf \"Badges vergeben\", um die Badges jetzt an deine Lernenden zu vergeben."
+		"clickOnAwardBadges": "Klicke auf \"Badges vergeben\", um die Badges jetzt an deine Lernenden zu vergeben.",
+		"creatingBadge": "Erstelle Badge"
 	},
 	"Badge": {
 		"groupBy": "Gruppieren nach",

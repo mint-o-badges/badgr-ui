@@ -95,6 +95,7 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 		])
 			.then(([list]) => {
 				this.collection = list.entityForSlug(this.collectionSlug);
+				this.menuItems[1].disabled = this.collection.badgeEntries.length === 0;
 				this.translate.get('BadgeCollection.myCollections').subscribe((str) => {
 					this.crumbs = [
 						{ title: str, routerLink: ['/recipient/badges'], queryParams: { tab: 'collections' } },
@@ -138,6 +139,7 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 				if (result === 'continue') {
 					this.collection.removeBadge(res.entityForSlug(badgeSlug));
 					this.collection.save();
+					this.menuItems[1].disabled = this.collection.badgeEntries.length === 0;
 				}
 			});
 		});
