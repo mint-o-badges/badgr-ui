@@ -112,6 +112,10 @@ export class BadgeClassEditCopyPermissionsComponent extends BaseAuthenticatedRou
 			copy_permissions.push('others');
 		}
 		this.badgeClass.copyPermissions = copy_permissions;
+		// the criteria field is null for old badges, leading to an error when trying to save
+		if (!this.badgeClass.criteria) {
+			this.badgeClass.criteria = [];
+		}
 		try {
 			this.savePromise = this.badgeClass.save();
 			await this.savePromise;
