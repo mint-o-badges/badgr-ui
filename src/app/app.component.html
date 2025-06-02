@@ -269,63 +269,53 @@
 <select-issuer-dialog #selectIssuerDialog></select-issuer-dialog>
 
 <!-- Footer -->
-<footer class="tw-relative tw-w-full tw-my-4" style="background-color: var(--color-lightgreen); margin-top: 30px">
-	<div class="page-padding">
-		<div class="oeb-footer tw-my-16 tw-flex tw-flex-row tw-items-center">
-			<div
-				class="tw-font-[rubik] tw-text-left tw-flex md:tw-flex-row md:tw-justify-between md:tw-gap-0 tw-flex-col-reverse tw-gap-[2em]"
-			>
-				<div class="tw-flex tw-flex-col tw-gap-2 tw-text-[18px] tw-leading-[23.4px] tw-text-oebblack">
-					<p
-						class="md:tw-w-2/3 tw-mt#-[10px]"
-						*ngIf="theme.showPoweredByOSL && theme.providedBy"
-						[innerHTML]="'Start.poweredBy' | translate"
-					></p>
-					<div class="tw-flex tw-gap-2 tw-items-center tw-mt-[10px] md:tw-w-2/3">
-						<img
-							src="assets/oeb/images/issuerPage/oeb-beta-logo.svg"
-							class="md:tw-w-[100px] tw-w-[64px]"
-							alt="Beta logo"
-						/>
-						<p [innerHTML]="'Issuer.betaPhase' | translate"></p>
-					</div>
-					<div class="tw-flex md:tw-hidden tw-flex-col tw-gap-[7px]">
-						<a
-							class="tw-text-[14px] tw-leading-[16.8px] tw-font-semibold md:tw-text-[20px] md:tw-font-medium md:tw-leading-[26px] tw-text-oebblack"
-							[routerLink]="['/public/faq']"
-							>FAQ</a
-						>
-						<a
-							class="tw-text-[14px] tw-leading-[16.8px] md:tw-text-[20px] md:tw-leading-[26px] tw-text-oebblack"
-							[href]="theme.termsOfServiceLink"
-							>{{ 'Start.imprint' | translate }}</a
-						>
-						<a
-							class="tw-text-[14px] tw-leading-[16.8px] md:tw-text-[20px] md:tw-leading-[26px] tw-text-oebblack"
-							[href]="theme.privacyPolicyLink"
-							>{{ 'Start.privacyPolicy' | translate }}</a
-						>
-						<a
-							class="tw-text-[14px] tw-leading-[16.8px] md:tw-text-[20px] md:tw-leading-[26px] tw-text-oebblack"
-							[routerLink]="['/public/terms']"
-							>{{ 'General.tos' | translate }}</a
-						>
-					</div>
-				</div>
-
-				<oeb-button
-					[routerLink]="['/public/about/newsletter']"
-					[text]="'Newsletter.signup' | translate"
-					width="max_content"
-				></oeb-button>
-
-				<!-- <div class="tw-flex tw-flex-col tw-min-w-fit tw-text-right tw-justify-evenly">
-					<a class="tw-text-[14px] tw-leading-[16.8px] tw-font-semibold  md:tw-text-[20px] md:tw-font-medium md:tw-leading-[26px] tw-text-oebblack" [routerLink]="['/public/faq']">FAQ</a>
-					<a class="tw-text-[14px] tw-leading-[16.8px] tw-font-semibold  md:tw-text-[20px] md:tw-font-medium md:tw-leading-[26px] tw-text-oebblack" [href]="theme.termsOfServiceLink">{{ 'Start.imprint' | translate }}</a>
-					<a class="tw-text-[14px] tw-leading-[16.8px] tw-font-semibold  md:tw-text-[20px] md:tw-font-medium md:tw-leading-[26px] tw-text-oebblack" [href]="theme.privacyPolicyLink">{{ 'Start.privacyPolicy' | translate }}</a>
-				</div> -->
+<footer class="tw-relative tw-w-full tw-my-4 tw-bg-oebgrey tw-mt-8">
+	<div
+		class="page-padding oeb-footer tw-py-14 tw-font-[rubik] tw-text-left tw-flex md:tw-flex-row md:tw-justify-between md:tw-gap-0 tw-flex-col-reverse tw-gap-[2em]"
+	>
+		<div class="tw-flex tw-flex-col tw-gap-2 tw-text-[18px] tw-leading-[23.4px] tw-text-oebblack">
+			<p
+				class="md:tw-w-2/3 tw-mt#-[10px]"
+				*ngIf="theme.showPoweredByOSL && theme.providedBy"
+				[innerHTML]="'Start.poweredBy' | translate"
+			></p>
+			<div class="tw-flex tw-gap-2 tw-items-center tw-mt-[10px] md:tw-w-2/3">
+				<img
+					src="assets/oeb/images/issuerPage/oeb-beta-logo.svg"
+					class="md:tw-w-[100px] tw-w-[64px]"
+					alt="Beta logo"
+				/>
+				<p [innerHTML]="'Issuer.betaPhase' | translate"></p>
+			</div>
+			<div class="tw-flex md:tw-hidden tw-flex-col tw-gap-[7px]">
+				<a
+					class="tw-text-[14px] tw-leading-[16.8px] tw-font-semibold md:tw-text-[20px] md:tw-font-medium md:tw-leading-[26px] tw-text-oebblack"
+					[routerLink]="['/public/faq']"
+					>FAQ</a
+				>
+				<a
+					class="tw-text-[14px] tw-leading-[16.8px] md:tw-text-[20px] md:tw-leading-[26px] tw-text-oebblack"
+					[href]="theme.termsOfServiceLink"
+					>{{ 'Start.imprint' | translate }}</a
+				>
+				<a
+					class="tw-text-[14px] tw-leading-[16.8px] md:tw-text-[20px] md:tw-leading-[26px] tw-text-oebblack"
+					[href]="theme.privacyPolicyLink"
+					>{{ 'Start.privacyPolicy' | translate }}</a
+				>
+				<a
+					class="tw-text-[14px] tw-leading-[16.8px] md:tw-text-[20px] md:tw-leading-[26px] tw-text-oebblack"
+					[routerLink]="['/public/terms']"
+					>{{ 'General.tos' | translate }}</a
+				>
 			</div>
 		</div>
+
+		<oeb-button
+			[routerLink]="['/public/about/newsletter']"
+			[text]="'Newsletter.signup' | translate"
+			width="max_content"
+		></oeb-button>
 	</div>
 	<script>
 		window.REQUIRED_CODE_ERROR_MESSAGE = 'W�hlen Sie bitte einen L�ndervorwahl aus.';
@@ -355,17 +345,13 @@
 <div class="tw-relative tw-w-full" [class.tw-hidden]="mobileNavOpen">
 	<div class="page-padding oeb logos-container md:tw-flex md:tw-justify-between">
 		<img
-			*ngIf="translate.currentLang == 'de'"
 			class="tw-max-w-full md:tw-max-w-[60%]"
 			alt="Telekom-Stiftung Logo"
-			src="assets/oeb/images/aboutpage/logoleiste_cropped.png"
-			alt="Telekom Stiftung Logo"
-		/>
-		<img
-			*ngIf="translate.currentLang != 'de'"
-			class="tw-max-w-full md:tw-max-w-[60%]"
-			alt="Telekom-Stiftung Logo"
-			src="assets/oeb/images/aboutpage/logoleiste_en.png"
+			[src]="
+				translate.currentLang !== 'de'
+					? 'assets/oeb/images/aboutpage/logoleiste_en.png'
+					: 'assets/oeb/images/aboutpage/logoleiste_cropped.png'
+			"
 			alt="Telekom Stiftung Logo"
 		/>
 		<div class="tw-hidden md:tw-flex tw-flex-col tw-min-w-fit tw-text-right tw-gap-[7px]">
@@ -390,9 +376,5 @@
 				>{{ 'General.tos' | translate }}</a
 			>
 		</div>
-		<!-- <div class="funding-logos-container">
-			<img src="assets/oeb/images/aboutpage/bmbf_logo_new.jpg" class="tw-max-w-[200px]" alt="BMBF logo" />
-			<img src="assets/oeb/images/aboutpage/eu_logo_new.png" class="tw-w-[230px] sm:tw-w-[357px]" alt="EU logo" />
-		</div> -->
 	</div>
 </div>
