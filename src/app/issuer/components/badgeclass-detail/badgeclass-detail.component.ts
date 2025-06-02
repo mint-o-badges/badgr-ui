@@ -1,4 +1,13 @@
-import { afterRenderEffect, Component, ElementRef, Input, OnInit, SecurityContext, ViewChild } from '@angular/core';
+import {
+	afterRenderEffect,
+	Component,
+	ElementRef,
+	Input,
+	OnInit,
+	SecurityContext,
+	TemplateRef,
+	ViewChild,
+} from '@angular/core';
 
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from '../../../common/services/message.service';
@@ -35,6 +44,11 @@ import { inject } from '@angular/core';
 import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
 import { ApiLearningPath } from '../../../common/model/learningpath-api.model';
 import { ViewportScroller } from '@angular/common';
+import { TaskResult, TaskStatus, TaskPollingManagerService } from '../../../common/task-manager.service';
+import { Subscription } from 'rxjs';
+import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
+import { DialogComponent } from '../../../components/dialog.component';
+import { BrnDialogRef } from '@spartan-ng/brain/dialog';
 
 @Component({
 	selector: 'badgeclass-detail',
@@ -42,7 +56,6 @@ import { ViewportScroller } from '@angular/common';
 		<bg-badgedetail [config]="config" [awaitPromises]="[issuerLoaded, badgeClassLoaded]">
 			<div #qrAwards>
 				<qrcode-awards
-					*ngIf="config.qrCodeButton.show"
 					(qrBadgeAward)="onQrBadgeAward()"
 					[awards]="qrCodeAwards"
 					[badgeClass]="badgeClass"
@@ -57,7 +70,42 @@ import { ViewportScroller } from '@angular/common';
 				(actionElement)="revokeInstance($event)"
 				(downloadCertificate)="downloadCertificate($event.instance, $event.badgeIndex)"
 				[downloadStates]="downloadStates"
+				[awardInProgress]="isTaskProcessing || isTaskPending"
 			></issuer-detail-datatable>
+			<ng-template #headerTemplate>
+				<h2 class="tw-font-bold tw-my-2" hlmH2>{{ 'Badge.copyForWhatInstitution' | translate }}</h2>
+			</ng-template>
+			<ng-template #issuerSelection>
+				<div class="tw-mb-8">
+					<ng-container *ngIf="config.copy_permissions.includes('others'); else originalIssuer">
+						<ng-container *ngFor="let issuer of userIssuers">
+							<label class="radio tw-mb-2">
+								<input type="radio" [(ngModel)]="selectedIssuer" [value]="issuer" />
+								<span class="radio-x-text">{{ issuer.name }}</span>
+							</label>
+						</ng-container>
+					</ng-container>
+
+					<ng-template #originalIssuer>
+						<span class="tw-text-oebblack tw-text-center tw-my-2">
+							{{ 'Badge.copyPermissionInfo' | translate }}
+						</span>
+						<label class="radio tw-my-2">
+							<input type="radio" [(ngModel)]="selectedIssuer" [value]="issuer" />
+							<span class="radio-x-text">{{ config.issuerName }}</span>
+						</label>
+					</ng-template>
+				</div>
+				<oeb-button
+					width="full_width"
+					type="button"
+					[disabled]="!selectedIssuer"
+					(click)="routeToBadgeCreation(selectedIssuer)"
+					size="sm"
+					[text]="'General.next' | translate"
+				>
+				</oeb-button>
+			</ng-template>
 		</bg-badgedetail>
 	`,
 	standalone: false,
@@ -65,8 +113,21 @@ import { ViewportScroller } from '@angular/common';
 export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	@ViewChild('qrAwards') qrAwards!: ElementRef;
 
+	@ViewChild('issuerSelection')
+	issuerSelection: TemplateRef<void>;
+
+	@ViewChild('headerTemplate')
+	headerTemplate: TemplateRef<void>;
+
 	readonly badgeFailedImageUrl = '../../../../breakdown/static/images/badge-failed.svg';
 	readonly badgeLoadingImageUrl = '../../../../breakdown/static/images/badge-loading.svg';
+
+	currentTaskStatus: TaskResult | null = null;
+	isTaskActive: boolean = false;
+
+	private taskSubscription: Subscription | null = null;
+
+	TaskStatus = TaskStatus;
 
 	get issuerSlug() {
 		return this.route.snapshot.params['issuerSlug'];
@@ -109,6 +170,8 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 
 	private readonly _hlmDialogService = inject(HlmDialogService);
 
+	private statusSubscription: Subscription | null = null;
+
 	badgeClassLoaded: Promise<unknown>;
 	badgeInstancesLoaded: Promise<unknown>;
 	assertionsLoaded: Promise<unknown>;
@@ -124,6 +187,9 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 	crumbs: LinkEntry[];
 	focusRequests: boolean;
 	hasScrolled: boolean = false;
+	userIssuers: Issuer[] = [];
+	dialogRef: BrnDialogRef<unknown> = null;
+	selectedIssuer: Issuer = null;
 
 	config: PageConfig;
 
@@ -166,6 +232,8 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		private sanitizer: DomSanitizer,
 		private translate: TranslateService,
 		private learningPathApiService: LearningPathApiService,
+		private taskService: TaskPollingManagerService,
+		protected userProfileManager: UserProfileManager,
 	) {
 		super(router, route, sessionService);
 
@@ -175,6 +243,14 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 				this.title.setTitle(
 					`Badge Class - ${this.badgeClass.name} - ${this.configService.theme['serviceName'] || 'Badgr'}`,
 				);
+				// wait for user profile, emails, issuer to check if user can copy
+				this.userProfileManager.userProfilePromise.then((profile) => {
+					profile.emails.loadedPromise.then(() => {
+						this.issuerManager.myIssuers$.subscribe((issuers) => {
+							this.userIssuers = issuers.filter((issuer) => issuer.canCreateBadge);
+						});
+					});
+				});
 				this.loadInstances();
 			},
 			(error) =>
@@ -200,6 +276,37 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 
 	ngAfterViewChecked() {
 		this.focusRequestsOnPage();
+	}
+
+	copyBadge() {
+		if (this.userIssuers.length == 1) {
+			// copy
+			this.router.navigate(['/issuer/issuers', this.userIssuers[0].slug, 'badges', 'create'], {
+				state: { copybadgeid: this.badgeClass.slug },
+			});
+		} else if (this.userIssuers.length > 1) {
+			const dialogRef = this._hlmDialogService.open(DialogComponent, {
+				context: {
+					headerTemplate: this.headerTemplate,
+					content: this.issuerSelection,
+				},
+			});
+
+			this.dialogRef = dialogRef;
+		}
+	}
+
+	closeDialog() {
+		if (this.dialogRef) {
+			this.dialogRef.close();
+		}
+	}
+
+	routeToBadgeCreation(issuer: Issuer) {
+		this.closeDialog();
+		this.router.navigate(['/issuer/issuers', issuer.slug, 'badges', 'create'], {
+			state: { copybadgeid: this.badgeClass.slug },
+		});
 	}
 
 	async loadInstances(recipientQuery?: string) {
@@ -237,6 +344,26 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 						show: true,
 						action: () => this.routeToQRCodeAward(this.badgeClass, this.issuer),
 					},
+					badgeDescription: this.badgeClass.description,
+					issuerSlug: this.issuerSlug,
+					slug: this.badgeSlug,
+					createdAt: this.badgeClass.createdAt,
+					updatedAt: this.badgeClass.updatedAt,
+					duration: this.badgeClass.extension['extensions:StudyLoadExtension'].StudyLoad,
+					category: this.translate.instant(
+						`Badge.categories.${this.badgeClass.extension['extensions:CategoryExtension']?.Category || 'participation'}`,
+					),
+					tags: this.badgeClass.tags,
+					issuerName: this.badgeClass.issuerName,
+					issuerImagePlacholderUrl: this.issuerImagePlacholderUrl,
+					issuerImage: this.issuer.image,
+					badgeLoadingImageUrl: this.badgeLoadingImageUrl,
+					badgeFailedImageUrl: this.badgeFailedImageUrl,
+					badgeImage: this.badgeClass.image,
+					competencies: this.badgeClass.extension['extensions:CompetencyExtension'],
+					license: this.badgeClass.extension['extensions:LicenseExtension'] ? true : false,
+					learningPaths: this.learningPaths,
+					copy_permissions: this.badgeClass.copyPermissions,
 					menuitems: [
 						{
 							title: 'General.edit',
@@ -245,12 +372,10 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 							icon: 'lucidePencil',
 						},
 						{
-							title: 'Badge.copyThisIssuer',
-							action: () => {
-								this.router.navigate(['/issuer/issuers', this.issuer.slug, 'badges', 'create'], {
-									state: { copybadgeid: this.badgeSlug },
-								});
-							},
+							title: this.badgeClass.copyPermissions.includes('others')
+								? 'General.copy'
+								: 'Badge.copyThisIssuer',
+							action: this.copyBadge.bind(this),
 							icon: 'lucideCopy',
 							disabled: !this.issuer.canCreateBadge,
 						},
@@ -273,26 +398,6 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 							disabled: !this.issuer.canDeleteBadge,
 						},
 					],
-					badgeDescription: this.badgeClass.description,
-					issuerSlug: this.issuerSlug,
-					slug: this.badgeSlug,
-					createdAt: this.badgeClass.createdAt,
-					updatedAt: this.badgeClass.updatedAt,
-					duration: this.badgeClass.extension['extensions:StudyLoadExtension'].StudyLoad,
-					category: this.translate.instant(
-						`Badge.categories.${this.badgeClass.extension['extensions:CategoryExtension']?.Category || 'participation'}`,
-					),
-					tags: this.badgeClass.tags,
-					issuerName: this.badgeClass.issuerName,
-					issuerImagePlacholderUrl: this.issuerImagePlacholderUrl,
-					issuerImage: this.issuer.image,
-					badgeLoadingImageUrl: this.badgeLoadingImageUrl,
-					badgeFailedImageUrl: this.badgeFailedImageUrl,
-					badgeImage: this.badgeClass.image,
-					competencies: this.badgeClass.extension['extensions:CompetencyExtension'],
-					license: this.badgeClass.extension['extensions:LicenseExtension'] ? true : false,
-					learningPaths: this.learningPaths,
-					copy_permissions: this.badgeClass.copyPermissions,
 				};
 				if (this.badgeClass.extension['extensions:CategoryExtension']?.Category === 'learningpath') {
 					this.config.headerButton = null;
@@ -315,7 +420,98 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 
 	ngOnInit() {
 		super.ngOnInit();
+		this.checkForActiveTask();
 		this.focusRequests = this.route.snapshot.queryParamMap.get('focusRequests') === 'true';
+	}
+
+	ngOnDestroy() {
+		if (this.taskSubscription) {
+			this.taskSubscription.unsubscribe();
+		}
+	}
+
+	private checkForActiveTask() {
+		if (this.taskService.hasActiveTask(this.badgeSlug)) {
+			this.isTaskActive = true;
+
+			this.currentTaskStatus = this.taskService.getLastTaskStatus(this.badgeSlug);
+
+			this.subscribeToTaskUpdates();
+		}
+	}
+
+	private subscribeToTaskUpdates() {
+		this.taskSubscription = this.taskService.getTaskUpdatesForBadge(this.badgeSlug).subscribe(
+			(taskResult: TaskResult) => {
+				this.currentTaskStatus = taskResult;
+
+				if (taskResult.status === TaskStatus.SUCCESS) {
+					this.handleTaskSuccess(taskResult);
+				} else if (taskResult.status === TaskStatus.FAILURE) {
+					this.handleTaskFailure(taskResult);
+				}
+			},
+			(error) => {
+				console.error('Error receiving task status updates:', error);
+				this.isTaskActive = false;
+			},
+		);
+	}
+
+	private handleTaskSuccess(taskResult: TaskResult) {
+		this.isTaskActive = false;
+
+		const awardCount = taskResult.result?.data.length;
+		if (awardCount) {
+			this.recipientCount += awardCount;
+		}
+		// Refresh datatable
+		this.loadInstances();
+	}
+
+	private handleTaskFailure(taskResult: TaskResult) {
+		this.isTaskActive = false;
+
+		const errorMessage = taskResult.result?.error || 'Batch award process failed';
+		this.messageService.reportHandledError(this.translate.instant('Issuer.batchAwardFailed'), errorMessage);
+	}
+
+	cancelTaskPolling() {
+		if (this.isTaskActive) {
+			this.taskService.stopTaskPolling(this.badgeSlug);
+			this.isTaskActive = false;
+			this.currentTaskStatus = null;
+
+			if (this.taskSubscription) {
+				this.taskSubscription.unsubscribe();
+				this.taskSubscription = null;
+			}
+		}
+	}
+
+	get isTaskPending(): boolean {
+		return this.currentTaskStatus?.status === TaskStatus.PENDING;
+	}
+
+	get isTaskProcessing(): boolean {
+		return (
+			this.currentTaskStatus?.status === TaskStatus.STARTED || this.currentTaskStatus?.status === TaskStatus.RETRY
+		);
+	}
+
+	get isTaskCompleted(): boolean {
+		return (
+			this.currentTaskStatus?.status === TaskStatus.SUCCESS ||
+			this.currentTaskStatus?.status === TaskStatus.FAILURE
+		);
+	}
+
+	get isTaskSuccessful(): boolean {
+		return this.currentTaskStatus?.status === TaskStatus.SUCCESS;
+	}
+
+	get isTaskFailed(): boolean {
+		return this.currentTaskStatus?.status === TaskStatus.FAILURE;
 	}
 
 	revokeInstance(instance: BadgeInstance) {
@@ -359,7 +555,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 	downloadCertificate(instance: BadgeInstance, badgeIndex: number) {
 		this.downloadStates[badgeIndex] = true;
 		this.pdfService
-			.getPdf(instance.slug)
+			.getPdf(instance.slug, 'badges')
 			.then((url) => {
 				this.pdfSrc = url;
 				this.pdfService.downloadPdf(this.pdfSrc, this.badgeClass.name, instance.createdAt);
@@ -517,14 +713,5 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		this.externalToolsManager.getLaunchInfo(launchpoint, instanceSlug).then((launchInfo) => {
 			this.eventService.externalToolLaunch.next(launchInfo);
 		});
-	}
-}
-
-class MatchingAlgorithm {
-	static instanceMatcher(inputPattern: string): (instance: BadgeInstance) => boolean {
-		const patternStr = StringMatchingUtil.normalizeString(inputPattern);
-		const patternExp = StringMatchingUtil.tryRegExp(patternStr);
-
-		return (instance) => StringMatchingUtil.stringMatches(instance.recipientIdentifier, patternStr, patternExp);
 	}
 }

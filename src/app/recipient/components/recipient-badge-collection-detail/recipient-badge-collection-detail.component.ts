@@ -19,6 +19,8 @@ import { DialogComponent } from '../../../components/dialog.component';
 import { RecipientBadgeInstance } from '../../models/recipient-badge.model';
 import { BrnDialogRef } from '@spartan-ng/brain/dialog';
 import { TranslateService } from '@ngx-translate/core';
+import { ShareDialogTemplateComponent } from '../../../common/dialogs/oeb-dialogs/share-dialog-template.component';
+import { PdfService } from '../../../common/services/pdf.service';
 
 @Component({
 	selector: 'recipient-earned-badge-detail',
@@ -63,6 +65,7 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 		private configService: AppConfigService,
 		private dialogService: CommonDialogsService,
 		private translate: TranslateService,
+		private pdfService: PdfService,
 	) {
 		super(router, route, loginService);
 
@@ -74,11 +77,11 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 				icon: 'lucidePencil',
 				action: () => this.router.navigate([`/recipient/badge-collections/${this.collectionSlug}/edit`]),
 			},
-			// {
-			// 	title: 'PDF herunterladen',
-			// 	icon: 'lucideFileText',
-			// 	action: () => console.log(""),
-			// },
+			{
+				title: this.translate.instant('BadgeCollection.downloadPdf'),
+				icon: 'lucideFileText',
+				action: () => this.exportPdf(),
+			},
 			{
 				title: this.translate.instant('General.delete'),
 				icon: 'lucideTrash2',
@@ -92,6 +95,7 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 		])
 			.then(([list]) => {
 				this.collection = list.entityForSlug(this.collectionSlug);
+				this.menuItems[1].disabled = this.collection.badgeEntries.length === 0;
 				this.translate.get('BadgeCollection.myCollections').subscribe((str) => {
 					this.crumbs = [
 						{ title: str, routerLink: ['/recipient/badges'], queryParams: { tab: 'collections' } },
@@ -135,6 +139,7 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 				if (result === 'continue') {
 					this.collection.removeBadge(res.entityForSlug(badgeSlug));
 					this.collection.save();
+					this.menuItems[1].disabled = this.collection.badgeEntries.length === 0;
 				}
 			});
 		});
@@ -192,6 +197,17 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 				templateContext: {
 					badgename: badge.apiModel.json.badge.name,
 				},
+			},
+		});
+
+		this.dialogRef = dialogRef;
+	}
+
+	openShareDialog(collection: RecipientBadgeCollection) {
+		const dialogRef = this._hlmDialogService.open(ShareDialogTemplateComponent, {
+			context: {
+				collection: collection,
+				caption: this.translate.instant('BadgeCollection.shareCollection'),
 			},
 		});
 
@@ -286,10 +302,11 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 		this.dialogService.shareSocialDialog.openDialog(shareCollectionDialogOptionsFor(this.collection));
 	}
 
-	// exportPdf() {
-	// 	this.dialogService.exportPdfDialog.openDialogForCollections(this.collection)
-	// 		.catch((error) => console.log(error));
-	// }
+	exportPdf() {
+		this.pdfService.getPdf(this.collection.slug, 'collections').then((res) => {
+			this.pdfService.downloadPdf(res, this.collection.name, new Date());
+		});
+	}
 }
 
 export function shareCollectionDialogOptionsFor(collection: RecipientBadgeCollection): ShareSocialDialogOptions {

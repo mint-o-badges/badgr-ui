@@ -259,6 +259,8 @@
 		"batchAwardText1": "Vergebe den Badge an eine lernende Person oder",
 		"batchAwardTextLink": "klicke hier, um den Badge an mehrere Lernende gleichzeitig",
 		"batchAwardText2": "zu vergeben",
+		"batchAwardFailed": "Badge-Massenvergabe fehlgeschlagen",
+		"failedBatchMonitoring": "Fortschitt der Vergabe konnte nicht ermittelt werden",
 		"awardedPerson": "Name der Empfänger:in",
 		"sendEmail": "Empfänger:in mit E-Mail benachrichtigen",
 		"giveBadge": "Badge vergeben",
@@ -353,7 +355,8 @@
 		"importPreview": "Import-Vorschau",
 		"rowsWereImported": "Zeilen konnten importiert werden.",
 		"rowsAreDuplicates": "Zeilen sind Duplikate und werden ignoriert.",
-		"clickOnAwardBadges": "Klicke auf \"Badges vergeben\", um die Badges jetzt an deine Lernenden zu vergeben."
+		"clickOnAwardBadges": "Klicke auf \"Badges vergeben\", um die Badges jetzt an deine Lernenden zu vergeben.",
+		"creatingBadge": "Erstelle Badge"
 	},
 	"Badge": {
 		"groupBy": "Gruppieren nach",
@@ -436,7 +439,9 @@
 		"competencyBadgeInfo": "kann (mithilfe unseres KI-Assistenten) mit den Kompetenzen gefüllt werden, die deine Lernenden erwerben.",
 		"learningPathBadgeInfo": "verbindet mehrere Badges zu einer größeren Lerneinheit. Wenn Lernende alle Badges dieses „Lernpfades” erworben haben, erhalten sie automatisch den Abschluss Micro Degree.",
 		"lastEdited": "Zuletzt editiert",
-		"badgeSuccessfullyCreated": "Der Badge wurde erfolgreich an {{recipient}} vergeben"
+		"badgeSuccessfullyCreated": "Der Badge wurde erfolgreich an {{recipient}} vergeben",
+		"awardingInProgress": "Badge-Vergabe läuft",
+		"willBeAwardedSoon": "Gleich haben wir alle Badges verschickt!"
 	},
 	"CreateBadge": {
 		"chooseBadgeCategory": "Kategorie wählen",
@@ -760,6 +765,7 @@
 		"createCollection": "Sammlung anlegen",
 		"editCollection": "Sammlung bearbeiten",
 		"share": "Teilen",
+		"shareCollection": "Sammlung teilen",
 		"orginzeBadges": "Organisiere deine Badges in Sammlungen.",
 		"collectionName": "Name der Sammlung",
 		"collectionNamePlaceholder": "Tech & Code – Meine digitalen Fähigkeiten für die Zukunft",
@@ -788,7 +794,9 @@
 		"downloadPdf": "PDF herunterladen",
 		"deleteCollection": "Sammlung löschen",
 		"deleteText": "Bist du sicher, dass du die Sammlung {{ collectionname }} löschen möchtest?",
-		"searchBadges": "Meine Badges durchsuchen"
+		"searchBadges": "Meine Badges durchsuchen",
+		"downloadQrCode": "QR-Code herunterladen",
+		"copiedToClipboard": "In die Zwischenablage kopiert!"
 	},
 	"Profile": {
 		"more": "Mehr",

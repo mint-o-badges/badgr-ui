@@ -221,7 +221,7 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 			return;
 		} else {
 			this.pdfService
-				.getPdf(this.badgeInstance.slug)
+				.getPdf(this.badgeInstance.slug, 'badges')
 				.then((url) => {
 					this.pdfSrc = url;
 					this.pdfService.downloadPdf(this.pdfSrc, this.learningPath.name, new Date());

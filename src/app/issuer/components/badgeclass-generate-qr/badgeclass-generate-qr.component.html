@@ -68,7 +68,7 @@
 						[text]="'QrCode.downloadPoster' | translate"
 						(click)="savePdf(parent)"
 					></oeb-button>
-					<oeb-button size="md" text="Download QR-Code-PNG" (click)="saveAsImage(parent)"></oeb-button>
+					<oeb-button size="md" text="Download QR-Code-PNG" (click)="saveQrCodeAsImage(parent)"></oeb-button>
 				</div>
 				<oeb-button
 					[routerLink]="['/issuer/issuers', this.issuerSlug, 'badges', badgeClass.slug]"

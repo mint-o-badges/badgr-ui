@@ -41,8 +41,9 @@ import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src
 import { DialogComponent } from '../../../components/dialog.component';
 import { BrnDialogRef } from '@spartan-ng/brain/dialog';
 import { RecipientBadgeCollectionManager } from '../../services/recipient-badge-collection-manager.service';
-import { forkJoin } from 'rxjs';
 import { RecipientBadgeApiService } from '../../services/recipient-badges-api.service';
+import { RecipientBadgeCollection } from '../../models/recipient-badge-collection.model';
+import { ShareDialogTemplateComponent } from '../../../common/dialogs/oeb-dialogs/share-dialog-template.component';
 
 type BadgeDispay = 'grid' | 'list';
 type EscoCompetencies = {
@@ -113,6 +114,8 @@ export class RecipientEarnedBadgeListComponent
 	@ViewChild('collectionTemplate', { static: true }) collectionTemplate: ElementRef;
 	@ViewChild('collectionInfoHeaderTemplate', { static: true }) collectionInfoHeaderTemplate: ElementRef;
 	@ViewChild('collectionInfoContentTemplate', { static: true }) collectionInfoContentTemplate: ElementRef;
+	@ViewChild('shareDialogContentTemplate', { static: true }) shareDialogContentTemplate: ElementRef;
+	@ViewChild('shareDialogHeaderTemplate', { static: true }) shareDialogHeaderTemplate: ElementRef;
 
 	dialogRef: BrnDialogRef<any> = null;
 	translatedTitles: string[] = [];
@@ -226,6 +229,17 @@ export class RecipientEarnedBadgeListComponent
 				content: this.collectionInfoContentTemplate,
 				variant: 'default',
 				footer: false,
+			},
+		});
+
+		this.dialogRef = dialogRef;
+	}
+
+	openShareDialog(collection: RecipientBadgeCollection) {
+		const dialogRef = this._hlmDialogService.open(ShareDialogTemplateComponent, {
+			context: {
+				collection: collection,
+				caption: this.translate.instant('BadgeCollection.shareCollection'),
 			},
 		});
 

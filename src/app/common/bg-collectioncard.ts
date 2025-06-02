@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { RecipientBadgeCollection } from '../recipient/models/recipient-badge-collection.model';
 
 @Component({
@@ -38,16 +38,19 @@ import { RecipientBadgeCollection } from '../recipient/models/recipient-badge-co
 				</div>
 				<footer class="tw-flex tw-justify-between tw-items-center tw-w-full tw-mt-4">
 					<div class="tw-items-center tw-w-full">
-						<!-- <label hlmLabel class="tw-flex tw-gap-4">
-							<hlm-switch
-								[(ngModel)]="collection.published"
-								(ngModelChange)="togglePublished()"
-							>
+						<label hlmLabel class="tw-flex tw-gap-4">
+							<hlm-switch [(ngModel)]="collection.published" (ngModelChange)="togglePublished()">
 							</hlm-switch>
-							<span class="tw-text-oebblack tw-text-lg">{{'General.public' | translate }}</span>
-						</label> -->
+							<span class="tw-text-oebblack tw-text-lg">{{ 'General.public' | translate }}</span>
+						</label>
 					</div>
-					<oeb-button [text]="'BadgeCollection.share' | translate" size="sm" disabled="true"> </oeb-button>
+					<oeb-button
+						[text]="'BadgeCollection.share' | translate"
+						size="sm"
+						[disabled]="!collection.published"
+						(click)="openShareDialog()"
+					>
+					</oeb-button>
 				</footer>
 			</div>
 		</div>
@@ -58,9 +61,14 @@ export class BgCollectionCard {
 	readonly badgeLoadingImageUrl = '../../../breakdown/static/images/badge-loading.svg';
 	readonly badgeFailedImageUrl = '../../../breakdown/static/images/badge-failed.svg';
 	@Input() collection: RecipientBadgeCollection = null;
+	@Output() share = new EventEmitter();
 
 	togglePublished() {
 		this.collection.save();
+	}
+
+	openShareDialog() {
+		this.share.emit();
 	}
 
 	ngOnInit() {}

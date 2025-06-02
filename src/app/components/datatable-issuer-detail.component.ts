@@ -18,6 +18,7 @@ import { lucideSearch } from '@ng-icons/lucide';
 import { HlmCommandInputWrapperComponent } from './spartan/ui-command-helm/src';
 import { OebButtonComponent } from './oeb-button.component';
 import { provideIcons } from '@ng-icons/core';
+import { OebSpinnerComponent } from './oeb-spinner.component';
 
 @Component({
 	selector: 'issuer-detail-datatable',
@@ -34,13 +35,16 @@ import { provideIcons } from '@ng-icons/core';
 		HlmIconDirective,
 		HlmCommandInputWrapperComponent,
 		OebButtonComponent,
+		OebSpinnerComponent,
 	],
 	providers: [provideIcons({ lucideSearch })],
 	template: `
 		<div class="tw-p-[calc(var(--gridspacing)*2)] tw-mt-8">
 			<div class="tw-flex tw-items-center tw-justify-between tw-gap-4 sm:flex-col">
 				<div class="l-stack u-margin-bottom2x u-margin-top4x">
-					<h3 class="md:tw-text-xl tw-text-sm tw-font-semibold tw-font-[rubik] tw-text-oebblack">
+					<h3
+						class="md:tw-text-xl md:tw-text-nowrap tw-text-sm tw-font-semibold tw-font-[rubik] tw-text-oebblack"
+					>
 						{{ recipientCount }} Badge
 						{{ recipientCount == 1 ? ('Issuer.recipient' | translate) : ('Issuer.recipients' | translate) }}
 					</h3>
@@ -57,6 +61,18 @@ import { provideIcons } from '@ng-icons/core';
 						<ng-icon hlm size="lg" class="tw-absolute  tw-right-6 tw-text-purple" name="lucideSearch" />
 					</hlm-cmd-input-wrapper>
 				</label>
+			</div>
+			<div
+				*ngIf="awardInProgress"
+				class="tw-border-green tw-p-2 tw-border-solid tw-border-4 tw-rounded-[10px] tw-w-full tw-flex md:tw-gap-6 tw-gap-2 tw-items-center"
+			>
+				<oeb-spinner size="lg"></oeb-spinner>
+				<div class="tw-text-oebblack tw-text-lg tw-flex tw-flex-col tw-gap-1">
+					<span class="tw-text-lg tw-font-bold tw-uppercase">{{
+						'Badge.awardingInProgress' | translate
+					}}</span>
+					<span>{{ 'Badge.willBeAwardedSoon' | translate }}</span>
+				</div>
 			</div>
 			<hlm-table
 				class="tw-rounded-t-[20px] tw-overflow-hidden tw-w-full tw-max-w-[100%] tw-bg-lightpurple tw-border-purple tw-border-[1px] tw-border-solid tw-mt-8"
@@ -119,6 +135,7 @@ export class IssuerDetailDatatableComponent {
 	@Input() downloadStates;
 	@Output() actionElement = new EventEmitter();
 	@Output() downloadCertificate = new EventEmitter<object>();
+	@Input() awardInProgress: boolean = false;
 
 	_recipients = input.required<BadgeInstance[]>();
 
