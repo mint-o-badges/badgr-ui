@@ -1,143 +1,5 @@
 <ng-template sourceListener></ng-template>
-<div *ngIf="curtain" style="height: 100vh; width: 100vw">
-	<header style="text-align: center; height: 45%; padding-bottom: 10%; padding-top: 10%; background-color: #f5f5f5">
-		<div style="height: 100%; display: flex; justify-content: space-between; align-items: center">
-			<div class="nunito-bold header-oeb">
-				<span style="align-self: flex-start">Open</span>
-				<span style="align-self: flex-start">Educational</span>
-				<span style="align-self: flex-start">Badges</span>
-			</div>
-			<img
-				class="badge-logo"
-				src="../assets/logos/curtain_logo.png"
-				alt="Logo for this website says: Coming soon: 01. April 2024"
-			/>
-		</div>
-		<style>
-			@font-face {
-				font-display: block;
-				font-family: Roboto;
-				src:
-					url(https://assets.brevo.com/font/Roboto/Latin/normal/normal/7529907e9eaf8ebb5220c5f9850e3811.woff2)
-						format('woff2'),
-					url(https://assets.brevo.com/font/Roboto/Latin/normal/normal/25c678feafdc175a70922a116c9be3e7.woff)
-						format('woff');
-			}
-
-			@font-face {
-				font-display: fallback;
-				font-family: Roboto;
-				font-weight: 600;
-				src:
-					url(https://assets.brevo.com/font/Roboto/Latin/medium/normal/6e9caeeafb1f3491be3e32744bc30440.woff2)
-						format('woff2'),
-					url(https://assets.brevo.com/font/Roboto/Latin/medium/normal/71501f0d8d5aa95960f6475d5487d4c2.woff)
-						format('woff');
-			}
-
-			@font-face {
-				font-display: fallback;
-				font-family: Roboto;
-				font-weight: 700;
-				src:
-					url(https://assets.brevo.com/font/Roboto/Latin/bold/normal/3ef7cf158f310cf752d5ad08cd0e7e60.woff2)
-						format('woff2'),
-					url(https://assets.brevo.com/font/Roboto/Latin/bold/normal/ece3a1d82f18b60bcce0211725c476aa.woff)
-						format('woff');
-			}
-
-			#sib-container input:-ms-input-placeholder {
-				text-align: left;
-				font-family: 'Helvetica', sans-serif;
-				color: #c0ccda;
-			}
-
-			#sib-container input::placeholder {
-				text-align: left;
-				font-family: 'Helvetica', sans-serif;
-				color: #c0ccda;
-			}
-
-			#sib-container textarea::placeholder {
-				text-align: left;
-				font-family: 'Helvetica', sans-serif;
-				color: #c0ccda;
-			}
-
-			#sib-container a {
-				text-decoration: underline;
-				color: #2bb2fc;
-			}
-		</style>
-		<link rel="stylesheet" href="https://sibforms.com/forms/end-form/build/sib-styles.css" />
-	</header>
-	<div
-		style="
-			background: linear-gradient(#6100f9 85%, #f5f5f5 15%);
-			display: flex;
-			flex-direction: column;
-			justify-content: center;
-			align-items: center;
-		"
-	>
-		<div style="height: 10%; text-align: center">
-			<h2 class="nunito-normal what-are-oeb">
-				Was sind <br />
-				Open Educational Badges?
-			</h2>
-		</div>
-		<div
-			class="video-container md:tw-w-[52%] tw-h-[370px] tw-border-purple tw-border-solid tw-border-4 tw-m-4 tw-box-border"
-		>
-			<iframe
-				src="https://www.youtube.com/embed/KZqY_jY4ZD4"
-				class="tw-w-full tw-h-full"
-				title="Open badges kurz erklärt"
-				frameborder="0"
-				allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-				allowfullscreen
-			></iframe>
-		</div>
-		<div class="iframe-container">
-			<iframe
-				class="newsletter-form"
-				src="https://2b1b89e9.sibforms.com/serve/MUIFAKojWi4x97UOmo2HdfRvnlJLK7yupo_
-				1AW0kPuwZAvaJKVrnY9pSznPf8Tjmv0QVrTBPNIJNbXonMqdxYOSWt8pVW1oJ433_rxMKy6MuYinwl
-				-1uOEueeJLYdc3CZWA109Ie3XYxT64NwBAAJD09w6xT_fhZ4Nsh-z-
-				Q4amYm0A3xXy6pWEdrUOuAEd1kAg6YUw7HLIi--v0"
-				frameborder="0"
-				scrolling="auto"
-				allowfullscreen
-				style="display: block; margin-right: 2em; max-width: 100%; z-index: 50"
-			></iframe>
-			<p class="nunito-normal form-paragraph">
-				Melde dich hier an und wir kontaktieren dich sofort, wenn du Badges erstellen kannst.
-			</p>
-		</div>
-	</div>
-	<footer style="height: 10%; background-color: white">
-		<div class="l-containerxaxis">
-			<div class="footer l-stickyfooter-x-footer">
-				<ul class="footer-x-leftlinks">
-					<li *ngIf="theme.showPoweredByOSL && theme.providedBy">
-						Open Educational Badges ist eine Initiative von
-						<a href="https://matrix-gruppe.de/matrix-gemeinnuetzig/" target="_blank">matrix gGmbH</a>,
-						<a href="https://mycelia.education/" target="_blank">mycelia gGmbH</a>
-						und der
-						<a href="{{ theme.providedBy.url }}" target="_blank">openSenselab gGmbH</a>
-					</li>
-				</ul>
-
-				<ul class="footer-x-links">
-					<li>
-						<a [href]="theme.termsOfServiceLink" target="_blank">{{ 'Start.imprint' | translate }}</a>
-					</li>
-				</ul>
-			</div>
-		</div>
-	</footer>
-</div>
-<header *ngIf="!curtain">
+<header>
 	<nav class="oeb-navbar oeb-nav">
 		<a
 			[class.logo-is-loading]="isRequestPending"
@@ -270,7 +132,6 @@
 	</nav>
 
 	<!-- Nav dropdown menus -->
-
 	<bg-popup-menu #appsMenu>
 		<a class="menuitem" href="{{ lp.launch_url }}" *ngFor="let lp of launchpoints" target="_blank">
 			{{ lp.label }}
@@ -376,13 +237,7 @@
 	</nav>
 </header>
 
-<!-- Display a "curtain" instead of the normal page, if `curtain` is set to true-->
-<main
-	*ngIf="!curtain"
-	class="oeb-main o-container"
-	[attr.inert]="mobileNavOpen ? '' : null"
-	[class.tw-hidden]="mobileNavOpen"
->
+<main class="oeb-main o-container" [attr.inert]="mobileNavOpen ? '' : null" [class.tw-hidden]="mobileNavOpen">
 	<router-outlet *ngIf="!hasFatalError"></router-outlet>
 	<!-- children go here -->
 	<article *ngIf="hasFatalError" class="l-containerxaxis l-containeryaxis">
@@ -414,12 +269,7 @@
 <select-issuer-dialog #selectIssuerDialog></select-issuer-dialog>
 
 <!-- Footer -->
-
-<footer
-	*ngIf="!curtain"
-	class="tw-relative tw-w-full tw-my-4"
-	style="background-color: var(--color-lightgreen); margin-top: 30px"
->
+<footer class="tw-relative tw-w-full tw-my-4" style="background-color: var(--color-lightgreen); margin-top: 30px">
 	<div class="page-padding">
 		<div class="oeb-footer tw-my-16 tw-flex tw-flex-row tw-items-center">
 			<div
@@ -430,22 +280,7 @@
 						class="md:tw-w-2/3 tw-mt#-[10px]"
 						*ngIf="theme.showPoweredByOSL && theme.providedBy"
 						[innerHTML]="'Start.poweredBy' | translate"
-					>
-						Open Educational Badges ist ein Gemeinschaftsprojekt von
-						<a
-							class="tw-underline tw-text-link"
-							href="https://matrix-gruppe.de/matrix-gemeinnuetzig/"
-							target="_blank"
-							>matrix gGmbH</a
-						>,
-						<a class="tw-underline tw-text-link" href="https://mycelia.education/" target="_blank"
-							>mycelia gGmbH</a
-						>
-						und
-						<a class="tw-underline tw-text-link" href="https://opensenselab.org/" target="_blank"
-							>openSenseLab gGmbH</a
-						>.
-					</p>
+					></p>
 					<div class="tw-flex tw-gap-2 tw-items-center tw-mt-[10px] md:tw-w-2/3">
 						<img
 							src="assets/oeb/images/issuerPage/oeb-beta-logo.svg"
