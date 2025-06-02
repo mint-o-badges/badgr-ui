@@ -64,14 +64,16 @@ import { BrnDialogRef } from '@spartan-ng/brain/dialog';
 					[defaultUnfolded]="focusRequests"
 				></qrcode-awards>
 			</div>
-			<issuer-detail-datatable
-				[recipientCount]="recipientCount"
-				[_recipients]="instanceResults"
-				(actionElement)="revokeInstance($event)"
-				(downloadCertificate)="downloadCertificate($event.instance, $event.badgeIndex)"
-				[downloadStates]="downloadStates"
-				[awardInProgress]="isTaskProcessing || isTaskPending"
-			></issuer-detail-datatable>
+			<div #batchAwards>
+				<issuer-detail-datatable
+					[recipientCount]="recipientCount"
+					[_recipients]="instanceResults"
+					(actionElement)="revokeInstance($event)"
+					(downloadCertificate)="downloadCertificate($event.instance, $event.badgeIndex)"
+					[downloadStates]="downloadStates"
+					[awardInProgress]="isTaskProcessing || isTaskPending"
+				></issuer-detail-datatable>
+			</div>
 			<ng-template #headerTemplate>
 				<h2 class="tw-font-bold tw-my-2" hlmH2>{{ 'Badge.copyForWhatInstitution' | translate }}</h2>
 			</ng-template>
@@ -112,6 +114,7 @@ import { BrnDialogRef } from '@spartan-ng/brain/dialog';
 })
 export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	@ViewChild('qrAwards') qrAwards!: ElementRef;
+	@ViewChild('batchAwards') batchAwards!: ElementRef;
 
 	@ViewChild('issuerSelection')
 	issuerSelection: TemplateRef<void>;
@@ -276,6 +279,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 
 	ngAfterViewChecked() {
 		this.focusRequestsOnPage();
+		this.focusBatchAwardingsOnPage();
 	}
 
 	copyBadge() {
@@ -435,6 +439,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 			this.isTaskActive = true;
 
 			this.currentTaskStatus = this.taskService.getLastTaskStatus(this.badgeSlug);
+			this.focusBatchAwardingsOnPage();
 
 			this.subscribeToTaskUpdates();
 		}
@@ -678,6 +683,13 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		if (this.focusRequests && this.qrAwards && !this.hasScrolled) {
 			if (this.qrAwards.nativeElement.offsetTop > 0) this.hasScrolled = true;
 			this.qrAwards.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+		}
+	}
+
+	private focusBatchAwardingsOnPage() {
+		if ((this.isTaskPending || this.isTaskProcessing) && this.batchAwards && !this.hasScrolled) {
+			if (this.batchAwards.nativeElement.offsetTop > 0) this.hasScrolled = true;
+			this.batchAwards.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
 		}
 	}
 
