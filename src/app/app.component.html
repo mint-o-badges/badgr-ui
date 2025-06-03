@@ -269,7 +269,7 @@
 <select-issuer-dialog #selectIssuerDialog></select-issuer-dialog>
 
 <!-- Footer -->
-<footer class="tw-relative tw-w-full tw-my-4 tw-bg-oebgrey tw-mt-8">
+<footer class="tw-relative tw-w-full tw-bg-oebgrey tw-mt-8">
 	<div
 		class="page-padding oeb-footer tw-py-14 tw-font-[rubik] tw-text-left tw-flex md:tw-flex-row md:tw-justify-between md:tw-gap-0 tw-flex-col-reverse tw-gap-[2em]"
 	>
@@ -287,27 +287,11 @@
 				/>
 				<p [innerHTML]="'Issuer.betaPhase' | translate"></p>
 			</div>
-			<div class="tw-flex md:tw-hidden tw-flex-col tw-gap-[7px]">
-				<a
-					class="tw-text-[14px] tw-leading-[16.8px] tw-font-semibold md:tw-text-[20px] md:tw-font-medium md:tw-leading-[26px] tw-text-oebblack"
-					[routerLink]="['/public/faq']"
-					>FAQ</a
-				>
-				<a
-					class="tw-text-[14px] tw-leading-[16.8px] md:tw-text-[20px] md:tw-leading-[26px] tw-text-oebblack"
-					[href]="theme.termsOfServiceLink"
-					>{{ 'Start.imprint' | translate }}</a
-				>
-				<a
-					class="tw-text-[14px] tw-leading-[16.8px] md:tw-text-[20px] md:tw-leading-[26px] tw-text-oebblack"
-					[href]="theme.privacyPolicyLink"
-					>{{ 'Start.privacyPolicy' | translate }}</a
-				>
-				<a
-					class="tw-text-[14px] tw-leading-[16.8px] md:tw-text-[20px] md:tw-leading-[26px] tw-text-oebblack"
-					[routerLink]="['/public/terms']"
-					>{{ 'General.tos' | translate }}</a
-				>
+			<div class="tw-flex md:tw-hidden tw-flex-col tw-gap-[7px] tw-text-sm md:tw-text-base tw-text-oebblack">
+				<a class="tw-font-semibold md:tw-font-medium tw-text-oebblack" [routerLink]="['/public/faq']">FAQ</a>
+				<a class="tw-text-oebblack" [href]="theme.termsOfServiceLink">{{ 'Start.imprint' | translate }}</a>
+				<a class="tw-text-oebblack" [href]="theme.privacyPolicyLink">{{ 'Start.privacyPolicy' | translate }}</a>
+				<a class="tw-text-oebblack" [routerLink]="['/public/terms']">{{ 'General.tos' | translate }}</a>
 			</div>
 		</div>
 
@@ -354,27 +338,13 @@
 			"
 			alt="Telekom Stiftung Logo"
 		/>
-		<div class="tw-hidden md:tw-flex tw-flex-col tw-min-w-fit tw-text-right tw-gap-[7px]">
-			<a
-				class="tw-text-[14px] tw-leading-[16.8px] tw-font-semibold md:tw-text-[20px] md:tw-font-medium md:tw-leading-[26px] tw-text-oebblack"
-				[routerLink]="['/public/faq']"
-				>FAQ</a
-			>
-			<a
-				class="tw-text-[14px] tw-leading-[16.8px] md:tw-text-[20px] md:tw-leading-[26px] tw-text-oebblack"
-				[href]="theme.termsOfServiceLink"
-				>{{ 'Start.imprint' | translate }}</a
-			>
-			<a
-				class="tw-text-[14px] tw-leading-[16.8px] md:tw-text-[20px] md:tw-leading-[26px] tw-text-oebblack"
-				[href]="theme.privacyPolicyLink"
-				>{{ 'Start.privacyPolicy' | translate }}</a
-			>
-			<a
-				class="tw-text-[14px] tw-leading-[16.8px] md:tw-text-[20px] md:tw-leading-[26px] tw-text-oebblack"
-				[routerLink]="['/public/terms']"
-				>{{ 'General.tos' | translate }}</a
-			>
+		<div
+			class="tw-hidden md:tw-flex tw-flex-col tw-min-w-fit tw-text-right tw-gap-[7px] tw-text-sm md:tw-text-lg md:tw-leading-tight"
+		>
+			<a class="tw-font-semibold md:tw-font-medium tw-text-oebblack" [routerLink]="['/public/faq']">FAQ</a>
+			<a class="tw-text-oebblack" [href]="theme.termsOfServiceLink">{{ 'Start.imprint' | translate }}</a>
+			<a class="tw-text-oebblack" [href]="theme.privacyPolicyLink">{{ 'Start.privacyPolicy' | translate }}</a>
+			<a class="tw-text-oebblack" [routerLink]="['/public/terms']">{{ 'General.tos' | translate }}</a>
 		</div>
 	</div>
 </div>
