@@ -196,7 +196,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		{ controlName: 'selfReflection', text: this.translate.instant('Badge.selfReflection') },
 		{ controlName: 'peerFeedback', text: 'Peer-Feedback' },
 		{ controlName: 'achievedIndividualLearning', text: this.translate.instant('Badge.achievedIndividualLearning') },
-		{ controlName: 'presence90', text: this.translate.instant('Badge.presence90') },
+		{ controlName: 'passed75', text: this.translate.instant('Badge.passed75') },
 		{ controlName: 'practicalApplication', text: this.translate.instant('Badge.practicalApplication') },
 		{ controlName: 'onlineCourseCompleted', text: this.translate.instant('Badge.onlineCourseCompleted') },
 		{ controlName: 'portfolio', text: 'Portfolio' },
@@ -387,12 +387,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 	@Input()
 	category: string;
-
-	@Input()
-	submitText: string;
-
-	@Input()
-	submittingText: string;
 
 	@Input()
 	scrolled: boolean;

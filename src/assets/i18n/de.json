@@ -75,7 +75,7 @@
 		"title": "Titel",
 		"noResults": "Keine Ergebnisse",
 		"reset": "Zurücksetzen",
-		"exam": "Prüfung",
+		"exam": "Test / Prüfung",
 		"create": "erstellen",
 		"copy": "kopieren",
 		"place": "stellen",
@@ -259,6 +259,8 @@
 		"batchAwardText1": "Vergebe den Badge an eine lernende Person oder",
 		"batchAwardTextLink": "klicke hier, um den Badge an mehrere Lernende gleichzeitig",
 		"batchAwardText2": "zu vergeben",
+		"batchAwardFailed": "Badge-Massenvergabe fehlgeschlagen",
+		"failedBatchMonitoring": "Fortschitt der Vergabe konnte nicht ermittelt werden",
 		"awardedPerson": "Name der Empfänger:in",
 		"sendEmail": "Empfänger:in mit E-Mail benachrichtigen",
 		"giveBadge": "Badge vergeben",
@@ -353,7 +355,8 @@
 		"importPreview": "Import-Vorschau",
 		"rowsWereImported": "Zeilen konnten importiert werden.",
 		"rowsAreDuplicates": "Zeilen sind Duplikate und werden ignoriert.",
-		"clickOnAwardBadges": "Klicke auf \"Badges vergeben\", um die Badges jetzt an deine Lernenden zu vergeben."
+		"clickOnAwardBadges": "Klicke auf \"Badges vergeben\", um die Badges jetzt an deine Lernenden zu vergeben.",
+		"creatingBadge": "Erstelle Badge"
 	},
 	"Badge": {
 		"groupBy": "Gruppieren nach",
@@ -425,8 +428,8 @@
 		"activeParticipation": "Aktive Teilnahme",
 		"selfReflection": "Selbstreflexion",
 		"achievedIndividualLearning": "Individuelles Lernziel erreicht",
-		"presence90": "90% Anwesenheit",
-		"practicalApplication": "Praxis-Awendung",
+		"passed75": "75% bestanden",
+		"practicalApplication": "Praxis-Anwendung",
 		"onlineCourseCompleted": "Online-Kurs abgeschlossen",
 		"projectCompleted": "Projekt-Abschluss",
 		"addOwnCriteria": "Eigenes Kriterium hinzufügen",
@@ -439,7 +442,9 @@
 		"badgeSuccessfullyCreated": "Der Badge wurde erfolgreich an {{recipient}} vergeben",
 		"standard": "Badge-Standard",
 		"standard-info-20": "Alle Badges, die vor Juni 2025 auf OEB erstellt wurden, haben den 2.0-Standard. Weitere Infos dazu findest du in unseren <a class='tw-underline' href='/public/faq'>FAQ</a>.",
-		"standard-info-30": "Seit Juni 2025 werden alle Badges auf OEB im neuen, zukunfts-sicheren 3.0-Standard erstellt. Weitere Infos dazu findest du in unseren <a class='tw-underline' href='/public/faq'>FAQ</a>."
+		"standard-info-30": "Seit Juni 2025 werden alle Badges auf OEB im neuen, zukunfts-sicheren 3.0-Standard erstellt. Weitere Infos dazu findest du in unseren <a class='tw-underline' href='/public/faq'>FAQ</a>.",
+		"awardingInProgress": "Badge-Vergabe läuft",
+		"willBeAwardedSoon": "Gleich haben wir alle Badges verschickt!"
 	},
 	"CreateBadge": {
 		"chooseBadgeCategory": "Kategorie wählen",
@@ -767,6 +772,7 @@
 		"createCollection": "Sammlung anlegen",
 		"editCollection": "Sammlung bearbeiten",
 		"share": "Teilen",
+		"shareCollection": "Sammlung teilen",
 		"orginzeBadges": "Organisiere deine Badges in Sammlungen.",
 		"collectionName": "Name der Sammlung",
 		"collectionNamePlaceholder": "Tech & Code – Meine digitalen Fähigkeiten für die Zukunft",
@@ -782,6 +788,7 @@
 		"createCollectionNow": "Jetzt Sammlung anlegen",
 		"addBadges": "Badges zu Sammlung hinzufügen",
 		"skipStep": "Du kannst diesen Schritt überspringen und später Badges hinzufügen.",
+		"ob3Disclaimer": "Momentan können noch keine fremden 3.0-Badges hinzugefügt werden.",
 		"badgesInCollection": "Badges in der Sammlung",
 		"removeBadge": "Badge aus Sammlung entfernen?",
 		"removeBadgeConfirm1": "Möchtest du den Badge ",
@@ -790,7 +797,13 @@
 		"youHave": "Du hast",
 		"oneBadge": " Badge für die Sammlung ausgewählt.",
 		"multiBadges": " Badges für die Sammlung ausgewählt.",
-		"noBadgesInThisCollectionYet": "Diese Sammlung enthält noch keine Badges."
+		"noBadgesInThisCollectionYet": "Diese Sammlung enthält noch keine Badges.",
+		"downloadPdf": "PDF herunterladen",
+		"deleteCollection": "Sammlung löschen",
+		"deleteText": "Bist du sicher, dass du die Sammlung {{ collectionname }} löschen möchtest?",
+		"searchBadges": "Meine Badges durchsuchen",
+		"downloadQrCode": "QR-Code herunterladen",
+		"copiedToClipboard": "In die Zwischenablage kopiert!"
 	},
 	"Profile": {
 		"more": "Mehr",
@@ -956,8 +969,7 @@
 		"finishedOn": "Abgeschlossen am",
 		"deleteMd": "Micro Degree löschen",
 		"mdUsers": "Micro Degree-Nutzende",
-		"searchMds": "Micro Degrees durchsuchen",
-		"saving": "Speichere"
+		"searchMds": "Micro Degrees durchsuchen"
 	},
 	"LearningPathEditor": {
 		"shortDescription": "Zusammenfassende Beschreibung deines Micro Degrees. Diese Kurzbeschreibung wird im Micro Degree gespeichert."
