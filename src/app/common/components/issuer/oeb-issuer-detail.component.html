@@ -49,13 +49,18 @@
 				[class]="issuer.canCreateBadge ? '' : 'disabled'"
 			>
 			</oeb-button>
-			<oeb-button
-				class="tw-whitespace-nowrap"
-				*ngIf="public"
-				(click)="routeToUrl(issuer.url)"
-				[text]="'Issuer.visitWebsite' | translate"
-			>
-			</oeb-button>
+			<div *ngIf="public" class="tw-flex tw-gap-2">
+				<oeb-button
+					*ngIf="userIsMember"
+					class="tw-whitespace-nowrap"
+					(click)="routeToMemberView()"
+					[text]="'Issuer.memberView' | translate"
+					variant="secondary"
+				>
+				</oeb-button>
+				<oeb-button class="tw-whitespace-nowrap" *ngIf="public" (click)="routeToUrl(issuer.url)" text="Website">
+				</oeb-button>
+			</div>
 			<oeb-dropdown
 				[trigger]="svgTrigger"
 				class="tw-items-center tw-justify-center tw-flex tw-cursor-pointer tw-border tw-border-solid tw-border-[var(--color-purple)] tw-rounded-[7px]"
