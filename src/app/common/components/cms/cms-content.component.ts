@@ -1,23 +1,35 @@
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, input, Input } from '@angular/core';
 import { AppConfigService } from '../../app-config.service';
-import { CmsApiService } from '../../services/cms-api.service';
 import { CmsManager } from '../../services/cms-manager.service';
+import { ShadowDomComponent } from '../shadow-dom.component';
 
 @Component({
 	selector: 'cms-content',
 	template: `
 	<div class="oeb">
 		<div class="tw-overflow-hidden tw-pt-24">
+			@if (headline()) {
+				<div class="page-padding">
+					<h1 class="tw-text-oebblack ng-tns-c3875192498-0 md:tw-leading-[55.2px] md:tw-text-[46px] tw-leading-[36px] tw-text-[30px]">{{headline()}}</h1>
+				</div>
+			}
+			@if (image()) {
+				<img class="md:tw-w-[50%] tw-aspect-[1.22]" [src]="image()" alt="headline()">
+			}
 			<shadow-dom [content]="_content" [styles]="styles" [script]="configService.apiConfig.baseUrl + '/cms/script'" />
 		</div>
 	</div>
 	`,
-	standalone: false,
+	imports: [
+		ShadowDomComponent
+	],
+	standalone: true,
 })
 export class CmsContentComponent {
 
-	@Input() headline: string;
-	@Input() content: string;
+	headline = input<string>();
+	image = input<string>();
+	content = input<string>();
 	_content: string
 
 	styles: string;
@@ -34,11 +46,11 @@ export class CmsContentComponent {
 	}
 
 	ngOnChanges() {
-		if (this.content) {
+		if (this.content()) {
 			// make sure styles were loaded first
 			this.cmsManager.styles$.subscribe((s) => {
 				this._content = `
-					${this.content}
+					${this.content()}
 				`;
 			});
 		}

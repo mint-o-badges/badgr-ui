@@ -1,25 +1,28 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, input, Input, OnChanges, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { SafeHtml } from '@angular/platform-browser';
 import { CmsApiService } from '../../services/cms-api.service';
 import { CmsApiPage, CmsApiPost } from '../../model/cms-api.model';
-import { AppConfigService } from '../../app-config.service';
+import { CmsContentComponent } from './cms-content.component';
 
 @Component({
 	selector: 'cms-page',
 	template: `
 		<cms-content [headline]="headline" [content]="content" />
 	`,
-	standalone: false,
+	imports: [
+		CmsContentComponent
+	],
+	standalone: true,
 })
 export class CmsPageComponent implements OnInit, OnChanges {
 
 	headline: SafeHtml;
+	image: SafeHtml;
 	content: SafeHtml;
 	type: string;
 
-	@Input() slug: string;
+	slug = input<string>();
 
 	constructor(
 		private route: ActivatedRoute,
@@ -29,7 +32,7 @@ export class CmsPageComponent implements OnInit, OnChanges {
 	}
 
 	ngOnInit() {
-		let slug = this.slug;
+		let slug = this.slug();
 		if (!slug) {
 			slug = this.route.snapshot.params['slug'];
 		}
@@ -45,8 +48,11 @@ export class CmsPageComponent implements OnInit, OnChanges {
 				} else if (this.type == 'post') {
 					content = await this.cmsApiService.getPostBySlug(slug);
 				}
+				console.log(content);
 				if (content) {
-					this.headline = content.post_title;
+					if (this.type == 'post') {
+						this.headline = content.post_title;
+					}
 					this.content = content.post_content;
 				}
 			});
@@ -55,15 +61,17 @@ export class CmsPageComponent implements OnInit, OnChanges {
 
 	// change if @input slug changes for static paths (home, about, faq)
 	async ngOnChanges(changes: unknown) {
-		if (this.slug && changes['slug'] && changes['slug'] != this.slug && this.type) {
+		if (this.slug() && changes['slug'] && changes['slug'] != this.slug() && this.type) {
 			let content: CmsApiPage|CmsApiPost;
 			if (this.type == 'page') {
-				content = await this.cmsApiService.getPageBySlug(this.slug);
+				content = await this.cmsApiService.getPageBySlug(this.slug());
 			} else if (this.type == 'post') {
-				content = await this.cmsApiService.getPostBySlug(this.slug);
+				content = await this.cmsApiService.getPostBySlug(this.slug());
 			}
 			if (content) {
-				this.headline = content.post_title;
+				if (this.type == 'post') {
+					this.headline = content.post_title;
+				}
 				this.content = content.post_content;
 			}
 		}

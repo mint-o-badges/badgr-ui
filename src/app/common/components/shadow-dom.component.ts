@@ -1,4 +1,4 @@
-import { Component,  Input, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, input, Input, ViewChild, ViewEncapsulation } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 
@@ -9,16 +9,16 @@ import { Router } from '@angular/router';
 		<div class="shadow-content" #contentWrap [innerHTML]="_content"></div>
 	`,
 	encapsulation: ViewEncapsulation.ShadowDom,
-	standalone: false,
+	standalone: true,
 })
 export class ShadowDomComponent {
 
-	@Input() content: string;
+	content = input<string>();
 	_content: SafeHtml = "";
 
 
-	@Input() styles: string;
-	@Input() script: string;
+	styles = input<string>();
+	script = input<string>();
 
 	@ViewChild('assetWrap') assetWrap;
 	styleEl: HTMLStyleElement;
@@ -35,33 +35,31 @@ export class ShadowDomComponent {
 	ngOnChanges() {
 
 		if (this.assetWrap) {
-			const shadowRoot = this.assetWrap.nativeElement.getRootNode();
-			if (this.styles) {
+			if (this.styles()) {
 				// create style tag via js api, because angular won't allow it in template
 				if (!this.styleEl) {
 					this.styleEl = document.createElement('style');
 					this.styleEl.setAttribute('type', 'text/css');
-					console.log([1, this.assetWrap]);
 					this.assetWrap.nativeElement.appendChild(this.styleEl);
 				}
 				this.styleEl.innerHTML = '';
-				this.styleEl.appendChild(document.createTextNode(this.styles));
+				this.styleEl.appendChild(document.createTextNode(this.styles()));
 			}
 		}
 
-		if (this.content) {
-			this._content = this.domSanitizer.bypassSecurityTrustHtml(this.content);
+		if (this.content()) {
+			this._content = this.domSanitizer.bypassSecurityTrustHtml(this.content());
 			this.contentWrap.nativeElement.removeEventListener('click', this.bindLinks.bind(this));
 			this.contentWrap.nativeElement.addEventListener('click', this.bindLinks.bind(this));
 		}
 		if (this.assetWrap) {
-			if (this.script) {
+			if (this.script()) {
 				// create script tag via js api, because angular won't allow it in template
 				if (!this.scriptEl) {
 					// delay inserting scripts to make sure HTML DOM was inserted
 					setTimeout(() => {
 						this.scriptEl = document.createElement('script');
-						this.scriptEl.src = this.script;
+						this.scriptEl.src = this.script();
 						this.assetWrap.nativeElement.appendChild(this.scriptEl);
 					}, 100)
 				}

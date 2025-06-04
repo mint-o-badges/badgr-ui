@@ -1,13 +1,17 @@
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CmsApiService } from '../../../services/cms-api.service';
 import { CmsApiPost } from '../../../model/cms-api.model';
 import { LanguageService } from '../../../services/language.service';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'cms-post-list',
 	templateUrl: './cms-post-list.component.html',
 	styleUrls: ['./cms-post-list.component.scss'],
-	standalone: false,
+	standalone: true,
+	imports: [
+		TranslateModule
+	]
 })
 export class CmsPostListComponent implements OnInit {
 
@@ -15,7 +19,7 @@ export class CmsPostListComponent implements OnInit {
 
 	constructor(
 		protected cmsApiService: CmsApiService,
-		public languageService: LanguageService
+		public languageService: LanguageService,
 	) {
 
 	}
@@ -23,8 +27,6 @@ export class CmsPostListComponent implements OnInit {
 	async ngOnInit() {
 		this.languageService.getSelectedLngObs().subscribe(async (lang: string) => {
 			this.posts = await this.cmsApiService.getPosts();
-			//  FIXME: debug
-			// this.posts = [...this.posts, ...this.posts, ...this.posts, ...this.posts, ...this.posts]
 		});
 	}
 }

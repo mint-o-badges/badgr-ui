@@ -151,8 +151,6 @@ export const routes: Routes = [
 		TranslateModule,
 	],
 	declarations: [
-		AboutComponent,
-		StartComponent,
 		ImpressumComponent,
 		PrivacyComponent,
 		PublicComponent,
@@ -161,7 +159,6 @@ export const routes: Routes = [
 		RequestBadgeComponent,
 		PublicBadgeCollectionComponent,
 		VerifyBadgeDialog,
-		FaqComponent,
 		PublicBadgeClassComponent,
 		PublicLearningPathComponent,
 	],
