@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, input, Input, OnInit } from '@angular/core';
 import { NgIcon } from '@ng-icons/core';
 
 @Component({
@@ -6,7 +6,7 @@ import { NgIcon } from '@ng-icons/core';
 	template: `
 		<div class="oeb-infoicon tw-relative tw-flex tw-items-center" [class]="{'oeb-infoicon--init': init}">
 			<ng-icon hlm name="lucideInfo" size="24px" class="tw-text-purple"></ng-icon>
-			<div class="oeb-infoicon__description tw-text-white tw-bg-purple tw-py-2 tw-px-3 tw-rounded-[10px] tw-ml-1" [style]="{ 'width': width + 'px' }">
+			<div class="oeb-infoicon__description tw-text-white tw-bg-purple tw-py-2 tw-px-3 tw-rounded-[10px] tw-ml-1" [style]="{ 'width': width() + 'px' }">
 				<ng-content/>
 			</div>
 		</div>
@@ -33,7 +33,7 @@ import { NgIcon } from '@ng-icons/core';
 	]
 })
 export class InfoIcon implements OnInit {
-	@Input() width = 200;
+	width = input(200);
 
 	init = false;
 
