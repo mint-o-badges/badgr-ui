@@ -774,6 +774,7 @@
 		"description": "Beschreibung der Sammlung",
 		"descriptionPlaceholder": "Diese Badges zeigen, dass ich die digitale Welt nicht nur verstehe, sondern aktiv gestalte. Von Programmierung über Algorithmen bis hin zu IT-Sicherheit – ich kenne die Werkzeuge der Zukunft und setze sie kreativ ein, um technische Herausforderungen zu lösen.",
 		"provideDescription": "Bitte gib eine Beschreibung an",
+		"descriptionMax300": "Die Beschreibung darf maximal 300 Zeichen lang sein",
 		"useCollectionsForApplications": "Sammlungen für Bewerbungen nutzen",
 		"myCollections": "Meine Sammlungen",
 		"collectionInfoText": "Organisiere deine Badges in Sammlungen und lade das entsprechende PDF herunter oder erstelle einen Direkt-Link zum Teilen.",
@@ -908,7 +909,8 @@
 		"download": "Download QR-Code",
 		"toBadgeDetail": "Zur Badge Detail-Seite",
 		"downloadPoster": "Download QR-Code-Plakat",
-		"badgeDetailPage": "Badge Detail Seite"
+		"badgeDetailPage": "Badge Detail Seite",
+		"badgesAwardedSuccessfully": "Badges erfolgreich vergeben"
 	},
 	"LearningPath": {
 		"learningpaths": "Micro Degrees",

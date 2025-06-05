@@ -259,7 +259,8 @@
 						badgeClassForm.controls.keywordCompetencies.valid &&
 						!badgeClassForm.hasError('competenceHoursMinutesZero') &&
 						!badgeClassForm.hasError('competencyExceedsBadgeDuration') &&
-						!badgeClassForm.hasError('emptyCompetencies')
+						!badgeClassForm.hasError('emptyCompetencies') &&
+						!badgeClassForm.hasError('duplicateCompetency')
 					"
 					[hasError]="
 						!badgeClassForm.controls.aiCompetencies.valid ||
@@ -267,7 +268,8 @@
 						!badgeClassForm.controls.keywordCompetencies.valid ||
 						badgeClassForm.hasError('competenceHoursMinutesZero') ||
 						badgeClassForm.hasError('competencyExceedsBadgeDuration') ||
-						badgeClassForm.hasError('emptyCompetencies')
+						badgeClassForm.hasError('emptyCompetencies') ||
+						badgeClassForm.hasError('duplicateCompetency')
 					"
 				>
 					<div class="section tw-text-oebblack tw-px-1 tw-mt-6" *ngIf="badgeCategory === 'competency'">
