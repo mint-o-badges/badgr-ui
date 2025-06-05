@@ -48,7 +48,6 @@ export class CmsPageComponent implements OnInit, OnChanges {
 				} else if (this.type == 'post') {
 					content = await this.cmsApiService.getPostBySlug(slug);
 				}
-				console.log(content);
 				if (content) {
 					if (this.type == 'post') {
 						this.headline = content.post_title;

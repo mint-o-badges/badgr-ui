@@ -1,20 +1,34 @@
-import { Component, input, Input, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, input, ViewChild, ViewEncapsulation } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { DynamicHooksComponent } from 'ngx-dynamic-hooks';
 import { Router } from '@angular/router';
+import { KiAssistantComponent } from 'app/issuer/components/ki-assistant/ki-assistant.component';
 
 @Component({
 	selector: 'shadow-dom',
 	template: `
 		<div class="shadow-assets" #assetWrap></div>
-		<div class="shadow-content" #contentWrap [innerHTML]="_content"></div>
+		<div #contentWrap>
+			<ngx-dynamic-hooks class="shadow-content" [content]="_content" [parsers]="dynamicComponents" options="{sanitize: false}"></ngx-dynamic-hooks>
+		</div>
+	`,
+	styles: `
+		@tailwind base;
+		@tailwind components;
+		@tailwind utilities;
 	`,
 	encapsulation: ViewEncapsulation.ShadowDom,
 	standalone: true,
+	imports: [DynamicHooksComponent]
 })
 export class ShadowDomComponent {
 
 	content = input<string>();
 	_content: SafeHtml = "";
+
+	dynamicComponents = [
+		KiAssistantComponent
+	];
 
 
 	styles = input<string>();
@@ -48,7 +62,7 @@ export class ShadowDomComponent {
 		}
 
 		if (this.content()) {
-			this._content = this.domSanitizer.bypassSecurityTrustHtml(this.content());
+			this._content = this.content();
 			this.contentWrap.nativeElement.removeEventListener('click', this.bindLinks.bind(this));
 			this.contentWrap.nativeElement.addEventListener('click', this.bindLinks.bind(this));
 		}
