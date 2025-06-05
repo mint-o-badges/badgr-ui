@@ -683,7 +683,12 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 		this.stepper.selectionChange.subscribe((event) => {
 			this.selectedStep = event.selectedIndex;
-			this.badgeClassForm.rawControl.setValidators(this.createCompetenciesValidator());
+			this.badgeClassForm.rawControl.setValidators([
+				this.createCompetenciesValidator(),
+				this.hoursAndMinutesValidatorCompetencies(),
+				// this.hoursAndMinutesValidatorBadgeDuration(),
+				this.noDuplicateCompetencies(),
+			]);
 			this.badgeClassForm.rawControl.updateValueAndValidity();
 		});
 
@@ -772,9 +777,10 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			this.badgeClassForm.hasError('competencyExceedsBadgeDuration') ||
 			this.badgeClassForm.hasError('competenceHoursMinutesZero') ||
 			this.badgeClassForm.hasError('maxMinutesCompetencyError') ||
-			this.badgeClassForm.hasError('maxHoursCompetencyError')
+			this.badgeClassForm.hasError('maxHoursCompetencyError') ||
+			this.badgeClassForm.hasError('duplicateCompetency')
 		) {
-			return 'Ungültige Kompetenz';
+			return this.translate.instant('CreateBadge.invalidCompetence');
 		}
 		// else if(this.badgeClassForm.hasError('competenceHoursMinutesZero')){
 		// 	return this.competenceHoursMinutesZeroError
@@ -1179,66 +1185,70 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	}
 
 	// Validator for competencies, displays error messages for all compentencies
-	hoursAndMinutesValidatorCompetencies(): ValidationErrors | null {
-		if (!this.badgeClassForm) return null;
+	hoursAndMinutesValidatorCompetencies(): ValidatorFn {
+		return (control: AbstractControl): ValidationErrors | null => {
+			if (!this.badgeClassForm) return null;
 
-		const allCompetencies = [
-			...this.badgeClassForm.value.competencies,
-			...this.badgeClassForm.value.keywordCompetencies,
-			...this.badgeClassForm.value.aiCompetencies.filter((comp) => comp.selected),
-		];
+			const allCompetencies = [
+				...this.badgeClassForm.value.competencies,
+				...this.badgeClassForm.value.keywordCompetencies,
+				...this.badgeClassForm.value.aiCompetencies.filter((comp) => comp.selected),
+			];
 
-		// Suche nach dem ersten fehlerhaften Kompetenzfeld
-		const invalidCompetencyIndex = allCompetencies.findIndex(
-			(competence) => Number(competence.hours) === 0 && Number(competence.minutes) === 0,
-		);
+			// Suche nach dem ersten fehlerhaften Kompetenzfeld
+			const invalidCompetencyIndex = allCompetencies.findIndex(
+				(competence) => Number(competence.hours) === 0 && Number(competence.minutes) === 0,
+			);
 
-		if (invalidCompetencyIndex !== -1) {
-			return { competenceHoursMinutesZero: true, invalidIndex: invalidCompetencyIndex };
-		}
+			if (invalidCompetencyIndex !== -1) {
+				return { competenceHoursMinutesZero: true, invalidIndex: invalidCompetencyIndex };
+			}
 
-		const invalidMaxMinutesCompetencyIndex = allCompetencies.findIndex(
-			(competence) => Number(competence.minutes) > 59,
-		);
+			const invalidMaxMinutesCompetencyIndex = allCompetencies.findIndex(
+				(competence) => Number(competence.minutes) > 59,
+			);
 
-		if (invalidMaxMinutesCompetencyIndex !== -1) {
-			return { maxMinutesCompetencyError: true };
-		}
+			if (invalidMaxMinutesCompetencyIndex !== -1) {
+				return { maxMinutesCompetencyError: true };
+			}
 
-		const invalidMaxHoursCompetencyIndex = allCompetencies.findIndex(
-			(competence) => Number(competence.hours) > 999,
-		);
+			const invalidMaxHoursCompetencyIndex = allCompetencies.findIndex(
+				(competence) => Number(competence.hours) > 999,
+			);
 
-		if (invalidMaxHoursCompetencyIndex !== -1) {
-			return { maxHoursCompetencyError: true };
-		}
+			if (invalidMaxHoursCompetencyIndex !== -1) {
+				return { maxHoursCompetencyError: true };
+			}
 
-		const badgeDurationInMinutes =
-			Number(this.badgeClassForm.controls.badge_hours.value) * 60 +
-			Number(this.badgeClassForm.controls.badge_minutes.value);
+			const badgeDurationInMinutes =
+				Number(this.badgeClassForm.controls.badge_hours.value) * 60 +
+				Number(this.badgeClassForm.controls.badge_minutes.value);
 
-		const competencyExceedsBadgeDurationIndex = allCompetencies.findIndex(
-			(competence) => Number(competence.hours * 60) + Number(competence.minutes) > badgeDurationInMinutes,
-		);
+			const competencyExceedsBadgeDurationIndex = allCompetencies.findIndex(
+				(competence) => Number(competence.hours * 60) + Number(competence.minutes) > badgeDurationInMinutes,
+			);
 
-		if (competencyExceedsBadgeDurationIndex !== -1) {
-			return { competencyExceedsBadgeDuration: true, invalidIndex: competencyExceedsBadgeDurationIndex };
-		}
+			if (competencyExceedsBadgeDurationIndex !== -1) {
+				return { competencyExceedsBadgeDuration: true, invalidIndex: competencyExceedsBadgeDurationIndex };
+			}
 
-		return null;
+			return null;
+		};
 	}
 
 	// Validator for badge Duration, is displayed on the respective input
-	hoursAndMinutesValidatorBadgeDuration(): ValidationErrors | null {
-		if (!this.badgeClassForm) return null;
+	hoursAndMinutesValidatorBadgeDuration(): ValidatorFn {
+		return (control: AbstractControl): ValidationErrors | null => {
+			if (!this.badgeClassForm) return null;
 
-		const hours = Number(this.badgeClassForm.value.badge_hours);
-		const minutes = Number(this.badgeClassForm.value.badge_minutes);
-		if (hours === 0 && minutes === 0) {
-			return { hoursAndMinutesError: true };
-		}
+			const hours = Number(this.badgeClassForm.value.badge_hours);
+			const minutes = Number(this.badgeClassForm.value.badge_minutes);
+			if (hours === 0 && minutes === 0) {
+				return { hoursAndMinutesError: true };
+			}
 
-		return null;
+			return null;
+		};
 	}
 
 	competencyDurationValidator(): ValidationErrors | null {
@@ -1597,8 +1607,10 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		}
 	}
 
-	noDuplicateCompetencies(): { duplicateCompetency: Boolean } | null {
-		if (this.checkDuplicateCompetency()) return { duplicateCompetency: true };
+	noDuplicateCompetencies(): ValidatorFn {
+		return (control: AbstractControl): ValidationErrors | null => {
+			if (this.checkDuplicateCompetency()) return { duplicateCompetency: true };
+		};
 	}
 
 	checkDuplicateCompetency(): String | null {
