@@ -474,7 +474,6 @@ export class QrCodeDatatableComponent {
 				(response) => {
 					const taskId = response.body.task_id;
 					this.startTaskPolling(taskId);
-					this.router.navigate(['issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug]);
 				},
 				(error) => {
 					this.messageService.setMessage(
