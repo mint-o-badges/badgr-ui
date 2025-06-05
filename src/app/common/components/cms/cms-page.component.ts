@@ -8,7 +8,7 @@ import { CmsContentComponent } from './cms-content.component';
 @Component({
 	selector: 'cms-page',
 	template: `
-		<cms-content [headline]="headline" [content]="content" />
+		<cms-content [headline]="headline" [image]="image" [content]="content" />
 	`,
 	imports: [
 		CmsContentComponent
@@ -18,7 +18,7 @@ import { CmsContentComponent } from './cms-content.component';
 export class CmsPageComponent implements OnInit, OnChanges {
 
 	headline: SafeHtml;
-	image: SafeHtml;
+	image: string;
 	content: SafeHtml;
 	type: string;
 
@@ -52,6 +52,7 @@ export class CmsPageComponent implements OnInit, OnChanges {
 				if (content) {
 					if (this.type == 'post') {
 						this.headline = content.post_title;
+						this.image = (content as CmsApiPost).post_thumbnail;
 					}
 					this.content = content.post_content;
 				}
@@ -71,6 +72,7 @@ export class CmsPageComponent implements OnInit, OnChanges {
 			if (content) {
 				if (this.type == 'post') {
 					this.headline = content.post_title;
+					this.image = (content as CmsApiPost).post_thumbnail;
 				}
 				this.content = content.post_content;
 			}

@@ -8,13 +8,15 @@ import { ShadowDomComponent } from '../shadow-dom.component';
 	template: `
 	<div class="oeb">
 		<div class="tw-overflow-hidden tw-pt-24">
-			@if (headline()) {
+			@if (headline() || image()) {
 				<div class="page-padding">
-					<h1 class="tw-text-oebblack ng-tns-c3875192498-0 md:tw-leading-[55.2px] md:tw-text-[46px] tw-leading-[36px] tw-text-[30px]">{{headline()}}</h1>
+					@if (headline()) {
+						<h1 class="tw-text-oebblack ng-tns-c3875192498-0 md:tw-leading-[55.2px] md:tw-text-[46px] tw-leading-[36px] tw-text-[30px]">{{headline()}}</h1>
+					}
+					@if (image()) {
+						<img class="md:tw-w-[100%]" [src]="image()" alt="headline()">
+					}
 				</div>
-			}
-			@if (image()) {
-				<img class="md:tw-w-[50%] tw-aspect-[1.22]" [src]="image()" alt="headline()">
 			}
 			<shadow-dom [content]="_content" [styles]="styles" [script]="configService.apiConfig.baseUrl + '/cms/script'" />
 		</div>
