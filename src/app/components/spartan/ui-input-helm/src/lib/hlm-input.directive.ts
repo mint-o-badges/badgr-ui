@@ -8,7 +8,7 @@ import { type VariantProps, cva } from 'class-variance-authority';
 import type { ClassValue } from 'clsx';
 
 export const inputVariants = cva(
-	'tw-flex tw-rounded-md tw-border tw-font-normal tw-border-input tw-bg-transparent tw-text-base md:tw-text-sm tw-ring-offset-background file:tw-border-0 file:tw-text-foreground file:tw-bg-transparent file:tw-font-medium placeholder:tw-text-muted-foreground focus-visible:tw-outline-none focus-visible:tw-ring-2 focus-visible:tw-ring-ring focus-visible:tw-ring-offset-2 disabled:tw-cursor-not-allowed disabled:tw-opacity-50',
+	'tw-flex tw-rounded-md tw-border tw-font-normal tw-text-oebblack tw-border-input tw-bg-transparent tw-text-base md:tw-text-sm tw-ring-offset-background file:tw-border-0 file:tw-text-foreground file:tw-bg-transparent file:tw-font-medium placeholder:tw-text-muted-foreground focus-visible:tw-outline-none focus-visible:tw-ring-2 focus-visible:tw-ring-ring focus-visible:tw-ring-offset-2 disabled:tw-cursor-not-allowed disabled:tw-opacity-50',
 	{
 		variants: {
 			size: {

@@ -165,7 +165,7 @@ export class OebIssuerDetailComponent implements OnInit {
 		if (requestMap?.has(badge.slug)) {
 			const qrCode = requestMap.get(badge.slug);
 			if (qrCode.length) {
-				return qrCode[0].request_count;
+				return qrCode.reduce((sum, code) => sum + code.request_count, 0);
 			}
 			return 0;
 		}

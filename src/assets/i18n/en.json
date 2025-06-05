@@ -774,6 +774,7 @@
 		"description": "Description of the collection",
 		"descriptionPlaceholder": "These badges show that I not only understand the digital world, but also actively shape it. From programming and algorithms to IT security - I know the tools of the future and use them creatively to solve technical challenges.",
 		"provideDescription": "Please provide a description",
+		"descriptionMax300": "The description should not exceed 300 characters",
 		"myCollections": "My Collections",
 		"useCollectionsForApplications": "Use collections for applications",
 		"collectionInfoText": "Organize your badges into collections and download the respective PDF or create a direct-link for sharing.",
@@ -908,7 +909,8 @@
 		"download": "Download QR code",
 		"toBadgeDetail": "To Badge detail page",
 		"downloadPoster": "Download QR-Code-Poster",
-		"badgeDetailPage": "badge detail page"
+		"badgeDetailPage": "badge detail page",
+		"badgesAwardedSuccessfully": "badges awarded successfully"
 	},
 	"LearningPath": {
 		"learningpaths": "Micro Degrees",

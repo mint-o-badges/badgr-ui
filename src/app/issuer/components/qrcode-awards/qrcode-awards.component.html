@@ -72,7 +72,7 @@
 								[issuerSlug]="issuer.slug"
 								[badgeSlug]="badgeClass.slug"
 								(deletedQRAward)="deleteQRAward($event)"
-								(qrBadgeAward)="onQrBadgeAward()"
+								(qrBadgeAward)="onQrBadgeAward($event)"
 								[(requestCount)]="award.request_count"
 							></qrcodes-datatable>
 						</brn-accordion-content>
