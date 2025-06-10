@@ -762,7 +762,10 @@
 		"verifyBadge": "Badge verifizieren",
 		"deleteBadge": "Badge aus Rucksack löschen",
 		"copyShareLink": "Kopiere diesen Link zum teilen",
-		"addToProfile": "Zum Profil hinzufügen"
+		"addToProfile": "Zum Profil hinzufügen",
+		"removeBadge": "Badge entfernen",
+		"confirmRemove": "Entfernen bestätigen",
+		"sureToRemove": "Bist du sicher, dass du {{badgeName}} aus deinen Badges entfernen möchtest?"
 	},
 	"BadgeCollection": {
 		"addCollection": "Sammlung hinzufügen",
@@ -803,7 +806,8 @@
 		"deleteText": "Bist du sicher, dass du die Sammlung {{ collectionname }} löschen möchtest?",
 		"searchBadges": "Meine Badges durchsuchen",
 		"downloadQrCode": "QR-Code herunterladen",
-		"copiedToClipboard": "In die Zwischenablage kopiert!"
+		"copiedToClipboard": "In die Zwischenablage kopiert!",
+		"sureToRemove": "Bist du sicher, dass du {{badgeName}} aus der Sammlung {{collectionName}} entfernen möchtest?"
 	},
 	"Profile": {
 		"more": "Mehr",

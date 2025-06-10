@@ -232,10 +232,13 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 	removeEntry(entry: RecipientBadgeCollectionEntry) {
 		this.dialogService.confirmDialog
 			.openResolveRejectDialog({
-				dialogTitle: 'Confirm Remove',
-				dialogBody: `Are you sure you want to remove ${entry.badge.badgeClass.name} from ${this.collection.name}?`,
-				rejectButtonLabel: 'Cancel',
-				resolveButtonLabel: 'Remove Badge',
+				dialogTitle: this.translate.instant('RecBadgeDetail.confirmRemove'),
+				dialogBody: this.translate.instant('BadgeCollection.sureToRemove', {
+					badgeName: entry.badge.badgeClass.name,
+					collectionName: this.collection.name,
+				}),
+				rejectButtonLabel: this.translate.instant('General.cancel'),
+				resolveButtonLabel: this.translate.instant('RecBadgeDetail.removeBadge'),
 			})
 			.then(
 				() => {
