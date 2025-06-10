@@ -85,7 +85,9 @@
 			<oeb-button
 				[text]="'General.cancel' | translate"
 				variant="secondary"
+				type="button"
 				size="sm"
+				(click)="this.closeDialog();"
 			/>
 			<oeb-button
 				type="submit"
