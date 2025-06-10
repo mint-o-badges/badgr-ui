@@ -714,7 +714,7 @@
 		"badgeUploadVersionError": "Das Hochladen dieser Badge-Version ist leider nicht möglich. Aktuell unterstützen wir nur Badges bis einschließlich OB Version 2.1.",
 		"uploadEmailDoesNotMatchError": "Die im Badge hinterlegte E-Mail-Adresse stimmt nicht mit deiner auf OEB hinterlegten E-Mail-Adresse überein.",
 		"addEmailToUpload": "Füge die E-Mail-Adresse deinem Profil hinzu, um den Badge hochzuladen.",
-		"versionUploadInfo": "Momentan können leider nur Badges der Version 2.1 hochgeladen werden",
+		"versionUploadInfo": "Badges im 2.0-Standard Validieren wir beim Hochladen. Badges im 3.0-Standard können wir aktuell nur minimal validieren. Weitere Infos dazu findest du in unseren <a class=\"tw-text-link tw-underline\" href=\"/public/faq\">FAQ</a>.",
 		"addingBadge": "Füge Badge hinzu ..."
 	},
 	"EditBadge": {

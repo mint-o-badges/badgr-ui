@@ -1,0 +1,25 @@
+// style oeb-backpack-tabs as child of this component
+* ::ng-deep oeb-backpack-tabs {
+	hlm-tabs-list {
+		justify-content: flex-start;
+		padding: 0;
+	}
+	button {
+		flex-grow: 0;
+		background-color: var(--color-lightgray);
+		border-width: 4px 0 0;
+		font-weight: bold;
+		&.data-\[state\=active\]\:tw-shadow-sm[data-state="inactive"] {
+			border-top-color: var(--color-lightgray);
+		}
+		&.data-\[state\=active\]\:tw-shadow-sm[data-state="active"] {
+			border-width: 4px 0 0;
+			box-shadow: none;
+			font-weight: bold;
+			color: black;
+		}
+	}
+	[role=tabpanel] {
+		background-color: var(--color-lightgray);
+	}
+}
