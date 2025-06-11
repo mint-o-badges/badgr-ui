@@ -204,6 +204,8 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 	}
 
 	openShareDialog(collection: RecipientBadgeCollection) {
+		if (!collection.published) return;
+
 		const dialogRef = this._hlmDialogService.open(ShareDialogTemplateComponent, {
 			context: {
 				collection: collection,
