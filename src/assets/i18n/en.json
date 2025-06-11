@@ -797,7 +797,8 @@
 		"deleteText": "Are you sure you want to delete collection {{ collectionname }}?",
 		"searchBadges": "Search my badges",
 		"downloadQrCode": "Download QR-Code",
-		"copiedToClipboard": "Copied to clipboard!"
+		"copiedToClipboard": "Copied to clipboard!",
+		"collectionNotPublic": "This collection is currently not available to the public."
 	},
 	"Profile": {
 		"more": "More",

@@ -797,7 +797,8 @@
 		"deleteText": "Bist du sicher, dass du die Sammlung {{ collectionname }} löschen möchtest?",
 		"searchBadges": "Meine Badges durchsuchen",
 		"downloadQrCode": "QR-Code herunterladen",
-		"copiedToClipboard": "In die Zwischenablage kopiert!"
+		"copiedToClipboard": "In die Zwischenablage kopiert!",
+		"collectionNotPublic": "Diese Sammlung ist momentan nicht für die Öffentlichkeit freigeschaltet."
 	},
 	"Profile": {
 		"more": "Mehr",
