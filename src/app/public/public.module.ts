@@ -24,6 +24,7 @@ import { BadgeRequestApiService } from '../issuer/services/badgerequest-api.serv
 import { PdfDownloadComponent } from './components/pdf-download/pdf-download.component';
 import { PublicLearningPathComponent } from './components/learningpath/learningpath.component';
 import { UserProfileApiService } from '../common/services/user-profile-api.service';
+import { PublicNotFoundBadgeCollectionComponent } from './components/not-found-badge-collection/not-found-badge-collection.component';
 
 export const routes: Routes = [
 	{
@@ -124,7 +125,13 @@ export const routes: Routes = [
 			publiclyAccessible: true,
 		} as BadgrRouteData,
 	},
-
+	{
+		path: 'collections/not-found',
+		component: PublicNotFoundBadgeCollectionComponent,
+		data: {
+			publiclyAccessible: true,
+		} as BadgrRouteData,
+	},
 	{
 		path: 'collections/:collectionShareHash',
 		component: PublicBadgeCollectionComponent,
@@ -149,6 +156,7 @@ export const routes: Routes = [
 		CommonEntityManagerModule,
 		RouterModule.forChild(routes),
 		TranslateModule,
+		PublicNotFoundBadgeCollectionComponent,
 	],
 	declarations: [
 		AboutComponent,
