@@ -356,7 +356,8 @@
 		"rowsWereImported": "rows could be imported.",
 		"rowsAreDuplicates": "rows are duplicates and are ignored.",
 		"clickOnAwardBadges": "Click on \"award badges\" to award the badges to your learners now.",
-		"creatingBadge": "Creating Badge"
+		"creatingBadge": "Creating Badge",
+		"memberView": "Member view"
 	},
 	"Badge": {
 		"groupBy": "Group by",
