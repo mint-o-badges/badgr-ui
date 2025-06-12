@@ -50,8 +50,8 @@ export class RecipientBadgeCollectionEditFormComponent extends BaseAuthenticated
 	editing = false;
 
 	badgeCollectionForm = typedFormGroup()
-		.addControl('collectionName', '', [Validators.required, Validators.maxLength(128)])
-		.addControl('collectionDescription', '', [Validators.maxLength(255)]);
+		.addControl('collectionName', '', [Validators.required, Validators.maxLength(50)])
+		.addControl('collectionDescription', '', [Validators.maxLength(300)]);
 
 	savePromise: Promise<unknown>;
 	badgesLoaded: Promise<unknown>;
@@ -72,6 +72,7 @@ export class RecipientBadgeCollectionEditFormComponent extends BaseAuthenticated
 	allIssuers: ApiRecipientBadgeIssuer[];
 
 	myCollections = this.translate.instant('BadgeCollection.myCollections');
+	descriptionMax300 = this.translate.instant('BadgeCollection.descriptionMax300');
 
 	isEditing = false;
 	groups: string[] = [];
@@ -130,6 +131,10 @@ export class RecipientBadgeCollectionEditFormComponent extends BaseAuthenticated
 
 		this.translate.get('Badge.issuer').subscribe((translatedText: string) => {
 			this.groups[0] = translatedText;
+		});
+
+		this.translate.get('BadgeCollection.descriptionMax300').subscribe((str) => {
+			this.descriptionMax300 = str;
 		});
 	}
 

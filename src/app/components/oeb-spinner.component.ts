@@ -14,6 +14,6 @@ import { NgIf } from '@angular/common';
 })
 export class OebSpinnerComponent {
 	@Input() text: string;
-	@Input() size: SpinnerVariants['size']
-	@Input() variant: SpinnerVariants['variant'] 
+	@Input() size: SpinnerVariants['size'];
+	@Input() variant: SpinnerVariants['variant'];
 }

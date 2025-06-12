@@ -56,7 +56,7 @@ import { BrnDialogRef } from '@spartan-ng/brain/dialog';
 		<bg-badgedetail [config]="config" [awaitPromises]="[issuerLoaded, badgeClassLoaded]">
 			<div #qrAwards>
 				<qrcode-awards
-					(qrBadgeAward)="onQrBadgeAward()"
+					(qrBadgeAward)="onQrBadgeAward($event)"
 					[awards]="qrCodeAwards"
 					[badgeClass]="badgeClass"
 					[issuer]="issuer"
@@ -417,9 +417,9 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		);
 	}
 
-	onQrBadgeAward() {
+	onQrBadgeAward(event: number) {
 		this.loadInstances();
-		this.recipientCount += 1;
+		this.recipientCount += event;
 	}
 
 	ngOnInit() {

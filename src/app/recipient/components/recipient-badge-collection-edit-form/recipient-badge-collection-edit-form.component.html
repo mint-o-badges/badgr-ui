@@ -20,7 +20,9 @@
 				<oeb-input
 					[control]="badgeCollectionForm.rawControlMap.collectionDescription"
 					label="{{ 'BadgeCollection.description' | translate }}"
-					errorMessage="{{ 'BadgeCollection.provideDescription' | translate }}"
+					[errorMessage]="{
+						maxlength: descriptionMax300
+					}"
 					[max]="300"
 					size="lg"
 					fieldType="textarea"

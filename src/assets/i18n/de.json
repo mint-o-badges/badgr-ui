@@ -122,7 +122,7 @@
 	"Start": {
 		"desc1": "Ein lernerzentrierter Ansatz",
 		"desc2": "zur Dokumentation & Feedback des Lernprozesses",
-		"poweredBy": "Open Educational Badges ist ein Gemeinschaftsprojekt von <a href='https://matrix-gruppe.de/matrix-gemeinnuetzig/'>matrix gGmbh</a>, <a href='https://mycelia.education/'>mycelia gGmbh</a> und der <a href='https://opensenselab.org/'>openSenseLab gGmbh</a>",
+		"poweredBy": "Open Educational Badges ist ein Gemeinschaftsprojekt von <a href='https://matrix-gruppe.de/matrix-gemeinnuetzig/'>matrix gGmbH</a>, <a href='https://mycelia.education/'>mycelia gGmbH</a> und der <a href='https://opensenselab.org/'>openSenseLab gGmbH</a>.",
 		"imprint": "Impressum",
 		"privacyPolicy": "Datenschutz",
 		"ourIdeaTitle": "Unsere Idee",
@@ -784,6 +784,7 @@
 		"description": "Beschreibung der Sammlung",
 		"descriptionPlaceholder": "Diese Badges zeigen, dass ich die digitale Welt nicht nur verstehe, sondern aktiv gestalte. Von Programmierung über Algorithmen bis hin zu IT-Sicherheit – ich kenne die Werkzeuge der Zukunft und setze sie kreativ ein, um technische Herausforderungen zu lösen.",
 		"provideDescription": "Bitte gib eine Beschreibung an",
+		"descriptionMax300": "Die Beschreibung darf maximal 300 Zeichen lang sein",
 		"useCollectionsForApplications": "Sammlungen für Bewerbungen nutzen",
 		"myCollections": "Meine Sammlungen",
 		"collectionInfoText": "Organisiere deine Badges in Sammlungen und lade das entsprechende PDF herunter oder erstelle einen Direkt-Link zum Teilen.",
@@ -807,7 +808,8 @@
 		"searchBadges": "Meine Badges durchsuchen",
 		"downloadQrCode": "QR-Code herunterladen",
 		"copiedToClipboard": "In die Zwischenablage kopiert!",
-		"sureToRemove": "Bist du sicher, dass du {{badgeName}} aus der Sammlung {{collectionName}} entfernen möchtest?"
+		"sureToRemove": "Bist du sicher, dass du {{badgeName}} aus der Sammlung {{collectionName}} entfernen möchtest?",
+		"collectionNotPublic": "Diese Sammlung ist momentan nicht für die Öffentlichkeit freigeschaltet."
 	},
 	"Profile": {
 		"more": "Mehr",
@@ -919,7 +921,8 @@
 		"download": "Download QR-Code",
 		"toBadgeDetail": "Zur Badge Detail-Seite",
 		"downloadPoster": "Download QR-Code-Plakat",
-		"badgeDetailPage": "Badge Detail Seite"
+		"badgeDetailPage": "Badge Detail Seite",
+		"badgesAwardedSuccessfully": "Badges erfolgreich vergeben"
 	},
 	"LearningPath": {
 		"learningpaths": "Micro Degrees",

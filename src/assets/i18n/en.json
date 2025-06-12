@@ -122,7 +122,7 @@
 	"Start": {
 		"desc1": "A learner-centered approach",
 		"desc2": "for documenting & feedback on the learning process",
-		"poweredBy": "Open Educational Badges is a joint project by <a href='https://matrix-gruppe.de/matrix-gemeinnuetzig/'>matrix gGmbh</a>, <a href='https://mycelia.education/'>mycelia gGmbh</a> and <a href='https://opensenselab.org/'>openSenseLab gGmbh</a>",
+		"poweredBy": "Open Educational Badges is a joint project by <a href='https://matrix-gruppe.de/matrix-gemeinnuetzig/'>matrix gGmbH</a>, <a href='https://mycelia.education/'>mycelia gGmbH</a> and <a href='https://opensenselab.org/'>openSenseLab gGmbH</a>.",
 		"imprint": "Imprint",
 		"privacyPolicy": "Privacy Policy",
 		"ourIdeaTitle": "Our Idea",
@@ -784,6 +784,7 @@
 		"description": "Description of the collection",
 		"descriptionPlaceholder": "These badges show that I not only understand the digital world, but also actively shape it. From programming and algorithms to IT security - I know the tools of the future and use them creatively to solve technical challenges.",
 		"provideDescription": "Please provide a description",
+		"descriptionMax300": "The description should not exceed 300 characters",
 		"myCollections": "My Collections",
 		"useCollectionsForApplications": "Use collections for applications",
 		"collectionInfoText": "Organize your badges into collections and download the respective PDF or create a direct-link for sharing.",
@@ -807,7 +808,8 @@
 		"searchBadges": "Search my badges",
 		"downloadQrCode": "Download QR-Code",
 		"copiedToClipboard": "Copied to clipboard!",
-		"sureToRemove": "Are you sure you want to remove {{badgeName}} from {{collectionName}}?"
+		"sureToRemove": "Are you sure you want to remove {{badgeName}} from {{collectionName}}?",
+		"collectionNotPublic": "This collection is currently not available to the public."
 	},
 	"Profile": {
 		"more": "More",
@@ -919,7 +921,8 @@
 		"download": "Download QR code",
 		"toBadgeDetail": "To Badge detail page",
 		"downloadPoster": "Download QR-Code-Poster",
-		"badgeDetailPage": "badge detail page"
+		"badgeDetailPage": "badge detail page",
+		"badgesAwardedSuccessfully": "badges awarded successfully"
 	},
 	"LearningPath": {
 		"learningpaths": "Micro Degrees",
