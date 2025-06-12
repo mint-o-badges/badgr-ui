@@ -81,7 +81,8 @@ export interface ApiRecipientBadgeInstanceJson {
 	uid: string;
 	recipient: ApiRecipientBadgeRecipient;
 	badge: ApiRecipientBadgeClass;
-	issuedOn: string;
+	issuedOn?: string;
+	validFrom?: string;
 	image: string;
 	evidence?: string;
 	narrative?: string;
