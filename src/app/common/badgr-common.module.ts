@@ -292,7 +292,7 @@ export const COMMON_IMPORTS = [
 	NgIconsModule,
 	HlmIconDirective,
 	HlmTableModule,
-	InfoIcon
+	InfoIcon,
 ];
 
 @NgModule({

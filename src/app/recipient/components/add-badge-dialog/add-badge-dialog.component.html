@@ -25,11 +25,7 @@
 	<div class="tw-flex tw-justify-center tw-items-center tw-mt-2 tw-gap-2" *ngIf="buttontext">
 		<oeb-button size="sm" (click)="closeDialog()" [text]="'General.cancel' | translate" variant="secondary">
 		</oeb-button>
-		<oeb-button
-			(click)="routeToUserProfile()"
-			size="sm"
-			[text]="'General.toMyProfile' | translate"
-		></oeb-button>
+		<oeb-button (click)="routeToUserProfile()" size="sm" [text]="'General.toMyProfile' | translate"></oeb-button>
 	</div>
 </ng-template>
 
@@ -57,7 +53,10 @@
 			{{ 'RecBadge.addRecievedBadge' | translate }}
 		</p>
 
-		<p class="tw-mt-2 tw-mb-6 tw-text-purple tw-italic tw-text-sm" [innerHTML]="'RecBadge.versionUploadInfo' | translate"></p>
+		<p
+			class="tw-mt-2 tw-mb-6 tw-text-purple tw-italic tw-text-sm"
+			[innerHTML]="'RecBadge.versionUploadInfo' | translate"
+		></p>
 
 		<oeb-backpack-tabs
 			[tabs]="tabs"
@@ -87,7 +86,7 @@
 				variant="secondary"
 				type="button"
 				size="sm"
-				(click)="this.closeDialog();"
+				(click)="this.closeDialog()"
 			/>
 			<oeb-button
 				type="submit"
