@@ -142,7 +142,7 @@ export class ImportedBadgeDetailComponent extends BaseAuthenticatedRoutableCompo
 					// 	action: () => window.open(this.verifyUrl, '_blank'),
 					// },
 					{
-						title: 'Badge aus Rucksack löschen',
+						title: 'RecBadgeDetail.deleteBadge',
 						icon: 'lucideTrash2',
 						action: () => this.deleteBadge(this.badge),
 					},
