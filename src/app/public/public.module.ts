@@ -10,7 +10,6 @@ import { PublicBadgeClassComponent } from './components/badgeclass/badgeclass.co
 import { PublicIssuerComponent } from './components/issuer/issuer.component';
 import { PublicBadgeCollectionComponent } from './components/badge-collection/badge-collection.component';
 import { BadgrRouteData } from '../common/services/navigation.service';
-import { VerifyBadgeDialog } from './components/verify-badge-dialog/verify-badge-dialog.component';
 import { AboutComponent } from './components/about/about.component';
 import { NewsletterComponent } from './components/about/newsletter/newsletter.component';
 import { StartComponent } from './components/start/start.component';
@@ -168,7 +167,6 @@ export const routes: Routes = [
 		PublicIssuerComponent,
 		RequestBadgeComponent,
 		PublicBadgeCollectionComponent,
-		VerifyBadgeDialog,
 		FaqComponent,
 		PublicBadgeClassComponent,
 		PublicLearningPathComponent,
