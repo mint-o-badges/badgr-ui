@@ -88,4 +88,5 @@ export interface PageConfig {
 	learningPaths?: PublicApiLearningPath[] | ApiLearningPath[];
 	copy_permissions?: BadgeClassCopyPermissions[];
 	criteria?: Array<{ name: string; description: string }>;
+	version?: string;
 }

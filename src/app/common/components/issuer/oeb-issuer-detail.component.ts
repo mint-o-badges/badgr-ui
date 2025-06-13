@@ -38,6 +38,7 @@ export class OebIssuerDetailComponent implements OnInit {
 
 	learningPathsPromise: Promise<unknown>;
 	requestsLoaded: Promise<Map<string, ApiQRCode[]>>;
+	userIsMember = false;
 
 	constructor(
 		private router: Router,
@@ -50,7 +51,12 @@ export class OebIssuerDetailComponent implements OnInit {
 		private learningPathApiService: LearningPathApiService,
 		private qrCodeApiService: QrCodeApiService,
 		private sessionService: SessionService,
-	) {}
+	) {
+		this.issuerManager.myIssuers$.subscribe((issuers) => {
+			this.userIsMember = issuers.some((i) => this.issuer.slug == i.slug);
+		});
+	}
+
 	private readonly _hlmDialogService = inject(HlmDialogService);
 
 	menuItemsPublic: MenuItem[] = [
@@ -266,6 +272,10 @@ export class OebIssuerDetailComponent implements OnInit {
 
 	routeToJson() {
 		window.open(`${this.configService.apiConfig.baseUrl}/public/issuers/${this.issuer.slug}.json`, '_blank');
+	}
+
+	routeToMemberView() {
+		this.router.navigate(['/issuer/issuers/', this.issuer.slug]);
 	}
 
 	routeToUrl(url) {

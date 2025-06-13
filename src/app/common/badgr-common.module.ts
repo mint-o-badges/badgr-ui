@@ -145,6 +145,7 @@ import { PaginationAdvancedComponent } from '../components/oeb-numbered-paginati
 import { NgIconsModule } from '@ng-icons/core';
 import { HlmIconDirective } from '../components/spartan/ui-icon-helm/src';
 import { HlmTableModule } from './../components/spartan/ui-table-helm/src';
+import { InfoIcon } from './components/info-icon.component';
 import { TaskPollingManagerService } from './task-manager.service';
 
 const DIRECTIVES = [
@@ -291,6 +292,7 @@ export const COMMON_IMPORTS = [
 	NgIconsModule,
 	HlmIconDirective,
 	HlmTableModule,
+	InfoIcon,
 ];
 
 @NgModule({

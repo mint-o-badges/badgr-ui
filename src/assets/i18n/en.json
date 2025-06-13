@@ -356,7 +356,8 @@
 		"rowsWereImported": "rows could be imported.",
 		"rowsAreDuplicates": "rows are duplicates and are ignored.",
 		"clickOnAwardBadges": "Click on \"award badges\" to award the badges to your learners now.",
-		"creatingBadge": "Creating Badge"
+		"creatingBadge": "Creating Badge",
+		"memberView": "Member view"
 	},
 	"Badge": {
 		"groupBy": "Group by",
@@ -438,6 +439,9 @@
 		"learningPathBadgeInfo": "combines several badges into a larger learning unit. When learners have earned all the badges on this “learning path”, they automatically receive the Micro Degree.",
 		"lastEdited": "Last edited",
 		"badgeSuccessfullyCreated": "The badge has been awarded to {{ recipient }} successfully.",
+		"standard": "Badge standard",
+		"standard-info-20": "Badges awarded on OEB before June 2025 adhered to the OpenBadges 2.0 specification. Read more about this in our <a class='tw-underline' href='/public/faq'>FAQ</a>.",
+		"standard-info-30": "Since June 2025 Badges on OEB are awarded according to the new, future proof OpenBadges 3.0 specification. Read more about this in our <a class='tw-underline' href='/public/faq'>FAQ</a>.",
 		"copyForWhatInstitution": "For which of your institutions do you want to copy the badge?",
 		"copyPermissionInfo": "The copy status of this badge only allows copying inside this institution.",
 		"awardingInProgress": "Badge awarding in progress",
@@ -711,7 +715,7 @@
 		"badgeUploadVersionError": "Unfortunately uploading this badge version is not possible.",
 		"uploadEmailDoesNotMatchError": "The email address in the badge does not match the email in your OEB profile.",
 		"addEmailToUpload": "Add the email address to your profile to upload the badge.",
-		"versionUploadInfo": "Unfortunately at the moment only badges of version 2.1 can be uploaded",
+		"versionUploadInfo": "We validate badges in the 2.0 standard when they are uploaded. We can currently only validate badges in the 3.0 standard to a minimal extent. You can find more information on this in our <a class=\"tw-text-link tw-underline\" href=\"/public/faq\">FAQ</a>.",
 		"addingBadge": "Adding Badge ..."
 	},
 	"EditBadge": {
@@ -750,12 +754,19 @@
 		"evidence": "Evidence",
 		"viewEvidenceUrl": "Visit evidence URL",
 		"downloadImage": "Download Badge image",
+		"downloadImage20": "Download Badge image (2.0)",
+		"downloadImage30": "Download Badge image (3.0)",
 		"downloadJson": "Download JSON file",
+		"downloadJson20": "Download JSON file (2.0)",
+		"downloadJson30": "Download JSON file (3.0)",
 		"downloadPDF": "Download PDF certificate",
-		"verifyBadge": "Badge verify",
+		"verifyBadge": "Verify Badge",
 		"deleteBadge": "Remove Badge from Backpack",
 		"copyShareLink": "Copy this link to share",
-		"addToProfile": "Add to profile"
+		"addToProfile": "Add to profile",
+		"removeBadge": "Remove Badge",
+		"confirmRemove": "Confirm Remove",
+		"sureToRemove": "Are you sure you want to remove {{badgeName}} from your badges?"
 	},
 	"BadgeCollection": {
 		"addCollection": "Add collection",
@@ -797,7 +808,9 @@
 		"deleteText": "Are you sure you want to delete collection {{ collectionname }}?",
 		"searchBadges": "Search my badges",
 		"downloadQrCode": "Download QR-Code",
-		"copiedToClipboard": "Copied to clipboard!"
+		"copiedToClipboard": "Copied to clipboard!",
+		"sureToRemove": "Are you sure you want to remove {{badgeName}} from {{collectionName}}?",
+		"collectionNotPublic": "This collection is currently not available to the public."
 	},
 	"Profile": {
 		"more": "More",

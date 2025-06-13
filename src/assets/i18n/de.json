@@ -356,7 +356,8 @@
 		"rowsWereImported": "Zeilen konnten importiert werden.",
 		"rowsAreDuplicates": "Zeilen sind Duplikate und werden ignoriert.",
 		"clickOnAwardBadges": "Klicke auf \"Badges vergeben\", um die Badges jetzt an deine Lernenden zu vergeben.",
-		"creatingBadge": "Erstelle Badge"
+		"creatingBadge": "Erstelle Badge",
+		"memberView": "Mitglieds-Ansicht"
 	},
 	"Badge": {
 		"groupBy": "Gruppieren nach",
@@ -440,6 +441,9 @@
 		"learningPathBadgeInfo": "verbindet mehrere Badges zu einer größeren Lerneinheit. Wenn Lernende alle Badges dieses „Lernpfades” erworben haben, erhalten sie automatisch den Abschluss Micro Degree.",
 		"lastEdited": "Zuletzt editiert",
 		"badgeSuccessfullyCreated": "Der Badge wurde erfolgreich an {{recipient}} vergeben",
+		"standard": "Badge-Standard",
+		"standard-info-20": "Alle Badges, die vor Juni 2025 auf OEB erstellt wurden, haben den 2.0-Standard. Weitere Infos dazu findest du in unseren <a class='tw-underline' href='/public/faq'>FAQ</a>.",
+		"standard-info-30": "Seit Juni 2025 werden alle Badges auf OEB im neuen, zukunfts-sicheren 3.0-Standard erstellt. Weitere Infos dazu findest du in unseren <a class='tw-underline' href='/public/faq'>FAQ</a>.",
 		"awardingInProgress": "Badge-Vergabe läuft",
 		"willBeAwardedSoon": "Gleich haben wir alle Badges verschickt!"
 	},
@@ -711,7 +715,7 @@
 		"badgeUploadVersionError": "Das Hochladen dieser Badge-Version ist leider nicht möglich. Aktuell unterstützen wir nur Badges bis einschließlich OB Version 2.1.",
 		"uploadEmailDoesNotMatchError": "Die im Badge hinterlegte E-Mail-Adresse stimmt nicht mit deiner auf OEB hinterlegten E-Mail-Adresse überein.",
 		"addEmailToUpload": "Füge die E-Mail-Adresse deinem Profil hinzu, um den Badge hochzuladen.",
-		"versionUploadInfo": "Momentan können leider nur Badges der Version 2.1 hochgeladen werden",
+		"versionUploadInfo": "Badges im 2.0-Standard Validieren wir beim Hochladen. Badges im 3.0-Standard können wir aktuell nur minimal validieren. Weitere Infos dazu findest du in unseren <a class=\"tw-text-link tw-underline\" href=\"/public/faq\">FAQ</a>.",
 		"addingBadge": "Füge Badge hinzu ..."
 	},
 	"EditBadge": {
@@ -750,12 +754,19 @@
 		"evidence": "Nachweis",
 		"viewEvidenceUrl": "Besuche Nachweis-URL",
 		"downloadImage": "Download Badge-Bild",
+		"downloadImage20": "Download Badge-Bild (2.0)",
+		"downloadImage30": "Download Badge-Bild (3.0)",
 		"downloadJson": "Download JSON-Datei",
+		"downloadJson20": "Download JSON-Datei (2.0)",
+		"downloadJson30": "Download JSON-Datei (3.0)",
 		"downloadPDF": "Download PDF-Zertifikat",
 		"verifyBadge": "Badge verifizieren",
 		"deleteBadge": "Badge aus Rucksack löschen",
 		"copyShareLink": "Kopiere diesen Link zum teilen",
-		"addToProfile": "Zum Profil hinzufügen"
+		"addToProfile": "Zum Profil hinzufügen",
+		"removeBadge": "Badge entfernen",
+		"confirmRemove": "Entfernen bestätigen",
+		"sureToRemove": "Bist du sicher, dass du {{badgeName}} aus deinen Badges entfernen möchtest?"
 	},
 	"BadgeCollection": {
 		"addCollection": "Sammlung hinzufügen",
@@ -797,7 +808,9 @@
 		"deleteText": "Bist du sicher, dass du die Sammlung {{ collectionname }} löschen möchtest?",
 		"searchBadges": "Meine Badges durchsuchen",
 		"downloadQrCode": "QR-Code herunterladen",
-		"copiedToClipboard": "In die Zwischenablage kopiert!"
+		"copiedToClipboard": "In die Zwischenablage kopiert!",
+		"sureToRemove": "Bist du sicher, dass du {{badgeName}} aus der Sammlung {{collectionName}} entfernen möchtest?",
+		"collectionNotPublic": "Diese Sammlung ist momentan nicht für die Öffentlichkeit freigeschaltet."
 	},
 	"Profile": {
 		"more": "Mehr",
