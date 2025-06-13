@@ -628,12 +628,11 @@
 		"cat2Desc": "Ein Badge aus der Kategorie 'Teilnahme' weist lediglich die Anwesenheit von Lernenden bei Veranstaltungen aus und enthält keine Informationen über vermittelte oder erlangte Kompetenzen."
 	},
 	"About": {
-		"mainDesc": "Open Educational Badges basiert auf Vorüberlegungen zu einem offenen Badge-System, das im schulischen wie außerschulischen Kontext Einsatz finden kann sowie einer ersten technischen Machbarkeitsstudie für eine “Open Badges-Plattform”, die am Institut für Geoinformatik der Uni Münster im Rahmen des BMBF-Projektes senseBox Pro durchgeführt wurde. Im Rahmen des Hackathons “#WirFürSchule“ 2020 wurde mit einem interdisziplinären Team die Projektidee weiterentwickelt und ein erster Prototyp umgesetzt. Die hier vorliegende Version von Open Educational Badges basiert auf dem quelloffenen Open Badges Standard “badgr“ von concentricsky und wurde mit freundlicher Unterstützung der Deutsche Telekom Stiftung durch re:edu GmbH & Co. KG in Zusammenarbeit mit Junge Tüftler*innen gGmbH umgestzt. Eine Entwicklung von Integrationen zu Plattformen des senseBox Pro Projektes (Blockly Lernumgebung und openSenseMap) wird im Rahmen der BMBF-Förderung entwickelt.",
 		"contact": "Kontakt:",
 		"brojectBy": "Ein Projekt von",
 		"supportedBy": "Unterstützt von der",
 		"funding": "Förderung",
-		"fundingDesc": "Mit der Fördermaßnahme 'Open Photonik Pro' verfolgt das Bundesministerium für Bildung und Forschung (BMBF) das Ziel, neue Formen der Zusammenarbeit von Wissenschaft und Wirtschaft mit der Maker- und Gründerszene zu ermöglichen. Erschlossen werden sollen damit zusätzliche Innovationspfade und -potenziale. Gleichzeitig sollen Innovationszyklen deutlich verkürzt und die Vernetzung dieser Gruppen nachhaltig verbessert werden.",
+		"fundingDesc": "Mit der Fördermaßnahme 'Open Photonik Pro' verfolgt das Bundesministerium für Forschung, Technologie und Raumfahrt (BMFTR) das Ziel, neue Formen der Zusammenarbeit von Wissenschaft und Wirtschaft mit der Maker- und Gründerszene zu ermöglichen. Erschlossen werden sollen damit zusätzliche Innovationspfade und -potenziale. Gleichzeitig sollen Innovationszyklen deutlich verkürzt und die Vernetzung dieser Gruppen nachhaltig verbessert werden.",
 		"moreAboutFund": "Mehr zur Fördermaßnahme"
 	},
 	"Newsletter": {
