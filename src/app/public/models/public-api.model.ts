@@ -91,6 +91,7 @@ export interface PublicApiIssuer {
 	email: string;
 	type: 'Issuer';
 	id: string;
+	slug: string;
 	name: string;
 	image?: string;
 	// Extension to the spec containing the original URL of this assertion if it is not stored by Badgr

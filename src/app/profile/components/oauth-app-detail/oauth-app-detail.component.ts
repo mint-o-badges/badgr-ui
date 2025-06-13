@@ -9,6 +9,7 @@ import { OAuth2AppAuthorization } from '../../../common/model/oauth.model';
 import { CommonDialogsService } from '../../../common/services/common-dialogs.service';
 import { flatten } from '../../../common/util/array-reducers';
 import { AppConfigService } from '../../../common/app-config.service';
+import { PatternLibraryIconName } from '../../../common/components/svg-icon.component';
 
 @Component({
 	selector: 'oauth-app-detail-component',
@@ -20,7 +21,7 @@ export class OAuthAppDetailComponent extends BaseAuthenticatedRoutableComponent 
 	appTokens: OAuth2AppAuthorization[];
 	appPromise: Promise<unknown>;
 
-	permisionScopeToIconName(scope: string): string {
+	permisionScopeToIconName(scope: string): PatternLibraryIconName {
 		switch (scope) {
 			case 'permission-issuer':
 				return 'icon_issuer2';

@@ -41,6 +41,7 @@
 	},
 	"angularCompilerOptions": {
 		"strictTemplates": true,
+		"strictDomEventTypes": false,
 		"preserveWhitespaces": true
 	}
 }

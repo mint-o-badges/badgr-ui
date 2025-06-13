@@ -40,7 +40,7 @@
 										#fileField
 										label="File"
 										validFileTypes=".json"
-										[control]="jsonForm.controls['jsonFile']"
+										[control]="$any(jsonForm.controls['jsonFile'])"
 										(fileData)="onFileDataReceived($event)"
 									>
 									</bg-formfield-file>

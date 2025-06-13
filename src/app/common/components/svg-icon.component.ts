@@ -22,7 +22,7 @@ export class SvgIconComponent {
 	}
 }
 
-type PatternLibraryIconName =
+export type PatternLibraryIconName =
 	| 'icon_add'
 	| 'icon_arrow'
 	| 'icon_checkmark_circle'

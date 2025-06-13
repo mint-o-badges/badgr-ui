@@ -160,7 +160,7 @@
 								></bg-formfield-markdown>
 								<bg-formfield-text
 									class="u-margin-top2x u-margin-bottom6x"
-									[control]="evidence.rawControlMap.evidence_url"
+									[control]="$any(evidence.rawControlMap.evidence_url)"
 									label="URL zum Nachweis"
 									fieldType="url"
 									[urlField]="true"
@@ -216,7 +216,7 @@
 									label="Ablaufdatum"
 									id="date"
 									fieldType="date"
-									[control]="issueForm.rawControlMap.expires"
+									[control]="$any(issueForm.rawControlMap.expires)"
 									ariaLabel="Ablaufdatum"
 									[errorMessage]="'Bitte gib ein Datum in der Form YYYY/mm/dd an'"
 								></bg-formfield-text>
