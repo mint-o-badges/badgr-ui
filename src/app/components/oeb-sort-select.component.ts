@@ -7,14 +7,14 @@ import { BadgeClass } from '../issuer/models/badgeclass.model';
 	selector: 'oeb-sort-select',
 	template: `
 		<oeb-select
-			actionBar="true"
+			[actionBar]="true"
 			class="oeb tw-block tw-w-full"
 			[options]="sortOptions"
 			[control]="control"
 			[disabled]="disabled"
 			[autofocus]="true"
 			[placeholder]="placeholder"
-			noTopMargin="true"
+			[noTopMargin]="true"
 		></oeb-select>
 	`,
 	standalone: false,

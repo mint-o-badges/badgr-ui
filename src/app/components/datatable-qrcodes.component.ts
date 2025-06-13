@@ -149,7 +149,7 @@ export type RequestedBadge = {
 				</brn-column-def>
 				<brn-column-def name="requestedOn" class="!tw-flex-1 tw-justify-center">
 					<hlm-th *brnHeaderDef>
-						<button hlmBtn size="sm" variant="ghost" (click)="handleEmailSortChange()">
+						<button hlmBtn size="sm" variant="secondary" (click)="handleEmailSortChange()">
 							<span class="tw-text-white tw-text-sm">{{ 'Badge.requestedOn' | translate }}</span>
 							<ng-icon hlm class="tw-ml-3 tw-text-white" size="sm" name="lucideArrowUpDown" />
 						</button>
@@ -171,7 +171,7 @@ export type RequestedBadge = {
 					<hlm-td *brnCellDef="let element">
 						<button
 							hlmBtn
-							variant="ghost"
+							variant="secondary"
 							class="tw-h-6 tw-w-6 tw-p-0.5"
 							align="end"
 							[brnMenuTriggerFor]="menu"

@@ -50,7 +50,7 @@ export class BadgeClassCreateComponent extends BaseAuthenticatedRoutableComponen
 		protected badgeClassService: BadgeClassManager,
 		private configService: AppConfigService,
 		protected dialogService: CommonDialogsService,
-		private translate: TranslateService,
+		public translate: TranslateService,
 	) {
 		super(router, route, sessionService);
 		this.translate.get('Issuer.createBadge').subscribe((str) => {

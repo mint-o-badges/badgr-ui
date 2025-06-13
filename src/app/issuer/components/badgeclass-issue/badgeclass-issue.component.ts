@@ -36,6 +36,9 @@ import { TranslateService } from '@ngx-translate/core';
 	standalone: false,
 })
 export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
+	readonly badgeLoadingImageUrl = '../../../breakdown/static/images/badge-loading.svg';
+	readonly badgeFailedImageUrl = '../../../breakdown/static/images/badge-failed.svg';
+
 	breadcrumbLinkEntries: LinkEntry[] = [];
 
 	get defaultExpiration(): string {

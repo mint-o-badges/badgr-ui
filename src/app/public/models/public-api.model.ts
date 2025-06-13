@@ -2,6 +2,7 @@
  * TypeScript type information for a portion of the Open Badges v2.0 Specification, from
  * https://www.imsglobal.org/sites/default/files/Badges/OBv2p0/index.html
  */
+import { BadgeMostRelevantStatusType } from '../../recipient/models/recipient-badge.model';
 import { BadgeClassCopyPermissions } from '../../issuer/models/badgeclass-api.model';
 import { BadgeClass } from '../../issuer/models/badgeclass.model';
 import { Issuer } from '../../issuer/models/issuer.model';
@@ -80,7 +81,7 @@ export interface PublicApiBadgeClassWithIssuer extends PublicApiBadgeClass {
 	issuer: PublicApiIssuer;
 	badgeClass: BadgeClass;
 	issueDate: string;
-	mostRelevantStatus: string;
+	mostRelevantStatus: BadgeMostRelevantStatusType;
 }
 
 export interface PublicApiIssuer {
@@ -146,6 +147,8 @@ export interface PublicApiLearningPath {
 	slug: string;
 	tags: string[];
 	issuer_id: string;
+	issuer_name?: string;
+	completed_at?: Date | null;
 	participationBadge_id: string;
 	completed_badges?: any[];
 	progress: number;

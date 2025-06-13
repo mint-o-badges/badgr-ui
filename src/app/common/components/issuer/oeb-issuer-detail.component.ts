@@ -19,6 +19,7 @@ import { InfoDialogComponent } from '../../dialogs/oeb-dialogs/info-dialog.compo
 import { QrCodeApiService } from '../../../issuer/services/qrcode-api.service';
 import { ApiQRCode } from '../../../issuer/models/qrcode-api.model';
 import { SessionService } from '../../services/session.service';
+import { PublicApiBadgeClass } from '../../../public/models/public-api.model';
 
 @Component({
 	selector: 'oeb-issuer-detail',
@@ -30,7 +31,7 @@ export class OebIssuerDetailComponent implements OnInit {
 	@Input() issuer: Issuer;
 	@Input() issuerPlaceholderSrc: string;
 	@Input() issuerActionsMenu: any;
-	@Input() badges: BadgeClass[];
+	@Input() badges: BadgeClass[] | PublicApiBadgeClass[];
 	@Input() learningPaths: ApiLearningPath[];
 	@Input() public: boolean = false;
 	@Output() issuerDeleted = new EventEmitter();

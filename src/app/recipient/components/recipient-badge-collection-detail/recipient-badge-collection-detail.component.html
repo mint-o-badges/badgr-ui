@@ -14,7 +14,7 @@
 							<oeb-button
 								[text]="'BadgeCollection.share' | translate"
 								icon="lucideUpload"
-								iconLeft="true"
+								[iconLeft]="true"
 								variant="secondary"
 								(click)="openShareDialog(collection)"
 								[disabled]="!collection.published"
@@ -85,7 +85,7 @@
 						[badgeSlug]="entry.badge.slug"
 						(shareClicked)="shareBadge(entry.badge)"
 						[competencies]="entry.badge.getExtension('extensions:CompetencyExtension', [{}])"
-						showXIcon="true"
+						[showXIcon]="true"
 						(closeEmit)="removeBadge($event)"
 					></bg-badgecard>
 				</div>

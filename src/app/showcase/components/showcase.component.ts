@@ -22,12 +22,14 @@ export class ShowcaseComponent {
 			description: 'adskadjadalsd',
 			createdAt: '2009-01-15T13:45:30',
 			recipientCount: 102,
+			requestCount: 0,
 		},
 		{
 			image: 'test',
 			description: 'adskadjadalsd',
 			createdAt: '2009-03-15T13:45:30',
 			recipientCount: 0,
+			requestCount: 1,
 		},
 	];
 

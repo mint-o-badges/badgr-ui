@@ -31,6 +31,8 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 
 	Array = Array;
 
+	state;
+
 	badges: BadgeClass[] = null;
 	badgeResults: BadgeClass[] = null;
 	badgeResultsByIssuer: MatchingBadgeIssuer[] = [];

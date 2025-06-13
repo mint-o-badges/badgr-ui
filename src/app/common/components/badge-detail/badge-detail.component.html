@@ -114,12 +114,12 @@
 								*ngIf="config.badgeCriteria && config.category == competencyBadge"
 								class="tw-bg-white tw-mb-4 tw-rounded-[10px]"
 							>
-								<ng-template [bgAwaitPromises]="[badgeInstancesLoaded]">
+								<ng-template>
 									<oeb-collapsible
 										[trigger]="collapseCriteriaTrigger"
 										closeIcon="lucideChevronDown"
 										[defaultOpen]="
-											typeof(config.badgeCriteria) != 'string' && config.badgeCriteria.length
+											typeof(config.badgeCriteria) != 'string' && config.badgeCriteria.length > 0
 										"
 										[id]=""
 										*ngIf="config.badgeCriteria.length || config.competencies.length"
@@ -142,12 +142,12 @@
 										>
 											<ul class="tw-pr-2 tw-pl-8 tw-list-inside tw-list-disc">
 												<li class="tw-mb-1" *ngFor="let criteria of config.badgeCriteria">
-													<span class="tw-text-oebblack">{{ criteria.name }}</span>
+													<span class="tw-text-oebblack">{{ criteria['name'] }}</span>
 													<p
-														*ngIf="criteria.description"
+														*ngIf="criteria['description']"
 														class="tw-text-oebblack tw-italic tw-font-thin tw-ml-4 tw-mt-1"
 													>
-														{{ criteria.description }}
+														{{ criteria['description'] }}
 													</p>
 												</li>
 											</ul>
@@ -209,7 +209,7 @@
 									{{ 'RecBadgeDetail.duration' | translate }}
 								</dt>
 								<dd class="tw-text-sm tw-text-oebblack md:tw-ml-2">
-									{{ config.duration | hourPipe }} {{ 'RecBadge.hours' | translate | lowercase }}
+									{{ +config.duration | hourPipe }} {{ 'RecBadge.hours' | translate | lowercase }}
 								</dd>
 							</div>
 
@@ -325,9 +325,9 @@
 						</span>
 						<div class="tw-mt-8 tw-grid tw-grid-cols-learningpaths tw-gap-6">
 							<bg-learningpathcard
-								*ngFor="let lp of config.learningPaths"
+								*ngFor="let lp of getLearningPaths()"
 								[name]="lp.name"
-								[badgeImage]="lp.participationBadge_image"
+								[badgeImage]="lp.image"
 								[issuerTitle]="lp.issuer_name"
 								[description]="lp.description"
 								[slug]="lp.slug"

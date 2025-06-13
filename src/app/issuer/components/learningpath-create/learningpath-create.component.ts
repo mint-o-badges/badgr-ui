@@ -16,6 +16,7 @@ import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src
 import { SuccessDialogComponent } from '../../../common/dialogs/oeb-dialogs/success-dialog.component';
 import { Issuer } from '../../models/issuer.model';
 import { IssuerManager } from '../../services/issuer-manager.service';
+import { ApiLearningPath } from '../../../common/model/learningpath-api.model';
 
 @Component({
 	selector: 'learningpath-create',
@@ -70,7 +71,7 @@ export class LearningPathCreateComponent extends BaseAuthenticatedRoutableCompon
 		});
 	}
 
-	learningPathCreated(promise: Promise<LearningPath>) {
+	learningPathCreated(promise: Promise<LearningPath | ApiLearningPath>) {
 		promise.then(
 			(lp) => {
 				this.router.navigate(['issuer/issuers', this.issuerSlug, 'learningpaths', lp.slug]).then(() => {

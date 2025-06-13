@@ -42,6 +42,8 @@ export class OebLearningPathDetailComponent extends BaseRoutableComponent implem
 	loading: any;
 	pdfSrc: SafeResourceUrl;
 
+	state;
+
 	learningPathEditLink;
 
 	constructor(

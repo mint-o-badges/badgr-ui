@@ -146,7 +146,7 @@ export class VerifyBadgeDialog extends BaseDialog {
 		}
 	}
 
-	private closeDialog() {
+	closeDialog() {
 		this.closeModal();
 	}
 }

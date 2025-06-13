@@ -7,11 +7,11 @@ import { TranslateModule } from '@ngx-translate/core';
 import { OebDialogComponent } from './oeb-dialog.component';
 
 interface DialogContext {
-	headerTemplate: TemplateRef<void>;
-	tite?: string;
+	headerTemplate: TemplateRef<Record<string, any>>;
+	title?: string;
 	subtitle?: string;
 	variant: 'danger' | 'info' | 'success' | 'default';
-	content: TemplateRef<void>;
+	content: TemplateRef<Record<string, any>>;
 	templateContext?: Record<string, any>;
 }
 
@@ -27,7 +27,7 @@ interface DialogContext {
 				></ng-container>
 			</ng-container>
 			<ng-template #textHeader>
-				<p class="tw-text-center" [innerHTML]="context.caption"></p>
+				<p class="tw-text-center" [innerHTML]="context.title"></p>
 			</ng-template>
 			<ng-container *ngIf="context.variant == 'success'">
 				<div class="tw-text-center tw-text-purple">

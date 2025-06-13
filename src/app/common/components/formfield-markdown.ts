@@ -133,7 +133,7 @@ export class FormFieldMarkdown implements OnChanges, AfterViewInit {
 	get inputName() {
 		return (this.label || this.placeholder || this.randomName).replace(/[^\w]+/g, '_').toLowerCase();
 	}
-	@Input() control: FormControl;
+	@Input() control: any;
 	@Input() initialValue: string;
 	@Input() label: string;
 	@Input() includeLabelAsWrapper = false; // includes label for layout purposes even if label text wasn't passed in.

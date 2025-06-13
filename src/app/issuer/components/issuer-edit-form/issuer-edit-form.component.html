@@ -13,7 +13,7 @@
 		[errorMessage]="imageError"
 		(imageError)="onImageError($event)"
 		[enableIconSearch]="false"
-		maxSizeInMB="2"
+		[maxSizeInMB]="2"
 		[labelStyle]="'forminput-x-label u-margin-bottom1x'"
 	></bg-formfield-image>
 	<span class="tw-text-oebblack tw-italic tw-text-lg"
@@ -111,7 +111,7 @@
 
 	<div class="tw-mt-6 md:tw-mt-7">
 		<oeb-checkbox
-			alignStart="true"
+			[alignStart]="true"
 			id="verify-intent"
 			name="verify-intent"
 			[text]="'Issuer.herebyIConfirm' | translate"

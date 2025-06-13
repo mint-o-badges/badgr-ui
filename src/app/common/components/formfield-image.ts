@@ -144,7 +144,7 @@ export class BgFormFieldImageComponent {
 	// Image error is emitted when the image is too large or not square
 	@Output() imageError = new EventEmitter<string>();
 
-	@Input() control: FormControl;
+	@Input() control: any;
 	@Input() enableIconSearch: boolean = true;
 	@Input() label: string;
 	@Input() sublabel: string;

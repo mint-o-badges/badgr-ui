@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { HlmTabsModule, HlmTabsTriggerDirective } from './spartan/ui-tabs-helm/src';
 import { NgIf, NgFor, NgTemplateOutlet } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
+import { type TabsVariants } from './spartan/ui-tabs-helm/src';
 
 export const bg = 'tw-block tw-absolute tw-z-0 tw-opacity-80';
 
@@ -39,7 +40,7 @@ export class OebTabsComponent {
 	@Input() imgClass: string;
 	@Input() tabs: Tab[];
 	@Input() activeTab: string;
-	@Input() variant: string = 'default';
+	@Input() variant: TabsVariants['variant'] = 'default';
 	@Output() onTabChanged = new EventEmitter();
 
 	onTabChange(tab) {

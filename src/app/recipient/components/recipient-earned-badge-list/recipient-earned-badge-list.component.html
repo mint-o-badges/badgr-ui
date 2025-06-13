@@ -325,7 +325,7 @@
 								<div class="tw-grid min-[450px]:tw-grid-cols-learningpathsBackpack tw-gap-6">
 									<bg-learningpathcard
 										*ngFor="let lp of learningPathsReadyToRequest"
-										[badgeImage]="lp.participationBadge_image"
+										[badgeImage]="lp.participationBadgeImage"
 										[name]="lp.name"
 										[issuerTitle]="lp.issuer_name"
 										[description]="lp.description"
@@ -348,7 +348,7 @@
 								<div class="tw-grid min-[450px]:tw-grid-cols-learningpathsBackpack tw-gap-6">
 									<bg-learningpathcard
 										*ngFor="let lp of learningPathsInProgress"
-										[badgeImage]="lp.participationBadge_image"
+										[badgeImage]="lp.participationBadgeImage"
 										[name]="lp.name"
 										[issuerTitle]="lp.issuer_name"
 										[description]="lp.description"
@@ -370,7 +370,7 @@
 								<div class="tw-grid min-[450px]:tw-grid-cols-learningpathsBackpack tw-gap-6">
 									<bg-learningpathcard
 										*ngFor="let lp of learningPathsCompleted"
-										[badgeImage]="lp.participationBadge_image"
+										[badgeImage]="lp.participationBadgeImage"
 										[name]="lp.name"
 										[issuerTitle]="lp.issuer_name"
 										[description]="lp.description"
@@ -533,14 +533,6 @@
 						class="tw-text-lg tw-text-purple tw-italic tw-mt-1"
 						[innerHTML]="'BadgeCollection.addLink' | translate"
 					></p>
-				</ng-template>
-				<ng-template #shareDialogHeaderTemplate>
-					<h2 class="tw-text-purple tw-font-bold tw-text-[22px] tw-leading-[120%]">
-						{{ 'BadgeCollection.shareCollection' | translate }}
-					</h2>
-				</ng-template>
-				<ng-template #shareDialogContentTemplate let-shareUrl="share_url">
-					<share-dialog-template></share-dialog-template>
 				</ng-template>
 			</div>
 		</div>
