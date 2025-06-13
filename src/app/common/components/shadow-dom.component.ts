@@ -8,7 +8,7 @@ import { KiAssistantComponent } from 'app/issuer/components/ki-assistant/ki-assi
 	selector: 'shadow-dom',
 	template: `
 		<div class="shadow-assets" #assetWrap></div>
-		<div #contentWrap>
+		<div class="shadow-wrap" #contentWrap>
 			<ngx-dynamic-hooks class="shadow-content" [content]="_content" [parsers]="dynamicComponents" options="{sanitize: false}"></ngx-dynamic-hooks>
 		</div>
 	`,
@@ -16,6 +16,10 @@ import { KiAssistantComponent } from 'app/issuer/components/ki-assistant/ki-assi
 		@tailwind base;
 		@tailwind components;
 		@tailwind utilities;
+		.shadow-wrap {
+			max-width: 100vw;
+			overflow: hidden;
+		}
 	`,
 	encapsulation: ViewEncapsulation.ShadowDom,
 	standalone: true,
