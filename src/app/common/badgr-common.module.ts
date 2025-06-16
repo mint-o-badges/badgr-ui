@@ -5,7 +5,7 @@ import { BgBadgecard } from './components/bg-badgecard';
 import { BgLearningPathCard } from './components/bg-learningpathcard';
 import { BgCollectionCard } from './bg-collectioncard';
 import { BgBadgeDetail } from './components/badge-detail/badge-detail.component';
-import { OebSwitchComponent } from '../components/oeb-switch.component'
+import { OebSwitchComponent } from '../components/oeb-switch.component';
 import { HlmSwitchComponent } from '../components/spartan/ui-switch-helm/src';
 import { BgAwaitPromises } from './directives/bg-await-promises';
 import { BgImageStatusPlaceholderDirective } from './directives/bg-image-status-placeholder.directive';
@@ -145,6 +145,8 @@ import { PaginationAdvancedComponent } from '../components/oeb-numbered-paginati
 import { NgIconsModule } from '@ng-icons/core';
 import { HlmIconDirective } from '../components/spartan/ui-icon-helm/src';
 import { HlmTableModule } from './../components/spartan/ui-table-helm/src';
+import { InfoIcon } from './components/info-icon.component';
+import { TaskPollingManagerService } from './task-manager.service';
 
 // CMS contents
 import { CmsApiService } from './services/cms-api.service';
@@ -241,7 +243,8 @@ const SERVICES = [
 	LearningPathApiService,
 	QrCodeApiService,
 	CmsApiService,
-	CmsManager
+	CmsManager,
+	TaskPollingManagerService,
 ];
 
 const GUARDS = [AuthGuard];
@@ -295,6 +298,7 @@ export const COMMON_IMPORTS = [
 	NgIconsModule,
 	HlmIconDirective,
 	HlmTableModule,
+	InfoIcon,
 ];
 
 @NgModule({

@@ -67,7 +67,7 @@ export interface ApiRecipientBadgeClass {
 	name: string;
 	description: string;
 	image: string;
-	criteria?: Array<{name: string; description: string;}>;
+	criteria?: Array<{ name: string; description: string }>;
 	criteria_text?: string;
 	criteria_url?: string;
 	tags: string[];
@@ -81,7 +81,8 @@ export interface ApiRecipientBadgeInstanceJson {
 	uid: string;
 	recipient: ApiRecipientBadgeRecipient;
 	badge: ApiRecipientBadgeClass;
-	issuedOn: string;
+	issuedOn?: string;
+	validFrom?: string;
 	image: string;
 	evidence?: string;
 	narrative?: string;
@@ -138,7 +139,7 @@ export interface ApiImportedBadgeInstance {
 		type: 'image';
 		id: string;
 	};
-	extensions: object
+	extensions: object;
 }
 
 interface ApiImportedBadgeInstanceBadge {

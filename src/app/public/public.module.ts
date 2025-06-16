@@ -10,7 +10,6 @@ import { PublicBadgeClassComponent } from './components/badgeclass/badgeclass.co
 import { PublicIssuerComponent } from './components/issuer/issuer.component';
 import { PublicBadgeCollectionComponent } from './components/badge-collection/badge-collection.component';
 import { BadgrRouteData } from '../common/services/navigation.service';
-import { VerifyBadgeDialog } from './components/verify-badge-dialog/verify-badge-dialog.component';
 import { AboutComponent } from './components/about/about.component';
 import { NewsletterComponent } from './components/about/newsletter/newsletter.component';
 import { StartComponent } from './components/start/start.component';
@@ -24,6 +23,7 @@ import { BadgeRequestApiService } from '../issuer/services/badgerequest-api.serv
 import { PdfDownloadComponent } from './components/pdf-download/pdf-download.component';
 import { PublicLearningPathComponent } from './components/learningpath/learningpath.component';
 import { UserProfileApiService } from '../common/services/user-profile-api.service';
+import { PublicNotFoundBadgeCollectionComponent } from './components/not-found-badge-collection/not-found-badge-collection.component';
 
 export const routes: Routes = [
 	{
@@ -124,7 +124,13 @@ export const routes: Routes = [
 			publiclyAccessible: true,
 		} as BadgrRouteData,
 	},
-
+	{
+		path: 'collections/not-found',
+		component: PublicNotFoundBadgeCollectionComponent,
+		data: {
+			publiclyAccessible: true,
+		} as BadgrRouteData,
+	},
 	{
 		path: 'collections/:collectionShareHash',
 		component: PublicBadgeCollectionComponent,
@@ -149,6 +155,7 @@ export const routes: Routes = [
 		CommonEntityManagerModule,
 		RouterModule.forChild(routes),
 		TranslateModule,
+		PublicNotFoundBadgeCollectionComponent,
 	],
 	declarations: [
 		ImpressumComponent,
@@ -158,7 +165,7 @@ export const routes: Routes = [
 		PublicIssuerComponent,
 		RequestBadgeComponent,
 		PublicBadgeCollectionComponent,
-		VerifyBadgeDialog,
+		FaqComponent,
 		PublicBadgeClassComponent,
 		PublicLearningPathComponent,
 	],

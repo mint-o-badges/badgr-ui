@@ -19,7 +19,7 @@ import { TranslateModule } from '@ngx-translate/core';
 		ReactiveFormsModule,
 		CommonModule,
 		OebSeparatorComponent,
-		TranslateModule
+		TranslateModule,
 	],
 	template: ` <div [ngClass]="{ 'tw-mt-6 md:tw-mt-7': !noTopMargin }">
 		<label class="tw-pb-[2px] tw-pl-[3px]" [attr.for]="inputName" *ngIf="label">
@@ -55,7 +55,9 @@ import { TranslateModule } from '@ngx-translate/core';
 				<div *ngIf="multiple" class="tw-text-base">{{ placeholder }}</div>
 			</hlm-select-trigger>
 			<hlm-select-content [ngStyle]="{ 'max-height.px': dropdownMaxHeight }">
-				<hlm-option *ngFor="let option of options" [value]="option.value">{{ option.label | translate }}</hlm-option>
+				<hlm-option *ngFor="let option of options" [value]="option.value">{{
+					option.label | translate
+				}}</hlm-option>
 				<div *ngIf="template">
 					<oeb-separator [separatorStyle]="'!tw-border-dashed'"></oeb-separator>
 					<ng-content *ngTemplateOutlet="template"></ng-content>

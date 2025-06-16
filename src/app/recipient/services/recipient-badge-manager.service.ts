@@ -41,8 +41,7 @@ export class RecipientBadgeManager {
 			}
 		});
 
-		return this.recipientBadgeApiService
-			.addRecipientBadge(payload)
+		return this.recipientBadgeApiService.addRecipientBadge(payload);
 	}
 
 	deleteRecipientBadge(badge: RecipientBadgeInstance) {

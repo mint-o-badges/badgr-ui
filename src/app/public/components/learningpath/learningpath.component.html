@@ -81,7 +81,9 @@
 						<p hlmP>{{ learningPath.description }}</p>
 					</div>
 					<div class="oeb-section-sm">
-						<h3 hlmH3 class="tw-text-oebblack tw-font-bold tw-pb-4">{{ 'LearningPath.includedBadges' | translate }}</h3>
+						<h3 hlmH3 class="tw-text-oebblack tw-font-bold tw-pb-4">
+							{{ 'LearningPath.includedBadges' | translate }}
+						</h3>
 						<oeb-backpack-tabs
 							*ngIf="loggedIn; else allTemplate"
 							(onTabChanged)="onTabChange($event)"

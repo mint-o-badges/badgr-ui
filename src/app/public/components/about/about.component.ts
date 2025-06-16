@@ -9,7 +9,7 @@ import { CmsPageComponent } from 'app/common/components/cms/cms-page.component';
 	imports: [CmsPageComponent]
 })
 export class AboutComponent {
-	constructor(
-		protected translate: TranslateService,
-	) {}
+	mailAddress = 'support@openbadges.education';
+	mailBody = 'Interesse an Open Educational Badges';
+	constructor(public translate: TranslateService) {}
 }

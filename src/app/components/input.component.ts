@@ -93,7 +93,7 @@ export class OebInputComponent {
 	@Input() sublabelRight?: string;
 	@Input() autofocus = false;
 	@Input() noTopMargin = false;
-	@Input() size: InputVariants['size'] = "default"
+	@Input() size: InputVariants['size'] = 'default';
 
 	@ViewChild('textInput') textInput: ElementRef;
 	@ViewChild('textareaInput') textareaInput: ElementRef;

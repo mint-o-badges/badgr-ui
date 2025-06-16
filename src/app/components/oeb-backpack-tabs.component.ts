@@ -6,6 +6,7 @@ import { TranslateModule } from '@ngx-translate/core';
 export const bg = 'tw-block tw-absolute tw-z-0 tw-opacity-80';
 
 export type Tab = {
+	key: string;
 	title: string;
 	count?: number;
 	component: any;
@@ -17,7 +18,7 @@ export type Tab = {
 	template: `<hlm-tabs class="tw-block tw-w-full" [tab]="activeTab" (tabActivated)="onTabChange($event)">
 		<hlm-tabs-list class="tw-w-full tw-max-w-[660px] tw-flex tw-justify-between" aria-label="tabs">
 			<ng-container *ngFor="let tab of tabs">
-				<button class="tw-grow" [hlmTabsTrigger]="tab.title" [variant]="variant">
+				<button class="tw-grow" [hlmTabsTrigger]="tab.key" [variant]="variant">
 					{{ tab.title | translate }}
 					<div
 						*ngIf="tab.count"
@@ -28,7 +29,7 @@ export type Tab = {
 				</button>
 			</ng-container>
 		</hlm-tabs-list>
-		<div *ngFor="let tab of tabs" [hlmTabsContent]="tab.title">
+		<div *ngFor="let tab of tabs" [hlmTabsContent]="tab.key">
 			<ng-template *ngTemplateOutlet="tab.component"></ng-template>
 		</div>
 	</hlm-tabs> `,

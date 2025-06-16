@@ -61,7 +61,7 @@ export class BadgeClassIssueQrComponent extends BaseAuthenticatedRoutableCompone
 				this.badgeClass = badgeClass;
 				this.list4Text =
 					this.translate.instant('IssueQr.list4') +
-					`<a class="tw-tw-underline tw-text-[#1400FF]" href="issuer/issuers/${this.issuerSlug}/badges/${this.badgeSlug}">Badge Detail Seite </a>` +
+					`<a class="tw-tw-underline tw-text-[#1400FF]" href="issuer/issuers/${this.issuerSlug}/badges/${this.badgeSlug}">${this.translate.instant('QrCode.badgeDetailPage')} </a>` +
 					this.translate.instant('IssueQr.list4.2');
 
 				this.crumbs = [

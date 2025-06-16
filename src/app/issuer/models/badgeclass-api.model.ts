@@ -39,7 +39,7 @@ export interface ApiBadgeClassForCreation {
 	alignment?: ApiBadgeClassAlignment[];
 	expires?: ApiBadgeClassExpiration;
 	copy_permissions?: BadgeClassCopyPermissions[];
-	criteria?: Array<{name: string; description: string;}>;
+	criteria?: Array<{ name: string; description: string }>;
 }
 
 export interface ApiBadgeClassAlignment {

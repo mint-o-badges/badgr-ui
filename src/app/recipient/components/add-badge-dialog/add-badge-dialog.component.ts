@@ -22,8 +22,7 @@ import {
 } from '../upload-badge-tabs/upload-badge-tabs.component';
 import { NgIcon } from '@ng-icons/core';
 import { provideIcons } from '@ng-icons/core';
-import { lucideCircleX, lucideX } from '@ng-icons/lucide';
-import { HlmH2Directive } from '../../../components/spartan/ui-typography-helm/src';
+import { lucideCircleX } from '@ng-icons/lucide';
 import { Router } from '@angular/router';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 
@@ -39,102 +38,11 @@ import { OebButtonComponent } from '../../../components/oeb-button.component';
 		TranslateModule,
 		OebTabsComponent,
 		NgIcon,
-		HlmH2Directive,
 		OebButtonComponent,
 	],
 	providers: [provideIcons({ lucideCircleX })],
-	template: `
-		<ng-template #dialogHeader>
-			<h2 hlmH2 id="addBadgeDialog" class="!tw-text-oebblack tw-font-bold">
-				{{ 'RecBadge.addBadge' | translate }}
-			</h2>
-		</ng-template>
-
-		<ng-template #failureHeader>
-			<div class="tw-items-center tw-w-full tw-justify-center tw-flex">
-				<ng-icon (click)="this.closeDialog()" hlm name="lucideCircleX" class="!tw-h-28 !tw-w-28 tw-text-purple"></ng-icon>
-			</div>
-		</ng-template>
-
-		<ng-template #failureContent let-message="message" let-text="text" let-buttontext="buttontext">
-			<div class="tw-px-4">
-				<p class="tw-text-lg tw-text-oebblack tw-text-center tw-font-bold tw-mt-2 tw-leading-[130%]">{{ message }}</p>
-				<p [innerHTML]="text" class="tw-mt-2 tw-text-purple tw-italic tw-text-center"></p>
-			</div>
-			<div class="tw-flex tw-justify-center tw-items-center tw-mt-2 tw-gap-2" *ngIf="buttontext">
-				<oeb-button 
-					size="sm" 
-					(click)="closeDialog()" 
-					[text]="'General.cancel' | translate"
-					variant="secondary">
-				</oeb-button>
-				<oeb-button
-					(click)="routeToUserProfile()"
-					size="sm"
-					[text]="'General.toMyProfile' | translate"
-				></oeb-button>
-			</div>
-		</ng-template>
-
-		<!-- Tab content templates -->
-		<ng-template #uploadTabTemplate>
-			<app-upload-tab
-				[form]="addRecipientBadgeForm"
-				[uploadBadgeImageUrl]="uploadBadgeImageUrl"
-				(controlUpdated)="controlUpdated($event)"
-			></app-upload-tab>
-		</ng-template>
-
-		<ng-template #urlTabTemplate>
-			<app-url-tab [form]="addRecipientBadgeForm" (controlUpdated)="controlUpdated($event)"></app-url-tab>
-		</ng-template>
-
-		<ng-template #jsonTabTemplate>
-			<app-json-tab [form]="addRecipientBadgeForm" (controlUpdated)="controlUpdated($event)"></app-json-tab>
-		</ng-template>
-
-		<!-- Dialog content template -->
-		<ng-template #dialogContent>
-			<form [formGroup]="addRecipientBadgeForm.rawControl" (ngSubmit)="submitBadgeRecipientForm()">
-				<p class="tw-text-oebblack tw-text-lg tw-py-2">
-					{{ 'RecBadge.addRecievedBadge' | translate }}
-				</p>
-
-				<oeb-backpack-tabs
-					[tabs]="tabs"
-					[activeTab]="currentTab"
-					(onTabChanged)="currentTab = $event"
-				></oeb-backpack-tabs>
-
-				<div *ngIf="formError" class="u-padding-all3x">
-					<div class="notification notification-warning notification-is-active">
-						<div class="notification-x-icon">
-							<svg icon="icon_priority_high"></svg>
-						</div>
-						<div class="notification-x-text">
-							<h2>Uh Oh...</h2>
-							<p>{{ formError }}</p>
-						</div>
-						<button class="notification-x-close buttonicon buttonicon-clear" (click)="clearFormError()">
-							<svg icon="icon_close"></svg>
-							<span class="visuallyhidden">{{ 'RecBadge.closeNotification' | translate }}</span>
-						</button>
-					</div>
-				</div>
-
-				<div class="u-responsivepadding-xaxis u-responsivepadding-yaxis l-stack l-stack-right">
-					<button
-						class="button"
-						type="submit"
-						[loading-promises]="[badgeUploadPromise]"
-						loading-message="Hinzufügen"
-					>
-						{{ 'RecBadge.addBadge' | translate }}
-					</button>
-				</div>
-			</form>
-		</ng-template>
-	`,
+	templateUrl: './add-badge-dialog.component.html',
+	styleUrl: './add-badge-dialog.component.scss',
 })
 export class AddBadgeDialogComponent implements AfterViewInit {
 	@ViewChild('dialogHeader') dialogHeader: TemplateRef<void>;
@@ -154,7 +62,7 @@ export class AddBadgeDialogComponent implements AfterViewInit {
 		.addControl('assertion', '', JsonValidator.validJson);
 
 	formError: string;
-	currentTab: string = 'upload';
+	currentTab: string = 'image';
 	badgeUploadPromise: Promise<unknown>;
 	tabs: Tab[] = [];
 
@@ -174,14 +82,17 @@ export class AddBadgeDialogComponent implements AfterViewInit {
 		setTimeout(() => {
 			this.tabs = [
 				{
+					key: 'image',
 					title: this.translate.instant('RecBadge.image'),
 					component: this.uploadTabTemplate,
 				},
 				{
+					key: 'url',
 					title: 'URL',
 					component: this.urlTabTemplate,
 				},
 				{
+					key: 'json',
 					title: 'JSON',
 					component: this.jsonTabTemplate,
 				},
@@ -204,39 +115,38 @@ export class AddBadgeDialogComponent implements AfterViewInit {
 	 */
 	openDialog(): Promise<void> {
 		this.addRecipientBadgeForm.reset();
-		this.currentTab = this.translate.instant('RecBadge.image');
-	  
-		return new Promise<void>((resolve, reject) => {
+		// this.currentTab = this.translate.instant('RecBadge.image');
 
-		  // wait for temlate refs to be available
-		  setTimeout(() => {
-			this.dialogRef = this._hlmDialogService.open(DialogComponent, {
-			  context: {
-				headerTemplate: this.dialogHeader,
-				variant: 'default',
-				content: this.dialogContent,
-			  },
-			});
-						
-			if (this.dialogRef && this.dialogRef.closed$) {
-			  this.dialogRef.closed$.subscribe(
-				(result) => {
-				  if (result === 'cancel') {
-					reject();
-				  } else {
-					resolve();
-				  }
-				},
-				(error) => {
-				  reject(error);
+		return new Promise<void>((resolve, reject) => {
+			// wait for temlate refs to be available
+			setTimeout(() => {
+				this.dialogRef = this._hlmDialogService.open(DialogComponent, {
+					context: {
+						headerTemplate: this.dialogHeader,
+						variant: 'default',
+						content: this.dialogContent,
+					},
+				});
+
+				if (this.dialogRef && this.dialogRef.closed$) {
+					this.dialogRef.closed$.subscribe(
+						(result) => {
+							if (result === 'cancel') {
+								reject();
+							} else {
+								resolve();
+							}
+						},
+						(error) => {
+							reject(error);
+						},
+					);
+				} else {
+					reject(new Error('Dialog reference not properly initialized'));
 				}
-			  );
-			} else {
-			  reject(new Error('Dialog reference not properly initialized'));
-			}
-		  });
+			});
 		});
-	  }
+	}
 
 	closeDialog() {
 		this.dialogRef?.close();
@@ -281,18 +191,18 @@ export class AddBadgeDialogComponent implements AfterViewInit {
 							});
 							break;
 
-						case 'DUPLICATE_BADGE': 
+						case 'DUPLICATE_BADGE':
 							this.dialogRef = this._hlmDialogService.open(DialogComponent, {
 								context: {
 									headerTemplate: this.failureHeader,
 									content: this.failureContent,
 									templateContext: {
 										message: this.translate.instant('RecBadge.uploadFailed'),
-										text: this.translate.instant('RecBadge.duplicateBadge') 
+										text: this.translate.instant('RecBadge.duplicateBadge'),
 									},
 								},
 							});
-							break;	
+							break;
 
 						case 'INVALID_BADGE_VERSION':
 							this.dialogRef = this._hlmDialogService.open(DialogComponent, {
