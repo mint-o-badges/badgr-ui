@@ -19,7 +19,7 @@ export class AiSkillsService extends BaseHttpApiService {
 
 	getAiSkillsResult(textToAnalyze: string): Promise<AiSkillsResult> {
 		return this.post<AiSkillsResult>(`/aiskills/`, {
-			'text': textToAnalyze
+			text: textToAnalyze,
 		}).then(
 			(r) => r.body as AiSkillsResult,
 			(error) => {
@@ -39,8 +39,8 @@ export class AiSkillsService extends BaseHttpApiService {
 
 	getAiKeywordSkillsResult(query: string, language: string): Promise<AiSkillsResult> {
 		return this.post<AiSkillsResult>(`/aiskills-keywords/`, {
-			'keyword': query,
-			'lang': language
+			keyword: query,
+			lang: language,
 		}).then(
 			(r) => r.body as AiSkillsResult,
 			(error) => {
