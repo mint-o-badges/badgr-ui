@@ -136,6 +136,7 @@ export abstract class BaseHttpApiService {
 		const endpointUrl = path.startsWith('http') ? path : this.baseUrl + path;
 		headers = this.addJsonRequestHeader(headers);
 		headers = this.addJsonResponseHeader(headers);
+		headers = this.addCsrfTokenHeader(headers);
 		this.messageService.incrementPendingRequestCount();
 
 		return this.augmentRequest<T>(
