@@ -6,10 +6,7 @@ import { StandaloneEntitySet } from '../../common/model/managed-entity-set';
 import { CommonEntityManager } from '../../entity-manager/services/common-entity-manager.service';
 import { EventsService } from '../../common/services/events.service';
 
-// TODO: What is this? It causes problems...
-//const test = [CommonEntityManager];
-
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class RecipientBadgeManager {
 	recipientBadgeList = new StandaloneEntitySet<RecipientBadgeInstance, ApiRecipientBadgeInstance>(
 		(apiModel) => new RecipientBadgeInstance(this.commonEntityManager),
@@ -41,8 +38,7 @@ export class RecipientBadgeManager {
 			}
 		});
 
-		return this.recipientBadgeApiService
-			.addRecipientBadge(payload)
+		return this.recipientBadgeApiService.addRecipientBadge(payload);
 	}
 
 	deleteRecipientBadge(badge: RecipientBadgeInstance) {

@@ -49,7 +49,7 @@ export class BadgeInstanceResultSet {
 	links: PaginationResults;
 }
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class BadgeInstanceApiService extends BaseHttpApiService {
 	constructor(
 		protected loginService: SessionService,

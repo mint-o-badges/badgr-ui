@@ -5,9 +5,7 @@ import { BehaviorSubject } from 'rxjs';
 const LNG_KEY = 'SELECTED_LANGUAGE';
 const lngs = ['de', 'en'];
 
-@Injectable({
-	providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
 export class LanguageService {
 	private selected_lng$: BehaviorSubject<string>;
 

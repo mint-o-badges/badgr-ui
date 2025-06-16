@@ -8,14 +8,13 @@ import { AppConfigService } from './app/common/app-config.service';
 import { BrowserModule, bootstrapApplication } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, provideHttpClient } from '@angular/common/http';
 import { AppComponent } from './app/app.component';
 import { initializeTheme } from './theming/theme-setup';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ROUTE_CONFIG } from './app/app.routes';
 import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
-
 
 registerLocaleData(localeDe);
 
@@ -29,31 +28,34 @@ if (environment.production) {
 }
 
 bootstrapApplication(AppComponent, {
-    providers: [
-        importProvidersFrom(BrowserModule, TranslateModule.forRoot({
-            loader: {
-                provide: TranslateLoader,
-                useFactory: (client) => new TranslateHttpLoader(client),
-                deps: [HttpClient],
-            },
-        })),
-        RecipientBadgeApiService,
-        { provide: RouteReuseStrategy, useClass: BadgrRouteReuseStrategy },
-        provideAppInitializer(async () => {
-            const configService = inject(AppConfigService);
-            const configPromise = configService.initializeConfig();
+	providers: [
+		provideHttpClient(),
+		importProvidersFrom(
+			BrowserModule,
+			TranslateModule.forRoot({
+				loader: {
+					provide: TranslateLoader,
+					useFactory: (client) => new TranslateHttpLoader(client),
+					deps: [HttpClient],
+				},
+			}),
+		),
+		RecipientBadgeApiService,
+		{ provide: RouteReuseStrategy, useClass: BadgrRouteReuseStrategy },
+		provideAppInitializer(async () => {
+			const configService = inject(AppConfigService);
+			const configPromise = configService.initializeConfig();
 
-            // Expose the configuration to external scripts for debugging and testing.
-            window['badgrConfigPromise'] = configPromise;
+			// Expose the configuration to external scripts for debugging and testing.
+			window['badgrConfigPromise'] = configPromise;
 
-            const config = await configPromise;
+			const config = await configPromise;
 
-            window['badgrConfig'] = config;
+			window['badgrConfig'] = config;
 
-            initializeTheme(configService);
-        }),
-        provideRouter(ROUTE_CONFIG),
-        provideAnimations(),
-    ]
-})
-	.catch((err) => console.log(err));
+			initializeTheme(configService);
+		}),
+		provideRouter(ROUTE_CONFIG),
+		provideAnimations(),
+	],
+}).catch((err) => console.log(err));

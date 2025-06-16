@@ -9,7 +9,7 @@ import {
 import { MessageService } from '../../common/services/message.service';
 import { HttpClient } from '@angular/common/http';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class RecipientBadgeCollectionApiService extends BaseHttpApiService {
 	constructor(
 		protected loginService: SessionService,
@@ -41,8 +41,7 @@ export class RecipientBadgeCollectionApiService extends BaseHttpApiService {
 		).then((r) => r.body);
 	}
 
-	getCollectionBadges(collectionSlug: string){
-		return this.get(`/v1/earner/collections/${collectionSlug}/badges`)
-			.then((r) => r.body)
+	getCollectionBadges(collectionSlug: string) {
+		return this.get(`/v1/earner/collections/${collectionSlug}/badges`).then((r) => r.body);
 	}
 }
