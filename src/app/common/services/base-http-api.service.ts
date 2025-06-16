@@ -13,6 +13,7 @@ import {
 } from '@angular/common/http';
 import { timeoutPromise } from '../util/promise-util';
 import { Observable } from 'rxjs';
+import { getCookie } from '../util/cookies';
 
 export class BadgrApiError extends Error {
 	constructor(
@@ -88,6 +89,7 @@ export abstract class BaseHttpApiService {
 
 		headers = this.addJsonRequestHeader(headers);
 		headers = this.addJsonResponseHeader(headers);
+		headers = this.addCsrfTokenHeader(headers);
 		this.messageService.incrementPendingRequestCount();
 
 		return this.augmentRequest<T>(
@@ -111,6 +113,7 @@ export abstract class BaseHttpApiService {
 
 		headers = this.addJsonRequestHeader(headers);
 		headers = this.addJsonResponseHeader(headers);
+		headers = this.addCsrfTokenHeader(headers);
 		this.messageService.incrementPendingRequestCount();
 
 		return this.augmentRequest<T>(
@@ -205,6 +208,15 @@ export abstract class BaseHttpApiService {
 
 	private addJsonResponseHeader(headers: HttpHeaders) {
 		return headers.append('Accept', 'application/json');
+	}
+
+	private addCsrfTokenHeader(headers: HttpHeaders): HttpHeaders {
+		// add csrf token if available
+		const csrf = getCookie('csrftoken');
+		if (csrf) {
+			headers = headers.append('X-CSRFToken', csrf);
+		}
+		return headers;
 	}
 
 	private async addTestingDelay<T>(value: T): Promise<T> {
