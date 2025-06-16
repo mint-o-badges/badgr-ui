@@ -1,124 +1,101 @@
-<dialog
-	aria-labelledby="addBadgeDialog"
-	aria-describedby="dialog1Desc"
-	class="dialog dialog-is-active l-dialog dialog-clean"
-	role="dialog"
->
-	<div class="dialog-x-box o-container">
-		<div class="dialog-x-header u-background-light3">
-			<h2 id="addBadgeDialog" class="u-text-body-bold-caps text-dark1">{{ 'RecBadge.addBadge' | translate }}</h2>
-			<button class="buttonicon buttonicon-link" (click)="closeDialog()">
-				<svg icon="icon_close"></svg>
-				<span class="visuallyhidden">{{ 'RecBadge.close' | translate }}</span>
-			</button>
-		</div>
+<ng-template #dialogHeader>
+	<h2 id="addBadgeDialog" class="tw-text-[22px] tw-text-purple tw-uppercase tw-font-bold tw-mb-6">
+		{{ 'RecBadge.addBadge' | translate }}
+	</h2>
+</ng-template>
 
-		<form [formGroup]="addRecipientBadgeForm.rawControl" (ngSubmit)="submitBadgeRecipientForm()">
-			<p class="u-padding-yaxis2x u-responsivepadding-xaxis border-light3 u-text-body u-background-light3">
-				{{ 'RecBadge.addRecievedBadge' | translate }}
-			</p>
+<ng-template #failureHeader>
+	<div class="tw-items-center tw-w-full tw-justify-center tw-flex">
+		<ng-icon
+			(click)="this.closeDialog()"
+			hlm
+			name="lucideCircleX"
+			class="!tw-h-28 !tw-w-28 tw-text-purple"
+		></ng-icon>
+	</div>
+</ng-template>
 
-			<div class="tabbar">
-				<div
-					class="tab"
-					[class.tab-is-active]="currentTab === 'upload'"
-					(click)="currentTab = 'upload'"
-					type="button"
-				>
-					{{ 'RecBadge.image' | translate }}
+<ng-template #failureContent let-message="message" let-text="text" let-buttontext="buttontext">
+	<div class="tw-px-4">
+		<p class="tw-text-lg tw-text-oebblack tw-text-center tw-font-bold tw-mt-2 tw-leading-[130%]">
+			{{ message }}
+		</p>
+		<p [innerHTML]="text" class="tw-mt-2 tw-text-purple tw-italic tw-text-center"></p>
+	</div>
+	<div class="tw-flex tw-justify-center tw-items-center tw-mt-2 tw-gap-2" *ngIf="buttontext">
+		<oeb-button size="sm" (click)="closeDialog()" [text]="'General.cancel' | translate" variant="secondary">
+		</oeb-button>
+		<oeb-button (click)="routeToUserProfile()" size="sm" [text]="'General.toMyProfile' | translate"></oeb-button>
+	</div>
+</ng-template>
+
+<!-- Tab content templates -->
+<ng-template #uploadTabTemplate>
+	<app-upload-tab
+		[form]="addRecipientBadgeForm"
+		[uploadBadgeImageUrl]="uploadBadgeImageUrl"
+		(controlUpdated)="controlUpdated($event)"
+	></app-upload-tab>
+</ng-template>
+
+<ng-template #urlTabTemplate>
+	<app-url-tab [form]="addRecipientBadgeForm" (controlUpdated)="controlUpdated($event)"></app-url-tab>
+</ng-template>
+
+<ng-template #jsonTabTemplate>
+	<app-json-tab [form]="addRecipientBadgeForm" (controlUpdated)="controlUpdated($event)"></app-json-tab>
+</ng-template>
+
+<!-- Dialog content template -->
+<ng-template #dialogContent>
+	<form [formGroup]="addRecipientBadgeForm.rawControl" (ngSubmit)="submitBadgeRecipientForm()">
+		<p class="tw-text-oebblack tw-font-bold tw-text-[18px] tw-mb-2">
+			{{ 'RecBadge.addRecievedBadge' | translate }}
+		</p>
+
+		<p
+			class="tw-mt-2 tw-mb-6 tw-text-purple tw-italic tw-text-sm"
+			[innerHTML]="'RecBadge.versionUploadInfo' | translate"
+		></p>
+
+		<oeb-backpack-tabs
+			[tabs]="tabs"
+			[activeTab]="currentTab"
+			(onTabChanged)="currentTab = $event"
+		></oeb-backpack-tabs>
+
+		<div *ngIf="formError" class="u-padding-all3x">
+			<div class="notification notification-warning notification-is-active">
+				<div class="notification-x-icon">
+					<svg icon="icon_priority_high"></svg>
 				</div>
-
-				<div
-					class="tab"
-					[class.tab-is-active]="currentTab === 'url'"
-					(click)="currentTab = 'url'"
-					type="button"
-				>
-					URL
+				<div class="notification-x-text">
+					<h2>Uh Oh...</h2>
+					<p>{{ formError }}</p>
 				</div>
-
-				<div
-					class="tab"
-					[class.tab-is-active]="currentTab === 'json'"
-					(click)="currentTab = 'json'"
-					type="button"
-				>
-					JSON
-				</div>
-			</div>
-
-			<!-- Drag or upload Badge -->
-
-			<div *ngIf="currentTab === 'upload'" class="u-padding-all3x">
-				<bg-formfield-image
-					imageLoaderName="basic"
-					[placeholderImage]="uploadBadgeImageUrl"
-					[control]="addRecipientBadgeForm.rawControlMap.image"
-					(change)="controlUpdated(addRecipientBadgeForm.controls.image)"
-					class="formimage-badgeUpload"
-				></bg-formfield-image>
-			</div>
-
-			<!-- ------- Paste badge URL  -->
-
-			<div *ngIf="currentTab === 'url'" class="u-padding-all3x">
-				<div class="forminput">
-					<bg-formfield-text
-						urlField="true"
-						[control]="addRecipientBadgeForm.rawControlMap.url"
-						errorMessage="Bitte gib eine gültige URL ein"
-						(change)="controlUpdated(addRecipientBadgeForm.controls.url)"
-						includeLabelAsWrapper="true"
-						placeholder="{{ 'RecBadge.enterURL' | translate }}"
-						[autofocus]="true"
-						#urlField
-					></bg-formfield-text>
-				</div>
-			</div>
-
-			<!-- ------- Paste badge JSON  -->
-
-			<div *ngIf="currentTab === 'json'" class="u-padding-all3x">
-				<div class="forminput">
-					<bg-formfield-text
-						[control]="addRecipientBadgeForm.rawControlMap.assertion"
-						errorMessage="Bitte gib ein gültiges JSON ein"
-						placeholder="{{ 'RecBadge.enterJSON' | translate }}"
-						(change)="controlUpdated(addRecipientBadgeForm.controls.assertion)"
-						[multiline]="true"
-						[monospaced]="true"
-						[autofocus]="true"
-						class="formfield-x-badgePasteJson-text-height"
-						#jsonField
-					></bg-formfield-text>
-				</div>
-			</div>
-
-			<div class="u-responsivepadding-xaxis u-responsivepadding-yaxis l-stack l-stack-right">
-				<button
-					class="button"
-					type="submit"
-					[loading-promises]="[badgeUploadPromise]"
-					loading-message="Hinzufügen"
-				>
-					{{ 'RecBadge.addBadge' | translate }}
+				<button class="notification-x-close buttonicon buttonicon-clear" (click)="clearFormError()">
+					<svg icon="icon_close"></svg>
+					<span class="visuallyhidden">{{ 'RecBadge.closeNotification' | translate }}</span>
 				</button>
 			</div>
-			<div *ngIf="formError" class="u-padding-all3x">
-				<div class="notification notification-warning notification-is-active">
-					<div class="notification-x-icon">
-						<svg icon="icon_priority_high"></svg>
-					</div>
-					<div class="notification-x-text">
-						<h2>Uh Oh...</h2>
-						<p>{{ formError }}</p>
-					</div>
-					<button class="notification-x-close buttonicon buttonicon-clear" (click)="clearFormError()">
-						<svg icon="icon_close"></svg>
-						<span class="visuallyhidden">{{ 'RecBadge.closeNotification' | translate }}</span>
-					</button>
-				</div>
-			</div>
-		</form>
-	</div>
-</dialog>
+		</div>
+
+		<div class="tw-flex tw-flex-row tw-gap-4 tw-justify-start tw-mt-6">
+			<oeb-button
+				[text]="'General.cancel' | translate"
+				variant="secondary"
+				type="button"
+				size="sm"
+				(click)="this.closeDialog()"
+			/>
+			<oeb-button
+				type="submit"
+				[loading-promises]="badgeUploadPromise"
+				[disabled-when-requesting]="true"
+				[loading-message]="'RecBadge.addingBadge' | translate"
+				[text]="'RecBadge.addBadge' | translate"
+				size="sm"
+			/>
+		</div>
+	</form>
+</ng-template>

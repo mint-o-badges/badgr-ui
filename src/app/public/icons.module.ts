@@ -44,6 +44,7 @@ import {
 	lucideHexagon,
 	lucideUser,
 	lucideUpload,
+	lucideSquareArrowOutUpRight
 } from '@ng-icons/lucide';
 
 @NgModule({
@@ -92,6 +93,7 @@ import {
 			lucideHexagon,
 			lucideUser,
 			lucideUpload,
+			lucideSquareArrowOutUpRight
 		}),
 	],
 })

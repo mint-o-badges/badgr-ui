@@ -34,6 +34,8 @@ import { SelectIssuerDialog } from './common/dialogs/select-issuer-dialog/select
 import { LanguageService } from './common/services/language.service';
 import { TranslateService } from '@ngx-translate/core';
 import { MenuItem } from './common/components/badge-detail/badge-detail.component.types';
+import { CmsApiMenu } from './common/model/cms-api.model';
+import { CmsManager } from './common/services/cms-manager.service';
 
 // Shim in support for the :scope attribute
 // See https://github.com/lazd/scopedQuerySelectorShim and
@@ -50,11 +52,6 @@ import { MenuItem } from './common/components/badge-detail/badge-detail.componen
 	standalone: false,
 })
 export class AppComponent implements OnInit, AfterViewInit {
-	/**
-	 * Enables or disables the "curtain" feature, hiding the normal page.
-	 */
-	curtainEnabled = true;
-
 	aboutBadgesMenuItems: MenuItem[] = [
 		{
 			title: 'NavItems.faq',
@@ -99,23 +96,6 @@ export class AppComponent implements OnInit, AfterViewInit {
 			icon: 'lucideLogOut',
 		},
 	];
-	/**
-	 * Permanently disables the curtain, making it impossible to show it even with the query parameter
-	 */
-	curtainPermanentlyDisabled = true;
-	get curtain() {
-		let re = /\?curtainEnabled=(\w*)/i;
-		let match = this.router.url.match(re);
-		if (match && match.length == 2) {
-			let param: string = match[1];
-			if (param == 'false' || param == 'true' || param == 'yes' || param == 'no')
-				localStorage.setItem('curtainEnabled', param == 'true' || param == 'yes' ? 'true' : 'false');
-		}
-
-		let local = localStorage.getItem('curtainEnabled');
-		if (local == 'false' || local == 'true') this.curtainEnabled = localStorage.getItem('curtainEnabled') == 'true';
-		return this.curtainEnabled && !this.router.url.includes('impressum') && !this.curtainPermanentlyDisabled;
-	}
 
 	title = 'Badgr Angular';
 	loggedIn = false;
@@ -128,6 +108,10 @@ export class AppComponent implements OnInit, AfterViewInit {
 	});
 
 	copyrightYear = new Date().getFullYear();
+
+	cmsMenus: CmsApiMenu;
+	headerCmsItems: MenuItem[] = [];
+
 
 	@ViewChild('confirmDialog')
 	private confirmDialog: ConfirmDialog;
@@ -215,6 +199,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 		private languageService: LanguageService, // Translation
 		protected translate: TranslateService,
 		@Inject(DOCUMENT) private document: Document,
+		cmsManager: CmsManager,
 	) {
 		// Initialize App language
 		this.languageService.setInitialAppLangauge();
@@ -247,6 +232,11 @@ export class AppComponent implements OnInit, AfterViewInit {
 			// Enable the embedded indicator class on the body
 			renderer.addClass(document.body, 'embeddedcontainer');
 		}
+
+
+		cmsManager.menus$.subscribe((menu) => {
+			this.cmsMenus = menu;
+		});
 	}
 
 	refreshProfile = () => {

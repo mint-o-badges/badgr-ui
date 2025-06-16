@@ -14,7 +14,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { typedFormGroup } from '../../../common/util/typed-forms';
 import { BadgrApiFailure } from '../../../common/services/api-failure';
 import { TranslateService } from '@ngx-translate/core';
-import 'altcha';
 
 @Component({
 	selector: 'sign-up',

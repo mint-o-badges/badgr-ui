@@ -16,18 +16,12 @@ import { MessageService } from '../../../common/services/message.service';
 import { AppConfigService } from '../../../common/app-config.service';
 import { saveAs } from 'file-saver';
 import { Title } from '@angular/platform-browser';
-import { VerifyBadgeDialog } from '../verify-badge-dialog/verify-badge-dialog.component';
-import { BadgeClassCategory, BadgeClassLevel } from './../../../issuer/models/badgeclass-api.model';
 import { PageConfig } from '../../../common/components/badge-detail/badge-detail.component.types';
 import { CommonDialogsService } from '../../../common/services/common-dialogs.service';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-	template: `<verify-badge-dialog
-			#verifyBadgeDialog
-			(verifiedBadgeAssertion)="onVerifiedBadgeAssertion($event)"
-		></verify-badge-dialog>
-		<bg-badgedetail [config]="config" [awaitPromises]="[assertionIdParam]"></bg-badgedetail>`,
+	template: ` <bg-badgedetail [config]="config" [awaitPromises]="[assertionIdParam]"></bg-badgedetail>`,
 	standalone: false,
 })
 export class PublicBadgeAssertionComponent {
@@ -52,9 +46,6 @@ export class PublicBadgeAssertionComponent {
 	readonly badgeLoadingImageUrl = '../../../../breakdown/static/images/badge-loading.svg';
 
 	readonly badgeFailedImageUrl = '../../../../breakdown/static/images/badge-failed.svg';
-
-	@ViewChild('verifyBadgeDialog')
-	verifyBadgeDialog: VerifyBadgeDialog;
 
 	assertionIdParam: LoadedRouteParam<PublicApiBadgeAssertionWithBadgeClass>;
 
@@ -117,12 +108,35 @@ export class PublicBadgeAssertionComponent {
 		return url;
 	}
 
-	onVerifiedBadgeAssertion(ba) {
-		this.assertionIdParam = this.createLoadedRouteParam();
-	}
-
 	verifyBadge() {
-		this.verifyBadgeDialog.openDialog(this.assertion);
+		if (this.config.version == '3.0') {
+			// v1: open ui for manual upload
+			// window.open('https://verifybadge.org/upload?validatorId=OB30Inspector');
+
+			// v2: post request using the assertion public url
+			const form = document.createElement('form');
+			form.target = '_blank';
+			form.method = 'POST';
+			form.action = 'https://verifybadge.org/uploaduri';
+			form.style.display = 'none';
+
+			[
+				['uri', this.assertion.id],
+				['validatorId', 'OB30Inspector'],
+			].forEach(([key, value]) => {
+				const input = document.createElement('input');
+				input.type = 'hidden';
+				input.name = key;
+				input.value = value;
+				form.appendChild(input);
+			});
+
+			document.body.appendChild(form);
+			form.submit();
+			document.body.removeChild(form);
+		} else {
+			window.open(this.verifyUrl, '_blank');
+		}
 	}
 
 	generateFileName(assertion, fileExtension): string {
@@ -157,10 +171,16 @@ export class PublicBadgeAssertionComponent {
 				const assertion = await service.getBadgeAssertion(paramValue);
 				const lps = await service.getLearningPathsForBadgeClass(assertion.badge.slug);
 
+				const assertionVersion =
+					Array.isArray(assertion['@context']) &&
+					assertion['@context'].some((c) => c.indexOf('purl.imsglobal.org/spec/ob/v3p0') != -1)
+						? '3.0'
+						: '2.0';
+
 				this.config = {
 					badgeTitle: assertion.badge.name,
 					headerButton: {
-						title: 'Badge verifizieren',
+						title: 'RecBadgeDetail.verifyBadge',
 						action: () => this.verifyBadge(),
 					},
 					qrCodeButton: {
@@ -168,25 +188,32 @@ export class PublicBadgeAssertionComponent {
 					},
 					menuitems: [
 						{
-							title: 'Download Badge-Bild',
+							title:
+								assertionVersion == '3.0'
+									? 'RecBadgeDetail.downloadImage30'
+									: 'RecBadgeDetail.downloadImage20',
 							icon: 'lucideImage',
 							action: () => this.exportPng(),
 						},
 						{
-							title: 'Download JSON-Datei',
+							title:
+								assertionVersion == '3.0'
+									? 'RecBadgeDetail.downloadJson30'
+									: 'RecBadgeDetail.downloadJson20',
 							icon: '	lucideFileCode',
 							action: () => this.exportJson(),
 						},
 						{
-							title: 'Download PDF-Zertifikat',
+							title: 'RecBadgeDetail.downloadPDF',
 							icon: 'lucideFileText',
 							action: () => this.exportPdf(),
 						},
-						{
-							title: 'View Badge',
-							icon: 'lucideBadge',
-							routerLink: routerLinkForUrl(assertion.badge.hostedUrl || assertion.badge.id),
-						},
+						// Disabled for now
+						// {
+						// 	title: 'View Badge',
+						// 	icon: 'lucideBadge',
+						// 	routerLink: routerLinkForUrl(assertion.badge.hostedUrl || assertion.badge.id),
+						// },
 					],
 					badgeDescription: assertion.badge.description,
 					badgeCriteria:
@@ -207,6 +234,7 @@ export class PublicBadgeAssertionComponent {
 					competencies: assertion.badge['extensions:CompetencyExtension'],
 					license: assertion.badge['extensions:LicenseExtension'] ? true : false,
 					learningPaths: lps,
+					version: assertionVersion,
 				};
 				if (assertion.revoked) {
 					if (assertion.revocationReason) {
@@ -235,7 +263,7 @@ export class PublicBadgeAssertionComponent {
 				const url = URL.createObjectURL(blob);
 				const urlParts = this.rawBakedUrl.split('/');
 				link.href = url;
-				link.download = `${new Date(this.assertion.issuedOn).toISOString().split('T')[0]}-${this.assertion.badge.name.trim().replace(' ', '_')}.png`;
+				link.download = `${new Date(this.assertion.issuedOn || this.assertion.validFrom).toISOString().split('T')[0]}-${this.assertion.badge.name.trim().replace(' ', '_')}.png`;
 				document.body.appendChild(link);
 				link.click();
 				document.body.removeChild(link);
@@ -251,7 +279,7 @@ export class PublicBadgeAssertionComponent {
 				const link = document.createElement('a');
 				const url = URL.createObjectURL(blob);
 				link.href = url;
-				link.download = `${new Date(this.assertion.issuedOn).toISOString().split('T')[0]}-${this.assertion.badge.name.trim().replace(' ', '_')}.json`;
+				link.download = `${new Date(this.assertion.issuedOn || this.assertion.validFrom).toISOString().split('T')[0]}-${this.assertion.badge.name.trim().replace(' ', '_')}.json`;
 				document.body.appendChild(link);
 				link.click();
 				document.body.removeChild(link);

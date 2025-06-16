@@ -9,6 +9,7 @@ type MenuItemBase = {
 	icon?: any;
 	disabled?: boolean;
 	action?: (args?: any) => void;
+	children?: MenuItem[]
 };
 
 type MenuItemWithLink = MenuItemBase & {
@@ -85,4 +86,5 @@ export interface PageConfig {
 	learningPaths?: PublicApiLearningPath[] | ApiLearningPath[];
 	copy_permissions?: BadgeClassCopyPermissions[];
 	criteria?: Array<{ name: string; description: string }>;
+	version?: string;
 }

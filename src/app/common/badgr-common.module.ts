@@ -145,7 +145,12 @@ import { PaginationAdvancedComponent } from '../components/oeb-numbered-paginati
 import { NgIconsModule } from '@ng-icons/core';
 import { HlmIconDirective } from '../components/spartan/ui-icon-helm/src';
 import { HlmTableModule } from './../components/spartan/ui-table-helm/src';
+import { InfoIcon } from './components/info-icon.component';
 import { TaskPollingManagerService } from './task-manager.service';
+
+// CMS contents
+import { CmsApiService } from './services/cms-api.service';
+import { CmsManager } from './services/cms-manager.service';
 
 const DIRECTIVES = [
 	BgAwaitPromises,
@@ -237,6 +242,8 @@ const SERVICES = [
 	ApplicationCredentialsService,
 	LearningPathApiService,
 	QrCodeApiService,
+	CmsApiService,
+	CmsManager,
 	TaskPollingManagerService,
 ];
 
@@ -291,6 +298,7 @@ export const COMMON_IMPORTS = [
 	NgIconsModule,
 	HlmIconDirective,
 	HlmTableModule,
+	InfoIcon,
 ];
 
 @NgModule({
