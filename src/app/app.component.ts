@@ -37,50 +37,146 @@ import { MenuItem } from './common/components/badge-detail/badge-detail.componen
 import { SourceListenerDirective } from './mozz-transition/directives/source-listener/source-listener.directive';
 import { OebDropdownComponent } from './components/oeb-dropdown.component';
 import { OebButtonComponent } from './components/oeb-button.component';
-import { NgIcon } from '@ng-icons/core';
+import { NgIcon, provideIcons } from '@ng-icons/core';
 import { HlmIconDirective } from './components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
 import { BgPopupMenuTriggerDirective, BgPopupMenu } from './common/components/bg-popup-menu.component';
 import { SvgIconComponent } from './common/components/svg-icon.component';
 import { MenuItemDirective } from './common/directives/bg-menuitem.directive';
+import {
+	lucideArrowUpDown,
+	lucideAward,
+	lucideBadge,
+	lucideBadgeCheck,
+	lucideBookOpen,
+	lucideCheck,
+	lucideChevronDown,
+	lucideChevronLeft,
+	lucideChevronRight,
+	lucideChevronUp,
+	lucideCircle,
+	lucideCircleX,
+	lucideClipboard,
+	lucideClock,
+	lucideCloudUpload,
+	lucideCopy,
+	lucideCopyX,
+	lucideEllipsis,
+	lucideFileCode,
+	lucideFileQuestion,
+	lucideFileText,
+	lucideGithub,
+	lucideGlobe,
+	lucideGrid2x2,
+	lucideHand,
+	lucideHeart,
+	lucideHexagon,
+	lucideImage,
+	lucideInfo,
+	lucideLogOut,
+	lucideMapPin,
+	lucidePencil,
+	lucidePlus,
+	lucideQrCode,
+	lucideRepeat2,
+	lucideRoute,
+	lucideSearch,
+	lucideShare,
+	lucideTrash2,
+	lucideTriangleAlert,
+	lucideUpload,
+	lucideUser,
+	lucideUsers,
+	lucideWarehouse,
+	lucideX,
+} from '@ng-icons/lucide';
 
 // Shim in support for the :scope attribute
 // See https://github.com/lazd/scopedQuerySelectorShim and
 // https://stackoverflow.com/questions/3680876/using-queryselectorall-to-retrieve-direct-children/21126966#21126966
 
 @Component({
-    selector: 'app-root',
-    host: {
-        '(document:click)': 'onDocumentClick($event)',
-        '[class.l-stickyfooter-chromeless]': '! showAppChrome',
-    },
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss'],
-    imports: [
-        SourceListenerDirective,
-        NgIf,
-        OebDropdownComponent,
-        RouterLinkActive,
-        RouterLink,
-        OebButtonComponent,
-        NgStyle,
-        NgIcon,
-        HlmIconDirective,
-        BgPopupMenuTriggerDirective,
-        SvgIconComponent,
-        BgPopupMenu,
-        NgFor,
-        MenuItemDirective,
-        RouterOutlet,
-        ConfirmDialog,
-        ShareSocialDialog,
-        ExportPdfDialog,
-        NounprojectDialog,
-        CopyBadgeDialog,
-        ForkBadgeDialog,
-        MarkdownHintsDialog,
-        SelectIssuerDialog,
-        TranslatePipe,
-    ],
+	selector: 'app-root',
+	host: {
+		'(document:click)': 'onDocumentClick($event)',
+		'[class.l-stickyfooter-chromeless]': '! showAppChrome',
+	},
+	templateUrl: './app.component.html',
+	styleUrls: ['./app.component.scss'],
+	imports: [
+		SourceListenerDirective,
+		NgIf,
+		OebDropdownComponent,
+		RouterLinkActive,
+		RouterLink,
+		OebButtonComponent,
+		NgStyle,
+		NgIcon,
+		HlmIconDirective,
+		BgPopupMenuTriggerDirective,
+		SvgIconComponent,
+		BgPopupMenu,
+		NgFor,
+		MenuItemDirective,
+		RouterOutlet,
+		ConfirmDialog,
+		ShareSocialDialog,
+		ExportPdfDialog,
+		NounprojectDialog,
+		CopyBadgeDialog,
+		ForkBadgeDialog,
+		MarkdownHintsDialog,
+		SelectIssuerDialog,
+		TranslatePipe,
+	],
+	providers: [
+		provideIcons({
+			lucideUser,
+			lucideGlobe,
+			lucideFileQuestion,
+			lucideAward,
+			lucideWarehouse,
+			lucideRoute,
+			lucideHexagon,
+			lucideUsers,
+			lucideRepeat2,
+			lucideLogOut,
+			lucideInfo,
+			lucideShare,
+			lucideSearch,
+			lucideX,
+			lucideCloudUpload,
+			lucideChevronUp,
+			lucideChevronDown,
+			lucideChevronRight,
+			lucideChevronLeft,
+			lucideMapPin,
+			lucideGrid2x2,
+			lucideCheck,
+			lucideClock,
+			lucidePencil,
+			lucideTrash2,
+			lucideTriangleAlert,
+			lucideCircleX,
+			lucideClipboard,
+			lucideGithub,
+			lucideEllipsis,
+			lucideArrowUpDown,
+			lucidePlus,
+			lucideCircle,
+			lucideCopy,
+			lucideCopyX,
+			lucideQrCode,
+			lucideFileCode,
+			lucideFileText,
+			lucideBadge,
+			lucideBadgeCheck,
+			lucideUpload,
+			lucideImage,
+			lucideHeart,
+			lucideHand,
+			lucideBookOpen,
+		}),
+	],
 })
 export class AppComponent implements OnInit, AfterViewInit {
 	/**
@@ -257,11 +353,11 @@ export class AppComponent implements OnInit, AfterViewInit {
 			}
 		});
 
-		try{
+		try {
 			// @ts-ignore
 			// Start umami tracking
 			umami.track();
-		}catch(e){}
+		} catch (e) {}
 
 		messageService.useRouter(router);
 
