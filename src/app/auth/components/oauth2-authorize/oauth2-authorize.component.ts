@@ -10,6 +10,7 @@ import { throwExpr } from '../../../common/util/throw-expr';
 import { Title } from '@angular/platform-browser';
 import { InitialLoadingIndicatorService } from '../../../common/services/initial-loading-indicator.service';
 import { AppConfigService } from '../../../common/app-config.service';
+import { PatternLibraryIconName } from '../../../common/components/svg-icon.component';
 
 @Component({
 	// selector: 'logout',
@@ -33,11 +34,11 @@ export class OAuth2AuthorizeComponent extends BaseRoutableComponent {
 		return this.configService.theme;
 	}
 
-	iconName(scopeCssName: string): string {
-		if (scopeCssName === 'permission-issuer') return 'issuer2';
-		if (scopeCssName === 'permission-assertion') return 'badgeaward';
-		if (scopeCssName === 'permission-profile') return 'email';
-		return 'checkmark';
+	iconName(scopeCssName: string): PatternLibraryIconName {
+		if (scopeCssName === 'permission-issuer') return 'icon_issuer2';
+		if (scopeCssName === 'permission-assertion') return 'icon_badgeaward';
+		if (scopeCssName === 'permission-profile') return 'icon_email';
+		return 'icon_checkmark';
 	}
 
 	constructor(

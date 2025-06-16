@@ -44,7 +44,7 @@ import { FormsModule } from '@angular/forms';
 								class="!tw-border-purple !tw-border-solid !tw-text-oebblack tw-rounded-[10px] tw-text-lg"
 								[ngModel]="member.roleSlug"
 								[disabled]="member == issuer.currentUserStaffMember"
-								(change)="changeRole(member, $any($event.target).value)"
+								(change)="changeRole(member, $event.target)"
 								*ngIf="isCurrentUserIssuerOwner"
 							>
 								<option *ngFor="let role of roleOptions" [value]="role.value">

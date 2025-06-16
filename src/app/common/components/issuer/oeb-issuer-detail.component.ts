@@ -19,7 +19,7 @@ import { InfoDialogComponent } from '../../dialogs/oeb-dialogs/info-dialog.compo
 import { QrCodeApiService } from '../../../issuer/services/qrcode-api.service';
 import { ApiQRCode } from '../../../issuer/models/qrcode-api.model';
 import { SessionService } from '../../services/session.service';
-import { PublicApiBadgeClass } from '../../../public/models/public-api.model';
+import { PublicApiBadgeClass, PublicApiIssuer, PublicApiLearningPath } from '../../../public/models/public-api.model';
 
 @Component({
 	selector: 'oeb-issuer-detail',
@@ -32,7 +32,7 @@ export class OebIssuerDetailComponent implements OnInit {
 	@Input() issuerPlaceholderSrc: string;
 	@Input() issuerActionsMenu: any;
 	@Input() badges: BadgeClass[] | PublicApiBadgeClass[];
-	@Input() learningPaths: ApiLearningPath[];
+	@Input() learningPaths: (ApiLearningPath | PublicApiLearningPath)[];
 	@Input() public: boolean = false;
 	@Output() issuerDeleted = new EventEmitter();
 
@@ -118,6 +118,14 @@ export class OebIssuerDetailComponent implements OnInit {
 	set searchQuery(query) {
 		this._searchQuery = query;
 		this.updateResults();
+	}
+
+	get lps() {
+		if (this.public) {
+			return this.learningPaths as PublicApiLearningPath[];
+		} else {
+			return this.learningPaths as ApiLearningPath[];
+		}
 	}
 
 	private async updateResults() {

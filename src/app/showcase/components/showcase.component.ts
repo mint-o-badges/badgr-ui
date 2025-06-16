@@ -3,6 +3,7 @@ import { Validators } from '@angular/forms';
 import { EmailValidator } from '../../common/validators/email.validator';
 
 import { typedFormGroup } from '../../common/util/typed-forms';
+import { BadgeClass } from '../../issuer/models/badgeclass.model';
 
 @Component({
 	selector: 'oeb-showcase',
@@ -12,24 +13,31 @@ import { typedFormGroup } from '../../common/util/typed-forms';
 export class ShowcaseComponent {
 	public badges = [
 		{
-			image: 'test',
-			description: 'adskadjadalsd',
-			createdAt: '2009-06-15T13:45:30',
-			recipientCount: 10,
+			requestCount: 10,
+			badge: {
+				name: 'test',
+				image: 'test',
+				description: 'adskadjadalsd',
+				createdAt: '2009-06-15T13:45:30',
+			} as unknown as BadgeClass,
 		},
 		{
-			image: 'test2323',
-			description: 'adskadjadalsd',
-			createdAt: '2009-01-15T13:45:30',
-			recipientCount: 102,
 			requestCount: 0,
+			badge: {
+				name: 'test2323',
+				image: 'test2323',
+				description: 'adskadjadalsd',
+				createdAt: '2009-01-15T13:45:30',
+			} as unknown as BadgeClass,
 		},
 		{
-			image: 'test',
-			description: 'adskadjadalsd',
-			createdAt: '2009-03-15T13:45:30',
-			recipientCount: 0,
 			requestCount: 1,
+			badge: {
+				image: 'test',
+				name: 'test1232354345',
+				description: 'adskadjadalsd',
+				createdAt: '2009-03-15T13:45:30',
+			} as unknown as BadgeClass,
 		},
 	];
 

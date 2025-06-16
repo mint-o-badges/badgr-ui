@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Issuer } from '../../issuer/models/issuer.model';
+import { PublicApiIssuer } from '../../public/models/public-api.model';
 
 @Component({
 	selector: 'oeb-issuerCard',
@@ -25,5 +26,5 @@ import { Issuer } from '../../issuer/models/issuer.model';
 export class OebIssuerCard {
 	readonly badgeLoadingImageUrl = '../../../breakdown/static/images/badge-loading.svg';
 	readonly badgeFailedImageUrl = '../../../breakdown/static/images/badge-failed.svg';
-	@Input() issuer: Issuer;
+	@Input() issuer: Issuer | PublicApiIssuer;
 }

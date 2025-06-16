@@ -20,7 +20,7 @@
 						Know who you are on {{ theme.serviceName || 'Badgr' }}
 					</li>
 					<li class="authlist-x-item" *ngFor="let scope of presentationScopes">
-						<!-- <svg [icon]="'icon_' + iconName(scope.cssName)"></svg> -->
+						<svg [icon]="iconName(scope.cssName)"></svg>
 						{{ scope.label }}
 					</li>
 				</ul>

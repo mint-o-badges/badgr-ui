@@ -561,7 +561,7 @@ export class RecipientEarnedBadgeListComponent
 	}
 }
 
-class BadgeResult {
+export class BadgeResult {
 	constructor(
 		public badge: RecipientBadgeInstance,
 		public issuer: ApiRecipientBadgeIssuer,
