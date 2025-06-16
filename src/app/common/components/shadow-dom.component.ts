@@ -2,7 +2,7 @@ import { Component, input, ViewChild, ViewEncapsulation } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { DynamicHooksComponent } from 'ngx-dynamic-hooks';
 import { Router } from '@angular/router';
-import { KiAssistantComponent } from 'app/issuer/components/ki-assistant/ki-assistant.component';
+import { AiAssistantComponent } from 'app/issuer/components/ai-assistant/ai-assistant.component';
 
 @Component({
 	selector: 'shadow-dom',
@@ -31,7 +31,7 @@ export class ShadowDomComponent {
 	_content: SafeHtml = "";
 
 	dynamicComponents = [
-		KiAssistantComponent
+		AiAssistantComponent
 	];
 
 
