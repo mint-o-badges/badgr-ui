@@ -977,7 +977,8 @@
 		"finishedOn": "Abgeschlossen am",
 		"deleteMd": "Micro Degree löschen",
 		"mdUsers": "Micro Degree-Nutzende",
-		"searchMds": "Micro Degrees durchsuchen"
+		"searchMds": "Micro Degrees durchsuchen",
+		"saving": "Speichere"
 	},
 	"LearningPathEditor": {
 		"shortDescription": "Zusammenfassende Beschreibung deines Micro Degrees. Diese Kurzbeschreibung wird im Micro Degree gespeichert."

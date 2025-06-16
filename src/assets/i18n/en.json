@@ -977,7 +977,8 @@
 		"finishedOn": "finished on",
 		"deleteMd": "delete micro degree",
 		"mdUsers": "Micro Degree users",
-		"searchMds": "search micro degrees"
+		"searchMds": "search micro degrees",
+		"saving": "Saving"
 	},
 	"LearningPathEditor": {
 		"shortDescription": "Summarized description of your Micro Degree. This short description will be saved in the Micro Degree."
