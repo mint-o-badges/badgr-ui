@@ -60,7 +60,7 @@ export class IssuerDetailComponent extends BaseAuthenticatedRoutableComponent im
 
 	menuitems: MenuItem[] = [];
 
-	myInstitutions = "Meine Institutionen"
+	myInstitutions = 'Meine Institutionen';
 
 	constructor(
 		loginService: SessionService,
@@ -75,7 +75,7 @@ export class IssuerDetailComponent extends BaseAuthenticatedRoutableComponent im
 		private configService: AppConfigService,
 		private externalToolsManager: ExternalToolsManager,
 		private dialogService: CommonDialogsService,
-		private translate: TranslateService
+		private translate: TranslateService,
 	) {
 		super(router, route, loginService);
 
@@ -173,8 +173,8 @@ export class IssuerDetailComponent extends BaseAuthenticatedRoutableComponent im
 	ngOnInit() {
 		super.ngOnInit();
 		this.translate.get('NavItems.myInstitutions').subscribe((str) => {
-			this.myInstitutions = str
-		})
+			this.myInstitutions = str;
+		});
 	}
 
 	routeToBadgeAward(badge, issuer) {

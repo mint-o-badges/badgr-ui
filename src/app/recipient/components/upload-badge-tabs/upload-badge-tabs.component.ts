@@ -20,9 +20,6 @@ import { BgFormFieldImageComponent } from "../../../common/components/formfield-
 				[text_body]="'RecBadge.selectFromMyFiles' | translate"
 				dropZoneInfo1="Drag & Drop"
 			></bg-formfield-image>
-			<span class="tw-mt-2 tw-text-oebblack tw-italic tw-text-sm">
-				{{ 'RecBadge.versionUploadInfo' | translate }}.
-			</span>
 		</div>
 	`,
 })

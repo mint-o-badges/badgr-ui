@@ -89,8 +89,6 @@ export class IssuerEditFormComponent implements OnInit {
 	iAmResponsible: string;
 	noMisuse: string;
 
-	intendedUseCheckboxText: string;
-
 	existingIssuer: Issuer | null = null;
 
 	@Input() issuerSlug: string;
@@ -154,10 +152,6 @@ export class IssuerEditFormComponent implements OnInit {
 			this.herebyIConfirm = translatedText;
 		});
 
-		this.translate.get('Issuer.eligible').subscribe((translatedText: string) => {
-			this.iAmEligible = translatedText;
-		});
-
 		this.translate.get('Issuer.responsible').subscribe((translatedText: string) => {
 			this.iAmResponsible = translatedText;
 		});
@@ -165,9 +159,6 @@ export class IssuerEditFormComponent implements OnInit {
 		this.translate.get('Issuer.noMisuse').subscribe((translatedText: string) => {
 			this.noMisuse = translatedText;
 		});
-
-		this.intendedUseCheckboxText =
-			this.herebyIConfirm + ' ' + '1.) ' + this.iAmEligible + ' ' + this.iAmResponsible + ' ' + this.noMisuse;
 	}
 
 	initFormFromExisting(issuer: Issuer) {

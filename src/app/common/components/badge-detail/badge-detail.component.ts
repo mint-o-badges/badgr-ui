@@ -61,8 +61,14 @@ export class BgBadgeDetail {
 
 	constructor(
 		private dialogService: CommonDialogsService,
-		private translate: TranslateService
-	) {}
+		private translate: TranslateService,
+	) {
+		this.translate.get('Badge.categories.competency').subscribe((str) => {
+			this.competencyBadge = str;
+		});
+	}
+
+	competencyBadge = this.translate.instant('Badge.categories.competency');
 
 	calculateLearningPathStatus(lp: LearningPath): { match: string } | { progress: number } {
 		if (lp.progress != null) {

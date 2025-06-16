@@ -330,8 +330,7 @@ export const issuerStaffRoles = [
 		slug: 'owner',
 		label: 'Issuer.addMember_owner',
 		indefiniteLabel: 'an owner',
-		description:
-			'Issuer.staffOwnerRights',
+		description: 'Issuer.staffOwnerRights',
 	},
 	{
 		slug: 'editor',
@@ -343,8 +342,7 @@ export const issuerStaffRoles = [
 		slug: 'staff',
 		label: 'Issuer.addMember_staff',
 		indefiniteLabel: 'a staff member',
-		description:
-			'Issuer.staffMemberRights',
+		description: 'Issuer.staffMemberRights',
 	},
 ];
 export function issuerRoleInfoFor(slug: IssuerStaffRoleSlug) {

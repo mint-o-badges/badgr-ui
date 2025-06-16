@@ -17,27 +17,10 @@ export class AiSkillsService extends BaseHttpApiService {
 		super(loginService, http, configService, messageService);
 	}
 
-	// Inspired by
-	// - https://developer.mozilla.org/en-US/docs/Glossary/Base64#the_unicode_problem
-	// - https://stackoverflow.com/questions/5234581/base64url-decoding-via-javascript
-	toBase64Url(text: string): string {
-		// To allow for unicode characters, convert it to a binary string first
-		const bytes = new TextEncoder().encode(text);
-		const binString = Array.from(bytes, (byte) => String.fromCodePoint(byte)).join('');
-		const base64 = btoa(binString);
-		// To make it url safe, replace + and /
-		return base64.replace(/\+/g, '-').replace(/\//g, '_');
-	}
-
 	getAiSkillsResult(textToAnalyze: string): Promise<AiSkillsResult> {
-		// TODO: Potentially it would be better to transfer the text to analyze in the body,
-		// since it could become quite long. For this howerver, POST needs to be used.
-		// This either (probably) failed with some CSRF stuff (though there was no clear error message
-		// indicating this) or the authentication had to be removed (that's how it was done for uploading image).
-		// Removing authentication could lead to attacks though and I didn't manage to fix the CSRF stuff
-		// (I've tried for hours to add the correct headers etc., it all failed with a 403 without an error message).
-		// Since the url lenght limit *probably* isn't too short anyway, for now this solution should suffice.
-		return this.get<AiSkillsResult>(`/aiskills/${this.toBase64Url(textToAnalyze)}`).then(
+		return this.post<AiSkillsResult>(`/aiskills/`, {
+			text: textToAnalyze,
+		}).then(
 			(r) => r.body as AiSkillsResult,
 			(error) => {
 				throw new Error(JSON.parse(error.message).error);
@@ -55,7 +38,10 @@ export class AiSkillsService extends BaseHttpApiService {
 	}
 
 	getAiKeywordSkillsResult(query: string, language: string): Promise<AiSkillsResult> {
-		return this.get<AiSkillsResult>(`/aiskills-keywords/${this.toBase64Url(query)}?lang=${language}`).then(
+		return this.post<AiSkillsResult>(`/aiskills-keywords/`, {
+			keyword: query,
+			lang: language,
+		}).then(
 			(r) => r.body as AiSkillsResult,
 			(error) => {
 				throw new Error(JSON.parse(error.message).error);

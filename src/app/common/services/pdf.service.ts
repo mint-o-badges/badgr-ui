@@ -6,6 +6,8 @@ import { SessionService } from './session.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { map } from 'rxjs';
 
+export type PdfResourceType = 'badges' | 'collections';
+
 @Injectable({ providedIn: 'root' })
 export class PdfService {
 	baseUrl: string;
@@ -20,9 +22,9 @@ export class PdfService {
 		this.baseUrl = this.configService.apiConfig.baseUrl;
 	}
 
-	getPdf(slug: string): Promise<SafeResourceUrl> {
+	getPdf(slug: string, resource: PdfResourceType): Promise<SafeResourceUrl> {
 		return this.http
-			.get(`${this.baseUrl}/v1/earner/badges/pdf/${slug}`, {
+			.get(`${this.baseUrl}/v1/earner/${resource}/pdf/${slug}`, {
 				responseType: 'blob',
 				withCredentials: true,
 			})

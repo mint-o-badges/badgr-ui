@@ -82,6 +82,17 @@ export class BadgeInstanceApiService extends BaseHttpApiService {
 		).then((r) => r.body);
 	}
 
+	createBadgeInstanceBatchedAsync(
+		issuerSlug: IssuerSlug,
+		badgeSlug: BadgeClassSlug,
+		batchCreationInstance: ApiBadgeInstanceForBatchCreation,
+	) {
+		return this.post<any>(
+			`/v1/issuer/issuers/${issuerSlug}/badges/${badgeSlug}/batchAssertions`,
+			batchCreationInstance,
+		);
+	}
+
 	listBadgeInstances(
 		issuerSlug: string,
 		badgeSlug: string,

@@ -15,22 +15,22 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { HourPipe } from '../pipes/hourPipe';
 
 @Component({
-    selector: 'bg-badgecard',
-    animations: [
-        trigger('showCompetencies', [
-            state('true', style({ height: AUTO_STYLE, visibility: AUTO_STYLE })),
-            state('false', style({ height: '0', visibility: 'hidden' })),
-            transition('false => true', animate(220 + 'ms ease-out')),
-            transition('true => false', animate(220 + 'ms ease-in')),
-        ]),
-    ],
-    host: {
-        class: 'tw-rounded-[10px] tw-h-max tw-max-w-[450px] tw-border-solid tw-border-purple tw-border tw-relative tw-p-4 tw-pt-8 tw-block tw-overflow-hidden oeb-badge-card',
-    },
-    template: `
+	selector: 'bg-badgecard',
+	animations: [
+		trigger('showCompetencies', [
+			state('true', style({ height: AUTO_STYLE, visibility: AUTO_STYLE })),
+			state('false', style({ height: '0', visibility: 'hidden' })),
+			transition('false => true', animate(220 + 'ms ease-out')),
+			transition('true => false', animate(220 + 'ms ease-in')),
+		]),
+	],
+	host: {
+		class: 'tw-rounded-[10px] tw-h-max tw-max-w-[450px] tw-border-solid tw-border-purple tw-border tw-relative tw-p-4 tw-block tw-overflow-hidden oeb-badge-card',
+	},
+	template: `
 		<div
-			class="tw-absolute tw-top-0 tw-left-0 tw-bg-purple tw-text-white tw-px-2 tw-py-1"
-			*ngIf="mostRelevantStatus"
+			class="tw-absolute tw-top-0 tw-right-0 tw-bg-purple tw-text-white tw-px-2 tw-py-1"
+			*ngIf="mostRelevantStatus && !showXIcon"
 		>
 			{{ 'General.' + mostRelevantStatus | translate }}
 		</div>
@@ -171,8 +171,8 @@ import { HourPipe } from '../pipes/hourPipe';
 		</div>
 		<!--<ul *ngIf="tags && tags.length" class="tw-mt-2 tw-leading-[0px]"><li class="tag tw-mt-2 tw-mr-2" *ngFor="let tag of tags">{{tag}}</li></ul>-->
 	`,
-    styles: [
-        `
+	styles: [
+		`
 			.text-clamp {
 				-webkit-line-clamp: 3;
 				-webkit-box-orient: vertical;
@@ -188,23 +188,23 @@ import { HourPipe } from '../pipes/hourPipe';
 				-webkit-line-clamp: 1;
 			}
 		`,
-    ],
-    imports: [
-        NgIf,
-        NgIcon,
-        HlmIconDirective,
-        BgImageStatusPlaceholderDirective,
-        HlmPDirective,
-        RouterLink,
-        TimeComponent,
-        HlmADirective,
-        OebCheckboxComponent,
-        FormsModule,
-        NgFor,
-        CompetencyAccordionComponent,
-        TranslatePipe,
-        HourPipe,
-    ],
+	],
+	imports: [
+		NgIf,
+		NgIcon,
+		HlmIconDirective,
+		BgImageStatusPlaceholderDirective,
+		HlmPDirective,
+		RouterLink,
+		TimeComponent,
+		HlmADirective,
+		OebCheckboxComponent,
+		FormsModule,
+		NgFor,
+		CompetencyAccordionComponent,
+		TranslatePipe,
+		HourPipe,
+	],
 })
 export class BgBadgecard {
 	readonly badgeLoadingImageUrl = '../../../breakdown/static/images/badge-loading.svg';

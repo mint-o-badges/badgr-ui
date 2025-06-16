@@ -6,16 +6,17 @@
 		<div class="oeb-standard-padding-bottom">
 			<p *ngIf="importPreviewData?.rows" hlmP>
 				<span>
-					{{'Issuer.csvPreview' | translate}}
+					{{ 'Issuer.csvPreview' | translate }}
 					{{
 						importPreviewData.rows.length < MAX_ROWS_TO_DISPLAY
 							? importPreviewData.rows.length
 							: MAX_ROWS_TO_DISPLAY
 					}}
-					{{'General.of' | translate }} {{ importPreviewData.rows.length }} {{'Issuer.rowsOfYourFile' | translate }}
+					{{ 'General.of' | translate }} {{ importPreviewData.rows.length }}
+					{{ 'Issuer.rowsOfYourFile' | translate }}
 				</span>
 				<br />
-				<span> {{'Issuer.chooseColumn' | translate }} </span>
+				<span> {{ 'Issuer.chooseColumn' | translate }} </span>
 			</p>
 		</div>
 		<table class="datatable datatable-roundheaders datatable-headers">

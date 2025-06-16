@@ -28,33 +28,33 @@ import { OebDropdownComponent } from '../../../components/oeb-dropdown.component
 import { SvgIconComponent } from '../../../common/components/svg-icon.component';
 import { HlmSwitchComponent } from '../../../components/spartan/ui-switch-helm/src/lib/hlm-switch.component';
 import { FormsModule } from '@angular/forms';
-import { RecipientBadgeCollectionEditFormComponent } from '../recipient-badge-collection-edit-form/recipient-badge-collection-edit-form.component';
 import { BgBadgecard } from '../../../common/components/bg-badgecard';
 import { NgIcon } from '@ng-icons/core';
 import { HlmIconDirective } from '../../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
+import { ShareDialogTemplateComponent } from '../../../common/dialogs/oeb-dialogs/share-dialog-template.component';
+import { PdfService } from '../../../common/services/pdf.service';
 
 @Component({
-    selector: 'recipient-earned-badge-detail',
-    templateUrl: 'recipient-badge-collection-detail.component.html',
-    imports: [
-        FormMessageComponent,
-        BgBreadcrumbsComponent,
-        BgAwaitPromises,
-        NgIf,
-        HlmH1Directive,
-        OebButtonComponent,
-        OebDropdownComponent,
-        SvgIconComponent,
-        HlmSwitchComponent,
-        FormsModule,
-        RecipientBadgeCollectionEditFormComponent,
-        NgFor,
-        BgBadgecard,
-        NgIcon,
-        HlmIconDirective,
-        RecipientBadgeSelectionDialog,
-        TranslatePipe,
-    ],
+	selector: 'recipient-earned-badge-detail',
+	templateUrl: 'recipient-badge-collection-detail.component.html',
+	imports: [
+		FormMessageComponent,
+		BgBreadcrumbsComponent,
+		BgAwaitPromises,
+		NgIf,
+		HlmH1Directive,
+		OebButtonComponent,
+		OebDropdownComponent,
+		SvgIconComponent,
+		HlmSwitchComponent,
+		FormsModule,
+		NgFor,
+		BgBadgecard,
+		NgIcon,
+		HlmIconDirective,
+		RecipientBadgeSelectionDialog,
+		TranslatePipe,
+	],
 })
 export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	readonly badgeLoadingImageUrl = '../../../../breakdown/static/images/badge-loading.svg';
@@ -67,17 +67,19 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 	recipientBadgeDialog: RecipientBadgeSelectionDialog;
 
 	@ViewChild('dangerDialogHeaderTemplate')
-	dangerDialogHeaderTemplate: ElementRef
+	dangerDialogHeaderTemplate: ElementRef;
 
 	@ViewChild('deleteBadgeDialogContentTemplate')
-	deleteBadgeDialogContentTemplate: ElementRef
+	deleteBadgeDialogContentTemplate: ElementRef;
+
+	@ViewChild('deleteCollectionDialogContentTemplate')
+	deleteCollectionDialogContentTemplate: ElementRef;
 
 	collectionLoadedPromise: Promise<unknown>;
 	collection: RecipientBadgeCollection = new RecipientBadgeCollection(null);
 	crumbs: LinkEntry[];
 
-	menuItems: MenuItem[]
-
+	menuItems: MenuItem[];
 
 	dialogRef: BrnDialogRef<any> = null;
 
@@ -91,7 +93,8 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 		private recipientBadgeCollectionManager: RecipientBadgeCollectionManager,
 		private configService: AppConfigService,
 		private dialogService: CommonDialogsService,
-		private translate: TranslateService
+		private translate: TranslateService,
+		private pdfService: PdfService,
 	) {
 		super(router, route, loginService);
 
@@ -101,19 +104,19 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 			{
 				title: this.translate.instant('General.edit'),
 				icon: 'lucidePencil',
-				action: () => console.log("")
+				action: () => this.router.navigate([`/recipient/badge-collections/${this.collectionSlug}/edit`]),
 			},
-			// {
-			// 	title: 'PDF herunterladen',
-			// 	icon: 'lucideFileText',
-			// 	action: () => console.log(""),
-			// },
+			{
+				title: this.translate.instant('BadgeCollection.downloadPdf'),
+				icon: 'lucideFileText',
+				action: () => this.exportPdf(),
+			},
 			{
 				title: this.translate.instant('General.delete'),
 				icon: 'lucideTrash2',
 				action: () => this.deleteCollection(),
 			},
-		]
+		];
 
 		this.collectionLoadedPromise = Promise.all([
 			this.recipientBadgeCollectionManager.recipientBadgeCollectionList.loadedPromise,
@@ -121,10 +124,13 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 		])
 			.then(([list]) => {
 				this.collection = list.entityForSlug(this.collectionSlug);
-				this.crumbs = [
-					{ title: 'Collections', routerLink: ['/recipient/badge-collections'] },
-					{ title: this.collection.name, routerLink: ['/collection/' + this.collection.slug] },
-				];
+				this.menuItems[1].disabled = this.collection.badgeEntries.length === 0;
+				this.translate.get('BadgeCollection.myCollections').subscribe((str) => {
+					this.crumbs = [
+						{ title: str, routerLink: ['/recipient/badges'], queryParams: { tab: 'collections' } },
+						{ title: this.collection.name, routerLink: ['/collection/' + this.collection.slug] },
+					];
+				});
 				return this.collection;
 			})
 			.then((collection) => collection.badgesPromise)
@@ -154,18 +160,35 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 		}
 	}
 
-	removeBadge(badgeSlug: string){
+	removeBadge(badgeSlug: string) {
 		this.recipientBadgeManager.recipientBadgeList.loadedPromise.then((res) => {
-			const badge = res.entityForSlug(badgeSlug)
-			this.openBadgeDeleteDialog(badge)
+			const badge = res.entityForSlug(badgeSlug);
+			this.openBadgeDeleteDialog(badge);
 			this.dialogRef.closed$.subscribe((result) => {
-				if (result === 'continue'){
-					this.collection.removeBadge(res.entityForSlug(badgeSlug))
-					this.collection.save()
+				if (result === 'continue') {
+					this.collection.removeBadge(res.entityForSlug(badgeSlug));
+					this.collection.save();
+					this.menuItems[1].disabled = this.collection.badgeEntries.length === 0;
 				}
 			});
+		});
+	}
 
-		})
+	deleteCollection() {
+		this.openCollectionDeleteDialog();
+		this.dialogRef.closed$.subscribe((result) => {
+			if (result === 'continue') {
+				this.collection.deleteCollection().then(
+					() => {
+						this.messageService.reportMinorSuccess(`Deleted collection '${this.collection.name}'`);
+						this.router.navigate(['/recipient/badges'], {
+							queryParams: { tab: 'collections' },
+						});
+					},
+					(error) => this.messageService.reportHandledError(`Failed to delete collection`, error),
+				);
+			}
+		});
 	}
 
 	manageBadges() {
@@ -201,46 +224,52 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 				content: this.deleteBadgeDialogContentTemplate,
 				variant: 'danger',
 				templateContext: {
-					badgename: badge.apiModel.json.badge.name
-				}
+					badgename: badge.apiModel.json.badge.name,
+				},
 			},
 		});
 
-		this.dialogRef = dialogRef
+		this.dialogRef = dialogRef;
 	}
 
-	deleteCollection() {
-		this.dialogService.confirmDialog
-			.openResolveRejectDialog({
-				dialogTitle: 'Delete Collection',
-				dialogBody: `Are you sure you want to delete collection ${this.collection.name}?`,
-				resolveButtonLabel: 'Delete Collection',
-				rejectButtonLabel: 'Cancel',
-			})
-			.then(
-				() => {
-					this.collection.deleteCollection().then(
-						() => {
-							this.messageService.reportMinorSuccess(`Deleted collection '${this.collection.name}'`);
-							this.router.navigate(['/recipient/badges'],
-								{
-									queryParams: { tab: this.translate.instant('BadgeCollection.myCollections') },
-								});
-						},
-						(error) => this.messageService.reportHandledError(`Failed to delete collection`, error),
-					);
+	openShareDialog(collection: RecipientBadgeCollection) {
+		if (!collection.published) return;
+
+		const dialogRef = this._hlmDialogService.open(ShareDialogTemplateComponent, {
+			context: {
+				collection: collection,
+				caption: this.translate.instant('BadgeCollection.shareCollection'),
+			},
+		});
+
+		this.dialogRef = dialogRef;
+	}
+
+	public openCollectionDeleteDialog() {
+		const dialogRef = this._hlmDialogService.open(DialogComponent, {
+			context: {
+				headerTemplate: this.dangerDialogHeaderTemplate,
+				content: this.deleteCollectionDialogContentTemplate,
+				variant: 'danger',
+				templateContext: {
+					collectionname: this.collection.name,
 				},
-				() => {},
-			);
+			},
+		});
+
+		this.dialogRef = dialogRef;
 	}
 
 	removeEntry(entry: RecipientBadgeCollectionEntry) {
 		this.dialogService.confirmDialog
 			.openResolveRejectDialog({
-				dialogTitle: 'Confirm Remove',
-				dialogBody: `Are you sure you want to remove ${entry.badge.badgeClass.name} from ${this.collection.name}?`,
-				rejectButtonLabel: 'Cancel',
-				resolveButtonLabel: 'Remove Badge',
+				dialogTitle: this.translate.instant('RecBadgeDetail.confirmRemove'),
+				dialogBody: this.translate.instant('BadgeCollection.sureToRemove', {
+					badgeName: entry.badge.badgeClass.name,
+					collectionName: this.collection.name,
+				}),
+				rejectButtonLabel: this.translate.instant('General.cancel'),
+				resolveButtonLabel: this.translate.instant('RecBadgeDetail.removeBadge'),
 			})
 			.then(
 				() => {
@@ -299,18 +328,19 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 		}
 	}
 
-	togglePublished(){
-		this.collection.save()
+	togglePublished() {
+		this.collection.save();
 	}
 
 	shareCollection() {
 		this.dialogService.shareSocialDialog.openDialog(shareCollectionDialogOptionsFor(this.collection));
 	}
 
-	// exportPdf() {
-	// 	this.dialogService.exportPdfDialog.openDialogForCollections(this.collection)
-	// 		.catch((error) => console.log(error));
-	// }
+	exportPdf() {
+		this.pdfService.getPdf(this.collection.slug, 'collections').then((res) => {
+			this.pdfService.downloadPdf(res, this.collection.name, new Date());
+		});
+	}
 }
 
 export function shareCollectionDialogOptionsFor(collection: RecipientBadgeCollection): ShareSocialDialogOptions {

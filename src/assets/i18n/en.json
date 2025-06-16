@@ -34,7 +34,6 @@
 		"postalCode": "Postal Code",
 		"description": "Description",
 		"city": "City",
-		"emptyString": "",
 		"member": "Member",
 		"members": "Members",
 		"role": "Role",
@@ -76,7 +75,7 @@
 		"title": "Title",
 		"noResults": "No results",
 		"reset": "Reset",
-		"exam": "Exam",
+		"exam": "Test / Exam",
 		"create": "create",
 		"copy": "copy",
 		"place": "place",
@@ -105,7 +104,7 @@
 		"imported": "imported",
 		"new": "new",
 		"expired": "expired",
-		"emailAddress":"E-mail address",
+		"emailAddress": "E-mail address",
 		"tos": "Terms of Service",
 		"change": "change"
 	},
@@ -123,7 +122,7 @@
 	"Start": {
 		"desc1": "A learner-centered approach",
 		"desc2": "for documenting & feedback on the learning process",
-		"poweredBy": "Open Educational Badges is a joint project by <a href='https://matrix-gruppe.de/matrix-gemeinnuetzig/'>matrix gGmbh</a>, <a href='https://mycelia.education/'>mycelia gGmbh</a> and <a href='https://opensenselab.org/'>openSenseLab gGmbh</a>",
+		"poweredBy": "Open Educational Badges is a joint project by <a href='https://matrix-gruppe.de/matrix-gemeinnuetzig/'>matrix gGmbH</a>, <a href='https://mycelia.education/'>mycelia gGmbH</a> and <a href='https://opensenselab.org/'>openSenseLab gGmbH</a>.",
 		"imprint": "Imprint",
 		"privacyPolicy": "Privacy Policy",
 		"ourIdeaTitle": "Our Idea",
@@ -258,8 +257,10 @@
 		"badgePreview": "Badge preview",
 		"certPreview": "PDF certificate preview",
 		"batchAwardText1": "Award the badge to one learner or",
-		"batchAwardTextLink": "click here to award the badge to multiple learners simultaneously",
-		"batchAwardText2": "",
+		"batchAwardTextLink": "click here ",
+		"batchAwardText2": "to award the badge to multiple learners simultaneously",
+		"batchAwardFailed": "Batch award failed",
+		"failedBatchMonitoring": "Failed to monitor batch award progress",
 		"awardedPerson": "Recipient's name",
 		"sendEmail": "Notify recipient by email",
 		"giveBadge": "Award badge",
@@ -343,7 +344,7 @@
 		"staffMemberRights": "Can assign badges created by owners and/or editors (including creating, editing and deleting QR code assignments).",
 		"imageFormat": "(Format 1:1 / square)",
 		"nameOfIssuer": "Name of Institution",
-		"wesbiteUrl": "Website-URL",
+		"websiteUrl": "Website-URL",
 		"schoolLabel": "School (elementary school, secondary schools, vocational schools, institutions of formal education)",
 		"universityLabel": "University (universities, universities of applied sciences, ...)",
 		"othersLabel": "Others (libraries, museums, FabLabs, companies, associations, ...)",
@@ -354,15 +355,16 @@
 		"importPreview": "Import preview",
 		"rowsWereImported": "rows could be imported.",
 		"rowsAreDuplicates": "rows are duplicates and are ignored.",
-		"clickOnAwardBadges": "Click on \"award badges\" to award the badges to your learners now."
-
+		"clickOnAwardBadges": "Click on \"award badges\" to award the badges to your learners now.",
+		"creatingBadge": "Creating Badge",
+		"memberView": "Member view"
 	},
 	"Badge": {
 		"groupBy": "Group by",
 		"framesMeaning": "What do the frames and colors mean?",
 		"searchBadges": "Search badges",
 		"category": "Category",
-		"issuer": "Issuer",
+		"issuer": "Institution",
 		"membership": "Membership",
 		"ability": "Meta-skill",
 		"archievement": "Participation / Achievement",
@@ -415,8 +417,6 @@
 		"copy": "Copy badge for own institution",
 		"copyBadge": "Copy badge",
 		"copyableFor": "Copyable for",
-		"copyForWhatInstitution": "For which of your institutions should the badge be copied?",
-		"copyPermissionInfo": "The copy status of this badge only allows copying within the institution, so only this one is displayed here.",
 		"copyThisIssuer": "Copy (this institution)",
 		"editCopyStatus": "Edit copy status",
 		"award": "Award Badge",
@@ -427,7 +427,7 @@
 		"activeParticipation": "Active Participation",
 		"selfReflection": "Self-Reflection",
 		"achievedIndividualLearning": "Individual Learning Goal Achieved",
-		"presence90": "90% Attendance",
+		"passed75": "passed 75%",
 		"practicalApplication": "Practical Application",
 		"onlineCourseCompleted": "Online Course Completed",
 		"projectCompleted": "Project Completed",
@@ -438,8 +438,14 @@
 		"competencyBadgeInfo": "can be filled (with the help of our AI assistant) with the skills that your learners acquire.",
 		"learningPathBadgeInfo": "combines several badges into a larger learning unit. When learners have earned all the badges on this “learning path”, they automatically receive the Micro Degree.",
 		"lastEdited": "Last edited",
-		"badgeSuccessfullyCreated": "The badge has been awarded to {{ recipient }} successfully."
-
+		"badgeSuccessfullyCreated": "The badge has been awarded to {{ recipient }} successfully.",
+		"standard": "Badge standard",
+		"standard-info-20": "Badges awarded on OEB before June 2025 adhered to the OpenBadges 2.0 specification. Read more about this in our <a class='tw-underline' href='/public/faq'>FAQ</a>.",
+		"standard-info-30": "Since June 2025 Badges on OEB are awarded according to the new, future proof OpenBadges 3.0 specification. Read more about this in our <a class='tw-underline' href='/public/faq'>FAQ</a>.",
+		"copyForWhatInstitution": "For which of your institutions do you want to copy the badge?",
+		"copyPermissionInfo": "The copy status of this badge only allows copying inside this institution.",
+		"awardingInProgress": "Badge awarding in progress",
+		"willBeAwardedSoon": "We will have awarded the badges soon!"
 	},
 	"CreateBadge": {
 		"chooseBadgeCategory": "Choose category",
@@ -538,8 +544,8 @@
 		"stepFinish": "Finish",
 		"weHelpCreateBadge": "We'll help you create your badge in just a few steps.",
 		"letsGo": "Let's go!",
-		"closing": "Closing"
-
+		"closing": "Closing",
+		"alignment": "link"
 	},
 	"Signup": {
 		"youHaveAccount": "Already have an account?",
@@ -622,12 +628,11 @@
 		"cat2Desc": "A badge from the 'Participation' category only indicates the attendance of learners at events and does not contain information about taught or acquired skills."
 	},
 	"About": {
-		"mainDesc": "Open Educational Badges is based on preliminary considerations for an open badge system that can be used in school and extracurricular contexts, as well as an initial technical feasibility study for an “Open Badges Platform” conducted at the Institute for Geoinformatics at the University of Münster as part of the BMBF project senseBox Pro. During the “#WirFürSchule” 2020 hackathon, an interdisciplinary team further developed the project idea and implemented an initial prototype. The present version of Open Educational Badges is based on the open-source Open Badges standard “badgr” by concentricsky and was implemented with the kind support of the Deutsche Telekom Stiftung by re:edu GmbH & Co. KG in collaboration with Junge Tüftler*innen gGmbH. The development of integrations for platforms of the senseBox Pro project (Blockly learning environment and openSenseMap) is being developed as part of BMBF funding.",
 		"contact": "Contact:",
 		"brojectBy": "A project by",
 		"supportedBy": "Supported by",
 		"funding": "Funding",
-		"fundingDesc": "With the funding measure 'Open Photonik Pro', the Federal Ministry of Education and Research (BMBF) pursues the goal of enabling new forms of cooperation between science and industry with the maker and startup scene. This is intended to open up additional innovation paths and potentials. At the same time, innovation cycles are to be significantly shortened and the networking of these groups is to be sustainably improved.",
+		"fundingDesc": "With the funding measure 'Open Photonik Pro', the Federal Ministry of Research, Technology and Space (BMFTR) pursues the goal of enabling new forms of cooperation between science and industry with the maker and startup scene. This is intended to open up additional innovation paths and potentials. At the same time, innovation cycles are to be significantly shortened and the networking of these groups is to be sustainably improved.",
 		"moreAboutFund": "More about the funding measure"
 	},
 	"Newsletter": {
@@ -709,7 +714,7 @@
 		"badgeUploadVersionError": "Unfortunately uploading this badge version is not possible.",
 		"uploadEmailDoesNotMatchError": "The email address in the badge does not match the email in your OEB profile.",
 		"addEmailToUpload": "Add the email address to your profile to upload the badge.",
-		"versionUploadInfo": "Unfortunately at the moment only badges of version 2.1 can be uploaded",
+		"versionUploadInfo": "We validate badges in the 2.0 standard when they are uploaded. We can currently only validate badges in the 3.0 standard to a minimal extent. You can find more information on this in our <a class=\"tw-text-link tw-underline\" href=\"/public/faq\">FAQ</a>.",
 		"addingBadge": "Adding Badge ..."
 	},
 	"EditBadge": {
@@ -717,7 +722,9 @@
 		"editBadgeInfo": "Edit the information about this achievement.",
 		"removeCompetency": "Remove competency",
 		"removeCompetencyInfo": "Are you sure you want to remove this competency?",
-		"cancel": "Cancel"
+		"cancel": "Cancel",
+		"save": "Save",
+		"saving": "Saving"
 	},
 	"RecBadgeDetail": {
 		"shareBadge": "Share badge",
@@ -746,12 +753,19 @@
 		"evidence": "Evidence",
 		"viewEvidenceUrl": "Visit evidence URL",
 		"downloadImage": "Download Badge image",
+		"downloadImage20": "Download Badge image (2.0)",
+		"downloadImage30": "Download Badge image (3.0)",
 		"downloadJson": "Download JSON file",
+		"downloadJson20": "Download JSON file (2.0)",
+		"downloadJson30": "Download JSON file (3.0)",
 		"downloadPDF": "Download PDF certificate",
-		"verifyBadge": "Badge verify",
+		"verifyBadge": "Verify Badge",
 		"deleteBadge": "Remove Badge from Backpack",
 		"copyShareLink": "Copy this link to share",
-		"addToProfile": "Add to profile"
+		"addToProfile": "Add to profile",
+		"removeBadge": "Remove Badge",
+		"confirmRemove": "Confirm Remove",
+		"sureToRemove": "Are you sure you want to remove {{badgeName}} from your badges?"
 	},
 	"BadgeCollection": {
 		"addCollection": "Add collection",
@@ -759,27 +773,43 @@
 		"noCollections": "You have no collections",
 		"collectionInfo": "With collections you can organize and share your received badges.",
 		"createCollection": "Create collection",
+		"editCollection": "Edit collection",
 		"share": "Share",
+		"shareCollection": "Share collection",
 		"orginzeBadges": "Organize your badges in collections.",
-		"collectionNamePlaceholder": "Tech & Code – My digital skills for the future",
 		"collectionName": "Collection name",
+		"collectionNamePlaceholder": "Tech & Code – My digital skills for the future",
 		"enterCollectioName": "Please enter a collection name",
 		"remainingChar": "remaining characters",
 		"description": "Description of the collection",
 		"descriptionPlaceholder": "These badges show that I not only understand the digital world, but also actively shape it. From programming and algorithms to IT security - I know the tools of the future and use them creatively to solve technical challenges.",
 		"provideDescription": "Please provide a description",
+		"descriptionMax300": "The description should not exceed 300 characters",
 		"myCollections": "My Collections",
 		"useCollectionsForApplications": "Use collections for applications",
 		"collectionInfoText": "Organize your badges into collections and download the respective PDF or create a direct-link for sharing.",
-		"addLink": "",
+		"addLink": "Add the link or PDF to your application and refer to it in your cover letter. (For example: “In the attached badge collection you will find an overview of my skills in the field of...”)",
 		"createCollectionNow": "Create collection now",
 		"addBadges": "Add badges to collection",
 		"skipStep": "You can skip this step and add badges later.",
+		"ob3Disclaimer": "At the moment, no external 3.0 badges can be added.",
 		"badgesInCollection": "badges in the collection",
 		"removeBadge": "Remove Badge from collection?",
-		"removeBadgeConfirm1": "Möchtest du den Badge ",
-		"removeBadgeConfirm2": " wirklich aus dieser Sammlung entfernen?",
-		"removeBadgeConfirmation": "Yes, remove"
+		"removeBadgeConfirm1": "Do you really want to remove the badge ",
+		"removeBadgeConfirm2": "from this collection?",
+		"removeBadgeConfirmation": "Yes, remove",
+		"youHave": "You have selected",
+		"oneBadge": " badge for this collection.",
+		"multiBadges": " badges for this collection.",
+		"noBadgesInThisCollectionYet": "This collection does not contain any badges yet.",
+		"downloadPdf": "Download PDF",
+		"deleteCollection": "Delete Collection",
+		"deleteText": "Are you sure you want to delete collection {{ collectionname }}?",
+		"searchBadges": "Search my badges",
+		"downloadQrCode": "Download QR-Code",
+		"copiedToClipboard": "Copied to clipboard!",
+		"sureToRemove": "Are you sure you want to remove {{badgeName}} from {{collectionName}}?",
+		"collectionNotPublic": "This collection is currently not available to the public."
 	},
 	"Profile": {
 		"more": "More",
@@ -891,7 +921,8 @@
 		"download": "Download QR code",
 		"toBadgeDetail": "To Badge detail page",
 		"downloadPoster": "Download QR-Code-Poster",
-		"badgeDetailPage": "badge detail page"
+		"badgeDetailPage": "badge detail page",
+		"badgesAwardedSuccessfully": "badges awarded successfully"
 	},
 	"LearningPath": {
 		"learningpaths": "Micro Degrees",
@@ -945,8 +976,8 @@
 		"finishedOn": "finished on",
 		"deleteMd": "delete micro degree",
 		"mdUsers": "Micro Degree users",
-		"searchMds": "search micro degrees"
-
+		"searchMds": "search micro degrees",
+		"saving": "Saving"
 	},
 	"LearningPathEditor": {
 		"shortDescription": "Summarized description of your Micro Degree. This short description will be saved in the Micro Degree."

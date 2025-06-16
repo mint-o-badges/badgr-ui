@@ -65,7 +65,7 @@
 						></oeb-button> -->
 						<oeb-button
 							class="tw-whitespace-nowrap"
-							[text]="'LearningPath.deleteMd' | translate "
+							[text]="'LearningPath.deleteMd' | translate"
 							variant="secondary"
 							width="full_width"
 							[disabled-when-requesting]="true"
@@ -139,7 +139,9 @@
 		</div>
 		<div class="oeb-section-sm tw-flex-grow lg:tw-pt-0 tw-pt-6">
 			<div class="tw-bg-oebgrey tw-rounded-[10px] tw-py-6 tw-px-4">
-				<h3 hlmH3 class="tw-font-bold tw-uppercase tw-text-oebblack tw-text-center">{{'LearningPath.mdUsers' | translate }}</h3>
+				<h3 hlmH3 class="tw-font-bold tw-uppercase tw-text-oebblack tw-text-center">
+					{{ 'LearningPath.mdUsers' | translate }}
+				</h3>
 				<div class="oeb-section-sm">
 					<h3 hlmH3 class="tw-pb-2 tw-font-medium tw-text-oebblack">
 						{{ participants.length }}

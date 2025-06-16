@@ -98,23 +98,21 @@ export class ImportedBadgeDetailComponent extends BaseAuthenticatedRoutableCompo
 
 		this.badgeLoaded = this.recipientBadgeApiService.getImportedBadge(this.badgeSlug).then((r) => {
 			this.badge = r;
-			if('extensions:CompetencyExtension' in this.badge.extensions){
-
-				const comps = this.badge.extensions['extensions:CompetencyExtension'] as Array<unknown>
+			if ('extensions:CompetencyExtension' in this.badge.extensions) {
+				const comps = this.badge.extensions['extensions:CompetencyExtension'] as Array<unknown>;
 				this.competencies = comps.map((c) => {
 					return {
-						"name": c["extensions:name"],
-						"description": c["extensions:description"],
-						"studyLoad": c["extensions:studyLoad"],
-						"category": c["extensions:category"],
-						"framework": c["extensions:framework"], 						
-						"framework_identifier": c["extensions:framework_identifier"], 						
-
-					}
+						name: c['extensions:name'],
+						description: c['extensions:description'],
+						studyLoad: c['extensions:studyLoad'],
+						category: c['extensions:category'],
+						framework: c['extensions:framework'],
+						framework_identifier: c['extensions:framework_identifier'],
+					};
 				});
 			}
-			if('extensions:CategoryExtension' in this.badge.extensions){
-				this.category = this.badge.extensions['extensions:CategoryExtension'] as object
+			if ('extensions:CategoryExtension' in this.badge.extensions) {
+				this.category = this.badge.extensions['extensions:CategoryExtension'] as object;
 			}
 			this.crumbs = [
 				{ title: 'Mein Rucksack', routerLink: ['/recipient/badges'] },
@@ -145,7 +143,7 @@ export class ImportedBadgeDetailComponent extends BaseAuthenticatedRoutableCompo
 					// 	action: () => window.open(this.verifyUrl, '_blank'),
 					// },
 					{
-						title: 'Badge aus Rucksack löschen',
+						title: 'RecBadgeDetail.deleteBadge',
 						icon: 'lucideTrash2',
 						action: () => this.deleteBadge(this.badge),
 					},
@@ -155,9 +153,11 @@ export class ImportedBadgeDetailComponent extends BaseAuthenticatedRoutableCompo
 				slug: this.badgeSlug,
 				issuedOn: this.badge.json.issuedOn,
 				issuedTo: this.badge.json.recipient.identity,
-				category: this.category ? this.translate.instant(
-					`Badge.categories.${this.category['extensions:Category'] || 'participation'}`,
-				) : null,
+				category: this.category
+					? this.translate.instant(
+							`Badge.categories.${this.category['extensions:Category'] || 'participation'}`,
+						)
+					: null,
 				tags: [],
 				issuerName: this.badge.json.badge.issuer.name,
 				issuerImagePlacholderUrl: this.issuerImagePlacholderUrl,
@@ -166,7 +166,7 @@ export class ImportedBadgeDetailComponent extends BaseAuthenticatedRoutableCompo
 				badgeFailedImageUrl: this.badgeFailedImageUrl,
 				badgeImage: this.badge.json.badge.image,
 				learningPaths: [],
-				competencies:  this.competencies as CompetencyType[],
+				competencies: this.competencies as CompetencyType[],
 				// license: this.badge.getExtension('extensions:LicenseExtension', {}) ? true : false,
 				// shareButton: true,
 				// badgeInstanceSlug: this.badgeSlug,
@@ -190,10 +190,12 @@ export class ImportedBadgeDetailComponent extends BaseAuthenticatedRoutableCompo
 		console.log(badge);
 		this.dialogService.confirmDialog
 			.openResolveRejectDialog({
-				dialogTitle: 'Confirm Remove',
-				dialogBody: `Are you sure you want to remove ${badge.json.badge.name} from your badges?`,
-				rejectButtonLabel: 'Cancel',
-				resolveButtonLabel: 'Remove Badge',
+				dialogTitle: this.translate.instant('RecBadgeDetail.confirmRemove'),
+				dialogBody: this.translate.instant('RecBadgeDetail.sureToRemove', {
+					badgeName: badge.json.badge.name,
+				}),
+				rejectButtonLabel: this.translate.instant('General.cancel'),
+				resolveButtonLabel: this.translate.instant('RecBadgeDetail.removeBadge'),
 			})
 			.then(
 				() =>

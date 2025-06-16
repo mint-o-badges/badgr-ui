@@ -2,7 +2,7 @@
 	<bg-formfield-image
 		#imageField
 		label="{{ 'Issuer.imageLogo' | translate }}"
-		sublabelRight="{{'Issuer.imageFormat' | translate }}"
+		sublabelRight="{{ 'Issuer.imageFormat' | translate }}"
 		imageLoaderName="issuer"
 		[text_body]="selectFromMyFiles"
 		dropZoneInfo1="Drag & Drop"
@@ -26,12 +26,12 @@
 		[fieldType]="'text'"
 		[autofocus]="true"
 		[errorMessage]="{ required: issuerRequiredError }"
-		sublabelRight="(max. 90 {{'General.characters' | translate}})"
+		sublabelRight="(max. 90 {{ 'General.characters' | translate }})"
 		#issuer_name_field
 	></oeb-input>
 
 	<oeb-input
-		label="{{'Issuer.websiteUrl' | translate}}"
+		label="{{ 'Issuer.websiteUrl' | translate }}"
 		[control]="issuerForm.rawControlMap.issuer_url"
 		[urlField]="true"
 		[fieldType]="'url'"
@@ -53,7 +53,7 @@
 		[control]="issuerForm.rawControlMap.issuer_description"
 		[fieldType]="'textarea'"
 		[errorMessage]="{ required: enterDescription }"
-		sublabelRight="(min. 200 / max. 300 {{'General.characters' | translate}})"
+		sublabelRight="(min. 200 / max. 300 {{ 'General.characters' | translate }})"
 	></oeb-input>
 
 	<oeb-select
@@ -66,7 +66,7 @@
 				value: 'schule'
 			},
 			{
-				label: 'Issuer.universityLabel' | translate ,
+				label: 'Issuer.universityLabel' | translate,
 				value: 'hochschule'
 			},
 			{

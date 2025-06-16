@@ -65,7 +65,7 @@ export class QrCodeAwardsComponent {
 	@Input() issuer: Issuer;
 	@Input() badgeClass: BadgeClass;
 	@Input() defaultUnfolded: boolean | undefined = false;
-	@Output() qrBadgeAward = new EventEmitter<void>();
+	@Output() qrBadgeAward = new EventEmitter<number>();
 
 	requestedBadges: any[] = [];
 
@@ -157,7 +157,7 @@ export class QrCodeAwardsComponent {
 		});
 	}
 
-	onQrBadgeAward() {
-		this.qrBadgeAward.emit();
+	onQrBadgeAward(count: number) {
+		this.qrBadgeAward.emit(count);
 	}
 }

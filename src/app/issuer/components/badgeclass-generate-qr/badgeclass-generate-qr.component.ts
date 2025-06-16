@@ -1,6 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { LinkEntry, BgBreadcrumbsComponent } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
-import { ActivatedRoute, Route, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { BadgeClassManager } from '../../services/badgeclass-manager.service';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
 import { SessionService } from '../../../common/services/session.service';
@@ -14,29 +14,30 @@ import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { QrCodeApiService } from '../../services/qrcode-api.service';
 import { DatePipe, NgIf } from '@angular/common';
 import { MenuItem } from '../../../common/components/badge-detail/badge-detail.component.types';
-import { QRCodeElementType, FixMeLater, QRCodeComponent } from 'angularx-qrcode';
+import { QRCodeComponent } from 'angularx-qrcode';
 import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 import { OebDropdownComponent } from '../../../components/oeb-dropdown.component';
 import { SvgIconComponent } from '../../../common/components/svg-icon.component';
 import { BgImageStatusPlaceholderDirective } from '../../../common/directives/bg-image-status-placeholder.directive';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
+import { saveAsImage } from '../../../common/util/qrcode-util';
 
 @Component({
-    selector: 'badgeclass-generate-qr',
-    templateUrl: './badgeclass-generate-qr.component.html',
-    styleUrls: ['../../../public/components/about/about.component.css'],
-    imports: [
-        BgAwaitPromises,
-        BgBreadcrumbsComponent,
-        OebDropdownComponent,
-        SvgIconComponent,
-        QRCodeComponent,
-        BgImageStatusPlaceholderDirective,
-        NgIf,
-        OebButtonComponent,
-        RouterLink,
-        TranslatePipe,
-    ],
+	selector: 'badgeclass-generate-qr',
+	templateUrl: './badgeclass-generate-qr.component.html',
+	styleUrls: ['../../../public/components/about/about.component.css'],
+	imports: [
+		BgAwaitPromises,
+		BgBreadcrumbsComponent,
+		OebDropdownComponent,
+		SvgIconComponent,
+		QRCodeComponent,
+		BgImageStatusPlaceholderDirective,
+		NgIf,
+		OebButtonComponent,
+		RouterLink,
+		TranslatePipe,
+	],
 })
 export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	static datePipe = new DatePipe('de');
@@ -76,7 +77,6 @@ export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComp
 	editQrCodeLink: string = `/issuer/issuers/${this.issuerSlug}/badges/${this.badgeSlug}/qr/${this.qrSlug}/edit`;
 	qrCodeWidth = 244;
 	public qrCodeDownloadLink: SafeUrl = '';
-	public elementType: QRCodeElementType = 'canvas';
 
 	pdfSrc: SafeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl('about:blank');
 
@@ -208,51 +208,8 @@ export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComp
 		}
 	}
 
-	private convertBase64ToBlob(Base64Image: string) {
-		// split into two parts
-		const parts = Base64Image.split(';base64,');
-		// hold the content type
-		const imageType = parts[0].split(':')[1];
-		// decode base64 string
-		const decodedData = window.atob(parts[1]);
-		// create unit8array of size same as row data length
-		const uInt8Array = new Uint8Array(decodedData.length);
-		// insert all character code into uint8array
-		for (let i = 0; i < decodedData.length; ++i) {
-			uInt8Array[i] = decodedData.charCodeAt(i);
-		}
-		// return blob image after conversion
-		return new Blob([uInt8Array], { type: imageType });
-	}
-
-	// Code from https://github.com/Cordobo/angularx-qrcode/blob/9eab0cb688049d4cd42e0da2b76826aed64e3dd6/projects/demo-app/src/app/app.component.ts#L225
-	saveAsImage(parent: FixMeLater) {
-		let parentElement = null;
-
-		if (this.elementType === 'canvas') {
-			// fetches base 64 data from canvas
-			parentElement = parent.qrcElement.nativeElement.querySelector('canvas').toDataURL('image/png');
-		} else if (this.elementType === 'img' || this.elementType === 'url') {
-			// fetches base 64 data from image
-			// parentElement contains the base64 encoded image src
-			// you might use to store somewhere
-			parentElement = parent.qrcElement.nativeElement.querySelector('img').src;
-		} else {
-			alert("Set elementType to 'canvas', 'img' or 'url'.");
-		}
-
-		if (parentElement) {
-			// converts base 64 encoded image to blobData
-			let blobData = this.convertBase64ToBlob(parentElement);
-			// saves as image
-			const blob = new Blob([blobData], { type: 'image/png' });
-			const url = window.URL.createObjectURL(blob);
-			const link = document.createElement('a');
-			link.href = url;
-			// name of the file
-			link.download = `${this.qrTitle}-qrcode.png`;
-			link.click();
-		}
+	saveQrCodeAsImage(parent) {
+		saveAsImage(parent, `${this.qrTitle}-qrcode.png`);
 	}
 
 	public openDangerDialog() {

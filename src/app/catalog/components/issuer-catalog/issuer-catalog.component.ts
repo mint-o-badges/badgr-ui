@@ -311,27 +311,24 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 	}
 
 	generateGeoJSON(issuers) {
-		let featureCollection = [];
-		issuers.forEach((issuer) => {
-			featureCollection.push({
-				type: 'Feature',
-				properties: {
-					name: issuer.name,
-					slug: issuer.slug,
-					img: issuer.image,
-					description: issuer.description,
-					category: issuer.category,
-				},
-				geometry: {
-					type: 'Point',
-					coordinates: [issuer.lon, issuer.lat],
-				},
-			});
-		});
-
 		this.issuerGeoJson = {
 			type: 'FeatureCollection',
-			features: featureCollection,
+			features: issuers
+				.filter((issuer) => issuer.lat !== null && issuer.lon !== null)
+				.map((issuer) => ({
+					type: 'Feature',
+					properties: {
+						name: issuer.name,
+						slug: issuer.slug,
+						img: issuer.image,
+						description: issuer.description,
+						category: issuer.category,
+					},
+					geometry: {
+						type: 'Point',
+						coordinates: [issuer.lon, issuer.lat],
+					},
+				})),
 		};
 
 		if (!this.mapObject.getSource('issuers')) {
@@ -527,8 +524,8 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 			},
 			recipient: {
 				'=0': this.translate.instant('Issuer.noRecipient'),
-				'=1': '1 ' + this.translate.instant('General.recipient'),
-				other: '# ' + this.translate.instant('General.recipient'),
+				'=1': '1 ' + this.translate.instant('Issuer.recipient'),
+				other: '# ' + this.translate.instant('Issuer.recipients'),
 			},
 		};
 	}

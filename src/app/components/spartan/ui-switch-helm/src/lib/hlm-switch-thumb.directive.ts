@@ -14,7 +14,7 @@ export class HlmSwitchThumbDirective {
 
 	protected readonly _computedClass = computed(() =>
 		hlm(
-			'tw-block tw-h-5 tw-w-5 tw-rounded-full tw-bg-background tw-shadow-lg tw-ring-0 tw- transition-transform group-data-[state=checked]:tw-translate-x-5 group-data-[state=unchecked]:tw-translate-x-0',
+			'tw-block tw-h-5 tw-w-5 tw-rounded-full tw-bg-purple tw-shadow-lg tw-ring-0 tw- transition-transform group-data-[state=checked]:tw-translate-x-5 group-data-[state=unchecked]:tw-translate-x-0',
 			this.userClass(),
 		),
 	);

@@ -9,7 +9,7 @@
 		<h3 hlmH3 class="tw-text-oebblack">{{ 'Issuer.lpSubHeading' | translate }}</h3>
 		<ng-template [bgAwaitPromises]="[learningPathLoaded]">
 			<learningpath-edit-form
-				submittingText="Saving..."
+				[submittingText]="('LearningPath.saving' | translate) + ' ...'"
 				(save)="learningPathCreated($event)"
 				(cancel)="creationCanceled()"
 				[learningPath]="learningPath"

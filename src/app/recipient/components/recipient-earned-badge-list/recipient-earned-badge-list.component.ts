@@ -1,13 +1,4 @@
-import {
-	Component,
-	ContentChild,
-	ElementRef,
-	OnInit,
-	ViewChild,
-	AfterContentInit,
-	inject,
-	TemplateRef,
-} from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, AfterContentInit, inject, TemplateRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
@@ -41,7 +32,6 @@ import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src
 import { DialogComponent } from '../../../components/dialog.component';
 import { BrnDialogRef } from '@spartan-ng/brain/dialog';
 import { RecipientBadgeCollectionManager } from '../../services/recipient-badge-collection-manager.service';
-import { forkJoin } from 'rxjs';
 import { RecipientBadgeApiService } from '../../services/recipient-badges-api.service';
 import { FormMessageComponent } from '../../../common/components/form-message.component';
 import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
@@ -61,6 +51,8 @@ import { OebCompetency } from '../../../common/components/oeb-competency';
 import { BgLearningPathCard } from '../../../common/components/bg-learningpathcard';
 import { BgCollectionCard } from '../../../common/bg-collectioncard';
 import { DynamicFilterPipe } from '../../../common/pipes/dynamicFilterPipe';
+import { RecipientBadgeCollection } from '../../models/recipient-badge-collection.model';
+import { ShareDialogTemplateComponent } from '../../../common/dialogs/oeb-dialogs/share-dialog-template.component';
 
 type BadgeDispay = 'grid' | 'list';
 type EscoCompetencies = {
@@ -68,44 +60,44 @@ type EscoCompetencies = {
 };
 
 @Component({
-    selector: 'recipient-earned-badge-list',
-    templateUrl: './recipient-earned-badge-list.component.html',
-    providers: [
-        provideIcons({ lucideHexagon }),
-        provideIcons({ lucideMedal }),
-        provideIcons({ lucideClock }),
-        provideIcons({ lucideHand }),
-        provideIcons({ lucideBookOpen }),
-        provideIcons({ lucideHeart }),
-    ],
-    imports: [
-        ImportLauncherDirective,
-        FormMessageComponent,
-        BgAwaitPromises,
-        HlmH2Directive,
-        OebButtonComponent,
-        FormsModule,
-        ReactiveFormsModule,
-        BadgrButtonComponent,
-        OebTabsComponent,
-        NgIcon,
-        HlmIconDirective,
-        HlmPDirective,
-        NgIf,
-        CountUpModule,
-        HlmInputDirective,
-        OebSortSelectComponent,
-        OebCheckboxComponent,
-        NgFor,
-        BgBadgecard,
-        HlmH3Directive,
-        OebCompetency,
-        BgLearningPathCard,
-        BgCollectionCard,
-        AddBadgeDialogComponent,
-        DynamicFilterPipe,
-        TranslatePipe,
-    ],
+	selector: 'recipient-earned-badge-list',
+	templateUrl: './recipient-earned-badge-list.component.html',
+	providers: [
+		provideIcons({ lucideHexagon }),
+		provideIcons({ lucideMedal }),
+		provideIcons({ lucideClock }),
+		provideIcons({ lucideHand }),
+		provideIcons({ lucideBookOpen }),
+		provideIcons({ lucideHeart }),
+	],
+	imports: [
+		ImportLauncherDirective,
+		FormMessageComponent,
+		BgAwaitPromises,
+		HlmH2Directive,
+		OebButtonComponent,
+		FormsModule,
+		ReactiveFormsModule,
+		BadgrButtonComponent,
+		OebTabsComponent,
+		NgIcon,
+		HlmIconDirective,
+		HlmPDirective,
+		NgIf,
+		CountUpModule,
+		HlmInputDirective,
+		OebSortSelectComponent,
+		OebCheckboxComponent,
+		NgFor,
+		BgBadgecard,
+		HlmH3Directive,
+		OebCompetency,
+		BgLearningPathCard,
+		BgCollectionCard,
+		AddBadgeDialogComponent,
+		DynamicFilterPipe,
+		TranslatePipe,
+	],
 })
 export class RecipientEarnedBadgeListComponent
 	extends BaseAuthenticatedRoutableComponent
@@ -158,6 +150,8 @@ export class RecipientEarnedBadgeListComponent
 	@ViewChild('collectionTemplate', { static: true }) collectionTemplate: ElementRef;
 	@ViewChild('collectionInfoHeaderTemplate', { static: true }) collectionInfoHeaderTemplate: ElementRef;
 	@ViewChild('collectionInfoContentTemplate', { static: true }) collectionInfoContentTemplate: ElementRef;
+	@ViewChild('shareDialogContentTemplate', { static: true }) shareDialogContentTemplate: ElementRef;
+	@ViewChild('shareDialogHeaderTemplate', { static: true }) shareDialogHeaderTemplate: ElementRef;
 
 	dialogRef: BrnDialogRef<any> = null;
 	translatedTitles: string[] = [];
@@ -173,7 +167,7 @@ export class RecipientEarnedBadgeListComponent
 	@ViewChild('countup2') countup2: CountUpDirective;
 	@ViewChild('badgesCounter') badgesCounter: CountUpDirective;
 
-	activeTab: string = '';
+	activeTab: string = 'badges';
 	private _badgesDisplay: BadgeDispay = 'grid';
 	sortControl = new FormControl('date_desc');
 	get badgesDisplay() {
@@ -277,6 +271,17 @@ export class RecipientEarnedBadgeListComponent
 		this.dialogRef = dialogRef;
 	}
 
+	openShareDialog(collection: RecipientBadgeCollection) {
+		const dialogRef = this._hlmDialogService.open(ShareDialogTemplateComponent, {
+			context: {
+				collection: collection,
+				caption: this.translate.instant('BadgeCollection.shareCollection'),
+			},
+		});
+
+		this.dialogRef = dialogRef;
+	}
+
 	// NOTE: Mozz import functionality
 	launchImport = ($event: Event) => {
 		$event.preventDefault();
@@ -345,21 +350,25 @@ export class RecipientEarnedBadgeListComponent
 	ngAfterContentInit() {
 		this.tabs = [
 			{
+				key: 'badges',
 				title: 'Badges',
 				component: this.badgesTemplate,
 			},
 			{
-				title: 'RecBadge.competencies',
+				key: 'competencies',
+				title: this.translate.instant('RecBadge.competencies'),
 				component: this.badgesCompetency,
 			},
 			{
+				key: 'microdegrees',
 				title: 'Micro Degrees',
 				component: this.learningPathTemplate,
 			},
 			{
-				title: 'BadgeCollection.myCollections',
+				key: 'collections',
+				title: this.translate.instant('BadgeCollection.myCollections'),
 				component: this.collectionTemplate,
-			}
+			},
 		];
 	}
 
@@ -394,10 +403,12 @@ export class RecipientEarnedBadgeListComponent
 	deleteBadge(badge: RecipientBadgeInstance) {
 		this.dialogService.confirmDialog
 			.openResolveRejectDialog({
-				dialogTitle: 'Confirm Remove',
-				dialogBody: `Are you sure you want to remove ${badge.badgeClass.name} from your badges?`,
-				rejectButtonLabel: 'Cancel',
-				resolveButtonLabel: 'Remove Badge',
+				dialogTitle: this.translate.instant('RecBadgeDetail.confirmRemove'),
+				dialogBody: this.translate.instant('RecBadgeDetail.sureToRemove', {
+					badgeName: badge.badgeClass.name,
+				}),
+				rejectButtonLabel: this.translate.instant('General.cancel'),
+				resolveButtonLabel: this.translate.instant('RecBadgeDetail.removeBadge'),
 			})
 			.then(
 				() => this.recipientBadgeManager.deleteRecipientBadge(badge),

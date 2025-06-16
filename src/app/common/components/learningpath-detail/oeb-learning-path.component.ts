@@ -74,7 +74,7 @@ export class OebLearningPathDetailComponent extends BaseRoutableComponent implem
 		private pdfService: PdfService,
 		public router: Router,
 		route: ActivatedRoute,
-		private translate: TranslateService
+		private translate: TranslateService,
 	) {
 		super(router, route);
 	}
@@ -138,7 +138,10 @@ export class OebLearningPathDetailComponent extends BaseRoutableComponent implem
 		this.confirmDialog
 			.openResolveRejectDialog({
 				dialogTitle: this.translate.instant('General.warning'),
-				dialogBody: this.translate.instant('Issuer.revokeBadgeWarning', { "badge": this.learningPath.name, "recipient": participationBadgeInstance.recipientIdentifier }),
+				dialogBody: this.translate.instant('Issuer.revokeBadgeWarning', {
+					badge: this.learningPath.name,
+					recipient: participationBadgeInstance.recipientIdentifier,
+				}),
 				resolveButtonLabel: this.translate.instant('General.revoke'),
 				rejectButtonLabel: this.translate.instant('General.cancel'),
 			})
@@ -167,7 +170,7 @@ export class OebLearningPathDetailComponent extends BaseRoutableComponent implem
 	downloadCertificate(participant: any) {
 		const instance = participant.participationBadgeAssertion;
 		this.pdfService
-			.getPdf(instance.slug)
+			.getPdf(instance.slug, 'badges')
 			.then((url) => {
 				this.pdfSrc = url;
 				this.pdfService.downloadPdf(this.pdfSrc, this.learningPath.name, new Date(instance.json.issuedOn));
