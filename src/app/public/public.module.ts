@@ -165,7 +165,6 @@ export const routes: Routes = [
 		PublicIssuerComponent,
 		RequestBadgeComponent,
 		PublicBadgeCollectionComponent,
-		FaqComponent,
 		PublicBadgeClassComponent,
 		PublicLearningPathComponent,
 	],
