@@ -8,8 +8,8 @@ import {
 	ValidationErrors,
 } from '@angular/forms';
 import { AppConfigService } from '../common/app-config.service';
+// import to include altcha styles and js
 import 'altcha';
-import { EventEmitter } from 'stream';
 
 @Component({
 	selector: 'altcha',
@@ -79,5 +79,13 @@ export class AltchaComponent implements ControlValueAccessor, Validator {
 		this.valueEvent.emit(this.value);
 		this.onChange(this.value);
 		this.onTouched();
+	}
+
+	public verify() {
+		console.log({x: this.altchaWidget.nativeElement.verify});
+		this.altchaWidget.nativeElement.verify();
+	}
+	public reset() {
+		this.altchaWidget.nativeElement.reset();
 	}
 }

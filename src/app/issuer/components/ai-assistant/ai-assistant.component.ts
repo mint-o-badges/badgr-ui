@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Skill } from 'app/common/model/ai-skills.model';
@@ -28,13 +28,18 @@ export class AiAssistantComponent implements AfterViewInit {
 	constructor(
 		protected aiSkillsService: AiSkillsService,
 		private translate: TranslateService,
-		private messageService: MessageService
+		private messageService: MessageService,
+		private changeDetectorRef: ChangeDetectorRef
 	) {
 	}
 
 	ngAfterViewInit(): void {
 		this.altcha.valueEvent.subscribe((value) => {
-			this.altchaValue = value;
+			if (value) {
+				this.altchaValue = value;
+				// FIXME: not sure why this is needed, but angular does not update the view otherwise
+				this.changeDetectorRef.detectChanges();
+			}
 		});
 	}
 
@@ -46,6 +51,7 @@ export class AiAssistantComponent implements AfterViewInit {
 			return;
 		}
 
+		this.aiSkillsService.setAltcha(this.altchaValue);
 
 		this.aiCompetenciesLoading = true;
 		this.aiSkillsService
@@ -53,6 +59,8 @@ export class AiAssistantComponent implements AfterViewInit {
 			.then((skills) => {
 				this.aiCompetenciesSuggestions = skills;
 				this.aiCompetenciesLoading = false;
+				// get a new alcha challenge
+				this.altcha.verify();
 			})
 			.catch((error) => {
 				this.aiCompetenciesLoading = false;
