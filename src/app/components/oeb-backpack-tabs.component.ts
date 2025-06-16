@@ -4,6 +4,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { HlmTabsTriggerDirective } from './spartan/ui-tabs-helm/src/lib/hlm-tabs-trigger.directive';
 import { HlmTabsComponent } from './spartan/ui-tabs-helm/src/lib/hlm-tabs.component';
 import { HlmTabsListComponent } from './spartan/ui-tabs-helm/src/lib/hlm-tabs-list.component';
+import { HlmTabsContentDirective } from './spartan/ui-tabs-helm/src/lib/hlm-tabs-content.directive';
 
 export const bg = 'tw-block tw-absolute tw-z-0 tw-opacity-80';
 
@@ -17,6 +18,7 @@ export type Tab = {
 	selector: 'oeb-backpack-tabs',
 	imports: [
 		HlmTabsTriggerDirective,
+		HlmTabsContentDirective,
 		NgIf,
 		NgFor,
 		NgTemplateOutlet,
