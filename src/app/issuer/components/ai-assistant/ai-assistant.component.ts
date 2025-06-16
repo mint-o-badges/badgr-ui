@@ -59,12 +59,16 @@ export class AiAssistantComponent implements AfterViewInit {
 			.then((skills) => {
 				this.aiCompetenciesSuggestions = skills;
 				this.aiCompetenciesLoading = false;
-				// get a new alcha challenge
-				this.altcha.verify();
 			})
 			.catch((error) => {
 				this.aiCompetenciesLoading = false;
 				this.messageService.reportAndThrowError(`Failed to obtain ai skills: ${error.message}`, error);
+			})
+			.finally(() => {
+				// clear old altcha value from http service
+				this.aiSkillsService.setAltcha(null);
+				// get a new alcha challenge
+				this.altcha.verify();
 			});
 	}
 }
