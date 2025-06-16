@@ -1,25 +1,29 @@
 import { CommonModule } from '@angular/common';
-import { Component, input } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Skill } from 'app/common/model/ai-skills.model';
 import { AiSkillsService } from 'app/common/services/ai-skills.service';
 import { MessageService } from 'app/common/services/message.service';
+import { AltchaComponent } from 'app/components/altcha.component';
 import { OebButtonComponent } from 'app/components/oeb-button.component';
 
 @Component({
-	selector: 'ki-assistant',
-	templateUrl: './ki-assistant.component.html',
+	selector: 'ai-assistant',
+	templateUrl: './ai-assistant.component.html',
 	standalone: true,
-	imports: [TranslateModule, OebButtonComponent, FormsModule, CommonModule]
+	imports: [TranslateModule, OebButtonComponent, FormsModule, CommonModule, AltchaComponent]
 })
-export class KiAssistantComponent {
+export class AiAssistantComponent implements AfterViewInit {
 
 	aiCompetenciesLoading = false;
 	aiCompetenciesDescription: string = '';
 	aiCompetenciesSuggestions: Skill[] = [];
 	suggestCompetenciesText = this.translate.instant('CreateBadge.suggestCompetencies');
 	detailedDescription = this.translate.instant('CreateBadge.detailedDescription');
+
+	@ViewChild('altcha') altcha: AltchaComponent;
+	altchaValue = "";
 
 	constructor(
 		protected aiSkillsService: AiSkillsService,
@@ -28,10 +32,21 @@ export class KiAssistantComponent {
 	) {
 	}
 
+	ngAfterViewInit(): void {
+		this.altcha.valueEvent.subscribe((value) => {
+			this.altchaValue = value;
+		});
+	}
+
 	suggestCompetencies() {
 		if (this.aiCompetenciesDescription.length < 70) {
 			return;
 		}
+		if (!this.altchaValue) {
+			return;
+		}
+
+
 		this.aiCompetenciesLoading = true;
 		this.aiSkillsService
 			.getAiSkills(this.aiCompetenciesDescription)

@@ -49,6 +49,8 @@
 				{{ 'General.characters' | translate }}
 			</span>
 		</div>
+		<altcha #altcha class="tw-text-[14px]"></altcha>
+		{{altchaValue}}
 		<div class="tw-mt-4 tw-flex tw-gap-4">
 			<oeb-button
 				[id]="'suggest-competencies-btn'"
@@ -56,7 +58,7 @@
 				(click)="suggestCompetencies()"
 				type="button"
 				[text]="suggestCompetenciesText"
-				[disabled]="aiCompetenciesDescription.length < 70 || aiCompetenciesLoading"
+				[disabled]="aiCompetenciesDescription.length < 70 || !altchaValue || aiCompetenciesLoading"
 			>
 				<span class="tw-font-bold">
 					{{ 'CreateBadge.suggestCompetencies' | translate }}
