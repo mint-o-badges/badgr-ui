@@ -118,8 +118,8 @@ export class RecipientEarnedBadgeListComponent
 	dialogRef: BrnDialogRef<any> = null;
 	translatedTitles: string[] = [];
 
-	groupedUserCompetencies = {};
-	newGroupedUserCompetencies = {};
+	groupedUserCompetencies: Competency[] | {} = {};
+	newGroupedUserCompetencies: Competency[] | {} = {};
 
 	totalStudyTime = 0;
 	public objectKeys = Object.keys;

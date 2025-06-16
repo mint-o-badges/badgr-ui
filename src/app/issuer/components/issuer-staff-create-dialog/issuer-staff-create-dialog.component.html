@@ -28,7 +28,7 @@
 					errorMessage="{{ 'Issuer.addMember_selectRole' | translate }}"
 				></bg-formfield-radio>
 				<bg-formfield-text
-					[control]="$any(staffCreateForm.rawControlMap.staffEmail)"
+					[control]="staffCreateForm.rawControlMap.staffEmail"
 					label="{{ 'Issuer.addMember_newEmail' | translate }}"
 					errorMessage="{{ 'Issuer.addMember_enterValidEmail' | translate }}"
 					placeholder="{{ 'Issuer.addMember_newEmailPH' | translate }}"

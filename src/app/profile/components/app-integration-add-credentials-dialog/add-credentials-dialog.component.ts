@@ -33,7 +33,7 @@ import { Validators } from '@angular/forms';
 					}}</span>
 					<bg-formfield-text
 						class="tw-py-4"
-						[control]="$any(credentialsForm.rawControlMap.client_name)"
+						[control]="credentialsForm.rawControlMap.client_name"
 						[errorMessage]="{
 							required: 'Name erforderlich'
 						}"

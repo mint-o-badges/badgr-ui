@@ -6,6 +6,7 @@ import { RecipientBadgeInstance } from '../../../recipient/models/recipient-badg
 import { BadgeInstance } from '../../../issuer/models/badgeinstance.model';
 import { TranslateService } from '@ngx-translate/core';
 import { PublicApiLearningPath } from '../../../public/models/public-api.model';
+import { ApiImportedBadgeInstance } from '../../../recipient/models/recipient-badge-api.model';
 
 @Component({
 	selector: 'bg-badgedetail',
@@ -16,7 +17,7 @@ import { PublicApiLearningPath } from '../../../public/models/public-api.model';
 export class BgBadgeDetail {
 	@Input() config: PageConfig;
 	@Input() awaitPromises?: Promise<any>[];
-	@Input() badge?: RecipientBadgeInstance | BadgeInstance;
+	@Input() badge?: RecipientBadgeInstance | BadgeInstance | ApiImportedBadgeInstance;
 
 	constructor(
 		private dialogService: CommonDialogsService,
@@ -56,6 +57,7 @@ export class BgBadgeDetail {
 	}
 
 	shareBadge() {
+		console.log('sharing');
 		const baseUrl = window.location.origin;
 		this.dialogService.shareSocialDialog.openDialog({
 			title: this.translate.instant('RecBadgeDetail.shareBadge'),
@@ -67,7 +69,7 @@ export class BgBadgeDetail {
 			shareSummary: this.config.badgeDescription,
 			shareEndpoint: 'certification',
 			embedOptions: [],
-			badge: this.badge,
+			badge: this.badge as any,
 		});
 	}
 }

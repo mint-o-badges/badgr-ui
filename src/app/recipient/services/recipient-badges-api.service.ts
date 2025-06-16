@@ -102,6 +102,7 @@ export class RecipientBadgeApiService extends BaseHttpApiService {
 					// criteria_text: importedBadge.criteriaText || '',
 					issuer: {
 						id: importedBadge.json.badge.issuer.name,
+						slug: importedBadge.slug,
 						type: 'Issuer',
 						name: importedBadge.json.badge.issuer.name,
 						url: importedBadge.json.badge.issuer.url,

@@ -79,4 +79,5 @@ export type PatternLibraryIconName =
 	| 'icon_narrative'
 	| 'icon_tags'
 	| 'icon_markdown'
-	| 'icon_arrow2';
+	| 'icon_arrow2'
+	| '';
