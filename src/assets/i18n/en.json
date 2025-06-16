@@ -628,12 +628,11 @@
 		"cat2Desc": "A badge from the 'Participation' category only indicates the attendance of learners at events and does not contain information about taught or acquired skills."
 	},
 	"About": {
-		"mainDesc": "Open Educational Badges is based on preliminary considerations for an open badge system that can be used in school and extracurricular contexts, as well as an initial technical feasibility study for an “Open Badges Platform” conducted at the Institute for Geoinformatics at the University of Münster as part of the BMBF project senseBox Pro. During the “#WirFürSchule” 2020 hackathon, an interdisciplinary team further developed the project idea and implemented an initial prototype. The present version of Open Educational Badges is based on the open-source Open Badges standard “badgr” by concentricsky and was implemented with the kind support of the Deutsche Telekom Stiftung by re:edu GmbH & Co. KG in collaboration with Junge Tüftler*innen gGmbH. The development of integrations for platforms of the senseBox Pro project (Blockly learning environment and openSenseMap) is being developed as part of BMBF funding.",
 		"contact": "Contact:",
 		"brojectBy": "A project by",
 		"supportedBy": "Supported by",
 		"funding": "Funding",
-		"fundingDesc": "With the funding measure 'Open Photonik Pro', the Federal Ministry of Education and Research (BMBF) pursues the goal of enabling new forms of cooperation between science and industry with the maker and startup scene. This is intended to open up additional innovation paths and potentials. At the same time, innovation cycles are to be significantly shortened and the networking of these groups is to be sustainably improved.",
+		"fundingDesc": "With the funding measure 'Open Photonik Pro', the Federal Ministry of Research, Technology and Space (BMFTR) pursues the goal of enabling new forms of cooperation between science and industry with the maker and startup scene. This is intended to open up additional innovation paths and potentials. At the same time, innovation cycles are to be significantly shortened and the networking of these groups is to be sustainably improved.",
 		"moreAboutFund": "More about the funding measure"
 	},
 	"Newsletter": {
