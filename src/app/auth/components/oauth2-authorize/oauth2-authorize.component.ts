@@ -17,15 +17,9 @@ import { NgFor } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-    // selector: 'logout',
-    templateUrl: './oauth2-authorize.component.html',
-    imports: [
-        BgAwaitPromises,
-        FormMessageComponent,
-        SvgIconComponent,
-        NgFor,
-        FormsModule,
-    ],
+	// selector: 'logout',
+	templateUrl: './oauth2-authorize.component.html',
+	imports: [BgAwaitPromises, FormMessageComponent, SvgIconComponent, NgFor, FormsModule],
 })
 export class OAuth2AuthorizeComponent extends BaseRoutableComponent {
 	readonly authLinkLogoSrc = this.theme.logoImg.small;

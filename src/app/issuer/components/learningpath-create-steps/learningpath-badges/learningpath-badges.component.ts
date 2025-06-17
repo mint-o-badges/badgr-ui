@@ -18,20 +18,20 @@ import { BgBadgecard } from '../../../../common/components/bg-badgecard';
 type BadgeResult = BadgeClass & { selected?: boolean };
 
 @Component({
-    selector: 'learningpath-badges',
-    templateUrl: './learningpath-badges.component.html',
-    styleUrls: ['../../learningpath-edit-form/learningpath-edit-form.component.scss'],
-    imports: [
-        BgAwaitPromises,
-        HlmH2Directive,
-        FormsModule,
-        HlmInputDirective,
-        NgClass,
-        NgFor,
-        NgIf,
-        BgBadgecard,
-        TranslatePipe,
-    ],
+	selector: 'learningpath-badges',
+	templateUrl: './learningpath-badges.component.html',
+	styleUrls: ['../../learningpath-edit-form/learningpath-edit-form.component.scss'],
+	imports: [
+		BgAwaitPromises,
+		HlmH2Directive,
+		FormsModule,
+		HlmInputDirective,
+		NgClass,
+		NgFor,
+		NgIf,
+		BgBadgecard,
+		TranslatePipe,
+	],
 })
 export class LearningPathBadgesComponent implements OnInit {
 	// @Output() selectedBadgesChanged = new EventEmitter<{ urls: string[], studyLoad: number }>();

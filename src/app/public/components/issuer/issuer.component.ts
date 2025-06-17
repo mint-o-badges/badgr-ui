@@ -14,8 +14,8 @@ import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 import { OebIssuerDetailComponent } from '../../../common/components/issuer/oeb-issuer-detail.component';
 
 @Component({
-    templateUrl: './issuer.component.html',
-    imports: [BgAwaitPromises, OebIssuerDetailComponent],
+	templateUrl: './issuer.component.html',
+	imports: [BgAwaitPromises, OebIssuerDetailComponent],
 })
 export class PublicIssuerComponent {
 	readonly issuerImagePlaceholderUrl = preloadImageURL(

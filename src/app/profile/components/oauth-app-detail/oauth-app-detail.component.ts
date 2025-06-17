@@ -16,16 +16,9 @@ import { NgIf, NgFor } from '@angular/common';
 import { SvgIconComponent } from '../../../common/components/svg-icon.component';
 
 @Component({
-    selector: 'oauth-app-detail-component',
-    templateUrl: './oauth-app-detail.html',
-    imports: [
-        BgAwaitPromises,
-        FormMessageComponent,
-        TimeComponent,
-        NgIf,
-        SvgIconComponent,
-        NgFor,
-    ],
+	selector: 'oauth-app-detail-component',
+	templateUrl: './oauth-app-detail.html',
+	imports: [BgAwaitPromises, FormMessageComponent, TimeComponent, NgIf, SvgIconComponent, NgFor],
 })
 export class OAuthAppDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	app: OAuth2AppAuthorization;

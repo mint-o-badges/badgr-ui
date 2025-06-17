@@ -18,16 +18,16 @@ import { NgIf } from '@angular/common';
 import { BadgrButtonComponent } from './badgr-button.component';
 
 @Component({
-    selector: 'bg-formfield-text',
-    host: {
-        class: 'forminput',
-        '[class.forminput-is-error]': 'isErrorState',
-        '[class.forminput-locked]': 'isLockedState',
-        '[class.forminput-monospaced]': 'monospaced',
-        '[class.forminput-withbutton]': 'inlineButtonText',
-        '[class.forminput-withsublabel]': 'sublabel',
-    },
-    template: `
+	selector: 'bg-formfield-text',
+	host: {
+		class: 'forminput',
+		'[class.forminput-is-error]': 'isErrorState',
+		'[class.forminput-locked]': 'isLockedState',
+		'[class.forminput-monospaced]': 'monospaced',
+		'[class.forminput-withbutton]': 'inlineButtonText',
+		'[class.forminput-withsublabel]': 'sublabel',
+	},
+	template: `
 		<div class="forminput-x-labelrow">
 			<label class="forminput-x-label" [attr.for]="inputName" *ngIf="label || includeLabelAsWrapper">
 				{{ label }} <span *ngIf="optional">(OPTIONAL)</span>
@@ -84,12 +84,7 @@ import { BadgrButtonComponent } from './badgr-button.component';
 		</div>
 		<p class="forminput-x-error" *ngIf="isErrorState">{{ errorMessageForDisplay }}</p>
 	`,
-    imports: [
-        NgIf,
-        FormsModule,
-        ReactiveFormsModule,
-        BadgrButtonComponent,
-    ],
+	imports: [NgIf, FormsModule, ReactiveFormsModule, BadgrButtonComponent],
 })
 export class FormFieldText implements OnChanges, AfterViewInit {
 	@Input()

@@ -20,20 +20,20 @@ import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-    selector: 'learningpath-upload',
-    templateUrl: './learningpath-upload.component.html',
-    imports: [
-        BgBreadcrumbsComponent,
-        FormMessageComponent,
-        HlmH1Directive,
-        HlmPDirective,
-        HlmH3Directive,
-        FormsModule,
-        ReactiveFormsModule,
-        BgFormFieldFileComponent,
-        OebButtonComponent,
-        TranslatePipe,
-    ],
+	selector: 'learningpath-upload',
+	templateUrl: './learningpath-upload.component.html',
+	imports: [
+		BgBreadcrumbsComponent,
+		FormMessageComponent,
+		HlmH1Directive,
+		HlmPDirective,
+		HlmH3Directive,
+		FormsModule,
+		ReactiveFormsModule,
+		BgFormFieldFileComponent,
+		OebButtonComponent,
+		TranslatePipe,
+	],
 })
 export class LearningPathUploadComponent extends BaseAuthenticatedRoutableComponent {
 	jsonForm: FormGroup;

@@ -2,9 +2,7 @@ import { Routes } from '@angular/router';
 
 import { ProfileComponent } from './components/profile/profile.component';
 import { AppIntegrationListComponent } from './components/app-integrations-list/app-integrations-list.component';
-import {
-	BadgebookLti1DetailComponent,
-} from './components/badgebook-lti1-integration-detail/badgebook-lti1-integration-detail.component';
+import { BadgebookLti1DetailComponent } from './components/badgebook-lti1-integration-detail/badgebook-lti1-integration-detail.component';
 import { ProfileEditComponent } from './components/profile-edit/profile-edit.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { OAuthAppDetailComponent } from './components/oauth-app-detail/oauth-app-detail.component';

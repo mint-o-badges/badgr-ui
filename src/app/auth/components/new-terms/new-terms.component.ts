@@ -10,15 +10,9 @@ import { FormsModule } from '@angular/forms';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 
 @Component({
-    selector: 'app-new-terms',
-    templateUrl: './new-terms.component.html',
-    imports: [
-        RouterLink,
-        OebCheckboxComponent,
-        FormsModule,
-        OebButtonComponent,
-        TranslatePipe,
-    ],
+	selector: 'app-new-terms',
+	templateUrl: './new-terms.component.html',
+	imports: [RouterLink, OebCheckboxComponent, FormsModule, OebButtonComponent, TranslatePipe],
 })
 export class NewTermsComponent extends BaseRoutableComponent {
 	confirmed = false;

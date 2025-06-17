@@ -15,14 +15,10 @@ import { FormsModule } from '@angular/forms';
  * of this.
  */
 @Component({
-    selector: 'select-issuer-dialog',
-    templateUrl: 'select-issuer-dialog.component.html',
-    styleUrls: ['./select-issuer-dialog.component.css'],
-    imports: [
-        SvgIconComponent,
-        NgFor,
-        FormsModule,
-    ],
+	selector: 'select-issuer-dialog',
+	templateUrl: 'select-issuer-dialog.component.html',
+	styleUrls: ['./select-issuer-dialog.component.css'],
+	imports: [SvgIconComponent, NgFor, FormsModule],
 })
 export class SelectIssuerDialog extends BaseDialog {
 	Array = Array;

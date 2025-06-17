@@ -19,16 +19,16 @@ import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/sr
 import { IssuerEditFormComponent } from '../issuer-edit-form/issuer-edit-form.component';
 
 @Component({
-    selector: 'issuer-edit',
-    templateUrl: './issuer-edit.component.html',
-    imports: [
-        FormMessageComponent,
-        BgBreadcrumbsComponent,
-        HlmH1Directive,
-        HlmPDirective,
-        IssuerEditFormComponent,
-        TranslatePipe,
-    ],
+	selector: 'issuer-edit',
+	templateUrl: './issuer-edit.component.html',
+	imports: [
+		FormMessageComponent,
+		BgBreadcrumbsComponent,
+		HlmH1Directive,
+		HlmPDirective,
+		IssuerEditFormComponent,
+		TranslatePipe,
+	],
 })
 export class IssuerEditComponent extends BaseAuthenticatedRoutableComponent {
 	issuer: Issuer;

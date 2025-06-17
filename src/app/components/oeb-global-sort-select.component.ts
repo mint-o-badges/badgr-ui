@@ -4,8 +4,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { OebSelectComponent } from './select.component';
 
 @Component({
-    selector: 'oeb-global-sort-select',
-    template: `
+	selector: 'oeb-global-sort-select',
+	template: `
 		<oeb-select
 			actionBar="true"
 			class="oeb tw-block tw-w-full"
@@ -17,7 +17,7 @@ import { OebSelectComponent } from './select.component';
 			noTopMargin="true"
 		></oeb-select>
 	`,
-    imports: [OebSelectComponent],
+	imports: [OebSelectComponent],
 })
 export class OebGlobalSortSelectComponent implements OnInit {
 	@Input() control: FormControl = new FormControl('name_asc');

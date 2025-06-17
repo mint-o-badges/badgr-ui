@@ -23,11 +23,11 @@ describe('ResetPasswordSent', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-    imports: [RouterTestingModule, BadgrCommonModule, ...COMMON_IMPORTS, ResetPasswordSent],
-    providers: [FormBuilder, Title, ...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    teardown: { destroyAfterEach: false },
-}).compileComponents();
+			imports: [RouterTestingModule, BadgrCommonModule, ...COMMON_IMPORTS, ResetPasswordSent],
+			providers: [FormBuilder, Title, ...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
+			schemas: [CUSTOM_ELEMENTS_SCHEMA],
+			teardown: { destroyAfterEach: false },
+		}).compileComponents();
 		fixture = TestBed.createComponent(ResetPasswordSent);
 		component = fixture.debugElement.componentInstance;
 	});

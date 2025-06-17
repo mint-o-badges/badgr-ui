@@ -9,14 +9,10 @@ type FaqItem = {
 };
 
 @Component({
-    selector: 'app-faq',
-    templateUrl: './faq.component.html',
-    styleUrls: ['./faq.component.scss'],
-    imports: [
-        NgFor,
-        NgClass,
-        TranslatePipe,
-    ],
+	selector: 'app-faq',
+	templateUrl: './faq.component.html',
+	styleUrls: ['./faq.component.scss'],
+	imports: [NgFor, NgClass, TranslatePipe],
 })
 export class FaqComponent implements OnInit {
 	data: FaqItem[] = [];

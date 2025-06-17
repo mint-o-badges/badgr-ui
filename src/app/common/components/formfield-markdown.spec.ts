@@ -17,10 +17,10 @@ describe('FormFieldMarkdown', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-    imports: [RouterTestingModule, LMarkdownEditorModule, ...COMMON_IMPORTS, FormFieldMarkdown],
-    providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
-}).compileComponents();
+			imports: [RouterTestingModule, LMarkdownEditorModule, ...COMMON_IMPORTS, FormFieldMarkdown],
+			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
+			schemas: [CUSTOM_ELEMENTS_SCHEMA],
+		}).compileComponents();
 		fixture = TestBed.createComponent(FormFieldMarkdown);
 		fixture.componentInstance.control = new FormControl('', Validators.required);
 		fixture.detectChanges();

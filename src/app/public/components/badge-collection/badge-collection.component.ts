@@ -16,16 +16,8 @@ import { BgBadgecard } from '../../../common/components/bg-badgecard';
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-    templateUrl: 'badge-collection.component.html',
-    imports: [
-        BgAwaitPromises,
-        NgIf,
-        NgFor,
-        BgImageStatusPlaceholderDirective,
-        BgBadgecard,
-        SlicePipe,
-        TranslatePipe,
-    ],
+	templateUrl: 'badge-collection.component.html',
+	imports: [BgAwaitPromises, NgIf, NgFor, BgImageStatusPlaceholderDirective, BgBadgecard, SlicePipe, TranslatePipe],
 })
 export class PublicBadgeCollectionComponent {
 	readonly issuerImagePlacholderUrl = preloadImageURL(

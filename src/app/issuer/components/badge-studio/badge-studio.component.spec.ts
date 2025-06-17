@@ -21,10 +21,17 @@ describe('BadgeStudioComponent', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-    imports: [RouterTestingModule, CommonModule, FormsModule, BadgrCommonModule, ...COMMON_IMPORTS, BadgeStudioComponent],
-    providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
-}).compileComponents();
+			imports: [
+				RouterTestingModule,
+				CommonModule,
+				FormsModule,
+				BadgrCommonModule,
+				...COMMON_IMPORTS,
+				BadgeStudioComponent,
+			],
+			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
+			schemas: [CUSTOM_ELEMENTS_SCHEMA],
+		}).compileComponents();
 		fixture = TestBed.createComponent(BadgeStudioComponent);
 		component = fixture.debugElement.componentInstance;
 	});

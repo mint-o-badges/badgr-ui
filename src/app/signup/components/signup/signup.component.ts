@@ -25,23 +25,23 @@ import { AltchaComponent } from '../../../components/altcha.component';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 
 @Component({
-    selector: 'sign-up',
-    templateUrl: './signup.component.html',
-    imports: [
-        FormMessageComponent,
-        OAuthBannerComponent,
-        NgIf,
-        HlmPDirective,
-        RouterLink,
-        NgFor,
-        FormsModule,
-        ReactiveFormsModule,
-        OebInputComponent,
-        OebCheckboxComponent,
-        AltchaComponent,
-        OebButtonComponent,
-        TranslatePipe,
-    ],
+	selector: 'sign-up',
+	templateUrl: './signup.component.html',
+	imports: [
+		FormMessageComponent,
+		OAuthBannerComponent,
+		NgIf,
+		HlmPDirective,
+		RouterLink,
+		NgFor,
+		FormsModule,
+		ReactiveFormsModule,
+		OebInputComponent,
+		OebCheckboxComponent,
+		AltchaComponent,
+		OebButtonComponent,
+		TranslatePipe,
+	],
 })
 export class SignupComponent extends BaseRoutableComponent implements OnInit, AfterViewInit {
 	// Translations

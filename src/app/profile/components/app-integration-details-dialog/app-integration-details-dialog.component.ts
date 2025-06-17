@@ -5,8 +5,8 @@ import { SvgIconComponent } from '../../../common/components/svg-icon.component'
 import { NgIf } from '@angular/common';
 
 @Component({
-    selector: 'app-integration-details-dialog',
-    template: ` <dialog
+	selector: 'app-integration-details-dialog',
+	template: ` <dialog
 		aria-labelledby="addCredentialsDialog"
 		aria-describedby="dialog1Desc"
 		class="dialog dialog-is-active l-dialog"
@@ -55,11 +55,7 @@ import { NgIf } from '@angular/common';
 			</div>
 		</div>
 	</dialog>`,
-    imports: [
-        SvgIconComponent,
-        NgIf,
-        TranslatePipe,
-    ],
+	imports: [SvgIconComponent, NgIf, TranslatePipe],
 })
 export class AppIntegrationDetailsDialog extends BaseDialog {
 	@Output() tokenDeleted = new EventEmitter();

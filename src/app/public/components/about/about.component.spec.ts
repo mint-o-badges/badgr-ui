@@ -11,10 +11,15 @@ describe('AboutComponent', () => {
 
 	beforeEach(waitForAsync(() => {
 		TestBed.configureTestingModule({
-    imports: [...COMMON_IMPORTS, BadgrCommonModule, TranslateTestingModule.withTranslations('de', {}), AboutComponent],
-    providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
-    teardown: { destroyAfterEach: false },
-}).compileComponents();
+			imports: [
+				...COMMON_IMPORTS,
+				BadgrCommonModule,
+				TranslateTestingModule.withTranslations('de', {}),
+				AboutComponent,
+			],
+			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
+			teardown: { destroyAfterEach: false },
+		}).compileComponents();
 	}));
 
 	beforeEach(() => {

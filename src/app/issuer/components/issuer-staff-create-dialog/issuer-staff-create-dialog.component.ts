@@ -19,19 +19,19 @@ import { FormFieldRadio } from '../../../common/components/formfield-radio';
 import { FormFieldText } from '../../../common/components/formfield-text';
 
 @Component({
-    selector: 'issuer-staff-create-dialog',
-    templateUrl: './issuer-staff-create-dialog.component.html',
-    styleUrls: ['./issuer-staff-create-dialog.component.css'],
-    imports: [
-        SvgIconComponent,
-        FormsModule,
-        ReactiveFormsModule,
-        NgFor,
-        FormFieldRadio,
-        FormFieldText,
-        NgIf,
-        TranslatePipe,
-    ],
+	selector: 'issuer-staff-create-dialog',
+	templateUrl: './issuer-staff-create-dialog.component.html',
+	styleUrls: ['./issuer-staff-create-dialog.component.css'],
+	imports: [
+		SvgIconComponent,
+		FormsModule,
+		ReactiveFormsModule,
+		NgFor,
+		FormFieldRadio,
+		FormFieldText,
+		NgIf,
+		TranslatePipe,
+	],
 })
 export class IssuerStaffCreateDialogComponent extends BaseDialog {
 	staffCreateForm = typedFormGroup()

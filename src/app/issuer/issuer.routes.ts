@@ -1,4 +1,3 @@
-
 import { IssuerListComponent } from './components/issuer-list/issuer-list.component';
 import { IssuerCreateComponent } from './components/issuer-create/issuer-create.component';
 import { IssuerDetailComponent } from './components/issuer-detail/issuer-detail.component';

@@ -8,8 +8,8 @@ import { FormFieldText } from '../../../common/components/formfield-text';
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-    selector: 'add-credentials-dialog',
-    template: ` <dialog
+	selector: 'add-credentials-dialog',
+	template: ` <dialog
 		aria-labelledby="addCredentialsDialog"
 		aria-describedby="dialog1Desc"
 		class="dialog dialog-is-active l-dialog"
@@ -53,13 +53,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 			</div>
 		</div>
 	</dialog>`,
-    imports: [
-        SvgIconComponent,
-        FormsModule,
-        ReactiveFormsModule,
-        FormFieldText,
-        TranslatePipe,
-    ],
+	imports: [SvgIconComponent, FormsModule, ReactiveFormsModule, FormFieldText, TranslatePipe],
 })
 export class AddCredentialsDialog extends BaseDialog {
 	@Output() newTokenAdded = new EventEmitter();

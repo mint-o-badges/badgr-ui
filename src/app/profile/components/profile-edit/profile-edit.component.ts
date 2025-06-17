@@ -18,17 +18,17 @@ import { FormFieldText } from '../../../common/components/formfield-text';
 import { BadgrButtonComponent } from '../../../common/components/badgr-button.component';
 
 @Component({
-    templateUrl: './profile-edit.component.html',
-    imports: [
-        BgAwaitPromises,
-        FormMessageComponent,
-        BgBreadcrumbsComponent,
-        FormsModule,
-        ReactiveFormsModule,
-        FormFieldText,
-        BadgrButtonComponent,
-        RouterLink,
-    ],
+	templateUrl: './profile-edit.component.html',
+	imports: [
+		BgAwaitPromises,
+		FormMessageComponent,
+		BgBreadcrumbsComponent,
+		FormsModule,
+		ReactiveFormsModule,
+		FormFieldText,
+		BadgrButtonComponent,
+		RouterLink,
+	],
 })
 export class ProfileEditComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	profile: UserProfile;

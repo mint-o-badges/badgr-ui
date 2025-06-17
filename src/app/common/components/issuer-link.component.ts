@@ -5,11 +5,11 @@ import { preloadImageURL } from '../util/file-util';
 import { BgImageStatusPlaceholderDirective } from '../directives/bg-image-status-placeholder.directive';
 
 @Component({
-    selector: '[bgIssuerLink]',
-    host: {
-        target: '_blank',
-    },
-    template: `
+	selector: '[bgIssuerLink]',
+	host: {
+		target: '_blank',
+	},
+	template: `
 		<img
 			[loaded-src]="bgIssuerLink?.image"
 			[loading-src]="issuerPlaceholderImageSrc"
@@ -18,7 +18,7 @@ import { BgImageStatusPlaceholderDirective } from '../directives/bg-image-status
 		/>
 		{{ bgIssuerLink?.name || 'Unknown Issuer' }}
 	`,
-    imports: [BgImageStatusPlaceholderDirective],
+	imports: [BgImageStatusPlaceholderDirective],
 })
 export class BgIssuerLinkComponent implements OnChanges {
 	readonly issuerPlaceholderImageSrc = preloadImageURL(

@@ -12,14 +12,9 @@ import { NgFor } from '@angular/common';
 import { FormFieldText } from '../../../common/components/formfield-text';
 
 @Component({
-    selector: 'badgeclass-issue-bulk-award-error',
-    templateUrl: './badgeclass-issue-bulk-award-error.component.html',
-    imports: [
-        FormsModule,
-        ReactiveFormsModule,
-        NgFor,
-        FormFieldText,
-    ],
+	selector: 'badgeclass-issue-bulk-award-error',
+	templateUrl: './badgeclass-issue-bulk-award-error.component.html',
+	imports: [FormsModule, ReactiveFormsModule, NgFor, FormFieldText],
 })
 export class BadgeclassIssueBulkAwardError extends BaseAuthenticatedRoutableComponent implements OnInit {
 	@Input() transformedImportData: TransformedImportData;

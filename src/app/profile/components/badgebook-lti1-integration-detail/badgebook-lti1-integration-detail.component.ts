@@ -13,16 +13,16 @@ import { SvgIconComponent } from '../../../common/components/svg-icon.component'
 import { BgCopyInputDirective } from '../../../common/directives/bg-copy-input.directive';
 
 @Component({
-    selector: 'badgebook-lti1-detail',
-    templateUrl: './badgebook-lti1-integration-detail.component.html',
-    imports: [
-        FormMessageComponent,
-        BgAwaitPromises,
-        SvgIconComponent,
-        BgCopyInputDirective,
-        RouterLink,
-        forwardRef(() => IntegrationImageComponent),
-    ],
+	selector: 'badgebook-lti1-detail',
+	templateUrl: './badgebook-lti1-integration-detail.component.html',
+	imports: [
+		FormMessageComponent,
+		BgAwaitPromises,
+		SvgIconComponent,
+		BgCopyInputDirective,
+		RouterLink,
+		forwardRef(() => IntegrationImageComponent),
+	],
 })
 export class BadgebookLti1DetailComponent extends AppIntegrationDetailComponent<BadebookLti1Integration> {
 	readonly externalAppsBadgrImageUrl =
@@ -47,8 +47,8 @@ export class BadgebookLti1DetailComponent extends AppIntegrationDetailComponent<
 }
 
 @Component({
-    selector: '[integration-image]',
-    template: ` <a class="integrationthumb" href="javascript: void(0)" (click)="imageClick()" data-index="2">
+	selector: '[integration-image]',
+	template: ` <a class="integrationthumb" href="javascript: void(0)" (click)="imageClick()" data-index="2">
 		<span>{{ caption }}<span> (Open Thumbnail)</span></span>
 		<img srcset="{{ imagePath }} 2x" [src]="imagePath" alt="thumbnail description" #addAppConfigurationImage />
 	</a>`,

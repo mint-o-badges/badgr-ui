@@ -15,15 +15,9 @@ import { NgIf, NgFor } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-    selector: 'share-social-dialog',
-    templateUrl: 'share-social-dialog.component.html',
-    imports: [
-        SvgIconComponent,
-        NgIf,
-        FormsModule,
-        NgFor,
-        TranslatePipe,
-    ],
+	selector: 'share-social-dialog',
+	templateUrl: 'share-social-dialog.component.html',
+	imports: [SvgIconComponent, NgIf, FormsModule, NgFor, TranslatePipe],
 })
 export class ShareSocialDialog extends BaseDialog {
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -27,17 +27,17 @@ import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 import { LearningPathEditFormComponent } from '../learningpath-edit-form/learningpath-edit-form.component';
 
 @Component({
-    selector: 'learningpath-edit',
-    templateUrl: './learningpath-edit.component.html',
-    imports: [
-        BgBreadcrumbsComponent,
-        FormMessageComponent,
-        HlmH1Directive,
-        HlmH3Directive,
-        BgAwaitPromises,
-        LearningPathEditFormComponent,
-        TranslatePipe,
-    ],
+	selector: 'learningpath-edit',
+	templateUrl: './learningpath-edit.component.html',
+	imports: [
+		BgBreadcrumbsComponent,
+		FormMessageComponent,
+		HlmH1Directive,
+		HlmH3Directive,
+		BgAwaitPromises,
+		LearningPathEditFormComponent,
+		TranslatePipe,
+	],
 })
 export class LearningPathEditComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	breadcrumbLinkEntries: LinkEntry[] = [];

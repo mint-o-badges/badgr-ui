@@ -26,20 +26,20 @@ import { OebCheckboxComponent } from '../../../components/oeb-checkbox.component
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 
 @Component({
-    templateUrl: 'badgeclass-edit-copypermissions.component.html',
-    styleUrl: './badgeclass-edit-copypermissions.component.css',
-    imports: [
-        BgBreadcrumbsComponent,
-        HlmH1Directive,
-        NgIf,
-        BgAwaitPromises,
-        FormsModule,
-        ReactiveFormsModule,
-        HlmH2Directive,
-        OebCheckboxComponent,
-        OebButtonComponent,
-        TranslatePipe,
-    ],
+	templateUrl: 'badgeclass-edit-copypermissions.component.html',
+	styleUrl: './badgeclass-edit-copypermissions.component.css',
+	imports: [
+		BgBreadcrumbsComponent,
+		HlmH1Directive,
+		NgIf,
+		BgAwaitPromises,
+		FormsModule,
+		ReactiveFormsModule,
+		HlmH2Directive,
+		OebCheckboxComponent,
+		OebButtonComponent,
+		TranslatePipe,
+	],
 })
 export class BadgeClassEditCopyPermissionsComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	issuerSlug: string;

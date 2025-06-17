@@ -32,25 +32,25 @@ import { HlmIconDirective } from '../../../components/spartan/ui-icon-helm/src/l
 import { BgImageStatusPlaceholderDirective } from '../../../common/directives/bg-image-status-placeholder.directive';
 
 @Component({
-    selector: 'issuer-list',
-    templateUrl: './issuer-list.component.html',
-    imports: [
-        FormMessageComponent,
-        HlmH1Directive,
-        HlmPDirective,
-        NgIf,
-        OebButtonComponent,
-        RouterLink,
-        NgTemplateOutlet,
-        NgIcon,
-        HlmIconDirective,
-        NgFor,
-        BgImageStatusPlaceholderDirective,
-        NgClass,
-        FormsModule,
-        NgStyle,
-        TranslatePipe,
-    ],
+	selector: 'issuer-list',
+	templateUrl: './issuer-list.component.html',
+	imports: [
+		FormMessageComponent,
+		HlmH1Directive,
+		HlmPDirective,
+		NgIf,
+		OebButtonComponent,
+		RouterLink,
+		NgTemplateOutlet,
+		NgIcon,
+		HlmIconDirective,
+		NgFor,
+		BgImageStatusPlaceholderDirective,
+		NgClass,
+		FormsModule,
+		NgStyle,
+		TranslatePipe,
+	],
 })
 export class IssuerListComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	readonly issuerPlaceholderSrc = preloadImageURL('../../../../breakdown/static/images/placeholderavatar-issuer.svg');

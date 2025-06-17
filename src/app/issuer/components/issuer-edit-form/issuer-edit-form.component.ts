@@ -25,21 +25,21 @@ import { NgIf } from '@angular/common';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 
 @Component({
-    selector: 'issuer-edit-form',
-    templateUrl: 'issuer-edit-form.component.html',
-    styleUrls: ['issuer-edit-form.component.scss'],
-    imports: [
-        FormsModule,
-        BgFormFieldImageComponent,
-        OebInputComponent,
-        OebSelectComponent,
-        OebCheckboxComponent,
-        NgIf,
-        ReactiveFormsModule,
-        OebButtonComponent,
-        RouterLink,
-        TranslatePipe,
-    ],
+	selector: 'issuer-edit-form',
+	templateUrl: 'issuer-edit-form.component.html',
+	styleUrls: ['issuer-edit-form.component.scss'],
+	imports: [
+		FormsModule,
+		BgFormFieldImageComponent,
+		OebInputComponent,
+		OebSelectComponent,
+		OebCheckboxComponent,
+		NgIf,
+		ReactiveFormsModule,
+		OebButtonComponent,
+		RouterLink,
+		TranslatePipe,
+	],
 })
 export class IssuerEditFormComponent implements OnInit {
 	readonly issuerImagePlacholderUrl = preloadImageURL(

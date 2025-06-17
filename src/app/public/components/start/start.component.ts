@@ -11,20 +11,20 @@ import { HlmH3Directive } from '../../../components/spartan/ui-typography-helm/s
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-    selector: 'app-start',
-    templateUrl: './start.component.html',
-    styleUrls: ['./start.component.scss'],
-    imports: [
-        FormMessageComponent,
-        HlmH1Directive,
-        HlmPDirective,
-        OebButtonComponent,
-        RouterLink,
-        NgIf,
-        HlmH2Directive,
-        HlmH3Directive,
-        TranslatePipe,
-    ],
+	selector: 'app-start',
+	templateUrl: './start.component.html',
+	styleUrls: ['./start.component.scss'],
+	imports: [
+		FormMessageComponent,
+		HlmH1Directive,
+		HlmPDirective,
+		OebButtonComponent,
+		RouterLink,
+		NgIf,
+		HlmH2Directive,
+		HlmH3Directive,
+		TranslatePipe,
+	],
 })
 export class StartComponent implements OnInit {
 	constructor(public sessionService: SessionService) {}

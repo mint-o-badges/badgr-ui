@@ -13,20 +13,20 @@ import { HlmH3Directive } from '../../../../components/spartan/ui-typography-hel
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-    selector: 'learningpath-tags',
-    templateUrl: './learningpath-tags.component.html',
-    styleUrls: ['../../learningpath-edit-form/learningpath-edit-form.component.scss'],
-    imports: [
-        HlmH2Directive,
-        AutocompleteLibModule,
-        OebButtonComponent,
-        NgIf,
-        NgFor,
-        HlmPDirective,
-        BgImageStatusPlaceholderDirective,
-        HlmH3Directive,
-        TranslatePipe,
-    ],
+	selector: 'learningpath-tags',
+	templateUrl: './learningpath-tags.component.html',
+	styleUrls: ['../../learningpath-edit-form/learningpath-edit-form.component.scss'],
+	imports: [
+		HlmH2Directive,
+		AutocompleteLibModule,
+		OebButtonComponent,
+		NgIf,
+		NgFor,
+		HlmPDirective,
+		BgImageStatusPlaceholderDirective,
+		HlmH3Directive,
+		TranslatePipe,
+	],
 })
 export class LearningPathTagsComponent implements OnInit {
 	@Input() lpName: string;

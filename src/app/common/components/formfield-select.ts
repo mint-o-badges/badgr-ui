@@ -7,13 +7,13 @@ import { CustomValidatorMessages, messagesForValidationError } from './formfield
 import { NgIf, NgFor } from '@angular/common';
 
 @Component({
-    selector: 'bg-formfield-select',
-    host: {
-        class: 'forminput',
-        '[class.forminput-is-error]': 'isErrorState',
-        '[class.forminput-locked]': 'isLockedState',
-    },
-    template: `
+	selector: 'bg-formfield-select',
+	host: {
+		class: 'forminput',
+		'[class.forminput-is-error]': 'isErrorState',
+		'[class.forminput-locked]': 'isLockedState',
+	},
+	template: `
 		<label class="forminput-x-label" [attr.for]="inputName" *ngIf="label || includeLabelAsWrapper">
 			{{ label }}
 			<span *ngIf="formFieldAside">{{ formFieldAside }}</span>
@@ -41,12 +41,7 @@ import { NgIf, NgFor } from '@angular/common';
 
 		<p class="forminput-x-error" *ngIf="isErrorState">{{ errorMessageForDisplay }}</p>
 	`,
-    imports: [
-        NgIf,
-        FormsModule,
-        ReactiveFormsModule,
-        NgFor,
-    ],
+	imports: [NgIf, FormsModule, ReactiveFormsModule, NgFor],
 })
 export class FormFieldSelect implements OnChanges, AfterViewInit {
 	@Input() control: FormControl;

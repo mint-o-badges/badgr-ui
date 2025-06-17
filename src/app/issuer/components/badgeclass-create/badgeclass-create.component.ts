@@ -22,15 +22,15 @@ import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 import { BadgeClassEditFormComponent } from '../badgeclass-edit-form/badgeclass-edit-form.component';
 
 @Component({
-    templateUrl: 'badgeclass-create.component.html',
-    imports: [
-        BgBreadcrumbsComponent,
-        HlmH1Directive,
-        NgIf,
-        BgAwaitPromises,
-        BadgeClassEditFormComponent,
-        TranslatePipe,
-    ],
+	templateUrl: 'badgeclass-create.component.html',
+	imports: [
+		BgBreadcrumbsComponent,
+		HlmH1Directive,
+		NgIf,
+		BgAwaitPromises,
+		BadgeClassEditFormComponent,
+		TranslatePipe,
+	],
 })
 export class BadgeClassCreateComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	issuerSlug: string;

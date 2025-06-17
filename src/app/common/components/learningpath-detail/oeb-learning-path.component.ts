@@ -27,32 +27,32 @@ import { BgBadgecard } from '../bg-badgecard';
 import { LearningPathGraduatesDatatableComponent } from '../../../components/datatable-learningpath-graduates.component';
 
 @Component({
-    selector: 'oeb-learning-path',
-    templateUrl: './oeb-learning-path.component.html',
-    styleUrl: './oeb-learning-path.component.scss',
-    animations: [
-        trigger('inOutAnimation', [
-            transition(':enter', [
-                style({ transform: 'translateX(-120px)', opacity: '0' }),
-                animate('.5s ease-out', style({ transform: 'translateX(0px)', opacity: '1' })),
-            ]),
-            // transition(':leave', [style({ opacity: '1' }), animate('.5s ease-out', style({ opacity: '0' }))]),
-        ]),
-        trigger('stagger', [transition(':enter', [query(':enter', stagger('.3s', [animateChild()]))])]),
-    ],
-    imports: [
-        HlmH2Directive,
-        HlmPDirective,
-        HlmADirective,
-        RouterLink,
-        NgFor,
-        OebButtonComponent,
-        HlmH3Directive,
-        NgIf,
-        BgBadgecard,
-        LearningPathGraduatesDatatableComponent,
-        TranslatePipe,
-    ],
+	selector: 'oeb-learning-path',
+	templateUrl: './oeb-learning-path.component.html',
+	styleUrl: './oeb-learning-path.component.scss',
+	animations: [
+		trigger('inOutAnimation', [
+			transition(':enter', [
+				style({ transform: 'translateX(-120px)', opacity: '0' }),
+				animate('.5s ease-out', style({ transform: 'translateX(0px)', opacity: '1' })),
+			]),
+			// transition(':leave', [style({ opacity: '1' }), animate('.5s ease-out', style({ opacity: '0' }))]),
+		]),
+		trigger('stagger', [transition(':enter', [query(':enter', stagger('.3s', [animateChild()]))])]),
+	],
+	imports: [
+		HlmH2Directive,
+		HlmPDirective,
+		HlmADirective,
+		RouterLink,
+		NgFor,
+		OebButtonComponent,
+		HlmH3Directive,
+		NgIf,
+		BgBadgecard,
+		LearningPathGraduatesDatatableComponent,
+		TranslatePipe,
+	],
 })
 export class OebLearningPathDetailComponent extends BaseRoutableComponent implements OnInit {
 	@Input() learningPath;

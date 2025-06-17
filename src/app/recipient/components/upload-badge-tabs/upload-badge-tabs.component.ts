@@ -2,8 +2,8 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { TypedFormControl } from '../../../common/util/typed-forms';
-import { FormFieldText } from "../../../common/components/formfield-text";
-import { BgFormFieldImageComponent } from "../../../common/components/formfield-image";
+import { FormFieldText } from '../../../common/components/formfield-text';
+import { BgFormFieldImageComponent } from '../../../common/components/formfield-image';
 
 @Component({
 	selector: 'app-upload-tab',

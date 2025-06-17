@@ -12,7 +12,17 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AbstractControl, FormBuilder, Validators, ValidatorFn, ValidationErrors, FormControl, NgModel, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+	AbstractControl,
+	FormBuilder,
+	Validators,
+	ValidatorFn,
+	ValidationErrors,
+	FormControl,
+	NgModel,
+	FormsModule,
+	ReactiveFormsModule,
+} from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { Md5 } from 'ts-md5/dist/md5';
 
@@ -73,36 +83,36 @@ const MAX_STUDYLOAD_HRS: number = 10_000;
 const MAX_HRS_PER_COMPETENCY: number = 999;
 
 @Component({
-    selector: 'badgeclass-edit-form',
-    templateUrl: './badgeclass-edit-form.component.html',
-    styleUrl: './badgeclass-edit-form.component.css',
-    imports: [
-        FormMessageComponent,
-        NgIf,
-        BadgeLegendComponent,
-        FormsModule,
-        ReactiveFormsModule,
-        StepperComponent,
-        StepComponent,
-        CdkStep,
-        HlmH2Directive,
-        OebInputComponent,
-        HlmPDirective,
-        BgFormFieldImageComponent,
-        BadgeStudioComponent,
-        NgClass,
-        OebButtonComponent,
-        NgFor,
-        OebCheckboxComponent,
-        OebCollapsibleComponent,
-        NgIcon,
-        HlmIconDirective,
-        NgStyle,
-        OebSelectComponent,
-        AutocompleteLibModule,
-        DecimalPipe,
-        TranslatePipe,
-    ],
+	selector: 'badgeclass-edit-form',
+	templateUrl: './badgeclass-edit-form.component.html',
+	styleUrl: './badgeclass-edit-form.component.css',
+	imports: [
+		FormMessageComponent,
+		NgIf,
+		BadgeLegendComponent,
+		FormsModule,
+		ReactiveFormsModule,
+		StepperComponent,
+		StepComponent,
+		CdkStep,
+		HlmH2Directive,
+		OebInputComponent,
+		HlmPDirective,
+		BgFormFieldImageComponent,
+		BadgeStudioComponent,
+		NgClass,
+		OebButtonComponent,
+		NgFor,
+		OebCheckboxComponent,
+		OebCollapsibleComponent,
+		NgIcon,
+		HlmIconDirective,
+		NgStyle,
+		OebSelectComponent,
+		AutocompleteLibModule,
+		DecimalPipe,
+		TranslatePipe,
+	],
 })
 export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableComponent implements OnInit, AfterViewInit {
 	private readonly _hlmDialogService = inject(HlmDialogService);

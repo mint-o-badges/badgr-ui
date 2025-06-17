@@ -22,16 +22,16 @@ import { HlmH3Directive } from '../../../components/spartan/ui-typography-helm/s
 import { LearningPathEditFormComponent } from '../learningpath-edit-form/learningpath-edit-form.component';
 
 @Component({
-    selector: 'learningpath-create',
-    templateUrl: './learningpath-create.component.html',
-    imports: [
-        BgBreadcrumbsComponent,
-        FormMessageComponent,
-        HlmH1Directive,
-        HlmH3Directive,
-        LearningPathEditFormComponent,
-        TranslatePipe,
-    ],
+	selector: 'learningpath-create',
+	templateUrl: './learningpath-create.component.html',
+	imports: [
+		BgBreadcrumbsComponent,
+		FormMessageComponent,
+		HlmH1Directive,
+		HlmH3Directive,
+		LearningPathEditFormComponent,
+		TranslatePipe,
+	],
 })
 export class LearningPathCreateComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	breadcrumbLinkEntries: LinkEntry[] = [];

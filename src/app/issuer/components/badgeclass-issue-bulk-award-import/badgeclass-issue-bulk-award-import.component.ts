@@ -19,18 +19,18 @@ import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-    selector: 'Badgeclass-issue-bulk-award-import',
-    templateUrl: './badgeclass-issue-bulk-award-import.component.html',
-    imports: [
-        HlmH1Directive,
-        HlmPDirective,
-        HlmH3Directive,
-        FormsModule,
-        ReactiveFormsModule,
-        BgFormFieldFileComponent,
-        OebButtonComponent,
-        TranslatePipe,
-    ],
+	selector: 'Badgeclass-issue-bulk-award-import',
+	templateUrl: './badgeclass-issue-bulk-award-import.component.html',
+	imports: [
+		HlmH1Directive,
+		HlmPDirective,
+		HlmH3Directive,
+		FormsModule,
+		ReactiveFormsModule,
+		BgFormFieldFileComponent,
+		OebButtonComponent,
+		TranslatePipe,
+	],
 })
 export class BadgeClassIssueBulkAwardImportComponent extends BaseAuthenticatedRoutableComponent {
 	readonly csvUploadIconUrl = '../../../../breakdown/static/images/csvuploadicon.svg';

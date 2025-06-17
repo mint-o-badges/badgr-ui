@@ -27,14 +27,9 @@ import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 import { OebIssuerDetailComponent } from '../../../common/components/issuer/oeb-issuer-detail.component';
 
 @Component({
-    selector: 'issuer-detail',
-    templateUrl: './issuer-detail.component.html',
-    imports: [
-        FormMessageComponent,
-        BgAwaitPromises,
-        BgBreadcrumbsComponent,
-        OebIssuerDetailComponent,
-    ],
+	selector: 'issuer-detail',
+	templateUrl: './issuer-detail.component.html',
+	imports: [FormMessageComponent, BgAwaitPromises, BgBreadcrumbsComponent, OebIssuerDetailComponent],
 })
 export class IssuerDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	readonly issuerImagePlaceHolderUrl = preloadImageURL(

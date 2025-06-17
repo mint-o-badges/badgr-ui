@@ -32,9 +32,9 @@ import { ApiImportedBadgeInstance } from '../../models/recipient-badge-api.model
 import { BgBadgeDetail } from '../../../common/components/badge-detail/badge-detail.component';
 
 @Component({
-    selector: 'recipient-earned-badge-detail',
-    template: `<bg-badgedetail [config]="config" [awaitPromises]="[badgeLoaded]" [badge]="badge"></bg-badgedetail>`,
-    imports: [BgBadgeDetail],
+	selector: 'recipient-earned-badge-detail',
+	template: `<bg-badgedetail [config]="config" [awaitPromises]="[badgeLoaded]" [badge]="badge"></bg-badgedetail>`,
+	imports: [BgBadgeDetail],
 })
 export class ImportedBadgeDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	readonly issuerImagePlacholderUrl = preloadImageURL(

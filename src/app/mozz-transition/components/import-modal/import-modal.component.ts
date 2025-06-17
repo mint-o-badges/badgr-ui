@@ -11,17 +11,10 @@ import { NgIf, NgFor, I18nPluralPipe } from '@angular/common';
 import { BgFormFieldFileComponent } from '../../../common/components/formfield-file';
 
 @Component({
-    selector: 'import-modal',
-    templateUrl: './import-modal.component.html',
-    styleUrls: ['./import-modal.component.css'],
-    imports: [
-        SvgIconComponent,
-        NgIf,
-        NgFor,
-        FormsModule,
-        BgFormFieldFileComponent,
-        I18nPluralPipe,
-    ],
+	selector: 'import-modal',
+	templateUrl: './import-modal.component.html',
+	styleUrls: ['./import-modal.component.css'],
+	imports: [SvgIconComponent, NgIf, NgFor, FormsModule, BgFormFieldFileComponent, I18nPluralPipe],
 })
 export class ImportModalComponent extends BaseDialog implements OnInit {
 	@ViewChild('importModalDialog')

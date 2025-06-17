@@ -33,8 +33,8 @@ export interface BadgeSelectionDialogSettings {
 }
 
 @Component({
-    selector: 'badge-selection-dialog',
-    template: `
+	selector: 'badge-selection-dialog',
+	template: `
 		<dialog class="dialog dialog-large">
 			<section class="l-overflowlist">
 				<!-- Header and Search Area -->
@@ -199,13 +199,7 @@ export interface BadgeSelectionDialogSettings {
 			</section>
 		</dialog>
 	`,
-    imports: [
-        FormsModule,
-        NgIf,
-        SvgIconComponent,
-        BgAwaitPromises,
-        NgFor,
-    ],
+	imports: [FormsModule, NgIf, SvgIconComponent, BgAwaitPromises, NgFor],
 })
 export class BadgeSelectionDialog extends BaseDialog {
 	get searchQuery() {

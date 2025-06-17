@@ -4,8 +4,8 @@ import Tether from 'tether';
 import { NgClass } from '@angular/common';
 
 @Component({
-    selector: 'tooltip',
-    template: `
+	selector: 'tooltip',
+	template: `
 		<span #anchor (click)="toggleTip()"><ng-content select=".trigger"></ng-content></span>
 		<div #tooltip class="tooltip" [ngClass]="{ 'tooltip-is-active': active }">
 			<span class="tooltip-x-arrow"></span>
@@ -17,7 +17,7 @@ import { NgClass } from '@angular/common';
 			</div>
 		</div>
 	`,
-    imports: [NgClass],
+	imports: [NgClass],
 })
 export class TooltipComponent implements AfterViewInit, OnDestroy {
 	@Input() position = {

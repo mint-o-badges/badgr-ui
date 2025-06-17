@@ -26,15 +26,15 @@ import { BadgeClassEditFormComponent } from '../badgeclass-edit-form/badgeclass-
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-    selector: 'badgeclass-edit',
-    templateUrl: './badgeclass-edit.component.html',
-    imports: [
-        BgAwaitPromises,
-        FormMessageComponent,
-        BgBreadcrumbsComponent,
-        BadgeClassEditFormComponent,
-        TranslatePipe,
-    ],
+	selector: 'badgeclass-edit',
+	templateUrl: './badgeclass-edit.component.html',
+	imports: [
+		BgAwaitPromises,
+		FormMessageComponent,
+		BgBreadcrumbsComponent,
+		BadgeClassEditFormComponent,
+		TranslatePipe,
+	],
 })
 export class BadgeClassEditComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	get issuerSlug() {

@@ -33,27 +33,27 @@ import { BgLearningPathCard } from '../../../common/components/bg-learningpathca
 import { PaginationAdvancedComponent } from '../../../components/oeb-numbered-pagination';
 
 @Component({
-    selector: 'app-learningpaths-catalog',
-    templateUrl: './learningpath-catalog.component.html',
-    styleUrls: ['../badge-catalog/badge-catalog.component.css'],
-    animations: [appearAnimation],
-    imports: [
-        FormMessageComponent,
-        BgAwaitPromises,
-        HlmH1Directive,
-        NgIf,
-        CountUpModule,
-        FormsModule,
-        HlmInputDirective,
-        NgIcon,
-        HlmIconDirective,
-        OebGlobalSortSelectComponent,
-        NgFor,
-        BgLearningPathCard,
-        PaginationAdvancedComponent,
-        I18nPluralPipe,
-        TranslatePipe,
-    ],
+	selector: 'app-learningpaths-catalog',
+	templateUrl: './learningpath-catalog.component.html',
+	styleUrls: ['../badge-catalog/badge-catalog.component.css'],
+	animations: [appearAnimation],
+	imports: [
+		FormMessageComponent,
+		BgAwaitPromises,
+		HlmH1Directive,
+		NgIf,
+		CountUpModule,
+		FormsModule,
+		HlmInputDirective,
+		NgIcon,
+		HlmIconDirective,
+		OebGlobalSortSelectComponent,
+		NgFor,
+		BgLearningPathCard,
+		PaginationAdvancedComponent,
+		I18nPluralPipe,
+		TranslatePipe,
+	],
 })
 export class LearningPathsCatalogComponent extends BaseRoutableComponent implements OnInit {
 	learningPathsLoaded: Promise<unknown>;
