@@ -8,7 +8,7 @@ import { map } from 'rxjs';
 
 export type PdfResourceType = 'badges' | 'collections';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class PdfService {
 	baseUrl: string;
 

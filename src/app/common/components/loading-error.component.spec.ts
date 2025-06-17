@@ -19,8 +19,7 @@ describe('LoadingErrorComponent', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			declarations: [LoadingErrorComponent],
-			imports: [RouterTestingModule, CommonModule, ...COMMON_IMPORTS],
+			imports: [RouterTestingModule, CommonModule, ...COMMON_IMPORTS, LoadingErrorComponent],
 			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		}).compileComponents();

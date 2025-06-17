@@ -27,6 +27,7 @@ import { CompetencyType, PageConfig } from '../../../common/components/badge-det
 import { ApiLearningPath } from '../../../common/model/learningpath-api.model';
 import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
 import { TranslateService } from '@ngx-translate/core';
+import { BgBadgeDetail } from '../../../common/components/badge-detail/badge-detail.component';
 
 @Component({
 	selector: 'recipient-earned-badge-detail',
@@ -35,7 +36,7 @@ import { TranslateService } from '@ngx-translate/core';
 		[awaitPromises]="[badgesLoaded, learningPathsLoaded]"
 		[badge]="badge"
 	></bg-badgedetail>`,
-	standalone: false,
+	imports: [BgBadgeDetail],
 })
 export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	readonly issuerImagePlacholderUrl = preloadImageURL(

@@ -6,7 +6,6 @@ import { BaseRoutableComponent } from '../../../common/pages/base-routable.compo
 	selector: 'app-terms',
 	templateUrl: './terms-of-service.component.html',
 	styleUrls: ['./terms-of-service.component.css'],
-	standalone: false,
 })
 export class TermsComponent extends BaseRoutableComponent implements OnInit {
 	constructor(router: Router, route: ActivatedRoute) {

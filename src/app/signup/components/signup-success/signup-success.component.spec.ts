@@ -24,8 +24,8 @@ describe('SignupSuccessComponent', () => {
 				TranslateTestingModule.withTranslations('de', {}),
 				CommonEntityManagerModule,
 				RouterTestingModule,
+				SignupSuccessComponent,
 			],
-			declarations: [SignupSuccessComponent],
 			providers: [
 				Title,
 				...COMMON_MOCKS_PROVIDERS_WITH_SUBS,

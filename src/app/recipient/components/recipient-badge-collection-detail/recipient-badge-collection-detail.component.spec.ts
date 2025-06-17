@@ -28,8 +28,14 @@ describe('RecipientBadgeCollectionDetailComponent', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			declarations: [RecipientBadgeCollectionDetailComponent, RecipientBadgeSelectionDialog],
-			imports: [RouterTestingModule, CommonModule, BadgrCommonModule, ...COMMON_IMPORTS],
+			imports: [
+				RouterTestingModule,
+				CommonModule,
+				BadgrCommonModule,
+				...COMMON_IMPORTS,
+				RecipientBadgeCollectionDetailComponent,
+				RecipientBadgeSelectionDialog,
+			],
 			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 			teardown: { destroyAfterEach: false },

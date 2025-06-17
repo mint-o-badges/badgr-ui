@@ -11,6 +11,10 @@ import { StringMatchingUtil } from '../../../common/util/string-matching-util';
 import { SettingsService } from '../../../common/services/settings.service';
 import { BaseDialog } from '../../../common/dialogs/base-dialog';
 import { first } from 'rxjs/operators';
+import { FormsModule } from '@angular/forms';
+import { NgIf, NgFor } from '@angular/common';
+import { SvgIconComponent } from '../../../common/components/svg-icon.component';
+import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 
 export interface BadgeSelectionDialogOptions {
 	dialogId: string;
@@ -195,7 +199,7 @@ export interface BadgeSelectionDialogSettings {
 			</section>
 		</dialog>
 	`,
-	standalone: false,
+	imports: [FormsModule, NgIf, SvgIconComponent, BgAwaitPromises, NgFor],
 })
 export class BadgeSelectionDialog extends BaseDialog {
 	get searchQuery() {

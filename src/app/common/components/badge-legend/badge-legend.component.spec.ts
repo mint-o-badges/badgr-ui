@@ -9,8 +9,7 @@ describe('BadgeLegendComponent', () => {
 
 	beforeEach(waitForAsync(() => {
 		TestBed.configureTestingModule({
-			declarations: [BadgeLegendComponent],
-			imports: [TranslateTestingModule.withTranslations('de', {})],
+			imports: [TranslateTestingModule.withTranslations('de', {}), BadgeLegendComponent],
 		}).compileComponents();
 	}));
 

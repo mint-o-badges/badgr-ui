@@ -8,7 +8,7 @@ describe('BgBreadcrumbsComponent', () => {
 
 	beforeEach(waitForAsync(() => {
 		TestBed.configureTestingModule({
-			declarations: [BgBreadcrumbsComponent],
+			imports: [BgBreadcrumbsComponent],
 		}).compileComponents();
 	}));
 

@@ -5,7 +5,7 @@ import { Observable, catchError, throwError, of } from 'rxjs';
 import { ErrorDialogComponent } from './common/dialogs/oeb-dialogs/error-dialog.component';
 import { HlmDialogService } from './components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ServerErrorInterceptor implements HttpInterceptor {
 	private readonly _hlmDialogService = inject(HlmDialogService);
 

@@ -4,7 +4,6 @@ import { AppConfigService } from '../app-config.service';
 import { MessageService } from './message.service';
 import { BaseHttpApiService } from './base-http-api.service';
 import { ExternalAuthProvider } from '../model/user-profile-api.model';
-import { throwExpr } from '../util/throw-expr';
 import { UpdatableSubject } from '../util/updatable-subject';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { NavigationService } from './navigation.service';
@@ -20,7 +19,7 @@ export interface AuthorizationTokenInformation {
 	token_typ?: string;
 }
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class SessionService {
 	baseUrl: string;
 

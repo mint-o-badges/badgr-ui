@@ -4,7 +4,6 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
 	selector: 'app-download',
 	template: `<p hlmP class="oeb page-padding tw-text-oebblack tw-text-xl">{{ text }}</p>`,
-	standalone: false,
 })
 export class PdfDownloadComponent implements OnInit {
 	constructor(private route: ActivatedRoute) {}

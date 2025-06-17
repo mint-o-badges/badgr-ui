@@ -2,7 +2,10 @@ import { Component, ElementRef, Renderer2, Output, EventEmitter } from '@angular
 import { BaseDialog } from '../../../common/dialogs/base-dialog';
 import { ApplicationCredentialsService } from '../../../common/services/application-credentials.service.';
 import { typedFormGroup } from '../../../common/util/typed-forms';
-import { Validators } from '@angular/forms';
+import { Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SvgIconComponent } from '../../../common/components/svg-icon.component';
+import { FormFieldText } from '../../../common/components/formfield-text';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
 	selector: 'add-credentials-dialog',
@@ -50,7 +53,7 @@ import { Validators } from '@angular/forms';
 			</div>
 		</div>
 	</dialog>`,
-	standalone: false,
+	imports: [SvgIconComponent, FormsModule, ReactiveFormsModule, FormFieldText, TranslatePipe],
 })
 export class AddCredentialsDialog extends BaseDialog {
 	@Output() newTokenAdded = new EventEmitter();

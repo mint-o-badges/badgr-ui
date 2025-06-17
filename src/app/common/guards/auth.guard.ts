@@ -4,7 +4,7 @@ import { SessionService } from '../services/session.service';
 import { OAuthManager } from '../services/oauth-manager.service';
 import { UserProfileApiService } from '../services/user-profile-api.service';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AuthGuard {
 	constructor(
 		private sessionService: SessionService,

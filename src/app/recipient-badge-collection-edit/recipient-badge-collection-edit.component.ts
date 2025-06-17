@@ -8,11 +8,13 @@ import { BadgeClassManager } from '../issuer/services/badgeclass-manager.service
 import { RecipientBadgeCollectionManager } from '../recipient/services/recipient-badge-collection-manager.service';
 import { RecipientBadgeCollection } from '../recipient/models/recipient-badge-collection.model';
 import { AppConfigService } from '../common/app-config.service';
+import { TranslatePipe } from '@ngx-translate/core';
+import { RecipientBadgeCollectionEditFormComponent } from '~/recipient/components/recipient-badge-collection-edit-form/recipient-badge-collection-edit-form.component';
 
 @Component({
 	selector: 'edit-recipient-badge-collection',
 	templateUrl: './recipient-badge-collection-edit.component.html',
-	standalone: false,
+	imports: [TranslatePipe, RecipientBadgeCollectionEditFormComponent],
 })
 export class RecipientBadgeCollectionEditComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	collectionLoaded: Promise<unknown>;

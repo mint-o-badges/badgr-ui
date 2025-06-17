@@ -10,7 +10,6 @@ import { CdkStep } from '@angular/cdk/stepper';
 			useExisting: StepComponent,
 		},
 	],
-	standalone: false,
 })
 export class StepComponent extends CdkStep {
 	@Input()

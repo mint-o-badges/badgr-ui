@@ -6,7 +6,7 @@ import { DangerDialogComponentTemplate } from '../../dialogs/oeb-dialogs/danger-
 import { BadgeClassManager } from '../../../issuer/services/badgeclass-manager.service';
 import { BadgeClass } from '../../../issuer/models/badgeclass.model';
 import { BadgeInstanceManager } from '../../../issuer/services/badgeinstance-manager.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { MessageService } from '../../services/message.service';
 import { BadgrApiFailure } from '../../services/api-failure';
 import { SuccessDialogComponent } from '../../dialogs/oeb-dialogs/success-dialog.component';
@@ -16,7 +16,15 @@ import { BaseRoutableComponent } from '../../pages/base-routable.component';
 import { BadgeInstanceApiService } from '../../../issuer/services/badgeinstance-api.service';
 import { PdfService } from '../../services/pdf.service';
 import { SafeResourceUrl } from '@angular/platform-browser';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+import { HlmH2Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h2.directive';
+import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
+import { HlmADirective } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-a.directive';
+import { NgFor, NgIf } from '@angular/common';
+import { OebButtonComponent } from '../../../components/oeb-button.component';
+import { HlmH3Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h3.directive';
+import { BgBadgecard } from '../bg-badgecard';
+import { LearningPathGraduatesDatatableComponent } from '../../../components/datatable-learningpath-graduates.component';
 
 @Component({
 	selector: 'oeb-learning-path',
@@ -32,7 +40,19 @@ import { TranslateService } from '@ngx-translate/core';
 		]),
 		trigger('stagger', [transition(':enter', [query(':enter', stagger('.3s', [animateChild()]))])]),
 	],
-	standalone: false,
+	imports: [
+		HlmH2Directive,
+		HlmPDirective,
+		HlmADirective,
+		RouterLink,
+		NgFor,
+		OebButtonComponent,
+		HlmH3Directive,
+		NgIf,
+		BgBadgecard,
+		LearningPathGraduatesDatatableComponent,
+		TranslatePipe,
+	],
 })
 export class OebLearningPathDetailComponent extends BaseRoutableComponent implements OnInit {
 	@Input() learningPath;

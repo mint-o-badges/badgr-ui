@@ -43,7 +43,10 @@ import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src
 import { inject } from '@angular/core';
 import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
 import { ApiLearningPath } from '../../../common/model/learningpath-api.model';
-import { ViewportScroller } from '@angular/common';
+import { BgBadgeDetail } from '../../../common/components/badge-detail/badge-detail.component';
+import { QrCodeAwardsComponent } from '../qrcode-awards/qrcode-awards.component';
+import { IssuerDetailDatatableComponent } from '../../../components/datatable-issuer-detail.component';
+import { NgIf } from '@angular/common';
 import { TaskResult, TaskStatus, TaskPollingManagerService } from '../../../common/task-manager.service';
 import { Subscription } from 'rxjs';
 import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
@@ -110,7 +113,7 @@ import { BrnDialogRef } from '@spartan-ng/brain/dialog';
 			</ng-template>
 		</bg-badgedetail>
 	`,
-	standalone: false,
+	imports: [BgBadgeDetail, NgIf, QrCodeAwardsComponent, IssuerDetailDatatableComponent],
 })
 export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	@ViewChild('qrAwards') qrAwards!: ElementRef;

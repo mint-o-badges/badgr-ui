@@ -15,9 +15,7 @@ export type HlmDialogOptions<DialogContext = any> = BrnDialogOptions & {
 	context?: DialogContext;
 };
 
-@Injectable({
-	providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
 export class HlmDialogService {
 	private readonly _brnDialogService = inject(BrnDialogService);
 

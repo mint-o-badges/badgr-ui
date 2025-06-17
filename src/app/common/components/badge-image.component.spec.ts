@@ -21,8 +21,7 @@ describe('BadgeImageComponent', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			declarations: [BadgeImageComponent],
-			imports: [RouterTestingModule, CommonModule, ...COMMON_IMPORTS],
+			imports: [RouterTestingModule, CommonModule, ...COMMON_IMPORTS, BadgeImageComponent],
 			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		}).compileComponents();

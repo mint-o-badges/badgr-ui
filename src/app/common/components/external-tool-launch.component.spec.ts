@@ -20,8 +20,7 @@ describe('ExternalToolLaunchComponent', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			declarations: [ExternalToolLaunchComponent],
-			imports: [RouterTestingModule, ...COMMON_IMPORTS],
+			imports: [RouterTestingModule, ...COMMON_IMPORTS, ExternalToolLaunchComponent],
 			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		}).compileComponents();

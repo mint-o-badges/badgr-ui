@@ -15,7 +15,7 @@ describe('ForkBadgeDialog', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			declarations: [ForkBadgeDialog],
+			imports: [ForkBadgeDialog],
 			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
 			// Since this is a dialog, not a classical component, this schema has to be used
 			schemas: [NO_ERRORS_SCHEMA],

@@ -6,7 +6,7 @@ import { MessageService } from './message.service';
 import { EventsService } from './events.service';
 import { HttpClient } from '@angular/common/http';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ApplicationCredentialsService extends BaseHttpApiService {
 	constructor(
 		protected sessionService: SessionService,

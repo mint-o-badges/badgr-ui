@@ -4,6 +4,9 @@ import { BadgeClassManager } from '../../issuer/services/badgeclass-manager.serv
 import { BadgeClass } from '../../issuer/models/badgeclass.model';
 import { MessageService } from '../services/message.service';
 import { AbstractBadgeComponent } from './abstract-badge.component';
+import { RouterLink } from '@angular/router';
+import { BadgeImageComponent } from './badge-image.component';
+import { TruncatedTextComponent } from './truncated-text.component';
 
 @Component({
 	selector: 'connected-badge',
@@ -32,7 +35,7 @@ import { AbstractBadgeComponent } from './abstract-badge.component';
 	`,
 	// Inputs from superclass must be specified here again due to https://github.com/angular/angular/issues/5415
 	inputs: ['badge', 'issuerId', 'badgeSlug', 'badgeId', 'forceFailed'],
-	standalone: false,
+	imports: [RouterLink, BadgeImageComponent, TruncatedTextComponent],
 })
 export class ConnectedBadgeComponent extends AbstractBadgeComponent {
 	@Output()

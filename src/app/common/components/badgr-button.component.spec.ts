@@ -23,8 +23,7 @@ describe('BadgrButtonComponent', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			declarations: [BadgrButtonComponent],
-			imports: [RouterTestingModule, ...COMMON_IMPORTS],
+			imports: [RouterTestingModule, ...COMMON_IMPORTS, BadgrButtonComponent],
 			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		}).compileComponents();

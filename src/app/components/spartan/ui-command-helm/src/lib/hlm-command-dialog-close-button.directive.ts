@@ -1,10 +1,10 @@
 import { Directive, computed, input } from '@angular/core';
 import { hlm } from '@spartan-ng/brain/core';
 import { BrnDialogCloseDirective } from '@spartan-ng/brain/dialog';
-import { HlmButtonDirective } from '../../../ui-button-helm/src';
-import { provideHlmIconConfig } from '../../../ui-icon-helm/src';
 import type { ClassValue } from 'clsx';
 import { provideBrnButtonConfig } from '../../../ui-button-helm/src/lib/hlm-button.token';
+import { HlmButtonDirective } from '~/components/spartan/ui-button-helm/src/lib/hlm-button.directive';
+import { provideHlmIconConfig } from '~/components/spartan/ui-icon-helm/src/lib/hlm-icon.token';
 
 @Directive({
 	selector: '[hlmCommandDialogCloseBtn]',

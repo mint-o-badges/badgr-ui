@@ -3,7 +3,7 @@ import { AppConfigService } from '../../common/app-config.service';
 import { SignupModel } from '../models/signup-model.type';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class SignupService {
 	baseUrl: string;
 

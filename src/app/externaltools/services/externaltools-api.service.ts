@@ -10,7 +10,7 @@ import {
 } from '../models/externaltools-api.model';
 import { HttpClient } from '@angular/common/http';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ExternalToolsApiService extends BaseHttpApiService {
 	constructor(
 		protected loginService: SessionService,

@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
 import { SessionService } from '../../../common/services/session.service';
@@ -9,6 +9,8 @@ import { AppConfigService } from '../../../common/app-config.service';
 import { RecipientBadgeCollectionManager } from '../../services/recipient-badge-collection-manager.service';
 import { typedFormGroup } from '../../../common/util/typed-forms';
 import { RecipientBadgeCollection } from '../../models/recipient-badge-collection.model';
+import { FormMessageComponent } from '../../../common/components/form-message.component';
+import { NgIf } from '@angular/common';
 import { RecipientBadgeManager } from '../../services/recipient-badge-manager.service';
 import { RecipientBadgeInstance } from '../../models/recipient-badge.model';
 import { ApiRecipientBadgeIssuer } from '../../models/recipient-badge-api.model';
@@ -17,8 +19,10 @@ import { BadgeInstanceUrl } from '../../../issuer/models/badgeinstance-api.model
 import { groupIntoArray, groupIntoObject } from '../../../common/util/array-reducers';
 import { StringMatchingUtil } from '../../../common/util/string-matching-util';
 import { ApiRecipientBadgeCollectionForCreation } from '../../models/recipient-badge-collection-api.model';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { BadgeClassCategory } from '../../../issuer/models/badgeclass-api.model';
+import { OebInputComponent } from '~/components/input.component';
+import { OebButtonComponent } from '~/components/oeb-button.component';
 
 interface CreateBadgeCollectionForm<T> {
 	collectionName: T;
@@ -28,7 +32,16 @@ interface CreateBadgeCollectionForm<T> {
 @Component({
 	selector: 'recipient-badge-collection-edit-form',
 	templateUrl: './recipient-badge-collection-edit-form.component.html',
-	standalone: false,
+	imports: [
+		FormMessageComponent,
+		NgIf,
+		FormsModule,
+		ReactiveFormsModule,
+		TranslatePipe,
+		OebInputComponent,
+		OebButtonComponent,
+		RouterLink,
+	],
 })
 export class RecipientBadgeCollectionEditFormComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	@Input()

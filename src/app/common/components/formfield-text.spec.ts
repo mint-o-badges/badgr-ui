@@ -22,8 +22,7 @@ describe('FormFieldText', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			declarations: [FormFieldText, BadgrButtonComponent],
-			imports: [RouterTestingModule, CommonModule, ...COMMON_IMPORTS],
+			imports: [RouterTestingModule, CommonModule, ...COMMON_IMPORTS, FormFieldText, BadgrButtonComponent],
 			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		}).compileComponents();

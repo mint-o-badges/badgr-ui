@@ -1,9 +1,9 @@
 import { Directive, computed, inject, input } from '@angular/core';
 import { lucideChevronDown } from '@ng-icons/lucide';
 import { hlm } from '@spartan-ng/brain/core';
-import { HlmIconDirective, provideHlmIconConfig } from '../../../ui-icon-helm/src/index';
 import type { ClassValue } from 'clsx';
 import { provideIcons } from '@ng-icons/core';
+import { provideHlmIconConfig } from '~/components/spartan/ui-icon-helm/src/lib/hlm-icon.token';
 
 @Directive({
 	selector: 'hlm-icon[hlmAccordionIcon], hlm-icon[hlmAccIcon]',

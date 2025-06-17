@@ -25,8 +25,13 @@ describe('BadgeClassIssueBulkAwardPreviewComponent', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			declarations: [BadgeClassIssueBulkAwardPreviewComponent],
-			imports: [RouterTestingModule, CommonModule, ...COMMON_IMPORTS, TranslateModule.forRoot()],
+			imports: [
+				RouterTestingModule,
+				CommonModule,
+				...COMMON_IMPORTS,
+				TranslateModule.forRoot(),
+				BadgeClassIssueBulkAwardPreviewComponent,
+			],
 			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		}).compileComponents();

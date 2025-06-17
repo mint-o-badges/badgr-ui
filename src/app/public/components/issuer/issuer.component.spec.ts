@@ -14,8 +14,7 @@ describe('PublicIssuerComponent', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			declarations: [PublicIssuerComponent],
-			imports: [RouterTestingModule, CommonModule, BadgrCommonModule, ...COMMON_IMPORTS],
+			imports: [RouterTestingModule, CommonModule, BadgrCommonModule, ...COMMON_IMPORTS, PublicIssuerComponent],
 			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		}).compileComponents();

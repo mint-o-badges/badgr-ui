@@ -6,7 +6,6 @@ import { BaseRoutableComponent } from '../../../common/pages/base-routable.compo
 @Component({
 	selector: 'logout',
 	template: '',
-	standalone: false,
 })
 export class LogoutComponent extends BaseRoutableComponent {
 	constructor(

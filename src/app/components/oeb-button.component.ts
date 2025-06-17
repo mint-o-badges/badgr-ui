@@ -1,13 +1,13 @@
 import { Component, computed, Input, input, linkedSignal, signal } from '@angular/core';
-import { buttonVariants, ButtonVariants, HlmButtonDirective } from './spartan/ui-button-helm/src';
 import { NgIf, NgClass } from '@angular/common';
 import { MessageService } from '../common/services/message.service';
 import { lucidePlus, lucideUpload, lucideCircleX, lucideMapPin } from '@ng-icons/lucide';
 import { provideIcons } from '@ng-icons/core';
-import { HlmIconDirective } from './spartan/ui-icon-helm/src';
 import { NgIcon } from '@ng-icons/core';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { map, Subscription } from 'rxjs';
+import { HlmButtonDirective, ButtonVariants } from './spartan/ui-button-helm/src/lib/hlm-button.directive';
+import { HlmIconDirective } from './spartan/ui-icon-helm/src/lib/hlm-icon.directive';
 
 @Component({
 	selector: 'oeb-button',

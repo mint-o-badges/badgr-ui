@@ -3,9 +3,9 @@ import { NgIcon, provideIcons } from '@ng-icons/core';
 import { lucideChevronDown } from '@ng-icons/lucide';
 import { hlm } from '@spartan-ng/brain/core';
 import { BrnSelectComponent, BrnSelectTriggerDirective } from '@spartan-ng/brain/select';
-import { HlmIconDirective } from '../../../ui-icon-helm/src';
 import { type VariantProps, cva } from 'class-variance-authority';
 import type { ClassValue } from 'clsx';
+import { HlmIconDirective } from '~/components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
 
 export const selectTriggerVariants = cva(
 	'tw-flex tw-items-center tw-justify-between tw-rounded-md tw-border tw-border-input tw-bg-background tw-text-sm tw-ring-offset-background placeholder:tw-text-muted-foreground focus-visible:tw-outline-none focus-visible:tw-ring-2 focus-visible:tw-ring-ring focus-visible:tw-ring-offset-2 disabled:tw-cursor-not-allowed disabled:tw-opacity-50',

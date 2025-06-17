@@ -6,7 +6,7 @@ import { ApiIssuer, ApiIssuerForCreation, ApiIssuerStaffOperation, IssuerSlug } 
 import { MessageService } from '../../common/services/message.service';
 import { HttpClient } from '@angular/common/http';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class IssuerApiService extends BaseHttpApiService {
 	constructor(
 		protected loginService: SessionService,

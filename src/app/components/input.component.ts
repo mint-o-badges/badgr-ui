@@ -1,10 +1,10 @@
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
-import { HlmInputDirective, InputVariants } from './spartan/ui-input-helm/src';
 import { OebInputErrorComponent } from './input.error.component';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { NgClass, NgIf } from '@angular/common';
 import { UrlValidator } from '../common/validators/url.validator';
 import { HlmPDirective } from './spartan/ui-typography-helm/src/lib/hlm-p.directive';
+import { HlmInputDirective, InputVariants } from './spartan/ui-input-helm/src/lib/hlm-input.directive';
 
 @Component({
 	selector: 'oeb-input',

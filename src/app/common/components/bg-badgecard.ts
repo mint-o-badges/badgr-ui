@@ -1,6 +1,18 @@
 import { Component, EventEmitter, HostBinding, Input, Output } from '@angular/core';
 import { AUTO_STYLE, animate, state, style, transition, trigger } from '@angular/animations';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormsModule } from '@angular/forms';
+import { NgIf, NgFor } from '@angular/common';
+import { NgIcon } from '@ng-icons/core';
+import { HlmIconDirective } from '../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
+import { BgImageStatusPlaceholderDirective } from '../directives/bg-image-status-placeholder.directive';
+import { HlmPDirective } from '../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
+import { RouterLink } from '@angular/router';
+import { TimeComponent } from './time.component';
+import { HlmADirective } from '../../components/spartan/ui-typography-helm/src/lib/hlm-a.directive';
+import { OebCheckboxComponent } from '../../components/oeb-checkbox.component';
+import { CompetencyAccordionComponent } from '../../components/accordion.component';
+import { TranslatePipe } from '@ngx-translate/core';
+import { HourPipe } from '../pipes/hourPipe';
 
 @Component({
 	selector: 'bg-badgecard',
@@ -159,7 +171,6 @@ import { FormControl } from '@angular/forms';
 		</div>
 		<!--<ul *ngIf="tags && tags.length" class="tw-mt-2 tw-leading-[0px]"><li class="tag tw-mt-2 tw-mr-2" *ngFor="let tag of tags">{{tag}}</li></ul>-->
 	`,
-	standalone: false,
 	styles: [
 		`
 			.text-clamp {
@@ -177,6 +188,22 @@ import { FormControl } from '@angular/forms';
 				-webkit-line-clamp: 1;
 			}
 		`,
+	],
+	imports: [
+		NgIf,
+		NgIcon,
+		HlmIconDirective,
+		BgImageStatusPlaceholderDirective,
+		HlmPDirective,
+		RouterLink,
+		TimeComponent,
+		HlmADirective,
+		OebCheckboxComponent,
+		FormsModule,
+		NgFor,
+		CompetencyAccordionComponent,
+		TranslatePipe,
+		HourPipe,
 	],
 })
 export class BgBadgecard {

@@ -5,10 +5,10 @@ import { NgIcon, provideIcons } from '@ng-icons/core';
 import { lucideChevronLeft, lucideChevronRight } from '@ng-icons/lucide';
 import { hlm } from '@spartan-ng/brain/core';
 import { BrnTabsPaginatedListDirective, BrnTabsTriggerDirective } from '@spartan-ng/brain/tabs';
-import { buttonVariants } from '../../../ui-button-helm/src';
-import { HlmIconDirective } from '../../../ui-icon-helm/src';
 import type { ClassValue } from 'clsx';
 import { listVariants } from './hlm-tabs-list.component';
+import { buttonVariants } from '~/components/spartan/ui-button-helm/src/lib/hlm-button.directive';
+import { HlmIconDirective } from '~/components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
 
 @Component({
 	selector: 'hlm-paginated-tabs-list',

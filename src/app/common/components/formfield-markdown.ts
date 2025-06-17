@@ -8,13 +8,14 @@ import {
 	ViewChild,
 	ViewEncapsulation,
 } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule } from '@angular/forms';
 
 import { CommonDialogsService } from '../services/common-dialogs.service';
 import { CustomValidatorMessages, messagesForValidationError } from './formfield-text';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { HttpClient } from '@angular/common/http';
 import { AppConfigService } from '../app-config.service';
+import { LMarkdownEditorModule } from 'ngx-markdown-editor';
 
 interface UploadResult {
 	isImg: boolean;
@@ -33,7 +34,7 @@ interface UploadResult {
 	</md-editor>`,
 	styleUrls: ['./formfield-markdown.css'],
 	encapsulation: ViewEncapsulation.ShadowDom,
-	standalone: false,
+	imports: [LMarkdownEditorModule, FormsModule],
 })
 export class FormFieldMarkdown implements OnChanges, AfterViewInit {
 	markdown_content = '';

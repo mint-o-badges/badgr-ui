@@ -22,8 +22,14 @@ describe('BgIssuerLinkComponent', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			declarations: [BgIssuerLinkComponent, BadgrButtonComponent, BgImageStatusPlaceholderDirective],
-			imports: [RouterTestingModule, CommonModule, ...COMMON_IMPORTS],
+			imports: [
+				RouterTestingModule,
+				CommonModule,
+				...COMMON_IMPORTS,
+				BgIssuerLinkComponent,
+				BadgrButtonComponent,
+				BgImageStatusPlaceholderDirective,
+			],
 			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		}).compileComponents();

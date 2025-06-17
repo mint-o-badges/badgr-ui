@@ -15,17 +15,10 @@ import {
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { lucideArrowUpDown, lucideChevronDown, lucideEllipsis } from '@ng-icons/lucide';
-import { HlmButtonModule } from './spartan/ui-button-helm/src';
-import { HlmCheckboxComponent } from './spartan/ui-checkbox-helm/src';
-import { HlmIconDirective } from './spartan/ui-icon-helm/src';
-import { HlmInputDirective } from './spartan/ui-input-helm/src';
+
 import { BrnMenuTriggerDirective } from '@spartan-ng/brain/menu';
-import { HlmMenuModule } from './spartan/ui-menu-helm/src';
-import { BrnTableModule, PaginatorState, useBrnColumnManager } from '@spartan-ng/brain/table';
-import { HlmTableModule } from './spartan/ui-table-helm/src';
+import { BrnTableModule, useBrnColumnManager } from '@spartan-ng/brain/table';
 import { BrnSelectModule } from '@spartan-ng/brain/select';
-import { HlmSelectModule } from './spartan/ui-select-helm/src';
-import { hlmMuted } from './spartan/ui-typography-helm/src';
 import { debounceTime, map, Subscription } from 'rxjs';
 import { HlmDialogService } from './spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
 import { SuccessDialogComponent } from '../common/dialogs/oeb-dialogs/success-dialog.component';
@@ -33,9 +26,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { BadgeRequestApiService } from '../issuer/services/badgerequest-api.service';
 import { BadgeInstanceManager } from '../issuer/services/badgeinstance-manager.service';
 import { BadgeClassManager } from '../issuer/services/badgeclass-manager.service';
-import { BadgeClass } from '../issuer/models/badgeclass.model';
 import { MessageService } from '../common/services/message.service';
-import { BadgrApiFailure } from '../common/services/api-failure';
 import { Router } from '@angular/router';
 import { DangerDialogComponent } from '../common/dialogs/oeb-dialogs/danger-dialog.component';
 import { TranslateService } from '@ngx-translate/core';
@@ -47,6 +38,10 @@ import striptags from 'striptags';
 import { OebSpinnerComponent } from './oeb-spinner.component';
 import { BadgeInstanceBatchAssertion } from '../issuer/models/badgeinstance-api.model';
 import { provideIcons } from '@ng-icons/core';
+import { HlmButtonDirective } from './spartan/ui-button-helm/src/lib/hlm-button.directive';
+import { HlmCheckboxComponent } from './spartan/ui-checkbox-helm/src/lib/hlm-checkbox.component';
+import { HlmIconDirective } from './spartan/ui-icon-helm/src/lib/hlm-icon.directive';
+import { HlmInputDirective } from './spartan/ui-input-helm/src/lib/hlm-input.directive';
 import { BadgeInstanceApiService } from '../issuer/services/badgeinstance-api.service';
 import { TaskPollingManagerService, TaskResult, TaskStatus } from '../common/task-manager.service';
 
@@ -71,17 +66,14 @@ export type RequestedBadge = {
 	imports: [
 		FormsModule,
 		BrnMenuTriggerDirective,
-		HlmMenuModule,
 		BrnTableModule,
-		HlmTableModule,
-		HlmButtonModule,
+		HlmButtonDirective,
 		DatePipe,
 		NgIcon,
 		HlmIconDirective,
 		HlmInputDirective,
 		HlmCheckboxComponent,
 		BrnSelectModule,
-		HlmSelectModule,
 		TranslateModule,
 		HlmCommandInputWrapperComponent,
 		OebButtonComponent,

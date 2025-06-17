@@ -1,5 +1,5 @@
 import { Directive } from '@angular/core';
-import { provideHlmIconConfig } from '../../../ui-icon-helm/src/index';
+import { provideHlmIconConfig } from '~/components/spartan/ui-icon-helm/src/lib/hlm-icon.token';
 
 @Directive({
 	standalone: true,

@@ -13,12 +13,12 @@ describe('IssuerCatalogComponent', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			declarations: [IssuerCatalogComponent],
 			imports: [
 				...COMMON_IMPORTS,
 				BadgrCommonModule,
 				RouterTestingModule,
 				TranslateTestingModule.withTranslations('de', {}),
+				IssuerCatalogComponent,
 			],
 			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],

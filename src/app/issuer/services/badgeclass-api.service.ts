@@ -7,7 +7,7 @@ import { ApiBadgeClass, ApiBadgeClassForCreation, BadgeClassSlug } from '../mode
 import { MessageService } from '../../common/services/message.service';
 import { HttpClient } from '@angular/common/http';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class BadgeClassApiService extends BaseHttpApiService {
 	constructor(
 		protected loginService: SessionService,

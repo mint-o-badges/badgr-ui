@@ -6,7 +6,6 @@ import { Destroy } from './destroy';
 @Directive({
 	selector: '[countUp]',
 	providers: [Destroy],
-	standalone: false,
 })
 export class CountUpDirective {
 	@Input('countUp')

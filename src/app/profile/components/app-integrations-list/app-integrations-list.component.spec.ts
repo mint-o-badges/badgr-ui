@@ -25,13 +25,13 @@ describe('AppIntegrationListComponent', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			declarations: [AppIntegrationListComponent],
 			imports: [
 				RouterTestingModule,
 				CommonModule,
 				BadgrCommonModule,
 				TranslateTestingModule.withTranslations('de', {}),
 				...COMMON_IMPORTS,
+				AppIntegrationListComponent,
 			],
 			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],

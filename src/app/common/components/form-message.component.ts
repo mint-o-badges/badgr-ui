@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { EventsService } from '../services/events.service';
 import Timeout = NodeJS.Timeout;
 import { animationFramePromise } from '../util/promise-util';
+import { NgIf } from '@angular/common';
 
 interface Notification {
 	submodule: 'notification-warning' | 'notification-success' | '';
@@ -42,7 +43,7 @@ const messageStatusTypeToNotificationMap: { [key in string]: Notification } = {
 			</button>
 		</div>
 	</div>`,
-	standalone: false,
+	imports: [NgIf],
 })
 export class FormMessageComponent implements OnInit, OnDestroy {
 	messageDismissed = false;

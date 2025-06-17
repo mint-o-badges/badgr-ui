@@ -5,6 +5,7 @@ import { BaseRoutableComponent } from '../../../common/pages/base-routable.compo
 import { Title } from '@angular/platform-browser';
 
 import { AppConfigService } from '../../../common/app-config.service';
+import { FormMessageComponent } from '../../../common/components/form-message.component';
 
 @Component({
 	selector: 'login',
@@ -18,7 +19,7 @@ import { AppConfigService } from '../../../common/app-config.service';
 			<div class="l-containerhorizontal l-containervertical l-childrenvertical wrap"></div>
 		</main>
 	`,
-	standalone: false,
+	imports: [FormMessageComponent],
 })
 export class PublicComponent extends BaseRoutableComponent implements OnInit {
 	constructor(

@@ -9,7 +9,7 @@ import { resolve } from 'dns';
 /**
  * Manager for the singleton `UserProfile` instance that provides access to the current user's profile.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class UserProfileManager {
 	userProfileSet = new StandaloneEntitySet<UserProfile, ApiUserProfile>(
 		(apiModel) => new UserProfile(this.commonEntityManager),

@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { MessageService } from '../services/message.service';
+import { NgIf } from '@angular/common';
 
 @Component({
 	selector:
@@ -13,7 +14,7 @@ import { MessageService } from '../services/message.service';
 		<ng-content *ngIf="!showLoadindMessage"></ng-content>
 		<ng-container *ngIf="showLoadindMessage && loadingMessage">{{ loadingMessage }}</ng-container>
 	`,
-	standalone: false,
+	imports: [NgIf],
 })
 export class BadgrButtonComponent {
 	loadingPromise: Promise<unknown>;

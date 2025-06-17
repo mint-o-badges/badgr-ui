@@ -2,13 +2,14 @@ import { NgIcon } from '@ng-icons/core';
 import { Component, inject } from '@angular/core';
 import { BrnDialogRef, injectBrnDialogContext } from '@spartan-ng/brain/dialog';
 import { OebDialogComponent } from '../../../components/oeb-dialog.component';
-import { HlmIconDirective } from '../../../components/spartan/ui-icon-helm/src';
 import { lucideClipboard, lucideCircleX, lucideCheck } from '@ng-icons/lucide';
-import { HlmH3Directive, HlmPDirective } from '../../../components/spartan/ui-typography-helm/src';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgIf } from '@angular/common';
 import { provideIcons } from '@ng-icons/core';
+import { HlmIconDirective } from '~/components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
+import { HlmH3Directive } from '~/components/spartan/ui-typography-helm/src/lib/hlm-h3.directive';
+import { HlmPDirective } from '~/components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
 
 @Component({
 	selector: 'oeb-error-dialog',

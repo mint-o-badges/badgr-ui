@@ -10,7 +10,7 @@ import { BadgrCommonModule, COMMON_IMPORTS } from '../../../common/badgr-common.
 import { CommonEntityManagerModule } from '../../../entity-manager/entity-manager.module';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateTestingModule } from 'ngx-translate-testing';
-import { RecipientModule } from '../../../recipient/recipient.module';
+import { RecipientModule } from '../../../recipient/recipient.routes';
 
 describe('LoginComponent', () => {
 	let fixture;
@@ -24,8 +24,8 @@ describe('LoginComponent', () => {
 				CommonEntityManagerModule,
 				RouterTestingModule.withRoutes([{ path: 'recipient', component: RecipientModule }]),
 				TranslateTestingModule.withTranslations('de', {}),
+				LoginComponent,
 			],
-			declarations: [LoginComponent],
 			providers: [FormBuilder, Title, ...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 			teardown: { destroyAfterEach: false },

@@ -11,8 +11,12 @@ describe('AboutComponent', () => {
 
 	beforeEach(waitForAsync(() => {
 		TestBed.configureTestingModule({
-			declarations: [AboutComponent],
-			imports: [...COMMON_IMPORTS, BadgrCommonModule, TranslateTestingModule.withTranslations('de', {})],
+			imports: [
+				...COMMON_IMPORTS,
+				BadgrCommonModule,
+				TranslateTestingModule.withTranslations('de', {}),
+				AboutComponent,
+			],
 			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
 			teardown: { destroyAfterEach: false },
 		}).compileComponents();

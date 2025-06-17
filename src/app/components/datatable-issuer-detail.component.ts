@@ -1,40 +1,42 @@
 import { NgIcon } from '@ng-icons/core';
 import { CommonModule } from '@angular/common';
-import { BadgrCommonModule } from '../common/badgr-common.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { BrnAccordionContentComponent } from '@spartan-ng/brain/accordion';
-import { HlmIconModule } from './spartan/ui-icon-helm/src';
 import { RouterModule } from '@angular/router';
 import { Component, EventEmitter, Input, Output, computed, effect, input, signal } from '@angular/core';
-import { HlmTableModule } from './spartan/ui-table-helm/src';
-import { HlmInputDirective } from './spartan/ui-input-helm/src';
-import { HlmLabelDirective } from './spartan/ui-label-helm/src';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { debounceTime } from 'rxjs';
 import { BadgeInstance } from '../issuer/models/badgeinstance.model';
 import { FormsModule } from '@angular/forms';
-import { HlmIconDirective } from './spartan/ui-icon-helm/src';
 import { lucideSearch } from '@ng-icons/lucide';
-import { HlmCommandInputWrapperComponent } from './spartan/ui-command-helm/src';
 import { OebButtonComponent } from './oeb-button.component';
 import { provideIcons } from '@ng-icons/core';
+import { HlmCommandInputWrapperComponent } from './spartan/ui-command-helm/src/lib/hlm-command-input-wrapper.component';
+import { HlmIconDirective } from './spartan/ui-icon-helm/src/lib/hlm-icon.directive';
+import { HlmInputDirective } from './spartan/ui-input-helm/src/lib/hlm-input.directive';
+import { HlmLabelDirective } from './spartan/ui-label-helm/src/lib/hlm-label.directive';
+import { HlmCaptionComponent } from './spartan/ui-table-helm/src/lib/hlm-caption.component';
+import { HlmTableComponent } from './spartan/ui-table-helm/src/lib/hlm-table.component';
+import { HlmThComponent } from './spartan/ui-table-helm/src/lib/hlm-th.component';
+import { HlmTrowComponent } from './spartan/ui-table-helm/src/lib/hlm-trow.component';
 import { OebSpinnerComponent } from './oeb-spinner.component';
 
 @Component({
 	selector: 'issuer-detail-datatable',
 	imports: [
 		FormsModule,
-		HlmTableModule,
 		CommonModule,
-		BadgrCommonModule,
 		TranslateModule,
 		RouterModule,
+		HlmTableComponent,
 		HlmInputDirective,
 		HlmLabelDirective,
 		NgIcon,
 		HlmIconDirective,
 		HlmCommandInputWrapperComponent,
 		OebButtonComponent,
+		HlmCaptionComponent,
+		HlmTrowComponent,
+		HlmThComponent,
 		OebSpinnerComponent,
 	],
 	providers: [provideIcons({ lucideSearch })],

@@ -12,7 +12,7 @@ import { HttpClient } from '@angular/common/http';
 import { CommonEntityManager } from '../../entity-manager/services/common-entity-manager.service';
 import { RecipientBadgeInstance } from '../models/recipient-badge.model';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class RecipientBadgeApiService extends BaseHttpApiService {
 	constructor(
 		protected loginService: SessionService,

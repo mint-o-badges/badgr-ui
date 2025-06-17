@@ -26,8 +26,7 @@ describe('OAuthAppDetailComponent', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			declarations: [OAuthAppDetailComponent],
-			imports: [RouterTestingModule, CommonModule, BadgrCommonModule, ...COMMON_IMPORTS],
+			imports: [RouterTestingModule, CommonModule, BadgrCommonModule, ...COMMON_IMPORTS, OAuthAppDetailComponent],
 			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		}).compileComponents();

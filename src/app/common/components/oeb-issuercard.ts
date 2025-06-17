@@ -1,5 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Issuer } from '../../issuer/models/issuer.model';
+import { HlmPDirective } from '../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
+import { RouterLink } from '@angular/router';
 
 @Component({
 	selector: 'oeb-issuerCard',
@@ -20,7 +22,7 @@ import { Issuer } from '../../issuer/models/issuer.model';
 			</div>
 		</div>
 	`,
-	standalone: false,
+	imports: [HlmPDirective, RouterLink],
 })
 export class OebIssuerCard {
 	readonly badgeLoadingImageUrl = '../../../breakdown/static/images/badge-loading.svg';

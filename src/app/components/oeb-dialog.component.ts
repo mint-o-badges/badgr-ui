@@ -1,13 +1,9 @@
 import { Component, Input } from '@angular/core';
-import { HlmButtonDirective } from './spartan/ui-button-helm/src';
-
-import {
-	HlmDialogDescriptionDirective,
-	HlmDialogFooterComponent,
-	HlmDialogHeaderComponent,
-} from './spartan/ui-dialog-helm/src';
-
 import { NgIf } from '@angular/common';
+import { HlmButtonDirective } from './spartan/ui-button-helm/src/lib/hlm-button.directive';
+import { HlmDialogDescriptionDirective } from './spartan/ui-dialog-helm/src/lib/hlm-dialog-description.directive';
+import { HlmDialogFooterComponent } from './spartan/ui-dialog-helm/src/lib/hlm-dialog-footer.component';
+import { HlmDialogHeaderComponent } from './spartan/ui-dialog-helm/src/lib/hlm-dialog-header.component';
 
 @Component({
 	selector: 'oeb-dialog',

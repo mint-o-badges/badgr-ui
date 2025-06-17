@@ -9,10 +9,10 @@ import {
 	ApiOAuthResponse,
 	OAuth2RequestParams,
 } from '../model/oauth-api.model';
-import { ExternalAuthProvider, SocialAccountProviderInfo } from '../model/user-profile-api.model';
+import { ExternalAuthProvider } from '../model/user-profile-api.model';
 import { HttpClient } from '@angular/common/http';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class OAuthApiService extends BaseHttpApiService {
 	constructor(
 		protected loginService: SessionService,

@@ -20,13 +20,13 @@ describe('AddBadgeDialogComponent', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			declarations: [AddBadgeDialogComponent],
 			imports: [
 				RouterTestingModule,
 				CommonModule,
 				BadgrCommonModule,
 				TranslateTestingModule.withTranslations('de', {}),
 				...COMMON_IMPORTS,
+				AddBadgeDialogComponent,
 			],
 			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],

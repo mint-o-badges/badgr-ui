@@ -3,11 +3,11 @@ import { IssuerApiService } from './issuer-api.service';
 import { Issuer } from '../models/issuer.model';
 import { ApiIssuer, ApiIssuerForCreation, ApiIssuerForEditing, IssuerSlug } from '../models/issuer-api.model';
 import { combineLatest, firstValueFrom, Observable, of } from 'rxjs';
-import { ManagedEntitySet, StandaloneEntitySet } from '../../common/model/managed-entity-set';
+import { StandaloneEntitySet } from '../../common/model/managed-entity-set';
 import { CommonEntityManager } from '../../entity-manager/services/common-entity-manager.service';
-import { catchError, first, map, withLatestFrom } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class IssuerManager {
 	issuersList = new StandaloneEntitySet<Issuer, ApiIssuer>(
 		(apiModel) => new Issuer(this.commonEntityManager),

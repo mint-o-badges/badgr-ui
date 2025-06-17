@@ -23,8 +23,13 @@ describe('PublicBadgeClassComponent', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			declarations: [PublicBadgeClassComponent],
-			imports: [RouterTestingModule, CommonModule, BadgrCommonModule, ...COMMON_IMPORTS],
+			imports: [
+				RouterTestingModule,
+				CommonModule,
+				BadgrCommonModule,
+				...COMMON_IMPORTS,
+				PublicBadgeClassComponent,
+			],
 			providers: [
 				...COMMON_MOCKS_PROVIDERS_WITH_SUBS,
 				RecipientBadgeApiService,

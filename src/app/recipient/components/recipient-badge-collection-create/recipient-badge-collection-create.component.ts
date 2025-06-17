@@ -10,11 +10,14 @@ import { BadgeClass } from '../../../issuer/models/badgeclass.model';
 import { BadgeClassManager } from '../../../issuer/services/badgeclass-manager.service';
 import { RecipientBadgeApiService } from '../../services/recipient-badges-api.service';
 import { RecipientBadgeInstance } from '../../models/recipient-badge.model';
+import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
+import { TranslatePipe } from '@ngx-translate/core';
+import { RecipientBadgeCollectionEditFormComponent } from '../recipient-badge-collection-edit-form/recipient-badge-collection-edit-form.component';
 
 @Component({
 	selector: 'create-recipient-badge-collection',
 	templateUrl: './recipient-badge-collection-create.component.html',
-	standalone: false,
+	imports: [HlmH1Directive, TranslatePipe, RecipientBadgeCollectionEditFormComponent],
 })
 export class RecipientBadgeCollectionCreateComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	badgeCollectionForm = typedFormGroup()

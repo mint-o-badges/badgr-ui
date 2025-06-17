@@ -21,8 +21,7 @@ describe('FormFieldSelect', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			declarations: [FormFieldSelect],
-			imports: [RouterTestingModule, ...COMMON_IMPORTS],
+			imports: [RouterTestingModule, ...COMMON_IMPORTS, FormFieldSelect],
 			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		}).compileComponents();

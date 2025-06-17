@@ -3,12 +3,12 @@ import { Component, HostBinding, inject, Input } from '@angular/core';
 import { BrnDialogRef, injectBrnDialogContext } from '@spartan-ng/brain/dialog';
 import { OebDialogComponent } from '../../../components/oeb-dialog.component';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
-import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/src';
-import { HlmIconDirective } from '../../../components/spartan/ui-icon-helm/src';
 import { lucideTriangleAlert } from '@ng-icons/lucide';
 
 import { TranslateService } from '@ngx-translate/core';
 import { provideIcons } from '@ng-icons/core';
+import { HlmIconDirective } from '~/components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
+import { HlmPDirective } from '~/components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
 
 @Component({
 	selector: 'oeb-danger-dialog-template',

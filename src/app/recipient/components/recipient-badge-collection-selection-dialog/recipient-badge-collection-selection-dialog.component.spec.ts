@@ -13,8 +13,14 @@ describe('RecipientBadgeCollectionSelectionDialogComponent', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			declarations: [RecipientBadgeCollectionSelectionDialogComponent],
-			imports: [RouterTestingModule, CommonModule, BadgrCommonModule, FormsModule, ...COMMON_IMPORTS],
+			imports: [
+				RouterTestingModule,
+				CommonModule,
+				BadgrCommonModule,
+				FormsModule,
+				...COMMON_IMPORTS,
+				RecipientBadgeCollectionSelectionDialogComponent,
+			],
 			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		}).compileComponents();
