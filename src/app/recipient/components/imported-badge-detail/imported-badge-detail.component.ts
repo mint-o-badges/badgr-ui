@@ -142,7 +142,7 @@ export class ImportedBadgeDetailComponent extends BaseAuthenticatedRoutableCompo
 					// 	action: () => window.open(this.verifyUrl, '_blank'),
 					// },
 					{
-						title: 'Badge aus Rucksack löschen',
+						title: 'RecBadgeDetail.deleteBadge',
 						icon: 'lucideTrash2',
 						action: () => this.deleteBadge(this.badge),
 					},
@@ -189,10 +189,12 @@ export class ImportedBadgeDetailComponent extends BaseAuthenticatedRoutableCompo
 		console.log(badge);
 		this.dialogService.confirmDialog
 			.openResolveRejectDialog({
-				dialogTitle: 'Confirm Remove',
-				dialogBody: `Are you sure you want to remove ${badge.json.badge.name} from your badges?`,
-				rejectButtonLabel: 'Cancel',
-				resolveButtonLabel: 'Remove Badge',
+				dialogTitle: this.translate.instant('RecBadgeDetail.confirmRemove'),
+				dialogBody: this.translate.instant('RecBadgeDetail.sureToRemove', {
+					badgeName: badge.json.badge.name,
+				}),
+				rejectButtonLabel: this.translate.instant('General.cancel'),
+				resolveButtonLabel: this.translate.instant('RecBadgeDetail.removeBadge'),
 			})
 			.then(
 				() =>
