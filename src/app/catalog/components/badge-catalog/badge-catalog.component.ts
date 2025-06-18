@@ -112,6 +112,14 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		this.updatePaginatedResults();
 	}
 
+	get badgesPluralWord(): string {
+		return this.badges.length === 1 ? this.plural['badges']['1'] : this.plural['badges']['other'];
+	}
+
+	get issuersPluralWord(): string {
+		return this.issuers.length === 1 ? this.plural['issuer']['1'] : this.plural['issuer']['other'];
+	}
+
 	isFiltered() {
 		return Boolean(this.searchQuery || this.tagsControl.value?.length);
 	}
