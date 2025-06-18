@@ -12,9 +12,9 @@
 						</ng-container>
 						<ng-container *ngIf="learningPaths.length > 0">
 							<span [countUp]="learningPaths.length">{{ learningPaths.length }}</span
-							>{{ null | i18nPlural: plural['learningPath'] }} in
+							>{{ learningPathPluralWord }} in
 							<span [countUp]="issuersWithLps.length">{{ issuersWithLps.length }}</span
-							>{{ null | i18nPlural: plural['issuer'] }}
+							>{{ issuersPluralWord }}
 						</ng-container>
 					</h1>
 				</div>
