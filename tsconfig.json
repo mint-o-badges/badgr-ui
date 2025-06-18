@@ -17,6 +17,7 @@
 		"module": "commonjs",
 		"baseUrl": "./",
 		"useDefineForClassFields": false,
+		"resolveJsonModule": true,
 		"paths": {
 			"@spartan-ng/ui-accordion-helm": ["./src/app/components/spartan/ui-accordion-helm/src/index.ts"],
 			"@spartan-ng/ui-badge-helm": ["./src/app/components/spartan/ui-badge-helm/src/index.ts"],

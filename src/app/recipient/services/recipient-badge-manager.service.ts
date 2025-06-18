@@ -17,6 +17,8 @@ export class RecipientBadgeManager {
 		() => this.recipientBadgeApiService.listRecipientBadges(),
 	);
 
+	recipientSkills = this.recipientBadgeApiService.getSkills();
+
 	constructor(
 		public recipientBadgeApiService: RecipientBadgeApiService,
 		public eventsService: EventsService,

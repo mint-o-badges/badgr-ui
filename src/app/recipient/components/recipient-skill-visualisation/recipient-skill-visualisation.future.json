@@ -1,0 +1,187 @@
+{
+	"/esco/skill/9bf266a6-188b-4d17-a22f-2f266d76832b": {
+		"concept_uri": "initiativ-und-leistungskompetenz",
+		"preferred_label": "Initiativ- und Leistungskompetenz",
+		"description": "Der Future Skill Initiativ- und Leistungskompetenz ist die F\u00e4higkeit zur Selbst-motivation, eine hohe Aktivit\u00e4ts- und Umsetzungskompetenz (siehe auch Studie von Pelz (2017) weiter unten) sowie der Wunsch, etwas beizutragen. Beharrlichkeit und Zielorientie-rung formen die Leistungsmotivation. Zus\u00e4tzlich spielt ein positives Selbstkonzept eine Rolle, sodass Erfolge und Misserfolge in einer Weise attribuiert werden, die nicht zur Senkung der Leistungsmotivation f\u00fchren."
+	},
+	"/esco/skill/f78877d1-99f3-4649-addc-2d09c9183a1e": {
+		"concept_uri": "lernkompetenz",
+		"preferred_label": "Lernkompetenz",
+		"description": "Lernkompetenz ist die F\u00e4higkeit und Bereitschaft zum Lernen, insbesondere zum selbstgesteuerten Lernen. Sie erstreckt sich auch auf metakognitive F\u00e4higkeiten."
+	},
+	"/esco/skill/135192cb-84e4-4b70-8946-fbe5041b26cd": {
+		"concept_uri": "lernkompetenz",
+		"preferred_label": "Lernkompetenz",
+		"description": "Lernkompetenz ist die F\u00e4higkeit und Bereitschaft zum Lernen, insbesondere zum selbstgesteuerten Lernen. Sie erstreckt sich auch auf metakognitive F\u00e4higkeiten."
+	},
+	"/esco/skill/a44c0ed6-68b1-457a-9c6d-ea8487bdfeb2": {
+		"concept_uri": "lernkompetenz",
+		"preferred_label": "Lernkompetenz",
+		"description": "Lernkompetenz ist die F\u00e4higkeit und Bereitschaft zum Lernen, insbesondere zum selbstgesteuerten Lernen. Sie erstreckt sich auch auf metakognitive F\u00e4higkeiten."
+	},
+	"/esco/skill/19a64e91-bfe3-4c48-9225-3bb1229b12f0": {
+		"concept_uri": "sensemaking",
+		"preferred_label": "Sensemaking",
+		"description": "Das Future Skill Profil Sensemaking umfasst die Bereitschaft und F\u00e4higkeit, die sich schnell wandelnden Sinnstrukturen von Future Organisations zu verstehen, bestehende Sinnstruk-turen weiterzuentwickeln oder die Entstehung neuer zu bef\u00f6rdern, dort wo sie abhandenge-kommen sind."
+	},
+	"/esco/skill/669b75d8-671c-4a1c-8e0b-6466c513c27d": {
+		"concept_uri": "zukunfts-und-gestaltungskompetenz",
+		"preferred_label": "Zukunfts- und Gestaltungskompetenz",
+		"description": "Zukunfts- und Gestaltungskompetenz ist die F\u00e4higkeit, mit Mut zum Neuen, Ver\u00e4nderungs-bereitschaft und Vorw\u00e4rtsgewandtheit, die derzeit gegebenen Situationen in andere, neue und bisher nicht bekannte Zukunftsvorstellungen weiterzuentwickeln und diese gestalterisch an-zugehen."
+	},
+	"/esco/skill/409a0245-0e6c-4aac-ba16-0920ecb76a8d": {
+		"concept_uri": "zukunfts-und-gestaltungskompetenz",
+		"preferred_label": "Zukunfts- und Gestaltungskompetenz",
+		"description": "Zukunfts- und Gestaltungskompetenz ist die F\u00e4higkeit, mit Mut zum Neuen, Ver\u00e4nderungs-bereitschaft und Vorw\u00e4rtsgewandtheit, die derzeit gegebenen Situationen in andere, neue und bisher nicht bekannte Zukunftsvorstellungen weiterzuentwickeln und diese gestalterisch an-zugehen."
+	},
+	"/esco/skill/468135b7-5757-48c3-9509-fde0e13ec5be": {
+		"concept_uri": "initiativ-und-leistungskompetenz",
+		"preferred_label": "Initiativ- und Leistungskompetenz",
+		"description": "Der Future Skill Initiativ- und Leistungskompetenz ist die F\u00e4higkeit zur Selbst-motivation, eine hohe Aktivit\u00e4ts- und Umsetzungskompetenz (siehe auch Studie von Pelz (2017) weiter unten) sowie der Wunsch, etwas beizutragen. Beharrlichkeit und Zielorientie-rung formen die Leistungsmotivation. Zus\u00e4tzlich spielt ein positives Selbstkonzept eine Rolle, sodass Erfolge und Misserfolge in einer Weise attribuiert werden, die nicht zur Senkung der Leistungsmotivation f\u00fchren."
+	},
+	"/esco/skill/1835a7c1-600e-4b16-a0af-fb4f7d8d77b9": {
+		"concept_uri": "selbstwirksamkeit",
+		"preferred_label": "Selbstwirksamkeit",
+		"description": "Selbstwirksamkeit als Future Skill ist die \u00dcberzeugung und das (Selbst-)Bewusstsein daf\u00fcr, die zu bew\u00e4ltigen Aufgaben mit den eigenen F\u00e4higkeiten umsetzen zu k\u00f6nnen, dabei Ver-antwortung zu \u00fcbernehmen und Entscheidungen treffen zu k\u00f6nnen."
+	},
+	"/esco/skill/5a927fa0-462e-4d54-ae12-97fd6ca45762": {
+		"concept_uri": "selbstbestimmtheit",
+		"preferred_label": "Selbstbestimmtheit",
+		"description": "Die F\u00e4higkeit zur Selbstbestimmung als Future Skill oder auch Selbstbestim-mungskompetenz, bezeichnet die F\u00e4higkeit, im Spannungsverh\u00e4ltnis von Fremd- und Selbstbestimmung produktiv zu agieren und sich R\u00e4ume zur eigenen Autonomie und Ent-wicklung zu schaffen, sodass die Befriedigung der eigenen Bed\u00fcrfnisse in Freiheit und selbst-bestimmt angestrebt werden kann."
+	},
+	"/esco/skill/77b636e8-fab3-41a8-8022-1e0a354059dc": {
+		"concept_uri": "reflexionskompetenz",
+		"preferred_label": "Reflexionskompetenz",
+		"description": "Reflexionskompetenz als Future Skill umfasst die Bereitschaft und F\u00e4higkeit zur Reflexion, also die F\u00e4higkeit, sich selbst und andere zum Zweck der konstruktiven Weiter-entwicklung hinterfragen zu k\u00f6nnen sowie zugrundeliegende Verhaltens-, Denk- und Werte-systeme zu erkennen und deren Konsequenzen f\u00fcr Handlungen und Entscheidungen holis-tisch einsch\u00e4tzen zu k\u00f6nnen."
+	},
+	"/esco/skill/7dd94ad3-13d6-43fe-8b94-51fcbf67ced9": {
+		"concept_uri": "ethische-kompetenz",
+		"preferred_label": "Ethische Kompetenz",
+		"description": "Ethische Kompetenz umfasst die F\u00e4higkeit zur Wahrnehmung eines Sachverhalts bezie-hungsweise einer Situation als ethisch relevant einschlie\u00dflich seiner/ ihrer begrifflichen, em-pirischen und kontextuellen Pr\u00fcfung (wahrnehmen), die F\u00e4higkeit zur Formulierung von einschl\u00e4gigen pr\u00e4skriptiven Pr\u00e4missen zusammen mit der Pr\u00fcfung ihrer Einschl\u00e4gigkeit, ih-res Gewichts, ihrer Begr\u00fcndung, ihrer Verbindlichkeit und ihrer Anwendungsbedingungen (bewerten) sowie die F\u00e4higkeit zur Urteilsbildung und der Pr\u00fcfung ihrer logischen Konsis-tenz, ihrer Anwendungsbedingungen und ihrer Alternativen (urteilen)."
+	},
+	"/esco/skill/20012caa-b63c-4cb9-b2b8-01a1cfdfc1d1": {
+		"concept_uri": "reflexionskompetenz",
+		"preferred_label": "Reflexionskompetenz",
+		"description": "Reflexionskompetenz als Future Skill umfasst die Bereitschaft und F\u00e4higkeit zur Reflexion, also die F\u00e4higkeit, sich selbst und andere zum Zweck der konstruktiven Weiter-entwicklung hinterfragen zu k\u00f6nnen sowie zugrundeliegende Verhaltens-, Denk- und Werte-systeme zu erkennen und deren Konsequenzen f\u00fcr Handlungen und Entscheidungen holis-tisch einsch\u00e4tzen zu k\u00f6nnen."
+	},
+	"/esco/skill/cef5c0f8-1e40-4c09-b6a7-aa7811849e5d": {
+		"concept_uri": "sensemaking",
+		"preferred_label": "Sensemaking",
+		"description": "Das Future Skill Profil Sensemaking umfasst die Bereitschaft und F\u00e4higkeit, die sich schnell wandelnden Sinnstrukturen von Future Organisations zu verstehen, bestehende Sinnstruk-turen weiterzuentwickeln oder die Entstehung neuer zu bef\u00f6rdern, dort wo sie abhandenge-kommen sind."
+	},
+	"/esco/skill/967b60c2-4657-4ffc-bcaf-aab565793f97": {
+		"concept_uri": "reflexionskompetenz",
+		"preferred_label": "Reflexionskompetenz",
+		"description": "Reflexionskompetenz als Future Skill umfasst die Bereitschaft und F\u00e4higkeit zur Reflexion, also die F\u00e4higkeit, sich selbst und andere zum Zweck der konstruktiven Weiter-entwicklung hinterfragen zu k\u00f6nnen sowie zugrundeliegende Verhaltens-, Denk- und Werte-systeme zu erkennen und deren Konsequenzen f\u00fcr Handlungen und Entscheidungen holis-tisch einsch\u00e4tzen zu k\u00f6nnen."
+	},
+	"/esco/skill/4707da90-9cfc-46ca-8de0-38a0b7bfb137": {
+		"concept_uri": "entscheidungskompetenz",
+		"preferred_label": "Entscheidungskompetenz",
+		"description": "Entscheidungskompetenz als Future Skill ist die F\u00e4higkeit, Entscheidungsnotwendigkeiten wahrzunehmen sowie m\u00f6gliche alternative Entscheidungen gegeneinander abzuw\u00e4gen, eine Entscheidung zu treffen und diese zu verantworten"
+	},
+	"/esco/skill/c54b03a9-fe20-42af-9e8a-f8896af4a4f9": {
+		"concept_uri": "entscheidungskompetenz",
+		"preferred_label": "Entscheidungskompetenz",
+		"description": "Entscheidungskompetenz als Future Skill ist die F\u00e4higkeit, Entscheidungsnotwendigkeiten wahrzunehmen sowie m\u00f6gliche alternative Entscheidungen gegeneinander abzuw\u00e4gen, eine Entscheidung zu treffen und diese zu verantworten"
+	},
+	"/esco/skill/d56e2c2f-3e01-4b76-a7bb-ecb6d430172f": {
+		"concept_uri": "zukunfts-und-gestaltungskompetenz",
+		"preferred_label": "Zukunfts- und Gestaltungskompetenz",
+		"description": "Zukunfts- und Gestaltungskompetenz ist die F\u00e4higkeit, mit Mut zum Neuen, Ver\u00e4nderungs-bereitschaft und Vorw\u00e4rtsgewandtheit, die derzeit gegebenen Situationen in andere, neue und bisher nicht bekannte Zukunftsvorstellungen weiterzuentwickeln und diese gestalterisch an-zugehen."
+	},
+	"/esco/skill/fd2d573f-8d35-45ca-b0a4-91cad3b178d1": {
+		"concept_uri": "entscheidungskompetenz",
+		"preferred_label": "Entscheidungskompetenz",
+		"description": "Entscheidungskompetenz als Future Skill ist die F\u00e4higkeit, Entscheidungsnotwendigkeiten wahrzunehmen sowie m\u00f6gliche alternative Entscheidungen gegeneinander abzuw\u00e4gen, eine Entscheidung zu treffen und diese zu verantworten"
+	},
+	"/esco/skill/bcf002ce-90f8-42e5-ac1b-5dba208639b0": {
+		"concept_uri": "entscheidungskompetenz",
+		"preferred_label": "Entscheidungskompetenz",
+		"description": "Entscheidungskompetenz als Future Skill ist die F\u00e4higkeit, Entscheidungsnotwendigkeiten wahrzunehmen sowie m\u00f6gliche alternative Entscheidungen gegeneinander abzuw\u00e4gen, eine Entscheidung zu treffen und diese zu verantworten"
+	},
+	"/esco/skill/6dc2dfac-3e21-44dd-a71c-9a1c8fe2514c": {
+		"concept_uri": "entscheidungskompetenz",
+		"preferred_label": "Entscheidungskompetenz",
+		"description": "Entscheidungskompetenz als Future Skill ist die F\u00e4higkeit, Entscheidungsnotwendigkeiten wahrzunehmen sowie m\u00f6gliche alternative Entscheidungen gegeneinander abzuw\u00e4gen, eine Entscheidung zu treffen und diese zu verantworten"
+	},
+	"/esco/skill/e9575f7f-053a-439e-8074-f93df3334e92": {
+		"concept_uri": "ethische-kompetenz",
+		"preferred_label": "Ethische Kompetenz",
+		"description": "Ethische Kompetenz umfasst die F\u00e4higkeit zur Wahrnehmung eines Sachverhalts bezie-hungsweise einer Situation als ethisch relevant einschlie\u00dflich seiner/ ihrer begrifflichen, em-pirischen und kontextuellen Pr\u00fcfung (wahrnehmen), die F\u00e4higkeit zur Formulierung von einschl\u00e4gigen pr\u00e4skriptiven Pr\u00e4missen zusammen mit der Pr\u00fcfung ihrer Einschl\u00e4gigkeit, ih-res Gewichts, ihrer Begr\u00fcndung, ihrer Verbindlichkeit und ihrer Anwendungsbedingungen (bewerten) sowie die F\u00e4higkeit zur Urteilsbildung und der Pr\u00fcfung ihrer logischen Konsis-tenz, ihrer Anwendungsbedingungen und ihrer Alternativen (urteilen)."
+	},
+	"/esco/skill/7cf2762d-32e1-4b21-8ef8-574e40310c18": {
+		"concept_uri": "ethische-kompetenz",
+		"preferred_label": "Ethische Kompetenz",
+		"description": "Ethische Kompetenz umfasst die F\u00e4higkeit zur Wahrnehmung eines Sachverhalts bezie-hungsweise einer Situation als ethisch relevant einschlie\u00dflich seiner/ ihrer begrifflichen, em-pirischen und kontextuellen Pr\u00fcfung (wahrnehmen), die F\u00e4higkeit zur Formulierung von einschl\u00e4gigen pr\u00e4skriptiven Pr\u00e4missen zusammen mit der Pr\u00fcfung ihrer Einschl\u00e4gigkeit, ih-res Gewichts, ihrer Begr\u00fcndung, ihrer Verbindlichkeit und ihrer Anwendungsbedingungen (bewerten) sowie die F\u00e4higkeit zur Urteilsbildung und der Pr\u00fcfung ihrer logischen Konsis-tenz, ihrer Anwendungsbedingungen und ihrer Alternativen (urteilen)."
+	},
+	"/esco/skill/0b709c64-a57a-4976-86bd-34d2cf34fa4f": {
+		"concept_uri": "ethische-kompetenz",
+		"preferred_label": "Ethische Kompetenz",
+		"description": "Ethische Kompetenz umfasst die F\u00e4higkeit zur Wahrnehmung eines Sachverhalts bezie-hungsweise einer Situation als ethisch relevant einschlie\u00dflich seiner/ ihrer begrifflichen, em-pirischen und kontextuellen Pr\u00fcfung (wahrnehmen), die F\u00e4higkeit zur Formulierung von einschl\u00e4gigen pr\u00e4skriptiven Pr\u00e4missen zusammen mit der Pr\u00fcfung ihrer Einschl\u00e4gigkeit, ih-res Gewichts, ihrer Begr\u00fcndung, ihrer Verbindlichkeit und ihrer Anwendungsbedingungen (bewerten) sowie die F\u00e4higkeit zur Urteilsbildung und der Pr\u00fcfung ihrer logischen Konsis-tenz, ihrer Anwendungsbedingungen und ihrer Alternativen (urteilen)."
+	},
+	"/esco/skill/d97c894e-d330-4bd3-b8ba-138fc11855ee": {
+		"concept_uri": "innovationskompetenz",
+		"preferred_label": "Innovationskompetenz",
+		"description": "Innovationskompetenz als Future Skill Profil umfasst die Bereitschaft Innovation als integralen Bestandteil eines jeden Organisationsgegenstandes, -themas und -prozesses zu f\u00f6rdern und die F\u00e4higkeit zur Organisation als Innovations\u00f6kosystem beizutragen."
+	},
+	"/esco/skill/c624c6a3-b0ba-4a31-a296-0d433fe47e41": {
+		"concept_uri": "innovationskompetenz",
+		"preferred_label": "Innovationskompetenz",
+		"description": "Innovationskompetenz als Future Skill Profil umfasst die Bereitschaft Innovation als integralen Bestandteil eines jeden Organisationsgegenstandes, -themas und -prozesses zu f\u00f6rdern und die F\u00e4higkeit zur Organisation als Innovations\u00f6kosystem beizutragen."
+	},
+	"/esco/skill/c2a0c52c-0b4b-4180-a918-92650ea3b458": {
+		"concept_uri": "innovationskompetenz",
+		"preferred_label": "Innovationskompetenz",
+		"description": "Innovationskompetenz als Future Skill Profil umfasst die Bereitschaft Innovation als integralen Bestandteil eines jeden Organisationsgegenstandes, -themas und -prozesses zu f\u00f6rdern und die F\u00e4higkeit zur Organisation als Innovations\u00f6kosystem beizutragen."
+	},
+	"/esco/skill/2fb8480e-de3c-462b-b169-e8bbb344da68": {
+		"concept_uri": "innovationskompetenz",
+		"preferred_label": "Innovationskompetenz",
+		"description": "Innovationskompetenz als Future Skill Profil umfasst die Bereitschaft Innovation als integralen Bestandteil eines jeden Organisationsgegenstandes, -themas und -prozesses zu f\u00f6rdern und die F\u00e4higkeit zur Organisation als Innovations\u00f6kosystem beizutragen."
+	},
+	"/esco/skill/8327754d-3990-4056-b07e-4faa49cfcd26": {
+		"concept_uri": "innovationskompetenz",
+		"preferred_label": "Innovationskompetenz",
+		"description": "Innovationskompetenz als Future Skill Profil umfasst die Bereitschaft Innovation als integralen Bestandteil eines jeden Organisationsgegenstandes, -themas und -prozesses zu f\u00f6rdern und die F\u00e4higkeit zur Organisation als Innovations\u00f6kosystem beizutragen."
+	},
+	"/esco/skill/67dbfc2a-3dd4-41a1-90bd-97035e7add60": {
+		"concept_uri": "digitalkompetenz",
+		"preferred_label": "Digitalkompetenz",
+		"description": "Digitalkompetenz ist die F\u00e4higkeit, digitale Medien zu nutzen, produktiv gestaltend zu entwickeln, f\u00fcr das eigene Leben einzusetzen und reflektorisch, kritisch und analytisch ihre Wirkungsweise in Bezug auf die Einzelne/ den Einzelnen und die Gesellschaft als Ganzes zu verstehen sowie die Kenntnis \u00fcber die Potenziale und Grenzen digitaler Medien und ihrer Wirkungsweisen."
+	},
+	"/esco/skill/b19e0820-a96f-4c0a-a724-3c056180c1b3": {
+		"concept_uri": "kooperationskompetenz",
+		"preferred_label": "Kooperationskompetenz",
+		"description": "Kooperationskompetenz ist die F\u00e4higkeit zur Zusammenarbeit in Teams, auch interkulturell, in Pr\u00e4senzinteraktion oder durch Zuhilfenahme von Medien, innerhalb oder zwischen Orga-nisationen, Zusammenarbeit so zu gestalten, dass bestehende Differenzen in Gemeinsamkeiten \u00fcberf\u00fchrt werden k\u00f6nnen. Dabei spielen soziale Intelligenz, Offenheit und Beratungs-kompetenz eine wichtige Rolle."
+	},
+	"/esco/skill/60c78287-22eb-4103-9c8c-28deaa460da0": {
+		"concept_uri": "kooperationskompetenz",
+		"preferred_label": "Kooperationskompetenz",
+		"description": "Kooperationskompetenz ist die F\u00e4higkeit zur Zusammenarbeit in Teams, auch interkulturell, in Pr\u00e4senzinteraktion oder durch Zuhilfenahme von Medien, innerhalb oder zwischen Orga-nisationen, Zusammenarbeit so zu gestalten, dass bestehende Differenzen in Gemeinsamkeiten \u00fcberf\u00fchrt werden k\u00f6nnen. Dabei spielen soziale Intelligenz, Offenheit und Beratungs-kompetenz eine wichtige Rolle."
+	},
+	"/esco/skill/326809fc-238d-40c2-881e-40042f7f2f0d": {
+		"concept_uri": "kooperationskompetenz",
+		"preferred_label": "Kooperationskompetenz",
+		"description": "Kooperationskompetenz ist die F\u00e4higkeit zur Zusammenarbeit in Teams, auch interkulturell, in Pr\u00e4senzinteraktion oder durch Zuhilfenahme von Medien, innerhalb oder zwischen Orga-nisationen, Zusammenarbeit so zu gestalten, dass bestehende Differenzen in Gemeinsamkeiten \u00fcberf\u00fchrt werden k\u00f6nnen. Dabei spielen soziale Intelligenz, Offenheit und Beratungs-kompetenz eine wichtige Rolle."
+	},
+	"/esco/skill/bf983f2a-e941-4646-811d-cc81060cb53f": {
+		"concept_uri": "kooperationskompetenz",
+		"preferred_label": "Kooperationskompetenz",
+		"description": "Kooperationskompetenz ist die F\u00e4higkeit zur Zusammenarbeit in Teams, auch interkulturell, in Pr\u00e4senzinteraktion oder durch Zuhilfenahme von Medien, innerhalb oder zwischen Orga-nisationen, Zusammenarbeit so zu gestalten, dass bestehende Differenzen in Gemeinsamkeiten \u00fcberf\u00fchrt werden k\u00f6nnen. Dabei spielen soziale Intelligenz, Offenheit und Beratungs-kompetenz eine wichtige Rolle."
+	},
+	"/esco/skill/eab3bafa-eebb-47bf-85ce-e336c5019108": {
+		"concept_uri": "kooperationskompetenz",
+		"preferred_label": "Kooperationskompetenz",
+		"description": "Kooperationskompetenz ist die F\u00e4higkeit zur Zusammenarbeit in Teams, auch interkulturell, in Pr\u00e4senzinteraktion oder durch Zuhilfenahme von Medien, innerhalb oder zwischen Orga-nisationen, Zusammenarbeit so zu gestalten, dass bestehende Differenzen in Gemeinsamkeiten \u00fcberf\u00fchrt werden k\u00f6nnen. Dabei spielen soziale Intelligenz, Offenheit und Beratungs-kompetenz eine wichtige Rolle."
+	},
+	"/esco/skill/a5b0cd5c-e13a-4ab3-8d93-4d242adcfb01": {
+		"concept_uri": "kooperationskompetenz",
+		"preferred_label": "Kooperationskompetenz",
+		"description": "Kooperationskompetenz ist die F\u00e4higkeit zur Zusammenarbeit in Teams, auch interkulturell, in Pr\u00e4senzinteraktion oder durch Zuhilfenahme von Medien, innerhalb oder zwischen Orga-nisationen, Zusammenarbeit so zu gestalten, dass bestehende Differenzen in Gemeinsamkeiten \u00fcberf\u00fchrt werden k\u00f6nnen. Dabei spielen soziale Intelligenz, Offenheit und Beratungs-kompetenz eine wichtige Rolle."
+	},
+	"/esco/skill/6f142deb-03a9-4cd7-94ce-e0f023ae2169": {
+		"concept_uri": "kommunikationskompetenz",
+		"preferred_label": "Kommunikationskompetenz",
+		"description": "Kommunikationskompetenz umfasst neben sprachlichen F\u00e4higkeiten auch Diskurs-, Dialog und strategische Kommunikationsf\u00e4higkeit, um in unterschiedlichen Kontexten und Situationen situativ angemessen erfolgreich kommunikativ handlungsf\u00e4hig zu sein."
+	}
+}

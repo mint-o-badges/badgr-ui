@@ -1,0 +1,112 @@
+
+::ng-deep {
+	svg {
+		foreignObject {
+			pointer-events: none;
+		}
+
+		div {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			text-align: center;
+			height: 100%;
+			width: 100%;
+			padding: 4px;
+			line-height: 1.2em;
+			color: inherit;
+			// cursor: pointer;
+			// word-break: break-all;
+			hyphens: auto;
+
+			&.description {
+				background-color: #F8F6FC;
+				border-radius: 10px;
+				border: 1px solid #492E98;
+				color: #492E98;
+				font-weight: normal;
+				display: none;
+			}
+		}
+	//   circle {
+	//     transition: filter 0.1s ease;
+	//   }
+	//   g:hover {
+
+	//     > circle {
+	//       filter: brightness(80%)
+	//     }
+	//   }
+
+		g {
+			font-weight: bold;
+			circle {
+				stroke: #492E98;
+			}
+			&.level-1 {
+				color: #492E98;
+				circle { fill: #E2DAF3; }
+			}
+			&.level-2 {
+				color: #3D2979;
+				circle { fill: #B4A1E1; }
+			}
+			&.level-3 {
+				color: white;
+				circle { fill: #6C4AC7; }
+			}
+			&.level-4, &.leaf {
+				color: white;
+				circle { fill: #492E98; }
+			}
+		}
+
+		g.group, g.leaf, .link {
+			transition: opacity 0.3s ease 0.2s;
+
+			&.show-description {
+				transition: opacity 0.3s ease 0.1s;
+
+				div.description {
+					display: flex;
+				}
+			}
+		}
+
+		g.group, g.leaf {
+
+			opacity: 0;
+			z-index: 2;
+			position: relative;
+
+			&.clickable {
+				cursor: pointer;
+			}
+
+			&.level-1 {
+				opacity: 1;
+				z-index: 1;
+			}
+			&.show {
+				opacity: 1;
+			}
+
+			&.leaf {
+			//   display: none;
+			//   &.show {
+			//     display: block;
+			//   }
+			}
+		}
+
+		.link {
+			opacity: 0;
+			transition: opacity 0.3s;
+			&.show {
+				transition: opacity 0.3s ease 0.2s;
+				opacity: 1;
+			}
+		}
+	}
+}
+

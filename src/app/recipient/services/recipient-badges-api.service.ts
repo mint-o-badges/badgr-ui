@@ -6,6 +6,7 @@ import {
 	ApiImportedBadgeInstance,
 	ApiRecipientBadgeInstance,
 	RecipientBadgeInstanceCreationInfo,
+	ApiRootSkill
 } from '../models/recipient-badge-api.model';
 import { MessageService } from '../../common/services/message.service';
 import { HttpClient } from '@angular/common/http';
@@ -34,6 +35,10 @@ export class RecipientBadgeApiService extends BaseHttpApiService {
 		return this.get<ApiImportedBadgeInstance[]>('/v1/earner/imported-badges').then((importedBadges) =>
 			importedBadges.body.map((badge) => this.convertToRecipientBadgeInstance(badge)),
 		);
+	}
+
+	getSkills(): Promise<ApiRootSkill[]> {
+		return this.get<{skills: ApiRootSkill[]}>('/v1/earner/skills').then((r) => r.body.skills);
 	}
 
 	getImportedBadge(slug: string): Promise<ApiImportedBadgeInstance> {

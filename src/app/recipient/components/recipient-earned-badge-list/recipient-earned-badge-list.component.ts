@@ -20,7 +20,7 @@ import { SessionService } from '../../../common/services/session.service';
 
 import { AddBadgeDialogComponent } from '../add-badge-dialog/add-badge-dialog.component';
 import { RecipientBadgeManager } from '../../services/recipient-badge-manager.service';
-import { ApiRecipientBadgeIssuer } from '../../models/recipient-badge-api.model';
+import { ApiRecipientBadgeIssuer, ApiRootSkill } from '../../models/recipient-badge-api.model';
 import { RecipientBadgeInstance } from '../../models/recipient-badge.model';
 import { badgeShareDialogOptionsFor } from '../recipient-earned-badge-detail/recipient-earned-badge-detail.component';
 import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
@@ -83,10 +83,12 @@ export class RecipientEarnedBadgeListComponent
 	importedBadges: RecipientBadgeInstance[] = [];
 	badgesLoaded: Promise<unknown>;
 	profileLoaded: Promise<unknown>;
+	skillsLoaded: Promise<unknown>;
 	learningpathLoaded: Promise<unknown>;
 	collectionsLoaded: Promise<unknown>;
 	importedBadgesLoaded: Promise<unknown>;
 	allIssuers: ApiRecipientBadgeIssuer[] = [];
+	allSkills: ApiRootSkill[] = [];
 	allLearningPaths: any[] = [];
 	collections: any[] = [];
 
@@ -108,6 +110,7 @@ export class RecipientEarnedBadgeListComponent
 	running = false;
 	tabs: any[] = [];
 	@ViewChild('overViewTemplate', { static: true }) overViewTemplate: ElementRef;
+	@ViewChild('profileTemplate', { static: true }) profileTemplate: ElementRef;
 	@ViewChild('badgesTemplate', { static: true }) badgesTemplate: ElementRef;
 	@ViewChild('badgesCompetency', { static: true }) badgesCompetency: ElementRef;
 	@ViewChild('learningPathTemplate', { static: true }) learningPathTemplate: ElementRef;
@@ -131,7 +134,7 @@ export class RecipientEarnedBadgeListComponent
 	@ViewChild('countup2') countup2: CountUpDirective;
 	@ViewChild('badgesCounter') badgesCounter: CountUpDirective;
 
-	activeTab: string = 'badges';
+	activeTab: string = 'profile';
 	private _badgesDisplay: BadgeDispay = 'grid';
 	sortControl = new FormControl('date_desc');
 	get badgesDisplay() {
@@ -187,6 +190,10 @@ export class RecipientEarnedBadgeListComponent
 		this.badgesLoaded = this.recipientBadgeManager.recipientBadgeList.loadedPromise.catch((e) =>
 			this.messageService.reportAndThrowError('Failed to load your badges', e),
 		);
+
+		this.skillsLoaded = this.recipientBadgeApiService.getSkills().then((skills) => {
+			this.allSkills = skills;
+		});
 
 		this.learningpathLoaded = this.learningPathApi
 			.getLearningPathsForUser()
@@ -313,6 +320,11 @@ export class RecipientEarnedBadgeListComponent
 
 	ngAfterContentInit() {
 		this.tabs = [
+			{
+				key: 'profile',
+				title: 'Profil',
+				component: this.profileTemplate,
+			},
 			{
 				key: 'badges',
 				title: 'Badges',

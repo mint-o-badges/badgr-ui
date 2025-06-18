@@ -20,6 +20,7 @@ import { MozzTransitionModule } from '../mozz-transition/mozz-transition.module'
 import { TranslateModule } from '@ngx-translate/core';
 import { ImportedBadgeDetailComponent } from './components/imported-badge-detail/imported-badge-detail.component';
 import { RecipientBadgeCollectionEditComponent } from '../recipient-badge-collection-edit/recipient-badge-collection-edit.component';
+import { RecipientSkillVisualisationComponent } from './components/recipient-skill-visualisation/recipient-skill-visualisation.component';
 
 const routes: Routes = [
 	/* Recipient Badges */
@@ -73,6 +74,7 @@ const routes: Routes = [
 		MozzTransitionModule,
 		TranslateModule,
 		AddBadgeDialogComponent,
+		RecipientSkillVisualisationComponent,
 	],
 	declarations: [
 		RecipientEarnedBadgeListComponent,

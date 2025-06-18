@@ -53,6 +53,9 @@
 					[activeTab]="activeTab"
 					[tabs]="tabs"
 				></oeb-backpack-tabs>
+				<ng-template #profileTemplate>
+					<recipient-skill-visualisation [skills]="allSkills"></recipient-skill-visualisation>
+				</ng-template>
 				<ng-template #badgesTemplate>
 					<ng-template [bgAwaitPromises]="[badgesLoaded]">
 						<div class="oeb-section-sm">
