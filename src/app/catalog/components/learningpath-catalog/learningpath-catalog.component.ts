@@ -170,7 +170,7 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 			issuer: {
 				'=0': this.translate.instant('Issuer.noInstitutions'),
 				'=1': '1 Institution',
-				other: this.translate.instant('General.institutions'),
+				other: ' ' + this.translate.instant('General.institutions'),
 			},
 			issuerText: {
 				'=0': this.translate.instant('Issuer.institutionsIssued'),
