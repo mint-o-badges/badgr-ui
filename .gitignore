@@ -18,5 +18,3 @@ temp/
 
 # vscode updates
 .vscode
-
-src/environments/version.ts
