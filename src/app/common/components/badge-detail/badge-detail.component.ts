@@ -57,7 +57,6 @@ export class BgBadgeDetail {
 	}
 
 	shareBadge() {
-		console.log('sharing');
 		const baseUrl = window.location.origin;
 		this.dialogService.shareSocialDialog.openDialog({
 			title: this.translate.instant('RecBadgeDetail.shareBadge'),
