@@ -30,7 +30,7 @@ import { CommonModule } from '@angular/common';
 				</li>
 
 				<li hlmPaginationItem *ngFor="let page of getPageNumbers()" (click)="changePage(page)">
-					<hlm-pagination-ellipsis *ngIf="page === '...'" />
+					<!-- <hlm-pagination-ellipsis *ngIf="page === '...'" /> -->
 
 					<a hlmPaginationLink [isActive]="page === currentPage">{{ page }}</a>
 				</li>

@@ -114,14 +114,12 @@ export class RecipientEarnedBadgeListComponent
 	@ViewChild('collectionTemplate', { static: true }) collectionTemplate: ElementRef;
 	@ViewChild('collectionInfoHeaderTemplate', { static: true }) collectionInfoHeaderTemplate: ElementRef;
 	@ViewChild('collectionInfoContentTemplate', { static: true }) collectionInfoContentTemplate: ElementRef;
-	@ViewChild('shareDialogContentTemplate', { static: true }) shareDialogContentTemplate: ElementRef;
-	@ViewChild('shareDialogHeaderTemplate', { static: true }) shareDialogHeaderTemplate: ElementRef;
 
 	dialogRef: BrnDialogRef<any> = null;
 	translatedTitles: string[] = [];
 
-	groupedUserCompetencies = {};
-	newGroupedUserCompetencies = {};
+	groupedUserCompetencies: Competency[] | {} = {};
+	newGroupedUserCompetencies: Competency[] | {} = {};
 
 	totalStudyTime = 0;
 	public objectKeys = Object.keys;
@@ -563,7 +561,7 @@ export class RecipientEarnedBadgeListComponent
 	}
 }
 
-class BadgeResult {
+export class BadgeResult {
 	constructor(
 		public badge: RecipientBadgeInstance,
 		public issuer: ApiRecipientBadgeIssuer,

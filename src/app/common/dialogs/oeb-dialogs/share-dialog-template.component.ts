@@ -20,13 +20,14 @@ import { saveAsImage } from '../../util/qrcode-util';
 				class=" tw-mt-2 tw-flex tw-relative tw-items-center tw-border-purple tw-border-solid tw-border tw-rounded-md"
 			>
 				<input
+					#inputRef
 					type="text"
 					name="forminput"
 					readonly
 					changeOrder
 					class="!tw-bg-white focus:tw-outline-none tw-w-full tw-border-1 tw-border-purple min-[880px]:tw-w-96 tw-border-solid tw-h-12 tw-rounded-lg"
 					hlmInput
-					(click)="$event.target.select()"
+					(click)="inputRef.select()"
 					[value]="collection.shareUrl"
 					#urlInput
 				/>

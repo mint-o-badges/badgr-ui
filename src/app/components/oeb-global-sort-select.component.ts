@@ -6,14 +6,14 @@ import { TranslateService } from '@ngx-translate/core';
 	selector: 'oeb-global-sort-select',
 	template: `
 		<oeb-select
-			actionBar="true"
+			[actionBar]="true"
 			class="oeb tw-block tw-w-full"
 			[options]="sortOptions"
 			[control]="control"
 			[disabled]="disabled"
 			[autofocus]="true"
 			[placeholder]="placeholder"
-			noTopMargin="true"
+			[noTopMargin]="true"
 		></oeb-select>
 	`,
 	standalone: false,

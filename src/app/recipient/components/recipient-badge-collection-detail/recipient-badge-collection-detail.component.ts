@@ -131,6 +131,14 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 		}
 	}
 
+	badgeEntryBySlug(index: number, entry: RecipientBadgeCollectionEntry) {
+		return entry.badgeSlug;
+	}
+
+	badgeIssueDate(entry: RecipientBadgeCollectionEntry) {
+		return new Date(entry.badge.apiModel.json.issuedOn);
+	}
+
 	removeBadge(badgeSlug: string) {
 		this.recipientBadgeManager.recipientBadgeList.loadedPromise.then((res) => {
 			const badge = res.entityForSlug(badgeSlug);

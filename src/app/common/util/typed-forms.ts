@@ -199,7 +199,7 @@ export class TypedFormControl<ValueType> extends TypedFormItem<ValueType> {
 }
 
 type RawGroupOf<T> = {
-	[F in keyof T]: AbstractControl;
+	[F in keyof T]: FormControl;
 };
 
 /**
@@ -314,7 +314,7 @@ export class TypedFormArray<ItemValueType, ItemType extends TypedFormItem<ItemVa
 		this.rawControl = new FormArray([], validator);
 	}
 
-	get rawControls(): AbstractControl[] {
+	get rawControls(): FormControl[] {
 		return this.rawControl.controls;
 	}
 

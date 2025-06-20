@@ -21,7 +21,7 @@ import { CommonDialogsService } from '../../../common/services/common-dialogs.se
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-	template: ` <bg-badgedetail [config]="config" [awaitPromises]="[assertionIdParam]"></bg-badgedetail>`,
+	template: ` <bg-badgedetail [config]="config" [awaitPromises]="[assertionIdParam.loadedPromise]"></bg-badgedetail>`,
 	standalone: false,
 })
 export class PublicBadgeAssertionComponent {

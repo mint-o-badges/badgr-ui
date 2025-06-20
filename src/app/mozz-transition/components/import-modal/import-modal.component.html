@@ -91,7 +91,7 @@
 								[name]="'ZipFile'"
 								label="ZipFile"
 								[validFileTypes]="'application/octet-stream, .zip'"
-								[control]="csvForm.controls['zipFile']"
+								[control]="$any(csvForm.controls['zipFile'])"
 								[placeholderImage]="csvUploadIconUrl"
 								(change)="fileChanged($event)"
 								(drop)="fileChanged($event)"

@@ -44,7 +44,7 @@ export class LearningPath extends ManagedEntity<ApiLearningPath, LearningPathRef
 	get completed_at(): Date | null {
 		return this.apiModel.completed_at;
 	}
-	get requested(): Boolean | null {
+	get requested(): boolean | null {
 		return this.apiModel.requested;
 	}
 

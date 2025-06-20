@@ -31,7 +31,7 @@ import { RecipientBadgeCollection } from '../recipient/models/recipient-badge-co
 					>
 						<img
 							[src]="badge.image"
-							[title]="badge?.name"
+							[title]="badge.badgeClass.name"
 							class="md:tw-w-[80px] md:tw-h-[80px] tw-w-[50px] tw-h-[50px]"
 						/>
 					</div>

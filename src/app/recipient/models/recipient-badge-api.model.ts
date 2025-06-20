@@ -97,6 +97,7 @@ export interface ApiRecipientBadgeIssuer {
 	description: string;
 	email: string;
 	image?: string;
+	slug: string;
 }
 
 export type RecipientBadgeInstanceCreationInfo =

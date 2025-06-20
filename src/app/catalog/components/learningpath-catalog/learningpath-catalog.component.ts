@@ -55,6 +55,8 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 
 	sortOption: string | null = null;
 
+	state;
+
 	get theme() {
 		return this.configService.theme;
 	}
@@ -98,6 +100,16 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 			this._currentPage = value;
 			this.updatePaginatedResults();
 		}
+	}
+
+	get learningPathPluralWord(): string {
+		return this.learningPaths.length === 1
+			? this.plural['learningPath']['1']
+			: this.plural['learningPath']['other'];
+	}
+
+	get issuersPluralWord(): string {
+		return this.issuers.length === 1 ? this.plural['issuer']['1'] : this.plural['issuer']['other'];
 	}
 
 	constructor(
@@ -158,17 +170,17 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 			issuer: {
 				'=0': this.translate.instant('Issuer.noInstitutions'),
 				'=1': '1 Institution',
-				other: '# ' + this.translate.instant('General.institutions'),
+				other: ' ' + this.translate.instant('General.institutions'),
 			},
 			issuerText: {
 				'=0': this.translate.instant('Issuer.institutionsIssued'),
 				'=1': '1 ' + this.translate.instant('Issuer.institutionIssued'),
-				other: '# ' + this.translate.instant('Issuer.institutionsIssued'),
+				other: ' ' + this.translate.instant('Issuer.institutionsIssued'),
 			},
 			learningPath: {
 				'=0': this.translate.instant('General.noLearningPaths'),
 				'=1': '1 ' + this.translate.instant('General.learningPath'),
-				other: '# ' + this.translate.instant('General.learningPaths'),
+				other: ' ' + this.translate.instant('General.learningPaths'),
 			},
 		};
 	}

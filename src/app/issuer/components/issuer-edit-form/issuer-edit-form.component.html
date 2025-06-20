@@ -13,7 +13,7 @@
 		[errorMessage]="imageError"
 		(imageError)="onImageError($event)"
 		[enableIconSearch]="false"
-		maxSizeInMB="2"
+		[maxSizeInMB]="2"
 		[labelStyle]="'forminput-x-label u-margin-bottom1x'"
 	></bg-formfield-image>
 	<span class="tw-text-oebblack tw-italic tw-text-lg"
@@ -111,7 +111,7 @@
 
 	<div class="tw-mt-6 md:tw-mt-7">
 		<oeb-checkbox
-			alignStart="true"
+			[alignStart]="true"
 			id="verify-intent"
 			name="verify-intent"
 			[text]="'Issuer.herebyIConfirm' | translate"
@@ -119,27 +119,6 @@
 		>
 		</oeb-checkbox>
 	</div>
-
-	<label
-		[class.checkbox-is-error]="
-			issuerForm.rawControlMap.agreedTerms.dirty && !issuerForm.rawControlMap.agreedTerms.valid
-		"
-		*ngIf="dataProcessorUrl"
-		class="checkbox l-marginBottom-2x"
-		for="terms"
-	>
-		<input name="terms" id="terms" type="checkbox" [formControl]="issuerForm.rawControlMap.agreedTerms" />
-		<span class="checkbox-x-text"
-			>Ich habe die <a target="_blank" [href]="dataProcessorUrl">Datenschutzrichtlinien</a> gelesen und stimme
-			ihnen zu.
-			<div
-				*ngIf="issuerForm.rawControlMap.agreedTerms.dirty && !issuerForm.rawControlMap.agreedTerms.valid"
-				class="checkbox-x-errortext"
-			>
-				{{ 'Issuer.readPolicy' | translate }}
-			</div>
-		</span>
-	</label>
 
 	<div class="tw-flex tw-justify-between tw-flex-wrap sm:tw-flex-nowrap tw-gap-2 tw-mt-4">
 		<oeb-button

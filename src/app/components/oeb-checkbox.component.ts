@@ -48,7 +48,7 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class OebCheckboxComponent implements ControlValueAccessor {
 	@Input() text: string;
-	@Input() control: FormControl = new FormControl();
+	@Input() control: any = new FormControl();
 	@Input() name: string;
 	@Output() checkedChange = new EventEmitter<boolean>();
 	@Input() ngModel: boolean;
@@ -63,7 +63,7 @@ export class OebCheckboxComponent implements ControlValueAccessor {
 	@Input() alignStart = false;
 	@Input() noMargin = false;
 
-	@Output() ngModelChange = new EventEmitter<string>();
+	@Output() ngModelChange = new EventEmitter<boolean>();
 
 	constructor(private translate: TranslateService) {}
 

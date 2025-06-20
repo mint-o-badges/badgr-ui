@@ -28,6 +28,9 @@ export class ForkBadgeDialog extends BaseDialog {
 	resolveFunc: (BadgeClass) => void;
 	rejectFunc: () => void;
 
+	readonly badgeLoadingImageUrl = '../../../breakdown/static/images/badge-loading.svg';
+	readonly badgeFailedImageUrl = '../../../breakdown/static/images/badge-failed.svg';
+
 	badges: BadgeClass[] = null;
 	allIssuers: string[] = [];
 	badgeResults: BadgeResult[] = null;

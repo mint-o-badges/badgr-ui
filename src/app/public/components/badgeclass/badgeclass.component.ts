@@ -60,6 +60,8 @@ export class PublicBadgeClassComponent {
 	dialogRef: BrnDialogRef<unknown> = null;
 	selectedIssuer: Issuer = null;
 
+	badgeClassPromise: Promise<PublicApiBadgeClassWithIssuer>;
+
 	constructor(
 		private injector: Injector,
 		public embedService: EmbedService,
@@ -177,7 +179,7 @@ export class PublicBadgeClassComponent {
 		return stripQueryParamsFromUrl(this.badgeClass.id) + '.json';
 	}
 
-	calculateMatch(lp: LearningPath): string {
+	calculateMatch(lp: LearningPath | PublicApiLearningPath): string {
 		const lpBadges = lp.badges;
 		const badgeClassIds = lpBadges.map((b) => b.badge.json.id);
 		const totalBadges = lpBadges.length;
@@ -185,7 +187,7 @@ export class PublicBadgeClassComponent {
 		return `${userBadgeCount}/${totalBadges}`;
 	}
 
-	calculateLearningPathStatus(lp: LearningPath): { match: string } | { progress: number } {
+	calculateLearningPathStatus(lp: LearningPath | PublicApiLearningPath): { match: string } | { progress: number } {
 		if (lp.progress != null) {
 			const percentCompleted = lp.progress;
 			return { progress: percentCompleted };
@@ -194,7 +196,7 @@ export class PublicBadgeClassComponent {
 		}
 	}
 
-	calculateStudyLoad(lp: LearningPath): number {
+	calculateStudyLoad(lp: LearningPath | PublicApiLearningPath): number {
 		const totalStudyLoad = lp.badges.reduce(
 			(acc, b) => acc + b.badge.extensions['extensions:StudyLoadExtension'].StudyLoad,
 			0,
@@ -202,7 +204,7 @@ export class PublicBadgeClassComponent {
 		return totalStudyLoad;
 	}
 
-	checkCompleted(lp: LearningPath): boolean {
+	checkCompleted(lp: LearningPath | PublicApiLearningPath): boolean {
 		return lp.completed_at != null;
 	}
 

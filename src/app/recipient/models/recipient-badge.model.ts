@@ -10,7 +10,7 @@ import { LinkedEntitySet } from '../../common/model/linked-entity-set';
 import { RecipientBadgeCollection } from './recipient-badge-collection.model';
 import { RecipientBadgeCollectionRef } from './recipient-badge-collection-api.model';
 
-type BadgeMostRelevantStatusType = 'new' | 'expired' | 'pending' | 'imported';
+export type BadgeMostRelevantStatusType = 'new' | 'expired' | 'pending' | 'imported';
 
 export class RecipientBadgeInstance extends ManagedEntity<ApiRecipientBadgeInstance, RecipientBadgeInstanceRef> {
 	get type(): string {

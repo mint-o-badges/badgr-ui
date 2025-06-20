@@ -44,7 +44,7 @@ import { UrlValidator } from '../../../common/validators/url.validator';
 import { CommonDialogsService } from '../../../common/services/common-dialogs.service';
 import { BadgeClass } from '../../models/badgeclass.model';
 import { AppConfigService } from '../../../common/app-config.service';
-import { typedFormArray, typedFormGroup } from '../../../common/util/typed-forms';
+import { typedFormArray, TypedFormControl, TypedFormGroup, typedFormGroup } from '../../../common/util/typed-forms';
 import { FormFieldSelectOption } from '../../../common/components/formfield-select';
 
 import { AiSkillsService } from '../../../common/services/ai-skills.service';
@@ -726,7 +726,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		}
 	}
 
-	isPredefinedCriteria(criteria: AbstractControl): boolean {
+	isPredefinedCriteria(criteria: typeof this.criteriaForm): boolean {
 		const controlName = criteria.value.name;
 		return this.criteriaOptions.some((option) => option.text === controlName);
 	}

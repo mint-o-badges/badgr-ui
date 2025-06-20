@@ -51,6 +51,9 @@ export type CompetencyType = {
 	name: string;
 	description: string;
 	studyLoad: number;
+	category?: string;
+	framework?: string;
+	framework_identifier?: string;
 };
 
 export interface PageConfig {

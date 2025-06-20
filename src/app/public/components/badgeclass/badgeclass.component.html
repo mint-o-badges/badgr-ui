@@ -1,4 +1,4 @@
-<bg-badgedetail [config]="config" [awaitPromises]="[badgeClass]">
+<bg-badgedetail [config]="config" [awaitPromises]="[badgeClassPromise]">
 	<ng-template>
 		<div class="oeb" *ngIf="learningPaths.length > 0">
 			<oeb-separator class="tw-block tw-mb-8 tw-mt-8"></oeb-separator>
@@ -9,7 +9,7 @@
 				<bg-learningpathcard
 					*ngFor="let lp of learningPaths"
 					[name]="lp.name"
-					[badgeImage]="lp.participationBadge_image"
+					[badgeImage]="lp.image"
 					[issuerTitle]="lp.issuer_name"
 					[description]="lp.description"
 					[slug]="lp.slug"

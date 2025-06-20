@@ -14,7 +14,7 @@
 
 			<cdk-step
 				[label]="'CreateBadge.enterDetailsStep' | translate"
-				[stepControl]="stepOne.lpDetailsForm"
+				[stepControl]="$any(stepOne.lpDetailsForm)"
 				[optional]="false"
 				[errorMessage]="'General.validationCompleteForm' | translate"
 			>
@@ -26,7 +26,7 @@
 			</cdk-step>
 			<cdk-step
 				[label]="'LearningPath.includedBadges' | translate"
-				[stepControl]="stepTwo.lpBadgesForm"
+				[stepControl]="$any(stepTwo.lpBadgesForm)"
 				[optional]="false"
 				errorMessage="Wähle mindestens 3 Badges aus"
 			>

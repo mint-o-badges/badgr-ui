@@ -34,7 +34,7 @@
 									[id]="'select' + columnId"
 									#selectDest
 									[value]="columnHeaderName.destColumn"
-									(change)="mapDestNameToSourceName(columnId, selectDest.value)"
+									(change)="mapDestNameToSourceName(columnId, $any(selectDest.value))"
 								>
 									<option value="NA">N/A</option>
 									<option value="email">E-Mail</option>

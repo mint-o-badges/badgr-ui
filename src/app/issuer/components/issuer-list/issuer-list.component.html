@@ -260,11 +260,7 @@
 								<span>{{ issuer.name }}</span>
 							</li>
 							<li
-								*ngIf="
-									issuerSearchResults.length == 0 &&
-									!keywordCompetenciesLoading &&
-									keywordCompetenciesLoaded
-								"
+								*ngIf="issuerSearchResults.length == 0"
 								class="tw-p-2 tw-text-gray-500 tw-cursor-default"
 							>
 								Keine Ergebnisse

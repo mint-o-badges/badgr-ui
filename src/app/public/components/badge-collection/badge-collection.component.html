@@ -58,7 +58,7 @@
 								[badgeTitle]="badge.badge.name"
 								[badgeImage]="badge.image"
 								[badgeDescription]="badge.badge.description"
-								[badgeIssueDate]="badge?.issuedOn"
+								[badgeIssueDate]="getBadgeIssuedOn(badge)"
 								[mostRelevantStatus]="badge.badge.mostRelevantStatus"
 								[issuerTitle]="badge.badge.issuer.name"
 								[public]="true"

@@ -73,7 +73,7 @@ import { TranslateModule } from '@ngx-translate/core';
 	</div>`,
 })
 export class OebSelectComponent {
-	@Input() control: FormControl;
+	@Input() control: any;
 	@Input() initialValue: string;
 	@Input() label: string;
 	@Input() ariaLabel: string | null = null;

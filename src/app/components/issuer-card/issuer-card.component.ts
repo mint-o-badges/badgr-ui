@@ -1,8 +1,8 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { preloadImageURL } from '../../common/util/file-util';
 
 export interface Issuer {
 	image: string;
-	imagePlaceholder: string;
 	name: string;
 	description: string;
 	category: string;
@@ -23,6 +23,10 @@ export class IssuerCardComponent {
 	@Input() plural: any; // If needed for pluralization logic
 
 	@Output() navigate = new EventEmitter<void>();
+
+	readonly issuerImagePlaceHolderUrl = preloadImageURL(
+		'../../../../breakdown/static/images/placeholderavatar-issuer.svg',
+	);
 
 	onNavigate() {
 		this.navigate.emit();

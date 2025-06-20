@@ -80,9 +80,13 @@
 
 					<div class="tw-flex tw-justify-between tw-flex-wrap">
 						<oeb-button text="Normal"></oeb-button>
-						<oeb-button disabled="true" text="Normal Disabled"></oeb-button>
+						<oeb-button [disabled]="true" text="Normal Disabled"></oeb-button>
 						<oeb-button variant="secondary" text="Secondary Variant"></oeb-button>
-						<oeb-button variant="secondary" disabled="true" text="Secondary Variant Disabled"></oeb-button>
+						<oeb-button
+							variant="secondary"
+							[disabled]="true"
+							text="Secondary Variant Disabled"
+						></oeb-button>
 
 						<oeb-button variant="blackborder" text="Black Border Button"></oeb-button>
 						<oeb-button variant="destructive" text="Delete"></oeb-button>
