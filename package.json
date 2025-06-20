@@ -143,7 +143,7 @@
 		"ts-loader": "^9.5.1",
 		"ts-node": "^10.9.1",
 		"tslint": "~6.1.0",
-		"typedoc": "^0.26.6",
+		"typedoc": "^0.28.5",
 		"typescript": "~5.8.3",
 		"uglify-js": "^3.5.11",
 		"url-loader": "^4.1.1",
