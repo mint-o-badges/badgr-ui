@@ -71,12 +71,12 @@ xdescribe('IssuerManager', () => {
 		},
 	));
 
-	it('should retrieve issuers on subscription of allIssuers$', inject(
+	it('should retrieve issuers on subscription of myIssuers$', inject(
 		[IssuerManager, SessionService],
 		(issuerManager: IssuerManager, loginService: SessionService) => {
 			return Promise.all([
 				expectAllIssuersRequest(httpTestingController),
-				issuerManager.allIssuers$
+				issuerManager.myIssuers$
 					.pipe(first())
 					.toPromise()
 					.then(() => {

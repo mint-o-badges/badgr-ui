@@ -50,14 +50,9 @@ import { MenuItem } from './common/components/badge-detail/badge-detail.componen
 	standalone: false,
 })
 export class AppComponent implements OnInit, AfterViewInit {
-	/**
-	 * Enables or disables the "curtain" feature, hiding the normal page.
-	 */
-	curtainEnabled = true;
-
 	aboutBadgesMenuItems: MenuItem[] = [
 		{
-			title: 'FAQ',
+			title: 'NavItems.faq',
 			routerLink: ['/public/faq'],
 			icon: 'lucideFileQuestion',
 		},
@@ -67,24 +62,29 @@ export class AppComponent implements OnInit, AfterViewInit {
 			icon: 'lucideAward',
 		},
 		{
-			title: '',
+			title: 'General.institutionsNav',
 			routerLink: ['/catalog/issuers'],
 			icon: 'lucideWarehouse',
 		},
 		{
-			title: '',
+			title: 'LearningPath.learningpathsNav',
 			routerLink: ['/catalog/learningpaths'],
 			icon: 'lucideRoute',
 		},
 	];
 	accountMenuItems: MenuItem[] = [
 		{
-			title: 'Mein Profil',
+			title: 'General.backpack',
+			routerLink: ['/recipient/badges'],
+			icon: 'lucideHexagon',
+		},
+		{
+			title: 'NavItems.myProfile',
 			routerLink: ['/profile/profile'],
 			icon: 'lucideUsers',
 		},
 		{
-			title: 'App Integrationen',
+			title: 'NavItems.appIntegrations',
 			routerLink: ['/profile/app-integrations'],
 			icon: 'lucideRepeat2',
 		},
@@ -94,23 +94,6 @@ export class AppComponent implements OnInit, AfterViewInit {
 			icon: 'lucideLogOut',
 		},
 	];
-	/**
-	 * Permanently disables the curtain, making it impossible to show it even with the query parameter
-	 */
-	curtainPermanentlyDisabled = true;
-	get curtain() {
-		let re = /\?curtainEnabled=(\w*)/i;
-		let match = this.router.url.match(re);
-		if (match && match.length == 2) {
-			let param: string = match[1];
-			if (param == 'false' || param == 'true' || param == 'yes' || param == 'no')
-				localStorage.setItem('curtainEnabled', param == 'true' || param == 'yes' ? 'true' : 'false');
-		}
-
-		let local = localStorage.getItem('curtainEnabled');
-		if (local == 'false' || local == 'true') this.curtainEnabled = localStorage.getItem('curtainEnabled') == 'true';
-		return this.curtainEnabled && !this.router.url.includes('impressum') && !this.curtainPermanentlyDisabled;
-	}
 
 	title = 'Badgr Angular';
 	loggedIn = false;
@@ -208,7 +191,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 		private titleService: Title,
 		protected issuerManager: IssuerManager,
 		private languageService: LanguageService, // Translation
-		private translate: TranslateService,
+		protected translate: TranslateService,
 		@Inject(DOCUMENT) private document: Document,
 	) {
 		// Initialize App language
@@ -219,11 +202,11 @@ export class AppComponent implements OnInit, AfterViewInit {
 			}
 		});
 
-		try{
+		try {
 			// @ts-ignore
 			// Start umami tracking
 			umami.track();
-		}catch(e){}
+		} catch (e) {}
 
 		messageService.useRouter(router);
 
@@ -253,7 +236,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 			// for issuers tab which can only be loaded when the user is verified
 			this.profileManager.userProfile.emails.updateList().then(() => {
 				if (this.profileManager.userProfile.isVerified)
-					this.issuerManager.allIssuers$.subscribe(
+					this.issuerManager.myIssuers$.subscribe(
 						(issuers) => {
 							this.issuers.set(
 								issuers.slice().sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime()),
@@ -313,24 +296,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 			}),
 		);
 
-		this.translate.get('General.institutionsNav').subscribe((translatedText: string) => {
-			this.aboutBadgesMenuItems[2].title = translatedText;
-		});
-
-		this.translate.get('LearningPath.learningpathsNav').subscribe((translatedText: string) => {
-			this.aboutBadgesMenuItems[3].title = translatedText;
-		});
-
-		this.translate.get('NavItems.myProfile').subscribe((translatedText: string) => {
-			this.accountMenuItems[0].title = translatedText;
-		});
-
-		this.translate.get('NavItems.appIntegrations').subscribe((translatedText: string) => {
-			this.accountMenuItems[1].title = translatedText;
-		});
-
 		this.translate.onLangChange.subscribe(() => {
-			console.log('!!!!!!!!' + this.translate.currentLang);
 			this.document.documentElement.lang = this.translate.currentLang;
 		});
 	}

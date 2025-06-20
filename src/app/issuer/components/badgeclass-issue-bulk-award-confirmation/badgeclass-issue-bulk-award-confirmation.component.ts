@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject, OnDestroy } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SessionService } from '../../../common/services/session.service';
@@ -14,13 +14,17 @@ import striptags from 'striptags';
 import { SuccessDialogComponent } from '../../../common/dialogs/oeb-dialogs/success-dialog.component';
 import { HlmDialogService } from './../../../components/spartan/ui-dialog-helm/src';
 import { typedFormGroup } from '../../../common/util/typed-forms';
+import { BadgeInstanceApiService } from '../../services/badgeinstance-api.service';
+import { TaskStatus, TaskResult, TaskPollingManagerService } from '../../../common/task-manager.service';
+import { Subscription } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'badgeclass-issue-bulk-award-confirmation',
 	templateUrl: './badgeclass-issue-bulk-award-confirmation.component.html',
 	standalone: false,
 })
-export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRoutableComponent {
+export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRoutableComponent implements OnDestroy {
 	@Input() transformedImportData: TransformedImportData;
 	@Input() badgeSlug: string;
 	@Input() issuerSlug: string;
@@ -32,17 +36,29 @@ export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRouta
 
 	issueBadgeFinished: Promise<unknown>;
 
+	private taskSubscription: Subscription | null = null;
+	currentTaskStatus: TaskResult | null = null;
+
 	constructor(
 		protected badgeInstanceManager: BadgeInstanceManager,
+		protected badgeInstanceApiService: BadgeInstanceApiService,
 		protected sessionService: SessionService,
 		protected router: Router,
 		protected route: ActivatedRoute,
 		protected messageService: MessageService,
 		protected formBuilder: FormBuilder,
 		protected title: Title,
+		protected taskService: TaskPollingManagerService,
+		protected translate: TranslateService,
 	) {
 		super(router, route, sessionService);
 		this.enableActionButton();
+	}
+
+	ngOnDestroy() {
+		if (this.taskSubscription) {
+			this.taskSubscription.unsubscribe();
+		}
 	}
 
 	issueForm = typedFormGroup().addControl('notify_earner', true);
@@ -63,6 +79,7 @@ export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRouta
 
 		const assertions: BadgeInstanceBatchAssertion[] = [];
 		const recipientProfileContextUrl = 'https://openbadgespec.org/extensions/recipientProfile/context.json';
+
 		this.transformedImportData.validRowsTransformed.forEach((row) => {
 			let assertion: BadgeInstanceBatchAssertion;
 
@@ -83,25 +100,56 @@ export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRouta
 			assertions.push(assertion);
 		});
 
-		this.badgeInstanceManager
-			.createBadgeInstanceBatched(this.issuerSlug, this.badgeSlug, {
+		this.badgeInstanceApiService
+			.createBadgeInstanceBatchedAsync(this.issuerSlug, this.badgeSlug, {
 				issuer: this.issuerSlug,
 				badge_class: this.badgeSlug,
 				create_notification: this.issueForm.rawControlMap.notify_earner.value,
 				assertions,
 			})
-			.then(
-				(result) => {
-					this.openSuccessDialog(assertions.length + ' User');
-					this.router.navigate(['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug]);
-				},
-				(error) => {
-					this.messageService.setMessage(
-						'Fast geschafft! Deine Badges werden gerade vergeben – das kann ein paar Minuten dauern. Schau gleich auf der Badge-Detail-Seite nach, ob alles geklappt hat.',
-						'error',
-					);
-				},
-			);
+			.then((response) => {
+				const taskId = response.body.task_id;
+				this.startTaskPolling(taskId);
+
+				this.router.navigate(['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug]);
+			})
+			.catch((error) => {
+				console.error('Error creating badge batch:', error);
+				this.enableActionButton(); // Re-enable the button on error
+
+				// Show error message to user
+				this.messageService.reportHandledError('Failed to start batch award process. Please try again.', error);
+			});
+	}
+
+	private startTaskPolling(taskId: string) {
+		// Clean up any existing subscription
+		if (this.taskSubscription) {
+			this.taskSubscription.unsubscribe();
+		}
+
+		this.taskSubscription = this.taskService.startTaskPolling(taskId, this.issuerSlug, this.badgeSlug).subscribe(
+			(taskResult: TaskResult) => {
+				this.currentTaskStatus = taskResult;
+
+				if (taskResult.status === TaskStatus.FAILURE) {
+					this.handleTaskFailure(taskResult);
+				}
+			},
+			(error) => {
+				console.error('Error polling batch award task status:', error);
+				this.handleTaskError(error);
+			},
+		);
+	}
+
+	private handleTaskFailure(taskResult: TaskResult) {
+		const errorMessage = taskResult.result?.error || 'An error occurred during the batch award process.';
+		this.messageService.reportHandledError(this.translate.instant('Issuer.batchAwardFailed'), errorMessage);
+	}
+
+	private handleTaskError(error: any) {
+		this.messageService.reportHandledError(this.translate.instant('Issuer.failedBatchMonitoring'), error);
 	}
 
 	updateViewState(state: ViewState) {

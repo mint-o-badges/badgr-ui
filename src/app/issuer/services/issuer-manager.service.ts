@@ -2,10 +2,10 @@ import { forwardRef, Inject, Injectable } from '@angular/core';
 import { IssuerApiService } from './issuer-api.service';
 import { Issuer } from '../models/issuer.model';
 import { ApiIssuer, ApiIssuerForCreation, ApiIssuerForEditing, IssuerSlug } from '../models/issuer-api.model';
-import { Observable } from 'rxjs';
-import { StandaloneEntitySet } from '../../common/model/managed-entity-set';
+import { combineLatest, firstValueFrom, Observable, of } from 'rxjs';
+import { ManagedEntitySet, StandaloneEntitySet } from '../../common/model/managed-entity-set';
 import { CommonEntityManager } from '../../entity-manager/services/common-entity-manager.service';
-import { first, map } from 'rxjs/operators';
+import { catchError, first, map, withLatestFrom } from 'rxjs/operators';
 
 @Injectable()
 export class IssuerManager {
@@ -33,7 +33,7 @@ export class IssuerManager {
 			.then((newIssuer) => this.issuersList.addOrUpdate(newIssuer));
 	}
 
-	get allIssuers$(): Observable<Issuer[]> {
+	get myIssuers$(): Observable<Issuer[]> {
 		return this.issuersList.loaded$.pipe(map((l) => l.entities));
 	}
 
@@ -54,14 +54,22 @@ export class IssuerManager {
 	}
 
 	issuerBySlug(issuerSlug: IssuerSlug): Promise<Issuer> {
-		return this.allIssuers$
-			.pipe(first())
-			.toPromise()
-			.then(
-				(issuers) =>
-					issuers.find((i) => i.slug === issuerSlug) ||
-					this.throwError(`Issuer Slug '${issuerSlug}' not found`),
-			);
+		return firstValueFrom(
+			combineLatest([
+				this.allIssuersList.loaded$.pipe(map((l) => l.entities)),
+				this.issuersList.loaded$.pipe(
+					catchError((err: any) => of()),
+					map((l) => l.entities),
+				),
+			]).pipe(
+				map(([all, mine]) => {
+					return mine.concat(all.filter((f) => mine.findIndex((m) => m.slug === f.slug) === -1));
+				}),
+			),
+		).then(
+			(issuers) =>
+				issuers.find((i) => i.slug === issuerSlug) || this.throwError(`Issuer Slug '${issuerSlug}' not found`),
+		);
 	}
 
 	private throwError(message: string): never {

@@ -104,6 +104,12 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 					{ title: 'Mein Rucksack', routerLink: ['/recipient/badges'] },
 					{ title: this.badge.badgeClass.name, routerLink: ['/earned-badge/' + this.badge.slug] },
 				];
+				// @ts-ignore
+				const context = this.badge.apiModel.json['@context'];
+				const assertionVersion =
+					Array.isArray(context) && context.some((c) => c.indexOf('purl.imsglobal.org/spec/ob/v3p0') != -1)
+						? '3.0'
+						: '2.0';
 				this.config = {
 					crumbs: this.crumbs,
 					badgeTitle: this.badge.badgeClass.name,
@@ -117,32 +123,39 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 					},
 					menuitems: [
 						{
-							title: 'Download Badge-Bild',
+							title:
+								assertionVersion == '3.0'
+									? 'RecBadgeDetail.downloadImage30'
+									: 'RecBadgeDetail.downloadImage20',
 							icon: 'lucideImage',
 							action: () => this.exportPng(),
 						},
 						{
-							title: 'Download JSON-Datei',
-							icon: '	lucideFileCode',
+							title:
+								assertionVersion == '3.0'
+									? 'RecBadgeDetail.downloadJson30'
+									: 'RecBadgeDetail.downloadJson20',
+							icon: 'lucideFileCode',
 							action: () => this.exportJson(),
 						},
 						{
-							title: 'Download PDF-Zertifikat',
+							title: 'RecBadgeDetail.downloadPDF',
 							icon: 'lucideFileText',
 							action: () => this.exportPdf(),
 						},
 						{
-							title: 'Badge verifizieren',
+							title: 'RecBadgeDetail.verifyBadge',
 							icon: 'lucideBadgeCheck',
-							action: () => window.open(this.verifyUrl, '_blank'),
+							action: () => this.verifyBadge(),
 						},
 						{
-							title: 'Badge aus Rucksack löschen',
+							title: 'RecBadgeDetail.deleteBadge',
 							icon: 'lucideTrash2',
 							action: () => this.deleteBadge(this.badge),
 						},
 					],
 					badgeDescription: this.badge.badgeClass.description,
+					badgeCriteria: this.badge.badgeClass.criteria,
 					issuerSlug: this.badge.badgeClass.issuer.id,
 					slug: this.badgeSlug,
 					issuedOn: this.badge.issueDate,
@@ -162,6 +175,7 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 					license: this.badge.getExtension('extensions:LicenseExtension', {}) ? true : false,
 					shareButton: true,
 					badgeInstanceSlug: this.badgeSlug,
+					version: assertionVersion,
 				};
 			})
 			.finally(() => {
@@ -190,10 +204,12 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 	deleteBadge(badge: RecipientBadgeInstance) {
 		this.dialogService.confirmDialog
 			.openResolveRejectDialog({
-				dialogTitle: 'Confirm Remove',
-				dialogBody: `Are you sure you want to remove ${badge.badgeClass.name} from your badges?`,
-				rejectButtonLabel: 'Cancel',
-				resolveButtonLabel: 'Remove Badge',
+				dialogTitle: this.translate.instant('RecBadgeDetail.confirmRemove'),
+				dialogBody: this.translate.instant('RecBadgeDetail.sureToRemove', {
+					badgeName: badge.badgeClass.name,
+				}),
+				rejectButtonLabel: this.translate.instant('General.cancel'),
+				resolveButtonLabel: this.translate.instant('RecBadgeDetail.removeBadge'),
 			})
 			.then(
 				() =>
@@ -228,6 +244,38 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 			}
 		}
 		return url;
+	}
+
+	verifyBadge() {
+		console.log(this.verifyUrl, this.badge.apiModel.json.id);
+		if (this.config.version == '3.0') {
+			// v1: open ui for manual upload
+			// window.open('https://verifybadge.org/upload?validatorId=OB30Inspector');
+
+			// v2: post request using the assertion public url
+			const form = document.createElement('form');
+			form.target = '_blank';
+			form.method = 'POST';
+			form.action = 'https://verifybadge.org/uploaduri';
+			form.style.display = 'none';
+
+			[
+				['uri', this.badge.apiModel.json.id.toString()],
+				['validatorId', 'OB30Inspector'],
+			].forEach(([key, value]) => {
+				const input = document.createElement('input');
+				input.type = 'hidden';
+				input.name = key;
+				input.value = value;
+				form.appendChild(input);
+			});
+
+			document.body.appendChild(form);
+			form.submit();
+			document.body.removeChild(form);
+		} else {
+			window.open(this.verifyUrl, '_blank');
+		}
 	}
 
 	get isExpired() {
@@ -362,7 +410,7 @@ interface BadgeShareOptions {
 
 export function badgeShareDialogOptions(options: BadgeShareOptions): ShareSocialDialogOptions {
 	return {
-		title: 'Badge Teilen',
+		title: this.translate.instant('RecBadgeDetail.shareBadge'),
 		shareObjectType: 'BadgeInstance',
 		shareUrl: options.shareUrl,
 		shareTitle: options.badgeClassName,

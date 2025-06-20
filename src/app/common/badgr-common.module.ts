@@ -3,8 +3,10 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { BgBadgecard } from './components/bg-badgecard';
 import { BgLearningPathCard } from './components/bg-learningpathcard';
+import { BgCollectionCard } from './bg-collectioncard';
 import { BgBadgeDetail } from './components/badge-detail/badge-detail.component';
-
+import { OebSwitchComponent } from '../components/oeb-switch.component';
+import { HlmSwitchComponent } from '../components/spartan/ui-switch-helm/src';
 import { BgAwaitPromises } from './directives/bg-await-promises';
 import { BgImageStatusPlaceholderDirective } from './directives/bg-image-status-placeholder.directive';
 import { MenuItemDirective } from './directives/bg-menuitem.directive';
@@ -143,6 +145,8 @@ import { PaginationAdvancedComponent } from '../components/oeb-numbered-paginati
 import { NgIconsModule } from '@ng-icons/core';
 import { HlmIconDirective } from '../components/spartan/ui-icon-helm/src';
 import { HlmTableModule } from './../components/spartan/ui-table-helm/src';
+import { InfoIcon } from './components/info-icon.component';
+import { TaskPollingManagerService } from './task-manager.service';
 
 const DIRECTIVES = [
 	BgAwaitPromises,
@@ -164,6 +168,7 @@ export const COMMON_MODULE_COMPONENTS = [
 	BadgrButtonComponent,
 	BgBadgecard,
 	BgLearningPathCard,
+	BgCollectionCard,
 	BgBadgeDetail,
 	BgBreadcrumbsComponent,
 	BgFormFieldFileComponent,
@@ -233,6 +238,7 @@ const SERVICES = [
 	ApplicationCredentialsService,
 	LearningPathApiService,
 	QrCodeApiService,
+	TaskPollingManagerService,
 ];
 
 const GUARDS = [AuthGuard];
@@ -253,10 +259,12 @@ export const COMMON_IMPORTS = [
 	OebSpinnerComponent,
 	OebCollapsibleComponent,
 	OebButtonComponent,
+	OebSwitchComponent,
 	OebProgressComponent,
 	OebDropdownComponent,
 	OebPaginationComponent,
 	PaginationAdvancedComponent,
+	HlmSwitchComponent,
 	HlmH1Directive,
 	HlmH2Directive,
 	HlmH3Directive,
@@ -284,6 +292,7 @@ export const COMMON_IMPORTS = [
 	NgIconsModule,
 	HlmIconDirective,
 	HlmTableModule,
+	InfoIcon,
 ];
 
 @NgModule({

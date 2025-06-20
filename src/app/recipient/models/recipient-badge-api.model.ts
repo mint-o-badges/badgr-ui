@@ -44,6 +44,7 @@ export interface ApiRecipientBadgeInstance {
 	shareUrl?: string;
 	extensions?: object;
 	pending?: boolean;
+	imported?: boolean;
 }
 
 export interface ApiRecipientBadgeRecipient {
@@ -66,7 +67,7 @@ export interface ApiRecipientBadgeClass {
 	name: string;
 	description: string;
 	image: string;
-	criteria?: string;
+	criteria?: Array<{ name: string; description: string }>;
 	criteria_text?: string;
 	criteria_url?: string;
 	tags: string[];
@@ -80,7 +81,8 @@ export interface ApiRecipientBadgeInstanceJson {
 	uid: string;
 	recipient: ApiRecipientBadgeRecipient;
 	badge: ApiRecipientBadgeClass;
-	issuedOn: string;
+	issuedOn?: string;
+	validFrom?: string;
 	image: string;
 	evidence?: string;
 	narrative?: string;
@@ -110,4 +112,44 @@ export interface RecipientBadgeInstanceFromImage {
 }
 export interface RecipientBadgeInstanceFromJson {
 	assertion: string;
+}
+
+export interface ApiImportedBadgeInstance {
+	id: ApiRecipientBadgeInstanceSlug;
+	slug: string;
+	json: {
+		badge: ApiImportedBadgeInstanceBadge;
+		issuedOn: Date;
+		recipient: {
+			type: string;
+			identity: string;
+		};
+		type: string;
+		verification: any;
+	};
+	original_json: any;
+	image: string;
+	acceptance: RecipientBadgeAcceptance;
+	narrative: string;
+	imagePreview: {
+		type: 'image';
+		id: string;
+	};
+	issuerImagePreview?: {
+		type: 'image';
+		id: string;
+	};
+	extensions: object;
+}
+
+interface ApiImportedBadgeInstanceBadge {
+	description: string;
+	image: string;
+	issuer: {
+		email: string;
+		image: string;
+		name: string;
+		url: string;
+	};
+	name: string;
 }

@@ -9,6 +9,7 @@ import { generateEmbedHtml } from '../../../../embed/generate-embed-html';
 import { animationFramePromise } from '../../util/promise-util';
 import { RecipientBadgeInstance } from '../../../recipient/models/recipient-badge.model';
 import { BadgeInstance } from '../../../issuer/models/badgeinstance.model';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'share-social-dialog',
@@ -55,6 +56,7 @@ export class ShareSocialDialog extends BaseDialog {
 		renderer: Renderer2,
 		private domSanitizer: DomSanitizer,
 		private sharingService: SharingService,
+		public translate: TranslateService,
 	) {
 		super(componentElem, renderer);
 
@@ -144,21 +146,12 @@ export class ShareSocialDialog extends BaseDialog {
 		}
 	}
 
-	copyToClipboard(input: HTMLInputElement) {
-		// Inspired by https://stackoverflow.com/questions/400212/how-do-i-copy-to-the-clipboard-in-javascript
-
-		const inputWasDisabled = input.disabled;
-		input.disabled = false;
-		input.select();
-
-		// Invoke browser support
+	async copyToClipboard(input: HTMLInputElement) {
+		const valueToCopy = input.value;
 		try {
-			if (document.execCommand('copy')) {
-				return;
-			}
+			await navigator.clipboard.writeText(valueToCopy);
 		} catch (err) {
-		} finally {
-			input.disabled = inputWasDisabled;
+			console.warn(err);
 		}
 	}
 

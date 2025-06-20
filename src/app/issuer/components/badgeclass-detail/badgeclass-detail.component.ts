@@ -1,4 +1,13 @@
-import { afterRenderEffect, Component, ElementRef, Input, OnInit, SecurityContext, ViewChild } from '@angular/core';
+import {
+	afterRenderEffect,
+	Component,
+	ElementRef,
+	Input,
+	OnInit,
+	SecurityContext,
+	TemplateRef,
+	ViewChild,
+} from '@angular/core';
 
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from '../../../common/services/message.service';
@@ -35,6 +44,11 @@ import { inject } from '@angular/core';
 import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
 import { ApiLearningPath } from '../../../common/model/learningpath-api.model';
 import { ViewportScroller } from '@angular/common';
+import { TaskResult, TaskStatus, TaskPollingManagerService } from '../../../common/task-manager.service';
+import { Subscription } from 'rxjs';
+import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
+import { DialogComponent } from '../../../components/dialog.component';
+import { BrnDialogRef } from '@spartan-ng/brain/dialog';
 
 @Component({
 	selector: 'badgeclass-detail',
@@ -42,8 +56,7 @@ import { ViewportScroller } from '@angular/common';
 		<bg-badgedetail [config]="config" [awaitPromises]="[issuerLoaded, badgeClassLoaded]">
 			<div #qrAwards>
 				<qrcode-awards
-					*ngIf="config.qrCodeButton.show"
-					(qrBadgeAward)="onQrBadgeAward()"
+					(qrBadgeAward)="onQrBadgeAward($event)"
 					[awards]="qrCodeAwards"
 					[badgeClass]="badgeClass"
 					[issuer]="issuer"
@@ -51,22 +64,73 @@ import { ViewportScroller } from '@angular/common';
 					[defaultUnfolded]="focusRequests"
 				></qrcode-awards>
 			</div>
-			<issuer-detail-datatable
-				[recipientCount]="recipientCount"
-				[_recipients]="instanceResults"
-				(actionElement)="revokeInstance($event)"
-				(downloadCertificate)="downloadCertificate($event.instance, $event.badgeIndex)"
-				[downloadStates]="downloadStates"
-			></issuer-detail-datatable>
+			<div #batchAwards>
+				<issuer-detail-datatable
+					[recipientCount]="recipientCount"
+					[_recipients]="instanceResults"
+					(actionElement)="revokeInstance($event)"
+					(downloadCertificate)="downloadCertificate($event.instance, $event.badgeIndex)"
+					[downloadStates]="downloadStates"
+					[awardInProgress]="isTaskProcessing || isTaskPending"
+				></issuer-detail-datatable>
+			</div>
+			<ng-template #headerTemplate>
+				<h2 class="tw-font-bold tw-my-2" hlmH2>{{ 'Badge.copyForWhatInstitution' | translate }}</h2>
+			</ng-template>
+			<ng-template #issuerSelection>
+				<div class="tw-mb-8">
+					<ng-container *ngIf="config.copy_permissions.includes('others'); else originalIssuer">
+						<ng-container *ngFor="let issuer of userIssuers">
+							<label class="radio tw-mb-2">
+								<input type="radio" [(ngModel)]="selectedIssuer" [value]="issuer" />
+								<span class="radio-x-text">{{ issuer.name }}</span>
+							</label>
+						</ng-container>
+					</ng-container>
+
+					<ng-template #originalIssuer>
+						<span class="tw-text-oebblack tw-text-center tw-my-2">
+							{{ 'Badge.copyPermissionInfo' | translate }}
+						</span>
+						<label class="radio tw-my-2">
+							<input type="radio" [(ngModel)]="selectedIssuer" [value]="issuer" />
+							<span class="radio-x-text">{{ config.issuerName }}</span>
+						</label>
+					</ng-template>
+				</div>
+				<oeb-button
+					width="full_width"
+					type="button"
+					[disabled]="!selectedIssuer"
+					(click)="routeToBadgeCreation(selectedIssuer)"
+					size="sm"
+					[text]="'General.next' | translate"
+				>
+				</oeb-button>
+			</ng-template>
 		</bg-badgedetail>
 	`,
 	standalone: false,
 })
 export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	@ViewChild('qrAwards') qrAwards!: ElementRef;
+	@ViewChild('batchAwards') batchAwards!: ElementRef;
+
+	@ViewChild('issuerSelection')
+	issuerSelection: TemplateRef<void>;
+
+	@ViewChild('headerTemplate')
+	headerTemplate: TemplateRef<void>;
 
 	readonly badgeFailedImageUrl = '../../../../breakdown/static/images/badge-failed.svg';
 	readonly badgeLoadingImageUrl = '../../../../breakdown/static/images/badge-loading.svg';
+
+	currentTaskStatus: TaskResult | null = null;
+	isTaskActive: boolean = false;
+
+	private taskSubscription: Subscription | null = null;
+
+	TaskStatus = TaskStatus;
 
 	get issuerSlug() {
 		return this.route.snapshot.params['issuerSlug'];
@@ -109,6 +173,8 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 
 	private readonly _hlmDialogService = inject(HlmDialogService);
 
+	private statusSubscription: Subscription | null = null;
+
 	badgeClassLoaded: Promise<unknown>;
 	badgeInstancesLoaded: Promise<unknown>;
 	assertionsLoaded: Promise<unknown>;
@@ -124,6 +190,9 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 	crumbs: LinkEntry[];
 	focusRequests: boolean;
 	hasScrolled: boolean = false;
+	userIssuers: Issuer[] = [];
+	dialogRef: BrnDialogRef<unknown> = null;
+	selectedIssuer: Issuer = null;
 
 	config: PageConfig;
 
@@ -166,6 +235,8 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		private sanitizer: DomSanitizer,
 		private translate: TranslateService,
 		private learningPathApiService: LearningPathApiService,
+		private taskService: TaskPollingManagerService,
+		protected userProfileManager: UserProfileManager,
 	) {
 		super(router, route, sessionService);
 
@@ -175,6 +246,14 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 				this.title.setTitle(
 					`Badge Class - ${this.badgeClass.name} - ${this.configService.theme['serviceName'] || 'Badgr'}`,
 				);
+				// wait for user profile, emails, issuer to check if user can copy
+				this.userProfileManager.userProfilePromise.then((profile) => {
+					profile.emails.loadedPromise.then(() => {
+						this.issuerManager.myIssuers$.subscribe((issuers) => {
+							this.userIssuers = issuers.filter((issuer) => issuer.canCreateBadge);
+						});
+					});
+				});
 				this.loadInstances();
 			},
 			(error) =>
@@ -200,6 +279,38 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 
 	ngAfterViewChecked() {
 		this.focusRequestsOnPage();
+		this.focusBatchAwardingsOnPage();
+	}
+
+	copyBadge() {
+		if (this.userIssuers.length == 1) {
+			// copy
+			this.router.navigate(['/issuer/issuers', this.userIssuers[0].slug, 'badges', 'create'], {
+				state: { copybadgeid: this.badgeClass.slug },
+			});
+		} else if (this.userIssuers.length > 1) {
+			const dialogRef = this._hlmDialogService.open(DialogComponent, {
+				context: {
+					headerTemplate: this.headerTemplate,
+					content: this.issuerSelection,
+				},
+			});
+
+			this.dialogRef = dialogRef;
+		}
+	}
+
+	closeDialog() {
+		if (this.dialogRef) {
+			this.dialogRef.close();
+		}
+	}
+
+	routeToBadgeCreation(issuer: Issuer) {
+		this.closeDialog();
+		this.router.navigate(['/issuer/issuers', issuer.slug, 'badges', 'create'], {
+			state: { copybadgeid: this.badgeClass.slug },
+		});
 	}
 
 	async loadInstances(recipientQuery?: string) {
@@ -225,50 +336,18 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 				this.config = {
 					crumbs: this.crumbs,
 					badgeTitle: this.badgeClass.name,
+					badgeCriteria: this.badgeClass.apiModel.criteria,
 					headerButton: {
-						title: 'Badge direkt vergeben',
+						title: 'Badge.award',
 						action: () => this.routeToBadgeAward(this.badgeClass, this.issuer),
 						// routerLink: ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'issue'],
 					},
 					issueQrRouterLink: ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'qr'],
 					qrCodeButton: {
-						title: 'Badge über QR-Code vergeben',
+						title: 'Badge.awardQRCode',
 						show: true,
 						action: () => this.routeToQRCodeAward(this.badgeClass, this.issuer),
 					},
-					menuitems: [
-						{
-							title: 'Bearbeiten',
-							routerLink: ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'edit'],
-							disabled: this.badgeClass.recipientCount > 0,
-							icon: 'lucidePencil',
-						},
-						{
-							title: 'Kopieren (diese Institution)',
-							action: () => {
-								this.router.navigate(['/issuer/issuers', this.issuer.slug, 'badges', 'create'], {
-									state: { copybadgeid: this.badgeSlug },
-								});
-							},
-							icon: 'lucideCopy',
-						},
-						{
-							title: 'Kopierstatus bearbeiten',
-							routerLink: [
-								'/issuer/issuers',
-								this.issuerSlug,
-								'badges',
-								this.badgeSlug,
-								'copypermissions',
-							],
-							icon: 'lucideCopyX',
-						},
-						{
-							title: 'Löschen',
-							icon: 'lucideTrash2',
-							action: () => this.deleteBadge(),
-						},
-					],
 					badgeDescription: this.badgeClass.description,
 					issuerSlug: this.issuerSlug,
 					slug: this.badgeSlug,
@@ -289,6 +368,40 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 					license: this.badgeClass.extension['extensions:LicenseExtension'] ? true : false,
 					learningPaths: this.learningPaths,
 					copy_permissions: this.badgeClass.copyPermissions,
+					menuitems: [
+						{
+							title: 'General.edit',
+							routerLink: ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'edit'],
+							disabled: this.badgeClass.recipientCount > 0 || !this.issuer.canEditBadge,
+							icon: 'lucidePencil',
+						},
+						{
+							title: this.badgeClass.copyPermissions.includes('others')
+								? 'General.copy'
+								: 'Badge.copyThisIssuer',
+							action: this.copyBadge.bind(this),
+							icon: 'lucideCopy',
+							disabled: !this.issuer.canCreateBadge,
+						},
+						{
+							title: 'Badge.editCopyStatus',
+							routerLink: [
+								'/issuer/issuers',
+								this.issuerSlug,
+								'badges',
+								this.badgeSlug,
+								'copypermissions',
+							],
+							icon: 'lucideCopyX',
+							disabled: !this.issuer.canEditBadge,
+						},
+						{
+							title: 'General.delete',
+							icon: 'lucideTrash2',
+							action: () => this.deleteBadge(),
+							disabled: !this.issuer.canDeleteBadge,
+						},
+					],
 				};
 				if (this.badgeClass.extension['extensions:CategoryExtension']?.Category === 'learningpath') {
 					this.config.headerButton = null;
@@ -304,30 +417,127 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		);
 	}
 
-	onQrBadgeAward() {
+	onQrBadgeAward(event: number) {
 		this.loadInstances();
-		this.recipientCount += 1;
+		this.recipientCount += event;
 	}
 
 	ngOnInit() {
 		super.ngOnInit();
+		this.checkForActiveTask();
 		this.focusRequests = this.route.snapshot.queryParamMap.get('focusRequests') === 'true';
+	}
+
+	ngOnDestroy() {
+		if (this.taskSubscription) {
+			this.taskSubscription.unsubscribe();
+		}
+	}
+
+	private checkForActiveTask() {
+		if (this.taskService.hasActiveTask(this.badgeSlug)) {
+			this.isTaskActive = true;
+
+			this.currentTaskStatus = this.taskService.getLastTaskStatus(this.badgeSlug);
+			this.focusBatchAwardingsOnPage();
+
+			this.subscribeToTaskUpdates();
+		}
+	}
+
+	private subscribeToTaskUpdates() {
+		this.taskSubscription = this.taskService.getTaskUpdatesForBadge(this.badgeSlug).subscribe(
+			(taskResult: TaskResult) => {
+				this.currentTaskStatus = taskResult;
+
+				if (taskResult.status === TaskStatus.SUCCESS) {
+					this.handleTaskSuccess(taskResult);
+				} else if (taskResult.status === TaskStatus.FAILURE) {
+					this.handleTaskFailure(taskResult);
+				}
+			},
+			(error) => {
+				console.error('Error receiving task status updates:', error);
+				this.isTaskActive = false;
+			},
+		);
+	}
+
+	private handleTaskSuccess(taskResult: TaskResult) {
+		this.isTaskActive = false;
+
+		const awardCount = taskResult.result?.data.length;
+		if (awardCount) {
+			this.recipientCount += awardCount;
+		}
+		// Refresh datatable
+		this.loadInstances();
+	}
+
+	private handleTaskFailure(taskResult: TaskResult) {
+		this.isTaskActive = false;
+
+		const errorMessage = taskResult.result?.error || 'Batch award process failed';
+		this.messageService.reportHandledError(this.translate.instant('Issuer.batchAwardFailed'), errorMessage);
+	}
+
+	cancelTaskPolling() {
+		if (this.isTaskActive) {
+			this.taskService.stopTaskPolling(this.badgeSlug);
+			this.isTaskActive = false;
+			this.currentTaskStatus = null;
+
+			if (this.taskSubscription) {
+				this.taskSubscription.unsubscribe();
+				this.taskSubscription = null;
+			}
+		}
+	}
+
+	get isTaskPending(): boolean {
+		return this.currentTaskStatus?.status === TaskStatus.PENDING;
+	}
+
+	get isTaskProcessing(): boolean {
+		return (
+			this.currentTaskStatus?.status === TaskStatus.STARTED || this.currentTaskStatus?.status === TaskStatus.RETRY
+		);
+	}
+
+	get isTaskCompleted(): boolean {
+		return (
+			this.currentTaskStatus?.status === TaskStatus.SUCCESS ||
+			this.currentTaskStatus?.status === TaskStatus.FAILURE
+		);
+	}
+
+	get isTaskSuccessful(): boolean {
+		return this.currentTaskStatus?.status === TaskStatus.SUCCESS;
+	}
+
+	get isTaskFailed(): boolean {
+		return this.currentTaskStatus?.status === TaskStatus.FAILURE;
 	}
 
 	revokeInstance(instance: BadgeInstance) {
 		this.confirmDialog
 			.openResolveRejectDialog({
-				dialogTitle: 'Warnung',
-				dialogBody: `Bist du sicher, dass du <strong>${this.badgeClass.name}</strong> von <strong>${instance.recipientIdentifier}</strong> zurücknehmen möchtest?`,
-				resolveButtonLabel: 'Zurücknehmen',
-				rejectButtonLabel: 'Abbrechen',
+				dialogTitle: this.translate.instant('General.warning'),
+				dialogBody: this.translate.instant('Issuer.revokeBadgeWarning', {
+					badge: this.badgeClass.name,
+					recipient: instance.recipientIdentifier,
+				}),
+				resolveButtonLabel: this.translate.instant('General.revoke'),
+				rejectButtonLabel: this.translate.instant('General.cancel'),
 			})
 			.then(
 				() => {
 					instance.revokeBadgeInstance('Manually revoked by Issuer').then(
 						(result) => {
 							this.messageService.reportMinorSuccess(
-								`Badge von ${instance.recipientIdentifier} zurücknehmen`,
+								this.translate.instant('Issuer.revokeSuccess', {
+									recipient: instance.recipientIdentifier,
+								}),
 							);
 							this.badgeClass.update();
 							// this.updateResults();
@@ -336,7 +546,9 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 						},
 						(error) =>
 							this.messageService.reportAndThrowError(
-								`Widerrufen des Badges von ${instance.recipientIdentifier} fehlgeschlagen`,
+								this.translate.instant('Issuer.revokeError', {
+									recipient: instance.recipientIdentifier,
+								}),
 							),
 					);
 				},
@@ -348,7 +560,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 	downloadCertificate(instance: BadgeInstance, badgeIndex: number) {
 		this.downloadStates[badgeIndex] = true;
 		this.pdfService
-			.getPdf(instance.slug)
+			.getPdf(instance.slug, 'badges')
 			.then((url) => {
 				this.pdfSrc = url;
 				this.pdfService.downloadPdf(this.pdfSrc, this.badgeClass.name, instance.createdAt);
@@ -392,7 +604,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 			this.confirmDialog
 				.openResolveRejectDialog({
 					dialogTitle: 'Error',
-					dialogBody: `All instances of <strong>${this.badgeClass.name}</strong> must be revoked before you can delete it`,
+					dialogBody: this.translate.instant('Badge.deleteInstancesLeft'),
 					resolveButtonLabel: 'Ok',
 					showRejectButton: false,
 				})
@@ -474,6 +686,13 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		}
 	}
 
+	private focusBatchAwardingsOnPage() {
+		if ((this.isTaskPending || this.isTaskProcessing) && this.batchAwards && !this.hasScrolled) {
+			if (this.batchAwards.nativeElement.offsetTop > 0) this.hasScrolled = true;
+			this.batchAwards.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+		}
+	}
+
 	private updateResults() {
 		this.instanceResults = this.allBadgeInstances.entities;
 		if (this.recipientCount > this.resultsPerPage) {
@@ -506,14 +725,5 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		this.externalToolsManager.getLaunchInfo(launchpoint, instanceSlug).then((launchInfo) => {
 			this.eventService.externalToolLaunch.next(launchInfo);
 		});
-	}
-}
-
-class MatchingAlgorithm {
-	static instanceMatcher(inputPattern: string): (instance: BadgeInstance) => boolean {
-		const patternStr = StringMatchingUtil.normalizeString(inputPattern);
-		const patternExp = StringMatchingUtil.tryRegExp(patternStr);
-
-		return (instance) => StringMatchingUtil.stringMatches(instance.recipientIdentifier, patternStr, patternExp);
 	}
 }

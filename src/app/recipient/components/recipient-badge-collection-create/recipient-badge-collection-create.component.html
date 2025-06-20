@@ -1,55 +1,12 @@
 <main>
-	<form-message></form-message>
-	<header class="l-containerxaxis topbar">
-		<h3 class="topbar-x-heading">{{ 'BadgeCollection.createCollection' | translate }}</h3>
-		<p class="topbar-x-subheading">{{ 'BadgeCollection.orginzeBadges' | translate }}</p>
-	</header>
-
-	<div class="l-containerxaxis u-margin-yaxis3x u-width-formsmall">
-		<form [formGroup]="badgeCollectionForm.rawControl" (ngSubmit)="onSubmit(badgeCollectionForm.value)" novalidate>
-			<fieldset aria-labelledby="heading-add-badge-collection" role="group">
-				<legend class="visuallyhidden" id="heading-add-badge-collection">
+	<div class="page-padding oeb">
+		<div class="tw-bg-lightpurple oeb-inset-padding">
+			<header class="md:tw-flex tw-justify-between tw-items-center oeb-section-sm !tw-pb-0">
+				<h1 hlmH1 class="tw-text-purple tw-font-black">
 					{{ 'BadgeCollection.createCollection' | translate }}
-				</legend>
-				<bg-formfield-text
-					[control]="badgeCollectionForm.rawControlMap.collectionName"
-					label="{{ 'BadgeCollection.collectionName' | translate }}"
-					[maxchar]="128"
-					errorMessage=" {{ 'BadgeCollection.enterCollectioName' | translate }}"
-					[autofocus]="true"
-					sublabel=" {{ 'BadgeCollection.remainingChar' | translate }}"
-				></bg-formfield-text>
-
-				<div class="u-margin-top2x">
-					<bg-formfield-text
-						[control]="badgeCollectionForm.rawControlMap.collectionDescription"
-						label="{{ 'BadgeCollection.description' | translate }}"
-						errorMessage="{{ 'BadgeCollection.provideDescription' | translate }}"
-						[maxchar]="255"
-						[multiline]="true"
-						sublabel=" {{ 'BadgeCollection.remainingChar' | translate }}"
-					></bg-formfield-text>
-				</div>
-
-				<div class="l-flex l-flex-1x l-flex-justifyend u-margin-top2x">
-					<a
-						[routerLink]="['/recipient/badge-collections']"
-						class="button button-secondary"
-						[disabled-when-requesting]="true"
-						>{{ 'General.cancel' | translate }}</a
-					>
-
-					<button
-						type="submit"
-						class="button"
-						[disabled]="!!createCollectionPromise"
-						[loading-promises]="[createCollectionPromise]"
-						loading-message="Hinzufügen"
-					>
-						{{ 'BadgeCollection.createCollection' | translate }}
-					</button>
-				</div>
-			</fieldset>
-		</form>
+				</h1>
+			</header>
+			<recipient-badge-collection-edit-form></recipient-badge-collection-edit-form>
+		</div>
 	</div>
 </main>

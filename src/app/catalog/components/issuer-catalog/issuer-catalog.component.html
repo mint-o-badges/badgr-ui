@@ -23,7 +23,10 @@
 					<div
 						class="tw-flex tw-flex-col tw-gap-4 tw-w-full min-[880px]:tw-items-center min-[880px]:tw-justify-between min-[880px]:tw-flex-row"
 					>
-						<div class="tw-flex tw-flex-col min-[880px]:tw-flex-row min-[880px]:tw-items-center tw-gap-6">
+						<div
+							*ngIf="badgesDisplay !== 'map'"
+							class="tw-flex tw-flex-col min-[880px]:tw-flex-row min-[880px]:tw-items-center tw-gap-6"
+						>
 							<div class="tw-flex tw-relative tw-items-center">
 								<input
 									hlmInput
@@ -52,13 +55,16 @@
 								class="md:tw-w-[180px] oeb"
 								[options]="categoryOptions"
 								[control]="categoryControl"
-								placeholder="{{ 'Issuer.allCategories' | translate }}"
+								placeholder="{{ 'Issuer.categories.allCategories' | translate }}"
 								[autofocus]="true"
 								noTopMargin="true"
 							></oeb-select>
 						</div>
 
-						<div class="tw-flex tw-gap-4 tw-items-center">
+						<div
+							class="tw-flex tw-gap-4 tw-items-center"
+							[ngClass]="{ 'tw-w-full tw-justify-end': badgesDisplay == 'map' }"
+						>
 							<oeb-button
 								size="icon"
 								*ngIf="badgesDisplay !== 'map'"
@@ -116,15 +122,15 @@
 					</li>
 					<li>
 						<div class="color schule"></div>
-						Schule
+						{{ 'Issuer.categories.schule' | translate }}
 					</li>
 					<li>
 						<div class="color hochschule"></div>
-						Hochschule
+						{{ 'Issuer.categories.hochschule' | translate }}
 					</li>
 					<li>
 						<div class="color andere"></div>
-						Andere
+						{{ 'Issuer.categories.andere' | translate }}
 					</li>
 				</ul>
 			</div>

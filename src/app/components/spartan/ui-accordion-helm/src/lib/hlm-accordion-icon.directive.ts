@@ -14,7 +14,6 @@ import { provideIcons } from '@ng-icons/core';
 	},
 })
 export class HlmAccordionIconDirective {
-
 	public readonly userClass = input<ClassValue>('', { alias: 'class' });
 	protected _computedClass = computed(() =>
 		hlm('tw-inline-block tw-h-4 tw-w-4 tw-transition-transform tw-duration-200', this.userClass()),

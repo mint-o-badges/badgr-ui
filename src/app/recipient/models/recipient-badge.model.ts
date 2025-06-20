@@ -10,7 +10,7 @@ import { LinkedEntitySet } from '../../common/model/linked-entity-set';
 import { RecipientBadgeCollection } from './recipient-badge-collection.model';
 import { RecipientBadgeCollectionRef } from './recipient-badge-collection-api.model';
 
-type BadgeMostRelevantStatusType = 'new' | 'expired' | 'pending';
+type BadgeMostRelevantStatusType = 'new' | 'expired' | 'pending' | 'imported';
 
 export class RecipientBadgeInstance extends ManagedEntity<ApiRecipientBadgeInstance, RecipientBadgeInstanceRef> {
 	get type(): string {
@@ -23,7 +23,9 @@ export class RecipientBadgeInstance extends ManagedEntity<ApiRecipientBadgeInsta
 		return this.apiModel.json.badge;
 	}
 	get issueDate(): Date {
-		return this._issueDate ? this._issueDate : (this._issueDate = new Date(this.apiModel.json.issuedOn));
+		return this._issueDate
+			? this._issueDate
+			: (this._issueDate = new Date(this.apiModel.json.issuedOn || this.apiModel.json.validFrom));
 	}
 	get image(): string {
 		return this.apiModel.image;
@@ -59,6 +61,8 @@ export class RecipientBadgeInstance extends ManagedEntity<ApiRecipientBadgeInsta
 	get mostRelevantStatus(): BadgeMostRelevantStatusType | null {
 		if (this.expiresDate && this.expiresDate < new Date()) {
 			return 'expired';
+		} else if (this.apiModel.imported) {
+			return 'imported';
 		} else if (this.apiModel.pending) {
 			return 'pending';
 		} else if (this.apiModel.acceptance === 'Unaccepted') {
@@ -71,7 +75,15 @@ export class RecipientBadgeInstance extends ManagedEntity<ApiRecipientBadgeInsta
 	}
 
 	get criteriaUrl(): string {
-		return this.badgeClass.criteria_url || this.badgeClass.criteria || null;
+		return this.badgeClass.criteria_url || null;
+	}
+
+	get criteria(): Array<{ name: string; description: string }> {
+		return this.criteria;
+	}
+
+	get imported(): boolean {
+		return this.apiModel.imported;
 	}
 	/**
 	 * Cached copy of the immutable issueDate for optimization

@@ -37,6 +37,7 @@ export class OebIssuerDetailComponent implements OnInit {
 
 	learningPathsPromise: Promise<unknown>;
 	requestsLoaded: Promise<Map<string, ApiQRCode[]>>;
+	userIsMember = false;
 
 	constructor(
 		private router: Router,
@@ -49,12 +50,19 @@ export class OebIssuerDetailComponent implements OnInit {
 		private learningPathApiService: LearningPathApiService,
 		private qrCodeApiService: QrCodeApiService,
 		private sessionService: SessionService,
-	) {}
+	) {
+		if (this.sessionService.isLoggedIn) {
+			this.issuerManager.myIssuers$.subscribe((issuers) => {
+				this.userIsMember = issuers.some((i) => this.issuer.slug == i.slug);
+			});
+		}
+	}
+
 	private readonly _hlmDialogService = inject(HlmDialogService);
 
 	menuItemsPublic: MenuItem[] = [
 		{
-			title: this.translate.instant('Issuer.jsonView'),
+			title: 'Issuer.jsonView',
 			action: (a: any) => this.routeToJson(),
 			// action: (a:any) => this.delete(a),
 			icon: 'lucideFileQuestion',
@@ -63,25 +71,25 @@ export class OebIssuerDetailComponent implements OnInit {
 
 	menuItems: MenuItem[] = [
 		{
-			title: this.translate.instant('General.edit'),
+			title: 'General.edit',
 			routerLink: ['./edit'],
 			icon: 'lucidePencil',
 		},
 		{
-			title: this.translate.instant('General.delete'),
+			title: 'General.delete',
 			// routerLink: ['/catalog/badges'],
 			action: (a: any) => this.delete(a),
 			icon: 'lucideTrash2',
 		},
 		{
-			title: this.translate.instant('General.members'),
+			title: 'General.members',
 			routerLink: ['./staff'],
 			icon: 'lucideUsers',
 		},
 	];
 
 	tabs: any = undefined;
-	activeTab = 'Badges';
+	activeTab = 'badges';
 
 	@ViewChild('badgesTemplate', { static: true }) badgesTemplate: ElementRef;
 	@ViewChild('learningPathTemplate', { static: true }) learningPathTemplate: ElementRef;
@@ -89,10 +97,12 @@ export class OebIssuerDetailComponent implements OnInit {
 	ngAfterContentInit() {
 		this.tabs = [
 			{
+				key: 'badges',
 				title: 'Badges',
 				component: this.badgesTemplate,
 			},
 			{
+				key: 'micro-degrees',
 				title: 'Micro Degrees',
 				component: this.learningPathTemplate,
 			},
@@ -141,13 +151,7 @@ export class OebIssuerDetailComponent implements OnInit {
 				return false;
 			}
 
-			this.badgeResults.push(
-				new BadgeResult(
-					badge,
-					this.issuer.name,
-					this.getRequestCount(badge, requestMap)
-				),
-			);
+			this.badgeResults.push(new BadgeResult(badge, this.issuer.name, this.getRequestCount(badge, requestMap)));
 
 			return true;
 		};
@@ -165,14 +169,14 @@ export class OebIssuerDetailComponent implements OnInit {
 		this.issuerDeleted.emit(event);
 	}
 
-	getRequestCount(badge: BadgeClass, requestMap:  Map<string, ApiQRCode[]>): number{
-		if(requestMap?.has(badge.slug)) {
-			const qrCode = requestMap.get(badge.slug)
-			if(qrCode.length){
-				return qrCode[0].request_count
+	getRequestCount(badge: BadgeClass, requestMap: Map<string, ApiQRCode[]>): number {
+		if (requestMap?.has(badge.slug)) {
+			const qrCode = requestMap.get(badge.slug);
+			if (qrCode.length) {
+				return qrCode.reduce((sum, code) => sum + code.request_count, 0);
 			}
-			return 0
-		}  
+			return 0;
+		}
 	}
 
 	routeToBadgeAward(badge: BadgeClass, issuer) {
@@ -241,7 +245,7 @@ export class OebIssuerDetailComponent implements OnInit {
 				// qrCodeRequested: () => {},
 				variant: 'danger',
 				text: 'Möchtest du diesen Micro Degree wirklich löschen?',
-				title: 'Micro Degree löschen',
+				title: this.translate.instant('LearningPath.deleteMd'),
 			},
 		});
 	}
@@ -269,6 +273,10 @@ export class OebIssuerDetailComponent implements OnInit {
 
 	routeToJson() {
 		window.open(`${this.configService.apiConfig.baseUrl}/public/issuers/${this.issuer.slug}.json`, '_blank');
+	}
+
+	routeToMemberView() {
+		this.router.navigate(['/issuer/issuers/', this.issuer.slug]);
 	}
 
 	routeToUrl(url) {

@@ -18,6 +18,7 @@ import { lucideSearch } from '@ng-icons/lucide';
 import { HlmCommandInputWrapperComponent } from './spartan/ui-command-helm/src';
 import { OebButtonComponent } from './oeb-button.component';
 import { provideIcons } from '@ng-icons/core';
+import { OebSpinnerComponent } from './oeb-spinner.component';
 
 @Component({
 	selector: 'issuer-detail-datatable',
@@ -34,18 +35,22 @@ import { provideIcons } from '@ng-icons/core';
 		HlmIconDirective,
 		HlmCommandInputWrapperComponent,
 		OebButtonComponent,
+		OebSpinnerComponent,
 	],
 	providers: [provideIcons({ lucideSearch })],
 	template: `
 		<div class="tw-p-[calc(var(--gridspacing)*2)] tw-mt-8">
 			<div class="tw-flex tw-items-center tw-justify-between tw-gap-4 sm:flex-col">
 				<div class="l-stack u-margin-bottom2x u-margin-top4x">
-					<h3 class="md:tw-text-xl tw-text-sm tw-font-semibold tw-font-[rubik] tw-text-oebblack">
-						{{ recipientCount }} Badge {{ recipientCount == 1 ? 'Empfänger:in' : 'Empfänger:innen' }}
+					<h3
+						class="md:tw-text-xl md:tw-text-nowrap tw-text-sm tw-font-semibold tw-font-[rubik] tw-text-oebblack"
+					>
+						{{ recipientCount }} Badge
+						{{ recipientCount == 1 ? ('Issuer.recipient' | translate) : ('Issuer.recipients' | translate) }}
 					</h3>
 				</div>
 				<label hlmLabel class="tw-font-semibold tw-text-[0.5rem] tw-w-full">
-					<span class="tw-px-3">Nach E-Mail-Adresse suchen</span>
+					<span class="tw-px-3">{{ 'General.searchByEmail' | translate }}</span>
 					<hlm-cmd-input-wrapper class="tw-relative tw-px-0 tw-mt-1 tw-border-b-0">
 						<input
 							hlmInput
@@ -57,13 +62,27 @@ import { provideIcons } from '@ng-icons/core';
 					</hlm-cmd-input-wrapper>
 				</label>
 			</div>
+			<div
+				*ngIf="awardInProgress"
+				class="tw-border-green tw-p-2 tw-border-solid tw-border-4 tw-rounded-[10px] tw-w-full tw-flex md:tw-gap-6 tw-gap-2 tw-items-center"
+			>
+				<oeb-spinner size="lg"></oeb-spinner>
+				<div class="tw-text-oebblack tw-text-lg tw-flex tw-flex-col tw-gap-1">
+					<span class="tw-text-lg tw-font-bold tw-uppercase">{{
+						'Badge.awardingInProgress' | translate
+					}}</span>
+					<span>{{ 'Badge.willBeAwardedSoon' | translate }}</span>
+				</div>
+			</div>
 			<hlm-table
 				class="tw-rounded-t-[20px] tw-overflow-hidden tw-w-full tw-max-w-[100%] tw-bg-lightpurple tw-border-purple tw-border-[1px] tw-border-solid tw-mt-8"
 			>
 				<hlm-caption>{{ caption }}</hlm-caption>
 				<hlm-trow class="tw-bg-purple tw-text-white tw-flex-wrap hover:tw-bg-purple">
 					<hlm-th class="!tw-text-white tw-w-40">ID</hlm-th>
-					<hlm-th class="!tw-text-white tw-justify-center xl:tw-pr-12 !tw-flex-1">Vergeben am </hlm-th>
+					<hlm-th class="!tw-text-white tw-justify-center xl:tw-pr-12 !tw-flex-1">{{
+						'RecBadgeDetail.issuedOn' | translate
+					}}</hlm-th>
 					<hlm-th class="!tw-text-white tw-justify-end xl:tw-w-40 tw-w-0 !tw-p-0"></hlm-th>
 				</hlm-trow>
 				<hlm-trow
@@ -92,7 +111,7 @@ import { provideIcons } from '@ng-icons/core';
 							width="full_width"
 							class="tw-w-full"
 							(click)="actionElement.emit(recipient)"
-							[text]="actionElementText"
+							[text]="actionElementText | translate | titlecase"
 						></oeb-button>
 
 						<oeb-button
@@ -112,10 +131,11 @@ import { provideIcons } from '@ng-icons/core';
 export class IssuerDetailDatatableComponent {
 	@Input() caption: string = '';
 	@Input() recipientCount: number = 0;
-	@Input() actionElementText: string = 'zurücknehmen';
+	@Input() actionElementText: string = 'General.revoke';
 	@Input() downloadStates;
 	@Output() actionElement = new EventEmitter();
 	@Output() downloadCertificate = new EventEmitter<object>();
+	@Input() awardInProgress: boolean = false;
 
 	_recipients = input.required<BadgeInstance[]>();
 

@@ -1,25 +1,58 @@
-import { Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
+import { Component, ViewChild, TemplateRef, inject, AfterViewInit } from '@angular/core';
 import { RecipientBadgeManager } from '../../services/recipient-badge-manager.service';
 import { FormBuilder } from '@angular/forms';
 import { UrlValidator } from '../../../common/validators/url.validator';
 import { JsonValidator } from '../../../common/validators/json.validator';
 import { MessageService } from '../../../common/services/message.service';
 import { BadgrApiFailure } from '../../../common/services/api-failure';
-import { BaseDialog } from '../../../common/dialogs/base-dialog';
 import { preloadImageURL } from '../../../common/util/file-util';
-import { FormFieldText } from '../../../common/components/formfield-text';
 import { TypedFormControl, typedFormGroup } from '../../../common/util/typed-forms';
 import { TranslateService } from '@ngx-translate/core';
-
-type AddBadgeDialogTabName = 'upload' | 'url' | 'json';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src';
+import { BrnDialogRef } from '@spartan-ng/brain/dialog';
+import { DialogComponent } from '../../../components/dialog.component';
+import { OebTabsComponent, Tab } from '../../../components/oeb-backpack-tabs.component';
+import { TranslateModule } from '@ngx-translate/core';
+import {
+	UploadTabComponent,
+	JsonTabComponent,
+	UrlTabComponent,
+} from '../upload-badge-tabs/upload-badge-tabs.component';
+import { NgIcon } from '@ng-icons/core';
+import { provideIcons } from '@ng-icons/core';
+import { lucideCircleX } from '@ng-icons/lucide';
+import { Router } from '@angular/router';
+import { OebButtonComponent } from '../../../components/oeb-button.component';
 
 @Component({
 	selector: 'add-badge-dialog',
+	standalone: true,
+	imports: [
+		CommonModule,
+		ReactiveFormsModule,
+		UploadTabComponent,
+		UrlTabComponent,
+		JsonTabComponent,
+		TranslateModule,
+		OebTabsComponent,
+		NgIcon,
+		OebButtonComponent,
+	],
+	providers: [provideIcons({ lucideCircleX })],
 	templateUrl: './add-badge-dialog.component.html',
-	standalone: false,
+	styleUrl: './add-badge-dialog.component.scss',
 })
-export class AddBadgeDialogComponent extends BaseDialog {
-	static defaultOptions = {} as AddBadgeDialogOptions;
+export class AddBadgeDialogComponent implements AfterViewInit {
+	@ViewChild('dialogHeader') dialogHeader: TemplateRef<void>;
+	@ViewChild('dialogContent') dialogContent: TemplateRef<void>;
+	@ViewChild('uploadTabTemplate') uploadTabTemplate: TemplateRef<void>;
+	@ViewChild('urlTabTemplate') urlTabTemplate: TemplateRef<void>;
+	@ViewChild('jsonTabTemplate') jsonTabTemplate: TemplateRef<void>;
+	@ViewChild('failureHeader') failureHeader: TemplateRef<void>;
+	@ViewChild('failureContent') failureContent: TemplateRef<void>;
+
 	readonly uploadBadgeImageUrl = '../../../../breakdown/static/images/image-uplodBadge.svg';
 	readonly pasteBadgeImageUrl = preloadImageURL('../../../../breakdown/static/images/image-uplodBadgeUrl.svg');
 
@@ -28,32 +61,43 @@ export class AddBadgeDialogComponent extends BaseDialog {
 		.addControl('url', '', UrlValidator.validUrl)
 		.addControl('assertion', '', JsonValidator.validJson);
 
-	showAdvance = false;
 	formError: string;
-
-	currentTab: AddBadgeDialogTabName = 'upload';
-
-	options: AddBadgeDialogOptions = AddBadgeDialogComponent.defaultOptions;
-	resolveFunc: () => void = () => {};
-	rejectFunc: (err?: unknown) => void;
-
+	currentTab: string = 'image';
 	badgeUploadPromise: Promise<unknown>;
+	tabs: Tab[] = [];
 
-	@ViewChild('jsonField')
-	private jsonField: FormFieldText;
-
-	@ViewChild('urlField')
-	private urlField: FormFieldText;
+	private dialogRef: BrnDialogRef;
+	private _hlmDialogService = inject(HlmDialogService);
 
 	constructor(
-		componentElem: ElementRef,
-		renderer: Renderer2,
 		protected recipientBadgeManager: RecipientBadgeManager,
 		protected formBuilder: FormBuilder,
 		protected messageService: MessageService,
 		private translate: TranslateService,
-	) {
-		super(componentElem, renderer);
+		private router: Router,
+	) {}
+
+	ngAfterViewInit() {
+		// Initialize tabs after view is initialized to get template references
+		setTimeout(() => {
+			this.tabs = [
+				{
+					key: 'image',
+					title: this.translate.instant('RecBadge.image'),
+					component: this.uploadTabTemplate,
+				},
+				{
+					key: 'url',
+					title: 'URL',
+					component: this.urlTabTemplate,
+				},
+				{
+					key: 'json',
+					title: 'JSON',
+					component: this.jsonTabTemplate,
+				},
+			];
+		});
 	}
 
 	isJson = (str) => {
@@ -66,32 +110,56 @@ export class AddBadgeDialogComponent extends BaseDialog {
 	};
 
 	/**
-	 * Opens the confirm dialog with the given options. If the user clicks the "true" button, the promise will be
-	 * resolved, otherwise, it will be rejected.
-	 *
-	 * @param customOptions Options for the dialog
+	 * Opens the badge dialog
 	 * @returns {Promise<void>}
 	 */
-	openDialog(customOptions: AddBadgeDialogOptions): Promise<void> {
-		this.options = Object.assign({}, AddBadgeDialogComponent.defaultOptions, customOptions);
+	openDialog(): Promise<void> {
 		this.addRecipientBadgeForm.reset();
-		this.showModal();
+		// this.currentTab = this.translate.instant('RecBadge.image');
 
 		return new Promise<void>((resolve, reject) => {
-			this.resolveFunc = resolve;
-			this.rejectFunc = reject;
+			// wait for temlate refs to be available
+			setTimeout(() => {
+				this.dialogRef = this._hlmDialogService.open(DialogComponent, {
+					context: {
+						headerTemplate: this.dialogHeader,
+						variant: 'default',
+						content: this.dialogContent,
+					},
+				});
+
+				if (this.dialogRef && this.dialogRef.closed$) {
+					this.dialogRef.closed$.subscribe(
+						(result) => {
+							if (result === 'cancel') {
+								reject();
+							} else {
+								resolve();
+							}
+						},
+						(error) => {
+							reject(error);
+						},
+					);
+				} else {
+					reject(new Error('Dialog reference not properly initialized'));
+				}
+			});
 		});
 	}
 
 	closeDialog() {
-		this.closeModal();
-		this.resolveFunc();
+		this.dialogRef?.close();
 	}
 
 	get formHasBadgeValue() {
 		const formState = this.addRecipientBadgeForm.value;
-
 		return !!(formState.assertion || formState.image || formState.url);
+	}
+
+	routeToUserProfile() {
+		this.router.navigate(['profile', 'profile']);
+		this.closeDialog();
 	}
 
 	submitBadgeRecipientForm() {
@@ -106,30 +174,87 @@ export class AddBadgeDialogComponent extends BaseDialog {
 				})
 				.catch((err) => {
 					let message = BadgrApiFailure.from(err).firstMessage;
+					console.log('message', message);
+					this.closeDialog();
+					switch (message) {
+						case 'VERIFY_RECIPIENT_IDENTIFIER':
+							this.dialogRef = this._hlmDialogService.open(DialogComponent, {
+								context: {
+									headerTemplate: this.failureHeader,
+									content: this.failureContent,
+									templateContext: {
+										message: this.translate.instant('RecBadge.uploadEmailDoesNotMatchError'),
+										text: this.translate.instant('RecBadge.addEmailToUpload'),
+										buttontext: this.translate.instant('General.toMyProfile'),
+									},
+								},
+							});
+							break;
 
-					// display human readable description of first error if provided by server
-					if (this.isJson(message)) {
-						const jsonErr = JSON.parse(message);
-						if (err.response && err.response._body) {
-							const body = JSON.parse(err.response._body);
-							if (body && body.length > 0 && body[0].description) {
-								message = body[0].description;
-							}
-						} else if (jsonErr.length) {
-							message = jsonErr[0].result || jsonErr[0].description;
-						}
+						case 'DUPLICATE_BADGE':
+							this.dialogRef = this._hlmDialogService.open(DialogComponent, {
+								context: {
+									headerTemplate: this.failureHeader,
+									content: this.failureContent,
+									templateContext: {
+										message: this.translate.instant('RecBadge.uploadFailed'),
+										text: this.translate.instant('RecBadge.duplicateBadge'),
+									},
+								},
+							});
+							break;
+
+						case 'INVALID_BADGE_VERSION':
+							this.dialogRef = this._hlmDialogService.open(DialogComponent, {
+								context: {
+									headerTemplate: this.failureHeader,
+									content: this.failureContent,
+									templateContext: {
+										message: this.translate.instant('RecBadge.badgeUploadVersionError'),
+										text: this.translate.instant('General.sendUsYourBadge'),
+									},
+								},
+							});
+							break;
+
+						default:
+							this.dialogRef = this._hlmDialogService.open(DialogComponent, {
+								context: {
+									headerTemplate: this.failureHeader,
+									content: this.failureContent,
+									templateContext: {
+										message: this.translate.instant('General.thisDidNotWork'),
+										text: this.translate.instant('General.sendUsYourBadge'),
+									},
+								},
+							});
 					}
 
-					this.messageService.reportAndThrowError(
-						message
-							? this.translate.instant('RecBadge.uploadFailed') + message
-							: this.translate.instant('RecBadge.unknownError'),
-						err,
-					);
+					// display human readable description of first error if provided by server
+					// if (this.isJson(message)) {
+					// 	console.log('msg', message);
+					// 	console.log('err', err);
+					// 	const jsonErr = JSON.parse(message);
+					// 	if (err.response && err.response._body) {
+					// 		const body = JSON.parse(err.response._body);
+					// 		if (body && body.length > 0 && body[0].description) {
+					// 			message = body[0].description;
+					// 		}
+					// 	} else if (jsonErr.length) {
+					// 		message = jsonErr[0].result || jsonErr[0].description;
+					// 	}
+					// }
+
+					// this.messageService.reportAndThrowError(
+					// 	message
+					// 		? this.translate.instant('RecBadge.uploadFailed') + message
+					// 		: this.translate.instant('RecBadge.unknownError'),
+					// 	err,
+					// );
 				})
 				.catch((e) => {
-					this.closeModal();
-					this.rejectFunc(e);
+					this.closeDialog();
+					throw e;
 				});
 		} else {
 			this.formError = this.translate.instant('RecBadge.oneBadgeRequired');
@@ -149,5 +274,3 @@ export class AddBadgeDialogComponent extends BaseDialog {
 		this.formError = undefined;
 	}
 }
-
-export interface AddBadgeDialogOptions {}

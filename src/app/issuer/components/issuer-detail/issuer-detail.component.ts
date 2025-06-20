@@ -21,6 +21,7 @@ import { MenuItem } from '../../../common/components/badge-detail/badge-detail.c
 import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
 import { ApiLearningPath } from '../../../common/model/learningpath-api.model';
 import { first, firstValueFrom } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'issuer-detail',
@@ -51,6 +52,8 @@ export class IssuerDetailComponent extends BaseAuthenticatedRoutableComponent im
 
 	menuitems: MenuItem[] = [];
 
+	myInstitutions = 'Meine Institutionen';
+
 	constructor(
 		loginService: SessionService,
 		router: Router,
@@ -64,6 +67,7 @@ export class IssuerDetailComponent extends BaseAuthenticatedRoutableComponent im
 		private configService: AppConfigService,
 		private externalToolsManager: ExternalToolsManager,
 		private dialogService: CommonDialogsService,
+		private translate: TranslateService,
 	) {
 		super(router, route, loginService);
 
@@ -77,17 +81,17 @@ export class IssuerDetailComponent extends BaseAuthenticatedRoutableComponent im
 
 		this.menuitems = [
 			{
-				title: 'Bearbeiten',
+				title: this.translate.instant('General.edit'),
 				routerLink: ['./edit'],
 				icon: 'lucidePencil',
 			},
 			{
-				title: 'Löschen',
+				title: this.translate.instant('General.delete'),
 				action: ($event) => this.delete($event),
 				icon: 'lucideTrash2',
 			},
 			{
-				title: 'Mitglieder bearbeiten',
+				title: this.translate.instant('Issuer.editMembers'),
 				routerLink: ['./staff'],
 				icon: 'lucideUsers',
 			},
@@ -100,7 +104,7 @@ export class IssuerDetailComponent extends BaseAuthenticatedRoutableComponent im
 					`Issuer - ${this.issuer.name} - ${this.configService.theme['serviceName'] || 'Badgr'}`,
 				);
 				this.crumbs = [
-					{ title: 'Meine Institutionen', routerLink: ['/issuer/issuers'] },
+					{ title: this.translate.instant('NavItems.myInstitutions'), routerLink: ['/issuer/issuers'] },
 					{ title: this.issuer.name, routerLink: ['/issuer/issuers/' + this.issuer.slug] },
 				];
 
@@ -160,6 +164,9 @@ export class IssuerDetailComponent extends BaseAuthenticatedRoutableComponent im
 
 	ngOnInit() {
 		super.ngOnInit();
+		this.translate.get('NavItems.myInstitutions').subscribe((str) => {
+			this.myInstitutions = str;
+		});
 	}
 
 	routeToBadgeAward(badge, issuer) {
