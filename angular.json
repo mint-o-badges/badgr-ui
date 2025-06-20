@@ -3,6 +3,22 @@
 	"version": 1,
 	"newProjectRoot": "projects",
 	"projects": {
+		"web-components-cli": {
+			"projectType": "application",
+			"root": "webcomponents",
+			"sourceRoot": "webcomponents",
+			"architect": {
+				"build": {
+					"builder": "@angular-devkit/build-angular:browser",
+					"options": {
+						"outputPath": "dist/webcomponents",
+						"index": "webcomponents/index.html",
+						"main": "webcomponents/test.component.ts",
+						"tsConfig": "webcomponents/tsconfig.wc.json"
+					}
+				}
+			}
+		},
 		"badgr-ui-cli": {
 			"root": ".",
 			"sourceRoot": "src",

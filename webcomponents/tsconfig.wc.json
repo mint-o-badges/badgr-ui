@@ -1,0 +1,11 @@
+{
+	"extends": "../tsconfig.json",
+	"files": ["test.component.ts"],
+	"include": ["**/*.d.ts"],
+	"module": "es2015",
+	"compilerOptions": {
+		"outDir": "../out-tsc/webcomponents",
+		"baseUrl": ".",
+		"types": ["node"]
+	}
+}
