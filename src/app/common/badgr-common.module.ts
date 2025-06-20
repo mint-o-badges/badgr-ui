@@ -41,7 +41,6 @@ import { StudyLoadPipe } from './pipes/format-studyload.pipe';
 import { BgCopyInputDirective } from './directives/bg-copy-input.directive';
 import { ShareSocialDialog } from './dialogs/share-social-dialog/share-social-dialog.component';
 import { TimeComponent } from './components/time.component';
-import { BadgrButtonComponent } from './components/badgr-button.component';
 import { SharingService } from './services/sharing.service';
 import { NounprojectService } from './services/nounproject.service';
 import { AiSkillsService } from './services/ai-skills.service';
@@ -165,7 +164,6 @@ const DIRECTIVES = [
 
 export const COMMON_MODULE_COMPONENTS = [
 	BadgeImageComponent,
-	BadgrButtonComponent,
 	BgBadgecard,
 	BgLearningPathCard,
 	BgCollectionCard,

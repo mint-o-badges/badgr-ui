@@ -27,17 +27,16 @@
 				<div id="show-error-result">PDF konnte nicht erstellt werden...</div>
 			</ng-template>
 			<div class="l-stack l-stack-right u-margin-top1x u-padding-bottom2x">
-				<button
+				<oeb-button
 					id="download-pdf-backpack"
 					type="submit"
-					class="button"
+					[size]="'md'"
 					(click)="downloadPdf()"
 					loading-message="Downloading..."
 					[disabled-when-requesting]="true"
 					[disabled]="pdfError"
-				>
-					Herunterladen
-				</button>
+					text="Herunterladen"
+				/>
 			</div>
 		</div>
 	</div>
