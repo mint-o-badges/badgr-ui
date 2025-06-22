@@ -91,7 +91,7 @@ export class FormFieldRadio implements OnChanges, AfterViewInit {
 	get inputId() {
 		return this.id || (this.label || this.randomName).replace(/[^\w]+/g, '_').toLowerCase();
 	}
-	@Input() control: any;
+	@Input() control: FormControl;
 	@Input() value: string;
 	@Input() id: string;
 	@Input() label: string;

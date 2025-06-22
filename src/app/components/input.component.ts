@@ -1,7 +1,7 @@
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { HlmInputDirective, InputVariants } from './spartan/ui-input-helm/src';
 import { OebInputErrorComponent } from './input.error.component';
-import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { NgClass, NgIf } from '@angular/common';
 import { UrlValidator } from '../common/validators/url.validator';
 import { HlmPDirective } from './spartan/ui-typography-helm/src/lib/hlm-p.directive';
@@ -102,7 +102,7 @@ export class OebInputComponent {
 	private cachedErrorMessage = null;
 	private cachedErrorState = null;
 	private cachedDirtyState = null;
-	@Input() control: any;
+	@Input() control: FormControl;
 	@Input() errorGroup: TypedFormGroup;
 
 	remainingCharactersNum = this.maxchar;
