@@ -70,7 +70,6 @@ export type RequestedBadge = {
 	selector: 'qrcodes-datatable',
 	imports: [
 		FormsModule,
-		BrnMenuTriggerDirective,
 		HlmMenuModule,
 		BrnTableModule,
 		HlmTableModule,
@@ -149,8 +148,8 @@ export type RequestedBadge = {
 				</brn-column-def>
 				<brn-column-def name="requestedOn" class="!tw-flex-1 tw-justify-center">
 					<hlm-th *brnHeaderDef>
-						<button hlmBtn size="sm" variant="secondary" (click)="handleEmailSortChange()">
-							<span class="tw-text-white tw-text-sm">{{ 'Badge.requestedOn' | translate }}</span>
+						<button hlmBtn size="sm" variant="inherit" (click)="handleEmailSortChange()">
+							<span class="tw-text-white tw-text-sm tw-font-medium">{{ 'Badge.requestedOn' | translate }}</span>
 							<ng-icon hlm class="tw-ml-3 tw-text-white" size="sm" name="lucideArrowUpDown" />
 						</button>
 					</hlm-th>
@@ -169,30 +168,6 @@ export type RequestedBadge = {
 				<brn-column-def name="actions" class="tw-w-16">
 					<hlm-th *brnHeaderDef></hlm-th>
 					<hlm-td *brnCellDef="let element">
-						<button
-							hlmBtn
-							variant="secondary"
-							class="tw-h-6 tw-w-6 tw-p-0.5"
-							align="end"
-							[brnMenuTriggerFor]="menu"
-						>
-							<ng-icon hlm class="tw-w-4 tw-h-4" name="lucideEllipsis" />
-						</button>
-
-						<ng-template #menu>
-							<hlm-menu>
-								<hlm-menu-label>Actions</hlm-menu-label>
-								<hlm-menu-separator />
-								<hlm-menu-group>
-									<button hlmMenuItem>Copy payment ID</button>
-								</hlm-menu-group>
-								<hlm-menu-separator />
-								<hlm-menu-group>
-									<button hlmMenuItem>View customer</button>
-									<button hlmMenuItem>View payment details</button>
-								</hlm-menu-group>
-							</hlm-menu>
-						</ng-template>
 					</hlm-td>
 				</brn-column-def>
 				<div class="tw-flex tw-items-center tw-justify-center tw-p-20 tw-text-muted-foreground" brnNoDataRow>
