@@ -26,7 +26,6 @@ import { Title } from '@angular/platform-browser';
 import { MarkdownHintsDialog } from './common/dialogs/markdown-hints-dialog.component';
 import { Issuer } from './issuer/models/issuer.model';
 import { IssuerManager } from './issuer/services/issuer-manager.service';
-import { ImportModalComponent } from './mozz-transition/components/import-modal/import-modal.component';
 import { ExportPdfDialog } from './common/dialogs/export-pdf-dialog/export-pdf-dialog.component';
 import { CopyBadgeDialog } from './common/dialogs/copy-badge-dialog/copy-badge-dialog.component';
 import { ForkBadgeDialog } from './common/dialogs/fork-badge-dialog/fork-badge-dialog.component';
@@ -136,9 +135,6 @@ export class AppComponent implements OnInit, AfterViewInit {
 
 	@ViewChild('issuerLink')
 	private issuerLink: unknown;
-
-	@ViewChild('importModalDialog')
-	importModalDialog: ImportModalComponent;
 
 	// For changing language of texts defined in ts file
 	lngObserver = this.languageService.getSelectedLngObs();
