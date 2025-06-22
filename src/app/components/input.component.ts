@@ -21,8 +21,6 @@ import { TypedFormGroup } from '../common/util/typed-forms';
 					<span hlmP class="tw-text-oebblack tw-font-semibold" [innerHTML]="label"></span>
 				</ng-template>
 				<span class="tw-pl-[3px] tw-text-oebblack" *ngIf="sublabelRight"> {{ sublabelRight }}</span>
-				<!-- <span *ngIf="optional">(OPTIONAL)</span>
-				<span *ngIf="formFieldAside">{{ formFieldAside }}</span> -->
 			</label>
 			<ng-content
 				class="tw-relative tw-z-20 tw-font-semibold tw-text-[14px] md:tw-text-[20px] tw-leading-4 md:tw-leading-6"
@@ -32,7 +30,7 @@ import { TypedFormGroup } from '../common/util/typed-forms';
 		<p class="tw-pl-[3px]" *ngIf="sublabel">
 			{{ sublabel }}
 		</p>
-		<!-- <label class="visuallyhidden" [attr.for]="inputName" *ngIf="ariaLabel">{{ ariaLabel }}</label> -->
+		<label class="visuallyhidden" [attr.for]="inputName" *ngIf="ariaLabel">{{ ariaLabel }}</label>
 
 		<div class="tw-relative tw-w-full">
 			<input
@@ -146,6 +144,10 @@ export class OebInputComponent {
 		).concat(
 			messagesForValidationError(this.label, this.errorGroup && this.errorGroup.errors, this.errorGroupMessage),
 		)[0]; // Only display the first error
+	}
+
+	get inputName() {
+		return (this.label || this.placeholder).replace(/[^\w]+/g, '_').toLowerCase();
 	}
 
 	ngAfterViewInit() {
