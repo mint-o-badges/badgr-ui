@@ -5,7 +5,8 @@ import * as d3 from "d3";
 import d3ForceBoundary from "d3-force-boundary";
 
 import futureSkills from "./recipient-skill-visualisation.future.json";
-import { debounceTime, fromEvent, Observable, Subject, Subscribable, Subscription, takeUntil, tap } from "rxjs";
+import { debounceTime, fromEvent, Subject, takeUntil, tap } from "rxjs";
+import { TranslateModule } from "@ngx-translate/core";
 
 interface ExtendedApiSkill extends Partial<ApiSkill> {
 	id: string
@@ -33,6 +34,7 @@ interface SkillLink  {
 	templateUrl: './recipient-skill-visualisation.component.html',
 	styleUrl: './recipient-skill-visualisation.component.scss',
 	standalone: true,
+	imports: [TranslateModule]
 })
 export class RecipientSkillVisualisationComponent implements OnChanges {
 
@@ -46,6 +48,7 @@ export class RecipientSkillVisualisationComponent implements OnChanges {
 	};
 
 	mobile = window.innerWidth < 768;
+	hasFutureSkills = false;
 
 	resizeSubject$ = new Subject<void>();
 
@@ -79,6 +82,15 @@ export class RecipientSkillVisualisationComponent implements OnChanges {
 	prepareData(skills: ApiRootSkill[]) {
 
 		this.skillTree = new Map();
+		this.hasFutureSkills = false;
+
+		// DEBUG: add your own future skill for testing
+		// futureSkills["/esco/skill/1565b401-1754-4b07-8f1a-eb5869e64d95"] = {
+		// 	"concept_uri": "kommunikationskompetenz",
+		// 	"preferred_label": "Kommunikationskompetenz",
+		// 	"description": "Kommunikationskompetenz umfasst neben sprachlichen F\u00e4higkeiten auch Diskurs-, Dialog und strategische Kommunikationsf\u00e4higkeit, um in unterschiedlichen Kontexten und Situationen situativ angemessen erfolgreich kommunikativ handlungsf\u00e4hig zu sein."
+		// };
+
 		skills.forEach(s => {
 			const breadcrumbs = s.breadcrumb_paths;
 
@@ -88,15 +100,17 @@ export class RecipientSkillVisualisationComponent implements OnChanges {
 					"preferred_label": "future skills",
 					"concept_uri": "future-skills"
 				}, futureSkills[s.concept_uri], s]);
+
+				this.hasFutureSkills = true;
 			}
 
 			// loop breadcrumbs to augment skill data
 			breadcrumbs.forEach(breadcrumb => {
 				let ancestor = null;
 				breadcrumb.forEach((bc, j) => {
-					const last = breadcrumb[j-1];
+					const previous = breadcrumb[j-1];
 					// skips esco top level 'skills'
-					if (last) {
+					if (previous) {
 						const id = bc.concept_uri;
 
 						// get skill from tree set or create new
@@ -133,10 +147,9 @@ export class RecipientSkillVisualisationComponent implements OnChanges {
 						if (j == 1) {
 							ancestor = id;
 						}
-						if (j > 1 && last?.concept_uri) {
-							entry.parents.add(last.concept_uri)
+						if (j > 1 && previous?.concept_uri) {
+							entry.parents.add(previous.concept_uri)
 						}
-
 						this.skillTree.set(id, entry);
 					}
 				});
@@ -162,10 +175,18 @@ export class RecipientSkillVisualisationComponent implements OnChanges {
 				.map(s => s.id)
 				.slice(0, hasFuture ? 4 : 5)
 		);
+		// add future skills if available
+		if (hasFuture) {
+			topAncestors.add('future-skills');
+		}
 
 		// add nodes that either are topAncestors or have a topAncestor or are in future skills
 		this.d3data.nodes = Array.from(this.skillTree.values()).filter((s) => {
-			return topAncestors.has(s.id) || s.id == 'future-skills' || (s.ancestors.size > 0 && s.ancestors.intersection(topAncestors).size >= s.ancestors.size);
+			return topAncestors.has(s.id)	// is topAncestor
+				|| (
+					s.ancestors.size > 0	// is not top level (should also be depth == 1)
+					&& s.ancestors.intersection(topAncestors).size >= s.ancestors.size	// is beneath a topAncestor
+				);
 		});
 
 		this.d3data.links = [];
@@ -187,6 +208,10 @@ export class RecipientSkillVisualisationComponent implements OnChanges {
 		});
 	}
 
+	getTopLevelSkills() {
+		return this.d3data.nodes.filter(d => d.depth == 1);
+	}
+
 	initD3() {
 
 		const width = this.mobile ? 540 : 1144;
@@ -194,7 +219,7 @@ export class RecipientSkillVisualisationComponent implements OnChanges {
 
 		const nodeBaseSize = 50;
 		const nodeMaxAdditionalSize = 100;
-		const topLevelSkills = this.d3data.nodes.filter(d => d.depth == 1);
+		const topLevelSkills = this.getTopLevelSkills();
 		const maxStudyLoad = topLevelSkills.reduce((current, d) => Math.max(current, d.studyLoad), 0)
 		const minStudyLoad = topLevelSkills.reduce((current, d) => Math.min(current, d.studyLoad), Number.MAX_SAFE_INTEGER)
 
@@ -317,14 +342,21 @@ export class RecipientSkillVisualisationComponent implements OnChanges {
 			.attr("y", (d) => nodeRadius(d) * -1)
 			.attr("height", (d) => nodeRadius(d) * 2)
 			.attr("width", (d) => nodeRadius(d) * 2)
-			.attr('class', "fo-name")
+			.attr("class", "fo-name")
 			.append("xhtml:div")
 			// DEBUG: output studyload if not 0
 			// .text(d => { return d.name.replace("/", " / ") + (d.studyLoad !== 0 ? ` (${d.studyLoad} min)` : '') })
 			.text(d => { return d.name.replace("/", " / ") })
-			.attr('style', (d) => `font-size: ${nodeRadius(d) * 0.20}px;`)
-			.attr('text-anchor', "top")
-			.attr('class', "name")
+			.attr("style", (d) => `font-size: ${nodeRadius(d) * 0.20}px;`)
+			.attr("text-anchor", "top")
+			.attr("class", "name")
+
+			// only append studyload when top level
+			.filter(d => d.depth == 1)
+			.append("xhtml:div")
+			.text(d => { return `${d.studyLoad} min` })
+			.attr("class", "studyload")
+
 
 		// add foreignObject for description text popover
 		node
@@ -345,6 +377,7 @@ export class RecipientSkillVisualisationComponent implements OnChanges {
 				${ d.leaf ? 'leaf' : 'group' }
 				level-${ d.depth }
 				${ d.clickable ? 'clickable' : ''}
+				${ d.id == 'future-skills' ? 'future': ''}
 			`)
 
 		node.sort((d1, d2) => { return d1.depth - d2.depth; })
