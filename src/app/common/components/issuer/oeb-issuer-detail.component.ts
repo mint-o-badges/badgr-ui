@@ -28,7 +28,7 @@ import { PublicApiBadgeClass, PublicApiIssuer, PublicApiLearningPath } from '../
 	standalone: false,
 })
 export class OebIssuerDetailComponent implements OnInit {
-	@Input() issuer: Issuer;
+	@Input() issuer: Issuer | PublicApiIssuer;
 	@Input() issuerPlaceholderSrc: string;
 	@Input() issuerActionsMenu: any;
 	@Input() badges: BadgeClass[] | PublicApiBadgeClass[];
@@ -58,6 +58,10 @@ export class OebIssuerDetailComponent implements OnInit {
 	}
 
 	private readonly _hlmDialogService = inject(HlmDialogService);
+
+	isFullIssuer(issuer: Issuer | PublicApiIssuer): issuer is Issuer {
+    return 'staffMembers' in issuer;
+  }
 
 	menuItemsPublic: MenuItem[] = [
 		{
