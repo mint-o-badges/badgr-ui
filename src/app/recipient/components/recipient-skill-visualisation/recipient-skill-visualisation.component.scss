@@ -1,6 +1,7 @@
 
 ::ng-deep {
 	svg {
+
 		foreignObject {
 			pointer-events: none;
 		}
@@ -28,15 +29,6 @@
 				display: none;
 			}
 		}
-	//   circle {
-	//     transition: filter 0.1s ease;
-	//   }
-	//   g:hover {
-
-	//     > circle {
-	//       filter: brightness(80%)
-	//     }
-	//   }
 
 		g {
 			font-weight: bold;
@@ -89,13 +81,6 @@
 			}
 			&.show {
 				opacity: 1;
-			}
-
-			&.leaf {
-			//   display: none;
-			//   &.show {
-			//     display: block;
-			//   }
 			}
 		}
 
