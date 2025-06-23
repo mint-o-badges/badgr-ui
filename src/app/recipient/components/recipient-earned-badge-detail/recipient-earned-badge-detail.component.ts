@@ -147,7 +147,7 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 						{
 							title: 'RecBadgeDetail.verifyBadge',
 							icon: 'lucideBadgeCheck',
-							action: () => window.open(this.verifyUrl, '_blank'),
+							action: () => this.verifyBadge(),
 						},
 						{
 							title: 'RecBadgeDetail.deleteBadge',
@@ -245,6 +245,38 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 			}
 		}
 		return url;
+	}
+
+	verifyBadge() {
+		console.log(this.verifyUrl, this.badge.apiModel.json.id);
+		if (this.config.version == '3.0') {
+			// v1: open ui for manual upload
+			// window.open('https://verifybadge.org/upload?validatorId=OB30Inspector');
+
+			// v2: post request using the assertion public url
+			const form = document.createElement('form');
+			form.target = '_blank';
+			form.method = 'POST';
+			form.action = 'https://verifybadge.org/uploaduri';
+			form.style.display = 'none';
+
+			[
+				['uri', this.badge.apiModel.json.id.toString()],
+				['validatorId', 'OB30Inspector'],
+			].forEach(([key, value]) => {
+				const input = document.createElement('input');
+				input.type = 'hidden';
+				input.name = key;
+				input.value = value;
+				form.appendChild(input);
+			});
+
+			document.body.appendChild(form);
+			form.submit();
+			document.body.removeChild(form);
+		} else {
+			window.open(this.verifyUrl, '_blank');
+		}
 	}
 
 	get isExpired() {

@@ -42,7 +42,7 @@ import { BadgrButtonComponent } from './badgr-button.component';
 		</p>
 
 		<label class="visuallyhidden" [attr.for]="inputName" *ngIf="ariaLabel">{{ ariaLabel }}</label>
-		<div class="forminput-x-inputs">
+		<div class="forminput-x-inputs tw-flex tw-gap-2 tw-items-center">
 			<input
 				[type]="fieldType"
 				*ngIf="!multiline"
@@ -58,16 +58,16 @@ import { BadgrButtonComponent } from './badgr-button.component';
 				(keyup)="handleKeyUp($event)"
 				#textInput
 			/>
-			<div class="forminput-x-button" *ngIf="inlineButtonText">
-				<button
-					class="button button-secondary button-informinput"
-					(click)="buttonClicked.emit($event)"
-					[disabled-when-requesting]="true"
-					type="submit"
-				>
-					{{ inlineButtonText }}
-				</button>
-			</div>
+			<oeb-button
+				*ngIf="inlineButtonText"
+				class="forminput-x-button"
+				[variant]="'secondary'"
+				[size]="'sm'"
+				(click)="buttonClicked.emit($event)"
+				[disabled-when-requesting]="true"
+				type="submit"
+				[text]="inlineButtonText"
+			/>
 			<textarea
 				*ngIf="multiline"
 				[name]="inputName"
