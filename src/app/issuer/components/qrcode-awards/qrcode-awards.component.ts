@@ -21,6 +21,10 @@ import { Router } from '@angular/router';
 import { Issuer } from '../../models/issuer.model';
 import { HlmIconDirective } from '../../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
 import { HlmAccordionDirective } from '~/components/spartan/ui-accordion-helm/src/lib/hlm-accordion.directive';
+import { HlmAccordionContentDirective } from '~/components/spartan/ui-accordion-helm/src/lib/hlm-accordion-content.directive';
+import { HlmAccordionItemDirective } from '~/components/spartan/ui-accordion-helm/src/lib/hlm-accordion-item.directive';
+import { HlmAccordionTriggerDirective } from '~/components/spartan/ui-accordion-helm/src/lib/hlm-accordion-trigger.directive';
+import { SvgIconComponent } from '~/common/components/svg-icon.component';
 
 @Component({
 	selector: 'qrcode-awards',
@@ -41,6 +45,10 @@ import { HlmAccordionDirective } from '~/components/spartan/ui-accordion-helm/sr
 		QrCodeDatatableComponent,
 		HlmH3Directive,
 		HlmAccordionDirective,
+		HlmAccordionItemDirective,
+		HlmAccordionTriggerDirective,
+		HlmAccordionContentDirective,
+		SvgIconComponent,
 	],
 })
 export class QrCodeAwardsComponent {
