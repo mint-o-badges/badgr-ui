@@ -39,8 +39,6 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 	issuerResultsByCategory: MatchingIssuerCategory[] = [];
 	filteredIssuers: Issuer[] = [];
 
-	state;
-
 	order = 'asc';
 	public badgesDisplay = 'grid';
 

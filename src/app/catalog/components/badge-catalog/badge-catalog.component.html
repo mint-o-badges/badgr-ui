@@ -108,7 +108,7 @@
 						<!-- TODO: Fix the badgecard link for sharing and routing -->
 						<bg-badgecard
 							*ngFor="let badge of badgeResults; trackBy: trackById"
-							[@appearAnimation]="state"
+							@appearAnimation
 							[badgeTitle]="badge.name"
 							[badgeImage]="badge.image"
 							[badgeDescription]="badge.description"

@@ -1,5 +1,5 @@
 import { Component, inject, input, Input, OnInit } from '@angular/core';
-import { animate, animateChild, query, stagger, state, style, transition, trigger } from '@angular/animations';
+import { animate, animateChild, query, stagger, style, transition, trigger } from '@angular/animations';
 import { LearningPathApiService } from '../../services/learningpath-api.service';
 import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
 import { DangerDialogComponentTemplate } from '../../dialogs/oeb-dialogs/danger-dialog-template.component';

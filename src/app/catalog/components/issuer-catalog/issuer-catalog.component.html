@@ -86,7 +86,7 @@
 					<div class="tw-grid sm:tw-grid-cols-issuer tw-gap-6 tw-w-full" [@stagger]>
 						<oeb-issuer-card
 							*ngFor="let issuer of issuerResults"
-							[@appearAnimation]="state"
+							@appearAnimation
 							[issuer]="issuer"
 							[plural]="plural"
 							(navigate)="navigateToIssuer(issuer)"

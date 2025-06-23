@@ -55,8 +55,6 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 
 	sortOption: string | null = null;
 
-	state;
-
 	get theme() {
 		return this.configService.theme;
 	}
