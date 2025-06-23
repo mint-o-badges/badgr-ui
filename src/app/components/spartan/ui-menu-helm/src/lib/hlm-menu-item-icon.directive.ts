@@ -1,7 +1,7 @@
 import { Directive, computed, input } from '@angular/core';
 import { hlm } from '@spartan-ng/brain/core';
+import { provideHlmIconConfig } from '@spartan-ng/ui-icon-helm';
 import type { ClassValue } from 'clsx';
-import { provideHlmIconConfig } from '~/components/spartan/ui-icon-helm/src/lib/hlm-icon.token';
 
 @Directive({
 	selector: '[hlmMenuIcon]',
@@ -13,5 +13,5 @@ import { provideHlmIconConfig } from '~/components/spartan/ui-icon-helm/src/lib/
 })
 export class HlmMenuItemIconDirective {
 	public readonly userClass = input<ClassValue>('', { alias: 'class' });
-	protected _computedClass = computed(() => hlm('tw-mr-2', this.userClass()));
+	protected _computedClass = computed(() => hlm('mr-2', this.userClass()));
 }

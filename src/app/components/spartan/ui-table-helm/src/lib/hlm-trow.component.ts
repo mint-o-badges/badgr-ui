@@ -9,7 +9,9 @@ import type { ClassValue } from 'clsx';
 		'[class]': '_computedClass()',
 		role: 'row',
 	},
-	template: ` <ng-content /> `,
+	template: `
+		<ng-content />
+	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	encapsulation: ViewEncapsulation.None,
 })
@@ -17,7 +19,7 @@ export class HlmTrowComponent {
 	public readonly userClass = input<ClassValue>('', { alias: 'class' });
 	protected _computedClass = computed(() =>
 		hlm(
-			'tw-flex tw-flex tw-border-b tw-border-border tw-transition-colors hover:tw-bg-muted/50 data-[state=selected]:tw-bg-muted',
+			'flex flex border-b border-border transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted',
 			this.userClass(),
 		),
 	);

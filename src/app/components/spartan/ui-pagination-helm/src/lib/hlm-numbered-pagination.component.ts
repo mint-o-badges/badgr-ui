@@ -11,6 +11,7 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrnSelectImports } from '@spartan-ng/brain/select';
+import { HlmSelectImports } from '@spartan-ng/ui-select-helm';
 import { HlmPaginationContentDirective } from './hlm-pagination-content.directive';
 import { HlmPaginationEllipsisComponent } from './hlm-pagination-ellipsis.component';
 import { HlmPaginationItemDirective } from './hlm-pagination-item.directive';
@@ -22,36 +23,53 @@ import { HlmPaginationDirective } from './hlm-pagination.directive';
 @Component({
 	selector: 'hlm-numbered-pagination',
 	template: `
-		<div class="tw-flex tw-items-center tw-justify-between tw-gap-2 tw-px-4 tw-py-2">
+		<div class="flex items-center justify-between gap-2 px-4 py-2">
+			<div class="flex items-center gap-1 text-nowrap text-sm text-gray-600">
+				<b>{{ totalItems() }}</b>
+				total items |
+				<b>{{ pages().length }}</b>
+				pages
+			</div>
+
 			<nav hlmPagination>
 				<ul hlmPaginationContent>
 					@if (showEdges() && !isFirstPageActive()) {
 						<li hlmPaginationItem (click)="goToPrevious()">
-							<hlm-pagination-previous iconOnly="true" />
+							<hlm-pagination-previous />
 						</li>
 					}
+
 					@for (page of pages(); track page) {
 						<li hlmPaginationItem>
 							@if (page === '...') {
 								<hlm-pagination-ellipsis />
 							} @else {
-								<a
-									hlmPaginationLink
-									[isActive]="currentPage() === page"
-									(click)="currentPage.set(page)"
-								>
+								<a hlmPaginationLink [isActive]="currentPage() === page" (click)="currentPage.set(page)">
 									{{ page }}
 								</a>
 							}
 						</li>
 					}
+
 					@if (showEdges() && !isLastPageActive()) {
 						<li hlmPaginationItem (click)="goToNext()">
-							<hlm-pagination-next iconOnly="true" />
+							<hlm-pagination-next />
 						</li>
 					}
 				</ul>
 			</nav>
+
+			<!-- Show Page Size selector -->
+			<brn-select [(ngModel)]="itemsPerPage" class="ml-auto" placeholder="Page size">
+				<hlm-select-trigger class="w-fit">
+					<hlm-select-value />
+				</hlm-select-trigger>
+				<hlm-select-content>
+					@for (pageSize of pageSizesWithCurrent(); track pageSize) {
+						<hlm-option [value]="pageSize">{{ pageSize }} / page</hlm-option>
+					}
+				</hlm-select-content>
+			</brn-select>
 		</div>
 	`,
 	imports: [
@@ -64,6 +82,7 @@ import { HlmPaginationDirective } from './hlm-pagination.directive';
 		HlmPaginationLinkDirective,
 		HlmPaginationEllipsisComponent,
 		BrnSelectImports,
+		HlmSelectImports,
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })

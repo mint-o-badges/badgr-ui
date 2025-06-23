@@ -3,7 +3,7 @@ import { hlm } from '@spartan-ng/brain/core';
 import { type VariantProps, cva } from 'class-variance-authority';
 import { ClassValue } from 'clsx';
 
-export const paginationContentVariants = cva('tw-flex tw-flex-row tw-items-center tw-gap-1', {
+export const paginationContentVariants = cva('flex flex-row items-center gap-1', {
 	variants: {},
 	defaultVariants: {},
 });

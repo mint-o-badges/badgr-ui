@@ -7,6 +7,7 @@ import {
 	effect,
 	inject,
 	input,
+	untracked,
 } from '@angular/core';
 import { hlm } from '@spartan-ng/brain/core';
 import type { ClassValue } from 'clsx';
@@ -21,7 +22,9 @@ let captionIdSequence = 0;
 		'[class]': '_computedClass()',
 		'[id]': 'id()',
 	},
-	template: ` <ng-content /> `,
+	template: `
+		<ng-content />
+	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	encapsulation: ViewEncapsulation.None,
 })
@@ -34,20 +37,19 @@ export class HlmCaptionComponent {
 	public readonly userClass = input<ClassValue>('', { alias: 'class' });
 	protected readonly _computedClass = computed(() =>
 		hlm(
-			'tw-text-center tw-block tw-mt-4 tw-text-sm tw-text-muted-foreground',
-			this.hidden() ? 'tw-sr-only' : 'tw-order-last',
+			'text-center block mt-4 text-sm text-muted-foreground',
+			this.hidden() ? 'sr-only' : 'order-last',
 			this.userClass(),
 		),
 	);
 
 	constructor() {
-		effect(
-			() => {
-				const id = this.id();
+		effect(() => {
+			const id = this.id();
+			untracked(() => {
 				if (!this._table) return;
 				this._table.labeledBy.set(id);
-			},
-			{ allowSignalWrites: true },
-		);
+			});
+		});
 	}
 }

@@ -23,7 +23,7 @@ import type { ClassValue } from 'clsx';
 			<ng-content />
 		</ng-template>
 		@if (truncate()) {
-			<span class="tw-flex-1 tw-truncate">
+			<span class="flex-1 truncate">
 				<ng-container [ngTemplateOutlet]="content" />
 			</span>
 		} @else {
@@ -40,7 +40,7 @@ export class HlmThComponent {
 	public readonly userClass = input<ClassValue>('', { alias: 'class' });
 	protected readonly _computedClass = computed(() =>
 		hlm(
-			'tw-flex tw-flex-none tw-h-12 tw-px-4 tw-text-sm tw-items-center tw-font-medium tw-text-muted-foreground [&:has([role=checkbox])]:tw-pr-0',
+			'flex flex-none h-12 px-4 text-sm items-center font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0',
 			this._columnDef?.class(),
 			this.userClass(),
 		),

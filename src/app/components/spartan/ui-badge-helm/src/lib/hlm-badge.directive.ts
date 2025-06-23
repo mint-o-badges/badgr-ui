@@ -1,23 +1,22 @@
-import { Directive, Input, booleanAttribute, computed, input, signal } from '@angular/core';
+import type { BooleanInput } from '@angular/cdk/coercion';
+import { Directive, booleanAttribute, computed, input } from '@angular/core';
 import { hlm } from '@spartan-ng/brain/core';
 import { type VariantProps, cva } from 'class-variance-authority';
 import type { ClassValue } from 'clsx';
 
 export const badgeVariants = cva(
-	'tw-inline-flex tw-items-center tw-border tw-rounded-full  tw-font-semibold tw-transition-colors tw-focus:outline-none tw-focus:ring-2 tw-focus:ring-ring tw-focus:ring-offset-2',
+	'inline-flex items-center border rounded-full px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2',
 	{
 		variants: {
 			variant: {
-				default: 'tw-bg-primary tw-border-transparent tw-text-primary-foreground',
-				secondary: 'tw-bg-secondary tw-border-transparent tw-text-secondary-foreground',
-				destructive: 'tw-bg-destructive tw-border-transparent tw-text-destructive-foreground',
-				outline: 'tw-text-foreground tw-border-border',
-				categoryTag:
-					'tw-border-[#6B6B6B] tw-text-[#6B6B6B] tw-border-solid tw-border-1 tw-rounded-full tw-p-2 tw-text-xs',
+				default: 'bg-primary border-transparent text-primary-foreground',
+				secondary: 'bg-secondary border-transparent text-secondary-foreground',
+				destructive: 'bg-destructive border-transparent text-destructive-foreground',
+				outline: 'text-foreground border-border',
 			},
 			size: {
-				default: 'tw-text-xs',
-				lg: 'tw-text-sm',
+				default: 'text-xs',
+				lg: 'text-sm',
 			},
 			static: { true: '', false: '' },
 		},
@@ -25,17 +24,17 @@ export const badgeVariants = cva(
 			{
 				variant: 'default',
 				static: false,
-				class: 'tw-hover:bg-primary/80',
+				class: 'hover:bg-primary/80',
 			},
 			{
 				variant: 'secondary',
 				static: false,
-				class: 'tw-hover:bg-secondary/80',
+				class: 'hover:bg-secondary/80',
 			},
 			{
 				variant: 'destructive',
 				static: false,
-				class: 'tw-hover:bg-destructive/80',
+				class: 'hover:bg-destructive/80',
 			},
 		],
 		defaultVariants: {
@@ -45,8 +44,7 @@ export const badgeVariants = cva(
 		},
 	},
 );
-
-type badgeVariants = VariantProps<typeof badgeVariants>;
+export type BadgeVariants = VariantProps<typeof badgeVariants>;
 
 @Directive({
 	selector: '[hlmBadge]',
@@ -56,26 +54,12 @@ type badgeVariants = VariantProps<typeof badgeVariants>;
 	},
 })
 export class HlmBadgeDirective {
-	public readonly userClass = input<ClassValue>('', { alias: 'class' });
-	protected _computedClass = computed(() =>
-		hlm(badgeVariants({ variant: this._variant(), size: this._size(), static: this._static() }), this.userClass()),
+	protected readonly _computedClass = computed(() =>
+		hlm(badgeVariants({ variant: this.variant(), size: this.size(), static: this.static() }), this.userClass()),
 	);
 
-	private readonly _variant = signal<badgeVariants['variant']>('default');
-	@Input()
-	set variant(variant: badgeVariants['variant']) {
-		this._variant.set(variant);
-	}
-
-	private readonly _static = signal<badgeVariants['static']>(false);
-	@Input({ transform: booleanAttribute })
-	set static(value: badgeVariants['static']) {
-		this._static.set(value);
-	}
-
-	private readonly _size = signal<badgeVariants['size']>('default');
-	@Input()
-	set size(size: badgeVariants['size']) {
-		this._size.set(size);
-	}
+	public readonly userClass = input<ClassValue>('', { alias: 'class' });
+	public readonly variant = input<BadgeVariants['variant']>('default');
+	public readonly static = input<BadgeVariants['static'], BooleanInput>(false, { transform: booleanAttribute });
+	public readonly size = input<BadgeVariants['size']>('default');
 }
