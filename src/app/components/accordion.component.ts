@@ -8,6 +8,10 @@ import { lucideClock, lucideChevronDown } from '@ng-icons/lucide';
 import { provideIcons } from '@ng-icons/core';
 import { HlmIconDirective } from './spartan/ui-icon-helm/src/lib/hlm-icon.directive';
 import { HlmAccordionDirective } from './spartan/ui-accordion-helm/src/lib/hlm-accordion.directive';
+import { HlmAccordionItemDirective } from './spartan/ui-accordion-helm/src/lib/hlm-accordion-item.directive';
+import { HlmAccordionTriggerDirective } from './spartan/ui-accordion-helm/src/lib/hlm-accordion-trigger.directive';
+import { HlmAccordionIconDirective } from './spartan/ui-accordion-helm/src/lib/hlm-accordion-icon.directive';
+import { HlmAccordionContentDirective } from './spartan/ui-accordion-helm/src/lib/hlm-accordion-content.directive';
 
 @Component({
 	selector: 'competency-accordion',
@@ -20,6 +24,10 @@ import { HlmAccordionDirective } from './spartan/ui-accordion-helm/src/lib/hlm-a
 		BrnAccordionContentComponent,
 		RouterModule,
 		NgIf,
+		HlmAccordionDirective,
+		HlmAccordionItemDirective,
+		HlmAccordionTriggerDirective,
+		HlmAccordionContentDirective,
 	],
 	template: `
 		<div class="tw-bg-[var(--color-lightgray)] tw-border tw-border-solid tw-border-purple tw-rounded-lg tw-mt-4">
