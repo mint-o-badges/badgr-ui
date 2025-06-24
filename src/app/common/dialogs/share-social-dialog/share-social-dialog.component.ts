@@ -146,7 +146,7 @@ export class ShareSocialDialog extends BaseDialog {
 		}
 	}
 
-	async copyToClipboard(input: HTMLInputElement) {
+	async copyToClipboard(input: HTMLInputElement | HTMLTextAreaElement) {
 		const valueToCopy = input.value;
 		try {
 			await navigator.clipboard.writeText(valueToCopy);

@@ -69,7 +69,7 @@ import { BrnDialogRef } from '@spartan-ng/brain/dialog';
 					[recipientCount]="recipientCount"
 					[_recipients]="instanceResults"
 					(actionElement)="revokeInstance($event)"
-					(downloadCertificate)="downloadCertificate($event.instance, $event.badgeIndex)"
+					(downloadCertificate)="downloadCertificate($event['instance'], $event['badgeIndex'])"
 					[downloadStates]="downloadStates"
 					[awardInProgress]="isTaskProcessing || isTaskPending"
 				></issuer-detail-datatable>

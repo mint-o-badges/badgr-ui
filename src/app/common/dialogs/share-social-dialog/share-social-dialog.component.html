@@ -66,11 +66,12 @@
 					<svg class="forminput-x-icon" icon="icon_link"></svg>
 
 					<input
+						#shareInput
 						id="link-input"
 						name="link-input"
 						type="text"
 						[value]="currentShareUrl"
-						(click)="$event.target.select()"
+						(click)="shareInput.select()"
 						readonly
 						#urlInput
 					/>
@@ -254,7 +255,7 @@
 						name="emebed-code-box"
 						readonly
 						[value]="currentEmbedHtml"
-						(click)="$event.target.select()"
+						(click)="embedHtmlInput.select()"
 						#embedHtmlInput
 					>
 The embed code goes here and changes dynamically as the checks and radios are pressed above.</textarea

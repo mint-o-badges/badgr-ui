@@ -51,7 +51,6 @@ import { LearningPathDetailsComponent } from './components/learningpath-create-s
 import { LearningPathBadgesComponent } from './components/learningpath-create-steps/learningpath-badges/learningpath-badges.component';
 import { LearningPathBadgeOrderComponent } from './components/learningpath-create-steps/learningpath-badge-order/learningpath-badge-order.component';
 import { LearningPathTagsComponent } from './components/learningpath-create-steps/learningpath-tags/learningpath-tags.component';
-import { LearningPathUploadComponent } from './components/learningpath-upload/learningpath-upload.component';
 import { IssuerLearningPathComponent } from './components/issuer-learning-path/issuer-learning-path.component';
 import { IssuerEditFormComponent } from './components/issuer-edit-form/issuer-edit-form.component';
 import { Issuer } from './models/issuer.model';
@@ -99,10 +98,6 @@ const routes = [
 	{
 		path: 'issuers/:issuerSlug/badges/:badgeSlug',
 		component: BadgeClassDetailComponent,
-	},
-	{
-		path: 'issuers/:issuerSlug/learningpaths/upload',
-		component: LearningPathUploadComponent,
 	},
 	{
 		path: 'issuers/:issuerSlug/learningpaths/create',
@@ -181,7 +176,6 @@ const routes = [
 
 		BadgeClassIssueBulkAwardComponent,
 		BadgeClassIssueBulkAwardImportComponent,
-		LearningPathUploadComponent,
 		LearningPathCreateComponent,
 		LearningPathEditComponent,
 		LearningPathEditFormComponent,

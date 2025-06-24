@@ -7,9 +7,9 @@
 			</h2>
 			<ng-template [showLoader]="false" [bgAwaitPromises]="[issuersLoaded]">
 				<span hlmH1 class="lg:tw-pl-[10%] tw-text-purple tw-font-black tw-break-words">
-					<span [countUp]="issuers.length"> </span>
+					<span [countUp]="issuers.length">{{ issuers.length }}</span>
 					<span>
-						{{ ' ' | i18nPlural: plural['issuerText'] }}
+						{{ issuersPluralWord }}
 					</span>
 				</span>
 			</ng-template>
@@ -47,17 +47,16 @@
 								class="oeb tw-w-[12rem]"
 								[disabled]="!!categoryControl.value && categoryControl.value !== '---'"
 								[control]="sortControl"
-								[result]="issuerResults"
 							>
 							</oeb-global-sort-select>
 							<oeb-select
-								actionBar="true"
+								[actionBar]="true"
 								class="md:tw-w-[180px] oeb"
 								[options]="categoryOptions"
 								[control]="categoryControl"
 								placeholder="{{ 'Issuer.categories.allCategories' | translate }}"
 								[autofocus]="true"
-								noTopMargin="true"
+								[noTopMargin]="true"
 							></oeb-select>
 						</div>
 
@@ -84,17 +83,15 @@
 				</div>
 
 				<ng-container *ngIf="badgesDisplay == 'grid'">
-					<ng-container *ngIf="!groupByCategory">
-						<div class="tw-grid sm:tw-grid-cols-issuer tw-gap-6 tw-w-full" [@stagger]>
-							<oeb-issuer-card
-								*ngFor="let issuer of issuerResults"
-								[@appearAnimation]="state"
-								[issuer]="issuer"
-								[plural]="plural"
-								(navigate)="navigateToIssuer(issuer)"
-							></oeb-issuer-card>
-						</div>
-					</ng-container>
+					<div class="tw-grid sm:tw-grid-cols-issuer tw-gap-6 tw-w-full" [@stagger]>
+						<oeb-issuer-card
+							*ngFor="let issuer of issuerResults"
+							@appearAnimation
+							[issuer]="issuer"
+							[plural]="plural"
+							(navigate)="navigateToIssuer(issuer)"
+						></oeb-issuer-card>
+					</div>
 				</ng-container>
 
 				<div

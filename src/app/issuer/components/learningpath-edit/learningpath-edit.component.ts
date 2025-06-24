@@ -102,7 +102,7 @@ export class LearningPathEditComponent extends BaseAuthenticatedRoutableComponen
 		});
 	}
 
-	learningPathCreated(promise: Promise<LearningPath>) {
+	learningPathCreated(promise: Promise<LearningPath | ApiLearningPath>) {
 		promise.then(
 			(lp) => {
 				this.router.navigate(['issuer/issuers', this.issuerSlug, 'learningpaths', lp.slug]).then(() => {

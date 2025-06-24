@@ -48,8 +48,8 @@ import { TranslateModule } from '@ngx-translate/core';
 		</button>
 
 		<ng-template #menu>
-			<hlm-menu [size]="size" [inset]="inset" class="tw-border-[var(--color-purple)] tw-border-2">
-				<hlm-menu-label [size]="size" *ngIf="label">{{ label }}</hlm-menu-label>
+			<hlm-menu class="tw-border-[var(--color-purple)] tw-border-2">
+				<hlm-menu-label *ngIf="label">{{ label }}</hlm-menu-label>
 				<ng-container *ngFor="let menuItem of menuItems">
 					<button
 						*ngIf="menuItem.action"

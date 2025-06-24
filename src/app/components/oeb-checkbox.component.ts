@@ -63,7 +63,7 @@ export class OebCheckboxComponent implements ControlValueAccessor {
 	@Input() alignStart = false;
 	@Input() noMargin = false;
 
-	@Output() ngModelChange = new EventEmitter<string>();
+	@Output() ngModelChange = new EventEmitter<boolean>();
 
 	constructor(private translate: TranslateService) {}
 
