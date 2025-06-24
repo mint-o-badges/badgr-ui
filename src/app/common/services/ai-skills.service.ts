@@ -6,7 +6,7 @@ import { BaseHttpApiService } from './base-http-api.service';
 import { MessageService } from './message.service';
 import { SessionService } from './session.service';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AiSkillsService extends BaseHttpApiService {
 	constructor(
 		protected loginService: SessionService,
