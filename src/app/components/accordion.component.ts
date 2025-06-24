@@ -6,18 +6,17 @@ import { RouterModule } from '@angular/router';
 import { Component, Input } from '@angular/core';
 import { lucideClock, lucideChevronDown } from '@ng-icons/lucide';
 import { provideIcons } from '@ng-icons/core';
-import { HlmIconDirective } from './spartan/ui-icon-helm/src/lib/hlm-icon.directive';
-import { HlmAccordionDirective } from './spartan/ui-accordion-helm/src/lib/hlm-accordion.directive';
-import { HlmAccordionItemDirective } from './spartan/ui-accordion-helm/src/lib/hlm-accordion-item.directive';
-import { HlmAccordionTriggerDirective } from './spartan/ui-accordion-helm/src/lib/hlm-accordion-trigger.directive';
-import { HlmAccordionIconDirective } from './spartan/ui-accordion-helm/src/lib/hlm-accordion-icon.directive';
-import { HlmAccordionContentDirective } from './spartan/ui-accordion-helm/src/lib/hlm-accordion-content.directive';
+import {
+	HlmAccordionDirective,
+	HlmAccordionItemDirective,
+	HlmAccordionTriggerDirective,
+} from '@spartan-ng/ui-accordion-helm';
+import { HlmIconDirective } from '@spartan-ng/ui-icon-helm';
 
 @Component({
 	selector: 'competency-accordion',
 	providers: [provideIcons({ lucideClock, lucideChevronDown })],
 	imports: [
-		HlmAccordionDirective,
 		NgIcon,
 		HlmIconDirective,
 		TranslateModule,
@@ -27,7 +26,6 @@ import { HlmAccordionContentDirective } from './spartan/ui-accordion-helm/src/li
 		HlmAccordionDirective,
 		HlmAccordionItemDirective,
 		HlmAccordionTriggerDirective,
-		HlmAccordionContentDirective,
 	],
 	template: `
 		<div class="tw-bg-[var(--color-lightgray)] tw-border tw-border-solid tw-border-purple tw-rounded-lg tw-mt-4">

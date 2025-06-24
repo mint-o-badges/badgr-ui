@@ -10,7 +10,6 @@ import { OebDropdownComponent } from '../../../components/oeb-dropdown.component
 import { BadgeRequestApiService } from '../../services/badgerequest-api.service';
 import { QrCodeDatatableComponent } from '../../../components/datatable-qrcodes.component';
 import type { MenuItem } from '../../../../app/common/components/badge-detail/badge-detail.component.types';
-import { HlmDialogService } from '../../../../app/components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
 import { DangerDialogComponent } from '../../../../app/common/dialogs/oeb-dialogs/danger-dialog.component';
 import { QrCodeApiService } from '../../services/qrcode-api.service';
 import { HlmH3Directive } from '../../../../app/components/spartan/ui-typography-helm/src/lib/hlm-h3.directive';
@@ -19,12 +18,14 @@ import { InfoDialogComponent } from '../../../common/dialogs/oeb-dialogs/info-di
 import { BadgeClass } from '../../models/badgeclass.model';
 import { Router } from '@angular/router';
 import { Issuer } from '../../models/issuer.model';
-import { HlmIconDirective } from '../../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
-import { HlmAccordionDirective } from '~/components/spartan/ui-accordion-helm/src/lib/hlm-accordion.directive';
-import { HlmAccordionContentDirective } from '~/components/spartan/ui-accordion-helm/src/lib/hlm-accordion-content.directive';
-import { HlmAccordionItemDirective } from '~/components/spartan/ui-accordion-helm/src/lib/hlm-accordion-item.directive';
-import { HlmAccordionTriggerDirective } from '~/components/spartan/ui-accordion-helm/src/lib/hlm-accordion-trigger.directive';
 import { SvgIconComponent } from '~/common/components/svg-icon.component';
+import { HlmDialogService } from '@spartan-ng/ui-dialog-helm';
+import { HlmIconDirective } from '@spartan-ng/ui-icon-helm';
+import {
+	HlmAccordionDirective,
+	HlmAccordionItemDirective,
+	HlmAccordionTriggerDirective,
+} from '@spartan-ng/ui-accordion-helm';
 
 @Component({
 	selector: 'qrcode-awards',
@@ -47,7 +48,6 @@ import { SvgIconComponent } from '~/common/components/svg-icon.component';
 		HlmAccordionDirective,
 		HlmAccordionItemDirective,
 		HlmAccordionTriggerDirective,
-		HlmAccordionContentDirective,
 		SvgIconComponent,
 	],
 })
