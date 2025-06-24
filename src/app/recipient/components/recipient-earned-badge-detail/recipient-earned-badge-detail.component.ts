@@ -30,13 +30,13 @@ import { TranslateService } from '@ngx-translate/core';
 import { BgBadgeDetail } from '../../../common/components/badge-detail/badge-detail.component';
 
 @Component({
-    selector: 'recipient-earned-badge-detail',
-    template: `<bg-badgedetail
+	selector: 'recipient-earned-badge-detail',
+	template: `<bg-badgedetail
 		[config]="config"
 		[awaitPromises]="[badgesLoaded, learningPathsLoaded]"
 		[badge]="badge"
 	></bg-badgedetail>`,
-    imports: [BgBadgeDetail],
+	imports: [BgBadgeDetail],
 })
 export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	readonly issuerImagePlacholderUrl = preloadImageURL(

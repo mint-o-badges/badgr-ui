@@ -29,17 +29,9 @@ export interface RecipientBadgeSelectionDialogSettings {
 }
 
 @Component({
-    selector: 'recipient-badge-selection-dialog',
-    templateUrl: './recipient-badge-selection-dialog.component.html',
-    imports: [
-        SvgIconComponent,
-        FormsModule,
-        NgIf,
-        BgAwaitPromises,
-        NgFor,
-        NgStyle,
-        DatePipe,
-    ],
+	selector: 'recipient-badge-selection-dialog',
+	templateUrl: './recipient-badge-selection-dialog.component.html',
+	imports: [SvgIconComponent, FormsModule, NgIf, BgAwaitPromises, NgFor, NgStyle, DatePipe],
 })
 export class RecipientBadgeSelectionDialog extends BaseDialog {
 	get searchQuery() {

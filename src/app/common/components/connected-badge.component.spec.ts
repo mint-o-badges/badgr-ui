@@ -23,10 +23,10 @@ describe('ConnectedBadgeComponent', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-    imports: [RouterTestingModule, ...COMMON_IMPORTS, ConnectedBadgeComponent, TruncatedTextComponent],
-    providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
-}).compileComponents();
+			imports: [RouterTestingModule, ...COMMON_IMPORTS, ConnectedBadgeComponent, TruncatedTextComponent],
+			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
+			schemas: [CUSTOM_ELEMENTS_SCHEMA],
+		}).compileComponents();
 		fixture = TestBed.createComponent(ConnectedBadgeComponent);
 		component = fixture.debugElement.componentInstance;
 	});

@@ -20,17 +20,17 @@ interface LearningPathBadgeInput {
 }
 
 @Component({
-    selector: 'learningpath-details',
-    templateUrl: './learningpath-details.component.html',
-    styleUrls: ['../../learningpath-edit-form/learningpath-edit-form.component.scss'],
-    imports: [
-        HlmH2Directive,
-        OebInputComponent,
-        HlmPDirective,
-        BgFormFieldImageComponent,
-        BadgeStudioComponent,
-        TranslatePipe,
-    ],
+	selector: 'learningpath-details',
+	templateUrl: './learningpath-details.component.html',
+	styleUrls: ['../../learningpath-edit-form/learningpath-edit-form.component.scss'],
+	imports: [
+		HlmH2Directive,
+		OebInputComponent,
+		HlmPDirective,
+		BgFormFieldImageComponent,
+		BadgeStudioComponent,
+		TranslatePipe,
+	],
 })
 export class LearningPathDetailsComponent implements OnInit, AfterViewInit {
 	@ViewChild(StepperComponent) stepper: StepperComponent;

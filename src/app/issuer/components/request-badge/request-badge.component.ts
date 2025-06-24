@@ -20,20 +20,20 @@ import { OebCheckboxComponent } from '../../../components/oeb-checkbox.component
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 
 @Component({
-    selector: 'request-badge',
-    templateUrl: './request-badge.component.html',
-    imports: [
-        BgAwaitPromises,
-        HlmH1Directive,
-        BgImageStatusPlaceholderDirective,
-        HlmPDirective,
-        FormsModule,
-        ReactiveFormsModule,
-        OebInputComponent,
-        OebCheckboxComponent,
-        OebButtonComponent,
-        TranslatePipe,
-    ],
+	selector: 'request-badge',
+	templateUrl: './request-badge.component.html',
+	imports: [
+		BgAwaitPromises,
+		HlmH1Directive,
+		BgImageStatusPlaceholderDirective,
+		HlmPDirective,
+		FormsModule,
+		ReactiveFormsModule,
+		OebInputComponent,
+		OebCheckboxComponent,
+		OebButtonComponent,
+		TranslatePipe,
+	],
 })
 export class RequestBadgeComponent extends BaseRoutableComponent {
 	constructor(

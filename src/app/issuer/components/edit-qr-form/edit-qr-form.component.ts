@@ -22,19 +22,19 @@ import { OebCheckboxComponent } from '../../../components/oeb-checkbox.component
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 
 @Component({
-    selector: 'edit-qr-form',
-    templateUrl: './edit-qr-form.component.html',
-    imports: [
-        BgAwaitPromises,
-        FormsModule,
-        ReactiveFormsModule,
-        BgImageStatusPlaceholderDirective,
-        OebInputComponent,
-        NgIf,
-        OebCheckboxComponent,
-        OebButtonComponent,
-        TranslatePipe,
-    ],
+	selector: 'edit-qr-form',
+	templateUrl: './edit-qr-form.component.html',
+	imports: [
+		BgAwaitPromises,
+		FormsModule,
+		ReactiveFormsModule,
+		BgImageStatusPlaceholderDirective,
+		OebInputComponent,
+		NgIf,
+		OebCheckboxComponent,
+		OebButtonComponent,
+		TranslatePipe,
+	],
 })
 export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent {
 	static datePipe = new DatePipe('de');

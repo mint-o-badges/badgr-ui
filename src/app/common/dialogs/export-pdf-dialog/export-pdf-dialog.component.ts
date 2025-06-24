@@ -19,15 +19,10 @@ import { SvgIconComponent } from '../../components/svg-icon.component';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 
 @Component({
-    selector: 'export-pdf-dialog',
-    templateUrl: 'export-pdf-dialog.component.html',
-    styleUrls: ['export-pdf-dialog.component.css'],
-    imports: [
-        NgIf,
-        LoadingDotsComponent,
-        SvgIconComponent,
-        OebButtonComponent,
-    ],
+	selector: 'export-pdf-dialog',
+	templateUrl: 'export-pdf-dialog.component.html',
+	styleUrls: ['export-pdf-dialog.component.css'],
+	imports: [NgIf, LoadingDotsComponent, SvgIconComponent, OebButtonComponent],
 })
 export class ExportPdfDialog extends BaseDialog {
 	badge: RecipientBadgeInstance | PublicApiBadgeAssertionWithBadgeClass | null = null;

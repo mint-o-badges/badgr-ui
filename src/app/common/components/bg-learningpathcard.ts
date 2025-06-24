@@ -13,11 +13,11 @@ import { HourPipe } from '../pipes/hourPipe';
 type MatchOrProgressType = { match?: string; progress?: number };
 
 @Component({
-    selector: 'bg-learningpathcard',
-    host: {
-        class: 'tw-rounded-[10px] tw-h-full tw-border-solid tw-relative tw-p-6 tw-block tw-overflow-hidden oeb-badge-card',
-    },
-    template: `
+	selector: 'bg-learningpathcard',
+	host: {
+		class: 'tw-rounded-[10px] tw-h-full tw-border-solid tw-relative tw-p-6 tw-block tw-overflow-hidden oeb-badge-card',
+	},
+	template: `
 		<a [routerLink]="['/public/learningpaths/', slug]">
 			<div class="tw-flex tw-flex-col tw-justify-between tw-h-full">
 				<div
@@ -115,20 +115,20 @@ type MatchOrProgressType = { match?: string; progress?: number };
 			</div>
 		</a>
 	`,
-    imports: [
-        RouterLink,
-        NgIf,
-        NgIcon,
-        HlmIconDirective,
-        BgImageStatusPlaceholderDirective,
-        NgFor,
-        HlmPDirective,
-        OebProgressComponent,
-        LowerCasePipe,
-        SlicePipe,
-        TranslatePipe,
-        HourPipe,
-    ],
+	imports: [
+		RouterLink,
+		NgIf,
+		NgIcon,
+		HlmIconDirective,
+		BgImageStatusPlaceholderDirective,
+		NgFor,
+		HlmPDirective,
+		OebProgressComponent,
+		LowerCasePipe,
+		SlicePipe,
+		TranslatePipe,
+		HourPipe,
+	],
 })
 export class BgLearningPathCard {
 	readonly badgeLoadingImageUrl = '../../../breakdown/static/images/badge-loading.svg';

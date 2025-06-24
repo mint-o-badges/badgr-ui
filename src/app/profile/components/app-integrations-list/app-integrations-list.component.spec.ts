@@ -25,18 +25,18 @@ describe('AppIntegrationListComponent', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-    imports: [
-        RouterTestingModule,
-        CommonModule,
-        BadgrCommonModule,
-        TranslateTestingModule.withTranslations('de', {}),
-        ...COMMON_IMPORTS,
-        AppIntegrationListComponent,
-    ],
-    providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    teardown: { destroyAfterEach: false },
-}).compileComponents();
+			imports: [
+				RouterTestingModule,
+				CommonModule,
+				BadgrCommonModule,
+				TranslateTestingModule.withTranslations('de', {}),
+				...COMMON_IMPORTS,
+				AppIntegrationListComponent,
+			],
+			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
+			schemas: [CUSTOM_ELEMENTS_SCHEMA],
+			teardown: { destroyAfterEach: false },
+		}).compileComponents();
 		fixture = TestBed.createComponent(AppIntegrationListComponent);
 		component = fixture.debugElement.componentInstance;
 	});

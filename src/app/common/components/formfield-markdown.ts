@@ -24,17 +24,17 @@ interface UploadResult {
 }
 
 @Component({
-    selector: 'bg-formfield-markdown',
-    host: {
-        class: 'forminput',
-        '[class.forminput-is-error]': 'isErrorState',
-        '[class.forminput-locked]': 'isLockedState',
-    },
-    template: ` <md-editor (input)="change()" [(ngModel)]="markdown_content" [upload]="doUpload" (paste)="change()">
+	selector: 'bg-formfield-markdown',
+	host: {
+		class: 'forminput',
+		'[class.forminput-is-error]': 'isErrorState',
+		'[class.forminput-locked]': 'isLockedState',
+	},
+	template: ` <md-editor (input)="change()" [(ngModel)]="markdown_content" [upload]="doUpload" (paste)="change()">
 	</md-editor>`,
-    styleUrls: ['./formfield-markdown.css'],
-    encapsulation: ViewEncapsulation.ShadowDom,
-    imports: [LMarkdownEditorModule, FormsModule],
+	styleUrls: ['./formfield-markdown.css'],
+	encapsulation: ViewEncapsulation.ShadowDom,
+	imports: [LMarkdownEditorModule, FormsModule],
 })
 export class FormFieldMarkdown implements OnChanges, AfterViewInit {
 	markdown_content = '';

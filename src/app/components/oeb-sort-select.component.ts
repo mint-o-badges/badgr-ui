@@ -5,8 +5,8 @@ import { BadgeClass } from '../issuer/models/badgeclass.model';
 import { OebSelectComponent } from './select.component';
 
 @Component({
-    selector: 'oeb-sort-select',
-    template: `
+	selector: 'oeb-sort-select',
+	template: `
 		<oeb-select
 			actionBar="true"
 			class="oeb tw-block tw-w-full"
@@ -18,7 +18,7 @@ import { OebSelectComponent } from './select.component';
 			noTopMargin="true"
 		></oeb-select>
 	`,
-    imports: [OebSelectComponent],
+	imports: [OebSelectComponent],
 })
 export class OebSortSelectComponent implements OnInit {
 	@Input() control: FormControl = new FormControl('name_asc');

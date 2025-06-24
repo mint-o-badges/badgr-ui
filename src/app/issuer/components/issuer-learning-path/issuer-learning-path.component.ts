@@ -22,14 +22,9 @@ import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 import { OebLearningPathDetailComponent } from '../../../common/components/learningpath-detail/oeb-learning-path.component';
 
 @Component({
-    selector: 'issuer-learning-path',
-    templateUrl: './issuer-learning-path.component.html',
-    imports: [
-        FormMessageComponent,
-        BgAwaitPromises,
-        BgBreadcrumbsComponent,
-        OebLearningPathDetailComponent,
-    ],
+	selector: 'issuer-learning-path',
+	templateUrl: './issuer-learning-path.component.html',
+	imports: [FormMessageComponent, BgAwaitPromises, BgBreadcrumbsComponent, OebLearningPathDetailComponent],
 })
 export class IssuerLearningPathComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	readonly issuerImagePlaceHolderUrl = preloadImageURL(

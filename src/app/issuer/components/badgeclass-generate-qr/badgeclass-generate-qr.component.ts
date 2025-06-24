@@ -23,21 +23,21 @@ import { BgImageStatusPlaceholderDirective } from '../../../common/directives/bg
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 
 @Component({
-    selector: 'badgeclass-generate-qr',
-    templateUrl: './badgeclass-generate-qr.component.html',
-    styleUrls: ['../../../public/components/about/about.component.css'],
-    imports: [
-        BgAwaitPromises,
-        BgBreadcrumbsComponent,
-        OebDropdownComponent,
-        SvgIconComponent,
-        QRCodeComponent,
-        BgImageStatusPlaceholderDirective,
-        NgIf,
-        OebButtonComponent,
-        RouterLink,
-        TranslatePipe,
-    ],
+	selector: 'badgeclass-generate-qr',
+	templateUrl: './badgeclass-generate-qr.component.html',
+	styleUrls: ['../../../public/components/about/about.component.css'],
+	imports: [
+		BgAwaitPromises,
+		BgBreadcrumbsComponent,
+		OebDropdownComponent,
+		SvgIconComponent,
+		QRCodeComponent,
+		BgImageStatusPlaceholderDirective,
+		NgIf,
+		OebButtonComponent,
+		RouterLink,
+		TranslatePipe,
+	],
 })
 export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	static datePipe = new DatePipe('de');

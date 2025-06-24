@@ -13,16 +13,16 @@ describe('IssuerCatalogComponent', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-    imports: [
-        ...COMMON_IMPORTS,
-        BadgrCommonModule,
-        RouterTestingModule,
-        TranslateTestingModule.withTranslations('de', {}),
-        IssuerCatalogComponent,
-    ],
-    providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
-}).compileComponents();
+			imports: [
+				...COMMON_IMPORTS,
+				BadgrCommonModule,
+				RouterTestingModule,
+				TranslateTestingModule.withTranslations('de', {}),
+				IssuerCatalogComponent,
+			],
+			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
+			schemas: [CUSTOM_ELEMENTS_SCHEMA],
+		}).compileComponents();
 		fixture = TestBed.createComponent(IssuerCatalogComponent);
 		fixture.detectChanges();
 		component = fixture.componentInstance;

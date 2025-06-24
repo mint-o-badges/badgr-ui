@@ -12,16 +12,9 @@ import { FormMessageComponent } from '../../../common/components/form-message.co
 import { NgIf, NgFor } from '@angular/common';
 
 @Component({
-    selector: 'app-integration-detail',
-    templateUrl: './app-integrations-list.component.html',
-    imports: [
-        FormMessageComponent,
-        NgIf,
-        AddCredentialsDialog,
-        AppIntegrationDetailsDialog,
-        NgFor,
-        TranslatePipe,
-    ],
+	selector: 'app-integration-detail',
+	templateUrl: './app-integrations-list.component.html',
+	imports: [FormMessageComponent, NgIf, AddCredentialsDialog, AppIntegrationDetailsDialog, NgFor, TranslatePipe],
 })
 export class AppIntegrationListComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	constructor(

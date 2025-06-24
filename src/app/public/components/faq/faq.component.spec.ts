@@ -9,8 +9,8 @@ describe('FaqComponent', () => {
 
 	beforeEach(waitForAsync(() => {
 		TestBed.configureTestingModule({
-    imports: [TranslateTestingModule.withTranslations('de', {}), FaqComponent],
-}).compileComponents();
+			imports: [TranslateTestingModule.withTranslations('de', {}), FaqComponent],
+		}).compileComponents();
 	}));
 
 	beforeEach(() => {

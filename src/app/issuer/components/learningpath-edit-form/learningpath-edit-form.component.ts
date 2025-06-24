@@ -1,6 +1,14 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
-import { FormArray, FormBuilder, FormControl, ValidationErrors, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+	FormArray,
+	FormBuilder,
+	FormControl,
+	ValidationErrors,
+	Validators,
+	FormsModule,
+	ReactiveFormsModule,
+} from '@angular/forms';
 import { SessionService } from '../../../common/services/session.service';
 import { MessageService } from '../../../common/services/message.service';
 import { IssuerApiService } from '../../services/issuer-api.service';
@@ -58,24 +66,24 @@ interface DraggableItem {
 type BadgeResult = BadgeClass & { selected?: boolean };
 
 @Component({
-    selector: 'learningpath-edit-form',
-    templateUrl: './learningpath-edit-form.component.html',
-    styleUrls: ['./learningpath-edit-form.component.scss'],
-    imports: [
-        FormMessageComponent,
-        FormsModule,
-        ReactiveFormsModule,
-        StepperComponent,
-        NgIf,
-        StepComponent,
-        CdkStep,
-        LearningPathDetailsComponent,
-        LearningPathBadgesComponent,
-        LearningPathBadgeOrderComponent,
-        LearningPathTagsComponent,
-        OebButtonComponent,
-        TranslatePipe,
-    ],
+	selector: 'learningpath-edit-form',
+	templateUrl: './learningpath-edit-form.component.html',
+	styleUrls: ['./learningpath-edit-form.component.scss'],
+	imports: [
+		FormMessageComponent,
+		FormsModule,
+		ReactiveFormsModule,
+		StepperComponent,
+		NgIf,
+		StepComponent,
+		CdkStep,
+		LearningPathDetailsComponent,
+		LearningPathBadgesComponent,
+		LearningPathBadgeOrderComponent,
+		LearningPathTagsComponent,
+		OebButtonComponent,
+		TranslatePipe,
+	],
 })
 export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	@ViewChild(StepperComponent) stepper: StepperComponent;

@@ -16,19 +16,19 @@ import { BgImageStatusPlaceholderDirective } from '../../directives/bg-image-sta
 import { RouterLink } from '@angular/router';
 
 @Component({
-    selector: 'nounproject-dialog',
-    templateUrl: 'nounproject-dialog.component.html',
-    styleUrls: ['./nounproject-dialog.component.css'],
-    imports: [
-        SvgIconComponent,
-        FormsModule,
-        NgIf,
-        BgAwaitPromises,
-        NgFor,
-        BgImageStatusPlaceholderDirective,
-        RouterLink,
-        TranslatePipe,
-    ],
+	selector: 'nounproject-dialog',
+	templateUrl: 'nounproject-dialog.component.html',
+	styleUrls: ['./nounproject-dialog.component.css'],
+	imports: [
+		SvgIconComponent,
+		FormsModule,
+		NgIf,
+		BgAwaitPromises,
+		NgFor,
+		BgImageStatusPlaceholderDirective,
+		RouterLink,
+		TranslatePipe,
+	],
 })
 export class NounprojectDialog extends BaseDialog implements AfterViewInit {
 	Array = Array;

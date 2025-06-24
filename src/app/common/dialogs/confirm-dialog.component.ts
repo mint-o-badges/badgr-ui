@@ -14,8 +14,8 @@ export interface ConfirmDialogOptions {
 }
 
 @Component({
-    selector: 'confirm-dialog',
-    template: `
+	selector: 'confirm-dialog',
+	template: `
 		<dialog class="dialog dialog-is-active dialog l-dialog">
 			<div class="dialog-x-box o-container">
 				<div class="u-padding-all3x">
@@ -46,7 +46,7 @@ export interface ConfirmDialogOptions {
 			</div>
 		</dialog>
 	`,
-    imports: [SvgIconComponent, NgIf],
+	imports: [SvgIconComponent, NgIf],
 })
 export class ConfirmDialog extends BaseDialog {
 	static defaultOptions = {

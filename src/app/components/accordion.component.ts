@@ -14,14 +14,14 @@ import { HlmIconDirective } from './spartan/ui-icon-helm/src/lib/hlm-icon.direct
 	selector: 'competency-accordion',
 	providers: [provideIcons({ lucideClock, lucideChevronDown })],
 	imports: [
-    HlmAccordionModule,
-    NgIcon,
-    HlmIconDirective,
-    TranslateModule,
-    BrnAccordionContentComponent,
-    RouterModule,
-    NgIf
-],
+		HlmAccordionModule,
+		NgIcon,
+		HlmIconDirective,
+		TranslateModule,
+		BrnAccordionContentComponent,
+		RouterModule,
+		NgIf,
+	],
 	template: `
 		<div class="tw-bg-[var(--color-lightgray)] tw-border tw-border-solid tw-border-purple tw-rounded-lg tw-mt-4">
 			<div hlmAccordion>

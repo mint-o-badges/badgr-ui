@@ -15,13 +15,9 @@ import { RecipientBadgeCollectionEditFormComponent } from '../recipient-badge-co
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-    selector: 'create-recipient-badge-collection',
-    templateUrl: './recipient-badge-collection-create.component.html',
-    imports: [
-        HlmH1Directive,
-        RecipientBadgeCollectionEditFormComponent,
-        TranslatePipe,
-    ],
+	selector: 'create-recipient-badge-collection',
+	templateUrl: './recipient-badge-collection-create.component.html',
+	imports: [HlmH1Directive, RecipientBadgeCollectionEditFormComponent, TranslatePipe],
 })
 export class RecipientBadgeCollectionCreateComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	badgeCollectionForm = typedFormGroup()

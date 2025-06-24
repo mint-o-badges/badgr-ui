@@ -49,19 +49,19 @@ export interface ColumnHeaders {
 }
 
 @Component({
-    selector: 'Badgeclass-issue-bulk-award',
-    templateUrl: './badgeclass-issue-bulk-award.component.html',
-    imports: [
-        BgAwaitPromises,
-        OebBackgroundComponent,
-        BgBreadcrumbsComponent,
-        FormMessageComponent,
-        NgIf,
-        BadgeClassIssueBulkAwardImportComponent,
-        BadgeClassIssueBulkAwardPreviewComponent,
-        BadgeclassIssueBulkAwardConformation,
-        BadgeclassIssueBulkAwardError,
-    ],
+	selector: 'Badgeclass-issue-bulk-award',
+	templateUrl: './badgeclass-issue-bulk-award.component.html',
+	imports: [
+		BgAwaitPromises,
+		OebBackgroundComponent,
+		BgBreadcrumbsComponent,
+		FormMessageComponent,
+		NgIf,
+		BadgeClassIssueBulkAwardImportComponent,
+		BadgeClassIssueBulkAwardPreviewComponent,
+		BadgeclassIssueBulkAwardConformation,
+		BadgeclassIssueBulkAwardError,
+	],
 })
 export class BadgeClassIssueBulkAwardComponent extends BaseAuthenticatedRoutableComponent {
 	importPreviewData: BulkIssueImportPreviewData;

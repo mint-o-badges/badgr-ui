@@ -29,10 +29,10 @@ describe('BadgeClassEditComponent', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-    imports: [RouterTestingModule, CommonModule, BadgrCommonModule, ...COMMON_IMPORTS, BadgeClassEditComponent],
-    providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
-}).compileComponents();
+			imports: [RouterTestingModule, CommonModule, BadgrCommonModule, ...COMMON_IMPORTS, BadgeClassEditComponent],
+			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
+			schemas: [CUSTOM_ELEMENTS_SCHEMA],
+		}).compileComponents();
 		fixture = TestBed.createComponent(BadgeClassEditComponent);
 		component = fixture.debugElement.componentInstance;
 	});

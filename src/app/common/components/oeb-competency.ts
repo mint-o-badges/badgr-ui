@@ -8,12 +8,12 @@ import { HlmADirective } from '../../components/spartan/ui-typography-helm/src/l
 import { HlmIconDirective } from '../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
 import { HourPipe } from '../pipes/hourPipe';
 @Component({
-    selector: 'oeb-competency',
-    providers: [provideIcons({ lucideClock })],
-    host: {
-        class: 'tw-rounded-[10px] tw-bg-oebgrey tw-border-purple tw-border-solid tw-border tw-relative tw-p-[calc(var(--gridspacing)*2)] tw-block tw-overflow-hidden',
-    },
-    template: `
+	selector: 'oeb-competency',
+	providers: [provideIcons({ lucideClock })],
+	host: {
+		class: 'tw-rounded-[10px] tw-bg-oebgrey tw-border-purple tw-border-solid tw-border tw-relative tw-p-[calc(var(--gridspacing)*2)] tw-block tw-overflow-hidden',
+	},
+	template: `
 		<div class="tw-flex tw-justify-between tw-items-center">
 			<div>
 				<span hlmP size="sm" class="tw-text-oebblack tw-font-medium">{{ competency.name }} </span>
@@ -36,14 +36,7 @@ import { HourPipe } from '../pipes/hourPipe';
 			</div>
 		</div>
 	`,
-    imports: [
-        HlmPDirective,
-        NgIf,
-        HlmADirective,
-        NgIcon,
-        HlmIconDirective,
-        HourPipe,
-    ],
+	imports: [HlmPDirective, NgIf, HlmADirective, NgIcon, HlmIconDirective, HourPipe],
 })
 export class OebCompetency {
 	@Input() competency: Competency;

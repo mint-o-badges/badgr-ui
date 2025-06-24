@@ -20,10 +20,10 @@ describe('MarkdownDisplay', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-    imports: [RouterTestingModule, CommonModule, ...COMMON_IMPORTS, MarkdownDisplay, BgMarkdownComponent],
-    providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
-}).compileComponents();
+			imports: [RouterTestingModule, CommonModule, ...COMMON_IMPORTS, MarkdownDisplay, BgMarkdownComponent],
+			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
+			schemas: [CUSTOM_ELEMENTS_SCHEMA],
+		}).compileComponents();
 		fixture = TestBed.createComponent(MarkdownDisplay);
 		component = fixture.debugElement.componentInstance;
 	});

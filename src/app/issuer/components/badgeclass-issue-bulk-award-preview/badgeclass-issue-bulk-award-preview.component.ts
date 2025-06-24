@@ -20,17 +20,9 @@ import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-    selector: 'Badgeclass-issue-bulk-award-preview',
-    templateUrl: './badgeclass-issue-bulk-award-preview.component.html',
-    imports: [
-        HlmH1Directive,
-        NgIf,
-        HlmPDirective,
-        NgFor,
-        FormsModule,
-        OebButtonComponent,
-        TranslatePipe,
-    ],
+	selector: 'Badgeclass-issue-bulk-award-preview',
+	templateUrl: './badgeclass-issue-bulk-award-preview.component.html',
+	imports: [HlmH1Directive, NgIf, HlmPDirective, NgFor, FormsModule, OebButtonComponent, TranslatePipe],
 })
 export class BadgeClassIssueBulkAwardPreviewComponent extends BaseAuthenticatedRoutableComponent {
 	@Input() importPreviewData: BulkIssueImportPreviewData;

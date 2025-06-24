@@ -14,18 +14,18 @@ import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { NgIf } from '@angular/common';
 
 @Component({
-    selector: 'signup-success',
-    templateUrl: './signup-success.component.html',
-    providers: [provideIcons({ lucideCheck })],
-    imports: [
-        FormMessageComponent,
-        OAuthBannerComponent,
-        NgIcon,
-        HlmIconDirective,
-        OebButtonComponent,
-        NgIf,
-        TranslatePipe,
-    ],
+	selector: 'signup-success',
+	templateUrl: './signup-success.component.html',
+	providers: [provideIcons({ lucideCheck })],
+	imports: [
+		FormMessageComponent,
+		OAuthBannerComponent,
+		NgIcon,
+		HlmIconDirective,
+		OebButtonComponent,
+		NgIf,
+		TranslatePipe,
+	],
 })
 export class SignupSuccessComponent implements OnInit {
 	constructor(

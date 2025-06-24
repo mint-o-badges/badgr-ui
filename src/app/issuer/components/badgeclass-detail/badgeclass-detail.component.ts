@@ -57,8 +57,8 @@ import { FormsModule } from '@angular/forms';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 
 @Component({
-    selector: 'badgeclass-detail',
-    template: `
+	selector: 'badgeclass-detail',
+	template: `
 		<bg-badgedetail [config]="config" [awaitPromises]="[issuerLoaded, badgeClassLoaded]">
 			<div #qrAwards>
 				<qrcode-awards
@@ -116,17 +116,17 @@ import { OebButtonComponent } from '../../../components/oeb-button.component';
 			</ng-template>
 		</bg-badgedetail>
 	`,
-    imports: [
-        BgBadgeDetail,
-        QrCodeAwardsComponent,
-        IssuerDetailDatatableComponent,
-        HlmH2Directive,
-        NgIf,
-        NgFor,
-        FormsModule,
-        OebButtonComponent,
-        TranslatePipe,
-    ],
+	imports: [
+		BgBadgeDetail,
+		QrCodeAwardsComponent,
+		IssuerDetailDatatableComponent,
+		HlmH2Directive,
+		NgIf,
+		NgFor,
+		FormsModule,
+		OebButtonComponent,
+		TranslatePipe,
+	],
 })
 export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	@ViewChild('qrAwards') qrAwards!: ElementRef;

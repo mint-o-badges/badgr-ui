@@ -4,17 +4,17 @@ import { OAuthManager } from '../services/oauth-manager.service';
 import { NgIf } from '@angular/common';
 
 @Component({
-    selector: 'oauth-banner',
-    host: {
-        '[class]': "'authlink'",
-    },
-    template: `
+	selector: 'oauth-banner',
+	host: {
+		'[class]': "'authlink'",
+	},
+	template: `
 		<ng-template [ngIf]="isAuthorizing">
 			<div><img [src]="appInfo.image" alt="{{ appInfo.name }} Logo" height="72" /></div>
 			<div><img [src]="authLinkBadgrLogoSrc" height="72" alt="Logo" /></div>
 		</ng-template>
 	`,
-    imports: [NgIf],
+	imports: [NgIf],
 })
 export class OAuthBannerComponent {
 	readonly authLinkBadgrLogoSrc = '../../../breakdown/static/images/logo.svg';

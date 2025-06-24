@@ -18,16 +18,16 @@ import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/sr
 import { EditQrFormComponent } from '../edit-qr-form/edit-qr-form.component';
 
 @Component({
-    selector: 'badgeclass-issue-qr',
-    templateUrl: './badgeclass-issue-qr.component.html',
-    imports: [
-        BgAwaitPromises,
-        BgBreadcrumbsComponent,
-        HlmH1Directive,
-        HlmPDirective,
-        EditQrFormComponent,
-        TranslatePipe,
-    ],
+	selector: 'badgeclass-issue-qr',
+	templateUrl: './badgeclass-issue-qr.component.html',
+	imports: [
+		BgAwaitPromises,
+		BgBreadcrumbsComponent,
+		HlmH1Directive,
+		HlmPDirective,
+		EditQrFormComponent,
+		TranslatePipe,
+	],
 })
 export class BadgeClassIssueQrComponent extends BaseAuthenticatedRoutableComponent {
 	get issuerSlug() {

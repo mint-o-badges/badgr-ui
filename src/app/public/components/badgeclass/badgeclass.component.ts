@@ -34,18 +34,18 @@ import { FormsModule } from '@angular/forms';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 
 @Component({
-    templateUrl: './badgeclass.component.html',
-    imports: [
-        BgBadgeDetail,
-        NgIf,
-        OebSeparatorComponent,
-        NgFor,
-        BgLearningPathCard,
-        HlmH2Directive,
-        FormsModule,
-        OebButtonComponent,
-        TranslatePipe,
-    ],
+	templateUrl: './badgeclass.component.html',
+	imports: [
+		BgBadgeDetail,
+		NgIf,
+		OebSeparatorComponent,
+		NgFor,
+		BgLearningPathCard,
+		HlmH2Directive,
+		FormsModule,
+		OebButtonComponent,
+		TranslatePipe,
+	],
 })
 export class PublicBadgeClassComponent {
 	readonly issuerImagePlaceholderUrl = preloadImageURL(

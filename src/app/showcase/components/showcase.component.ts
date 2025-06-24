@@ -16,22 +16,22 @@ import { CompetencyAccordionComponent } from '../../components/accordion.compone
 import { OebSpinnerComponent } from '../../components/oeb-spinner.component';
 
 @Component({
-    selector: 'oeb-showcase',
-    templateUrl: './oeb-showcase.component.html',
-    imports: [
-        HlmH1Directive,
-        HlmH2Directive,
-        HlmH3Directive,
-        HlmPDirective,
-        OebButtonComponent,
-        HlmADirective,
-        FormsModule,
-        OebInputComponent,
-        OebCheckboxComponent,
-        DatatableComponent,
-        CompetencyAccordionComponent,
-        OebSpinnerComponent,
-    ],
+	selector: 'oeb-showcase',
+	templateUrl: './oeb-showcase.component.html',
+	imports: [
+		HlmH1Directive,
+		HlmH2Directive,
+		HlmH3Directive,
+		HlmPDirective,
+		OebButtonComponent,
+		HlmADirective,
+		FormsModule,
+		OebInputComponent,
+		OebCheckboxComponent,
+		DatatableComponent,
+		CompetencyAccordionComponent,
+		OebSpinnerComponent,
+	],
 })
 export class ShowcaseComponent {
 	public badges = [

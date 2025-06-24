@@ -21,20 +21,20 @@ export interface Issuer {
 }
 
 @Component({
-    selector: 'oeb-issuer-card',
-    templateUrl: './issuer-card.component.html',
-    styleUrls: ['./issuer-card.component.css'],
-    imports: [
-        BgImageStatusPlaceholderDirective,
-        HlmH2Directive,
-        TruncatedTextComponent,
-        HlmPDirective,
-        HlmBadgeDirective,
-        RouterLink,
-        NgIf,
-        I18nPluralPipe,
-        TranslatePipe,
-    ],
+	selector: 'oeb-issuer-card',
+	templateUrl: './issuer-card.component.html',
+	styleUrls: ['./issuer-card.component.css'],
+	imports: [
+		BgImageStatusPlaceholderDirective,
+		HlmH2Directive,
+		TruncatedTextComponent,
+		HlmPDirective,
+		HlmBadgeDirective,
+		RouterLink,
+		NgIf,
+		I18nPluralPipe,
+		TranslatePipe,
+	],
 })
 export class IssuerCardComponent {
 	@Input() issuer: Issuer; // Single input for the entire object

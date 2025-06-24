@@ -15,21 +15,21 @@ import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-    selector: 'password-reset-request',
-    templateUrl: 'request-password-reset.component.html',
-    styleUrls: ['request-password-reset.component.scss'],
-    imports: [
-        FormMessageComponent,
-        OAuthBannerComponent,
-        HlmH1Directive,
-        HlmPDirective,
-        FormsModule,
-        ReactiveFormsModule,
-        OebInputComponent,
-        OebButtonComponent,
-        RouterLink,
-        TranslatePipe,
-    ],
+	selector: 'password-reset-request',
+	templateUrl: 'request-password-reset.component.html',
+	styleUrls: ['request-password-reset.component.scss'],
+	imports: [
+		FormMessageComponent,
+		OAuthBannerComponent,
+		HlmH1Directive,
+		HlmPDirective,
+		FormsModule,
+		ReactiveFormsModule,
+		OebInputComponent,
+		OebButtonComponent,
+		RouterLink,
+		TranslatePipe,
+	],
 })
 export class RequestPasswordResetComponent extends BaseRoutableComponent {
 	readonly requestPasswordResetForm = typedFormGroup().addControl('username', '', [

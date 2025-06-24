@@ -16,19 +16,19 @@ import { OebInputComponent } from '../../../components/input.component';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 
 @Component({
-    selector: 'change-password',
-    templateUrl: './reset-password.component.html',
-    imports: [
-        FormMessageComponent,
-        OAuthBannerComponent,
-        HlmH1Directive,
-        FormsModule,
-        ReactiveFormsModule,
-        OebInputComponent,
-        OebButtonComponent,
-        RouterLink,
-        TranslatePipe,
-    ],
+	selector: 'change-password',
+	templateUrl: './reset-password.component.html',
+	imports: [
+		FormMessageComponent,
+		OAuthBannerComponent,
+		HlmH1Directive,
+		FormsModule,
+		ReactiveFormsModule,
+		OebInputComponent,
+		OebButtonComponent,
+		RouterLink,
+		TranslatePipe,
+	],
 })
 export class ResetPasswordComponent extends BaseRoutableComponent {
 	changePasswordForm = typedFormGroup()

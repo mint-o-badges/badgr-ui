@@ -8,8 +8,8 @@ import { AppConfigService } from '../../../common/app-config.service';
 import { FormMessageComponent } from '../../../common/components/form-message.component';
 
 @Component({
-    selector: 'login',
-    template: `
+	selector: 'login',
+	template: `
 		<main>
 			<form-message></form-message>
 			<header class="wrap wrap-light l-containerhorizontal l-heading">
@@ -19,7 +19,7 @@ import { FormMessageComponent } from '../../../common/components/form-message.co
 			<div class="l-containerhorizontal l-containervertical l-childrenvertical wrap"></div>
 		</main>
 	`,
-    imports: [FormMessageComponent],
+	imports: [FormMessageComponent],
 })
 export class PublicComponent extends BaseRoutableComponent implements OnInit {
 	constructor(

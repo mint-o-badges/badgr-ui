@@ -11,10 +11,15 @@ describe('ImpressumComponent', () => {
 
 	beforeEach(waitForAsync(() => {
 		TestBed.configureTestingModule({
-    imports: [...COMMON_IMPORTS, BadgrCommonModule, TranslateTestingModule.withTranslations('de', {}), ImpressumComponent],
-    providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
-    teardown: { destroyAfterEach: false },
-}).compileComponents();
+			imports: [
+				...COMMON_IMPORTS,
+				BadgrCommonModule,
+				TranslateTestingModule.withTranslations('de', {}),
+				ImpressumComponent,
+			],
+			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
+			teardown: { destroyAfterEach: false },
+		}).compileComponents();
 	}));
 
 	beforeEach(() => {

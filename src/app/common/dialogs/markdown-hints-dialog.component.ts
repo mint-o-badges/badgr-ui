@@ -3,8 +3,8 @@ import { BaseDialog } from './base-dialog';
 import { SvgIconComponent } from '../components/svg-icon.component';
 
 @Component({
-    selector: 'markdown-hints-dialog',
-    template: `
+	selector: 'markdown-hints-dialog',
+	template: `
 		<dialog
 			aria-labelledby="markdownHintsDialog"
 			aria-describedby="dialog1Desc"
@@ -42,7 +42,7 @@ import { SvgIconComponent } from '../components/svg-icon.component';
 			</div>
 		</dialog>
 	`,
-    imports: [SvgIconComponent],
+	imports: [SvgIconComponent],
 })
 export class MarkdownHintsDialog extends BaseDialog {
 	constructor(componentElem: ElementRef, renderer: Renderer2) {

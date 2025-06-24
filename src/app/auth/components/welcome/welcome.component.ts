@@ -9,10 +9,10 @@ import { MessageService } from '../../../common/services/message.service';
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-    selector: 'app-welcome',
-    templateUrl: './welcome.component.html',
-    styleUrls: ['./welcome.component.scss'],
-    imports: [RouterLink, TranslatePipe],
+	selector: 'app-welcome',
+	templateUrl: './welcome.component.html',
+	styleUrls: ['./welcome.component.scss'],
+	imports: [RouterLink, TranslatePipe],
 })
 export class WelcomeComponent /*extends BaseAuthenticatedRoutableComponent*/ implements OnInit {
 	constructor(

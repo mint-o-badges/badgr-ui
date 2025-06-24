@@ -4,10 +4,10 @@ import { ServerVersionService } from '../../../common/services/server-version.se
 import { FormMessageComponent } from '../../../common/components/form-message.component';
 
 @Component({
-    selector: 'app-impressum',
-    templateUrl: './impressum.component.html',
-    styleUrls: ['./impressum.component.css'],
-    imports: [FormMessageComponent],
+	selector: 'app-impressum',
+	templateUrl: './impressum.component.html',
+	styleUrls: ['./impressum.component.css'],
+	imports: [FormMessageComponent],
 })
 export class ImpressumComponent implements OnInit {
 	version = VERSION;

@@ -8,14 +8,14 @@ import { NgIf } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
 @Component({
-    selector: 'badge-image',
-    host: {
-        class: 'badge',
-        '[class.badge-is-noMargin]': 'noMargin',
-        '[class.badge-is-locked]': 'locked',
-        '[class.badge-is-disabled]': 'disabled',
-    },
-    template: `
+	selector: 'badge-image',
+	host: {
+		class: 'badge',
+		'[class.badge-is-noMargin]': 'noMargin',
+		'[class.badge-is-locked]': 'locked',
+		'[class.badge-is-disabled]': 'disabled',
+	},
+	template: `
 		<a
 			[routerLink]="['/issuer/issuers/', badge?.issuerSlug || '', 'badges', badge?.slug || '']"
 			*ngIf="link && !loading && !failed"
@@ -47,9 +47,9 @@ import { RouterLink } from '@angular/router';
 			*ngIf="awardedIconSize > 0"
 		/>
 	`,
-    // Inputs from superclass must be specified here again due to https://github.com/angular/angular/issues/5415
-    inputs: ['badge', 'issuerId', 'badgeSlug', 'badgeId', 'forceFailed'],
-    imports: [NgIf, RouterLink],
+	// Inputs from superclass must be specified here again due to https://github.com/angular/angular/issues/5415
+	inputs: ['badge', 'issuerId', 'badgeSlug', 'badgeId', 'forceFailed'],
+	imports: [NgIf, RouterLink],
 })
 export class BadgeImageComponent extends AbstractBadgeComponent {
 	readonly greenCheckCircleUrl = preloadImageURL(

@@ -21,16 +21,9 @@ import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/sr
 import { HlmH2Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h2.directive';
 
 @Component({
-    templateUrl: 'badgeclass-select-type.component.html',
-    styleUrls: ['./badgeclass-select-type.component.scss'],
-    imports: [
-        BgBreadcrumbsComponent,
-        HlmH1Directive,
-        HlmPDirective,
-        HlmH2Directive,
-        RouterLink,
-        TranslatePipe,
-    ],
+	templateUrl: 'badgeclass-select-type.component.html',
+	styleUrls: ['./badgeclass-select-type.component.scss'],
+	imports: [BgBreadcrumbsComponent, HlmH1Directive, HlmPDirective, HlmH2Directive, RouterLink, TranslatePipe],
 })
 export class BadgeClassSelectTypeComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	issuerSlug: string;

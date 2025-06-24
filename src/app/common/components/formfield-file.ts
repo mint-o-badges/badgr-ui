@@ -9,20 +9,20 @@ import { HlmADirective } from '../../components/spartan/ui-typography-helm/src/l
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-    selector: 'bg-formfield-file',
-    host: {
-        class: 'dropzone',
-        '[class.dropzone-is-dragging]': 'isDragging',
-        '[class.dropzone-is-error]': 'fileErrorMessage || (control?.dirty && !control?.valid)',
-        '(drag)': 'stopEvent($event)',
-        '(dragstart)': 'stopEvent($event)',
-        '(dragover)': 'dragStart($event)',
-        '(dragenter)': 'dragStart($event)',
-        '(dragleave)': 'dragStop($event)',
-        '(dragend)': 'dragStop($event)',
-        '(drop)': 'drop($event)',
-    },
-    template: `
+	selector: 'bg-formfield-file',
+	host: {
+		class: 'dropzone',
+		'[class.dropzone-is-dragging]': 'isDragging',
+		'[class.dropzone-is-error]': 'fileErrorMessage || (control?.dirty && !control?.valid)',
+		'(drag)': 'stopEvent($event)',
+		'(dragstart)': 'stopEvent($event)',
+		'(dragover)': 'dragStart($event)',
+		'(dragenter)': 'dragStart($event)',
+		'(dragleave)': 'dragStop($event)',
+		'(dragend)': 'dragStop($event)',
+		'(drop)': 'drop($event)',
+	},
+	template: `
 		<p class="visuallyhidden">
 			{{ label }}
 			<ng-content select="[label-additions]"></ng-content>
@@ -55,13 +55,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 		</label>
 		<p class="dropzone-x-error" *ngIf="control?.dirty && !control?.valid">{{ errorMessage }}</p>
 	`,
-    imports: [
-        SvgIconComponent,
-        NgIf,
-        HlmPDirective,
-        HlmADirective,
-        TranslatePipe,
-    ],
+	imports: [SvgIconComponent, NgIf, HlmPDirective, HlmADirective, TranslatePipe],
 })
 export class BgFormFieldFileComponent {
 	private get element(): HTMLElement {

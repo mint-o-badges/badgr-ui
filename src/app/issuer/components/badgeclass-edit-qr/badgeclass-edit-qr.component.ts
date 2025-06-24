@@ -17,14 +17,9 @@ import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/s
 import { EditQrFormComponent } from '../edit-qr-form/edit-qr-form.component';
 
 @Component({
-    selector: 'badgeclass-edit-qr',
-    templateUrl: './badgeclass-edit-qr.component.html',
-    imports: [
-        BgAwaitPromises,
-        BgBreadcrumbsComponent,
-        HlmH1Directive,
-        EditQrFormComponent,
-    ],
+	selector: 'badgeclass-edit-qr',
+	templateUrl: './badgeclass-edit-qr.component.html',
+	imports: [BgAwaitPromises, BgBreadcrumbsComponent, HlmH1Directive, EditQrFormComponent],
 })
 export class BadgeClassEditQrComponent extends BaseAuthenticatedRoutableComponent {
 	get issuerSlug() {

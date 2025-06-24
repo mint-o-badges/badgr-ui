@@ -8,11 +8,11 @@ import { OebButtonComponent } from '../components/oeb-button.component';
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-    selector: 'bg-collectioncard',
-    host: {
-        class: 'tw-rounded-[10px] tw-bg-white tw-h-max tw-max-w-[450px] tw-border-purple tw-border-solid tw-border tw-relative tw-p-4 tw-block tw-overflow-hidden oeb-badge-card',
-    },
-    template: `
+	selector: 'bg-collectioncard',
+	host: {
+		class: 'tw-rounded-[10px] tw-bg-white tw-h-max tw-max-w-[450px] tw-border-purple tw-border-solid tw-border tw-relative tw-p-4 tw-block tw-overflow-hidden oeb-badge-card',
+	},
+	template: `
 		<div class="tw-h-[200px]">
 			<div class="tw-flex tw-flex-col tw-items-center tw-h-full tw-w-full">
 				<a class="tw-w-full" [routerLink]="['../badge-collections/collection/', collection.slug]">
@@ -61,15 +61,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 			</div>
 		</div>
 	`,
-    imports: [
-        RouterLink,
-        NgIf,
-        NgFor,
-        HlmSwitchComponent,
-        FormsModule,
-        OebButtonComponent,
-        TranslatePipe,
-    ],
+	imports: [RouterLink, NgIf, NgFor, HlmSwitchComponent, FormsModule, OebButtonComponent, TranslatePipe],
 })
 export class BgCollectionCard {
 	readonly badgeLoadingImageUrl = '../../../breakdown/static/images/badge-loading.svg';

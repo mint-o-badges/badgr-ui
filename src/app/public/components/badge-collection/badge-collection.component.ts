@@ -18,18 +18,18 @@ import { PublicNotFoundBadgeCollectionComponent } from '../not-found-badge-colle
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-    templateUrl: 'badge-collection.component.html',
-    imports: [
-        BgAwaitPromises,
-        NgIf,
-        NgFor,
-        BgImageStatusPlaceholderDirective,
-        HlmH1Directive,
-        BgBadgecard,
-        PublicNotFoundBadgeCollectionComponent,
-        SlicePipe,
-        TranslatePipe,
-    ],
+	templateUrl: 'badge-collection.component.html',
+	imports: [
+		BgAwaitPromises,
+		NgIf,
+		NgFor,
+		BgImageStatusPlaceholderDirective,
+		HlmH1Directive,
+		BgBadgecard,
+		PublicNotFoundBadgeCollectionComponent,
+		SlicePipe,
+		TranslatePipe,
+	],
 })
 export class PublicBadgeCollectionComponent {
 	readonly issuerImagePlacholderUrl = preloadImageURL(

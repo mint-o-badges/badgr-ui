@@ -7,9 +7,9 @@ import { FormMessageComponent } from '../../../common/components/form-message.co
 import { OAuthBannerComponent } from '../../../common/components/oauth-banner.component';
 
 @Component({
-    selector: 'password-reset-sent',
-    templateUrl: './reset-password-sent.component.html',
-    imports: [FormMessageComponent, OAuthBannerComponent],
+	selector: 'password-reset-sent',
+	templateUrl: './reset-password-sent.component.html',
+	imports: [FormMessageComponent, OAuthBannerComponent],
 })
 export class ResetPasswordSent extends BaseRoutableComponent {
 	constructor(

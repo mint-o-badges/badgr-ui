@@ -22,10 +22,10 @@ describe('FormFieldText', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-    imports: [RouterTestingModule, CommonModule, ...COMMON_IMPORTS, FormFieldText, BadgrButtonComponent],
-    providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
-}).compileComponents();
+			imports: [RouterTestingModule, CommonModule, ...COMMON_IMPORTS, FormFieldText, BadgrButtonComponent],
+			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
+			schemas: [CUSTOM_ELEMENTS_SCHEMA],
+		}).compileComponents();
 		fixture = TestBed.createComponent(FormFieldText);
 		fixture.componentInstance.control = new FormControl('', Validators.required);
 		fixture.detectChanges();

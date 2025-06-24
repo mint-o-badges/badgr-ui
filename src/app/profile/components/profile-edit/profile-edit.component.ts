@@ -17,16 +17,16 @@ import { FormMessageComponent } from '../../../common/components/form-message.co
 import { FormFieldText } from '../../../common/components/formfield-text';
 
 @Component({
-    templateUrl: './profile-edit.component.html',
-    imports: [
-        BgAwaitPromises,
-        FormMessageComponent,
-        BgBreadcrumbsComponent,
-        FormsModule,
-        ReactiveFormsModule,
-        FormFieldText,
-        RouterLink,
-    ],
+	templateUrl: './profile-edit.component.html',
+	imports: [
+		BgAwaitPromises,
+		FormMessageComponent,
+		BgBreadcrumbsComponent,
+		FormsModule,
+		ReactiveFormsModule,
+		FormFieldText,
+		RouterLink,
+	],
 })
 export class ProfileEditComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	profile: UserProfile;

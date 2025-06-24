@@ -22,18 +22,18 @@ import { NgFor } from '@angular/common';
 import { BgBadgecard } from '../../../../common/components/bg-badgecard';
 
 @Component({
-    selector: 'learningpath-badge-order',
-    templateUrl: './learningpath-badge-order.component.html',
-    styleUrls: ['../../learningpath-edit-form/learningpath-edit-form.component.scss'],
-    imports: [
-        HlmH2Directive,
-        HlmPDirective,
-        NgFor,
-        DndDraggableDirective,
-        DndDropzoneDirective,
-        BgBadgecard,
-        TranslatePipe,
-    ],
+	selector: 'learningpath-badge-order',
+	templateUrl: './learningpath-badge-order.component.html',
+	styleUrls: ['../../learningpath-edit-form/learningpath-edit-form.component.scss'],
+	imports: [
+		HlmH2Directive,
+		HlmPDirective,
+		NgFor,
+		DndDraggableDirective,
+		DndDropzoneDirective,
+		BgBadgecard,
+		TranslatePipe,
+	],
 })
 export class LearningPathBadgeOrderComponent implements OnInit {
 	constructor(

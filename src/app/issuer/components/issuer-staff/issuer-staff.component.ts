@@ -42,9 +42,9 @@ import { HlmThComponent } from '../../../components/spartan/ui-table-helm/src/li
 import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
 
 @Component({
-    templateUrl: './issuer-staff.component.html',
-    styles: [
-        `
+	templateUrl: './issuer-staff.component.html',
+	styles: [
+		`
 			::ng-deep .radio .radio-x-text {
 				--typography-size: 18px;
 				line-height: 130%;
@@ -59,27 +59,27 @@ import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/sr
 				line-height: 130%;
 			}
 		`,
-    ],
-    imports: [
-        BgAwaitPromises,
-        FormMessageComponent,
-        BgBreadcrumbsComponent,
-        NgIf,
-        HlmH1Directive,
-        OebButtonComponent,
-        FormsModule,
-        ReactiveFormsModule,
-        OebInputComponent,
-        NgFor,
-        FormFieldRadio,
-        HlmH2Directive,
-        IssuerStaffRequestsDatatableComponent,
-        HlmTableComponent,
-        HlmTrowComponent,
-        HlmThComponent,
-        HlmPDirective,
-        TranslatePipe,
-    ],
+	],
+	imports: [
+		BgAwaitPromises,
+		FormMessageComponent,
+		BgBreadcrumbsComponent,
+		NgIf,
+		HlmH1Directive,
+		OebButtonComponent,
+		FormsModule,
+		ReactiveFormsModule,
+		OebInputComponent,
+		NgFor,
+		FormFieldRadio,
+		HlmH2Directive,
+		IssuerStaffRequestsDatatableComponent,
+		HlmTableComponent,
+		HlmTrowComponent,
+		HlmThComponent,
+		HlmPDirective,
+		TranslatePipe,
+	],
 })
 export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	get issuerStaffRoleOptions() {

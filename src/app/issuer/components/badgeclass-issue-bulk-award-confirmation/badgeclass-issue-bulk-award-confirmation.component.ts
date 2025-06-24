@@ -26,17 +26,17 @@ import { HlmH3Directive } from '../../../components/spartan/ui-typography-helm/s
 import { OebCheckboxComponent } from '../../../components/oeb-checkbox.component';
 
 @Component({
-    selector: 'badgeclass-issue-bulk-award-confirmation',
-    templateUrl: './badgeclass-issue-bulk-award-confirmation.component.html',
-    imports: [
-        HlmH1Directive,
-        HlmPDirective,
-        NgFor,
-        OebButtonComponent,
-        HlmH3Directive,
-        OebCheckboxComponent,
-        TranslatePipe,
-    ],
+	selector: 'badgeclass-issue-bulk-award-confirmation',
+	templateUrl: './badgeclass-issue-bulk-award-confirmation.component.html',
+	imports: [
+		HlmH1Directive,
+		HlmPDirective,
+		NgFor,
+		OebButtonComponent,
+		HlmH3Directive,
+		OebCheckboxComponent,
+		TranslatePipe,
+	],
 })
 export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRoutableComponent implements OnDestroy {
 	@Input() transformedImportData: TransformedImportData;

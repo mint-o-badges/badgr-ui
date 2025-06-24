@@ -35,27 +35,27 @@ import { NgIcon } from '@ng-icons/core';
 import { HlmIconDirective } from '../../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
 
 @Component({
-    selector: 'recipient-earned-badge-detail',
-    templateUrl: 'recipient-badge-collection-detail.component.html',
-    imports: [
-        FormMessageComponent,
-        BgBreadcrumbsComponent,
-        BgAwaitPromises,
-        HlmH1Directive,
-        OebButtonComponent,
-        OebDropdownComponent,
-        SvgIconComponent,
-        HlmSwitchComponent,
-        FormsModule,
-        NgIf,
-        NgFor,
-        BgBadgecard,
-        NgIcon,
-        HlmIconDirective,
-        TranslateDirective,
-        RecipientBadgeSelectionDialog,
-        TranslatePipe,
-    ],
+	selector: 'recipient-earned-badge-detail',
+	templateUrl: 'recipient-badge-collection-detail.component.html',
+	imports: [
+		FormMessageComponent,
+		BgBreadcrumbsComponent,
+		BgAwaitPromises,
+		HlmH1Directive,
+		OebButtonComponent,
+		OebDropdownComponent,
+		SvgIconComponent,
+		HlmSwitchComponent,
+		FormsModule,
+		NgIf,
+		NgFor,
+		BgBadgecard,
+		NgIcon,
+		HlmIconDirective,
+		TranslateDirective,
+		RecipientBadgeSelectionDialog,
+		TranslatePipe,
+	],
 })
 export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	readonly badgeLoadingImageUrl = '../../../../breakdown/static/images/badge-loading.svg';

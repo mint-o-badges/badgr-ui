@@ -22,16 +22,19 @@ describe('BgBadgecard', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-    imports: [
-        RouterTestingModule,
-        //BadgrCommonModule.forRoot(),
-        //CommonModule,
-        ...COMMON_IMPORTS,
-        BgBadgecard, TimeComponent, BgImageStatusPlaceholderDirective, TruncatedTextComponent,
-    ],
-    providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
-}).compileComponents();
+			imports: [
+				RouterTestingModule,
+				//BadgrCommonModule.forRoot(),
+				//CommonModule,
+				...COMMON_IMPORTS,
+				BgBadgecard,
+				TimeComponent,
+				BgImageStatusPlaceholderDirective,
+				TruncatedTextComponent,
+			],
+			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
+			schemas: [CUSTOM_ELEMENTS_SCHEMA],
+		}).compileComponents();
 		fixture = TestBed.createComponent(BgBadgecard);
 		component = fixture.debugElement.componentInstance;
 	});

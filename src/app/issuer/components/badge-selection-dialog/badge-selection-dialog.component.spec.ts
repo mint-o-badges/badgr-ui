@@ -25,10 +25,17 @@ describe('BadgeSelectionDialog', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-    imports: [RouterTestingModule, CommonModule, FormsModule, ...COMMON_IMPORTS, BadgeSelectionDialog, BgAwaitPromises],
-    providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
-}).compileComponents();
+			imports: [
+				RouterTestingModule,
+				CommonModule,
+				FormsModule,
+				...COMMON_IMPORTS,
+				BadgeSelectionDialog,
+				BgAwaitPromises,
+			],
+			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
+			schemas: [CUSTOM_ELEMENTS_SCHEMA],
+		}).compileComponents();
 		fixture = TestBed.createComponent(BadgeSelectionDialog);
 		component = fixture.debugElement.componentInstance;
 		component.open = false;

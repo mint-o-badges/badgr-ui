@@ -7,14 +7,8 @@ import { IssuerEditFormComponent } from '../issuer-edit-form/issuer-edit-form.co
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-    selector: 'issuer-create',
-    templateUrl: './issuer-create.component.html',
-    imports: [
-        FormMessageComponent,
-        HlmH1Directive,
-        HlmPDirective,
-        IssuerEditFormComponent,
-        TranslatePipe,
-    ],
+	selector: 'issuer-create',
+	templateUrl: './issuer-create.component.html',
+	imports: [FormMessageComponent, HlmH1Directive, HlmPDirective, IssuerEditFormComponent, TranslatePipe],
 })
 export class IssuerCreateComponent extends BaseAuthenticatedRoutableComponent {}

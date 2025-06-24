@@ -20,10 +20,10 @@ describe('ExternalToolLaunchComponent', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-    imports: [RouterTestingModule, ...COMMON_IMPORTS, ExternalToolLaunchComponent],
-    providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
-}).compileComponents();
+			imports: [RouterTestingModule, ...COMMON_IMPORTS, ExternalToolLaunchComponent],
+			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
+			schemas: [CUSTOM_ELEMENTS_SCHEMA],
+		}).compileComponents();
 		fixture = TestBed.createComponent(ExternalToolLaunchComponent);
 		component = fixture.debugElement.componentInstance;
 	});

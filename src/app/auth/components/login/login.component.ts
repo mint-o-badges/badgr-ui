@@ -38,22 +38,22 @@ interface RedirectResponse {
 type RedirectHttpResponse = HttpResponse<RedirectResponse>;
 
 @Component({
-    selector: 'login',
-    templateUrl: './login.component.html',
-    styleUrls: ['./login.component.scss'],
-    imports: [
-        HlmH1Directive,
-        HlmPDirective,
-        HlmADirective,
-        RouterLink,
-        NgIf,
-        FormsModule,
-        OebInputComponent,
-        OebCheckboxComponent,
-        OebButtonComponent,
-        FormMessageComponent,
-        TranslatePipe,
-    ],
+	selector: 'login',
+	templateUrl: './login.component.html',
+	styleUrls: ['./login.component.scss'],
+	imports: [
+		HlmH1Directive,
+		HlmPDirective,
+		HlmADirective,
+		RouterLink,
+		NgIf,
+		FormsModule,
+		OebInputComponent,
+		OebCheckboxComponent,
+		OebButtonComponent,
+		FormMessageComponent,
+		TranslatePipe,
+	],
 })
 export class LoginComponent extends BaseRoutableComponent implements OnInit, AfterViewInit {
 	get theme() {
