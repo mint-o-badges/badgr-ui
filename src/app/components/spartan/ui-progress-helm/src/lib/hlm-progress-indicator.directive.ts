@@ -1,6 +1,5 @@
-import { Directive, computed, input } from '@angular/core';
+import { Directive, type DoCheck, ElementRef, Renderer2, computed, effect, inject, input, signal } from '@angular/core';
 import { hlm } from '@spartan-ng/brain/core';
-import { injectBrnProgress } from '@spartan-ng/brain/progress';
 import type { ClassValue } from 'clsx';
 
 @Directive({
@@ -8,21 +7,39 @@ import type { ClassValue } from 'clsx';
 	standalone: true,
 	host: {
 		'[class]': '_computedClass()',
-		'[class.animate-indeterminate]': 'indeterminate()',
-		'[style.transform]': 'transform()',
 	},
 })
-export class HlmProgressIndicatorDirective {
-	private readonly _progress = injectBrnProgress();
+export class HlmProgressIndicatorDirective implements DoCheck {
+	private _element = inject(ElementRef);
+	private _renderer = inject(Renderer2);
+	private readonly _value = signal(0);
+
 	public readonly userClass = input<ClassValue>('', { alias: 'class' });
-
-	protected readonly _computedClass = computed(() =>
-		hlm('inline-flex transform-gpu h-full w-full flex-1 bg-primary transition-all', this.userClass()),
+	protected _computedClass = computed(() =>
+		hlm(
+			'tw-inline-flex tw-transform-gpu tw-h-full tw-w-full tw-flex-1 tw-bg-green tw-transition-all',
+			this.userClass(),
+		),
 	);
 
-	protected readonly transform = computed(() => `translateX(-${100 - (this._progress.value() ?? 100)}%)`);
+	constructor() {
+		effect(() => {
+			// using renderer directly as hostbinding is one change detection cycle behind
+			const currentValue = this._value();
+			this._renderer.setStyle(
+				this._element.nativeElement,
+				'transform',
+				`translateX(-${100 - (currentValue || 100)}%)`,
+			);
+			if (!currentValue) {
+				this._renderer.addClass(this._element.nativeElement, 'animate-indeterminate');
+			} else {
+				this._renderer.removeClass(this._element.nativeElement, 'animate-indeterminate');
+			}
+		});
+	}
 
-	protected readonly indeterminate = computed(
-		() => this._progress.value() === null || this._progress.value() === undefined,
-	);
+	ngDoCheck(): void {
+		this._value.set(this._element.nativeElement.getAttribute('data-value'));
+	}
 }

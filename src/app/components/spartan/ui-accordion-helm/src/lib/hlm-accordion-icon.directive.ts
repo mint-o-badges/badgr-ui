@@ -1,12 +1,12 @@
-import { Directive, computed, input } from '@angular/core';
-import { provideIcons } from '@ng-icons/core';
+import { Directive, computed, inject, input } from '@angular/core';
 import { lucideChevronDown } from '@ng-icons/lucide';
 import { hlm } from '@spartan-ng/brain/core';
-import { provideHlmIconConfig } from '@spartan-ng/ui-icon-helm';
 import type { ClassValue } from 'clsx';
+import { provideIcons } from '@ng-icons/core';
+import { provideHlmIconConfig } from '~/components/spartan/ui-icon-helm/src/lib/hlm-icon.token';
 
 @Directive({
-	selector: 'ng-icon[hlmAccordionIcon], ng-icon[hlmAccIcon]',
+	selector: 'hlm-icon[hlmAccordionIcon], hlm-icon[hlmAccIcon]',
 	standalone: true,
 	providers: [provideIcons({ lucideChevronDown }), provideHlmIconConfig({ size: 'sm' })],
 	host: {
@@ -15,7 +15,7 @@ import type { ClassValue } from 'clsx';
 })
 export class HlmAccordionIconDirective {
 	public readonly userClass = input<ClassValue>('', { alias: 'class' });
-	protected readonly _computedClass = computed(() =>
-		hlm('inline-block h-4 w-4 transition-transform [animation-duration:200]', this.userClass()),
+	protected _computedClass = computed(() =>
+		hlm('tw-inline-block tw-h-4 tw-w-4 tw-transition-transform tw-duration-200', this.userClass()),
 	);
 }

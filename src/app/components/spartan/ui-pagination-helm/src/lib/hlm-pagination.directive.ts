@@ -3,7 +3,7 @@ import { hlm } from '@spartan-ng/brain/core';
 import { type VariantProps, cva } from 'class-variance-authority';
 import type { ClassValue } from 'clsx';
 
-export const paginationVariants = cva('mx-auto flex w-full justify-center', {
+export const paginationVariants = cva('tw-mx-auto tw-flex tw-w-full tw-justify-center', {
 	variants: {},
 	defaultVariants: {},
 });

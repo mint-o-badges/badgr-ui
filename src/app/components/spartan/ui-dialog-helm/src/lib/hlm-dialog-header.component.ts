@@ -5,9 +5,7 @@ import type { ClassValue } from 'clsx';
 @Component({
 	selector: 'hlm-dialog-header',
 	standalone: true,
-	template: `
-		<ng-content />
-	`,
+	template: ` <ng-content /> `,
 	host: {
 		'[class]': '_computedClass()',
 	},
@@ -15,6 +13,6 @@ import type { ClassValue } from 'clsx';
 export class HlmDialogHeaderComponent {
 	public readonly userClass = input<ClassValue>('', { alias: 'class' });
 	protected _computedClass = computed(() =>
-		hlm('flex flex-col space-y-1.5 text-center sm:text-left', this.userClass()),
+		hlm('tw-flex tw-flex-col tw-space-y-1.5 tw-text-center sm:tw-text-left', this.userClass()),
 	);
 }

@@ -15,7 +15,6 @@ import { LinkEntry, BgBreadcrumbsComponent } from '../../../common/components/bg
 import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 import { FormMessageComponent } from '../../../common/components/form-message.component';
 import { FormFieldText } from '../../../common/components/formfield-text';
-import { BadgrButtonComponent } from '../../../common/components/badgr-button.component';
 
 @Component({
 	templateUrl: './profile-edit.component.html',
@@ -26,7 +25,6 @@ import { BadgrButtonComponent } from '../../../common/components/badgr-button.co
 		FormsModule,
 		ReactiveFormsModule,
 		FormFieldText,
-		BadgrButtonComponent,
 		RouterLink,
 	],
 })

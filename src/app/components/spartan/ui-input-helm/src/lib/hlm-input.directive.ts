@@ -8,17 +8,17 @@ import { type VariantProps, cva } from 'class-variance-authority';
 import type { ClassValue } from 'clsx';
 
 export const inputVariants = cva(
-	'flex rounded-md border font-normal border-input bg-transparent text-base md:text-sm ring-offset-background file:border-0 file:text-foreground file:bg-transparent file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50',
+	'tw-flex tw-rounded-md tw-border tw-font-normal tw-text-oebblack tw-border-input tw-bg-transparent tw-text-base md:tw-text-sm tw-ring-offset-background file:tw-border-0 file:tw-text-foreground file:tw-bg-transparent file:tw-font-medium placeholder:tw-text-muted-foreground focus-visible:tw-outline-none focus-visible:tw-ring-2 focus-visible:tw-ring-ring focus-visible:tw-ring-offset-2 disabled:tw-cursor-not-allowed disabled:tw-opacity-50',
 	{
 		variants: {
 			size: {
-				default: 'h-10 py-2 px-4 file:max-md:py-0',
-				sm: 'h-9 px-3 file:md:py-2 file:max-md:py-1.5',
-				lg: 'h-11 px-8 file:md:py-3 file:max-md:py-2.5',
+				default: 'tw-h-10 tw-py-2 tw-px-4 file:max-md:tw-py-0',
+				sm: 'tw-h-9 tw-px-3 file:md:tw-py-2 file:max-md:tw-py-1.5',
+				lg: 'tw-h-11 tw-px-4 tw-py-2 file:tw-md:py-3 file:max-md:tw-py-2.5',
 			},
 			error: {
-				auto: '[&.ng-invalid.ng-touched]:text-destructive [&.ng-invalid.ng-touched]:border-destructive [&.ng-invalid.ng-touched]:focus-visible:ring-destructive',
-				true: 'text-destructive border-destructive focus-visible:ring-destructive',
+				auto: '[&.ng-invalid.ng-touched]:tw-text-destructive [&.ng-invalid.ng-touched]:tw-border-destructive [&.ng-invalid.ng-touched]:focus-visible:tw-ring-destructive',
+				true: 'tw-text-destructive tw-border-destructive tw-focus-visible:tw-ring-destructive',
 			},
 		},
 		defaultVariants: {
@@ -27,7 +27,7 @@ export const inputVariants = cva(
 		},
 	},
 );
-type InputVariants = VariantProps<typeof inputVariants>;
+export type InputVariants = VariantProps<typeof inputVariants>;
 
 @Directive({
 	selector: '[hlmInput]',

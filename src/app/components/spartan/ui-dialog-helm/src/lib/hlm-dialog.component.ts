@@ -1,9 +1,5 @@
-import { ChangeDetectionStrategy, Component, forwardRef, ViewEncapsulation } from '@angular/core';
-import {
-	BrnDialogComponent,
-	BrnDialogOverlayComponent,
-	provideBrnDialogDefaultOptions,
-} from '@spartan-ng/brain/dialog';
+import { ChangeDetectionStrategy, Component, ViewEncapsulation, forwardRef } from '@angular/core';
+import { BrnDialogComponent, BrnDialogOverlayComponent } from '@spartan-ng/brain/dialog';
 import { HlmDialogOverlayDirective } from './hlm-dialog-overlay.directive';
 
 @Component({
@@ -14,9 +10,6 @@ import { HlmDialogOverlayDirective } from './hlm-dialog-overlay.directive';
 			provide: BrnDialogComponent,
 			useExisting: forwardRef(() => HlmDialogComponent),
 		},
-		provideBrnDialogDefaultOptions({
-			// add custom options here
-		}),
 	],
 	template: `
 		<brn-dialog-overlay hlm />
@@ -26,4 +19,9 @@ import { HlmDialogOverlayDirective } from './hlm-dialog-overlay.directive';
 	encapsulation: ViewEncapsulation.None,
 	exportAs: 'hlmDialog',
 })
-export class HlmDialogComponent extends BrnDialogComponent {}
+export class HlmDialogComponent extends BrnDialogComponent {
+	constructor() {
+		super();
+		// this.closeDelay = 100;
+	}
+}

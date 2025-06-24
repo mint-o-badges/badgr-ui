@@ -5,11 +5,9 @@ import { BrnMenuGroupDirective } from '@spartan-ng/brain/menu';
 	selector: 'hlm-menu-group',
 	standalone: true,
 	host: {
-		class: 'block',
+		class: 'tw-block',
 	},
 	hostDirectives: [BrnMenuGroupDirective],
-	template: `
-		<ng-content />
-	`,
+	template: ` <ng-content /> `,
 })
 export class HlmMenuGroupComponent {}

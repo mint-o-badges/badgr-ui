@@ -3,8 +3,8 @@ import { NgIcon, provideIcons } from '@ng-icons/core';
 import { lucideCheck } from '@ng-icons/lucide';
 import { hlm } from '@spartan-ng/brain/core';
 import { BrnSelectOptionDirective } from '@spartan-ng/brain/select';
-import { HlmIconDirective } from '@spartan-ng/ui-icon-helm';
 import type { ClassValue } from 'clsx';
+import { HlmIconDirective } from '~/components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
 
 @Component({
 	selector: 'hlm-option',
@@ -18,7 +18,7 @@ import type { ClassValue } from 'clsx';
 		<ng-content />
 		<span
 			[attr.dir]="_brnSelectOption.dir()"
-			class="absolute left-2 flex h-3.5 w-3.5 items-center justify-center rtl:left-auto rtl:right-2"
+			class="tw-absolute tw-left-2 tw-flex tw-h-3.5 tw-w-3.5 tw-items-center tw-justify-center rtl:tw-left-auto rtl:tw-right-2"
 			[attr.data-state]="this._brnSelectOption.checkedState()"
 		>
 			@if (this._brnSelectOption.selected()) {
@@ -33,7 +33,7 @@ export class HlmSelectOptionComponent {
 	public readonly userClass = input<ClassValue>('', { alias: 'class' });
 	protected readonly _computedClass = computed(() =>
 		hlm(
-			'relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 rtl:flex-reverse rtl:pr-8 rtl:pl-2 text-sm outline-none data-[active]:bg-accent data-[active]:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
+			'tw-relative tw-flex tw-w-full tw-cursor-default tw-select-none tw-items-center tw-rounded-sm tw-py-1.5 tw-pl-8 tw-pr-2 rtl:tw-flex-reverse rtl:tw-pr-8 rtl:tw-pl-2 tw-text-sm tw-outline-none data-[active]:tw-bg-accent data-[active]:tw-text-accent-foreground data-[disabled]:tw-pointer-events-none data-[disabled]:tw-opacity-50',
 			this.userClass(),
 		),
 	);

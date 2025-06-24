@@ -3,10 +3,10 @@ import { BgImageStatusPlaceholderDirective } from '../../common/directives/bg-im
 import { HlmH2Directive } from '../spartan/ui-typography-helm/src/lib/hlm-h2.directive';
 import { TruncatedTextComponent } from '../../common/components/truncated-text.component';
 import { HlmPDirective } from '../spartan/ui-typography-helm/src/lib/hlm-p.directive';
-import { HlmBadgeDirective } from '../spartan/ui-badge-helm/src/lib/hlm-badge.directive';
 import { RouterLink } from '@angular/router';
 import { NgIf, I18nPluralPipe } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
+import { HlmBadgeDirective } from '@spartan-ng/ui-badge-helm';
 
 export interface Issuer {
 	image: string;

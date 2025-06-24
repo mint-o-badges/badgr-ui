@@ -5,9 +5,7 @@ import type { ClassValue } from 'clsx';
 @Component({
 	selector: 'hlm-menu-shortcut',
 	standalone: true,
-	template: `
-		<ng-content />
-	`,
+	template: ` <ng-content /> `,
 	host: {
 		'[class]': '_computedClass()',
 	},
@@ -15,6 +13,6 @@ import type { ClassValue } from 'clsx';
 export class HlmMenuShortcutComponent {
 	public readonly userClass = input<ClassValue>('', { alias: 'class' });
 	protected _computedClass = computed(() =>
-		hlm('ml-auto font-light text-xs tracking-widest opacity-60', this.userClass()),
+		hlm('tw-ml-auto tw-font-light tw-text-xs tw-tracking-widest tw-opacity-60', this.userClass()),
 	);
 }

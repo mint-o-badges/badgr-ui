@@ -16,7 +16,7 @@ export class HlmAccordionTriggerDirective {
 	public readonly userClass = input<ClassValue>('', { alias: 'class' });
 	protected _computedClass = computed(() =>
 		hlm(
-			'w-full focus-visible:outline-none text-sm focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-offset-2 flex flex-1 items-center justify-between py-4 px-0.5 font-medium underline-offset-4 hover:underline [&[data-state=open]>[hlmAccordionIcon]]:rotate-180 [&[data-state=open]>[hlmAccIcon]]:rotate-180',
+			'tw-w-40 tw-focus-visible:outline-none tw-text-sm tw-focus-visible:ring-1 tw-focus-visible:ring-ring tw-focus-visible:ring-offset-2 tw-flex tw-flex-1 tw-items-center tw-justify-between tw-py-2 tw-px-1 tw-font-medium tw-underline-offset-4 hover:tw-underline [&[data-state=open]>[hlmAccordionIcon]]:tw-rotate-180 [&[data-state=open]>[hlmAccIcon]]:tw-rotate-180',
 			this.userClass(),
 		),
 	);

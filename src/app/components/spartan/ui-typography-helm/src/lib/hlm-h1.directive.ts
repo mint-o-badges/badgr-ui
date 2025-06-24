@@ -2,7 +2,7 @@ import { Directive, computed, input } from '@angular/core';
 import { hlm } from '@spartan-ng/brain/core';
 import type { ClassValue } from 'clsx';
 
-export const hlmH1 = 'scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl';
+export const hlmH1 = 'md:tw-text-[46px] md:tw-leading-[55.2px] tw-text-[30px] tw-leading-[36px]';
 
 @Directive({
 	selector: '[hlmH1]',

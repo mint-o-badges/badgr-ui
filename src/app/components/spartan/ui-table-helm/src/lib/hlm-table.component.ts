@@ -1,13 +1,4 @@
-import {
-	ChangeDetectionStrategy,
-	Component,
-	ViewEncapsulation,
-	computed,
-	effect,
-	input,
-	signal,
-	untracked,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewEncapsulation, computed, effect, input, signal } from '@angular/core';
 import { hlm } from '@spartan-ng/brain/core';
 import type { ClassValue } from 'clsx';
 
@@ -19,16 +10,14 @@ import type { ClassValue } from 'clsx';
 		role: 'table',
 		'[attr.aria-labelledby]': 'labeledBy()',
 	},
-	template: `
-		<ng-content />
-	`,
+	template: ` <ng-content /> `,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	encapsulation: ViewEncapsulation.None,
 })
 export class HlmTableComponent {
 	public readonly userClass = input<ClassValue>('', { alias: 'class' });
 	protected readonly _computedClass = computed(() =>
-		hlm('flex flex-col text-sm [&_hlm-trow:last-child]:border-0', this.userClass()),
+		hlm('tw-flex tw-flex-col tw-text-sm [&_hlm-trow:last-child]:tw-border-0', this.userClass()),
 	);
 
 	// we aria-labelledby to be settable from outside but use the input by default.
@@ -36,11 +25,6 @@ export class HlmTableComponent {
 	public readonly labeledBy = signal<string | null | undefined>(undefined);
 
 	constructor() {
-		effect(() => {
-			const labeledBy = this._labeledByInput();
-			untracked(() => {
-				this.labeledBy.set(labeledBy);
-			});
-		});
+		effect(() => this.labeledBy.set(this._labeledByInput()), { allowSignalWrites: true });
 	}
 }

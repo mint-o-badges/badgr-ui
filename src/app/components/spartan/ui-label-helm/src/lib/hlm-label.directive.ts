@@ -1,23 +1,23 @@
-import { Directive, computed, inject, input, signal } from '@angular/core';
+import { Directive, Input, computed, inject, input, signal } from '@angular/core';
 import { hlm } from '@spartan-ng/brain/core';
 import { BrnLabelDirective } from '@spartan-ng/brain/label';
-import { type VariantProps, cva } from 'class-variance-authority';
+import { cva, type VariantProps } from 'class-variance-authority';
 import type { ClassValue } from 'clsx';
 
 export const labelVariants = cva(
-	'text-sm font-medium leading-none [&>[hlmInput]]:my-1 [&:has([hlmInput]:disabled)]:cursor-not-allowed [&:has([hlmInput]:disabled)]:opacity-70',
+	'tw-text-sm tw-font-medium tw-leading-none [&>[hlmInput]]:tw-my-1 [&:has([hlmInput]:disabled)]:tw-cursor-not-allowed [&:has([hlmInput]:disabled)]:tw-opacity-70',
 	{
 		variants: {
 			variant: {
 				default: '',
 			},
 			error: {
-				auto: '[&:has([hlmInput].ng-invalid.ng-touched)]:text-destructive',
-				true: 'text-destructive',
+				auto: '[&:has([hlmInput].ng-invalid.ng-touched)]:tw-text-destructive',
+				true: 'tw-text-destructive',
 			},
 			disabled: {
-				auto: '[&:has([hlmInput]:disabled)]:opacity-70',
-				true: 'opacity-70',
+				auto: '[&:has([hlmInput]:disabled)]:tw-opacity-70',
+				true: 'tw-opacity-70',
 				false: '',
 			},
 		},
@@ -46,20 +46,11 @@ export class HlmLabelDirective {
 	private readonly _brn = inject(BrnLabelDirective, { host: true });
 
 	public readonly userClass = input<ClassValue>('', { alias: 'class' });
-
-	public readonly variant = input<LabelVariants['variant']>('default');
-
-	public readonly error = input<LabelVariants['error']>('auto');
-
-	protected readonly state = computed(() => ({
-		error: signal(this.error()),
-	}));
-
 	protected readonly _computedClass = computed(() =>
 		hlm(
 			labelVariants({
-				variant: this.variant(),
-				error: this.state().error(),
+				variant: this._variant(),
+				error: this._error(),
 				disabled: this._brn?.dataDisabled() ?? 'auto',
 			}),
 			'[&.ng-invalid.ng-touched]:text-destructive',
@@ -67,7 +58,15 @@ export class HlmLabelDirective {
 		),
 	);
 
-	setError(error: LabelVariants['error']): void {
-		this.state().error.set(error);
+	private readonly _variant = signal<LabelVariants['variant']>('default');
+	@Input()
+	set variant(value: LabelVariants['variant']) {
+		this._variant.set(value);
+	}
+
+	private readonly _error = signal<LabelVariants['error']>('auto');
+	@Input()
+	set error(value: LabelVariants['error']) {
+		this._error.set(value);
 	}
 }

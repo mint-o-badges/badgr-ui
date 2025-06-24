@@ -16,13 +16,12 @@ import { PublicApiBadgeAssertionWithBadgeClass } from '../../../public/models/pu
 import { NgIf } from '@angular/common';
 import { LoadingDotsComponent } from '../../components/loading-dots.component';
 import { SvgIconComponent } from '../../components/svg-icon.component';
-import { BadgrButtonComponent } from '../../components/badgr-button.component';
 
 @Component({
 	selector: 'export-pdf-dialog',
 	templateUrl: 'export-pdf-dialog.component.html',
 	styleUrls: ['export-pdf-dialog.component.css'],
-	imports: [NgIf, LoadingDotsComponent, SvgIconComponent, BadgrButtonComponent],
+	imports: [NgIf, LoadingDotsComponent, SvgIconComponent],
 })
 export class ExportPdfDialog extends BaseDialog {
 	badge: RecipientBadgeInstance | PublicApiBadgeAssertionWithBadgeClass | null = null;

@@ -1,12 +1,19 @@
-import { Component, booleanAttribute, computed, forwardRef, input, model, output, signal } from '@angular/core';
+import {
+	Component,
+	EventEmitter,
+	Input,
+	Output,
+	booleanAttribute,
+	computed,
+	forwardRef,
+	input,
+	signal,
+} from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import { NgIcon, provideIcons } from '@ng-icons/core';
-import { lucideCheck } from '@ng-icons/lucide';
-import { BrnCheckboxComponent } from '@spartan-ng/brain/checkbox';
+import { BrnCheckboxComponent, indeterminateBooleanAttribute } from '@spartan-ng/brain/checkbox';
 import { hlm } from '@spartan-ng/brain/core';
-import type { ChangeFn, TouchFn } from '@spartan-ng/brain/forms';
-import { HlmIconDirective } from '@spartan-ng/ui-icon-helm';
 import type { ClassValue } from 'clsx';
+import { HlmCheckboxCheckIconComponent } from './hlm-checkbox-checkicon.component';
 
 export const HLM_CHECKBOX_VALUE_ACCESSOR = {
 	provide: NG_VALUE_ACCESSOR,
@@ -16,22 +23,22 @@ export const HLM_CHECKBOX_VALUE_ACCESSOR = {
 
 @Component({
 	selector: 'hlm-checkbox',
-	imports: [BrnCheckboxComponent, NgIcon, HlmIconDirective],
+	imports: [BrnCheckboxComponent, HlmCheckboxCheckIconComponent],
 	template: `
 		<brn-checkbox
 			[id]="id()"
 			[name]="name()"
 			[class]="_computedClass()"
-			[checked]="checked()"
-			[disabled]="state().disabled()"
+			[checked]="_checked()"
+			[disabled]="disabled()"
 			[required]="required()"
 			[aria-label]="ariaLabel()"
 			[aria-labelledby]="ariaLabelledby()"
 			[aria-describedby]="ariaDescribedby()"
 			(changed)="_handleChange()"
-			(touched)="_onTouched?.()"
+			(touched)="_onTouched()"
 		>
-			<ng-icon [class]="_computedIconClass()" hlm size="sm" name="lucideCheck" />
+			<hlm-checkbox-checkicon [class]="checkIconClass()" [iconName]="checkIconName()" />
 		</brn-checkbox>
 	`,
 	host: {
@@ -42,22 +49,16 @@ export const HLM_CHECKBOX_VALUE_ACCESSOR = {
 		'[attr.aria-describedby]': 'null',
 	},
 	providers: [HLM_CHECKBOX_VALUE_ACCESSOR],
-	viewProviders: [provideIcons({ lucideCheck })],
 })
 export class HlmCheckboxComponent {
 	public readonly userClass = input<ClassValue>('', { alias: 'class' });
-
-	protected readonly _computedClass = computed(() =>
+	protected _computedClass = computed(() =>
 		hlm(
-			'group inline-flex border border-foreground shrink-0 cursor-pointer items-center rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring' +
-				' focus-visible:ring-offset-2 focus-visible:ring-offset-background data-[state=checked]:text-background data-[state=checked]:bg-primary data-[state=unchecked]:bg-background',
+			'tw-group tw-flex tw-border tw-border-purple tw-shrink-0 tw-cursor-pointer tw-items-center tw-rounded-[5px] focus-visible:tw-outline-none focus-visible:tw-ring-2 focus-visible:tw-ring-ring' +
+				' focus-visible:tw-ring-offset-2 focus-visible:tw-ring-offset-background data-[state=checked]:tw-text-background data-[state=checked]:tw-bg-purple data-[state=unchecked]:tw-bg-background data-[state=indeterminate]:tw-bg-white',
 			this.userClass(),
-			this.state().disabled() ? 'cursor-not-allowed opacity-50' : '',
+			this.disabled() ? 'tw-cursor-not-allowed tw-opacity-50' : '',
 		),
-	);
-
-	protected readonly _computedIconClass = computed(() =>
-		hlm('leading-none group-data-[state=unchecked]:opacity-0', this.checked() === 'indeterminate' ? 'opacity-50' : ''),
 	);
 
 	/** Used to set the id on the underlying brn element. */
@@ -72,52 +73,51 @@ export class HlmCheckboxComponent {
 	/** Used to set the aria-describedby attribute on the underlying brn element. */
 	public readonly ariaDescribedby = input<string | null>(null, { alias: 'aria-describedby' });
 
-	/** The checked state of the checkbox. */
-	public readonly checked = model<CheckboxValue>(false);
-
-	/** The name attribute of the checkbox. */
 	public readonly name = input<string | null>(null);
-
-	/** Whether the checkbox is required. */
+	public readonly disabled = input(false, { transform: booleanAttribute });
 	public readonly required = input(false, { transform: booleanAttribute });
 
-	/** Whether the checkbox is disabled. */
-	public readonly disabled = input(false, { transform: booleanAttribute });
+	// icon inputs
+	public readonly checkIconName = input<string>('lucideCheck');
+	public readonly checkIconClass = input<string>('');
 
-	protected readonly state = computed(() => ({
-		disabled: signal(this.disabled()),
-	}));
-
-	public readonly changed = output<boolean>();
-
-	protected _onChange?: ChangeFn<CheckboxValue>;
-	protected _onTouched?: TouchFn;
+	@Output()
+	public changed = new EventEmitter<boolean>();
 
 	protected _handleChange(): void {
-		if (this.state().disabled()) return;
+		if (this.disabled()) return;
 
-		const previousChecked = this.checked();
-		this.checked.set(previousChecked === 'indeterminate' ? true : !previousChecked);
-		this._onChange?.(!previousChecked);
+		const previousChecked = this._checked();
+		this._checked.set(previousChecked === 'indeterminate' ? true : !previousChecked);
+		this._onChange(!previousChecked);
 		this.changed.emit(!previousChecked);
 	}
 
-	/** CONROL VALUE ACCESSOR */
-	writeValue(value: CheckboxValue): void {
-		this.checked.set(!!value);
+	// TODO should be changed to new model input when updated to Angular 17.2
+	protected _checked = signal<boolean | 'indeterminate'>(false);
+	@Input({ transform: indeterminateBooleanAttribute })
+	set checked(value: boolean | 'indeterminate') {
+		this._checked.set(value);
 	}
 
-	registerOnChange(fn: ChangeFn<CheckboxValue>): void {
+	/** CONROL VALUE ACCESSOR */
+
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	writeValue(value: any): void {
+		this.checked = !!value;
+	}
+	// eslint-disable-next-line @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars,,@typescript-eslint/no-explicit-any
+	protected _onChange = (_: any) => {};
+	// eslint-disable-next-line @typescript-eslint/no-empty-function
+	protected _onTouched = () => {};
+
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	registerOnChange(fn: any): void {
 		this._onChange = fn;
 	}
 
-	registerOnTouched(fn: TouchFn): void {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	registerOnTouched(fn: any): void {
 		this._onTouched = fn;
 	}
-
-	setDisabledState(isDisabled: boolean): void {
-		this.state().disabled.set(isDisabled);
-	}
 }
-
-type CheckboxValue = boolean | 'indeterminate';

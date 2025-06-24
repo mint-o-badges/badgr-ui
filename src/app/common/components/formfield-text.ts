@@ -15,7 +15,6 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angul
 import { UrlValidator } from '../validators/url.validator';
 import { CommonDialogsService } from '../services/common-dialogs.service';
 import { NgIf } from '@angular/common';
-import { BadgrButtonComponent } from './badgr-button.component';
 
 @Component({
 	selector: 'bg-formfield-text',
