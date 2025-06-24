@@ -25,6 +25,8 @@ import { CompetencyAccordionComponent } from '../../../components/accordion.comp
 import { OebSeparatorComponent } from '../../../components/oeb-separator.component';
 import { BgLearningPathCard } from '../bg-learningpathcard';
 import { HourPipe } from '../../pipes/hourPipe';
+import { PublicApiLearningPath } from '../../../public/models/public-api.model';
+import { ApiImportedBadgeInstance } from '../../../recipient/models/recipient-badge-api.model';
 
 @Component({
 	selector: 'bg-badgedetail',
@@ -59,7 +61,7 @@ import { HourPipe } from '../../pipes/hourPipe';
 export class BgBadgeDetail {
 	@Input() config: PageConfig;
 	@Input() awaitPromises?: Promise<any>[];
-	@Input() badge?: RecipientBadgeInstance | BadgeInstance;
+	@Input() badge?: RecipientBadgeInstance | BadgeInstance | ApiImportedBadgeInstance;
 
 	constructor(
 		private dialogService: CommonDialogsService,
@@ -70,9 +72,13 @@ export class BgBadgeDetail {
 		});
 	}
 
+	getLearningPaths(): PublicApiLearningPath[] {
+		return this.config.learningPaths as PublicApiLearningPath[];
+	}
+
 	competencyBadge = this.translate.instant('Badge.categories.competency');
 
-	calculateLearningPathStatus(lp: LearningPath): { match: string } | { progress: number } {
+	calculateLearningPathStatus(lp: LearningPath | PublicApiLearningPath): { match: string } | { progress: number } {
 		if (lp.progress != null) {
 			const percentCompleted = lp.progress;
 			return { progress: percentCompleted };
@@ -82,11 +88,11 @@ export class BgBadgeDetail {
 		// }
 	}
 
-	checkCompleted(lp: LearningPath): boolean {
+	checkCompleted(lp: LearningPath | PublicApiLearningPath): boolean {
 		return lp.completed_at != null;
 	}
 
-	calculateStudyLoad(lp: LearningPath): number {
+	calculateStudyLoad(lp: LearningPath | PublicApiLearningPath): number {
 		const totalStudyLoad = lp.badges.reduce(
 			(acc, b) => acc + b.badge.extensions['extensions:StudyLoadExtension'].StudyLoad,
 			0,
@@ -106,7 +112,7 @@ export class BgBadgeDetail {
 			shareSummary: this.config.badgeDescription,
 			shareEndpoint: 'certification',
 			embedOptions: [],
-			badge: this.badge,
+			badge: this.badge as any,
 		});
 	}
 }

@@ -22,7 +22,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { BgBadgeDetail } from '../../../common/components/badge-detail/badge-detail.component';
 
 @Component({
-	template: ` <bg-badgedetail [config]="config" [awaitPromises]="[assertionIdParam]"></bg-badgedetail>`,
+	template: ` <bg-badgedetail [config]="config" [awaitPromises]="[assertionIdParam.loadedPromise]"></bg-badgedetail>`,
 	imports: [BgBadgeDetail],
 })
 export class PublicBadgeAssertionComponent {

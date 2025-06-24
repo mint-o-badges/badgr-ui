@@ -14,6 +14,7 @@ import { OebCheckboxComponent } from '../../components/oeb-checkbox.component';
 import { DatatableComponent } from '../../components/datatable-badges.component';
 import { CompetencyAccordionComponent } from '../../components/accordion.component';
 import { OebSpinnerComponent } from '../../components/oeb-spinner.component';
+import { BadgeClass } from '../../issuer/models/badgeclass.model';
 
 @Component({
 	selector: 'oeb-showcase',
@@ -36,22 +37,31 @@ import { OebSpinnerComponent } from '../../components/oeb-spinner.component';
 export class ShowcaseComponent {
 	public badges = [
 		{
-			image: 'test',
-			description: 'adskadjadalsd',
-			createdAt: '2009-06-15T13:45:30',
-			recipientCount: 10,
+			requestCount: 10,
+			badge: {
+				name: 'test',
+				image: 'test',
+				description: 'adskadjadalsd',
+				createdAt: '2009-06-15T13:45:30',
+			} as unknown as BadgeClass,
 		},
 		{
-			image: 'test2323',
-			description: 'adskadjadalsd',
-			createdAt: '2009-01-15T13:45:30',
-			recipientCount: 102,
+			requestCount: 0,
+			badge: {
+				name: 'test2323',
+				image: 'test2323',
+				description: 'adskadjadalsd',
+				createdAt: '2009-01-15T13:45:30',
+			} as unknown as BadgeClass,
 		},
 		{
-			image: 'test',
-			description: 'adskadjadalsd',
-			createdAt: '2009-03-15T13:45:30',
-			recipientCount: 0,
+			requestCount: 1,
+			badge: {
+				image: 'test',
+				name: 'test1232354345',
+				description: 'adskadjadalsd',
+				createdAt: '2009-03-15T13:45:30',
+			} as unknown as BadgeClass,
 		},
 	];
 

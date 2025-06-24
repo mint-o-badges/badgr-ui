@@ -20,6 +20,7 @@ import { FormMessageComponent } from '../../../common/components/form-message.co
 import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
 import { HlmH3Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h3.directive';
 import { LearningPathEditFormComponent } from '../learningpath-edit-form/learningpath-edit-form.component';
+import { ApiLearningPath } from '../../../common/model/learningpath-api.model';
 
 @Component({
 	selector: 'learningpath-create',
@@ -81,7 +82,7 @@ export class LearningPathCreateComponent extends BaseAuthenticatedRoutableCompon
 		});
 	}
 
-	learningPathCreated(promise: Promise<LearningPath>) {
+	learningPathCreated(promise: Promise<LearningPath | ApiLearningPath>) {
 		promise.then(
 			(lp) => {
 				this.router.navigate(['issuer/issuers', this.issuerSlug, 'learningpaths', lp.slug]).then(() => {

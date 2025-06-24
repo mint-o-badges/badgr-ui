@@ -73,7 +73,7 @@ type MatchOrProgressType = { match?: string; progress?: number };
 							<div
 								class="tw-px-[11.55px] tw-py-[3.85px] tw-bg-lightpurple tw-rounded-[95px] tw-inline-block"
 							>
-								<span class="tw-text-sm tw-text-purple">{{ this._matchOrProgress?.match }} Badges</span>
+								<span class="tw-text-sm tw-text-purple">{{ this.isMatch }} Badges</span>
 							</div>
 						</div>
 						<ng-template #progressBar>

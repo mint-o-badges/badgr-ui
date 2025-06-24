@@ -35,6 +35,7 @@ import { HlmInputDirective } from '../../../components/spartan/ui-input-helm/src
 import { BgBadgecard } from '../bg-badgecard';
 import { LearningPathDatatableComponent } from '../../../components/datatable-learningpaths.component';
 import { BgLearningPathCard } from '../bg-learningpathcard';
+import { PublicApiBadgeClass, PublicApiIssuer, PublicApiLearningPath } from '../../../public/models/public-api.model';
 
 @Component({
 	selector: 'oeb-issuer-detail',
@@ -63,11 +64,11 @@ import { BgLearningPathCard } from '../bg-learningpathcard';
 	],
 })
 export class OebIssuerDetailComponent implements OnInit {
-	@Input() issuer: Issuer;
+	@Input() issuer: Issuer | PublicApiIssuer;
 	@Input() issuerPlaceholderSrc: string;
 	@Input() issuerActionsMenu: any;
-	@Input() badges: BadgeClass[];
-	@Input() learningPaths: ApiLearningPath[];
+	@Input() badges: BadgeClass[] | PublicApiBadgeClass[];
+	@Input() learningPaths: (ApiLearningPath | PublicApiLearningPath)[];
 	@Input() public: boolean = false;
 	@Output() issuerDeleted = new EventEmitter();
 
@@ -95,6 +96,10 @@ export class OebIssuerDetailComponent implements OnInit {
 	}
 
 	private readonly _hlmDialogService = inject(HlmDialogService);
+
+	isFullIssuer(issuer: Issuer | PublicApiIssuer): issuer is Issuer {
+		return 'currentUserStaffMember' in issuer;
+	}
 
 	menuItemsPublic: MenuItem[] = [
 		{
@@ -155,6 +160,14 @@ export class OebIssuerDetailComponent implements OnInit {
 	set searchQuery(query) {
 		this._searchQuery = query;
 		this.updateResults();
+	}
+
+	get lps() {
+		if (this.public) {
+			return this.learningPaths as PublicApiLearningPath[];
+		} else {
+			return this.learningPaths as ApiLearningPath[];
+		}
 	}
 
 	private async updateResults() {

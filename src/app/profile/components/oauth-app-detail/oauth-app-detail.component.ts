@@ -14,6 +14,7 @@ import { FormMessageComponent } from '../../../common/components/form-message.co
 import { TimeComponent } from '../../../common/components/time.component';
 import { NgIf, NgFor } from '@angular/common';
 import { SvgIconComponent } from '../../../common/components/svg-icon.component';
+import { PatternLibraryIconName } from '../../../common/components/svg-icon.component';
 
 @Component({
 	selector: 'oauth-app-detail-component',
@@ -25,7 +26,7 @@ export class OAuthAppDetailComponent extends BaseAuthenticatedRoutableComponent 
 	appTokens: OAuth2AppAuthorization[];
 	appPromise: Promise<unknown>;
 
-	permisionScopeToIconName(scope: string): string {
+	permisionScopeToIconName(scope: string): PatternLibraryIconName {
 		switch (scope) {
 			case 'permission-issuer':
 				return 'icon_issuer2';

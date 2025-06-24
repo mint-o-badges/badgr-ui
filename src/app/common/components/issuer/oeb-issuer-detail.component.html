@@ -21,7 +21,7 @@
 					<a hlmA target="_blank" [href]="issuer.url">{{ issuer.url }}</a>
 				</p>
 			</ng-container>
-			<ng-container *ngIf="!public">
+			<ng-container *ngIf="!public && isFullIssuer(issuer)">
 				<p
 					class="tw-text-oebblack tw-font-semibold md:tw-text-[20px] md:tw-leading-[24.4px] tw-text-[14px] tw-leading-[19.6px]"
 				>
@@ -32,7 +32,10 @@
 		</div>
 	</div>
 	<div class="tw-w-auto tw-hidden md:tw-grid !tw-content-center">
-		<p *ngIf="issuer.apiModel && !issuer.apiModel.verified" class="u-margin-top1x u-width-paragraph">
+		<p
+			*ngIf="isFullIssuer(issuer) && issuer.apiModel && !issuer.apiModel.verified"
+			class="u-margin-top1x u-width-paragraph"
+		>
 			{{ 'Issuer.nichtVerified' | translate }}
 		</p>
 		<div class="tw-flex tw-gap-2">
@@ -40,13 +43,13 @@
 				class="tw-whitespace-nowrap"
 				*ngIf="!public"
 				[routerLink]="activeTab === 'badges' ? ['./badges/select'] : ['./learningpaths/create']"
-				[disabled]="!issuer.canCreateBadge"
+				[disabled]="isFullIssuer(issuer) && !issuer.canCreateBadge"
 				[text]="
 					activeTab === 'badges'
 						? ('Issuer.createBadge' | translate)
 						: ('Issuer.myInstitutionsCreateLearningPath' | translate)
 				"
-				[class]="issuer.canCreateBadge ? '' : 'disabled'"
+				[class]="isFullIssuer(issuer) && issuer.canCreateBadge ? '' : 'disabled'"
 			>
 			</oeb-button>
 			<div *ngIf="public" class="tw-flex tw-gap-2">
@@ -64,7 +67,7 @@
 			<oeb-dropdown
 				[trigger]="svgTrigger"
 				class="tw-items-center tw-justify-center tw-flex tw-cursor-pointer tw-border tw-border-solid tw-border-[var(--color-purple)] tw-rounded-[7px]"
-				*ngIf="menuItemsPublic && issuer.canUpdateDeleteIssuer"
+				*ngIf="menuItemsPublic && isFullIssuer(issuer) && issuer.canUpdateDeleteIssuer"
 				[menuItems]="public ? menuItemsPublic : menuItems"
 			></oeb-dropdown>
 			<ng-template #svgTrigger>
@@ -82,16 +85,21 @@
 	<p class="tw-text-oebblack oeb-break-words tw-py-4">{{ issuer.description }}</p>
 </div>
 <div class="topbar-x-buttons tw-grid md:tw-hidden">
-	<p *ngIf="issuer.apiModel && !issuer.apiModel.verified" class="u-margin-top1x u-width-paragraph">
+	<p
+		*ngIf="isFullIssuer(issuer) && issuer.apiModel && !issuer.apiModel.verified"
+		class="u-margin-top1x u-width-paragraph"
+	>
 		{{ 'Issuer.nichtVerified' | translate }}
 	</p>
 	<div class="tw-flex tw-flex-wrap tw-gap-4">
 		<oeb-button
 			*ngIf="!public"
 			width="full_width"
-			[class]="'tw-flex-grow tw-relative'.concat(issuer.canCreateBadge ? '' : ' disabled')"
+			[class]="
+				'tw-flex-grow tw-relative'.concat(isFullIssuer(issuer) && issuer.canCreateBadge ? '' : ' disabled')
+			"
 			[routerLink]="activeTab === 'badges' ? ['./badges/select'] : ['./learningpaths/create']"
-			[disabled]="!issuer.canCreateBadge"
+			[disabled]="isFullIssuer(issuer) && !issuer.canCreateBadge"
 			[text]="
 				activeTab === 'badges'
 					? ('Issuer.createBadge' | translate)
@@ -182,11 +190,9 @@
 						[badgeImage]="badge.badge.image"
 						[badgeDescription]="badge.badge.description"
 						[badgeSlug]="badge.badge.slug"
-						[issuerTitle]="badge.issuerName ? badge.issuerName : badge.issuer.name"
+						[issuerTitle]="badge.issuerName ? badge.issuerName : badge.badge.issuer"
 						[badgeIssueDate]="badge.badge.createdAt"
-						public="true"
-						[publicUrl]="badge.badge.id"
-						[badgeClass]="true"
+						[public]="true"
 					></bg-badgecard>
 				</div>
 			</ng-container>
@@ -210,7 +216,7 @@
 					<learningpaths-datatable
 						*ngIf="!public"
 						[learningPaths]="learningPaths"
-						[issuer]="issuer"
+						[issuer]="isFullIssuer(issuer) ? issuer : null"
 						(actionElement)="deleteLearningPath($event, issuer)"
 						(redirectToLearningPathDetail)="redirectToLearningPathDetail($event, issuer)"
 					></learningpaths-datatable>
@@ -219,7 +225,6 @@
 						<div class="tw-grid tw-grid-cols-learningpaths tw-gap-6">
 							<bg-learningpathcard
 								*ngFor="let lp of learningPaths"
-								[badgeImage]="lp.image"
 								[name]="lp.name"
 								[issuerTitle]="issuer.name"
 								[description]="lp.description"

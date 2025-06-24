@@ -35,6 +35,9 @@ export class NounprojectDialog extends BaseDialog implements AfterViewInit {
 	resolveFunc: (BadgeClass) => void;
 	rejectFunc: () => void;
 
+	readonly badgeLoadingImageUrl = '../../../breakdown/static/images/badge-loading.svg';
+	readonly badgeFailedImageUrl = '../../../breakdown/static/images/badge-failed.svg';
+
 	icons: any[] = null;
 	maxDisplayedResults = 10;
 	order = 'asc';
