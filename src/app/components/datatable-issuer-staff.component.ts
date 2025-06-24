@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-import { HlmIconModule } from './spartan/ui-icon-helm/src';
+
 import { RouterModule } from '@angular/router';
 import { Component, Input, Output, EventEmitter, ChangeDetectorRef, SimpleChanges } from '@angular/core';
 import { HlmTableModule } from './spartan/ui-table-helm/src';
@@ -8,6 +8,7 @@ import { HlmPDirective } from '../components/spartan/ui-typography-helm/src/lib/
 import { Issuer, IssuerStaffMember, issuerStaffRoles } from '../issuer/models/issuer.model';
 import { IssuerStaffRoleSlug } from '../issuer/models/issuer-api.model';
 import { FormFieldSelectOption } from '../common/components/formfield-select';
+import { HlmIconModule } from '@spartan-ng/ui-icon-helm';
 
 @Component({
 	selector: 'issuer-staff-datatable',

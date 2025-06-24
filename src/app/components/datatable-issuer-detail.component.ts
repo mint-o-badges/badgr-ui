@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { BadgrCommonModule } from '../common/badgr-common.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { BrnAccordionContentComponent } from '@spartan-ng/brain/accordion';
-import { HlmIconModule } from './spartan/ui-icon-helm/src';
+
 import { RouterModule } from '@angular/router';
 import { Component, EventEmitter, Input, Output, computed, effect, input, signal } from '@angular/core';
 import { HlmTableModule } from './spartan/ui-table-helm/src';

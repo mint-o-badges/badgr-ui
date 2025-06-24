@@ -3,24 +3,25 @@ import { NgIf } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { BrnAccordionContentComponent } from '@spartan-ng/brain/accordion';
 import { HlmAccordionModule } from './spartan/ui-accordion-helm/src';
-import { HlmIconModule } from './spartan/ui-icon-helm/src';
+
 import { RouterModule } from '@angular/router';
 import { Component, Input } from '@angular/core';
 import { lucideClock, lucideChevronDown } from '@ng-icons/lucide';
 import { provideIcons } from '@ng-icons/core';
+import { HlmIconDirective } from './spartan/ui-icon-helm/src/lib/hlm-icon.directive';
 
 @Component({
 	selector: 'competency-accordion',
 	providers: [provideIcons({ lucideClock, lucideChevronDown })],
 	imports: [
-		HlmAccordionModule,
-		NgIcon,
-		HlmIconModule,
-		TranslateModule,
-		BrnAccordionContentComponent,
-		RouterModule,
-		NgIf,
-	],
+    HlmAccordionModule,
+    NgIcon,
+    HlmIconDirective,
+    TranslateModule,
+    BrnAccordionContentComponent,
+    RouterModule,
+    NgIf
+],
 	template: `
 		<div class="tw-bg-[var(--color-lightgray)] tw-border tw-border-solid tw-border-purple tw-rounded-lg tw-mt-4">
 			<div hlmAccordion>

@@ -11,7 +11,7 @@ import {
 	effect,
 } from '@angular/core';
 import { HlmButtonDirective } from './spartan/ui-button-helm/src';
-import { HlmIconModule } from './spartan/ui-icon-helm/src';
+
 import { HlmIconDirective } from './spartan/ui-icon-helm/src';
 import {
 	BrnCollapsibleComponent,
