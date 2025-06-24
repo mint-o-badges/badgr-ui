@@ -1,20 +1,9 @@
 import { Component, OnInit, Input, inject, Output, EventEmitter } from '@angular/core';
-import {
-	DndDraggableDirective,
-	DndDropEvent,
-	DndDropzoneDirective,
-	DndHandleDirective,
-	DndPlaceholderRefDirective,
-	DropEffect,
-	EffectAllowed,
-	DndModule,
-} from 'ngx-drag-drop';
+import { DndDraggableDirective, DndDropEvent, DndDropzoneDirective, DropEffect } from 'ngx-drag-drop';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { BadgeClassManager } from '../../../../issuer/services/badgeclass-manager.service';
 import { HlmDialogService } from '../../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
 import { DangerDialogComponent } from '../../../../common/dialogs/oeb-dialogs/danger-dialog.component';
-import { typedFormGroup } from '../../../../common/util/typed-forms';
-import { FormControl, Validators } from '@angular/forms';
 import { BadgeClass } from '../../../../issuer/models/badgeclass.model';
 import { HlmH2Directive } from '../../../../components/spartan/ui-typography-helm/src/lib/hlm-h2.directive';
 import { HlmPDirective } from '../../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';

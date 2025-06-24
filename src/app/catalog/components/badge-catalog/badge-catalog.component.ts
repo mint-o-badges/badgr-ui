@@ -20,14 +20,13 @@ import { FormMessageComponent } from '../../../common/components/form-message.co
 import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
 import { CountUpModule } from 'ngx-countup';
-import { NgIf, NgFor, I18nPluralPipe } from '@angular/common';
+import { NgIf, NgFor } from '@angular/common';
 import { BadgeLegendComponent } from '../../../common/components/badge-legend/badge-legend.component';
 import { HlmInputDirective } from '../../../components/spartan/ui-input-helm/src/lib/hlm-input.directive';
 import { NgIcon } from '@ng-icons/core';
 import { HlmIconDirective } from '../../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
 import { OebGlobalSortSelectComponent } from '../../../components/oeb-global-sort-select.component';
 import { OebSelectComponent } from '../../../components/select.component';
-import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { BgBadgecard } from '../../../common/components/bg-badgecard';
 import { PaginationAdvancedComponent } from '../../../components/oeb-numbered-pagination';
 import { SortPipe } from '../../../common/pipes/sortPipe';
@@ -50,11 +49,9 @@ import { SortPipe } from '../../../common/pipes/sortPipe';
 		HlmIconDirective,
 		OebGlobalSortSelectComponent,
 		OebSelectComponent,
-		OebButtonComponent,
 		NgFor,
 		BgBadgecard,
 		PaginationAdvancedComponent,
-		I18nPluralPipe,
 		SortPipe,
 		TranslatePipe,
 	],

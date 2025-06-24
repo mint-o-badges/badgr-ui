@@ -12,7 +12,6 @@ import { BadgeClassEditQrComponent } from './components/badgeclass-edit-qr/badge
 import { BadgeClassIssueQrComponent } from './components/badgeclass-issue-qr/badgeclass-issue-qr.component';
 import { BadgeClassGenerateQrComponent } from './components/badgeclass-generate-qr/badgeclass-generate-qr.component';
 import { LearningPathCreateComponent } from './components/learningpath-create/learningpath-create.component';
-import { LearningPathUploadComponent } from './components/learningpath-upload/learningpath-upload.component';
 import { IssuerLearningPathComponent } from './components/issuer-learning-path/issuer-learning-path.component';
 import { LearningPathEditComponent } from './components/learningpath-edit/learningpath-edit.component';
 import { BadgeClassSelectTypeComponent } from './components/badgeclass-select-type/badgeclass-select-type.component';
@@ -55,10 +54,6 @@ export const routes = [
 	{
 		path: 'issuers/:issuerSlug/badges/:badgeSlug',
 		component: BadgeClassDetailComponent,
-	},
-	{
-		path: 'issuers/:issuerSlug/learningpaths/upload',
-		component: LearningPathUploadComponent,
 	},
 	{
 		path: 'issuers/:issuerSlug/learningpaths/create',

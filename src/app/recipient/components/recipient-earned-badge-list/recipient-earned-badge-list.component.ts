@@ -78,7 +78,6 @@ type EscoCompetencies = {
 		provideIcons({ lucideHeart }),
 	],
 	imports: [
-		ImportLauncherDirective,
 		FormMessageComponent,
 		BgAwaitPromises,
 		HlmH2Directive,

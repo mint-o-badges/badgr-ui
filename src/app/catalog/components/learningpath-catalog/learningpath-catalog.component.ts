@@ -2,10 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from '../../../common/services/message.service';
 import { Title } from '@angular/platform-browser';
-import { preloadImageURL } from '../../../common/util/file-util';
 import { AppConfigService } from '../../../common/app-config.service';
 import { BaseRoutableComponent } from '../../../common/pages/base-routable.component';
-import { BadgeClassCategory } from '../../../issuer/models/badgeclass-api.model';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { SessionService } from '../../../common/services/session.service';
 import { LearningPathManager } from '../../../issuer/services/learningpath-manager.service';
@@ -16,14 +14,13 @@ import { IssuerManager } from '../../../issuer/services/issuer-manager.service';
 import { sortUnique } from '../badge-catalog/badge-catalog.component';
 import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
 import { RecipientBadgeApiService } from '../../../recipient/services/recipient-badges-api.service';
-import { ApiRecipientBadgeInstance } from '../../../recipient/models/recipient-badge-api.model';
 import { appearAnimation } from '../../../common/animations/animations';
 import { FormControl, FormsModule } from '@angular/forms';
 import { applySorting } from '../../util/sorting';
 import { FormMessageComponent } from '../../../common/components/form-message.component';
 import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
-import { NgIf, NgFor, I18nPluralPipe } from '@angular/common';
+import { NgIf, NgFor } from '@angular/common';
 import { CountUpModule } from 'ngx-countup';
 import { HlmInputDirective } from '../../../components/spartan/ui-input-helm/src/lib/hlm-input.directive';
 import { NgIcon } from '@ng-icons/core';
@@ -51,7 +48,6 @@ import { PaginationAdvancedComponent } from '../../../components/oeb-numbered-pa
 		NgFor,
 		BgLearningPathCard,
 		PaginationAdvancedComponent,
-		I18nPluralPipe,
 		TranslatePipe,
 	],
 })

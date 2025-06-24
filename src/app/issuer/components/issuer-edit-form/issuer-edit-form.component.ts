@@ -21,7 +21,6 @@ import { BgFormFieldImageComponent } from '../../../common/components/formfield-
 import { OebInputComponent } from '../../../components/input.component';
 import { OebSelectComponent } from '../../../components/select.component';
 import { OebCheckboxComponent } from '../../../components/oeb-checkbox.component';
-import { NgIf } from '@angular/common';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 
 @Component({
@@ -34,7 +33,6 @@ import { OebButtonComponent } from '../../../components/oeb-button.component';
 		OebInputComponent,
 		OebSelectComponent,
 		OebCheckboxComponent,
-		NgIf,
 		ReactiveFormsModule,
 		OebButtonComponent,
 		RouterLink,

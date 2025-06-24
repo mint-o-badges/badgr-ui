@@ -1,14 +1,6 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
-import {
-	FormArray,
-	FormBuilder,
-	FormControl,
-	ValidationErrors,
-	Validators,
-	FormsModule,
-	ReactiveFormsModule,
-} from '@angular/forms';
+import { FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SessionService } from '../../../common/services/session.service';
 import { MessageService } from '../../../common/services/message.service';
 import { IssuerApiService } from '../../services/issuer-api.service';
@@ -17,30 +9,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { BadgeClassManager } from '../../services/badgeclass-manager.service';
 import { BadgeClass } from '../../models/badgeclass.model';
-import { sortUnique } from '../../../catalog/components/badge-catalog/badge-catalog.component';
-import { StringMatchingUtil } from '../../../common/util/string-matching-util';
-import {
-	DndDraggableDirective,
-	DndDropEvent,
-	DndDropzoneDirective,
-	DndHandleDirective,
-	DndPlaceholderRefDirective,
-	DropEffect,
-	EffectAllowed,
-	DndModule,
-} from 'ngx-drag-drop';
+import { EffectAllowed } from 'ngx-drag-drop';
 import { typedFormGroup } from '../../../common/util/typed-forms';
 import { LearningPath } from '../../models/learningpath.model';
-import { BadgeStudioComponent } from '../badge-studio/badge-studio.component';
-import { BgFormFieldImageComponent } from '../../../common/components/formfield-image';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { BadgeInstanceManager } from '../../services/badgeinstance-manager.service';
-import { ApiLearningPath, ApiLearningPathForCreation } from '../../../common/model/learningpath-api.model';
-import { BadgeClassCategory } from '../../models/badgeclass-api.model';
-import { FormFieldSelectOption } from '../../../common/components/formfield-select';
+import { ApiLearningPath } from '../../../common/model/learningpath-api.model';
 import { LearningPathManager } from '../../services/learningpath-manager.service';
 import { StepperComponent } from '../../../components/stepper/stepper.component';
-import { base64ByteSize } from '../../../common/util/file-util';
 import { LearningPathDetailsComponent } from '../learningpath-create-steps/learningpath-details/learningpath-details.component';
 import { LearningPathBadgesComponent } from '../learningpath-create-steps/learningpath-badges/learningpath-badges.component';
 import { LearningPathBadgeOrderComponent } from '../learningpath-create-steps/learningpath-badge-order/learningpath-badge-order.component';

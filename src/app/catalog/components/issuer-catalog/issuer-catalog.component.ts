@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, NgModule, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SessionService } from '../../../common/services/session.service';
 import { MessageService } from '../../../common/services/message.service';
@@ -52,7 +52,6 @@ import { PaginationAdvancedComponent } from '../../../components/oeb-numbered-pa
 		NgFor,
 		IssuerCardComponent,
 		PaginationAdvancedComponent,
-		I18nPluralPipe,
 		TranslatePipe,
 	],
 })
