@@ -20,7 +20,7 @@ import { FormMessageComponent } from '../../../common/components/form-message.co
 import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
 import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 import { CountUpModule } from 'ngx-countup';
-import { NgIf, NgClass, NgFor, I18nPluralPipe } from '@angular/common';
+import { NgIf, NgClass, NgFor } from '@angular/common';
 import { HlmInputDirective } from '../../../components/spartan/ui-input-helm/src/lib/hlm-input.directive';
 import { NgIcon } from '@ng-icons/core';
 import { HlmIconDirective } from '../../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
@@ -143,7 +143,7 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 	}
 
 	get issuersPluralWord(): string {
-		return this.issuers.length === 1 ? this.plural['issuer']['1'] : this.plural['issuer']['other'];
+		return this.plural['issuerText']['=0'];
 	}
 
 	issuersPerPage = 30;
