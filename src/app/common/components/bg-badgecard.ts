@@ -215,8 +215,7 @@ export class BgBadgecard {
 	@Input() badgeImage: string;
 	@Input() badgeTitle: string;
 	@Input() badgeDescription: string;
-	@Input() badgeIssueDate: string;
-	@Input() badgeClass: string;
+	@Input() badgeIssueDate: Date;
 	@Input() issuerTitle: string;
 	@Input() mostRelevantStatus: 'expired' | 'new' | 'pending' | 'imported' | undefined;
 	@Input() verifyUrl: string;

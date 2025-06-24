@@ -143,6 +143,10 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 		return this.configService.featuresConfig;
 	}
 
+	get issuersPluralWord(): string {
+		return this.issuers.length === 1 ? this.plural['issuer']['1'] : this.plural['issuer']['other'];
+	}
+
 	issuersPerPage = 30;
 	totalPages: number;
 	nextLink: string;
@@ -506,7 +510,7 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 			issuer: {
 				'=0': this.translate.instant('Issuer.noInstitutions'),
 				'=1': '1 Institution',
-				other: '# ' + this.translate.instant('General.institutions'),
+				other: this.translate.instant('General.institutions'),
 			},
 			issuerText: {
 				'=0': this.translate.instant('Issuer.institutionsIssued'),

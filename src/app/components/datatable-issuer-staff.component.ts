@@ -9,11 +9,12 @@ import { Issuer, IssuerStaffMember, issuerStaffRoles } from '../issuer/models/is
 import { IssuerStaffRoleSlug } from '../issuer/models/issuer-api.model';
 import { FormFieldSelectOption } from '../common/components/formfield-select';
 import { HlmIconModule } from '@spartan-ng/ui-icon-helm';
+import { FormsModule } from '@angular/forms';
 
 @Component({
 	selector: 'issuer-staff-datatable',
 	standalone: true,
-	imports: [HlmTableModule, HlmIconModule, CommonModule, TranslateModule, RouterModule, HlmPDirective],
+	imports: [HlmTableModule, HlmIconModule, CommonModule, TranslateModule, RouterModule, HlmPDirective, FormsModule],
 	template: `
 		<hlm-table
 			class="tw-rounded-t-[20px] tw-overflow-hidden tw-w-full tw-max-w-[100%] tw-bg-white tw-border-lightgrey tw-border"
@@ -41,10 +42,11 @@ import { HlmIconModule } from '@spartan-ng/ui-icon-helm';
 					<div class="forminput forminput-full" *ngIf="isCurrentUserIssuerOwner">
 						<div class="forminput-x-inputs">
 							<select
+								#memberSelect
 								class="!tw-border-purple !tw-border-solid !tw-text-oebblack tw-rounded-[10px] tw-text-lg"
 								[ngModel]="member.roleSlug"
 								[disabled]="member == issuer.currentUserStaffMember"
-								(change)="changeRole(member, $event.target.value)"
+								(change)="changeRole(member, $any(memberSelect.value))"
 								*ngIf="isCurrentUserIssuerOwner"
 							>
 								<option *ngFor="let role of roleOptions" [value]="role.value">

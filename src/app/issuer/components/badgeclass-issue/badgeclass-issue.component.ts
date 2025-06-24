@@ -72,6 +72,9 @@ import { OebButtonComponent } from '../../../components/oeb-button.component';
 	],
 })
 export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
+	readonly badgeLoadingImageUrl = '../../../breakdown/static/images/badge-loading.svg';
+	readonly badgeFailedImageUrl = '../../../breakdown/static/images/badge-failed.svg';
+
 	breadcrumbLinkEntries: LinkEntry[] = [];
 
 	get defaultExpiration(): string {

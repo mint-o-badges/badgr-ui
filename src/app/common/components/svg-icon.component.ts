@@ -21,7 +21,7 @@ export class SvgIconComponent {
 	}
 }
 
-type PatternLibraryIconName =
+export type PatternLibraryIconName =
 	| 'icon_add'
 	| 'icon_arrow'
 	| 'icon_checkmark_circle'
@@ -78,4 +78,5 @@ type PatternLibraryIconName =
 	| 'icon_narrative'
 	| 'icon_tags'
 	| 'icon_markdown'
-	| 'icon_arrow2';
+	| 'icon_arrow2'
+	| '';

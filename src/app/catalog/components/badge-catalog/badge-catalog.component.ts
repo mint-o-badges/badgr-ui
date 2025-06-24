@@ -66,6 +66,8 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 
 	Array = Array;
 
+	state;
+
 	badges: BadgeClass[] = null;
 	badgeResults: BadgeClass[] = null;
 	badgeResultsByIssuer: MatchingBadgeIssuer[] = [];
@@ -143,6 +145,14 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		this._groupBy = val;
 		// this.updateResults();
 		this.updatePaginatedResults();
+	}
+
+	get badgesPluralWord(): string {
+		return this.badges.length === 1 ? this.plural['badges']['1'] : this.plural['badges']['other'];
+	}
+
+	get issuersPluralWord(): string {
+		return this.issuers.length === 1 ? this.plural['issuer']['1'] : this.plural['issuer']['other'];
 	}
 
 	isFiltered() {

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SessionService } from '../../../common/services/session.service';
 import { MessageService } from '../../../common/services/message.service';
@@ -58,6 +58,10 @@ export class BadgeClassIssueBulkAwardImportComponent extends BaseAuthenticatedRo
 		this.csvForm = formBuilder.group({
 			file: [],
 		} as ImportCsvForm<Array<unknown>>);
+	}
+
+	get zipFileControl(): FormControl {
+		return this.csvForm.get('zipFile') as FormControl;
 	}
 
 	importAction() {

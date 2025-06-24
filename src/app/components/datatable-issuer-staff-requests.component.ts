@@ -36,13 +36,13 @@ import { HlmIconModule } from '@spartan-ng/ui-icon-helm';
 				<!-- Name Column -->
 				<hlm-th class="md:tw-w-[25%] tw-w-[33%] tw-px-4 tw-flex tw-items-center">
 					<span class="tw-text-oebblack tw-cursor-pointer tw-truncate tw-font-normal tw-text-lg">
-						{{ request.user.first_name }} {{ request.user.last_name }}
+						{{ request.user.firstName }} {{ request.user.lastName }}
 					</span>
 				</hlm-th>
 
 				<!-- Email Column -->
 				<hlm-th class="md:tw-w-[25%] tw-w-[33%] tw-px-4 tw-text-center tw-flex tw-items-center">
-					<p class="tw-font-normal tw-truncate tw-text-lg tw-text-oebblack">{{ request.user.email }}</p>
+					<p class="tw-font-normal tw-truncate tw-text-lg tw-text-oebblack">{{ request.user.emails }}</p>
 				</hlm-th>
 
 				<!-- Requested On Column -->

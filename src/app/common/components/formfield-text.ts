@@ -295,7 +295,7 @@ export class FormFieldText implements OnChanges, AfterViewInit {
 		this.remainingCharactersNum = this.maxchar - (this.control.value ? this.control.value.length : 0);
 	}
 
-	private postProcessInput() {
+	postProcessInput() {
 		if (this.urlField) {
 			UrlValidator.addMissingHttpToControl(this.control);
 		}

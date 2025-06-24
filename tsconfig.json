@@ -35,5 +35,8 @@
 			"@spartan-ng/ui-formfield-helm": ["./src/app/components/spartan/ui-formfield-helm/src/index.ts"],
 			"~/*": ["./src/app/*"]
 		}
+	},
+	"angularCompilerOptions": {
+		"strictTemplates": true
 	}
 }

@@ -41,11 +41,11 @@ export class UploadTabComponent {
 		<div class="u-padding-all3x">
 			<div class="forminput">
 				<bg-formfield-text
-					urlField="true"
+					[urlField]="true"
 					[control]="form.rawControlMap.url"
 					errorMessage="Bitte gib eine gültige URL ein"
 					(change)="onControlUpdated(form.controls.url)"
-					includeLabelAsWrapper="true"
+					[includeLabelAsWrapper]="true"
 					placeholder="{{ 'RecBadge.enterURL' | translate }}"
 					[autofocus]="true"
 					#urlField

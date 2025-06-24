@@ -4,7 +4,10 @@ import { ActivatedRoute } from '@angular/router';
 import { preloadImageURL } from '../../../common/util/file-util';
 import { PublicApiService } from '../../services/public-api.service';
 import { LoadedRouteParam } from '../../../common/util/loaded-route-param';
-import { PublicApiBadgeCollectionWithBadgeClassAndIssuer } from '../../models/public-api.model';
+import {
+	PublicApiBadgeCollectionEntryWithBadgeClassAndIssuer,
+	PublicApiBadgeCollectionWithBadgeClassAndIssuer,
+} from '../../models/public-api.model';
 import { EmbedService } from '../../../common/services/embed.service';
 import { routerLinkForUrl } from '../public/public.component';
 import { Title } from '@angular/platform-browser';
@@ -60,8 +63,12 @@ export class PublicBadgeCollectionComponent {
 		);
 	}
 
-	getBadgeUrl(badge) {
+	getBadgeUrl(badge: PublicApiBadgeCollectionEntryWithBadgeClassAndIssuer) {
 		return badge.hostedUrl ? badge.hostedUrl : badge.id;
+	}
+
+	getBadgeIssuedOn(badge: PublicApiBadgeCollectionEntryWithBadgeClassAndIssuer) {
+		return new Date(badge.issuedOn);
 	}
 
 	isExpired(date: string): boolean {

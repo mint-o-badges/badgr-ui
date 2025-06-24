@@ -7,10 +7,10 @@ import { HlmBadgeDirective } from '../spartan/ui-badge-helm/src/lib/hlm-badge.di
 import { RouterLink } from '@angular/router';
 import { NgIf, I18nPluralPipe } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
+import { preloadImageURL } from '../../common/util/file-util';
 
 export interface Issuer {
 	image: string;
-	imagePlaceholder: string;
 	name: string;
 	description: string;
 	category: string;
@@ -41,6 +41,10 @@ export class IssuerCardComponent {
 	@Input() plural: any; // If needed for pluralization logic
 
 	@Output() navigate = new EventEmitter<void>();
+
+	readonly issuerImagePlaceHolderUrl = preloadImageURL(
+		'../../../../breakdown/static/images/placeholderavatar-issuer.svg',
+	);
 
 	onNavigate() {
 		this.navigate.emit();

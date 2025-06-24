@@ -25,7 +25,6 @@ import { RecipientBadgeInstance } from '../../models/recipient-badge.model';
 import { badgeShareDialogOptionsFor } from '../recipient-earned-badge-detail/recipient-earned-badge-detail.component';
 import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
 import { AppConfigService } from '../../../common/app-config.service';
-import { ImportLauncherDirective } from '../../../mozz-transition/directives/import-launcher/import-launcher.directive';
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { UserProfile } from '../../../common/model/user-profile.model';
 import { lucideHand, lucideHexagon, lucideMedal, lucideBookOpen, lucideClock, lucideHeart } from '@ng-icons/lucide';
@@ -117,8 +116,6 @@ export class RecipientEarnedBadgeListComponent
 	@ViewChild('addBadgeDialog')
 	addBadgeDialog: AddBadgeDialogComponent;
 
-	@ViewChild(ImportLauncherDirective) importLauncherDirective: ImportLauncherDirective;
-
 	@ViewChild('headerTemplate')
 	headerTemplate: TemplateRef<void>;
 
@@ -157,14 +154,12 @@ export class RecipientEarnedBadgeListComponent
 	@ViewChild('collectionTemplate', { static: true }) collectionTemplate: ElementRef;
 	@ViewChild('collectionInfoHeaderTemplate', { static: true }) collectionInfoHeaderTemplate: ElementRef;
 	@ViewChild('collectionInfoContentTemplate', { static: true }) collectionInfoContentTemplate: ElementRef;
-	@ViewChild('shareDialogContentTemplate', { static: true }) shareDialogContentTemplate: ElementRef;
-	@ViewChild('shareDialogHeaderTemplate', { static: true }) shareDialogHeaderTemplate: ElementRef;
 
 	dialogRef: BrnDialogRef<any> = null;
 	translatedTitles: string[] = [];
 
-	groupedUserCompetencies = {};
-	newGroupedUserCompetencies = {};
+	groupedUserCompetencies: Competency[] | {} = {};
+	newGroupedUserCompetencies: Competency[] | {} = {};
 
 	totalStudyTime = 0;
 	public objectKeys = Object.keys;
@@ -289,11 +284,6 @@ export class RecipientEarnedBadgeListComponent
 		this.dialogRef = dialogRef;
 	}
 
-	// NOTE: Mozz import functionality
-	launchImport = ($event: Event) => {
-		$event.preventDefault();
-		this.importLauncherDirective.insert();
-	};
 	hideMozz = ($event: Event) => {
 		$event.preventDefault();
 		this.mozillaTransitionOver = true;
@@ -337,8 +327,6 @@ export class RecipientEarnedBadgeListComponent
 				this.activeTab = params['tab'];
 			}
 		});
-
-		if (this.route.snapshot.routeConfig.path === 'badges/import') this.launchImport(new Event('click'));
 	}
 
 	private loadImportedBadges() {
@@ -606,7 +594,7 @@ export class RecipientEarnedBadgeListComponent
 	}
 }
 
-class BadgeResult {
+export class BadgeResult {
 	constructor(
 		public badge: RecipientBadgeInstance,
 		public issuer: ApiRecipientBadgeIssuer,
