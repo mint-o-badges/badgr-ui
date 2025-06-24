@@ -8,12 +8,11 @@ import { Subscription } from 'rxjs';
  */
 
 @Directive({
-	selector: '.menuItem',
-	exportAs: 'menuitem',
-	host: {
-		'[class.menuitem]': 'true',
-	},
-	standalone: false,
+    selector: '.menuItem',
+    exportAs: 'menuitem',
+    host: {
+        '[class.menuitem]': 'true',
+    },
 })
 export class MenuItemDirective implements OnDestroy {
 	menuItem: boolean;

@@ -20,17 +20,17 @@ describe('AddBadgeDialogComponent', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			declarations: [AddBadgeDialogComponent],
-			imports: [
-				RouterTestingModule,
-				CommonModule,
-				BadgrCommonModule,
-				TranslateTestingModule.withTranslations('de', {}),
-				...COMMON_IMPORTS,
-			],
-			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		}).compileComponents();
+    imports: [
+        RouterTestingModule,
+        CommonModule,
+        BadgrCommonModule,
+        TranslateTestingModule.withTranslations('de', {}),
+        ...COMMON_IMPORTS,
+        AddBadgeDialogComponent,
+    ],
+    providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+}).compileComponents();
 		fixture = TestBed.createComponent(AddBadgeDialogComponent);
 		component = fixture.debugElement.componentInstance;
 		component.open = false;

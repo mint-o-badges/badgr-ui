@@ -1,6 +1,6 @@
-import { FormBuilder, ValidationErrors, Validators } from '@angular/forms';
+import { FormBuilder, ValidationErrors, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AfterViewInit, Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SignupModel } from '../../models/signup-model.type';
 import { SignupService } from '../../services/signup.service';
 import { SessionService } from '../../../common/services/session.service';
@@ -13,13 +13,35 @@ import { OAuthManager } from '../../../common/services/oauth-manager.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { typedFormGroup } from '../../../common/util/typed-forms';
 import { BadgrApiFailure } from '../../../common/services/api-failure';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import 'altcha';
+import { FormMessageComponent } from '../../../common/components/form-message.component';
+import { OAuthBannerComponent } from '../../../common/components/oauth-banner.component';
+import { NgIf, NgFor } from '@angular/common';
+import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
+import { OebInputComponent } from '../../../components/input.component';
+import { OebCheckboxComponent } from '../../../components/oeb-checkbox.component';
+import { AltchaComponent } from '../../../components/altcha.component';
+import { OebButtonComponent } from '../../../components/oeb-button.component';
 
 @Component({
-	selector: 'sign-up',
-	templateUrl: './signup.component.html',
-	standalone: false,
+    selector: 'sign-up',
+    templateUrl: './signup.component.html',
+    imports: [
+        FormMessageComponent,
+        OAuthBannerComponent,
+        NgIf,
+        HlmPDirective,
+        RouterLink,
+        NgFor,
+        FormsModule,
+        ReactiveFormsModule,
+        OebInputComponent,
+        OebCheckboxComponent,
+        AltchaComponent,
+        OebButtonComponent,
+        TranslatePipe,
+    ],
 })
 export class SignupComponent extends BaseRoutableComponent implements OnInit, AfterViewInit {
 	// Translations

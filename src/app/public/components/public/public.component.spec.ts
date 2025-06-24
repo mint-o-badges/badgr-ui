@@ -22,12 +22,11 @@ describe('PublicComponent', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			declarations: [PublicComponent],
-			imports: [RouterTestingModule, CommonModule, BadgrCommonModule, ...COMMON_IMPORTS],
-			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-			teardown: { destroyAfterEach: false },
-		}).compileComponents();
+    imports: [RouterTestingModule, CommonModule, BadgrCommonModule, ...COMMON_IMPORTS, PublicComponent],
+    providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    teardown: { destroyAfterEach: false },
+}).compileComponents();
 		fixture = TestBed.createComponent(PublicComponent);
 		component = fixture.debugElement.componentInstance;
 	});

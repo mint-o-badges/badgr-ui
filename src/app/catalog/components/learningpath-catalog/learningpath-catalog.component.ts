@@ -6,7 +6,7 @@ import { preloadImageURL } from '../../../common/util/file-util';
 import { AppConfigService } from '../../../common/app-config.service';
 import { BaseRoutableComponent } from '../../../common/pages/base-routable.component';
 import { BadgeClassCategory } from '../../../issuer/models/badgeclass-api.model';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { SessionService } from '../../../common/services/session.service';
 import { LearningPathManager } from '../../../issuer/services/learningpath-manager.service';
 import { LearningPath } from '../../../issuer/models/learningpath.model';
@@ -18,15 +18,42 @@ import { UserProfileManager } from '../../../common/services/user-profile-manage
 import { RecipientBadgeApiService } from '../../../recipient/services/recipient-badges-api.service';
 import { ApiRecipientBadgeInstance } from '../../../recipient/models/recipient-badge-api.model';
 import { appearAnimation } from '../../../common/animations/animations';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormsModule } from '@angular/forms';
 import { applySorting } from '../../util/sorting';
+import { FormMessageComponent } from '../../../common/components/form-message.component';
+import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
+import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
+import { NgIf, NgFor, I18nPluralPipe } from '@angular/common';
+import { CountUpModule } from 'ngx-countup';
+import { HlmInputDirective } from '../../../components/spartan/ui-input-helm/src/lib/hlm-input.directive';
+import { NgIcon } from '@ng-icons/core';
+import { HlmIconDirective } from '../../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
+import { OebGlobalSortSelectComponent } from '../../../components/oeb-global-sort-select.component';
+import { BgLearningPathCard } from '../../../common/components/bg-learningpathcard';
+import { PaginationAdvancedComponent } from '../../../components/oeb-numbered-pagination';
 
 @Component({
-	selector: 'app-learningpaths-catalog',
-	templateUrl: './learningpath-catalog.component.html',
-	styleUrls: ['../badge-catalog/badge-catalog.component.css'],
-	animations: [appearAnimation],
-	standalone: false,
+    selector: 'app-learningpaths-catalog',
+    templateUrl: './learningpath-catalog.component.html',
+    styleUrls: ['../badge-catalog/badge-catalog.component.css'],
+    animations: [appearAnimation],
+    imports: [
+        FormMessageComponent,
+        BgAwaitPromises,
+        HlmH1Directive,
+        NgIf,
+        CountUpModule,
+        FormsModule,
+        HlmInputDirective,
+        NgIcon,
+        HlmIconDirective,
+        OebGlobalSortSelectComponent,
+        NgFor,
+        BgLearningPathCard,
+        PaginationAdvancedComponent,
+        I18nPluralPipe,
+        TranslatePipe,
+    ],
 })
 export class LearningPathsCatalogComponent extends BaseRoutableComponent implements OnInit {
 	learningPathsLoaded: Promise<unknown>;

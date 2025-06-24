@@ -16,11 +16,10 @@ describe('FormFieldRadio', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			declarations: [FormFieldRadio],
-			imports: [RouterTestingModule, ...COMMON_IMPORTS],
-			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		}).compileComponents();
+    imports: [RouterTestingModule, ...COMMON_IMPORTS, FormFieldRadio],
+    providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+}).compileComponents();
 		fixture = TestBed.createComponent(FormFieldRadio);
 		fixture.componentInstance.control = new FormControl('', Validators.required);
 		fixture.detectChanges();

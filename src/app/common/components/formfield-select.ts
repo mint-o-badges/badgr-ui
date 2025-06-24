@@ -1,18 +1,19 @@
 import { AfterViewInit, Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { CommonDialogsService } from '../services/common-dialogs.service';
 import { CustomValidatorMessages, messagesForValidationError } from './formfield-text';
+import { NgIf, NgFor } from '@angular/common';
 
 @Component({
-	selector: 'bg-formfield-select',
-	host: {
-		class: 'forminput',
-		'[class.forminput-is-error]': 'isErrorState',
-		'[class.forminput-locked]': 'isLockedState',
-	},
-	template: `
+    selector: 'bg-formfield-select',
+    host: {
+        class: 'forminput',
+        '[class.forminput-is-error]': 'isErrorState',
+        '[class.forminput-locked]': 'isLockedState',
+    },
+    template: `
 		<label class="forminput-x-label" [attr.for]="inputName" *ngIf="label || includeLabelAsWrapper">
 			{{ label }}
 			<span *ngIf="formFieldAside">{{ formFieldAside }}</span>
@@ -40,7 +41,12 @@ import { CustomValidatorMessages, messagesForValidationError } from './formfield
 
 		<p class="forminput-x-error" *ngIf="isErrorState">{{ errorMessageForDisplay }}</p>
 	`,
-	standalone: false,
+    imports: [
+        NgIf,
+        FormsModule,
+        ReactiveFormsModule,
+        NgFor,
+    ],
 })
 export class FormFieldSelect implements OnChanges, AfterViewInit {
 	@Input() control: FormControl;

@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnInit, ViewChild, Input } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { typedFormGroup } from '../../../../common/util/typed-forms';
 import { FormGroup, FormGroupDirective, ValidationErrors, Validators } from '@angular/forms';
 import { BgFormFieldImageComponent } from '../../../../common/components/formfield-image';
@@ -10,6 +10,9 @@ import { ApiLearningPath } from '../../../../common/model/learningpath-api.model
 import { BadgeClass } from '../../../../issuer/models/badgeclass.model';
 import { LearningPath } from '../../../../issuer/models/learningpath.model';
 import { Issuer } from '../../../../issuer/models/issuer.model';
+import { HlmH2Directive } from '../../../../components/spartan/ui-typography-helm/src/lib/hlm-h2.directive';
+import { OebInputComponent } from '../../../../components/input.component';
+import { HlmPDirective } from '../../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
 
 interface LearningPathBadgeInput {
 	learningPath: ApiLearningPath;
@@ -17,10 +20,17 @@ interface LearningPathBadgeInput {
 }
 
 @Component({
-	selector: 'learningpath-details',
-	templateUrl: './learningpath-details.component.html',
-	styleUrls: ['../../learningpath-edit-form/learningpath-edit-form.component.scss'],
-	standalone: false,
+    selector: 'learningpath-details',
+    templateUrl: './learningpath-details.component.html',
+    styleUrls: ['../../learningpath-edit-form/learningpath-edit-form.component.scss'],
+    imports: [
+        HlmH2Directive,
+        OebInputComponent,
+        HlmPDirective,
+        BgFormFieldImageComponent,
+        BadgeStudioComponent,
+        TranslatePipe,
+    ],
 })
 export class LearningPathDetailsComponent implements OnInit, AfterViewInit {
 	@ViewChild(StepperComponent) stepper: StepperComponent;

@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+import { NgFor, NgClass } from '@angular/common';
 
 type FaqItem = {
 	Q: string;
@@ -8,10 +9,14 @@ type FaqItem = {
 };
 
 @Component({
-	selector: 'app-faq',
-	templateUrl: './faq.component.html',
-	styleUrls: ['./faq.component.scss'],
-	standalone: false,
+    selector: 'app-faq',
+    templateUrl: './faq.component.html',
+    styleUrls: ['./faq.component.scss'],
+    imports: [
+        NgFor,
+        NgClass,
+        TranslatePipe,
+    ],
 })
 export class FaqComponent implements OnInit {
 	data: FaqItem[] = [];

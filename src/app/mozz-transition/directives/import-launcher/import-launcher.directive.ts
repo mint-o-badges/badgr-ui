@@ -4,10 +4,7 @@ import { ImportModalComponent } from '../../components/import-modal/import-modal
 import { RecipientBadgeManager } from '../../../recipient/services/recipient-badge-manager.service';
 import { MessageService } from '../../../common/services/message.service';
 
-@Directive({
-	selector: '[importLauncher]',
-	standalone: false,
-})
+@Directive({ selector: '[importLauncher]', })
 export class ImportLauncherDirective implements OnInit {
 	constructor(
 		public viewContainerRef: ViewContainerRef,

@@ -1,17 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SessionService } from '../../../common/services/session.service';
 import { AppConfigService } from '../../../common/app-config.service';
 import { QueryParametersService } from '../../../common/services/query-parameters.service';
 import { ExternalToolsManager } from '../../../externaltools/services/externaltools-manager.service';
 import { MessageService } from '../../../common/services/message.service';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-	selector: 'app-welcome',
-	templateUrl: './welcome.component.html',
-	styleUrls: ['./welcome.component.scss'],
-	standalone: false,
+    selector: 'app-welcome',
+    templateUrl: './welcome.component.html',
+    styleUrls: ['./welcome.component.scss'],
+    imports: [RouterLink, TranslatePipe],
 })
 export class WelcomeComponent /*extends BaseAuthenticatedRoutableComponent*/ implements OnInit {
 	constructor(

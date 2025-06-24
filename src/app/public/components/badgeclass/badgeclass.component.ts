@@ -14,7 +14,7 @@ import { PageConfig } from '../../../common/components/badge-detail/badge-detail
 import { LearningPath } from '../../../issuer/models/learningpath.model';
 import { SessionService } from '../../../common/services/session.service';
 import { RecipientBadgeApiService } from '../../../recipient/services/recipient-badges-api.service';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { IssuerManager } from '../../../issuer/services/issuer-manager.service';
 import { CommonDialogsService } from '../../../common/services/common-dialogs.service';
 import { Issuer } from '../../../issuer/models/issuer.model';
@@ -25,10 +25,27 @@ import { BadgeClass } from '../../../issuer/models/badgeclass.model';
 import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src';
 import { DialogComponent } from '../../../components/dialog.component';
 import { BrnDialogRef } from '@spartan-ng/brain/dialog';
+import { BgBadgeDetail } from '../../../common/components/badge-detail/badge-detail.component';
+import { NgIf, NgFor } from '@angular/common';
+import { OebSeparatorComponent } from '../../../components/oeb-separator.component';
+import { BgLearningPathCard } from '../../../common/components/bg-learningpathcard';
+import { HlmH2Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h2.directive';
+import { FormsModule } from '@angular/forms';
+import { OebButtonComponent } from '../../../components/oeb-button.component';
 
 @Component({
-	templateUrl: './badgeclass.component.html',
-	standalone: false,
+    templateUrl: './badgeclass.component.html',
+    imports: [
+        BgBadgeDetail,
+        NgIf,
+        OebSeparatorComponent,
+        NgFor,
+        BgLearningPathCard,
+        HlmH2Directive,
+        FormsModule,
+        OebButtonComponent,
+        TranslatePipe,
+    ],
 })
 export class PublicBadgeClassComponent {
 	readonly issuerImagePlaceholderUrl = preloadImageURL(

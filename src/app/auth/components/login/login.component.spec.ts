@@ -18,18 +18,18 @@ describe('LoginComponent', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			imports: [
-				...COMMON_IMPORTS,
-				BadgrCommonModule,
-				CommonEntityManagerModule,
-				RouterTestingModule.withRoutes([{ path: 'recipient', component: RecipientModule }]),
-				TranslateTestingModule.withTranslations('de', {}),
-			],
-			declarations: [LoginComponent],
-			providers: [FormBuilder, Title, ...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-			teardown: { destroyAfterEach: false },
-		}).compileComponents();
+    imports: [
+        ...COMMON_IMPORTS,
+        BadgrCommonModule,
+        CommonEntityManagerModule,
+        RouterTestingModule.withRoutes([{ path: 'recipient', component: RecipientModule }]),
+        TranslateTestingModule.withTranslations('de', {}),
+        LoginComponent,
+    ],
+    providers: [FormBuilder, Title, ...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    teardown: { destroyAfterEach: false },
+}).compileComponents();
 		fixture = TestBed.createComponent(LoginComponent);
 		component = fixture.debugElement.componentInstance;
 		// spyOn(component.router, 'navigate').and.returnValue(true);

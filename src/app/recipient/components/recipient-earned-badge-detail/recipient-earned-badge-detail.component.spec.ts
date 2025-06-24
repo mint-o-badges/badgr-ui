@@ -30,17 +30,17 @@ describe('RecipientEarnedBadgeDetailComponent', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			declarations: [RecipientEarnedBadgeDetailComponent],
-			imports: [
-				RouterTestingModule,
-				CommonModule,
-				BadgrCommonModule,
-				...COMMON_IMPORTS,
-				TranslateModule.forRoot(),
-			],
-			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		}).compileComponents();
+    imports: [
+        RouterTestingModule,
+        CommonModule,
+        BadgrCommonModule,
+        ...COMMON_IMPORTS,
+        TranslateModule.forRoot(),
+        RecipientEarnedBadgeDetailComponent,
+    ],
+    providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+}).compileComponents();
 		fixture = TestBed.createComponent(RecipientEarnedBadgeDetailComponent);
 		component = fixture.debugElement.componentInstance;
 		//component.recipientBadgeManager.recipientBadgeList.loadedPromise.then = ()=>{}

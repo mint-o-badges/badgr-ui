@@ -16,24 +16,29 @@ import { CdkStepper, STEPPER_GLOBAL_OPTIONS, CdkStep } from '@angular/cdk/steppe
 import { StepComponent } from './step.component';
 import { Router } from '@angular/router';
 import { Directionality } from '@angular/cdk/bidi';
+import { NgFor, NgClass, NgTemplateOutlet } from '@angular/common';
 
 @Component({
-	selector: 'oeb-stepper',
-	templateUrl: './stepper.component.html',
-	styleUrls: ['./stepper.component.scss'],
-	/* This custom stepper provides itself as CdkStepper so that it can be recognized
+    selector: 'oeb-stepper',
+    templateUrl: './stepper.component.html',
+    styleUrls: ['./stepper.component.scss'],
+    /* This custom stepper provides itself as CdkStepper so that it can be recognized
     / by other components. */
-	providers: [
-		{
-			provide: CdkStepper,
-			useExisting: StepperComponent,
-		},
-		{
-			provide: STEPPER_GLOBAL_OPTIONS,
-			useValue: { showError: true },
-		},
-	],
-	standalone: false,
+    providers: [
+        {
+            provide: CdkStepper,
+            useExisting: StepperComponent,
+        },
+        {
+            provide: STEPPER_GLOBAL_OPTIONS,
+            useValue: { showError: true },
+        },
+    ],
+    imports: [
+        NgFor,
+        NgClass,
+        NgTemplateOutlet,
+    ],
 })
 export class StepperComponent extends CdkStepper implements OnInit {
 	@Input()

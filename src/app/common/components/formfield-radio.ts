@@ -9,20 +9,21 @@ import {
 	SimpleChanges,
 	ViewChild,
 } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonDialogsService } from '../services/common-dialogs.service';
+import { NgIf } from '@angular/common';
 
 @Component({
-	selector: 'bg-formfield-radio',
-	host: {
-		class: 'forminput',
-		'[class.forminput-is-error]': 'isErrorState',
-		'[class.forminput-locked]': 'isLockedState',
-		'[class.forminput-monospaced]': 'monospaced',
-		'[class.forminput-withbutton]': 'inlineButtonText',
-		'[class.forminput-withsublabel]': 'sublabel',
-	},
-	template: `
+    selector: 'bg-formfield-radio',
+    host: {
+        class: 'forminput',
+        '[class.forminput-is-error]': 'isErrorState',
+        '[class.forminput-locked]': 'isLockedState',
+        '[class.forminput-monospaced]': 'monospaced',
+        '[class.forminput-withbutton]': 'inlineButtonText',
+        '[class.forminput-withsublabel]': 'sublabel',
+    },
+    template: `
 		<div class="">
 			<label class="radio">
 				<input type="radio" [id]="inputId" [name]="name" [value]="value" [formControl]="control" #radioInput />
@@ -33,7 +34,11 @@ import { CommonDialogsService } from '../services/common-dialogs.service';
 		</div>
 		<p class="forminput-x-error" *ngIf="!control.valid && control.dirty && last">{{ errorMessageForDisplay }}</p>
 	`,
-	standalone: false,
+    imports: [
+        FormsModule,
+        ReactiveFormsModule,
+        NgIf,
+    ],
 })
 export class FormFieldRadio implements OnChanges, AfterViewInit {
 	set unlocked(unlocked: boolean) {

@@ -1,6 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormControl, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { SessionService } from '../../../common/services/session.service';
 import { MessageService } from '../../../common/services/message.service';
@@ -21,19 +21,55 @@ import { RecipientIdentifierType } from '../../models/badgeinstance-api.model';
 import { typedFormGroup } from '../../../common/util/typed-forms';
 import { TelephoneValidator } from '../../../common/validators/telephone.validator';
 import { EventsService } from '../../../common/services/events.service';
-import { FormFieldTextInputType } from '../../../common/components/formfield-text';
+import { FormFieldTextInputType, FormFieldText } from '../../../common/components/formfield-text';
 import striptags from 'striptags';
 import { DateValidator } from '../../../common/validators/date.validator';
 import { AppConfigService } from '../../../common/app-config.service';
-import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
+import { LinkEntry, BgBreadcrumbsComponent } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { HlmDialogService } from './../../../components/spartan/ui-dialog-helm/src';
 import { SuccessDialogComponent } from '../../../common/dialogs/oeb-dialogs/success-dialog.component';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
+import { FormMessageComponent } from '../../../common/components/form-message.component';
+import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
+import { BgImageStatusPlaceholderDirective } from '../../../common/directives/bg-image-status-placeholder.directive';
+import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
+import { HlmADirective } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-a.directive';
+import { OebInputComponent } from '../../../components/input.component';
+import { OebSelectComponent } from '../../../components/select.component';
+import { OebCheckboxComponent } from '../../../components/oeb-checkbox.component';
+import { NgIf, NgFor, NgClass, DatePipe } from '@angular/common';
+import { SvgIconComponent } from '../../../common/components/svg-icon.component';
+import { FormFieldMarkdown } from '../../../common/components/formfield-markdown';
+import { OebButtonComponent } from '../../../components/oeb-button.component';
 
 @Component({
-	selector: 'badgeclass-issue',
-	templateUrl: './badgeclass-issue.component.html',
-	standalone: false,
+    selector: 'badgeclass-issue',
+    templateUrl: './badgeclass-issue.component.html',
+    imports: [
+        BgAwaitPromises,
+        FormMessageComponent,
+        BgBreadcrumbsComponent,
+        FormsModule,
+        ReactiveFormsModule,
+        HlmH1Directive,
+        BgImageStatusPlaceholderDirective,
+        HlmPDirective,
+        HlmADirective,
+        RouterLink,
+        OebInputComponent,
+        OebSelectComponent,
+        OebCheckboxComponent,
+        NgIf,
+        SvgIconComponent,
+        NgFor,
+        FormFieldMarkdown,
+        FormFieldText,
+        NgClass,
+        OebButtonComponent,
+        DatePipe,
+        TranslatePipe,
+    ],
 })
 export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	breadcrumbLinkEntries: LinkEntry[] = [];

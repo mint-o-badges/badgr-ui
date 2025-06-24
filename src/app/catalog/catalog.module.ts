@@ -41,23 +41,23 @@ export const routes: Routes = [
 ];
 
 @NgModule({
-	declarations: [BadgeCatalogComponent, IssuerCatalogComponent, LearningPathsCatalogComponent],
-	imports: [
-		...COMMON_IMPORTS,
-		BadgrCommonModule,
-		CommonEntityManagerModule,
-		RouterModule.forChild(routes),
-		TranslateModule,
-	],
-	providers: [
-		BadgeClassApiService,
-		BadgeClassManager,
-		BadgeInstanceApiService,
-		BadgeInstanceManager,
-		IssuerApiService,
-		IssuerManager,
-		LearningPathManager,
-		LearningPathApiService,
-	],
+    imports: [
+        ...COMMON_IMPORTS,
+        BadgrCommonModule,
+        CommonEntityManagerModule,
+        RouterModule.forChild(routes),
+        TranslateModule,
+        BadgeCatalogComponent, IssuerCatalogComponent, LearningPathsCatalogComponent,
+    ],
+    providers: [
+        BadgeClassApiService,
+        BadgeClassManager,
+        BadgeInstanceApiService,
+        BadgeInstanceManager,
+        IssuerApiService,
+        IssuerManager,
+        LearningPathManager,
+        LearningPathApiService,
+    ],
 })
 export class CatalogModule {}

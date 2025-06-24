@@ -1,14 +1,19 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { lucideClock } from '@ng-icons/lucide';
 import { Competency } from '../model/competency.model';
-import { provideIcons } from '@ng-icons/core';
+import { provideIcons, NgIcon } from '@ng-icons/core';
+import { HlmPDirective } from '../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
+import { NgIf } from '@angular/common';
+import { HlmADirective } from '../../components/spartan/ui-typography-helm/src/lib/hlm-a.directive';
+import { HlmIconDirective } from '../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
+import { HourPipe } from '../pipes/hourPipe';
 @Component({
-	selector: 'oeb-competency',
-	providers: [provideIcons({ lucideClock })],
-	host: {
-		class: 'tw-rounded-[10px] tw-bg-oebgrey tw-border-purple tw-border-solid tw-border tw-relative tw-p-[calc(var(--gridspacing)*2)] tw-block tw-overflow-hidden',
-	},
-	template: `
+    selector: 'oeb-competency',
+    providers: [provideIcons({ lucideClock })],
+    host: {
+        class: 'tw-rounded-[10px] tw-bg-oebgrey tw-border-purple tw-border-solid tw-border tw-relative tw-p-[calc(var(--gridspacing)*2)] tw-block tw-overflow-hidden',
+    },
+    template: `
 		<div class="tw-flex tw-justify-between tw-items-center">
 			<div>
 				<span hlmP size="sm" class="tw-text-oebblack tw-font-medium">{{ competency.name }} </span>
@@ -31,7 +36,14 @@ import { provideIcons } from '@ng-icons/core';
 			</div>
 		</div>
 	`,
-	standalone: false,
+    imports: [
+        HlmPDirective,
+        NgIf,
+        HlmADirective,
+        NgIcon,
+        HlmIconDirective,
+        HourPipe,
+    ],
 })
 export class OebCompetency {
 	@Input() competency: Competency;

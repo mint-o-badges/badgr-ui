@@ -6,19 +6,23 @@ import { throwExpr } from '../util/throw-expr';
 import { CommonDialogsService } from '../services/common-dialogs.service';
 import { NounProjectIcon } from '../model/nounproject.model';
 import { MessageService } from '../services/message.service';
+import { NgIf } from '@angular/common';
+import { NgIcon } from '@ng-icons/core';
+import { HlmIconDirective } from '../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-	selector: 'bg-formfield-image',
-	host: {
-		'(drag)': 'stopEvent($event)',
-		'(dragstart)': 'stopEvent($event)',
-		'(dragover)': 'dragStart($event)',
-		'(dragenter)': 'dragStart($event)',
-		'(dragleave)': 'dragStop($event)',
-		'(dragend)': 'dragStop($event)',
-		'(drop)': 'drop($event)',
-	},
-	template: `
+    selector: 'bg-formfield-image',
+    host: {
+        '(drag)': 'stopEvent($event)',
+        '(dragstart)': 'stopEvent($event)',
+        '(dragover)': 'dragStart($event)',
+        '(dragenter)': 'dragStart($event)',
+        '(dragleave)': 'dragStop($event)',
+        '(dragend)': 'dragStop($event)',
+        '(drop)': 'drop($event)',
+    },
+    template: `
 		<div class="forminput u-margin-bottom2x">
 			<div class="forminput-x-labelrow">
 				<label [class]="labelStyle" for="image_field{{ uniqueIdSuffix }}">{{ label }}</label>
@@ -107,7 +111,12 @@ import { MessageService } from '../services/message.service';
 			<p class="forminput-x-error" *ngIf="control.dirty && !control.valid">{{ errorMessage }}</p>
 		</div>
 	`,
-	standalone: false,
+    imports: [
+        NgIf,
+        NgIcon,
+        HlmIconDirective,
+        TranslatePipe,
+    ],
 })
 export class BgFormFieldImageComponent {
 	@Input() set imageLoaderName(name: string) {

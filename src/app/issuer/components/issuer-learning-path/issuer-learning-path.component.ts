@@ -13,15 +13,23 @@ import { UserProfileManager } from '../../../common/services/user-profile-manage
 import { UserProfileEmail } from '../../../common/model/user-profile.model';
 import { AppConfigService } from '../../../common/app-config.service';
 import { CommonDialogsService } from '../../../common/services/common-dialogs.service';
-import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
+import { LinkEntry, BgBreadcrumbsComponent } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { MenuItem } from '../../../common/components/badge-detail/badge-detail.component.types';
 import { ApiLearningPath, ApiLearningPathParticipant } from '../../..//common/model/learningpath-api.model';
 import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
+import { FormMessageComponent } from '../../../common/components/form-message.component';
+import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
+import { OebLearningPathDetailComponent } from '../../../common/components/learningpath-detail/oeb-learning-path.component';
 
 @Component({
-	selector: 'issuer-learning-path',
-	templateUrl: './issuer-learning-path.component.html',
-	standalone: false,
+    selector: 'issuer-learning-path',
+    templateUrl: './issuer-learning-path.component.html',
+    imports: [
+        FormMessageComponent,
+        BgAwaitPromises,
+        BgBreadcrumbsComponent,
+        OebLearningPathDetailComponent,
+    ],
 })
 export class IssuerLearningPathComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	readonly issuerImagePlaceHolderUrl = preloadImageURL(

@@ -11,18 +11,50 @@ import { BaseRoutableComponent } from '../../../common/pages/base-routable.compo
 import { StringMatchingUtil } from '../../../common/util/string-matching-util';
 
 import { Map, NavigationControl, Popup } from 'maplibre-gl';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormsModule } from '@angular/forms';
 import { appearAnimation } from '../../../common/animations/animations';
 import { applySorting } from '../../util/sorting';
+import { FormMessageComponent } from '../../../common/components/form-message.component';
+import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
+import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
+import { CountUpModule } from 'ngx-countup';
+import { NgIf, NgClass, NgFor, I18nPluralPipe } from '@angular/common';
+import { HlmInputDirective } from '../../../components/spartan/ui-input-helm/src/lib/hlm-input.directive';
+import { NgIcon } from '@ng-icons/core';
+import { HlmIconDirective } from '../../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
+import { OebGlobalSortSelectComponent } from '../../../components/oeb-global-sort-select.component';
+import { OebSelectComponent } from '../../../components/select.component';
+import { OebButtonComponent } from '../../../components/oeb-button.component';
+import { IssuerCardComponent } from '../../../components/issuer-card/issuer-card.component';
+import { PaginationAdvancedComponent } from '../../../components/oeb-numbered-pagination';
 
 @Component({
-	selector: 'app-issuer-catalog',
-	templateUrl: './issuer-catalog.component.html',
-	styleUrls: ['./issuer-catalog.component.css'],
-	animations: [appearAnimation],
-	standalone: false,
+    selector: 'app-issuer-catalog',
+    templateUrl: './issuer-catalog.component.html',
+    styleUrls: ['./issuer-catalog.component.css'],
+    animations: [appearAnimation],
+    imports: [
+        FormMessageComponent,
+        HlmH1Directive,
+        BgAwaitPromises,
+        CountUpModule,
+        NgIf,
+        FormsModule,
+        HlmInputDirective,
+        NgIcon,
+        HlmIconDirective,
+        OebGlobalSortSelectComponent,
+        OebSelectComponent,
+        NgClass,
+        OebButtonComponent,
+        NgFor,
+        IssuerCardComponent,
+        PaginationAdvancedComponent,
+        I18nPluralPipe,
+        TranslatePipe,
+    ],
 })
 export class IssuerCatalogComponent extends BaseRoutableComponent implements OnInit, AfterViewInit {
 	readonly issuerPlaceholderSrc = preloadImageURL('../../../../breakdown/static/images/placeholderavatar-issuer.svg');

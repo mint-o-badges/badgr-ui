@@ -21,10 +21,7 @@ import { LoadingErrorComponent } from '../components/loading-error.component';
  * the order matters!
  */
 
-@Directive({
-	selector: '[bgAwaitPromises]',
-	standalone: false,
-})
+@Directive({ selector: '[bgAwaitPromises]', })
 export class BgAwaitPromises {
 	currentPromise: Promise<unknown>;
 	indicatorClassName: string;

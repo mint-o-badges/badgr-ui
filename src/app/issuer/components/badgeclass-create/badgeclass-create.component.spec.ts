@@ -25,18 +25,18 @@ describe('BadgeClassCreateComponent', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			declarations: [BadgeClassCreateComponent],
-			imports: [
-				RouterTestingModule,
-				CommonModule,
-				FormsModule,
-				BadgrCommonModule,
-				TranslateTestingModule.withTranslations('de', {}),
-				...COMMON_IMPORTS,
-			],
-			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		}).compileComponents();
+    imports: [
+        RouterTestingModule,
+        CommonModule,
+        FormsModule,
+        BadgrCommonModule,
+        TranslateTestingModule.withTranslations('de', {}),
+        ...COMMON_IMPORTS,
+        BadgeClassCreateComponent,
+    ],
+    providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+}).compileComponents();
 
 		fixture = TestBed.createComponent(BadgeClassCreateComponent);
 		fixture.detectChanges();

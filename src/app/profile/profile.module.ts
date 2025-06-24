@@ -60,32 +60,30 @@ const routes: Routes = [
 ];
 
 @NgModule({
-	imports: [
-		...COMMON_IMPORTS,
-		BadgrCommonModule,
-		CommonEntityManagerModule,
-		RouterModule.forChild(routes),
-		MozzTransitionModule,
-		TranslateModule,
-	],
-	declarations: [
-		BadgebookLti1DetailComponent,
-		AppIntegrationListComponent,
-		ProfileComponent,
-		ProfileEditComponent,
-		IntegrationImageComponent,
-		ChangePasswordComponent,
-		OAuthAppDetailComponent,
-		AddCredentialsDialog,
-		AppIntegrationDetailsDialog,
-	],
-	providers: [
-		// UserProfileService,
-		AppIntegrationApiService,
-		AppIntegrationManager,
-		UserProfileApiService,
-		UserProfileManager,
-	],
-	exports: [],
+    imports: [
+        ...COMMON_IMPORTS,
+        BadgrCommonModule,
+        CommonEntityManagerModule,
+        RouterModule.forChild(routes),
+        MozzTransitionModule,
+        TranslateModule,
+        BadgebookLti1DetailComponent,
+        AppIntegrationListComponent,
+        ProfileComponent,
+        ProfileEditComponent,
+        IntegrationImageComponent,
+        ChangePasswordComponent,
+        OAuthAppDetailComponent,
+        AddCredentialsDialog,
+        AppIntegrationDetailsDialog,
+    ],
+    providers: [
+        // UserProfileService,
+        AppIntegrationApiService,
+        AppIntegrationManager,
+        UserProfileApiService,
+        UserProfileManager,
+    ],
+    exports: [],
 })
 export class ProfileModule {}

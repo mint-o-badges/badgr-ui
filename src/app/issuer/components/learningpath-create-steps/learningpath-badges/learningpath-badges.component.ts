@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { typedFormGroup } from '../../../../common/util/typed-forms';
-import { ValidationErrors, Validators } from '@angular/forms';
+import { ValidationErrors, Validators, FormsModule } from '@angular/forms';
 import { BadgeClass } from '../../../../issuer/models/badgeclass.model';
 import { BadgeClassCategory } from '../../../../issuer/models/badgeclass-api.model';
 import { BadgeClassManager } from '../../../../issuer/services/badgeclass-manager.service';
@@ -9,14 +9,29 @@ import { sortUnique } from '../../../../catalog/components/badge-catalog/badge-c
 import { MessageService } from '../../../../common/services/message.service';
 import { StringMatchingUtil } from '../../../../common/util/string-matching-util';
 import { ApiLearningPath } from '../../../../common/model/learningpath-api.model';
+import { BgAwaitPromises } from '../../../../common/directives/bg-await-promises';
+import { HlmH2Directive } from '../../../../components/spartan/ui-typography-helm/src/lib/hlm-h2.directive';
+import { HlmInputDirective } from '../../../../components/spartan/ui-input-helm/src/lib/hlm-input.directive';
+import { NgClass, NgFor, NgIf } from '@angular/common';
+import { BgBadgecard } from '../../../../common/components/bg-badgecard';
 
 type BadgeResult = BadgeClass & { selected?: boolean };
 
 @Component({
-	selector: 'learningpath-badges',
-	templateUrl: './learningpath-badges.component.html',
-	styleUrls: ['../../learningpath-edit-form/learningpath-edit-form.component.scss'],
-	standalone: false,
+    selector: 'learningpath-badges',
+    templateUrl: './learningpath-badges.component.html',
+    styleUrls: ['../../learningpath-edit-form/learningpath-edit-form.component.scss'],
+    imports: [
+        BgAwaitPromises,
+        HlmH2Directive,
+        FormsModule,
+        HlmInputDirective,
+        NgClass,
+        NgFor,
+        NgIf,
+        BgBadgecard,
+        TranslatePipe,
+    ],
 })
 export class LearningPathBadgesComponent implements OnInit {
 	// @Output() selectedBadgesChanged = new EventEmitter<{ urls: string[], studyLoad: number }>();

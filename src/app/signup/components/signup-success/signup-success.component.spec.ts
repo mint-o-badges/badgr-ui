@@ -18,27 +18,27 @@ describe('SignupSuccessComponent', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			imports: [
-				...COMMON_IMPORTS,
-				BadgrCommonModule,
-				TranslateTestingModule.withTranslations('de', {}),
-				CommonEntityManagerModule,
-				RouterTestingModule,
-			],
-			declarations: [SignupSuccessComponent],
-			providers: [
-				Title,
-				...COMMON_MOCKS_PROVIDERS_WITH_SUBS,
-				{
-					provide: ActivatedRoute,
-					useValue: {
-						snapshot: { params: { email: btoa('mail@example.org') } },
-					},
-				},
-			],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-			teardown: { destroyAfterEach: false },
-		}).compileComponents();
+    imports: [
+        ...COMMON_IMPORTS,
+        BadgrCommonModule,
+        TranslateTestingModule.withTranslations('de', {}),
+        CommonEntityManagerModule,
+        RouterTestingModule,
+        SignupSuccessComponent,
+    ],
+    providers: [
+        Title,
+        ...COMMON_MOCKS_PROVIDERS_WITH_SUBS,
+        {
+            provide: ActivatedRoute,
+            useValue: {
+                snapshot: { params: { email: btoa('mail@example.org') } },
+            },
+        },
+    ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    teardown: { destroyAfterEach: false },
+}).compileComponents();
 		fixture = TestBed.createComponent(SignupSuccessComponent);
 		component = fixture.componentInstance;
 		fixture.detectChanges();

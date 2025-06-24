@@ -20,17 +20,17 @@ describe('RequestPasswordResetComponent', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			imports: [
-				RouterTestingModule,
-				BadgrCommonModule,
-				...COMMON_IMPORTS,
-				TranslateTestingModule.withTranslations('de', {}),
-			],
-			declarations: [RequestPasswordResetComponent],
-			providers: [FormBuilder, ...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-			teardown: { destroyAfterEach: false },
-		}).compileComponents();
+    imports: [
+        RouterTestingModule,
+        BadgrCommonModule,
+        ...COMMON_IMPORTS,
+        TranslateTestingModule.withTranslations('de', {}),
+        RequestPasswordResetComponent,
+    ],
+    providers: [FormBuilder, ...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    teardown: { destroyAfterEach: false },
+}).compileComponents();
 		fixture = TestBed.createComponent(RequestPasswordResetComponent);
 		component = fixture.debugElement.componentInstance;
 	});

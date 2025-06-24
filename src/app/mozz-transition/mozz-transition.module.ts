@@ -7,8 +7,7 @@ import { CommonEntityManagerModule } from '../entity-manager/entity-manager.modu
 import { ImportLauncherDirective } from './directives/import-launcher/import-launcher.directive';
 
 @NgModule({
-	imports: [...COMMON_IMPORTS, BadgrCommonModule, CommonEntityManagerModule],
-	declarations: [SourceListenerDirective, ImportModalComponent, ImportLauncherDirective],
-	exports: [SourceListenerDirective, ImportModalComponent, ImportLauncherDirective],
+    imports: [...COMMON_IMPORTS, BadgrCommonModule, CommonEntityManagerModule, SourceListenerDirective, ImportModalComponent, ImportLauncherDirective],
+    exports: [SourceListenerDirective, ImportModalComponent, ImportLauncherDirective],
 })
 export class MozzTransitionModule {}

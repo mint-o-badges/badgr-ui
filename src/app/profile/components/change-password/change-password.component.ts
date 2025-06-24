@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
-import { FormBuilder, ValidationErrors, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, ValidationErrors, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SessionService } from '../../../common/services/session.service';
 import { MessageService } from '../../../common/services/message.service';
 import { Title } from '@angular/platform-browser';
@@ -10,13 +10,29 @@ import { UserProfileManager } from '../../../common/services/user-profile-manage
 import { UserProfile } from '../../../common/model/user-profile.model';
 import { AppConfigService } from '../../../common/app-config.service';
 import { typedFormGroup } from '../../../common/util/typed-forms';
-import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
-import { TranslateService } from '@ngx-translate/core';
+import { LinkEntry, BgBreadcrumbsComponent } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+import { FormMessageComponent } from '../../../common/components/form-message.component';
+import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
+import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
+import { OebInputComponent } from '../../../components/input.component';
+import { OebButtonComponent } from '../../../components/oeb-button.component';
 
 @Component({
-	selector: 'change-password',
-	templateUrl: './change-password.component.html',
-	standalone: false,
+    selector: 'change-password',
+    templateUrl: './change-password.component.html',
+    imports: [
+        FormMessageComponent,
+        BgBreadcrumbsComponent,
+        HlmH1Directive,
+        HlmPDirective,
+        FormsModule,
+        ReactiveFormsModule,
+        OebInputComponent,
+        OebButtonComponent,
+        RouterLink,
+        TranslatePipe,
+    ],
 })
 export class ChangePasswordComponent extends BaseRoutableComponent {
 	changePasswordForm = typedFormGroup()

@@ -4,14 +4,13 @@ const defaultLoadingImage = '../../../breakdown/static/images/image-placeholder.
 const defaultErrorImage = '../../../breakdown/static/images/image-failed.svg';
 
 @Directive({
-	// Note that to have webpack process these sources, we must add the attributes to webpack.common.js in the html loader section.
-	selector: '[click-to-copy]',
-	host: {
-		'(click)': 'copyInput()',
-		'[style.display]': "copySupported ? '' : 'none'",
-	},
-	exportAs: 'copy-input',
-	standalone: false,
+    // Note that to have webpack process these sources, we must add the attributes to webpack.common.js in the html loader section.
+    selector: '[click-to-copy]',
+    host: {
+        '(click)': 'copyInput()',
+        '[style.display]': "copySupported ? '' : 'none'",
+    },
+    exportAs: 'copy-input',
 })
 export class BgCopyInputDirective {
 	@Input('click-to-copy')

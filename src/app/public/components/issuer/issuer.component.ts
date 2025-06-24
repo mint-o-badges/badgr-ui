@@ -10,10 +10,12 @@ import { addQueryParamsToUrl, stripQueryParamsFromUrl } from '../../../common/ut
 import { routerLinkForUrl } from '../public/public.component';
 import { Title } from '@angular/platform-browser';
 import { AppConfigService } from '../../../common/app-config.service';
+import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
+import { OebIssuerDetailComponent } from '../../../common/components/issuer/oeb-issuer-detail.component';
 
 @Component({
-	templateUrl: './issuer.component.html',
-	standalone: false,
+    templateUrl: './issuer.component.html',
+    imports: [BgAwaitPromises, OebIssuerDetailComponent],
 })
 export class PublicIssuerComponent {
 	readonly issuerImagePlaceholderUrl = preloadImageURL(

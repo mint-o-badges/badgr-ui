@@ -25,11 +25,10 @@ describe('BadgeclassIssueBulkAwardConformation', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			declarations: [BadgeclassIssueBulkAwardConformation],
-			imports: [RouterTestingModule, CommonModule, BadgrCommonModule, ...COMMON_IMPORTS],
-			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		}).compileComponents();
+    imports: [RouterTestingModule, CommonModule, BadgrCommonModule, ...COMMON_IMPORTS, BadgeclassIssueBulkAwardConformation],
+    providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+}).compileComponents();
 		fixture = TestBed.createComponent(BadgeclassIssueBulkAwardConformation);
 		component = fixture.debugElement.componentInstance;
 	});

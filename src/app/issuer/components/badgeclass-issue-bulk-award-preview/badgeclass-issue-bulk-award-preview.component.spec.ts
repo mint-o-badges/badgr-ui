@@ -25,11 +25,10 @@ describe('BadgeClassIssueBulkAwardPreviewComponent', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			declarations: [BadgeClassIssueBulkAwardPreviewComponent],
-			imports: [RouterTestingModule, CommonModule, ...COMMON_IMPORTS, TranslateModule.forRoot()],
-			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		}).compileComponents();
+    imports: [RouterTestingModule, CommonModule, ...COMMON_IMPORTS, TranslateModule.forRoot(), BadgeClassIssueBulkAwardPreviewComponent],
+    providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+}).compileComponents();
 		fixture = TestBed.createComponent(BadgeClassIssueBulkAwardPreviewComponent);
 		fixture.componentInstance.importPreviewData = {
 			columnHeaders: [],

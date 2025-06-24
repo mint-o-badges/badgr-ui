@@ -3,12 +3,30 @@ import { FormFieldSelectOption } from '../../../../common/components/formfield-s
 import { LearningPathManager } from '../../../../issuer/services/learningpath-manager.service';
 import { LearningPath } from '../../../../issuer/models/learningpath.model';
 import { ApiLearningPath } from '../../../../common/model/learningpath-api.model';
+import { HlmH2Directive } from '../../../../components/spartan/ui-typography-helm/src/lib/hlm-h2.directive';
+import { AutocompleteLibModule } from 'angular-ng-autocomplete';
+import { OebButtonComponent } from '../../../../components/oeb-button.component';
+import { NgIf, NgFor } from '@angular/common';
+import { HlmPDirective } from '../../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
+import { BgImageStatusPlaceholderDirective } from '../../../../common/directives/bg-image-status-placeholder.directive';
+import { HlmH3Directive } from '../../../../components/spartan/ui-typography-helm/src/lib/hlm-h3.directive';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-	selector: 'learningpath-tags',
-	templateUrl: './learningpath-tags.component.html',
-	styleUrls: ['../../learningpath-edit-form/learningpath-edit-form.component.scss'],
-	standalone: false,
+    selector: 'learningpath-tags',
+    templateUrl: './learningpath-tags.component.html',
+    styleUrls: ['../../learningpath-edit-form/learningpath-edit-form.component.scss'],
+    imports: [
+        HlmH2Directive,
+        AutocompleteLibModule,
+        OebButtonComponent,
+        NgIf,
+        NgFor,
+        HlmPDirective,
+        BgImageStatusPlaceholderDirective,
+        HlmH3Directive,
+        TranslatePipe,
+    ],
 })
 export class LearningPathTagsComponent implements OnInit {
 	@Input() lpName: string;

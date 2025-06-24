@@ -1,17 +1,35 @@
 import { Component } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { EmailValidator } from '../../../common/validators/email.validator';
 import { SessionService } from '../../../common/services/session.service';
 import { MessageService } from '../../../common/services/message.service';
 import { BaseRoutableComponent } from '../../../common/pages/base-routable.component';
 import { typedFormGroup } from '../../../common/util/typed-forms';
+import { FormMessageComponent } from '../../../common/components/form-message.component';
+import { OAuthBannerComponent } from '../../../common/components/oauth-banner.component';
+import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
+import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
+import { OebInputComponent } from '../../../components/input.component';
+import { OebButtonComponent } from '../../../components/oeb-button.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-	selector: 'password-reset-request',
-	templateUrl: 'request-password-reset.component.html',
-	styleUrls: ['request-password-reset.component.scss'],
-	standalone: false,
+    selector: 'password-reset-request',
+    templateUrl: 'request-password-reset.component.html',
+    styleUrls: ['request-password-reset.component.scss'],
+    imports: [
+        FormMessageComponent,
+        OAuthBannerComponent,
+        HlmH1Directive,
+        HlmPDirective,
+        FormsModule,
+        ReactiveFormsModule,
+        OebInputComponent,
+        OebButtonComponent,
+        RouterLink,
+        TranslatePipe,
+    ],
 })
 export class RequestPasswordResetComponent extends BaseRoutableComponent {
 	readonly requestPasswordResetForm = typedFormGroup().addControl('username', '', [

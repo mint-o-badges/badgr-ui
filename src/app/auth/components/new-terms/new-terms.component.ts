@@ -1,15 +1,24 @@
 import { Component, inject } from '@angular/core';
 import { BaseRoutableComponent } from '../../../common/pages/base-routable.component';
-import { ActivatedRoute, Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
 import { DangerDialogComponent } from '../../../common/dialogs/oeb-dialogs/danger-dialog.component';
 import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
+import { OebCheckboxComponent } from '../../../components/oeb-checkbox.component';
+import { FormsModule } from '@angular/forms';
+import { OebButtonComponent } from '../../../components/oeb-button.component';
 
 @Component({
-	selector: 'app-new-terms',
-	templateUrl: './new-terms.component.html',
-	standalone: false,
+    selector: 'app-new-terms',
+    templateUrl: './new-terms.component.html',
+    imports: [
+        RouterLink,
+        OebCheckboxComponent,
+        FormsModule,
+        OebButtonComponent,
+        TranslatePipe,
+    ],
 })
 export class NewTermsComponent extends BaseRoutableComponent {
 	confirmed = false;

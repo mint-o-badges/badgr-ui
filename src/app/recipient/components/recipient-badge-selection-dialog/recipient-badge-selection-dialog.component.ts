@@ -8,6 +8,10 @@ import { RecipientBadgeInstance } from '../../models/recipient-badge.model';
 import { BadgeInstanceUrl } from '../../../issuer/models/badgeinstance-api.model';
 import { groupIntoArray, groupIntoObject } from '../../../common/util/array-reducers';
 import { BaseDialog } from '../../../common/dialogs/base-dialog';
+import { SvgIconComponent } from '../../../common/components/svg-icon.component';
+import { FormsModule } from '@angular/forms';
+import { NgIf, NgFor, NgStyle, DatePipe } from '@angular/common';
+import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 
 export interface RecipientBadgeSelectionDialogOptions {
 	dialogId: string;
@@ -25,9 +29,17 @@ export interface RecipientBadgeSelectionDialogSettings {
 }
 
 @Component({
-	selector: 'recipient-badge-selection-dialog',
-	templateUrl: './recipient-badge-selection-dialog.component.html',
-	standalone: false,
+    selector: 'recipient-badge-selection-dialog',
+    templateUrl: './recipient-badge-selection-dialog.component.html',
+    imports: [
+        SvgIconComponent,
+        FormsModule,
+        NgIf,
+        BgAwaitPromises,
+        NgFor,
+        NgStyle,
+        DatePipe,
+    ],
 })
 export class RecipientBadgeSelectionDialog extends BaseDialog {
 	get searchQuery() {

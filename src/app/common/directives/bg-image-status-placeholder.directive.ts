@@ -4,10 +4,9 @@ const defaultLoadingImage = '../../../breakdown/static/images/image-placeholder.
 const defaultErrorImage = '../../../breakdown/static/images/image-failed.svg';
 
 @Directive({
-	// Note that to have webpack process these sources, we must add the attributes to webpack.common.js in the html loader section.
-	selector: '[loading-src],[loaded-src],[error-src]',
-	exportAs: 'image-status-placeholder',
-	standalone: false,
+    // Note that to have webpack process these sources, we must add the attributes to webpack.common.js in the html loader section.
+    selector: '[loading-src],[loaded-src],[error-src]',
+    exportAs: 'image-status-placeholder',
 })
 export class BgImageStatusPlaceholderDirective implements OnChanges {
 	protected get loadingSrc(): string {

@@ -13,11 +13,10 @@ describe('RecipientBadgeCollectionSelectionDialogComponent', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			declarations: [RecipientBadgeCollectionSelectionDialogComponent],
-			imports: [RouterTestingModule, CommonModule, BadgrCommonModule, FormsModule, ...COMMON_IMPORTS],
-			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
-		}).compileComponents();
+    imports: [RouterTestingModule, CommonModule, BadgrCommonModule, FormsModule, ...COMMON_IMPORTS, RecipientBadgeCollectionSelectionDialogComponent],
+    providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+}).compileComponents();
 		fixture = TestBed.createComponent(RecipientBadgeCollectionSelectionDialogComponent);
 		component = fixture.debugElement.componentInstance;
 		component.resolveFunc = () => {};

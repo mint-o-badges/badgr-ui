@@ -4,9 +4,8 @@ import { distinctUntilChanged, endWith, map, switchMap, takeUntil, takeWhile } f
 import { Destroy } from './destroy';
 
 @Directive({
-	selector: '[countUp]',
-	providers: [Destroy],
-	standalone: false,
+    selector: '[countUp]',
+    providers: [Destroy],
 })
 export class CountUpDirective {
 	@Input('countUp')
