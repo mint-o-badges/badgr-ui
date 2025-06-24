@@ -34,7 +34,7 @@
 					(click)="downloadPdf()"
 					loading-message="Downloading..."
 					[disabled-when-requesting]="true"
-					[disabled]="pdfError"
+					[disabled]="!!pdfError"
 				>
 					Herunterladen
 				</button>
