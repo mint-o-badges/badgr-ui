@@ -149,7 +149,9 @@ export type RequestedBadge = {
 				<brn-column-def name="requestedOn" class="!tw-flex-1 tw-justify-center">
 					<hlm-th *brnHeaderDef>
 						<button hlmBtn size="sm" variant="inherit" (click)="handleEmailSortChange()">
-							<span class="tw-text-white tw-text-sm tw-font-medium">{{ 'Badge.requestedOn' | translate }}</span>
+							<span class="tw-text-white tw-text-sm tw-font-medium">{{
+								'Badge.requestedOn' | translate
+							}}</span>
 							<ng-icon hlm class="tw-ml-3 tw-text-white" size="sm" name="lucideArrowUpDown" />
 						</button>
 					</hlm-th>
@@ -167,8 +169,7 @@ export type RequestedBadge = {
 				</brn-column-def>
 				<brn-column-def name="actions" class="tw-w-16">
 					<hlm-th *brnHeaderDef></hlm-th>
-					<hlm-td *brnCellDef="let element">
-					</hlm-td>
+					<hlm-td *brnCellDef="let element"> </hlm-td>
 				</brn-column-def>
 				<div class="tw-flex tw-items-center tw-justify-center tw-p-20 tw-text-muted-foreground" brnNoDataRow>
 					No data

@@ -6,7 +6,7 @@ import { CommonEntityManagerModule } from '../entity-manager/entity-manager.modu
 
 @NgModule({
 	imports: [...COMMON_IMPORTS, BadgrCommonModule, CommonEntityManagerModule],
-	declarations: [SourceListenerDirective,],
-	exports: [SourceListenerDirective,],
+	declarations: [SourceListenerDirective],
+	exports: [SourceListenerDirective],
 })
 export class MozzTransitionModule {}

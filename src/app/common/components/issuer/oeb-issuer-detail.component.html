@@ -32,7 +32,10 @@
 		</div>
 	</div>
 	<div class="tw-w-auto tw-hidden md:tw-grid !tw-content-center">
-		<p *ngIf="isFullIssuer(issuer) && issuer.apiModel && !issuer.apiModel.verified" class="u-margin-top1x u-width-paragraph">
+		<p
+			*ngIf="isFullIssuer(issuer) && issuer.apiModel && !issuer.apiModel.verified"
+			class="u-margin-top1x u-width-paragraph"
+		>
 			{{ 'Issuer.nichtVerified' | translate }}
 		</p>
 		<div class="tw-flex tw-gap-2">
@@ -82,14 +85,19 @@
 	<p class="tw-text-oebblack oeb-break-words tw-py-4">{{ issuer.description }}</p>
 </div>
 <div class="topbar-x-buttons tw-grid md:tw-hidden">
-	<p *ngIf="isFullIssuer(issuer) && issuer.apiModel && !issuer.apiModel.verified" class="u-margin-top1x u-width-paragraph">
+	<p
+		*ngIf="isFullIssuer(issuer) && issuer.apiModel && !issuer.apiModel.verified"
+		class="u-margin-top1x u-width-paragraph"
+	>
 		{{ 'Issuer.nichtVerified' | translate }}
 	</p>
 	<div class="tw-flex tw-flex-wrap tw-gap-4">
 		<oeb-button
 			*ngIf="!public"
 			width="full_width"
-			[class]="'tw-flex-grow tw-relative'.concat(isFullIssuer(issuer) && issuer.canCreateBadge ? '' : ' disabled')"
+			[class]="
+				'tw-flex-grow tw-relative'.concat(isFullIssuer(issuer) && issuer.canCreateBadge ? '' : ' disabled')
+			"
 			[routerLink]="activeTab === 'badges' ? ['./badges/select'] : ['./learningpaths/create']"
 			[disabled]="isFullIssuer(issuer) && !issuer.canCreateBadge"
 			[text]="

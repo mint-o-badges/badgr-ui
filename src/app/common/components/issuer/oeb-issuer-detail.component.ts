@@ -60,8 +60,8 @@ export class OebIssuerDetailComponent implements OnInit {
 	private readonly _hlmDialogService = inject(HlmDialogService);
 
 	isFullIssuer(issuer: Issuer | PublicApiIssuer): issuer is Issuer {
-    return 'currentUserStaffMember' in issuer;
-  }
+		return 'currentUserStaffMember' in issuer;
+	}
 
 	menuItemsPublic: MenuItem[] = [
 		{

@@ -284,7 +284,6 @@ export class RecipientEarnedBadgeListComponent
 				this.activeTab = params['tab'];
 			}
 		});
-
 	}
 
 	private loadImportedBadges() {
