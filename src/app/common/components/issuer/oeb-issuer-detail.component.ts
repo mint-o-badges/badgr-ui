@@ -52,9 +52,11 @@ export class OebIssuerDetailComponent implements OnInit {
 		private qrCodeApiService: QrCodeApiService,
 		private sessionService: SessionService,
 	) {
-		this.issuerManager.myIssuers$.subscribe((issuers) => {
-			this.userIsMember = issuers.some((i) => this.issuer.slug == i.slug);
-		});
+		if (this.sessionService.isLoggedIn) {
+			this.issuerManager.myIssuers$.subscribe((issuers) => {
+				this.userIsMember = issuers.some((i) => this.issuer.slug == i.slug);
+			});
+		}
 	}
 
 	private readonly _hlmDialogService = inject(HlmDialogService);
