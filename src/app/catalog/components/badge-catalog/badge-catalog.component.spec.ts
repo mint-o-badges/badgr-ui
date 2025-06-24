@@ -13,13 +13,13 @@ describe('BadgeCatalogComponent', () => {
 
 	beforeEach(waitForAsync(() => {
 		TestBed.configureTestingModule({
-			declarations: [BadgeCatalogComponent],
 			imports: [
 				...COMMON_IMPORTS,
 				CommonModule,
 				BadgrCommonModule,
 				RouterTestingModule,
 				TranslateTestingModule.withTranslations('de', {}),
+				BadgeCatalogComponent,
 			],
 			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
 		}).compileComponents();

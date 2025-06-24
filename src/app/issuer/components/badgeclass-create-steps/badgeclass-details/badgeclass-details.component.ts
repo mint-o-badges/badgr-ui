@@ -6,7 +6,6 @@ import { BadgeClass } from '../../../../issuer/models/badgeclass.model';
 @Component({
 	selector: 'badgeclass-details',
 	templateUrl: './badgeclass-details.component.html',
-	standalone: false,
 })
 export class BadgeClassDetailsComponent implements OnInit, AfterViewInit {
 	@Input() badgeClass: BadgeClass;

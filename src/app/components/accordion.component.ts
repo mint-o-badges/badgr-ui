@@ -3,11 +3,12 @@ import { NgIf } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { BrnAccordionContentComponent } from '@spartan-ng/brain/accordion';
 import { HlmAccordionModule } from './spartan/ui-accordion-helm/src';
-import { HlmIconModule } from './spartan/ui-icon-helm/src';
+
 import { RouterModule } from '@angular/router';
 import { Component, Input } from '@angular/core';
 import { lucideClock, lucideChevronDown } from '@ng-icons/lucide';
 import { provideIcons } from '@ng-icons/core';
+import { HlmIconDirective } from './spartan/ui-icon-helm/src/lib/hlm-icon.directive';
 
 @Component({
 	selector: 'competency-accordion',
@@ -15,7 +16,7 @@ import { provideIcons } from '@ng-icons/core';
 	imports: [
 		HlmAccordionModule,
 		NgIcon,
-		HlmIconModule,
+		HlmIconDirective,
 		TranslateModule,
 		BrnAccordionContentComponent,
 		RouterModule,

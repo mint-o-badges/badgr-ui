@@ -11,7 +11,6 @@ const defaultErrorImage = '../../../breakdown/static/images/image-failed.svg';
 		'[style.display]': "copySupported ? '' : 'none'",
 	},
 	exportAs: 'copy-input',
-	standalone: false,
 })
 export class BgCopyInputDirective {
 	@Input('click-to-copy')

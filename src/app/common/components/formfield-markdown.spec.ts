@@ -17,8 +17,7 @@ describe('FormFieldMarkdown', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			declarations: [FormFieldMarkdown],
-			imports: [RouterTestingModule, LMarkdownEditorModule, ...COMMON_IMPORTS],
+			imports: [RouterTestingModule, LMarkdownEditorModule, ...COMMON_IMPORTS, FormFieldMarkdown],
 			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		}).compileComponents();

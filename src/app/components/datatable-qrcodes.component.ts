@@ -15,7 +15,7 @@ import {
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { lucideArrowUpDown, lucideChevronDown, lucideEllipsis } from '@ng-icons/lucide';
-import { HlmButtonModule } from './spartan/ui-button-helm/src';
+
 import { HlmCheckboxComponent } from './spartan/ui-checkbox-helm/src';
 import { HlmIconDirective } from './spartan/ui-icon-helm/src';
 import { HlmInputDirective } from './spartan/ui-input-helm/src';
@@ -49,6 +49,7 @@ import { BadgeInstanceBatchAssertion } from '../issuer/models/badgeinstance-api.
 import { provideIcons } from '@ng-icons/core';
 import { BadgeInstanceApiService } from '../issuer/services/badgeinstance-api.service';
 import { TaskPollingManagerService, TaskResult, TaskStatus } from '../common/task-manager.service';
+import { HlmButtonDirective } from './spartan/ui-button-helm/src/lib/hlm-button.directive';
 
 export type Payment = {
 	id: string;
@@ -73,7 +74,7 @@ export type RequestedBadge = {
 		HlmMenuModule,
 		BrnTableModule,
 		HlmTableModule,
-		HlmButtonModule,
+		HlmButtonDirective,
 		DatePipe,
 		NgIcon,
 		HlmIconDirective,

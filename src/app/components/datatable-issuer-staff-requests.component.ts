@@ -1,12 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-import { HlmIconModule } from './spartan/ui-icon-helm/src';
+
 import { RouterModule } from '@angular/router';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { HlmTableModule } from './spartan/ui-table-helm/src';
 import { OebButtonComponent } from './oeb-button.component';
 
 import { ApiStaffRequest } from '../issuer/staffrequest-api.model';
+import { HlmIconModule } from '@spartan-ng/ui-icon-helm';
 
 @Component({
 	selector: 'issuer-staff-requests-datatable',

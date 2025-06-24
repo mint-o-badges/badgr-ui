@@ -1,5 +1,14 @@
 import { Component, EventEmitter, Input, HostBinding, Output } from '@angular/core';
 import { LearningPathApiService } from '../services/learningpath-api.service';
+import { RouterLink } from '@angular/router';
+import { NgIf, NgFor, LowerCasePipe, SlicePipe } from '@angular/common';
+import { NgIcon } from '@ng-icons/core';
+import { HlmIconDirective } from '../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
+import { BgImageStatusPlaceholderDirective } from '../directives/bg-image-status-placeholder.directive';
+import { HlmPDirective } from '../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
+import { OebProgressComponent } from '../../components/oeb-progress.component';
+import { TranslatePipe } from '@ngx-translate/core';
+import { HourPipe } from '../pipes/hourPipe';
 
 type MatchOrProgressType = { match?: string; progress?: number };
 
@@ -106,7 +115,20 @@ type MatchOrProgressType = { match?: string; progress?: number };
 			</div>
 		</a>
 	`,
-	standalone: false,
+	imports: [
+		RouterLink,
+		NgIf,
+		NgIcon,
+		HlmIconDirective,
+		BgImageStatusPlaceholderDirective,
+		NgFor,
+		HlmPDirective,
+		OebProgressComponent,
+		LowerCasePipe,
+		SlicePipe,
+		TranslatePipe,
+		HourPipe,
+	],
 })
 export class BgLearningPathCard {
 	readonly badgeLoadingImageUrl = '../../../breakdown/static/images/badge-loading.svg';

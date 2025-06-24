@@ -20,6 +20,8 @@ import {
 	ValidationErrors,
 	FormControl,
 	NgModel,
+	FormsModule,
+	ReactiveFormsModule,
 } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { Md5 } from 'ts-md5/dist/md5';
@@ -49,7 +51,7 @@ import { FormFieldSelectOption } from '../../../common/components/formfield-sele
 
 import { AiSkillsService } from '../../../common/services/ai-skills.service';
 import { Skill } from '../../../common/model/ai-skills.model';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { Platform } from '@angular/cdk/platform'; // To detect the current platform by comparing the userAgent strings
 import { NavigationService } from '../../../common/services/navigation.service';
 
@@ -61,6 +63,21 @@ import { StepperComponent } from '../../../components/stepper/stepper.component'
 import { BadgeClassDetailsComponent } from '../badgeclass-create-steps/badgeclass-details/badgeclass-details.component';
 import { Issuer } from '../../models/issuer.model';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
+import { FormMessageComponent } from '../../../common/components/form-message.component';
+import { NgIf, NgClass, NgFor, NgStyle, DecimalPipe } from '@angular/common';
+import { BadgeLegendComponent } from '../../../common/components/badge-legend/badge-legend.component';
+import { StepComponent } from '../../../components/stepper/step.component';
+import { CdkStep } from '@angular/cdk/stepper';
+import { HlmH2Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h2.directive';
+import { OebInputComponent } from '../../../components/input.component';
+import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
+import { OebButtonComponent } from '../../../components/oeb-button.component';
+import { OebCheckboxComponent } from '../../../components/oeb-checkbox.component';
+import { OebCollapsibleComponent } from '../../../components/oeb-collapsible.component';
+import { NgIcon } from '@ng-icons/core';
+import { HlmIconDirective } from '../../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
+import { OebSelectComponent } from '../../../components/select.component';
+import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 
 const MAX_STUDYLOAD_HRS: number = 10_000;
 const MAX_HRS_PER_COMPETENCY: number = 999;
@@ -69,7 +86,33 @@ const MAX_HRS_PER_COMPETENCY: number = 999;
 	selector: 'badgeclass-edit-form',
 	templateUrl: './badgeclass-edit-form.component.html',
 	styleUrl: './badgeclass-edit-form.component.css',
-	standalone: false,
+	imports: [
+		FormMessageComponent,
+		NgIf,
+		BadgeLegendComponent,
+		FormsModule,
+		ReactiveFormsModule,
+		StepperComponent,
+		StepComponent,
+		CdkStep,
+		HlmH2Directive,
+		OebInputComponent,
+		HlmPDirective,
+		BgFormFieldImageComponent,
+		BadgeStudioComponent,
+		NgClass,
+		OebButtonComponent,
+		NgFor,
+		OebCheckboxComponent,
+		OebCollapsibleComponent,
+		NgIcon,
+		HlmIconDirective,
+		NgStyle,
+		OebSelectComponent,
+		AutocompleteLibModule,
+		DecimalPipe,
+		TranslatePipe,
+	],
 })
 export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableComponent implements OnInit, AfterViewInit {
 	private readonly _hlmDialogService = inject(HlmDialogService);

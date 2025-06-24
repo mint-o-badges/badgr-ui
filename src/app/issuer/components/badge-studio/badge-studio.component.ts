@@ -12,7 +12,6 @@ import { HttpClient } from '@angular/common/http';
 	host: {},
 	template: ` <canvas #canvas width="400" height="400"></canvas> `,
 	styleUrls: ['../../../../../node_modules/font-awesome/css/font-awesome.css'],
-	standalone: false,
 })
 export class BadgeStudioComponent implements OnInit, OnChanges {
 	get canvas() {

@@ -10,10 +10,12 @@ import {
 	ViewChild,
 } from '@angular/core';
 
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { UrlValidator } from '../validators/url.validator';
 import { CommonDialogsService } from '../services/common-dialogs.service';
+import { NgIf } from '@angular/common';
+import { OebButtonComponent } from '../../components/oeb-button.component';
 
 @Component({
 	selector: 'bg-formfield-text',
@@ -82,7 +84,7 @@ import { CommonDialogsService } from '../services/common-dialogs.service';
 		</div>
 		<p class="forminput-x-error" *ngIf="isErrorState">{{ errorMessageForDisplay }}</p>
 	`,
-	standalone: false,
+	imports: [NgIf, FormsModule, ReactiveFormsModule, OebButtonComponent],
 })
 export class FormFieldText implements OnChanges, AfterViewInit {
 	@Input()

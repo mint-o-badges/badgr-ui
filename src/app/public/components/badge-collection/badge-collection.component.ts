@@ -12,10 +12,27 @@ import { EmbedService } from '../../../common/services/embed.service';
 import { routerLinkForUrl } from '../public/public.component';
 import { Title } from '@angular/platform-browser';
 import { AppConfigService } from '../../../common/app-config.service';
+import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
+import { NgIf, NgFor, SlicePipe } from '@angular/common';
+import { BgImageStatusPlaceholderDirective } from '../../../common/directives/bg-image-status-placeholder.directive';
+import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
+import { BgBadgecard } from '../../../common/components/bg-badgecard';
+import { PublicNotFoundBadgeCollectionComponent } from '../not-found-badge-collection/not-found-badge-collection.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
 	templateUrl: 'badge-collection.component.html',
-	standalone: false,
+	imports: [
+		BgAwaitPromises,
+		NgIf,
+		NgFor,
+		BgImageStatusPlaceholderDirective,
+		HlmH1Directive,
+		BgBadgecard,
+		PublicNotFoundBadgeCollectionComponent,
+		SlicePipe,
+		TranslatePipe,
+	],
 })
 export class PublicBadgeCollectionComponent {
 	readonly issuerImagePlacholderUrl = preloadImageURL(

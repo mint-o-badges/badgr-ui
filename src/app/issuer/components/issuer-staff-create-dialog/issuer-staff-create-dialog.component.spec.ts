@@ -14,13 +14,13 @@ describe('IssuerStaffCreateDialogComponent', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			declarations: [IssuerStaffCreateDialogComponent],
 			imports: [
 				RouterTestingModule,
 				CommonModule,
 				BadgrCommonModule,
 				TranslateTestingModule.withTranslations('de', {}),
 				...COMMON_IMPORTS,
+				IssuerStaffCreateDialogComponent,
 			],
 			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
 		}).compileComponents();

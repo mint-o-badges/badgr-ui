@@ -13,7 +13,7 @@ import { OAuthManager } from '../../common/services/oauth-manager.service';
  * Common entity manager which orchestrates communication between the various types of managed entities so they can
  * work with one another.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CommonEntityManager {
 	get badgeInstanceManager(): BadgeInstanceManager {
 		return this.injector.get(BadgeInstanceManager);

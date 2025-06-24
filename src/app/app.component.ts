@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, OnInit, Renderer2, ViewChild, Inject, signal, computed } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
-import { Router } from '@angular/router';
+import { DOCUMENT, NgIf, NgStyle, NgFor } from '@angular/common';
+import { Router, RouterLinkActive, RouterLink, RouterOutlet } from '@angular/router';
 
 import { MessageService } from './common/services/message.service';
 import { SessionService } from './common/services/session.service';
@@ -31,8 +31,63 @@ import { CopyBadgeDialog } from './common/dialogs/copy-badge-dialog/copy-badge-d
 import { ForkBadgeDialog } from './common/dialogs/fork-badge-dialog/fork-badge-dialog.component';
 import { SelectIssuerDialog } from './common/dialogs/select-issuer-dialog/select-issuer-dialog.component';
 import { LanguageService } from './common/services/language.service';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { MenuItem } from './common/components/badge-detail/badge-detail.component.types';
+import { SourceListenerDirective } from './mozz-transition/directives/source-listener/source-listener.directive';
+import { OebDropdownComponent } from './components/oeb-dropdown.component';
+import { OebButtonComponent } from './components/oeb-button.component';
+import { NgIcon, provideIcons } from '@ng-icons/core';
+import { HlmIconDirective } from './components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
+import { BgPopupMenuTriggerDirective, BgPopupMenu } from './common/components/bg-popup-menu.component';
+import { SvgIconComponent } from './common/components/svg-icon.component';
+import { MenuItemDirective } from './common/directives/bg-menuitem.directive';
+import {
+	lucideArrowUpDown,
+	lucideAward,
+	lucideBadge,
+	lucideBadgeCheck,
+	lucideBookOpen,
+	lucideCheck,
+	lucideChevronDown,
+	lucideChevronLeft,
+	lucideChevronRight,
+	lucideChevronUp,
+	lucideCircle,
+	lucideCircleX,
+	lucideClipboard,
+	lucideClock,
+	lucideCloudUpload,
+	lucideCopy,
+	lucideCopyX,
+	lucideEllipsis,
+	lucideFileCode,
+	lucideFileQuestion,
+	lucideFileText,
+	lucideGithub,
+	lucideGlobe,
+	lucideGrid2x2,
+	lucideHand,
+	lucideHeart,
+	lucideHexagon,
+	lucideImage,
+	lucideInfo,
+	lucideLogOut,
+	lucideMapPin,
+	lucidePencil,
+	lucidePlus,
+	lucideQrCode,
+	lucideRepeat2,
+	lucideRoute,
+	lucideSearch,
+	lucideShare,
+	lucideTrash2,
+	lucideTriangleAlert,
+	lucideUpload,
+	lucideUser,
+	lucideUsers,
+	lucideWarehouse,
+	lucideX,
+} from '@ng-icons/lucide';
 
 // Shim in support for the :scope attribute
 // See https://github.com/lazd/scopedQuerySelectorShim and
@@ -46,7 +101,81 @@ import { MenuItem } from './common/components/badge-detail/badge-detail.componen
 	},
 	templateUrl: './app.component.html',
 	styleUrls: ['./app.component.scss'],
-	standalone: false,
+	imports: [
+		SourceListenerDirective,
+		NgIf,
+		OebDropdownComponent,
+		RouterLinkActive,
+		RouterLink,
+		OebButtonComponent,
+		NgStyle,
+		NgIcon,
+		HlmIconDirective,
+		BgPopupMenuTriggerDirective,
+		SvgIconComponent,
+		BgPopupMenu,
+		NgFor,
+		MenuItemDirective,
+		RouterOutlet,
+		ConfirmDialog,
+		ShareSocialDialog,
+		ExportPdfDialog,
+		NounprojectDialog,
+		CopyBadgeDialog,
+		ForkBadgeDialog,
+		MarkdownHintsDialog,
+		SelectIssuerDialog,
+		TranslatePipe,
+	],
+	providers: [
+		provideIcons({
+			lucideUser,
+			lucideGlobe,
+			lucideFileQuestion,
+			lucideAward,
+			lucideWarehouse,
+			lucideRoute,
+			lucideHexagon,
+			lucideUsers,
+			lucideRepeat2,
+			lucideLogOut,
+			lucideInfo,
+			lucideShare,
+			lucideSearch,
+			lucideX,
+			lucideCloudUpload,
+			lucideChevronUp,
+			lucideChevronDown,
+			lucideChevronRight,
+			lucideChevronLeft,
+			lucideMapPin,
+			lucideGrid2x2,
+			lucideCheck,
+			lucideClock,
+			lucidePencil,
+			lucideTrash2,
+			lucideTriangleAlert,
+			lucideCircleX,
+			lucideClipboard,
+			lucideGithub,
+			lucideEllipsis,
+			lucideArrowUpDown,
+			lucidePlus,
+			lucideCircle,
+			lucideCopy,
+			lucideCopyX,
+			lucideQrCode,
+			lucideFileCode,
+			lucideFileText,
+			lucideBadge,
+			lucideBadgeCheck,
+			lucideUpload,
+			lucideImage,
+			lucideHeart,
+			lucideHand,
+			lucideBookOpen,
+		}),
+	],
 })
 export class AppComponent implements OnInit, AfterViewInit {
 	aboutBadgesMenuItems: MenuItem[] = [
