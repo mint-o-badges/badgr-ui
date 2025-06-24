@@ -11,28 +11,25 @@ import {
 import { NgIf, NgFor, NgTemplateOutlet, AsyncPipe } from '@angular/common';
 import type { MenuItem } from '../common/components/badge-detail/badge-detail.component.types';
 import { RouterModule } from '@angular/router';
-
-import { SharedIconsModule } from '../public/icons.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { HlmIconDirective } from './spartan/ui-icon-helm/src/lib/hlm-icon.directive';
 
 @Component({
 	selector: 'oeb-dropdown',
 	imports: [
-    BrnMenuTriggerDirective,
-    HlmMenuComponent,
-    HlmMenuItemDirective,
-    HlmMenuLabelComponent,
-    HlmMenuItemIconDirective,
-    NgIf,
-    NgFor,
-    NgTemplateOutlet,
-    RouterModule,
-    NgIcon,
-    HlmIconDirective,
-    SharedIconsModule,
-    TranslateModule
-],
+		BrnMenuTriggerDirective,
+		HlmMenuComponent,
+		HlmMenuItemDirective,
+		HlmMenuLabelComponent,
+		HlmMenuItemIconDirective,
+		NgIf,
+		NgFor,
+		NgTemplateOutlet,
+		RouterModule,
+		NgIcon,
+		HlmIconDirective,
+		TranslateModule,
+	],
 	template: `
 		<button
 			[brnMenuTriggerFor]="menu"

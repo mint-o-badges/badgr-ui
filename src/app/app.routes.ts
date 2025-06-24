@@ -43,7 +43,7 @@ export const ROUTE_CONFIG: Routes = [
 	},
 	{
 		path: 'public',
-		loadChildren: () => import('./public/public.module').then((m) => m.routes),
+		loadChildren: () => import('./public/public.routes').then((m) => m.routes),
 	},
 	{
 		path: 'catalog',

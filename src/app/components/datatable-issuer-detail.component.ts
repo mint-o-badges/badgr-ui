@@ -1,9 +1,6 @@
 import { NgIcon } from '@ng-icons/core';
 import { CommonModule } from '@angular/common';
-import { BadgrCommonModule } from '../common/badgr-common.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { BrnAccordionContentComponent } from '@spartan-ng/brain/accordion';
-
 import { RouterModule } from '@angular/router';
 import { Component, EventEmitter, Input, Output, computed, effect, input, signal } from '@angular/core';
 import { HlmTableModule } from './spartan/ui-table-helm/src';
@@ -15,10 +12,10 @@ import { BadgeInstance } from '../issuer/models/badgeinstance.model';
 import { FormsModule } from '@angular/forms';
 import { HlmIconDirective } from './spartan/ui-icon-helm/src';
 import { lucideSearch } from '@ng-icons/lucide';
-import { HlmCommandInputWrapperComponent } from './spartan/ui-command-helm/src';
 import { OebButtonComponent } from './oeb-button.component';
 import { provideIcons } from '@ng-icons/core';
 import { OebSpinnerComponent } from './oeb-spinner.component';
+import { HlmCommandInputWrapperComponent } from './spartan/ui-command-helm/src/lib/hlm-command-input-wrapper.component';
 
 @Component({
 	selector: 'issuer-detail-datatable',
@@ -26,7 +23,6 @@ import { OebSpinnerComponent } from './oeb-spinner.component';
 		FormsModule,
 		HlmTableModule,
 		CommonModule,
-		BadgrCommonModule,
 		TranslateModule,
 		RouterModule,
 		HlmInputDirective,
