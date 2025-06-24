@@ -83,7 +83,7 @@ import { NgIf } from '@angular/common';
 		</div>
 		<p class="forminput-x-error" *ngIf="isErrorState">{{ errorMessageForDisplay }}</p>
 	`,
-	imports: [NgIf, FormsModule, ReactiveFormsModule, BadgrButtonComponent],
+	imports: [NgIf, FormsModule, ReactiveFormsModule],
 })
 export class FormFieldText implements OnChanges, AfterViewInit {
 	@Input()
