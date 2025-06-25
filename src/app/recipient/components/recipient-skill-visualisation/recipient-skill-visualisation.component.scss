@@ -1,7 +1,5 @@
-
 ::ng-deep {
 	svg {
-
 		foreignObject {
 			pointer-events: none;
 
@@ -22,10 +20,10 @@
 				hyphens: auto;
 
 				&.description {
-					background-color: #F8F6FC;
+					background-color: var(--color-purple-50);
 					border-radius: 10px;
-					border: 1px solid #492E98;
-					color: #492E98;
+					border: 1px solid var(--color-purple);
+					color: var(--color-purple);
 					font-weight: normal;
 					display: none;
 				}
@@ -37,38 +35,48 @@
 			}
 		}
 
-
 		g {
 			font-weight: bold;
 			circle {
-				stroke: #492E98;
+				stroke: var(--color-purple);
 			}
 			&.level-1 {
-				color: #492E98;
-				circle { fill: #E2DAF3; }
+				color: var(--color-purple);
+				circle {
+					fill: var(--color-purple-100);
+				}
 			}
 			&.level-2 {
-				color: #3D2979;
-				circle { fill: #B4A1E1; }
+				color: var(--color-purple-950);
+				circle {
+					fill: var(--color-purple-300);
+				}
 			}
 			&.level-3 {
 				color: white;
-				circle { fill: #6C4AC7; }
+				circle {
+					fill: var(--color-purple-600);
+				}
 			}
-			&.level-4, &.leaf {
+			&.level-4,
+			&.leaf {
 				color: white;
-				circle { fill: #492E98; }
+				circle {
+					fill: var(--color-purple);
+				}
 			}
 			&.future {
-				color: #806600;
+				color: var(--color-yellow-800);
 				circle {
-					stroke: #806600;
-					fill: #FFEB9C;
+					stroke: var(--color-yellow-800);
+					fill: var(--color-yellow-200);
 				}
 			}
 		}
 
-		g.group, g.leaf, .link {
+		g.group,
+		g.leaf,
+		.link {
 			transition: opacity 0.3s ease 0.2s;
 
 			&.show-description {
@@ -80,8 +88,8 @@
 			}
 		}
 
-		g.group, g.leaf {
-
+		g.group,
+		g.leaf {
 			opacity: 0;
 			z-index: 2;
 			position: relative;
@@ -129,14 +137,14 @@
 
 	&__esco {
 		&:before {
-			border-color: #492E98;
-			background-color: #E2DAF3;
+			border-color: var(--color-purple);
+			background-color: var(--color-purple-100);
 		}
 	}
 
 	&__future {
 		&:before {
-			background-color: #FFE26D;
+			background-color: var(--color-yellow-300);
 		}
 	}
 }
