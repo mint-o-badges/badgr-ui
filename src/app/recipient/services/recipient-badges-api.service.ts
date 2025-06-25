@@ -37,8 +37,10 @@ export class RecipientBadgeApiService extends BaseHttpApiService {
 		);
 	}
 
-	getSkills(): Promise<ApiRootSkill[]> {
-		return this.get<{skills: ApiRootSkill[]}>('/v1/earner/skills').then((r) => r.body.skills);
+	getSkills(language = 'de'): Promise<ApiRootSkill[]> {
+		return this.get<{skills: ApiRootSkill[]}>('/v1/earner/skills', {
+			lang: language
+		}).then((r) => r.body.skills);
 	}
 
 	getImportedBadge(slug: string): Promise<ApiImportedBadgeInstance> {

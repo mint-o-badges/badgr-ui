@@ -165,7 +165,7 @@ export interface ApiSkill {
 	"breadcrumb_paths"?: [ApiSkill[]]
 }
 
-export interface ApiRootSkill extends Partial<ApiSkill> {
+export interface ApiRootSkill extends ApiSkill {
 	"studyLoad": number,
 	"breadcrumb_paths": [ApiSkill[]]
 }
