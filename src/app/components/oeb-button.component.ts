@@ -23,10 +23,10 @@ import { map, Subscription } from 'rxjs';
 		[variant]="variant()"
 		[attr.id]="id()"
 	>
-		<ng-icon hlm *ngIf="icon()" size="lg" [name]="icon()" />
+		<ng-icon hlm *ngIf="icon() && iconLeft()" size="lg" [name]="icon()" />
 		<img *ngIf="img()" class="md:tw-h-[30px] tw-h-[20px] tw-pr-4" [src]="img()" />
 		<span [ngClass]="{ 'tw-ml-4': iconLeft() }" [innerHTML]="computedText()"></span>
-		<ng-icon hlm *ngIf="icon() && !iconLeft()" class="tw-ml-4" size="lg" [name]="icon()" />
+		<ng-icon hlm *ngIf="icon() && !iconLeft()" size="lg" [name]="icon()" />
 	</button>`,
 })
 export class OebButtonComponent {
