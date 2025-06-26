@@ -1,32 +1,46 @@
-import { Component, ElementRef, input, OnChanges, SimpleChanges, ViewChild } from "@angular/core";
-import { ApiRootSkill, ApiSkill } from "../../models/recipient-badge-api.model";
+import { Component, ElementRef, input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
+import { ApiRootSkill, ApiSkill } from '../../../common/model/ai-skills.model';
 
-import * as d3 from "d3";
-import d3ForceBoundary from "d3-force-boundary";
+import * as d3 from 'd3';
+import d3ForceBoundary from 'd3-force-boundary';
 
-import futureSkills from "./recipient-skill-visualisation.future.json";
-import { debounceTime, fromEvent, Subject, takeUntil, tap } from "rxjs";
-import { TranslateModule } from "@ngx-translate/core";
-
+import futureSkills from './recipient-skill-visualisation.future.json';
+import { debounceTime, fromEvent, Subject, takeUntil, tap } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
+import { HlmAccordionModule } from '../../../components/spartan/ui-accordion-helm/src/index';
+import {
+	BrnAccordionContentComponent,
+	BrnAccordionItemDirective,
+	BrnAccordionDirective,
+	BrnAccordionTriggerDirective,
+} from '@spartan-ng/brain/accordion';
+import { HlmIconModule } from '../../../components/spartan/ui-icon-helm/src/index';
+import { NgIcon } from '@ng-icons/core';
+import { OebButtonComponent } from '../../../components/oeb-button.component';
+import { CompetencyAccordionComponent } from '../../../components/accordion.component';
+import { BadgrCommonModule } from '../../../common/badgr-common.module';
 interface ExtendedApiSkill extends Partial<ApiSkill> {
-	id: string
-	name: string
-	description: string
-	ancestors: Set<string>
-	height: number
-	depth: number
-	parents: Set<string>
-	children: string[]
-	leafs: string[]
-	leaf: boolean
-	group: number
-	mouseover: boolean
-	clickable: boolean
+	id: string;
+	name: string;
+	description: string;
+	type: string;
+	studyLoad: number;
+	concept_uri: string;
+	ancestors: Set<string>;
+	height: number;
+	depth: number;
+	parents: Set<string>;
+	children: string[];
+	leafs: string[];
+	leaf: boolean;
+	group: number;
+	mouseover: boolean;
+	clickable: boolean;
 }
 
-interface SkillLink  {
-	source: string
-	target: string
+interface SkillLink {
+	source: string;
+	target: string;
 }
 
 @Component({
@@ -34,17 +48,26 @@ interface SkillLink  {
 	templateUrl: './recipient-skill-visualisation.component.html',
 	styleUrl: './recipient-skill-visualisation.component.scss',
 	standalone: true,
-	imports: [TranslateModule]
+	providers: [BrnAccordionItemDirective, BrnAccordionDirective, BrnAccordionTriggerDirective],
+	imports: [
+		TranslateModule,
+		HlmAccordionModule,
+		HlmIconModule,
+		OebButtonComponent,
+		BrnAccordionContentComponent,
+		NgIcon,
+		CompetencyAccordionComponent,
+		BadgrCommonModule,
+	],
 })
 export class RecipientSkillVisualisationComponent implements OnChanges {
-
 	@ViewChild('d3canvas') d3canvas: ElementRef<HTMLElement>;
 
 	skills = input<ApiRootSkill[]>([]);
-	skillTree: Map<string, ExtendedApiSkill>
-	d3data: {nodes: ExtendedApiSkill[], links: SkillLink[]} = {
-		"nodes": [],
-		"links": [],
+	skillTree: Map<string, ExtendedApiSkill>;
+	d3data: { nodes: ExtendedApiSkill[]; links: SkillLink[] } = {
+		nodes: [],
+		links: [],
 	};
 
 	mobile = window.innerWidth < 768;
@@ -52,19 +75,24 @@ export class RecipientSkillVisualisationComponent implements OnChanges {
 
 	resizeSubject$ = new Subject<void>();
 
-	constructor() {
+	selectedNode: ExtendedApiSkill | null = null;
+	selectedNodeNumber: string | undefined = undefined;
+	showSingleNode: boolean = false;
 
-		fromEvent(window, 'resize').pipe(
-			debounceTime(300),
-			tap((event: UIEvent) => {
-				const width = event.target['innerWidth'];
-				const wasMobile = this.mobile;
-				this.mobile = window.innerWidth < 768;
-				if (wasMobile && !this.mobile || !wasMobile && this.mobile) {
-					this.initD3();
-				}
-			}, takeUntil(this.resizeSubject$)) // cleanup
-		).subscribe();
+	constructor() {
+		fromEvent(window, 'resize')
+			.pipe(
+				debounceTime(300),
+				tap((event: UIEvent) => {
+					const width = event.target['innerWidth'];
+					const wasMobile = this.mobile;
+					this.mobile = window.innerWidth < 768;
+					if ((wasMobile && !this.mobile) || (!wasMobile && this.mobile)) {
+						this.initD3();
+					}
+				}, takeUntil(this.resizeSubject$)), // cleanup
+			)
+			.subscribe();
 	}
 
 	ngOnDestroy() {
@@ -73,14 +101,13 @@ export class RecipientSkillVisualisationComponent implements OnChanges {
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
-		if (changes["skills"] && changes["skills"].currentValue.length) {
-			this.prepareData(changes["skills"].currentValue);
+		if (changes['skills'] && changes['skills'].currentValue.length) {
+			this.prepareData(changes['skills'].currentValue);
 			this.initD3();
 		}
 	}
 
 	prepareData(skills: ApiRootSkill[]) {
-
 		this.skillTree = new Map();
 		this.hasFutureSkills = false;
 
@@ -91,24 +118,29 @@ export class RecipientSkillVisualisationComponent implements OnChanges {
 		// 	"description": "Kommunikationskompetenz umfasst neben sprachlichen F\u00e4higkeiten auch Diskurs-, Dialog und strategische Kommunikationsf\u00e4higkeit, um in unterschiedlichen Kontexten und Situationen situativ angemessen erfolgreich kommunikativ handlungsf\u00e4hig zu sein."
 		// };
 
-		skills.forEach(s => {
+		skills.forEach((s) => {
 			const breadcrumbs = s.breadcrumb_paths;
 
 			// add future skills to breadcrumbs if applicable
 			if (futureSkills[s.concept_uri]) {
-				breadcrumbs.push([{}, {
-					"preferred_label": "future skills",
-					"concept_uri": "future-skills"
-				}, futureSkills[s.concept_uri], s]);
+				breadcrumbs.push([
+					{},
+					{
+						preferred_label: 'future skills',
+						concept_uri: 'future-skills',
+					},
+					futureSkills[s.concept_uri],
+					s,
+				]);
 
 				this.hasFutureSkills = true;
 			}
 
 			// loop breadcrumbs to augment skill data
-			breadcrumbs.forEach(breadcrumb => {
+			breadcrumbs.forEach((breadcrumb) => {
 				let ancestor = null;
 				breadcrumb.forEach((bc, j) => {
-					const previous = breadcrumb[j-1];
+					const previous = breadcrumb[j - 1];
 					// skips esco top level 'skills'
 					if (previous) {
 						const id = bc.concept_uri;
@@ -118,6 +150,9 @@ export class RecipientSkillVisualisationComponent implements OnChanges {
 							id: id,
 							name: bc.preferred_label,
 							description: bc.description,
+							type: bc.type,
+							studyload: bc.studyLoad,
+							concept_uri: bc.concept_uri,
 							depth: j,
 							height: breadcrumb.length - j,
 							parents: new Set(),
@@ -128,8 +163,8 @@ export class RecipientSkillVisualisationComponent implements OnChanges {
 							leaf: j == breadcrumb.length - 1,
 							group: j == breadcrumb.length - 1 ? 2 : 1,
 							mouseover: false,
-							clickable: !!bc.description
-						}
+							clickable: !!bc.description,
+						};
 
 						// studyload does not exist on breadcrumb entries, take from top level json
 						if (entry.id == s.concept_uri) {
@@ -141,23 +176,23 @@ export class RecipientSkillVisualisationComponent implements OnChanges {
 						}
 
 						Object.assign(entry, {
-							height: Math.max(breadcrumb.length - j, entry.height)
-						})
+							height: Math.max(breadcrumb.length - j, entry.height),
+						});
 
 						if (j == 1) {
 							ancestor = id;
 						}
 						if (j > 1 && previous?.concept_uri) {
-							entry.parents.add(previous.concept_uri)
+							entry.parents.add(previous.concept_uri);
 						}
 						this.skillTree.set(id, entry);
 					}
 				});
-			})
+			});
 		});
 
 		// sum up leaf studyLoads on top level ancestors
-		Array.from(this.skillTree.values()).forEach(v => {
+		Array.from(this.skillTree.values()).forEach((v) => {
 			if (v.leaf) {
 				for (let a of v.ancestors.values()) {
 					this.skillTree.get(a).studyLoad += v.studyLoad;
@@ -165,15 +200,18 @@ export class RecipientSkillVisualisationComponent implements OnChanges {
 			}
 		});
 
-		const hasFuture = Array.from(this.skillTree.values()).reduce((c, s) => { return s.id == 'future-skills' || c; }, false);
+		const hasFuture = Array.from(this.skillTree.values()).reduce((c, s) => {
+			return s.id == 'future-skills' || c;
+		}, false);
 		// find top level nodes with highest studyLoad, either top 5 or 4 if future skills exist
 		const topAncestors = new Set(
 			Array.from(this.skillTree.values())
-				.filter((s) => !s.ancestors.size && s.id != 'future-skills').sort((a, b) => {
+				.filter((s) => !s.ancestors.size && s.id != 'future-skills')
+				.sort((a, b) => {
 					return b.studyLoad - a.studyLoad;
 				})
-				.map(s => s.id)
-				.slice(0, hasFuture ? 4 : 5)
+				.map((s) => s.id)
+				.slice(0, hasFuture ? 4 : 5),
 		);
 		// add future skills if available
 		if (hasFuture) {
@@ -182,74 +220,100 @@ export class RecipientSkillVisualisationComponent implements OnChanges {
 
 		// add nodes that either are topAncestors or have a topAncestor or are in future skills
 		this.d3data.nodes = Array.from(this.skillTree.values()).filter((s) => {
-			return topAncestors.has(s.id)	// is topAncestor
-				|| (
-					s.ancestors.size > 0	// is not top level (should also be depth == 1)
-					&& s.ancestors.intersection(topAncestors).size >= s.ancestors.size	// is beneath a topAncestor
-				);
+			return (
+				topAncestors.has(s.id) || // is topAncestor
+				(s.ancestors.size > 0 && // is not top level (should also be depth == 1)
+					s.ancestors.intersection(topAncestors).size >= s.ancestors.size) // is beneath a topAncestor
+			);
 		});
 
 		this.d3data.links = [];
-		this.d3data.nodes.forEach(v => {
+		this.d3data.nodes.forEach((v) => {
 			if (v.leaf) {
 				for (let a of v.ancestors.values()) {
 					this.skillTree.get(a).leafs.push(v.id);
 				}
 			}
-			v.parents.forEach(p => {
+			v.parents.forEach((p) => {
 				if (this.skillTree.get(p)) {
 					this.skillTree.get(p).children.push(v.id);
 					this.d3data.links.push({
-						'source': v.id,
-						'target': p
-					})
+						source: v.id,
+						target: p,
+					});
 				}
-			})
+			});
 		});
 	}
 
 	getTopLevelSkills() {
-		return this.d3data.nodes.filter(d => d.depth == 1);
+		return this.d3data.nodes.filter((d) => d.depth == 1);
+	}
+
+	getAllDescendantsForTopLevelSkill(topLevelSkill: ExtendedApiSkill): ExtendedApiSkill[] {
+		const descendants = new Set<ExtendedApiSkill>();
+		const visited = new Set<string>();
+
+		const collectDescendants = (skill: ExtendedApiSkill) => {
+			if (visited.has(skill.id)) return;
+			visited.add(skill.id);
+
+			skill.children.forEach((childId) => {
+				const child = this.d3data.nodes.find((node) => node.id === childId);
+				if (child) {
+					// Always recurse to explore all paths
+					collectDescendants(child);
+
+					// Add to descendants only if user earned it
+					if (this.skills().some((s) => s.concept_uri == child.concept_uri)) {
+						descendants.add(child);
+					}
+				}
+			});
+		};
+
+		collectDescendants(topLevelSkill);
+		return Array.from(descendants);
 	}
 
 	initD3() {
-
 		const width = this.mobile ? 540 : 1144;
 		const height = width;
 
-		const nodeBaseSize = 50;
+		const nodeBaseSize = this.showSingleNode ? 100 : 50;
 		const nodeMaxAdditionalSize = 100;
 		const topLevelSkills = this.getTopLevelSkills();
-		const maxStudyLoad = topLevelSkills.reduce((current, d) => Math.max(current, d.studyLoad), 0)
-		const minStudyLoad = topLevelSkills.reduce((current, d) => Math.min(current, d.studyLoad), Number.MAX_SAFE_INTEGER)
+		const maxStudyLoad = topLevelSkills.reduce((current, d) => Math.max(current, d.studyLoad), 0);
+		const minStudyLoad = topLevelSkills.reduce(
+			(current, d) => Math.min(current, d.studyLoad),
+			Number.MAX_SAFE_INTEGER,
+		);
 
 		const nodeRadius = (d: ExtendedApiSkill) => {
 			if (d.depth == 1) {
 				// calculate node sizes based on studyLoad for top level skills
 				const size = d.studyLoad / maxStudyLoad;
-				return nodeBaseSize + (nodeMaxAdditionalSize * size / 2);
+				return nodeBaseSize + (nodeMaxAdditionalSize * size) / 2;
 			} else {
 				// return default size for everything else
 				return nodeBaseSize;
 			}
-		}
+		};
 
 		// Set the position attributes of links and nodes each time the simulation ticks.
 		const onTick = () => {
-			link
-				.attr("x1", d => d.source.x)
-				.attr("y1", d => d.source.y)
-				.attr("x2", d => d.target.x)
-				.attr("y2", d => d.target.y);
+			link.attr('x1', (d) => d.source.x)
+				.attr('y1', (d) => d.source.y)
+				.attr('x2', (d) => d.target.x)
+				.attr('y2', (d) => d.target.y);
 
-			node
-				.attr("transform", d => `translate(${d.x}, ${d.y})`);
+			node.attr('transform', (d) => `translate(${d.x}, ${d.y})`);
 
 			node.sort((d1, d2) => {
 				if (d1.mouseover) return 1;
 				if (d2.mouseover) return -1;
 				return d1.depth - d2.depth;
-			})
+			});
 		};
 
 		// The force simulation mutates links and nodes, so create a copy
@@ -257,191 +321,270 @@ export class RecipientSkillVisualisationComponent implements OnChanges {
 		let links = [];
 		let nodes = [];
 		if (!this.mobile) {
-			links = this.d3data.links.map(d => ({...d}));
-			nodes = this.d3data.nodes.map(d => ({...d}));
+			links = this.d3data.links.map((d) => ({ ...d }));
+			nodes = this.d3data.nodes.map((d) => ({ ...d }));
 		} else {
-			// filter top level nodes for mobile, no links
-			nodes = this.d3data.nodes.filter(d => d.depth == 1).map(d => ({...d}));
+			if (this.showSingleNode && this.selectedNode) {
+				nodes = [{ ...this.selectedNode }];
+			} else {
+				nodes = this.d3data.nodes.filter((d) => d.depth == 1).map((d) => ({ ...d }));
+			}
 		}
 
-
 		// Create a simulation with several forces.
-		const simulation = d3.forceSimulation(nodes)
+		const simulation = d3
+			.forceSimulation(nodes)
 			// center all nodes on the middle
-			.force("center", d3.forceCenter(0, 0).strength(1))
+			.force('center', d3.forceCenter(0, 0).strength(1))
 			// keep nodes inside SVG bounds
-			.force("bounds", d3ForceBoundary(
-				width * -0.46,
-				height * -0.46,
-				width * 0.46,
-				height * 0.46
-			).strength(0.1).border(10))
+			.force(
+				'bounds',
+				d3ForceBoundary(width * -0.46, height * -0.46, width * 0.46, height * 0.46)
+					.strength(0.1)
+					.border(10),
+			)
 			// force between links
-			.force("link", d3.forceLink(links).id((d) => (d as ExtendedApiSkill).id).distance(10).strength(1))
+			.force(
+				'link',
+				d3
+					.forceLink(links)
+					.id((d) => (d as ExtendedApiSkill).id)
+					.distance(10)
+					.strength(1),
+			)
 			// force between nodes ("charged" magentism)
-			.force("charge", d3.forceManyBody().strength(d => {
-				return (d as ExtendedApiSkill).depth == 1 ? -1000 : -500
-			}))
+			.force(
+				'charge',
+				d3.forceManyBody().strength((d) => {
+					return (d as ExtendedApiSkill).depth == 1 ? -1000 : -500;
+				}),
+			)
 			// prevent overlapping nodes
-			.force("collide", d3.forceCollide((d) => nodeRadius(d)*1.1))
+			.force(
+				'collide',
+				d3.forceCollide((d) => nodeRadius(d) * 1.1),
+			)
 			// forces nodes into "rings", basically creating a ring of nodes for each depth level
 			// which helps keeping distances uniform
-			.force("inner", d3.forceRadial(d => {
-				if ((d as ExtendedApiSkill).depth == 1) {
-					return 0
-				}
-				return ((d as ExtendedApiSkill).depth -1) * (nodeBaseSize * 3)
-			}).strength(d => {
-
-				return (d as ExtendedApiSkill).depth == 1 ? 2 : 0.1
-			}))
+			.force(
+				'inner',
+				d3
+					.forceRadial((d) => {
+						if ((d as ExtendedApiSkill).depth == 1) {
+							return 0;
+						}
+						return ((d as ExtendedApiSkill).depth - 1) * (nodeBaseSize * 3);
+					})
+					.strength((d) => {
+						return (d as ExtendedApiSkill).depth == 1 ? 2 : 0.1;
+					}),
+			);
 
 		// skip ticks do skip "start animation"
 		for (var i = 0; i < 1000; i++) {
 			simulation.tick();
 		}
 
-		simulation.on("tick", onTick);
-
+		simulation.on('tick', onTick);
 
 		// Create the SVG container.
-		const svg = d3.create("svg")
-			 .attr("width", width)
-			 .attr("height", height)
-			 .attr("viewBox", [-width / 2, -height / 2, width, height])
-			 .attr("style", "max-width: 100%; height: auto;");
+		const svg = d3
+			.create('svg')
+			.attr('width', width)
+			.attr('height', height)
+			.attr('viewBox', [-width / 2, -height / 2, width, height])
+			.attr('style', 'max-width: 100%; height: auto;');
 
 		// Add a line for each link, and a circle for each node.
-		const link = svg.append("g")
-			.attr("stroke", "#999")
-			.attr("stroke-opacity", 1)
-			.selectAll("line")
+		const link = svg
+			.append('g')
+			.attr('stroke', '#999')
+			.attr('stroke-opacity', 1)
+			.selectAll('line')
 			.data(links)
-			.join("line")
-			.attr("stroke-width", "2")
-			.attr("class", "link");
+			.join('line')
+			.attr('stroke-width', '2')
+			.attr('class', 'link');
 
-		const node = svg.append("g")
-			.attr("stroke", "#fff")
-			.attr("stroke-width", 1.5)
-			.selectAll("g")
+		const node = svg
+			.append('g')
+			.attr('stroke', '#fff')
+			.attr('stroke-width', 1.5)
+			.selectAll('g')
 			.data(nodes)
-			.join("g");
+			.join('g');
 
-		node
-			.append("circle")
-			.attr("r", (d) => nodeRadius(d));
+		node.append('circle').attr('r', (d) => nodeRadius(d));
 
-		node.append("title")
-			 .text(d => d.name);
+		node.append('title').text((d) => d.name);
 
 		// add foreignObject for text styling / positioning
-		node
-			.append("foreignObject")
-			.attr("x", (d) => nodeRadius(d) * -1)
-			.attr("y", (d) => nodeRadius(d) * -1)
-			.attr("height", (d) => nodeRadius(d) * 2)
-			.attr("width", (d) => nodeRadius(d) * 2)
-			.attr("class", "fo-name")
-			.append("xhtml:div")
+		const nodeText = node
+			.append('foreignObject')
+			.attr('x', (d) => nodeRadius(d) * -1)
+			.attr('y', (d) => nodeRadius(d) * -1)
+			.attr('height', (d) => nodeRadius(d) * 2)
+			.attr('width', (d) => nodeRadius(d) * 2)
+			.attr('class', 'fo-name')
+			.append('xhtml:div')
 			// DEBUG: output studyload if not 0
 			// .text(d => { return d.name.replace("/", " / ") + (d.studyLoad !== 0 ? ` (${d.studyLoad} min)` : '') })
-			.text(d => { return d.name.replace("/", " / ") })
-			.attr("style", (d) => `font-size: ${nodeRadius(d) * 0.20}px;`)
-			.attr("text-anchor", "top")
-			.attr("class", "name")
+			.text((d) => {
+				return d.name.replace('/', ' / ');
+			})
+			.attr('style', (d) => `font-size: ${nodeRadius(d) * 0.2}px;`)
+			.attr('text-anchor', 'top')
+			.attr('class', 'name');
+
+		if (this.mobile) {
+			if (!this.showSingleNode) {
+				// show numbers based on bubble size (01 for biggest bubble)
+				const sortedNodes = [...nodes].sort((a, b) => nodeRadius(b) - nodeRadius(a));
+				const nodeRankMap = new Map();
+				sortedNodes.forEach((node, index) => {
+					nodeRankMap.set(node.id, index + 1);
+				});
+				nodeText.text((d) => {
+					const rank = nodeRankMap.get(d.id);
+					return this.padStart(rank);
+				});
+			} else {
+				nodeText.text((_, i) => {
+					return this.selectedNodeNumber;
+				});
+
+				nodeText.append('xhtml:div').text((d) => {
+					return d.name.replace('/', ' / ');
+				});
+			}
+		} else {
+			nodeText.text((d) => {
+				return d.name.replace('/', ' / ');
+			});
 
 			// only append studyload when top level
-			.filter(d => d.depth == 1)
-			.append("xhtml:div")
-			.text(d => { return `${d.studyLoad} min` })
-			.attr("class", "studyload")
-
+			nodeText
+				.filter((d) => d.depth == 1)
+				.append('xhtml:div')
+				.text((d) => {
+					return `${d.studyLoad} min`;
+				})
+				.attr('class', 'studyload');
+		}
 
 		// add foreignObject for description text popover
-		node
-			.append("foreignObject")
-			.attr("x", (d) => nodeRadius(d) * 0.25)
-			.attr("y", (d) => (nodeRadius(d) * -0.5) - ((nodeBaseSize) * 2)) // half radius - height of popover
-			.attr("width", (d) => (nodeBaseSize) * 6)
-			.attr("height", (d) => (nodeBaseSize) * 2)
-			.attr('class', "fo-description")
-			.append("xhtml:div")
-			.text(d => { return d.description })
-			.attr('style', (d) => `font-size: 12px;`)
-			.attr('text-anchor', "top")
-			.attr('class', "description")
-
-		node
-			.attr("class", (d) => `
-				${ d.leaf ? 'leaf' : 'group' }
-				level-${ d.depth }
-				${ d.clickable ? 'clickable' : ''}
-				${ d.id == 'future-skills' ? 'future': ''}
-			`)
-
-		node.sort((d1, d2) => { return d1.depth - d2.depth; })
-
-		node
-			.on("click", (e, d) => {
-
-				// TODO: dynamically resize description popover, reposition if out of screen?
-
-				if (d.description) {
-					const others = d3.selectAll<SVGElement, ExtendedApiSkill>('g.leaf, g.group').filter(d2 => d2.id != d.id);
-					others.data().forEach(d2 => { d2.mouseover = false; });
-					others.nodes().forEach(n => {
-						n.classList.remove('show-description');
-					});
-
-					const n = d3.selectAll<SVGElement, ExtendedApiSkill>('g.leaf, g.group').filter(d2 => d2.id == d.id).node();
-					if (n.classList.contains('show-description')) {
-						n.classList.remove('show-description');
-						d.mouseover = false;
-					} else {
-						n.classList.add('show-description');
-						d.mouseover = true;
-					}
-
-					// needed to reset node order?
-					simulation.alphaTarget(0).restart();
-				}
+		node.append('foreignObject')
+			.attr('x', (d) => nodeRadius(d) * 0.25)
+			.attr('y', (d) => nodeRadius(d) * -0.5 - nodeBaseSize * 2) // half radius - height of popover
+			.attr('width', (d) => nodeBaseSize * 6)
+			.attr('height', (d) => nodeBaseSize * 2)
+			.attr('class', 'fo-description')
+			.append('xhtml:div')
+			.text((d) => {
+				return d.description;
 			})
-			.on("mouseenter", (e, d) => {
+			.attr('style', (d) => `font-size: 12px;`)
+			.attr('text-anchor', 'top')
+			.attr('class', 'description');
+
+		node.attr(
+			'class',
+			(d) => `
+				${d.leaf ? 'leaf' : 'group'}
+				level-${d.depth}
+				${d.clickable ? 'clickable' : ''}
+				${d.id == 'future-skills' ? 'future' : ''}
+			`,
+		);
+
+		node.sort((d1, d2) => {
+			return d1.depth - d2.depth;
+		});
+
+		node.on('click', (e, d) => {
+			if (this.mobile && !this.showSingleNode) {
+				const sortedNodes = [...nodes].sort((a, b) => nodeRadius(b) - nodeRadius(a));
+				const nodeIndex = sortedNodes.indexOf(d);
+				if (nodeIndex != -1) {
+					this.selectedNodeNumber = this.padStart(String(nodeIndex + 1));
+				}
+				this.selectedNode = d;
+				this.showSingleNode = true;
+				this.initD3();
+				return;
+			}
+			// TODO: dynamically resize description popover, reposition if out of screen?
+
+			if (d.description) {
+				const others = d3
+					.selectAll<SVGElement, ExtendedApiSkill>('g.leaf, g.group')
+					.filter((d2) => d2.id != d.id);
+				others.data().forEach((d2) => {
+					d2.mouseover = false;
+				});
+				others.nodes().forEach((n) => {
+					n.classList.remove('show-description');
+				});
+
+				const n = d3
+					.selectAll<SVGElement, ExtendedApiSkill>('g.leaf, g.group')
+					.filter((d2) => d2.id == d.id)
+					.node();
+				if (n.classList.contains('show-description')) {
+					n.classList.remove('show-description');
+					d.mouseover = false;
+				} else {
+					n.classList.add('show-description');
+					d.mouseover = true;
+				}
+
+				// needed to reset node order?
+				simulation.alphaTarget(0).restart();
+			}
+		})
+			.on('mouseenter', (e, d) => {
 				// find all node parents and links to toggle show
 				let ancestors = [d.id];
 				if (d.depth > 1) {
 					ancestors = Array.from(d.ancestors.values());
 				}
 				// in case of multiple ancestors show all breadcrumb paths
-				ancestors.forEach(id => {
+				ancestors.forEach((id) => {
 					d = this.skillTree.get(id);
-					const children = d3.selectAll<SVGElement, ExtendedApiSkill>('g.leaf, g.group').filter(d2 => d2.ancestors.has(d.id));
-					const linkedIds = [d.id, ...children.data().map(c => c.id)];
-					children.nodes().forEach(n => {
-						n.classList.add('show')
+					const children = d3
+						.selectAll<SVGElement, ExtendedApiSkill>('g.leaf, g.group')
+						.filter((d2) => d2.ancestors.has(d.id));
+					const linkedIds = [d.id, ...children.data().map((c) => c.id)];
+					children.nodes().forEach((n) => {
+						n.classList.add('show');
 					});
-					const links = d3.selectAll<SVGElement, d3.HierarchyLink<ExtendedApiSkill>>('line').filter(l => [l.target.id, l.source.id].every(i => linkedIds.includes(i)));
-					links.nodes().forEach(n => {
-						n.classList.add('show')
+					const links = d3
+						.selectAll<SVGElement, d3.HierarchyLink<ExtendedApiSkill>>('line')
+						.filter((l) => [l.target.id, l.source.id].every((i) => linkedIds.includes(i)));
+					links.nodes().forEach((n) => {
+						n.classList.add('show');
 					});
-				})
+				});
 			})
-			.on("mouseout", (e, d) => {
+			.on('mouseout', (e, d) => {
 				let ancestors = [d.id];
 				if (d.depth > 1) {
 					ancestors = Array.from(d.ancestors.values());
 				}
-				ancestors.forEach(id => {
+				ancestors.forEach((id) => {
 					d = this.skillTree.get(id);
-					const children = d3.selectAll<SVGElement, ExtendedApiSkill>('g.leaf, g.group').filter(d2 => d2.ancestors.has(d.id));
-					const linkedIds = [d.id, ...children.data().map(c => c.id)];
-					children.nodes().forEach(n => {
-						n.classList.remove('show')
+					const children = d3
+						.selectAll<SVGElement, ExtendedApiSkill>('g.leaf, g.group')
+						.filter((d2) => d2.ancestors.has(d.id));
+					const linkedIds = [d.id, ...children.data().map((c) => c.id)];
+					children.nodes().forEach((n) => {
+						n.classList.remove('show');
 					});
-					const links = d3.selectAll<SVGElement, d3.HierarchyLink<ExtendedApiSkill>>('line').filter((l) => [l.target.id, l.source.id].every(i => linkedIds.includes(i)));
-					links.nodes().forEach(n => {
-						n.classList.remove('show')
+					const links = d3
+						.selectAll<SVGElement, d3.HierarchyLink<ExtendedApiSkill>>('line')
+						.filter((l) => [l.target.id, l.source.id].every((i) => linkedIds.includes(i)));
+					links.nodes().forEach((n) => {
+						n.classList.remove('show');
 					});
 				});
 			});
@@ -449,5 +592,32 @@ export class RecipientSkillVisualisationComponent implements OnChanges {
 		// clear previous versions (on mobile change)
 		this.d3canvas.nativeElement.innerHTML = '';
 		this.d3canvas.nativeElement.append(svg.node());
+	}
+
+	selectSkillForSingleView(skill: ExtendedApiSkill, index: number) {
+		if (this.mobile) {
+			this.selectedNode = skill;
+			this.showSingleNode = true;
+			this.selectedNodeNumber = this.padStart(index);
+			this.initD3();
+		}
+	}
+
+	goBackToFullView() {
+		this.showSingleNode = false;
+		this.selectedNode = null;
+		this.selectedNodeNumber = undefined;
+		this.initD3();
+	}
+
+	padStart(str: string | number) {
+		if (typeof str == 'number') {
+			return String(str).padStart(2, '0');
+		}
+		return str.padStart(2, '0');
+	}
+
+	getFormattedSkillText(idx: number, name: string): string {
+		return `<span class="tw-font-extrabold tw-mr-1">${this.padStart(idx + 1)}</span> ${name}`;
 	}
 }
