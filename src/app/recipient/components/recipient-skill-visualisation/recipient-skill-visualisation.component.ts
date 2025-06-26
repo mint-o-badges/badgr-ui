@@ -6,7 +6,7 @@ import d3ForceBoundary from 'd3-force-boundary';
 
 import futureSkills from './recipient-skill-visualisation.future.json';
 import { debounceTime, fromEvent, Subject, takeUntil, tap } from 'rxjs';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { HlmAccordionModule } from '../../../components/spartan/ui-accordion-helm/src/index';
 import {
 	BrnAccordionContentComponent,
@@ -79,7 +79,7 @@ export class RecipientSkillVisualisationComponent implements OnChanges {
 	selectedNodeNumber: string | undefined = undefined;
 	showSingleNode: boolean = false;
 
-	constructor() {
+	constructor(private translate: TranslateService) {
 		fromEvent(window, 'resize')
 			.pipe(
 				debounceTime(300),
@@ -112,26 +112,45 @@ export class RecipientSkillVisualisationComponent implements OnChanges {
 		this.hasFutureSkills = false;
 
 		// DEBUG: add your own future skill for testing
-		// futureSkills["/esco/skill/1565b401-1754-4b07-8f1a-eb5869e64d95"] = {
-		// 	"concept_uri": "kommunikationskompetenz",
-		// 	"preferred_label": "Kommunikationskompetenz",
-		// 	"description": "Kommunikationskompetenz umfasst neben sprachlichen F\u00e4higkeiten auch Diskurs-, Dialog und strategische Kommunikationsf\u00e4higkeit, um in unterschiedlichen Kontexten und Situationen situativ angemessen erfolgreich kommunikativ handlungsf\u00e4hig zu sein."
-		// };
+		futureSkills['escoMap']['/esco/skill/1565b401-1754-4b07-8f1a-eb5869e64d95'] = 'lernkompetenz';
 
 		skills.forEach((s) => {
 			const breadcrumbs = s.breadcrumb_paths;
 
 			// add future skills to breadcrumbs if applicable
-			if (futureSkills[s.concept_uri]) {
-				breadcrumbs.push([
-					{},
-					{
-						preferred_label: 'future skills',
-						concept_uri: 'future-skills',
+			if (futureSkills['escoMap'][s.concept_uri]) {
+				const emptyFs = {
+					preferred_label: '',
+					concept_uri: '',
+					description: '',
+					type: '',
+					alt_labels: [],
+					reuse_level: null,
+				};
+				const baseFs = futureSkills['futureSkills'][futureSkills['escoMap'][s.concept_uri]];
+				const futureSkill = {
+					...emptyFs,
+					...{
+						concept_uri: baseFs['concept_uri'],
+						preferred_label: baseFs[this.translate.currentLang]['preferred_label'],
+						description: baseFs[this.translate.currentLang]['description'],
 					},
-					futureSkills[s.concept_uri],
+				};
+
+				breadcrumbs.push([
+					emptyFs,
+					{
+						...emptyFs,
+						...{
+							preferred_label: 'future skills',
+							concept_uri: 'future-skills',
+						},
+					},
+					futureSkill,
 					s,
 				]);
+
+				console.log(breadcrumbs);
 
 				this.hasFutureSkills = true;
 			}

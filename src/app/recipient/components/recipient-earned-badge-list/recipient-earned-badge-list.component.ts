@@ -197,8 +197,10 @@ export class RecipientEarnedBadgeListComponent
 			this.messageService.reportAndThrowError('Failed to load your badges', e),
 		);
 
-		this.skillsLoaded = this.recipientBadgeApiService.getSkills().then((skills) => {
-			this.allSkills = skills;
+		translate.onLangChange.subscribe(() => {
+			this.skillsLoaded = this.recipientBadgeApiService.getSkills(translate.currentLang).then((skills) => {
+				this.allSkills = skills;
+			});
 		});
 
 		this.learningpathLoaded = this.learningPathApi
