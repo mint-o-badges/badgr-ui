@@ -36,8 +36,8 @@
 					left: 0;
 					background-color: #f8f6fc;
 					border-radius: 10px;
-					border: 1px solid #492e98;
-					color: #492e98;
+					border: 1px solid var(--color-purple);
+					color: var(--color-purple);
 					font-weight: normal;
 					padding: 1em;
 					max-width: min(40ch, 25vw);
@@ -46,7 +46,7 @@
 
 				div.studyload {
 					font-weight: normal;
-					color: black;
+					color: var(--color-black);
 				}
 			}
 		}
@@ -54,12 +54,12 @@
 		g {
 			font-weight: bold;
 			circle {
-				stroke: #492e98;
+				stroke: var(--color-purple);
 			}
 			&.level-1 {
-				color: #492e98;
+				color: var(--color-purple);
 				circle {
-					fill: #e2daf3;
+					fill: var(--color-lightpurple);
 				}
 			}
 			&.level-2 {
@@ -78,7 +78,7 @@
 			&.leaf {
 				color: white;
 				circle {
-					fill: #492e98;
+					fill: var(--color-purple);
 				}
 			}
 			&.future {
@@ -144,7 +144,7 @@
 		&:before {
 			content: '';
 			display: block;
-			border: 1px solid black;
+			border: 1px solid var(--color-black);
 			height: 16px;
 			width: 16px;
 		}
@@ -152,14 +152,14 @@
 
 	&__esco {
 		&:before {
-			border-color: #492e98;
-			background-color: #e2daf3;
+			border-color: var(--color-purple);
+			background-color: var(--color-lightpurple);
 		}
 	}
 
 	&__future {
 		&:before {
-			background-color: #ffe26d;
+			background-color: var(--color-yellow);
 		}
 	}
 }
