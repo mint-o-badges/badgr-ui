@@ -11,13 +11,13 @@ export interface ApiSkill {
 	alt_labels: string[];
 	description: string;
 	concept_uri: string;
-	reuse_level: string;
 	type: string;
+	reuse_level: string;
 	studyLoad?: number;
 	breadcrumb_paths?: [ApiSkill[]];
 }
 
-export interface ApiRootSkill extends Partial<ApiSkill> {
+export interface ApiRootSkill extends ApiSkill {
 	studyLoad: number;
 	breadcrumb_paths: [ApiSkill[]];
 }
