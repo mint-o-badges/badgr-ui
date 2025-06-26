@@ -716,8 +716,8 @@
 		"addEmailToUpload": "Add the email address to your profile to upload the badge.",
 		"versionUploadInfo": "We validate badges in the 2.0 standard when they are uploaded. We can currently only validate badges in the 3.0 standard to a minimal extent. You can find more information on this in our <a class=\"tw-text-link tw-underline\" href=\"/public/faq\">FAQ</a>.",
 		"addingBadge": "Adding Badge ...",
-		"skillVisualisationIntro": "[TRANSLATE] In diesen Bereichen hast du am meisten Kompetenzen gestärkt:",
-		"skillVisualisationHelp": "[TRANSLATE] Bewege den Mauszeiger über die Kreise, um die zugehörigen Kompetenzen zu sehen."
+		"skillVisualisationIntro": "These are the areas in which you have strengthened your skills the most:",
+		"skillVisualisationHelp": "Move the mouse pointer over the circles to see the associated skills."
 	},
 	"EditBadge": {
 		"editBadge": "Edit badge",
