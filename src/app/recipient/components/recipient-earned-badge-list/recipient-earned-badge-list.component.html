@@ -15,10 +15,10 @@
 						*ngIf="activeTab === 'badges' || activeTab === 'profile'"
 						icon="lucideUpload"
 						[variant]="activeTab === 'profile' ? 'secondary' : ''"
-						iconLeft="true"
+						[iconLeft]="true"
 						(click)="uploadBadge()"
 						[disabled-when-requesting]="true"
-						[text]="'RecBadge.uploadBadge' | translate"
+						[text]="mobile ? null : ('RecBadge.uploadBadge' | translate)"
 					>
 					</oeb-button>
 					<ng-template #headerTemplate>

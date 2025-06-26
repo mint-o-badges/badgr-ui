@@ -45,6 +45,7 @@ import { RecipientBadgeApiService } from '../../services/recipient-badges-api.se
 import { RecipientBadgeCollection } from '../../models/recipient-badge-collection.model';
 import { ShareDialogTemplateComponent } from '../../../common/dialogs/oeb-dialogs/share-dialog-template.component';
 import { ApiRootSkill } from '../../../common/model/ai-skills.model';
+import { BreakpointService } from '../../../common/services/breakpoint.service';
 
 type BadgeDispay = 'grid' | 'list';
 type EscoCompetencies = {
@@ -138,6 +139,9 @@ export class RecipientEarnedBadgeListComponent
 	activeTab: string = 'profile';
 	private _badgesDisplay: BadgeDispay = 'grid';
 	sortControl = new FormControl('date_desc');
+
+	mobile = window.innerWidth < 768;
+
 	get badgesDisplay() {
 		return this._badgesDisplay;
 	}
@@ -183,6 +187,7 @@ export class RecipientEarnedBadgeListComponent
 		public recipientBadgeCollectionApiService: RecipientBadgeCollectionApiService,
 		private recipientBadgeCollectionManager: RecipientBadgeCollectionManager,
 		private recipientBadgeApiService: RecipientBadgeApiService,
+		private breakpointService: BreakpointService,
 	) {
 		super(router, route, sessionService);
 
@@ -290,6 +295,10 @@ export class RecipientEarnedBadgeListComponent
 	}
 
 	ngOnInit() {
+		this.breakpointService.isCustomMobile$.subscribe((isMobile) => {
+			this.mobile = isMobile;
+		});
+
 		this.loadImportedBadges();
 
 		this.recipientBadgeManager.recipientBadgeList.changed$.subscribe((badges) => {
@@ -365,6 +374,9 @@ export class RecipientEarnedBadgeListComponent
 	uploadBadge() {
 		this.addBadgeDialog.openDialog().then(
 			() => {
+				if (this.activeTab != 'badges') {
+					this.onTabChange('badges');
+				}
 				this.loadImportedBadges();
 			},
 			() => {},
