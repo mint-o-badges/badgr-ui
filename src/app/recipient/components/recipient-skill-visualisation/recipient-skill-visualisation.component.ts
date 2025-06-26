@@ -352,9 +352,6 @@ export class RecipientSkillVisualisationComponent implements OnChanges {
 			.append("circle")
 			.attr("r", (d) => nodeRadius(d));
 
-		node.append("title")
-			 .text(d => d.name);
-
 		// add foreignObject for text styling / positioning
 		node
 			.append("foreignObject")
@@ -382,14 +379,12 @@ export class RecipientSkillVisualisationComponent implements OnChanges {
 		node
 			.append("foreignObject")
 			.attr("x", (d) => nodeRadius(d) * 0.25)
-			.attr("y", (d) => (nodeRadius(d) * -0.5) - ((nodeBaseSize) * 2)) // half radius - height of popover
-			.attr("width", (d) => (nodeBaseSize) * 6)
-			.attr("height", (d) => (nodeBaseSize) * 2)
+			.attr("y", (d) => (nodeRadius(d) * -0.5) + nodeBaseSize)
+			.attr("width", (d) => nodeBaseSize)
+			.attr("height", (d) => nodeBaseSize)
 			.attr('class', "fo-description")
 			.append("xhtml:div")
-			.text(d => { return d.description })
-			.attr('style', (d) => `font-size: 12px;`)
-			.attr('text-anchor', "top")
+			.attr('data-title', d => d.description)
 			.attr('class', "description")
 
 		node
@@ -404,9 +399,6 @@ export class RecipientSkillVisualisationComponent implements OnChanges {
 
 		node
 			.on("click", (e, d) => {
-
-				// TODO: dynamically resize description popover, reposition if out of screen?
-
 				if (d.description) {
 					const others = d3.selectAll<SVGElement, ExtendedApiSkill>('g.leaf, g.group').filter(d2 => d2.id != d.id);
 					others.data().forEach(d2 => { d2.mouseover = false; });
@@ -425,6 +417,11 @@ export class RecipientSkillVisualisationComponent implements OnChanges {
 
 					// needed to reset node order?
 					simulation.alphaTarget(0).restart();
+				}
+				else {
+					const descriptionNodes = d3.selectAll<SVGElement, ExtendedApiSkill>('.show-description').nodes();
+					for(const n of descriptionNodes)
+						n.classList.remove('show-description');					
 				}
 			})
 			.on("mouseenter", (e, d) => {
@@ -464,6 +461,11 @@ export class RecipientSkillVisualisationComponent implements OnChanges {
 						n.classList.remove('show')
 					});
 				});
+
+				// hide all descriptions
+				const descriptionNodes = d3.selectAll<SVGElement, ExtendedApiSkill>('.show-description').nodes();
+				for(const n of descriptionNodes)
+					n.classList.remove('show-description');
 			});
 
 		// clear previous versions (on mobile change)

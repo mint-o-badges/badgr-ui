@@ -1,9 +1,10 @@
-
 ::ng-deep {
 	svg {
+		overflow: visible;
 
 		foreignObject {
 			pointer-events: none;
+			overflow: visible;
 
 			> div {
 				display: flex;
@@ -22,12 +23,25 @@
 				hyphens: auto;
 
 				&.description {
-					background-color: #F8F6FC;
+					position: relative;
+					opacity: 0;
+					visibility: hidden;
+					transition: opacity 0.3s ease 0.1s;
+				}
+
+				&.description[data-title]::after {
+					content: attr(data-title);
+					position: absolute;
+					top: 0;
+					left: 0;
+					background-color: #f8f6fc;
 					border-radius: 10px;
-					border: 1px solid #492E98;
-					color: #492E98;
+					border: 1px solid #492e98;
+					color: #492e98;
 					font-weight: normal;
-					display: none;
+					padding: 1em;
+					max-width: min(40ch, 25vw);
+					width: max-content;
 				}
 
 				div.studyload {
@@ -37,51 +51,60 @@
 			}
 		}
 
-
 		g {
 			font-weight: bold;
 			circle {
-				stroke: #492E98;
+				stroke: #492e98;
 			}
 			&.level-1 {
-				color: #492E98;
-				circle { fill: #E2DAF3; }
+				color: #492e98;
+				circle {
+					fill: #e2daf3;
+				}
 			}
 			&.level-2 {
-				color: #3D2979;
-				circle { fill: #B4A1E1; }
+				color: #3d2979;
+				circle {
+					fill: #b4a1e1;
+				}
 			}
 			&.level-3 {
 				color: white;
-				circle { fill: #6C4AC7; }
+				circle {
+					fill: #6c4ac7;
+				}
 			}
-			&.level-4, &.leaf {
+			&.level-4,
+			&.leaf {
 				color: white;
-				circle { fill: #492E98; }
+				circle {
+					fill: #492e98;
+				}
 			}
 			&.future {
 				color: #806600;
 				circle {
 					stroke: #806600;
-					fill: #FFEB9C;
+					fill: #ffeb9c;
 				}
 			}
 		}
 
-		g.group, g.leaf, .link {
+		g.group,
+		g.leaf,
+		.link {
 			transition: opacity 0.3s ease 0.2s;
 
 			&.show-description {
-				transition: opacity 0.3s ease 0.1s;
-
 				div.description {
-					display: flex;
+					visibility: visible;
+					opacity: 1;
 				}
 			}
 		}
 
-		g.group, g.leaf {
-
+		g.group,
+		g.leaf {
 			opacity: 0;
 			z-index: 2;
 			position: relative;
@@ -129,14 +152,14 @@
 
 	&__esco {
 		&:before {
-			border-color: #492E98;
-			background-color: #E2DAF3;
+			border-color: #492e98;
+			background-color: #e2daf3;
 		}
 	}
 
 	&__future {
 		&:before {
-			background-color: #FFE26D;
+			background-color: #ffe26d;
 		}
 	}
 }
