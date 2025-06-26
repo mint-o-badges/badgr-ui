@@ -153,19 +153,3 @@ interface ApiImportedBadgeInstanceBadge {
 	};
 	name: string;
 }
-
-export interface ApiSkill {
-	"preferred_label":string,
-	"alt_labels": string[],
-	"description": string,
-	"concept_uri": string,
-	"type": string,
-	"reuse_level": string,
-	"studyLoad"?: number,
-	"breadcrumb_paths"?: [ApiSkill[]]
-}
-
-export interface ApiRootSkill extends Partial<ApiSkill> {
-	"studyLoad": number,
-	"breadcrumb_paths": [ApiSkill[]]
-}

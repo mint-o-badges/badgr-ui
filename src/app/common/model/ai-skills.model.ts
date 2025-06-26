@@ -2,15 +2,22 @@ export interface AiSkillsResult {
 	id: string;
 	text_to_analyze: string;
 	language: string;
-	skills: Skill[];
+	skills: ApiSkill[];
 	status: string;
 }
 
-export interface Skill {
+export interface ApiSkill {
 	preferred_label: string;
 	alt_labels: string[];
 	description: string;
 	concept_uri: string;
 	reuse_level: string;
 	type: string;
+	studyLoad?: number;
+	breadcrumb_paths?: [ApiSkill[]];
+}
+
+export interface ApiRootSkill extends Partial<ApiSkill> {
+	studyLoad: number;
+	breadcrumb_paths: [ApiSkill[]];
 }
