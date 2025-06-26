@@ -15,12 +15,13 @@
 		<p class="tw-p-4 tw-text-purple tw-italic">{{ 'RecBadge.skillVisualisationHelp' | translate }}</p>
 	}
 	<div #d3canvas></div>
-	@if (hasFutureSkills) {
-		<div class="tw-p-2 visualiser-legend">
-			<span class="visualiser-legend__esco">ESCO-Bereiche</span>
+	<div class="tw-p-2 visualiser-legend">
+		<span class="visualiser-legend__esco">ESCO-Bereiche</span>
+		@if (hasFutureSkills) {
 			<span class="visualiser-legend__future">Future Skills nach Ulf Ehers</span>
-		</div>
-	}
+		}
+	</div>
+
 	@if (mobile) {
 		<div class="mobile-overview tw-p-2">
 			<ul class="tw-flex tw-flex-col tw-gap-1">

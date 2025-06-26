@@ -433,8 +433,6 @@ export class RecipientSkillVisualisationComponent implements OnChanges {
 
 		node.append('circle').attr('r', (d) => nodeRadius(d));
 
-		node.append('title').text((d) => d.name);
-
 		// add foreignObject for text styling / positioning
 		const nodeText = node
 			.append('foreignObject')
@@ -490,16 +488,53 @@ export class RecipientSkillVisualisationComponent implements OnChanges {
 		}
 
 		// add foreignObject for description text popover
-		node.append('foreignObject')
-			.attr('x', (d) => nodeRadius(d) * 0.25)
-			.attr('y', (d) => nodeRadius(d) * -0.5 - nodeBaseSize * 2) // half radius - height of popover
-			.attr('width', (d) => nodeBaseSize * 6)
-			.attr('height', (d) => nodeBaseSize * 2)
-			.attr('class', 'fo-description')
-			.attr('data-title', (d) => d.description)
-			.append('xhtml:div')
-			.text((d) => {
-				return d.description;
+		node
+			.append("foreignObject")
+			.attr("x", (d) => nodeRadius(d) * 0.25)
+			.attr("y", (d) => (nodeRadius(d) * -0.5) + nodeBaseSize)
+			.attr("width", (d) => nodeBaseSize)
+			.attr("height", (d) => nodeBaseSize)
+			.attr('class', "fo-description")
+			.append("xhtml:div")
+			.attr('data-title', d => d.description)
+			.attr('class', "description")
+
+		node
+			.attr("class", (d) => `
+				${ d.leaf ? 'leaf' : 'group' }
+				level-${ d.depth }
+				${ d.clickable ? 'clickable' : ''}
+				${ d.id == 'future-skills' ? 'future': ''}
+			`)
+
+		node.sort((d1, d2) => { return d1.depth - d2.depth; })
+
+		node
+			.on("click", (e, d) => {
+				if (d.description) {
+					const others = d3.selectAll<SVGElement, ExtendedApiSkill>('g.leaf, g.group').filter(d2 => d2.id != d.id);
+					others.data().forEach(d2 => { d2.mouseover = false; });
+					others.nodes().forEach(n => {
+						n.classList.remove('show-description');
+					});
+
+					const n = d3.selectAll<SVGElement, ExtendedApiSkill>('g.leaf, g.group').filter(d2 => d2.id == d.id).node();
+					if (n.classList.contains('show-description')) {
+						n.classList.remove('show-description');
+						d.mouseover = false;
+					} else {
+						n.classList.add('show-description');
+						d.mouseover = true;
+					}
+
+					// needed to reset node order?
+					simulation.alphaTarget(0).restart();
+				}
+				else {
+					const descriptionNodes = d3.selectAll<SVGElement, ExtendedApiSkill>('.show-description').nodes();
+					for(const n of descriptionNodes)
+						n.classList.remove('show-description');					
+				}
 			})
 			.attr('style', (d) => `font-size: 12px;`)
 			.attr('text-anchor', 'top')

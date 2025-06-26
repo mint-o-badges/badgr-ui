@@ -719,7 +719,9 @@
 		"addingBadge": "Adding Badge ...",
 		"skillVisualisationIntro": "These are the areas in which you have strengthened your skills the most:",
 		"skillVisualisationHelp": "Move the mouse pointer over the circles to see the associated skills.",
-		"skillVisualisationSingleIntro": "Your skills in the area of "
+		"skillVisualisationSingleIntro": "Your skills in the area of ",
+		"FutureSkillsAccrodingToUlfEhers": "Future Skills according to Ulf Ehers",
+		"ESCOAreas": "ESCO areas"
 	},
 	"EditBadge": {
 		"editBadge": "Edit badge",
