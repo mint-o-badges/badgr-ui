@@ -6,12 +6,15 @@
 			<ng-template [bgAwaitPromises]="[profileLoaded]">
 				<div class="md:tw-flex tw-justify-between tw-items-center oeb-section-sm">
 					<h2 hlmH2 class="tw-text-oebblack tw-font-bold tw-pb-4 md:tw-pb-0">
-						{{ 'RecBadge.greating' | translate }} {{ profile.firstName }}
+						{{ 'RecBadge.greating' | translate }}
+						<span class="tw-capitalize">{{ profile.firstName }} </span>,
+						{{ 'RecBadge.greating2' | translate }}
 					</h2>
 
 					<oeb-button
-						*ngIf="activeTab === 'badges'"
+						*ngIf="activeTab === 'badges' || activeTab === 'profile'"
 						icon="lucideUpload"
+						[variant]="activeTab === 'profile' ? 'secondary' : ''"
 						iconLeft="true"
 						(click)="uploadBadge()"
 						[disabled-when-requesting]="true"
