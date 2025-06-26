@@ -81,11 +81,16 @@
 					fill: var(--color-purple);
 				}
 			}
-			&.future {
-				color: #806600;
+			&.future, &.future-sub {
+				color: #514000;
 				circle {
-					stroke: #806600;
+					stroke: #514000;
 					fill: #ffeb9c;
+				}
+			}
+			&.future-sub {
+				circle {
+					fill: #FFCF0F;
 				}
 			}
 		}
@@ -159,7 +164,7 @@
 
 	&__future {
 		&:before {
-			background-color: var(--color-yellow);
+			background-color: #ffeb9c;
 		}
 	}
 }

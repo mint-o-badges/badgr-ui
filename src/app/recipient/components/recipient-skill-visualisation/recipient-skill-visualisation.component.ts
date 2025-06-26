@@ -393,6 +393,7 @@ export class RecipientSkillVisualisationComponent implements OnChanges {
 				level-${ d.depth }
 				${ d.clickable ? 'clickable' : ''}
 				${ d.id == 'future-skills' ? 'future': ''}
+				${ d.parents.has('future-skills') ? 'future-sub': ''}
 			`)
 
 		node.sort((d1, d2) => { return d1.depth - d2.depth; })
@@ -421,7 +422,7 @@ export class RecipientSkillVisualisationComponent implements OnChanges {
 				else {
 					const descriptionNodes = d3.selectAll<SVGElement, ExtendedApiSkill>('.show-description').nodes();
 					for(const n of descriptionNodes)
-						n.classList.remove('show-description');					
+						n.classList.remove('show-description');
 				}
 			})
 			.on("mouseenter", (e, d) => {
