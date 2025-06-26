@@ -717,7 +717,8 @@
 		"versionUploadInfo": "Badges im 2.0-Standard Validieren wir beim Hochladen. Badges im 3.0-Standard können wir aktuell nur minimal validieren. Weitere Infos dazu findest du in unseren <a class=\"tw-text-link tw-underline\" href=\"/public/faq\">FAQ</a>.",
 		"addingBadge": "Füge Badge hinzu ...",
 		"skillVisualisationIntro": "In diesen Bereichen hast du am meisten Kompetenzen gestärkt:",
-		"skillVisualisationHelp": "Bewege den Mauszeiger über die Kreise, um die zugehörigen Kompetenzen zu sehen."
+		"skillVisualisationHelp": "Bewege den Mauszeiger über die Kreise, um die zugehörigen Kompetenzen zu sehen.",
+		"skillVisualisationSingleIntro": "Deine Kompetenzen im Bereich "
 	},
 	"EditBadge": {
 		"editBadge": "Badge editieren",
