@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, HostBinding, Output } from '@angular/core';
 import { LearningPathApiService } from '../services/learningpath-api.service';
 import { RouterLink } from '@angular/router';
-import { NgIf, NgFor, LowerCasePipe, SlicePipe } from '@angular/common';
+import { NgIf, NgFor, SlicePipe } from '@angular/common';
 import { NgIcon } from '@ng-icons/core';
 import { HlmIconDirective } from '../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
 import { BgImageStatusPlaceholderDirective } from '../directives/bg-image-status-placeholder.directive';
@@ -124,7 +124,6 @@ type MatchOrProgressType = { match?: string; progress?: number };
 		NgFor,
 		HlmPDirective,
 		OebProgressComponent,
-		LowerCasePipe,
 		SlicePipe,
 		TranslatePipe,
 		HourPipe,
