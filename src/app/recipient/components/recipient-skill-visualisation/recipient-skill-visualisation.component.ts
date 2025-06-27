@@ -535,7 +535,7 @@ export class RecipientSkillVisualisationComponent implements OnChanges {
 			// TODO: dynamically resize description popover, reposition if out of screen?
 
 			if (d.description) {
-				const others = d3
+				const others = svg
 					.selectAll<SVGElement, ExtendedApiSkill>('g.leaf, g.group')
 					.filter((d2) => d2.id != d.id);
 				others.data().forEach((d2) => {
@@ -545,7 +545,7 @@ export class RecipientSkillVisualisationComponent implements OnChanges {
 					n.classList.remove('show-description');
 				});
 
-				const n = d3
+				const n = svg
 					.selectAll<SVGElement, ExtendedApiSkill>('g.leaf, g.group')
 					.filter((d2) => d2.id == d.id)
 					.node();
@@ -560,7 +560,7 @@ export class RecipientSkillVisualisationComponent implements OnChanges {
 				// needed to reset node order?
 				simulation.alphaTarget(0).restart();
 			} else {
-				const descriptionNodes = d3.selectAll<SVGElement, ExtendedApiSkill>('.show-description').nodes();
+				const descriptionNodes = svg.selectAll<SVGElement, ExtendedApiSkill>('.show-description').nodes();
 				for (const n of descriptionNodes) n.classList.remove('show-description');
 			}
 		})
@@ -573,14 +573,14 @@ export class RecipientSkillVisualisationComponent implements OnChanges {
 				// in case of multiple ancestors show all breadcrumb paths
 				ancestors.forEach((id) => {
 					d = this.skillTree.get(id);
-					const children = d3
+					const children = svg
 						.selectAll<SVGElement, ExtendedApiSkill>('g.leaf, g.group')
 						.filter((d2) => d2.ancestors.has(d.id));
 					const linkedIds = [d.id, ...children.data().map((c) => c.id)];
 					children.nodes().forEach((n) => {
 						n.classList.add('show');
 					});
-					const links = d3
+					const links = svg
 						.selectAll<SVGElement, d3.HierarchyLink<ExtendedApiSkill>>('line')
 						.filter((l) => [l.target.id, l.source.id].every((i) => linkedIds.includes(i)));
 					links.nodes().forEach((n) => {
@@ -595,14 +595,14 @@ export class RecipientSkillVisualisationComponent implements OnChanges {
 				}
 				ancestors.forEach((id) => {
 					d = this.skillTree.get(id);
-					const children = d3
+					const children = svg
 						.selectAll<SVGElement, ExtendedApiSkill>('g.leaf, g.group')
 						.filter((d2) => d2.ancestors.has(d.id));
 					const linkedIds = [d.id, ...children.data().map((c) => c.id)];
 					children.nodes().forEach((n) => {
 						n.classList.remove('show');
 					});
-					const links = d3
+					const links = svg
 						.selectAll<SVGElement, d3.HierarchyLink<ExtendedApiSkill>>('line')
 						.filter((l) => [l.target.id, l.source.id].every((i) => linkedIds.includes(i)));
 					links.nodes().forEach((n) => {
@@ -611,7 +611,7 @@ export class RecipientSkillVisualisationComponent implements OnChanges {
 				});
 
 				// hide all descriptions
-				const descriptionNodes = d3.selectAll<SVGElement, ExtendedApiSkill>('.show-description').nodes();
+				const descriptionNodes = svg.selectAll<SVGElement, ExtendedApiSkill>('.show-description').nodes();
 				for (const n of descriptionNodes) n.classList.remove('show-description');
 			});
 
