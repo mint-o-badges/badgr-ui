@@ -83,10 +83,15 @@
 			}
 			&.future,
 			&.future-sub {
-				color: var(--color-yellow-800);
+				color: var(--color-yellow-900);
 				circle {
-					stroke: var(--color-yellow-800);
+					stroke: var(--color-yellow-900);
 					fill: var(--color-yellow-200);
+				}
+			}
+			&.future-sub {
+				circle {
+					fill: var(--color-yellow-500);
 				}
 			}
 		}
