@@ -9,7 +9,6 @@ import { debounceTime, fromEvent, Subject, takeUntil, tap } from 'rxjs';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { HlmAccordionModule } from '../../../components/spartan/ui-accordion-helm/src/index';
 import {
-	BrnAccordionContentComponent,
 	BrnAccordionItemDirective,
 	BrnAccordionDirective,
 	BrnAccordionTriggerDirective,
@@ -19,6 +18,7 @@ import { NgIcon } from '@ng-icons/core';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { CompetencyAccordionComponent } from '../../../components/accordion.component';
 import { HourPipe } from '../../../common/pipes/hourPipe';
+import { VISUALISATION_BREAKPOINT_MAX_WIDTH } from '../recipient-earned-badge-list/recipient-earned-badge-list.component';
 
 interface ExtendedApiSkill extends Partial<ApiSkill> {
 	id: string;
@@ -70,7 +70,7 @@ export class RecipientSkillVisualisationComponent implements OnChanges {
 		links: [],
 	};
 
-	mobile = window.innerWidth < 768;
+	mobile = window.innerWidth <= VISUALISATION_BREAKPOINT_MAX_WIDTH;
 	hasFutureSkills = false;
 
 	resizeSubject$ = new Subject<void>();
@@ -86,7 +86,7 @@ export class RecipientSkillVisualisationComponent implements OnChanges {
 				tap((event: UIEvent) => {
 					const width = event.target['innerWidth'];
 					const wasMobile = this.mobile;
-					this.mobile = window.innerWidth < 768;
+					this.mobile = window.innerWidth <= VISUALISATION_BREAKPOINT_MAX_WIDTH;
 					if ((wasMobile && !this.mobile) || (!wasMobile && this.mobile)) {
 						this.initD3();
 					}

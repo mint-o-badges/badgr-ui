@@ -60,7 +60,7 @@ type EscoCompetencies = {
 	[key: string]: Competency;
 };
 
-const VISUALISATION_BREAKPOINT_MAX_WIDTH: number = 768;
+export const VISUALISATION_BREAKPOINT_MAX_WIDTH: number = 768;
 
 @Component({
 	selector: 'recipient-earned-badge-list',
