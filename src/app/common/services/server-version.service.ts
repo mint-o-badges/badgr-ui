@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AppConfigService } from '../app-config.service';
-import { AiSkillsResult, Skill } from '../model/ai-skills.model';
 import { BaseHttpApiService } from './base-http-api.service';
 import { MessageService } from './message.service';
 import { SessionService } from './session.service';
