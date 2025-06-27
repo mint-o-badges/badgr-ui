@@ -150,8 +150,6 @@ export class RecipientSkillVisualisationComponent implements OnChanges {
 					s,
 				]);
 
-				console.log(breadcrumbs);
-
 				this.hasFutureSkills = true;
 			}
 
@@ -498,6 +496,7 @@ export class RecipientSkillVisualisationComponent implements OnChanges {
 			.attr('width', (d) => nodeBaseSize * 6)
 			.attr('height', (d) => nodeBaseSize * 2)
 			.attr('class', 'fo-description')
+			.attr('data-title', (d) => d.description)
 			.append('xhtml:div')
 			.text((d) => {
 				return d.description;
@@ -513,6 +512,7 @@ export class RecipientSkillVisualisationComponent implements OnChanges {
 				level-${d.depth}
 				${d.clickable ? 'clickable' : ''}
 				${d.id == 'future-skills' ? 'future' : ''}
+				${d.parents.has('future-skills') ? 'future-sub' : ''}
 			`,
 		);
 
@@ -559,6 +559,9 @@ export class RecipientSkillVisualisationComponent implements OnChanges {
 
 				// needed to reset node order?
 				simulation.alphaTarget(0).restart();
+			} else {
+				const descriptionNodes = d3.selectAll<SVGElement, ExtendedApiSkill>('.show-description').nodes();
+				for (const n of descriptionNodes) n.classList.remove('show-description');
 			}
 		})
 			.on('mouseenter', (e, d) => {
@@ -606,6 +609,10 @@ export class RecipientSkillVisualisationComponent implements OnChanges {
 						n.classList.remove('show');
 					});
 				});
+
+				// hide all descriptions
+				const descriptionNodes = d3.selectAll<SVGElement, ExtendedApiSkill>('.show-description').nodes();
+				for (const n of descriptionNodes) n.classList.remove('show-description');
 			});
 
 		// clear previous versions (on mobile change)

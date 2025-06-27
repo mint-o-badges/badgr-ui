@@ -1,7 +1,10 @@
 ::ng-deep {
 	svg {
+		overflow: visible;
+
 		foreignObject {
 			pointer-events: none;
+			overflow: visible;
 
 			> div {
 				display: flex;
@@ -20,17 +23,30 @@
 				hyphens: auto;
 
 				&.description {
-					background-color: var(--color-purple-50);
+					position: relative;
+					opacity: 0;
+					visibility: hidden;
+					transition: opacity 0.3s ease 0.1s;
+				}
+
+				&.description[data-title]::after {
+					content: attr(data-title);
+					position: absolute;
+					top: 0;
+					left: 0;
+					background-color: #f8f6fc;
 					border-radius: 10px;
 					border: 1px solid var(--color-purple);
 					color: var(--color-purple);
 					font-weight: normal;
-					display: none;
+					padding: 1em;
+					max-width: min(40ch, 25vw);
+					width: max-content;
 				}
 
 				div.studyload {
 					font-weight: normal;
-					color: black;
+					color: var(--color-black);
 				}
 			}
 		}
@@ -43,7 +59,7 @@
 			&.level-1 {
 				color: var(--color-purple);
 				circle {
-					fill: var(--color-purple-100);
+					fill: var(--color-lightpurple);
 				}
 			}
 			&.level-2 {
@@ -65,7 +81,8 @@
 					fill: var(--color-purple);
 				}
 			}
-			&.future {
+			&.future,
+			&.future-sub {
 				color: var(--color-yellow-800);
 				circle {
 					stroke: var(--color-yellow-800);
@@ -80,10 +97,9 @@
 			transition: opacity 0.3s ease 0.2s;
 
 			&.show-description {
-				transition: opacity 0.3s ease 0.1s;
-
 				div.description {
-					display: flex;
+					visibility: visible;
+					opacity: 1;
 				}
 			}
 		}
@@ -129,7 +145,7 @@
 		&:before {
 			content: '';
 			display: block;
-			border: 1px solid black;
+			border: 1px solid var(--color-black);
 			height: 16px;
 			width: 16px;
 		}
@@ -138,7 +154,7 @@
 	&__esco {
 		&:before {
 			border-color: var(--color-purple);
-			background-color: var(--color-purple-100);
+			background-color: var(--color-lightpurple);
 		}
 	}
 
