@@ -112,7 +112,7 @@ export class RecipientSkillVisualisationComponent implements OnChanges {
 		this.hasFutureSkills = false;
 
 		// DEBUG: add your own future skill for testing
-		futureSkills['escoMap']['/esco/skill/1565b401-1754-4b07-8f1a-eb5869e64d95'] = 'lernkompetenz';
+		// futureSkills['escoMap']['/esco/skill/1565b401-1754-4b07-8f1a-eb5869e64d95'] = 'lernkompetenz';
 
 		skills.forEach((s) => {
 			const breadcrumbs = s.breadcrumb_paths;
