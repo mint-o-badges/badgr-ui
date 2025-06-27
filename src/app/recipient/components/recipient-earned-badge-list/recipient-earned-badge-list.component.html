@@ -15,7 +15,7 @@
 						*ngIf="activeTab === 'badges' || activeTab === 'profile'"
 						icon="lucideUpload"
 						[variant]="activeTab === 'profile' ? 'secondary' : ''"
-						[iconLeft]="true"
+						[iconLeft]="!mobile"
 						(click)="uploadBadge()"
 						[disabled-when-requesting]="true"
 						[text]="mobile ? null : ('RecBadge.uploadBadge' | translate)"
