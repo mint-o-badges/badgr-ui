@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, HostBinding, Output } from '@angular/core';
 import { LearningPathApiService } from '../services/learningpath-api.service';
 import { RouterLink } from '@angular/router';
-import { NgIf, NgFor, LowerCasePipe, SlicePipe } from '@angular/common';
+import { NgIf, NgFor, SlicePipe } from '@angular/common';
 import { NgIcon } from '@ng-icons/core';
 import { HlmIconDirective } from '../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
 import { BgImageStatusPlaceholderDirective } from '../directives/bg-image-status-placeholder.directive';
@@ -92,7 +92,7 @@ type MatchOrProgressType = { match?: string; progress?: number };
 							<div class="tw-absolute tw-w-full tw-text-left">
 								<span class="tw-ml-2 tw-text-sm tw-text-purple"
 									>Micro Degree <span *ngIf="!completed">{{ progressValue }}%</span>
-									{{ 'LearningPath.finished' | translate | lowercase }}</span
+									{{ 'LearningPath.finished' | translate }}</span
 								>
 							</div>
 						</ng-template>
@@ -109,7 +109,7 @@ type MatchOrProgressType = { match?: string; progress?: number };
 					</div>
 					<div class="tw-flex tw-flex-row tw-gap-4 tw-text-[#6B7280] tw-text-sm tw-mt-6 tw-items-end">
 						<ng-icon hlm name="lucideClock" />
-						<span>{{ studyLoad | hourPipe }} {{ 'RecBadge.hours' | translate | lowercase }}</span>
+						<span>{{ studyLoad | hourPipe }} {{ 'RecBadge.hours' | translate }}</span>
 					</div>
 				</div>
 			</div>
@@ -124,7 +124,6 @@ type MatchOrProgressType = { match?: string; progress?: number };
 		NgFor,
 		HlmPDirective,
 		OebProgressComponent,
-		LowerCasePipe,
 		SlicePipe,
 		TranslatePipe,
 		HourPipe,
