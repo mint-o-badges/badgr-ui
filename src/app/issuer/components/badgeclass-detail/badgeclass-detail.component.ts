@@ -388,7 +388,10 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 						{
 							title: 'General.edit',
 							routerLink: ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'edit'],
-							disabled: this.badgeClass.recipientCount > 0 || !this.issuer.canEditBadge,
+							disabled:
+								this.badgeClass.recipientCount > 0 ||
+								!this.issuer.canEditBadge ||
+								this.qrCodeAwards.length > 0,
 							icon: 'lucidePencil',
 						},
 						{
