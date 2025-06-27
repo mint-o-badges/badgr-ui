@@ -10,9 +10,6 @@ export class BreakpointService {
 		.observe([Breakpoints.XSmall, Breakpoints.Small])
 		.pipe(map((result) => result.matches));
 
-	// TODO: check if we can delete this and use the predefined breakpoints listed
-	// here: https://material.angular.dev/cdk/layout/overview#predefined-breakpoints
-	isCustomMobile$: Observable<boolean> = this.breakpointObserver
-		.observe('(max-width: 767px)')
-		.pipe(map((result) => result.matches));
+	observeCustomBreakpoint = (maxWidth: number): Observable<boolean> =>
+		this.breakpointObserver.observe(`(max-width: ${maxWidth}px)`).pipe(map((result) => result.matches));
 }

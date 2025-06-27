@@ -1,13 +1,4 @@
-import {
-	Component,
-	ContentChild,
-	ElementRef,
-	OnInit,
-	ViewChild,
-	AfterContentInit,
-	inject,
-	TemplateRef,
-} from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, AfterContentInit, inject, TemplateRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
@@ -68,6 +59,8 @@ type BadgeDispay = 'grid' | 'list';
 type EscoCompetencies = {
 	[key: string]: Competency;
 };
+
+const VISUALISATION_BREAKPOINT_MAX_WIDTH: number = 768;
 
 @Component({
 	selector: 'recipient-earned-badge-list',
@@ -179,7 +172,7 @@ export class RecipientEarnedBadgeListComponent
 	private _badgesDisplay: BadgeDispay = 'grid';
 	sortControl = new FormControl('date_desc');
 
-	mobile = window.innerWidth < 768;
+	mobile = window.innerWidth <= VISUALISATION_BREAKPOINT_MAX_WIDTH;
 
 	get badgesDisplay() {
 		return this._badgesDisplay;
@@ -338,7 +331,7 @@ export class RecipientEarnedBadgeListComponent
 	}
 
 	ngOnInit() {
-		this.breakpointService.isCustomMobile$.subscribe((isMobile) => {
+		this.breakpointService.observeCustomBreakpoint(VISUALISATION_BREAKPOINT_MAX_WIDTH).subscribe((isMobile) => {
 			this.mobile = isMobile;
 		});
 
