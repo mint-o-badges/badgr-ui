@@ -20,7 +20,7 @@ export interface AuthorizationTokenInformation {
 	token_typ?: string;
 }
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class SessionService {
 	baseUrl: string;
 

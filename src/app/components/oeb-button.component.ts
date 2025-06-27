@@ -1,5 +1,5 @@
-import { Component, computed, Input, input, linkedSignal, signal } from '@angular/core';
-import { buttonVariants, ButtonVariants, HlmButtonDirective } from './spartan/ui-button-helm/src';
+import { Component, computed, input, signal } from '@angular/core';
+import { ButtonVariants, HlmButtonDirective } from './spartan/ui-button-helm/src';
 import { NgIf, NgClass } from '@angular/common';
 import { MessageService } from '../common/services/message.service';
 import { lucidePlus, lucideUpload, lucideCircleX, lucideMapPin } from '@ng-icons/lucide';
@@ -42,7 +42,6 @@ export class OebButtonComponent {
 	readonly iconLeft = input<boolean>(false);
 
 	readonly loadingMessage = input<string>('Loading', { alias: 'loading-message' });
-	readonly loadingWhenRequesting = input<boolean>(false, { alias: 'loading-when-requesting' });
 	readonly disableWhenRequesting = input<boolean>(false, { alias: 'disabled-when-requesting' });
 	readonly loadingPromise = input<Promise<unknown> | Promise<unknown | undefined | null>[]>(undefined, {
 		alias: 'loading-promises',
@@ -56,13 +55,10 @@ export class OebButtonComponent {
 	);
 
 	readonly computedText = computed(() => {
-		return this.showLoadingMessage() && this.loadingMessage() ? this.loadingMessage() : this.text();
+		return this.promiseIsLoading() && this.loadingMessage() ? this.loadingMessage() : this.text();
 	});
-	readonly showLoadingMessage = computed(
-		() => this.promiseIsLoading() || (this.loadingWhenRequesting() && this.messageService.pendingRequestCount > 0),
-	);
 
-	constructor(private messageService: MessageService) {}
+	constructor() {}
 
 	ngOnInit() {
 		// Subscribe to changes made to the loadingPromises

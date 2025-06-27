@@ -19,8 +19,7 @@ describe('ShowMore', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			declarations: [ShowMore],
-			imports: [RouterTestingModule, CommonModule, ...COMMON_IMPORTS],
+			imports: [RouterTestingModule, CommonModule, ...COMMON_IMPORTS, ShowMore],
 			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		}).compileComponents();

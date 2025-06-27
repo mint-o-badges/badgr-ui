@@ -13,7 +13,7 @@ import { CommonEntityManager } from '../../entity-manager/services/common-entity
 import { RecipientBadgeInstance } from '../models/recipient-badge.model';
 import { ApiRootSkill } from '../../common/model/ai-skills.model';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class RecipientBadgeApiService extends BaseHttpApiService {
 	constructor(
 		protected loginService: SessionService,
@@ -109,6 +109,7 @@ export class RecipientBadgeApiService extends BaseHttpApiService {
 					// criteria_text: importedBadge.criteriaText || '',
 					issuer: {
 						id: importedBadge.json.badge.issuer.name,
+						slug: importedBadge.slug,
 						type: 'Issuer',
 						name: importedBadge.json.badge.issuer.name,
 						url: importedBadge.json.badge.issuer.url,

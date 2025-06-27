@@ -34,7 +34,7 @@ import { ShareSocialDialogOptions } from '../../../common/dialogs/share-social-d
 import { AppConfigService } from '../../../common/app-config.service';
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { BadgeClassCategory, BadgeClassLevel } from '../../models/badgeclass-api.model';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { PageConfig } from '../../../common/components/badge-detail/badge-detail.component.types';
 import { PdfService } from '../../../common/services/pdf.service';
 import { QrCodeApiService } from '../../services/qrcode-api.service';
@@ -43,12 +43,18 @@ import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src
 import { inject } from '@angular/core';
 import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
 import { ApiLearningPath } from '../../../common/model/learningpath-api.model';
-import { ViewportScroller } from '@angular/common';
+import { ViewportScroller, NgIf, NgFor } from '@angular/common';
 import { TaskResult, TaskStatus, TaskPollingManagerService } from '../../../common/task-manager.service';
 import { Subscription } from 'rxjs';
 import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
 import { DialogComponent } from '../../../components/dialog.component';
 import { BrnDialogRef } from '@spartan-ng/brain/dialog';
+import { BgBadgeDetail } from '../../../common/components/badge-detail/badge-detail.component';
+import { QrCodeAwardsComponent } from '../qrcode-awards/qrcode-awards.component';
+import { IssuerDetailDatatableComponent } from '../../../components/datatable-issuer-detail.component';
+import { HlmH2Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h2.directive';
+import { FormsModule } from '@angular/forms';
+import { OebButtonComponent } from '../../../components/oeb-button.component';
 
 @Component({
 	selector: 'badgeclass-detail',
@@ -69,7 +75,7 @@ import { BrnDialogRef } from '@spartan-ng/brain/dialog';
 					[recipientCount]="recipientCount"
 					[_recipients]="instanceResults"
 					(actionElement)="revokeInstance($event)"
-					(downloadCertificate)="downloadCertificate($event.instance, $event.badgeIndex)"
+					(downloadCertificate)="downloadCertificate($event['instance'], $event['badgeIndex'])"
 					[downloadStates]="downloadStates"
 					[awardInProgress]="isTaskProcessing || isTaskPending"
 				></issuer-detail-datatable>
@@ -110,7 +116,17 @@ import { BrnDialogRef } from '@spartan-ng/brain/dialog';
 			</ng-template>
 		</bg-badgedetail>
 	`,
-	standalone: false,
+	imports: [
+		BgBadgeDetail,
+		QrCodeAwardsComponent,
+		IssuerDetailDatatableComponent,
+		HlmH2Directive,
+		NgIf,
+		NgFor,
+		FormsModule,
+		OebButtonComponent,
+		TranslatePipe,
+	],
 })
 export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	@ViewChild('qrAwards') qrAwards!: ElementRef;

@@ -25,8 +25,14 @@ describe('BadgebookLti1DetailComponent', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			declarations: [BadgebookLti1DetailComponent, IntegrationImageComponent],
-			imports: [RouterTestingModule, CommonModule, BadgrCommonModule, ...COMMON_IMPORTS],
+			imports: [
+				RouterTestingModule,
+				CommonModule,
+				BadgrCommonModule,
+				...COMMON_IMPORTS,
+				BadgebookLti1DetailComponent,
+				IntegrationImageComponent,
+			],
 			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		}).compileComponents();

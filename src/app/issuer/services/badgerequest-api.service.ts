@@ -7,7 +7,7 @@ import { BadgeRequest } from '../models/badgerequest-api.model';
 import { MessageService } from '../../common/services/message.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class BadgeRequestApiService extends BaseHttpApiService {
 	constructor(
 		protected loginService: SessionService,

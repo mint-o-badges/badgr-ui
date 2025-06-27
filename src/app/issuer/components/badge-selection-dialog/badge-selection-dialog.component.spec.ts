@@ -25,8 +25,14 @@ describe('BadgeSelectionDialog', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			declarations: [BadgeSelectionDialog, BgAwaitPromises],
-			imports: [RouterTestingModule, CommonModule, FormsModule, ...COMMON_IMPORTS],
+			imports: [
+				RouterTestingModule,
+				CommonModule,
+				FormsModule,
+				...COMMON_IMPORTS,
+				BadgeSelectionDialog,
+				BgAwaitPromises,
+			],
 			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		}).compileComponents();

@@ -9,18 +9,24 @@ import { OAuth2AppAuthorization } from '../../../common/model/oauth.model';
 import { CommonDialogsService } from '../../../common/services/common-dialogs.service';
 import { flatten } from '../../../common/util/array-reducers';
 import { AppConfigService } from '../../../common/app-config.service';
+import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
+import { FormMessageComponent } from '../../../common/components/form-message.component';
+import { TimeComponent } from '../../../common/components/time.component';
+import { NgIf, NgFor } from '@angular/common';
+import { SvgIconComponent } from '../../../common/components/svg-icon.component';
+import { PatternLibraryIconName } from '../../../common/components/svg-icon.component';
 
 @Component({
 	selector: 'oauth-app-detail-component',
 	templateUrl: './oauth-app-detail.html',
-	standalone: false,
+	imports: [BgAwaitPromises, FormMessageComponent, TimeComponent, NgIf, SvgIconComponent, NgFor],
 })
 export class OAuthAppDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	app: OAuth2AppAuthorization;
 	appTokens: OAuth2AppAuthorization[];
 	appPromise: Promise<unknown>;
 
-	permisionScopeToIconName(scope: string): string {
+	permisionScopeToIconName(scope: string): PatternLibraryIconName {
 		switch (scope) {
 			case 'permission-issuer':
 				return 'icon_issuer2';

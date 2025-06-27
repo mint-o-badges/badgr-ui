@@ -19,8 +19,7 @@ describe('LoadingDotsComponent', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			declarations: [LoadingDotsComponent],
-			imports: [RouterTestingModule, CommonModule, ...COMMON_IMPORTS],
+			imports: [RouterTestingModule, CommonModule, ...COMMON_IMPORTS, LoadingDotsComponent],
 			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		}).compileComponents();

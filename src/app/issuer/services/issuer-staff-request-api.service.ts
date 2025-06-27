@@ -6,7 +6,7 @@ import { MessageService } from '../../common/services/message.service';
 import { HttpClient } from '@angular/common/http';
 import { ApiStaffRequest } from '../staffrequest-api.model';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class IssuerStaffRequestApiService extends BaseHttpApiService {
 	constructor(
 		protected loginService: SessionService,

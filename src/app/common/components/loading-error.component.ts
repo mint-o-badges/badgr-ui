@@ -13,7 +13,6 @@ import { Component, Input } from '@angular/core';
 			</div>
 		</article>
 	`,
-	standalone: false,
 })
 export class LoadingErrorComponent {
 	@Input() errorMessage: string;

@@ -19,8 +19,7 @@ describe('TimeComponent', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			declarations: [TimeComponent],
-			imports: [RouterTestingModule, CommonModule, ...COMMON_IMPORTS],
+			imports: [RouterTestingModule, CommonModule, ...COMMON_IMPORTS, TimeComponent],
 			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		}).compileComponents();

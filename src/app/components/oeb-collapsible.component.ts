@@ -11,7 +11,7 @@ import {
 	effect,
 } from '@angular/core';
 import { HlmButtonDirective } from './spartan/ui-button-helm/src';
-import { HlmIconModule } from './spartan/ui-icon-helm/src';
+
 import { HlmIconDirective } from './spartan/ui-icon-helm/src';
 import {
 	BrnCollapsibleComponent,
@@ -39,7 +39,15 @@ import { NgIf, NgTemplateOutlet, NgClass } from '@angular/common';
 	],
 	template: `
 		<brn-collapsible class="tw-flex tw-flex-col" #collapsible [disabled]="disabled()">
-			<button [attr.id]="id" brnCollapsibleTrigger type="button" hlmBtn variant="ghost" size="sm" class="!tw-p-0">
+			<button
+				[attr.id]="id"
+				brnCollapsibleTrigger
+				type="button"
+				hlmBtn
+				variant="secondary"
+				size="sm"
+				class="!tw-p-0"
+			>
 				<ngTemplateOutlet
 					*ngIf="isTemplate; else stringTrigger"
 					[ngTemplateOutlet]="trigger"

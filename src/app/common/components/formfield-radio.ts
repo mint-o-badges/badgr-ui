@@ -9,8 +9,9 @@ import {
 	SimpleChanges,
 	ViewChild,
 } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonDialogsService } from '../services/common-dialogs.service';
+import { NgIf } from '@angular/common';
 
 @Component({
 	selector: 'bg-formfield-radio',
@@ -33,7 +34,7 @@ import { CommonDialogsService } from '../services/common-dialogs.service';
 		</div>
 		<p class="forminput-x-error" *ngIf="!control.valid && control.dirty && last">{{ errorMessageForDisplay }}</p>
 	`,
-	standalone: false,
+	imports: [FormsModule, ReactiveFormsModule, NgIf],
 })
 export class FormFieldRadio implements OnChanges, AfterViewInit {
 	set unlocked(unlocked: boolean) {
