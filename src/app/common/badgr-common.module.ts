@@ -47,6 +47,7 @@ import { NounprojectService } from './services/nounproject.service';
 import { AiSkillsService } from './services/ai-skills.service';
 import { ServerVersionService } from './services/server-version.service';
 import { PdfService } from './services/pdf.service';
+import { BreakpointService } from './services/breakpoint.service';
 import { EventsService } from './services/events.service';
 import { ForwardRouteComponent } from './pages/forward-route.component';
 import { MarkdownDisplay } from './components/markdown-display';
@@ -221,6 +222,7 @@ const SERVICES = [
 	AiSkillsService,
 	ServerVersionService,
 	PdfService,
+	BreakpointService,
 	EventsService,
 	SessionService,
 	QueryParametersService,

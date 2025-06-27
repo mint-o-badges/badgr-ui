@@ -48,7 +48,7 @@ import { typedFormArray, typedFormGroup } from '../../../common/util/typed-forms
 import { FormFieldSelectOption } from '../../../common/components/formfield-select';
 
 import { AiSkillsService } from '../../../common/services/ai-skills.service';
-import { Skill } from '../../../common/model/ai-skills.model';
+import { ApiSkill } from '../../../common/model/ai-skills.model';
 import { TranslateService } from '@ngx-translate/core';
 import { Platform } from '@angular/cdk/platform'; // To detect the current platform by comparing the userAgent strings
 import { NavigationService } from '../../../common/services/navigation.service';
@@ -78,8 +78,8 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	badgeCategory: string;
 
 	aiCompetenciesLoading = false;
-	selectedKeywordCompetencies: Skill[] = [];
-	keywordCompetenciesResult: Skill[] = [];
+	selectedKeywordCompetencies: ApiSkill[] = [];
+	keywordCompetenciesResult: ApiSkill[] = [];
 	keywordCompetenciesLanguage = 'de';
 	keywordCompetenciesShowResults = false;
 	keywordCompetenciesLoading = false;
@@ -238,7 +238,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	 * The suggested competencies regarding the description
 	 * from the user (@see aiCompetenciesDescription)
 	 */
-	aiCompetenciesSuggestions: Skill[] = [];
+	aiCompetenciesSuggestions: ApiSkill[] = [];
 
 	/**
 	 * The query for the ESCO Skill search for the AI tool
@@ -1018,7 +1018,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 		}, 200);
 	}
 
-	addKeywordCompetenciesResult(skill: Skill) {
+	addKeywordCompetenciesResult(skill: ApiSkill) {
 		const existing = this.selectedKeywordCompetencies.find((s) => {
 			return s.concept_uri == skill.concept_uri;
 		});
@@ -1033,7 +1033,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	}
 
 	getFilteredkeywordCompetenciesResult() {
-		return this.keywordCompetenciesResult.filter((result: Skill) => {
+		return this.keywordCompetenciesResult.filter((result: ApiSkill) => {
 			return !this.selectedKeywordCompetencies.find((s) => {
 				return s.concept_uri == result.concept_uri;
 			});
@@ -1468,8 +1468,8 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	 * and the ones that were suggested by the ai tool and selected (@see formState.aiCompetencies).
 	 */
 	getCompetencyExtensions(
-		aiCompetenciesSuggestions: Skill[],
-		keywordCompetenciesResults: Skill[],
+		aiCompetenciesSuggestions: ApiSkill[],
+		keywordCompetenciesResults: ApiSkill[],
 		formState,
 		competencyExtensionContextUrl: string,
 	): {

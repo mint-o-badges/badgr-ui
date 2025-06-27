@@ -20,7 +20,7 @@ import { SessionService } from '../../../common/services/session.service';
 
 import { AddBadgeDialogComponent } from '../add-badge-dialog/add-badge-dialog.component';
 import { RecipientBadgeManager } from '../../services/recipient-badge-manager.service';
-import { ApiRecipientBadgeIssuer, ApiRootSkill } from '../../models/recipient-badge-api.model';
+import { ApiRecipientBadgeIssuer } from '../../models/recipient-badge-api.model';
 import { RecipientBadgeInstance } from '../../models/recipient-badge.model';
 import { badgeShareDialogOptionsFor } from '../recipient-earned-badge-detail/recipient-earned-badge-detail.component';
 import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
@@ -44,6 +44,8 @@ import { RecipientBadgeCollectionManager } from '../../services/recipient-badge-
 import { RecipientBadgeApiService } from '../../services/recipient-badges-api.service';
 import { RecipientBadgeCollection } from '../../models/recipient-badge-collection.model';
 import { ShareDialogTemplateComponent } from '../../../common/dialogs/oeb-dialogs/share-dialog-template.component';
+import { ApiRootSkill } from '../../../common/model/ai-skills.model';
+import { BreakpointService } from '../../../common/services/breakpoint.service';
 
 type BadgeDispay = 'grid' | 'list';
 type EscoCompetencies = {
@@ -137,6 +139,9 @@ export class RecipientEarnedBadgeListComponent
 	activeTab: string = 'profile';
 	private _badgesDisplay: BadgeDispay = 'grid';
 	sortControl = new FormControl('date_desc');
+
+	mobile = window.innerWidth < 768;
+
 	get badgesDisplay() {
 		return this._badgesDisplay;
 	}
@@ -182,6 +187,7 @@ export class RecipientEarnedBadgeListComponent
 		public recipientBadgeCollectionApiService: RecipientBadgeCollectionApiService,
 		private recipientBadgeCollectionManager: RecipientBadgeCollectionManager,
 		private recipientBadgeApiService: RecipientBadgeApiService,
+		private breakpointService: BreakpointService,
 	) {
 		super(router, route, sessionService);
 
@@ -298,6 +304,10 @@ export class RecipientEarnedBadgeListComponent
 	}
 
 	ngOnInit() {
+		this.breakpointService.isCustomMobile$.subscribe((isMobile) => {
+			this.mobile = isMobile;
+		});
+
 		this.loadImportedBadges();
 
 		this.recipientBadgeManager.recipientBadgeList.changed$.subscribe((badges) => {
@@ -373,6 +383,9 @@ export class RecipientEarnedBadgeListComponent
 	uploadBadge() {
 		this.addBadgeDialog.openDialog().then(
 			() => {
+				if (this.activeTab != 'badges') {
+					this.onTabChange('badges');
+				}
 				this.loadImportedBadges();
 			},
 			() => {},
