@@ -6,7 +6,7 @@ import { RecipientBadgeInstance } from '../../../recipient/models/recipient-badg
 import { BadgeInstance } from '../../../issuer/models/badgeinstance.model';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { BgAwaitPromises } from '../../directives/bg-await-promises';
-import { NgIf, NgFor, LowerCasePipe } from '@angular/common';
+import { NgIf, NgFor } from '@angular/common';
 import { FormMessageComponent } from '../form-message.component';
 import { BgBreadcrumbsComponent } from '../bg-breadcrumbs/bg-breadcrumbs.component';
 import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
@@ -53,7 +53,6 @@ import { ApiImportedBadgeInstance } from '../../../recipient/models/recipient-ba
 		CompetencyAccordionComponent,
 		OebSeparatorComponent,
 		BgLearningPathCard,
-		LowerCasePipe,
 		TranslatePipe,
 		HourPipe,
 	],
