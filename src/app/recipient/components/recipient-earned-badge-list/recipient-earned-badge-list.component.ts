@@ -34,7 +34,7 @@ import { Competency } from '../../../common/model/competency.model';
 import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
 import { LearningPath } from '../../../issuer/models/learningpath.model';
 import { FormControl } from '@angular/forms';
-import { TranslateService } from '@ngx-translate/core';
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { provideIcons } from '@ng-icons/core';
 import { RecipientBadgeCollectionApiService } from '../../services/recipient-badge-collection-api.service';
 import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
@@ -191,10 +191,17 @@ export class RecipientEarnedBadgeListComponent
 			this.messageService.reportAndThrowError('Failed to load your badges', e),
 		);
 
-		translate.onLangChange.subscribe(() => {
-			this.skillsLoaded = this.recipientBadgeApiService.getSkills(translate.currentLang).then((skills) => {
-				this.allSkills = skills;
-			});
+		let skillsLang = translate.currentLang;
+		this.skillsLoaded = this.recipientBadgeApiService.getSkills(translate.currentLang).then((skills) => {
+			this.allSkills = skills;
+		});
+		translate.onLangChange.subscribe((e: LangChangeEvent) => {
+			if (e.lang != skillsLang) {
+				this.skillsLoaded = this.recipientBadgeApiService.getSkills(e.lang).then((skills) => {
+					this.allSkills = skills;
+				});
+				skillsLang = e.lang;
+			}
 		});
 
 		this.learningpathLoaded = this.learningPathApi

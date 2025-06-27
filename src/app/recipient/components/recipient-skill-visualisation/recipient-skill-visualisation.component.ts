@@ -119,8 +119,6 @@ export class RecipientSkillVisualisationComponent implements OnChanges {
 					s
 				]);
 
-				console.log(breadcrumbs)
-
 				this.hasFutureSkills = true;
 			}
 
