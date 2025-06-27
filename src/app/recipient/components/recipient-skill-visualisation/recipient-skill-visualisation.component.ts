@@ -445,11 +445,7 @@ export class RecipientSkillVisualisationComponent implements OnChanges {
 			.append('xhtml:div')
 			// DEBUG: output studyload if not 0
 			// .text(d => { return d.name.replace("/", " / ") + (d.studyLoad !== 0 ? ` (${d.studyLoad} min)` : '') })
-			.text((d) => {
-				return d.name.replace('/', ' / ');
-			})
 			.attr('style', (d) => `font-size: ${nodeRadius(d) * 0.2}px;`)
-			.attr('text-anchor', 'top')
 			.attr('class', 'name');
 
 		if (this.mobile) {
@@ -474,19 +470,15 @@ export class RecipientSkillVisualisationComponent implements OnChanges {
 				});
 			}
 		} else {
-			nodeText.text((d) => {
-				return d.name.replace('/', ' / ');
-			});
-
-			// only append studyload when top level
-			nodeText
-				.filter((d) => d.depth == 1)
-				.append('xhtml:div')
-				.html((d) => {
+			nodeText.html((d) => {
+				if (d.depth == 1) {
 					const p = new HourPipe();
-					return `<span>${p.transform(d.studyLoad)} h</span>`;
-				})
-				.attr('class', 'studyload');
+					const studyLoadNode = `<span>${p.transform(d.studyLoad)} h</span>`;
+					return `<div class="studyload__wrapper"><div>${d.name.replace('/', ' / ')}</div><div class="studyload">${studyLoadNode}</div></div>`;
+				}
+
+				return `<div>${d.name.replace('/', ' / ')}</div>`;
+			});
 		}
 
 		// add foreignObject for description text popover
