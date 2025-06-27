@@ -62,6 +62,7 @@ import { OebCompetency } from '../../../common/components/oeb-competency';
 import { BgLearningPathCard } from '../../../common/components/bg-learningpathcard';
 import { BgCollectionCard } from '../../../common/bg-collectioncard';
 import { DynamicFilterPipe } from '../../../common/pipes/dynamicFilterPipe';
+import { RecipientSkillVisualisationComponent } from '../recipient-skill-visualisation/recipient-skill-visualisation.component';
 
 type BadgeDispay = 'grid' | 'list';
 type EscoCompetencies = {
@@ -104,6 +105,7 @@ type EscoCompetencies = {
 		AddBadgeDialogComponent,
 		DynamicFilterPipe,
 		TranslatePipe,
+		RecipientSkillVisualisationComponent,
 	],
 })
 export class RecipientEarnedBadgeListComponent

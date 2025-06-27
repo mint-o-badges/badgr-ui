@@ -14,7 +14,7 @@
 					<oeb-button
 						*ngIf="activeTab === 'badges' || activeTab === 'profile'"
 						icon="lucideUpload"
-						[variant]="activeTab === 'profile' ? 'secondary' : ''"
+						[variant]="activeTab === 'profile' ? 'secondary' : 'default'"
 						[iconLeft]="!mobile"
 						(click)="uploadBadge()"
 						[disabled-when-requesting]="true"
