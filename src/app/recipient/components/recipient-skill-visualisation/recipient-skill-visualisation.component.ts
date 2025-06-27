@@ -482,9 +482,9 @@ export class RecipientSkillVisualisationComponent implements OnChanges {
 			nodeText
 				.filter((d) => d.depth == 1)
 				.append('xhtml:div')
-				.text((d) => {
+				.html((d) => {
 					const p = new HourPipe();
-					return `${p.transform(d.studyLoad)} h`
+					return `<span>${p.transform(d.studyLoad)} h</span>`;
 				})
 				.attr('class', 'studyload');
 		}
