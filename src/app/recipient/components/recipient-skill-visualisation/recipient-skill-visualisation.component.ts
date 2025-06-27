@@ -411,7 +411,7 @@ export class RecipientSkillVisualisationComponent implements OnChanges {
 			.attr('width', width)
 			.attr('height', height)
 			.attr('viewBox', [-width / 2, -height / 2, width, height])
-			.attr('style', 'max-width: 100%; height: auto;');
+			.attr('style', 'max-width: 100%; height: auto; margin: 0 auto;');
 
 		// Add a line for each link, and a circle for each node.
 		const link = svg
