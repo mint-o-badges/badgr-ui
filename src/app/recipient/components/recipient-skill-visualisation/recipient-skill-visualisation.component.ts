@@ -496,18 +496,21 @@ export class RecipientSkillVisualisationComponent implements OnChanges {
 				sortedNodes.forEach((node, index) => {
 					nodeRankMap.set(node.id, index + 1);
 				});
-				nodeText.text((d) => {
-					const rank = nodeRankMap.get(d.id);
-					return this.padStart(rank);
-				});
+				nodeText.html((d) => `
+					<div class="studyload__wrapper">
+						${skillIconMap[d.id] ? skillIconMap[d.id]: ''}
+						${this.padStart(
+							nodeRankMap.get(d.id)
+						)}
+					</div>
+				`);
 			} else {
-				nodeText.text((_, i) => {
-					return this.selectedNodeNumber;
-				});
-
-				nodeText.append('xhtml:div').text((d) => {
-					return d.name.replace('/', ' / ');
-				});
+				nodeText.html((d) => `
+					<div class="studyload__wrapper">
+						${skillIconMap[d.id] ? skillIconMap[d.id]: ''}
+						${this.selectedNodeNumber}
+					</div>
+				`);
 			}
 		} else {
 			nodeText.html((d) => {
