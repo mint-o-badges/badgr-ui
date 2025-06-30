@@ -130,7 +130,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 	@Input()
 	submittingText: string;
 
-	@Input() set learningPath(lp: ApiLearningPath) {
+	@Input() set learningPath(lp: LearningPath) {
 		if (this.initialisedLearningpath !== lp) {
 			this.initialisedLearningpath = lp;
 			this.initFormFromExisting(this.initialisedLearningpath, this.existingLpBadge);
@@ -153,8 +153,8 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 		}
 	}
 
-	existingLearningPath: ApiLearningPath | null = null;
-	initialisedLearningpath: ApiLearningPath | null = null;
+	existingLearningPath: LearningPath | null = null;
+	initialisedLearningpath: LearningPath | null = null;
 
 	breadcrumbLinkEntries: LinkEntry[] = [];
 	step3Loaded = false;
@@ -226,7 +226,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 	}
 
 	selectMinBadgesControl = new FormControl('');
-	selectMinBadgesOptions: Array<{ label: string; value: number }> = [];
+	selectMinBadgesOptions: FormFieldSelectOption[] = [];
 
 	constructor(
 		protected formBuilder: FormBuilder,
@@ -253,7 +253,6 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 		});
 		this.badgesLoaded = this.loadBadges();
 		this.selectMinBadgesControl.valueChanges.subscribe((value) => {
-			console.log('select value', value);
 			this.learningPathForm.controls.badges.value.length;
 		});
 	}
@@ -261,7 +260,6 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 	previous: string;
 
 	ngOnInit() {
-		console.log('badges', this.learningPathForm.controls.badges.value);
 		this.translate.get('General.next').subscribe((next) => {
 			this.next = next;
 		});
@@ -340,15 +338,15 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 		}
 	}
 
-	initFormFromExisting(lp: ApiLearningPath, badge: BadgeClass) {
+	initFormFromExisting(lp: LearningPath, badge: BadgeClass) {
 		if (!lp || !badge) return;
 
 		this.learningPathForm.setValue({
 			name: lp.name,
 			description: lp.description,
 			badge_category: 'learningpath',
-			badge_image: badge.imageFrame ? lp.participationBadge_image : null,
-			badge_customImage: !badge.imageFrame ? lp.participationBadge_image : null,
+			badge_image: badge.imageFrame ? lp.participationBadgeImage : null,
+			badge_customImage: !badge.imageFrame ? lp.participationBadgeImage : null,
 			useIssuerImageInBadge: true,
 			badges: lp.badges,
 			license: [
@@ -477,13 +475,12 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 				this.selectMinBadgesOptions = value
 					.map((_, i) => ({
 						label: String(i + 1),
-						value: i + 1,
+						value: String(i + 1),
 					}))
-					.filter((v) => v.value != value.length || v.value != 3)
+					.filter((v) => parseInt(v.value) != value.length && parseInt(v.value) >= 3)
 					.reverse();
 
-				this.selectMinBadgesOptions.unshift({ label: 'General.all', value: value.length });
-				console.log('options', this.selectMinBadgesOptions);
+				this.selectMinBadgesOptions.unshift({ label: 'General.all', value: value.length.toString() });
 			}
 		});
 	}
@@ -813,8 +810,9 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 				{
 					...this.existingLearningPath,
 					name: data.name,
+					issuer_id: '',
 					description: data.description,
-					participationBadge_id: this.existingLearningPath.participationBadge_id,
+					participationBadge_id: this.existingLearningPath.participationBadgeId,
 					participationBadge_image: data.image,
 					tags: data.tags,
 					badges: this.badgeList.map((item, index) => {

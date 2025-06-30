@@ -282,7 +282,7 @@
 								{{ 'LearningPath.selectedBadges' | translate: { count: selectedBadges.length } }}
 							</p>
 							<oeb-separator
-								class="tw-block tw-mb-8 tw-mt-8 tw-bg-white tw-border-dashed tw-border tw-border-purple"
+								[separatorStyle]="'tw-block tw-my-4 !tw-border !tw-border-dashed !tw-border-purple'"
 							></oeb-separator>
 
 							<section *ngIf="selectedBadges.length > 2">
