@@ -366,7 +366,7 @@ export class RecipientEarnedBadgeListComponent
 		this.tabs = [
 			{
 				key: 'profile',
-				title: 'Profil',
+				title: this.translate.instant('NavItems.profile'),
 				component: this.profileTemplate,
 			},
 			{
