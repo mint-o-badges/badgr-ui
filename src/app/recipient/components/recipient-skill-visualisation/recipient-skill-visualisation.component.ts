@@ -242,10 +242,10 @@ export class RecipientSkillVisualisationComponent implements OnChanges {
 			return (
 				topAncestors.has(s.id) || // is topAncestor
 				(s.ancestors.size > 0 && // is not top level (should also be depth == 1)
-				intersections.size >= 1) // is beneath at least one topAncestor
+					intersections.size >= 1) // is beneath at least one topAncestor
 			);
 		});
-		const d3NodeIds = this.d3data.nodes.map(n => n.id);
+		const d3NodeIds = this.d3data.nodes.map((n) => n.id);
 
 		this.d3data.links = [];
 		this.d3data.nodes.forEach((node) => {
