@@ -117,7 +117,7 @@
 		"appIntegrations": "App Integrations",
 		"openMenu": "Open menu",
 		"logout": "Log out",
-		"myProfile": "My profile",
+		"myProfile": "My account",
 		"faq": "FAQ"
 	},
 	"Start": {
@@ -721,7 +721,7 @@
 		"skillVisualisationIntro": "These are the areas in which you have strengthened your skills the most:",
 		"skillVisualisationHelp": "Move the mouse pointer over the circles to see the associated skills.",
 		"skillVisualisationSingleIntro": "Your skills in the area of ",
-		"FutureSkillsAccrodingToUlfEhers": "Future Skills according to Ulf Ehers",
+		"FutureSkillsAccrodingToUlfEhlers": "Future Skills according to Ulf Ehlers",
 		"ESCOAreas": "ESCO areas"
 	},
 	"EditBadge": {
