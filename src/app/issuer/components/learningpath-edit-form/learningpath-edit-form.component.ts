@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, inject, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
 import {
 	FormBuilder,
@@ -51,6 +51,9 @@ import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/sr
 import { HlmInputDirective } from '../../../components/spartan/ui-input-helm/src/lib/hlm-input.directive';
 import { OebSeparatorComponent } from '../../../components/oeb-separator.component';
 import { OebSelectComponent } from '~/components/select.component';
+import { DndDraggableDirective, DndDropEvent, DndDropzoneDirective, DropEffect } from 'ngx-drag-drop';
+import { HlmDialogService } from '~/components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
+import { DangerDialogComponent } from '~/common/dialogs/oeb-dialogs/danger-dialog.component';
 
 interface DraggableItem {
 	content: string;
@@ -89,6 +92,8 @@ type BadgeResult = BadgeClass & { selected?: boolean };
 		HlmInputDirective,
 		OebSeparatorComponent,
 		OebSelectComponent,
+		DndDraggableDirective,
+		DndDropzoneDirective,
 	],
 })
 export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
@@ -259,7 +264,28 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 	next: string;
 	previous: string;
 
+	draggableList: {
+		id: string;
+		name: string;
+		image: any;
+		description: string;
+		slug: string;
+		issuerName: string;
+		order: number;
+	}[] = [];
+
 	ngOnInit() {
+		this.draggableList = this.selectedBadges.map((badge, index) => {
+			return {
+				id: badge.slug,
+				name: badge.name,
+				image: badge.image,
+				description: badge.description,
+				slug: badge.slug,
+				issuerName: badge.issuerName,
+				order: index,
+			};
+		});
 		this.translate.get('General.next').subscribe((next) => {
 			this.next = next;
 		});
@@ -362,6 +388,25 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 	badgeChecked(badge: BadgeClass) {
 		return this.selectedBadges.includes(badge);
 	}
+
+	private readonly _hlmDialogService = inject(HlmDialogService);
+	public openDangerDialog(index: number) {
+		const dialogRef = this._hlmDialogService.open(DangerDialogComponent, {
+			context: {
+				delete: () => {
+					this.draggableList.splice(index, 1);
+				},
+				variant: 'danger',
+				text: 'Are you sure you want to remove this badge from the learningpath?',
+			},
+		});
+	}
+
+	// checkboxChange(event, index: number) {
+	// 	if (!event) {
+	// 		this.openDangerDialog(index);
+	// 	}
+	// }
 
 	checkboxChange(event, badge: BadgeClass) {
 		if (event) {
@@ -750,6 +795,33 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 			this.newTagInput.nativeElement.focus();
 			event.preventDefault();
 		}
+	}
+
+	onDragged(item: any, list: any[], effect: DropEffect) {
+		const index = list.indexOf(item);
+		list.splice(index, 1);
+		this.recalculateOrder(list);
+	}
+
+	onDrop(event: DndDropEvent, index: number, list: any[]) {
+		const previousIndex = list.findIndex((item) => item.id === event.data.id);
+
+		if (previousIndex !== -1) {
+			list.splice(previousIndex, 1);
+		}
+
+		if (typeof index === 'undefined') {
+			index = list.length;
+		}
+
+		list.splice(index, 0, event.data);
+		this.recalculateOrder(list);
+	}
+
+	recalculateOrder(list: any[]) {
+		list.forEach((item, index) => {
+			item.order = index;
+		});
 	}
 
 	removeTag(tag: string) {
