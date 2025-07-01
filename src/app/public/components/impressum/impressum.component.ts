@@ -24,4 +24,3 @@ export class ImpressumComponent implements OnInit {
 	}
 	ngOnInit() {}
 }
-
