@@ -1,13 +1,4 @@
-import {
-	Component,
-	ContentChild,
-	ElementRef,
-	OnInit,
-	ViewChild,
-	AfterContentInit,
-	inject,
-	TemplateRef,
-} from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, AfterContentInit, inject, TemplateRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
@@ -33,7 +24,7 @@ import { Competency } from '../../../common/model/competency.model';
 import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
 import { LearningPath } from '../../../issuer/models/learningpath.model';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe, LangChangeEvent } from '@ngx-translate/core';
 import { provideIcons, NgIcon } from '@ng-icons/core';
 import { RecipientBadgeCollectionApiService } from '../../services/recipient-badge-collection-api.service';
 import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
@@ -43,6 +34,8 @@ import { RecipientBadgeCollectionManager } from '../../services/recipient-badge-
 import { RecipientBadgeApiService } from '../../services/recipient-badges-api.service';
 import { RecipientBadgeCollection } from '../../models/recipient-badge-collection.model';
 import { ShareDialogTemplateComponent } from '../../../common/dialogs/oeb-dialogs/share-dialog-template.component';
+import { ApiRootSkill } from '../../../common/model/ai-skills.model';
+import { BreakpointService } from '../../../common/services/breakpoint.service';
 import { FormMessageComponent } from '../../../common/components/form-message.component';
 import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 import { HlmH2Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h2.directive';
@@ -60,11 +53,14 @@ import { OebCompetency } from '../../../common/components/oeb-competency';
 import { BgLearningPathCard } from '../../../common/components/bg-learningpathcard';
 import { BgCollectionCard } from '../../../common/bg-collectioncard';
 import { DynamicFilterPipe } from '../../../common/pipes/dynamicFilterPipe';
+import { RecipientSkillVisualisationComponent } from '../recipient-skill-visualisation/recipient-skill-visualisation.component';
 
 type BadgeDispay = 'grid' | 'list';
 type EscoCompetencies = {
 	[key: string]: Competency;
 };
+
+export const VISUALISATION_BREAKPOINT_MAX_WIDTH: number = 768;
 
 @Component({
 	selector: 'recipient-earned-badge-list',
@@ -102,6 +98,7 @@ type EscoCompetencies = {
 		AddBadgeDialogComponent,
 		DynamicFilterPipe,
 		TranslatePipe,
+		RecipientSkillVisualisationComponent,
 	],
 })
 export class RecipientEarnedBadgeListComponent
@@ -122,10 +119,12 @@ export class RecipientEarnedBadgeListComponent
 	importedBadges: RecipientBadgeInstance[] = [];
 	badgesLoaded: Promise<unknown>;
 	profileLoaded: Promise<unknown>;
+	skillsLoaded: Promise<unknown>;
 	learningpathLoaded: Promise<unknown>;
 	collectionsLoaded: Promise<unknown>;
 	importedBadgesLoaded: Promise<unknown>;
 	allIssuers: ApiRecipientBadgeIssuer[] = [];
+	allSkills: ApiRootSkill[] = [];
 	allLearningPaths: any[] = [];
 	collections: any[] = [];
 
@@ -147,6 +146,7 @@ export class RecipientEarnedBadgeListComponent
 	running = false;
 	tabs: any[] = [];
 	@ViewChild('overViewTemplate', { static: true }) overViewTemplate: ElementRef;
+	@ViewChild('profileTemplate', { static: true }) profileTemplate: ElementRef;
 	@ViewChild('badgesTemplate', { static: true }) badgesTemplate: ElementRef;
 	@ViewChild('badgesCompetency', { static: true }) badgesCompetency: ElementRef;
 	@ViewChild('learningPathTemplate', { static: true }) learningPathTemplate: ElementRef;
@@ -168,9 +168,12 @@ export class RecipientEarnedBadgeListComponent
 	@ViewChild('countup2') countup2: CountUpDirective;
 	@ViewChild('badgesCounter') badgesCounter: CountUpDirective;
 
-	activeTab: string = 'badges';
+	activeTab: string = 'profile';
 	private _badgesDisplay: BadgeDispay = 'grid';
 	sortControl = new FormControl('date_desc');
+
+	mobile = window.innerWidth <= VISUALISATION_BREAKPOINT_MAX_WIDTH;
+
 	get badgesDisplay() {
 		return this._badgesDisplay;
 	}
@@ -216,6 +219,7 @@ export class RecipientEarnedBadgeListComponent
 		public recipientBadgeCollectionApiService: RecipientBadgeCollectionApiService,
 		private recipientBadgeCollectionManager: RecipientBadgeCollectionManager,
 		private recipientBadgeApiService: RecipientBadgeApiService,
+		private breakpointService: BreakpointService,
 	) {
 		super(router, route, sessionService);
 
@@ -224,6 +228,19 @@ export class RecipientEarnedBadgeListComponent
 		this.badgesLoaded = this.recipientBadgeManager.recipientBadgeList.loadedPromise.catch((e) =>
 			this.messageService.reportAndThrowError('Failed to load your badges', e),
 		);
+
+		let skillsLang = translate.currentLang;
+		this.skillsLoaded = this.recipientBadgeApiService.getSkills(translate.currentLang).then((skills) => {
+			this.allSkills = skills;
+		});
+		translate.onLangChange.subscribe((e: LangChangeEvent) => {
+			if (e.lang != skillsLang) {
+				this.skillsLoaded = this.recipientBadgeApiService.getSkills(e.lang).then((skills) => {
+					this.allSkills = skills;
+				});
+				skillsLang = e.lang;
+			}
+		});
 
 		this.learningpathLoaded = this.learningPathApi
 			.getLearningPathsForUser()
@@ -314,6 +331,10 @@ export class RecipientEarnedBadgeListComponent
 	}
 
 	ngOnInit() {
+		this.breakpointService.observeCustomBreakpoint(VISUALISATION_BREAKPOINT_MAX_WIDTH).subscribe((isMobile) => {
+			this.mobile = isMobile;
+		});
+
 		this.loadImportedBadges();
 
 		this.recipientBadgeManager.recipientBadgeList.changed$.subscribe((badges) => {
@@ -344,13 +365,18 @@ export class RecipientEarnedBadgeListComponent
 	ngAfterContentInit() {
 		this.tabs = [
 			{
+				key: 'profile',
+				title: 'NavItems.profile',
+				component: this.profileTemplate,
+			},
+			{
 				key: 'badges',
 				title: 'Badges',
 				component: this.badgesTemplate,
 			},
 			{
 				key: 'competencies',
-				title: this.translate.instant('RecBadge.competencies'),
+				title: 'RecBadge.competencies',
 				component: this.badgesCompetency,
 			},
 			{
@@ -360,7 +386,7 @@ export class RecipientEarnedBadgeListComponent
 			},
 			{
 				key: 'collections',
-				title: this.translate.instant('BadgeCollection.myCollections'),
+				title: 'BadgeCollection.myCollections',
 				component: this.collectionTemplate,
 			},
 		];
@@ -382,6 +408,9 @@ export class RecipientEarnedBadgeListComponent
 	uploadBadge() {
 		this.addBadgeDialog.openDialog().then(
 			() => {
+				if (this.activeTab != 'badges') {
+					this.onTabChange('badges');
+				}
 				this.loadImportedBadges();
 			},
 			() => {},

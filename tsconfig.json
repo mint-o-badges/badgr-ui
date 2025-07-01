@@ -17,6 +17,7 @@
 		"module": "es2022",
 		"baseUrl": "./",
 		"useDefineForClassFields": false,
+		"resolveJsonModule": true,
 		"paths": {
 			"@spartan-ng/ui-dialog-helm": ["./src/app/components/spartan/ui-dialog-helm/src/index.ts"],
 			"@spartan-ng/ui-icon-helm": ["./src/app/components/spartan/ui-icon-helm/src/index.ts"],

@@ -11,6 +11,7 @@ import { MessageService } from '../../common/services/message.service';
 import { HttpClient } from '@angular/common/http';
 import { CommonEntityManager } from '../../entity-manager/services/common-entity-manager.service';
 import { RecipientBadgeInstance } from '../models/recipient-badge.model';
+import { ApiRootSkill } from '../../common/model/ai-skills.model';
 
 @Injectable({ providedIn: 'root' })
 export class RecipientBadgeApiService extends BaseHttpApiService {
@@ -34,6 +35,12 @@ export class RecipientBadgeApiService extends BaseHttpApiService {
 		return this.get<ApiImportedBadgeInstance[]>('/v1/earner/imported-badges').then((importedBadges) =>
 			importedBadges.body.map((badge) => this.convertToRecipientBadgeInstance(badge)),
 		);
+	}
+
+	getSkills(language = 'de'): Promise<ApiRootSkill[]> {
+		return this.get<{ skills: ApiRootSkill[] }>('/v1/earner/skills', {
+			lang: language,
+		}).then((r) => r.body.skills);
 	}
 
 	getImportedBadge(slug: string): Promise<ApiImportedBadgeInstance> {
