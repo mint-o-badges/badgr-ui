@@ -25,7 +25,6 @@ describe('BadgeClassCreateComponent', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			declarations: [BadgeClassCreateComponent],
 			imports: [
 				RouterTestingModule,
 				CommonModule,
@@ -33,6 +32,7 @@ describe('BadgeClassCreateComponent', () => {
 				BadgrCommonModule,
 				TranslateTestingModule.withTranslations('de', {}),
 				...COMMON_IMPORTS,
+				BadgeClassCreateComponent,
 			],
 			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],

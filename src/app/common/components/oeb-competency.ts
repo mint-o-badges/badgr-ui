@@ -1,7 +1,12 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { lucideClock } from '@ng-icons/lucide';
 import { Competency } from '../model/competency.model';
-import { provideIcons } from '@ng-icons/core';
+import { provideIcons, NgIcon } from '@ng-icons/core';
+import { HlmPDirective } from '../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
+import { NgIf } from '@angular/common';
+import { HlmADirective } from '../../components/spartan/ui-typography-helm/src/lib/hlm-a.directive';
+import { HlmIconDirective } from '../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
+import { HourPipe } from '../pipes/hourPipe';
 @Component({
 	selector: 'oeb-competency',
 	providers: [provideIcons({ lucideClock })],
@@ -31,7 +36,7 @@ import { provideIcons } from '@ng-icons/core';
 			</div>
 		</div>
 	`,
-	standalone: false,
+	imports: [HlmPDirective, NgIf, HlmADirective, NgIcon, HlmIconDirective, HourPipe],
 })
 export class OebCompetency {
 	@Input() competency: Competency;

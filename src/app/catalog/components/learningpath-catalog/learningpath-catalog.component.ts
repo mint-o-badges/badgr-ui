@@ -2,11 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from '../../../common/services/message.service';
 import { Title } from '@angular/platform-browser';
-import { preloadImageURL } from '../../../common/util/file-util';
 import { AppConfigService } from '../../../common/app-config.service';
 import { BaseRoutableComponent } from '../../../common/pages/base-routable.component';
-import { BadgeClassCategory } from '../../../issuer/models/badgeclass-api.model';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { SessionService } from '../../../common/services/session.service';
 import { LearningPathManager } from '../../../issuer/services/learningpath-manager.service';
 import { LearningPath } from '../../../issuer/models/learningpath.model';
@@ -16,17 +14,42 @@ import { IssuerManager } from '../../../issuer/services/issuer-manager.service';
 import { sortUnique } from '../badge-catalog/badge-catalog.component';
 import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
 import { RecipientBadgeApiService } from '../../../recipient/services/recipient-badges-api.service';
-import { ApiRecipientBadgeInstance } from '../../../recipient/models/recipient-badge-api.model';
 import { appearAnimation } from '../../../common/animations/animations';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormsModule } from '@angular/forms';
 import { applySorting } from '../../util/sorting';
+import { FormMessageComponent } from '../../../common/components/form-message.component';
+import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
+import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
+import { NgIf, NgFor } from '@angular/common';
+import { CountUpModule } from 'ngx-countup';
+import { HlmInputDirective } from '../../../components/spartan/ui-input-helm/src/lib/hlm-input.directive';
+import { NgIcon } from '@ng-icons/core';
+import { HlmIconDirective } from '../../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
+import { OebGlobalSortSelectComponent } from '../../../components/oeb-global-sort-select.component';
+import { BgLearningPathCard } from '../../../common/components/bg-learningpathcard';
+import { PaginationAdvancedComponent } from '../../../components/oeb-numbered-pagination';
 
 @Component({
 	selector: 'app-learningpaths-catalog',
 	templateUrl: './learningpath-catalog.component.html',
 	styleUrls: ['../badge-catalog/badge-catalog.component.css'],
 	animations: [appearAnimation],
-	standalone: false,
+	imports: [
+		FormMessageComponent,
+		BgAwaitPromises,
+		HlmH1Directive,
+		NgIf,
+		CountUpModule,
+		FormsModule,
+		HlmInputDirective,
+		NgIcon,
+		HlmIconDirective,
+		OebGlobalSortSelectComponent,
+		NgFor,
+		BgLearningPathCard,
+		PaginationAdvancedComponent,
+		TranslatePipe,
+	],
 })
 export class LearningPathsCatalogComponent extends BaseRoutableComponent implements OnInit {
 	learningPathsLoaded: Promise<unknown>;
@@ -100,6 +123,16 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 		}
 	}
 
+	get learningPathPluralWord(): string {
+		return this.learningPaths.length === 1
+			? this.plural['learningPath']['1']
+			: this.plural['learningPath']['other'];
+	}
+
+	get issuersPluralWord(): string {
+		return this.issuers.length === 1 ? this.plural['issuer']['1'] : this.plural['issuer']['other'];
+	}
+
 	constructor(
 		protected title: Title,
 		protected messageService: MessageService,
@@ -158,17 +191,17 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 			issuer: {
 				'=0': this.translate.instant('Issuer.noInstitutions'),
 				'=1': '1 Institution',
-				other: '# ' + this.translate.instant('General.institutions'),
+				other: ' ' + this.translate.instant('General.institutions'),
 			},
 			issuerText: {
 				'=0': this.translate.instant('Issuer.institutionsIssued'),
 				'=1': '1 ' + this.translate.instant('Issuer.institutionIssued'),
-				other: '# ' + this.translate.instant('Issuer.institutionsIssued'),
+				other: ' ' + this.translate.instant('Issuer.institutionsIssued'),
 			},
 			learningPath: {
 				'=0': this.translate.instant('General.noLearningPaths'),
 				'=1': '1 ' + this.translate.instant('General.learningPath'),
-				other: '# ' + this.translate.instant('General.learningPaths'),
+				other: ' ' + this.translate.instant('General.learningPaths'),
 			},
 		};
 	}

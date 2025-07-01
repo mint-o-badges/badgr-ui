@@ -1,4 +1,7 @@
 import { Component, Input } from '@angular/core';
+import { NgIf } from '@angular/common';
+import { HlmPDirective } from '../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
 	selector: 'loading-dots',
@@ -8,7 +11,7 @@ import { Component, Input } from '@angular/core';
 			{{ 'General.loading' | translate }}
 		</p>
 	</div>`,
-	standalone: false,
+	imports: [NgIf, HlmPDirective, TranslatePipe],
 })
 export class LoadingDotsComponent {
 	@Input() className: string;

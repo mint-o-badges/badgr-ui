@@ -6,45 +6,21 @@
 			<ng-template [bgAwaitPromises]="[profileLoaded]">
 				<div class="md:tw-flex tw-justify-between tw-items-center oeb-section-sm">
 					<h2 hlmH2 class="tw-text-oebblack tw-font-bold tw-pb-4 md:tw-pb-0">
-						{{ 'RecBadge.greating' | translate }} {{ profile.firstName }}
+						{{ 'RecBadge.greating' | translate }}
+						<span class="tw-capitalize">{{ profile.firstName }} </span>,
+						{{ 'RecBadge.greating2' | translate }}
 					</h2>
 
 					<oeb-button
-						*ngIf="activeTab === 'badges'"
+						*ngIf="activeTab === 'badges' || activeTab === 'profile'"
 						icon="lucideUpload"
-						iconLeft="true"
+						[variant]="activeTab === 'profile' ? 'secondary' : 'default'"
+						[iconLeft]="!mobile"
 						(click)="uploadBadge()"
 						[disabled-when-requesting]="true"
-						[text]="'RecBadge.uploadBadge' | translate"
+						[text]="mobile ? null : ('RecBadge.uploadBadge' | translate)"
 					>
 					</oeb-button>
-					<ng-template #headerTemplate>
-						<h2 hlmH2>Badge hochladen</h2>
-						<span>Füge einen Badge hinzu den du bereits erhalten hast</span>
-					</ng-template>
-					<ng-template #badgeUploadContentTemplate>
-						<form [formGroup]="addRecipientBadgeForm.rawControl" (ngSubmit)="submitBadgeRecipientForm()">
-							<app-badge-tabs
-								[form]="addRecipientBadgeForm"
-								[uploadBadgeImageUrl]="uploadBadgeImageUrl"
-								[formError]="formError"
-								(formErrorCleared)="clearFormError()"
-								(controlChange)="controlUpdated($event)"
-								(tabChange)="onTabChange($event)"
-							></app-badge-tabs>
-
-							<div class="u-responsivepadding-xaxis u-responsivepadding-yaxis l-stack l-stack-right">
-								<button
-									class="button"
-									type="submit"
-									[loading-promises]="[badgeUploadPromise]"
-									loading-message="Hinzufügen"
-								>
-									{{ 'RecBadge.addBadge' | translate }}
-								</button>
-							</div>
-						</form>
-					</ng-template>
 				</div>
 			</ng-template>
 			<div class="oeb-section-sm">
@@ -53,6 +29,9 @@
 					[activeTab]="activeTab"
 					[tabs]="tabs"
 				></oeb-backpack-tabs>
+				<ng-template #profileTemplate>
+					<recipient-skill-visualisation [skills]="allSkills"></recipient-skill-visualisation>
+				</ng-template>
 				<ng-template #badgesTemplate>
 					<ng-template [bgAwaitPromises]="[badgesLoaded]">
 						<div class="oeb-section-sm">
@@ -325,16 +304,15 @@
 								<div class="tw-grid min-[450px]:tw-grid-cols-learningpathsBackpack tw-gap-6">
 									<bg-learningpathcard
 										*ngFor="let lp of learningPathsReadyToRequest"
-										[badgeImage]="lp.participationBadge_image"
+										[badgeImage]="lp.participationBadgeImage"
 										[name]="lp.name"
 										[issuerTitle]="lp.issuer_name"
 										[description]="lp.description"
 										[tags]="lp.tags"
 										[slug]="lp.slug"
 										[studyLoad]="calculateStudyLoad(lp)"
-										[completed]="lp.completed"
+										[completed]="lp.completed_at != null"
 										[progress]="lp.progress"
-										[completed]="lp.completed"
 										[requested]="lp.requested"
 										[matchOrProgress]="{ progress: lp.progress / calculateStudyLoad(lp) }"
 									></bg-learningpathcard>
@@ -348,14 +326,14 @@
 								<div class="tw-grid min-[450px]:tw-grid-cols-learningpathsBackpack tw-gap-6">
 									<bg-learningpathcard
 										*ngFor="let lp of learningPathsInProgress"
-										[badgeImage]="lp.participationBadge_image"
+										[badgeImage]="lp.participationBadgeImage"
 										[name]="lp.name"
 										[issuerTitle]="lp.issuer_name"
 										[description]="lp.description"
 										[tags]="lp.tags"
 										[slug]="lp.slug"
 										[progress]="lp.progress"
-										[completed]="lp.completed"
+										[completed]="lp.completed_at != null"
 										[requested]="lp.requested"
 										[studyLoad]="calculateStudyLoad(lp)"
 										[matchOrProgress]="{ progress: lp.progress / calculateStudyLoad(lp) }"
@@ -370,7 +348,7 @@
 								<div class="tw-grid min-[450px]:tw-grid-cols-learningpathsBackpack tw-gap-6">
 									<bg-learningpathcard
 										*ngFor="let lp of learningPathsCompleted"
-										[badgeImage]="lp.participationBadge_image"
+										[badgeImage]="lp.participationBadgeImage"
 										[name]="lp.name"
 										[issuerTitle]="lp.issuer_name"
 										[description]="lp.description"
@@ -533,14 +511,6 @@
 						class="tw-text-lg tw-text-purple tw-italic tw-mt-1"
 						[innerHTML]="'BadgeCollection.addLink' | translate"
 					></p>
-				</ng-template>
-				<ng-template #shareDialogHeaderTemplate>
-					<h2 class="tw-text-purple tw-font-bold tw-text-[22px] tw-leading-[120%]">
-						{{ 'BadgeCollection.shareCollection' | translate }}
-					</h2>
-				</ng-template>
-				<ng-template #shareDialogContentTemplate let-shareUrl="share_url">
-					<share-dialog-template></share-dialog-template>
 				</ng-template>
 			</div>
 		</div>

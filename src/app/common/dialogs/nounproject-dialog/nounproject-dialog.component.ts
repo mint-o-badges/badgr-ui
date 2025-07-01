@@ -7,18 +7,36 @@ import { NounprojectService } from '../../services/nounproject.service';
 import { NounProjectIcon } from '../../model/nounproject.model';
 import { fromEvent } from 'rxjs';
 import { map, debounceTime, distinctUntilChanged } from 'rxjs/operators';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+import { SvgIconComponent } from '../../components/svg-icon.component';
+import { FormsModule } from '@angular/forms';
+import { NgIf, NgFor } from '@angular/common';
+import { BgAwaitPromises } from '../../directives/bg-await-promises';
+import { BgImageStatusPlaceholderDirective } from '../../directives/bg-image-status-placeholder.directive';
+import { RouterLink } from '@angular/router';
 
 @Component({
 	selector: 'nounproject-dialog',
 	templateUrl: 'nounproject-dialog.component.html',
 	styleUrls: ['./nounproject-dialog.component.css'],
-	standalone: false,
+	imports: [
+		SvgIconComponent,
+		FormsModule,
+		NgIf,
+		BgAwaitPromises,
+		NgFor,
+		BgImageStatusPlaceholderDirective,
+		RouterLink,
+		TranslatePipe,
+	],
 })
 export class NounprojectDialog extends BaseDialog implements AfterViewInit {
 	Array = Array;
 	resolveFunc: (BadgeClass) => void;
 	rejectFunc: () => void;
+
+	readonly badgeLoadingImageUrl = '../../../breakdown/static/images/badge-loading.svg';
+	readonly badgeFailedImageUrl = '../../../breakdown/static/images/badge-failed.svg';
 
 	icons: any[] = null;
 	maxDisplayedResults = 10;

@@ -1,0 +1,57 @@
+<p class="tw-mt-6 tw-mb-2 tw-text-oebblack tw-text-[16px] tw-leading-[120%] tw-font-semibold">
+	{{
+		showSingleNode
+			? ('RecBadge.skillVisualisationSingleIntro' | translate) + `"${selectedNode.name}":`
+			: ('RecBadge.skillVisualisationIntro' | translate)
+	}}
+</p>
+<div class="tw-bg-white">
+	@if (showSingleNode) {
+		<button (click)="goBackToFullView()" class="tw-flex tw-gap-1 tw-p-4 tw-items-center">
+			<ng-icon class="tw-w-8 tw-h-8 tw-text-purple" name="lucideChevronLeft"></ng-icon>
+			<span class="tw-underline tw-italic tw-text-link tw-lowercase">{{ 'General.previous' | translate }}</span>
+		</button>
+	} @else {
+		<p class="tw-p-4 tw-text-purple tw-italic">{{ 'RecBadge.skillVisualisationHelp' | translate }}</p>
+	}
+	<div #d3canvas></div>
+	<div class="tw-p-2 visualiser-legend">
+		<span class="visualiser-legend__esco">{{ 'RecBadge.ESCOAreas' | translate }}</span>
+		@if (hasFutureSkills) {
+			<span class="visualiser-legend__future">{{ 'RecBadge.FutureSkillsAccrodingToUlfEhlers' | translate }}</span>
+		}
+	</div>
+
+	@if (mobile) {
+		<div class="mobile-overview tw-p-2">
+			<ul class="tw-flex tw-flex-col tw-gap-1">
+				@if (showSingleNode) {
+					@for (skill of getAllDescendantsForTopLevelSkill(selectedNode); track skill.id) {
+						<competency-accordion
+							[name]="skill.name"
+							[category]="skill.type"
+							[description]="skill.description"
+							framework="esco"
+							[framework_identifier]="'http://data.europa.eu' + skill.concept_uri"
+							[studyload]="(skill.studyLoad | hourPipe) + ' h'"
+						>
+						</competency-accordion>
+					}
+				} @else {
+					@for (skill of getTopLevelSkills(); track skill.id; let idx = $index) {
+						<li>
+							<oeb-button
+								(click)="selectSkillForSingleView(skill, idx)"
+								icon="lucideChevronRight"
+								variant="purple100"
+								[text]="getFormattedSkillText(idx, skill.name)"
+								width="full_width"
+							>
+							</oeb-button>
+						</li>
+					}
+				}
+			</ul>
+		</div>
+	}
+</div>

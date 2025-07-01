@@ -6,7 +6,6 @@ import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 		'[title]': 'rawText',
 	},
 	template: `{{ processedText }}`,
-	standalone: false,
 })
 export class TruncatedTextComponent implements OnChanges {
 	@Input('truncatedText')

@@ -12,8 +12,12 @@ describe('WelcomeComponent', () => {
 
 	beforeEach(waitForAsync(() => {
 		TestBed.configureTestingModule({
-			declarations: [WelcomeComponent],
-			imports: [...COMMON_IMPORTS, RouterTestingModule, TranslateTestingModule.withTranslations('de', {})],
+			imports: [
+				...COMMON_IMPORTS,
+				RouterTestingModule,
+				TranslateTestingModule.withTranslations('de', {}),
+				WelcomeComponent,
+			],
 			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
 		}).compileComponents();
 	}));

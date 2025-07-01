@@ -12,7 +12,7 @@ import {
 import { ExternalAuthProvider, SocialAccountProviderInfo } from '../model/user-profile-api.model';
 import { HttpClient } from '@angular/common/http';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class OAuthApiService extends BaseHttpApiService {
 	constructor(
 		protected loginService: SessionService,

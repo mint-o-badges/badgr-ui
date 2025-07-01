@@ -6,6 +6,10 @@ import { throwExpr } from '../util/throw-expr';
 import { CommonDialogsService } from '../services/common-dialogs.service';
 import { NounProjectIcon } from '../model/nounproject.model';
 import { MessageService } from '../services/message.service';
+import { NgIf } from '@angular/common';
+import { NgIcon } from '@ng-icons/core';
+import { HlmIconDirective } from '../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
 	selector: 'bg-formfield-image',
@@ -107,7 +111,7 @@ import { MessageService } from '../services/message.service';
 			<p class="forminput-x-error" *ngIf="control.dirty && !control.valid">{{ errorMessage }}</p>
 		</div>
 	`,
-	standalone: false,
+	imports: [NgIf, NgIcon, HlmIconDirective, TranslatePipe],
 })
 export class BgFormFieldImageComponent {
 	@Input() set imageLoaderName(name: string) {

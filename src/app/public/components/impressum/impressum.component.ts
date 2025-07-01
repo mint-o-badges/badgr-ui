@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { uiTimestamp } from '../../../../environments/timestamp';
 import { ServerTimestampService } from '../../../common/services/server-timestamp.service';
+import { FormMessageComponent } from '../../../common/components/form-message.component';
 
 @Component({
 	selector: 'app-impressum',
 	templateUrl: './impressum.component.html',
 	styleUrls: ['./impressum.component.css'],
-	standalone: false,
+	imports: [FormMessageComponent],
 })
 export class ImpressumComponent implements OnInit {
     uiTimestamp = uiTimestamp;

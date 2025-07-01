@@ -9,7 +9,7 @@ import { RecipientBadgeCollection } from '../models/recipient-badge-collection.m
 import { RecipientBadgeCollectionApiService } from './recipient-badge-collection-api.service';
 import { EventsService } from '../../common/services/events.service';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class RecipientBadgeCollectionManager {
 	recipientBadgeCollectionList = new StandaloneEntitySet<RecipientBadgeCollection, ApiRecipientBadgeCollection>(
 		(apiModel) => new RecipientBadgeCollection(this.commonEntityManager, apiModel),

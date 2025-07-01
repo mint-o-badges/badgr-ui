@@ -13,7 +13,6 @@ import { SessionService } from '../../../../common/services/session.service';
 	selector: 'about-newsletter',
 	templateUrl: './newsletter.component.html',
 	styleUrls: ['../about.component.css'],
-	standalone: false,
 })
 export class NewsletterComponent extends BaseRoutableComponent implements OnInit {
 	newsletterForm = typedFormGroup({})

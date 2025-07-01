@@ -13,12 +13,16 @@ import { MessageService } from '../../services/message.service';
 import { PdfService } from '../../services/pdf.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { PublicApiBadgeAssertionWithBadgeClass } from '../../../public/models/public-api.model';
+import { NgIf } from '@angular/common';
+import { LoadingDotsComponent } from '../../components/loading-dots.component';
+import { SvgIconComponent } from '../../components/svg-icon.component';
+import { OebButtonComponent } from '../../../components/oeb-button.component';
 
 @Component({
 	selector: 'export-pdf-dialog',
 	templateUrl: 'export-pdf-dialog.component.html',
 	styleUrls: ['export-pdf-dialog.component.css'],
-	standalone: false,
+	imports: [NgIf, LoadingDotsComponent, SvgIconComponent, OebButtonComponent],
 })
 export class ExportPdfDialog extends BaseDialog {
 	badge: RecipientBadgeInstance | PublicApiBadgeAssertionWithBadgeClass | null = null;

@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
 import { SessionService } from '../../../common/services/session.service';
@@ -17,8 +17,15 @@ import { BadgeInstanceUrl } from '../../../issuer/models/badgeinstance-api.model
 import { groupIntoArray, groupIntoObject } from '../../../common/util/array-reducers';
 import { StringMatchingUtil } from '../../../common/util/string-matching-util';
 import { ApiRecipientBadgeCollectionForCreation } from '../../models/recipient-badge-collection-api.model';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { BadgeClassCategory } from '../../../issuer/models/badgeclass-api.model';
+import { FormMessageComponent } from '../../../common/components/form-message.component';
+import { OebInputComponent } from '../../../components/input.component';
+import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
+import { HlmInputDirective } from '../../../components/spartan/ui-input-helm/src/lib/hlm-input.directive';
+import { NgClass, NgFor, NgIf, I18nPluralPipe } from '@angular/common';
+import { BgBadgecard } from '../../../common/components/bg-badgecard';
+import { OebButtonComponent } from '../../../components/oeb-button.component';
 
 interface CreateBadgeCollectionForm<T> {
 	collectionName: T;
@@ -28,7 +35,22 @@ interface CreateBadgeCollectionForm<T> {
 @Component({
 	selector: 'recipient-badge-collection-edit-form',
 	templateUrl: './recipient-badge-collection-edit-form.component.html',
-	standalone: false,
+	imports: [
+		FormMessageComponent,
+		FormsModule,
+		ReactiveFormsModule,
+		OebInputComponent,
+		BgAwaitPromises,
+		HlmInputDirective,
+		NgClass,
+		NgFor,
+		NgIf,
+		BgBadgecard,
+		OebButtonComponent,
+		RouterLink,
+		I18nPluralPipe,
+		TranslatePipe,
+	],
 })
 export class RecipientBadgeCollectionEditFormComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	@Input()
@@ -167,6 +189,10 @@ export class RecipientBadgeCollectionEditFormComponent extends BaseAuthenticated
 		} else {
 			this.selectedBadges.splice(this.selectedBadges.indexOf(badge), 1);
 		}
+	}
+
+	badgeIssueDate(badge: BadgeResult) {
+		return new Date(badge.badge.apiModel.json.issuedOn);
 	}
 
 	private updateBadges(allBadges: RecipientBadgeInstance[]) {

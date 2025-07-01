@@ -23,8 +23,7 @@ describe('ResetPasswordSent', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			declarations: [ResetPasswordSent],
-			imports: [RouterTestingModule, BadgrCommonModule, ...COMMON_IMPORTS],
+			imports: [RouterTestingModule, BadgrCommonModule, ...COMMON_IMPORTS, ResetPasswordSent],
 			providers: [FormBuilder, Title, ...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 			teardown: { destroyAfterEach: false },

@@ -6,7 +6,7 @@ import { ApiExternalToolLaunchInfo } from '../../externaltools/models/externalto
  * Service for broadcasting and subscribing to events between modules in Badgr to avoid the need for tight coupling
  * between the modules.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class EventsService {
 	profileEmailsChanged = new Subject<string[]>();
 

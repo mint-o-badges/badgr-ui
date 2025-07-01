@@ -1,22 +1,23 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
+import { OebSelectComponent } from './select.component';
 
 @Component({
 	selector: 'oeb-global-sort-select',
 	template: `
 		<oeb-select
-			actionBar="true"
+			[actionBar]="true"
 			class="oeb tw-block tw-w-full"
 			[options]="sortOptions"
 			[control]="control"
 			[disabled]="disabled"
 			[autofocus]="true"
 			[placeholder]="placeholder"
-			noTopMargin="true"
+			[noTopMargin]="true"
 		></oeb-select>
 	`,
-	standalone: false,
+	imports: [OebSelectComponent],
 })
 export class OebGlobalSortSelectComponent implements OnInit {
 	@Input() control: FormControl = new FormControl('name_asc');

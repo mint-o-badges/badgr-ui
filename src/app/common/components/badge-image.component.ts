@@ -4,6 +4,8 @@ import { BadgeClassManager } from '../../issuer/services/badgeclass-manager.serv
 import { MessageService } from '../services/message.service';
 import { AbstractBadgeComponent } from './abstract-badge.component';
 import { preloadImageURL } from '../util/file-util';
+import { NgIf } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
 	selector: 'badge-image',
@@ -47,7 +49,7 @@ import { preloadImageURL } from '../util/file-util';
 	`,
 	// Inputs from superclass must be specified here again due to https://github.com/angular/angular/issues/5415
 	inputs: ['badge', 'issuerId', 'badgeSlug', 'badgeId', 'forceFailed'],
-	standalone: false,
+	imports: [NgIf, RouterLink],
 })
 export class BadgeImageComponent extends AbstractBadgeComponent {
 	readonly greenCheckCircleUrl = preloadImageURL(
