@@ -127,10 +127,11 @@ export class OebInputComponent {
 	}
 
 	get controlErrorState() {
-		return (
-			this.errorOverride ||
-			(this.control.dirty && (!this.control.valid || (this.errorGroup && !this.errorGroup.valid)))
-		);
+		if (this.errorOverride) return true;
+		if (!this.control.dirty) return false;
+
+		const controlInvalid = this.errorGroup ? !this.control.valid || !this.errorGroup.valid : !this.control.valid;
+		return controlInvalid;
 	}
 	get errorMessageForDisplay(): string {
 		return this.hasFocus ? this.cachedErrorMessage : this.uncachedErrorMessage;
