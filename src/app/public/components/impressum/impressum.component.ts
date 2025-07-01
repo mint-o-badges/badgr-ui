@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { uiTimestamp } from '../../../../environments/timestamp';
+import { ServerTimestampService } from '../../../common/services/server-timestamp.service';
 
 @Component({
 	selector: 'app-impressum',
@@ -9,6 +10,16 @@ import { uiTimestamp } from '../../../../environments/timestamp';
 })
 export class ImpressumComponent implements OnInit {
     uiTimestamp = uiTimestamp;
-    constructor() {}
+    serverTimestamp = '?';
+    constructor(protected serverTimestampService: ServerTimestampService) {
+        serverTimestampService.getServerTimestamp().then(
+            (ts) => {
+                this.serverTimestamp = ts;
+            },
+            (error) => {
+                throw error;
+            },
+        );
+    }
 	ngOnInit() {}
 }

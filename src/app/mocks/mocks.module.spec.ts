@@ -41,6 +41,7 @@ import { ApplicationCredentialsService } from '../common/services/application-cr
 import { QrCodeApiService } from '../issuer/services/qrcode-api.service';
 import { PdfService } from '../common/services/pdf.service';
 import { LearningPathApiService } from '../common/services/learningpath-api.service';
+import { ServerTimestampService } from '../common/services/server-timestamp.service';
 import { BadgeInstanceApiService } from '../issuer/services/badgeinstance-api.service';
 
 /*@Injectable()
@@ -191,6 +192,11 @@ export class MockPdfService {
 	getPdf = () => new Promise(() => {});
 	downloadPdf = () => new Promise(() => {});
 	dateToString = () => new Promise(() => {});
+}
+
+@Injectable()
+export class MockServerTimestampService {
+    getServerTimestamp = () => new Promise(() => '');
 }
 
 export const commonDialog = {
@@ -387,6 +393,7 @@ export let COMMON_MOCKS_PROVIDERS_WITH_SUBS = [];
 	QrCodeApiService,
 	PdfService,
 	LearningPathApiService,
+    ServerTimestampService,
 	BadgeInstanceApiService,
 ].forEach((m, i, a) => {
 	const thisMock = eval('Mock' + m.name);
