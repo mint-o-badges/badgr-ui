@@ -32,10 +32,10 @@ jobs:
   create-release:
     permissions:
       contents: write
-      runs-on: ubuntu-latest
-      outputs:
-        release_id: ${{ steps.create-release.outputs.result }}
-        if: github.ref == 'refs/heads/production'
+    runs-on: ubuntu-latest
+    outputs:
+      release_id: ${{ steps.create-release.outputs.result }}
+      if: github.ref == 'refs/heads/production'
 
     steps:
       - name: ⬇️ Checkout repository
