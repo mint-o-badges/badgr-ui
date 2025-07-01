@@ -47,17 +47,6 @@
 
 				div.studyload__wrapper {
 					position: relative;
-					width: 100%;
-
-					> .studyload {
-						position: absolute;
-						left: 0;
-						right: 0;
-						padding-top: 0.25em;
-					}
-				}
-
-				div.studyload {
 					display: flex;
 					flex-direction: column;
 					align-items: center;

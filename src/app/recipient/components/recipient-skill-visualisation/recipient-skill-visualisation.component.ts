@@ -464,7 +464,7 @@ export class RecipientSkillVisualisationComponent implements OnChanges {
 						return ((d as ExtendedApiSkill).depth - 1) * (nodeBaseSize * 3);
 					})
 					.strength((d) => {
-						return (d as ExtendedApiSkill).depth == 1 ? 2 : 0.1;
+						return (d as ExtendedApiSkill).depth == 1 ? 3 : 0.1;
 					}),
 			);
 
