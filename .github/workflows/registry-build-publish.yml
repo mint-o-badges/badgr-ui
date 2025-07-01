@@ -121,9 +121,9 @@ jobs:
   publish-release:
     permissions:
       contents: write
-      runs-on: ubuntu-latest
-      needs: [create-release, build-and-push-image]
-      if: github.ref == 'refs/heads/production'
+    runs-on: ubuntu-latest
+    needs: [create-release, build-and-push-image]
+    if: github.ref == 'refs/heads/production'
 
     steps:
       - name: 🚢 Publish release
