@@ -1,5 +1,11 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { RecipientBadgeCollection } from '../recipient/models/recipient-badge-collection.model';
+import { RouterLink } from '@angular/router';
+import { NgIf, NgFor } from '@angular/common';
+import { HlmSwitchComponent } from '../components/spartan/ui-switch-helm/src/lib/hlm-switch.component';
+import { FormsModule } from '@angular/forms';
+import { OebButtonComponent } from '../components/oeb-button.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
 	selector: 'bg-collectioncard',
@@ -31,7 +37,7 @@ import { RecipientBadgeCollection } from '../recipient/models/recipient-badge-co
 					>
 						<img
 							[src]="badge.image"
-							[title]="badge?.name"
+							[title]="badge.badgeClass.name"
 							class="md:tw-w-[80px] md:tw-h-[80px] tw-w-[50px] tw-h-[50px]"
 						/>
 					</div>
@@ -55,7 +61,7 @@ import { RecipientBadgeCollection } from '../recipient/models/recipient-badge-co
 			</div>
 		</div>
 	`,
-	standalone: false,
+	imports: [RouterLink, NgIf, NgFor, HlmSwitchComponent, FormsModule, OebButtonComponent, TranslatePipe],
 })
 export class BgCollectionCard {
 	readonly badgeLoadingImageUrl = '../../../breakdown/static/images/badge-loading.svg';

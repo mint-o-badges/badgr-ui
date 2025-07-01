@@ -12,7 +12,7 @@ import { LearningPath } from '../models/learningpath.model';
 import { ApiLearningPath } from '../../common/model/learningpath-api.model';
 import { LearningPathApiService } from '../../common/services/learningpath-api.service';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class LearningPathManager extends BaseHttpApiService {
 	learningPathList = new StandaloneEntitySet<LearningPath, ApiLearningPath>(
 		(apiModel) => new LearningPath(this.commonEntityManager),

@@ -1,5 +1,7 @@
 import { Component, ElementRef, Renderer2 } from '@angular/core';
 import { BaseDialog } from './base-dialog';
+import { SvgIconComponent } from '../components/svg-icon.component';
+import { NgIf } from '@angular/common';
 
 export interface ConfirmDialogOptions {
 	dialogTitle?: string;
@@ -44,7 +46,7 @@ export interface ConfirmDialogOptions {
 			</div>
 		</dialog>
 	`,
-	standalone: false,
+	imports: [SvgIconComponent, NgIf],
 })
 export class ConfirmDialog extends BaseDialog {
 	static defaultOptions = {

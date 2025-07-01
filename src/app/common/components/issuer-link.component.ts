@@ -2,6 +2,7 @@ import { Component, ElementRef, Input, OnChanges } from '@angular/core';
 
 import { Issuer } from '../../issuer/models/issuer.model';
 import { preloadImageURL } from '../util/file-util';
+import { BgImageStatusPlaceholderDirective } from '../directives/bg-image-status-placeholder.directive';
 
 @Component({
 	selector: '[bgIssuerLink]',
@@ -17,7 +18,7 @@ import { preloadImageURL } from '../util/file-util';
 		/>
 		{{ bgIssuerLink?.name || 'Unknown Issuer' }}
 	`,
-	standalone: false,
+	imports: [BgImageStatusPlaceholderDirective],
 })
 export class BgIssuerLinkComponent implements OnChanges {
 	readonly issuerPlaceholderImageSrc = preloadImageURL(

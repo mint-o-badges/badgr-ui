@@ -17,12 +17,26 @@ import { typedFormGroup } from '../../../common/util/typed-forms';
 import { BadgeInstanceApiService } from '../../services/badgeinstance-api.service';
 import { TaskStatus, TaskResult, TaskPollingManagerService } from '../../../common/task-manager.service';
 import { Subscription } from 'rxjs';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
+import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
+import { NgFor } from '@angular/common';
+import { OebButtonComponent } from '../../../components/oeb-button.component';
+import { HlmH3Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h3.directive';
+import { OebCheckboxComponent } from '../../../components/oeb-checkbox.component';
 
 @Component({
 	selector: 'badgeclass-issue-bulk-award-confirmation',
 	templateUrl: './badgeclass-issue-bulk-award-confirmation.component.html',
-	standalone: false,
+	imports: [
+		HlmH1Directive,
+		HlmPDirective,
+		NgFor,
+		OebButtonComponent,
+		HlmH3Directive,
+		OebCheckboxComponent,
+		TranslatePipe,
+	],
 })
 export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRoutableComponent implements OnDestroy {
 	@Input() transformedImportData: TransformedImportData;

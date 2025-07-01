@@ -11,9 +11,8 @@ import {
 import { NgIf, NgFor, NgTemplateOutlet, AsyncPipe } from '@angular/common';
 import type { MenuItem } from '../common/components/badge-detail/badge-detail.component.types';
 import { RouterModule } from '@angular/router';
-import { HlmIconModule } from './spartan/ui-icon-helm/src';
-import { SharedIconsModule } from '../public/icons.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { HlmIconDirective } from './spartan/ui-icon-helm/src/lib/hlm-icon.directive';
 
 @Component({
 	selector: 'oeb-dropdown',
@@ -28,8 +27,7 @@ import { TranslateModule } from '@ngx-translate/core';
 		NgTemplateOutlet,
 		RouterModule,
 		NgIcon,
-		HlmIconModule,
-		SharedIconsModule,
+		HlmIconDirective,
 		TranslateModule,
 	],
 	template: `
@@ -48,8 +46,8 @@ import { TranslateModule } from '@ngx-translate/core';
 		</button>
 
 		<ng-template #menu>
-			<hlm-menu [size]="size" [inset]="inset" class="tw-border-[var(--color-purple)] tw-border-2">
-				<hlm-menu-label [size]="size" *ngIf="label">{{ label }}</hlm-menu-label>
+			<hlm-menu class="tw-border-[var(--color-purple)] tw-border-2">
+				<hlm-menu-label *ngIf="label">{{ label }}</hlm-menu-label>
 				<ng-container *ngFor="let menuItem of menuItems">
 					<button
 						*ngIf="menuItem.action"

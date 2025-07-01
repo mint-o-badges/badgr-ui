@@ -24,8 +24,7 @@ describe('BgPopupMenu', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			declarations: [BgPopupMenu],
-			imports: [RouterTestingModule, ...COMMON_IMPORTS],
+			imports: [RouterTestingModule, ...COMMON_IMPORTS, BgPopupMenu],
 			providers: [
 				...COMMON_MOCKS_PROVIDERS_WITH_SUBS,
 				//{provide: ElementRef, useClass: MockElementRef},

@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ElementRef, HostListener, Input, OnDestroy, ViewChild } from '@angular/core';
 
 import Tether from 'tether';
+import { NgClass } from '@angular/common';
 
 @Component({
 	selector: 'tooltip',
@@ -16,7 +17,7 @@ import Tether from 'tether';
 			</div>
 		</div>
 	`,
-	standalone: false,
+	imports: [NgClass],
 })
 export class TooltipComponent implements AfterViewInit, OnDestroy {
 	@Input() position = {
