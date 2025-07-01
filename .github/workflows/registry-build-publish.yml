@@ -4,10 +4,10 @@ on:
     push:
         branches: [main, production, develop]
         tags: ['v*.*.*']
-        pull_request:
-            branches:
-                - main
-                - develop
+    pull_request:
+        branches:
+            - main
+            - develop
 
 env:
     REGISTRY: ghcr.io
@@ -35,7 +35,7 @@ jobs:
         runs-on: ubuntu-latest
         outputs:
             release_id: ${{ steps.create-release.outputs.result }}
-            if: github.ref == 'refs/heads/production'
+        if: github.ref == 'refs/heads/production'
 
         steps:
             - name: ⬇️ Checkout repository
