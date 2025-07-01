@@ -98,7 +98,7 @@ export class OebInputComponent {
 	@ViewChild('textareaInput') textareaInput: ElementRef;
 
 	private cachedErrorMessage = null;
-	private cachedErrorState = null;
+	private cachedErrorState: boolean | null = null;
 	private cachedDirtyState = null;
 	@Input() control: FormControl;
 	@Input() errorGroup: TypedFormGroup;
