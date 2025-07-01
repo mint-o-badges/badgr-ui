@@ -176,7 +176,7 @@ export class RecipientSkillVisualisationComponent implements OnChanges {
 		this.hasFutureSkills = false;
 
 		// DEBUG: add your own future skill for testing
-		futureSkills['escoMap']['/esco/skill/1565b401-1754-4b07-8f1a-eb5869e64d95'] = 'ethische-kompetenz';
+		// futureSkills['escoMap']['/esco/skill/2c6439c2-77a5-436a-b222-5e12d435c3eb'] = 'lernkompetenz';
 
 		skills.forEach((s) => {
 			const breadcrumbs = s.breadcrumb_paths;
@@ -302,27 +302,33 @@ export class RecipientSkillVisualisationComponent implements OnChanges {
 		// add nodes that either are topAncestors or have a topAncestor or are in future skills
 		this.d3data.nodes = Array.from(this.skillTree.values()).filter((s) => {
 			const intersection = <T>(a: Set<T>, b: Set<T>): Set<T> => new Set([...a].filter((x) => b.has(x)));
+			const intersections = intersection(s.ancestors, topAncestors);
 			return (
 				topAncestors.has(s.id) || // is topAncestor
 				(s.ancestors.size > 0 && // is not top level (should also be depth == 1)
-					intersection(s.ancestors, topAncestors).size >= s.ancestors.size) // is beneath a topAncestor
+					intersections.size >= 1) // is beneath at least one topAncestor
 			);
 		});
+		const d3NodeIds = this.d3data.nodes.map((n) => n.id);
 
 		this.d3data.links = [];
-		this.d3data.nodes.forEach((v) => {
-			if (v.leaf) {
-				for (let a of v.ancestors.values()) {
-					this.skillTree.get(a).leafs.push(v.id);
+		this.d3data.nodes.forEach((node) => {
+			if (node.leaf) {
+				for (let ancestor of node.ancestors.values()) {
+					this.skillTree.get(ancestor).leafs.push(node.id);
 				}
 			}
-			v.parents.forEach((p) => {
-				if (this.skillTree.get(p)) {
-					this.skillTree.get(p).children.push(v.id);
-					this.d3data.links.push({
-						source: v.id,
-						target: p,
-					});
+			node.parents.forEach((parentId) => {
+				const parent = this.skillTree.get(parentId);
+				if (parent) {
+					// parents might have been removed in topancestors filter
+					if (d3NodeIds.includes(parent.id)) {
+						parent.children.push(node.id);
+						this.d3data.links.push({
+							source: node.id,
+							target: parentId,
+						});
+					}
 				}
 			});
 		});
