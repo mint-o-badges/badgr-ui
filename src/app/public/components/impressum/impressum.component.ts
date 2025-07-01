@@ -10,17 +10,18 @@ import { FormMessageComponent } from '../../../common/components/form-message.co
 	imports: [FormMessageComponent],
 })
 export class ImpressumComponent implements OnInit {
-    uiTimestamp = uiTimestamp;
-    serverTimestamp = '?';
-    constructor(protected serverTimestampService: ServerTimestampService) {
-        serverTimestampService.getServerTimestamp().then(
-            (ts) => {
-                this.serverTimestamp = ts;
-            },
-            (error) => {
-                throw error;
-            },
-        );
-    }
+	uiTimestamp = uiTimestamp;
+	serverTimestamp = '?';
+	constructor(protected serverTimestampService: ServerTimestampService) {
+		serverTimestampService.getServerTimestamp().then(
+			(ts) => {
+				this.serverTimestamp = ts;
+			},
+			(error) => {
+				throw error;
+			},
+		);
+	}
 	ngOnInit() {}
 }
+

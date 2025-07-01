@@ -196,7 +196,7 @@ export class MockPdfService {
 
 @Injectable()
 export class MockServerTimestampService {
-    getServerTimestamp = () => new Promise(() => '');
+	getServerTimestamp = () => new Promise(() => '');
 }
 
 export const commonDialog = {
@@ -393,7 +393,7 @@ export let COMMON_MOCKS_PROVIDERS_WITH_SUBS = [];
 	QrCodeApiService,
 	PdfService,
 	LearningPathApiService,
-    ServerTimestampService,
+	ServerTimestampService,
 	BadgeInstanceApiService,
 ].forEach((m, i, a) => {
 	const thisMock = eval('Mock' + m.name);
@@ -408,3 +408,4 @@ export let COMMON_MOCKS_PROVIDERS_WITH_SUBS = [];
 	providers: [...COMMON_MOCKS_PROVIDERS],
 })
 export class MocksModuleSpec {}
+

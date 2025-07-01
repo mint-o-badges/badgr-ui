@@ -4,7 +4,7 @@
 	"description": "Badgr UI",
 	"scripts": {
 		"ng": "ng",
-        "postinstall": "date +\"export const uiTimestamp = \\\"%d.%m.%y %T\\\";\" > src/environments/timestamp.ts",
+		"postinstall": "date +\"export const uiTimestamp = \\\"%d.%m.%y %T\\\";\" > src/environments/timestamp.ts",
 		"start": "ng serve",
 		"start-intellij": "ng serve --host 0.0.0.0 --disable-host-check --aot 2>&1 | perl -e '$|++; while (<>) { s/((ERROR|WARNING) in\\s*)(.*)/$1\\n$3/g; print $_; }'",
 		"build:widgets": "webpack --config widgets-webpack.config.ts",
@@ -172,3 +172,4 @@
 		}
 	}
 }
+
