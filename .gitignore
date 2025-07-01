@@ -18,3 +18,5 @@ temp/
 
 # vscode updates
 .vscode
+
+src/environments/timestamp.ts
