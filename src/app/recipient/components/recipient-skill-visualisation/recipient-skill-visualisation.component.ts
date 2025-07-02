@@ -338,6 +338,12 @@ export class RecipientSkillVisualisationComponent implements OnChanges {
 		return this.d3data.nodes.filter((d) => d.depth == 1);
 	}
 
+	getTopLevelSkillsSorted() {
+		const topLevelSkills = this.getTopLevelSkills();
+		const maxStudyLoad = topLevelSkills.reduce((current, d) => Math.max(current, d.studyLoad), 0);
+		return topLevelSkills.sort((a, b) => b.studyLoad / maxStudyLoad - a.studyLoad / maxStudyLoad);
+	}
+
 	getAllDescendantsForTopLevelSkill(topLevelSkill: ExtendedApiSkill): ExtendedApiSkill[] {
 		const descendants = new Set<ExtendedApiSkill>();
 		const visited = new Set<string>();
