@@ -386,7 +386,7 @@ export class RecipientEarnedBadgeListComponent
 			},
 			{
 				key: 'collections',
-				title: 'BadgeCollection.myCollections',
+				title: 'General.collections',
 				component: this.collectionTemplate,
 			},
 		];
