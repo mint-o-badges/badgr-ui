@@ -47,29 +47,33 @@
 
 				div.studyload__wrapper {
 					position: relative;
-					width: 100%;
-
-					> .studyload {
-						position: absolute;
-						left: 0;
-						right: 0;
-						padding-top: 0.25em;
-					}
-				}
-
-				div.studyload {
 					display: flex;
+					flex-direction: column;
 					align-items: center;
 					justify-content: center;
-					gap: 0.5ch;
-					font-weight: normal;
-					font-size: 0.8rem;
-					color: var(--color-black);
+					gap: 8px;
 
-					&::before {
-						content: url('data:image/svg+xml; utf8, <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock-fading-icon lucide-clock-fading"><path d="M12 2a10 10 0 0 1 7.38 16.75"/><path d="M12 6v6l4 2"/><path d="M2.5 8.875a10 10 0 0 0-.5 3"/><path d="M2.83 16a10 10 0 0 0 2.43 3.4"/><path d="M4.636 5.235a10 10 0 0 1 .891-.857"/><path d="M8.644 21.42a10 10 0 0 0 7.631-.38"/></svg>');
-						align-self: center;
-						display: inline-flex;
+					> svg {
+						width: 2em;
+						height: auto;
+						stroke: black;
+						--ng-icon__stroke-width: 1;
+					}
+
+					> .studyload {
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						gap: 0.5ch;
+						font-weight: normal;
+						color: var(--color-black);
+
+						svg {
+							align-self: center;
+							display: inline-flex;
+							width: 1em;
+							height: auto;
+						}
 					}
 				}
 			}
