@@ -93,7 +93,6 @@ export class RecipientBadgeCollectionEditFormComponent extends BaseAuthenticated
 	allBadges: RecipientBadgeInstance[];
 	allIssuers: ApiRecipientBadgeIssuer[];
 
-	myCollections = this.translate.instant('BadgeCollection.myCollections');
 	descriptionMax300 = this.translate.instant('BadgeCollection.descriptionMax300');
 
 	isEditing = false;
