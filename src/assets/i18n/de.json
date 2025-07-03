@@ -792,7 +792,6 @@
 		"provideDescription": "Bitte gib eine Beschreibung an",
 		"descriptionMax300": "Die Beschreibung darf maximal 300 Zeichen lang sein",
 		"useCollectionsForApplications": "Sammlungen für Bewerbungen nutzen",
-		"myCollections": "Meine Sammlungen",
 		"collectionInfoText": "Organisiere deine Badges in Sammlungen und lade das entsprechende PDF herunter oder erstelle einen Direkt-Link zum Teilen.",
 		"addLink": "Füge den Link oder das PDF deiner Bewerbung hinzu und verweise im Anschreiben darauf. (Zum Beispiel: „In der beigefügten Badge-Sammlung finden Sie eine Übersicht meiner Fähigkeiten im Bereich…“)",
 		"createCollectionNow": "Jetzt Sammlung anlegen",
