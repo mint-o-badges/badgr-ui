@@ -126,7 +126,7 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 			.then(([list]) => {
 				this.collection = list.entityForSlug(this.collectionSlug);
 				this.menuItems[1].disabled = this.collection.badgeEntries.length === 0;
-				this.translate.get('General.collections').subscribe((str) => {
+				this.translate.get('BadgeCollection.myCollections').subscribe((str) => {
 					this.crumbs = [
 						{ title: str, routerLink: ['/recipient/badges'], queryParams: { tab: 'collections' } },
 						{ title: this.collection.name, routerLink: ['/collection/' + this.collection.slug] },
