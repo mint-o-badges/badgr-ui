@@ -16,7 +16,6 @@
 				[label]="'CreateBadge.enterDetailsStep' | translate"
 				[optional]="false"
 				[errorMessage]="'General.validationCompleteForm' | translate"
-				[errorMessage]="'General.validationCompleteForm' | translate"
 				[completed]="(validateFields(['name', 'description']) && !imageValidation()) || isDevMode"
 				[hasError]="
 					((!validateFields(['name', 'description']) &&
@@ -154,7 +153,9 @@
 			<cdk-step
 				[label]="'LearningPath.includedBadges' | translate"
 				[optional]="false"
-				errorMessage="Wähle mindestens 3 Badges aus"
+				[errorMessage]="'LearningPath.chooseMin3Badges' | translate"
+				[completed]="!learningPathForm.hasError('minSelectedBadges') || isDevMode"
+				[hasError]="learningPathForm.hasError('minSelectedBadges') && !isDevMode"
 			>
 				<ng-template [showLoader]="true" [bgAwaitPromises]="badgesLoaded">
 					<div class="tw-mt-6 md:tw-mt-7 oeb-section section">

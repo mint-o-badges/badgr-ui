@@ -981,7 +981,8 @@
 		"flexibleSelection": "Auswahl für flexiblen Lernpfad",
 		"flexibleSelectionInfo": "Lege hier fest, wieviele der ausgewählten Badges erworben werden müssen, damit die lernende Person den Abschluss Micro Degree erhält:",
 		"learnersHaveTo": "Lernende müssen",
-		"learnersHaveTo2": "der oben ausgewählten Badges erwerben, um den Abschluss-Badge Micro Degree zu erhalten."
+		"learnersHaveTo2": "der oben ausgewählten Badges erwerben, um den Abschluss-Badge Micro Degree zu erhalten.",
+		"chooseMin3Badges": "Wähle mindestens 3 Badges aus"
 	},
 	"LearningPathEditor": {
 		"shortDescription": "Zusammenfassende Beschreibung deines Micro Degrees. Diese Kurzbeschreibung wird im Micro Degree gespeichert."
