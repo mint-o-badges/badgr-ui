@@ -98,7 +98,7 @@ export class OebInputComponent {
 	@ViewChild('textareaInput') textareaInput: ElementRef;
 
 	private cachedErrorMessage = null;
-	private cachedErrorState = null;
+	private cachedErrorState: boolean | null = null;
 	private cachedDirtyState = null;
 	@Input() control: FormControl;
 	@Input() errorGroup: TypedFormGroup;
@@ -127,10 +127,11 @@ export class OebInputComponent {
 	}
 
 	get controlErrorState() {
-		return (
-			this.errorOverride ||
-			(this.control.dirty && (!this.control.valid || (this.errorGroup && !this.errorGroup.valid)))
-		);
+		if (this.errorOverride) return true;
+		if (!this.control.dirty) return false;
+
+		const controlInvalid = this.errorGroup ? !this.control.valid || !this.errorGroup.valid : !this.control.valid;
+		return controlInvalid;
 	}
 	get errorMessageForDisplay(): string {
 		return this.hasFocus ? this.cachedErrorMessage : this.uncachedErrorMessage;
@@ -172,7 +173,8 @@ export class OebInputComponent {
 		if (event.code === 'Enter') {
 			this.control.markAsDirty();
 			this.cacheControlState();
-			event.preventDefault();
+
+			if (this.cachedErrorState) event.preventDefault();
 		}
 		// If fieldType is number prevent strings and chars from entering
 		if (this.fieldType === 'number') {
