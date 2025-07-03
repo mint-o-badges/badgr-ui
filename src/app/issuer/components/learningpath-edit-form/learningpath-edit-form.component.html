@@ -16,6 +16,14 @@
 				[label]="'CreateBadge.enterDetailsStep' | translate"
 				[optional]="false"
 				[errorMessage]="'General.validationCompleteForm' | translate"
+				[errorMessage]="'General.validationCompleteForm' | translate"
+				[completed]="(validateFields(['name', 'description']) && !imageValidation()) || isDevMode"
+				[hasError]="
+					((!validateFields(['name', 'description']) &&
+						dirtyFields(['badge_description', 'badge_hours', 'badge_name'])) ||
+						(imageFieldDirty && imageValidation())) &&
+					!isDevMode
+				"
 			>
 				<section class="tw-mt-6 md:tw-mt-7 section oeb-section">
 					<h2 hlmH2 class="tw-font-bold">2. {{ 'LearningPath.enterDetails' | translate }}</h2>
@@ -317,7 +325,7 @@
 				></learningpath-badges> -->
 			</cdk-step>
 			<cdk-step [label]="'LearningPath.badgeSequenceStep' | translate">
-				<ng-container *ngIf="step3Loaded">
+				<ng-container>
 					<div class="tw-mt-6 md:tw-mt-7 oeb-section section">
 						<h2 hlmH2 class="tw-font-bold">4. {{ 'LearningPath.badgeSequence' | translate }}</h2>
 						<div class="tw-m-4 md:tw-m-12 tw-rounded-2xl tw-p-6 tw-bg-[var(--color-white)]">

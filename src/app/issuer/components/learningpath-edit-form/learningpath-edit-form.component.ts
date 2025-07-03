@@ -1,4 +1,14 @@
-import { Component, ElementRef, EventEmitter, inject, Input, OnInit, Output, ViewChild } from '@angular/core';
+import {
+	Component,
+	ElementRef,
+	EventEmitter,
+	inject,
+	Input,
+	isDevMode,
+	OnInit,
+	Output,
+	ViewChild,
+} from '@angular/core';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
 import {
 	FormBuilder,
@@ -24,7 +34,6 @@ import { BadgeInstanceManager } from '../../services/badgeinstance-manager.servi
 import { ApiLearningPath } from '../../../common/model/learningpath-api.model';
 import { LearningPathManager } from '../../services/learningpath-manager.service';
 import { StepperComponent } from '../../../components/stepper/stepper.component';
-import { LearningPathBadgeOrderComponent } from '../learningpath-create-steps/learningpath-badge-order/learningpath-badge-order.component';
 import { AppConfigService } from '../../../common/app-config.service';
 import { BadgeClassApiService } from '../../services/badgeclass-api.service';
 import { UrlValidator } from '../../../common/validators/url.validator';
@@ -79,7 +88,6 @@ type BadgeResult = BadgeClass & { selected?: boolean };
 		StepComponent,
 		CdkStep,
 		BgAwaitPromises,
-		LearningPathBadgeOrderComponent,
 		AutocompleteLibModule,
 		OebButtonComponent,
 		TranslatePipe,
@@ -162,12 +170,13 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 	initialisedLearningpath: LearningPath | null = null;
 
 	breadcrumbLinkEntries: LinkEntry[] = [];
-	step3Loaded = false;
 	selectedBadgeUrls: string[] = [];
 	selectedBadges: any[] = [];
 	studyLoad: number = 0;
 	savePromise: Promise<ApiLearningPath> | Promise<void> | null = null;
 	selectedStep = 0;
+
+	isDevMode: boolean = false && isDevMode(); // DEBUG: enable to skip steps
 
 	detailsForm: any;
 	lpName: string;
@@ -408,6 +417,18 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 	// 	}
 	// }
 
+	validateFields(fields: string[]) {
+		return fields.every((c) => {
+			return this.learningPathForm.controls[c].valid;
+		});
+	}
+
+	dirtyFields(fields: string[]) {
+		return fields.every((c) => {
+			return this.learningPathForm.controls[c].dirty;
+		});
+	}
+
 	checkboxChange(event, badge: BadgeClass) {
 		if (event) {
 			this.selectedBadges.push(badge);
@@ -420,6 +441,18 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 			);
 			this.studyLoad -= badge.extension['extensions:StudyLoadExtension'].StudyLoad;
 		}
+		this.draggableList = this.selectedBadges.map((badge, index) => {
+			return {
+				id: badge.slug,
+				name: badge.name,
+				image: badge.image,
+				description: badge.description,
+				slug: badge.slug,
+				issuerName: badge.issuerName,
+				order: index,
+			};
+		});
+		console.log('draglist', this.draggableList);
 	}
 	groups: string[] = [];
 	// groups = [this.translate.instant('Badge.category'), this.translate.instant('Badge.issuer'), '---'];
@@ -460,6 +493,18 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 			description: badge.description,
 			issuerName: badge.issuerName,
 		}));
+		this.draggableList = this.selectedBadges.map((badge, index) => {
+			return {
+				id: badge.slug,
+				name: badge.name,
+				image: badge.image,
+				description: badge.description,
+				slug: badge.slug,
+				issuerName: badge.issuerName,
+				order: index,
+			};
+		});
+		console.log('draglist', this.draggableList);
 	}
 
 	learningPathForm = typedFormGroup([this.imageValidation.bind(this), this.minSelectedBadges.bind(this)])
