@@ -160,6 +160,7 @@ export class RecipientEarnedBadgeListComponent
 	groupedUserCompetencies: Competency[] | {} = {};
 	newGroupedUserCompetencies: Competency[] | {} = {};
 
+	totalStudyTime = 0;
 	public objectKeys = Object.keys;
 	public objectValues = Object.values;
 
@@ -200,13 +201,6 @@ export class RecipientEarnedBadgeListComponent
 		this._searchQuery = query;
 		this.saveDisplayState();
 		this.updateResults();
-	}
-
-	get totalStudyTime(): number {
-		if (!this.allSkills || this.allSkills.length === 0) {
-			return 0;
-		}
-		return this.allSkills.reduce((total, skill) => total + skill.studyLoad, 0);
 	}
 
 	constructor(
@@ -262,10 +256,9 @@ export class RecipientEarnedBadgeListComponent
 		]).then(([list]) => {
 			this.collections = list.entities;
 		});
-		this.recipientBadgeManager.recipientBadgeList.changed$.subscribe((badges) => {
-			this.updateBadges(badges.entities);
-			this.loadSkills();
-		});
+		this.recipientBadgeManager.recipientBadgeList.changed$.subscribe((badges) =>
+			this.updateBadges(badges.entities),
+		);
 
 		if (sessionService.isLoggedIn) {
 			// force a refresh of the userProfileSet now that we are authenticated
@@ -353,13 +346,6 @@ export class RecipientEarnedBadgeListComponent
 			if (params['tab']) {
 				this.activeTab = params['tab'];
 			}
-		});
-	}
-
-	private loadSkills() {
-		const skillsLang = this.translate.currentLang;
-		this.recipientBadgeApiService.getSkills(skillsLang).then((s) => {
-			this.allSkills = s;
 		});
 	}
 
@@ -583,6 +569,7 @@ export class RecipientEarnedBadgeListComponent
 					groupedCompetencies[key] = { ...competency };
 					groupedCompetencies[key].lastReceived = badge.issueDate;
 				}
+				this.totalStudyTime += competency.studyLoad;
 			});
 		});
 
