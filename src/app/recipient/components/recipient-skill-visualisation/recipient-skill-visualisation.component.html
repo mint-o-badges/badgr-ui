@@ -18,7 +18,7 @@
 	<div class="tw-p-2 visualiser-legend">
 		<span class="visualiser-legend__esco">{{ 'RecBadge.ESCOAreas' | translate }}</span>
 		@if (hasFutureSkills) {
-			<span class="visualiser-legend__future">{{ 'RecBadge.FutureSkillsAccrodingToUlfEhers' | translate }}</span>
+			<span class="visualiser-legend__future">{{ 'RecBadge.FutureSkillsAccrodingToUlfEhlers' | translate }}</span>
 		}
 	</div>
 
@@ -38,7 +38,7 @@
 						</competency-accordion>
 					}
 				} @else {
-					@for (skill of getTopLevelSkills(); track skill.id; let idx = $index) {
+					@for (skill of getTopLevelSkillsSorted(); track skill.id; let idx = $index) {
 						<li>
 							<oeb-button
 								(click)="selectSkillForSingleView(skill, idx)"

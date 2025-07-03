@@ -380,7 +380,7 @@ export class RecipientEarnedBadgeListComponent
 		this.tabs = [
 			{
 				key: 'profile',
-				title: 'Profil',
+				title: 'NavItems.profile',
 				component: this.profileTemplate,
 			},
 			{
@@ -390,7 +390,7 @@ export class RecipientEarnedBadgeListComponent
 			},
 			{
 				key: 'competencies',
-				title: this.translate.instant('RecBadge.competencies'),
+				title: 'RecBadge.competencies',
 				component: this.badgesCompetency,
 			},
 			{
@@ -400,7 +400,7 @@ export class RecipientEarnedBadgeListComponent
 			},
 			{
 				key: 'collections',
-				title: this.translate.instant('BadgeCollection.myCollections'),
+				title: 'General.collections',
 				component: this.collectionTemplate,
 			},
 		];

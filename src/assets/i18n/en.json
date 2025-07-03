@@ -116,7 +116,7 @@
 		"appIntegrations": "App Integrations",
 		"openMenu": "Open menu",
 		"logout": "Log out",
-		"myProfile": "My profile",
+		"myProfile": "My account",
 		"faq": "FAQ"
 	},
 	"Start": {
@@ -720,7 +720,7 @@
 		"skillVisualisationIntro": "These are the areas in which you have strengthened your skills the most:",
 		"skillVisualisationHelp": "Move the mouse pointer over the circles to see the associated skills.",
 		"skillVisualisationSingleIntro": "Your skills in the area of ",
-		"FutureSkillsAccrodingToUlfEhers": "Future Skills according to Ulf Ehers",
+		"FutureSkillsAccrodingToUlfEhlers": "Future Skills according to Ulf Ehlers",
 		"ESCOAreas": "ESCO areas"
 	},
 	"EditBadge": {
@@ -791,7 +791,6 @@
 		"descriptionPlaceholder": "These badges show that I not only understand the digital world, but also actively shape it. From programming and algorithms to IT security - I know the tools of the future and use them creatively to solve technical challenges.",
 		"provideDescription": "Please provide a description",
 		"descriptionMax300": "The description should not exceed 300 characters",
-		"myCollections": "My Collections",
 		"useCollectionsForApplications": "Use collections for applications",
 		"collectionInfoText": "Organize your badges into collections and download the respective PDF or create a direct-link for sharing.",
 		"addLink": "Add the link or PDF to your application and refer to it in your cover letter. (For example: “In the attached badge collection you will find an overview of my skills in the field of...”)",

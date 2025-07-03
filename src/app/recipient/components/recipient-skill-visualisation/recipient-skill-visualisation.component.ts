@@ -1,10 +1,5 @@
 import { Component, ElementRef, input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { ApiRootSkill, ApiSkill } from '../../../common/model/ai-skills.model';
-
-import * as d3 from 'd3';
-import d3ForceBoundary from 'd3-force-boundary';
-
-import futureSkills from './recipient-skill-visualisation.future.json';
 import { debounceTime, fromEvent, Subject, takeUntil, tap } from 'rxjs';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { HlmAccordionModule } from '../../../components/spartan/ui-accordion-helm/src/index';
@@ -19,6 +14,43 @@ import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { CompetencyAccordionComponent } from '../../../components/accordion.component';
 import { HourPipe } from '../../../common/pipes/hourPipe';
 import { VISUALISATION_BREAKPOINT_MAX_WIDTH } from '../recipient-earned-badge-list/recipient-earned-badge-list.component';
+import { lucideClockFading } from '@ng-icons/lucide';
+import {
+	lucideLifeBuoy,
+	lucideLightbulb,
+	lucideCalendar1,
+	lucideSpeech,
+	lucideDumbbell,
+	lucidePodcast,
+	lucideHandshake,
+	lucideBinoculars,
+	lucideHandHeart,
+	lucideSquarePen,
+	lucideMonitorCheck,
+	lucideTruck,
+	lucideHardHat,
+	lucideDrill,
+	lucideBrain,
+	lucideGraduationCap,
+	lucideDrama,
+	lucideNewspaper,
+	lucideScale,
+	lucideAtom,
+	lucideBinary,
+	lucideBrainCircuit,
+	lucideSprout,
+	lucideAmbulance,
+	lucidePhoneCall,
+	lucideMessageSquare,
+	lucideLanguages,
+	lucideRocket,
+	lucideEarth,
+} from '@ng-icons/lucide';
+
+import * as d3 from 'd3';
+import d3ForceBoundary from 'd3-force-boundary';
+
+import futureSkills from './recipient-skill-visualisation.future.json';
 
 interface ExtendedApiSkill extends Partial<ApiSkill> {
 	id: string;
@@ -43,6 +75,38 @@ interface SkillLink {
 	source: string;
 	target: string;
 }
+
+const skillIconMap = {
+	'/esco/skill/b94686e3-cce5-47a2-a8d8-402a0d0ed44e': lucideLifeBuoy,
+	'/esco/skill/8267ecb5-c976-4b6a-809b-4ceecb954967': lucideLightbulb,
+	'/esco/skill/021a23e1-907e-4627-b05a-555f889cbb65': lucideCalendar1,
+	'/esco/skill/552c4f35-a2d1-49c2-8fda-afe26695c44a': lucideSpeech,
+	'/esco/skill/12022223-8c30-418a-8f83-658396c9fec2': lucideDumbbell,
+	'/esco/skill/4ef78abc-e983-4cc7-84a1-52532a0159dc': lucidePodcast,
+	'/esco/skill/dc06de9f-dd3a-4f28-b58f-b01b5ae72ab8': lucideHandshake,
+	'/esco/skill/0a2d70ee-d435-4965-9e96-702b2fb65740': lucideBinoculars,
+	'/esco/skill/c73521be-c039-4e22-b037-3b01b3f6f9d9': lucideHandHeart,
+	'/esco/skill/869fc2ce-478f-4420-8766-e1f02cec4fb2': lucideSquarePen,
+	'/esco/skill/243eb885-07c7-4b77-ab9c-827551d83dc4': lucideMonitorCheck,
+	'/esco/skill/03e0b95b-67d1-457a-b3f7-06c407cf6bec': lucideTruck,
+	'/esco/skill/2ae39fc8-0f1b-4284-9e73-3f2739471f63': lucideHardHat,
+	'/esco/skill/9b8bb484-dcba-49af-8ae0-cfe8b6e9ed45': lucideDrill,
+	'/esco/isced-f/00': lucideBrain,
+	'/esco/isced-f/01': lucideGraduationCap,
+	'/esco/isced-f/02': lucideDrama,
+	'/esco/isced-f/03': lucideNewspaper,
+	'/esco/isced-f/04': lucideScale,
+	'/esco/isced-f/05': lucideAtom,
+	'/esco/isced-f/06': lucideBinary,
+	'/esco/isced-f/07': lucideBrainCircuit,
+	'/esco/isced-f/08': lucideSprout,
+	'/esco/isced-f/09': lucideAmbulance,
+	'/esco/isced-f/10': lucidePhoneCall,
+	'/esco/skill/43f425aa-f45d-4bb4-a200-6f82fa211b66': lucideMessageSquare,
+	'/esco/skill/e434e71a-f068-44ed-8059-d1af9eb592d7': lucideLanguages,
+	'future-skills': lucideRocket,
+	bne: lucideEarth,
+};
 
 @Component({
 	selector: 'recipient-skill-visualisation',
@@ -112,7 +176,7 @@ export class RecipientSkillVisualisationComponent implements OnChanges {
 		this.hasFutureSkills = false;
 
 		// DEBUG: add your own future skill for testing
-		// futureSkills['escoMap']['/esco/skill/1565b401-1754-4b07-8f1a-eb5869e64d95'] = 'lernkompetenz';
+		// futureSkills['escoMap']['/esco/skill/2c6439c2-77a5-436a-b222-5e12d435c3eb'] = 'lernkompetenz';
 
 		skills.forEach((s) => {
 			const breadcrumbs = s.breadcrumb_paths;
@@ -238,27 +302,33 @@ export class RecipientSkillVisualisationComponent implements OnChanges {
 		// add nodes that either are topAncestors or have a topAncestor or are in future skills
 		this.d3data.nodes = Array.from(this.skillTree.values()).filter((s) => {
 			const intersection = <T>(a: Set<T>, b: Set<T>): Set<T> => new Set([...a].filter((x) => b.has(x)));
+			const intersections = intersection(s.ancestors, topAncestors);
 			return (
 				topAncestors.has(s.id) || // is topAncestor
 				(s.ancestors.size > 0 && // is not top level (should also be depth == 1)
-					intersection(s.ancestors, topAncestors).size >= s.ancestors.size) // is beneath a topAncestor
+					intersections.size >= 1) // is beneath at least one topAncestor
 			);
 		});
+		const d3NodeIds = this.d3data.nodes.map((n) => n.id);
 
 		this.d3data.links = [];
-		this.d3data.nodes.forEach((v) => {
-			if (v.leaf) {
-				for (let a of v.ancestors.values()) {
-					this.skillTree.get(a).leafs.push(v.id);
+		this.d3data.nodes.forEach((node) => {
+			if (node.leaf) {
+				for (let ancestor of node.ancestors.values()) {
+					this.skillTree.get(ancestor).leafs.push(node.id);
 				}
 			}
-			v.parents.forEach((p) => {
-				if (this.skillTree.get(p)) {
-					this.skillTree.get(p).children.push(v.id);
-					this.d3data.links.push({
-						source: v.id,
-						target: p,
-					});
+			node.parents.forEach((parentId) => {
+				const parent = this.skillTree.get(parentId);
+				if (parent) {
+					// parents might have been removed in topancestors filter
+					if (d3NodeIds.includes(parent.id)) {
+						parent.children.push(node.id);
+						this.d3data.links.push({
+							source: node.id,
+							target: parentId,
+						});
+					}
 				}
 			});
 		});
@@ -266,6 +336,12 @@ export class RecipientSkillVisualisationComponent implements OnChanges {
 
 	getTopLevelSkills() {
 		return this.d3data.nodes.filter((d) => d.depth == 1);
+	}
+
+	getTopLevelSkillsSorted() {
+		const topLevelSkills = this.getTopLevelSkills();
+		const maxStudyLoad = topLevelSkills.reduce((current, d) => Math.max(current, d.studyLoad), 0);
+		return topLevelSkills.sort((a, b) => b.studyLoad / maxStudyLoad - a.studyLoad / maxStudyLoad);
 	}
 
 	getAllDescendantsForTopLevelSkill(topLevelSkill: ExtendedApiSkill): ExtendedApiSkill[] {
@@ -298,7 +374,7 @@ export class RecipientSkillVisualisationComponent implements OnChanges {
 		const width = this.mobile ? 540 : 1144;
 		const height = width;
 
-		const nodeBaseSize = this.showSingleNode ? 100 : 50;
+		const nodeBaseSize = this.showSingleNode ? 100 : 60;
 		const nodeMaxAdditionalSize = 100;
 		const topLevelSkills = this.getTopLevelSkills();
 		const maxStudyLoad = topLevelSkills.reduce((current, d) => Math.max(current, d.studyLoad), 0);
@@ -394,7 +470,7 @@ export class RecipientSkillVisualisationComponent implements OnChanges {
 						return ((d as ExtendedApiSkill).depth - 1) * (nodeBaseSize * 3);
 					})
 					.strength((d) => {
-						return (d as ExtendedApiSkill).depth == 1 ? 2 : 0.1;
+						return (d as ExtendedApiSkill).depth == 1 ? 3 : 0.1;
 					}),
 			);
 
@@ -445,7 +521,7 @@ export class RecipientSkillVisualisationComponent implements OnChanges {
 			.append('xhtml:div')
 			// DEBUG: output studyload if not 0
 			// .text(d => { return d.name.replace("/", " / ") + (d.studyLoad !== 0 ? ` (${d.studyLoad} min)` : '') })
-			.attr('style', (d) => `font-size: ${nodeRadius(d) * 0.2}px;`)
+			.attr('style', (d) => `font-size: ${nodeRadius(d) * 0.175}px;`)
 			.attr('class', 'name');
 
 		if (this.mobile) {
@@ -456,25 +532,35 @@ export class RecipientSkillVisualisationComponent implements OnChanges {
 				sortedNodes.forEach((node, index) => {
 					nodeRankMap.set(node.id, index + 1);
 				});
-				nodeText.text((d) => {
-					const rank = nodeRankMap.get(d.id);
-					return this.padStart(rank);
-				});
+				nodeText.html(
+					(d) => `
+					<div class="studyload__wrapper">
+						${skillIconMap[d.id] ? skillIconMap[d.id] : ''}
+						${this.padStart(nodeRankMap.get(d.id))}
+					</div>
+				`,
+				);
 			} else {
-				nodeText.text((_, i) => {
-					return this.selectedNodeNumber;
-				});
-
-				nodeText.append('xhtml:div').text((d) => {
-					return d.name.replace('/', ' / ');
-				});
+				nodeText.html(
+					(d) => `
+					<div class="studyload__wrapper">
+						${skillIconMap[d.id] ? skillIconMap[d.id] : ''}
+						${this.selectedNodeNumber}
+					</div>
+				`,
+				);
 			}
 		} else {
 			nodeText.html((d) => {
 				if (d.depth == 1) {
 					const p = new HourPipe();
 					const studyLoadNode = `<span>${p.transform(d.studyLoad)} h</span>`;
-					return `<div class="studyload__wrapper"><div>${d.name.replace('/', ' / ')}</div><div class="studyload">${studyLoadNode}</div></div>`;
+					return `
+					<div class="studyload__wrapper">
+					${skillIconMap[d.id] ? skillIconMap[d.id] : ''}
+						<div>${d.name.replace('/', ' / ')}</div>
+						<div class="studyload">${lucideClockFading}${studyLoadNode}</div>
+					</div>`;
 				}
 
 				return `<div>${d.name.replace('/', ' / ')}</div>`;
