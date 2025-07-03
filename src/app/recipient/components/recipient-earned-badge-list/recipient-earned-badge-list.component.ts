@@ -551,6 +551,7 @@ export class RecipientEarnedBadgeListComponent
 	}
 
 	private groupCompetencies(badges) {
+		this.totalStudyTime = 0;
 		let groupedCompetencies: EscoCompetencies = {};
 		let newGroupedCompetencies: EscoCompetencies = {};
 		this.groupedUserCompetencies = {};
@@ -569,7 +570,9 @@ export class RecipientEarnedBadgeListComponent
 					groupedCompetencies[key] = { ...competency };
 					groupedCompetencies[key].lastReceived = badge.issueDate;
 				}
-				this.totalStudyTime += competency.studyLoad;
+				if (competency.studyLoad) {
+					this.totalStudyTime += competency.studyLoad;
+				}
 			});
 		});
 
