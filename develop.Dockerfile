@@ -4,9 +4,6 @@ WORKDIR /app
 
 COPY . .
 
-RUN apt-get clean all && apt-get update && apt-get upgrade -y
-RUN apt-get install -y git
-
 RUN npm ci
 
 RUN npm run build:develop
