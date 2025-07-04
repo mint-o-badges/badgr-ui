@@ -58,7 +58,7 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 	badges = signal<BadgeClass[]>([]);
 
 	/** The tag selected for filtering {@link badges} into {@link filteredBadges}. */
-	selectedTags = signal<ITag[] | null>(null);
+	selectedTags = signal<ITag['value'][] | null>(null);
 
 	/** A search string that is used to filter {@link badges} into {@link filteredBadges}. */
 	searchQuery = signal<string>('');
@@ -70,17 +70,17 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 	currentPage = signal<number>(1);
 
 	/** The number of badges shown per page. */
-	badgesPerPage = signal<number>(30);
+	badgesPerPage = signal<number>(3);
 
 	/** Determines whether a legend that explains badge categories is shown. */
 	showLegend = signal<boolean>(false);
 
 	/**
-	 * A subset of {@link badges} filtered using the values of {@link searchQuery}, {@link sortOption}.
+	 * A subset of {@link badges} filtered using the values of {@link searchQuery}, {@link sortOption} and {@link selectedTags}.
 	 * When no filters are set, this is equivalent to {@link badges}.
 	 */
 	filteredBadges = computed<BadgeClass[]>(() =>
-		this.filterBadges(this.badges(), this.searchQuery(), this.sortOption()),
+		this.filterBadges(this.badges(), this.searchQuery(), this.sortOption(), this.selectedTags()),
 	);
 
 	/** The total number of pages taking into account the number of badges per page. */
@@ -188,6 +188,7 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 
 	onSearchQueryChange(query: string) {
 		this.searchQuery.set(query);
+		this.currentPage.set(1);
 	}
 
 	/**
@@ -224,11 +225,19 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		});
 	}
 
-	private filterBadges(badges: BadgeClass[], query: string, sortOption) {
+	private filterBadges(
+		badges: BadgeClass[],
+		query: string,
+		sortOption: string | null,
+		selectedTags: ITag['value'][] | null,
+	) {
 		const filtered = badges
 			.filter(this.badgeMatcher(query))
 			.filter(
-				(b) => !this.tagsControl.value?.length || this.tagsControl.value.some((tag) => b.tags.includes(tag)),
+				(b) =>
+					selectedTags === null ||
+					selectedTags.length === 0 ||
+					selectedTags.some((tag) => b.tags.includes(tag)),
 			)
 			.filter((b) => !b.apiModel.source_url);
 
