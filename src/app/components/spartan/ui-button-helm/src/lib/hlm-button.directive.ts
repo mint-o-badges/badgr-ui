@@ -21,6 +21,7 @@ export const buttonVariants = cva(
 				link: 'tw-underline-offset-4 tw-underline tw-text-link',
 				green: 'tw-bg-green tw-font-bold tw-text-purple tw-border-solid tw-border-purple hover:tw-bg-green-400 tw-border-solid tw-border-green hover:tw-border-green-400',
 				white: 'tw-bg-white tw-text-oebblack tw-border-solid tw-border-purple !tw-font-normal',
+				ghost: '',
 				purple100:
 					'tw-bg-purple-100 tw-text-purple tw-border-solid tw-border-purple !tw-font-bold tw-flex tw-justify-between tw-text-left',
 				inherit: 'tw-bg-inherit',
