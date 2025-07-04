@@ -29,6 +29,10 @@ export class LearningPath extends ManagedEntity<ApiLearningPath, LearningPathRef
 		return this.apiModel.badges;
 	}
 
+	get required_badges_count(): number {
+		return this.apiModel.required_badges_count;
+	}
+
 	get issuer_id() {
 		return this.apiModel.issuer_id;
 	}
@@ -58,6 +62,10 @@ export class LearningPath extends ManagedEntity<ApiLearningPath, LearningPathRef
 
 	get issuerOwnerAcceptedTos(): boolean {
 		return this.apiModel.issuerOwnerAcceptedTos;
+	}
+
+	get activated(): boolean {
+		return this.apiModel.activated;
 	}
 
 	constructor(

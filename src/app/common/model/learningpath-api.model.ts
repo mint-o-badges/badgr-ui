@@ -13,6 +13,8 @@ export interface ApiLearningPathForCreation {
 	tags: string[];
 	participationBadge_id: string;
 	badges: Array<{ slug: string; order: number }>;
+	required_badges_count: number;
+	activated: boolean;
 }
 
 export interface ApiLearningPathForEditing {
@@ -24,6 +26,8 @@ export interface ApiLearningPathForEditing {
 	participationBadge_id: string;
 	participationBadge_image: string;
 	badges: Array<{ slug: string; order: number }>;
+	required_badges_count: number;
+	activated: boolean;
 }
 
 export interface ApiLearningPath {
@@ -37,12 +41,14 @@ export interface ApiLearningPath {
 	description: string;
 	tags: string[];
 	badges: Array<{ badge: any; order: number }>;
+	required_badges_count: number;
 	completed_badges?: Array<any>;
 	progress?: number | null;
 	completed_at?: Date | null;
 	created_at?: Date | null;
 	requested?: boolean;
 	issuerOwnerAcceptedTos?: boolean;
+	activated: boolean;
 }
 
 export interface ApiLearningPathParticipant {
