@@ -6,10 +6,11 @@ import { NgClass, NgIf } from '@angular/common';
 import { UrlValidator } from '../common/validators/url.validator';
 import { HlmPDirective } from './spartan/ui-typography-helm/src/lib/hlm-p.directive';
 import { TypedFormGroup } from '../common/util/typed-forms';
+import { NgIcon } from '@ng-icons/core';
 
 @Component({
 	selector: 'oeb-input',
-	imports: [HlmInputDirective, HlmPDirective, OebInputErrorComponent, NgIf, NgClass, ReactiveFormsModule],
+	imports: [HlmInputDirective, HlmPDirective, OebInputErrorComponent, NgIf, NgClass, ReactiveFormsModule, NgIcon],
 	styleUrls: ['./input.component.scss'],
 	template: ` <div
 		[ngClass]="{ 'tw-my-6 md:tw-mt-7': !noTopMargin, 'tw-opacity-50 tw-pointer-events-none': readonly }"
@@ -34,7 +35,7 @@ import { TypedFormGroup } from '../common/util/typed-forms';
 
 		<div class="tw-relative tw-w-full">
 			<input
-				*ngIf="fieldType != 'textarea'"
+				*ngIf="fieldType != 'textarea' && fieldType != 'password'"
 				(focus)="cacheControlState()"
 				(keypress)="handleKeyPress($event)"
 				(keyup)="handleKeyUp($event)"
@@ -66,6 +67,29 @@ import { TypedFormGroup } from '../common/util/typed-forms';
 				[ngClass]="{ 'tw-min-h-20': size === 'default', 'tw-min-h-32': size === 'lg' }"
 				hlmInput
 			></textarea>
+			<div class="tw-relative tw-flex tw-items-center" *ngIf="fieldType == 'password'">
+				<input
+					(focus)="cacheControlState()"
+					(keypress)="handleKeyPress($event)"
+					(keyup)="handleKeyUp($event)"
+					(change)="postProcessInput()"
+					[formControl]="control"
+					[placeholder]="placeholder || ''"
+					[attr.maxlength]="maxchar"
+					[attr.max]="max"
+					[type]="showPassword ? 'text' : 'password'"
+					[readonly]="readonly"
+					#textInput
+					class="tw-w-full tw-border-solid tw-border-purple tw-bg-white"
+					hlmInput
+				/>
+				<ng-icon
+					(click)="togglePasswordVisibility()"
+					class="tw-absolute tw-right-3 tw-text-purple"
+					hlm
+					[name]="showPassword ? 'lucideEyeOff' : 'lucideEye'"
+				></ng-icon>
+			</div>
 			<oeb-input-error
 				class="tw-text-red tw-pl-[3px] tw-absolute tw-top-full tw-w-full"
 				*ngIf="isErrorState"
@@ -104,6 +128,12 @@ export class OebInputComponent {
 	@Input() errorGroup: TypedFormGroup;
 
 	remainingCharactersNum = this.maxchar;
+
+	showPassword = false;
+
+	togglePasswordVisibility(): void {
+		this.showPassword = !this.showPassword;
+	}
 
 	get hasFocus(): boolean {
 		return document.activeElement === this.inputElement;
