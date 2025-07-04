@@ -58,13 +58,13 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 	badges = signal<BadgeClass[]>([]);
 
 	/** The tag selected for filtering {@link badges} into {@link filteredBadges}. */
-	selectedTags = signal<ITag['value'][] | null>(null);
+	selectedTags = signal<ITag['value'][]>([]);
 
 	/** A search string that is used to filter {@link badges} into {@link filteredBadges}. */
 	searchQuery = signal<string>('');
 
 	/** A sorting option to sort {@link badges} into {@link filteredBadges}. */
-	sortOption = signal<string | null>(null);
+	sortOption = signal<string>('');
 
 	/** The 1-indexed current page the component sits on. */
 	currentPage = signal<number>(1);
@@ -168,7 +168,7 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		super.ngOnInit();
 
 		this.tagsControl.valueChanges.subscribe((value) => {
-			this.selectedTags.set(value);
+			this.selectedTags.set(value ?? []);
 			this.currentPage.set(1);
 		});
 
@@ -225,23 +225,13 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		});
 	}
 
-	private filterBadges(
-		badges: BadgeClass[],
-		query: string,
-		sortOption: string | null,
-		selectedTags: ITag['value'][] | null,
-	) {
+	private filterBadges(badges: BadgeClass[], query: string, sortOption: string, selectedTags: ITag['value'][]) {
 		const filtered = badges
 			.filter(this.badgeMatcher(query))
-			.filter(
-				(b) =>
-					selectedTags === null ||
-					selectedTags.length === 0 ||
-					selectedTags.some((tag) => b.tags.includes(tag)),
-			)
+			.filter((b) => selectedTags.length === 0 || selectedTags.some((tag) => b.tags.includes(tag)))
 			.filter((b) => !b.apiModel.source_url);
 
-		if (sortOption !== null) applySorting(filtered, sortOption);
+		if (sortOption.length > 0) applySorting(filtered, sortOption);
 		return filtered;
 	}
 
