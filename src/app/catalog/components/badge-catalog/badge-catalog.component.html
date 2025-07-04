@@ -7,7 +7,7 @@
 				<div class="tw-z-10 tw-relative">
 					<h1 hlmH1 class="tw-text-oebblack">{{ 'Badge.catalogHeadline' | translate }}</h1>
 					<h1 hlmH1 class="lg:tw-pl-[10%] tw-font-black tw-text-purple">
-						<span [countUp]="badges.length">{{ badges.length }}</span>
+						<span [countUp]="badges().length">{{ badges().length }}</span>
 						{{ badgesPluralWord }} in
 						<span [countUp]="issuers.length">{{ issuers.length }}</span>
 						{{ issuersPluralWord }}
@@ -16,7 +16,7 @@
 			</div>
 		</div>
 
-		<app-badge-legend *ngIf="showLegend" (closed)="closeLegend()"></app-badge-legend>
+		<app-badge-legend *ngIf="showLegend()" (closed)="closeLegend()"></app-badge-legend>
 
 		<div class="tw-relative">
 			<section class="">

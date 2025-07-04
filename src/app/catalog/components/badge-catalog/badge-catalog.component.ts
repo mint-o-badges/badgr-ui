@@ -1,9 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from '../../../common/services/message.service';
-//import {BadgeClassManager} from '../../services/badgeclass-manager.service';
 import { Issuer } from '../../../issuer/models/issuer.model';
-//import {BadgeClass} from '../../models/badgeclass.model';
 import { Title } from '@angular/platform-browser';
 import { preloadImageURL } from '../../../common/util/file-util';
 import { AppConfigService } from '../../../common/app-config.service';
@@ -57,24 +55,15 @@ import { SortPipe } from '../../../common/pipes/sortPipe';
 	],
 })
 export class BadgeCatalogComponent extends BaseRoutableComponent implements OnInit {
-	readonly issuerPlaceholderSrc = preloadImageURL('../../../../breakdown/static/images/placeholderavatar-issuer.svg');
-	readonly noIssuersPlaceholderSrc =
-		'../../../../assets/@concentricsky/badgr-style/dist/images/image-empty-issuer.svg';
-
-	Array = Array;
-
-	state;
-
-	badges: BadgeClass[] = null;
-	badgeResults: BadgeClass[] = null;
-	badgeResultsByIssuer: MatchingBadgeIssuer[] = [];
-	badgeResultsByCategory: MatchingBadgeCategory[] = [];
-
-	filteredBadges: BadgeClass[] = null;
+	badges = signal<BadgeClass[] | null>(null);
+	badgeResults = computed<BadgeClass[]>(() => this.getBadgeResults(this.badges()));
+	badgeResultsByIssuer = computed<MatchingBadgeIssuer[]>(() => this.getBadgeResultsByIssuer());
+	badgeResultsByCategory = computed<MatchingBadgeIssuer[]>(() => this.getBadgeResultsByCategory());
+	filteredBadges = computed<BadgeClass[] | null>(() => this.filterBadges());
+	showLegend = signal<boolean>(false);
 
 	badgesLoaded: Promise<unknown>;
 
-	showLegend = false;
 	tags: string[] = [];
 	issuers: string[] = [];
 	selectedTag: string = null;
@@ -97,13 +86,6 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 	previousLink: string;
 
 	sortOption: string | null = null;
-
-	get theme() {
-		return this.configService.theme;
-	}
-	get features() {
-		return this.configService.featuresConfig;
-	}
 
 	plural = {
 		issuer: {
@@ -205,14 +187,16 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		return new Promise(async (resolve, reject) => {
 			this.badgeClassService.allPublicBadges$.subscribe(
 				async (badges) => {
-					this.badges = badges
-						.filter((badge) => badge.issuerVerified && badge.issuerOwnerAcceptedTos)
-						.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+					this.badges.set(
+						badges
+							.filter((badge) => badge.issuerVerified && badge.issuerOwnerAcceptedTos)
+							.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime()),
+					);
 
 					this.totalPages = Math.ceil(this.badges.length / this.badgesPerPage);
 					this.updatePaginatedResults();
 
-					this.badges.forEach((badge) => {
+					this.badges().forEach((badge) => {
 						this.tags = this.tags.concat(badge.tags);
 						this.issuers = badge.issuerVerified ? this.issuers.concat(badge.issuer) : this.issuers;
 					});
@@ -299,70 +283,8 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		};
 	}
 
-	private updateResults() {
-		let that = this;
-		// Clear Results
-		this.badgeResults = [];
-		this.badgeResultsByIssuer = [];
-		const badgeResultsByIssuerLocal = {};
-		this.badgeResultsByCategory = [];
-		const badgeResultsByCategoryLocal = {};
-
-		var addBadgeToResultsByIssuer = function (item) {
-			let issuerResults = badgeResultsByIssuerLocal[item.issuerName];
-
-			if (!issuerResults) {
-				issuerResults = badgeResultsByIssuerLocal[item.issuerName] = new MatchingBadgeIssuer(
-					item.issuerName,
-					'',
-				);
-
-				// append result to the issuerResults array bound to the view template.
-				that.badgeResultsByIssuer.push(issuerResults);
-			}
-
-			issuerResults.addBadge(item);
-			return true;
-		};
-		var addBadgeToResultsByCategory = function (item) {
-			let itemCategory =
-				item.extension && item.extension['extensions:CategoryExtension']
-					? item.extension['extensions:CategoryExtension'].Category
-					: 'noCategory';
-			let categoryResults = badgeResultsByCategoryLocal[itemCategory];
-
-			if (!categoryResults) {
-				categoryResults = badgeResultsByCategoryLocal[itemCategory] = new MatchingBadgeCategory(
-					itemCategory,
-					'',
-				);
-
-				// append result to the categoryResults array bound to the view template.
-				that.badgeResultsByCategory.push(categoryResults);
-			}
-
-			categoryResults.addBadge(item);
-
-			return true;
-		};
-		this.badges
-			.filter(this.badgeMatcher(this.searchQuery))
-			// .filter((badge) => !this.tagsControl.value?.length || this.tagsControl.value.every(tag => badge.tags.includes(tag))) // badges have to match all tags
-			.filter(
-				(badge) =>
-					!this.tagsControl.value?.length || this.tagsControl.value.some((tag) => badge.tags.includes(tag)),
-			) // badges have to match at least one tag
-			.filter((i) => !i.apiModel.source_url)
-			.forEach((item) => {
-				that.badgeResults.push(item);
-				addBadgeToResultsByIssuer(item);
-				addBadgeToResultsByCategory(item);
-			});
-	}
-
 	private updatePaginatedResults() {
 		let that = this;
-		this.badgeResults = [];
 		this.badgeResultsByIssuer = [];
 		const badgeResultsByIssuerLocal = {};
 		this.badgeResultsByCategory = [];
@@ -402,7 +324,7 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 			return true;
 		};
 
-		this.filteredBadges = this.badges
+		this.filteredBadges = this.badges()
 			.filter(this.badgeMatcher(this.searchQuery))
 			.filter(
 				(badge) =>
@@ -434,11 +356,11 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 	// }
 
 	openLegend() {
-		this.showLegend = true;
+		this.showLegend.set(true);
 	}
 
 	closeLegend() {
-		this.showLegend = false;
+		this.showLegend.set(false);
 	}
 
 	filterByTag(tag) {
