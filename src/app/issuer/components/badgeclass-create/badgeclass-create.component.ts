@@ -13,13 +13,24 @@ import { BadgrApiFailure } from '../../../common/services/api-failure';
 import { CommonDialogsService } from '../../../common/services/common-dialogs.service';
 import { BadgeClass } from '../../models/badgeclass.model';
 import { AppConfigService } from '../../../common/app-config.service';
-import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
+import { LinkEntry, BgBreadcrumbsComponent } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { BadgeClassManager } from '../../services/badgeclass-manager.service';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
+import { NgIf } from '@angular/common';
+import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
+import { BadgeClassEditFormComponent } from '../badgeclass-edit-form/badgeclass-edit-form.component';
 
 @Component({
 	templateUrl: 'badgeclass-create.component.html',
-	standalone: false,
+	imports: [
+		BgBreadcrumbsComponent,
+		HlmH1Directive,
+		NgIf,
+		BgAwaitPromises,
+		BadgeClassEditFormComponent,
+		TranslatePipe,
+	],
 })
 export class BadgeClassCreateComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	issuerSlug: string;
@@ -50,7 +61,7 @@ export class BadgeClassCreateComponent extends BaseAuthenticatedRoutableComponen
 		protected badgeClassService: BadgeClassManager,
 		private configService: AppConfigService,
 		protected dialogService: CommonDialogsService,
-		private translate: TranslateService,
+		public translate: TranslateService,
 	) {
 		super(router, route, sessionService);
 		this.translate.get('Issuer.createBadge').subscribe((str) => {

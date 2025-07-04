@@ -16,8 +16,7 @@ describe('FormFieldRadio', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			declarations: [FormFieldRadio],
-			imports: [RouterTestingModule, ...COMMON_IMPORTS],
+			imports: [RouterTestingModule, ...COMMON_IMPORTS, FormFieldRadio],
 			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		}).compileComponents();

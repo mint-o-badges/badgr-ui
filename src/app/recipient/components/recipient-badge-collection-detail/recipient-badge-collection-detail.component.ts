@@ -12,20 +12,50 @@ import { SessionService } from '../../../common/services/session.service';
 import { ShareSocialDialogOptions } from '../../../common/dialogs/share-social-dialog/share-social-dialog.component';
 import { addQueryParamsToUrl } from '../../../common/util/url-util';
 import { AppConfigService } from '../../../common/app-config.service';
-import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
+import { LinkEntry, BgBreadcrumbsComponent } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { MenuItem } from '../../../common/components/badge-detail/badge-detail.component.types';
 import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
 import { DialogComponent } from '../../../components/dialog.component';
 import { RecipientBadgeInstance } from '../../models/recipient-badge.model';
 import { BrnDialogRef } from '@spartan-ng/brain/dialog';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 import { ShareDialogTemplateComponent } from '../../../common/dialogs/oeb-dialogs/share-dialog-template.component';
 import { PdfService } from '../../../common/services/pdf.service';
+import { FormMessageComponent } from '../../../common/components/form-message.component';
+import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
+import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
+import { OebButtonComponent } from '../../../components/oeb-button.component';
+import { OebDropdownComponent } from '../../../components/oeb-dropdown.component';
+import { SvgIconComponent } from '../../../common/components/svg-icon.component';
+import { HlmSwitchComponent } from '../../../components/spartan/ui-switch-helm/src/lib/hlm-switch.component';
+import { FormsModule } from '@angular/forms';
+import { NgIf, NgFor } from '@angular/common';
+import { BgBadgecard } from '../../../common/components/bg-badgecard';
+import { NgIcon } from '@ng-icons/core';
+import { HlmIconDirective } from '../../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
 
 @Component({
 	selector: 'recipient-earned-badge-detail',
 	templateUrl: 'recipient-badge-collection-detail.component.html',
-	standalone: false,
+	imports: [
+		FormMessageComponent,
+		BgBreadcrumbsComponent,
+		BgAwaitPromises,
+		HlmH1Directive,
+		OebButtonComponent,
+		OebDropdownComponent,
+		SvgIconComponent,
+		HlmSwitchComponent,
+		FormsModule,
+		NgIf,
+		NgFor,
+		BgBadgecard,
+		NgIcon,
+		HlmIconDirective,
+		TranslateDirective,
+		RecipientBadgeSelectionDialog,
+		TranslatePipe,
+	],
 })
 export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	readonly badgeLoadingImageUrl = '../../../../breakdown/static/images/badge-loading.svg';
@@ -96,7 +126,7 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 			.then(([list]) => {
 				this.collection = list.entityForSlug(this.collectionSlug);
 				this.menuItems[1].disabled = this.collection.badgeEntries.length === 0;
-				this.translate.get('BadgeCollection.myCollections').subscribe((str) => {
+				this.translate.get('General.collections').subscribe((str) => {
 					this.crumbs = [
 						{ title: str, routerLink: ['/recipient/badges'], queryParams: { tab: 'collections' } },
 						{ title: this.collection.name, routerLink: ['/collection/' + this.collection.slug] },
@@ -129,6 +159,14 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 		if (this.dialogRef) {
 			this.dialogRef.close('continue');
 		}
+	}
+
+	badgeEntryBySlug(index: number, entry: RecipientBadgeCollectionEntry) {
+		return entry.badgeSlug;
+	}
+
+	badgeIssueDate(entry: RecipientBadgeCollectionEntry) {
+		return new Date(entry.badge.apiModel.json.issuedOn);
 	}
 
 	removeBadge(badgeSlug: string) {

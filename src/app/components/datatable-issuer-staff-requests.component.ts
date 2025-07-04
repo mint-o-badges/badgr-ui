@@ -1,12 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-import { HlmIconModule } from './spartan/ui-icon-helm/src';
+
 import { RouterModule } from '@angular/router';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { HlmTableModule } from './spartan/ui-table-helm/src';
 import { OebButtonComponent } from './oeb-button.component';
 
 import { ApiStaffRequest } from '../issuer/staffrequest-api.model';
+import { HlmIconModule } from '@spartan-ng/ui-icon-helm';
 
 @Component({
 	selector: 'issuer-staff-requests-datatable',
@@ -35,13 +36,13 @@ import { ApiStaffRequest } from '../issuer/staffrequest-api.model';
 				<!-- Name Column -->
 				<hlm-th class="md:tw-w-[25%] tw-w-[33%] tw-px-4 tw-flex tw-items-center">
 					<span class="tw-text-oebblack tw-cursor-pointer tw-truncate tw-font-normal tw-text-lg">
-						{{ request.user.first_name }} {{ request.user.last_name }}
+						{{ request.user.firstName }} {{ request.user.lastName }}
 					</span>
 				</hlm-th>
 
 				<!-- Email Column -->
 				<hlm-th class="md:tw-w-[25%] tw-w-[33%] tw-px-4 tw-text-center tw-flex tw-items-center">
-					<p class="tw-font-normal tw-truncate tw-text-lg tw-text-oebblack">{{ request.user.email }}</p>
+					<p class="tw-font-normal tw-truncate tw-text-lg tw-text-oebblack">{{ request.user.emails }}</p>
 				</hlm-th>
 
 				<!-- Requested On Column -->

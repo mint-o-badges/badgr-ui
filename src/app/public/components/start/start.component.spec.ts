@@ -12,12 +12,12 @@ describe('StartComponent', () => {
 
 	beforeEach(waitForAsync(() => {
 		TestBed.configureTestingModule({
-			declarations: [StartComponent],
 			imports: [
 				...COMMON_IMPORTS,
 				BadgrCommonModule,
 				RouterTestingModule,
 				TranslateTestingModule.withTranslations('de', {}),
+				StartComponent,
 			],
 			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
 			teardown: { destroyAfterEach: false },

@@ -20,8 +20,7 @@ describe('MarkdownDisplay', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			declarations: [MarkdownDisplay, BgMarkdownComponent],
-			imports: [RouterTestingModule, CommonModule, ...COMMON_IMPORTS],
+			imports: [RouterTestingModule, CommonModule, ...COMMON_IMPORTS, MarkdownDisplay, BgMarkdownComponent],
 			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		}).compileComponents();

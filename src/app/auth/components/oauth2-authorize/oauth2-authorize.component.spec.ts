@@ -50,8 +50,7 @@ describe('OAuth2AuthorizeComponent', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			imports: [RouterTestingModule, BadgrCommonModule, ...COMMON_IMPORTS],
-			declarations: [OAuth2AuthorizeComponent],
+			imports: [RouterTestingModule, BadgrCommonModule, ...COMMON_IMPORTS, OAuth2AuthorizeComponent],
 			providers: [Title, ...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		}).compileComponents();

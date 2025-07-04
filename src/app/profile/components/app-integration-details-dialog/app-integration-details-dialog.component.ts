@@ -1,6 +1,8 @@
 import { Component, ElementRef, Renderer2, Output, EventEmitter, Input } from '@angular/core';
 import { BaseDialog } from '../../../common/dialogs/base-dialog';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+import { SvgIconComponent } from '../../../common/components/svg-icon.component';
+import { NgIf } from '@angular/common';
 
 @Component({
 	selector: 'app-integration-details-dialog',
@@ -53,7 +55,7 @@ import { TranslateService } from '@ngx-translate/core';
 			</div>
 		</div>
 	</dialog>`,
-	standalone: false,
+	imports: [SvgIconComponent, NgIf, TranslatePipe],
 })
 export class AppIntegrationDetailsDialog extends BaseDialog {
 	@Output() tokenDeleted = new EventEmitter();

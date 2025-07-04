@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class NavigationService {
 	currentRouteData: BadgrRouteData = {};
 	browserRefresh = false;

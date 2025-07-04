@@ -1,5 +1,14 @@
 import { Component, EventEmitter, Input, HostBinding, Output } from '@angular/core';
 import { LearningPathApiService } from '../services/learningpath-api.service';
+import { RouterLink } from '@angular/router';
+import { NgIf, NgFor, SlicePipe } from '@angular/common';
+import { NgIcon } from '@ng-icons/core';
+import { HlmIconDirective } from '../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
+import { BgImageStatusPlaceholderDirective } from '../directives/bg-image-status-placeholder.directive';
+import { HlmPDirective } from '../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
+import { OebProgressComponent } from '../../components/oeb-progress.component';
+import { TranslatePipe } from '@ngx-translate/core';
+import { HourPipe } from '../pipes/hourPipe';
 
 type MatchOrProgressType = { match?: string; progress?: number };
 
@@ -64,7 +73,7 @@ type MatchOrProgressType = { match?: string; progress?: number };
 							<div
 								class="tw-px-[11.55px] tw-py-[3.85px] tw-bg-lightpurple tw-rounded-[95px] tw-inline-block"
 							>
-								<span class="tw-text-sm tw-text-purple">{{ this._matchOrProgress?.match }} Badges</span>
+								<span class="tw-text-sm tw-text-purple">{{ this.isMatch }} Badges</span>
 							</div>
 						</div>
 						<ng-template #progressBar>
@@ -83,7 +92,7 @@ type MatchOrProgressType = { match?: string; progress?: number };
 							<div class="tw-absolute tw-w-full tw-text-left">
 								<span class="tw-ml-2 tw-text-sm tw-text-purple"
 									>Micro Degree <span *ngIf="!completed">{{ progressValue }}%</span>
-									{{ 'LearningPath.finished' | translate | lowercase }}</span
+									{{ 'LearningPath.finished' | translate }}</span
 								>
 							</div>
 						</ng-template>
@@ -100,13 +109,25 @@ type MatchOrProgressType = { match?: string; progress?: number };
 					</div>
 					<div class="tw-flex tw-flex-row tw-gap-4 tw-text-[#6B7280] tw-text-sm tw-mt-6 tw-items-end">
 						<ng-icon hlm name="lucideClock" />
-						<span>{{ studyLoad | hourPipe }} {{ 'RecBadge.hours' | translate | lowercase }}</span>
+						<span>{{ studyLoad | hourPipe }} {{ 'RecBadge.hours' | translate }}</span>
 					</div>
 				</div>
 			</div>
 		</a>
 	`,
-	standalone: false,
+	imports: [
+		RouterLink,
+		NgIf,
+		NgIcon,
+		HlmIconDirective,
+		BgImageStatusPlaceholderDirective,
+		NgFor,
+		HlmPDirective,
+		OebProgressComponent,
+		SlicePipe,
+		TranslatePipe,
+		HourPipe,
+	],
 })
 export class BgLearningPathCard {
 	readonly badgeLoadingImageUrl = '../../../breakdown/static/images/badge-loading.svg';

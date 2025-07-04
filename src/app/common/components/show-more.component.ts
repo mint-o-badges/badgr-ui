@@ -18,7 +18,6 @@ import { AfterViewChecked, Component, ElementRef, Input, ViewChild } from '@angu
 			<div class="showmore-x-buttoninside">{{ isOpen ? 'Show Less' : 'Show More' }}</div>
 		</button>
 	`,
-	standalone: false,
 })
 export class ShowMore implements AfterViewChecked {
 	@Input()

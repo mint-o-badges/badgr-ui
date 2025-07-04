@@ -8,7 +8,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class QrCodeApiService extends BaseHttpApiService {
 	constructor(
 		protected loginService: SessionService,

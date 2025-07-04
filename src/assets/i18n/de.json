@@ -116,7 +116,7 @@
 		"appIntegrations": "App Integrationen",
 		"openMenu": "Menü öffnen",
 		"logout": "Ausloggen",
-		"myProfile": "Mein Profil",
+		"myProfile": "Mein Account",
 		"faq": "FAQ"
 	},
 	"Start": {
@@ -373,10 +373,10 @@
 		"noCategory": "Keine Kategorie",
 		"noIssuers": "keiner Institution",
 		"oneIssuer": "einer Institution",
-		"multiIssuers": "# Institutionen",
+		"multiIssuers": "Institutionen",
 		"noBadges": "Keine Badges",
 		"oneBadge": "1 Badge",
-		"multiBadges": "# Badges",
+		"multiBadges": "Badges",
 		"noRecipients": "Keine Empfänger:in",
 		"oneRecipient": "1 Empfänger",
 		"multiRecipients": "Empfänger:innen",
@@ -688,6 +688,7 @@
 		"groupByInstitution": "Nach Institutionen gruppieren",
 		"institution": "Institution",
 		"greating": "Hallo",
+		"greating2": "willkommen in deinem Rucksack!",
 		"competencies": "Kompetenzen",
 		"studyingTime": "Lernzeit",
 		"hours": "Stunden",
@@ -715,7 +716,12 @@
 		"uploadEmailDoesNotMatchError": "Die im Badge hinterlegte E-Mail-Adresse stimmt nicht mit deiner auf OEB hinterlegten E-Mail-Adresse überein.",
 		"addEmailToUpload": "Füge die E-Mail-Adresse deinem Profil hinzu, um den Badge hochzuladen.",
 		"versionUploadInfo": "Badges im 2.0-Standard Validieren wir beim Hochladen. Badges im 3.0-Standard können wir aktuell nur minimal validieren. Weitere Infos dazu findest du in unseren <a class=\"tw-text-link tw-underline\" href=\"/public/faq\">FAQ</a>.",
-		"addingBadge": "Füge Badge hinzu ..."
+		"addingBadge": "Füge Badge hinzu ...",
+		"skillVisualisationIntro": "In diesen Bereichen hast du am meisten Kompetenzen gestärkt:",
+		"skillVisualisationHelp": "Bewege den Mauszeiger über die Kreise, um die zugehörigen Kompetenzen zu sehen.",
+		"skillVisualisationSingleIntro": "Deine Kompetenzen im Bereich ",
+		"FutureSkillsAccrodingToUlfEhlers": "Future Skills nach Ulf Ehlers",
+		"ESCOAreas": "ESCO-Bereiche"
 	},
 	"EditBadge": {
 		"editBadge": "Badge editieren",
@@ -786,7 +792,6 @@
 		"provideDescription": "Bitte gib eine Beschreibung an",
 		"descriptionMax300": "Die Beschreibung darf maximal 300 Zeichen lang sein",
 		"useCollectionsForApplications": "Sammlungen für Bewerbungen nutzen",
-		"myCollections": "Meine Sammlungen",
 		"collectionInfoText": "Organisiere deine Badges in Sammlungen und lade das entsprechende PDF herunter oder erstelle einen Direkt-Link zum Teilen.",
 		"addLink": "Füge den Link oder das PDF deiner Bewerbung hinzu und verweise im Anschreiben darauf. (Zum Beispiel: „In der beigefügten Badge-Sammlung finden Sie eine Übersicht meiner Fähigkeiten im Bereich…“)",
 		"createCollectionNow": "Jetzt Sammlung anlegen",

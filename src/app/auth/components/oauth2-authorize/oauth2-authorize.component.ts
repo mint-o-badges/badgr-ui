@@ -10,11 +10,17 @@ import { throwExpr } from '../../../common/util/throw-expr';
 import { Title } from '@angular/platform-browser';
 import { InitialLoadingIndicatorService } from '../../../common/services/initial-loading-indicator.service';
 import { AppConfigService } from '../../../common/app-config.service';
+import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
+import { FormMessageComponent } from '../../../common/components/form-message.component';
+import { SvgIconComponent } from '../../../common/components/svg-icon.component';
+import { NgFor } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { PatternLibraryIconName } from '../../../common/components/svg-icon.component';
 
 @Component({
 	// selector: 'logout',
 	templateUrl: './oauth2-authorize.component.html',
-	standalone: false,
+	imports: [BgAwaitPromises, FormMessageComponent, SvgIconComponent, NgFor, FormsModule],
 })
 export class OAuth2AuthorizeComponent extends BaseRoutableComponent {
 	readonly authLinkLogoSrc = this.theme.logoImg.small;
@@ -33,11 +39,11 @@ export class OAuth2AuthorizeComponent extends BaseRoutableComponent {
 		return this.configService.theme;
 	}
 
-	iconName(scopeCssName: string): string {
-		if (scopeCssName === 'permission-issuer') return 'issuer2';
-		if (scopeCssName === 'permission-assertion') return 'badgeaward';
-		if (scopeCssName === 'permission-profile') return 'email';
-		return 'checkmark';
+	iconName(scopeCssName: string): PatternLibraryIconName {
+		if (scopeCssName === 'permission-issuer') return 'icon_issuer2';
+		if (scopeCssName === 'permission-assertion') return 'icon_badgeaward';
+		if (scopeCssName === 'permission-profile') return 'icon_email';
+		return 'icon_checkmark';
 	}
 
 	constructor(

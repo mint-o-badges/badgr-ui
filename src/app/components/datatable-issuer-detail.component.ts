@@ -1,9 +1,6 @@
 import { NgIcon } from '@ng-icons/core';
 import { CommonModule } from '@angular/common';
-import { BadgrCommonModule } from '../common/badgr-common.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { BrnAccordionContentComponent } from '@spartan-ng/brain/accordion';
-import { HlmIconModule } from './spartan/ui-icon-helm/src';
 import { RouterModule } from '@angular/router';
 import { Component, EventEmitter, Input, Output, computed, effect, input, signal } from '@angular/core';
 import { HlmTableModule } from './spartan/ui-table-helm/src';
@@ -15,10 +12,11 @@ import { BadgeInstance } from '../issuer/models/badgeinstance.model';
 import { FormsModule } from '@angular/forms';
 import { HlmIconDirective } from './spartan/ui-icon-helm/src';
 import { lucideSearch } from '@ng-icons/lucide';
-import { HlmCommandInputWrapperComponent } from './spartan/ui-command-helm/src';
 import { OebButtonComponent } from './oeb-button.component';
 import { provideIcons } from '@ng-icons/core';
 import { OebSpinnerComponent } from './oeb-spinner.component';
+import { HlmCommandInputWrapperComponent } from './spartan/ui-command-helm/src/lib/hlm-command-input-wrapper.component';
+import { LoadingDotsComponent } from '../common/components/loading-dots.component';
 
 @Component({
 	selector: 'issuer-detail-datatable',
@@ -26,7 +24,6 @@ import { OebSpinnerComponent } from './oeb-spinner.component';
 		FormsModule,
 		HlmTableModule,
 		CommonModule,
-		BadgrCommonModule,
 		TranslateModule,
 		RouterModule,
 		HlmInputDirective,
@@ -36,6 +33,7 @@ import { OebSpinnerComponent } from './oeb-spinner.component';
 		HlmCommandInputWrapperComponent,
 		OebButtonComponent,
 		OebSpinnerComponent,
+		LoadingDotsComponent,
 	],
 	providers: [provideIcons({ lucideSearch })],
 	template: `
@@ -100,7 +98,7 @@ import { OebSpinnerComponent } from './oeb-spinner.component';
 						<span class="!tw-text-oebblack !tw-font-normal">{{ recipient.recipientIdentifier }}</span>
 					</hlm-th>
 					<hlm-th class="!tw-flex-1 tw-justify-center !tw-text-oebblack"
-						><p class="u-text"><time [date]="recipient.issuedOn" format="dd.MM.y"></time></p
+						><p class="u-text"><time [dateTime]="recipient.issuedOn" format="dd.MM.y"></time></p
 					></hlm-th>
 					<hlm-th
 						class="tw-justify-center tw-gap-[25px] xl:tw-gap-[5px] xl:tw-w-max xl:tw-h-fit xl:tw-flex-col xl:tw-justify-end tw-w-full !tw-text-oebblack"
