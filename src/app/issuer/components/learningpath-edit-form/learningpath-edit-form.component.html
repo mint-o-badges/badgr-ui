@@ -1,14 +1,14 @@
 <div class="tw-max-w-[1016px]">
 	<form-message></form-message>
 	<ng-container [formGroup]="learningPathForm.rawControl">
-		<oeb-stepper [linear]="existingLearningPath ? false : true" [initialStep]="existingLearningPath ? 0 : 1">
+		<oeb-stepper [linear]="false" [initialStep]="initialisedLearningpath ? 0 : 1">
 			<oeb-step
 				[label]="'CreateBadge.chooseBadgeCategory' | translate"
 				[optional]="false"
 				[route]="['/issuer/issuers/' + issuerSlug + '/badges' + '/select']"
 				errorMessage="Bitte Kategorie wählen"
 				[completed]="true"
-				*ngIf="!existingLearningPath"
+				*ngIf="!initialisedLearningpath"
 			>
 			</oeb-step>
 
@@ -18,8 +18,7 @@
 				[errorMessage]="'General.validationCompleteForm' | translate"
 				[completed]="(validateFields(['name', 'description']) && !imageValidation()) || isDevMode"
 				[hasError]="
-					((!validateFields(['name', 'description']) &&
-						dirtyFields(['badge_description', 'badge_hours', 'badge_name'])) ||
+					((!validateFields(['name', 'description']) && dirtyFields(['name', 'description'])) ||
 						(imageFieldDirty && imageValidation())) &&
 					!isDevMode
 				"
@@ -306,8 +305,9 @@
 									'LearningPath.learnersHaveTo' | translate
 								}}</span>
 								<oeb-select
+									class="tw-block tw-max-w-32"
 									[options]="selectMinBadgesOptions"
-									[control]="selectMinBadgesControl"
+									[control]="learningPathForm.rawControlMap.required_badges_count"
 									[noTopMargin]="true"
 									placeholder="{{ 'General.all' | translate }}"
 								></oeb-select>
@@ -318,12 +318,6 @@
 						</div>
 					</div>
 				</ng-template>
-
-				<!-- <learningpath-badges
-					#stepTwo
-					[learningPath]="existingLearningPath"
-					(selectedBadgesChanged)="updateSelectedBadges($event)"
-				></learningpath-badges> -->
 			</cdk-step>
 			<cdk-step [label]="'LearningPath.badgeSequenceStep' | translate">
 				<ng-container>
@@ -362,13 +356,6 @@
 							</div>
 						</div>
 					</div>
-					<!-- <learningpath-badge-order
-						(badgeListChanged)="updateBadgeList($event)"
-						#stepThree
-						[selectedBadgeUrls]="selectedBadgeUrls"
-						[selectedBadges]="selectedBadges"
-						errorMessage="Wähle mindestens 3 Badges aus"
-					></learningpath-badge-order> -->
 				</ng-container>
 			</cdk-step>
 			<cdk-step [label]="'CreateBadge.stepFinish' | translate">
@@ -460,8 +447,7 @@
 							>
 								Titel
 							</h3>
-							<!-- <span> {{lpDetailsForm.rawControlMap.name.value}}</span> -->
-							<span>{{ lpName }}</span>
+							<span> {{ learningPathForm.rawControlMap.name.value }}</span>
 
 							<h3
 								hlmH3
@@ -469,8 +455,7 @@
 							>
 								{{ 'LearningPath.shortDescription' | translate }}
 							</h3>
-							<!-- <span> {{lpDetailsForm.rawControlMap.description.value}}</span> -->
-							<span>{{ lpDescription }}</span>
+							<span> {{ learningPathForm.rawControlMap.description.value }}</span>
 						</div>
 					</div>
 				</div>
@@ -478,6 +463,29 @@
 					class="tw-italic tw-text-[24px]/[1.2em] tw-mt-12"
 					[innerHTML]="'LearningPath.lastBadgeInfo' | translate"
 				></p>
+
+				<section
+					class="tw-bg-purple tw-rounded-[25px] tw-py-[21.2px] tw-px-[11px] md:tw-p-[25.2px] tw-mt-6 md:tw-mt-7 tw-mb-8"
+				>
+					<h2 hlmH2 class="tw-text-white">{{ 'LearningPath.activateMd' | translate }}</h2>
+					<p class="tw-flex tw-flex-col tw-gap-2 tw-mt-2">
+						<span
+							class="tw-text-white tw-italic tw-text-lg"
+							[innerHTML]="'LearningPath.activationInfo' | translate"
+						>
+						</span>
+						<span
+							class="tw-text-white tw-italic tw-text-lg"
+							[innerHTML]="'LearningPath.activationInfo2' | translate"
+						>
+						</span>
+					</p>
+					<oeb-checkbox
+						[control]="learningPathForm.rawControlMap.activated"
+						class="tw-mt-2"
+						[text]="'LearningPath.activateMdForUse' | translate"
+					></oeb-checkbox>
+				</section>
 
 				<div class="tw-mt-8">
 					<p
@@ -497,16 +505,6 @@
 
 	<form [formGroup]="learningPathForm.rawControl" #formElem (ngSubmit)="onSubmit()" novalidate>
 		<div class="tw-flex tw-justify-between md:tw-justify-end tw-flex-wrap sm:tw-flex-nowrap tw-gap-2 tw-mt-8">
-			<!-- <oeb-button
-				class="tw-float-left"
-				variant="secondary"
-				[hidden]="selectedStep < 1"
-				type="button"
-				[text]="previous"
-				(click)="previousStep()"
-			>
-			</oeb-button> -->
-
 			<oeb-button
 				class="tw-mr-4"
 				type="button"
@@ -518,44 +516,30 @@
 				text="{{ 'General.cancel' | translate }}"
 			></oeb-button>
 
-			<oeb-button *ngIf="selectedStep < 4" type="button" [text]="next" (click)="nextStep()"> </oeb-button>
+			<oeb-button
+				*ngIf="!firstStep()"
+				variant="secondary"
+				type="button"
+				[text]="previous"
+				(click)="previousStep()"
+			>
+			</oeb-button>
+
+			<oeb-button *ngIf="!lastStep()" type="button" [text]="next" (click)="nextStep()"> </oeb-button>
 
 			<oeb-button
-				*ngIf="selectedStep === 4"
+				*ngIf="lastStep()"
 				type="submit"
 				width="max_content"
 				[disabled]="!!savePromise || learningPathForm.invalid || selectedBadges.length < 3"
 				[loading-promises]="[savePromise]"
 				loading-message="{{ submittingText }}"
 				text="{{
-					(existingLearningPath ? 'General.saveChanges' : 'Issuer.myInstitutionsCreateLearningPath')
+					(initialisedLearningpath ? 'General.saveChanges' : 'Issuer.myInstitutionsCreateLearningPath')
 						| translate
 				}}"
 			>
 			</oeb-button>
 		</div>
-		<!--
-		<div class="tw-flex tw-justify-end tw-flex-wrap tw-gap-4 tw-pt-8 tw-clear-both">
-			<oeb-button
-				variant="secondary"
-				(click)="cancelClicked()"
-				[class.disabled]="!!savePromise"
-				[disabled-when-requesting]="true"
-				text="{{ 'General.cancel' | translate }}"
-			></oeb-button>
-
-			<oeb-button
-				type="submit"
-				width="max_content"
-				[disabled]="!!savePromise || learningPathForm.invalid || selectedBadges.length < 3"
-				[loading-promises]="[savePromise]"
-				loading-message="{{ submittingText }}"
-				text="{{
-					(existingLearningPath ? 'General.saveChanges' : 'Issuer.myInstitutionsCreateLearningPath') | translate
-				}}"
-			>
-			</oeb-button>
-		</div>
-		-->
 	</form>
 </div>
