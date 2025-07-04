@@ -7,10 +7,10 @@
 				<div class="tw-z-10 tw-relative">
 					<h1 hlmH1 class="tw-text-oebblack">{{ 'Badge.catalogHeadline' | translate }}</h1>
 					<h1 hlmH1 class="lg:tw-pl-[10%] tw-font-black tw-text-purple">
-						<span [countUp]="badges().length">{{ badges().length }}</span>
-						{{ badgesPluralWord }} in
-						<span [countUp]="issuers.length">{{ issuers.length }}</span>
-						{{ issuersPluralWord }}
+						<span [countUp]="badges().length" *ngIf="badges().length > 1">{{ badges().length }}</span>
+						{{ badgesPluralWord() }} in
+						<span [countUp]="issuers().length" *ngIf="issuers().length > 1">{{ issuers().length }}</span>
+						{{ issuersPluralWord() }}
 					</h1>
 				</div>
 			</div>
@@ -32,7 +32,8 @@
 									changeOrder
 									class="!tw-bg-white tw-w-full tw-border-1 tw-border-purple min-[880px]:tw-w-96 tw-border-solid tw-h-12 tw-rounded-lg tw-p-2"
 									placeholder="{{ 'Badge.searchBadges' | translate }}"
-									[(ngModel)]="searchQuery"
+									[ngModel]="searchQuery()"
+									(ngModelChange)="onSearchQueryChange($event)"
 									hlmInput
 								/>
 								<ng-icon
@@ -46,26 +47,15 @@
 						<oeb-global-sort-select
 							placeholder="{{ 'Badge.sortBy' | translate }}"
 							class="oeb tw-w-[12rem]"
-							[disabled]="!!groupControl?.value && groupControl?.value !== '---'"
 							[control]="sortControl"
 						>
 						</oeb-global-sort-select>
-
-						<!-- <oeb-select
-							actionBar="true"
-							placeholder="{{ 'Badge.groupBy' | translate }}"
-							class="oeb tw-w-[12rem]"
-							[options]="groupOptions"
-							[control]="groupControl"
-							[autofocus]="true"
-							noTopMargin="true"
-						></oeb-select> -->
 
 						<oeb-select
 							[actionBar]="true"
 							placeholder="Tags"
 							class="oeb tw-w-[12rem]"
-							[options]="tagsOptions"
+							[options]="tagsOptions()"
 							[control]="tagsControl"
 							[autofocus]="true"
 							[noTopMargin]="true"
@@ -88,91 +78,35 @@
 						<a (click)="openLegend()">{{ 'Badge.framesMeaning' | translate }}</a>
 					</div>
 				</div>
-				<ng-container *ngIf="groupBy == '' || groupBy == '---'">
-					<div class="tw-gap-6 tw-grid tw-grid-cols-badges" [@stagger]>
-						<!-- TODO: Fix the badgecard link for sharing and routing -->
-						<bg-badgecard
-							*ngFor="let badge of badgeResults; trackBy: trackById"
-							@appearAnimation
-							[badgeTitle]="badge.name"
-							[badgeImage]="badge.image"
-							[badgeDescription]="badge.description"
-							[badgeSlug]="badge.slug"
-							[issuerTitle]="badge.issuerName"
-							[badgeIssueDate]="badge.createdAt"
-							[public]="true"
-							[publicUrl]="badge.url"
-							[issuerSlug]="badge.issuerSlug"
-							[competencies]="badge.extension['extensions:CompetencyExtension']"
-							[tags]="badge.tags"
-						></bg-badgecard>
-					</div>
-				</ng-container>
-				<ng-container *ngIf="groupBy == 'issuer'">
-					<ng-container
-						*ngFor="let issuerGroup of badgeResultsByIssuer | sort: { key: 'issuerName', inplace: true }"
-					>
-						<h3 class="u-text-h3-semibold u-margin-bottom2x u-margin-top6x u-text-dark1">
-							{{ issuerGroup.issuerName }}
-							<span class="u-text-small-semibold-caps u-text-dark4 u-margin-left2x"
-								>{{ issuerGroup.badges.length }}
-								{{ issuerGroup.badges.length == 1 ? 'Badge' : 'Badges' }}</span
-							>
-						</h3>
-						<div class="tw-gap-6 tw-grid tw-grid-cols-badges">
-							<!-- TODO: Fix the badgecard link for sharing and routing -->
-							<bg-badgecard
-								*ngFor="let badge of issuerGroup.badges"
-								[badgeTitle]="badge.name"
-								[badgeImage]="badge.image"
-								[badgeDescription]="badge.description"
-								[badgeSlug]="badge.slug"
-								[issuerTitle]="badge.issuerName ? badge.issuerName : badge.issuer"
-								[badgeIssueDate]="badge.createdAt"
-								[public]="true"
-								[publicUrl]="badge.url"
-								[competencies]="badge.extension['extensions:CompetencyExtension']"
-							></bg-badgecard>
-						</div>
-					</ng-container>
-				</ng-container>
-				<!-- ToDo: test it with real data -->
-				<!-- <ng-container *ngIf="groupBy == 'Kategorie'"> -->
-				<ng-container *ngIf="groupBy == 'Kategorie' || groupBy == 'category'">
-					<ng-container *ngFor="let categoryGroup of badgeResultsByCategory">
-						<h3 class="u-text-h3-semibold u-margin-bottom2x u-margin-top6x u-text-dark1">
-							{{ categoryOptions[categoryGroup.category] }}
-							<span class="u-text-small-semibold-caps u-text-dark4 u-margin-left2x"
-								>{{ categoryGroup.badges.length }}
-								{{ categoryGroup.badges.length == 1 ? 'Badge' : 'Badges' }}</span
-							>
-						</h3>
-						<div class="tw-gap-6 tw-grid tw-grid-cols-badges">
-							<!-- TODO: Fix the badgecard link for sharing and routing -->
-							<bg-badgecard
-								*ngFor="let badge of categoryGroup.badges"
-								[badgeTitle]="badge.name"
-								[badgeImage]="badge.image"
-								[badgeDescription]="badge.description"
-								[badgeSlug]="badge.slug"
-								[issuerTitle]="badge.issuerName ? badge.issuerName : badge.issuer"
-								[badgeIssueDate]="badge.createdAt"
-								[public]="true"
-								[publicUrl]="badge.url"
-								[competencies]="badge.extension['extensions:CompetencyExtension']"
-							></bg-badgecard>
-						</div>
-					</ng-container>
-				</ng-container>
+				<div class="tw-gap-6 tw-grid tw-grid-cols-badges" [@stagger]>
+					<bg-badgecard
+						*ngFor="let badge of badgeResults(); trackBy: trackById"
+						@appearAnimation
+						[badgeTitle]="badge.name"
+						[badgeImage]="badge.image"
+						[badgeDescription]="badge.description"
+						[badgeSlug]="badge.slug"
+						[issuerTitle]="badge.issuerName"
+						[badgeIssueDate]="badge.createdAt"
+						[public]="true"
+						[publicUrl]="badge.url"
+						[issuerSlug]="badge.issuerSlug"
+						[competencies]="badge.extension['extensions:CompetencyExtension']"
+						[tags]="badge.tags"
+					></bg-badgecard>
+				</div>
 				<p
-					*ngIf="!badgeResults.length"
+					*ngIf="!badgeResults().length"
 					class="tw-m-auto tw-max-w-[300px] tw-p-4 tw-border-solid tw-border-[1px] tw-border-[var(--color-blue)] tw-rounded-lg tw-bg-[var(--color-lightpurple)] tw-text-center"
 				>
 					{{ 'General.noResults' | translate }}
 				</p>
 			</section>
 		</div>
-		<div class="tw-mt-8" *ngIf="badgeResults.length >= 30 || (currentPage == totalPages && currentPage != 1)">
+		<div
+			class="tw-mt-8"
+			*ngIf="badgeResults().length >= 30 || (currentPage() == totalPages() && currentPage() != 1)"
+		>
 			<oeb-numbered-pagination
 				[totalProducts]="isFiltered() ? filteredBadges.length : badges.length"
 				[(page)]="currentPage"
