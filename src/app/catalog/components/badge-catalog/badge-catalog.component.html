@@ -105,10 +105,10 @@
 		</div>
 		<div
 			class="tw-mt-8"
-			*ngIf="badgeResults().length >= 30 || (currentPage() == totalPages() && currentPage() != 1)"
+			*ngIf="badgeResults().length >= badgesPerPage() || (currentPage() === totalPages() && currentPage() != 1)"
 		>
 			<oeb-numbered-pagination
-				[totalProducts]="isFiltered() ? filteredBadges.length : badges.length"
+				[totalProducts]="filteredBadges().length"
 				[(page)]="currentPage"
 				[(pageSize)]="badgesPerPage"
 			>

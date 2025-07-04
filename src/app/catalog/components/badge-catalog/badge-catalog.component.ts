@@ -1,4 +1,4 @@
-import { Component, computed, OnInit, signal } from '@angular/core';
+import { Component, computed, OnInit, signal, TrackByFunction } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from '../../../common/services/message.service';
 import { Title } from '@angular/platform-browser';
@@ -54,36 +54,39 @@ import { combineLatest, map, startWith, switchMap } from 'rxjs';
 	],
 })
 export class BadgeCatalogComponent extends BaseRoutableComponent implements OnInit {
-	/** Holds all badges known to the component */
+	/** Holds all badges known to the component. */
 	badges = signal<BadgeClass[]>([]);
 
-	/** The tag selected for filtering {@link badges} into {@link filteredBadges} */
-	selectedTag = signal<ITag | null>(null);
+	/** The tag selected for filtering {@link badges} into {@link filteredBadges}. */
+	selectedTags = signal<ITag[] | null>(null);
 
-	/** A search string that is used to filter {@link badges} into {@link filteredBadges} */
+	/** A search string that is used to filter {@link badges} into {@link filteredBadges}. */
 	searchQuery = signal<string>('');
 
-	/** A sorting option to sort {@link badges} into {@link filteredBadges} */
+	/** A sorting option to sort {@link badges} into {@link filteredBadges}. */
 	sortOption = signal<string | null>(null);
 
-	/** The 1-indexed current page the component sits on */
+	/** The 1-indexed current page the component sits on. */
 	currentPage = signal<number>(1);
 
-	/** The number of badges shown per page */
+	/** The number of badges shown per page. */
 	badgesPerPage = signal<number>(30);
 
-	/** Determines whether a legend that explains badge categories is shown */
+	/** Determines whether a legend that explains badge categories is shown. */
 	showLegend = signal<boolean>(false);
 
-	/** A subset of {@link badges} filtered using the values of {@link searchQuery}, {@link sortOption} and {@link selectedTag} */
+	/**
+	 * A subset of {@link badges} filtered using the values of {@link searchQuery}, {@link sortOption}.
+	 * When no filters are set, this is equivalent to {@link badges}.
+	 */
 	filteredBadges = computed<BadgeClass[]>(() =>
 		this.filterBadges(this.badges(), this.searchQuery(), this.sortOption()),
 	);
 
-	/** The total number of pages taking into account the number of badges per page */
+	/** The total number of pages taking into account the number of badges per page. */
 	totalPages = computed<number>(() => Math.max(1, Math.ceil(this.filteredBadges().length / this.badgesPerPage())));
 
-	/** The subset of {@link filteredBadges} for the currently displayed page */
+	/** The subset of {@link filteredBadges} for the currently displayed page. */
 	badgeResults = computed<BadgeClass[]>(() =>
 		this.filteredBadges().slice(
 			(this.currentPage() - 1) * this.badgesPerPage(),
@@ -91,7 +94,7 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		),
 	);
 
-	/** Unique issuers of all badges */
+	/** Unique issuers of all badges. */
 	issuers = computed<string[]>(() =>
 		this.badges()
 			.filter((b) => b.issuerVerified)
@@ -99,7 +102,7 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 			.filter((value, index, array) => array.indexOf(value) === index),
 	);
 
-	/** Selectable options to filter with */
+	/** Selectable options to filter with. */
 	tagsOptions = computed<ITag[]>(() =>
 		this.badges()
 			.flatMap((b) => b.tags)
@@ -111,7 +114,7 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 			})),
 	);
 
-	/** A string used for displaying the amount of badges that is aware of the current language */
+	/** A string used for displaying the amount of badges that is aware of the current language. */
 	badgesPluralWord = toSignal(
 		combineLatest(
 			[toObservable(this.badges), this.translate.onLangChange.pipe(startWith(this.translate.currentLang))],
@@ -126,7 +129,7 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		),
 	);
 
-	/** A string used for displaying the amount of issuers that is aware of the current language */
+	/** A string used for displaying the amount of issuers that is aware of the current language. */
 	issuersPluralWord = toSignal(
 		combineLatest(
 			[toObservable(this.issuers), this.translate.onLangChange.pipe(startWith(this.translate.currentLang))],
@@ -164,7 +167,8 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 	ngOnInit() {
 		super.ngOnInit();
 
-		this.tagsControl.valueChanges.subscribe(() => {
+		this.tagsControl.valueChanges.subscribe((value) => {
+			this.selectedTags.set(value);
 			this.currentPage.set(1);
 		});
 
@@ -186,19 +190,19 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		this.searchQuery.set(query);
 	}
 
-	trackById(index: number, item: any): any {
-		return item.id;
-	}
-
-	isFiltered() {
-		return Boolean(this.searchQuery || this.tagsControl.value?.length);
-	}
-
-	filterByTag(tag: ITag) {
-		this.selectedTag.update((current) => (current.value == tag.value ? null : tag));
+	/**
+	 * TrackByFunction to uniquely identify a BadgeClass
+	 * @param index The index of the badgeclass within the iterable
+	 * @param item The BadgeClass itself
+	 * @returns The badge classes slug which uniquely identifies the badgeclass
+	 */
+	trackById(index: number, item: BadgeClass) {
+		return item.slug;
 	}
 
 	removeTag(tag) {
+		// remove on the control, triggering an update of the setter
+		// and thus updating all dependent signals
 		this.tagsControl.setValue(this.tagsControl.value.filter((t) => t != tag));
 	}
 
