@@ -19,3 +19,19 @@ export function applySorting(data: any[], sortOption: string): void {
 
 	data.sort(sortFn);
 }
+
+export function sortUnique(array: string[]): string[] {
+	let frequency = {};
+
+	array.forEach(function (value) {
+		frequency[value] = 0;
+	});
+
+	let uniques = array.filter(function (value) {
+		return ++frequency[value] == 1;
+	});
+
+	return uniques.sort(function (a, b) {
+		return frequency[b] - frequency[a];
+	});
+}
