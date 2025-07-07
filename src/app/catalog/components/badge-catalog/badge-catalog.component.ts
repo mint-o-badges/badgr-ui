@@ -26,7 +26,10 @@ import { PaginationAdvancedComponent } from '../../../components/oeb-numbered-pa
 import { SortPipe } from '../../../common/pipes/sortPipe';
 import { BgBadgecard } from '../../../common/components/bg-badgecard';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
-import { combineLatest, map, startWith, switchMap } from 'rxjs';
+import { combineLatest, debounceTime, distinctUntilChanged, map, startWith, switchMap, tap } from 'rxjs';
+import { CatalogService } from '~/catalog/catalog.service';
+
+const INPUT_DEBOUNCE_TIME = 500;
 
 @Component({
 	selector: 'app-badge-catalog',
@@ -87,10 +90,21 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 	totalPages = computed<number>(() => Math.max(1, Math.ceil(this.filteredBadges().length / this.badgesPerPage())));
 
 	/** The subset of {@link filteredBadges} for the currently displayed page. */
-	badgeResults = computed<BadgeClass[]>(() =>
-		this.filteredBadges().slice(
-			(this.currentPage() - 1) * this.badgesPerPage(),
-			(this.currentPage() - 1) * this.badgesPerPage() + this.badgesPerPage(),
+	// badgeResults = computed<BadgeClass[]>(() =>
+	// 	this.filteredBadges().slice(
+	// 		(this.currentPage() - 1) * this.badgesPerPage(),
+	// 		(this.currentPage() - 1) * this.badgesPerPage() + this.badgesPerPage(),
+	// 	),
+	// );
+	badgeResults = toSignal<BadgeClass[]>(
+		combineLatest([toObservable(this.selectedTags), toObservable(this.searchQuery)], (values_0, values_1) => ({
+			tags: values_0,
+			searchQuery: values_1,
+		})).pipe(
+			debounceTime(INPUT_DEBOUNCE_TIME),
+			distinctUntilChanged(),
+			switchMap((v) => this.catalogService.loadBadges(undefined, undefined, v.searchQuery, v.tags)),
+			map((paginatedBadges) => paginatedBadges.results),
 		),
 	);
 
@@ -153,6 +167,7 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		protected messageService: MessageService,
 		protected configService: AppConfigService,
 		protected badgeClassService: BadgeClassManager,
+		protected catalogService: CatalogService,
 		router: Router,
 		route: ActivatedRoute,
 		private translate: TranslateService,
@@ -161,7 +176,7 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		title.setTitle(`Badges - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 
 		// subscribe to issuer and badge class changes
-		this.badgesLoaded = this.loadBadges();
+		//this.badgesLoaded = this.loadBadges();
 	}
 
 	ngOnInit() {
@@ -208,6 +223,8 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 	}
 
 	private async loadBadges() {
+		this.catalogService.loadBadges(0, this.badgesPerPage());
+
 		return new Promise(async (resolve, reject) => {
 			this.badgeClassService.allPublicBadges$.subscribe(
 				async (badges) => {
