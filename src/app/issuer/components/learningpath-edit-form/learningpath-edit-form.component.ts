@@ -129,6 +129,9 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 	}
 
 	firstStep(): boolean {
+		if (this.initialisedLearningpath) {
+			return this.stepper?.selectedIndex == 0;
+		}
 		return this.stepper?.selectedIndex == 1;
 	}
 
@@ -274,6 +277,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 	}
 
 	ngOnInit() {
+		this.fetchTags();
 		if (!this.initialisedLearningpath) {
 			this.learningPathForm.controls.license.addFromTemplate();
 		}

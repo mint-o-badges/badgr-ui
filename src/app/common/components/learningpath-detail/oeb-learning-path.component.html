@@ -57,19 +57,22 @@
 								"
 							>
 							</oeb-button>
-							<oeb-button
-								*ngIf="!learningPath.activated"
-								[text]="'General.edit' | translate"
-								width="full_width"
-								[routerLink]="learningPathEditLink"
-								[class]="
-									issuer.canCreateBadge ? 'tw-whitespace-nowrap tw-hidden md:tw-block' : 'disabled'
-								"
-							>
-							</oeb-button>
-							<span class="tw-italic tw-text-oebblack">{{
-								'LearningPath.notActivatedYet' | translate
-							}}</span>
+							<div *ngIf="!learningPath.activated">
+								<oeb-button
+									[text]="'General.edit' | translate"
+									width="full_width"
+									[routerLink]="learningPathEditLink"
+									[class]="
+										issuer.canCreateBadge
+											? 'tw-whitespace-nowrap tw-hidden md:tw-block'
+											: 'disabled'
+									"
+								>
+								</oeb-button>
+								<span class="tw-italic tw-text-oebblack">{{
+									'LearningPath.notActivatedYet' | translate
+								}}</span>
+							</div>
 						</div>
 					</div>
 
@@ -81,15 +84,18 @@
 							width="full_width"
 							[disabled-when-requesting]="true"
 						></oeb-button>
-						<oeb-button
-							*ngIf="!learningPath.activated"
-							class="tw-whitespace-nowrap tw-mb-2"
-							[text]="'General.edit' | translate"
-							width="full_width"
-							[routerLink]="learningPathEditLink"
-							[disabled-when-requesting]="true"
-						></oeb-button>
-						<span class="tw-italic tw-text-oebblack">{{ 'LearningPath.notActivatedYet' | translate }}</span>
+						<div *ngIf="!learningPath.activated">
+							<oeb-button
+								class="tw-whitespace-nowrap tw-mb-2"
+								[text]="'General.edit' | translate"
+								width="full_width"
+								[routerLink]="learningPathEditLink"
+								[disabled-when-requesting]="true"
+							></oeb-button>
+							<span class="tw-italic tw-text-oebblack">{{
+								'LearningPath.notActivatedYet' | translate
+							}}</span>
+						</div>
 					</div>
 				</div>
 			</div>

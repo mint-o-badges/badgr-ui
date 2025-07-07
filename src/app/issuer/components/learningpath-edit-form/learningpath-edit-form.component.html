@@ -1,7 +1,7 @@
 <div class="tw-max-w-[1016px]">
 	<form-message></form-message>
 	<ng-container [formGroup]="learningPathForm.rawControl">
-		<oeb-stepper [linear]="false" [initialStep]="initialisedLearningpath ? 0 : 1">
+		<oeb-stepper [linear]="true" [initialStep]="initialisedLearningpath ? 0 : 1">
 			<oeb-step
 				[label]="'CreateBadge.chooseBadgeCategory' | translate"
 				[optional]="false"
@@ -154,7 +154,7 @@
 				[optional]="false"
 				[errorMessage]="'LearningPath.chooseMin3Badges' | translate"
 				[completed]="!learningPathForm.hasError('minSelectedBadges') || isDevMode"
-				[hasError]="learningPathForm.hasError('minSelectedBadges') && !isDevMode"
+				[hasError]="!firstStep() && learningPathForm.hasError('minSelectedBadges') && !isDevMode"
 			>
 				<ng-template [showLoader]="true" [bgAwaitPromises]="badgesLoaded">
 					<div class="tw-mt-6 md:tw-mt-7 oeb-section section">
