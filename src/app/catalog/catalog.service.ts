@@ -5,6 +5,7 @@ import { BaseHttpApiService } from '~/common/services/base-http-api.service';
 import { MessageService } from '~/common/services/message.service';
 import { SessionService } from '~/common/services/session.service';
 import { BadgeClass } from '~/issuer/models/badgeclass.model';
+import { BadgeClassV3, IBadgeClassV3 } from '~/issuer/models/badgeclassv3.model';
 
 const ENDPOINT = 'v3/issuer';
 
@@ -38,9 +39,13 @@ export class CatalogService extends BaseHttpApiService {
 			if (nameQuery) params = params.append('name', nameQuery);
 			if (tags && tags.length > 0) params = params.append('tags', tags.join(','));
 
-			const response = await this.get<PaginatedBadgeClass>(`${this.baseUrl}/${ENDPOINT}/badges/`, params);
+			const response = await this.get<PaginatedBadgeClass & { results: IBadgeClassV3[] }>(
+				`${this.baseUrl}/${ENDPOINT}/badges/`,
+				params,
+			);
 
-			if (response.ok) return response.body;
+			if (response.ok)
+				return { ...response.body, results: response.body.results.map((r) => new BadgeClassV3(r)) };
 			else {
 				console.warn(
 					`Paginated request to get badge classes did not return ok, got ${response.status}: ${response.statusText}`,
@@ -58,5 +63,5 @@ export interface PaginatedBadgeClass {
 	count: number;
 	next: string | null;
 	previous: string | null;
-	results: BadgeClass[];
+	results: BadgeClassV3[];
 }

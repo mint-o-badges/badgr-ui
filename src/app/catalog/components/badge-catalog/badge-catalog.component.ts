@@ -1,18 +1,14 @@
-import { Component, computed, OnInit, signal } from '@angular/core';
+import { AfterViewInit, Component, computed, ElementRef, OnDestroy, OnInit, signal, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from '../../../common/services/message.service';
 import { Title } from '@angular/platform-browser';
 import { AppConfigService } from '../../../common/app-config.service';
 import { BaseRoutableComponent } from '../../../common/pages/base-routable.component';
-import { BadgeClass } from '../../../issuer/models/badgeclass.model';
 import { BadgeClassManager } from '../../../issuer/services/badgeclass-manager.service';
-import { StringMatchingUtil } from '../../../common/util/string-matching-util';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { FormControl, FormsModule } from '@angular/forms';
 import { appearAnimation } from '../../../common/animations/animations';
-import { applySorting } from '../../util/sorting';
 import { FormMessageComponent } from '../../../common/components/form-message.component';
-import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
 import { CountUpModule } from 'ngx-countup';
 import { NgIf, NgFor } from '@angular/common';
@@ -22,14 +18,23 @@ import { NgIcon } from '@ng-icons/core';
 import { HlmIconDirective } from '../../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
 import { OebGlobalSortSelectComponent } from '../../../components/oeb-global-sort-select.component';
 import { OebSelectComponent } from '../../../components/select.component';
-import { PaginationAdvancedComponent } from '../../../components/oeb-numbered-pagination';
 import { SortPipe } from '../../../common/pipes/sortPipe';
 import { BgBadgecard } from '../../../common/components/bg-badgecard';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
-import { combineLatest, debounceTime, distinctUntilChanged, map, startWith, switchMap, tap } from 'rxjs';
+import {
+	combineLatest,
+	debounceTime,
+	distinctUntilChanged,
+	filter,
+	map,
+	startWith,
+	Subscription,
+	switchMap,
+	tap,
+} from 'rxjs';
 import { CatalogService } from '~/catalog/catalog.service';
-
-const INPUT_DEBOUNCE_TIME = 500;
+import { BadgeClassV3 } from '~/issuer/models/badgeclassv3.model';
+import { LoadingDotsComponent } from '../../../common/components/loading-dots.component';
 
 @Component({
 	selector: 'app-badge-catalog',
@@ -38,7 +43,6 @@ const INPUT_DEBOUNCE_TIME = 500;
 	animations: [appearAnimation],
 	imports: [
 		FormMessageComponent,
-		BgAwaitPromises,
 		HlmH1Directive,
 		CountUpModule,
 		NgIf,
@@ -50,67 +54,57 @@ const INPUT_DEBOUNCE_TIME = 500;
 		OebGlobalSortSelectComponent,
 		OebSelectComponent,
 		NgFor,
-		PaginationAdvancedComponent,
 		SortPipe,
 		TranslatePipe,
 		BgBadgecard,
+		LoadingDotsComponent,
 	],
 })
-export class BadgeCatalogComponent extends BaseRoutableComponent implements OnInit {
-	/** Holds all badges known to the component. */
-	badges = signal<BadgeClass[]>([]);
+export class BadgeCatalogComponent extends BaseRoutableComponent implements OnInit, AfterViewInit, OnDestroy {
+	sortControl = new FormControl('');
+	tagsControl = new FormControl();
+	intersectionObserver: IntersectionObserver;
+	scrollSubscription?: Subscription;
+	paginateSubscription?: Subscription;
+
+	@ViewChild('loadMore') loadMore: ElementRef;
+
+	readonly INPUT_DEBOUNCE_TIME = 500;
+	readonly BADGES_PER_PAGE = 20;
 
 	/** The tag selected for filtering {@link badges} into {@link filteredBadges}. */
 	selectedTags = signal<ITag['value'][]>([]);
+	selectedTags$ = toObservable(this.selectedTags);
 
 	/** A search string that is used to filter {@link badges} into {@link filteredBadges}. */
 	searchQuery = signal<string>('');
+	searchQuery$ = toObservable(this.searchQuery);
 
 	/** A sorting option to sort {@link badges} into {@link filteredBadges}. */
 	sortOption = signal<string>('');
 
-	/** The 1-indexed current page the component sits on. */
-	currentPage = signal<number>(1);
-
-	/** The number of badges shown per page. */
-	badgesPerPage = signal<number>(3);
+	/**
+	 * The 0-indexed current page the component sits on, starting at -1 to
+	 * initiate the first load when it is set to 0.
+	 */
+	currentPage = signal<number>(-1);
+	currentPage$ = toObservable(this.currentPage);
 
 	/** Determines whether a legend that explains badge categories is shown. */
 	showLegend = signal<boolean>(false);
 
 	/**
-	 * A subset of {@link badges} filtered using the values of {@link searchQuery}, {@link sortOption} and {@link selectedTags}.
-	 * When no filters are set, this is equivalent to {@link badges}.
+	 * The badges resulting from a query to the database with the given inputs of
+	 * {@link searchQuery}, {@link selectedTags} and {@link sortOption}
 	 */
-	filteredBadges = computed<BadgeClass[]>(() =>
-		this.filterBadges(this.badges(), this.searchQuery(), this.sortOption(), this.selectedTags()),
-	);
+	badgeResults = signal<BadgeClassV3[]>([]);
 
-	/** The total number of pages taking into account the number of badges per page. */
-	totalPages = computed<number>(() => Math.max(1, Math.ceil(this.filteredBadges().length / this.badgesPerPage())));
-
-	/** The subset of {@link filteredBadges} for the currently displayed page. */
-	// badgeResults = computed<BadgeClass[]>(() =>
-	// 	this.filteredBadges().slice(
-	// 		(this.currentPage() - 1) * this.badgesPerPage(),
-	// 		(this.currentPage() - 1) * this.badgesPerPage() + this.badgesPerPage(),
-	// 	),
-	// );
-	badgeResults = toSignal<BadgeClass[]>(
-		combineLatest([toObservable(this.selectedTags), toObservable(this.searchQuery)], (values_0, values_1) => ({
-			tags: values_0,
-			searchQuery: values_1,
-		})).pipe(
-			debounceTime(INPUT_DEBOUNCE_TIME),
-			distinctUntilChanged(),
-			switchMap((v) => this.catalogService.loadBadges(undefined, undefined, v.searchQuery, v.tags)),
-			map((paginatedBadges) => paginatedBadges.results),
-		),
-	);
+	/** Whether or not a next page of badge classes can be exists to be loaded. */
+	hasNext = signal<boolean>(true);
 
 	/** Unique issuers of all badges. */
 	issuers = computed<string[]>(() =>
-		this.badges()
+		this.badgeResults()
 			.filter((b) => b.issuerVerified)
 			.flatMap((b) => b.issuer)
 			.filter((value, index, array) => array.indexOf(value) === index),
@@ -118,7 +112,7 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 
 	/** Selectable options to filter with. */
 	tagsOptions = computed<ITag[]>(() =>
-		this.badges()
+		this.badgeResults()
 			.flatMap((b) => b.tags)
 			.filter((value, index, array) => array.indexOf(value) === index)
 			.sort()
@@ -131,7 +125,7 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 	/** A string used for displaying the amount of badges that is aware of the current language. */
 	badgesPluralWord = toSignal(
 		combineLatest(
-			[toObservable(this.badges), this.translate.onLangChange.pipe(startWith(this.translate.currentLang))],
+			[toObservable(this.badgeResults), this.translate.onLangChange.pipe(startWith(this.translate.currentLang))],
 			(badges, lang) => badges,
 		).pipe(
 			map((badges) => {
@@ -158,10 +152,6 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		),
 	);
 
-	badgesLoaded: Promise<unknown>;
-	sortControl = new FormControl('');
-	tagsControl = new FormControl();
-
 	constructor(
 		protected title: Title,
 		protected messageService: MessageService,
@@ -174,23 +164,55 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 	) {
 		super(router, route);
 		title.setTitle(`Badges - ${this.configService.theme['serviceName'] || 'Badgr'}`);
+	}
 
-		// subscribe to issuer and badge class changes
-		//this.badgesLoaded = this.loadBadges();
+	ngAfterViewInit(): void {
+		this.intersectionObserver = this.setupIntersectionObserver(this.loadMore);
 	}
 
 	ngOnInit() {
 		super.ngOnInit();
 
+		this.paginateSubscription = combineLatest(
+			[this.currentPage$, this.searchQuery$.pipe(debounceTime(this.INPUT_DEBOUNCE_TIME)), this.selectedTags$],
+			(v1, v2, v3) => ({
+				page: v1,
+				searchQuery: v2,
+				tags: v3,
+			}),
+		)
+			.pipe(
+				filter((i) => i.page >= 0),
+				switchMap((i) => this.loadRangeOfBadges(i.page, i.searchQuery, i.tags)),
+			)
+			.subscribe((paginatedBadges) => {
+				if (!paginatedBadges.next) this.hasNext.set(false);
+				if (!paginatedBadges.previous)
+					// on the first page, set the whole array to make sure to not append anything
+					this.badgeResults.set(paginatedBadges.results);
+				else this.badgeResults.update((currentBadges) => [...currentBadges, ...paginatedBadges.results]);
+			});
+
+		// Scroll to the top when something resets
+		// the list of badges (e.g. due to filtering)
+		this.scrollSubscription = this.currentPage$.subscribe((p) => {
+			if (p === 0) window?.scrollTo({ left: 0, top: 0, behavior: 'smooth' });
+		});
+
 		this.tagsControl.valueChanges.subscribe((value) => {
 			this.selectedTags.set(value ?? []);
-			this.currentPage.set(1);
+			if (this.currentPage() > 0) this.currentPage.set(0);
 		});
 
 		this.sortControl.valueChanges.subscribe((value) => {
 			this.sortOption.set(value);
-			this.currentPage.set(1);
+			if (this.currentPage() > 0) this.currentPage.set(0);
 		});
+	}
+
+	ngOnDestroy(): void {
+		if (this.paginateSubscription) this.paginateSubscription.unsubscribe();
+		if (this.scrollSubscription) this.scrollSubscription.unsubscribe();
 	}
 
 	openLegend() {
@@ -203,7 +225,7 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 
 	onSearchQueryChange(query: string) {
 		this.searchQuery.set(query);
-		this.currentPage.set(1);
+		this.currentPage.set(0);
 	}
 
 	/**
@@ -212,7 +234,7 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 	 * @param item The BadgeClass itself
 	 * @returns The badge classes slug which uniquely identifies the badgeclass
 	 */
-	trackById(index: number, item: BadgeClass) {
+	trackById(index: number, item: BadgeClassV3) {
 		return item.slug;
 	}
 
@@ -222,41 +244,24 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		this.tagsControl.setValue(this.tagsControl.value.filter((t) => t != tag));
 	}
 
-	private async loadBadges() {
-		this.catalogService.loadBadges(0, this.badgesPerPage());
-
-		return new Promise(async (resolve, reject) => {
-			this.badgeClassService.allPublicBadges$.subscribe(
-				async (badges) => {
-					this.badges.set(
-						badges
-							.filter((badge) => badge.issuerVerified && badge.issuerOwnerAcceptedTos)
-							.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime()),
-					);
-					resolve(badges);
-				},
-				(error) => {
-					this.messageService.reportAndThrowError('Failed to load badges', error);
-				},
-			);
+	private setupIntersectionObserver(element: ElementRef): IntersectionObserver {
+		const observer = new IntersectionObserver((entries) => {
+			if (entries.at(0).isIntersecting) {
+				this.currentPage.update((p) => p + 1);
+			}
 		});
+
+		observer.observe(element.nativeElement);
+		return observer;
 	}
 
-	private filterBadges(badges: BadgeClass[], query: string, sortOption: string, selectedTags: ITag['value'][]) {
-		const filtered = badges
-			.filter(this.badgeMatcher(query))
-			.filter((b) => selectedTags.length === 0 || selectedTags.some((tag) => b.tags.includes(tag)))
-			.filter((b) => !b.apiModel.source_url);
-
-		if (sortOption.length > 0) applySorting(filtered, sortOption);
-		return filtered;
-	}
-
-	private badgeMatcher(inputPattern: string): (badge) => boolean {
-		const patternStr = StringMatchingUtil.normalizeString(inputPattern);
-		const patternExp = StringMatchingUtil.tryRegExp(patternStr);
-
-		return (badge) => StringMatchingUtil.stringMatches(badge.name, patternStr, patternExp);
+	private async loadRangeOfBadges(pageNumber: number, searchQuery: string, selectedTags: string[]) {
+		return await this.catalogService.loadBadges(
+			pageNumber * this.BADGES_PER_PAGE,
+			this.BADGES_PER_PAGE,
+			searchQuery,
+			selectedTags,
+		);
 	}
 }
 
