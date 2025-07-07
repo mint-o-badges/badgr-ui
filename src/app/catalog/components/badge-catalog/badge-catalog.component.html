@@ -2,18 +2,8 @@
 
 <div class="oeb page-padding">
 	<div class="oeb-section-sm">
-		<div class="oeb-headline-container tw-relative">
-			<div class="tw-z-10 tw-relative">
-				<h1 hlmH1 class="tw-text-oebblack">{{ 'Badge.catalogHeadline' | translate }}</h1>
-				<h1 hlmH1 class="lg:tw-pl-[10%] tw-font-black tw-text-purple">
-					<span [countUp]="badgeResults().length" *ngIf="badgeResults().length > 1">{{
-						badgeResults().length
-					}}</span>
-					{{ badgesPluralWord() }} in
-					<span [countUp]="issuers().length" *ngIf="issuers().length > 1">{{ issuers().length }}</span>
-					{{ issuersPluralWord() }}
-				</h1>
-			</div>
+		<div class="tw-z-10 tw-relative">
+			<h1 hlmH1 class="tw-text-oebblack">{{ 'Badge.catalogHeadline' | translate }}</h1>
 		</div>
 	</div>
 
@@ -104,18 +94,19 @@
 			</p>
 		</section>
 	</div>
-	<div #loadMore>
+	<div #loadMore class="oeb-section-sm">
 		@if (hasNext()) {
 			<loading-dots />
 		} @else {
-			<h1 hlmH1 class="lg:tw-pl-[10%] tw-font-black tw-text-purple">
+			<h4 hlmH4 class="tw-text-oebblack tw-text-center">{{ 'Badge.catalogAllLoaded' | translate }}</h4>
+			<h4 hlmH4 class="tw-font-black tw-text-purple tw-text-center">
 				<span [countUp]="badgeResults().length" *ngIf="badgeResults().length > 1">{{
 					badgeResults().length
 				}}</span>
 				{{ badgesPluralWord() }} in
 				<span [countUp]="issuers().length" *ngIf="issuers().length > 1">{{ issuers().length }}</span>
 				{{ issuersPluralWord() }}
-			</h1>
+			</h4>
 		}
 	</div>
 </div>

@@ -60,7 +60,7 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 	@ViewChild('loadMore') loadMore: ElementRef;
 
 	readonly INPUT_DEBOUNCE_TIME = 500;
-	readonly BADGES_PER_PAGE = 20;
+	readonly BADGES_PER_PAGE = 21; // We show at most 3 columns of badges, so we load 7 at a time
 
 	/** The tag selected for filtering {@link badges} into {@link filteredBadges}. */
 	selectedTags = signal<ITag['value'][]>([]);
