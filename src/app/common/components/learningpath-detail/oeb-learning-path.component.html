@@ -69,9 +69,17 @@
 									"
 								>
 								</oeb-button>
-								<span class="tw-italic tw-text-oebblack">{{
-									'LearningPath.notActivatedYet' | translate
-								}}</span>
+								<p class="tw-italic tw-text-oebblack">
+									<span>{{ 'LearningPath.notActivatedYetStart' | translate }}</span>
+									<a
+										class="tw-underline tw-text-link"
+										[routerLink]="[`/issuer/issuers/${issuer.slug}/learningpaths/${learningPath.slug}/edit`]"
+										[queryParams]="{ focusActivation: true }"
+									>
+										{{ 'LearningPath.notActivatedYetLink' | translate }}</a
+									>
+									<span>{{ 'LearningPath.notActivatedYetEnd' | translate }}</span>
+								</p>
 							</div>
 						</div>
 					</div>
@@ -92,9 +100,17 @@
 								[routerLink]="learningPathEditLink"
 								[disabled-when-requesting]="true"
 							></oeb-button>
-							<span class="tw-italic tw-text-oebblack">{{
-								'LearningPath.notActivatedYet' | translate
-							}}</span>
+							<p class="tw-italic tw-text-oebblack">
+								<span>{{ 'LearningPath.notActivatedYetStart' | translate }}</span>
+								<a
+									class="tw-underline tw-text-link"
+									[routerLink]="[`/issuer/issuers/${issuer.slug}/learningpaths/${learningPath.slug}/edit`]"
+									[queryParams]="{ focusActivation: true }"
+								>
+									{{ 'LearningPath.notActivatedYetLink' | translate }}</a
+								>
+								<span>{{ 'LearningPath.notActivatedYetEnd' | translate }}</span>
+							</p>
 						</div>
 					</div>
 				</div>

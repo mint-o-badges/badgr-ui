@@ -115,6 +115,8 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 	@ViewChild('newTagInput')
 	newTagInput: ElementRef<HTMLInputElement>;
 
+	@ViewChild('activationSection') activationSection!: ElementRef;
+
 	nextStep(): void {
 		this.learningPathForm.markTreeDirtyAndValidate();
 		this.stepper.next();
@@ -166,6 +168,9 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 	isDevMode: boolean = false && isDevMode(); // DEBUG: enable to skip steps
 
 	baseUrl: string;
+
+	focusActivation = false;
+	hasScrolled = false;
 
 	issuer: Issuer;
 	issuerLoaded: Promise<unknown>;
@@ -489,6 +494,11 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 		);
 
 	ngAfterViewInit() {
+		this.focusActivation = this.route.snapshot.queryParamMap.get('focusActivation') === 'true';
+
+		if (this.focusActivation && this.initialisedLearningpath && this.stepper) {
+			this.focusActivationSection();
+		}
 		this.learningPathForm.controls.badge_image.rawControl.valueChanges.subscribe((value) => {
 			if (this.imageField.control.value != null) this.customImageField.control.reset();
 		});
@@ -510,6 +520,21 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 				this.selectMinBadgesOptions.unshift({ label: 'General.all', value: value.length.toString() });
 			}
 		});
+	}
+
+	private focusActivationSection() {
+		if (this.focusActivation && this.activationSection && !this.hasScrolled) {
+			// stepper being linear requires the steps to be marked as completed before changing the step index
+			const steps = this.stepper.steps.toArray();
+			for (let i = 0; i < 3; i++) {
+				if (steps[i]) {
+					steps[i].completed = true;
+				}
+			}
+			this.stepper.selectedIndex = 3;
+			if (this.activationSection.nativeElement.offsetTop > 0) this.hasScrolled = true;
+			this.activationSection.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+		}
 	}
 
 	generateRandomImage() {
