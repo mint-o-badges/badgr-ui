@@ -87,14 +87,14 @@ export class LearningPathEditComponent extends BaseAuthenticatedRoutableComponen
 
 	async loadLearningPath() {
 		return new Promise(async (resolve, reject) => {
-			this.learningPathManager.allPublicLearningPaths$.subscribe(
-				async (lps) => {
-					this.learningPath = lps.find((lp) => lp.slug === this.lpSlug);
+			this.learningPathManager.learningPathBySlug(this.lpSlug).then(
+				async (lp) => {
+					this.learningPath = lp;
 					this.learningPathBadge = await this.badgeClassService.badgeByIssuerSlugAndSlug(
 						this.issuerSlug,
 						this.learningPath.participationBadgeId,
 					);
-					resolve(lps);
+					resolve(lp);
 				},
 				(error) => {
 					this.messageService.reportAndThrowError('Failed to load learningPath', error);

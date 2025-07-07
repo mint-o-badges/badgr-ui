@@ -17,20 +17,7 @@ export interface ApiLearningPathForCreation {
 	activated: boolean;
 }
 
-export interface ApiLearningPathForEditing {
-	slug?: string;
-	issuer_id: string;
-	name: string;
-	description: string;
-	tags: string[];
-	participationBadge_id: string;
-	participationBadge_image: string;
-	badges: Array<{ slug: string; order: number }>;
-	required_badges_count: number;
-	activated: boolean;
-}
-
-export interface ApiLearningPath {
+export interface ApiLearningPath extends Omit<ApiLearningPathForCreation, 'badges'> {
 	id?: number;
 	slug?: string;
 	issuer_id: string;

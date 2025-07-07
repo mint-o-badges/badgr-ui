@@ -133,7 +133,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 	}
 
 	@Output()
-	save = new EventEmitter<Promise<ApiLearningPath>>();
+	save = new EventEmitter<Promise<LearningPath>>();
 
 	@Output()
 	cancel = new EventEmitter<void>();
@@ -158,7 +158,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 	breadcrumbLinkEntries: LinkEntry[] = [];
 	selectedBadges: BadgeClass[] = [];
 	studyLoad: number = 0;
-	savePromise: Promise<ApiLearningPath> | Promise<void> | null = null;
+	savePromise: Promise<LearningPath> | Promise<void> | null = null;
 
 	isDevMode: boolean = false && isDevMode(); // DEBUG: enable to skip steps
 
@@ -281,7 +281,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 			return {
 				id: badge.slug,
 				name: badge.name,
-				image: badge.image,
+				image: 'http://localhost:8000' + badge.image,
 				description: badge.description,
 				slug: badge.slug,
 				issuerName: badge.issuerName,
@@ -817,14 +817,8 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 		const participationText = `Du hast erfolgreich an **${this.learningPathForm.controls.name.value}** teilgenommen.  \n\n `;
 
 		if (this.initialisedLearningpath && this.lpBadge) {
-			const data = {
-				name: this.learningPathForm.controls.name.value,
-				description: this.learningPathForm.controls.description.value,
-				image: this.learningPathForm.controls.badge_image.value,
-				tags: Array.from(this.lpTags),
-				required_badges_count: Number(this.learningPathForm.controls.required_badges_count.value),
-				activated: this.learningPathForm.controls.activated.value,
-			};
+			const formState = this.learningPathForm.value;
+
 			this.existingLpBadge.imageFrame =
 				this.learningPathForm.controls.badge_customImage.value && this.learningPathForm.valid ? false : true;
 			this.existingLpBadge.image = this.learningPathForm.controls.badge_image.value;
@@ -856,27 +850,20 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 
 			this.existingLpBadge.save();
 
-			this.savePromise = this.learningPathApiService.updateLearningPath(
-				this.issuerSlug,
-				this.initialisedLearningpath.slug,
-				{
-					...this.initialisedLearningpath,
-					name: data.name,
-					issuer_id: '',
-					description: data.description,
-					participationBadge_id: this.initialisedLearningpath.participationBadgeId,
-					participationBadge_image: data.image,
-					tags: data.tags,
-					badges: this.draggableList.map((item, index) => {
-						return {
-							slug: item.slug,
-							order: item.order,
-						};
-					}),
-					required_badges_count: Number(data.required_badges_count),
-					activated: data.activated,
-				},
-			);
+			this.initialisedLearningpath.name = formState.name;
+			this.initialisedLearningpath.description = formState.description;
+			this.initialisedLearningpath.activated = formState.activated;
+			this.initialisedLearningpath.issuer_id = this.issuer.slug;
+			this.initialisedLearningpath.tags = Array.from(this.lpTags);
+			this.initialisedLearningpath.required_badges_count = Number(formState.required_badges_count);
+			this.initialisedLearningpath.badges = this.draggableList.map((item, index) => {
+				return {
+					badge: this.selectedBadges.find((b) => b.slug == item.slug),
+					order: item.order,
+				};
+			});
+
+			this.savePromise = this.initialisedLearningpath.save();
 
 			this.save.emit(this.savePromise);
 
@@ -926,7 +913,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 
 					const issuer = await this.issuerApiService.getIssuer(this.issuerSlug);
 
-					this.savePromise = this.learningPathApiService.createLearningPath(this.issuerSlug, {
+					this.savePromise = this.learningPathManager.createLearningPath(this.issuerSlug, {
 						issuer_id: issuer.slug,
 						name: this.learningPathForm.controls.name.value,
 						description: this.learningPathForm.controls.description.value,
