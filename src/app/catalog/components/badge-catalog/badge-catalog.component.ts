@@ -21,7 +21,7 @@ import { OebSelectComponent } from '../../../components/select.component';
 import { SortPipe } from '../../../common/pipes/sortPipe';
 import { BgBadgecard } from '../../../common/components/bg-badgecard';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
-import { combineLatest, debounceTime, filter, map, startWith, Subscription, switchMap } from 'rxjs';
+import { combineLatest, debounceTime, filter, map, startWith, Subscription, switchMap, tap } from 'rxjs';
 import { CatalogService } from '~/catalog/catalog.service';
 import { BadgeClassV3 } from '~/issuer/models/badgeclassv3.model';
 import { LoadingDotsComponent } from '../../../common/components/loading-dots.component';
@@ -60,7 +60,7 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 	@ViewChild('loadMore') loadMore: ElementRef;
 
 	readonly INPUT_DEBOUNCE_TIME = 500;
-	readonly BADGES_PER_PAGE = 3; // We show at most 3 columns of badges, so we load 7 rows at a time
+	readonly BADGES_PER_PAGE = 21; // We show at most 3 columns of badges, so we load 7 rows at a time
 
 	/** The tag selected for filtering {@link badges}. */
 	selectedTags = signal<ITag['value'][]>([]);
@@ -92,6 +92,14 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 
 	/** Whether or not a next page of badge classes can be exists to be loaded. */
 	hasNext = signal<boolean>(true);
+
+	/**
+	 * A signal controlling whether user scrolling should be observed or not.
+	 * While new badges are loaded, user scrolling is usually disregarded
+	 * and thus should be ignored.
+	 **/
+	observeScrolling = signal<boolean>(true);
+	observeScrolling$ = toObservable(this.observeScrolling);
 
 	/** Unique issuers of all badges. */
 	issuers = computed<string[]>(() =>
@@ -164,6 +172,11 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 	ngOnInit() {
 		super.ngOnInit();
 
+		this.observeScrolling$.pipe(filter((_) => this.intersectionObserver !== undefined)).subscribe((observe) => {
+			if (observe) this.intersectionObserver.observe(this.loadMore.nativeElement);
+			else this.intersectionObserver.unobserve(this.loadMore.nativeElement);
+		});
+
 		this.paginateSubscription = combineLatest(
 			[
 				this.currentPage$,
@@ -180,7 +193,9 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		)
 			.pipe(
 				filter((i) => i.page >= 0),
+				tap((_) => this.observeScrolling.set(false)),
 				switchMap((i) => this.loadRangeOfBadges(i.page, i.searchQuery, i.tags, i.sortOption)),
+				tap((_) => this.observeScrolling.set(true)),
 			)
 			.subscribe((paginatedBadges) => {
 				if (!paginatedBadges.next) this.hasNext.set(false);
@@ -243,7 +258,7 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 
 	private setupIntersectionObserver(element: ElementRef): IntersectionObserver {
 		const observer = new IntersectionObserver((entries) => {
-			if (entries.at(0).isIntersecting) {
+			if (entries.at(0).isIntersecting && this.hasNext()) {
 				this.currentPage.update((p) => p + 1);
 			}
 		});
