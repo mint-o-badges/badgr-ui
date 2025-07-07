@@ -27,6 +27,7 @@ export class CatalogService extends BaseHttpApiService {
 		limit: number = 20,
 		nameQuery?: string,
 		tags?: string[],
+		orderBy?: 'name_asc' | 'name_desc' | 'date_asc' | 'date_desc',
 	): Promise<PaginatedBadgeClass | null> {
 		try {
 			let params = new HttpParams({
@@ -38,6 +39,13 @@ export class CatalogService extends BaseHttpApiService {
 
 			if (nameQuery) params = params.append('name', nameQuery);
 			if (tags && tags.length > 0) params = params.append('tags', tags.join(','));
+			if (orderBy) {
+				const ascOrDesc = orderBy.indexOf('asc') > -1 ? '' : '-';
+				const nameOrDate = orderBy.indexOf('name') > -1 ? 'name' : 'created_at';
+				// backend expects e.g. a '-name' for descending ordering of the name property and
+				// e.g. 'name' or ascending ordering. Same for 'created_at'
+				params = params.append('ordering', `${ascOrDesc}${nameOrDate}`);
+			}
 
 			const response = await this.get<PaginatedBadgeClass & { results: IBadgeClassV3[] }>(
 				`${this.baseUrl}/${ENDPOINT}/badges/`,

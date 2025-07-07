@@ -21,17 +21,7 @@ import { OebSelectComponent } from '../../../components/select.component';
 import { SortPipe } from '../../../common/pipes/sortPipe';
 import { BgBadgecard } from '../../../common/components/bg-badgecard';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
-import {
-	combineLatest,
-	debounceTime,
-	distinctUntilChanged,
-	filter,
-	map,
-	startWith,
-	Subscription,
-	switchMap,
-	tap,
-} from 'rxjs';
+import { combineLatest, debounceTime, filter, map, startWith, Subscription, switchMap } from 'rxjs';
 import { CatalogService } from '~/catalog/catalog.service';
 import { BadgeClassV3 } from '~/issuer/models/badgeclassv3.model';
 import { LoadingDotsComponent } from '../../../common/components/loading-dots.component';
@@ -81,7 +71,8 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 	searchQuery$ = toObservable(this.searchQuery);
 
 	/** A sorting option to sort {@link badges} into {@link filteredBadges}. */
-	sortOption = signal<string>('');
+	sortOption = signal<'name_asc' | 'name_desc' | 'date_asc' | 'date_desc'>('date_desc');
+	sortOption$ = toObservable(this.sortOption);
 
 	/**
 	 * The 0-indexed current page the component sits on, starting at -1 to
@@ -174,16 +165,22 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		super.ngOnInit();
 
 		this.paginateSubscription = combineLatest(
-			[this.currentPage$, this.searchQuery$.pipe(debounceTime(this.INPUT_DEBOUNCE_TIME)), this.selectedTags$],
-			(v1, v2, v3) => ({
+			[
+				this.currentPage$,
+				this.searchQuery$.pipe(debounceTime(this.INPUT_DEBOUNCE_TIME)),
+				this.selectedTags$,
+				this.sortOption$,
+			],
+			(v1, v2, v3, v4) => ({
 				page: v1,
 				searchQuery: v2,
 				tags: v3,
+				sortOption: v4,
 			}),
 		)
 			.pipe(
 				filter((i) => i.page >= 0),
-				switchMap((i) => this.loadRangeOfBadges(i.page, i.searchQuery, i.tags)),
+				switchMap((i) => this.loadRangeOfBadges(i.page, i.searchQuery, i.tags, i.sortOption)),
 			)
 			.subscribe((paginatedBadges) => {
 				if (!paginatedBadges.next) this.hasNext.set(false);
@@ -204,7 +201,7 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 			if (this.currentPage() > 0) this.currentPage.set(0);
 		});
 
-		this.sortControl.valueChanges.subscribe((value) => {
+		this.sortControl.valueChanges.subscribe((value: 'name_asc' | 'name_desc' | 'date_asc' | 'date_desc') => {
 			this.sortOption.set(value);
 			if (this.currentPage() > 0) this.currentPage.set(0);
 		});
@@ -255,12 +252,18 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		return observer;
 	}
 
-	private async loadRangeOfBadges(pageNumber: number, searchQuery: string, selectedTags: string[]) {
+	private async loadRangeOfBadges(
+		pageNumber: number,
+		searchQuery: string,
+		selectedTags: string[],
+		sortOption: 'name_asc' | 'name_desc' | 'date_asc' | 'date_desc',
+	) {
 		return await this.catalogService.loadBadges(
 			pageNumber * this.BADGES_PER_PAGE,
 			this.BADGES_PER_PAGE,
 			searchQuery,
 			selectedTags,
+			sortOption,
 		);
 	}
 }
