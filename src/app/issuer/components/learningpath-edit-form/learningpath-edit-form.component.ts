@@ -58,6 +58,7 @@ import { DndDraggableDirective, DndDropEvent, DndDropzoneDirective, DropEffect }
 import { HlmDialogService } from '~/components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
 import { DangerDialogComponent } from '~/common/dialogs/oeb-dialogs/danger-dialog.component';
 import { OebCheckboxComponent } from '../../../components/oeb-checkbox.component';
+import { BgImageStatusPlaceholderDirective } from '~/common/directives/bg-image-status-placeholder.directive';
 
 interface DraggableItem {
 	content: string;
@@ -98,6 +99,7 @@ type BadgeResult = BadgeClass & { selected?: boolean };
 		DndDraggableDirective,
 		DndDropzoneDirective,
 		OebCheckboxComponent,
+		BgImageStatusPlaceholderDirective,
 	],
 })
 export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
