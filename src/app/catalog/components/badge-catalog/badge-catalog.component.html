@@ -71,7 +71,7 @@
 			</div>
 			<div class="tw-gap-6 tw-grid tw-grid-cols-badges" [@stagger]>
 				<bg-badgecard
-					*ngFor="let badge of badgeResults(); trackBy: trackById"
+					*ngFor="let badge of badges(); trackBy: trackById"
 					@appearAnimation
 					[badgeTitle]="badge.name"
 					[badgeImage]="badge.image"
@@ -87,7 +87,7 @@
 				></bg-badgecard>
 			</div>
 			<p
-				*ngIf="!badgeResults().length"
+				*ngIf="!badges().length && !hasNext()"
 				class="tw-m-auto tw-max-w-[300px] tw-p-4 tw-border-solid tw-border-[1px] tw-border-[var(--color-blue)] tw-rounded-lg tw-bg-[var(--color-lightpurple)] tw-text-center"
 			>
 				{{ 'General.noResults' | translate }}
@@ -100,9 +100,7 @@
 		} @else {
 			<h4 hlmH4 class="tw-text-oebblack tw-text-center">{{ 'Badge.catalogAllLoaded' | translate }}</h4>
 			<h4 hlmH4 class="tw-font-black tw-text-purple tw-text-center">
-				<span [countUp]="badgeResults().length" *ngIf="badgeResults().length > 1">{{
-					badgeResults().length
-				}}</span>
+				<span [countUp]="badges().length" *ngIf="badges().length > 1">{{ badges().length }}</span>
 				{{ badgesPluralWord() }} in
 				<span [countUp]="issuers().length" *ngIf="issuers().length > 1">{{ issuers().length }}</span>
 				{{ issuersPluralWord() }}

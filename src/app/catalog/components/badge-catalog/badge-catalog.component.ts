@@ -60,17 +60,17 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 	@ViewChild('loadMore') loadMore: ElementRef;
 
 	readonly INPUT_DEBOUNCE_TIME = 500;
-	readonly BADGES_PER_PAGE = 21; // We show at most 3 columns of badges, so we load 7 at a time
+	readonly BADGES_PER_PAGE = 3; // We show at most 3 columns of badges, so we load 7 rows at a time
 
-	/** The tag selected for filtering {@link badges} into {@link filteredBadges}. */
+	/** The tag selected for filtering {@link badges}. */
 	selectedTags = signal<ITag['value'][]>([]);
 	selectedTags$ = toObservable(this.selectedTags);
 
-	/** A search string that is used to filter {@link badges} into {@link filteredBadges}. */
+	/** A search string that is used to filter {@link badges}. */
 	searchQuery = signal<string>('');
 	searchQuery$ = toObservable(this.searchQuery);
 
-	/** A sorting option to sort {@link badges} into {@link filteredBadges}. */
+	/** A sorting option to sort {@link badges}. */
 	sortOption = signal<'name_asc' | 'name_desc' | 'date_asc' | 'date_desc'>('date_desc');
 	sortOption$ = toObservable(this.sortOption);
 
@@ -88,14 +88,14 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 	 * The badges resulting from a query to the database with the given inputs of
 	 * {@link searchQuery}, {@link selectedTags} and {@link sortOption}
 	 */
-	badgeResults = signal<BadgeClassV3[]>([]);
+	badges = signal<BadgeClassV3[]>([]);
 
 	/** Whether or not a next page of badge classes can be exists to be loaded. */
 	hasNext = signal<boolean>(true);
 
 	/** Unique issuers of all badges. */
 	issuers = computed<string[]>(() =>
-		this.badgeResults()
+		this.badges()
 			.filter((b) => b.issuerVerified)
 			.flatMap((b) => b.issuer)
 			.filter((value, index, array) => array.indexOf(value) === index),
@@ -103,7 +103,7 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 
 	/** Selectable options to filter with. */
 	tagsOptions = computed<ITag[]>(() =>
-		this.badgeResults()
+		this.badges()
 			.flatMap((b) => b.tags)
 			.filter((value, index, array) => array.indexOf(value) === index)
 			.sort()
@@ -116,7 +116,7 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 	/** A string used for displaying the amount of badges that is aware of the current language. */
 	badgesPluralWord = toSignal(
 		combineLatest(
-			[toObservable(this.badgeResults), this.translate.onLangChange.pipe(startWith(this.translate.currentLang))],
+			[toObservable(this.badges), this.translate.onLangChange.pipe(startWith(this.translate.currentLang))],
 			(badges, lang) => badges,
 		).pipe(
 			map((badges) => {
@@ -186,8 +186,8 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 				if (!paginatedBadges.next) this.hasNext.set(false);
 				if (!paginatedBadges.previous)
 					// on the first page, set the whole array to make sure to not append anything
-					this.badgeResults.set(paginatedBadges.results);
-				else this.badgeResults.update((currentBadges) => [...currentBadges, ...paginatedBadges.results]);
+					this.badges.set(paginatedBadges.results);
+				else this.badges.update((currentBadges) => [...currentBadges, ...paginatedBadges.results]);
 			});
 
 		// Scroll to the top when something resets
