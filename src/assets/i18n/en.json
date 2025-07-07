@@ -106,7 +106,8 @@
 		"expired": "expired",
 		"emailAddress": "E-mail address",
 		"tos": "Terms of Service",
-		"change": "change"
+		"change": "change",
+		"condition": "condition"
 	},
 	"NavItems": {
 		"register": "Register",
@@ -986,7 +987,9 @@
 		"flexibleSelectionInfo": "Specify here how many of the selected badges must be earned in order for the learner to receive the Micro Degree:",
 		"learnersHaveTo": "Learners have to",
 		"learnersHaveTo2": "of the badges selected above in order to receive the Micro Degree badge.",
-		"chooseMin3Badges": "Choose at least 3 badges"
+		"chooseMin3Badges": "Choose at least 3 badges",
+		"studentsMustEarn": "Students <span class='tw-font-bold'>must earn {{ count_required }} of the {{count_total}} badges </span> to receive the Micro Degree badge.",
+		"condition": "You <span class='tw-font-bold'>must earn {{ count_required }} of the {{count_total}} badges</span> to receive the Micro Degree."
 	},
 	"LearningPathEditor": {
 		"shortDescription": "Summarized description of your Micro Degree. This short description will be saved in the Micro Degree."

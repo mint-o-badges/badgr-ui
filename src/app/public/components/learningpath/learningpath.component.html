@@ -16,6 +16,23 @@
 							<ng-icon hlm name="lucideClock" />
 							<span>{{ minutesTotal | hourPipe }} {{ 'LearningPath.hours' | translate }}</span>
 						</div>
+						<div class="tw-mt-8">
+							<span class="tw-capitalize tw-text-purple tw-font-bold tw-text-lg tw-italic">
+								{{ 'General.condition' | translate }}:
+							</span>
+							<p
+								class="tw-text-lg tw-text-purple tw-italic"
+								hlmP
+								[innerHTML]="
+									'LearningPath.condition'
+										| translate
+											: {
+													count_required: learningPath.required_badges_count,
+													count_total: learningPath.badges.length
+											  }
+								"
+							></p>
+						</div>
 					</div>
 
 					<section class="tw-flex tw-flex-col tw-gap-2" *ngIf="showDownloadButton">
@@ -57,7 +74,7 @@
 					</ng-template>
 				</div>
 				<div
-					class="tw-relative tw-grow tw-px-16 tw-py-8 tw-bg-oebgrey tw-rounded-[12px] tw-flex tw-justify-center tw-items-center tw-max-w-[500px] md:tw-min-w-[250px]"
+					class="tw-relative tw-grow tw-px-16 tw-py-8 tw-bg-white tw-rounded-[12px] tw-flex tw-justify-center tw-items-center tw-max-w-[500px] md:tw-min-w-[250px]"
 				>
 					<div class="tw-absolute tw-top-[12px] tw-right-[12px]">
 						<img

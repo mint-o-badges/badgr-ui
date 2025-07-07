@@ -29,6 +29,20 @@
 									{{ tag }}
 								</div>
 							</div>
+							<p
+								class="tw-text-lg tw-text-purple tw-italic"
+								hlmP
+								[innerHTML]="
+									'LearningPath.studentsMustEarn'
+										| translate
+											: {
+													count_required: learningPath.required_badges_count,
+													count_total: learningPath.badges.length
+											  }
+								"
+							></p>
+
+							<p class="tw-text-lg" hlmP>{{ learningPath.description }}</p>
 						</div>
 						<div class="tw-flex tw-flex-col tw-gap-2">
 							<oeb-button
@@ -58,8 +72,6 @@
 							}}</span>
 						</div>
 					</div>
-
-					<p hlmP>{{ learningPath.description }}</p>
 
 					<div class="tw-mt-4 md:tw-hidden tw-flex tw-flex-col tw-gap-4">
 						<oeb-button

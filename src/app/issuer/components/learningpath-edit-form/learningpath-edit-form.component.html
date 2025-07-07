@@ -289,11 +289,11 @@
 							<p *ngIf="selectedBadges.length > 1" class="tw-mt-6">
 								{{ 'LearningPath.selectedBadges' | translate: { count: selectedBadges.length } }}
 							</p>
-							<oeb-separator
-								[separatorStyle]="'tw-block tw-my-4 !tw-border !tw-border-dashed !tw-border-purple'"
-							></oeb-separator>
 
 							<section *ngIf="selectedBadges.length > 2">
+								<oeb-separator
+									[separatorStyle]="'tw-block tw-my-4 !tw-border !tw-border-dashed !tw-border-purple'"
+								></oeb-separator>
 								<h2 class="tw-text-purple tw-text-[22px] tw-leading-[120%]">
 									Optional:
 									<span class="tw-font-bold">{{ 'LearningPath.flexibleSelection' | translate }}</span>
