@@ -9,7 +9,12 @@ import { AiAssistantComponent } from 'app/issuer/components/ai-assistant/ai-assi
 	template: `
 		<div class="shadow-assets" #assetWrap></div>
 		<div class="shadow-wrap" #contentWrap>
-			<ngx-dynamic-hooks class="shadow-content" [content]="_content" [parsers]="dynamicComponents" options="{sanitize: false}"></ngx-dynamic-hooks>
+			<ngx-dynamic-hooks
+				class="shadow-content"
+				[content]="_content"
+				[parsers]="dynamicComponents"
+				options="{sanitize: false}"
+			></ngx-dynamic-hooks>
 		</div>
 	`,
 	styles: `
@@ -20,20 +25,19 @@ import { AiAssistantComponent } from 'app/issuer/components/ai-assistant/ai-assi
 			max-width: 100vw;
 			overflow: hidden;
 		}
+		ai-assistant * {
+			box-sizing: border-box;
+		}
 	`,
 	encapsulation: ViewEncapsulation.ShadowDom,
 	standalone: true,
-	imports: [DynamicHooksComponent]
+	imports: [DynamicHooksComponent],
 })
 export class ShadowDomComponent {
-
 	content = input<string>();
-	_content: SafeHtml = "";
+	_content: SafeHtml = '';
 
-	dynamicComponents = [
-		AiAssistantComponent
-	];
-
+	dynamicComponents = [AiAssistantComponent];
 
 	styles = input<string>();
 	script = input<string>();
@@ -47,11 +51,9 @@ export class ShadowDomComponent {
 	constructor(
 		private domSanitizer: DomSanitizer,
 		private router: Router,
-	) {
-	}
+	) {}
 
 	ngOnChanges() {
-
 		if (this.assetWrap) {
 			if (this.styles()) {
 				// create style tag via js api, because angular won't allow it in template
@@ -79,7 +81,7 @@ export class ShadowDomComponent {
 						this.scriptEl = document.createElement('script');
 						this.scriptEl.src = this.script();
 						this.assetWrap.nativeElement.appendChild(this.scriptEl);
-					}, 100)
+					}, 100);
 				}
 			}
 		}
