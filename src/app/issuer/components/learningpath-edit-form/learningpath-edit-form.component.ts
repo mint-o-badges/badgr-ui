@@ -534,8 +534,19 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 				}
 			}
 			this.stepper.selectedIndex = 3;
-			if (this.activationSection.nativeElement.offsetTop > 0) this.hasScrolled = true;
-			this.activationSection.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+			// Wait for the DOM to update after changing stepper index
+			setTimeout(() => {
+				if (this.activationSection?.nativeElement) {
+					this.hasScrolled = true;
+					this.activationSection.nativeElement.scrollIntoView({
+						behavior: 'smooth',
+						block: 'center',
+					});
+				}
+			}, 100);
+			// 	if (this.activationSection.nativeElement.offsetTop > 0) this.hasScrolled = true;
+			// 	this.activationSection.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
 		}
 	}
 
