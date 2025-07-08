@@ -389,8 +389,6 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 			? badge.extension['extensions:OrgImageExtension'].OrgImage
 			: undefined;
 
-		console.log('current image', this.currentImage);
-
 		setTimeout(() => {
 			if (badge.imageFrame) {
 				this.generateUploadImage(this.currentImage, this.learningPathForm.value, true);
@@ -859,10 +857,17 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 		const participationText = `Du hast erfolgreich an **${this.learningPathForm.controls.name.value}** teilgenommen.  \n\n `;
 
 		if (this.initialisedLearningpath && this.lpBadge) {
+			let imageFrame = true;
+			if (this.learningPathForm.controls.badge_customImage.value && this.learningPathForm.valid) {
+				imageFrame = false;
+				this.learningPathForm.controls.badge_image.setValue(
+					this.learningPathForm.controls.badge_customImage.value,
+				);
+			}
+			this.learningPathForm.markTreeDirty();
 			const formState = this.learningPathForm.value;
 
-			this.existingLpBadge.imageFrame =
-				this.learningPathForm.controls.badge_customImage.value && this.learningPathForm.valid ? false : true;
+			this.existingLpBadge.imageFrame = imageFrame;
 			this.existingLpBadge.image = this.learningPathForm.controls.badge_image.value;
 			(this.existingLpBadge.name = this.learningPathForm.controls.name.value),
 				(this.existingLpBadge.description = this.learningPathForm.controls.description.value),
