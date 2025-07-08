@@ -16,7 +16,7 @@
 							<ng-icon hlm name="lucideClock" />
 							<span>{{ minutesTotal | hourPipe }} {{ 'LearningPath.hours' | translate }}</span>
 						</div>
-						<div class="tw-mt-8">
+						<div class="tw-mt-8" *ngIf="learningPath.required_badges_count < learningPath.badges.length">
 							<span class="tw-capitalize tw-text-purple tw-font-bold tw-text-lg tw-italic">
 								{{ 'General.condition' | translate }}:
 							</span>
