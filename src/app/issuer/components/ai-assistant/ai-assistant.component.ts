@@ -2,16 +2,15 @@ import { CommonModule } from '@angular/common';
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
 import { AbstractControl, FormsModule, Validators } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { BadgrCommonModule } from 'app/common/badgr-common.module';
-import { Skill } from 'app/common/model/ai-skills.model';
-import { AiSkillsService } from 'app/common/services/ai-skills.service';
-import { MessageService } from 'app/common/services/message.service';
-import { TypedFormGroup, typedFormGroup } from 'app/common/util/typed-forms';
-import { CompetencyAccordionComponent } from 'app/components/accordion.component';
-import { AltchaComponent } from 'app/components/altcha.component';
-import { OebInputComponent } from 'app/components/input.component';
-import { OebButtonComponent } from 'app/components/oeb-button.component';
-import { OebCheckboxComponent } from 'app/components/oeb-checkbox.component';
+import { ApiSkill } from '~/common/model/ai-skills.model';
+import { AiSkillsService } from '~/common/services/ai-skills.service';
+import { MessageService } from '~/common/services/message.service';
+import { typedFormGroup } from '~/common/util/typed-forms';
+import { CompetencyAccordionComponent } from '~/components/accordion.component';
+import { AltchaComponent } from '~/components/altcha.component';
+import { OebInputComponent } from '~/components/input.component';
+import { OebButtonComponent } from '~/components/oeb-button.component';
+import { OebCheckboxComponent } from '~/components/oeb-checkbox.component';
 
 @Component({
 	selector: 'ai-assistant',
@@ -31,7 +30,7 @@ import { OebCheckboxComponent } from 'app/components/oeb-checkbox.component';
 export class AiAssistantComponent implements AfterViewInit {
 	aiCompetenciesLoading = false;
 	aiCompetenciesDescription: string = '';
-	aiCompetenciesSuggestions: Skill[] = [];
+	aiCompetenciesSuggestions: ApiSkill[] = [];
 	suggestCompetenciesText = this.translate.instant('CreateBadge.suggestCompetencies');
 	detailedDescription = this.translate.instant('CreateBadge.detailedDescription');
 	showBadgeDemo = false;
@@ -66,6 +65,8 @@ export class AiAssistantComponent implements AfterViewInit {
 			.addControl('hours', '1', [this.positiveIntegerOrNull, Validators.max(999)])
 			.addControl('minutes', '0', [this.positiveIntegerOrNull, Validators.max(59)]),
 	);
+
+	requiredError = this.translate.instant('CreateBadge.requiredError');
 
 	constructor(
 		protected aiSkillsService: AiSkillsService,

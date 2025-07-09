@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { CmsPageComponent } from 'app/common/components/cms/cms-page.component';
+import { CmsPageComponent } from '~/common/components/cms/cms-page.component';
 
 @Component({
 	selector: 'app-faq',

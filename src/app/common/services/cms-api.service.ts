@@ -8,51 +8,47 @@ import { CmsApiMenu, CmsApiPage, CmsApiPost } from '../model/cms-api.model';
 import { lastValueFrom } from 'rxjs';
 import { LanguageService } from './language.service';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CmsApiService extends BaseHttpApiService {
 	constructor(
 		protected loginService: SessionService,
 		protected http: HttpClient,
 		protected configService: AppConfigService,
 		protected messageService: MessageService,
-		protected languageService: LanguageService
+		protected languageService: LanguageService,
 	) {
 		super(loginService, http, configService, messageService);
 	}
 
 	getMenus() {
-		return this.get<CmsApiMenu>('/cms/menu/list/', null, false, false)
-			.then((r) => r.body)
-		;
+		return this.get<CmsApiMenu>('/cms/menu/list/', null, false, false).then((r) => r.body);
 	}
 
 	getPageByID(ID: number) {
-		return this.get<CmsApiPage>(`/cms/page/${ID}`, null, false, false)
-			.then((r) => r.body)
-		;
+		return this.get<CmsApiPage>(`/cms/page/${ID}`, null, false, false).then((r) => r.body);
 	}
 
 	getPageBySlug(slug: string) {
-		return this.get<CmsApiPage>(`/cms/page/slug/`, { 'slug': slug }, false, false)
-			.then((r) => r.body)
-		;
+		return this.get<CmsApiPage>(`/cms/page/slug/`, { slug: slug }, false, false).then((r) => r.body);
 	}
 
 	getPostBySlug(slug: string) {
-		return this.get<CmsApiPage>(`/cms/post/slug/`, { 'slug': slug }, false, false)
-			.then((r) => r.body)
-		;
+		return this.get<CmsApiPage>(`/cms/post/slug/`, { slug: slug }, false, false).then((r) => r.body);
 	}
 
 	getPosts() {
-		return this.get<CmsApiPost[]>(`/cms/post/list/`, { 'lang': this.languageService.getSelectedLngValue()}, false, false)
-			.then((r) => r.body)
-		;
+		return this.get<CmsApiPost[]>(
+			`/cms/post/list/`,
+			{ lang: this.languageService.getSelectedLngValue() },
+			false,
+			false,
+		).then((r) => r.body);
 	}
 
 	getStyles() {
 		// lastValueFrom instead of deprecated .toPromise()
-		return lastValueFrom(this.http.get(`${this.configService.apiConfig.baseUrl}/cms/style`, { responseType: 'text' }));
+		return lastValueFrom(
+			this.http.get(`${this.configService.apiConfig.baseUrl}/cms/style`, { responseType: 'text' }),
+		);
 	}
-
 }

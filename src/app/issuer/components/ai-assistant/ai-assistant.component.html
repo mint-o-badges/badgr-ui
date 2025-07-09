@@ -155,7 +155,7 @@
 								[fieldType]="'number'"
 								[control]="aiCompetency.rawControlMap.hours"
 								[errorMessage]="{ duration: requiredError }"
-								noTopMargin="true"
+								[noTopMargin]="true"
 							>
 							</oeb-input>
 							<span class="tw-font-bold tw-text-purple" hlmP>:</span>
@@ -164,7 +164,7 @@
 								[fieldType]="'number'"
 								[control]="aiCompetency.rawControlMap.minutes"
 								[errorMessage]="{ duration: requiredError }"
-								noTopMargin="true"
+								[noTopMargin]="true"
 							>
 							</oeb-input>
 							<span class="tw-text-oebblack md:tw-text-lg">{{ 'RecBadge.hours' | translate }}</span>

@@ -1,8 +1,8 @@
 import { Component, input, ViewChild, ViewEncapsulation } from '@angular/core';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { SafeHtml } from '@angular/platform-browser';
 import { DynamicHooksComponent } from 'ngx-dynamic-hooks';
 import { Router } from '@angular/router';
-import { AiAssistantComponent } from 'app/issuer/components/ai-assistant/ai-assistant.component';
+import { AiAssistantComponent } from '~/issuer/components/ai-assistant/ai-assistant.component';
 
 @Component({
 	selector: 'shadow-dom',
@@ -13,7 +13,7 @@ import { AiAssistantComponent } from 'app/issuer/components/ai-assistant/ai-assi
 				class="shadow-content"
 				[content]="_content"
 				[parsers]="dynamicComponents"
-				options="{sanitize: false}"
+				[options]="{ sanitize: false }"
 			></ngx-dynamic-hooks>
 		</div>
 	`,
@@ -31,7 +31,8 @@ import { AiAssistantComponent } from 'app/issuer/components/ai-assistant/ai-assi
 	`,
 	encapsulation: ViewEncapsulation.ShadowDom,
 	standalone: true,
-	imports: [DynamicHooksComponent],
+	// FIXME: AiAssistantComponent is used in CMS HTML, ignore Angular warning?
+	imports: [DynamicHooksComponent, AiAssistantComponent],
 })
 export class ShadowDomComponent {
 	content = input<string>();
@@ -48,10 +49,7 @@ export class ShadowDomComponent {
 
 	@ViewChild('contentWrap') contentWrap;
 
-	constructor(
-		private domSanitizer: DomSanitizer,
-		private router: Router,
-	) {}
+	constructor(private router: Router) {}
 
 	ngOnChanges() {
 		if (this.assetWrap) {

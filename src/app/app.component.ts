@@ -82,6 +82,7 @@ import {
 	lucideRoute,
 	lucideSearch,
 	lucideShare,
+	lucideSquareArrowOutUpRight,
 	lucideTrash2,
 	lucideTriangleAlert,
 	lucideUpload,
@@ -90,6 +91,7 @@ import {
 	lucideWarehouse,
 	lucideX,
 } from '@ng-icons/lucide';
+import { CmsMenuItemsPipe } from './common/pipes/cmsMenuItems.pipe';
 
 // Shim in support for the :scope attribute
 // See https://github.com/lazd/scopedQuerySelectorShim and
@@ -128,6 +130,7 @@ import {
 		MarkdownHintsDialog,
 		SelectIssuerDialog,
 		TranslatePipe,
+		CmsMenuItemsPipe,
 	],
 	providers: [
 		provideIcons({
@@ -176,6 +179,7 @@ import {
 			lucideHeart,
 			lucideHand,
 			lucideBookOpen,
+			lucideSquareArrowOutUpRight,
 		}),
 	],
 })
@@ -323,7 +327,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 		private languageService: LanguageService, // Translation
 		protected translate: TranslateService,
 		@Inject(DOCUMENT) private document: Document,
-		cmsManager: CmsManager,
+		private cmsManager: CmsManager,
 	) {
 		// Initialize App language
 		this.languageService.setInitialAppLangauge();

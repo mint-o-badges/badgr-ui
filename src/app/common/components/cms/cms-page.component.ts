@@ -7,16 +7,11 @@ import { CmsContentComponent } from './cms-content.component';
 
 @Component({
 	selector: 'cms-page',
-	template: `
-		<cms-content [headline]="headline" [image]="image" [content]="content" />
-	`,
-	imports: [
-		CmsContentComponent
-	],
+	template: ` <cms-content [headline]="headline?.toString()" [image]="image" [content]="content?.toString()" /> `,
+	imports: [CmsContentComponent],
 	standalone: true,
 })
 export class CmsPageComponent implements OnInit, OnChanges {
-
 	headline: SafeHtml;
 	image: string;
 	content: SafeHtml;
@@ -27,9 +22,7 @@ export class CmsPageComponent implements OnInit, OnChanges {
 	constructor(
 		private route: ActivatedRoute,
 		protected cmsApiService: CmsApiService,
-	) {
-
-	}
+	) {}
 
 	ngOnInit() {
 		let slug = this.slug();
@@ -42,7 +35,7 @@ export class CmsPageComponent implements OnInit, OnChanges {
 				if (data.cmsContentType) {
 					this.type = data.cmsContentType;
 				}
-				let content: CmsApiPage|CmsApiPost;
+				let content: CmsApiPage | CmsApiPost;
 				if (this.type == 'page') {
 					content = await this.cmsApiService.getPageBySlug(slug);
 				} else if (this.type == 'post') {
@@ -62,7 +55,7 @@ export class CmsPageComponent implements OnInit, OnChanges {
 	// change if @input slug changes for static paths (home, about, faq)
 	async ngOnChanges(changes: unknown) {
 		if (this.slug() && changes['slug'] && changes['slug'] != this.slug() && this.type) {
-			let content: CmsApiPage|CmsApiPost;
+			let content: CmsApiPage | CmsApiPost;
 			if (this.type == 'page') {
 				content = await this.cmsApiService.getPageBySlug(this.slug());
 			} else if (this.type == 'post') {

@@ -15,7 +15,7 @@
 		"typeRoots": ["node_modules/@types"],
 		"lib": ["dom", "es2022"],
 		"module": "es2022",
-		"baseUrl": "src",
+		"baseUrl": "./",
 		"useDefineForClassFields": false,
 		"resolveJsonModule": true,
 		"paths": {
