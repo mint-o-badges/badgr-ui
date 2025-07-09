@@ -1,27 +1,28 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { BadgeClass } from '../issuer/models/badgeclass.model';
+import { BadgeResult } from '../recipient/components/recipient-earned-badge-list/recipient-earned-badge-list.component';
+import { OebSelectComponent } from './select.component';
 
 @Component({
 	selector: 'oeb-sort-select',
 	template: `
 		<oeb-select
-			actionBar="true"
+			[actionBar]="true"
 			class="oeb tw-block tw-w-full"
 			[options]="sortOptions"
 			[control]="control"
 			[disabled]="disabled"
 			[autofocus]="true"
 			[placeholder]="placeholder"
-			noTopMargin="true"
+			[noTopMargin]="true"
 		></oeb-select>
 	`,
-	standalone: false,
+	imports: [OebSelectComponent],
 })
 export class OebSortSelectComponent implements OnInit {
 	@Input() control: FormControl = new FormControl('name_asc');
-	@Input() result: BadgeClass[] = [];
+	@Input() result: BadgeResult[] = [];
 	@Input() recipient: boolean = false;
 	@Input() learningPath: boolean = false;
 	@Input() disabled: boolean = false;

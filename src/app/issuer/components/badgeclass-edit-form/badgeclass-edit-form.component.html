@@ -43,7 +43,7 @@
 									<oeb-input
 										class="tw-w-full"
 										[control]="badgeClassForm.rawControlMap.badge_name"
-										noTopMargin="true"
+										[noTopMargin]="true"
 										[errorMessage]="{
 											required: giveBadgeTitle,
 											mustChange: changeBadgeTitle
@@ -63,7 +63,7 @@
 										[fieldType]="'number'"
 										[control]="badgeClassForm.rawControlMap.badge_hours"
 										[errorMessage]="{ duration: hoursMaxError }"
-										noTopMargin="true"
+										[noTopMargin]="true"
 									>
 									</oeb-input>
 									<span class="tw-text-oebblack md:tw-text-lg">{{
@@ -74,7 +74,7 @@
 										[fieldType]="'number'"
 										[control]="badgeClassForm.rawControlMap.badge_minutes"
 										[errorMessage]="{ duration: minMaxError }"
-										noTopMargin="true"
+										[noTopMargin]="true"
 									>
 									</oeb-input>
 									<span class="tw-text-oebblack md:tw-text-lg">{{
@@ -121,7 +121,7 @@
 									id="badgeclass_description_input"
 									[placeholder]="summarizedDescription"
 									[errorMessage]="{ required: enterDescription }"
-									noTopMargin="true"
+									[noTopMargin]="true"
 								>
 								</oeb-input>
 							</div>
@@ -442,7 +442,7 @@
 														[fieldType]="'number'"
 														[control]="aiCompetency.rawControlMap.hours"
 														[errorMessage]="{ duration: requiredError }"
-														noTopMargin="true"
+														[noTopMargin]="true"
 													>
 													</oeb-input>
 													<span class="tw-font-bold tw-text-purple" hlmP>:</span>
@@ -451,7 +451,7 @@
 														[fieldType]="'number'"
 														[control]="aiCompetency.rawControlMap.minutes"
 														[errorMessage]="{ duration: requiredError }"
-														noTopMargin="true"
+														[noTopMargin]="true"
 													>
 													</oeb-input>
 													<span class="tw-text-oebblack md:tw-text-lg">{{
@@ -683,7 +683,7 @@
 														[fieldType]="'number'"
 														[control]="keywordCompetency.rawControlMap.hours"
 														[errorMessage]="{ duration: requiredError }"
-														noTopMargin="true"
+														[noTopMargin]="true"
 													>
 													</oeb-input>
 													<span class="tw-font-bold tw-text-purple" hlmP>:</span>
@@ -692,7 +692,7 @@
 														[fieldType]="'number'"
 														[control]="keywordCompetency.rawControlMap.minutes"
 														[errorMessage]="{ duration: requiredError }"
-														noTopMargin="true"
+														[noTopMargin]="true"
 													>
 													</oeb-input>
 													<span class="tw-text-oebblack md:tw-text-lg">{{
@@ -775,7 +775,7 @@
 													[label]="competencyTitle"
 													[control]="competency.rawControlMap.name"
 													[errorMessage]="{ required: titleError }"
-													noTopMargin="true"
+													[noTopMargin]="true"
 													[readonly]="
 														competency.controls['framework_identifier'].value ? true : false
 													"
@@ -804,7 +804,7 @@
 													[errorMessage]="{
 														required: competencyCategoryError
 													}"
-													noTopMargin="true"
+													[noTopMargin]="true"
 													[disabled]="
 														competency.controls['framework_identifier'].value ? true : false
 													"
@@ -836,7 +836,7 @@
 																[errorMessage]="{
 																	max: maxValue1000
 																}"
-																noTopMargin="true"
+																[noTopMargin]="true"
 															>
 															</oeb-input>
 															:
@@ -848,7 +848,7 @@
 																[errorMessage]="{
 																	max: minMaxError
 																}"
-																noTopMargin="true"
+																[noTopMargin]="true"
 															>
 															</oeb-input>
 
@@ -1040,7 +1040,7 @@
 										[fieldType]="'text'"
 										[control]="criteria.rawControlMap.name"
 										[errorMessage]="{ required: titleError }"
-										noTopMargin="true"
+										[noTopMargin]="true"
 										[readonly]="isPredefinedCriteria(criteria)"
 										class="tw-w-full"
 										[placeholder]="'Badge.enterOwnCriteria' | translate"
@@ -1050,7 +1050,7 @@
 									<oeb-button
 										icon="lucideTrash2"
 										type="button"
-										iconLeft="true"
+										[iconLeft]="true"
 										size="sm"
 										variant="secondary"
 										[text]="'General.delete' | translate"
@@ -1123,6 +1123,7 @@
 		<div class="tw-flex tw-justify-between md:tw-justify-end tw-flex-wrap sm:tw-flex-nowrap tw-gap-2 tw-mt-8">
 			<oeb-button
 				class="tw-mr-4"
+				type="button"
 				variant="secondary"
 				(click)="cancelClicked()"
 				[disabled]="!!savePromise"
@@ -1171,7 +1172,7 @@
 							required: chooseABadgeCategory
 						}"
 						[autofocus]="true"
-						noTopMargin="true"
+						[noTopMargin]="true"
 					></oeb-select>
 				</div>
 				<div class="tw-italic tw-gap-2 md:tw-pl-8">

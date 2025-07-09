@@ -2,6 +2,11 @@ import { Component, ElementRef, EventEmitter, Input, Output } from '@angular/cor
 import { FormControl } from '@angular/forms';
 import { preloadImageURL, readFileAsText } from '../util/file-util';
 import { DomSanitizer } from '@angular/platform-browser';
+import { SvgIconComponent } from './svg-icon.component';
+import { NgIf } from '@angular/common';
+import { HlmPDirective } from '../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
+import { HlmADirective } from '../../components/spartan/ui-typography-helm/src/lib/hlm-a.directive';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
 	selector: 'bg-formfield-file',
@@ -50,7 +55,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 		</label>
 		<p class="dropzone-x-error" *ngIf="control?.dirty && !control?.valid">{{ errorMessage }}</p>
 	`,
-	standalone: false,
+	imports: [SvgIconComponent, NgIf, HlmPDirective, HlmADirective, TranslatePipe],
 })
 export class BgFormFieldFileComponent {
 	private get element(): HTMLElement {

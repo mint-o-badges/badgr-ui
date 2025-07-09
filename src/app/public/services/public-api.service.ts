@@ -17,7 +17,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ApiV2Wrapper } from '../../common/model/api-v2-wrapper';
 import { Issuer } from '../../issuer/models/issuer.model';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class PublicApiService extends BaseHttpApiService {
 	constructor(
 		protected loginService: SessionService,

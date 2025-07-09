@@ -25,13 +25,13 @@ describe('IssuerEditComponent', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			declarations: [IssuerEditComponent],
 			imports: [
 				RouterTestingModule,
 				CommonModule,
 				BadgrCommonModule,
 				TranslateTestingModule.withTranslations('de', {}),
 				...COMMON_IMPORTS,
+				IssuerEditComponent,
 			],
 			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],

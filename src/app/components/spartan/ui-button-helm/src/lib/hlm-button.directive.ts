@@ -21,6 +21,9 @@ export const buttonVariants = cva(
 				link: 'tw-underline-offset-4 tw-underline tw-text-link',
 				green: 'tw-bg-green tw-font-bold tw-text-purple tw-border-solid tw-border-purple hover:tw-bg-green-400 tw-border-solid tw-border-green hover:tw-border-green-400',
 				white: 'tw-bg-white tw-text-oebblack tw-border-solid tw-border-purple !tw-font-normal',
+				purple100:
+					'tw-bg-purple-100 tw-text-purple tw-border-solid tw-border-purple !tw-font-bold tw-flex tw-justify-between tw-text-left',
+				inherit: 'tw-bg-inherit',
 				meinBildungsraum:
 					'button tw-shrink-0 tw-bg-white tw-text-oebblack tw-gap-[8px] md:tw-h-[64px] md:tw-py-[4px] md:tw-px-[16px] md:tw-text-[20px] md:tw-rounded-[10px] md:tw-border-[1px] tw-items-center tw-h-[44.8px] tw-py-[2.8px] tw-px-[11.2px] tw-text-[14px] tw-border-[0.7] tw-rounded-[7px] tw-font-normal md:tw-leading-[28px] tw-leading-[19.6px] tw-px-0',
 			},

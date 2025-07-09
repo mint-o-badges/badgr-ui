@@ -1,5 +1,6 @@
 import { Component, ElementRef, Renderer2 } from '@angular/core';
 import { BaseDialog } from './base-dialog';
+import { SvgIconComponent } from '../components/svg-icon.component';
 
 @Component({
 	selector: 'markdown-hints-dialog',
@@ -41,7 +42,7 @@ import { BaseDialog } from './base-dialog';
 			</div>
 		</dialog>
 	`,
-	standalone: false,
+	imports: [SvgIconComponent],
 })
 export class MarkdownHintsDialog extends BaseDialog {
 	constructor(componentElem: ElementRef, renderer: Renderer2) {

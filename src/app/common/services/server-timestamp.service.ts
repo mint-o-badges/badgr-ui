@@ -1,13 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AppConfigService } from '../app-config.service';
-import { AiSkillsResult, Skill } from '../model/ai-skills.model';
 import { BaseHttpApiService } from './base-http-api.service';
 import { MessageService } from './message.service';
 import { SessionService } from './session.service';
 
-@Injectable()
-export class ServerVersionService extends BaseHttpApiService {
+@Injectable({ providedIn: 'root' })
+export class ServerTimestampService extends BaseHttpApiService {
 	constructor(
 		protected loginService: SessionService,
 		protected http: HttpClient,
@@ -16,9 +15,9 @@ export class ServerVersionService extends BaseHttpApiService {
 	) {
 		super(loginService, http, configService, messageService);
 	}
-	getServerVersion(): Promise<string> {
+	getServerTimestamp(): Promise<string> {
 		return this.get<string>(
-			'/get-server-version',
+			'/get-server-timestamp',
 			null, // queryParams
 			false, // requireAuth
 			false, // useAuth

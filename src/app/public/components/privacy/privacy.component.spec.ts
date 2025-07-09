@@ -12,8 +12,12 @@ describe('PrivacyComponent', () => {
 
 	beforeEach(waitForAsync(() => {
 		TestBed.configureTestingModule({
-			declarations: [PrivacyComponent],
-			imports: [...COMMON_IMPORTS, BadgrCommonModule, TranslateTestingModule.withTranslations('de', {})],
+			imports: [
+				...COMMON_IMPORTS,
+				BadgrCommonModule,
+				TranslateTestingModule.withTranslations('de', {}),
+				PrivacyComponent,
+			],
 			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 			teardown: { destroyAfterEach: false },

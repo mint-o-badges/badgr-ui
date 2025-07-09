@@ -29,7 +29,7 @@
 						#fileField
 						label="File"
 						validFileTypes="text/plain,.csv"
-						[control]="csvForm.controls['zipFile']"
+						[control]="zipFileControl"
 						[placeholderImage]="csvUploadIconUrl"
 						(fileData)="onFileDataReceived($event)"
 					>
@@ -40,6 +40,7 @@
 				<oeb-button
 					class="tw-mr-4"
 					variant="secondary"
+					type="button"
 					(click)="updateViewState('cancel')"
 					[text]="'General.cancel' | translate"
 				></oeb-button>

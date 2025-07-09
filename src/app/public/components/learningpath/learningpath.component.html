@@ -162,11 +162,10 @@
 					[badgeDescription]="badge.badge.description"
 					[badgeSlug]="badge.badge.slug"
 					[badgeIssueDate]="badge.badge.created_at"
-					public="true"
+					[public]="true"
 					[competencies]="badge.badge.extensions['extensions:CompetencyExtension']"
 					[publicUrl]="'/public/badges/' + badge.badge.slug"
 					[completed]="completedBadgeIds.includes(badge.badge.slug)"
-					[badgeClass]="true"
 				></bg-badgecard>
 			</div>
 		</ng-template>
@@ -182,10 +181,9 @@
 					[badgeDescription]="badge.badge.description"
 					[badgeSlug]="badge.badge.slug"
 					[badgeIssueDate]="badge.badge.created_at"
-					public="true"
+					[public]="true"
 					[competencies]="badge.badge.extensions['extensions:CompetencyExtension']"
 					[publicUrl]="'/public/badges/' + badge.badge.slug"
-					[badgeClass]="true"
 				></bg-badgecard>
 			</div>
 		</ng-template>
@@ -204,10 +202,9 @@
 					[badgeDescription]="badge.description"
 					[badgeSlug]="badge.slug"
 					[badgeIssueDate]="badge.created_at"
-					public="true"
+					[public]="true"
 					[publicUrl]="'/public/badges/' + badge.slug"
 					[competencies]="badge.extensions['extensions:CompetencyExtension']"
-					[badgeClass]="true"
 					[completed]="completedBadgeIds.includes(badge.slug)"
 				></bg-badgecard>
 			</div>

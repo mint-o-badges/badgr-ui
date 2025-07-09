@@ -6,7 +6,7 @@ import { ZipTaskProgress } from './interfaces/zip-task-progress.interface';
 
 declare const zip: any;
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ZipService {
 	constructor() {
 		zip.workerScriptsPath = 'assets/zipjs/';

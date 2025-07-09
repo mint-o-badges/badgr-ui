@@ -6,10 +6,8 @@ import { CmsPageComponent } from 'app/common/components/cms/cms-page.component';
 	selector: 'app-start',
 	template: `<cms-page [slug]="translate.currentLang == 'de' ? 'startseite' : 'startseite'" />`,
 	standalone: true,
-	imports: [CmsPageComponent]
+	imports: [CmsPageComponent],
 })
 export class StartComponent {
-	constructor(
-		protected translate: TranslateService
-	) {}
+	constructor(protected translate: TranslateService) {}
 }

@@ -3,6 +3,8 @@ import { BaseDialog } from './base-dialog';
 import { AppConfigService } from '../app-config.service';
 import { UserProfileManager } from '../services/user-profile-manager.service';
 import { UserProfile } from '../model/user-profile.model';
+import { NgIf } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
 	selector: 'new-terms-dialog',
@@ -47,7 +49,7 @@ import { UserProfile } from '../model/user-profile.model';
 			</div>
 		</div>
 	</dialog>`,
-	standalone: false,
+	imports: [NgIf, FormsModule],
 })
 export class NewTermsDialog extends BaseDialog {
 	agreedToTerms = false;

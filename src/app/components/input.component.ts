@@ -5,6 +5,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { NgClass, NgIf } from '@angular/common';
 import { UrlValidator } from '../common/validators/url.validator';
 import { HlmPDirective } from './spartan/ui-typography-helm/src/lib/hlm-p.directive';
+import { TypedFormGroup } from '../common/util/typed-forms';
 
 @Component({
 	selector: 'oeb-input',
@@ -14,14 +15,12 @@ import { HlmPDirective } from './spartan/ui-typography-helm/src/lib/hlm-p.direct
 		[ngClass]="{ 'tw-my-6 md:tw-mt-7': !noTopMargin, 'tw-opacity-50 tw-pointer-events-none': readonly }"
 	>
 		<div class="tw-flex tw-justify-between">
-			<label class="tw-pb-[2px] tw-pl-[3px]" [attr.for]="inputName" *ngIf="label">
+			<label class="tw-pb-[2px] tw-pl-[3px]" *ngIf="label">
 				<span *ngIf="labelStyle; else baseLabel" [class]="labelStyle" [innerHTML]="label"></span>
 				<ng-template #baseLabel>
 					<span hlmP class="tw-text-oebblack tw-font-semibold" [innerHTML]="label"></span>
 				</ng-template>
 				<span class="tw-pl-[3px] tw-text-oebblack" *ngIf="sublabelRight"> {{ sublabelRight }}</span>
-				<span *ngIf="optional">(OPTIONAL)</span>
-				<span *ngIf="formFieldAside">{{ formFieldAside }}</span>
 			</label>
 			<ng-content
 				class="tw-relative tw-z-20 tw-font-semibold tw-text-[14px] md:tw-text-[20px] tw-leading-4 md:tw-leading-6"
@@ -77,11 +76,11 @@ import { HlmPDirective } from './spartan/ui-typography-helm/src/lib/hlm-p.direct
 })
 export class OebInputComponent {
 	@Input() error: string;
-	@Input() errorOverride?: false;
+	@Input() errorOverride?: boolean = false;
 	@Input() label: string;
 	@Input() labelStyle?: string = '';
 	@Input() ariaLabel: string;
-	@Input() errorMessage: string;
+	@Input() errorMessage: CustomValidatorMessages;
 	@Input() errorGroupMessage: CustomValidatorMessages;
 	@Input() urlField = false;
 	@Input() fieldType = 'text';
@@ -99,10 +98,10 @@ export class OebInputComponent {
 	@ViewChild('textareaInput') textareaInput: ElementRef;
 
 	private cachedErrorMessage = null;
-	private cachedErrorState = null;
+	private cachedErrorState: boolean | null = null;
 	private cachedDirtyState = null;
 	@Input() control: FormControl;
-	@Input() errorGroup: FormGroup;
+	@Input() errorGroup: TypedFormGroup;
 
 	remainingCharactersNum = this.maxchar;
 
@@ -128,10 +127,11 @@ export class OebInputComponent {
 	}
 
 	get controlErrorState() {
-		return (
-			this.errorOverride ||
-			(this.control.dirty && (!this.control.valid || (this.errorGroup && !this.errorGroup.valid)))
-		);
+		if (this.errorOverride) return true;
+		if (!this.control.dirty) return false;
+
+		const controlInvalid = this.errorGroup ? !this.control.valid || !this.errorGroup.valid : !this.control.valid;
+		return controlInvalid;
 	}
 	get errorMessageForDisplay(): string {
 		return this.hasFocus ? this.cachedErrorMessage : this.uncachedErrorMessage;
@@ -145,6 +145,10 @@ export class OebInputComponent {
 		).concat(
 			messagesForValidationError(this.label, this.errorGroup && this.errorGroup.errors, this.errorGroupMessage),
 		)[0]; // Only display the first error
+	}
+
+	get inputName() {
+		return (this.label || this.placeholder).replace(/[^\w]+/g, '_').toLowerCase();
 	}
 
 	ngAfterViewInit() {
@@ -169,7 +173,8 @@ export class OebInputComponent {
 		if (event.code === 'Enter') {
 			this.control.markAsDirty();
 			this.cacheControlState();
-			event.preventDefault();
+
+			if (this.cachedErrorState) event.preventDefault();
 		}
 		// If fieldType is number prevent strings and chars from entering
 		if (this.fieldType === 'number') {

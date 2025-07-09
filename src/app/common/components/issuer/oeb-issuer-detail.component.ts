@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, Output, EventEmitter, ElementRef, ViewChild, inject } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { MessageService } from '../../../common/services/message.service';
 import { Title } from '@angular/platform-browser';
 import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
@@ -9,7 +9,7 @@ import { BadgeClass } from '../../../issuer/models/badgeclass.model';
 import { IssuerManager } from '../../../issuer/services/issuer-manager.service';
 import { MatchingAlgorithm } from '../../dialogs/fork-badge-dialog/fork-badge-dialog.component';
 import { MenuItem } from '../badge-detail/badge-detail.component.types';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { ApiLearningPath } from '../../../common/model/learningpath-api.model';
 import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
 import { DangerDialogComponentTemplate } from '../../dialogs/oeb-dialogs/danger-dialog-template.component';
@@ -19,19 +19,56 @@ import { InfoDialogComponent } from '../../dialogs/oeb-dialogs/info-dialog.compo
 import { QrCodeApiService } from '../../../issuer/services/qrcode-api.service';
 import { ApiQRCode } from '../../../issuer/models/qrcode-api.model';
 import { SessionService } from '../../services/session.service';
+import { BgImageStatusPlaceholderDirective } from '../../directives/bg-image-status-placeholder.directive';
+import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
+import { NgIf, NgFor } from '@angular/common';
+import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
+import { HlmADirective } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-a.directive';
+import { OebButtonComponent } from '../../../components/oeb-button.component';
+import { OebDropdownComponent } from '../../../components/oeb-dropdown.component';
+import { SvgIconComponent } from '../svg-icon.component';
+import { OebTabsComponent } from '../../../components/oeb-backpack-tabs.component';
+import { BgAwaitPromises } from '../../directives/bg-await-promises';
+import { DatatableComponent } from '../../../components/datatable-badges.component';
+import { FormsModule } from '@angular/forms';
+import { HlmInputDirective } from '../../../components/spartan/ui-input-helm/src/lib/hlm-input.directive';
+import { BgBadgecard } from '../bg-badgecard';
+import { LearningPathDatatableComponent } from '../../../components/datatable-learningpaths.component';
+import { BgLearningPathCard } from '../bg-learningpathcard';
+import { PublicApiBadgeClass, PublicApiIssuer, PublicApiLearningPath } from '../../../public/models/public-api.model';
 
 @Component({
 	selector: 'oeb-issuer-detail',
 	templateUrl: './oeb-issuer-detail.component.html',
 	styleUrl: './oeb-issuer-detail.component.scss',
-	standalone: false,
+	imports: [
+		BgImageStatusPlaceholderDirective,
+		HlmH1Directive,
+		NgIf,
+		HlmPDirective,
+		HlmADirective,
+		OebButtonComponent,
+		RouterLink,
+		OebDropdownComponent,
+		SvgIconComponent,
+		OebTabsComponent,
+		BgAwaitPromises,
+		DatatableComponent,
+		FormsModule,
+		HlmInputDirective,
+		NgFor,
+		BgBadgecard,
+		LearningPathDatatableComponent,
+		BgLearningPathCard,
+		TranslatePipe,
+	],
 })
 export class OebIssuerDetailComponent implements OnInit {
-	@Input() issuer: Issuer;
+	@Input() issuer: Issuer | PublicApiIssuer;
 	@Input() issuerPlaceholderSrc: string;
 	@Input() issuerActionsMenu: any;
-	@Input() badges: BadgeClass[];
-	@Input() learningPaths: ApiLearningPath[];
+	@Input() badges: BadgeClass[] | PublicApiBadgeClass[];
+	@Input() learningPaths: (ApiLearningPath | PublicApiLearningPath)[];
 	@Input() public: boolean = false;
 	@Output() issuerDeleted = new EventEmitter();
 
@@ -51,12 +88,18 @@ export class OebIssuerDetailComponent implements OnInit {
 		private qrCodeApiService: QrCodeApiService,
 		private sessionService: SessionService,
 	) {
-		this.issuerManager.myIssuers$.subscribe((issuers) => {
-			this.userIsMember = issuers.some((i) => this.issuer.slug == i.slug);
-		});
+		if (this.sessionService.isLoggedIn) {
+			this.issuerManager.myIssuers$.subscribe((issuers) => {
+				this.userIsMember = issuers.some((i) => this.issuer.slug == i.slug);
+			});
+		}
 	}
 
 	private readonly _hlmDialogService = inject(HlmDialogService);
+
+	isFullIssuer(issuer: Issuer | PublicApiIssuer): issuer is Issuer {
+		return 'currentUserStaffMember' in issuer;
+	}
 
 	menuItemsPublic: MenuItem[] = [
 		{
@@ -117,6 +160,14 @@ export class OebIssuerDetailComponent implements OnInit {
 	set searchQuery(query) {
 		this._searchQuery = query;
 		this.updateResults();
+	}
+
+	get lps() {
+		if (this.public) {
+			return this.learningPaths as PublicApiLearningPath[];
+		} else {
+			return this.learningPaths as ApiLearningPath[];
+		}
 	}
 
 	private async updateResults() {

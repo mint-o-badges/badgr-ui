@@ -23,12 +23,12 @@ describe('SignupComponent', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			declarations: [SignupComponent],
 			imports: [
 				RouterTestingModule.withRoutes([{ path: 'userProfile', component: ProfileComponent }]),
 				BadgrCommonModule,
 				TranslateTestingModule.withTranslations('de', {}),
 				...COMMON_IMPORTS,
+				SignupComponent,
 			],
 			providers: [FormBuilder, Title, DomSanitizer, CommonDialogsService, ...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],

@@ -14,13 +14,13 @@ describe('ProfileComponent', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			declarations: [ProfileComponent],
 			imports: [
 				RouterTestingModule,
 				CommonModule,
 				BadgrCommonModule,
 				...COMMON_IMPORTS,
 				TranslateModule.forRoot(),
+				ProfileComponent,
 			],
 			providers: [...COMMON_MOCKS_PROVIDERS_WITH_SUBS],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],

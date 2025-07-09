@@ -6,10 +6,8 @@ import { CmsPageComponent } from 'app/common/components/cms/cms-page.component';
 	selector: 'app-faq',
 	template: `<cms-page [slug]="translate.currentLang == 'de' ? 'faq' : 'faq'" />`,
 	standalone: true,
-	imports: [CmsPageComponent]
+	imports: [CmsPageComponent],
 })
 export class FaqComponent {
-	constructor(
-		protected translate: TranslateService,
-	) {}
+	constructor(protected translate: TranslateService) {}
 }

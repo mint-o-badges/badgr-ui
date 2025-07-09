@@ -3,11 +3,12 @@ import { NgIf } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { BrnAccordionContentComponent } from '@spartan-ng/brain/accordion';
 import { HlmAccordionModule } from './spartan/ui-accordion-helm/src';
-import { HlmIconModule } from './spartan/ui-icon-helm/src';
+
 import { RouterModule } from '@angular/router';
 import { Component, Input } from '@angular/core';
 import { lucideClock, lucideChevronDown } from '@ng-icons/lucide';
 import { provideIcons } from '@ng-icons/core';
+import { HlmIconDirective } from './spartan/ui-icon-helm/src/lib/hlm-icon.directive';
 
 @Component({
 	selector: 'competency-accordion',
@@ -15,7 +16,7 @@ import { provideIcons } from '@ng-icons/core';
 	imports: [
 		HlmAccordionModule,
 		NgIcon,
-		HlmIconModule,
+		HlmIconDirective,
 		TranslateModule,
 		BrnAccordionContentComponent,
 		RouterModule,
@@ -42,7 +43,7 @@ import { provideIcons } from '@ng-icons/core';
 							</div>
 							<div class="tw-text-purple tw-whitespace-nowrap tw-flex tw-items-center tw-gap-2 tw-mr-2">
 								<ng-icon hlm name="lucideClock" class="!tw-w-4 !tw-h-4" />
-								<span>{{ studyload.toString() }} </span>
+								<span>{{ studyload }} </span>
 							</div>
 						</div>
 						<ng-icon hlm hlmAccIcon name="lucideChevronDown" class="tw-w-8 tw-h-8" />
@@ -68,7 +69,7 @@ export class CompetencyAccordionComponent {
 	@Input() category: string;
 	@Input() description: string;
 	@Input() name: string;
-	@Input() studyload: number;
+	@Input() studyload: string;
 	@Input() framework_identifier?: string;
 	@Input() framework?: string;
 }

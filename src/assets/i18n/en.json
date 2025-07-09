@@ -117,7 +117,7 @@
 		"appIntegrations": "App Integrations",
 		"openMenu": "Open menu",
 		"logout": "Log out",
-		"myProfile": "My profile",
+		"myProfile": "My account",
 		"faq": "FAQ"
 	},
 	"Start": {
@@ -374,10 +374,10 @@
 		"noCategory": "No category",
 		"noIssuers": "no institution",
 		"oneIssuer": "one institution",
-		"multiIssuers": "# institutions",
+		"multiIssuers": "institutions",
 		"noBadges": "No badges",
 		"oneBadge": "1 badge",
-		"multiBadges": "# badges",
+		"multiBadges": "badges",
 		"noRecipients": "No recipient",
 		"oneRecipient": "1 recipient",
 		"multiRecipients": "recipients",
@@ -689,9 +689,10 @@
 		"groupByInstitution": "Group by institution",
 		"institution": "Institution",
 		"greating": "Hello",
+		"greating2": "welcome to your backpack!",
 		"competencies": "Skills",
 		"studyingTime": "Learning time",
-		"hours": "Hours",
+		"hours": "hours",
 		"newCompetencies": "New skills",
 		"skills": "Skills",
 		"knowledge": "Knowledge",
@@ -716,7 +717,12 @@
 		"uploadEmailDoesNotMatchError": "The email address in the badge does not match the email in your OEB profile.",
 		"addEmailToUpload": "Add the email address to your profile to upload the badge.",
 		"versionUploadInfo": "We validate badges in the 2.0 standard when they are uploaded. We can currently only validate badges in the 3.0 standard to a minimal extent. You can find more information on this in our <a class=\"tw-text-link tw-underline\" href=\"/public/faq\">FAQ</a>.",
-		"addingBadge": "Adding Badge ..."
+		"addingBadge": "Adding Badge ...",
+		"skillVisualisationIntro": "These are the areas in which you have strengthened your skills the most:",
+		"skillVisualisationHelp": "Move the mouse pointer over the circles to see the associated skills.",
+		"skillVisualisationSingleIntro": "Your skills in the area of ",
+		"FutureSkillsAccrodingToUlfEhlers": "Future Skills according to Ulf Ehlers",
+		"ESCOAreas": "ESCO areas"
 	},
 	"EditBadge": {
 		"editBadge": "Edit badge",
@@ -786,7 +792,6 @@
 		"descriptionPlaceholder": "These badges show that I not only understand the digital world, but also actively shape it. From programming and algorithms to IT security - I know the tools of the future and use them creatively to solve technical challenges.",
 		"provideDescription": "Please provide a description",
 		"descriptionMax300": "The description should not exceed 300 characters",
-		"myCollections": "My Collections",
 		"useCollectionsForApplications": "Use collections for applications",
 		"collectionInfoText": "Organize your badges into collections and download the respective PDF or create a direct-link for sharing.",
 		"addLink": "Add the link or PDF to your application and refer to it in your cover letter. (For example: “In the attached badge collection you will find an overview of my skills in the field of...”)",
@@ -977,7 +982,8 @@
 		"finishedOn": "finished on",
 		"deleteMd": "delete micro degree",
 		"mdUsers": "Micro Degree users",
-		"searchMds": "search micro degrees"
+		"searchMds": "search micro degrees",
+		"saving": "Saving"
 	},
 	"LearningPathEditor": {
 		"shortDescription": "Summarized description of your Micro Degree. This short description will be saved in the Micro Degree."

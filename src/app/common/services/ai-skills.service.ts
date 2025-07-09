@@ -1,12 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AppConfigService } from '../app-config.service';
-import { AiSkillsResult, Skill } from '../model/ai-skills.model';
+import { AiSkillsResult, ApiSkill } from '../model/ai-skills.model';
 import { BaseHttpApiService } from './base-http-api.service';
 import { MessageService } from './message.service';
 import { SessionService } from './session.service';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AiSkillsService extends BaseHttpApiService {
 	constructor(
 		protected loginService: SessionService,
@@ -19,7 +19,7 @@ export class AiSkillsService extends BaseHttpApiService {
 
 	getAiSkillsResult(textToAnalyze: string): Promise<AiSkillsResult> {
 		return this.post<AiSkillsResult>(`/aiskills/`, {
-			'text': textToAnalyze
+			text: textToAnalyze,
 		}).then(
 			(r) => r.body as AiSkillsResult,
 			(error) => {
@@ -28,7 +28,7 @@ export class AiSkillsService extends BaseHttpApiService {
 		);
 	}
 
-	getAiSkills(textToAnalyze: string): Promise<Skill[]> {
+	getAiSkills(textToAnalyze: string): Promise<ApiSkill[]> {
 		return this.getAiSkillsResult(textToAnalyze).then(
 			(result: AiSkillsResult) => result.skills,
 			(error) => {
@@ -39,8 +39,8 @@ export class AiSkillsService extends BaseHttpApiService {
 
 	getAiKeywordSkillsResult(query: string, language: string): Promise<AiSkillsResult> {
 		return this.post<AiSkillsResult>(`/aiskills-keywords/`, {
-			'keyword': query,
-			'lang': language
+			keyword: query,
+			lang: language,
 		}).then(
 			(r) => r.body as AiSkillsResult,
 			(error) => {
@@ -49,7 +49,7 @@ export class AiSkillsService extends BaseHttpApiService {
 		);
 	}
 
-	getAiKeywordSkills(query: string, language = 'de'): Promise<Skill[]> {
+	getAiKeywordSkills(query: string, language = 'de'): Promise<ApiSkill[]> {
 		return this.getAiKeywordSkillsResult(query, language).then(
 			(result: AiSkillsResult) => result.skills,
 			(error) => {
