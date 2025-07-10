@@ -36,6 +36,7 @@ import {
 import { CatalogService } from '~/catalog/catalog.service';
 import { BadgeClassV3 } from '~/issuer/models/badgeclassv3.model';
 import { LoadingDotsComponent } from '../../../common/components/loading-dots.component';
+import { OebButtonComponent } from '~/components/oeb-button.component';
 
 @Component({
 	selector: 'app-badge-catalog',
@@ -59,6 +60,7 @@ import { LoadingDotsComponent } from '../../../common/components/loading-dots.co
 		TranslatePipe,
 		BgBadgecard,
 		LoadingDotsComponent,
+		OebButtonComponent,
 	],
 })
 export class BadgeCatalogComponent extends BaseRoutableComponent implements OnInit, AfterViewInit, OnDestroy {
@@ -71,7 +73,7 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 	@ViewChild('loadMore') loadMore: ElementRef;
 
 	readonly INPUT_DEBOUNCE_TIME = 400;
-	readonly BADGES_PER_PAGE = 21; // We show at most 3 columns of badges, so we load 7 rows at a time
+	readonly BADGES_PER_PAGE = 1; // We show at most 3 columns of badges, so we load 7 rows at a time
 
 	/** The tag selected for filtering {@link badges}. */
 	selectedTags = signal<ITag['value'][]>([]);
@@ -248,6 +250,10 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		this.currentPage.set(0);
 	}
 
+	onLoadMoreClicked() {
+		if (this.hasNext()) this.currentPage.update((p) => p + 1);
+	}
+
 	/**
 	 * TrackByFunction to uniquely identify a BadgeClass
 	 * @param index The index of the badgeclass within the iterable
@@ -265,11 +271,14 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 	}
 
 	private setupIntersectionObserver(element: ElementRef): IntersectionObserver {
-		const observer = new IntersectionObserver((entries) => {
-			if (entries.at(0).isIntersecting && this.hasNext()) {
-				this.currentPage.update((p) => p + 1);
-			}
-		});
+		const observer = new IntersectionObserver(
+			(entries) => {
+				if (entries.at(0).isIntersecting && this.hasNext() && this.observeScrolling()) {
+					this.currentPage.update((p) => p + 1);
+				}
+			},
+			{ rootMargin: '20% 0px' },
+		);
 
 		observer.observe(element.nativeElement);
 		return observer;

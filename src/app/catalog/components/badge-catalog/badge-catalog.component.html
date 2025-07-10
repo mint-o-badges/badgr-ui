@@ -96,7 +96,18 @@
 	</div>
 	<div #loadMore class="oeb-section-sm">
 		@if (hasNext()) {
-			<loading-dots />
+			@if (!observeScrolling()) {
+				<loading-dots />
+			} @else {
+				<oeb-button
+					variant="secondary"
+					size="sm"
+					type="button"
+					text="{{ 'General.loadMore' | translate }}"
+					(click)="onLoadMoreClicked()"
+					class="tw-mx-auto tw-block tw-w-max"
+				/>
+			}
 		} @else {
 			<h4 hlmH4 class="tw-text-oebblack tw-text-center">{{ 'Badge.catalogAllLoaded' | translate }}</h4>
 			<h4 hlmH4 class="tw-font-black tw-text-purple tw-text-center">
