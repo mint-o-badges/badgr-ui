@@ -955,7 +955,7 @@
 		"badgeSequenceStep": "Badge-Reihenfolge",
 		"badgeSequence": "Reihenfolge der Badges im Micro Degree",
 		"combineBadgeCategories": "Du kannst Kompetenz-Badges und Teilnahme-Badges kombinieren.",
-		"min3Badges": "Der Micro Degree muss mindestens 3 Badges enthalten.",
+		"min2Badges": "Der Micro Degree muss mindestens 2 Badges enthalten.",
 		"chooseBadgesInfo": "Verwende am besten nur Badges deiner eigenen Institution, da der Micro Degree inaktiv wird, falls einer der enthaltenen Badges gelöscht werden sollte. Du musst dann einen Ersatz finden, um den Micro Degree wieder zu aktivieren.",
 		"youHave": "Du hast",
 		"choosenForLp": "für den Micro Degree ausgewählt.",
@@ -989,7 +989,7 @@
 		"flexibleSelectionInfo": "Lege hier fest, wieviele der ausgewählten Badges erworben werden müssen, damit die lernende Person den Abschluss Micro Degree erhält:",
 		"learnersHaveTo": "Lernende müssen",
 		"learnersHaveTo2": "der oben ausgewählten Badges erwerben, um den Abschluss-Badge Micro Degree zu erhalten.",
-		"chooseMin3Badges": "Wähle mindestens 3 Badges aus",
+		"chooseMin2Badges": "Wähle mindestens 2 Badges aus",
 		"studentsMustEarn": "Lernende müssen <span class='tw-font-bold'>{{ count_required }} der {{count_total}} Badges erwerben</span>, um den Abschluss-Badge Micro Degree zu erhalten.",
 		"condition": "Du musst <span class='tw-font-bold'>{{ count_required }} der {{count_total}} Badges erwerben</span>, um den Micro Degree zu erhalten."
 	},

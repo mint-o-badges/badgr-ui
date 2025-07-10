@@ -514,7 +514,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 						label: String(i + 1),
 						value: String(i + 1),
 					}))
-					.filter((v) => parseInt(v.value) != value.length && parseInt(v.value) >= 3)
+					.filter((v) => parseInt(v.value) != value.length && parseInt(v.value) >= 2)
 					.reverse();
 
 				this.selectMinBadgesOptions.unshift({ label: 'General.all', value: value.length.toString() });
@@ -1003,9 +1003,9 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 	}
 
 	minSelectedBadges(): ValidationErrors | null {
-		return this.selectedBadges.length >= 3
+		return this.selectedBadges.length >= 2
 			? null
-			: { minSelectedBadges: { required: 3, actual: this.selectedBadges.length } };
+			: { minSelectedBadges: { required: 2, actual: this.selectedBadges.length } };
 	}
 }
 

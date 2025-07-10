@@ -152,7 +152,7 @@
 			<cdk-step
 				[label]="'LearningPath.includedBadges' | translate"
 				[optional]="false"
-				[errorMessage]="'LearningPath.chooseMin3Badges' | translate"
+				[errorMessage]="'LearningPath.chooseMin2Badges' | translate"
 				[completed]="!learningPathForm.hasError('minSelectedBadges') || isDevMode"
 				[hasError]="!firstStep() && learningPathForm.hasError('minSelectedBadges') && !isDevMode"
 			>
@@ -163,7 +163,7 @@
 						<div class="tw-m-4 md:tw-m-12 tw-rounded-2xl tw-p-6 md:tw-p-8 tw-bg-white">
 							<p class="tw-flex tw-flex-col tw-gap-2 tw-text-purple tw-text-[18px] tw-leading-[23.4px]">
 								<span class="tw-italic">{{ 'LearningPath.combineBadgeCategories' | translate }}</span>
-								<span> {{ 'LearningPath.min3Badges' | translate }}</span>
+								<span> {{ 'LearningPath.min2Badges' | translate }}</span>
 							</p>
 							<div class="tw-flex tw-flex-wrap tw-py-6">
 								<!-- Search  -->
@@ -290,7 +290,7 @@
 								{{ 'LearningPath.selectedBadges' | translate: { count: selectedBadges.length } }}
 							</p>
 
-							<section *ngIf="selectedBadges.length > 2">
+							<section *ngIf="selectedBadges.length > 1">
 								<oeb-separator
 									[separatorStyle]="'tw-block tw-my-4 !tw-border !tw-border-dashed !tw-border-purple'"
 								></oeb-separator>
@@ -532,7 +532,7 @@
 				*ngIf="lastStep()"
 				type="submit"
 				width="max_content"
-				[disabled]="!!savePromise || learningPathForm.invalid || selectedBadges.length < 3"
+				[disabled]="!!savePromise || learningPathForm.invalid || selectedBadges.length < 2"
 				[loading-promises]="[savePromise]"
 				loading-message="{{ submittingText }}"
 				text="{{
