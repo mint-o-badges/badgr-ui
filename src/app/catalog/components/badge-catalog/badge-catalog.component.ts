@@ -21,7 +21,18 @@ import { OebSelectComponent } from '../../../components/select.component';
 import { SortPipe } from '../../../common/pipes/sortPipe';
 import { BgBadgecard } from '../../../common/components/bg-badgecard';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
-import { combineLatest, debounceTime, filter, map, startWith, Subscription, switchMap, tap } from 'rxjs';
+import {
+	combineLatest,
+	concatMap,
+	debounceTime,
+	distinctUntilChanged,
+	filter,
+	map,
+	startWith,
+	Subscription,
+	switchMap,
+	tap,
+} from 'rxjs';
 import { CatalogService } from '~/catalog/catalog.service';
 import { BadgeClassV3 } from '~/issuer/models/badgeclassv3.model';
 import { LoadingDotsComponent } from '../../../common/components/loading-dots.component';
@@ -59,7 +70,7 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 
 	@ViewChild('loadMore') loadMore: ElementRef;
 
-	readonly INPUT_DEBOUNCE_TIME = 500;
+	readonly INPUT_DEBOUNCE_TIME = 400;
 	readonly BADGES_PER_PAGE = 21; // We show at most 3 columns of badges, so we load 7 rows at a time
 
 	/** The tag selected for filtering {@link badges}. */
@@ -178,12 +189,7 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		});
 
 		this.paginateSubscription = combineLatest(
-			[
-				this.currentPage$,
-				this.searchQuery$.pipe(debounceTime(this.INPUT_DEBOUNCE_TIME)),
-				this.selectedTags$,
-				this.sortOption$,
-			],
+			[this.currentPage$, this.searchQuery$, this.selectedTags$, this.sortOption$],
 			(v1, v2, v3, v4) => ({
 				page: v1,
 				searchQuery: v2,
@@ -192,17 +198,19 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 			}),
 		)
 			.pipe(
+				debounceTime(this.INPUT_DEBOUNCE_TIME),
 				filter((i) => i.page >= 0),
+				distinctUntilChanged((prev, curr) => JSON.stringify(prev) === JSON.stringify(curr)),
 				tap((_) => this.observeScrolling.set(false)),
-				switchMap((i) => this.loadRangeOfBadges(i.page, i.searchQuery, i.tags, i.sortOption)),
-				tap((_) => this.observeScrolling.set(true)),
+				concatMap((i) => this.loadRangeOfBadges(i.page, i.searchQuery, i.tags, i.sortOption)),
 			)
 			.subscribe((paginatedBadges) => {
-				if (!paginatedBadges.next) this.hasNext.set(false);
+				this.hasNext.set(paginatedBadges.next !== null);
 				if (!paginatedBadges.previous)
 					// on the first page, set the whole array to make sure to not append anything
 					this.badges.set(paginatedBadges.results);
 				else this.badges.update((currentBadges) => [...currentBadges, ...paginatedBadges.results]);
+				this.observeScrolling.set(true);
 			});
 
 		// Scroll to the top when something resets
