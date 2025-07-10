@@ -166,6 +166,14 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 	}
 
 	badgeIssueDate(entry: RecipientBadgeCollectionEntry) {
+		const context = entry.badge.apiModel.json['@context'];
+		const badgeVersion =
+			Array.isArray(context) && context.some((c) => c.indexOf('purl.imsglobal.org/spec/ob/v3p0') != -1)
+				? '3.0'
+				: '2.0';
+		if (badgeVersion == '3.0') {
+			return new Date(entry.badge.apiModel.json.validFrom);
+		}
 		return new Date(entry.badge.apiModel.json.issuedOn);
 	}
 
