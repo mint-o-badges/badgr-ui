@@ -193,6 +193,7 @@
 						[issuerTitle]="badge.issuerName ? badge.issuerName : badge.badge.issuer"
 						[badgeIssueDate]="badge.badge.createdAt"
 						[public]="true"
+						[publicUrl]="`../../public/badges/${badge.badge.slug}`"
 					></bg-badgecard>
 				</div>
 			</ng-container>
