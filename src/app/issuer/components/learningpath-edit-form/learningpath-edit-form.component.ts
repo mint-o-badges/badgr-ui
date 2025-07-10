@@ -905,7 +905,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 			this.initialisedLearningpath.required_badges_count = Number(formState.required_badges_count);
 			this.initialisedLearningpath.badges = this.draggableList.map((item, index) => {
 				return {
-					badge: this.selectedBadges.find((b) => b.slug == item.slug),
+					badge: item,
 					order: item.order,
 				};
 			});
