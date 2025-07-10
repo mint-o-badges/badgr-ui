@@ -195,6 +195,7 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 				filter((i) => i.page >= 0),
 				tap((_) => this.observeScrolling.set(false)),
 				switchMap((i) => this.loadRangeOfBadges(i.page, i.searchQuery, i.tags, i.sortOption)),
+				tap((_) => this.observeScrolling.set(true)),
 			)
 			.subscribe((paginatedBadges) => {
 				if (!paginatedBadges.next) this.hasNext.set(false);
@@ -202,7 +203,6 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 					// on the first page, set the whole array to make sure to not append anything
 					this.badges.set(paginatedBadges.results);
 				else this.badges.update((currentBadges) => [...currentBadges, ...paginatedBadges.results]);
-				this.observeScrolling.set(true);
 			});
 
 		// Scroll to the top when something resets
