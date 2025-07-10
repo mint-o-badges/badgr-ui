@@ -197,7 +197,6 @@ export class RecipientBadgeCollectionEditFormComponent extends BaseAuthenticated
 				? '3.0'
 				: '2.0';
 		if (badgeVersion == '3.0') {
-			//@ts-ignore
 			return new Date(badge.badge.apiModel.json.validFrom);
 		}
 		return new Date(badge.badge.apiModel.json.issuedOn);
