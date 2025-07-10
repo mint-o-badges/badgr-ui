@@ -22,13 +22,25 @@
 						triggerStyle="oeb-navitem tw-cursor-pointer !tw-leading-none !tw-py-1"
 					></oeb-dropdown>
 
-					<a
-						*ngIf="!features.disableRegistration"
-						class="oeb-navitem"
-						routerLinkActive="oeb-navitem-is-active"
-						[routerLink]="['/public/about']"
-						>{{ 'NavItems.aboutOpenEducationalBadges' | translate }}</a
-					>
+					@if (cmsMenus && cmsMenus.header[translate.currentLang]) {
+						@for (item of cmsMenus.header[translate.currentLang]; track item.id) {
+							@if (item.children.length) {
+								<oeb-dropdown
+									[menuItems]="item.children | CmsMenuItems"
+									[trigger]="item.title"
+									triggerStyle="oeb-navitem tw-cursor-pointer !tw-leading-none !tw-py-1"
+									[noTranslate]="true"
+								/>
+							} @else {
+								<a
+									class="oeb-navitem"
+									routerLinkActive="oeb-navitem-is-active"
+									[routerLink]="[ item.url ]"
+								>{{item.title}}</a>
+							}
+						}
+					}
+
 					<a
 						*ngIf="!features.disableRegistration"
 						class="oeb-navitem"
@@ -69,9 +81,25 @@
 						triggerStyle="oeb-navitem tw-cursor-pointer !tw-leading-none !tw-py-1"
 					></oeb-dropdown>
 
-					<a class="oeb-navitem" routerLinkActive="oeb-navitem-is-active" [routerLink]="['public/about']">
-						{{ 'NavItems.aboutOpenEducationalBadges' | translate }}
-					</a>
+
+					@if (cmsMenus && cmsMenus.header[translate.currentLang]) {
+						@for (item of cmsMenus.header[translate.currentLang]; track item.id) {
+							@if (item.children.length) {
+								<oeb-dropdown
+									[menuItems]="item.children | CmsMenuItems"
+									[trigger]="item.title"
+									triggerStyle="oeb-navitem tw-cursor-pointer !tw-leading-none !tw-py-1"
+									[noTranslate]="true"
+								/>
+							} @else {
+								<a
+									class="oeb-navitem"
+									routerLinkActive="oeb-navitem-is-active"
+									[routerLink]="[ item.url ]"
+								>{{item.title}}</a>
+							}
+						}
+					}
 
 					<a
 						class="oeb-navitem tw-cursor-pointer"
@@ -171,6 +199,21 @@
 			<a routerLinkActive="menuitem-is-active" [routerLink]="['/catalog/learningpaths']">{{
 				'LearningPath.learningpathsNav' | translate
 			}}</a>
+
+			@if (cmsMenus && cmsMenus.header[translate.currentLang]) {
+				@for (item of cmsMenus.header[translate.currentLang]; track item.id) {
+					<hr class="mobilenav-x-rule" />
+					@if (item.children.length) {
+						<p class="mobilenav-x-label">{{ item.title }}</p>
+						@for (child of item.children; track child.id) {
+							<a [routerLink]="[ child.url ]">{{child.title}}</a>
+						}
+					} @else {
+						<a [routerLink]="item.url">{{item.title}}</a>
+					}
+				}
+			}
+
 			<hr class="mobilenav-x-rule" />
 
 			<a routerLinkActive="menuitem-is-active" [routerLink]="['/public/about']">{{
@@ -213,6 +256,20 @@
 			<a [routerLink]="['/catalog/badges']">Badges A-Z</a>
 			<a [routerLink]="['/catalog/issuers']">{{ 'General.institutionsNav' | translate }}</a>
 			<a [routerLink]="['/catalog/learningpaths']">{{ 'LearningPath.learningpathsNav' | translate }}</a>
+
+			@if (cmsMenus && cmsMenus.header[translate.currentLang]) {
+				@for (item of cmsMenus.header[translate.currentLang]; track item.id) {
+					<hr class="mobilenav-x-rule" />
+					@if (item.children.length) {
+						<p class="mobilenav-x-label">{{ item.title }}</p>
+						@for (child of item.children; track child.id) {
+							<a [routerLink]="[ child.url ]">{{child.title}}</a>
+						}
+					} @else {
+						<a [routerLink]="item.url">{{item.title}}</a>
+					}
+				}
+			}
 
 			<hr class="mobilenav-x-rule" />
 			<a [routerLink]="['/recipient/badges']">{{ 'General.backpack' | translate }}</a>
@@ -341,10 +398,19 @@
 		<div
 			class="tw-hidden md:tw-flex tw-flex-col tw-min-w-fit tw-text-right tw-gap-[7px] tw-text-sm md:tw-text-lg md:tw-leading-tight"
 		>
-			<a class="tw-font-semibold md:tw-font-medium tw-text-oebblack" [routerLink]="['/public/faq']">FAQ</a>
-			<a class="tw-text-oebblack" [href]="theme.termsOfServiceLink">{{ 'Start.imprint' | translate }}</a>
-			<a class="tw-text-oebblack" [href]="theme.privacyPolicyLink">{{ 'Start.privacyPolicy' | translate }}</a>
-			<a class="tw-text-oebblack" [routerLink]="['/public/terms']">{{ 'General.tos' | translate }}</a>
+			<ng-container *ngIf="cmsMenus && cmsMenus.footer.de; else menuFooterDefault">
+				<a
+					*ngFor="let item of cmsMenus.footer[translate.currentLang]"
+					class="tw-text-oebblack"
+					href="{{item.url}}"
+				>{{item.title}}</a>
+			</ng-container>
+			<ng-template #menuFooterDefault>
+				<a class="tw-font-semibold md:tw-font-medium tw-text-oebblack" [routerLink]="['/public/faq']">FAQ</a>
+				<a class="tw-text-oebblack" [href]="theme.termsOfServiceLink">{{ 'Start.imprint' | translate }}</a>
+				<a class="tw-text-oebblack" [href]="theme.privacyPolicyLink">{{ 'Start.privacyPolicy' | translate }}</a>
+				<a class="tw-text-oebblack" [routerLink]="['/public/terms']">{{ 'General.tos' | translate }}</a>
+			</ng-template>
 		</div>
 	</div>
 </div>
