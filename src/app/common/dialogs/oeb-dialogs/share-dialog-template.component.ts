@@ -28,12 +28,11 @@ import { saveAsImage } from '../../util/qrcode-util';
 					class="!tw-bg-white focus:tw-outline-none tw-w-full tw-border-1 tw-border-purple min-[880px]:tw-w-96 tw-border-solid tw-h-12 tw-rounded-lg"
 					hlmInput
 					(click)="inputRef.select()"
-					[value]="collection.shareUrl"
-					#urlInput
+					[value]="collection.permanentHash"
 				/>
 				<oeb-button
 					class="tw-absolute tw-top-1/2 tw-right-0 -tw-translate-y-1/2 tw-scale-75"
-					(click)="copyToClipboard(urlInput)"
+					(click)="copyToClipboard(inputRef)"
 					icon="lucideCopy"
 					[size]="'icon'"
 				/>
@@ -71,7 +70,7 @@ export class ShareDialogTemplateComponent {
 	copied: WritableSignal<boolean> = signal(false);
 
 	ngOnInit() {
-		this.qrData = this.collection.shareUrl;
+		this.qrData = this.collection.permanentHash;
 	}
 
 	async copyToClipboard(input: HTMLInputElement) {
