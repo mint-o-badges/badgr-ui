@@ -5,7 +5,6 @@ import { ValidationErrors, Validators, FormsModule } from '@angular/forms';
 import { BadgeClass } from '../../../../issuer/models/badgeclass.model';
 import { BadgeClassCategory } from '../../../../issuer/models/badgeclass-api.model';
 import { BadgeClassManager } from '../../../../issuer/services/badgeclass-manager.service';
-import { sortUnique } from '../../../../catalog/components/badge-catalog/badge-catalog.component';
 import { MessageService } from '../../../../common/services/message.service';
 import { StringMatchingUtil } from '../../../../common/util/string-matching-util';
 import { ApiLearningPath } from '../../../../common/model/learningpath-api.model';
@@ -14,6 +13,7 @@ import { HlmH2Directive } from '../../../../components/spartan/ui-typography-hel
 import { HlmInputDirective } from '../../../../components/spartan/ui-input-helm/src/lib/hlm-input.directive';
 import { NgClass, NgFor, NgIf } from '@angular/common';
 import { BgBadgecard } from '../../../../common/components/bg-badgecard';
+import { sortUnique } from '~/catalog/util/sorting';
 
 type BadgeResult = BadgeClass & { selected?: boolean };
 

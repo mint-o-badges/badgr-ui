@@ -1,23 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, computed, ElementRef, OnDestroy, OnInit, signal, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from '../../../common/services/message.service';
-//import {BadgeClassManager} from '../../services/badgeclass-manager.service';
-import { Issuer } from '../../../issuer/models/issuer.model';
-//import {BadgeClass} from '../../models/badgeclass.model';
 import { Title } from '@angular/platform-browser';
-import { preloadImageURL } from '../../../common/util/file-util';
 import { AppConfigService } from '../../../common/app-config.service';
 import { BaseRoutableComponent } from '../../../common/pages/base-routable.component';
-import { BadgeClass } from '../../../issuer/models/badgeclass.model';
 import { BadgeClassManager } from '../../../issuer/services/badgeclass-manager.service';
-import { StringMatchingUtil } from '../../../common/util/string-matching-util';
-import { BadgeClassCategory } from '../../../issuer/models/badgeclass-api.model';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { FormControl, FormsModule } from '@angular/forms';
 import { appearAnimation } from '../../../common/animations/animations';
-import { applySorting } from '../../util/sorting';
 import { FormMessageComponent } from '../../../common/components/form-message.component';
-import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
 import { CountUpModule } from 'ngx-countup';
 import { NgIf, NgFor } from '@angular/common';
@@ -27,9 +18,25 @@ import { NgIcon } from '@ng-icons/core';
 import { HlmIconDirective } from '../../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
 import { OebGlobalSortSelectComponent } from '../../../components/oeb-global-sort-select.component';
 import { OebSelectComponent } from '../../../components/select.component';
-import { BgBadgecard } from '../../../common/components/bg-badgecard';
-import { PaginationAdvancedComponent } from '../../../components/oeb-numbered-pagination';
 import { SortPipe } from '../../../common/pipes/sortPipe';
+import { BgBadgecard } from '../../../common/components/bg-badgecard';
+import { toObservable, toSignal } from '@angular/core/rxjs-interop';
+import {
+	combineLatest,
+	concatMap,
+	debounceTime,
+	distinctUntilChanged,
+	filter,
+	map,
+	startWith,
+	Subscription,
+	switchMap,
+	tap,
+} from 'rxjs';
+import { CatalogService } from '~/catalog/catalog.service';
+import { BadgeClassV3 } from '~/issuer/models/badgeclassv3.model';
+import { LoadingDotsComponent } from '../../../common/components/loading-dots.component';
+import { OebButtonComponent } from '~/components/oeb-button.component';
 
 @Component({
 	selector: 'app-badge-catalog',
@@ -38,7 +45,6 @@ import { SortPipe } from '../../../common/pipes/sortPipe';
 	animations: [appearAnimation],
 	imports: [
 		FormMessageComponent,
-		BgAwaitPromises,
 		HlmH1Directive,
 		CountUpModule,
 		NgIf,
@@ -50,469 +56,251 @@ import { SortPipe } from '../../../common/pipes/sortPipe';
 		OebGlobalSortSelectComponent,
 		OebSelectComponent,
 		NgFor,
-		BgBadgecard,
-		PaginationAdvancedComponent,
 		SortPipe,
 		TranslatePipe,
+		BgBadgecard,
+		LoadingDotsComponent,
+		OebButtonComponent,
 	],
 })
-export class BadgeCatalogComponent extends BaseRoutableComponent implements OnInit {
-	readonly issuerPlaceholderSrc = preloadImageURL('../../../../breakdown/static/images/placeholderavatar-issuer.svg');
-	readonly noIssuersPlaceholderSrc =
-		'../../../../assets/@concentricsky/badgr-style/dist/images/image-empty-issuer.svg';
-
-	Array = Array;
-
-	state;
-
-	badges: BadgeClass[] = null;
-	badgeResults: BadgeClass[] = null;
-	badgeResultsByIssuer: MatchingBadgeIssuer[] = [];
-	badgeResultsByCategory: MatchingBadgeCategory[] = [];
-
-	filteredBadges: BadgeClass[] = null;
-
-	badgesLoaded: Promise<unknown>;
-
-	showLegend = false;
-	tags: string[] = [];
-	issuers: string[] = [];
-	selectedTag: string = null;
-
+export class BadgeCatalogComponent extends BaseRoutableComponent implements OnInit, AfterViewInit, OnDestroy {
 	sortControl = new FormControl('');
-
-	groupOptions = [
-		{ value: '---', label: 'Nicht gruppieren' },
-		{ value: 'issuer', label: 'Institution' },
-		{ value: 'category', label: 'Kategorie' },
-	];
-	groupControl = new FormControl();
-
-	tagsOptions = [];
 	tagsControl = new FormControl();
+	intersectionObserver: IntersectionObserver;
+	scrollSubscription?: Subscription;
+	paginateSubscription?: Subscription;
 
-	badgesPerPage = 30;
-	totalPages: number;
-	nextLink: string;
-	previousLink: string;
+	@ViewChild('loadMore') loadMore: ElementRef;
 
-	sortOption: string | null = null;
+	readonly INPUT_DEBOUNCE_TIME = 400;
+	readonly BADGES_PER_PAGE = 21; // We show at most 3 columns of badges, so we load 7 rows at a time
 
-	get theme() {
-		return this.configService.theme;
-	}
-	get features() {
-		return this.configService.featuresConfig;
-	}
+	/** The tag selected for filtering {@link badges}. */
+	selectedTags = signal<ITag['value'][]>([]);
+	selectedTags$ = toObservable(this.selectedTags);
 
-	plural = {
-		issuer: {
-			'=0': this.translate.instant('Badge.noIssuers'),
-			'=1': this.translate.instant('Badge.oneIssuer'),
-			other: this.translate.instant('Badge.multiIssuers'),
-		},
-		badges: {
-			'=0': this.translate.instant('Badge.noBadges'),
-			'=1': this.translate.instant('Badge.oneBadge'),
-			other: this.translate.instant('Badge.multiBadges'),
-		},
-		recipient: {
-			'=0': this.translate.instant('Badge.noRecipients'),
-			'=1': this.translate.instant('Badge.oneRecipient'),
-			other: this.translate.instant('Badge.multiRecipients'),
-		},
-	};
+	/** A search string that is used to filter {@link badges}. */
+	searchQuery = signal<string>('');
+	searchQuery$ = toObservable(this.searchQuery);
 
-	private _searchQuery = '';
-	get searchQuery() {
-		return this._searchQuery;
-	}
-	set searchQuery(query) {
-		this._searchQuery = query;
-		// this.updateResults();
-		this.updatePaginatedResults();
-		this.currentPage = 1;
-	}
+	/** A sorting option to sort {@link badges}. */
+	sortOption = signal<'name_asc' | 'name_desc' | 'date_asc' | 'date_desc'>('date_desc');
+	sortOption$ = toObservable(this.sortOption);
 
-	private _groupBy = '';
-	get groupBy() {
-		return this._groupBy;
-	}
-	set groupBy(val: string) {
-		this._groupBy = val;
-		// this.updateResults();
-		this.updatePaginatedResults();
-	}
+	/**
+	 * The 0-indexed current page the component sits on, starting at -1 to
+	 * initiate the first load when it is set to 0.
+	 */
+	currentPage = signal<number>(-1);
+	currentPage$ = toObservable(this.currentPage);
 
-	get badgesPluralWord(): string {
-		return this.badges.length === 1 ? this.plural['badges']['1'] : this.plural['badges']['other'];
-	}
+	/** Determines whether a legend that explains badge categories is shown. */
+	showLegend = signal<boolean>(false);
 
-	get issuersPluralWord(): string {
-		return this.issuers.length === 1 ? this.plural['issuer']['1'] : this.plural['issuer']['other'];
-	}
+	/**
+	 * The badges resulting from a query to the database with the given inputs of
+	 * {@link searchQuery}, {@link selectedTags} and {@link sortOption}
+	 */
+	badges = signal<BadgeClassV3[]>([]);
 
-	isFiltered() {
-		return Boolean(this.searchQuery || this.tagsControl.value?.length);
-	}
+	/** Whether or not a next page of badge classes can be exists to be loaded. */
+	hasNext = signal<boolean>(true);
 
-	trackById(index: number, item: any): any {
-		return item.id;
-	}
+	/**
+	 * A signal controlling whether user scrolling should be observed or not.
+	 * While new badges are loaded, user scrolling is usually disregarded
+	 * and thus should be ignored.
+	 **/
+	observeScrolling = signal<boolean>(true);
+	observeScrolling$ = toObservable(this.observeScrolling);
 
-	private _currentPage = 1;
+	/** Unique issuers of all badges. */
+	issuers = computed<string[]>(() =>
+		this.badges()
+			.filter((b) => b.issuerVerified)
+			.flatMap((b) => b.issuer)
+			.filter((value, index, array) => array.indexOf(value) === index),
+	);
 
-	get currentPage(): number {
-		return this._currentPage;
-	}
+	/** Selectable options to filter with. */
+	tagsOptions = computed<ITag[]>(() =>
+		this.badges()
+			.flatMap((b) => b.tags)
+			.filter((value, index, array) => array.indexOf(value) === index)
+			.sort()
+			.map((t) => ({
+				label: t,
+				value: t,
+			})),
+	);
 
-	set currentPage(value: number) {
-		if (this._currentPage !== value) {
-			this._currentPage = value;
-			this.updatePaginatedResults();
-		}
-	}
+	/** A string used for displaying the amount of badges that is aware of the current language. */
+	badgesPluralWord = toSignal(
+		combineLatest(
+			[toObservable(this.badges), this.translate.onLangChange.pipe(startWith(this.translate.currentLang))],
+			(badges, lang) => badges,
+		).pipe(
+			map((badges) => {
+				if (badges.length === 0) return 'Badge.noBadges';
+				if (badges.length === 1) return 'Badge.oneBadge';
+				return 'Badge.multiBadges';
+			}),
+			switchMap((key) => this.translate.get(key)),
+		),
+	);
 
-	groups = [this.translate.instant('Badge.category'), this.translate.instant('Badge.issuer'), '---'];
-	categoryOptions: { [key in BadgeClassCategory | 'noCategory']: string } = {
-		competency: this.translate.instant('Badge.competency'),
-		participation: this.translate.instant('Badge.participation'),
-		learningpath: this.translate.instant('Badge.learningpath'),
-		noCategory: this.translate.instant('Badge.noCategory'),
-	};
+	/** A string used for displaying the amount of issuers that is aware of the current language. */
+	issuersPluralWord = toSignal(
+		combineLatest(
+			[toObservable(this.issuers), this.translate.onLangChange.pipe(startWith(this.translate.currentLang))],
+			(issuers, lang) => issuers,
+		).pipe(
+			map((issuers) => {
+				if (issuers.length === 0) return 'Badge.noIssuers';
+				if (issuers.length === 1) return 'Badge.oneIssuer';
+				return 'Badge.multiIssuers';
+			}),
+			switchMap((key) => this.translate.get(key)),
+		),
+	);
 
 	constructor(
 		protected title: Title,
 		protected messageService: MessageService,
 		protected configService: AppConfigService,
 		protected badgeClassService: BadgeClassManager,
+		protected catalogService: CatalogService,
 		router: Router,
 		route: ActivatedRoute,
 		private translate: TranslateService,
 	) {
 		super(router, route);
 		title.setTitle(`Badges - ${this.configService.theme['serviceName'] || 'Badgr'}`);
-
-		// subscribe to issuer and badge class changes
-		this.badgesLoaded = this.loadBadges();
-
-		this.groupControl.valueChanges.subscribe((value) => {
-			this.groupBy = value;
-		});
 	}
 
-	async loadBadges() {
-		return new Promise(async (resolve, reject) => {
-			this.badgeClassService.allPublicBadges$.subscribe(
-				async (badges) => {
-					this.badges = badges
-						.filter((badge) => badge.issuerVerified && badge.issuerOwnerAcceptedTos)
-						.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
-
-					this.totalPages = Math.ceil(this.badges.length / this.badgesPerPage);
-					this.updatePaginatedResults();
-
-					this.badges.forEach((badge) => {
-						this.tags = this.tags.concat(badge.tags);
-						this.issuers = badge.issuerVerified ? this.issuers.concat(badge.issuer) : this.issuers;
-					});
-
-					// sortUnique sorts by frequency, we want to sort by tagname
-					// this.tags = sortUnique(this.tags);
-					this.tags = this.tags.filter((value, index, array) => array.indexOf(value) === index);
-					this.tags.sort();
-					this.tags.forEach((t) => {
-						this.tagsOptions.push({
-							label: t,
-							value: t,
-						});
-					});
-					// this.issuers = sortUnique(this.issuers);
-					this.issuers = this.issuers.filter((value, index, array) => array.indexOf(value) === index);
-					// this.updateResults();
-					resolve(badges);
-				},
-				(error) => {
-					this.messageService.reportAndThrowError('Failed to load badges', error);
-				},
-			);
-		});
-	}
-
-	async getIssuer(badge: BadgeClass): Promise<Issuer> {
-		const im = badge.issuerManager;
-		const issuer = await im.issuerBySlug(badge.issuerSlug);
-
-		return issuer;
+	ngAfterViewInit(): void {
+		this.intersectionObserver = this.setupIntersectionObserver(this.loadMore);
 	}
 
 	ngOnInit() {
 		super.ngOnInit();
 
-		// initialize predefined text
-		this.prepareTexts();
-		// Translate: to update predefined text when language is changed
-		this.translate.onLangChange.subscribe((event) => {
-			this.prepareTexts();
+		this.observeScrolling$.pipe(filter((_) => this.intersectionObserver !== undefined)).subscribe((observe) => {
+			if (observe) this.intersectionObserver.observe(this.loadMore.nativeElement);
+			else this.intersectionObserver.unobserve(this.loadMore.nativeElement);
 		});
 
-		this.tagsControl.valueChanges.subscribe(() => {
-			this.updatePaginatedResults();
-			this.currentPage = 1;
-			// this.updateResults();
-		});
-
-		this.sortControl.valueChanges.subscribe((value) => {
-			console.log(value);
-			this.sortOption = value;
-			this.updatePaginatedResults();
-			this.currentPage = 1;
-		});
-	}
-	prepareTexts() {
-		// 1. Groups
-		this.groups = [this.translate.instant('Badge.category'), this.translate.instant('Badge.issuer'), '---'];
-		// 2. Category options
-		this.categoryOptions = {
-			competency: this.translate.instant('Badge.competency'),
-			participation: this.translate.instant('Badge.participation'),
-			learningpath: this.translate.instant('Badge.learningpath'),
-			noCategory: this.translate.instant('Badge.noCategory'),
-		};
-		// 3. Plural
-		this.plural = {
-			issuer: {
-				'=0': this.translate.instant('Badge.noIssuers'),
-				'=1': this.translate.instant('Badge.oneIssuer'),
-				other: this.translate.instant('Badge.multiIssuers'),
-			},
-			badges: {
-				'=0': this.translate.instant('Badge.noBadges'),
-				'=1': this.translate.instant('Badge.oneBadge'),
-				other: this.translate.instant('Badge.multiBadges'),
-			},
-			recipient: {
-				'=0': this.translate.instant('Badge.noRecipients'),
-				'=1': this.translate.instant('Badge.oneRecipient'),
-				other: this.translate.instant('Badge.multiRecipients'),
-			},
-		};
-	}
-
-	private updateResults() {
-		let that = this;
-		// Clear Results
-		this.badgeResults = [];
-		this.badgeResultsByIssuer = [];
-		const badgeResultsByIssuerLocal = {};
-		this.badgeResultsByCategory = [];
-		const badgeResultsByCategoryLocal = {};
-
-		var addBadgeToResultsByIssuer = function (item) {
-			let issuerResults = badgeResultsByIssuerLocal[item.issuerName];
-
-			if (!issuerResults) {
-				issuerResults = badgeResultsByIssuerLocal[item.issuerName] = new MatchingBadgeIssuer(
-					item.issuerName,
-					'',
-				);
-
-				// append result to the issuerResults array bound to the view template.
-				that.badgeResultsByIssuer.push(issuerResults);
-			}
-
-			issuerResults.addBadge(item);
-			return true;
-		};
-		var addBadgeToResultsByCategory = function (item) {
-			let itemCategory =
-				item.extension && item.extension['extensions:CategoryExtension']
-					? item.extension['extensions:CategoryExtension'].Category
-					: 'noCategory';
-			let categoryResults = badgeResultsByCategoryLocal[itemCategory];
-
-			if (!categoryResults) {
-				categoryResults = badgeResultsByCategoryLocal[itemCategory] = new MatchingBadgeCategory(
-					itemCategory,
-					'',
-				);
-
-				// append result to the categoryResults array bound to the view template.
-				that.badgeResultsByCategory.push(categoryResults);
-			}
-
-			categoryResults.addBadge(item);
-
-			return true;
-		};
-		this.badges
-			.filter(this.badgeMatcher(this.searchQuery))
-			// .filter((badge) => !this.tagsControl.value?.length || this.tagsControl.value.every(tag => badge.tags.includes(tag))) // badges have to match all tags
-			.filter(
-				(badge) =>
-					!this.tagsControl.value?.length || this.tagsControl.value.some((tag) => badge.tags.includes(tag)),
-			) // badges have to match at least one tag
-			.filter((i) => !i.apiModel.source_url)
-			.forEach((item) => {
-				that.badgeResults.push(item);
-				addBadgeToResultsByIssuer(item);
-				addBadgeToResultsByCategory(item);
+		this.paginateSubscription = combineLatest(
+			[this.currentPage$, this.searchQuery$, this.selectedTags$, this.sortOption$],
+			(v1, v2, v3, v4) => ({
+				page: v1,
+				searchQuery: v2,
+				tags: v3,
+				sortOption: v4,
+			}),
+		)
+			.pipe(
+				debounceTime(this.INPUT_DEBOUNCE_TIME),
+				filter((i) => i.page >= 0),
+				distinctUntilChanged((prev, curr) => JSON.stringify(prev) === JSON.stringify(curr)),
+				tap((_) => this.observeScrolling.set(false)),
+				concatMap((i) => this.loadRangeOfBadges(i.page, i.searchQuery, i.tags, i.sortOption)),
+			)
+			.subscribe((paginatedBadges) => {
+				this.hasNext.set(paginatedBadges.next !== null);
+				if (!paginatedBadges.previous)
+					// on the first page, set the whole array to make sure to not append anything
+					this.badges.set(paginatedBadges.results);
+				else this.badges.update((currentBadges) => [...currentBadges, ...paginatedBadges.results]);
+				this.observeScrolling.set(true);
 			});
+
+		// Scroll to the top when something resets
+		// the list of badges (e.g. due to filtering)
+		this.scrollSubscription = this.currentPage$.subscribe((p) => {
+			if (p === 0) window?.scrollTo({ left: 0, top: 0, behavior: 'smooth' });
+		});
+
+		this.tagsControl.valueChanges.subscribe((value) => {
+			this.selectedTags.set(value ?? []);
+			if (this.currentPage() > 0) this.currentPage.set(0);
+		});
+
+		this.sortControl.valueChanges.subscribe((value: 'name_asc' | 'name_desc' | 'date_asc' | 'date_desc') => {
+			this.sortOption.set(value);
+			if (this.currentPage() > 0) this.currentPage.set(0);
+		});
 	}
 
-	private updatePaginatedResults() {
-		let that = this;
-		this.badgeResults = [];
-		this.badgeResultsByIssuer = [];
-		const badgeResultsByIssuerLocal = {};
-		this.badgeResultsByCategory = [];
-		const badgeResultsByCategoryLocal = {};
-
-		const addBadgeToResultsByIssuer = function (item) {
-			let issuerResults = badgeResultsByIssuerLocal[item.issuerName];
-
-			if (!issuerResults) {
-				issuerResults = badgeResultsByIssuerLocal[item.issuerName] = new MatchingBadgeIssuer(
-					item.issuerName,
-					'',
-				);
-				that.badgeResultsByIssuer.push(issuerResults);
-			}
-
-			issuerResults.addBadge(item);
-			return true;
-		};
-
-		const addBadgeToResultsByCategory = function (item) {
-			let itemCategory =
-				item.extension && item.extension['extensions:CategoryExtension']
-					? item.extension['extensions:CategoryExtension'].Category
-					: 'noCategory';
-			let categoryResults = badgeResultsByCategoryLocal[itemCategory];
-
-			if (!categoryResults) {
-				categoryResults = badgeResultsByCategoryLocal[itemCategory] = new MatchingBadgeCategory(
-					itemCategory,
-					'',
-				);
-				that.badgeResultsByCategory.push(categoryResults);
-			}
-
-			categoryResults.addBadge(item);
-			return true;
-		};
-
-		this.filteredBadges = this.badges
-			.filter(this.badgeMatcher(this.searchQuery))
-			.filter(
-				(badge) =>
-					!this.tagsControl.value?.length || this.tagsControl.value.some((tag) => badge.tags.includes(tag)),
-			) // Matches at least one tag
-			.filter((i) => !i.apiModel.source_url);
-
-		if (this.sortOption) {
-			applySorting(this.filteredBadges, this.sortOption);
-		}
-
-		this.totalPages = Math.ceil(this.filteredBadges.length / this.badgesPerPage);
-		const start = (this.currentPage - 1) * this.badgesPerPage;
-		const end = start + this.badgesPerPage;
-
-		that.badgeResults = this.filteredBadges.slice(start, end);
-
-		// that.badgeResults.forEach((item) => {
-		// 	addBadgeToResultsByIssuer(item);
-		// 	addBadgeToResultsByCategory(item);
-		// });
+	ngOnDestroy(): void {
+		if (this.paginateSubscription) this.paginateSubscription.unsubscribe();
+		if (this.scrollSubscription) this.scrollSubscription.unsubscribe();
 	}
-
-	// onPageChange(newPage: number) {
-	// 	if (newPage >= 1 && newPage <= this.totalPages) {
-	// 		this.currentPage = newPage;
-	// 		this.updatePaginatedResults();
-	// 	}
-	// }
 
 	openLegend() {
-		this.showLegend = true;
+		this.showLegend.set(true);
 	}
 
 	closeLegend() {
-		this.showLegend = false;
+		this.showLegend.set(false);
 	}
 
-	filterByTag(tag) {
-		this.selectedTag = this.selectedTag == tag ? null : tag;
-		this.updatePaginatedResults();
-		// this.updateResults();
+	onSearchQueryChange(query: string) {
+		this.searchQuery.set(query);
+		this.currentPage.set(0);
+	}
+
+	onLoadMoreClicked() {
+		if (this.hasNext()) this.currentPage.update((p) => p + 1);
+	}
+
+	/**
+	 * TrackByFunction to uniquely identify a BadgeClass
+	 * @param index The index of the badgeclass within the iterable
+	 * @param item The BadgeClass itself
+	 * @returns The badge classes slug which uniquely identifies the badgeclass
+	 */
+	trackById(index: number, item: BadgeClassV3) {
+		return item.slug;
 	}
 
 	removeTag(tag) {
+		// remove on the control, triggering an update of the setter
+		// and thus updating all dependent signals
 		this.tagsControl.setValue(this.tagsControl.value.filter((t) => t != tag));
-		this.updatePaginatedResults();
-		this.currentPage = 1;
 	}
 
-	private badgeMatcher(inputPattern: string): (badge) => boolean {
-		const patternStr = StringMatchingUtil.normalizeString(inputPattern);
-		const patternExp = StringMatchingUtil.tryRegExp(patternStr);
+	private setupIntersectionObserver(element: ElementRef): IntersectionObserver {
+		const observer = new IntersectionObserver(
+			(entries) => {
+				if (entries.at(0).isIntersecting && this.hasNext() && this.observeScrolling()) {
+					this.currentPage.update((p) => p + 1);
+				}
+			},
+			{ rootMargin: '20% 0px' },
+		);
 
-		return (badge) => StringMatchingUtil.stringMatches(badge.name, patternStr, patternExp);
+		observer.observe(element.nativeElement);
+		return observer;
+	}
+
+	private async loadRangeOfBadges(
+		pageNumber: number,
+		searchQuery: string,
+		selectedTags: string[],
+		sortOption: 'name_asc' | 'name_desc' | 'date_asc' | 'date_desc',
+	) {
+		return await this.catalogService.loadBadges(
+			pageNumber * this.BADGES_PER_PAGE,
+			this.BADGES_PER_PAGE,
+			searchQuery,
+			selectedTags,
+			sortOption,
+		);
 	}
 }
 
-class MatchingBadgeIssuer {
-	constructor(
-		public issuerName: string,
-		public badge,
-		public badges: BadgeClass[] = [],
-	) {}
-
-	async addBadge(badge) {
-		if (badge.issuerName === this.issuerName) {
-			if (this.badges.indexOf(badge) < 0) {
-				this.badges.push(badge);
-			}
-		}
-	}
-}
-
-export function sortUnique(array: string[]): string[] {
-	let frequency = {};
-
-	array.forEach(function (value) {
-		frequency[value] = 0;
-	});
-
-	let uniques = array.filter(function (value) {
-		return ++frequency[value] == 1;
-	});
-
-	return uniques.sort(function (a, b) {
-		return frequency[b] - frequency[a];
-	});
-}
-
-class MatchingBadgeCategory {
-	constructor(
-		public category: string,
-		public badge,
-		public badges: BadgeClass[] = [],
-	) {}
-
-	async addBadge(badge) {
-		if (
-			badge.extension &&
-			badge.extension['extensions:CategoryExtension'] &&
-			badge.extension['extensions:CategoryExtension'].Category === this.category
-		) {
-			if (this.badges.indexOf(badge) < 0) {
-				this.badges.push(badge);
-			}
-		} else if (!badge.extension['extensions:CategoryExtension'] && this.category == 'noCategory') {
-			if (this.badges.indexOf(badge) < 0) {
-				this.badges.push(badge);
-			}
-		}
-	}
+interface ITag {
+	label: string;
+	value: string;
 }
