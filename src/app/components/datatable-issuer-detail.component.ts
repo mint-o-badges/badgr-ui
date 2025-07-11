@@ -17,6 +17,7 @@ import { provideIcons } from '@ng-icons/core';
 import { OebSpinnerComponent } from './oeb-spinner.component';
 import { HlmCommandInputWrapperComponent } from './spartan/ui-command-helm/src/lib/hlm-command-input-wrapper.component';
 import { LoadingDotsComponent } from '../common/components/loading-dots.component';
+import { TimeComponent } from '~/common/components/time.component';
 
 @Component({
 	selector: 'issuer-detail-datatable',
@@ -34,6 +35,7 @@ import { LoadingDotsComponent } from '../common/components/loading-dots.componen
 		OebButtonComponent,
 		OebSpinnerComponent,
 		LoadingDotsComponent,
+		TimeComponent,
 	],
 	providers: [provideIcons({ lucideSearch })],
 	template: `
@@ -98,7 +100,8 @@ import { LoadingDotsComponent } from '../common/components/loading-dots.componen
 						<span class="!tw-text-oebblack !tw-font-normal">{{ recipient.recipientIdentifier }}</span>
 					</hlm-th>
 					<hlm-th class="!tw-flex-1 tw-justify-center !tw-text-oebblack"
-						><p class="u-text"><time [dateTime]="recipient.issuedOn" format="dd.MM.y"></time></p
+						><p class="u-text">
+							<time [date]="recipient.issuedOn" format="dd.MM.y"></time></p
 					></hlm-th>
 					<hlm-th
 						class="tw-justify-center tw-gap-[25px] xl:tw-gap-[5px] xl:tw-w-max xl:tw-h-fit xl:tw-flex-col xl:tw-justify-end tw-w-full !tw-text-oebblack"
