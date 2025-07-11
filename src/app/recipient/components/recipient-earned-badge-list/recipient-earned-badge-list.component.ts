@@ -620,7 +620,6 @@ export class RecipientEarnedBadgeListComponent
 	}
 
 	routeToCollectionCreation() {
-		console.log('routed');
 		this.router.navigate(['recipient/badge-collections/create']);
 	}
 }

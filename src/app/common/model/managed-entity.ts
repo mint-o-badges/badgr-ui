@@ -51,6 +51,10 @@ export abstract class ManagedEntity<ApiModelType, ApiRefType extends ApiEntityRe
 		return this._commonManager.badgeManager;
 	}
 
+	get learningPathManager() {
+		return this._commonManager.learningpathManager;
+	}
+
 	get badgeInstanceManager() {
 		return this._commonManager.badgeInstanceManager;
 	}
