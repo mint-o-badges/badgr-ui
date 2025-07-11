@@ -439,7 +439,10 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 			this.learningPathForm.controls.badges.push(typedFormGroup().addControl('badge', badge));
 			this.studyLoad += badge.extension['extensions:StudyLoadExtension'].StudyLoad;
 		} else {
-			this.selectedBadges.splice(this.selectedBadges.indexOf(badge), 1);
+			this.selectedBadges.splice(
+				this.selectedBadges.findIndex((b) => b.slug == badge.slug),
+				1,
+			);
 			this.learningPathForm.controls.badges.removeAt(
 				this.learningPathForm.controls.badges.value.findIndex((badge) => badge.badge === badge),
 			);
