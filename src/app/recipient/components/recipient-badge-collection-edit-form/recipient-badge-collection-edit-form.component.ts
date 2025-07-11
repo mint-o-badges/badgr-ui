@@ -191,7 +191,7 @@ export class RecipientBadgeCollectionEditFormComponent extends BaseAuthenticated
 	}
 
 	badgeIssueDate(badge: BadgeResult) {
-		return new Date(badge.badge.apiModel.json.issuedOn);
+		return new Date(badge.badge.apiModel.json.issuedOn || badge.badge.apiModel.json.validFrom);
 	}
 
 	private updateBadges(allBadges: RecipientBadgeInstance[]) {
