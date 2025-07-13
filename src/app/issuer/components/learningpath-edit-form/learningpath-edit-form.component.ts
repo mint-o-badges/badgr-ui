@@ -510,19 +510,32 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 			if (this.customImageField.control.value != null) this.imageField.control.reset();
 		});
 
-		this.learningPathForm.controls.badges.rawControl.valueChanges.subscribe((value) => {
-			if (Array.isArray(value)) {
-				this.selectMinBadgesOptions = value
-					.map((_, i) => ({
-						label: String(i + 1),
-						value: String(i + 1),
-					}))
-					.filter((v) => parseInt(v.value) != value.length && parseInt(v.value) >= 2)
-					.reverse();
+		if (this.initialisedLearningpath) {
+			this.selectMinBadgesOptions = this.generateSelectMinBadgesOptions(this.selectedBadges);
+		}
 
-				this.selectMinBadgesOptions.unshift({ label: 'General.all', value: value.length.toString() });
-			}
+		this.learningPathForm.controls.badges.rawControl.valueChanges.subscribe((value) => {
+			this.selectMinBadgesOptions = this.generateSelectMinBadgesOptions(value);
 		});
+	}
+
+	private generateSelectMinBadgesOptions(badges: any[]): FormFieldSelectOption[] {
+		if (!Array.isArray(badges)) return [];
+
+		const options = badges
+			.map((_, i) => ({
+				label: String(i + 1),
+				value: String(i + 1),
+			}))
+			.filter((v) => parseInt(v.value) !== badges.length && parseInt(v.value) >= 2)
+			.reverse();
+
+		options.unshift({
+			label: 'General.all',
+			value: badges.length.toString(),
+		});
+
+		return options;
 	}
 
 	private focusActivationSection() {
