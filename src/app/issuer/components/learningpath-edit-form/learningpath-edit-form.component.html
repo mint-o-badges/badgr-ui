@@ -523,6 +523,9 @@
 				type="button"
 				[text]="previous"
 				(click)="previousStep()"
+				[disabled]="!!savePromise"
+				[class.disabled]="!!savePromise"
+				[disabled-when-requesting]="true"
 			>
 			</oeb-button>
 
