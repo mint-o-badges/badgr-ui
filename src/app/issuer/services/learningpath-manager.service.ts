@@ -53,6 +53,11 @@ export class LearningPathManager extends BaseHttpApiService {
 		});
 	}
 
+	async getLearningPathForIssuer(issuerSlug: string, lpSlug: string): Promise<LearningPath> {
+		const apiLearningPath = await this.learningPathApi.getLearningPath(issuerSlug, lpSlug);
+		return new LearningPath(this.commonEntityManager, apiLearningPath);
+	}
+
 	learningPathBySlug(learningPathSlug: string): Promise<LearningPath> {
 		return this.allLearningPaths$
 			.pipe(first())
