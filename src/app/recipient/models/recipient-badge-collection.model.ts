@@ -33,6 +33,11 @@ export class RecipientBadgeCollection extends ManagedEntity<ApiRecipientBadgeCol
 	get shareHash(): string {
 		return this.apiModel.share_hash;
 	}
+
+	get permanentHash(): string {
+		return this.apiModel.permanent_hash;
+	}
+
 	get shareUrl(): string {
 		return this.apiModel.share_url;
 	}
