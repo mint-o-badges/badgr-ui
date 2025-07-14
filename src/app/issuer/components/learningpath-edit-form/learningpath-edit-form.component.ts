@@ -38,7 +38,6 @@ import { NgIf, NgClass, NgFor } from '@angular/common';
 import { StepComponent } from '../../../components/stepper/step.component';
 import { CdkStep } from '@angular/cdk/stepper';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
-import { sortUnique } from '~/catalog/components/badge-catalog/badge-catalog.component';
 import { StringMatchingUtil } from '~/common/util/string-matching-util';
 import { BadgeClassCategory } from '~/issuer/models/badgeclass-api.model';
 import { base64ByteSize } from '~/common/util/file-util';
@@ -59,6 +58,7 @@ import { HlmDialogService } from '~/components/spartan/ui-dialog-helm/src/lib/hl
 import { DangerDialogComponent } from '~/common/dialogs/oeb-dialogs/danger-dialog.component';
 import { OebCheckboxComponent } from '../../../components/oeb-checkbox.component';
 import { BgImageStatusPlaceholderDirective } from '~/common/directives/bg-image-status-placeholder.directive';
+import { sortUnique } from '~/catalog/util/sorting';
 
 interface DraggableItem {
 	content: string;
