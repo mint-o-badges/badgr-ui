@@ -104,7 +104,7 @@
 								></bg-badgecard>
 							</div>
 						</ng-container>
-						<ng-container *ngIf="groupBy == 'Issuer'">
+						<ng-container *ngIf="groupBy == 'Issuer' || groupBy == 'Institution'">
 							<ng-container *ngFor="let issuerGroup of issuerResults">
 								<h3 class="u-text-h3-semibold u-margin-bottom2x u-margin-top6x u-text-dark1">
 									{{ issuerGroup.issuer?.name }}
