@@ -106,7 +106,8 @@
 		"expired": "expired",
 		"emailAddress": "E-mail address",
 		"tos": "Terms of Service",
-		"change": "change"
+		"change": "change",
+		"condition": "condition"
 	},
 	"NavItems": {
 		"register": "Register",
@@ -959,7 +960,7 @@
 		"badgeSequenceStep": "Badge order",
 		"badgeSequence": "Order of badges in the Micro Degree",
 		"combineBadgeCategories": "You can combine competency badges and participation badges.",
-		"min3Badges": "The Micro Degree must contain at least 3 badges.",
+		"min2Badges": "The Micro Degree must contain at least 2 badges.",
 		"chooseBadgesInfo": "It is best to only use badges from your own institution, as the Micro Degree will become inactive if one of the included badges is deleted. You will then have to find a replacement to reactivate the Micro Degree.",
 		"youHave": "You have",
 		"choosenForLp": "selected for the Micro Degree.",
@@ -978,11 +979,24 @@
 		"deleteWarning": "Do you really want to delete this Micro Degree?",
 		"mdImage": "Micro degree image",
 		"lastBadgeInfo": "Learners automatically receive the <strong class='tw-text-purple'>Micro Degree</strong> badge by e-mail, as soon as they have earned all the badges it contains.",
+		"activateMd": "Unlock Micro Degree",
+		"activationInfo": "When you activate the Micro Degree for use, <span class='tw-font-bold'>you can no longer edit it afterwards</span>. ",
+		"activationInfo2": "At the same time, learners who already have the badges included in the learning pathway automatically receive the Micro Degree.",
+		"activateMdForUse": "<span class='tw-font-bold tw-text-white tw-text-lg'>Unlock Micro Degree for use</span>",
+		"notActivatedYetStart": "The Micro Degree is not yet",
+		"notActivatedYetLink": "unlocked",
+		"notActivatedYetEnd": " for use.",
 		"finishedOn": "finished on",
-		"deleteMd": "delete micro degree",
 		"mdUsers": "Micro Degree users",
 		"searchMds": "search micro degrees",
-		"saving": "Saving"
+		"saving": "Saving",
+		"flexibleSelection": "Selection for flexible learning path",
+		"flexibleSelectionInfo": "Specify here how many of the selected badges must be earned in order for the learner to receive the Micro Degree:",
+		"learnersHaveTo": "Learners have to acquire",
+		"learnersHaveTo2": "of the badges selected above in order to receive the Micro Degree badge.",
+		"chooseMin2Badges": "Choose at least 2 badges",
+		"studentsMustEarn": "Students <span class='tw-font-bold'>must earn {{ count_required }} of the {{count_total}} badges </span> to receive the Micro Degree badge.",
+		"condition": "You <span class='tw-font-bold'>must earn {{ count_required }} of the {{count_total}} badges</span> to receive the Micro Degree."
 	},
 	"LearningPathEditor": {
 		"shortDescription": "Summarized description of your Micro Degree. This short description will be saved in the Micro Degree."

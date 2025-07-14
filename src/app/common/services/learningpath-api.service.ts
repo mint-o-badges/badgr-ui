@@ -5,7 +5,6 @@ import { AppConfigService } from '../../common/app-config.service';
 import {
 	ApiLearningPath,
 	ApiLearningPathForCreation,
-	ApiLearningPathForEditing,
 	ApiLearningPathParticipant,
 } from '../../common/model/learningpath-api.model';
 import { MessageService } from '../../common/services/message.service';
@@ -52,7 +51,7 @@ export class LearningPathApiService extends BaseHttpApiService {
 		);
 	}
 
-	updateLearningPath(issuerSlug: string, lpSlug: string, updatedLP: ApiLearningPathForEditing) {
+	updateLearningPath(issuerSlug: string, lpSlug: string, updatedLP: ApiLearningPath) {
 		return this.put<ApiLearningPath>(`/v1/issuer/issuers/${issuerSlug}/learningpath/${lpSlug}`, updatedLP).then(
 			(r) => r.body,
 		);
