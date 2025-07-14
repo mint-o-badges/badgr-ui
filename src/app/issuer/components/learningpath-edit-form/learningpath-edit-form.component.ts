@@ -389,6 +389,8 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 			? badge.extension['extensions:OrgImageExtension'].OrgImage
 			: undefined;
 
+		this.currentImage = lp.participationBadgeImage;
+
 		setTimeout(() => {
 			if (badge.imageFrame) {
 				this.generateUploadImage(this.currentImage, this.learningPathForm.value, true);
