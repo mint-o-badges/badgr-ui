@@ -39,7 +39,7 @@ import { StepComponent } from '../../../components/stepper/step.component';
 import { CdkStep } from '@angular/cdk/stepper';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { StringMatchingUtil } from '~/common/util/string-matching-util';
-import { BadgeClassCategory } from '~/issuer/models/badgeclass-api.model';
+import { ApiBadgeClassForCreation, BadgeClassCategory } from '~/issuer/models/badgeclass-api.model';
 import { base64ByteSize } from '~/common/util/file-util';
 import { BadgeStudioComponent } from '../badge-studio/badge-studio.component';
 import { BgFormFieldImageComponent } from '~/common/components/formfield-image';
@@ -292,7 +292,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 			return {
 				id: badge.slug,
 				name: badge.name,
-				image: 'http://localhost:8000' + badge.image,
+				image: badge.image,
 				description: badge.description,
 				slug: badge.slug,
 				issuerName: badge.issuerName,
@@ -385,11 +385,13 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 		});
 		this.selectedBadges = lp.badges.map((b) => b.badge);
 
-		this.currentImage = lp.participationBadgeImage;
+		this.currentImage = badge.extension['extensions:OrgImageExtension']
+			? badge.extension['extensions:OrgImageExtension'].OrgImage
+			: undefined;
 
 		setTimeout(() => {
 			if (badge.imageFrame) {
-				this.generateUploadImage(this.currentImage, this.learningPathForm.value, true);
+				this.generateUploadImage(this.currentImage, this.learningPathForm.value, true, true);
 			}
 		}, 1);
 
@@ -568,12 +570,12 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 			.then((imageUrl) => this.imageField.useDataUrl(imageUrl, 'Auto-generated image'));
 	}
 
-	generateUploadImage(image, formdata, useIssuerImageInBadge = false) {
+	generateUploadImage(image, formdata, useIssuerImageInBadge = false, initializing = false) {
 		this.currentImage = image.slice();
 		this.badgeStudio
 			.generateUploadImage(image.slice(), formdata, useIssuerImageInBadge, this.issuer.image)
 			.then((imageUrl) => {
-				this.imageField.useDataUrl(imageUrl, 'BADGE');
+				this.imageField.useDataUrl(imageUrl, 'BADGE', initializing);
 			});
 	}
 
@@ -865,6 +867,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 		const categoryExtensionContextUrl = `${this.baseUrl}/static/extensions/CategoryExtension/context.json`;
 		const licenseExtensionContextUrl = `${this.baseUrl}/static/extensions/LicenseExtension/context.json`;
 		const competencyExtensionContextUrl = `${this.baseUrl}/static/extensions/CompetencyExtension/context.json`;
+		const orgImageExtensionContextUrl = `${this.baseUrl}/static/extensions/OrgImageExtension/context.json`;
 
 		const criteriaText =
 			'*Folgende Kriterien sind auf Basis deiner Eingaben als Metadaten im Badge hinterlegt*: \n\n';
@@ -909,6 +912,17 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 					'extensions:CompetencyExtension': [],
 				});
 
+			if (this.currentImage) {
+				this.existingLpBadge.extension = {
+					...this.existingLpBadge.extension,
+					'extensions:OrgImageExtension': {
+						'@context': orgImageExtensionContextUrl,
+						type: ['Extension', 'extensions:OrgImageExtension'],
+						OrgImage: this.currentImage,
+					},
+				};
+			}
+
 			this.existingLpBadge.save();
 
 			this.initialisedLearningpath.name = formState.name;
@@ -941,7 +955,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 						);
 					}
 
-					const participationBadge = await this.badgeClassService.createBadgeClass(this.issuerSlug, {
+					let participationBadgeData = {
 						image: this.learningPathForm.controls.badge_image.value,
 						imageFrame: imageFrame,
 						name: this.learningPathForm.controls.name.value,
@@ -970,7 +984,23 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 							'extensions:CompetencyExtension': [],
 						},
 						copy_permissions: ['issuer'],
-					});
+					} as ApiBadgeClassForCreation;
+
+					if (this.currentImage) {
+						participationBadgeData.extensions = {
+							...participationBadgeData.extensions,
+							'extensions:OrgImageExtension': {
+								'@context': orgImageExtensionContextUrl,
+								type: ['Extension', 'extensions:OrgImageExtension'],
+								OrgImage: this.currentImage,
+							},
+						};
+					}
+
+					const participationBadge = await this.badgeClassService.createBadgeClass(
+						this.issuerSlug,
+						participationBadgeData,
+					);
 
 					const issuer = await this.issuerApiService.getIssuer(this.issuerSlug);
 
