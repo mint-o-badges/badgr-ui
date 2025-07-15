@@ -292,7 +292,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 			return {
 				id: badge.slug,
 				name: badge.name,
-				image: 'http://localhost:8000' + badge.image,
+				image: badge.image,
 				description: badge.description,
 				slug: badge.slug,
 				issuerName: badge.issuerName,
