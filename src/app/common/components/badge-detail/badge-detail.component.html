@@ -346,7 +346,7 @@
 							<bg-learningpathcard
 								*ngFor="let lp of getLearningPaths()"
 								[name]="lp.name"
-								[badgeImage]="lp.image"
+								[badgeImage]="$any(lp).participationBadge_image"
 								[issuerTitle]="lp.issuer_name"
 								[description]="lp.description"
 								[slug]="lp.slug"

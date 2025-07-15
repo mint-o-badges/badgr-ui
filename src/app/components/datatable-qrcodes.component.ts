@@ -101,7 +101,7 @@ export type RequestedBadge = {
 				<hlm-cmd-input-wrapper class="tw-relative tw-px-0 tw-mt-1 tw-border-b-0">
 					<input
 						hlmInput
-						class="tw-w-full tw-border-solid tw-border-purple tw-py-1 tw-rounded-[20px] tw-text-oebblack"
+						class="!tw-bg-background tw-w-full tw-border-solid tw-border-purple tw-py-1 tw-rounded-[20px] tw-text-oebblack"
 						[ngModel]="_emailFilter()"
 						(ngModelChange)="_rawFilterInput.set($event)"
 					/>

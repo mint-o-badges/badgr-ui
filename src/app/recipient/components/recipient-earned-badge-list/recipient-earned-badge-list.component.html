@@ -304,7 +304,7 @@
 								<div class="tw-grid min-[450px]:tw-grid-cols-learningpathsBackpack tw-gap-6">
 									<bg-learningpathcard
 										*ngFor="let lp of learningPathsReadyToRequest"
-										[badgeImage]="lp.participationBadgeImage"
+										[badgeImage]="$any(lp).participationBadge_image"
 										[name]="lp.name"
 										[issuerTitle]="lp.issuer_name"
 										[description]="lp.description"
@@ -326,7 +326,7 @@
 								<div class="tw-grid min-[450px]:tw-grid-cols-learningpathsBackpack tw-gap-6">
 									<bg-learningpathcard
 										*ngFor="let lp of learningPathsInProgress"
-										[badgeImage]="lp.participationBadgeImage"
+										[badgeImage]="$any(lp).participationBadge_image"
 										[name]="lp.name"
 										[issuerTitle]="lp.issuer_name"
 										[description]="lp.description"
@@ -348,7 +348,7 @@
 								<div class="tw-grid min-[450px]:tw-grid-cols-learningpathsBackpack tw-gap-6">
 									<bg-learningpathcard
 										*ngFor="let lp of learningPathsCompleted"
-										[badgeImage]="lp.participationBadgeImage"
+										[badgeImage]="$any(lp).participationBadge_image"
 										[name]="lp.name"
 										[issuerTitle]="lp.issuer_name"
 										[description]="lp.description"
