@@ -1,184 +1,121 @@
 <form-message></form-message>
 
 <div class="oeb page-padding">
-	<ng-template [showLoader]="true" [bgAwaitPromises]="[badgesLoaded]">
-		<div class="oeb-section-sm">
-			<div class="oeb-headline-container tw-relative">
-				<div class="tw-z-10 tw-relative">
-					<h1 hlmH1 class="tw-text-oebblack">{{ 'Badge.catalogHeadline' | translate }}</h1>
-					<h1 hlmH1 class="lg:tw-pl-[10%] tw-font-black tw-text-purple">
-						<span [countUp]="badges.length">{{ badges.length }}</span>
-						{{ badgesPluralWord }} in
-						<span [countUp]="issuers.length">{{ issuers.length }}</span>
-						{{ issuersPluralWord }}
-					</h1>
+	<div class="oeb-section-sm">
+		<div class="tw-z-10 tw-relative">
+			<h1 hlmH1 class="tw-text-oebblack">{{ 'Badge.catalogHeadline' | translate }}</h1>
+		</div>
+	</div>
+
+	<app-badge-legend *ngIf="showLegend()" (closed)="closeLegend()"></app-badge-legend>
+
+	<div class="tw-relative">
+		<section class="">
+			<div class="tw-flex tw-items-center tw-rounded-lg tw-p-4 tw-bg-[#ECFEED] tw-mb-4 tw-gap-6">
+				<div
+					class="tw-flex tw-flex-col tw-justify-between tw-gap-4 tw-w-full min-[880px]:tw-flex-row min-[880px]:tw-items-center"
+				>
+					<div class="tw-flex tw-flex-col min-[880px]:tw-flex-row min-[880px]:tw-items-center tw-gap-6">
+						<div class="tw-flex tw-relative tw-items-center">
+							<input
+								type="text"
+								name="forminput"
+								changeOrder
+								class="!tw-bg-white tw-w-full tw-border-1 tw-border-purple min-[880px]:tw-w-96 tw-border-solid tw-h-12 tw-rounded-lg tw-p-2"
+								placeholder="{{ 'Badge.searchBadges' | translate }}"
+								[ngModel]="searchQuery()"
+								(ngModelChange)="onSearchQueryChange($event)"
+								hlmInput
+							/>
+							<ng-icon
+								hlm
+								name="lucideSearch"
+								class="tw-w-8 tw-h-8 tw-absolute tw-top-1/2 tw-right-2 -tw-translate-y-1/2 tw-pointer-events-none tw-text-purple"
+							></ng-icon>
+						</div>
+					</div>
+
+					<oeb-global-sort-select
+						placeholder="{{ 'Badge.sortBy' | translate }}"
+						class="oeb tw-w-[12rem]"
+						[control]="sortControl"
+					>
+					</oeb-global-sort-select>
+
+					<oeb-select
+						[actionBar]="true"
+						placeholder="Tags"
+						class="oeb tw-w-[12rem]"
+						[options]="tagsOptions()"
+						[control]="tagsControl"
+						[autofocus]="true"
+						[noTopMargin]="true"
+						[multiple]="true"
+						[dropdownMaxHeight]="250"
+					></oeb-select>
 				</div>
 			</div>
-		</div>
-
-		<app-badge-legend *ngIf="showLegend" (closed)="closeLegend()"></app-badge-legend>
-
-		<div class="tw-relative">
-			<section class="">
-				<div class="tw-flex tw-items-center tw-rounded-lg tw-p-4 tw-bg-[#ECFEED] tw-mb-4 tw-gap-6">
-					<div
-						class="tw-flex tw-flex-col tw-justify-between tw-gap-4 tw-w-full min-[880px]:tw-flex-row min-[880px]:tw-items-center"
+			<div class="subtitle-wrapper">
+				<ul class="tags-wrapper oeb-standard-padding-bottom">
+					<li
+						*ngFor="let tag of tagsControl.value | sort"
+						class="tag tag-close tag-delete tag-button tw-mr-2"
+						(click)="removeTag(tag)"
 					>
-						<div class="tw-flex tw-flex-col min-[880px]:tw-flex-row min-[880px]:tw-items-center tw-gap-6">
-							<div class="tw-flex tw-relative tw-items-center">
-								<input
-									type="text"
-									name="forminput"
-									changeOrder
-									class="!tw-bg-white tw-w-full tw-border-1 tw-border-purple min-[880px]:tw-w-96 tw-border-solid tw-h-12 tw-rounded-lg tw-p-2"
-									placeholder="{{ 'Badge.searchBadges' | translate }}"
-									[(ngModel)]="searchQuery"
-									hlmInput
-								/>
-								<ng-icon
-									hlm
-									name="lucideSearch"
-									class="tw-w-8 tw-h-8 tw-absolute tw-top-1/2 tw-right-2 -tw-translate-y-1/2 tw-pointer-events-none tw-text-purple"
-								></ng-icon>
-							</div>
-						</div>
-
-						<oeb-global-sort-select
-							placeholder="{{ 'Badge.sortBy' | translate }}"
-							class="oeb tw-w-[12rem]"
-							[disabled]="!!groupControl?.value && groupControl?.value !== '---'"
-							[control]="sortControl"
-						>
-						</oeb-global-sort-select>
-
-						<!-- <oeb-select
-							actionBar="true"
-							placeholder="{{ 'Badge.groupBy' | translate }}"
-							class="oeb tw-w-[12rem]"
-							[options]="groupOptions"
-							[control]="groupControl"
-							[autofocus]="true"
-							noTopMargin="true"
-						></oeb-select> -->
-
-						<oeb-select
-							[actionBar]="true"
-							placeholder="Tags"
-							class="oeb tw-w-[12rem]"
-							[options]="tagsOptions"
-							[control]="tagsControl"
-							[autofocus]="true"
-							[noTopMargin]="true"
-							[multiple]="true"
-							[dropdownMaxHeight]="250"
-						></oeb-select>
-					</div>
+						{{ tag }}
+					</li>
+				</ul>
+				<div class="open-legend-button">
+					<a (click)="openLegend()">{{ 'Badge.framesMeaning' | translate }}</a>
 				</div>
-				<div class="subtitle-wrapper">
-					<ul class="tags-wrapper oeb-standard-padding-bottom">
-						<li
-							*ngFor="let tag of tagsControl.value | sort"
-							class="tag tag-close tag-delete tag-button tw-mr-2"
-							(click)="removeTag(tag)"
-						>
-							{{ tag }}
-						</li>
-					</ul>
-					<div class="open-legend-button">
-						<a (click)="openLegend()">{{ 'Badge.framesMeaning' | translate }}</a>
-					</div>
-				</div>
-				<ng-container *ngIf="groupBy == '' || groupBy == '---'">
-					<div class="tw-gap-6 tw-grid tw-grid-cols-badges" [@stagger]>
-						<!-- TODO: Fix the badgecard link for sharing and routing -->
-						<bg-badgecard
-							*ngFor="let badge of badgeResults; trackBy: trackById"
-							@appearAnimation
-							[badgeTitle]="badge.name"
-							[badgeImage]="badge.image"
-							[badgeDescription]="badge.description"
-							[badgeSlug]="badge.slug"
-							[issuerTitle]="badge.issuerName"
-							[badgeIssueDate]="badge.createdAt"
-							[public]="true"
-							[publicUrl]="badge.url"
-							[issuerSlug]="badge.issuerSlug"
-							[competencies]="badge.extension['extensions:CompetencyExtension']"
-							[tags]="badge.tags"
-						></bg-badgecard>
-					</div>
-				</ng-container>
-				<ng-container *ngIf="groupBy == 'issuer'">
-					<ng-container
-						*ngFor="let issuerGroup of badgeResultsByIssuer | sort: { key: 'issuerName', inplace: true }"
-					>
-						<h3 class="u-text-h3-semibold u-margin-bottom2x u-margin-top6x u-text-dark1">
-							{{ issuerGroup.issuerName }}
-							<span class="u-text-small-semibold-caps u-text-dark4 u-margin-left2x"
-								>{{ issuerGroup.badges.length }}
-								{{ issuerGroup.badges.length == 1 ? 'Badge' : 'Badges' }}</span
-							>
-						</h3>
-						<div class="tw-gap-6 tw-grid tw-grid-cols-badges">
-							<!-- TODO: Fix the badgecard link for sharing and routing -->
-							<bg-badgecard
-								*ngFor="let badge of issuerGroup.badges"
-								[badgeTitle]="badge.name"
-								[badgeImage]="badge.image"
-								[badgeDescription]="badge.description"
-								[badgeSlug]="badge.slug"
-								[issuerTitle]="badge.issuerName ? badge.issuerName : badge.issuer"
-								[badgeIssueDate]="badge.createdAt"
-								[public]="true"
-								[publicUrl]="badge.url"
-								[competencies]="badge.extension['extensions:CompetencyExtension']"
-							></bg-badgecard>
-						</div>
-					</ng-container>
-				</ng-container>
-				<!-- ToDo: test it with real data -->
-				<!-- <ng-container *ngIf="groupBy == 'Kategorie'"> -->
-				<ng-container *ngIf="groupBy == 'Kategorie' || groupBy == 'category'">
-					<ng-container *ngFor="let categoryGroup of badgeResultsByCategory">
-						<h3 class="u-text-h3-semibold u-margin-bottom2x u-margin-top6x u-text-dark1">
-							{{ categoryOptions[categoryGroup.category] }}
-							<span class="u-text-small-semibold-caps u-text-dark4 u-margin-left2x"
-								>{{ categoryGroup.badges.length }}
-								{{ categoryGroup.badges.length == 1 ? 'Badge' : 'Badges' }}</span
-							>
-						</h3>
-						<div class="tw-gap-6 tw-grid tw-grid-cols-badges">
-							<!-- TODO: Fix the badgecard link for sharing and routing -->
-							<bg-badgecard
-								*ngFor="let badge of categoryGroup.badges"
-								[badgeTitle]="badge.name"
-								[badgeImage]="badge.image"
-								[badgeDescription]="badge.description"
-								[badgeSlug]="badge.slug"
-								[issuerTitle]="badge.issuerName ? badge.issuerName : badge.issuer"
-								[badgeIssueDate]="badge.createdAt"
-								[public]="true"
-								[publicUrl]="badge.url"
-								[competencies]="badge.extension['extensions:CompetencyExtension']"
-							></bg-badgecard>
-						</div>
-					</ng-container>
-				</ng-container>
-				<p
-					*ngIf="!badgeResults.length"
-					class="tw-m-auto tw-max-w-[300px] tw-p-4 tw-border-solid tw-border-[1px] tw-border-[var(--color-blue)] tw-rounded-lg tw-bg-[var(--color-lightpurple)] tw-text-center"
-				>
-					{{ 'General.noResults' | translate }}
-				</p>
-			</section>
-		</div>
-		<div class="tw-mt-8" *ngIf="badgeResults.length >= 30 || (currentPage == totalPages && currentPage != 1)">
-			<oeb-numbered-pagination
-				[totalProducts]="isFiltered() ? filteredBadges.length : badges.length"
-				[(page)]="currentPage"
-				[(pageSize)]="badgesPerPage"
+			</div>
+			<div class="tw-gap-6 tw-grid tw-grid-cols-badges" [@stagger]>
+				<bg-badgecard
+					*ngFor="let badge of badges(); trackBy: trackById"
+					@appearAnimation
+					[badgeTitle]="badge.name"
+					[badgeImage]="badge.image"
+					[badgeDescription]="badge.description"
+					[badgeSlug]="badge.slug"
+					[issuerTitle]="badge.issuerName"
+					[badgeIssueDate]="badge.createdAt"
+					[public]="true"
+					[publicUrl]="badge.url"
+					[issuerSlug]="badge.issuerSlug"
+					[competencies]="badge.extensions['extensions:CompetencyExtension']"
+					[tags]="badge.tags"
+				></bg-badgecard>
+			</div>
+			<p
+				*ngIf="!badges().length && !hasNext()"
+				class="tw-m-auto tw-max-w-[300px] tw-p-4 tw-border-solid tw-border-[1px] tw-border-[var(--color-blue)] tw-rounded-lg tw-bg-[var(--color-lightpurple)] tw-text-center"
 			>
-			</oeb-numbered-pagination>
-		</div>
-	</ng-template>
+				{{ 'General.noResults' | translate }}
+			</p>
+		</section>
+	</div>
+	<div #loadMore class="oeb-section-sm">
+		@if (hasNext()) {
+			@if (!observeScrolling()) {
+				<loading-dots />
+			} @else {
+				<oeb-button
+					variant="secondary"
+					size="sm"
+					type="button"
+					text="{{ 'General.loadMore' | translate }}"
+					(click)="onLoadMoreClicked()"
+					class="tw-mx-auto tw-block tw-w-max"
+				/>
+			}
+		} @else {
+			<h4 hlmH4 class="tw-text-oebblack tw-text-center">{{ 'Badge.catalogAllLoaded' | translate }}</h4>
+			<h4 hlmH4 class="tw-font-black tw-text-purple tw-text-center">
+				<span [countUp]="badges().length" *ngIf="badges().length > 1">{{ badges().length }}</span>
+				{{ badgesPluralWord() }} in
+				<span [countUp]="issuers().length" *ngIf="issuers().length > 1">{{ issuers().length }}</span>
+				{{ issuersPluralWord() }}
+			</h4>
+		}
+	</div>
 </div>

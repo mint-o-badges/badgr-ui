@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { first, map } from 'rxjs/operators';
 import { LearningPath } from '../models/learningpath.model';
-import { ApiLearningPath } from '../../common/model/learningpath-api.model';
+import { ApiLearningPath, ApiLearningPathForCreation } from '../../common/model/learningpath-api.model';
 import { LearningPathApiService } from '../../common/services/learningpath-api.service';
 
 @Injectable({ providedIn: 'root' })
@@ -44,6 +44,18 @@ export class LearningPathManager extends BaseHttpApiService {
 		protected messageService: MessageService,
 	) {
 		super(loginService, http, configService, messageService);
+	}
+
+	createLearningPath(issuerSlug: string, newLp: ApiLearningPathForCreation): Promise<LearningPath> {
+		return this.learningPathApi.createLearningPath(issuerSlug, newLp).then((retNewBadge) => {
+			this.allLearningPathsList.addOrUpdate(retNewBadge);
+			return this.learningPathList.addOrUpdate(retNewBadge);
+		});
+	}
+
+	async getLearningPathForIssuer(issuerSlug: string, lpSlug: string): Promise<LearningPath> {
+		const apiLearningPath = await this.learningPathApi.getLearningPath(issuerSlug, lpSlug);
+		return new LearningPath(this.commonEntityManager, apiLearningPath);
 	}
 
 	learningPathBySlug(learningPathSlug: string): Promise<LearningPath> {

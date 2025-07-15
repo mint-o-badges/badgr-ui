@@ -193,6 +193,7 @@
 						[issuerTitle]="badge.issuerName ? badge.issuerName : badge.badge.issuer"
 						[badgeIssueDate]="badge.badge.createdAt"
 						[public]="true"
+						[publicUrl]="`../../public/badges/${badge.badge.slug}`"
 					></bg-badgecard>
 				</div>
 			</ng-container>
@@ -235,6 +236,7 @@
 								[requested]="lp.requested"
 								[progress]="lp.progress"
 								[matchOrProgress]="undefined"
+								[badgeImage]="$any(lp).image"
 							></bg-learningpathcard>
 						</div>
 					</ng-container>
