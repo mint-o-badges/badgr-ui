@@ -38,6 +38,5 @@
 	},
 	"angularCompilerOptions": {
 		"strictTemplates": true
-	},
-	"exclude": ["src/**/*.spec.ts"]
+	}
 }

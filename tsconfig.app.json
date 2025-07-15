@@ -2,6 +2,7 @@
 	"extends": "./tsconfig.json",
 	"files": ["main.ts", "polyfills.ts"],
 	"include": ["src/**/*.d.ts"],
+	"exclude": ["src/**/*.spec.ts"],
 	"compilerOptions": {
 		"outDir": "./out-tsc/app",
 		"types": ["node"]
