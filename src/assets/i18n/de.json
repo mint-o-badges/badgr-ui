@@ -106,7 +106,8 @@
 		"expired": "abgelaufen",
 		"emailAddress": "E-Mail-Adresse",
 		"tos": "Nutzungsbedingungen",
-		"change": "ändern"
+		"change": "ändern",
+		"condition": "Bedingung"
 	},
 	"NavItems": {
 		"register": "Registrieren",
@@ -445,7 +446,8 @@
 		"standard-info-20": "Alle Badges, die vor Juni 2025 auf OEB erstellt wurden, haben den 2.0-Standard. Weitere Infos dazu findest du in unseren <a class='tw-underline' href='/public/faq'>FAQ</a>.",
 		"standard-info-30": "Seit Juni 2025 werden alle Badges auf OEB im neuen, zukunfts-sicheren 3.0-Standard erstellt. Weitere Infos dazu findest du in unseren <a class='tw-underline' href='/public/faq'>FAQ</a>.",
 		"awardingInProgress": "Badge-Vergabe läuft",
-		"willBeAwardedSoon": "Gleich haben wir alle Badges verschickt!"
+		"willBeAwardedSoon": "Gleich haben wir alle Badges verschickt!",
+		"catalogAllLoaded": "Alle Badges, die deinen Suchkriterien entsprechen, wurden geladen."
 	},
 	"CreateBadge": {
 		"chooseBadgeCategory": "Kategorie wählen",
@@ -959,7 +961,7 @@
 		"badgeSequenceStep": "Badge-Reihenfolge",
 		"badgeSequence": "Reihenfolge der Badges im Micro Degree",
 		"combineBadgeCategories": "Du kannst Kompetenz-Badges und Teilnahme-Badges kombinieren.",
-		"min3Badges": "Der Micro Degree muss mindestens 3 Badges enthalten.",
+		"min2Badges": "Der Micro Degree muss mindestens 2 Badges enthalten.",
 		"chooseBadgesInfo": "Verwende am besten nur Badges deiner eigenen Institution, da der Micro Degree inaktiv wird, falls einer der enthaltenen Badges gelöscht werden sollte. Du musst dann einen Ersatz finden, um den Micro Degree wieder zu aktivieren.",
 		"youHave": "Du hast",
 		"choosenForLp": "für den Micro Degree ausgewählt.",
@@ -978,11 +980,24 @@
 		"deleteWarning": "Möchtest du diesen Micro Degree wirklich löschen?",
 		"mdImage": "Micro-Degree Bild",
 		"lastBadgeInfo": "Den Abschluss-Badge <strong class='tw-text-purple'>Micro Degree</strong> erhalten Lernende automatisiert per E-Mail, sobald sie alle darin enthaltenen Badges erworben haben.",
+		"activateMd": "Micro Degree freischalten",
+		"activationInfo": "Wenn du den Micro Degree zur Nutzung freischaltest, <span class='tw-font-bold'>kannst du ihn danach nicht mehr bearbeiten</span>. ",
+		"activationInfo2": "Zeitgleich erhalten Lernende, die bereits im Besitz der im Lernpfad enthaltenen Badges sind, automatisch den Micro Degree.",
+		"activateMdForUse": "<span class='tw-font-bold tw-text-white tw-text-lg'>Micro Degree zur Nutzung freischalten</span>",
+		"notActivatedYetStart": "Der Lernpfad ist noch nicht zur Nutzung",
+		"notActivatedYetLink": "freigeschaltet",
+		"notActivatedYetEnd": ".",
 		"finishedOn": "Abgeschlossen am",
-		"deleteMd": "Micro Degree löschen",
 		"mdUsers": "Micro Degree-Nutzende",
 		"searchMds": "Micro Degrees durchsuchen",
-		"saving": "Speichere"
+		"saving": "Speichere",
+		"flexibleSelection": "Auswahl für flexiblen Lernpfad",
+		"flexibleSelectionInfo": "Lege hier fest, wieviele der ausgewählten Badges erworben werden müssen, damit die lernende Person den Abschluss Micro Degree erhält:",
+		"learnersHaveTo": "Lernende müssen",
+		"learnersHaveTo2": "der oben ausgewählten Badges erwerben, um den Abschluss-Badge Micro Degree zu erhalten.",
+		"chooseMin2Badges": "Wähle mindestens 2 Badges aus",
+		"studentsMustEarn": "Lernende müssen <span class='tw-font-bold'>{{ count_required }} der {{count_total}} Badges erwerben</span>, um den Abschluss-Badge Micro Degree zu erhalten.",
+		"condition": "Du musst <span class='tw-font-bold'>{{ count_required }} der {{count_total}} Badges erwerben</span>, um den Micro Degree zu erhalten."
 	},
 	"LearningPathEditor": {
 		"shortDescription": "Zusammenfassende Beschreibung deines Micro Degrees. Diese Kurzbeschreibung wird im Micro Degree gespeichert."
