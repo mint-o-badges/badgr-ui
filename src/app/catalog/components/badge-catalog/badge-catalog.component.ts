@@ -37,6 +37,9 @@ import { CatalogService } from '~/catalog/catalog.service';
 import { BadgeClassV3 } from '~/issuer/models/badgeclassv3.model';
 import { LoadingDotsComponent } from '../../../common/components/loading-dots.component';
 import { OebButtonComponent } from '~/components/oeb-button.component';
+import { BgAwaitPromises } from '~/common/directives/bg-await-promises';
+import { skip } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
 	selector: 'app-badge-catalog',
@@ -61,16 +64,11 @@ import { OebButtonComponent } from '~/components/oeb-button.component';
 		BgBadgecard,
 		LoadingDotsComponent,
 		OebButtonComponent,
+		BgAwaitPromises,
 	],
 })
 export class BadgeCatalogComponent extends BaseRoutableComponent implements OnInit, AfterViewInit, OnDestroy {
-	sortControl = new FormControl('');
-	tagsControl = new FormControl();
-	intersectionObserver: IntersectionObserver;
-	scrollSubscription?: Subscription;
-	paginateSubscription?: Subscription;
-
-	@ViewChild('loadMore') loadMore: ElementRef;
+	@ViewChild('loadMore') loadMore: ElementRef | undefined;
 
 	readonly INPUT_DEBOUNCE_TIME = 400;
 	readonly BADGES_PER_PAGE = 21; // We show at most 3 columns of badges, so we load 7 rows at a time
@@ -111,7 +109,7 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 	 * While new badges are loaded, user scrolling is usually disregarded
 	 * and thus should be ignored.
 	 **/
-	observeScrolling = signal<boolean>(true);
+	observeScrolling = signal<boolean>(false);
 	observeScrolling$ = toObservable(this.observeScrolling);
 
 	/** Unique issuers of all badges. */
@@ -123,16 +121,8 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 	);
 
 	/** Selectable options to filter with. */
-	tagsOptions = computed<ITag[]>(() =>
-		this.badges()
-			.flatMap((b) => b.tags)
-			.filter((value, index, array) => array.indexOf(value) === index)
-			.sort()
-			.map((t) => ({
-				label: t,
-				value: t,
-			})),
-	);
+	tagsOptions = signal<ITag[]>([]);
+	tagsOptions$ = toObservable(this.tagsOptions);
 
 	/** A string used for displaying the amount of badges that is aware of the current language. */
 	badgesPluralWord = toSignal(
@@ -164,6 +154,13 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		),
 	);
 
+	sortControl = new FormControl('');
+	tagsControl = new FormControl();
+	intersectionObserver: IntersectionObserver | undefined;
+	pageSubscriptions: Subscription[] = [];
+	pageReadyPromise: Promise<unknown> = firstValueFrom(this.tagsOptions$.pipe(skip(1))); // skip initial value of signal
+	viewInitialized: boolean = false;
+
 	constructor(
 		protected title: Title,
 		protected messageService: MessageService,
@@ -178,63 +175,87 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		title.setTitle(`Badges - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 	}
 
+	ngOnInit() {
+		super.ngOnInit();
+
+		this.pageSubscriptions.push(
+			this.observeScrolling$.pipe(filter((_) => this.intersectionObserver !== undefined)).subscribe((observe) => {
+				if (observe) this.intersectionObserver!.observe(this.loadMore!.nativeElement);
+				else this.intersectionObserver!.unobserve(this.loadMore!.nativeElement);
+			}),
+		);
+
+		this.pageSubscriptions.push(
+			combineLatest(
+				[this.currentPage$, this.searchQuery$, this.selectedTags$, this.sortOption$],
+				(v1, v2, v3, v4) => ({
+					page: v1,
+					searchQuery: v2,
+					tags: v3,
+					sortOption: v4,
+				}),
+			)
+				.pipe(
+					debounceTime(this.INPUT_DEBOUNCE_TIME),
+					filter((i) => i.page >= 0),
+					distinctUntilChanged((prev, curr) => JSON.stringify(prev) === JSON.stringify(curr)),
+					tap((_) => this.observeScrolling.set(false)),
+					concatMap((i) => this.loadRangeOfBadges(i.page, i.searchQuery, i.tags, i.sortOption)),
+				)
+				.subscribe((paginatedBadges) => {
+					this.hasNext.set(paginatedBadges?.next !== null);
+					if (!paginatedBadges?.previous)
+						// on the first page, set the whole array to make sure to not append anything
+						this.badges.set(paginatedBadges?.results ?? []);
+					else this.badges.update((currentBadges) => [...currentBadges, ...paginatedBadges.results]);
+					this.observeScrolling.set(true);
+				}),
+		);
+
+		// Scroll to the top when something resets
+		// the list of badges (e.g. due to filtering)
+		this.pageSubscriptions.push(
+			this.currentPage$.subscribe((p) => {
+				if (p === 0) window?.scrollTo({ left: 0, top: 0, behavior: 'smooth' });
+			}),
+		);
+
+		this.pageSubscriptions.push(
+			this.tagsControl.valueChanges.subscribe((value) => {
+				this.selectedTags.set(value ?? []);
+				if (this.currentPage() > 0) this.currentPage.set(0);
+			}),
+		);
+
+		this.pageSubscriptions.push(
+			this.sortControl.valueChanges.subscribe((value: 'name_asc' | 'name_desc' | 'date_asc' | 'date_desc') => {
+				this.sortOption.set(value);
+				if (this.currentPage() > 0) this.currentPage.set(0);
+			}),
+		);
+
+		// Activate the intersection observer once the tags options have been set
+		this.pageSubscriptions.push(
+			this.tagsOptions$
+				.pipe(
+					skip(1),
+					tap((x) => console.log(x)),
+				)
+				.subscribe(() => {
+					this.observeScrolling.set(true);
+				}),
+		);
+
+		// load the tags, kicking off the page load process
+		this.fetchAvailableTags();
+	}
+
 	ngAfterViewInit(): void {
 		this.intersectionObserver = this.setupIntersectionObserver(this.loadMore);
 	}
 
-	ngOnInit() {
-		super.ngOnInit();
-
-		this.observeScrolling$.pipe(filter((_) => this.intersectionObserver !== undefined)).subscribe((observe) => {
-			if (observe) this.intersectionObserver.observe(this.loadMore.nativeElement);
-			else this.intersectionObserver.unobserve(this.loadMore.nativeElement);
-		});
-
-		this.paginateSubscription = combineLatest(
-			[this.currentPage$, this.searchQuery$, this.selectedTags$, this.sortOption$],
-			(v1, v2, v3, v4) => ({
-				page: v1,
-				searchQuery: v2,
-				tags: v3,
-				sortOption: v4,
-			}),
-		)
-			.pipe(
-				debounceTime(this.INPUT_DEBOUNCE_TIME),
-				filter((i) => i.page >= 0),
-				distinctUntilChanged((prev, curr) => JSON.stringify(prev) === JSON.stringify(curr)),
-				tap((_) => this.observeScrolling.set(false)),
-				concatMap((i) => this.loadRangeOfBadges(i.page, i.searchQuery, i.tags, i.sortOption)),
-			)
-			.subscribe((paginatedBadges) => {
-				this.hasNext.set(paginatedBadges.next !== null);
-				if (!paginatedBadges.previous)
-					// on the first page, set the whole array to make sure to not append anything
-					this.badges.set(paginatedBadges.results);
-				else this.badges.update((currentBadges) => [...currentBadges, ...paginatedBadges.results]);
-				this.observeScrolling.set(true);
-			});
-
-		// Scroll to the top when something resets
-		// the list of badges (e.g. due to filtering)
-		this.scrollSubscription = this.currentPage$.subscribe((p) => {
-			if (p === 0) window?.scrollTo({ left: 0, top: 0, behavior: 'smooth' });
-		});
-
-		this.tagsControl.valueChanges.subscribe((value) => {
-			this.selectedTags.set(value ?? []);
-			if (this.currentPage() > 0) this.currentPage.set(0);
-		});
-
-		this.sortControl.valueChanges.subscribe((value: 'name_asc' | 'name_desc' | 'date_asc' | 'date_desc') => {
-			this.sortOption.set(value);
-			if (this.currentPage() > 0) this.currentPage.set(0);
-		});
-	}
-
 	ngOnDestroy(): void {
-		if (this.paginateSubscription) this.paginateSubscription.unsubscribe();
-		if (this.scrollSubscription) this.scrollSubscription.unsubscribe();
+		for (const s of this.pageSubscriptions) s.unsubscribe();
 	}
 
 	openLegend() {
@@ -270,17 +291,23 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		this.tagsControl.setValue(this.tagsControl.value.filter((t) => t != tag));
 	}
 
+	private fetchAvailableTags(): Promise<ITag[]> {
+		return this.catalogService.getBadgeTags().then((t) => {
+			const tags: ITag[] = t.map((o) => ({ label: o, value: o }));
+			this.tagsOptions.set(tags);
+			return tags;
+		});
+	}
+
 	private setupIntersectionObserver(element: ElementRef): IntersectionObserver {
 		const observer = new IntersectionObserver(
 			(entries) => {
-				if (entries.at(0).isIntersecting && this.hasNext() && this.observeScrolling()) {
+				if (entries.at(0)?.isIntersecting && this.hasNext() && this.observeScrolling()) {
 					this.currentPage.update((p) => p + 1);
 				}
 			},
 			{ rootMargin: '20% 0px' },
 		);
-
-		observer.observe(element.nativeElement);
 		return observer;
 	}
 
@@ -290,7 +317,7 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 		selectedTags: string[],
 		sortOption: 'name_asc' | 'name_desc' | 'date_asc' | 'date_desc',
 	) {
-		return await this.catalogService.loadBadges(
+		return await this.catalogService.getBadges(
 			pageNumber * this.BADGES_PER_PAGE,
 			this.BADGES_PER_PAGE,
 			searchQuery,

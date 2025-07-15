@@ -7,93 +7,95 @@
 		</div>
 	</div>
 
-	<app-badge-legend *ngIf="showLegend()" (closed)="closeLegend()"></app-badge-legend>
+	<ng-template [showLoader]="false" [bgAwaitPromises]="pageReadyPromise">
+		<app-badge-legend *ngIf="showLegend()" (closed)="closeLegend()"></app-badge-legend>
 
-	<div class="tw-relative">
-		<section class="">
-			<div class="tw-flex tw-items-center tw-rounded-lg tw-p-4 tw-bg-[#ECFEED] tw-mb-4 tw-gap-6">
-				<div
-					class="tw-flex tw-flex-col tw-justify-between tw-gap-4 tw-w-full min-[880px]:tw-flex-row min-[880px]:tw-items-center"
-				>
-					<div class="tw-flex tw-flex-col min-[880px]:tw-flex-row min-[880px]:tw-items-center tw-gap-6">
-						<div class="tw-flex tw-relative tw-items-center">
-							<input
-								type="text"
-								name="forminput"
-								changeOrder
-								class="!tw-bg-white tw-w-full tw-border-1 tw-border-purple min-[880px]:tw-w-96 tw-border-solid tw-h-12 tw-rounded-lg tw-p-2"
-								placeholder="{{ 'Badge.searchBadges' | translate }}"
-								[ngModel]="searchQuery()"
-								(ngModelChange)="onSearchQueryChange($event)"
-								hlmInput
-							/>
-							<ng-icon
-								hlm
-								name="lucideSearch"
-								class="tw-w-8 tw-h-8 tw-absolute tw-top-1/2 tw-right-2 -tw-translate-y-1/2 tw-pointer-events-none tw-text-purple"
-							></ng-icon>
+		<div class="tw-relative">
+			<section class="">
+				<div class="tw-flex tw-items-center tw-rounded-lg tw-p-4 tw-bg-[#ECFEED] tw-mb-4 tw-gap-6">
+					<div
+						class="tw-flex tw-flex-col tw-justify-between tw-gap-4 tw-w-full min-[880px]:tw-flex-row min-[880px]:tw-items-center"
+					>
+						<div class="tw-flex tw-flex-col min-[880px]:tw-flex-row min-[880px]:tw-items-center tw-gap-6">
+							<div class="tw-flex tw-relative tw-items-center">
+								<input
+									type="text"
+									name="forminput"
+									changeOrder
+									class="!tw-bg-white tw-w-full tw-border-1 tw-border-purple min-[880px]:tw-w-96 tw-border-solid tw-h-12 tw-rounded-lg tw-p-2"
+									placeholder="{{ 'Badge.searchBadges' | translate }}"
+									[ngModel]="searchQuery()"
+									(ngModelChange)="onSearchQueryChange($event)"
+									hlmInput
+								/>
+								<ng-icon
+									hlm
+									name="lucideSearch"
+									class="tw-w-8 tw-h-8 tw-absolute tw-top-1/2 tw-right-2 -tw-translate-y-1/2 tw-pointer-events-none tw-text-purple"
+								></ng-icon>
+							</div>
 						</div>
+
+						<oeb-global-sort-select
+							placeholder="{{ 'Badge.sortBy' | translate }}"
+							class="oeb tw-w-[12rem]"
+							[control]="sortControl"
+						>
+						</oeb-global-sort-select>
+
+						<oeb-select
+							[actionBar]="true"
+							placeholder="Tags"
+							class="oeb tw-w-[12rem]"
+							[options]="tagsOptions()"
+							[control]="tagsControl"
+							[autofocus]="true"
+							[noTopMargin]="true"
+							[multiple]="true"
+							[dropdownMaxHeight]="250"
+						></oeb-select>
 					</div>
-
-					<oeb-global-sort-select
-						placeholder="{{ 'Badge.sortBy' | translate }}"
-						class="oeb tw-w-[12rem]"
-						[control]="sortControl"
-					>
-					</oeb-global-sort-select>
-
-					<oeb-select
-						[actionBar]="true"
-						placeholder="Tags"
-						class="oeb tw-w-[12rem]"
-						[options]="tagsOptions()"
-						[control]="tagsControl"
-						[autofocus]="true"
-						[noTopMargin]="true"
-						[multiple]="true"
-						[dropdownMaxHeight]="250"
-					></oeb-select>
 				</div>
-			</div>
-			<div class="subtitle-wrapper">
-				<ul class="tags-wrapper oeb-standard-padding-bottom">
-					<li
-						*ngFor="let tag of tagsControl.value | sort"
-						class="tag tag-close tag-delete tag-button tw-mr-2"
-						(click)="removeTag(tag)"
-					>
-						{{ tag }}
-					</li>
-				</ul>
-				<div class="open-legend-button">
-					<a (click)="openLegend()">{{ 'Badge.framesMeaning' | translate }}</a>
+				<div class="subtitle-wrapper">
+					<ul class="tags-wrapper oeb-standard-padding-bottom">
+						<li
+							*ngFor="let tag of tagsControl.value | sort"
+							class="tag tag-close tag-delete tag-button tw-mr-2"
+							(click)="removeTag(tag)"
+						>
+							{{ tag }}
+						</li>
+					</ul>
+					<div class="open-legend-button">
+						<a (click)="openLegend()">{{ 'Badge.framesMeaning' | translate }}</a>
+					</div>
 				</div>
-			</div>
-			<div class="tw-gap-6 tw-grid tw-grid-cols-badges" [@stagger]>
-				<bg-badgecard
-					*ngFor="let badge of badges(); trackBy: trackById"
-					@appearAnimation
-					[badgeTitle]="badge.name"
-					[badgeImage]="badge.image"
-					[badgeDescription]="badge.description"
-					[badgeSlug]="badge.slug"
-					[issuerTitle]="badge.issuerName"
-					[badgeIssueDate]="badge.createdAt"
-					[public]="true"
-					[publicUrl]="badge.url"
-					[issuerSlug]="badge.issuerSlug"
-					[competencies]="badge.extensions['extensions:CompetencyExtension']"
-					[tags]="badge.tags"
-				></bg-badgecard>
-			</div>
-			<p
-				*ngIf="!badges().length && !hasNext()"
-				class="tw-m-auto tw-max-w-[300px] tw-p-4 tw-border-solid tw-border-[1px] tw-border-[var(--color-blue)] tw-rounded-lg tw-bg-[var(--color-lightpurple)] tw-text-center"
-			>
-				{{ 'General.noResults' | translate }}
-			</p>
-		</section>
-	</div>
+				<div class="tw-gap-6 tw-grid tw-grid-cols-badges" [@stagger]>
+					<bg-badgecard
+						*ngFor="let badge of badges(); trackBy: trackById"
+						@appearAnimation
+						[badgeTitle]="badge.name"
+						[badgeImage]="badge.image"
+						[badgeDescription]="badge.description"
+						[badgeSlug]="badge.slug"
+						[issuerTitle]="badge.issuerName"
+						[badgeIssueDate]="badge.createdAt"
+						[public]="true"
+						[publicUrl]="badge.url"
+						[issuerSlug]="badge.issuerSlug"
+						[competencies]="badge.extensions['extensions:CompetencyExtension']"
+						[tags]="badge.tags"
+					></bg-badgecard>
+				</div>
+				<p
+					*ngIf="!badges().length && !hasNext()"
+					class="tw-m-auto tw-max-w-[300px] tw-p-4 tw-border-solid tw-border-[1px] tw-border-[var(--color-blue)] tw-rounded-lg tw-bg-[var(--color-lightpurple)] tw-text-center"
+				>
+					{{ 'General.noResults' | translate }}
+				</p>
+			</section>
+		</div>
+	</ng-template>
 	<div #loadMore class="oeb-section-sm">
 		@if (hasNext()) {
 			@if (!observeScrolling()) {
