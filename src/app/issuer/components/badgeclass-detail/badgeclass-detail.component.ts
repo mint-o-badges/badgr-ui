@@ -1,13 +1,4 @@
-import {
-	afterRenderEffect,
-	Component,
-	ElementRef,
-	Input,
-	OnInit,
-	SecurityContext,
-	TemplateRef,
-	ViewChild,
-} from '@angular/core';
+import { Component, ElementRef, Input, OnInit, SecurityContext, TemplateRef, ViewChild } from '@angular/core';
 
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from '../../../common/services/message.service';
