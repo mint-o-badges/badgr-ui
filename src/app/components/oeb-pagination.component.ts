@@ -8,42 +8,48 @@ import {
 	HlmPaginationNextComponent,
 	HlmPaginationPreviousComponent,
 } from './spartan/ui-pagination-helm/src';
-import { CommonModule } from '@angular/common';
+
 
 @Component({
 	selector: 'oeb-pagination',
 	imports: [
-		HlmPaginationDirective,
-		HlmPaginationContentDirective,
-		HlmPaginationItemDirective,
-		HlmPaginationPreviousComponent,
-		HlmPaginationNextComponent,
-		HlmPaginationLinkDirective,
-		HlmPaginationEllipsisComponent,
-		CommonModule,
-	],
+    HlmPaginationDirective,
+    HlmPaginationContentDirective,
+    HlmPaginationItemDirective,
+    HlmPaginationPreviousComponent,
+    HlmPaginationNextComponent,
+    HlmPaginationLinkDirective,
+    HlmPaginationEllipsisComponent
+],
 	template: `
 		<nav hlmPagination class="tw-mt-4">
-			<ul hlmPaginationContent>
-				<li hlmPaginationItem>
-					<hlm-pagination-previous (click)="changePage(currentPage - 1)" *ngIf="currentPage > 1" />
-				</li>
-
-				<li hlmPaginationItem *ngFor="let page of getPageNumbers()" (click)="changePage(page)">
-					<hlm-pagination-ellipsis *ngIf="page.toString() === '...'" />
-
-					<a hlmPaginationLink [isActive]="page === currentPage">{{ page }}</a>
-				</li>
-
-				<li hlmPaginationItem>
-					<hlm-pagination-ellipsis />
-				</li>
-				<li hlmPaginationItem (click)="changePage(currentPage + 1)" *ngIf="currentPage < totalPages">
-					<hlm-pagination-next />
-				</li>
-			</ul>
+		  <ul hlmPaginationContent>
+		    <li hlmPaginationItem>
+		      @if (currentPage > 1) {
+		        <hlm-pagination-previous (click)="changePage(currentPage - 1)" />
+		      }
+		    </li>
+		
+		    @for (page of getPageNumbers(); track page) {
+		      <li hlmPaginationItem (click)="changePage(page)">
+		        @if (page.toString() === '...') {
+		          <hlm-pagination-ellipsis />
+		        }
+		        <a hlmPaginationLink [isActive]="page === currentPage">{{ page }}</a>
+		      </li>
+		    }
+		
+		    <li hlmPaginationItem>
+		      <hlm-pagination-ellipsis />
+		    </li>
+		    @if (currentPage < totalPages) {
+		      <li hlmPaginationItem (click)="changePage(currentPage + 1)">
+		        <hlm-pagination-next />
+		      </li>
+		    }
+		  </ul>
 		</nav>
-	`,
+		`,
 })
 export class OebPaginationComponent {
 	@Input() currentPage = 1;

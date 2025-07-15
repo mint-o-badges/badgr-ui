@@ -20,7 +20,7 @@ import { FormMessageComponent } from '../../../common/components/form-message.co
 import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
 import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 import { CountUpModule } from 'ngx-countup';
-import { NgIf, NgClass, NgFor } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { HlmInputDirective } from '../../../components/spartan/ui-input-helm/src/lib/hlm-input.directive';
 import { NgIcon } from '@ng-icons/core';
 import { HlmIconDirective } from '../../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
@@ -36,24 +36,22 @@ import { PaginationAdvancedComponent } from '../../../components/oeb-numbered-pa
 	styleUrls: ['./issuer-catalog.component.css'],
 	animations: [appearAnimation],
 	imports: [
-		FormMessageComponent,
-		HlmH1Directive,
-		BgAwaitPromises,
-		CountUpModule,
-		NgIf,
-		FormsModule,
-		HlmInputDirective,
-		NgIcon,
-		HlmIconDirective,
-		OebGlobalSortSelectComponent,
-		OebSelectComponent,
-		NgClass,
-		OebButtonComponent,
-		NgFor,
-		IssuerCardComponent,
-		PaginationAdvancedComponent,
-		TranslatePipe,
-	],
+    FormMessageComponent,
+    HlmH1Directive,
+    BgAwaitPromises,
+    CountUpModule,
+    FormsModule,
+    HlmInputDirective,
+    NgIcon,
+    HlmIconDirective,
+    OebGlobalSortSelectComponent,
+    OebSelectComponent,
+    NgClass,
+    OebButtonComponent,
+    IssuerCardComponent,
+    PaginationAdvancedComponent,
+    TranslatePipe
+],
 })
 export class IssuerCatalogComponent extends BaseRoutableComponent implements OnInit, AfterViewInit {
 	readonly issuerPlaceholderSrc = preloadImageURL('../../../../breakdown/static/images/placeholderavatar-issuer.svg');

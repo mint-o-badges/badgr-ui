@@ -11,21 +11,20 @@ import { FormMessageComponent } from '../../../common/components/form-message.co
 import { OAuthBannerComponent } from '../../../common/components/oauth-banner.component';
 import { HlmIconDirective } from '../../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
-import { NgIf } from '@angular/common';
+
 
 @Component({
 	selector: 'signup-success',
 	templateUrl: './signup-success.component.html',
 	providers: [provideIcons({ lucideCheck })],
 	imports: [
-		FormMessageComponent,
-		OAuthBannerComponent,
-		NgIcon,
-		HlmIconDirective,
-		OebButtonComponent,
-		NgIf,
-		TranslatePipe,
-	],
+    FormMessageComponent,
+    OAuthBannerComponent,
+    NgIcon,
+    HlmIconDirective,
+    OebButtonComponent,
+    TranslatePipe
+],
 })
 export class SignupSuccessComponent implements OnInit {
 	constructor(

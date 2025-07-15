@@ -34,7 +34,7 @@ import { UrlValidator } from '../../../common/validators/url.validator';
 import { Issuer } from '../../models/issuer.model';
 import { IssuerManager } from '../../services/issuer-manager.service';
 import { FormMessageComponent } from '../../../common/components/form-message.component';
-import { NgIf, NgClass, NgFor } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { StepComponent } from '../../../components/stepper/step.component';
 import { CdkStep } from '@angular/cdk/stepper';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
@@ -74,33 +74,31 @@ type BadgeResult = BadgeClass & { selected?: boolean };
 	templateUrl: './learningpath-edit-form.component.html',
 	styleUrls: ['./learningpath-edit-form.component.scss'],
 	imports: [
-		FormMessageComponent,
-		FormsModule,
-		ReactiveFormsModule,
-		StepperComponent,
-		NgIf,
-		NgClass,
-		NgFor,
-		StepComponent,
-		CdkStep,
-		BgAwaitPromises,
-		AutocompleteLibModule,
-		OebButtonComponent,
-		TranslatePipe,
-		OebInputComponent,
-		BgFormFieldImageComponent,
-		BadgeStudioComponent,
-		BgBadgecard,
-		HlmH2Directive,
-		HlmPDirective,
-		HlmInputDirective,
-		OebSeparatorComponent,
-		OebSelectComponent,
-		DndDraggableDirective,
-		DndDropzoneDirective,
-		OebCheckboxComponent,
-		BgImageStatusPlaceholderDirective,
-	],
+    FormMessageComponent,
+    FormsModule,
+    ReactiveFormsModule,
+    StepperComponent,
+    NgClass,
+    StepComponent,
+    CdkStep,
+    BgAwaitPromises,
+    AutocompleteLibModule,
+    OebButtonComponent,
+    TranslatePipe,
+    OebInputComponent,
+    BgFormFieldImageComponent,
+    BadgeStudioComponent,
+    BgBadgecard,
+    HlmH2Directive,
+    HlmPDirective,
+    HlmInputDirective,
+    OebSeparatorComponent,
+    OebSelectComponent,
+    DndDraggableDirective,
+    DndDropzoneDirective,
+    OebCheckboxComponent,
+    BgImageStatusPlaceholderDirective
+],
 })
 export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	@ViewChild(StepperComponent) stepper: StepperComponent;

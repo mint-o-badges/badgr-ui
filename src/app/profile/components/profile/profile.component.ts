@@ -27,27 +27,25 @@ import { BgPopupMenuTriggerDirective, BgPopupMenu } from '../../../common/compon
 import { SvgIconComponent } from '../../../common/components/svg-icon.component';
 import { MenuItemDirective } from '../../../common/directives/bg-menuitem.directive';
 import { FormFieldText } from '../../../common/components/formfield-text';
-import { NgFor, NgIf } from '@angular/common';
+
 
 @Component({
 	selector: 'userProfile',
 	templateUrl: './profile.component.html',
 	imports: [
-		FormMessageComponent,
-		SourceListenerDirective,
-		BgAwaitPromises,
-		RouterLink,
-		BgPopupMenuTriggerDirective,
-		SvgIconComponent,
-		BgPopupMenu,
-		MenuItemDirective,
-		FormsModule,
-		ReactiveFormsModule,
-		FormFieldText,
-		NgFor,
-		NgIf,
-		TranslatePipe,
-	],
+    FormMessageComponent,
+    SourceListenerDirective,
+    BgAwaitPromises,
+    RouterLink,
+    BgPopupMenuTriggerDirective,
+    SvgIconComponent,
+    BgPopupMenu,
+    MenuItemDirective,
+    FormsModule,
+    ReactiveFormsModule,
+    FormFieldText,
+    TranslatePipe
+],
 })
 export class ProfileComponent extends BaseAuthenticatedRoutableComponent implements OnInit, OnDestroy {
 	emailForm = typedFormGroup().addControl('email', '', [Validators.required, EmailValidator.validEmail]);

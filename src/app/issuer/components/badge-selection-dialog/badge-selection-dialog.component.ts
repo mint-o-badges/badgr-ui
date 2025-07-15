@@ -12,7 +12,7 @@ import { SettingsService } from '../../../common/services/settings.service';
 import { BaseDialog } from '../../../common/dialogs/base-dialog';
 import { first } from 'rxjs/operators';
 import { FormsModule } from '@angular/forms';
-import { NgIf, NgFor } from '@angular/common';
+
 import { SvgIconComponent } from '../../../common/components/svg-icon.component';
 import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 
@@ -36,170 +36,182 @@ export interface BadgeSelectionDialogSettings {
 	selector: 'badge-selection-dialog',
 	template: `
 		<dialog class="dialog dialog-large">
-			<section class="l-overflowlist">
-				<!-- Header and Search Area -->
-				<header class="l-childrenvertical l-childrenvertical-is-smalldesktop bordered bordered-bottom">
-					<h1 class="title">{{ dialogTitle }}</h1>
-					<div class="l-childrenhorizontal l-childrenhorizontal-stackmobile">
-						<input type="text" class="search" placeholder="Filter your badges" [(ngModel)]="searchQuery" />
-						<label *ngIf="!isRestrictedToSingleIssuer && hasMultipleIssuers" class="formcheckbox">
-							<input type="checkbox" [(ngModel)]="groupByIssuer" />
-							<span class="formcheckbox-x-text">Group by Issuer</span>
-						</label>
-					</div>
-					<button (click)="cancelDialog()" class="buttonicon buttonicon-link">
-						<svg icon="icon_close"></svg>
-						<span class="visuallyhidden">Close</span>
-					</button>
-				</header>
-
-				<!-- Badge List -->
-				<div class="l-overflowlist-x-list">
-					<table class="table table-dialog" *bgAwaitPromises="[badgesLoaded]">
-						<thead>
-							<tr>
-								<th colspan="3">Badge</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr *ngIf="badgeResults.length < 1">
-								<td class="table-x-padded" colspan="3">
-									<ng-template [ngIf]="hasMultipleIssuers">
-										No badges or issuers matching your query
-									</ng-template>
-									<ng-template [ngIf]="!hasMultipleIssuers">
-										No badges matching your query
-									</ng-template>
-								</td>
-							</tr>
-
-							<ng-template [ngIf]="groupByIssuer && hasMultipleIssuers">
-								<ng-template ngFor let-issuerResults [ngForOf]="issuerResults">
-									<tr>
-										<td colspan="3" class="table-x-inlineheader">
-											{{ issuerResults.issuer?.name || 'Unknown Issuer' }}
-										</td>
-									</tr>
-									<tr *ngFor="let badgeClass of issuerResults.badges">
-										<td class="table-x-input">
-											<input
-												class="checklist"
-												type="checkbox"
-												id="badge-check-{{ badgeClass.badgeUrl }}"
-												#badgeCheckbox
-												[checked]="selectedBadges.has(badgeClass)"
-												(change)="updateBadgeSelection(badgeClass, badgeCheckbox.checked)"
-												*ngIf="multiSelectMode"
-											/>
-											<input
-												class="checklist checklist-radio"
-												type="radio"
-												id="badge-check-{{ badgeClass.badgeUrl }}"
-												#badgeRadio
-												[checked]="selectedBadges.has(badgeClass)"
-												(change)="updateBadgeSelection(badgeClass, badgeRadio.checked)"
-												name="badge-selection-radio"
-												*ngIf="!multiSelectMode"
-											/>
-											<label htmlFor="badge-check-{{ badgeClass.badgeUrl }}">{{
-												badgeClass.name
-											}}</label>
-										</td>
-										<td>
-											<label
-												htmlFor="badge-check-{{ badgeClass.badgeUrl }}"
-												class="table-x-badge"
-											>
-												<img
-													[src]="badgeClass.image"
-													width="40"
-													height="40"
-													alt="{{ badgeClass.name }}"
-												/>
-											</label>
-										</td>
-										<td class="table-x-span">
-											<label
-												htmlFor="badge-check-{{ badgeClass.badgeUrl }}"
-												class="stack stack-list table-x-stack"
-											>
-												<span class="stack-x-text">
-													<h1>{{ badgeClass.name }}</h1>
-													<small>{{ issuerResults.issuer?.name || 'Unknown Issuer' }}</small>
-												</span>
-											</label>
-										</td>
-									</tr>
-								</ng-template>
-							</ng-template>
-
-							<ng-template [ngIf]="!groupByIssuer || !hasMultipleIssuers">
-								<tr *ngFor="let badgeResult of badgeResults">
-									<td class="table-x-input">
-										<input
-											class="checklist"
-											type="checkbox"
-											[id]="'badge-check-' + badgeResult.badge.badgeUrl"
-											#badgeCheckbox
-											[checked]="selectedBadges.has(badgeResult.badge)"
-											(change)="updateBadgeSelection(badgeResult.badge, badgeCheckbox.checked)"
-											*ngIf="multiSelectMode"
-										/>
-										<input
-											class="checklist checklist-radio"
-											type="radio"
-											[id]="'badge-check-' + badgeResult.badge.badgeUrl"
-											#badgeRadio
-											[checked]="selectedBadges.has(badgeResult.badge)"
-											(change)="updateBadgeSelection(badgeResult.badge, badgeRadio.checked)"
-											name="badge-selection-radio"
-											*ngIf="!multiSelectMode"
-										/>
-										<label htmlFor="badge-check-{{ badgeResult.badge.badgeUrl }}">{{
-											badgeResult.badge.name
-										}}</label>
-									</td>
-									<td>
-										<label
-											htmlFor="badge-check-{{ badgeResult.badge.badgeUrl }}"
-											class="table-x-badge"
-										>
-											<img
-												[src]="badgeResult.badge.image"
-												width="40"
-												height="40"
-												alt="{{ badgeResult.badge.name }}"
-											/>
-										</label>
-									</td>
-									<td class="table-x-span">
-										<label
-											htmlFor="badge-check-{{ badgeResult.badge.badgeUrl }}"
-											class="stack stack-list table-x-stack"
-										>
-											<span class="stack-x-text">
-												<h1>{{ badgeResult.badge.name }}</h1>
-												<small>{{ badgeResult.issuer?.name || 'Unknown Issuer' }}</small>
-											</span>
-										</label>
-									</td>
-								</tr>
-							</ng-template>
-						</tbody>
-					</table>
-				</div>
-
-				<!-- Selected Badges and Buttons -->
-				<footer class="bordered bordered-top">
-					<div class="l-childrenhorizontal l-childrenhorizontal-small l-childrenhorizontal-right">
-						<button class="button button-primaryghost" (click)="cancelDialog()">Cancel</button>
-						<button class="button" (click)="saveDialog()">Save Changes</button>
-					</div>
-				</footer>
-			</section>
+		  <section class="l-overflowlist">
+		    <!-- Header and Search Area -->
+		    <header class="l-childrenvertical l-childrenvertical-is-smalldesktop bordered bordered-bottom">
+		      <h1 class="title">{{ dialogTitle }}</h1>
+		      <div class="l-childrenhorizontal l-childrenhorizontal-stackmobile">
+		        <input type="text" class="search" placeholder="Filter your badges" [(ngModel)]="searchQuery" />
+		        @if (!isRestrictedToSingleIssuer && hasMultipleIssuers) {
+		          <label class="formcheckbox">
+		            <input type="checkbox" [(ngModel)]="groupByIssuer" />
+		            <span class="formcheckbox-x-text">Group by Issuer</span>
+		          </label>
+		        }
+		      </div>
+		      <button (click)="cancelDialog()" class="buttonicon buttonicon-link">
+		        <svg icon="icon_close"></svg>
+		        <span class="visuallyhidden">Close</span>
+		      </button>
+		    </header>
+		
+		    <!-- Badge List -->
+		    <div class="l-overflowlist-x-list">
+		      <table class="table table-dialog" *bgAwaitPromises="[badgesLoaded]">
+		        <thead>
+		          <tr>
+		            <th colspan="3">Badge</th>
+		          </tr>
+		        </thead>
+		        <tbody>
+		          @if (badgeResults.length < 1) {
+		            <tr>
+		              <td class="table-x-padded" colspan="3">
+		                @if (hasMultipleIssuers) {
+		                  No badges or issuers matching your query
+		                }
+		                @if (!hasMultipleIssuers) {
+		                  No badges matching your query
+		                }
+		              </td>
+		            </tr>
+		          }
+		
+		          @if (groupByIssuer && hasMultipleIssuers) {
+		            @for (issuerResults of issuerResults; track issuerResults) {
+		              <tr>
+		                <td colspan="3" class="table-x-inlineheader">
+		                  {{ issuerResults.issuer?.name || 'Unknown Issuer' }}
+		                </td>
+		              </tr>
+		              @for (badgeClass of issuerResults.badges; track badgeClass) {
+		                <tr>
+		                  <td class="table-x-input">
+		                    @if (multiSelectMode) {
+		                      <input
+		                        class="checklist"
+		                        type="checkbox"
+		                        id="badge-check-{{ badgeClass.badgeUrl }}"
+		                        #badgeCheckbox
+		                        [checked]="selectedBadges.has(badgeClass)"
+		                        (change)="updateBadgeSelection(badgeClass, badgeCheckbox.checked)"
+		                        />
+		                    }
+		                    @if (!multiSelectMode) {
+		                      <input
+		                        class="checklist checklist-radio"
+		                        type="radio"
+		                        id="badge-check-{{ badgeClass.badgeUrl }}"
+		                        #badgeRadio
+		                        [checked]="selectedBadges.has(badgeClass)"
+		                        (change)="updateBadgeSelection(badgeClass, badgeRadio.checked)"
+		                        name="badge-selection-radio"
+		                        />
+		                    }
+		                    <label htmlFor="badge-check-{{ badgeClass.badgeUrl }}">{{
+		                      badgeClass.name
+		                    }}</label>
+		                  </td>
+		                  <td>
+		                    <label
+		                      htmlFor="badge-check-{{ badgeClass.badgeUrl }}"
+		                      class="table-x-badge"
+		                      >
+		                      <img
+		                        [src]="badgeClass.image"
+		                        width="40"
+		                        height="40"
+		                        alt="{{ badgeClass.name }}"
+		                        />
+		                    </label>
+		                  </td>
+		                  <td class="table-x-span">
+		                    <label
+		                      htmlFor="badge-check-{{ badgeClass.badgeUrl }}"
+		                      class="stack stack-list table-x-stack"
+		                      >
+		                      <span class="stack-x-text">
+		                        <h1>{{ badgeClass.name }}</h1>
+		                        <small>{{ issuerResults.issuer?.name || 'Unknown Issuer' }}</small>
+		                      </span>
+		                    </label>
+		                  </td>
+		                </tr>
+		              }
+		            }
+		          }
+		
+		          @if (!groupByIssuer || !hasMultipleIssuers) {
+		            @for (badgeResult of badgeResults; track badgeResult) {
+		              <tr>
+		                <td class="table-x-input">
+		                  @if (multiSelectMode) {
+		                    <input
+		                      class="checklist"
+		                      type="checkbox"
+		                      [id]="'badge-check-' + badgeResult.badge.badgeUrl"
+		                      #badgeCheckbox
+		                      [checked]="selectedBadges.has(badgeResult.badge)"
+		                      (change)="updateBadgeSelection(badgeResult.badge, badgeCheckbox.checked)"
+		                      />
+		                  }
+		                  @if (!multiSelectMode) {
+		                    <input
+		                      class="checklist checklist-radio"
+		                      type="radio"
+		                      [id]="'badge-check-' + badgeResult.badge.badgeUrl"
+		                      #badgeRadio
+		                      [checked]="selectedBadges.has(badgeResult.badge)"
+		                      (change)="updateBadgeSelection(badgeResult.badge, badgeRadio.checked)"
+		                      name="badge-selection-radio"
+		                      />
+		                  }
+		                  <label htmlFor="badge-check-{{ badgeResult.badge.badgeUrl }}">{{
+		                    badgeResult.badge.name
+		                  }}</label>
+		                </td>
+		                <td>
+		                  <label
+		                    htmlFor="badge-check-{{ badgeResult.badge.badgeUrl }}"
+		                    class="table-x-badge"
+		                    >
+		                    <img
+		                      [src]="badgeResult.badge.image"
+		                      width="40"
+		                      height="40"
+		                      alt="{{ badgeResult.badge.name }}"
+		                      />
+		                  </label>
+		                </td>
+		                <td class="table-x-span">
+		                  <label
+		                    htmlFor="badge-check-{{ badgeResult.badge.badgeUrl }}"
+		                    class="stack stack-list table-x-stack"
+		                    >
+		                    <span class="stack-x-text">
+		                      <h1>{{ badgeResult.badge.name }}</h1>
+		                      <small>{{ badgeResult.issuer?.name || 'Unknown Issuer' }}</small>
+		                    </span>
+		                  </label>
+		                </td>
+		              </tr>
+		            }
+		          }
+		        </tbody>
+		      </table>
+		    </div>
+		
+		    <!-- Selected Badges and Buttons -->
+		    <footer class="bordered bordered-top">
+		      <div class="l-childrenhorizontal l-childrenhorizontal-small l-childrenhorizontal-right">
+		        <button class="button button-primaryghost" (click)="cancelDialog()">Cancel</button>
+		        <button class="button" (click)="saveDialog()">Save Changes</button>
+		      </div>
+		    </footer>
+		  </section>
 		</dialog>
-	`,
-	imports: [FormsModule, NgIf, SvgIconComponent, BgAwaitPromises, NgFor],
+		`,
+	imports: [FormsModule, SvgIconComponent, BgAwaitPromises],
 })
 export class BadgeSelectionDialog extends BaseDialog {
 	get searchQuery() {

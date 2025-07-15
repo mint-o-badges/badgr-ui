@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnInit, Renderer2, ViewChild, Inject, signal, computed, DOCUMENT } from '@angular/core';
-import { NgIf, NgStyle, NgFor } from '@angular/common';
+import { NgStyle } from '@angular/common';
 import { Router, RouterLinkActive, RouterLink, RouterOutlet } from '@angular/router';
 
 import { MessageService } from './common/services/message.service';
@@ -56,31 +56,29 @@ import { IconsProvider } from './icons-provider';
 	templateUrl: './app.component.html',
 	styleUrls: ['./app.component.scss'],
 	imports: [
-		SourceListenerDirective,
-		NgIf,
-		OebDropdownComponent,
-		RouterLinkActive,
-		RouterLink,
-		OebButtonComponent,
-		NgStyle,
-		NgIcon,
-		HlmIconDirective,
-		BgPopupMenuTriggerDirective,
-		SvgIconComponent,
-		BgPopupMenu,
-		NgFor,
-		MenuItemDirective,
-		RouterOutlet,
-		ConfirmDialog,
-		ShareSocialDialog,
-		ExportPdfDialog,
-		NounprojectDialog,
-		CopyBadgeDialog,
-		ForkBadgeDialog,
-		MarkdownHintsDialog,
-		SelectIssuerDialog,
-		TranslatePipe,
-	],
+    SourceListenerDirective,
+    OebDropdownComponent,
+    RouterLinkActive,
+    RouterLink,
+    OebButtonComponent,
+    NgStyle,
+    NgIcon,
+    HlmIconDirective,
+    BgPopupMenuTriggerDirective,
+    SvgIconComponent,
+    BgPopupMenu,
+    MenuItemDirective,
+    RouterOutlet,
+    ConfirmDialog,
+    ShareSocialDialog,
+    ExportPdfDialog,
+    NounprojectDialog,
+    CopyBadgeDialog,
+    ForkBadgeDialog,
+    MarkdownHintsDialog,
+    SelectIssuerDialog,
+    TranslatePipe
+],
 	providers: [IconsProvider],
 })
 export class AppComponent implements OnInit, AfterViewInit {

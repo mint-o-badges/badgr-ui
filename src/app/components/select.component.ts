@@ -22,55 +22,74 @@ import { TranslateModule } from '@ngx-translate/core';
 		TranslateModule,
 	],
 	template: ` <div [ngClass]="{ 'tw-mt-6 md:tw-mt-7': !noTopMargin }">
-		<label class="tw-pb-[2px] tw-pl-[3px]" [attr.for]="inputName" *ngIf="label">
-			<span hlmP class="tw-text-oebblack tw-font-semibold" [innerHTML]="label"></span>
-			<span *ngIf="formFieldAside">{{ formFieldAside }}</span>
-			<ng-content select="[label-additions]"></ng-content>
-		</label>
-
-		<label class="visuallyhidden" [attr.for]="inputName" *ngIf="ariaLabel">{{ ariaLabel }}</label>
-
-		<div class="" *ngIf="description">{{ description }}</div>
-
-		<brn-select
-			[formControl]="control"
-			(focus)="cacheControlState()"
-			(keypress)="handleKeyPress($event)"
-			#selectInput
-			class="tw-text-oebblack"
-			[ngClass]="{ 'tw-pointer-events-none tw-opacity-50': disabled }"
-			[attr.id]="id"
-			[placeholder]="placeholder"
-			[multiple]="multiple"
-			brn-select
-			hlm
-		>
-			<div *ngIf="placeholder" brnSelectLabel class="tw-hidden"></div>
-
-			<hlm-select-trigger
-				[_size]="actionBar ? 'actionBar' : 'default'"
-				class="tw-w-full tw-border-solid tw-border-purple tw-bg-white "
-			>
-				<hlm-select-value *ngIf="!multiple" class="tw-text-base " />
-				<div *ngIf="multiple" class="tw-text-base">{{ placeholder }}</div>
-			</hlm-select-trigger>
-			<hlm-select-content [ngStyle]="{ 'max-height.px': dropdownMaxHeight }">
-				<hlm-option *ngFor="let option of options" [value]="option.value">{{
-					option.label | translate
-				}}</hlm-option>
-				<div *ngIf="template">
-					<oeb-separator [separatorStyle]="'!tw-border-dashed'"></oeb-separator>
-					<ng-content *ngTemplateOutlet="template"></ng-content>
-				</div>
-			</hlm-select-content>
+		  @if (label) {
+		    <label class="tw-pb-[2px] tw-pl-[3px]" [attr.for]="inputName">
+		      <span hlmP class="tw-text-oebblack tw-font-semibold" [innerHTML]="label"></span>
+		      @if (formFieldAside) {
+		        <span>{{ formFieldAside }}</span>
+		      }
+		      <ng-content select="[label-additions]"></ng-content>
+		    </label>
+		  }
+		
+		  @if (ariaLabel) {
+		    <label class="visuallyhidden" [attr.for]="inputName">{{ ariaLabel }}</label>
+		  }
+		
+		  @if (description) {
+		    <div class="">{{ description }}</div>
+		  }
+		
+		  <brn-select
+		    [formControl]="control"
+		    (focus)="cacheControlState()"
+		    (keypress)="handleKeyPress($event)"
+		    #selectInput
+		    class="tw-text-oebblack"
+		    [ngClass]="{ 'tw-pointer-events-none tw-opacity-50': disabled }"
+		    [attr.id]="id"
+		    [placeholder]="placeholder"
+		    [multiple]="multiple"
+		    brn-select
+		    hlm
+		    >
+		  @if (placeholder) {
+		    <div brnSelectLabel class="tw-hidden"></div>
+		  }
+		
+		  <hlm-select-trigger
+		    [_size]="actionBar ? 'actionBar' : 'default'"
+		    class="tw-w-full tw-border-solid tw-border-purple tw-bg-white "
+		    >
+		    @if (!multiple) {
+		      <hlm-select-value class="tw-text-base " />
+		    }
+		    @if (multiple) {
+		      <div class="tw-text-base">{{ placeholder }}</div>
+		    }
+		  </hlm-select-trigger>
+		  <hlm-select-content [ngStyle]="{ 'max-height.px': dropdownMaxHeight }">
+		    @for (option of options; track option) {
+		      <hlm-option [value]="option.value">{{
+		        option.label | translate
+		      }}</hlm-option>
+		    }
+		    @if (template) {
+		      <div>
+		        <oeb-separator [separatorStyle]="'!tw-border-dashed'"></oeb-separator>
+		        <ng-content *ngTemplateOutlet="template"></ng-content>
+		      </div>
+		    }
+		  </hlm-select-content>
 		</brn-select>
-
-		<oeb-input-error
-			class="tw-text-red tw-pl-[3px]"
-			*ngIf="isErrorState"
-			[error]="errorMessageForDisplay"
-		></oeb-input-error>
-	</div>`,
+		
+		@if (isErrorState) {
+		  <oeb-input-error
+		    class="tw-text-red tw-pl-[3px]"
+		    [error]="errorMessageForDisplay"
+		  ></oeb-input-error>
+		}
+		</div>`,
 })
 export class OebSelectComponent {
 	@Input() control: FormControl;

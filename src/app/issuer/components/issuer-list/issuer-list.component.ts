@@ -25,7 +25,7 @@ import { BadgrApiFailure } from '../../../common/services/api-failure';
 import { FormMessageComponent } from '../../../common/components/form-message.component';
 import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
 import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
-import { NgIf, NgTemplateOutlet, NgFor, NgClass, NgStyle } from '@angular/common';
+import { NgTemplateOutlet, NgClass, NgStyle } from '@angular/common';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { NgIcon } from '@ng-icons/core';
 import { HlmIconDirective } from '../../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
@@ -35,22 +35,20 @@ import { BgImageStatusPlaceholderDirective } from '../../../common/directives/bg
 	selector: 'issuer-list',
 	templateUrl: './issuer-list.component.html',
 	imports: [
-		FormMessageComponent,
-		HlmH1Directive,
-		HlmPDirective,
-		NgIf,
-		OebButtonComponent,
-		RouterLink,
-		NgTemplateOutlet,
-		NgIcon,
-		HlmIconDirective,
-		NgFor,
-		BgImageStatusPlaceholderDirective,
-		NgClass,
-		FormsModule,
-		NgStyle,
-		TranslatePipe,
-	],
+    FormMessageComponent,
+    HlmH1Directive,
+    HlmPDirective,
+    OebButtonComponent,
+    RouterLink,
+    NgTemplateOutlet,
+    NgIcon,
+    HlmIconDirective,
+    BgImageStatusPlaceholderDirective,
+    NgClass,
+    FormsModule,
+    NgStyle,
+    TranslatePipe
+],
 })
 export class IssuerListComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	readonly issuerPlaceholderSrc = preloadImageURL('../../../../breakdown/static/images/placeholderavatar-issuer.svg');

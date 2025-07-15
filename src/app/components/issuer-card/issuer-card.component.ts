@@ -5,7 +5,7 @@ import { TruncatedTextComponent } from '../../common/components/truncated-text.c
 import { HlmPDirective } from '../spartan/ui-typography-helm/src/lib/hlm-p.directive';
 import { HlmBadgeDirective } from '../spartan/ui-badge-helm/src/lib/hlm-badge.directive';
 import { RouterLink } from '@angular/router';
-import { NgIf, I18nPluralPipe } from '@angular/common';
+import { I18nPluralPipe } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { preloadImageURL } from '../../common/util/file-util';
 
@@ -25,16 +25,15 @@ export interface Issuer {
 	templateUrl: './issuer-card.component.html',
 	styleUrls: ['./issuer-card.component.css'],
 	imports: [
-		BgImageStatusPlaceholderDirective,
-		HlmH2Directive,
-		TruncatedTextComponent,
-		HlmPDirective,
-		HlmBadgeDirective,
-		RouterLink,
-		NgIf,
-		I18nPluralPipe,
-		TranslatePipe,
-	],
+    BgImageStatusPlaceholderDirective,
+    HlmH2Directive,
+    TruncatedTextComponent,
+    HlmPDirective,
+    HlmBadgeDirective,
+    RouterLink,
+    I18nPluralPipe,
+    TranslatePipe
+],
 })
 export class IssuerCardComponent {
 	@Input() issuer: Issuer; // Single input for the entire object

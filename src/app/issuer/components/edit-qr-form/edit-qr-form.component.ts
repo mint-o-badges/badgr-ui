@@ -12,7 +12,7 @@ import { QrCodeApiService } from '../../services/qrcode-api.service';
 import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
 import { SuccessDialogComponent } from '../../../common/dialogs/oeb-dialogs/success-dialog.component';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
-import { DatePipe, NgIf } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { Location } from '@angular/common';
 import { ApiQRCode } from '../../models/qrcode-api.model';
 import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
@@ -25,16 +25,15 @@ import { OebButtonComponent } from '../../../components/oeb-button.component';
 	selector: 'edit-qr-form',
 	templateUrl: './edit-qr-form.component.html',
 	imports: [
-		BgAwaitPromises,
-		FormsModule,
-		ReactiveFormsModule,
-		BgImageStatusPlaceholderDirective,
-		OebInputComponent,
-		NgIf,
-		OebCheckboxComponent,
-		OebButtonComponent,
-		TranslatePipe,
-	],
+    BgAwaitPromises,
+    FormsModule,
+    ReactiveFormsModule,
+    BgImageStatusPlaceholderDirective,
+    OebInputComponent,
+    OebCheckboxComponent,
+    OebButtonComponent,
+    TranslatePipe
+],
 })
 export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent {
 	static datePipe = new DatePipe('de');

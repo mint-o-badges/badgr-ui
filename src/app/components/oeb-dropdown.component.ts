@@ -8,7 +8,7 @@ import {
 	HlmMenuItemVariants,
 	HlmMenuLabelComponent,
 } from './spartan/ui-menu-helm/src/index';
-import { NgIf, NgFor, NgTemplateOutlet, AsyncPipe } from '@angular/common';
+import { NgTemplateOutlet, AsyncPipe } from '@angular/common';
 import type { MenuItem } from '../common/components/badge-detail/badge-detail.component.types';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
@@ -17,70 +17,76 @@ import { HlmIconDirective } from './spartan/ui-icon-helm/src/lib/hlm-icon.direct
 @Component({
 	selector: 'oeb-dropdown',
 	imports: [
-		BrnMenuTriggerDirective,
-		HlmMenuComponent,
-		HlmMenuItemDirective,
-		HlmMenuLabelComponent,
-		HlmMenuItemIconDirective,
-		NgIf,
-		NgFor,
-		NgTemplateOutlet,
-		RouterModule,
-		NgIcon,
-		HlmIconDirective,
-		TranslateModule,
-	],
+    BrnMenuTriggerDirective,
+    HlmMenuComponent,
+    HlmMenuItemDirective,
+    HlmMenuLabelComponent,
+    HlmMenuItemIconDirective,
+    NgTemplateOutlet,
+    RouterModule,
+    NgIcon,
+    HlmIconDirective,
+    TranslateModule
+],
 	template: `
 		<button
-			[brnMenuTriggerFor]="menu"
-			[disabled]="!hasEnabledMenuItem"
-			class="disabled:tw-pointer-events-none disabled:tw-opacity-50"
-		>
-			<ngTemplateOutlet *ngIf="isTemplate; else stringTrigger" [ngTemplateOutlet]="trigger"></ngTemplateOutlet>
-			<ng-template #stringTrigger>
-				<button [class]="triggerStyle" [disabled]="!hasEnabledMenuItem">
-					{{ trigger | translate }}
-					<ng-icon hlm class="tw-ml-2" name="lucideChevronDown" hlmMenuIcon />
-				</button>
-			</ng-template>
+		  [brnMenuTriggerFor]="menu"
+		  [disabled]="!hasEnabledMenuItem"
+		  class="disabled:tw-pointer-events-none disabled:tw-opacity-50"
+		  >
+		  @if (isTemplate) {
+		    <ngTemplateOutlet [ngTemplateOutlet]="trigger"></ngTemplateOutlet>
+		  } @else {
+		    <button [class]="triggerStyle" [disabled]="!hasEnabledMenuItem">
+		      {{ trigger | translate }}
+		      <ng-icon hlm class="tw-ml-2" name="lucideChevronDown" hlmMenuIcon />
+		    </button>
+		  }
 		</button>
-
+		
 		<ng-template #menu>
-			<hlm-menu class="tw-border-[var(--color-purple)] tw-border-2">
-				<hlm-menu-label *ngIf="label">{{ label }}</hlm-menu-label>
-				<ng-container *ngFor="let menuItem of menuItems">
-					<button
-						*ngIf="menuItem.action"
-						(click)="menuItem.action($event)"
-						[size]="size"
-						[disabled]="menuItem.disabled"
-						hlmMenuItem
-					>
-						<ng-icon hlm [size]="iconClass" *ngIf="menuItem.icon" name="{{ menuItem.icon }}" hlmMenuIcon />
-						{{ menuItem.title | translate }}
-					</button>
-					<button
-						routerLinkActive="tw-bg-lightpurple"
-						*ngIf="menuItem.routerLink"
-						[disabled]="menuItem.disabled"
-						[routerLink]="menuItem.routerLink"
-						[size]="size"
-						hlmMenuItem
-					>
-						<ng-icon
-							hlm
-							class="tw-mr-3"
-							[size]="iconClass"
-							*ngIf="menuItem.icon"
-							name="{{ menuItem.icon }}"
-							hlmMenuIcon
-						/>
-						{{ menuItem.title | translate }}
-					</button>
-				</ng-container>
-			</hlm-menu>
+		  <hlm-menu class="tw-border-[var(--color-purple)] tw-border-2">
+		    @if (label) {
+		      <hlm-menu-label>{{ label }}</hlm-menu-label>
+		    }
+		    @for (menuItem of menuItems; track menuItem) {
+		      @if (menuItem.action) {
+		        <button
+		          (click)="menuItem.action($event)"
+		          [size]="size"
+		          [disabled]="menuItem.disabled"
+		          hlmMenuItem
+		          >
+		          @if (menuItem.icon) {
+		            <ng-icon hlm [size]="iconClass" name="{{ menuItem.icon }}" hlmMenuIcon />
+		          }
+		          {{ menuItem.title | translate }}
+		        </button>
+		      }
+		      @if (menuItem.routerLink) {
+		        <button
+		          routerLinkActive="tw-bg-lightpurple"
+		          [disabled]="menuItem.disabled"
+		          [routerLink]="menuItem.routerLink"
+		          [size]="size"
+		          hlmMenuItem
+		          >
+		          @if (menuItem.icon) {
+		            <ng-icon
+		              hlm
+		              class="tw-mr-3"
+		              [size]="iconClass"
+		              name="{{ menuItem.icon }}"
+		              hlmMenuIcon
+		              />
+		          }
+		          {{ menuItem.title | translate }}
+		        </button>
+		      }
+		    }
+		  </hlm-menu>
 		</ng-template>
-	`,
+		`,
 	styleUrls: ['../app.component.scss'],
 })
 export class OebDropdownComponent {

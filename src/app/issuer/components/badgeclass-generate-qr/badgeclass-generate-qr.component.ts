@@ -12,7 +12,7 @@ import { SuccessDialogComponent } from '../../../common/dialogs/oeb-dialogs/succ
 import { DangerDialogComponent } from '../../../common/dialogs/oeb-dialogs/danger-dialog.component';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { QrCodeApiService } from '../../services/qrcode-api.service';
-import { DatePipe, NgIf } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { MenuItem } from '../../../common/components/badge-detail/badge-detail.component.types';
 import { saveAsImage } from '../../../common/util/qrcode-util';
 import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
@@ -27,17 +27,16 @@ import { OebButtonComponent } from '../../../components/oeb-button.component';
 	templateUrl: './badgeclass-generate-qr.component.html',
 	styleUrls: ['../../../public/components/about/about.component.css'],
 	imports: [
-		BgAwaitPromises,
-		BgBreadcrumbsComponent,
-		OebDropdownComponent,
-		SvgIconComponent,
-		QRCodeComponent,
-		BgImageStatusPlaceholderDirective,
-		NgIf,
-		OebButtonComponent,
-		RouterLink,
-		TranslatePipe,
-	],
+    BgAwaitPromises,
+    BgBreadcrumbsComponent,
+    OebDropdownComponent,
+    SvgIconComponent,
+    QRCodeComponent,
+    BgImageStatusPlaceholderDirective,
+    OebButtonComponent,
+    RouterLink,
+    TranslatePipe
+],
 })
 export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	static datePipe = new DatePipe('de');

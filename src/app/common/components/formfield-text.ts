@@ -14,7 +14,7 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angul
 
 import { UrlValidator } from '../validators/url.validator';
 import { CommonDialogsService } from '../services/common-dialogs.service';
-import { NgIf } from '@angular/common';
+
 import { OebButtonComponent } from '../../components/oeb-button.component';
 
 @Component({
@@ -29,62 +29,81 @@ import { OebButtonComponent } from '../../components/oeb-button.component';
 	},
 	template: `
 		<div class="forminput-x-labelrow">
-			<label class="forminput-x-label" [attr.for]="inputName" *ngIf="label || includeLabelAsWrapper">
-				{{ label }} <span *ngIf="optional">(OPTIONAL)</span>
-				<span class="forminput-x-formFieldAside" *ngIf="formFieldAside">{{ formFieldAside }}</span>
-				<button type="button" *ngIf="isLockedState" (click)="unlock()">(unlock)</button>
-			</label>
-			<ng-content class="forminput-x-helplink" select="[label-additions]"></ng-content>
+		  @if (label || includeLabelAsWrapper) {
+		    <label class="forminput-x-label" [attr.for]="inputName">
+		      {{ label }} @if (optional) {
+		      <span>(OPTIONAL)</span>
+		    }
+		    @if (formFieldAside) {
+		      <span class="forminput-x-formFieldAside">{{ formFieldAside }}</span>
+		    }
+		    @if (isLockedState) {
+		      <button type="button" (click)="unlock()">(unlock)</button>
+		    }
+		  </label>
+		}
+		<ng-content class="forminput-x-helplink" select="[label-additions]"></ng-content>
 		</div>
-		<p class="forminput-x-sublabel" *ngIf="sublabel">
-			<span *ngIf="remainingCharactersNum >= 0">{{ remainingCharactersNum }}</span
-			>{{ sublabel }}
-		</p>
-
-		<label class="visuallyhidden" [attr.for]="inputName" *ngIf="ariaLabel">{{ ariaLabel }}</label>
-		<div class="forminput-x-inputs tw-flex tw-gap-2 tw-items-center">
-			<input
-				[type]="fieldType"
-				*ngIf="!multiline"
-				[name]="inputName"
-				[id]="inputId"
-				[formControl]="control"
-				[placeholder]="placeholder || ''"
-				[attr.maxlength]="maxchar"
-				[attr.max]="max"
-				(change)="postProcessInput()"
-				(focus)="cacheControlState()"
-				(keypress)="handleKeyPress($event)"
-				(keyup)="handleKeyUp($event)"
-				#textInput
-			/>
-			<oeb-button
-				*ngIf="inlineButtonText"
-				class="forminput-x-button"
-				[variant]="'secondary'"
-				[size]="'sm'"
-				(click)="buttonClicked.emit($event)"
-				[disabled-when-requesting]="true"
-				type="submit"
-				[text]="inlineButtonText"
-			/>
-			<textarea
-				*ngIf="multiline"
-				[name]="inputName"
-				[id]="inputId"
-				[formControl]="control"
-				[attr.maxlength]="maxchar"
-				[placeholder]="placeholder || ''"
-				(change)="postProcessInput()"
-				(focus)="cacheControlState()"
-				(keypress)="handleKeyPress($event)"
-				(keyup)="handleKeyUp($event)"
-				#textareaInput
-			></textarea>
-		</div>
-		<p class="forminput-x-error" *ngIf="isErrorState">{{ errorMessageForDisplay }}</p>
-	`,
-	imports: [NgIf, FormsModule, ReactiveFormsModule, OebButtonComponent],
+		@if (sublabel) {
+		  <p class="forminput-x-sublabel">
+		    @if (remainingCharactersNum >= 0) {
+		      <span>{{ remainingCharactersNum }}</span
+		        >
+		        }{{ sublabel }}
+		      </p>
+		    }
+		
+		    @if (ariaLabel) {
+		      <label class="visuallyhidden" [attr.for]="inputName">{{ ariaLabel }}</label>
+		    }
+		    <div class="forminput-x-inputs tw-flex tw-gap-2 tw-items-center">
+		      @if (!multiline) {
+		        <input
+		          [type]="fieldType"
+		          [name]="inputName"
+		          [id]="inputId"
+		          [formControl]="control"
+		          [placeholder]="placeholder || ''"
+		          [attr.maxlength]="maxchar"
+		          [attr.max]="max"
+		          (change)="postProcessInput()"
+		          (focus)="cacheControlState()"
+		          (keypress)="handleKeyPress($event)"
+		          (keyup)="handleKeyUp($event)"
+		          #textInput
+		          />
+		      }
+		      @if (inlineButtonText) {
+		        <oeb-button
+		          class="forminput-x-button"
+		          [variant]="'secondary'"
+		          [size]="'sm'"
+		          (click)="buttonClicked.emit($event)"
+		          [disabled-when-requesting]="true"
+		          type="submit"
+		          [text]="inlineButtonText"
+		          />
+		      }
+		      @if (multiline) {
+		        <textarea
+		          [name]="inputName"
+		          [id]="inputId"
+		          [formControl]="control"
+		          [attr.maxlength]="maxchar"
+		          [placeholder]="placeholder || ''"
+		          (change)="postProcessInput()"
+		          (focus)="cacheControlState()"
+		          (keypress)="handleKeyPress($event)"
+		          (keyup)="handleKeyUp($event)"
+		          #textareaInput
+		        ></textarea>
+		      }
+		    </div>
+		    @if (isErrorState) {
+		      <p class="forminput-x-error">{{ errorMessageForDisplay }}</p>
+		    }
+		`,
+	imports: [FormsModule, ReactiveFormsModule, OebButtonComponent],
 })
 export class FormFieldText implements OnChanges, AfterViewInit {
 	@Input()

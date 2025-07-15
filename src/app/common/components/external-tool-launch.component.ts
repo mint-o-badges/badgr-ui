@@ -2,28 +2,30 @@ import { Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
 import { ApiExternalToolLaunchInfo } from '../../externaltools/models/externaltools-api.model';
 import { EventsService } from '../services/events.service';
 import { Subscription } from 'rxjs';
-import { NgIf, NgFor } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 
 @Component({
 	selector: 'external-tool-launch',
 	template: `
-		<form
-			*ngIf="toolLaunchInfo"
-			#toolLaunchForm
-			action="{{ toolLaunchInfo.launch_url }}"
-			method="POST"
-			encType="application/x-www-form-urlencoded"
-		>
-			<input
-				*ngFor="let key of objectKeys(toolLaunchInfo.launch_data)"
-				type="hidden"
-				name="{{ key }}"
-				value="{{ toolLaunchInfo.launch_data[key] }}"
-			/>
-		</form>
-	`,
-	imports: [NgIf, FormsModule, NgFor],
+		@if (toolLaunchInfo) {
+		  <form
+		    #toolLaunchForm
+		    action="{{ toolLaunchInfo.launch_url }}"
+		    method="POST"
+		    encType="application/x-www-form-urlencoded"
+		    >
+		    @for (key of objectKeys(toolLaunchInfo.launch_data); track key) {
+		      <input
+		        type="hidden"
+		        name="{{ key }}"
+		        value="{{ toolLaunchInfo.launch_data[key] }}"
+		        />
+		    }
+		  </form>
+		}
+		`,
+	imports: [FormsModule],
 })
 export class ExternalToolLaunchComponent implements OnDestroy {
 	objectKeys = Object.keys;

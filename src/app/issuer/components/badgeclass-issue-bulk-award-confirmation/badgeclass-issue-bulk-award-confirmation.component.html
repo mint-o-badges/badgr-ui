@@ -1,75 +1,77 @@
 <section class="oeb-section">
-	<div class="oeb-headline-container-sm">
-		<h1 hlmH1 class="tw-text-purple">{{ 'Issuer.importPreview' | translate }}</h1>
-	</div>
-	<p hlmP class="oeb-standard-padding-bottom">
-		<span
-			>{{ transformedImportData.validRowsTransformed.size }} {{ 'Issuer.rowsWereImported' | translate }}
-			{{ transformedImportData.duplicateRecords.length }} {{ 'Issuer.rowsAreDuplicates' | translate }}</span
-		><br />
-		<span>{{ 'Issuer.clickOnAwardBadges' | translate }}</span>
-	</p>
+  <div class="oeb-headline-container-sm">
+    <h1 hlmH1 class="tw-text-purple">{{ 'Issuer.importPreview' | translate }}</h1>
+  </div>
+  <p hlmP class="oeb-standard-padding-bottom">
+    <span
+      >{{ transformedImportData.validRowsTransformed.size }} {{ 'Issuer.rowsWereImported' | translate }}
+      {{ transformedImportData.duplicateRecords.length }} {{ 'Issuer.rowsAreDuplicates' | translate }}</span
+      ><br />
+      <span>{{ 'Issuer.clickOnAwardBadges' | translate }}</span>
+    </p>
 
-	<div class="oeb-standard-padding-bottom">
-		<table class="datatable datatable-roundheaders datatable-headers">
-			<thead class="datatable-x-head">
-				<tr class="datatable-x-header">
-					<th class="datatable-x-cell" scope="col">E-Mail</th>
-					<th class="datatable-x-cell" scope="col">Name</th>
-					<th class="datatable-x-cell">
-						<!-- header for remove link-->
-					</th>
-				</tr>
-			</thead>
-			<tbody class="datatable-x-body">
-				<tr class="datatable-x-row" *ngFor="let row of transformedImportData.validRowsTransformed">
-					<td class="datatable-x-cell">
-						{{ row.email }}
-					</td>
-					<td class="datatable-x-cell">
-						{{ row.name }}
-					</td>
-					<td class="datatable-x-cell">
-						<oeb-button
-							variant="secondary"
-							size="xs"
-							text="Entfernen"
-							(click)="removeValidRowsTransformed(row)"
-						></oeb-button>
-					</td>
-				</tr>
-			</tbody>
+    <div class="oeb-standard-padding-bottom">
+      <table class="datatable datatable-roundheaders datatable-headers">
+        <thead class="datatable-x-head">
+          <tr class="datatable-x-header">
+            <th class="datatable-x-cell" scope="col">E-Mail</th>
+            <th class="datatable-x-cell" scope="col">Name</th>
+            <th class="datatable-x-cell">
+              <!-- header for remove link-->
+            </th>
+          </tr>
+        </thead>
+        <tbody class="datatable-x-body">
+          @for (row of transformedImportData.validRowsTransformed; track row) {
+            <tr class="datatable-x-row">
+              <td class="datatable-x-cell">
+                {{ row.email }}
+              </td>
+              <td class="datatable-x-cell">
+                {{ row.name }}
+              </td>
+              <td class="datatable-x-cell">
+                <oeb-button
+                  variant="secondary"
+                  size="xs"
+                  text="Entfernen"
+                  (click)="removeValidRowsTransformed(row)"
+                ></oeb-button>
+              </td>
+            </tr>
+          }
+        </tbody>
 
-			<tbody></tbody>
-		</table>
-	</div>
-	<div class="oeb-standard-padding-bottom">
-		<h3 hlmH3 class="tw-text-purple">{{ 'General.notification' | translate }}</h3>
-		<oeb-checkbox
-			name="notify_earner"
-			id="notify_earner"
-			type="checkbox"
-			[control]="issueForm.rawControlMap.notify_earner"
-			[text]="'Issuer.sendEmail' | translate"
-			[disabled]="buttonDisabledAttribute"
-		></oeb-checkbox>
-	</div>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div class="oeb-standard-padding-bottom">
+      <h3 hlmH3 class="tw-text-purple">{{ 'General.notification' | translate }}</h3>
+      <oeb-checkbox
+        name="notify_earner"
+        id="notify_earner"
+        type="checkbox"
+        [control]="issueForm.rawControlMap.notify_earner"
+        [text]="'Issuer.sendEmail' | translate"
+        [disabled]="buttonDisabledAttribute"
+      ></oeb-checkbox>
+    </div>
 
-	<!-- BUTTONS -->
-	<div class="tw-flex tw-justify-end tw-gap-2 tw-mt-4">
-		<oeb-button
-			class="tw-mr-4"
-			variant="secondary"
-			(click)="updateViewState('import')"
-			text="{{ 'General.cancel' | translate }}"
-		></oeb-button>
+    <!-- BUTTONS -->
+    <div class="tw-flex tw-justify-end tw-gap-2 tw-mt-4">
+      <oeb-button
+        class="tw-mr-4"
+        variant="secondary"
+        (click)="updateViewState('import')"
+        text="{{ 'General.cancel' | translate }}"
+      ></oeb-button>
 
-		<oeb-button
-			[class.button-is-disabled]="buttonDisabledClass"
-			[disabled]="buttonDisabledAttribute"
-			(click)="dataConfirmed()"
-			text="{{ 'Issuer.giveBadges' | translate }}"
-		>
-		</oeb-button>
-	</div>
-</section>
+      <oeb-button
+        [class.button-is-disabled]="buttonDisabledClass"
+        [disabled]="buttonDisabledAttribute"
+        (click)="dataConfirmed()"
+        text="{{ 'Issuer.giveBadges' | translate }}"
+        >
+      </oeb-button>
+    </div>
+  </section>

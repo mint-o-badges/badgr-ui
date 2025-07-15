@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 import { preloadImageURL, readFileAsText } from '../util/file-util';
 import { DomSanitizer } from '@angular/platform-browser';
 import { SvgIconComponent } from './svg-icon.component';
-import { NgIf } from '@angular/common';
+
 import { HlmPDirective } from '../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
 import { HlmADirective } from '../../components/spartan/ui-typography-helm/src/lib/hlm-a.directive';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -24,38 +24,52 @@ import { TranslatePipe } from '@ngx-translate/core';
 	},
 	template: `
 		<p class="visuallyhidden">
-			{{ label }}
-			<ng-content select="[label-additions]"></ng-content>
+		  {{ label }}
+		  <ng-content select="[label-additions]"></ng-content>
 		</p>
 		<input
-			type="file"
-			accept="{{ validFileTypes }}"
-			name="{{ name }}"
-			id="{{ name }}"
-			(change)="fileInputChanged($event)"
-			class="visuallyhidden"
-		/>
+		  type="file"
+		  accept="{{ validFileTypes }}"
+		  name="{{ name }}"
+		  id="{{ name }}"
+		  (change)="fileInputChanged($event)"
+		  class="visuallyhidden"
+		  />
 		<label [attr.for]="name" (click)="clearFileInput()" class="l-flex l-flex-column l-flex-aligncenter">
-			<svg class="dropzone-x-icon" icon="icon_upload"></svg>
-			<div class="dropzone-x-text tw-text-center" *ngIf="!fileErrorMessage">
-				<div *ngIf="!fileProvided && !fileLoading" hlmP>
-					<span class="tw-font-bold">Drag and Drop</span> {{ 'General.or' | translate }} <br /><a
-						hlmA
-						class="tw-font-bold"
-						>{{ 'RecBadge.selectFromMyFiles' | translate }}</a
-					>
-				</div>
-				<div *ngIf="fileLoading" class="dropzone-x-info1">Loading File...</div>
-				<div *ngIf="fileName" class="dropzone-x-info1">{{ fileName }}</div>
-				<div *ngIf="fileName" class="u-text-link">{{ 'General.change' | translate }}</div>
-			</div>
-
-			<div *ngIf="fileErrorMessage" class="dropzone-x-error">{{ fileErrorMessage }}</div>
-			<!--</span>-->
+		  <svg class="dropzone-x-icon" icon="icon_upload"></svg>
+		  @if (!fileErrorMessage) {
+		    <div class="dropzone-x-text tw-text-center">
+		      @if (!fileProvided && !fileLoading) {
+		        <div hlmP>
+		          <span class="tw-font-bold">Drag and Drop</span> {{ 'General.or' | translate }} <br /><a
+		          hlmA
+		          class="tw-font-bold"
+		          >{{ 'RecBadge.selectFromMyFiles' | translate }}</a
+		          >
+		        </div>
+		      }
+		      @if (fileLoading) {
+		        <div class="dropzone-x-info1">Loading File...</div>
+		      }
+		      @if (fileName) {
+		        <div class="dropzone-x-info1">{{ fileName }}</div>
+		      }
+		      @if (fileName) {
+		        <div class="u-text-link">{{ 'General.change' | translate }}</div>
+		      }
+		    </div>
+		  }
+		
+		  @if (fileErrorMessage) {
+		    <div class="dropzone-x-error">{{ fileErrorMessage }}</div>
+		  }
+		<!--</span>-->
 		</label>
-		<p class="dropzone-x-error" *ngIf="control?.dirty && !control?.valid">{{ errorMessage }}</p>
-	`,
-	imports: [SvgIconComponent, NgIf, HlmPDirective, HlmADirective, TranslatePipe],
+		@if (control?.dirty && !control?.valid) {
+		  <p class="dropzone-x-error">{{ errorMessage }}</p>
+		}
+		`,
+	imports: [SvgIconComponent, HlmPDirective, HlmADirective, TranslatePipe],
 })
 export class BgFormFieldFileComponent {
 	private get element(): HTMLElement {

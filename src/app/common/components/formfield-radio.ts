@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonDialogsService } from '../services/common-dialogs.service';
-import { NgIf } from '@angular/common';
+
 
 @Component({
 	selector: 'bg-formfield-radio',
@@ -25,16 +25,20 @@ import { NgIf } from '@angular/common';
 	},
 	template: `
 		<div class="">
-			<label class="radio">
-				<input type="radio" [id]="inputId" [name]="name" [value]="value" [formControl]="control" #radioInput />
-				<span class="radio-x-text">{{ label }}</span>
-			</label>
-
-			<p class="u-margin-left3p5x u-text-small u-margin-bottom2x" *ngIf="sublabel">{{ sublabel }}</p>
+		  <label class="radio">
+		    <input type="radio" [id]="inputId" [name]="name" [value]="value" [formControl]="control" #radioInput />
+		    <span class="radio-x-text">{{ label }}</span>
+		  </label>
+		
+		  @if (sublabel) {
+		    <p class="u-margin-left3p5x u-text-small u-margin-bottom2x">{{ sublabel }}</p>
+		  }
 		</div>
-		<p class="forminput-x-error" *ngIf="!control.valid && control.dirty && last">{{ errorMessageForDisplay }}</p>
-	`,
-	imports: [FormsModule, ReactiveFormsModule, NgIf],
+		@if (!control.valid && control.dirty && last) {
+		  <p class="forminput-x-error">{{ errorMessageForDisplay }}</p>
+		}
+		`,
+	imports: [FormsModule, ReactiveFormsModule],
 })
 export class FormFieldRadio implements OnChanges, AfterViewInit {
 	set unlocked(unlocked: boolean) {

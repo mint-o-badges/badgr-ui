@@ -1,7 +1,7 @@
 import { Component, ElementRef, Renderer2 } from '@angular/core';
 import { BaseDialog } from './base-dialog';
 import { SvgIconComponent } from '../components/svg-icon.component';
-import { NgIf } from '@angular/common';
+
 
 export interface ConfirmDialogOptions {
 	dialogTitle?: string;
@@ -17,36 +17,37 @@ export interface ConfirmDialogOptions {
 	selector: 'confirm-dialog',
 	template: `
 		<dialog class="dialog dialog-is-active dialog l-dialog">
-			<div class="dialog-x-box o-container">
-				<div class="u-padding-all3x">
-					<div class="l-flex l-flex-justifybetween u-margin-bottom2x">
-						<h2 class="u-text-body-bold-caps text-dark1">
-							{{ options.dialogTitle }}
-						</h2>
-						<button (click)="rejectDialog()" class="buttonicon buttonicon-link">
-							<svg icon="icon_close"></svg>
-							<span class="visuallyhidden">Close</span>
-						</button>
-					</div>
-					<p class="u-text-body" [innerHTML]="options.dialogBody"></p>
-
-					<div class="l-stack l-stack-buttons u-margin-top3x">
-						<button [disabled]="options.disableConfirm" class="button" (click)="resolveDialog()">
-							{{ options.resolveButtonLabel }}
-						</button>
-						<button
-							*ngIf="options.showRejectButton"
-							class="button button-secondary"
-							(click)="rejectDialog()"
-						>
-							{{ options.rejectButtonLabel }}
-						</button>
-					</div>
-				</div>
-			</div>
+		  <div class="dialog-x-box o-container">
+		    <div class="u-padding-all3x">
+		      <div class="l-flex l-flex-justifybetween u-margin-bottom2x">
+		        <h2 class="u-text-body-bold-caps text-dark1">
+		          {{ options.dialogTitle }}
+		        </h2>
+		        <button (click)="rejectDialog()" class="buttonicon buttonicon-link">
+		          <svg icon="icon_close"></svg>
+		          <span class="visuallyhidden">Close</span>
+		        </button>
+		      </div>
+		      <p class="u-text-body" [innerHTML]="options.dialogBody"></p>
+		
+		      <div class="l-stack l-stack-buttons u-margin-top3x">
+		        <button [disabled]="options.disableConfirm" class="button" (click)="resolveDialog()">
+		          {{ options.resolveButtonLabel }}
+		        </button>
+		        @if (options.showRejectButton) {
+		          <button
+		            class="button button-secondary"
+		            (click)="rejectDialog()"
+		            >
+		            {{ options.rejectButtonLabel }}
+		          </button>
+		        }
+		      </div>
+		    </div>
+		  </div>
 		</dialog>
-	`,
-	imports: [SvgIconComponent, NgIf],
+		`,
+	imports: [SvgIconComponent],
 })
 export class ConfirmDialog extends BaseDialog {
 	static defaultOptions = {

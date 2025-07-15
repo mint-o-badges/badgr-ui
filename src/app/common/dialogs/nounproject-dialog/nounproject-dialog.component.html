@@ -1,103 +1,110 @@
 <dialog
-	aria-labelledby="NounProjectDialog"
-	aria-describedby="dialog1Desc"
-	class="dialog dialog-is-active l-dialog"
-	role="dialog"
->
-	<div class="dialog-x-box o-container">
-		<div class="dialog-x-header u-background-light3">
-			<h1>{{ 'NounProject.searchIcon' | translate }}</h1>
-			<button (click)="closeDialog()" class="buttonicon buttonicon-link">
-				<svg icon="icon_close"></svg>
-				<span class="visuallyhidden">{{ 'General.close' | translate }}</span>
-			</button>
-		</div>
-		<div class="u-responsivepadding-yaxis u-responsivepadding-xaxis" tabindex="-1" id="sharelink">
-			<div class="forminput l-actionbar-x-search dialog-x-options">
-				<div class="forminput-x-inputs">
-					<input
-						#nounprojectSearch
-						type="text"
-						name="forminput"
-						id="forminput"
-						[placeholder]="'NounProject.searchIcon' | translate"
-						(ngModel)="(searchQuery)"
-					/>
-					<svg class="forminput-x-icon" icon="icon_search"></svg>
-				</div>
-			</div>
-			<div class="dialog-x-height">
-				<div *ngIf="iconsLoaded">
-					<div *bgAwaitPromises="[iconsLoaded]" class="l-containerxaxis l-containeryaxis">
-						<table
-							*ngIf="icons && icons.length > 0; else noResult"
-							class="datatable datatable-roundheaders datatable-onlyfirstcolumn datatable-verticalalignmiddle"
-						>
-							<thead class="datatable-x-head">
-								<tr class="datatable-x-header">
-									<th class="datatable-x-cell" scope="col">Icon</th>
-									<th class="datatable-x-cell" scope="col">Tags</th>
-									<th class="datatable-x-cell" scope="col"><span class="visuallyhidden">ID</span></th>
-								</tr>
-							</thead>
-							<tbody class="datatable-x-body">
-								<!-- Icons -->
-								<ng-template ngFor let-icon [ngForOf]="icons" let-i="index">
-									<tr class="datatable-x-row u-cursor-pointer" (click)="selectIcon(icon)">
-										<td class="datatable-x-cell">
-											<div class="l-flex l-flex-2x l-flex-aligncenter">
-												<img
-													class="badgeimage badgeimage-test badgeimage-small u-margin-right2x l-flex-x-shrink0"
-													width="40"
-													[loading-src]="badgeLoadingImageUrl"
-													[error-src]="badgeFailedImageUrl"
-													[loaded-src]="icon.thumbnail_url"
-												/>
-												<p
-													class="u-text-bold u-text-breakword"
-													[routerLink]=""
-													(click)="selectIcon(icon)"
-												>
-													{{ icon.term }}
-												</p>
-											</div>
-										</td>
-										<td class="datatable-x-cell u-text-body">{{ icon.tags }}</td>
-										<td class="datatable-x-cell">
-											<button class="button" (click)="selectIcon(icon)">
-												{{ 'General.select' | translate }}
-											</button>
-										</td>
-									</tr>
-								</ng-template>
-							</tbody>
-							<div *ngIf="!endOfResults" id="load-more-icons">
-								<div *ngIf="loadingMore; else NotLoadingMore" class="u-text u-text-breakword">
-									{{ 'NounProject.loading' | translate }}
-								</div>
-								<ng-template #NotLoadingMore>
-									<a
-										class="u-text u-text-link u-text-breakword"
-										[routerLink]=""
-										(click)="loadMoreIcons()"
-										>{{ 'General.loadMore' | translate }}</a
-									>
-								</ng-template>
-							</div>
-						</table>
-						<!-- No results error -->
-						<ng-template #noResult>
-							<div id="no-icon-result">
-								{{ 'NounProject.noIconsFoundFor' | translate }} "{{ searchTerm }}"
-							</div>
-						</ng-template>
-					</div>
-				</div>
-			</div>
-			<!-- Language warning -->
-			<div class="category u-padding-xaxis3x u-margin-top2x warning" *ngIf="translate.currentLang != 'en'">
-				<p>Bitte nutze englische Begriffe zum Suchen der Icons.</p>
-			</div>
-		</div>
-	</div>
-</dialog>
+  aria-labelledby="NounProjectDialog"
+  aria-describedby="dialog1Desc"
+  class="dialog dialog-is-active l-dialog"
+  role="dialog"
+  >
+  <div class="dialog-x-box o-container">
+    <div class="dialog-x-header u-background-light3">
+      <h1>{{ 'NounProject.searchIcon' | translate }}</h1>
+      <button (click)="closeDialog()" class="buttonicon buttonicon-link">
+        <svg icon="icon_close"></svg>
+        <span class="visuallyhidden">{{ 'General.close' | translate }}</span>
+      </button>
+    </div>
+    <div class="u-responsivepadding-yaxis u-responsivepadding-xaxis" tabindex="-1" id="sharelink">
+      <div class="forminput l-actionbar-x-search dialog-x-options">
+        <div class="forminput-x-inputs">
+          <input
+            #nounprojectSearch
+            type="text"
+            name="forminput"
+            id="forminput"
+            [placeholder]="'NounProject.searchIcon' | translate"
+            (ngModel)="(searchQuery)"
+            />
+          <svg class="forminput-x-icon" icon="icon_search"></svg>
+        </div>
+      </div>
+      <div class="dialog-x-height">
+        @if (iconsLoaded) {
+          <div>
+            <div *bgAwaitPromises="[iconsLoaded]" class="l-containerxaxis l-containeryaxis">
+              @if (icons && icons.length > 0) {
+                <table
+                  class="datatable datatable-roundheaders datatable-onlyfirstcolumn datatable-verticalalignmiddle"
+                  >
+                  <thead class="datatable-x-head">
+                    <tr class="datatable-x-header">
+                      <th class="datatable-x-cell" scope="col">Icon</th>
+                      <th class="datatable-x-cell" scope="col">Tags</th>
+                      <th class="datatable-x-cell" scope="col"><span class="visuallyhidden">ID</span></th>
+                    </tr>
+                  </thead>
+                  <tbody class="datatable-x-body">
+                    <!-- Icons -->
+                    @for (icon of icons; track icon; let i = $index) {
+                      <tr class="datatable-x-row u-cursor-pointer" (click)="selectIcon(icon)">
+                        <td class="datatable-x-cell">
+                          <div class="l-flex l-flex-2x l-flex-aligncenter">
+                            <img
+                              class="badgeimage badgeimage-test badgeimage-small u-margin-right2x l-flex-x-shrink0"
+                              width="40"
+                              [loading-src]="badgeLoadingImageUrl"
+                              [error-src]="badgeFailedImageUrl"
+                              [loaded-src]="icon.thumbnail_url"
+                              />
+                            <p
+                              class="u-text-bold u-text-breakword"
+                              [routerLink]=""
+                              (click)="selectIcon(icon)"
+                              >
+                              {{ icon.term }}
+                            </p>
+                          </div>
+                        </td>
+                        <td class="datatable-x-cell u-text-body">{{ icon.tags }}</td>
+                        <td class="datatable-x-cell">
+                          <button class="button" (click)="selectIcon(icon)">
+                            {{ 'General.select' | translate }}
+                          </button>
+                        </td>
+                      </tr>
+                    }
+                  </tbody>
+                  @if (!endOfResults) {
+                    <div id="load-more-icons">
+                      @if (loadingMore) {
+                        <div class="u-text u-text-breakword">
+                          {{ 'NounProject.loading' | translate }}
+                        </div>
+                      } @else {
+                        <a
+                          class="u-text u-text-link u-text-breakword"
+                          [routerLink]=""
+                          (click)="loadMoreIcons()"
+                          >{{ 'General.loadMore' | translate }}</a
+                          >
+                        }
+                      </div>
+                    }
+                  </table>
+                } @else {
+                  <div id="no-icon-result">
+                    {{ 'NounProject.noIconsFoundFor' | translate }} "{{ searchTerm }}"
+                  </div>
+                }
+                <!-- No results error -->
+              </div>
+            </div>
+          }
+        </div>
+        <!-- Language warning -->
+        @if (translate.currentLang != 'en') {
+          <div class="category u-padding-xaxis3x u-margin-top2x warning">
+            <p>Bitte nutze englische Begriffe zum Suchen der Icons.</p>
+          </div>
+        }
+      </div>
+    </div>
+  </dialog>

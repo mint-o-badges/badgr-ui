@@ -1,64 +1,67 @@
 <dialog class="dialog dialog-is-active dialog l-dialog">
-	<div class="dialog-x-box o-container">
-		<div class="dialog-x-header">
-			<h1>{{ 'Issuer.addMember' | translate }}</h1>
-			<button (click)="closeDialog()" class="buttonicon buttonicon-link">
-				<svg icon="icon_close"></svg>
-				<span class="visuallyhidden">Close</span>
-			</button>
-		</div>
+  <div class="dialog-x-box o-container">
+    <div class="dialog-x-header">
+      <h1>{{ 'Issuer.addMember' | translate }}</h1>
+      <button (click)="closeDialog()" class="buttonicon buttonicon-link">
+        <svg icon="icon_close"></svg>
+        <span class="visuallyhidden">Close</span>
+      </button>
+    </div>
 
-		<div class="u-padding-all3x">
-			<div class="l-flex l-flex-justifybetween u-margin-bottom3x">
-				<p class="u-text-body">
-					{{ 'Issuer.addMember_text' | translate }}
-				</p>
-			</div>
+    <div class="u-padding-all3x">
+      <div class="l-flex l-flex-justifybetween u-margin-bottom3x">
+        <p class="u-text-body">
+          {{ 'Issuer.addMember_text' | translate }}
+        </p>
+      </div>
 
-			<h3 class="u-margin-bottom2x u-text-small-bold">{{ 'Issuer.addMember_chooseRole' | translate }}</h3>
-			<form [formGroup]="staffCreateForm.rawControl" (ngSubmit)="submitStaffCreate()">
-				<bg-formfield-radio
-					*ngFor="let role of issuerStaffRoleOptions; last as last"
-					[control]="staffCreateForm.rawControlMap.staffRole"
-					[name]="'staffRole'"
-					[label]="role.label"
-					[value]="role.value"
-					[sublabel]="role.description"
-					[last]="last"
-					errorMessage="{{ 'Issuer.addMember_selectRole' | translate }}"
-				></bg-formfield-radio>
-				<bg-formfield-text
-					[control]="staffCreateForm.rawControlMap.staffEmail"
-					label="{{ 'Issuer.addMember_newEmail' | translate }}"
-					errorMessage="{{ 'Issuer.addMember_enterValidEmail' | translate }}"
-					placeholder="{{ 'Issuer.addMember_newEmailPH' | translate }}"
-					class="forminput-light1 u-width-formsmall u-margin-top3x"
-				></bg-formfield-text>
-				<br />
+      <h3 class="u-margin-bottom2x u-text-small-bold">{{ 'Issuer.addMember_chooseRole' | translate }}</h3>
+      <form [formGroup]="staffCreateForm.rawControl" (ngSubmit)="submitStaffCreate()">
+        @for (role of issuerStaffRoleOptions; track role; let last = $last) {
+          <bg-formfield-radio
+            [control]="staffCreateForm.rawControlMap.staffRole"
+            [name]="'staffRole'"
+            [label]="role.label"
+            [value]="role.value"
+            [sublabel]="role.description"
+            [last]="last"
+            errorMessage="{{ 'Issuer.addMember_selectRole' | translate }}"
+          ></bg-formfield-radio>
+        }
+        <bg-formfield-text
+          [control]="staffCreateForm.rawControlMap.staffEmail"
+          label="{{ 'Issuer.addMember_newEmail' | translate }}"
+          errorMessage="{{ 'Issuer.addMember_enterValidEmail' | translate }}"
+          placeholder="{{ 'Issuer.addMember_newEmailPH' | translate }}"
+          class="forminput-light1 u-width-formsmall u-margin-top3x"
+        ></bg-formfield-text>
+        <br />
 
-				<div class="notification notification-warning notification-is-active" *ngIf="error">
-					<div class="notification-x-icon">
-						<svg>
-							<use xlink:href="/images/icons.svg#icon_priority_high"></use>
-						</svg>
-					</div>
-					<div class="notification-x-text">
-						<h2>{{ 'Issuer.addMember_failed' | translate }}!</h2>
-						<p>{{ error }}</p>
-					</div>
-				</div>
+        @if (error) {
+          <div class="notification notification-warning notification-is-active">
+            <div class="notification-x-icon">
+              <svg>
+                <use xlink:href="/images/icons.svg#icon_priority_high"></use>
+              </svg>
+            </div>
+            <div class="notification-x-text">
+              <h2>{{ 'Issuer.addMember_failed' | translate }}!</h2>
+              <p>{{ error }}</p>
+            </div>
+          </div>
+        }
 
-				<div class="l-stack l-stack-buttons u-margin-top4x">
-					<button class="button" type="submit">{{ 'Issuer.addMember' | translate }}</button>
-					<button
-						class="button button-secondary"
-						type="button"
-						(click)="$event.preventDefault(); closeDialog()"
-					>
-						{{ 'General.cancel' | translate }}
-					</button>
-				</div>
-			</form>
-		</div>
-	</div>
+        <div class="l-stack l-stack-buttons u-margin-top4x">
+          <button class="button" type="submit">{{ 'Issuer.addMember' | translate }}</button>
+          <button
+            class="button button-secondary"
+            type="button"
+            (click)="$event.preventDefault(); closeDialog()"
+            >
+            {{ 'General.cancel' | translate }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
 </dialog>

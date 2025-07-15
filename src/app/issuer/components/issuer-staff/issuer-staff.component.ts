@@ -29,7 +29,7 @@ import { ApiStaffRequest } from '../../staffrequest-api.model';
 import { BrnDialogRef } from '@spartan-ng/brain/dialog';
 import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 import { FormMessageComponent } from '../../../common/components/form-message.component';
-import { NgIf, NgFor } from '@angular/common';
+
 import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { OebInputComponent } from '../../../components/input.component';
@@ -61,25 +61,23 @@ import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/sr
 		`,
 	],
 	imports: [
-		BgAwaitPromises,
-		FormMessageComponent,
-		BgBreadcrumbsComponent,
-		NgIf,
-		HlmH1Directive,
-		OebButtonComponent,
-		FormsModule,
-		ReactiveFormsModule,
-		OebInputComponent,
-		NgFor,
-		FormFieldRadio,
-		HlmH2Directive,
-		IssuerStaffRequestsDatatableComponent,
-		HlmTableComponent,
-		HlmTrowComponent,
-		HlmThComponent,
-		HlmPDirective,
-		TranslatePipe,
-	],
+    BgAwaitPromises,
+    FormMessageComponent,
+    BgBreadcrumbsComponent,
+    HlmH1Directive,
+    OebButtonComponent,
+    FormsModule,
+    ReactiveFormsModule,
+    OebInputComponent,
+    FormFieldRadio,
+    HlmH2Directive,
+    IssuerStaffRequestsDatatableComponent,
+    HlmTableComponent,
+    HlmTrowComponent,
+    HlmThComponent,
+    HlmPDirective,
+    TranslatePipe
+],
 })
 export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	get issuerStaffRoleOptions() {

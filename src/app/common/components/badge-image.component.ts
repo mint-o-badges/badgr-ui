@@ -4,7 +4,7 @@ import { BadgeClassManager } from '../../issuer/services/badgeclass-manager.serv
 import { MessageService } from '../services/message.service';
 import { AbstractBadgeComponent } from './abstract-badge.component';
 import { preloadImageURL } from '../util/file-util';
-import { NgIf } from '@angular/common';
+
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -16,40 +16,48 @@ import { RouterLink } from '@angular/router';
 		'[class.badge-is-disabled]': 'disabled',
 	},
 	template: `
-		<a
-			[routerLink]="['/issuer/issuers/', badge?.issuerSlug || '', 'badges', badge?.slug || '']"
-			*ngIf="link && !loading && !failed"
-		>
-			<img [src]="badgeImageUrl" [title]="badge?.name" [width]="size" [height]="size" />
-		</a>
-		<a *ngIf="!(link && !loading && !failed)">
-			<img [src]="loadingBadgeUrl" *ngIf="loading" title="Loading Badge..." [width]="size" [height]="size" />
-			<img
-				[src]="failedBadgeUrl"
-				*ngIf="!loading && failed"
-				title="Badge Failed to Load"
-				[width]="size"
-				[height]="size"
-			/>
-			<img
-				[src]="badgeImageUrl"
-				*ngIf="!loading && !failed"
-				[title]="badge?.name"
-				[width]="size"
-				[height]="size"
-			/>
-		</a>
-		<img
-			[src]="awardedIconActive ? greenCheckCircleUrl : grayCheckCircleUrl"
-			[width]="awardedIconSize"
-			[height]="awardedIconSize"
-			class="badge-x-awardedIcon"
-			*ngIf="awardedIconSize > 0"
-		/>
-	`,
+		@if (link && !loading && !failed) {
+		  <a
+		    [routerLink]="['/issuer/issuers/', badge?.issuerSlug || '', 'badges', badge?.slug || '']"
+		    >
+		    <img [src]="badgeImageUrl" [title]="badge?.name" [width]="size" [height]="size" />
+		  </a>
+		}
+		@if (!(link && !loading && !failed)) {
+		  <a>
+		    @if (loading) {
+		      <img [src]="loadingBadgeUrl" title="Loading Badge..." [width]="size" [height]="size" />
+		    }
+		    @if (!loading && failed) {
+		      <img
+		        [src]="failedBadgeUrl"
+		        title="Badge Failed to Load"
+		        [width]="size"
+		        [height]="size"
+		        />
+		    }
+		    @if (!loading && !failed) {
+		      <img
+		        [src]="badgeImageUrl"
+		        [title]="badge?.name"
+		        [width]="size"
+		        [height]="size"
+		        />
+		    }
+		  </a>
+		}
+		@if (awardedIconSize > 0) {
+		  <img
+		    [src]="awardedIconActive ? greenCheckCircleUrl : grayCheckCircleUrl"
+		    [width]="awardedIconSize"
+		    [height]="awardedIconSize"
+		    class="badge-x-awardedIcon"
+		    />
+		}
+		`,
 	// Inputs from superclass must be specified here again due to https://github.com/angular/angular/issues/5415
 	inputs: ['badge', 'issuerId', 'badgeSlug', 'badgeId', 'forceFailed'],
-	imports: [NgIf, RouterLink],
+	imports: [RouterLink],
 })
 export class BadgeImageComponent extends AbstractBadgeComponent {
 	readonly greenCheckCircleUrl = preloadImageURL(

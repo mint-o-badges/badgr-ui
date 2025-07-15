@@ -5,14 +5,14 @@ import { ControlValueAccessor, FormControl, FormGroup, NG_VALUE_ACCESSOR } from 
 import type { ClassValue } from 'clsx';
 import { hlm } from '@spartan-ng/brain/core';
 import { CustomValidatorMessages, messagesForValidationError } from './input.component';
-import { NgIf, NgClass } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { OebInputErrorComponent } from './input.error.component';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'oeb-checkbox',
-	imports: [HlmPDirective, HlmCheckboxComponent, NgIf, NgClass, OebInputErrorComponent, ReactiveFormsModule],
+	imports: [HlmPDirective, HlmCheckboxComponent, NgClass, OebInputErrorComponent, ReactiveFormsModule],
 	providers: [
 		{
 			provide: NG_VALUE_ACCESSOR,
@@ -21,27 +21,28 @@ import { TranslateService } from '@ngx-translate/core';
 		},
 	],
 	template: `<label
-		[ngClass]="alignStart ? 'tw-items-start' : 'tw-items-center'"
-		class="tw-flex tw-mt-[0.25rem]"
-		hlmP
-	>
-		<hlm-checkbox
-			[name]="name"
-			[checked]="checked"
-			(changed)="onChange($event)"
-			[formControl]="control"
-			[class.tw-mr-2]="!noMargin"
-			[disabled]="disabled"
-		/>
-		<div class="tw-flex tw-flex-col">
-			<span class="tw-pl-[3px]" [innerHTML]="text"></span>
-			<oeb-input-error
-				class="tw-text-red tw-pl-[3px]"
-				*ngIf="isErrorState"
-				[error]="errorMessageForDisplay"
-			></oeb-input-error>
-		</div>
-	</label>`,
+		  [ngClass]="alignStart ? 'tw-items-start' : 'tw-items-center'"
+		  class="tw-flex tw-mt-[0.25rem]"
+		  hlmP
+		  >
+		  <hlm-checkbox
+		    [name]="name"
+		    [checked]="checked"
+		    (changed)="onChange($event)"
+		    [formControl]="control"
+		    [class.tw-mr-2]="!noMargin"
+		    [disabled]="disabled"
+		    />
+		  <div class="tw-flex tw-flex-col">
+		    <span class="tw-pl-[3px]" [innerHTML]="text"></span>
+		    @if (isErrorState) {
+		      <oeb-input-error
+		        class="tw-text-red tw-pl-[3px]"
+		        [error]="errorMessageForDisplay"
+		      ></oeb-input-error>
+		    }
+		  </div>
+		</label>`,
 	host: {
 		'[class]': '_computedClass()',
 	},

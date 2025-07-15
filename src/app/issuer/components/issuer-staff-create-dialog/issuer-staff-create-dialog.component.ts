@@ -14,7 +14,7 @@ import { typedFormGroup } from '../../../common/util/typed-forms';
 import { MemoizedProperty } from '../../../common/util/memoized-property-decorator';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { SvgIconComponent } from '../../../common/components/svg-icon.component';
-import { NgFor, NgIf } from '@angular/common';
+
 import { FormFieldRadio } from '../../../common/components/formfield-radio';
 import { FormFieldText } from '../../../common/components/formfield-text';
 
@@ -23,15 +23,13 @@ import { FormFieldText } from '../../../common/components/formfield-text';
 	templateUrl: './issuer-staff-create-dialog.component.html',
 	styleUrls: ['./issuer-staff-create-dialog.component.css'],
 	imports: [
-		SvgIconComponent,
-		FormsModule,
-		ReactiveFormsModule,
-		NgFor,
-		FormFieldRadio,
-		FormFieldText,
-		NgIf,
-		TranslatePipe,
-	],
+    SvgIconComponent,
+    FormsModule,
+    ReactiveFormsModule,
+    FormFieldRadio,
+    FormFieldText,
+    TranslatePipe
+],
 })
 export class IssuerStaffCreateDialogComponent extends BaseDialog {
 	staffCreateForm = typedFormGroup()

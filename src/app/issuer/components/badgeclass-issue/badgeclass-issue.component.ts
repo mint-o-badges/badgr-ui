@@ -38,7 +38,7 @@ import { HlmADirective } from '../../../components/spartan/ui-typography-helm/sr
 import { OebInputComponent } from '../../../components/input.component';
 import { OebSelectComponent } from '../../../components/select.component';
 import { OebCheckboxComponent } from '../../../components/oeb-checkbox.component';
-import { NgIf, NgFor, NgClass, DatePipe } from '@angular/common';
+import { NgClass, DatePipe } from '@angular/common';
 import { SvgIconComponent } from '../../../common/components/svg-icon.component';
 import { FormFieldMarkdown } from '../../../common/components/formfield-markdown';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
@@ -47,29 +47,27 @@ import { OebButtonComponent } from '../../../components/oeb-button.component';
 	selector: 'badgeclass-issue',
 	templateUrl: './badgeclass-issue.component.html',
 	imports: [
-		BgAwaitPromises,
-		FormMessageComponent,
-		BgBreadcrumbsComponent,
-		FormsModule,
-		ReactiveFormsModule,
-		HlmH1Directive,
-		BgImageStatusPlaceholderDirective,
-		HlmPDirective,
-		HlmADirective,
-		RouterLink,
-		OebInputComponent,
-		OebSelectComponent,
-		OebCheckboxComponent,
-		NgIf,
-		SvgIconComponent,
-		NgFor,
-		FormFieldMarkdown,
-		FormFieldText,
-		NgClass,
-		OebButtonComponent,
-		DatePipe,
-		TranslatePipe,
-	],
+    BgAwaitPromises,
+    FormMessageComponent,
+    BgBreadcrumbsComponent,
+    FormsModule,
+    ReactiveFormsModule,
+    HlmH1Directive,
+    BgImageStatusPlaceholderDirective,
+    HlmPDirective,
+    HlmADirective,
+    RouterLink,
+    OebInputComponent,
+    OebSelectComponent,
+    OebCheckboxComponent,
+    SvgIconComponent,
+    FormFieldMarkdown,
+    FormFieldText,
+    NgClass,
+    OebButtonComponent,
+    DatePipe,
+    TranslatePipe
+],
 })
 export class BadgeClassIssueComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	readonly badgeLoadingImageUrl = '../../../breakdown/static/images/badge-loading.svg';

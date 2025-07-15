@@ -1,43 +1,44 @@
 <!-- loading spinner -->
-<loading-dots
-	[showLoading]="false"
-	*ngIf="pdfIsLoading"
-	class="tw-absolute tw-top-1/2 tw-left-1/2 tw-z-50"
-></loading-dots>
+@if (pdfIsLoading) {
+  <loading-dots
+    [showLoading]="false"
+    class="tw-absolute tw-top-1/2 tw-left-1/2 tw-z-50"
+  ></loading-dots>
+}
 
 <dialog
-	aria-labelledby="exportPdfDialog"
-	aria-describedby="dialog1Desc"
-	class="dialog dialog-is-active l-dialog"
-	role="dialog"
->
-	<div class="dialog-x-box o-container">
-		<div class="dialog-x-header u-background-light3">
-			<h1>Badge exportieren</h1>
-			<button (click)="closeDialog()" class="buttonicon buttonicon-link">
-				<svg icon="icon_close"></svg>
-				<span class="visuallyhidden">Close</span>
-			</button>
-		</div>
+  aria-labelledby="exportPdfDialog"
+  aria-describedby="dialog1Desc"
+  class="dialog dialog-is-active l-dialog"
+  role="dialog"
+  >
+  <div class="dialog-x-box o-container">
+    <div class="dialog-x-header u-background-light3">
+      <h1>Badge exportieren</h1>
+      <button (click)="closeDialog()" class="buttonicon buttonicon-link">
+        <svg icon="icon_close"></svg>
+        <span class="visuallyhidden">Close</span>
+      </button>
+    </div>
 
-		<div class="category u-padding-xaxis3x u-margin-top2x warning">
-			<embed [src]="pdfSrc" class="output-pdf-embed" type="application/pdf" width="100%" height="100%" />
-			<!-- No results error -->
-			<ng-template #showError>
-				<div id="show-error-result">PDF konnte nicht erstellt werden...</div>
-			</ng-template>
-			<div class="l-stack l-stack-right u-margin-top1x u-padding-bottom2x">
-				<oeb-button
-					id="download-pdf-backpack"
-					type="submit"
-					[size]="'md'"
-					(click)="downloadPdf()"
-					loading-message="Downloading..."
-					[disabled-when-requesting]="true"
-					[disabled]="!!pdfError"
-					text="Herunterladen"
-				/>
-			</div>
-		</div>
-	</div>
+    <div class="category u-padding-xaxis3x u-margin-top2x warning">
+      <embed [src]="pdfSrc" class="output-pdf-embed" type="application/pdf" width="100%" height="100%" />
+      <!-- No results error -->
+      <ng-template #showError>
+        <div id="show-error-result">PDF konnte nicht erstellt werden...</div>
+      </ng-template>
+      <div class="l-stack l-stack-right u-margin-top1x u-padding-bottom2x">
+        <oeb-button
+          id="download-pdf-backpack"
+          type="submit"
+          [size]="'md'"
+          (click)="downloadPdf()"
+          loading-message="Downloading..."
+          [disabled-when-requesting]="true"
+          [disabled]="!!pdfError"
+          text="Herunterladen"
+          />
+      </div>
+    </div>
+  </div>
 </dialog>

@@ -39,7 +39,7 @@ import { BreakpointService } from '../../../common/services/breakpoint.service';
 import { FormMessageComponent } from '../../../common/components/form-message.component';
 import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 import { HlmH2Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h2.directive';
-import { NgIf, NgFor } from '@angular/common';
+
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { OebTabsComponent } from '../../../components/oeb-backpack-tabs.component';
 import { HlmIconDirective } from '../../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
@@ -74,32 +74,30 @@ export const VISUALISATION_BREAKPOINT_MAX_WIDTH: number = 768;
 		provideIcons({ lucideHeart }),
 	],
 	imports: [
-		FormMessageComponent,
-		BgAwaitPromises,
-		HlmH2Directive,
-		NgIf,
-		OebButtonComponent,
-		FormsModule,
-		ReactiveFormsModule,
-		OebTabsComponent,
-		NgIcon,
-		HlmIconDirective,
-		HlmPDirective,
-		CountUpModule,
-		HlmInputDirective,
-		OebSortSelectComponent,
-		OebCheckboxComponent,
-		NgFor,
-		BgBadgecard,
-		HlmH3Directive,
-		OebCompetency,
-		BgLearningPathCard,
-		BgCollectionCard,
-		AddBadgeDialogComponent,
-		DynamicFilterPipe,
-		TranslatePipe,
-		RecipientSkillVisualisationComponent,
-	],
+    FormMessageComponent,
+    BgAwaitPromises,
+    HlmH2Directive,
+    OebButtonComponent,
+    FormsModule,
+    ReactiveFormsModule,
+    OebTabsComponent,
+    NgIcon,
+    HlmIconDirective,
+    HlmPDirective,
+    CountUpModule,
+    HlmInputDirective,
+    OebSortSelectComponent,
+    OebCheckboxComponent,
+    BgBadgecard,
+    HlmH3Directive,
+    OebCompetency,
+    BgLearningPathCard,
+    BgCollectionCard,
+    AddBadgeDialogComponent,
+    DynamicFilterPipe,
+    TranslatePipe,
+    RecipientSkillVisualisationComponent
+],
 })
 export class RecipientEarnedBadgeListComponent
 	extends BaseAuthenticatedRoutableComponent

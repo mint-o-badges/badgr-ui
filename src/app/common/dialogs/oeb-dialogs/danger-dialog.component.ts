@@ -6,43 +6,47 @@ import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/src';
 import { HlmIconDirective } from '../../../components/spartan/ui-icon-helm/src';
 import { lucideTriangleAlert } from '@ng-icons/lucide';
-import { NgIf } from '@angular/common';
+
 import { TranslateService } from '@ngx-translate/core';
 import { provideIcons } from '@ng-icons/core';
 
 @Component({
 	selector: 'oeb-danger-dialog',
-	imports: [OebDialogComponent, OebButtonComponent, HlmPDirective, NgIcon, HlmIconDirective, NgIf],
+	imports: [OebDialogComponent, OebButtonComponent, HlmPDirective, NgIcon, HlmIconDirective],
 	providers: [TranslateService, provideIcons({ lucideTriangleAlert })],
 	template: `
 		<oeb-dialog [variant]="variant" class="tw-text-center tw-text-oebblack">
-			<div class="tw-flex tw-justify-center">
-				<div class="oeb-icon-circle tw-my-4">
-					<ng-icon hlm class="tw-text-red" size="xl" name="lucideTriangleAlert" />
-				</div>
-			</div>
-			<p hlmP class="tw-flex tw-flex-col tw-gap-2 tw-my-2">
-				<span class="tw-font-extrabold md:tw-text-[18px] md:tw-leading-[23px]" [innerHtml]="caption"></span>
-				<span *ngIf="text">
-					<p hlmP [innerHtml]="text"></p>
-					<span *ngIf="qrCodeRequested">Damit gehen alle noch offenen Badge-Anfragen verloren.</span>
-				</span>
-			</p>
-			<oeb-button
-				(click)="clickSingleButton()"
-				size="sm"
-				*ngIf="singleButtonText; else TwoButtons"
-				[text]="singleButtonText"
-			>
-			</oeb-button>
-			<ng-template #TwoButtons>
-				<div class="tw-flex tw-justify-around tw-mt-6">
-					<oeb-button variant="secondary" [text]="cancelText" (click)="closeDialog()"></oeb-button>
-					<oeb-button class="tw-mr-4" [text]="deleteText" (click)="deleteItem()"></oeb-button>
-				</div>
-			</ng-template>
+		  <div class="tw-flex tw-justify-center">
+		    <div class="oeb-icon-circle tw-my-4">
+		      <ng-icon hlm class="tw-text-red" size="xl" name="lucideTriangleAlert" />
+		    </div>
+		  </div>
+		  <p hlmP class="tw-flex tw-flex-col tw-gap-2 tw-my-2">
+		    <span class="tw-font-extrabold md:tw-text-[18px] md:tw-leading-[23px]" [innerHtml]="caption"></span>
+		    @if (text) {
+		      <span>
+		        <p hlmP [innerHtml]="text"></p>
+		        @if (qrCodeRequested) {
+		          <span>Damit gehen alle noch offenen Badge-Anfragen verloren.</span>
+		        }
+		      </span>
+		    }
+		  </p>
+		  @if (singleButtonText) {
+		    <oeb-button
+		      (click)="clickSingleButton()"
+		      size="sm"
+		      [text]="singleButtonText"
+		      >
+		    </oeb-button>
+		  } @else {
+		    <div class="tw-flex tw-justify-around tw-mt-6">
+		      <oeb-button variant="secondary" [text]="cancelText" (click)="closeDialog()"></oeb-button>
+		      <oeb-button class="tw-mr-4" [text]="deleteText" (click)="deleteItem()"></oeb-button>
+		    </div>
+		  }
 		</oeb-dialog>
-	`,
+		`,
 })
 export class DangerDialogComponent {
 	// @HostBinding('class') private readonly _class: string = 'tw-bg-red tw-bg-red';
