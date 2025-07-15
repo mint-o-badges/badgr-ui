@@ -11,7 +11,6 @@ import { SvgIconComponent } from '../../../common/components/svg-icon.component'
 import { FormsModule } from '@angular/forms';
 import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 
-
 export interface RecipientBadgeCollectionSelectionDialogOptions {
 	dialogId: string;
 	dialogTitle: string;

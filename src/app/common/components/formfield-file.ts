@@ -24,51 +24,51 @@ import { TranslatePipe } from '@ngx-translate/core';
 	},
 	template: `
 		<p class="visuallyhidden">
-		  {{ label }}
-		  <ng-content select="[label-additions]"></ng-content>
+			{{ label }}
+			<ng-content select="[label-additions]"></ng-content>
 		</p>
 		<input
-		  type="file"
-		  accept="{{ validFileTypes }}"
-		  name="{{ name }}"
-		  id="{{ name }}"
-		  (change)="fileInputChanged($event)"
-		  class="visuallyhidden"
-		  />
+			type="file"
+			accept="{{ validFileTypes }}"
+			name="{{ name }}"
+			id="{{ name }}"
+			(change)="fileInputChanged($event)"
+			class="visuallyhidden"
+		/>
 		<label [attr.for]="name" (click)="clearFileInput()" class="l-flex l-flex-column l-flex-aligncenter">
-		  <svg class="dropzone-x-icon" icon="icon_upload"></svg>
-		  @if (!fileErrorMessage) {
-		    <div class="dropzone-x-text tw-text-center">
-		      @if (!fileProvided && !fileLoading) {
-		        <div hlmP>
-		          <span class="tw-font-bold">Drag and Drop</span> {{ 'General.or' | translate }} <br /><a
-		          hlmA
-		          class="tw-font-bold"
-		          >{{ 'RecBadge.selectFromMyFiles' | translate }}</a
-		          >
-		        </div>
-		      }
-		      @if (fileLoading) {
-		        <div class="dropzone-x-info1">Loading File...</div>
-		      }
-		      @if (fileName) {
-		        <div class="dropzone-x-info1">{{ fileName }}</div>
-		      }
-		      @if (fileName) {
-		        <div class="u-text-link">{{ 'General.change' | translate }}</div>
-		      }
-		    </div>
-		  }
-		
-		  @if (fileErrorMessage) {
-		    <div class="dropzone-x-error">{{ fileErrorMessage }}</div>
-		  }
-		<!--</span>-->
+			<svg class="dropzone-x-icon" icon="icon_upload"></svg>
+			@if (!fileErrorMessage) {
+				<div class="dropzone-x-text tw-text-center">
+					@if (!fileProvided && !fileLoading) {
+						<div hlmP>
+							<span class="tw-font-bold">Drag and Drop</span> {{ 'General.or' | translate }} <br /><a
+								hlmA
+								class="tw-font-bold"
+								>{{ 'RecBadge.selectFromMyFiles' | translate }}</a
+							>
+						</div>
+					}
+					@if (fileLoading) {
+						<div class="dropzone-x-info1">Loading File...</div>
+					}
+					@if (fileName) {
+						<div class="dropzone-x-info1">{{ fileName }}</div>
+					}
+					@if (fileName) {
+						<div class="u-text-link">{{ 'General.change' | translate }}</div>
+					}
+				</div>
+			}
+
+			@if (fileErrorMessage) {
+				<div class="dropzone-x-error">{{ fileErrorMessage }}</div>
+			}
+			<!--</span>-->
 		</label>
 		@if (control?.dirty && !control?.valid) {
-		  <p class="dropzone-x-error">{{ errorMessage }}</p>
+			<p class="dropzone-x-error">{{ errorMessage }}</p>
 		}
-		`,
+	`,
 	imports: [SvgIconComponent, HlmPDirective, HlmADirective, TranslatePipe],
 })
 export class BgFormFieldFileComponent {

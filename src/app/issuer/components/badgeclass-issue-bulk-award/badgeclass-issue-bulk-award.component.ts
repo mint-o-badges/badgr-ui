@@ -52,15 +52,15 @@ export interface ColumnHeaders {
 	selector: 'Badgeclass-issue-bulk-award',
 	templateUrl: './badgeclass-issue-bulk-award.component.html',
 	imports: [
-    BgAwaitPromises,
-    OebBackgroundComponent,
-    BgBreadcrumbsComponent,
-    FormMessageComponent,
-    BadgeClassIssueBulkAwardImportComponent,
-    BadgeClassIssueBulkAwardPreviewComponent,
-    BadgeclassIssueBulkAwardConformation,
-    BadgeclassIssueBulkAwardError
-],
+		BgAwaitPromises,
+		OebBackgroundComponent,
+		BgBreadcrumbsComponent,
+		FormMessageComponent,
+		BadgeClassIssueBulkAwardImportComponent,
+		BadgeClassIssueBulkAwardPreviewComponent,
+		BadgeclassIssueBulkAwardConformation,
+		BadgeclassIssueBulkAwardError,
+	],
 })
 export class BadgeClassIssueBulkAwardComponent extends BaseAuthenticatedRoutableComponent {
 	importPreviewData: BulkIssueImportPreviewData;

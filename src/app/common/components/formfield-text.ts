@@ -29,80 +29,81 @@ import { OebButtonComponent } from '../../components/oeb-button.component';
 	},
 	template: `
 		<div class="forminput-x-labelrow">
-		  @if (label || includeLabelAsWrapper) {
-		    <label class="forminput-x-label" [attr.for]="inputName">
-		      {{ label }} @if (optional) {
-		      <span>(OPTIONAL)</span>
-		    }
-		    @if (formFieldAside) {
-		      <span class="forminput-x-formFieldAside">{{ formFieldAside }}</span>
-		    }
-		    @if (isLockedState) {
-		      <button type="button" (click)="unlock()">(unlock)</button>
-		    }
-		  </label>
-		}
-		<ng-content class="forminput-x-helplink" select="[label-additions]"></ng-content>
+			@if (label || includeLabelAsWrapper) {
+				<label class="forminput-x-label" [attr.for]="inputName">
+					{{ label }}
+					@if (optional) {
+						<span>(OPTIONAL)</span>
+					}
+					@if (formFieldAside) {
+						<span class="forminput-x-formFieldAside">{{ formFieldAside }}</span>
+					}
+					@if (isLockedState) {
+						<button type="button" (click)="unlock()">(unlock)</button>
+					}
+				</label>
+			}
+			<ng-content class="forminput-x-helplink" select="[label-additions]"></ng-content>
 		</div>
 		@if (sublabel) {
-		  <p class="forminput-x-sublabel">
-		    @if (remainingCharactersNum >= 0) {
-		      <span>{{ remainingCharactersNum }}</span
-		        >
-		        }{{ sublabel }}
-		      </p>
-		    }
-		
-		    @if (ariaLabel) {
-		      <label class="visuallyhidden" [attr.for]="inputName">{{ ariaLabel }}</label>
-		    }
-		    <div class="forminput-x-inputs tw-flex tw-gap-2 tw-items-center">
-		      @if (!multiline) {
-		        <input
-		          [type]="fieldType"
-		          [name]="inputName"
-		          [id]="inputId"
-		          [formControl]="control"
-		          [placeholder]="placeholder || ''"
-		          [attr.maxlength]="maxchar"
-		          [attr.max]="max"
-		          (change)="postProcessInput()"
-		          (focus)="cacheControlState()"
-		          (keypress)="handleKeyPress($event)"
-		          (keyup)="handleKeyUp($event)"
-		          #textInput
-		          />
-		      }
-		      @if (inlineButtonText) {
-		        <oeb-button
-		          class="forminput-x-button"
-		          [variant]="'secondary'"
-		          [size]="'sm'"
-		          (click)="buttonClicked.emit($event)"
-		          [disabled-when-requesting]="true"
-		          type="submit"
-		          [text]="inlineButtonText"
-		          />
-		      }
-		      @if (multiline) {
-		        <textarea
-		          [name]="inputName"
-		          [id]="inputId"
-		          [formControl]="control"
-		          [attr.maxlength]="maxchar"
-		          [placeholder]="placeholder || ''"
-		          (change)="postProcessInput()"
-		          (focus)="cacheControlState()"
-		          (keypress)="handleKeyPress($event)"
-		          (keyup)="handleKeyUp($event)"
-		          #textareaInput
-		        ></textarea>
-		      }
-		    </div>
-		    @if (isErrorState) {
-		      <p class="forminput-x-error">{{ errorMessageForDisplay }}</p>
-		    }
-		`,
+			<p class="forminput-x-sublabel">
+				@if (remainingCharactersNum >= 0) {
+					<span>{{ remainingCharactersNum }}</span>
+				}
+				{{ sublabel }}
+			</p>
+		}
+
+		@if (ariaLabel) {
+			<label class="visuallyhidden" [attr.for]="inputName">{{ ariaLabel }}</label>
+		}
+		<div class="forminput-x-inputs tw-flex tw-gap-2 tw-items-center">
+			@if (!multiline) {
+				<input
+					[type]="fieldType"
+					[name]="inputName"
+					[id]="inputId"
+					[formControl]="control"
+					[placeholder]="placeholder || ''"
+					[attr.maxlength]="maxchar"
+					[attr.max]="max"
+					(change)="postProcessInput()"
+					(focus)="cacheControlState()"
+					(keypress)="handleKeyPress($event)"
+					(keyup)="handleKeyUp($event)"
+					#textInput
+				/>
+			}
+			@if (inlineButtonText) {
+				<oeb-button
+					class="forminput-x-button"
+					[variant]="'secondary'"
+					[size]="'sm'"
+					(click)="buttonClicked.emit($event)"
+					[disabled-when-requesting]="true"
+					type="submit"
+					[text]="inlineButtonText"
+				/>
+			}
+			@if (multiline) {
+				<textarea
+					[name]="inputName"
+					[id]="inputId"
+					[formControl]="control"
+					[attr.maxlength]="maxchar"
+					[placeholder]="placeholder || ''"
+					(change)="postProcessInput()"
+					(focus)="cacheControlState()"
+					(keypress)="handleKeyPress($event)"
+					(keyup)="handleKeyUp($event)"
+					#textareaInput
+				></textarea>
+			}
+		</div>
+		@if (isErrorState) {
+			<p class="forminput-x-error">{{ errorMessageForDisplay }}</p>
+		}
+	`,
 	imports: [FormsModule, ReactiveFormsModule, OebButtonComponent],
 })
 export class FormFieldText implements OnChanges, AfterViewInit {

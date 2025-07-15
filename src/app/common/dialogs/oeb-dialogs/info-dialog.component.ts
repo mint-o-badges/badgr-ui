@@ -15,59 +15,54 @@ import { provideIcons } from '@ng-icons/core';
 @Component({
 	selector: 'oeb-info-dialog',
 	imports: [
-    OebDialogComponent,
-    OebButtonComponent,
-    HlmPDirective,
-    HlmH3Directive,
-    NgIcon,
-    HlmIconDirective,
-    TranslateModule
-],
+		OebDialogComponent,
+		OebButtonComponent,
+		HlmPDirective,
+		HlmH3Directive,
+		NgIcon,
+		HlmIconDirective,
+		TranslateModule,
+	],
 	providers: [TranslateService, provideIcons({ lucideInfo })],
 	template: `
 		<oeb-dialog [variant]="variant" class="tw-text-center tw-text-oebblack">
-		  <div class="tw-flex tw-justify-center">
-		    <div class="oeb-icon-circle tw-my-4">
-		      <ng-icon hlm class="tw-text-link" size="xl" name="lucideInfo" />
-		    </div>
-		  </div>
-		  <h3 hlmH3 class="tw-font-bold !tw-text-black tw-uppercase">
-		    {{ caption }}
-		  </h3>
-		  <div class="tw-flex tw-flex-col tw-gap-2 tw-my-2">
-		    @if (subtitle) {
-		      <p hlmP>
-		        {{ subtitle }}
-		      </p>
-		    }
-		    @if (text) {
-		      <p hlmP class="tw-italic">
-		        {{ text }}
-		      </p>
-		    }
-		  </div>
-		  @if (singleButtonText) {
-		    <oeb-button
-		      (click)="clickSingleButton()"
-		      size="sm"
-		      [text]="singleButtonText"
-		      >
-		    </oeb-button>
-		  } @else {
-		    <div class="tw-flex tw-justify-around tw-mt-6">
-		      <oeb-button size="md" variant="secondary" [text]="cancelText" (click)="cancel()"></oeb-button>
-		      <oeb-button
-		        [id]="'confirm-award-badge'"
-		        width="max_content"
-		        size="md"
-		        class="tw-mr-4"
-		        [text]="forwardText"
-		        (click)="continue()"
-		      ></oeb-button>
-		    </div>
-		  }
+			<div class="tw-flex tw-justify-center">
+				<div class="oeb-icon-circle tw-my-4">
+					<ng-icon hlm class="tw-text-link" size="xl" name="lucideInfo" />
+				</div>
+			</div>
+			<h3 hlmH3 class="tw-font-bold !tw-text-black tw-uppercase">
+				{{ caption }}
+			</h3>
+			<div class="tw-flex tw-flex-col tw-gap-2 tw-my-2">
+				@if (subtitle) {
+					<p hlmP>
+						{{ subtitle }}
+					</p>
+				}
+				@if (text) {
+					<p hlmP class="tw-italic">
+						{{ text }}
+					</p>
+				}
+			</div>
+			@if (singleButtonText) {
+				<oeb-button (click)="clickSingleButton()" size="sm" [text]="singleButtonText"> </oeb-button>
+			} @else {
+				<div class="tw-flex tw-justify-around tw-mt-6">
+					<oeb-button size="md" variant="secondary" [text]="cancelText" (click)="cancel()"></oeb-button>
+					<oeb-button
+						[id]="'confirm-award-badge'"
+						width="max_content"
+						size="md"
+						class="tw-mr-4"
+						[text]="forwardText"
+						(click)="continue()"
+					></oeb-button>
+				</div>
+			}
 		</oeb-dialog>
-		`,
+	`,
 })
 export class InfoDialogComponent {
 	// @HostBinding('class') private readonly _class: string = 'tw-bg-red tw-bg-red';

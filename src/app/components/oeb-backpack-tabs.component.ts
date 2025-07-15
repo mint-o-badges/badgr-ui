@@ -17,26 +17,26 @@ export type Tab = {
 	selector: 'oeb-backpack-tabs',
 	imports: [HlmTabsModule, HlmTabsTriggerDirective, NgTemplateOutlet, TranslateModule],
 	template: `<hlm-tabs class="tw-block tw-w-full" [tab]="activeTab" (tabActivated)="onTabChange($event)">
-		  <hlm-tabs-list class="tw-w-full tw-max-w-[660px] tw-flex tw-justify-between" aria-label="tabs">
-		    @for (tab of tabs; track tab) {
-		      <button class="tw-grow" [hlmTabsTrigger]="tab.key" [variant]="variant">
-		        {{ tab.title | translate }}
-		        @if (tab.count) {
-		          <div
-		            class="md:tw-w-7 md:tw-h-7 tw-h-5 tw-w-5 tw-flex tw-items-center tw-justify-center tw-ml-2 tw-p-1 tw-rounded-full tw-bg-purple tw-text-white tw-text-sm"
-		            >
-		            {{ tab.count }}
-		          </div>
-		        }
-		      </button>
-		    }
-		  </hlm-tabs-list>
-		  @for (tab of tabs; track tab) {
-		    <div [hlmTabsContent]="tab.key">
-		      <ng-template *ngTemplateOutlet="tab.component"></ng-template>
-		    </div>
-		  }
-		</hlm-tabs>`,
+		<hlm-tabs-list class="tw-w-full tw-max-w-[660px] tw-flex tw-justify-between" aria-label="tabs">
+			@for (tab of tabs; track tab) {
+				<button class="tw-grow" [hlmTabsTrigger]="tab.key" [variant]="variant">
+					{{ tab.title | translate }}
+					@if (tab.count) {
+						<div
+							class="md:tw-w-7 md:tw-h-7 tw-h-5 tw-w-5 tw-flex tw-items-center tw-justify-center tw-ml-2 tw-p-1 tw-rounded-full tw-bg-purple tw-text-white tw-text-sm"
+						>
+							{{ tab.count }}
+						</div>
+					}
+				</button>
+			}
+		</hlm-tabs-list>
+		@for (tab of tabs; track tab) {
+			<div [hlmTabsContent]="tab.key">
+				<ng-template *ngTemplateOutlet="tab.component"></ng-template>
+			</div>
+		}
+	</hlm-tabs>`,
 })
 export class OebTabsComponent {
 	@Input() image: string;

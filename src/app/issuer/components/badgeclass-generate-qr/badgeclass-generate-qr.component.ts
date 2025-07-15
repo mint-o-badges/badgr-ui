@@ -27,16 +27,16 @@ import { OebButtonComponent } from '../../../components/oeb-button.component';
 	templateUrl: './badgeclass-generate-qr.component.html',
 	styleUrls: ['../../../public/components/about/about.component.css'],
 	imports: [
-    BgAwaitPromises,
-    BgBreadcrumbsComponent,
-    OebDropdownComponent,
-    SvgIconComponent,
-    QRCodeComponent,
-    BgImageStatusPlaceholderDirective,
-    OebButtonComponent,
-    RouterLink,
-    TranslatePipe
-],
+		BgAwaitPromises,
+		BgBreadcrumbsComponent,
+		OebDropdownComponent,
+		SvgIconComponent,
+		QRCodeComponent,
+		BgImageStatusPlaceholderDirective,
+		OebButtonComponent,
+		RouterLink,
+		TranslatePipe,
+	],
 })
 export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	static datePipe = new DatePipe('de');

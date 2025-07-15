@@ -25,15 +25,15 @@ import { OebButtonComponent } from '../../../components/oeb-button.component';
 	selector: 'edit-qr-form',
 	templateUrl: './edit-qr-form.component.html',
 	imports: [
-    BgAwaitPromises,
-    FormsModule,
-    ReactiveFormsModule,
-    BgImageStatusPlaceholderDirective,
-    OebInputComponent,
-    OebCheckboxComponent,
-    OebButtonComponent,
-    TranslatePipe
-],
+		BgAwaitPromises,
+		FormsModule,
+		ReactiveFormsModule,
+		BgImageStatusPlaceholderDirective,
+		OebInputComponent,
+		OebCheckboxComponent,
+		OebButtonComponent,
+		TranslatePipe,
+	],
 })
 export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent {
 	static datePipe = new DatePipe('de');

@@ -17,44 +17,32 @@ import { RouterLink } from '@angular/router';
 	},
 	template: `
 		@if (link && !loading && !failed) {
-		  <a
-		    [routerLink]="['/issuer/issuers/', badge?.issuerSlug || '', 'badges', badge?.slug || '']"
-		    >
-		    <img [src]="badgeImageUrl" [title]="badge?.name" [width]="size" [height]="size" />
-		  </a>
+			<a [routerLink]="['/issuer/issuers/', badge?.issuerSlug || '', 'badges', badge?.slug || '']">
+				<img [src]="badgeImageUrl" [title]="badge?.name" [width]="size" [height]="size" />
+			</a>
 		}
 		@if (!(link && !loading && !failed)) {
-		  <a>
-		    @if (loading) {
-		      <img [src]="loadingBadgeUrl" title="Loading Badge..." [width]="size" [height]="size" />
-		    }
-		    @if (!loading && failed) {
-		      <img
-		        [src]="failedBadgeUrl"
-		        title="Badge Failed to Load"
-		        [width]="size"
-		        [height]="size"
-		        />
-		    }
-		    @if (!loading && !failed) {
-		      <img
-		        [src]="badgeImageUrl"
-		        [title]="badge?.name"
-		        [width]="size"
-		        [height]="size"
-		        />
-		    }
-		  </a>
+			<a>
+				@if (loading) {
+					<img [src]="loadingBadgeUrl" title="Loading Badge..." [width]="size" [height]="size" />
+				}
+				@if (!loading && failed) {
+					<img [src]="failedBadgeUrl" title="Badge Failed to Load" [width]="size" [height]="size" />
+				}
+				@if (!loading && !failed) {
+					<img [src]="badgeImageUrl" [title]="badge?.name" [width]="size" [height]="size" />
+				}
+			</a>
 		}
 		@if (awardedIconSize > 0) {
-		  <img
-		    [src]="awardedIconActive ? greenCheckCircleUrl : grayCheckCircleUrl"
-		    [width]="awardedIconSize"
-		    [height]="awardedIconSize"
-		    class="badge-x-awardedIcon"
-		    />
+			<img
+				[src]="awardedIconActive ? greenCheckCircleUrl : grayCheckCircleUrl"
+				[width]="awardedIconSize"
+				[height]="awardedIconSize"
+				class="badge-x-awardedIcon"
+			/>
 		}
-		`,
+	`,
 	// Inputs from superclass must be specified here again due to https://github.com/angular/angular/issues/5415
 	inputs: ['badge', 'issuerId', 'badgeSlug', 'badgeId', 'forceFailed'],
 	imports: [RouterLink],

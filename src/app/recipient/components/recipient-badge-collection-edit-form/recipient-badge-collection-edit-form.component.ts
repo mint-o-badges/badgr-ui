@@ -36,19 +36,19 @@ interface CreateBadgeCollectionForm<T> {
 	selector: 'recipient-badge-collection-edit-form',
 	templateUrl: './recipient-badge-collection-edit-form.component.html',
 	imports: [
-    FormMessageComponent,
-    FormsModule,
-    ReactiveFormsModule,
-    OebInputComponent,
-    BgAwaitPromises,
-    HlmInputDirective,
-    NgClass,
-    BgBadgecard,
-    OebButtonComponent,
-    RouterLink,
-    I18nPluralPipe,
-    TranslatePipe
-],
+		FormMessageComponent,
+		FormsModule,
+		ReactiveFormsModule,
+		OebInputComponent,
+		BgAwaitPromises,
+		HlmInputDirective,
+		NgClass,
+		BgBadgecard,
+		OebButtonComponent,
+		RouterLink,
+		I18nPluralPipe,
+		TranslatePipe,
+	],
 })
 export class RecipientBadgeCollectionEditFormComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	@Input()

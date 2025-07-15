@@ -41,16 +41,16 @@ import { LearningPathGraduatesDatatableComponent } from '../../../components/dat
 		trigger('stagger', [transition(':enter', [query(':enter', stagger('.3s', [animateChild()]))])]),
 	],
 	imports: [
-    HlmH2Directive,
-    HlmPDirective,
-    HlmADirective,
-    RouterLink,
-    OebButtonComponent,
-    HlmH3Directive,
-    BgBadgecard,
-    LearningPathGraduatesDatatableComponent,
-    TranslatePipe
-],
+		HlmH2Directive,
+		HlmPDirective,
+		HlmADirective,
+		RouterLink,
+		OebButtonComponent,
+		HlmH3Directive,
+		BgBadgecard,
+		LearningPathGraduatesDatatableComponent,
+		TranslatePipe,
+	],
 })
 export class OebLearningPathDetailComponent extends BaseRoutableComponent implements OnInit {
 	@Input() learningPath;

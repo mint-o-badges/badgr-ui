@@ -60,70 +60,69 @@ import { OebButtonComponent } from '../../../components/oeb-button.component';
 	selector: 'badgeclass-detail',
 	template: `
 		<bg-badgedetail [config]="config" [awaitPromises]="[issuerLoaded, badgeClassLoaded]">
-		  <div #qrAwards>
-		    <qrcode-awards
-		      (qrBadgeAward)="onQrBadgeAward($event)"
-		      [awards]="qrCodeAwards"
-		      [badgeClass]="badgeClass"
-		      [issuer]="issuer"
-		      [routerLinkText]="config?.issueQrRouterLink"
-		      [defaultUnfolded]="focusRequests"
-		    ></qrcode-awards>
-		  </div>
-		  <div #batchAwards>
-		    <issuer-detail-datatable
-		      [recipientCount]="recipientCount"
-		      [_recipients]="instanceResults"
-		      (actionElement)="revokeInstance($event)"
-		      (downloadCertificate)="downloadCertificate($event['instance'], $event['badgeIndex'])"
-		      [downloadStates]="downloadStates"
-		      [awardInProgress]="isTaskProcessing || isTaskPending"
-		    ></issuer-detail-datatable>
-		  </div>
-		  <ng-template #headerTemplate>
-		    <h2 class="tw-font-bold tw-my-2" hlmH2>{{ 'Badge.copyForWhatInstitution' | translate }}</h2>
-		  </ng-template>
-		  <ng-template #issuerSelection>
-		    <div class="tw-mb-8">
-		      @if (config.copy_permissions.includes('others')) {
-		        @for (issuer of userIssuers; track issuer) {
-		          <label class="radio tw-mb-2">
-		            <input type="radio" [(ngModel)]="selectedIssuer" [value]="issuer" />
-		            <span class="radio-x-text">{{ issuer.name }}</span>
-		          </label>
-		        }
-		      } @else {
-		        <span class="tw-text-oebblack tw-text-center tw-my-2">
-		          {{ 'Badge.copyPermissionInfo' | translate }}
-		        </span>
-		        <label class="radio tw-my-2">
-		          <input type="radio" [(ngModel)]="selectedIssuer" [value]="issuer" />
-		          <span class="radio-x-text">{{ config.issuerName }}</span>
-		        </label>
-		      }
-		
-		    </div>
-		    <oeb-button
-		      width="full_width"
-		      type="button"
-		      [disabled]="!selectedIssuer"
-		      (click)="routeToBadgeCreation(selectedIssuer)"
-		      size="sm"
-		      [text]="'General.next' | translate"
-		      >
-		    </oeb-button>
-		  </ng-template>
+			<div #qrAwards>
+				<qrcode-awards
+					(qrBadgeAward)="onQrBadgeAward($event)"
+					[awards]="qrCodeAwards"
+					[badgeClass]="badgeClass"
+					[issuer]="issuer"
+					[routerLinkText]="config?.issueQrRouterLink"
+					[defaultUnfolded]="focusRequests"
+				></qrcode-awards>
+			</div>
+			<div #batchAwards>
+				<issuer-detail-datatable
+					[recipientCount]="recipientCount"
+					[_recipients]="instanceResults"
+					(actionElement)="revokeInstance($event)"
+					(downloadCertificate)="downloadCertificate($event['instance'], $event['badgeIndex'])"
+					[downloadStates]="downloadStates"
+					[awardInProgress]="isTaskProcessing || isTaskPending"
+				></issuer-detail-datatable>
+			</div>
+			<ng-template #headerTemplate>
+				<h2 class="tw-font-bold tw-my-2" hlmH2>{{ 'Badge.copyForWhatInstitution' | translate }}</h2>
+			</ng-template>
+			<ng-template #issuerSelection>
+				<div class="tw-mb-8">
+					@if (config.copy_permissions.includes('others')) {
+						@for (issuer of userIssuers; track issuer) {
+							<label class="radio tw-mb-2">
+								<input type="radio" [(ngModel)]="selectedIssuer" [value]="issuer" />
+								<span class="radio-x-text">{{ issuer.name }}</span>
+							</label>
+						}
+					} @else {
+						<span class="tw-text-oebblack tw-text-center tw-my-2">
+							{{ 'Badge.copyPermissionInfo' | translate }}
+						</span>
+						<label class="radio tw-my-2">
+							<input type="radio" [(ngModel)]="selectedIssuer" [value]="issuer" />
+							<span class="radio-x-text">{{ config.issuerName }}</span>
+						</label>
+					}
+				</div>
+				<oeb-button
+					width="full_width"
+					type="button"
+					[disabled]="!selectedIssuer"
+					(click)="routeToBadgeCreation(selectedIssuer)"
+					size="sm"
+					[text]="'General.next' | translate"
+				>
+				</oeb-button>
+			</ng-template>
 		</bg-badgedetail>
-		`,
+	`,
 	imports: [
-    BgBadgeDetail,
-    QrCodeAwardsComponent,
-    IssuerDetailDatatableComponent,
-    HlmH2Directive,
-    FormsModule,
-    OebButtonComponent,
-    TranslatePipe
-],
+		BgBadgeDetail,
+		QrCodeAwardsComponent,
+		IssuerDetailDatatableComponent,
+		HlmH2Directive,
+		FormsModule,
+		OebButtonComponent,
+		TranslatePipe,
+	],
 })
 export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	@ViewChild('qrAwards') qrAwards!: ElementRef;

@@ -36,14 +36,14 @@ import { OebButtonComponent } from '../../../components/oeb-button.component';
 @Component({
 	templateUrl: './badgeclass.component.html',
 	imports: [
-    BgBadgeDetail,
-    OebSeparatorComponent,
-    BgLearningPathCard,
-    HlmH2Directive,
-    FormsModule,
-    OebButtonComponent,
-    TranslatePipe
-],
+		BgBadgeDetail,
+		OebSeparatorComponent,
+		BgLearningPathCard,
+		HlmH2Directive,
+		FormsModule,
+		OebButtonComponent,
+		TranslatePipe,
+	],
 })
 export class PublicBadgeClassComponent {
 	readonly issuerImagePlaceholderUrl = preloadImageURL(

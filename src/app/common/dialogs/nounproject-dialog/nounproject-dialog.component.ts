@@ -20,13 +20,13 @@ import { RouterLink } from '@angular/router';
 	templateUrl: 'nounproject-dialog.component.html',
 	styleUrls: ['./nounproject-dialog.component.css'],
 	imports: [
-    SvgIconComponent,
-    FormsModule,
-    BgAwaitPromises,
-    BgImageStatusPlaceholderDirective,
-    RouterLink,
-    TranslatePipe
-],
+		SvgIconComponent,
+		FormsModule,
+		BgAwaitPromises,
+		BgImageStatusPlaceholderDirective,
+		RouterLink,
+		TranslatePipe,
+	],
 })
 export class NounprojectDialog extends BaseDialog implements AfterViewInit {
 	Array = Array;

@@ -9,22 +9,18 @@ import { FormsModule } from '@angular/forms';
 	selector: 'external-tool-launch',
 	template: `
 		@if (toolLaunchInfo) {
-		  <form
-		    #toolLaunchForm
-		    action="{{ toolLaunchInfo.launch_url }}"
-		    method="POST"
-		    encType="application/x-www-form-urlencoded"
-		    >
-		    @for (key of objectKeys(toolLaunchInfo.launch_data); track key) {
-		      <input
-		        type="hidden"
-		        name="{{ key }}"
-		        value="{{ toolLaunchInfo.launch_data[key] }}"
-		        />
-		    }
-		  </form>
+			<form
+				#toolLaunchForm
+				action="{{ toolLaunchInfo.launch_url }}"
+				method="POST"
+				encType="application/x-www-form-urlencoded"
+			>
+				@for (key of objectKeys(toolLaunchInfo.launch_data); track key) {
+					<input type="hidden" name="{{ key }}" value="{{ toolLaunchInfo.launch_data[key] }}" />
+				}
+			</form>
 		}
-		`,
+	`,
 	imports: [FormsModule],
 })
 export class ExternalToolLaunchComponent implements OnDestroy {

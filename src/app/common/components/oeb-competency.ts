@@ -15,30 +15,30 @@ import { HourPipe } from '../pipes/hourPipe';
 	},
 	template: `
 		<div class="tw-flex tw-justify-between tw-items-center">
-		  <div>
-		    <span hlmP size="sm" class="tw-text-oebblack tw-font-medium">{{ competency.name }} </span>
-		    @if (competency['framework_identifier']) {
-		      <a
-		        hlmP
-		        hlmA
-		        size="sm"
-		        target="_blank"
-		        [href]="competency['framework_identifier']"
-		        text="inline link"
-		        >(E)</a
-		        >
-		      }
-		    </div>
-		
-		    <div class="tw-text-purple tw-flex tw-items-center tw-whitespace-nowrap">
-		      @if (new) {
-		        <span hlmP size="sm" class="tw-bg-yellow tw-px-2 tw-mr-2 tw-rounded-[10px]">NEU</span>
-		      }
-		      <ng-icon hlm class="tw-mr-2" size="sm" name="lucideClock" />
-		      {{ competency.studyLoad | hourPipe }} h
-		    </div>
-		  </div>
-		`,
+			<div>
+				<span hlmP size="sm" class="tw-text-oebblack tw-font-medium">{{ competency.name }} </span>
+				@if (competency['framework_identifier']) {
+					<a
+						hlmP
+						hlmA
+						size="sm"
+						target="_blank"
+						[href]="competency['framework_identifier']"
+						text="inline link"
+						>(E)</a
+					>
+				}
+			</div>
+
+			<div class="tw-text-purple tw-flex tw-items-center tw-whitespace-nowrap">
+				@if (new) {
+					<span hlmP size="sm" class="tw-bg-yellow tw-px-2 tw-mr-2 tw-rounded-[10px]">NEU</span>
+				}
+				<ng-icon hlm class="tw-mr-2" size="sm" name="lucideClock" />
+				{{ competency.studyLoad | hourPipe }} h
+			</div>
+		</div>
+	`,
 	imports: [HlmPDirective, HlmADirective, NgIcon, HlmIconDirective, HourPipe],
 })
 export class OebCompetency {

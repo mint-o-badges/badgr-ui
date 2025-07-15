@@ -14,26 +14,26 @@ import { map, Subscription } from 'rxjs';
 	imports: [HlmButtonDirective, HlmIconDirective, NgClass, NgIcon],
 	providers: [MessageService, provideIcons({ lucideUpload, lucidePlus, lucideCircleX, lucideMapPin })],
 	template: `<button
-		  [type]="type()"
-		  class="tw-relative"
-		  hlmBtn
-		  [disabled]="computedDisabled()"
-		  [width]="width()"
-		  [size]="size()"
-		  [variant]="variant()"
-		  [attr.id]="id()"
-		  >
-		  @if (icon() && iconLeft()) {
-		    <ng-icon hlm size="lg" [name]="icon()" />
-		  }
-		  @if (img()) {
-		    <img class="md:tw-h-[30px] tw-h-[20px] tw-pr-4" [src]="img()" />
-		  }
-		  <span [ngClass]="{ 'tw-ml-4': iconLeft() }" [innerHTML]="computedText()"></span>
-		  @if (icon() && !iconLeft()) {
-		    <ng-icon hlm size="lg" [name]="icon()" />
-		  }
-		</button>`,
+		[type]="type()"
+		class="tw-relative"
+		hlmBtn
+		[disabled]="computedDisabled()"
+		[width]="width()"
+		[size]="size()"
+		[variant]="variant()"
+		[attr.id]="id()"
+	>
+		@if (icon() && iconLeft()) {
+			<ng-icon hlm size="lg" [name]="icon()" />
+		}
+		@if (img()) {
+			<img class="md:tw-h-[30px] tw-h-[20px] tw-pr-4" [src]="img()" />
+		}
+		<span [ngClass]="{ 'tw-ml-4': iconLeft() }" [innerHTML]="computedText()"></span>
+		@if (icon() && !iconLeft()) {
+			<ng-icon hlm size="lg" [name]="icon()" />
+		}
+	</button>`,
 })
 export class OebButtonComponent {
 	readonly variant = input<ButtonVariants['variant']>('default');

@@ -1,130 +1,127 @@
 <form-message></form-message>
 
 <div class="oeb page-padding">
-  <div class="oeb-section-sm">
-    <div class="tw-z-10 tw-relative">
-      <h1 hlmH1 class="tw-text-oebblack">{{ 'Badge.catalogHeadline' | translate }}</h1>
-    </div>
-  </div>
+	<div class="oeb-section-sm">
+		<div class="tw-z-10 tw-relative">
+			<h1 hlmH1 class="tw-text-oebblack">{{ 'Badge.catalogHeadline' | translate }}</h1>
+		</div>
+	</div>
 
-  @if (showLegend()) {
-    <app-badge-legend (closed)="closeLegend()"></app-badge-legend>
-  }
+	@if (showLegend()) {
+		<app-badge-legend (closed)="closeLegend()"></app-badge-legend>
+	}
 
-  <div class="tw-relative">
-    <section class="">
-      <div class="tw-flex tw-items-center tw-rounded-lg tw-p-4 tw-bg-[#ECFEED] tw-mb-4 tw-gap-6">
-        <div
-          class="tw-flex tw-flex-col tw-justify-between tw-gap-4 tw-w-full min-[880px]:tw-flex-row min-[880px]:tw-items-center"
-          >
-          <div class="tw-flex tw-flex-col min-[880px]:tw-flex-row min-[880px]:tw-items-center tw-gap-6">
-            <div class="tw-flex tw-relative tw-items-center">
-              <input
-                type="text"
-                name="forminput"
-                changeOrder
-                class="!tw-bg-white tw-w-full tw-border-1 tw-border-purple min-[880px]:tw-w-96 tw-border-solid tw-h-12 tw-rounded-lg tw-p-2"
-                placeholder="{{ 'Badge.searchBadges' | translate }}"
-                [ngModel]="searchQuery()"
-                (ngModelChange)="onSearchQueryChange($event)"
-                hlmInput
-                />
-              <ng-icon
-                hlm
-                name="lucideSearch"
-                class="tw-w-8 tw-h-8 tw-absolute tw-top-1/2 tw-right-2 -tw-translate-y-1/2 tw-pointer-events-none tw-text-purple"
-              ></ng-icon>
-            </div>
-          </div>
+	<div class="tw-relative">
+		<section class="">
+			<div class="tw-flex tw-items-center tw-rounded-lg tw-p-4 tw-bg-[#ECFEED] tw-mb-4 tw-gap-6">
+				<div
+					class="tw-flex tw-flex-col tw-justify-between tw-gap-4 tw-w-full min-[880px]:tw-flex-row min-[880px]:tw-items-center"
+				>
+					<div class="tw-flex tw-flex-col min-[880px]:tw-flex-row min-[880px]:tw-items-center tw-gap-6">
+						<div class="tw-flex tw-relative tw-items-center">
+							<input
+								type="text"
+								name="forminput"
+								changeOrder
+								class="!tw-bg-white tw-w-full tw-border-1 tw-border-purple min-[880px]:tw-w-96 tw-border-solid tw-h-12 tw-rounded-lg tw-p-2"
+								placeholder="{{ 'Badge.searchBadges' | translate }}"
+								[ngModel]="searchQuery()"
+								(ngModelChange)="onSearchQueryChange($event)"
+								hlmInput
+							/>
+							<ng-icon
+								hlm
+								name="lucideSearch"
+								class="tw-w-8 tw-h-8 tw-absolute tw-top-1/2 tw-right-2 -tw-translate-y-1/2 tw-pointer-events-none tw-text-purple"
+							></ng-icon>
+						</div>
+					</div>
 
-          <oeb-global-sort-select
-            placeholder="{{ 'Badge.sortBy' | translate }}"
-            class="oeb tw-w-[12rem]"
-            [control]="sortControl"
-            >
-          </oeb-global-sort-select>
+					<oeb-global-sort-select
+						placeholder="{{ 'Badge.sortBy' | translate }}"
+						class="oeb tw-w-[12rem]"
+						[control]="sortControl"
+					>
+					</oeb-global-sort-select>
 
-          <oeb-select
-            [actionBar]="true"
-            placeholder="Tags"
-            class="oeb tw-w-[12rem]"
-            [options]="tagsOptions()"
-            [control]="tagsControl"
-            [autofocus]="true"
-            [noTopMargin]="true"
-            [multiple]="true"
-            [dropdownMaxHeight]="250"
-          ></oeb-select>
-        </div>
-      </div>
-      <div class="subtitle-wrapper">
-        <ul class="tags-wrapper oeb-standard-padding-bottom">
-          @for (tag of tagsControl.value | sort; track tag) {
-            <li
-              class="tag tag-close tag-delete tag-button tw-mr-2"
-              (click)="removeTag(tag)"
-              >
-              {{ tag }}
-            </li>
-          }
-        </ul>
-        <div class="open-legend-button">
-          <a (click)="openLegend()">{{ 'Badge.framesMeaning' | translate }}</a>
-        </div>
-      </div>
-      <div class="tw-gap-6 tw-grid tw-grid-cols-badges" [@stagger]>
-        @for (badge of badges(); track trackById($index, badge)) {
-          <bg-badgecard
-            @appearAnimation
-            [badgeTitle]="badge.name"
-            [badgeImage]="badge.image"
-            [badgeDescription]="badge.description"
-            [badgeSlug]="badge.slug"
-            [issuerTitle]="badge.issuerName"
-            [badgeIssueDate]="badge.createdAt"
-            [public]="true"
-            [publicUrl]="badge.url"
-            [issuerSlug]="badge.issuerSlug"
-            [competencies]="badge.extensions['extensions:CompetencyExtension']"
-            [tags]="badge.tags"
-          ></bg-badgecard>
-        }
-      </div>
-      @if (!badges().length && !hasNext()) {
-        <p
-          class="tw-m-auto tw-max-w-[300px] tw-p-4 tw-border-solid tw-border-[1px] tw-border-[var(--color-blue)] tw-rounded-lg tw-bg-[var(--color-lightpurple)] tw-text-center"
-          >
-          {{ 'General.noResults' | translate }}
-        </p>
-      }
-    </section>
-  </div>
-  <div #loadMore class="oeb-section-sm">
-    @if (hasNext()) {
-      @if (!observeScrolling()) {
-        <loading-dots />
-      } @else {
-        <oeb-button
-          variant="secondary"
-          size="sm"
-          type="button"
-          text="{{ 'General.loadMore' | translate }}"
-          (click)="onLoadMoreClicked()"
-          class="tw-mx-auto tw-block tw-w-max"
-          />
-      }
-    } @else {
-      <h4 hlmH4 class="tw-text-oebblack tw-text-center">{{ 'Badge.catalogAllLoaded' | translate }}</h4>
-      <h4 hlmH4 class="tw-font-black tw-text-purple tw-text-center">
-        @if (badges().length > 1) {
-          <span [countUp]="badges().length">{{ badges().length }}</span>
-        }
-        {{ badgesPluralWord() }} in
-        @if (issuers().length > 1) {
-          <span [countUp]="issuers().length">{{ issuers().length }}</span>
-        }
-        {{ issuersPluralWord() }}
-      </h4>
-    }
-  </div>
+					<oeb-select
+						[actionBar]="true"
+						placeholder="Tags"
+						class="oeb tw-w-[12rem]"
+						[options]="tagsOptions()"
+						[control]="tagsControl"
+						[autofocus]="true"
+						[noTopMargin]="true"
+						[multiple]="true"
+						[dropdownMaxHeight]="250"
+					></oeb-select>
+				</div>
+			</div>
+			<div class="subtitle-wrapper">
+				<ul class="tags-wrapper oeb-standard-padding-bottom">
+					@for (tag of tagsControl.value | sort; track tag) {
+						<li class="tag tag-close tag-delete tag-button tw-mr-2" (click)="removeTag(tag)">
+							{{ tag }}
+						</li>
+					}
+				</ul>
+				<div class="open-legend-button">
+					<a (click)="openLegend()">{{ 'Badge.framesMeaning' | translate }}</a>
+				</div>
+			</div>
+			<div class="tw-gap-6 tw-grid tw-grid-cols-badges" [@stagger]>
+				@for (badge of badges(); track trackById($index, badge)) {
+					<bg-badgecard
+						@appearAnimation
+						[badgeTitle]="badge.name"
+						[badgeImage]="badge.image"
+						[badgeDescription]="badge.description"
+						[badgeSlug]="badge.slug"
+						[issuerTitle]="badge.issuerName"
+						[badgeIssueDate]="badge.createdAt"
+						[public]="true"
+						[publicUrl]="badge.url"
+						[issuerSlug]="badge.issuerSlug"
+						[competencies]="badge.extensions['extensions:CompetencyExtension']"
+						[tags]="badge.tags"
+					></bg-badgecard>
+				}
+			</div>
+			@if (!badges().length && !hasNext()) {
+				<p
+					class="tw-m-auto tw-max-w-[300px] tw-p-4 tw-border-solid tw-border-[1px] tw-border-[var(--color-blue)] tw-rounded-lg tw-bg-[var(--color-lightpurple)] tw-text-center"
+				>
+					{{ 'General.noResults' | translate }}
+				</p>
+			}
+		</section>
+	</div>
+	<div #loadMore class="oeb-section-sm">
+		@if (hasNext()) {
+			@if (!observeScrolling()) {
+				<loading-dots />
+			} @else {
+				<oeb-button
+					variant="secondary"
+					size="sm"
+					type="button"
+					text="{{ 'General.loadMore' | translate }}"
+					(click)="onLoadMoreClicked()"
+					class="tw-mx-auto tw-block tw-w-max"
+				/>
+			}
+		} @else {
+			<h4 hlmH4 class="tw-text-oebblack tw-text-center">{{ 'Badge.catalogAllLoaded' | translate }}</h4>
+			<h4 hlmH4 class="tw-font-black tw-text-purple tw-text-center">
+				@if (badges().length > 1) {
+					<span [countUp]="badges().length">{{ badges().length }}</span>
+				}
+				{{ badgesPluralWord() }} in
+				@if (issuers().length > 1) {
+					<span [countUp]="issuers().length">{{ issuers().length }}</span>
+				}
+				{{ issuersPluralWord() }}
+			</h4>
+		}
+	</div>
 </div>

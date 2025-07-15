@@ -23,13 +23,7 @@ import { BadgeClassEditFormComponent } from '../badgeclass-edit-form/badgeclass-
 
 @Component({
 	templateUrl: 'badgeclass-create.component.html',
-	imports: [
-    BgBreadcrumbsComponent,
-    HlmH1Directive,
-    BgAwaitPromises,
-    BadgeClassEditFormComponent,
-    TranslatePipe
-],
+	imports: [BgBreadcrumbsComponent, HlmH1Directive, BgAwaitPromises, BadgeClassEditFormComponent, TranslatePipe],
 })
 export class BadgeClassCreateComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	issuerSlug: string;

@@ -10,7 +10,6 @@ import { ApplicationCredentialsService } from '../../../common/services/applicat
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { FormMessageComponent } from '../../../common/components/form-message.component';
 
-
 @Component({
 	selector: 'app-integration-detail',
 	templateUrl: './app-integrations-list.component.html',

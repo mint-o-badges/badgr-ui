@@ -27,46 +27,44 @@ import { NgTemplateOutlet, NgClass } from '@angular/common';
 	selector: 'oeb-collapsible',
 	providers: [provideIcons({ lucideChevronRight })],
 	imports: [
-    BrnCollapsibleComponent,
-    BrnCollapsibleTriggerDirective,
-    HlmButtonDirective,
-    BrnCollapsibleContentComponent,
-    NgIcon,
-    HlmIconDirective,
-    NgTemplateOutlet,
-    NgClass
-],
+		BrnCollapsibleComponent,
+		BrnCollapsibleTriggerDirective,
+		HlmButtonDirective,
+		BrnCollapsibleContentComponent,
+		NgIcon,
+		HlmIconDirective,
+		NgTemplateOutlet,
+		NgClass,
+	],
 	template: `
 		<brn-collapsible class="tw-flex tw-flex-col" #collapsible [disabled]="disabled()">
-		<button [attr.id]="id" brnCollapsibleTrigger type="button" hlmBtn variant="ghost" size="sm" class="!tw-p-0">
-		  @if (isTemplate) {
-		    <ngTemplateOutlet
-		      [ngTemplateOutlet]="trigger"
-		    ></ngTemplateOutlet>
-		  } @else {
-		    <button class="tw-flex tw-w-full !tw-justify-between tw-items-center">
-		      {{ trigger }}
-		      <ng-icon hlm class="tw-ml-2" name="lucideChevronDown" hlmMenuIcon />
-		    </button>
-		  }
-		  <div>
-		    <ng-icon
-		      hlm
-		      size="xl"
-		      class="tw-text-purple"
+			<button [attr.id]="id" brnCollapsibleTrigger type="button" hlmBtn variant="ghost" size="sm" class="!tw-p-0">
+				@if (isTemplate) {
+					<ngTemplateOutlet [ngTemplateOutlet]="trigger"></ngTemplateOutlet>
+				} @else {
+					<button class="tw-flex tw-w-full !tw-justify-between tw-items-center">
+						{{ trigger }}
+						<ng-icon hlm class="tw-ml-2" name="lucideChevronDown" hlmMenuIcon />
+					</button>
+				}
+				<div>
+					<ng-icon
+						hlm
+						size="xl"
+						class="tw-text-purple"
 						[ngClass]="{
 							'tw-rotate-90': collapsible.state() == 'open' && closeIcon == 'lucideChevronRight',
 							'tw-rotate-180': collapsible.state() == 'open' && closeIcon == 'lucideChevronDown'
 						}"
-		      [name]="closeIcon"
-		      />
-		  </div>
-		</button>
-		<brn-collapsible-content>
-		<ng-content></ng-content>
-		</brn-collapsible-content>
+						[name]="closeIcon"
+					/>
+				</div>
+			</button>
+			<brn-collapsible-content>
+				<ng-content></ng-content>
+			</brn-collapsible-content>
 		</brn-collapsible>
-		`,
+	`,
 })
 export class OebCollapsibleComponent implements AfterViewInit {
 	@Input() trigger: any;

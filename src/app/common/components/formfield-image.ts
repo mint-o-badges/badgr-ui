@@ -24,109 +24,108 @@ import { TranslatePipe } from '@ngx-translate/core';
 	},
 	template: `
 		<div class="forminput u-margin-bottom2x">
-		  <div class="forminput-x-labelrow">
-		    <label [class]="labelStyle" for="image_field{{ uniqueIdSuffix }}">{{ label }}</label>
-		    @if (sublabelRight) {
-		      <span
-		        class="tw-mr-auto tw-ml-2 tw-font-[rubik] tw-text-oebblack tw-text-sm tw-font-normal"
-		        >{{ sublabelRight }}</span
-		        >
-		      }
-		      @if (generateRandom) {
-		        <a
-		          (click)="$event.preventDefault(); generateRandomImage.emit()"
-		          class="forminput-x-helplink"
-		          href="#"
-		          >{{ 'RecBadge.genRandomImage' | translate }}</a
-		          >
-		        }
-		      </div>
-		      @if (sublabel) {
-		        <p
-		          class="tw-text-sm tw-w-full tw-text-center tw-text-oebblack tw-mt-2 tw-italic tw-leading-[16.4px]"
-		          [innerHTML]="sublabel"
-		        ></p>
-		      }
-		      <input
-		        type="file"
-		        [accept]="allowedFileFormats"
-		        name="image_field{{ uniqueIdSuffix }}"
-		        id="image_field{{ uniqueIdSuffix }}"
-		        (change)="fileInputChanged($event)"
-		        class="visuallyhidden"
-		        (cancel)="cancelFileSelection($event)"
-		        />
-		
-		      <label
-		        class="dropzone tw-mx-auto tw-mt-2 !tw-h-[250px] md:tw-min-w-[300px]"
-		        #imageLabel
-		        [attr.for]="'image_field' + uniqueIdSuffix"
-		        (click)="clearFileInput()"
-		        tabindex="0"
-		        [class.dropzone-is-dragging]="isDragging"
-		        [class.dropzone-is-error]="imageErrorMessage || (control.dirty && !control.valid)"
-		        >
-		        @if (imageDataUrl) {
-		          <div class="dropzone-x-preview">
-		            <img [src]="imageDataUrl" alt="" />
-		            <p class="u-text-body">
-		              {{ imageName }}
-		              <button (click)="imageLabel.click()" type="button" class="u-text-link">
-		                {{ 'RecBadge.chooseAnotherFile' | translate }}
-		              </button>
-		              @if (loaderName != 'basic' && enableIconSearch) {
-		                <button
-		                  (click)="$event.preventDefault(); findNounproject($event)"
-		                  type="button"
-		                  class="u-text-link"
-		                  >
-		                  {{ 'RecBadge.searchAnotherIcon' | translate }}
-		                </button>
-		              }
-		            </p>
-		          </div>
-		        }
-		
-		        @if (!imageDataUrl) {
-		          <ng-icon hlm size="xl" name="lucideCloudUpload"></ng-icon>
-		          @if (dropZoneInfo1) {
-		            <p class="dropzone-x-info1">
-		              <span cass="tw-font-bold">{{ dropZoneInfo1 }} </span>
-		              @if (dropZoneInfo1) {
-		                <span class="tw-inline-block tw-font-normal tw-my-1 tw-mr-1">
-		                  {{ 'General.or' | translate }}
-		                </span>
-		              }
-		            </p>
-		          }
-		          <p class="dropzone-x-info2">
-		            <span class="u-text-link tw-underline tw-inline-block tw-font-normal">{{ text_body }}</span>
-		          </p>
-		          <!-- dont let user select icon when uploading badge -->
-		          @if (loaderName != 'basic' && dropZoneInfo2) {
-		            <p class="dropzone-x-info2">
-		              <span class="tw-inline-block tw-my-1 tw-mr-1">{{ 'General.or' | translate }}</span>
-		              <span
-		                id="nounProject_span"
-		                class="u-text-link tw-underline tw-inline-block tw-font-normal"
-		                (click)="$event.preventDefault(); findNounproject($event)"
-		                >{{ dropZoneInfo2 }}</span
-		                >
-		              </p>
-		            }
-		            @if (loaderName != 'basic' && dropZoneInfo3) {
-		              <p class="tw-mx-auto tw-mt-4">
-		                <span class="tw-text-oebblack tw-italic tw-text-sm tw-mt-4">{{ dropZoneInfo3 }}</span>
-		              </p>
-		            }
-		          }
-		        </label>
-		
-		        @if (control.dirty && !control.valid) {
-		          <p class="forminput-x-error">{{ errorMessage }}</p>
-		        }
-		      </div>
-		`,
+			<div class="forminput-x-labelrow">
+				<label [class]="labelStyle" for="image_field{{ uniqueIdSuffix }}">{{ label }}</label>
+				@if (sublabelRight) {
+					<span class="tw-mr-auto tw-ml-2 tw-font-[rubik] tw-text-oebblack tw-text-sm tw-font-normal">{{
+						sublabelRight
+					}}</span>
+				}
+				@if (generateRandom) {
+					<a
+						(click)="$event.preventDefault(); generateRandomImage.emit()"
+						class="forminput-x-helplink"
+						href="#"
+						>{{ 'RecBadge.genRandomImage' | translate }}</a
+					>
+				}
+			</div>
+			@if (sublabel) {
+				<p
+					class="tw-text-sm tw-w-full tw-text-center tw-text-oebblack tw-mt-2 tw-italic tw-leading-[16.4px]"
+					[innerHTML]="sublabel"
+				></p>
+			}
+			<input
+				type="file"
+				[accept]="allowedFileFormats"
+				name="image_field{{ uniqueIdSuffix }}"
+				id="image_field{{ uniqueIdSuffix }}"
+				(change)="fileInputChanged($event)"
+				class="visuallyhidden"
+				(cancel)="cancelFileSelection($event)"
+			/>
+
+			<label
+				class="dropzone tw-mx-auto tw-mt-2 !tw-h-[250px] md:tw-min-w-[300px]"
+				#imageLabel
+				[attr.for]="'image_field' + uniqueIdSuffix"
+				(click)="clearFileInput()"
+				tabindex="0"
+				[class.dropzone-is-dragging]="isDragging"
+				[class.dropzone-is-error]="imageErrorMessage || (control.dirty && !control.valid)"
+			>
+				@if (imageDataUrl) {
+					<div class="dropzone-x-preview">
+						<img [src]="imageDataUrl" alt="" />
+						<p class="u-text-body">
+							{{ imageName }}
+							<button (click)="imageLabel.click()" type="button" class="u-text-link">
+								{{ 'RecBadge.chooseAnotherFile' | translate }}
+							</button>
+							@if (loaderName != 'basic' && enableIconSearch) {
+								<button
+									(click)="$event.preventDefault(); findNounproject($event)"
+									type="button"
+									class="u-text-link"
+								>
+									{{ 'RecBadge.searchAnotherIcon' | translate }}
+								</button>
+							}
+						</p>
+					</div>
+				}
+
+				@if (!imageDataUrl) {
+					<ng-icon hlm size="xl" name="lucideCloudUpload"></ng-icon>
+					@if (dropZoneInfo1) {
+						<p class="dropzone-x-info1">
+							<span cass="tw-font-bold">{{ dropZoneInfo1 }} </span>
+							@if (dropZoneInfo1) {
+								<span class="tw-inline-block tw-font-normal tw-my-1 tw-mr-1">
+									{{ 'General.or' | translate }}
+								</span>
+							}
+						</p>
+					}
+					<p class="dropzone-x-info2">
+						<span class="u-text-link tw-underline tw-inline-block tw-font-normal">{{ text_body }}</span>
+					</p>
+					<!-- dont let user select icon when uploading badge -->
+					@if (loaderName != 'basic' && dropZoneInfo2) {
+						<p class="dropzone-x-info2">
+							<span class="tw-inline-block tw-my-1 tw-mr-1">{{ 'General.or' | translate }}</span>
+							<span
+								id="nounProject_span"
+								class="u-text-link tw-underline tw-inline-block tw-font-normal"
+								(click)="$event.preventDefault(); findNounproject($event)"
+								>{{ dropZoneInfo2 }}</span
+							>
+						</p>
+					}
+					@if (loaderName != 'basic' && dropZoneInfo3) {
+						<p class="tw-mx-auto tw-mt-4">
+							<span class="tw-text-oebblack tw-italic tw-text-sm tw-mt-4">{{ dropZoneInfo3 }}</span>
+						</p>
+					}
+				}
+			</label>
+
+			@if (control.dirty && !control.valid) {
+				<p class="forminput-x-error">{{ errorMessage }}</p>
+			}
+		</div>
+	`,
 	imports: [NgIcon, HlmIconDirective, TranslatePipe],
 })
 export class BgFormFieldImageComponent {

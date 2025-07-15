@@ -15,15 +15,15 @@ import { TranslatePipe } from '@ngx-translate/core';
 	templateUrl: './start.component.html',
 	styleUrls: ['./start.component.scss'],
 	imports: [
-    FormMessageComponent,
-    HlmH1Directive,
-    HlmPDirective,
-    OebButtonComponent,
-    RouterLink,
-    HlmH2Directive,
-    HlmH3Directive,
-    TranslatePipe
-],
+		FormMessageComponent,
+		HlmH1Directive,
+		HlmPDirective,
+		OebButtonComponent,
+		RouterLink,
+		HlmH2Directive,
+		HlmH3Directive,
+		TranslatePipe,
+	],
 })
 export class StartComponent implements OnInit {
 	constructor(public sessionService: SessionService) {}

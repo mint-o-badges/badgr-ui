@@ -23,13 +23,7 @@ import { RouterLink } from '@angular/router';
 	selector: 'copy-badge-dialog',
 	templateUrl: 'copy-badge-dialog.component.html',
 	styleUrls: ['./copy-badge-dialog.component.css'],
-	imports: [
-    SvgIconComponent,
-    FormsModule,
-    BgAwaitPromises,
-    BgImageStatusPlaceholderDirective,
-    RouterLink
-],
+	imports: [SvgIconComponent, FormsModule, BgAwaitPromises, BgImageStatusPlaceholderDirective, RouterLink],
 })
 export class CopyBadgeDialog extends BaseDialog {
 	Array = Array;

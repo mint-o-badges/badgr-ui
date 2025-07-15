@@ -10,12 +10,12 @@ import { NgModel } from '@angular/forms';
 	imports: [HlmLabelDirective, HlmSwitchComponent],
 	template: `
 		<label class="tw-flex tw-items-center" hlmLabel>
-		  <hlm-switch class="tw-mr-2" />
-		  @if (text()) {
-		    <span> {{ text() }} </span>
-		  }
+			<hlm-switch class="tw-mr-2" />
+			@if (text()) {
+				<span> {{ text() }} </span>
+			}
 		</label>
-		`,
+	`,
 })
 export class OebSwitchComponent {
 	readonly text = input<string>('');

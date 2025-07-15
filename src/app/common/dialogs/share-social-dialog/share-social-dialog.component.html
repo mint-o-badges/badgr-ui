@@ -1,145 +1,133 @@
 <dialog
-  aria-labelledby="shareBadgeDialog"
-  aria-describedby="dialog1Desc"
-  class="dialog dialog-is-active l-dialog"
-  role="dialog"
-  >
-  <div class="dialog-x-box o-container">
-    <!-- Header -->
-    <div class="dialog-x-header u-background-light3">
-      <h1>{{ options?.title }}</h1>
-      <button (click)="closeDialog()" class="buttonicon buttonicon-link">
-        <svg icon="icon_close"></svg>
-        <span class="visuallyhidden">Close</span>
-      </button>
-    </div>
+	aria-labelledby="shareBadgeDialog"
+	aria-describedby="dialog1Desc"
+	class="dialog dialog-is-active l-dialog"
+	role="dialog"
+>
+	<div class="dialog-x-box o-container">
+		<!-- Header -->
+		<div class="dialog-x-header u-background-light3">
+			<h1>{{ options?.title }}</h1>
+			<button (click)="closeDialog()" class="buttonicon buttonicon-link">
+				<svg icon="icon_close"></svg>
+				<span class="visuallyhidden">Close</span>
+			</button>
+		</div>
 
-    <!-- Tab Navigation Bar -->
-    <nav aria-labelledby="heading-share-options" class="tabbar">
-      <button [class.tab-is-active]="currentTabId === 'link'" (click)="openTab('link')" class="tab">
-        <span class="visuallyhidden"> Open the </span> Link
-        <span class="visuallyhidden"> tab</span>
-      </button>
-      <button [class.tab-is-active]="currentTabId === 'social'" (click)="openTab('social')" class="tab">
-        <span class="visuallyhidden"> Open the </span>Social
-        <span class="visuallyhidden"> tab</span>
-      </button>
-      @if (hasEmbedSupport) {
-        <button
-          [class.tab-is-active]="currentTabId === 'embed'"
-          (click)="openTab('embed')"
-          class="tab"
-          >
-          <span class="visuallyhidden"> Open the </span>HTML
-          <span class="visuallyhidden"> tab</span>
-        </button>
-      }
-    </nav>
+		<!-- Tab Navigation Bar -->
+		<nav aria-labelledby="heading-share-options" class="tabbar">
+			<button [class.tab-is-active]="currentTabId === 'link'" (click)="openTab('link')" class="tab">
+				<span class="visuallyhidden"> Open the </span> Link
+				<span class="visuallyhidden"> tab</span>
+			</button>
+			<button [class.tab-is-active]="currentTabId === 'social'" (click)="openTab('social')" class="tab">
+				<span class="visuallyhidden"> Open the </span>Social
+				<span class="visuallyhidden"> tab</span>
+			</button>
+			@if (hasEmbedSupport) {
+				<button [class.tab-is-active]="currentTabId === 'embed'" (click)="openTab('embed')" class="tab">
+					<span class="visuallyhidden"> Open the </span>HTML
+					<span class="visuallyhidden"> tab</span>
+				</button>
+			}
+		</nav>
 
-    <!-- Link Tab -->
-    @if (currentTabId == 'link') {
-      <div
-        class="u-responsivepadding-yaxis u-responsivepadding-xaxis"
-        tabindex="-1"
-        id="sharelink"
-        >
-        @if (options?.showRecipientOptions) {
-          <p class="u-text-bold u-margin-bottom3x">Badge Optionen:</p>
-          <label class="checkbox checkbox-light u-margin-bottom5x">
-            <input
-              [(ngModel)]="includeRecipientIdentifier"
-              (ngModelChange)="updateEmbedHtml()"
-              type="checkbox"
-              checked
-              />
-            <span class="checkbox-x-text">
-              <strong>Empfänger E-Mail einbeziehen:</strong> <br />
-              {{ options.recipientIdentifier }}
-            </span>
-          </label>
-        }
-        @if (options) {
-          <div class="forminput forminput-hasiconleft forminput-withbutton u-margin-bottom3x">
-            <label class="forminput-x-label" for="link-input">{{
-              'RecBadgeDetail.copyShareLink' | translate
-            }}</label>
-            <div class="forminput-x-inputs">
-              <svg class="forminput-x-icon" icon="icon_link"></svg>
-              <input
-                #shareInput
-                id="link-input"
-                name="link-input"
-                type="text"
-                [value]="currentShareUrl"
-                (click)="shareInput.select()"
-                readonly
-                #urlInput
-                />
-              <div class="forminput-x-button">
-                <button
-                  (click)="copyToClipboard(urlInput)"
-                  [hidden]="!copySupported"
-                  class="button button-secondary button-informinput"
-                  >
-                  {{ 'General.copy' | translate }}
-                </button>
-              </div>
-            </div>
-          </div>
-        }
-        @if (options) {
-          <a [href]="currentShareUrl" target="_blank" class="u-text-link-small">{{
-            'General.openNewWindow' | translate
-          }}</a>
-        }
-      </div>
-    }
+		<!-- Link Tab -->
+		@if (currentTabId == 'link') {
+			<div class="u-responsivepadding-yaxis u-responsivepadding-xaxis" tabindex="-1" id="sharelink">
+				@if (options?.showRecipientOptions) {
+					<p class="u-text-bold u-margin-bottom3x">Badge Optionen:</p>
+					<label class="checkbox checkbox-light u-margin-bottom5x">
+						<input
+							[(ngModel)]="includeRecipientIdentifier"
+							(ngModelChange)="updateEmbedHtml()"
+							type="checkbox"
+							checked
+						/>
+						<span class="checkbox-x-text">
+							<strong>Empfänger E-Mail einbeziehen:</strong> <br />
+							{{ options.recipientIdentifier }}
+						</span>
+					</label>
+				}
+				@if (options) {
+					<div class="forminput forminput-hasiconleft forminput-withbutton u-margin-bottom3x">
+						<label class="forminput-x-label" for="link-input">{{
+							'RecBadgeDetail.copyShareLink' | translate
+						}}</label>
+						<div class="forminput-x-inputs">
+							<svg class="forminput-x-icon" icon="icon_link"></svg>
+							<input
+								#shareInput
+								id="link-input"
+								name="link-input"
+								type="text"
+								[value]="currentShareUrl"
+								(click)="shareInput.select()"
+								readonly
+								#urlInput
+							/>
+							<div class="forminput-x-button">
+								<button
+									(click)="copyToClipboard(urlInput)"
+									[hidden]="!copySupported"
+									class="button button-secondary button-informinput"
+								>
+									{{ 'General.copy' | translate }}
+								</button>
+							</div>
+						</div>
+					</div>
+				}
+				@if (options) {
+					<a [href]="currentShareUrl" target="_blank" class="u-text-link-small">{{
+						'General.openNewWindow' | translate
+					}}</a>
+				}
+			</div>
+		}
 
-    <!-- Social Tab -->
-    @if (currentTabId === 'social') {
-      <div
-        class="u-padding-yaxis2x u-responsivepadding-xaxis"
-        tabindex="-1"
-        id="sharelinksocial"
-        >
-        @if (options.showRecipientOptions) {
-          <p class="u-text-bold u-margin-bottom3x">Badge Optionen:</p>
-          <label class="checkbox checkbox-light u-margin-bottom5x">
-            <input
-              id="form-checkbox"
-              type="checkbox"
-              [(ngModel)]="includeRecipientIdentifier"
-              (ngModelChange)="updateEmbedHtml()"
-              checked
-              />
-            <span class="checkbox-x-text">
-              <strong>Empfänger E-Mail einbeziehen:</strong> <br />
-              {{ options.recipientIdentifier }}
-            </span>
-          </label>
-        }
-        <div class="u-margin-bottom3x">
-          <p class="u-text-bold u-margin-bottom3x">{{ 'RecBadgeDetail.addToProfile' | translate }}:</p>
-          <div>
-            <a [href]="linkedInCertURL">
-              @if (translate.currentLang == 'de') {
-                <img
-                  src="../../../breakdown/static/scss/images/linkedin_zum_profile_hinzufugen.png"
-                  width="208"
-                  alt="LinkedIn Add to Profile button"
-                  />
-              }
-              @if (translate.currentLang != 'de') {
-                <img
-                  src="../../../breakdown/static/scss/images/linkedin_en.png"
-                  width="208"
-                  alt="LinkedIn Add to Profile button"
-                  />
-              }
-            </a>
-          </div>
-        </div>
-        <!-- <p class="u-text-bold u-margin-bottom3x">Auf Social Media teilen:</p>
+		<!-- Social Tab -->
+		@if (currentTabId === 'social') {
+			<div class="u-padding-yaxis2x u-responsivepadding-xaxis" tabindex="-1" id="sharelinksocial">
+				@if (options.showRecipientOptions) {
+					<p class="u-text-bold u-margin-bottom3x">Badge Optionen:</p>
+					<label class="checkbox checkbox-light u-margin-bottom5x">
+						<input
+							id="form-checkbox"
+							type="checkbox"
+							[(ngModel)]="includeRecipientIdentifier"
+							(ngModelChange)="updateEmbedHtml()"
+							checked
+						/>
+						<span class="checkbox-x-text">
+							<strong>Empfänger E-Mail einbeziehen:</strong> <br />
+							{{ options.recipientIdentifier }}
+						</span>
+					</label>
+				}
+				<div class="u-margin-bottom3x">
+					<p class="u-text-bold u-margin-bottom3x">{{ 'RecBadgeDetail.addToProfile' | translate }}:</p>
+					<div>
+						<a [href]="linkedInCertURL">
+							@if (translate.currentLang == 'de') {
+								<img
+									src="../../../breakdown/static/scss/images/linkedin_zum_profile_hinzufugen.png"
+									width="208"
+									alt="LinkedIn Add to Profile button"
+								/>
+							}
+							@if (translate.currentLang != 'de') {
+								<img
+									src="../../../breakdown/static/scss/images/linkedin_en.png"
+									width="208"
+									alt="LinkedIn Add to Profile button"
+								/>
+							}
+						</a>
+					</div>
+				</div>
+				<!-- <p class="u-text-bold u-margin-bottom3x">Auf Social Media teilen:</p>
         <div class="l-grid l-grid-small">
           <button
             *ngIf="displayShareServiceType('Facebook')"
@@ -174,105 +162,105 @@
             pinterest
           </button>
         </div> -->
-      </div>
-    }
+			</div>
+		}
 
-    <!-- Embed Tab -->
-    @if (currentTabId === 'embed') {
-      <div
-        class="u-padding-yaxis2x u-responsivepadding-xaxis"
-        tabindex="-1"
-        id="sharelinkembed"
-        >
-        @if (options.embedOptions.length > 1) {
-          <div class="l-flex l-flex-1x u-margin-bottom3x">
-            @for (embedOption of options.embedOptions; track embedOption; let i = $index) {
-              <label class="radio" [attr.for]="'embed-type-' + i">
-                <input
-                  type="radio"
-                  [name]="'embed-type-' + i"
-                  [id]="'embed-type-' + i"
-                  [value]="embedOption"
-                  [(ngModel)]="selectedEmbedOption"
-                  (ngModelChange)="updateEmbedHtml()"
-                  />
-                <span class="radio-x-text">{{ embedOption.label }}</span>
-              </label>
-            }
-          </div>
-        }
-        @if (options?.showRecipientOptions) {
-          <p class="u-text-bold u-margin-bottom2x">Enthaltene Badge Optionen</p>
-          <label class="checkbox checkbox-light u-margin-bottom2x">
-            <input
-              [(ngModel)]="includeRecipientIdentifier"
-              (ngModelChange)="updateEmbedHtml()"
-              type="checkbox"
-              checked
-              />
-            <span class="checkbox-x-text">
-              <strong>Empfänger E-Mail:</strong> <br />
-              {{ options.recipientIdentifier }}
-            </span>
-          </label>
-          @if (selectedEmbedOption && selectedEmbedOption?.embedType == 'image') {
-            <label
-              class="checkbox u-margin-bottom2x"
-              >
-              <input
-                [(ngModel)]="includeBadgeClassName"
-                (ngModelChange)="updateEmbedHtml()"
-                type="checkbox"
-                checked
-                />
-              <span class="checkbox-x-text"> Badge Name </span>
-            </label>
-          }
-          @if (selectedEmbedOption && selectedEmbedOption?.embedType == 'image') {
-            <label
-              class="checkbox u-margin-bottom2x"
-              >
-              <input [(ngModel)]="includeAwardDate" (change)="updateEmbedHtml()" type="checkbox" checked />
-              <span class="checkbox-x-text"> Datum der Vergabe </span>
-            </label>
-          }
-          @if (selectedEmbedOption && selectedEmbedOption?.embedType == 'image') {
-            <label
-              class="checkbox u-margin-bottom2x"
-              >
-              <input [(ngModel)]="includeVerifyButton" (change)="updateEmbedHtml()" type="checkbox" checked />
-              <span class="checkbox-x-text"> Verifizierung </span>
-            </label>
-          }
-        }
-        <p class="u-text-small-bold u-margin-bottom0p5x u-margin-top2x">Vorschau</p>
-        <iframe src="about:blank" class="previewIframe" style="width: 100%"></iframe>
-        <div class="forminput forminput-code u-margin-top3x u-margin-bottom2x">
-          <label class="forminput-x-label" for="emebed-code-box">Eingebetteter Code</label>
-          <div class="forminput-x-inputs">
-            <textarea
-              id="emebed-code-box"
-              name="emebed-code-box"
-              readonly
-              [value]="currentEmbedHtml"
-              (click)="embedHtmlInput.select()"
-              #embedHtmlInput
-              >
+		<!-- Embed Tab -->
+		@if (currentTabId === 'embed') {
+			<div class="u-padding-yaxis2x u-responsivepadding-xaxis" tabindex="-1" id="sharelinkembed">
+				@if (options.embedOptions.length > 1) {
+					<div class="l-flex l-flex-1x u-margin-bottom3x">
+						@for (embedOption of options.embedOptions; track embedOption; let i = $index) {
+							<label class="radio" [attr.for]="'embed-type-' + i">
+								<input
+									type="radio"
+									[name]="'embed-type-' + i"
+									[id]="'embed-type-' + i"
+									[value]="embedOption"
+									[(ngModel)]="selectedEmbedOption"
+									(ngModelChange)="updateEmbedHtml()"
+								/>
+								<span class="radio-x-text">{{ embedOption.label }}</span>
+							</label>
+						}
+					</div>
+				}
+				@if (options?.showRecipientOptions) {
+					<p class="u-text-bold u-margin-bottom2x">Enthaltene Badge Optionen</p>
+					<label class="checkbox checkbox-light u-margin-bottom2x">
+						<input
+							[(ngModel)]="includeRecipientIdentifier"
+							(ngModelChange)="updateEmbedHtml()"
+							type="checkbox"
+							checked
+						/>
+						<span class="checkbox-x-text">
+							<strong>Empfänger E-Mail:</strong> <br />
+							{{ options.recipientIdentifier }}
+						</span>
+					</label>
+					@if (selectedEmbedOption && selectedEmbedOption?.embedType == 'image') {
+						<label class="checkbox u-margin-bottom2x">
+							<input
+								[(ngModel)]="includeBadgeClassName"
+								(ngModelChange)="updateEmbedHtml()"
+								type="checkbox"
+								checked
+							/>
+							<span class="checkbox-x-text"> Badge Name </span>
+						</label>
+					}
+					@if (selectedEmbedOption && selectedEmbedOption?.embedType == 'image') {
+						<label class="checkbox u-margin-bottom2x">
+							<input
+								[(ngModel)]="includeAwardDate"
+								(change)="updateEmbedHtml()"
+								type="checkbox"
+								checked
+							/>
+							<span class="checkbox-x-text"> Datum der Vergabe </span>
+						</label>
+					}
+					@if (selectedEmbedOption && selectedEmbedOption?.embedType == 'image') {
+						<label class="checkbox u-margin-bottom2x">
+							<input
+								[(ngModel)]="includeVerifyButton"
+								(change)="updateEmbedHtml()"
+								type="checkbox"
+								checked
+							/>
+							<span class="checkbox-x-text"> Verifizierung </span>
+						</label>
+					}
+				}
+				<p class="u-text-small-bold u-margin-bottom0p5x u-margin-top2x">Vorschau</p>
+				<iframe src="about:blank" class="previewIframe" style="width: 100%"></iframe>
+				<div class="forminput forminput-code u-margin-top3x u-margin-bottom2x">
+					<label class="forminput-x-label" for="emebed-code-box">Eingebetteter Code</label>
+					<div class="forminput-x-inputs">
+						<textarea
+							id="emebed-code-box"
+							name="emebed-code-box"
+							readonly
+							[value]="currentEmbedHtml"
+							(click)="embedHtmlInput.select()"
+							#embedHtmlInput
+						>
               The embed code goes here and changes dynamically as the checks and radios are pressed above.</textarea
-              >
-            </div>
-          </div>
-          <div class="l-stack l-stack-right">
-            <button
-              type="button"
-              [hidden]="!copySupported"
-              (click)="copyToClipboard(embedHtmlInput)"
-              class="button button-secondary"
-              >
-              Copy
-            </button>
-          </div>
-        </div>
-      }
-    </div>
-  </dialog>
+						>
+					</div>
+				</div>
+				<div class="l-stack l-stack-right">
+					<button
+						type="button"
+						[hidden]="!copySupported"
+						(click)="copyToClipboard(embedHtmlInput)"
+						class="button button-secondary"
+					>
+						Copy
+					</button>
+				</div>
+			</div>
+		}
+	</div>
+</dialog>

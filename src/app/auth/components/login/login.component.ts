@@ -42,17 +42,17 @@ type RedirectHttpResponse = HttpResponse<RedirectResponse>;
 	templateUrl: './login.component.html',
 	styleUrls: ['./login.component.scss'],
 	imports: [
-    HlmH1Directive,
-    HlmPDirective,
-    HlmADirective,
-    RouterLink,
-    FormsModule,
-    OebInputComponent,
-    OebCheckboxComponent,
-    OebButtonComponent,
-    FormMessageComponent,
-    TranslatePipe
-],
+		HlmH1Directive,
+		HlmPDirective,
+		HlmADirective,
+		RouterLink,
+		FormsModule,
+		OebInputComponent,
+		OebCheckboxComponent,
+		OebButtonComponent,
+		FormMessageComponent,
+		TranslatePipe,
+	],
 })
 export class LoginComponent extends BaseRoutableComponent implements OnInit, AfterViewInit {
 	get theme() {

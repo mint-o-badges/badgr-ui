@@ -21,28 +21,25 @@ import { TranslateService } from '@ngx-translate/core';
 		},
 	],
 	template: `<label
-		  [ngClass]="alignStart ? 'tw-items-start' : 'tw-items-center'"
-		  class="tw-flex tw-mt-[0.25rem]"
-		  hlmP
-		  >
-		  <hlm-checkbox
-		    [name]="name"
-		    [checked]="checked"
-		    (changed)="onChange($event)"
-		    [formControl]="control"
-		    [class.tw-mr-2]="!noMargin"
-		    [disabled]="disabled"
-		    />
-		  <div class="tw-flex tw-flex-col">
-		    <span class="tw-pl-[3px]" [innerHTML]="text"></span>
-		    @if (isErrorState) {
-		      <oeb-input-error
-		        class="tw-text-red tw-pl-[3px]"
-		        [error]="errorMessageForDisplay"
-		      ></oeb-input-error>
-		    }
-		  </div>
-		</label>`,
+		[ngClass]="alignStart ? 'tw-items-start' : 'tw-items-center'"
+		class="tw-flex tw-mt-[0.25rem]"
+		hlmP
+	>
+		<hlm-checkbox
+			[name]="name"
+			[checked]="checked"
+			(changed)="onChange($event)"
+			[formControl]="control"
+			[class.tw-mr-2]="!noMargin"
+			[disabled]="disabled"
+		/>
+		<div class="tw-flex tw-flex-col">
+			<span class="tw-pl-[3px]" [innerHTML]="text"></span>
+			@if (isErrorState) {
+				<oeb-input-error class="tw-text-red tw-pl-[3px]" [error]="errorMessageForDisplay"></oeb-input-error>
+			}
+		</div>
+	</label>`,
 	host: {
 		'[class]': '_computedClass()',
 	},

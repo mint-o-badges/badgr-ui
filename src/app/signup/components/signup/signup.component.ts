@@ -28,18 +28,18 @@ import { OebButtonComponent } from '../../../components/oeb-button.component';
 	selector: 'sign-up',
 	templateUrl: './signup.component.html',
 	imports: [
-    FormMessageComponent,
-    OAuthBannerComponent,
-    HlmPDirective,
-    RouterLink,
-    FormsModule,
-    ReactiveFormsModule,
-    OebInputComponent,
-    OebCheckboxComponent,
-    AltchaComponent,
-    OebButtonComponent,
-    TranslatePipe
-],
+		FormMessageComponent,
+		OAuthBannerComponent,
+		HlmPDirective,
+		RouterLink,
+		FormsModule,
+		ReactiveFormsModule,
+		OebInputComponent,
+		OebCheckboxComponent,
+		AltchaComponent,
+		OebButtonComponent,
+		TranslatePipe,
+	],
 })
 export class SignupComponent extends BaseRoutableComponent implements OnInit, AfterViewInit {
 	// Translations

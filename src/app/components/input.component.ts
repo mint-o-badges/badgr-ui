@@ -12,79 +12,79 @@ import { TypedFormGroup } from '../common/util/typed-forms';
 	imports: [HlmInputDirective, HlmPDirective, OebInputErrorComponent, NgClass, ReactiveFormsModule],
 	styleUrls: ['./input.component.scss'],
 	template: ` <div
-		  [ngClass]="{ 'tw-my-6 md:tw-mt-7': !noTopMargin, 'tw-opacity-50 tw-pointer-events-none': readonly }"
-		  >
-		  <div class="tw-flex tw-justify-between">
-		    @if (label) {
-		      <label class="tw-pb-[2px] tw-pl-[3px]">
-		        @if (labelStyle) {
-		          <span [class]="labelStyle" [innerHTML]="label"></span>
-		        } @else {
-		          <span hlmP class="tw-text-oebblack tw-font-semibold" [innerHTML]="label"></span>
-		        }
-		        @if (sublabelRight) {
-		          <span class="tw-pl-[3px] tw-text-oebblack"> {{ sublabelRight }}</span>
-		        }
-		      </label>
-		    }
-		    <ng-content
-		      class="tw-relative tw-z-20 tw-font-semibold tw-text-[14px] md:tw-text-[20px] tw-leading-4 md:tw-leading-6"
-		      select="[label-additions]"
-		    ></ng-content>
-		  </div>
-		  @if (sublabel) {
-		    <p class="tw-pl-[3px]">
-		      {{ sublabel }}
-		    </p>
-		  }
-		  @if (ariaLabel) {
-		    <label class="visuallyhidden" [attr.for]="inputName">{{ ariaLabel }}</label>
-		  }
-		
-		  <div class="tw-relative tw-w-full">
-		    @if (fieldType != 'textarea') {
-		      <input
-		        (focus)="cacheControlState()"
-		        (keypress)="handleKeyPress($event)"
-		        (keyup)="handleKeyUp($event)"
-		        (change)="postProcessInput()"
-		        [formControl]="control"
-		        [placeholder]="placeholder || ''"
-		        [attr.maxlength]="maxchar"
-		        [attr.max]="max"
-		        [type]="fieldType"
-		        [readonly]="readonly"
-		        #textInput
-		        class="tw-w-full tw-border-solid tw-border-purple tw-bg-white"
-		        hlmInput
-		        />
-		    }
-		    @if (fieldType === 'textarea') {
-		      <textarea
-		        (focus)="cacheControlState()"
-		        (keypress)="handleKeyPress($event)"
-		        (keyup)="handleKeyUp($event)"
-		        (change)="postProcessInput()"
-		        [formControl]="control"
-		        [placeholder]="placeholder || ''"
-		        [attr.maxlength]="maxchar"
-		        [attr.max]="max"
-		        [readonly]="readonly"
-		        [size]="size"
-		        #textInput
-		        class="tw-w-full tw-border-solid tw-border-purple tw-bg-white"
-		        [ngClass]="{ 'tw-min-h-20': size === 'default', 'tw-min-h-32': size === 'lg' }"
-		        hlmInput
-		      ></textarea>
-		    }
-		    @if (isErrorState) {
-		      <oeb-input-error
-		        class="tw-text-red tw-pl-[3px] tw-absolute tw-top-full tw-w-full"
-		        [error]="errorMessageForDisplay"
-		      ></oeb-input-error>
-		    }
-		  </div>
-		</div>`,
+		[ngClass]="{ 'tw-my-6 md:tw-mt-7': !noTopMargin, 'tw-opacity-50 tw-pointer-events-none': readonly }"
+	>
+		<div class="tw-flex tw-justify-between">
+			@if (label) {
+				<label class="tw-pb-[2px] tw-pl-[3px]">
+					@if (labelStyle) {
+						<span [class]="labelStyle" [innerHTML]="label"></span>
+					} @else {
+						<span hlmP class="tw-text-oebblack tw-font-semibold" [innerHTML]="label"></span>
+					}
+					@if (sublabelRight) {
+						<span class="tw-pl-[3px] tw-text-oebblack"> {{ sublabelRight }}</span>
+					}
+				</label>
+			}
+			<ng-content
+				class="tw-relative tw-z-20 tw-font-semibold tw-text-[14px] md:tw-text-[20px] tw-leading-4 md:tw-leading-6"
+				select="[label-additions]"
+			></ng-content>
+		</div>
+		@if (sublabel) {
+			<p class="tw-pl-[3px]">
+				{{ sublabel }}
+			</p>
+		}
+		@if (ariaLabel) {
+			<label class="visuallyhidden" [attr.for]="inputName">{{ ariaLabel }}</label>
+		}
+
+		<div class="tw-relative tw-w-full">
+			@if (fieldType != 'textarea') {
+				<input
+					(focus)="cacheControlState()"
+					(keypress)="handleKeyPress($event)"
+					(keyup)="handleKeyUp($event)"
+					(change)="postProcessInput()"
+					[formControl]="control"
+					[placeholder]="placeholder || ''"
+					[attr.maxlength]="maxchar"
+					[attr.max]="max"
+					[type]="fieldType"
+					[readonly]="readonly"
+					#textInput
+					class="tw-w-full tw-border-solid tw-border-purple tw-bg-white"
+					hlmInput
+				/>
+			}
+			@if (fieldType === 'textarea') {
+				<textarea
+					(focus)="cacheControlState()"
+					(keypress)="handleKeyPress($event)"
+					(keyup)="handleKeyUp($event)"
+					(change)="postProcessInput()"
+					[formControl]="control"
+					[placeholder]="placeholder || ''"
+					[attr.maxlength]="maxchar"
+					[attr.max]="max"
+					[readonly]="readonly"
+					[size]="size"
+					#textInput
+					class="tw-w-full tw-border-solid tw-border-purple tw-bg-white"
+					[ngClass]="{ 'tw-min-h-20': size === 'default', 'tw-min-h-32': size === 'lg' }"
+					hlmInput
+				></textarea>
+			}
+			@if (isErrorState) {
+				<oeb-input-error
+					class="tw-text-red tw-pl-[3px] tw-absolute tw-top-full tw-w-full"
+					[error]="errorMessageForDisplay"
+				></oeb-input-error>
+			}
+		</div>
+	</div>`,
 })
 export class OebInputComponent {
 	@Input() error: string;

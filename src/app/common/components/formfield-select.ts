@@ -5,7 +5,6 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angul
 import { CommonDialogsService } from '../services/common-dialogs.service';
 import { CustomValidatorMessages, messagesForValidationError } from './formfield-text';
 
-
 @Component({
 	selector: 'bg-formfield-select',
 	host: {
@@ -15,48 +14,48 @@ import { CustomValidatorMessages, messagesForValidationError } from './formfield
 	},
 	template: `
 		@if (label || includeLabelAsWrapper) {
-		  <label class="forminput-x-label" [attr.for]="inputName">
-		    {{ label }}
-		    @if (formFieldAside) {
-		      <span>{{ formFieldAside }}</span>
-		    }
-		    @if (isLockedState) {
-		      <button type="button" (click)="unlock()">(unlock)</button>
-		    }
-		    <ng-content select="[label-additions]"></ng-content>
-		  </label>
+			<label class="forminput-x-label" [attr.for]="inputName">
+				{{ label }}
+				@if (formFieldAside) {
+					<span>{{ formFieldAside }}</span>
+				}
+				@if (isLockedState) {
+					<button type="button" (click)="unlock()">(unlock)</button>
+				}
+				<ng-content select="[label-additions]"></ng-content>
+			</label>
 		}
-		
+
 		@if (ariaLabel) {
-		  <label class="visuallyhidden" [attr.for]="inputName">{{ ariaLabel }}</label>
+			<label class="visuallyhidden" [attr.for]="inputName">{{ ariaLabel }}</label>
 		}
-		
+
 		@if (description) {
-		  <div class="forminput-x-sublabel">{{ description }}</div>
+			<div class="forminput-x-sublabel">{{ description }}</div>
 		}
 		<div class="forminput-x-inputs">
-		  <select
-		    [name]="inputName"
-		    [id]="inputName"
-		    [attr.disabled]="disabled ? '' : null"
-		    [formControl]="control"
-		    (focus)="cacheControlState()"
-		    (keypress)="handleKeyPress($event)"
-		    #selectInput
-		    >
-		    @if (placeholder) {
-		      <option selected value="">{{ placeholder }}</option>
-		    }
-		    @for (option of options; track option) {
-		      <option [value]="option.value">{{ option.label }}</option>
-		    }
-		  </select>
+			<select
+				[name]="inputName"
+				[id]="inputName"
+				[attr.disabled]="disabled ? '' : null"
+				[formControl]="control"
+				(focus)="cacheControlState()"
+				(keypress)="handleKeyPress($event)"
+				#selectInput
+			>
+				@if (placeholder) {
+					<option selected value="">{{ placeholder }}</option>
+				}
+				@for (option of options; track option) {
+					<option [value]="option.value">{{ option.label }}</option>
+				}
+			</select>
 		</div>
-		
+
 		@if (isErrorState) {
-		  <p class="forminput-x-error">{{ errorMessageForDisplay }}</p>
+			<p class="forminput-x-error">{{ errorMessageForDisplay }}</p>
 		}
-		`,
+	`,
 	imports: [FormsModule, ReactiveFormsModule],
 })
 export class FormFieldSelect implements OnChanges, AfterViewInit {

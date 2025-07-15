@@ -23,14 +23,14 @@ import { TranslatePipe } from '@ngx-translate/core';
 @Component({
 	templateUrl: 'badge-collection.component.html',
 	imports: [
-    BgAwaitPromises,
-    BgImageStatusPlaceholderDirective,
-    HlmH1Directive,
-    BgBadgecard,
-    PublicNotFoundBadgeCollectionComponent,
-    SlicePipe,
-    TranslatePipe
-],
+		BgAwaitPromises,
+		BgImageStatusPlaceholderDirective,
+		HlmH1Directive,
+		BgBadgecard,
+		PublicNotFoundBadgeCollectionComponent,
+		SlicePipe,
+		TranslatePipe,
+	],
 })
 export class PublicBadgeCollectionComponent {
 	readonly issuerImagePlacholderUrl = preloadImageURL(

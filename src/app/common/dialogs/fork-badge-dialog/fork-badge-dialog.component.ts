@@ -27,13 +27,7 @@ import { RouterLink } from '@angular/router';
 	selector: 'fork-badge-dialog',
 	templateUrl: 'fork-badge-dialog.component.html',
 	styleUrls: ['./fork-badge-dialog.component.css'],
-	imports: [
-    SvgIconComponent,
-    FormsModule,
-    BgAwaitPromises,
-    BgImageStatusPlaceholderDirective,
-    RouterLink
-],
+	imports: [SvgIconComponent, FormsModule, BgAwaitPromises, BgImageStatusPlaceholderDirective, RouterLink],
 })
 export class ForkBadgeDialog extends BaseDialog {
 	Array = Array;

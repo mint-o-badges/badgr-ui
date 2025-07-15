@@ -34,19 +34,19 @@ import { PaginationAdvancedComponent } from '../../../components/oeb-numbered-pa
 	styleUrls: ['../badge-catalog/badge-catalog.component.css'],
 	animations: [appearAnimation],
 	imports: [
-    FormMessageComponent,
-    BgAwaitPromises,
-    HlmH1Directive,
-    CountUpModule,
-    FormsModule,
-    HlmInputDirective,
-    NgIcon,
-    HlmIconDirective,
-    OebGlobalSortSelectComponent,
-    BgLearningPathCard,
-    PaginationAdvancedComponent,
-    TranslatePipe
-],
+		FormMessageComponent,
+		BgAwaitPromises,
+		HlmH1Directive,
+		CountUpModule,
+		FormsModule,
+		HlmInputDirective,
+		NgIcon,
+		HlmIconDirective,
+		OebGlobalSortSelectComponent,
+		BgLearningPathCard,
+		PaginationAdvancedComponent,
+		TranslatePipe,
+	],
 })
 export class LearningPathsCatalogComponent extends BaseRoutableComponent implements OnInit {
 	learningPathsLoaded: Promise<unknown>;

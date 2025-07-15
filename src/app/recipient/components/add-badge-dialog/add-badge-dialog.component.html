@@ -1,105 +1,109 @@
 <ng-template #dialogHeader>
-  <h2 id="addBadgeDialog" class="tw-text-[22px] tw-text-purple tw-uppercase tw-font-bold tw-mb-6">
-    {{ 'RecBadge.addBadge' | translate }}
-  </h2>
+	<h2 id="addBadgeDialog" class="tw-text-[22px] tw-text-purple tw-uppercase tw-font-bold tw-mb-6">
+		{{ 'RecBadge.addBadge' | translate }}
+	</h2>
 </ng-template>
 
 <ng-template #failureHeader>
-  <div class="tw-items-center tw-w-full tw-justify-center tw-flex">
-    <ng-icon
-      (click)="this.closeDialog()"
-      hlm
-      name="lucideCircleX"
-      class="!tw-h-28 !tw-w-28 tw-text-purple"
-    ></ng-icon>
-  </div>
+	<div class="tw-items-center tw-w-full tw-justify-center tw-flex">
+		<ng-icon
+			(click)="this.closeDialog()"
+			hlm
+			name="lucideCircleX"
+			class="!tw-h-28 !tw-w-28 tw-text-purple"
+		></ng-icon>
+	</div>
 </ng-template>
 
 <ng-template #failureContent let-message="message" let-text="text" let-buttontext="buttontext">
-  <div class="tw-px-4">
-    <p class="tw-text-lg tw-text-oebblack tw-text-center tw-font-bold tw-mt-2 tw-leading-[130%]">
-      {{ message }}
-    </p>
-    <p [innerHTML]="text" class="tw-mt-2 tw-text-purple tw-italic tw-text-center"></p>
-  </div>
-  @if (buttontext) {
-    <div class="tw-flex tw-justify-center tw-items-center tw-mt-2 tw-gap-2">
-      <oeb-button size="sm" (click)="closeDialog()" [text]="'General.cancel' | translate" variant="secondary">
-      </oeb-button>
-      <oeb-button (click)="routeToUserProfile()" size="sm" [text]="'General.toMyProfile' | translate"></oeb-button>
-    </div>
-  }
+	<div class="tw-px-4">
+		<p class="tw-text-lg tw-text-oebblack tw-text-center tw-font-bold tw-mt-2 tw-leading-[130%]">
+			{{ message }}
+		</p>
+		<p [innerHTML]="text" class="tw-mt-2 tw-text-purple tw-italic tw-text-center"></p>
+	</div>
+	@if (buttontext) {
+		<div class="tw-flex tw-justify-center tw-items-center tw-mt-2 tw-gap-2">
+			<oeb-button size="sm" (click)="closeDialog()" [text]="'General.cancel' | translate" variant="secondary">
+			</oeb-button>
+			<oeb-button
+				(click)="routeToUserProfile()"
+				size="sm"
+				[text]="'General.toMyProfile' | translate"
+			></oeb-button>
+		</div>
+	}
 </ng-template>
 
 <!-- Tab content templates -->
 <ng-template #uploadTabTemplate>
-  <app-upload-tab
-    [form]="addRecipientBadgeForm"
-    [uploadBadgeImageUrl]="uploadBadgeImageUrl"
-    (controlUpdated)="controlUpdated($event)"
-  ></app-upload-tab>
+	<app-upload-tab
+		[form]="addRecipientBadgeForm"
+		[uploadBadgeImageUrl]="uploadBadgeImageUrl"
+		(controlUpdated)="controlUpdated($event)"
+	></app-upload-tab>
 </ng-template>
 
 <ng-template #urlTabTemplate>
-  <app-url-tab [form]="addRecipientBadgeForm" (controlUpdated)="controlUpdated($event)"></app-url-tab>
+	<app-url-tab [form]="addRecipientBadgeForm" (controlUpdated)="controlUpdated($event)"></app-url-tab>
 </ng-template>
 
 <ng-template #jsonTabTemplate>
-  <app-json-tab [form]="addRecipientBadgeForm" (controlUpdated)="controlUpdated($event)"></app-json-tab>
+	<app-json-tab [form]="addRecipientBadgeForm" (controlUpdated)="controlUpdated($event)"></app-json-tab>
 </ng-template>
 
 <!-- Dialog content template -->
 <ng-template #dialogContent>
-  <form [formGroup]="addRecipientBadgeForm.rawControl" (ngSubmit)="submitBadgeRecipientForm()">
-    <p class="tw-text-oebblack tw-font-bold tw-text-[18px] tw-mb-2">
-      {{ 'RecBadge.addRecievedBadge' | translate }}
-    </p>
+	<form [formGroup]="addRecipientBadgeForm.rawControl" (ngSubmit)="submitBadgeRecipientForm()">
+		<p class="tw-text-oebblack tw-font-bold tw-text-[18px] tw-mb-2">
+			{{ 'RecBadge.addRecievedBadge' | translate }}
+		</p>
 
-    <p
-      class="tw-mt-2 tw-mb-6 tw-text-purple tw-italic tw-text-sm"
-      [innerHTML]="'RecBadge.versionUploadInfo' | translate"
-    ></p>
+		<p
+			class="tw-mt-2 tw-mb-6 tw-text-purple tw-italic tw-text-sm"
+			[innerHTML]="'RecBadge.versionUploadInfo' | translate"
+		></p>
 
-    <oeb-backpack-tabs
-      [tabs]="tabs"
-      [activeTab]="currentTab"
-      (onTabChanged)="currentTab = $event"
-    ></oeb-backpack-tabs>
+		<oeb-backpack-tabs
+			[tabs]="tabs"
+			[activeTab]="currentTab"
+			(onTabChanged)="currentTab = $event"
+		></oeb-backpack-tabs>
 
-    @if (formError) {
-      <div class="u-padding-all3x">
-        <div class="notification notification-warning notification-is-active">
-          <div class="notification-x-icon">
-            <svg icon="icon_priority_high"></svg>
-          </div>
-          <div class="notification-x-text">
-            <h2>Uh Oh...</h2>
-            <p>{{ formError }}</p>
-          </div>
-          <button class="notification-x-close buttonicon buttonicon-clear" (click)="clearFormError()">
-            <svg icon="icon_close"></svg>
-            <span class="visuallyhidden">{{ 'RecBadge.closeNotification' | translate }}</span>
-          </button>
-        </div>
-      </div>
-    }
+		@if (formError) {
+			<div class="u-padding-all3x">
+				<div class="notification notification-warning notification-is-active">
+					<div class="notification-x-icon">
+						<svg icon="icon_priority_high"></svg>
+					</div>
+					<div class="notification-x-text">
+						<h2>Uh Oh...</h2>
+						<p>{{ formError }}</p>
+					</div>
+					<button class="notification-x-close buttonicon buttonicon-clear" (click)="clearFormError()">
+						<svg icon="icon_close"></svg>
+						<span class="visuallyhidden">{{ 'RecBadge.closeNotification' | translate }}</span>
+					</button>
+				</div>
+			</div>
+		}
 
-    <div class="tw-flex tw-flex-row tw-gap-4 tw-justify-start tw-mt-6">
-      <oeb-button
-        [text]="'General.cancel' | translate"
-        variant="secondary"
-        type="button"
-        size="sm"
-        (click)="this.closeDialog()"
-        />
-      <oeb-button
-        type="submit"
-        [loading-promises]="badgeUploadPromise"
-        [disabled-when-requesting]="true"
-        [loading-message]="'RecBadge.addingBadge' | translate"
-        [text]="'RecBadge.addBadge' | translate"
-        size="sm"
-        />
-    </div>
-  </form>
+		<div class="tw-flex tw-flex-row tw-gap-4 tw-justify-start tw-mt-6">
+			<oeb-button
+				[text]="'General.cancel' | translate"
+				variant="secondary"
+				type="button"
+				size="sm"
+				(click)="this.closeDialog()"
+			/>
+			<oeb-button
+				type="submit"
+				[loading-promises]="badgeUploadPromise"
+				[disabled-when-requesting]="true"
+				[loading-message]="'RecBadge.addingBadge' | translate"
+				[text]="'RecBadge.addBadge' | translate"
+				size="sm"
+			/>
+		</div>
+	</form>
 </ng-template>

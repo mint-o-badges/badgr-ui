@@ -22,14 +22,7 @@ import { FormFieldText } from '../../../common/components/formfield-text';
 	selector: 'issuer-staff-create-dialog',
 	templateUrl: './issuer-staff-create-dialog.component.html',
 	styleUrls: ['./issuer-staff-create-dialog.component.css'],
-	imports: [
-    SvgIconComponent,
-    FormsModule,
-    ReactiveFormsModule,
-    FormFieldRadio,
-    FormFieldText,
-    TranslatePipe
-],
+	imports: [SvgIconComponent, FormsModule, ReactiveFormsModule, FormFieldRadio, FormFieldText, TranslatePipe],
 })
 export class IssuerStaffCreateDialogComponent extends BaseDialog {
 	staffCreateForm = typedFormGroup()

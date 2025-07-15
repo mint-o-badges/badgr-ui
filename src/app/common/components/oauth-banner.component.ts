@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { MessageService } from '../services/message.service';
 import { OAuthManager } from '../services/oauth-manager.service';
 
-
 @Component({
 	selector: 'oauth-banner',
 	host: {
@@ -10,10 +9,10 @@ import { OAuthManager } from '../services/oauth-manager.service';
 	},
 	template: `
 		@if (isAuthorizing) {
-		  <div><img [src]="appInfo.image" alt="{{ appInfo.name }} Logo" height="72" /></div>
-		  <div><img [src]="authLinkBadgrLogoSrc" height="72" alt="Logo" /></div>
+			<div><img [src]="appInfo.image" alt="{{ appInfo.name }} Logo" height="72" /></div>
+			<div><img [src]="authLinkBadgrLogoSrc" height="72" alt="Logo" /></div>
 		}
-		`,
+	`,
 	imports: [],
 })
 export class OAuthBannerComponent {

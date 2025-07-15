@@ -28,14 +28,7 @@ import { OebCheckboxComponent } from '../../../components/oeb-checkbox.component
 @Component({
 	selector: 'badgeclass-issue-bulk-award-confirmation',
 	templateUrl: './badgeclass-issue-bulk-award-confirmation.component.html',
-	imports: [
-    HlmH1Directive,
-    HlmPDirective,
-    OebButtonComponent,
-    HlmH3Directive,
-    OebCheckboxComponent,
-    TranslatePipe
-],
+	imports: [HlmH1Directive, HlmPDirective, OebButtonComponent, HlmH3Directive, OebCheckboxComponent, TranslatePipe],
 })
 export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRoutableComponent implements OnDestroy {
 	@Input() transformedImportData: TransformedImportData;

@@ -29,16 +29,16 @@ import { OebButtonComponent } from '../../../components/oeb-button.component';
 	templateUrl: 'badgeclass-edit-copypermissions.component.html',
 	styleUrl: './badgeclass-edit-copypermissions.component.css',
 	imports: [
-    BgBreadcrumbsComponent,
-    HlmH1Directive,
-    BgAwaitPromises,
-    FormsModule,
-    ReactiveFormsModule,
-    HlmH2Directive,
-    OebCheckboxComponent,
-    OebButtonComponent,
-    TranslatePipe
-],
+		BgBreadcrumbsComponent,
+		HlmH1Directive,
+		BgAwaitPromises,
+		FormsModule,
+		ReactiveFormsModule,
+		HlmH2Directive,
+		OebCheckboxComponent,
+		OebButtonComponent,
+		TranslatePipe,
+	],
 })
 export class BadgeClassEditCopyPermissionsComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	issuerSlug: string;

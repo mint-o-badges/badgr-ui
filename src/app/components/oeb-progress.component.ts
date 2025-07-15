@@ -5,20 +5,15 @@ import { NgTemplateOutlet } from '@angular/common';
 
 @Component({
 	selector: 'oeb-progress',
-	imports: [
-    BrnProgressComponent,
-    BrnProgressIndicatorComponent,
-    HlmProgressIndicatorDirective,
-    NgTemplateOutlet
-],
+	imports: [BrnProgressComponent, BrnProgressIndicatorComponent, HlmProgressIndicatorDirective, NgTemplateOutlet],
 	template: `
 		<brn-progress [class]="class" hlm aria-labelledby="loading" [value]="progressValue">
-		<brn-progress-indicator hlm />
-		@if (template) {
-		  <ng-container *ngTemplateOutlet="template"></ng-container>
-		}
+			<brn-progress-indicator hlm />
+			@if (template) {
+				<ng-container *ngTemplateOutlet="template"></ng-container>
+			}
 		</brn-progress>
-		`,
+	`,
 })
 export class OebProgressComponent {
 	@Input() value: number;

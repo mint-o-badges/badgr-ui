@@ -7,32 +7,25 @@ import {
 	HlmDialogHeaderComponent,
 } from './spartan/ui-dialog-helm/src';
 
-
-
 @Component({
 	selector: 'oeb-dialog',
-	imports: [
-    HlmDialogHeaderComponent,
-    HlmDialogFooterComponent,
-    HlmDialogDescriptionDirective,
-    HlmButtonDirective
-],
+	imports: [HlmDialogHeaderComponent, HlmDialogFooterComponent, HlmDialogDescriptionDirective, HlmButtonDirective],
 	template: `
 		<div class="tw-px-4 tw-py-6">
-		  @if (title) {
-		    <hlm-dialog-header>
-		      <h3 hlmH3>{{ title }}</h3>
-		      <p hlmP hlmDialogDescription>{{ subtitle }}</p>
-		    </hlm-dialog-header>
-		  }
-		  <ng-content></ng-content>
-		  @if (footer) {
-		    <hlm-dialog-footer>
-		      <button hlmBtn type="submit">Save changes</button>
-		    </hlm-dialog-footer>
-		  }
+			@if (title) {
+				<hlm-dialog-header>
+					<h3 hlmH3>{{ title }}</h3>
+					<p hlmP hlmDialogDescription>{{ subtitle }}</p>
+				</hlm-dialog-header>
+			}
+			<ng-content></ng-content>
+			@if (footer) {
+				<hlm-dialog-footer>
+					<button hlmBtn type="submit">Save changes</button>
+				</hlm-dialog-footer>
+			}
 		</div>
-		`,
+	`,
 })
 export class OebDialogComponent {
 	@Input() title: string;

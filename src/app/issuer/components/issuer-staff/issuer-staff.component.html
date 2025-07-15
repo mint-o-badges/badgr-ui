@@ -1,248 +1,244 @@
 <div *bgAwaitPromises="[issuerLoaded, profileEmailsLoaded]">
-  <form-message></form-message>
-  <div class="oeb page-padding">
-    <div class="oeb-breadcrumbs">
-      <bg-breadcrumbs [linkentries]="breadcrumbLinkEntries"> </bg-breadcrumbs>
-    </div>
-    <div class="tw-flex tw-items-center tw-justify-between">
-      <div class="tw-gap-4 tw-flex tw-items-center">
-        @if (issuer.image) {
-          <img
-            class="md:tw-w-[93px] tw-w-[70px] tw-min-w-[70px]"
-            [src]="issuer.image"
-            alt="{{ issuer.name }} logo "
-            />
-        }
-        @if (!issuer.image) {
-          <img
-            class="topbar-x-image"
-            [src]="issuerImagePlaceHolderUrl"
-            alt="Default issuer image"
-            />
-        }
-        <h1 hlmH1 class="tw-font-extrabold tw-text-purple">
-          {{ (isCurrentUserIssuerOwner ? 'Issuer.editMembers' : 'General.members') | translate }}
-        </h1>
-      </div>
-      <oeb-button
-        [text]="'Issuer.addMember' | translate"
-        size="mediumText"
-        (click)="openDialog(this.translate.instant('Issuer.addMember'))"
-      ></oeb-button>
-      <ng-template #headerTemplate>
-        <h1 class="tw-font-bold tw-text-oebblack tw-text-2xl tw-mb-4">{{ 'Issuer.addMember' | translate }}</h1>
-        <span
-          class="tw-text-purple tw-italic tw-text-lg tw-leading-[130%]"
-          [innerHTML]="'Issuer.addMember_text' | translate"
-          >
-        </span>
-      </ng-template>
-      <ng-template #headerConfirmStaffTemplate let-email="email">
-        <h1 class="tw-font-bold tw-text-oebblack tw-text-2xl">
-          {{ 'Issuer.confirmStaffRequest' | translate }}
-        </h1>
-        <p class="tw-text-oebblack tw-text-lg tw-mt-2 tw-mb-4 tw-leading-[130%]">
-          <span [innerHTML]="'Issuer.confirmStaffRequestText1' | translate"></span>
-          <span class="tw-font-bold">{{ email }}</span>
-          <span [innerHTML]="'Issuer.confirmStaffRequestText2' | translate"></span>
-        </p>
-      </ng-template>
-      <ng-template #addMemberFormTemplate>
-        <form [formGroup]="staffCreateForm.rawControl" (ngSubmit)="submitStaffCreate()">
-          <oeb-input
-            [control]="staffCreateForm.rawControlMap.staffEmail"
-            labelStyle="tw-text-oebblack tw-text-lg tw-font-bold"
-            label="{{ 'Issuer.addMember_newEmail' | translate }}"
-            error="{{ 'Issuer.addMember_newEmail' | translate }}"
-            >
-          </oeb-input>
-          <span class="tw-mt-6 tw-text-oebblack tw-text-lg tw-font-bold">{{
-            'Issuer.addMember_chooseRole' | translate
-          }}</span>
-          @for (role of issuerStaffRoleOptions; track role; let last = $last) {
-            <bg-formfield-radio
-              [control]="staffCreateForm.rawControlMap.staffRole"
-              [name]="'staffRole'"
-              label="{{ role.label | translate }}"
-              [value]="role.value"
-              [sublabel]="role.description | translate"
-              [last]="last"
-              errorMessage="{{ 'Issuer.addMember_selectRole' | translate }}"
-            ></bg-formfield-radio>
-          }
-          <br />
+	<form-message></form-message>
+	<div class="oeb page-padding">
+		<div class="oeb-breadcrumbs">
+			<bg-breadcrumbs [linkentries]="breadcrumbLinkEntries"> </bg-breadcrumbs>
+		</div>
+		<div class="tw-flex tw-items-center tw-justify-between">
+			<div class="tw-gap-4 tw-flex tw-items-center">
+				@if (issuer.image) {
+					<img
+						class="md:tw-w-[93px] tw-w-[70px] tw-min-w-[70px]"
+						[src]="issuer.image"
+						alt="{{ issuer.name }} logo "
+					/>
+				}
+				@if (!issuer.image) {
+					<img class="topbar-x-image" [src]="issuerImagePlaceHolderUrl" alt="Default issuer image" />
+				}
+				<h1 hlmH1 class="tw-font-extrabold tw-text-purple">
+					{{ (isCurrentUserIssuerOwner ? 'Issuer.editMembers' : 'General.members') | translate }}
+				</h1>
+			</div>
+			<oeb-button
+				[text]="'Issuer.addMember' | translate"
+				size="mediumText"
+				(click)="openDialog(this.translate.instant('Issuer.addMember'))"
+			></oeb-button>
+			<ng-template #headerTemplate>
+				<h1 class="tw-font-bold tw-text-oebblack tw-text-2xl tw-mb-4">{{ 'Issuer.addMember' | translate }}</h1>
+				<span
+					class="tw-text-purple tw-italic tw-text-lg tw-leading-[130%]"
+					[innerHTML]="'Issuer.addMember_text' | translate"
+				>
+				</span>
+			</ng-template>
+			<ng-template #headerConfirmStaffTemplate let-email="email">
+				<h1 class="tw-font-bold tw-text-oebblack tw-text-2xl">
+					{{ 'Issuer.confirmStaffRequest' | translate }}
+				</h1>
+				<p class="tw-text-oebblack tw-text-lg tw-mt-2 tw-mb-4 tw-leading-[130%]">
+					<span [innerHTML]="'Issuer.confirmStaffRequestText1' | translate"></span>
+					<span class="tw-font-bold">{{ email }}</span>
+					<span [innerHTML]="'Issuer.confirmStaffRequestText2' | translate"></span>
+				</p>
+			</ng-template>
+			<ng-template #addMemberFormTemplate>
+				<form [formGroup]="staffCreateForm.rawControl" (ngSubmit)="submitStaffCreate()">
+					<oeb-input
+						[control]="staffCreateForm.rawControlMap.staffEmail"
+						labelStyle="tw-text-oebblack tw-text-lg tw-font-bold"
+						label="{{ 'Issuer.addMember_newEmail' | translate }}"
+						error="{{ 'Issuer.addMember_newEmail' | translate }}"
+					>
+					</oeb-input>
+					<span class="tw-mt-6 tw-text-oebblack tw-text-lg tw-font-bold">{{
+						'Issuer.addMember_chooseRole' | translate
+					}}</span>
+					@for (role of issuerStaffRoleOptions; track role; let last = $last) {
+						<bg-formfield-radio
+							[control]="staffCreateForm.rawControlMap.staffRole"
+							[name]="'staffRole'"
+							label="{{ role.label | translate }}"
+							[value]="role.value"
+							[sublabel]="role.description | translate"
+							[last]="last"
+							errorMessage="{{ 'Issuer.addMember_selectRole' | translate }}"
+						></bg-formfield-radio>
+					}
+					<br />
 
-          @if (error) {
-            <div class="notification notification-warning notification-is-active">
-              <div class="notification-x-icon">
-                <svg>
-                  <use xlink:href="/images/icons.svg#icon_priority_high"></use>
-                </svg>
-              </div>
-              <div class="notification-x-text">
-                <h2>{{ 'Issuer.addMember_failed' | translate }}!</h2>
-                <p>{{ error }}</p>
-              </div>
-            </div>
-          }
+					@if (error) {
+						<div class="notification notification-warning notification-is-active">
+							<div class="notification-x-icon">
+								<svg>
+									<use xlink:href="/images/icons.svg#icon_priority_high"></use>
+								</svg>
+							</div>
+							<div class="notification-x-text">
+								<h2>{{ 'Issuer.addMember_failed' | translate }}!</h2>
+								<p>{{ error }}</p>
+							</div>
+						</div>
+					}
 
-          <div class="tw-w-full tw-justify-between tw-flex">
-            <oeb-button
-              type="button"
-              size="md"
-              variant="secondary"
-              (click)="$event.preventDefault(); closeDialog()"
-              [text]="'General.cancel' | translate"
-              >
-            </oeb-button>
-            <oeb-button
-              size="md"
-              type="submit"
-              [text]="'Issuer.addMember' | translate"
-              [disabled]="staffCreateForm.invalid"
-              >
-            </oeb-button>
-          </div>
-        </form>
-      </ng-template>
-      <ng-template #staffRequestRoleTemplate let-requestid="requestid">
-        <form [formGroup]="staffRequestRoleForm.rawControl" (ngSubmit)="submitStaffRequestRoleForm(requestid)">
-          <span class="tw-text-oebblack tw-text-lg tw-font-bold">{{
-            'Issuer.addMember_chooseRole' | translate
-          }}</span>
-          <section class="tw-mt-4">
-            @for (role of issuerStaffRoleOptions; track role; let last = $last) {
-              <bg-formfield-radio
-                [control]="staffRequestRoleForm.rawControlMap.staffRole"
-                [name]="'staffRole'"
-                label="{{ role.label | translate }}"
-                [value]="role.value"
-                sublabel="{{ role.description | translate }}"
-                [last]="last"
-                errorMessage="{{ 'Issuer.addMember_selectRole' | translate }}"
-              ></bg-formfield-radio>
-            }
-          </section>
-          <br />
+					<div class="tw-w-full tw-justify-between tw-flex">
+						<oeb-button
+							type="button"
+							size="md"
+							variant="secondary"
+							(click)="$event.preventDefault(); closeDialog()"
+							[text]="'General.cancel' | translate"
+						>
+						</oeb-button>
+						<oeb-button
+							size="md"
+							type="submit"
+							[text]="'Issuer.addMember' | translate"
+							[disabled]="staffCreateForm.invalid"
+						>
+						</oeb-button>
+					</div>
+				</form>
+			</ng-template>
+			<ng-template #staffRequestRoleTemplate let-requestid="requestid">
+				<form [formGroup]="staffRequestRoleForm.rawControl" (ngSubmit)="submitStaffRequestRoleForm(requestid)">
+					<span class="tw-text-oebblack tw-text-lg tw-font-bold">{{
+						'Issuer.addMember_chooseRole' | translate
+					}}</span>
+					<section class="tw-mt-4">
+						@for (role of issuerStaffRoleOptions; track role; let last = $last) {
+							<bg-formfield-radio
+								[control]="staffRequestRoleForm.rawControlMap.staffRole"
+								[name]="'staffRole'"
+								label="{{ role.label | translate }}"
+								[value]="role.value"
+								sublabel="{{ role.description | translate }}"
+								[last]="last"
+								errorMessage="{{ 'Issuer.addMember_selectRole' | translate }}"
+							></bg-formfield-radio>
+						}
+					</section>
+					<br />
 
-          @if (error) {
-            <div class="notification notification-warning notification-is-active">
-              <div class="notification-x-icon">
-                <svg>
-                  <use xlink:href="/images/icons.svg#icon_priority_high"></use>
-                </svg>
-              </div>
-              <div class="notification-x-text">
-                <h2>{{ 'Issuer.addMember_failed' | translate }}!</h2>
-                <p>{{ error }}</p>
-              </div>
-            </div>
-          }
+					@if (error) {
+						<div class="notification notification-warning notification-is-active">
+							<div class="notification-x-icon">
+								<svg>
+									<use xlink:href="/images/icons.svg#icon_priority_high"></use>
+								</svg>
+							</div>
+							<div class="notification-x-text">
+								<h2>{{ 'Issuer.addMember_failed' | translate }}!</h2>
+								<p>{{ error }}</p>
+							</div>
+						</div>
+					}
 
-          <div class="tw-w-full tw-justify-between tw-flex">
-            <oeb-button
-              type="button"
-              size="md"
-              variant="secondary"
-              (click)="$event.preventDefault(); closeDialog()"
-              [text]="'General.cancel' | translate"
-              >
-            </oeb-button>
-            <oeb-button
-              size="md"
-              type="submit"
-              [text]="'Issuer.addMember' | translate"
-              [disabled]="staffRequestRoleForm.invalid"
-              >
-              {{ 'Issuer.addMember' | translate }}
-            </oeb-button>
-          </div>
-        </form>
-      </ng-template>
-    </div>
-    <section class="tw-mt-8">
-      <h2 hlmH2 class="!tw-text-oebblack tw-mb-2">{{ 'Issuer.openStaffRequests' | translate }}</h2>
-      @if (staffRequests.length == 0) {
-        <span class="tw-text-oebblack tw-italic tw-text-lg">{{
-          'Issuer.noOpenStaffRequests' | translate
-        }}</span>
-      }
-      <issuer-staff-requests-datatable
-        [requests]="staffRequests"
-        (deleteStaffRequest)="deleteStaffRequest($event)"
-        (confirmStaffRequest)="confirmStaffRequest($event)"
-        >
-      </issuer-staff-requests-datatable>
-    </section>
-    <section class="tw-mt-8">
-      <h2 hlmH2 class="!tw-text-oebblack tw-mb-2">
-        {{ 'General.members' | translate }} {{ 'General.of' | translate }} {{ issuer.name }}
-      </h2>
-      <hlm-table
-        class="tw-rounded-t-[20px] tw-overflow-hidden tw-w-full tw-max-w-[100%] tw-bg-white tw-border-lightgrey tw-border"
-        >
-        <hlm-trow class="!tw-bg-lightgrey tw-text-oebblack tw-flex-wrap hover:tw-bg-lightgrey">
-          <!-- Name -->
-          <hlm-th class="tw-text-oebblack md:tw-w-[25%] tw-w-[33%] tw-px-4">Name</hlm-th>
-          <!-- E-Mail -->
-          <hlm-th class="tw-text-oebblack md:tw-w-[25%] tw-w-[33%] tw-px-4">{{
-            'General.email' | translate
-          }}</hlm-th>
-          <!-- Role -->
-          <hlm-th class="tw-text-oebblack md:tw-w-[25%] tw-w-[33%] tw-px-4">{{
-            'General.role' | translate
-          }}</hlm-th>
-          <!-- Actions -->
-          <hlm-th class="tw-text-oebblack md:tw-w-[25%] tw-w-0 tw-px-4"></hlm-th>
-        </hlm-trow>
-        @for (member of issuer.staff; track member) {
-          <hlm-trow class="tw-border-lightgrey tw-flex-wrap tw-py-2">
-            <hlm-th class="md:tw-w-[25%] tw-w-[33%] tw-px-4 tw-items-center">
-              <span class="tw-font-normal tw-text-lg tw-text-oebblack tw-truncate">{{
-                member.nameLabel
-              }}</span>
-            </hlm-th>
-            <hlm-th class="md:tw-w-[25%] tw-w-[33%] tw-px-4 tw-text-center tw-flex tw-items-center"
-              ><p hlmP class="tw-font-normal tw-text-lg tw-text-oebblack tw-truncate">
-              {{ member.email }}
-            </p></hlm-th
-            >
-            <hlm-th class="tw-w-36 md:tw-w-48 !tw-text-oebblack sm:tw-grid">
-              @if (isCurrentUserIssuerOwner) {
-                <div class="forminput forminput-full">
-                  <div class="forminput-x-inputs">
-                    @if (isCurrentUserIssuerOwner) {
-                      <select
-                        #memberSelect
-                        class="!tw-border-purple !tw-border-solid !tw-text-oebblack tw-rounded-[10px] tw-text-lg"
-                        [ngModel]="member.roleSlug"
-                        [disabled]="member == issuer.currentUserStaffMember"
-                        (change)="changeMemberRole(member, $any(memberSelect.value))"
-                        >
-                        @for (role of issuerStaffRoleOptions; track role) {
-                          <option [value]="role.value">
-                            {{ role.label | translate }}
-                          </option>
-                        }
-                      </select>
-                    }
-                  </div>
-                </div>
-              }
-            </hlm-th>
-            <hlm-th class="md:tw-w-[25%] tw-w-full tw-px-4 tw-text-center tw-flex md:tw-justify-end">
-              @if (member != issuer.currentUserStaffMember) {
-                <span
-                  (click)="removeMember(member)"
-                  class="tw-text-link tw-underline tw-text-sm tw-cursor-pointer"
-                  >{{ 'General.remove' | translate }}</span
-                  >
-                }
-              </hlm-th>
-            </hlm-trow>
-          }
-        </hlm-table>
-        <!-- <issuer-staff-datatable
+					<div class="tw-w-full tw-justify-between tw-flex">
+						<oeb-button
+							type="button"
+							size="md"
+							variant="secondary"
+							(click)="$event.preventDefault(); closeDialog()"
+							[text]="'General.cancel' | translate"
+						>
+						</oeb-button>
+						<oeb-button
+							size="md"
+							type="submit"
+							[text]="'Issuer.addMember' | translate"
+							[disabled]="staffRequestRoleForm.invalid"
+						>
+							{{ 'Issuer.addMember' | translate }}
+						</oeb-button>
+					</div>
+				</form>
+			</ng-template>
+		</div>
+		<section class="tw-mt-8">
+			<h2 hlmH2 class="!tw-text-oebblack tw-mb-2">{{ 'Issuer.openStaffRequests' | translate }}</h2>
+			@if (staffRequests.length == 0) {
+				<span class="tw-text-oebblack tw-italic tw-text-lg">{{
+					'Issuer.noOpenStaffRequests' | translate
+				}}</span>
+			}
+			<issuer-staff-requests-datatable
+				[requests]="staffRequests"
+				(deleteStaffRequest)="deleteStaffRequest($event)"
+				(confirmStaffRequest)="confirmStaffRequest($event)"
+			>
+			</issuer-staff-requests-datatable>
+		</section>
+		<section class="tw-mt-8">
+			<h2 hlmH2 class="!tw-text-oebblack tw-mb-2">
+				{{ 'General.members' | translate }} {{ 'General.of' | translate }} {{ issuer.name }}
+			</h2>
+			<hlm-table
+				class="tw-rounded-t-[20px] tw-overflow-hidden tw-w-full tw-max-w-[100%] tw-bg-white tw-border-lightgrey tw-border"
+			>
+				<hlm-trow class="!tw-bg-lightgrey tw-text-oebblack tw-flex-wrap hover:tw-bg-lightgrey">
+					<!-- Name -->
+					<hlm-th class="tw-text-oebblack md:tw-w-[25%] tw-w-[33%] tw-px-4">Name</hlm-th>
+					<!-- E-Mail -->
+					<hlm-th class="tw-text-oebblack md:tw-w-[25%] tw-w-[33%] tw-px-4">{{
+						'General.email' | translate
+					}}</hlm-th>
+					<!-- Role -->
+					<hlm-th class="tw-text-oebblack md:tw-w-[25%] tw-w-[33%] tw-px-4">{{
+						'General.role' | translate
+					}}</hlm-th>
+					<!-- Actions -->
+					<hlm-th class="tw-text-oebblack md:tw-w-[25%] tw-w-0 tw-px-4"></hlm-th>
+				</hlm-trow>
+				@for (member of issuer.staff; track member) {
+					<hlm-trow class="tw-border-lightgrey tw-flex-wrap tw-py-2">
+						<hlm-th class="md:tw-w-[25%] tw-w-[33%] tw-px-4 tw-items-center">
+							<span class="tw-font-normal tw-text-lg tw-text-oebblack tw-truncate">{{
+								member.nameLabel
+							}}</span>
+						</hlm-th>
+						<hlm-th class="md:tw-w-[25%] tw-w-[33%] tw-px-4 tw-text-center tw-flex tw-items-center"
+							><p hlmP class="tw-font-normal tw-text-lg tw-text-oebblack tw-truncate">
+								{{ member.email }}
+							</p></hlm-th
+						>
+						<hlm-th class="tw-w-36 md:tw-w-48 !tw-text-oebblack sm:tw-grid">
+							@if (isCurrentUserIssuerOwner) {
+								<div class="forminput forminput-full">
+									<div class="forminput-x-inputs">
+										@if (isCurrentUserIssuerOwner) {
+											<select
+												#memberSelect
+												class="!tw-border-purple !tw-border-solid !tw-text-oebblack tw-rounded-[10px] tw-text-lg"
+												[ngModel]="member.roleSlug"
+												[disabled]="member == issuer.currentUserStaffMember"
+												(change)="changeMemberRole(member, $any(memberSelect.value))"
+											>
+												@for (role of issuerStaffRoleOptions; track role) {
+													<option [value]="role.value">
+														{{ role.label | translate }}
+													</option>
+												}
+											</select>
+										}
+									</div>
+								</div>
+							}
+						</hlm-th>
+						<hlm-th class="md:tw-w-[25%] tw-w-full tw-px-4 tw-text-center tw-flex md:tw-justify-end">
+							@if (member != issuer.currentUserStaffMember) {
+								<span
+									(click)="removeMember(member)"
+									class="tw-text-link tw-underline tw-text-sm tw-cursor-pointer"
+									>{{ 'General.remove' | translate }}</span
+								>
+							}
+						</hlm-th>
+					</hlm-trow>
+				}
+			</hlm-table>
+			<!-- <issuer-staff-datatable
         [members]="issuer.staff"
         [issuer]="issuer"
         [isCurrentUserIssuerOwner]="isCurrentUserIssuerOwner"
@@ -251,6 +247,6 @@
         (roleChanged)="changeMemberRole($event.member, $event.roleSlug)"
         >
       </issuer-staff-datatable> -->
-    </section>
-  </div>
+		</section>
+	</div>
 </div>
