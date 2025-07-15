@@ -385,9 +385,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 		});
 		this.selectedBadges = lp.badges.map((b) => b.badge);
 
-		this.currentImage = badge.extension['extensions:OrgImageExtension']
-			? badge.extension['extensions:OrgImageExtension'].OrgImage
-			: undefined;
+		this.currentImage = lp.participationBadgeImage;
 
 		setTimeout(() => {
 			if (badge.imageFrame) {
