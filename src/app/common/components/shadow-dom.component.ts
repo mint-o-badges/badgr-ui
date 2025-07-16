@@ -3,18 +3,23 @@ import { SafeHtml } from '@angular/platform-browser';
 import { DynamicHooksComponent } from 'ngx-dynamic-hooks';
 import { Router } from '@angular/router';
 import { AiAssistantComponent } from '~/issuer/components/ai-assistant/ai-assistant.component';
+import { LoadingDotsComponent } from './loading-dots.component';
 
 @Component({
 	selector: 'shadow-dom',
 	template: `
 		<div class="shadow-assets" #assetWrap></div>
 		<div class="shadow-wrap" #contentWrap>
-			<ngx-dynamic-hooks
-				class="shadow-content"
-				[content]="_content"
-				[parsers]="dynamicComponents"
-				[options]="{ sanitize: false }"
-			></ngx-dynamic-hooks>
+			@if (_content) {
+				<ngx-dynamic-hooks
+					class="shadow-content"
+					[content]="_content"
+					[parsers]="dynamicComponents"
+					[options]="{ sanitize: false }"
+				></ngx-dynamic-hooks>
+			} @else {
+				<loading-dots />
+			}
 		</div>
 	`,
 	styles: `
@@ -35,7 +40,7 @@ import { AiAssistantComponent } from '~/issuer/components/ai-assistant/ai-assist
 	encapsulation: ViewEncapsulation.ShadowDom,
 	standalone: true,
 	// FIXME: AiAssistantComponent is used in CMS HTML, ignore Angular warning?
-	imports: [DynamicHooksComponent, AiAssistantComponent],
+	imports: [DynamicHooksComponent, AiAssistantComponent, LoadingDotsComponent],
 })
 export class ShadowDomComponent {
 	content = input<string>();

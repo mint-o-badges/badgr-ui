@@ -7,7 +7,7 @@ import { CmsContentComponent } from './cms-content.component';
 
 @Component({
 	selector: 'cms-page',
-	template: ` <cms-content [headline]="headline?.toString()" [image]="image" [content]="content?.toString()" /> `,
+	template: `<cms-content [headline]="headline?.toString()" [image]="image" [content]="content?.toString()" />`,
 	imports: [CmsContentComponent],
 	standalone: true,
 })
