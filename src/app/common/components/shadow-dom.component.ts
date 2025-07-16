@@ -18,15 +18,18 @@ import { AiAssistantComponent } from '~/issuer/components/ai-assistant/ai-assist
 		</div>
 	`,
 	styles: `
-		@tailwind base;
-		@tailwind components;
-		@tailwind utilities;
+		@use '/src/styles/oeb/oeb_styles.scss';
 		.shadow-wrap {
 			max-width: 100vw;
 			overflow: hidden;
 		}
 		ai-assistant * {
 			box-sizing: border-box;
+		}
+		// FIXME tailwind config is not loaded here?
+		// updating to tailwind 4 and using @config css might resolve this
+		.tw-border-purple {
+			border-color: var(--color-purple) !important;
 		}
 	`,
 	encapsulation: ViewEncapsulation.ShadowDom,

@@ -52,7 +52,8 @@
 						"buildOptimizer": false,
 						"sourceMap": true,
 						"optimization": false,
-						"namedChunks": true
+						"namedChunks": true,
+						"inlineStyleLanguage": "scss"
 					},
 					"configurations": {
 						"production": {
@@ -177,7 +178,8 @@
 								"input": "./assets/@concentricsky/badgr-style/dist/images",
 								"output": "./assets/@concentricsky/badgr-style/dist/images"
 							}
-						]
+						],
+						"inlineStyleLanguage": "scss"
 					}
 				}
 			}

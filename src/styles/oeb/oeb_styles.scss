@@ -1,11 +1,11 @@
-@import "@angular/cdk/overlay-prebuilt.css";
+@use "./typography.scss";
+@use "./elements.scss";
+
+@use "@angular/cdk/overlay-prebuilt.css";
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@import url(typography.scss);
-@import url(elements.scss);
 
 html {
 	font-family: rubik;
