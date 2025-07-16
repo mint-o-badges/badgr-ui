@@ -166,7 +166,7 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 	}
 
 	badgeIssueDate(entry: RecipientBadgeCollectionEntry) {
-		return new Date(entry.badge.apiModel.json.issuedOn);
+		return new Date(entry.badge.issueDate);
 	}
 
 	removeBadge(badgeSlug: string) {
