@@ -27,6 +27,7 @@ import { BgLearningPathCard } from '../bg-learningpathcard';
 import { HourPipe } from '../../pipes/hourPipe';
 import { PublicApiLearningPath } from '../../../public/models/public-api.model';
 import { ApiImportedBadgeInstance } from '../../../recipient/models/recipient-badge-api.model';
+import { RecipientBadgeManager } from '../../../recipient/services/recipient-badge-manager.service';
 
 @Component({
 	selector: 'bg-badgedetail',
@@ -63,6 +64,7 @@ export class BgBadgeDetail {
 	constructor(
 		private dialogService: CommonDialogsService,
 		private translate: TranslateService,
+		private recipientManager: RecipientBadgeManager,
 	) {
 		this.translate.get('Badge.categories.competency').subscribe((str) => {
 			this.competencyBadge = str;
@@ -86,6 +88,14 @@ export class BgBadgeDetail {
 	}
 
 	checkCompleted(lp: LearningPath | PublicApiLearningPath): boolean {
+		if (lp.required_badges_count != lp.badges.length) {
+			const userAssertions = this.recipientManager.recipientBadgeList.entities;
+			const badgeClassIds = lp.badges.map((b) => b.badge.slug);
+			const userBadgeCount = userAssertions.filter((b) =>
+				badgeClassIds.some((i) => b.badgeClass.slug == i),
+			).length;
+			return userBadgeCount >= lp.required_badges_count;
+		}
 		return lp.completed_at != null;
 	}
 

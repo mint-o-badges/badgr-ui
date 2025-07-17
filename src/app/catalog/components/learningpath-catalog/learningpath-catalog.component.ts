@@ -219,10 +219,8 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 	}
 
 	calculateMatch(lp: LearningPath): string {
-		const lpBadges = lp.badges;
-		const badgeClassIds = lpBadges.map((b) => b.badge.json.id);
-		const totalBadges = lpBadges.length;
-		const userBadgeCount = badgeClassIds.filter((b) => this.userBadges.includes(b)).length;
+		const userBadgeCount = this.calculateUserBadgeCount(lp);
+		const totalBadges = lp.badges.length;
 		return `${userBadgeCount}/${totalBadges}`;
 	}
 
@@ -236,7 +234,18 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 	}
 
 	checkCompleted(lp: LearningPath): boolean {
+		if (lp.required_badges_count != lp.badges.length) {
+			const userBadgeCount = this.calculateUserBadgeCount(lp);
+			return userBadgeCount >= lp.required_badges_count;
+		}
 		return lp.completed_at != null;
+	}
+
+	calculateUserBadgeCount(lp: LearningPath): number {
+		const lpBadges = lp.badges;
+		const badgeClassIds = lpBadges.map((b) => b.badge.json.id);
+		const userBadgeCount = badgeClassIds.filter((b) => this.userBadges.includes(b)).length;
+		return userBadgeCount;
 	}
 
 	calculateStudyLoad(lp: LearningPath): number {

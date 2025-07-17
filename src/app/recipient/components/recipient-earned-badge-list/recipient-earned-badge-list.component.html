@@ -7,7 +7,8 @@
 				<div class="md:tw-flex tw-justify-between tw-items-center oeb-section-sm">
 					<h2 hlmH2 class="tw-text-oebblack tw-font-bold tw-pb-4 md:tw-pb-0">
 						{{ 'RecBadge.greating' | translate }}
-						<span class="tw-capitalize">{{ profile.firstName }} </span>,
+						<span class="tw-capitalize">{{ profile.firstName }}</span
+						>,
 						{{ 'RecBadge.greating2' | translate }}
 					</h2>
 
@@ -341,7 +342,7 @@
 												[tags]="lp.tags"
 												[slug]="lp.slug"
 												[studyLoad]="calculateStudyLoad(lp)"
-												[completed]="lp.completed_at != null"
+												[completed]="checkCompleted(lp)"
 												[progress]="lp.progress"
 												[requested]="lp.requested"
 												[matchOrProgress]="{ progress: lp.progress / calculateStudyLoad(lp) }"
@@ -366,7 +367,7 @@
 												[tags]="lp.tags"
 												[slug]="lp.slug"
 												[progress]="lp.progress"
-												[completed]="lp.completed_at != null"
+												[completed]="checkCompleted(lp)"
 												[requested]="lp.requested"
 												[studyLoad]="calculateStudyLoad(lp)"
 												[matchOrProgress]="{ progress: lp.progress / calculateStudyLoad(lp) }"
@@ -469,6 +470,7 @@
 							</div>
 						}
 
+						<<<<<<< HEAD
 						<div>
 							<!-- <div class="oeb-section-sm" *ngIf="learningPathsReadyToRequest.length > 0">
                 <h3 hlmH3 class="tw-uppercase tw-text-purple tw-font-bold tw-pb-4">
@@ -536,6 +538,9 @@
             </div>
           </div> -->
 						</div>
+						=======
+						<div></div>
+						>>>>>>> develop
 					</ng-template>
 				</ng-template>
 				<ng-template #collectionInfoHeaderTemplate>

@@ -195,11 +195,16 @@ export class PublicBadgeClassComponent {
 	}
 
 	calculateMatch(lp: LearningPath | PublicApiLearningPath): string {
+		const userBadgeCount = this.calculateUserBadgeCount(lp);
+		const totalBadges = lp.badges.length;
+		return `${userBadgeCount}/${totalBadges}`;
+	}
+
+	calculateUserBadgeCount(lp: LearningPath | PublicApiLearningPath): number {
 		const lpBadges = lp.badges;
 		const badgeClassIds = lpBadges.map((b) => b.badge.json.id);
-		const totalBadges = lpBadges.length;
 		const userBadgeCount = badgeClassIds.filter((b) => this.userBadges.includes(b)).length;
-		return `${userBadgeCount}/${totalBadges}`;
+		return userBadgeCount;
 	}
 
 	calculateLearningPathStatus(lp: LearningPath | PublicApiLearningPath): { match: string } | { progress: number } {
@@ -220,6 +225,10 @@ export class PublicBadgeClassComponent {
 	}
 
 	checkCompleted(lp: LearningPath | PublicApiLearningPath): boolean {
+		if (lp.required_badges_count != lp.badges.length) {
+			const userBadgeCount = this.calculateUserBadgeCount(lp);
+			return userBadgeCount >= lp.required_badges_count;
+		}
 		return lp.completed_at != null;
 	}
 
