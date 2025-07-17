@@ -184,6 +184,9 @@ export class PublicLearningPathComponent implements OnInit, AfterContentInit {
 	}
 
 	progressValue(): number {
+		if (this.learningPath.required_badges_count <= this.learningPath.completed_badges.length) {
+			return 100;
+		}
 		return Math.floor((this.minutesCompleted / this.minutesTotal) * 100);
 	}
 

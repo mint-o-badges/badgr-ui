@@ -125,7 +125,7 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 		])
 			.then(([list]) => {
 				this.collection = list.entityForSlug(this.collectionSlug);
-				this.menuItems[1].disabled = this.collection.badgeEntries.length === 0;
+				this.checkDisableDownload();
 				this.translate.get('General.collections').subscribe((str) => {
 					this.crumbs = [
 						{ title: str, routerLink: ['/recipient/badges'], queryParams: { tab: 'collections' } },
@@ -161,6 +161,10 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 		}
 	}
 
+	checkDisableDownload() {
+		this.menuItems[1].disabled = this.collection.badgeEntries.length === 0 || !this.collection.published;
+	}
+
 	badgeEntryBySlug(index: number, entry: RecipientBadgeCollectionEntry) {
 		return entry.badgeSlug;
 	}
@@ -177,7 +181,8 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 				if (result === 'continue') {
 					this.collection.removeBadge(res.entityForSlug(badgeSlug));
 					this.collection.save();
-					this.menuItems[1].disabled = this.collection.badgeEntries.length === 0;
+					this.checkDisableDownload();
+					// this.menuItems[1].disabled = this.collection.badgeEntries.length === 0;
 				}
 			});
 		});
@@ -314,8 +319,10 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 
 		if (published) {
 			this.collection.save().then(
-				(success) =>
-					this.messageService.reportMinorSuccess(`Published collection ${this.collection.name} successfully`),
+				(success) => {
+					this.messageService.reportMinorSuccess(`Published collection ${this.collection.name} successfully`);
+					this.checkDisableDownload();
+				},
 				(failure) =>
 					this.messageService.reportHandledError(
 						`Failed to publish collection ${this.collection.name}`,
@@ -338,7 +345,7 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 	}
 
 	togglePublished() {
-		this.collection.save();
+		this.collection.save().then(() => this.checkDisableDownload());
 	}
 
 	shareCollection() {
