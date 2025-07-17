@@ -33,20 +33,22 @@
 					</tr>
 				</thead>
 				<tbody class="datatable-x-body">
-					<tr class="datatable-x-row" *ngFor="let collection of badgeCollectionsResults">
-						<td class="datatable-x-cell">
-							<label htmlFor="collection-{{ collection.slug }}" class="checkbox">
-								<input
-									type="checkbox"
-									#collectionsCheckbox
-									[id]="'collection-' + collection.slug"
-									[name]="'collection-' + collection.slug"
-									(change)="updateCollection(collection, collectionsCheckbox.checked)"
-								/>
-								<span class="checkbox-x-text">{{ collection.name }}</span>
-							</label>
-						</td>
-					</tr>
+					@for (collection of badgeCollectionsResults; track collection) {
+						<tr class="datatable-x-row">
+							<td class="datatable-x-cell">
+								<label htmlFor="collection-{{ collection.slug }}" class="checkbox">
+									<input
+										type="checkbox"
+										#collectionsCheckbox
+										[id]="'collection-' + collection.slug"
+										[name]="'collection-' + collection.slug"
+										(change)="updateCollection(collection, collectionsCheckbox.checked)"
+									/>
+									<span class="checkbox-x-text">{{ collection.name }}</span>
+								</label>
+							</td>
+						</tr>
+					}
 				</tbody>
 			</table>
 
@@ -56,6 +58,8 @@
 			</div>
 		</div>
 
-		<div class="bordered bordered-top" *ngIf="badgeCollectionsResults.length == 0">No Available Collections</div>
+		@if (badgeCollectionsResults.length == 0) {
+			<div class="bordered bordered-top">No Available Collections</div>
+		}
 	</div>
 </dialog>

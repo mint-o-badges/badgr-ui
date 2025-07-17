@@ -1,6 +1,6 @@
 import { Component, computed, input, signal } from '@angular/core';
 import { ButtonVariants, HlmButtonDirective } from './spartan/ui-button-helm/src';
-import { NgIf, NgClass } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { MessageService } from '../common/services/message.service';
 import { lucidePlus, lucideUpload, lucideCircleX, lucideMapPin } from '@ng-icons/lucide';
 import { provideIcons } from '@ng-icons/core';
@@ -11,7 +11,7 @@ import { map, Subscription } from 'rxjs';
 
 @Component({
 	selector: 'oeb-button',
-	imports: [HlmButtonDirective, HlmIconDirective, NgIf, NgClass, NgIcon],
+	imports: [HlmButtonDirective, HlmIconDirective, NgClass, NgIcon],
 	providers: [MessageService, provideIcons({ lucideUpload, lucidePlus, lucideCircleX, lucideMapPin })],
 	template: `<button
 		[type]="type()"
@@ -23,10 +23,16 @@ import { map, Subscription } from 'rxjs';
 		[variant]="variant()"
 		[attr.id]="id()"
 	>
-		<ng-icon hlm *ngIf="icon() && iconLeft()" size="lg" [name]="icon()" />
-		<img *ngIf="img()" class="md:tw-h-[30px] tw-h-[20px] tw-pr-4" [src]="img()" />
+		@if (icon() && iconLeft()) {
+			<ng-icon hlm size="lg" [name]="icon()" />
+		}
+		@if (img()) {
+			<img class="md:tw-h-[30px] tw-h-[20px] tw-pr-4" [src]="img()" />
+		}
 		<span [ngClass]="{ 'tw-ml-4': iconLeft() }" [innerHTML]="computedText()"></span>
-		<ng-icon hlm *ngIf="icon() && !iconLeft()" size="lg" [name]="icon()" />
+		@if (icon() && !iconLeft()) {
+			<ng-icon hlm size="lg" [name]="icon()" />
+		}
 	</button>`,
 })
 export class OebButtonComponent {

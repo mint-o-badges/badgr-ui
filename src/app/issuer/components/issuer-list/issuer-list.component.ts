@@ -25,7 +25,7 @@ import { BadgrApiFailure } from '../../../common/services/api-failure';
 import { FormMessageComponent } from '../../../common/components/form-message.component';
 import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
 import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
-import { NgIf, NgTemplateOutlet, NgFor, NgClass, NgStyle } from '@angular/common';
+import { NgTemplateOutlet, NgClass, NgStyle } from '@angular/common';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { NgIcon } from '@ng-icons/core';
 import { HlmIconDirective } from '../../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
@@ -38,13 +38,11 @@ import { BgImageStatusPlaceholderDirective } from '../../../common/directives/bg
 		FormMessageComponent,
 		HlmH1Directive,
 		HlmPDirective,
-		NgIf,
 		OebButtonComponent,
 		RouterLink,
 		NgTemplateOutlet,
 		NgIcon,
 		HlmIconDirective,
-		NgFor,
 		BgImageStatusPlaceholderDirective,
 		NgClass,
 		FormsModule,

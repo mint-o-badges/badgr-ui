@@ -10,7 +10,7 @@ import { map, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { SvgIconComponent } from '../../components/svg-icon.component';
 import { FormsModule } from '@angular/forms';
-import { NgIf, NgFor } from '@angular/common';
+
 import { BgAwaitPromises } from '../../directives/bg-await-promises';
 import { BgImageStatusPlaceholderDirective } from '../../directives/bg-image-status-placeholder.directive';
 import { RouterLink } from '@angular/router';
@@ -22,9 +22,7 @@ import { RouterLink } from '@angular/router';
 	imports: [
 		SvgIconComponent,
 		FormsModule,
-		NgIf,
 		BgAwaitPromises,
-		NgFor,
 		BgImageStatusPlaceholderDirective,
 		RouterLink,
 		TranslatePipe,

@@ -9,13 +9,15 @@
 					<p class="topbar-x-authdate u-text">
 						Authorized: <strong><time [date]="app.createdDate" format="mediumDate"></time></strong>
 					</p>
-					This application has been granted permission to sign you in using your Badgr account.
-					<div class="u-margin-top1x" *ngIf="app.websiteUrl">
+					This application has been granted permission to sign you in using your Badgr account. @if
+					(app.websiteUrl) {
+					<div class="u-margin-top1x">
 						<a class="u-text-outlink" [href]="app.websiteUrl" aria-labelledby="heading" target="_blank"
 							>Visit Website
 							<svg icon="icon_external_link"></svg>
 						</a>
 					</div>
+					}
 				</div>
 				<div class="topbar-x-buttons">
 					<button class="button button-full" (click)="revokeAccess()">Revoke</button>
@@ -32,10 +34,12 @@
 					<svg icon="icon_member"></svg>
 					Know who you are on Badgr
 				</li>
-				<li class="authlist-x-item" *ngFor="let scope of presentationScopes">
+				@for (scope of presentationScopes; track scope) {
+				<li class="authlist-x-item">
 					<svg [icon]="permisionScopeToIconName(scope.cssName)"></svg>
 					{{ scope.label }}
 				</li>
+				}
 			</ul>
 		</div>
 	</div>

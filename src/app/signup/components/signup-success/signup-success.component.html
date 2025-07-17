@@ -42,30 +42,29 @@
 				</oeb-button>
 			</div>
 
-			<div
-				*ngIf="signedUpForNewsletter"
-				class="tw-flex tw-flex-col tw-justify-center md:tw-p-[50px] md:tw-mt-[50px] tw-p-[30px] tw-mt-[30px] tw-bg-yellow md:tw-w-[80%] tw-w-[98%] md:tw-rounded-[20px] tw-rounded-[14px]"
-			>
-				<div class="tw-flex tw-gap-4 tw-justify-center tw-items-center">
-					<div class="oeb-icon-circle tw-my-6 tw-bg-white">
-						<ng-icon hlm class="tw-text-purple tw-font-bold" size="lg" name="lucideCheck" />
+			@if (signedUpForNewsletter) {
+				<div
+					class="tw-flex tw-flex-col tw-justify-center md:tw-p-[50px] md:tw-mt-[50px] tw-p-[30px] tw-mt-[30px] tw-bg-yellow md:tw-w-[80%] tw-w-[98%] md:tw-rounded-[20px] tw-rounded-[14px]"
+				>
+					<div class="tw-flex tw-gap-4 tw-justify-center tw-items-center">
+						<div class="oeb-icon-circle tw-my-6 tw-bg-white">
+							<ng-icon hlm class="tw-text-purple tw-font-bold" size="lg" name="lucideCheck" />
+						</div>
+						<p
+							[innerHTML]="'Signup.newsletterEmail' | translate"
+							class="tw-font-normal md:tw-text-[18px] tw-text-oebblack md:tw-leading-[23.4px] tw-text-center tw-text-[14px] tw-leading-[16.8px]"
+						></p>
 					</div>
 					<p
-						[innerHTML]="'Signup.newsletterEmail' | translate"
-						class="tw-font-normal md:tw-text-[18px] tw-text-oebblack md:tw-leading-[23.4px] tw-text-center tw-text-[14px] tw-leading-[16.8px]"
+						[innerHTML]="'Signup.confirmNewsletter' | translate"
+						class="tw-font-normal md:tw-text-[18px] tw-text-oebblack md:tw-leading-[23.4px] tw-text-center tw-text-[14px] tw-leading-[16.8px] tw-mt-[20px]"
+					></p>
+					<p
+						[innerHTML]="'Signup.newsletterEmailNotReceived' | translate"
+						class="tw-font-normal md:tw-text-[14px] tw-italic tw-text-oebblack md:tw-leading-[16.8px] tw-text-center tw-text-[14px] tw-leading-[16.8px] tw-mt-[20px]"
 					></p>
 				</div>
-
-				<p
-					[innerHTML]="'Signup.confirmNewsletter' | translate"
-					class="tw-font-normal md:tw-text-[18px] tw-text-oebblack md:tw-leading-[23.4px] tw-text-center tw-text-[14px] tw-leading-[16.8px] tw-mt-[20px]"
-				></p>
-
-				<p
-					[innerHTML]="'Signup.newsletterEmailNotReceived' | translate"
-					class="tw-font-normal md:tw-text-[14px] tw-italic tw-text-oebblack md:tw-leading-[16.8px] tw-text-center tw-text-[14px] tw-leading-[16.8px] tw-mt-[20px]"
-				></p>
-			</div>
+			}
 		</div>
 	</div>
 </div>

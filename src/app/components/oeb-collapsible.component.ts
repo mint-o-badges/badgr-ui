@@ -21,7 +21,7 @@ import {
 } from '@spartan-ng/brain/collapsible';
 import { provideIcons } from '@ng-icons/core';
 import { lucideChevronRight } from '@ng-icons/lucide';
-import { NgIf, NgTemplateOutlet, NgClass } from '@angular/common';
+import { NgTemplateOutlet, NgClass } from '@angular/common';
 
 @Component({
 	selector: 'oeb-collapsible',
@@ -33,23 +33,20 @@ import { NgIf, NgTemplateOutlet, NgClass } from '@angular/common';
 		BrnCollapsibleContentComponent,
 		NgIcon,
 		HlmIconDirective,
-		NgIf,
 		NgTemplateOutlet,
 		NgClass,
 	],
 	template: `
 		<brn-collapsible class="tw-flex tw-flex-col" #collapsible [disabled]="disabled()">
 			<button [attr.id]="id" brnCollapsibleTrigger type="button" hlmBtn variant="ghost" size="sm" class="!tw-p-0">
-				<ngTemplateOutlet
-					*ngIf="isTemplate; else stringTrigger"
-					[ngTemplateOutlet]="trigger"
-				></ngTemplateOutlet>
-				<ng-template #stringTrigger>
+				@if (isTemplate) {
+					<ngTemplateOutlet [ngTemplateOutlet]="trigger"></ngTemplateOutlet>
+				} @else {
 					<button class="tw-flex tw-w-full !tw-justify-between tw-items-center">
 						{{ trigger }}
 						<ng-icon hlm class="tw-ml-2" name="lucideChevronDown" hlmMenuIcon />
 					</button>
-				</ng-template>
+				}
 				<div>
 					<ng-icon
 						hlm

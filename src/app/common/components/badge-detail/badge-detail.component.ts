@@ -6,7 +6,7 @@ import { RecipientBadgeInstance } from '../../../recipient/models/recipient-badg
 import { BadgeInstance } from '../../../issuer/models/badgeinstance.model';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { BgAwaitPromises } from '../../directives/bg-await-promises';
-import { NgIf, NgFor } from '@angular/common';
+
 import { FormMessageComponent } from '../form-message.component';
 import { BgBreadcrumbsComponent } from '../bg-breadcrumbs/bg-breadcrumbs.component';
 import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
@@ -27,6 +27,7 @@ import { BgLearningPathCard } from '../bg-learningpathcard';
 import { HourPipe } from '../../pipes/hourPipe';
 import { PublicApiLearningPath } from '../../../public/models/public-api.model';
 import { ApiImportedBadgeInstance } from '../../../recipient/models/recipient-badge-api.model';
+import { RecipientBadgeManager } from '../../../recipient/services/recipient-badge-manager.service';
 
 @Component({
 	selector: 'bg-badgedetail',
@@ -34,7 +35,6 @@ import { ApiImportedBadgeInstance } from '../../../recipient/models/recipient-ba
 	styleUrls: ['./badge-detail.component.scss'],
 	imports: [
 		BgAwaitPromises,
-		NgIf,
 		FormMessageComponent,
 		BgBreadcrumbsComponent,
 		HlmH1Directive,
@@ -46,7 +46,6 @@ import { ApiImportedBadgeInstance } from '../../../recipient/models/recipient-ba
 		OebCollapsibleComponent,
 		NgIcon,
 		HlmIconDirective,
-		NgFor,
 		InfoIcon,
 		TimeComponent,
 		HlmPDirective,
@@ -65,6 +64,7 @@ export class BgBadgeDetail {
 	constructor(
 		private dialogService: CommonDialogsService,
 		private translate: TranslateService,
+		private recipientManager: RecipientBadgeManager,
 	) {
 		this.translate.get('Badge.categories.competency').subscribe((str) => {
 			this.competencyBadge = str;
@@ -88,6 +88,14 @@ export class BgBadgeDetail {
 	}
 
 	checkCompleted(lp: LearningPath | PublicApiLearningPath): boolean {
+		if (lp.required_badges_count != lp.badges.length) {
+			const userAssertions = this.recipientManager.recipientBadgeList.entities;
+			const badgeClassIds = lp.badges.map((b) => b.badge.slug);
+			const userBadgeCount = userAssertions.filter((b) =>
+				badgeClassIds.some((i) => b.badgeClass.slug == i),
+			).length;
+			return userBadgeCount >= lp.required_badges_count;
+		}
 		return lp.completed_at != null;
 	}
 

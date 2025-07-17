@@ -4,7 +4,7 @@ import { BrnAccordionContentComponent } from '@spartan-ng/brain/accordion';
 import { HlmAccordionModule } from '../../../components/spartan/ui-accordion-helm/src';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
-import { NgFor, NgIf, NgClass } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { OebSeparatorComponent } from '../../../components/oeb-separator.component';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { OebDropdownComponent } from '../../../components/oeb-dropdown.component';
@@ -35,8 +35,6 @@ import { SvgIconComponent } from '~/common/components/svg-icon.component';
 		TranslateModule,
 		BrnAccordionContentComponent,
 		RouterModule,
-		NgIf,
-		NgFor,
 		NgClass,
 		OebSeparatorComponent,
 		OebButtonComponent,

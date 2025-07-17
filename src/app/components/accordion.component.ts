@@ -1,5 +1,5 @@
 import { NgIcon } from '@ng-icons/core';
-import { NgIf } from '@angular/common';
+
 import { TranslateModule } from '@ngx-translate/core';
 import { BrnAccordionContentComponent } from '@spartan-ng/brain/accordion';
 import { HlmAccordionModule } from './spartan/ui-accordion-helm/src';
@@ -20,7 +20,6 @@ import { HlmIconDirective } from './spartan/ui-icon-helm/src/lib/hlm-icon.direct
 		TranslateModule,
 		BrnAccordionContentComponent,
 		RouterModule,
-		NgIf,
 	],
 	template: `
 		<div class="tw-bg-[var(--color-lightgray)] tw-border tw-border-solid tw-border-purple tw-rounded-lg tw-mt-4">
@@ -31,15 +30,16 @@ import { HlmIconDirective } from './spartan/ui-icon-helm/src/lib/hlm-icon.direct
 							<div class="tw-flex tw-gap-2 tw-flex-shrink-1">
 								<span class="tw-font-bold tw-text-left tw-text-oebblack"
 									>{{ name }}
-									<a
-										(click)="$event.stopPropagation()"
-										href="{{ framework_identifier }}"
-										class="tw-text-link tw-font-normal tw-underline"
-										target="_blank"
-										*ngIf="framework == 'esco'"
-										>[E]</a
-									></span
-								>
+									@if (framework == 'esco') {
+										<a
+											(click)="$event.stopPropagation()"
+											href="{{ framework_identifier }}"
+											class="tw-text-link tw-font-normal tw-underline"
+											target="_blank"
+											>[E]</a
+										>
+									}
+								</span>
 							</div>
 							<div class="tw-text-purple tw-whitespace-nowrap tw-flex tw-items-center tw-gap-2 tw-mr-2">
 								<ng-icon hlm name="lucideClock" class="!tw-w-4 !tw-h-4" />

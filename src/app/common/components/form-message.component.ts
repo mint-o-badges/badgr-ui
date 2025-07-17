@@ -6,7 +6,6 @@ import { Subscription } from 'rxjs';
 import { EventsService } from '../services/events.service';
 import Timeout = NodeJS.Timeout;
 import { animationFramePromise } from '../util/promise-util';
-import { NgIf } from '@angular/common';
 
 interface Notification {
 	submodule: 'notification-warning' | 'notification-success' | '';
@@ -25,25 +24,26 @@ const messageStatusTypeToNotificationMap: { [key in string]: Notification } = {
 @Component({
 	selector: 'form-message',
 	template: ` <div class="l-toast">
-		<div
-			*ngIf="msg"
-			class="notification notification-toast {{ notification.submodule }}"
-			[class.notification-is-active]="message"
-		>
-			<div class="notification-x-icon">
-				<svg class="navitem-x-icon" [attr.icon]="notification.icon"></svg>
+		@if (msg) {
+			<div
+				class="notification notification-toast {{ notification.submodule }}"
+				[class.notification-is-active]="message"
+			>
+				<div class="notification-x-icon">
+					<svg class="navitem-x-icon" [attr.icon]="notification.icon"></svg>
+				</div>
+				<div class="notification-x-text">
+					<h2>{{ notification.title }}</h2>
+					<p>{{ msg }}</p>
+				</div>
+				<button class="notification-x-close buttonicon buttonicon-clear" (click)="dismissMessage()">
+					<svg class="navitem-x-icon" [attr.icon]="'icon_close'"></svg>
+					<span class="visuallyhidden">Close Notification</span>
+				</button>
 			</div>
-			<div class="notification-x-text">
-				<h2>{{ notification.title }}</h2>
-				<p>{{ msg }}</p>
-			</div>
-			<button class="notification-x-close buttonicon buttonicon-clear" (click)="dismissMessage()">
-				<svg class="navitem-x-icon" [attr.icon]="'icon_close'"></svg>
-				<span class="visuallyhidden">Close Notification</span>
-			</button>
-		</div>
+		}
 	</div>`,
-	imports: [NgIf],
+	imports: [],
 })
 export class FormMessageComponent implements OnInit, OnDestroy {
 	messageDismissed = false;

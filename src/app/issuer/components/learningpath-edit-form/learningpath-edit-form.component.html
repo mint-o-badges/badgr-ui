@@ -2,15 +2,16 @@
 	<form-message></form-message>
 	<ng-container [formGroup]="learningPathForm.rawControl">
 		<oeb-stepper [linear]="true" [initialStep]="initialisedLearningpath ? 0 : 1">
-			<oeb-step
-				[label]="'CreateBadge.chooseBadgeCategory' | translate"
-				[optional]="false"
-				[route]="['/issuer/issuers/' + issuerSlug + '/badges' + '/select']"
-				errorMessage="Bitte Kategorie wählen"
-				[completed]="true"
-				*ngIf="!initialisedLearningpath"
-			>
-			</oeb-step>
+			@if (!initialisedLearningpath) {
+				<oeb-step
+					[label]="'CreateBadge.chooseBadgeCategory' | translate"
+					[optional]="false"
+					[route]="['/issuer/issuers/' + issuerSlug + '/badges' + '/select']"
+					errorMessage="Bitte Kategorie wählen"
+					[completed]="true"
+				>
+				</oeb-step>
+			}
 
 			<cdk-step
 				[label]="'CreateBadge.enterDetailsStep' | translate"
@@ -193,38 +194,41 @@
 													id="badge-catalog-select"
 												>
 													<option [ngValue]="'---'">{{ 'Badge.groupBy' | translate }}</option>
-													<option *ngFor="let option of groups" [value]="option">
-														{{ option }}
-													</option>
+													@for (option of groups; track option) {
+														<option [value]="option">
+															{{ option }}
+														</option>
+													}
 												</select>
 											</div>
 										</div>
 									</label>
 								</div>
 							</div>
-							<ng-container *ngIf="groupBy == '---'">
+							@if (groupBy == '---') {
 								<div class="tw-grid tw-grid-cols-badgesLp tw-gap-6 tw-mt-4">
-									<bg-badgecard
-										*ngFor="let badge of badgeResults; let i = index"
-										[badgeTitle]="badge.name"
-										[badgeImage]="badge.image"
-										[badgeDescription]="badge.description"
-										[badgeSlug]="badge.slug"
-										[issuerTitle]="badge.issuerName ? badge.issuerName : badge.issuer"
-										[badgeIssueDate]="badge.createdAt"
-										[public]="true"
-										[publicUrl]="badge.url"
-										[issuerSlug]="badge.issuerSlug"
-										[competencies]="badge.extension['extensions:CompetencyExtension']"
-										(ngModelChange)="checkboxChange($event, badge)"
-										(checkboxChange)="checkboxChange($event, badge)"
-										[checked]="badgeChecked(badge)"
-										[showCheckbox]="true"
-									></bg-badgecard>
+									@for (badge of badgeResults; track badge; let i = $index) {
+										<bg-badgecard
+											[badgeTitle]="badge.name"
+											[badgeImage]="badge.image"
+											[badgeDescription]="badge.description"
+											[badgeSlug]="badge.slug"
+											[issuerTitle]="badge.issuerName ? badge.issuerName : badge.issuer"
+											[badgeIssueDate]="badge.createdAt"
+											[public]="true"
+											[publicUrl]="badge.url"
+											[issuerSlug]="badge.issuerSlug"
+											[competencies]="badge.extension['extensions:CompetencyExtension']"
+											(ngModelChange)="checkboxChange($event, badge)"
+											(checkboxChange)="checkboxChange($event, badge)"
+											[checked]="badgeChecked(badge)"
+											[showCheckbox]="true"
+										></bg-badgecard>
+									}
 								</div>
-							</ng-container>
-							<ng-container *ngIf="groupBy == 'Kategorie' || groupBy == 'Category'">
-								<ng-container *ngFor="let categoryGroup of badgeResultsByCategory">
+							}
+							@if (groupBy == 'Kategorie' || groupBy == 'Category') {
+								@for (categoryGroup of badgeResultsByCategory; track categoryGroup) {
 									<h3 class="u-text-h3-semibold u-margin-bottom2x u-margin-top6x u-text-dark1">
 										{{ categoryOptions[categoryGroup.category] }}
 										<span class="u-text-small-semibold-caps u-text-dark4 u-margin-left2x"
@@ -234,27 +238,28 @@
 									</h3>
 									<div class="tw-grid tw-grid-cols-badgesLp tw-gap-6">
 										<!-- TODO: Fix the badgecard link for sharing and routing -->
-										<bg-badgecard
-											*ngFor="let badge of categoryGroup.badges"
-											[badgeTitle]="badge.name"
-											[badgeImage]="badge.image"
-											[badgeDescription]="badge.description"
-											[badgeSlug]="badge.slug"
-											[issuerTitle]="badge.issuerName ? badge.issuerName : badge.issuer"
-											[badgeIssueDate]="badge.createdAt"
-											[public]="true"
-											[publicUrl]="badge.url"
-											[competencies]="badge.extension['extensions:CompetencyExtension']"
-											[showCheckbox]="true"
-											(ngModelChange)="checkboxChange($event, badge)"
-											(checkboxChange)="checkboxChange($event, badge)"
-											[checked]="badgeChecked(badge)"
-										></bg-badgecard>
+										@for (badge of categoryGroup.badges; track badge) {
+											<bg-badgecard
+												[badgeTitle]="badge.name"
+												[badgeImage]="badge.image"
+												[badgeDescription]="badge.description"
+												[badgeSlug]="badge.slug"
+												[issuerTitle]="badge.issuerName ? badge.issuerName : badge.issuer"
+												[badgeIssueDate]="badge.createdAt"
+												[public]="true"
+												[publicUrl]="badge.url"
+												[competencies]="badge.extension['extensions:CompetencyExtension']"
+												[showCheckbox]="true"
+												(ngModelChange)="checkboxChange($event, badge)"
+												(checkboxChange)="checkboxChange($event, badge)"
+												[checked]="badgeChecked(badge)"
+											></bg-badgecard>
+										}
 									</div>
-								</ng-container>
-							</ng-container>
-							<ng-container *ngIf="groupBy == 'Issuer' || groupBy == 'Institution'">
-								<ng-container *ngFor="let issuerGroup of badgeResultsByIssuer">
+								}
+							}
+							@if (groupBy == 'Issuer' || groupBy == 'Institution') {
+								@for (issuerGroup of badgeResultsByIssuer; track issuerGroup) {
 									<h3 class="u-text-h3-semibold u-margin-bottom2x u-margin-top6x u-text-dark1">
 										{{ issuerGroup.issuerName }}
 										<span class="u-text-small-semibold-caps u-text-dark4 u-margin-left2x"
@@ -264,57 +269,68 @@
 									</h3>
 									<div class="tw-grid sm:tw-grid-cols-badgesLp tw-gap-6">
 										<!-- TODO: Fix the badgecard link for sharing and routing -->
-										<bg-badgecard
-											*ngFor="let badge of issuerGroup.badges"
-											[badgeTitle]="badge.name"
-											[badgeImage]="badge.image"
-											[badgeDescription]="badge.description"
-											[badgeSlug]="badge.slug"
-											[issuerTitle]="badge.issuerName ? badge.issuerName : badge.issuer"
-											[badgeIssueDate]="badge.createdAt"
-											[public]="true"
-											[publicUrl]="badge.url"
-											[competencies]="badge.extension['extensions:CompetencyExtension']"
-											[showCheckbox]="true"
-											(ngModelChange)="checkboxChange($event, badge)"
-											(checkboxChange)="checkboxChange($event, badge)"
-											[checked]="badgeChecked(badge)"
-										></bg-badgecard>
+										@for (badge of issuerGroup.badges; track badge) {
+											<bg-badgecard
+												[badgeTitle]="badge.name"
+												[badgeImage]="badge.image"
+												[badgeDescription]="badge.description"
+												[badgeSlug]="badge.slug"
+												[issuerTitle]="badge.issuerName ? badge.issuerName : badge.issuer"
+												[badgeIssueDate]="badge.createdAt"
+												[public]="true"
+												[publicUrl]="badge.url"
+												[competencies]="badge.extension['extensions:CompetencyExtension']"
+												[showCheckbox]="true"
+												(ngModelChange)="checkboxChange($event, badge)"
+												(checkboxChange)="checkboxChange($event, badge)"
+												[checked]="badgeChecked(badge)"
+											></bg-badgecard>
+										}
 									</div>
-								</ng-container>
-							</ng-container>
-							<p *ngIf="selectedBadges.length == 1" class="tw-mt-6">
-								{{ 'LearningPath.selectedBadgesOne' | translate }}
-							</p>
-							<p *ngIf="selectedBadges.length > 1" class="tw-mt-6">
-								{{ 'LearningPath.selectedBadges' | translate: { count: selectedBadges.length } }}
-							</p>
-
-							<section *ngIf="selectedBadges.length > 1">
-								<oeb-separator
-									[separatorStyle]="'tw-block tw-my-4 !tw-border !tw-border-dashed !tw-border-purple'"
-								></oeb-separator>
-								<h2 class="tw-text-purple tw-text-[22px] tw-leading-[120%]">
-									Optional:
-									<span class="tw-font-bold">{{ 'LearningPath.flexibleSelection' | translate }}</span>
-								</h2>
-								<p class="tw-text-purple tw-italic tw-text-lg tw-my-2">
-									{{ 'LearningPath.flexibleSelectionInfo' | translate }}
+								}
+							}
+							@if (selectedBadges.length == 1) {
+								<p class="tw-mt-6">
+									{{ 'LearningPath.selectedBadgesOne' | translate }}
 								</p>
-								<span class="tw-text-oebblack tw-text-lg">{{
-									'LearningPath.learnersHaveTo' | translate
-								}}</span>
-								<oeb-select
-									class="tw-block tw-max-w-32"
-									[options]="selectMinBadgesOptions"
-									[control]="learningPathForm.rawControlMap.required_badges_count"
-									[noTopMargin]="true"
-									placeholder="{{ 'General.all' | translate }}"
-								></oeb-select>
-								<span class="tw-text-oebblack tw-text-lg">{{
-									'LearningPath.learnersHaveTo2' | translate
-								}}</span>
-							</section>
+							}
+							@if (selectedBadges.length > 1) {
+								<p class="tw-mt-6">
+									{{ 'LearningPath.selectedBadges' | translate: { count: selectedBadges.length } }}
+								</p>
+							}
+
+							@if (selectedBadges.length > 1) {
+								<section>
+									<oeb-separator
+										[separatorStyle]="
+											'tw-block tw-my-4 !tw-border !tw-border-dashed !tw-border-purple'
+										"
+									></oeb-separator>
+									<h2 class="tw-text-purple tw-text-[22px] tw-leading-[120%]">
+										Optional:
+										<span class="tw-font-bold">{{
+											'LearningPath.flexibleSelection' | translate
+										}}</span>
+									</h2>
+									<p class="tw-text-purple tw-italic tw-text-lg tw-my-2">
+										{{ 'LearningPath.flexibleSelectionInfo' | translate }}
+									</p>
+									<span class="tw-text-oebblack tw-text-lg">{{
+										'LearningPath.learnersHaveTo' | translate
+									}}</span>
+									<oeb-select
+										class="tw-block tw-max-w-32"
+										[options]="selectMinBadgesOptions"
+										[control]="learningPathForm.rawControlMap.required_badges_count"
+										[noTopMargin]="true"
+										placeholder="{{ 'General.all' | translate }}"
+									></oeb-select>
+									<span class="tw-text-oebblack tw-text-lg">{{
+										'LearningPath.learnersHaveTo2' | translate
+									}}</span>
+								</section>
+							}
 						</div>
 					</div>
 				</ng-template>
@@ -330,29 +346,31 @@
 								[innerHtml]="'LearningPath.dragDropInfo' | translate"
 							></p>
 							<div class="tw-grid tw-grid-cols-1 tw-mt-4">
-								<div class="tw-list-decimal tw-mt-2" *ngFor="let item of draggableList; let i = index">
-									<div
-										class="md:tw-w-[392px] tw-flex tw-items-center tw-gap-4"
-										dndDraggable
-										[dndDraggable]="item"
-										(dndDrop)="onDrop($event, i, draggableList)"
-										dndDropzone
-									>
-										<div>
-											<span hlmP class="tw-font-extrabold tw-color-purple">{{ i + 1 }}</span>
-										</div>
-										<bg-badgecard
-											class="tw-grow"
-											[badgeTitle]="item.name"
-											[badgeImage]="item.image"
-											[badgeDescription]="item.description"
-											[badgeSlug]="item.slug"
-											[issuerTitle]="item.issuerName"
-											[checked]="true"
+								@for (item of draggableList; track item; let i = $index) {
+									<div class="tw-list-decimal tw-mt-2">
+										<div
+											class="md:tw-w-[392px] tw-flex tw-items-center tw-gap-4"
+											dndDraggable
+											[dndDraggable]="item"
+											(dndDrop)="onDrop($event, i, draggableList)"
+											dndDropzone
 										>
-										</bg-badgecard>
+											<div>
+												<span hlmP class="tw-font-extrabold tw-color-purple">{{ i + 1 }}</span>
+											</div>
+											<bg-badgecard
+												class="tw-grow"
+												[badgeTitle]="item.name"
+												[badgeImage]="item.image"
+												[badgeDescription]="item.description"
+												[badgeSlug]="item.slug"
+												[issuerTitle]="item.issuerName"
+												[checked]="true"
+											>
+											</bg-badgecard>
+										</div>
 									</div>
-								</div>
+								}
 							</div>
 						</div>
 					</div>
@@ -403,21 +421,22 @@
 								</oeb-button>
 							</div>
 						</div>
-						<div *ngIf="lpTags.size > 0" class="tw-flex tw-flex-wrap tw-gap-4 tw-w-[70%] tw-ml-[3.2rem]">
-							<div
-								class="tw-flex tw-items-center tw-rounded-full tw-py-1 tw-mb-2"
-								*ngFor="let tag of lpTags"
-							>
-								<oeb-button
-									variant="secondary"
-									size="xxs"
-									(click)="removeTag(tag)"
-									icon="lucideCircleX"
-									text="{{ tag }}"
-								>
-								</oeb-button>
+						@if (lpTags.size > 0) {
+							<div class="tw-flex tw-flex-wrap tw-gap-4 tw-w-[70%] tw-ml-[3.2rem]">
+								@for (tag of lpTags; track tag) {
+									<div class="tw-flex tw-items-center tw-rounded-full tw-py-1 tw-mb-2">
+										<oeb-button
+											variant="secondary"
+											size="xxs"
+											(click)="removeTag(tag)"
+											icon="lucideCircleX"
+											text="{{ tag }}"
+										>
+										</oeb-button>
+									</div>
+								}
 							</div>
-						</div>
+						}
 					</div>
 				</div>
 
@@ -499,10 +518,10 @@
 	</ng-container>
 
 	<!-- <div class="tw-flex tw-justify-end">
-		<p *ngIf="stepper?.selected?.hasError" class="tw-inline-block tw-text-red">
-			{{ stepper.selected.errorMessage }}
-		</p>
-	</div> -->
+          <p *ngIf="stepper?.selected?.hasError" class="tw-inline-block tw-text-red">
+            {{ stepper.selected.errorMessage }}
+          </p>
+        </div> -->
 
 	<form [formGroup]="learningPathForm.rawControl" #formElem (ngSubmit)="onSubmit()" novalidate>
 		<div class="tw-flex tw-justify-between md:tw-justify-end tw-flex-wrap sm:tw-flex-nowrap tw-gap-2 tw-mt-8">
@@ -517,33 +536,37 @@
 				text="{{ 'General.cancel' | translate }}"
 			></oeb-button>
 
-			<oeb-button
-				*ngIf="!firstStep()"
-				variant="secondary"
-				type="button"
-				[text]="previous"
-				(click)="previousStep()"
-				[disabled]="!!savePromise"
-				[class.disabled]="!!savePromise"
-				[disabled-when-requesting]="true"
-			>
-			</oeb-button>
+			@if (!firstStep()) {
+				<oeb-button
+					variant="secondary"
+					type="button"
+					[text]="previous"
+					(click)="previousStep()"
+					[disabled]="!!savePromise"
+					[class.disabled]="!!savePromise"
+					[disabled-when-requesting]="true"
+				>
+				</oeb-button>
+			}
 
-			<oeb-button *ngIf="!lastStep()" type="button" [text]="next" (click)="nextStep()"> </oeb-button>
+			@if (!lastStep()) {
+				<oeb-button type="button" [text]="next" (click)="nextStep()"> </oeb-button>
+			}
 
-			<oeb-button
-				*ngIf="lastStep()"
-				type="submit"
-				width="max_content"
-				[disabled]="!!savePromise || learningPathForm.invalid || selectedBadges.length < 2"
-				[loading-promises]="[savePromise]"
-				loading-message="{{ submittingText }}"
-				text="{{
-					(initialisedLearningpath ? 'General.saveChanges' : 'Issuer.myInstitutionsCreateLearningPath')
-						| translate
-				}}"
-			>
-			</oeb-button>
+			@if (lastStep()) {
+				<oeb-button
+					type="submit"
+					width="max_content"
+					[disabled]="!!savePromise || learningPathForm.invalid || selectedBadges.length < 2"
+					[loading-promises]="[savePromise]"
+					loading-message="{{ submittingText }}"
+					text="{{
+						(initialisedLearningpath ? 'General.saveChanges' : 'Issuer.myInstitutionsCreateLearningPath')
+							| translate
+					}}"
+				>
+				</oeb-button>
+			}
 		</div>
 	</form>
 </div>
