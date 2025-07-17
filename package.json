@@ -102,7 +102,6 @@
 		"@types/source-map": "0.5.7",
 		"@types/uglify-js": "3.17.4",
 		"@types/webpack": "^5.28.5",
-		"caniuse-lite": "^1.0.30000967",
 		"codelyzer": "^6.0.0",
 		"commitizen": "^4.3.0",
 		"cz-conventional-changelog": "^3.3.0",
@@ -147,16 +146,6 @@
 		"url-loader": "^4.1.1",
 		"webpack-cli": "^5.1.4"
 	},
-	"browserslist": [
-		"> 1%",
-		"last 2 Chrome version",
-		"last 2 Firefox version",
-		"last 2 Edge major versions",
-		"last 2 Safari major versions",
-		"last 2 iOS major versions",
-		"Firefox ESR",
-		"not IE < 12"
-	],
 	"config": {
 		"commitizen": {
 			"path": "./node_modules/cz-conventional-changelog"
