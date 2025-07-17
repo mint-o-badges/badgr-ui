@@ -619,6 +619,17 @@ export class RecipientEarnedBadgeListComponent
 		return totalStudyLoad;
 	}
 
+	checkCompleted(lp: LearningPath): boolean {
+		if (lp.required_badges_count != lp.badges.length) {
+			const badgeClassIds = lp.badges.map((b) => b.badge.slug);
+			const userBadgeCount = this.allBadges.filter((b) =>
+				badgeClassIds.some((i) => b.badgeClass.slug == i),
+			).length;
+			return userBadgeCount >= lp.required_badges_count;
+		}
+		return lp.completed_at != null;
+	}
+
 	routeToCollectionCreation() {
 		this.router.navigate(['recipient/badge-collections/create']);
 	}
