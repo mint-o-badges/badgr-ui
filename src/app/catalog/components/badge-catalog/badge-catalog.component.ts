@@ -11,7 +11,7 @@ import { appearAnimation } from '../../../common/animations/animations';
 import { FormMessageComponent } from '../../../common/components/form-message.component';
 import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
 import { CountUpModule } from 'ngx-countup';
-import { NgIf, NgFor } from '@angular/common';
+
 import { BadgeLegendComponent } from '../../../common/components/badge-legend/badge-legend.component';
 import { HlmInputDirective } from '../../../components/spartan/ui-input-helm/src/lib/hlm-input.directive';
 import { NgIcon } from '@ng-icons/core';
@@ -47,7 +47,6 @@ import { OebButtonComponent } from '~/components/oeb-button.component';
 		FormMessageComponent,
 		HlmH1Directive,
 		CountUpModule,
-		NgIf,
 		BadgeLegendComponent,
 		FormsModule,
 		HlmInputDirective,
@@ -55,7 +54,6 @@ import { OebButtonComponent } from '~/components/oeb-button.component';
 		HlmIconDirective,
 		OebGlobalSortSelectComponent,
 		OebSelectComponent,
-		NgFor,
 		SortPipe,
 		TranslatePipe,
 		BgBadgecard,

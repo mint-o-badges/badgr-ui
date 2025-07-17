@@ -22,23 +22,22 @@ import { HlmIconModule } from '@spartan-ng/ui-icon-helm';
 				<p>Status</p></hlm-th
 			>
 		</hlm-trow>
-		<hlm-trow
-			*ngFor="let participant of participants"
-			class="tw-border-purple tw-flex-wrap tw-justify-between md:tw-justify-normal tw-py-2"
-		>
-			<hlm-th class="tw-w-28 md:tw-w-48">
-				<span class="tw-text-oebblack tw-cursor-pointer">{{ participant.user.email }}</span>
-			</hlm-th>
-			<hlm-th class="tw-hidden md:tw-flex !tw-flex-1 tw-justify-center !tw-text-oebblack"
-				><p class="u-text">{{ participant.started_at | date: 'dd.MM.yyyy' }}</p></hlm-th
-			>
-			<hlm-th class="tw-justify-center sm:tw-justify-end tw-w-40 !tw-text-oebblack tw-flex-col">
-				<p class="md:tw-hidden">{{ participant.started_at | date: 'dd.MM.yyyy' }}</p>
-				<p class="tw-whitespace-nowrap">
-					{{ participant.completed_badges.length }} / {{ number_badges }} Badges
-				</p>
-			</hlm-th>
-		</hlm-trow>
+		@for (participant of participants; track participant) {
+			<hlm-trow class="tw-border-purple tw-flex-wrap tw-justify-between md:tw-justify-normal tw-py-2">
+				<hlm-th class="tw-w-28 md:tw-w-48">
+					<span class="tw-text-oebblack tw-cursor-pointer">{{ participant.user.email }}</span>
+				</hlm-th>
+				<hlm-th class="tw-hidden md:tw-flex !tw-flex-1 tw-justify-center !tw-text-oebblack"
+					><p class="u-text">{{ participant.started_at | date: 'dd.MM.yyyy' }}</p></hlm-th
+				>
+				<hlm-th class="tw-justify-center sm:tw-justify-end tw-w-40 !tw-text-oebblack tw-flex-col">
+					<p class="md:tw-hidden">{{ participant.started_at | date: 'dd.MM.yyyy' }}</p>
+					<p class="tw-whitespace-nowrap">
+						{{ participant.completed_badges.length }} / {{ number_badges }} Badges
+					</p>
+				</hlm-th>
+			</hlm-trow>
+		}
 	</hlm-table>`,
 })
 export class LearningPathParticipantsDatatableComponent {

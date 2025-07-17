@@ -7,7 +7,9 @@
 		</div>
 	</div>
 
-	<app-badge-legend *ngIf="showLegend()" (closed)="closeLegend()"></app-badge-legend>
+	@if (showLegend()) {
+		<app-badge-legend (closed)="closeLegend()"></app-badge-legend>
+	}
 
 	<div class="tw-relative">
 		<section class="">
@@ -57,41 +59,41 @@
 			</div>
 			<div class="subtitle-wrapper">
 				<ul class="tags-wrapper oeb-standard-padding-bottom">
-					<li
-						*ngFor="let tag of tagsControl.value | sort"
-						class="tag tag-close tag-delete tag-button tw-mr-2"
-						(click)="removeTag(tag)"
-					>
-						{{ tag }}
-					</li>
+					@for (tag of tagsControl.value | sort; track tag) {
+						<li class="tag tag-close tag-delete tag-button tw-mr-2" (click)="removeTag(tag)">
+							{{ tag }}
+						</li>
+					}
 				</ul>
 				<div class="open-legend-button">
 					<a (click)="openLegend()">{{ 'Badge.framesMeaning' | translate }}</a>
 				</div>
 			</div>
 			<div class="tw-gap-6 tw-grid tw-grid-cols-badges" [@stagger]>
-				<bg-badgecard
-					*ngFor="let badge of badges(); trackBy: trackById"
-					@appearAnimation
-					[badgeTitle]="badge.name"
-					[badgeImage]="badge.image"
-					[badgeDescription]="badge.description"
-					[badgeSlug]="badge.slug"
-					[issuerTitle]="badge.issuerName"
-					[badgeIssueDate]="badge.createdAt"
-					[public]="true"
-					[publicUrl]="badge.url"
-					[issuerSlug]="badge.issuerSlug"
-					[competencies]="badge.extensions['extensions:CompetencyExtension']"
-					[tags]="badge.tags"
-				></bg-badgecard>
+				@for (badge of badges(); track trackById($index, badge)) {
+					<bg-badgecard
+						@appearAnimation
+						[badgeTitle]="badge.name"
+						[badgeImage]="badge.image"
+						[badgeDescription]="badge.description"
+						[badgeSlug]="badge.slug"
+						[issuerTitle]="badge.issuerName"
+						[badgeIssueDate]="badge.createdAt"
+						[public]="true"
+						[publicUrl]="badge.url"
+						[issuerSlug]="badge.issuerSlug"
+						[competencies]="badge.extensions['extensions:CompetencyExtension']"
+						[tags]="badge.tags"
+					></bg-badgecard>
+				}
 			</div>
-			<p
-				*ngIf="!badges().length && !hasNext()"
-				class="tw-m-auto tw-max-w-[300px] tw-p-4 tw-border-solid tw-border-[1px] tw-border-[var(--color-blue)] tw-rounded-lg tw-bg-[var(--color-lightpurple)] tw-text-center"
-			>
-				{{ 'General.noResults' | translate }}
-			</p>
+			@if (!badges().length && !hasNext()) {
+				<p
+					class="tw-m-auto tw-max-w-[300px] tw-p-4 tw-border-solid tw-border-[1px] tw-border-[var(--color-blue)] tw-rounded-lg tw-bg-[var(--color-lightpurple)] tw-text-center"
+				>
+					{{ 'General.noResults' | translate }}
+				</p>
+			}
 		</section>
 	</div>
 	<div #loadMore class="oeb-section-sm">
@@ -111,9 +113,13 @@
 		} @else {
 			<h4 hlmH4 class="tw-text-oebblack tw-text-center">{{ 'Badge.catalogAllLoaded' | translate }}</h4>
 			<h4 hlmH4 class="tw-font-black tw-text-purple tw-text-center">
-				<span [countUp]="badges().length" *ngIf="badges().length > 1">{{ badges().length }}</span>
+				@if (badges().length > 1) {
+					<span [countUp]="badges().length">{{ badges().length }}</span>
+				}
 				{{ badgesPluralWord() }} in
-				<span [countUp]="issuers().length" *ngIf="issuers().length > 1">{{ issuers().length }}</span>
+				@if (issuers().length > 1) {
+					<span [countUp]="issuers().length">{{ issuers().length }}</span>
+				}
 				{{ issuersPluralWord() }}
 			</h4>
 		}

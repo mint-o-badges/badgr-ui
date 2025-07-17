@@ -16,7 +16,7 @@ import { CdkStepper, STEPPER_GLOBAL_OPTIONS, CdkStep } from '@angular/cdk/steppe
 import { StepComponent } from './step.component';
 import { Router } from '@angular/router';
 import { Directionality } from '@angular/cdk/bidi';
-import { NgFor, NgClass, NgTemplateOutlet } from '@angular/common';
+import { NgClass, NgTemplateOutlet } from '@angular/common';
 
 @Component({
 	selector: 'oeb-stepper',
@@ -34,7 +34,7 @@ import { NgFor, NgClass, NgTemplateOutlet } from '@angular/common';
 			useValue: { showError: true },
 		},
 	],
-	imports: [NgFor, NgClass, NgTemplateOutlet],
+	imports: [NgClass, NgTemplateOutlet],
 })
 export class StepperComponent extends CdkStepper implements OnInit {
 	@Input()

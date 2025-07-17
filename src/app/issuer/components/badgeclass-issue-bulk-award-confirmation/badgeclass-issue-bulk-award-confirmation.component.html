@@ -22,22 +22,24 @@
 				</tr>
 			</thead>
 			<tbody class="datatable-x-body">
-				<tr class="datatable-x-row" *ngFor="let row of transformedImportData.validRowsTransformed">
-					<td class="datatable-x-cell">
-						{{ row.email }}
-					</td>
-					<td class="datatable-x-cell">
-						{{ row.name }}
-					</td>
-					<td class="datatable-x-cell">
-						<oeb-button
-							variant="secondary"
-							size="xs"
-							text="Entfernen"
-							(click)="removeValidRowsTransformed(row)"
-						></oeb-button>
-					</td>
-				</tr>
+				@for (row of transformedImportData.validRowsTransformed; track row) {
+					<tr class="datatable-x-row">
+						<td class="datatable-x-cell">
+							{{ row.email }}
+						</td>
+						<td class="datatable-x-cell">
+							{{ row.name }}
+						</td>
+						<td class="datatable-x-cell">
+							<oeb-button
+								variant="secondary"
+								size="xs"
+								text="Entfernen"
+								(click)="removeValidRowsTransformed(row)"
+							></oeb-button>
+						</td>
+					</tr>
+				}
 			</tbody>
 
 			<tbody></tbody>

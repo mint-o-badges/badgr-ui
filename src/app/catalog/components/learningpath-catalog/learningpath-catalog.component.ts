@@ -19,7 +19,7 @@ import { applySorting, sortUnique } from '../../util/sorting';
 import { FormMessageComponent } from '../../../common/components/form-message.component';
 import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
-import { NgIf, NgFor } from '@angular/common';
+
 import { CountUpModule } from 'ngx-countup';
 import { HlmInputDirective } from '../../../components/spartan/ui-input-helm/src/lib/hlm-input.directive';
 import { NgIcon } from '@ng-icons/core';
@@ -37,14 +37,12 @@ import { PaginationAdvancedComponent } from '../../../components/oeb-numbered-pa
 		FormMessageComponent,
 		BgAwaitPromises,
 		HlmH1Directive,
-		NgIf,
 		CountUpModule,
 		FormsModule,
 		HlmInputDirective,
 		NgIcon,
 		HlmIconDirective,
 		OebGlobalSortSelectComponent,
-		NgFor,
 		BgLearningPathCard,
 		PaginationAdvancedComponent,
 		TranslatePipe,

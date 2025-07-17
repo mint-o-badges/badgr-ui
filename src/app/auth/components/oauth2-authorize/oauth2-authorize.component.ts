@@ -13,14 +13,14 @@ import { AppConfigService } from '../../../common/app-config.service';
 import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 import { FormMessageComponent } from '../../../common/components/form-message.component';
 import { SvgIconComponent } from '../../../common/components/svg-icon.component';
-import { NgFor } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { PatternLibraryIconName } from '../../../common/components/svg-icon.component';
 
 @Component({
 	// selector: 'logout',
 	templateUrl: './oauth2-authorize.component.html',
-	imports: [BgAwaitPromises, FormMessageComponent, SvgIconComponent, NgFor, FormsModule],
+	imports: [BgAwaitPromises, FormMessageComponent, SvgIconComponent, FormsModule],
 })
 export class OAuth2AuthorizeComponent extends BaseRoutableComponent {
 	readonly authLinkLogoSrc = this.theme.logoImg.small;

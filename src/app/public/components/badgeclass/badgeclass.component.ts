@@ -26,7 +26,7 @@ import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src
 import { DialogComponent } from '../../../components/dialog.component';
 import { BrnDialogRef } from '@spartan-ng/brain/dialog';
 import { BgBadgeDetail } from '../../../common/components/badge-detail/badge-detail.component';
-import { NgIf, NgFor } from '@angular/common';
+
 import { OebSeparatorComponent } from '../../../components/oeb-separator.component';
 import { BgLearningPathCard } from '../../../common/components/bg-learningpathcard';
 import { HlmH2Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h2.directive';
@@ -37,9 +37,7 @@ import { OebButtonComponent } from '../../../components/oeb-button.component';
 	templateUrl: './badgeclass.component.html',
 	imports: [
 		BgBadgeDetail,
-		NgIf,
 		OebSeparatorComponent,
-		NgFor,
 		BgLearningPathCard,
 		HlmH2Directive,
 		FormsModule,
