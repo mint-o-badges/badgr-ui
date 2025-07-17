@@ -43,7 +43,7 @@ import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src
 import { inject } from '@angular/core';
 import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
 import { ApiLearningPath } from '../../../common/model/learningpath-api.model';
-import { ViewportScroller, NgIf, NgFor } from '@angular/common';
+import { ViewportScroller } from '@angular/common';
 import { TaskResult, TaskStatus, TaskPollingManagerService } from '../../../common/task-manager.service';
 import { Subscription } from 'rxjs';
 import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
@@ -85,16 +85,14 @@ import { OebButtonComponent } from '../../../components/oeb-button.component';
 			</ng-template>
 			<ng-template #issuerSelection>
 				<div class="tw-mb-8">
-					<ng-container *ngIf="config.copy_permissions.includes('others'); else originalIssuer">
-						<ng-container *ngFor="let issuer of userIssuers">
+					@if (config.copy_permissions.includes('others')) {
+						@for (issuer of userIssuers; track issuer) {
 							<label class="radio tw-mb-2">
 								<input type="radio" [(ngModel)]="selectedIssuer" [value]="issuer" />
 								<span class="radio-x-text">{{ issuer.name }}</span>
 							</label>
-						</ng-container>
-					</ng-container>
-
-					<ng-template #originalIssuer>
+						}
+					} @else {
 						<span class="tw-text-oebblack tw-text-center tw-my-2">
 							{{ 'Badge.copyPermissionInfo' | translate }}
 						</span>
@@ -102,7 +100,7 @@ import { OebButtonComponent } from '../../../components/oeb-button.component';
 							<input type="radio" [(ngModel)]="selectedIssuer" [value]="issuer" />
 							<span class="radio-x-text">{{ config.issuerName }}</span>
 						</label>
-					</ng-template>
+					}
 				</div>
 				<oeb-button
 					width="full_width"
@@ -121,8 +119,6 @@ import { OebButtonComponent } from '../../../components/oeb-button.component';
 		QrCodeAwardsComponent,
 		IssuerDetailDatatableComponent,
 		HlmH2Directive,
-		NgIf,
-		NgFor,
 		FormsModule,
 		OebButtonComponent,
 		TranslatePipe,

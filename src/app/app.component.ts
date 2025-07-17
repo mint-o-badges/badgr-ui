@@ -1,5 +1,15 @@
-import { AfterViewInit, Component, OnInit, Renderer2, ViewChild, Inject, signal, computed } from '@angular/core';
-import { DOCUMENT, NgIf, NgStyle, NgFor } from '@angular/common';
+import {
+	AfterViewInit,
+	Component,
+	OnInit,
+	Renderer2,
+	ViewChild,
+	Inject,
+	signal,
+	computed,
+	DOCUMENT,
+} from '@angular/core';
+import { NgStyle } from '@angular/common';
 import { Router, RouterLinkActive, RouterLink, RouterOutlet } from '@angular/router';
 
 import { MessageService } from './common/services/message.service';
@@ -57,7 +67,6 @@ import { IconsProvider } from './icons-provider';
 	styleUrls: ['./app.component.scss'],
 	imports: [
 		SourceListenerDirective,
-		NgIf,
 		OebDropdownComponent,
 		RouterLinkActive,
 		RouterLink,
@@ -68,7 +77,6 @@ import { IconsProvider } from './icons-provider';
 		BgPopupMenuTriggerDirective,
 		SvgIconComponent,
 		BgPopupMenu,
-		NgFor,
 		MenuItemDirective,
 		RouterOutlet,
 		ConfirmDialog,

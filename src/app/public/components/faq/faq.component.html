@@ -29,22 +29,26 @@
 			/>
 		</div>
 	</div>
-	<div *ngFor="let item of data; let i = index" class="tw-flex tw-flex-col tw-w-full tw-max-w-6xl">
-		<div class="tw-mt-4">
-			<button
-				[ngClass]="item.isActive ? 'tw-text-[var(--color-red)]' : 'tw-text-[var(--color-purple)]'"
-				class="accordion tw-px-4 tw-py-2"
-				(click)="toggleAccordian($event, i)"
-			>
-				{{ item.Q | translate }}
-			</button>
-			<div class="panel" hide="!item.isActive">
-				<input type="text" />
-				<div *ngFor="let answer of item.A">
-					<p class="tw-mt-2 md:tw-text-lg tw-text-oebblack">{{ answer.text | translate }}</p>
+	@for (item of data; track item; let i = $index) {
+		<div class="tw-flex tw-flex-col tw-w-full tw-max-w-6xl">
+			<div class="tw-mt-4">
+				<button
+					[ngClass]="item.isActive ? 'tw-text-[var(--color-red)]' : 'tw-text-[var(--color-purple)]'"
+					class="accordion tw-px-4 tw-py-2"
+					(click)="toggleAccordian($event, i)"
+				>
+					{{ item.Q | translate }}
+				</button>
+				<div class="panel" hide="!item.isActive">
+					<input type="text" />
+					@for (answer of item.A; track answer) {
+						<div>
+							<p class="tw-mt-2 md:tw-text-lg tw-text-oebblack">{{ answer.text | translate }}</p>
+						</div>
+					}
 				</div>
 			</div>
+			<hr class="tw-w-full tw-mt-2 tw-border-2 tw-border-solid tw-border-[var(--color-lightgray)]" />
 		</div>
-		<hr class="tw-w-full tw-mt-2 tw-border-2 tw-border-solid tw-border-[var(--color-lightgray)]" />
-	</div>
+	}
 </div>

@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { TranslateModule } from '@ngx-translate/core';
 import { TypedFormControl } from '../../../common/util/typed-forms';
 import { BgFormFieldImageComponent } from '../../../common/components/formfield-image';
@@ -8,7 +8,7 @@ import { FormFieldText } from '../../../common/components/formfield-text';
 @Component({
 	selector: 'app-upload-tab',
 	standalone: true,
-	imports: [CommonModule, TranslateModule, BgFormFieldImageComponent],
+	imports: [TranslateModule, BgFormFieldImageComponent],
 	template: `
 		<div class="tw-p-6">
 			<bg-formfield-image
@@ -36,7 +36,7 @@ export class UploadTabComponent {
 @Component({
 	selector: 'app-url-tab',
 	standalone: true,
-	imports: [CommonModule, TranslateModule, FormFieldText],
+	imports: [TranslateModule, FormFieldText],
 	template: `
 		<div class="u-padding-all3x">
 			<div class="forminput">
@@ -66,7 +66,7 @@ export class UrlTabComponent {
 @Component({
 	selector: 'app-json-tab',
 	standalone: true,
-	imports: [CommonModule, TranslateModule, FormFieldText],
+	imports: [TranslateModule, FormFieldText],
 	template: `
 		<div class="u-padding-all3x">
 			<div class="forminput">

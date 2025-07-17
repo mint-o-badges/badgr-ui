@@ -32,13 +32,14 @@
 						</div>
 					</div>
 					<div class="video-container md:tw-w-[52%] tw-h-[370px] tw-relative tw-m-4 tw-box-border">
-						<img
-							class="tw-cursor-pointer tw-relative tw-z-10"
-							[src]="thumbnailSrc"
-							alt="Thumbnail"
-							*ngIf="!videoStarted"
-							(click)="startVideo()"
-						/>
+						@if (!videoStarted) {
+							<img
+								class="tw-cursor-pointer tw-relative tw-z-10"
+								[src]="thumbnailSrc"
+								alt="Thumbnail"
+								(click)="startVideo()"
+							/>
+						}
 						<iframe
 							[hidden]="!videoStarted"
 							src="https://www.youtube.com/embed/KZqY_jY4ZD4"

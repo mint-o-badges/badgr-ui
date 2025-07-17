@@ -7,7 +7,7 @@ import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/sr
 import { HlmIconDirective } from '../../../components/spartan/ui-icon-helm/src';
 import { HlmH3Directive } from '../../../components/spartan/ui-typography-helm/src';
 import { lucideInfo } from '@ng-icons/lucide';
-import { NgIf } from '@angular/common';
+
 import { TranslateService } from '@ngx-translate/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { provideIcons } from '@ng-icons/core';
@@ -21,7 +21,6 @@ import { provideIcons } from '@ng-icons/core';
 		HlmH3Directive,
 		NgIcon,
 		HlmIconDirective,
-		NgIf,
 		TranslateModule,
 	],
 	providers: [TranslateService, provideIcons({ lucideInfo })],
@@ -36,21 +35,20 @@ import { provideIcons } from '@ng-icons/core';
 				{{ caption }}
 			</h3>
 			<div class="tw-flex tw-flex-col tw-gap-2 tw-my-2">
-				<p hlmP *ngIf="subtitle">
-					{{ subtitle }}
-				</p>
-				<p hlmP *ngIf="text" class="tw-italic">
-					{{ text }}
-				</p>
+				@if (subtitle) {
+					<p hlmP>
+						{{ subtitle }}
+					</p>
+				}
+				@if (text) {
+					<p hlmP class="tw-italic">
+						{{ text }}
+					</p>
+				}
 			</div>
-			<oeb-button
-				(click)="clickSingleButton()"
-				size="sm"
-				*ngIf="singleButtonText; else TwoButtons"
-				[text]="singleButtonText"
-			>
-			</oeb-button>
-			<ng-template #TwoButtons>
+			@if (singleButtonText) {
+				<oeb-button (click)="clickSingleButton()" size="sm" [text]="singleButtonText"> </oeb-button>
+			} @else {
 				<div class="tw-flex tw-justify-around tw-mt-6">
 					<oeb-button size="md" variant="secondary" [text]="cancelText" (click)="cancel()"></oeb-button>
 					<oeb-button
@@ -62,7 +60,7 @@ import { provideIcons } from '@ng-icons/core';
 						(click)="continue()"
 					></oeb-button>
 				</div>
-			</ng-template>
+			}
 		</oeb-dialog>
 	`,
 })

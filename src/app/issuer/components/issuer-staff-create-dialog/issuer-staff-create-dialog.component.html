@@ -17,16 +17,17 @@
 
 			<h3 class="u-margin-bottom2x u-text-small-bold">{{ 'Issuer.addMember_chooseRole' | translate }}</h3>
 			<form [formGroup]="staffCreateForm.rawControl" (ngSubmit)="submitStaffCreate()">
-				<bg-formfield-radio
-					*ngFor="let role of issuerStaffRoleOptions; last as last"
-					[control]="staffCreateForm.rawControlMap.staffRole"
-					[name]="'staffRole'"
-					[label]="role.label"
-					[value]="role.value"
-					[sublabel]="role.description"
-					[last]="last"
-					errorMessage="{{ 'Issuer.addMember_selectRole' | translate }}"
-				></bg-formfield-radio>
+				@for (role of issuerStaffRoleOptions; track role; let last = $last) {
+					<bg-formfield-radio
+						[control]="staffCreateForm.rawControlMap.staffRole"
+						[name]="'staffRole'"
+						[label]="role.label"
+						[value]="role.value"
+						[sublabel]="role.description"
+						[last]="last"
+						errorMessage="{{ 'Issuer.addMember_selectRole' | translate }}"
+					></bg-formfield-radio>
+				}
 				<bg-formfield-text
 					[control]="staffCreateForm.rawControlMap.staffEmail"
 					label="{{ 'Issuer.addMember_newEmail' | translate }}"
@@ -36,17 +37,19 @@
 				></bg-formfield-text>
 				<br />
 
-				<div class="notification notification-warning notification-is-active" *ngIf="error">
-					<div class="notification-x-icon">
-						<svg>
-							<use xlink:href="/images/icons.svg#icon_priority_high"></use>
-						</svg>
+				@if (error) {
+					<div class="notification notification-warning notification-is-active">
+						<div class="notification-x-icon">
+							<svg>
+								<use xlink:href="/images/icons.svg#icon_priority_high"></use>
+							</svg>
+						</div>
+						<div class="notification-x-text">
+							<h2>{{ 'Issuer.addMember_failed' | translate }}!</h2>
+							<p>{{ error }}</p>
+						</div>
 					</div>
-					<div class="notification-x-text">
-						<h2>{{ 'Issuer.addMember_failed' | translate }}!</h2>
-						<p>{{ error }}</p>
-					</div>
-				</div>
+				}
 
 				<div class="l-stack l-stack-buttons u-margin-top4x">
 					<button class="button" type="submit">{{ 'Issuer.addMember' | translate }}</button>

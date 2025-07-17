@@ -22,11 +22,17 @@
 		</p>
 		<p [innerHTML]="text" class="tw-mt-2 tw-text-purple tw-italic tw-text-center"></p>
 	</div>
-	<div class="tw-flex tw-justify-center tw-items-center tw-mt-2 tw-gap-2" *ngIf="buttontext">
-		<oeb-button size="sm" (click)="closeDialog()" [text]="'General.cancel' | translate" variant="secondary">
-		</oeb-button>
-		<oeb-button (click)="routeToUserProfile()" size="sm" [text]="'General.toMyProfile' | translate"></oeb-button>
-	</div>
+	@if (buttontext) {
+		<div class="tw-flex tw-justify-center tw-items-center tw-mt-2 tw-gap-2">
+			<oeb-button size="sm" (click)="closeDialog()" [text]="'General.cancel' | translate" variant="secondary">
+			</oeb-button>
+			<oeb-button
+				(click)="routeToUserProfile()"
+				size="sm"
+				[text]="'General.toMyProfile' | translate"
+			></oeb-button>
+		</div>
+	}
 </ng-template>
 
 <!-- Tab content templates -->
@@ -64,21 +70,23 @@
 			(onTabChanged)="currentTab = $event"
 		></oeb-backpack-tabs>
 
-		<div *ngIf="formError" class="u-padding-all3x">
-			<div class="notification notification-warning notification-is-active">
-				<div class="notification-x-icon">
-					<svg icon="icon_priority_high"></svg>
+		@if (formError) {
+			<div class="u-padding-all3x">
+				<div class="notification notification-warning notification-is-active">
+					<div class="notification-x-icon">
+						<svg icon="icon_priority_high"></svg>
+					</div>
+					<div class="notification-x-text">
+						<h2>Uh Oh...</h2>
+						<p>{{ formError }}</p>
+					</div>
+					<button class="notification-x-close buttonicon buttonicon-clear" (click)="clearFormError()">
+						<svg icon="icon_close"></svg>
+						<span class="visuallyhidden">{{ 'RecBadge.closeNotification' | translate }}</span>
+					</button>
 				</div>
-				<div class="notification-x-text">
-					<h2>Uh Oh...</h2>
-					<p>{{ formError }}</p>
-				</div>
-				<button class="notification-x-close buttonicon buttonicon-clear" (click)="clearFormError()">
-					<svg icon="icon_close"></svg>
-					<span class="visuallyhidden">{{ 'RecBadge.closeNotification' | translate }}</span>
-				</button>
 			</div>
-		</div>
+		}
 
 		<div class="tw-flex tw-flex-row tw-gap-4 tw-justify-start tw-mt-6">
 			<oeb-button

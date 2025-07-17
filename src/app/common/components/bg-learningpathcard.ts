@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, HostBinding, Output } from '@angular/core';
 import { LearningPathApiService } from '../services/learningpath-api.service';
 import { RouterLink } from '@angular/router';
-import { NgIf, NgFor, SlicePipe } from '@angular/common';
+import { SlicePipe } from '@angular/common';
 import { NgIcon } from '@ng-icons/core';
 import { HlmIconDirective } from '../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
 import { BgImageStatusPlaceholderDirective } from '../directives/bg-image-status-placeholder.directive';
@@ -23,34 +23,37 @@ type MatchOrProgressType = { match?: string; progress?: number };
 				<div
 					class="tw-bg-[var(--color-lightgray)] tw-w-full tw-relative tw-h-[175px] tw-items-center tw-flex tw-justify-center tw-p-2 tw-rounded-[3px]"
 				>
-					<div *ngIf="!completed" class="tw-absolute tw-top-[10px] tw-right-[10px]">
-						<img
-							src="/assets/oeb/images/learningPath/learningPathIcon.svg"
-							class="tw-w-[30px]"
-							alt="LearningPath"
-						/>
-					</div>
-					<div
-						*ngIf="completed"
-						class="tw-absolute tw-top-[10px] tw-right-[10px] tw-flex tw-justify-center tw-items-center tw-gap-2"
-					>
-						<div class="tw-inline-block">
+					@if (!completed) {
+						<div class="tw-absolute tw-top-[10px] tw-right-[10px]">
 							<img
 								src="/assets/oeb/images/learningPath/learningPathIcon.svg"
 								class="tw-w-[30px]"
 								alt="LearningPath"
 							/>
 						</div>
+					}
+					@if (completed) {
 						<div
-							class="tw-bg-white tw-inline-flex tw-rounded-full tw-justify-center tw-items-center tw-border-solid tw-border-green tw-border-[3px] "
+							class="tw-absolute tw-top-[10px] tw-right-[10px] tw-flex tw-justify-center tw-items-center tw-gap-2"
 						>
-							<ng-icon
-								hlm
-								class="tw-text-purple tw-box-border tw-w-[26px] tw-h-[26px]"
-								name="lucideCheck"
-							/>
+							<div class="tw-inline-block">
+								<img
+									src="/assets/oeb/images/learningPath/learningPathIcon.svg"
+									class="tw-w-[30px]"
+									alt="LearningPath"
+								/>
+							</div>
+							<div
+								class="tw-bg-white tw-inline-flex tw-rounded-full tw-justify-center tw-items-center tw-border-solid tw-border-green tw-border-[3px] "
+							>
+								<ng-icon
+									hlm
+									class="tw-text-purple tw-box-border tw-w-[26px] tw-h-[26px]"
+									name="lucideCheck"
+								/>
+							</div>
 						</div>
-					</div>
+					}
 
 					<img
 						class="tw-w-[145px] tw-h-[145px]"
@@ -64,34 +67,41 @@ type MatchOrProgressType = { match?: string; progress?: number };
 					<span class="tw-font-semibold tw-text-[22px] tw-leading-[26px] oeb-break-words">{{ name }}</span>
 					<a class="tw-text-[18px] tw-leading-[23.4px] oeb-break-words">{{ issuerTitle }}</a>
 					<div class="tw-items-center">
-						<div *ngIf="!isProgress" class="oeb-standard-padding-bottom tw-gap-1 tw-flex tw-flex-wrap">
-							<div hlmP size="sm" class="oeb-tag" *ngFor="let tag of tags | slice: 0 : 3; last as last">
-								{{ tag }}
+						@if (!isProgress) {
+							<div class="oeb-standard-padding-bottom tw-gap-1 tw-flex tw-flex-wrap">
+								@for (tag of tags | slice: 0 : 3; track tag; let last = $last) {
+									<div hlmP size="sm" class="oeb-tag">
+										{{ tag }}
+									</div>
+								}
 							</div>
-						</div>
-						<div *ngIf="isMatch; else progressBar">
-							<div
-								class="tw-px-[11.55px] tw-py-[3.85px] tw-bg-lightpurple tw-rounded-[95px] tw-inline-block"
-							>
-								<span class="tw-text-sm tw-text-purple">{{ this.isMatch }} Badges</span>
+						}
+						@if (isMatch) {
+							<div>
+								<div
+									class="tw-px-[11.55px] tw-py-[3.85px] tw-bg-lightpurple tw-rounded-[95px] tw-inline-block"
+								>
+									<span class="tw-text-sm tw-text-purple">{{ this.isMatch }} Badges</span>
+								</div>
 							</div>
-						</div>
-						<ng-template #progressBar>
-							<div
-								*ngIf="progress === 0 || progress"
-								class="tw-mb-4 tw-w-full tw-mt-6 tw-flex tw-justify-center tw-items-center"
-							>
-								<oeb-progress
-									class="tw-w-full tw-h-7 tw-relative tw-inline-flex tw-overflow-hidden tw-rounded-3xl tw-bg-white tw-items-center"
-									[value]="progressValue"
-									[template]="requested ? requestedTemplate : progressTemplate"
-								></oeb-progress>
-							</div>
-						</ng-template>
+						} @else {
+							@if (progress === 0 || progress) {
+								<div class="tw-mb-4 tw-w-full tw-mt-6 tw-flex tw-justify-center tw-items-center">
+									<oeb-progress
+										class="tw-w-full tw-h-7 tw-relative tw-inline-flex tw-overflow-hidden tw-rounded-3xl tw-bg-white tw-items-center"
+										[value]="progressValue"
+										[template]="requested ? requestedTemplate : progressTemplate"
+									></oeb-progress>
+								</div>
+							}
+						}
 						<ng-template #progressTemplate>
 							<div class="tw-absolute tw-w-full tw-text-left">
 								<span class="tw-ml-2 tw-text-sm tw-text-purple"
-									>Micro Degree <span *ngIf="!completed">{{ progressValue }}%</span>
+									>Micro Degree
+									@if (!completed) {
+										<span>{{ progressValue }}%</span>
+									}
 									{{ 'LearningPath.finished' | translate }}</span
 								>
 							</div>
@@ -117,11 +127,9 @@ type MatchOrProgressType = { match?: string; progress?: number };
 	`,
 	imports: [
 		RouterLink,
-		NgIf,
 		NgIcon,
 		HlmIconDirective,
 		BgImageStatusPlaceholderDirective,
-		NgFor,
 		HlmPDirective,
 		OebProgressComponent,
 		SlicePipe,
@@ -155,7 +163,7 @@ export class BgLearningPathCard {
 	@Output() shareClicked = new EventEmitter<MouseEvent>();
 
 	@HostBinding('class') get hostClasses(): string {
-		if (this.isProgress && this.progress / this.studyLoad < 1) {
+		if (this.isProgress && this.progress / this.studyLoad < 1 && !this.completed) {
 			return 'tw-bg-[var(--color-lightgreen)] tw-border-purple tw-border';
 		} else if (this.isProgress && this.progress / this.studyLoad === 1 && !this.completed && !this.requested) {
 			return 'tw-bg-[var(--color-lightgreen)] tw-border-green tw-border-4';
@@ -180,6 +188,9 @@ export class BgLearningPathCard {
 	}
 
 	get progressValue(): number {
+		if (this.completed) {
+			return 100;
+		}
 		return Math.floor((this.progress / this.studyLoad) * 100);
 	}
 }

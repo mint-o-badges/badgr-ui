@@ -2,7 +2,6 @@ import { Component, ElementRef, Renderer2, Output, EventEmitter, Input } from '@
 import { BaseDialog } from '../../../common/dialogs/base-dialog';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { SvgIconComponent } from '../../../common/components/svg-icon.component';
-import { NgIf } from '@angular/common';
 
 @Component({
 	selector: 'app-integration-details-dialog',
@@ -21,26 +20,28 @@ import { NgIf } from '@angular/common';
 				</button>
 			</div>
 			<div class="u-padding-yaxis2x u-margin-xaxis2x border border-top border-light3">
-				<div *ngIf="credentials" class="tw-px-4 tw-my-6">
-					<div>
-						<h2
-							class="tw-font-extrabold md:tw-text-[30px] md:tw-leading-[36px] tw-text-purple tw-text-[20px] tw-leading-[24px] tw-py-4"
-						>
-							{{ credentials.name }}
-						</h2>
-						<div class="forminput tw-py-4">
-							<div class="forminput-x-inputs">
-								<label class="forminput-x-label">Client ID</label>
-								<input
-									class="tw-w-full tw-p-2"
-									type="text"
-									disabled
-									value="{{ credentials.clientId }}"
-								/>
+				@if (credentials) {
+					<div class="tw-px-4 tw-my-6">
+						<div>
+							<h2
+								class="tw-font-extrabold md:tw-text-[30px] md:tw-leading-[36px] tw-text-purple tw-text-[20px] tw-leading-[24px] tw-py-4"
+							>
+								{{ credentials.name }}
+							</h2>
+							<div class="forminput tw-py-4">
+								<div class="forminput-x-inputs">
+									<label class="forminput-x-label">Client ID</label>
+									<input
+										class="tw-w-full tw-p-2"
+										type="text"
+										disabled
+										value="{{ credentials.clientId }}"
+									/>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
+				}
 				<div class="tw-flex tw-justify-between">
 					<button
 						class="oeb-button oeb-red-bg tw-bg-purple !tw-font-bold"
@@ -55,7 +56,7 @@ import { NgIf } from '@angular/common';
 			</div>
 		</div>
 	</dialog>`,
-	imports: [SvgIconComponent, NgIf, TranslatePipe],
+	imports: [SvgIconComponent, TranslatePipe],
 })
 export class AppIntegrationDetailsDialog extends BaseDialog {
 	@Output() tokenDeleted = new EventEmitter();
