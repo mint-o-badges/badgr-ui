@@ -38,7 +38,11 @@ import { HlmIconDirective } from './spartan/ui-icon-helm/src/lib/hlm-icon.direct
 				<ngTemplateOutlet [ngTemplateOutlet]="trigger"></ngTemplateOutlet>
 			} @else {
 				<button [class]="triggerStyle" [disabled]="!hasEnabledMenuItem">
-					{{ trigger | translate }}
+					@if (noTranslate) {
+						{{ trigger }}
+					} @else {
+						{{ trigger | translate }}
+					}
 					<ng-icon hlm class="tw-ml-2" name="lucideChevronDown" hlmMenuIcon />
 				</button>
 			}
@@ -60,7 +64,11 @@ import { HlmIconDirective } from './spartan/ui-icon-helm/src/lib/hlm-icon.direct
 							@if (menuItem.icon) {
 								<ng-icon hlm [size]="iconClass" name="{{ menuItem.icon }}" hlmMenuIcon />
 							}
-							{{ menuItem.title | translate }}
+							@if (noTranslate) {
+								{{ menuItem.title }}
+							} @else {
+								{{ menuItem.title | translate }}
+							}
 						</button>
 					}
 					@if (menuItem.routerLink) {
@@ -80,7 +88,11 @@ import { HlmIconDirective } from './spartan/ui-icon-helm/src/lib/hlm-icon.direct
 									hlmMenuIcon
 								/>
 							}
-							{{ menuItem.title | translate }}
+							@if (noTranslate) {
+								{{ menuItem.title }}
+							} @else {
+								{{ menuItem.title | translate }}
+							}
 						</button>
 					}
 				}
@@ -98,6 +110,7 @@ export class OebDropdownComponent {
 	@Input() label?: string = '';
 	@Input() class?: string = '';
 	@Input() menuItems: MenuItem[];
+	@Input() noTranslate = false;
 
 	get isTemplate(): boolean {
 		return this.trigger instanceof TemplateRef;

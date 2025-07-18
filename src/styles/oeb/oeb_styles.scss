@@ -1,11 +1,11 @@
-@import '@angular/cdk/overlay-prebuilt.css';
+@use "./typography.scss";
+@use "./elements.scss";
+
+@use "@angular/cdk/overlay-prebuilt.css";
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@import url(typography.scss);
-@import url(elements.scss);
 
 html {
 	font-family: rubik;
@@ -51,6 +51,7 @@ html {
 	--color-pink-950: #f76866;
 	--color-lightgreen: #ecfeed;
 	--color-green: #93f993;
+	--color-mint: #e4ffe4;
 	--color-green-50: #e4ffe4;
 	--color-green-100: #d3ffd3;
 	--color-green-200: #c3fec3;
@@ -134,7 +135,7 @@ html {
 	--color-link: #1400ff;
 
 	// spartan
-	--font-sans: '';
+	--font-sans: "";
 	--background: 0 0% 100%;
 	--foreground: 240 10% 3.9%;
 	--card: 0 0% 100%;
@@ -222,7 +223,7 @@ html {
 	border-top: none;
 	padding-top: calc(var(--gridspacing) * 12);
 	padding-bottom: calc(var(--gridspacing) * 12);
-	grid-area: 'footer';
+	grid-area: "footer";
 }
 
 .footer [href] {
@@ -272,7 +273,7 @@ html {
 
 .oeb-input-hide-arrows {
 	/* Hide arrows from input number - Firefox */
-	input[type='number'] {
+	input[type="number"] {
 		-moz-appearance: textfield;
 	}
 
@@ -287,7 +288,7 @@ html {
 .oeb-breadcrumbs {
 	margin-bottom: 24px;
 	padding-bottom: 16px;
-	border-bottom: 1px solid theme('colors.grey.85');
+	border-bottom: 1px solid theme("colors.grey.85");
 }
 
 .oeb-max-form-width {
@@ -343,7 +344,7 @@ html {
 	}
 	&-close {
 		padding-right: 32px;
-		background: transparent url(../../breakdown/static/scss/images/tooltip-close.svg) right 8px center no-repeat;
+		background: transparent url("../../breakdown/static/scss/images/tooltip-close.svg") right 8px center no-repeat;
 		background-size: 12px 12px;
 	}
 	&-delete {

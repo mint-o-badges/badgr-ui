@@ -1,7 +1,3 @@
-@import url('../styles/google-webfonts/inter.scss');
-@import url('../styles/google-webfonts/nunito.scss');
-@import url('../styles/google-webfonts/rubik.scss');
-
 .flex-1 {
 	flex: 1;
 }
@@ -113,14 +109,14 @@
 }
 
 .nunito-normal {
-	font-family: 'Nunito', sans-serif;
+	font-family: "Nunito", sans-serif;
 	font-optical-sizing: auto;
 	font-weight: 500;
 	font-style: normal;
 }
 
 .nunito-bold {
-	font-family: 'Nunito', sans-serif;
+	font-family: "Nunito", sans-serif;
 	font-optical-sizing: auto;
 	font-weight: 900;
 	font-style: normal;
@@ -220,7 +216,7 @@
 }
 
 .text-semiBold a {
-	font-family: 'rubik';
+	font-family: "rubik";
 	text-decoration-line: underline;
 	color: #1400ff;
 }
@@ -344,7 +340,7 @@
 	&:after {
 		background-color: transparent;
 		bottom: -10px;
-		content: '';
+		content: "";
 		display: block;
 		height: 4px;
 		left: 0;
