@@ -16,7 +16,7 @@
 							"browser": ""
 						},
 						"index": "src/index.html",
-						"tsConfig": "src/tsconfig.app.json",
+						"tsConfig": "tsconfig.app.json",
 						"polyfills": ["src/polyfills.ts"],
 						"assets": [
 							"src/assets",
@@ -149,7 +149,7 @@
 					"builder": "@angular-devkit/build-angular:karma",
 					"options": {
 						"polyfills": ["zone.js", "zone.js/testing"],
-						"tsConfig": "src/tsconfig.spec.json",
+						"tsConfig": "tsconfig.spec.json",
 						"karmaConfig": "src/karma.conf.js",
 						"styles": [
 							"src/assets/@concentricsky/badgr-style/dist/css/screen.css",
