@@ -23,7 +23,7 @@ import { LoadingDotsComponent } from './loading-dots.component';
 		</div>
 	`,
 	styles: `
-		@use '/src/styles/oeb/oeb_styles.scss';
+		@use 'src/styles/oeb/oeb_styles.scss';
 		.shadow-wrap {
 			max-width: 100vw;
 			overflow: hidden;

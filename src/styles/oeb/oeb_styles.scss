@@ -344,7 +344,7 @@ html {
 	}
 	&-close {
 		padding-right: 32px;
-		background: transparent url(../../breakdown/static/scss/images/tooltip-close.svg) right 8px center no-repeat;
+		background: transparent url("../../breakdown/static/scss/images/tooltip-close.svg") right 8px center no-repeat;
 		background-size: 12px 12px;
 	}
 	&-delete {
