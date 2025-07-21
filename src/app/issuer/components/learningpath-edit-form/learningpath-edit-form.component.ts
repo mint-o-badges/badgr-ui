@@ -480,7 +480,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 		.addControl('useIssuerImageInBadge', true)
 		.addControl('activated', false)
 		.addArray('badges', typedFormGroup().addControl('badge', null, Validators.required))
-		.addControl('required_badges_count', 3, Validators.required)
+		.addControl('required_badges_count', 2, Validators.required)
 		.addArray(
 			'license',
 			typedFormGroup()
