@@ -4,7 +4,6 @@ import { AppConfigService } from '~/common/app-config.service';
 import { BaseHttpApiService } from '~/common/services/base-http-api.service';
 import { MessageService } from '~/common/services/message.service';
 import { SessionService } from '~/common/services/session.service';
-import { BadgeClass } from '~/issuer/models/badgeclass.model';
 import { BadgeClassV3, IBadgeClassV3 } from '~/issuer/models/badgeclassv3.model';
 
 const ENDPOINT = 'v3/issuer';
@@ -22,7 +21,42 @@ export class CatalogService extends BaseHttpApiService {
 		super(sessionService, httpClient, configService, messageService);
 	}
 
-	async loadBadges(
+	/**
+	 * Gets a list of tags, whose entries may be used as input for
+	 * the tags parameter of the {@link getBadges} method
+	 * @returns An array of available tags to filter badges by
+	 */
+	async getBadgeTags(): Promise<string[]> {
+		try {
+			const response = await this.get<string[]>(`${this.baseUrl}/${ENDPOINT}/badges/tags`);
+
+			if (response.ok) return response.body;
+			else {
+				console.warn(
+					`Request for badge tags did not return ok, got ${response.status}: ${response.statusText}`,
+				);
+				return [];
+			}
+		} catch (e) {
+			console.warn(e);
+			return [];
+		}
+	}
+
+	/**
+	 * Gets a paginated list of badges, optionally filtered by name and/or tags.
+	 * Offset-based pagination is used, so pagination is achieved by setting the limit and offset
+	 * by multiples of the limit to go through pages (e.g. limit = 3, offset = 6 results in a request
+	 * for page 3, giving you the values from 7 to 9)
+	 * @param offset Offset for offset-based pagination
+	 * @param limit Limit for offset-based pagination
+	 * @param nameQuery Filter to apply to the name of badges pre application of offset and limit
+	 * @param tags A list of tags that all badges must contain pre application of offset and limit
+	 * @param orderBy Order of the returned list
+	 * @returns An object containing the url of the next and previous page
+	 * (if any) and the contents of the given page as array of badge objects
+	 */
+	async getBadges(
 		offset: number = 0,
 		limit: number = 20,
 		nameQuery?: string,
