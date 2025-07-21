@@ -234,14 +234,9 @@ export class BadgeCatalogComponent extends BaseRoutableComponent implements OnIn
 
 		// Activate the intersection observer once the tags options have been set
 		this.pageSubscriptions.push(
-			this.tagsOptions$
-				.pipe(
-					skip(1),
-					tap((x) => console.log(x)),
-				)
-				.subscribe(() => {
-					this.observeScrolling.set(true);
-				}),
+			this.tagsOptions$.pipe(skip(1)).subscribe(() => {
+				this.observeScrolling.set(true);
+			}),
 		);
 
 		// load the tags, kicking off the page load process
