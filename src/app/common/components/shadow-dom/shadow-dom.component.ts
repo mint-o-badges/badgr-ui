@@ -3,7 +3,7 @@ import { SafeHtml } from '@angular/platform-browser';
 import { DynamicHooksComponent } from 'ngx-dynamic-hooks';
 import { Router } from '@angular/router';
 import { AiAssistantComponent } from '~/issuer/components/ai-assistant/ai-assistant.component';
-import { LoadingDotsComponent } from './loading-dots.component';
+import { LoadingDotsComponent } from '../loading-dots.component';
 
 @Component({
 	selector: 'shadow-dom',
@@ -22,21 +22,9 @@ import { LoadingDotsComponent } from './loading-dots.component';
 			}
 		</div>
 	`,
-	styles: `
-		@use 'src/styles/oeb/oeb_styles.scss';
-		.shadow-wrap {
-			max-width: 100vw;
-			overflow: hidden;
-		}
-		ai-assistant * {
-			box-sizing: border-box;
-		}
-		// FIXME tailwind config is not loaded here?
-		// updating to tailwind 4 and using @config css might resolve this
-		.tw-border-purple {
-			border-color: var(--color-purple) !important;
-		}
-	`,
+	// has to be included as external stylesheet
+	// so esbuild correctly resolves image urls in oeb_styles.scss
+	styleUrls: ['./shadow-dom.component.scss'],
 	encapsulation: ViewEncapsulation.ShadowDom,
 	standalone: true,
 	// FIXME: AiAssistantComponent is used in CMS HTML, ignore Angular warning?
