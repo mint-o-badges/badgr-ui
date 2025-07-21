@@ -67,15 +67,13 @@ export class ShadowDomComponent {
 			this.contentWrap.nativeElement.addEventListener('click', this.bindLinks.bind(this));
 		}
 		if (this.assetWrap) {
-			if (this.script()) {
+			if (this.script() && this._content) {
 				// create script tag via js api, because angular won't allow it in template
 				if (!this.scriptEl) {
 					// delay inserting scripts to make sure HTML DOM was inserted
-					setTimeout(() => {
-						this.scriptEl = document.createElement('script');
-						this.scriptEl.src = this.script();
-						this.assetWrap.nativeElement.appendChild(this.scriptEl);
-					}, 100);
+					this.scriptEl = document.createElement('script');
+					this.scriptEl.src = this.script();
+					this.assetWrap.nativeElement.appendChild(this.scriptEl);
 				}
 			}
 		}
