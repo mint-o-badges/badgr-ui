@@ -172,7 +172,8 @@
 		"forEleText3": "You can award badges to your learners via email or QR code.",
 		"forEleHeadlinet4": "Learners receive and collect badges",
 		"forEleText4": "Learners receive badges with their acquired skills. This gives them a better overview of their abilities.",
-		"usingOEB": "These institutions are already using Open Educational Badges"
+		"usingOEB": "These institutions are already using Open Educational Badges",
+		"createBadgePreview": "Badge-Vorschau erstellen"
 	},
 	"Issuer": {
 		"map": "Map",

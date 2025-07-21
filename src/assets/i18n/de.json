@@ -172,7 +172,8 @@
 		"forEleText3": "Du kannst Badges per Email oder per QR-Code an deine Lernenden vergeben.",
 		"forEleHeadlinet4": "Lernende erhalten und sammeln Badges",
 		"forEleText4": "Lernende erhalten Badges mit den erworbenen Kompetenzen. Sie erlangen dadurch einen besseren Überblick über ihr Können.",
-		"usingOEB": "Diese Institutionen nutzen bereits Open Educational Badges"
+		"usingOEB": "Diese Institutionen nutzen bereits Open Educational Badges",
+		"createBadgePreview": "Badge-Vorschau erstellen"
 	},
 	"Issuer": {
 		"map": "Karte",
