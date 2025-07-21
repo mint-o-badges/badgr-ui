@@ -2,32 +2,32 @@ export interface CmsApiMenuItem {
 	id: number;
 	title: string;
 	url: string;
-	children: CmsApiMenuItem[]
+	children: CmsApiMenuItem[];
 }
 export interface CmsApiMenu {
 	header: {
-		"de": CmsApiMenuItem[],
-		"en": CmsApiMenuItem[],
-	},
+		de: CmsApiMenuItem[];
+		en: CmsApiMenuItem[];
+	};
 	footer: {
-		"de": CmsApiMenuItem[],
-		"en": CmsApiMenuItem[],
-	}
+		de: CmsApiMenuItem[];
+		en: CmsApiMenuItem[];
+	};
 }
 
 export interface CmsApiPage {
-	ID: number,
-	post_content: string,
-	post_title: string,
-	slug: string,
+	ID: number;
+	post_content: string;
+	post_title: string;
+	slug: string;
 }
 export interface CmsApiPost {
-	ID: number,
-	post_author: string,
-	post_excerpt: string,
-	post_content: string,
-	post_title: string,
-	slug: string,
-	post_thumbnail: string | null,
-	post_tags: string[] | null,
+	ID: number;
+	post_author: string;
+	post_excerpt: string;
+	post_content: string;
+	post_title: string;
+	slug: string;
+	post_thumbnail: string | null;
+	post_tags: string[] | null;
 }

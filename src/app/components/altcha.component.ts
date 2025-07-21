@@ -82,7 +82,6 @@ export class AltchaComponent implements ControlValueAccessor, Validator {
 	}
 
 	public verify() {
-		console.log({x: this.altchaWidget.nativeElement.verify});
 		this.altchaWidget.nativeElement.verify();
 	}
 	public reset() {

@@ -79,7 +79,7 @@ export class AiAssistantComponent implements AfterViewInit {
 		this.altcha.valueEvent.subscribe((value) => {
 			if (value) {
 				this.altchaValue = value;
-				// FIXME: not sure why this is needed, but angular does not update the view otherwise
+				// not sure why this is needed, but angular does not update the view otherwise
 				this.changeDetectorRef.detectChanges();
 			}
 		});
@@ -98,10 +98,6 @@ export class AiAssistantComponent implements AfterViewInit {
 		this.aiCompetenciesLoading = true;
 		this.aiSkillsService
 			.getAiSkills(this.aiCompetenciesDescription)
-			// .then((skills) => {
-			// 	this.aiCompetenciesSuggestions = skills;
-			// 	this.aiCompetenciesLoading = false;
-			// })
 			.then((skills) => {
 				let aiCompetencies = this.aiForm.controls.aiCompetencies;
 				const selectedAiCompetencies = aiCompetencies.value

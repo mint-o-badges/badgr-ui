@@ -27,7 +27,7 @@ export class BadgrApiError extends Error {
 @Injectable({ providedIn: 'root' })
 export abstract class BaseHttpApiService {
 	baseUrl: string;
-	altcha: string|null = null;
+	altcha: string | null = null;
 
 	static async addTestingDelay<T>(value: T, configService: AppConfigService): Promise<T> {
 		const delayRange = configService.apiConfig.debugDelayRange;
@@ -54,7 +54,7 @@ export abstract class BaseHttpApiService {
 	) {
 		this.baseUrl = this.configService.apiConfig.baseUrl;
 	}
-	
+
 	setAltcha(altcha: string) {
 		this.altcha = altcha;
 	}
@@ -233,7 +233,7 @@ export abstract class BaseHttpApiService {
 		if (this.altcha) {
 			headers = headers.append('X-Oeb-Altcha', this.altcha);
 		}
-		return headers
+		return headers;
 	}
 
 	private async addTestingDelay<T>(value: T): Promise<T> {

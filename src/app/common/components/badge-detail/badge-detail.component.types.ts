@@ -9,7 +9,7 @@ type MenuItemBase = {
 	icon?: any;
 	disabled?: boolean;
 	action?: (args?: any) => void;
-	children?: MenuItem[]
+	children?: MenuItem[];
 };
 
 type MenuItemWithLink = MenuItemBase & {
