@@ -29,8 +29,24 @@ export class LearningPath extends ManagedEntity<ApiLearningPath, LearningPathRef
 		return this.apiModel.badges;
 	}
 
+	set badges(badges: Array<{ badge: any; order: number }>) {
+		this.apiModel.badges = badges;
+	}
+
+	get required_badges_count(): number {
+		return this.apiModel.required_badges_count;
+	}
+
+	set required_badges_count(count: number) {
+		this.apiModel.required_badges_count = count;
+	}
+
 	get issuer_id() {
 		return this.apiModel.issuer_id;
+	}
+
+	set issuer_id(slug: string) {
+		this.apiModel.issuer_id = slug;
 	}
 
 	get issuer_name() {
@@ -60,6 +76,14 @@ export class LearningPath extends ManagedEntity<ApiLearningPath, LearningPathRef
 		return this.apiModel.issuerOwnerAcceptedTos;
 	}
 
+	get activated(): boolean {
+		return this.apiModel.activated;
+	}
+
+	set activated(active: boolean) {
+		this.apiModel.activated = active;
+	}
+
 	constructor(
 		commonManager: CommonEntityManager,
 		initialEntity: ApiLearningPath = null,
@@ -77,5 +101,15 @@ export class LearningPath extends ManagedEntity<ApiLearningPath, LearningPathRef
 			'@id': '',
 			slug: this.apiModel.slug,
 		};
+	}
+
+	save(): Promise<this> {
+		return this.learningPathManager.learningPathApi
+			.updateLearningPath(this.issuer_id, this.slug, this.apiModel)
+			.catch((e) => {
+				this.revertChanges();
+				throw e;
+			})
+			.then((apiLp) => this.applyApiModel(apiLp));
 	}
 }

@@ -6,7 +6,7 @@ import { MessageService } from './message.service';
 import { SessionService } from './session.service';
 
 @Injectable({ providedIn: 'root' })
-export class ServerVersionService extends BaseHttpApiService {
+export class ServerTimestampService extends BaseHttpApiService {
 	constructor(
 		protected loginService: SessionService,
 		protected http: HttpClient,
@@ -15,9 +15,9 @@ export class ServerVersionService extends BaseHttpApiService {
 	) {
 		super(loginService, http, configService, messageService);
 	}
-	getServerVersion(): Promise<string> {
+	getServerTimestamp(): Promise<string> {
 		return this.get<string>(
-			'/get-server-version',
+			'/get-server-timestamp',
 			null, // queryParams
 			false, // requireAuth
 			false, // useAuth

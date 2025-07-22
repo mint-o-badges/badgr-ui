@@ -551,6 +551,7 @@ export class RecipientEarnedBadgeListComponent
 	}
 
 	private groupCompetencies(badges) {
+		this.totalStudyTime = 0;
 		let groupedCompetencies: EscoCompetencies = {};
 		let newGroupedCompetencies: EscoCompetencies = {};
 		this.groupedUserCompetencies = {};
@@ -569,7 +570,9 @@ export class RecipientEarnedBadgeListComponent
 					groupedCompetencies[key] = { ...competency };
 					groupedCompetencies[key].lastReceived = badge.issueDate;
 				}
-				this.totalStudyTime += competency.studyLoad;
+				if (competency.studyLoad) {
+					this.totalStudyTime += competency.studyLoad;
+				}
 			});
 		});
 
@@ -616,8 +619,18 @@ export class RecipientEarnedBadgeListComponent
 		return totalStudyLoad;
 	}
 
+	checkCompleted(lp: LearningPath): boolean {
+		if (lp.required_badges_count != lp.badges.length) {
+			const badgeClassIds = lp.badges.map((b) => b.badge.slug);
+			const userBadgeCount = this.allBadges.filter((b) =>
+				badgeClassIds.some((i) => b.badgeClass.slug == i),
+			).length;
+			return userBadgeCount >= lp.required_badges_count;
+		}
+		return lp.completed_at != null;
+	}
+
 	routeToCollectionCreation() {
-		console.log('routed');
 		this.router.navigate(['recipient/badge-collections/create']);
 	}
 }

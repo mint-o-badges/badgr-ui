@@ -19,6 +19,7 @@ export interface ApiRecipientBadgeCollection extends ApiRecipientBadgeCollection
 	readonly slug: string;
 	readonly share_hash: string;
 	readonly share_url: string;
+	readonly permanent_hash: string;
 }
 
 export interface RecipientBadgeCollectionEntryRef {
