@@ -4,14 +4,21 @@ import { SafeHtml } from '@angular/platform-browser';
 import { CmsApiService } from '../../services/cms-api.service';
 import { CmsApiPage, CmsApiPost } from '../../model/cms-api.model';
 import { CmsContentComponent } from './cms-content.component';
+import { Cms404Component } from './cms-404.component';
 
 @Component({
 	selector: 'cms-page',
-	template: `<cms-content [headline]="headline?.toString()" [image]="image" [content]="content?.toString()" />`,
-	imports: [CmsContentComponent],
+	template: `
+		@if (!notfound) {
+			<cms-content [headline]="headline?.toString()" [image]="image" [content]="content?.toString()" />
+		} @else {
+			<cms-404 />
+		}
+	`,
+	imports: [CmsContentComponent, Cms404Component],
 	standalone: true,
 })
-export class CmsPageComponent implements OnInit, OnChanges {
+export class CmsPageComponent implements OnInit {
 	headline: SafeHtml;
 	image: string;
 	content: SafeHtml;
@@ -19,10 +26,37 @@ export class CmsPageComponent implements OnInit, OnChanges {
 
 	slug = input<string>();
 
+	notfound = false;
+
 	constructor(
 		private route: ActivatedRoute,
 		protected cmsApiService: CmsApiService,
 	) {}
+
+	async setContent(slug: string, type: string) {
+		this.type = 'page';
+		if (type) {
+			this.type = type;
+		}
+		let content: CmsApiPage | CmsApiPost;
+		if (this.type == 'page') {
+			content = await this.cmsApiService.getPageBySlug(slug);
+		} else if (this.type == 'post') {
+			content = await this.cmsApiService.getPostBySlug(slug);
+		}
+		if (content) {
+			if (content.data && content.data?.status != 200) {
+				this.notfound = true;
+			} else {
+				this.notfound = false;
+				if (this.type == 'post') {
+					this.headline = content.post_title;
+					this.image = (content as CmsApiPost).post_thumbnail;
+				}
+				this.content = content.post_content;
+			}
+		}
+	}
 
 	ngOnInit() {
 		let slug = this.slug();
@@ -31,43 +65,8 @@ export class CmsPageComponent implements OnInit, OnChanges {
 		}
 		if (slug) {
 			this.route.data.subscribe(async (data) => {
-				this.type = 'page';
-				if (data.cmsContentType) {
-					this.type = data.cmsContentType;
-				}
-				let content: CmsApiPage | CmsApiPost;
-				if (this.type == 'page') {
-					content = await this.cmsApiService.getPageBySlug(slug);
-				} else if (this.type == 'post') {
-					content = await this.cmsApiService.getPostBySlug(slug);
-				}
-				if (content) {
-					if (this.type == 'post') {
-						this.headline = content.post_title;
-						this.image = (content as CmsApiPost).post_thumbnail;
-					}
-					this.content = content.post_content;
-				}
+				this.setContent(slug, data.cmsContentType);
 			});
-		}
-	}
-
-	// change if @input slug changes for static paths (home, about, faq)
-	async ngOnChanges(changes: unknown) {
-		if (this.slug() && changes['slug'] && changes['slug'] != this.slug() && this.type) {
-			let content: CmsApiPage | CmsApiPost;
-			if (this.type == 'page') {
-				content = await this.cmsApiService.getPageBySlug(this.slug());
-			} else if (this.type == 'post') {
-				content = await this.cmsApiService.getPostBySlug(this.slug());
-			}
-			if (content) {
-				if (this.type == 'post') {
-					this.headline = content.post_title;
-					this.image = (content as CmsApiPost).post_thumbnail;
-				}
-				this.content = content.post_content;
-			}
 		}
 	}
 }

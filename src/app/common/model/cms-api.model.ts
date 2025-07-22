@@ -20,14 +20,14 @@ export interface CmsApiPage {
 	post_content: string;
 	post_title: string;
 	slug: string;
+
+	data?: {
+		status: number;
+	};
 }
-export interface CmsApiPost {
-	ID: number;
+export interface CmsApiPost extends CmsApiPage {
 	post_author: string;
 	post_excerpt: string;
-	post_content: string;
-	post_title: string;
-	slug: string;
 	post_thumbnail: string | null;
 	post_tags: string[] | null;
 }

@@ -4,6 +4,7 @@ import { DynamicHooksComponent } from 'ngx-dynamic-hooks';
 import { Router } from '@angular/router';
 import { AiAssistantComponent } from '~/issuer/components/ai-assistant/ai-assistant.component';
 import { LoadingDotsComponent } from '../loading-dots.component';
+import { VersionComponent } from '~/public/components/version.component';
 
 @Component({
 	selector: 'shadow-dom',
@@ -27,14 +28,14 @@ import { LoadingDotsComponent } from '../loading-dots.component';
 	styleUrls: ['./shadow-dom.component.scss'],
 	encapsulation: ViewEncapsulation.ShadowDom,
 	standalone: true,
-	// FIXME: AiAssistantComponent is used in CMS HTML, ignore Angular warning?
-	imports: [DynamicHooksComponent, AiAssistantComponent, LoadingDotsComponent],
+	// FIXME: AiAssistantComponent, TimestampComponent used in CMS HTML, ignore Angular warning?
+	imports: [DynamicHooksComponent, LoadingDotsComponent, AiAssistantComponent, VersionComponent],
 })
 export class ShadowDomComponent {
 	content = input<string>();
 	_content: SafeHtml = '';
 
-	dynamicComponents = [AiAssistantComponent];
+	dynamicComponents = [AiAssistantComponent, VersionComponent];
 
 	styles = input<string>();
 	script = input<string>();
