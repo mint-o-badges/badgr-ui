@@ -40,21 +40,14 @@ export class AiAssistantComponent implements AfterViewInit {
 
 	@ViewChild('top') top: ElementRef<HTMLElement>;
 
-	positiveInteger(control: AbstractControl) {
-		const val = parseInt(control.value, 10);
-		if (isNaN(val) || val < 1) {
-			return { expires_amount: 'Must be a positive integer' };
-		}
-	}
-
 	positiveIntegerOrNull(control: AbstractControl) {
 		const val = parseFloat(control.value);
 
 		if (isNaN(val)) {
-			return { emptyField: 'Das Feld darf nicht leer sein.' };
+			return { emptyField: this.translate.instant('OEBComponents.fieldIsRequired') };
 		}
 		if (!Number.isInteger(val) || val < 0) {
-			return { negativeDuration: 'Bitte geben Sie eine positive Zahl oder 0 ein.' };
+			return { negativeDuration: this.translate.instant('CreateBadge.durationPositive') };
 		}
 	}
 
