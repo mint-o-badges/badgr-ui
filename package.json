@@ -108,7 +108,7 @@
 		"cz-conventional-changelog": "^3.3.0",
 		"file-loader": "^6.2.0",
 		"font-awesome": "^4.7.0",
-		"fontmin": "^1.0.1",
+		"fontmin": "^2.0.2",
 		"gh-pages": "^6.1.0",
 		"gts": "^5.2.0",
 		"html-minifier": "^4.0.0",
