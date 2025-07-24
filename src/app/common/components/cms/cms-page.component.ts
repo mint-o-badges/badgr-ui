@@ -5,6 +5,7 @@ import { CmsApiService } from '../../services/cms-api.service';
 import { CmsApiPage, CmsApiPost } from '../../model/cms-api.model';
 import { CmsContentComponent } from './cms-content.component';
 import { Cms404Component } from './cms-404.component';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'cms-page',
@@ -18,7 +19,7 @@ import { Cms404Component } from './cms-404.component';
 	imports: [CmsContentComponent, Cms404Component],
 	standalone: true,
 })
-export class CmsPageComponent implements OnInit {
+export class CmsPageComponent implements OnInit, OnChanges {
 	headline: SafeHtml;
 	image: string;
 	content: SafeHtml;
@@ -31,6 +32,7 @@ export class CmsPageComponent implements OnInit {
 	constructor(
 		private route: ActivatedRoute,
 		protected cmsApiService: CmsApiService,
+		protected translate: TranslateService,
 	) {}
 
 	async setContent(slug: string, type: string) {
@@ -58,15 +60,31 @@ export class CmsPageComponent implements OnInit {
 		}
 	}
 
+	onSlug(slug: string) {
+		this.route.data.subscribe(async (data) => {
+			this.setContent(slug, data.cmsContentType);
+			// TODO: on language change, we should find the corresponding
+			// language page slug to the current page, but the API is not
+			// providing this information as of now
+			// this.translate.onLangChange.subscribe(() => {
+			// });
+		});
+	}
+
 	ngOnInit() {
 		let slug = this.slug();
 		if (!slug) {
 			slug = this.route.snapshot.params['slug'];
 		}
 		if (slug) {
-			this.route.data.subscribe(async (data) => {
-				this.setContent(slug, data.cmsContentType);
-			});
+			this.onSlug(slug);
+		}
+	}
+
+	ngOnChanges() {
+		let slug = this.slug();
+		if (slug) {
+			this.onSlug(slug);
 		}
 	}
 }

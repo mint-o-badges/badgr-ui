@@ -1,4 +1,9 @@
 @use "src/styles/oeb/oeb_styles.scss";
+
+:where(figure) {
+	margin: 0 0 1em;
+}
+
 .shadow-wrap {
 	max-width: 100vw;
 	overflow: hidden;

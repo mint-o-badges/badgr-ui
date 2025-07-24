@@ -70,12 +70,13 @@ export class ShadowDomComponent {
 		if (this.assetWrap) {
 			if (this.script() && this._content) {
 				// create script tag via js api, because angular won't allow it in template
-				if (!this.scriptEl) {
-					// delay inserting scripts to make sure HTML DOM was inserted
-					this.scriptEl = document.createElement('script');
-					this.scriptEl.src = this.script();
-					this.assetWrap.nativeElement.appendChild(this.scriptEl);
+				if (this.scriptEl) {
+					// remove on page content change and recreate, to rerun onload triggers
+					this.scriptEl.remove();
 				}
+				this.scriptEl = document.createElement('script');
+				this.scriptEl.src = this.script();
+				this.assetWrap.nativeElement.appendChild(this.scriptEl);
 			}
 		}
 	}
