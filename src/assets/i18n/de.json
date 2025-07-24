@@ -538,6 +538,7 @@
 		"pleaseAddCompetencies": "Bitte Kompetenzen hinzufügen",
 		"invalidCompetence": "Ungültige Kompetenz",
 		"competencyOptions": "Du hast zwei Möglichkeiten, händisch Kompetenzen zu ergänzen.",
+		"chooseCompetency": "Wähle Kompetenzen durch Anklicken aus, um sie deinem Badge hinzuzufügen.",
 		"escoSearch": {
 			"headline": "ESCO-Kompetenz",
 			"description": "Damit unsere Badges inhaltlich standardisiert und vergleichbar sind, nutzt der KI-Assistent <a class='tw-text-[var(--color-link)] tw-underline' href='https://esco.ec.europa.eu/de/about-esco' target='_blank'>die Europäische Klassifizierung für Kompetenzen (ESCO)</a>. Du kannst hier selbst nach passenden Kompetenzen suchen und sie hinzufügen:",

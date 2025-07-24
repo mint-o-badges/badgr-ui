@@ -1,18 +1,20 @@
 <div class="tw-text-[14px] tw-mt-7 tw-p-12 tw-bg-[#CCD7FF] tw-rounded-md tw-mx-auto tw-relative">
-	<span class="tw-font-extrabold tw-text-xl tw-uppercase tw-relative"
+	<span class="tw-font-extrabold tw-text-[30px] tw-uppercase tw-relative"
 		>{{ 'CreateBadge.aiAssistant' | translate }}
 		<img
 			class="tw-absolute tw--top-10 tw--right-16 tw-w-16 tw-h-16"
 			src="assets/oeb/images/badge/icon-ai-skills.svg"
 		/>
 	</span>
-	<p class="tw-text tw-my-2 tw-mb-0 tw-italic tw-text-[var(--color-purple)]">
-		{{ 'CreateBadge.NoPersonalInformation' | translate }}
-	</p>
+	@if (!showBadgeDemo) {
+		<p class="tw-text tw-my-2 tw-mb-0 tw-italic tw-text-[var(--color-purple)]">
+			{{ 'CreateBadge.NoPersonalInformation' | translate }}
+		</p>
 
-	<hr #top class="tw-my-6 tw-w-full tw-border-solid tw-border-top-[1px] tw-border-white" />
+		<hr #top class="tw-my-6 tw-w-full tw-border-solid tw-border-top-[1px] tw-border-bottom-0 tw-border-white" />
+	}
 
-	<div class="">
+	<div class="tw- mt-4">
 		@if (showBadgeDemo) {
 			<div class="tw-rounded tw-bg-white tw-p-6">
 				<div class="tw-p-4 tw-bg-[var(--color-mint)] tw-text-purple tw-text-[22px] tw-mb-8">
@@ -51,7 +53,7 @@
 			>
 			</oeb-button>
 		} @else {
-			<h2 class="tw-font-bold tw-inline-block">
+			<h2 class="tw-font-bold tw-inline-block tw-text-[22px]">
 				{{ 'CreateBadge.myContentDescription' | translate }}
 			</h2>
 			<span class="tw-font-thin tw-italic tw-ml-2">{{ 'CreateBadge.min70max1200Chars' | translate }}</span>
@@ -113,7 +115,7 @@
 						[ngClass]="
 							aiCompetency.rawControlMap.selected.value
 								? 'tw-bg-[var(--color-lightgreen)]'
-								: 'tw-bg-gray-100'
+								: 'tw-bg-[var(--color-lightgray)]'
 						"
 						class="tw-border tw-border-solid tw-border-purple tw-rounded-md md:tw-w-2/3 tw-mx-auto md:tw-ml-0 tw-p-2 tw-mt-2"
 					>
@@ -178,7 +180,7 @@
 							class="tw-whitespace-nowrap"
 							[disabled]="!competenciesSelected()"
 							(click)="showDemo()"
-							text="'Start.createBadgePreview' | translate"
+							[text]="'Start.createBadgePreview' | translate"
 							type="button"
 						>
 						</oeb-button>

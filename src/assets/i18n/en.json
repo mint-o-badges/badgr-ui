@@ -486,7 +486,7 @@
 		"NoPersonalInformation": "Please do not enter any biographical / personal information here.",
 		"addAiCompetencies": "Add suitable suggested skills to your badge by clicking on them.",
 		"myContentDescription": "Content description of the learning offer",
-		"min70max1200Chars": "(Minimum 70 / maximum 1200 characters)",
+		"min70max1200Chars": "(Minimum 70 / maximum 1.200 characters)",
 		"detailedDescription": "Enter the content description of your learning offer here.\nThe more precise it is, the better we can suggest skills to you.",
 		"suggestCompetencies": "Suggest skills",
 		"fitting": "Fitting",
@@ -538,6 +538,7 @@
 		"pleaseAddCompetencies": "Please add skills",
 		"invalidCompetence": "Invalid skill",
 		"competencyOptions": "You have two options for adding skills manually.",
+		"chooseCompetency": "Choose competencies by clicking on them to add them to your badge.",
 		"escoSearch": {
 			"headline": "ESCO Competencies",
 			"description": "To ensure our badges are standardized and comparable in terms of content, the AI assistant uses <a class='tw-text-[var(--color-link)] tw-underline' href='https://esco.ec.europa.eu/en/about-esco' target='_blank'>the European Classification of Skills, Competences and Occupations (ESCO)</a>. You can search for suitable skills yourself here and add them:",
