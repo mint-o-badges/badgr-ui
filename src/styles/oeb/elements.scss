@@ -167,10 +167,10 @@
 	min-height: 100vh;
 	grid-template-columns: 1fr;
 	grid-template-areas:
-		"nav   "
-		"loader"
-		"main  "
-		"footer";
+		'nav   '
+		'loader'
+		'main  '
+		'footer';
 	grid-template-rows: 100px 6px 1fr auto;
 }
 
