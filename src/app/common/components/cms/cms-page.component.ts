@@ -1,4 +1,4 @@
-import { Component, input, Input, OnChanges, OnInit } from '@angular/core';
+import { Component, input, Input, OnChanges, OnInit, SimpleChange, SimpleChanges } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SafeHtml } from '@angular/platform-browser';
 import { CmsApiService } from '../../services/cms-api.service';
@@ -74,16 +74,18 @@ export class CmsPageComponent implements OnInit, OnChanges {
 	ngOnInit() {
 		let slug = this.slug();
 		if (!slug) {
+			// ngChanges runs first if property has been set,
+			// only check route params if it hasn't
 			slug = this.route.snapshot.params['slug'];
-		}
-		if (slug) {
-			this.onSlug(slug);
+			if (slug) {
+				this.onSlug(slug);
+			}
 		}
 	}
 
-	ngOnChanges() {
+	ngOnChanges(changes: SimpleChanges) {
 		let slug = this.slug();
-		if (slug) {
+		if (slug && slug != changes['slug']?.previousValue) {
 			this.onSlug(slug);
 		}
 	}
