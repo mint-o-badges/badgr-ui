@@ -45,6 +45,8 @@ import {
 	lucideHeart,
 	lucideHand,
 	lucideBookOpen,
+	lucideEye,
+	lucideEyeOff,
 } from '@ng-icons/lucide';
 
 export const IconsProvider = provideIcons({
@@ -93,4 +95,6 @@ export const IconsProvider = provideIcons({
 	lucideHeart,
 	lucideHand,
 	lucideBookOpen,
+	lucideEye,
+	lucideEyeOff,
 });
