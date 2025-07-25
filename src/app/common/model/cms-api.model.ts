@@ -21,6 +21,12 @@ export interface CmsApiPage {
 	post_title: string;
 	slug: string;
 
+	lang: string;
+	languages: {
+		de: string;
+		en: string;
+	};
+
 	data?: {
 		status: number;
 	};
