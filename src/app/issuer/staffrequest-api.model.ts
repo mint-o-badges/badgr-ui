@@ -1,4 +1,4 @@
-import { UserProfile } from '../common/model/user-profile.model';
+import { ApiUserProfile } from '~/common/model/user-profile-api.model';
 import { Issuer } from './models/issuer.model';
 
 export interface ApiStaffRequest {
@@ -8,5 +8,7 @@ export interface ApiStaffRequest {
 	issuer: Issuer;
 	requestedOn: string;
 	status: string;
-	user: UserProfile;
+	user: ApiUserProfile & {
+		email: string;
+	};
 }
