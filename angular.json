@@ -53,6 +53,7 @@
 						"sourceMap": true,
 						"optimization": false,
 						"namedChunks": true,
+						"inlineStyleLanguage": "scss",
 						"browser": "src/main.ts"
 					},
 					"configurations": {
@@ -172,7 +173,8 @@
 								"input": "./assets/@concentricsky/badgr-style/dist/images",
 								"output": "./assets/@concentricsky/badgr-style/dist/images"
 							}
-						]
+						],
+						"inlineStyleLanguage": "scss"
 					}
 				}
 			}

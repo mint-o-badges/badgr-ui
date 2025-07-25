@@ -1,4 +1,4 @@
-import { CUSTOM_ELEMENTS_SCHEMA, Component, ElementRef, ViewChild, forwardRef } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, Component, ElementRef, ViewChild, forwardRef, output } from '@angular/core';
 import {
 	ControlValueAccessor,
 	NG_VALUE_ACCESSOR,
@@ -8,6 +8,8 @@ import {
 	ValidationErrors,
 } from '@angular/forms';
 import { AppConfigService } from '../common/app-config.service';
+// import to include altcha styles and js
+import 'altcha';
 
 @Component({
 	selector: 'altcha',
@@ -39,6 +41,8 @@ export class AltchaComponent implements ControlValueAccessor, Validator {
 	value: string = '';
 	onChange: any = () => {};
 	onTouched: any = () => {};
+
+	valueEvent = output<string>();
 
 	ngAfterViewInit(): void {
 		const el = this.altchaWidget.nativeElement as HTMLElement;
@@ -72,7 +76,15 @@ export class AltchaComponent implements ControlValueAccessor, Validator {
 
 	onStateChange(state: 'unverified' | 'verifying' | 'verified' | 'error', payload: string = '') {
 		this.value = state === 'verified' ? payload : '';
+		this.valueEvent.emit(this.value);
 		this.onChange(this.value);
 		this.onTouched();
+	}
+
+	public verify() {
+		this.altchaWidget.nativeElement.verify();
+	}
+	public reset() {
+		this.altchaWidget.nativeElement.reset();
 	}
 }

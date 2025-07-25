@@ -387,8 +387,7 @@
 														{{ 'CreateBadge.competencies' | translate }}
 													</h2>
 													<p class="tw-text-purple tw-italic tw-mb-4">
-														Wähle Kompetenzen durch Anklicken aus, um sie deinem Badge
-														hinzuzufügen.
+														{{ 'CreateBadge.chooseCompetency' }}
 													</p>
 													@for (
 														aiCompetency of badgeClassForm.controls.aiCompetencies.controls;
@@ -399,7 +398,7 @@
 															[ngClass]="
 																aiCompetency.rawControlMap.selected.value
 																	? 'tw-bg-[var(--color-lightgreen)]'
-																	: 'tw-bg-gray-100'
+																	: 'tw-bg-[var(--color-lightgray)]'
 															"
 															class="tw-border tw-border-solid tw-border-purple tw-rounded-md md:tw-w-2/3 tw-mx-auto md:tw-ml-0 tw-p-2 tw-mt-2"
 														>

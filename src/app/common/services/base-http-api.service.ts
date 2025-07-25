@@ -27,6 +27,7 @@ export class BadgrApiError extends Error {
 @Injectable({ providedIn: 'root' })
 export abstract class BaseHttpApiService {
 	baseUrl: string;
+	altcha: string | null = null;
 
 	static async addTestingDelay<T>(value: T, configService: AppConfigService): Promise<T> {
 		const delayRange = configService.apiConfig.debugDelayRange;
@@ -54,6 +55,10 @@ export abstract class BaseHttpApiService {
 		this.baseUrl = this.configService.apiConfig.baseUrl;
 	}
 
+	setAltcha(altcha: string) {
+		this.altcha = altcha;
+	}
+
 	get<T = object>(
 		path: string,
 		queryParams: HttpParams | { [param: string]: string | string[] } | null = null,
@@ -64,6 +69,7 @@ export abstract class BaseHttpApiService {
 		const endpointUrl = path.startsWith('http') ? path : this.baseUrl + path;
 
 		headers = this.addJsonResponseHeader(headers);
+		headers = this.addAltchaHeader(headers);
 		this.messageService.incrementPendingRequestCount();
 
 		return this.augmentRequest<T>(
@@ -90,6 +96,7 @@ export abstract class BaseHttpApiService {
 		headers = this.addJsonRequestHeader(headers);
 		headers = this.addJsonResponseHeader(headers);
 		headers = this.addCsrfTokenHeader(headers);
+		headers = this.addAltchaHeader(headers);
 		this.messageService.incrementPendingRequestCount();
 
 		return this.augmentRequest<T>(
@@ -114,6 +121,7 @@ export abstract class BaseHttpApiService {
 		headers = this.addJsonRequestHeader(headers);
 		headers = this.addJsonResponseHeader(headers);
 		headers = this.addCsrfTokenHeader(headers);
+		headers = this.addAltchaHeader(headers);
 		this.messageService.incrementPendingRequestCount();
 
 		return this.augmentRequest<T>(
@@ -137,6 +145,7 @@ export abstract class BaseHttpApiService {
 		headers = this.addJsonRequestHeader(headers);
 		headers = this.addJsonResponseHeader(headers);
 		headers = this.addCsrfTokenHeader(headers);
+		headers = this.addAltchaHeader(headers);
 		this.messageService.incrementPendingRequestCount();
 
 		return this.augmentRequest<T>(
@@ -216,6 +225,13 @@ export abstract class BaseHttpApiService {
 		const csrf = getCookie('csrftoken');
 		if (csrf) {
 			headers = headers.append('X-CSRFToken', csrf);
+		}
+		return headers;
+	}
+
+	private addAltchaHeader(headers: HttpHeaders): HttpHeaders {
+		if (this.altcha) {
+			headers = headers.append('X-Oeb-Altcha', this.altcha);
 		}
 		return headers;
 	}

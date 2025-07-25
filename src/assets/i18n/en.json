@@ -104,6 +104,7 @@
 		"imported": "imported",
 		"new": "new",
 		"expired": "expired",
+		"readmore": "read more",
 		"emailAddress": "E-mail address",
 		"tos": "Terms of Service",
 		"change": "change",
@@ -171,7 +172,8 @@
 		"forEleText3": "You can award badges to your learners via email or QR code.",
 		"forEleHeadlinet4": "Learners receive and collect badges",
 		"forEleText4": "Learners receive badges with their acquired skills. This gives them a better overview of their abilities.",
-		"usingOEB": "These institutions are already using Open Educational Badges"
+		"usingOEB": "These institutions are already using Open Educational Badges",
+		"createBadgePreview": "Badge-Vorschau erstellen"
 	},
 	"Issuer": {
 		"map": "Map",
@@ -484,7 +486,7 @@
 		"NoPersonalInformation": "Please do not enter any biographical / personal information here.",
 		"addAiCompetencies": "Add suitable suggested skills to your badge by clicking on them.",
 		"myContentDescription": "Content description of the learning offer",
-		"min70max1200Chars": "(Minimum 70 / maximum 1200 characters)",
+		"min70max1200Chars": "(Minimum 70 / maximum 1.200 characters)",
 		"detailedDescription": "Enter the content description of your learning offer here.\nThe more precise it is, the better we can suggest skills to you.",
 		"suggestCompetencies": "Suggest skills",
 		"fitting": "Fitting",
@@ -510,6 +512,8 @@
 		"expirationInfo": "Describe how long this badge is generally valid. This information can also be changed when awarding the badge. Badges are marked as expired after their validity period has expired.",
 		"validUntil": "The badge is valid until ",
 		"chooseDuration": "Choose duration",
+		"durationPositive": "Please enter a positive number or 0",
+		"valuePositive": "Please enter a positive number",
 		"optionalBadgeDetails": "Optional badge details",
 		"addTags": "Add tags",
 		"newTag": "Enter a tag...",
@@ -534,6 +538,7 @@
 		"pleaseAddCompetencies": "Please add skills",
 		"invalidCompetence": "Invalid skill",
 		"competencyOptions": "You have two options for adding skills manually.",
+		"chooseCompetency": "Choose competencies by clicking on them to add them to your badge.",
 		"escoSearch": {
 			"headline": "ESCO Competencies",
 			"description": "To ensure our badges are standardized and comparable in terms of content, the AI assistant uses <a class='tw-text-[var(--color-link)] tw-underline' href='https://esco.ec.europa.eu/en/about-esco' target='_blank'>the European Classification of Skills, Competences and Occupations (ESCO)</a>. You can search for suitable skills yourself here and add them:",

@@ -104,6 +104,7 @@
 		"imported": "importiert",
 		"new": "neu",
 		"expired": "abgelaufen",
+		"readmore": "weiterlesen",
 		"emailAddress": "E-Mail-Adresse",
 		"tos": "Nutzungsbedingungen",
 		"change": "ändern",
@@ -171,7 +172,8 @@
 		"forEleText3": "Du kannst Badges per Email oder per QR-Code an deine Lernenden vergeben.",
 		"forEleHeadlinet4": "Lernende erhalten und sammeln Badges",
 		"forEleText4": "Lernende erhalten Badges mit den erworbenen Kompetenzen. Sie erlangen dadurch einen besseren Überblick über ihr Können.",
-		"usingOEB": "Diese Institutionen nutzen bereits Open Educational Badges"
+		"usingOEB": "Diese Institutionen nutzen bereits Open Educational Badges",
+		"createBadgePreview": "Badge-Vorschau erstellen"
 	},
 	"Issuer": {
 		"map": "Karte",
@@ -510,6 +512,8 @@
 		"expirationInfo": "Diese Information kann auch bei der Vergabe geändert werden. Badges werden nach Ablauf der Gültigkeit als abgelaufen markiert.",
 		"validUntil": "Der Badge ist gültig bis ",
 		"chooseDuration": "Wähle Dauer",
+		"durationPositive": "Bitte gib eine positive Zahl oder 0 ein",
+		"valuePositive": "Bitte gib eine positive Zahl ein",
 		"optionalBadgeDetails": "Optionale Badge-Details",
 		"addTags": "Tags hinzufügen",
 		"newTag": "Einen Tag eingeben...",
@@ -534,6 +538,7 @@
 		"pleaseAddCompetencies": "Bitte Kompetenzen hinzufügen",
 		"invalidCompetence": "Ungültige Kompetenz",
 		"competencyOptions": "Du hast zwei Möglichkeiten, händisch Kompetenzen zu ergänzen.",
+		"chooseCompetency": "Wähle Kompetenzen durch Anklicken aus, um sie deinem Badge hinzuzufügen.",
 		"escoSearch": {
 			"headline": "ESCO-Kompetenz",
 			"description": "Damit unsere Badges inhaltlich standardisiert und vergleichbar sind, nutzt der KI-Assistent <a class='tw-text-[var(--color-link)] tw-underline' href='https://esco.ec.europa.eu/de/about-esco' target='_blank'>die Europäische Klassifizierung für Kompetenzen (ESCO)</a>. Du kannst hier selbst nach passenden Kompetenzen suchen und sie hinzufügen:",
