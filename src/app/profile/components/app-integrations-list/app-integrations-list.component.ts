@@ -9,12 +9,11 @@ import { AppIntegrationDetailsDialog } from '../app-integration-details-dialog/a
 import { ApplicationCredentialsService } from '../../../common/services/application-credentials.service.';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { FormMessageComponent } from '../../../common/components/form-message.component';
-import { NgIf, NgFor } from '@angular/common';
 
 @Component({
 	selector: 'app-integration-detail',
 	templateUrl: './app-integrations-list.component.html',
-	imports: [FormMessageComponent, NgIf, AddCredentialsDialog, AppIntegrationDetailsDialog, NgFor, TranslatePipe],
+	imports: [FormMessageComponent, AddCredentialsDialog, AppIntegrationDetailsDialog, TranslatePipe],
 })
 export class AppIntegrationListComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	constructor(

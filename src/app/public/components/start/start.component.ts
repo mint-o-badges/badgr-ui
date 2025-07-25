@@ -5,7 +5,7 @@ import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/s
 import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { RouterLink } from '@angular/router';
-import { NgIf } from '@angular/common';
+
 import { HlmH2Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h2.directive';
 import { HlmH3Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h3.directive';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -20,7 +20,6 @@ import { TranslatePipe } from '@ngx-translate/core';
 		HlmPDirective,
 		OebButtonComponent,
 		RouterLink,
-		NgIf,
 		HlmH2Directive,
 		HlmH3Directive,
 		TranslatePipe,

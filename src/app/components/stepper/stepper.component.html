@@ -4,27 +4,27 @@
 			class="tw-justify-evenly tw-items-center tw-w-full tw-z-20 tw-relative tw-inline-flex tw-p-4 tw-my-12 tw-rounded-2xl"
 		>
 			<div class="steps-wrapper">
-				<button
-					class="step"
-					type="button"
-					*ngFor="let step of steps; let i = index"
-					[ngClass]="{
-						active: selectedIndex === i,
-						error: step.hasError,
-						completed: step.completed && i < selectedIndex
-					}"
-					(click)="onClick(i)"
-				>
-					<div class="step-bullet">
-						{{ i + 1 }}
-					</div>
-
-					<div class="tw-hidden md:tw-flex tw-flex-col tw-gap-2">
-						<span class="step-title">
-							{{ step.hasError ? step.errorMessage : step.label }}
-						</span>
-					</div>
-				</button>
+				@for (step of steps; track step; let i = $index) {
+					<button
+						class="step"
+						type="button"
+						[ngClass]="{
+							active: selectedIndex === i,
+							error: step.hasError,
+							completed: step.completed && i < selectedIndex
+						}"
+						(click)="onClick(i)"
+					>
+						<div class="step-bullet">
+							{{ i + 1 }}
+						</div>
+						<div class="tw-hidden md:tw-flex tw-flex-col tw-gap-2">
+							<span class="step-title">
+								{{ step.hasError ? step.errorMessage : step.label }}
+							</span>
+						</div>
+					</button>
+				}
 			</div>
 		</div>
 	</header>

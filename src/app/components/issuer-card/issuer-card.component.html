@@ -39,19 +39,20 @@
 				<img src="assets/badges/badgeIcon.svg" alt="bade icon" class="tw-w-9" />
 				<p [innerHTML]="issuer?.badgeClassCount | i18nPlural: plural['badges']"></p>
 			</a>
-			<a
-				*ngIf="issuer?.learningPathCount > 0"
-				hlmP
-				class="tw-flex tw-flex-row tw-text-purple tw-font-semibold tw-items-center hover:tw-underline"
-				[routerLink]="['/public/issuers/', issuer?.slug]"
-			>
-				<img
-					src="assets/oeb/images/learningPath/learningPathIcon.svg"
-					alt="learning path icon"
-					class="tw-w-7"
-				/>
-				<p class="tw-ml-2" [innerHTML]="issuer?.learningPathCount | i18nPlural: plural['learningPath']"></p>
-			</a>
+			@if (issuer?.learningPathCount > 0) {
+				<a
+					hlmP
+					class="tw-flex tw-flex-row tw-text-purple tw-font-semibold tw-items-center hover:tw-underline"
+					[routerLink]="['/public/issuers/', issuer?.slug]"
+				>
+					<img
+						src="assets/oeb/images/learningPath/learningPathIcon.svg"
+						alt="learning path icon"
+						class="tw-w-7"
+					/>
+					<p class="tw-ml-2" [innerHTML]="issuer?.learningPathCount | i18nPlural: plural['learningPath']"></p>
+				</a>
+			}
 		</div>
 	</div>
 </div>

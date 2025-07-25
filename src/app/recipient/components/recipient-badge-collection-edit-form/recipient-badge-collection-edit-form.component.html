@@ -76,36 +76,39 @@
 												id="badge-catalog-select"
 											>
 												<option [ngValue]="'---'">{{ 'Badge.groupBy' | translate }}</option>
-												<option *ngFor="let option of groups" [value]="option">
-													{{ option }}
-												</option>
+												@for (option of groups; track option) {
+													<option [value]="option">
+														{{ option }}
+													</option>
+												}
 											</select>
 										</div>
 									</div>
 								</label>
 							</div>
 						</div>
-						<ng-container *ngIf="groupBy == '---'">
+						@if (groupBy == '---') {
 							<div class="tw-grid tw-grid-cols-badgesLp tw-gap-6 tw-mt-4">
-								<bg-badgecard
-									*ngFor="let badge of badgeResults; let i = index"
-									[badgeTitle]="badge.badge.apiModel.json.badge.name"
-									[badgeImage]="badge.badge.apiModel.json.badge.image"
-									[badgeDescription]="badge.badge.apiModel.json.badge.description"
-									[badgeSlug]="badge.badge.apiModel.json.badge.slug"
-									[issuerTitle]="badge.badge.apiModel.json.badge.issuer.name"
-									[badgeIssueDate]="badgeIssueDate(badge)"
-									[public]="true"
-									[publicUrl]="badge.badge.url"
-									(ngModelChange)="checkboxChange($event, badge.badge)"
-									(checkboxChange)="checkboxChange($event, badge.badge)"
-									[checked]="badgeChecked(badge.badge)"
-									[showCheckbox]="true"
-								></bg-badgecard>
+								@for (badge of badgeResults; track badge; let i = $index) {
+									<bg-badgecard
+										[badgeTitle]="badge.badge.apiModel.json.badge.name"
+										[badgeImage]="badge.badge.apiModel.json.badge.image"
+										[badgeDescription]="badge.badge.apiModel.json.badge.description"
+										[badgeSlug]="badge.badge.apiModel.json.badge.slug"
+										[issuerTitle]="badge.badge.apiModel.json.badge.issuer.name"
+										[badgeIssueDate]="badgeIssueDate(badge)"
+										[public]="true"
+										[publicUrl]="badge.badge.url"
+										(ngModelChange)="checkboxChange($event, badge.badge)"
+										(checkboxChange)="checkboxChange($event, badge.badge)"
+										[checked]="badgeChecked(badge.badge)"
+										[showCheckbox]="true"
+									></bg-badgecard>
+								}
 							</div>
-						</ng-container>
-						<ng-container *ngIf="groupBy == 'Issuer'">
-							<ng-container *ngFor="let issuerGroup of issuerResults">
+						}
+						@if (groupBy == 'Issuer' || groupBy == 'Institution') {
+							@for (issuerGroup of issuerResults; track issuerGroup) {
 								<h3 class="u-text-h3-semibold u-margin-bottom2x u-margin-top6x u-text-dark1">
 									{{ issuerGroup.issuer?.name }}
 									<span class="u-text-small-semibold-caps u-text-dark4 u-margin-left2x"
@@ -115,25 +118,26 @@
 								</h3>
 								<div class="tw-grid sm:tw-grid-cols-badgesLp tw-gap-6">
 									<!-- TODO: Fix the badgecard link for sharing and routing -->
-									<bg-badgecard
-										*ngFor="let badge of issuerGroup.badges"
-										[badgeTitle]="badge.badgeClass.name"
-										[badgeImage]="badge.badgeClass.image"
-										[badgeDescription]="badge.badgeClass.description"
-										[badgeSlug]="badge.badgeClass.slug"
-										[issuerTitle]="badge.badgeClass.issuer.name"
-										[badgeIssueDate]="badge.issueDate"
-										[public]="true"
-										[publicUrl]="badge.url"
-										[competencies]="badge.apiModel.extensions['extensions:CompetencyExtension']"
-										[showCheckbox]="true"
-										(ngModelChange)="checkboxChange($event, badge)"
-										(checkboxChange)="checkboxChange($event, badge)"
-										[checked]="badgeChecked(badge)"
-									></bg-badgecard>
+									@for (badge of issuerGroup.badges; track badge) {
+										<bg-badgecard
+											[badgeTitle]="badge.badgeClass.name"
+											[badgeImage]="badge.badgeClass.image"
+											[badgeDescription]="badge.badgeClass.description"
+											[badgeSlug]="badge.badgeClass.slug"
+											[issuerTitle]="badge.badgeClass.issuer.name"
+											[badgeIssueDate]="badge.issueDate"
+											[public]="true"
+											[publicUrl]="badge.url"
+											[competencies]="badge.apiModel.extensions['extensions:CompetencyExtension']"
+											[showCheckbox]="true"
+											(ngModelChange)="checkboxChange($event, badge)"
+											(checkboxChange)="checkboxChange($event, badge)"
+											[checked]="badgeChecked(badge)"
+										></bg-badgecard>
+									}
 								</div>
-							</ng-container>
-						</ng-container>
+							}
+						}
 						<p class="tw-mt-6">
 							{{ 'BadgeCollection.youHave' | translate }} {{ selectedBadges.length }}
 							{{ selectedBadges.length | i18nPlural: plural.badges | translate }}

@@ -9,13 +9,15 @@
 			"projectType": "application",
 			"architect": {
 				"build": {
-					"builder": "@angular-devkit/build-angular:browser",
+					"builder": "@angular-devkit/build-angular:application",
 					"options": {
-						"outputPath": "dist",
+						"outputPath": {
+							"base": "dist",
+							"browser": ""
+						},
 						"index": "src/index.html",
-						"main": "src/main.ts",
 						"tsConfig": "src/tsconfig.app.json",
-						"polyfills": "src/polyfills.ts",
+						"polyfills": ["src/polyfills.ts"],
 						"assets": [
 							"src/assets",
 							"src/breakdown",
@@ -47,12 +49,11 @@
 							"node_modules/ngx-markdown-editor/assets/marked.min.js",
 							"node_modules/altcha/dist/altcha.js"
 						],
-						"vendorChunk": true,
 						"extractLicenses": false,
-						"buildOptimizer": false,
 						"sourceMap": true,
 						"optimization": false,
-						"namedChunks": true
+						"namedChunks": true,
+						"browser": "src/main.ts"
 					},
 					"configurations": {
 						"production": {
@@ -67,8 +68,6 @@
 							"sourceMap": false,
 							"namedChunks": false,
 							"extractLicenses": true,
-							"vendorChunk": false,
-							"buildOptimizer": true,
 							"index": {
 								"input": "src/index.production.html",
 								"output": "index.html"
@@ -92,8 +91,6 @@
 							"sourceMap": false,
 							"namedChunks": false,
 							"extractLicenses": true,
-							"vendorChunk": false,
-							"buildOptimizer": true,
 							"index": {
 								"input": "src/index.staging.html",
 								"output": "index.html"
@@ -117,8 +114,6 @@
 							"sourceMap": false,
 							"namedChunks": false,
 							"extractLicenses": true,
-							"vendorChunk": false,
-							"buildOptimizer": true,
 							"index": {
 								"input": "src/index.develop.html",
 								"output": "index.html"
@@ -200,10 +195,30 @@
 	"schematics": {
 		"@schematics/angular:component": {
 			"prefix": "app",
-			"style": "css"
+			"style": "css",
+			"type": "component"
 		},
 		"@schematics/angular:directive": {
-			"prefix": "app"
+			"prefix": "app",
+			"type": "directive"
+		},
+		"@schematics/angular:service": {
+			"type": "service"
+		},
+		"@schematics/angular:guard": {
+			"typeSeparator": "."
+		},
+		"@schematics/angular:interceptor": {
+			"typeSeparator": "."
+		},
+		"@schematics/angular:module": {
+			"typeSeparator": "."
+		},
+		"@schematics/angular:pipe": {
+			"typeSeparator": "."
+		},
+		"@schematics/angular:resolver": {
+			"typeSeparator": "."
 		}
 	},
 	"cli": {

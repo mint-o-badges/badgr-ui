@@ -24,7 +24,7 @@ import { UserProfileApiService } from '../../../common/services/user-profile-api
 import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
 import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
 import { HlmADirective } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-a.directive';
-import { NgIf } from '@angular/common';
+
 import { OebInputComponent } from '../../../components/input.component';
 import { OebCheckboxComponent } from '../../../components/oeb-checkbox.component';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
@@ -46,7 +46,6 @@ type RedirectHttpResponse = HttpResponse<RedirectResponse>;
 		HlmPDirective,
 		HlmADirective,
 		RouterLink,
-		NgIf,
 		FormsModule,
 		OebInputComponent,
 		OebCheckboxComponent,

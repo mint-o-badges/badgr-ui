@@ -17,20 +17,13 @@ import { LinkEntry, BgBreadcrumbsComponent } from '../../../common/components/bg
 import { BadgeClassManager } from '../../services/badgeclass-manager.service';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
-import { NgIf } from '@angular/common';
+
 import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 import { BadgeClassEditFormComponent } from '../badgeclass-edit-form/badgeclass-edit-form.component';
 
 @Component({
 	templateUrl: 'badgeclass-create.component.html',
-	imports: [
-		BgBreadcrumbsComponent,
-		HlmH1Directive,
-		NgIf,
-		BgAwaitPromises,
-		BadgeClassEditFormComponent,
-		TranslatePipe,
-	],
+	imports: [BgBreadcrumbsComponent, HlmH1Directive, BgAwaitPromises, BadgeClassEditFormComponent, TranslatePipe],
 })
 export class BadgeClassCreateComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	issuerSlug: string;

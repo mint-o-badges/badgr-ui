@@ -1,23 +1,17 @@
 import { Component, Input, OnInit, TemplateRef, ChangeDetectorRef } from '@angular/core';
 import { BrnProgressComponent, BrnProgressIndicatorComponent } from '@spartan-ng/brain/progress';
 import { HlmProgressIndicatorDirective } from './spartan/ui-progress-helm/src';
-import { NgTemplateOutlet, NgIf } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 
 @Component({
 	selector: 'oeb-progress',
-	imports: [
-		BrnProgressComponent,
-		BrnProgressIndicatorComponent,
-		HlmProgressIndicatorDirective,
-		NgTemplateOutlet,
-		NgIf,
-	],
+	imports: [BrnProgressComponent, BrnProgressIndicatorComponent, HlmProgressIndicatorDirective, NgTemplateOutlet],
 	template: `
 		<brn-progress [class]="class" hlm aria-labelledby="loading" [value]="progressValue">
 			<brn-progress-indicator hlm />
-			<ng-container *ngIf="template">
+			@if (template) {
 				<ng-container *ngTemplateOutlet="template"></ng-container>
-			</ng-container>
+			}
 		</brn-progress>
 	`,
 })

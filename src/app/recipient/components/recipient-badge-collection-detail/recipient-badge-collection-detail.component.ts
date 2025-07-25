@@ -29,7 +29,7 @@ import { OebDropdownComponent } from '../../../components/oeb-dropdown.component
 import { SvgIconComponent } from '../../../common/components/svg-icon.component';
 import { HlmSwitchComponent } from '../../../components/spartan/ui-switch-helm/src/lib/hlm-switch.component';
 import { FormsModule } from '@angular/forms';
-import { NgIf, NgFor } from '@angular/common';
+
 import { BgBadgecard } from '../../../common/components/bg-badgecard';
 import { NgIcon } from '@ng-icons/core';
 import { HlmIconDirective } from '../../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
@@ -47,8 +47,6 @@ import { HlmIconDirective } from '../../../components/spartan/ui-icon-helm/src/l
 		SvgIconComponent,
 		HlmSwitchComponent,
 		FormsModule,
-		NgIf,
-		NgFor,
 		BgBadgecard,
 		NgIcon,
 		HlmIconDirective,
@@ -125,7 +123,7 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 		])
 			.then(([list]) => {
 				this.collection = list.entityForSlug(this.collectionSlug);
-				this.menuItems[1].disabled = this.collection.badgeEntries.length === 0;
+				this.checkDisableDownload();
 				this.translate.get('General.collections').subscribe((str) => {
 					this.crumbs = [
 						{ title: str, routerLink: ['/recipient/badges'], queryParams: { tab: 'collections' } },
@@ -161,12 +159,16 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 		}
 	}
 
+	checkDisableDownload() {
+		this.menuItems[1].disabled = this.collection.badgeEntries.length === 0 || !this.collection.published;
+	}
+
 	badgeEntryBySlug(index: number, entry: RecipientBadgeCollectionEntry) {
 		return entry.badgeSlug;
 	}
 
 	badgeIssueDate(entry: RecipientBadgeCollectionEntry) {
-		return new Date(entry.badge.apiModel.json.issuedOn);
+		return new Date(entry.badge.issueDate);
 	}
 
 	removeBadge(badgeSlug: string) {
@@ -177,7 +179,8 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 				if (result === 'continue') {
 					this.collection.removeBadge(res.entityForSlug(badgeSlug));
 					this.collection.save();
-					this.menuItems[1].disabled = this.collection.badgeEntries.length === 0;
+					this.checkDisableDownload();
+					// this.menuItems[1].disabled = this.collection.badgeEntries.length === 0;
 				}
 			});
 		});
@@ -314,8 +317,10 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 
 		if (published) {
 			this.collection.save().then(
-				(success) =>
-					this.messageService.reportMinorSuccess(`Published collection ${this.collection.name} successfully`),
+				(success) => {
+					this.messageService.reportMinorSuccess(`Published collection ${this.collection.name} successfully`);
+					this.checkDisableDownload();
+				},
 				(failure) =>
 					this.messageService.reportHandledError(
 						`Failed to publish collection ${this.collection.name}`,
@@ -338,7 +343,7 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 	}
 
 	togglePublished() {
-		this.collection.save();
+		this.collection.save().then(() => this.checkDisableDownload());
 	}
 
 	shareCollection() {

@@ -60,138 +60,141 @@
 				</tr>
 			</thead>
 			<tbody class="datatable-x-body">
-				<tr class="datatable-x-row" *ngFor="let email of emails">
-					<td class="datatable-x-cell">
-						<div class="l-stack l-stack-start">
-							<p class="u-text-body u-break-word">
-								{{ email.email }}
-							</p>
-							<div *ngIf="email.primary" class="badgestatus badgestatus-new badgestatus-intable">
-								{{ 'Profile.primary' | translate }}
-							</div>
-						</div>
-					</td>
-					<td class="datatable-x-cell u-text-body">
-						<div class="l-flex l-flex-aligncenter l-flex-1x">
-							<div *ngIf="email.verified" class="l-flex l-flex-aligncenter l-flex-1x">
-								<svg icon="icon_checkmark_circle" class="icon icon-success" viewBox="0 0 24 24"></svg>
-								<p class="u-text-body u-hidden-maxtablet">
-									{{ 'Profile.verified' | translate }}
+				@for (email of emails; track email) {
+					<tr class="datatable-x-row">
+						<td class="datatable-x-cell">
+							<div class="l-stack l-stack-start">
+								<p class="u-text-body u-break-word">
+									{{ email.email }}
 								</p>
+								@if (email.primary) {
+									<div class="badgestatus badgestatus-new badgestatus-intable">
+										{{ 'Profile.primary' | translate }}
+									</div>
+								}
 							</div>
-							<div *ngIf="!email.verified" class="l-flex l-flex-aligncenter l-flex-1x">
-								<svg icon="icon_pending" class="icon icon-dark4" viewBox="0 0 24 24"></svg>
-								<p class="u-text-body u-hidden-maxtablet">
-									{{ 'Profile.pending' | translate }}
-								</p>
+						</td>
+						<td class="datatable-x-cell u-text-body">
+							<div class="l-flex l-flex-aligncenter l-flex-1x">
+								@if (email.verified) {
+									<div class="l-flex l-flex-aligncenter l-flex-1x">
+										<svg
+											icon="icon_checkmark_circle"
+											class="icon icon-success"
+											viewBox="0 0 24 24"
+										></svg>
+										<p class="u-text-body u-hidden-maxtablet">
+											{{ 'Profile.verified' | translate }}
+										</p>
+									</div>
+								}
+								@if (!email.verified) {
+									<div class="l-flex l-flex-aligncenter l-flex-1x">
+										<svg icon="icon_pending" class="icon icon-dark4" viewBox="0 0 24 24"></svg>
+										<p class="u-text-body u-hidden-maxtablet">
+											{{ 'Profile.pending' | translate }}
+										</p>
+									</div>
+								}
 							</div>
-						</div>
-					</td>
-					<td class="datatable-x-cell">
-						<button
-							*ngIf="
+						</td>
+						<td class="datatable-x-cell">
+							@if (
 								!email.verified ||
 								(email.verified && !email.primary) ||
 								(emails.length > 1 && !email.primary)
-							"
-							[bgPopupMenuTrigger]="emailMenu"
-							class="buttonicon buttonicon-link"
-						>
-							<svg icon="icon_more"></svg>
-							<span class="visuallyhidden">{{ 'Profile.more' | translate }}</span>
-						</button>
-
-						<bg-popup-menu #emailMenu class="menu" id="menu1">
-							<div
-								*ngIf="!email.verified"
-								class="menuitem"
-								(click)="clickResendVerification($event, email)"
-							>
-								<svg icon="icon_refresh"></svg>
-								{{ 'Profile.resendVerification' | translate }}
-							</div>
-
-							<div
-								*ngIf="email.verified && !email.primary"
-								class="menuitem"
-								(click)="clickMakePrimary($event, email)"
-							>
-								<svg icon="icon_refresh"></svg>
-								{{ 'Profile.makePrimary' | translate }}
-							</div>
-
-							<div
-								class="menuitem"
-								[class.button-is-disabled]="email.primary"
-								(click)="clickConfirmRemove($event, email)"
-								*ngIf="emails.length > 1 && !email.primary"
-							>
-								<svg icon="icon_remove"></svg>
-								{{ 'Profile.remove' | translate }}
-							</div>
-						</bg-popup-menu>
-					</td>
-				</tr>
+							) {
+								<button [bgPopupMenuTrigger]="emailMenu" class="buttonicon buttonicon-link">
+									<svg icon="icon_more"></svg>
+									<span class="visuallyhidden">{{ 'Profile.more' | translate }}</span>
+								</button>
+							}
+							<bg-popup-menu #emailMenu class="menu" id="menu1">
+								@if (!email.verified) {
+									<div class="menuitem" (click)="clickResendVerification($event, email)">
+										<svg icon="icon_refresh"></svg>
+										{{ 'Profile.resendVerification' | translate }}
+									</div>
+								}
+								@if (email.verified && !email.primary) {
+									<div class="menuitem" (click)="clickMakePrimary($event, email)">
+										<svg icon="icon_refresh"></svg>
+										{{ 'Profile.makePrimary' | translate }}
+									</div>
+								}
+								@if (emails.length > 1 && !email.primary) {
+									<div
+										class="menuitem"
+										[class.button-is-disabled]="email.primary"
+										(click)="clickConfirmRemove($event, email)"
+									>
+										<svg icon="icon_remove"></svg>
+										{{ 'Profile.remove' | translate }}
+									</div>
+								}
+							</bg-popup-menu>
+						</td>
+					</tr>
+				}
 			</tbody>
 		</table>
 
-		<ng-template
-			[ngIf]="socialAccounts.length > 0 || configService.featuresConfig?.socialAccountProviders?.length > 0"
-		>
+		@if (socialAccounts.length > 0 || configService.featuresConfig?.socialAccountProviders?.length > 0) {
 			<h2 class="u-text-h3-bold u-margin-yaxis3x u-text-dark2">Linked Accounts</h2>
-
 			<table class="datatable datatable-roundheaders">
-				<thead class="datatable-x-head" *ngIf="socialAccounts.length > 0">
-					<tr class="datatable-x-header">
-						<th class="datatable-x-cell">{{ 'Profile.service' | translate }}</th>
-						<th class="datatable-x-cell">{{ 'General.account' | translate }}</th>
-						<th class="datatable-x-cell">
-							<span class="visuallyhidden">{{ 'Profile.actions' | translate }}</span>
-						</th>
-					</tr>
-				</thead>
+				@if (socialAccounts.length > 0) {
+					<thead class="datatable-x-head">
+						<tr class="datatable-x-header">
+							<th class="datatable-x-cell">{{ 'Profile.service' | translate }}</th>
+							<th class="datatable-x-cell">{{ 'General.account' | translate }}</th>
+							<th class="datatable-x-cell">
+								<span class="visuallyhidden">{{ 'Profile.actions' | translate }}</span>
+							</th>
+						</tr>
+					</thead>
+				}
 				<tbody class="datatable-x-body">
-					<tr *ngFor="let account of socialAccounts" class="datatable-x-row">
-						<td class="datatable-x-cell u-text-small">
-							{{ account.providerInfo?.name }}
-						</td>
-						<td class="datatable-x-cell u-text-small tw-break-words">
-							{{ account.fullLabel }}
-						</td>
-						<td class="datatable-x-cell">
-							<div class="l-flex l-flex-justifyend">
-								<a
-									href="#"
-									class="u-text u-text-small u-text-bold"
-									(click)="unlinkAccount($event, account, socialAccounts.length)"
-									>{{ 'Profile.unlink' | translate }}</a
-								>
-							</div>
-						</td>
-					</tr>
+					@for (account of socialAccounts; track account) {
+						<tr class="datatable-x-row">
+							<td class="datatable-x-cell u-text-small">
+								{{ account.providerInfo?.name }}
+							</td>
+							<td class="datatable-x-cell u-text-small tw-break-words">
+								{{ account.fullLabel }}
+							</td>
+							<td class="datatable-x-cell">
+								<div class="l-flex l-flex-justifyend">
+									<a
+										href="#"
+										class="u-text u-text-small u-text-bold"
+										(click)="unlinkAccount($event, account, socialAccounts.length)"
+										>{{ 'Profile.unlink' | translate }}</a
+									>
+								</div>
+							</td>
+						</tr>
+					}
 				</tbody>
 			</table>
-
 			<p class="u-text-body u-margin-yaxis3x u-width-paragraph">
 				{{ 'Profile.clickProviderBtn' | translate }}
 				to {{ configService.theme['serviceName'] || 'Badgr' }}
 				{{ 'Profile.useServiceInstead' | translate }}
 			</p>
 			<p class="u-text-small u-text-bold u-text-dark2 u-margin-bottom1x">Link Account:</p>
-
 			<div class="rule u-margin-bottom2x"></div>
-
 			<div class="l-grid l-grid-medium">
-				<button
-					*ngFor="let provider of sessionService.enabledExternalAuthProviders"
-					(click)="linkAccount($event, provider)"
-					class="socialbutton"
-					[style.backgroundColor]="provider.color"
-				>
-					<div class="visuallyhidden">{{ 'Profile.accessWith' | translate }} {{ provider.label }}</div>
-					<img [src]="sanitize(provider.imgSrc)" alt="" />
-				</button>
+				@for (provider of sessionService.enabledExternalAuthProviders; track provider) {
+					<button
+						(click)="linkAccount($event, provider)"
+						class="socialbutton"
+						[style.backgroundColor]="provider.color"
+					>
+						<div class="visuallyhidden">{{ 'Profile.accessWith' | translate }} {{ provider.label }}</div>
+						<img [src]="sanitize(provider.imgSrc)" alt="" />
+					</button>
+				}
 			</div>
-		</ng-template>
+		}
 	</div>
 </main>

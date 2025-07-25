@@ -11,13 +11,13 @@ import { RecipientBadgeInstance } from '../../../recipient/models/recipient-badg
 import { BadgeInstance } from '../../../issuer/models/badgeinstance.model';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { SvgIconComponent } from '../../components/svg-icon.component';
-import { NgIf, NgFor } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 
 @Component({
 	selector: 'share-social-dialog',
 	templateUrl: 'share-social-dialog.component.html',
-	imports: [SvgIconComponent, NgIf, FormsModule, NgFor, TranslatePipe],
+	imports: [SvgIconComponent, FormsModule, TranslatePipe],
 })
 export class ShareSocialDialog extends BaseDialog {
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -1,11 +1,10 @@
 import { NgIcon } from '@ng-icons/core';
-import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges, inject } from '@angular/core';
+import { Component, EventEmitter, Input, Output, SimpleChanges, inject } from '@angular/core';
 import { BrnAccordionContentComponent } from '@spartan-ng/brain/accordion';
 import { HlmAccordionModule } from '../../../components/spartan/ui-accordion-helm/src';
-
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
-import { NgFor, NgIf, NgClass } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { OebSeparatorComponent } from '../../../components/oeb-separator.component';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { OebDropdownComponent } from '../../../components/oeb-dropdown.component';
@@ -23,6 +22,7 @@ import { BadgeClass } from '../../models/badgeclass.model';
 import { Router } from '@angular/router';
 import { Issuer } from '../../models/issuer.model';
 import { HlmIconDirective } from '../../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
+import { SvgIconComponent } from '~/common/components/svg-icon.component';
 
 @Component({
 	selector: 'qrcode-awards',
@@ -35,14 +35,13 @@ import { HlmIconDirective } from '../../../components/spartan/ui-icon-helm/src/l
 		TranslateModule,
 		BrnAccordionContentComponent,
 		RouterModule,
-		NgIf,
-		NgFor,
 		NgClass,
 		OebSeparatorComponent,
 		OebButtonComponent,
 		OebDropdownComponent,
 		QrCodeDatatableComponent,
 		HlmH3Directive,
+		SvgIconComponent,
 	],
 })
 export class QrCodeAwardsComponent {

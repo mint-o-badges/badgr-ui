@@ -25,30 +25,29 @@
 					</tr>
 				</thead>
 				<tbody class="datatable-x-body">
-					<tr
-						class="datatable-x-row"
-						*ngFor="let user of importErrorForm.controls['users']['controls']; let i = index"
-					>
-						<td class="datatable-x-cell">
-							<bg-formfield-text
-								class="u-margin-left2x"
-								[control]="importErrorForm.controls['users']['controls'][i].controls.email"
-								[errorMessage]="'Please enter a valid email'"
-							></bg-formfield-text>
-						</td>
-						<td class="datatable-x-cell">
-							<bg-formfield-text
-								class="u-margin-left2x"
-								[control]="importErrorForm.controls['users']['controls'][i].controls.name"
-								[errorMessage]="'Please enter a valid name'"
-							></bg-formfield-text>
-						</td>
-						<td class="datatable-x-cell">
-							<button class="u-margin-left2x u-text-link-small" (click)="removeButtonErrorState(i)">
-								Entfernen
-							</button>
-						</td>
-					</tr>
+					@for (user of importErrorForm.controls['users']['controls']; track user; let i = $index) {
+						<tr class="datatable-x-row">
+							<td class="datatable-x-cell">
+								<bg-formfield-text
+									class="u-margin-left2x"
+									[control]="importErrorForm.controls['users']['controls'][i].controls.email"
+									[errorMessage]="'Please enter a valid email'"
+								></bg-formfield-text>
+							</td>
+							<td class="datatable-x-cell">
+								<bg-formfield-text
+									class="u-margin-left2x"
+									[control]="importErrorForm.controls['users']['controls'][i].controls.name"
+									[errorMessage]="'Please enter a valid name'"
+								></bg-formfield-text>
+							</td>
+							<td class="datatable-x-cell">
+								<button class="u-margin-left2x u-text-link-small" (click)="removeButtonErrorState(i)">
+									Entfernen
+								</button>
+							</td>
+						</tr>
+					}
 				</tbody>
 
 				<tbody></tbody>

@@ -64,7 +64,7 @@ import { BadgeClassDetailsComponent } from '../badgeclass-create-steps/badgeclas
 import { Issuer } from '../../models/issuer.model';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { FormMessageComponent } from '../../../common/components/form-message.component';
-import { NgIf, NgClass, NgFor, NgStyle, DecimalPipe } from '@angular/common';
+import { NgClass, NgStyle, DecimalPipe } from '@angular/common';
 import { BadgeLegendComponent } from '../../../common/components/badge-legend/badge-legend.component';
 import { StepComponent } from '../../../components/stepper/step.component';
 import { CdkStep } from '@angular/cdk/stepper';
@@ -88,7 +88,6 @@ const MAX_HRS_PER_COMPETENCY: number = 999;
 	styleUrl: './badgeclass-edit-form.component.css',
 	imports: [
 		FormMessageComponent,
-		NgIf,
 		BadgeLegendComponent,
 		FormsModule,
 		ReactiveFormsModule,
@@ -102,7 +101,6 @@ const MAX_HRS_PER_COMPETENCY: number = 999;
 		BadgeStudioComponent,
 		NgClass,
 		OebButtonComponent,
-		NgFor,
 		OebCheckboxComponent,
 		OebCollapsibleComponent,
 		NgIcon,

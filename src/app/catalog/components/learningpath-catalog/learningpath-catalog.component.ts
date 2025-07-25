@@ -11,16 +11,15 @@ import { LearningPath } from '../../../issuer/models/learningpath.model';
 import { Issuer } from '../../../issuer/models/issuer.model';
 import { StringMatchingUtil } from '../../../common/util/string-matching-util';
 import { IssuerManager } from '../../../issuer/services/issuer-manager.service';
-import { sortUnique } from '../badge-catalog/badge-catalog.component';
 import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
 import { RecipientBadgeApiService } from '../../../recipient/services/recipient-badges-api.service';
 import { appearAnimation } from '../../../common/animations/animations';
 import { FormControl, FormsModule } from '@angular/forms';
-import { applySorting } from '../../util/sorting';
+import { applySorting, sortUnique } from '../../util/sorting';
 import { FormMessageComponent } from '../../../common/components/form-message.component';
 import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
-import { NgIf, NgFor } from '@angular/common';
+
 import { CountUpModule } from 'ngx-countup';
 import { HlmInputDirective } from '../../../components/spartan/ui-input-helm/src/lib/hlm-input.directive';
 import { NgIcon } from '@ng-icons/core';
@@ -38,14 +37,12 @@ import { PaginationAdvancedComponent } from '../../../components/oeb-numbered-pa
 		FormMessageComponent,
 		BgAwaitPromises,
 		HlmH1Directive,
-		NgIf,
 		CountUpModule,
 		FormsModule,
 		HlmInputDirective,
 		NgIcon,
 		HlmIconDirective,
 		OebGlobalSortSelectComponent,
-		NgFor,
 		BgLearningPathCard,
 		PaginationAdvancedComponent,
 		TranslatePipe,
@@ -222,10 +219,8 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 	}
 
 	calculateMatch(lp: LearningPath): string {
-		const lpBadges = lp.badges;
-		const badgeClassIds = lpBadges.map((b) => b.badge.json.id);
-		const totalBadges = lpBadges.length;
-		const userBadgeCount = badgeClassIds.filter((b) => this.userBadges.includes(b)).length;
+		const userBadgeCount = this.calculateUserBadgeCount(lp);
+		const totalBadges = lp.badges.length;
 		return `${userBadgeCount}/${totalBadges}`;
 	}
 
@@ -239,7 +234,18 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 	}
 
 	checkCompleted(lp: LearningPath): boolean {
+		if (lp.required_badges_count != lp.badges.length) {
+			const userBadgeCount = this.calculateUserBadgeCount(lp);
+			return userBadgeCount >= lp.required_badges_count;
+		}
 		return lp.completed_at != null;
+	}
+
+	calculateUserBadgeCount(lp: LearningPath): number {
+		const lpBadges = lp.badges;
+		const badgeClassIds = lpBadges.map((b) => b.badge.json.id);
+		const userBadgeCount = badgeClassIds.filter((b) => this.userBadges.includes(b)).length;
+		return userBadgeCount;
 	}
 
 	calculateStudyLoad(lp: LearningPath): number {

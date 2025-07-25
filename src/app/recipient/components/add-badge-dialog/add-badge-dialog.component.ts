@@ -8,7 +8,7 @@ import { BadgrApiFailure } from '../../../common/services/api-failure';
 import { preloadImageURL } from '../../../common/util/file-util';
 import { TypedFormControl, typedFormGroup } from '../../../common/util/typed-forms';
 import { TranslateService } from '@ngx-translate/core';
-import { CommonModule } from '@angular/common';
+
 import { ReactiveFormsModule } from '@angular/forms';
 import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src';
 import { BrnDialogRef } from '@spartan-ng/brain/dialog';
@@ -30,7 +30,6 @@ import { OebButtonComponent } from '../../../components/oeb-button.component';
 	selector: 'add-badge-dialog',
 	standalone: true,
 	imports: [
-		CommonModule,
 		ReactiveFormsModule,
 		UploadTabComponent,
 		UrlTabComponent,

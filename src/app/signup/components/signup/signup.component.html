@@ -19,55 +19,48 @@
 						Open Educational Badges
 					</h1>
 
-					<p
-						hlmP
-						class="tw-font-normal tw-mt-3 tw-mb-5 md:tw-mt-4 md:tw-mb-6"
-						*ngIf="!oAuthManager.currentAuthorization"
-					>
-						{{ 'Signup.youHaveAccount' | translate }}
-						<a class="tw-underline tw-text-[#1400FF]" [routerLink]="['/auth/login']">Login</a>.
-					</p>
+					@if (!oAuthManager.currentAuthorization) {
+						<p hlmP class="tw-font-normal tw-mt-3 tw-mb-5 md:tw-mt-4 md:tw-mb-6">
+							{{ 'Signup.youHaveAccount' | translate }}
+							<a class="tw-underline tw-text-[#1400FF]" [routerLink]="['/auth/login']">Login</a>.
+						</p>
+					}
 
-					<p
-						class="tw-font-normal tw-text-[20px] tw-leading-[28px]"
-						*ngIf="oAuthManager.currentAuthorization"
-					>
-						{{ 'Signup.application' | translate }}
-						<strong>
-							{{ oAuthManager.currentAuthorization.application.name }}
-						</strong>
-						{{ 'Signup.loginWithOpenEducationalBadges' | translate }}
-						Open Educational Badges.
-						{{ 'Signup.youHaveAccount' | translate }}
-						<a class="tw-underline tw-text-[#1400FF]" [routerLink]="['/login']">Login</a>!
-					</p>
-					<h3
-						class="ruleheadline l-ruleheadline"
-						*ngIf="sessionService.enabledExternalAuthProviders.length > 0"
-					>
-						{{ 'Signup.signUpWith' | translate }}
-					</h3>
+					@if (oAuthManager.currentAuthorization) {
+						<p class="tw-font-normal tw-text-[20px] tw-leading-[28px]">
+							{{ 'Signup.application' | translate }}
+							<strong>
+								{{ oAuthManager.currentAuthorization.application.name }}
+							</strong>
+							{{ 'Signup.loginWithOpenEducationalBadges' | translate }}
+							Open Educational Badges.
+							{{ 'Signup.youHaveAccount' | translate }}
+							<a class="tw-underline tw-text-[#1400FF]" [routerLink]="['/login']">Login</a>!
+						</p>
+					}
+					@if (sessionService.enabledExternalAuthProviders.length > 0) {
+						<h3 class="ruleheadline l-ruleheadline">
+							{{ 'Signup.signUpWith' | translate }}
+						</h3>
+					}
 
-					<div
-						class="l-socialbuttons u-margin-top2x"
-						*ngIf="sessionService.enabledExternalAuthProviders.length > 0"
-					>
-						<button
-							*ngFor="let provider of sessionService.enabledExternalAuthProviders"
-							(click)="sessionService.initiateUnauthenticatedExternalAuth(provider)"
-							class="socialbutton"
-							[style.backgroundColor]="provider.color"
-						>
-							<div class="visuallyhidden">Access with {{ provider.label }}</div>
-							<img [src]="sanitize(provider.imgSrc)" alt="" />
-						</button>
-					</div>
-					<h3
-						class="ruleheadline l-ruleheadline"
-						*ngIf="sessionService.enabledExternalAuthProviders.length > 0"
-					>
-						Oder
-					</h3>
+					@if (sessionService.enabledExternalAuthProviders.length > 0) {
+						<div class="l-socialbuttons u-margin-top2x">
+							@for (provider of sessionService.enabledExternalAuthProviders; track provider) {
+								<button
+									(click)="sessionService.initiateUnauthenticatedExternalAuth(provider)"
+									class="socialbutton"
+									[style.backgroundColor]="provider.color"
+								>
+									<div class="visuallyhidden">Access with {{ provider.label }}</div>
+									<img [src]="sanitize(provider.imgSrc)" alt="" />
+								</button>
+							}
+						</div>
+					}
+					@if (sessionService.enabledExternalAuthProviders.length > 0) {
+						<h3 class="ruleheadline l-ruleheadline">Oder</h3>
+					}
 				</div>
 
 				<div
@@ -547,15 +540,16 @@
 						</div>
 						<div class="tw-flex tw-justify-end tw-flex-wrap sm:tw-flex-nowrap tw-gap-2 tw-mt-4">
 							<!-- Not sure if cancel button still in use -->
-							<oeb-button
-								class="tw-mr-4"
-								type="button"
-								variant="secondary"
-								(click)="oAuthManager.cancelCurrentAuthorization()"
-								*ngIf="oAuthManager.currentAuthorization"
-								[disabled-when-requesting]="true"
-								text="{{ 'General.cancel' | translate }}"
-							></oeb-button>
+							@if (oAuthManager.currentAuthorization) {
+								<oeb-button
+									class="tw-mr-4"
+									type="button"
+									variant="secondary"
+									(click)="oAuthManager.cancelCurrentAuthorization()"
+									[disabled-when-requesting]="true"
+									text="{{ 'General.cancel' | translate }}"
+								></oeb-button>
+							}
 
 							<oeb-button
 								type="submit"
@@ -568,7 +562,7 @@
 							</oeb-button>
 							<!-- TO DO: Add a destination -->
 							<!--<a class="u-text-link-small" href="#"
-						>Change my Badgr location</a>-->
+                      >Change my Badgr location</a>-->
 						</div>
 					</div>
 				</form>
