@@ -43,7 +43,7 @@
 		"@ng-icons/lucide": "^32.0.0",
 		"@ngx-translate/core": "^16.0.4",
 		"@ngx-translate/http-loader": "^16.0.0",
-		"@spartan-ng/brain": "0.0.1-alpha.491",
+		"@spartan-ng/brain": "^0.0.1-alpha.445",
 		"@spartan-ng/ui-core": "0.0.1-alpha.380",
 		"ace-builds": "^1.4.14",
 		"altcha": "^0.3.1",
