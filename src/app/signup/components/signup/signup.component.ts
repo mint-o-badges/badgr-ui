@@ -23,6 +23,7 @@ import { OebInputComponent } from '../../../components/input.component';
 import { OebCheckboxComponent } from '../../../components/oeb-checkbox.component';
 import { AltchaComponent } from '../../../components/altcha.component';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
+import { PasswordComplexityValidator } from '../../../common/validators/password-complexity.validator';
 
 @Component({
 	selector: 'sign-up',
@@ -47,13 +48,18 @@ export class SignupComponent extends BaseRoutableComponent implements OnInit, Af
 	passwordMustBe8Char = this.translate.instant('Signup.passwordMustBe8Char');
 	confirmPassword = this.translate.instant('Signup.confirmPassword');
 	passwordsNotEqual = this.translate.instant('Signup.passwordsNotEqual');
+	passwordInsecure = this.translate.instant('Profile.passwordInsecure');
 
 	baseUrl: string;
 	signupForm = typedFormGroup()
 		.addControl('username', '', [Validators.required, EmailValidator.validEmail])
 		.addControl('firstName', '', Validators.required)
 		.addControl('lastName', '', Validators.required)
-		.addControl('password', '', [Validators.required, Validators.minLength(8)])
+		.addControl('password', '', [
+			Validators.required,
+			Validators.minLength(8),
+			PasswordComplexityValidator.securePassword,
+		])
 		.addControl('passwordConfirm', '', [Validators.required, this.passwordsMatch.bind(this)])
 		.addControl('agreedTermsService', false, Validators.requiredTrue)
 		.addControl('marketingOptIn', false)
@@ -194,7 +200,9 @@ export class SignupComponent extends BaseRoutableComponent implements OnInit, Af
 							} else if (error) {
 								if (error.password) {
 									this.messageService.setMessage(
-										'Your password must be uncommon and at least 8 characters. Please try again.',
+										this.translate.instant('Profile.passwordInsecure') +
+											' ' +
+											this.translate.instant('Profile.pleaseTryAgain'),
 										'error',
 									);
 								} else if (typeof error === 'object' && error.error) {

@@ -11,6 +11,7 @@ export interface ApiUserProfile {
 	has_password_set: boolean;
 	latest_terms_description: string;
 	marketing_opt_in: boolean;
+	secure_password_set: boolean;
 }
 export interface UserProfileRef extends ApiEntityRef {}
 

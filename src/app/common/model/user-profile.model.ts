@@ -58,6 +58,14 @@ export class UserProfile extends ManagedEntity<ApiUserProfile, UserProfileRef> {
 		this.apiModel.marketing_opt_in = true;
 	}
 
+	get securePasswordSet() {
+		return this.apiModel.secure_password_set;
+	}
+
+	set securePasswordSet(secure: boolean) {
+		this.apiModel.marketing_opt_in = secure;
+	}
+
 	static currentProfileId = 'currentUserProfile';
 	/**
 	 * List of emails associated with this user's account.

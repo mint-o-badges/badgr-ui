@@ -35,6 +35,9 @@ export class AuthGuard {
 				if (profile.agreed_terms_version !== profile.latest_terms_version) {
 					this.router.navigate(['/auth/new-terms']);
 					return false;
+				} else if (!profile.secure_password_set) {
+					this.router.navigate(['/auth/new-password']);
+					return false;
 				}
 			});
 			return true;
