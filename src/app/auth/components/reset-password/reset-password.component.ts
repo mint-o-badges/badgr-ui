@@ -14,6 +14,7 @@ import { OAuthBannerComponent } from '../../../common/components/oauth-banner.co
 import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
 import { OebInputComponent } from '../../../components/input.component';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
+import { PasswordComplexityValidator } from '../../../common/validators/password-complexity.validator';
 
 @Component({
 	selector: 'change-password',
@@ -32,7 +33,11 @@ import { OebButtonComponent } from '../../../components/oeb-button.component';
 })
 export class ResetPasswordComponent extends BaseRoutableComponent {
 	changePasswordForm = typedFormGroup()
-		.addControl('password1', '', [Validators.required, Validators.minLength(8)])
+		.addControl('password1', '', [
+			Validators.required,
+			Validators.minLength(8),
+			PasswordComplexityValidator.securePassword,
+		])
 		.addControl('password2', '', [Validators.required, this.passwordsMatch.bind(this)]);
 
 	get resetToken(): string {
@@ -44,6 +49,8 @@ export class ResetPasswordComponent extends BaseRoutableComponent {
 	mustBe8Char;
 	enterNewPasswordConfirmation;
 	passwordsDoNotMatch;
+	passwordInsecure;
+	pleaseTryAgain;
 
 	constructor(
 		private fb: FormBuilder,
@@ -73,6 +80,8 @@ export class ResetPasswordComponent extends BaseRoutableComponent {
 			this.mustBe8Char = this.translate.instant('Login.mustBe8Char');
 			this.enterNewPasswordConfirmation = this.translate.instant('Login.enterNewPasswordConfirmation');
 			this.passwordsDoNotMatch = this.translate.instant('Login.passwordsNotMatch');
+			this.passwordInsecure = this.translate.instant('Profile.passwordInsecure');
+			this.pleaseTryAgain = this.translate.instant('Profile.pleaseTryAgain');
 		});
 	}
 
@@ -92,10 +101,7 @@ export class ResetPasswordComponent extends BaseRoutableComponent {
 					return this.router.navigate(['/auth']);
 				},
 				(err) =>
-					this._messageService.reportAndThrowError(
-						'Your password must be uncommon and at least 8 characters. Please try again.',
-						err,
-					),
+					this._messageService.reportAndThrowError(this.passwordInsecure + ' ' + this.pleaseTryAgain, err),
 			);
 		}
 	}

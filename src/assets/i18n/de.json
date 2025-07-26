@@ -875,7 +875,15 @@
 		"dontHavePassword": "Du hast dein aktuelles Passwort nicht?",
 		"clickHere": "Hier Klicken",
 		"resetByEmail": "zum Zurücksetzen per E-Mail.",
-		"emails": "E-Mails"
+		"emails": "E-Mails",
+		"passwordInsecure": "Ihr Passwort muss ungewöhnlich sein und mindestens 8 Zeichen (davon 1 Großbuchstabe, 1 Zahl und 1 Sonderzeichen) enthalten.",
+		"pleaseTryAgain": "Bitte versuche es erneut.",
+		"passwordMinRequirements": "(mind. 8 Zeichen, davon 1 Großbuchstabe, 1 Zahl und 1 Sonderzeichen)",
+		"createNewPassword": "Neues Passwort erstellen",
+		"repeatNewpassword": "Neues Passwort wiederholen",
+		"weIncreasedPasswordRequirements": "Wir haben unsere Anforderungen an Passwörter erhöht.",
+		"pleaseRenewPassword": "Deshalb bitten wir dich, dein Passwort zu erneuern.",
+		"pleaseRenewPasswordInfo": "Dauert nur kurz und sorgt für mehr Schutz."
 	},
 	"Welcome": {
 		"heading": "Schön, dass du da bist!",
