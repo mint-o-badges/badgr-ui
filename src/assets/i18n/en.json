@@ -881,9 +881,11 @@
 		"passwordMinRequirements": "(At least 8 characters, including 1 uppercase letter, 1 number, and 1 special character)",
 		"createNewPassword": "Create new password",
 		"repeatNewpassword": "Repeat new password",
+		"saveNewPassword": "Neues Passwort speichern",
 		"weIncreasedPasswordRequirements": "We have increased our password requirements.",
 		"pleaseRenewPassword": "Therefore, we kindly request that you update your password.",
-		"pleaseRenewPasswordInfo": "Takes only a moment and provides greater protection."
+		"pleaseRenewPasswordInfo": "Takes only a moment and provides greater protection.",
+		"dontPanic": "Don't panic – everything is fine!"
 	},
 	"Welcome": {
 		"heading": "Nice to see you!",
