@@ -20,4 +20,6 @@ RUN mkdir -p /etc/nginx/sites-enabled/\
 
 COPY --from=build /app/dist/ /usr/share/nginx/html
 
+ENV TZ="Europe/Berlin"
+
 EXPOSE 80

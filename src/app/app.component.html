@@ -21,25 +21,40 @@
 						trigger="General.aboutBadges"
 						triggerStyle="oeb-navitem tw-cursor-pointer !tw-leading-none !tw-py-1"
 					></oeb-dropdown>
-					@if (!features.disableRegistration) {
-						<a
-							class="oeb-navitem"
-							routerLinkActive="oeb-navitem-is-active"
-							[routerLink]="['/public/about']"
-							>{{ 'NavItems.aboutOpenEducationalBadges' | translate }}</a
-						>
+
+					@if (cmsMenus && cmsMenus.header[translate.currentLang]) {
+						@for (item of cmsMenus.header[translate.currentLang]; track item.id) {
+							@if (item.children.length) {
+								<oeb-dropdown
+									[menuItems]="item.children | CmsMenuItems"
+									[trigger]="item.title"
+									triggerStyle="oeb-navitem tw-cursor-pointer !tw-leading-none !tw-py-1"
+									[noTranslate]="true"
+								/>
+							} @else {
+								<a
+									class="oeb-navitem"
+									routerLinkActive="oeb-navitem-is-active"
+									[routerLink]="[item.url]"
+									>{{ item.title }}</a
+								>
+							}
+						}
 					}
+
 					@if (!features.disableRegistration) {
 						<a class="oeb-navitem" routerLinkActive="oeb-navitem-is-active" [routerLink]="['/signup']">{{
 							'NavItems.register' | translate
 						}}</a>
 					}
+
 					<oeb-button
 						size="sm"
 						class="tw-self-center"
 						[routerLink]="['/auth/login']"
 						text="Login"
 					></oeb-button>
+
 					<!-- Language -->
 					<div class="navitem" class="tw-flex tw-gap-1 tw-items-center tw-text-purple tw-text-[18px]/[1.2em]">
 						<button (click)="changeLng('de')" class="tw-text-purple tw-text-[length:inherit]">
@@ -64,9 +79,27 @@
 						trigger="General.aboutBadges"
 						triggerStyle="oeb-navitem tw-cursor-pointer !tw-leading-none !tw-py-1"
 					></oeb-dropdown>
-					<a class="oeb-navitem" routerLinkActive="oeb-navitem-is-active" [routerLink]="['public/about']">
-						{{ 'NavItems.aboutOpenEducationalBadges' | translate }}
-					</a>
+
+					@if (cmsMenus && cmsMenus.header[translate.currentLang]) {
+						@for (item of cmsMenus.header[translate.currentLang]; track item.id) {
+							@if (item.children.length) {
+								<oeb-dropdown
+									[menuItems]="item.children | CmsMenuItems"
+									[trigger]="item.title"
+									triggerStyle="oeb-navitem tw-cursor-pointer !tw-leading-none !tw-py-1"
+									[noTranslate]="true"
+								/>
+							} @else {
+								<a
+									class="oeb-navitem"
+									routerLinkActive="oeb-navitem-is-active"
+									[routerLink]="[item.url]"
+									>{{ item.title }}</a
+								>
+							}
+						}
+					}
+
 					@if (theme.customMenu) {
 						<a
 							class="oeb-navitem tw-cursor-pointer"
@@ -77,11 +110,13 @@
 							<svg class="navitem-x-icon" icon="icon_dropdown"></svg>
 						</a>
 					}
+
 					@if (showIssuersTab()) {
 						<a class="oeb-navitem" routerLinkActive="oeb-navitem-is-active" [routerLink]="['/issuer']">{{
 							'NavItems.myInstitutions' | translate
 						}}</a>
 					}
+
 					<!-- Account Menu -->
 					<oeb-dropdown
 						[menuItems]="accountMenuItems"
@@ -93,6 +128,7 @@
 					<ng-template #accountMenuTrigger>
 						<ng-icon hlm name="lucideUser" size="32px"></ng-icon>
 					</ng-template>
+
 					<!-- Language -->
 					<div class="navitem" class="tw-flex tw-gap-1 tw-items-center tw-text-purple tw-text-[18px]/[1.2em]">
 						<button (click)="changeLng('de')" class="tw-text-purple tw-text-[length:inherit]">
@@ -155,7 +191,9 @@
 						<span [ngStyle]="{ 'font-weight': selectedLng == 'en' ? 'bold' : 'normal' }">EN</span>
 					</button>
 				</div>
+
 				<p class="mobilenav-x-label">{{ 'General.aboutBadges' | translate }}</p>
+
 				<a routerLinkActive="menuitem-is-active" [routerLink]="['/catalog/badges']">Badges A-Z</a>
 				<a routerLinkActive="menuitem-is-active" [routerLink]="['/catalog/issuers']">{{
 					'General.institutionsNav' | translate
@@ -163,11 +201,28 @@
 				<a routerLinkActive="menuitem-is-active" [routerLink]="['/catalog/learningpaths']">{{
 					'LearningPath.learningpathsNav' | translate
 				}}</a>
+
+				@if (cmsMenus && cmsMenus.header[translate.currentLang]) {
+					@for (item of cmsMenus.header[translate.currentLang]; track item.id) {
+						<hr class="mobilenav-x-rule" />
+						@if (item.children.length) {
+							<p class="mobilenav-x-label">{{ item.title }}</p>
+							@for (child of item.children; track child.id) {
+								<a [routerLink]="[child.url]">{{ child.title }}</a>
+							}
+						} @else {
+							<a [routerLink]="item.url">{{ item.title }}</a>
+						}
+					}
+				}
+
 				<hr class="mobilenav-x-rule" />
+
 				<a routerLinkActive="menuitem-is-active" [routerLink]="['/public/about']">{{
 					'NavItems.aboutOpenEducationalBadges' | translate
 				}}</a>
 				<hr class="mobilenav-x-rule" />
+
 				<a routerLinkActive="menuitem-is-active" [routerLink]="['/auth/login']">Login</a>
 				<a routerLinkActive="menuitem-is-active" [routerLink]="['/signup']">{{
 					'NavItems.register' | translate
@@ -202,35 +257,52 @@
 						<span [ngStyle]="{ 'font-weight': selectedLng == 'en' ? 'bold' : 'normal' }">EN</span>
 					</button>
 				</div>
+
 				<p class="mobilenav-x-label">{{ 'General.aboutBadges' | translate }}</p>
 				<a [routerLink]="['/public/faq']">FAQ</a>
 				<a [routerLink]="['/catalog/badges']">Badges A-Z</a>
 				<a [routerLink]="['/catalog/issuers']">{{ 'General.institutionsNav' | translate }}</a>
 				<a [routerLink]="['/catalog/learningpaths']">{{ 'LearningPath.learningpathsNav' | translate }}</a>
+
+				@if (cmsMenus && cmsMenus.header[translate.currentLang]) {
+					@for (item of cmsMenus.header[translate.currentLang]; track item.id) {
+						<hr class="mobilenav-x-rule" />
+						@if (item.children.length) {
+							<p class="mobilenav-x-label">{{ item.title }}</p>
+							@for (child of item.children; track child.id) {
+								<a [routerLink]="[child.url]">{{ child.title }}</a>
+							}
+						} @else {
+							<a [routerLink]="item.url">{{ item.title }}</a>
+						}
+					}
+				}
+
 				<hr class="mobilenav-x-rule" />
 				<a [routerLink]="['/recipient/badges']">{{ 'General.backpack' | translate }}</a>
 				<!-- <a [routerLink]="['/recipient/badge-collections']">{{ 'General.collections' | translate }}</a> -->
 				@if (showIssuersTab()) {
 					<a [routerLink]="['/issuer']">{{ 'NavItems.myInstitutions' | translate }}</a>
 				}
+
 				@if (launchpoints?.length) {
 					<hr class="mobilenav-x-rule" />
-				}
-				@if (launchpoints?.length) {
 					<p class="mobilenav-x-label">Apps</p>
+					@for (lp of launchpoints; track lp) {
+						<a href="{{ lp.launch_url }}" target="_blank"> {{ lp.label }} </a>
+					}
 				}
-				@for (lp of launchpoints; track lp) {
-					<a href="{{ lp.launch_url }}" target="_blank"> {{ lp.label }} </a>
-				}
+
 				@if (theme.customMenu) {
 					<hr class="mobilenav-x-rule" />
-				}
-				@if (theme.customMenu) {
 					<p class="mobilenav-x-label">{{ theme.customMenu.label }}</p>
+					@for (item of theme?.customMenu?.items; track item) {
+						<a [href]="item.url" target="_blank">
+							{{ item.label }}
+						</a>
+					}
 				}
-				@for (item of theme?.customMenu?.items; track item) {
-					<a [href]="item.url" target="_blank"> {{ item.label }} </a>
-				}
+
 				<hr class="mobilenav-x-rule" />
 				<p class="mobilenav-x-label">{{ 'General.account' | translate }}</p>
 				<a [routerLink]="['/profile/profile']">{{ 'NavItems.profile' | translate }}</a>
@@ -356,10 +428,16 @@
 		<div
 			class="tw-hidden md:tw-flex tw-flex-col tw-min-w-fit tw-text-right tw-gap-[7px] tw-text-sm md:tw-text-lg md:tw-leading-tight"
 		>
-			<a class="tw-font-semibold md:tw-font-medium tw-text-oebblack" [routerLink]="['/public/faq']">FAQ</a>
-			<a class="tw-text-oebblack" [href]="theme.termsOfServiceLink">{{ 'Start.imprint' | translate }}</a>
-			<a class="tw-text-oebblack" [href]="theme.privacyPolicyLink">{{ 'Start.privacyPolicy' | translate }}</a>
-			<a class="tw-text-oebblack" [routerLink]="['/public/terms']">{{ 'General.tos' | translate }}</a>
+			@if (cmsMenus && cmsMenus.footer.de) {
+				@for (item of cmsMenus.footer[translate.currentLang]; track item) {
+					<a class="tw-text-oebblack" href="{{ item.url }}">{{ item.title }}</a>
+				}
+			} @else {
+				<a class="tw-font-semibold md:tw-font-medium tw-text-oebblack" [routerLink]="['/public/faq']">FAQ</a>
+				<a class="tw-text-oebblack" [href]="theme.termsOfServiceLink">{{ 'Start.imprint' | translate }}</a>
+				<a class="tw-text-oebblack" [href]="theme.privacyPolicyLink">{{ 'Start.privacyPolicy' | translate }}</a>
+				<a class="tw-text-oebblack" [routerLink]="['/public/terms']">{{ 'General.tos' | translate }}</a>
+			}
 		</div>
 	</div>
 </div>
