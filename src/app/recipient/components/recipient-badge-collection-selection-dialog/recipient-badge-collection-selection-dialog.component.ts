@@ -10,7 +10,6 @@ import { StringMatchingUtil } from '../../../common/util/string-matching-util';
 import { SvgIconComponent } from '../../../common/components/svg-icon.component';
 import { FormsModule } from '@angular/forms';
 import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
-import { NgFor, NgIf } from '@angular/common';
 
 export interface RecipientBadgeCollectionSelectionDialogOptions {
 	dialogId: string;
@@ -21,7 +20,7 @@ export interface RecipientBadgeCollectionSelectionDialogOptions {
 @Component({
 	selector: 'recipient-badge-collection-selection-dialog',
 	templateUrl: './recipient-badge-collection-selection-dialog.component.html',
-	imports: [SvgIconComponent, FormsModule, BgAwaitPromises, NgFor, NgIf],
+	imports: [SvgIconComponent, FormsModule, BgAwaitPromises],
 })
 export class RecipientBadgeCollectionSelectionDialogComponent extends BaseDialog {
 	get searchQuery() {

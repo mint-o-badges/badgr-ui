@@ -27,71 +27,66 @@
 							alt="Circles"
 						/>
 					</div>
-					<form
-						class="tw-relative tw-z-20"
-						(ngSubmit)="submitAuth()"
-						*ngIf="!features.disableRegistration"
-						novalidate
-					>
-						<!-- Email Field -->
-						<oeb-input
-							[control]="loginForm.rawControlMap.username"
-							[label]="'General.email' | translate"
-							[placeholder]="'Login.yourEmail' | translate"
-							fieldType="email"
-							[error]="'Bitte gib Deine Email-Adresse ein.'"
-							[autofocus]="true"
-							#usernameField
-						></oeb-input>
-						<oeb-input
-							hlmP
-							[control]="loginForm.rawControlMap.password"
-							[label]="'General.password' | translate"
-							class="tw-mt-6 md:tw-mt-[35px]"
-							[error]="'Bitte gib Dein Passwort ein.'"
-							fieldType="password"
-							[placeholder]="'Login.yourPassword' | translate"
-							fieldType="password"
-							#passwordField
-						>
-							<span label-additions>
-								<a
-									hlmA
-									class="tw-relative tw-text-purple tw-z-20 tw-font-semibold"
-									href="#"
-									tabindex="-1"
-									[routerLink]="[
-										'/auth/request-password-reset',
-										loginForm.rawControlMap.username.value
-									]"
-									>{{ 'Login.forgotPassword?' | translate }}</a
+					@if (!features.disableRegistration) {
+						<form class="tw-relative tw-z-20" (ngSubmit)="submitAuth()" novalidate>
+							<!-- Email Field -->
+							<oeb-input
+								[control]="loginForm.rawControlMap.username"
+								[label]="'General.email' | translate"
+								[placeholder]="'Login.yourEmail' | translate"
+								fieldType="email"
+								[error]="'Bitte gib Deine Email-Adresse ein.'"
+								[autofocus]="true"
+								#usernameField
+							></oeb-input>
+							<oeb-input
+								hlmP
+								[control]="loginForm.rawControlMap.password"
+								[label]="'General.password' | translate"
+								class="tw-mt-6 md:tw-mt-[35px]"
+								[error]="'Bitte gib Dein Passwort ein.'"
+								fieldType="password"
+								[placeholder]="'Login.yourPassword' | translate"
+								fieldType="password"
+								#passwordField
+							>
+								<span label-additions>
+									<a
+										hlmA
+										class="tw-relative tw-text-purple tw-z-20 tw-font-semibold"
+										href="#"
+										tabindex="-1"
+										[routerLink]="[
+											'/auth/request-password-reset',
+											loginForm.rawControlMap.username.value
+										]"
+										>{{ 'Login.forgotPassword?' | translate }}</a
+									>
+								</span>
+							</oeb-input>
+							<div class="tw-flex tw-gap-2 tw-items-center tw-justify-between tw-mt-11 md:tw-mt-[62px]">
+								<!-- Remember Me Checkout -->
+								<oeb-checkbox
+									class=""
+									id="remember-me"
+									name="remember-me"
+									type="checkbox"
+									[text]="'Login.stayLogged' | translate"
+									[control]="loginForm.rawControlMap.rememberMe"
 								>
-							</span>
-						</oeb-input>
-
-						<div class="tw-flex tw-gap-2 tw-items-center tw-justify-between tw-mt-11 md:tw-mt-[62px]">
-							<!-- Remember Me Checkout -->
-							<oeb-checkbox
-								class=""
-								id="remember-me"
-								name="remember-me"
-								type="checkbox"
-								[text]="'Login.stayLogged' | translate"
-								[control]="loginForm.rawControlMap.rememberMe"
-							>
-							</oeb-checkbox>
-
-							<!-- Submit Button -->
-							<oeb-button
-								type="submit"
-								[disabled]="!!loginFinished"
-								text="Login"
-								[loading-promises]="[loginFinished]"
-								loading-message="Signing In"
-							>
-							</oeb-button>
-						</div>
-					</form>
+								</oeb-checkbox>
+								<!-- Submit Button -->
+								<oeb-button
+									type="submit"
+									[disabled]="!!loginFinished"
+									text="Login"
+									[loading-promises]="[loginFinished]"
+									loading-message="Signing In"
+								>
+								</oeb-button>
+							</div>
+						</form>
+					}
 					<!-- Mein Bildungsraum -->
 					<div class="tw-flex tw-justify-end tw-mt-6 md:tw-mt-14">
 						<oeb-button

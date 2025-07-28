@@ -29,7 +29,7 @@ import { OebDropdownComponent } from '../../../components/oeb-dropdown.component
 import { SvgIconComponent } from '../../../common/components/svg-icon.component';
 import { HlmSwitchComponent } from '../../../components/spartan/ui-switch-helm/src/lib/hlm-switch.component';
 import { FormsModule } from '@angular/forms';
-import { NgIf, NgFor } from '@angular/common';
+
 import { BgBadgecard } from '../../../common/components/bg-badgecard';
 import { NgIcon } from '@ng-icons/core';
 import { HlmIconDirective } from '../../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
@@ -47,8 +47,6 @@ import { HlmIconDirective } from '../../../components/spartan/ui-icon-helm/src/l
 		SvgIconComponent,
 		HlmSwitchComponent,
 		FormsModule,
-		NgIf,
-		NgFor,
 		BgBadgecard,
 		NgIcon,
 		HlmIconDirective,

@@ -20,7 +20,7 @@ import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { HlmH2Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h2.directive';
 import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
 import { HlmADirective } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-a.directive';
-import { NgFor, NgIf } from '@angular/common';
+
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { HlmH3Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h3.directive';
 import { BgBadgecard } from '../bg-badgecard';
@@ -45,10 +45,8 @@ import { LearningPathGraduatesDatatableComponent } from '../../../components/dat
 		HlmPDirective,
 		HlmADirective,
 		RouterLink,
-		NgFor,
 		OebButtonComponent,
 		HlmH3Directive,
-		NgIf,
 		BgBadgecard,
 		LearningPathGraduatesDatatableComponent,
 		TranslatePipe,

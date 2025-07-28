@@ -22,50 +22,52 @@ import { HlmIconModule } from '@spartan-ng/ui-icon-helm';
 			}}</hlm-th>
 			<hlm-th class="!tw-text-white tw-justify-end sm:tw-w-48 tw-w-0 !tw-p-0"></hlm-th>
 		</hlm-trow>
-		<hlm-trow *ngFor="let learningPath of learningPaths" class="tw-border-purple tw-flex-wrap tw-py-2">
-			<hlm-th
-				class="tw-w-28 md:tw-flex-row tw-flex-col md:tw-w-48 tw-cursor-pointer tw-items-baseline tw-gap-1 md:tw-gap-2 md:tw-items-center"
-				(click)="redirectToLearningPathDetail.emit(learningPath.slug)"
-			>
-				<img
-					class="l-flex-x-shrink0 badgeimage badgeimage-small"
-					width="40"
-					height="40"
-					src="{{ learningPath.participationBadge_image }}"
-				/>
-				<div
-					class="md:tw-grid md:tw-grid-cols-[150px] lg:tw-grid-cols-[250px] xl:tw-grid-cols-[350px] tw-my-3 md:tw-my-2"
+		@for (learningPath of learningPaths; track learningPath) {
+			<hlm-trow class="tw-border-purple tw-flex-wrap tw-py-2">
+				<hlm-th
+					class="tw-w-28 md:tw-flex-row tw-flex-col md:tw-w-48 tw-cursor-pointer tw-items-baseline tw-gap-1 md:tw-gap-2 md:tw-items-center"
+					(click)="redirectToLearningPathDetail.emit(learningPath.slug)"
 				>
+					<img
+						class="l-flex-x-shrink0 badgeimage badgeimage-small"
+						width="40"
+						height="40"
+						src="{{ learningPath.participationBadge_image }}"
+					/>
 					<div
-						class="tw-text-nowrap md:tw-text-wrap md:tw-line-clamp-3 tw-break-word  tw-max-w-36 md:tw-max-w-none tw-absolute md:tw-relative"
+						class="md:tw-grid md:tw-grid-cols-[150px] lg:tw-grid-cols-[250px] xl:tw-grid-cols-[350px] tw-my-3 md:tw-my-2"
 					>
-						<span
-							class="tw-text-oebblack tw-cursor-pointer"
-							(click)="redirectToLearningPathDetail.emit(learningPath.slug)"
-							>{{ learningPath.name }}</span
+						<div
+							class="tw-text-nowrap md:tw-text-wrap md:tw-line-clamp-3 tw-break-word  tw-max-w-36 md:tw-max-w-none tw-absolute md:tw-relative"
 						>
+							<span
+								class="tw-text-oebblack tw-cursor-pointer"
+								(click)="redirectToLearningPathDetail.emit(learningPath.slug)"
+								>{{ learningPath.name }}</span
+							>
+						</div>
 					</div>
-				</div>
-			</hlm-th>
-			<hlm-th class="!tw-flex-1 tw-justify-center !tw-text-oebblack"
-				><p class="u-text">{{ learningPath.created_at | date: 'dd.MM.yyyy' }}</p></hlm-th
-			>
-			<hlm-th class="tw-w-36 md:tw-w-40 tw-justify-center !tw-text-oebblack">{{
-				learningPath.participant_count
-			}}</hlm-th>
-			<hlm-th class="tw-justify-center sm:tw-justify-end sm:tw-w-48 tw-w-full !tw-text-oebblack">
-				<oeb-button
-					class="tw-w-full"
-					variant="secondary"
-					size="xs"
-					width="full_width"
-					(click)="actionElement.emit(learningPath.slug)"
-					[text]="actionElementText | translate"
-					[disabled]="!issuer.canDeleteBadge"
-					[class]="issuer.canDeleteBadge ? '' : 'disabled'"
-				></oeb-button>
-			</hlm-th>
-		</hlm-trow>
+				</hlm-th>
+				<hlm-th class="!tw-flex-1 tw-justify-center !tw-text-oebblack"
+					><p class="u-text">{{ learningPath.created_at | date: 'dd.MM.yyyy' }}</p></hlm-th
+				>
+				<hlm-th class="tw-w-36 md:tw-w-40 tw-justify-center !tw-text-oebblack">{{
+					learningPath.participant_count
+				}}</hlm-th>
+				<hlm-th class="tw-justify-center sm:tw-justify-end sm:tw-w-48 tw-w-full !tw-text-oebblack">
+					<oeb-button
+						class="tw-w-full"
+						variant="secondary"
+						size="xs"
+						width="full_width"
+						(click)="actionElement.emit(learningPath.slug)"
+						[text]="actionElementText | translate"
+						[disabled]="!issuer.canDeleteBadge"
+						[class]="issuer.canDeleteBadge ? '' : 'disabled'"
+					></oeb-button>
+				</hlm-th>
+			</hlm-trow>
+		}
 	</hlm-table>`,
 })
 export class LearningPathDatatableComponent {

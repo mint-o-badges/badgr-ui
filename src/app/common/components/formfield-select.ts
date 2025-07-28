@@ -4,7 +4,6 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angul
 
 import { CommonDialogsService } from '../services/common-dialogs.service';
 import { CustomValidatorMessages, messagesForValidationError } from './formfield-text';
-import { NgIf, NgFor } from '@angular/common';
 
 @Component({
 	selector: 'bg-formfield-select',
@@ -14,16 +13,26 @@ import { NgIf, NgFor } from '@angular/common';
 		'[class.forminput-locked]': 'isLockedState',
 	},
 	template: `
-		<label class="forminput-x-label" [attr.for]="inputName" *ngIf="label || includeLabelAsWrapper">
-			{{ label }}
-			<span *ngIf="formFieldAside">{{ formFieldAside }}</span>
-			<button type="button" *ngIf="isLockedState" (click)="unlock()">(unlock)</button>
-			<ng-content select="[label-additions]"></ng-content>
-		</label>
+		@if (label || includeLabelAsWrapper) {
+			<label class="forminput-x-label" [attr.for]="inputName">
+				{{ label }}
+				@if (formFieldAside) {
+					<span>{{ formFieldAside }}</span>
+				}
+				@if (isLockedState) {
+					<button type="button" (click)="unlock()">(unlock)</button>
+				}
+				<ng-content select="[label-additions]"></ng-content>
+			</label>
+		}
 
-		<label class="visuallyhidden" [attr.for]="inputName" *ngIf="ariaLabel">{{ ariaLabel }}</label>
+		@if (ariaLabel) {
+			<label class="visuallyhidden" [attr.for]="inputName">{{ ariaLabel }}</label>
+		}
 
-		<div class="forminput-x-sublabel" *ngIf="description">{{ description }}</div>
+		@if (description) {
+			<div class="forminput-x-sublabel">{{ description }}</div>
+		}
 		<div class="forminput-x-inputs">
 			<select
 				[name]="inputName"
@@ -34,14 +43,20 @@ import { NgIf, NgFor } from '@angular/common';
 				(keypress)="handleKeyPress($event)"
 				#selectInput
 			>
-				<option *ngIf="placeholder" selected value="">{{ placeholder }}</option>
-				<option *ngFor="let option of options" [value]="option.value">{{ option.label }}</option>
+				@if (placeholder) {
+					<option selected value="">{{ placeholder }}</option>
+				}
+				@for (option of options; track option) {
+					<option [value]="option.value">{{ option.label }}</option>
+				}
 			</select>
 		</div>
 
-		<p class="forminput-x-error" *ngIf="isErrorState">{{ errorMessageForDisplay }}</p>
+		@if (isErrorState) {
+			<p class="forminput-x-error">{{ errorMessageForDisplay }}</p>
+		}
 	`,
-	imports: [NgIf, FormsModule, ReactiveFormsModule, NgFor],
+	imports: [FormsModule, ReactiveFormsModule],
 })
 export class FormFieldSelect implements OnChanges, AfterViewInit {
 	@Input() control: FormControl;

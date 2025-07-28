@@ -2,75 +2,113 @@ import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { HlmInputDirective, InputVariants } from './spartan/ui-input-helm/src';
 import { OebInputErrorComponent } from './input.error.component';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { NgClass, NgIf } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { UrlValidator } from '../common/validators/url.validator';
 import { HlmPDirective } from './spartan/ui-typography-helm/src/lib/hlm-p.directive';
 import { TypedFormGroup } from '../common/util/typed-forms';
+import { NgIcon } from '@ng-icons/core';
 
 @Component({
 	selector: 'oeb-input',
-	imports: [HlmInputDirective, HlmPDirective, OebInputErrorComponent, NgIf, NgClass, ReactiveFormsModule],
+	imports: [HlmInputDirective, HlmPDirective, OebInputErrorComponent, NgClass, ReactiveFormsModule, NgIcon],
 	styleUrls: ['./input.component.scss'],
 	template: ` <div
 		[ngClass]="{ 'tw-my-6 md:tw-mt-7': !noTopMargin, 'tw-opacity-50 tw-pointer-events-none': readonly }"
 	>
 		<div class="tw-flex tw-justify-between">
-			<label class="tw-pb-[2px] tw-pl-[3px]" *ngIf="label">
-				<span *ngIf="labelStyle; else baseLabel" [class]="labelStyle" [innerHTML]="label"></span>
-				<ng-template #baseLabel>
-					<span hlmP class="tw-text-oebblack tw-font-semibold" [innerHTML]="label"></span>
-				</ng-template>
-				<span class="tw-pl-[3px] tw-text-oebblack" *ngIf="sublabelRight"> {{ sublabelRight }}</span>
-			</label>
+			@if (label) {
+				<label class="tw-pb-[2px] tw-pl-[3px]">
+					@if (labelStyle) {
+						<span [class]="labelStyle" [innerHTML]="label"></span>
+					} @else {
+						<span hlmP class="tw-text-oebblack tw-font-semibold" [innerHTML]="label"></span>
+					}
+					@if (sublabelRight) {
+						<span class="tw-pl-[3px] tw-text-oebblack"> {{ sublabelRight }}</span>
+					}
+				</label>
+			}
 			<ng-content
 				class="tw-relative tw-z-20 tw-font-semibold tw-text-[14px] md:tw-text-[20px] tw-leading-4 md:tw-leading-6"
 				select="[label-additions]"
 			></ng-content>
 		</div>
-		<p class="tw-pl-[3px]" *ngIf="sublabel">
-			{{ sublabel }}
-		</p>
-		<label class="visuallyhidden" [attr.for]="inputName" *ngIf="ariaLabel">{{ ariaLabel }}</label>
+		@if (sublabel) {
+			<p class="tw-pl-[3px]">
+				{{ sublabel }}
+			</p>
+		}
+		@if (ariaLabel) {
+			<label class="visuallyhidden" [attr.for]="inputName">{{ ariaLabel }}</label>
+		}
 
 		<div class="tw-relative tw-w-full">
-			<input
-				*ngIf="fieldType != 'textarea'"
-				(focus)="cacheControlState()"
-				(keypress)="handleKeyPress($event)"
-				(keyup)="handleKeyUp($event)"
-				(change)="postProcessInput()"
-				[formControl]="control"
-				[placeholder]="placeholder || ''"
-				[attr.maxlength]="maxchar"
-				[attr.max]="max"
-				[type]="fieldType"
-				[readonly]="readonly"
-				#textInput
-				class="tw-w-full tw-border-solid tw-border-purple tw-bg-white"
-				hlmInput
-			/>
-			<textarea
-				*ngIf="fieldType === 'textarea'"
-				(focus)="cacheControlState()"
-				(keypress)="handleKeyPress($event)"
-				(keyup)="handleKeyUp($event)"
-				(change)="postProcessInput()"
-				[formControl]="control"
-				[placeholder]="placeholder || ''"
-				[attr.maxlength]="maxchar"
-				[attr.max]="max"
-				[readonly]="readonly"
-				[size]="size"
-				#textInput
-				class="tw-w-full tw-border-solid tw-border-purple tw-bg-white"
-				[ngClass]="{ 'tw-min-h-20': size === 'default', 'tw-min-h-32': size === 'lg' }"
-				hlmInput
-			></textarea>
-			<oeb-input-error
-				class="tw-text-red tw-pl-[3px] tw-absolute tw-top-full tw-w-full"
-				*ngIf="isErrorState"
-				[error]="errorMessageForDisplay"
-			></oeb-input-error>
+			@if (fieldType != 'textarea' && fieldType != 'password') {
+				<input
+					(focus)="cacheControlState()"
+					(keypress)="handleKeyPress($event)"
+					(keyup)="handleKeyUp($event)"
+					(change)="postProcessInput()"
+					[formControl]="control"
+					[placeholder]="placeholder || ''"
+					[attr.maxlength]="maxchar"
+					[attr.max]="max"
+					[type]="fieldType"
+					[readonly]="readonly"
+					#textInput
+					class="tw-w-full tw-border-solid tw-border-purple tw-bg-white"
+					hlmInput
+				/>
+			}
+			@if (fieldType === 'textarea') {
+				<textarea
+					(focus)="cacheControlState()"
+					(keypress)="handleKeyPress($event)"
+					(keyup)="handleKeyUp($event)"
+					(change)="postProcessInput()"
+					[formControl]="control"
+					[placeholder]="placeholder || ''"
+					[attr.maxlength]="maxchar"
+					[attr.max]="max"
+					[readonly]="readonly"
+					[size]="size"
+					#textInput
+					class="tw-w-full tw-border-solid tw-border-purple tw-bg-white"
+					[ngClass]="{ 'tw-min-h-20': size === 'default', 'tw-min-h-32': size === 'lg' }"
+					hlmInput
+				></textarea>
+			}
+			@if (fieldType == 'password') {
+				<div class="tw-relative tw-flex tw-items-center">
+					<input
+						(focus)="cacheControlState()"
+						(keypress)="handleKeyPress($event)"
+						(keyup)="handleKeyUp($event)"
+						(change)="postProcessInput()"
+						[formControl]="control"
+						[placeholder]="placeholder || ''"
+						[attr.maxlength]="maxchar"
+						[attr.max]="max"
+						[type]="showPassword ? 'text' : 'password'"
+						[readonly]="readonly"
+						#textInput
+						class="tw-w-full tw-border-solid tw-border-purple tw-bg-white"
+						hlmInput
+					/>
+					<ng-icon
+						(click)="togglePasswordVisibility()"
+						class="tw-absolute tw-right-3 tw-text-purple"
+						hlm
+						[name]="showPassword ? 'lucideEyeOff' : 'lucideEye'"
+					></ng-icon>
+				</div>
+			}
+			@if (isErrorState) {
+				<oeb-input-error
+					class="tw-text-red tw-pl-[3px] tw-absolute tw-top-full tw-w-full"
+					[error]="errorMessageForDisplay"
+				></oeb-input-error>
+			}
 		</div>
 	</div>`,
 })
@@ -104,6 +142,12 @@ export class OebInputComponent {
 	@Input() errorGroup: TypedFormGroup;
 
 	remainingCharactersNum = this.maxchar;
+
+	showPassword = false;
+
+	togglePasswordVisibility(): void {
+		this.showPassword = !this.showPassword;
+	}
 
 	get hasFocus(): boolean {
 		return document.activeElement === this.inputElement;

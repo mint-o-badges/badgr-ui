@@ -38,7 +38,7 @@ import { HlmADirective } from '../../../components/spartan/ui-typography-helm/sr
 import { OebInputComponent } from '../../../components/input.component';
 import { OebSelectComponent } from '../../../components/select.component';
 import { OebCheckboxComponent } from '../../../components/oeb-checkbox.component';
-import { NgIf, NgFor, NgClass, DatePipe } from '@angular/common';
+import { NgClass, DatePipe } from '@angular/common';
 import { SvgIconComponent } from '../../../common/components/svg-icon.component';
 import { FormFieldMarkdown } from '../../../common/components/formfield-markdown';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
@@ -60,9 +60,7 @@ import { OebButtonComponent } from '../../../components/oeb-button.component';
 		OebInputComponent,
 		OebSelectComponent,
 		OebCheckboxComponent,
-		NgIf,
 		SvgIconComponent,
-		NgFor,
 		FormFieldMarkdown,
 		FormFieldText,
 		NgClass,

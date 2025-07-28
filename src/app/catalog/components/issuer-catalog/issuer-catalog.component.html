@@ -23,90 +23,82 @@
 					<div
 						class="tw-flex tw-flex-col tw-gap-4 tw-w-full min-[880px]:tw-items-center min-[880px]:tw-justify-between min-[880px]:tw-flex-row"
 					>
-						<div
-							*ngIf="badgesDisplay !== 'map'"
-							class="tw-flex tw-flex-col min-[880px]:tw-flex-row min-[880px]:tw-items-center tw-gap-6"
-						>
-							<div class="tw-flex tw-relative tw-items-center">
-								<input
-									hlmInput
-									class="!tw-bg-white tw-w-full tw-border-1 tw-border-purple min-[880px]:tw-w-96 tw-border-solid tw-h-12 tw-rounded-lg tw-p-2"
-									placeholder="{{ 'Issuer.searchInstitutions' | translate }}"
-									[(ngModel)]="searchQuery"
-								/>
-								<ng-icon
-									hlm
-									name="lucideSearch"
-									class="tw-w-8 tw-h-8 tw-absolute tw-top-1/2 tw-right-2 -tw-translate-y-1/2 tw-pointer-events-none tw-text-purple"
-								></ng-icon>
-							</div>
-
-							<span>{{ 'Badge.sortBy' | translate }} </span>
-							<oeb-global-sort-select
-								placeholder="{{ 'Badge.sortBy' | translate }}"
-								class="oeb tw-w-[12rem]"
-								[disabled]="!!categoryControl.value && categoryControl.value !== '---'"
-								[control]="sortControl"
+						@if (badgesDisplay !== 'map') {
+							<div
+								class="tw-flex tw-flex-col min-[880px]:tw-flex-row min-[880px]:tw-items-center tw-gap-6"
 							>
-							</oeb-global-sort-select>
-							<oeb-select
-								[actionBar]="true"
-								class="md:tw-w-[180px] oeb"
-								[options]="categoryOptions"
-								[control]="categoryControl"
-								placeholder="{{ 'Issuer.categories.allCategories' | translate }}"
-								[autofocus]="true"
-								[noTopMargin]="true"
-							></oeb-select>
-						</div>
+								<div class="tw-flex tw-relative tw-items-center">
+									<input
+										hlmInput
+										class="!tw-bg-white tw-w-full tw-border-1 tw-border-purple min-[880px]:tw-w-96 tw-border-solid tw-h-12 tw-rounded-lg tw-p-2"
+										placeholder="{{ 'Issuer.searchInstitutions' | translate }}"
+										[(ngModel)]="searchQuery"
+									/>
+									<ng-icon
+										hlm
+										name="lucideSearch"
+										class="tw-w-8 tw-h-8 tw-absolute tw-top-1/2 tw-right-2 -tw-translate-y-1/2 tw-pointer-events-none tw-text-purple"
+									></ng-icon>
+								</div>
+								<span>{{ 'Badge.sortBy' | translate }} </span>
+								<oeb-global-sort-select
+									placeholder="{{ 'Badge.sortBy' | translate }}"
+									class="oeb tw-w-[12rem]"
+									[disabled]="!!categoryControl.value && categoryControl.value !== '---'"
+									[control]="sortControl"
+								>
+								</oeb-global-sort-select>
+								<oeb-select
+									[actionBar]="true"
+									class="md:tw-w-[180px] oeb"
+									[options]="categoryOptions"
+									[control]="categoryControl"
+									placeholder="{{ 'Issuer.categories.allCategories' | translate }}"
+									[autofocus]="true"
+									[noTopMargin]="true"
+								></oeb-select>
+							</div>
+						}
 
 						<div
 							class="tw-flex tw-gap-4 tw-items-center"
 							[ngClass]="{ 'tw-w-full tw-justify-end': badgesDisplay == 'map' }"
 						>
-							<oeb-button
-								size="icon"
-								*ngIf="badgesDisplay !== 'map'"
-								(click)="openMap()"
-								icon="lucideMapPin"
-							>
-							</oeb-button>
-							<oeb-button
-								size="icon"
-								*ngIf="badgesDisplay === 'map'"
-								(click)="openGrid()"
-								icon="lucideGrid2x2"
-							>
-							</oeb-button>
+							@if (badgesDisplay !== 'map') {
+								<oeb-button size="icon" (click)="openMap()" icon="lucideMapPin"> </oeb-button>
+							}
+							@if (badgesDisplay === 'map') {
+								<oeb-button size="icon" (click)="openGrid()" icon="lucideGrid2x2"> </oeb-button>
+							}
 						</div>
 					</div>
 				</div>
 
-				<ng-container *ngIf="badgesDisplay == 'grid'">
+				@if (badgesDisplay == 'grid') {
 					<div class="tw-grid sm:tw-grid-cols-issuer tw-gap-6 tw-w-full" [@stagger]>
-						<oeb-issuer-card
-							*ngFor="let issuer of issuerResults"
-							@appearAnimation
-							[issuer]="issuer"
-							[plural]="plural"
-							(navigate)="navigateToIssuer(issuer)"
-						></oeb-issuer-card>
+						@for (issuer of issuerResults; track issuer) {
+							<oeb-issuer-card
+								@appearAnimation
+								[issuer]="issuer"
+								[plural]="plural"
+								(navigate)="navigateToIssuer(issuer)"
+							></oeb-issuer-card>
+						}
 					</div>
-				</ng-container>
+				}
 
-				<div
-					class="tw-mt-8"
-					*ngIf="
-						(issuerResults.length >= 30 || (currentPage == totalPages && currentPage != 1)) &&
-						badgesDisplay != 'map'
-					"
-				>
-					<oeb-numbered-pagination
-						[totalProducts]="isFiltered() ? filteredIssuers.length : issuers.length"
-						[(page)]="currentPage"
-					>
-					</oeb-numbered-pagination>
-				</div>
+				@if (
+					(issuerResults.length >= 30 || (currentPage == totalPages && currentPage != 1)) &&
+					badgesDisplay != 'map'
+				) {
+					<div class="tw-mt-8">
+						<oeb-numbered-pagination
+							[totalProducts]="isFiltered() ? filteredIssuers.length : issuers.length"
+							[(page)]="currentPage"
+						>
+						</oeb-numbered-pagination>
+					</div>
+				}
 			</section>
 		</ng-template>
 		<div id="mapWrapper" class="tw-h-[45vh]" [hidden]="badgesDisplay != 'map'">
