@@ -30,7 +30,7 @@ import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/sr
 import { HlmADirective } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-a.directive';
 import { NgIcon } from '@ng-icons/core';
 import { HlmIconDirective } from '../../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
-import { NgIf, NgFor } from '@angular/common';
+
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { OebProgressComponent } from '../../../components/oeb-progress.component';
 import { BgImageStatusPlaceholderDirective } from '../../../common/directives/bg-image-status-placeholder.directive';
@@ -52,14 +52,12 @@ import { BgBadgecard } from '../../../common/components/bg-badgecard';
 		RouterLink,
 		NgIcon,
 		HlmIconDirective,
-		NgIf,
 		OebButtonComponent,
 		OebProgressComponent,
 		BgImageStatusPlaceholderDirective,
 		HlmH3Directive,
 		OebTabsComponent,
 		CountUpModule,
-		NgFor,
 		OebIssuerCard,
 		BgBadgecard,
 		HourPipe,

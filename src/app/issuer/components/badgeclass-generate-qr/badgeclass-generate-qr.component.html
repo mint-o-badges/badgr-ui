@@ -55,10 +55,12 @@
 						<span class="tw-font-bold">{{ 'QrCode.creator' | translate }}</span>
 						<span>{{ creator }}</span>
 					</div>
-					<div class="tw-flex tw-flex-col" *ngIf="validity">
-						<span class="tw-font-bold">{{ 'QrCode.validity' | translate }}</span>
-						<span>{{ validity }}</span>
-					</div>
+					@if (validity) {
+						<div class="tw-flex tw-flex-col">
+							<span class="tw-font-bold">{{ 'QrCode.validity' | translate }}</span>
+							<span>{{ validity }}</span>
+						</div>
+					}
 				</div>
 			</div>
 			<div class="tw-max-w-[630px]">

@@ -1,4 +1,4 @@
-FROM node:20.9.0-bookworm-slim AS build
+FROM node:24-bookworm-slim AS build
 
 WORKDIR /app
 
@@ -19,5 +19,7 @@ RUN mkdir -p /etc/nginx/sites-enabled/\
     && ln -s /etc/nginx/sites-available/site.conf /etc/nginx/sites-enabled/
 
 COPY --from=build /app/dist/ /usr/share/nginx/html
+
+ENV TZ="Europe/Berlin"
 
 EXPOSE 80

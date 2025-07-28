@@ -48,46 +48,29 @@
 					>{{ 'QrCode.expiration' | translate }} <span class="tw-font-normal">(optional)</span></span
 				>
 
-				<div
-					*ngIf="!editing; else editButtons"
-					class="tw-flex tw-flex-col xl:tw-flex-row tw-gap-2 tw-justify-between xl:tw-items-end"
-				>
-					<div class="tw-flex md:tw-justify-between tw-gap-12">
-						<oeb-input
-							labelStyle="tw-text-oebblack"
-							[label]="'QrCode.expirationStart' | translate"
-							[errorMessage]="'Bitte gib ein Datum in der Form YYYY/mm/dd an'"
-							[control]="qrForm.rawControlMap.valid_from"
-							fieldType="date"
-						></oeb-input>
-						<oeb-input
-							labelStyle="tw-text-oebblack"
-							[label]="'QrCode.expirationEnd' | translate"
-							[errorMessage]="{
-								expiresBeforeValidFrom: 'Das Ablaufdatum muss nach dem Start-Datum liegen',
-								invalidDate: 'Bitte gib ein Datum in der Form YYYY/mm/dd an'
-							}"
-							[control]="qrForm.rawControlMap.expires_at"
-							fieldType="date"
-						></oeb-input>
+				@if (!editing) {
+					<div class="tw-flex tw-flex-col xl:tw-flex-row tw-gap-2 tw-justify-between xl:tw-items-end">
+						<div class="tw-flex md:tw-justify-between tw-gap-12">
+							<oeb-input
+								labelStyle="tw-text-oebblack"
+								[label]="'QrCode.expirationStart' | translate"
+								[errorMessage]="'Bitte gib ein Datum in der Form YYYY/mm/dd an'"
+								[control]="qrForm.rawControlMap.valid_from"
+								fieldType="date"
+							></oeb-input>
+							<oeb-input
+								labelStyle="tw-text-oebblack"
+								[label]="'QrCode.expirationEnd' | translate"
+								[errorMessage]="{
+									expiresBeforeValidFrom: 'Das Ablaufdatum muss nach dem Start-Datum liegen',
+									invalidDate: 'Bitte gib ein Datum in der Form YYYY/mm/dd an'
+								}"
+								[control]="qrForm.rawControlMap.expires_at"
+								fieldType="date"
+							></oeb-input>
+						</div>
 					</div>
-				</div>
-
-				<div *ngIf="!editing">
-					<span
-						class="tw-mt-6 md:tw-mt-7 tw-text-oebblack tw-font-semibold md:tw-leading-[28px] md:tw-text-[20px] tw-leading-[19px] tw-text-[14px]"
-						>{{ 'General.notification' | translate }}</span
-					>
-					<oeb-checkbox
-						class="oeb-standard-padding-bottom"
-						type="checkbox"
-						[text]="'QrCode.receiveEmails' | translate"
-						[control]="qrForm.rawControlMap.notifications"
-					>
-					</oeb-checkbox>
-				</div>
-
-				<ng-template #editButtons>
+				} @else {
 					<div class="tw-flex tw-gap-12">
 						<oeb-input
 							label="Start-Datum"
@@ -102,7 +85,6 @@
 							fieldType="date"
 						></oeb-input>
 					</div>
-
 					<span
 						class="tw-mt-6 md:tw-mt-7 tw-text-oebblack tw-font-semibold md:tw-leading-[28px] md:tw-text-[20px] tw-leading-[19px] tw-text-[14px]"
 						>{{ 'General.notification' | translate }}</span
@@ -114,7 +96,6 @@
 						[control]="qrForm.rawControlMap.notifications"
 					>
 					</oeb-checkbox>
-
 					<div class="tw-flex tw-flex-col md:tw-flex-row tw-gap-4 tw-mt-2 tw-w-full">
 						<oeb-button
 							variant="secondary"
@@ -132,17 +113,34 @@
 						>
 						</oeb-button>
 					</div>
-				</ng-template>
+				}
 
-				<oeb-button
-					*ngIf="!editing"
-					class="tw-whitespace-nowrap tw-mt-6"
-					type="submit"
-					[text]="'QrCode.buttonCreate' | translate"
-					[loading-promises]="qrCodePromise"
-					[disabled-when-requesting]="true"
-				>
-				</oeb-button>
+				@if (!editing) {
+					<div>
+						<span
+							class="tw-mt-6 md:tw-mt-7 tw-text-oebblack tw-font-semibold md:tw-leading-[28px] md:tw-text-[20px] tw-leading-[19px] tw-text-[14px]"
+							>{{ 'General.notification' | translate }}</span
+						>
+						<oeb-checkbox
+							class="oeb-standard-padding-bottom"
+							type="checkbox"
+							[text]="'QrCode.receiveEmails' | translate"
+							[control]="qrForm.rawControlMap.notifications"
+						>
+						</oeb-checkbox>
+					</div>
+				}
+
+				@if (!editing) {
+					<oeb-button
+						class="tw-whitespace-nowrap tw-mt-6"
+						type="submit"
+						[text]="'QrCode.buttonCreate' | translate"
+						[loading-promises]="qrCodePromise"
+						[disabled-when-requesting]="true"
+					>
+					</oeb-button>
+				}
 			</div>
 		</div>
 	</form>

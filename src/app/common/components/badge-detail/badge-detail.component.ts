@@ -6,7 +6,7 @@ import { RecipientBadgeInstance } from '../../../recipient/models/recipient-badg
 import { BadgeInstance } from '../../../issuer/models/badgeinstance.model';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { BgAwaitPromises } from '../../directives/bg-await-promises';
-import { NgIf, NgFor } from '@angular/common';
+
 import { FormMessageComponent } from '../form-message.component';
 import { BgBreadcrumbsComponent } from '../bg-breadcrumbs/bg-breadcrumbs.component';
 import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
@@ -35,7 +35,6 @@ import { RecipientBadgeManager } from '../../../recipient/services/recipient-bad
 	styleUrls: ['./badge-detail.component.scss'],
 	imports: [
 		BgAwaitPromises,
-		NgIf,
 		FormMessageComponent,
 		BgBreadcrumbsComponent,
 		HlmH1Directive,
@@ -47,7 +46,6 @@ import { RecipientBadgeManager } from '../../../recipient/services/recipient-bad
 		OebCollapsibleComponent,
 		NgIcon,
 		HlmIconDirective,
-		NgFor,
 		InfoIcon,
 		TimeComponent,
 		HlmPDirective,

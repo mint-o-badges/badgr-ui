@@ -21,15 +21,14 @@ interface DialogContext {
 	imports: [CommonModule, TranslateModule, OebDialogComponent],
 	template: `
 		<oeb-dialog [variant]="context.variant || 'default'">
-			<ng-container *ngIf="isTemplate(context.headerTemplate); else textHeader">
+			@if (isTemplate(context.headerTemplate)) {
 				<ng-container
 					*ngTemplateOutlet="context.headerTemplate; context: context.templateContext || {}"
 				></ng-container>
-			</ng-container>
-			<ng-template #textHeader>
+			} @else {
 				<p class="tw-text-center" [innerHTML]="context.title"></p>
-			</ng-template>
-			<ng-container *ngIf="context.variant == 'success'">
+			}
+			@if (context.variant == 'success') {
 				<div class="tw-text-center tw-text-purple">
 					<div class="tw-flex tw-justify-center">
 						<div class="oeb-icon-circle tw-my-6">
@@ -40,16 +39,15 @@ interface DialogContext {
 						</div>
 					</div>
 				</div>
-			</ng-container>
+			}
 
-			<ng-container *ngIf="isTemplate(context.content); else textContent">
+			@if (isTemplate(context.content)) {
 				<ng-container
 					*ngTemplateOutlet="context.content; context: context.templateContext || {}"
 				></ng-container>
-			</ng-container>
-			<ng-template #textContent>
+			} @else {
 				<p class="tw-text-center" [innerHTML]="context.content"></p>
-			</ng-template>
+			}
 		</oeb-dialog>
 	`,
 	styleUrl: './dialog.component.scss',

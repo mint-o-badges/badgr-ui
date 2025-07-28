@@ -6,7 +6,7 @@ import { throwExpr } from '../util/throw-expr';
 import { CommonDialogsService } from '../services/common-dialogs.service';
 import { NounProjectIcon } from '../model/nounproject.model';
 import { MessageService } from '../services/message.service';
-import { NgIf } from '@angular/common';
+
 import { NgIcon } from '@ng-icons/core';
 import { HlmIconDirective } from '../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -26,24 +26,26 @@ import { TranslatePipe } from '@ngx-translate/core';
 		<div class="forminput u-margin-bottom2x">
 			<div class="forminput-x-labelrow">
 				<label [class]="labelStyle" for="image_field{{ uniqueIdSuffix }}">{{ label }}</label>
-				<span
-					*ngIf="sublabelRight"
-					class="tw-mr-auto tw-ml-2 tw-font-[rubik] tw-text-oebblack tw-text-sm tw-font-normal"
-					>{{ sublabelRight }}</span
-				>
-				<a
-					*ngIf="generateRandom"
-					(click)="$event.preventDefault(); generateRandomImage.emit()"
-					class="forminput-x-helplink"
-					href="#"
-					>{{ 'RecBadge.genRandomImage' | translate }}</a
-				>
+				@if (sublabelRight) {
+					<span class="tw-mr-auto tw-ml-2 tw-font-[rubik] tw-text-oebblack tw-text-sm tw-font-normal">{{
+						sublabelRight
+					}}</span>
+				}
+				@if (generateRandom) {
+					<a
+						(click)="$event.preventDefault(); generateRandomImage.emit()"
+						class="forminput-x-helplink"
+						href="#"
+						>{{ 'RecBadge.genRandomImage' | translate }}</a
+					>
+				}
 			</div>
-			<p
-				class="tw-text-sm tw-w-full tw-text-center tw-text-oebblack tw-mt-2 tw-italic tw-leading-[16.4px]"
-				[innerHTML]="sublabel"
-				*ngIf="sublabel"
-			></p>
+			@if (sublabel) {
+				<p
+					class="tw-text-sm tw-w-full tw-text-center tw-text-oebblack tw-mt-2 tw-italic tw-leading-[16.4px]"
+					[innerHTML]="sublabel"
+				></p>
+			}
 			<input
 				type="file"
 				[accept]="allowedFileFormats"
@@ -63,55 +65,68 @@ import { TranslatePipe } from '@ngx-translate/core';
 				[class.dropzone-is-dragging]="isDragging"
 				[class.dropzone-is-error]="imageErrorMessage || (control.dirty && !control.valid)"
 			>
-				<div class="dropzone-x-preview" *ngIf="imageDataUrl">
-					<img [src]="imageDataUrl" alt="" />
-					<p class="u-text-body">
-						{{ imageName }}
-						<button (click)="imageLabel.click()" type="button" class="u-text-link">
-							{{ 'RecBadge.chooseAnotherFile' | translate }}
-						</button>
-						<button
-							*ngIf="loaderName != 'basic' && enableIconSearch"
-							(click)="$event.preventDefault(); findNounproject($event)"
-							type="button"
-							class="u-text-link"
-						>
-							{{ 'RecBadge.searchAnotherIcon' | translate }}
-						</button>
-					</p>
-				</div>
+				@if (imageDataUrl) {
+					<div class="dropzone-x-preview">
+						<img [src]="imageDataUrl" alt="" />
+						<p class="u-text-body">
+							{{ imageName }}
+							<button (click)="imageLabel.click()" type="button" class="u-text-link">
+								{{ 'RecBadge.chooseAnotherFile' | translate }}
+							</button>
+							@if (loaderName != 'basic' && enableIconSearch) {
+								<button
+									(click)="$event.preventDefault(); findNounproject($event)"
+									type="button"
+									class="u-text-link"
+								>
+									{{ 'RecBadge.searchAnotherIcon' | translate }}
+								</button>
+							}
+						</p>
+					</div>
+				}
 
-				<ng-container *ngIf="!imageDataUrl">
+				@if (!imageDataUrl) {
 					<ng-icon hlm size="xl" name="lucideCloudUpload"></ng-icon>
-					<p *ngIf="dropZoneInfo1" class="dropzone-x-info1">
-						<span cass="tw-font-bold">{{ dropZoneInfo1 }} </span>
-						<span class="tw-inline-block tw-font-normal tw-my-1 tw-mr-1" *ngIf="dropZoneInfo1">
-							{{ 'General.or' | translate }}
-						</span>
-					</p>
+					@if (dropZoneInfo1) {
+						<p class="dropzone-x-info1">
+							<span cass="tw-font-bold">{{ dropZoneInfo1 }} </span>
+							@if (dropZoneInfo1) {
+								<span class="tw-inline-block tw-font-normal tw-my-1 tw-mr-1">
+									{{ 'General.or' | translate }}
+								</span>
+							}
+						</p>
+					}
 					<p class="dropzone-x-info2">
 						<span class="u-text-link tw-underline tw-inline-block tw-font-normal">{{ text_body }}</span>
 					</p>
 					<!-- dont let user select icon when uploading badge -->
-					<p *ngIf="loaderName != 'basic' && dropZoneInfo2" class="dropzone-x-info2">
-						<span class="tw-inline-block tw-my-1 tw-mr-1">{{ 'General.or' | translate }}</span>
-						<span
-							id="nounProject_span"
-							class="u-text-link tw-underline tw-inline-block tw-font-normal"
-							(click)="$event.preventDefault(); findNounproject($event)"
-							>{{ dropZoneInfo2 }}</span
-						>
-					</p>
-					<p *ngIf="loaderName != 'basic' && dropZoneInfo3" class="tw-mx-auto tw-mt-4">
-						<span class="tw-text-oebblack tw-italic tw-text-sm tw-mt-4">{{ dropZoneInfo3 }}</span>
-					</p>
-				</ng-container>
+					@if (loaderName != 'basic' && dropZoneInfo2) {
+						<p class="dropzone-x-info2">
+							<span class="tw-inline-block tw-my-1 tw-mr-1">{{ 'General.or' | translate }}</span>
+							<span
+								id="nounProject_span"
+								class="u-text-link tw-underline tw-inline-block tw-font-normal"
+								(click)="$event.preventDefault(); findNounproject($event)"
+								>{{ dropZoneInfo2 }}</span
+							>
+						</p>
+					}
+					@if (loaderName != 'basic' && dropZoneInfo3) {
+						<p class="tw-mx-auto tw-mt-4">
+							<span class="tw-text-oebblack tw-italic tw-text-sm tw-mt-4">{{ dropZoneInfo3 }}</span>
+						</p>
+					}
+				}
 			</label>
 
-			<p class="forminput-x-error" *ngIf="control.dirty && !control.valid">{{ errorMessage }}</p>
+			@if (control.dirty && !control.valid) {
+				<p class="forminput-x-error">{{ errorMessage }}</p>
+			}
 		</div>
 	`,
-	imports: [NgIf, NgIcon, HlmIconDirective, TranslatePipe],
+	imports: [NgIcon, HlmIconDirective, TranslatePipe],
 })
 export class BgFormFieldImageComponent {
 	@Input() set imageLoaderName(name: string) {

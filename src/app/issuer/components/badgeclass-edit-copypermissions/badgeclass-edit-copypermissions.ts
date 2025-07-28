@@ -19,7 +19,7 @@ import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { typedFormGroup } from '../../../common/util/typed-forms';
 import { BadgeClassCopyPermissions } from '../../models/badgeclass-api.model';
 import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
-import { NgIf } from '@angular/common';
+
 import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 import { HlmH2Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h2.directive';
 import { OebCheckboxComponent } from '../../../components/oeb-checkbox.component';
@@ -31,7 +31,6 @@ import { OebButtonComponent } from '../../../components/oeb-button.component';
 	imports: [
 		BgBreadcrumbsComponent,
 		HlmH1Directive,
-		NgIf,
 		BgAwaitPromises,
 		FormsModule,
 		ReactiveFormsModule,

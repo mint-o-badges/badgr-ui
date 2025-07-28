@@ -1,7 +1,6 @@
 import { Component, ElementRef, Renderer2 } from '@angular/core';
 import { BaseDialog } from './base-dialog';
 import { SvgIconComponent } from '../components/svg-icon.component';
-import { NgIf } from '@angular/common';
 
 export interface ConfirmDialogOptions {
 	dialogTitle?: string;
@@ -34,19 +33,17 @@ export interface ConfirmDialogOptions {
 						<button [disabled]="options.disableConfirm" class="button" (click)="resolveDialog()">
 							{{ options.resolveButtonLabel }}
 						</button>
-						<button
-							*ngIf="options.showRejectButton"
-							class="button button-secondary"
-							(click)="rejectDialog()"
-						>
-							{{ options.rejectButtonLabel }}
-						</button>
+						@if (options.showRejectButton) {
+							<button class="button button-secondary" (click)="rejectDialog()">
+								{{ options.rejectButtonLabel }}
+							</button>
+						}
 					</div>
 				</div>
 			</div>
 		</dialog>
 	`,
-	imports: [SvgIconComponent, NgIf],
+	imports: [SvgIconComponent],
 })
 export class ConfirmDialog extends BaseDialog {
 	static defaultOptions = {

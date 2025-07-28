@@ -46,14 +46,16 @@
 					</thead>
 					<tbody class="datatable-x-body">
 						<ng-template [showLoader]="true" [bgAwaitPromises]="[badgesLoaded]">
-							<ng-template ngFor let-issuerGroup [ngForOf]="issuerResults" let-i="index">
-								<tr class="datatable-x-row" *ngIf="groupByIssuer">
-									<th class="datatable-x-inlineheader" scope="row" colspan="4">
-										{{ issuerGroup.issuerName }}
-									</th>
-								</tr>
+							@for (issuerGroup of issuerResults; track issuerGroup; let i = $index) {
+								@if (groupByIssuer) {
+									<tr class="datatable-x-row">
+										<th class="datatable-x-inlineheader" scope="row" colspan="4">
+											{{ issuerGroup.issuerName }}
+										</th>
+									</tr>
+								}
 								<!-- Badges -->
-								<ng-template ngFor let-badge [ngForOf]="issuerGroup.badges" let-i="index">
+								@for (badge of issuerGroup.badges; track badge; let i = $index) {
 									<tr class="datatable-x-row">
 										<td class="datatable-x-cell">
 											<div class="l-flex l-flex-2x l-flex-aligncenter">
@@ -77,8 +79,8 @@
 											<button class="button" (click)="copyBadge(badge)">Copy</button>
 										</td>
 									</tr>
-								</ng-template>
-							</ng-template>
+								}
+							}
 						</ng-template>
 					</tbody>
 				</table>

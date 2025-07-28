@@ -4,13 +4,13 @@ import { OebDialogComponent } from '../../../components/oeb-dialog.component';
 import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/src';
 
 import { lucideCheck } from '@ng-icons/lucide';
-import { NgIf } from '@angular/common';
+
 import { provideIcons } from '@ng-icons/core';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
 	selector: 'oeb-success-dialog',
-	imports: [OebDialogComponent, HlmPDirective, NgIf, TranslateModule],
+	imports: [OebDialogComponent, HlmPDirective, TranslateModule],
 	providers: [provideIcons({ lucideCheck })],
 	template: `
 		<oeb-dialog [variant]="variant" class="tw-text-center tw-text-purple">
@@ -22,14 +22,14 @@ import { TranslateModule } from '@ngx-translate/core';
 					</svg>
 				</div>
 			</div>
-			<p *ngIf="recipient; else showText" hlmP class="tw-text-purple">
-				<span [translate]="'Badge.badgeSuccessfullyCreated'" [translateParams]="{ recipient: recipient }">
-				</span>
-			</p>
-
-			<ng-template #showText>
+			@if (recipient) {
+				<p hlmP class="tw-text-purple">
+					<span [translate]="'Badge.badgeSuccessfullyCreated'" [translateParams]="{ recipient: recipient }">
+					</span>
+				</p>
+			} @else {
 				<p hlmP class="tw-text-purple" [innerHTML]="text"></p>
-			</ng-template>
+			}
 		</oeb-dialog>
 	`,
 	styleUrl: './success-dialog.component.scss',

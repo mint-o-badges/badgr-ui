@@ -14,7 +14,7 @@ import { LinkEntry, BgBreadcrumbsComponent } from '../../../common/components/bg
 import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 import { OebBackgroundComponent } from '../../../components/oeb-background.component';
 import { FormMessageComponent } from '../../../common/components/form-message.component';
-import { NgIf } from '@angular/common';
+
 import { BadgeClassIssueBulkAwardImportComponent } from '../badgeclass-issue-bulk-award-import/badgeclass-issue-bulk-award-import.component';
 import { BadgeClassIssueBulkAwardPreviewComponent } from '../badgeclass-issue-bulk-award-preview/badgeclass-issue-bulk-award-preview.component';
 import { BadgeclassIssueBulkAwardConformation } from '../badgeclass-issue-bulk-award-confirmation/badgeclass-issue-bulk-award-confirmation.component';
@@ -56,7 +56,6 @@ export interface ColumnHeaders {
 		OebBackgroundComponent,
 		BgBreadcrumbsComponent,
 		FormMessageComponent,
-		NgIf,
 		BadgeClassIssueBulkAwardImportComponent,
 		BadgeClassIssueBulkAwardPreviewComponent,
 		BadgeclassIssueBulkAwardConformation,

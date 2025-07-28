@@ -3,7 +3,7 @@ import { BaseDialog } from './base-dialog';
 import { AppConfigService } from '../app-config.service';
 import { UserProfileManager } from '../services/user-profile-manager.service';
 import { UserProfile } from '../model/user-profile.model';
-import { NgIf } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -24,9 +24,11 @@ import { FormsModule } from '@angular/forms';
 				</p>
 
 				<div class="u-background-light3 u-padding-all2x u-margin-bottom3x">
-					<p class="u-text u-text-body" *ngIf="profile && profile.latestTermsDescription">
-						{{ profile.latestTermsDescription }}
-					</p>
+					@if (profile && profile.latestTermsDescription) {
+						<p class="u-text u-text-body">
+							{{ profile.latestTermsDescription }}
+						</p>
+					}
 				</div>
 
 				<label class="checkbox checkbox-small u-margin-bottom3x" [class.checkbox-is-error]="isErrorState">
@@ -34,22 +36,24 @@ import { FormsModule } from '@angular/forms';
 					<span class="checkbox-x-text"
 						>I have read and agree to the
 						<a target="_blank" [href]="termsOfServiceLink">Terms of Service</a>.
-						<div *ngIf="isErrorState" class="checkbox-x-errortext">
-							Please read and agree to the Terms of Service if you want to continue.
-						</div>
+						@if (isErrorState) {
+							<div class="checkbox-x-errortext">
+								Please read and agree to the Terms of Service if you want to continue.
+							</div>
+						}
 					</span>
 				</label>
 
 				<div class="l-flex l-flex-2x">
 					<button class="button" (click)="submitAgreement()">Continue</button>
-					<a class="button button-secondary" *ngIf="termsHelpLink" [href]="termsHelpLink" target="_blank"
-						>Need Help?</a
-					>
+					@if (termsHelpLink) {
+						<a class="button button-secondary" [href]="termsHelpLink" target="_blank">Need Help?</a>
+					}
 				</div>
 			</div>
 		</div>
 	</dialog>`,
-	imports: [NgIf, FormsModule],
+	imports: [FormsModule],
 })
 export class NewTermsDialog extends BaseDialog {
 	agreedToTerms = false;

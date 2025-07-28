@@ -1,5 +1,15 @@
-import { AfterViewInit, Component, OnInit, Renderer2, ViewChild, Inject, signal, computed } from '@angular/core';
-import { DOCUMENT, NgIf, NgStyle, NgFor } from '@angular/common';
+import {
+	AfterViewInit,
+	Component,
+	OnInit,
+	Renderer2,
+	ViewChild,
+	Inject,
+	signal,
+	computed,
+	DOCUMENT,
+} from '@angular/core';
+import { NgStyle } from '@angular/common';
 import { Router, RouterLinkActive, RouterLink, RouterOutlet } from '@angular/router';
 
 import { MessageService } from './common/services/message.service';
@@ -33,6 +43,8 @@ import { SelectIssuerDialog } from './common/dialogs/select-issuer-dialog/select
 import { LanguageService } from './common/services/language.service';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { MenuItem } from './common/components/badge-detail/badge-detail.component.types';
+import { CmsApiMenu } from './common/model/cms-api.model';
+import { CmsManager } from './common/services/cms-manager.service';
 import { SourceListenerDirective } from './mozz-transition/directives/source-listener/source-listener.directive';
 import { OebDropdownComponent } from './components/oeb-dropdown.component';
 import { OebButtonComponent } from './components/oeb-button.component';
@@ -42,6 +54,7 @@ import { BgPopupMenuTriggerDirective, BgPopupMenu } from './common/components/bg
 import { SvgIconComponent } from './common/components/svg-icon.component';
 import { MenuItemDirective } from './common/directives/bg-menuitem.directive';
 import { IconsProvider } from './icons-provider';
+import { CmsMenuItemsPipe } from './common/pipes/cmsMenuItems.pipe';
 
 // Shim in support for the :scope attribute
 // See https://github.com/lazd/scopedQuerySelectorShim and
@@ -57,7 +70,6 @@ import { IconsProvider } from './icons-provider';
 	styleUrls: ['./app.component.scss'],
 	imports: [
 		SourceListenerDirective,
-		NgIf,
 		OebDropdownComponent,
 		RouterLinkActive,
 		RouterLink,
@@ -68,7 +80,6 @@ import { IconsProvider } from './icons-provider';
 		BgPopupMenuTriggerDirective,
 		SvgIconComponent,
 		BgPopupMenu,
-		NgFor,
 		MenuItemDirective,
 		RouterOutlet,
 		ConfirmDialog,
@@ -80,6 +91,7 @@ import { IconsProvider } from './icons-provider';
 		MarkdownHintsDialog,
 		SelectIssuerDialog,
 		TranslatePipe,
+		CmsMenuItemsPipe,
 	],
 	providers: [IconsProvider],
 })
@@ -140,6 +152,9 @@ export class AppComponent implements OnInit, AfterViewInit {
 	});
 
 	copyrightYear = new Date().getFullYear();
+
+	cmsMenus: CmsApiMenu;
+	headerCmsItems: MenuItem[] = [];
 
 	@ViewChild('confirmDialog')
 	private confirmDialog: ConfirmDialog;
@@ -224,6 +239,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 		private languageService: LanguageService, // Translation
 		protected translate: TranslateService,
 		@Inject(DOCUMENT) private document: Document,
+		private cmsManager: CmsManager,
 	) {
 		// Initialize App language
 		this.languageService.setInitialAppLangauge();
@@ -256,6 +272,10 @@ export class AppComponent implements OnInit, AfterViewInit {
 			// Enable the embedded indicator class on the body
 			renderer.addClass(document.body, 'embeddedcontainer');
 		}
+
+		cmsManager.menus$.subscribe((menu) => {
+			this.cmsMenus = menu;
+		});
 	}
 
 	refreshProfile = () => {
