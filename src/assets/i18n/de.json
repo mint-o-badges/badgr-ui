@@ -173,7 +173,8 @@
 		"forEleHeadlinet4": "Lernende erhalten und sammeln Badges",
 		"forEleText4": "Lernende erhalten Badges mit den erworbenen Kompetenzen. Sie erlangen dadurch einen besseren Überblick über ihr Können.",
 		"usingOEB": "Diese Institutionen nutzen bereits Open Educational Badges",
-		"createBadgePreview": "Badge-Vorschau erstellen"
+		"createBadgePreview": "Badge-Vorschau erstellen",
+		"signupNow": "Jetzt Registrieren und Badges vergeben"
 	},
 	"Issuer": {
 		"map": "Karte",
@@ -875,7 +876,17 @@
 		"dontHavePassword": "Du hast dein aktuelles Passwort nicht?",
 		"clickHere": "Hier Klicken",
 		"resetByEmail": "zum Zurücksetzen per E-Mail.",
-		"emails": "E-Mails"
+		"emails": "E-Mails",
+		"passwordInsecure": "Ihr Passwort muss ungewöhnlich sein und mindestens 8 Zeichen (davon 1 Großbuchstabe, 1 Zahl und 1 Sonderzeichen) enthalten.",
+		"pleaseTryAgain": "Bitte versuche es erneut.",
+		"passwordMinRequirements": "(mind. 8 Zeichen, davon 1 Großbuchstabe, 1 Zahl und 1 Sonderzeichen)",
+		"createNewPassword": "Neues Passwort erstellen",
+		"repeatNewPassword": "Neues Passwort wiederholen",
+		"saveNewPassword": "Neues Passwort speichern",
+		"weIncreasedPasswordRequirements": "Wir haben unsere Anforderungen an Passwörter erhöht.",
+		"pleaseRenewPassword": "Deshalb bitten wir dich, dein Passwort zu erneuern.",
+		"pleaseRenewPasswordInfo": "Dauert nur kurz und sorgt für mehr Schutz.",
+		"dontPanic": "Keine Panik – alles ist in Ordnung!"
 	},
 	"Welcome": {
 		"heading": "Schön, dass du da bist!",
