@@ -20,6 +20,10 @@
 						"oeb-version": {
 							"main": "src/app/public/components/version.web-component.ts",
 							"outputPath": "dist/webcomponents/oeb-version"
+						},
+						"oeb-skill-visualisation": {
+							"main": "src/app/recipient/components/recipient-skill-visualisation/recipient-skill-visualisation.web-component.ts",
+							"outputPath": "dist/webcomponents/oeb-skill-visualisation"
 						}
 					}
 				}
