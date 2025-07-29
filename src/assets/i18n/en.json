@@ -885,7 +885,8 @@
 		"weIncreasedPasswordRequirements": "We have increased our password requirements.",
 		"pleaseRenewPassword": "Therefore, we kindly request that you update your password.",
 		"pleaseRenewPasswordInfo": "Takes only a moment and provides greater protection.",
-		"dontPanic": "Don't panic – everything is fine!"
+		"dontPanic": "Don't panic – everything is fine!",
+		"repeatNewPassword": "Repeat password"
 	},
 	"Welcome": {
 		"heading": "Nice to see you!",
