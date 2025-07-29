@@ -13,8 +13,9 @@
 					"options": {
 						"outputPath": "dist/webcomponents",
 						"index": "webcomponents/index.html",
-						"main": "webcomponents/test.component.ts",
-						"tsConfig": "webcomponents/tsconfig.wc.json"
+						"main": "webcomponents/main.ts",
+						"tsConfig": "tsconfig.wc.json",
+						"polyfills": ["src/polyfills.ts"]
 					}
 				}
 			}
