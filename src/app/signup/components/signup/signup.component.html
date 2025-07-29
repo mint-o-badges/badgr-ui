@@ -116,10 +116,11 @@
 							label="{{ 'General.password' | translate }}"
 							[errorMessage]="{
 								required: enterPassword,
-								minlength: passwordMustBe8Char
+								minlength: passwordMustBe8Char,
+								passwordComplexity: passwordInsecure
 							}"
 							[fieldType]="'password'"
-							sublabel="{{ 'Signup.passMin8Char' | translate }}"
+							sublabel="{{ 'Profile.passwordMinRequirements' | translate }}"
 						></oeb-input>
 
 						<oeb-input

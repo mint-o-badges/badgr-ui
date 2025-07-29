@@ -98,11 +98,6 @@ import { CmsMenuItemsPipe } from './common/pipes/cmsMenuItems.pipe';
 export class AppComponent implements OnInit, AfterViewInit {
 	aboutBadgesMenuItems: MenuItem[] = [
 		{
-			title: 'NavItems.faq',
-			routerLink: ['/public/faq'],
-			icon: 'lucideFileQuestion',
-		},
-		{
 			title: 'Badges A-Z',
 			routerLink: ['/catalog/badges'],
 			icon: 'lucideAward',
