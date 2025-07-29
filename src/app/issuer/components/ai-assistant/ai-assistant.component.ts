@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
 import { AbstractControl, FormsModule, Validators } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ApiSkill } from '~/common/model/ai-skills.model';
 import { AiSkillsService } from '~/common/services/ai-skills.service';
@@ -25,6 +26,7 @@ import { OebCheckboxComponent } from '~/components/oeb-checkbox.component';
 		OebInputComponent,
 		OebCheckboxComponent,
 		CompetencyAccordionComponent,
+		RouterModule,
 	],
 })
 export class AiAssistantComponent implements AfterViewInit {
