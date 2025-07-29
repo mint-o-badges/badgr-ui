@@ -20,9 +20,9 @@
 				<div class="tw-p-4 tw-bg-[var(--color-mint)] tw-text-purple tw-text-[22px] tw-mb-8">
 					So könnte dein Badge aussehen:
 				</div>
-				<div class="tw-flex tw-gap-10 tw-items-start">
-					<img src="assets/badges/ai-demo.svg" class="tw-flex-1" />
-					<div class="tw-flex-1">
+				<div class="tw-flex tw-flex-col lg:tw-flex-row tw-gap-10 tw-items-start">
+					<img src="assets/badges/ai-demo.png" class="tw-flex-1 lg:tw-w-24 tw-max-w-full" />
+					<div class="tw-flex-1 tw-w-full">
 						@for (aiCompetency of aiForm.controls.aiCompetencies.controls; track $index) {
 							@if (aiCompetency.rawControlMap.selected.value) {
 								<competency-accordion
@@ -44,12 +44,12 @@
 				</div>
 			</div>
 			<oeb-button
-				[id]="'suggest-competencies-btn'"
+				id="suggest-competencies-btn"
 				class="tw-block tw-mt-10"
 				width="full_width"
-				href="/signup"
+				[routerLink]="['/signup']"
 				type="button"
-				[text]="'Jetzt Registrieren und Badges vergeben'"
+				[text]="'Start.signupNow' | translate"
 			>
 			</oeb-button>
 		} @else {
