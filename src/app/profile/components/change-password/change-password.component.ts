@@ -1,6 +1,13 @@
 import { Component } from '@angular/core';
 
-import { FormBuilder, ValidationErrors, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+	FormBuilder,
+	ValidationErrors,
+	Validators,
+	FormsModule,
+	ReactiveFormsModule,
+	FormControl,
+} from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SessionService } from '../../../common/services/session.service';
 import { MessageService } from '../../../common/services/message.service';
@@ -17,6 +24,8 @@ import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/s
 import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
 import { OebInputComponent } from '../../../components/input.component';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
+import { PasswordComplexityValidator } from '../../../common/validators/password-complexity.validator';
+import { ValidationResult } from '~/common/validators/email.validator';
 
 @Component({
 	selector: 'change-password',
@@ -36,7 +45,11 @@ import { OebButtonComponent } from '../../../components/oeb-button.component';
 })
 export class ChangePasswordComponent extends BaseRoutableComponent {
 	changePasswordForm = typedFormGroup()
-		.addControl('password', '', [Validators.required, Validators.minLength(8)])
+		.addControl('password', '', [
+			Validators.required,
+			Validators.minLength(8),
+			PasswordComplexityValidator.securePassword,
+		])
 		.addControl('password2', '', [Validators.required, this.passwordsMatch.bind(this)])
 		.addControl('current_password', '', [Validators.required]);
 
@@ -56,6 +69,8 @@ export class ChangePasswordComponent extends BaseRoutableComponent {
 	confirmNewPassword = this.translate.instant('Profile.confirmNewPassword');
 	enterNewPasswordConfirmation = this.translate.instant('Profile.enterNewPasswordConfirmation');
 	PasswordsDoNotMatch = this.translate.instant('Profile.PasswordsNotMatch');
+	passwordInsecure = this.translate.instant('Profile.passwordInsecure');
+	pleaseTryAgain = this.translate.instant('Profile.pleaseTryAgain');
 
 	constructor(
 		private fb: FormBuilder,
@@ -113,7 +128,7 @@ export class ChangePasswordComponent extends BaseRoutableComponent {
 						}
 					} else {
 						this._messageService.reportAndThrowError(
-							'Your password must be uncommon and at least 8 characters. Please try again.',
+							this.passwordInsecure + ' ' + this.pleaseTryAgain,
 							err,
 						);
 					}
