@@ -17,6 +17,7 @@ import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { PasswordComplexityValidator } from '../../../common/validators/password-complexity.validator';
 import { UserProfile } from '../../../common/model/user-profile.model';
 import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
+import { map, startWith } from 'rxjs';
 
 @Component({
 	selector: 'new-password',
@@ -78,14 +79,19 @@ export class NewPasswordComponent extends BaseRoutableComponent {
 		super.ngOnInit();
 
 		// To resolve the issue of translation bug when opening a page direclty via link. In this case sent via email.
-		this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
-			this.enterNewPassword = this.translate.instant('Login.enterNewPassword');
-			this.mustBe8Char = this.translate.instant('Login.mustBe8Char');
-			this.enterNewPasswordConfirmation = this.translate.instant('Login.enterNewPasswordConfirmation');
-			this.passwordsDoNotMatch = this.translate.instant('Login.passwordsNotMatch');
-			this.passwordInsecure = this.translate.instant('Profile.passwordInsecure');
-			this.pleaseTryAgain = this.translate.instant('Profile.pleaseTryAgain');
-		});
+		this.translate.onLangChange
+			.pipe(
+				map((ev: LangChangeEvent) => ev.lang),
+				startWith(this.translate.currentLang),
+			)
+			.subscribe(() => {
+				this.enterNewPassword = this.translate.instant('Login.enterNewPassword');
+				this.mustBe8Char = this.translate.instant('Login.mustBe8Char');
+				this.enterNewPasswordConfirmation = this.translate.instant('Login.enterNewPasswordConfirmation');
+				this.passwordsDoNotMatch = this.translate.instant('Login.passwordsNotMatch');
+				this.passwordInsecure = this.translate.instant('Profile.passwordInsecure');
+				this.pleaseTryAgain = this.translate.instant('Profile.pleaseTryAgain');
+			});
 	}
 
 	isJson = (str) => {
