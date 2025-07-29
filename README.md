@@ -49,6 +49,19 @@ Run the tests with `npm run test`
 
 All files in `dist` constitute the build artifact.
 
+#### Bundle a component as a custom element / web component
+
+Components may be bundled as custom elements to be used elsewhere.
+In order to include an Angular component for exporting as custom element / web component, follow these steps:
+
+1. Create a bootstrapper for your Angular component
+    1. Next to your `my-component.component.ts`, create a `my-component.web-component.ts`
+    1. In `my-component.web-component.ts`, call `createWebComponent` from [the utility file](./webcomponents/create-webcomponent.ts) and provide the component, the tag name under which the custom element is registered and the required app configuration (providers etc).
+1. Add a build configuration to the `angular.json` file:
+    1. In the `web-components-cli` project under `configuration` add `my-component` and specify `main` and `outputPath`, where `main` points to your `my-component.web-component.ts` and outputPath points to `dist/webcomponents/my-component`
+1. Add a build step to the `package.json`:
+    1. Under scripts add: `"build:web-components:my-component": "ng build web-components-cli --configuration my-component --single-bundle"`
+
 ## Deployment
 
 Check out `deployment.md`.

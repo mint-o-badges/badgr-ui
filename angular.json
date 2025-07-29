@@ -5,17 +5,22 @@
 	"projects": {
 		"web-components-cli": {
 			"projectType": "application",
-			"root": "webcomponents",
-			"sourceRoot": "webcomponents",
+			"root": ".",
+			"sourceRoot": "src",
 			"architect": {
 				"build": {
-					"builder": "@angular-devkit/build-angular:browser",
+					"builder": "ngx-build-plus:browser",
 					"options": {
-						"outputPath": "dist/webcomponents",
 						"index": "webcomponents/index.html",
-						"main": "webcomponents/main.ts",
 						"tsConfig": "tsconfig.wc.json",
-						"polyfills": ["src/polyfills.ts"]
+						"polyfills": ["src/polyfills.ts"],
+						"inlineStyleLanguage": "scss"
+					},
+					"configurations": {
+						"oeb-version": {
+							"main": "src/app/public/components/version.web-component.ts",
+							"outputPath": "dist/webcomponents/oeb-version"
+						}
 					}
 				}
 			}

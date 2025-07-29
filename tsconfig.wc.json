@@ -1,7 +1,7 @@
 {
 	"extends": "./tsconfig.json",
 	"files": ["src/polyfills.ts"],
-	"include": ["webcomponents/**/*.ts"],
+	"include": ["src/**/*.web-component.ts"],
 	"compilerOptions": {
 		"outDir": "./out-tsc/webcomponents",
 		"types": ["node"]
