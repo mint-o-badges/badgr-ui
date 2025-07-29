@@ -173,7 +173,8 @@
 		"forEleHeadlinet4": "Learners receive and collect badges",
 		"forEleText4": "Learners receive badges with their acquired skills. This gives them a better overview of their abilities.",
 		"usingOEB": "These institutions are already using Open Educational Badges",
-		"createBadgePreview": "Badge-Vorschau erstellen"
+		"createBadgePreview": "Create badge preview",
+		"signupNow": "Sign up now and start awarding badges "
 	},
 	"Issuer": {
 		"map": "Map",
