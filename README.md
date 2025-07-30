@@ -63,6 +63,7 @@ In order to include an Angular component for exporting as custom element / web c
     1. Under scripts add: `"build:web-components:my-component": "ng build web-components-cli --configuration my-component --single-bundle"`
 
 Make sure that in your `my-component.web-component.ts` all necessary providers are imported and possibly configured using `provideAppInitializer`. A common example for this are translations (or the HttpClient for that matter), that have to be set up properly or won't work otherwise.
+Similarly, do provide all the necessary style files in the `"styles"` section of your configuration in `angular.json`. Otherwise global styles won't be loaded properly.
 
 ## Deployment
 

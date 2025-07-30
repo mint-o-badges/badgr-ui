@@ -9,7 +9,7 @@
 			"sourceRoot": "src",
 			"architect": {
 				"build": {
-					"builder": "ngx-build-plus:browser",
+					"builder": "@angular-devkit/build-angular:browser-esbuild",
 					"options": {
 						"index": "webcomponents/index.html",
 						"tsConfig": "tsconfig.wc.json",
@@ -30,10 +30,7 @@
 								"src/styles/google-webfonts/inter.scss",
 								"src/styles/google-webfonts/nunito.scss",
 								"src/styles/google-webfonts/rubik.scss",
-								"node_modules/dialog-polyfill/dialog-polyfill.css",
 								"src/breakdown/static/css/re-style.css",
-								"node_modules/maplibre-gl/dist/maplibre-gl.css",
-								"node_modules/ngx-markdown-editor/assets/highlight.js/agate.min.css",
 								"src/app/recipient/components/recipient-skill-visualisation/recipient-skill-visualisation.component.scss"
 							]
 						}
