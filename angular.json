@@ -30,14 +30,7 @@
 								"src/styles/google-webfonts/rubik.scss",
 								"src/app/recipient/components/recipient-skill-visualisation/recipient-skill-visualisation.component.scss"
 							],
-							"assets": [
-								"src/favicon.ico",
-								{
-									"glob": "icons.svg",
-									"input": "./assets/@concentricsky/badgr-style/dist/images",
-									"output": "./assets/@concentricsky/badgr-style/dist/images"
-								}
-							]
+							"assets": ["src/favicon.ico", "src/assets/@concentricsky/badgr-style/dist/images/icons.svg"]
 						}
 					}
 				}
