@@ -28,13 +28,6 @@ export class LanguageService {
 		this.setLanguage(language);
 	}
 
-	getLangauges() {
-		return [
-			{ value: 'de', img: 'DE', text: 'Deutsch' },
-			{ value: 'en', img: 'EN', text: 'English' },
-		];
-	}
-
 	// To set language
 	setLanguage(lng) {
 		window.localStorage.setItem('lang', lng);

@@ -1,5 +1,5 @@
 import { AbstractControl } from '@angular/forms';
-import isURL from 'validator/lib/isURL';
+import isURL from 'validator/es/lib/isURL';
 import { ValidationResult } from './email.validator';
 
 export class UrlValidator {
