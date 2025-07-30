@@ -382,11 +382,20 @@
 			</div>
 		</div>
 
-		<oeb-button
-			[routerLink]="['/public/about/newsletter']"
-			[text]="'Newsletter.signup' | translate"
-			width="max_content"
-		></oeb-button>
+		<div class="tw-flex tw-flex-col tw-align-stretch tw-min-w-[24rem]">
+			<oeb-button
+				[routerLink]="['/public/about/newsletter']"
+				[text]="'Newsletter.signup' | translate"
+				width="full_width"
+			></oeb-button>
+			<oeb-button
+				class="tw-mt-2"
+				variant="secondary"
+				(click)="openLinkedIn()"
+				[text]="'Start.followLinkedIn' | translate"
+				width="full_width"
+			></oeb-button>
+		</div>
 	</div>
 	<script>
 		window.REQUIRED_CODE_ERROR_MESSAGE = 'W�hlen Sie bitte einen L�ndervorwahl aus.';
