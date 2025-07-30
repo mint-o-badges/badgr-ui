@@ -125,6 +125,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	keywordCompetenciesShowResults = false;
 	keywordCompetenciesLoading = false;
 	keywordCompetenciesLoaded = false;
+	keywordCompetenciesViewChildrenInitialized = false;
 
 	isDevMode: boolean = false && isDevMode(); // DEBUG: enable to skip steps
 
@@ -732,7 +733,20 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			]);
 			this.badgeClassForm.rawControl.updateValueAndValidity();
 		});
+	}
 
+	ngAfterViewChecked() {
+		if (
+			this.keywordCompetenciesInputModel &&
+			this.keywordCompetenciesLanguageSelectModel &&
+			!this.keywordCompetenciesViewChildrenInitialized
+		) {
+			this.initializeViewChildSubscriptions();
+			this.keywordCompetenciesViewChildrenInitialized = true;
+		}
+	}
+
+	private initializeViewChildSubscriptions() {
 		// debounce ai competencies keyword search input
 		this.keywordCompetenciesInputModel.valueChanges
 			.pipe(debounceTime(500))

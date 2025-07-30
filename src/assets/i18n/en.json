@@ -173,7 +173,8 @@
 		"forEleHeadlinet4": "Learners receive and collect badges",
 		"forEleText4": "Learners receive badges with their acquired skills. This gives them a better overview of their abilities.",
 		"usingOEB": "These institutions are already using Open Educational Badges",
-		"createBadgePreview": "Badge-Vorschau erstellen",
+		"createBadgePreview": "Create badge preview",
+		"signupNow": "Sign up now and start awarding badges ",
 		"followLinkedIn": "Follow on LinkedIn"
 	},
 	"Issuer": {
@@ -728,7 +729,7 @@
 		"skillVisualisationIntro": "These are the areas in which you have strengthened your skills the most:",
 		"skillVisualisationHelp": "Move the mouse pointer over the circles to see the associated skills.",
 		"skillVisualisationSingleIntro": "Your skills in the area of ",
-		"FutureSkillsAccrodingToUlfEhlers": "Future Skills according to Ulf Ehlers",
+		"FutureSkillsAccrodingToNextSkills": "Future Skills according to the NextSkills-Framework",
 		"ESCOAreas": "ESCO areas"
 	},
 	"EditBadge": {
@@ -876,7 +877,18 @@
 		"dontHavePassword": "You don't have your current password?",
 		"clickHere": "Click here",
 		"resetByEmail": "to reset by email.",
-		"emails": "Emails"
+		"emails": "Emails",
+		"passwordInsecure": "Your password must be unusual and contain at least 8 characters (including 1 capital letter, 1 number, and 1 special character).",
+		"pleaseTryAgain": "Please try again.",
+		"passwordMinRequirements": "(At least 8 characters, including 1 uppercase letter, 1 number, and 1 special character)",
+		"createNewPassword": "Create new password",
+		"repeatNewpassword": "Repeat new password",
+		"saveNewPassword": "Neues Passwort speichern",
+		"weIncreasedPasswordRequirements": "We have increased our password requirements.",
+		"pleaseRenewPassword": "Therefore, we kindly request that you update your password.",
+		"pleaseRenewPasswordInfo": "Takes only a moment and provides greater protection.",
+		"dontPanic": "Don't panic – everything is fine!",
+		"repeatNewPassword": "Repeat password"
 	},
 	"Welcome": {
 		"heading": "Nice to see you!",
