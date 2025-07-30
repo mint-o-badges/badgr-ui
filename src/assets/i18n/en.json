@@ -174,7 +174,8 @@
 		"forEleText4": "Learners receive badges with their acquired skills. This gives them a better overview of their abilities.",
 		"usingOEB": "These institutions are already using Open Educational Badges",
 		"createBadgePreview": "Create badge preview",
-		"signupNow": "Sign up now and start awarding badges "
+		"signupNow": "Sign up now and start awarding badges ",
+		"followLinkedIn": "Follow on LinkedIn"
 	},
 	"Issuer": {
 		"map": "Map",
