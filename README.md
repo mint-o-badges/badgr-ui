@@ -65,6 +65,8 @@ In order to include an Angular component for exporting as custom element / web c
 Make sure that in your `my-component.web-component.ts` all necessary providers are imported and possibly configured using `provideAppInitializer`. A common example for this are translations (or the HttpClient for that matter), that have to be set up properly or won't work otherwise.
 Similarly, do provide all the necessary style files in the `"styles"` section of your configuration in `angular.json`. Otherwise global styles won't be loaded properly.
 
+**Note**: When using these components, keep in mind that the `polyfill.js` is the same for all of the components and should therefore only be imported once!
+
 ## Deployment
 
 Check out `deployment.md`.
