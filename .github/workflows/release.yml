@@ -19,4 +19,3 @@ jobs:
           initial-version: '2.10.0'
           tag-prefix: v
           generate-release-notes: true
-          dry-run: true
