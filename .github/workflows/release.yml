@@ -10,7 +10,7 @@ jobs:
       contents:
         write
     env:
-      GITHUB_TOKEN ${{ secrets.GITHUB_TOKEN }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: Create release and release notes
         uses: dexwritescode/release-on-merge-action@v1
