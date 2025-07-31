@@ -97,7 +97,7 @@ export class SignupComponent extends BaseRoutableComponent implements OnInit, Af
 		scriptElement.src = 'https://sibforms.com/forms/end-form/build/main.js';
 		this.renderer.appendChild(this.elementRef.nativeElement, scriptElement);
 		if (this.sessionService.isLoggedIn) {
-			this.router.navigate(['/userProfile']);
+			this.router.navigate(['/issuer']);
 		}
 		const defaultEmail = this.route.snapshot.queryParams['email'];
 		if (defaultEmail) this.signupForm.controls.username.setValue(defaultEmail);

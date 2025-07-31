@@ -173,7 +173,9 @@
 		"forEleHeadlinet4": "Learners receive and collect badges",
 		"forEleText4": "Learners receive badges with their acquired skills. This gives them a better overview of their abilities.",
 		"usingOEB": "These institutions are already using Open Educational Badges",
-		"createBadgePreview": "Badge-Vorschau erstellen"
+		"createBadgePreview": "Create badge preview",
+		"signupNow": "Sign up now and start awarding badges ",
+		"followLinkedIn": "Follow on LinkedIn"
 	},
 	"Issuer": {
 		"map": "Map",
@@ -727,7 +729,7 @@
 		"skillVisualisationIntro": "These are the areas in which you have strengthened your skills the most:",
 		"skillVisualisationHelp": "Move the mouse pointer over the circles to see the associated skills.",
 		"skillVisualisationSingleIntro": "Your skills in the area of ",
-		"FutureSkillsAccrodingToUlfEhlers": "Future Skills according to Ulf Ehlers",
+		"FutureSkillsAccrodingToNextSkills": "Future Skills according to the NextSkills-Framework",
 		"ESCOAreas": "ESCO areas"
 	},
 	"EditBadge": {
