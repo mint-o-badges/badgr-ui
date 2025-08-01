@@ -256,7 +256,9 @@ export class LoginComponent extends BaseRoutableComponent implements OnInit, Aft
 	}
 
 	isOidcDisabled(): boolean {
-		const prodUrl = 'https://openbadges.education';
-		return location.origin === prodUrl;
+		// Currently, OIDC is disabled in all environments
+		//const prodUrl = 'https://openbadges.education';
+		//return location.origin === prodUrl;
+		return true;
 	}
 }
