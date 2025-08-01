@@ -554,7 +554,14 @@
 		"weHelpCreateBadge": "We'll help you create your badge in just a few steps.",
 		"letsGo": "Let's go!",
 		"closing": "Closing",
-		"alignment": "link"
+		"alignment": "link",
+		"nothingSuitable": "Nothing suitable?",
+		"tryDetailedDescription": "Try a more detailed description.",
+		"tips": "Here a few <strong>tips</strong>:",
+		"subjectMatter": "Write down what your learning program teaches in terms of <u>subject matter</u>.",
+		"howLearningWorks": "Also describe <u>how</u> the learning takes place.",
+		"inAddition": "In addition to subject-specific skills, <u>soft skills</u> such as social, communication, or problem-solving skills can often be acquired through teamwork, experimentation or planning.",
+		"aiAssistantNote": "Note: AI support – the Badge Assistant can make mistakes. Therefore, please check the suggestions and report any incorrect results by <a class='tw-text-[var(--color-link)] tw-underline' href='mailto:support@openbadges.education'>email.</a> <a class='tw-text-[var(--color-link)] tw-underline' href='https://openbadges.education/public/privacy' target='_blank'>Data protection at OEB.</a>"
 	},
 	"Signup": {
 		"youHaveAccount": "Already have an account?",
@@ -648,7 +655,14 @@
 		"subscribe": "Subscribe to newsletter",
 		"confirmedSubscription": "<span class='tw-font-bold tw-text-oebblack'>You have successfully confirmed your newsletter subscription.</span>",
 		"cantUseWithoutSubscription": "Unfortunately, you cannot use Open Educational Badges without confirming the terms of use.",
-		"signup": "Newsletter registration"
+		"signup": "Newsletter registration",
+		"stayUpToDate": "Stay up to date",
+		"withOurNewsletter": "with our OEB newsletter",
+		"dontMissNews": "Don't want to miss out on the latest developments and updates relating to Open Educational Badges?",
+		"thenSubscribe": "Then subscribe to our newsletter now:",
+		"fillRegistrationForm": "Fill out the registration form",
+		"confirmLink": "Click on the confirmation link in the email you receive",
+		"receiveNewsletter": "Receive the OEB newsletter"
 	},
 	"TermsOfService": {
 		"newTerms": "New Terms of Service",
