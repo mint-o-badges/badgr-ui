@@ -34,7 +34,7 @@ import { UrlValidator } from '../../../common/validators/url.validator';
 import { Issuer } from '../../models/issuer.model';
 import { IssuerManager } from '../../services/issuer-manager.service';
 import { FormMessageComponent } from '../../../common/components/form-message.component';
-import { NgIf, NgClass, NgFor } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { StepComponent } from '../../../components/stepper/step.component';
 import { CdkStep } from '@angular/cdk/stepper';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
@@ -78,9 +78,7 @@ type BadgeResult = BadgeClass & { selected?: boolean };
 		FormsModule,
 		ReactiveFormsModule,
 		StepperComponent,
-		NgIf,
 		NgClass,
-		NgFor,
 		StepComponent,
 		CdkStep,
 		BgAwaitPromises,

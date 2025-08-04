@@ -10,7 +10,7 @@ import { groupIntoArray, groupIntoObject } from '../../../common/util/array-redu
 import { BaseDialog } from '../../../common/dialogs/base-dialog';
 import { SvgIconComponent } from '../../../common/components/svg-icon.component';
 import { FormsModule } from '@angular/forms';
-import { NgIf, NgFor, NgStyle, DatePipe } from '@angular/common';
+import { NgStyle, DatePipe } from '@angular/common';
 import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 
 export interface RecipientBadgeSelectionDialogOptions {
@@ -31,7 +31,7 @@ export interface RecipientBadgeSelectionDialogSettings {
 @Component({
 	selector: 'recipient-badge-selection-dialog',
 	templateUrl: './recipient-badge-selection-dialog.component.html',
-	imports: [SvgIconComponent, FormsModule, NgIf, BgAwaitPromises, NgFor, NgStyle, DatePipe],
+	imports: [SvgIconComponent, FormsModule, BgAwaitPromises, NgStyle, DatePipe],
 })
 export class RecipientBadgeSelectionDialog extends BaseDialog {
 	get searchQuery() {

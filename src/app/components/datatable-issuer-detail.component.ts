@@ -62,18 +62,19 @@ import { TimeComponent } from '~/common/components/time.component';
 					</hlm-cmd-input-wrapper>
 				</label>
 			</div>
-			<div
-				*ngIf="awardInProgress"
-				class="tw-border-green tw-p-2 tw-border-solid tw-border-4 tw-rounded-[10px] tw-w-full tw-flex md:tw-gap-6 tw-gap-2 tw-items-center"
-			>
-				<oeb-spinner size="lg"></oeb-spinner>
-				<div class="tw-text-oebblack tw-text-lg tw-flex tw-flex-col tw-gap-1">
-					<span class="tw-text-lg tw-font-bold tw-uppercase">{{
-						'Badge.awardingInProgress' | translate
-					}}</span>
-					<span>{{ 'Badge.willBeAwardedSoon' | translate }}</span>
+			@if (awardInProgress) {
+				<div
+					class="tw-border-green tw-p-2 tw-border-solid tw-border-4 tw-rounded-[10px] tw-w-full tw-flex md:tw-gap-6 tw-gap-2 tw-items-center"
+				>
+					<oeb-spinner size="lg"></oeb-spinner>
+					<div class="tw-text-oebblack tw-text-lg tw-flex tw-flex-col tw-gap-1">
+						<span class="tw-text-lg tw-font-bold tw-uppercase">{{
+							'Badge.awardingInProgress' | translate
+						}}</span>
+						<span>{{ 'Badge.willBeAwardedSoon' | translate }}</span>
+					</div>
 				</div>
-			</div>
+			}
 			<hlm-table
 				class="tw-rounded-t-[20px] tw-overflow-hidden tw-w-full tw-max-w-[100%] tw-bg-lightpurple tw-border-purple tw-border-[1px] tw-border-solid tw-mt-8"
 			>
@@ -85,46 +86,46 @@ import { TimeComponent } from '~/common/components/time.component';
 					}}</hlm-th>
 					<hlm-th class="!tw-text-white tw-justify-end xl:tw-w-40 tw-w-0 !tw-p-0"></hlm-th>
 				</hlm-trow>
-				<hlm-trow
-					*ngFor="let recipient of _filteredEmails(); let i = index"
-					class="tw-border-purple tw-border-0 tw-border-solid tw-flex-wrap tw-items-center tw-py-2 tw-relative"
-				>
-					<!-- loading spinner -->
-					<loading-dots
-						[showLoading]="false"
-						*ngIf="downloadStates[i]"
-						class="tw-absolute tw-right-0 tw-left-0 tw-z-50"
-					></loading-dots>
-
-					<hlm-th class="tw-w-40">
-						<span class="!tw-text-oebblack !tw-font-normal">{{ recipient.recipientIdentifier }}</span>
-					</hlm-th>
-					<hlm-th class="!tw-flex-1 tw-justify-center !tw-text-oebblack"
-						><p class="u-text">
-							<time [date]="recipient.issuedOn" format="dd.MM.y"></time></p
-					></hlm-th>
-					<hlm-th
-						class="tw-justify-center tw-gap-[25px] xl:tw-gap-[5px] xl:tw-w-max xl:tw-h-fit xl:tw-flex-col xl:tw-justify-end tw-w-full !tw-text-oebblack"
+				@for (recipient of _filteredEmails(); track recipient; let i = $index) {
+					<hlm-trow
+						class="tw-border-purple tw-border-0 tw-border-solid tw-flex-wrap tw-items-center tw-py-2 tw-relative"
 					>
-						<oeb-button
-							variant="secondary"
-							size="xs"
-							width="full_width"
-							class="tw-w-full"
-							(click)="actionElement.emit(recipient)"
-							[text]="actionElementText | translate | titlecase"
-						></oeb-button>
-
-						<oeb-button
-							size="xs"
-							width="full_width"
-							class="tw-w-full tw-font-semibold"
-							(click)="downloadCertificate.emit({ instance: recipient, badgeIndex: i })"
-							text="{{ 'Issuer.pdfCertificate' | translate }}"
-							[disabled]="downloadStates[i]"
-						></oeb-button>
-					</hlm-th>
-				</hlm-trow>
+						<!-- loading spinner -->
+						@if (downloadStates[i]) {
+							<loading-dots
+								[showLoading]="false"
+								class="tw-absolute tw-right-0 tw-left-0 tw-z-50"
+							></loading-dots>
+						}
+						<hlm-th class="tw-w-40">
+							<span class="!tw-text-oebblack !tw-font-normal">{{ recipient.recipientIdentifier }}</span>
+						</hlm-th>
+						<hlm-th class="!tw-flex-1 tw-justify-center !tw-text-oebblack"
+							><p class="u-text">
+								<time [date]="recipient.issuedOn" format="dd.MM.y"></time></p
+						></hlm-th>
+						<hlm-th
+							class="tw-justify-center tw-gap-[25px] xl:tw-gap-[5px] xl:tw-w-max xl:tw-h-fit xl:tw-flex-col xl:tw-justify-end tw-w-full !tw-text-oebblack"
+						>
+							<oeb-button
+								variant="secondary"
+								size="xs"
+								width="full_width"
+								class="tw-w-full"
+								(click)="actionElement.emit(recipient)"
+								[text]="actionElementText | translate | titlecase"
+							></oeb-button>
+							<oeb-button
+								size="xs"
+								width="full_width"
+								class="tw-w-full tw-font-semibold"
+								(click)="downloadCertificate.emit({ instance: recipient, badgeIndex: i })"
+								text="{{ 'Issuer.pdfCertificate' | translate }}"
+								[disabled]="downloadStates[i]"
+							></oeb-button>
+						</hlm-th>
+					</hlm-trow>
+				}
 			</hlm-table>
 		</div>
 	`,

@@ -5,7 +5,7 @@ import { Issuer } from '../../../issuer/models/issuer.model';
 import { IssuerManager } from '../../../issuer/services/issuer-manager.service';
 import { BaseDialog } from '../base-dialog';
 import { SvgIconComponent } from '../../components/svg-icon.component';
-import { NgFor } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 
 /**
@@ -18,7 +18,7 @@ import { FormsModule } from '@angular/forms';
 	selector: 'select-issuer-dialog',
 	templateUrl: 'select-issuer-dialog.component.html',
 	styleUrls: ['./select-issuer-dialog.component.css'],
-	imports: [SvgIconComponent, NgFor, FormsModule],
+	imports: [SvgIconComponent, FormsModule],
 })
 export class SelectIssuerDialog extends BaseDialog {
 	Array = Array;

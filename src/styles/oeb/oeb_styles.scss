@@ -1,11 +1,11 @@
-@import '@angular/cdk/overlay-prebuilt.css';
+@use './typography.scss';
+@use './elements.scss';
+
+@use '@angular/cdk/overlay-prebuilt.css';
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@import url(typography.scss);
-@import url(elements.scss);
 
 html {
 	font-family: rubik;
@@ -51,6 +51,7 @@ html {
 	--color-pink-950: #f76866;
 	--color-lightgreen: #ecfeed;
 	--color-green: #93f993;
+	--color-mint: #e4ffe4;
 	--color-green-50: #e4ffe4;
 	--color-green-100: #d3ffd3;
 	--color-green-200: #c3fec3;
@@ -343,7 +344,7 @@ html {
 	}
 	&-close {
 		padding-right: 32px;
-		background: transparent url(../../breakdown/static/scss/images/tooltip-close.svg) right 8px center no-repeat;
+		background: transparent url('../../breakdown/static/scss/images/tooltip-close.svg') right 8px center no-repeat;
 		background-size: 12px 12px;
 	}
 	&-delete {

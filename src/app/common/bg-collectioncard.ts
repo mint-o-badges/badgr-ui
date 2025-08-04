@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { RecipientBadgeCollection } from '../recipient/models/recipient-badge-collection.model';
 import { RouterLink } from '@angular/router';
-import { NgIf, NgFor } from '@angular/common';
+
 import { HlmSwitchComponent } from '../components/spartan/ui-switch-helm/src/lib/hlm-switch.component';
 import { FormsModule } from '@angular/forms';
 import { OebButtonComponent } from '../components/oeb-button.component';
@@ -22,26 +22,30 @@ import { TranslatePipe } from '@ngx-translate/core';
 						{{ collection.name }}
 					</h2>
 				</a>
-				<div class="tw-my-5" *ngIf="!collection.badges.length">
-					<span class="tw-text-oebblack tw-text-lg">{{
-						'BadgeCollection.noBadgesInThisCollectionYet' | translate
-					}}</span>
-				</div>
-				<div
-					*ngIf="collection.badges.length"
-					class="tw-flex tw-overflow-x-auto tw-overflow-y-hidden tw-w-full md:tw--space-x-6 tw--space-x-4 tw-pt-4 pt-pb-4"
-				>
-					<div
-						class="tw-flex-shrink-0 hover:tw-scale-105 hover:tw-z-10 tw-transform tw-ease-in-out tw-transition tw-duration-200"
-						*ngFor="let badge of collection.badges"
-					>
-						<img
-							[src]="badge.image"
-							[title]="badge.badgeClass.name"
-							class="md:tw-w-[80px] md:tw-h-[80px] tw-w-[50px] tw-h-[50px]"
-						/>
+				@if (!collection.badges.length) {
+					<div class="tw-my-5">
+						<span class="tw-text-oebblack tw-text-lg">{{
+							'BadgeCollection.noBadgesInThisCollectionYet' | translate
+						}}</span>
 					</div>
-				</div>
+				}
+				@if (collection.badges.length) {
+					<div
+						class="tw-flex tw-overflow-x-auto tw-overflow-y-hidden tw-w-full md:tw--space-x-6 tw--space-x-4 tw-pt-4 pt-pb-4"
+					>
+						@for (badge of collection.badges; track badge) {
+							<div
+								class="tw-flex-shrink-0 hover:tw-scale-105 hover:tw-z-10 tw-transform tw-ease-in-out tw-transition tw-duration-200"
+							>
+								<img
+									[src]="badge.image"
+									[title]="badge.badgeClass.name"
+									class="md:tw-w-[80px] md:tw-h-[80px] tw-w-[50px] tw-h-[50px]"
+								/>
+							</div>
+						}
+					</div>
+				}
 				<footer class="tw-flex tw-justify-between tw-items-center tw-w-full tw-mt-4">
 					<div class="tw-items-center tw-w-full">
 						<label hlmLabel class="tw-flex tw-gap-4">
@@ -61,7 +65,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 			</div>
 		</div>
 	`,
-	imports: [RouterLink, NgIf, NgFor, HlmSwitchComponent, FormsModule, OebButtonComponent, TranslatePipe],
+	imports: [RouterLink, HlmSwitchComponent, FormsModule, OebButtonComponent, TranslatePipe],
 })
 export class BgCollectionCard {
 	readonly badgeLoadingImageUrl = '../../../breakdown/static/images/badge-loading.svg';

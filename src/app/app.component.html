@@ -12,7 +12,7 @@
 		</a>
 
 		<!-- Unauthenticated -->
-		<ng-template [ngIf]="!loggedIn">
+		@if (!loggedIn) {
 			<nav class="tw-items-stretch tw-align-middle tw-hidden lg:tw-flex">
 				<div class="tw-flex tw-gap-8 tw-items-center">
 					<!-- About Badges Menu -->
@@ -22,20 +22,31 @@
 						triggerStyle="oeb-navitem tw-cursor-pointer !tw-leading-none !tw-py-1"
 					></oeb-dropdown>
 
-					<a
-						*ngIf="!features.disableRegistration"
-						class="oeb-navitem"
-						routerLinkActive="oeb-navitem-is-active"
-						[routerLink]="['/public/about']"
-						>{{ 'NavItems.aboutOpenEducationalBadges' | translate }}</a
-					>
-					<a
-						*ngIf="!features.disableRegistration"
-						class="oeb-navitem"
-						routerLinkActive="oeb-navitem-is-active"
-						[routerLink]="['/signup']"
-						>{{ 'NavItems.register' | translate }}</a
-					>
+					@if (cmsMenus && cmsMenus.header[translate.currentLang]) {
+						@for (item of cmsMenus.header[translate.currentLang]; track item.id) {
+							@if (item.children.length) {
+								<oeb-dropdown
+									[menuItems]="item.children | CmsMenuItems"
+									[trigger]="item.title"
+									triggerStyle="oeb-navitem tw-cursor-pointer !tw-leading-none !tw-py-1"
+									[noTranslate]="true"
+								/>
+							} @else {
+								<a
+									class="oeb-navitem"
+									routerLinkActive="oeb-navitem-is-active"
+									[routerLink]="[item.url]"
+									>{{ item.title }}</a
+								>
+							}
+						}
+					}
+
+					@if (!features.disableRegistration) {
+						<a class="oeb-navitem" routerLinkActive="oeb-navitem-is-active" [routerLink]="['/signup']">{{
+							'NavItems.register' | translate
+						}}</a>
+					}
 
 					<oeb-button
 						size="sm"
@@ -57,10 +68,10 @@
 					</div>
 				</div>
 			</nav>
-		</ng-template>
+		}
 
 		<!-- Authenticated -->
-		<ng-template [ngIf]="loggedIn && !isOAuthAuthorizationInProcess">
+		@if (loggedIn && !isOAuthAuthorizationInProcess) {
 			<nav class="tw-hidden lg:tw-block">
 				<div class="tw-flex tw-gap-8 tw-items-center">
 					<oeb-dropdown
@@ -69,27 +80,42 @@
 						triggerStyle="oeb-navitem tw-cursor-pointer !tw-leading-none !tw-py-1"
 					></oeb-dropdown>
 
-					<a class="oeb-navitem" routerLinkActive="oeb-navitem-is-active" [routerLink]="['public/about']">
-						{{ 'NavItems.aboutOpenEducationalBadges' | translate }}
-					</a>
+					@if (cmsMenus && cmsMenus.header[translate.currentLang]) {
+						@for (item of cmsMenus.header[translate.currentLang]; track item.id) {
+							@if (item.children.length) {
+								<oeb-dropdown
+									[menuItems]="item.children | CmsMenuItems"
+									[trigger]="item.title"
+									triggerStyle="oeb-navitem tw-cursor-pointer !tw-leading-none !tw-py-1"
+									[noTranslate]="true"
+								/>
+							} @else {
+								<a
+									class="oeb-navitem"
+									routerLinkActive="oeb-navitem-is-active"
+									[routerLink]="[item.url]"
+									>{{ item.title }}</a
+								>
+							}
+						}
+					}
 
-					<a
-						class="oeb-navitem tw-cursor-pointer"
-						*ngIf="theme.customMenu"
-						routerLinkActive="oeb-navitem-is-active"
-						[bgPopupMenuTrigger]="customMenu"
-					>
-						{{ theme.customMenu.label }}
-						<svg class="navitem-x-icon" icon="icon_dropdown"></svg>
-					</a>
+					@if (theme.customMenu) {
+						<a
+							class="oeb-navitem tw-cursor-pointer"
+							routerLinkActive="oeb-navitem-is-active"
+							[bgPopupMenuTrigger]="customMenu"
+						>
+							{{ theme.customMenu.label }}
+							<svg class="navitem-x-icon" icon="icon_dropdown"></svg>
+						</a>
+					}
 
-					<a
-						class="oeb-navitem"
-						routerLinkActive="oeb-navitem-is-active"
-						*ngIf="showIssuersTab()"
-						[routerLink]="['/issuer']"
-						>{{ 'NavItems.myInstitutions' | translate }}</a
-					>
+					@if (showIssuersTab()) {
+						<a class="oeb-navitem" routerLinkActive="oeb-navitem-is-active" [routerLink]="['/issuer']">{{
+							'NavItems.myInstitutions' | translate
+						}}</a>
+					}
 
 					<!-- Account Menu -->
 					<oeb-dropdown
@@ -116,7 +142,7 @@
 					</div>
 				</div>
 			</nav>
-		</ng-template>
+		}
 
 		<button
 			class="menutoggle lg:tw-hidden"
@@ -133,128 +159,190 @@
 
 	<!-- Nav dropdown menus -->
 	<bg-popup-menu #appsMenu>
-		<a class="menuitem" href="{{ lp.launch_url }}" *ngFor="let lp of launchpoints" target="_blank">
-			{{ lp.label }}
-		</a>
+		@for (lp of launchpoints; track lp) {
+			<a class="menuitem" href="{{ lp.launch_url }}" target="_blank">
+				{{ lp.label }}
+			</a>
+		}
 	</bg-popup-menu>
 
 	<bg-popup-menu #customMenu>
-		<a class="menuitem" [href]="item.url" *ngFor="let item of theme?.customMenu?.items" target="_blank">
-			{{ item.label }}
-		</a>
+		@for (item of theme?.customMenu?.items; track item) {
+			<a class="menuitem" [href]="item.url" target="_blank">
+				{{ item.label }}
+			</a>
+		}
 	</bg-popup-menu>
 
-	<nav
-		class="l-dialog mobilenav"
-		[class.mobilenav-is-active]="mobileNavOpen"
-		*ngIf="!loggedIn"
-		[class.mobilenav-light]="!theme.useColorNavbar"
-	>
-		<div class="mobilenav-x-navitems">
-			<!-- Language -->
-			<div class="mobilenav-x-label tw-flex tw-gap-1 tw-items-center tw-text-white tw-mb-8 tw-mt-8">
-				<button (click)="changeLng('de')" class="tw-text-white tw-text-[14px]/[1.2em]">
-					<span [ngStyle]="{ 'font-weight': selectedLng == 'de' ? 'bold' : 'normal' }">DE</span>
-				</button>
-				<span class="tw-text-[14px]/[1.2em]">|</span>
-				<button (click)="changeLng('en')" class="tw-text-white tw-text-[14px]/[1.2em]">
-					<span [ngStyle]="{ 'font-weight': selectedLng == 'en' ? 'bold' : 'normal' }">EN</span>
-				</button>
+	@if (!loggedIn) {
+		<nav
+			class="l-dialog mobilenav"
+			[class.mobilenav-is-active]="mobileNavOpen"
+			[class.mobilenav-light]="!theme.useColorNavbar"
+		>
+			<div class="mobilenav-x-navitems">
+				<!-- Language -->
+				<div class="mobilenav-x-label tw-flex tw-gap-1 tw-items-center tw-text-white tw-mb-8 tw-mt-8">
+					<button (click)="changeLng('de')" class="tw-text-white tw-text-[14px]/[1.2em]">
+						<span [ngStyle]="{ 'font-weight': selectedLng == 'de' ? 'bold' : 'normal' }">DE</span>
+					</button>
+					<span class="tw-text-[14px]/[1.2em]">|</span>
+					<button (click)="changeLng('en')" class="tw-text-white tw-text-[14px]/[1.2em]">
+						<span [ngStyle]="{ 'font-weight': selectedLng == 'en' ? 'bold' : 'normal' }">EN</span>
+					</button>
+				</div>
+
+				<p class="mobilenav-x-label">{{ 'General.aboutBadges' | translate }}</p>
+
+				<a routerLinkActive="menuitem-is-active" [routerLink]="['/catalog/badges']">Badges A-Z</a>
+				<a routerLinkActive="menuitem-is-active" [routerLink]="['/catalog/issuers']">{{
+					'General.institutionsNav' | translate
+				}}</a>
+				<a routerLinkActive="menuitem-is-active" [routerLink]="['/catalog/learningpaths']">{{
+					'LearningPath.learningpathsNav' | translate
+				}}</a>
+
+				@if (cmsMenus && cmsMenus.header[translate.currentLang]) {
+					@for (item of cmsMenus.header[translate.currentLang]; track item.id) {
+						<hr class="mobilenav-x-rule" />
+						@if (item.children.length) {
+							<p class="mobilenav-x-label">{{ item.title }}</p>
+							@for (child of item.children; track child.id) {
+								<a [routerLink]="[child.url]">{{ child.title }}</a>
+							}
+						} @else {
+							<a [routerLink]="item.url">{{ item.title }}</a>
+						}
+					}
+				}
+
+				<hr class="mobilenav-x-rule" />
+
+				<a routerLinkActive="menuitem-is-active" [routerLink]="['/public/about']">{{
+					'NavItems.aboutOpenEducationalBadges' | translate
+				}}</a>
+				<hr class="mobilenav-x-rule" />
+
+				<a routerLinkActive="menuitem-is-active" [routerLink]="['/auth/login']">Login</a>
+				<a routerLinkActive="menuitem-is-active" [routerLink]="['/signup']">{{
+					'NavItems.register' | translate
+				}}</a>
+				<hr class="mobilenav-x-rule" />
+				@if (launchpoints?.length) {
+					<p class="mobilenav-x-label">Apps</p>
+				}
+				@for (lp of launchpoints; track lp) {
+					<a href="{{ lp.launch_url }}" target="_blank">
+						{{ lp.label }}
+					</a>
+				}
 			</div>
+		</nav>
+	}
 
-			<p class="mobilenav-x-label">{{ 'General.aboutBadges' | translate }}</p>
+	@if (loggedIn && !isOAuthAuthorizationInProcess) {
+		<nav
+			class="l-dialog mobilenav"
+			[class.mobilenav-is-active]="mobileNavOpen"
+			[class.mobilenav-light]="!theme.useColorNavbar"
+		>
+			<div class="mobilenav-x-navitems">
+				<!-- Language -->
+				<div class="mobilenav-x-label tw-flex tw-gap-1 tw-items-center tw-text-white tw-mb-8 tw-mt-8">
+					<button (click)="changeLng('de')" class="tw-text-white tw-text-[14px]/[1.2em]">
+						<span [ngStyle]="{ 'font-weight': selectedLng == 'de' ? 'bold' : 'normal' }">DE</span>
+					</button>
+					<span class="tw-text-[14px]/[1.2em]">|</span>
+					<button (click)="changeLng('en')" class="tw-text-white tw-text-[14px]/[1.2em]">
+						<span [ngStyle]="{ 'font-weight': selectedLng == 'en' ? 'bold' : 'normal' }">EN</span>
+					</button>
+				</div>
 
-			<a routerLinkActive="menuitem-is-active" [routerLink]="['/catalog/badges']">Badges A-Z</a>
-			<a routerLinkActive="menuitem-is-active" [routerLink]="['/catalog/issuers']">{{
-				'General.institutionsNav' | translate
-			}}</a>
-			<a routerLinkActive="menuitem-is-active" [routerLink]="['/catalog/learningpaths']">{{
-				'LearningPath.learningpathsNav' | translate
-			}}</a>
-			<hr class="mobilenav-x-rule" />
+				<p class="mobilenav-x-label">{{ 'General.aboutBadges' | translate }}</p>
+				<a [routerLink]="['/catalog/badges']">Badges A-Z</a>
+				<a [routerLink]="['/catalog/issuers']">{{ 'General.institutionsNav' | translate }}</a>
+				<a [routerLink]="['/catalog/learningpaths']">{{ 'LearningPath.learningpathsNav' | translate }}</a>
 
-			<a routerLinkActive="menuitem-is-active" [routerLink]="['/public/about']">{{
-				'NavItems.aboutOpenEducationalBadges' | translate
-			}}</a>
-			<hr class="mobilenav-x-rule" />
+				@if (cmsMenus && cmsMenus.header[translate.currentLang]) {
+					@for (item of cmsMenus.header[translate.currentLang]; track item.id) {
+						<hr class="mobilenav-x-rule" />
+						@if (item.children.length) {
+							<p class="mobilenav-x-label">{{ item.title }}</p>
+							@for (child of item.children; track child.id) {
+								<a [routerLink]="[child.url]">{{ child.title }}</a>
+							}
+						} @else {
+							<a [routerLink]="item.url">{{ item.title }}</a>
+						}
+					}
+				}
 
-			<a routerLinkActive="menuitem-is-active" [routerLink]="['/auth/login']">Login</a>
-			<a routerLinkActive="menuitem-is-active" [routerLink]="['/signup']">{{
-				'NavItems.register' | translate
-			}}</a>
-			<hr class="mobilenav-x-rule" />
-			<p class="mobilenav-x-label" *ngIf="launchpoints?.length">Apps</p>
-			<a href="{{ lp.launch_url }}" *ngFor="let lp of launchpoints" target="_blank">
-				{{ lp.label }}
-			</a>
-		</div>
-	</nav>
+				<hr class="mobilenav-x-rule" />
+				<a [routerLink]="['/recipient/badges']">{{ 'General.backpack' | translate }}</a>
+				<!-- <a [routerLink]="['/recipient/badge-collections']">{{ 'General.collections' | translate }}</a> -->
+				@if (showIssuersTab()) {
+					<a [routerLink]="['/issuer']">{{ 'NavItems.myInstitutions' | translate }}</a>
+				}
 
-	<nav
-		class="l-dialog mobilenav"
-		[class.mobilenav-is-active]="mobileNavOpen"
-		*ngIf="loggedIn && !isOAuthAuthorizationInProcess"
-		[class.mobilenav-light]="!theme.useColorNavbar"
-	>
-		<div class="mobilenav-x-navitems">
-			<!-- Language -->
-			<div class="mobilenav-x-label tw-flex tw-gap-1 tw-items-center tw-text-white tw-mb-8 tw-mt-8">
-				<button (click)="changeLng('de')" class="tw-text-white tw-text-[14px]/[1.2em]">
-					<span [ngStyle]="{ 'font-weight': selectedLng == 'de' ? 'bold' : 'normal' }">DE</span>
-				</button>
-				<span class="tw-text-[14px]/[1.2em]">|</span>
-				<button (click)="changeLng('en')" class="tw-text-white tw-text-[14px]/[1.2em]">
-					<span [ngStyle]="{ 'font-weight': selectedLng == 'en' ? 'bold' : 'normal' }">EN</span>
-				</button>
+				@if (launchpoints?.length) {
+					<hr class="mobilenav-x-rule" />
+					<p class="mobilenav-x-label">Apps</p>
+					@for (lp of launchpoints; track lp) {
+						<a href="{{ lp.launch_url }}" target="_blank"> {{ lp.label }} </a>
+					}
+				}
+
+				@if (theme.customMenu) {
+					<hr class="mobilenav-x-rule" />
+					<p class="mobilenav-x-label">{{ theme.customMenu.label }}</p>
+					@for (item of theme?.customMenu?.items; track item) {
+						<a [href]="item.url" target="_blank">
+							{{ item.label }}
+						</a>
+					}
+				}
+
+				<hr class="mobilenav-x-rule" />
+				<p class="mobilenav-x-label">{{ 'General.account' | translate }}</p>
+				<a [routerLink]="['/profile/profile']">{{ 'NavItems.profile' | translate }}</a>
+				<a [routerLink]="['/profile/app-integrations']">{{ 'NavItems.appIntegrations' | translate }}</a>
+				<a [routerLink]="['/public/about']">{{ 'NavItems.aboutOpenEducationalBadges' | translate }}</a>
+				<a [routerLink]="['/auth/logout']">{{ 'NavItems.logout' | translate }}</a>
 			</div>
-
-			<p class="mobilenav-x-label">{{ 'General.aboutBadges' | translate }}</p>
-			<a [routerLink]="['/public/faq']">FAQ</a>
-			<a [routerLink]="['/catalog/badges']">Badges A-Z</a>
-			<a [routerLink]="['/catalog/issuers']">{{ 'General.institutionsNav' | translate }}</a>
-			<a [routerLink]="['/catalog/learningpaths']">{{ 'LearningPath.learningpathsNav' | translate }}</a>
-
-			<hr class="mobilenav-x-rule" />
-			<a [routerLink]="['/recipient/badges']">{{ 'General.backpack' | translate }}</a>
-			<!-- <a [routerLink]="['/recipient/badge-collections']">{{ 'General.collections' | translate }}</a> -->
-			<a [routerLink]="['/issuer']" *ngIf="showIssuersTab()">{{ 'NavItems.myInstitutions' | translate }}</a>
-
-			<hr class="mobilenav-x-rule" *ngIf="launchpoints?.length" />
-			<p class="mobilenav-x-label" *ngIf="launchpoints?.length">Apps</p>
-			<a href="{{ lp.launch_url }}" *ngFor="let lp of launchpoints" target="_blank"> {{ lp.label }} </a>
-
-			<hr class="mobilenav-x-rule" *ngIf="theme.customMenu" />
-			<p class="mobilenav-x-label" *ngIf="theme.customMenu">{{ theme.customMenu.label }}</p>
-			<a [href]="item.url" *ngFor="let item of theme?.customMenu?.items" target="_blank"> {{ item.label }} </a>
-
-			<hr class="mobilenav-x-rule" />
-			<p class="mobilenav-x-label">{{ 'General.account' | translate }}</p>
-			<a [routerLink]="['/profile/profile']">{{ 'NavItems.profile' | translate }}</a>
-			<a [routerLink]="['/profile/app-integrations']">{{ 'NavItems.appIntegrations' | translate }}</a>
-			<a [routerLink]="['/public/about']">{{ 'NavItems.aboutOpenEducationalBadges' | translate }}</a>
-			<a [routerLink]="['/auth/logout']">{{ 'NavItems.logout' | translate }}</a>
-		</div>
-	</nav>
+		</nav>
+	}
 </header>
 
 <main class="oeb-main o-container" [attr.inert]="mobileNavOpen ? '' : null" [class.tw-hidden]="mobileNavOpen">
-	<router-outlet *ngIf="!hasFatalError"></router-outlet>
+	@if (!hasFatalError) {
+		<router-outlet></router-outlet>
+	}
 	<!-- children go here -->
-	<article *ngIf="hasFatalError" class="l-containerxaxis l-containeryaxis">
-		<div class="l-flex l-flex-justifycenter">
-			<div>
-				<h1 *ngIf="fatalMessage" class="u-text-h2-bold u-text-center tw-text-purple">{{ fatalMessage }}</h1>
-				<h1 *ngIf="fatalMessageDetail" class="u-text-h3 u-text-center">{{ fatalMessageDetail }}</h1>
-				<h1 *ngIf="!fatalMessage" class="u-text-body-bold u-text-center">
-					{{ 'Start.serverDown' | translate }}
-				</h1>
-				<h1 *ngIf="!fatalMessageDetail" class="u-text-body u-text-center">
-					{{ 'Start.relodePage' | translate }}
-				</h1>
-				<img class="u-width-form" [src]="unavailableImageSrc" />
+	@if (hasFatalError) {
+		<article class="l-containerxaxis l-containeryaxis">
+			<div class="l-flex l-flex-justifycenter">
+				<div>
+					@if (fatalMessage) {
+						<h1 class="u-text-h2-bold u-text-center tw-text-purple">{{ fatalMessage }}</h1>
+					}
+					@if (fatalMessageDetail) {
+						<h1 class="u-text-h3 u-text-center">{{ fatalMessageDetail }}</h1>
+					}
+					@if (!fatalMessage) {
+						<h1 class="u-text-body-bold u-text-center">
+							{{ 'Start.serverDown' | translate }}
+						</h1>
+					}
+					@if (!fatalMessageDetail) {
+						<h1 class="u-text-body u-text-center">
+							{{ 'Start.relodePage' | translate }}
+						</h1>
+					}
+					<img class="u-width-form" [src]="unavailableImageSrc" />
+				</div>
 			</div>
-		</div>
-	</article>
+		</article>
+	}
 </main>
 
 <!-- TODO: Assess dialog patterns - use inert polyfill -->
@@ -274,11 +362,9 @@
 		class="page-padding oeb-footer tw-py-14 tw-font-[rubik] tw-text-left tw-flex md:tw-flex-row md:tw-justify-between md:tw-gap-0 tw-flex-col-reverse tw-gap-[2em]"
 	>
 		<div class="tw-flex tw-flex-col tw-gap-2 tw-text-[18px] tw-leading-[23.4px] tw-text-oebblack">
-			<p
-				class="md:tw-w-2/3 tw-mt#-[10px]"
-				*ngIf="theme.showPoweredByOSL && theme.providedBy"
-				[innerHTML]="'Start.poweredBy' | translate"
-			></p>
+			@if (theme.showPoweredByOSL && theme.providedBy) {
+				<p class="md:tw-w-2/3 tw-mt#-[10px]" [innerHTML]="'Start.poweredBy' | translate"></p>
+			}
 			<div class="tw-flex tw-gap-2 tw-items-center tw-mt-[10px] md:tw-w-2/3">
 				<img
 					src="assets/oeb/images/issuerPage/oeb-beta-logo.svg"
@@ -295,11 +381,20 @@
 			</div>
 		</div>
 
-		<oeb-button
-			[routerLink]="['/public/about/newsletter']"
-			[text]="'Newsletter.signup' | translate"
-			width="max_content"
-		></oeb-button>
+		<div class="tw-flex tw-flex-col tw-align-stretch tw-min-w-[24rem]">
+			<oeb-button
+				[routerLink]="['/public/about/newsletter']"
+				[text]="'Newsletter.signup' | translate"
+				width="full_width"
+			></oeb-button>
+			<oeb-button
+				class="tw-mt-2"
+				variant="secondary"
+				(click)="openLinkedIn()"
+				[text]="'Start.followLinkedIn' | translate"
+				width="full_width"
+			></oeb-button>
+		</div>
 	</div>
 	<script>
 		window.REQUIRED_CODE_ERROR_MESSAGE = 'W�hlen Sie bitte einen L�ndervorwahl aus.';
@@ -341,10 +436,16 @@
 		<div
 			class="tw-hidden md:tw-flex tw-flex-col tw-min-w-fit tw-text-right tw-gap-[7px] tw-text-sm md:tw-text-lg md:tw-leading-tight"
 		>
-			<a class="tw-font-semibold md:tw-font-medium tw-text-oebblack" [routerLink]="['/public/faq']">FAQ</a>
-			<a class="tw-text-oebblack" [href]="theme.termsOfServiceLink">{{ 'Start.imprint' | translate }}</a>
-			<a class="tw-text-oebblack" [href]="theme.privacyPolicyLink">{{ 'Start.privacyPolicy' | translate }}</a>
-			<a class="tw-text-oebblack" [routerLink]="['/public/terms']">{{ 'General.tos' | translate }}</a>
+			@if (cmsMenus && cmsMenus.footer.de) {
+				@for (item of cmsMenus.footer[translate.currentLang]; track item) {
+					<a class="tw-text-oebblack" href="{{ item.url }}">{{ item.title }}</a>
+				}
+			} @else {
+				<a class="tw-font-semibold md:tw-font-medium tw-text-oebblack" [routerLink]="['/public/faq']">FAQ</a>
+				<a class="tw-text-oebblack" [href]="theme.termsOfServiceLink">{{ 'Start.imprint' | translate }}</a>
+				<a class="tw-text-oebblack" [href]="theme.privacyPolicyLink">{{ 'Start.privacyPolicy' | translate }}</a>
+				<a class="tw-text-oebblack" [routerLink]="['/public/terms']">{{ 'General.tos' | translate }}</a>
+			}
 		</div>
 	</div>
 </div>

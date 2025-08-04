@@ -64,7 +64,7 @@ import { BadgeClassDetailsComponent } from '../badgeclass-create-steps/badgeclas
 import { Issuer } from '../../models/issuer.model';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { FormMessageComponent } from '../../../common/components/form-message.component';
-import { NgIf, NgClass, NgFor, NgStyle, DecimalPipe } from '@angular/common';
+import { NgClass, NgStyle, DecimalPipe } from '@angular/common';
 import { BadgeLegendComponent } from '../../../common/components/badge-legend/badge-legend.component';
 import { StepComponent } from '../../../components/stepper/step.component';
 import { CdkStep } from '@angular/cdk/stepper';
@@ -88,7 +88,6 @@ const MAX_HRS_PER_COMPETENCY: number = 999;
 	styleUrl: './badgeclass-edit-form.component.css',
 	imports: [
 		FormMessageComponent,
-		NgIf,
 		BadgeLegendComponent,
 		FormsModule,
 		ReactiveFormsModule,
@@ -102,7 +101,6 @@ const MAX_HRS_PER_COMPETENCY: number = 999;
 		BadgeStudioComponent,
 		NgClass,
 		OebButtonComponent,
-		NgFor,
 		OebCheckboxComponent,
 		OebCollapsibleComponent,
 		NgIcon,
@@ -127,6 +125,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	keywordCompetenciesShowResults = false;
 	keywordCompetenciesLoading = false;
 	keywordCompetenciesLoaded = false;
+	keywordCompetenciesViewChildrenInitialized = false;
 
 	isDevMode: boolean = false && isDevMode(); // DEBUG: enable to skip steps
 
@@ -343,17 +342,17 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			'aiCompetencies',
 			typedFormGroup()
 				.addControl('selected', false)
-				.addControl('studyLoad', 60, [Validators.required, this.positiveInteger])
-				.addControl('hours', 1, [this.positiveIntegerOrNull, Validators.max(MAX_HRS_PER_COMPETENCY)])
-				.addControl('minutes', 0, [this.positiveIntegerOrNull, Validators.max(59)])
+				.addControl('studyLoad', 60, [Validators.required, this.positiveInteger()])
+				.addControl('hours', 1, [this.positiveIntegerOrNull(), Validators.max(MAX_HRS_PER_COMPETENCY)])
+				.addControl('minutes', 0, [this.positiveIntegerOrNull(), Validators.max(59)])
 				.addControl('framework', 'esco', Validators.required),
 		)
 		.addArray(
 			'keywordCompetencies',
 			typedFormGroup()
-				.addControl('studyLoad', 60, [Validators.required, this.positiveInteger])
-				.addControl('hours', 1, [this.positiveIntegerOrNull, Validators.max(MAX_HRS_PER_COMPETENCY)])
-				.addControl('minutes', 0, [this.positiveIntegerOrNull, Validators.max(59)])
+				.addControl('studyLoad', 60, [Validators.required, this.positiveInteger()])
+				.addControl('hours', 1, [this.positiveIntegerOrNull(), Validators.max(MAX_HRS_PER_COMPETENCY)])
+				.addControl('minutes', 0, [this.positiveIntegerOrNull(), Validators.max(59)])
 				.addControl('framework', 'esco', Validators.required),
 		)
 		.addArray(
@@ -364,9 +363,9 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				.addControl('description', '', Validators.required)
 				.addControl('framework_identifier', '')
 				// limit of 1000000 is set so that users cant break the UI by entering a very long number
-				.addControl('studyLoad', 60, [Validators.required, this.positiveInteger])
-				.addControl('hours', 1, [this.positiveIntegerOrNull, Validators.max(MAX_HRS_PER_COMPETENCY)])
-				.addControl('minutes', 0, [this.positiveIntegerOrNull, Validators.max(59)])
+				.addControl('studyLoad', 60, [Validators.required, this.positiveInteger()])
+				.addControl('hours', 1, [this.positiveIntegerOrNull(), Validators.max(MAX_HRS_PER_COMPETENCY)])
+				.addControl('minutes', 0, [this.positiveIntegerOrNull(), Validators.max(59)])
 				.addControl('category', '', Validators.required)
 				.addControl('framework', '')
 				.addControl('source', ''),
@@ -734,7 +733,20 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			]);
 			this.badgeClassForm.rawControl.updateValueAndValidity();
 		});
+	}
 
+	ngAfterViewChecked() {
+		if (
+			this.keywordCompetenciesInputModel &&
+			this.keywordCompetenciesLanguageSelectModel &&
+			!this.keywordCompetenciesViewChildrenInitialized
+		) {
+			this.initializeViewChildSubscriptions();
+			this.keywordCompetenciesViewChildrenInitialized = true;
+		}
+	}
+
+	private initializeViewChildSubscriptions() {
 		// debounce ai competencies keyword search input
 		this.keywordCompetenciesInputModel.valueChanges
 			.pipe(debounceTime(500))
@@ -1632,22 +1644,29 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	allowedFileFormats = ['image/png', 'image/svg+xml'];
 	allowedFileFormatsCustom = ['image/png'];
 
-	positiveInteger(control: AbstractControl) {
-		const val = parseInt(control.value, 10);
-		if (isNaN(val) || val < 1) {
-			return { expires_amount: 'Must be a positive integer' };
-		}
+	positiveInteger() {
+		// turned into factory because this was sometimes missing
+		return (control: AbstractControl) => {
+			const val = parseInt(control.value, 10);
+			if (isNaN(val) || val < 1) {
+				return { expires_amount: this.translate.instant('CreateBadge.valuePositive') };
+				// return { expires_amount: 'CreateBadge.valuePositive' };
+			}
+		};
 	}
 
-	positiveIntegerOrNull(control: AbstractControl) {
-		const val = parseFloat(control.value);
+	positiveIntegerOrNull() {
+		// turned into factory because this was sometimes missing
+		return (control: AbstractControl) => {
+			const val = parseFloat(control.value);
 
-		if (isNaN(val)) {
-			return { emptyField: 'Das Feld darf nicht leer sein.' };
-		}
-		if (!Number.isInteger(val) || val < 0) {
-			return { negativeDuration: 'Bitte geben Sie eine positive Zahl oder 0 ein.' };
-		}
+			if (isNaN(val)) {
+				return { emptyField: this.translate.instant('OEBComponents.fieldIsRequired') };
+			}
+			if (!Number.isInteger(val) || val < 0) {
+				return { negativeDuration: this.translate.instant('CreateBadge.durationPositive') };
+			}
+		};
 	}
 
 	noDuplicateCompetencies(): ValidatorFn {

@@ -19,10 +19,12 @@
 						<svg icon="icon_member"></svg>
 						Know who you are on {{ theme.serviceName || 'Badgr' }}
 					</li>
-					<li class="authlist-x-item" *ngFor="let scope of presentationScopes">
-						<svg [icon]="iconName(scope.cssName)"></svg>
-						{{ scope.label }}
-					</li>
+					@for (scope of presentationScopes; track scope) {
+						<li class="authlist-x-item">
+							<svg [icon]="iconName(scope.cssName)"></svg>
+							{{ scope.label }}
+						</li>
+					}
 				</ul>
 			</div>
 			<p class="u-text-small text-dark4 u-margin-yaxis2x">

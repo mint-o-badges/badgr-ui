@@ -22,12 +22,11 @@
 								<a hlmA [routerLink]="['/issuer/issuers/' + issuer.slug]">{{ issuer.name }}</a>
 							</p>
 							<div class="tw-flex tw-gap-1 tw-pt-4 oeb-standard-padding-bottom">
-								<div
-									class="tag tw-border-[var(--color-purple)] tw-ml-0"
-									*ngFor="let tag of learningPath.tags"
-								>
-									{{ tag }}
-								</div>
+								@for (tag of learningPath.tags; track tag) {
+									<div class="tag tw-border-[var(--color-purple)] tw-ml-0">
+										{{ tag }}
+									</div>
+								}
 							</div>
 							<p
 								class="tw-text-lg tw-text-purple tw-italic"
@@ -57,18 +56,52 @@
 								"
 							>
 							</oeb-button>
-							<div *ngIf="!learningPath.activated">
+							@if (!learningPath.activated) {
+								<div>
+									<oeb-button
+										[text]="'General.edit' | translate"
+										width="full_width"
+										[routerLink]="learningPathEditLink"
+										[class]="
+											issuer.canCreateBadge
+												? 'tw-whitespace-nowrap tw-hidden md:tw-block'
+												: 'disabled'
+										"
+									>
+									</oeb-button>
+									<p class="tw-italic tw-text-oebblack">
+										<span>{{ 'LearningPath.notActivatedYetStart' | translate }}</span>
+										<a
+											class="tw-underline tw-text-link"
+											[routerLink]="[`/issuer/issuers/${issuer.slug}/learningpaths/${learningPath.slug}/edit`]"
+											[queryParams]="{ focusActivation: true }"
+										>
+											{{ 'LearningPath.notActivatedYetLink' | translate }}</a
+										>
+										<span>{{ 'LearningPath.notActivatedYetEnd' | translate }}</span>
+									</p>
+								</div>
+							}
+						</div>
+					</div>
+
+					<div class="tw-mt-4 md:tw-hidden tw-flex tw-flex-col tw-gap-4">
+						<oeb-button
+							class="tw-whitespace-nowrap"
+							[text]="'General.delete' | translate"
+							variant="secondary"
+							width="full_width"
+							[disabled-when-requesting]="true"
+						></oeb-button>
+						@if (!learningPath.activated) {
+							<div>
 								<oeb-button
+									class="tw-whitespace-nowrap tw-mb-2"
 									[text]="'General.edit' | translate"
 									width="full_width"
 									[routerLink]="learningPathEditLink"
-									[class]="
-										issuer.canCreateBadge
-											? 'tw-whitespace-nowrap tw-hidden md:tw-block'
-											: 'disabled'
-									"
-								>
-								</oeb-button>
+									[disabled-when-requesting]="true"
+								></oeb-button>
 								<p class="tw-italic tw-text-oebblack">
 									<span>{{ 'LearningPath.notActivatedYetStart' | translate }}</span>
 									<a
@@ -81,37 +114,7 @@
 									<span>{{ 'LearningPath.notActivatedYetEnd' | translate }}</span>
 								</p>
 							</div>
-						</div>
-					</div>
-
-					<div class="tw-mt-4 md:tw-hidden tw-flex tw-flex-col tw-gap-4">
-						<oeb-button
-							class="tw-whitespace-nowrap"
-							[text]="'General.delete' | translate"
-							variant="secondary"
-							width="full_width"
-							[disabled-when-requesting]="true"
-						></oeb-button>
-						<div *ngIf="!learningPath.activated">
-							<oeb-button
-								class="tw-whitespace-nowrap tw-mb-2"
-								[text]="'General.edit' | translate"
-								width="full_width"
-								[routerLink]="learningPathEditLink"
-								[disabled-when-requesting]="true"
-							></oeb-button>
-							<p class="tw-italic tw-text-oebblack">
-								<span>{{ 'LearningPath.notActivatedYetStart' | translate }}</span>
-								<a
-									class="tw-underline tw-text-link"
-									[routerLink]="[`/issuer/issuers/${issuer.slug}/learningpaths/${learningPath.slug}/edit`]"
-									[queryParams]="{ focusActivation: true }"
-								>
-									{{ 'LearningPath.notActivatedYetLink' | translate }}</a
-								>
-								<span>{{ 'LearningPath.notActivatedYetEnd' | translate }}</span>
-							</p>
-						</div>
+						}
 					</div>
 				</div>
 			</div>
@@ -134,47 +137,47 @@
 					{{ 'LearningPath.lpBadges' | translate }}
 				</h3>
 				<div class="tw-flex tw-flex-col tw-gap-4" [@stagger]>
-					<div
-						class="tw-relative"
-						*ngFor="let badge of learningPathReverseBadges; let i = index"
-						@inOutAnimation
-					>
-						<div class="tw-absolute tw-left-[-69px] md:tw-left-[-69px] tw-top-[50%] tw-translate-y-[-50%]">
-							<div class="tw-flex tw-items-center tw-justify-center tw-w-[56px] tw-h-[56px] tw-relative">
-								<img
-									*ngIf="
+					@for (badge of learningPathReverseBadges; track badge; let i = $index) {
+						<div class="tw-relative" @inOutAnimation>
+							<div
+								class="tw-absolute tw-left-[-69px] md:tw-left-[-69px] tw-top-[50%] tw-translate-y-[-50%]"
+							>
+								<div
+									class="tw-flex tw-items-center tw-justify-center tw-w-[56px] tw-h-[56px] tw-relative"
+								>
+									@if (
 										badge?.badge.extensions['extensions:CategoryExtension'].Category ===
 										'competency'
-									"
-									src="assets/oeb/images/learningPath/competency_icon.png"
-								/>
-								<img
-									*ngIf="
+									) {
+										<img src="assets/oeb/images/learningPath/competency_icon.png" />
+									}
+									@if (
 										badge?.badge.extensions['extensions:CategoryExtension'].Category ===
 										'participation'
-									"
-									src="assets/oeb/images/learningPath/participation_icon.png"
-								/>
-								<div
-									class="tw-absolute tw-text-[22px] tw-font-bold tw-text-white tw-top-[50%] tw-translate-y-[-50%] tw-left-[50%] tw-translate-x-[-50%]"
-								>
-									{{ learningPath.badges.length - i }}
+									) {
+										<img src="assets/oeb/images/learningPath/participation_icon.png" />
+									}
+									<div
+										class="tw-absolute tw-text-[22px] tw-font-bold tw-text-white tw-top-[50%] tw-translate-y-[-50%] tw-left-[50%] tw-translate-x-[-50%]"
+									>
+										{{ learningPath.badges.length - i }}
+									</div>
 								</div>
 							</div>
+							<bg-badgecard
+								[badgeTitle]="badge.badge.name"
+								class="tw-max-w-[300px]"
+								[badgeImage]="badge.badge.image"
+								[badgeDescription]="badge.badge.description"
+								[badgeSlug]="badge.badge.slug"
+								[issuerTitle]="badge?.badge.issuerName ? badge.badge.issuerName : issuer.name"
+								[badgeIssueDate]="badge.badge.created_at"
+								[public]="true"
+								[publicUrl]="'/public/badges/' + badge.badge.slug"
+								[competencies]="badge.badge.extensions['extensions:CompetencyExtension']"
+							></bg-badgecard>
 						</div>
-						<bg-badgecard
-							[badgeTitle]="badge.badge.name"
-							class="tw-max-w-[300px]"
-							[badgeImage]="badge.badge.image"
-							[badgeDescription]="badge.badge.description"
-							[badgeSlug]="badge.badge.slug"
-							[issuerTitle]="badge?.badge.issuerName ? badge.badge.issuerName : issuer.name"
-							[badgeIssueDate]="badge.badge.created_at"
-							[public]="true"
-							[publicUrl]="'/public/badges/' + badge.badge.slug"
-							[competencies]="badge.badge.extensions['extensions:CompetencyExtension']"
-						></bg-badgecard>
-					</div>
+					}
 				</div>
 			</div>
 		</div>

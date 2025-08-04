@@ -23,7 +23,7 @@ import { FormMessageComponent } from '../../../common/components/form-message.co
 import { OebInputComponent } from '../../../components/input.component';
 import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 import { HlmInputDirective } from '../../../components/spartan/ui-input-helm/src/lib/hlm-input.directive';
-import { NgClass, NgFor, NgIf, I18nPluralPipe } from '@angular/common';
+import { NgClass, I18nPluralPipe } from '@angular/common';
 import { BgBadgecard } from '../../../common/components/bg-badgecard';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 
@@ -43,8 +43,6 @@ interface CreateBadgeCollectionForm<T> {
 		BgAwaitPromises,
 		HlmInputDirective,
 		NgClass,
-		NgFor,
-		NgIf,
 		BgBadgecard,
 		OebButtonComponent,
 		RouterLink,

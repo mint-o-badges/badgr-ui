@@ -1,0 +1,233 @@
+<div class="tw-text-[14px] tw-mt-7 tw-p-12 tw-bg-[#CCD7FF] tw-rounded-md tw-mx-auto tw-relative">
+	<span class="tw-font-extrabold tw-text-[30px] tw-uppercase tw-relative"
+		>{{ 'CreateBadge.aiAssistant' | translate }}
+		<img
+			class="tw-absolute tw--top-10 tw--right-16 tw-w-16 tw-h-16"
+			src="assets/oeb/images/badge/icon-ai-skills.svg"
+		/>
+	</span>
+	@if (!showBadgeDemo) {
+		<p class="tw-text tw-my-2 tw-mb-0 tw-italic tw-text-[var(--color-purple)]">
+			{{ 'CreateBadge.NoPersonalInformation' | translate }}
+		</p>
+
+		<hr #top class="tw-my-6 tw-w-full tw-border-solid tw-border-top-[1px] tw-border-bottom-0 tw-border-white" />
+	}
+
+	<div class="tw- mt-4">
+		@if (showBadgeDemo) {
+			<div class="tw-rounded tw-bg-white tw-p-6">
+				<div class="tw-p-4 tw-bg-[var(--color-mint)] tw-text-purple tw-text-[22px] tw-mb-8">
+					So könnte dein Badge aussehen:
+				</div>
+				<div class="tw-flex tw-flex-col lg:tw-flex-row tw-gap-10 tw-items-start">
+					<img src="assets/badges/ai-demo.png" class="tw-flex-1 lg:tw-w-24 tw-max-w-full" />
+					<div class="tw-flex-1 tw-w-full">
+						@for (aiCompetency of aiForm.controls.aiCompetencies.controls; track $index) {
+							@if (aiCompetency.rawControlMap.selected.value) {
+								<competency-accordion
+									[name]="aiCompetenciesSuggestions[$index].preferred_label"
+									category="skill"
+									[description]="aiCompetenciesSuggestions[$index].description"
+									framework="esco"
+									[framework_identifier]="aiCompetenciesSuggestions[$index].concept_uri"
+									[studyload]="
+										formatStudyLoad(
+											aiCompetency.rawControlMap.hours.value,
+											aiCompetency.rawControlMap.minutes.value
+										)
+									"
+								></competency-accordion>
+							}
+						}
+					</div>
+				</div>
+			</div>
+			<oeb-button
+				id="suggest-competencies-btn"
+				class="tw-block tw-mt-10"
+				width="full_width"
+				[routerLink]="['/signup']"
+				type="button"
+				[text]="'Start.signupNow' | translate"
+			>
+			</oeb-button>
+		} @else {
+			<h2 class="tw-font-bold tw-inline-block tw-text-[22px]">
+				{{ 'CreateBadge.myContentDescription' | translate }}
+			</h2>
+			<span class="tw-font-thin tw-italic tw-ml-2">{{ 'CreateBadge.min70max1200Chars' | translate }}</span>
+			<div
+				class="tw-absolute tw--top-4 tw--right-4 md:tw-top-4 md:tw-right-4 tw-bg-[var(--color-lightgreen)] tw-rounded-full tw-w-24 tw-h-24 tw-flex tw-items-center tw-justify-center tw-text-center tw-rotate-[8deg] tw-text-[14px]"
+			>
+				Denke<br />auch an<br />Soft Skills!
+			</div>
+			<div class="tw-relative">
+				<textarea
+					id="ai-competencies-description"
+					class="tw-bg-white tw-border tw-border-gray-300 tw-mt-2 tw-rounded-md tw-shadow-sm tw-p-2 tw-h-48 tw-resize-none tw-text-sm tw-text-gray-700 tw-w-full"
+					[(ngModel)]="aiCompetenciesDescription"
+					[ngModelOptions]="{ standalone: true }"
+					maxlength="1200"
+					minlength="70"
+					[placeholder]="detailedDescription"
+				>
+				</textarea>
+				<span
+					*ngIf="aiCompetenciesDescription.length"
+					class="tw-absolute tw-bottom-1 tw-right-2 tw-pointer-events-none"
+					[ngClass]="
+						aiCompetenciesDescription.length < 70 || aiCompetenciesDescription.length == 1200
+							? 'tw-text-red'
+							: 'tw-text-gray-600'
+					"
+				>
+					{{ aiCompetenciesDescription.length }}
+					{{ 'General.characters' | translate }}
+				</span>
+			</div>
+			<altcha #altcha class="tw-text-[14px]"></altcha>
+			<div class="tw-mt-4 tw-flex tw-gap-4">
+				<oeb-button
+					[id]="'suggest-competencies-btn'"
+					class="tw-whitespace-nowrap"
+					(click)="suggestCompetencies()"
+					type="button"
+					[text]="suggestCompetenciesText"
+					[disabled]="aiCompetenciesDescription.length < 70 || !altchaValue || aiCompetenciesLoading"
+				>
+					<span class="tw-font-bold">
+						{{ 'CreateBadge.suggestCompetencies' | translate }}
+					</span>
+				</oeb-button>
+				<img *ngIf="aiCompetenciesLoading" width="32" height="32" src="assets/oeb/images/badge/loading.svg" />
+			</div>
+			<div class="tw-mt-6 md:tw-mt-8 tw-w-full" *ngIf="aiCompetenciesSuggestions.length != 0">
+				<h2 class="tw-font-bold tw-text-[22px] tw-mb-2">
+					{{ 'CreateBadge.fitting' | translate }}
+					{{ 'CreateBadge.competencies' | translate }}
+				</h2>
+				<p class="tw-text-purple tw-italic tw-mb-4">
+					Wähle Kompetenzen durch Anklicken aus, um sie deinem Badge hinzuzufügen.
+				</p>
+				<ng-container *ngFor="let aiCompetency of aiForm.controls.aiCompetencies.controls; let i = index">
+					<div
+						[ngClass]="
+							aiCompetency.rawControlMap.selected.value
+								? 'tw-bg-[var(--color-lightgreen)]'
+								: 'tw-bg-[var(--color-lightgray)]'
+						"
+						class="tw-border tw-border-solid tw-border-purple tw-rounded-md md:tw-w-2/3 tw-mx-auto md:tw-ml-0 tw-p-2 tw-mt-2"
+					>
+						<div class="tw-flex tw-justify-between tw-items-center">
+							<h2 class="tw-whitespace-pre-wrap tw-text-sm tw-text-oebblack tw-font-bold">
+								{{ aiCompetenciesSuggestions[i].preferred_label }}
+								<a
+									href="http://data.europa.eu/{{ aiCompetenciesSuggestions[i].concept_uri }}"
+									target="_blank"
+									class="tw-ml-2 !tw-text-[var(--color-link)]]"
+								>
+									<span class="tw-text-[var(--color-link)] tw-underline tw-font-normal">(E)</span></a
+								>
+							</h2>
+							<oeb-checkbox
+								class="tw-border-[var(--color-purple)]"
+								name="{{ 'checkboxAiSkill_' + i }}"
+								id="{{ 'checkboxAiSkill_' + i }}"
+								[control]="aiCompetency.rawControlMap.selected"
+								class="tw--mt-[0.25rem] tw-mb-[0.25rem]"
+								[noMargin]="true"
+							></oeb-checkbox>
+						</div>
+						<hr class="tw-text-[var(--color-grayinteractive)] tw-my-1 tw-border-solid tw-border" />
+						<p class="tw-w-full tw-my-2 tw-text-sm tw-text-oebblack tw-whitespace-pre-wrap">
+							{{ aiCompetenciesSuggestions[i].description }}
+						</p>
+						<p class="tw-text-sm tw-my-2 tw-text-[#6B6B6B] tw-font-light">
+							{{ 'Badge.category' | translate }}:
+							{{
+								aiCompetenciesSuggestions[i].type.includes('skill')
+									? ('Badge.skill' | translate)
+									: ('Badge.knowledge' | translate)
+							}}
+						</p>
+						<div class="tw-flex tw-gap-2 tw-items-center">
+							<oeb-input
+								class="tw-w-20"
+								[fieldType]="'number'"
+								[control]="aiCompetency.rawControlMap.hours"
+								[errorMessage]="{ duration: requiredError }"
+								[noTopMargin]="true"
+							>
+							</oeb-input>
+							<span class="tw-font-bold tw-text-purple" hlmP>:</span>
+							<oeb-input
+								class="tw-w-20"
+								[fieldType]="'number'"
+								[control]="aiCompetency.rawControlMap.minutes"
+								[errorMessage]="{ duration: requiredError }"
+								[noTopMargin]="true"
+							>
+							</oeb-input>
+							<span class="tw-text-oebblack md:tw-text-lg">{{ 'RecBadge.hours' | translate }}</span>
+						</div>
+					</div>
+				</ng-container>
+				@if (aiForm.controls.aiCompetencies.controls.length > 0) {
+					<div class="tw-flex tw-justify-end md:tw-w-2/3 tw-mx-auto md:tw-ml-0 tw-p-2 tw-mt-2">
+						<oeb-button
+							[id]="'create-demobadge-btn'"
+							class="tw-whitespace-nowrap"
+							[disabled]="!competenciesSelected()"
+							(click)="showDemo()"
+							[text]="'Start.createBadgePreview' | translate"
+							type="button"
+						>
+						</oeb-button>
+					</div>
+				}
+				<ng-container *ngIf="aiForm.controls.aiCompetencies.controls.length">
+					<div class="tw-bg-purple tw-rounded-2xl tw-p-12 tw-text-white tw-mt-12">
+						<div class="tw-flex tw-gap-8 tw-items-start tw-flex-col md:tw-flex-row">
+							<img class="" src="assets/oeb/images/badge/icon-ai-betterresults.svg" />
+							<div class="tw-text-[18px]/[1.3em]">
+								<h2 class="tw-uppercase tw-font-bold tw-mb-4 tw-text-[30px]/[1.4em] tw-">
+									Nichts passendes dabei?
+								</h2>
+								<p class="tw-italic tw-mb-4">Probiere es mit einer ausführlicheren Beschreibung.</p>
+								<p>Hier ein paar <strong>Tipps</strong>:</p>
+								<ul class="tw-list-disc tw-pl-8">
+									<li class="tw-list-disc tw-my-1">
+										Schreibe, was dein Lernangebot
+										<u>fachlich</u> vermittelt.
+									</li>
+									<li class="tw-list-disc tw-my-1">
+										Beschreibe auch, <u>wie</u> das Lernen stattfindet.
+									</li>
+									<li class="tw-list-disc tw-my-1">
+										Oft können neben fachlichen Kompetenzen auch
+										<u>Soft Skills</u> wie soziale, kommunikative oder Problemlösungs-Fähigkeiten
+										erworben werden – bei Teamarbeit, Experimentieren, Planung, ...
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<p class="tw-italic tw-mt-4">
+						Hinweis: KI-Unterstützung – der Badge-Assistent kann Fehler machen. Überprüfe daher die
+						Vorschläge und melde dich bei fehlerhaften Ergebnissen gerne per
+						<a class="tw-text-[var(--color-link)] tw-underline" href="mailto:support@openbadges.education"
+							>E-Mail</a
+						>.
+						<a
+							class="tw-text-[var(--color-link)] tw-underline"
+							href="https://openbadges.education/public/privacy"
+							target="_blank"
+							>Datenschutz bei OEB</a
+						>.
+					</p>
+				</ng-container>
+			</div>
+		}
+	</div>
+</div>

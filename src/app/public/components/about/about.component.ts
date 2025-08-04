@@ -1,17 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { NgIf } from '@angular/common';
+import { CmsPageComponent } from '~/common/components/cms/cms-page.component';
 
 @Component({
 	selector: 'app-about',
-	templateUrl: './about.component.html',
-	styleUrls: ['./about.component.css'],
-	imports: [NgIf],
+	template: `<cms-page [slug]="translate.currentLang == 'de' ? 'ueber-oeb' : 'about-oeb'" />`,
+	standalone: true,
+	imports: [CmsPageComponent],
 })
-export class AboutComponent implements OnInit {
+export class AboutComponent {
 	mailAddress = 'support@openbadges.education';
 	mailBody = 'Interesse an Open Educational Badges';
 	constructor(public translate: TranslateService) {}
-
-	ngOnInit() {}
 }

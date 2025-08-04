@@ -39,7 +39,7 @@ import { BreakpointService } from '../../../common/services/breakpoint.service';
 import { FormMessageComponent } from '../../../common/components/form-message.component';
 import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 import { HlmH2Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h2.directive';
-import { NgIf, NgFor } from '@angular/common';
+
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { OebTabsComponent } from '../../../components/oeb-backpack-tabs.component';
 import { HlmIconDirective } from '../../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
@@ -77,7 +77,6 @@ export const VISUALISATION_BREAKPOINT_MAX_WIDTH: number = 768;
 		FormMessageComponent,
 		BgAwaitPromises,
 		HlmH2Directive,
-		NgIf,
 		OebButtonComponent,
 		FormsModule,
 		ReactiveFormsModule,
@@ -89,7 +88,6 @@ export const VISUALISATION_BREAKPOINT_MAX_WIDTH: number = 768;
 		HlmInputDirective,
 		OebSortSelectComponent,
 		OebCheckboxComponent,
-		NgFor,
 		BgBadgecard,
 		HlmH3Directive,
 		OebCompetency,

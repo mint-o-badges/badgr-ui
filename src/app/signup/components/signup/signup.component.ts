@@ -17,7 +17,7 @@ import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import 'altcha';
 import { FormMessageComponent } from '../../../common/components/form-message.component';
 import { OAuthBannerComponent } from '../../../common/components/oauth-banner.component';
-import { NgIf, NgFor } from '@angular/common';
+
 import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
 import { OebInputComponent } from '../../../components/input.component';
 import { OebCheckboxComponent } from '../../../components/oeb-checkbox.component';
@@ -30,10 +30,8 @@ import { OebButtonComponent } from '../../../components/oeb-button.component';
 	imports: [
 		FormMessageComponent,
 		OAuthBannerComponent,
-		NgIf,
 		HlmPDirective,
 		RouterLink,
-		NgFor,
 		FormsModule,
 		ReactiveFormsModule,
 		OebInputComponent,
@@ -99,7 +97,7 @@ export class SignupComponent extends BaseRoutableComponent implements OnInit, Af
 		scriptElement.src = 'https://sibforms.com/forms/end-form/build/main.js';
 		this.renderer.appendChild(this.elementRef.nativeElement, scriptElement);
 		if (this.sessionService.isLoggedIn) {
-			this.router.navigate(['/userProfile']);
+			this.router.navigate(['/issuer']);
 		}
 		const defaultEmail = this.route.snapshot.queryParams['email'];
 		if (defaultEmail) this.signupForm.controls.username.setValue(defaultEmail);

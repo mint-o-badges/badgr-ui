@@ -13,30 +13,33 @@
 				</p>
 
 				<p hlmP size="lg" class="tw-pb-3" [innerHTML]="'Issuer.myLearningPathText' | translate"></p>
-				<section *ngIf="issuers?.length === 0" class="tw-flex tw-flex-col tw-gap-2 tw-mt-2">
-					<span
-						[innerHTML]="'Issuer.createFirstInstitution' | translate"
-						class="tw-text-2xl tw-italic tw-text-oebblack"
-					>
-					</span>
-					<oeb-button
-						class="md:tw-whitespace-nowrap"
-						[routerLink]="['/issuer/create']"
-						[disabled-when-requesting]="true"
-						[text]="'Issuer.createInstitutionNow' | translate"
-					>
-					</oeb-button>
-				</section>
+				@if (issuers?.length === 0) {
+					<section class="tw-flex tw-flex-col tw-gap-2 tw-mt-2">
+						<span
+							[innerHTML]="'Issuer.createFirstInstitution' | translate"
+							class="tw-text-2xl tw-italic tw-text-oebblack"
+						>
+						</span>
+						<oeb-button
+							class="md:tw-whitespace-nowrap"
+							[routerLink]="['/issuer/create']"
+							[disabled-when-requesting]="true"
+							[text]="'Issuer.createInstitutionNow' | translate"
+						>
+						</oeb-button>
+					</section>
+				}
 			</div>
 			<div class="tw-border-purple tw-border tw-rounded-[20px] md:tw-text-right tw-text-center tw-max-w-[600px]">
-				<oeb-button
-					*ngIf="issuers?.length > 0"
-					class="md:tw-whitespace-nowrap"
-					variant="secondary"
-					[routerLink]="['/issuer/create']"
-					[disabled-when-requesting]="true"
-					[text]="'Issuer.createInstitution' | translate"
-				></oeb-button>
+				@if (issuers?.length > 0) {
+					<oeb-button
+						class="md:tw-whitespace-nowrap"
+						variant="secondary"
+						[routerLink]="['/issuer/create']"
+						[disabled-when-requesting]="true"
+						[text]="'Issuer.createInstitution' | translate"
+					></oeb-button>
+				}
 				<div class="md:tw-block tw-hidden tw-mt-8 tw-max-w-[400px]">
 					<!-- Plugin box for desktop when issuers.length == 0 -->
 					<ng-container
@@ -72,7 +75,7 @@
 								<section class="tw-mb-2">
 									<h3
 										class="tw-text-lg tw-text-oebblack tw-font-semibold"
-										[innerHTML]="'Editor'"
+										[innerHTML]="'Editor:in'"
 									></h3>
 									<p
 										class="tw-text-oebblack tw-text-lg"
@@ -112,80 +115,83 @@
 		</div>
 		<div class="md:tw-flex">
 			<div class="tw-grid tw-grid-cols-myIssuersMobile sm:tw-grid-cols-myIssuers tw-gap-6 tw-w-full tw-relative">
-				<div
-					class="tw-grow tw-border-purple tw-border tw-border-solid tw-justify-between tw-flex tw-flex-col tw-rounded-[10px] tw-py-8 tw-px-6"
-					*ngFor="let issuer of issuers"
-				>
-					<div class="tw-flex">
-						<div class="tw-relative">
-							<img
-								[loaded-src]="issuer?.image"
-								[loading-src]="issuerPlaceholderSrc"
-								[error-src]="issuerPlaceholderSrc"
-								alt="{{ issuer.name }} avatar"
-								class="tw-h-[70px] md:tw-h-[100px] tw-w-auto tw-min-w-[70px] md:tw-min-w-[100px] tw-aspect-square"
-							/>
+				@for (issuer of issuers; track issuer) {
+					<div
+						class="tw-grow tw-border-purple tw-border tw-border-solid tw-justify-between tw-flex tw-flex-col tw-rounded-[10px] tw-py-8 tw-px-6"
+					>
+						<div class="tw-flex">
+							<div class="tw-relative">
+								<img
+									[loaded-src]="issuer?.image"
+									[loading-src]="issuerPlaceholderSrc"
+									[error-src]="issuerPlaceholderSrc"
+									alt="{{ issuer.name }} avatar"
+									class="tw-h-[70px] md:tw-h-[100px] tw-w-auto tw-min-w-[70px] md:tw-min-w-[100px] tw-aspect-square"
+								/>
+							</div>
+							<div class="tw-flex tw-flex-col tw-justify-center tw-pl-4 oeb-break-words">
+								<a
+									class="md:tw-text-[30px] md:tw-leading-[36px] tw-text-[20px] tw-leading-[24px] tw-text-purple tw-font-semibold"
+									[routerLink]="['/issuer/issuers/', issuer.slug]"
+									>{{ issuer.name }}</a
+								>
+								<p
+									class="tw-text-oebblack tw-pb-2 tw-font-semibold md:tw-text-[20px] md:tw-leading-[24.4px] tw-text-[14px] tw-leading-[19.6px]"
+								>
+									{{ 'Issuer.yourRole' | translate }}
+									{{ issuer.currentUserStaffMember?.roleInfo.label | translate }}
+								</p>
+							</div>
 						</div>
-						<div class="tw-flex tw-flex-col tw-justify-center tw-pl-4 oeb-break-words">
-							<a
-								class="md:tw-text-[30px] md:tw-leading-[36px] tw-text-[20px] tw-leading-[24px] tw-text-purple tw-font-semibold"
-								[routerLink]="['/issuer/issuers/', issuer.slug]"
-								>{{ issuer.name }}</a
-							>
+						<div class="tw-pt-4 tw-pb-6">
 							<p
-								class="tw-text-oebblack tw-pb-2 tw-font-semibold md:tw-text-[20px] md:tw-leading-[24.4px] tw-text-[14px] tw-leading-[19.6px]"
+								[class.tw-line-clamp-3]="issuerToBadgeInfo[issuer.issuerUrl]"
+								class="tw-text-oebblack tw-break-words"
 							>
-								{{ 'Issuer.yourRole' | translate }}
-								{{ issuer.currentUserStaffMember?.roleInfo.label | translate }}
+								{{ issuer.description }}
 							</p>
 						</div>
-					</div>
-					<div class="tw-pt-4 tw-pb-6">
-						<p
-							[class.tw-line-clamp-3]="issuerToBadgeInfo[issuer.issuerUrl]"
-							class="tw-text-oebblack tw-break-words"
-						>
-							{{ issuer.description }}
-						</p>
-					</div>
-
-					<oeb-button
-						[id]="'create-new-badge-btn-1'"
-						[class.disabled]="!issuer.canCreateBadge"
-						class="tw-whitespace-nowrap"
-						[routerLink]="['/issuer/issuers/', issuer.slug, 'badges', 'select']"
-						[disabled]="!issuer.currentUserStaffMember"
-						[text]="'Issuer.createBadge' | translate"
-						width="full_width"
-						*ngIf="!issuerToBadgeInfo[issuer.issuerUrl]"
-						size="mediumText"
-					>
-					</oeb-button>
-					<div *ngIf="issuerToBadgeInfo[issuer.issuerUrl]">
-						<oeb-button
-							class="tw-whitespace-nowrap tw-flex-grow"
-							[routerLink]="['/issuer/issuers/', issuer.slug]"
-							[text]="'Issuer.giveBadge' | translate"
-							width="full_width"
-							size="mediumText"
-						>
-						</oeb-button>
-						<div class="tw-flex tw-gap-2 tw-flex-wrap tw-justify-between tw-pt-2">
+						@if (!issuerToBadgeInfo[issuer.issuerUrl]) {
 							<oeb-button
-								[id]="'create-new-badge-btn-2'"
+								[id]="'create-new-badge-btn-1'"
 								[class.disabled]="!issuer.canCreateBadge"
-								class="tw-whitespace-nowrap tw-flex-grow"
+								class="tw-whitespace-nowrap"
 								[routerLink]="['/issuer/issuers/', issuer.slug, 'badges', 'select']"
 								[disabled]="!issuer.currentUserStaffMember"
 								[text]="'Issuer.createBadge' | translate"
-								variant="secondary"
 								width="full_width"
 								size="mediumText"
 							>
 							</oeb-button>
-						</div>
+						}
+						@if (issuerToBadgeInfo[issuer.issuerUrl]) {
+							<div>
+								<oeb-button
+									class="tw-whitespace-nowrap tw-flex-grow"
+									[routerLink]="['/issuer/issuers/', issuer.slug]"
+									[text]="'Issuer.giveBadge' | translate"
+									width="full_width"
+									size="mediumText"
+								>
+								</oeb-button>
+								<div class="tw-flex tw-gap-2 tw-flex-wrap tw-justify-between tw-pt-2">
+									<oeb-button
+										[id]="'create-new-badge-btn-2'"
+										[class.disabled]="!issuer.canCreateBadge"
+										class="tw-whitespace-nowrap tw-flex-grow"
+										[routerLink]="['/issuer/issuers/', issuer.slug, 'badges', 'select']"
+										[disabled]="!issuer.currentUserStaffMember"
+										[text]="'Issuer.createBadge' | translate"
+										variant="secondary"
+										width="full_width"
+										size="mediumText"
+									>
+									</oeb-button>
+								</div>
+							</div>
+						}
 					</div>
-				</div>
+				}
 				<ng-container
 					*ngTemplateOutlet="pluginBoxTemplate; context: { mobile: false, showWhenEmpty: false }"
 				></ng-container>
@@ -194,34 +200,36 @@
 		<section class="tw-flex tw-flex-col tw-gap-2" [ngClass]="issuers?.length > 0 ? 'tw-mt-12' : ''">
 			<span [innerHTML]="'Issuer.partOfInstitution' | translate" class="tw-text-2xl tw-italic tw-text-oebblack">
 			</span>
-			<section
-				class="tw-bg-lightpurple tw-p-4 tw-w-full tw-max-w-[600px] tw-rounded-[10px]"
-				*ngIf="staffRequests.length > 0"
-			>
-				<h2
-					[innerHTML]="'Issuer.yourOpenStaffRequests' | translate"
-					class="tw-text-2xl tw-text-purple tw-font-bold"
-				></h2>
-				<ul class="tw-list-disc tw-list-inside">
-					<li *ngFor="let request of staffRequests">
-						<span class="tw-text-lg tw-text-oebblack">{{ request.issuer.name }}</span>
-						<span
-							(click)="revokeStaffRequest(request.entity_id)"
-							[innerHTML]="'General.revoke' | translate"
-							class="tw-text-link tw-underline tw-text-lg tw-ml-2 tw-cursor-pointer"
-						></span>
-					</li>
-				</ul>
-			</section>
+			@if (staffRequests.length > 0) {
+				<section class="tw-bg-lightpurple tw-p-4 tw-w-full tw-max-w-[600px] tw-rounded-[10px]">
+					<h2
+						[innerHTML]="'Issuer.yourOpenStaffRequests' | translate"
+						class="tw-text-2xl tw-text-purple tw-font-bold"
+					></h2>
+					<ul class="tw-list-disc tw-list-inside">
+						@for (request of staffRequests; track request) {
+							<li>
+								<span class="tw-text-lg tw-text-oebblack">{{ request.issuer.name }}</span>
+								<span
+									(click)="revokeStaffRequest(request.entity_id)"
+									[innerHTML]="'General.revoke' | translate"
+									class="tw-text-link tw-underline tw-text-lg tw-ml-2 tw-cursor-pointer"
+								></span>
+							</li>
+						}
+					</ul>
+				</section>
+			}
 			<div class="tw-flex tw-gap-4 tw-items-center tw-mt-2">
 				<div class="tw-relative tw-w-full tw-max-w-[600px]">
-					<img
-						*ngIf="selectedIssuer"
-						[src]="selectedIssuer.image"
-						width="24"
-						height="24"
-						class="tw-absolute tw-left-2 tw-top-1/2 tw-transform -tw-translate-y-1/2 tw-rounded-full"
-					/>
+					@if (selectedIssuer) {
+						<img
+							[src]="selectedIssuer.image"
+							width="24"
+							height="24"
+							class="tw-absolute tw-left-2 tw-top-1/2 tw-transform -tw-translate-y-1/2 tw-rounded-full"
+						/>
+					}
 					<input
 						#issuerSearchInput
 						#issuerSearchInputModel="ngModel"
@@ -240,34 +248,33 @@
 						class="tw-absolute tw-top-[3px] tw-right-1 tw-w-6 tw-h-6 tw-pointer-events-none tw-text-purple"
 						name="lucideSearch"
 					/>
-					<div
-						*ngIf="
-							issuersShowResults && (issuersLoading || issuerSearchResults.length || issuerSearchLoaded)
-						"
-						class="tw-absolute tw-mt-1 tw-z-10 tw-bg-white tw-rounded-md tw-shadow-sm tw-border tw-border-solid tw-border-gray-700 tw-w-full tw-overflow-auto"
-						[ngStyle]="{
-							'max-height.px': calculateDropdownMaxHeight(issuerSearchInput, 100),
-							'bottom.px': calculateDropdownBottom(issuerSearchInput, 100)
-						}"
-					>
-						<ul>
-							<li *ngIf="issuersLoading" class="tw-p-2 tw-cursor-default">Loading...</li>
-							<li
-								class="tw-p-2 hover:tw-bg-[var(--color-lightpurple)] tw-cursor-pointer tw-flex tw-items-center tw-gap-2"
-								(click)="selectIssuerFromDropdown(issuer)"
-								*ngFor="let issuer of issuerSearchResults"
-							>
-								<img [src]="issuer.image" width="24" class="tw-aspect-square" />
-								<span>{{ issuer.name }}</span>
-							</li>
-							<li
-								*ngIf="issuerSearchResults.length == 0"
-								class="tw-p-2 tw-text-gray-500 tw-cursor-default"
-							>
-								Keine Ergebnisse
-							</li>
-						</ul>
-					</div>
+					@if (issuersShowResults && (issuersLoading || issuerSearchResults.length || issuerSearchLoaded)) {
+						<div
+							class="tw-absolute tw-mt-1 tw-z-10 tw-bg-white tw-rounded-md tw-shadow-sm tw-border tw-border-solid tw-border-gray-700 tw-w-full tw-overflow-auto"
+							[ngStyle]="{
+								'max-height.px': calculateDropdownMaxHeight(issuerSearchInput, 100),
+								'bottom.px': calculateDropdownBottom(issuerSearchInput, 100)
+							}"
+						>
+							<ul>
+								@if (issuersLoading) {
+									<li class="tw-p-2 tw-cursor-default">Loading...</li>
+								}
+								@for (issuer of issuerSearchResults; track issuer) {
+									<li
+										class="tw-p-2 hover:tw-bg-[var(--color-lightpurple)] tw-cursor-pointer tw-flex tw-items-center tw-gap-2"
+										(click)="selectIssuerFromDropdown(issuer)"
+									>
+										<img [src]="issuer.image" width="24" class="tw-aspect-square" />
+										<span>{{ issuer.name }}</span>
+									</li>
+								}
+								@if (issuerSearchResults.length == 0) {
+									<li class="tw-p-2 tw-text-gray-500 tw-cursor-default">Keine Ergebnisse</li>
+								}
+							</ul>
+						</div>
+					}
 				</div>
 			</div>
 			<oeb-button
@@ -350,35 +357,35 @@
 </div>
 
 <ng-template #pluginBoxTemplate let-showWhenEmpty="showWhenEmpty" let-mobile="mobile">
-	<div
-		*ngIf="(issuers?.length === 0 && showWhenEmpty) || (issuers?.length > 0 && !showWhenEmpty)"
-		#pluginBox
-		class="md:tw-flex-[0_0_363px] md:tw-mt-0 tw-mt-6"
-		[class.md:tw-w-[400px]]="mobile === false && showWhenEmpty"
-	>
-		<div>
-			<div class="tw-bg-lightgreen tw-p-6 tw-rounded-[10px] tw-text-center tw-text-oebblack tw-relative">
-				<ng-icon
-					hlm
-					(click)="pluginBoxElement.nativeElement.remove()"
-					class="tw-w-4 tw-h-4 tw-ml-2 tw-cursor-pointer tw-inline-block tw-absolute tw-top-2 tw-right-2"
-					name="lucideX"
-				/>
-
-				<div class="tw-flex md:tw-block tw-pb-4">
-					<img class="tw-inline-block" alt="Plugin" src="assets/oeb/images/issuerPage/plugin.svg" />
-					<p
-						class="tw-pt-4 tw-text-lg tw-text-left tw-pl-4 md:tw-pl-0 md:tw-text-center"
-						[innerHTML]="'Issuer.askForPluginText' | translate"
-					></p>
+	@if ((issuers?.length === 0 && showWhenEmpty) || (issuers?.length > 0 && !showWhenEmpty)) {
+		<div
+			#pluginBox
+			class="md:tw-flex-[0_0_363px] md:tw-mt-0 tw-mt-6"
+			[class.md:tw-w-[400px]]="mobile === false && showWhenEmpty"
+		>
+			<div>
+				<div class="tw-bg-lightgreen tw-p-6 tw-rounded-[10px] tw-text-center tw-text-oebblack tw-relative">
+					<ng-icon
+						hlm
+						(click)="pluginBoxElement.nativeElement.remove()"
+						class="tw-w-4 tw-h-4 tw-ml-2 tw-cursor-pointer tw-inline-block tw-absolute tw-top-2 tw-right-2"
+						name="lucideX"
+					/>
+					<div class="tw-flex md:tw-block tw-pb-4">
+						<img class="tw-inline-block" alt="Plugin" src="assets/oeb/images/issuerPage/plugin.svg" />
+						<p
+							class="tw-pt-4 tw-text-lg tw-text-left tw-pl-4 md:tw-pl-0 md:tw-text-center"
+							[innerHTML]="'Issuer.askForPluginText' | translate"
+						></p>
+					</div>
+					<a
+						href="mailto:hallo@openbadges.education?subject=Interesse an Plugin!"
+						class="!tw-font-medium tw-text-link tw-underline tw-text-lg"
+					>
+						{{ 'Issuer.askForPlugin' | translate }}
+					</a>
 				</div>
-				<a
-					href="mailto:hallo@openbadges.education?subject=Interesse an Plugin!"
-					class="!tw-font-medium tw-text-link tw-underline tw-text-lg"
-				>
-					{{ 'Issuer.askForPlugin' | translate }}
-				</a>
 			</div>
 		</div>
-	</div>
+	}
 </ng-template>
