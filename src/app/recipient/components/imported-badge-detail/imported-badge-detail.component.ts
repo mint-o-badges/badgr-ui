@@ -102,12 +102,12 @@ export class ImportedBadgeDetailComponent extends BaseAuthenticatedRoutableCompo
 				const comps = this.badge.extensions['extensions:CompetencyExtension'] as Array<unknown>;
 				this.competencies = comps.map((c) => {
 					return {
-						name: c['extensions:name'],
-						description: c['extensions:description'],
-						studyLoad: c['extensions:studyLoad'],
-						category: c['extensions:category'],
-						framework: c['extensions:framework'],
-						framework_identifier: c['extensions:framework_identifier'],
+						name: c['name'],
+						description: c['description'],
+						studyLoad: c['studyLoad'],
+						category: c['category'],
+						framework: c['framework'],
+						framework_identifier: c['framework_identifier'],
 					};
 				});
 			}
@@ -155,7 +155,7 @@ export class ImportedBadgeDetailComponent extends BaseAuthenticatedRoutableCompo
 				issuedTo: this.badge.json.recipient.identity,
 				category: this.category
 					? this.translate.instant(
-							`Badge.categories.${this.category['extensions:Category'] || 'participation'}`,
+							`Badge.categories.${this.category['Category'] || 'participation'}`,
 						)
 					: null,
 				tags: [],
