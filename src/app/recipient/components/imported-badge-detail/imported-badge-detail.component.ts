@@ -100,9 +100,8 @@ export class ImportedBadgeDetailComponent extends BaseAuthenticatedRoutableCompo
 			this.badge = r;
 			if ('extensions:CompetencyExtension' in this.badge.extensions) {
 				var comps = this.badge.extensions['extensions:CompetencyExtension'] as Array<unknown> | Object;
-                // In some old badges, the extension is not an array
-                if (!comps['map'])
-                    comps = [comps];
+				// In some old badges, the extension is not an array
+				if (!comps['map']) comps = [comps];
 				this.competencies = comps['map']((c) => {
 					return {
 						name: c['name'] ?? c['extensions:name'],
