@@ -99,8 +99,11 @@ export class ImportedBadgeDetailComponent extends BaseAuthenticatedRoutableCompo
 		this.badgeLoaded = this.recipientBadgeApiService.getImportedBadge(this.badgeSlug).then((r) => {
 			this.badge = r;
 			if ('extensions:CompetencyExtension' in this.badge.extensions) {
-				const comps = this.badge.extensions['extensions:CompetencyExtension'] as Array<unknown>;
-				this.competencies = comps.map((c) => {
+				var comps = this.badge.extensions['extensions:CompetencyExtension'] as Array<unknown> | Object;
+                // In some old badges, the extension is not an array
+                if (!comps['map'])
+                    comps = [comps];
+				this.competencies = comps['map']((c) => {
 					return {
 						name: c['name'] ?? c['extensions:name'],
 						description: c['description'] ?? c['extensions:description'],
