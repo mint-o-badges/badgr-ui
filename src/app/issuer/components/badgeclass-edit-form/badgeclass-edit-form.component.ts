@@ -1332,7 +1332,14 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			if (this.badgeClassForm.controls.badge_customImage.value && this.badgeClassForm.valid) {
 				imageFrame = false;
 				this.badgeClassForm.controls.badge_image.setValue(this.badgeClassForm.controls.badge_customImage.value);
+			} else {
+				await this.badgeClassManager
+					.createBadgeImage(this.issuer.slug, this.currentImage, this.badgeCategory, imageFrame)
+					.then((r) => {
+						this.badgeClassForm.controls.badge_image.setValue(r.image_url);
+					});
 			}
+
 			this.badgeClassForm.markTreeDirty();
 			if (this.expirationEnabled) {
 				this.expirationForm.markTreeDirty();
