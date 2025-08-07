@@ -99,15 +99,17 @@ export class ImportedBadgeDetailComponent extends BaseAuthenticatedRoutableCompo
 		this.badgeLoaded = this.recipientBadgeApiService.getImportedBadge(this.badgeSlug).then((r) => {
 			this.badge = r;
 			if ('extensions:CompetencyExtension' in this.badge.extensions) {
-				const comps = this.badge.extensions['extensions:CompetencyExtension'] as Array<unknown>;
-				this.competencies = comps.map((c) => {
+				var comps = this.badge.extensions['extensions:CompetencyExtension'] as Array<unknown> | Object;
+				// In some old badges, the extension is not an array
+				if (!comps['map']) comps = [comps];
+				this.competencies = comps['map']((c) => {
 					return {
-						name: c['extensions:name'],
-						description: c['extensions:description'],
-						studyLoad: c['extensions:studyLoad'],
-						category: c['extensions:category'],
-						framework: c['extensions:framework'],
-						framework_identifier: c['extensions:framework_identifier'],
+						name: c['name'] ?? c['extensions:name'],
+						description: c['description'] ?? c['extensions:description'],
+						studyLoad: c['studyLoad'] ?? c['extensions:studyLoad'],
+						category: c['category'] ?? c['extensions:category'],
+						framework: c['framework'] ?? c['extensions:framework'],
+						framework_identifier: c['framework_identifier'] ?? c['extensions:framework_identifier'],
 					};
 				});
 			}
@@ -155,7 +157,7 @@ export class ImportedBadgeDetailComponent extends BaseAuthenticatedRoutableCompo
 				issuedTo: this.badge.json.recipient.identity,
 				category: this.category
 					? this.translate.instant(
-							`Badge.categories.${this.category['extensions:Category'] || 'participation'}`,
+							`Badge.categories.${(this.category['Category'] ?? this.category['extensions:Category']) || 'participation'}`,
 						)
 					: null,
 				tags: [],
