@@ -1388,7 +1388,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			if (this.existingBadgeClass) {
 				this.existingBadgeClass.name = formState.badge_name;
 				this.existingBadgeClass.description = formState.badge_description;
-				this.existingBadgeClass.image = formState.badge_image;
+				this.existingBadgeClass.image = !imageFrame ? formState.badge_image : null;
 				this.existingBadgeClass.imageFrame = imageFrame;
 				this.existingBadgeClass.alignments = this.alignmentsEnabled ? formState.alignments : [];
 				this.existingBadgeClass.tags = Array.from(this.tags);

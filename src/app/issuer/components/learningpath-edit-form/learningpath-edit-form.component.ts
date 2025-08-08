@@ -884,7 +884,7 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 			const formState = this.learningPathForm.value;
 
 			this.existingLpBadge.imageFrame = imageFrame;
-			this.existingLpBadge.image = this.learningPathForm.controls.badge_image.value;
+			this.existingLpBadge.image = !imageFrame ? this.learningPathForm.controls.badge_image.value : null;
 			(this.existingLpBadge.name = this.learningPathForm.controls.name.value),
 				(this.existingLpBadge.description = this.learningPathForm.controls.description.value),
 				(this.existingLpBadge.tags = Array.from(this.lpTags)),
