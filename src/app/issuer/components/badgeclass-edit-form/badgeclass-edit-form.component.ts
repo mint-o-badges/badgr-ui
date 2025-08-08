@@ -1332,12 +1332,6 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			if (this.badgeClassForm.controls.badge_customImage.value && this.badgeClassForm.valid) {
 				imageFrame = false;
 				this.badgeClassForm.controls.badge_image.setValue(this.badgeClassForm.controls.badge_customImage.value);
-			} else {
-				await this.badgeClassManager
-					.createBadgeImage(this.issuer.slug, this.currentImage, this.badgeCategory, imageFrame)
-					.then((r) => {
-						this.badgeClassForm.controls.badge_image.setValue(r.image_url);
-					});
 			}
 
 			this.badgeClassForm.markTreeDirty();
@@ -1455,7 +1449,8 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 				let badgeClassData = {
 					name: formState.badge_name,
 					description: formState.badge_description,
-					image: formState.badge_image,
+					// if not custom, generate image on the server
+					image: !imageFrame ? formState.badge_image : null,
 					imageFrame: imageFrame,
 					tags: Array.from(this.tags),
 					alignment: this.alignmentsEnabled ? formState.alignments : [],

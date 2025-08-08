@@ -952,16 +952,10 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 						this.learningPathForm.controls.badge_image.setValue(
 							this.learningPathForm.controls.badge_customImage.value,
 						);
-					} else {
-						await this.badgeClassService
-							.createBadgeImage(this.issuer.slug, this.currentImage, 'learningpath', imageFrame)
-							.then((r) => {
-								this.learningPathForm.controls.badge_image.setValue(r.image_url);
-							});
 					}
-
 					let participationBadgeData = {
-						image: this.learningPathForm.controls.badge_image.value,
+						// if not custom, generate image on the server
+						image: !imageFrame ? this.learningPathForm.controls.badge_image.value : null,
 						imageFrame: imageFrame,
 						name: this.learningPathForm.controls.name.value,
 						description: this.learningPathForm.controls.description.value,
