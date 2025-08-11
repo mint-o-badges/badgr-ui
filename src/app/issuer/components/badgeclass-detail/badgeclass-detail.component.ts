@@ -266,7 +266,6 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 						});
 					});
 				});
-				this.loadInstances();
 			},
 			(error) =>
 				this.messageService.reportLoadingError(
@@ -287,6 +286,14 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		this.externalToolsManager.getToolLaunchpoints('issuer_assertion_action').then((launchpoints) => {
 			this.launchpoints = launchpoints;
 		});
+
+		Promise.all([this.issuerLoaded, this.badgeClassLoaded])
+			.then(() => {
+				this.loadInstances();
+			})
+			.catch((error) => {
+				console.error('Error loading instances:', error);
+			});
 	}
 
 	ngAfterViewChecked() {
