@@ -3,7 +3,12 @@ import { BaseHttpApiService } from '../../common/services/base-http-api.service'
 import { SessionService } from '../../common/services/session.service';
 import { AppConfigService } from '../../common/app-config.service';
 import { IssuerSlug } from '../models/issuer-api.model';
-import { ApiBadgeClass, ApiBadgeClassForCreation, BadgeClassSlug } from '../models/badgeclass-api.model';
+import {
+	ApiBadgeClass,
+	ApiBadgeClassForCreation,
+	BadgeClassSlug,
+	BadgeImageResponse,
+} from '../models/badgeclass-api.model';
 import { MessageService } from '../../common/services/message.service';
 import { HttpClient } from '@angular/common/http';
 
@@ -46,6 +51,15 @@ export class BadgeClassApiService extends BaseHttpApiService {
 		return this.post<ApiBadgeClass>(`/v1/issuer/issuers/${issuerSlug}/badges`, badgeClassWithExtensions).then(
 			(r) => r.body,
 		);
+	}
+
+	createBadgeImage(issuerSlug: string, image: string, category: string, useIssuerImage: boolean) {
+		return this.post(`/v1/issuer/issuers/${issuerSlug}/badges/image/compose`, {
+			issuerSlug: issuerSlug,
+			image: image,
+			category: category,
+			useIssuerImage: useIssuerImage,
+		}).then((r) => r.body as BadgeImageResponse);
 	}
 
 	updateBadgeClass(issuerSlug: IssuerSlug, badgeClass: ApiBadgeClass) {
