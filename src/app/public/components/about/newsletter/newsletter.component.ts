@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, Renderer2, inject } from '@angular/core';
 import { SuccessDialogComponent } from '../../../../common/dialogs/oeb-dialogs/success-dialog.component';
 import { HlmDialogService } from '../../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BaseRoutableComponent } from '../../../../common/pages/base-routable.component';
 import { typedFormGroup } from '../../../../common/util/typed-forms';
@@ -13,6 +13,7 @@ import { SessionService } from '../../../../common/services/session.service';
 	selector: 'about-newsletter',
 	templateUrl: './newsletter.component.html',
 	styleUrls: ['../about.component.css'],
+	imports: [TranslatePipe],
 })
 export class NewsletterComponent extends BaseRoutableComponent implements OnInit {
 	newsletterForm = typedFormGroup({})

@@ -8,6 +8,7 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
 import { OAuth2AuthorizeComponent } from './components/oauth2-authorize/oauth2-authorize.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { NewTermsComponent } from './components/new-terms/new-terms.component';
+import { NewPasswordComponent } from './components/new-password/new-password.component';
 
 export const routes: Routes = [
 	{
@@ -34,6 +35,10 @@ export const routes: Routes = [
 	{
 		path: 'new-terms',
 		component: NewTermsComponent,
+	},
+	{
+		path: 'new-password',
+		component: NewPasswordComponent,
 	},
 
 	/* OAuth2 */
