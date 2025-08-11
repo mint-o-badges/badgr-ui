@@ -67,6 +67,16 @@ Similarly, do provide all the necessary style files in the `"styles"` section of
 
 **Note**: When using these components, keep in mind that the `polyfill.js` is the same for all of the components and should therefore only be imported once!
 
+##### Configuration of custom elements / web components
+
+When embedding a custom element, you sometimes need to configure global behavior or set certain environment parameters.
+This can be done via a conventional global configuration object called `OEBWebComponentSettings` attached to the window object.
+
+Currently the following settings are available:
+| Property Name | Allowed Values | Purpose |
+| --- | --- | --- |
+| `language` | `en`, `de` | Overriding the browsers language to set a specific one for the component |
+
 ## Deployment
 
 Check out `deployment.md`.

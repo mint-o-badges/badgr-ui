@@ -2,8 +2,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
-const LNG_KEY = 'SELECTED_LANGUAGE';
-const lngs = ['de', 'en'];
+export const lngs = ['de', 'en'];
 
 @Injectable({
 	providedIn: 'root',
@@ -15,7 +14,7 @@ export class LanguageService {
 		this.selected_lng$ = new BehaviorSubject(null);
 	}
 
-	setInitialAppLangauge() {
+	setInitialAppLanguage() {
 		let language = window.localStorage.getItem('lang');
 		if (!language) {
 			if (navigator.language.toLocaleLowerCase().indexOf('de') == 0) {

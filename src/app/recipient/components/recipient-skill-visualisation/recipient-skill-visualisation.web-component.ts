@@ -1,4 +1,4 @@
-import { createWebcomponent } from 'webcomponents/create-webcomponent';
+import { useWebComponentLanguageSetting, createWebcomponent } from 'webcomponents/create-webcomponent';
 import { RecipientSkillVisualisationComponent } from './recipient-skill-visualisation.component';
 import { provideHttpClient } from '@angular/common/http';
 import { importProvidersFrom, inject, provideAppInitializer } from '@angular/core';
@@ -17,6 +17,11 @@ import * as translationsDe from 'src/assets/i18n/de.json';
  * 	<head>
  * 		...
  * 		<link rel="stylesheet" href="{{URLOfHostingServer}}/styles.css" />
+ *      <script>
+ *          window.OEBWebComponentSettings = {
+ *            language: 'en'
+ *          };
+ *      </script>
  * 	</head>
  * 	<body>
  *
@@ -43,7 +48,7 @@ createWebcomponent(RecipientSkillVisualisationComponent, 'oeb-skill-visualisatio
 			translate.setTranslation('de', translationsDe);
 
 			const lang = inject(LanguageService);
-			lang.setInitialAppLangauge();
+			useWebComponentLanguageSetting(lang);
 		}),
 	],
 });

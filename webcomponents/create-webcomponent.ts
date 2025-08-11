@@ -1,6 +1,7 @@
 import { ApplicationConfig, enableProdMode, Type } from '@angular/core';
 import { createCustomElement } from '@angular/elements';
 import { createApplication } from '@angular/platform-browser';
+import { LanguageService, lngs } from '~/common/services/language.service';
 
 /**
  * Creates a web component from the given details and registers it with the browser.
@@ -18,4 +19,16 @@ export const createWebcomponent = (component: Type<any>, tagName: string, option
 			customElements.define(tagName, elem);
 		})
 		.catch((err) => console.error(`Error bootstrapping custom element ${tagName}: ${err}`));
+};
+
+/**
+ * A reusable configuration method to make a web component aware of the language setting
+ * that is set in a configuration object of the embedding window.
+ * @param lang The language service configured in the app initializer
+ */
+export const useWebComponentLanguageSetting = (lang: LanguageService) => {
+	if (!window || !window['OEBWebComponentSettings'] || !window['OEBWebComponentSettings'].language) return;
+	const configuredLanguage = window['OEBWebComponentSettings'].language as string;
+	if (lngs.indexOf(configuredLanguage) >= 0) lang.setLanguage(configuredLanguage);
+	else lang.setInitialAppLanguage();
 };
