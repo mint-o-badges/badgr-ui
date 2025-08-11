@@ -15,10 +15,13 @@ import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/s
 import { OebInputComponent } from '../../../components/input.component';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { PasswordComplexityValidator } from '../../../common/validators/password-complexity.validator';
+import { UserProfile } from '../../../common/model/user-profile.model';
+import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
+import { map, startWith } from 'rxjs';
 
 @Component({
-	selector: 'change-password',
-	templateUrl: './reset-password.component.html',
+	selector: 'new-password',
+	templateUrl: './new-password.component.html',
 	imports: [
 		FormMessageComponent,
 		OAuthBannerComponent,
@@ -31,19 +34,21 @@ import { PasswordComplexityValidator } from '../../../common/validators/password
 		TranslatePipe,
 	],
 })
-export class ResetPasswordComponent extends BaseRoutableComponent {
+export class NewPasswordComponent extends BaseRoutableComponent {
 	changePasswordForm = typedFormGroup()
-		.addControl('password1', '', [
+		.addControl('password', '', [
 			Validators.required,
 			Validators.minLength(8),
 			PasswordComplexityValidator.securePassword,
 		])
-		.addControl('password2', '', [Validators.required, this.passwordsMatch.bind(this)]);
+		.addControl('password2', '', [Validators.required, this.passwordsMatch.bind(this)])
+		.addControl('current_password', '', [Validators.required]);
 
-	get resetToken(): string {
-		return this.route.snapshot.params['token'];
-	}
-
+	profile: UserProfile;
+	errors = {
+		current_password: '',
+		password: '',
+	};
 	// Translation
 	enterNewPassword;
 	mustBe8Char;
@@ -61,55 +66,84 @@ export class ResetPasswordComponent extends BaseRoutableComponent {
 		private configService: AppConfigService,
 		private _messageService: MessageService,
 		public translate: TranslateService,
+		private profileManager: UserProfileManager,
 	) {
 		super(router, route);
 
-		title.setTitle(`Reset Password - ${this.configService.theme['serviceName'] || 'Badgr'}`);
+		title.setTitle(`New Password - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 
-		if (!this.resetToken) {
-			this._messageService.reportHandledError('No reset token provided. Please try the reset link again.');
-		}
+		this.profileManager.userProfilePromise.then((profile) => (this.profile = profile));
 	}
 
 	ngOnInit() {
 		super.ngOnInit();
 
 		// To resolve the issue of translation bug when opening a page direclty via link. In this case sent via email.
-		this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
-			this.enterNewPassword = this.translate.instant('Login.enterNewPassword');
-			this.mustBe8Char = this.translate.instant('Login.mustBe8Char');
-			this.enterNewPasswordConfirmation = this.translate.instant('Login.enterNewPasswordConfirmation');
-			this.passwordsDoNotMatch = this.translate.instant('Login.passwordsNotMatch');
-			this.passwordInsecure = this.translate.instant('Profile.passwordInsecure');
-			this.pleaseTryAgain = this.translate.instant('Profile.pleaseTryAgain');
-		});
+		this.translate.onLangChange
+			.pipe(
+				map((ev: LangChangeEvent) => ev.lang),
+				startWith(this.translate.currentLang),
+			)
+			.subscribe(() => {
+				this.enterNewPassword = this.translate.instant('Login.enterNewPassword');
+				this.mustBe8Char = this.translate.instant('Login.mustBe8Char');
+				this.enterNewPasswordConfirmation = this.translate.instant('Login.enterNewPasswordConfirmation');
+				this.passwordsDoNotMatch = this.translate.instant('Login.passwordsNotMatch');
+				this.passwordInsecure = this.translate.instant('Profile.passwordInsecure');
+				this.pleaseTryAgain = this.translate.instant('Profile.pleaseTryAgain');
+			});
 	}
+
+	isJson = (str) => {
+		try {
+			JSON.parse(str);
+		} catch (e) {
+			return false;
+		}
+		return true;
+	};
 
 	submitChange() {
 		if (!this.changePasswordForm.markTreeDirtyAndValidate()) {
 			return;
 		}
 
-		const token = this.resetToken;
-		const newPassword = this.changePasswordForm.controls.password1.value;
-
-		if (token) {
-			this.sessionService.submitForgotPasswordChange(newPassword, token).then(
+		this.profile
+			.updatePassword(this.changePasswordForm.value.password, this.changePasswordForm.value.current_password)
+			.then(
 				() => {
-					// TODO: We should get the user's name and auth so we can send them to the auth page pre-populated
 					this._messageService.reportMajorSuccess('Your password has been changed successfully.', true);
-					return this.router.navigate(['/auth']);
+					this.router.navigate(['/profile/profile']);
 				},
-				(err) =>
-					this._messageService.reportAndThrowError(this.passwordInsecure + ' ' + this.pleaseTryAgain, err),
+				(err) => {
+					if (err.message && this.isJson(err.message)) {
+						const errors = JSON.parse(err.message);
+						for (const key in errors) {
+							if (errors.hasOwnProperty(key)) {
+								this.errors[key] = errors[key];
+								const c = this.changePasswordForm.controls[key].rawControl.valueChanges.subscribe(
+									(val) => {
+										if (this.changePasswordForm.value[key] === val) return;
+										this.errors[key] = '';
+										c.unsubscribe();
+									},
+								);
+							}
+						}
+					} else {
+						this._messageService.reportAndThrowError(
+							this.passwordInsecure + ' ' + this.pleaseTryAgain,
+							err,
+						);
+					}
+				},
 			);
-		}
 	}
 
 	passwordsMatch(): ValidationErrors | null {
 		if (!this.changePasswordForm) return null;
 
-		const p1 = this.changePasswordForm.controls.password1.value;
+		const p1 = this.changePasswordForm.controls.password.value;
 		const p2 = this.changePasswordForm.controls.password2.value;
 
 		if (p1 && p2 && p1 !== p2) {

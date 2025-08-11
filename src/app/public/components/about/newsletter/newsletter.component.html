@@ -2,24 +2,31 @@
 	<div class="page-padding">
 		<div style="display: flex">
 			<div class="tw-pt-[6rem] tw-pb-[4.4rem] main-paragraph">
-				<h1>Bleib auf dem Laufenden</h1>
-				<h1 class="h1-black heading-sec">mit unserem OEB-Newsletter</h1>
-				<p class="text-big tw-flex tw-flex-col tw-gap-2">
-					Du möchtest die neuesten Entwicklungen und Updates rund um Open Educational Badges nicht mehr
-					verpassen?
-				</p>
+				<h1 [innerHTML]="'Newsletter.stayUpToDate' | translate"></h1>
+				<h1 [innerHTML]="'Newsletter.withOurNewsletter' | translate" class="h1-black heading-sec"></h1>
+				<p
+					[innerHTML]="'Newsletter.dontMissNews' | translate"
+					class="text-big tw-flex tw-flex-col tw-gap-2"
+				></p>
 				<div class="tw-justify-between md:tw-w-2/3">
-					<span class="text-big"> Dann abonniere jetzt unseren Newsletter: </span>
+					<span [innerHTML]="'Newsletter.thenSubscribe' | translate" class="text-big"></span>
 					<img src="assets/oeb/images/aboutpage/Newsletter.png" class="tw-max-w-[200px] md:tw-float-right" />
 				</div>
 				<ol
 					class="tw-list-decimal tw-list-inside marker:tw-text-purple marker:tw-text-[30px] tw-pl-8 tw-my-8 tw-mx-auto tw-w-full"
 				>
-					<li class="tw-text-oebblack tw-font-bold tw-text-2xl tw-mb-6">Anmeldeformular ausfüllen</li>
-					<li class="tw-text-oebblack tw-font-bold tw-text-2xl tw-mb-6">
-						Bestätigungslink in der zugeschickten E-Mail klicken
-					</li>
-					<li class="tw-text-oebblack tw-font-bold tw-text-2xl tw-mb-6">OEB-Newsletter erhalten</li>
+					<li
+						[innerHTML]="'Newsletter.fillRegistrationForm' | translate"
+						class="tw-text-oebblack tw-font-bold tw-text-2xl tw-mb-6"
+					></li>
+					<li
+						[innerHTML]="'Newsletter.confirmLink' | translate"
+						class="tw-text-oebblack tw-font-bold tw-text-2xl tw-mb-6"
+					></li>
+					<li
+						[innerHTML]="'Newsletter.receiveNewsletter' | translate"
+						class="tw-text-oebblack tw-font-bold tw-text-2xl tw-mb-6"
+					></li>
 				</ol>
 			</div>
 		</div>
