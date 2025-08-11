@@ -77,6 +77,8 @@ Currently the following settings are available:
 | --- | --- | --- |
 | `language` | `en`, `de` | Overriding the browsers language to set a specific one for the component |
 
+**Note**: When using an iframe to embed the webcomponent, do set the `contentWindow` property of the iframe instead of the `window` property.
+
 ## Deployment
 
 Check out `deployment.md`.
