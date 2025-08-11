@@ -15,6 +15,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ROUTE_CONFIG } from './app/app.routes';
 import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
+import { uiTimestamp } from './environments/timestamp';
 
 registerLocaleData(localeDe);
 
@@ -35,7 +36,8 @@ bootstrapApplication(AppComponent, {
 			TranslateModule.forRoot({
 				loader: {
 					provide: TranslateLoader,
-					useFactory: (client) => new TranslateHttpLoader(client),
+					useFactory: (client) =>
+						new TranslateHttpLoader(client, undefined, `.json?ac=${btoa(uiTimestamp).substring(0, 10)}`),
 					deps: [HttpClient],
 				},
 			}),
