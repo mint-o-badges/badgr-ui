@@ -17,7 +17,7 @@ import { SuccessDialogComponent } from '../../../common/dialogs/oeb-dialogs/succ
 import { UserProfileApiService } from '../../../common/services/user-profile-api.service';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { IssuerManager } from '../../../issuer/services/issuer-manager.service';
-import type { Tab } from '../../../components/oeb-backpack-tabs.component';
+import type { Tab } from '../../../components/oeb-tabs.component';
 import { SessionService } from '../../../common/services/session.service';
 import { PdfService } from '../../../common/services/pdf.service';
 import { RecipientBadgeManager } from '../../../recipient/services/recipient-badge-manager.service';
@@ -35,7 +35,7 @@ import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { OebProgressComponent } from '../../../components/oeb-progress.component';
 import { BgImageStatusPlaceholderDirective } from '../../../common/directives/bg-image-status-placeholder.directive';
 import { HlmH3Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h3.directive';
-import { OebTabsComponent } from '../../../components/oeb-backpack-tabs.component';
+import { OebTabsComponent } from '../../../components/oeb-tabs.component';
 import { CountUpModule } from 'ngx-countup';
 import { OebIssuerCard } from '../../../common/components/oeb-issuercard';
 import { BgBadgecard } from '../../../common/components/bg-badgecard';

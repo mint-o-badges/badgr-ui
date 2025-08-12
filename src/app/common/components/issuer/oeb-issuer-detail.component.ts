@@ -27,7 +27,7 @@ import { HlmADirective } from '../../../components/spartan/ui-typography-helm/sr
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { OebDropdownComponent } from '../../../components/oeb-dropdown.component';
 import { SvgIconComponent } from '../svg-icon.component';
-import { OebTabsComponent } from '../../../components/oeb-backpack-tabs.component';
+import { OebTabsComponent } from '../../../components/oeb-tabs.component';
 import { BgAwaitPromises } from '../../directives/bg-await-promises';
 import { DatatableComponent } from '../../../components/datatable-badges.component';
 import { FormsModule } from '@angular/forms';

@@ -104,12 +104,12 @@
 							{{ 'LearningPath.includedBadges' | translate }}
 						</h3>
 						@if (loggedIn) {
-							<oeb-backpack-tabs
+							<oeb-tabs
 								(onTabChanged)="onTabChange($event)"
 								[tabs]="tabs"
 								[activeTab]="activeTab"
 								[variant]="'lightpurple'"
-							></oeb-backpack-tabs>
+							></oeb-tabs>
 						} @else {
 							<ng-template [bgAwaitPromises]="[issuerLoaded, badgeLoaded, loaded]">
 								@for (badge of learningPathReverseBadges; track badge; let i = $index) {

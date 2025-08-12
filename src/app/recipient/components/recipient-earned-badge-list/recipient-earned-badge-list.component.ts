@@ -41,7 +41,7 @@ import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 import { HlmH2Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h2.directive';
 
 import { OebButtonComponent } from '../../../components/oeb-button.component';
-import { OebTabsComponent } from '../../../components/oeb-backpack-tabs.component';
+import { OebTabsComponent } from '../../../components/oeb-tabs.component';
 import { HlmIconDirective } from '../../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
 import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
 import { HlmInputDirective } from '../../../components/spartan/ui-input-helm/src/lib/hlm-input.directive';

@@ -134,12 +134,12 @@
 </div>
 
 <div class="oeb-section-sm">
-	<oeb-backpack-tabs
+	<oeb-tabs
 		[variant]="'lightpurple'"
 		(onTabChanged)="onTabChange($event)"
 		[activeTab]="activeTab"
 		[tabs]="tabs"
-	></oeb-backpack-tabs>
+	></oeb-tabs>
 
 	<ng-template #badgesTemplate>
 		<section class="oeb-section-sm" *ngIf="!badges?.length">
