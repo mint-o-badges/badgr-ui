@@ -18,10 +18,10 @@ import { BadgeClassManager } from '../../services/badgeclass-manager.service';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { typedFormGroup } from '../../../common/util/typed-forms';
 import { BadgeClassCopyPermissions } from '../../models/badgeclass-api.model';
-import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
+import { HlmH1 } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
 
 import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
-import { HlmH2Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h2.directive';
+import { HlmH2 } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h2.directive';
 import { OebCheckboxComponent } from '../../../components/oeb-checkbox.component';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 
@@ -30,11 +30,11 @@ import { OebButtonComponent } from '../../../components/oeb-button.component';
 	styleUrl: './badgeclass-edit-copypermissions.component.css',
 	imports: [
 		BgBreadcrumbsComponent,
-		HlmH1Directive,
+		HlmH1,
 		BgAwaitPromises,
 		FormsModule,
 		ReactiveFormsModule,
-		HlmH2Directive,
+		HlmH2,
 		OebCheckboxComponent,
 		OebButtonComponent,
 		TranslatePipe,

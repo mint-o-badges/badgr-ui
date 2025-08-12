@@ -17,13 +17,13 @@ import { FormControl, FormsModule } from '@angular/forms';
 import { appearAnimation } from '../../../common/animations/animations';
 import { applySorting } from '../../util/sorting';
 import { FormMessageComponent } from '../../../common/components/form-message.component';
-import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
+import { HlmH1 } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
 import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 import { CountUpModule } from 'ngx-countup';
 import { NgClass } from '@angular/common';
-import { HlmInputDirective } from '../../../components/spartan/ui-input-helm/src/lib/hlm-input.directive';
+import { HlmInput } from '../../../components/spartan/ui-input-helm/src/lib/hlm-input.directive';
 import { NgIcon } from '@ng-icons/core';
-import { HlmIconDirective } from '../../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
+import { HlmIcon } from '../../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
 import { OebGlobalSortSelectComponent } from '../../../components/oeb-global-sort-select.component';
 import { OebSelectComponent } from '../../../components/select.component';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
@@ -37,13 +37,13 @@ import { PaginationAdvancedComponent } from '../../../components/oeb-numbered-pa
 	animations: [appearAnimation],
 	imports: [
 		FormMessageComponent,
-		HlmH1Directive,
+		HlmH1,
 		BgAwaitPromises,
 		CountUpModule,
 		FormsModule,
-		HlmInputDirective,
+		HlmInput,
 		NgIcon,
-		HlmIconDirective,
+		HlmIcon,
 		OebGlobalSortSelectComponent,
 		OebSelectComponent,
 		NgClass,

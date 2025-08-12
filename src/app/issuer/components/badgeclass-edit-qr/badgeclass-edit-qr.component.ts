@@ -13,13 +13,13 @@ import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src
 import { SuccessDialogComponent } from '../../../common/dialogs/oeb-dialogs/success-dialog.component';
 import { TranslateService } from '@ngx-translate/core';
 import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
-import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
+import { HlmH1 } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
 import { EditQrFormComponent } from '../edit-qr-form/edit-qr-form.component';
 
 @Component({
 	selector: 'badgeclass-edit-qr',
 	templateUrl: './badgeclass-edit-qr.component.html',
-	imports: [BgAwaitPromises, BgBreadcrumbsComponent, HlmH1Directive, EditQrFormComponent],
+	imports: [BgAwaitPromises, BgBreadcrumbsComponent, HlmH1, EditQrFormComponent],
 })
 export class BadgeClassEditQrComponent extends BaseAuthenticatedRoutableComponent {
 	get issuerSlug() {

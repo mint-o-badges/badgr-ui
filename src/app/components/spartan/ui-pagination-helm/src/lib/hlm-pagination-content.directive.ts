@@ -16,7 +16,7 @@ export type PaginationContentVariants = VariantProps<typeof paginationContentVar
 		'[class]': '_computedClass()',
 	},
 })
-export class HlmPaginationContentDirective {
+export class HlmPaginationContent {
 	public readonly userClass = input<ClassValue>('', { alias: 'class' });
 	protected readonly _computedClass = computed(() => hlm(paginationContentVariants(), this.userClass()));
 }

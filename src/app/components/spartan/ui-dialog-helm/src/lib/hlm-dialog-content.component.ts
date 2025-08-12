@@ -12,10 +12,10 @@ import {
 } from '@angular/core';
 import { lucideX } from '@ng-icons/lucide';
 import { hlm } from '@spartan-ng/brain/core';
-import { BrnDialogCloseDirective, BrnDialogRef, injectBrnDialogContext } from '@spartan-ng/brain/dialog';
-import { HlmIconDirective } from '../../../../spartan/ui-icon-helm/src';
+import { BrnDialogClose, BrnDialogRef, injectBrnDialogContext } from '@spartan-ng/brain/dialog';
+import { HlmIcon } from '../../../../spartan/ui-icon-helm/src';
 import type { ClassValue } from 'clsx';
-import { HlmDialogCloseDirective } from './hlm-dialog-close.directive';
+import { HlmDialogClose } from './hlm-dialog-close.directive';
 import { VariantProps, cva } from 'class-variance-authority';
 import { provideIcons } from '@ng-icons/core';
 
@@ -39,7 +39,7 @@ export type DiealogVariants = VariantProps<typeof dialogVariants>;
 
 @Component({
 	selector: 'hlm-dialog-content',
-	imports: [NgComponentOutlet, BrnDialogCloseDirective, HlmDialogCloseDirective, NgIcon, HlmIconDirective],
+	imports: [NgComponentOutlet, BrnDialogClose, HlmDialogClose, NgIcon, HlmIcon],
 	providers: [provideIcons({ lucideX })],
 	host: {
 		'[class]': '_computedClass()',
@@ -60,7 +60,7 @@ export type DiealogVariants = VariantProps<typeof dialogVariants>;
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	encapsulation: ViewEncapsulation.None,
 })
-export class HlmDialogContentComponent {
+export class HlmDialogContent {
 	private readonly _dialogRef = inject(BrnDialogRef);
 	private readonly _dialogContext = injectBrnDialogContext({ optional: true });
 

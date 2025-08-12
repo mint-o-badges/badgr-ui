@@ -38,7 +38,7 @@ export type PaginationLinkVariants = VariantProps<typeof paginationLinkVariants>
 		'[attr.aria-current]': 'isActive() ? "page" : null',
 	},
 })
-export class HlmPaginationLinkDirective {
+export class HlmPaginationLink {
 	public readonly userClass = input<ClassValue>('', { alias: 'class' });
 	public readonly isActive = input<boolean, BooleanInput>(false, { transform: booleanAttribute });
 	public readonly size = input<ButtonVariants['size']>('icon');

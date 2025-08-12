@@ -2,14 +2,14 @@ import { ChangeDetectionStrategy, Component, computed, inject, input } from '@an
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { lucideCheck } from '@ng-icons/lucide';
 import { hlm } from '@spartan-ng/brain/core';
-import { BrnSelectOptionDirective } from '@spartan-ng/brain/select';
-import { HlmIconDirective } from '../../../ui-icon-helm/src';
+import { BrnSelectOption } from '@spartan-ng/brain/select';
+import { HlmIcon } from '../../../ui-icon-helm/src';
 import type { ClassValue } from 'clsx';
 
 @Component({
 	selector: 'hlm-option',
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	hostDirectives: [{ directive: BrnSelectOptionDirective, inputs: ['disabled', 'value'] }],
+	hostDirectives: [{ directive: BrnSelectOption, inputs: ['disabled', 'value'] }],
 	providers: [provideIcons({ lucideCheck })],
 	host: {
 		'[class]': '_computedClass()',
@@ -26,10 +26,10 @@ import type { ClassValue } from 'clsx';
 			}
 		</span>
 	`,
-	imports: [NgIcon, HlmIconDirective],
+	imports: [NgIcon, HlmIcon],
 })
-export class HlmSelectOptionComponent {
-	protected readonly _brnSelectOption = inject(BrnSelectOptionDirective, { host: true });
+export class HlmSelectOption {
+	protected readonly _brnSelectOption = inject(BrnSelectOption, { host: true });
 	public readonly userClass = input<ClassValue>('', { alias: 'class' });
 	protected readonly _computedClass = computed(() =>
 		hlm(

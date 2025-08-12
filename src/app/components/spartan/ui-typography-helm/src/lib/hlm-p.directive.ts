@@ -33,7 +33,7 @@ export type PVariants = VariantProps<typeof pVariants>;
 		'[class]': '_computedClass()',
 	},
 })
-export class HlmPDirective {
+export class HlmP {
 	public readonly userClass = input<ClassValue>('', { alias: 'class' });
 	private readonly _settableClass = signal<ClassValue>('');
 

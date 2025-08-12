@@ -1,9 +1,9 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { BgImageStatusPlaceholderDirective } from '../../common/directives/bg-image-status-placeholder.directive';
-import { HlmH2Directive } from '../spartan/ui-typography-helm/src/lib/hlm-h2.directive';
+import { HlmH2 } from '../spartan/ui-typography-helm/src/lib/hlm-h2.directive';
 import { TruncatedTextComponent } from '../../common/components/truncated-text.component';
-import { HlmPDirective } from '../spartan/ui-typography-helm/src/lib/hlm-p.directive';
-import { HlmBadgeDirective } from '../spartan/ui-badge-helm/src/lib/hlm-badge.directive';
+import { HlmP } from '../spartan/ui-typography-helm/src/lib/hlm-p.directive';
+import { HlmBadge } from '../spartan/ui-badge-helm/src/lib/hlm-badge.directive';
 import { RouterLink } from '@angular/router';
 import { I18nPluralPipe } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -26,10 +26,10 @@ export interface Issuer {
 	styleUrls: ['./issuer-card.component.css'],
 	imports: [
 		BgImageStatusPlaceholderDirective,
-		HlmH2Directive,
+		HlmH2,
 		TruncatedTextComponent,
-		HlmPDirective,
-		HlmBadgeDirective,
+		HlmP,
+		HlmBadge,
 		RouterLink,
 		I18nPluralPipe,
 		TranslatePipe,

@@ -17,22 +17,15 @@ import { SuccessDialogComponent } from '../../../common/dialogs/oeb-dialogs/succ
 import { Issuer } from '../../models/issuer.model';
 import { IssuerManager } from '../../services/issuer-manager.service';
 import { FormMessageComponent } from '../../../common/components/form-message.component';
-import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
-import { HlmH3Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h3.directive';
+import { HlmH1 } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
+import { HlmH3 } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h3.directive';
 import { LearningPathEditFormComponent } from '../learningpath-edit-form/learningpath-edit-form.component';
 import { ApiLearningPath } from '../../../common/model/learningpath-api.model';
 
 @Component({
 	selector: 'learningpath-create',
 	templateUrl: './learningpath-create.component.html',
-	imports: [
-		BgBreadcrumbsComponent,
-		FormMessageComponent,
-		HlmH1Directive,
-		HlmH3Directive,
-		LearningPathEditFormComponent,
-		TranslatePipe,
-	],
+	imports: [BgBreadcrumbsComponent, FormMessageComponent, HlmH1, HlmH3, LearningPathEditFormComponent, TranslatePipe],
 })
 export class LearningPathCreateComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	breadcrumbLinkEntries: LinkEntry[] = [];

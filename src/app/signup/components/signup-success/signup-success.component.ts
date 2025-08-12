@@ -9,14 +9,14 @@ import { provideIcons, NgIcon } from '@ng-icons/core';
 import { lucideCheck } from '@ng-icons/lucide';
 import { FormMessageComponent } from '../../../common/components/form-message.component';
 import { OAuthBannerComponent } from '../../../common/components/oauth-banner.component';
-import { HlmIconDirective } from '../../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
+import { HlmIcon } from '../../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 
 @Component({
 	selector: 'signup-success',
 	templateUrl: './signup-success.component.html',
 	providers: [provideIcons({ lucideCheck })],
-	imports: [FormMessageComponent, OAuthBannerComponent, NgIcon, HlmIconDirective, OebButtonComponent, TranslatePipe],
+	imports: [FormMessageComponent, OAuthBannerComponent, NgIcon, HlmIcon, OebButtonComponent, TranslatePipe],
 })
 export class SignupSuccessComponent implements OnInit {
 	constructor(

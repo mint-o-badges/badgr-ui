@@ -2,7 +2,7 @@ import { Component, ElementRef, Input, ViewChild, TemplateRef } from '@angular/c
 import { OebInputErrorComponent } from './input.error.component';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { HlmPDirective } from './spartan/ui-typography-helm/src/lib/hlm-p.directive';
+import { HlmP } from './spartan/ui-typography-helm/src/lib/hlm-p.directive';
 import { BrnSelectImports } from '@spartan-ng/brain/select';
 import { HlmSelectModule } from './spartan/ui-select-helm/src/index';
 import { CustomValidatorMessages, messagesForValidationError } from './input.component';
@@ -14,7 +14,7 @@ import { TranslateModule } from '@ngx-translate/core';
 	imports: [
 		BrnSelectImports,
 		HlmSelectModule,
-		HlmPDirective,
+		HlmP,
 		OebInputErrorComponent,
 		ReactiveFormsModule,
 		CommonModule,

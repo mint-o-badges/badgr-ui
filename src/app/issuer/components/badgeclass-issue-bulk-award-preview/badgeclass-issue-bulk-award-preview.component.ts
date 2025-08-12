@@ -13,16 +13,16 @@ import {
 	TransformedImportData,
 	ViewState,
 } from '../badgeclass-issue-bulk-award/badgeclass-issue-bulk-award.component';
-import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
+import { HlmH1 } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
 
-import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
+import { HlmP } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
 	selector: 'Badgeclass-issue-bulk-award-preview',
 	templateUrl: './badgeclass-issue-bulk-award-preview.component.html',
-	imports: [HlmH1Directive, HlmPDirective, FormsModule, OebButtonComponent, TranslatePipe],
+	imports: [HlmH1, HlmP, FormsModule, OebButtonComponent, TranslatePipe],
 })
 export class BadgeClassIssueBulkAwardPreviewComponent extends BaseAuthenticatedRoutableComponent {
 	@Input() importPreviewData: BulkIssueImportPreviewData;

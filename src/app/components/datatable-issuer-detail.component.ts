@@ -4,18 +4,18 @@ import { TranslateModule } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
 import { Component, EventEmitter, Input, Output, computed, effect, input, signal } from '@angular/core';
 import { HlmTableModule } from './spartan/ui-table-helm/src';
-import { HlmInputDirective } from './spartan/ui-input-helm/src';
-import { HlmLabelDirective } from './spartan/ui-label-helm/src';
+import { HlmInput } from './spartan/ui-input-helm/src';
+import { HlmLabel } from './spartan/ui-label-helm/src';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { debounceTime } from 'rxjs';
 import { BadgeInstance } from '../issuer/models/badgeinstance.model';
 import { FormsModule } from '@angular/forms';
-import { HlmIconDirective } from './spartan/ui-icon-helm/src';
+import { HlmIcon } from './spartan/ui-icon-helm/src';
 import { lucideSearch } from '@ng-icons/lucide';
 import { OebButtonComponent } from './oeb-button.component';
 import { provideIcons } from '@ng-icons/core';
 import { OebSpinnerComponent } from './oeb-spinner.component';
-import { HlmCommandInputWrapperComponent } from './spartan/ui-command-helm/src/lib/hlm-command-input-wrapper.component';
+import { HlmCommandInputWrapper } from './spartan/ui-command-helm/src/lib/hlm-command-input-wrapper.component';
 import { LoadingDotsComponent } from '../common/components/loading-dots.component';
 import { TimeComponent } from '~/common/components/time.component';
 
@@ -27,11 +27,11 @@ import { TimeComponent } from '~/common/components/time.component';
 		CommonModule,
 		TranslateModule,
 		RouterModule,
-		HlmInputDirective,
-		HlmLabelDirective,
+		HlmInput,
+		HlmLabel,
 		NgIcon,
-		HlmIconDirective,
-		HlmCommandInputWrapperComponent,
+		HlmIcon,
+		HlmCommandInputWrapper,
 		OebButtonComponent,
 		OebSpinnerComponent,
 		LoadingDotsComponent,

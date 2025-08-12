@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { hlm } from '@spartan-ng/brain/core';
 import type { ClassValue } from 'clsx';
-import { HlmTableComponent } from '../index';
+import { HlmTable } from '../index';
 
 let captionIdSequence = 0;
 
@@ -25,8 +25,8 @@ let captionIdSequence = 0;
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	encapsulation: ViewEncapsulation.None,
 })
-export class HlmCaptionComponent {
-	private readonly _table = inject(HlmTableComponent, { optional: true });
+export class HlmCaption {
+	private readonly _table = inject(HlmTable, { optional: true });
 
 	protected readonly id = input<string | null | undefined>(`${captionIdSequence++}`);
 

@@ -3,17 +3,17 @@ import { TranslateModule } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
 import { Component, Input, Output, EventEmitter, ChangeDetectorRef, SimpleChanges } from '@angular/core';
 import { HlmTableModule } from './spartan/ui-table-helm/src';
-import { HlmPDirective } from '../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
+import { HlmP } from '../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
 import { Issuer, IssuerStaffMember, issuerStaffRoles } from '../issuer/models/issuer.model';
 import { IssuerStaffRoleSlug } from '../issuer/models/issuer-api.model';
 import { FormFieldSelectOption } from '../common/components/formfield-select';
-import { HlmIconModule } from '@spartan-ng/ui-icon-helm';
+import { HlmIconModule } from '@spartan-ng/helm/icon';
 import { FormsModule } from '@angular/forms';
 
 @Component({
 	selector: 'issuer-staff-datatable',
 	standalone: true,
-	imports: [HlmTableModule, HlmIconModule, TranslateModule, RouterModule, HlmPDirective, FormsModule],
+	imports: [HlmTableModule, HlmIconModule, TranslateModule, RouterModule, HlmP, FormsModule],
 	template: `
 		<hlm-table
 			class="tw-rounded-t-[20px] tw-overflow-hidden tw-w-full tw-max-w-[100%] tw-bg-white tw-border-lightgrey tw-border"

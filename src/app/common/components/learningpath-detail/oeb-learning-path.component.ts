@@ -17,12 +17,12 @@ import { BadgeInstanceApiService } from '../../../issuer/services/badgeinstance-
 import { PdfService } from '../../services/pdf.service';
 import { SafeResourceUrl } from '@angular/platform-browser';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
-import { HlmH2Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h2.directive';
-import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
-import { HlmADirective } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-a.directive';
+import { HlmH2 } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h2.directive';
+import { HlmP } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
+import { HlmA } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-a.directive';
 
 import { OebButtonComponent } from '../../../components/oeb-button.component';
-import { HlmH3Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h3.directive';
+import { HlmH3 } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h3.directive';
 import { BgBadgecard } from '../bg-badgecard';
 import { LearningPathGraduatesDatatableComponent } from '../../../components/datatable-learningpath-graduates.component';
 
@@ -41,12 +41,12 @@ import { LearningPathGraduatesDatatableComponent } from '../../../components/dat
 		trigger('stagger', [transition(':enter', [query(':enter', stagger('.3s', [animateChild()]))])]),
 	],
 	imports: [
-		HlmH2Directive,
-		HlmPDirective,
-		HlmADirective,
+		HlmH2,
+		HlmP,
+		HlmA,
 		RouterLink,
 		OebButtonComponent,
-		HlmH3Directive,
+		HlmH3,
 		BgBadgecard,
 		LearningPathGraduatesDatatableComponent,
 		TranslatePipe,

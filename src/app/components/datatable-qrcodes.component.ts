@@ -16,9 +16,9 @@ import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { lucideArrowUpDown, lucideChevronDown, lucideEllipsis } from '@ng-icons/lucide';
 
-import { HlmCheckboxComponent } from './spartan/ui-checkbox-helm/src';
-import { HlmIconDirective } from './spartan/ui-icon-helm/src';
-import { HlmInputDirective } from './spartan/ui-input-helm/src';
+import { HlmCheckbox } from './spartan/ui-checkbox-helm/src';
+import { HlmIcon } from './spartan/ui-icon-helm/src';
+import { HlmInput } from './spartan/ui-input-helm/src';
 import { HlmMenuModule } from './spartan/ui-menu-helm/src';
 import { BrnTableModule, useBrnColumnManager } from '@spartan-ng/brain/table';
 import { HlmTableModule } from './spartan/ui-table-helm/src';
@@ -37,7 +37,7 @@ import { DangerDialogComponent } from '../common/dialogs/oeb-dialogs/danger-dial
 import { TranslateService } from '@ngx-translate/core';
 import { ApiRequestedBadge } from '../issuer/models/badgerequest-api.model';
 
-import { HlmCommandInputWrapperComponent } from './spartan/ui-command-helm/src/lib/hlm-command-input-wrapper.component';
+import { HlmCommandInputWrapper } from './spartan/ui-command-helm/src/lib/hlm-command-input-wrapper.component';
 import { OebButtonComponent } from './oeb-button.component';
 import striptags from 'striptags';
 import { OebSpinnerComponent } from './oeb-spinner.component';
@@ -45,7 +45,7 @@ import { BadgeInstanceBatchAssertion } from '../issuer/models/badgeinstance-api.
 import { provideIcons } from '@ng-icons/core';
 import { BadgeInstanceApiService } from '../issuer/services/badgeinstance-api.service';
 import { TaskPollingManagerService, TaskResult, TaskStatus } from '../common/task-manager.service';
-import { HlmButtonDirective } from './spartan/ui-button-helm/src/lib/hlm-button.directive';
+import { HlmButton } from './spartan/ui-button-helm/src/lib/hlm-button.directive';
 
 export type Payment = {
 	id: string;
@@ -70,16 +70,16 @@ export type RequestedBadge = {
 		HlmMenuModule,
 		BrnTableModule,
 		HlmTableModule,
-		HlmButtonDirective,
+		HlmButton,
 		DatePipe,
 		NgIcon,
-		HlmIconDirective,
-		HlmInputDirective,
-		HlmCheckboxComponent,
+		HlmIcon,
+		HlmInput,
+		HlmCheckbox,
 		BrnSelectModule,
 		HlmSelectModule,
 		TranslateModule,
-		HlmCommandInputWrapperComponent,
+		HlmCommandInputWrapper,
 		OebButtonComponent,
 		OebSpinnerComponent,
 	],

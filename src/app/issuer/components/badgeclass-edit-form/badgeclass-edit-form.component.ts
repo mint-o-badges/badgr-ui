@@ -68,14 +68,14 @@ import { NgClass, NgStyle, DecimalPipe } from '@angular/common';
 import { BadgeLegendComponent } from '../../../common/components/badge-legend/badge-legend.component';
 import { StepComponent } from '../../../components/stepper/step.component';
 import { CdkStep } from '@angular/cdk/stepper';
-import { HlmH2Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h2.directive';
+import { HlmH2 } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h2.directive';
 import { OebInputComponent } from '../../../components/input.component';
-import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
+import { HlmP } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { OebCheckboxComponent } from '../../../components/oeb-checkbox.component';
 import { OebCollapsibleComponent } from '../../../components/oeb-collapsible.component';
 import { NgIcon } from '@ng-icons/core';
-import { HlmIconDirective } from '../../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
+import { HlmIcon } from '../../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
 import { OebSelectComponent } from '../../../components/select.component';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 
@@ -94,9 +94,9 @@ const MAX_HRS_PER_COMPETENCY: number = 999;
 		StepperComponent,
 		StepComponent,
 		CdkStep,
-		HlmH2Directive,
+		HlmH2,
 		OebInputComponent,
-		HlmPDirective,
+		HlmP,
 		BgFormFieldImageComponent,
 		BadgeStudioComponent,
 		NgClass,
@@ -104,7 +104,7 @@ const MAX_HRS_PER_COMPETENCY: number = 999;
 		OebCheckboxComponent,
 		OebCollapsibleComponent,
 		NgIcon,
-		HlmIconDirective,
+		HlmIcon,
 		NgStyle,
 		OebSelectComponent,
 		AutocompleteLibModule,

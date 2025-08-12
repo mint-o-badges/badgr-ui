@@ -8,14 +8,14 @@ import { BadgeClassManager } from '../issuer/services/badgeclass-manager.service
 import { RecipientBadgeCollectionManager } from '../recipient/services/recipient-badge-collection-manager.service';
 import { RecipientBadgeCollection } from '../recipient/models/recipient-badge-collection.model';
 import { AppConfigService } from '../common/app-config.service';
-import { HlmH1Directive } from '../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
+import { HlmH1 } from '../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
 import { RecipientBadgeCollectionEditFormComponent } from '../recipient/components/recipient-badge-collection-edit-form/recipient-badge-collection-edit-form.component';
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
 	selector: 'edit-recipient-badge-collection',
 	templateUrl: './recipient-badge-collection-edit.component.html',
-	imports: [HlmH1Directive, RecipientBadgeCollectionEditFormComponent, TranslatePipe],
+	imports: [HlmH1, RecipientBadgeCollectionEditFormComponent, TranslatePipe],
 })
 export class RecipientBadgeCollectionEditComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	collectionLoaded: Promise<unknown>;

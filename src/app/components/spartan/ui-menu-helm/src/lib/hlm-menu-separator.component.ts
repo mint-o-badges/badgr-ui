@@ -10,7 +10,7 @@ import type { ClassValue } from 'clsx';
 		'[class]': '_computedClass()',
 	},
 })
-export class HlmMenuSeparatorComponent {
+export class HlmMenuSeparator {
 	public readonly userClass = input<ClassValue>('', { alias: 'class' });
 	protected _computedClass = computed(() => hlm('tw-block tw--mx-1 tw-my-1 tw-h-px tw-bg-muted', this.userClass()));
 }

@@ -6,7 +6,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { HlmTableModule } from './spartan/ui-table-helm/src';
 import { OebButtonComponent } from './oeb-button.component';
 import { Issuer } from '../issuer/models/issuer.model';
-import { HlmIconModule } from '@spartan-ng/ui-icon-helm';
+import { HlmIconModule } from '@spartan-ng/helm/icon';
 
 @Component({
 	selector: 'learningpaths-datatable',

@@ -1,31 +1,31 @@
 import { NgIcon } from '@ng-icons/core';
 import { Component, Input, TemplateRef } from '@angular/core';
-import { BrnMenuTriggerDirective } from '@spartan-ng/brain/menu';
+import { BrnMenuTrigger } from '@spartan-ng/brain/menu';
 import {
-	HlmMenuComponent,
-	HlmMenuItemDirective,
-	HlmMenuItemIconDirective,
+	HlmMenu,
+	HlmMenuItem,
+	HlmMenuItemIcon,
 	HlmMenuItemVariants,
-	HlmMenuLabelComponent,
+	HlmMenuLabel,
 } from './spartan/ui-menu-helm/src/index';
 import { NgTemplateOutlet, AsyncPipe } from '@angular/common';
 import type { MenuItem } from '../common/components/badge-detail/badge-detail.component.types';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { HlmIconDirective } from './spartan/ui-icon-helm/src/lib/hlm-icon.directive';
+import { HlmIcon } from './spartan/ui-icon-helm/src/lib/hlm-icon.directive';
 
 @Component({
 	selector: 'oeb-dropdown',
 	imports: [
-		BrnMenuTriggerDirective,
-		HlmMenuComponent,
-		HlmMenuItemDirective,
-		HlmMenuLabelComponent,
-		HlmMenuItemIconDirective,
+		BrnMenuTrigger,
+		HlmMenu,
+		HlmMenuItem,
+		HlmMenuLabel,
+		HlmMenuItemIcon,
 		NgTemplateOutlet,
 		RouterModule,
 		NgIcon,
-		HlmIconDirective,
+		HlmIcon,
 		TranslateModule,
 	],
 	template: `

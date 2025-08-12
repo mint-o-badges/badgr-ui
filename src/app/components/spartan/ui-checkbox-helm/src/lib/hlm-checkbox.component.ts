@@ -10,20 +10,20 @@ import {
 	signal,
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import { BrnCheckboxComponent, indeterminateBooleanAttribute } from '@spartan-ng/brain/checkbox';
+import { BrnCheckbox, indeterminateBooleanAttribute } from '@spartan-ng/brain/checkbox';
 import { hlm } from '@spartan-ng/brain/core';
 import type { ClassValue } from 'clsx';
-import { HlmCheckboxCheckIconComponent } from './hlm-checkbox-checkicon.component';
+import { HlmCheckboxCheckIcon } from './hlm-checkbox-checkicon.component';
 
 export const HLM_CHECKBOX_VALUE_ACCESSOR = {
 	provide: NG_VALUE_ACCESSOR,
-	useExisting: forwardRef(() => HlmCheckboxComponent),
+	useExisting: forwardRef(() => HlmCheckbox),
 	multi: true,
 };
 
 @Component({
 	selector: 'hlm-checkbox',
-	imports: [BrnCheckboxComponent, HlmCheckboxCheckIconComponent],
+	imports: [BrnCheckbox, HlmCheckboxCheckIcon],
 	template: `
 		<brn-checkbox
 			[id]="id()"
@@ -50,7 +50,7 @@ export const HLM_CHECKBOX_VALUE_ACCESSOR = {
 	},
 	providers: [HLM_CHECKBOX_VALUE_ACCESSOR],
 })
-export class HlmCheckboxComponent {
+export class HlmCheckbox {
 	public readonly userClass = input<ClassValue>('', { alias: 'class' });
 	protected _computedClass = computed(() =>
 		hlm(

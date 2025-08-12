@@ -38,17 +38,17 @@ import { ApiRootSkill } from '../../../common/model/ai-skills.model';
 import { BreakpointService } from '../../../common/services/breakpoint.service';
 import { FormMessageComponent } from '../../../common/components/form-message.component';
 import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
-import { HlmH2Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h2.directive';
+import { HlmH2 } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h2.directive';
 
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { OebTabsComponent } from '../../../components/oeb-backpack-tabs.component';
-import { HlmIconDirective } from '../../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
-import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
-import { HlmInputDirective } from '../../../components/spartan/ui-input-helm/src/lib/hlm-input.directive';
+import { HlmIcon } from '../../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
+import { HlmP } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
+import { HlmInput } from '../../../components/spartan/ui-input-helm/src/lib/hlm-input.directive';
 import { OebSortSelectComponent } from '../../../components/oeb-sort-select.component';
 import { OebCheckboxComponent } from '../../../components/oeb-checkbox.component';
 import { BgBadgecard } from '../../../common/components/bg-badgecard';
-import { HlmH3Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h3.directive';
+import { HlmH3 } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h3.directive';
 import { OebCompetency } from '../../../common/components/oeb-competency';
 import { BgLearningPathCard } from '../../../common/components/bg-learningpathcard';
 import { BgCollectionCard } from '../../../common/bg-collectioncard';
@@ -76,20 +76,20 @@ export const VISUALISATION_BREAKPOINT_MAX_WIDTH: number = 768;
 	imports: [
 		FormMessageComponent,
 		BgAwaitPromises,
-		HlmH2Directive,
+		HlmH2,
 		OebButtonComponent,
 		FormsModule,
 		ReactiveFormsModule,
 		OebTabsComponent,
 		NgIcon,
-		HlmIconDirective,
-		HlmPDirective,
+		HlmIcon,
+		HlmP,
 		CountUpModule,
-		HlmInputDirective,
+		HlmInput,
 		OebSortSelectComponent,
 		OebCheckboxComponent,
 		BgBadgecard,
-		HlmH3Directive,
+		HlmH3,
 		OebCompetency,
 		BgLearningPathCard,
 		BgCollectionCard,

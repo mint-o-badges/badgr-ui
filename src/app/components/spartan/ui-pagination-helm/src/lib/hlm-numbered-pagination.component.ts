@@ -12,13 +12,13 @@ import {
 import { FormsModule } from '@angular/forms';
 import { BrnSelectImports } from '@spartan-ng/brain/select';
 import { HlmSelectImports } from '../../../ui-select-helm/src';
-import { HlmPaginationContentDirective } from './hlm-pagination-content.directive';
-import { HlmPaginationEllipsisComponent } from './hlm-pagination-ellipsis.component';
-import { HlmPaginationItemDirective } from './hlm-pagination-item.directive';
-import { HlmPaginationLinkDirective } from './hlm-pagination-link.directive';
-import { HlmPaginationNextComponent } from './hlm-pagination-next.component';
-import { HlmPaginationPreviousComponent } from './hlm-pagination-previous.component';
-import { HlmPaginationDirective } from './hlm-pagination.directive';
+import { HlmPaginationContent } from './hlm-pagination-content.directive';
+import { HlmPaginationEllipsis } from './hlm-pagination-ellipsis.component';
+import { HlmPaginationItem } from './hlm-pagination-item.directive';
+import { HlmPaginationLink } from './hlm-pagination-link.directive';
+import { HlmPaginationNext } from './hlm-pagination-next.component';
+import { HlmPaginationPrevious } from './hlm-pagination-previous.component';
+import { HlmPagination } from './hlm-pagination.directive';
 
 @Component({
 	selector: 'hlm-numbered-pagination',
@@ -57,19 +57,19 @@ import { HlmPaginationDirective } from './hlm-pagination.directive';
 	`,
 	imports: [
 		FormsModule,
-		HlmPaginationDirective,
-		HlmPaginationContentDirective,
-		HlmPaginationItemDirective,
-		HlmPaginationPreviousComponent,
-		HlmPaginationNextComponent,
-		HlmPaginationLinkDirective,
-		HlmPaginationEllipsisComponent,
+		HlmPagination,
+		HlmPaginationContent,
+		HlmPaginationItem,
+		HlmPaginationPrevious,
+		HlmPaginationNext,
+		HlmPaginationLink,
+		HlmPaginationEllipsis,
 		BrnSelectImports,
 		HlmSelectImports,
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HlmNumberedPaginationComponent {
+export class HlmNumberedPagination {
 	/**
 	 * The current (active) page.
 	 */

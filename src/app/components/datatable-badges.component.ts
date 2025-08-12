@@ -6,20 +6,12 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { HlmTableModule } from './spartan/ui-table-helm/src';
 import { BadgeClass } from '../issuer/models/badgeclass.model';
 import { OebButtonComponent } from './oeb-button.component';
-import { HlmPDirective } from '../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
-import { HlmIconModule } from '@spartan-ng/ui-icon-helm';
+import { HlmP } from '../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
+import { HlmIconModule } from '@spartan-ng/helm/icon';
 
 @Component({
 	selector: 'badges-datatable',
-	imports: [
-		HlmTableModule,
-		HlmIconModule,
-		CommonModule,
-		OebButtonComponent,
-		TranslateModule,
-		RouterModule,
-		HlmPDirective,
-	],
+	imports: [HlmTableModule, HlmIconModule, CommonModule, OebButtonComponent, TranslateModule, RouterModule, HlmP],
 	template: ` <hlm-table
 		class="tw-rounded-t-[20px] tw-overflow-hidden tw-w-full tw-max-w-[100%] tw-bg-lightpurple tw-border-purple tw-border"
 	>

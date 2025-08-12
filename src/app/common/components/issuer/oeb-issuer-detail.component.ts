@@ -20,10 +20,10 @@ import { QrCodeApiService } from '../../../issuer/services/qrcode-api.service';
 import { ApiQRCode } from '../../../issuer/models/qrcode-api.model';
 import { SessionService } from '../../services/session.service';
 import { BgImageStatusPlaceholderDirective } from '../../directives/bg-image-status-placeholder.directive';
-import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
+import { HlmH1 } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
 import { NgIf, NgFor } from '@angular/common';
-import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
-import { HlmADirective } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-a.directive';
+import { HlmP } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
+import { HlmA } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-a.directive';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { OebDropdownComponent } from '../../../components/oeb-dropdown.component';
 import { SvgIconComponent } from '../svg-icon.component';
@@ -31,7 +31,7 @@ import { OebTabsComponent } from '../../../components/oeb-backpack-tabs.componen
 import { BgAwaitPromises } from '../../directives/bg-await-promises';
 import { DatatableComponent } from '../../../components/datatable-badges.component';
 import { FormsModule } from '@angular/forms';
-import { HlmInputDirective } from '../../../components/spartan/ui-input-helm/src/lib/hlm-input.directive';
+import { HlmInput } from '../../../components/spartan/ui-input-helm/src/lib/hlm-input.directive';
 import { BgBadgecard } from '../bg-badgecard';
 import { LearningPathDatatableComponent } from '../../../components/datatable-learningpaths.component';
 import { BgLearningPathCard } from '../bg-learningpathcard';
@@ -43,10 +43,10 @@ import { PublicApiBadgeClass, PublicApiIssuer, PublicApiLearningPath } from '../
 	styleUrl: './oeb-issuer-detail.component.scss',
 	imports: [
 		BgImageStatusPlaceholderDirective,
-		HlmH1Directive,
+		HlmH1,
 		NgIf,
-		HlmPDirective,
-		HlmADirective,
+		HlmP,
+		HlmA,
 		OebButtonComponent,
 		RouterLink,
 		OebDropdownComponent,
@@ -55,7 +55,7 @@ import { PublicApiBadgeClass, PublicApiIssuer, PublicApiLearningPath } from '../
 		BgAwaitPromises,
 		DatatableComponent,
 		FormsModule,
-		HlmInputDirective,
+		HlmInput,
 		NgFor,
 		BgBadgecard,
 		LearningPathDatatableComponent,

@@ -10,7 +10,7 @@ import type { ClassValue } from 'clsx';
 		'[class]': '_computedClass()',
 	},
 })
-export class HlmMenuLabelComponent {
+export class HlmMenuLabel {
 	public readonly userClass = input<ClassValue>('', { alias: 'class' });
 	protected _computedClass = computed(() =>
 		hlm('tw-block tw-px-2 tw-py-1.5 tw-text-sm tw-font-semibold', this._inset() && 'pl-8', this.userClass()),

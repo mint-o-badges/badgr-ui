@@ -5,13 +5,13 @@ import { NgIcon, provideIcons } from '@ng-icons/core';
 import { lucideChevronRight } from '@ng-icons/lucide';
 import { hlm } from '@spartan-ng/brain/core';
 import { ButtonVariants } from '../../../ui-button-helm/src';
-import { HlmIconDirective } from '../../../ui-icon-helm/src';
+import { HlmIcon } from '../../../ui-icon-helm/src';
 import { ClassValue } from 'clsx';
-import { HlmPaginationLinkDirective } from './hlm-pagination-link.directive';
+import { HlmPaginationLink } from './hlm-pagination-link.directive';
 
 @Component({
 	selector: 'hlm-pagination-next',
-	imports: [HlmPaginationLinkDirective, NgIcon, HlmIconDirective],
+	imports: [HlmPaginationLink, NgIcon, HlmIcon],
 	providers: [provideIcons({ lucideChevronRight })],
 	template: `
 		<a
@@ -28,7 +28,7 @@ import { HlmPaginationLinkDirective } from './hlm-pagination-link.directive';
 		</a>
 	`,
 })
-export class HlmPaginationNextComponent {
+export class HlmPaginationNext {
 	public readonly userClass = input<ClassValue>('', { alias: 'class' });
 	public readonly link = input<RouterLink['routerLink']>();
 	public readonly queryParams = input<RouterLink['queryParams']>();

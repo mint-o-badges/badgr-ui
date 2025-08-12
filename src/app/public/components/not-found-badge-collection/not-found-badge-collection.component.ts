@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { HlmIconDirective } from '../../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
+import { HlmIcon } from '../../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { lucideCircleX } from '@ng-icons/lucide';
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
 	selector: 'bg-not-found-collection',
-	imports: [HlmIconDirective, NgIcon, TranslatePipe],
+	imports: [HlmIcon, NgIcon, TranslatePipe],
 	providers: [provideIcons({ lucideCircleX })],
 	template: `<div class="page-padding oeb">
 		<div class="tw-bg-lightpurple oeb-inset-padding tw-flex tw-justify-center">

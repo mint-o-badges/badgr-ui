@@ -9,7 +9,7 @@ import type { ClassValue } from 'clsx';
 		'[class]': '_computedClass()',
 	},
 })
-export class HlmProgressIndicatorDirective implements DoCheck {
+export class HlmProgressIndicator implements DoCheck {
 	private _element = inject(ElementRef);
 	private _renderer = inject(Renderer2);
 	private readonly _value = signal(0);

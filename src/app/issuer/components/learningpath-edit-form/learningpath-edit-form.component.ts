@@ -48,9 +48,9 @@ import { BgBadgecard } from '../../../common/components/bg-badgecard';
 import { BgAwaitPromises } from '~/common/directives/bg-await-promises';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { FormFieldSelectOption } from '~/common/components/formfield-select';
-import { HlmH2Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h2.directive';
-import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
-import { HlmInputDirective } from '../../../components/spartan/ui-input-helm/src/lib/hlm-input.directive';
+import { HlmH2 } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h2.directive';
+import { HlmP } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
+import { HlmInput } from '../../../components/spartan/ui-input-helm/src/lib/hlm-input.directive';
 import { OebSeparatorComponent } from '../../../components/oeb-separator.component';
 import { OebSelectComponent } from '~/components/select.component';
 import { DndDraggableDirective, DndDropEvent, DndDropzoneDirective, DropEffect } from 'ngx-drag-drop';
@@ -89,9 +89,9 @@ type BadgeResult = BadgeClass & { selected?: boolean };
 		BgFormFieldImageComponent,
 		BadgeStudioComponent,
 		BgBadgecard,
-		HlmH2Directive,
-		HlmPDirective,
-		HlmInputDirective,
+		HlmH2,
+		HlmP,
+		HlmInput,
 		OebSeparatorComponent,
 		OebSelectComponent,
 		DndDraggableDirective,

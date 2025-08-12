@@ -20,8 +20,8 @@ import { typedFormGroup } from '../../../common/util/typed-forms';
 import { LinkEntry, BgBreadcrumbsComponent } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { FormMessageComponent } from '../../../common/components/form-message.component';
-import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
-import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
+import { HlmH1 } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
+import { HlmP } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
 import { OebInputComponent } from '../../../components/input.component';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { PasswordComplexityValidator } from '../../../common/validators/password-complexity.validator';
@@ -33,8 +33,8 @@ import { ValidationResult } from '~/common/validators/email.validator';
 	imports: [
 		FormMessageComponent,
 		BgBreadcrumbsComponent,
-		HlmH1Directive,
-		HlmPDirective,
+		HlmH1,
+		HlmP,
 		FormsModule,
 		ReactiveFormsModule,
 		OebInputComponent,

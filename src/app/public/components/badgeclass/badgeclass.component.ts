@@ -29,7 +29,7 @@ import { BgBadgeDetail } from '../../../common/components/badge-detail/badge-det
 
 import { OebSeparatorComponent } from '../../../components/oeb-separator.component';
 import { BgLearningPathCard } from '../../../common/components/bg-learningpathcard';
-import { HlmH2Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h2.directive';
+import { HlmH2 } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h2.directive';
 import { FormsModule } from '@angular/forms';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 
@@ -39,7 +39,7 @@ import { OebButtonComponent } from '../../../components/oeb-button.component';
 		BgBadgeDetail,
 		OebSeparatorComponent,
 		BgLearningPathCard,
-		HlmH2Directive,
+		HlmH2,
 		FormsModule,
 		OebButtonComponent,
 		TranslatePipe,

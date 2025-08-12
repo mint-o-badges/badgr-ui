@@ -16,14 +16,14 @@ import { AppConfigService } from '../../../common/app-config.service';
 import { LinkEntry, BgBreadcrumbsComponent } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { BadgeClassManager } from '../../services/badgeclass-manager.service';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
-import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
-import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
-import { HlmH2Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h2.directive';
+import { HlmH1 } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
+import { HlmP } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
+import { HlmH2 } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h2.directive';
 
 @Component({
 	templateUrl: 'badgeclass-select-type.component.html',
 	styleUrls: ['./badgeclass-select-type.component.scss'],
-	imports: [BgBreadcrumbsComponent, HlmH1Directive, HlmPDirective, HlmH2Directive, RouterLink, TranslatePipe],
+	imports: [BgBreadcrumbsComponent, HlmH1, HlmP, HlmH2, RouterLink, TranslatePipe],
 })
 export class BadgeClassSelectTypeComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	issuerSlug: string;

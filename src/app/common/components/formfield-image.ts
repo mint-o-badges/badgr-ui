@@ -8,7 +8,7 @@ import { NounProjectIcon } from '../model/nounproject.model';
 import { MessageService } from '../services/message.service';
 
 import { NgIcon } from '@ng-icons/core';
-import { HlmIconDirective } from '../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
+import { HlmIcon } from '../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
@@ -126,7 +126,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 			}
 		</div>
 	`,
-	imports: [NgIcon, HlmIconDirective, TranslatePipe],
+	imports: [NgIcon, HlmIcon, TranslatePipe],
 })
 export class BgFormFieldImageComponent {
 	@Input() set imageLoaderName(name: string) {

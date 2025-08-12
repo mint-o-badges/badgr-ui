@@ -18,7 +18,7 @@ import 'altcha';
 import { FormMessageComponent } from '../../../common/components/form-message.component';
 import { OAuthBannerComponent } from '../../../common/components/oauth-banner.component';
 
-import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
+import { HlmP } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
 import { OebInputComponent } from '../../../components/input.component';
 import { OebCheckboxComponent } from '../../../components/oeb-checkbox.component';
 import { AltchaComponent } from '../../../components/altcha.component';
@@ -31,7 +31,7 @@ import { PasswordComplexityValidator } from '../../../common/validators/password
 	imports: [
 		FormMessageComponent,
 		OAuthBannerComponent,
-		HlmPDirective,
+		HlmP,
 		RouterLink,
 		FormsModule,
 		ReactiveFormsModule,

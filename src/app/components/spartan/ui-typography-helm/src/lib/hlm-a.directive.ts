@@ -11,7 +11,7 @@ export const hlmA = 'tw-underline !tw-text-link hover:!tw-text-buttonhover tw-cu
 		'[class]': '_computedClass()',
 	},
 })
-export class HlmADirective {
+export class HlmA {
 	public readonly userClass = input<ClassValue>('', { alias: 'class' });
 	protected _computedClass = computed(() => hlm(hlmA, this.userClass()));
 }

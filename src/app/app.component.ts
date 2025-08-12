@@ -49,7 +49,7 @@ import { SourceListenerDirective } from './mozz-transition/directives/source-lis
 import { OebDropdownComponent } from './components/oeb-dropdown.component';
 import { OebButtonComponent } from './components/oeb-button.component';
 import { NgIcon } from '@ng-icons/core';
-import { HlmIconDirective } from './components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
+import { HlmIcon } from './components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
 import { BgPopupMenuTriggerDirective, BgPopupMenu } from './common/components/bg-popup-menu.component';
 import { SvgIconComponent } from './common/components/svg-icon.component';
 import { MenuItemDirective } from './common/directives/bg-menuitem.directive';
@@ -76,7 +76,7 @@ import { CmsMenuItemsPipe } from './common/pipes/cmsMenuItems.pipe';
 		OebButtonComponent,
 		NgStyle,
 		NgIcon,
-		HlmIconDirective,
+		HlmIcon,
 		BgPopupMenuTriggerDirective,
 		SvgIconComponent,
 		BgPopupMenu,

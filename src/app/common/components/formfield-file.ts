@@ -4,8 +4,8 @@ import { preloadImageURL, readFileAsText } from '../util/file-util';
 import { DomSanitizer } from '@angular/platform-browser';
 import { SvgIconComponent } from './svg-icon.component';
 
-import { HlmPDirective } from '../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
-import { HlmADirective } from '../../components/spartan/ui-typography-helm/src/lib/hlm-a.directive';
+import { HlmP } from '../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
+import { HlmA } from '../../components/spartan/ui-typography-helm/src/lib/hlm-a.directive';
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
@@ -69,7 +69,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 			<p class="dropzone-x-error">{{ errorMessage }}</p>
 		}
 	`,
-	imports: [SvgIconComponent, HlmPDirective, HlmADirective, TranslatePipe],
+	imports: [SvgIconComponent, HlmP, HlmA, TranslatePipe],
 })
 export class BgFormFieldFileComponent {
 	private get element(): HTMLElement {

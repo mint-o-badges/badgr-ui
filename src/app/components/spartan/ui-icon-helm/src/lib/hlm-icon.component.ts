@@ -66,7 +66,7 @@ const TAILWIND_H_W_PATTERN = /\b(h-\d+|w-\d+)\b/g;
 		'[class]': '_computedClass()',
 	},
 })
-export class HlmIconComponent implements OnDestroy {
+export class HlmIcon implements OnDestroy {
 	private readonly _host = inject(ElementRef);
 	private readonly _platformId = inject(PLATFORM_ID);
 

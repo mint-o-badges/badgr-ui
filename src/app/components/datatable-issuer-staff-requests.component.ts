@@ -7,7 +7,7 @@ import { HlmTableModule } from './spartan/ui-table-helm/src';
 import { OebButtonComponent } from './oeb-button.component';
 
 import { ApiStaffRequest } from '../issuer/staffrequest-api.model';
-import { HlmIconModule } from '@spartan-ng/ui-icon-helm';
+import { HlmIconModule } from '@spartan-ng/helm/icon';
 
 @Component({
 	selector: 'issuer-staff-requests-datatable',

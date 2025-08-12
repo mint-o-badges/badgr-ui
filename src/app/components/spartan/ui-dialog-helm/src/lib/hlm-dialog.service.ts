@@ -6,7 +6,7 @@ import {
 	DEFAULT_BRN_DIALOG_OPTIONS,
 	cssClassesToArray,
 } from '@spartan-ng/brain/dialog';
-import { HlmDialogContentComponent } from './hlm-dialog-content.component';
+import { HlmDialogContent } from './hlm-dialog-content.component';
 import { hlmDialogOverlayClass } from './hlm-dialog-overlay.directive';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -31,6 +31,6 @@ export class HlmDialogService {
 			context: { ...options?.context, $component: component, $dynamicComponentClass: options?.contentClass },
 		};
 
-		return this._brnDialogService.open(HlmDialogContentComponent, undefined, options.context, options);
+		return this._brnDialogService.open(HlmDialogContent, undefined, options.context, options);
 	}
 }

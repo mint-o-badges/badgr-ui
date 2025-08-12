@@ -52,7 +52,7 @@ import { BrnDialogRef } from '@spartan-ng/brain/dialog';
 import { BgBadgeDetail } from '../../../common/components/badge-detail/badge-detail.component';
 import { QrCodeAwardsComponent } from '../qrcode-awards/qrcode-awards.component';
 import { IssuerDetailDatatableComponent } from '../../../components/datatable-issuer-detail.component';
-import { HlmH2Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h2.directive';
+import { HlmH2 } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h2.directive';
 import { FormsModule } from '@angular/forms';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 
@@ -118,7 +118,7 @@ import { OebButtonComponent } from '../../../components/oeb-button.component';
 		BgBadgeDetail,
 		QrCodeAwardsComponent,
 		IssuerDetailDatatableComponent,
-		HlmH2Directive,
+		HlmH2,
 		FormsModule,
 		OebButtonComponent,
 		TranslatePipe,

@@ -1,6 +1,6 @@
 import { Directive, Input, computed, signal, input } from '@angular/core';
 import { hlm } from '@spartan-ng/brain/core';
-import { BrnTabsTriggerDirective } from '@spartan-ng/brain/tabs';
+import { BrnTabsTrigger } from '@spartan-ng/brain/tabs';
 import { cva, VariantProps } from 'class-variance-authority';
 import type { ClassValue } from 'clsx';
 
@@ -21,12 +21,12 @@ export type TabsVariants = VariantProps<typeof tabsVariants>;
 @Directive({
 	selector: '[hlmTabsTrigger]',
 	standalone: true,
-	hostDirectives: [{ directive: BrnTabsTriggerDirective, inputs: ['brnTabsTrigger: hlmTabsTrigger', 'disabled'] }],
+	hostDirectives: [{ directive: BrnTabsTrigger, inputs: ['brnTabsTrigger: hlmTabsTrigger', 'disabled'] }],
 	host: {
 		'[class]': '_computedClass()',
 	},
 })
-export class HlmTabsTriggerDirective {
+export class HlmTabsTrigger {
 	public readonly triggerFor = input.required<string>({ alias: 'hlmTabsTrigger' });
 
 	public readonly userClass = input<ClassValue>('', { alias: 'class' });

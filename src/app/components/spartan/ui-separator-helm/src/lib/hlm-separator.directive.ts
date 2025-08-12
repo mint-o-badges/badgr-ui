@@ -10,7 +10,7 @@ export type HlmSeparatorOrientation = 'horizontal' | 'vertical';
 		'[class]': '_computedClass()',
 	},
 })
-export class HlmSeparatorDirective {
+export class HlmSeparator {
 	public readonly orientation = input<HlmSeparatorOrientation>('horizontal');
 	public readonly userClass = input<ClassValue>('', { alias: 'class' });
 	protected _computedClass = computed(() =>

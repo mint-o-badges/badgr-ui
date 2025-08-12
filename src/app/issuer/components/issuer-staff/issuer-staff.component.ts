@@ -30,16 +30,16 @@ import { BrnDialogRef } from '@spartan-ng/brain/dialog';
 import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 import { FormMessageComponent } from '../../../common/components/form-message.component';
 
-import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
+import { HlmH1 } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { OebInputComponent } from '../../../components/input.component';
 import { FormFieldRadio } from '../../../common/components/formfield-radio';
-import { HlmH2Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h2.directive';
+import { HlmH2 } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h2.directive';
 import { IssuerStaffRequestsDatatableComponent } from '../../../components/datatable-issuer-staff-requests.component';
-import { HlmTableComponent } from '../../../components/spartan/ui-table-helm/src/lib/hlm-table.component';
-import { HlmTrowComponent } from '../../../components/spartan/ui-table-helm/src/lib/hlm-trow.component';
-import { HlmThComponent } from '../../../components/spartan/ui-table-helm/src/lib/hlm-th.component';
-import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
+import { HlmTable } from '../../../components/spartan/ui-table-helm/src/lib/hlm-table.component';
+import { HlmTrow } from '../../../components/spartan/ui-table-helm/src/lib/hlm-trow.component';
+import { HlmTh } from '../../../components/spartan/ui-table-helm/src/lib/hlm-th.component';
+import { HlmP } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
 
 @Component({
 	templateUrl: './issuer-staff.component.html',
@@ -64,18 +64,18 @@ import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/sr
 		BgAwaitPromises,
 		FormMessageComponent,
 		BgBreadcrumbsComponent,
-		HlmH1Directive,
+		HlmH1,
 		OebButtonComponent,
 		FormsModule,
 		ReactiveFormsModule,
 		OebInputComponent,
 		FormFieldRadio,
-		HlmH2Directive,
+		HlmH2,
 		IssuerStaffRequestsDatatableComponent,
-		HlmTableComponent,
-		HlmTrowComponent,
-		HlmThComponent,
-		HlmPDirective,
+		HlmTable,
+		HlmTrow,
+		HlmTh,
+		HlmP,
 		TranslatePipe,
 	],
 })

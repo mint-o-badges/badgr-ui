@@ -10,13 +10,13 @@ import {
 	EventEmitter,
 	effect,
 } from '@angular/core';
-import { HlmButtonDirective } from './spartan/ui-button-helm/src';
+import { HlmButton } from './spartan/ui-button-helm/src';
 
-import { HlmIconDirective } from './spartan/ui-icon-helm/src';
+import { HlmIcon } from './spartan/ui-icon-helm/src';
 import {
-	BrnCollapsibleComponent,
-	BrnCollapsibleContentComponent,
-	BrnCollapsibleTriggerDirective,
+	BrnCollapsible,
+	BrnCollapsibleContent,
+	BrnCollapsibleTrigger,
 	BrnCollapsibleState,
 } from '@spartan-ng/brain/collapsible';
 import { provideIcons } from '@ng-icons/core';
@@ -27,12 +27,12 @@ import { NgTemplateOutlet, NgClass } from '@angular/common';
 	selector: 'oeb-collapsible',
 	providers: [provideIcons({ lucideChevronRight })],
 	imports: [
-		BrnCollapsibleComponent,
-		BrnCollapsibleTriggerDirective,
-		HlmButtonDirective,
-		BrnCollapsibleContentComponent,
+		BrnCollapsible,
+		BrnCollapsibleTrigger,
+		HlmButton,
+		BrnCollapsibleContent,
 		NgIcon,
-		HlmIconDirective,
+		HlmIcon,
 		NgTemplateOutlet,
 		NgClass,
 	],
@@ -74,7 +74,7 @@ export class OebCollapsibleComponent implements AfterViewInit {
 	@Input() closeIcon = 'lucideChevronRight';
 	@Output() toggled = new EventEmitter<boolean>();
 
-	@ViewChild('collapsible') collapsible: BrnCollapsibleComponent;
+	@ViewChild('collapsible') collapsible: BrnCollapsible;
 
 	constructor() {
 		effect(() => {

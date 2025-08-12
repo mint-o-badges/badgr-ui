@@ -14,21 +14,14 @@ import { AppConfigService } from '../../../common/app-config.service';
 import { LinkEntry, BgBreadcrumbsComponent } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { FormMessageComponent } from '../../../common/components/form-message.component';
-import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
-import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
+import { HlmH1 } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
+import { HlmP } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
 import { IssuerEditFormComponent } from '../issuer-edit-form/issuer-edit-form.component';
 
 @Component({
 	selector: 'issuer-edit',
 	templateUrl: './issuer-edit.component.html',
-	imports: [
-		FormMessageComponent,
-		BgBreadcrumbsComponent,
-		HlmH1Directive,
-		HlmPDirective,
-		IssuerEditFormComponent,
-		TranslatePipe,
-	],
+	imports: [FormMessageComponent, BgBreadcrumbsComponent, HlmH1, HlmP, IssuerEditFormComponent, TranslatePipe],
 })
 export class IssuerEditComponent extends BaseAuthenticatedRoutableComponent {
 	issuer: Issuer;

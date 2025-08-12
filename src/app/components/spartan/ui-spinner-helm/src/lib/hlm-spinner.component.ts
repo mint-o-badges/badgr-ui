@@ -66,7 +66,7 @@ export type SpinnerVariants = VariantProps<typeof spinnerVariants>;
 		<span class="tw-sr-only"><ng-content /></span>
 	`,
 })
-export class HlmSpinnerComponent {
+export class HlmSpinner {
 	public readonly size = input<SpinnerVariants['size']>('default');
 	public readonly variant = input<SpinnerVariants['variant']>('default');
 	public readonly userClass = input<ClassValue>('', { alias: 'class' });

@@ -11,7 +11,7 @@ export const hlmH1 = 'md:tw-text-[46px] md:tw-leading-[55.2px] tw-text-[30px] tw
 		'[class]': '_computedClass()',
 	},
 })
-export class HlmH1Directive {
+export class HlmH1 {
 	public readonly userClass = input<ClassValue>('', { alias: 'class' });
 	protected _computedClass = computed(() => hlm(hlmH1, this.userClass()));
 }

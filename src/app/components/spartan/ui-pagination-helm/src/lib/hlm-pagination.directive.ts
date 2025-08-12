@@ -18,7 +18,7 @@ export type PaginationVariants = VariantProps<typeof paginationVariants>;
 		'[attr.aria-label]': 'ariaLabel()',
 	},
 })
-export class HlmPaginationDirective {
+export class HlmPagination {
 	public readonly userClass = input<ClassValue>('', { alias: 'class' });
 
 	public readonly ariaLabel = input<string>('pagination', { alias: 'aria-label' });

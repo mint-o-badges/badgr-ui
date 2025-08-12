@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { HlmTableModule } from './spartan/ui-table-helm/src';
 import { OebButtonComponent } from './oeb-button.component';
-import { HlmIconModule } from '@spartan-ng/ui-icon-helm';
+import { HlmIconModule } from '@spartan-ng/helm/icon';
 
 @Component({
 	selector: 'learningpath-graduates-datatable',

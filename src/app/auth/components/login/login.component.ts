@@ -21,9 +21,9 @@ import { BadgrApiFailure } from '../../../common/services/api-failure';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { UserProfileApiService } from '../../../common/services/user-profile-api.service';
-import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
-import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
-import { HlmADirective } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-a.directive';
+import { HlmH1 } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
+import { HlmP } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
+import { HlmA } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-a.directive';
 
 import { OebInputComponent } from '../../../components/input.component';
 import { OebCheckboxComponent } from '../../../components/oeb-checkbox.component';
@@ -42,9 +42,9 @@ type RedirectHttpResponse = HttpResponse<RedirectResponse>;
 	templateUrl: './login.component.html',
 	styleUrls: ['./login.component.scss'],
 	imports: [
-		HlmH1Directive,
-		HlmPDirective,
-		HlmADirective,
+		HlmH1,
+		HlmP,
+		HlmA,
 		RouterLink,
 		FormsModule,
 		OebInputComponent,

@@ -9,13 +9,13 @@ import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { FormControl, FormsModule } from '@angular/forms';
 import { appearAnimation } from '../../../common/animations/animations';
 import { FormMessageComponent } from '../../../common/components/form-message.component';
-import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
+import { HlmH1 } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
 import { CountUpModule } from 'ngx-countup';
 
 import { BadgeLegendComponent } from '../../../common/components/badge-legend/badge-legend.component';
-import { HlmInputDirective } from '../../../components/spartan/ui-input-helm/src/lib/hlm-input.directive';
+import { HlmInput } from '../../../components/spartan/ui-input-helm/src/lib/hlm-input.directive';
 import { NgIcon } from '@ng-icons/core';
-import { HlmIconDirective } from '../../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
+import { HlmIcon } from '../../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
 import { OebGlobalSortSelectComponent } from '../../../components/oeb-global-sort-select.component';
 import { OebSelectComponent } from '../../../components/select.component';
 import { SortPipe } from '../../../common/pipes/sortPipe';
@@ -48,13 +48,13 @@ import { firstValueFrom } from 'rxjs';
 	animations: [appearAnimation],
 	imports: [
 		FormMessageComponent,
-		HlmH1Directive,
+		HlmH1,
 		CountUpModule,
 		BadgeLegendComponent,
 		FormsModule,
-		HlmInputDirective,
+		HlmInput,
 		NgIcon,
-		HlmIconDirective,
+		HlmIcon,
 		OebGlobalSortSelectComponent,
 		OebSelectComponent,
 		SortPipe,

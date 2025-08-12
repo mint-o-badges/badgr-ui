@@ -18,17 +18,17 @@ import { BadgeInstanceApiService } from '../../services/badgeinstance-api.servic
 import { TaskStatus, TaskResult, TaskPollingManagerService } from '../../../common/task-manager.service';
 import { Subscription } from 'rxjs';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
-import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
-import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
+import { HlmH1 } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
+import { HlmP } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
 
 import { OebButtonComponent } from '../../../components/oeb-button.component';
-import { HlmH3Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h3.directive';
+import { HlmH3 } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h3.directive';
 import { OebCheckboxComponent } from '../../../components/oeb-checkbox.component';
 
 @Component({
 	selector: 'badgeclass-issue-bulk-award-confirmation',
 	templateUrl: './badgeclass-issue-bulk-award-confirmation.component.html',
-	imports: [HlmH1Directive, HlmPDirective, OebButtonComponent, HlmH3Directive, OebCheckboxComponent, TranslatePipe],
+	imports: [HlmH1, HlmP, OebButtonComponent, HlmH3, OebCheckboxComponent, TranslatePipe],
 })
 export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRoutableComponent implements OnDestroy {
 	@Input() transformedImportData: TransformedImportData;
