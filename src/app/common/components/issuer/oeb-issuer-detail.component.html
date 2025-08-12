@@ -14,9 +14,6 @@
 				{{ issuer.name }}
 			</h1>
 			<ng-container *ngIf="public">
-				<p hlmP class="tw-text-oebblack tw-font-semibold">
-					{{ issuer.email }}
-				</p>
 				<p hlmP size="sm" *ngIf="issuer.url">
 					<a hlmA target="_blank" [href]="issuer.url">{{ issuer.url }}</a>
 				</p>
