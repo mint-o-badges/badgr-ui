@@ -19,7 +19,7 @@
 		"resolveJsonModule": true,
 		"paths": {
 			"@spartan-ng/helm/dialog": ["./src/app/components/spartan/ui-dialog-helm/src/index.ts"],
-			"@spartan-ng/helm/form-field": ["./src/app/components/spartan/ui-formfield-helm/src/index.ts"],
+			"@spartan-ng/helm/form-field": ["./src/app/components/spartan/ui-form-field-helm/src/index.ts"],
 			"@spartan-ng/helm/icon": ["./src/app/components/spartan/ui-icon-helm/src/index.ts"],
 			"@spartan-ng/helm/input": ["./src/app/components/spartan/ui-input-helm/src/index.ts"],
 			"@spartan-ng/helm/label": ["./src/app/components/spartan/ui-label-helm/src/index.ts"],
