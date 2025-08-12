@@ -5,6 +5,7 @@
 		"name": "Name",
 		"email": "E-Mail",
 		"institutions": "Institutionen",
+		"networks": "Netzwerke",
 		"institutionsNav": "Institutionen A-Z",
 		"account": "Konto",
 		"backpack": "Mein Rucksack",
@@ -363,6 +364,13 @@
 		"clickOnAwardBadges": "Klicke auf \"Badges vergeben\", um die Badges jetzt an deine Lernenden zu vergeben.",
 		"creatingBadge": "Erstelle Badge",
 		"memberView": "Mitglieds-Ansicht"
+	},
+	"Network": {
+		"noIssuerInNetwork": "Bisher ist keine deiner Institutionen Mitglied in einem Netzwerk.",
+		"networksUseBadgesTogether": "Netzwerke können Badges gemeinsam nutzen.",
+		"networkLogoOnBadge": "Das Logo des Netzwerks wird zusätzlich auf den entsprechenden Badge-Bildern abgebildet.",
+		"youCanAddInstitutions": "Du kannst selbst ein Netzwerk anlegen und deine Partner-Institutionen hinzufügen:",
+		"create": "Netzwerk anlegen"
 	},
 	"Badge": {
 		"groupBy": "Gruppieren nach",

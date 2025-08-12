@@ -30,6 +30,8 @@ import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { NgIcon } from '@ng-icons/core';
 import { HlmIconDirective } from '../../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
 import { BgImageStatusPlaceholderDirective } from '../../../common/directives/bg-image-status-placeholder.directive';
+import { OebTabsComponent } from '../../../components/oeb-tabs.component';
+import { environment } from 'src/environments/environment';
 
 @Component({
 	selector: 'issuer-list',
@@ -48,6 +50,7 @@ import { BgImageStatusPlaceholderDirective } from '../../../common/directives/bg
 		FormsModule,
 		NgStyle,
 		TranslatePipe,
+		OebTabsComponent,
 	],
 })
 export class IssuerListComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
@@ -83,6 +86,12 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 	@ViewChild('successfullyRequestedMembershipHeaderTemplate')
 	successfullyRequestedMembershipHeaderTemplate: TemplateRef<void>;
 
+	@ViewChild('issuersTemplate', { static: true })
+	issuersTemplate: ElementRef<void>;
+
+	@ViewChild('networksTemplate', { static: true })
+	networksTemplate: ElementRef<void>;
+
 	@ViewChild('issuerSearchInput') issuerSearchInput: ElementRef<HTMLInputElement>;
 	@ViewChild('issuerSearchInputModel') issuerSearchInputModel: NgModel;
 
@@ -104,6 +113,10 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 	issuerSearchLoaded = false;
 
 	dialogRef: BrnDialogRef<any> = null;
+
+	activeTab: string = 'issuers';
+
+	tabs: any[] = [];
 
 	plural = {
 		issuer: {
@@ -207,6 +220,31 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 		this.userProfileApiService.getIssuerStaffRequests().then((r) => (this.staffRequests = r.body));
 	}
 
+	ngAfterContentInit() {
+		if (environment.production) {
+			this.tabs = [
+				{
+					key: 'issuers',
+					title: 'General.institutions',
+					component: this.issuersTemplate,
+				},
+			];
+		} else {
+			this.tabs = [
+				{
+					key: 'issuers',
+					title: 'General.institutions',
+					component: this.issuersTemplate,
+				},
+				{
+					key: 'networks',
+					title: 'General.networks',
+					component: this.networksTemplate,
+				},
+			];
+		}
+	}
+
 	async issuerSearchChange() {
 		if (this.issuerSearchQuery.length >= 3) {
 			this.issuersLoading = true;
@@ -266,6 +304,15 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 				}
 			},
 		);
+	}
+
+	onTabChange(tab) {
+		this.activeTab = tab;
+
+		this.router.navigate([], {
+			relativeTo: this.route,
+			queryParams: { tab: tab },
+		});
 	}
 
 	private readonly _hlmDialogService = inject(HlmDialogService);

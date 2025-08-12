@@ -5,6 +5,7 @@
 		"name": "Name",
 		"email": "Email",
 		"institutions": "Institutions",
+		"networks": "Networks",
 		"institutionsNav": "Institutions A-Z",
 		"account": "Account",
 		"backpack": "My Backpack",
@@ -363,6 +364,13 @@
 		"clickOnAwardBadges": "Click on \"award badges\" to award the badges to your learners now.",
 		"creatingBadge": "Creating Badge",
 		"memberView": "Member view"
+	},
+	"Network": {
+		"noIssuerInNetwork": "None of your institutions are currently members of a network.",
+		"networksUseBadgesTogether": "Networks can share badges.",
+		"networkLogoOnBadge": "The network logo is also displayed on the corresponding badge images.",
+		"youCanAddInstitutions": "You can create your own network and add your partner institutions:",
+		"create": "create network"
 	},
 	"Badge": {
 		"groupBy": "Group by",
