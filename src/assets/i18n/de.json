@@ -109,7 +109,9 @@
 		"emailAddress": "E-Mail-Adresse",
 		"tos": "Nutzungsbedingungen",
 		"change": "ändern",
-		"condition": "Bedingung"
+		"condition": "Bedingung",
+		"country": "Land",
+		"state": "Bundesland"
 	},
 	"NavItems": {
 		"register": "Registrieren",
@@ -370,7 +372,8 @@
 		"networksUseBadgesTogether": "Netzwerke können Badges gemeinsam nutzen.",
 		"networkLogoOnBadge": "Das Logo des Netzwerks wird zusätzlich auf den entsprechenden Badge-Bildern abgebildet.",
 		"youCanAddInstitutions": "Du kannst selbst ein Netzwerk anlegen und deine Partner-Institutionen hinzufügen:",
-		"create": "Netzwerk anlegen"
+		"create": "Netzwerk anlegen",
+		"name": "Name des Netzwerks"
 	},
 	"Badge": {
 		"groupBy": "Gruppieren nach",

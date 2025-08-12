@@ -109,7 +109,9 @@
 		"emailAddress": "E-mail address",
 		"tos": "Terms of Service",
 		"change": "change",
-		"condition": "condition"
+		"condition": "condition",
+		"country": "Country",
+		"state": "State"
 	},
 	"NavItems": {
 		"register": "Register",
@@ -370,7 +372,8 @@
 		"networksUseBadgesTogether": "Networks can share badges.",
 		"networkLogoOnBadge": "The network logo is also displayed on the corresponding badge images.",
 		"youCanAddInstitutions": "You can create your own network and add your partner institutions:",
-		"create": "create network"
+		"create": "create network",
+		"name": "name of the network"
 	},
 	"Badge": {
 		"groupBy": "Group by",
