@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
 import { FormMessageComponent } from '../../../common/components/form-message.component';
-import { HlmH1 } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
-import { HlmP } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
 import { IssuerEditFormComponent } from '../issuer-edit-form/issuer-edit-form.component';
 import { TranslatePipe } from '@ngx-translate/core';
+import { HlmH1, HlmP } from '@spartan-ng/helm/typography';
 
 @Component({
 	selector: 'issuer-create',

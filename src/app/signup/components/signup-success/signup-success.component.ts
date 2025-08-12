@@ -9,8 +9,8 @@ import { provideIcons, NgIcon } from '@ng-icons/core';
 import { lucideCheck } from '@ng-icons/lucide';
 import { FormMessageComponent } from '../../../common/components/form-message.component';
 import { OAuthBannerComponent } from '../../../common/components/oauth-banner.component';
-import { HlmIcon } from '../../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
+import { HlmIcon } from '@spartan-ng/helm/icon';
 
 @Component({
 	selector: 'signup-success',

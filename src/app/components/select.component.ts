@@ -2,12 +2,12 @@ import { Component, ElementRef, Input, ViewChild, TemplateRef } from '@angular/c
 import { OebInputErrorComponent } from './input.error.component';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { HlmP } from './spartan/ui-typography-helm/src/lib/hlm-p.directive';
 import { BrnSelectImports } from '@spartan-ng/brain/select';
 import { HlmSelectModule } from './spartan/ui-select-helm/src/index';
 import { CustomValidatorMessages, messagesForValidationError } from './input.component';
 import { OebSeparatorComponent } from './oeb-separator.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { HlmP } from '@spartan-ng/helm/typography';
 
 @Component({
 	selector: 'oeb-select ',
@@ -58,7 +58,7 @@ import { TranslateModule } from '@ngx-translate/core';
 			}
 
 			<hlm-select-trigger
-				[_size]="actionBar ? 'actionBar' : 'default'"
+				[size]="actionBar ? 'actionBar' : 'default'"
 				class="tw-w-full tw-border-solid tw-border-purple tw-bg-white "
 			>
 				@if (!multiple) {

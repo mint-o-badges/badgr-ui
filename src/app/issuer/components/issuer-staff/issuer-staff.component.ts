@@ -1,8 +1,6 @@
 import { Component, inject, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
-
 import { SessionService } from '../../../common/services/session.service';
 import { MessageService } from '../../../common/services/message.service';
 import { IssuerManager } from '../../services/issuer-manager.service';
@@ -29,17 +27,12 @@ import { ApiStaffRequest } from '../../staffrequest-api.model';
 import { BrnDialogRef } from '@spartan-ng/brain/dialog';
 import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 import { FormMessageComponent } from '../../../common/components/form-message.component';
-
-import { HlmH1 } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { OebInputComponent } from '../../../components/input.component';
 import { FormFieldRadio } from '../../../common/components/formfield-radio';
-import { HlmH2 } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h2.directive';
 import { IssuerStaffRequestsDatatableComponent } from '../../../components/datatable-issuer-staff-requests.component';
-import { HlmTable } from '../../../components/spartan/ui-table-helm/src/lib/hlm-table.component';
-import { HlmTrow } from '../../../components/spartan/ui-table-helm/src/lib/hlm-trow.component';
-import { HlmTh } from '../../../components/spartan/ui-table-helm/src/lib/hlm-th.component';
-import { HlmP } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
+import { HlmTableImports } from '@spartan-ng/helm/table';
+import { HlmH1, HlmH2, HlmP } from '@spartan-ng/helm/typography';
 
 @Component({
 	templateUrl: './issuer-staff.component.html',
@@ -72,10 +65,8 @@ import { HlmP } from '../../../components/spartan/ui-typography-helm/src/lib/hlm
 		FormFieldRadio,
 		HlmH2,
 		IssuerStaffRequestsDatatableComponent,
-		HlmTable,
-		HlmTrow,
-		HlmTh,
 		HlmP,
+		HlmTableImports,
 		TranslatePipe,
 	],
 })

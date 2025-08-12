@@ -10,9 +10,9 @@ import { BadgeClass } from '../../../issuer/models/badgeclass.model';
 import { BadgeClassManager } from '../../../issuer/services/badgeclass-manager.service';
 import { RecipientBadgeApiService } from '../../services/recipient-badges-api.service';
 import { RecipientBadgeInstance } from '../../models/recipient-badge.model';
-import { HlmH1 } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
 import { RecipientBadgeCollectionEditFormComponent } from '../recipient-badge-collection-edit-form/recipient-badge-collection-edit-form.component';
 import { TranslatePipe } from '@ngx-translate/core';
+import { HlmH1 } from '@spartan-ng/helm/typography';
 
 @Component({
 	selector: 'create-recipient-badge-collection',

@@ -1,46 +1,46 @@
 import { TranslateModule } from '@ngx-translate/core';
-
 import { RouterModule } from '@angular/router';
-import { Component, Input, Output, EventEmitter, ChangeDetectorRef, SimpleChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { HlmTableModule } from './spartan/ui-table-helm/src';
-import { HlmP } from '../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
 import { Issuer, IssuerStaffMember, issuerStaffRoles } from '../issuer/models/issuer.model';
 import { IssuerStaffRoleSlug } from '../issuer/models/issuer-api.model';
 import { FormFieldSelectOption } from '../common/components/formfield-select';
 import { HlmIconModule } from '@spartan-ng/helm/icon';
 import { FormsModule } from '@angular/forms';
+import { HlmP } from '@spartan-ng/helm/typography';
 
 @Component({
 	selector: 'issuer-staff-datatable',
 	standalone: true,
 	imports: [HlmTableModule, HlmIconModule, TranslateModule, RouterModule, HlmP, FormsModule],
 	template: `
-		<hlm-table
+		<table
+			hlmTable
 			class="tw-rounded-t-[20px] tw-overflow-hidden tw-w-full tw-max-w-[100%] tw-bg-white tw-border-lightgrey tw-border"
 		>
-			<hlm-trow class="!tw-bg-lightgrey tw-text-oebblack tw-flex-wrap hover:tw-bg-lightgrey">
+			<tr hlmTr class="!tw-bg-lightgrey tw-text-oebblack tw-flex-wrap hover:tw-bg-lightgrey">
 				<!-- Name -->
-				<hlm-th class="tw-text-oebblack md:tw-w-[25%] tw-w-[33%] tw-px-4">Name</hlm-th>
+				<th hlmTh class="tw-text-oebblack md:tw-w-[25%] tw-w-[33%] tw-px-4">Name</th>
 				<!-- E-Mail -->
-				<hlm-th class="tw-text-oebblack md:tw-w-[25%] tw-w-[33%] tw-px-4">E-Mail</hlm-th>
+				<th hlmTh class="tw-text-oebblack md:tw-w-[25%] tw-w-[33%] tw-px-4">E-Mail</th>
 				<!-- Role -->
-				<hlm-th class="tw-text-oebblack md:tw-w-[25%] tw-w-[33%] tw-px-4">Rolle</hlm-th>
+				<th hlmTh class="tw-text-oebblack md:tw-w-[25%] tw-w-[33%] tw-px-4">Rolle</th>
 				<!-- Actions -->
-				<hlm-th class="tw-text-oebblack md:tw-w-[25%] tw-w-0 tw-px-4"></hlm-th>
-			</hlm-trow>
+				<th hlmTh class="tw-text-oebblack md:tw-w-[25%] tw-w-0 tw-px-4"></th>
+			</tr>
 			@for (member of members; track member) {
-				<hlm-trow class="tw-border-lightgrey tw-flex-wrap tw-py-2">
-					<hlm-th class="md:tw-w-[25%] tw-w-[33%] tw-px-4 tw-items-center ">
+				<tr hlmTr class="tw-border-lightgrey tw-flex-wrap tw-py-2">
+					<th hlmTh class="md:tw-w-[25%] tw-w-[33%] tw-px-4 tw-items-center ">
 						<span class="tw-font-normal tw-text-lg tw-text-oebblack tw-truncate">{{
 							member.nameLabel
 						}}</span>
-					</hlm-th>
-					<hlm-th class="md:tw-w-[25%] tw-w-[33%] tw-px-4 tw-text-center tw-flex tw-items-center"
-						><p hlmP class="tw-font-normal tw-text-lg tw-text-oebblack tw-truncate">
+					</th>
+					<th hlmTh class="md:tw-w-[25%] tw-w-[33%] tw-px-4 tw-text-center tw-flex tw-items-center">
+						<p hlmP class="tw-font-normal tw-text-lg tw-text-oebblack tw-truncate">
 							{{ member.email }}
-						</p></hlm-th
-					>
-					<hlm-th class="tw-w-36 md:tw-w-48 !tw-text-oebblack sm:tw-grid">
+						</p>
+					</th>
+					<th hlmTh class="tw-w-36 md:tw-w-48 !tw-text-oebblack sm:tw-grid">
 						@if (isCurrentUserIssuerOwner) {
 							<div class="forminput forminput-full">
 								<div class="forminput-x-inputs">
@@ -62,8 +62,8 @@ import { FormsModule } from '@angular/forms';
 								</div>
 							</div>
 						}
-					</hlm-th>
-					<hlm-th class="md:tw-w-[25%] tw-w-full tw-px-4 tw-text-center tw-flex md:tw-justify-end">
+					</th>
+					<th hlmTh class="md:tw-w-[25%] tw-w-full tw-px-4 tw-text-center tw-flex md:tw-justify-end">
 						@if (member != issuer.currentUserStaffMember) {
 							<span
 								(click)="removeMember(member)"
@@ -71,10 +71,10 @@ import { FormsModule } from '@angular/forms';
 								>{{ 'General.remove' | translate }}</span
 							>
 						}
-					</hlm-th>
-				</hlm-trow>
+					</th>
+				</tr>
 			}
-		</hlm-table>
+		</table>
 	`,
 })
 export class IssuerStaffDatatableComponent {

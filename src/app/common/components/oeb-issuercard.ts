@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { Issuer } from '../../issuer/models/issuer.model';
-import { HlmP } from '../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
 import { RouterLink } from '@angular/router';
 import { PublicApiIssuer } from '../../public/models/public-api.model';
+import { HlmP } from '@spartan-ng/helm/typography';
 
 @Component({
 	selector: 'oeb-issuerCard',

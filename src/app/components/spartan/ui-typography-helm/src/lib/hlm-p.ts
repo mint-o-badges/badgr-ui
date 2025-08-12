@@ -34,5 +34,7 @@ export class HlmP {
 	public readonly userClass = input<ClassValue>('', { alias: 'class' });
 	public readonly _variant = input<PVariants['variant']>('default');
 	public readonly _size = input<PVariants['size']>('default');
-	protected _computedClass = computed(() => hlm(pVariants({ variant: this._variant(), size: this._size() }),, this.userClass()));
+	protected _computedClass = computed(() =>
+		hlm(pVariants({ variant: this._variant(), size: this._size() }), this.userClass()),
+	);
 }

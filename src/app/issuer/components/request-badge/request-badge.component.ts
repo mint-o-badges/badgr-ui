@@ -12,12 +12,11 @@ import { BadgeRequest } from '../../models/badgerequest-api.model';
 import { PublicApiBadgeClassWithIssuer } from '../../../public/models/public-api.model';
 import { EmailValidator } from '../../../common/validators/email.validator';
 import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
-import { HlmH1 } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
 import { BgImageStatusPlaceholderDirective } from '../../../common/directives/bg-image-status-placeholder.directive';
-import { HlmP } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
 import { OebInputComponent } from '../../../components/input.component';
 import { OebCheckboxComponent } from '../../../components/oeb-checkbox.component';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
+import { HlmH1, HlmP } from '@spartan-ng/helm/typography';
 
 @Component({
 	selector: 'request-badge',

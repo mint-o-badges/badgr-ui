@@ -22,10 +22,10 @@ import { BadgeClassCategory } from '../../../issuer/models/badgeclass-api.model'
 import { FormMessageComponent } from '../../../common/components/form-message.component';
 import { OebInputComponent } from '../../../components/input.component';
 import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
-import { HlmInput } from '../../../components/spartan/ui-input-helm/src/lib/hlm-input.directive';
 import { NgClass, I18nPluralPipe } from '@angular/common';
 import { BgBadgecard } from '../../../common/components/bg-badgecard';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
+import { HlmInput } from '@spartan-ng/helm/input';
 
 interface CreateBadgeCollectionForm<T> {
 	collectionName: T;

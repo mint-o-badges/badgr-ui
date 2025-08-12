@@ -3,18 +3,14 @@ import { Validators, FormsModule } from '@angular/forms';
 import { EmailValidator } from '../../common/validators/email.validator';
 
 import { typedFormGroup } from '../../common/util/typed-forms';
-import { HlmH1 } from '../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
-import { HlmH2 } from '../../components/spartan/ui-typography-helm/src/lib/hlm-h2.directive';
-import { HlmH3 } from '../../components/spartan/ui-typography-helm/src/lib/hlm-h3.directive';
-import { HlmP } from '../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
 import { OebButtonComponent } from '../../components/oeb-button.component';
-import { HlmA } from '../../components/spartan/ui-typography-helm/src/lib/hlm-a.directive';
 import { OebInputComponent } from '../../components/input.component';
 import { OebCheckboxComponent } from '../../components/oeb-checkbox.component';
 import { DatatableComponent } from '../../components/datatable-badges.component';
 import { CompetencyAccordionComponent } from '../../components/accordion.component';
 import { OebSpinnerComponent } from '../../components/oeb-spinner.component';
 import { BadgeClass } from '../../issuer/models/badgeclass.model';
+import { HlmH1, HlmH2, HlmH3, HlmP } from '@spartan-ng/helm/typography';
 
 @Component({
 	selector: 'oeb-showcase',
@@ -25,7 +21,6 @@ import { BadgeClass } from '../../issuer/models/badgeclass.model';
 		HlmH3,
 		HlmP,
 		OebButtonComponent,
-		HlmA,
 		FormsModule,
 		OebInputComponent,
 		OebCheckboxComponent,

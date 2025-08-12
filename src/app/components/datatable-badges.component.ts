@@ -1,39 +1,46 @@
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-
 import { RouterModule } from '@angular/router';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { HlmTableModule } from './spartan/ui-table-helm/src';
 import { BadgeClass } from '../issuer/models/badgeclass.model';
 import { OebButtonComponent } from './oeb-button.component';
-import { HlmP } from '../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
 import { HlmIconModule } from '@spartan-ng/helm/icon';
+import { HlmP } from '@spartan-ng/helm/typography';
 
 @Component({
 	selector: 'badges-datatable',
 	imports: [HlmTableModule, HlmIconModule, CommonModule, OebButtonComponent, TranslateModule, RouterModule, HlmP],
-	template: ` <hlm-table
+	template: ` <table
+		hlmTable
 		class="tw-rounded-t-[20px] tw-overflow-hidden tw-w-full tw-max-w-[100%] tw-bg-lightpurple tw-border-purple tw-border"
 	>
-		<hlm-caption>{{ caption }}</hlm-caption>
-		<hlm-trow class="tw-bg-purple tw-text-white tw-flex-wrap hover:tw-bg-purple">
+		<caption hlmCaption>
+			{{
+				caption
+			}}
+		</caption>
+		<tr hlmTr class="tw-bg-purple tw-text-white tw-flex-wrap hover:tw-bg-purple">
 			<!-- Badge -->
-			<hlm-th class="!tw-text-white tw-w-28 sm:tw-w-20 md:tw-w-40">Badge</hlm-th>
+			<th hlmTh class="!tw-text-white tw-w-28 sm:tw-w-20 md:tw-w-40">Badge</th>
 			<!-- Created on -->
-			<hlm-th
+			<th
+				hlmTh
 				class="!tw-text-white tw-justify-center !tw-flex-1 tw-w-24 sm:tw-w-28  md:tw-w-48 !tw-px-3 sm:!tw-px-4"
-				>{{ 'Badge.createdOn' | translate }}</hlm-th
 			>
+				{{ 'Badge.createdOn' | translate }}
+			</th>
 			<!-- Recipients -->
-			<hlm-th class="!tw-text-white tw-w-36 md:tw-w-40 sm:tw-grid sm:tw-pl-0">{{
-				'Badge.multiRecipients' | translate | titlecase
-			}}</hlm-th>
+			<th hlmTh class="!tw-text-white tw-w-36 md:tw-w-40 sm:tw-grid sm:tw-pl-0">
+				{{ 'Badge.multiRecipients' | translate | titlecase }}
+			</th>
 			<!-- Badge/QR-code award -->
-			<hlm-th class="!tw-text-white tw-justify-end sm:tw-w-48 tw-w-0 !tw-p-0"></hlm-th>
-		</hlm-trow>
+			<th hlmTh class="!tw-text-white tw-justify-end sm:tw-w-48 tw-w-0 !tw-p-0"></th>
+		</tr>
 		@for (badge of badges; track badge) {
-			<hlm-trow class="tw-border-purple tw-flex-wrap tw-py-2">
-				<hlm-th
+			<tr hlmTr class="tw-border-purple tw-flex-wrap tw-py-2">
+				<th
+					hlmTh
 					class="tw-w-28 md:tw-w-48 tw-cursor-pointer tw-flex-col tw-items-baseline tw-gap-1 md:tw-gap-2 md:tw-items-center md:tw-flex-row"
 					(click)="redirectToBadgeDetail.emit({ badge: badge.badge, focusRequests: false })"
 				>
@@ -56,17 +63,20 @@ import { HlmIconModule } from '@spartan-ng/helm/icon';
 							>
 						</div>
 					</div>
-				</hlm-th>
-				<hlm-th
+				</th>
+				<th
+					hlmTh
 					class="!tw-flex-1 tw-justify-center !tw-text-oebblack tw-w-24 sm:tw-w-28 md:tw-w-48 sm:tw-px-3 tw-px-4"
-					><p hlmP class="tw-font-normal sm:!tw-text-[16px]">
+				>
+					<p hlmP class="tw-font-normal sm:!tw-text-[16px]">
 						{{ badge.badge.createdAt | date: 'dd.MM.yyyy' }}
-					</p></hlm-th
-				>
-				<hlm-th class="tw-w-36 md:tw-w-40 tw-justify-center !tw-text-oebblack sm:tw-grid"
-					><p hlmP class="tw-font-normal sm:!tw-text-[16px]">{{ badge.badge.recipientCount }}</p></hlm-th
-				>
-				<hlm-th
+					</p>
+				</th>
+				<th hlmTh class="tw-w-36 md:tw-w-40 tw-justify-center !tw-text-oebblack sm:tw-grid">
+					<p hlmP class="tw-font-normal sm:!tw-text-[16px]">{{ badge.badge.recipientCount }}</p>
+				</th>
+				<th
+					hlmTh
 					class="tw-justify-center sm:tw-justify-end !tw-text-oebblack tw-flex-col tw-h-fit sm:tw-w-max tw-w-full tw-gap-2 tw-my-2 tw-mt-7 sm:tw-mt-2"
 				>
 					@if (badge.badge.extension['extensions:CategoryExtension']?.Category === 'learningpath') {
@@ -112,10 +122,10 @@ import { HlmIconModule } from '@spartan-ng/helm/icon';
 						>
 						</oeb-button>
 					}
-				</hlm-th>
-			</hlm-trow>
+				</th>
+			</tr>
 		}
-	</hlm-table>`,
+	</table>`,
 })
 export class DatatableComponent {
 	@Input() caption: string = '';

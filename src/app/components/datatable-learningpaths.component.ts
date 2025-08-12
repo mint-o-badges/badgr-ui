@@ -11,23 +11,21 @@ import { HlmIconModule } from '@spartan-ng/helm/icon';
 @Component({
 	selector: 'learningpaths-datatable',
 	imports: [HlmTableModule, HlmIconModule, CommonModule, OebButtonComponent, TranslateModule, RouterModule],
-	template: ` <hlm-table
+	template: ` <table
+		hlmTable
 		class="tw-rounded-[20px] tw-overflow-hidden tw-w-full tw-max-w-[100%] tw-bg-lightpurple tw-border-purple tw-border"
 	>
-		<hlm-trow class="tw-bg-purple tw-text-white tw-flex-wrap hover:tw-bg-purple">
-			<hlm-th class="!tw-text-white tw-w-28 sm:tw-w-20 md:tw-w-40">Micro Degree</hlm-th>
-			<hlm-th class="!tw-text-white tw-justify-center !tw-flex-1">{{ 'Badge.createdOn' | translate }}</hlm-th>
-			<hlm-th class="!tw-text-white tw-w-36 md:tw-w-40">{{
-				'Issuer.learningPathParticipants' | translate
-			}}</hlm-th>
-			<hlm-th class="!tw-text-white tw-justify-end sm:tw-w-48 tw-w-0 !tw-p-0"></hlm-th>
-		</hlm-trow>
+		<tr hlmTr class="tw-bg-purple tw-text-white tw-flex-wrap hover:tw-bg-purple">
+			<th hlmTh>class="!tw-text-white tw-w-28 sm:tw-w-20 md:tw-w-40">Micro Degree</th>
+			<th hlmTh>class="!tw-text-white tw-justify-center !tw-flex-1">{{ 'Badge.createdOn' | translate }}</th>
+			<th hlmTh>class="!tw-text-white tw-w-36 md:tw-w-40">{{ 'Issuer.learningPathParticipants' | translate }}</th>
+			<th hlmTh>class="!tw-text-white tw-justify-end sm:tw-w-48 tw-w-0 !tw-p-0"></th>
+		</tr>
 		@for (learningPath of learningPaths; track learningPath) {
-			<hlm-trow class="tw-border-purple tw-flex-wrap tw-py-2">
-				<hlm-th
-					class="tw-w-28 md:tw-flex-row tw-flex-col md:tw-w-48 tw-cursor-pointer tw-items-baseline tw-gap-1 md:tw-gap-2 md:tw-items-center"
-					(click)="redirectToLearningPathDetail.emit(learningPath.slug)"
-				>
+			<tr hlmTr class="tw-border-purple tw-flex-wrap tw-py-2">
+				<th hlmTh>
+					class="tw-w-28 md:tw-flex-row tw-flex-col md:tw-w-48 tw-cursor-pointer tw-items-baseline tw-gap-1
+					md:tw-gap-2 md:tw-items-center" (click)="redirectToLearningPathDetail.emit(learningPath.slug)" >
 					<img
 						class="l-flex-x-shrink0 badgeimage badgeimage-small"
 						width="40"
@@ -47,14 +45,16 @@ import { HlmIconModule } from '@spartan-ng/helm/icon';
 							>
 						</div>
 					</div>
-				</hlm-th>
-				<hlm-th class="!tw-flex-1 tw-justify-center !tw-text-oebblack"
-					><p class="u-text">{{ learningPath.created_at | date: 'dd.MM.yyyy' }}</p></hlm-th
-				>
-				<hlm-th class="tw-w-36 md:tw-w-40 tw-justify-center !tw-text-oebblack">{{
-					learningPath.participant_count
-				}}</hlm-th>
-				<hlm-th class="tw-justify-center sm:tw-justify-end sm:tw-w-48 tw-w-full !tw-text-oebblack">
+				</th>
+				<th hlmTh>
+					class="!tw-flex-1 tw-justify-center !tw-text-oebblack" >
+					<p class="u-text">{{ learningPath.created_at | date: 'dd.MM.yyyy' }}</p>
+				</th>
+				<th hlmTh>
+					class="tw-w-36 md:tw-w-40 tw-justify-center !tw-text-oebblack">{{ learningPath.participant_count }}
+				</th>
+				<th hlmTh>
+					class="tw-justify-center sm:tw-justify-end sm:tw-w-48 tw-w-full !tw-text-oebblack">
 					<oeb-button
 						class="tw-w-full"
 						variant="secondary"
@@ -65,10 +65,10 @@ import { HlmIconModule } from '@spartan-ng/helm/icon';
 						[disabled]="!issuer.canDeleteBadge"
 						[class]="issuer.canDeleteBadge ? '' : 'disabled'"
 					></oeb-button>
-				</hlm-th>
-			</hlm-trow>
+				</th>
+			</tr>
 		}
-	</hlm-table>`,
+	</table>`,
 })
 export class LearningPathDatatableComponent {
 	@Input() learningPaths: any[];

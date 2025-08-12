@@ -75,19 +75,25 @@ import { TimeComponent } from '~/common/components/time.component';
 					</div>
 				</div>
 			}
-			<hlm-table
+			<table
+				hlmTable
 				class="tw-rounded-t-[20px] tw-overflow-hidden tw-w-full tw-max-w-[100%] tw-bg-lightpurple tw-border-purple tw-border-[1px] tw-border-solid tw-mt-8"
 			>
-				<hlm-caption>{{ caption }}</hlm-caption>
-				<hlm-trow class="tw-bg-purple tw-text-white tw-flex-wrap hover:tw-bg-purple">
-					<hlm-th class="!tw-text-white tw-w-40">ID</hlm-th>
-					<hlm-th class="!tw-text-white tw-justify-center xl:tw-pr-12 !tw-flex-1">{{
-						'RecBadgeDetail.issuedOn' | translate
-					}}</hlm-th>
-					<hlm-th class="!tw-text-white tw-justify-end xl:tw-w-40 tw-w-0 !tw-p-0"></hlm-th>
-				</hlm-trow>
+				<caption hlmCaption>
+					{{
+						caption
+					}}
+				</caption>
+				<tr hlmTr class="tw-bg-purple tw-text-white tw-flex-wrap hover:tw-bg-purple">
+					<th hlmTh class="!tw-text-white tw-w-40">ID</th>
+					<th hlmTh class="!tw-text-white tw-justify-center xl:tw-pr-12 !tw-flex-1">
+						{{ 'RecBadgeDetail.issuedOn' | translate }}
+					</th>
+					<th hlmTh class="!tw-text-white tw-justify-end xl:tw-w-40 tw-w-0 !tw-p-0"></th>
+				</tr>
 				@for (recipient of _filteredEmails(); track recipient; let i = $index) {
-					<hlm-trow
+					<tr
+						hlmTr
 						class="tw-border-purple tw-border-0 tw-border-solid tw-flex-wrap tw-items-center tw-py-2 tw-relative"
 					>
 						<!-- loading spinner -->
@@ -97,14 +103,16 @@ import { TimeComponent } from '~/common/components/time.component';
 								class="tw-absolute tw-right-0 tw-left-0 tw-z-50"
 							></loading-dots>
 						}
-						<hlm-th class="tw-w-40">
+						<th hlmTh class="tw-w-40">
 							<span class="!tw-text-oebblack !tw-font-normal">{{ recipient.recipientIdentifier }}</span>
-						</hlm-th>
-						<hlm-th class="!tw-flex-1 tw-justify-center !tw-text-oebblack"
-							><p class="u-text">
-								<time [date]="recipient.issuedOn" format="dd.MM.y"></time></p
-						></hlm-th>
-						<hlm-th
+						</th>
+						<th hlmTh class="!tw-flex-1 tw-justify-center !tw-text-oebblack">
+							<p class="u-text">
+								<time [date]="recipient.issuedOn" format="dd.MM.y"></time>
+							</p>
+						</th>
+						<th
+							hlmTh
 							class="tw-justify-center tw-gap-[25px] xl:tw-gap-[5px] xl:tw-w-max xl:tw-h-fit xl:tw-flex-col xl:tw-justify-end tw-w-full !tw-text-oebblack"
 						>
 							<oeb-button
@@ -123,10 +131,10 @@ import { TimeComponent } from '~/common/components/time.component';
 								text="{{ 'Issuer.pdfCertificate' | translate }}"
 								[disabled]="downloadStates[i]"
 							></oeb-button>
-						</hlm-th>
-					</hlm-trow>
+						</th>
+					</tr>
 				}
-			</hlm-table>
+			</table>
 		</div>
 	`,
 })

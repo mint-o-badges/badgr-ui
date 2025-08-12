@@ -1,12 +1,10 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { lucideClock } from '@ng-icons/lucide';
 import { Competency } from '../model/competency.model';
 import { provideIcons, NgIcon } from '@ng-icons/core';
-import { HlmP } from '../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
-
-import { HlmA } from '../../components/spartan/ui-typography-helm/src/lib/hlm-a.directive';
-import { HlmIcon } from '../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
 import { HourPipe } from '../pipes/hourPipe';
+import { HlmP } from '@spartan-ng/helm/typography';
+import { HlmIcon } from '@spartan-ng/helm/icon';
 @Component({
 	selector: 'oeb-competency',
 	providers: [provideIcons({ lucideClock })],
@@ -20,7 +18,7 @@ import { HourPipe } from '../pipes/hourPipe';
 				@if (competency['framework_identifier']) {
 					<a
 						hlmP
-						hlmA
+						class="tw-underline tw-text-link hover:!tw-text-buttonhover tw-cursor-pointer"
 						size="sm"
 						target="_blank"
 						[href]="competency['framework_identifier']"
@@ -39,7 +37,7 @@ import { HourPipe } from '../pipes/hourPipe';
 			</div>
 		</div>
 	`,
-	imports: [HlmP, HlmA, NgIcon, HlmIcon, HourPipe],
+	imports: [HlmP, NgIcon, HlmIcon, HourPipe],
 })
 export class OebCompetency {
 	@Input() competency: Competency;

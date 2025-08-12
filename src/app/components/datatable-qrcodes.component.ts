@@ -15,12 +15,10 @@ import {
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { lucideArrowUpDown, lucideChevronDown, lucideEllipsis } from '@ng-icons/lucide';
-
 import { HlmCheckbox } from './spartan/ui-checkbox-helm/src';
 import { HlmIcon } from './spartan/ui-icon-helm/src';
 import { HlmInput } from './spartan/ui-input-helm/src';
 import { HlmMenuModule } from './spartan/ui-menu-helm/src';
-import { BrnTableModule, useBrnColumnManager } from '@spartan-ng/brain/table';
 import { HlmTableModule } from './spartan/ui-table-helm/src';
 import { BrnSelectModule } from '@spartan-ng/brain/select';
 import { HlmSelectModule } from './spartan/ui-select-helm/src';
@@ -36,7 +34,6 @@ import { Router } from '@angular/router';
 import { DangerDialogComponent } from '../common/dialogs/oeb-dialogs/danger-dialog.component';
 import { TranslateService } from '@ngx-translate/core';
 import { ApiRequestedBadge } from '../issuer/models/badgerequest-api.model';
-
 import { HlmCommandInputWrapper } from './spartan/ui-command-helm/src/lib/hlm-command-input-wrapper.component';
 import { OebButtonComponent } from './oeb-button.component';
 import striptags from 'striptags';
@@ -68,7 +65,6 @@ export type RequestedBadge = {
 	imports: [
 		FormsModule,
 		HlmMenuModule,
-		BrnTableModule,
 		HlmTableModule,
 		HlmButton,
 		DatePipe,
@@ -130,43 +126,45 @@ export type RequestedBadge = {
 				[bodyRowClasses]="bodyRowStyle"
 			>
 				<brn-column-def name="select" class="tw-w-12">
-					<hlm-th *brnHeaderDef>
+					<th hlmTh>
+						*brnHeaderDef>
 						<hlm-checkbox [checked]="_checkboxState()" (changed)="handleHeaderCheckboxChange()" />
-					</hlm-th>
-					<hlm-td *brnCellDef="let element">
+					</th>
+					<td hlmTd *brnCellDef="let element">
 						<hlm-checkbox [checked]="_isPaymentSelected(element)" (changed)="togglePayment(element)" />
-					</hlm-td>
+					</td>
 				</brn-column-def>
 				<brn-column-def name="email" class="tw-w-40">
-					<hlm-th class="tw-text-white" truncate *brnHeaderDef>ID</hlm-th>
-					<hlm-td class="tw-text-white" *brnCellDef="let element">
+					<th hlmTh>class="tw-text-white" truncate *brnHeaderDef>ID</th>
+					<td hlmTd class="tw-text-white" *brnCellDef="let element">
 						<span class="tw-text-oebblack">{{ element.email }}</span>
-					</hlm-td>
+					</td>
 				</brn-column-def>
 				<brn-column-def name="requestedOn" class="!tw-flex-1 tw-justify-center">
-					<hlm-th *brnHeaderDef>
+					<th hlmTh>
+						*brnHeaderDef>
 						<button hlmBtn size="sm" variant="inherit" (click)="handleEmailSortChange()">
 							<span class="tw-text-white tw-text-sm tw-font-medium">{{
 								'Badge.requestedOn' | translate
 							}}</span>
 							<ng-icon hlm class="tw-ml-3 tw-text-white" size="sm" name="lucideArrowUpDown" />
 						</button>
-					</hlm-th>
-					<hlm-td class="!tw-flex-1 tw-justify-center" *brnCellDef="let element">
+					</th>
+					<td hlmTd class="!tw-flex-1 tw-justify-center" *brnCellDef="let element">
 						<span class="tw-text-oebblack">{{ element.requestedOn | date: 'dd.MM.yyyy' }}</span>
-					</hlm-td>
+					</td>
 				</brn-column-def>
 				<brn-column-def name="amount" class="tw-justify-end tw-w-20">
-					<hlm-th class="tw-text-white" *brnHeaderDef></hlm-th>
-					<hlm-td class="tw-font-medium tw-tabular-nums" *brnCellDef="let element">
+					<th hlmTh>class="tw-text-white" *brnHeaderDef></th>
+					<td hlmTd class="tw-font-medium tw-tabular-nums" *brnCellDef="let element">
 						<button (click)="openDangerDialog(element)">
 							<ng-icon hlm class="tw-ml-3 tw-text-oebblack" size="sm" name="lucideTrash2" />
 						</button>
-					</hlm-td>
+					</td>
 				</brn-column-def>
 				<brn-column-def name="actions" class="tw-w-16">
-					<hlm-th *brnHeaderDef></hlm-th>
-					<hlm-td *brnCellDef="let element"> </hlm-td>
+					<th hlmTh>*brnHeaderDef></th>
+					<td hlmTd *brnCellDef="let element"></td>
 				</brn-column-def>
 				<div class="tw-flex tw-items-center tw-justify-center tw-p-20 tw-text-muted-foreground" brnNoDataRow>
 					No data

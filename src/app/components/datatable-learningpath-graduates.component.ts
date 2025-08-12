@@ -10,25 +10,27 @@ import { HlmIconModule } from '@spartan-ng/helm/icon';
 @Component({
 	selector: 'learningpath-graduates-datatable',
 	imports: [HlmTableModule, HlmIconModule, CommonModule, OebButtonComponent, TranslateModule, RouterModule],
-	template: ` <hlm-table
+	template: ` <table
+		hlmTable
 		class="tw-rounded-t-[20px] tw-overflow-hidden tw-w-full tw-max-w-[100%] tw-bg-lightpurple tw-border-purple tw-border"
 	>
-		<hlm-trow class="tw-bg-purple tw-text-white tw-flex-wrap hover:tw-bg-purple">
-			<hlm-th class="!tw-text-white tw-w-28 md:tw-w-48">ID</hlm-th>
-			<hlm-th class="!tw-text-white tw-justify-center !tw-flex-1">{{
-				'LearningPath.finishedOn' | translate
-			}}</hlm-th>
-			<hlm-th class="!tw-text-white tw-justify-end sm:tw-w-48 tw-w-0 !tw-p-0"></hlm-th>
-		</hlm-trow>
+		<tr hlmTr class="tw-bg-purple tw-text-white tw-flex-wrap hover:tw-bg-purple">
+			<th hlmTh class="!tw-text-white tw-w-28 md:tw-w-48">ID</th>
+			<th hlmTh class="!tw-text-white tw-justify-center !tw-flex-1">
+				{{ 'LearningPath.finishedOn' | translate }}
+			</th>
+			<th hlmTh class="!tw-text-white tw-justify-end sm:tw-w-48 tw-w-0 !tw-p-0"></th>
+		</tr>
 		@for (participant of participants; track participant) {
-			<hlm-trow class="tw-border-purple tw-flex-wrap tw-py-2">
-				<hlm-th class="tw-w-28 md:tw-w-48">
+			<tr hlmTr class="tw-border-purple tw-flex-wrap tw-py-2">
+				<th hlmTh class="tw-w-28 md:tw-w-48">
 					<span class="tw-text-oebblack tw-cursor-pointer">{{ participant.user.email }}</span>
-				</hlm-th>
-				<hlm-th class="!tw-flex-1 tw-justify-center !tw-text-oebblack"
-					><p class="u-text">{{ participant.completed_at | date: 'dd.MM.yyyy' }}</p></hlm-th
-				>
-				<hlm-th
+				</th>
+				<th hlmTh class="!tw-flex-1 tw-justify-center !tw-text-oebblack">
+					<p class="u-text">{{ participant.completed_at | date: 'dd.MM.yyyy' }}</p>
+				</th>
+				<th
+					hlmTh
 					class="tw-justify-center sm:tw-justify-end !tw-text-oebblack tw-flex-col tw-h-fit sm:tw-w-max tw-w-full tw-gap-2 tw-my-2 tw-mt-7 sm:tw-mt-2"
 				>
 					<oeb-button
@@ -46,10 +48,10 @@ import { HlmIconModule } from '@spartan-ng/helm/icon';
 						(click)="downloadCertificate.emit(participant)"
 						[text]="actionElementText"
 					></oeb-button>
-				</hlm-th>
-			</hlm-trow>
+				</th>
+			</tr>
 		}
-	</hlm-table>`,
+	</table>`,
 })
 export class LearningPathGraduatesDatatableComponent {
 	@Input() caption: string = '';

@@ -25,20 +25,16 @@ import { RecipientBadgeInstance } from '../../../recipient/models/recipient-badg
 import { HourPipe } from '../../../common/pipes/hourPipe';
 import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 import { BgBreadcrumbsComponent } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
-import { HlmH1 } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
-import { HlmP } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
-import { HlmA } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-a.directive';
 import { NgIcon } from '@ng-icons/core';
-import { HlmIcon } from '../../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
-
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { OebProgressComponent } from '../../../components/oeb-progress.component';
 import { BgImageStatusPlaceholderDirective } from '../../../common/directives/bg-image-status-placeholder.directive';
-import { HlmH3 } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h3.directive';
 import { OebTabsComponent } from '../../../components/oeb-backpack-tabs.component';
 import { CountUpModule } from 'ngx-countup';
 import { OebIssuerCard } from '../../../common/components/oeb-issuercard';
 import { BgBadgecard } from '../../../common/components/bg-badgecard';
+import { HlmIcon } from '@spartan-ng/helm/icon';
+import { HlmH1, HlmP, HlmH3 } from '@spartan-ng/helm/typography';
 
 @Component({
 	templateUrl: './learningpath.component.html',
@@ -48,7 +44,6 @@ import { BgBadgecard } from '../../../common/components/bg-badgecard';
 		BgBreadcrumbsComponent,
 		HlmH1,
 		HlmP,
-		HlmA,
 		RouterLink,
 		NgIcon,
 		HlmIcon,

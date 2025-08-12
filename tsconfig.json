@@ -18,6 +18,7 @@
 		"useDefineForClassFields": false,
 		"resolveJsonModule": true,
 		"paths": {
+			"@spartan-ng/helm/checkbox": ["./src/app/components/spartan/ui-checkbox-helm/src/index.ts"],
 			"@spartan-ng/helm/dialog": ["./src/app/components/spartan/ui-dialog-helm/src/index.ts"],
 			"@spartan-ng/helm/form-field": ["./src/app/components/spartan/ui-form-field-helm/src/index.ts"],
 			"@spartan-ng/helm/icon": ["./src/app/components/spartan/ui-icon-helm/src/index.ts"],

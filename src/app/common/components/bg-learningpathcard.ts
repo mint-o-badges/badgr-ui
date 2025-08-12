@@ -3,12 +3,12 @@ import { LearningPathApiService } from '../services/learningpath-api.service';
 import { RouterLink } from '@angular/router';
 import { SlicePipe } from '@angular/common';
 import { NgIcon } from '@ng-icons/core';
-import { HlmIcon } from '../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
 import { BgImageStatusPlaceholderDirective } from '../directives/bg-image-status-placeholder.directive';
-import { HlmP } from '../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
 import { OebProgressComponent } from '../../components/oeb-progress.component';
 import { TranslatePipe } from '@ngx-translate/core';
 import { HourPipe } from '../pipes/hourPipe';
+import { HlmIcon } from '@spartan-ng/helm/icon';
+import { HlmP } from '@spartan-ng/helm/typography';
 
 type MatchOrProgressType = { match?: string; progress?: number };
 

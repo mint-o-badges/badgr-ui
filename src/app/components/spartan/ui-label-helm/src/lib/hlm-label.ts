@@ -1,7 +1,7 @@
 import { Directive, computed, inject, input } from '@angular/core';
 import { hlm } from '@spartan-ng/brain/core';
 import { BrnLabel } from '@spartan-ng/brain/label';
-import { VariantProps } from 'class-variance-authority';
+import { cva, VariantProps } from 'class-variance-authority';
 import type { ClassValue } from 'clsx';
 
 export const labelVariants = cva(

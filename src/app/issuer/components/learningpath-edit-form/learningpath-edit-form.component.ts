@@ -11,7 +11,7 @@ import {
 	ViewChild,
 } from '@angular/core';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
-import { Validators, FormsModule, ReactiveFormsModule, ValidationErrors, FormControl } from '@angular/forms';
+import { Validators, FormsModule, ReactiveFormsModule, ValidationErrors } from '@angular/forms';
 import { SessionService } from '../../../common/services/session.service';
 import { MessageService } from '../../../common/services/message.service';
 import { IssuerApiService } from '../../services/issuer-api.service';
@@ -20,12 +20,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { BadgeClassManager } from '../../services/badgeclass-manager.service';
 import { BadgeClass } from '../../models/badgeclass.model';
-import { EffectAllowed } from 'ngx-drag-drop';
 import { typedFormGroup } from '../../../common/util/typed-forms';
 import { LearningPath } from '../../models/learningpath.model';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { BadgeInstanceManager } from '../../services/badgeinstance-manager.service';
-import { ApiLearningPath } from '../../../common/model/learningpath-api.model';
 import { LearningPathManager } from '../../services/learningpath-manager.service';
 import { StepperComponent } from '../../../components/stepper/stepper.component';
 import { AppConfigService } from '../../../common/app-config.service';
@@ -48,9 +46,6 @@ import { BgBadgecard } from '../../../common/components/bg-badgecard';
 import { BgAwaitPromises } from '~/common/directives/bg-await-promises';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { FormFieldSelectOption } from '~/common/components/formfield-select';
-import { HlmH2 } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h2.directive';
-import { HlmP } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
-import { HlmInput } from '../../../components/spartan/ui-input-helm/src/lib/hlm-input.directive';
 import { OebSeparatorComponent } from '../../../components/oeb-separator.component';
 import { OebSelectComponent } from '~/components/select.component';
 import { DndDraggableDirective, DndDropEvent, DndDropzoneDirective, DropEffect } from 'ngx-drag-drop';
@@ -59,13 +54,8 @@ import { DangerDialogComponent } from '~/common/dialogs/oeb-dialogs/danger-dialo
 import { OebCheckboxComponent } from '../../../components/oeb-checkbox.component';
 import { BgImageStatusPlaceholderDirective } from '~/common/directives/bg-image-status-placeholder.directive';
 import { sortUnique } from '~/catalog/util/sorting';
-
-interface DraggableItem {
-	content: string;
-	effectAllowed: EffectAllowed;
-	disable: boolean;
-	handle: boolean;
-}
+import { HlmInput } from '@spartan-ng/helm/input';
+import { HlmH2, HlmP } from '@spartan-ng/helm/typography';
 
 type BadgeResult = BadgeClass & { selected?: boolean };
 

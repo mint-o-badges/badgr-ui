@@ -1,14 +1,12 @@
 import { NgIcon } from '@ng-icons/core';
-
 import { TranslateModule } from '@ngx-translate/core';
 import { BrnAccordionContent } from '@spartan-ng/brain/accordion';
 import { HlmAccordionModule } from './spartan/ui-accordion-helm/src';
-
 import { RouterModule } from '@angular/router';
 import { Component, Input } from '@angular/core';
 import { lucideClock, lucideChevronDown } from '@ng-icons/lucide';
 import { provideIcons } from '@ng-icons/core';
-import { HlmIcon } from './spartan/ui-icon-helm/src/lib/hlm-icon.directive';
+import { HlmIcon } from '@spartan-ng/helm/icon';
 
 @Component({
 	selector: 'competency-accordion',

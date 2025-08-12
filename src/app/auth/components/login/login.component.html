@@ -12,7 +12,11 @@
 
 					<p hlmP class="tw-text-oebblack tw-my-4">
 						{{ 'Login.areYouNew' | translate }}
-						<a hlmA href="#" [routerLink]="['/signup']">{{ 'Login.createAccount' | translate }}</a
+						<a
+							class="tw-underliner !tw-text-link hover:!tw-text-buttonhover tw-cursor-pointer"
+							href="#"
+							[routerLink]="['/signup']"
+							>{{ 'Login.createAccount' | translate }}</a
 						>.
 					</p>
 				</div>
@@ -52,7 +56,7 @@
 							>
 								<span label-additions>
 									<a
-										hlmA
+										class="tw-underliner !tw-text-link hover:!tw-text-buttonhover tw-cursor-pointer"
 										class="tw-relative tw-text-purple tw-z-20 tw-font-semibold"
 										href="#"
 										tabindex="-1"

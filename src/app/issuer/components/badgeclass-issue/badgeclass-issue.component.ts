@@ -31,10 +31,7 @@ import { SuccessDialogComponent } from '../../../common/dialogs/oeb-dialogs/succ
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 import { FormMessageComponent } from '../../../common/components/form-message.component';
-import { HlmH1 } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
 import { BgImageStatusPlaceholderDirective } from '../../../common/directives/bg-image-status-placeholder.directive';
-import { HlmP } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
-import { HlmA } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-a.directive';
 import { OebInputComponent } from '../../../components/input.component';
 import { OebSelectComponent } from '../../../components/select.component';
 import { OebCheckboxComponent } from '../../../components/oeb-checkbox.component';
@@ -42,6 +39,7 @@ import { NgClass, DatePipe } from '@angular/common';
 import { SvgIconComponent } from '../../../common/components/svg-icon.component';
 import { FormFieldMarkdown } from '../../../common/components/formfield-markdown';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
+import { HlmH1, HlmP } from '@spartan-ng/helm/typography';
 
 @Component({
 	selector: 'badgeclass-issue',
@@ -55,7 +53,6 @@ import { OebButtonComponent } from '../../../components/oeb-button.component';
 		HlmH1,
 		BgImageStatusPlaceholderDirective,
 		HlmP,
-		HlmA,
 		RouterLink,
 		OebInputComponent,
 		OebSelectComponent,

@@ -1,13 +1,12 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { BgImageStatusPlaceholderDirective } from '../../common/directives/bg-image-status-placeholder.directive';
-import { HlmH2 } from '../spartan/ui-typography-helm/src/lib/hlm-h2.directive';
 import { TruncatedTextComponent } from '../../common/components/truncated-text.component';
-import { HlmP } from '../spartan/ui-typography-helm/src/lib/hlm-p.directive';
 import { HlmBadge } from '../spartan/ui-badge-helm/src/lib/hlm-badge.directive';
 import { RouterLink } from '@angular/router';
 import { I18nPluralPipe } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { preloadImageURL } from '../../common/util/file-util';
+import { HlmH2, HlmP } from '@spartan-ng/helm/typography';
 
 export interface Issuer {
 	image: string;

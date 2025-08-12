@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { HlmIcon } from '../../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { lucideCircleX } from '@ng-icons/lucide';
 import { TranslatePipe } from '@ngx-translate/core';
+import { HlmIcon } from '@spartan-ng/helm/icon';
 
 @Component({
 	selector: 'bg-not-found-collection',

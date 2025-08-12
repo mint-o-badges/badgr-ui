@@ -1,6 +1,5 @@
 import { Component, Injector } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-
 import { preloadImageURL } from '../../../common/util/file-util';
 import { PublicApiService } from '../../services/public-api.service';
 import { LoadedRouteParam } from '../../../common/util/loaded-route-param';
@@ -15,10 +14,10 @@ import { AppConfigService } from '../../../common/app-config.service';
 import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 import { SlicePipe } from '@angular/common';
 import { BgImageStatusPlaceholderDirective } from '../../../common/directives/bg-image-status-placeholder.directive';
-import { HlmH1 } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
 import { BgBadgecard } from '../../../common/components/bg-badgecard';
 import { PublicNotFoundBadgeCollectionComponent } from '../not-found-badge-collection/not-found-badge-collection.component';
 import { TranslatePipe } from '@ngx-translate/core';
+import { HlmH1 } from '@spartan-ng/helm/typography';
 
 @Component({
 	templateUrl: 'badge-collection.component.html',

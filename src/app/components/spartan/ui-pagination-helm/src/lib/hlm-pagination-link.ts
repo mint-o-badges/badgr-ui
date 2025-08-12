@@ -2,9 +2,9 @@ import { BooleanInput } from '@angular/cdk/coercion';
 import { Directive, booleanAttribute, computed, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { hlm } from '@spartan-ng/brain/core';
-import { type ButtonVariants, buttonVariants } from '@spartan-ng/helm/button';
 import { type VariantProps, cva } from 'class-variance-authority';
 import type { ClassValue } from 'clsx';
+import { ButtonVariants, buttonVariants } from '~/components/spartan/ui-button-helm/src';
 
 export const paginationLinkVariants = cva('', {
 	variants: {},
