@@ -373,7 +373,8 @@
 		"networkLogoOnBadge": "Das Logo des Netzwerks wird zusätzlich auf den entsprechenden Badge-Bildern abgebildet.",
 		"youCanAddInstitutions": "Du kannst selbst ein Netzwerk anlegen und deine Partner-Institutionen hinzufügen:",
 		"create": "Netzwerk anlegen",
-		"name": "Name des Netzwerks"
+		"name": "Name des Netzwerks",
+		"addPartnerNext": "Deine Partner-Institutionen kannst du im nächsten Schritt hinzufügen."
 	},
 	"Badge": {
 		"groupBy": "Gruppieren nach",
