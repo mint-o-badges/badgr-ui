@@ -54,7 +54,7 @@
 					> svg {
 						width: 2em;
 						height: auto;
-						stroke: white;
+						stroke: currentColor;
 						--ng-icon__stroke-width: 1;
 					}
 
@@ -64,7 +64,7 @@
 						justify-content: center;
 						gap: 0.5ch;
 						font-weight: normal;
-						color: var(--color-white);
+						color: inherit;
 
 						svg {
 							align-self: center;
@@ -120,14 +120,6 @@
 					fill: var(--color-yellow-200);
 				}
 			}
-		}
-
-		g.future .fo-name svg,
-		g.future-sub .fo-name svg,
-		g.future .studyload,
-		g.future-sub .studyload {
-			stroke: black !important; //override white svg stroke
-			color: black !important;
 		}
 
 		g.group,
