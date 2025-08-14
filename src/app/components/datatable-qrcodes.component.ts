@@ -41,7 +41,7 @@ import { BadgeInstanceBatchAssertion } from '../issuer/models/badgeinstance-api.
 import { provideIcons } from '@ng-icons/core';
 import { BadgeInstanceApiService } from '../issuer/services/badgeinstance-api.service';
 import { TaskPollingManagerService, TaskResult, TaskStatus } from '../common/task-manager.service';
-import { formatDate, NgFor, NgIf } from '@angular/common';
+import { formatDate } from '@angular/common';
 import {
 	ColumnDef,
 	createAngularTable,
@@ -62,22 +62,20 @@ export type RequestedBadge = {
 @Component({
 	selector: 'qrcodes-datatable',
 	imports: [
-		FormsModule,
-		HlmMenuModule,
-		HlmTableModule,
-		NgIcon,
-		HlmIcon,
-		HlmInput,
-		BrnSelectModule,
-		HlmSelectModule,
-		TranslateModule,
-		HlmCommandInputWrapper,
-		OebButtonComponent,
-		OebSpinnerComponent,
-		NgFor,
-		FlexRenderDirective,
-		NgIf,
-	],
+    FormsModule,
+    HlmMenuModule,
+    HlmTableModule,
+    NgIcon,
+    HlmIcon,
+    HlmInput,
+    BrnSelectModule,
+    HlmSelectModule,
+    TranslateModule,
+    HlmCommandInputWrapper,
+    OebButtonComponent,
+    OebSpinnerComponent,
+    FlexRenderDirective
+],
 	styleUrl: './datatable-qrcodes.component.scss',
 	providers: [provideIcons({ lucideChevronDown, lucideEllipsis, lucideArrowUpDown }), TranslateService],
 	host: {
@@ -85,102 +83,110 @@ export type RequestedBadge = {
 	},
 	template: `
 		<div class="tw-flex tw-flex-col tw-justify-between tw-gap-4 sm:tw-flex-row">
-			<label hlmLabel class="tw-font-semibold tw-text-[0.5rem] tw-w-full md:tw-w-80">
-				<span class="tw-px-3 tw-text-muted-foreground tw-text-sm">{{
-					'General.searchByEmail' | translate
-				}}</span>
-				<hlm-cmd-input-wrapper class="tw-relative tw-px-0 tw-mt-1 tw-border-b-0">
-					<input
-						hlmInput
-						class="!tw-bg-background tw-w-full tw-border-solid tw-border-purple tw-py-1 tw-rounded-[20px] tw-text-oebblack"
-						[ngModel]="_emailFilter()"
-						(ngModelChange)="_rawFilterInput.set($event)"
-					/>
-					<ng-icon hlm size="lg" class="tw-absolute  tw-right-6 tw-text-purple" name="lucideSearch" />
-				</hlm-cmd-input-wrapper>
-			</label>
+		  <label hlmLabel class="tw-font-semibold tw-text-[0.5rem] tw-w-full md:tw-w-80">
+		    <span class="tw-px-3 tw-text-muted-foreground tw-text-sm">{{
+		      'General.searchByEmail' | translate
+		    }}</span>
+		    <hlm-cmd-input-wrapper class="tw-relative tw-px-0 tw-mt-1 tw-border-b-0">
+		      <input
+		        hlmInput
+		        class="!tw-bg-background tw-w-full tw-border-solid tw-border-purple tw-py-1 tw-rounded-[20px] tw-text-oebblack"
+		        [ngModel]="_emailFilter()"
+		        (ngModelChange)="_rawFilterInput.set($event)"
+		        />
+		      <ng-icon hlm size="lg" class="tw-absolute  tw-right-6 tw-text-purple" name="lucideSearch" />
+		    </hlm-cmd-input-wrapper>
+		  </label>
 		</div>
-
+		
 		@if (isTaskProcessing || isTaskPending) {
-			<div
-				class="tw-border-green tw-p-2 tw-border-solid tw-border-4 tw-rounded-[10px] tw-w-full tw-flex md:tw-gap-6 tw-gap-2 tw-items-center"
-			>
-				<oeb-spinner size="lg"></oeb-spinner>
-				<div class="tw-text-oebblack tw-text-lg tw-flex tw-flex-col tw-gap-1">
-					<span class="tw-text-lg tw-font-bold tw-uppercase">{{
-						'Badge.awardingInProgress' | translate
-					}}</span>
-					<span>{{ 'Badge.willBeAwardedSoon' | translate }}</span>
-				</div>
-			</div>
+		  <div
+		    class="tw-border-green tw-p-2 tw-border-solid tw-border-4 tw-rounded-[10px] tw-w-full tw-flex md:tw-gap-6 tw-gap-2 tw-items-center"
+		    >
+		    <oeb-spinner size="lg"></oeb-spinner>
+		    <div class="tw-text-oebblack tw-text-lg tw-flex tw-flex-col tw-gap-1">
+		      <span class="tw-text-lg tw-font-bold tw-uppercase">{{
+		        'Badge.awardingInProgress' | translate
+		      }}</span>
+		      <span>{{ 'Badge.willBeAwardedSoon' | translate }}</span>
+		    </div>
+		  </div>
 		} @else {
-			<div
-				class="tw-mt-4 tw-block tw-min-h-[335px] tw-max-h-[680px] tw-overflow-x-hidden tw-overflow-y-auto tw-rounded-md"
-			>
-				<table class="tw-w-full tw-border-collapse">
-					<thead class="sticky top-0 tw-bg-gray-800">
-						<tr *ngFor="let headerGroup of table.getHeaderGroups()">
-							<th
-								*ngFor="let header of headerGroup.headers"
-								[class]="header.column.columnDef.meta['class'] || ''"
-							>
-								<ng-container
+		  <div
+		    class="tw-mt-4 tw-block tw-min-h-[335px] tw-max-h-[680px] tw-overflow-x-hidden tw-overflow-y-auto tw-rounded-md"
+		    >
+		    <table class="tw-w-full tw-border-collapse">
+		      <thead class="sticky top-0 tw-bg-gray-800">
+		        @for (headerGroup of table.getHeaderGroups(); track headerGroup) {
+		          <tr>
+		            @for (header of headerGroup.headers; track header) {
+		              <th
+		                [class]="header.column.columnDef.meta['class'] || ''"
+		                >
+		                <ng-container
 									*flexRender="
 										header.column.columnDef.header;
 										props: header.getContext();
 										let rendered
 									"
-								>
-									<span [innerHTML]="rendered"></span>
-								</ng-container>
-							</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr *ngFor="let row of table.getRowModel().rows">
-							<td
-								*ngFor="let cell of row.getVisibleCells()"
-								[class]="cell.column.columnDef.meta['class'] || ''"
-							>
-								<ng-container
-									*flexRender="cell.column.columnDef.cell; props: cell.getContext(); let rendered"
-								>
-									<span [innerHTML]="rendered"></span>
-								</ng-container>
-							</td>
-						</tr>
-						<tr *ngIf="!table.getRowModel().rows.length">
-							<td [attr.colspan]="columns.length" class="tw-text-center tw-p-20 tw-text-muted-foreground">
-								No data
-							</td>
-						</tr>
-					</tbody>
-				</table>
-
-				<!-- Custom templates for complex cells -->
-				<ng-template #headerCheckbox>
-					<input type="checkbox" [checked]="allSelected()" (change)="toggleAll()" />
-				</ng-template>
-				<ng-template #rowCheckbox let-row="row">
-					<input type="checkbox" [checked]="isSelected(row.original)" (change)="toggleRow(row.original)" />
-				</ng-template>
-				<ng-template #deleteButton let-row="row">
-					<button (click)="openDangerDialog(row.original)">
-						<svg class="tw-ml-3 tw-text-oebblack" height="16" width="16"><!-- Trash icon --></svg>
-					</button>
-				</ng-template>
-			</div>
+		                  >
+		                  <span [innerHTML]="rendered"></span>
+		                </ng-container>
+		              </th>
+		            }
+		          </tr>
+		        }
+		      </thead>
+		      <tbody>
+		        @for (row of table.getRowModel().rows; track row) {
+		          <tr>
+		            @for (cell of row.getVisibleCells(); track cell) {
+		              <td
+		                [class]="cell.column.columnDef.meta['class'] || ''"
+		                >
+		                <ng-container
+		                  *flexRender="cell.column.columnDef.cell; props: cell.getContext(); let rendered"
+		                  >
+		                  <span [innerHTML]="rendered"></span>
+		                </ng-container>
+		              </td>
+		            }
+		          </tr>
+		        }
+		        @if (!table.getRowModel().rows.length) {
+		          <tr>
+		            <td [attr.colspan]="columns.length" class="tw-text-center tw-p-20 tw-text-muted-foreground">
+		              No data
+		            </td>
+		          </tr>
+		        }
+		      </tbody>
+		    </table>
+		
+		    <!-- Custom templates for complex cells -->
+		    <ng-template #headerCheckbox>
+		      <input type="checkbox" [checked]="allSelected()" (change)="toggleAll()" />
+		    </ng-template>
+		    <ng-template #rowCheckbox let-row="row">
+		      <input type="checkbox" [checked]="isSelected(row.original)" (change)="toggleRow(row.original)" />
+		    </ng-template>
+		    <ng-template #deleteButton let-row="row">
+		      <button (click)="openDangerDialog(row.original)">
+		        <svg class="tw-ml-3 tw-text-oebblack" height="16" width="16"><!-- Trash icon --></svg>
+		      </button>
+		    </ng-template>
+		  </div>
 		}
-
+		
 		<oeb-button
-			size="sm"
-			class="tw-float-right tw-mt-4"
-			(click)="issueBadges()"
-			[disabled]="_selected().length === 0 || isTaskProcessing || isTaskPending"
-			[text]="_selected().length > 1 ? ('Issuer.giveBadges' | translate) : ('Issuer.giveBadge' | translate)"
-		>
+		  size="sm"
+		  class="tw-float-right tw-mt-4"
+		  (click)="issueBadges()"
+		  [disabled]="_selected().length === 0 || isTaskProcessing || isTaskPending"
+		  [text]="_selected().length > 1 ? ('Issuer.giveBadges' | translate) : ('Issuer.giveBadge' | translate)"
+		  >
 		</oeb-button>
-	`,
+		`,
 })
 export class QrCodeDatatableComponent {
 	@Input() caption: string = '';
