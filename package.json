@@ -44,6 +44,7 @@
 		"@ngx-translate/http-loader": "^16.0.0",
 		"@spartan-ng/brain": "^0.0.1-alpha.498",
 		"@spartan-ng/ui-core": "0.0.1-alpha.380",
+		"@tanstack/angular-table": "^8.21.3",
 		"ace-builds": "^1.4.14",
 		"altcha": "^0.3.1",
 		"angular-ng-autocomplete": "^2.0.12",
