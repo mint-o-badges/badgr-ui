@@ -44,13 +44,13 @@ export const HLM_CHECKBOX_VALUE_ACCESSOR = {
 		>
 			@if (checked()) {
 				<span class="flex items-center justify-center text-current transition-none">
-					<ng-icon hlm size="14px" name="lucideCheck" />
+					<ng-icon hlm size="23px" name="lucideCheck" />
 				</span>
 			}
 		</brn-checkbox>
 	`,
 	host: {
-		class: 'contents peer',
+		class: 'tw-contents tw-peer',
 		'[attr.id]': 'null',
 		'[attr.aria-label]': 'null',
 		'[attr.aria-labelledby]': 'null',
@@ -66,10 +66,9 @@ export class HlmCheckbox implements ControlValueAccessor {
 
 	protected readonly _computedClass = computed(() =>
 		hlm(
-			'tw-group tw-flex tw-border tw-border-purple tw-shrink-0 tw-cursor-pointer tw-items-center tw-rounded-[5px] focus-visible:tw-outline-none focus-visible:tw-ring-2 focus-visible:tw-ring-ring' +
-				' focus-visible:tw-ring-offset-2 focus-visible:tw-ring-offset-background data-[state=checked]:tw-text-background data-[state=checked]:tw-bg-purple data-[state=unchecked]:tw-bg-background data-[state=indeterminate]:tw-bg-white',
+			'tw-peer tw-inline-block tw-border tw-border-solid tw-border-purple dark:tw-bg-input/30 data-[state=checked]:tw-bg-purple data-[state=checked]:tw-text-background dark:tw-data-[state=checked]:tw-bg-primary aria-invalid:tw-ring-destructive/20 dark:tw-aria-invalid:tw-ring-destructive/40 tw-size-6 tw-shrink-0 tw-rounded-[5px] focus-visible:tw-outline-none focus-visible:tw-ring-2 focus-visible:tw-ring-ring focus-visible:tw-ring-offset-2 focus-visible:tw-ring-offset-background disabled:tw-cursor-not-allowed disabled:tw-opacity-50 tw-cursor-default data-[state=unchecked]:tw-bg-background data-[state=indeterminate]:tw-bg-white tw-leading-none',
 			this.userClass(),
-			this.disabled() ? 'tw-cursor-not-allowed tw-opacity-50' : '',
+			this._state().disabled() ? 'cursor-not-allowed opacity-50' : '',
 		),
 	);
 
