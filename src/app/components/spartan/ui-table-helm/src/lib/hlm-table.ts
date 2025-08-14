@@ -21,7 +21,7 @@ export const HlmTableVariantDefault: HlmTableVariant = {
 	thead: '[&_tr]:border-b',
 	tbody: '[&_tr:last-child]:border-0',
 	tfoot: 'bg-muted/50 border-t font-medium [&>tr]:last:border-b-0',
-	tr: 'tw-flex tw-flex tw-border-b tw-border-border tw-transition-colors hover:tw-bg-muted/50 data-[state=selected]:tw-bg-muted',
+	tr: 'tw-flex tw-flex tw-border-b tw-border-border tw-border-solid tw-transition-colors hover:tw-bg-muted/50 data-[state=selected]:tw-bg-muted',
 	th: 'tw-flex tw-flex-none tw-h-12 tw-px-4 tw-text-sm tw-items-center tw-font-medium tw-text-muted-foreground [&:has([role=checkbox])]:tw-pr-0 tw-text-muted-foreground tw-whitespace-nowrap [&:has([role=checkbox])]:tw-pr-0 [&>[role=checkbox]]:tw-translate-y-[2px]',
 	td: 'tw-flex tw-flex-none tw-p-4 tw-items-center [&:has([role=checkbox])]:tw-pr-0 tw-whitespace-nowrap [&:has([role=checkbox])]:tw-pr-0 [&>[role=checkbox]]:tw-translate-y-[2px]',
 	caption: 'tw-text-center tw-block tw-mt-4 tw-text-sm tw-text-muted-foreground',

@@ -3,17 +3,17 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { RouterModule } from '@angular/router';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { HlmTableModule } from './spartan/ui-table-helm/src';
+import { HlmTableImports } from './spartan/ui-table-helm/src';
 import { OebButtonComponent } from './oeb-button.component';
 import { Issuer } from '../issuer/models/issuer.model';
 import { HlmIconModule } from '@spartan-ng/helm/icon';
 
 @Component({
 	selector: 'learningpaths-datatable',
-	imports: [HlmTableModule, HlmIconModule, CommonModule, OebButtonComponent, TranslateModule, RouterModule],
+	imports: [...HlmTableImports, HlmIconModule, CommonModule, OebButtonComponent, TranslateModule, RouterModule],
 	template: ` <table
 		hlmTable
-		class="tw-rounded-[20px] tw-overflow-hidden tw-w-full tw-max-w-[100%] tw-bg-lightpurple tw-border-purple tw-border"
+		class="tw-rounded-[20px] tw-overflow-hidden tw-w-full tw-max-w-[100%] tw-bg-lightpurple tw-border-purple tw-border tw-border-solid"
 	>
 		<tr hlmTr class="tw-bg-purple tw-text-white tw-flex-wrap hover:tw-bg-purple">
 			<th hlmTh>class="!tw-text-white tw-w-28 sm:tw-w-20 md:tw-w-40">Micro Degree</th>

@@ -1,7 +1,7 @@
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { HlmTableModule } from './spartan/ui-table-helm/src';
+import { HlmTableImports } from './spartan/ui-table-helm/src';
 import { Issuer, IssuerStaffMember, issuerStaffRoles } from '../issuer/models/issuer.model';
 import { IssuerStaffRoleSlug } from '../issuer/models/issuer-api.model';
 import { FormFieldSelectOption } from '../common/components/formfield-select';
@@ -12,11 +12,11 @@ import { HlmP } from '@spartan-ng/helm/typography';
 @Component({
 	selector: 'issuer-staff-datatable',
 	standalone: true,
-	imports: [HlmTableModule, HlmIconModule, TranslateModule, RouterModule, HlmP, FormsModule],
+	imports: [...HlmTableImports, HlmIconModule, TranslateModule, RouterModule, HlmP, FormsModule],
 	template: `
 		<table
 			hlmTable
-			class="tw-rounded-t-[20px] tw-overflow-hidden tw-w-full tw-max-w-[100%] tw-bg-white tw-border-lightgrey tw-border"
+			class="tw-rounded-t-[20px] tw-overflow-hidden tw-w-full tw-max-w-[100%] tw-bg-white tw-border-lightgrey tw-border tw-border-solid"
 		>
 			<tr hlmTr class="!tw-bg-lightgrey tw-text-oebblack tw-flex-wrap hover:tw-bg-lightgrey">
 				<!-- Name -->

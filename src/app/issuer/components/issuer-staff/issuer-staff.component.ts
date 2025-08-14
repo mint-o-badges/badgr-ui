@@ -66,7 +66,7 @@ import { HlmH1, HlmH2, HlmP } from '@spartan-ng/helm/typography';
 		HlmH2,
 		IssuerStaffRequestsDatatableComponent,
 		HlmP,
-		HlmTableImports,
+		...HlmTableImports,
 		TranslatePipe,
 	],
 })

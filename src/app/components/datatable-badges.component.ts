@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { HlmTableModule } from './spartan/ui-table-helm/src';
+import { HlmTableImports } from './spartan/ui-table-helm/src';
 import { BadgeClass } from '../issuer/models/badgeclass.model';
 import { OebButtonComponent } from './oeb-button.component';
 import { HlmIconModule } from '@spartan-ng/helm/icon';
@@ -10,10 +10,10 @@ import { HlmP } from '@spartan-ng/helm/typography';
 
 @Component({
 	selector: 'badges-datatable',
-	imports: [HlmTableModule, HlmIconModule, CommonModule, OebButtonComponent, TranslateModule, RouterModule, HlmP],
+	imports: [...HlmTableImports, HlmIconModule, CommonModule, OebButtonComponent, TranslateModule, RouterModule, HlmP],
 	template: ` <table
 		hlmTable
-		class="tw-rounded-t-[20px] tw-overflow-hidden tw-w-full tw-max-w-[100%] tw-bg-lightpurple tw-border-purple tw-border"
+		class="tw-rounded-t-[20px] tw-overflow-hidden tw-w-full tw-max-w-[100%] tw-bg-lightpurple tw-border-purple tw-border tw-border-solid"
 	>
 		@if (caption) {
 			<caption hlmCaption>

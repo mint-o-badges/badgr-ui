@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
 import { Component, EventEmitter, Input, Output, computed, effect, input, signal } from '@angular/core';
-import { HlmTableModule } from './spartan/ui-table-helm/src';
+import { HlmTableImports } from './spartan/ui-table-helm/src';
 import { HlmInput } from './spartan/ui-input-helm/src';
 import { HlmLabel } from './spartan/ui-label-helm/src';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
@@ -23,7 +23,7 @@ import { TimeComponent } from '~/common/components/time.component';
 	selector: 'issuer-detail-datatable',
 	imports: [
 		FormsModule,
-		HlmTableModule,
+		...HlmTableImports,
 		CommonModule,
 		TranslateModule,
 		RouterModule,

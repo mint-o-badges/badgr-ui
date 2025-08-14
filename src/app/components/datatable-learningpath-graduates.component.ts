@@ -3,16 +3,16 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { RouterModule } from '@angular/router';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { HlmTableModule } from './spartan/ui-table-helm/src';
+import { HlmTableImports } from './spartan/ui-table-helm/src';
 import { OebButtonComponent } from './oeb-button.component';
 import { HlmIconModule } from '@spartan-ng/helm/icon';
 
 @Component({
 	selector: 'learningpath-graduates-datatable',
-	imports: [HlmTableModule, HlmIconModule, CommonModule, OebButtonComponent, TranslateModule, RouterModule],
+	imports: [...HlmTableImports, HlmIconModule, CommonModule, OebButtonComponent, TranslateModule, RouterModule],
 	template: ` <table
 		hlmTable
-		class="tw-rounded-t-[20px] tw-overflow-hidden tw-w-full tw-max-w-[100%] tw-bg-lightpurple tw-border-purple tw-border"
+		class="tw-rounded-t-[20px] tw-overflow-hidden tw-w-full tw-max-w-[100%] tw-bg-lightpurple tw-border-purple tw-border tw-border-solid"
 	>
 		<tr hlmTr class="tw-bg-purple tw-text-white tw-flex-wrap hover:tw-bg-purple">
 			<th hlmTh class="!tw-text-white tw-w-28 md:tw-w-48">ID</th>
