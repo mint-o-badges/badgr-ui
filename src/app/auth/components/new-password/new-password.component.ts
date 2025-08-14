@@ -118,6 +118,9 @@ export class NewPasswordComponent extends BaseRoutableComponent {
 				(err) => {
 					if (err.message && this.isJson(err.message)) {
 						const errors = JSON.parse(err.message);
+						if (errors['current_password']) {
+							this._messageService.reportAndThrowError(errors['current_password'], err);
+						}
 						for (const key in errors) {
 							if (errors.hasOwnProperty(key)) {
 								this.errors[key] = errors[key];
