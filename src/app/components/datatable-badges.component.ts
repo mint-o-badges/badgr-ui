@@ -15,11 +15,13 @@ import { HlmP } from '@spartan-ng/helm/typography';
 		hlmTable
 		class="tw-rounded-t-[20px] tw-overflow-hidden tw-w-full tw-max-w-[100%] tw-bg-lightpurple tw-border-purple tw-border"
 	>
-		<caption hlmCaption>
-			{{
-				caption
-			}}
-		</caption>
+		@if (caption) {
+			<caption hlmCaption>
+				{{
+					caption
+				}}
+			</caption>
+		}
 		<tr hlmTr class="tw-bg-purple tw-text-white tw-flex-wrap hover:tw-bg-purple">
 			<!-- Badge -->
 			<th hlmTh class="!tw-text-white tw-w-28 sm:tw-w-20 md:tw-w-40">Badge</th>

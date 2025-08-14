@@ -79,11 +79,13 @@ import { TimeComponent } from '~/common/components/time.component';
 				hlmTable
 				class="tw-rounded-t-[20px] tw-overflow-hidden tw-w-full tw-max-w-[100%] tw-bg-lightpurple tw-border-purple tw-border-[1px] tw-border-solid tw-mt-8"
 			>
-				<caption hlmCaption>
-					{{
-						caption
-					}}
-				</caption>
+				@if (caption) {
+					<caption hlmCaption>
+						{{
+							caption
+						}}
+					</caption>
+				}
 				<tr hlmTr class="tw-bg-purple tw-text-white tw-flex-wrap hover:tw-bg-purple">
 					<th hlmTh class="!tw-text-white tw-w-40">ID</th>
 					<th hlmTh class="!tw-text-white tw-justify-center xl:tw-pr-12 !tw-flex-1">
