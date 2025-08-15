@@ -17,13 +17,13 @@ export interface HlmTableVariant {
 }
 
 export const HlmTableVariantDefault: HlmTableVariant = {
-	table: 'tw-flex tw-flex-col tw-text-sm [&_hlm-trow:last-child]:tw-border-0 tw-caption-bottom',
-	thead: '[&_tr]:border-b',
-	tbody: '[&_tr:last-child]:border-0',
-	tfoot: 'bg-muted/50 border-t font-medium [&>tr]:last:border-b-0',
-	tr: 'tw-flex tw-flex tw-border-b tw-border-border tw-border-solid tw-transition-colors hover:tw-bg-muted/50 data-[state=selected]:tw-bg-muted',
-	th: 'tw-flex tw-flex-none tw-h-12 tw-px-4 tw-text-sm tw-items-center tw-font-medium tw-text-muted-foreground [&:has([role=checkbox])]:tw-pr-0 tw-text-muted-foreground tw-whitespace-nowrap [&:has([role=checkbox])]:tw-pr-0 [&>[role=checkbox]]:tw-translate-y-[2px]',
-	td: 'tw-flex tw-flex-none tw-p-4 tw-items-center [&:has([role=checkbox])]:tw-pr-0 tw-whitespace-nowrap [&:has([role=checkbox])]:tw-pr-0 [&>[role=checkbox]]:tw-translate-y-[2px]',
+	table: 'tw-text-sm tw-caption-bottom tw-text-left',
+	thead: '',
+	tbody: '',
+	tfoot: 'bg-muted/50 border-t font-medium',
+	tr: 'tw-border-b tw-border-border tw-border-solid tw-transition-colors data-[state=selected]:tw-bg-muted',
+	th: 'tw-align-middle tw-h-12 tw-px-4 tw-text-sm tw-items-center tw-font-medium tw-text-muted-foreground [&:has([role=checkbox])]:tw-pr-0 tw-text-muted-foreground tw-whitespace-nowrap [&:has([role=checkbox])]:tw-pr-0 [&>[role=checkbox]]:tw-translate-y-[2px]',
+	td: 'tw-align-middle tw-p-4 tw-items-center [&:has([role=checkbox])]:tw-pr-0 tw-whitespace-nowrap [&:has([role=checkbox])]:tw-pr-0 [&>[role=checkbox]]:tw-translate-y-[2px]',
 	caption: 'tw-text-center tw-block tw-mt-4 tw-text-sm tw-text-muted-foreground',
 };
 

@@ -11,6 +11,7 @@ import {
 	EventEmitter,
 	TemplateRef,
 	ViewChild,
+	viewChild,
 } from '@angular/core';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
@@ -26,10 +27,7 @@ import { HlmDialogService } from './spartan/ui-dialog-helm/src/lib/hlm-dialog.se
 import { SuccessDialogComponent } from '../common/dialogs/oeb-dialogs/success-dialog.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { BadgeRequestApiService } from '../issuer/services/badgerequest-api.service';
-import { BadgeInstanceManager } from '../issuer/services/badgeinstance-manager.service';
-import { BadgeClassManager } from '../issuer/services/badgeclass-manager.service';
 import { MessageService } from '../common/services/message.service';
-import { Router } from '@angular/router';
 import { DangerDialogComponent } from '../common/dialogs/oeb-dialogs/danger-dialog.component';
 import { TranslateService } from '@ngx-translate/core';
 import { ApiRequestedBadge } from '../issuer/models/badgerequest-api.model';
@@ -49,6 +47,7 @@ import {
 	getCoreRowModel,
 	getSortedRowModel,
 } from '@tanstack/angular-table';
+import { OebCheckboxComponent } from './oeb-checkbox.component';
 
 export type RequestedBadge = {
 	email: string;
@@ -74,7 +73,9 @@ export type RequestedBadge = {
 		HlmCommandInputWrapper,
 		OebButtonComponent,
 		OebSpinnerComponent,
+		OebCheckboxComponent,
 		FlexRenderDirective,
+		OebCheckboxComponent,
 	],
 	styleUrl: './datatable-qrcodes.component.scss',
 	providers: [provideIcons({ lucideChevronDown, lucideEllipsis, lucideArrowUpDown }), TranslateService],
@@ -115,12 +116,12 @@ export type RequestedBadge = {
 			<div
 				class="tw-mt-4 tw-block tw-min-h-[335px] tw-max-h-[680px] tw-overflow-x-hidden tw-overflow-y-auto tw-rounded-md"
 			>
-				<table class="tw-w-full tw-border-collapse">
-					<thead class="sticky top-0 tw-bg-gray-800">
-						@for (headerGroup of table.getHeaderGroups(); track headerGroup) {
-							<tr>
-								@for (header of headerGroup.headers; track header) {
-									<th [class]="header.column.columnDef.meta['class'] || ''">
+				<table hlmTable class="tw-w-full tw-border tw-border-solid tw-border-gray-800 tw-border-collapse">
+					<thead hlmTHead class="tw-bg-gray-800">
+						@for (headerGroup of table.getHeaderGroups(); track headerGroup.id) {
+							<tr hlmTr class="tw-border-gray-800">
+								@for (header of headerGroup.headers; track header.id) {
+									<th hlmTh [class]="header.column.columnDef.meta['class'] || ''">
 										<ng-container
 											*flexRender="
 												header.column.columnDef.header;
@@ -135,11 +136,11 @@ export type RequestedBadge = {
 							</tr>
 						}
 					</thead>
-					<tbody>
-						@for (row of table.getRowModel().rows; track row) {
-							<tr>
-								@for (cell of row.getVisibleCells(); track cell) {
-									<td [class]="cell.column.columnDef.meta['class'] || ''">
+					<tbody class="tw-bg-background">
+						@for (row of table.getRowModel().rows; track row.id) {
+							<tr hlmTr class="tw-border-gray-800">
+								@for (cell of row.getVisibleCells(); track cell.id) {
+									<td hlmTd [class]="cell.column.columnDef.meta['class'] || ''">
 										<ng-container
 											*flexRender="
 												cell.column.columnDef.cell;
@@ -147,15 +148,16 @@ export type RequestedBadge = {
 												let rendered
 											"
 										>
-											<span [innerHTML]="rendered"></span>
+											<span [innerHTML]="rendered" class="tw-text-oebblack"></span>
 										</ng-container>
 									</td>
 								}
 							</tr>
 						}
 						@if (!table.getRowModel().rows.length) {
-							<tr>
+							<tr hlmTr class="tw-border-gray-800">
 								<td
+									hlmTd
 									[attr.colspan]="columns.length"
 									class="tw-text-center tw-p-20 tw-text-muted-foreground"
 								>
@@ -167,15 +169,21 @@ export type RequestedBadge = {
 				</table>
 
 				<!-- Custom templates for complex cells -->
+				<ng-template #requestedOnHeaderCell>
+					{{ 'Badge.requestedOn' | translate }}
+					<ng-icon hlm class="tw-ml-3 tw-text-white" size="sm" name="lucideArrowUpDown" />
+				</ng-template>
 				<ng-template #headerCheckbox>
-					<input type="checkbox" [checked]="allSelected()" (change)="toggleAll()" />
+					<oeb-checkbox [checked]="allSelected()" (checkedChange)="toggleAll()" />
 				</ng-template>
 				<ng-template #rowCheckbox let-row="row">
-					<input type="checkbox" [checked]="isSelected(row.original)" (change)="toggleRow(row.original)" />
+					<oeb-checkbox />
 				</ng-template>
 				<ng-template #deleteButton let-row="row">
-					<button (click)="openDangerDialog(row.original)">
-						<svg class="tw-ml-3 tw-text-oebblack" height="16" width="16"><!-- Trash icon --></svg>
+					<button>
+						<svg class="tw-ml-3 tw-text-oebblack" height="16" width="16">
+							<ng-icon hlm class="tw-ml-3 tw-text-oebblack" size="sm" name="lucideTrash2" />
+						</svg>
 					</button>
 				</ng-template>
 			</div>
@@ -453,57 +461,44 @@ export class QrCodeDatatableComponent {
 		);
 	}
 
-	badges = signal<RequestedBadge[]>([]);
 	selected = signal<Set<string>>(new Set());
 
-	// TemplateRefs for custom rendering
-	@ViewChild('headerCheckbox', { static: true }) headerCheckbox: TemplateRef<any>;
-	@ViewChild('rowCheckbox', { static: true }) rowCheckbox: TemplateRef<any>;
-	@ViewChild('deleteButton', { static: true }) deleteButton: TemplateRef<any>;
+	requestedOnHeaderCell = viewChild.required<TemplateRef<any>>('requestedOnHeaderCell');
+	headerCheckbox = viewChild.required<TemplateRef<any>>('headerCheckbox');
+	rowCheckbox = viewChild.required<TemplateRef<any>>('rowCheckbox');
+	deleteButton = viewChild.required<TemplateRef<any>>('deleteButton');
 
 	columns: ColumnDef<RequestedBadge>[] = [
 		{
 			id: 'select',
-			header: () => this.headerCheckbox,
-			cell: ({ row }) => this.rowCheckbox,
-			meta: { class: 'tw-w-12' },
+			header: () => this.headerCheckbox(),
+			cell: () => this.rowCheckbox(),
+			meta: { class: '' },
 		},
 		{
 			accessorKey: 'email',
 			header: 'ID',
 			cell: (info) => info.row.original.email,
-			meta: { class: 'tw-w-40 tw-text-white' },
+			meta: { class: 'tw-text-white' },
 		},
 		{
 			accessorKey: 'requestedOn',
-			header: (_ctx) => `
-        <button class="tw-text-white tw-text-sm tw-font-medium" (click)="toggleSort()">
-          {{ 'Badge.requestedOn' | translate }}
-        </button>
-        <svg class="tw-ml-3 tw-text-white" height="16" width="16"><!-- icon --></svg>
-      `,
+			header: () => this.requestedOnHeaderCell(),
 			cell: (info) => formatDate(info.row.original.requestedOn, 'dd.MM.yyyy', 'en'),
-			meta: { class: '!tw-flex-1 tw-justify-center' },
+			meta: { class: 'tw-text-white tw-text-sm tw-flex-1' },
 		},
 		{
-			id: 'amount',
+			accessorKey: 'actions',
 			header: '',
-			cell: ({ row }) => this.deleteButton,
-			meta: { class: 'tw-justify-end tw-w-20' },
-		},
-		{
-			id: 'actions',
-			header: '',
-			cell: () => '',
-			meta: { class: 'tw-w-16' },
+			cell: () => this.deleteButton(),
+			meta: { class: '' },
 		},
 	];
 
 	table = createAngularTable(() => ({
-		data: this.badges(),
+		data: this._requestedBadges(),
 		columns: this.columns,
 		getCoreRowModel: getCoreRowModel(),
-		getSortedRowModel: getSortedRowModel(),
 	}));
 
 	toggleRow(row: RequestedBadge) {
@@ -519,11 +514,11 @@ export class QrCodeDatatableComponent {
 	toggleAll() {
 		this.allSelected()
 			? this.selected.set(new Set())
-			: this.selected.set(new Set(this.badges().map((p) => p.entity_id)));
+			: this.selected.set(new Set(this._requestedBadges().map((p) => p.entity_id)));
 	}
 
 	allSelected() {
-		return this.selected().size === this.badges().length && this.badges().length > 0;
+		return this.selected().size === this._requestedBadges().length && this._requestedBadges().length > 0;
 	}
 
 	toggleSort() {
