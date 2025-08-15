@@ -1,5 +1,5 @@
 import { Directive, computed, inject, input } from '@angular/core';
-import { BrnAccordionContentComponent } from '@spartan-ng/brain/accordion';
+import { BrnAccordionContent } from '@spartan-ng/brain/accordion';
 import { hlm } from '@spartan-ng/brain/core';
 import type { ClassValue } from 'clsx';
 
@@ -10,8 +10,8 @@ import type { ClassValue } from 'clsx';
 		'[class]': '_computedClass()',
 	},
 })
-export class HlmAccordionContentDirective {
-	private readonly _brn = inject(BrnAccordionContentComponent, { optional: true });
+export class HlmAccordionContent {
+	private readonly _brn = inject(BrnAccordionContent, { optional: true });
 
 	public readonly userClass = input<ClassValue>('', { alias: 'class' });
 	protected readonly _computedClass = computed(() => {

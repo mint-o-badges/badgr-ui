@@ -1,9 +1,9 @@
 import { Component, Input } from '@angular/core';
-import { HlmSpinnerComponent, SpinnerVariants } from './spartan/ui-spinner-helm/src';
+import { HlmSpinner, SpinnerVariants } from './spartan/ui-spinner-helm/src';
 
 @Component({
 	selector: 'oeb-spinner',
-	imports: [HlmSpinnerComponent],
+	imports: [HlmSpinner],
 	template: `
 		<div class="tw-flex tw-flex-col tw-items-center tw-w-full">
 			<hlm-spinner [size]="size" />

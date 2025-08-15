@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-
-import { FormBuilder, FormGroup, ValidationErrors, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, ValidationErrors, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SessionService } from '../../../common/services/session.service';
 import { MessageService } from '../../../common/services/message.service';
@@ -11,13 +10,13 @@ import { typedFormGroup } from '../../../common/util/typed-forms';
 import { LangChangeEvent, TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { FormMessageComponent } from '../../../common/components/form-message.component';
 import { OAuthBannerComponent } from '../../../common/components/oauth-banner.component';
-import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
 import { OebInputComponent } from '../../../components/input.component';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { PasswordComplexityValidator } from '../../../common/validators/password-complexity.validator';
 import { UserProfile } from '../../../common/model/user-profile.model';
 import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
 import { map, startWith } from 'rxjs';
+import { HlmH1 } from '@spartan-ng/helm/typography';
 
 @Component({
 	selector: 'new-password',
@@ -25,7 +24,7 @@ import { map, startWith } from 'rxjs';
 	imports: [
 		FormMessageComponent,
 		OAuthBannerComponent,
-		HlmH1Directive,
+		HlmH1,
 		FormsModule,
 		ReactiveFormsModule,
 		OebInputComponent,

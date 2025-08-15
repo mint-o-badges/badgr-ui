@@ -11,10 +11,10 @@ import { typedFormGroup } from '../../../common/util/typed-forms';
 import { LangChangeEvent, TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { FormMessageComponent } from '../../../common/components/form-message.component';
 import { OAuthBannerComponent } from '../../../common/components/oauth-banner.component';
-import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
 import { OebInputComponent } from '../../../components/input.component';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { PasswordComplexityValidator } from '../../../common/validators/password-complexity.validator';
+import { HlmH1 } from '@spartan-ng/helm/typography';
 
 @Component({
 	selector: 'change-password',
@@ -22,7 +22,7 @@ import { PasswordComplexityValidator } from '../../../common/validators/password
 	imports: [
 		FormMessageComponent,
 		OAuthBannerComponent,
-		HlmH1Directive,
+		HlmH1,
 		FormsModule,
 		ReactiveFormsModule,
 		OebInputComponent,

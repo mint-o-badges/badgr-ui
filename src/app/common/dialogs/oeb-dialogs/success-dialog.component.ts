@@ -1,7 +1,7 @@
 import { Component, HostBinding, inject } from '@angular/core';
 import { BrnDialogRef, injectBrnDialogContext } from '@spartan-ng/brain/dialog';
 import { OebDialogComponent } from '../../../components/oeb-dialog.component';
-import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/src';
+import { HlmP } from '../../../components/spartan/ui-typography-helm/src';
 
 import { lucideCheck } from '@ng-icons/lucide';
 
@@ -10,7 +10,7 @@ import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
 	selector: 'oeb-success-dialog',
-	imports: [OebDialogComponent, HlmPDirective, TranslateModule],
+	imports: [OebDialogComponent, HlmP, TranslateModule],
 	providers: [provideIcons({ lucideCheck })],
 	template: `
 		<oeb-dialog [variant]="variant" class="tw-text-center tw-text-purple">

@@ -1,0 +1,25 @@
+import { Directive, computed, inject, input } from '@angular/core';
+import { hlm } from '@spartan-ng/brain/core';
+import { BrnSelectLabel } from '@spartan-ng/brain/select';
+import type { ClassValue } from 'clsx';
+import { HlmSelectContent } from './hlm-select-content';
+
+@Directive({
+	selector: '[hlmSelectLabel], hlm-select-label',
+	hostDirectives: [BrnSelectLabel],
+	host: {
+		'[class]': '_computedClass()',
+	},
+})
+export class HlmSelectLabel {
+	private readonly _selectContent = inject(HlmSelectContent);
+	private readonly _stickyLabels = computed(() => this._selectContent.stickyLabels());
+	public readonly userClass = input<ClassValue>('', { alias: 'class' });
+	protected readonly _computedClass = computed(() =>
+		hlm(
+			'tw-pl-8 tw-pr-2 tw-text-sm tw-font-semibold rtl:tw-pl-2 rtl:tw-pr-8',
+			this._stickyLabels() ? 'tw-sticky tw-top-0 tw-bg-popover tw-block tw-z-[2]' : '',
+			this.userClass(),
+		),
+	);
+}

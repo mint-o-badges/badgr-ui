@@ -2,9 +2,9 @@ import { NgIcon } from '@ng-icons/core';
 import { Component, inject } from '@angular/core';
 import { BrnDialogRef, injectBrnDialogContext } from '@spartan-ng/brain/dialog';
 import { OebDialogComponent } from '../../../components/oeb-dialog.component';
-import { HlmIconDirective } from '../../../components/spartan/ui-icon-helm/src';
+import { HlmIcon } from '../../../components/spartan/ui-icon-helm/src';
 import { lucideClipboard, lucideCircleX, lucideCheck } from '@ng-icons/lucide';
-import { HlmH3Directive, HlmPDirective } from '../../../components/spartan/ui-typography-helm/src';
+import { HlmH3, HlmP } from '../../../components/spartan/ui-typography-helm/src';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -12,15 +12,7 @@ import { provideIcons } from '@ng-icons/core';
 
 @Component({
 	selector: 'oeb-error-dialog',
-	imports: [
-		OebDialogComponent,
-		HlmPDirective,
-		HlmH3Directive,
-		NgIcon,
-		HlmIconDirective,
-		OebButtonComponent,
-		TranslateModule,
-	],
+	imports: [OebDialogComponent, HlmP, HlmH3, NgIcon, HlmIcon, OebButtonComponent, TranslateModule],
 	providers: [provideIcons({ lucideCircleX, lucideClipboard, lucideCheck })],
 	template: `
 		<oeb-dialog variant="danger" class="tw-text-center tw-text-oebblack oeb">

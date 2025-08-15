@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
-
-import { HlmPDirective } from '../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
 import { TranslatePipe } from '@ngx-translate/core';
+import { HlmP } from '@spartan-ng/helm/typography';
 
 @Component({
 	selector: 'loading-dots',
@@ -73,7 +72,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 			width: calc(var(--gridspacing) * 8);
 		}
 	`,
-	imports: [HlmPDirective, TranslatePipe],
+	imports: [HlmP, TranslatePipe],
 })
 export class LoadingDotsComponent {
 	@Input() className: string;

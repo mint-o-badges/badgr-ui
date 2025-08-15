@@ -1,5 +1,4 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-
 import { FormBuilder, Validators, FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { EmailValidator } from '../../../common/validators/email.validator';
@@ -9,7 +8,6 @@ import { MessageService } from '../../../common/services/message.service';
 import { BaseRoutableComponent } from '../../../common/pages/base-routable.component';
 import { DomSanitizer, Title } from '@angular/platform-browser';
 import { FormFieldText } from '../../../common/components/formfield-text';
-
 import { QueryParametersService } from '../../../common/services/query-parameters.service';
 import { OAuthManager } from '../../../common/services/oauth-manager.service';
 import { ExternalToolsManager } from '../../../externaltools/services/externaltools-manager.service';
@@ -21,14 +19,11 @@ import { BadgrApiFailure } from '../../../common/services/api-failure';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { UserProfileApiService } from '../../../common/services/user-profile-api.service';
-import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
-import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
-import { HlmADirective } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-a.directive';
-
 import { OebInputComponent } from '../../../components/input.component';
 import { OebCheckboxComponent } from '../../../components/oeb-checkbox.component';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { FormMessageComponent } from '../../../common/components/form-message.component';
+import { HlmH1, HlmP } from '@spartan-ng/helm/typography';
 
 interface RedirectResponse {
 	success: boolean;
@@ -42,9 +37,8 @@ type RedirectHttpResponse = HttpResponse<RedirectResponse>;
 	templateUrl: './login.component.html',
 	styleUrls: ['./login.component.scss'],
 	imports: [
-		HlmH1Directive,
-		HlmPDirective,
-		HlmADirective,
+		HlmH1,
+		HlmP,
 		RouterLink,
 		FormsModule,
 		OebInputComponent,

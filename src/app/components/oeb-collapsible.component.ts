@@ -10,15 +10,9 @@ import {
 	EventEmitter,
 	effect,
 } from '@angular/core';
-import { HlmButtonDirective } from './spartan/ui-button-helm/src';
-
-import { HlmIconDirective } from './spartan/ui-icon-helm/src';
-import {
-	BrnCollapsibleComponent,
-	BrnCollapsibleContentComponent,
-	BrnCollapsibleTriggerDirective,
-	BrnCollapsibleState,
-} from '@spartan-ng/brain/collapsible';
+import { HlmButton } from './spartan/ui-button-helm/src';
+import { HlmIcon } from './spartan/ui-icon-helm/src';
+import { BrnCollapsible, BrnCollapsibleContent, BrnCollapsibleTrigger } from '@spartan-ng/brain/collapsible';
 import { provideIcons } from '@ng-icons/core';
 import { lucideChevronRight } from '@ng-icons/lucide';
 import { NgTemplateOutlet, NgClass } from '@angular/common';
@@ -27,12 +21,12 @@ import { NgTemplateOutlet, NgClass } from '@angular/common';
 	selector: 'oeb-collapsible',
 	providers: [provideIcons({ lucideChevronRight })],
 	imports: [
-		BrnCollapsibleComponent,
-		BrnCollapsibleTriggerDirective,
-		HlmButtonDirective,
-		BrnCollapsibleContentComponent,
+		BrnCollapsible,
+		BrnCollapsibleTrigger,
+		HlmButton,
+		BrnCollapsibleContent,
 		NgIcon,
-		HlmIconDirective,
+		HlmIcon,
 		NgTemplateOutlet,
 		NgClass,
 	],
@@ -53,8 +47,8 @@ import { NgTemplateOutlet, NgClass } from '@angular/common';
 						size="xl"
 						class="tw-text-purple"
 						[ngClass]="{
-							'tw-rotate-90': collapsible.state() == 'open' && closeIcon == 'lucideChevronRight',
-							'tw-rotate-180': collapsible.state() == 'open' && closeIcon == 'lucideChevronDown'
+							'tw-rotate-90': collapsible.expanded() && closeIcon == 'lucideChevronRight',
+							'tw-rotate-180': collapsible.expanded() && closeIcon == 'lucideChevronDown'
 						}"
 						[name]="closeIcon"
 					/>
@@ -74,17 +68,17 @@ export class OebCollapsibleComponent implements AfterViewInit {
 	@Input() closeIcon = 'lucideChevronRight';
 	@Output() toggled = new EventEmitter<boolean>();
 
-	@ViewChild('collapsible') collapsible: BrnCollapsibleComponent;
+	@ViewChild('collapsible') collapsible: BrnCollapsible;
 
 	constructor() {
 		effect(() => {
-			this.collapsible && this.toggled.emit(this.collapsible.state() == 'open');
+			this.collapsible && this.toggled.emit(this.collapsible.expanded());
 		});
 	}
 
 	ngAfterViewInit() {
-		if (this.defaultOpen) {
-			this.collapsible.state.set('open');
+		if (this.defaultOpen && !this.collapsible.expanded()) {
+			this.collapsible.toggle();
 		}
 	}
 
@@ -100,6 +94,6 @@ export class OebCollapsibleComponent implements AfterViewInit {
 
 	// disable if open and not closeable
 	disabled() {
-		return this.collapsible && this.collapsible.state() == 'open' && !this.closeable;
+		return this.collapsible && this.collapsible.expanded() && !this.closeable;
 	}
 }

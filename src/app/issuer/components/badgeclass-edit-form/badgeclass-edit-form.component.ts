@@ -18,19 +18,15 @@ import {
 	Validators,
 	ValidatorFn,
 	ValidationErrors,
-	FormControl,
 	NgModel,
 	FormsModule,
 	ReactiveFormsModule,
 } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { Md5 } from 'ts-md5/dist/md5';
-
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
-
 import { SessionService } from '../../../common/services/session.service';
 import { MessageService } from '../../../common/services/message.service';
-
 import {
 	ApiBadgeClassForCreation,
 	BadgeClassCategory,
@@ -46,19 +42,14 @@ import { UrlValidator } from '../../../common/validators/url.validator';
 import { CommonDialogsService } from '../../../common/services/common-dialogs.service';
 import { BadgeClass } from '../../models/badgeclass.model';
 import { AppConfigService } from '../../../common/app-config.service';
-import { typedFormArray, TypedFormControl, TypedFormGroup, typedFormGroup } from '../../../common/util/typed-forms';
+import { typedFormGroup } from '../../../common/util/typed-forms';
 import { FormFieldSelectOption } from '../../../common/components/formfield-select';
-
 import { AiSkillsService } from '../../../common/services/ai-skills.service';
 import { ApiSkill } from '../../../common/model/ai-skills.model';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
-import { Platform } from '@angular/cdk/platform'; // To detect the current platform by comparing the userAgent strings
 import { NavigationService } from '../../../common/services/navigation.service';
-
 import { base64ByteSize } from '../../../common/util/file-util';
 import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
-import { ErrorDialogComponent } from '../../../common/dialogs/oeb-dialogs/error-dialog.component';
-
 import { StepperComponent } from '../../../components/stepper/stepper.component';
 import { BadgeClassDetailsComponent } from '../badgeclass-create-steps/badgeclass-details/badgeclass-details.component';
 import { Issuer } from '../../models/issuer.model';
@@ -68,16 +59,15 @@ import { NgClass, NgStyle, DecimalPipe } from '@angular/common';
 import { BadgeLegendComponent } from '../../../common/components/badge-legend/badge-legend.component';
 import { StepComponent } from '../../../components/stepper/step.component';
 import { CdkStep } from '@angular/cdk/stepper';
-import { HlmH2Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h2.directive';
 import { OebInputComponent } from '../../../components/input.component';
-import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { OebCheckboxComponent } from '../../../components/oeb-checkbox.component';
 import { OebCollapsibleComponent } from '../../../components/oeb-collapsible.component';
 import { NgIcon } from '@ng-icons/core';
-import { HlmIconDirective } from '../../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
 import { OebSelectComponent } from '../../../components/select.component';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
+import { HlmIcon } from '@spartan-ng/helm/icon';
+import { HlmH2, HlmP } from '@spartan-ng/helm/typography';
 
 const MAX_STUDYLOAD_HRS: number = 10_000;
 const MAX_HRS_PER_COMPETENCY: number = 999;
@@ -94,9 +84,9 @@ const MAX_HRS_PER_COMPETENCY: number = 999;
 		StepperComponent,
 		StepComponent,
 		CdkStep,
-		HlmH2Directive,
+		HlmH2,
 		OebInputComponent,
-		HlmPDirective,
+		HlmP,
 		BgFormFieldImageComponent,
 		BadgeStudioComponent,
 		NgClass,
@@ -104,7 +94,7 @@ const MAX_HRS_PER_COMPETENCY: number = 999;
 		OebCheckboxComponent,
 		OebCollapsibleComponent,
 		NgIcon,
-		HlmIconDirective,
+		HlmIcon,
 		NgStyle,
 		OebSelectComponent,
 		AutocompleteLibModule,

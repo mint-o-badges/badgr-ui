@@ -1,15 +1,11 @@
 import { Component, Input } from '@angular/core';
-import { HlmButtonDirective } from './spartan/ui-button-helm/src';
+import { HlmButton } from './spartan/ui-button-helm/src';
 
-import {
-	HlmDialogDescriptionDirective,
-	HlmDialogFooterComponent,
-	HlmDialogHeaderComponent,
-} from './spartan/ui-dialog-helm/src';
+import { HlmDialogDescription, HlmDialogFooter, HlmDialogHeader } from './spartan/ui-dialog-helm/src';
 
 @Component({
 	selector: 'oeb-dialog',
-	imports: [HlmDialogHeaderComponent, HlmDialogFooterComponent, HlmDialogDescriptionDirective, HlmButtonDirective],
+	imports: [HlmDialogHeader, HlmDialogFooter, HlmDialogDescription, HlmButton],
 	template: `
 		<div class="tw-px-4 tw-py-6">
 			@if (title) {

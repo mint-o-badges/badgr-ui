@@ -1,10 +1,10 @@
 import { Component, signal, input, EventEmitter, Output, model } from '@angular/core';
-import { HlmNumberedPaginationComponent } from '../components/spartan/ui-pagination-helm/src';
+import { HlmNumberedPagination } from '../components/spartan/ui-pagination-helm/src';
 
 @Component({
 	selector: 'oeb-numbered-pagination',
 	standalone: true,
-	imports: [HlmNumberedPaginationComponent],
+	imports: [HlmNumberedPagination],
 	template: `
 		<hlm-numbered-pagination [(currentPage)]="page" [(itemsPerPage)]="pageSize" [totalItems]="totalProducts()" />
 	`,

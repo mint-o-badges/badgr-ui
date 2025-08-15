@@ -4,4 +4,4 @@ import { Directive } from '@angular/core';
 	selector: '[hlmCmdLoader]',
 	standalone: true,
 })
-export class HlmCommandLoaderDirective {}
+export class HlmCommandLoader {}

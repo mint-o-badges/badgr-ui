@@ -3,11 +3,7 @@ import { ApiRootSkill, ApiSkill } from '../../../common/model/ai-skills.model';
 import { debounceTime, fromEvent, Subject, takeUntil, tap } from 'rxjs';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { HlmAccordionModule } from '../../../components/spartan/ui-accordion-helm/src/index';
-import {
-	BrnAccordionItemDirective,
-	BrnAccordionDirective,
-	BrnAccordionTriggerDirective,
-} from '@spartan-ng/brain/accordion';
+import { BrnAccordionItem, BrnAccordion, BrnAccordionTrigger } from '@spartan-ng/brain/accordion';
 import { HlmIconModule } from '../../../components/spartan/ui-icon-helm/src/index';
 import { NgIcon } from '@ng-icons/core';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
@@ -113,7 +109,7 @@ const skillIconMap = {
 	templateUrl: './recipient-skill-visualisation.component.html',
 	styleUrl: './recipient-skill-visualisation.component.scss',
 	standalone: true,
-	providers: [BrnAccordionItemDirective, BrnAccordionDirective, BrnAccordionTriggerDirective],
+	providers: [BrnAccordionItem, BrnAccordion, BrnAccordionTrigger],
 	imports: [
 		TranslateModule,
 		HlmAccordionModule,

@@ -18,7 +18,12 @@
 					{{ issuer.email }}
 				</p>
 				<p hlmP size="sm" *ngIf="issuer.url">
-					<a hlmA target="_blank" [href]="issuer.url">{{ issuer.url }}</a>
+					<a
+						class="tw-underline !tw-text-link hover:!tw-text-buttonhover tw-cursor-pointer"
+						target="_blank"
+						[href]="issuer.url"
+						>{{ issuer.url }}</a
+					>
 				</p>
 			</ng-container>
 			<ng-container *ngIf="!public && isFullIssuer(issuer)">

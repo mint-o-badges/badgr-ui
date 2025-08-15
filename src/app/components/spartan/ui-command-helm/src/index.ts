@@ -1,17 +1,17 @@
 import { NgModule } from '@angular/core';
 
-import { HlmCommandDialogCloseButtonDirective } from './lib/hlm-command-dialog-close-button.directive';
-import { HlmCommandDialogDirective } from './lib/hlm-command-dialog.directive';
-import { HlmCommandEmptyDirective } from './lib/hlm-command-empty.directive';
-import { HlmCommandGroupDirective } from './lib/hlm-command-group.directive';
-import { HlmCommandInputWrapperComponent } from './lib/hlm-command-input-wrapper.component';
-import { HlmCommandInputDirective } from './lib/hlm-command-input.directive';
-import { HlmCommandIconDirective } from './lib/hlm-command-item-icon.directive';
-import { HlmCommandItemDirective } from './lib/hlm-command-item.directive';
-import { HlmCommandListDirective } from './lib/hlm-command-list.directive';
-import { HlmCommandSeparatorDirective } from './lib/hlm-command-separator.directive';
-import { HlmCommandShortcutComponent } from './lib/hlm-command-shortcut.component';
-import { HlmCommandDirective } from './lib/hlm-command.directive';
+import { HlmCommandDialogCloseButton } from './lib/hlm-command-dialog-close-button.directive';
+import { HlmCommandDialog } from './lib/hlm-command-dialog.directive';
+import { HlmCommandEmpty } from './lib/hlm-command-empty.directive';
+import { HlmCommandGroup } from './lib/hlm-command-group.directive';
+import { HlmCommandInputWrapper } from './lib/hlm-command-input-wrapper.component';
+import { HlmCommandInput } from './lib/hlm-command-input.directive';
+import { HlmCommandIcon } from './lib/hlm-command-item-icon.directive';
+import { HlmCommandItem } from './lib/hlm-command-item.directive';
+import { HlmCommandList } from './lib/hlm-command-list.directive';
+import { HlmCommandSeparator } from './lib/hlm-command-separator.directive';
+import { HlmCommandShortcut } from './lib/hlm-command-shortcut.component';
+import { HlmCommand } from './lib/hlm-command.directive';
 
 export * from './lib/hlm-command-dialog-close-button.directive';
 export * from './lib/hlm-command-dialog.directive';
@@ -28,18 +28,18 @@ export * from './lib/hlm-command-shortcut.component';
 export * from './lib/hlm-command.directive';
 
 export const HlmCommandImports = [
-	HlmCommandDirective,
-	HlmCommandInputDirective,
-	HlmCommandItemDirective,
-	HlmCommandSeparatorDirective,
-	HlmCommandGroupDirective,
-	HlmCommandListDirective,
-	HlmCommandShortcutComponent,
-	HlmCommandIconDirective,
-	HlmCommandEmptyDirective,
-	HlmCommandInputWrapperComponent,
-	HlmCommandDialogCloseButtonDirective,
-	HlmCommandDialogDirective,
+	HlmCommand,
+	HlmCommandInput,
+	HlmCommandItem,
+	HlmCommandSeparator,
+	HlmCommandGroup,
+	HlmCommandList,
+	HlmCommandShortcut,
+	HlmCommandIcon,
+	HlmCommandEmpty,
+	HlmCommandInputWrapper,
+	HlmCommandDialogCloseButton,
+	HlmCommandDialog,
 ] as const;
 
 @NgModule({

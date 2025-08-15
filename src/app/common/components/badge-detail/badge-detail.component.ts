@@ -6,10 +6,8 @@ import { RecipientBadgeInstance } from '../../../recipient/models/recipient-badg
 import { BadgeInstance } from '../../../issuer/models/badgeinstance.model';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { BgAwaitPromises } from '../../directives/bg-await-promises';
-
 import { FormMessageComponent } from '../form-message.component';
 import { BgBreadcrumbsComponent } from '../bg-breadcrumbs/bg-breadcrumbs.component';
-import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { RouterLink } from '@angular/router';
 import { OebDropdownComponent } from '../../../components/oeb-dropdown.component';
@@ -17,10 +15,8 @@ import { SvgIconComponent } from '../svg-icon.component';
 import { BgImageStatusPlaceholderDirective } from '../../directives/bg-image-status-placeholder.directive';
 import { OebCollapsibleComponent } from '../../../components/oeb-collapsible.component';
 import { NgIcon } from '@ng-icons/core';
-import { HlmIconDirective } from '../../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
 import { InfoIcon } from '../info-icon.component';
 import { TimeComponent } from '../time.component';
-import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
 import { CompetencyAccordionComponent } from '../../../components/accordion.component';
 import { OebSeparatorComponent } from '../../../components/oeb-separator.component';
 import { BgLearningPathCard } from '../bg-learningpathcard';
@@ -28,6 +24,8 @@ import { HourPipe } from '../../pipes/hourPipe';
 import { PublicApiLearningPath } from '../../../public/models/public-api.model';
 import { ApiImportedBadgeInstance } from '../../../recipient/models/recipient-badge-api.model';
 import { RecipientBadgeManager } from '../../../recipient/services/recipient-badge-manager.service';
+import { HlmIcon } from '@spartan-ng/helm/icon';
+import { HlmH1, HlmP } from '@spartan-ng/helm/typography';
 
 @Component({
 	selector: 'bg-badgedetail',
@@ -37,7 +35,7 @@ import { RecipientBadgeManager } from '../../../recipient/services/recipient-bad
 		BgAwaitPromises,
 		FormMessageComponent,
 		BgBreadcrumbsComponent,
-		HlmH1Directive,
+		HlmH1,
 		OebButtonComponent,
 		RouterLink,
 		OebDropdownComponent,
@@ -45,10 +43,10 @@ import { RecipientBadgeManager } from '../../../recipient/services/recipient-bad
 		BgImageStatusPlaceholderDirective,
 		OebCollapsibleComponent,
 		NgIcon,
-		HlmIconDirective,
+		HlmIcon,
 		InfoIcon,
 		TimeComponent,
-		HlmPDirective,
+		HlmP,
 		CompetencyAccordionComponent,
 		OebSeparatorComponent,
 		BgLearningPathCard,

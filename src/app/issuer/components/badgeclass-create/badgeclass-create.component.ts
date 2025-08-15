@@ -2,9 +2,7 @@ import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
-
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
-
 import { SessionService } from '../../../common/services/session.service';
 import { MessageService } from '../../../common/services/message.service';
 import { Issuer } from '../../models/issuer.model';
@@ -16,14 +14,13 @@ import { AppConfigService } from '../../../common/app-config.service';
 import { LinkEntry, BgBreadcrumbsComponent } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { BadgeClassManager } from '../../services/badgeclass-manager.service';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
-import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
-
 import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 import { BadgeClassEditFormComponent } from '../badgeclass-edit-form/badgeclass-edit-form.component';
+import { HlmH1 } from '@spartan-ng/helm/typography';
 
 @Component({
 	templateUrl: 'badgeclass-create.component.html',
-	imports: [BgBreadcrumbsComponent, HlmH1Directive, BgAwaitPromises, BadgeClassEditFormComponent, TranslatePipe],
+	imports: [BgBreadcrumbsComponent, HlmH1, BgAwaitPromises, BadgeClassEditFormComponent, TranslatePipe],
 })
 export class BadgeClassCreateComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	issuerSlug: string;

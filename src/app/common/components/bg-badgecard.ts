@@ -1,18 +1,16 @@
 import { Component, EventEmitter, HostBinding, Input, Output } from '@angular/core';
 import { AUTO_STYLE, animate, state, style, transition, trigger } from '@angular/animations';
 import { FormControl, FormsModule } from '@angular/forms';
-
 import { NgIcon } from '@ng-icons/core';
-import { HlmIconDirective } from '../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
 import { BgImageStatusPlaceholderDirective } from '../directives/bg-image-status-placeholder.directive';
-import { HlmPDirective } from '../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
 import { RouterLink } from '@angular/router';
 import { TimeComponent } from './time.component';
-import { HlmADirective } from '../../components/spartan/ui-typography-helm/src/lib/hlm-a.directive';
 import { OebCheckboxComponent } from '../../components/oeb-checkbox.component';
 import { CompetencyAccordionComponent } from '../../components/accordion.component';
 import { TranslatePipe } from '@ngx-translate/core';
 import { HourPipe } from '../pipes/hourPipe';
+import { HlmIcon } from '@spartan-ng/helm/icon';
+import { HlmP } from '@spartan-ng/helm/typography';
 
 @Component({
 	selector: 'bg-badgecard',
@@ -102,22 +100,11 @@ import { HourPipe } from '../pipes/hourPipe';
 					<div class="tw-absolute tw-left-0 tw-bottom-2 tw-w-full">
 						<!-- Show Verify or Share Button unless public -->
 						<div class="tw-float-right tw-pr-4">
-							<!-- <a
-		                  hlmA
-		                  hlmP
-		                  size="sm"
-		                  class="tw-font-bold tw-text-purple tw-no-underline"
-		                  *ngIf="!verifyUrl && !public && mostRelevantStatus !== 'pending'"
-		                  (click)="shareClicked.emit($event)"
-		                  >
-		                  {{ 'BadgeCollection.share' | translate }}
-		                </a> -->
 							@if (verifyUrl) {
 								<a
-									hlmA
 									hlmP
 									size="sm"
-									class="tw-font-bold tw-text-purple tw-no-underline"
+									class="tw-font-bold tw-text-purple tw-no-underline hover:!tw-text-buttonhover tw-cursor-pointer"
 									[href]="verifyUrl"
 								>
 									{{ 'RecBadgeDetail.verify' | translate }}
@@ -192,12 +179,11 @@ import { HourPipe } from '../pipes/hourPipe';
 	],
 	imports: [
 		NgIcon,
-		HlmIconDirective,
+		HlmIcon,
 		BgImageStatusPlaceholderDirective,
-		HlmPDirective,
+		HlmP,
 		RouterLink,
 		TimeComponent,
-		HlmADirective,
 		OebCheckboxComponent,
 		FormsModule,
 		CompetencyAccordionComponent,

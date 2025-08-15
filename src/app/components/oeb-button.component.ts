@@ -1,17 +1,17 @@
 import { Component, computed, input, signal } from '@angular/core';
-import { ButtonVariants, HlmButtonDirective } from './spartan/ui-button-helm/src';
+import { ButtonVariants, HlmButton } from './spartan/ui-button-helm/src';
 import { NgClass } from '@angular/common';
 import { MessageService } from '../common/services/message.service';
 import { lucidePlus, lucideUpload, lucideCircleX, lucideMapPin } from '@ng-icons/lucide';
 import { provideIcons } from '@ng-icons/core';
-import { HlmIconDirective } from './spartan/ui-icon-helm/src';
+import { HlmIcon } from './spartan/ui-icon-helm/src';
 import { NgIcon } from '@ng-icons/core';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { map, Subscription } from 'rxjs';
 
 @Component({
 	selector: 'oeb-button',
-	imports: [HlmButtonDirective, HlmIconDirective, NgClass, NgIcon],
+	imports: [HlmButton, HlmIcon, NgClass, NgIcon],
 	providers: [MessageService, provideIcons({ lucideUpload, lucidePlus, lucideCircleX, lucideMapPin })],
 	template: `<button
 		[type]="type()"
