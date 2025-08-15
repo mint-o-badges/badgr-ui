@@ -17,14 +17,14 @@ export interface HlmTableVariant {
 }
 
 export const HlmTableVariantDefault: HlmTableVariant = {
-	table: 'tw-text-sm tw-caption-bottom tw-text-left',
-	thead: '',
-	tbody: '',
-	tfoot: 'bg-muted/50 border-t font-medium',
-	tr: 'tw-border-b tw-border-border tw-border-solid tw-transition-colors data-[state=selected]:tw-bg-muted',
-	th: 'tw-align-middle tw-h-12 tw-px-4 tw-text-sm tw-items-center tw-font-medium tw-text-muted-foreground [&:has([role=checkbox])]:tw-pr-0 tw-text-muted-foreground tw-whitespace-nowrap [&:has([role=checkbox])]:tw-pr-0 [&>[role=checkbox]]:tw-translate-y-[2px]',
-	td: 'tw-align-middle tw-p-4 tw-items-center [&:has([role=checkbox])]:tw-pr-0 tw-whitespace-nowrap [&:has([role=checkbox])]:tw-pr-0 [&>[role=checkbox]]:tw-translate-y-[2px]',
-	caption: 'tw-text-center tw-block tw-mt-4 tw-text-sm tw-text-muted-foreground',
+	table: 'w-full caption-bottom text-sm',
+	thead: '[&_tr]:border-b',
+	tbody: '[&_tr:last-child]:border-0',
+	tfoot: 'bg-muted/50 border-t font-medium [&>tr]:last:border-b-0',
+	tr: 'hover:bg-muted/50 data-[state=selected]:bg-muted border-b transition-colors',
+	th: 'text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]',
+	td: 'p-2 align-middle whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]',
+	caption: 'text-muted-foreground mt-4 text-sm',
 };
 
 export function provideHlmTableConfig(config: Partial<HlmTableVariant>): ValueProvider {
