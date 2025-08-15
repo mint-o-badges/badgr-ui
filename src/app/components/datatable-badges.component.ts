@@ -1,140 +1,213 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, formatDate } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, TemplateRef, viewChild } from '@angular/core';
 import { HlmTableImports } from './spartan/ui-table-helm/src';
 import { BadgeClass } from '../issuer/models/badgeclass.model';
 import { OebButtonComponent } from './oeb-button.component';
 import { HlmIconModule } from '@spartan-ng/helm/icon';
 import { HlmP } from '@spartan-ng/helm/typography';
+import { OebTableImports } from './oeb-table';
+import { ColumnDef, createAngularTable, FlexRenderDirective, getCoreRowModel } from '@tanstack/angular-table';
 
 @Component({
 	selector: 'badges-datatable',
-	imports: [...HlmTableImports, HlmIconModule, CommonModule, OebButtonComponent, TranslateModule, RouterModule, HlmP],
-	template: ` <table
-		hlmTable
-		class="tw-overflow-hidden tw-w-full tw-max-w-[100%] tw-bg-lightpurple tw-border-purple tw-border tw-border-solid tw-rounded-t-[20px]"
-	>
-		@if (caption) {
-			<caption hlmCaption>
-				{{
-					caption
-				}}
-			</caption>
-		}
-		<thead hlmTHead>
-			<tr hlmTr class="tw-bg-purple tw-text-white tw-flex-wrap hover:tw-bg-purple">
-				<!-- Badge -->
-				<th hlmTh class="!tw-text-white tw-w-28 sm:tw-w-20 md:tw-w-40">Badge</th>
-				<!-- Created on -->
-				<th
-					hlmTh
-					class="!tw-text-white tw-justify-center !tw-flex-1 tw-w-24 sm:tw-w-28  md:tw-w-48 !tw-px-3 sm:!tw-px-4"
-				>
-					{{ 'Badge.createdOn' | translate }}
-				</th>
-				<!-- Recipients -->
-				<th hlmTh class="!tw-text-white tw-w-36 md:tw-w-40 sm:tw-grid sm:tw-pl-0">
-					{{ 'Badge.multiRecipients' | translate | titlecase }}
-				</th>
-				<!-- Badge/QR-code award -->
-				<th hlmTh class="!tw-text-white tw-justify-end sm:tw-w-48 tw-w-0 !tw-p-0"></th>
-			</tr>
-		</thead>
-		<tbody hlmTBody>
-			@for (badge of badges; track badge) {
-				<tr hlmTr class="tw-border-purple">
+	imports: [
+		...HlmTableImports,
+		...OebTableImports,
+		FlexRenderDirective,
+		HlmIconModule,
+		CommonModule,
+		OebButtonComponent,
+		TranslateModule,
+		RouterModule,
+		HlmP,
+	],
+	template: ` <table hlmTable oeb-table>
+			<thead hlmTHead>
+				@for (headerRow of badgeTable.getHeaderGroups(); track headerRow.id) {
+					<tr hlmTr>
+						@for (headerCell of headerRow.headers; track headerCell.id) {
+							@if (!headerCell.isPlaceholder) {
+								<th hlmTh>
+									<ng-container
+										*flexRender="
+											headerCell.column.columnDef.header;
+											props: headerCell.getContext();
+											let header
+										"
+									>
+										<div [innerHTML]="header"></div>
+									</ng-container>
+								</th>
+							}
+						}
+					</tr>
+				}
+			</thead>
+			<tbody hlmTBody>
+				@for (row of badgeTable.getRowModel().rows; track row.id) {
+					<tr hlmTr>
+						@for (cell of row.getVisibleCells(); track cell.id) {
+							<td hlmTd>
+								<ng-container
+									*flexRender="cell.column.columnDef.cell; props: cell.getContext(); let cell"
+								>
+									<div [innerHTML]="cell"></div>
+								</ng-container>
+							</td>
+						}
+					</tr>
+				}
+			</tbody>
+		</table>
+
+		<ng-template #badgeCellTemplate let-context>
+			<div class="tw-flex tw-flex-row tw-gap-2">
+				<div>
+					<img
+						class=""
+						src="{{ context.row.original.badge.image }}"
+						alt="{{ context.row.original.badge.description }}"
+						width="40"
+					/>
+				</div>
+				<p>{{ context.getValue() }}</p>
+			</div>
+		</ng-template>
+
+		<table
+			hlmTable
+			class="tw-overflow-hidden tw-w-full tw-max-w-[100%] tw-bg-lightpurple tw-border-purple tw-border tw-border-solid tw-rounded-t-[20px]"
+		>
+			@if (caption) {
+				<caption hlmCaption>
+					{{
+						caption
+					}}
+				</caption>
+			}
+			<thead hlmTHead>
+				<tr hlmTr class="tw-bg-purple tw-text-white tw-flex-wrap hover:tw-bg-purple">
+					<!-- Badge -->
+					<th hlmTh class="!tw-text-white tw-w-28 sm:tw-w-20 md:tw-w-40">Badge</th>
+					<!-- Created on -->
 					<th
 						hlmTh
-						class="tw-w-28 md:tw-w-48 tw-cursor-pointer tw-py-4 !tw-align-top"
-						(click)="redirectToBadgeDetail.emit({ badge: badge.badge, focusRequests: false })"
+						class="!tw-text-white tw-justify-center !tw-flex-1 tw-w-24 sm:tw-w-28  md:tw-w-48 !tw-px-3 sm:!tw-px-4"
 					>
-						<div class="tw-flex tw-flex-row tw-items-center tw-gap-1 md:tw-gap-2">
-							<img
-								class="l-flex-x-shrink0 badgeimage badgeimage-small"
-								src="{{ badge.badge.image }}"
-								alt="{{ badge.badge.description }}"
-								width="40"
-							/>
-							<div
-								class="md:tw-grid md:tw-grid-cols-[150px] lg:tw-grid-cols-[250px] xl:tw-grid-cols-[350px] tw-my-1 md:tw-my-0"
-							>
+						{{ 'Badge.createdOn' | translate }}
+					</th>
+					<!-- Recipients -->
+					<th hlmTh class="!tw-text-white tw-w-36 md:tw-w-40 sm:tw-grid sm:tw-pl-0">
+						{{ 'Badge.multiRecipients' | translate | titlecase }}
+					</th>
+					<!-- Badge/QR-code award -->
+					<th hlmTh class="!tw-text-white tw-justify-end sm:tw-w-48 tw-w-0 !tw-p-0"></th>
+				</tr>
+			</thead>
+			<tbody hlmTBody>
+				@for (badge of badges; track badge) {
+					<tr hlmTr class="tw-border-purple">
+						<th
+							hlmTh
+							class="tw-w-28 md:tw-w-48 tw-cursor-pointer tw-py-4 !tw-align-top"
+							(click)="redirectToBadgeDetail.emit({ badge: badge.badge, focusRequests: false })"
+						>
+							<div class="tw-flex tw-flex-row tw-items-center tw-gap-1 md:tw-gap-2">
+								<img
+									class="l-flex-x-shrink0 badgeimage badgeimage-small"
+									src="{{ badge.badge.image }}"
+									alt="{{ badge.badge.description }}"
+									width="40"
+								/>
 								<div
-									class="tw-text-nowrap md:tw-text-wrap md:tw-line-clamp-3 tw-break-word  tw-max-w-36 md:tw-max-w-none tw-absolute md:tw-relative"
+									class="md:tw-grid md:tw-grid-cols-[150px] lg:tw-grid-cols-[250px] xl:tw-grid-cols-[350px] tw-my-1 md:tw-my-0"
 								>
-									<span
-										class="tw-text-oebblack tw-cursor-pointer"
-										(click)="
-											redirectToBadgeDetail.emit({ badge: badge.badge, focusRequests: false })
-										"
-										>{{ badge.badge.name }}</span
+									<div
+										class="tw-text-nowrap md:tw-text-wrap md:tw-line-clamp-3 tw-break-word  tw-max-w-36 md:tw-max-w-none tw-absolute md:tw-relative"
 									>
+										<span
+											class="tw-text-oebblack tw-cursor-pointer"
+											(click)="
+												redirectToBadgeDetail.emit({ badge: badge.badge, focusRequests: false })
+											"
+											>{{ badge.badge.name }}</span
+										>
+									</div>
 								</div>
 							</div>
-						</div>
-					</th>
-					<th hlmTh class="!tw-align-top tw-w-24 sm:tw-w-28 md:tw-w-48 sm:tw-px-3 tw-px-4 tw-py-4">
-						<p hlmP class="tw-font-normal sm:!tw-text-[16px]">
-							{{ badge.badge.createdAt | date: 'dd.MM.yyyy' }}
-						</p>
-					</th>
-					<th hlmTh class="!tw-align-top tw-w-36 md:tw-w-40 sm:tw-grid tw-py-4">
-						<p hlmP class="tw-font-normal sm:!tw-text-[16px]">{{ badge.badge.recipientCount }}</p>
-					</th>
-					<th
-						hlmTh
-						class="!tw-align-top tw-h-fit sm:tw-w-max tw-w-full tw-gap-2 tw-my-2 tw-mt-7 sm:tw-mt-2 tw-py-4"
-					>
-						<div class="tw-flex tw-flex-col tw-items-baseline tw-gap-1 md:tw-gap-2">
-							@if (badge.badge.extension['extensions:CategoryExtension']?.Category === 'learningpath') {
-								<div class="sm:tw-w-[186px] sm:tw-min-h-[50px]"></div>
-							}
-							@if (badge.badge.extension['extensions:CategoryExtension']?.Category !== 'learningpath') {
-								<oeb-button
-									variant="secondary"
-									size="xs"
-									width="full_width"
-									class="tw-w-full"
-									(click)="directBadgeAward.emit(badge.badge)"
-									[text]="directBadgeAwardText | translate"
-								>
-								</oeb-button>
-							}
-							@if (badge.badge.extension['extensions:CategoryExtension']?.Category !== 'learningpath') {
-								<oeb-button
-									variant="secondary"
-									size="xs"
-									width="full_width"
-									class="tw-w-full"
-									(click)="qrCodeAward.emit(badge.badge)"
-									[text]="qrCodeAwardText | translate"
-								>
-								</oeb-button>
-							}
-							@if (
-								badge.requestCount > 0 &&
-								badge.badge.extension['extensions:CategoryExtension']?.Category !== 'learningpath'
-							) {
-								<oeb-button
-									variant="green"
-									size="xs"
-									width="full_width"
-									class="tw-w-full"
-									(click)="redirectToBadgeDetail.emit({ badge: badge.badge, focusRequests: true })"
-									[text]="
-										badge.requestCount == 1
-											? badge.requestCount + ' ' + ('Badge.openRequestsOne' | translate)
-											: badge.requestCount + ' ' + ('Badge.openRequests' | translate)
-									"
-								>
-								</oeb-button>
-							}
-						</div>
-					</th>
-				</tr>
-			}
-		</tbody>
-	</table>`,
+						</th>
+						<th hlmTh class="!tw-align-top tw-w-24 sm:tw-w-28 md:tw-w-48 sm:tw-px-3 tw-px-4 tw-py-4">
+							<p hlmP class="tw-font-normal sm:!tw-text-[16px]">
+								{{ badge.badge.createdAt | date: 'dd.MM.yyyy' }}
+							</p>
+						</th>
+						<th hlmTh class="!tw-align-top tw-w-36 md:tw-w-40 sm:tw-grid tw-py-4">
+							<p hlmP class="tw-font-normal sm:!tw-text-[16px]">{{ badge.badge.recipientCount }}</p>
+						</th>
+						<th
+							hlmTh
+							class="!tw-align-top tw-h-fit sm:tw-w-max tw-w-full tw-gap-2 tw-my-2 tw-mt-7 sm:tw-mt-2 tw-py-4"
+						>
+							<div class="tw-flex tw-flex-col tw-items-baseline tw-gap-1 md:tw-gap-2">
+								@if (
+									badge.badge.extension['extensions:CategoryExtension']?.Category === 'learningpath'
+								) {
+									<div class="sm:tw-w-[186px] sm:tw-min-h-[50px]"></div>
+								}
+								@if (
+									badge.badge.extension['extensions:CategoryExtension']?.Category !== 'learningpath'
+								) {
+									<oeb-button
+										variant="secondary"
+										size="xs"
+										width="full_width"
+										class="tw-w-full"
+										(click)="directBadgeAward.emit(badge.badge)"
+										[text]="directBadgeAwardText | translate"
+									>
+									</oeb-button>
+								}
+								@if (
+									badge.badge.extension['extensions:CategoryExtension']?.Category !== 'learningpath'
+								) {
+									<oeb-button
+										variant="secondary"
+										size="xs"
+										width="full_width"
+										class="tw-w-full"
+										(click)="qrCodeAward.emit(badge.badge)"
+										[text]="qrCodeAwardText | translate"
+									>
+									</oeb-button>
+								}
+								@if (
+									badge.requestCount > 0 &&
+									badge.badge.extension['extensions:CategoryExtension']?.Category !== 'learningpath'
+								) {
+									<oeb-button
+										variant="green"
+										size="xs"
+										width="full_width"
+										class="tw-w-full"
+										(click)="
+											redirectToBadgeDetail.emit({ badge: badge.badge, focusRequests: true })
+										"
+										[text]="
+											badge.requestCount == 1
+												? badge.requestCount + ' ' + ('Badge.openRequestsOne' | translate)
+												: badge.requestCount + ' ' + ('Badge.openRequests' | translate)
+										"
+									>
+									</oeb-button>
+								}
+							</div>
+						</th>
+					</tr>
+				}
+			</tbody>
+		</table>`,
 })
 export class DatatableComponent {
 	@Input() caption: string = '';
@@ -144,6 +217,36 @@ export class DatatableComponent {
 	@Output() directBadgeAward = new EventEmitter();
 	@Output() qrCodeAward = new EventEmitter();
 	@Output() redirectToBadgeDetail = new EventEmitter<{ badge: BadgeClass; focusRequests: boolean }>();
+
+	badgeCellTemplate = viewChild.required<TemplateRef<any>>('badgeCellTemplate');
+
+	private readonly badgeTableColumnDefinition: ColumnDef<DatatableBadgeResult>[] = [
+		{
+			header: 'Badge',
+			accessorFn: (row) => row.badge.name,
+			cell: (info) => this.badgeCellTemplate(),
+		},
+		{
+			header: 'Badge.createdOn',
+			accessorFn: (row) => formatDate(row.badge.createdAt, 'dd.MM.yyyy', 'de-DE'),
+			cell: (info) => info.getValue(),
+		},
+		{
+			header: 'Badge.multiRecipients',
+			accessorFn: (row) => row.badge.recipientCount,
+			cell: (info) => info.getValue(),
+		},
+		{
+			id: 'actions',
+			cell: (info) => 'test',
+		},
+	];
+
+	badgeTable = createAngularTable(() => ({
+		data: this.badges,
+		columns: this.badgeTableColumnDefinition,
+		getCoreRowModel: getCoreRowModel(),
+	}));
 }
 
 export interface DatatableBadgeResult {
