@@ -76,7 +76,7 @@ import { TimeComponent } from '~/common/components/time.component';
 				</div>
 			}
 			<table
-				[hlmTable]="this.customVariant"
+				hlmTable
 				class="tw-rounded-t-[20px] tw-overflow-hidden tw-w-full tw-max-w-[100%] tw-bg-lightpurple tw-border-purple tw-border-[1px] tw-border-solid tw-mt-8"
 			>
 				@if (caption) {
@@ -141,17 +141,6 @@ import { TimeComponent } from '~/common/components/time.component';
 	`,
 })
 export class IssuerDetailDatatableComponent {
-	customVariant: HlmTableVariant = {
-		table: 'tw-text-sm tw-caption-bottom tw-text-center',
-		thead: '',
-		tbody: '',
-		tfoot: 'bg-muted/50 border-t font-medium',
-		tr: 'bg-white tw-border-b tw-border-border tw-border-solid tw-transition-colors data-[state=selected]:tw-bg-muted',
-		th: 'tw-align-middle tw-h-12 tw-px-4 tw-text-sm tw-items-center tw-font-medium tw-text-muted-foreground [&:has([role=checkbox])]:tw-pr-0 tw-text-muted-foreground tw-whitespace-nowrap [&:has([role=checkbox])]:tw-pr-0 [&>[role=checkbox]]:tw-translate-y-[2px]',
-		td: 'tw-align-middle tw-p-4 tw-items-center [&:has([role=checkbox])]:tw-pr-0 tw-whitespace-nowrap [&:has([role=checkbox])]:tw-pr-0 [&>[role=checkbox]]:tw-translate-y-[2px]',
-		caption: 'tw-text-center tw-block tw-mt-4 tw-text-sm tw-text-muted-foreground',
-	};
-
 	@Input() caption: string = '';
 	@Input() recipientCount: number = 0;
 	@Input() actionElementText: string = 'General.revoke';
