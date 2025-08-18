@@ -166,7 +166,6 @@
 			<ng-template [bgAwaitPromises]="requestsLoaded">
 				<badges-datatable
 					*ngIf="!public"
-					[caption]=""
 					[badges]="badgeResults"
 					(directBadgeAward)="routeToBadgeAward($event, issuer)"
 					(qrCodeAward)="routeToQRCodeAward($event, issuer)"
