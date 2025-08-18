@@ -222,8 +222,8 @@
 						*ngIf="!public"
 						[learningPaths]="learningPaths"
 						[issuer]="isFullIssuer(issuer) ? issuer : null"
-						(actionElement)="deleteLearningPath($event, issuer)"
-						(redirectToLearningPathDetail)="redirectToLearningPathDetail($event, issuer)"
+						(onDelete)="deleteLearningPath($event, issuer)"
+						(onNavigateToDetail)="redirectToLearningPathDetail($event, issuer)"
 					></learningpaths-datatable>
 
 					<ng-container *ngIf="public">

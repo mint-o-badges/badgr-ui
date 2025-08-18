@@ -158,14 +158,6 @@ export class OebIssuerDetailComponent implements OnInit {
 		this.updateResults();
 	}
 
-	get lps() {
-		if (this.public) {
-			return this.learningPaths as PublicApiLearningPath[];
-		} else {
-			return this.learningPaths as ApiLearningPath[];
-		}
-	}
-
 	private async updateResults() {
 		// Clear Results
 		this.badgeResults.length = 0;

@@ -21,7 +21,7 @@ import { ColumnDef, createAngularTable, FlexRenderDirective, getCoreRowModel } f
 		TranslateModule,
 		RouterModule,
 	],
-	template: ` <table hlmTable oeb-table>
+	template: `<table hlmTable oeb-table>
 			<thead hlmTHead>
 				@for (headerRow of badgeTable.getHeaderGroups(); track headerRow.id) {
 					<tr hlmTr>
