@@ -2,15 +2,23 @@ import { CommonModule, formatDate } from '@angular/common';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 import { RouterModule } from '@angular/router';
-import { Component, input, output, TemplateRef, viewChild } from '@angular/core';
+import { Component, input, output, signal, TemplateRef, viewChild } from '@angular/core';
 import { HlmTableImports } from './spartan/ui-table-helm/src';
 import { OebButtonComponent } from './oeb-button.component';
 import { Issuer } from '../issuer/models/issuer.model';
 import { HlmIconModule } from '@spartan-ng/helm/icon';
 import { ApiLearningPath } from '~/common/model/learningpath-api.model';
 import { PublicApiLearningPath } from '~/public/models/public-api.model';
-import { ColumnDef, createAngularTable, FlexRenderDirective, getCoreRowModel } from '@tanstack/angular-table';
+import {
+	ColumnDef,
+	createAngularTable,
+	FlexRenderDirective,
+	getCoreRowModel,
+	getSortedRowModel,
+	SortingState,
+} from '@tanstack/angular-table';
 import { OebTableImports } from './oeb-table';
+import { NgIcon } from '@ng-icons/core';
 
 @Component({
 	selector: 'learningpaths-datatable',
@@ -23,6 +31,7 @@ import { OebTableImports } from './oeb-table';
 		OebButtonComponent,
 		TranslateModule,
 		RouterModule,
+		NgIcon,
 	],
 	template: ` <table hlmTable oeb-table>
 			<thead hlmTHead>
@@ -31,15 +40,33 @@ import { OebTableImports } from './oeb-table';
 						@for (headerCell of headerRow.headers; track headerCell.id) {
 							@if (!headerCell.isPlaceholder) {
 								<th hlmTh>
-									<ng-container
-										*flexRender="
-											headerCell.column.columnDef.header;
-											props: headerCell.getContext();
-											let header
-										"
+									<div
+										class="tw-flex tw-flex-row tw-items-center tw-gap-2 [&[data-sortable='true']]:tw-cursor-pointer"
+										(click)="headerCell.column.toggleSorting()"
+										[attr.data-sortable]="headerCell.column.getCanSort()"
 									>
-										<div [innerHTML]="header"></div>
-									</ng-container>
+										<div>
+											<ng-container
+												*flexRender="
+													headerCell.column.columnDef.header;
+													props: headerCell.getContext();
+													let header
+												"
+											>
+												<div [innerHTML]="header"></div>
+											</ng-container>
+										</div>
+										@if (headerCell.column.getIsSorted()) {
+											@let order = headerCell.column.getNextSortingOrder() === "asc" ? "desc" : "asc";
+											@if (order === 'asc') {
+												<ng-icon hlm size="base" name="lucideChevronUp" />
+											} @else {
+												<ng-icon hlm size="base" name="lucideChevronDown" />
+											}
+										} @else if (headerCell.column.getCanSort()) {
+											<ng-icon hlm size="base" name="lucideChevronsUpDown" />
+										}
+									</div>
 								</th>
 							}
 						}
@@ -108,11 +135,19 @@ export class LearningPathDatatableComponent {
 	badgeCellTemplate = viewChild.required<TemplateRef<any>>('badgeCellTemplate');
 	badgeActionsTemplate = viewChild.required<TemplateRef<any>>('badgeActionsCellTemplate');
 
+	readonly tableSorting = signal<SortingState>([
+		{
+			id: 'Micro Degree',
+			desc: false,
+		},
+	]);
+
 	private readonly tableColumnDefinition: ColumnDef<ApiLearningPath>[] = [
 		{
 			header: 'Micro Degree',
 			accessorFn: (row) => row.name,
 			cell: () => this.badgeCellTemplate(),
+			sortDescFirst: false,
 		},
 		{
 			id: 'Badge.createdOn',
@@ -129,6 +164,7 @@ export class LearningPathDatatableComponent {
 		{
 			id: 'actions',
 			cell: (info) => this.badgeActionsTemplate(),
+			enableSorting: false,
 		},
 	];
 
@@ -136,6 +172,13 @@ export class LearningPathDatatableComponent {
 		data: this.learningPaths(),
 		columns: this.tableColumnDefinition,
 		getCoreRowModel: getCoreRowModel(),
+		getSortedRowModel: getSortedRowModel(),
+		state: {
+			sorting: this.tableSorting(),
+		},
+		onSortingChange: (updater) =>
+			updater instanceof Function ? this.tableSorting.update(updater) : this.tableSorting.set(updater),
+		enableSortingRemoval: false, // ensures at least one column is sorted
 	}));
 
 	constructor(private translate: TranslateService) {}
