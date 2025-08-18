@@ -120,8 +120,8 @@ import { ColumnDef, createAngularTable, FlexRenderDirective, getCoreRowModel } f
 })
 export class DatatableComponent {
 	badges = input.required<DatatableBadgeResult[]>();
-	directBadgeAward = output();
-	qrCodeAward = output();
+	directBadgeAward = output<BadgeClass>();
+	qrCodeAward = output<BadgeClass>();
 	redirectToBadgeDetail = output<{ badge: BadgeClass; focusRequests: boolean }>();
 	translateHeaderIDCellTemplate = viewChild.required<TemplateRef<any>>('translateHeaderIDCellTemplate');
 	badgeCellTemplate = viewChild.required<TemplateRef<any>>('badgeCellTemplate');
