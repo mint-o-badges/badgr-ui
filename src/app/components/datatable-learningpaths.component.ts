@@ -100,7 +100,7 @@ import { OebTableImports } from './oeb-table';
 		</ng-template>`,
 })
 export class LearningPathDatatableComponent {
-	learningPaths = input.required<(ApiLearningPath | PublicApiLearningPath)[]>();
+	learningPaths = input.required<ApiLearningPath[]>();
 	issuer = input<Issuer | null>(null);
 	onDelete = output<string>();
 	onNavigateToDetail = output<string>();
@@ -108,7 +108,7 @@ export class LearningPathDatatableComponent {
 	badgeCellTemplate = viewChild.required<TemplateRef<any>>('badgeCellTemplate');
 	badgeActionsTemplate = viewChild.required<TemplateRef<any>>('badgeActionsCellTemplate');
 
-	private readonly tableColumnDefinition: ColumnDef<ApiLearningPath | PublicApiLearningPath>[] = [
+	private readonly tableColumnDefinition: ColumnDef<ApiLearningPath>[] = [
 		{
 			header: 'Micro Degree',
 			accessorFn: (row) => row.name,

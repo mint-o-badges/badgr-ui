@@ -158,6 +158,10 @@ export class OebIssuerDetailComponent implements OnInit {
 		this.updateResults();
 	}
 
+	get apiLearningPaths() {
+		return this.public ? null : (this.learningPaths as ApiLearningPath[]);
+	}
+
 	private async updateResults() {
 		// Clear Results
 		this.badgeResults.length = 0;

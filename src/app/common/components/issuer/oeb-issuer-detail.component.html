@@ -220,7 +220,7 @@
 					</h2>
 					<learningpaths-datatable
 						*ngIf="!public"
-						[learningPaths]="learningPaths"
+						[learningPaths]="apiLearningPaths"
 						[issuer]="isFullIssuer(issuer) ? issuer : null"
 						(onDelete)="deleteLearningPath($event, issuer)"
 						(onNavigateToDetail)="redirectToLearningPathDetail($event, issuer)"
