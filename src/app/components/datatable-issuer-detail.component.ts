@@ -69,67 +69,67 @@ import { HlmIconModule } from '@spartan-ng/helm/icon';
 				hlmTable
 				oeb-table
 			>
-			<thead hlmTHead>
-				@for (headerRow of table.getHeaderGroups(); track headerRow.id) {
-					<tr hlmTr>
-						@for (headerCell of headerRow.headers; track headerCell.id) {
-							@if (!headerCell.isPlaceholder) {
-								<th hlmTh>
-									<div
-										class="tw-flex tw-flex-row tw-items-center tw-gap-2 [&[data-sortable='true']]:tw-cursor-pointer"
-										(click)="headerCell.column.toggleSorting()"
-										[attr.data-sortable]="headerCell.column.getCanSort()"
-									>
-										<div>
-											<ng-container
-												*flexRender="
-													headerCell.column.columnDef.header;
-													props: headerCell.getContext();
-													let header
-												"
-											>
-												<div [innerHTML]="header"></div>
-											</ng-container>
-										</div>
+				<thead hlmTHead>
+					@for (headerRow of table.getHeaderGroups(); track headerRow.id) {
+						<tr hlmTr>
+							@for (headerCell of headerRow.headers; track headerCell.id) {
+								@if (!headerCell.isPlaceholder) {
+									<th hlmTh>
+										<div
+											class="tw-flex tw-flex-row tw-items-center tw-gap-2 [&[data-sortable='true']]:tw-cursor-pointer"
+											(click)="headerCell.column.toggleSorting()"
+											[attr.data-sortable]="headerCell.column.getCanSort()"
+										>
+											<div>
+												<ng-container
+													*flexRender="
+														headerCell.column.columnDef.header;
+														props: headerCell.getContext();
+														let header
+													"
+												>
+													<div [innerHTML]="header"></div>
+												</ng-container>
+											</div>
 
-										@if (headerCell.column.getIsSorted()) {
-											@let order = headerCell.column.getNextSortingOrder() === "asc" ? "desc" : "asc";
-											@if (order === 'asc') {
-												<ng-icon hlm size="base" name="lucideChevronUp" />
-											} @else {
-												<ng-icon hlm size="base" name="lucideChevronDown" />
+											@if (headerCell.column.getIsSorted()) {
+												@let order = headerCell.column.getNextSortingOrder() === "asc" ? "desc" : "asc";
+												@if (order === 'asc') {
+													<ng-icon hlm size="base" name="lucideChevronUp" />
+												} @else {
+													<ng-icon hlm size="base" name="lucideChevronDown" />
+												}
+											} @else if (headerCell.column.getCanSort()) {
+												<ng-icon hlm size="base" name="lucideChevronsUpDown" />
 											}
-										} @else if (headerCell.column.getCanSort()) {
-											<ng-icon hlm size="base" name="lucideChevronsUpDown" />
-										}
-									</div>
-								</th>
+										</div>
+									</th>
+								}
 							}
-						}
-					</tr>
-				}
-			</thead>
-			<tbody hlmTBody>
-				@for (row of table.getRowModel().rows; track row.id; let i = $index) {
-					<tr hlmTr>
-						@if (downloadStates()[i]) {
-							<td hlmTd [colSpan]="3">
-								<loading-dots [showLoading]="false" />
-							</td>
-						} @else {
-							@for (cell of row.getVisibleCells(); track cell.id;) {
-								<td hlmTd>
-									<ng-container
-										*flexRender="cell.column.columnDef.cell; props: cell.getContext(); let cell"
-									>
-										<div [innerHTML]="cell"></div>
-									</ng-container>
+						</tr>
+					}
+				</thead>
+				<tbody hlmTBody>
+					@for (row of table.getRowModel().rows; track row.id; let i = $index) {
+						<tr hlmTr>
+							@if (downloadStates()[i]) {
+								<td hlmTd [colSpan]="3">
+									<loading-dots [showLoading]="false" />
 								</td>
+							} @else {
+								@for (cell of row.getVisibleCells(); track cell.id;) {
+									<td hlmTd>
+										<ng-container
+											*flexRender="cell.column.columnDef.cell; props: cell.getContext(); let cell"
+										>
+											<div [innerHTML]="cell"></div>
+										</ng-container>
+									</td>
+								}
 							}
-						}
-					</tr>
-				}
-			</tbody>
+						</tr>
+					}
+				</tbody>
 			</table>
 		</div>
 
