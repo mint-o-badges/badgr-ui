@@ -177,7 +177,7 @@ export class IssuerDetailDatatableComponent {
 		{
 			id: 'General.name',
 			header: () => this.translateHeaderIDCellTemplate(),
-			accessorFn: (row) => row.recipientIdentifier,
+			accessorFn: (row) => row.getExtension('extensions:recipientProfile', row.recipientIdentifier).name,
 			cell: (ctx) => ctx.getValue(),
 			sortDescFirst: false,
 		},
