@@ -1,41 +1,41 @@
-import { NgIcon } from '@ng-icons/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, formatDate } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
-import { Component, EventEmitter, Input, Output, computed, effect, input, signal } from '@angular/core';
-import { HlmTableImports, HlmTableVariant } from './spartan/ui-table-helm/src';
-import { HlmInput } from './spartan/ui-input-helm/src';
-import { HlmLabel } from './spartan/ui-label-helm/src';
-import { toObservable, toSignal } from '@angular/core/rxjs-interop';
-import { debounceTime } from 'rxjs';
+import { Component, input, output, signal, TemplateRef, viewChild } from '@angular/core';
+import { HlmTableImports } from './spartan/ui-table-helm/src';
 import { BadgeInstance } from '../issuer/models/badgeinstance.model';
 import { FormsModule } from '@angular/forms';
-import { HlmIcon } from './spartan/ui-icon-helm/src';
 import { lucideSearch } from '@ng-icons/lucide';
 import { OebButtonComponent } from './oeb-button.component';
-import { provideIcons } from '@ng-icons/core';
+import { NgIcon, provideIcons } from '@ng-icons/core';
 import { OebSpinnerComponent } from './oeb-spinner.component';
-import { HlmCommandInputWrapper } from './spartan/ui-command-helm/src/lib/hlm-command-input-wrapper.component';
 import { LoadingDotsComponent } from '../common/components/loading-dots.component';
-import { TimeComponent } from '~/common/components/time.component';
+import { OebTableImports } from './oeb-table';
+import {
+	ColumnDef,
+	createAngularTable,
+	FlexRenderDirective,
+	getCoreRowModel,
+	getSortedRowModel,
+	SortingState,
+} from '@tanstack/angular-table';
+import { HlmIconModule } from '@spartan-ng/helm/icon';
 
 @Component({
 	selector: 'issuer-detail-datatable',
 	imports: [
 		FormsModule,
 		...HlmTableImports,
+		...OebTableImports,
 		CommonModule,
 		TranslateModule,
 		RouterModule,
-		HlmInput,
-		HlmLabel,
-		NgIcon,
-		HlmIcon,
-		HlmCommandInputWrapper,
 		OebButtonComponent,
 		OebSpinnerComponent,
 		LoadingDotsComponent,
-		TimeComponent,
+		FlexRenderDirective,
+		NgIcon,
+		HlmIconModule,
 	],
 	providers: [provideIcons({ lucideSearch })],
 	template: `
@@ -45,24 +45,14 @@ import { TimeComponent } from '~/common/components/time.component';
 					<h3
 						class="md:tw-text-xl md:tw-text-nowrap tw-text-sm tw-font-semibold tw-font-[rubik] tw-text-oebblack"
 					>
-						{{ recipientCount }} Badge
-						{{ recipientCount == 1 ? ('Issuer.recipient' | translate) : ('Issuer.recipients' | translate) }}
+						{{ recipientCount() }} Badge
+						{{
+							recipientCount() == 1 ? ('Issuer.recipient' | translate) : ('Issuer.recipients' | translate)
+						}}
 					</h3>
 				</div>
-				<label hlmLabel class="tw-font-semibold tw-text-[0.5rem] tw-w-full">
-					<span class="tw-px-3">{{ 'General.searchByEmail' | translate }}</span>
-					<hlm-cmd-input-wrapper class="tw-relative tw-px-0 tw-mt-1 tw-border-b-0">
-						<input
-							hlmInput
-							class="tw-w-full tw-border-solid tw-ml-auto tw-border-purple tw-py-1 tw-rounded-[20px]"
-							[ngModel]="_emailFilter()"
-							(ngModelChange)="_rawFilterInput.set($event)"
-						/>
-						<ng-icon hlm size="lg" class="tw-absolute  tw-right-6 tw-text-purple" name="lucideSearch" />
-					</hlm-cmd-input-wrapper>
-				</label>
 			</div>
-			@if (awardInProgress) {
+			@if (awardInProgress()) {
 				<div
 					class="tw-border-green tw-p-2 tw-border-solid tw-border-4 tw-rounded-[10px] tw-w-full tw-flex md:tw-gap-6 tw-gap-2 tw-items-center"
 				>
@@ -77,96 +67,145 @@ import { TimeComponent } from '~/common/components/time.component';
 			}
 			<table
 				hlmTable
-				class="tw-rounded-t-[20px] tw-overflow-hidden tw-w-full tw-max-w-[100%] tw-bg-lightpurple tw-border-purple tw-border-[1px] tw-border-solid tw-mt-8"
+				oeb-table
 			>
-				@if (caption) {
-					<caption hlmCaption>
-						{{
-							caption
-						}}
-					</caption>
-				}
-				<tr hlmTr class="tw-bg-purple tw-text-white tw-flex-wrap hover:tw-bg-purple">
-					<th hlmTh class="!tw-text-white tw-w-40">ID</th>
-					<th hlmTh class="!tw-text-white tw-justify-center xl:tw-pr-12 !tw-flex-1">
-						{{ 'RecBadgeDetail.issuedOn' | translate }}
-					</th>
-					<th hlmTh class="!tw-text-white tw-justify-end xl:tw-w-40 tw-w-0 !tw-p-0"></th>
-				</tr>
-				@for (recipient of _filteredEmails(); track recipient; let i = $index) {
-					<tr
-						hlmTr
-						class="tw-border-purple tw-border-0 tw-border-solid tw-flex-wrap tw-items-center tw-py-2 tw-relative"
-					>
-						<!-- loading spinner -->
-						@if (downloadStates[i]) {
-							<loading-dots
-								[showLoading]="false"
-								class="tw-absolute tw-right-0 tw-left-0 tw-z-50"
-							></loading-dots>
+			<thead hlmTHead>
+				@for (headerRow of table.getHeaderGroups(); track headerRow.id) {
+					<tr hlmTr>
+						@for (headerCell of headerRow.headers; track headerCell.id) {
+							@if (!headerCell.isPlaceholder) {
+								<th hlmTh>
+									<div
+										class="tw-flex tw-flex-row tw-items-center tw-gap-2 [&[data-sortable='true']]:tw-cursor-pointer"
+										(click)="headerCell.column.toggleSorting()"
+										[attr.data-sortable]="headerCell.column.getCanSort()"
+									>
+										<div>
+											<ng-container
+												*flexRender="
+													headerCell.column.columnDef.header;
+													props: headerCell.getContext();
+													let header
+												"
+											>
+												<div [innerHTML]="header"></div>
+											</ng-container>
+										</div>
+
+										@if (headerCell.column.getIsSorted()) {
+											@let order = headerCell.column.getNextSortingOrder() === "asc" ? "desc" : "asc";
+											@if (order === 'asc') {
+												<ng-icon hlm size="base" name="lucideChevronUp" />
+											} @else {
+												<ng-icon hlm size="base" name="lucideChevronDown" />
+											}
+										} @else if (headerCell.column.getCanSort()) {
+											<ng-icon hlm size="base" name="lucideChevronsUpDown" />
+										}
+									</div>
+								</th>
+							}
 						}
-						<th hlmTh class="tw-w-40">
-							<span class="!tw-text-oebblack !tw-font-normal">{{ recipient.recipientIdentifier }}</span>
-						</th>
-						<th hlmTh class="!tw-flex-1 tw-justify-center !tw-text-oebblack">
-							<p class="u-text">
-								<time [date]="recipient.issuedOn" format="dd.MM.y"></time>
-							</p>
-						</th>
-						<th
-							hlmTh
-							class="tw-justify-center tw-gap-[25px] xl:tw-gap-[5px] xl:tw-w-max xl:tw-h-fit xl:tw-flex-col xl:tw-justify-end tw-w-full !tw-text-oebblack"
-						>
-							<oeb-button
-								variant="secondary"
-								size="xs"
-								width="full_width"
-								class="tw-w-full"
-								(click)="actionElement.emit(recipient)"
-								[text]="actionElementText | translate | titlecase"
-							></oeb-button>
-							<oeb-button
-								size="xs"
-								width="full_width"
-								class="tw-w-full tw-font-semibold"
-								(click)="downloadCertificate.emit({ instance: recipient, badgeIndex: i })"
-								text="{{ 'Issuer.pdfCertificate' | translate }}"
-								[disabled]="downloadStates[i]"
-							></oeb-button>
-						</th>
 					</tr>
 				}
+			</thead>
+			<tbody hlmTBody>
+				@for (row of table.getRowModel().rows; track row.id; let i = $index) {
+					<tr hlmTr>
+						@if (downloadStates()[i]) {
+							<td hlmTd [colSpan]="3">
+								<loading-dots [showLoading]="false" />
+							</td>
+						} @else {
+							@for (cell of row.getVisibleCells(); track cell.id;) {
+								<td hlmTd>
+									<ng-container
+										*flexRender="cell.column.columnDef.cell; props: cell.getContext(); let cell"
+									>
+										<div [innerHTML]="cell"></div>
+									</ng-container>
+								</td>
+							}
+						}
+					</tr>
+				}
+			</tbody>
 			</table>
 		</div>
+
+		<ng-template #translateHeaderIDCellTemplate let-context>
+			{{ context.header.id | translate | titlecase }}
+		</ng-template>
+
+		<ng-template #badgeActionsCellTemplate let-context>
+			<div class="tw-flex tw-flex-col tw-gap-1 md:tw-gap-2 tw-leading-relaxed">
+				<oeb-button
+					size="xs"
+					width="full_width"
+					(click)="downloadCertificate.emit({ instance: context.row.original, badgeIndex: context.row.index })"
+					text="{{ 'Issuer.pdfCertificate' | translate }}"
+					[disabled]="downloadStates()[context.row.index]" />
+				<oeb-button
+					variant="secondary"
+					size="xs"
+					width="full_width"
+					(click)="actionElement.emit(context.row.original)"
+					[text]="'General.revoke' | translate | titlecase" />
+			</div>
+		</ng-template>
 	`,
 })
 export class IssuerDetailDatatableComponent {
-	@Input() caption: string = '';
-	@Input() recipientCount: number = 0;
-	@Input() actionElementText: string = 'General.revoke';
-	@Input() downloadStates;
-	@Output() actionElement = new EventEmitter();
-	@Output() downloadCertificate = new EventEmitter<object>();
-	@Input() awardInProgress: boolean = false;
+	recipientCount = input<number>(0);
+	downloadStates = input<boolean[]>([]);
+	awardInProgress = input<boolean>(false);
+	recipients = input.required<BadgeInstance[]>();
+	actionElement = output<BadgeInstance>();
+	downloadCertificate = output<{ instance: BadgeInstance; badgeIndex: number }>();
 
-	_recipients = input.required<BadgeInstance[]>();
+	translateHeaderIDCellTemplate = viewChild.required<TemplateRef<any>>('translateHeaderIDCellTemplate');
+	badgeActionsTemplate = viewChild.required<TemplateRef<any>>('badgeActionsCellTemplate');
 
-	protected readonly _rawFilterInput = signal('');
-	protected readonly _emailFilter = signal('');
-	private readonly _debouncedFilter = toSignal(toObservable(this._rawFilterInput).pipe(debounceTime(300)));
-	constructor() {
-		// needed to sync the debounced filter to the name filter, but being able to override the
-		// filter when loading new users without debounce
-		effect(() => this._emailFilter.set(this._debouncedFilter() ?? ''), { allowSignalWrites: true });
-	}
+	readonly tableSorting = signal<SortingState>([
+		{
+			id: 'General.name',
+			desc: false,
+		},
+	]);
 
-	_filteredEmails = computed(() => {
-		if (this._recipients().length) {
-			const emailFilter = this._emailFilter()?.trim()?.toLowerCase();
-			return this._recipients().filter((u) => u.recipientIdentifier.toLowerCase().includes(emailFilter));
-		}
-		return this._recipients();
-	});
+	private readonly tableColumnDefinition: ColumnDef<BadgeInstance>[] = [
+		{
+			id: 'General.name',
+			header: () => this.translateHeaderIDCellTemplate(),
+			accessorFn: (row) => row.recipientIdentifier,
+			cell: (ctx) => ctx.getValue(),
+			sortDescFirst: false,
+		},
+		{
+			id: 'RecBadgeDetail.issuedOn',
+			header: () => this.translateHeaderIDCellTemplate(),
+			accessorFn: (row) => formatDate(row.issuedOn, 'dd.MM.yyyy', 'de-DE'),
+			cell: (info) => info.getValue(),
+		},
+		{
+			id: 'actions',
+			cell: (info) => this.badgeActionsTemplate(),
+			enableSorting: false,
+		},
+	];
 
-	protected readonly _totalElements = computed(() => this._filteredEmails().length);
+	table = createAngularTable(() => ({
+		data: this.recipients(),
+		columns: this.tableColumnDefinition,
+		getCoreRowModel: getCoreRowModel(),
+		getSortedRowModel: getSortedRowModel(),
+		state: {
+			sorting: this.tableSorting(),
+		},
+		onSortingChange: (updater) =>
+			updater instanceof Function ? this.tableSorting.update(updater) : this.tableSorting.set(updater),
+		enableSortingRemoval: false, // ensures at least one column is sorted
+	}));
+
+	constructor() {}
 }
