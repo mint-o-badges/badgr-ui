@@ -233,7 +233,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 		private cmsManager: CmsManager,
 	) {
 		// Initialize App language
-		this.languageService.setInitialAppLangauge();
+		this.languageService.setInitialAppLanguage();
 		this.lngObserver.subscribe((lng) => {
 			if (lng != null) {
 				this.selectedLng = lng;
