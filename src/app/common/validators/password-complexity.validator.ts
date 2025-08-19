@@ -9,7 +9,7 @@ export class PasswordComplexityValidator {
 
 		const hasUpperCase = /[A-Z]/.test(value);
 		const hasDigit = /\d/.test(value);
-		const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(value);
+		const hasSpecialChar = /[!\"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~€]/.test(value);
 
 		const isValid = hasUpperCase && hasDigit && hasSpecialChar;
 

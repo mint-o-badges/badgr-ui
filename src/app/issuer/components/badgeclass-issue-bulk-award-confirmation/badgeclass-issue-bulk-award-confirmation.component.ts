@@ -84,7 +84,8 @@ export class BadgeclassIssueBulkAwardConformation extends BaseAuthenticatedRouta
 		this.disableActionButton();
 
 		const assertions: BadgeInstanceBatchAssertion[] = [];
-		const recipientProfileContextUrl = 'https://openbadgespec.org/extensions/recipientProfile/context.json';
+		const recipientProfileContextUrl =
+			'https://api.openbadges.education/static/extensions/recipientProfile/context.json';
 
 		this.transformedImportData.validRowsTransformed.forEach((row) => {
 			let assertion: BadgeInstanceBatchAssertion;
