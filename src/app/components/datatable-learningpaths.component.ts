@@ -8,7 +8,6 @@ import { OebButtonComponent } from './oeb-button.component';
 import { Issuer } from '../issuer/models/issuer.model';
 import { HlmIconModule } from '@spartan-ng/helm/icon';
 import { ApiLearningPath } from '~/common/model/learningpath-api.model';
-import { PublicApiLearningPath } from '~/public/models/public-api.model';
 import {
 	ColumnDef,
 	createAngularTable,
