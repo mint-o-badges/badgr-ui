@@ -19,6 +19,7 @@ import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { BgBadgecard } from '../bg-badgecard';
 import { LearningPathGraduatesDatatableComponent } from '../../../components/datatable-learningpath-graduates.component';
 import { HlmH2, HlmP, HlmH3 } from '@spartan-ng/helm/typography';
+import { ApiLearningPathParticipant } from '~/common/model/learningpath-api.model';
 
 @Component({
 	selector: 'oeb-learning-path',
@@ -49,7 +50,7 @@ export class OebLearningPathDetailComponent extends BaseRoutableComponent implem
 	@Input() learningPath;
 	@Input() issuer;
 	@Input() badges;
-	@Input() participants;
+	@Input() participants: ApiLearningPathParticipant[];
 	loading: any;
 	pdfSrc: SafeResourceUrl;
 
