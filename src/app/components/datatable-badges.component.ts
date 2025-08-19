@@ -79,7 +79,7 @@ import { NgIcon } from '@ng-icons/core';
 								<ng-container
 									*flexRender="cell.column.columnDef.cell; props: cell.getContext(); let cell"
 								>
-									<div [innerHTML]="cell"></div>
+									<div class="tw-flex tw-items-center tw-min-h-10" [innerHTML]="cell"></div>
 								</ng-container>
 							</td>
 						}
@@ -94,7 +94,7 @@ import { NgIcon } from '@ng-icons/core';
 
 		<ng-template #badgeCellTemplate let-context>
 			<div
-				class="tw-flex tw-flex-row tw-gap-2 tw-cursor-pointer"
+				class="tw-flex tw-flex-row tw-items-center tw-leading-7 tw-gap-2 tw-cursor-pointer"
 				(click)="redirectToBadgeDetail.emit({ badge: context.row.original.badge, focusRequests: false })"
 			>
 				<div>
