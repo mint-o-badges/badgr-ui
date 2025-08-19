@@ -103,14 +103,14 @@ import { NgIcon } from '@ng-icons/core';
 			<oeb-button
 				size="xs"
 				width="full_width"
-				(click)="revokeLearningPath.emit(context)"
-				[text]="'General.revoke' | translate | titlecase" />
+				(click)="downloadCertificate.emit(context)"
+				[text]="'Issuer.pdfCertificate' | translate" />
 			<oeb-button
 				variant="secondary"
 				size="xs"
 				width="full_width"
-				(click)="downloadCertificate.emit(context)"
-				[text]="'Issuer.pdfCertificate' | translate" />
+				(click)="revokeLearningPath.emit(context)"
+				[text]="'General.revoke' | translate | titlecase" />
 		</div>
 	</ng-template>`,
 })
