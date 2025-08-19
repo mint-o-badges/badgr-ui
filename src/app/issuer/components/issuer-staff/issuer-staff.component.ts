@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, computed, inject, OnInit, signal, TemplateRef, viewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
 import { SessionService } from '../../../common/services/session.service';
@@ -10,12 +10,9 @@ import { preloadImageURL } from '../../../common/util/file-util';
 import { FormFieldSelectOption } from '../../../common/components/formfield-select';
 import { BadgrApiFailure } from '../../../common/services/api-failure';
 import { CommonDialogsService } from '../../../common/services/common-dialogs.service';
-import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
-import { UserProfileEmail } from '../../../common/model/user-profile.model';
 import { IssuerStaffRoleSlug } from '../../models/issuer-api.model';
 import { AppConfigService } from '../../../common/app-config.service';
-import { LinkEntry, BgBreadcrumbsComponent } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
-import { IssuerStaffCreateDialogComponent } from '../issuer-staff-create-dialog/issuer-staff-create-dialog.component';
+import { BgBreadcrumbsComponent } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src';
 import { DialogComponent } from '../../../components/dialog.component';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
@@ -32,7 +29,19 @@ import { OebInputComponent } from '../../../components/input.component';
 import { FormFieldRadio } from '../../../common/components/formfield-radio';
 import { IssuerStaffRequestsDatatableComponent } from '../../../components/datatable-issuer-staff-requests.component';
 import { HlmTableImports } from '@spartan-ng/helm/table';
-import { HlmH1, HlmH2, HlmP } from '@spartan-ng/helm/typography';
+import { HlmH1, HlmH2 } from '@spartan-ng/helm/typography';
+import { OebTableImports } from '~/components/oeb-table';
+import { NgIcon } from '@ng-icons/core';
+import { HlmIconModule } from '@spartan-ng/helm/icon';
+import {
+	SortingState,
+	ColumnDef,
+	createAngularTable,
+	getCoreRowModel,
+	getSortedRowModel,
+	FlexRenderDirective,
+} from '@tanstack/angular-table';
+import { TitleCasePipe } from '@angular/common';
 
 @Component({
 	templateUrl: './issuer-staff.component.html',
@@ -65,107 +74,98 @@ import { HlmH1, HlmH2, HlmP } from '@spartan-ng/helm/typography';
 		FormFieldRadio,
 		HlmH2,
 		IssuerStaffRequestsDatatableComponent,
-		HlmP,
 		...HlmTableImports,
+		...OebTableImports,
+		NgIcon,
+		HlmIconModule,
+		FlexRenderDirective,
 		TranslatePipe,
+		TitleCasePipe,
 	],
 })
 export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
-	get issuerStaffRoleOptions() {
-		return (
-			this._issuerStaffRoleOptions ||
-			(this._issuerStaffRoleOptions = issuerStaffRoles.map((r) => ({
-				label: r.label,
-				value: r.slug,
-				description: r.description,
-			})))
-		);
-	}
+	issuer = signal<Issuer | null>(null);
+	staff = computed(() => this.issuer()?.staff.entities ?? []);
+	staffRequests = signal<ApiStaffRequest[]>([]);
+	isCurrentUserIssuerOwner = computed(
+		() => this.issuer() && this.issuer().currentUserStaffMember && this.issuer().currentUserStaffMember.isOwner,
+	);
+	breadcrumbLinkEntries = computed(() => [
+		{ title: 'Issuers', routerLink: ['/issuer'] },
+		{ title: this.issuer().name, routerLink: ['/issuer/issuers', this.issuerSlug] },
+		{
+			title: this.isCurrentUserIssuerOwner()
+				? this.translate.instant('Issuer.editMembers')
+				: this.translate.instant('General.members'),
+		},
+	]);
+	issuerLoaded = signal<Promise<Issuer>>(null);
+	error = signal<string>(null);
 
-	get isCurrentUserIssuerOwner() {
-		return this.issuer && this.issuer.currentUserStaffMember && this.issuer.currentUserStaffMember.isOwner;
-	}
+	dialogHeaderTemplate = viewChild.required<TemplateRef<void>>('dialogHeaderTemplate');
+	addMemberFormTemplate = viewChild.required<TemplateRef<void>>('addMemberFormTemplate');
+	confirmDialogHeaderTemplate = viewChild.required<TemplateRef<void>>('confirmDialogHeaderTemplate');
+	staffRequestRoleTemplate = viewChild.required<TemplateRef<void>>('staffRequestRoleTemplate');
+	translateHeaderIDCellTemplate = viewChild.required<TemplateRef<any>>('translateHeaderIDCellTemplate');
+	roleSelectionCellTemplate = viewChild.required<TemplateRef<any>>('roleSelectionCellTemplate');
+	badgeActionsTemplate = viewChild.required<TemplateRef<any>>('badgeActionsCellTemplate');
 
+	readonly issuerStaffRoleOptions: FormFieldSelectOption[] = issuerStaffRoles.map((r) => ({
+		label: r.label,
+		value: r.slug,
+		description: r.description,
+	}));
 	readonly issuerImagePlaceHolderUrl = preloadImageURL(
 		'../../../../breakdown/static/images/placeholderavatar-issuer.svg',
 	);
+	readonly issuerSlug: string;
+	readonly tableSorting = signal<SortingState>([
+		{
+			id: 'General.name',
+			desc: false,
+		},
+	]);
+	private readonly _hlmDialogService = inject(HlmDialogService);
+	private readonly tableColumnDefinition: ColumnDef<IssuerStaffMember>[] = [
+		{
+			id: 'General.name',
+			header: () => this.translateHeaderIDCellTemplate(),
+			accessorFn: (row) => row.nameLabel,
+			cell: (ctx) => ctx.getValue(),
+			sortDescFirst: false,
+		},
+		{
+			id: 'General.email',
+			header: () => this.translateHeaderIDCellTemplate(),
+			accessorFn: (row) => row.email,
+			cell: (ctx) => ctx.getValue(),
+			sortDescFirst: false,
+		},
+		{
+			id: 'General.role',
+			header: () => this.translateHeaderIDCellTemplate(),
+			accessorFn: (row) => row.roleSlug,
+			cell: () => this.roleSelectionCellTemplate(),
+		},
+		{
+			id: 'actions',
+			cell: (info) => this.badgeActionsTemplate(),
+			enableSorting: false,
+		},
+	];
 
-	issuer: Issuer;
-	issuerSlug: string;
-	issuerLoaded: Promise<Issuer>;
-	profileEmailsLoaded: Promise<UserProfileEmail[]>;
-	profileEmails: UserProfileEmail[] = [];
-	error: string = null;
-
-	staffRequests: ApiStaffRequest[] = [];
-
-	selectedStaffRequestEmail: string | null = null;
-
-	staffRequestsCaption: string | null = null;
-
-	dialogRef: BrnDialogRef<any> = null;
-
-	@ViewChild('issuerStaffCreateDialog')
-	issuerStaffCreateDialog: IssuerStaffCreateDialogComponent;
-
-	@ViewChild('headerTemplate')
-	headerTemplate: TemplateRef<void>;
-
-	@ViewChild('headerConfirmStaffTemplate')
-	headerConfirmStaffTemplate: TemplateRef<void>;
-
-	@ViewChild('addMemberFormTemplate')
-	addMemberFormTemplate: TemplateRef<void>;
-
-	@ViewChild('staffRequestRoleTemplate')
-	staffRequestRoleTemplate: TemplateRef<void>;
-
-	breadcrumbLinkEntries: LinkEntry[] = [];
-
-	private _issuerStaffRoleOptions: FormFieldSelectOption[];
-
-	constructor(
-		loginService: SessionService,
-		router: Router,
-		route: ActivatedRoute,
-		protected title: Title,
-		protected messageService: MessageService,
-		protected issuerManager: IssuerManager,
-		protected profileManager: UserProfileManager,
-		protected configService: AppConfigService,
-		protected dialogService: CommonDialogsService,
-		protected translate: TranslateService,
-		protected issuerStaffRequestApiService: IssuerStaffRequestApiService,
-	) {
-		super(router, route, loginService);
-		title.setTitle(`Manage Issuer Staff - ${this.configService.theme['serviceName'] || 'Badgr'}`);
-
-		this.issuerSlug = this.route.snapshot.params['issuerSlug'];
-		this.issuerLoaded = this.issuerManager.issuerBySlug(this.issuerSlug).then((issuer) => {
-			this.issuer = issuer;
-			this.breadcrumbLinkEntries = [
-				{ title: 'Issuers', routerLink: ['/issuer'] },
-				{ title: issuer.name, routerLink: ['/issuer/issuers', this.issuerSlug] },
-				{
-					title: this.isCurrentUserIssuerOwner
-						? this.translate.instant('Issuer.editMembers')
-						: this.translate.instant('General.members'),
-				},
-			];
-			return issuer;
-		});
-
-		this.profileEmailsLoaded = this.profileManager.userProfilePromise
-			.then((profile) => profile.emails.loadedPromise)
-			.then((emails) => (this.profileEmails = emails.entities));
-	}
-
-	ngOnInit(): void {
-		this.issuerStaffRequestApiService.getStaffRequestsByIssuer(this.issuerSlug).then((r) => {
-			this.staffRequests = r.body;
-		});
-	}
-
+	table = createAngularTable(() => ({
+		data: this.staff(),
+		columns: this.tableColumnDefinition,
+		getCoreRowModel: getCoreRowModel(),
+		getSortedRowModel: getSortedRowModel(),
+		state: {
+			sorting: this.tableSorting(),
+		},
+		onSortingChange: (updater) =>
+			updater instanceof Function ? this.tableSorting.update(updater) : this.tableSorting.set(updater),
+		enableSortingRemoval: false, // ensures at least one column is sorted
+	}));
 	staffCreateForm = typedFormGroup()
 		.addControl('staffRole', 'staff' as IssuerStaffRoleSlug, Validators.required)
 		.addControl('staffEmail', '', [Validators.required, EmailValidator.validEmail]);
@@ -175,6 +175,38 @@ export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent imp
 		'staff' as IssuerStaffRoleSlug,
 		Validators.required,
 	);
+	dialogRef: BrnDialogRef<any> = null;
+	selectedStaffRequestEmail: string | null = null;
+
+	constructor(
+		loginService: SessionService,
+		router: Router,
+		route: ActivatedRoute,
+		protected title: Title,
+		protected messageService: MessageService,
+		protected issuerManager: IssuerManager,
+		protected configService: AppConfigService,
+		protected dialogService: CommonDialogsService,
+		protected translate: TranslateService,
+		protected issuerStaffRequestApiService: IssuerStaffRequestApiService,
+	) {
+		super(router, route, loginService);
+		title.setTitle(`Manage Issuer Staff - ${this.configService.theme['serviceName'] || 'Badgr'}`);
+		this.issuerSlug = this.route.snapshot.params['issuerSlug'];
+	}
+
+	ngOnInit(): void {
+		this.issuerLoaded.set(
+			this.issuerManager.issuerBySlug(this.issuerSlug).then((issuer) => {
+				this.issuer.set(issuer);
+				return issuer;
+			}),
+		);
+
+		this.issuerStaffRequestApiService.getStaffRequestsByIssuer(this.issuerSlug).then((r) => {
+			this.staffRequests.set(r.body);
+		});
+	}
 
 	submitStaffRequestRoleForm(requestid: string) {
 		if (!this.staffRequestRoleForm.markTreeDirtyAndValidate()) {
@@ -184,23 +216,26 @@ export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent imp
 
 		return this.issuerStaffRequestApiService.confirmRequest(this.issuerSlug, requestid).then(
 			() => {
-				this.issuer.addStaffMember(formData.staffRole, this.selectedStaffRequestEmail);
+				this.issuer().addStaffMember(formData.staffRole, this.selectedStaffRequestEmail);
 				this.error = null;
 				this.messageService.reportMinorSuccess(
 					`Added ${this.selectedStaffRequestEmail} as ${formData.staffRole}`,
 				);
 				this.closeDialog();
-				this.staffRequests = this.staffRequests.filter(
-					//@ts-ignore
-					(req) => req.user.email != this.selectedStaffRequestEmail,
+				this.staffRequests.update((current) =>
+					current.filter(
+						//@ts-ignore
+						(req) => req.user.email != this.selectedStaffRequestEmail,
+					),
 				);
 			},
 			(error) => {
 				const err = BadgrApiFailure.from(error);
 				console.log(err);
-				this.error =
+				this.error.set(
 					BadgrApiFailure.messageIfThrottableError(err.overallMessage) ||
-					''.concat(this.translate.instant('Issuer.addMember_failed'), ': ', err.firstMessage);
+						''.concat(this.translate.instant('Issuer.addMember_failed'), ': ', err.firstMessage),
+				);
 			},
 		);
 	}
@@ -212,25 +247,26 @@ export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent imp
 
 		const formData = this.staffCreateForm.value;
 
-		return this.issuer.addStaffMember(formData.staffRole, formData.staffEmail).then(
-			() => {
-				this.error = null;
-				this.messageService.reportMinorSuccess(`Added ${formData.staffEmail} as ${formData.staffRole}`);
-				this.closeDialog();
-				// this.closeModal();
-			},
-			(error) => {
-				const err = BadgrApiFailure.from(error);
-				console.log(err);
-				this.closeDialog();
-				this.error =
-					BadgrApiFailure.messageIfThrottableError(err.overallMessage) ||
-					''.concat(this.translate.instant('Issuer.addMember_failed'), ': ', err.firstMessage);
-			},
-		);
+		return this.issuer()
+			.addStaffMember(formData.staffRole, formData.staffEmail)
+			.then(
+				() => {
+					this.error = null;
+					this.messageService.reportMinorSuccess(`Added ${formData.staffEmail} as ${formData.staffRole}`);
+					this.closeDialog();
+					// this.closeModal();
+				},
+				(error) => {
+					const err = BadgrApiFailure.from(error);
+					console.log(err);
+					this.closeDialog();
+					this.error.set(
+						BadgrApiFailure.messageIfThrottableError(err.overallMessage) ||
+							''.concat(this.translate.instant('Issuer.addMember_failed'), ': ', err.firstMessage),
+					);
+				},
+			);
 	}
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	// Staff Editing
 
 	changeMemberRole(member: IssuerStaffMember, roleSlug: IssuerStaffRoleSlug) {
 		member.roleSlug = roleSlug;
@@ -248,16 +284,11 @@ export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent imp
 		);
 	}
 
-	memberId(member) {
-		return member.email || member.url || member.telephone;
-	}
-
 	async removeMember(member: IssuerStaffMember) {
-		console.log('member', member);
 		if (
 			!(await this.dialogService.confirmDialog.openTrueFalseDialog({
 				dialogTitle: `Remove ${member.nameLabel}?`,
-				dialogBody: `${member.nameLabel} is ${member.roleInfo.indefiniteLabel} of ${this.issuer.name}. Are you sure you want to remove them from this role?`,
+				dialogBody: `${member.nameLabel} is ${member.roleInfo.indefiniteLabel} of ${this.issuer().name}. Are you sure you want to remove them from this role?`,
 				resolveButtonLabel: `Remove ${member.nameLabel}`,
 				rejectButtonLabel: 'Cancel',
 			}))
@@ -266,7 +297,7 @@ export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent imp
 		}
 
 		return member.remove().then(
-			() => this.messageService.reportMinorSuccess(`Removed ${member.nameLabel} from ${this.issuer.name}`),
+			() => this.messageService.reportMinorSuccess(`Removed ${member.nameLabel} from ${this.issuer().name}`),
 			(error) =>
 				this.messageService.reportHandledError(
 					`Failed to add member: ${BadgrApiFailure.from(error).firstMessage}`,
@@ -274,24 +305,13 @@ export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent imp
 		);
 	}
 
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	// Staff Creation
-
-	addStaff() {
-		this.issuerStaffCreateDialog.openDialog();
-		// this.issuerStaffCreateDialog._issuerStaffRoleOptions = this._issuerStaffRoleOptions;
-		this.issuerStaffCreateDialog.issuer = this.issuer;
-	}
-
-	private readonly _hlmDialogService = inject(HlmDialogService);
-
 	public openDialog(text: string) {
 		const dialogRef = this._hlmDialogService.open(DialogComponent, {
 			context: {
-				headerTemplate: this.headerTemplate,
+				headerTemplate: this.dialogHeaderTemplate(),
 				text: text,
 				subtitle: 'Are you sure you want to proceed?',
-				content: this.addMemberFormTemplate,
+				content: this.addMemberFormTemplate(),
 				variant: 'default',
 				footer: false,
 			},
@@ -301,7 +321,7 @@ export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent imp
 
 	deleteStaffRequest(event) {
 		this.issuerStaffRequestApiService.deleteRequest(this.issuerSlug, event).then(() => {
-			this.staffRequests = this.staffRequests.filter((req) => req.entity_id != event);
+			this.staffRequests.update((current) => current.filter((req) => req.entity_id != event));
 		});
 	}
 
@@ -316,8 +336,8 @@ export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent imp
 		this.selectedStaffRequestEmail = event.user.email;
 		const dialogRef = this._hlmDialogService.open(DialogComponent, {
 			context: {
-				headerTemplate: this.headerConfirmStaffTemplate,
-				content: this.staffRequestRoleTemplate,
+				headerTemplate: this.confirmDialogHeaderTemplate(),
+				content: this.staffRequestRoleTemplate(),
 				footer: false,
 				templateContext: {
 					email: this.selectedStaffRequestEmail,
@@ -326,6 +346,5 @@ export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent imp
 			},
 		});
 		this.dialogRef = dialogRef;
-		// this.issuerStaffRequestApiService.confirmRequest(this.issuerSlug, event);
 	}
 }
