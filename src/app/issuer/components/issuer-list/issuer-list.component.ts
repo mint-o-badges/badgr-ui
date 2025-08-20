@@ -32,6 +32,11 @@ import { HlmIconDirective } from '../../../components/spartan/ui-icon-helm/src/l
 import { BgImageStatusPlaceholderDirective } from '../../../common/directives/bg-image-status-placeholder.directive';
 import { OebTabsComponent } from '../../../components/oeb-tabs.component';
 import { environment } from 'src/environments/environment';
+import { OebNetworkCard } from '~/common/components/oeb-networkcard.component';
+import { NetworkManager } from '../../services/network-manager.service';
+import { Network } from '../../models/network.model';
+import { NetworkListComponent } from '../network-list/network-list.component';
+import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 
 @Component({
 	selector: 'issuer-list',
@@ -51,6 +56,9 @@ import { environment } from 'src/environments/environment';
 		NgStyle,
 		TranslatePipe,
 		OebTabsComponent,
+		OebNetworkCard,
+		NetworkListComponent,
+		BgAwaitPromises,
 	],
 })
 export class IssuerListComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
@@ -61,10 +69,12 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 	Array = Array;
 
 	issuers: Issuer[] = null;
+	networks: Network[] = null;
 	badges: BadgeClass[] = null;
 	issuerToBadgeInfo: { [issuerId: string]: IssuerBadgesInfo } = {};
 
 	issuersLoaded: Promise<unknown>;
+	networksLoaded: Promise<unknown>;
 	badgesLoaded: Promise<unknown>;
 	@ViewChild('pluginBox') public pluginBoxElement: ElementRef;
 
@@ -140,6 +150,7 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 		protected title: Title,
 		protected messageService: MessageService,
 		protected issuerManager: IssuerManager,
+		protected networkManager: NetworkManager,
 		protected configService: AppConfigService,
 		protected badgeClassService: BadgeClassManager,
 		protected publicApiService: PublicApiService,
@@ -155,6 +166,7 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 
 		// subscribe to issuer and badge class changes
 		this.issuersLoaded = this.loadIssuers();
+		this.networksLoaded = this.loadNetworks();
 
 		this.badgesLoaded = new Promise<void>((resolve, reject) => {
 			this.badgeClassService.badgesByIssuerUrl$.subscribe((badges) => {
@@ -196,6 +208,21 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 		});
 	};
 
+	loadNetworks = () => {
+		return new Promise<void>((resolve, reject) => {
+			this.networkManager.myNetworks$.subscribe(
+				(networks) => {
+					this.networks = networks.slice().sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+					resolve();
+				},
+				(error) => {
+					this.messageService.reportAndThrowError(this.translate.instant('Issuer.failLoadissuers'), error);
+					resolve();
+				},
+			);
+		});
+	};
+
 	ngOnInit() {
 		super.ngOnInit();
 
@@ -214,6 +241,12 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 					queryParams: { newsletter_confirmed: null },
 					queryParamsHandling: 'merge',
 				});
+			}
+		});
+
+		this.route.queryParams.subscribe((params) => {
+			if (params['tab']) {
+				this.activeTab = params['tab'];
 			}
 		});
 

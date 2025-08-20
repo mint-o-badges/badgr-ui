@@ -1,0 +1,18 @@
+<div class="oeb tw-relative tw-w-full">
+	<div class="page-padding">
+		<div
+			*bgAwaitPromises="[networkLoaded]"
+			class="tw-bg-lightgrey tw-py-7 tw-pl-8 tw-pr-10 md:tw-py-[60px] md:tw-pl-28 md:tw-pr-80 tw-flex md:tw-justify-between"
+		>
+			<div class="tw-flex tw-flex-col tw-gap-16">
+				<p class="md:tw-text-3xl tw-text-oebblack">
+					Bestätige die <span class="tw-font-bold">Netzwerk-Einladung von {{ network.name }}</span> für deine
+					Institution mit Klick auf den Button:
+				</p>
+				<oeb-button (click)="confirmInvitation()" [text]="'Network.confirmInvitation' | translate">
+				</oeb-button>
+			</div>
+			<img class="tw-w-16 md:tw-w-[230px]" src="/assets/oeb/images/network/Network.svg" />
+		</div>
+	</div>
+</div>

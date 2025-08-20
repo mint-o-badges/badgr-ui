@@ -16,24 +16,22 @@ import { routerLinkForUrl } from '../public/public.component';
 import { Title } from '@angular/platform-browser';
 import { AppConfigService } from '../../../common/app-config.service';
 import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
-import { OebIssuerDetailComponent } from '../../../common/components/issuer/oeb-issuer-detail.component';
+import { OebNetworkDetailComponent } from '../../../common/components/network/oeb-network-detail.component';
 
 @Component({
-	templateUrl: './issuer.component.html',
-	imports: [BgAwaitPromises, OebIssuerDetailComponent],
+	templateUrl: './network.component.html',
+	imports: [BgAwaitPromises, OebNetworkDetailComponent],
 })
-export class PublicIssuerComponent {
+export class PublicNetworkComponent {
 	readonly issuerImagePlaceholderUrl = preloadImageURL(
 		'../../../../breakdown/static/images/placeholderavatar-issuer.svg',
 	);
 	readonly badgeLoadingImageUrl = '../../../../breakdown/static/images/badge-loading.svg';
 	readonly badgeFailedImageUrl = '../../../../breakdown/static/images/badge-failed.svg';
 
-	issuerIdParam: LoadedRouteParam<{
-		issuer: PublicApiIssuer;
-		badges: PublicApiBadgeClass[];
-		learningpaths: PublicApiLearningPath[];
-		networks: PublicApiNetwork[];
+	networkIdParam: LoadedRouteParam<{
+		network: PublicApiNetwork;
+		issuers: PublicApiIssuer[];
 	}>;
 	routerLinkForUrl = routerLinkForUrl;
 	plural = {
@@ -52,28 +50,22 @@ export class PublicIssuerComponent {
 	) {
 		title.setTitle(`Issuer - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 
-		this.issuerIdParam = new LoadedRouteParam(injector.get(ActivatedRoute), 'issuerId', (paramValue) => {
+		this.networkIdParam = new LoadedRouteParam(injector.get(ActivatedRoute), 'networkId', (paramValue) => {
+			console.log('paramV', paramValue);
 			const service: PublicApiService = injector.get(PublicApiService);
-			return service.getIssuerWithRelations(paramValue);
+			return service.getNetworkWithIssuers(paramValue);
 		});
 	}
 
-	get issuer(): PublicApiIssuer {
-		return this.issuerIdParam.value.issuer;
-	}
-	get badgeClasses(): PublicApiBadgeClass[] {
-		return this.issuerIdParam.value.badges;
+	get network(): PublicApiNetwork {
+		return this.networkIdParam.value.network;
 	}
 
-	get learningPaths(): PublicApiLearningPath[] {
-		return this.issuerIdParam.value.learningpaths;
-	}
-
-	get networks(): PublicApiNetwork[] {
-		return this.issuerIdParam.value.networks;
+	get issuers(): PublicApiIssuer[] {
+		return this.networkIdParam.value.issuers;
 	}
 
 	private get rawJsonUrl() {
-		return stripQueryParamsFromUrl(this.issuer.id) + '.json';
+		return stripQueryParamsFromUrl(this.network.id) + '.json';
 	}
 }

@@ -112,6 +112,11 @@ export class AppComponent implements OnInit, AfterViewInit {
 			routerLink: ['/catalog/learningpaths'],
 			icon: 'lucideRoute',
 		},
+		{
+			title: 'Network.networksNav',
+			routerLink: ['/catalog/networks'],
+			icon: 'lucideNetwork',
+		},
 	];
 	accountMenuItems: MenuItem[] = [
 		{

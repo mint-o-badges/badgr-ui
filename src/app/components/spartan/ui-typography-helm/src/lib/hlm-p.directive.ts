@@ -10,6 +10,7 @@ export const pVariants = cva('', {
 		variant: {
 			default: 'tw-text-oebblack',
 			light: 'tw-text-[#6B6B6B]',
+			white: 'tw-text-white',
 			// destructive: 'tw-bg-destructive tw-text-destructive-foreground hover:btw-g-destructive/90',
 		},
 		size: {

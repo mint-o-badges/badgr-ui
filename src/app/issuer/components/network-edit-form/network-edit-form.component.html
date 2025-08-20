@@ -8,7 +8,7 @@
 		dropZoneInfo1="Drag & Drop"
 		[dropZoneInfo3]="useImageFormat"
 		[placeholderImage]="issuerImagePlacholderUrl"
-		[control]="issuerForm.rawControlMap.issuer_image"
+		[control]="networkForm.rawControlMap.image"
 		[allowedFileFormats]="['image/png', 'image/svg+xml']"
 		[errorMessage]="imageError"
 		(imageError)="onImageError($event)"
@@ -22,17 +22,18 @@
 
 	<oeb-input
 		label="{{ 'Network.name' | translate }}"
-		[control]="issuerForm.rawControlMap.issuer_name"
+		[control]="networkForm.rawControlMap.name"
+		[placeholder]="'Netzwerk MINT'"
 		[fieldType]="'text'"
 		[autofocus]="true"
-		[errorMessage]="{ required: issuerRequiredError }"
+		[errorMessage]="{ required: networkRequiredError }"
 		sublabelRight="(max. 90 {{ 'General.characters' | translate }})"
 		#issuer_name_field
 	></oeb-input>
 
 	<oeb-input
 		label="{{ 'CreateBadge.shortDescription' | translate }}"
-		[control]="issuerForm.rawControlMap.issuer_description"
+		[control]="networkForm.rawControlMap.description"
 		[fieldType]="'textarea'"
 		[errorMessage]="{ required: enterDescription }"
 		sublabelRight="(min. 200 / max. 300 {{ 'General.characters' | translate }})"
@@ -40,33 +41,37 @@
 
 	<section class="tw-flex md:tw-flex-row tw-flex-col tw-w-full tw-gap-2 md:tw-justify-between">
 		<oeb-select
-			[control]="issuerForm.rawControlMap.issuer_email"
+			class="md:tw-min-w-[288px]"
+			[control]="networkForm.rawControlMap.country"
 			label="{{ 'General.country' | translate }}"
-			placeholder="{{ 'Issuer.enterValidEmail' | translate }}"
-			[options]="emailsOptions"
-			errorMessage="{{ 'Issuer.enterValidEmail' | translate }}"
-			#issuer_contact_Email
+			placeholder="{{ 'General.select' | translate }}"
+			[options]="_countriesOptions"
+			#networkCountry
 		>
 		</oeb-select>
 		<oeb-select
-			[control]="issuerForm.rawControlMap.issuer_email"
+			class="md:tw-min-w-[288px]"
+			[control]="networkForm.rawControlMap.state"
 			label="{{ 'General.state' | translate }}"
 			placeholder="{{ 'General.select' | translate }}"
-			[options]="emailsOptions"
-			errorMessage="{{ 'Issuer.enterValidEmail' | translate }}"
-			#issuer_contact_Email
+			[options]="_germanStateOptions"
+			[disabled]="networkForm.rawControlMap.country.value != 'Germany'"
+			#networkState
 		>
 		</oeb-select>
 	</section>
 
 	<oeb-input
 		label="{{ 'Issuer.websiteUrl' | translate }}"
-		[control]="issuerForm.rawControlMap.issuer_url"
+		[control]="networkForm.rawControlMap.url"
 		[urlField]="true"
+		[placeholder]="'www.netzwerk-mint.de'"
 		[fieldType]="'url'"
 		errorMessage="{{ 'Issuer.enterURL' | translate }}"
 		#issuer_url_field
 	></oeb-input>
+
+	<span class="tw-text-purple tw-text-lg tw-italic">{{ 'Network.addPartnerNext' | translate }}</span>
 
 	<div class="tw-flex tw-justify-between tw-flex-wrap sm:tw-flex-nowrap tw-gap-2 tw-mt-4">
 		<oeb-button
@@ -81,9 +86,9 @@
 		<oeb-button
 			type="submit"
 			width="max_content"
-			[disabled]="!!addIssuerFinished"
-			text="{{ existingIssuer ? ('General.save' | translate) : ('Issuer.createInstitution' | translate) }}"
-			[loading-promises]="[addIssuerFinished]"
+			[disabled]="!!addNetworkFinished"
+			text="{{ existingNetwork ? ('General.save' | translate) : ('Network.create' | translate) }}"
+			[loading-promises]="[addNetworkFinished]"
 			loading-message="Hinzufügen"
 		>
 		</oeb-button>

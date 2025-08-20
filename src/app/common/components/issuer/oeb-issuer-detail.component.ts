@@ -35,7 +35,13 @@ import { HlmInputDirective } from '../../../components/spartan/ui-input-helm/src
 import { BgBadgecard } from '../bg-badgecard';
 import { LearningPathDatatableComponent } from '../../../components/datatable-learningpaths.component';
 import { BgLearningPathCard } from '../bg-learningpathcard';
-import { PublicApiBadgeClass, PublicApiIssuer, PublicApiLearningPath } from '../../../public/models/public-api.model';
+import {
+	PublicApiBadgeClass,
+	PublicApiIssuer,
+	PublicApiLearningPath,
+	PublicApiNetwork,
+} from '../../../public/models/public-api.model';
+import { Network } from '../../../issuer/models/network.model';
 
 @Component({
 	selector: 'oeb-issuer-detail',
@@ -69,6 +75,7 @@ export class OebIssuerDetailComponent implements OnInit {
 	@Input() issuerActionsMenu: any;
 	@Input() badges: BadgeClass[] | PublicApiBadgeClass[];
 	@Input() learningPaths: (ApiLearningPath | PublicApiLearningPath)[];
+	@Input() networks: Network[] | PublicApiNetwork[];
 	@Input() public: boolean = false;
 	@Output() issuerDeleted = new EventEmitter();
 

@@ -111,7 +111,9 @@
 		"change": "change",
 		"condition": "condition",
 		"country": "Country",
-		"state": "State"
+		"state": "State",
+		"overview": "Overview",
+		"rolesAndRights": "Roles and rights"
 	},
 	"NavItems": {
 		"register": "Register",
@@ -365,16 +367,37 @@
 		"rowsAreDuplicates": "rows are duplicates and are ignored.",
 		"clickOnAwardBadges": "Click on \"award badges\" to award the badges to your learners now.",
 		"creatingBadge": "Creating Badge",
-		"memberView": "Member view"
+		"memberView": "Member view",
+		"partOfNetwork": "Part of the network"
 	},
 	"Network": {
+		"networksNav": "Networks A-Z",
 		"noIssuerInNetwork": "None of your institutions are currently members of a network.",
 		"networksUseBadgesTogether": "Networks can share badges.",
 		"networkLogoOnBadge": "The network logo is also displayed on the corresponding badge images.",
 		"youCanAddInstitutions": "You can create your own network and add your partner institutions:",
 		"create": "create network",
 		"name": "name of the network",
-		"addPartnerNext": "You can add your partner institutions in the next step."
+		"addPartnerNext": "You can add your partner institutions in the next step.",
+		"welcomeDashboard": "Welcome to the dashboard of the network",
+		"inviteInstitutions": "Invite institutions to network",
+		"addInstitutions": "Add institutions",
+		"rolesAndRights": "<span class='tw-text-link tw-underline'>Roles and rights</span> are transferred: The invitation email is sent to the owners of the institutions. <span class='tw-font-bold'>They will have corresponding rights within the network, such as creating network badges and adding additional partner organizations</span>.",
+		"addMember_owner": "Owner",
+		"addMember_editor": "Editor",
+		"addMember_staff": "Staff",
+		"staffOwnerRights": "Access to all functions including adding/removing editors and employees, editing institution details and creating, assigning and deleting badges including micro degrees.",
+		"staffEditorRights": "Rights to create, assign and delete badges, including micro-degrees.",
+		"staffMemberRights": "Can assign badges created by owners and/or editors (including creating, editing and deleting QR code assignments).",
+		"issuerOwnersNotified": "We have notified the owners of the institutions by email.",
+		"waitForInvitationAcceptance": "Once they have confirmed the invitation, they will be visible on the partner page.",
+		"confirmInvitation": "Confirm invitation",
+		"networksHeadline": "All networks at a glance",
+		"partners": "Network members",
+		"noInstitutionAddedYet": "You have not yet added any institutions to your network.",
+		"partnerIssuers": "Partners",
+		"notifiedIssuerOwners": "We have notified the owners of the institutions by email.",
+		"visibleAfterConfirmation": "Once they have confirmed the invitation, they will be visible on the partner page."
 	},
 	"Badge": {
 		"groupBy": "Group by",
