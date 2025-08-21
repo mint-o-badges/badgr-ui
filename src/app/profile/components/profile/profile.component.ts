@@ -1,25 +1,22 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Component, computed, OnDestroy, OnInit, signal, TemplateRef, viewChild } from '@angular/core';
+import { Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 import { EmailValidator } from '../../../common/validators/email.validator';
 import { MessageService } from '../../../common/services/message.service';
 import { SessionService } from '../../../common/services/session.service';
-import { DomSanitizer, Title } from '@angular/platform-browser';
+import { Title } from '@angular/platform-browser';
 
 import { CommonDialogsService } from '../../../common/services/common-dialogs.service';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
 import { BadgrApiFailure } from '../../../common/services/api-failure';
-import { ExternalAuthProvider, SocialAccountProviderInfo } from '../../../common/model/user-profile-api.model';
 import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
-import { UserProfile, UserProfileEmail, UserProfileSocialAccount } from '../../../common/model/user-profile.model';
+import { UserProfile, UserProfileEmail } from '../../../common/model/user-profile.model';
 import { Subscription } from 'rxjs';
 import { QueryParametersService } from '../../../common/services/query-parameters.service';
-import { OAuthApiService } from '../../../common/services/oauth-api.service';
 import { AppConfigService } from '../../../common/app-config.service';
 import { typedFormGroup } from '../../../common/util/typed-forms';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
-import { animationFramePromise } from '../../../common/util/promise-util';
 import { FormMessageComponent } from '../../../common/components/form-message.component';
 import { SourceListenerDirective } from '../../../mozz-transition/directives/source-listener/source-listener.directive';
 import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
@@ -27,11 +24,33 @@ import { BgPopupMenuTriggerDirective, BgPopupMenu } from '../../../common/compon
 import { SvgIconComponent } from '../../../common/components/svg-icon.component';
 import { MenuItemDirective } from '../../../common/directives/bg-menuitem.directive';
 import { FormFieldText } from '../../../common/components/formfield-text';
+import { HlmTableImports } from '@spartan-ng/helm/table';
+import { OebTableImports } from '~/components/oeb-table';
+import {
+	ColumnDef,
+	createAngularTable,
+	FlexRenderDirective,
+	getCoreRowModel,
+	getSortedRowModel,
+	SortingState,
+} from '@tanstack/angular-table';
+import { NgIcon } from '@ng-icons/core';
+import { TitleCasePipe } from '@angular/common';
+import { OebDropdownComponent } from '~/components/oeb-dropdown.component';
+import { HlmIcon } from '@spartan-ng/helm/icon';
+import { toObservable } from '@angular/core/rxjs-interop';
 
 @Component({
 	selector: 'userProfile',
 	templateUrl: './profile.component.html',
 	imports: [
+		...HlmTableImports,
+		...OebTableImports,
+		FlexRenderDirective,
+		NgIcon,
+		HlmIcon,
+		OebDropdownComponent,
+		TitleCasePipe,
 		FormMessageComponent,
 		SourceListenerDirective,
 		BgAwaitPromises,
@@ -47,51 +66,86 @@ import { FormFieldText } from '../../../common/components/formfield-text';
 	],
 })
 export class ProfileComponent extends BaseAuthenticatedRoutableComponent implements OnInit, OnDestroy {
+	emails = signal<UserProfileEmail[]>([]);
+	emails$ = toObservable(this.emails);
+	menuItems = computed(() => this.emails().map((x) => this.menuItemsForEmail(x)));
 	emailForm = typedFormGroup().addControl('email', '', [Validators.required, EmailValidator.validEmail]);
-
 	profile: UserProfile;
-	emails: UserProfileEmail[];
-
 	profileLoaded: Promise<unknown>;
 	emailsLoaded: Promise<unknown>;
 
-	newlyAddedSocialAccountId: string;
+	translateHeaderIDCellTemplate = viewChild.required<TemplateRef<any>>('translateHeaderIDCellTemplate');
+	emailAddressCellTemplate = viewChild.required<TemplateRef<any>>('emailAddressCellTemplate');
+	verifiedStateCellTemplate = viewChild.required<TemplateRef<any>>('verifiedStateCellTemplate');
+	badgeActionsTemplate = viewChild.required<TemplateRef<any>>('badgeActionsCellTemplate');
 
-	// isMoveInProgress = false;
-	// menuOpen = false;
+	readonly tableSorting = signal<SortingState>([
+		{
+			id: 'Profile.emailAddress',
+			desc: false,
+		},
+	]);
 
 	private emailsSubscription: Subscription;
+
+	private readonly tableColumnDefinition: ColumnDef<UserProfileEmail>[] = [
+		{
+			id: 'Profile.emailAddress',
+			header: () => this.translateHeaderIDCellTemplate(),
+			accessorFn: (row) => row.email,
+			cell: (ctx) => this.emailAddressCellTemplate(),
+			sortDescFirst: false,
+		},
+		{
+			id: 'Profile.status',
+			header: () => this.translateHeaderIDCellTemplate(),
+			accessorFn: (row) => row.verified,
+			cell: (info) => this.verifiedStateCellTemplate(),
+		},
+		{
+			id: 'actions',
+			cell: (info) => this.badgeActionsTemplate(),
+			enableSorting: false,
+		},
+	];
+
+	table = createAngularTable(() => ({
+		data: this.emails(),
+		columns: this.tableColumnDefinition,
+		getCoreRowModel: getCoreRowModel(),
+		getSortedRowModel: getSortedRowModel(),
+		state: {
+			sorting: this.tableSorting(),
+		},
+		onSortingChange: (updater) =>
+			updater instanceof Function ? this.tableSorting.update(updater) : this.tableSorting.set(updater),
+		enableSortingRemoval: false, // ensures at least one column is sorted
+	}));
 
 	constructor(
 		protected router: Router,
 		route: ActivatedRoute,
 		protected sessionService: SessionService,
-		protected formBuilder: FormBuilder,
 		protected title: Title,
 		protected messageService: MessageService,
 		protected profileManager: UserProfileManager,
 		protected dialogService: CommonDialogsService,
 		protected paramService: QueryParametersService,
 		protected configService: AppConfigService,
-		private oauthService: OAuthApiService,
-		private sanitizer: DomSanitizer,
 		private translate: TranslateService,
 	) {
 		super(router, route, sessionService);
 		title.setTitle(`Profile - ${this.configService.theme['serviceName'] || 'Badgr'}`);
+	}
 
+	ngOnInit() {
+		super.ngOnInit();
 		this.profileLoaded = this.profileManager.userProfilePromise.then(
 			(profile) => {
 				this.profile = profile;
 
 				this.emailsSubscription = profile.emails.loaded$.subscribe((update) => {
-					const emails = profile.emails.entities;
-
-					this.emails = emails
-						.filter((e) => e.primary)
-						.concat(
-							emails.filter((e) => e.verified && !e.primary).concat(emails.filter((e) => !e.verified)),
-						);
+					this.emails.set(profile.emails.entities);
 				});
 			},
 			(error) => this.messageService.reportAndThrowError('Failed to load userProfile', error),
@@ -99,87 +153,12 @@ export class ProfileComponent extends BaseAuthenticatedRoutableComponent impleme
 
 		this.emailsLoaded = this.profileManager.userProfilePromise.then((p) => p.emails.loadedPromise);
 
-		// Handle newly added social account
-		this.newlyAddedSocialAccountId = paramService.queryStringValue('addedSocialAccountId', true);
-	}
-
-	sanitize(url: string) {
-		return this.sanitizer.bypassSecurityTrustUrl(url);
-	}
-
-	get socialAccounts() {
-		return this.profile && this.profile.socialAccounts.entities;
-	}
-
-	ngOnInit() {
-		super.ngOnInit();
-
-		// Handle auth errors (e.g. when linking a new social account)
-		if (this.paramService.queryStringValue('authError', true)) {
-			this.messageService.reportHandledError(this.paramService.queryStringValue('authError', true), null, true);
-		}
-		this.paramService.clearInitialQueryParams();
+		this.emails$.subscribe((x) => console.log(x));
 	}
 
 	ngOnDestroy(): void {
 		if (this.emailsSubscription) this.emailsSubscription.unsubscribe();
 	}
-
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	// Linked Accounts
-
-	async unlinkAccount($event: Event, socialAccount: UserProfileSocialAccount, accountsNum: number) {
-		$event.preventDefault();
-		// safety first!
-		if (accountsNum <= 1 && !this.profile.hasPasswordSet) {
-			await animationFramePromise();
-			this.messageService.reportHandledError(
-				'Please set a password using the "Set Password" button above before removing this integration.',
-			);
-			return false;
-		}
-		if (
-			await this.dialogService.confirmDialog.openTrueFalseDialog({
-				dialogTitle: `Unlink ${socialAccount.providerInfo.name}?`,
-				dialogBody: `Are you sure you want to unlink the ${socialAccount.providerInfo.name} account ${
-					socialAccount.fullLabel
-				}) from your ${
-					this.configService.theme['serviceName'] || 'Badgr'
-				} account? You may re-link in the future by clicking the ${
-					socialAccount.providerInfo.name
-				} button on this page.`,
-				resolveButtonLabel: `Unlink ${socialAccount.providerInfo.name} account?`,
-				rejectButtonLabel: 'Cancel',
-			})
-		) {
-			socialAccount.remove().then(
-				() => this.messageService.reportMinorSuccess(`Removed ${socialAccount.fullLabel} from your account`),
-				(error) => {
-					if (error.response.status === 403) {
-						this.messageService.reportHandledError(
-							`Failed to remove ${socialAccount.fullLabel} from your account: ${error.response._body}`,
-						);
-					} else {
-						this.messageService.reportHandledError(
-							`Failed to remove ${socialAccount.fullLabel} from your account: ${
-								BadgrApiFailure.from(error).firstMessage
-							}`,
-						);
-					}
-				},
-			);
-		}
-	}
-
-	linkAccount($event: Event, info: ExternalAuthProvider) {
-		$event.preventDefault();
-		this.oauthService.connectProvider(info).then((r) => {
-			window.location.href = r.url;
-		});
-	}
-
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	// Emails
 
 	submitEmailForm() {
 		if (!this.emailForm.markTreeDirtyAndValidate()) {
@@ -190,6 +169,7 @@ export class ProfileComponent extends BaseAuthenticatedRoutableComponent impleme
 
 		this.profile.addEmail(formState.email).then(
 			(email) => {
+				this.emails.update((x) => [...x]);
 				this.messageService.setMessage('New email is currently pending.', 'success');
 				const emailControl = this.emailForm.rawControlMap.email;
 
@@ -213,28 +193,27 @@ export class ProfileComponent extends BaseAuthenticatedRoutableComponent impleme
 		);
 	}
 
-	// initialed displayed remove button.
-	clickConfirmRemove(ev: MouseEvent, email: UserProfileEmail) {
-		if (email.primary) {
-			ev.preventDefault();
-		} else {
-			this.dialogService.confirmDialog
-				.openResolveRejectDialog({
-					dialogTitle: 'Delete Email',
-					dialogBody: `All badges associated with this email address will be removed. Are you sure you want to delete email ${email.email}`,
-					resolveButtonLabel: 'Confirm remove',
-					rejectButtonLabel: 'Cancel',
-				})
-				.then(
-					() => this.clickRemove(ev, email), // success - clicked confirm
-					(cancel) => void 0, // fail - clicked cancel
-				);
-		}
+	clickConfirmRemove(email: UserProfileEmail) {
+		if (email.primary) return;
+		this.dialogService.confirmDialog
+			.openResolveRejectDialog({
+				dialogTitle: 'Delete Email',
+				dialogBody: `All badges associated with this email address will be removed. Are you sure you want to delete email ${email.email}`,
+				resolveButtonLabel: 'Confirm remove',
+				rejectButtonLabel: 'Cancel',
+			})
+			.then(
+				() => this.clickRemove(email), // success - clicked confirm
+				(cancel) => void 0, // fail - clicked cancel
+			);
 	}
 
-	clickRemove(ev: MouseEvent, email: UserProfileEmail) {
+	clickRemove(email: UserProfileEmail) {
 		email.remove().then(
-			() => this.messageService.reportMinorSuccess(`You have successfully removed ${email.email}`),
+			(mail) => {
+				this.emails.update((x) => [...mail.emails.entities]);
+				this.messageService.reportMinorSuccess(`You have successfully removed ${email.email}`);
+			},
 			(error) =>
 				this.messageService.reportHandledError(
 					`Unable to remove ${email.email}: ${BadgrApiFailure.from(error).firstMessage}`,
@@ -243,11 +222,12 @@ export class ProfileComponent extends BaseAuthenticatedRoutableComponent impleme
 		);
 	}
 
-	clickMakePrimary(ev: MouseEvent, email: UserProfileEmail) {
+	clickMakePrimary(email: UserProfileEmail) {
 		email.makePrimary().then(
 			() => {
 				this.messageService.reportMajorSuccess(`${email.email} is now your primary email.`);
 				this.profile.emails.updateList();
+				this.emails.update((x) => [...this.profile.emails.entities]);
 			},
 			(error) =>
 				this.messageService.reportAndThrowError(
@@ -257,7 +237,7 @@ export class ProfileComponent extends BaseAuthenticatedRoutableComponent impleme
 		);
 	}
 
-	clickResendVerification(ev: MouseEvent, email: UserProfileEmail) {
+	clickResendVerification(email: UserProfileEmail) {
 		email.resendVerificationEmail().then(
 			() => this.messageService.reportMajorSuccess(`Confirmation re-sent to ${email.email}`),
 			(error) => {
@@ -306,4 +286,26 @@ export class ProfileComponent extends BaseAuthenticatedRoutableComponent impleme
 			);
 		}
 	}
+
+	private menuItemsForEmail = (u: UserProfileEmail) => {
+		return [
+			u.verified
+				? {
+						title: 'Profile.makePrimary',
+						icon: 'lucideRepeat2',
+						action: () => this.clickMakePrimary(u),
+					}
+				: {
+						title: 'Profile.resendVerification',
+						icon: 'lucideRepeat2',
+						action: () => this.clickResendVerification(u),
+					},
+			{
+				title: 'Profile.remove',
+				icon: 'lucideTrash2',
+				action: () => this.clickConfirmRemove(u),
+				disabled: u.primary,
+			},
+		];
+	};
 }
