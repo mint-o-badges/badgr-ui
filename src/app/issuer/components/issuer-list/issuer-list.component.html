@@ -23,6 +23,14 @@
 						[disabled-when-requesting]="true"
 						[text]="'Issuer.createInstitution' | translate"
 					></oeb-button>
+				} @else if (networks?.length && activeTab == 'networks') {
+					<oeb-button
+						class="md:tw-whitespace-nowrap"
+						variant="secondary"
+						[routerLink]="['/issuer/networks/create']"
+						[disabled-when-requesting]="true"
+						[text]="'Network.create' | translate"
+					></oeb-button>
 				}
 				<div class="md:tw-block tw-hidden tw-mt-8 tw-max-w-[400px]">
 					<!-- Plugin box for desktop when issuers.length == 0 -->

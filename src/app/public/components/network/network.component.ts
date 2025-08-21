@@ -51,7 +51,6 @@ export class PublicNetworkComponent {
 		title.setTitle(`Issuer - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 
 		this.networkIdParam = new LoadedRouteParam(injector.get(ActivatedRoute), 'networkId', (paramValue) => {
-			console.log('paramV', paramValue);
 			const service: PublicApiService = injector.get(PublicApiService);
 			return service.getNetworkWithIssuers(paramValue);
 		});

@@ -11,6 +11,7 @@ import { ManagedEntity } from '../../common/model/managed-entity';
 import { ApiEntityRef } from '../../common/model/entity-ref';
 import { CommonEntityManager } from '../../entity-manager/services/common-entity-manager.service';
 import { EmbeddedEntitySet } from '../../common/model/managed-entity-set';
+import { ApiNetwork } from './network-api.model';
 
 export class Issuer extends ManagedEntity<ApiIssuer, IssuerRef> {
 	readonly staff = new EmbeddedEntitySet(
@@ -99,6 +100,10 @@ export class Issuer extends ManagedEntity<ApiIssuer, IssuerRef> {
 	}
 	get sourceUrl(): string {
 		return this.apiModel.source_url;
+	}
+
+	get networks(): ApiNetwork[] {
+		return this.apiModel.networks;
 	}
 
 	get badgeClassCount(): number {

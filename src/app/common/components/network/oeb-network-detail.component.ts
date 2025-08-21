@@ -9,7 +9,7 @@ import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { SessionService } from '../../services/session.service';
 import { BgImageStatusPlaceholderDirective } from '../../directives/bg-image-status-placeholder.directive';
 import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
-import { NgIf, NgFor } from '@angular/common';
+import { NgIf } from '@angular/common';
 import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
 import { HlmADirective } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-a.directive';
 import { Network } from '../../../issuer/models/network.model';

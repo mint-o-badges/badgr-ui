@@ -21,9 +21,11 @@ import { Network } from '../../issuer/models/network.model';
 						variant="white"
 						>{{ network.name }}</a
 					>
-					<span class="tw-text-white tw-text-lg"
-						>{{ 'Issuer.yourRole' | translate }} {{ network.currentUserStaffMember.roleSlug }}
-					</span>
+					@if (!public) {
+						<span class="tw-text-white tw-text-lg"
+							>{{ 'Issuer.yourRole' | translate }} {{ network.currentUserStaffMember.roleSlug }}
+						</span>
+					}
 				</div>
 			</div>
 			<div class="tw-text-white">
@@ -37,4 +39,5 @@ export class OebNetworkCard {
 	readonly badgeLoadingImageUrl = '../../../breakdown/static/images/badge-loading.svg';
 	readonly badgeFailedImageUrl = '../../../breakdown/static/images/badge-failed.svg';
 	@Input() network: Network;
+	@Input() public = true;
 }

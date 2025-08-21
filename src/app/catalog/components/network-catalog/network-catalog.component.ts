@@ -115,7 +115,6 @@ export class NetworkCatalogComponent extends BaseRoutableComponent implements On
 		return new Promise(async (resolve, reject) => {
 			this.networkManager.getAllNetworks().subscribe(
 				(networks) => {
-					console.log('url', networks[0].url);
 					this.networks = networks.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
 					// this.totalPages = Math.ceil(this.issuers.length / this.issuersPerPage);
 					// this.updatePaginatedResults();

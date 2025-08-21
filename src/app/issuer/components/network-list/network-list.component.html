@@ -19,7 +19,11 @@
 		<div class="md:tw-flex">
 			<div class="tw-grid tw-grid-cols-myIssuersMobile sm:tw-grid-cols-myIssuers tw-gap-6 tw-w-full tw-relative">
 				@for (network of networks; track network) {
-					<oeb-networkcard [network]="network" [routerLink]="['/issuer/networks', network.slug]">
+					<oeb-networkcard
+						[public]="false"
+						[network]="network"
+						[routerLink]="['/issuer/networks', network.slug]"
+					>
 					</oeb-networkcard>
 				}
 			</div>
