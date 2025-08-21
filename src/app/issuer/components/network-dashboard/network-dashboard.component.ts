@@ -27,6 +27,7 @@ import { NetworkApiService } from '../../../issuer/services/network-api.service'
 import { HlmH1Directive } from '@spartan-ng/ui-typography-helm';
 import { NetworkPartnersComponent } from '../network-partners/network-partners.component';
 import { AddInstitutionComponent } from '../add-institution/add-institution.component';
+import { BgBreadcrumbsComponent } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 
 @Component({
 	selector: 'network-dashboard',
@@ -42,6 +43,7 @@ import { AddInstitutionComponent } from '../add-institution/add-institution.comp
 		HlmH1Directive,
 		NetworkPartnersComponent,
 		AddInstitutionComponent,
+		BgBreadcrumbsComponent,
 	],
 })
 export class NetworkDashboardComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
@@ -102,6 +104,11 @@ export class NetworkDashboardComponent extends BaseAuthenticatedRoutableComponen
 			);
 			this.crumbs = [
 				{ title: this.translate.instant('NavItems.myInstitutions'), routerLink: ['/issuer/issuers'] },
+				{
+					title: this.translate.instant('General.networks'),
+					routerLink: ['/issuer'],
+					queryParams: { tab: 'networks' },
+				},
 				{ title: this.network.name, routerLink: ['/issuer/network/' + this.network.slug] },
 			];
 		});

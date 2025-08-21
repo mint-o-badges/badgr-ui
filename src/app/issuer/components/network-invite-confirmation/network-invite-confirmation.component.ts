@@ -10,6 +10,7 @@ import { NetworkManager } from '../../../issuer/services/network-manager.service
 import { Network } from '../../../issuer/models/network.model';
 import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 import { NetworkApiService } from '../../../issuer/services/network-api.service';
+import { MessageService } from '~/common/services/message.service';
 
 @Component({
 	selector: 'network-invite-confirmation',
@@ -33,6 +34,7 @@ export class NetworkInviteConfirmationComponent extends BaseAuthenticatedRoutabl
 		protected configService: AppConfigService,
 		protected networkManager: NetworkManager,
 		protected networkApiService: NetworkApiService,
+		private messageService: MessageService,
 	) {
 		super(router, route, loginService);
 		title.setTitle(`Confirm network invitation - ${this.configService.theme['serviceName'] || 'Badgr'}`);
@@ -49,8 +51,10 @@ export class NetworkInviteConfirmationComponent extends BaseAuthenticatedRoutabl
 
 	confirmInvitation() {
 		this.networkApiService.confirmInvitation(this.networkSlug, this.inviteSlug).then((res) => {
-			console.log('res', res);
-			// this.router.navigate([''])
+			this.router.navigate(['/issuer/networks', this.networkSlug]),
+				(err) => {
+					this.messageService.reportAndThrowError('Failed to confirm invitation ' + err);
+				};
 		});
 	}
 }
