@@ -401,7 +401,9 @@
 		"noInstitutionAddedYet": "Du hast noch keine Institutionen zu deinem Netzwerk hinzugefügt.",
 		"partnerIssuers": "Partner:innen",
 		"notifiedIssuerOwners": "Wir haben die Eigentümer:innen der Institutionen per E-Mail benachrichtigt.",
-		"visibleAfterConfirmation": "Sobald sie die Einladung bestätigt haben, sind sie auf der Partner:innen-Seite sichtbar."
+		"visibleAfterConfirmation": "Sobald sie die Einladung bestätigt haben, sind sie auf der Partner:innen-Seite sichtbar.",
+		"resendInvitation": "Einladung erneut senden",
+		"invitedOn": "Eingeladen am"
 	},
 	"Badge": {
 		"groupBy": "Gruppieren nach",

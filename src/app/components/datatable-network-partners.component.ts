@@ -1,7 +1,7 @@
 import { CommonModule, formatDate } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
-import { Component, input, output, signal, TemplateRef, viewChild } from '@angular/core';
+import { Component, effect, input, output, signal, TemplateRef, viewChild } from '@angular/core';
 import { HlmTableImports } from './spartan/ui-table-helm/src';
 import { FormsModule } from '@angular/forms';
 import { lucideSearch } from '@ng-icons/lucide';
@@ -20,6 +20,8 @@ import {
 } from '@tanstack/angular-table';
 import { HlmIconModule } from '@spartan-ng/helm/icon';
 import { Issuer } from '../issuer/models/issuer.model';
+import { NetworkApiService } from '../issuer/services/network-api.service';
+import { Network } from '../issuer/models/network.model';
 
 @Component({
 	selector: 'network-partners-datatable',
@@ -111,7 +113,7 @@ import { Issuer } from '../issuer/models/issuer.model';
 				  class="tw-float-right"
 					size="xs"
 					variant="secondary"
-					(click)="removePartner(context.issuer)"
+					(click)="removePartner(context.row.original)"
 					text="{{ 'General.remove' | translate }}"
 					/>
 		</ng-template>
@@ -119,7 +121,10 @@ import { Issuer } from '../issuer/models/issuer.model';
 })
 export class NetworkPartnersDatatableComponent {
 	partners = input.required<Issuer[]>();
+	network = input.required<Network>();
 	actionElement = output<Issuer>();
+
+	private _partners = signal<Issuer[]>([]);
 
 	translateHeaderIDCellTemplate = viewChild.required<TemplateRef<any>>('translateHeaderIDCellTemplate');
 	issuerActionsTemplate = viewChild.required<TemplateRef<any>>('issuerActionsCellTemplate');
@@ -153,7 +158,7 @@ export class NetworkPartnersDatatableComponent {
 	];
 
 	table = createAngularTable(() => ({
-		data: this.partners(),
+		data: this._partners(),
 		columns: this.tableColumnDefinition,
 		getCoreRowModel: getCoreRowModel(),
 		getSortedRowModel: getSortedRowModel(),
@@ -165,9 +170,17 @@ export class NetworkPartnersDatatableComponent {
 		enableSortingRemoval: false, // ensures at least one column is sorted
 	}));
 
-	constructor() {}
+	constructor(private networkApiService: NetworkApiService) {
+		effect(() => {
+			this._partners.set(this.partners());
+		});
+	}
 
 	removePartner(issuer: Issuer) {
-		console.log('remove', issuer);
+		this.networkApiService.removeIssuerFromNetwork(this.network().slug, issuer.slug).then((res) => {
+			if (res.status == 204) {
+				this._partners.update((current) => current.filter((partner) => partner.slug !== issuer.slug));
+			}
+		});
 	}
 }

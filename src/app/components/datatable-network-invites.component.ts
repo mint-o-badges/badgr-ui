@@ -1,7 +1,7 @@
 import { CommonModule, formatDate } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
-import { Component, input, output, signal, TemplateRef, viewChild } from '@angular/core';
+import { Component, effect, input, output, signal, TemplateRef, viewChild } from '@angular/core';
 import { HlmTableImports } from './spartan/ui-table-helm/src';
 import { FormsModule } from '@angular/forms';
 import { lucideSearch } from '@ng-icons/lucide';
@@ -20,6 +20,9 @@ import {
 } from '@tanstack/angular-table';
 import { HlmIconModule } from '@spartan-ng/helm/icon';
 import { ApiNetworkInvitation } from '../issuer/models/network-invite-api.model';
+import { NetworkApiService } from '../issuer/services/network-api.service';
+import { Issuer } from '../issuer/models/issuer.model';
+import { Network } from '../issuer/models/network.model';
 
 @Component({
 	selector: 'network-invites-datatable',
@@ -42,7 +45,7 @@ import { ApiNetworkInvitation } from '../issuer/models/network-invite-api.model'
 		<div class="tw-mt-8">
 			<table
 				hlmTable
-				oeb-table
+				oeb-table-secondary
 			>
 				<thead hlmTHead>
 					@for (headerRow of table.getHeaderGroups(); track headerRow.id) {
@@ -107,18 +110,28 @@ import { ApiNetworkInvitation } from '../issuer/models/network-invite-api.model'
 		</ng-template>
 
 		<ng-template #issuerActionsCellTemplate let-context>
+			<div class="tw-flex tw-flex-col md:tw-flex-row tw-gap-1 md:tw-gap-2 tw-leading-relaxed md:tw-justify-end">
 				<oeb-button
-				  class="tw-float-right"
 					size="xs"
-					variant="secondary"
-					text="{{ 'General.revoke' | translate }}"
+					text="{{ 'Network.resendInvitation' | translate }}"
+					(click)="resendInvitation(context.row.original.issuer)"
 					/>
+					<oeb-button
+						size="xs"
+						variant="secondary"
+						text="{{ 'General.revoke' | translate }}"
+						(click)="revokeInvitation(context.row.original)"
+					/>
+				</div>
 		</ng-template>
 	`,
 })
 export class NetworkInvitesDatatableComponent {
 	invites = input.required<ApiNetworkInvitation[]>();
+	network = input.required<Network>();
 	actionElement = output<ApiNetworkInvitation>();
+
+	private _invites = signal<ApiNetworkInvitation[]>([]);
 
 	translateHeaderIDCellTemplate = viewChild.required<TemplateRef<any>>('translateHeaderIDCellTemplate');
 	issuerActionsTemplate = viewChild.required<TemplateRef<any>>('issuerActionsCellTemplate');
@@ -139,7 +152,7 @@ export class NetworkInvitesDatatableComponent {
 			sortDescFirst: false,
 		},
 		{
-			id: 'RecBadgeDetail.issuedOn',
+			id: 'Network.invitedOn',
 			header: () => this.translateHeaderIDCellTemplate(),
 			accessorFn: (row) => formatDate(row.invitedOn, 'dd.MM.yyyy', 'de-DE'),
 			cell: (info) => info.getValue(),
@@ -152,7 +165,7 @@ export class NetworkInvitesDatatableComponent {
 	];
 
 	table = createAngularTable(() => ({
-		data: this.invites(),
+		data: this._invites(),
 		columns: this.tableColumnDefinition,
 		getCoreRowModel: getCoreRowModel(),
 		getSortedRowModel: getSortedRowModel(),
@@ -161,12 +174,29 @@ export class NetworkInvitesDatatableComponent {
 		},
 		onSortingChange: (updater) =>
 			updater instanceof Function ? this.tableSorting.update(updater) : this.tableSorting.set(updater),
-		enableSortingRemoval: false, // ensures at least one column is sorted
+		enableSortingRemoval: false,
 	}));
 
-	constructor() {}
+	constructor(private networkApiService: NetworkApiService) {
+		effect(() => {
+			this._invites.set(this.invites());
+		});
+	}
 
-	ngOnInit() {
-		console.log('dt invites', this.invites);
+	resendInvitation(issuer: Issuer) {
+		// TODO: implement
+		this.networkApiService.inviteInstitutions(this.network().slug, [issuer]).then((res) => {
+			console.log('res', res);
+		});
+	}
+
+	revokeInvitation(invite: ApiNetworkInvitation) {
+		this.networkApiService.revokeInvitation(this.network().slug, invite.entity_id).then((res) => {
+			if (res.ok) {
+				this._invites.update((current) =>
+					current.filter((invitation) => invitation.entity_id !== invite.entity_id),
+				);
+			}
+		});
 	}
 }

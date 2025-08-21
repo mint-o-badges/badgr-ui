@@ -54,6 +54,10 @@ export class NetworkApiService extends BaseHttpApiService {
 		return this.post(`/v1/issuer/networks/${networkSlug}/invite`, issuers).then((r) => r.body);
 	}
 
+	revokeInvitation(networkSlug: string, inviteSlug: string) {
+		return this.delete(`/v1/issuer/networks/${networkSlug}/invite/${inviteSlug}`);
+	}
+
 	getNetworkInvite(networkSlug: string, inviteSlug: string) {
 		return this.get<ApiNetworkInvitation>(`/v1/issuer/networks/${networkSlug}/invite/${inviteSlug}`).then(
 			(r) => r.body,
@@ -74,5 +78,9 @@ export class NetworkApiService extends BaseHttpApiService {
 
 	getIssuersForNetwork(networkSlug: string) {
 		return this.get<ApiIssuer[]>(`/v1/issuer/networks/${networkSlug}/issuer`).then((r) => r.body);
+	}
+
+	removeIssuerFromNetwork(networkSlug: string, issuerSlug: string) {
+		return this.delete(`/v1/issuer/networks/${networkSlug}/issuer/${issuerSlug}`);
 	}
 }

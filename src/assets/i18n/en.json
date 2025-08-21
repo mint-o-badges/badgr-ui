@@ -397,7 +397,9 @@
 		"noInstitutionAddedYet": "You have not yet added any institutions to your network.",
 		"partnerIssuers": "Partners",
 		"notifiedIssuerOwners": "We have notified the owners of the institutions by email.",
-		"visibleAfterConfirmation": "Once they have confirmed the invitation, they will be visible on the partner page."
+		"visibleAfterConfirmation": "Once they have confirmed the invitation, they will be visible on the partner page.",
+		"resendInvitation": "Resend invitation",
+		"invitedOn": "Invited on"
 	},
 	"Badge": {
 		"groupBy": "Group by",
