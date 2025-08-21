@@ -42,6 +42,9 @@ import {
 	FlexRenderDirective,
 } from '@tanstack/angular-table';
 import { TitleCasePipe } from '@angular/common';
+import { toObservable } from '@angular/core/rxjs-interop';
+import { UserProfileManager } from '~/common/services/user-profile-manager.service';
+import { UserProfile } from '~/common/model/user-profile.model';
 
 @Component({
 	templateUrl: './issuer-staff.component.html',
@@ -85,11 +88,25 @@ import { TitleCasePipe } from '@angular/common';
 })
 export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	issuer = signal<Issuer | null>(null);
-	staff = computed(() => this.issuer()?.staff.entities ?? []);
-	staffRequests = signal<ApiStaffRequest[]>([]);
-	isCurrentUserIssuerOwner = computed(
-		() => this.issuer() && this.issuer().currentUserStaffMember && this.issuer().currentUserStaffMember.isOwner,
+	userProfile = signal<UserProfile | null>(null);
+
+	// Workaround the fact that issuers are updated in place by the ApiService, meaning
+	// there is no new object reference when a new staff member is added or one is removed.
+	// Hence, the signal won't get updated if the entities aren't spread into a new array.
+	staff = computed<IssuerStaffMember[]>(() =>
+		this.issuer()?.staff.entities ? [...this.issuer()?.staff.entities] : [],
 	);
+	staffRequests = signal<ApiStaffRequest[]>([]);
+	isCurrentUserIssuerOwner = computed(() => {
+		if (this.userProfile() && this.userProfile().emails.entities) {
+			const emails = this.profileManager.userProfile.emails.entities;
+			const staffMember = this.staff().find(
+				(staffMember) => !!emails.find((profileEmail) => profileEmail.email === staffMember.email),
+			);
+			const isOwner = staffMember?.isOwner ?? false;
+			return isOwner;
+		}
+	});
 	breadcrumbLinkEntries = computed(() => [
 		{ title: 'Issuers', routerLink: ['/issuer'] },
 		{ title: this.issuer().name, routerLink: ['/issuer/issuers', this.issuerSlug] },
@@ -100,6 +117,7 @@ export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent imp
 		},
 	]);
 	issuerLoaded = signal<Promise<Issuer>>(null);
+	userProfileLoaded = signal<Promise<UserProfile>>(null);
 	error = signal<string>(null);
 
 	dialogHeaderTemplate = viewChild.required<TemplateRef<void>>('dialogHeaderTemplate');
@@ -185,6 +203,7 @@ export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent imp
 		protected title: Title,
 		protected messageService: MessageService,
 		protected issuerManager: IssuerManager,
+		protected profileManager: UserProfileManager,
 		protected configService: AppConfigService,
 		protected dialogService: CommonDialogsService,
 		protected translate: TranslateService,
@@ -196,6 +215,13 @@ export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent imp
 	}
 
 	ngOnInit(): void {
+		this.userProfileLoaded.set(
+			this.profileManager.userProfilePromise.then((userProfile) => {
+				this.userProfile.set(userProfile);
+				return userProfile;
+			}),
+		);
+
 		this.issuerLoaded.set(
 			this.issuerManager.issuerBySlug(this.issuerSlug).then((issuer) => {
 				this.issuer.set(issuer);
@@ -216,17 +242,18 @@ export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent imp
 
 		return this.issuerStaffRequestApiService.confirmRequest(this.issuerSlug, requestid).then(
 			() => {
-				this.issuer().addStaffMember(formData.staffRole, this.selectedStaffRequestEmail);
+				this.issuer()
+					.addStaffMember(formData.staffRole, this.selectedStaffRequestEmail)
+					.then((issuer) => {
+						this.issuer.set({ ...issuer } as Issuer);
+					});
 				this.error = null;
 				this.messageService.reportMinorSuccess(
 					`Added ${this.selectedStaffRequestEmail} as ${formData.staffRole}`,
 				);
 				this.closeDialog();
 				this.staffRequests.update((current) =>
-					current.filter(
-						//@ts-ignore
-						(req) => req.user.email != this.selectedStaffRequestEmail,
-					),
+					current.filter((req) => req.user.email != this.selectedStaffRequestEmail),
 				);
 			},
 			(error) => {
@@ -250,11 +277,11 @@ export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent imp
 		return this.issuer()
 			.addStaffMember(formData.staffRole, formData.staffEmail)
 			.then(
-				() => {
+				(issuer) => {
 					this.error = null;
 					this.messageService.reportMinorSuccess(`Added ${formData.staffEmail} as ${formData.staffRole}`);
 					this.closeDialog();
-					// this.closeModal();
+					this.issuer.set({ ...issuer } as Issuer);
 				},
 				(error) => {
 					const err = BadgrApiFailure.from(error);
@@ -297,7 +324,10 @@ export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent imp
 		}
 
 		return member.remove().then(
-			() => this.messageService.reportMinorSuccess(`Removed ${member.nameLabel} from ${this.issuer().name}`),
+			(issuer) => {
+				this.issuer.set({ ...issuer } as Issuer);
+				this.messageService.reportMinorSuccess(`Removed ${member.nameLabel} from ${this.issuer().name}`);
+			},
 			(error) =>
 				this.messageService.reportHandledError(
 					`Failed to add member: ${BadgrApiFailure.from(error).firstMessage}`,
@@ -319,6 +349,11 @@ export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent imp
 		this.dialogRef = dialogRef;
 	}
 
+	public isStaffMemberLoggedInUser(u: UserProfile, staff: IssuerStaffMember): boolean {
+		if (!u.emails?.entities) return false;
+		return u.emails.entities.find((e) => e.email === staff.email) !== undefined;
+	}
+
 	deleteStaffRequest(event) {
 		this.issuerStaffRequestApiService.deleteRequest(this.issuerSlug, event).then(() => {
 			this.staffRequests.update((current) => current.filter((req) => req.entity_id != event));
@@ -332,7 +367,6 @@ export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent imp
 	}
 
 	confirmStaffRequest(event: ApiStaffRequest) {
-		//@ts-ignore
 		this.selectedStaffRequestEmail = event.user.email;
 		const dialogRef = this._hlmDialogService.open(DialogComponent, {
 			context: {

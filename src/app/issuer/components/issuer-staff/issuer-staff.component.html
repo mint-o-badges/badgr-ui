@@ -1,4 +1,4 @@
-<div *bgAwaitPromises="[issuerLoaded()]">
+<div *bgAwaitPromises="[issuerLoaded(), userProfileLoaded()]">
 	<form-message></form-message>
 	<div class="oeb page-padding">
 		<div class="oeb-breadcrumbs">
@@ -29,17 +29,16 @@
 		</div>
 		<section class="tw-mt-8">
 			<h2 hlmH2 class="!tw-text-oebblack tw-mb-2">{{ 'Issuer.openStaffRequests' | translate }}</h2>
-			@if (staffRequests.length == 0) {
+			@if (staffRequests().length === 0) {
 				<span class="tw-text-oebblack tw-italic tw-text-lg">{{
 					'Issuer.noOpenStaffRequests' | translate
 				}}</span>
+			} @else {
+				<issuer-staff-requests-datatable
+					[requests]="staffRequests()"
+					(deleteStaffRequest)="deleteStaffRequest($event)"
+					(confirmStaffRequest)="confirmStaffRequest($event)" />
 			}
-			<issuer-staff-requests-datatable
-				[requests]="staffRequests()"
-				(deleteStaffRequest)="deleteStaffRequest($event)"
-				(confirmStaffRequest)="confirmStaffRequest($event)"
-			>
-			</issuer-staff-requests-datatable>
 		</section>
 		<section class="tw-mt-8">
 			<h2 hlmH2 class="!tw-text-oebblack tw-mb-2">
@@ -131,6 +130,7 @@
 <ng-template #addMemberFormTemplate>
 	<form [formGroup]="staffCreateForm.rawControl" (ngSubmit)="submitStaffCreate()">
 		<oeb-input
+			class="[&_input]:tw-w-11/12"
 			[control]="staffCreateForm.rawControlMap.staffEmail"
 			labelStyle="tw-text-oebblack tw-text-lg tw-font-bold"
 			label="{{ 'Issuer.addMember_newEmail' | translate }}"
@@ -246,27 +246,34 @@
 </ng-template>
 
 <ng-template #roleSelectionCellTemplate let-context>
-	<select
-		#memberSelect
-		class="!tw-border-purple !tw-border-solid !tw-text-oebblack tw-rounded-[10px] tw-text-lg"
-		[ngModel]="context.getValue()"
-		[disabled]="context.row.original == issuer().currentUserStaffMember"
-		(change)="changeMemberRole(context.row.original, $any(memberSelect.value))"
-	>
-		@for (role of issuerStaffRoleOptions; track role) {
-			<option [value]="role.value">
-				{{ role.label | translate }}
-			</option>
-		}
-	</select>
+	@if (isCurrentUserIssuerOwner()) {
+		<div class="forminput forminput-full">
+			<div class="forminput-x-inputs">
+					<select
+						#memberSelect
+						class="!tw-border-purple !tw-border-solid !tw-text-oebblack tw-rounded-[10px] tw-text-lg"
+						[ngModel]="context.getValue()"
+						[disabled]="context.getValue() === 'owner'"
+						(change)="changeMemberRole(context.row.original, $any(memberSelect.value))"
+						>
+							@for (role of issuerStaffRoleOptions; track role) {
+								<option [value]="role.value">
+									{{ role.label | translate }}
+								</option>
+							}
+					</select>
+			</div>
+		</div>
+	}
 </ng-template>
 
 <ng-template #badgeActionsCellTemplate let-context>
-	@if (context.row.original != issuer().currentUserStaffMember) {
-		<span
+	@if (!isStaffMemberLoggedInUser(userProfile(), context.row.original)) {
+		<oeb-button
+			variant="secondary"
 			(click)="removeMember(context.row.original)"
-			class="tw-text-link tw-underline tw-text-sm tw-cursor-pointer"
-			>{{ 'General.remove' | translate }}</span
-		>
+			size="sm"
+			width="full_width"
+			[text]="'General.remove' | translate"/>
 	}
 </ng-template>
