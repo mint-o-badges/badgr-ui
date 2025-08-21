@@ -11,6 +11,7 @@ import { ManagedEntity } from '../../common/model/managed-entity';
 import { ApiEntityRef } from '../../common/model/entity-ref';
 import { CommonEntityManager } from '../../entity-manager/services/common-entity-manager.service';
 import { EmbeddedEntitySet } from '../../common/model/managed-entity-set';
+import { Issuer } from './issuer.model';
 
 export class Network extends ManagedEntity<ApiNetwork, NetworkRef> {
 	readonly staff = new EmbeddedEntitySet(
@@ -18,6 +19,13 @@ export class Network extends ManagedEntity<ApiNetwork, NetworkRef> {
 		() => this.apiModel.staff,
 		(apiEntry) => new NetworkStaffMember(this),
 		NetworkStaffMember.urlFromApiModel,
+	);
+
+	readonly partnerIssuers = new EmbeddedEntitySet(
+		this,
+		() => this.apiModel.partner_issuers,
+		(apiEntry) => new Issuer(this.commonManager, apiEntry),
+		Issuer.urlFromApiModel,
 	);
 
 	protected buildApiRef(): ApiEntityRef {

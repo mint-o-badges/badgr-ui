@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { HlmTableImports } from './spartan/ui-table-helm/src';
 import { OebButtonComponent } from './oeb-button.component';
-import { ApiStaffRequest } from '../issuer/staffrequest-api.model';
+import { ApiStaffRequest } from '../issuer/models/staffrequest-api.model';
 import { HlmIconModule } from '@spartan-ng/helm/icon';
 
 @Component({

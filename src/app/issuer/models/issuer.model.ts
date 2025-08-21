@@ -205,6 +205,10 @@ export class Issuer extends ManagedEntity<ApiIssuer, IssuerRef> {
 			return null;
 		}
 	}
+
+	static urlFromApiModel(apiIssuer: ApiIssuer): IssuerUrl {
+		return apiIssuer.json.id;
+	}
 }
 
 export class IssuerStaffMember extends ManagedEntity<ApiIssuerStaff, IssuerStaffRef> {

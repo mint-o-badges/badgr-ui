@@ -20,7 +20,7 @@ import { typedFormGroup } from '../../../common/util/typed-forms';
 import { Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EmailValidator } from '../../../common/validators/email.validator';
 import { IssuerStaffRequestApiService } from '../../services/issuer-staff-request-api.service';
-import { ApiStaffRequest } from '../../staffrequest-api.model';
+import { ApiStaffRequest } from '../../models/staffrequest-api.model';
 import { BrnDialogRef } from '@spartan-ng/brain/dialog';
 import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 import { FormMessageComponent } from '../../../common/components/form-message.component';

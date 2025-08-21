@@ -13,6 +13,7 @@ import { MessageService } from '../../common/services/message.service';
 import { HttpClient } from '@angular/common/http';
 import { Issuer } from '../models/issuer.model';
 import { ApiIssuer } from '../models/issuer-api.model';
+import { ApiNetworkInvitation } from '../models/network-invite-api.model';
 
 @Injectable({ providedIn: 'root' })
 export class NetworkApiService extends BaseHttpApiService {
@@ -54,7 +55,13 @@ export class NetworkApiService extends BaseHttpApiService {
 	}
 
 	getNetworkInvite(networkSlug: string, inviteSlug: string) {
-		return this.get(`/v1/issuer/networks/${networkSlug}/invite/${inviteSlug}`);
+		return this.get<ApiNetworkInvitation>(`/v1/issuer/networks/${networkSlug}/invite/${inviteSlug}`).then(
+			(r) => r.body,
+		);
+	}
+
+	getPendingNetworkInvites(networkSlug: string) {
+		return this.get<ApiNetworkInvitation[]>(`/v1/issuer/networks/${networkSlug}/invites`).then((r) => r.body);
 	}
 
 	confirmInvitation(networkSlug: string, inviteSlug: string) {

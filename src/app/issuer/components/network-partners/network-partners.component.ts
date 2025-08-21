@@ -5,14 +5,38 @@ import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
 import { DialogComponent } from '../../../components/dialog.component';
 import { BrnDialogRef } from '@spartan-ng/brain/dialog';
+import { NetworkPartnersDatatableComponent } from '../../../components/datatable-network-partners.component';
+import { NetworkInvitesDatatableComponent } from '../../../components/datatable-network-invites.component';
+import { Issuer } from '../../../issuer/models/issuer.model';
+import { Network } from '../../../issuer/models/network.model';
+import { NetworkApiService } from '../../../issuer/services/network-api.service';
+import { ApiNetworkInvitation } from '~/issuer/models/network-invite-api.model';
 
 @Component({
 	selector: 'network-partners',
 	templateUrl: './network-partners.component.html',
-	imports: [BgAwaitPromises, TranslatePipe, OebButtonComponent],
+	imports: [
+		BgAwaitPromises,
+		TranslatePipe,
+		OebButtonComponent,
+		NetworkPartnersDatatableComponent,
+		NetworkInvitesDatatableComponent,
+	],
 })
 export class NetworkPartnersComponent {
 	@Input() partnersLoaded: Promise<unknown>;
+	@Input() issuers: Issuer[];
+	@Input() network: Network;
+	@Input() invites: ApiNetworkInvitation[];
+
+	pendingInvites: ApiNetworkInvitation[];
+
+	constructor(private networkApiService: NetworkApiService) {
+		// this.networkApiService.getPendingNetworkInvites(this.network.slug).then((invites) => {
+		// 	console.log('invites');
+		// 	this.pendingInvites = invites;
+		// });
+	}
 
 	dialogRef: BrnDialogRef<any> = null;
 
@@ -38,5 +62,9 @@ export class NetworkPartnersComponent {
 		// 			});
 		// 	}
 		// });
+	}
+
+	ngOnInit() {
+		console.log('invites', this.invites);
 	}
 }

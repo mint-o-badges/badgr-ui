@@ -19,7 +19,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { PublicApiService } from '../../../public/services/public-api.service';
 import { IssuerStaffRequestApiService } from '../../services/issuer-staff-request-api.service';
 import { UserProfileApiService } from '../../../common/services/user-profile-api.service';
-import { ApiStaffRequest } from '../../staffrequest-api.model';
+import { ApiStaffRequest } from '../../models/staffrequest-api.model';
 import { BrnDialogRef } from '@spartan-ng/brain/dialog';
 import { BadgrApiFailure } from '../../../common/services/api-failure';
 import { FormMessageComponent } from '../../../common/components/form-message.component';

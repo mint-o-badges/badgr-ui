@@ -6,7 +6,7 @@ import { MessageService } from './message.service';
 import { EventsService } from './events.service';
 import { ApiUserProfile, ApiUserProfileEmail, ApiUserProfileSocialAccount } from '../model/user-profile-api.model';
 import { HttpClient } from '@angular/common/http';
-import { ApiStaffRequest } from '../../issuer/staffrequest-api.model';
+import { ApiStaffRequest } from '../../issuer/models/staffrequest-api.model';
 
 @Injectable({ providedIn: 'root' })
 export class UserProfileApiService extends BaseHttpApiService {

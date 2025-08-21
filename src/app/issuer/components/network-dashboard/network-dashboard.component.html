@@ -34,7 +34,7 @@
 </div>
 
 <ng-template #partnerTemplate>
-	<network-partners></network-partners>
+	<network-partners [invites]="pendingInvites" [network]="network" [issuers]="partnerIssuers"></network-partners>
 </ng-template>
 
 <ng-template #headerTemplate>

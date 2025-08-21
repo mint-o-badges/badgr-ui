@@ -1,4 +1,5 @@
 import { ApiEntityRef } from '../../common/model/entity-ref';
+import { ApiIssuer } from './issuer-api.model';
 
 export type NetworkSlug = string;
 export type NetworkUrl = string;
@@ -30,9 +31,8 @@ export interface ApiNetwork {
 	created_at: string;
 	created_by: string;
 	staff: ApiNetworkStaff[];
+	partner_issuers: ApiIssuer[];
 
-	badgeClassCount: number;
-	learningPathCount: number;
 	json: ApiNetworkJsonld;
 }
 

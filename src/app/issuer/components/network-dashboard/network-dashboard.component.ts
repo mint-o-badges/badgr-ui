@@ -28,6 +28,7 @@ import { HlmH1 } from '@spartan-ng/helm/typography';
 import { NetworkPartnersComponent } from '../network-partners/network-partners.component';
 import { AddInstitutionComponent } from '../add-institution/add-institution.component';
 import { BgBreadcrumbsComponent } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
+import { ApiNetworkInvitation } from '../../../issuer/models/network-invite-api.model';
 
 @Component({
 	selector: 'network-dashboard',
@@ -56,6 +57,10 @@ export class NetworkDashboardComponent extends BaseAuthenticatedRoutableComponen
 	dialogRef: BrnDialogRef<any> = null;
 	issuerSearchQuery = '';
 	selectedIssuers: Issuer[] = [];
+
+	partnerIssuers: Issuer[] = [];
+
+	pendingInvites: ApiNetworkInvitation[];
 
 	issuersShowResults = false;
 	issuersLoading = false;
@@ -97,8 +102,13 @@ export class NetworkDashboardComponent extends BaseAuthenticatedRoutableComponen
 
 		this.networkSlug = this.route.snapshot.params['networkSlug'];
 
+		this.networkApiService.getPendingNetworkInvites(this.networkSlug).then((invites) => {
+			this.pendingInvites = invites;
+		});
+
 		this.networkLoaded = this.networkManager.networkBySlug(this.networkSlug).then((network) => {
 			this.network = network;
+			this.partnerIssuers = network.partnerIssuers.entities;
 			this.title.setTitle(
 				`Issuer - ${this.network.name} - ${this.configService.theme['serviceName'] || 'Badgr'}`,
 			);
