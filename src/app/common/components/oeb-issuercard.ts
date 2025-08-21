@@ -15,7 +15,9 @@ import { PublicApiIssuer } from '../../public/models/public-api.model';
 				<img [src]="issuer.image" class="tw-aspect-square" width="80" />
 				<div class="tw-flex tw-flex-col tw-flex-wrap tw-pl-4 tw-py-2 tw-break-words">
 					<a [routerLink]="['/public/issuers', issuer.slug]" hlmP>{{ issuer.name }}</a>
-					<p class="tw-font-bold" hlmP size="sm">{{ issuer.email }}</p>
+					@if (issuer.email) {
+						<p class="tw-font-bold" hlmP size="sm">{{ issuer.email }}</p>
+					}
 				</div>
 			</div>
 			<div>
