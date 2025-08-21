@@ -357,7 +357,8 @@ export class QrCodeDatatableComponent {
 		if (this._selected().length === 0 || this.isTaskProcessing || this.isTaskPending) return;
 
 		const assertions: BadgeInstanceBatchAssertion[] = [];
-		const recipientProfileContextUrl = 'https://openbadgespec.org/extensions/recipientProfile/context.json';
+		const recipientProfileContextUrl =
+			'https://api.openbadges.education/static/extensions/recipientProfile/context.json';
 		let assertion: BadgeInstanceBatchAssertion;
 		this._selected().forEach((b) => {
 			const name = b.firstName + ' ' + b.lastName;
