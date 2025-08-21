@@ -10,7 +10,7 @@ import type { ClassValue } from 'clsx';
 		'[class]': '_computedClass()',
 	},
 })
-export class HlmCommandInputWrapperComponent {
+export class HlmCommandInputWrapper {
 	public readonly userClass = input<ClassValue>('', { alias: 'class' });
 	protected _computedClass = computed(() =>
 		// I removed:  [&_hlm-icon]:tw-h-5 [&_hlm-icon]:tw-w-5

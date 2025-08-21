@@ -1,14 +1,4 @@
-import {
-	afterRenderEffect,
-	Component,
-	ElementRef,
-	Input,
-	OnInit,
-	SecurityContext,
-	TemplateRef,
-	ViewChild,
-} from '@angular/core';
-
+import { Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from '../../../common/services/message.service';
 import { BadgeClassManager } from '../../services/badgeclass-manager.service';
@@ -17,11 +7,9 @@ import { Issuer } from '../../models/issuer.model';
 import { DomSanitizer, SafeResourceUrl, Title } from '@angular/platform-browser';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
 import { SessionService } from '../../../common/services/session.service';
-import { StringMatchingUtil } from '../../../common/util/string-matching-util';
 import { CommonDialogsService } from '../../../common/services/common-dialogs.service';
 import { BadgeInstanceManager } from '../../services/badgeinstance-manager.service';
 import { BadgeClassInstances, BadgeInstance } from '../../models/badgeinstance.model';
-
 import { IssuerManager } from '../../services/issuer-manager.service';
 import { BadgrApiFailure } from '../../../common/services/api-failure';
 import { preloadImageURL } from '../../../common/util/file-util';
@@ -43,7 +31,6 @@ import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src
 import { inject } from '@angular/core';
 import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
 import { ApiLearningPath } from '../../../common/model/learningpath-api.model';
-import { ViewportScroller } from '@angular/common';
 import { TaskResult, TaskStatus, TaskPollingManagerService } from '../../../common/task-manager.service';
 import { Subscription } from 'rxjs';
 import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
@@ -52,9 +39,9 @@ import { BrnDialogRef } from '@spartan-ng/brain/dialog';
 import { BgBadgeDetail } from '../../../common/components/badge-detail/badge-detail.component';
 import { QrCodeAwardsComponent } from '../qrcode-awards/qrcode-awards.component';
 import { IssuerDetailDatatableComponent } from '../../../components/datatable-issuer-detail.component';
-import { HlmH2Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h2.directive';
 import { FormsModule } from '@angular/forms';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
+import { HlmH2 } from '@spartan-ng/helm/typography';
 
 @Component({
 	selector: 'badgeclass-detail',
@@ -73,7 +60,7 @@ import { OebButtonComponent } from '../../../components/oeb-button.component';
 			<div #batchAwards>
 				<issuer-detail-datatable
 					[recipientCount]="recipientCount"
-					[_recipients]="instanceResults"
+					[recipients]="instanceResults"
 					(actionElement)="revokeInstance($event)"
 					(downloadCertificate)="downloadCertificate($event['instance'], $event['badgeIndex'])"
 					[downloadStates]="downloadStates"
@@ -118,7 +105,7 @@ import { OebButtonComponent } from '../../../components/oeb-button.component';
 		BgBadgeDetail,
 		QrCodeAwardsComponent,
 		IssuerDetailDatatableComponent,
-		HlmH2Directive,
+		HlmH2,
 		FormsModule,
 		OebButtonComponent,
 		TranslatePipe,

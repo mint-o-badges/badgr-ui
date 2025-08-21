@@ -51,9 +51,11 @@
 				</div>
 				<div class="tw-border-purple tw-border-solid tw-border tw-px-4 tw-py-6 tw-rounded-[15px] tw-mb-6">
 					<span hlmP [innerHTML]="'Issuer.batchAwardText1' | translate"></span>&nbsp;
-					<a hlmP hlmA [routerLink]="['/issuer/issuers', issuerSlug, 'badges', badgeSlug, 'bulk-import']">{{
-						'Issuer.batchAwardTextLink' | translate
-					}}</a
+					<a
+						hlmP
+						class="tw-underline !tw-text-link hover:!tw-text-buttonhover tw-cursor-pointer"
+						[routerLink]="['/issuer/issuers', issuerSlug, 'badges', badgeSlug, 'bulk-import']"
+						>{{ 'Issuer.batchAwardTextLink' | translate }}</a
 					>&nbsp;
 					<span hlmP [innerHTML]="'Issuer.batchAwardText2' | translate"></span>
 					<oeb-input

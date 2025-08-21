@@ -1,58 +1,39 @@
 import { NgIcon } from '@ng-icons/core';
-import { SelectionModel } from '@angular/cdk/collections';
-import { DatePipe } from '@angular/common';
-import {
-	Component,
-	TrackByFunction,
-	computed,
-	effect,
-	signal,
-	inject,
-	Input,
-	Output,
-	EventEmitter,
-} from '@angular/core';
-import { toObservable, toSignal } from '@angular/core/rxjs-interop';
+import { Component, signal, inject, TemplateRef, viewChild, computed, input, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { lucideArrowUpDown, lucideChevronDown, lucideEllipsis } from '@ng-icons/lucide';
-
-import { HlmCheckboxComponent } from './spartan/ui-checkbox-helm/src';
-import { HlmIconDirective } from './spartan/ui-icon-helm/src';
-import { HlmInputDirective } from './spartan/ui-input-helm/src';
+import { HlmIcon } from './spartan/ui-icon-helm/src';
 import { HlmMenuModule } from './spartan/ui-menu-helm/src';
-import { BrnTableModule, useBrnColumnManager } from '@spartan-ng/brain/table';
-import { HlmTableModule } from './spartan/ui-table-helm/src';
+import { HlmTableImports } from './spartan/ui-table-helm/src';
 import { BrnSelectModule } from '@spartan-ng/brain/select';
 import { HlmSelectModule } from './spartan/ui-select-helm/src';
-import { debounceTime, map, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { HlmDialogService } from './spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
 import { SuccessDialogComponent } from '../common/dialogs/oeb-dialogs/success-dialog.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { BadgeRequestApiService } from '../issuer/services/badgerequest-api.service';
-import { BadgeInstanceManager } from '../issuer/services/badgeinstance-manager.service';
-import { BadgeClassManager } from '../issuer/services/badgeclass-manager.service';
 import { MessageService } from '../common/services/message.service';
-import { Router } from '@angular/router';
 import { DangerDialogComponent } from '../common/dialogs/oeb-dialogs/danger-dialog.component';
 import { TranslateService } from '@ngx-translate/core';
 import { ApiRequestedBadge } from '../issuer/models/badgerequest-api.model';
-
-import { HlmCommandInputWrapperComponent } from './spartan/ui-command-helm/src/lib/hlm-command-input-wrapper.component';
 import { OebButtonComponent } from './oeb-button.component';
 import striptags from 'striptags';
 import { OebSpinnerComponent } from './oeb-spinner.component';
 import { BadgeInstanceBatchAssertion } from '../issuer/models/badgeinstance-api.model';
-import { provideIcons } from '@ng-icons/core';
 import { BadgeInstanceApiService } from '../issuer/services/badgeinstance-api.service';
 import { TaskPollingManagerService, TaskResult, TaskStatus } from '../common/task-manager.service';
-import { HlmButtonDirective } from './spartan/ui-button-helm/src/lib/hlm-button.directive';
-
-export type Payment = {
-	id: string;
-	amount: number;
-	status: 'pending' | 'processing' | 'success' | 'failed';
-	email: string;
-};
+import { formatDate, TitleCasePipe } from '@angular/common';
+import {
+	ColumnDef,
+	createAngularTable,
+	FlexRenderDirective,
+	getCoreRowModel,
+	getSortedRowModel,
+	RowSelectionState,
+	SortingState,
+} from '@tanstack/angular-table';
+import { OebCheckboxComponent } from './oeb-checkbox.component';
+import { OebTableImports } from './oeb-table';
+import { HlmButtonModule } from './spartan/ui-button-helm/src';
 
 export type RequestedBadge = {
 	email: string;
@@ -68,47 +49,25 @@ export type RequestedBadge = {
 	imports: [
 		FormsModule,
 		HlmMenuModule,
-		BrnTableModule,
-		HlmTableModule,
-		HlmButtonDirective,
-		DatePipe,
+		...HlmTableImports,
+		...OebTableImports,
 		NgIcon,
-		HlmIconDirective,
-		HlmInputDirective,
-		HlmCheckboxComponent,
+		HlmIcon,
 		BrnSelectModule,
 		HlmSelectModule,
+		HlmButtonModule,
 		TranslateModule,
-		HlmCommandInputWrapperComponent,
 		OebButtonComponent,
 		OebSpinnerComponent,
+		OebCheckboxComponent,
+		FlexRenderDirective,
+		OebCheckboxComponent,
+		TitleCasePipe,
 	],
-	styleUrl: './datatable-qrcodes.component.scss',
-	providers: [provideIcons({ lucideChevronDown, lucideEllipsis, lucideArrowUpDown }), TranslateService],
-	host: {
-		class: 'tw-w-full',
-	},
 	template: `
-		<div class="tw-flex tw-flex-col tw-justify-between tw-gap-4 sm:tw-flex-row">
-			<label hlmLabel class="tw-font-semibold tw-text-[0.5rem] tw-w-full md:tw-w-80">
-				<span class="tw-px-3 tw-text-muted-foreground tw-text-sm">{{
-					'General.searchByEmail' | translate
-				}}</span>
-				<hlm-cmd-input-wrapper class="tw-relative tw-px-0 tw-mt-1 tw-border-b-0">
-					<input
-						hlmInput
-						class="!tw-bg-background tw-w-full tw-border-solid tw-border-purple tw-py-1 tw-rounded-[20px] tw-text-oebblack"
-						[ngModel]="_emailFilter()"
-						(ngModelChange)="_rawFilterInput.set($event)"
-					/>
-					<ng-icon hlm size="lg" class="tw-absolute  tw-right-6 tw-text-purple" name="lucideSearch" />
-				</hlm-cmd-input-wrapper>
-			</label>
-		</div>
-
-		@if (isTaskProcessing || isTaskPending) {
+		@if (this.isTaskProcessing() || this.isTaskPending()) {
 			<div
-				class="tw-border-green tw-p-2 tw-border-solid tw-border-4 tw-rounded-[10px] tw-w-full tw-flex md:tw-gap-6 tw-gap-2 tw-items-center"
+				class="tw-border-mint tw-p-2 tw-border-solid tw-border-4 tw-rounded-[10px] tw-w-full tw-flex md:tw-gap-6 tw-gap-2 tw-items-center"
 			>
 				<oeb-spinner size="lg"></oeb-spinner>
 				<div class="tw-text-oebblack tw-text-lg tw-flex tw-flex-col tw-gap-1">
@@ -119,181 +78,189 @@ export type RequestedBadge = {
 				</div>
 			</div>
 		} @else {
-			<brn-table
-				hlm
-				stickyHeader
-				class="tw-mt-4 tw-block tw-min-h-[335px] tw-max-h-[680px] tw-overflow-x-hidden tw-overflow-y-auto tw-rounded-md"
-				[dataSource]="_filteredSortedPayments()"
-				[displayedColumns]="_allDisplayedColumns()"
-				[trackBy]="_trackBy"
-				[headerRowClasses]="headerRowStyle"
-				[bodyRowClasses]="bodyRowStyle"
-			>
-				<brn-column-def name="select" class="tw-w-12">
-					<hlm-th *brnHeaderDef>
-						<hlm-checkbox [checked]="_checkboxState()" (changed)="handleHeaderCheckboxChange()" />
-					</hlm-th>
-					<hlm-td *brnCellDef="let element">
-						<hlm-checkbox [checked]="_isPaymentSelected(element)" (changed)="togglePayment(element)" />
-					</hlm-td>
-				</brn-column-def>
-				<brn-column-def name="email" class="tw-w-40">
-					<hlm-th class="tw-text-white" truncate *brnHeaderDef>ID</hlm-th>
-					<hlm-td class="tw-text-white" *brnCellDef="let element">
-						<span class="tw-text-oebblack">{{ element.email }}</span>
-					</hlm-td>
-				</brn-column-def>
-				<brn-column-def name="requestedOn" class="!tw-flex-1 tw-justify-center">
-					<hlm-th *brnHeaderDef>
-						<button hlmBtn size="sm" variant="inherit" (click)="handleEmailSortChange()">
-							<span class="tw-text-white tw-text-sm tw-font-medium">{{
-								'Badge.requestedOn' | translate
-							}}</span>
-							<ng-icon hlm class="tw-ml-3 tw-text-white" size="sm" name="lucideArrowUpDown" />
-						</button>
-					</hlm-th>
-					<hlm-td class="!tw-flex-1 tw-justify-center" *brnCellDef="let element">
-						<span class="tw-text-oebblack">{{ element.requestedOn | date: 'dd.MM.yyyy' }}</span>
-					</hlm-td>
-				</brn-column-def>
-				<brn-column-def name="amount" class="tw-justify-end tw-w-20">
-					<hlm-th class="tw-text-white" *brnHeaderDef></hlm-th>
-					<hlm-td class="tw-font-medium tw-tabular-nums" *brnCellDef="let element">
-						<button (click)="openDangerDialog(element)">
-							<ng-icon hlm class="tw-ml-3 tw-text-oebblack" size="sm" name="lucideTrash2" />
-						</button>
-					</hlm-td>
-				</brn-column-def>
-				<brn-column-def name="actions" class="tw-w-16">
-					<hlm-th *brnHeaderDef></hlm-th>
-					<hlm-td *brnCellDef="let element"> </hlm-td>
-				</brn-column-def>
-				<div class="tw-flex tw-items-center tw-justify-center tw-p-20 tw-text-muted-foreground" brnNoDataRow>
-					No data
-				</div>
-			</brn-table>
+			<table hlmTable oeb-table-secondary>
+				<thead hlmTHead>
+					@for (headerRow of badgeTable.getHeaderGroups(); track headerRow.id) {
+						<tr hlmTr>
+							@for (headerCell of headerRow.headers; track headerCell.id) {
+								@if (!headerCell.isPlaceholder) {
+									<th hlmTh>
+										<div
+											class="tw-flex tw-flex-row tw-items-center tw-gap-2 [&[data-sortable='true']]:tw-cursor-pointer"
+											(click)="
+												headerCell.column.getCanSort()
+													? headerCell.column.toggleSorting()
+													: undefined
+											"
+											[attr.data-sortable]="headerCell.column.getCanSort()"
+										>
+											<div>
+												<ng-container
+													*flexRender="
+														headerCell.column.columnDef.header;
+														props: headerCell.getContext();
+														let header
+													"
+												>
+													<div [innerHTML]="header"></div>
+												</ng-container>
+											</div>
+
+											@if (headerCell.column.getIsSorted()) {
+												@let order = headerCell.column.getNextSortingOrder() === "asc" ? "desc" : "asc";
+												@if (order === 'asc') {
+													<ng-icon hlm size="base" name="lucideChevronUp" />
+												} @else {
+													<ng-icon hlm size="base" name="lucideChevronDown" />
+												}
+											} @else if (headerCell.column.getCanSort()) {
+												<ng-icon hlm size="base" name="lucideChevronsUpDown" />
+											}
+										</div>
+									</th>
+								}
+							}
+						</tr>
+					}
+				</thead>
+				<tbody hlmTBody>
+					@for (row of badgeTable.getRowModel().rows; track row.id) {
+						<tr hlmTr>
+							@for (cell of row.getVisibleCells(); track cell.id) {
+								<td hlmTd class="tw-align-middle">
+									<ng-container
+										*flexRender="cell.column.columnDef.cell; props: cell.getContext(); let cell"
+									>
+										<div [innerHTML]="cell"></div>
+									</ng-container>
+								</td>
+							}
+						</tr>
+					}
+				</tbody>
+			</table>
+
+			<ng-template #translateHeaderIDCellTemplate let-context>
+				{{ context.header.id | translate | titlecase }}
+			</ng-template>
+			<ng-template #headerCheckbox let-context>
+				<oeb-checkbox
+					[checked]="context.table.getIsAllRowsSelected()"
+					(ngModelChange)="context.table.toggleAllRowsSelected()"
+				/>
+			</ng-template>
+			<ng-template #rowCheckbox let-context>
+				<oeb-checkbox
+					[checked]="context.row.getIsSelected()"
+					(ngModelChange)="context.row.getToggleSelectedHandler()($event)"
+				/>
+			</ng-template>
+			<ng-template #deleteButton let-context>
+				<button (click)="this.openDeleteDialog(context.row.original)" class="tw-h-10 tw-w-10 hover:tw-opacity-60 tw-inline-flex tw-items-center tw-justify-center">
+					<ng-icon hlm size="base"  name="lucideTrash2" />
+				</button>
+			</ng-template>
 		}
 
 		<oeb-button
 			size="sm"
-			class="tw-float-right tw-mt-4"
+			class="tw-float-right"
 			(click)="issueBadges()"
-			[disabled]="_selected().length === 0 || isTaskProcessing || isTaskPending"
-			[text]="_selected().length > 1 ? ('Issuer.giveBadges' | translate) : ('Issuer.giveBadge' | translate)"
+			[disabled]="this.rowSelectionCount() === 0 || this.isTaskProcessing() || this.isTaskPending()"
+			[text]="this.rowSelectionCount() > 1 ? ('Issuer.giveBadges' | translate) : ('Issuer.giveBadge' | translate)"
 		>
 		</oeb-button>
 	`,
 })
 export class QrCodeDatatableComponent {
-	@Input() caption: string = '';
-	@Input() qrCodeId: string = '';
-	@Input() badgeSlug: string = '';
-	@Input() issuerSlug: string = '';
-	@Input() badgeIssueLink: string[] = [];
-	@Input() actionElementText: string = 'Badge vergeben';
-	@Input() requestCount: number;
-	@Output() requestCountChange = new EventEmitter();
-	@Output() actionElement = new EventEmitter();
-	@Output() redirectToBadgeDetail = new EventEmitter();
-	@Output() deletedQRAward = new EventEmitter();
-	@Output() qrBadgeAward = new EventEmitter<number>();
-	requestedBadges: RequestedBadge[] = [];
-	public headerRowStyle =
-		'tw-flex tw-min-w-[100%] tw-w-fit tw-rounded-t-[20px] tw-border-b tw-border-darkgrey [&.cdk-table-sticky]:tw-bg-darkgrey ' +
-		'[&.cdk-table-sticky>*]:tw-z-[101] [&.cdk-table-sticky]:before:tw-z-0 [&.cdk-table-sticky]:before:tw-block [&.cdk-table-sticky]:hover:before:tw-bg-muted/50 [&.cdk-table-sticky]:before:tw-absolute [&.cdk-table-sticky]:before:tw-inset-0';
+	qrCodeId = input.required<string>();
+	badgeSlug = input.required<string>();
+	issuerSlug = input.required<string>();
+	qrBadgeAward = output<number>();
 
-	public bodyRowStyle =
-		'tw-bg-lightgrey tw-flex tw-min-w-[100%] tw-w-fit !tw-border-x !tw-border-b tw-border-solid tw-border-darkgrey tw-transition-[background-color] hover:tw-bg-muted/50 [&:has([role=checkbox][aria-checked=true])]:tw-bg-muted';
-	protected readonly _rawFilterInput = signal('');
-	protected readonly _emailFilter = signal('');
-	private readonly _debouncedFilter = toSignal(toObservable(this._rawFilterInput).pipe(debounceTime(300)));
+	translateHeaderIDCellTemplate = viewChild.required<TemplateRef<any>>('translateHeaderIDCellTemplate');
+	headerCheckbox = viewChild.required<TemplateRef<any>>('headerCheckbox');
+	rowCheckbox = viewChild.required<TemplateRef<any>>('rowCheckbox');
+	deleteButton = viewChild.required<TemplateRef<any>>('deleteButton');
 
-	private readonly _selectionModel = new SelectionModel<RequestedBadge>(true);
-	protected readonly _isPaymentSelected = (payment: RequestedBadge) => this._selectionModel.isSelected(payment);
-	protected readonly _selected = toSignal(
-		this._selectionModel.changed.pipe(map((change) => change.source.selected)),
-		{
-			initialValue: [],
+	rowSelectionCount = computed(() => Object.keys(this.rowSelection()).length);
+	isTaskPending = computed(() => this.currentTaskStatus()?.status === TaskStatus.PENDING);
+	isTaskProcessing = computed(
+		() =>
+			this.currentTaskStatus()?.status === TaskStatus.STARTED ||
+			this.currentTaskStatus()?.status === TaskStatus.RETRY,
+	);
+
+	badgeTable = createAngularTable(() => ({
+		data: this.requestedBadges(),
+		columns: this.badgeTableColumnDefinition,
+		getCoreRowModel: getCoreRowModel(),
+		getSortedRowModel: getSortedRowModel(),
+		state: {
+			sorting: this.tableSorting(),
+			rowSelection: this.rowSelection(),
 		},
-	);
-
-	protected readonly _brnColumnManager = useBrnColumnManager({
-		email: { visible: true, label: 'Email' },
-		requestedOn: { visible: true, label: 'RequestedOn' },
-		amount: { visible: true, label: 'Amount ($)' },
-	});
-	protected readonly _allDisplayedColumns = computed(() => [
-		'select',
-		...this._brnColumnManager.displayedColumns(),
-		'actions',
-	]);
-
-	private readonly _requestedBadges = signal(this.requestedBadges);
-	private readonly _filteredPayments = computed(() => {
-		const emailFilter = this._emailFilter()?.trim()?.toLowerCase();
-		if (emailFilter && emailFilter.length > 0) {
-			return this._requestedBadges().filter((u) => u.email.toLowerCase().includes(emailFilter));
-		}
-		return this._requestedBadges();
-	});
-	private readonly _requestedOnSort = signal<'ASC' | 'DESC' | null>(null);
-	private readonly _emailSort = signal<'ASC' | 'DESC'>('ASC');
-	protected readonly _filteredSortedPayments = computed(() => {
-		const sort = this._emailSort();
-		const payments = this._filteredPayments();
-		if (!sort) {
-			return payments;
-		}
-		return [...payments].sort((p1, p2) => {
-			const date1 = new Date(p1.requestedOn);
-			const date2 = new Date(p2.requestedOn);
-			return (sort === 'ASC' ? 1 : -1) * (date1.getTime() - date2.getTime());
-		});
-	});
-	// protected readonly _filteredSortedPaginatedPayments = computed(() => {
-	//   const sort = this._emailSort();
-	//   const start = this._displayedIndices().start;
-	//   const end = this._displayedIndices().end + 1;
-	//   const payments = this._filteredPayments();
-	//   if (!sort) {
-	//     return payments.slice(start, end);
-	//   }
-	//   return [...payments]
-	//   .sort((p1, p2) => {
-	// 	const date1 = new Date(p1.requestedOn);
-	// 	const date2 = new Date(p2.requestedOn);
-	// 	return (sort === 'ASC' ? 1 : -1) * (date1.getTime() - date2.getTime());
-	//   })
-	//     .slice(start, end);
-	// });
-	protected readonly _allFilteredPaginatedPaymentsSelected = computed(() =>
-		this._filteredSortedPayments().every((payment) => this._selected().includes(payment)),
-	);
-	protected readonly _checkboxState = computed(() => {
-		const noneSelected = this._selected().length === 0;
-		const allSelectedOrIndeterminate = this._allFilteredPaginatedPaymentsSelected() ? true : 'indeterminate';
-		return noneSelected ? false : allSelectedOrIndeterminate;
-	});
-
-	protected readonly _trackBy: TrackByFunction<RequestedBadge> = (_: number, p: RequestedBadge) => p.entity_id;
-	protected readonly _totalElements = computed(() => this._filteredPayments().length);
+		onSortingChange: (updater) =>
+			updater instanceof Function ? this.tableSorting.update(updater) : this.tableSorting.set(updater),
+		enableSortingRemoval: false, // ensures at least one column is sorted
+		enableRowSelection: true,
+		onRowSelectionChange: (updaterOrValue) => {
+			this.rowSelection.set(
+				typeof updaterOrValue === 'function' ? updaterOrValue(this.rowSelection()) : updaterOrValue,
+			);
+		},
+	}));
 
 	private taskSubscription: Subscription | null = null;
-	currentTaskStatus: TaskResult | null = null;
+	private currentTaskStatus = signal<TaskResult | null>(null);
+	private readonly requestedBadges = signal<RequestedBadge[]>([]);
+	private readonly tableSorting = signal<SortingState>([
+		{
+			id: 'email',
+			desc: false,
+		},
+	]);
+	private readonly rowSelection = signal<RowSelectionState>({});
+	private readonly badgeTableColumnDefinition: ColumnDef<RequestedBadge>[] = [
+		{
+			id: 'select',
+			header: () => this.headerCheckbox(),
+			cell: () => this.rowCheckbox(),
+			enableSorting: false,
+		},
+		{
+			accessorKey: 'email',
+			header: 'ID',
+			cell: (info) => info.row.original.email,
+		},
+		{
+			id: 'Badge.requestedOn',
+			accessorKey: 'requestedOn',
+			header: () => this.translateHeaderIDCellTemplate(),
+			cell: (info) => formatDate(info.row.original.requestedOn, 'dd.MM.yyyy', 'en'),
+		},
+		{
+			id: 'actions',
+			cell: () => this.deleteButton(),
+			enableSorting: false,
+		},
+	];
+	private readonly _hlmDialogService = inject(HlmDialogService);
 
 	constructor(
 		private badgeRequestApiService: BadgeRequestApiService,
-		private badgeInstanceManager: BadgeInstanceManager,
 		private badgeInstanceApiService: BadgeInstanceApiService,
-		private badgeClassManager: BadgeClassManager,
 		private taskService: TaskPollingManagerService,
 		private messageService: MessageService,
 		private translate: TranslateService,
-		public router: Router,
-	) {
-		// needed to sync the debounced filter to the name filter, but being able to override the
-		// filter when loading new users without debounce
-		effect(() => this._emailFilter.set(this._debouncedFilter() ?? ''), { allowSignalWrites: true });
+	) {}
+
+	ngOnInit(): void {
+		this.badgeRequestApiService.getBadgeRequestsByQrCode(this.qrCodeId()).then((response: any) => {
+			this.requestedBadges.set(
+				response.body.requested_badges.map((badge: ApiRequestedBadge) => this.transformRequestedBadge(badge)),
+			);
+		});
 	}
 
 	transformRequestedBadge = (apiBadge: ApiRequestedBadge): RequestedBadge => {
@@ -307,121 +274,15 @@ export class QrCodeDatatableComponent {
 		};
 	};
 
-	plural = {
-		award: {
-			'=0': this.translate.instant('Badge.requests'),
-			'=1': this.translate.instant('Badge.request'),
-			other: this.translate.instant('Badge.requests'),
-		},
-	};
-
-	prepareTexts() {
-		this.plural = {
-			award: {
-				'=0': this.translate.instant('Badge.requests'),
-				'=1': this.translate.instant('Badge.request'),
-				other: this.translate.instant('Badge.requests'),
-			},
-		};
-	}
-
-	ngOnInit(): void {
-		this.badgeRequestApiService.getBadgeRequestsByQrCode(this.qrCodeId).then((response: any) => {
-			this.requestedBadges = response.body.requested_badges.map((badge: ApiRequestedBadge) =>
-				this.transformRequestedBadge(badge),
-			);
-			this._requestedBadges.set(this.requestedBadges);
-		});
-		this.prepareTexts();
-		// Translate: to update predefined text when language is changed
-		this.translate.onLangChange.subscribe((event) => {
-			this.prepareTexts();
-		});
-	}
-
-	protected togglePayment(payment: RequestedBadge) {
-		this._selectionModel.toggle(payment);
-	}
-
-	protected handleHeaderCheckboxChange() {
-		const previousCbState = this._checkboxState();
-		if (previousCbState === 'indeterminate' || !previousCbState) {
-			this._selectionModel.select(...this._filteredSortedPayments());
-		} else {
-			this._selectionModel.deselect(...this._filteredSortedPayments());
-		}
-	}
-
-	protected handleEmailSortChange() {
-		const sort = this._emailSort();
-		if (sort === 'ASC') {
-			this._emailSort.set('DESC');
-		} else {
-			this._emailSort.set('ASC');
-		}
-	}
-
-	protected handleRequestedOnSortChange() {
-		const sort = this._requestedOnSort();
-		if (sort === 'ASC') {
-			this._requestedOnSort.set('DESC');
-		} else if (sort === 'DESC') {
-			this._requestedOnSort.set(null);
-		} else {
-			this._requestedOnSort.set('ASC');
-		}
-	}
-
-	private readonly _hlmDialogService = inject(HlmDialogService);
-	public openSuccessDialog(recipient = null, text = null) {
-		const dialogRef = this._hlmDialogService.open(SuccessDialogComponent, {
-			context: {
-				recipient: recipient,
-				text: text,
-				variant: 'success',
-			},
-		});
-	}
-
-	public openDangerDialog(request: RequestedBadge) {
-		const dialogRef = this._hlmDialogService.open(DangerDialogComponent, {
-			context: {
-				caption: this.translate.instant('Badge.deleteRequest'),
-				variant: 'danger',
-				text: `${this.translate.instant('Badge.confirmDeleteRequest1')} <span class="tw-font-bold">${
-					request.email
-				}</span>  ${this.translate.instant('Badge.confirmDeleteRequest2')}`,
-				delete: () => {
-					this.badgeRequestApiService
-						.deleteRequest(request.entity_id)
-						.then(() => {
-							this._requestedBadges.set(
-								this._requestedBadges().filter((r) => r.entity_id != request.entity_id),
-							);
-							this.requestCountChange.emit(this._requestedBadges().length);
-							this._selectionModel.clear();
-						})
-						.catch((e) =>
-							this.messageService.reportAndThrowError(
-								'Ausgewählte Ausweisanforderung konnte nicht gelöscht werden',
-								e,
-							),
-						);
-				},
-			},
-		});
-	}
-
-	issueBadges() {
-		if (this._selected().length === 0 || this.isTaskProcessing || this.isTaskPending) return;
+	async issueBadges() {
+		if (this.rowSelectionCount() === 0 || this.isTaskProcessing() || this.isTaskPending()) return;
 
 		const assertions: BadgeInstanceBatchAssertion[] = [];
 		const recipientProfileContextUrl =
-			'https://api.openbadges.education.org/static/extensions/recipientProfile/context.json';
-		let assertion: BadgeInstanceBatchAssertion;
-		this._selected().forEach((b) => {
+			'https://api.openbadges.education/static/extensions/recipientProfile/context.json';
+		Object.keys(this.rowSelection()).forEach((idx) => {
+			const b = this.requestedBadges().at(Number(idx));
 			const name = b.firstName + ' ' + b.lastName;
-
 			const extensions = name
 				? {
 						'extensions:recipientProfile': {
@@ -431,33 +292,32 @@ export class QrCodeDatatableComponent {
 						},
 					}
 				: undefined;
-
-			assertion = {
+			assertions.push({
 				recipient_identifier: b.email,
 				extensions: extensions,
-			};
-			assertions.push(assertion);
+			} satisfies BadgeInstanceBatchAssertion);
 		});
 
-		this.badgeInstanceApiService
-			.createBadgeInstanceBatchedAsync(this.issuerSlug, this.badgeSlug, {
-				issuer: this.issuerSlug,
-				badge_class: this.badgeSlug,
-				create_notification: true,
-				assertions,
-			})
-			.then(
-				(response) => {
-					const taskId = response.body.task_id;
-					this.startTaskPolling(taskId);
-				},
-				(error) => {
-					this.messageService.setMessage(
-						'Fast geschafft! Deine Badges werden gerade vergeben – das kann ein paar Minuten dauern. Schau gleich auf der Badge-Detail-Seite nach, ob alles geklappt hat.',
-						'error',
-					);
+		try {
+			const response = await this.badgeInstanceApiService.createBadgeInstanceBatchedAsync(
+				this.issuerSlug(),
+				this.badgeSlug(),
+				{
+					issuer: this.issuerSlug(),
+					badge_class: this.badgeSlug(),
+					create_notification: true,
+					assertions,
 				},
 			);
+
+			const taskId = response.body.task_id;
+			this.startTaskPolling(taskId);
+		} catch (e) {
+			this.messageService.setMessage(
+				'Fast geschafft! Deine Badges werden gerade vergeben – das kann ein paar Minuten dauern. Schau gleich auf der Badge-Detail-Seite nach, ob alles geklappt hat.',
+				'error',
+			);
+		}
 	}
 
 	private startTaskPolling(taskId: string) {
@@ -466,39 +326,46 @@ export class QrCodeDatatableComponent {
 			this.taskSubscription.unsubscribe();
 		}
 
-		this.taskSubscription = this.taskService.startTaskPolling(taskId, this.issuerSlug, this.badgeSlug).subscribe(
-			(taskResult: TaskResult) => {
-				this.currentTaskStatus = taskResult;
+		this.taskSubscription = this.taskService
+			.startTaskPolling(taskId, this.issuerSlug(), this.badgeSlug())
+			.subscribe({
+				next: (taskResult: TaskResult) => {
+					this.currentTaskStatus.set(taskResult);
 
-				if (taskResult.status === TaskStatus.FAILURE) {
-					this.handleTaskFailure(taskResult);
-				} else if (taskResult.status === TaskStatus.SUCCESS) {
-					this.handleTaskSuccess();
-				}
-			},
-			(error) => {
-				console.error('Error polling batch award task status:', error);
-				this.handleTaskError(error);
-			},
-		);
+					if (taskResult.status === TaskStatus.FAILURE) {
+						this.handleTaskFailure(taskResult);
+					} else if (taskResult.status === TaskStatus.SUCCESS) {
+						this.handleTaskSuccess();
+					}
+				},
+				error: (error) => {
+					console.error('Error polling batch award task status:', error);
+					this.handleTaskError(error);
+				},
+			});
 	}
 
 	private handleTaskSuccess() {
-		const ids = this._selected().map((b) => b.entity_id);
-		if (this._selected().length === 1) {
-			const email = this._selected().map((b) => b.email);
+		if (this.rowSelectionCount() === 1) {
+			const email = Object.keys(this.rowSelection()).map((idx) => {
+				const id = Number(idx);
+				return this.requestedBadges().at(id).email;
+			});
 			this.openSuccessDialog(email);
 		} else {
 			this.openSuccessDialog(
 				null,
-				this._selected().length + ' ' + this.translate.instant('QrCode.badgesAwardedSuccessfully'),
+				this.rowSelectionCount() + ' ' + this.translate.instant('QrCode.badgesAwardedSuccessfully'),
 			);
 		}
-		this.badgeRequestApiService.deleteRequests(this.issuerSlug, this.badgeSlug, ids).then((res) => {
-			this._requestedBadges.set(this._requestedBadges().filter((r) => !ids.includes(r.entity_id)));
-			this.requestCountChange.emit(this._requestedBadges().length);
-			this.qrBadgeAward.emit(this._selected().length);
-			this._selectionModel.clear();
+
+		const ids = Object.keys(this.rowSelection()).map((idx) => {
+			const id = Number(idx);
+			return this.requestedBadges().at(id).entity_id;
+		});
+		this.badgeRequestApiService.deleteRequests(this.issuerSlug(), this.badgeSlug(), ids).then((res) => {
+			this.qrBadgeAward.emit(this.rowSelectionCount());
+			this.requestedBadges.update((current) => current.filter((r) => !ids.includes(r.entity_id)));
 		});
 	}
 
@@ -511,28 +378,40 @@ export class QrCodeDatatableComponent {
 		this.messageService.reportHandledError(this.translate.instant('Issuer.failedBatchMonitoring'), error);
 	}
 
-	get isTaskPending(): boolean {
-		return this.currentTaskStatus?.status === TaskStatus.PENDING;
+	public openSuccessDialog(recipient = null, text = null) {
+		const dialogRef = this._hlmDialogService.open(SuccessDialogComponent, {
+			context: {
+				recipient: recipient,
+				text: text,
+				variant: 'success',
+			},
+		});
 	}
 
-	get isTaskProcessing(): boolean {
-		return (
-			this.currentTaskStatus?.status === TaskStatus.STARTED || this.currentTaskStatus?.status === TaskStatus.RETRY
-		);
-	}
-
-	get isTaskCompleted(): boolean {
-		return (
-			this.currentTaskStatus?.status === TaskStatus.SUCCESS ||
-			this.currentTaskStatus?.status === TaskStatus.FAILURE
-		);
-	}
-
-	get isTaskSuccessful(): boolean {
-		return this.currentTaskStatus?.status === TaskStatus.SUCCESS;
-	}
-
-	get isTaskFailed(): boolean {
-		return this.currentTaskStatus?.status === TaskStatus.FAILURE;
+	public openDeleteDialog(request: RequestedBadge) {
+		const dialogRef = this._hlmDialogService.open(DangerDialogComponent, {
+			context: {
+				caption: this.translate.instant('Badge.deleteRequest'),
+				variant: 'danger',
+				text: `${this.translate.instant('Badge.confirmDeleteRequest1')} <span class="tw-font-bold">${
+					request.email
+				}</span>  ${this.translate.instant('Badge.confirmDeleteRequest2')}`,
+				delete: () => {
+					this.badgeRequestApiService
+						.deleteRequest(request.entity_id)
+						.then(() => {
+							this.requestedBadges.update((current) =>
+								current.filter((r) => r.entity_id != request.entity_id),
+							);
+						})
+						.catch((e) =>
+							this.messageService.reportAndThrowError(
+								'Ausgewählte Ausweisanforderung konnte nicht gelöscht werden',
+								e,
+							),
+						);
+				},
+			},
+		});
 	}
 }

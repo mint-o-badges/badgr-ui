@@ -14,16 +14,12 @@ import { ApiLearningPath } from '../../../common/model/learningpath-api.model';
 import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
 import { DangerDialogComponentTemplate } from '../../dialogs/oeb-dialogs/danger-dialog-template.component';
 import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
-import { BadgeRequestApiService } from '../../../issuer/services/badgerequest-api.service';
 import { InfoDialogComponent } from '../../dialogs/oeb-dialogs/info-dialog.component';
 import { QrCodeApiService } from '../../../issuer/services/qrcode-api.service';
 import { ApiQRCode } from '../../../issuer/models/qrcode-api.model';
 import { SessionService } from '../../services/session.service';
 import { BgImageStatusPlaceholderDirective } from '../../directives/bg-image-status-placeholder.directive';
-import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
 import { NgIf, NgFor } from '@angular/common';
-import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
-import { HlmADirective } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-a.directive';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { OebDropdownComponent } from '../../../components/oeb-dropdown.component';
 import { SvgIconComponent } from '../svg-icon.component';
@@ -31,7 +27,6 @@ import { OebTabsComponent } from '../../../components/oeb-tabs.component';
 import { BgAwaitPromises } from '../../directives/bg-await-promises';
 import { DatatableComponent } from '../../../components/datatable-badges.component';
 import { FormsModule } from '@angular/forms';
-import { HlmInputDirective } from '../../../components/spartan/ui-input-helm/src/lib/hlm-input.directive';
 import { BgBadgecard } from '../bg-badgecard';
 import { LearningPathDatatableComponent } from '../../../components/datatable-learningpaths.component';
 import { BgLearningPathCard } from '../bg-learningpathcard';
@@ -42,6 +37,8 @@ import {
 	PublicApiNetwork,
 } from '../../../public/models/public-api.model';
 import { Network } from '../../../issuer/models/network.model';
+import { HlmInput } from '@spartan-ng/helm/input';
+import { HlmH1, HlmP } from '@spartan-ng/helm/typography';
 
 @Component({
 	selector: 'oeb-issuer-detail',
@@ -49,10 +46,9 @@ import { Network } from '../../../issuer/models/network.model';
 	styleUrl: './oeb-issuer-detail.component.scss',
 	imports: [
 		BgImageStatusPlaceholderDirective,
-		HlmH1Directive,
+		HlmH1,
 		NgIf,
-		HlmPDirective,
-		HlmADirective,
+		HlmP,
 		OebButtonComponent,
 		RouterLink,
 		OebDropdownComponent,
@@ -61,7 +57,7 @@ import { Network } from '../../../issuer/models/network.model';
 		BgAwaitPromises,
 		DatatableComponent,
 		FormsModule,
-		HlmInputDirective,
+		HlmInput,
 		NgFor,
 		BgBadgecard,
 		LearningPathDatatableComponent,
@@ -169,12 +165,8 @@ export class OebIssuerDetailComponent implements OnInit {
 		this.updateResults();
 	}
 
-	get lps() {
-		if (this.public) {
-			return this.learningPaths as PublicApiLearningPath[];
-		} else {
-			return this.learningPaths as ApiLearningPath[];
-		}
+	get apiLearningPaths() {
+		return this.public ? null : (this.learningPaths as ApiLearningPath[]);
 	}
 
 	private async updateResults() {

@@ -1,12 +1,12 @@
 import { Component, Input, inject } from '@angular/core';
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
-import { ActivatedRoute, Route, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BadgeClassManager } from '../../services/badgeclass-manager.service';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
 import { SessionService } from '../../../common/services/session.service';
 import { BadgeClass } from '../../models/badgeclass.model';
 import { typedFormGroup } from '../../../common/util/typed-forms';
-import { FormControl, ValidationErrors, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ValidationErrors, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DateValidator } from '../../../common/validators/date.validator';
 import { QrCodeApiService } from '../../services/qrcode-api.service';
 import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
@@ -14,7 +14,6 @@ import { SuccessDialogComponent } from '../../../common/dialogs/oeb-dialogs/succ
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { DatePipe } from '@angular/common';
 import { Location } from '@angular/common';
-import { ApiQRCode } from '../../models/qrcode-api.model';
 import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 import { BgImageStatusPlaceholderDirective } from '../../../common/directives/bg-image-status-placeholder.directive';
 import { OebInputComponent } from '../../../components/input.component';

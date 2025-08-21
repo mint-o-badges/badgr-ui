@@ -18,15 +18,14 @@ import { FormControl, FormsModule } from '@angular/forms';
 import { applySorting, sortUnique } from '../../util/sorting';
 import { FormMessageComponent } from '../../../common/components/form-message.component';
 import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
-import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
-
 import { CountUpModule } from 'ngx-countup';
-import { HlmInputDirective } from '../../../components/spartan/ui-input-helm/src/lib/hlm-input.directive';
 import { NgIcon } from '@ng-icons/core';
-import { HlmIconDirective } from '../../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
 import { OebGlobalSortSelectComponent } from '../../../components/oeb-global-sort-select.component';
 import { BgLearningPathCard } from '../../../common/components/bg-learningpathcard';
 import { PaginationAdvancedComponent } from '../../../components/oeb-numbered-pagination';
+import { HlmIcon } from '@spartan-ng/helm/icon';
+import { HlmInput } from '@spartan-ng/helm/input';
+import { HlmH1 } from '@spartan-ng/helm/typography';
 
 @Component({
 	selector: 'app-learningpaths-catalog',
@@ -36,12 +35,12 @@ import { PaginationAdvancedComponent } from '../../../components/oeb-numbered-pa
 	imports: [
 		FormMessageComponent,
 		BgAwaitPromises,
-		HlmH1Directive,
+		HlmH1,
 		CountUpModule,
 		FormsModule,
-		HlmInputDirective,
+		HlmInput,
 		NgIcon,
-		HlmIconDirective,
+		HlmIcon,
 		OebGlobalSortSelectComponent,
 		BgLearningPathCard,
 		PaginationAdvancedComponent,

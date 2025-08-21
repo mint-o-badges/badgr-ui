@@ -11,7 +11,6 @@ import {
 } from '@angular/core';
 import { NgStyle } from '@angular/common';
 import { Router, RouterLinkActive, RouterLink, RouterOutlet } from '@angular/router';
-
 import { MessageService } from './common/services/message.service';
 import { SessionService } from './common/services/session.service';
 import { CommonDialogsService } from './common/services/common-dialogs.service';
@@ -19,16 +18,13 @@ import { AppConfigService } from './common/app-config.service';
 import { ShareSocialDialog } from './common/dialogs/share-social-dialog/share-social-dialog.component';
 import { ConfirmDialog } from './common/dialogs/confirm-dialog.component';
 import { NounprojectDialog } from './common/dialogs/nounproject-dialog/nounproject-dialog.component';
-
 import '../thirdparty/scopedQuerySelectorShim';
 import { EventsService } from './common/services/events.service';
 import { OAuthManager } from './common/services/oauth-manager.service';
 import { EmbedService } from './common/services/embed.service';
 import { InitialLoadingIndicatorService } from './common/services/initial-loading-indicator.service';
-
 import { ApiExternalToolLaunchpoint } from '../app/externaltools/models/externaltools-api.model';
 import { ExternalToolsManager } from '../app/externaltools/services/externaltools-manager.service';
-
 import { UserProfileManager } from './common/services/user-profile-manager.service';
 import { NewTermsDialog } from './common/dialogs/new-terms-dialog.component';
 import { QueryParametersService } from './common/services/query-parameters.service';
@@ -49,12 +45,12 @@ import { SourceListenerDirective } from './mozz-transition/directives/source-lis
 import { OebDropdownComponent } from './components/oeb-dropdown.component';
 import { OebButtonComponent } from './components/oeb-button.component';
 import { NgIcon } from '@ng-icons/core';
-import { HlmIconDirective } from './components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
 import { BgPopupMenuTriggerDirective, BgPopupMenu } from './common/components/bg-popup-menu.component';
 import { SvgIconComponent } from './common/components/svg-icon.component';
 import { MenuItemDirective } from './common/directives/bg-menuitem.directive';
 import { IconsProvider } from './icons-provider';
 import { CmsMenuItemsPipe } from './common/pipes/cmsMenuItems.pipe';
+import { HlmIcon } from '@spartan-ng/helm/icon';
 
 // Shim in support for the :scope attribute
 // See https://github.com/lazd/scopedQuerySelectorShim and
@@ -76,7 +72,7 @@ import { CmsMenuItemsPipe } from './common/pipes/cmsMenuItems.pipe';
 		OebButtonComponent,
 		NgStyle,
 		NgIcon,
-		HlmIconDirective,
+		HlmIcon,
 		BgPopupMenuTriggerDirective,
 		SvgIconComponent,
 		BgPopupMenu,
@@ -242,7 +238,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 		private cmsManager: CmsManager,
 	) {
 		// Initialize App language
-		this.languageService.setInitialAppLangauge();
+		this.languageService.setInitialAppLanguage();
 		this.lngObserver.subscribe((lng) => {
 			if (lng != null) {
 				this.selectedLng = lng;
