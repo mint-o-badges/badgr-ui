@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core';
-import { HlmPDirective } from '../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
 import { RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { Network } from '../../issuer/models/network.model';
+import { HlmP } from '@spartan-ng/helm/typography';
 
 @Component({
 	selector: 'oeb-networkcard',
@@ -33,7 +33,7 @@ import { Network } from '../../issuer/models/network.model';
 			</div>
 		</div>
 	`,
-	imports: [HlmPDirective, RouterLink, TranslatePipe],
+	imports: [HlmP, RouterLink, TranslatePipe],
 })
 export class OebNetworkCard {
 	readonly badgeLoadingImageUrl = '../../../breakdown/static/images/badge-loading.svg';

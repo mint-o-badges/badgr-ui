@@ -9,6 +9,7 @@ export const tabsVariants = cva('', {
 		variant: {
 			default: 'data-[state=inactive]:tw-border-white',
 			lightpurple: 'data-[state=inactive]:tw-border-lightpurple',
+			black: 'data-[state=inactive]:tw-border-[#CCD7FF] data-[state=active]:tw-border-oebblack',
 		},
 	},
 	defaultVariants: {

@@ -24,7 +24,7 @@ import { NgStyle } from '@angular/common';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { FormFieldSelectOption } from '../../../components/select.component';
 import { NetworkApiService } from '../../../issuer/services/network-api.service';
-import { HlmH1Directive } from '@spartan-ng/ui-typography-helm';
+import { HlmH1 } from '@spartan-ng/helm/typography';
 import { NetworkPartnersComponent } from '../network-partners/network-partners.component';
 import { AddInstitutionComponent } from '../add-institution/add-institution.component';
 import { BgBreadcrumbsComponent } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
@@ -40,7 +40,7 @@ import { BgBreadcrumbsComponent } from '../../../common/components/bg-breadcrumb
 		NgIcon,
 		FormsModule,
 		NgStyle,
-		HlmH1Directive,
+		HlmH1,
 		NetworkPartnersComponent,
 		AddInstitutionComponent,
 		BgBreadcrumbsComponent,

@@ -34,8 +34,8 @@ import { NgStyle } from '@angular/common';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { FormFieldSelectOption } from '../../../components/select.component';
 import { NetworkApiService } from '../../../issuer/services/network-api.service';
-import { HlmH1Directive } from '@spartan-ng/ui-typography-helm';
 import { NetworkPartnersComponent } from '../network-partners/network-partners.component';
+import { HlmH1 } from '@spartan-ng/helm/typography';
 
 @Component({
 	selector: 'add-institution',
@@ -48,7 +48,7 @@ import { NetworkPartnersComponent } from '../network-partners/network-partners.c
 		NgIcon,
 		FormsModule,
 		NgStyle,
-		HlmH1Directive,
+		HlmH1,
 		NetworkPartnersComponent,
 	],
 })

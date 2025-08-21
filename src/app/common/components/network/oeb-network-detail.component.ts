@@ -8,28 +8,17 @@ import { IssuerManager } from '../../../issuer/services/issuer-manager.service';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { SessionService } from '../../services/session.service';
 import { BgImageStatusPlaceholderDirective } from '../../directives/bg-image-status-placeholder.directive';
-import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
 import { NgIf } from '@angular/common';
-import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
-import { HlmADirective } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-a.directive';
 import { Network } from '../../../issuer/models/network.model';
 import { PublicApiIssuer, PublicApiNetwork } from '../../../public/models/public-api.model';
 import { Issuer } from '../../../issuer/models/issuer.model';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
+import { HlmP, HlmH1 } from '@spartan-ng/helm/typography';
 
 @Component({
 	selector: 'oeb-network-detail',
 	templateUrl: './oeb-network-detail.component.html',
-	imports: [
-		BgImageStatusPlaceholderDirective,
-		HlmH1Directive,
-		NgIf,
-		HlmPDirective,
-		HlmADirective,
-		OebButtonComponent,
-		TranslatePipe,
-		RouterLink,
-	],
+	imports: [BgImageStatusPlaceholderDirective, HlmH1, NgIf, HlmP, OebButtonComponent, TranslatePipe, RouterLink],
 })
 export class OebNetworkDetailComponent {
 	@Input() issuers: Issuer[] | PublicApiIssuer[];
