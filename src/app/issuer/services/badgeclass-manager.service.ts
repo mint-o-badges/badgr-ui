@@ -86,6 +86,10 @@ export class BadgeClassManager extends BaseHttpApiService {
 		});
 	}
 
+	createBadgeImage(issuerSlug: string, image: string, category: string, useIssuerImage: boolean) {
+		return this.badgeClassApi.createBadgeImage(issuerSlug, image, category, useIssuerImage);
+	}
+
 	badgeByIssuerUrlAndSlug(issuerId: IssuerUrl, badgeSlug: BadgeClassSlug): Promise<BadgeClass> {
 		return this.allBadges$
 			.pipe(first())
