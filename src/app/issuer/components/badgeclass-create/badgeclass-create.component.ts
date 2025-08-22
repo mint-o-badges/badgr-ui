@@ -67,7 +67,7 @@ export class BadgeClassCreateComponent extends BaseAuthenticatedRoutableComponen
 		});
 		breadcrumbPromises.push(this.issuerLoaded);
 
-		const state = this.router.getCurrentNavigation().extras.state;
+		const state = this.router.currentNavigation().extras.state;
 		if (state && state.copybadgeid) {
 			breadcrumbPromises.push(
 				this.badgeClassService.issuerBadgeById(state.copybadgeid).then((badge) => {
