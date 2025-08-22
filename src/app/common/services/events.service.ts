@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { ApiExternalToolLaunchInfo } from '../../externaltools/models/externaltools-api.model';
 
 /**
  * Service for broadcasting and subscribing to events between modules in Badgr to avoid the need for tight coupling
@@ -18,7 +17,6 @@ export class EventsService {
 	 */
 	documentClicked = new Subject<MouseEvent>();
 
-	externalToolLaunch = new Subject<ApiExternalToolLaunchInfo>();
 
 	constructor() {}
 }

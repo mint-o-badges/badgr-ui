@@ -10,7 +10,6 @@ import { DomSanitizer, Title } from '@angular/platform-browser';
 import { FormFieldText } from '../../../common/components/formfield-text';
 import { QueryParametersService } from '../../../common/services/query-parameters.service';
 import { OAuthManager } from '../../../common/services/oauth-manager.service';
-import { ExternalToolsManager } from '../../../externaltools/services/externaltools-manager.service';
 import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { AppConfigService } from '../../../common/app-config.service';
@@ -78,7 +77,6 @@ export class LoginComponent extends BaseRoutableComponent implements OnInit, Aft
 		private configService: AppConfigService,
 		private queryParams: QueryParametersService,
 		public oAuthManager: OAuthManager,
-		private externalToolsManager: ExternalToolsManager,
 		private profileManager: UserProfileManager,
 		private userProfileApiService: UserProfileApiService,
 		private sanitizer: DomSanitizer,
@@ -123,8 +121,6 @@ export class LoginComponent extends BaseRoutableComponent implements OnInit, Aft
 							if (this.oAuthManager.isAuthorizationInProgress) {
 								this.router.navigate(['/auth/oauth2/authorize']);
 							} else {
-								this.externalToolsManager.externaltoolsList.updateIfLoaded();
-
 								this.userProfileApiService
 									.getRedirectUrl()
 									.then((response: RedirectHttpResponse) => {

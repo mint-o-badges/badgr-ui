@@ -12,8 +12,6 @@ import { Title } from '@angular/platform-browser';
 import { preloadImageURL } from '../../../common/util/file-util';
 import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
 import { UserProfileEmail } from '../../../common/model/user-profile.model';
-import { ApiExternalToolLaunchpoint } from '../../../externaltools/models/externaltools-api.model';
-import { ExternalToolsManager } from '../../../externaltools/services/externaltools-manager.service';
 import { AppConfigService } from '../../../common/app-config.service';
 import { CommonDialogsService } from '../../../common/services/common-dialogs.service';
 import { LinkEntry, BgBreadcrumbsComponent } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
@@ -42,7 +40,6 @@ export class IssuerDetailComponent extends BaseAuthenticatedRoutableComponent im
 	issuerSlug: string;
 	badges: BadgeClass[];
 	learningPaths: ApiLearningPath[];
-	launchpoints: ApiExternalToolLaunchpoint[];
 
 	profileEmails: UserProfileEmail[] = [];
 
@@ -68,7 +65,6 @@ export class IssuerDetailComponent extends BaseAuthenticatedRoutableComponent im
 		protected learningPathsService: LearningPathApiService,
 		protected profileManager: UserProfileManager,
 		private configService: AppConfigService,
-		private externalToolsManager: ExternalToolsManager,
 		private dialogService: CommonDialogsService,
 		private translate: TranslateService,
 	) {
@@ -77,10 +73,6 @@ export class IssuerDetailComponent extends BaseAuthenticatedRoutableComponent im
 		title.setTitle(`Issuer Detail - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 
 		this.issuerSlug = this.route.snapshot.params['issuerSlug'];
-
-		this.externalToolsManager.getToolLaunchpoints('issuer_external_launch').then((launchpoints) => {
-			this.launchpoints = launchpoints.filter((lp) => Boolean(lp));
-		});
 
 		this.menuitems = [
 			{
