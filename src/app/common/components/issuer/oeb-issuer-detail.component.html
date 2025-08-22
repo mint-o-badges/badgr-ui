@@ -166,7 +166,6 @@
 			<ng-template [bgAwaitPromises]="requestsLoaded">
 				<badges-datatable
 					*ngIf="!public"
-					[caption]=""
 					[badges]="badgeResults"
 					(directBadgeAward)="routeToBadgeAward($event, issuer)"
 					(qrCodeAward)="routeToQRCodeAward($event, issuer)"
@@ -221,10 +220,10 @@
 					</h2>
 					<learningpaths-datatable
 						*ngIf="!public"
-						[learningPaths]="learningPaths"
+						[learningPaths]="apiLearningPaths"
 						[issuer]="isFullIssuer(issuer) ? issuer : null"
-						(actionElement)="deleteLearningPath($event, issuer)"
-						(redirectToLearningPathDetail)="redirectToLearningPathDetail($event, issuer)"
+						(onDelete)="deleteLearningPath($event, issuer)"
+						(onNavigateToDetail)="redirectToLearningPathDetail($event, issuer)"
 					></learningpaths-datatable>
 
 					<ng-container *ngIf="public">

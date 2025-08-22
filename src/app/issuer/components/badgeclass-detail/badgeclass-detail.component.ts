@@ -60,7 +60,7 @@ import { HlmH2 } from '@spartan-ng/helm/typography';
 			<div #batchAwards>
 				<issuer-detail-datatable
 					[recipientCount]="recipientCount"
-					[_recipients]="instanceResults"
+					[recipients]="instanceResults"
 					(actionElement)="revokeInstance($event)"
 					(downloadCertificate)="downloadCertificate($event['instance'], $event['badgeIndex'])"
 					[downloadStates]="downloadStates"
