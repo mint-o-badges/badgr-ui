@@ -62,8 +62,11 @@ export class NetworkApiService extends BaseHttpApiService {
 		return this.get<ApiNetworkInvitation>(`/v1/issuer/networks/invites/${inviteSlug}`).then((r) => r.body);
 	}
 
-	getPendingNetworkInvites(networkSlug: string) {
-		return this.get<ApiNetworkInvitation[]>(`/v1/issuer/networks/${networkSlug}/invites`).then((r) => r.body);
+	getNetworkInvites(networkSlug: string, status?: 'pending' | 'approved') {
+		const statusParam = status ? `?status=${status}` : '';
+		return this.get<ApiNetworkInvitation[]>(`/v1/issuer/networks/${networkSlug}/invites${statusParam}`).then(
+			(r) => r.body,
+		);
 	}
 
 	confirmInvitation(networkSlug: string, inviteSlug: string) {

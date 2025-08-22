@@ -5,9 +5,17 @@
 			<oeb-button (click)="openDialog()" [text]="'Network.inviteInstitutions' | translate"> </oeb-button>
 		</div>
 	} @else {
-		<network-partners-datatable [network]="network" [partners]="issuers"></network-partners-datatable>
+		<network-partners-datatable
+			[network]="network"
+			[partners]="issuers"
+			[approvedInvites]="approvedInvites"
+		></network-partners-datatable>
 	}
-	@if (invites.length) {
-		<network-invites-datatable [network]="network" [invites]="invites"></network-invites-datatable>
+	@if (pendingInvites.length) {
+		<network-invites-datatable [network]="network" [invites]="pendingInvites"></network-invites-datatable>
 	}
 </ng-container>
+
+<ng-template #headerTemplate>
+	<h1 class="tw-font-bold tw-text-purple tw-text-2xl tw-mb-4">{{ 'Network.inviteInstitutions' | translate }}</h1>
+</ng-template>

@@ -102,7 +102,7 @@ export class NetworkDashboardComponent extends BaseAuthenticatedRoutableComponen
 
 		this.networkSlug = this.route.snapshot.params['networkSlug'];
 
-		this.networkApiService.getPendingNetworkInvites(this.networkSlug).then((invites) => {
+		this.networkApiService.getNetworkInvites(this.networkSlug, 'pending').then((invites) => {
 			this.pendingInvites = invites;
 		});
 

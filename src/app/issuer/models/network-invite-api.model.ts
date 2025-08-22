@@ -7,6 +7,7 @@ export interface ApiNetworkInvitation {
 	entity_id: string;
 	issuer: ApiIssuer;
 	invitedOn: string;
+	acceptedOn: string;
 	status: string;
 	revoked: boolean;
 	network: ApiNetwork;

@@ -406,7 +406,8 @@
 			"editor": "Editor",
 			"staff": "Member"
 		},
-		"confirmNetworkInvitation": "Confirm the <span class='tw-font-bold'>network invitation from {{networkName}}</span> for your institution <span class='tw-italic'>{{issuerName}}</span> by clicking the button:"
+		"confirmNetworkInvitation": "Confirm the <span class='tw-font-bold'>network invitation from {{networkName}}</span> for your institution <span class='tw-italic'>{{issuerName}}</span> by clicking the button:",
+		"partnerSince": "Partner since"
 	},
 	"Badge": {
 		"groupBy": "Group by",

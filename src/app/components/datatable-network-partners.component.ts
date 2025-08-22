@@ -22,6 +22,7 @@ import { HlmIconModule } from '@spartan-ng/helm/icon';
 import { Issuer } from '../issuer/models/issuer.model';
 import { NetworkApiService } from '../issuer/services/network-api.service';
 import { Network } from '../issuer/models/network.model';
+import { ApiNetworkInvitation } from '../issuer/models/network-invite-api.model';
 
 @Component({
 	selector: 'network-partners-datatable',
@@ -122,6 +123,7 @@ import { Network } from '../issuer/models/network.model';
 export class NetworkPartnersDatatableComponent {
 	partners = input.required<Issuer[]>();
 	network = input.required<Network>();
+	approvedInvites = input.required<ApiNetworkInvitation[]>();
 	actionElement = output<Issuer>();
 
 	private _partners = signal<Issuer[]>([]);
@@ -145,9 +147,9 @@ export class NetworkPartnersDatatableComponent {
 			sortDescFirst: false,
 		},
 		{
-			id: 'RecBadgeDetail.issuedOn',
+			id: 'Network.partnerSince',
 			header: () => this.translateHeaderIDCellTemplate(),
-			accessorFn: (row) => formatDate(row.createdAt, 'dd.MM.yyyy', 'de-DE'),
+			accessorFn: (row) => this.acceptedOn(row),
 			cell: (info) => info.getValue(),
 		},
 		{
@@ -182,5 +184,10 @@ export class NetworkPartnersDatatableComponent {
 				this._partners.update((current) => current.filter((partner) => partner.slug !== issuer.slug));
 			}
 		});
+	}
+
+	acceptedOn(issuer: Issuer) {
+		const inv = this.approvedInvites().find((i) => i.issuer.slug == issuer.slug);
+		if (inv) return formatDate(inv.acceptedOn, 'dd.MM.yyyy', 'de-DE');
 	}
 }

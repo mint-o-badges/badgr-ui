@@ -410,7 +410,8 @@
 			"editor": "Editor:in",
 			"staff": "Mitarbeiter:in"
 		},
-		"confirmNetworkInvitation": "Bestätige die <span class='tw-font-bold'>Netzwerk-Einladung von {{networkName}}</span> für deine Institution <span class='tw-italic'>{{issuerName}}</span> mit Klick auf den Button:"
+		"confirmNetworkInvitation": "Bestätige die <span class='tw-font-bold'>Netzwerk-Einladung von {{networkName}}</span> für deine Institution <span class='tw-italic'>{{issuerName}}</span> mit Klick auf den Button:",
+		"partnerSince": "Partner:in seit"
 	},
 	"Badge": {
 		"groupBy": "Gruppieren nach",

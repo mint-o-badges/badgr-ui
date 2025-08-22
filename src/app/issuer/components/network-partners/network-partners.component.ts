@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, Input, TemplateRef, ViewChild } from '@angular/core';
 import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 import { TranslatePipe } from '@ngx-translate/core';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
@@ -10,7 +10,12 @@ import { NetworkInvitesDatatableComponent } from '../../../components/datatable-
 import { Issuer } from '../../../issuer/models/issuer.model';
 import { Network } from '../../../issuer/models/network.model';
 import { NetworkApiService } from '../../../issuer/services/network-api.service';
-import { ApiNetworkInvitation } from '~/issuer/models/network-invite-api.model';
+import { ApiNetworkInvitation } from '../../../issuer/models/network-invite-api.model';
+// import { AddInstitutionComponent } from '../add-institution/add-institution.component';
+import { NgModel } from '@angular/forms';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { PublicApiService } from '../../../public/services/public-api.service';
+import { MessageService } from '../../../common/services/message.service';
 
 @Component({
 	selector: 'network-partners',
@@ -21,50 +26,82 @@ import { ApiNetworkInvitation } from '~/issuer/models/network-invite-api.model';
 		OebButtonComponent,
 		NetworkPartnersDatatableComponent,
 		NetworkInvitesDatatableComponent,
+		// AddInstitutionComponent,
 	],
 })
 export class NetworkPartnersComponent {
 	@Input() partnersLoaded: Promise<unknown>;
 	@Input() issuers: Issuer[];
 	@Input() network: Network;
-	@Input() invites: ApiNetworkInvitation[];
+	@Input() addInstitutionsTemplate: TemplateRef<void>;
 
 	pendingInvites: ApiNetworkInvitation[];
+	approvedInvites: ApiNetworkInvitation[];
 
-	constructor(private networkApiService: NetworkApiService) {
-		// this.networkApiService.getPendingNetworkInvites(this.network.slug).then((invites) => {
-		// 	console.log('invites');
-		// 	this.pendingInvites = invites;
-		// });
+	issuerSearchQuery = '';
+	selectedIssuers: Issuer[] = [];
+
+	issuersShowResults = false;
+	issuersLoading = false;
+	issuerSearchLoaded = false;
+	issuerSearchResults = [];
+
+	@ViewChild('headerTemplate')
+	headerTemplate: TemplateRef<void>;
+
+	@ViewChild('issuerSearchInputPartnerModel') issuerSearchInputPartnerModel: NgModel;
+
+	constructor(
+		private networkApiService: NetworkApiService,
+		private publicApiService: PublicApiService,
+		private messageService: MessageService,
+	) {}
+
+	ngOnInit() {
+		this.networkApiService.getNetworkInvites(this.network.slug).then((invites) => {
+			this.approvedInvites = invites.filter((i) => i.acceptedOn);
+			console.log('approved', this.approvedInvites);
+			this.pendingInvites = invites.filter((i) => i.status.toLowerCase() == 'pending');
+		});
 	}
 
-	dialogRef: BrnDialogRef<any> = null;
+	dialogRefPartner: BrnDialogRef<any> = null;
 
 	private readonly _hlmDialogService = inject(HlmDialogService);
 
 	public openDialog() {
 		const dialogRef = this._hlmDialogService.open(DialogComponent, {
 			context: {
-				// headerTemplate: this.headerTemplate,
-				// content: this.addInstitutionsTemplate,
+				headerTemplate: this.headerTemplate,
+				content: this.addInstitutionsTemplate,
 				variant: 'default',
 				footer: false,
 			},
 		});
-		this.dialogRef = dialogRef;
+		this.dialogRefPartner = dialogRef;
 
-		// setTimeout(() => {
-		// 	if (this.issuerSearchInputModel) {
-		// 		this.issuerSearchInputModel.valueChanges
-		// 			.pipe(debounceTime(500), distinctUntilChanged())
-		// 			.subscribe(() => {
-		// 				this.issuerSearchChange();
-		// 			});
-		// 	}
-		// });
+		setTimeout(() => {
+			if (this.issuerSearchInputPartnerModel) {
+				this.issuerSearchInputPartnerModel.valueChanges
+					.pipe(debounceTime(500), distinctUntilChanged())
+					.subscribe(() => {
+						this.issuerSearchChange();
+					});
+			}
+		});
 	}
 
-	ngOnInit() {
-		console.log('invites', this.invites);
+	async issuerSearchChange() {
+		if (this.issuerSearchQuery.length >= 3) {
+			this.issuersLoading = true;
+			try {
+				this.issuerSearchResults = [];
+				this.issuerSearchResults = await this.publicApiService.searchIssuers(this.issuerSearchQuery);
+			} catch (error) {
+				this.messageService.reportAndThrowError(`Failed to issuers: ${error.message}`, error);
+			}
+			this.issuersLoading = false;
+			this.issuerSearchLoaded = true;
+		}
 	}
 }
