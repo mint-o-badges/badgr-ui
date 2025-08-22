@@ -111,12 +111,13 @@
 			&.future-sub {
 				color: var(--color-black);
 				circle {
-					stroke: var(--color-yellow);
+					stroke: var(--color-yellow-900);
 					fill: var(--color-yellow);
 				}
 			}
 			&.future-sub {
 				circle {
+					stroke: var(--color-purple);
 					fill: var(--color-yellow-200);
 				}
 			}
