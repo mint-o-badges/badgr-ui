@@ -869,11 +869,12 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 					this.learningPathForm.controls.badge_customImage.value,
 				);
 			}
+
 			this.learningPathForm.markTreeDirty();
 			const formState = this.learningPathForm.value;
 
 			this.existingLpBadge.imageFrame = imageFrame;
-			this.existingLpBadge.image = this.learningPathForm.controls.badge_image.value;
+			this.existingLpBadge.image = !imageFrame ? this.learningPathForm.controls.badge_image.value : null;
 			(this.existingLpBadge.name = this.learningPathForm.controls.name.value),
 				(this.existingLpBadge.description = this.learningPathForm.controls.description.value),
 				(this.existingLpBadge.tags = Array.from(this.lpTags)),
@@ -942,9 +943,9 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 							this.learningPathForm.controls.badge_customImage.value,
 						);
 					}
-
 					let participationBadgeData = {
-						image: this.learningPathForm.controls.badge_image.value,
+						// if not custom, generate image on the server
+						image: !imageFrame ? this.learningPathForm.controls.badge_image.value : null,
 						imageFrame: imageFrame,
 						name: this.learningPathForm.controls.name.value,
 						description: this.learningPathForm.controls.description.value,

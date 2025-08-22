@@ -165,6 +165,11 @@ export class OebIssuerDetailComponent implements OnInit {
 		this.updateResults();
 	}
 
+	/**
+	 * Property used for rendering <learningpaths-datatable /> which is only
+	 * available if we are working with the non-public ApiLearningPaths
+	 * of an issuer. Therefore this remains null when public.
+	 */
 	get apiLearningPaths() {
 		return this.public ? null : (this.learningPaths as ApiLearningPath[]);
 	}

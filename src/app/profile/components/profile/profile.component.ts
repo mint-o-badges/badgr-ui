@@ -32,13 +32,13 @@ import {
 	FlexRenderDirective,
 	getCoreRowModel,
 	getSortedRowModel,
+	Header,
 	SortingState,
 } from '@tanstack/angular-table';
 import { NgIcon } from '@ng-icons/core';
 import { TitleCasePipe } from '@angular/common';
 import { OebDropdownComponent } from '~/components/oeb-dropdown.component';
 import { HlmIcon } from '@spartan-ng/helm/icon';
-import { toObservable } from '@angular/core/rxjs-interop';
 
 @Component({
 	selector: 'userProfile',
@@ -67,7 +67,6 @@ import { toObservable } from '@angular/core/rxjs-interop';
 })
 export class ProfileComponent extends BaseAuthenticatedRoutableComponent implements OnInit, OnDestroy {
 	emails = signal<UserProfileEmail[]>([]);
-	emails$ = toObservable(this.emails);
 	menuItems = computed(() => this.emails().map((x) => this.menuItemsForEmail(x)));
 	emailForm = typedFormGroup().addControl('email', '', [Validators.required, EmailValidator.validEmail]);
 	profile: UserProfile;
@@ -152,12 +151,14 @@ export class ProfileComponent extends BaseAuthenticatedRoutableComponent impleme
 		);
 
 		this.emailsLoaded = this.profileManager.userProfilePromise.then((p) => p.emails.loadedPromise);
-
-		this.emails$.subscribe((x) => console.log(x));
 	}
 
 	ngOnDestroy(): void {
 		if (this.emailsSubscription) this.emailsSubscription.unsubscribe();
+	}
+
+	getOrderForHeaderCell(headerCell: Header<UserProfileEmail, unknown>): 'asc' | 'desc' {
+		return headerCell.column.getNextSortingOrder() === 'asc' ? 'desc' : 'asc';
 	}
 
 	submitEmailForm() {

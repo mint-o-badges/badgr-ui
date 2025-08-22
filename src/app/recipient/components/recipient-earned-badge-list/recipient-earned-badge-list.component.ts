@@ -38,7 +38,7 @@ import { BreakpointService } from '../../../common/services/breakpoint.service';
 import { FormMessageComponent } from '../../../common/components/form-message.component';
 import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
-import { OebTabsComponent } from '../../../components/oeb-tabs.component';
+import { OebTabsComponent } from '../../../components/oeb-backpack-tabs.component';
 import { OebSortSelectComponent } from '../../../components/oeb-sort-select.component';
 import { OebCheckboxComponent } from '../../../components/oeb-checkbox.component';
 import { BgBadgecard } from '../../../common/components/bg-badgecard';

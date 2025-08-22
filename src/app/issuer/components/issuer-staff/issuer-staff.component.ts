@@ -40,9 +40,9 @@ import {
 	getCoreRowModel,
 	getSortedRowModel,
 	FlexRenderDirective,
+	Header,
 } from '@tanstack/angular-table';
 import { TitleCasePipe } from '@angular/common';
-import { toObservable } from '@angular/core/rxjs-interop';
 import { UserProfileManager } from '~/common/services/user-profile-manager.service';
 import { UserProfile } from '~/common/model/user-profile.model';
 
@@ -232,6 +232,10 @@ export class IssuerStaffComponent extends BaseAuthenticatedRoutableComponent imp
 		this.issuerStaffRequestApiService.getStaffRequestsByIssuer(this.issuerSlug).then((r) => {
 			this.staffRequests.set(r.body);
 		});
+	}
+
+	getOrderForHeaderCell(headerCell: Header<IssuerStaffMember, unknown>): 'asc' | 'desc' {
+		return headerCell.column.getNextSortingOrder() === 'asc' ? 'desc' : 'asc';
 	}
 
 	submitStaffRequestRoleForm(requestid: string) {

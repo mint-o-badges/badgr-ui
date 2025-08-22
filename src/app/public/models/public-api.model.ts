@@ -89,7 +89,6 @@ export interface PublicApiIssuer {
 	'@context': 'https://w3id.org/openbadges/v2';
 	description: string;
 	url: string;
-	email: string;
 	type: 'Issuer';
 	id: string;
 	slug: string;

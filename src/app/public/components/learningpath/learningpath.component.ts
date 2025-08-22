@@ -29,7 +29,7 @@ import { NgIcon } from '@ng-icons/core';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { OebProgressComponent } from '../../../components/oeb-progress.component';
 import { BgImageStatusPlaceholderDirective } from '../../../common/directives/bg-image-status-placeholder.directive';
-import { OebTabsComponent } from '../../../components/oeb-tabs.component';
+import { OebTabsComponent } from '../../../components/oeb-backpack-tabs.component';
 import { CountUpModule } from 'ngx-countup';
 import { OebIssuerCard } from '../../../common/components/oeb-issuercard';
 import { BgBadgecard } from '../../../common/components/bg-badgecard';
