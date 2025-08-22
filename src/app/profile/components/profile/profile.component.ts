@@ -32,6 +32,7 @@ import {
 	FlexRenderDirective,
 	getCoreRowModel,
 	getSortedRowModel,
+	Header,
 	SortingState,
 } from '@tanstack/angular-table';
 import { NgIcon } from '@ng-icons/core';
@@ -154,6 +155,10 @@ export class ProfileComponent extends BaseAuthenticatedRoutableComponent impleme
 
 	ngOnDestroy(): void {
 		if (this.emailsSubscription) this.emailsSubscription.unsubscribe();
+	}
+
+	getOrderForHeaderCell(headerCell: Header<UserProfileEmail, unknown>): 'asc' | 'desc' {
+		return headerCell.column.getNextSortingOrder() === 'asc' ? 'desc' : 'asc';
 	}
 
 	submitEmailForm() {
