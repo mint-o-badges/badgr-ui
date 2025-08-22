@@ -67,7 +67,6 @@ import { toObservable } from '@angular/core/rxjs-interop';
 })
 export class ProfileComponent extends BaseAuthenticatedRoutableComponent implements OnInit, OnDestroy {
 	emails = signal<UserProfileEmail[]>([]);
-	emails$ = toObservable(this.emails);
 	menuItems = computed(() => this.emails().map((x) => this.menuItemsForEmail(x)));
 	emailForm = typedFormGroup().addControl('email', '', [Validators.required, EmailValidator.validEmail]);
 	profile: UserProfile;
@@ -152,8 +151,6 @@ export class ProfileComponent extends BaseAuthenticatedRoutableComponent impleme
 		);
 
 		this.emailsLoaded = this.profileManager.userProfilePromise.then((p) => p.emails.loadedPromise);
-
-		this.emails$.subscribe((x) => console.log(x));
 	}
 
 	ngOnDestroy(): void {
