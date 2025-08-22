@@ -11,20 +11,18 @@ import {
 	DestSelectOptions,
 	ViewState,
 } from '../badgeclass-issue-bulk-award/badgeclass-issue-bulk-award.component';
-import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
-import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
-import { HlmH3Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h3.directive';
 import { BgFormFieldFileComponent } from '../../../common/components/formfield-file';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { TranslatePipe } from '@ngx-translate/core';
+import { HlmH1, HlmH3, HlmP } from '@spartan-ng/helm/typography';
 
 @Component({
 	selector: 'Badgeclass-issue-bulk-award-import',
 	templateUrl: './badgeclass-issue-bulk-award-import.component.html',
 	imports: [
-		HlmH1Directive,
-		HlmPDirective,
-		HlmH3Directive,
+		HlmH1,
+		HlmP,
+		HlmH3,
 		FormsModule,
 		ReactiveFormsModule,
 		BgFormFieldFileComponent,

@@ -13,7 +13,7 @@ import type { ClassValue } from 'clsx';
 		'[style.display]': '"flex"',
 	},
 })
-export class HlmCommandItemDirective {
+export class HlmCommandItem {
 	public readonly userClass = input<ClassValue>('', { alias: 'class' });
 
 	protected _computedClass = computed(() =>

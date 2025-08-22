@@ -5,7 +5,6 @@ import { SessionService } from '../../../common/services/session.service';
 import { MessageService } from '../../../common/services/message.service';
 import { Title } from '@angular/platform-browser';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
-
 import {
 	BulkIssueData,
 	BulkIssueImportPreviewData,
@@ -13,16 +12,14 @@ import {
 	TransformedImportData,
 	ViewState,
 } from '../badgeclass-issue-bulk-award/badgeclass-issue-bulk-award.component';
-import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
-
-import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { TranslatePipe } from '@ngx-translate/core';
+import { HlmH1, HlmP } from '@spartan-ng/helm/typography';
 
 @Component({
 	selector: 'Badgeclass-issue-bulk-award-preview',
 	templateUrl: './badgeclass-issue-bulk-award-preview.component.html',
-	imports: [HlmH1Directive, HlmPDirective, FormsModule, OebButtonComponent, TranslatePipe],
+	imports: [HlmH1, HlmP, FormsModule, OebButtonComponent, TranslatePipe],
 })
 export class BadgeClassIssueBulkAwardPreviewComponent extends BaseAuthenticatedRoutableComponent {
 	@Input() importPreviewData: BulkIssueImportPreviewData;

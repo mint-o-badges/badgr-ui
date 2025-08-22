@@ -23,16 +23,15 @@ import { ShareDialogTemplateComponent } from '../../../common/dialogs/oeb-dialog
 import { PdfService } from '../../../common/services/pdf.service';
 import { FormMessageComponent } from '../../../common/components/form-message.component';
 import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
-import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { OebDropdownComponent } from '../../../components/oeb-dropdown.component';
 import { SvgIconComponent } from '../../../common/components/svg-icon.component';
-import { HlmSwitchComponent } from '../../../components/spartan/ui-switch-helm/src/lib/hlm-switch.component';
 import { FormsModule } from '@angular/forms';
-
 import { BgBadgecard } from '../../../common/components/bg-badgecard';
 import { NgIcon } from '@ng-icons/core';
-import { HlmIconDirective } from '../../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
+import { HlmIcon } from '@spartan-ng/helm/icon';
+import { HlmSwitch } from '@spartan-ng/helm/switch';
+import { HlmH1 } from '@spartan-ng/helm/typography';
 
 @Component({
 	selector: 'recipient-earned-badge-detail',
@@ -41,15 +40,15 @@ import { HlmIconDirective } from '../../../components/spartan/ui-icon-helm/src/l
 		FormMessageComponent,
 		BgBreadcrumbsComponent,
 		BgAwaitPromises,
-		HlmH1Directive,
+		HlmH1,
 		OebButtonComponent,
 		OebDropdownComponent,
 		SvgIconComponent,
-		HlmSwitchComponent,
+		HlmSwitch,
 		FormsModule,
 		BgBadgecard,
 		NgIcon,
-		HlmIconDirective,
+		HlmIcon,
 		TranslateDirective,
 		RecipientBadgeSelectionDialog,
 		TranslatePipe,

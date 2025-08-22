@@ -3,10 +3,8 @@ import { FormControl } from '@angular/forms';
 import { preloadImageURL, readFileAsText } from '../util/file-util';
 import { DomSanitizer } from '@angular/platform-browser';
 import { SvgIconComponent } from './svg-icon.component';
-
-import { HlmPDirective } from '../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
-import { HlmADirective } from '../../components/spartan/ui-typography-helm/src/lib/hlm-a.directive';
 import { TranslatePipe } from '@ngx-translate/core';
+import { HlmP } from '@spartan-ng/helm/typography';
 
 @Component({
 	selector: 'bg-formfield-file',
@@ -42,8 +40,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 					@if (!fileProvided && !fileLoading) {
 						<div hlmP>
 							<span class="tw-font-bold">Drag and Drop</span> {{ 'General.or' | translate }} <br /><a
-								hlmA
-								class="tw-font-bold"
+								class="tw-underline tw-text-link hover:!tw-text-buttonhover tw-cursor-pointer tw-font-bold"
 								>{{ 'RecBadge.selectFromMyFiles' | translate }}</a
 							>
 						</div>
@@ -69,7 +66,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 			<p class="dropzone-x-error">{{ errorMessage }}</p>
 		}
 	`,
-	imports: [SvgIconComponent, HlmPDirective, HlmADirective, TranslatePipe],
+	imports: [SvgIconComponent, HlmP, TranslatePipe],
 })
 export class BgFormFieldFileComponent {
 	private get element(): HTMLElement {
