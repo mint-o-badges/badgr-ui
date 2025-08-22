@@ -75,3 +75,9 @@ export interface ApiBadgeClass extends ApiBadgeClassForCreation {
 	issuerVerified: boolean;
 	issuerOwnerAcceptedTos: boolean;
 }
+
+export interface BadgeImageResponse {
+	success: boolean;
+	image_url: string;
+	message: string;
+}

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, computed, input, Input } from '@angular/core';
 import { Issuer } from '../../issuer/models/issuer.model';
 import { RouterLink } from '@angular/router';
 import { PublicApiIssuer } from '../../public/models/public-api.model';
@@ -12,14 +12,16 @@ import { HlmP } from '@spartan-ng/helm/typography';
 	template: `
 		<div class="tw-flex tw-flex-col tw-h-full">
 			<div class="tw-flex-row tw-flex tw-items-center">
-				<img [src]="issuer.image" class="tw-aspect-square" width="80" />
+				<img [src]="issuer().image" class="tw-aspect-square" width="80" />
 				<div class="tw-flex tw-flex-col tw-flex-wrap tw-pl-4 tw-py-2 tw-break-words">
-					<a [routerLink]="['/public/issuers', issuer.slug]" hlmP>{{ issuer.name }}</a>
-					<p class="tw-font-bold" hlmP size="sm">{{ issuer.email }}</p>
+					<a [routerLink]="['/public/issuers', issuer().slug]" hlmP>{{ issuer().name }}</a>
+					@if (email().length > 0) {
+						<p class="tw-font-bold" hlmP size="sm">{{ email() }}</p>
+					}
 				</div>
 			</div>
 			<div>
-				{{ issuer.description }}
+				{{ issuer().description }}
 			</div>
 		</div>
 	`,
@@ -28,5 +30,6 @@ import { HlmP } from '@spartan-ng/helm/typography';
 export class OebIssuerCard {
 	readonly badgeLoadingImageUrl = '../../../breakdown/static/images/badge-loading.svg';
 	readonly badgeFailedImageUrl = '../../../breakdown/static/images/badge-failed.svg';
-	@Input() issuer: Issuer | PublicApiIssuer;
+	issuer = input.required<Issuer | PublicApiIssuer>();
+	email = computed(() => (this.issuer() instanceof Issuer ? (this.issuer() as Issuer).email : ''));
 }
