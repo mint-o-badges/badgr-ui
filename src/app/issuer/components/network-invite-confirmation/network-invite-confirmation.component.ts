@@ -12,11 +12,13 @@ import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 import { NetworkApiService } from '../../../issuer/services/network-api.service';
 import { MessageService } from '../../../common/services/message.service';
 import { ApiNetworkInvitation } from '../../../issuer/models/network-invite-api.model';
+import { BadgrApiFailure } from '~/common/services/api-failure';
+import { FormMessageComponent } from '~/common/components/form-message.component';
 
 @Component({
 	selector: 'network-invite-confirmation',
 	templateUrl: './network-invite-confirmation.component.html',
-	imports: [OebButtonComponent, TranslatePipe, BgAwaitPromises],
+	imports: [OebButtonComponent, TranslatePipe, BgAwaitPromises, FormMessageComponent],
 })
 export class NetworkInviteConfirmationComponent extends BaseAuthenticatedRoutableComponent {
 	inviteSlug: string;
@@ -31,7 +33,7 @@ export class NetworkInviteConfirmationComponent extends BaseAuthenticatedRoutabl
 		protected configService: AppConfigService,
 		protected networkManager: NetworkManager,
 		protected networkApiService: NetworkApiService,
-		private messageService: MessageService,
+		protected messageService: MessageService,
 	) {
 		super(router, route, loginService);
 		title.setTitle(`Confirm network invitation - ${this.configService.theme['serviceName'] || 'Badgr'}`);
@@ -42,11 +44,13 @@ export class NetworkInviteConfirmationComponent extends BaseAuthenticatedRoutabl
 	}
 
 	confirmInvitation() {
-		this.networkApiService.confirmInvitation(this.invite.network.slug, this.inviteSlug).then((res) => {
-			this.router.navigate(['/issuer/networks', this.invite.network.slug]),
-				(err) => {
-					this.messageService.reportAndThrowError('Failed to confirm invitation ' + err);
-				};
-		});
+		this.networkApiService
+			.confirmInvitation(this.invite.network.slug, this.inviteSlug)
+			.then((res) => {
+				this.router.navigate(['/issuer/networks', this.invite.network.slug]);
+			})
+			.catch((err) => {
+				this.messageService.reportAndThrowError(`${BadgrApiFailure.from(err).firstMessage}`, err);
+			});
 	}
 }

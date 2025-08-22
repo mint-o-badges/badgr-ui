@@ -191,7 +191,7 @@ export class NetworkInvitesDatatableComponent {
 	}
 
 	revokeInvitation(invite: ApiNetworkInvitation) {
-		this.networkApiService.revokeInvitation(this.network().slug, invite.entity_id).then((res) => {
+		this.networkApiService.revokeInvitation(invite.entity_id).then((res) => {
 			if (res.ok) {
 				this._invites.update((current) =>
 					current.filter((invitation) => invitation.entity_id !== invite.entity_id),

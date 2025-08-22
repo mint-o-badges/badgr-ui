@@ -54,8 +54,8 @@ export class NetworkApiService extends BaseHttpApiService {
 		return this.post(`/v1/issuer/networks/${networkSlug}/invite`, issuers).then((r) => r.body);
 	}
 
-	revokeInvitation(networkSlug: string, inviteSlug: string) {
-		return this.delete(`/v1/issuer/networks/${networkSlug}/invite/${inviteSlug}`);
+	revokeInvitation(inviteSlug: string) {
+		return this.delete(`/v1/issuer/networks/invites/${inviteSlug}`);
 	}
 
 	getNetworkInvite(inviteSlug: string) {
