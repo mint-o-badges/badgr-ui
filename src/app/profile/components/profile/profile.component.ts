@@ -38,7 +38,6 @@ import { NgIcon } from '@ng-icons/core';
 import { TitleCasePipe } from '@angular/common';
 import { OebDropdownComponent } from '~/components/oeb-dropdown.component';
 import { HlmIcon } from '@spartan-ng/helm/icon';
-import { toObservable } from '@angular/core/rxjs-interop';
 
 @Component({
 	selector: 'userProfile',
