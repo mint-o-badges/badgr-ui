@@ -39,7 +39,7 @@ export const routes = [
 		component: NetworkDashboardComponent,
 	},
 	{
-		path: 'networks/:networkSlug/invite/:inviteSlug',
+		path: 'networks/invite/:inviteSlug',
 		component: NetworkInviteConfirmationComponent,
 	},
 	{

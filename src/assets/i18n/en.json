@@ -399,7 +399,14 @@
 		"notifiedIssuerOwners": "We have notified the owners of the institutions by email.",
 		"visibleAfterConfirmation": "Once they have confirmed the invitation, they will be visible on the partner page.",
 		"resendInvitation": "Resend invitation",
-		"invitedOn": "Invited on"
+		"invitedOn": "Invited on",
+		"yourRole": "Your role: {{role}}",
+		"role": {
+			"owner": "Owner",
+			"editor": "Editor",
+			"staff": "Member"
+		},
+		"confirmNetworkInvitation": "Confirm the <span class='tw-font-bold'>network invitation from {{networkName}}</span> for your institution <span class='tw-italic'>{{issuerName}}</span> by clicking the button:"
 	},
 	"Badge": {
 		"groupBy": "Group by",

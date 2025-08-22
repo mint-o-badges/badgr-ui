@@ -58,10 +58,8 @@ export class NetworkApiService extends BaseHttpApiService {
 		return this.delete(`/v1/issuer/networks/${networkSlug}/invite/${inviteSlug}`);
 	}
 
-	getNetworkInvite(networkSlug: string, inviteSlug: string) {
-		return this.get<ApiNetworkInvitation>(`/v1/issuer/networks/${networkSlug}/invite/${inviteSlug}`).then(
-			(r) => r.body,
-		);
+	getNetworkInvite(inviteSlug: string) {
+		return this.get<ApiNetworkInvitation>(`/v1/issuer/networks/invites/${inviteSlug}`).then((r) => r.body);
 	}
 
 	getPendingNetworkInvites(networkSlug: string) {

@@ -403,7 +403,14 @@
 		"notifiedIssuerOwners": "Wir haben die Eigentümer:innen der Institutionen per E-Mail benachrichtigt.",
 		"visibleAfterConfirmation": "Sobald sie die Einladung bestätigt haben, sind sie auf der Partner:innen-Seite sichtbar.",
 		"resendInvitation": "Einladung erneut senden",
-		"invitedOn": "Eingeladen am"
+		"invitedOn": "Eingeladen am",
+		"yourRole": "Deine Rolle: {{role}}",
+		"role": {
+			"owner": "Eigentümer:in",
+			"editor": "Editor:in",
+			"staff": "Mitarbeiter:in"
+		},
+		"confirmNetworkInvitation": "Bestätige die <span class='tw-font-bold'>Netzwerk-Einladung von {{networkName}}</span> für deine Institution <span class='tw-italic'>{{issuerName}}</span> mit Klick auf den Button:"
 	},
 	"Badge": {
 		"groupBy": "Gruppieren nach",

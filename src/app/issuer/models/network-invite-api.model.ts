@@ -1,4 +1,5 @@
 import { ApiIssuer } from './issuer-api.model';
+import { ApiNetwork } from './network-api.model';
 
 export interface ApiNetworkInvitation {
 	id?: number;
@@ -8,4 +9,5 @@ export interface ApiNetworkInvitation {
 	invitedOn: string;
 	status: string;
 	revoked: boolean;
+	network: ApiNetwork;
 }

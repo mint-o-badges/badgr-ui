@@ -10,7 +10,8 @@ import { NetworkManager } from '../../../issuer/services/network-manager.service
 import { Network } from '../../../issuer/models/network.model';
 import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 import { NetworkApiService } from '../../../issuer/services/network-api.service';
-import { MessageService } from '~/common/services/message.service';
+import { MessageService } from '../../../common/services/message.service';
+import { ApiNetworkInvitation } from '../../../issuer/models/network-invite-api.model';
 
 @Component({
 	selector: 'network-invite-confirmation',
@@ -18,13 +19,9 @@ import { MessageService } from '~/common/services/message.service';
 	imports: [OebButtonComponent, TranslatePipe, BgAwaitPromises],
 })
 export class NetworkInviteConfirmationComponent extends BaseAuthenticatedRoutableComponent {
-	networkSlug: string;
-	networkLoaded: Promise<unknown>;
-	network: Network;
-
 	inviteSlug: string;
 	inviteLoaded: Promise<unknown>;
-	invite: any;
+	invite: ApiNetworkInvitation;
 
 	constructor(
 		loginService: SessionService,
@@ -38,20 +35,15 @@ export class NetworkInviteConfirmationComponent extends BaseAuthenticatedRoutabl
 	) {
 		super(router, route, loginService);
 		title.setTitle(`Confirm network invitation - ${this.configService.theme['serviceName'] || 'Badgr'}`);
-		this.networkSlug = this.route.snapshot.params['networkSlug'];
 		this.inviteSlug = this.route.snapshot.params['inviteSlug'];
-		this.networkLoaded = this.networkManager.networkBySlug(this.networkSlug).then((network) => {
-			this.network = network;
-			return network;
-		});
-		this.networkApiService.getNetworkInvite(this.networkSlug, this.inviteSlug).then((invite) => {
+		this.networkApiService.getNetworkInvite(this.inviteSlug).then((invite) => {
 			this.invite = invite;
 		});
 	}
 
 	confirmInvitation() {
-		this.networkApiService.confirmInvitation(this.networkSlug, this.inviteSlug).then((res) => {
-			this.router.navigate(['/issuer/networks', this.networkSlug]),
+		this.networkApiService.confirmInvitation(this.invite.network.slug, this.inviteSlug).then((res) => {
+			this.router.navigate(['/issuer/networks', this.invite.network.slug]),
 				(err) => {
 					this.messageService.reportAndThrowError('Failed to confirm invitation ' + err);
 				};

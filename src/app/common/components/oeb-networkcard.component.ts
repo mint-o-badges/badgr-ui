@@ -18,12 +18,20 @@ import { HlmP } from '@spartan-ng/helm/typography';
 						class="tw-text-3xl tw-font-bold"
 						[routerLink]="['/issuer/networks', network.slug]"
 						hlmP
-						variant="white"
+						_variant="white"
 						>{{ network.name }}</a
 					>
 					@if (!public) {
 						<span class="tw-text-white tw-text-lg"
-							>{{ 'Issuer.yourRole' | translate }} {{ network.currentUserStaffMember.roleSlug }}
+							>{{
+								'Network.yourRole'
+									| translate
+										: {
+												role:
+													'Network.role.' + network.currentUserStaffMember.roleSlug
+													| translate
+										  }
+							}}
 						</span>
 					}
 				</div>
