@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, signal, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SessionService } from '../../../common/services/session.service';
 import { MessageService } from '../../../common/services/message.service';
@@ -33,9 +33,23 @@ import { RouterLink } from '@angular/router';
 import { HlmIcon } from '@spartan-ng/helm/icon';
 import { HlmInput } from '@spartan-ng/helm/input';
 import { HlmH1 } from '@spartan-ng/helm/typography';
+import { CatalogService } from '~/catalog/catalog.service';
+import { toObservable } from '@angular/core/rxjs-interop';
+import {
+	combineLatest,
+	concatMap,
+	debounceTime,
+	distinctUntilChanged,
+	filter,
+	firstValueFrom,
+	skip,
+	Subscription,
+	tap,
+} from 'rxjs';
+import { NetworkV3 } from '~/issuer/models/networkv3.model';
 
 @Component({
-	selector: 'app-issuer-catalog',
+	selector: 'app-network-catalog',
 	templateUrl: './network-catalog.component.html',
 	animations: [appearAnimation],
 	imports: [
@@ -58,46 +72,37 @@ import { HlmH1 } from '@spartan-ng/helm/typography';
 		RouterLink,
 	],
 })
-export class NetworkCatalogComponent extends BaseRoutableComponent implements OnInit {
-	readonly issuerPlaceholderSrc = preloadImageURL('../../../../breakdown/static/images/placeholderavatar-issuer.svg');
-	readonly noIssuersPlaceholderSrc =
-		'../../../../assets/@concentricsky/badgr-style/dist/images/image-empty-issuer.svg';
+export class NetworkCatalogComponent extends BaseRoutableComponent implements OnInit, AfterViewInit, OnDestroy {
+	readonly NETWORKS_PER_PAGE = 20;
+	readonly INPUT_DEBOUNCE_TIME = 400;
+	@ViewChild('loadMore') loadMore: ElementRef | undefined;
 
 	Array = Array;
-
-	networks: Network[] = null;
-	chooseABadgeCategory = this.translate.instant('CreateBadge.chooseABadgeCategory');
-
-	networksLoaded: Promise<unknown>;
-	issuerResults: Network[] = [];
-
-	get theme() {
-		return this.configService.theme;
-	}
-	get features() {
-		return this.configService.featuresConfig;
-	}
-
-	get networksPluralWord(): string {
-		return this.plural['network']['=0'];
-	}
-
-	plural = {};
-
+	networks = signal<NetworkV3[]>([]);
 	networksPerPage = 30;
 	totalPages: number;
 	nextLink: string;
 	previousLink: string;
-
-	sortOption: string | null = null;
-
+	intersectionObserver: IntersectionObserver | undefined;
+	pageSubscriptions: Subscription[] = [];
+	sortOption = signal<'name_asc' | 'name_desc'>('name_asc');
+	sortOption$ = toObservable(this.sortOption);
+	observeScrolling = signal<boolean>(false);
+	observeScrolling$ = toObservable(this.observeScrolling);
+	currentPage = signal<number>(-1);
+	currentPage$ = toObservable(this.currentPage);
+	searchQuery = signal<string>('');
+	searchQuery$ = toObservable(this.searchQuery);
+	hasNext = signal<boolean>(true);
+	pageReadyPromise: Promise<unknown>;
 	public loggedIn = false;
+	plural: any;
 
 	constructor(
-		protected title: Title,
 		protected messageService: MessageService,
 		protected networkManager: NetworkManager,
 		protected configService: AppConfigService,
+		protected catalogService: CatalogService,
 		router: Router,
 		route: ActivatedRoute,
 		private translate: TranslateService,
@@ -105,37 +110,49 @@ export class NetworkCatalogComponent extends BaseRoutableComponent implements On
 		protected profileManager: UserProfileManager,
 	) {
 		super(router, route);
-		title.setTitle(`Networks - ${this.configService.theme['serviceName'] || 'Badgr'}`);
-
-		this.networksLoaded = this.loadNetworks();
 	}
 
-	async loadNetworks() {
-		let that = this;
-		return new Promise(async (resolve, reject) => {
-			this.networkManager.getAllNetworks().subscribe(
-				(networks) => {
-					this.networks = networks.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
-					// this.totalPages = Math.ceil(this.issuers.length / this.issuersPerPage);
-					// this.updatePaginatedResults();
-					// this.issuerResults = this.issuers;
-					// this.issuerResults.sort((a, b) => a.name.localeCompare(b.name));
-					// if (this.mapObject)
-					// 	this.mapObject.on('load', function () {
-					// 		that.generateGeoJSON(that.issuerResults);
-					// 	});
-					resolve(networks);
-				},
-				(error) => {
-					this.messageService.reportAndThrowError(this.translate.instant('Issuer.failLoadissuers'), error);
-				},
-			);
+	private async loadRangeOfNetworks(pageNumber: number, searchQuery: string, sortOption: 'name_asc' | 'name_desc') {
+		console.log('🚀 Loading networks with params:', {
+			pageNumber,
+			offset: pageNumber * this.NETWORKS_PER_PAGE,
+			limit: this.NETWORKS_PER_PAGE,
+			searchQuery,
+			sortOption,
 		});
+
+		try {
+			const result = await this.catalogService.getNetworks(
+				pageNumber * this.NETWORKS_PER_PAGE,
+				this.NETWORKS_PER_PAGE,
+				searchQuery,
+				sortOption,
+			);
+
+			if (!result) {
+				return null;
+			}
+
+			return result;
+		} catch (error) {
+			return null;
+		}
+	}
+
+	private setupIntersectionObserver(element: ElementRef): IntersectionObserver {
+		const observer = new IntersectionObserver(
+			(entries) => {
+				if (entries.at(0)?.isIntersecting && this.hasNext() && this.observeScrolling()) {
+					this.currentPage.update((p) => p + 1);
+				}
+			},
+			{ rootMargin: '20% 0px' },
+		);
+		return observer;
 	}
 
 	ngOnInit() {
 		super.ngOnInit();
-
 		this.loggedIn = this.sessionService.isLoggedIn;
 
 		this.plural = {
@@ -145,32 +162,88 @@ export class NetworkCatalogComponent extends BaseRoutableComponent implements On
 				other: '# ' + this.translate.instant('Network.networksRegistered'),
 			},
 		};
+
+		this.pageReadyPromise = Promise.resolve();
+
+		this.pageSubscriptions.push(
+			this.observeScrolling$.pipe(filter((_) => this.intersectionObserver !== undefined)).subscribe((observe) => {
+				if (observe) this.intersectionObserver!.observe(this.loadMore!.nativeElement);
+				else this.intersectionObserver!.unobserve(this.loadMore!.nativeElement);
+			}),
+		);
+
+		this.pageSubscriptions.push(
+			combineLatest([this.currentPage$, this.searchQuery$, this.sortOption$], (v1, v2, v3) => ({
+				page: v1,
+				searchQuery: v2,
+				sortOption: v3,
+			}))
+				.pipe(
+					debounceTime(this.INPUT_DEBOUNCE_TIME),
+					filter((i) => i.page >= 0),
+					distinctUntilChanged((prev, curr) => JSON.stringify(prev) === JSON.stringify(curr)),
+					tap((_) => this.observeScrolling.set(false)),
+					concatMap((i) => this.loadRangeOfNetworks(i.page, i.searchQuery, i.sortOption)),
+				)
+				.subscribe((paginatedNetworks) => {
+					if (!paginatedNetworks) {
+						this.observeScrolling.set(true);
+						return;
+					}
+
+					this.hasNext.set(paginatedNetworks?.next !== null);
+
+					if (!paginatedNetworks?.previous) {
+						this.networks.set(paginatedNetworks?.results ?? []);
+					} else {
+						this.networks.update((currentNetworks) => [...currentNetworks, ...paginatedNetworks.results]);
+					}
+
+					this.observeScrolling.set(true);
+				}),
+		);
+
+		this.pageSubscriptions.push(
+			this.currentPage$.subscribe((p) => {
+				if (p === 0) window?.scrollTo({ left: 0, top: 0, behavior: 'smooth' });
+			}),
+		);
+
+		this.currentPage.set(0);
 	}
 
-	// private updatePaginatedResults() {
-	// 	let that = this;
-	// 	// Clear Results
-	// 	this.issuerResults = [];
-	// 	this.issuerResultsByCategory = [];
+	ngAfterViewInit() {
+		if (this.loadMore) {
+			this.intersectionObserver = this.setupIntersectionObserver(this.loadMore);
+		}
+	}
 
-	// 	// this.issuerResults.sort((a, b) => a.name.localeCompare(b.name));
+	ngOnDestroy() {
+		this.pageSubscriptions.forEach((sub) => sub.unsubscribe());
 
-	// 	this.filteredIssuers = this.issuers
-	// 		.filter(MatchingAlgorithm.issuerMatcher(this.searchQuery))
-	// 		.filter((issuer) => !this.categoryFilter || issuer.category === this.categoryFilter);
+		if (this.intersectionObserver) {
+			this.intersectionObserver.disconnect();
+		}
+	}
 
-	// 	if (this.sortOption) {
-	// 		applySorting(this.filteredIssuers, this.sortOption);
-	// 	}
-	// 	this.totalPages = Math.ceil(this.filteredIssuers.length / this.issuersPerPage);
-	// 	const start = (this.currentPage - 1) * this.issuersPerPage;
-	// 	const end = start + this.issuersPerPage;
+	onSearchChange(searchTerm: string) {
+		this.searchQuery.set(searchTerm);
+		if (this.currentPage() > 0) {
+			this.currentPage.set(0);
+		}
+	}
 
-	// 	that.issuerResults = this.filteredIssuers.slice(start, end);
-	// 	// this.issuerResults = this.issuers
-	// 	// 	.filter(MatchingAlgorithm.issuerMatcher(this.searchQuery))
-	// 	// 	.filter((issuer) => !this.categoryFilter || issuer.category === this.categoryFilter);
-	// 	// this.issuerResultsByCategory.forEach((r) => r.issuers.sort((a, b) => a.name.localeCompare(b.name)));
-	// 	// this.generateGeoJSON(this.issuerResults);
-	// }
+	onSortChange(sortOption: 'name_asc' | 'name_desc') {
+		this.sortOption.set(sortOption);
+		if (this.currentPage() > 0) {
+			this.currentPage.set(0);
+		}
+	}
+
+	get networksPluralWord(): string {
+		const count = this.networks().length;
+		if (count === 0) return this.translate.instant('Network.noNetworks');
+		if (count === 1) return '1 ' + this.translate.instant('Network.networkRegistered');
+		return count + ' ' + this.translate.instant('Network.networksRegistered');
+	}
 }

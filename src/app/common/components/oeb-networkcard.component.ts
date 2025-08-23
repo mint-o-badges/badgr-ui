@@ -3,6 +3,7 @@ import { RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { Network } from '../../issuer/models/network.model';
 import { HlmP } from '@spartan-ng/helm/typography';
+import { NetworkV3 } from '~/issuer/models/networkv3.model';
 
 @Component({
 	selector: 'oeb-networkcard',
@@ -28,7 +29,7 @@ import { HlmP } from '@spartan-ng/helm/typography';
 									| translate
 										: {
 												role:
-													'Network.role.' + network.currentUserStaffMember.roleSlug
+													'Network.role.' + $any(network).currentUserStaffMember.roleSlug
 													| translate
 										  }
 							}}
@@ -46,6 +47,6 @@ import { HlmP } from '@spartan-ng/helm/typography';
 export class OebNetworkCard {
 	readonly badgeLoadingImageUrl = '../../../breakdown/static/images/badge-loading.svg';
 	readonly badgeFailedImageUrl = '../../../breakdown/static/images/badge-failed.svg';
-	@Input() network: Network;
+	@Input() network: Network | NetworkV3;
 	@Input() public = true;
 }
