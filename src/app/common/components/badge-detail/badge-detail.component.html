@@ -181,35 +181,15 @@
 									</div>
 								}
 								@if (config.copy_permissions) {
-									<div class="tw-flex tw-flex-row tw-gap-1">
-										<dt
-											class="tw-text-oebblack tw-font-bold"
-											[innerHTML]="('Badge.copyableFor' | translate) + ': '"
-										></dt>
+									<div class="tw-flex tw-italic tw-text-oebblack tw-flex-row tw-gap-1">
+										<dt [innerHTML]="('Badge.copyableFor' | translate) + ': '"></dt>
 										<dd
-											class="tw-text-oebblack tw-italic"
 											[innerHTML]="
 												config.copy_permissions.includes('others')
 													? ('Issuer.allInstitutions' | translate)
 													: ('Issuer.ownInstitution' | translate)
 											"
 										></dd>
-									</div>
-								}
-								@if (config.tags.length > 0) {
-									<div class="tw-flex tw-items-start md:tw-flex-row tw-flex-col">
-										<dt class="tw-text-oebblack tw-font-bold md:tw-py-2 md:tw-mr-2 tw-mb-1">
-											Tags
-										</dt>
-										<dd class="tw-text-oebblack">
-											@for (tag of config.tags; track tag; let last = $last) {
-												<div
-													class="tag tw-border-[var(--color-purple)] tw-mx-2 tw-ml-0 tw-max-w-24"
-												>
-													{{ tag }}
-												</div>
-											}
-										</dd>
 									</div>
 								}
 								@if (config.version) {
@@ -235,36 +215,32 @@
 								}
 								@if (config.category) {
 									<div class="tw-flex tw-text-oebblack tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
-										<dt class="tw-text-sm tw-text-oebblack tw-font-bold">
+										<dt class="tw-text-sm tw-text-oebblack">
 											{{ 'General.category' | translate }}
 										</dt>
-										<dd class="tw-text-sm tw-text-oebblack md:tw-ml-2">{{ config.category }}</dd>
+										<dd class="tw-text-sm tw-text-oebblack tw-font-bold md:tw-ml-2">
+											{{ config.category }}
+										</dd>
 									</div>
 								}
 								@if (config.duration) {
-									<div class="tw-flex tw-text-oebblack tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
-										<dt class="tw-text-sm tw-text-oebblack tw-font-bold">
+									<div
+										class="tw-flex tw-text-sm tw-text-oebblack tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col"
+									>
+										<dt>
 											{{ 'RecBadgeDetail.duration' | translate }}
 										</dt>
-										<dd class="tw-text-sm tw-text-oebblack md:tw-ml-2">
+										<dd class="tw-font-bold md:tw-ml-2">
 											{{ +config.duration | hourPipe }} {{ 'RecBadge.hours' | translate }}
 										</dd>
 									</div>
 								}
-								@if (config.updatedAt) {
-									<div class="tw-flex tw-text-oebblack tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
-										<dt class="tw-text-sm tw-text-oebblack tw-font-bold">
-											{{ 'Badge.lastEdited' | translate }}
-										</dt>
-										<dd class="tw-text-sm tw-text-oebblack md:tw-ml-2">
-											<time [date]="config.updatedAt" format="dd.MM.y"></time>
-										</dd>
-									</div>
-								}
 								@if (config.createdAt) {
-									<div class="tw-flex tw-text-oebblack tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
-										<dt class="tw-text-sm tw-text-oebblack tw-font-bold">Erstellt am</dt>
-										<dd class="tw-text-sm tw-text-oebblack md:tw-ml-2">
+									<div
+										class="tw-flex tw-text-sm tw-text-oebblack tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col"
+									>
+										<dt class="">{{ 'Badge.createdOn' | translate }}</dt>
+										<dd class="tw-font-bold md:tw-ml-2">
 											<time [date]="config.createdAt" format="dd.MM.y"></time>
 										</dd>
 									</div>
@@ -288,11 +264,11 @@
 									</div>
 								}
 								@if (config.license) {
-									<div class="tw-text-oebblack tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
-										<dt class="tw-text-sm tw-text-oebblack tw-font-bold">
+									<div class="tw-text-oebblack tw-mt-2 tw-pt-2 tw-flex tw-flex-row">
+										<dt class="tw-text-sm tw-text-oebblack">
 											{{ 'General.license' | translate }}
 										</dt>
-										<dd class="tw-text-sm tw-text-oebblack md:tw-ml-2 tw-flex">
+										<dd class="tw-text-sm tw-text-oebblack tw-ml-2 tw-flex">
 											<div
 												class="tw-ml-1 tw-w-5 tw-h-5 tw-flex tw-items-center tw-justify-center tw-border-solid tw-border-[1px] tw-border-oebblack tw-rounded-full"
 											>
@@ -310,6 +286,22 @@
 											>
 												CC0 1.0</a
 											>
+										</dd>
+									</div>
+								}
+								@if (config.tags.length > 0) {
+									<div class="tw-flex tw-items-start md:tw-flex-row tw-flex-col">
+										<dt class="tw-text-oebblack tw-font-bold md:tw-py-2 md:tw-mr-2 tw-mb-1">
+											Tags
+										</dt>
+										<dd class="tw-text-oebblack">
+											@for (tag of config.tags; track tag; let last = $last) {
+												<div
+													class="tag tw-border-[var(--color-purple)] tw-mx-2 tw-ml-0 tw-max-w-24"
+												>
+													{{ tag }}
+												</div>
+											}
 										</dd>
 									</div>
 								}
