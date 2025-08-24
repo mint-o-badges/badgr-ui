@@ -1,24 +1,24 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import {
-	HlmPaginationContentDirective,
-	HlmPaginationDirective,
-	HlmPaginationEllipsisComponent,
-	HlmPaginationItemDirective,
-	HlmPaginationLinkDirective,
-	HlmPaginationNextComponent,
-	HlmPaginationPreviousComponent,
+	HlmPaginationContent,
+	HlmPagination,
+	HlmPaginationEllipsis,
+	HlmPaginationItem,
+	HlmPaginationLink,
+	HlmPaginationNext,
+	HlmPaginationPrevious,
 } from './spartan/ui-pagination-helm/src';
 
 @Component({
 	selector: 'oeb-pagination',
 	imports: [
-		HlmPaginationDirective,
-		HlmPaginationContentDirective,
-		HlmPaginationItemDirective,
-		HlmPaginationPreviousComponent,
-		HlmPaginationNextComponent,
-		HlmPaginationLinkDirective,
-		HlmPaginationEllipsisComponent,
+		HlmPagination,
+		HlmPaginationContent,
+		HlmPaginationItem,
+		HlmPaginationPrevious,
+		HlmPaginationNext,
+		HlmPaginationLink,
+		HlmPaginationEllipsis,
 	],
 	template: `
 		<nav hlmPagination class="tw-mt-4">

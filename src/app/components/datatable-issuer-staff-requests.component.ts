@@ -1,91 +1,171 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, formatDate } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-
 import { RouterModule } from '@angular/router';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { HlmTableModule } from './spartan/ui-table-helm/src';
+import { Component, input, output, signal, TemplateRef, viewChild } from '@angular/core';
+import { HlmTableImports } from './spartan/ui-table-helm/src';
 import { OebButtonComponent } from './oeb-button.component';
-
 import { ApiStaffRequest } from '../issuer/staffrequest-api.model';
-import { HlmIconModule } from '@spartan-ng/ui-icon-helm';
+import { HlmIconModule } from '@spartan-ng/helm/icon';
+import { OebTableImports } from './oeb-table';
+import {
+	ColumnDef,
+	createAngularTable,
+	FlexRenderDirective,
+	getCoreRowModel,
+	getSortedRowModel,
+	SortingState,
+} from '@tanstack/angular-table';
+import { NgIcon } from '@ng-icons/core';
 
 @Component({
 	selector: 'issuer-staff-requests-datatable',
 	standalone: true,
-	imports: [HlmTableModule, HlmIconModule, CommonModule, OebButtonComponent, TranslateModule, RouterModule],
+	imports: [
+		...HlmTableImports,
+		...OebTableImports,
+		FlexRenderDirective,
+		NgIcon,
+		HlmIconModule,
+		CommonModule,
+		OebButtonComponent,
+		TranslateModule,
+		RouterModule,
+	],
 	template: `
-		@if (requests.length > 0) {
-			<hlm-table
-				class="tw-rounded-t-[20px] tw-overflow-hidden tw-w-full tw-max-w-[100%] tw-bg-white tw-border-lightgrey tw-border"
-			>
-				<hlm-trow class="!tw-bg-lightgreen tw-text-oebblack tw-flex-wrap hover:tw-bg-lightgreen">
-					<!-- Name -->
-					<hlm-th class="tw-text-oebblack tw-text-lg md:tw-w-[25%] tw-w-[33%] tw-px-4">Name</hlm-th>
-					<!-- E-Mail -->
-					<hlm-th class="tw-text-oebblack md:tw-w-[25%] tw-w-[33%] tw-text-lg tw-px-4 tw-text-center"
-						>E-Mail</hlm-th
-					>
-					<!-- Requested On -->
-					<hlm-th class="tw-text-oebblack md:tw-w-[25%]tw-w-[33%] tw-text-lg tw-px-4 tw-text-center">{{
-						'Badge.requestedOn' | translate
-					}}</hlm-th>
-					<!-- Actions -->
-					<hlm-th class="md:tw-w-[25%] tw-w-0 tw-px-4"></hlm-th>
-				</hlm-trow>
-				@for (request of requests; track request) {
-					<hlm-trow class="tw-border-purple tw-flex-wrap tw-py-2">
-						<!-- Name Column -->
-						<hlm-th class="md:tw-w-[25%] tw-w-[33%] tw-px-4 tw-flex tw-items-center">
-							<span class="tw-text-oebblack tw-cursor-pointer tw-truncate tw-font-normal tw-text-lg">
-								{{ request.user.first_name }} {{ request.user.last_name }}
-							</span>
-						</hlm-th>
-						<!-- Email Column -->
-						<hlm-th class="md:tw-w-[25%] tw-w-[33%] tw-px-4 tw-text-center tw-flex tw-items-center">
-							<p class="tw-font-normal tw-truncate tw-text-lg tw-text-oebblack">
-								{{ request.user.email }}
-							</p>
-						</hlm-th>
-						<!-- Requested On Column -->
-						<hlm-th class="md:tw-w-[25%] tw-w-[33%] tw-px-4 tw-text-center tw-flex tw-items-center">
-							<span class="tw-font-normal tw-text-lg tw-text-oebblack">{{
-								request.requestedOn | date: 'dd.MM.yyyy'
-							}}</span>
-						</hlm-th>
-						<!-- Actions Column -->
-						<hlm-th
-							class="md:tw-w-[25%] tw-w-full tw-px-4 tw-flex tw-flex-row md:tw-flex-col lg:tw-h-fit tw-h-16 lg:tw-flex-row tw-justify-evenly tw-items-start md:tw-items-center xl:tw-gap-6 tw-gap-2"
-						>
-							<oeb-button
-								(click)="confirmRequest(request)"
-								size="sm"
-								[text]="'General.confirm' | translate"
-								class="tw-mb-2 md:tw-mb-0"
-							></oeb-button>
-							<span
-								(click)="deleteRequest(request.entity_id)"
-								class="tw-text-link tw-underline tw-text-sm tw-cursor-pointer"
-							>
-								{{ 'Issuer.deleteStaffRequest' | translate }}
-							</span>
-						</hlm-th>
-					</hlm-trow>
+		<table
+			hlmTable
+			oeb-table-highlight
+		>
+			<thead hlmTHead>
+				@for (headerRow of table.getHeaderGroups(); track headerRow.id) {
+					<tr hlmTr>
+						@for (headerCell of headerRow.headers; track headerCell.id) {
+							@if (!headerCell.isPlaceholder) {
+								<th hlmTh>
+									<div
+										class="tw-flex tw-flex-row tw-items-center tw-gap-2 [&[data-sortable='true']]:tw-cursor-pointer"
+										(click)="headerCell.column.toggleSorting()"
+										[attr.data-sortable]="headerCell.column.getCanSort()"
+									>
+										<div>
+											<ng-container
+												*flexRender="
+													headerCell.column.columnDef.header;
+													props: headerCell.getContext();
+													let header
+												"
+											>
+												<div [innerHTML]="header"></div>
+											</ng-container>
+										</div>
+
+										@if (headerCell.column.getIsSorted()) {
+											@let order = headerCell.column.getNextSortingOrder() === "asc" ? "desc" : "asc";
+											@if (order === 'asc') {
+												<ng-icon hlm size="base" name="lucideChevronUp" />
+											} @else {
+												<ng-icon hlm size="base" name="lucideChevronDown" />
+											}
+										} @else if (headerCell.column.getCanSort()) {
+											<ng-icon hlm size="base" name="lucideChevronsUpDown" />
+										}
+									</div>
+								</th>
+							}
+						}
+					</tr>
 				}
-			</hlm-table>
-		}
+			</thead>
+			<tbody hlmTBody>
+				@for (row of table.getRowModel().rows; track row.id; let i = $index) {
+					<tr hlmTr>
+						@for (cell of row.getVisibleCells(); track cell.id;) {
+							<td hlmTd>
+								<ng-container
+									*flexRender="cell.column.columnDef.cell; props: cell.getContext(); let cell"
+								>
+									<div [innerHTML]="cell"></div>
+								</ng-container>
+							</td>
+						}
+					</tr>
+				}
+			</tbody>
+		</table>
+
+		<ng-template #translateHeaderIDCellTemplate let-context>
+			{{ context.header.id | translate | titlecase }}
+		</ng-template>
+
+		<ng-template #badgeActionsCellTemplate let-context>
+			<div class="tw-flex tw-flex-col tw-justify-end lg:tw-flex-row tw-gap-4">
+				<oeb-button
+					(click)="confirmStaffRequest.emit(context.row.original)"
+					size="sm"
+					width="full_width"
+					[text]="'General.confirm' | translate"/>
+				<oeb-button
+					variant="secondary"
+					(click)="deleteStaffRequest.emit(context.row.original.entity_id)"
+					size="sm"
+					width="full_width"
+					[text]="'Issuer.deleteStaffRequest' | translate"/>
+			</div>
+		</ng-template>
 	`,
 })
 export class IssuerStaffRequestsDatatableComponent {
-	@Input() caption: string = '';
-	@Input() requests: ApiStaffRequest[] = [];
-	@Output() deleteStaffRequest = new EventEmitter<string>();
-	@Output() confirmStaffRequest = new EventEmitter<ApiStaffRequest>();
+	requests = input.required<ApiStaffRequest[]>();
+	deleteStaffRequest = output<string>();
+	confirmStaffRequest = output<ApiStaffRequest>();
 
-	deleteRequest(requestId: string) {
-		this.deleteStaffRequest.emit(requestId);
-	}
+	translateHeaderIDCellTemplate = viewChild.required<TemplateRef<any>>('translateHeaderIDCellTemplate');
+	badgeActionsTemplate = viewChild.required<TemplateRef<any>>('badgeActionsCellTemplate');
 
-	confirmRequest(request: ApiStaffRequest) {
-		this.confirmStaffRequest.emit(request);
-	}
+	readonly tableSorting = signal<SortingState>([
+		{
+			id: 'General.name',
+			desc: false,
+		},
+	]);
+	private readonly tableColumnDefinition: ColumnDef<ApiStaffRequest>[] = [
+		{
+			id: 'General.name',
+			header: () => this.translateHeaderIDCellTemplate(),
+			accessorFn: (row) => `${row.user.first_name} ${row.user.last_name}`,
+			cell: (ctx) => ctx.getValue(),
+			sortDescFirst: false,
+		},
+		{
+			id: 'General.email',
+			header: () => this.translateHeaderIDCellTemplate(),
+			accessorFn: (row) => `${row.user.email}`,
+			cell: (ctx) => ctx.getValue(),
+			sortDescFirst: false,
+		},
+		{
+			id: 'Badge.requestedOn',
+			header: () => this.translateHeaderIDCellTemplate(),
+			accessorFn: (row) => formatDate(row.requestedOn, 'dd.MM.yyyy', 'de-DE'),
+			cell: (ctx) => ctx.getValue(),
+		},
+		{
+			id: 'actions',
+			cell: (info) => this.badgeActionsTemplate(),
+			enableSorting: false,
+		},
+	];
+
+	table = createAngularTable(() => ({
+		data: this.requests(),
+		columns: this.tableColumnDefinition,
+		getCoreRowModel: getCoreRowModel(),
+		getSortedRowModel: getSortedRowModel(),
+		state: {
+			sorting: this.tableSorting(),
+		},
+		onSortingChange: (updater) =>
+			updater instanceof Function ? this.tableSorting.update(updater) : this.tableSorting.set(updater),
+		enableSortingRemoval: false, // ensures at least one column is sorted
+	}));
 }

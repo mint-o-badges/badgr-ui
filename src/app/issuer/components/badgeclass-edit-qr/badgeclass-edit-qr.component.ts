@@ -1,25 +1,22 @@
 import { Component, inject } from '@angular/core';
 import { LinkEntry, BgBreadcrumbsComponent } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
-import { ActivatedRoute, Route, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BadgeClassManager } from '../../services/badgeclass-manager.service';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
 import { SessionService } from '../../../common/services/session.service';
 import { BadgeClass } from '../../models/badgeclass.model';
-import { typedFormGroup } from '../../../common/util/typed-forms';
-import { Validators } from '@angular/forms';
-import { DateValidator } from '../../../common/validators/date.validator';
 import { QrCodeApiService } from '../../services/qrcode-api.service';
 import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
 import { SuccessDialogComponent } from '../../../common/dialogs/oeb-dialogs/success-dialog.component';
 import { TranslateService } from '@ngx-translate/core';
 import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
-import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
 import { EditQrFormComponent } from '../edit-qr-form/edit-qr-form.component';
+import { HlmH1 } from '@spartan-ng/helm/typography';
 
 @Component({
 	selector: 'badgeclass-edit-qr',
 	templateUrl: './badgeclass-edit-qr.component.html',
-	imports: [BgAwaitPromises, BgBreadcrumbsComponent, HlmH1Directive, EditQrFormComponent],
+	imports: [BgAwaitPromises, BgBreadcrumbsComponent, HlmH1, EditQrFormComponent],
 })
 export class BadgeClassEditQrComponent extends BaseAuthenticatedRoutableComponent {
 	get issuerSlug() {

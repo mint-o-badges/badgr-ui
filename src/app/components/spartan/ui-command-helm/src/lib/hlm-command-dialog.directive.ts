@@ -1,17 +1,17 @@
 import { Directive, ElementRef, Renderer2, computed, effect, inject, input, signal } from '@angular/core';
 import { hlm, injectExposesStateProvider } from '@spartan-ng/brain/core';
 import type { ClassValue } from 'clsx';
-import { HlmCommandDirective } from './hlm-command.directive';
+import { HlmCommand } from './hlm-command.directive';
 
 @Directive({
 	selector: '[hlmCmdDialog]',
 	standalone: true,
-	hostDirectives: [HlmCommandDirective],
+	hostDirectives: [HlmCommand],
 	host: {
 		'[class]': '_computedClass()',
 	},
 })
-export class HlmCommandDialogDirective {
+export class HlmCommandDialog {
 	private _stateProvider = injectExposesStateProvider({ host: true });
 	public state = this._stateProvider.state ?? signal('closed').asReadonly();
 	private _renderer = inject(Renderer2);

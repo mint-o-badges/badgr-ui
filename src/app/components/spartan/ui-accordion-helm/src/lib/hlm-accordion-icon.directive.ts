@@ -1,7 +1,7 @@
 import { Directive, computed, inject, input } from '@angular/core';
 import { lucideChevronDown } from '@ng-icons/lucide';
 import { hlm } from '@spartan-ng/brain/core';
-import { HlmIconDirective, provideHlmIconConfig } from '../../../ui-icon-helm/src/index';
+import { HlmIcon, provideHlmIconConfig } from '../../../ui-icon-helm/src/index';
 import type { ClassValue } from 'clsx';
 import { provideIcons } from '@ng-icons/core';
 
@@ -13,7 +13,7 @@ import { provideIcons } from '@ng-icons/core';
 		'[class]': '_computedClass()',
 	},
 })
-export class HlmAccordionIconDirective {
+export class HlmAccordionIcon {
 	public readonly userClass = input<ClassValue>('', { alias: 'class' });
 	protected _computedClass = computed(() =>
 		hlm('tw-inline-block tw-h-4 tw-w-4 tw-transition-transform tw-duration-200', this.userClass()),
