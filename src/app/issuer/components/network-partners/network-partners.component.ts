@@ -71,7 +71,7 @@ export class NetworkPartnersComponent {
 		const dialogRef = this._hlmDialogService.open(DialogComponent, {
 			context: {
 				headerTemplate: this.headerTemplate,
-				content: this.addInstitutionsTemplate,
+				content: this.addInstitutionsTemplate(),
 				variant: 'default',
 				footer: false,
 			},
