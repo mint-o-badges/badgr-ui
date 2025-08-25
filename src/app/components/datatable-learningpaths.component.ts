@@ -32,6 +32,9 @@ import { NgIcon } from '@ng-icons/core';
 		RouterModule,
 		NgIcon,
 	],
+	host: {
+		class: 'tw-block tw-overflow-x-auto',
+	},
 	template: ` <table hlmTable oeb-table>
 			<thead hlmTHead>
 				@for (headerRow of badgeTable.getHeaderGroups(); track headerRow.id) {
