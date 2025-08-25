@@ -9,6 +9,7 @@
 			[network]="network()"
 			[partners]="issuers()"
 			[approvedInvites]="approvedInvites()"
+			(removePartnerRequest)="onPartnerRemoved($any($event))"
 		></network-partners-datatable>
 	}
 	@if (pendingInvites().length) {

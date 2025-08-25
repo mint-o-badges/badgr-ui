@@ -44,6 +44,7 @@
 	<network-partners
 		[network]="network()"
 		[issuers]="partnerIssuers()"
+		(removePartnerRequest)="onRemovePartner($event)"
 		[addInstitutionsTemplate]="addInstitutionsTemplate"
 	></network-partners>
 </ng-template>

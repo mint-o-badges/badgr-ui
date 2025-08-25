@@ -1,4 +1,4 @@
-import { Component, inject, input, Input, signal, TemplateRef, ViewChild } from '@angular/core';
+import { Component, inject, input, Input, output, signal, TemplateRef, ViewChild } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
@@ -27,6 +27,8 @@ export class NetworkPartnersComponent {
 
 	pendingInvites = signal<ApiNetworkInvitation[]>([]);
 	approvedInvites = signal<ApiNetworkInvitation[]>([]);
+
+	removePartnerRequest = output<Issuer>();
 
 	issuerSearchQuery = '';
 	selectedIssuers: Issuer[] = [];
@@ -106,5 +108,9 @@ export class NetworkPartnersComponent {
 		} catch (error) {
 			console.error('Failed to revoke invitation:', error);
 		}
+	}
+
+	async onPartnerRemoved(issuer: Issuer) {
+		this.removePartnerRequest.emit(issuer);
 	}
 }

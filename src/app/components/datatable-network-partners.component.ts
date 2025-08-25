@@ -126,7 +126,7 @@ export class NetworkPartnersDatatableComponent {
 	approvedInvites = input.required<ApiNetworkInvitation[]>();
 	actionElement = output<Issuer>();
 
-	private _partners = signal<Issuer[]>([]);
+	removePartnerRequest = output<Issuer>();
 
 	translateHeaderIDCellTemplate = viewChild.required<TemplateRef<any>>('translateHeaderIDCellTemplate');
 	issuerActionsTemplate = viewChild.required<TemplateRef<any>>('issuerActionsCellTemplate');
@@ -160,7 +160,7 @@ export class NetworkPartnersDatatableComponent {
 	];
 
 	table = createAngularTable(() => ({
-		data: this._partners(),
+		data: this.partners(),
 		columns: this.tableColumnDefinition,
 		getCoreRowModel: getCoreRowModel(),
 		getSortedRowModel: getSortedRowModel(),
@@ -172,18 +172,10 @@ export class NetworkPartnersDatatableComponent {
 		enableSortingRemoval: false, // ensures at least one column is sorted
 	}));
 
-	constructor(private networkApiService: NetworkApiService) {
-		effect(() => {
-			this._partners.set(this.partners());
-		});
-	}
+	constructor(private networkApiService: NetworkApiService) {}
 
 	removePartner(issuer: Issuer) {
-		this.networkApiService.removeIssuerFromNetwork(this.network().slug, issuer.slug).then((res) => {
-			if (res.status == 204) {
-				this._partners.update((current) => current.filter((partner) => partner.slug !== issuer.slug));
-			}
-		});
+		this.removePartnerRequest.emit(issuer);
 	}
 
 	acceptedOn(issuer: Issuer) {

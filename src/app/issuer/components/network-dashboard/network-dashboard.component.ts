@@ -206,6 +206,13 @@ export class NetworkDashboardComponent extends BaseAuthenticatedRoutableComponen
 		}
 	}
 
+	async onRemovePartner(issuer: Issuer) {
+		const res = await this.networkApiService.removeIssuerFromNetwork(this.network().slug, issuer.slug);
+		if (res.status === 204) {
+			this.partnerIssuers.update((current) => current.filter((partner) => partner.slug !== issuer.slug));
+		}
+	}
+
 	calculateDropdownMaxHeight(el: HTMLElement, minHeight = 100) {
 		const rect = el.getBoundingClientRect();
 		let maxHeight = Math.ceil(window.innerHeight - rect.top - rect.height - 20);
