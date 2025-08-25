@@ -31,9 +31,6 @@ import { NgIcon } from '@ng-icons/core';
 		TranslateModule,
 		RouterModule,
 	],
-	host: {
-		class: 'tw-block tw-overflow-x-auto',
-	},
 	template: ` <table
 		hlmTable
 		oeb-table
