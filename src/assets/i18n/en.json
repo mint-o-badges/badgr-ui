@@ -407,7 +407,8 @@
 			"staff": "Member"
 		},
 		"confirmNetworkInvitation": "Confirm the <span class='tw-font-bold'>network invitation from {{networkName}}</span> for your institution <span class='tw-italic'>{{issuerName}}</span> by clicking the button:",
-		"partnerSince": "Partner since"
+		"partnerSince": "Partner since",
+		"partner": "Network Members"
 	},
 	"Badge": {
 		"groupBy": "Group by",
