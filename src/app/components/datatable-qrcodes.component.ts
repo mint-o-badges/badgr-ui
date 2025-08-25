@@ -30,6 +30,8 @@ import {
 	getSortedRowModel,
 	RowSelectionState,
 	SortingState,
+	getPaginationRowModel,
+	PaginationState,
 } from '@tanstack/angular-table';
 import { OebCheckboxComponent } from './oeb-checkbox.component';
 import { OebTableImports } from './oeb-table';
@@ -140,6 +142,76 @@ export type RequestedBadge = {
 				</tbody>
 			</table>
 
+			<!-- Pagination Controls - Only show if more than 15 badges -->
+			@if (shouldShowPagination()) {
+				<div class="tw-flex tw-items-center tw-justify-between tw-px-2 tw-py-4">
+					<div class="tw-flex tw-items-center tw-space-x-6 tw-lg:space-x-8">
+						<div class="tw-flex tw-items-center tw-space-x-2">
+							<p class="tw-text-sm tw-font-medium">{{ 'table.rowsPerPage' | translate }}</p>
+							<select
+								class="tw-h-8 tw-w-[70px] tw-rounded tw-border tw-border-gray-300 tw-px-2 tw-text-sm"
+								[value]="badgeTable.getState().pagination.pageSize"
+								(change)="onPageSizeChange($event)"
+							>
+								<option value="15">15</option>
+								<option value="25">25</option>
+								<option value="50">50</option>
+								<option value="100">100</option>
+							</select>
+						</div>
+						<div class="tw-flex tw-w-[100px] tw-items-center tw-justify-center tw-text-sm tw-font-medium">
+							{{ 'table.pageXofY' | translate : {
+								current: badgeTable.getState().pagination.pageIndex + 1,
+								total: badgeTable.getPageCount()
+							} }}
+						</div>
+						<div class="tw-flex tw-items-center tw-space-x-2">
+							<p class="tw-text-sm tw-font-medium">
+								{{ 'table.showingXtoYofZ' | translate : {
+									from: (badgeTable.getState().pagination.pageIndex * badgeTable.getState().pagination.pageSize) + 1,
+									to: Math.min((badgeTable.getState().pagination.pageIndex + 1) * badgeTable.getState().pagination.pageSize, badgeTable.getFilteredRowModel().rows.length),
+									total: badgeTable.getFilteredRowModel().rows.length
+								} }}
+							</p>
+						</div>
+					</div>
+					<div class="tw-flex tw-items-center tw-space-x-2">
+						<button
+							hlmBtn
+							size="sm"
+							[disabled]="!badgeTable.getCanPreviousPage()"
+							(click)="badgeTable.setPageIndex(0)"
+						>
+							<ng-icon hlm size="sm" name="lucideChevronsLeft" />
+						</button>
+						<button
+							hlmBtn
+							size="sm"
+							[disabled]="!badgeTable.getCanPreviousPage()"
+							(click)="badgeTable.previousPage()"
+						>
+							<ng-icon hlm size="sm" name="lucideChevronLeft" />
+						</button>
+						<button
+							hlmBtn
+							size="sm"
+							[disabled]="!badgeTable.getCanNextPage()"
+							(click)="badgeTable.nextPage()"
+						>
+							<ng-icon hlm size="sm" name="lucideChevronRight" />
+						</button>
+						<button
+							hlmBtn
+							size="sm"
+							[disabled]="!badgeTable.getCanNextPage()"
+							(click)="badgeTable.setPageIndex(badgeTable.getPageCount() - 1)"
+						>
+							<ng-icon hlm size="sm" name="lucideChevronsRight" />
+						</button>
+					</div>
+				</div>
+			}
+
 			<ng-template #translateHeaderIDCellTemplate let-context>
 				{{ context.header.id | translate | titlecase }}
 			</ng-template>
@@ -165,6 +237,7 @@ export type RequestedBadge = {
 		<oeb-button
 			size="sm"
 			class="tw-float-right"
+			variant="blackborder"
 			(click)="issueBadges()"
 			[disabled]="this.rowSelectionCount() === 0 || this.isTaskProcessing() || this.isTaskPending()"
 			[text]="this.rowSelectionCount() > 1 ? ('Issuer.giveBadges' | translate) : ('Issuer.giveBadge' | translate)"
@@ -191,23 +264,36 @@ export class QrCodeDatatableComponent {
 			this.currentTaskStatus()?.status === TaskStatus.RETRY,
 	);
 
+	Math = Math;
+
+	shouldShowPagination = computed(() => this.requestedBadges().length > 15);
+
 	badgeTable = createAngularTable(() => ({
 		data: this.requestedBadges(),
 		columns: this.badgeTableColumnDefinition,
 		getCoreRowModel: getCoreRowModel(),
 		getSortedRowModel: getSortedRowModel(),
+		getPaginationRowModel: getPaginationRowModel(),
 		state: {
 			sorting: this.tableSorting(),
 			rowSelection: this.rowSelection(),
+			pagination: this.pagination(),
 		},
 		onSortingChange: (updater) =>
 			updater instanceof Function ? this.tableSorting.update(updater) : this.tableSorting.set(updater),
+		onPaginationChange: (updater) =>
+			updater instanceof Function ? this.pagination.update(updater) : this.pagination.set(updater),
 		enableSortingRemoval: false, // ensures at least one column is sorted
 		enableRowSelection: true,
 		onRowSelectionChange: (updaterOrValue) => {
 			this.rowSelection.set(
 				typeof updaterOrValue === 'function' ? updaterOrValue(this.rowSelection()) : updaterOrValue,
 			);
+		},
+		initialState: {
+			pagination: {
+				pageSize: 15,
+			},
 		},
 	}));
 
@@ -247,6 +333,11 @@ export class QrCodeDatatableComponent {
 	];
 	private readonly _hlmDialogService = inject(HlmDialogService);
 
+	private readonly pagination = signal<PaginationState>({
+		pageIndex: 0,
+		pageSize: 15,
+	});
+
 	constructor(
 		private badgeRequestApiService: BadgeRequestApiService,
 		private badgeInstanceApiService: BadgeInstanceApiService,
@@ -261,6 +352,11 @@ export class QrCodeDatatableComponent {
 				response.body.requested_badges.map((badge: ApiRequestedBadge) => this.transformRequestedBadge(badge)),
 			);
 		});
+	}
+
+	onPageSizeChange(event: Event): void {
+		const target = event.target as HTMLSelectElement;
+		this.badgeTable.setPageSize(Number(target.value));
 	}
 
 	transformRequestedBadge = (apiBadge: ApiRequestedBadge): RequestedBadge => {

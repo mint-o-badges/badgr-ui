@@ -42,12 +42,20 @@ import { IssuerDetailDatatableComponent } from '../../../components/datatable-is
 import { FormsModule } from '@angular/forms';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { HlmH2 } from '@spartan-ng/helm/typography';
+import { OebTabsComponent } from '~/components/oeb-backpack-tabs.component';
 
 @Component({
 	selector: 'badgeclass-detail',
 	template: `
 		<bg-badgedetail [config]="config" [awaitPromises]="[issuerLoaded, badgeClassLoaded]">
-			<div #qrAwards>
+			<oeb-backpack-tabs
+				[variant]="'black'"
+				(onTabChanged)="onTabChange($event)"
+				[activeTab]="activeTab"
+				[tabs]="tabs"
+			>
+			</oeb-backpack-tabs>
+			<ng-template #qrAwards>
 				<qrcode-awards
 					(qrBadgeAward)="onQrBadgeAward($event)"
 					[awards]="qrCodeAwards"
@@ -56,8 +64,8 @@ import { HlmH2 } from '@spartan-ng/helm/typography';
 					[routerLinkText]="config?.issueQrRouterLink"
 					[defaultUnfolded]="focusRequests"
 				></qrcode-awards>
-			</div>
-			<div #batchAwards>
+			</ng-template>
+			<ng-template #batchAwards>
 				<issuer-detail-datatable
 					[recipientCount]="recipientCount"
 					[recipients]="instanceResults"
@@ -66,7 +74,7 @@ import { HlmH2 } from '@spartan-ng/helm/typography';
 					[downloadStates]="downloadStates"
 					[awardInProgress]="isTaskProcessing || isTaskPending"
 				></issuer-detail-datatable>
-			</div>
+			</ng-template>
 			<ng-template #headerTemplate>
 				<h2 class="tw-font-bold tw-my-2" hlmH2>{{ 'Badge.copyForWhatInstitution' | translate }}</h2>
 			</ng-template>
@@ -109,6 +117,7 @@ import { HlmH2 } from '@spartan-ng/helm/typography';
 		FormsModule,
 		OebButtonComponent,
 		TranslatePipe,
+		OebTabsComponent,
 	],
 })
 export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
@@ -130,6 +139,9 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 	private taskSubscription: Subscription | null = null;
 
 	TaskStatus = TaskStatus;
+
+	tabs: any = undefined;
+	activeTab = 'qrcodes';
 
 	get issuerSlug() {
 		return this.route.snapshot.params['issuerSlug'];
@@ -286,6 +298,21 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 	ngAfterViewChecked() {
 		this.focusRequestsOnPage();
 		this.focusBatchAwardingsOnPage();
+	}
+
+	ngAfterViewInit() {
+		this.tabs = [
+			{
+				key: 'qrcodes',
+				title: 'Qrcodes',
+				component: this.qrAwards,
+			},
+			{
+				key: 'recipients',
+				title: 'Recipients',
+				component: this.batchAwards,
+			},
+		];
 	}
 
 	copyBadge() {
@@ -622,6 +649,10 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 					() => void 0,
 				);
 		}
+	}
+
+	onTabChange(tab) {
+		this.activeTab = tab;
 	}
 
 	routeToBadgeAward(badge: BadgeClass, issuer) {

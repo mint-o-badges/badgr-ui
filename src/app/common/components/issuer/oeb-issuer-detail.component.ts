@@ -131,7 +131,7 @@ export class OebIssuerDetailComponent implements OnInit {
 	@ViewChild('badgesTemplate', { static: true }) badgesTemplate: ElementRef;
 	@ViewChild('learningPathTemplate', { static: true }) learningPathTemplate: ElementRef;
 
-	ngAfterContentInit() {
+	ngAfterViewInit() {
 		this.tabs = [
 			{
 				key: 'badges',

@@ -1,15 +1,12 @@
-<div class="oeb">
-	<oeb-separator [class]="separatorStyle"></oeb-separator>
+<div class="oeb tw-mt-4">
 	@if (awards.length === 0) {
-		<div class="tw-flex tw-flex-col lg:tw-flex-row tw-items-center tw-justify-between tw-gap-2">
-			<div class="tw-flex tw-flex-col">
-				<h3 hlmH3 class="tw-text-purple tw-font-bold">{{ 'QrCode.qrAwards' | translate }}</h3>
-				<span class="tw-italic tw-text-[18px] tw-leading-[21.6px] tw-text-oebblack tw-mt-2">{{
-					'QrCode.noQrCodes' | translate
-				}}</span>
-			</div>
+		<div class="tw-flex tw-flex-col tw-gap-2">
+			<h3 hlmH3 class="tw-text-purple tw-font-bold">{{ 'QrCode.qrAwards' | translate }}</h3>
+			<span class="tw-italic tw-text-[18px] tw-leading-[21.6px] tw-text-oebblack tw-mt-2">{{
+				'QrCode.noQrCodes' | translate
+			}}</span>
 			<oeb-button
-				class="oeb-button tw-whitespace-nowrap !tw-p-0"
+				class="tw-whitespace-nowrap !tw-p-0"
 				variant="secondary"
 				[text]="'Badge.awardQRCode' | translate"
 				(click)="routeToQrAward(badgeClass, issuer)"
@@ -17,7 +14,7 @@
 		</div>
 	} @else {
 		<div class="oeb-standard-padding-bottom">
-			<h3 hlmH3 size="default" class="tw-text-purple tw-font-bold">{{ 'QrCode.qrAwards' | translate }}</h3>
+			<h3 hlmH3 size="default" class="tw-text-oebblack tw-font-bold">{{ 'QrCode.qrAwards' | translate }}</h3>
 		</div>
 		<div hlmAccordion class="tw-flex tw-gap-2">
 			@for (award of awards; track award; let i = $index) {
@@ -62,7 +59,7 @@
 									<ng-icon hlm name="lucideChevronDown" hlmAccIcon class="tw-w-8 tw-h-8" />
 								}
 							</button>
-							@if (award.request_count > 0) {
+							@if (award.request_count > 0 && issuer?.slug && badgeClass?.slug) {
 								<brn-accordion-content hlm class="tw-text-white">
 									<qrcodes-datatable
 										[qrCodeId]="award.slug"
@@ -97,6 +94,4 @@
 			}
 		</div>
 	}
-
-	<oeb-separator [class]="separatorStyle"></oeb-separator>
 </div>
