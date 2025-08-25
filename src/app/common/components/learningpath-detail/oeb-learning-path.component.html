@@ -19,7 +19,11 @@
 							</h2>
 							<p size="sm" hlmP class="tw-text-oebblack">
 								{{ 'LearningPath.lpFrom' | translate }}
-								<a hlmA [routerLink]="['/issuer/issuers/' + issuer.slug]">{{ issuer.name }}</a>
+								<a
+									class="tw-underline !tw-text-link hover:!tw-text-buttonhover tw-cursor-pointer"
+									[routerLink]="['/issuer/issuers/' + issuer.slug]"
+									>{{ issuer.name }}</a
+								>
 							</p>
 							<div class="tw-flex tw-gap-1 tw-pt-4 oeb-standard-padding-bottom">
 								@for (tag of learningPath.tags; track tag) {

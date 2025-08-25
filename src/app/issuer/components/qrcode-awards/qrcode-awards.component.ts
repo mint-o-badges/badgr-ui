@@ -1,6 +1,6 @@
 import { NgIcon } from '@ng-icons/core';
 import { Component, EventEmitter, Input, Output, SimpleChanges, inject } from '@angular/core';
-import { BrnAccordionContentComponent } from '@spartan-ng/brain/accordion';
+import { BrnAccordionContent } from '@spartan-ng/brain/accordion';
 import { HlmAccordionModule } from '../../../components/spartan/ui-accordion-helm/src';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
@@ -14,15 +14,14 @@ import type { MenuItem } from '../../../../app/common/components/badge-detail/ba
 import { HlmDialogService } from '../../../../app/components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
 import { DangerDialogComponent } from '../../../../app/common/dialogs/oeb-dialogs/danger-dialog.component';
 import { QrCodeApiService } from '../../services/qrcode-api.service';
-import { HlmH3Directive } from '../../../../app/components/spartan/ui-typography-helm/src/lib/hlm-h3.directive';
-
 import { TranslateService } from '@ngx-translate/core';
 import { InfoDialogComponent } from '../../../common/dialogs/oeb-dialogs/info-dialog.component';
 import { BadgeClass } from '../../models/badgeclass.model';
 import { Router } from '@angular/router';
 import { Issuer } from '../../models/issuer.model';
-import { HlmIconDirective } from '../../../components/spartan/ui-icon-helm/src/lib/hlm-icon.directive';
 import { SvgIconComponent } from '~/common/components/svg-icon.component';
+import { HlmIcon } from '@spartan-ng/helm/icon';
+import { HlmH3 } from '@spartan-ng/helm/typography';
 
 @Component({
 	selector: 'qrcode-awards',
@@ -31,16 +30,16 @@ import { SvgIconComponent } from '~/common/components/svg-icon.component';
 	imports: [
 		HlmAccordionModule,
 		NgIcon,
-		HlmIconDirective,
+		HlmIcon,
 		TranslateModule,
-		BrnAccordionContentComponent,
+		BrnAccordionContent,
 		RouterModule,
 		NgClass,
 		OebSeparatorComponent,
 		OebButtonComponent,
 		OebDropdownComponent,
 		QrCodeDatatableComponent,
-		HlmH3Directive,
+		HlmH3,
 		SvgIconComponent,
 	],
 })

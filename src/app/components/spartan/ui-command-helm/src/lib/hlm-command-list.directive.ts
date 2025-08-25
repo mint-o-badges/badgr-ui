@@ -9,7 +9,7 @@ import type { ClassValue } from 'clsx';
 		'[class]': '_computedClass()',
 	},
 })
-export class HlmCommandListDirective {
+export class HlmCommandList {
 	public readonly userClass = input<ClassValue>('', { alias: 'class' });
 	protected _computedClass = computed(() => hlm('max-h-[300px] overflow-y-auto overflow-x-hidden', this.userClass()));
 }

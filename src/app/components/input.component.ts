@@ -1,16 +1,16 @@
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
-import { HlmInputDirective, InputVariants } from './spartan/ui-input-helm/src';
+import { HlmInput, InputVariants } from './spartan/ui-input-helm/src';
 import { OebInputErrorComponent } from './input.error.component';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { NgClass } from '@angular/common';
 import { UrlValidator } from '../common/validators/url.validator';
-import { HlmPDirective } from './spartan/ui-typography-helm/src/lib/hlm-p.directive';
 import { TypedFormGroup } from '../common/util/typed-forms';
 import { NgIcon } from '@ng-icons/core';
+import { HlmP } from '@spartan-ng/helm/typography';
 
 @Component({
 	selector: 'oeb-input',
-	imports: [HlmInputDirective, HlmPDirective, OebInputErrorComponent, NgClass, ReactiveFormsModule, NgIcon],
+	imports: [HlmInput, HlmP, OebInputErrorComponent, NgClass, ReactiveFormsModule, NgIcon],
 	styleUrls: ['./input.component.scss'],
 	template: ` <div
 		[ngClass]="{ 'tw-my-6 md:tw-mt-7': !noTopMargin, 'tw-opacity-50 tw-pointer-events-none': readonly }"

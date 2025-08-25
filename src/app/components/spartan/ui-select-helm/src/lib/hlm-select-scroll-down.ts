@@ -1,0 +1,23 @@
+import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import { NgIcon, provideIcons } from '@ng-icons/core';
+import { lucideChevronDown } from '@ng-icons/lucide';
+import { hlm } from '@spartan-ng/brain/core';
+import { HlmIcon } from '@spartan-ng/helm/icon';
+import { ClassValue } from 'clsx';
+
+@Component({
+	selector: 'hlm-select-scroll-down',
+	imports: [NgIcon, HlmIcon],
+	providers: [provideIcons({ lucideChevronDown })],
+	host: {
+		'[class]': '_computedClass()',
+	},
+	template: ` <ng-icon hlm size="sm" class="tw-ml-2" name="lucideChevronDown" /> `,
+	changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class HlmSelectScrollDown {
+	public readonly userClass = input<ClassValue>('', { alias: 'class' });
+	protected readonly _computedClass = computed(() =>
+		hlm('tw-flex tw-cursor-default tw-items-center tw-justify-center tw-py-1', this.userClass()),
+	);
+}

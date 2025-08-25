@@ -24,7 +24,7 @@
 				<div class="tw-flex tw-gap-2">
 					<div
 						[ngClass]="
-							award.request_count > 0 ? 'tw-bg-[var(--color-green)]' : 'tw-bg-[var(--color-darkgray)]'
+							award.request_count > 0 ? 'tw-bg-[var(--color-mint)]' : 'tw-bg-[var(--color-darkgray)]'
 						"
 						class="tw-border-0 tw-border-solid tw-border-purple tw-rounded-lg tw-pb-0 tw-w-full"
 					>
@@ -65,13 +65,11 @@
 							@if (award.request_count > 0) {
 								<brn-accordion-content hlm class="tw-text-white">
 									<qrcodes-datatable
-										caption=""
 										[qrCodeId]="award.slug"
 										[issuerSlug]="issuer.slug"
 										[badgeSlug]="badgeClass.slug"
 										(deletedQRAward)="deleteQRAward($event)"
 										(qrBadgeAward)="onQrBadgeAward($event)"
-										[(requestCount)]="award.request_count"
 									></qrcodes-datatable>
 								</brn-accordion-content>
 							}
@@ -81,7 +79,7 @@
 						<oeb-dropdown
 							[trigger]="svgTrigger"
 							[ngClass]="
-								award.request_count > 0 ? 'tw-bg-[var(--color-green)]' : 'tw-bg-[var(--color-darkgray)]'
+								award.request_count > 0 ? 'tw-bg-[var(--color-mint)]' : 'tw-bg-[var(--color-darkgray)]'
 							"
 							class="tw-items-center tw-justify-center tw-flex tw-cursor-pointer tw-rounded-[7px]"
 							[menuItems]="qrCodeMenus[i]"

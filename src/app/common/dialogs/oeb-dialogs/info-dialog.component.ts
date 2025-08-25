@@ -3,9 +3,9 @@ import { Component, HostBinding, Input, inject } from '@angular/core';
 import { BrnDialogRef, injectBrnDialogContext } from '@spartan-ng/brain/dialog';
 import { OebDialogComponent } from '../../../components/oeb-dialog.component';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
-import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/src';
-import { HlmIconDirective } from '../../../components/spartan/ui-icon-helm/src';
-import { HlmH3Directive } from '../../../components/spartan/ui-typography-helm/src';
+import { HlmP } from '../../../components/spartan/ui-typography-helm/src';
+import { HlmIcon } from '../../../components/spartan/ui-icon-helm/src';
+import { HlmH3 } from '../../../components/spartan/ui-typography-helm/src';
 import { lucideInfo } from '@ng-icons/lucide';
 
 import { TranslateService } from '@ngx-translate/core';
@@ -14,15 +14,7 @@ import { provideIcons } from '@ng-icons/core';
 
 @Component({
 	selector: 'oeb-info-dialog',
-	imports: [
-		OebDialogComponent,
-		OebButtonComponent,
-		HlmPDirective,
-		HlmH3Directive,
-		NgIcon,
-		HlmIconDirective,
-		TranslateModule,
-	],
+	imports: [OebDialogComponent, OebButtonComponent, HlmP, HlmH3, NgIcon, HlmIcon, TranslateModule],
 	providers: [TranslateService, provideIcons({ lucideInfo })],
 	template: `
 		<oeb-dialog [variant]="variant" class="tw-text-center tw-text-oebblack">

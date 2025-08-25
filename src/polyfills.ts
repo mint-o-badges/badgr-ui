@@ -42,5 +42,3 @@ import 'zone.js'; // Included with Angular CLI.
 // import 'intl/locale-data/jsonp/en';
 
 // Custom polyfills
-
-import 'inert-polyfill/inert-polyfill';
