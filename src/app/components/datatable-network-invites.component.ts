@@ -131,7 +131,7 @@ export class NetworkInvitesDatatableComponent {
 	network = input.required<Network>();
 	actionElement = output<ApiNetworkInvitation>();
 
-	private _invites = signal<ApiNetworkInvitation[]>([]);
+	inviteRevoked = output<ApiNetworkInvitation>();
 
 	translateHeaderIDCellTemplate = viewChild.required<TemplateRef<any>>('translateHeaderIDCellTemplate');
 	issuerActionsTemplate = viewChild.required<TemplateRef<any>>('issuerActionsCellTemplate');
@@ -165,7 +165,7 @@ export class NetworkInvitesDatatableComponent {
 	];
 
 	table = createAngularTable(() => ({
-		data: this._invites(),
+		data: this.invites(),
 		columns: this.tableColumnDefinition,
 		getCoreRowModel: getCoreRowModel(),
 		getSortedRowModel: getSortedRowModel(),
@@ -177,26 +177,17 @@ export class NetworkInvitesDatatableComponent {
 		enableSortingRemoval: false,
 	}));
 
-	constructor(private networkApiService: NetworkApiService) {
-		effect(() => {
-			this._invites.set(this.invites());
-		});
+	constructor(private networkApiService: NetworkApiService) {}
+
+	ngOnInit() {
+		console.log('invites', this.invites());
 	}
 
 	resendInvitation(issuer: Issuer) {
-		// TODO: implement
-		this.networkApiService.inviteInstitutions(this.network().slug, [issuer]).then((res) => {
-			console.log('res', res);
-		});
+		this.networkApiService.inviteInstitutions(this.network().slug, [issuer]).then((res) => {});
 	}
 
 	revokeInvitation(invite: ApiNetworkInvitation) {
-		this.networkApiService.revokeInvitation(invite.entity_id).then((res) => {
-			if (res.ok) {
-				this._invites.update((current) =>
-					current.filter((invitation) => invitation.entity_id !== invite.entity_id),
-				);
-			}
-		});
+		this.inviteRevoked.emit(invite);
 	}
 }

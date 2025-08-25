@@ -1,4 +1,4 @@
-<ng-container *bgAwaitPromises="[promise]">
+<ng-container *bgAwaitPromises="[promise()]">
 	@if (networks.length == 0) {
 		<p hlmP size="lg" class="tw-py-3 tw-flex tw-flex-col">
 			<span class="tw-text-oebblack tw-font-bold" [innerHTML]="'Network.noIssuerInNetwork' | translate"></span>
@@ -18,7 +18,7 @@
 	} @else {
 		<div class="md:tw-flex">
 			<div class="tw-grid tw-grid-cols-myIssuersMobile sm:tw-grid-cols-myIssuers tw-gap-6 tw-w-full tw-relative">
-				@for (network of networks; track network) {
+				@for (network of networks(); track network) {
 					<oeb-networkcard
 						[public]="false"
 						[network]="network"

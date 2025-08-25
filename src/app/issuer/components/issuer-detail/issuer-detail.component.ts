@@ -114,10 +114,6 @@ export class IssuerDetailComponent extends BaseAuthenticatedRoutableComponent im
 					{ title: this.issuer.name, routerLink: ['/issuer/issuers/' + this.issuer.slug] },
 				];
 
-				this.networksLoaded = new Promise<void>((res, rej) => {
-					// this.networkManager.networksByIssuerUrl$
-				});
-
 				this.badgesLoaded = firstValueFrom(this.badgeClassService.badgesByIssuerUrl$)
 					.then((badgesByIssuer) => {
 						const cmp = (a, b) => (a === b ? 0 : a < b ? -1 : 1);

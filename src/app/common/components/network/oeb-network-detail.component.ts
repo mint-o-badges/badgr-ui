@@ -1,12 +1,10 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { MessageService } from '../../../common/services/message.service';
 import { Title } from '@angular/platform-browser';
 import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
-import { AppConfigService } from '../../../common/app-config.service';
 import { IssuerManager } from '../../../issuer/services/issuer-manager.service';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
-import { SessionService } from '../../services/session.service';
 import { BgImageStatusPlaceholderDirective } from '../../directives/bg-image-status-placeholder.directive';
 import { NgIf } from '@angular/common';
 import { Network } from '../../../issuer/models/network.model';
@@ -31,18 +29,12 @@ export class OebNetworkDetailComponent {
 	issuersPromise: Promise<unknown>;
 
 	constructor(
-		private router: Router,
 		public translate: TranslateService,
 		protected messageService: MessageService,
 		protected title: Title,
 		protected issuerManager: IssuerManager,
 		protected profileManager: UserProfileManager,
-		private configService: AppConfigService,
-		private sessionService: SessionService,
-	) {
-		if (this.sessionService.isLoggedIn) {
-		}
-	}
+	) {}
 
 	routeToUrl(url) {
 		window.location.href = url;
