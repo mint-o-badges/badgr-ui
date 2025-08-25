@@ -1,14 +1,12 @@
-import { Component, inject, input, Input, OnInit } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { animate, animateChild, query, stagger, style, transition, trigger } from '@angular/animations';
 import { LearningPathApiService } from '../../services/learningpath-api.service';
 import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
 import { DangerDialogComponentTemplate } from '../../dialogs/oeb-dialogs/danger-dialog-template.component';
 import { BadgeClassManager } from '../../../issuer/services/badgeclass-manager.service';
-import { BadgeClass } from '../../../issuer/models/badgeclass.model';
 import { BadgeInstanceManager } from '../../../issuer/services/badgeinstance-manager.service';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { MessageService } from '../../services/message.service';
-import { BadgrApiFailure } from '../../services/api-failure';
 import { SuccessDialogComponent } from '../../dialogs/oeb-dialogs/success-dialog.component';
 import { BadgeInstance } from '../../../issuer/models/badgeinstance.model';
 import { CommonDialogsService } from '../../services/common-dialogs.service';
@@ -17,14 +15,11 @@ import { BadgeInstanceApiService } from '../../../issuer/services/badgeinstance-
 import { PdfService } from '../../services/pdf.service';
 import { SafeResourceUrl } from '@angular/platform-browser';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
-import { HlmH2Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h2.directive';
-import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
-import { HlmADirective } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-a.directive';
-
 import { OebButtonComponent } from '../../../components/oeb-button.component';
-import { HlmH3Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h3.directive';
 import { BgBadgecard } from '../bg-badgecard';
 import { LearningPathGraduatesDatatableComponent } from '../../../components/datatable-learningpath-graduates.component';
+import { HlmH2, HlmP, HlmH3 } from '@spartan-ng/helm/typography';
+import { ApiLearningPathParticipant } from '~/common/model/learningpath-api.model';
 
 @Component({
 	selector: 'oeb-learning-path',
@@ -41,12 +36,11 @@ import { LearningPathGraduatesDatatableComponent } from '../../../components/dat
 		trigger('stagger', [transition(':enter', [query(':enter', stagger('.3s', [animateChild()]))])]),
 	],
 	imports: [
-		HlmH2Directive,
-		HlmPDirective,
-		HlmADirective,
+		HlmH2,
+		HlmP,
 		RouterLink,
 		OebButtonComponent,
-		HlmH3Directive,
+		HlmH3,
 		BgBadgecard,
 		LearningPathGraduatesDatatableComponent,
 		TranslatePipe,
@@ -56,7 +50,7 @@ export class OebLearningPathDetailComponent extends BaseRoutableComponent implem
 	@Input() learningPath;
 	@Input() issuer;
 	@Input() badges;
-	@Input() participants;
+	@Input() participants: ApiLearningPathParticipant[];
 	loading: any;
 	pdfSrc: SafeResourceUrl;
 

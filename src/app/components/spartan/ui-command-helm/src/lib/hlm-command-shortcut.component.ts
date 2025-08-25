@@ -10,7 +10,7 @@ import type { ClassValue } from 'clsx';
 		'[class]': '_computedClass()',
 	},
 })
-export class HlmCommandShortcutComponent {
+export class HlmCommandShortcut {
 	public readonly userClass = input<ClassValue>('', { alias: 'class' });
 	protected _computedClass = computed(() =>
 		hlm('ml-auto font-light text-xs tracking-widest opacity-60', this.userClass()),

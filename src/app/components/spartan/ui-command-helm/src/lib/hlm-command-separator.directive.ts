@@ -7,4 +7,4 @@ import { Directive } from '@angular/core';
 		class: '[&_hr]:border-border [&[cmdk-hidden="true"]]:hidden',
 	},
 })
-export class HlmCommandSeparatorDirective {}
+export class HlmCommandSeparator {}
