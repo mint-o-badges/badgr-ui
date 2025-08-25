@@ -113,14 +113,6 @@ export class NetworkCatalogComponent extends BaseRoutableComponent implements On
 	}
 
 	private async loadRangeOfNetworks(pageNumber: number, searchQuery: string, sortOption: 'name_asc' | 'name_desc') {
-		console.log('🚀 Loading networks with params:', {
-			pageNumber,
-			offset: pageNumber * this.NETWORKS_PER_PAGE,
-			limit: this.NETWORKS_PER_PAGE,
-			searchQuery,
-			sortOption,
-		});
-
 		try {
 			const result = await this.catalogService.getNetworks(
 				pageNumber * this.NETWORKS_PER_PAGE,
@@ -243,7 +235,7 @@ export class NetworkCatalogComponent extends BaseRoutableComponent implements On
 	get networksPluralWord(): string {
 		const count = this.networks().length;
 		if (count === 0) return this.translate.instant('Network.noNetworks');
-		if (count === 1) return '1 ' + this.translate.instant('Network.networkRegistered');
-		return count + ' ' + this.translate.instant('Network.networksRegistered');
+		if (count === 1) return this.translate.instant('Network.networkRegistered');
+		return this.translate.instant('Network.networksRegistered');
 	}
 }
