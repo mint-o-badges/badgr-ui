@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input, Input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { NgModel, FormsModule } from '@angular/forms';
@@ -38,10 +38,6 @@ import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 	],
 })
 export class NetworkListComponent {
-	@Input() networks: Network[];
-	@Input() promise: Promise<unknown>;
-
-	ngOnInit() {
-		console.log('networks', this.networks);
-	}
+	networks = input.required<Network[]>();
+	promise = input.required<Promise<unknown>>();
 }

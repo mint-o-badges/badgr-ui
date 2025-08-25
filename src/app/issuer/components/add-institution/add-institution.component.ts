@@ -1,30 +1,9 @@
-import {
-	AfterViewChecked,
-	AfterViewInit,
-	Component,
-	ElementRef,
-	inject,
-	Input,
-	OnInit,
-	TemplateRef,
-	ViewChild,
-} from '@angular/core';
+import { AfterViewInit, Component, inject, input, Input, TemplateRef, ViewChild } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
-import { NetworkManager } from '../../../issuer/services/network-manager.service';
-import { SessionService } from '../../../common/services/session.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
 import { Network, networkStaffRoles } from '../../../issuer/models/network.model';
-import { Title } from '@angular/platform-browser';
-import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
-import { TranslateService } from '@ngx-translate/core';
-import { AppConfigService } from '../../../common/app-config.service';
-import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
-import { OebTabsComponent, Tab } from '../../../components/oeb-tabs.component';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
 import { DialogComponent } from '../../../components/dialog.component';
-import { BrnDialogRef } from '@spartan-ng/brain/dialog';
 import { NgIcon } from '@ng-icons/core';
 import { NgModel, FormsModule } from '@angular/forms';
 import { Issuer } from '../../../issuer/models/issuer.model';
@@ -34,23 +13,11 @@ import { NgStyle } from '@angular/common';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { FormFieldSelectOption } from '../../../components/select.component';
 import { NetworkApiService } from '../../../issuer/services/network-api.service';
-import { NetworkPartnersComponent } from '../network-partners/network-partners.component';
-import { HlmH1 } from '@spartan-ng/helm/typography';
 
 @Component({
 	selector: 'add-institution',
 	templateUrl: './add-institution.component.html',
-	imports: [
-		TranslatePipe,
-		BgAwaitPromises,
-		OebTabsComponent,
-		OebButtonComponent,
-		NgIcon,
-		FormsModule,
-		NgStyle,
-		HlmH1,
-		NetworkPartnersComponent,
-	],
+	imports: [TranslatePipe, OebButtonComponent, NgIcon, FormsModule, NgStyle],
 })
 export class AddInstitutionComponent implements AfterViewInit {
 	constructor(
@@ -59,7 +26,7 @@ export class AddInstitutionComponent implements AfterViewInit {
 		private networkApiService: NetworkApiService,
 	) {}
 
-	@Input() network: Network;
+	network = input.required<Network>();
 
 	@ViewChild('inviteSuccessContent')
 	inviteSuccessContent: TemplateRef<void>;
@@ -151,7 +118,7 @@ export class AddInstitutionComponent implements AfterViewInit {
 
 	inviteInstitutions(issuers: Issuer[]) {
 		if (!issuers.length) return;
-		this.networkApiService.inviteInstitutions(this.network.slug, issuers).then((res) => {
+		this.networkApiService.inviteInstitutions(this.network().slug, issuers).then((res) => {
 			if (res) {
 				this.openSuccessDialog();
 			}

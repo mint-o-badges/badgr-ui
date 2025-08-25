@@ -137,7 +137,9 @@
 				</div>
 			</div>
 		</div>
-		<network-list [networks]="networks" [promise]="networksLoaded" #networksTemplate> </network-list>
+		@if (activeTab == 'networks') {
+			<network-list [networks]="networks()" [promise]="networksLoaded()" #networksTemplate> </network-list>
+		}
 	</div>
 </div>
 

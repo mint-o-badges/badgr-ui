@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, TemplateRef, ViewChild, inject } from '@angular/core';
+import { Component, ElementRef, OnInit, TemplateRef, ViewChild, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SessionService } from '../../../common/services/session.service';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
@@ -68,12 +68,12 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 	Array = Array;
 
 	issuers: Issuer[] = null;
-	networks: Network[] = null;
 	badges: BadgeClass[] = null;
 	issuerToBadgeInfo: { [issuerId: string]: IssuerBadgesInfo } = {};
 
 	issuersLoaded: Promise<unknown>;
-	networksLoaded: Promise<unknown>;
+	networks = signal<Network[]>([]);
+	networksLoaded = signal<Promise<unknown>>(null);
 	badgesLoaded: Promise<unknown>;
 	@ViewChild('pluginBox') public pluginBoxElement: ElementRef;
 
@@ -165,7 +165,7 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 
 		// subscribe to issuer and badge class changes
 		this.issuersLoaded = this.loadIssuers();
-		this.networksLoaded = this.loadNetworks();
+		this.networksLoaded.set(this.loadNetworks());
 
 		this.badgesLoaded = new Promise<void>((resolve, reject) => {
 			this.badgeClassService.badgesByIssuerUrl$.subscribe((badges) => {
@@ -211,7 +211,7 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 		return new Promise<void>((resolve, reject) => {
 			this.networkManager.myNetworks$.subscribe(
 				(networks) => {
-					this.networks = networks.slice().sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+					this.networks.set(networks.slice().sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime()));
 					resolve();
 				},
 				(error) => {

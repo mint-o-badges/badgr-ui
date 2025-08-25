@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, inject, OnInit, signal, TemplateRef, ViewChild } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
 import { NetworkManager } from '../../../issuer/services/network-manager.service';
 import { SessionService } from '../../../common/services/session.service';
@@ -48,9 +48,8 @@ import { ApiNetworkInvitation } from '../../../issuer/models/network-invite-api.
 	],
 })
 export class NetworkDashboardComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
-	networkLoaded: Promise<unknown>;
+	networkLoaded = signal<Promise<unknown> | null>(null);
 	networkSlug: string;
-	network: Network;
 	crumbs: LinkEntry[];
 	tabs: Tab[] = undefined;
 	activeTab = 'overview';
@@ -58,7 +57,8 @@ export class NetworkDashboardComponent extends BaseAuthenticatedRoutableComponen
 	issuerSearchQuery = '';
 	selectedIssuers: Issuer[] = [];
 
-	partnerIssuers: Issuer[] = [];
+	network = signal<Network | null>(null);
+	partnerIssuers = signal<Issuer[]>([]);
 
 	pendingInvites: ApiNetworkInvitation[];
 
@@ -106,9 +106,9 @@ export class NetworkDashboardComponent extends BaseAuthenticatedRoutableComponen
 			this.pendingInvites = invites;
 		});
 
-		this.networkLoaded = this.networkManager.networkBySlug(this.networkSlug).then((network) => {
-			this.network = network;
-			this.partnerIssuers = network.partnerIssuers.entities;
+		const loadPromise = this.networkManager.networkBySlug(this.networkSlug).then((network) => {
+			this.network.set(network);
+			this.partnerIssuers.set(network.partnerIssuers.entities);
 			this.title.setTitle(
 				`Issuer - ${this.network.name} - ${this.configService.theme['serviceName'] || 'Badgr'}`,
 			);
@@ -119,9 +119,11 @@ export class NetworkDashboardComponent extends BaseAuthenticatedRoutableComponen
 					routerLink: ['/issuer'],
 					queryParams: { tab: 'networks' },
 				},
-				{ title: this.network.name, routerLink: ['/issuer/network/' + this.network.slug] },
+				{ title: this.network.name, routerLink: ['/issuer/network/' + this.network().slug] },
 			];
 		});
+
+		this.networkLoaded.set(loadPromise);
 	}
 
 	ngAfterContentInit() {
@@ -246,7 +248,7 @@ export class NetworkDashboardComponent extends BaseAuthenticatedRoutableComponen
 	}
 
 	inviteInstitutions(issuers: Issuer[]) {
-		this.networkApiService.inviteInstitutions(this.network.slug, issuers).then((res) => {
+		this.networkApiService.inviteInstitutions(this.network().slug, issuers).then((res) => {
 			if (res) {
 				this.openSuccessDialog();
 			}

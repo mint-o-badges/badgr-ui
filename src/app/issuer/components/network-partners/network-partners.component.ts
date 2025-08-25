@@ -1,4 +1,4 @@
-import { Component, inject, Input, TemplateRef, ViewChild } from '@angular/core';
+import { Component, inject, input, Input, signal, TemplateRef, ViewChild } from '@angular/core';
 import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 import { TranslatePipe } from '@ngx-translate/core';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
@@ -11,7 +11,6 @@ import { Issuer } from '../../../issuer/models/issuer.model';
 import { Network } from '../../../issuer/models/network.model';
 import { NetworkApiService } from '../../../issuer/services/network-api.service';
 import { ApiNetworkInvitation } from '../../../issuer/models/network-invite-api.model';
-// import { AddInstitutionComponent } from '../add-institution/add-institution.component';
 import { NgModel } from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { PublicApiService } from '../../../public/services/public-api.service';
@@ -30,12 +29,12 @@ import { MessageService } from '../../../common/services/message.service';
 	],
 })
 export class NetworkPartnersComponent {
-	@Input() partnersLoaded: Promise<unknown>;
-	@Input() issuers: Issuer[];
-	@Input() network: Network;
-	@Input() addInstitutionsTemplate: TemplateRef<void>;
+	partnersLoaded = input.required<Promise<unknown>>();
+	issuers = input.required<Issuer[]>();
+	network = input.required<Network>();
+	addInstitutionsTemplate = input.required<TemplateRef<void>>();
 
-	pendingInvites: ApiNetworkInvitation[];
+	pendingInvites = signal<ApiNetworkInvitation[]>([]);
 	approvedInvites: ApiNetworkInvitation[];
 
 	issuerSearchQuery = '';
@@ -58,10 +57,9 @@ export class NetworkPartnersComponent {
 	) {}
 
 	ngOnInit() {
-		this.networkApiService.getNetworkInvites(this.network.slug).then((invites) => {
+		this.networkApiService.getNetworkInvites(this.network().slug).then((invites) => {
 			this.approvedInvites = invites.filter((i) => i.acceptedOn);
-			console.log('approved', this.approvedInvites);
-			this.pendingInvites = invites.filter((i) => i.status.toLowerCase() == 'pending');
+			this.pendingInvites.set(invites.filter((i) => i.status.toLowerCase() == 'pending'));
 		});
 	}
 
@@ -102,6 +100,20 @@ export class NetworkPartnersComponent {
 			}
 			this.issuersLoading = false;
 			this.issuerSearchLoaded = true;
+		}
+	}
+
+	async onInviteRevoked(invite: ApiNetworkInvitation) {
+		try {
+			const res = await this.networkApiService.revokeInvitation(invite.entity_id);
+
+			if (res.ok) {
+				this.pendingInvites.update((current) =>
+					current.filter((invitation) => invitation.entity_id !== invite.entity_id),
+				);
+			}
+		} catch (error) {
+			console.error('Failed to revoke invitation:', error);
 		}
 	}
 }

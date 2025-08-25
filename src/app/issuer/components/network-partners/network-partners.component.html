@@ -1,4 +1,4 @@
-<ng-container *bgAwaitPromises="[partnersLoaded]">
+<ng-container *bgAwaitPromises="[partnersLoaded()]">
 	@if (!issuers.length) {
 		<div class="tw-my-8">
 			<span class="tw-text-oebblack tw-text-lg tw-block">{{ 'Network.noInstitutionAddedYet' | translate }}</span>
@@ -6,13 +6,17 @@
 		</div>
 	} @else {
 		<network-partners-datatable
-			[network]="network"
-			[partners]="issuers"
+			[network]="network()"
+			[partners]="issuers()"
 			[approvedInvites]="approvedInvites"
 		></network-partners-datatable>
 	}
-	@if (pendingInvites.length) {
-		<network-invites-datatable [network]="network" [invites]="pendingInvites"></network-invites-datatable>
+	@if (pendingInvites().length) {
+		<network-invites-datatable
+			[network]="network()"
+			(inviteRevoked)="onInviteRevoked($event)"
+			[invites]="pendingInvites()"
+		></network-invites-datatable>
 	}
 </ng-container>
 
