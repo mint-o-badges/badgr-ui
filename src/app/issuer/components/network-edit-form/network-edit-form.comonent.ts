@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { typedFormGroup } from '../../../common/util/typed-forms';
 import { FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IssuerNameValidator } from '../../../common/validators/issuer-name.validator';
@@ -64,14 +64,12 @@ export class NetworkEditFormComponent implements OnInit {
 
 	existingNetwork: Network | null = null;
 
-	@Input() networkSlug: string;
-
-	@Input() set network(network: Network) {
-		if (this.existingNetwork !== network) {
-			this.existingNetwork = network;
-			this.initFormFromExisting(network);
-		}
-	}
+	// @Input() set network(network: Network) {
+	// 	if (this.existingNetwork !== network) {
+	// 		this.existingNetwork = network;
+	// 		this.initFormFromExisting(network);
+	// 	}
+	// }
 	constructor(
 		protected router: Router,
 		protected route: ActivatedRoute,
