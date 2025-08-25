@@ -34,10 +34,12 @@ import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 		TranslatePipe,
 		OebTabsComponent,
 		OebNetworkCard,
-		BgAwaitPromises,
 	],
 })
 export class NetworkListComponent {
 	networks = input.required<Network[]>();
-	promise = input.required<Promise<unknown>>();
+
+	ngOnInit() {
+		console.log('networks', this.networks());
+	}
 }

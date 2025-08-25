@@ -408,7 +408,9 @@
 		},
 		"confirmNetworkInvitation": "Confirm the <span class='tw-font-bold'>network invitation from {{networkName}}</span> for your institution <span class='tw-italic'>{{issuerName}}</span> by clicking the button:",
 		"partnerSince": "Partner since",
-		"partner": "Network Members"
+		"partner": "Network Members",
+		"alreadyConfirmed": "Another member of <span class='tw-italic'> {{issuerName}} has already accepted the network invitation from <span class='tw-font-bold'> {{networkName}}</span>.",
+		"view": "View network"
 	},
 	"Badge": {
 		"groupBy": "Group by",

@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, TemplateRef, ViewChild, inject, signal } from '@angular/core';
+import { Component, ElementRef, OnInit, TemplateRef, ViewChild, computed, effect, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SessionService } from '../../../common/services/session.service';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
@@ -15,7 +15,7 @@ import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src
 import { SuccessDialogComponent } from '../../../common/dialogs/oeb-dialogs/success-dialog.component';
 import { DialogComponent } from '../../../components/dialog.component';
 import { NgModel, FormsModule } from '@angular/forms';
-import { debounceTime, distinctUntilChanged } from 'rxjs';
+import { catchError, debounceTime, distinctUntilChanged, map, of, tap } from 'rxjs';
 import { PublicApiService } from '../../../public/services/public-api.service';
 import { IssuerStaffRequestApiService } from '../../services/issuer-staff-request-api.service';
 import { UserProfileApiService } from '../../../common/services/user-profile-api.service';
@@ -36,6 +36,7 @@ import { NetworkListComponent } from '../network-list/network-list.component';
 import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 import { HlmIcon } from '@spartan-ng/helm/icon';
 import { HlmH1, HlmP } from '@spartan-ng/helm/typography';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
 	selector: 'issuer-list',
@@ -71,9 +72,20 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 	badges: BadgeClass[] = null;
 	issuerToBadgeInfo: { [issuerId: string]: IssuerBadgesInfo } = {};
 
+	hasEmitted = signal<boolean>(false);
+
 	issuersLoaded: Promise<unknown>;
-	networks = signal<Network[]>([]);
-	networksLoaded = signal<Promise<unknown>>(null);
+	networks = toSignal(
+		this.networkManager.myNetworks$.pipe(
+			tap(() => this.hasEmitted.set(true)),
+			map((networks) => networks.slice().sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())),
+			catchError((error) => {
+				this.messageService.reportAndThrowError(this.translate.instant('Issuer.failLoadissuers'), error);
+			}),
+		),
+		{ initialValue: [] as Network[] },
+	);
+	networksLoaded = computed(() => this.hasEmitted());
 	badgesLoaded: Promise<unknown>;
 	@ViewChild('pluginBox') public pluginBoxElement: ElementRef;
 
@@ -165,7 +177,6 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 
 		// subscribe to issuer and badge class changes
 		this.issuersLoaded = this.loadIssuers();
-		this.networksLoaded.set(this.loadNetworks());
 
 		this.badgesLoaded = new Promise<void>((resolve, reject) => {
 			this.badgeClassService.badgesByIssuerUrl$.subscribe((badges) => {
@@ -207,20 +218,20 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 		});
 	};
 
-	loadNetworks = () => {
-		return new Promise<void>((resolve, reject) => {
-			this.networkManager.myNetworks$.subscribe(
-				(networks) => {
-					this.networks.set(networks.slice().sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime()));
-					resolve();
-				},
-				(error) => {
-					this.messageService.reportAndThrowError(this.translate.instant('Issuer.failLoadissuers'), error);
-					resolve();
-				},
-			);
-		});
-	};
+	// loadNetworks = () => {
+	// 	return new Promise<void>((resolve, reject) => {
+	// 		this.networkManager.myNetworks$.subscribe(
+	// 			(networks) => {
+	// 				this.networks.set(networks.slice().sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime()));
+	// 				resolve();
+	// 			},
+	// 			(error) => {
+	// 				this.messageService.reportAndThrowError(this.translate.instant('Issuer.failLoadissuers'), error);
+	// 				resolve();
+	// 			},
+	// 		);
+	// 	});
+	// };
 
 	ngOnInit() {
 		super.ngOnInit();

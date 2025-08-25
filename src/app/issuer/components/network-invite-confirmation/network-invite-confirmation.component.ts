@@ -3,7 +3,7 @@ import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-a
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { TranslatePipe } from '@ngx-translate/core';
 import { SessionService } from '../../../common/services/session.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { AppConfigService } from '../../../common/app-config.service';
 import { NetworkManager } from '../../../issuer/services/network-manager.service';
@@ -18,12 +18,13 @@ import { FormMessageComponent } from '~/common/components/form-message.component
 @Component({
 	selector: 'network-invite-confirmation',
 	templateUrl: './network-invite-confirmation.component.html',
-	imports: [OebButtonComponent, TranslatePipe, BgAwaitPromises, FormMessageComponent],
+	imports: [OebButtonComponent, TranslatePipe, BgAwaitPromises, FormMessageComponent, RouterLink],
 })
 export class NetworkInviteConfirmationComponent extends BaseAuthenticatedRoutableComponent {
 	inviteSlug: string;
 	inviteLoaded: Promise<unknown>;
 	invite: ApiNetworkInvitation;
+	alreadyConfirmed = false;
 
 	constructor(
 		loginService: SessionService,
@@ -40,6 +41,13 @@ export class NetworkInviteConfirmationComponent extends BaseAuthenticatedRoutabl
 		this.inviteSlug = this.route.snapshot.params['inviteSlug'];
 		this.networkApiService.getNetworkInvite(this.inviteSlug).then((invite) => {
 			this.invite = invite;
+		});
+
+		this.route.queryParams.subscribe((params) => {
+			if (params.hasOwnProperty('confirmed')) {
+				console.log('confirmed');
+				this.alreadyConfirmed = true;
+			}
 		});
 	}
 

@@ -411,7 +411,9 @@
 			"staff": "Mitarbeiter:in"
 		},
 		"confirmNetworkInvitation": "Bestätige die <span class='tw-font-bold'>Netzwerk-Einladung von {{networkName}}</span> für deine Institution <span class='tw-italic'>{{issuerName}}</span> mit Klick auf den Button:",
-		"partnerSince": "Partner:in seit"
+		"partnerSince": "Partner:in seit",
+		"alreadyConfirmed": "Ein anderes Mitglied von <span class='tw-italic'> {{issuerName}} hat die Netzwerk-Einladung von <span class='tw-font-bold'> {{networkName}}</span> bereits bestätigt.",
+		"view": "Netzwerk ansehen"
 	},
 	"Badge": {
 		"groupBy": "Gruppieren nach",

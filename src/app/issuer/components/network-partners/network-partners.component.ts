@@ -1,5 +1,4 @@
 import { Component, inject, input, Input, signal, TemplateRef, ViewChild } from '@angular/core';
-import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 import { TranslatePipe } from '@ngx-translate/core';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
@@ -19,23 +18,15 @@ import { MessageService } from '../../../common/services/message.service';
 @Component({
 	selector: 'network-partners',
 	templateUrl: './network-partners.component.html',
-	imports: [
-		BgAwaitPromises,
-		TranslatePipe,
-		OebButtonComponent,
-		NetworkPartnersDatatableComponent,
-		NetworkInvitesDatatableComponent,
-		// AddInstitutionComponent,
-	],
+	imports: [TranslatePipe, OebButtonComponent, NetworkPartnersDatatableComponent, NetworkInvitesDatatableComponent],
 })
 export class NetworkPartnersComponent {
-	partnersLoaded = input.required<Promise<unknown>>();
 	issuers = input.required<Issuer[]>();
 	network = input.required<Network>();
 	addInstitutionsTemplate = input.required<TemplateRef<void>>();
 
 	pendingInvites = signal<ApiNetworkInvitation[]>([]);
-	approvedInvites: ApiNetworkInvitation[];
+	approvedInvites = signal<ApiNetworkInvitation[]>([]);
 
 	issuerSearchQuery = '';
 	selectedIssuers: Issuer[] = [];
@@ -58,7 +49,7 @@ export class NetworkPartnersComponent {
 
 	ngOnInit() {
 		this.networkApiService.getNetworkInvites(this.network().slug).then((invites) => {
-			this.approvedInvites = invites.filter((i) => i.acceptedOn);
+			this.approvedInvites.set(invites.filter((i) => i.acceptedOn));
 			this.pendingInvites.set(invites.filter((i) => i.status.toLowerCase() == 'pending'));
 		});
 	}
