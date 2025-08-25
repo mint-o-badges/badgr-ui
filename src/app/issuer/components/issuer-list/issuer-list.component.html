@@ -137,7 +137,6 @@
 				</div>
 			</div>
 		</div>
-		<network-list [networks]="networks" [promise]="networksLoaded" #networksTemplate> </network-list>
 	</div>
 </div>
 
@@ -410,4 +409,8 @@
 			</div>
 		</ng-template>
 	</section>
+</ng-template>
+
+<ng-template #networksTemplate>
+	<network-list [networks]="networks" [promise]="networksLoaded" />
 </ng-template>
