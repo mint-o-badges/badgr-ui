@@ -259,7 +259,7 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 	}
 
 	ngAfterContentInit() {
-		if (environment.production) {
+		if (!environment.networksEnabled) {
 			this.tabs = [
 				{
 					key: 'issuers',

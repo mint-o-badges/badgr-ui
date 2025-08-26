@@ -348,7 +348,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 			this.document.documentElement.lang = this.translate.currentLang;
 		});
 
-		if (!environment.production) {
+		if (environment.networksEnabled) {
 			this.aboutBadgesMenuItems.push({
 				title: 'Network.networksNav',
 				routerLink: ['/catalog/networks'],
