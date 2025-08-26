@@ -5,6 +5,7 @@ import { BaseHttpApiService } from '~/common/services/base-http-api.service';
 import { MessageService } from '~/common/services/message.service';
 import { SessionService } from '~/common/services/session.service';
 import { BadgeClassV3, IBadgeClassV3 } from '~/issuer/models/badgeclassv3.model';
+import { INetworkV3, NetworkV3 } from '~/issuer/models/networkv3.model';
 
 const ENDPOINT = 'v3/issuer';
 
@@ -99,6 +100,57 @@ export class CatalogService extends BaseHttpApiService {
 			return null;
 		}
 	}
+
+	/**
+	 * Gets a paginated list of networks, optionally filtered by name.
+	 * Offset-based pagination is used, so pagination is achieved by setting the limit and offset
+	 * by multiples of the limit to go through pages (e.g. limit = 3, offset = 6 results in a request
+	 * for page 3, giving you the values from 7 to 9)
+	 * @param offset Offset for offset-based pagination
+	 * @param limit Limit for offset-based pagination
+	 * @param nameQuery Filter to apply to the name of networks pre application of offset and limit
+	 * @param orderBy Order of the returned list
+	 * @returns An object containing the url of the next and previous page
+	 * (if any) and the contents of the given page as array of network objects
+	 */
+	async getNetworks(
+		offset: number = 0,
+		limit: number = 20,
+		nameQuery?: string,
+		orderBy?: 'name_asc' | 'name_desc',
+	): Promise<PaginatedNetwork | null> {
+		try {
+			let params = new HttpParams({
+				fromObject: {
+					offset: offset,
+					limit: limit,
+				},
+			});
+
+			if (nameQuery) params = params.append('name', nameQuery);
+			if (orderBy) {
+				const ascOrDesc = orderBy.indexOf('asc') > -1 ? '' : '-';
+				const nameOrDate = orderBy.indexOf('name') > -1 ? 'name' : 'created_at';
+				params = params.append('ordering', `${ascOrDesc}${nameOrDate}`);
+			}
+
+			const response = await this.get<PaginatedNetwork & { results: INetworkV3[] }>(
+				`${this.baseUrl}/${ENDPOINT}/networks/`,
+				params,
+			);
+
+			if (response.ok && response.body) {
+				return {
+					...response.body,
+					results: response.body.results.map((r) => new NetworkV3(r)),
+				};
+			} else {
+				return null;
+			}
+		} catch (e) {
+			return null;
+		}
+	}
 }
 
 export interface PaginatedBadgeClass {
@@ -106,4 +158,11 @@ export interface PaginatedBadgeClass {
 	next: string | null;
 	previous: string | null;
 	results: BadgeClassV3[];
+}
+
+export interface PaginatedNetwork {
+	count: number;
+	next: string | null;
+	previous: string | null;
+	results: NetworkV3[];
 }

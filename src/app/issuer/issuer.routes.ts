@@ -16,6 +16,9 @@ import { IssuerLearningPathComponent } from './components/issuer-learning-path/i
 import { LearningPathEditComponent } from './components/learningpath-edit/learningpath-edit.component';
 import { BadgeClassSelectTypeComponent } from './components/badgeclass-select-type/badgeclass-select-type.component';
 import { BadgeClassEditCopyPermissionsComponent } from './components/badgeclass-edit-copypermissions/badgeclass-edit-copypermissions';
+import { NetworkCreateComponent } from './components/network-create/network-create.component';
+import { NetworkDashboardComponent } from './components/network-dashboard/network-dashboard.component';
+import { NetworkInviteConfirmationComponent } from './components/network-invite-confirmation/network-invite-confirmation.component';
 
 export const routes = [
 	/* Issuer */
@@ -26,6 +29,18 @@ export const routes = [
 	{
 		path: 'create',
 		component: IssuerCreateComponent,
+	},
+	{
+		path: 'networks/create',
+		component: NetworkCreateComponent,
+	},
+	{
+		path: 'networks/:networkSlug',
+		component: NetworkDashboardComponent,
+	},
+	{
+		path: 'networks/invite/:inviteSlug',
+		component: NetworkInviteConfirmationComponent,
 	},
 	{
 		path: 'issuers/:issuerSlug',

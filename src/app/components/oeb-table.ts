@@ -5,7 +5,7 @@ import { provideHlmTableConfig } from '@spartan-ng/helm/table';
 	selector: 'table[oeb-table]',
 	providers: [
 		provideHlmTableConfig({
-			table: 'tw-w-full tw-mb-8 tw-text-lg tw-text-left tw-rounded-lg tw-border tw-border-solid tw-border-purple tw-border-separate tw-bg-purple',
+			table: 'tw-min-w-max tw-w-full tw-mb-8 tw-text-lg tw-text-left tw-rounded-lg tw-border tw-border-solid tw-border-purple tw-border-separate tw-bg-purple',
 			thead: 'tw-font-semibold tw-text-white',
 			tbody: 'tw-bg-white',
 			tfoot: '',
@@ -22,7 +22,7 @@ export class OebTable {}
 	selector: 'table[oeb-table-secondary]',
 	providers: [
 		provideHlmTableConfig({
-			table: 'tw-w-full tw-mb-8 tw-text-lg tw-text-left tw-rounded-lg tw-border tw-border-solid tw-border-gray-100 tw-border-separate tw-bg-gray-100',
+			table: 'tw-min-w-max tw-w-full tw-mb-8 tw-text-lg tw-text-left tw-rounded-lg tw-border tw-border-solid tw-border-gray-100 tw-border-separate tw-bg-gray-100',
 			thead: 'tw-font-semibold tw-text-oebblack',
 			tbody: 'tw-bg-white tw-text-oebblack',
 			tfoot: '',
@@ -39,7 +39,7 @@ export class OebTableSecondary {}
 	selector: 'table[oeb-table-highlight]',
 	providers: [
 		provideHlmTableConfig({
-			table: 'tw-w-full tw-mb-8 tw-text-lg tw-text-left tw-rounded-lg tw-border tw-border-solid tw-border-gray-100 tw-border-separate tw-bg-[var(--color-mint)]',
+			table: 'tw-min-w-max tw-w-full tw-mb-8 tw-text-lg tw-text-left tw-rounded-lg tw-border tw-border-solid tw-border-gray-100 tw-border-separate tw-bg-[var(--color-mint)]',
 			thead: 'tw-font-semibold tw-text-oebblack',
 			tbody: 'tw-bg-white tw-text-oebblack',
 			tfoot: '',
