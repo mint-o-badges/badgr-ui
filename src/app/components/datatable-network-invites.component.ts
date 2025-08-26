@@ -1,14 +1,12 @@
 import { CommonModule, formatDate } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
-import { Component, effect, input, output, signal, TemplateRef, viewChild } from '@angular/core';
+import { Component, input, output, signal, TemplateRef, viewChild } from '@angular/core';
 import { HlmTableImports } from './spartan/ui-table-helm/src';
 import { FormsModule } from '@angular/forms';
 import { lucideSearch } from '@ng-icons/lucide';
 import { OebButtonComponent } from './oeb-button.component';
 import { NgIcon, provideIcons } from '@ng-icons/core';
-import { OebSpinnerComponent } from './oeb-spinner.component';
-import { LoadingDotsComponent } from '../common/components/loading-dots.component';
 import { OebTableImports } from './oeb-table';
 import {
 	ColumnDef,
@@ -34,8 +32,6 @@ import { Network } from '../issuer/models/network.model';
 		TranslateModule,
 		RouterModule,
 		OebButtonComponent,
-		OebSpinnerComponent,
-		LoadingDotsComponent,
 		FlexRenderDirective,
 		NgIcon,
 		HlmIconModule,
@@ -179,12 +175,8 @@ export class NetworkInvitesDatatableComponent {
 
 	constructor(private networkApiService: NetworkApiService) {}
 
-	ngOnInit() {
-		console.log('invites', this.invites());
-	}
-
 	resendInvitation(issuer: Issuer) {
-		this.networkApiService.inviteInstitutions(this.network().slug, [issuer]).then((res) => {});
+		this.networkApiService.inviteInstitutions(this.network().slug, [issuer]);
 	}
 
 	revokeInvitation(invite: ApiNetworkInvitation) {
