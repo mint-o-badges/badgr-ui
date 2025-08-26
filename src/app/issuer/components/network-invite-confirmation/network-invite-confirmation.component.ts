@@ -7,7 +7,6 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { AppConfigService } from '../../../common/app-config.service';
 import { NetworkManager } from '../../../issuer/services/network-manager.service';
-import { Network } from '../../../issuer/models/network.model';
 import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 import { NetworkApiService } from '../../../issuer/services/network-api.service';
 import { MessageService } from '../../../common/services/message.service';
@@ -45,7 +44,6 @@ export class NetworkInviteConfirmationComponent extends BaseAuthenticatedRoutabl
 
 		this.route.queryParams.subscribe((params) => {
 			if (params.hasOwnProperty('confirmed')) {
-				console.log('confirmed');
 				this.alreadyConfirmed = true;
 			}
 		});
