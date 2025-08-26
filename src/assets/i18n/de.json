@@ -96,6 +96,7 @@
 		"select": "Auswählen",
 		"loadMore": "Mehr laden",
 		"searchByEmail": "Nach E-Mail-Adresse suchen",
+		"searchByNameOrEmail": "Name oder E-Mail suchen",
 		"openNewWindow": "In neuem Fenster öffnen",
 		"public": "Öffentlich",
 		"sendUsYourBadge": "Sende deinen Badge gerne an <a class='tw-text-link tw-underline' href='mailto:support@openbadges.education'>support@openbadges.education</a>, dann schauen wir uns die Datei an. ",
