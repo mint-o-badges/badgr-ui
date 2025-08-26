@@ -262,6 +262,7 @@
 				<a [routerLink]="['/catalog/badges']">Badges A-Z</a>
 				<a [routerLink]="['/catalog/issuers']">{{ 'General.institutionsNav' | translate }}</a>
 				<a [routerLink]="['/catalog/learningpaths']">{{ 'LearningPath.learningpathsNav' | translate }}</a>
+				<!-- <a [routerLink]="['/catalog/networks']">{{ 'Network.networksNav' | translate }}</a> -->
 
 				@if (cmsMenus && cmsMenus.header[translate.currentLang]) {
 					@for (item of cmsMenus.header[translate.currentLang]; track item.id) {

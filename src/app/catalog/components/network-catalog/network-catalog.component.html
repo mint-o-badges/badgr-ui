@@ -1,0 +1,34 @@
+<form-message></form-message>
+<div class="oeb page-padding">
+	<div class="oeb-section-sm">
+		<header class="oeb-headline-container tw-relative tw-flex tw-flex-col">
+			<h2 hlmH1 class="tw-text-oebblack">
+				{{ 'Network.networksHeadline' | translate }}
+			</h2>
+			<ng-template [showLoader]="false" [bgAwaitPromises]="[pageReadyPromise]">
+				<span hlmH1 class="lg:tw-pl-[10%] tw-text-purple tw-font-black tw-break-words">
+					<span [countUp]="networks().length">{{ networks().length }}</span>
+					<span>
+						{{ networksPluralWord }}
+					</span>
+				</span>
+			</ng-template>
+		</header>
+	</div>
+
+	<div>
+		<ng-template [showLoader]="true" [bgAwaitPromises]="[pageReadyPromise]">
+			<section>
+				<div class="tw-grid sm:tw-grid-cols-issuer tw-gap-6 tw-w-full" [@stagger]>
+					@for (network of networks(); track network) {
+						<oeb-networkcard
+							@appearAnimation
+							[network]="network"
+							[routerLink]="['/public/networks', network.slug]"
+						></oeb-networkcard>
+					}
+				</div>
+			</section>
+		</ng-template>
+	</div>
+</div>

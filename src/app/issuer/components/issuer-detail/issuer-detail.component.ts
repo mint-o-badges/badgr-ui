@@ -25,6 +25,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { FormMessageComponent } from '../../../common/components/form-message.component';
 import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 import { OebIssuerDetailComponent } from '../../../common/components/issuer/oeb-issuer-detail.component';
+import { NetworkManager } from '../../../issuer/services/network-manager.service';
 
 @Component({
 	selector: 'issuer-detail',
@@ -49,6 +50,7 @@ export class IssuerDetailComponent extends BaseAuthenticatedRoutableComponent im
 	issuerLoaded: Promise<unknown>;
 	badgesLoaded: Promise<unknown>;
 	learningPathsLoaded: Promise<unknown>;
+	networksLoaded: Promise<unknown>;
 
 	profileEmailsLoaded: Promise<unknown>;
 	crumbs: LinkEntry[];
@@ -65,6 +67,7 @@ export class IssuerDetailComponent extends BaseAuthenticatedRoutableComponent im
 		protected title: Title,
 		protected issuerManager: IssuerManager,
 		protected badgeClassService: BadgeClassManager,
+		protected networkManager: NetworkManager,
 		protected learningPathsService: LearningPathApiService,
 		protected profileManager: UserProfileManager,
 		private configService: AppConfigService,

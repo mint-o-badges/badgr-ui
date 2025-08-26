@@ -64,11 +64,7 @@
 			[innerHTML]="'RecBadge.versionUploadInfo' | translate"
 		></p>
 
-		<oeb-backpack-tabs
-			[tabs]="tabs"
-			[activeTab]="currentTab"
-			(onTabChanged)="currentTab = $event"
-		></oeb-backpack-tabs>
+		<oeb-tabs [tabs]="tabs" [activeTab]="currentTab" (onTabChanged)="currentTab = $event"></oeb-tabs>
 
 		@if (formError) {
 			<div class="u-padding-all3x">
