@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, TemplateRef, ViewChild, computed, effect, inject, signal } from '@angular/core';
+import { Component, ElementRef, OnInit, TemplateRef, ViewChild, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SessionService } from '../../../common/services/session.service';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
@@ -15,7 +15,7 @@ import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src
 import { SuccessDialogComponent } from '../../../common/dialogs/oeb-dialogs/success-dialog.component';
 import { DialogComponent } from '../../../components/dialog.component';
 import { NgModel, FormsModule } from '@angular/forms';
-import { catchError, debounceTime, distinctUntilChanged, map, of, tap } from 'rxjs';
+import { catchError, debounceTime, distinctUntilChanged, map, tap } from 'rxjs';
 import { PublicApiService } from '../../../public/services/public-api.service';
 import { IssuerStaffRequestApiService } from '../../services/issuer-staff-request-api.service';
 import { UserProfileApiService } from '../../../common/services/user-profile-api.service';
@@ -29,11 +29,9 @@ import { NgIcon } from '@ng-icons/core';
 import { BgImageStatusPlaceholderDirective } from '../../../common/directives/bg-image-status-placeholder.directive';
 import { OebTabsComponent } from '../../../components/oeb-tabs.component';
 import { environment } from 'src/environments/environment';
-import { OebNetworkCard } from '~/common/components/oeb-networkcard.component';
 import { NetworkManager } from '../../services/network-manager.service';
 import { Network } from '../../models/network.model';
 import { NetworkListComponent } from '../network-list/network-list.component';
-import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 import { HlmIcon } from '@spartan-ng/helm/icon';
 import { HlmH1, HlmP } from '@spartan-ng/helm/typography';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -56,9 +54,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 		NgStyle,
 		TranslatePipe,
 		OebTabsComponent,
-		OebNetworkCard,
 		NetworkListComponent,
-		BgAwaitPromises,
 	],
 })
 export class IssuerListComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
@@ -72,12 +68,12 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 	badges: BadgeClass[] = null;
 	issuerToBadgeInfo: { [issuerId: string]: IssuerBadgesInfo } = {};
 
-	hasEmitted = signal<boolean>(false);
+	networksLoaded = signal<boolean>(false);
 
 	issuersLoaded: Promise<unknown>;
 	networks = toSignal(
 		this.networkManager.myNetworks$.pipe(
-			tap(() => this.hasEmitted.set(true)),
+			tap(() => this.networksLoaded.set(true)),
 			map((networks) => networks.slice().sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())),
 			catchError((error) => {
 				this.messageService.reportAndThrowError(this.translate.instant('Issuer.failLoadissuers'), error);
@@ -85,7 +81,6 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 		),
 		{ initialValue: [] as Network[] },
 	);
-	networksLoaded = computed(() => this.hasEmitted());
 	badgesLoaded: Promise<unknown>;
 	@ViewChild('pluginBox') public pluginBoxElement: ElementRef;
 
