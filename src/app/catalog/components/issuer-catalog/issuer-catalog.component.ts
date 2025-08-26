@@ -236,7 +236,8 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 					type: 'raster',
 					tiles: ['https://a.tile.openstreetmap.org/{z}/{x}/{y}.png'],
 					tileSize: 256,
-					attribution: '&copy; OpenStreetMap Contributors',
+					attribution:
+						'Map data & geocoding from <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
 					maxzoom: 19,
 				},
 			},
