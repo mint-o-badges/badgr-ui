@@ -13,11 +13,12 @@ import { NgStyle } from '@angular/common';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { FormFieldSelectOption } from '../../../components/select.component';
 import { NetworkApiService } from '../../../issuer/services/network-api.service';
+import { HlmIcon } from '@spartan-ng/helm/icon';
 
 @Component({
 	selector: 'add-institution',
 	templateUrl: './add-institution.component.html',
-	imports: [TranslatePipe, OebButtonComponent, NgIcon, FormsModule, NgStyle],
+	imports: [TranslatePipe, OebButtonComponent, NgIcon, HlmIcon, FormsModule, NgStyle],
 })
 export class AddInstitutionComponent implements AfterViewInit {
 	constructor(
