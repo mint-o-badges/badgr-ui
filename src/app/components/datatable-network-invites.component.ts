@@ -38,7 +38,7 @@ import { Network } from '../issuer/models/network.model';
 	],
 	providers: [provideIcons({ lucideSearch })],
 	template: `
-		<div class="tw-mt-8">
+		<div class="tw-mt-8 tw-overflow-x-auto">
 			<table
 				hlmTable
 				oeb-table-secondary
