@@ -17,6 +17,5 @@ export class EventsService {
 	 */
 	documentClicked = new Subject<MouseEvent>();
 
-
 	constructor() {}
 }
