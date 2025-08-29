@@ -310,8 +310,6 @@ export class IssuerDetailDatatableComponent {
 		},
 	];
 
-	Math = Math;
-
 	shouldShowPagination = computed(() => this.recipients().length > 15);
 
 	table = createAngularTable(() => ({
