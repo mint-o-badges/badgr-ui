@@ -3,6 +3,7 @@ import { BadgrEnvironment } from './badgr-environment';
 // The environment for the develop instance
 export const environment: BadgrEnvironment = {
 	production: true,
+	networksEnabled: true,
 	enableErrorInterceptor: true,
 	config: {
 		api: {

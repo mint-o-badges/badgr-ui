@@ -1,0 +1,32 @@
+<ng-container>
+	@if (networks().length == 0) {
+		<p hlmP size="lg" class="tw-py-3 tw-flex tw-flex-col">
+			<span class="tw-text-oebblack tw-font-bold" [innerHTML]="'Network.noIssuerInNetwork' | translate"></span>
+			<span class="tw-mt-1" [innerHTML]="'Network.networksUseBadgesTogether' | translate"></span>
+			<span [innerHTML]="'Network.networkLogoOnBadge' | translate"></span>
+			<span
+				class="tw-mt-1 tw-italic tw-text-purple"
+				[innerHTML]="'Network.youCanAddInstitutions' | translate"
+			></span>
+		</p>
+		<oeb-button
+			class="md:tw-whitespace-nowrap"
+			[routerLink]="['/issuer/networks/create']"
+			[disabled-when-requesting]="true"
+			[text]="'Network.create' | translate"
+		></oeb-button>
+	} @else {
+		<div class="md:tw-flex">
+			<div class="tw-grid tw-grid-cols-myIssuersMobile sm:tw-grid-cols-myIssuers tw-gap-6 tw-w-full tw-relative">
+				@for (network of networks(); track network) {
+					<oeb-networkcard
+						[public]="false"
+						[network]="network"
+						[routerLink]="['/issuer/networks', network.slug]"
+					>
+					</oeb-networkcard>
+				}
+			</div>
+		</div>
+	}
+</ng-container>

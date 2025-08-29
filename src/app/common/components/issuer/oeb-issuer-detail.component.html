@@ -54,7 +54,7 @@
 				[class]="isFullIssuer(issuer) && issuer.canCreateBadge ? '' : 'disabled'"
 			>
 			</oeb-button>
-			<div *ngIf="public" class="tw-flex tw-gap-2">
+			<div *ngIf="public" class="tw-flex tw-flex-col tw-gap-2">
 				<oeb-button
 					*ngIf="userIsMember"
 					class="tw-whitespace-nowrap"
@@ -65,6 +65,31 @@
 				</oeb-button>
 				<oeb-button class="tw-whitespace-nowrap" *ngIf="public" (click)="routeToUrl(issuer.url)" text="Website">
 				</oeb-button>
+
+				<!-- Network section -->
+
+				<section
+					class="tw-bg-oebgrey tw-mt-4 tw-rounded-[10px] tw-p-2 tw-flex tw-flex-col tw-justify-center tw-items-center"
+				>
+					<div>
+						<h2 class="tw-w-full tw-text-lg tw-font-boldtw-text-lg tw-text-oebblack tw-font-bold">
+							{{ 'Issuer.partOfNetwork' | translate }}
+						</h2>
+						<ul class="tw-w-full tw-list-none tw-mt-2">
+							@for (network of networks; track network) {
+								<li
+									class="tw-flex tw-gap-2 tw-items-center"
+									[routerLink]="['/public/networks', network.slug]"
+								>
+									<img class="tw-w-[33px]" [src]="network.image" />
+									<span class="tw-text-oebblack">
+										{{ network.name }}
+									</span>
+								</li>
+							}
+						</ul>
+					</div>
+				</section>
 			</div>
 			<oeb-dropdown
 				[trigger]="svgTrigger"
@@ -136,12 +161,12 @@
 </div>
 
 <div class="oeb-section-sm">
-	<oeb-backpack-tabs
+	<oeb-tabs
 		[variant]="'lightpurple'"
 		(onTabChanged)="onTabChange($event)"
 		[activeTab]="activeTab"
 		[tabs]="tabs"
-	></oeb-backpack-tabs>
+	></oeb-tabs>
 
 	<ng-template #badgesTemplate>
 		<section class="oeb-section-sm" *ngIf="!badges?.length">

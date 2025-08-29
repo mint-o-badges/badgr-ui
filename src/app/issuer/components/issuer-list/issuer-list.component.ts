@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, TemplateRef, ViewChild, inject } from '@angular/core';
+import { Component, ElementRef, OnInit, TemplateRef, ViewChild, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SessionService } from '../../../common/services/session.service';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
@@ -15,11 +15,11 @@ import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src
 import { SuccessDialogComponent } from '../../../common/dialogs/oeb-dialogs/success-dialog.component';
 import { DialogComponent } from '../../../components/dialog.component';
 import { NgModel, FormsModule } from '@angular/forms';
-import { debounceTime, distinctUntilChanged } from 'rxjs';
+import { catchError, debounceTime, distinctUntilChanged, map, tap } from 'rxjs';
 import { PublicApiService } from '../../../public/services/public-api.service';
 import { IssuerStaffRequestApiService } from '../../services/issuer-staff-request-api.service';
 import { UserProfileApiService } from '../../../common/services/user-profile-api.service';
-import { ApiStaffRequest } from '../../staffrequest-api.model';
+import { ApiStaffRequest } from '../../models/staffrequest-api.model';
 import { BrnDialogRef } from '@spartan-ng/brain/dialog';
 import { BadgrApiFailure } from '../../../common/services/api-failure';
 import { FormMessageComponent } from '../../../common/components/form-message.component';
@@ -27,8 +27,14 @@ import { NgTemplateOutlet, NgClass, NgStyle } from '@angular/common';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { NgIcon } from '@ng-icons/core';
 import { BgImageStatusPlaceholderDirective } from '../../../common/directives/bg-image-status-placeholder.directive';
+import { OebTabsComponent } from '../../../components/oeb-tabs.component';
+import { environment } from 'src/environments/environment';
+import { NetworkManager } from '../../services/network-manager.service';
+import { Network } from '../../models/network.model';
+import { NetworkListComponent } from '../network-list/network-list.component';
 import { HlmIcon } from '@spartan-ng/helm/icon';
 import { HlmH1, HlmP } from '@spartan-ng/helm/typography';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
 	selector: 'issuer-list',
@@ -47,6 +53,8 @@ import { HlmH1, HlmP } from '@spartan-ng/helm/typography';
 		FormsModule,
 		NgStyle,
 		TranslatePipe,
+		OebTabsComponent,
+		NetworkListComponent,
 	],
 })
 export class IssuerListComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
@@ -60,7 +68,19 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 	badges: BadgeClass[] = null;
 	issuerToBadgeInfo: { [issuerId: string]: IssuerBadgesInfo } = {};
 
+	networksLoaded = signal<boolean>(false);
+
 	issuersLoaded: Promise<unknown>;
+	networks = toSignal(
+		this.networkManager.myNetworks$.pipe(
+			tap(() => this.networksLoaded.set(true)),
+			map((networks) => networks.slice().sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())),
+			catchError((error) => {
+				this.messageService.reportAndThrowError(this.translate.instant('Issuer.failLoadissuers'), error);
+			}),
+		),
+		{ initialValue: [] as Network[] },
+	);
 	badgesLoaded: Promise<unknown>;
 	@ViewChild('pluginBox') public pluginBoxElement: ElementRef;
 
@@ -81,6 +101,12 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 
 	@ViewChild('successfullyRequestedMembershipHeaderTemplate')
 	successfullyRequestedMembershipHeaderTemplate: TemplateRef<void>;
+
+	@ViewChild('issuersTemplate', { static: true })
+	issuersTemplate: ElementRef<void>;
+
+	@ViewChild('networksTemplate', { static: true })
+	networksTemplate: ElementRef<void>;
 
 	@ViewChild('issuerSearchInput') issuerSearchInput: ElementRef<HTMLInputElement>;
 	@ViewChild('issuerSearchInputModel') issuerSearchInputModel: NgModel;
@@ -104,6 +130,10 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 
 	dialogRef: BrnDialogRef<any> = null;
 
+	activeTab: string = 'issuers';
+
+	tabs: any[] = [];
+
 	plural = {
 		issuer: {
 			'=0': this.translate.instant('Issuer.noInstitutions'),
@@ -126,6 +156,7 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 		protected title: Title,
 		protected messageService: MessageService,
 		protected issuerManager: IssuerManager,
+		protected networkManager: NetworkManager,
 		protected configService: AppConfigService,
 		protected badgeClassService: BadgeClassManager,
 		protected publicApiService: PublicApiService,
@@ -182,6 +213,21 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 		});
 	};
 
+	// loadNetworks = () => {
+	// 	return new Promise<void>((resolve, reject) => {
+	// 		this.networkManager.myNetworks$.subscribe(
+	// 			(networks) => {
+	// 				this.networks.set(networks.slice().sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime()));
+	// 				resolve();
+	// 			},
+	// 			(error) => {
+	// 				this.messageService.reportAndThrowError(this.translate.instant('Issuer.failLoadissuers'), error);
+	// 				resolve();
+	// 			},
+	// 		);
+	// 	});
+	// };
+
 	ngOnInit() {
 		super.ngOnInit();
 
@@ -203,7 +249,38 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 			}
 		});
 
+		this.route.queryParams.subscribe((params) => {
+			if (params['tab']) {
+				this.activeTab = params['tab'];
+			}
+		});
+
 		this.userProfileApiService.getIssuerStaffRequests().then((r) => (this.staffRequests = r.body));
+	}
+
+	ngAfterContentInit() {
+		if (!environment.networksEnabled) {
+			this.tabs = [
+				{
+					key: 'issuers',
+					title: 'General.institutions',
+					component: this.issuersTemplate,
+				},
+			];
+		} else {
+			this.tabs = [
+				{
+					key: 'issuers',
+					title: 'General.institutions',
+					component: this.issuersTemplate,
+				},
+				{
+					key: 'networks',
+					title: 'General.networks',
+					component: this.networksTemplate,
+				},
+			];
+		}
 	}
 
 	async issuerSearchChange() {
@@ -265,6 +342,15 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 				}
 			},
 		);
+	}
+
+	onTabChange(tab) {
+		this.activeTab = tab;
+
+		this.router.navigate([], {
+			relativeTo: this.route,
+			queryParams: { tab: tab },
+		});
 	}
 
 	private readonly _hlmDialogService = inject(HlmDialogService);

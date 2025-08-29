@@ -49,6 +49,7 @@ import { MenuItemDirective } from './common/directives/bg-menuitem.directive';
 import { IconsProvider } from './icons-provider';
 import { CmsMenuItemsPipe } from './common/pipes/cmsMenuItems.pipe';
 import { HlmIcon } from '@spartan-ng/helm/icon';
+import { environment } from 'src/environments/environment';
 
 // Shim in support for the :scope attribute
 // See https://github.com/lazd/scopedQuerySelectorShim and
@@ -106,6 +107,11 @@ export class AppComponent implements OnInit, AfterViewInit {
 			routerLink: ['/catalog/learningpaths'],
 			icon: 'lucideRoute',
 		},
+		// {
+		// 	title: 'Network.networksNav',
+		// 	routerLink: ['/catalog/networks'],
+		// 	icon: 'lucideNetwork',
+		// },
 	];
 	accountMenuItems: MenuItem[] = [
 		{
@@ -333,6 +339,14 @@ export class AppComponent implements OnInit, AfterViewInit {
 		this.translate.onLangChange.subscribe(() => {
 			this.document.documentElement.lang = this.translate.currentLang;
 		});
+
+		if (environment.networksEnabled) {
+			this.aboutBadgesMenuItems.push({
+				title: 'Network.networksNav',
+				routerLink: ['/catalog/networks'],
+				icon: 'lucideNetwork',
+			});
+		}
 	}
 
 	ngAfterViewInit() {
