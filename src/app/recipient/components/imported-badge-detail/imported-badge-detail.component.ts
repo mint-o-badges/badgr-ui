@@ -17,8 +17,6 @@ import { addQueryParamsToUrl } from '../../../common/util/url-util';
 import { compareDate } from '../../../common/util/date-compare';
 import { EventsService } from '../../../common/services/events.service';
 import { AppConfigService } from '../../../common/app-config.service';
-import { ApiExternalToolLaunchpoint } from '../../../externaltools/models/externaltools-api.model';
-import { ExternalToolsManager } from '../../../externaltools/services/externaltools-manager.service';
 import { QueryParametersService } from '../../../common/services/query-parameters.service';
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { BadgeInstance } from '../../../issuer/models/badgeinstance.model';
@@ -55,7 +53,6 @@ export class ImportedBadgeDetailComponent extends BaseAuthenticatedRoutableCompo
 	category: object;
 	badge: ApiImportedBadgeInstance;
 	issuerBadgeCount: string;
-	launchpoints: ApiExternalToolLaunchpoint[];
 
 	config: PageConfig;
 
@@ -89,7 +86,6 @@ export class ImportedBadgeDetailComponent extends BaseAuthenticatedRoutableCompo
 		private eventService: EventsService,
 		private dialogService: CommonDialogsService,
 		private configService: AppConfigService,
-		private externalToolsManager: ExternalToolsManager,
 		public queryParametersService: QueryParametersService,
 		private translate: TranslateService,
 		private recipientBadgeApiService: RecipientBadgeApiService,
@@ -173,10 +169,6 @@ export class ImportedBadgeDetailComponent extends BaseAuthenticatedRoutableCompo
 				// shareButton: true,
 				// badgeInstanceSlug: this.badgeSlug,
 			};
-		});
-
-		this.externalToolsManager.getToolLaunchpoints('earner_assertion_action').then((launchpoints) => {
-			this.launchpoints = launchpoints;
 		});
 	}
 
@@ -293,12 +285,6 @@ export class ImportedBadgeDetailComponent extends BaseAuthenticatedRoutableCompo
 	// 	};
 	// 	this.issuerBadgeCount = issuerBadgeCount();
 	// }
-
-	private clickLaunchpoint(launchpoint: ApiExternalToolLaunchpoint) {
-		this.externalToolsManager.getLaunchInfo(launchpoint, this.badgeSlug).then((launchInfo) => {
-			this.eventService.externalToolLaunch.next(launchInfo);
-		});
-	}
 
 	exportJson() {
 		fetch(this.rawJsonUrl)
