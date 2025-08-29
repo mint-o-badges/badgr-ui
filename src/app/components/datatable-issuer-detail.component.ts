@@ -347,12 +347,6 @@ export class IssuerDetailDatatableComponent {
 		},
 	}));
 
-	constructor() {
-		effect(() => {
-			console.log('recipients', this.recipients());
-		});
-	}
-
 	onPageSizeChange(event: Event): void {
 		const target = event.target as HTMLSelectElement;
 		this.table.setPageSize(Number(target.value));

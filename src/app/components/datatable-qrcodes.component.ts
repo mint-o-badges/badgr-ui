@@ -30,8 +30,6 @@ import {
 	getSortedRowModel,
 	RowSelectionState,
 	SortingState,
-	getPaginationRowModel,
-	PaginationState,
 } from '@tanstack/angular-table';
 import { OebCheckboxComponent } from './oeb-checkbox.component';
 import { OebTableImports } from './oeb-table';
@@ -194,23 +192,17 @@ export class QrCodeDatatableComponent {
 			this.currentTaskStatus()?.status === TaskStatus.RETRY,
 	);
 
-	Math = Math;
-
 	badgeTable = createAngularTable(() => ({
 		data: this.requestedBadges(),
 		columns: this.badgeTableColumnDefinition,
 		getCoreRowModel: getCoreRowModel(),
 		getSortedRowModel: getSortedRowModel(),
-		// getPaginationRowModel: getPaginationRowModel(),
 		state: {
 			sorting: this.tableSorting(),
 			rowSelection: this.rowSelection(),
-			// pagination: this.pagination(),
 		},
 		onSortingChange: (updater) =>
 			updater instanceof Function ? this.tableSorting.update(updater) : this.tableSorting.set(updater),
-		// onPaginationChange: (updater) =>
-		// 	updater instanceof Function ? this.pagination.update(updater) : this.pagination.set(updater),
 		enableSortingRemoval: false, // ensures at least one column is sorted
 		enableRowSelection: true,
 		onRowSelectionChange: (updaterOrValue) => {
@@ -218,11 +210,6 @@ export class QrCodeDatatableComponent {
 				typeof updaterOrValue === 'function' ? updaterOrValue(this.rowSelection()) : updaterOrValue,
 			);
 		},
-		// initialState: {
-		// 	pagination: {
-		// 		pageSize: 10,
-		// 	},
-		// },
 	}));
 
 	private taskSubscription: Subscription | null = null;
@@ -261,11 +248,6 @@ export class QrCodeDatatableComponent {
 	];
 	private readonly _hlmDialogService = inject(HlmDialogService);
 
-	// private readonly pagination = signal<PaginationState>({
-	// 	pageIndex: 0,
-	// 	pageSize: 10,
-	// });
-
 	constructor(
 		private badgeRequestApiService: BadgeRequestApiService,
 		private badgeInstanceApiService: BadgeInstanceApiService,
@@ -280,11 +262,6 @@ export class QrCodeDatatableComponent {
 				response.body.requested_badges.map((badge: ApiRequestedBadge) => this.transformRequestedBadge(badge)),
 			);
 		});
-	}
-
-	onPageSizeChange(event: Event): void {
-		const target = event.target as HTMLSelectElement;
-		this.badgeTable.setPageSize(Number(target.value));
 	}
 
 	transformRequestedBadge = (apiBadge: ApiRequestedBadge): RequestedBadge => {
