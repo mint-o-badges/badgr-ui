@@ -1,5 +1,5 @@
 import { ApiUserProfile } from '~/common/model/user-profile-api.model';
-import { Issuer } from './models/issuer.model';
+import { Issuer } from '../models/issuer.model';
 
 export interface ApiStaffRequest {
 	id?: number;

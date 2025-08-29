@@ -158,3 +158,15 @@ export interface PublicApiLearningPath {
 	required_badges_count: number;
 	activated: boolean;
 }
+
+export interface PublicApiNetwork {
+	'@context': 'https://w3id.org/openbadges/v2';
+	description: string;
+	url: string;
+	type: 'Network';
+	id: string;
+	slug: string;
+	name: string;
+	image?: string;
+	sourceUrl?: string;
+}

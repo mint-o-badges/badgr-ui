@@ -7,8 +7,10 @@ import type { ClassValue } from 'clsx';
 export const tabsVariants = cva('', {
 	variants: {
 		variant: {
-			default: 'data-[state=inactive]:tw-border-white data-[state=active]:tw-text-purple',
-			lightpurple: 'data-[state=inactive]:tw-border-lightpurple data-[state=active]:tw-text-purple',
+			default:
+				'data-[state=inactive]:tw-border-white data-[state=active]:tw-border-purple data-[state=active]:tw-text-purple',
+			lightpurple:
+				'data-[state=inactive]:tw-border-lightpurple data-[state=active]:tw-border-purple data-[state=active]:tw-text-purple',
 			black: 'data-[state=inactive]:tw-border-[#CCD7FF] data-[state=active]:tw-border-oebblack',
 		},
 	},
@@ -35,7 +37,7 @@ export class HlmTabsTrigger {
 			tabsVariants({
 				variant: this._variant(),
 			}),
-			'tw-text-oebblack tw-text-[14px] tw-leading-[19px] md:tw-text-[20px] md:tw-leading-[28px] tw-inline-flex tw-items-center tw-justify-center tw-whitespace-nowrap tw-px-3 tw-py-1.5 tw-transition-all focus-visible:tw-outline-none focus-visible:tw-ring-2 focus-visible:tw-ring-ring focus-visible:tw-ring-offset-2 disabled:tw-pointer-events-none disabled:tw-opacity-50 tw-border-solid tw-border-b-2 tw-border-white data-[state=active]:tw-font-medium data-[state=active]:tw-border-purple data-[state=active]:tw-shadow-sm [&_ng-icon]:tw-pointer-events-none [&_ng-icon]:tw-shrink-0 [&_ng-icon]:tw-text-base',
+			'tw-text-oebblack tw-text-[14px] tw-leading-[19px] md:tw-text-[20px] md:tw-leading-[28px] tw-inline-flex tw-items-center tw-justify-center tw-whitespace-nowrap tw-px-3 tw-py-1.5 tw-transition-all focus-visible:tw-outline-none focus-visible:tw-ring-2 focus-visible:tw-ring-ring focus-visible:tw-ring-offset-2 disabled:tw-pointer-events-none disabled:tw-opacity-50 tw-border-solid tw-border-b-2 tw-border-white data-[state=active]:tw-font-medium data-[state=active]:tw-shadow-sm [&_ng-icon]:tw-pointer-events-none [&_ng-icon]:tw-shrink-0 [&_ng-icon]:tw-text-base',
 			this.userClass(),
 		),
 	);

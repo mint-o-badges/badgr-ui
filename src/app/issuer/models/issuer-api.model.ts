@@ -1,4 +1,5 @@
 import { ApiEntityRef } from '../../common/model/entity-ref';
+import { ApiNetwork } from './network-api.model';
 
 export type IssuerSlug = string;
 export type IssuerUrl = string;
@@ -48,6 +49,8 @@ export interface ApiIssuer {
 	lon?: number;
 	intendedUseVerified: boolean;
 	ownerAcceptedTos: boolean;
+
+	networks: ApiNetwork[];
 }
 
 export type IssuerStaffRoleSlug = 'owner' | 'editor' | 'staff';
