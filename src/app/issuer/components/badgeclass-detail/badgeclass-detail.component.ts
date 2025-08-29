@@ -14,7 +14,6 @@ import { IssuerManager } from '../../services/issuer-manager.service';
 import { BadgrApiFailure } from '../../../common/services/api-failure';
 import { preloadImageURL } from '../../../common/util/file-util';
 import { EventsService } from '../../../common/services/events.service';
-import { BadgeInstanceSlug } from '../../models/badgeinstance-api.model';
 import { badgeShareDialogOptions } from '../../../recipient/components/recipient-earned-badge-detail/recipient-earned-badge-detail.component';
 import { ShareSocialDialogOptions } from '../../../common/dialogs/share-social-dialog/share-social-dialog.component';
 import { AppConfigService } from '../../../common/app-config.service';
@@ -40,19 +39,14 @@ import { IssuerDetailDatatableComponent } from '../../../components/datatable-is
 import { FormsModule } from '@angular/forms';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { HlmH2 } from '@spartan-ng/helm/typography';
-import { OebTabsComponent } from '~/components/oeb-backpack-tabs.component';
+import { OebTabsComponent } from '~/components/oeb-tabs.component';
 
 @Component({
 	selector: 'badgeclass-detail',
 	template: `
 		<bg-badgedetail [config]="config" [awaitPromises]="[issuerLoaded, badgeClassLoaded]">
-			<oeb-backpack-tabs
-				[variant]="'black'"
-				(onTabChanged)="onTabChange($event)"
-				[activeTab]="activeTab"
-				[tabs]="tabs"
-			>
-			</oeb-backpack-tabs>
+			<oeb-tabs [variant]="'black'" (onTabChanged)="onTabChange($event)" [activeTab]="activeTab" [tabs]="tabs">
+			</oeb-tabs>
 			<ng-template #qrAwards>
 				<qrcode-awards
 					(qrBadgeAward)="onQrBadgeAward($event)"
