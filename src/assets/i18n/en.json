@@ -114,7 +114,8 @@
 		"country": "Country",
 		"state": "State",
 		"overview": "Overview",
-		"rolesAndRights": "Roles and rights"
+		"rolesAndRights": "Roles and rights",
+		"website": "Website"
 	},
 	"NavItems": {
 		"register": "Register",

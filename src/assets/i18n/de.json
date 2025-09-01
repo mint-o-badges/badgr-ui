@@ -115,7 +115,8 @@
 		"country": "Land",
 		"state": "Bundesland",
 		"overview": "Übersicht",
-		"rolesAndRights": "Rollen und Rechte"
+		"rolesAndRights": "Rollen und Rechte",
+		"website": "Webseite"
 	},
 	"NavItems": {
 		"register": "Registrieren",
