@@ -141,7 +141,7 @@ export type RequestedBadge = {
 			</table>
 
 			<ng-template #translateHeaderIDCellTemplate let-context>
-				{{ context.header.id | translate | titlecase }}
+				{{ context.header.id | translate }}
 			</ng-template>
 			<ng-template #headerCheckbox let-context>
 				<oeb-checkbox
