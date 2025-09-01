@@ -1,34 +1,23 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
-
 import { SessionService } from '../../../common/services/session.service';
 import { MessageService } from '../../../common/services/message.service';
 import { IssuerManager } from '../../services/issuer-manager.service';
 import { Title } from '@angular/platform-browser';
 import { Issuer } from '../../models/issuer.model';
-
 import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
 import { AppConfigService } from '../../../common/app-config.service';
 import { LinkEntry, BgBreadcrumbsComponent } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { FormMessageComponent } from '../../../common/components/form-message.component';
-import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
-import { HlmPDirective } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-p.directive';
 import { IssuerEditFormComponent } from '../issuer-edit-form/issuer-edit-form.component';
+import { HlmH1, HlmP } from '@spartan-ng/helm/typography';
 
 @Component({
 	selector: 'issuer-edit',
 	templateUrl: './issuer-edit.component.html',
-	imports: [
-		FormMessageComponent,
-		BgBreadcrumbsComponent,
-		HlmH1Directive,
-		HlmPDirective,
-		IssuerEditFormComponent,
-		TranslatePipe,
-	],
+	imports: [FormMessageComponent, BgBreadcrumbsComponent, HlmH1, HlmP, IssuerEditFormComponent, TranslatePipe],
 })
 export class IssuerEditComponent extends BaseAuthenticatedRoutableComponent {
 	issuer: Issuer;

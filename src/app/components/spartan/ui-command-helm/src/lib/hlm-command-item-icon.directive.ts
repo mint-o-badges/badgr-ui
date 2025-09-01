@@ -9,4 +9,4 @@ import { provideHlmIconConfig } from '../../../ui-icon-helm/src/index';
 	},
 	providers: [provideHlmIconConfig({ size: 'sm' })],
 })
-export class HlmCommandIconDirective {}
+export class HlmCommandIcon {}

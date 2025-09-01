@@ -8,6 +8,10 @@ on:
         branches:
             - main
             - develop
+    merge_group:
+        branches:
+            - production
+            - main
 
 env:
     REGISTRY: ghcr.io
@@ -19,7 +23,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: ⬇️  Checkout repository
-              uses: actions/checkout@v4.2.2
+              uses: actions/checkout@v5.0.0
             - name: 🔨 Setup node
               uses: actions/setup-node@v4.4.0
               with:
@@ -34,7 +38,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: ⬇️  Checkout repository
-              uses: actions/checkout@v4.2.2
+              uses: actions/checkout@v5.0.0
             - name: 🔨 Setup node
               uses: actions/setup-node@v4.4.0
               with:
@@ -53,13 +57,13 @@ jobs:
 
         steps:
             - name: ⬇️  Checkout repository
-              uses: actions/checkout@v4.2.2
+              uses: actions/checkout@v5.0.0
               with:
                   fetch-tags: true
                   fetch-depth: 0
 
             - name: 🔑 Log in to the Container registry
-              uses: docker/login-action@v3.4.0
+              uses: docker/login-action@v3.5.0
               with:
                   registry: ${{ env.REGISTRY }}
                   username: ${{ github.actor }}

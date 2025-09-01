@@ -108,7 +108,12 @@
 		"emailAddress": "E-Mail-Adresse",
 		"tos": "Nutzungsbedingungen",
 		"change": "ändern",
-		"condition": "Bedingung"
+		"condition": "Bedingung",
+		"country": "Land",
+		"state": "Bundesland",
+		"overview": "Übersicht",
+		"rolesAndRights": "Rollen und Rechte",
+		"website": "Webseite"
 	},
 	"NavItems": {
 		"register": "Registrieren",

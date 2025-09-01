@@ -1,12 +1,11 @@
 import { Component, inject, Injector, TemplateRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-
 import { preloadImageURL } from '../../../common/util/file-util';
 import { PublicApiService } from '../../services/public-api.service';
 import { LoadedRouteParam } from '../../../common/util/loaded-route-param';
 import { PublicApiBadgeClassWithIssuer, PublicApiIssuer, PublicApiLearningPath } from '../../models/public-api.model';
 import { EmbedService } from '../../../common/services/embed.service';
-import { addQueryParamsToUrl, stripQueryParamsFromUrl } from '../../../common/util/url-util';
+import { stripQueryParamsFromUrl } from '../../../common/util/url-util';
 import { routerLinkForUrl } from '../public/public.component';
 import { AppConfigService } from '../../../common/app-config.service';
 import { Title } from '@angular/platform-browser';
@@ -18,7 +17,6 @@ import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { IssuerManager } from '../../../issuer/services/issuer-manager.service';
 import { CommonDialogsService } from '../../../common/services/common-dialogs.service';
 import { Issuer } from '../../../issuer/models/issuer.model';
-import { BadgeClassApiService } from '../../../issuer/services/badgeclass-api.service';
 import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
 import { BadgeClassManager } from '../../../issuer/services/badgeclass-manager.service';
 import { BadgeClass } from '../../../issuer/models/badgeclass.model';
@@ -26,12 +24,11 @@ import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src
 import { DialogComponent } from '../../../components/dialog.component';
 import { BrnDialogRef } from '@spartan-ng/brain/dialog';
 import { BgBadgeDetail } from '../../../common/components/badge-detail/badge-detail.component';
-
 import { OebSeparatorComponent } from '../../../components/oeb-separator.component';
 import { BgLearningPathCard } from '../../../common/components/bg-learningpathcard';
-import { HlmH2Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h2.directive';
 import { FormsModule } from '@angular/forms';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
+import { HlmH2 } from '@spartan-ng/helm/typography';
 
 @Component({
 	templateUrl: './badgeclass.component.html',
@@ -39,7 +36,7 @@ import { OebButtonComponent } from '../../../components/oeb-button.component';
 		BgBadgeDetail,
 		OebSeparatorComponent,
 		BgLearningPathCard,
-		HlmH2Directive,
+		HlmH2,
 		FormsModule,
 		OebButtonComponent,
 		TranslatePipe,
@@ -106,7 +103,7 @@ export class PublicBadgeClassComponent {
 					},
 					badgeTitle: badge.name,
 					badgeDescription: badge.description,
-					badgeCriteria: badge.criteria['narrative'],
+					awardCriteria: badge.criteria['narrative'],
 					issuerSlug: badge.issuer['slug'],
 					slug: badge.id,
 					category: this.translate.instant(

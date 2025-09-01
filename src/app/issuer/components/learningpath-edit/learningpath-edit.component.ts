@@ -21,10 +21,9 @@ import { BadgeClass } from '../../models/badgeclass.model';
 import { BadgeClassApiService } from '../../services/badgeclass-api.service';
 import { LearningPathManager } from '../../services/learningpath-manager.service';
 import { FormMessageComponent } from '../../../common/components/form-message.component';
-import { HlmH1Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h1.directive';
-import { HlmH3Directive } from '../../../components/spartan/ui-typography-helm/src/lib/hlm-h3.directive';
 import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 import { LearningPathEditFormComponent } from '../learningpath-edit-form/learningpath-edit-form.component';
+import { HlmH1, HlmH3 } from '@spartan-ng/helm/typography';
 
 @Component({
 	selector: 'learningpath-edit',
@@ -32,8 +31,8 @@ import { LearningPathEditFormComponent } from '../learningpath-edit-form/learnin
 	imports: [
 		BgBreadcrumbsComponent,
 		FormMessageComponent,
-		HlmH1Directive,
-		HlmH3Directive,
+		HlmH1,
+		HlmH3,
 		BgAwaitPromises,
 		LearningPathEditFormComponent,
 		TranslatePipe,

@@ -54,7 +54,7 @@
 					> svg {
 						width: 2em;
 						height: auto;
-						stroke: black;
+						stroke: currentColor;
 						--ng-icon__stroke-width: 1;
 					}
 
@@ -64,7 +64,7 @@
 						justify-content: center;
 						gap: 0.5ch;
 						font-weight: normal;
-						color: var(--color-black);
+						color: inherit;
 
 						svg {
 							align-self: center;
@@ -83,41 +83,42 @@
 				stroke: var(--color-purple);
 			}
 			&.level-1 {
-				color: var(--color-purple);
-				circle {
-					fill: var(--color-lightpurple);
-				}
-			}
-			&.level-2 {
-				color: var(--color-purple-950);
-				circle {
-					fill: var(--color-purple-300);
-				}
-			}
-			&.level-3 {
-				color: white;
-				circle {
-					fill: var(--color-purple-600);
-				}
-			}
-			&.level-4,
-			&.leaf {
-				color: white;
+				color: var(--color-white);
 				circle {
 					fill: var(--color-purple);
 				}
 			}
+			&.level-2 {
+				color: var(--color-white);
+				circle {
+					fill: var(--color-purple-600);
+				}
+			}
+			&.level-3 {
+				color: var(--color-black);
+				circle {
+					fill: var(--color-purple-300);
+				}
+			}
+			&.level-4,
+			&.leaf {
+				color: var(--color-black);
+				circle {
+					fill: var(--color-lightgray);
+				}
+			}
 			&.future,
 			&.future-sub {
-				color: var(--color-yellow-900);
+				color: var(--color-black);
 				circle {
 					stroke: var(--color-yellow-900);
-					fill: var(--color-yellow-200);
+					fill: var(--color-yellow);
 				}
 			}
 			&.future-sub {
 				circle {
-					fill: var(--color-yellow-500);
+					stroke: var(--color-purple);
+					fill: var(--color-yellow-200);
 				}
 			}
 		}
@@ -185,7 +186,7 @@
 	&__esco {
 		&:before {
 			border-color: var(--color-purple);
-			background-color: var(--color-lightpurple);
+			background-color: var(--color-purple-100);
 		}
 	}
 

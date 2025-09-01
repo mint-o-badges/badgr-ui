@@ -24,6 +24,7 @@ export interface ApiLearningPath extends Omit<ApiLearningPathForCreation, 'badge
 	issuer_name: string;
 	participationBadge_id: string;
 	participationBadge_image?: string;
+	participant_count?: number;
 	name: string;
 	description: string;
 	tags: string[];

@@ -1,62 +1,165 @@
-import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
-
+import { CommonModule, formatDate } from '@angular/common';
+import { TranslateModule, TranslatePipe } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { HlmTableModule } from './spartan/ui-table-helm/src';
+import { Component, input, output, signal, TemplateRef, viewChild } from '@angular/core';
+import { HlmTableImports } from './spartan/ui-table-helm/src';
 import { OebButtonComponent } from './oeb-button.component';
-import { HlmIconModule } from '@spartan-ng/ui-icon-helm';
+import { HlmIconModule } from '@spartan-ng/helm/icon';
+import { OebTableImports } from './oeb-table';
+import {
+	SortingState,
+	ColumnDef,
+	createAngularTable,
+	getCoreRowModel,
+	getSortedRowModel,
+	FlexRenderDirective,
+} from '@tanstack/angular-table';
+import { ApiLearningPathParticipant } from '~/common/model/learningpath-api.model';
+import { NgIcon } from '@ng-icons/core';
 
 @Component({
 	selector: 'learningpath-graduates-datatable',
-	imports: [HlmTableModule, HlmIconModule, CommonModule, OebButtonComponent, TranslateModule, RouterModule],
-	template: ` <hlm-table
-		class="tw-rounded-t-[20px] tw-overflow-hidden tw-w-full tw-max-w-[100%] tw-bg-lightpurple tw-border-purple tw-border"
+	imports: [
+		...HlmTableImports,
+		...OebTableImports,
+		FlexRenderDirective,
+		TranslatePipe,
+		NgIcon,
+		HlmIconModule,
+		CommonModule,
+		OebButtonComponent,
+		TranslateModule,
+		RouterModule,
+	],
+	template: ` <table
+		hlmTable
+		oeb-table
 	>
-		<hlm-trow class="tw-bg-purple tw-text-white tw-flex-wrap hover:tw-bg-purple">
-			<hlm-th class="!tw-text-white tw-w-28 md:tw-w-48">ID</hlm-th>
-			<hlm-th class="!tw-text-white tw-justify-center !tw-flex-1">{{
-				'LearningPath.finishedOn' | translate
-			}}</hlm-th>
-			<hlm-th class="!tw-text-white tw-justify-end sm:tw-w-48 tw-w-0 !tw-p-0"></hlm-th>
-		</hlm-trow>
-		@for (participant of participants; track participant) {
-			<hlm-trow class="tw-border-purple tw-flex-wrap tw-py-2">
-				<hlm-th class="tw-w-28 md:tw-w-48">
-					<span class="tw-text-oebblack tw-cursor-pointer">{{ participant.user.email }}</span>
-				</hlm-th>
-				<hlm-th class="!tw-flex-1 tw-justify-center !tw-text-oebblack"
-					><p class="u-text">{{ participant.completed_at | date: 'dd.MM.yyyy' }}</p></hlm-th
-				>
-				<hlm-th
-					class="tw-justify-center sm:tw-justify-end !tw-text-oebblack tw-flex-col tw-h-fit sm:tw-w-max tw-w-full tw-gap-2 tw-my-2 tw-mt-7 sm:tw-mt-2"
-				>
-					<oeb-button
-						class="tw-w-full"
-						variant="secondary"
-						size="xs"
-						width="full_width"
-						(click)="revokeLearningPath.emit(participant)"
-						[text]="revokeLpText"
-					></oeb-button>
-					<oeb-button
-						class="tw-w-full"
-						size="xs"
-						width="full_width"
-						(click)="downloadCertificate.emit(participant)"
-						[text]="actionElementText"
-					></oeb-button>
-				</hlm-th>
-			</hlm-trow>
-		}
-	</hlm-table>`,
+		<thead hlmTHead>
+			@for (headerRow of table.getHeaderGroups(); track headerRow.id) {
+				<tr hlmTr>
+					@for (headerCell of headerRow.headers; track headerCell.id) {
+						@if (!headerCell.isPlaceholder) {
+							<th hlmTh>
+								<div
+									class="tw-flex tw-flex-row tw-items-center tw-gap-2 [&[data-sortable='true']]:tw-cursor-pointer"
+									(click)="headerCell.column.toggleSorting()"
+									[attr.data-sortable]="headerCell.column.getCanSort()"
+								>
+									<div>
+										<ng-container
+											*flexRender="
+												headerCell.column.columnDef.header;
+												props: headerCell.getContext();
+												let header
+											"
+										>
+											<div [innerHTML]="header"></div>
+										</ng-container>
+									</div>
+
+									@if (headerCell.column.getIsSorted()) {
+										@let order = headerCell.column.getNextSortingOrder() === "asc" ? "desc" : "asc";
+										@if (order === 'asc') {
+											<ng-icon hlm size="base" name="lucideChevronUp" />
+										} @else {
+											<ng-icon hlm size="base" name="lucideChevronDown" />
+										}
+									} @else if (headerCell.column.getCanSort()) {
+										<ng-icon hlm size="base" name="lucideChevronsUpDown" />
+									}
+								</div>
+							</th>
+						}
+					}
+				</tr>
+			}
+		</thead>
+		<tbody hlmTBody>
+			@for (row of table.getRowModel().rows; track row.id; let i = $index) {
+				<tr hlmTr>
+
+						@for (cell of row.getVisibleCells(); track cell.id;) {
+							<td hlmTd>
+								<ng-container
+									*flexRender="cell.column.columnDef.cell; props: cell.getContext(); let cell"
+								>
+									<div [innerHTML]="cell"></div>
+								</ng-container>
+							</td>
+						}
+
+				</tr>
+			}
+		</tbody>
+	</table>
+
+	<ng-template #translateHeaderIDCellTemplate let-context>
+		{{ context.header.id | translate }}
+	</ng-template>
+
+	<ng-template #badgeActionsCellTemplate let-context>
+		<div class="tw-flex tw-flex-col tw-gap-1 md:tw-gap-2 tw-leading-relaxed">
+			<oeb-button
+				size="xs"
+				width="full_width"
+				(click)="downloadCertificate.emit(context)"
+				[text]="'Issuer.pdfCertificate' | translate" />
+			<oeb-button
+				variant="secondary"
+				size="xs"
+				width="full_width"
+				(click)="revokeLearningPath.emit(context)"
+				[text]="'General.revoke' | translate | titlecase" />
+		</div>
+	</ng-template>`,
 })
 export class LearningPathGraduatesDatatableComponent {
-	@Input() caption: string = '';
-	@Input() participants: any[];
-	@Input() actionElementText: string = 'PDF-Zertifikat';
-	@Input() revokeLpText: string = 'zurücknehmen';
-	@Output() revokeLearningPath = new EventEmitter();
-	@Output() downloadCertificate = new EventEmitter();
-	@Output() redirectToBadgeDetail = new EventEmitter();
+	participants = input.required<ApiLearningPathParticipant[]>();
+	revokeLearningPath = output<ApiLearningPathParticipant>();
+	downloadCertificate = output<ApiLearningPathParticipant>();
+
+	translateHeaderIDCellTemplate = viewChild.required<TemplateRef<any>>('translateHeaderIDCellTemplate');
+	badgeActionsTemplate = viewChild.required<TemplateRef<any>>('badgeActionsCellTemplate');
+
+	readonly tableSorting = signal<SortingState>([
+		{
+			id: 'General.name',
+			desc: false,
+		},
+	]);
+
+	private readonly tableColumnDefinition: ColumnDef<ApiLearningPathParticipant>[] = [
+		{
+			id: 'General.name',
+			header: () => this.translateHeaderIDCellTemplate(),
+			accessorFn: (row) => `${row.user.first_name} ${row.user.last_name}`,
+			cell: (ctx) => ctx.getValue(),
+			sortDescFirst: false,
+		},
+		{
+			id: 'LearningPath.finishedOn',
+			header: () => this.translateHeaderIDCellTemplate(),
+			accessorFn: (row) => formatDate(row.completed_at, 'dd.MM.yyyy', 'de-DE'),
+			cell: (info) => info.getValue(),
+		},
+		{
+			id: 'actions',
+			cell: (info) => this.badgeActionsTemplate(),
+			enableSorting: false,
+		},
+	];
+
+	table = createAngularTable(() => ({
+		data: this.participants(),
+		columns: this.tableColumnDefinition,
+		getCoreRowModel: getCoreRowModel(),
+		getSortedRowModel: getSortedRowModel(),
+		state: {
+			sorting: this.tableSorting(),
+		},
+		onSortingChange: (updater) =>
+			updater instanceof Function ? this.tableSorting.update(updater) : this.tableSorting.set(updater),
+		enableSortingRemoval: false, // ensures at least one column is sorted
+	}));
 }

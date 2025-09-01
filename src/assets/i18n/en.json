@@ -108,7 +108,12 @@
 		"emailAddress": "E-mail address",
 		"tos": "Terms of Service",
 		"change": "change",
-		"condition": "condition"
+		"condition": "condition",
+		"country": "Country",
+		"state": "State",
+		"overview": "Overview",
+		"rolesAndRights": "Roles and rights",
+		"website": "Website"
 	},
 	"NavItems": {
 		"register": "Register",
@@ -1019,7 +1024,7 @@
 		"notActivatedYetStart": "The Micro Degree is not yet",
 		"notActivatedYetLink": "unlocked",
 		"notActivatedYetEnd": " for use.",
-		"finishedOn": "finished on",
+		"finishedOn": "Finished on",
 		"mdUsers": "Micro Degree users",
 		"searchMds": "search micro degrees",
 		"saving": "Saving",
