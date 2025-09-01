@@ -1,0 +1,20 @@
+<ng-container *bgAwaitPromises="[]">
+	<oeb-tabs
+		[variant]="'bluebackground'"
+		(onTabChanged)="onTabChange($event)"
+		[activeTab]="activeTab"
+		[tabs]="tabs"
+		countStyle="parentheses"
+	></oeb-tabs>
+</ng-container>
+
+<ng-template #networkTemplate>
+	<oeb-button
+		[text]="'Network.createBadge' | translate"
+		[routerLink]="['/issuer/networks/', network().slug]"
+	></oeb-button>
+</ng-template>
+
+<ng-template #partnerTemplate>
+	<span>Partners</span>
+</ng-template>

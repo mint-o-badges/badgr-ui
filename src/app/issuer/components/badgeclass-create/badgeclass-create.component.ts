@@ -17,6 +17,8 @@ import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 import { BadgeClassEditFormComponent } from '../badgeclass-edit-form/badgeclass-edit-form.component';
 import { HlmH1 } from '@spartan-ng/helm/typography';
+import { Network } from '~/issuer/models/network.model';
+import { BadgeParentEntity } from '../badgeclass-edit-form/badgeclass-edit-form.component';
 
 @Component({
 	templateUrl: 'badgeclass-create.component.html',
@@ -26,7 +28,9 @@ export class BadgeClassCreateComponent extends BaseAuthenticatedRoutableComponen
 	issuerSlug: string;
 	category: string;
 	issuer: Issuer;
-	issuerLoaded: Promise<unknown>;
+	network: Network;
+	entityLoaded: Promise<unknown>;
+	entity: BadgeParentEntity;
 	breadcrumbLinkEntries: LinkEntry[] = [];
 	scrolled = false;
 	copiedBadgeClass: BadgeClass = null;
@@ -37,6 +41,9 @@ export class BadgeClassCreateComponent extends BaseAuthenticatedRoutableComponen
 
 	badgesLoaded: Promise<unknown>;
 	badges: BadgeClass[] = null;
+
+	contextSlug: string;
+	contextType: 'issuer' | 'network';
 
 	@ViewChild('badgeimage') badgeImage;
 
@@ -58,14 +65,29 @@ export class BadgeClassCreateComponent extends BaseAuthenticatedRoutableComponen
 			title.setTitle(`${str} - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 		});
 
-		this.issuerSlug = this.route.snapshot.params['issuerSlug'];
+		// this.issuerSlug = this.route.snapshot.params['issuerSlug'];
 		this.category = this.route.snapshot.params['category'];
 
+		if (this.route.snapshot.params['issuerSlug']) {
+			this.contextSlug = this.route.snapshot.params['issuerSlug'];
+			this.contextType = 'issuer';
+		} else if (this.route.snapshot.params['networkSlug']) {
+			this.contextSlug = this.route.snapshot.params['networkSlug'];
+			this.contextType = 'network';
+		} else {
+			throw new Error('No valid context parameter found');
+		}
+
 		const breadcrumbPromises: Promise<unknown>[] = [];
-		this.issuerLoaded = this.issuerManager.issuerBySlug(this.issuerSlug).then((issuer) => {
+		this.entityLoaded = this.issuerManager.issuerBySlug(this.contextSlug).then((issuer) => {
 			this.issuer = issuer;
+			this.entity = {
+				type: 'issuer',
+				image: issuer.image,
+				slug: issuer.slug,
+			};
 		});
-		breadcrumbPromises.push(this.issuerLoaded);
+		breadcrumbPromises.push(this.entityLoaded);
 
 		const state = this.router.getCurrentNavigation().extras.state;
 		if (state && state.copybadgeid) {
@@ -96,7 +118,7 @@ export class BadgeClassCreateComponent extends BaseAuthenticatedRoutableComponen
 
 	badgeClassCreated(promise: Promise<BadgeClass>) {
 		promise.then(
-			(badgeClass) => this.router.navigate(['issuer/issuers', this.issuerSlug, 'badges', badgeClass.slug]),
+			(badgeClass) => this.router.navigate(['issuer/issuers', this.contextSlug, 'badges', badgeClass.slug]),
 			(error) =>
 				this.messageService.reportAndThrowError(
 					`Unable to create Badge Class: ${BadgrApiFailure.from(error).firstMessage}`,

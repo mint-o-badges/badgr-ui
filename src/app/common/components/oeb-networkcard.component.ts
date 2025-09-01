@@ -4,6 +4,8 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { Network } from '../../issuer/models/network.model';
 import { HlmP } from '@spartan-ng/helm/typography';
 import { NetworkV3 } from '~/issuer/models/networkv3.model';
+import { OebBackgroundComponent } from '~/components/oeb-background.component';
+import { OebButtonComponent } from '~/components/oeb-button.component';
 
 @Component({
 	selector: 'oeb-networkcard',
@@ -40,9 +42,18 @@ import { NetworkV3 } from '~/issuer/models/networkv3.model';
 			<div class="tw-text-white">
 				{{ network.description }}
 			</div>
+
+			<section>
+				<oeb-button variant="secondary" width="full_width" [text]="'Issuer.giveBadge' | translate"></oeb-button>
+				<oeb-button
+					variant="secondary"
+					width="full_width"
+					[text]="'Issuer.createBadge' | translate"
+				></oeb-button>
+			</section>
 		</div>
 	`,
-	imports: [HlmP, RouterLink, TranslatePipe],
+	imports: [HlmP, RouterLink, TranslatePipe, OebButtonComponent],
 })
 export class OebNetworkCard {
 	readonly badgeLoadingImageUrl = '../../../breakdown/static/images/badge-loading.svg';

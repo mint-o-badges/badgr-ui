@@ -11,7 +11,7 @@
 					<oeb-step
 						[label]="'CreateBadge.chooseBadgeCategory' | translate"
 						[optional]="false"
-						[route]="['/issuer/issuers/' + issuer.slug + '/badges' + '/select']"
+						[route]="['/issuer/issuers/' + parentEntity.slug + '/badges' + '/select']"
 						errorMessage="Bitte Kategorie wählen"
 						[completed]="true"
 					>

@@ -72,6 +72,12 @@ import { HlmH2, HlmP } from '@spartan-ng/helm/typography';
 const MAX_STUDYLOAD_HRS: number = 10_000;
 const MAX_HRS_PER_COMPETENCY: number = 999;
 
+export interface BadgeParentEntity {
+	type: 'network' | 'issuer';
+	slug: string;
+	image: string;
+}
+
 @Component({
 	selector: 'badgeclass-edit-form',
 	templateUrl: './badgeclass-edit-form.component.html',
@@ -415,7 +421,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	cancel = new EventEmitter<void>();
 
 	@Input()
-	issuer: Issuer;
+	parentEntity: BadgeParentEntity;
 
 	@Input()
 	category: string;
@@ -1498,7 +1504,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 						amount: parseInt(expirationState.expires_amount, 10),
 					};
 				}
-				this.savePromise = this.badgeClassManager.createBadgeClass(this.issuer.slug, badgeClassData);
+				this.savePromise = this.badgeClassManager.createBadgeClass(this.parentEntity.slug, badgeClassData);
 			}
 
 			this.save.emit(this.savePromise);
@@ -1601,7 +1607,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	generateUploadImage(image, formdata, useIssuerImageInBadge = true, initializing = false) {
 		this.currentImage = image.slice();
 		this.badgeStudio
-			.generateUploadImage(image.slice(), formdata, useIssuerImageInBadge, this.issuer.image)
+			.generateUploadImage(image.slice(), formdata, useIssuerImageInBadge, this.parentEntity.image)
 			.then((imageUrl) => {
 				this.imageField.useDataUrl(imageUrl, 'BADGE', initializing);
 			});

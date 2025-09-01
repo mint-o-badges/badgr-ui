@@ -83,14 +83,14 @@
       </button> -->
 		</div>
 
-		<div *bgAwaitPromises="[issuerLoaded]">
+		<div *bgAwaitPromises="[entityLoaded]">
 			<div class="tw-max-w-[1016px]">
 				<badgeclass-edit-form
 					#badgeimage
 					(save)="badgeClassCreated($event)"
 					(cancel)="creationCanceled()"
 					[scrolled]="scrolled"
-					[issuer]="issuer"
+					[parentEntity]="entity"
 					[category]="category"
 					[isForked]="isForked"
 					[initBadgeClass]="copiedBadgeClass"

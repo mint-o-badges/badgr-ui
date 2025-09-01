@@ -29,6 +29,7 @@ import { NetworkPartnersComponent } from '../network-partners/network-partners.c
 import { AddInstitutionComponent } from '../add-institution/add-institution.component';
 import { BgBreadcrumbsComponent } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { ApiNetworkInvitation } from '../../../issuer/models/network-invite-api.model';
+import { NetworkBadgesComponent } from '../network-badges/network-badges.component';
 
 @Component({
 	selector: 'network-dashboard',
@@ -45,6 +46,7 @@ import { ApiNetworkInvitation } from '../../../issuer/models/network-invite-api.
 		NetworkPartnersComponent,
 		AddInstitutionComponent,
 		BgBreadcrumbsComponent,
+		NetworkBadgesComponent,
 	],
 })
 export class NetworkDashboardComponent extends BaseAuthenticatedRoutableComponent implements OnInit {

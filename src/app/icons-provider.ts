@@ -49,6 +49,7 @@ import {
 	lucideEye,
 	lucideEyeOff,
 	lucideNetwork,
+	lucideShipWheel,
 } from '@ng-icons/lucide';
 
 export const IconsProvider = provideIcons({
@@ -101,4 +102,5 @@ export const IconsProvider = provideIcons({
 	lucideEye,
 	lucideEyeOff,
 	lucideNetwork,
+	lucideShipWheel,
 });
