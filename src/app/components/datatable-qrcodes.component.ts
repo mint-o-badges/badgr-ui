@@ -167,6 +167,7 @@ export type RequestedBadge = {
 		<oeb-button
 			size="sm"
 			class="tw-float-right"
+			variant="blackborder"
 			(click)="issueBadges()"
 			[disabled]="this.rowSelectionCount() === 0 || this.isTaskProcessing() || this.isTaskPending()"
 			[text]="this.rowSelectionCount() > 1 ? ('Issuer.giveBadges' | translate) : ('Issuer.giveBadge' | translate)"

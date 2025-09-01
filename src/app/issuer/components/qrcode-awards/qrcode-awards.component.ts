@@ -50,13 +50,12 @@ export class QrCodeAwardsComponent {
 		private router: Router,
 		private translate: TranslateService,
 	) {}
-	separatorStyle = 'tw-block tw-my-2 tw-border-[var(--color-lightgray)]';
 
 	getSvgFillColor(int: number) {
 		if (int === 0) {
 			return 'white';
 		} else {
-			return 'var(--color-purple)';
+			return 'oebblack';
 		}
 	}
 
@@ -72,43 +71,52 @@ export class QrCodeAwardsComponent {
 	qrCodeMenus: Array<MenuItem[]> = [];
 
 	ngOnChanges(changes: SimpleChanges) {
-		if (changes.awards) {
-			this.awards.forEach((award) => {
-				this.qrCodeMenus.push([
-					{
-						title: 'QrCode.showQrCode',
-						routerLink: [
-							'/issuer/issuers',
-							this.issuer.slug,
-							'badges',
-							this.badgeClass.slug,
-							'qr',
-							award.slug,
-							'generate',
-						],
-						icon: 'lucideQrCode',
-					},
-					{
-						title: 'General.edit',
-						routerLink: [
-							'/issuer/issuers/',
-							this.issuer.slug,
-							'badges',
-							this.badgeClass.slug,
-							'qr',
-							award.slug,
-							'edit',
-						],
-						icon: 'lucidePencil',
-					},
-					{
-						title: 'General.delete',
-						action: () => this.openDangerDialog(award.slug),
-						icon: 'lucideTrash2',
-					},
-				]);
-			});
+		if (changes.awards || changes.issuer || changes.badgeClass) {
+			this.setupQrCodeMenus();
 		}
+	}
+
+	private setupQrCodeMenus() {
+		if (!this.issuer || !this.awards || !this.badgeClass) {
+			return;
+		}
+
+		this.qrCodeMenus = [];
+		this.awards.forEach((award) => {
+			this.qrCodeMenus.push([
+				{
+					title: 'QrCode.showQrCode',
+					routerLink: [
+						'/issuer/issuers',
+						this.issuer.slug,
+						'badges',
+						this.badgeClass.slug,
+						'qr',
+						award.slug,
+						'generate',
+					],
+					icon: 'lucideQrCode',
+				},
+				{
+					title: 'General.edit',
+					routerLink: [
+						'/issuer/issuers/',
+						this.issuer.slug,
+						'badges',
+						this.badgeClass.slug,
+						'qr',
+						award.slug,
+						'edit',
+					],
+					icon: 'lucidePencil',
+				},
+				{
+					title: 'General.delete',
+					action: () => this.openDangerDialog(award.slug),
+					icon: 'lucideTrash2',
+				},
+			]);
+		});
 	}
 
 	private readonly _hlmDialogService = inject(HlmDialogService);
