@@ -232,7 +232,7 @@ import { HlmIconModule } from '@spartan-ng/helm/icon';
 
 
 		<ng-template #translateHeaderIDCellTemplate let-context>
-			{{ context.header.id | translate | titlecase }}
+			{{ context.header.id | translate }}
 		</ng-template>
 
 		<ng-template #badgeActionsCellTemplate let-context>
