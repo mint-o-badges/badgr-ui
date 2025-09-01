@@ -33,7 +33,7 @@
 				&.description[data-title]::after {
 					content: attr(data-title);
 					position: fixed;
-					background-color: #f8f6fc;
+					background-color: var(--color-lavender);
 					border-radius: 10px;
 					border: 1px solid var(--color-purple);
 					color: var(--color-purple);
