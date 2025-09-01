@@ -217,8 +217,9 @@ export class PublicBadgeAssertionComponent {
 						// },
 					],
 					badgeDescription: assertion.badge.description,
-					badgeCriteria:
-						typeof assertion.badge.criteria != 'string' ? assertion.badge.criteria.narrative : null,
+					awardCriteria: assertion.badge.criteria['narrative'],
+					// criteria:
+					// 	typeof assertion.badge.criteria != 'string' ? assertion.badge.criteria.narrative : null,
 					issuerSlug: assertion.badge.issuer['slug'],
 					slug: assertion.badge.id,
 					category:

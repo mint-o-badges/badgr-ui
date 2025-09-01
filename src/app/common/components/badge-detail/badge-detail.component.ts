@@ -73,6 +73,14 @@ export class BgBadgeDetail {
 		return this.config.learningPaths as PublicApiLearningPath[];
 	}
 
+	get hasCriteria(): boolean {
+		return (
+			this.config?.awardCriteria &&
+			Array.isArray(this.config.awardCriteria) &&
+			this.config.awardCriteria.length > 0
+		);
+	}
+
 	competencyBadge = this.translate.instant('Badge.categories.competency');
 
 	calculateLearningPathStatus(lp: LearningPath | PublicApiLearningPath): { match: string } | { progress: number } {
