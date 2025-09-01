@@ -78,14 +78,6 @@ import { HlmIconModule } from '@spartan-ng/helm/icon';
 						</button>
 					}
 				</div>
-				@if (searchValue()) {
-					<div class="tw-text-sm tw-text-gray-600">
-						{{ 'table.searchResults' | translate : {
-							count: table.getFilteredRowModel().rows.length,
-							total: recipients().length
-						} }}
-					</div>
-				}
 				</div>
 			</div>
 
@@ -331,7 +323,21 @@ export class IssuerDetailDatatableComponent {
 		onPaginationChange: (updater) =>
 			updater instanceof Function ? this.pagination.update(updater) : this.pagination.set(updater),
 		onGlobalFilterChange: (value) => this.searchValue.set(value),
-		globalFilterFn: 'includesString',
+		globalFilterFn: (row, columnId, filterValue) => {
+			if (!filterValue) return true;
+
+			const searchTerm = filterValue.toLowerCase();
+			const badgeInstance = row.original;
+
+			const name =
+				badgeInstance
+					.getExtension('extensions:recipientProfile', badgeInstance.recipientIdentifier)
+					.name?.toLowerCase() || '';
+
+			const email = badgeInstance.recipientIdentifier?.toLowerCase() || '';
+
+			return name.includes(searchTerm) || email.includes(searchTerm);
+		},
 		enableSortingRemoval: false, // ensures at least one column is sorted
 		enableRowSelection: true,
 		onRowSelectionChange: (updaterOrValue) => {
