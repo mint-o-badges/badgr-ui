@@ -97,6 +97,7 @@
 		"select": "Select",
 		"loadMore": "Load more",
 		"searchByEmail": "Search by email address",
+		"searchByNameOrEmail": "Search name or email",
 		"openNewWindow": "Open in new window",
 		"public": "Public",
 		"sendUsYourBadge": "Send your badge to <a class='tw-text-link tw-underline' href='mailto:support@openbadges.education'>support@openbadges.education</a> and we will be glad to take a look. ",

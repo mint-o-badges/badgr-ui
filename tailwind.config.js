@@ -40,6 +40,8 @@ module.exports = {
 				},
 				lightpurple: 'var(--color-lightpurple)',
 				brightpurple: 'var(--color-brightpurple)',
+				aipurple: 'var(--color-aipurple)',
+				lavender: 'var(--color-lavender)',
 				buttonhover: 'var(--color-buttonhover)',
 				red: {
 					DEFAULT: 'var(--color-red)',
@@ -59,6 +61,7 @@ module.exports = {
 					900: 'var(--color-pink-900)',
 					950: 'var(--color-pink-950)',
 				},
+				lightpink: 'var(--color-lightpink)',
 				green: {
 					DEFAULT: 'var(--color-green)',
 					50: 'var(--color-green-50)',
@@ -74,6 +77,8 @@ module.exports = {
 					950: 'var(--color-green-950)',
 					// 400: '#66BB6A',
 				},
+				mint: 'var(--color-mint)',
+				darkgreen: 'var(--color-darkgreen)',
 				yellow: {
 					DEFAULT: 'var(--color-yellow)',
 					50: 'var(--color-yellow-50)',
