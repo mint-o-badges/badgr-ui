@@ -24,7 +24,7 @@ import { HlmPaginationPrevious } from './hlm-pagination-previous';
 @Component({
 	selector: 'hlm-numbered-pagination-query-params',
 	template: `
-		<div class="tw-flex tw-items-center tw-justify-between tw-gap-2 twpx-4 tw-py-2">
+		<div class="tw-flex tw-items-center tw-justify-between tw-gap-2 tw-px-4 tw-py-2">
 			<div class="tw-flex tw-items-center tw-gap-1 tw-text-nowrap tw-text-sm tw-text-gray-600">
 				<b>{{ totalItems() }}</b>
 				total items |
