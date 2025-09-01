@@ -31,7 +31,8 @@ html {
 	// Secondary
 	--color-lightgray: #f5f5f5;
 	--color-midgrey: #dedede;
-	--color-darkgrey: #757575;
+	--color-darkgray: #757575;
+	--color-darkgrey: var(--color-darkgray);
 	--color-lavender: #f8f6fc;
 	--color-aipurple: #ccd7ff;
 	--color-mint: #e4ffe4;
@@ -80,7 +81,6 @@ html {
 	--color-green-900: #55ee56;
 	--color-green-950: #47ea48;
 
-	--color-darkgray: #6b6b6b;
 	--color-grayinteractive: #cfcece;
 	--color-gray-50: #f3f3f3;
 	--color-gray-100: #dedede;

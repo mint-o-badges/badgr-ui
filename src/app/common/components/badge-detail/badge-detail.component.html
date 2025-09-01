@@ -77,10 +77,10 @@
 				<!-- Sidebar -->
 				<div class="tw-flex md:tw-flex-row tw-flex-col tw-gap-16 tw-mt-4 tw-relative md:tw-mx-0 tw-mx-auto">
 					<div class="md:tw-w-[346px] md:tw-p-0 tw-pb-8 md:tw-flex-grow-1">
-						<div class="badge-sidebar-internal tw-flex tw-flex-wrap">
+						<div class="badge-sidebar-internal tw-rounded-lg tw-flex tw-flex-wrap">
 							<div class="md:tw-min-w-[260px] tw-min-w-[200px]">
 								<div
-									class="tw-flex tw-items-center tw-bg-white tw-mx-auto tw-py-8 tw-rounded-[20px] oeb-slight-shadow"
+									class="tw-flex tw-items-center tw-bg-white tw-mx-auto tw-py-8 tw-rounded-lg oeb-slight-shadow"
 								>
 									<img
 										class="tw-w-[120.88px] tw-h-[120.88px] md:tw-w-[172.69px] md:tw-h-[172.69px] tw-mx-auto tw-block"
@@ -91,7 +91,7 @@
 								</div>
 								<!-- Issuer Information -->
 								<div
-									class="tw-mt-4 tw-mx-auto tw-flex tw-items-center oeb-slight-shadow tw-pl-4 tw-pr-2 tw-py-4 tw-bg-white tw-rounded-[20px]"
+									class="tw-mt-4 tw-mx-auto tw-flex tw-items-center oeb-slight-shadow tw-pl-4 tw-pr-2 tw-py-4 tw-bg-white tw-rounded-lg"
 								>
 									<div>
 										<img
@@ -193,14 +193,12 @@
 									</div>
 								}
 								@if (config.version) {
-									<div
-										class="tw-flex tw-text-oebblack tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col tw-items-center"
-									>
-										<dt class="tw-text-sm tw-text-oebblack tw-font-bold">
+									<div class="tw-flex tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col tw-items-center">
+										<dt class="tw-text-sm tw-text-darkgray">
 											{{ 'Badge.standard' | translate }}
 										</dt>
 										<dd
-											class="tw-text-sm tw-text-oebblack md:tw-ml-2 tw-flex tw-items-center tw-gap-1"
+											class="tw-text-sm tw-text-oebblack md:tw-ml-2 tw-flex tw-items-center tw-gap-1 tw-font-medium"
 										>
 											{{ config.version }}
 											<info-icon>
@@ -214,8 +212,8 @@
 									</div>
 								}
 								@if (config.category) {
-									<div class="tw-flex tw-text-oebblack tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
-										<dt class="tw-text-sm tw-text-[#757575]">
+									<div class="tw-flex tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
+										<dt class="tw-text-sm tw-text-darkgray">
 											{{ 'General.category' | translate }}
 										</dt>
 										<dd class="tw-text-sm tw-text-oebblack tw-font-medium md:tw-ml-2">
@@ -225,7 +223,7 @@
 								}
 								@if (config.duration) {
 									<div class="tw-flex tw-text-sm tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
-										<dt class="tw-text-[#757575]">
+										<dt class="tw-text-darkgray">
 											{{ 'RecBadgeDetail.duration' | translate }}
 										</dt>
 										<dd class="tw-text-oebblack tw-font-medium md:tw-ml-2">
@@ -235,7 +233,7 @@
 								}
 								@if (config.createdAt) {
 									<div class="tw-flex tw-text-sm tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
-										<dt class="tw-text-[#757575]">{{ 'Badge.createdOn' | translate }}</dt>
+										<dt class="tw-text-darkgray">{{ 'Badge.createdOn' | translate }}</dt>
 										<dd class="tw-font-medium md:tw-ml-2 tw-text-oebblack">
 											<time [date]="config.createdAt" format="dd.MM.y"></time>
 										</dd>
@@ -243,7 +241,7 @@
 								}
 								@if (config.issuedOn) {
 									<div class="tw-flex tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
-										<dt class="tw-text-sm tw-text-[#757575]">
+										<dt class="tw-text-sm tw-text-darkgray">
 											{{ 'RecBadgeDetail.issuedOn' | translate }}
 										</dt>
 										<dd class="tw-text-sm tw-font-medium tw-text-oebblack md:tw-ml-2">
@@ -253,7 +251,7 @@
 								}
 								@if (config.issuedTo) {
 									<div class="tw-flex tw-mt-2 tw-pt-2 md:tw-flex-row tw-flex-col">
-										<dt class="tw-text-sm tw-text-[#757575]">
+										<dt class="tw-text-sm tw-text-darkgray">
 											{{ 'RecBadgeDetail.awardedTo' | translate }}
 										</dt>
 										<dd class="tw-text-sm tw-break-words tw-font-medium">
@@ -263,7 +261,7 @@
 								}
 								@if (config.license) {
 									<div class="tw-mt-2 tw-pt-2 tw-flex tw-flex-row">
-										<dt class="tw-text-sm tw-text-[#757575]">
+										<dt class="tw-text-sm tw-text-darkgray">
 											{{ 'General.license' | translate }}
 										</dt>
 										<dd class="tw-text-sm tw-text-oebblack tw-ml-2 tw-flex">
@@ -289,10 +287,10 @@
 								}
 								@if (config.tags.length > 0) {
 									<div class="tw-flex tw-items-start tw-flex-col tw-mt-4">
-										<dt class="tw-text-[#757575] md:tw-py-2 md:tw-mr-2 tw-mb-1">Tags</dt>
-										<dd class="tw-text-[#757575]">
+										<dt class="tw-text-darkgray md:tw-py-2 md:tw-mr-2 tw-mb-1">Tags</dt>
+										<dd class="tw-text-darkgray">
 											@for (tag of config.tags; track tag; let last = $last) {
-												<div class="tag tw-border-[#757575] tw-mx-2 tw-ml-0 tw-max-w-24">
+												<div class="tag tw-border-darkgray tw-mx-2 tw-ml-0 tw-max-w-24">
 													{{ tag }}
 												</div>
 											}

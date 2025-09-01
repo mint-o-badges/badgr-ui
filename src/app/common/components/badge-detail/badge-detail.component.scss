@@ -1,7 +1,6 @@
 .badge-sidebar-internal {
 	padding: calc(var(--gridspacing) * 4);
 	padding-top: calc(var(--gridspacing) * 4);
-	border-radius: 14px;
 	grid-gap: calc(var(--gridspacing) * 2);
 	background-color: var(--color-lavender);
 }
@@ -21,8 +20,8 @@
 	line-height: calc(var(--typography-size) + 4px);
 	background-color: white;
 	border-radius: 30px;
-	border: 1px solid #757575;
-	color: #757575;
+	border: 1px solid var(--color-darkgray);
+	color: var(--color-darkgray);
 	display: inline-block;
 	font-weight: 600;
 	padding: 8px 16px;
