@@ -14,8 +14,6 @@ import { IssuerManager } from '../../services/issuer-manager.service';
 import { BadgrApiFailure } from '../../../common/services/api-failure';
 import { preloadImageURL } from '../../../common/util/file-util';
 import { EventsService } from '../../../common/services/events.service';
-import { ExternalToolsManager } from '../../../externaltools/services/externaltools-manager.service';
-import { ApiExternalToolLaunchpoint } from '../../../externaltools/models/externaltools-api.model';
 import { BadgeInstanceSlug } from '../../models/badgeinstance-api.model';
 import { badgeShareDialogOptions } from '../../../recipient/components/recipient-earned-badge-detail/recipient-earned-badge-detail.component';
 import { ShareSocialDialogOptions } from '../../../common/dialogs/share-social-dialog/share-social-dialog.component';
@@ -168,7 +166,6 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 	readonly issuerImagePlacholderUrl = preloadImageURL(
 		'../../../../breakdown/static/images/placeholderavatar-issuer.svg',
 	);
-	launchpoints: ApiExternalToolLaunchpoint[];
 
 	private readonly _hlmDialogService = inject(HlmDialogService);
 
@@ -229,7 +226,6 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		protected dialogService: CommonDialogsService,
 		private eventService: EventsService,
 		protected configService: AppConfigService,
-		private externalToolsManager: ExternalToolsManager,
 		protected pdfService: PdfService,
 		private sanitizer: DomSanitizer,
 		private translate: TranslateService,
@@ -268,10 +264,6 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 
 		this.qrCodeApiService.getQrCodesForIssuerByBadgeClass(this.issuerSlug, this.badgeSlug).then((qrCodes) => {
 			this.qrCodeAwards = qrCodes;
-		});
-
-		this.externalToolsManager.getToolLaunchpoints('issuer_assertion_action').then((launchpoints) => {
-			this.launchpoints = launchpoints;
 		});
 
 		Promise.all([this.issuerLoaded, this.badgeClassLoaded])
@@ -728,11 +720,5 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 			this.showAssertionCount = false;
 			this.assertionsLoaded = this.allBadgeInstances.loadPrevPage().then(() => (this.showAssertionCount = true));
 		}
-	}
-
-	private clickLaunchpoint(launchpoint: ApiExternalToolLaunchpoint, instanceSlug: BadgeInstanceSlug) {
-		this.externalToolsManager.getLaunchInfo(launchpoint, instanceSlug).then((launchInfo) => {
-			this.eventService.externalToolLaunch.next(launchInfo);
-		});
 	}
 }

@@ -158,14 +158,6 @@
 	</nav>
 
 	<!-- Nav dropdown menus -->
-	<bg-popup-menu #appsMenu>
-		@for (lp of launchpoints; track lp) {
-			<a class="menuitem" href="{{ lp.launch_url }}" target="_blank">
-				{{ lp.label }}
-			</a>
-		}
-	</bg-popup-menu>
-
 	<bg-popup-menu #customMenu>
 		@for (item of theme?.customMenu?.items; track item) {
 			<a class="menuitem" [href]="item.url" target="_blank">
@@ -228,14 +220,6 @@
 					'NavItems.register' | translate
 				}}</a>
 				<hr class="mobilenav-x-rule" />
-				@if (launchpoints?.length) {
-					<p class="mobilenav-x-label">Apps</p>
-				}
-				@for (lp of launchpoints; track lp) {
-					<a href="{{ lp.launch_url }}" target="_blank">
-						{{ lp.label }}
-					</a>
-				}
 			</div>
 		</nav>
 	}
@@ -283,14 +267,6 @@
 				<!-- <a [routerLink]="['/recipient/badge-collections']">{{ 'General.collections' | translate }}</a> -->
 				@if (showIssuersTab()) {
 					<a [routerLink]="['/issuer']">{{ 'NavItems.myInstitutions' | translate }}</a>
-				}
-
-				@if (launchpoints?.length) {
-					<hr class="mobilenav-x-rule" />
-					<p class="mobilenav-x-label">Apps</p>
-					@for (lp of launchpoints; track lp) {
-						<a href="{{ lp.launch_url }}" target="_blank"> {{ lp.label }} </a>
-					}
 				}
 
 				@if (theme.customMenu) {
