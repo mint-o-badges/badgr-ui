@@ -13,3 +13,28 @@
 		flex-direction: column;
 	}
 }
+
+.tag {
+	--typography-size: 12px;
+	font-family: var(--font-family);
+	font-size: var(--typography-size);
+	line-height: calc(var(--typography-size) + 4px);
+	background-color: white;
+	border-radius: 30px;
+	border: 1px solid #757575;
+	color: #757575;
+	display: inline-block;
+	font-weight: 600;
+	padding: 8px 16px;
+	position: relative;
+	text-transform: lowercase;
+	-webkit-hyphens: auto;
+	-ms-hyphens: auto;
+	hyphens: auto;
+	overflow-wrap: break-word;
+	max-width: 100%;
+	box-sizing: border-box;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}

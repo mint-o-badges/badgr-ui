@@ -1,8 +1,8 @@
 <div class="oeb tw-mt-4">
 	@if (awards.length === 0) {
 		<div class="tw-flex tw-flex-col tw-gap-2">
-			<h3 hlmH3 class="tw-text-purple tw-font-bold">{{ 'QrCode.qrAwards' | translate }}</h3>
-			<span class="tw-italic tw-text-[18px] tw-leading-[21.6px] tw-text-oebblack tw-mt-2">{{
+			<h3 hlmH3 class="tw-text-purple tw-font-bold tw-uppercase">{{ 'QrCode.qrAwards' | translate }}</h3>
+			<span class="tw-italic tw-text-[18px] tw-leading-[21.6px] tw-text-oebblack tw-my-2">{{
 				'QrCode.noQrCodes' | translate
 			}}</span>
 			<oeb-button
@@ -14,7 +14,9 @@
 		</div>
 	} @else {
 		<div class="oeb-standard-padding-bottom">
-			<h3 hlmH3 size="default" class="tw-text-oebblack tw-font-bold">{{ 'QrCode.qrAwards' | translate }}</h3>
+			<h3 hlmH3 size="default" class="tw-text-oebblack tw-font-bold tw-uppercase">
+				{{ 'QrCode.qrAwards' | translate }}
+			</h3>
 		</div>
 		<div hlmAccordion class="tw-flex tw-gap-2">
 			@for (award of awards; track award; let i = $index) {
