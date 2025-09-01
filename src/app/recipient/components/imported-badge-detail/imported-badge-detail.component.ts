@@ -127,7 +127,7 @@ export class ImportedBadgeDetailComponent extends BaseAuthenticatedRoutableCompo
 				qrCodeButton: {
 					show: false,
 				},
-				badgeCriteria: null,
+				criteria: null,
 				menuitems: [
 					// {
 					// 	title: 'Download JSON-Datei',

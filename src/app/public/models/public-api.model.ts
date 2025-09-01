@@ -60,7 +60,7 @@ export interface PublicApiBadgeClass {
 	criteria:
 		| {
 				id: string;
-				narrative: Array<string | object>;
+				narrative: Array<{ name: string; description: string }>;
 				criteriaUrl: string;
 		  }
 		| string;
@@ -77,6 +77,7 @@ export interface PublicApiBadgeClass {
 	sourceUrl?: string;
 	badge?: any;
 	copy_permissions?: BadgeClassCopyPermissions[];
+	awardCriteria?: Array<{ name: string; description: string }>;
 }
 export interface PublicApiBadgeClassWithIssuer extends PublicApiBadgeClass {
 	issuer: PublicApiIssuer;
