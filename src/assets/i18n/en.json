@@ -108,7 +108,12 @@
 		"emailAddress": "E-mail address",
 		"tos": "Terms of Service",
 		"change": "change",
-		"condition": "condition"
+		"condition": "condition",
+		"country": "Country",
+		"state": "State",
+		"overview": "Overview",
+		"rolesAndRights": "Roles and rights",
+		"website": "Website"
 	},
 	"NavItems": {
 		"register": "Register",
