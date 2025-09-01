@@ -90,7 +90,7 @@ import { NgIcon } from '@ng-icons/core';
 		</table>
 
 		<ng-template #translateHeaderIDCellTemplate let-context>
-			{{ context.header.id | translate | titlecase }}
+			{{ context.header.id | translate }}
 		</ng-template>
 
 		<ng-template #badgeCellTemplate let-context>
