@@ -120,6 +120,14 @@
 		</oeb-checkbox>
 	</div>
 
+	@if (!existingIssuer) {
+		<p
+			hlmP
+			class="tw-mt-6 md:tw-mt-7 tw-italic tw-leading-[130%]"
+			[innerHTML]="'Issuer.contract26' | translate"
+		></p>
+	}
+
 	<div class="tw-flex tw-justify-between tw-flex-wrap sm:tw-flex-nowrap tw-gap-2 tw-mt-4">
 		<oeb-button
 			type="button"
