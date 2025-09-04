@@ -79,6 +79,7 @@
 						@for (issuer of issuerResults; track issuer) {
 							<oeb-issuer-card
 								@appearAnimation
+								[plural]="plural"
 								[issuer]="issuer"
 								(navigate)="navigateToIssuer(issuer)"
 							></oeb-issuer-card>
