@@ -115,7 +115,8 @@
 		"state": "State",
 		"overview": "Overview",
 		"rolesAndRights": "Roles and rights",
-		"website": "Website"
+		"website": "Website",
+		"organization": "Organization"
 	},
 	"NavItems": {
 		"register": "Register",
@@ -1011,7 +1012,11 @@
 		"toBadgeDetail": "To Badge detail page",
 		"downloadPoster": "Download QR-Code-Poster",
 		"badgeDetailPage": "badge detail page",
-		"badgesAwardedSuccessfully": "badges awarded successfully"
+		"badgesAwardedSuccessfully": "badges awarded successfully",
+		"invalidDateRange": "The expiration date must be after the start date",
+		"invalidDate": "Please enter a date in the format YYYY/mm/dd",
+		"missingStartDate": "Please enter a start date for validity",
+		"expired": "This QR code has expired."
 	},
 	"LearningPath": {
 		"learningpaths": "Micro Degrees",

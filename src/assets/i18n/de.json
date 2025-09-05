@@ -116,7 +116,8 @@
 		"state": "Bundesland",
 		"overview": "Übersicht",
 		"rolesAndRights": "Rollen und Rechte",
-		"website": "Webseite"
+		"website": "Webseite",
+		"organization": "Organisation"
 	},
 	"NavItems": {
 		"register": "Registrieren",
@@ -1013,7 +1014,11 @@
 		"toBadgeDetail": "Zur Badge Detail-Seite",
 		"downloadPoster": "Download QR-Code-Plakat",
 		"badgeDetailPage": "Badge Detail Seite",
-		"badgesAwardedSuccessfully": "Badges erfolgreich vergeben"
+		"badgesAwardedSuccessfully": "Badges erfolgreich vergeben",
+		"invalidDateRange": "Das Ablaufdatum muss nach dem Start-Datum liegen",
+		"invalidDate": "Bitte gib ein Datum in der Form YYYY/mm/dd an",
+		"missingStartDate": "Bitte gib ein Start-Datum für die Gültigkeit an",
+		"expired": "Die Gültigkeit dieses Qr Codes ist abgelaufen."
 	},
 	"LearningPath": {
 		"learningpaths": "Micro Degrees",
