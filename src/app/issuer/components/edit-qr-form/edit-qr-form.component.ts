@@ -61,7 +61,7 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent {
 	badgeClassLoaded: Promise<unknown>;
 	crumbs: LinkEntry[];
 
-	qrForm = typedFormGroup()
+	qrForm = typedFormGroup(this.missingStartDate.bind(this))
 		.addControl('title', '', Validators.required)
 		.addControl('createdBy', '', Validators.required)
 		.addControl('valid_from', '', DateValidator.validDate)
@@ -143,6 +143,16 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent {
 		this._location.back();
 	}
 
+	missingStartDate(): ValidationErrors | null {
+		if (!this.qrForm) return null;
+		const valid_from = this.qrForm.controls.valid_from.value;
+		const expires = this.qrForm.controls.expires_at.value;
+
+		if (expires && !valid_from) {
+			return { noStartDate: true };
+		}
+	}
+
 	validDateRange(): ValidationErrors | null {
 		if (!this.qrForm) return null;
 
@@ -167,8 +177,8 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent {
 				.updateQrCode(this.issuerSlug, this.badgeSlug, this.qrSlug, {
 					title: formState.title,
 					createdBy: formState.createdBy,
-					expires_at: formState.expires_at ? new Date(formState.expires_at).toISOString() : undefined,
-					valid_from: formState.valid_from ? new Date(formState.valid_from).toISOString() : undefined,
+					expires_at: formState.expires_at ? new Date(formState.expires_at).toISOString() : null,
+					valid_from: formState.valid_from ? new Date(formState.valid_from).toISOString() : null,
 					badgeclass_id: this.badgeSlug,
 					issuer_id: this.issuerSlug,
 					notifications: formState.notifications,

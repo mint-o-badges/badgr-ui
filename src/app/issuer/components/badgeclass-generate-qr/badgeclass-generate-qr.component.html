@@ -6,7 +6,7 @@
 
 		<div class="tw-pt-[6rem] tw-pb-[4.4rem] main-paragraph tw-flex tw-justify-between">
 			<div class="tw-w-full">
-				<h1>QR-Code-Vergabe</h1>
+				<h1>{{ 'QrCode.qrAward' | translate }}</h1>
 				<h1 class="h1-black heading-sec tw-w-full">{{ qrTitle }}</h1>
 			</div>
 			<div>
@@ -21,7 +21,7 @@
 						fill="var(--color-purple)"
 						icon="icon_more"
 					></svg>
-					<span class="visuallyhidden">Mehr</span>
+					<span class="visuallyhidden">{{ 'General.more' | translate }}</span>
 				</ng-template>
 			</div>
 		</div>
@@ -48,7 +48,7 @@
 						</div>
 					</div>
 					<div class="tw-flex tw-flex-col">
-						<span class="tw-font-bold">Organisation</span>
+						<span class="tw-font-bold">{{ 'General.organization' | translate }}</span>
 						<span>{{ issuer }}</span>
 					</div>
 					<div class="tw-flex tw-flex-col">
