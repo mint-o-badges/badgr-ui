@@ -534,6 +534,7 @@
 				[class.disabled]="!!savePromise"
 				[disabled-when-requesting]="true"
 				text="{{ 'General.cancel' | translate }}"
+				[umamiEvent]="!existingLpBadge ? 'cancel-create-badge' : undefined"
 			></oeb-button>
 
 			@if (!firstStep()) {
@@ -550,7 +551,12 @@
 			}
 
 			@if (!lastStep()) {
-				<oeb-button type="button" [text]="next" (click)="nextStep()"> </oeb-button>
+				<oeb-button
+					type="button"
+					[text]="next"
+					(click)="nextStep()"
+					[umamiEvent]="!existingLpBadge ? `${this.stepper?.selectedIndex + 1}-create-micro-degree` : undefined"
+				/>
 			}
 
 			@if (lastStep()) {
@@ -564,6 +570,7 @@
 						(initialisedLearningpath ? 'General.saveChanges' : 'Issuer.myInstitutionsCreateLearningPath')
 							| translate
 					}}"
+					[umamiEvent]="!existingLpBadge ? `${this.stepper?.selectedIndex + 1}-create-micro-degree-done` : undefined"
 				>
 				</oeb-button>
 			}

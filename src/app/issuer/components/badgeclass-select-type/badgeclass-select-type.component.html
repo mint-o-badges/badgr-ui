@@ -20,17 +20,26 @@
 				<h2 hlmH2 class="tw-font-bold tw-mb-6">1. {{ 'CreateBadge.chooseCategory' | translate }}</h2>
 
 				<div class="tw-flex tw-justify-evenly oeb-badgeclass-select-container tw-flex-col md:tw-flex-row">
-					<a [routerLink]="['/issuer/issuers', issuerSlug, 'badges', 'create', 'participation']">
+					<a
+						[routerLink]="['/issuer/issuers', issuerSlug, 'badges', 'create', 'participation']"
+						[attr.data-umami-event]="'1-create-participation-badge'"
+					>
 						<img src="../../../../breakdown/static/badgestudio/shapes/participation.svg" />
 						<strong>{{ 'Badge.categories.participation' | translate }}</strong>
 						<p [innerHTML]="'Badge.participationBadgeInfo' | translate"></p>
 					</a>
-					<a [routerLink]="['/issuer/issuers', issuerSlug, 'badges', 'create', 'competency']">
+					<a
+						[routerLink]="['/issuer/issuers', issuerSlug, 'badges', 'create', 'competency']"
+						[attr.data-umami-event]="'1-create-competency-badge'"
+					>
 						<img src="../../../../breakdown/static/badgestudio/shapes/competency.svg" />
 						<strong>{{ 'Badge.categories.competency' | translate }}</strong>
 						<p [innerHTML]="'Badge.competencyBadgeInfo' | translate"></p>
 					</a>
-					<a [routerLink]="['/issuer/issuers', issuerSlug, 'learningpaths', 'create']">
+					<a
+						[routerLink]="['/issuer/issuers', issuerSlug, 'learningpaths', 'create']"
+						[attr.data-umami-event]="'1-create-micro-degree'"
+					>
 						<img src="../../../../breakdown/static/badgestudio/shapes/learningpath.svg" />
 
 						<strong>{{ 'Badge.categories.learningpath' | translate }}</strong>
