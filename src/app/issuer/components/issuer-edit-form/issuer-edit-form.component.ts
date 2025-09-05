@@ -22,6 +22,7 @@ import { OebInputComponent } from '../../../components/input.component';
 import { OebSelectComponent } from '../../../components/select.component';
 import { OebCheckboxComponent } from '../../../components/oeb-checkbox.component';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
+import { HlmP } from '@spartan-ng/helm/typography';
 
 @Component({
 	selector: 'issuer-edit-form',
@@ -37,6 +38,7 @@ import { OebButtonComponent } from '../../../components/oeb-button.component';
 		OebButtonComponent,
 		RouterLink,
 		TranslatePipe,
+		HlmP,
 	],
 })
 export class IssuerEditFormComponent implements OnInit {
