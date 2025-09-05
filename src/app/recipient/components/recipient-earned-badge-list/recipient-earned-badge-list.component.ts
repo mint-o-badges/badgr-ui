@@ -375,7 +375,7 @@ export class RecipientEarnedBadgeListComponent
 			},
 			{
 				key: 'microdegrees',
-				title: 'Micro Degrees',
+				title: 'LearningPath.learningpathsPlural',
 				component: this.learningPathTemplate,
 			},
 			{
