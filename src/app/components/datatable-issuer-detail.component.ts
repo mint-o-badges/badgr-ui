@@ -268,7 +268,7 @@ export class IssuerDetailDatatableComponent {
 
 	readonly tableSorting = signal<SortingState>([
 		{
-			id: 'General.name',
+			id: 'RecBadgeDetail.issuedOn',
 			desc: false,
 		},
 	]);
@@ -293,8 +293,8 @@ export class IssuerDetailDatatableComponent {
 		{
 			id: 'RecBadgeDetail.issuedOn',
 			header: () => this.translateHeaderIDCellTemplate(),
-			accessorFn: (row) => formatDate(row.issuedOn, 'dd.MM.yyyy', 'de-DE'),
-			cell: (info) => info.getValue(),
+			accessorFn: (row) => row.issuedOn,
+			cell: (info) => formatDate(info.getValue() as Date, 'dd.MM.yyyy', 'de-DE'),
 		},
 		{
 			id: 'actions',
