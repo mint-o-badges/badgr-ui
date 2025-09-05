@@ -147,7 +147,7 @@ export class OebIssuerDetailComponent implements OnInit {
 			},
 			{
 				key: 'micro-degrees',
-				title: 'Micro Degrees',
+				title: 'LearningPath.learningpathsPlural',
 				component: this.learningPathTemplate,
 			},
 		];
