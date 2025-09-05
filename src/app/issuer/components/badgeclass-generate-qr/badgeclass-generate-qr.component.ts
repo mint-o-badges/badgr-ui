@@ -69,8 +69,8 @@ export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComp
 	creator: string;
 	valid: boolean = true;
 	validity: string;
-	valid_from: Date;
-	expires_at: Date;
+	valid_from: string | null;
+	expires_at: string | null;
 	baseUrl: string;
 	badgeRequested: boolean = false;
 	editQrCodeLink: string = `/issuer/issuers/${this.issuerSlug}/badges/${this.badgeSlug}/qr/${this.qrSlug}/edit`;
@@ -153,11 +153,12 @@ export class BadgeClassGenerateQrComponent extends BaseAuthenticatedRoutableComp
 				this.creator = qrCode.createdBy;
 				this.valid_from = qrCode.valid_from;
 				this.expires_at = qrCode.expires_at;
+
 				if (
-					//@ts-ignore
-					(qrCode.expires_at && !isNaN(new Date(qrCode.expires_at))) ||
-					//@ts-ignore
-					(qrCode.valid_from && !isNaN(new Date(qrCode.valid_from)))
+					qrCode.expires_at &&
+					qrCode.valid_from &&
+					!isNaN(new Date(this.expires_at).getTime()) &&
+					!isNaN(new Date(this.valid_from).getTime())
 				) {
 					if (
 						new Date(this.valid_from) < new Date() &&
