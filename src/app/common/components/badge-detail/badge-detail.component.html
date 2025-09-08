@@ -26,10 +26,9 @@
 											[disabled-when-requesting]="true"
 										></oeb-button>
 									}
-									<!-- TODO:  use full width button variant -->
 									@if (config.headerButton.action) {
 										<oeb-button
-											class="tw-whitespace-nowrap tw-grow"
+											class="tw-whitespace-nowrap tw-grow md:tw-min-w-[327px]"
 											width="full_width"
 											(click)="config.headerButton.action()"
 											[disabled-when-requesting]="true"
