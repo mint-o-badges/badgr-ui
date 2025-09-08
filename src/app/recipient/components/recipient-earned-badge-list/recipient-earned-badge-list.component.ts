@@ -250,9 +250,10 @@ export class RecipientEarnedBadgeListComponent
 		]).then(([list]) => {
 			this.collections = list.entities;
 		});
-		this.recipientBadgeManager.recipientBadgeList.changed$.subscribe((badges) =>
-			this.updateBadges(badges.entities),
-		);
+		this.recipientBadgeManager.recipientBadgeList.changed$.subscribe((badges) => {
+			const filteredBadges = this.getCombinedAndFilteredBadges(badges.entities);
+			this.updateBadges(filteredBadges);
+		});
 
 		if (sessionService.isLoggedIn) {
 			// force a refresh of the userProfileSet now that we are authenticated
@@ -332,8 +333,8 @@ export class RecipientEarnedBadgeListComponent
 		this.loadImportedBadges();
 
 		this.recipientBadgeManager.recipientBadgeList.changed$.subscribe((badges) => {
-			const combinedBadges = [...this.importedBadges, ...badges.entities];
-			this.updateBadges(combinedBadges);
+			const filteredBadges = this.getCombinedAndFilteredBadges(badges.entities);
+			this.updateBadges(filteredBadges);
 		});
 		super.ngOnInit();
 		this.route.queryParams.subscribe((params) => {
@@ -350,8 +351,8 @@ export class RecipientEarnedBadgeListComponent
 				this.importedBadges = res;
 				// Force an update after loading imported badges
 				const currentBadges = this.recipientBadgeManager.recipientBadgeList.entities || [];
-				const combinedBadges = [...this.importedBadges, ...currentBadges];
-				this.updateBadges(combinedBadges);
+				const filteredBadges = this.getCombinedAndFilteredBadges(currentBadges);
+				this.updateBadges(filteredBadges);
 			})
 			.catch((e) => this.messageService.reportAndThrowError('Failed to load imported badges', e));
 	}
@@ -431,6 +432,18 @@ export class RecipientEarnedBadgeListComponent
 				() => this.recipientBadgeManager.deleteRecipientBadge(badge),
 				() => {},
 			);
+	}
+
+	private filterOutLearningPathBadges(badges: RecipientBadgeInstance[]): RecipientBadgeInstance[] {
+		return badges.filter((badge) => {
+			const ext = badge.getExtension('extensions:CategoryExtension', {});
+			return ext?.Category !== 'learningpath';
+		});
+	}
+
+	private getCombinedAndFilteredBadges(newBadges: RecipientBadgeInstance[]): any[] {
+		const combinedBadges = [...this.importedBadges, ...newBadges];
+		return this.filterOutLearningPathBadges(combinedBadges);
 	}
 
 	private updateBadges(allBadges: RecipientBadgeInstance[]) {
