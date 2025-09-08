@@ -183,8 +183,9 @@ export class IssuerEditFormComponent implements OnInit {
 		const imageControl = this.issuerForm.rawControlMap.issuer_image;
 		if (imageControl) {
 			imageControl.setErrors({ imageError: error });
+			imageControl.markAsDirty();
+			imageControl.updateValueAndValidity();
 		}
-		this.issuerForm.markTreeDirtyAndValidate();
 	}
 
 	refreshProfile = () => {
