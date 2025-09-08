@@ -125,7 +125,7 @@ export class OebLearningPathDetailComponent extends BaseRoutableComponent implem
 	}
 
 	async revokeLpParticipationBadge(participant: any) {
-		const participationBadgeInstance: BadgeInstance = participant.participationBadgeAssertion;
+		const participationBadgeInstance: BadgeInstance = participant.row.original.participationBadgeAssertion;
 
 		this.confirmDialog
 			.openResolveRejectDialog({
