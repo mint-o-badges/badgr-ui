@@ -985,7 +985,7 @@
 	},
 	"QrCode": {
 		"qrAward": "QR code awarding",
-		"qrAwards": "QR Code awarding",
+		"qrAwards": "QR Code awardings",
 		"savedSuccessfully": "<span class='tw-font-bold'> The QR code award has been successfully saved on the badge detail page.</span>",
 		"downloadedSuccessfully": "<span class='tw-font-bold'>You have successfully downloaded the QR code.</span><br> Check your download folder.",
 		"deleteQrAward": "Delete QR code award",

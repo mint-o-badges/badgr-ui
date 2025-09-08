@@ -290,7 +290,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		this.tabs = [
 			{
 				key: 'qrcodes',
-				title: 'Qrcodes',
+				title: 'QrCode.qrAwards',
 				component: this.qrAwards,
 			},
 			{
