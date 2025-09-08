@@ -59,6 +59,7 @@ import { OebTabsComponent } from '~/components/oeb-tabs.component';
 			</ng-template>
 			<ng-template #batchAwards>
 				<issuer-detail-datatable
+					[issuer]="issuer"
 					[recipientCount]="recipientCount"
 					[recipients]="instanceResults"
 					(actionElement)="revokeInstance($event)"
