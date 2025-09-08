@@ -295,7 +295,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 			},
 			{
 				key: 'recipients',
-				title: 'Recipients',
+				title: 'Badge.multiRecipients',
 				component: this.batchAwards,
 			},
 		];
