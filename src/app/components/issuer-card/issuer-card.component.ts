@@ -7,17 +7,8 @@ import { I18nPluralPipe } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { preloadImageURL } from '../../common/util/file-util';
 import { HlmH2, HlmP } from '@spartan-ng/helm/typography';
-
-export interface Issuer {
-	image: string;
-	name: string;
-	description: string;
-	category: string;
-	slug: string;
-	badgeClassCount: number;
-	learningPathCount: number;
-	// Add other properties as needed
-}
+import { TranslateService } from '@ngx-translate/core';
+import { Issuer } from '~/issuer/models/issuer.model';
 
 @Component({
 	selector: 'oeb-issuer-card',
@@ -35,16 +26,27 @@ export interface Issuer {
 	],
 })
 export class IssuerCardComponent {
-	@Input() issuer: Issuer; // Single input for the entire object
-	@Input() plural: any; // If needed for pluralization logic
+	@Input() issuer: Issuer;
+	@Input() plural: object;
 
 	@Output() navigate = new EventEmitter<void>();
 
+	constructor(private translate: TranslateService) {}
 	readonly issuerImagePlaceHolderUrl = preloadImageURL(
 		'../../../../breakdown/static/images/placeholderavatar-issuer.svg',
 	);
 
 	onNavigate() {
 		this.navigate.emit();
+	}
+
+	prepareTexts() {
+		this.plural = {
+			badges: {
+				'=0': this.translate.instant('Badge.noBadges'),
+				'=1': this.translate.instant('Badge.oneBadge'),
+				other: this.translate.instant('Badge.multiBadges'),
+			},
+		};
 	}
 }

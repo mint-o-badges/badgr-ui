@@ -23,8 +23,6 @@ import { EventsService } from './common/services/events.service';
 import { OAuthManager } from './common/services/oauth-manager.service';
 import { EmbedService } from './common/services/embed.service';
 import { InitialLoadingIndicatorService } from './common/services/initial-loading-indicator.service';
-import { ApiExternalToolLaunchpoint } from '../app/externaltools/models/externaltools-api.model';
-import { ExternalToolsManager } from '../app/externaltools/services/externaltools-manager.service';
 import { UserProfileManager } from './common/services/user-profile-manager.service';
 import { NewTermsDialog } from './common/dialogs/new-terms-dialog.component';
 import { QueryParametersService } from './common/services/query-parameters.service';
@@ -51,6 +49,7 @@ import { MenuItemDirective } from './common/directives/bg-menuitem.directive';
 import { IconsProvider } from './icons-provider';
 import { CmsMenuItemsPipe } from './common/pipes/cmsMenuItems.pipe';
 import { HlmIcon } from '@spartan-ng/helm/icon';
+import { environment } from 'src/environments/environment';
 
 // Shim in support for the :scope attribute
 // See https://github.com/lazd/scopedQuerySelectorShim and
@@ -108,6 +107,11 @@ export class AppComponent implements OnInit, AfterViewInit {
 			routerLink: ['/catalog/learningpaths'],
 			icon: 'lucideRoute',
 		},
+		// {
+		// 	title: 'Network.networksNav',
+		// 	routerLink: ['/catalog/networks'],
+		// 	icon: 'lucideNetwork',
+		// },
 	];
 	accountMenuItems: MenuItem[] = [
 		{
@@ -136,7 +140,6 @@ export class AppComponent implements OnInit, AfterViewInit {
 	loggedIn = false;
 	mobileNavOpen = false;
 	isUnsupportedBrowser = false;
-	launchpoints?: ApiExternalToolLaunchpoint[];
 	issuers = signal<Issuer[] | undefined>(undefined);
 	showIssuersTab = computed(() => {
 		return !this.features.disableIssuers && this.issuers() !== undefined;
@@ -223,7 +226,6 @@ export class AppComponent implements OnInit, AfterViewInit {
 		private embedService: EmbedService,
 		private renderer: Renderer2,
 		private queryParams: QueryParametersService,
-		private externalToolsManager: ExternalToolsManager,
 		private initialLoadingIndicatorService: InitialLoadingIndicatorService,
 		private titleService: Title,
 		protected issuerManager: IssuerManager,
@@ -254,10 +256,6 @@ export class AppComponent implements OnInit, AfterViewInit {
 
 		const authCode = this.queryParams.queryStringValue('authCode', true);
 		if (sessionService.isLoggedIn && !authCode) this.refreshProfile();
-
-		this.externalToolsManager.getToolLaunchpoints('navigation_external_launch').then((launchpoints) => {
-			this.launchpoints = launchpoints.filter((lp) => Boolean(lp));
-		});
 
 		if (this.embedService.isEmbedded) {
 			// Enable the embedded indicator class on the body
@@ -341,6 +339,14 @@ export class AppComponent implements OnInit, AfterViewInit {
 		this.translate.onLangChange.subscribe(() => {
 			this.document.documentElement.lang = this.translate.currentLang;
 		});
+
+		if (environment.networksEnabled) {
+			this.aboutBadgesMenuItems.push({
+				title: 'Network.networksNav',
+				routerLink: ['/catalog/networks'],
+				icon: 'lucideNetwork',
+			});
+		}
 	}
 
 	ngAfterViewInit() {

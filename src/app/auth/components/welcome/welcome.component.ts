@@ -4,7 +4,6 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SessionService } from '../../../common/services/session.service';
 import { AppConfigService } from '../../../common/app-config.service';
 import { QueryParametersService } from '../../../common/services/query-parameters.service';
-import { ExternalToolsManager } from '../../../externaltools/services/externaltools-manager.service';
 import { MessageService } from '../../../common/services/message.service';
 import { TranslatePipe } from '@ngx-translate/core';
 
@@ -22,7 +21,6 @@ export class WelcomeComponent /*extends BaseAuthenticatedRoutableComponent*/ imp
 
 		public configService: AppConfigService,
 		private queryParams: QueryParametersService,
-		private externalToolsManager: ExternalToolsManager,
 		private messageService: MessageService,
 	) {
 		//super(router, route, sessionService);
@@ -55,7 +53,6 @@ export class WelcomeComponent /*extends BaseAuthenticatedRoutableComponent*/ imp
 					true,
 				);
 			} else if (this.sessionService.isLoggedIn) {
-				this.externalToolsManager.externaltoolsList.updateIfLoaded();
 				this.initFinished = this.router.navigate([redirect]);
 				return;
 			}

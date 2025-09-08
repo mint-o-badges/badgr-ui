@@ -78,67 +78,69 @@ export type RequestedBadge = {
 				</div>
 			</div>
 		} @else {
-			<table hlmTable oeb-table-secondary>
-				<thead hlmTHead>
-					@for (headerRow of badgeTable.getHeaderGroups(); track headerRow.id) {
-						<tr hlmTr>
-							@for (headerCell of headerRow.headers; track headerCell.id) {
-								@if (!headerCell.isPlaceholder) {
-									<th hlmTh>
-										<div
-											class="tw-flex tw-flex-row tw-items-center tw-gap-2 [&[data-sortable='true']]:tw-cursor-pointer"
-											(click)="
-												headerCell.column.getCanSort()
-													? headerCell.column.toggleSorting()
-													: undefined
-											"
-											[attr.data-sortable]="headerCell.column.getCanSort()"
-										>
-											<div>
-												<ng-container
-													*flexRender="
-														headerCell.column.columnDef.header;
-														props: headerCell.getContext();
-														let header
-													"
-												>
-													<div [innerHTML]="header"></div>
-												</ng-container>
-											</div>
+			<div class="tw-overflow-x-auto">
+				<table hlmTable oeb-table-secondary>
+					<thead hlmTHead>
+						@for (headerRow of badgeTable.getHeaderGroups(); track headerRow.id) {
+							<tr hlmTr>
+								@for (headerCell of headerRow.headers; track headerCell.id) {
+									@if (!headerCell.isPlaceholder) {
+										<th hlmTh>
+											<div
+												class="tw-flex tw-flex-row tw-items-center tw-gap-2 [&[data-sortable='true']]:tw-cursor-pointer"
+												(click)="
+													headerCell.column.getCanSort()
+														? headerCell.column.toggleSorting()
+														: undefined
+												"
+												[attr.data-sortable]="headerCell.column.getCanSort()"
+											>
+												<div>
+													<ng-container
+														*flexRender="
+															headerCell.column.columnDef.header;
+															props: headerCell.getContext();
+															let header
+														"
+													>
+														<div [innerHTML]="header"></div>
+													</ng-container>
+												</div>
 
-											@if (headerCell.column.getIsSorted()) {
-												@let order = headerCell.column.getNextSortingOrder() === "asc" ? "desc" : "asc";
-												@if (order === 'asc') {
-													<ng-icon hlm size="base" name="lucideChevronUp" />
-												} @else {
-													<ng-icon hlm size="base" name="lucideChevronDown" />
+												@if (headerCell.column.getIsSorted()) {
+													@let order = headerCell.column.getNextSortingOrder() === "asc" ? "desc" : "asc";
+													@if (order === 'asc') {
+														<ng-icon hlm size="base" name="lucideChevronUp" />
+													} @else {
+														<ng-icon hlm size="base" name="lucideChevronDown" />
+													}
+												} @else if (headerCell.column.getCanSort()) {
+													<ng-icon hlm size="base" name="lucideChevronsUpDown" />
 												}
-											} @else if (headerCell.column.getCanSort()) {
-												<ng-icon hlm size="base" name="lucideChevronsUpDown" />
-											}
-										</div>
-									</th>
+											</div>
+										</th>
+									}
 								}
-							}
-						</tr>
-					}
-				</thead>
-				<tbody hlmTBody>
-					@for (row of badgeTable.getRowModel().rows; track row.id) {
-						<tr hlmTr>
-							@for (cell of row.getVisibleCells(); track cell.id) {
-								<td hlmTd class="tw-align-middle">
-									<ng-container
-										*flexRender="cell.column.columnDef.cell; props: cell.getContext(); let cell"
-									>
-										<div [innerHTML]="cell"></div>
-									</ng-container>
-								</td>
-							}
-						</tr>
-					}
-				</tbody>
-			</table>
+							</tr>
+						}
+					</thead>
+					<tbody hlmTBody>
+						@for (row of badgeTable.getRowModel().rows; track row.id) {
+							<tr hlmTr>
+								@for (cell of row.getVisibleCells(); track cell.id) {
+									<td hlmTd class="tw-align-middle">
+										<ng-container
+											*flexRender="cell.column.columnDef.cell; props: cell.getContext(); let cell"
+										>
+											<div [innerHTML]="cell"></div>
+										</ng-container>
+									</td>
+								}
+							</tr>
+						}
+					</tbody>
+				</table>
+			</div>
 
 			<ng-template #translateHeaderIDCellTemplate let-context>
 				{{ context.header.id | translate }}
@@ -165,6 +167,7 @@ export type RequestedBadge = {
 		<oeb-button
 			size="sm"
 			class="tw-float-right"
+			variant="blackborder"
 			(click)="issueBadges()"
 			[disabled]="this.rowSelectionCount() === 0 || this.isTaskProcessing() || this.isTaskPending()"
 			[text]="this.rowSelectionCount() > 1 ? ('Issuer.giveBadges' | translate) : ('Issuer.giveBadge' | translate)"

@@ -4,7 +4,7 @@ import { SessionService } from '../../common/services/session.service';
 import { AppConfigService } from '../../common/app-config.service';
 import { MessageService } from '../../common/services/message.service';
 import { HttpClient } from '@angular/common/http';
-import { ApiStaffRequest } from '../staffrequest-api.model';
+import { ApiStaffRequest } from '../models/staffrequest-api.model';
 
 @Injectable({ providedIn: 'root' })
 export class IssuerStaffRequestApiService extends BaseHttpApiService {

@@ -1,0 +1,98 @@
+<ng-container>
+	<div class="tw-relative">
+		<input
+			#issuerSearchInput
+			#issuerSearchInputModel="ngModel"
+			class="tw-bg-white tw-border tw-border-solid tw-border-[var(--color-purple)] tw-rounded-md tw-shadow-sm tw-p-2 tw-resize-none tw-text-sm tw-text-gray-700 tw-w-full tw-mb-6"
+			[(ngModel)]="issuerSearchQuery"
+			[ngModelOptions]="{ standalone: true }"
+			[placeholder]="'Issuer.searchIssuer' | translate"
+			(focus)="issuersShowResults = true"
+			(focusout)="issuerSearchInputFocusOut()"
+			(keydown.enter)="$event.preventDefault()"
+		/>
+		<ng-icon
+			hlm
+			size="lg"
+			class="tw-absolute tw-top-[3px] tw-right-1 tw-w-6 tw-h-6 tw-pointer-events-none tw-text-purple"
+			name="lucideSearch"
+		/>
+		@if (issuersShowResults && (issuersLoading || issuerSearchResults.length || issuerSearchLoaded)) {
+			<div
+				class="tw-absolute tw-mt-1 tw-z-10 tw-bg-white tw-rounded-md tw-shadow-sm tw-border tw-border-solid tw-border-gray-700 tw-w-full tw-overflow-auto"
+				[ngStyle]="{
+					'max-height.px': calculateDropdownMaxHeight(issuerSearchInput, 100),
+					'bottom.px': calculateDropdownBottom(issuerSearchInput, 100)
+				}"
+			>
+				<ul>
+					@if (issuersLoading) {
+						<li class="tw-p-2 tw-cursor-default">Loading...</li>
+					}
+					@for (issuer of issuerSearchResults; track issuer) {
+						<li
+							class="tw-p-2 hover:tw-bg-[var(--color-lightpurple)] tw-cursor-pointer tw-flex tw-items-center tw-gap-2"
+							(click)="selectIssuerFromDropdown(issuer)"
+						>
+							<img [src]="issuer.image" width="24" class="tw-aspect-square" />
+							<span>{{ issuer.name }}</span>
+						</li>
+					}
+					@if (issuerSearchResults.length == 0) {
+						<li class="tw-p-2 tw-text-gray-500 tw-cursor-default">Keine Ergebnisse</li>
+					}
+				</ul>
+			</div>
+		}
+		@if (selectedIssuers.length > 0) {
+			<ul>
+				@for (issuer of selectedIssuers; track issuer) {
+					<li
+						class="tw-flex tw-justify-between tw-border-purple tw-border tw-border-solid tw-rounded-[10px] tw-p-2 tw-mb-2"
+					>
+						<div class="tw-flex tw-gap-2">
+							<img [src]="issuer.image" width="24" height="24" />
+							<span>{{ issuer.name }}</span>
+						</div>
+						<span (click)="removeSelectedissuer(issuer)" class="tw-text-link tw-cursor-pointer">{{
+							'General.remove' | translate
+						}}</span>
+					</li>
+				}
+			</ul>
+		}
+		<section class="tw-mb-4">
+			@if (selectedIssuers.length) {
+				<p
+					class="tw-italic tw-text-purple tw-text-lg tw-mb-2"
+					(click)="collapseRoles()"
+					[innerHTML]="'Network.rolesAndRights' | translate"
+				></p>
+			}
+			@if (rightsAndRolesExpanded) {
+				<h2 class="tw-font-bold tw-text-[22px] tw-text-oebblack">{{ 'General.rolesAndRights' | translate }}</h2>
+				<dl>
+					@for (role of networkStaffRoleOptions; track role; let last = $last) {
+						<dt class="tw-text-lg tw-font-semibold tw-text-oebblack">
+							{{ role.label | translate }}
+						</dt>
+						<dd class="tw-text-lg tw-text-oebblack">
+							{{ role.description | translate }}
+						</dd>
+					}
+				</dl>
+			}
+		</section>
+		<oeb-button
+			[disabled]="!selectedIssuers.length"
+			(click)="inviteInstitutions(selectedIssuers)"
+			[text]="'Network.addInstitutions' | translate"
+		>
+		</oeb-button>
+	</div>
+</ng-container>
+
+<ng-template #inviteSuccessContent>
+	<span class="tw-text-oebblack">{{ 'Network.notifiedIssuerOwners' | translate }}</span>
+	<span class="tw-text-oebblack"> {{ 'Network.visibleAfterConfirmation' | translate }}</span>
+</ng-template>
