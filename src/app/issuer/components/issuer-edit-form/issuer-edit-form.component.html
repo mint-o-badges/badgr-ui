@@ -1,4 +1,4 @@
-<form (ngSubmit)="onSubmit()" class="oeb-max-form-width tw-mt-6" novalidate>
+<form (ngSubmit)="onSubmit()" class="oeb-max-form-width" novalidate>
 	<bg-formfield-image
 		#imageField
 		label="{{ 'Issuer.imageLogo' | translate }}"
@@ -16,11 +16,9 @@
 		[maxSizeInMB]="2"
 		[labelStyle]="'forminput-x-label u-margin-bottom1x'"
 	></bg-formfield-image>
-	<span class="tw-text-oebblack tw-italic tw-text-lg"
-		>{{ 'General.fileformats' | translate }}: SVG {{ 'General.and' | translate }} PNG</span
-	>
 
 	<oeb-input
+		class="tw-mt-8"
 		label="{{ 'Issuer.nameOfIssuer' | translate }}"
 		[control]="issuerForm.rawControlMap.issuer_name"
 		[fieldType]="'text'"
@@ -31,6 +29,7 @@
 	></oeb-input>
 
 	<oeb-input
+		class="tw-mt-8"
 		label="{{ 'Issuer.websiteUrl' | translate }}"
 		[control]="issuerForm.rawControlMap.issuer_url"
 		[urlField]="true"
@@ -40,15 +39,17 @@
 	></oeb-input>
 
 	<oeb-select
+		class="tw-mt-8"
 		[control]="issuerForm.rawControlMap.issuer_email"
 		label="{{ 'General.contact' | translate }}-E-Mail"
-		placeholder="{{ 'Issuer.enterValidEmail' | translate }}"
 		[options]="emailsOptions"
+		[initialValue]="primaryEmail.email"
 		errorMessage="{{ 'Issuer.enterValidEmail' | translate }}"
 		#issuer_contact_Email
 	></oeb-select>
 
 	<oeb-input
+		class="tw-mt-8"
 		label="{{ 'CreateBadge.shortDescription' | translate }}"
 		[control]="issuerForm.rawControlMap.issuer_description"
 		[fieldType]="'textarea'"
@@ -57,6 +58,7 @@
 	></oeb-input>
 
 	<oeb-select
+		class="tw-mt-8"
 		[control]="issuerForm.rawControlMap.issuer_category"
 		label="{{ 'General.category' | translate }}"
 		placeholder="{{ 'Issuer.enterCategory' | translate }}"
@@ -78,6 +80,7 @@
 	></oeb-select>
 
 	<oeb-input
+		class="tw-mt-8"
 		label="{{ 'General.street' | translate }}"
 		[control]="issuerForm.rawControlMap.issuer_street"
 		[fieldType]="'text'"
@@ -86,6 +89,7 @@
 	></oeb-input>
 
 	<oeb-input
+		class="tw-mt-8"
 		label="{{ 'Issuer.houseNo' | translate }}"
 		[control]="issuerForm.rawControlMap.issuer_streetnumber"
 		errorMessage="{{ 'Issuer.enterHouseNo' | translate }}"
@@ -93,7 +97,7 @@
 	></oeb-input>
 
 	<oeb-input
-		class="oeb-input-hide-arrows"
+		class="oeb-input-hide-arrows tw-mt-8"
 		label="{{ 'General.postalCode' | translate }}"
 		[control]="issuerForm.rawControlMap.issuer_zip"
 		[fieldType]="'number'"
@@ -102,6 +106,7 @@
 	></oeb-input>
 
 	<oeb-input
+		class="tw-mt-8"
 		label="{{ 'General.city' | translate }}"
 		[control]="issuerForm.rawControlMap.issuer_city"
 		[fieldType]="'text'"
@@ -109,7 +114,29 @@
 		#issuer_city_field
 	></oeb-input>
 
-	<div class="tw-mt-6 md:tw-mt-7">
+	<section class="tw-flex md:tw-flex-row tw-mt-8 tw-flex-col tw-w-full tw-gap-2 md:tw-justify-between">
+		<oeb-select
+			class="md:tw-min-w-[288px]"
+			[control]="issuerForm.rawControlMap.country"
+			label="{{ 'General.country' | translate }}"
+			placeholder="{{ 'General.select' | translate }}"
+			[options]="_countriesOptions"
+			#networkCountry
+		>
+		</oeb-select>
+		<oeb-select
+			class="md:tw-min-w-[288px]"
+			[control]="issuerForm.rawControlMap.state"
+			label="{{ 'General.state' | translate }}"
+			placeholder="{{ 'General.select' | translate }}"
+			[options]="_germanStateOptions"
+			[disabled]="issuerForm.rawControlMap.country.value != 'Germany'"
+			#networkState
+		>
+		</oeb-select>
+	</section>
+
+	<div class="tw-mt-6 md:tw-mt-8">
 		<oeb-checkbox
 			[alignStart]="true"
 			id="verify-intent"
@@ -123,12 +150,12 @@
 	@if (!existingIssuer) {
 		<p
 			hlmP
-			class="tw-mt-6 md:tw-mt-7 tw-italic tw-leading-[130%]"
+			class="tw-mt-6 md:tw-mt-8 tw-italic tw-leading-[130%]"
 			[innerHTML]="'Issuer.contract26' | translate"
 		></p>
 	}
 
-	<div class="tw-flex tw-justify-between tw-flex-wrap sm:tw-flex-nowrap tw-gap-2 tw-mt-4">
+	<div class="tw-flex tw-justify-between tw-flex-wrap sm:tw-flex-nowrap tw-gap-2 tw-mt-8">
 		<oeb-button
 			type="button"
 			class="tw-mr-4"
