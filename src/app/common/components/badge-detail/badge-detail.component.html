@@ -101,19 +101,33 @@
 										/>
 									</div>
 									<div class="tw-text-oebblack tw-ml-2">
-										<dt class="tw-italic">{{ 'RecBadgeDetail.issuedBy' | translate }}:</dt>
-										<dd class="oeb-break-words">
+										<dt class="tw-text-darkgrey">{{ 'RecBadgeDetail.issuedBy' | translate }}:</dt>
+										<dd class="oeb-break-words tw-font-bold">
 											{{ config.issuerName }}
 										</dd>
 									</div>
 								</div>
 							</div>
+							@if (config.copy_permissions) {
+								<div class="tw-flex tw-italic tw-text-oebblack tw-flex-row tw-gap-1">
+									<dt [innerHTML]="('Badge.copyableFor' | translate) + ': '"></dt>
+									<dd
+										[innerHTML]="
+											config.copy_permissions.includes('others')
+												? ('Issuer.allInstitutions' | translate)
+												: ('Issuer.ownInstitution' | translate)
+										"
+									></dd>
+								</div>
+							}
 							<dl clss="tw-min-w-[150px]">
 								@if (hasCriteria || config.competencies.length) {
-									<div class="tw-bg-white tw-mb-4 tw-rounded-[10px]">
+									<div class="tw-bg-white tw-mb-4 tw-rounded-[10px] tw-p-2">
 										<oeb-collapsible
 											[trigger]="collapseCriteriaTrigger"
 											closeIcon="lucideChevronDown"
+											[iconSize]="'24px'"
+											[iconStyle]="'tw-text-oebblack tw-mr-2'"
 											[defaultOpen]="hasCriteria"
 											[id]=""
 										>
@@ -124,7 +138,7 @@
 													<ng-icon
 														hlm
 														name="lucideAward"
-														class="tw-w-8 tw-h-8 tw-text-purple"
+														class="tw-w-6 tw-h-6 tw-text-purple"
 													>
 													</ng-icon>
 													<span
@@ -162,18 +176,6 @@
 												</ul>
 											}
 										</oeb-collapsible>
-									</div>
-								}
-								@if (config.copy_permissions) {
-									<div class="tw-flex tw-italic tw-text-oebblack tw-flex-row tw-gap-1">
-										<dt [innerHTML]="('Badge.copyableFor' | translate) + ': '"></dt>
-										<dd
-											[innerHTML]="
-												config.copy_permissions.includes('others')
-													? ('Issuer.allInstitutions' | translate)
-													: ('Issuer.ownInstitution' | translate)
-											"
-										></dd>
 									</div>
 								}
 								@if (config.version) {
