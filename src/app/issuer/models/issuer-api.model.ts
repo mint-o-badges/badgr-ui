@@ -46,6 +46,9 @@ export interface ApiIssuer {
 	zip?: string;
 	city?: string;
 
+	country?: string;
+	state?: string;
+
 	lat?: number;
 	lon?: number;
 	intendedUseVerified: boolean;
@@ -89,6 +92,9 @@ export interface ApiIssuerForCreation {
 	zip?: string;
 	city?: string;
 
+	country?: string;
+	state?: string;
+
 	intendedUseVerified: boolean;
 	linkedinId: string;
 
@@ -107,6 +113,9 @@ export interface ApiIssuerForEditing {
 	streetnumber?: string;
 	zip?: string;
 	city?: string;
+
+	country?: string;
+	state?: string;
 
 	intendedUseVerified: boolean;
 	linkedinId: string;
