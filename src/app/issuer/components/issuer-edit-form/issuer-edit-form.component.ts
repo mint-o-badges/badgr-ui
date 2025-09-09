@@ -23,7 +23,6 @@ import { OebSelectComponent } from '../../../components/select.component';
 import { OebCheckboxComponent } from '../../../components/oeb-checkbox.component';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { HlmP, HlmH3 } from '@spartan-ng/helm/typography';
-import { NetworkManager } from '~/issuer/services/network-manager.service';
 import { countries } from 'countries-list';
 import * as states from '../../../../assets/data/german-states.json';
 import type { TCountries, ICountry, ICountryData } from 'countries-list';
@@ -52,15 +51,39 @@ export class IssuerEditFormComponent implements OnInit {
 	readonly issuerImagePlacholderUrl = preloadImageURL(
 		'../../../../breakdown/static/images/placeholderavatar-issuer.svg',
 	);
-	issuerForm: any;
+	issuerForm = typedFormGroup()
+		.addControl('issuer_name', '', [
+			Validators.required,
+			Validators.maxLength(90),
+			IssuerNameValidator.validIssuerName,
+		])
+		.addControl('issuer_description', '', [
+			Validators.required,
+			Validators.minLength(200),
+			Validators.maxLength(300),
+		])
+		.addControl('issuer_email', '', [
+			Validators.required,
+			/*Validators.maxLength(75),
+                EmailValidator.validEmail*/
+		])
+		.addControl('issuer_url', '', [Validators.required, UrlValidator.validUrl])
+		.addControl('issuer_linkedin_id', '', this.positiveIntegerString())
+		.addControl('issuer_category', '', [Validators.required])
+		.addControl('issuer_image', '', Validators.required)
+		.addControl('issuer_street', '', Validators.required)
+		.addControl('issuer_streetnumber', '', Validators.required)
+		.addControl('issuer_zip', '', Validators.required)
+		.addControl('issuer_city', '', Validators.required)
+		.addControl('country', 'Germany', Validators.required)
+		.addControl('state', '')
+		.addControl('verify_intended_use', false, Validators.requiredTrue);
 
 	emails: UserProfileEmail[];
 	primaryEmail: UserProfileEmail;
 	emailsOptions: FormFieldSelectOption[];
 	addIssuerFinished: Promise<unknown>;
 	editIssuerFinished: Promise<unknown>;
-
-	addNetworkFinished: Promise<unknown>;
 
 	_countriesOptions: FormFieldSelectOption[];
 	_germanStateOptions: FormFieldSelectOption[];
@@ -215,30 +238,17 @@ export class IssuerEditFormComponent implements OnInit {
 			issuer_name: issuer.name,
 			issuer_description: issuer.description,
 			issuer_image: issuer.image,
+			issuer_category: issuer.category,
+			issuer_email: issuer.email,
+			issuer_city: issuer.city,
+			issuer_street: issuer.street,
+			issuer_streetnumber: issuer.streetnumber,
+			issuer_zip: issuer.zip,
 			issuer_url: issuer.websiteUrl,
 			country: issuer.country,
 			state: issuer.state,
 			issuer_linkedin_id: issuer.linkedinId,
-		};
-
-		const issuerSpecificValues = !this.networkForm()
-			? {
-					issuer_category: issuer.category,
-					issuer_email: issuer.email,
-					issuer_city: issuer.city,
-					issuer_street: issuer.street,
-					issuer_streetnumber: issuer.streetnumber,
-					issuer_zip: issuer.zip,
-					country: issuer.country,
-					state: issuer.state,
-					issuer_linkedin_id: issuer.linkedinId,
-					verify_intended_use: issuer.intendedUseVerified,
-				}
-			: {};
-
-		this.issuerForm.setValue({
-			...commonValues,
-			...issuerSpecificValues,
+			verify_intended_use: issuer.intendedUseVerified,
 		});
 	}
 
@@ -278,35 +288,23 @@ export class IssuerEditFormComponent implements OnInit {
 
 		const formState = this.issuerForm.value;
 
-		if (this.networkForm()) {
-			this.handleNetworkSubmit(formState);
-		} else {
-			this.handleIssuerSubmit(formState);
-		}
-	}
-
-	private handleIssuerSubmit(formState: any) {
-		const issuer: ApiIssuerForCreation | ApiIssuerForEditing = {
-			name: formState.issuer_name,
-			description: formState.issuer_description,
-			email: formState.issuer_email,
-			url: formState.issuer_url,
-			category: formState.issuer_category,
-			street: formState.issuer_street,
-			streetnumber: formState.issuer_streetnumber,
-			zip: formState.issuer_zip,
-			city: formState.issuer_city,
-			country: formState.country,
-			state: formState.state,
-			intendedUseVerified: formState.verify_intended_use,
-			linkedinId: formState.issuer_linkedin_id,
-		};
-
-		if (formState.issuer_image && String(formState.issuer_image).length > 0) {
-			issuer.image = formState.issuer_image;
-		}
-
 		if (this.existingIssuer) {
+			const issuer: ApiIssuerForEditing = {
+				name: formState.issuer_name,
+				description: formState.issuer_description,
+				image: formState.issuer_image,
+				email: formState.issuer_email,
+				url: formState.issuer_url,
+				linkedinId: formState.issuer_linkedin_id,
+				category: formState.issuer_category,
+				street: formState.issuer_street,
+				streetnumber: formState.issuer_streetnumber,
+				zip: formState.issuer_zip,
+				city: formState.issuer_city,
+				country: formState.country,
+				state: formState.state,
+				intendedUseVerified: formState.verify_intended_use,
+			};
 			this.editIssuerFinished = this.issuerManager
 				.editIssuer(this.issuerSlug, issuer)
 				.then(
@@ -320,6 +318,26 @@ export class IssuerEditFormComponent implements OnInit {
 				)
 				.then(() => (this.editIssuerFinished = null));
 		} else {
+			const issuer: ApiIssuerForCreation = {
+				name: formState.issuer_name,
+				description: formState.issuer_description,
+				email: formState.issuer_email,
+				url: formState.issuer_url,
+				linkedinId: formState.issuer_linkedin_id,
+				category: formState.issuer_category,
+				street: formState.issuer_street,
+				streetnumber: formState.issuer_streetnumber,
+				zip: formState.issuer_zip,
+				city: formState.issuer_city,
+				country: formState.country,
+				state: formState.state,
+				intendedUseVerified: formState.verify_intended_use,
+			};
+
+			if (formState.issuer_image && String(formState.issuer_image).length > 0) {
+				issuer.image = formState.issuer_image;
+			}
+
 			this.addIssuerFinished = this.issuerManager
 				.createIssuer(issuer)
 				.then(
