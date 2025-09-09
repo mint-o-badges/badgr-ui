@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, input } from '@angular/core';
 import { typedFormGroup } from '../../../common/util/typed-forms';
 import { FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IssuerNameValidator } from '../../../common/validators/issuer-name.validator';
@@ -47,32 +47,7 @@ export class IssuerEditFormComponent implements OnInit {
 	readonly issuerImagePlacholderUrl = preloadImageURL(
 		'../../../../breakdown/static/images/placeholderavatar-issuer.svg',
 	);
-	issuerForm = typedFormGroup()
-		.addControl('issuer_name', '', [
-			Validators.required,
-			Validators.maxLength(90),
-			IssuerNameValidator.validIssuerName,
-		])
-		.addControl('issuer_description', '', [
-			Validators.required,
-			Validators.minLength(200),
-			Validators.maxLength(300),
-		])
-		.addControl('issuer_email', '', [
-			Validators.required,
-			/*Validators.maxLength(75),
-                EmailValidator.validEmail*/
-		])
-		.addControl('issuer_url', '', [Validators.required, UrlValidator.validUrl])
-		.addControl('issuer_category', '', [Validators.required])
-		.addControl('issuer_image', '', Validators.required)
-		.addControl('issuer_street', '', Validators.required)
-		.addControl('issuer_streetnumber', '', Validators.required)
-		.addControl('issuer_zip', '', Validators.required)
-		.addControl('issuer_city', '', Validators.required)
-		.addControl('country', 'Germany', Validators.required)
-		.addControl('state', '')
-		.addControl('verify_intended_use', false, Validators.requiredTrue);
+	issuerForm: any;
 
 	emails: UserProfileEmail[];
 	primaryEmail: UserProfileEmail;
@@ -98,6 +73,8 @@ export class IssuerEditFormComponent implements OnInit {
 	noMisuse: string;
 
 	existingIssuer: Issuer | null = null;
+
+	networkForm = input<boolean>();
 
 	@Input() issuerSlug: string;
 
@@ -125,6 +102,8 @@ export class IssuerEditFormComponent implements OnInit {
 		if (this.configService.theme.dataProcessorTermsLink) {
 			this.issuerForm.addControl('agreedTerms', '', Validators.requiredTrue);
 		}
+
+		this.buildForm();
 
 		const authCode = this.queryParams.queryStringValue('authCode', true);
 		if (loginService.isLoggedIn && !authCode) this.refreshProfile();
@@ -180,22 +159,62 @@ export class IssuerEditFormComponent implements OnInit {
 		});
 	}
 
+	private buildForm() {
+		this.issuerForm = typedFormGroup()
+			.addControl('issuer_name', '', [
+				Validators.required,
+				Validators.maxLength(90),
+				IssuerNameValidator.validIssuerName,
+			])
+			.addControl('issuer_description', '', [
+				Validators.required,
+				Validators.minLength(200),
+				Validators.maxLength(300),
+			])
+			.addControl('issuer_url', '', [Validators.required, UrlValidator.validUrl])
+			.addControl('issuer_image', '', Validators.required)
+			.addControl('country', 'Germany', Validators.required)
+			.addControl('state', '');
+
+		if (!this.networkForm()) {
+			this.issuerForm
+				.addControl('issuer_email', '', [Validators.required])
+				.addControl('issuer_category', '', [Validators.required])
+				.addControl('issuer_street', '', Validators.required)
+				.addControl('issuer_streetnumber', '', Validators.required)
+				.addControl('issuer_zip', '', Validators.required)
+				.addControl('issuer_city', '', Validators.required)
+				.addControl('verify_intended_use', false, Validators.requiredTrue);
+		}
+	}
+
 	initFormFromExisting(issuer: Issuer) {
 		if (!issuer) return;
-		this.issuerForm.setValue({
+
+		const commonValues = {
 			issuer_name: issuer.name,
 			issuer_description: issuer.description,
 			issuer_image: issuer.image,
-			issuer_category: issuer.category,
-			issuer_email: issuer.email,
-			issuer_city: issuer.city,
-			issuer_street: issuer.street,
-			issuer_streetnumber: issuer.streetnumber,
-			issuer_zip: issuer.zip,
 			issuer_url: issuer.websiteUrl,
 			country: issuer.country,
 			state: issuer.state,
-			verify_intended_use: issuer.intendedUseVerified,
+		};
+
+		const issuerSpecificValues = !this.networkForm()
+			? {
+					issuer_category: issuer.category,
+					issuer_email: issuer.email,
+					issuer_city: issuer.city,
+					issuer_street: issuer.street,
+					issuer_streetnumber: issuer.streetnumber,
+					issuer_zip: issuer.zip,
+					verify_intended_use: issuer.intendedUseVerified,
+				}
+			: {};
+
+		this.issuerForm.setValue({
+			...commonValues,
+			...issuerSpecificValues,
 		});
 	}
 
@@ -225,68 +244,127 @@ export class IssuerEditFormComponent implements OnInit {
 
 		const formState = this.issuerForm.value;
 
-		if (this.existingIssuer) {
-			const issuer: ApiIssuerForEditing = {
-				name: formState.issuer_name,
-				description: formState.issuer_description,
-				image: formState.issuer_image,
-				email: formState.issuer_email,
-				url: formState.issuer_url,
-				category: formState.issuer_category,
-				street: formState.issuer_street,
-				streetnumber: formState.issuer_streetnumber,
-				zip: formState.issuer_zip,
-				city: formState.issuer_city,
-				country: formState.country,
-				state: formState.state,
-				intendedUseVerified: formState.verify_intended_use,
-			};
-			this.editIssuerFinished = this.issuerManager
-				.editIssuer(this.issuerSlug, issuer)
-				.then(
-					(newIssuer) => {
-						this.router.navigate(['issuer/issuers', newIssuer.slug]);
-						this.messageService.setMessage('Issuer created successfully.', 'success');
-					},
-					(error) => {
-						this.messageService.setMessage('Unable to create issuer: ' + error, 'error');
-					},
-				)
-				.then(() => (this.editIssuerFinished = null));
+		if (this.networkForm()) {
+			this.handleNetworkSubmit(formState);
 		} else {
-			const issuer: ApiIssuerForCreation = {
-				name: formState.issuer_name,
-				description: formState.issuer_description,
-				email: formState.issuer_email,
-				url: formState.issuer_url,
-				category: formState.issuer_category,
-				street: formState.issuer_street,
-				streetnumber: formState.issuer_streetnumber,
-				zip: formState.issuer_zip,
-				city: formState.issuer_city,
-				country: formState.country,
-				state: formState.state,
-				intendedUseVerified: formState.verify_intended_use,
-			};
-
-			if (formState.issuer_image && String(formState.issuer_image).length > 0) {
-				issuer.image = formState.issuer_image;
-			}
-
-			this.addIssuerFinished = this.issuerManager
-				.createIssuer(issuer)
-				.then(
-					(newIssuer) => {
-						this.router.navigate(['issuer/issuers', newIssuer.slug]);
-						this.messageService.setMessage('Issuer created successfully.', 'success');
-					},
-					(error) => {
-						this.messageService.setMessage('Unable to create issuer: ' + error, 'error');
-					},
-				)
-				.then(() => (this.addIssuerFinished = null));
+			this.handleIssuerSubmit(formState);
 		}
 	}
+
+	private handleIssuerSubmit(formState: any) {
+		const issuer: ApiIssuerForCreation | ApiIssuerForEditing = {
+			name: formState.issuer_name,
+			description: formState.issuer_description,
+			email: formState.issuer_email,
+			url: formState.issuer_url,
+			category: formState.issuer_category,
+			street: formState.issuer_street,
+			streetnumber: formState.issuer_streetnumber,
+			zip: formState.issuer_zip,
+			city: formState.issuer_city,
+			country: formState.country,
+			state: formState.state,
+			intendedUseVerified: formState.verify_intended_use,
+		};
+
+		if (formState.issuer_image && String(formState.issuer_image).length > 0) {
+			issuer.image = formState.issuer_image;
+		}
+
+		// this.submitIssuer(issuer);
+	}
+
+	private handleNetworkSubmit(formState: any) {
+		const network = {
+			name: formState.issuer_name,
+			description: formState.issuer_description,
+			url: formState.issuer_url,
+			country: formState.country,
+			state: formState.state,
+		};
+
+		if (formState.issuer_image && String(formState.issuer_image).length > 0) {
+			network['image'] = formState.issuer_image;
+		}
+
+		// this.submitNetwork(network);
+	}
+
+	// onSubmit() {
+	// 	if (this.issuerForm.controls.issuer_image.rawControl.hasError('required')) {
+	// 		this.imageError = this.translate.instant('Issuer.imageRequiredError');
+	// 	}
+
+	// 	if (!this.issuerForm.markTreeDirtyAndValidate()) {
+	// 		return;
+	// 	}
+
+	// 	const formState = this.issuerForm.value;
+
+	// 	const issuerFormState = this.issuerOnlyForm.value;
+
+	// 	if (this.existingIssuer) {
+	// 		const issuer: ApiIssuerForEditing = {
+	// 			name: formState.issuer_name,
+	// 			description: formState.issuer_description,
+	// 			image: formState.issuer_image,
+	// 			email: issuerFormState.issuer_email,
+	// 			url: formState.issuer_url,
+	// 			category: issuerFormState.issuer_category,
+	// 			street: issuerFormState.issuer_street,
+	// 			streetnumber: issuerFormState.issuer_streetnumber,
+	// 			zip: issuerFormState.issuer_zip,
+	// 			city: issuerFormState.issuer_city,
+	// 			country: formState.country,
+	// 			state: formState.state,
+	// 			intendedUseVerified: issuerFormState.verify_intended_use,
+	// 		};
+	// 		this.editIssuerFinished = this.issuerManager
+	// 			.editIssuer(this.issuerSlug, issuer)
+	// 			.then(
+	// 				(newIssuer) => {
+	// 					this.router.navigate(['issuer/issuers', newIssuer.slug]);
+	// 					this.messageService.setMessage('Issuer created successfully.', 'success');
+	// 				},
+	// 				(error) => {
+	// 					this.messageService.setMessage('Unable to create issuer: ' + error, 'error');
+	// 				},
+	// 			)
+	// 			.then(() => (this.editIssuerFinished = null));
+	// 	} else {
+	// 		const issuer: ApiIssuerForCreation = {
+	// 			name: formState.issuer_name,
+	// 			description: formState.issuer_description,
+	// 			email: issuerFormState.issuer_email,
+	// 			url: formState.issuer_url,
+	// 			category: issuerFormState.issuer_category,
+	// 			street: issuerFormState.issuer_street,
+	// 			streetnumber: issuerFormState.issuer_streetnumber,
+	// 			zip: issuerFormState.issuer_zip,
+	// 			city: issuerFormState.issuer_city,
+	// 			country: formState.country,
+	// 			state: formState.state,
+	// 			intendedUseVerified: issuerFormState.verify_intended_use,
+	// 		};
+
+	// 		if (formState.issuer_image && String(formState.issuer_image).length > 0) {
+	// 			issuer.image = formState.issuer_image;
+	// 		}
+
+	// 		this.addIssuerFinished = this.issuerManager
+	// 			.createIssuer(issuer)
+	// 			.then(
+	// 				(newIssuer) => {
+	// 					this.router.navigate(['issuer/issuers', newIssuer.slug]);
+	// 					this.messageService.setMessage('Issuer created successfully.', 'success');
+	// 				},
+	// 				(error) => {
+	// 					this.messageService.setMessage('Unable to create issuer: ' + error, 'error');
+	// 				},
+	// 			)
+	// 			.then(() => (this.addIssuerFinished = null));
+	// 	}
+	// }
 
 	get dataProcessorUrl() {
 		return this.configService.theme.dataProcessorTermsLink;

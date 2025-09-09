@@ -19,7 +19,7 @@
 
 	<oeb-input
 		class="tw-mt-8"
-		label="{{ 'Issuer.nameOfIssuer' | translate }}"
+		[label]="networkForm() ? ('Network.name' | translate) : ('Issuer.nameOfIssuer' | translate)"
 		[control]="issuerForm.rawControlMap.issuer_name"
 		[fieldType]="'text'"
 		[autofocus]="true"
@@ -28,25 +28,17 @@
 		#issuer_name_field
 	></oeb-input>
 
-	<oeb-input
-		class="tw-mt-8"
-		label="{{ 'Issuer.websiteUrl' | translate }}"
-		[control]="issuerForm.rawControlMap.issuer_url"
-		[urlField]="true"
-		[fieldType]="'url'"
-		errorMessage="{{ 'Issuer.enterURL' | translate }}"
-		#issuer_url_field
-	></oeb-input>
-
-	<oeb-select
-		class="tw-mt-8"
-		[control]="issuerForm.rawControlMap.issuer_email"
-		label="{{ 'General.contact' | translate }}-E-Mail"
-		[options]="emailsOptions"
-		[initialValue]="primaryEmail.email"
-		errorMessage="{{ 'Issuer.enterValidEmail' | translate }}"
-		#issuer_contact_Email
-	></oeb-select>
+	@if (!networkForm()) {
+		<oeb-select
+			class="tw-mt-8"
+			[control]="issuerForm.rawControlMap.issuer_email"
+			label="{{ 'General.contact' | translate }}-E-Mail"
+			[options]="emailsOptions"
+			[initialValue]="primaryEmail.email"
+			errorMessage="{{ 'Issuer.enterValidEmail' | translate }}"
+			#issuer_contact_Email
+		></oeb-select>
+	}
 
 	<oeb-input
 		class="tw-mt-8"
@@ -57,62 +49,64 @@
 		sublabelRight="(min. 200 / max. 300 {{ 'General.characters' | translate }})"
 	></oeb-input>
 
-	<oeb-select
-		class="tw-mt-8"
-		[control]="issuerForm.rawControlMap.issuer_category"
-		label="{{ 'General.category' | translate }}"
-		placeholder="{{ 'Issuer.enterCategory' | translate }}"
-		[options]="[
-			{
-				label: 'Issuer.schoolLabel' | translate,
-				value: 'schule'
-			},
-			{
-				label: 'Issuer.universityLabel' | translate,
-				value: 'hochschule'
-			},
-			{
-				label: 'Issuer.othersLabel' | translate,
-				value: 'andere'
-			}
-		]"
-		#issuer_category
-	></oeb-select>
+	@if (!networkForm()) {
+		<oeb-select
+			class="tw-mt-8"
+			[control]="issuerForm.rawControlMap.issuer_category"
+			label="{{ 'General.category' | translate }}"
+			placeholder="{{ 'Issuer.enterCategory' | translate }}"
+			[options]="[
+				{
+					label: 'Issuer.schoolLabel' | translate,
+					value: 'schule'
+				},
+				{
+					label: 'Issuer.universityLabel' | translate,
+					value: 'hochschule'
+				},
+				{
+					label: 'Issuer.othersLabel' | translate,
+					value: 'andere'
+				}
+			]"
+			#issuer_category
+		></oeb-select>
 
-	<oeb-input
-		class="tw-mt-8"
-		label="{{ 'General.street' | translate }}"
-		[control]="issuerForm.rawControlMap.issuer_street"
-		[fieldType]="'text'"
-		errorMessage="{{ 'Issuer.enterStreet' | translate }}"
-		#issuer_street_field
-	></oeb-input>
+		<oeb-input
+			class="tw-mt-8"
+			label="{{ 'General.street' | translate }}"
+			[control]="issuerForm.rawControlMap.issuer_street"
+			[fieldType]="'text'"
+			errorMessage="{{ 'Issuer.enterStreet' | translate }}"
+			#issuer_street_field
+		></oeb-input>
 
-	<oeb-input
-		class="tw-mt-8"
-		label="{{ 'Issuer.houseNo' | translate }}"
-		[control]="issuerForm.rawControlMap.issuer_streetnumber"
-		errorMessage="{{ 'Issuer.enterHouseNo' | translate }}"
-		#issuer_streetnumber_field
-	></oeb-input>
+		<oeb-input
+			class="tw-mt-8"
+			label="{{ 'Issuer.houseNo' | translate }}"
+			[control]="issuerForm.rawControlMap.issuer_streetnumber"
+			errorMessage="{{ 'Issuer.enterHouseNo' | translate }}"
+			#issuer_streetnumber_field
+		></oeb-input>
 
-	<oeb-input
-		class="oeb-input-hide-arrows tw-mt-8"
-		label="{{ 'General.postalCode' | translate }}"
-		[control]="issuerForm.rawControlMap.issuer_zip"
-		[fieldType]="'number'"
-		errorMessage="{{ 'Issuer.enterPostalCode' | translate }}"
-		#issuer_zip_field
-	></oeb-input>
+		<oeb-input
+			class="oeb-input-hide-arrows tw-mt-8"
+			label="{{ 'General.postalCode' | translate }}"
+			[control]="issuerForm.rawControlMap.issuer_zip"
+			[fieldType]="'number'"
+			errorMessage="{{ 'Issuer.enterPostalCode' | translate }}"
+			#issuer_zip_field
+		></oeb-input>
 
-	<oeb-input
-		class="tw-mt-8"
-		label="{{ 'General.city' | translate }}"
-		[control]="issuerForm.rawControlMap.issuer_city"
-		[fieldType]="'text'"
-		errorMessage="{{ 'Issuer.enterCity' | translate }}"
-		#issuer_city_field
-	></oeb-input>
+		<oeb-input
+			class="tw-mt-8"
+			label="{{ 'General.city' | translate }}"
+			[control]="issuerForm.rawControlMap.issuer_city"
+			[fieldType]="'text'"
+			errorMessage="{{ 'Issuer.enterCity' | translate }}"
+			#issuer_city_field
+		></oeb-input>
+	}
 
 	<section class="tw-flex md:tw-flex-row tw-mt-8 tw-flex-col tw-w-full tw-gap-2 md:tw-justify-between">
 		<oeb-select
@@ -136,23 +130,38 @@
 		</oeb-select>
 	</section>
 
-	<div class="tw-mt-6 md:tw-mt-8">
-		<oeb-checkbox
-			[alignStart]="true"
-			id="verify-intent"
-			name="verify-intent"
-			[text]="'Issuer.herebyIConfirm' | translate"
-			[control]="issuerForm.rawControlMap.verify_intended_use"
-		>
-		</oeb-checkbox>
-	</div>
+	<oeb-input
+		class="tw-mt-8"
+		label="{{ 'Issuer.websiteUrl' | translate }}"
+		[control]="issuerForm.rawControlMap.issuer_url"
+		[urlField]="true"
+		[fieldType]="'url'"
+		errorMessage="{{ 'Issuer.enterURL' | translate }}"
+		#issuer_url_field
+	></oeb-input>
+	@if (networkForm()) {
+		<span class="tw-text-purple tw-text-lg tw-italic">{{ 'Network.addPartnerNext' | translate }}</span>
+	}
 
-	@if (!existingIssuer) {
-		<p
-			hlmP
-			class="tw-mt-6 md:tw-mt-8 tw-italic tw-leading-[130%]"
-			[innerHTML]="'Issuer.contract26' | translate"
-		></p>
+	@if (!networkForm()) {
+		<div class="tw-mt-6 md:tw-mt-8">
+			<oeb-checkbox
+				[alignStart]="true"
+				id="verify-intent"
+				name="verify-intent"
+				[text]="'Issuer.herebyIConfirm' | translate"
+				[control]="issuerForm.rawControlMap.verify_intended_use"
+			>
+			</oeb-checkbox>
+		</div>
+
+		@if (!existingIssuer) {
+			<p
+				hlmP
+				class="tw-mt-6 md:tw-mt-8 tw-italic tw-leading-[130%]"
+				[innerHTML]="'Issuer.contract26' | translate"
+			></p>
+		}
 	}
 
 	<div class="tw-flex tw-justify-between tw-flex-wrap sm:tw-flex-nowrap tw-gap-2 tw-mt-8">
