@@ -41,18 +41,16 @@ import { NgTemplateOutlet, NgClass } from '@angular/common';
 						<ng-icon hlm class="tw-ml-2" name="lucideChevronDown" hlmMenuIcon />
 					</button>
 				}
-				<div>
-					<ng-icon
-						hlm
-						size="xl"
-						class="tw-text-purple"
-						[ngClass]="{
-							'tw-rotate-90': collapsible.expanded() && closeIcon == 'lucideChevronRight',
-							'tw-rotate-180': collapsible.expanded() && closeIcon == 'lucideChevronDown'
-						}"
-						[name]="closeIcon"
-					/>
-				</div>
+				<ng-icon
+					hlm
+					[size]="iconSize"
+					[class]="iconStyle"
+					[ngClass]="{
+						'tw-rotate-90': collapsible.expanded() && closeIcon == 'lucideChevronRight',
+						'tw-rotate-180': collapsible.expanded() && closeIcon == 'lucideChevronDown'
+					}"
+					[name]="closeIcon"
+				/>
 			</button>
 			<brn-collapsible-content>
 				<ng-content></ng-content>
@@ -66,6 +64,8 @@ export class OebCollapsibleComponent implements AfterViewInit {
 	@Input() id: string = null;
 	@Input() closeable: boolean = true;
 	@Input() closeIcon = 'lucideChevronRight';
+	@Input() iconSize = 'xl';
+	@Input() iconStyle = 'tw-text-purple';
 	@Output() toggled = new EventEmitter<boolean>();
 
 	@ViewChild('collapsible') collapsible: BrnCollapsible;
