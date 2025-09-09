@@ -371,7 +371,7 @@
 		"creatingBadge": "Creating Badge",
 		"memberView": "Member view",
 		"partOfNetwork": "Part of the network",
-		"contract26": "By clicking on “Create institution,” the agreement <a class='tw-underline tw-text-link' target='_blank' href='https://oeb-cms.mycelia.education/wp-content/uploads/2025/09/Vereinbarung-ueber-die-gemeinsame-Verantwortlichkeit-GVV_Institution_082025.pdf'>available here</a> pursuant to Article 26(1) GDPR on the joint data protection responsibility of the institution with its partners becomes effective."
+		"contract26": "By clicking on “Create institution,” the agreement <a class='tw-underline tw-text-link' target='_blank' href='https://oeb-cms.mycelia.education/wp-content/uploads/2025/09/EN-Vereinbarung-ueber-die-gemeinsame-Verantwortlichkeit-GVV_Institution_082025.pdf'>available here</a> pursuant to Article 26(1) GDPR on the joint data protection responsibility of the institution with its partners becomes effective."
 	},
 	"Network": {
 		"networksNav": "Networks A-Z",
@@ -435,7 +435,7 @@
 		"multiBadges": "badges",
 		"noRecipients": "No recipient",
 		"oneRecipient": "1 recipient",
-		"multiRecipients": "recipients",
+		"multiRecipients": "Recipients",
 		"participation": "Participation",
 		"competency": "Competency",
 		"learningpath": "Micro Degree",
@@ -985,7 +985,7 @@
 	},
 	"QrCode": {
 		"qrAward": "QR code awarding",
-		"qrAwards": "QR Code awarding",
+		"qrAwards": "QR Code awardings",
 		"savedSuccessfully": "<span class='tw-font-bold'> The QR code award has been successfully saved on the badge detail page.</span>",
 		"downloadedSuccessfully": "<span class='tw-font-bold'>You have successfully downloaded the QR code.</span><br> Check your download folder.",
 		"deleteQrAward": "Delete QR code award",
