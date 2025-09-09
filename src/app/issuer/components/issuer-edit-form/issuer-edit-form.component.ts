@@ -200,6 +200,12 @@ export class IssuerEditFormComponent implements OnInit {
 		}
 
 		if (!this.issuerForm.markTreeDirtyAndValidate()) {
+			// try scrolling to the first invalid form field
+			const firstInvalidControl: HTMLElement = document.querySelector('.ng-invalid') as HTMLElement;
+			if (firstInvalidControl) {
+				firstInvalidControl.scrollIntoView({ behavior: 'smooth', block: 'center' }); // smooth scroll and center
+			}
+
 			return;
 		}
 
