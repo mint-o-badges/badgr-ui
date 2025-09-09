@@ -88,6 +88,14 @@ export class Issuer extends ManagedEntity<ApiIssuer, IssuerRef> {
 		return this.apiModel.city;
 	}
 
+	get country(): string {
+		return this.apiModel.country;
+	}
+
+	get state(): string {
+		return this.apiModel.state;
+	}
+
 	get intendedUseVerified(): boolean {
 		return this.apiModel.intendedUseVerified;
 	}
