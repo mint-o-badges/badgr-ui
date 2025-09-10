@@ -2,17 +2,16 @@ import { BaseHttpApiService } from '../../common/services/base-http-api.service'
 import { Injectable } from '@angular/core';
 import { AppConfigService } from '../../common/app-config.service';
 import { SessionService } from '../../common/services/session.service';
-import {
-	ApiNetwork,
-	ApiNetworkForCreation,
-	ApiNetworkForEditing,
-	ApiNetworkStaffOperation,
-	NetworkSlug,
-} from '../models/network-api.model';
 import { MessageService } from '../../common/services/message.service';
 import { HttpClient } from '@angular/common/http';
 import { Issuer } from '../models/issuer.model';
-import { ApiIssuer } from '../models/issuer-api.model';
+import {
+	ApiIssuer,
+	ApiIssuerStaffOperation,
+	ApiNetwork,
+	ApiNetworkForCreation,
+	IssuerSlug,
+} from '../models/issuer-api.model';
 import { ApiNetworkInvitation } from '../models/network-invite-api.model';
 
 @Injectable({ providedIn: 'root' })
@@ -30,11 +29,11 @@ export class NetworkApiService extends BaseHttpApiService {
 		return this.post<ApiNetwork>(`/v1/issuer/networks`, creationNetwork).then((r) => r.body);
 	}
 
-	editNetwork(issuerSlug: NetworkSlug, editingNetwork: ApiNetworkForCreation) {
+	editNetwork(issuerSlug: IssuerSlug, editingNetwork: ApiNetworkForCreation) {
 		return this.put<ApiNetwork>(`/v1/issuer/networks/${issuerSlug}`, editingNetwork).then((r) => r.body);
 	}
 
-	deleteNetwork(issuerSlug: NetworkSlug) {
+	deleteNetwork(issuerSlug: IssuerSlug) {
 		return this.delete<null>(`/v1/issuer/networks/${issuerSlug}`).then((r) => r.body);
 	}
 
@@ -73,7 +72,7 @@ export class NetworkApiService extends BaseHttpApiService {
 		return this.put(`/v1/issuer/networks/${networkSlug}/invite/${inviteSlug}/confirm`, null);
 	}
 
-	updateStaff(networkSlug: NetworkSlug, updateOp: ApiNetworkStaffOperation) {
+	updateStaff(networkSlug: IssuerSlug, updateOp: ApiIssuerStaffOperation) {
 		return this.post(`/v1/issuer/networks/${networkSlug}/staff`, updateOp).then((r) => r.body);
 	}
 

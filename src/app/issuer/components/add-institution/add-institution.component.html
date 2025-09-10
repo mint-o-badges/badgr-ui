@@ -72,7 +72,7 @@
 			@if (rightsAndRolesExpanded) {
 				<h2 class="tw-font-bold tw-text-[22px] tw-text-oebblack">{{ 'General.rolesAndRights' | translate }}</h2>
 				<dl>
-					@for (role of networkStaffRoleOptions; track role; let last = $last) {
+					@for (role of issuerStaffRoleOptions; track role; let last = $last) {
 						<dt class="tw-text-lg tw-font-semibold tw-text-oebblack">
 							{{ role.label | translate }}
 						</dt>

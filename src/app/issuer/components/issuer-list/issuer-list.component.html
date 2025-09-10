@@ -4,7 +4,7 @@
 	<div class="page-padding">
 		<div class="tw-pt-[4rem] md:tw-flex tw-justify-between md:tw-gap-16">
 			<div class="oeb-standard-padding-bottom">
-				<h1 hlmH1 class="tw-text-purple oeb-standard-padding-bottom tw-font-bold">
+				<h1 hlmH1 class="tw-text-purple oeb-standard-padding-bottom tw-font-black">
 					{{ 'NavItems.myInstitutions' | translate }}
 				</h1>
 				<oeb-tabs
@@ -175,12 +175,12 @@
 </ng-template>
 
 <ng-template #issuersTemplate>
-	<p hlmP size="lg" class="tw-py-3">
+	<p class="tw-mt-8 tw-text-oebblack tw-text-lg">
 		<span [innerHTML]="'Issuer.myInstitutionsText' | translate"></span>
 		<span [innerHTML]="'Issuer.copyBadgesOfOtherIssuers' | translate"></span>
 	</p>
 
-	<p hlmP size="lg" class="tw-pb-3" [innerHTML]="'Issuer.myLearningPathText' | translate"></p>
+	<p class="tw-pb-3 tw-text-oebblack tw-text-lg" [innerHTML]="'Issuer.myLearningPathText' | translate"></p>
 	@if (issuers?.length === 0) {
 		<section class="tw-flex tw-flex-col tw-gap-2 tw-mt-2">
 			<span

@@ -36,7 +36,6 @@ import {
 	PublicApiLearningPath,
 	PublicApiNetwork,
 } from '../../../public/models/public-api.model';
-import { Network } from '../../../issuer/models/network.model';
 import { HlmInput } from '@spartan-ng/helm/input';
 import { HlmH1, HlmP } from '@spartan-ng/helm/typography';
 
@@ -71,7 +70,7 @@ export class OebIssuerDetailComponent implements OnInit {
 	@Input() issuerActionsMenu: any;
 	@Input() badges: BadgeClass[] | PublicApiBadgeClass[];
 	@Input() learningPaths: (ApiLearningPath | PublicApiLearningPath)[];
-	@Input() networks: Network[] | PublicApiNetwork[];
+	@Input() networks: PublicApiNetwork[];
 	@Input() public: boolean = false;
 	@Output() issuerDeleted = new EventEmitter();
 

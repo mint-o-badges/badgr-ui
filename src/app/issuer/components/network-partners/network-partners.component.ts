@@ -7,7 +7,6 @@ import { BrnDialogRef } from '@spartan-ng/brain/dialog';
 import { NetworkPartnersDatatableComponent } from '../../../components/datatable-network-partners.component';
 import { NetworkInvitesDatatableComponent } from '../../../components/datatable-network-invites.component';
 import { Issuer } from '../../../issuer/models/issuer.model';
-import { Network } from '../../../issuer/models/network.model';
 import { NetworkApiService } from '../../../issuer/services/network-api.service';
 import { ApiNetworkInvitation } from '../../../issuer/models/network-invite-api.model';
 import { NgModel } from '@angular/forms';
@@ -22,7 +21,7 @@ import { MessageService } from '../../../common/services/message.service';
 })
 export class NetworkPartnersComponent {
 	issuers = input.required<Issuer[]>();
-	network = input.required<Network>();
+	network = input.required<any>();
 	addInstitutionsTemplate = input.required<TemplateRef<void>>();
 
 	pendingInvites = signal<ApiNetworkInvitation[]>([]);

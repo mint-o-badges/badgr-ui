@@ -17,7 +17,6 @@ import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 import { BadgeClassEditFormComponent } from '../badgeclass-edit-form/badgeclass-edit-form.component';
 import { HlmH1 } from '@spartan-ng/helm/typography';
-import { Network } from '~/issuer/models/network.model';
 import { BadgeParentEntity } from '../badgeclass-edit-form/badgeclass-edit-form.component';
 
 @Component({
@@ -28,7 +27,7 @@ export class BadgeClassCreateComponent extends BaseAuthenticatedRoutableComponen
 	issuerSlug: string;
 	category: string;
 	issuer: Issuer;
-	network: Network;
+	network: any;
 	entityLoaded: Promise<unknown>;
 	entity: BadgeParentEntity;
 	breadcrumbLinkEntries: LinkEntry[] = [];

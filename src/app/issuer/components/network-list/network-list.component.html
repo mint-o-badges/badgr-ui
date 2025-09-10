@@ -1,16 +1,15 @@
 <ng-container>
 	@if (networks().length == 0) {
-		<p hlmP size="lg" class="tw-py-3 tw-flex tw-flex-col">
-			<span class="tw-text-oebblack tw-font-bold" [innerHTML]="'Network.noIssuerInNetwork' | translate"></span>
+		<p class="tw-mt-8 tw-mb-2 tw-flex tw-text-lg tw-flex-col tw-text-oebblack">
+			<span class="tw-font-bold" [innerHTML]="'Network.noIssuerInNetwork' | translate"></span>
 			<span class="tw-mt-1" [innerHTML]="'Network.networksUseBadgesTogether' | translate"></span>
 			<span [innerHTML]="'Network.networkLogoOnBadge' | translate"></span>
 			<span
-				class="tw-mt-1 tw-italic tw-text-purple"
+				class="tw-mt-3 tw-italic tw-text-purple"
 				[innerHTML]="'Network.youCanAddInstitutions' | translate"
 			></span>
 		</p>
 		<oeb-button
-			class="md:tw-whitespace-nowrap"
 			[routerLink]="['/issuer/networks/create']"
 			[disabled-when-requesting]="true"
 			[text]="'Network.create' | translate"

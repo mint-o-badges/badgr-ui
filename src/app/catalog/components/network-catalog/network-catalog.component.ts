@@ -26,8 +26,6 @@ import { OebSelectComponent } from '../../../components/select.component';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { IssuerCardComponent } from '../../../components/issuer-card/issuer-card.component';
 import { PaginationAdvancedComponent } from '../../../components/oeb-numbered-pagination';
-import { Network } from '../../../issuer/models/network.model';
-import { NetworkManager } from '../../../issuer/services/network-manager.service';
 import { OebNetworkCard } from '~/common/components/oeb-networkcard.component';
 import { RouterLink } from '@angular/router';
 import { HlmIcon } from '@spartan-ng/helm/icon';
@@ -46,7 +44,6 @@ import {
 	Subscription,
 	tap,
 } from 'rxjs';
-import { NetworkV3 } from '~/issuer/models/networkv3.model';
 
 @Component({
 	selector: 'app-network-catalog',
@@ -78,7 +75,7 @@ export class NetworkCatalogComponent extends BaseRoutableComponent implements On
 	@ViewChild('loadMore') loadMore: ElementRef | undefined;
 
 	Array = Array;
-	networks = signal<NetworkV3[]>([]);
+	networks = signal<any[]>([]);
 	networksPerPage = 30;
 	totalPages: number;
 	nextLink: string;
@@ -100,7 +97,6 @@ export class NetworkCatalogComponent extends BaseRoutableComponent implements On
 
 	constructor(
 		protected messageService: MessageService,
-		protected networkManager: NetworkManager,
 		protected configService: AppConfigService,
 		protected catalogService: CatalogService,
 		router: Router,

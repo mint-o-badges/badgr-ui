@@ -1,10 +1,8 @@
 import { Component, ElementRef, inject, OnInit, signal, TemplateRef, ViewChild } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
-import { NetworkManager } from '../../../issuer/services/network-manager.service';
 import { SessionService } from '../../../common/services/session.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
-import { Network, networkStaffRoles } from '../../../issuer/models/network.model';
 import { Title } from '@angular/platform-browser';
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { TranslateService } from '@ngx-translate/core';
@@ -17,7 +15,7 @@ import { DialogComponent } from '../../../components/dialog.component';
 import { BrnDialogRef } from '@spartan-ng/brain/dialog';
 import { NgIcon } from '@ng-icons/core';
 import { NgModel, FormsModule } from '@angular/forms';
-import { Issuer } from '../../../issuer/models/issuer.model';
+import { Issuer, issuerStaffRoles } from '../../../issuer/models/issuer.model';
 import { PublicApiService } from '../../../public/services/public-api.service';
 import { MessageService } from '../../../common/services/message.service';
 import { NgStyle } from '@angular/common';
@@ -30,6 +28,7 @@ import { AddInstitutionComponent } from '../add-institution/add-institution.comp
 import { BgBreadcrumbsComponent } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { ApiNetworkInvitation } from '../../../issuer/models/network-invite-api.model';
 import { NetworkBadgesComponent } from '../network-badges/network-badges.component';
+import { IssuerManager } from '~/issuer/services/issuer-manager.service';
 
 @Component({
 	selector: 'network-dashboard',
@@ -59,7 +58,7 @@ export class NetworkDashboardComponent extends BaseAuthenticatedRoutableComponen
 	issuerSearchQuery = '';
 	selectedIssuers: Issuer[] = [];
 
-	network = signal<Network | null>(null);
+	network = signal<any | null>(null);
 	partnerIssuers = signal<Issuer[]>([]);
 
 	pendingInvites: ApiNetworkInvitation[];
@@ -92,7 +91,7 @@ export class NetworkDashboardComponent extends BaseAuthenticatedRoutableComponen
 		loginService: SessionService,
 		router: Router,
 		route: ActivatedRoute,
-		private networkManager: NetworkManager,
+		private issuerManager: IssuerManager,
 		protected title: Title,
 		protected translate: TranslateService,
 		private configService: AppConfigService,
@@ -108,9 +107,9 @@ export class NetworkDashboardComponent extends BaseAuthenticatedRoutableComponen
 			this.pendingInvites = invites;
 		});
 
-		const loadPromise = this.networkManager.networkBySlug(this.networkSlug).then((network) => {
+		const loadPromise = this.issuerManager.issuerBySlug(this.networkSlug).then((network) => {
 			this.network.set(network);
-			this.partnerIssuers.set(network.partnerIssuers.entities);
+			// this.partnerIssuers.set(network.partnerIssuers.entities);
 			this.title.setTitle(
 				`Issuer - ${this.network.name} - ${this.configService.theme['serviceName'] || 'Badgr'}`,
 			);
@@ -243,17 +242,6 @@ export class NetworkDashboardComponent extends BaseAuthenticatedRoutableComponen
 
 	collapseRoles() {
 		this.rightsAndRolesExpanded = !this.rightsAndRolesExpanded;
-	}
-
-	get networkStaffRoleOptions() {
-		return (
-			this._networkStaffRoleOptions ||
-			(this._networkStaffRoleOptions = networkStaffRoles.map((r) => ({
-				label: r.label,
-				value: r.slug,
-				description: r.description,
-			})))
-		);
 	}
 
 	inviteInstitutions(issuers: Issuer[]) {

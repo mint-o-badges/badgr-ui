@@ -29,8 +29,6 @@ import { NgIcon } from '@ng-icons/core';
 import { BgImageStatusPlaceholderDirective } from '../../../common/directives/bg-image-status-placeholder.directive';
 import { OebTabsComponent } from '../../../components/oeb-tabs.component';
 import { environment } from 'src/environments/environment';
-import { NetworkManager } from '../../services/network-manager.service';
-import { Network } from '../../models/network.model';
 import { NetworkListComponent } from '../network-list/network-list.component';
 import { HlmIcon } from '@spartan-ng/helm/icon';
 import { HlmH1, HlmP } from '@spartan-ng/helm/typography';
@@ -71,16 +69,7 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 	networksLoaded = signal<boolean>(false);
 
 	issuersLoaded: Promise<unknown>;
-	networks = toSignal(
-		this.networkManager.myNetworks$.pipe(
-			tap(() => this.networksLoaded.set(true)),
-			map((networks) => networks.slice().sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())),
-			catchError((error) => {
-				this.messageService.reportAndThrowError(this.translate.instant('Issuer.failLoadissuers'), error);
-			}),
-		),
-		{ initialValue: [] as Network[] },
-	);
+	networks;
 	badgesLoaded: Promise<unknown>;
 	@ViewChild('pluginBox') public pluginBoxElement: ElementRef;
 
@@ -156,7 +145,6 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 		protected title: Title,
 		protected messageService: MessageService,
 		protected issuerManager: IssuerManager,
-		protected networkManager: NetworkManager,
 		protected configService: AppConfigService,
 		protected badgeClassService: BadgeClassManager,
 		protected publicApiService: PublicApiService,

@@ -3,7 +3,6 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { NetworkPartnersDatatableComponent } from '../../../components/datatable-network-partners.component';
 import { NetworkInvitesDatatableComponent } from '../../../components/datatable-network-invites.component';
-import { Network } from '../../../issuer/models/network.model';
 import { NetworkApiService } from '../../../issuer/services/network-api.service';
 import { OebTabsComponent } from '~/components/oeb-tabs.component';
 import { BgAwaitPromises } from '~/common/directives/bg-await-promises';
@@ -16,7 +15,7 @@ import { RouterLink } from '@angular/router';
 })
 export class NetworkBadgesComponent {
 	constructor(private networkApiService: NetworkApiService) {}
-	network = input.required<Network>();
+	network = input.required<any>();
 
 	tabs: any = undefined;
 

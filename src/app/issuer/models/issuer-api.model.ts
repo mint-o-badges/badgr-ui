@@ -1,5 +1,4 @@
 import { ApiEntityRef } from '../../common/model/entity-ref';
-import { ApiNetwork } from './network-api.model';
 
 export type IssuerSlug = string;
 export type IssuerUrl = string;
@@ -54,6 +53,31 @@ export interface ApiIssuer {
 	ownerAcceptedTos: boolean;
 
 	networks: ApiNetwork[];
+}
+
+export interface ApiNetwork {
+	name: string;
+	slug: IssuerSlug;
+	description: string;
+	image: string;
+	country: string;
+	state: string;
+
+	created_at: string;
+	created_by: string;
+	staff: ApiIssuerStaff[];
+	partner_issuers: ApiIssuer[];
+
+	json: ApiIssuerJsonld;
+}
+
+export interface ApiNetworkForCreation {
+	name: string;
+	description: string;
+	image: string;
+	url: string;
+	country: string;
+	state?: string;
 }
 
 export type IssuerStaffRoleSlug = 'owner' | 'editor' | 'staff';
