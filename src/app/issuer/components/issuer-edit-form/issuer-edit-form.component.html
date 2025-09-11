@@ -28,13 +28,21 @@
 		#issuer_name_field
 	></oeb-input>
 
+	<oeb-input
+		label="{{ 'Issuer.websiteUrl' | translate }}"
+		[control]="issuerForm.rawControlMap.issuer_url"
+		[urlField]="true"
+		[fieldType]="'url'"
+		errorMessage="{{ 'Issuer.enterURL' | translate }}"
+		#issuer_url_field
+	></oeb-input>
+
 	@if (!networkForm()) {
 		<oeb-select
-			class="tw-mt-8"
 			[control]="issuerForm.rawControlMap.issuer_email"
 			label="{{ 'General.contact' | translate }}-E-Mail"
+			placeholder="{{ 'Issuer.enterValidEmail' | translate }}"
 			[options]="emailsOptions"
-			[initialValue]="primaryEmail.email"
 			errorMessage="{{ 'Issuer.enterValidEmail' | translate }}"
 			#issuer_contact_Email
 		></oeb-select>
@@ -174,14 +182,26 @@
 			text="{{ 'General.cancel' | translate }}"
 		></oeb-button>
 
-		<oeb-button
-			type="submit"
-			width="max_content"
-			[disabled]="!!addIssuerFinished"
-			text="{{ existingIssuer ? ('General.save' | translate) : ('Issuer.createInstitution' | translate) }}"
-			[loading-promises]="[addIssuerFinished]"
-			loading-message="Hinzufügen"
-		>
-		</oeb-button>
+		@if (networkForm()) {
+			<oeb-button
+				type="submit"
+				width="max_content"
+				[disabled]="!!addIssuerFinished"
+				text="{{ existingIssuer ? ('General.save' | translate) : ('Network.create' | translate) }}"
+				[loading-promises]="[addIssuerFinished]"
+				loading-message="Hinzufügen"
+			>
+			</oeb-button>
+		} @else {
+			<oeb-button
+				type="submit"
+				width="max_content"
+				[disabled]="!!addIssuerFinished"
+				text="{{ existingIssuer ? ('General.save' | translate) : ('Issuer.createInstitution' | translate) }}"
+				[loading-promises]="[addIssuerFinished]"
+				loading-message="Hinzufügen"
+			>
+			</oeb-button>
+		}
 	</div>
 </form>

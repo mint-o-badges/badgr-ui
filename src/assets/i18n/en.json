@@ -411,7 +411,8 @@
 		"partner": "Network Members",
 		"alreadyConfirmed": "Another member of <span class='tw-italic'> {{issuerName}} has already accepted the network invitation from <span class='tw-font-bold'> {{networkName}}</span>.",
 		"view": "View network",
-		"createBadge": "Create network badge"
+		"createBadge": "Create network badge",
+		"awardBadgeIssuer": "Which of your <span class='tw-font-bold'>institutions</span> should the badge be awarded to?"
 	},
 	"Badge": {
 		"groupBy": "Group by",

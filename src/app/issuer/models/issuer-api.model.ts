@@ -53,6 +53,7 @@ export interface ApiIssuer {
 	ownerAcceptedTos: boolean;
 
 	networks: ApiNetwork[];
+	is_network: boolean;
 }
 
 export interface ApiNetwork {

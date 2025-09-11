@@ -8,11 +8,52 @@
 	></oeb-tabs>
 </ng-container>
 
-<ng-template #networkTemplate>
-	<oeb-button
-		[text]="'Network.createBadge' | translate"
-		[routerLink]="['/issuer/networks/', network().slug]"
-	></oeb-button>
+<ng-template [bgAwaitPromises]="badgesLoaded" #networkTemplate>
+	@if (badgeResults.length) {
+		<badges-datatable
+			[badges]="badgeResults"
+			(directBadgeAward)="routeToBadgeAward($event, network())"
+			(qrCodeAward)="routeToQRCodeAward($event, network())"
+			(redirectToBadgeDetail)="routeToBadgeDetail($event.badge, network(), $event.focusRequests)"
+		></badges-datatable>
+	} @else {
+		<oeb-button
+			[text]="'Network.createBadge' | translate"
+			[routerLink]="[`/issuer/issuers/${network().slug}/badges/select/`]"
+		></oeb-button>
+	}
+</ng-template>
+
+<ng-template #headerTemplate>
+	<h2 class="tw-text-purple tw-text-[22px] tw-uppercase" [innerHTML]="'Network.awardBadgeIssuer' | translate"></h2>
+</ng-template>
+<ng-template #issuerSelection>
+	<div class="tw-mb-8">
+		@for (issuer of userIssuers; track issuer) {
+			<label class="radio tw-mb-2">
+				<input type="radio" [(ngModel)]="selectedIssuer" [value]="issuer" />
+				<span class="radio-x-text">{{ issuer.name }}</span>
+			</label>
+		}
+	</div>
+	<div class="tw-flex tw-gap-2">
+		<oeb-button
+			type="button"
+			variant="secondary"
+			[text]="'General.cancel' | translate"
+			size="sm"
+			(click)="closeDialog()"
+		>
+		</oeb-button>
+		<oeb-button
+			type="button"
+			[disabled]="!selectedIssuer"
+			(click)="routeToBadgeCreation(selectedIssuer)"
+			size="sm"
+			[text]="'Issuer.giveBadge' | translate"
+		>
+		</oeb-button>
+	</div>
 </ng-template>
 
 <ng-template #partnerTemplate>

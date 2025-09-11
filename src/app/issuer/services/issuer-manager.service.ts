@@ -1,11 +1,18 @@
 import { forwardRef, Inject, Injectable } from '@angular/core';
 import { IssuerApiService } from './issuer-api.service';
 import { Issuer } from '../models/issuer.model';
-import { ApiIssuer, ApiIssuerForCreation, ApiIssuerForEditing, IssuerSlug } from '../models/issuer-api.model';
+import {
+	ApiIssuer,
+	ApiIssuerForCreation,
+	ApiIssuerForEditing,
+	ApiNetworkForCreation,
+	IssuerSlug,
+} from '../models/issuer-api.model';
 import { combineLatest, firstValueFrom, Observable, of } from 'rxjs';
 import { ManagedEntitySet, StandaloneEntitySet } from '../../common/model/managed-entity-set';
 import { CommonEntityManager } from '../../entity-manager/services/common-entity-manager.service';
 import { catchError, first, map, withLatestFrom } from 'rxjs/operators';
+import { NetworkApiService } from './network-api.service';
 
 @Injectable({ providedIn: 'root' })
 export class IssuerManager {
@@ -23,6 +30,7 @@ export class IssuerManager {
 
 	constructor(
 		public issuerApiService: IssuerApiService,
+		public networkApiService: NetworkApiService,
 		@Inject(forwardRef(() => CommonEntityManager))
 		public commonEntityManager: CommonEntityManager,
 	) {}
@@ -31,6 +39,10 @@ export class IssuerManager {
 		return this.issuerApiService
 			.createIssuer(initialIssuer)
 			.then((newIssuer) => this.issuersList.addOrUpdate(newIssuer));
+	}
+
+	createNetwork(network: ApiNetworkForCreation): Promise<any> {
+		return this.networkApiService.createNetwork(network);
 	}
 
 	get myIssuers$(): Observable<Issuer[]> {

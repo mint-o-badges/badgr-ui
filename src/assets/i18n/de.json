@@ -414,7 +414,8 @@
 		"partnerSince": "Partner:in seit",
 		"alreadyConfirmed": "Ein anderes Mitglied von <span class='tw-italic'> {{issuerName}} hat die Netzwerk-Einladung von <span class='tw-font-bold'> {{networkName}}</span> bereits bestätigt.",
 		"view": "Netzwerk ansehen",
-		"createBadge": "Netzwerk-Badge erstellen"
+		"createBadge": "Netzwerk-Badge erstellen",
+		"awardBadgeIssuer": "Über welche deiner <span class='tw-font-bold'>Institutionen</span> soll der Badge vergeben werden?"
 	},
 	"Badge": {
 		"groupBy": "Gruppieren nach",

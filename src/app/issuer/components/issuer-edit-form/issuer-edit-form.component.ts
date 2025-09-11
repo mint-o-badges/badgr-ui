@@ -160,6 +160,7 @@ export class IssuerEditFormComponent implements OnInit {
 	}
 
 	private buildForm() {
+		console.log('network form', this.networkForm());
 		this.issuerForm = typedFormGroup()
 			.addControl('issuer_name', '', [
 				Validators.required,
@@ -176,16 +177,16 @@ export class IssuerEditFormComponent implements OnInit {
 			.addControl('country', 'Germany', Validators.required)
 			.addControl('state', '');
 
-		if (!this.networkForm()) {
-			this.issuerForm
-				.addControl('issuer_email', '', [Validators.required])
-				.addControl('issuer_category', '', [Validators.required])
-				.addControl('issuer_street', '', Validators.required)
-				.addControl('issuer_streetnumber', '', Validators.required)
-				.addControl('issuer_zip', '', Validators.required)
-				.addControl('issuer_city', '', Validators.required)
-				.addControl('verify_intended_use', false, Validators.requiredTrue);
-		}
+		// if (!this.networkForm()) {
+		// 	this.issuerForm
+		// 		.addControl('issuer_email', '', [Validators.required])
+		// 		.addControl('issuer_category', '', [Validators.required])
+		// 		.addControl('issuer_street', '', Validators.required)
+		// 		.addControl('issuer_streetnumber', '', Validators.required)
+		// 		.addControl('issuer_zip', '', Validators.required)
+		// 		.addControl('issuer_city', '', Validators.required)
+		// 		.addControl('verify_intended_use', false, Validators.requiredTrue);
+		// }
 	}
 
 	initFormFromExisting(issuer: Issuer) {
@@ -234,6 +235,8 @@ export class IssuerEditFormComponent implements OnInit {
 	};
 
 	onSubmit() {
+		console.log('submit attempted');
+		console.log('form valid', this.issuerForm.markTreeDirtyAndValidate());
 		if (this.issuerForm.controls.issuer_image.rawControl.hasError('required')) {
 			this.imageError = this.translate.instant('Issuer.imageRequiredError');
 		}
@@ -245,6 +248,7 @@ export class IssuerEditFormComponent implements OnInit {
 		const formState = this.issuerForm.value;
 
 		if (this.networkForm()) {
+			console.log('formState', formState);
 			this.handleNetworkSubmit(formState);
 		} else {
 			this.handleIssuerSubmit(formState);
@@ -275,19 +279,19 @@ export class IssuerEditFormComponent implements OnInit {
 	}
 
 	private handleNetworkSubmit(formState: any) {
+		console.log('submit handle form state', formState);
 		const network = {
 			name: formState.issuer_name,
 			description: formState.issuer_description,
 			url: formState.issuer_url,
 			country: formState.country,
 			state: formState.state,
+			image: formState.issuer_image,
 		};
 
-		if (formState.issuer_image && String(formState.issuer_image).length > 0) {
-			network['image'] = formState.issuer_image;
-		}
-
-		// this.submitNetwork(network);
+		this.issuerManager.createNetwork(network).then((network) => {
+			this.router.navigate(['issuer/networks', network.slug]);
+		});
 	}
 
 	// onSubmit() {

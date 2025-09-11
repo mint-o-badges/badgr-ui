@@ -29,6 +29,7 @@ import { BgBreadcrumbsComponent } from '../../../common/components/bg-breadcrumb
 import { ApiNetworkInvitation } from '../../../issuer/models/network-invite-api.model';
 import { NetworkBadgesComponent } from '../network-badges/network-badges.component';
 import { IssuerManager } from '~/issuer/services/issuer-manager.service';
+import { NetworkManager } from '~/issuer/services/network-manager.service';
 
 @Component({
 	selector: 'network-dashboard',
@@ -91,7 +92,7 @@ export class NetworkDashboardComponent extends BaseAuthenticatedRoutableComponen
 		loginService: SessionService,
 		router: Router,
 		route: ActivatedRoute,
-		private issuerManager: IssuerManager,
+		private networkManager: NetworkManager,
 		protected title: Title,
 		protected translate: TranslateService,
 		private configService: AppConfigService,
@@ -107,7 +108,7 @@ export class NetworkDashboardComponent extends BaseAuthenticatedRoutableComponen
 			this.pendingInvites = invites;
 		});
 
-		const loadPromise = this.issuerManager.issuerBySlug(this.networkSlug).then((network) => {
+		const loadPromise = this.networkManager.networkBySlug(this.networkSlug).then((network) => {
 			this.network.set(network);
 			// this.partnerIssuers.set(network.partnerIssuers.entities);
 			this.title.setTitle(

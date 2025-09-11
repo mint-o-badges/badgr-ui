@@ -33,6 +33,7 @@ import { NetworkListComponent } from '../network-list/network-list.component';
 import { HlmIcon } from '@spartan-ng/helm/icon';
 import { HlmH1, HlmP } from '@spartan-ng/helm/typography';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { NetworkManager } from '~/issuer/services/network-manager.service';
 
 @Component({
 	selector: 'issuer-list',
@@ -66,10 +67,10 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 	badges: BadgeClass[] = null;
 	issuerToBadgeInfo: { [issuerId: string]: IssuerBadgesInfo } = {};
 
-	networksLoaded = signal<boolean>(false);
-
 	issuersLoaded: Promise<unknown>;
-	networks;
+	networksLoaded: Promise<unknown>;
+
+	networks = signal<any>([]);
 	badgesLoaded: Promise<unknown>;
 	@ViewChild('pluginBox') public pluginBoxElement: ElementRef;
 
@@ -145,6 +146,7 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 		protected title: Title,
 		protected messageService: MessageService,
 		protected issuerManager: IssuerManager,
+		protected networkManager: NetworkManager,
 		protected configService: AppConfigService,
 		protected badgeClassService: BadgeClassManager,
 		protected publicApiService: PublicApiService,
@@ -160,6 +162,8 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 
 		// subscribe to issuer and badge class changes
 		this.issuersLoaded = this.loadIssuers();
+
+		this.networksLoaded = this.loadNetworks();
 
 		this.badgesLoaded = new Promise<void>((resolve, reject) => {
 			this.badgeClassService.badgesByIssuerUrl$.subscribe((badges) => {
@@ -201,20 +205,20 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 		});
 	};
 
-	// loadNetworks = () => {
-	// 	return new Promise<void>((resolve, reject) => {
-	// 		this.networkManager.myNetworks$.subscribe(
-	// 			(networks) => {
-	// 				this.networks.set(networks.slice().sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime()));
-	// 				resolve();
-	// 			},
-	// 			(error) => {
-	// 				this.messageService.reportAndThrowError(this.translate.instant('Issuer.failLoadissuers'), error);
-	// 				resolve();
-	// 			},
-	// 		);
-	// 	});
-	// };
+	loadNetworks = () => {
+		return new Promise<void>((resolve, reject) => {
+			this.networkManager.myNetworks$.subscribe(
+				(networks) => {
+					this.networks.set(networks.slice().sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime()));
+					resolve();
+				},
+				(error) => {
+					this.messageService.reportAndThrowError(this.translate.instant('Issuer.failLoadissuers'), error);
+					resolve();
+				},
+			);
+		});
+	};
 
 	ngOnInit() {
 		super.ngOnInit();

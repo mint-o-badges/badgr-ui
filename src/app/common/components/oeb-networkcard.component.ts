@@ -23,7 +23,7 @@ import { OebButtonComponent } from '~/components/oeb-button.component';
 						>{{ network.name }}</a
 					>
 					@if (!public) {
-						<span class="tw-text-white tw-text-lg"
+						<!-- <span class="tw-text-white tw-text-lg"
 							>{{
 								'Network.yourRole'
 									| translate
@@ -33,7 +33,7 @@ import { OebButtonComponent } from '~/components/oeb-button.component';
 													| translate
 										  }
 							}}
-						</span>
+						</span> -->
 					}
 				</div>
 			</div>
