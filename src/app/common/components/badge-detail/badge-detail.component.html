@@ -328,19 +328,21 @@
 								</span>
 								<div class="tw-mt-8 tw-grid tw-grid-cols-learningpaths tw-gap-6">
 									@for (lp of getLearningPaths(); track lp) {
-										<bg-learningpathcard
-											[name]="lp.name"
-											[badgeImage]="$any(lp).participationBadge_image"
-											[issuerTitle]="lp.issuer_name"
-											[description]="lp.description"
-											[slug]="lp.slug"
-											[tags]="lp.tags"
-											[studyLoad]="calculateStudyLoad(lp)"
-											[progress]="lp.progress"
-											[matchOrProgress]="calculateLearningPathStatus(lp)"
-											[requested]="lp.requested"
-											[completed]="checkCompleted(lp)"
-										></bg-learningpathcard>
+										@if (lp.activated) {
+											<bg-learningpathcard
+												[name]="lp.name"
+												[badgeImage]="$any(lp).participationBadge_image"
+												[issuerTitle]="lp.issuer_name"
+												[description]="lp.description"
+												[slug]="lp.slug"
+												[tags]="lp.tags"
+												[studyLoad]="calculateStudyLoad(lp)"
+												[progress]="lp.progress"
+												[matchOrProgress]="calculateLearningPathStatus(lp)"
+												[requested]="lp.requested"
+												[completed]="checkCompleted(lp)"
+											></bg-learningpathcard>
+										}
 									}
 								</div>
 							</div>
