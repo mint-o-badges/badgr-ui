@@ -23,6 +23,7 @@ import { AltchaComponent } from '../../../components/altcha.component';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { PasswordComplexityValidator } from '../../../common/validators/password-complexity.validator';
 import { HlmP } from '@spartan-ng/helm/typography';
+import { OebHeaderText } from '~/components/oeb-header-text.component';
 
 @Component({
 	selector: 'sign-up',
@@ -39,6 +40,7 @@ import { HlmP } from '@spartan-ng/helm/typography';
 		AltchaComponent,
 		OebButtonComponent,
 		TranslatePipe,
+		OebHeaderText,
 	],
 })
 export class SignupComponent extends BaseRoutableComponent implements OnInit, AfterViewInit {
