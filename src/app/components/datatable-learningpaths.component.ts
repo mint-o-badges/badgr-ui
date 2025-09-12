@@ -139,7 +139,7 @@ export class LearningPathDatatableComponent {
 
 	readonly tableSorting = signal<SortingState>([
 		{
-			id: 'Micro Degree',
+			id: 'Badge.createdOn',
 			desc: false,
 		},
 	]);
@@ -154,8 +154,8 @@ export class LearningPathDatatableComponent {
 		{
 			id: 'Badge.createdOn',
 			header: () => this.translateHeaderIDCellTemplate(),
-			accessorFn: (row) => formatDate(row.created_at, 'dd.MM.yyyy', 'de-DE'),
-			cell: (info) => info.getValue(),
+			accessorFn: (row) => row.created_at,
+			cell: (info) => formatDate(info.getValue() as Date, 'dd.MM.yyyy', 'de-DE'),
 		},
 		{
 			id: 'Issuer.learningPathParticipants',
