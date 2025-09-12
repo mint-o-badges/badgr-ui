@@ -1663,28 +1663,74 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 	noDuplicateCompetencies(): ValidatorFn {
 		return (control: AbstractControl): ValidationErrors | null => {
-			if (this.checkDuplicateCompetency()) return { duplicateCompetency: true };
+			const duplicateName = this.checkDuplicateCompetency();
+			return duplicateName
+				? { duplicateCompetency: { duplicateName, message: `Duplicate competency: ${duplicateName}` } }
+				: null;
 		};
 	}
 
-	checkDuplicateCompetency(): String | null {
-		if (!this.badgeClassForm) return null;
+	checkDuplicateCompetency(): string | null {
+		if (!this.badgeClassForm) {
+			return null;
+		}
 
-		const inHandCompetencies = this.badgeClassForm.controls.competencies.value
-			// Hand competencies get added automatically at submitting
-			//filter(c => c.added).
-			.map((c) => c.name);
+		try {
+			const handCompetencyNames = this.extractUserCompetencyNames();
+			const keywordCompetencyNames = this.extractKeywordCompetencyNames();
+			const selectedAICompetencyNames = this.extractSelectedAICompetencyNames();
 
-		const newSelectedAICompetencies = this.badgeClassForm.controls.aiCompetencies.value
-			.map((c, i) => (c.selected ? this.aiCompetenciesSuggestions[i].preferred_label : ''))
-			.filter(String);
+			const allCompetencyNames = [
+				...handCompetencyNames,
+				...keywordCompetencyNames,
+				...selectedAICompetencyNames,
+			];
 
-		const all = inHandCompetencies.concat(newSelectedAICompetencies);
-		const check = new Set();
+			return this.findFirstDuplicate(allCompetencyNames);
+		} catch (error) {
+			return null;
+		}
+	}
 
-		for (const name of all)
-			if (check.has(name)) return name;
-			else check.add(name);
+	private extractUserCompetencyNames(): string[] {
+		const competencies = this.badgeClassForm.controls.competencies.value;
+		return Array.isArray(competencies) ? competencies.filter((c) => c?.name).map((c) => c.name.trim()) : [];
+	}
+
+	private extractKeywordCompetencyNames(): string[] {
+		return Array.isArray(this.selectedKeywordCompetencies)
+			? this.selectedKeywordCompetencies.filter((c) => c?.preferred_label).map((c) => c.preferred_label.trim())
+			: [];
+	}
+
+	private extractSelectedAICompetencyNames(): string[] {
+		const aiCompetencies = this.badgeClassForm.controls.aiCompetencies.value;
+
+		if (!Array.isArray(aiCompetencies) || !Array.isArray(this.aiCompetenciesSuggestions)) {
+			return [];
+		}
+
+		return aiCompetencies
+			.map((competency, index) => {
+				if (competency?.selected && this.aiCompetenciesSuggestions[index]?.preferred_label) {
+					return this.aiCompetenciesSuggestions[index].preferred_label.trim();
+				}
+				return null;
+			})
+			.filter((label): label is string => !!label && label.length > 0);
+	}
+
+	private findFirstDuplicate(items: string[]): string | null {
+		const seen = new Set<string>();
+
+		for (const item of items) {
+			const normalizedItem = item.toLowerCase();
+			if (seen.has(normalizedItem)) {
+				return item;
+			}
+			seen.add(normalizedItem);
+		}
+
 		return null;
 	}
 
