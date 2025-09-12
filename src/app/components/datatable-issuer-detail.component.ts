@@ -24,6 +24,7 @@ import {
 	RowSelectionState,
 } from '@tanstack/angular-table';
 import { HlmIconModule } from '@spartan-ng/helm/icon';
+import { Issuer } from '~/issuer/models/issuer.model';
 
 @Component({
 	selector: 'issuer-detail-datatable',
@@ -243,17 +244,20 @@ import { HlmIconModule } from '@spartan-ng/helm/icon';
 					(click)="downloadCertificate.emit({ instance: context.row.original, badgeIndex: context.row.index })"
 					text="{{ 'Issuer.pdfCertificate' | translate }}"
 					[disabled]="downloadStates()[context.row.index]" />
-				<oeb-button
-					variant="secondary"
-					size="xs"
-					width="full_width"
-					(click)="actionElement.emit(context.row.original)"
-					[text]="'General.revoke' | translate | titlecase" />
+					@if(issuer().canEditBadge){
+						<oeb-button
+							variant="secondary"
+							size="xs"
+							width="full_width"
+							(click)="actionElement.emit(context.row.original)"
+							[text]="'General.revoke' | translate | titlecase" />
+					}
 			</div>
 		</ng-template>
 	`,
 })
 export class IssuerDetailDatatableComponent {
+	issuer = input<Issuer>();
 	recipientCount = input<number>(0);
 	downloadStates = input<boolean[]>([]);
 	awardInProgress = input<boolean>(false);
