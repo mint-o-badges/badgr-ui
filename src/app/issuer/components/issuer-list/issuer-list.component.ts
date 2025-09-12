@@ -66,8 +66,6 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 
 	issuers: Issuer[] = null;
 	badges: BadgeClass[] = null;
-	issuerToBadgeInfo: { [issuerId: string]: IssuerBadgesInfo } = {};
-
 	networksLoaded = signal<boolean>(false);
 
 	issuersLoaded: Promise<unknown>;
@@ -81,7 +79,6 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 		),
 		{ initialValue: [] as Network[] },
 	);
-	badgesLoaded: Promise<unknown>;
 	@ViewChild('pluginBox') public pluginBoxElement: ElementRef;
 
 	@ViewChild('headerTemplate')
@@ -172,23 +169,6 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 
 		// subscribe to issuer and badge class changes
 		this.issuersLoaded = this.loadIssuers();
-
-		this.badgesLoaded = new Promise<void>((resolve, reject) => {
-			this.badgeClassService.badgesByIssuerUrl$.subscribe((badges) => {
-				this.issuerToBadgeInfo = {};
-
-				Object.keys(badges).forEach((issuerSlug) => {
-					const issuerBadges = badges[issuerSlug];
-
-					this.issuerToBadgeInfo[issuerSlug] = new IssuerBadgesInfo(
-						issuerBadges.reduce((sum, badge) => sum + badge.recipientCount, 0),
-						issuerBadges.sort((a, b) => b.recipientCount - a.recipientCount),
-					);
-				});
-
-				resolve();
-			});
-		});
 	}
 
 	issuerSearchInputFocusOut() {
@@ -463,11 +443,4 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 		}
 		return null;
 	}
-}
-
-class IssuerBadgesInfo {
-	constructor(
-		public totalBadgeIssuanceCount = 0,
-		public badges: BadgeClass[] = [],
-	) {}
 }
