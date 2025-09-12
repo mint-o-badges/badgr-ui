@@ -12,7 +12,7 @@ import { HlmP } from '@spartan-ng/helm/typography';
 
 @Component({
 	selector: 'oeb-checkbox',
-	imports: [HlmP, HlmCheckbox, NgClass, OebInputErrorComponent, ReactiveFormsModule],
+	imports: [HlmP, HlmCheckbox, OebInputErrorComponent, ReactiveFormsModule],
 	providers: [
 		{
 			provide: NG_VALUE_ACCESSOR,
@@ -20,11 +20,7 @@ import { HlmP } from '@spartan-ng/helm/typography';
 			multi: true,
 		},
 	],
-	template: `<label
-		[ngClass]="alignStart ? 'tw-items-start' : 'tw-items-center'"
-		class="tw-flex tw-mt-[0.25rem]"
-		hlmP
-	>
+	template: `<label class="tw-flex tw-mt-[0.25rem] tw-items-start" hlmP>
 		<hlm-checkbox
 			[name]="name"
 			[checked]="checked"
@@ -32,6 +28,7 @@ import { HlmP } from '@spartan-ng/helm/typography';
 			[formControl]="control"
 			[class.tw-mr-2]="!noMargin"
 			[disabled]="disabled"
+			class="tw-mt-[1px]"
 		/>
 		<div class="tw-flex tw-flex-col">
 			<span class="tw-pl-[12px]" [innerHTML]="text"></span>
@@ -58,7 +55,6 @@ export class OebCheckboxComponent implements ControlValueAccessor {
 	@Input() label: string;
 	@Input() errorGroup: FormGroup;
 	@Input() errorGroupMessage: CustomValidatorMessages;
-	@Input() alignStart = false;
 	@Input() noMargin = false;
 
 	@Output() ngModelChange = new EventEmitter<boolean>();
