@@ -17,8 +17,6 @@ import { addQueryParamsToUrl } from '../../../common/util/url-util';
 import { compareDate } from '../../../common/util/date-compare';
 import { EventsService } from '../../../common/services/events.service';
 import { AppConfigService } from '../../../common/app-config.service';
-import { ApiExternalToolLaunchpoint } from '../../../externaltools/models/externaltools-api.model';
-import { ExternalToolsManager } from '../../../externaltools/services/externaltools-manager.service';
 import { QueryParametersService } from '../../../common/services/query-parameters.service';
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { BadgeInstance } from '../../../issuer/models/badgeinstance.model';
@@ -56,7 +54,6 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 	category: object;
 	badge: RecipientBadgeInstance;
 	issuerBadgeCount: string;
-	launchpoints: ApiExternalToolLaunchpoint[];
 
 	config: PageConfig;
 
@@ -90,7 +87,6 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 		private eventService: EventsService,
 		private dialogService: CommonDialogsService,
 		private configService: AppConfigService,
-		private externalToolsManager: ExternalToolsManager,
 		public queryParametersService: QueryParametersService,
 		private translate: TranslateService,
 	) {
@@ -188,10 +184,6 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 					});
 			})
 			.catch((e) => this.messageService.reportAndThrowError('Failed to load your badges', e));
-
-		this.externalToolsManager.getToolLaunchpoints('earner_assertion_action').then((launchpoints) => {
-			this.launchpoints = launchpoints;
-		});
 	}
 
 	ngOnInit() {
@@ -337,12 +329,6 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 			return count === 1 ? '1 Badge' : `${count} Badges`;
 		};
 		this.issuerBadgeCount = issuerBadgeCount();
-	}
-
-	private clickLaunchpoint(launchpoint: ApiExternalToolLaunchpoint) {
-		this.externalToolsManager.getLaunchInfo(launchpoint, this.badgeSlug).then((launchInfo) => {
-			this.eventService.externalToolLaunch.next(launchInfo);
-		});
 	}
 
 	exportPng() {

@@ -14,7 +14,7 @@ export type Tab = {
 };
 
 @Component({
-	selector: 'oeb-backpack-tabs',
+	selector: 'oeb-tabs',
 	imports: [HlmTabsModule, HlmTabsTrigger, NgTemplateOutlet, TranslateModule],
 	template: `<hlm-tabs class="tw-block tw-w-full" [tab]="activeTab" (tabActivated)="onTabChange($event)">
 		<hlm-tabs-list class="tw-w-full tw-max-w-[660px] tw-flex tw-justify-between" aria-label="tabs">

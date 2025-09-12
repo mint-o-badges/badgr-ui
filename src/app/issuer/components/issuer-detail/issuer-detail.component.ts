@@ -12,8 +12,6 @@ import { Title } from '@angular/platform-browser';
 import { preloadImageURL } from '../../../common/util/file-util';
 import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
 import { UserProfileEmail } from '../../../common/model/user-profile.model';
-import { ApiExternalToolLaunchpoint } from '../../../externaltools/models/externaltools-api.model';
-import { ExternalToolsManager } from '../../../externaltools/services/externaltools-manager.service';
 import { AppConfigService } from '../../../common/app-config.service';
 import { CommonDialogsService } from '../../../common/services/common-dialogs.service';
 import { LinkEntry, BgBreadcrumbsComponent } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
@@ -25,6 +23,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { FormMessageComponent } from '../../../common/components/form-message.component';
 import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 import { OebIssuerDetailComponent } from '../../../common/components/issuer/oeb-issuer-detail.component';
+import { NetworkManager } from '../../../issuer/services/network-manager.service';
 
 @Component({
 	selector: 'issuer-detail',
@@ -42,13 +41,13 @@ export class IssuerDetailComponent extends BaseAuthenticatedRoutableComponent im
 	issuerSlug: string;
 	badges: BadgeClass[];
 	learningPaths: ApiLearningPath[];
-	launchpoints: ApiExternalToolLaunchpoint[];
 
 	profileEmails: UserProfileEmail[] = [];
 
 	issuerLoaded: Promise<unknown>;
 	badgesLoaded: Promise<unknown>;
 	learningPathsLoaded: Promise<unknown>;
+	networksLoaded: Promise<unknown>;
 
 	profileEmailsLoaded: Promise<unknown>;
 	crumbs: LinkEntry[];
@@ -65,10 +64,10 @@ export class IssuerDetailComponent extends BaseAuthenticatedRoutableComponent im
 		protected title: Title,
 		protected issuerManager: IssuerManager,
 		protected badgeClassService: BadgeClassManager,
+		protected networkManager: NetworkManager,
 		protected learningPathsService: LearningPathApiService,
 		protected profileManager: UserProfileManager,
 		private configService: AppConfigService,
-		private externalToolsManager: ExternalToolsManager,
 		private dialogService: CommonDialogsService,
 		private translate: TranslateService,
 	) {
@@ -77,10 +76,6 @@ export class IssuerDetailComponent extends BaseAuthenticatedRoutableComponent im
 		title.setTitle(`Issuer Detail - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 
 		this.issuerSlug = this.route.snapshot.params['issuerSlug'];
-
-		this.externalToolsManager.getToolLaunchpoints('issuer_external_launch').then((launchpoints) => {
-			this.launchpoints = launchpoints.filter((lp) => Boolean(lp));
-		});
 
 		this.menuitems = [
 			{

@@ -14,9 +14,6 @@ import { IssuerManager } from '../../services/issuer-manager.service';
 import { BadgrApiFailure } from '../../../common/services/api-failure';
 import { preloadImageURL } from '../../../common/util/file-util';
 import { EventsService } from '../../../common/services/events.service';
-import { ExternalToolsManager } from '../../../externaltools/services/externaltools-manager.service';
-import { ApiExternalToolLaunchpoint } from '../../../externaltools/models/externaltools-api.model';
-import { BadgeInstanceSlug } from '../../models/badgeinstance-api.model';
 import { badgeShareDialogOptions } from '../../../recipient/components/recipient-earned-badge-detail/recipient-earned-badge-detail.component';
 import { ShareSocialDialogOptions } from '../../../common/dialogs/share-social-dialog/share-social-dialog.component';
 import { AppConfigService } from '../../../common/app-config.service';
@@ -42,12 +39,15 @@ import { IssuerDetailDatatableComponent } from '../../../components/datatable-is
 import { FormsModule } from '@angular/forms';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { HlmH2 } from '@spartan-ng/helm/typography';
+import { OebTabsComponent } from '~/components/oeb-tabs.component';
 
 @Component({
 	selector: 'badgeclass-detail',
 	template: `
 		<bg-badgedetail [config]="config" [awaitPromises]="[issuerLoaded, badgeClassLoaded]">
-			<div #qrAwards>
+			<oeb-tabs [variant]="'black'" (onTabChanged)="onTabChange($event)" [activeTab]="activeTab" [tabs]="tabs">
+			</oeb-tabs>
+			<ng-template #qrAwards>
 				<qrcode-awards
 					(qrBadgeAward)="onQrBadgeAward($event)"
 					[awards]="qrCodeAwards"
@@ -56,8 +56,8 @@ import { HlmH2 } from '@spartan-ng/helm/typography';
 					[routerLinkText]="config?.issueQrRouterLink"
 					[defaultUnfolded]="focusRequests"
 				></qrcode-awards>
-			</div>
-			<div #batchAwards>
+			</ng-template>
+			<ng-template #batchAwards>
 				<issuer-detail-datatable
 					[recipientCount]="recipientCount"
 					[recipients]="instanceResults"
@@ -66,7 +66,7 @@ import { HlmH2 } from '@spartan-ng/helm/typography';
 					[downloadStates]="downloadStates"
 					[awardInProgress]="isTaskProcessing || isTaskPending"
 				></issuer-detail-datatable>
-			</div>
+			</ng-template>
 			<ng-template #headerTemplate>
 				<h2 class="tw-font-bold tw-my-2" hlmH2>{{ 'Badge.copyForWhatInstitution' | translate }}</h2>
 			</ng-template>
@@ -109,6 +109,7 @@ import { HlmH2 } from '@spartan-ng/helm/typography';
 		FormsModule,
 		OebButtonComponent,
 		TranslatePipe,
+		OebTabsComponent,
 	],
 })
 export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
@@ -130,6 +131,9 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 	private taskSubscription: Subscription | null = null;
 
 	TaskStatus = TaskStatus;
+
+	tabs: any = undefined;
+	activeTab = 'qrcodes';
 
 	get issuerSlug() {
 		return this.route.snapshot.params['issuerSlug'];
@@ -168,7 +172,6 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 	readonly issuerImagePlacholderUrl = preloadImageURL(
 		'../../../../breakdown/static/images/placeholderavatar-issuer.svg',
 	);
-	launchpoints: ApiExternalToolLaunchpoint[];
 
 	private readonly _hlmDialogService = inject(HlmDialogService);
 
@@ -229,7 +232,6 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		protected dialogService: CommonDialogsService,
 		private eventService: EventsService,
 		protected configService: AppConfigService,
-		private externalToolsManager: ExternalToolsManager,
 		protected pdfService: PdfService,
 		private sanitizer: DomSanitizer,
 		private translate: TranslateService,
@@ -270,10 +272,6 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 			this.qrCodeAwards = qrCodes;
 		});
 
-		this.externalToolsManager.getToolLaunchpoints('issuer_assertion_action').then((launchpoints) => {
-			this.launchpoints = launchpoints;
-		});
-
 		Promise.all([this.issuerLoaded, this.badgeClassLoaded])
 			.then(() => {
 				this.loadInstances();
@@ -286,6 +284,21 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 	ngAfterViewChecked() {
 		this.focusRequestsOnPage();
 		this.focusBatchAwardingsOnPage();
+	}
+
+	ngAfterViewInit() {
+		this.tabs = [
+			{
+				key: 'qrcodes',
+				title: 'QrCode.qrAwards',
+				component: this.qrAwards,
+			},
+			{
+				key: 'recipients',
+				title: 'Badge.multiRecipients',
+				component: this.batchAwards,
+			},
+		];
 	}
 
 	copyBadge() {
@@ -624,6 +637,10 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		}
 	}
 
+	onTabChange(tab) {
+		this.activeTab = tab;
+	}
+
 	routeToBadgeAward(badge: BadgeClass, issuer) {
 		this.qrCodeApiService.getQrCodesForIssuerByBadgeClass(this.issuer.slug, badge.slug).then((qrCodes) => {
 			if (badge.recipientCount === 0 && qrCodes.length === 0) {
@@ -728,11 +745,5 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 			this.showAssertionCount = false;
 			this.assertionsLoaded = this.allBadgeInstances.loadPrevPage().then(() => (this.showAssertionCount = true));
 		}
-	}
-
-	private clickLaunchpoint(launchpoint: ApiExternalToolLaunchpoint, instanceSlug: BadgeInstanceSlug) {
-		this.externalToolsManager.getLaunchInfo(launchpoint, instanceSlug).then((launchInfo) => {
-			this.eventService.externalToolLaunch.next(launchInfo);
-		});
 	}
 }
