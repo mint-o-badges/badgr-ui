@@ -27,7 +27,7 @@ import { IssuerCardComponent } from '../../../components/issuer-card/issuer-card
 import { PaginationAdvancedComponent } from '../../../components/oeb-numbered-pagination';
 import { HlmIcon } from '@spartan-ng/helm/icon';
 import { HlmInput } from '@spartan-ng/helm/input';
-import { HlmH1 } from '@spartan-ng/helm/typography';
+import { OebHeaderText } from '~/components/oeb-header-text.component';
 
 @Component({
 	selector: 'app-issuer-catalog',
@@ -36,7 +36,6 @@ import { HlmH1 } from '@spartan-ng/helm/typography';
 	animations: [appearAnimation],
 	imports: [
 		FormMessageComponent,
-		HlmH1,
 		BgAwaitPromises,
 		CountUpModule,
 		FormsModule,
@@ -50,6 +49,7 @@ import { HlmH1 } from '@spartan-ng/helm/typography';
 		IssuerCardComponent,
 		PaginationAdvancedComponent,
 		TranslatePipe,
+		OebHeaderText,
 	],
 })
 export class IssuerCatalogComponent extends BaseRoutableComponent implements OnInit, AfterViewInit {
