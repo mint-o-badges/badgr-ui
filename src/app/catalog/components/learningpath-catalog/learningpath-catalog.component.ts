@@ -26,6 +26,7 @@ import { PaginationAdvancedComponent } from '../../../components/oeb-numbered-pa
 import { HlmIcon } from '@spartan-ng/helm/icon';
 import { HlmInput } from '@spartan-ng/helm/input';
 import { HlmH1 } from '@spartan-ng/helm/typography';
+import { OebHeaderText } from '~/components/oeb-header-text.component';
 
 @Component({
 	selector: 'app-learningpaths-catalog',
@@ -45,6 +46,7 @@ import { HlmH1 } from '@spartan-ng/helm/typography';
 		BgLearningPathCard,
 		PaginationAdvancedComponent,
 		TranslatePipe,
+		OebHeaderText,
 	],
 })
 export class LearningPathsCatalogComponent extends BaseRoutableComponent implements OnInit {

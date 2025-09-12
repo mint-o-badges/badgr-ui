@@ -5,18 +5,27 @@
 		<div class="oeb-section-sm">
 			<div class="oeb-headline-container tw-relative">
 				<div class="tw-z-10 tw-relative">
-					<h1 hlmH1 class="tw-text-oebblack">{{ 'LearningPath.catalogHeadline' | translate }}</h1>
-					<h1 hlmH1 class="lg:tw-pl-[10%] tw-font-black tw-text-purple">
+					<oeb-header-text [text1]="'LearningPath.catalogHeadline'" [text2Template]="text2Template" />
+					<ng-template #text2Template>
 						@if (learningPaths.length === 0) {
-							{{ plural['learningPath']['=0'] }}
+							{{ 'General.noLearningPaths' | translate }}
+						} @else {
+							<span [countUp]="learningPaths.length">{{ learningPaths.length }}</span>
+							&nbsp;
+							{{
+								learningPaths.length === 1
+									? ('General.learningPath' | translate)
+									: ('General.learningPaths' | translate)
+							}}
+							in <span [countUp]="issuersWithLps.length">{{ issuersWithLps.length }}</span>
+							&nbsp;
+							{{
+								issuersWithLps.length === 1
+									? ('General.institution' | translate)
+									: ('General.institutions' | translate)
+							}}
 						}
-						@if (learningPaths.length > 0) {
-							<span [countUp]="learningPaths.length">{{ learningPaths.length }}</span
-							>{{ learningPathPluralWord }} in
-							<span [countUp]="issuersWithLps.length">{{ issuersWithLps.length }}</span
-							>{{ issuersPluralWord }}
-						}
-					</h1>
+					</ng-template>
 				</div>
 			</div>
 		</div>
