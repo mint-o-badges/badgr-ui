@@ -22,6 +22,7 @@ import { map, Subscription } from 'rxjs';
 		[size]="size()"
 		[variant]="variant()"
 		[attr.id]="id()"
+		[attr.data-umami-event]="umamiEvent()"
 	>
 		@if (icon() && iconLeft()) {
 			<ng-icon hlm size="lg" [name]="icon()" />
@@ -46,6 +47,7 @@ export class OebButtonComponent {
 	readonly type = input<'submit' | 'reset' | 'button'>('submit');
 	readonly id = input<string>();
 	readonly iconLeft = input<boolean>(false);
+	readonly umamiEvent = input<string>();
 
 	readonly loadingMessage = input<string>('Loading', { alias: 'loading-message' });
 	readonly disableWhenRequesting = input<boolean>(false, { alias: 'disabled-when-requesting' });
