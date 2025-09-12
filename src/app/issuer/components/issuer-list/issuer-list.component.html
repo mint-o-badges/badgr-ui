@@ -189,7 +189,7 @@
 			>
 			</span>
 			<oeb-button
-				class="md:tw-whitespace-nowrap"
+				class="md:tw-whitespace-nowrap tw-w-fit"
 				[routerLink]="['/issuer/create']"
 				[disabled-when-requesting]="true"
 				[text]="'Issuer.createInstitutionNow' | translate"
@@ -228,14 +228,11 @@
 						</div>
 					</div>
 					<div class="tw-pt-4 tw-pb-6">
-						<p
-							[class.tw-line-clamp-3]="issuerToBadgeInfo[issuer.issuerUrl]"
-							class="tw-text-oebblack tw-break-words"
-						>
+						<p [class.tw-line-clamp-3]="issuer.badgeClassCount" class="tw-text-oebblack tw-break-words">
 							{{ issuer.description }}
 						</p>
 					</div>
-					@if (!issuerToBadgeInfo[issuer.issuerUrl]) {
+					@if (!issuer.badgeClassCount) {
 						<oeb-button
 							[id]="'create-new-badge-btn-1'"
 							[class.disabled]="!issuer.canCreateBadge"
@@ -249,7 +246,7 @@
 						>
 						</oeb-button>
 					}
-					@if (issuerToBadgeInfo[issuer.issuerUrl]) {
+					@if (issuer.badgeClassCount) {
 						<div>
 							<oeb-button
 								class="tw-whitespace-nowrap tw-flex-grow"

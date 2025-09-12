@@ -47,9 +47,9 @@ import { HlmIconModule } from '@spartan-ng/helm/icon';
 			<div class="tw-flex tw-items-center tw-justify-between tw-gap-4 sm:flex-col">
 				<div class="l-stack u-margin-bottom2x u-margin-top4x tw-w-full tw-flex tw-justify-between">
 					<h3
-						class="md:tw-text-xl md:tw-text-nowrap tw-text-sm tw-font-semibold tw-font-[rubik] tw-text-oebblack"
+						class="md:tw-text-nowrap tw-text-lg tw-font-semibold tw-font-[rubik] tw-text-purple tw-uppercase"
 					>
-						{{ recipientCount() }} Badge
+						{{ recipientCount() }} Badge -
 						{{
 							recipientCount() == 1 ? ('Issuer.recipient' | translate) : ('Issuer.recipients' | translate)
 						}}
@@ -268,7 +268,7 @@ export class IssuerDetailDatatableComponent {
 
 	readonly tableSorting = signal<SortingState>([
 		{
-			id: 'General.name',
+			id: 'RecBadgeDetail.issuedOn',
 			desc: false,
 		},
 	]);
@@ -293,8 +293,8 @@ export class IssuerDetailDatatableComponent {
 		{
 			id: 'RecBadgeDetail.issuedOn',
 			header: () => this.translateHeaderIDCellTemplate(),
-			accessorFn: (row) => formatDate(row.issuedOn, 'dd.MM.yyyy', 'de-DE'),
-			cell: (info) => info.getValue(),
+			accessorFn: (row) => row.issuedOn,
+			cell: (info) => formatDate(info.getValue() as Date, 'dd.MM.yyyy', 'de-DE'),
 		},
 		{
 			id: 'actions',

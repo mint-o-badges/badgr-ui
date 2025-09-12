@@ -247,20 +247,23 @@
 
 					<ng-container *ngIf="public">
 						<div class="tw-grid tw-grid-cols-learningpaths tw-gap-6">
-							<bg-learningpathcard
-								*ngFor="let lp of learningPaths"
-								[name]="lp.name"
-								[issuerTitle]="issuer.name"
-								[description]="lp.description"
-								[tags]="lp.tags"
-								[slug]="lp.slug"
-								[studyLoad]="calculateStudyLoad(lp)"
-								[completed]="false"
-								[requested]="lp.requested"
-								[progress]="lp.progress"
-								[matchOrProgress]="undefined"
-								[badgeImage]="$any(lp).image"
-							></bg-learningpathcard>
+							@for (lp of learningPaths; track lp) {
+								@if (lp.activated) {
+									<bg-learningpathcard
+										[name]="lp.name"
+										[issuerTitle]="issuer.name"
+										[description]="lp.description"
+										[tags]="lp.tags"
+										[slug]="lp.slug"
+										[studyLoad]="calculateStudyLoad(lp)"
+										[completed]="false"
+										[requested]="lp.requested"
+										[progress]="lp.progress"
+										[matchOrProgress]="undefined"
+										[badgeImage]="$any(lp).image"
+									></bg-learningpathcard>
+								}
+							}
 						</div>
 					</ng-container>
 				</div>

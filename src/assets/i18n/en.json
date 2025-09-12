@@ -115,7 +115,8 @@
 		"state": "State",
 		"overview": "Overview",
 		"rolesAndRights": "Roles and rights",
-		"website": "Website"
+		"website": "Website",
+		"organization": "Organization"
 	},
 	"NavItems": {
 		"register": "Register",
@@ -370,7 +371,8 @@
 		"clickOnAwardBadges": "Click on \"award badges\" to award the badges to your learners now.",
 		"creatingBadge": "Creating Badge",
 		"memberView": "Member view",
-		"partOfNetwork": "Part of the network"
+		"partOfNetwork": "Part of the network",
+		"contract26": "By clicking on “Create institution,” the agreement <a class='tw-underline tw-text-link' target='_blank' href='https://oeb-cms.mycelia.education/wp-content/uploads/2025/09/EN-Vereinbarung-ueber-die-gemeinsame-Verantwortlichkeit-GVV_Institution_082025.pdf'>available here</a> pursuant to Article 26(1) GDPR on the joint data protection responsibility of the institution with its partners becomes effective."
 	},
 	"Network": {
 		"networksNav": "Networks A-Z",
@@ -434,7 +436,7 @@
 		"multiBadges": "badges",
 		"noRecipients": "No recipient",
 		"oneRecipient": "1 recipient",
-		"multiRecipients": "recipients",
+		"multiRecipients": "Recipients",
 		"participation": "Participation",
 		"competency": "Competency",
 		"learningpath": "Micro Degree",
@@ -984,7 +986,7 @@
 	},
 	"QrCode": {
 		"qrAward": "QR code awarding",
-		"qrAwards": "QR Code awarding",
+		"qrAwards": "QR Code awardings",
 		"savedSuccessfully": "<span class='tw-font-bold'> The QR code award has been successfully saved on the badge detail page.</span>",
 		"downloadedSuccessfully": "<span class='tw-font-bold'>You have successfully downloaded the QR code.</span><br> Check your download folder.",
 		"deleteQrAward": "Delete QR code award",
@@ -1011,7 +1013,11 @@
 		"toBadgeDetail": "To Badge detail page",
 		"downloadPoster": "Download QR-Code-Poster",
 		"badgeDetailPage": "badge detail page",
-		"badgesAwardedSuccessfully": "badges awarded successfully"
+		"badgesAwardedSuccessfully": "badges awarded successfully",
+		"invalidDateRange": "The expiration date must be after the start date",
+		"invalidDate": "Please enter a date in the format YYYY/mm/dd",
+		"missingStartDate": "Please enter a start date for validity",
+		"expired": "This QR code has expired."
 	},
 	"LearningPath": {
 		"learningpaths": "Micro Degrees",
