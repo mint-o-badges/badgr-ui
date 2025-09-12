@@ -15,7 +15,7 @@ import { HlmH1 } from '@spartan-ng/helm/typography';
 	imports: [TranslatePipe, HlmH1, NgTemplateOutlet],
 	template: `
 		<h1 hlmH1>
-			<span class="tw-font-normal tw-text-oebblack tw-break-words">
+			<span class="tw-font-normal tw-text-oebblack tw-break-words tw-inline-block">
 				@if (text1Template()) {
 					<ng-container *ngTemplateOutlet="text1Template()" />
 				} @else {
@@ -28,7 +28,7 @@ import { HlmH1 } from '@spartan-ng/helm/typography';
 			</span>
 
 			<br />
-			<span class="tw-font-black tw-text-purple md:tw-pl-[2ch] tw-break-words">
+			<span class="tw-font-black tw-text-purple md:tw-pl-[2ch] tw-break-words tw-inline-block">
 				@if (text2Template()) {
 					<ng-container *ngTemplateOutlet="text2Template()" />
 				} @else {
