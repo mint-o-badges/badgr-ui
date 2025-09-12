@@ -1,3 +1,4 @@
+import { BadgeInstance } from '~/issuer/models/badgeinstance.model';
 import { ApiEntityRef } from './entity-ref';
 import { ApiUserProfile } from './user-profile-api.model';
 
@@ -47,6 +48,7 @@ export interface ApiLearningPathParticipant {
 	completed_badges: number;
 	started_at: Date;
 	completed_at: Date | null;
+	participationBadgeAssertion?: BadgeInstance;
 }
 
 export interface LearningPathRef extends ApiEntityRef {}
