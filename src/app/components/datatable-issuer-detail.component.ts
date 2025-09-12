@@ -47,9 +47,9 @@ import { HlmIconModule } from '@spartan-ng/helm/icon';
 			<div class="tw-flex tw-items-center tw-justify-between tw-gap-4 sm:flex-col">
 				<div class="l-stack u-margin-bottom2x u-margin-top4x tw-w-full tw-flex tw-justify-between">
 					<h3
-						class="md:tw-text-xl md:tw-text-nowrap tw-text-sm tw-font-semibold tw-font-[rubik] tw-text-oebblack"
+						class="md:tw-text-nowrap tw-text-lg tw-font-semibold tw-font-[rubik] tw-text-purple tw-uppercase"
 					>
-						{{ recipientCount() }} Badge
+						{{ recipientCount() }} Badge -
 						{{
 							recipientCount() == 1 ? ('Issuer.recipient' | translate) : ('Issuer.recipients' | translate)
 						}}
