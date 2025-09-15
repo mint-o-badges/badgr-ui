@@ -373,7 +373,10 @@
 		"creatingBadge": "Erstelle Badge",
 		"memberView": "Mitglieds-Ansicht",
 		"partOfNetwork": "Teil vom Netzwerk",
-		"contract26": "Mit einem Klick auf „Institution erstellen“ wird die <a class='tw-underline tw-text-link' target='_blank' href='https://oeb-cms.mycelia.education/wp-content/uploads/2025/09/Vereinbarung-ueber-die-gemeinsame-Verantwortlichkeit-GVV_Institution_082025.pdf'>hier abrufbare</a> Vereinbarung gemäß Artikel 26 Abs. 1 DSGVO über die gemeinsame datenschutzrechtliche Verantwortung der Institution mit den Verbundpartnerinnen wirksam."
+		"contract26": "Mit einem Klick auf „Institution erstellen“ wird die <a class='tw-underline tw-text-link' target='_blank' href='https://oeb-cms.mycelia.education/wp-content/uploads/2025/09/Vereinbarung-ueber-die-gemeinsame-Verantwortlichkeit-GVV_Institution_082025.pdf'>hier abrufbare</a> Vereinbarung gemäß Artikel 26 Abs. 1 DSGVO über die gemeinsame datenschutzrechtliche Verantwortung der Institution mit den Verbundpartnerinnen wirksam.",
+		"linkedInId": "<span class=\"tw-italic tw-font-normal\">Optional: </span> LinkedIn-ID",
+		"linkedInIdUse": "Für die Badge-Darstellung auf LinkedIn",
+		"linkedInIdHint": "Die LinkedIn-ID ist die Zahlenfolge in der URL deiner Institutions-Seite, etwa: www.linkedin.com/company/<b>12345678</b>/admin -> ID <b>12345678</b>"
 	},
 	"Network": {
 		"networksNav": "Netzwerke A-Z",
