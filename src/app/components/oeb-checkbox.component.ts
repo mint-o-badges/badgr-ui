@@ -31,7 +31,7 @@ import { HlmP } from '@spartan-ng/helm/typography';
 			class="tw-mt-[1px]"
 		/>
 		<div class="tw-flex tw-flex-col">
-			<span class="tw-pl-[12px]" [innerHTML]="text"></span>
+			<span class="tw-pl-[8px]" [innerHTML]="text"></span>
 			@if (isErrorState) {
 				<oeb-input-error class="tw-text-red tw-pl-[3px]" [error]="errorMessageForDisplay"></oeb-input-error>
 			}
