@@ -175,12 +175,12 @@
 </ng-template>
 
 <ng-template #issuersTemplate>
-	<p hlmP size="lg" class="tw-py-3">
+	<p hlmP class="tw-py-3">
 		<span [innerHTML]="'Issuer.myInstitutionsText' | translate"></span>
 		<span [innerHTML]="'Issuer.copyBadgesOfOtherIssuers' | translate"></span>
 	</p>
 
-	<p hlmP size="lg" class="tw-pb-3" [innerHTML]="'Issuer.myLearningPathText' | translate"></p>
+	<p hlmP class="tw-pb-3" [innerHTML]="'Issuer.myLearningPathText' | translate"></p>
 	@if (issuers?.length === 0) {
 		<section class="tw-flex tw-flex-col tw-gap-2 tw-mt-2">
 			<span
