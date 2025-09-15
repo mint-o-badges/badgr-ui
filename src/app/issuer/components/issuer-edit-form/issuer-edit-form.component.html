@@ -43,6 +43,7 @@
 	<oeb-input
 		label="{{ 'Issuer.linkedInId' | translate }}"
 		[sublabelRightTemplate]="linkedInIdSublabelRight"
+		[fieldType]="'number'"
 		sublabel="{{ 'Issuer.linkedInIdHint' | translate }}"
 		[control]="issuerForm.rawControlMap.issuer_linkedin_id"
 	/>
