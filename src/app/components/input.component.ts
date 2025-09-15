@@ -34,9 +34,7 @@ import { HlmP } from '@spartan-ng/helm/typography';
 			></ng-content>
 		</div>
 		@if (sublabel) {
-			<p class="tw-pl-[3px]">
-				{{ sublabel }}
-			</p>
+			<p class="tw-pl-[3px] tw-text-purple tw-italic" [innerHTML]="sublabel"></p>
 		}
 		@if (ariaLabel) {
 			<label class="visuallyhidden" [attr.for]="inputName">{{ ariaLabel }}</label>

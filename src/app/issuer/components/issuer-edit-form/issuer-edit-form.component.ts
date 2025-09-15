@@ -62,6 +62,7 @@ export class IssuerEditFormComponent implements OnInit {
                 EmailValidator.validEmail*/
 		])
 		.addControl('issuer_url', '', [Validators.required, UrlValidator.validUrl])
+		.addControl('issuer_linkedin_id', '')
 		.addControl('issuer_category', '', [Validators.required])
 		.addControl('issuer_image', '', Validators.required)
 		.addControl('issuer_street', '', Validators.required)
@@ -177,6 +178,7 @@ export class IssuerEditFormComponent implements OnInit {
 			issuer_streetnumber: issuer.streetnumber,
 			issuer_zip: issuer.zip,
 			issuer_url: issuer.websiteUrl,
+			issuer_linkedin_id: issuer.linkedinId,
 			verify_intended_use: issuer.intendedUseVerified,
 		});
 	}
@@ -224,6 +226,7 @@ export class IssuerEditFormComponent implements OnInit {
 				image: formState.issuer_image,
 				email: formState.issuer_email,
 				url: formState.issuer_url,
+				linkedinId: formState.issuer_linkedin_id,
 				category: formState.issuer_category,
 				street: formState.issuer_street,
 				streetnumber: formState.issuer_streetnumber,
@@ -249,6 +252,7 @@ export class IssuerEditFormComponent implements OnInit {
 				description: formState.issuer_description,
 				email: formState.issuer_email,
 				url: formState.issuer_url,
+				linkedinId: formState.issuer_linkedin_id,
 				category: formState.issuer_category,
 				street: formState.issuer_street,
 				streetnumber: formState.issuer_streetnumber,

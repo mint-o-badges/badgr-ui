@@ -40,6 +40,13 @@
 		#issuer_url_field
 	></oeb-input>
 
+	<oeb-input
+		label="{{ 'Issuer.linkedInId' | translate }}"
+		sublabelRight="{{ 'Issuer.linkedInIdUse' | translate }}"
+		sublabel="{{ 'Issuer.linkedInIdHint' | translate }}"
+		[control]="issuerForm.rawControlMap.issuer_linkedin_id"
+	/>
+
 	<oeb-select
 		[control]="issuerForm.rawControlMap.issuer_email"
 		label="{{ 'General.contact' | translate }}-E-Mail"
