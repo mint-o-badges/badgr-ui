@@ -36,7 +36,6 @@ import {
 	SortingState,
 } from '@tanstack/angular-table';
 import { NgIcon } from '@ng-icons/core';
-import { TitleCasePipe } from '@angular/common';
 import { OebDropdownComponent } from '~/components/oeb-dropdown.component';
 import { HlmIcon } from '@spartan-ng/helm/icon';
 
@@ -50,7 +49,6 @@ import { HlmIcon } from '@spartan-ng/helm/icon';
 		NgIcon,
 		HlmIcon,
 		OebDropdownComponent,
-		TitleCasePipe,
 		FormMessageComponent,
 		SourceListenerDirective,
 		BgAwaitPromises,
