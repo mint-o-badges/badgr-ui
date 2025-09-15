@@ -42,10 +42,26 @@
 
 	<oeb-input
 		label="{{ 'Issuer.linkedInId' | translate }}"
-		sublabelRight="{{ 'Issuer.linkedInIdUse' | translate }}"
+		[sublabelRightTemplate]="linkedInIdSublabelRight"
 		sublabel="{{ 'Issuer.linkedInIdHint' | translate }}"
 		[control]="issuerForm.rawControlMap.issuer_linkedin_id"
 	/>
+	<ng-template #linkedInIdSublabelRight>
+		({{ 'Issuer.linkedInIdUse1' | translate }}
+		<a (click)="openLinkedInInfoDialog()" class="tw-text-link tw-underline tw-cursor-pointer">{{
+			'Issuer.linkedInIdUseLink' | translate
+		}}</a>
+		{{ 'Issuer.linkedInIdUse2' | translate }})
+	</ng-template>
+	<ng-template #linkedInIdDialogHeader>
+		<h3 hlmH3 class="oeb tw-text-purple tw-uppercase tw-font-bold tw-pb-4">LinkedIn-ID deiner Institution</h3>
+	</ng-template>
+	<ng-template #linkedInIdDialogBody>
+		<p hlmP class="oeb tw-text-base">
+			Lernende können erhaltene Badges in ihr LinkedIn-Profil einbinden. Damit das Zertifikat dort mit dem
+			Logo-Bild deiner Institution erscheint, müssen wir die LinkedIn-ID deiner Institution hinterlegen.
+		</p>
+	</ng-template>
 
 	<oeb-select
 		[control]="issuerForm.rawControlMap.issuer_email"
