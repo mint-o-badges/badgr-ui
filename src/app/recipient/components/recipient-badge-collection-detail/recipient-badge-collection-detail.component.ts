@@ -6,7 +6,6 @@ import { RecipientBadgeSelectionDialog } from '../recipient-badge-selection-dial
 import { RecipientBadgeCollection, RecipientBadgeCollectionEntry } from '../../models/recipient-badge-collection.model';
 import { RecipientBadgeCollectionManager } from '../../services/recipient-badge-collection-manager.service';
 import { RecipientBadgeManager } from '../../services/recipient-badge-manager.service';
-import { CommonDialogsService } from '../../../common/services/common-dialogs.service';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
 import { SessionService } from '../../../common/services/session.service';
 import { ShareSocialDialogOptions } from '../../../common/dialogs/share-social-dialog/share-social-dialog.component';
@@ -34,7 +33,7 @@ import { HlmSwitch } from '@spartan-ng/helm/switch';
 import { HlmH1 } from '@spartan-ng/helm/typography';
 
 @Component({
-	selector: 'recipient-earned-badge-detail',
+	selector: 'recipient-badge-collection-detail',
 	templateUrl: 'recipient-badge-collection-detail.component.html',
 	imports: [
 		FormMessageComponent,
@@ -90,7 +89,6 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 		private recipientBadgeManager: RecipientBadgeManager,
 		private recipientBadgeCollectionManager: RecipientBadgeCollectionManager,
 		private configService: AppConfigService,
-		private dialogService: CommonDialogsService,
 		private translate: TranslateService,
 		private pdfService: PdfService,
 	) {
@@ -313,10 +311,6 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 
 	togglePublished() {
 		this.collection.save().then(() => this.checkDisableDownload());
-	}
-
-	shareCollection() {
-		this.dialogService.shareSocialDialog.openDialog(shareCollectionDialogOptionsFor(this.collection));
 	}
 
 	exportPdf() {

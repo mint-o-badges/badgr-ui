@@ -8,19 +8,16 @@ import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-a
 import { CommonDialogsService } from '../../../common/services/common-dialogs.service';
 
 import { RecipientBadgeInstance } from '../../models/recipient-badge.model';
-import { RecipientBadgeCollection } from '../../models/recipient-badge-collection.model';
 import { RecipientBadgeManager } from '../../services/recipient-badge-manager.service';
 import { RecipientBadgeCollectionSelectionDialogComponent } from '../recipient-badge-collection-selection-dialog/recipient-badge-collection-selection-dialog.component';
 import { preloadImageURL } from '../../../common/util/file-util';
 import { ShareSocialDialogOptions } from '../../../common/dialogs/share-social-dialog/share-social-dialog.component';
-import { addQueryParamsToUrl } from '../../../common/util/url-util';
 import { compareDate } from '../../../common/util/date-compare';
 import { EventsService } from '../../../common/services/events.service';
 import { AppConfigService } from '../../../common/app-config.service';
 import { QueryParametersService } from '../../../common/services/query-parameters.service';
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { BadgeInstance } from '../../../issuer/models/badgeinstance.model';
-import { Issuer } from '../../../issuer/models/issuer.model';
 import { CompetencyType, PageConfig } from '../../../common/components/badge-detail/badge-detail.component.types';
 import { ApiLearningPath } from '../../../common/model/learningpath-api.model';
 import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
@@ -30,7 +27,7 @@ import { ApiImportedBadgeInstance } from '../../models/recipient-badge-api.model
 import { BgBadgeDetail } from '../../../common/components/badge-detail/badge-detail.component';
 
 @Component({
-	selector: 'recipient-earned-badge-detail',
+	selector: 'imported-earned-badge-detail',
 	template: `<bg-badgedetail [config]="config" [awaitPromises]="[badgeLoaded]" [badge]="badge"></bg-badgedetail>`,
 	imports: [BgBadgeDetail],
 })
