@@ -2,7 +2,6 @@ import { Component, ElementRef, OnInit, ViewChild, AfterContentInit, inject, Tem
 import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { CommonDialogsService } from '../../../common/services/common-dialogs.service';
-import { StringMatchingUtil } from '../../../common/util/string-matching-util';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
 import { groupIntoArray, groupIntoObject } from '../../../common/util/array-reducers';
 import { MessageService } from '../../../common/services/message.service';
@@ -12,7 +11,6 @@ import { AddBadgeDialogComponent } from '../add-badge-dialog/add-badge-dialog.co
 import { RecipientBadgeManager } from '../../services/recipient-badge-manager.service';
 import { ApiRecipientBadgeIssuer } from '../../models/recipient-badge-api.model';
 import { RecipientBadgeInstance } from '../../models/recipient-badge.model';
-import { badgeShareDialogOptionsFor } from '../recipient-earned-badge-detail/recipient-earned-badge-detail.component';
 import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
 import { AppConfigService } from '../../../common/app-config.service';
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
@@ -410,12 +408,6 @@ export class RecipientEarnedBadgeListComponent
 			},
 			() => {},
 		);
-	}
-
-	shareBadge(badge: RecipientBadgeInstance) {
-		badge.markAccepted();
-
-		//this.dialogService.shareSocialDialog.openDialog(badgeShareDialogOptionsFor(badge));
 	}
 
 	deleteBadge(badge: RecipientBadgeInstance) {

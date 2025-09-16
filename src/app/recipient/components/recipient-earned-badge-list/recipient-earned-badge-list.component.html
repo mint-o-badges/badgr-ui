@@ -119,7 +119,6 @@
 													[issuerTitle]="badgeResult.badge.badgeClass.issuer.name"
 													[issuerSlug]="badgeResult.badge.badgeClass.issuer.slug"
 													[badgeSlug]="badgeResult.badge.slug"
-													(shareClicked)="shareBadge(badgeResult.badge)"
 													[competencies]="
 														badgeResult.badge.getExtension(
 															'extensions:CompetencyExtension',
@@ -155,7 +154,6 @@
 															[issuerSlug]="issuerIdToSlug(issuerGroup.issuerId)"
 															[issuerTitle]="badge.badgeClass.issuer.name"
 															[badgeSlug]="badge.slug"
-															(shareClicked)="shareBadge(badge)"
 															[competencies]="
 																badge.getExtension('extensions:CompetencyExtension', [
 																	{}
