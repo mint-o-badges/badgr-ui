@@ -10,13 +10,11 @@ import { RecipientBadgeCollection } from '../../models/recipient-badge-collectio
 import { RecipientBadgeManager } from '../../services/recipient-badge-manager.service';
 import { RecipientBadgeCollectionSelectionDialogComponent } from '../recipient-badge-collection-selection-dialog/recipient-badge-collection-selection-dialog.component';
 import { preloadImageURL } from '../../../common/util/file-util';
-import { ShareSocialDialogOptions } from '../../../common/dialogs/share-social-dialog/share-social-dialog.component';
 import { compareDate } from '../../../common/util/date-compare';
 import { EventsService } from '../../../common/services/events.service';
 import { AppConfigService } from '../../../common/app-config.service';
 import { QueryParametersService } from '../../../common/services/query-parameters.service';
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
-import { BadgeInstance } from '../../../issuer/models/badgeinstance.model';
 import { CompetencyType, PageConfig } from '../../../common/components/badge-detail/badge-detail.component.types';
 import { ApiLearningPath } from '../../../common/model/learningpath-api.model';
 import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
@@ -354,63 +352,4 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 	exportPdf() {
 		this.dialogService.exportPdfDialog.openDialog(this.badge).catch((error) => console.log(error));
 	}
-}
-
-interface BadgeShareOptions {
-	shareUrl: string;
-	imageUrl: string;
-	badgeClassName: string;
-	badgeClassDescription: string;
-	issueDate: Date;
-	recipientName?: string;
-	recipientIdentifier?: string;
-	recipientType?: string;
-
-	badge: RecipientBadgeInstance | BadgeInstance;
-}
-
-export function badgeShareDialogOptions(options: BadgeShareOptions): ShareSocialDialogOptions {
-	return {
-		title: this.translate.instant('RecBadgeDetail.shareBadge'),
-		shareObjectType: 'BadgeInstance',
-		shareUrl: options.shareUrl,
-		shareTitle: options.badgeClassName,
-		imageUrl: options.imageUrl,
-		// shareIdUrl: badge.url,
-		shareIdUrl: options.shareUrl,
-		shareSummary: options.badgeClassDescription,
-		shareEndpoint: 'certification',
-
-		showRecipientOptions: true,
-		recipientIdentifier: options.recipientIdentifier,
-		recipientType: options.recipientType,
-
-		badge: options.badge,
-
-		embedOptions: [
-			{
-				label: 'Card',
-				embedTitle: 'Badge: ' + options.badgeClassName,
-				embedType: 'iframe',
-				embedSize: { width: 330, height: 186 },
-				embedVersion: 1,
-				// The UI will show the embedded version because of the embedding params that are included automatically by the dialog
-				embedUrl: options.shareUrl,
-				embedLinkUrl: null,
-			},
-
-			{
-				label: 'Badge',
-				embedTitle: 'Badge: ' + options.badgeClassName,
-				embedType: 'image',
-				embedSize: { width: 128, height: 128 },
-				embedVersion: 1,
-				embedUrl: options.imageUrl,
-				embedLinkUrl: options.shareUrl,
-				embedAwardDate: options.issueDate,
-				embedBadgeName: options.badgeClassName,
-				embedRecipientName: options.recipientName,
-			},
-		],
-	};
 }

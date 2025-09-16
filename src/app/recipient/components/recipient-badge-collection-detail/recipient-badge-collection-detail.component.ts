@@ -8,7 +8,6 @@ import { RecipientBadgeCollectionManager } from '../../services/recipient-badge-
 import { RecipientBadgeManager } from '../../services/recipient-badge-manager.service';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
 import { SessionService } from '../../../common/services/session.service';
-import { ShareSocialDialogOptions } from '../../../common/dialogs/share-social-dialog/share-social-dialog.component';
 import { addQueryParamsToUrl } from '../../../common/util/url-util';
 import { AppConfigService } from '../../../common/app-config.service';
 import { LinkEntry, BgBreadcrumbsComponent } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
@@ -318,29 +317,4 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 			this.pdfService.downloadPdf(res, this.collection.name, new Date());
 		});
 	}
-}
-
-export function shareCollectionDialogOptionsFor(collection: RecipientBadgeCollection): ShareSocialDialogOptions {
-	return {
-		title: 'Share Collection',
-		shareObjectType: 'BadgeCollection',
-		shareUrl: collection.shareUrl,
-		shareTitle: collection.name,
-		shareIdUrl: collection.url,
-		shareSummary: collection.description,
-		shareEndpoint: 'shareArticle',
-		excludeServiceTypes: ['Pinterest'],
-
-		embedOptions: [
-			{
-				label: 'Card',
-				embedTitle: /*"Badge Collection: " +*/ collection.name,
-				embedType: 'iframe',
-				embedSize: { width: 330, height: 186 },
-				embedVersion: 1,
-				embedUrl: addQueryParamsToUrl(collection.shareUrl, { embed: true }),
-				embedLinkUrl: null,
-			},
-		],
-	};
 }
