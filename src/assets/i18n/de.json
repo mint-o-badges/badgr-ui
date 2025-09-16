@@ -807,7 +807,8 @@
 		"ESCOAreas": "ESCO-Bereiche",
 		"shareViaLink": "Per Link:",
 		"addToLinkedInProfile": "Badge zu LinkedIn-Profil hinzufügen",
-		"shareViaLinkedIn": "Auf LinkedIn:"
+		"shareViaLinkedIn": "Auf LinkedIn:",
+		"shareWithoutLinkedInId": "Info: Die Institution, die dir den Badge verliehen hat, hat bei uns keine LinkedIn-ID hinterlegt. Deswegen kann das entsprechende Logo-Bild auf LinkedIn leider nicht angezeigt werden."
 	},
 	"EditBadge": {
 		"editBadge": "Badge editieren",

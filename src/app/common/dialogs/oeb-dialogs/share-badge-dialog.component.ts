@@ -1,4 +1,4 @@
-import { Component, inject, NgZone, signal, WritableSignal } from '@angular/core';
+import { AfterViewInit, Component, inject, NgZone, signal, WritableSignal } from '@angular/core';
 import { BrnDialogRef, injectBrnDialogContext } from '@spartan-ng/brain/dialog';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
@@ -7,6 +7,7 @@ import { OebButtonComponent } from '~/components/oeb-button.component';
 import { HlmDialogModule } from '@spartan-ng/helm/dialog';
 import { HlmH3, HlmP } from '@spartan-ng/helm/typography';
 import { RecipientBadgeInstance } from '~/recipient/models/recipient-badge.model';
+import { Issuer } from '~/issuer/models/issuer.model';
 
 export interface ShareBadgeDialogContext {
 	badge: RecipientBadgeInstance;
@@ -56,17 +57,30 @@ const COPY_NOTIF_TIMEOUT_MS: number = 3000;
 					(click)="shareOnLinkedIn()"
 				/>
 			</div>
+			@if (noLinkedInIdForInstitution) {
+				<p hlmP [size]="'sm'" class="oeb tw-text-xs tw-italic tw-pt-2">
+					{{ 'RecBadge.shareWithoutLinkedInId' | translate }}
+				</p>
+			}
 		</oeb-dialog>
 	`,
 })
-export class ShareBadgeDialogComponent {
+export class ShareBadgeDialogComponent implements AfterViewInit {
+	copied: WritableSignal<boolean> = signal(false);
+	noLinkedInIdForInstitution: WritableSignal<boolean> = signal(true);
 	private readonly _dialogContext = injectBrnDialogContext<ShareBadgeDialogContext>();
 	private readonly dialogRef = inject<BrnDialogRef>(BrnDialogRef);
+	private issuer: Issuer = undefined;
 	protected readonly context = this._dialogContext;
 
-	copied: WritableSignal<boolean> = signal(false);
-
 	constructor(private zone: NgZone) {}
+
+	ngAfterViewInit(): void {
+		this.context.badge.issuerManager.issuerBySlug(this.context.badge.badgeClass.issuer.slug).then((i) => {
+			this.issuer = i;
+			this.noLinkedInIdForInstitution.set((this.issuer.linkedinId?.length ?? 0) === 0);
+		});
+	}
 
 	close() {
 		this.dialogRef.close();
@@ -102,7 +116,8 @@ export class ShareBadgeDialogComponent {
 	}
 
 	async shareOnLinkedIn() {
-		const issuer = await this.context.badge.issuerManager.issuerBySlug(this.context.badge.badgeClass.issuer.slug);
+		if (!this.issuer) return;
+
 		const shareParams = new URLSearchParams({
 			startTask: 'CERTIFICATION_NAME', // this is the name LinkedIn has given the task
 			name: this.context.badge.badgeClass.name,
@@ -117,7 +132,7 @@ export class ShareBadgeDialogComponent {
 				: undefined,
 			certUrl: this.shareUrl,
 			certId: this.context.badge.slug,
-			organizationId: issuer.linkedinId?.length > 0 ? issuer.linkedinId : undefined,
+			organizationId: this.issuer.linkedinId?.length > 0 ? this.issuer.linkedinId : undefined,
 		});
 
 		// clean out undefined values (which are converted to string)
