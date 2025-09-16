@@ -7,11 +7,9 @@ import { OebButtonComponent } from '~/components/oeb-button.component';
 import { HlmDialogModule } from '@spartan-ng/helm/dialog';
 import { HlmH3, HlmP } from '@spartan-ng/helm/typography';
 import { RecipientBadgeInstance } from '~/recipient/models/recipient-badge.model';
-import { BadgeInstance } from '~/issuer/models/badgeinstance.model';
-import { ApiImportedBadgeInstance } from '~/recipient/models/recipient-badge-api.model';
 
 export interface ShareBadgeDialogContext {
-	badge: RecipientBadgeInstance | BadgeInstance | ApiImportedBadgeInstance;
+	badge: RecipientBadgeInstance;
 }
 
 const COPY_NOTIF_TIMEOUT_MS: number = 3000;
@@ -55,7 +53,7 @@ const COPY_NOTIF_TIMEOUT_MS: number = 3000;
 				<oeb-button
 					[text]="'RecBadge.addToLinkedInProfile' | translate"
 					[size]="'sm'"
-					(click)="(shareOnLinkedIn)"
+					(click)="shareOnLinkedIn()"
 				/>
 			</div>
 		</oeb-dialog>
@@ -103,5 +101,30 @@ export class ShareBadgeDialogComponent {
 		}
 	}
 
-	async shareOnLinkedIn() {}
+	async shareOnLinkedIn() {
+		const issuer = await this.context.badge.issuerManager.issuerBySlug(this.context.badge.badgeClass.issuer.slug);
+		const shareParams = new URLSearchParams({
+			startTask: 'CERTIFICATION_NAME', // this is the name LinkedIn has given the task
+			name: this.context.badge.badgeClass.name,
+			organizationName: this.context.badge.badgeClass.issuer.name,
+			issueYear: `${this.context.badge.issueDate.getFullYear()}`,
+			issueMonth: ('0' + (this.context.badge.issueDate.getMonth() + 1)).slice(-2),
+			expirationYear: this.context.badge.expiresDate
+				? `${this.context.badge.expiresDate.getFullYear()}`
+				: undefined,
+			expirationMonth: this.context.badge.expiresDate
+				? ('0' + (this.context.badge.expiresDate.getMonth() + 1)).slice(-2)
+				: undefined,
+			certUrl: this.shareUrl,
+			certId: this.context.badge.slug,
+			organizationId: issuer.linkedinId?.length > 0 ? issuer.linkedinId : undefined,
+		});
+
+		// clean out undefined values (which are converted to string)
+		for (const [key, value] of shareParams) if (value === 'undefined') shareParams.delete(key);
+
+		const linkedInUrl = new URL(`https://www.linkedin.com/profile/add?${shareParams}`);
+		console.log(linkedInUrl);
+		window.open(linkedInUrl, '_blank');
+	}
 }

@@ -118,21 +118,9 @@ export class BgBadgeDetail {
 	}
 
 	shareBadge() {
-		this.dialogService.open(ShareBadgeDialogComponent, {
-			context: { badge: this.badge } satisfies ShareBadgeDialogContext,
-		});
-
-		// this.dialogService.shareSocialDialog.openDialog({
-		// 	title: this.translate.instant('RecBadgeDetail.shareBadge'),
-		// 	shareObjectType: 'BadgeInstance',
-		// 	shareUrl: `${baseUrl}/public/assertions/${this.config.badgeInstanceSlug}`,
-		// 	shareTitle: this.config.badgeTitle,
-		// 	imageUrl: this.config.issuerImage,
-		// 	shareIdUrl: `${baseUrl}/public/assertions/${this.config.badgeInstanceSlug}`,
-		// 	shareSummary: this.config.badgeDescription,
-		// 	shareEndpoint: 'certification',
-		// 	embedOptions: [],
-		// 	badge: this.badge as any,
-		// });
+		if (this.badge && this.badge instanceof RecipientBadgeInstance)
+			this.dialogService.open(ShareBadgeDialogComponent, {
+				context: { badge: this.badge } satisfies ShareBadgeDialogContext,
+			});
 	}
 }
