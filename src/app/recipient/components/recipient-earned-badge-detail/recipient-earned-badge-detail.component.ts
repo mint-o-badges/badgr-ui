@@ -1,26 +1,22 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-
 import { MessageService } from '../../../common/services/message.service';
 import { SessionService } from '../../../common/services/session.service';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
 import { CommonDialogsService } from '../../../common/services/common-dialogs.service';
-
 import { RecipientBadgeInstance } from '../../models/recipient-badge.model';
 import { RecipientBadgeCollection } from '../../models/recipient-badge-collection.model';
 import { RecipientBadgeManager } from '../../services/recipient-badge-manager.service';
 import { RecipientBadgeCollectionSelectionDialogComponent } from '../recipient-badge-collection-selection-dialog/recipient-badge-collection-selection-dialog.component';
 import { preloadImageURL } from '../../../common/util/file-util';
 import { ShareSocialDialogOptions } from '../../../common/dialogs/share-social-dialog/share-social-dialog.component';
-import { addQueryParamsToUrl } from '../../../common/util/url-util';
 import { compareDate } from '../../../common/util/date-compare';
 import { EventsService } from '../../../common/services/events.service';
 import { AppConfigService } from '../../../common/app-config.service';
 import { QueryParametersService } from '../../../common/services/query-parameters.service';
 import { LinkEntry } from '../../../common/components/bg-breadcrumbs/bg-breadcrumbs.component';
 import { BadgeInstance } from '../../../issuer/models/badgeinstance.model';
-import { Issuer } from '../../../issuer/models/issuer.model';
 import { CompetencyType, PageConfig } from '../../../common/components/badge-detail/badge-detail.component.types';
 import { ApiLearningPath } from '../../../common/model/learningpath-api.model';
 import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
@@ -110,11 +106,6 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 				this.config = {
 					crumbs: this.crumbs,
 					badgeTitle: this.badge.badgeClass.name,
-					// uncomment after the sharing of a badge is discussed from a data privacy perspective
-					// headerButton: {
-					// 	title: 'Badge teilen',
-					// 	action: () => this.shareBadge(),
-					// },
 					qrCodeButton: {
 						show: false,
 					},
@@ -188,10 +179,6 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 
 	ngOnInit() {
 		super.ngOnInit();
-	}
-
-	shareBadge() {
-		//this.dialogService.shareSocialDialog.openDialog(badgeShareDialogOptionsFor(this.badge));
 	}
 
 	deleteBadge(badge: RecipientBadgeInstance) {
@@ -367,19 +354,6 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 	exportPdf() {
 		this.dialogService.exportPdfDialog.openDialog(this.badge).catch((error) => console.log(error));
 	}
-}
-
-export function badgeShareDialogOptionsFor(badge: RecipientBadgeInstance): ShareSocialDialogOptions {
-	return badgeShareDialogOptions({
-		shareUrl: badge.shareUrl,
-		imageUrl: badge.imagePreview,
-		badgeClassName: badge.badgeClass.name,
-		badgeClassDescription: badge.badgeClass.description,
-		issueDate: badge.issueDate,
-		recipientName: badge.getExtension('extensions:recipientProfile', { name: undefined }).name,
-		recipientIdentifier: badge.recipientEmail,
-		badge,
-	});
 }
 
 interface BadgeShareOptions {
