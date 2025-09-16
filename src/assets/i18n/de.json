@@ -378,7 +378,9 @@
 		"linkedInIdUse1": "Für die ",
 		"linkedInIdUseLink": "Badge-Darstellung",
 		"linkedInIdUse2": " auf LinkedIn",
-		"linkedInIdHint": "Die LinkedIn-ID ist die Zahlenfolge in der URL deiner Institutions-Seite, etwa: www.linkedin.com/company/<b>12345678</b>/admin -> ID <b>12345678</b>"
+		"linkedInIdHint": "Die LinkedIn-ID ist die Zahlenfolge in der URL deiner Institutions-Seite, etwa: www.linkedin.com/company/<b>12345678</b>/admin -> ID <b>12345678</b>",
+		"linkedInUseNoteHeader": "LinkedIn-ID deiner Institution",
+		"linkedInUseNoteText": "Lernende können erhaltene Badges in ihr LinkedIn-Profil einbinden. Damit das Zertifikat dort mit dem \t\t\tLogo-Bild deiner Institution erscheint, müssen wir die LinkedIn-ID deiner Institution hinterlegen."
 	},
 	"Network": {
 		"networksNav": "Netzwerke A-Z",

@@ -55,12 +55,13 @@
 		{{ 'Issuer.linkedInIdUse2' | translate }})
 	</ng-template>
 	<ng-template #linkedInIdDialogHeader>
-		<h3 hlmH3 class="oeb tw-text-purple tw-uppercase tw-font-bold tw-pb-4">LinkedIn-ID deiner Institution</h3>
+		<h3 hlmH3 class="oeb tw-text-purple tw-uppercase tw-font-bold tw-pb-4">
+			{{ 'Issuer.linkedInUseNoteHeader' | translate }}
+		</h3>
 	</ng-template>
 	<ng-template #linkedInIdDialogBody>
-		<p hlmP class="oeb tw-text-base">
-			Lernende können erhaltene Badges in ihr LinkedIn-Profil einbinden. Damit das Zertifikat dort mit dem
-			Logo-Bild deiner Institution erscheint, müssen wir die LinkedIn-ID deiner Institution hinterlegen.
+		<p hlmP [size]="'sm'" class="oeb">
+			{{ 'Issuer.linkedInUseNoteText' | translate }}
 		</p>
 	</ng-template>
 
