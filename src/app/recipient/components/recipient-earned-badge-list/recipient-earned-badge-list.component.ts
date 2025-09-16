@@ -50,6 +50,7 @@ import { RecipientSkillVisualisationComponent } from '../recipient-skill-visuali
 import { HlmIcon } from '@spartan-ng/helm/icon';
 import { HlmInput } from '@spartan-ng/helm/input';
 import { HlmH2, HlmP, HlmH3 } from '@spartan-ng/helm/typography';
+import { MatchingAlgorithm } from '~/common/util/matching-algorithm';
 
 type BadgeDispay = 'grid' | 'list';
 type EscoCompetencies = {
@@ -664,27 +665,5 @@ class MatchingLearningPathIssuer {
 				this.learningpaths.push(learningpath);
 			}
 		}
-	}
-}
-
-class MatchingAlgorithm {
-	static issuerMatcher(inputPattern: string): (issuer: ApiRecipientBadgeIssuer) => boolean {
-		const patternStr = StringMatchingUtil.normalizeString(inputPattern);
-		const patternExp = StringMatchingUtil.tryRegExp(patternStr);
-
-		return (issuer) => StringMatchingUtil.stringMatches(issuer.name, patternStr, patternExp);
-	}
-
-	static badgeMatcher(inputPattern: string): (badge: RecipientBadgeInstance) => boolean {
-		const patternStr = StringMatchingUtil.normalizeString(inputPattern);
-		const patternExp = StringMatchingUtil.tryRegExp(patternStr);
-
-		return (badge) => StringMatchingUtil.stringMatches(badge.badgeClass.name, patternStr, patternExp);
-	}
-	static learningPathMatcher(inputPattern: string): (learningPath: any) => boolean {
-		const patternStr = StringMatchingUtil.normalizeString(inputPattern);
-		const patternExp = StringMatchingUtil.tryRegExp(patternStr);
-
-		return (learningPath) => StringMatchingUtil.stringMatches(learningPath.name, patternStr, patternExp);
 	}
 }
