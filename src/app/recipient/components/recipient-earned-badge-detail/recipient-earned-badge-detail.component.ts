@@ -191,7 +191,7 @@ export class RecipientEarnedBadgeDetailComponent extends BaseAuthenticatedRoutab
 	}
 
 	shareBadge() {
-		this.dialogService.shareSocialDialog.openDialog(badgeShareDialogOptionsFor(this.badge));
+		//this.dialogService.shareSocialDialog.openDialog(badgeShareDialogOptionsFor(this.badge));
 	}
 
 	deleteBadge(badge: RecipientBadgeInstance) {

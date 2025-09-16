@@ -801,7 +801,10 @@
 		"skillVisualisationHelp": "Move the mouse pointer over the circles to see the associated skills.",
 		"skillVisualisationSingleIntro": "Your skills in the area of ",
 		"FutureSkillsAccrodingToNextSkills": "Future Skills according to the NextSkills-Framework",
-		"ESCOAreas": "ESCO areas"
+		"ESCOAreas": "ESCO areas",
+		"shareViaLink": "Via Link:",
+		"addToLinkedInProfile": "Add badge to LinkedIn profile",
+		"shareViaLinkedIn": "On LinkedIn:"
 	},
 	"EditBadge": {
 		"editBadge": "Edit badge",

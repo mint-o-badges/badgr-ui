@@ -32,7 +32,7 @@ import { BrnDialogRef } from '@spartan-ng/brain/dialog';
 import { RecipientBadgeCollectionManager } from '../../services/recipient-badge-collection-manager.service';
 import { RecipientBadgeApiService } from '../../services/recipient-badges-api.service';
 import { RecipientBadgeCollection } from '../../models/recipient-badge-collection.model';
-import { ShareDialogTemplateComponent } from '../../../common/dialogs/oeb-dialogs/share-dialog-template.component';
+import { ShareCollectionDialogComponent } from '../../../common/dialogs/oeb-dialogs/share-collection-dialog.component';
 import { ApiRootSkill } from '../../../common/model/ai-skills.model';
 import { BreakpointService } from '../../../common/services/breakpoint.service';
 import { FormMessageComponent } from '../../../common/components/form-message.component';
@@ -285,7 +285,7 @@ export class RecipientEarnedBadgeListComponent
 	}
 
 	openShareDialog(collection: RecipientBadgeCollection) {
-		const dialogRef = this._hlmDialogService.open(ShareDialogTemplateComponent, {
+		const dialogRef = this._hlmDialogService.open(ShareCollectionDialogComponent, {
 			context: {
 				collection: collection,
 				caption: this.translate.instant('BadgeCollection.shareCollection'),
@@ -415,7 +415,7 @@ export class RecipientEarnedBadgeListComponent
 	shareBadge(badge: RecipientBadgeInstance) {
 		badge.markAccepted();
 
-		this.dialogService.shareSocialDialog.openDialog(badgeShareDialogOptionsFor(badge));
+		//this.dialogService.shareSocialDialog.openDialog(badgeShareDialogOptionsFor(badge));
 	}
 
 	deleteBadge(badge: RecipientBadgeInstance) {

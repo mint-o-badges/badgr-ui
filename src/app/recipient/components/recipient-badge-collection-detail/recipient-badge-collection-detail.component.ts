@@ -18,7 +18,7 @@ import { DialogComponent } from '../../../components/dialog.component';
 import { RecipientBadgeInstance } from '../../models/recipient-badge.model';
 import { BrnDialogRef } from '@spartan-ng/brain/dialog';
 import { TranslateService, TranslateDirective, TranslatePipe } from '@ngx-translate/core';
-import { ShareDialogTemplateComponent } from '../../../common/dialogs/oeb-dialogs/share-dialog-template.component';
+import { ShareCollectionDialogComponent } from '../../../common/dialogs/oeb-dialogs/share-collection-dialog.component';
 import { PdfService } from '../../../common/services/pdf.service';
 import { FormMessageComponent } from '../../../common/components/form-message.component';
 import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
@@ -244,7 +244,7 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 	openShareDialog(collection: RecipientBadgeCollection) {
 		if (!collection.published) return;
 
-		const dialogRef = this._hlmDialogService.open(ShareDialogTemplateComponent, {
+		const dialogRef = this._hlmDialogService.open(ShareCollectionDialogComponent, {
 			context: {
 				collection: collection,
 				caption: this.translate.instant('BadgeCollection.shareCollection'),

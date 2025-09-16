@@ -688,7 +688,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 	}
 
 	shareInstance(instance: BadgeInstance) {
-		this.dialogService.shareSocialDialog.openDialog(this.badgeShareDialogOptionsFor(instance));
+		//this.dialogService.shareSocialDialog.openDialog(this.badgeShareDialogOptionsFor(instance));
 	}
 
 	badgeShareDialogOptionsFor(badge: BadgeInstance): ShareSocialDialogOptions {
