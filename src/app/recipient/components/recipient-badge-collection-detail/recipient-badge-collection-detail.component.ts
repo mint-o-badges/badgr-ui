@@ -271,36 +271,6 @@ export class RecipientBadgeCollectionDetailComponent extends BaseAuthenticatedRo
 		this.dialogRef = dialogRef;
 	}
 
-	removeEntry(entry: RecipientBadgeCollectionEntry) {
-		this.dialogService.confirmDialog
-			.openResolveRejectDialog({
-				dialogTitle: this.translate.instant('RecBadgeDetail.confirmRemove'),
-				dialogBody: this.translate.instant('BadgeCollection.sureToRemove', {
-					badgeName: entry.badge.badgeClass.name,
-					collectionName: this.collection.name,
-				}),
-				rejectButtonLabel: this.translate.instant('General.cancel'),
-				resolveButtonLabel: this.translate.instant('RecBadgeDetail.removeBadge'),
-			})
-			.then(
-				() => {
-					this.collection.badgeEntries.remove(entry);
-					this.collection.save().then(
-						(success) =>
-							this.messageService.reportMinorSuccess(
-								`Removed badge ${entry.badge.badgeClass.name} from collection ${this.collection.name} successfully`,
-							),
-						(failure) =>
-							this.messageService.reportHandledError(
-								`Failed to remove badge ${entry.badge.badgeClass.name} from collection ${this.collection.name}`,
-								failure,
-							),
-					);
-				},
-				() => {},
-			);
-	}
-
 	get badgesInCollectionCount(): string {
 		return `${this.collection.badgeEntries.length} ${
 			this.collection.badgeEntries.length === 1 ? 'Badge' : 'Badges'

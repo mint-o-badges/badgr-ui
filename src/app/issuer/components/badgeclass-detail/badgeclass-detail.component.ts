@@ -231,7 +231,6 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		router: Router,
 		route: ActivatedRoute,
 		protected dialogService: CommonDialogsService,
-		private eventService: EventsService,
 		protected configService: AppConfigService,
 		protected pdfService: PdfService,
 		private sanitizer: DomSanitizer,
