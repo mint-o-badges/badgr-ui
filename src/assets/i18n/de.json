@@ -117,7 +117,8 @@
 		"overview": "Übersicht",
 		"rolesAndRights": "Rollen und Rechte",
 		"website": "Webseite",
-		"organization": "Organisation"
+		"organization": "Organisation",
+		"notNow": "Jetzt nicht"
 	},
 	"NavItems": {
 		"register": "Registrieren",
@@ -380,7 +381,11 @@
 		"linkedInIdUse2": " auf LinkedIn",
 		"linkedInIdHint": "Die LinkedIn-ID ist die Zahlenfolge in der URL deiner Institutions-Seite, etwa: www.linkedin.com/company/<b>12345678</b>/admin -> ID <b>12345678</b>",
 		"linkedInUseNoteHeader": "LinkedIn-ID deiner Institution",
-		"linkedInUseNoteText": "Lernende können erhaltene Badges in ihr LinkedIn-Profil einbinden. Damit das Zertifikat dort mit dem \t\t\tLogo-Bild deiner Institution erscheint, müssen wir die LinkedIn-ID deiner Institution hinterlegen."
+		"linkedInUseNoteText": "Lernende können erhaltene Badges in ihr LinkedIn-Profil einbinden. Damit das Zertifikat dort mit dem \t\t\tLogo-Bild deiner Institution erscheint, müssen wir die LinkedIn-ID deiner Institution hinterlegen.",
+		"addLinkedInId": "LinkedIn-ID ergänzen",
+		"findLinkedInId": "So findest du die LinkedIn-ID:",
+		"findLinkedInIdText": "Gehe zur Seite deiner Institution auf LinkedIn.  Die ID ist die Zahlenfolge in der entsprechenden URL.  Die URL lautet zum Beispiel: www.linkedin.com/company/12345678/admin. → ID = 12345678.",
+		"findLinkedInIdNote": "Du kannst die Linkedin-ID jederzeit auf der Seite deiner Institution durch „Bearbeiten” der Institutions-Details ergänzen."
 	},
 	"Network": {
 		"networksNav": "Netzwerke A-Z",
