@@ -129,4 +129,10 @@ export class BadgeInstanceApiService extends BaseHttpApiService {
 
 		return resultset;
 	};
+
+	listPartnerIssuerBadgeInstances(issuerSlug: string, badgeSlug: string) {
+		return this.get<ApiBadgeInstance[]>(`/v1/issuer/issuers/${issuerSlug}/badges/${badgeSlug}/partner-awards`).then(
+			(r) => r.body,
+		);
+	}
 }
