@@ -40,6 +40,9 @@ import { IssuerDetailDatatableComponent } from '../../../components/datatable-is
 import { FormsModule } from '@angular/forms';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { HlmH2 } from '@spartan-ng/helm/typography';
+import { NetworkManager } from '~/issuer/services/network-manager.service';
+import { Network } from '~/issuer/network.model';
+import { BadgeInstanceApiService } from '~/issuer/services/badgeinstance-api.service';
 
 @Component({
 	selector: 'badgeclass-detail',
@@ -173,6 +176,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 
 	badgeClassLoaded: Promise<unknown>;
 	badgeInstancesLoaded: Promise<unknown>;
+	partnerInstanesLoaded: Promise<unknown>;
 	assertionsLoaded: Promise<unknown>;
 	issuerLoaded: Promise<unknown>;
 	learningPaths: ApiLearningPath[];
@@ -182,7 +186,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 	instanceResults: BadgeInstance[] = [];
 	popInstance: BadgeInstance | null = null;
 	resultsPerPage = 100;
-	issuer: Issuer;
+	issuer: Issuer | Network;
 	crumbs: LinkEntry[];
 	focusRequests: boolean;
 	hasScrolled: boolean = false;
@@ -218,6 +222,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		protected messageService: MessageService,
 		protected badgeManager: BadgeClassManager,
 		protected issuerManager: IssuerManager,
+		protected networkManager: NetworkManager,
 		protected badgeInstanceManager: BadgeInstanceManager,
 		protected qrCodeApiService: QrCodeApiService,
 		sessionService: SessionService,
@@ -232,6 +237,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		private learningPathApiService: LearningPathApiService,
 		private taskService: TaskPollingManagerService,
 		protected userProfileManager: UserProfileManager,
+		protected badgeInstanceApiService: BadgeInstanceApiService,
 	) {
 		super(router, route, sessionService);
 
@@ -257,10 +263,17 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 				),
 		);
 
-		this.issuerLoaded = issuerManager.issuerBySlug(this.issuerSlug).then(
-			(issuer) => (this.issuer = issuer),
-			(error) => this.messageService.reportLoadingError(`Cannot find issuer ${this.issuerSlug}`, error),
-		);
+		try {
+			this.issuerLoaded = issuerManager.issuerBySlug(this.issuerSlug).then(
+				(issuer) => (this.issuer = issuer),
+				(error) => this.messageService.reportLoadingError(`Cannot find issuer ${this.issuerSlug}`, error),
+			);
+		} catch {
+			this.issuerLoaded = networkManager.networkBySlug(this.issuerSlug).then(
+				(network) => (this.issuer = network),
+				(error) => this.messageService.reportLoadingError(`Cannot find issuer ${this.issuerSlug}`, error),
+			);
+		}
 
 		this.qrCodeApiService.getQrCodesForIssuerByBadgeClass(this.issuerSlug, this.badgeSlug).then((qrCodes) => {
 			this.qrCodeAwards = qrCodes;
@@ -359,6 +372,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 					issuerName: this.badgeClass.issuerName,
 					issuerImagePlacholderUrl: this.issuerImagePlacholderUrl,
 					issuerImage: this.issuer.image,
+					networkBadge: this.issuer.is_network,
 					badgeLoadingImageUrl: this.badgeLoadingImageUrl,
 					badgeFailedImageUrl: this.badgeFailedImageUrl,
 					badgeImage: this.badgeClass.image,
@@ -400,7 +414,7 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 							title: 'General.delete',
 							icon: 'lucideTrash2',
 							action: () => this.deleteBadge(),
-							disabled: !this.issuer.canDeleteBadge,
+							disabled: !this.issuer.canEditBadge,
 						},
 					],
 				};
@@ -416,6 +430,12 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 				return error;
 			},
 		);
+
+		if (this.issuer.is_network) {
+			this.badgeInstanceApiService
+				.listPartnerIssuerBadgeInstances(this.issuer.slug, this.badgeClass.slug)
+				.then((instances) => {});
+		}
 	}
 
 	onQrBadgeAward(event: number) {
