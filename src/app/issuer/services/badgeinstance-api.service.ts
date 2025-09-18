@@ -106,6 +106,11 @@ export class BadgeInstanceApiService extends BaseHttpApiService {
 		return this.get(url).then(this.handleAssertionResult);
 	}
 
+	listNetworkBadgeInstances(networkSlug: string, badgeSlug: string, num = 500): Promise<any> {
+		let url = `/v1/issuer/issuers/${networkSlug}/badges/${badgeSlug}/network-assertions?num=${num}`;
+		return this.get(url).then((r) => r.body);
+	}
+
 	getBadgeInstancePage(paginationUrl: string): Promise<BadgeInstanceResultSet> {
 		return this.get(paginationUrl).then(this.handleAssertionResult);
 	}

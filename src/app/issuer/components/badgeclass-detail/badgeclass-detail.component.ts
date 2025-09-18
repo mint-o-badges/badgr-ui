@@ -43,7 +43,14 @@ import { NetworkManager } from '~/issuer/services/network-manager.service';
 import { Network } from '~/issuer/network.model';
 import { BadgeInstanceApiService } from '~/issuer/services/badgeinstance-api.service';
 import { OebTabsComponent } from '~/components/oeb-tabs.component';
+import { ApiBadgeInstance } from '~/issuer/models/badgeinstance-api.model';
 
+interface groupedInstances {
+	has_access: boolean;
+	instance_count: number;
+	instances: ApiBadgeInstance[];
+	issuer: any;
+}
 @Component({
 	selector: 'badgeclass-detail',
 	template: `
@@ -61,15 +68,45 @@ import { OebTabsComponent } from '~/components/oeb-tabs.component';
 				></qrcode-awards>
 			</ng-template>
 			<ng-template #batchAwards>
-				<issuer-detail-datatable
-					[issuer]="issuer"
-					[recipientCount]="recipientCount"
-					[recipients]="instanceResults"
-					(actionElement)="revokeInstance($event)"
-					(downloadCertificate)="downloadCertificate($event['instance'], $event['badgeIndex'])"
-					[downloadStates]="downloadStates"
-					[awardInProgress]="isTaskProcessing || isTaskPending"
-				></issuer-detail-datatable>
+				@if (issuer) {
+					@if (issuer.is_network) {
+						@if (groupedPartnerInstances) {
+							@for (partner of groupedPartnerInstances; track partner) {
+								@if (partner.instances.length) {
+									<div class="tw-mb-4">
+										<div class="tw-flex tw-gap-2">
+											<img [src]="partner.issuer.image" alt="Partner Logo" />
+											<span class="tw-text-oebblack tw-font-bold tw-text-lg">{{
+												partner.issuer.name
+											}}</span>
+										</div>
+										<issuer-detail-datatable
+											[issuer]="issuer"
+											[recipientCount]="partner.instance_count"
+											[recipients]="partner.instances"
+											(actionElement)="revokeInstance($event)"
+											(downloadCertificate)="
+												downloadCertificate($event['instance'], $event['badgeIndex'])
+											"
+											[downloadStates]="downloadStates"
+											[awardInProgress]="isTaskProcessing || isTaskPending"
+										></issuer-detail-datatable>
+									</div>
+								}
+							}
+						}
+					} @else {
+						<issuer-detail-datatable
+							[issuer]="issuer"
+							[recipientCount]="recipientCount"
+							[recipients]="instanceResults"
+							(actionElement)="revokeInstance($event)"
+							(downloadCertificate)="downloadCertificate($event['instance'], $event['badgeIndex'])"
+							[downloadStates]="downloadStates"
+							[awardInProgress]="isTaskProcessing || isTaskPending"
+						></issuer-detail-datatable>
+					}
+				}
 			</ng-template>
 			<ng-template #headerTemplate>
 				<h2 class="tw-font-bold tw-my-2" hlmH2>{{ 'Badge.copyForWhatInstitution' | translate }}</h2>
@@ -183,7 +220,8 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 
 	badgeClassLoaded: Promise<unknown>;
 	badgeInstancesLoaded: Promise<unknown>;
-	partnerInstanesLoaded: Promise<unknown>;
+	partnerInstancesLoaded: Promise<unknown>;
+	groupedPartnerInstances: any[] = [];
 	assertionsLoaded: Promise<unknown>;
 	issuerLoaded: Promise<unknown>;
 	learningPaths: ApiLearningPath[];
@@ -288,7 +326,11 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 
 		Promise.all([this.issuerLoaded, this.badgeClassLoaded])
 			.then(() => {
-				this.loadInstances();
+				if (this.issuer.is_network) {
+					this.loadPartnerInstances();
+				} else {
+					this.loadInstances();
+				}
 			})
 			.catch((error) => {
 				console.error('Error loading instances:', error);
@@ -344,6 +386,105 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 		this.router.navigate(['/issuer/issuers', issuer.slug, 'badges', 'create'], {
 			state: { copybadgeid: this.badgeClass.slug },
 		});
+	}
+
+	async loadPartnerInstances() {
+		this.learningPaths = await this.learningPathApiService.getLearningPathsForBadgeClass(this.badgeSlug);
+
+		this.badgeInstancesLoaded = this.badgeInstanceApiService
+			.listNetworkBadgeInstances(this.issuer.slug, this.badgeClass.slug)
+			.then((res: Record<string, groupedInstances[]>) => {
+				const grouped = Object.values(res)[0] as groupedInstances[];
+
+				// convert ApiBadgeInstance[] to BadgeInstance[]
+				const tempSet = new BadgeClassInstances(
+					this.badgeInstanceManager,
+					this.issuerSlug,
+					this.badgeClass.slug,
+				);
+
+				this.groupedPartnerInstances = grouped.map((group) => ({
+					...group,
+					instances: group.instances.map((apiInst) => new BadgeInstance(tempSet, apiInst)),
+				}));
+				this.config = {
+					crumbs: this.crumbs,
+					badgeTitle: this.badgeClass.name,
+					awardCriteria: this.badgeClass.criteria,
+					headerButton: {
+						title: 'Badge.award',
+						action: () => this.routeToBadgeAward(this.badgeClass, this.issuer),
+					},
+					issueQrRouterLink: ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'qr'],
+					qrCodeButton: {
+						title: 'Badge.awardQRCode',
+						show: true,
+						action: () => this.routeToQRCodeAward(this.badgeClass, this.issuer),
+					},
+					badgeDescription: this.badgeClass.description,
+					issuerSlug: this.issuerSlug,
+					slug: this.badgeSlug,
+					createdAt: this.badgeClass.createdAt,
+					updatedAt: this.badgeClass.updatedAt,
+					duration: this.badgeClass.extension['extensions:StudyLoadExtension'].StudyLoad,
+					category: this.translate.instant(
+						`Badge.categories.${this.badgeClass.extension['extensions:CategoryExtension']?.Category || 'participation'}`,
+					),
+					tags: this.badgeClass.tags,
+					issuerName: this.badgeClass.issuerName,
+					issuerImagePlacholderUrl: this.issuerImagePlacholderUrl,
+					issuerImage: this.issuer.image,
+					networkBadge: this.issuer.is_network,
+					badgeLoadingImageUrl: this.badgeLoadingImageUrl,
+					badgeFailedImageUrl: this.badgeFailedImageUrl,
+					badgeImage: this.badgeClass.image,
+					competencies: this.badgeClass.extension['extensions:CompetencyExtension'],
+					license: this.badgeClass.extension['extensions:LicenseExtension'] ? true : false,
+					learningPaths: this.learningPaths,
+					copy_permissions: this.badgeClass.copyPermissions,
+					menuitems: [
+						{
+							title: 'General.edit',
+							routerLink: ['/issuer/issuers', this.issuerSlug, 'badges', this.badgeSlug, 'edit'],
+							disabled:
+								this.badgeClass.recipientCount > 0 ||
+								!this.issuer.canEditBadge ||
+								this.qrCodeAwards.length > 0,
+							icon: 'lucidePencil',
+						},
+						{
+							title: this.badgeClass.copyPermissions.includes('others')
+								? 'General.copy'
+								: 'Badge.copyThisIssuer',
+							action: this.copyBadge.bind(this),
+							icon: 'lucideCopy',
+							disabled: !this.issuer.canCreateBadge,
+						},
+						{
+							title: 'Badge.editCopyStatus',
+							routerLink: [
+								'/issuer/issuers',
+								this.issuerSlug,
+								'badges',
+								this.badgeSlug,
+								'copypermissions',
+							],
+							icon: 'lucideCopyX',
+							disabled: !this.issuer.canEditBadge,
+						},
+						{
+							title: 'General.delete',
+							icon: 'lucideTrash2',
+							action: () => this.deleteBadge(),
+							disabled: !this.issuer.canEditBadge,
+						},
+					],
+				};
+				if (this.badgeClass.extension['extensions:CategoryExtension']?.Category === 'learningpath') {
+					this.config.headerButton = null;
+					this.config.qrCodeButton.show = false;
+				}
+			});
 	}
 
 	async loadInstances(recipientQuery?: string) {
@@ -452,12 +593,6 @@ export class BadgeClassDetailComponent extends BaseAuthenticatedRoutableComponen
 				return error;
 			},
 		);
-
-		if (this.issuer.is_network) {
-			this.badgeInstanceApiService
-				.listPartnerIssuerBadgeInstances(this.issuer.slug, this.badgeClass.slug)
-				.then((instances) => {});
-		}
 	}
 
 	onQrBadgeAward(event: number) {
