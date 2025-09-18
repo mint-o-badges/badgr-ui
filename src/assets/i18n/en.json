@@ -277,7 +277,7 @@
 		"giveBadges": "Award badges",
 		"badgeAwardInProgress": "Award badge",
 		"giveQr": "Create QR code award",
-		"nameWarning": "Note: The name will be saved as plain text in the badge.",
+		"infoNamePlainText": "The name is stored as plain text in the badge and appears on the PDF certificate.",
 		"multipleBadgeAwardHeadline": "Award badge to multiple learners simultaneously",
 		"uploadListText": "You can <span class='tw-font-bold'>import a list of recipients</span> who should receive the badge at the same time. Here's how:",
 		"downloadExampleCSV": "Download our file template:",
@@ -368,7 +368,16 @@
 		"clickOnAwardBadges": "Click on \"award badges\" to award the badges to your learners now.",
 		"creatingBadge": "Creating Badge",
 		"memberView": "Member view",
-		"partOfNetwork": "Part of the network"
+		"partOfNetwork": "Part of the network",
+		"issueByEmail": "issue by email",
+		"recipientEmail": "Recipient's email address",
+		"emailIsIdentifier": "The email serves as an identifier for the badge. The badge will be sent here.",
+		"receivesBadgeByEmail": "The recipient will receive the badge by email.",
+		"issuerBadges": "Institutional badges",
+		"networkBadges": "Network badges",
+		"yourIssuersAreInNetworks": "Your institutions are part of the following networks:",
+		"awardedNetworkBadges": "These badges were issued by {{issuer}} via the respective network:",
+		"badgesApprovedForNetworks": " {{ issuer }} has approved these badges for use in the respective network:"
 	},
 	"Network": {
 		"networksNav": "Networks A-Z",
@@ -412,7 +421,10 @@
 		"alreadyConfirmed": "Another member of <span class='tw-italic'> {{issuerName}} has already accepted the network invitation from <span class='tw-font-bold'> {{networkName}}</span>.",
 		"view": "View network",
 		"createBadge": "Create network badge",
-		"awardBadgeIssuer": "Which of your <span class='tw-font-bold'>institutions</span> should the badge be awarded to?"
+		"awardBadgeIssuer": "Which of your <span class='tw-font-bold'>institutions</span> should the badge be awarded to?",
+		"networkBadges": "Network badges",
+		"noPartnerBadgesYet": "So far, no partner institution has released a badge for the network.",
+		"createdByNetwork": "Created by NETWORK"
 	},
 	"Badge": {
 		"groupBy": "Group by",
