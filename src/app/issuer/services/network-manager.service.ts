@@ -26,7 +26,7 @@ export class NetworkManager {
 
 	createNetwork(initialNetwork: ApiNetworkForCreation): Promise<Network> {
 		return this.networkApiService
-			.createNetwork(initialNetwork)
+			.createNetwork({ ...initialNetwork, is_network: true })
 			.then((newNetwork) => this.networksList.addOrUpdate(newNetwork));
 	}
 
@@ -51,18 +51,6 @@ export class NetworkManager {
 				this.throwError(`Network Slug '${networkSlug}' not found`),
 		);
 	}
-
-	// addPartnerToNetwork(networkSlug: IssuerSlug, issuerSlug: IssuerSlug): Promise<Network> {
-	//   return this.networkApiService
-	//     .addPartnerIssuer(networkSlug, issuerSlug)
-	//     .then((updatedNetwork) => this.networksList.addOrUpdate(updatedNetwork));
-	// }
-
-	// removePartnerFromNetwork(networkSlug: IssuerSlug, issuerSlug: IssuerSlug): Promise<Network> {
-	//   return this.networkApiService
-	//     .removePartnerIssuer(networkSlug, issuerSlug)
-	//     .then((updatedNetwork) => this.networksList.addOrUpdate(updatedNetwork));
-	// }
 
 	private throwError(message: string): never {
 		throw new Error(message);
