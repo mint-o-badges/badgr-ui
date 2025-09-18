@@ -26,6 +26,7 @@ import { HlmP } from '@spartan-ng/helm/typography';
 import { countries } from 'countries-list';
 import * as states from '../../../../assets/data/german-states.json';
 import type { TCountries, ICountry, ICountryData } from 'countries-list';
+import { NetworkManager } from '~/issuer/services/network-manager.service';
 
 @Component({
 	selector: 'issuer-edit-form',
@@ -55,6 +56,8 @@ export class IssuerEditFormComponent implements OnInit {
 	addIssuerFinished: Promise<unknown>;
 	editIssuerFinished: Promise<unknown>;
 
+	addNetworkFinished: Promise<unknown>;
+
 	_countriesOptions: FormFieldSelectOption[];
 	_germanStateOptions: FormFieldSelectOption[];
 
@@ -74,7 +77,7 @@ export class IssuerEditFormComponent implements OnInit {
 
 	existingIssuer: Issuer | null = null;
 
-	networkForm = input<boolean>();
+	networkForm = input<boolean>(false);
 
 	@Input() issuerSlug: string;
 
@@ -96,6 +99,7 @@ export class IssuerEditFormComponent implements OnInit {
 		protected messageService: MessageService,
 		protected translate: TranslateService,
 		protected issuerManager: IssuerManager,
+		protected networkManager: NetworkManager,
 	) {
 		title.setTitle(`Create Issuer - ${this.configService.theme['serviceName'] || 'Badgr'}`);
 
@@ -177,16 +181,16 @@ export class IssuerEditFormComponent implements OnInit {
 			.addControl('country', 'Germany', Validators.required)
 			.addControl('state', '');
 
-		// if (!this.networkForm()) {
-		// 	this.issuerForm
-		// 		.addControl('issuer_email', '', [Validators.required])
-		// 		.addControl('issuer_category', '', [Validators.required])
-		// 		.addControl('issuer_street', '', Validators.required)
-		// 		.addControl('issuer_streetnumber', '', Validators.required)
-		// 		.addControl('issuer_zip', '', Validators.required)
-		// 		.addControl('issuer_city', '', Validators.required)
-		// 		.addControl('verify_intended_use', false, Validators.requiredTrue);
-		// }
+		if (!this.networkForm()) {
+			this.issuerForm
+				.addControl('issuer_email', '', [Validators.required])
+				.addControl('issuer_category', '', [Validators.required])
+				.addControl('issuer_street', '', Validators.required)
+				.addControl('issuer_streetnumber', '', Validators.required)
+				.addControl('issuer_zip', '', Validators.required)
+				.addControl('issuer_city', '', Validators.required)
+				.addControl('verify_intended_use', false, Validators.requiredTrue);
+		}
 	}
 
 	initFormFromExisting(issuer: Issuer) {
@@ -235,8 +239,6 @@ export class IssuerEditFormComponent implements OnInit {
 	};
 
 	onSubmit() {
-		console.log('submit attempted');
-		console.log('form valid', this.issuerForm.markTreeDirtyAndValidate());
 		if (this.issuerForm.controls.issuer_image.rawControl.hasError('required')) {
 			this.imageError = this.translate.instant('Issuer.imageRequiredError');
 		}
@@ -248,7 +250,6 @@ export class IssuerEditFormComponent implements OnInit {
 		const formState = this.issuerForm.value;
 
 		if (this.networkForm()) {
-			console.log('formState', formState);
 			this.handleNetworkSubmit(formState);
 		} else {
 			this.handleIssuerSubmit(formState);
@@ -275,11 +276,21 @@ export class IssuerEditFormComponent implements OnInit {
 			issuer.image = formState.issuer_image;
 		}
 
-		// this.submitIssuer(issuer);
+		this.addIssuerFinished = this.issuerManager
+			.createIssuer(issuer)
+			.then(
+				(newIssuer) => {
+					this.router.navigate(['issuer/issuers', newIssuer.slug]);
+					this.messageService.setMessage('Issuer created successfully.', 'success');
+				},
+				(error) => {
+					this.messageService.setMessage('Unable to create issuer: ' + error, 'error');
+				},
+			)
+			.then(() => (this.addIssuerFinished = null));
 	}
 
 	private handleNetworkSubmit(formState: any) {
-		console.log('submit handle form state', formState);
 		const network = {
 			name: formState.issuer_name,
 			description: formState.issuer_description,
@@ -289,9 +300,13 @@ export class IssuerEditFormComponent implements OnInit {
 			image: formState.issuer_image,
 		};
 
-		this.issuerManager.createNetwork(network).then((network) => {
-			this.router.navigate(['issuer/networks', network.slug]);
-		});
+		this.addIssuerFinished = this.networkManager
+			.createNetwork(network)
+			.then((network) => {
+				this.router.navigate(['issuer/networks', network.slug]);
+				this.messageService.setMessage('Network created successfully.', 'success');
+			})
+			.then(() => (this.addIssuerFinished = null));
 	}
 
 	// onSubmit() {
