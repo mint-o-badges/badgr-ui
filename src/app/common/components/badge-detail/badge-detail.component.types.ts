@@ -76,6 +76,7 @@ export interface PageConfig {
 	issuerName: string;
 	issuerImagePlacholderUrl: string;
 	issuerImage: string;
+	networkBadge?: boolean;
 	badgeLoadingImageUrl: string;
 	badgeFailedImageUrl: string;
 	badgeImage: string;

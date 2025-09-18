@@ -17,7 +17,8 @@ import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
 import { BadgeClassEditFormComponent } from '../badgeclass-edit-form/badgeclass-edit-form.component';
 import { HlmH1 } from '@spartan-ng/helm/typography';
-import { BadgeParentEntity } from '../badgeclass-edit-form/badgeclass-edit-form.component';
+import { NetworkManager } from '~/issuer/services/network-manager.service';
+import { Network } from '~/issuer/network.model';
 
 @Component({
 	templateUrl: 'badgeclass-create.component.html',
@@ -26,10 +27,8 @@ import { BadgeParentEntity } from '../badgeclass-edit-form/badgeclass-edit-form.
 export class BadgeClassCreateComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
 	issuerSlug: string;
 	category: string;
-	issuer: Issuer;
-	network: any;
-	entityLoaded: Promise<unknown>;
-	entity: BadgeParentEntity;
+	issuer: Issuer | Network;
+	issuerLoaded: Promise<unknown>;
 	breadcrumbLinkEntries: LinkEntry[] = [];
 	scrolled = false;
 	copiedBadgeClass: BadgeClass = null;
@@ -54,6 +53,7 @@ export class BadgeClassCreateComponent extends BaseAuthenticatedRoutableComponen
 		protected title: Title,
 		protected messageService: MessageService,
 		protected issuerManager: IssuerManager,
+		protected networkManager: NetworkManager,
 		protected badgeClassService: BadgeClassManager,
 		private configService: AppConfigService,
 		protected dialogService: CommonDialogsService,
@@ -66,7 +66,9 @@ export class BadgeClassCreateComponent extends BaseAuthenticatedRoutableComponen
 
 		// this.issuerSlug = this.route.snapshot.params['issuerSlug'];
 		this.category = this.route.snapshot.params['category'];
+	}
 
+	async ngOnInit() {
 		if (this.route.snapshot.params['issuerSlug']) {
 			this.contextSlug = this.route.snapshot.params['issuerSlug'];
 			this.contextType = 'issuer';
@@ -78,17 +80,23 @@ export class BadgeClassCreateComponent extends BaseAuthenticatedRoutableComponen
 		}
 
 		const breadcrumbPromises: Promise<unknown>[] = [];
-		this.entityLoaded = this.issuerManager.issuerBySlug(this.contextSlug).then((issuer) => {
-			this.issuer = issuer;
-			this.entity = {
-				type: 'issuer',
-				image: issuer.image,
-				slug: issuer.slug,
-			};
-		});
-		breadcrumbPromises.push(this.entityLoaded);
 
-		const state = this.router.getCurrentNavigation().extras.state;
+		try {
+			this.issuer = await this.issuerManager.issuerBySlug(this.contextSlug);
+			this.issuerLoaded = Promise.resolve(this.issuer);
+		} catch (e) {
+			try {
+				this.issuer = await this.networkManager.networkBySlug(this.contextSlug);
+				this.issuerLoaded = Promise.resolve(this.issuer);
+			} catch (err) {
+				this.issuerLoaded = Promise.reject(err);
+			}
+		}
+
+		breadcrumbPromises.push(this.issuerLoaded);
+
+		// Check if there is a badge ID in the state and fetch it if necessary
+		const state = this.router.getCurrentNavigation()?.extras.state;
 		if (state && state.copybadgeid) {
 			breadcrumbPromises.push(
 				this.badgeClassService.issuerBadgeById(state.copybadgeid).then((badge) => {
@@ -98,21 +106,19 @@ export class BadgeClassCreateComponent extends BaseAuthenticatedRoutableComponen
 			);
 		}
 
-		Promise.all(breadcrumbPromises).then(() => {
-			this.breadcrumbLinkEntries = [
-				{ title: 'Issuers', routerLink: ['/issuer'] },
-				{ title: this.issuer.name, routerLink: ['/issuer/issuers', this.issuerSlug] },
-				{
-					title: this.copiedBadgeClass
-						? this.translate.instant('Badge.copyBadge')
-						: this.translate.instant('Issuer.createBadge'),
-				},
-			];
-		});
-	}
+		// Wait for all breadcrumb-related promises to resolve
+		await Promise.all(breadcrumbPromises);
 
-	ngOnInit() {
-		super.ngOnInit();
+		// Set breadcrumb link entries after everything is loaded
+		this.breadcrumbLinkEntries = [
+			{ title: 'Issuers', routerLink: ['/issuer'] },
+			{ title: this.issuer.name, routerLink: ['/issuer/issuers', this.issuerSlug] },
+			{
+				title: this.copiedBadgeClass
+					? this.translate.instant('Badge.copyBadge')
+					: this.translate.instant('Issuer.createBadge'),
+			},
+		];
 	}
 
 	badgeClassCreated(promise: Promise<BadgeClass>) {

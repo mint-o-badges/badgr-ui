@@ -68,15 +68,10 @@ import { OebSelectComponent } from '../../../components/select.component';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { HlmIcon } from '@spartan-ng/helm/icon';
 import { HlmH2, HlmP } from '@spartan-ng/helm/typography';
+import { Network } from '~/issuer/network.model';
 
 const MAX_STUDYLOAD_HRS: number = 10_000;
 const MAX_HRS_PER_COMPETENCY: number = 999;
-
-export interface BadgeParentEntity {
-	type: 'network' | 'issuer';
-	slug: string;
-	image: string;
-}
 
 @Component({
 	selector: 'badgeclass-edit-form',
@@ -421,7 +416,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	cancel = new EventEmitter<void>();
 
 	@Input()
-	parentEntity: BadgeParentEntity;
+	issuer: Issuer | Network;
 
 	@Input()
 	category: string;
@@ -617,6 +612,10 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 
 	ngOnInit() {
 		super.ngOnInit();
+
+		if (this.issuer.is_network) {
+			this.badgeClassForm.rawControl.controls.useIssuerImageInBadge.setValue(false);
+		}
 
 		this.criteriaOptions.forEach((option) => {
 			const selectionGroup = typedFormGroup()
@@ -1376,9 +1375,14 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 			const aiCompetenciesSuggestions = this.aiCompetenciesSuggestions;
 			const keywordCompetenciesResults = this.selectedKeywordCompetencies;
 
-			const copy_permissions: BadgeClassCopyPermissions[] = ['issuer'];
-			if (formState.copy_permissions_allow_others) {
-				copy_permissions.push('others');
+			let copy_permissions: BadgeClassCopyPermissions[];
+			if (this.issuer.is_network) {
+				copy_permissions = ['none'];
+			} else {
+				copy_permissions = ['issuer'];
+				if (formState.copy_permissions_allow_others) {
+					copy_permissions.push('others');
+				}
 			}
 
 			if (this.existingBadgeClass) {
@@ -1504,7 +1508,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 						amount: parseInt(expirationState.expires_amount, 10),
 					};
 				}
-				this.savePromise = this.badgeClassManager.createBadgeClass(this.parentEntity.slug, badgeClassData);
+				this.savePromise = this.badgeClassManager.createBadgeClass(this.issuer.slug, badgeClassData);
 			}
 
 			this.save.emit(this.savePromise);
@@ -1607,7 +1611,7 @@ export class BadgeClassEditFormComponent extends BaseAuthenticatedRoutableCompon
 	generateUploadImage(image, formdata, useIssuerImageInBadge = true, initializing = false) {
 		this.currentImage = image.slice();
 		this.badgeStudio
-			.generateUploadImage(image.slice(), formdata, useIssuerImageInBadge, this.parentEntity.image)
+			.generateUploadImage(image.slice(), formdata, useIssuerImageInBadge, this.issuer.image)
 			.then((imageUrl) => {
 				this.imageField.useDataUrl(imageUrl, 'BADGE', initializing);
 			});

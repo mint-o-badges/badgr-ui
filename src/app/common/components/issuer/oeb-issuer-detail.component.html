@@ -169,6 +169,15 @@
 	></oeb-tabs>
 
 	<ng-template #badgesTemplate>
+		<div class="tw-mt-12">
+			<oeb-tabs
+				[variant]="'bluebackground'"
+				(onTabChanged)="onNestedTabChange($event)"
+				[tabs]="badgeTemplateTabs"
+				[activeTab]="activeTabBadgeTemplate"
+			>
+			</oeb-tabs>
+		</div>
 		<section class="oeb-section-sm" *ngIf="!badges?.length">
 			<h2
 				class="tw-font-medium md:tw-text-[22px] md:tw-leading-[26.4px] tw-text-purple tw-text-[16px] tw-leading-[19.2px] oeb-break-words"
@@ -268,6 +277,38 @@
 					</ng-container>
 				</div>
 			</ng-template>
+		</div>
+	</ng-template>
+
+	<ng-template #issuerBadgesTemplate>
+		<div class="tw-mt-12 tw-bg-[#F8F6FC]">
+			<badges-datatable
+				[badges]="badgeResults"
+				(directBadgeAward)="routeToBadgeAward($event, issuer)"
+				(qrCodeAward)="routeToQRCodeAward($event, issuer)"
+				(redirectToBadgeDetail)="routeToBadgeDetail($event.badge, issuer, $event.focusRequests)"
+			></badges-datatable>
+		</div>
+	</ng-template>
+
+	<ng-template #networkBadgesTemplate>
+		<div class="tw-mt-12 tw-bg-[#F8F6FC]">
+			<span [translate]="'Issuer.badgesApprovedForNetworks'" [translateParams]="{ issuer: issuer.name }"></span>
+			<badges-datatable
+				[badges]="badgeResults"
+				(directBadgeAward)="routeToBadgeAward($event, issuer)"
+				(qrCodeAward)="routeToQRCodeAward($event, issuer)"
+				(redirectToBadgeDetail)="routeToBadgeDetail($event.badge, issuer, $event.focusRequests)"
+			></badges-datatable>
+		</div>
+		<div class="tw-mt-12 tw-bg-[#F8F6FC]">
+			<span [translate]="'Issuer.awardedNetworkBadges'" [translateParams]="{ issuer: issuer.name }"></span>
+			<badges-datatable
+				[badges]="badgeResults"
+				(directBadgeAward)="routeToBadgeAward($event, issuer)"
+				(qrCodeAward)="routeToQRCodeAward($event, issuer)"
+				(redirectToBadgeDetail)="routeToBadgeDetail($event.badge, issuer, $event.focusRequests)"
+			></badges-datatable>
 		</div>
 	</ng-template>
 </div>

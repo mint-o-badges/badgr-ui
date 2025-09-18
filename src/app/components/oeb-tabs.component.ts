@@ -29,7 +29,7 @@ export type Tab = {
 						<span>{{ tab.title | translate }}</span>
 						@if (tab.count) {
 							@if (countStyle() === 'parentheses') {
-								<span class="tw-ml-1 tw-text-sm tw-opacity-70"> ({{ tab.count }}) </span>
+								<span class="tw-ml-1 md:tw-text-lg tw-font-semibold"> ({{ tab.count }}) </span>
 							} @else {
 								<div
 									class="md:tw-w-7 md:tw-h-7 tw-h-5 tw-w-5 tw-flex tw-items-center tw-justify-center tw-ml-2 tw-p-1 tw-rounded-full tw-bg-purple tw-text-white tw-text-sm"

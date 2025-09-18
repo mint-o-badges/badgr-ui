@@ -21,6 +21,7 @@ import { IssuerManager } from '~/issuer/services/issuer-manager.service';
 import { UserProfileManager } from '~/common/services/user-profile-manager.service';
 import { FormsModule } from '@angular/forms';
 import { BrnDialogRef } from '@spartan-ng/brain/dialog';
+import { QrCodeApiService } from '~/issuer/services/qrcode-api.service';
 
 @Component({
 	selector: 'network-badges',
@@ -42,6 +43,7 @@ export class NetworkBadgesComponent {
 		private userProfileManager: UserProfileManager,
 		private issuerManager: IssuerManager,
 		private messageService: MessageService,
+		private qrCodeApiService: QrCodeApiService,
 		private translate: TranslateService,
 		private router: Router,
 	) {
@@ -56,6 +58,7 @@ export class NetworkBadgesComponent {
 
 	network = input.required<Network>();
 	badgesLoaded: Promise<unknown>;
+	requestsLoaded: Promise<Map<string, ApiQRCode[]>>;
 
 	userIssuers: Issuer[] = [];
 
@@ -81,40 +84,66 @@ export class NetworkBadgesComponent {
 
 	private readonly _hlmDialogService = inject(HlmDialogService);
 
-	ngOnInit() {
-		this.badgesLoaded = firstValueFrom(this.badgeClassService.badgesByIssuerUrl$)
-			.then((badgesByIssuer) => {
-				const cmp = (a, b) => (a === b ? 0 : a < b ? -1 : 1);
-				this.badges = (badgesByIssuer[this.network().networkUrl] || []).sort((a, b) =>
-					cmp(b.createdAt, a.createdAt),
-				);
-				this.badges.forEach((b) => {
-					this.badgeResults.push({ badge: b, requestCount: 0 });
-				});
-			})
-			.catch((error) => {
-				this.messageService.reportAndThrowError(
-					`Failed to load badges for ${this.network() ? this.network().name : this.network().slug}`,
-					error,
-				);
-			});
-	}
-
-	ngAfterContentInit() {
+	private initializeTabs() {
 		this.tabs = [
 			{
 				key: 'network',
-				title: 'Network',
+				title: 'Network.networkBadges',
 				icon: 'lucideShipWheel',
-				count: 2,
+				count: this.badges.length,
 				component: this.networkTemplate,
 			},
 			{
 				key: 'partner',
 				title: 'Partner-Badges',
+				icon: 'lucideHexagon',
 				component: this.partnerTemplate,
 			},
 		];
+	}
+
+	async ngOnInit() {
+		try {
+			await this.loadBadgesAndRequests();
+			this.initializeTabs();
+		} catch (error) {
+			this.messageService.reportAndThrowError(
+				`Failed to load badges for ${this.network() ? this.network().name : this.network().slug}`,
+				error,
+			);
+		}
+	}
+
+	private async loadBadgesAndRequests() {
+		const badgesByIssuer = await firstValueFrom(this.badgeClassService.badgesByIssuerUrl$);
+		this.badges = this.sortBadgesByCreatedAt(badgesByIssuer[this.network().issuerUrl] || []);
+
+		const requestMap = await this.loadRequestsForBadges(this.badges);
+
+		this.badgeResults = this.badges.map((badge) => ({
+			badge,
+			requestCount: this.getRequestCount(badge, requestMap),
+		}));
+	}
+
+	private sortBadgesByCreatedAt(badges: any[]) {
+		const cmp = (a, b) => (a === b ? 0 : a < b ? -1 : 1);
+		return badges.sort((a, b) => cmp(b.createdAt, a.createdAt));
+	}
+
+	private async loadRequestsForBadges(badges: any[]): Promise<Map<string, ApiQRCode[]>> {
+		const requestPromises = badges.map((badge) =>
+			this.qrCodeApiService
+				.getQrCodesForIssuerByBadgeClass(badge.issuerSlug, badge.slug)
+				.then((requests) => ({ key: badge.slug, value: requests })),
+		);
+
+		const requestData = await Promise.all(requestPromises);
+
+		return requestData.reduce((map, { key, value }) => {
+			map.set(key, value);
+			return map;
+		}, new Map<string, ApiQRCode[]>());
 	}
 
 	onTabChange(tab) {
@@ -132,39 +161,34 @@ export class NetworkBadgesComponent {
 	}
 
 	routeToBadgeAward(badge: BadgeClass, issuer) {
-		const dialogRef = this._hlmDialogService.open(DialogComponent, {
+		this.dialogRef = this._hlmDialogService.open(DialogComponent, {
 			context: {
 				headerTemplate: this.headerTemplate,
 				content: this.issuerSelection,
 			},
 		});
-		dialogRef.closed$.subscribe((result) => {
+		this.dialogRef.closed$.subscribe((result) => {
 			if (result === 'continue')
-				this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'issue']);
+				this.router.navigate(['/issuer/issuers/', this.selectedIssuer.slug, 'badges', badge.slug, 'issue']);
 		});
 	}
 
 	routeToQRCodeAward(badge, issuer) {
-		// 	this.qrCodeApiService.getQrCodesForIssuerByBadgeClass(this.issuer.slug, badge.slug).then((qrCodes) => {
-		// 		if (badge.recipientCount === 0 && qrCodes.length === 0) {
-		// 			const dialogRef = this._hlmDialogService.open(InfoDialogComponent, {
-		// 				context: {
-		// 					variant: 'info',
-		// 					caption: this.translate.instant('Badge.endOfEditDialogTitle'),
-		// 					subtitle: this.translate.instant('Badge.endOfEditDialogTextQR'),
-		// 					text: this.translate.instant('Badge.endOfEditDialogSubText'),
-		// 					cancelText: this.translate.instant('General.previous'),
-		// 					forwardText: this.translate.instant('Issuer.giveQr'),
-		// 				},
-		// 			});
-		// 			dialogRef.closed$.subscribe((result) => {
-		// 				if (result === 'continue')
-		// 					this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'qr']);
-		// 			});
-		// 		} else {
-		// 			this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'qr']);
-		// 		}
-		// 	});
+		this.dialogRef = this._hlmDialogService.open(DialogComponent, {
+			context: {
+				headerTemplate: this.headerTemplate,
+				content: this.issuerSelection,
+			},
+		});
+		this.dialogRef.closed$.subscribe((result) => {
+			if (result === 'continue')
+				this.router.navigate(['/issuer/issuers/', issuer.slug, 'badges', badge.slug, 'qr'], {
+					queryParams: {
+						partnerIssuer: this.selectedIssuer.slug,
+						isNetworkBadge: true,
+					},
+				});
+		});
 	}
 
 	routeToBadgeDetail(badge, issuer, focusRequests: boolean = false) {
@@ -178,7 +202,6 @@ export class NetworkBadgesComponent {
 	}
 
 	routeToBadgeCreation(issuer: Issuer) {
-		console.log('issuer', issuer);
 		this.closeDialog();
 		this.router.navigate(['/issuer/issuers', issuer.slug, 'badges', 'create']);
 	}
@@ -187,5 +210,9 @@ export class NetworkBadgesComponent {
 		if (this.dialogRef) {
 			this.dialogRef.close();
 		}
+	}
+
+	closeDialogContinue() {
+		this.dialogRef.close('continue');
 	}
 }

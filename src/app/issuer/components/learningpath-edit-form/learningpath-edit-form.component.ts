@@ -276,6 +276,11 @@ export class LearningPathEditFormComponent extends BaseAuthenticatedRoutableComp
 		if (!this.initialisedLearningpath) {
 			this.learningPathForm.controls.license.addFromTemplate();
 		}
+
+		if (this.issuer.is_network) {
+			this.learningPathForm.rawControl.controls.useIssuerImageInBadge.setValue(false);
+		}
+
 		this.draggableList = this.selectedBadges.map((badge, index) => {
 			return {
 				id: badge.slug,

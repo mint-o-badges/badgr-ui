@@ -19,6 +19,8 @@ import { BgImageStatusPlaceholderDirective } from '../../../common/directives/bg
 import { OebInputComponent } from '../../../components/input.component';
 import { OebCheckboxComponent } from '../../../components/oeb-checkbox.component';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
+import { IssuerManager } from '~/issuer/services/issuer-manager.service';
+import { Issuer } from '~/issuer/models/issuer.model';
 
 @Component({
 	selector: 'edit-qr-form',
@@ -49,16 +51,26 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent {
 		return this.route.snapshot.params['badgeSlug'];
 	}
 
+	get isNetworkBadge() {
+		return this.route.snapshot.queryParams['isNetworkBadge'];
+	}
+
+	get partnerIssuerSlug() {
+		return this.route.snapshot.queryParams['partnerIssuer'];
+	}
+
 	get qrSlug() {
 		return this.route.snapshot.params['qrCodeId'];
 	}
 
 	badgeClass: BadgeClass;
+	issuer: Issuer;
 
 	readonly badgeFailedImageUrl = '../../../../breakdown/static/images/badge-failed.svg';
 	readonly badgeLoadingImageUrl = '../../../../breakdown/static/images/badge-loading.svg';
 
 	badgeClassLoaded: Promise<unknown>;
+	issuerLoaded: Promise<unknown>;
 	crumbs: LinkEntry[];
 
 	qrForm = typedFormGroup()
@@ -77,33 +89,50 @@ export class EditQrFormComponent extends BaseAuthenticatedRoutableComponent {
 		protected translate: TranslateService,
 		protected qrCodeApiService: QrCodeApiService,
 		protected badgeClassManager: BadgeClassManager,
+		protected issuerManager: IssuerManager,
 		protected _location: Location,
 	) {
 		super(router, route, sessionService);
 
-		this.badgeClassLoaded = this.badgeClassManager
-			.badgeByIssuerSlugAndSlug(this.issuerSlug, this.badgeSlug)
-			.then((badgeClass) => {
-				this.badgeClass = badgeClass;
-
-				this.crumbs = [
-					{ title: 'Issuers', routerLink: ['/issuer'] },
-					{
-						// title: issuer.name,
-						title: 'issuer',
-						routerLink: ['/issuer/issuers', this.issuerSlug],
-					},
-					{
-						title: 'badges',
-						routerLink: ['/issuer/issuers/' + this.issuerSlug + '/badges/'],
-					},
-					{
-						title: badgeClass.name,
-						routerLink: ['/issuer/issuers', this.issuerSlug, 'badges', badgeClass.slug],
-					},
-					{ title: 'Award Badge' },
-				];
+		if (this.isNetworkBadge) {
+			this.badgeClassLoaded = this.badgeClassManager
+				.badgeByIssuerSlugAndSlug(this.issuerSlug, this.badgeSlug)
+				.then((badgeClass) => {
+					this.badgeClass = badgeClass;
+					return this.issuerManager.issuerBySlug(this.partnerIssuerSlug);
+				})
+				.then((partnerIssuer) => {
+					this.issuer = partnerIssuer;
+				});
+		} else {
+			this.issuerLoaded = this.issuerManager.issuerBySlug(this.issuerSlug).then((issuer) => {
+				this.issuer = issuer;
 			});
+
+			this.badgeClassLoaded = this.badgeClassManager
+				.badgeByIssuerSlugAndSlug(this.issuerSlug, this.badgeSlug)
+				.then((badgeClass) => {
+					this.badgeClass = badgeClass;
+
+					this.crumbs = [
+						{ title: 'Issuers', routerLink: ['/issuer'] },
+						{
+							// title: issuer.name,
+							title: 'issuer',
+							routerLink: ['/issuer/issuers', this.issuerSlug],
+						},
+						{
+							title: 'badges',
+							routerLink: ['/issuer/issuers/' + this.issuerSlug + '/badges/'],
+						},
+						{
+							title: badgeClass.name,
+							routerLink: ['/issuer/issuers', this.issuerSlug, 'badges', badgeClass.slug],
+						},
+						{ title: 'Award Badge' },
+					];
+				});
+		}
 
 		if (this.qrSlug) {
 			this.qrCodeApiService.getQrCode(this.qrSlug).then((qrCode) => {

@@ -78,12 +78,12 @@
 				<div class="tw-flex md:tw-flex-row tw-flex-col tw-gap-16 tw-mt-4 tw-relative md:tw-mx-0 tw-mx-auto">
 					<div class="md:tw-w-[346px] md:tw-p-0 tw-pb-8 md:tw-flex-grow-1">
 						<div class="badge-sidebar-internal tw-flex tw-flex-wrap">
-							<div class="md:tw-min-w-[260px] tw-min-w-[200px]">
+							<div class="tw-w-60">
 								<div
 									class="tw-flex tw-items-center tw-bg-white tw-mx-auto tw-py-8 tw-rounded-[20px] oeb-slight-shadow"
 								>
 									<img
-										class="tw-w-[120.88px] tw-h-[120.88px] md:tw-w-[172.69px] md:tw-h-[172.69px] tw-mx-auto tw-block"
+										class="tw-w-[300px] tw-h-tw-w-[300px] tw-mx-auto tw-block"
 										[loaded-src]="config.badgeImage"
 										[loading-src]="config.badgeLoadingImageUrl"
 										[error-src]="config.badgeFailedImageUrl"
@@ -95,18 +95,29 @@
 								>
 									<div>
 										<img
-											class="tw-min-w-[37.1px] tw-h-[37.1px] md:tw-min-w-[53px] md:tw-h-[53px] issuer-image tw-aspect-square"
+											class="tw-min-w-[37.1px] tw-h-[37.1px] issuer-image tw-aspect-square"
 											[loaded-src]="config.issuerImage"
 											[loading-src]="config.issuerImagePlacholderUrl"
 											[error-src]="config.issuerImagePlacholderUrl"
 										/>
 									</div>
-									<div class="tw-text-oebblack tw-ml-2">
-										<dt class="tw-italic">{{ 'RecBadgeDetail.issuedBy' | translate }}:</dt>
-										<dd class="oeb-break-words">
-											{{ config.issuerName }}
-										</dd>
-									</div>
+									@if (config.networkBadge) {
+										<div class="tw-leading-[120%] tw-ml-2">
+											<dt class="tw-text-[#757575]">
+												{{ 'Network.createdByNetwork' | translate }}:
+											</dt>
+											<dd class="oeb-break-words tw-text-oebblack tw-font-bold">
+												{{ config.issuerName }}
+											</dd>
+										</div>
+									} @else {
+										<div class="tw-text-oebblack tw-ml-2">
+											<dt class="tw-italic">{{ 'RecBadgeDetail.issuedBy' | translate }}:</dt>
+											<dd class="oeb-break-words">
+												{{ config.issuerName }}
+											</dd>
+										</div>
+									}
 								</div>
 							</div>
 							<dl clss="tw-min-w-[150px]">
@@ -180,7 +191,7 @@
 										</ng-template>
 									</div>
 								}
-								@if (config.copy_permissions) {
+								@if (config.copy_permissions && !config.copy_permissions.includes('none')) {
 									<div class="tw-flex tw-flex-row tw-gap-1">
 										<dt
 											class="tw-text-oebblack tw-font-bold"

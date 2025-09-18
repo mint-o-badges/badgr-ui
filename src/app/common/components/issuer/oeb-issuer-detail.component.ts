@@ -9,7 +9,7 @@ import { BadgeClass } from '../../../issuer/models/badgeclass.model';
 import { IssuerManager } from '../../../issuer/services/issuer-manager.service';
 import { MatchingAlgorithm } from '../../dialogs/fork-badge-dialog/fork-badge-dialog.component';
 import { MenuItem } from '../badge-detail/badge-detail.component.types';
-import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe, TranslateModule } from '@ngx-translate/core';
 import { ApiLearningPath } from '../../../common/model/learningpath-api.model';
 import { LearningPathApiService } from '../../../common/services/learningpath-api.service';
 import { DangerDialogComponentTemplate } from '../../dialogs/oeb-dialogs/danger-dialog-template.component';
@@ -62,6 +62,7 @@ import { HlmH1, HlmP } from '@spartan-ng/helm/typography';
 		LearningPathDatatableComponent,
 		BgLearningPathCard,
 		TranslatePipe,
+		TranslateModule,
 	],
 })
 export class OebIssuerDetailComponent implements OnInit {
@@ -134,8 +135,14 @@ export class OebIssuerDetailComponent implements OnInit {
 	tabs: any = undefined;
 	activeTab = 'badges';
 
+	badgeTemplateTabs: any = undefined;
+	activeTabBadgeTemplate = 'issuer-badges';
+
 	@ViewChild('badgesTemplate', { static: true }) badgesTemplate: ElementRef;
 	@ViewChild('learningPathTemplate', { static: true }) learningPathTemplate: ElementRef;
+
+	@ViewChild('issuerBadgesTemplate', { static: true }) issuerBadgesTemplate: ElementRef;
+	@ViewChild('networkBadgesTemplate', { static: true }) networkBadgesTemplate: ElementRef;
 
 	ngAfterContentInit() {
 		this.tabs = [
@@ -148,6 +155,19 @@ export class OebIssuerDetailComponent implements OnInit {
 				key: 'micro-degrees',
 				title: 'Micro Degrees',
 				component: this.learningPathTemplate,
+			},
+		];
+
+		this.badgeTemplateTabs = [
+			{
+				key: 'issuer-badges',
+				title: 'Issuer.issuerBadges',
+				component: this.issuerBadgesTemplate,
+			},
+			{
+				key: 'network-badges',
+				title: 'Issuer.networkBadges',
+				component: this.networkBadgesTemplate,
 			},
 		];
 	}
@@ -337,6 +357,10 @@ export class OebIssuerDetailComponent implements OnInit {
 
 	onTabChange(tab) {
 		this.activeTab = tab;
+	}
+
+	onNestedTabChange(tab) {
+		this.activeTabBadgeTemplate = tab;
 	}
 
 	calculateStudyLoad(lp: any): number {

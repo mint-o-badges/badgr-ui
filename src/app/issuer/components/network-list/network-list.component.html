@@ -15,7 +15,10 @@
 			[text]="'Network.create' | translate"
 		></oeb-button>
 	} @else {
-		<div class="md:tw-flex">
+		<span class="tw-mt-8 tw-flex tw-text-oebblack tw-text-[22px]">{{
+			'Issuer.yourIssuersAreInNetworks' | translate
+		}}</span>
+		<div class="md:tw-flex tw-mt-4">
 			<div class="tw-grid tw-grid-cols-myIssuersMobile sm:tw-grid-cols-myIssuers tw-gap-6 tw-w-full tw-relative">
 				@for (network of networks(); track network) {
 					<oeb-networkcard
