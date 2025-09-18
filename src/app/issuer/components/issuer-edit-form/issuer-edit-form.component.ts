@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, input } from '@angular/core';
+import { Component, OnInit, Input, input, ElementRef, viewChild } from '@angular/core';
 import { typedFormGroup } from '../../../common/util/typed-forms';
 import { FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IssuerNameValidator } from '../../../common/validators/issuer-name.validator';

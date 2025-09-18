@@ -34,6 +34,7 @@ import { HlmIcon } from '@spartan-ng/helm/icon';
 import { HlmH1, HlmP } from '@spartan-ng/helm/typography';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { NetworkManager } from '~/issuer/services/network-manager.service';
+import { Network } from '~/issuer/network.model';
 
 @Component({
 	selector: 'issuer-list',
@@ -64,14 +65,14 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 	Array = Array;
 
 	issuers: Issuer[] = null;
+	networks = signal<Network[]>([]);
 	badges: BadgeClass[] = null;
-	issuerToBadgeInfo: { [issuerId: string]: IssuerBadgesInfo } = {};
 
 	issuersLoaded: Promise<unknown>;
 	networksLoaded: Promise<unknown>;
 
-	networks = signal<any>([]);
 	badgesLoaded: Promise<unknown>;
+
 	@ViewChild('pluginBox') public pluginBoxElement: ElementRef;
 
 	@ViewChild('headerTemplate')
@@ -162,25 +163,7 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 
 		// subscribe to issuer and badge class changes
 		this.issuersLoaded = this.loadIssuers();
-
 		this.networksLoaded = this.loadNetworks();
-
-		this.badgesLoaded = new Promise<void>((resolve, reject) => {
-			this.badgeClassService.badgesByIssuerUrl$.subscribe((badges) => {
-				this.issuerToBadgeInfo = {};
-
-				Object.keys(badges).forEach((issuerSlug) => {
-					const issuerBadges = badges[issuerSlug];
-
-					this.issuerToBadgeInfo[issuerSlug] = new IssuerBadgesInfo(
-						issuerBadges.reduce((sum, badge) => sum + badge.recipientCount, 0),
-						issuerBadges.sort((a, b) => b.recipientCount - a.recipientCount),
-					);
-				});
-
-				resolve();
-			});
-		});
 	}
 
 	issuerSearchInputFocusOut() {
@@ -194,7 +177,10 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 		return new Promise<void>((resolve, reject) => {
 			this.issuerManager.myIssuers$.subscribe(
 				(issuers) => {
-					this.issuers = issuers.slice().sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+					this.issuers = issuers
+						.filter((i) => !i.is_network)
+						.slice()
+						.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
 					resolve();
 				},
 				(error) => {
@@ -208,8 +194,12 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 	loadNetworks = () => {
 		return new Promise<void>((resolve, reject) => {
 			this.networkManager.myNetworks$.subscribe(
-				(networks) => {
-					this.networks.set(networks.slice().sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime()));
+				(issuers) => {
+					this.networks.set(
+						issuers
+							.filter((i) => i.is_network)
+							.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime()),
+					);
 					resolve();
 				},
 				(error) => {
