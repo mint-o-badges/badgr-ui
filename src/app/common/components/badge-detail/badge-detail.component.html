@@ -77,12 +77,12 @@
 				<div class="tw-flex md:tw-flex-row tw-flex-col tw-gap-16 tw-mt-4 tw-relative md:tw-mx-0 tw-mx-auto">
 					<div class="md:tw-w-[346px] md:tw-p-0 tw-pb-8 md:tw-flex-grow-1">
 						<div class="badge-sidebar-internal tw-rounded-lg tw-flex tw-flex-wrap">
-							<div class="tw-w-60">
+							<div class="md:tw-min-w-[260px] tw-min-w-[200px]">
 								<div
 									class="tw-flex tw-items-center tw-bg-white tw-mx-auto tw-py-8 tw-rounded-lg oeb-slight-shadow"
 								>
 									<img
-										class="tw-w-[300px] tw-h-tw-w-[300px] tw-mx-auto tw-block"
+										class="tw-w-[120.88px] tw-h-[120.88px] md:tw-w-[172.69px] md:tw-h-[172.69px] tw-mx-auto tw-block"
 										[loaded-src]="config.badgeImage"
 										[loading-src]="config.badgeLoadingImageUrl"
 										[error-src]="config.badgeFailedImageUrl"
@@ -94,7 +94,7 @@
 								>
 									<div>
 										<img
-											class="tw-min-w-[37.1px] tw-h-[37.1px] issuer-image tw-aspect-square"
+											class="tw-min-w-[37.1px] tw-h-[37.1px] md:tw-min-w-[53px] md:tw-h-[53px] issuer-image tw-aspect-square"
 											[loaded-src]="config.issuerImage"
 											[loading-src]="config.issuerImagePlacholderUrl"
 											[error-src]="config.issuerImagePlacholderUrl"
@@ -111,7 +111,9 @@
 										</div>
 									} @else {
 										<div class="tw-text-oebblack tw-ml-2">
-											<dt class="tw-text-darkgrey">{{ 'RecBadgeDetail.issuedBy' | translate }}:</dt>
+											<dt class="tw-text-darkgrey">
+												{{ 'RecBadgeDetail.issuedBy' | translate }}:
+											</dt>
 											<dd class="oeb-break-words tw-font-bold">
 												{{ config.issuerName }}
 											</dd>
@@ -119,10 +121,14 @@
 									}
 								</div>
 							</div>
-							@if (config.copy_permissions) {
-								<div class="tw-flex tw-italic tw-text-oebblack tw-flex-row tw-gap-1">
-									<dt [innerHTML]="('Badge.copyableFor' | translate) + ': '"></dt>
+							@if (config.copy_permissions && !config.copy_permissions.includes('none')) {
+								<div class="tw-flex tw-flex-row tw-gap-1">
+									<dt
+										class="tw-text-oebblack tw-font-bold"
+										[innerHTML]="('Badge.copyableFor' | translate) + ': '"
+									></dt>
 									<dd
+										class="tw-text-oebblack tw-italic"
 										[innerHTML]="
 											config.copy_permissions.includes('others')
 												? ('Issuer.allInstitutions' | translate)
@@ -187,106 +193,6 @@
 												</ul>
 											}
 										</oeb-collapsible>
-								@if (config.badgeCriteria && config.category == competencyBadge) {
-									<div class="tw-bg-white tw-mb-4 tw-rounded-[10px]">
-										<ng-template>
-											@if (config.badgeCriteria.length || config.competencies.length) {
-												<oeb-collapsible
-													[trigger]="collapseCriteriaTrigger"
-													closeIcon="lucideChevronDown"
-													[defaultOpen]="
-														typeof(config.badgeCriteria) != 'string' &&
-														config.badgeCriteria.length > 0
-													"
-													[id]=""
-												>
-													<ng-template #collapseCriteriaTrigger>
-														<dt
-															class="tw-mr-auto tw-flex tw-justify-center tw-items-center tw-px-2"
-														>
-															<ng-icon
-																hlm
-																name="lucideAward"
-																class="tw-w-8 tw-h-8 tw-text-purple"
-															>
-															</ng-icon>
-															<span
-																class="tw-text-oebblack tw-font-bold tw-text-sm tw-ml-1"
-																[innerHTML]="'Badge.awardCriteria' | translate"
-															></span>
-														</dt>
-													</ng-template>
-													@if (
-														typeof(config.badgeCriteria) != 'string' &&
-														config.badgeCriteria.length
-													) {
-														<dd>
-															<ul class="tw-pr-2 tw-pl-8 tw-list-inside tw-list-disc">
-																@for (
-																	criteria of config.badgeCriteria;
-																	track criteria
-																) {
-																	<li class="tw-mb-1">
-																		<span class="tw-text-oebblack">{{
-																			criteria['name']
-																		}}</span>
-																		@if (criteria['description']) {
-																			<p
-																				class="tw-text-oebblack tw-italic tw-font-thin tw-ml-4 tw-mt-1"
-																			>
-																				{{ criteria['description'] }}
-																			</p>
-																		}
-																	</li>
-																}
-															</ul>
-														</dd>
-													} @else {
-														<ul class="tw-pr-2 tw-pl-8 tw-list-inside tw-list-disc">
-															@for (competency of config.competencies; track competency) {
-																<li class="tw-mb-1">
-																	<span class="tw-text-oebblack">{{
-																		competency.name
-																	}}</span>
-																</li>
-															}
-														</ul>
-													}
-												</oeb-collapsible>
-											}
-										</ng-template>
-									</div>
-								}
-								@if (config.copy_permissions && !config.copy_permissions.includes('none')) {
-									<div class="tw-flex tw-flex-row tw-gap-1">
-										<dt
-											class="tw-text-oebblack tw-font-bold"
-											[innerHTML]="('Badge.copyableFor' | translate) + ': '"
-										></dt>
-										<dd
-											class="tw-text-oebblack tw-italic"
-											[innerHTML]="
-												config.copy_permissions.includes('others')
-													? ('Issuer.allInstitutions' | translate)
-													: ('Issuer.ownInstitution' | translate)
-											"
-										></dd>
-									</div>
-								}
-								@if (config.tags.length > 0) {
-									<div class="tw-flex tw-items-start md:tw-flex-row tw-flex-col">
-										<dt class="tw-text-oebblack tw-font-bold md:tw-py-2 md:tw-mr-2 tw-mb-1">
-											Tags
-										</dt>
-										<dd class="tw-text-oebblack">
-											@for (tag of config.tags; track tag; let last = $last) {
-												<div
-													class="tag tw-border-[var(--color-purple)] tw-mx-2 tw-ml-0 tw-max-w-24"
-												>
-													{{ tag }}
-												</div>
-											}
-										</dd>
 									</div>
 								}
 								@if (config.version) {
