@@ -97,6 +97,7 @@
 		"select": "Select",
 		"loadMore": "Load more",
 		"searchByEmail": "Search by email address",
+		"searchByNameOrEmail": "Search name or email",
 		"openNewWindow": "Open in new window",
 		"public": "Public",
 		"sendUsYourBadge": "Send your badge to <a class='tw-text-link tw-underline' href='mailto:support@openbadges.education'>support@openbadges.education</a> and we will be glad to take a look. ",
@@ -113,7 +114,9 @@
 		"country": "Country",
 		"state": "State",
 		"overview": "Overview",
-		"rolesAndRights": "Roles and rights"
+		"rolesAndRights": "Roles and rights",
+		"website": "Website",
+		"organization": "Organization"
 	},
 	"NavItems": {
 		"register": "Register",
@@ -353,6 +356,7 @@
 		"staffEditorRights": "Rights to create, assign and delete badges, including micro-degrees.",
 		"staffMemberRights": "Can assign badges created by owners and/or editors (including creating, editing and deleting QR code assignments).",
 		"imageFormat": "(Format 1:1 / square, file formats: PNG or SVG)",
+		"imageFormat": "(Format 1:1 / square, file formats: PNG or SVG)",
 		"nameOfIssuer": "Name of Institution",
 		"websiteUrl": "Website-URL",
 		"schoolLabel": "School (elementary school, secondary schools, vocational schools, institutions of formal education)",
@@ -368,6 +372,7 @@
 		"clickOnAwardBadges": "Click on \"award badges\" to award the badges to your learners now.",
 		"creatingBadge": "Creating Badge",
 		"memberView": "Member view",
+		"contract26": "By clicking on “Create institution,” the agreement <a class='tw-underline tw-text-link' target='_blank' href='https://oeb-cms.mycelia.education/wp-content/uploads/2025/09/EN-Vereinbarung-ueber-die-gemeinsame-Verantwortlichkeit-GVV_Institution_082025.pdf'>available here</a> pursuant to Article 26(1) GDPR on the joint data protection responsibility of the institution with its partners becomes effective.",
 		"partOfNetwork": "Part of the network",
 		"issueByEmail": "issue by email",
 		"recipientEmail": "Recipient's email address",
@@ -446,7 +451,7 @@
 		"multiBadges": "badges",
 		"noRecipients": "No recipient",
 		"oneRecipient": "1 recipient",
-		"multiRecipients": "recipients",
+		"multiRecipients": "Recipients",
 		"participation": "Participation",
 		"competency": "Competency",
 		"learningpath": "Micro Degree",
@@ -996,7 +1001,7 @@
 	},
 	"QrCode": {
 		"qrAward": "QR code awarding",
-		"qrAwards": "QR Code awarding",
+		"qrAwards": "QR Code awardings",
 		"savedSuccessfully": "<span class='tw-font-bold'> The QR code award has been successfully saved on the badge detail page.</span>",
 		"downloadedSuccessfully": "<span class='tw-font-bold'>You have successfully downloaded the QR code.</span><br> Check your download folder.",
 		"deleteQrAward": "Delete QR code award",
@@ -1023,7 +1028,11 @@
 		"toBadgeDetail": "To Badge detail page",
 		"downloadPoster": "Download QR-Code-Poster",
 		"badgeDetailPage": "badge detail page",
-		"badgesAwardedSuccessfully": "badges awarded successfully"
+		"badgesAwardedSuccessfully": "badges awarded successfully",
+		"invalidDateRange": "The expiration date must be after the start date",
+		"invalidDate": "Please enter a date in the format YYYY/mm/dd",
+		"missingStartDate": "Please enter a start date for validity",
+		"expired": "This QR code has expired."
 	},
 	"LearningPath": {
 		"learningpaths": "Micro Degrees",
@@ -1081,7 +1090,7 @@
 		"notActivatedYetStart": "The Micro Degree is not yet",
 		"notActivatedYetLink": "unlocked",
 		"notActivatedYetEnd": " for use.",
-		"finishedOn": "finished on",
+		"finishedOn": "Finished on",
 		"mdUsers": "Micro Degree users",
 		"searchMds": "search micro degrees",
 		"saving": "Saving",

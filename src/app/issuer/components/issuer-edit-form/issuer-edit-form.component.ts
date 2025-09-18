@@ -42,6 +42,7 @@ import { NetworkManager } from '~/issuer/services/network-manager.service';
 		OebButtonComponent,
 		RouterLink,
 		TranslatePipe,
+		HlmP,
 	],
 })
 export class IssuerEditFormComponent implements OnInit {
@@ -87,6 +88,9 @@ export class IssuerEditFormComponent implements OnInit {
 			this.initFormFromExisting(issuer);
 		}
 	}
+
+	imageField = viewChild.required<ElementRef<HTMLElement>>('imageField');
+
 	constructor(
 		loginService: SessionService,
 		protected router: Router,
@@ -228,8 +232,9 @@ export class IssuerEditFormComponent implements OnInit {
 		const imageControl = this.issuerForm.rawControlMap.issuer_image;
 		if (imageControl) {
 			imageControl.setErrors({ imageError: error });
+			imageControl.markAsDirty();
+			imageControl.updateValueAndValidity();
 		}
-		this.issuerForm.markTreeDirtyAndValidate();
 	}
 
 	refreshProfile = () => {
@@ -244,6 +249,15 @@ export class IssuerEditFormComponent implements OnInit {
 		}
 
 		if (!this.issuerForm.markTreeDirtyAndValidate()) {
+			// try scrolling to the first invalid form field
+			const firstInvalidControl: HTMLElement =
+				this.imageError.length > 0
+					? this.imageField().nativeElement
+					: (document.querySelector('.ng-invalid') as HTMLElement);
+			if (firstInvalidControl) {
+				firstInvalidControl.scrollIntoView({ behavior: 'smooth', block: 'center' }); // smooth scroll and center
+			}
+
 			return;
 		}
 

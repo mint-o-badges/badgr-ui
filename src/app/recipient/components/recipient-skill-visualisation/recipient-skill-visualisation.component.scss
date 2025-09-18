@@ -33,7 +33,7 @@
 				&.description[data-title]::after {
 					content: attr(data-title);
 					position: fixed;
-					background-color: #f8f6fc;
+					background-color: var(--color-lavender);
 					border-radius: 10px;
 					border: 1px solid var(--color-purple);
 					color: var(--color-purple);
@@ -104,7 +104,7 @@
 			&.leaf {
 				color: var(--color-black);
 				circle {
-					fill: var(--color-purple-50);
+					fill: var(--color-lightgray);
 				}
 			}
 			&.future,
@@ -186,7 +186,7 @@
 	&__esco {
 		&:before {
 			border-color: var(--color-purple);
-			background-color: var(--color-lightpurple);
+			background-color: var(--color-purple-100);
 		}
 	}
 

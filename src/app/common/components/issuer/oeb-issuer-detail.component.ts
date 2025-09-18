@@ -144,7 +144,7 @@ export class OebIssuerDetailComponent implements OnInit {
 	@ViewChild('issuerBadgesTemplate', { static: true }) issuerBadgesTemplate: ElementRef;
 	@ViewChild('networkBadgesTemplate', { static: true }) networkBadgesTemplate: ElementRef;
 
-	ngAfterContentInit() {
+	ngAfterViewInit() {
 		this.tabs = [
 			{
 				key: 'badges',

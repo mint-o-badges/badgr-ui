@@ -456,10 +456,3 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 		return null;
 	}
 }
-
-class IssuerBadgesInfo {
-	constructor(
-		public totalBadgeIssuanceCount = 0,
-		public badges: BadgeClass[] = [],
-	) {}
-}

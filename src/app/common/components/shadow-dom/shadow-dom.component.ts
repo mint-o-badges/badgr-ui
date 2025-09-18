@@ -84,6 +84,13 @@ export class ShadowDomComponent {
 	bindLinks(e: MouseEvent) {
 		if ((e.target as HTMLElement).nodeName == 'A') {
 			const a = e.target as HTMLAnchorElement;
+
+			// manual handling of umami data attributes because umami-tracker does not handle shadow dom contents
+			if (a.dataset.umamiEvent) {
+				// @ts-ignore
+				if (window.umami) window.umami.track(a.dataset.umamiEvent);
+			}
+
 			if (a.href) {
 				const url = new URL(a.href);
 				if (url.origin == location.origin) {

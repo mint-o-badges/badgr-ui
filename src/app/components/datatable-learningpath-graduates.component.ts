@@ -98,7 +98,7 @@ import { NgIcon } from '@ng-icons/core';
 	</table>
 
 	<ng-template #translateHeaderIDCellTemplate let-context>
-		{{ context.header.id | translate | titlecase }}
+		{{ context.header.id | translate }}
 	</ng-template>
 
 	<ng-template #badgeActionsCellTemplate let-context>
@@ -106,13 +106,13 @@ import { NgIcon } from '@ng-icons/core';
 			<oeb-button
 				size="xs"
 				width="full_width"
-				(click)="downloadCertificate.emit(context)"
+				(click)="downloadCertificate.emit(context.row.original)"
 				[text]="'Issuer.pdfCertificate' | translate" />
 			<oeb-button
 				variant="secondary"
 				size="xs"
 				width="full_width"
-				(click)="revokeLearningPath.emit(context)"
+				(click)="revokeLearningPath.emit(context.row.original)"
 				[text]="'General.revoke' | translate | titlecase" />
 		</div>
 	</ng-template>`,

@@ -92,7 +92,7 @@ import { NgIcon } from '@ng-icons/core';
 		</table>
 
 		<ng-template #translateHeaderIDCellTemplate let-context>
-			{{ context.header.id | translate | titlecase }}
+			{{ context.header.id | translate }}
 		</ng-template>
 
 		<ng-template #badgeCellTemplate let-context>
@@ -160,7 +160,7 @@ export class DatatableComponent {
 
 	readonly tableSorting = signal<SortingState>([
 		{
-			id: 'Badge',
+			id: 'Badge.createdOn',
 			desc: false,
 		},
 	]);
@@ -175,8 +175,8 @@ export class DatatableComponent {
 		{
 			id: 'Badge.createdOn',
 			header: () => this.translateHeaderIDCellTemplate(),
-			accessorFn: (row) => formatDate(row.badge.createdAt, 'dd.MM.yyyy', 'de-DE'),
-			cell: (info) => info.getValue(),
+			accessorFn: (row) => row.badge.createdAt,
+			cell: (info) => formatDate(info.getValue() as Date, 'dd.MM.yyyy', 'de-DE'),
 		},
 		{
 			id: 'Badge.multiRecipients',

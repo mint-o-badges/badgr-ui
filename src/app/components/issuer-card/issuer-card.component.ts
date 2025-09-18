@@ -27,6 +27,7 @@ import { Issuer } from '~/issuer/models/issuer.model';
 })
 export class IssuerCardComponent {
 	@Input() issuer: Issuer;
+	@Input() plural: object;
 
 	@Output() navigate = new EventEmitter<void>();
 
@@ -34,8 +35,6 @@ export class IssuerCardComponent {
 	readonly issuerImagePlaceHolderUrl = preloadImageURL(
 		'../../../../breakdown/static/images/placeholderavatar-issuer.svg',
 	);
-
-	plural = {};
 
 	onNavigate() {
 		this.navigate.emit();

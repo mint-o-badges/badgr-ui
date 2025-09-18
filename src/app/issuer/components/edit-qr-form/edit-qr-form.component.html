@@ -62,7 +62,9 @@
 							<oeb-input
 								labelStyle="tw-text-oebblack"
 								[label]="'QrCode.expirationStart' | translate"
-								[errorMessage]="'Bitte gib ein Datum in der Form YYYY/mm/dd an'"
+								[errorMessage]="{
+									invalidDate: 'QrCode.invalidDate' | translate
+								}"
 								[control]="qrForm.rawControlMap.valid_from"
 								fieldType="date"
 							></oeb-input>
@@ -70,29 +72,39 @@
 								labelStyle="tw-text-oebblack"
 								[label]="'QrCode.expirationEnd' | translate"
 								[errorMessage]="{
-									expiresBeforeValidFrom: 'Das Ablaufdatum muss nach dem Start-Datum liegen',
-									invalidDate: 'Bitte gib ein Datum in der Form YYYY/mm/dd an'
+									expiresBeforeValidFrom: ('QrCode.invalidDateRange' | translate),
+									invalidDate: ('QrCode.invalidDate' | translate)
 								}"
 								[control]="qrForm.rawControlMap.expires_at"
 								fieldType="date"
 							></oeb-input>
 						</div>
 					</div>
+					@if (qrForm.hasError('noStartDate')) {
+						<p id="noStartDateError" [hidden]="!qrForm.hasError('noStartDate')" class="tw-text-red tw-mb-2">
+							{{ 'QrCode.missingStartDate' | translate }}
+						</p>
+					}
 				} @else {
 					<div class="tw-flex tw-gap-12">
 						<oeb-input
-							label="Start-Datum"
-							[errorMessage]="'Bitte gib ein Datum in der Form YYYY/mm/dd an'"
+							[label]="'QrCode.expirationStart' | translate"
+							[errorMessage]="'QrCode.invalidDate' | translate"
 							[control]="qrForm.rawControlMap.valid_from"
 							fieldType="date"
 						></oeb-input>
 						<oeb-input
-							label="End-Datum"
-							[errorMessage]="'Bitte gib ein Datum in der Form YYYY/mm/dd an'"
+							[label]="'QrCode.expirationEnd' | translate"
+							[errorMessage]="'QrCode.invalidDate' | translate"
 							[control]="qrForm.rawControlMap.expires_at"
 							fieldType="date"
 						></oeb-input>
 					</div>
+					@if (qrForm.hasError('noStartDate')) {
+						<p id="noStartDateError" [hidden]="!qrForm.hasError('noStartDate')" class="tw-text-red tw-mb-2">
+							{{ 'QrCode.missingStartDate' | translate }}
+						</p>
+					}
 					<span
 						class="tw-mt-6 md:tw-mt-7 tw-text-oebblack tw-font-semibold md:tw-leading-[28px] md:tw-text-[20px] tw-leading-[19px] tw-text-[14px]"
 						>{{ 'General.notification' | translate }}</span

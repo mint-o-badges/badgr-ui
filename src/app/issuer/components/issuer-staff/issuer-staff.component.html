@@ -22,7 +22,7 @@
 			</div>
 			<oeb-button
 				[text]="'Issuer.addMember' | translate"
-				size="mediumText"
+				class="tw-font-semibold"
 				(click)="openDialog(this.translate.instant('Issuer.addMember'))"
 			></oeb-button>
 		</div>
@@ -238,7 +238,7 @@
 </ng-template>
 
 <ng-template #translateHeaderIDCellTemplate let-context>
-	{{ context.header.id | translate | titlecase }}
+	{{ context.header.id | translate }}
 </ng-template>
 
 <ng-template #roleSelectionCellTemplate let-context>
