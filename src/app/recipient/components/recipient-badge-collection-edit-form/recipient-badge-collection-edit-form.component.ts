@@ -26,6 +26,7 @@ import { NgClass, I18nPluralPipe } from '@angular/common';
 import { BgBadgecard } from '../../../common/components/bg-badgecard';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { HlmInput } from '@spartan-ng/helm/input';
+import { MatchingAlgorithm } from '~/common/util/matching-algorithm';
 
 interface CreateBadgeCollectionForm<T> {
 	collectionName: T;
@@ -388,21 +389,5 @@ class MatchingIssuerBadges {
 				this.badges.push(badge);
 			}
 		}
-	}
-}
-
-class MatchingAlgorithm {
-	static issuerMatcher(inputPattern: string): (issuer: ApiRecipientBadgeIssuer) => boolean {
-		const patternStr = StringMatchingUtil.normalizeString(inputPattern);
-		const patternExp = StringMatchingUtil.tryRegExp(patternStr);
-
-		return (issuer) => StringMatchingUtil.stringMatches(issuer.name, patternStr, patternExp);
-	}
-
-	static badgeMatcher(inputPattern: string): (badge: RecipientBadgeInstance) => boolean {
-		const patternStr = StringMatchingUtil.normalizeString(inputPattern);
-		const patternExp = StringMatchingUtil.tryRegExp(patternStr);
-
-		return (badge) => StringMatchingUtil.stringMatches(badge.badgeClass.name, patternStr, patternExp);
 	}
 }

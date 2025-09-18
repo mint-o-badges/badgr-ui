@@ -10,6 +10,7 @@ import { StringMatchingUtil } from '../../../common/util/string-matching-util';
 import { SvgIconComponent } from '../../../common/components/svg-icon.component';
 import { FormsModule } from '@angular/forms';
 import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
+import { MatchingAlgorithm } from '~/common/util/matching-algorithm';
 
 export interface RecipientBadgeCollectionSelectionDialogOptions {
 	dialogId: string;
@@ -129,14 +130,5 @@ export class RecipientBadgeCollectionSelectionDialogComponent extends BaseDialog
 			.forEach(addCollectionToResults);
 
 		this.applySorting();
-	}
-}
-
-class MatchingAlgorithm {
-	static collectionMatcher(inputPattern: string): (collection: RecipientBadgeCollection) => boolean {
-		const patternStr = StringMatchingUtil.normalizeString(inputPattern);
-		const patternExp = StringMatchingUtil.tryRegExp(patternStr);
-
-		return (collection) => StringMatchingUtil.stringMatches(collection.name, patternStr, patternExp);
 	}
 }

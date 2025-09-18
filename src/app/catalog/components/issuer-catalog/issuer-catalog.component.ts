@@ -28,6 +28,8 @@ import { PaginationAdvancedComponent } from '../../../components/oeb-numbered-pa
 import { HlmIcon } from '@spartan-ng/helm/icon';
 import { HlmInput } from '@spartan-ng/helm/input';
 import { HlmH1 } from '@spartan-ng/helm/typography';
+import { BadgeClass } from '~/issuer/models/badgeclass.model';
+import { MatchingAlgorithm } from '~/common/util/matching-algorithm';
 
 @Component({
 	selector: 'app-issuer-catalog',
@@ -550,15 +552,6 @@ export class IssuerCatalogComponent extends BaseRoutableComponent implements OnI
 					this.router.navigate([isMember ? '/issuer/issuers/' : '/public/issuers/', issuerData.slug]);
 				});
 		}
-	}
-}
-
-class MatchingAlgorithm {
-	static issuerMatcher(inputPattern: string): (issuer) => boolean {
-		const patternStr = StringMatchingUtil.normalizeString(inputPattern);
-		const patternExp = StringMatchingUtil.tryRegExp(patternStr);
-
-		return (issuer) => StringMatchingUtil.stringMatches(issuer.name, patternStr, patternExp);
 	}
 }
 

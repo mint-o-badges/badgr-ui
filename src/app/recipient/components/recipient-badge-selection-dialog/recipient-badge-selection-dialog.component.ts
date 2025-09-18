@@ -12,6 +12,7 @@ import { SvgIconComponent } from '../../../common/components/svg-icon.component'
 import { FormsModule } from '@angular/forms';
 import { NgStyle, DatePipe } from '@angular/common';
 import { BgAwaitPromises } from '../../../common/directives/bg-await-promises';
+import { MatchingAlgorithm } from '~/common/util/matching-algorithm';
 
 export interface RecipientBadgeSelectionDialogOptions {
 	dialogId: string;
@@ -283,21 +284,5 @@ class MatchingIssuerBadges {
 				this.badges.push(badge);
 			}
 		}
-	}
-}
-
-class MatchingAlgorithm {
-	static issuerMatcher(inputPattern: string): (issuer: ApiRecipientBadgeIssuer) => boolean {
-		const patternStr = StringMatchingUtil.normalizeString(inputPattern);
-		const patternExp = StringMatchingUtil.tryRegExp(patternStr);
-
-		return (issuer) => StringMatchingUtil.stringMatches(issuer.name, patternStr, patternExp);
-	}
-
-	static badgeMatcher(inputPattern: string): (badge: RecipientBadgeInstance) => boolean {
-		const patternStr = StringMatchingUtil.normalizeString(inputPattern);
-		const patternExp = StringMatchingUtil.tryRegExp(patternStr);
-
-		return (badge) => StringMatchingUtil.stringMatches(badge.badgeClass.name, patternStr, patternExp);
 	}
 }

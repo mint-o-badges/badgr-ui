@@ -3,10 +3,7 @@ import { animate, animateChild, query, stagger, style, transition, trigger } fro
 import { LearningPathApiService } from '../../services/learningpath-api.service';
 import { HlmDialogService } from '../../../components/spartan/ui-dialog-helm/src/lib/hlm-dialog.service';
 import { DangerDialogComponentTemplate } from '../../dialogs/oeb-dialogs/danger-dialog-template.component';
-import { BadgeClassManager } from '../../../issuer/services/badgeclass-manager.service';
-import { BadgeInstanceManager } from '../../../issuer/services/badgeinstance-manager.service';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
-import { MessageService } from '../../services/message.service';
 import { SuccessDialogComponent } from '../../dialogs/oeb-dialogs/success-dialog.component';
 import { CommonDialogsService } from '../../services/common-dialogs.service';
 import { BaseRoutableComponent } from '../../pages/base-routable.component';
@@ -57,9 +54,6 @@ export class OebLearningPathDetailComponent extends BaseRoutableComponent implem
 
 	constructor(
 		private learningPathApiService: LearningPathApiService,
-		private badgeClassManager: BadgeClassManager,
-		private badgeInstanceManager: BadgeInstanceManager,
-		private messageService: MessageService,
 		private dialogService: CommonDialogsService,
 		private badgeInstanceApiservice: BadgeInstanceApiService,
 		private pdfService: PdfService,

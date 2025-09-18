@@ -13,7 +13,6 @@ import { BadgrApiFailure } from '../../../common/services/api-failure';
 import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
 import { UserProfile, UserProfileEmail } from '../../../common/model/user-profile.model';
 import { Subscription } from 'rxjs';
-import { QueryParametersService } from '../../../common/services/query-parameters.service';
 import { AppConfigService } from '../../../common/app-config.service';
 import { typedFormGroup } from '../../../common/util/typed-forms';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
@@ -36,7 +35,6 @@ import {
 	SortingState,
 } from '@tanstack/angular-table';
 import { NgIcon } from '@ng-icons/core';
-import { TitleCasePipe } from '@angular/common';
 import { OebDropdownComponent } from '~/components/oeb-dropdown.component';
 import { HlmIcon } from '@spartan-ng/helm/icon';
 
@@ -50,7 +48,6 @@ import { HlmIcon } from '@spartan-ng/helm/icon';
 		NgIcon,
 		HlmIcon,
 		OebDropdownComponent,
-		TitleCasePipe,
 		FormMessageComponent,
 		SourceListenerDirective,
 		BgAwaitPromises,
@@ -129,7 +126,6 @@ export class ProfileComponent extends BaseAuthenticatedRoutableComponent impleme
 		protected messageService: MessageService,
 		protected profileManager: UserProfileManager,
 		protected dialogService: CommonDialogsService,
-		protected paramService: QueryParametersService,
 		protected configService: AppConfigService,
 		private translate: TranslateService,
 	) {

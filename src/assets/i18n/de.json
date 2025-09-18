@@ -117,7 +117,8 @@
 		"overview": "Übersicht",
 		"rolesAndRights": "Rollen und Rechte",
 		"website": "Webseite",
-		"organization": "Organisation"
+		"organization": "Organisation",
+		"notNow": "Jetzt nicht"
 	},
 	"NavItems": {
 		"register": "Registrieren",
@@ -373,7 +374,18 @@
 		"creatingBadge": "Erstelle Badge",
 		"memberView": "Mitglieds-Ansicht",
 		"partOfNetwork": "Teil vom Netzwerk",
-		"contract26": "Mit einem Klick auf „Institution erstellen“ wird die <a class='tw-underline tw-text-link' target='_blank' href='https://oeb-cms.mycelia.education/wp-content/uploads/2025/09/Vereinbarung-ueber-die-gemeinsame-Verantwortlichkeit-GVV_Institution_082025.pdf'>hier abrufbare</a> Vereinbarung gemäß Artikel 26 Abs. 1 DSGVO über die gemeinsame datenschutzrechtliche Verantwortung der Institution mit den Verbundpartnerinnen wirksam."
+		"contract26": "Mit einem Klick auf „Institution erstellen“ wird die <a class='tw-underline tw-text-link' target='_blank' href='https://oeb-cms.mycelia.education/wp-content/uploads/2025/09/Vereinbarung-ueber-die-gemeinsame-Verantwortlichkeit-GVV_Institution_082025.pdf'>hier abrufbare</a> Vereinbarung gemäß Artikel 26 Abs. 1 DSGVO über die gemeinsame datenschutzrechtliche Verantwortung der Institution mit den Verbundpartnerinnen wirksam.",
+		"linkedInId": "<span class=\"tw-italic tw-font-normal\">Optional: </span> LinkedIn-ID",
+		"linkedInIdUse1": "Für die ",
+		"linkedInIdUseLink": "Badge-Darstellung",
+		"linkedInIdUse2": " auf LinkedIn",
+		"linkedInIdHint": "Die LinkedIn-ID ist die Zahlenfolge in der URL deiner Institutions-Seite, etwa: www.linkedin.com/company/<b>12345678</b>/admin -> ID <b>12345678</b>",
+		"linkedInUseNoteHeader": "LinkedIn-ID deiner Institution",
+		"linkedInUseNoteText": "Lernende können erhaltene Badges in ihr LinkedIn-Profil einbinden. Damit das Zertifikat dort mit dem \t\t\tLogo-Bild deiner Institution erscheint, müssen wir die LinkedIn-ID deiner Institution hinterlegen.",
+		"addLinkedInId": "LinkedIn-ID ergänzen",
+		"findLinkedInId": "So findest du die LinkedIn-ID:",
+		"findLinkedInIdText": "Gehe zur Seite deiner Institution auf LinkedIn.  Die ID ist die Zahlenfolge in der entsprechenden URL.  Die URL lautet zum Beispiel: www.linkedin.com/company/12345678/admin. → ID = 12345678.",
+		"findLinkedInIdNote": "Du kannst die Linkedin-ID jederzeit auf der Seite deiner Institution durch „Bearbeiten” der Institutions-Details ergänzen."
 	},
 	"Network": {
 		"networksNav": "Netzwerke A-Z",
@@ -799,7 +811,11 @@
 		"skillVisualisationHelp": "Bewege den Mauszeiger über die Kreise, um die zugehörigen Kompetenzen zu sehen.",
 		"skillVisualisationSingleIntro": "Deine Kompetenzen im Bereich ",
 		"FutureSkillsAccrodingToNextSkills": "Future Skills nach dem NextSkills-Framework",
-		"ESCOAreas": "ESCO-Bereiche"
+		"ESCOAreas": "ESCO-Bereiche",
+		"shareViaLink": "Per Link:",
+		"addToLinkedInProfile": "Badge zu LinkedIn-Profil hinzufügen",
+		"shareViaLinkedIn": "Auf LinkedIn:",
+		"shareWithoutLinkedInId": "Info: Die Institution, die dir den Badge verliehen hat, hat bei uns keine LinkedIn-ID hinterlegt. Deswegen kann das entsprechende Logo-Bild auf LinkedIn leider nicht angezeigt werden."
 	},
 	"EditBadge": {
 		"editBadge": "Badge editieren",
