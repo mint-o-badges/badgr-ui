@@ -20,56 +20,65 @@ export interface ApiIssuerJsonld {
 	image: string;
 }
 
-export interface ApiIssuer {
+export interface ApiBaseIssuer {
 	name: string;
 	slug: IssuerSlug;
 	description: string;
 	image: string;
-
 	created_at: string;
 	created_by: string;
 	staff: ApiIssuerStaff[];
+	json: ApiIssuerJsonld;
+	country?: string;
+	state?: string;
+}
+
+export interface ApiIssuer extends ApiBaseIssuer {
+	is_network: false;
 
 	badgeClassCount: number;
 	learningPathCount: number;
-	json: ApiIssuerJsonld;
-
 	verified: boolean;
+	intendedUseVerified: boolean;
+	ownerAcceptedTos: boolean;
 
 	source_url?: string;
-
 	category?: string;
 	street?: string;
 	streetnumber?: string;
 	zip?: string;
 	city?: string;
-
-	country?: string;
-	state?: string;
-
 	lat?: number;
 	lon?: number;
-	intendedUseVerified: boolean;
-	ownerAcceptedTos: boolean;
 
 	networks: ApiNetwork[];
-	is_network: boolean;
 }
 
-export interface ApiNetwork {
-	name: string;
-	slug: IssuerSlug;
-	description: string;
-	image: string;
-	country: string;
-	state: string;
-
-	created_at: string;
-	created_by: string;
-	staff: ApiIssuerStaff[];
+export interface ApiNetwork extends ApiBaseIssuer {
+	is_network: true;
 	partner_issuers: ApiIssuer[];
+}
 
-	json: ApiIssuerJsonld;
+export type ApiAnyIssuer = ApiIssuer | ApiNetwork;
+
+export interface ApiIssuerForCreation {
+	name: string;
+	description: string;
+	image?: string;
+	email: string;
+	url: string;
+	category?: string;
+	street?: string;
+	streetnumber?: string;
+	zip?: string;
+	city?: string;
+	country?: string;
+	state?: string;
+	intendedUseVerified: boolean;
+	lat?: number;
+	lon?: number;
+
+	is_network?: false;
 }
 
 export interface ApiNetworkForCreation {
@@ -79,6 +88,7 @@ export interface ApiNetworkForCreation {
 	url: string;
 	country: string;
 	state?: string;
+	is_network?: boolean;
 }
 
 export type IssuerStaffRoleSlug = 'owner' | 'editor' | 'staff';
@@ -102,27 +112,6 @@ export interface ApiIssuerStaffOperation {
 	username?: string;
 	email?: string;
 	role?: IssuerStaffRoleSlug;
-}
-
-export interface ApiIssuerForCreation {
-	name: string;
-	description: string;
-	image?: string;
-	email: string;
-	url: string;
-	category?: string;
-	street?: string;
-	streetnumber?: string;
-	zip?: string;
-	city?: string;
-
-	country?: string;
-	state?: string;
-
-	intendedUseVerified: boolean;
-
-	lat?: number;
-	lon?: number;
 }
 
 export interface ApiIssuerForEditing {

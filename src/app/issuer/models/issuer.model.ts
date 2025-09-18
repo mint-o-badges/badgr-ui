@@ -114,6 +114,10 @@ export class Issuer extends ManagedEntity<ApiIssuer, IssuerRef> {
 		return this.apiModel.networks;
 	}
 
+	get is_network(): boolean {
+		return this.apiModel.is_network;
+	}
+
 	get badgeClassCount(): number {
 		const badges = this.commonManager.badgeManager.badgesList;
 

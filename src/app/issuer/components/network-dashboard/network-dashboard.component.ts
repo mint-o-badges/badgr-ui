@@ -30,6 +30,7 @@ import { ApiNetworkInvitation } from '../../../issuer/models/network-invite-api.
 import { NetworkBadgesComponent } from '../network-badges/network-badges.component';
 import { IssuerManager } from '~/issuer/services/issuer-manager.service';
 import { NetworkManager } from '~/issuer/services/network-manager.service';
+import { ApiIssuer } from '~/issuer/models/issuer-api.model';
 
 @Component({
 	selector: 'network-dashboard',
@@ -50,7 +51,7 @@ import { NetworkManager } from '~/issuer/services/network-manager.service';
 	],
 })
 export class NetworkDashboardComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
-	networkLoaded = signal<Promise<unknown> | null>(null);
+	networkLoaded: Promise<unknown>;
 	networkSlug: string;
 	crumbs: LinkEntry[];
 	tabs: Tab[] = undefined;
@@ -108,9 +109,9 @@ export class NetworkDashboardComponent extends BaseAuthenticatedRoutableComponen
 			this.pendingInvites = invites;
 		});
 
-		const loadPromise = this.networkManager.networkBySlug(this.networkSlug).then((network) => {
+		this.networkLoaded = this.networkManager.networkBySlug(this.networkSlug).then((network) => {
 			this.network.set(network);
-			// this.partnerIssuers.set(network.partnerIssuers.entities);
+			this.partnerIssuers.set(network.partner_issuers.entities);
 			this.title.setTitle(
 				`Issuer - ${this.network.name} - ${this.configService.theme['serviceName'] || 'Badgr'}`,
 			);
@@ -124,8 +125,6 @@ export class NetworkDashboardComponent extends BaseAuthenticatedRoutableComponen
 				{ title: this.network.name, routerLink: ['/issuer/network/' + this.network().slug] },
 			];
 		});
-
-		this.networkLoaded.set(loadPromise);
 	}
 
 	ngAfterContentInit() {

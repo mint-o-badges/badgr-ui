@@ -17,7 +17,7 @@ import { IssuerSlug, IssuerUrl } from '../models/issuer-api.model';
 import { AnyRefType, EntityRef } from '../../common/model/entity-ref';
 import { ManagedEntityGrouping } from '../../common/model/entity-set';
 import { MessageService } from '../../common/services/message.service';
-import { Observable } from 'rxjs';
+import { from, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { first, map } from 'rxjs/operators';
 
@@ -59,6 +59,26 @@ export class BadgeClassManager extends BaseHttpApiService {
 		return this.badgesList.loaded$.pipe(map((l) => l.entities));
 	}
 
+	private awardableBadgesCache = new Map<string, Promise<BadgeClass[]>>();
+
+	async getAwardableBadgesForIssuer(issuerSlug: string): Promise<BadgeClass[]> {
+		if (!this.awardableBadgesCache.has(issuerSlug)) {
+			const promise = this.badgeClassApi.getAwardableBadgesForIssuer(issuerSlug).then((apiBadges) =>
+				apiBadges.map((apiModel) => {
+					const badge = new BadgeClass(this.commonEntityManager);
+					badge.applyApiModel(apiModel);
+					return badge;
+				}),
+			);
+			this.awardableBadgesCache.set(issuerSlug, promise);
+		}
+		return this.awardableBadgesCache.get(issuerSlug)!;
+	}
+
+	getAwardableBadges$(issuerSlug: string): Observable<BadgeClass[]> {
+		return from(this.getAwardableBadgesForIssuer(issuerSlug));
+	}
+
 	constructor(
 		protected loginService: SessionService,
 		protected http: HttpClient,
@@ -86,8 +106,13 @@ export class BadgeClassManager extends BaseHttpApiService {
 		});
 	}
 
-	createBadgeImage(issuerSlug: string, image: string, category: string, useIssuerImage: boolean) {
-		return this.badgeClassApi.createBadgeImage(issuerSlug, image, category, useIssuerImage);
+	createBadgeImage(issuerSlug: string, badgeSlug: string, category: string, useIssuerImage: boolean) {
+		return this.badgeClassApi.createBadgeImage(issuerSlug, badgeSlug, category, useIssuerImage);
+	}
+
+	async badgeByIssuerSlugAndSlug(issuerSlug: string, badgeSlug: string): Promise<BadgeClass | null> {
+		const badges = await this.getAwardableBadgesForIssuer(issuerSlug);
+		return badges.find((badge) => badge.slug === badgeSlug) || null;
 	}
 
 	badgeByIssuerUrlAndSlug(issuerId: IssuerUrl, badgeSlug: BadgeClassSlug): Promise<BadgeClass> {
@@ -101,16 +126,16 @@ export class BadgeClassManager extends BaseHttpApiService {
 			);
 	}
 
-	badgeByIssuerSlugAndSlug(issuerSlug: IssuerSlug, badgeSlug: BadgeClassSlug): Promise<BadgeClass> {
-		return this.allBadges$
-			.pipe(first())
-			.toPromise()
-			.then(
-				(badges) =>
-					badges.find((b) => b.issuerSlug === issuerSlug && b.slug === badgeSlug) ||
-					this.throwError(`Issuer Slug '${issuerSlug}' has no badge with slug '${badgeSlug}'`),
-			);
-	}
+	// badgeByIssuerSlugAndSlug(issuerSlug: IssuerSlug, badgeSlug: BadgeClassSlug): Promise<BadgeClass> {
+	// 	return this.allBadges$
+	// 		.pipe(first())
+	// 		.toPromise()
+	// 		.then(
+	// 			(badges) =>
+	// 				badges.find((b) => b.issuerSlug === issuerSlug && b.slug === badgeSlug) ||
+	// 				this.throwError(`Issuer Slug '${issuerSlug}' has no badge with slug '${badgeSlug}'`),
+	// 		);
+	// }
 
 	loadedBadgeByRef(badgeRef: BadgeClassRef | BadgeClassUrl): BadgeClass {
 		const badgeUrl = EntityRef.urlForRef(badgeRef);

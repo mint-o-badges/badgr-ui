@@ -13,6 +13,7 @@ import { NgModel } from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { PublicApiService } from '../../../public/services/public-api.service';
 import { MessageService } from '../../../common/services/message.service';
+import { ApiIssuer } from '~/issuer/models/issuer-api.model';
 
 @Component({
 	selector: 'network-partners',
