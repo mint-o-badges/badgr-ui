@@ -8,22 +8,26 @@ import { OebButtonComponent } from '~/components/oeb-button.component';
 @Component({
 	selector: 'oeb-networkcard',
 	host: {
-		class: 'tw-rounded-[10px] tw-bg-purple tw-border-[#CFCECE] tw-border-solid tw-border tw-relative tw-p-3 tw-block tw-overflow-hidden tw-max-w-[600px]',
+		class: 'tw-rounded-[10px] tw-bg-purple tw-border-[#CFCECE] tw-border-solid tw-border tw-relative tw-p-6 tw-block tw-overflow-hidden tw-max-w-[600px] tw-h-[455px]',
 	},
 	template: `
 		<div class="tw-flex tw-flex-col tw-h-full">
 			<div class="tw-flex-row tw-flex tw-items-center">
-				<img [src]="network.image" class="tw-aspect-square" width="80" />
+				<div
+					class="tw-bg-white tw-w-[100px] tw-h-[100px] tw-flex tw-items-center tw-justify-center tw-rounded-[10px]"
+				>
+					<img [src]="network.image" class="tw-aspect-square" width="80" />
+				</div>
 				<div class="tw-flex tw-flex-col tw-flex-wrap tw-pl-4 tw-py-2 tw-break-words">
 					<a
-						class="tw-text-3xl tw-font-bold"
+						class="!tw-text-3xl tw-font-bold tw-leading-[120%]"
 						[routerLink]="['/issuer/networks', network.slug]"
 						hlmP
 						_variant="white"
 						>{{ network.name }}</a
 					>
 					@if (!public) {
-						<!-- <span class="tw-text-white tw-text-lg"
+						<span class="tw-text-white tw-text-lg"
 							>{{
 								'Network.yourRole'
 									| translate
@@ -33,21 +37,23 @@ import { OebButtonComponent } from '~/components/oeb-button.component';
 													| translate
 										  }
 							}}
-						</span> -->
+						</span>
 					}
 				</div>
 			</div>
-			<div class="tw-text-white">
+			<div class="tw-text-white tw-mt-4 tw-leading-[130%]">
 				{{ network.description }}
 			</div>
 
-			<section>
+			<section class="tw-mt-6 tw-flex tw-flex-col tw-gap-6">
 				<oeb-button variant="secondary" width="full_width" [text]="'Issuer.giveBadge' | translate"></oeb-button>
-				<oeb-button
-					variant="secondary"
-					width="full_width"
-					[text]="'Issuer.createBadge' | translate"
-				></oeb-button>
+				@if (network.canCreateBadge) {
+					<oeb-button
+						variant="secondary"
+						width="full_width"
+						[text]="'Issuer.createBadge' | translate"
+					></oeb-button>
+				}
 			</section>
 		</div>
 	`,
