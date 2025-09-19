@@ -7,10 +7,11 @@ import { IssuerManager } from '../../../issuer/services/issuer-manager.service';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { BgImageStatusPlaceholderDirective } from '../../directives/bg-image-status-placeholder.directive';
 import { NgIf } from '@angular/common';
-import { PublicApiIssuer, PublicApiNetwork } from '../../../public/models/public-api.model';
+import { PublicApiIssuer } from '../../../public/models/public-api.model';
 import { Issuer } from '../../../issuer/models/issuer.model';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { HlmP, HlmH1 } from '@spartan-ng/helm/typography';
+import { Network } from '~/issuer/network.model';
 
 @Component({
 	selector: 'oeb-network-detail',
@@ -19,7 +20,7 @@ import { HlmP, HlmH1 } from '@spartan-ng/helm/typography';
 })
 export class OebNetworkDetailComponent {
 	@Input() issuers: Issuer[] | PublicApiIssuer[];
-	@Input() network: any | PublicApiNetwork;
+	@Input() network: Network | PublicApiIssuer;
 	@Input() networkPlaceholderSrc: string;
 	@Input() networkActionsMenu: any;
 	@Input() public: boolean = false;

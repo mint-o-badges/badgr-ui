@@ -30,12 +30,7 @@ import { FormsModule } from '@angular/forms';
 import { BgBadgecard } from '../bg-badgecard';
 import { LearningPathDatatableComponent } from '../../../components/datatable-learningpaths.component';
 import { BgLearningPathCard } from '../bg-learningpathcard';
-import {
-	PublicApiBadgeClass,
-	PublicApiIssuer,
-	PublicApiLearningPath,
-	PublicApiNetwork,
-} from '../../../public/models/public-api.model';
+import { PublicApiBadgeClass, PublicApiIssuer, PublicApiLearningPath } from '../../../public/models/public-api.model';
 import { HlmInput } from '@spartan-ng/helm/input';
 import { HlmH1, HlmP } from '@spartan-ng/helm/typography';
 
@@ -71,7 +66,7 @@ export class OebIssuerDetailComponent implements OnInit {
 	@Input() issuerActionsMenu: any;
 	@Input() badges: BadgeClass[] | PublicApiBadgeClass[];
 	@Input() learningPaths: (ApiLearningPath | PublicApiLearningPath)[];
-	@Input() networks: PublicApiNetwork[];
+	@Input() networks: PublicApiIssuer[];
 	@Input() public: boolean = false;
 	@Output() issuerDeleted = new EventEmitter();
 
