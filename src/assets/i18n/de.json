@@ -265,7 +265,7 @@
 		"giveMyBadges": "Meine Badges vergeben",
 		"askForPlugin": "Plugin anfragen",
 		"askForPluginText": "Unser <span class='tw-font-bold'>Plugin</span> bietet dir die Möglichkeit, Badges aus deiner eigenen digitalen Lehrumgebung heraus zu vergeben.",
-		"betaPhase": "Unsere Plattform befindet sich noch in der Betaphase. <b>Du hast Fehler entdeckt? Schreib uns gerne an <a class='tw-text-link tw-underline' href='mailto:support@openbadges.education'>support@openbadges.education</a></b>.",
+		"betaPhase": "Unsere Plattform befindet sich noch in der Betaphase. <b>Du hast Fehler entdeckt? Schreib uns gerne an <a class='tw-text-link tw-underline oeb-break-words' href='mailto:support@openbadges.education'>support@openbadges.education</a></b>.",
 		"askForLearningPath": "Wir helfen dir, einen Micro Degree anzulegen. Schreibe an <a href='mailto:lernpfad@openbadges.education' class='tw-underline tw-text-[#1400FF]'>lernpfad@openbadges.education</a>.",
 		"award": "vergeben",
 		"badgePreview": "Vorschau Badge",
@@ -687,7 +687,7 @@
 		"changePassword": "Passwort ändern",
 		"newPassword": "Neues Passwort",
 		"areYouNew": "Du bist neu hier?",
-		"yourEmail": "Deine E-Mail Adresse",
+		"yourEmail": "Deine E-Mail-Adresse",
 		"yourPassword": "Dein Passwort"
 	},
 	"Legend": {
