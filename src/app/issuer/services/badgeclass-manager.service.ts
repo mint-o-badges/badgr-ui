@@ -23,6 +23,8 @@ import { first, map } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class BadgeClassManager extends BaseHttpApiService {
+	private _networkBadgesBySlug = new Map<string, StandaloneEntitySet<BadgeClass, ApiBadgeClass>>();
+
 	badgesList = new StandaloneEntitySet<BadgeClass, ApiBadgeClass>(
 		(apiModel) => new BadgeClass(this.commonEntityManager),
 		(apiModel) => apiModel.json.id,
@@ -57,6 +59,38 @@ export class BadgeClassManager extends BaseHttpApiService {
 
 	get loadedBadges$(): Observable<BadgeClass[]> {
 		return this.badgesList.loaded$.pipe(map((l) => l.entities));
+	}
+
+	private getNetworkBadgesEntitySet(networkSlug: string): StandaloneEntitySet<BadgeClass, ApiBadgeClass> {
+		if (!this._networkBadgesBySlug.has(networkSlug)) {
+			const entitySet = new StandaloneEntitySet<BadgeClass, ApiBadgeClass>(
+				(apiModel) => new BadgeClass(this.commonEntityManager),
+				(apiModel) => apiModel.json.id,
+				() => this.badgeClassApi.getNetworkBadgeClasses(networkSlug),
+			);
+			this._networkBadgesBySlug.set(networkSlug, entitySet);
+		}
+		return this._networkBadgesBySlug.get(networkSlug)!;
+	}
+
+	getNetworkBadgeClassesByIssuerUrl(networkSlug: string): { [issuerUrl: string]: BadgeClass[] } {
+		const entitySet = this.getNetworkBadgesEntitySet(networkSlug);
+		return entitySet.entities.reduce(
+			(grouped, badge) => {
+				const issuerUrl = badge.issuerUrl;
+				if (!grouped[issuerUrl]) {
+					grouped[issuerUrl] = [];
+				}
+				grouped[issuerUrl].push(badge);
+				return grouped;
+			},
+			{} as { [issuerUrl: string]: BadgeClass[] },
+		);
+	}
+
+	getNetworkBadgesByIssuerUrl$(networkSlug: string): Observable<{ [issuerUrl: string]: BadgeClass[] }> {
+		const entitySet = this.getNetworkBadgesEntitySet(networkSlug);
+		return entitySet.loaded$.pipe(map(() => this.getNetworkBadgeClassesByIssuerUrl(networkSlug)));
 	}
 
 	private awardableBadgesCache = new Map<string, Promise<BadgeClass[]>>();

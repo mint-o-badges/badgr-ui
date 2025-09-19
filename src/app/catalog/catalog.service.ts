@@ -5,6 +5,7 @@ import { BaseHttpApiService } from '~/common/services/base-http-api.service';
 import { MessageService } from '~/common/services/message.service';
 import { SessionService } from '~/common/services/session.service';
 import { BadgeClassV3, IBadgeClassV3 } from '~/issuer/models/badgeclassv3.model';
+import { NetworkV3 } from '~/issuer/models/networkv3.model';
 
 const ENDPOINT = 'v3/issuer';
 
@@ -139,10 +140,10 @@ export class CatalogService extends BaseHttpApiService {
 			);
 
 			if (response.ok && response.body) {
-				// return {
-				// 	...response.body,
-				// 	results: response.body.results.map((r) => new NetworkV3(r)),
-				// };
+				return {
+					...response.body,
+					results: response.body.results.map((r) => new NetworkV3(r)),
+				};
 			} else {
 				return null;
 			}

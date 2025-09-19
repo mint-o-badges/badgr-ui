@@ -1,5 +1,5 @@
 import { ManagedEntity } from '~/common/model/managed-entity';
-import { ApiIssuer, ApiNetwork, IssuerRef, IssuerUrl } from './models/issuer-api.model';
+import { ApiIssuer, ApiNetwork, IssuerRef, IssuerStaffRoleSlug, IssuerUrl } from './models/issuer-api.model';
 import { CommonEntityManager } from '~/entity-manager/services/common-entity-manager.service';
 import { ApiEntityRef } from '~/common/model/entity-ref';
 import { Issuer, IssuerStaffMember } from './models/issuer.model';
@@ -69,6 +69,10 @@ export class Network extends ManagedEntity<ApiNetwork, IssuerRef> {
 
 	get partnerCount(): number {
 		return this.partner_issuers.length;
+	}
+
+	get current_user_network_role(): IssuerStaffRoleSlug | null {
+		return this.apiModel.current_user_network_role;
 	}
 
 	get currentUserStaffMember(): IssuerStaffMember {

@@ -18,14 +18,16 @@
 			(qrCodeAward)="routeToQRCodeAward($event, network())"
 			(redirectToBadgeDetail)="routeToBadgeDetail($event.badge, network(), $event.focusRequests)"
 		></badges-datatable>
-		@if (network().currentUserStaffMember.canEditBadge) {
-			<oeb-button
-				[text]="'Network.createBadge' | translate"
-				[routerLink]="[`/issuer/issuers/${network().slug}/badges/select/`]"
-			></oeb-button>
-		}
 	} @else {
-		@if (network().currentUserStaffMember.canEditBadge) {
+		<span
+			class="tw-text-lg tw-text-oebblack tw-my-6 tw-block"
+			[innerHTML]="'Network.noBadgesYet' | translate: { network: network().name }"
+		></span>
+		@if (
+			network().current_user_network_role &&
+			network().current_user_network_role != 'staff' &&
+			!badgeResults.length
+		) {
 			<oeb-button
 				[text]="'Network.createBadge' | translate"
 				[routerLink]="[`/issuer/issuers/${network().slug}/badges/select/`]"

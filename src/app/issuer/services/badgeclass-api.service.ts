@@ -43,6 +43,10 @@ export class BadgeClassApiService extends BaseHttpApiService {
 		return this.get<ApiBadgeClass>('/v1/issuer/issuers/' + issuerSlug + '/badges/' + badgeSlug).then((r) => r.body);
 	}
 
+	getNetworkBadgeClasses(networkSlug: string) {
+		return this.get<ApiBadgeClass[]>(`/v1/issuer/networks/${networkSlug}/badges`).then((r) => r.body);
+	}
+
 	deleteBadgeClass(issuerSlug: IssuerSlug, badgeSlug: BadgeClassSlug) {
 		return this.delete(`/v1/issuer/issuers/${issuerSlug}/badges/${badgeSlug}`);
 	}

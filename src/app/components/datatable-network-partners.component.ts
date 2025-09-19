@@ -82,26 +82,29 @@ import { ApiNetworkInvitation } from '../issuer/models/network-invite-api.model'
 						</tr>
 					}
 				</thead>
-				<tbody hlmTBody>
-					@for (row of table.getRowModel().rows; track row.id; let i = $index) {
-						<tr hlmTr>
-								@for (cell of row.getVisibleCells(); track cell.id;) {
-									<td hlmTd>
-										<ng-container
-											*flexRender="cell.column.columnDef.cell; props: cell.getContext(); let cell"
-										>
-											<div [innerHTML]="cell"></div>
-										</ng-container>
-									</td>
-								}
-						</tr>
-					}
-				</tbody>
+				@if(approvedInvites().length){
+
+					<tbody hlmTBody>
+						@for (row of table.getRowModel().rows; track row.id; let i = $index) {
+							<tr hlmTr>
+									@for (cell of row.getVisibleCells(); track cell.id;) {
+										<td hlmTd>
+											<ng-container
+												*flexRender="cell.column.columnDef.cell; props: cell.getContext(); let cell"
+											>
+												<div [innerHTML]="cell"></div>
+											</ng-container>
+										</td>
+									}
+							</tr>
+						}
+					</tbody>
+				}
 			</table>
 		</div>
 
 		<ng-template #translateHeaderIDCellTemplate let-context>
-			{{ context.header.id | translate | titlecase }}
+			{{ context.header.id | translate  }}
 		</ng-template>
 
 		<ng-template #issuerActionsCellTemplate let-context>

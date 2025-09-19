@@ -31,7 +31,7 @@ import { NetworkBadgesComponent } from '../network-badges/network-badges.compone
 import { IssuerManager } from '~/issuer/services/issuer-manager.service';
 import { NetworkManager } from '~/issuer/services/network-manager.service';
 import { ApiIssuer } from '~/issuer/models/issuer-api.model';
-
+import { RouterLink } from '@angular/router';
 @Component({
 	selector: 'network-dashboard',
 	templateUrl: './network-dashboard.component.html',
@@ -48,6 +48,7 @@ import { ApiIssuer } from '~/issuer/models/issuer-api.model';
 		AddInstitutionComponent,
 		BgBreadcrumbsComponent,
 		NetworkBadgesComponent,
+		RouterLink,
 	],
 })
 export class NetworkDashboardComponent extends BaseAuthenticatedRoutableComponent implements OnInit {
@@ -250,5 +251,13 @@ export class NetworkDashboardComponent extends BaseAuthenticatedRoutableComponen
 				this.openSuccessDialog();
 			}
 		});
+	}
+
+	get role() {
+		if (this.network().currentUserStaffMember) {
+			return this.network().currentUserStaffMember.roleSlug;
+		} else {
+			return this.network().current_user_network_role;
+		}
 	}
 }

@@ -425,14 +425,15 @@
 			"staff": "Mitarbeiter:in"
 		},
 		"confirmNetworkInvitation": "Bestätige die <span class='tw-font-bold'>Netzwerk-Einladung von {{networkName}}</span> für deine Institution <span class='tw-italic'>{{issuerName}}</span> mit Klick auf den Button:",
-		"partnerSince": "Partner:in seit",
+		"partnerSince": "Netzwerk-Partner:in seit",
 		"alreadyConfirmed": "Ein anderes Mitglied von <span class='tw-italic'> {{issuerName}} hat die Netzwerk-Einladung von <span class='tw-font-bold'> {{networkName}}</span> bereits bestätigt.",
 		"view": "Netzwerk ansehen",
 		"createBadge": "Netzwerk-Badge erstellen",
 		"awardBadgeIssuer": "Über welche deiner <span class='tw-font-bold'>Institutionen</span> soll der Badge vergeben werden?",
 		"networkBadges": "Netzwerk-Badges",
 		"noPartnerBadgesYet": "Bisher hat keine Partner-Institution einen Badge für das Netzwerk freigegeben.",
-		"createdByNetwork": "Erstellt vom NETZWERK"
+		"createdByNetwork": "Erstellt vom NETZWERK",
+		"noBadgesYet": "Das Netzwerk <span class='tw-font-semibold'>{{network}}</span> hat noch keine eigenen Badges erstellt."
 	},
 	"Badge": {
 		"groupBy": "Gruppieren nach",

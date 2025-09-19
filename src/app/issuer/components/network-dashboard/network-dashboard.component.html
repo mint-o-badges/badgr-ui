@@ -16,12 +16,20 @@
 							'Network.yourRole'
 								| translate
 									: {
-											role:
-												'Network.role.' + network().currentUserStaffMember.roleSlug | translate
+											role: 'Network.role.' + role | translate
 									  }
 						}}</span
 					>
 				</div>
+				@if (activeTab == 'badges') {
+					<div class="tw-ml-auto">
+						<oeb-button
+							variant="secondary"
+							[text]="'Network.createBadge' | translate"
+							[routerLink]="[`/issuer/issuers/${network().slug}/badges/select/`]"
+						></oeb-button>
+					</div>
+				}
 			</section>
 			<p class="tw-text-oebblack tw-text-lg tw-mt-2 tw-pb-8">
 				{{ network().description }}
@@ -36,7 +44,12 @@
 		</ng-template>
 		<ng-template #overviewTemplate>
 			<div class="tw-my-12">
-				<oeb-button (click)="openDialog()" [text]="'Network.inviteInstitutions' | translate"> </oeb-button>
+				<oeb-button
+					[variant]="partnerIssuers().length ? 'secondary' : 'default'"
+					(click)="openDialog()"
+					[text]="'Network.inviteInstitutions' | translate"
+				>
+				</oeb-button>
 			</div>
 		</ng-template>
 	</div>

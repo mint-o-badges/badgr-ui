@@ -1,8 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
-import { HlmP } from '@spartan-ng/helm/typography';
-import { OebBackgroundComponent } from '~/components/oeb-background.component';
 import { OebButtonComponent } from '~/components/oeb-button.component';
 
 @Component({
@@ -20,10 +18,8 @@ import { OebButtonComponent } from '~/components/oeb-button.component';
 				</div>
 				<div class="tw-flex tw-flex-col tw-flex-wrap tw-pl-4 tw-py-2 tw-break-words">
 					<a
-						class="!tw-text-3xl tw-font-bold tw-leading-[120%]"
+						class="!tw-text-3xl tw-font-bold tw-leading-[120%] tw-text-white"
 						[routerLink]="['/issuer/networks', network.slug]"
-						hlmP
-						_variant="white"
 						>{{ network.name }}</a
 					>
 					@if (!public) {
@@ -32,9 +28,7 @@ import { OebButtonComponent } from '~/components/oeb-button.component';
 								'Network.yourRole'
 									| translate
 										: {
-												role:
-													'Network.role.' + $any(network).currentUserStaffMember.roleSlug
-													| translate
+												role: 'Network.role.' + network.current_user_network_role | translate
 										  }
 							}}
 						</span>
@@ -44,20 +38,27 @@ import { OebButtonComponent } from '~/components/oeb-button.component';
 			<div class="tw-text-white tw-mt-4 tw-leading-[130%]">
 				{{ network.description }}
 			</div>
-
-			<section class="tw-mt-6 tw-flex tw-flex-col tw-gap-6">
-				<oeb-button variant="secondary" width="full_width" [text]="'Issuer.giveBadge' | translate"></oeb-button>
-				@if (network.canCreateBadge) {
-					<oeb-button
-						variant="secondary"
-						width="full_width"
-						[text]="'Issuer.createBadge' | translate"
-					></oeb-button>
-				}
-			</section>
+			@if (!public) {
+				<section class="tw-flex tw-flex-col tw-h-full">
+					<div class="tw-mt-auto tw-flex tw-flex-col tw-gap-6">
+						@if (network.current_user_network_role && network.current_user_network_role != 'staff') {
+							<oeb-button
+								variant="secondary"
+								width="full_width"
+								[text]="'Issuer.createBadge' | translate"
+							></oeb-button>
+						}
+						<oeb-button
+							variant="secondary"
+							width="full_width"
+							[text]="'Issuer.giveBadge' | translate"
+						></oeb-button>
+					</div>
+				</section>
+			}
 		</div>
 	`,
-	imports: [HlmP, RouterLink, TranslatePipe, OebButtonComponent],
+	imports: [RouterLink, TranslatePipe, OebButtonComponent],
 })
 export class OebNetworkCard {
 	readonly badgeLoadingImageUrl = '../../../breakdown/static/images/badge-loading.svg';

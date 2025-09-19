@@ -98,6 +98,7 @@ export interface PublicApiIssuer {
 	// Extension to the spec containing the original URL of this assertion if it is not stored by Badgr
 	sourceUrl?: string;
 	hostedUrl?: string;
+	is_network?: boolean;
 }
 
 export interface PublicApiBadgeCollectionWithBadgeClassAndIssuer {
@@ -158,16 +159,4 @@ export interface PublicApiLearningPath {
 	learningPathBadgeInstanceSlug?: string;
 	required_badges_count: number;
 	activated: boolean;
-}
-
-export interface PublicApiNetwork {
-	'@context': 'https://w3id.org/openbadges/v2';
-	description: string;
-	url: string;
-	type: 'Network';
-	id: string;
-	slug: string;
-	name: string;
-	image?: string;
-	sourceUrl?: string;
 }

@@ -1,9 +1,8 @@
 import { Component, ElementRef, inject, input, Input, output, signal, TemplateRef, ViewChild } from '@angular/core';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe, TranslateDirective } from '@ngx-translate/core';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { NetworkApiService } from '../../../issuer/services/network-api.service';
 import { OebTabsComponent } from '~/components/oeb-tabs.component';
-import { BgAwaitPromises } from '~/common/directives/bg-await-promises';
 import { Route, RouterLink } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { BadgeClassManager } from '~/issuer/services/badgeclass-manager.service';
@@ -22,6 +21,9 @@ import { UserProfileManager } from '~/common/services/user-profile-manager.servi
 import { FormsModule } from '@angular/forms';
 import { BrnDialogRef } from '@spartan-ng/brain/dialog';
 import { QrCodeApiService } from '~/issuer/services/qrcode-api.service';
+import { TranslateModule } from '@ngx-translate/core';
+import { BadgeClassApiService } from '~/issuer/services/badgeclass-api.service';
+import { NetworkManager } from '~/issuer/services/network-manager.service';
 
 @Component({
 	selector: 'network-badges',
@@ -30,18 +32,21 @@ import { QrCodeApiService } from '~/issuer/services/qrcode-api.service';
 		TranslatePipe,
 		OebButtonComponent,
 		OebTabsComponent,
-		BgAwaitPromises,
 		RouterLink,
 		DatatableComponent,
 		FormsModule,
+		TranslateDirective,
+		TranslateModule,
 	],
 })
 export class NetworkBadgesComponent {
 	constructor(
 		private networkApiService: NetworkApiService,
 		private badgeClassService: BadgeClassManager,
+		private badgeClassApiService: BadgeClassApiService,
 		private userProfileManager: UserProfileManager,
 		private issuerManager: IssuerManager,
+		private networkManager: NetworkManager,
 		private messageService: MessageService,
 		private qrCodeApiService: QrCodeApiService,
 		private translate: TranslateService,
@@ -115,7 +120,10 @@ export class NetworkBadgesComponent {
 	}
 
 	private async loadBadgesAndRequests() {
-		const badgesByIssuer = await firstValueFrom(this.badgeClassService.badgesByIssuerUrl$);
+		const networkSlug = this.network().slug;
+
+		const badgesByIssuer = await firstValueFrom(this.badgeClassService.getNetworkBadgesByIssuerUrl$(networkSlug));
+
 		this.badges = this.sortBadgesByCreatedAt(badgesByIssuer[this.network().issuerUrl] || []);
 
 		const requestMap = await this.loadRequestsForBadges(this.badges);
@@ -131,12 +139,20 @@ export class NetworkBadgesComponent {
 		return badges.sort((a, b) => cmp(b.createdAt, a.createdAt));
 	}
 
-	private async loadRequestsForBadges(badges: any[]): Promise<Map<string, ApiQRCode[]>> {
-		const requestPromises = badges.map((badge) =>
-			this.qrCodeApiService
-				.getQrCodesForIssuerByBadgeClass(badge.issuerSlug, badge.slug)
-				.then((requests) => ({ key: badge.slug, value: requests })),
-		);
+	private async loadRequestsForBadges(badges: BadgeClass[]): Promise<Map<string, ApiQRCode[]>> {
+		const requestPromises = badges.map(async (badge) => {
+			const issuer = await this.networkManager.networkBySlug(badge.issuerSlug);
+
+			if (issuer.currentUserStaffMember) {
+				const requests = await this.qrCodeApiService.getQrCodesForIssuerByBadgeClass(
+					badge.issuerSlug,
+					badge.slug,
+				);
+				return { key: badge.slug, value: requests };
+			} else {
+				return { key: badge.slug, value: [] };
+			}
+		});
 
 		const requestData = await Promise.all(requestPromises);
 
