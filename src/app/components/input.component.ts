@@ -53,6 +53,7 @@ import { HlmP } from '@spartan-ng/helm/typography';
 					[placeholder]="placeholder || ''"
 					[attr.maxlength]="maxchar"
 					[attr.max]="max"
+					[attr.min]="min"
 					[type]="fieldType"
 					[readonly]="readonly"
 					#textInput
@@ -70,6 +71,7 @@ import { HlmP } from '@spartan-ng/helm/typography';
 					[placeholder]="placeholder || ''"
 					[attr.maxlength]="maxchar"
 					[attr.max]="max"
+					[attr.min]="min"
 					[readonly]="readonly"
 					[size]="size"
 					#textInput
@@ -89,6 +91,7 @@ import { HlmP } from '@spartan-ng/helm/typography';
 						[placeholder]="placeholder || ''"
 						[attr.maxlength]="maxchar"
 						[attr.max]="max"
+						[attr.min]="min"
 						[type]="showPassword ? 'text' : 'password'"
 						[readonly]="readonly"
 						#textInput
@@ -125,6 +128,7 @@ export class OebInputComponent {
 	@Input() placeholder = '';
 	@Input() maxchar?: number = null;
 	@Input() max?: number;
+	@Input() min?: number;
 	@Input() readonly?: boolean = false;
 	@Input() sublabel?: string;
 	@Input() sublabelRight?: string;

@@ -17,7 +17,7 @@ export type Tab = {
 	selector: 'oeb-tabs',
 	imports: [HlmTabsModule, HlmTabsTrigger, NgTemplateOutlet, TranslateModule],
 	template: `<hlm-tabs class="tw-block tw-w-full" [tab]="activeTab" (tabActivated)="onTabChange($event)">
-		<hlm-tabs-list class="tw-w-full tw-max-w-[660px] tw-flex tw-justify-between" aria-label="tabs">
+		<hlm-tabs-list class="tw-w-full tw-max-w-[600px] tw-flex tw-justify-between" aria-label="tabs">
 			@for (tab of tabs; track tab) {
 				<button class="tw-grow" [hlmTabsTrigger]="tab.key" [_variant]="variant">
 					{{ tab.title | translate }}

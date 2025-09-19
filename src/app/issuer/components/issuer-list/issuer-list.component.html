@@ -175,12 +175,12 @@
 </ng-template>
 
 <ng-template #issuersTemplate>
-	<p hlmP size="lg" class="tw-py-3">
+	<p hlmP class="tw-py-3">
 		<span [innerHTML]="'Issuer.myInstitutionsText' | translate"></span>
 		<span [innerHTML]="'Issuer.copyBadgesOfOtherIssuers' | translate"></span>
 	</p>
 
-	<p hlmP size="lg" class="tw-pb-3" [innerHTML]="'Issuer.myLearningPathText' | translate"></p>
+	<p hlmP class="tw-pb-3" [innerHTML]="'Issuer.myLearningPathText' | translate"></p>
 	@if (issuers?.length === 0) {
 		<section class="tw-flex tw-flex-col tw-gap-2 tw-mt-2">
 			<span
@@ -283,9 +283,10 @@
 
 	<!-- Staff Requests section -->
 
-	<section class="tw-flex tw-flex-col tw-gap-2" [ngClass]="issuers?.length > 0 ? 'tw-mt-12' : ''">
-		<span [innerHTML]="'Issuer.partOfInstitution' | translate" class="tw-text-2xl tw-italic tw-text-oebblack">
-		</span>
+	<section class="tw-flex tw-flex-col tw-gap-2 tw-mt-6">
+		<p class="tw-text-xl tw-italic tw-text-oebblack">
+			{{ 'Issuer.partOfInstitution' | translate }}
+		</p>
 		@if (staffRequests.length > 0) {
 			<section class="tw-bg-lightpurple tw-p-4 tw-w-full tw-max-w-[600px] tw-rounded-[10px]">
 				<h2

@@ -22,7 +22,8 @@ import { OebInputComponent } from '../../../components/input.component';
 import { OebCheckboxComponent } from '../../../components/oeb-checkbox.component';
 import { OebButtonComponent } from '../../../components/oeb-button.component';
 import { FormMessageComponent } from '../../../common/components/form-message.component';
-import { HlmH1, HlmP } from '@spartan-ng/helm/typography';
+import { HlmP } from '@spartan-ng/helm/typography';
+import { OebHeaderText } from '~/components/oeb-header-text.component';
 
 interface RedirectResponse {
 	success: boolean;
@@ -36,7 +37,6 @@ type RedirectHttpResponse = HttpResponse<RedirectResponse>;
 	templateUrl: './login.component.html',
 	styleUrls: ['./login.component.scss'],
 	imports: [
-		HlmH1,
 		HlmP,
 		RouterLink,
 		FormsModule,
@@ -45,6 +45,7 @@ type RedirectHttpResponse = HttpResponse<RedirectResponse>;
 		OebButtonComponent,
 		FormMessageComponent,
 		TranslatePipe,
+		OebHeaderText,
 	],
 })
 export class LoginComponent extends BaseRoutableComponent implements OnInit, AfterViewInit {
