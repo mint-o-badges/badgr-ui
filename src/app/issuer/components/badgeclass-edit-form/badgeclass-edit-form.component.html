@@ -1181,7 +1181,7 @@
 					type="button"
 					[text]="next"
 					(click)="nextStep()"
-					[umamiEvent]="!existingBadgeClass ? `${this.stepper?.selectedIndex + 1}-create-${category}-badge` : undefined"
+					[umamiEvent]="!existingBadgeClass ? `create-${category}-badge-${this.stepper?.selectedIndex + 1}` : undefined"
 				/>
 			}
 
@@ -1203,7 +1203,7 @@
 							: 'General.save'
 						) | translate
 					}}"
-					[umamiEvent]="!existingBadgeClass ? `${this.stepper?.selectedIndex + 1}-create-${category}-badge-done` : undefined"
+					[umamiEvent]="!existingBadgeClass ? `create-${category}-badge-done-${this.stepper?.selectedIndex + 1}` : undefined"
 				>
 				</oeb-button>
 			}

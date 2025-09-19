@@ -555,7 +555,7 @@
 					type="button"
 					[text]="next"
 					(click)="nextStep()"
-					[umamiEvent]="!existingLpBadge ? `${this.stepper?.selectedIndex + 1}-create-micro-degree` : undefined"
+					[umamiEvent]="!existingLpBadge ? `create-micro-degree-${this.stepper?.selectedIndex + 1}` : undefined"
 				/>
 			}
 
@@ -570,7 +570,7 @@
 						(initialisedLearningpath ? 'General.saveChanges' : 'Issuer.myInstitutionsCreateLearningPath')
 							| translate
 					}}"
-					[umamiEvent]="!existingLpBadge ? `${this.stepper?.selectedIndex + 1}-create-micro-degree-done` : undefined"
+					[umamiEvent]="!existingLpBadge ? `create-micro-degree-done-${this.stepper?.selectedIndex + 1}` : undefined"
 				>
 				</oeb-button>
 			}
