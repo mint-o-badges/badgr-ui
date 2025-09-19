@@ -22,7 +22,7 @@
 				<div class="tw-flex tw-justify-evenly oeb-badgeclass-select-container tw-flex-col md:tw-flex-row">
 					<a
 						[routerLink]="['/issuer/issuers', issuerSlug, 'badges', 'create', 'participation']"
-						[attr.data-umami-event]="'1-create-participation-badge'"
+						[attr.data-umami-event]="'create-participation-badge-1'"
 					>
 						<img src="../../../../breakdown/static/badgestudio/shapes/participation.svg" />
 						<strong>{{ 'Badge.categories.participation' | translate }}</strong>
@@ -30,7 +30,7 @@
 					</a>
 					<a
 						[routerLink]="['/issuer/issuers', issuerSlug, 'badges', 'create', 'competency']"
-						[attr.data-umami-event]="'1-create-competency-badge'"
+						[attr.data-umami-event]="'create-competency-badge-1'"
 					>
 						<img src="../../../../breakdown/static/badgestudio/shapes/competency.svg" />
 						<strong>{{ 'Badge.categories.competency' | translate }}</strong>
@@ -38,7 +38,7 @@
 					</a>
 					<a
 						[routerLink]="['/issuer/issuers', issuerSlug, 'learningpaths', 'create']"
-						[attr.data-umami-event]="'1-create-micro-degree'"
+						[attr.data-umami-event]="'create-micro-degree-1'"
 					>
 						<img src="../../../../breakdown/static/badgestudio/shapes/learningpath.svg" />
 
