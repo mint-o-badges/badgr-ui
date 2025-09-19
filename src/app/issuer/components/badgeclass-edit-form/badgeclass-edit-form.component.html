@@ -1172,10 +1172,17 @@
 				[class.disabled]="!!savePromise"
 				[disabled-when-requesting]="true"
 				text="{{ 'General.cancel' | translate }}"
-			></oeb-button>
+				[umamiEvent]="!existingBadgeClass ? 'cancel-create-badge' : undefined"
+			/>
 
 			@if (!lastStep()) {
-				<oeb-button class="tw-float-right" type="button" [text]="next" (click)="nextStep()"> </oeb-button>
+				<oeb-button
+					class="tw-float-right"
+					type="button"
+					[text]="next"
+					(click)="nextStep()"
+					[umamiEvent]="!existingBadgeClass ? `create-${category}-badge-${this.stepper?.selectedIndex + 1}` : undefined"
+				/>
 			}
 
 			@if (lastStep()) {
@@ -1196,6 +1203,7 @@
 							: 'General.save'
 						) | translate
 					}}"
+					[umamiEvent]="!existingBadgeClass ? `create-${category}-badge-done-${this.stepper?.selectedIndex + 1}` : undefined"
 				>
 				</oeb-button>
 			}
