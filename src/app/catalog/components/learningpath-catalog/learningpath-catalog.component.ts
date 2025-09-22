@@ -319,15 +319,6 @@ export class LearningPathsCatalogComponent extends BaseRoutableComponent impleme
 	}
 }
 
-class MatchingAlgorithm {
-	static learningPathMatcher(inputPattern: string): (lp) => boolean {
-		const patternStr = StringMatchingUtil.normalizeString(inputPattern);
-		const patternExp = StringMatchingUtil.tryRegExp(patternStr);
-
-		return (lp) => StringMatchingUtil.stringMatches(lp.name, patternStr, patternExp);
-	}
-}
-
 class MatchingLearningPathIssuer {
 	constructor(
 		public issuerName: string,

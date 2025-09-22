@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, TemplateRef, ViewChild, inject, signal } from '@angular/core';
+import { Component, ElementRef, OnInit, TemplateRef, ViewChild, inject, signal, viewChild } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SessionService } from '../../../common/services/session.service';
 import { BaseAuthenticatedRoutableComponent } from '../../../common/pages/base-authenticated-routable.component';
@@ -35,6 +35,7 @@ import { NetworkListComponent } from '../network-list/network-list.component';
 import { HlmIcon } from '@spartan-ng/helm/icon';
 import { HlmH1, HlmP } from '@spartan-ng/helm/typography';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { UserPreferenceService } from '~/common/services/user-preference.service';
 
 @Component({
 	selector: 'issuer-list',
@@ -163,6 +164,7 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 		private translate: TranslateService,
 		private issuerStaffRequestApiService: IssuerStaffRequestApiService,
 		private userProfileApiService: UserProfileApiService,
+		private userPreferences: UserPreferenceService,
 	) {
 		super(router, route, loginService);
 		title.setTitle(`Issuers - ${this.configService.theme['serviceName'] || 'Badgr'}`);
@@ -395,6 +397,29 @@ export class IssuerListComponent extends BaseAuthenticatedRoutableComponent impl
 				footer: false,
 			},
 		});
+	}
+
+	linkedInIdHeaderTemplate = viewChild.required<TemplateRef<any>>('linkedInIdDialogHeader');
+	linkedInIdBodyTemplate = viewChild.required<TemplateRef<any>>('linkedInIdDialogBody');
+
+	public async openLinkedInHintDialog(slug: string) {
+		const issuerSlug = slug;
+		const prefKey = 'linkedInIDPromptForInstitution';
+		const pref = await this.userPreferences.getPreference(prefKey, '[]');
+		if (pref === undefined || pref === null)
+			// not logged in or unsuccessful
+			return;
+		const promptedInstitutions = JSON.parse(pref) as string[];
+		if (!promptedInstitutions.find((x) => x === issuerSlug)) {
+			this.dialogRef = this._hlmDialogService.open(DialogComponent, {
+				context: {
+					headerTemplate: this.linkedInIdHeaderTemplate(),
+					content: this.linkedInIdBodyTemplate(),
+					templateContext: { slug: issuerSlug },
+				},
+			});
+			await this.userPreferences.setPreference(prefKey, JSON.stringify([...promptedInstitutions, issuerSlug]));
+		}
 	}
 
 	// initialize predefined text

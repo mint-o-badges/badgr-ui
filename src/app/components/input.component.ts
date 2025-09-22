@@ -1,8 +1,8 @@
-import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { Component, ElementRef, input, Input, TemplateRef, ViewChild } from '@angular/core';
 import { HlmInput, InputVariants } from './spartan/ui-input-helm/src';
 import { OebInputErrorComponent } from './input.error.component';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { NgClass } from '@angular/common';
+import { NgClass, NgTemplateOutlet } from '@angular/common';
 import { UrlValidator } from '../common/validators/url.validator';
 import { TypedFormGroup } from '../common/util/typed-forms';
 import { NgIcon } from '@ng-icons/core';
@@ -10,7 +10,7 @@ import { HlmP } from '@spartan-ng/helm/typography';
 
 @Component({
 	selector: 'oeb-input',
-	imports: [HlmInput, HlmP, OebInputErrorComponent, NgClass, ReactiveFormsModule, NgIcon],
+	imports: [HlmInput, HlmP, OebInputErrorComponent, NgClass, ReactiveFormsModule, NgIcon, NgTemplateOutlet],
 	styleUrls: ['./input.component.scss'],
 	template: ` <div
 		[ngClass]="{ 'tw-my-6 md:tw-mt-7': !noTopMargin, 'tw-opacity-50 tw-pointer-events-none': readonly }"
@@ -23,7 +23,9 @@ import { HlmP } from '@spartan-ng/helm/typography';
 					} @else {
 						<span hlmP class="tw-text-oebblack tw-font-semibold" [innerHTML]="label"></span>
 					}
-					@if (sublabelRight) {
+					@if (sublabelRightTemplate) {
+						<ng-container *ngTemplateOutlet="sublabelRightTemplate()" />
+					} @else if (sublabelRight) {
 						<span class="tw-pl-[3px] tw-text-oebblack"> {{ sublabelRight }}</span>
 					}
 				</label>
@@ -34,9 +36,7 @@ import { HlmP } from '@spartan-ng/helm/typography';
 			></ng-content>
 		</div>
 		@if (sublabel) {
-			<p class="tw-pl-[3px]">
-				{{ sublabel }}
-			</p>
+			<p class="tw-pl-[3px] tw-text-purple tw-italic" [innerHTML]="sublabel"></p>
 		}
 		@if (ariaLabel) {
 			<label class="visuallyhidden" [attr.for]="inputName">{{ ariaLabel }}</label>
@@ -131,6 +131,7 @@ export class OebInputComponent {
 	@Input() min?: number;
 	@Input() readonly?: boolean = false;
 	@Input() sublabel?: string;
+	sublabelRightTemplate = input<TemplateRef<any>>();
 	@Input() sublabelRight?: string;
 	@Input() autofocus = false;
 	@Input() noTopMargin = false;

@@ -1,4 +1,4 @@
-import { Component, Injector, OnInit, ViewChild } from '@angular/core';
+import { Component, Injector } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { preloadImageURL } from '../../../common/util/file-util';
@@ -17,7 +17,6 @@ import { AppConfigService } from '../../../common/app-config.service';
 import { saveAs } from 'file-saver';
 import { SafeResourceUrl, Title } from '@angular/platform-browser';
 import { PageConfig } from '../../../common/components/badge-detail/badge-detail.component.types';
-import { CommonDialogsService } from '../../../common/services/common-dialogs.service';
 import { TranslateService } from '@ngx-translate/core';
 import { BgBadgeDetail } from '../../../common/components/badge-detail/badge-detail.component';
 import { PdfService } from '../../../common/services/pdf.service';
@@ -34,7 +33,6 @@ export class PublicBadgeAssertionComponent {
 		public messageService: MessageService,
 		public configService: AppConfigService,
 		public queryParametersService: QueryParametersService,
-		private dialogService: CommonDialogsService,
 		private title: Title,
 		private translate: TranslateService,
 		private pdfService: PdfService,

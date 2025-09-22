@@ -13,7 +13,6 @@ import { BadgrApiFailure } from '../../../common/services/api-failure';
 import { UserProfileManager } from '../../../common/services/user-profile-manager.service';
 import { UserProfile, UserProfileEmail } from '../../../common/model/user-profile.model';
 import { Subscription } from 'rxjs';
-import { QueryParametersService } from '../../../common/services/query-parameters.service';
 import { AppConfigService } from '../../../common/app-config.service';
 import { typedFormGroup } from '../../../common/util/typed-forms';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
@@ -127,7 +126,6 @@ export class ProfileComponent extends BaseAuthenticatedRoutableComponent impleme
 		protected messageService: MessageService,
 		protected profileManager: UserProfileManager,
 		protected dialogService: CommonDialogsService,
-		protected paramService: QueryParametersService,
 		protected configService: AppConfigService,
 		private translate: TranslateService,
 	) {
