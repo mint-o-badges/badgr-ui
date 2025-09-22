@@ -95,6 +95,11 @@
 </ng-container>
 
 <ng-template #inviteSuccessContent>
-	<span class="tw-text-oebblack">{{ 'Network.notifiedIssuerOwners' | translate }}</span>
-	<span class="tw-text-oebblack"> {{ 'Network.visibleAfterConfirmation' | translate }}</span>
+	<div class="tw-text-center tw-text-lg tw-leading-[130%] tw-flex tw-flex-col">
+		<span class="tw-text-oebblack">{{ 'Network.notifiedIssuerOwners' | translate }}</span>
+		<span class="tw-text-purple tw-mt-4 tw-mb-8 tw-italic">
+			{{ 'Network.visibleAfterConfirmation' | translate }}</span
+		>
+		<oeb-button size="sm" [text]="'OK'" (click)="closeDialog()"></oeb-button>
+	</div>
 </ng-template>

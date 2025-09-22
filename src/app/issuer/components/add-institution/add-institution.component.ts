@@ -14,6 +14,7 @@ import { FormFieldSelectOption } from '../../../components/select.component';
 import { NetworkApiService } from '../../../issuer/services/network-api.service';
 import { HlmIcon } from '@spartan-ng/helm/icon';
 import { MemoizedProperty } from '~/common/util/memoized-property-decorator';
+import { BrnDialogRef } from '@spartan-ng/brain/dialog';
 
 @Component({
 	selector: 'add-institution',
@@ -35,6 +36,8 @@ export class AddInstitutionComponent implements AfterViewInit {
 	@ViewChild('issuerSearchInputModel') issuerSearchInputModel: NgModel;
 
 	private _networkStaffRoleOptions: FormFieldSelectOption[];
+
+	dialogRef: BrnDialogRef<any> = null;
 
 	issuerSearchQuery = '';
 	selectedIssuers: Issuer[] = [];
@@ -133,5 +136,11 @@ export class AddInstitutionComponent implements AfterViewInit {
 				variant: 'success',
 			},
 		});
+
+		this.dialogRef = dialogRef;
+	}
+
+	closeDialog() {
+		this.dialogRef.close();
 	}
 }
