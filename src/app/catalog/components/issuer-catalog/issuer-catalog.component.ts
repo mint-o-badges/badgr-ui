@@ -30,6 +30,8 @@ import { HlmInput } from '@spartan-ng/helm/input';
 import { HlmH1 } from '@spartan-ng/helm/typography';
 import { BadgeClass } from '~/issuer/models/badgeclass.model';
 import { MatchingAlgorithm } from '~/common/util/matching-algorithm';
+import { OebHeaderText } from '~/components/oeb-header-text.component';
+
 
 @Component({
 	selector: 'app-issuer-catalog',
@@ -38,7 +40,6 @@ import { MatchingAlgorithm } from '~/common/util/matching-algorithm';
 	animations: [appearAnimation],
 	imports: [
 		FormMessageComponent,
-		HlmH1,
 		BgAwaitPromises,
 		CountUpModule,
 		FormsModule,
@@ -52,6 +53,7 @@ import { MatchingAlgorithm } from '~/common/util/matching-algorithm';
 		IssuerCardComponent,
 		PaginationAdvancedComponent,
 		TranslatePipe,
+		OebHeaderText,
 	],
 })
 export class IssuerCatalogComponent extends BaseRoutableComponent implements OnInit, AfterViewInit {

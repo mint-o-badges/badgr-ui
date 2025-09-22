@@ -3,12 +3,7 @@
 		<div class="tw-relative page-padding">
 			<div class="oeb-section">
 				<div class="tw-relative tw-z-20 oeb-headline-container-sm">
-					<h1 hlmH1 class="tw-font-normal tw-text-purple">
-						{{ 'Login.welcome' | translate }}
-					</h1>
-					<h1 hlmH1 class="tw-font-black tw-text-purple">
-						{{ 'General.oeb' | translate }}
-					</h1>
+					<oeb-header-text [text1]="'Login.welcome'" [text2]="'General.oeb'" />
 
 					<p hlmP class="tw-text-oebblack tw-my-4">
 						{{ 'Login.areYouNew' | translate }}
